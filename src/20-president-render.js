@@ -100,6 +100,7 @@ function presRenderEconomy(C) {
     +     _pdMeter('Supply', wr.supply, false)
     +   '</div>'
     + '</div>'
+    + (typeof presProdBlock === "function" ? presProdBlock(C) : '')
     + dispatches
     + '<hr class="rule">'
     + '<p class="lede" style="font-size:12px;opacity:.7">Full executive management of ' + sideName
