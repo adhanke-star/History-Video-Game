@@ -42,7 +42,7 @@
       "ok": true,
       "v": {
         "clockYear": 1862,
-        "weariness": 20,
+        "weariness": 20.22704,
         "capital": 11,
         "funds": 336,
         "supply": 51,
@@ -58,7 +58,7 @@
       "ok": true,
       "v": {
         "r1kills": "1st Maine Infantry k=3",
-        "weariness": 32
+        "weariness": 32.454080000000005
       }
     },
     {
@@ -93,7 +93,7 @@
       "name": "clock tab renders",
       "ok": true,
       "v": {
-        "len": 2678,
+        "len": 2732,
         "hasBond": true
       }
     },
@@ -109,7 +109,7 @@
       "name": "warroom tab renders",
       "ok": true,
       "v": {
-        "len": 3863,
+        "len": 3763,
         "hasBuild": true
       }
     },
@@ -117,8 +117,8 @@
       "name": "war-room build click (spend funds)",
       "ok": true,
       "v": {
-        "fundsBefore": 380,
-        "fundsAfter": 80,
+        "fundsBefore": 407,
+        "fundsAfter": 107,
         "industryLv": 3
       }
     },
@@ -128,8 +128,8 @@
       "v": {
         "capBefore": 33,
         "capAfter": 13,
-        "fundsBefore": 80,
-        "fundsAfter": 230
+        "fundsBefore": 107,
+        "fundsAfter": 257
       }
     }
   ],

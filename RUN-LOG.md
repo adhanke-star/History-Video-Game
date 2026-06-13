@@ -19,7 +19,12 @@ Run the whole arc (S0→S5→tactical, stop only at unresolvable fork/blocker/do
 
 **Design forks resolved this run → `DECISIONS.md`** (Aaron-locked: build system, expand-in-place, interstitial, cabinet-engravings; Claude-decided+logged: menu relabel deferred to S1, generated HTML kept committed, no save-ver bump, ~1mo/battle date cadence).
 
-**NEXT: S1 — the full asymmetric economy** (manpower/industry/rail/agriculture/finance+inflation/blockade/foreign), funding choices, content-complete with real figures.
+## S1a SHIPPED + VERIFIED — the finance core (the economy spine)
+- **Content-complete:** citation-grade economy research (8-agent workflow) → `HISTORICAL-DATA-ECONOMY.md` (digest + 28 debate cards) + `data/economy.json` (game-ready params: sides/finance/production/cottonBlockade/manpower/timeline/teachingCards). Build is now **data-driven** — `tools/build.mjs` injects `data/*.json` as `GAME_DATA` (single source of truth, single-file deliverable preserved).
+- **The finance system** (`src/40-economy.js`, `G.campaign.economy`): three funding levers (War Bonds / Taxation / the Printing Press) with an **emergent inflation model** — thin CS bond absorption + ~10% tax-collection force the residue onto the press → compounding hyperinflation spiral; the US covers demand with bonds+taxes → stays anchored. Inflation → `clock.weariness` interlink (the home-front cost). New **"The Treasury" tab** (7th desk tab); Secretary Chase/Memminger **delegated by default** (auto-manages historical mix), opt-in to pull the levers yourself; ambient "Why it mattered" teaching card.
+- **VERIFIED (probe-economy 8/8):** over 12 turns US inflation ×1.01→**1.13** (anchored) vs CS ×1.16→**87.5** (geometric spiral, ≈ historical ~90× target), ratio **1:77**; CS weariness →100 (inflation crushes the home front). Treasury tab renders, delegate toggle + lever shift + teaching expander all work. Regression: probe-desk 12/12, t1probe ok, diag-classic Classic paints; 0 pageerrors.
+
+**NEXT: S1b–S1d** — production (industry/rail/agriculture, asymmetric output → supply/matériel) · cotton/blockade/foreign (King Cotton trap + strangulation, blockade-depth toggle R14) · manpower/conscription (the late-war CS replacement collapse). All data already in `data/economy.json`. Then S2 (executive decisions + 3-layer morale + 1864 election + advisor system).
 
 ---
 

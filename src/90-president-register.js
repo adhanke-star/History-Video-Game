@@ -22,11 +22,13 @@ function _t1InitAll(C) {
   try { if (typeof mrInit  === "function") mrInit(C);  } catch (e) {}
   try { if (typeof wrInit  === "function") wrInit(C);  } catch (e) {}
   try { if (typeof presInit === "function") presInit(C); } catch (e) {}   // S0: President's Desk
+  try { if (typeof econInit === "function") econInit(C); } catch (e) {}   // S1: economy/finance
 }
 
 function _t1Resolve(winnerSide, type, B, C, win) {
   if (!C) return;
   try { if (typeof clkOnResolve === "function") clkOnResolve(winnerSide, type, B, C, win); } catch (e) {}
+  try { if (typeof econOnResolve === "function") econOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S1: after clk → feeds clock.weariness
   try { if (typeof wrOnResolve  === "function") wrOnResolve(winnerSide, type, B, C, win);  } catch (e) {}
   try { if (typeof mrOnResolve  === "function") mrOnResolve(winnerSide, type, B, C, win);  } catch (e) {}
   try { if (typeof presOnResolve === "function") presOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S0: after clk (interlink)

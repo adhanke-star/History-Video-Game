@@ -4,6 +4,7 @@
     "10-president-state.js",
     "20-president-render.js",
     "30-president-shell.js",
+    "40-economy.js",
     "90-president-register.js"
   ],
   "overrides": [
