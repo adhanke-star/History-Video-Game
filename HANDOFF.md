@@ -1,3 +1,26 @@
+# HANDOFF — "The Civil War"
+
+## ⚡ CONTINUE HERE — run i progress (S0 + S1a SHIPPED) → next: S1b (updated 2026-06-13)
+
+**Strategic-first build underway. Two milestones shipped + gated + committed locally this run (no git remote yet — local commits only; add a remote to push):**
+- **S0 — President's-Desk owner shell** (commit `673894f`): zero-dep **build system** (`build/base.html` frozen run-h monolith + ordered `src/*.js` modules + `tools/build.mjs` → concat → splice before the engine-end anchor → in-memory parse/hex/collision gate → write `civil_war_generals.html`). `G.campaign.president` state (sibling of clock/muster/warroom; rides the save, no `_SAVE_VER` bump). War Department **expanded in place** into a 7-tab desk; between-battles **auto-surface/one-click-skip interstitial**. Cabinet = 4 engraved advisors (stub).
+- **S1a — finance core** (commit `3a6aad6`): build is now **data-driven** (`tools/build.mjs` injects `data/*.json` as `GAME_DATA`). `data/economy.json` + `HISTORICAL-DATA-ECONOMY.md` from a citation-grade 8-agent research workflow. `src/40-economy.js` = 3 funding levers (bonds/taxes/press) with an **emergent inflation asymmetry** (US anchored ×1.13 / CS spiral ×87.5 over 12 turns ≈ historical ~90×; inflation→`clock.weariness`). "The Treasury" tab; Secretary delegated by default; teaching card.
+
+**OPERATING PARAMETERS (Aaron-locked, run i — govern the whole run):** run the whole arc (S0→S5→tactical; stop only at unresolvable fork/blocker/done) · **always decide & log** (forks → `DECISIONS.md`, never pause mid-run) · **auto-commit AND push** at gated milestones (no remote yet → local only) · **content-complete each phase** (real data + PD images per system).
+
+**TOOLCHAIN (proven this run):** `node tools/build.mjs` (then bootprobe/t1probe/probe-desk/probe-economy/diag-classic — START a `python3 -m http.server 8765` yourself + confirm 200 first; probes' auto-spawn races; bootprobe goto=60s). **READ the JSON in `tools/shots/` + the PNGs.** Gotchas: no literal comment-closer in JS block comments (bit the build script + a module — scan `src/` before building); bare-name globals `G`/`GAME_DATA` (never `window.G`); `portraitFor` → `window.portraitFor` from modules. Decisions: `DECISIONS.md`. Run detail: `RUN-LOG.md` §"run i".
+
+**NEXT — finish S1, then S2 (all data already in `data/economy.json`):**
+- **S1b production** — industry/rail/agriculture nodes → supply/matériel/output, asymmetric (Union industrial vs CS scarcity + rail deterioration). Likely `src/50-production.js` + a desk tab or fold into War Room.
+- **S1c cotton/blockade/foreign** — King Cotton self-embargo trap + blockade strangulation schedule + runner economics + Erlanger loan; foreign-recognition pressure inputs (feeds S2 diplomacy). Blockade-depth = toggle (R14).
+- **S1d manpower/conscription** — recruitment pools, draft, the late-war CS replacement-ratio collapse (1.0→0.1) that ends the war; immigrant pool; enslaved-labor base (ties to S2 emancipation/contraband).
+- Wire economy consequences into the pre-battle conditioning bridge (§3/§11) and the cabinet advisors (each secretary surfaces its domain's choices + teaches).
+- **Then S2** — executive decisions + 3-layer morale + the 1864 election + the **advisor/cabinet system** (the linchpin R25: auto-manage + recommend + TEACH, per-domain delegation — the Treasury delegate toggle is the seed pattern).
+
+**To continue:** read this CONTINUE-HERE block, then `DECISIONS.md`, `RUN-LOG.md` §"run i", `data/economy.json` + `HISTORICAL-DATA-ECONOMY.md`, and the design law `GRAND-STRATEGY-PLAN.md` (esp. §2 economy, §27 balance). Build S1b next with the same module+gate+probe+commit discipline. The full design orientation is below.
+
+---
+
 # HANDOFF — "The Civil War" — MASTER new-chat handoff (run h → next build)
 
 **Written 2026-06-13 (run h, Opus 4.8). THE single entry point for the next session.** Personal project — NOT MJI. Full autonomy, Ultracode on, $0/free-CC0, build bar 200/100. **To start the next chat: paste the §PASTE block at the bottom.** Everything else here orients you.
