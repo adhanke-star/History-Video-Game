@@ -1,0 +1,108 @@
+{
+  "steps": [
+    {
+      "name": "init systems",
+      "ok": true,
+      "v": {
+        "clock": true,
+        "warroom": true,
+        "muster": true,
+        "president": true
+      }
+    },
+    {
+      "name": "seed two turns",
+      "ok": true,
+      "v": {
+        "turn": 2,
+        "year": 1861,
+        "log": 2
+      }
+    },
+    {
+      "name": "open desk",
+      "ok": true,
+      "v": {
+        "overlay": true,
+        "title": "The President's Desk",
+        "tabsPresent": 6
+      }
+    },
+    {
+      "name": "economy tab",
+      "ok": true,
+      "v": {
+        "len": 24232,
+        "hasMeter": true,
+        "hasPortrait": true
+      }
+    },
+    {
+      "name": "warroom tab (existing)",
+      "ok": true,
+      "v": {
+        "len": 3546,
+        "hasBuild": true
+      }
+    },
+    {
+      "name": "clock tab (existing)",
+      "ok": true,
+      "v": {
+        "len": 2173,
+        "hasBond": true
+      }
+    },
+    {
+      "name": "muster tab (existing)",
+      "ok": true,
+      "v": {
+        "len": 491
+      }
+    },
+    {
+      "name": "cabinet tab",
+      "ok": true,
+      "v": {
+        "delegates": 4,
+        "portraits": 4
+      }
+    },
+    {
+      "name": "delegate toggle persists",
+      "ok": true,
+      "v": {
+        "wasDelegated": false,
+        "nowDelegated": true
+      }
+    },
+    {
+      "name": "map tab",
+      "ok": true,
+      "v": {
+        "len": 1257
+      }
+    },
+    {
+      "name": "interstitial appears",
+      "ok": true,
+      "v": {
+        "hasContinue": true,
+        "hasDeskBtn": true,
+        "mode": "menu"
+      }
+    },
+    {
+      "name": "continue → quartermaster",
+      "ok": true,
+      "v": {
+        "quartermaster": true,
+        "mode": "upgrade",
+        "turnAckReset": true
+      }
+    }
+  ],
+  "errors": [],
+  "ok": true,
+  "pageerrors": []
+}

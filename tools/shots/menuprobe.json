@@ -1,0 +1,29 @@
+{
+  "steps": [
+    {
+      "n": "saveLocal",
+      "ok": true,
+      "v": true
+    },
+    {
+      "n": "openMainMenu",
+      "ok": true,
+      "v": true
+    },
+    {
+      "n": "wardept button present",
+      "ok": true,
+      "v": true
+    },
+    {
+      "n": "click wardept",
+      "ok": true,
+      "v": {
+        "overlayShown": true,
+        "hasTabs": true
+      }
+    }
+  ],
+  "errors": [],
+  "pageerrors": []
+}

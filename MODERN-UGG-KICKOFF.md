@@ -1,0 +1,35 @@
+# NEW-CHAT KICKOFF — "The Civil War" next build
+
+**Written 2026-06-13 (run h). Paste §PASTE (bottom) as the FIRST message of a fresh VS Code Claude Code session.** Personal project — NOT MJI. Full autonomy, Ultracode on, $0/free-CC0, single-file/CDN three@0.128, build bar 200/100.
+
+## THE TWO BUILDS (and the locked ORDER)
+The project has two giant builds ahead, designed across two popup sessions (60 locked decisions). **Build order is STRATEGIC-FIRST** (Aaron, rounds 9–10):
+1. **FIRST: the grand-strategy "Owner-Mode" war + alternate-history teaching engine** — you are the **President** (Lincoln/Davis) running the whole war (economy, politics, diplomacy, morale, generals, the home front), with an alternate-history divergence engine and a PhD-level teaching layer. Spec = **`GRAND-STRATEGY-PLAN.md`** (build the FULL strategic layer before battles, phases S0–S5; battles use the EXISTING engine via a bridge for now). Content = **`HISTORICAL-DATA.md`**.
+2. **THEN: the real-time Ultimate General: Gettysburg tactical battle engine** swaps in behind that bridge. Spec = **`MODERN-UGG-PLAN.md`** (phases P0–P5, First Bull Run vertical slice first).
+
+Classic (hex/turn) is **FROZEN/finished** — never regress it.
+
+## READ FIRST, IN THIS ORDER (you have zero prior context)
+1. **`GRAND-STRATEGY-PLAN.md`** — THE LAW for the strategic layer. 60 locked decisions (Part I rounds 1–10, Part II rounds 11–20), architecture, systems deep-dive, build phases S0–S5, the "modes & toggles / all play styles" spine.
+2. **`HISTORICAL-DATA.md`** — citation-grade content (Bull Run OOB Union+CSA, weapons/ballistics with ranges, USCT, historiography framework, PD image sources) — feeds OOBs, weapons stats, debate cards, the codex.
+3. **`MODERN-UGG-PLAN.md`** — the tactical battle engine spec (build SECOND).
+4. **`RUN-LOG.md` §"run h"** — what shipped (3 polish items, reusable) + the pivot + this design session. Then skim §"run g"/§"run f" for the cinematic 3D foundation.
+5. **`REVIEW-QUEUE.md` top** + **`GRAPHICS-RUN-CONTINUE.md` §TOOLCHAIN/GOTCHAS** (splice/gate/real-GPU-shot toolchain + the bare-name-globals / async-THREE / override-by-redeclaration lessons).
+
+## THE SPINE (every system obeys this)
+**Modes & toggles, ALL play styles** (Aaron's through-line): a rigorous-historical DEFAULT, with opt-in toggles, separate modes (skirmish / owner-game / coupled campaign; Civ-Rev-style scenario packs), and **separate difficulty + realism sliders**. Build systems so they can be toggled/bounded, not hard-wired to one style.
+
+## HEADLINE LOCKED DECISIONS (full list in GRAND-STRATEGY-PLAN §13 + §24)
+President + owner levers + field command · expand the War Department · strategic turns→battles · full historical asymmetric economy + finance · full executive slate, pre-battle conditioning only · three morale layers (troop/leader/public) + leader reputation/ambition · tiered alternate-history (plausible→long-shot→fantastical, each with an honesty card) + emergent/hinge/scenarios + deterministic-by-performance with consensus framing · upgrades as toggleable modes + full logistics · multi-voice debate cards (consensus+dissent+fringe, named scholars + primary sources) + layered codex teaching · multiple asymmetric victory paths incl. **negotiated peace (both sides)** + the 1864 election hinge + military-only hard-loss · full diplomacy (emancipation = home-front lever) · slavery FRONT-AND-CENTER as the cause + contraband/self-emancipation + Black agency · full political home front + civil liberties + recurring elections · full naval war (own tactical mode; blockade depth toggle) · full strategic map + maneuver + logistics · full general roster + RPG skill trees + rivalries · Muster Roll human layer + medicine/~750k toll + veterans · full-info strategic map + real espionage (Black Dispatches) · rich events + variable pacing + anchored-drifting timeline · rich replay + New Game+ + dual scoring + layered scenario onboarding.
+
+## YOUR FIRST DELIVERABLE
+The grand-strategy layer per `GRAND-STRATEGY-PLAN.md` §12, phases **S0→S5** (owner shell → economy → executive decisions + 3-morale + 1864 election → alt-history engine → education layer → victory/defeat incl. negotiated peace), wrapping the EXISTING battle engine through a clean bridge. Build the FULL strategic layer before swapping in the UG:G tactical engine. Layered scenario onboarding (start ~1861 with a limited toolset).
+
+## HOW TO WORK
+- **Extend, don't duplicate:** grow `G.campaign.{clock,muster,warroom}` (the shipped War Department) into the economy/decision/morale/alt-history state. Namespace new chunks (suggest `__GS`/`gs*`), append-only, spliced before `/*__ENGINE_END__*/`. Keep Classic + the future `__FIELD` tactical engine decoupled.
+- **Gate every splice:** `.bak` → parse (`node --check` on the extracted single `<script>`) → invalid-hex grep = 0 → collision-grep new fns = 0. **Self-verify on the real GPU (Intel UHD 617, headed Chrome `--use-angle=metal`) — you READ the shots/probes.** **Run `tools/diag-classic.mjs` every splice — NEVER regress Classic.** Stale server: `lsof -ti tcp:8765 | xargs kill`.
+- **Aaron won't test until a feel/play-check milestone** → self-verify everything. Surface **questions only at a genuine design fork** (Aaron likes popup rounds of 3 with Rec=option 1).
+- Honor the gotchas: bare-name lexical globals (`G`/`HEX`/`PALETTE`/`THREE_BASE`), THREE loads async (no top-level `new THREE.*`), override-by-redeclaration, no literal `*/` in block comments, reduceMotion + gfxQuality tiers, $0/free-CC0. Provenance discipline (Verified/Inferred) on all historical content.
+
+## §PASTE (first message for the new session)
+> Continue building "The Civil War" (personal project, NOT MJI; full autonomy, Ultracode on, $0/free-CC0, single-file/CDN three@0.128, build bar 200/100). Read `GRAND-STRATEGY-PLAN.md` FULLY (the law — 60 locked decisions, architecture, systems, phases, the modes-&-toggles spine), then `HISTORICAL-DATA.md` (citation-grade content), then skim `MODERN-UGG-PLAN.md` (the tactical engine you build SECOND), `RUN-LOG.md` §"run h", `REVIEW-QUEUE.md` top, and `GRAPHICS-RUN-CONTINUE.md` §TOOLCHAIN/GOTCHAS. Build order is STRATEGIC-FIRST: build the full grand-strategy Owner-Mode war + alternate-history + teaching layer (GRAND-STRATEGY-PLAN §12 phases S0→S5) by EXTENDING the existing War Department (`G.campaign.*`), wrapping the existing battle engine via a clean bridge; the real-time UG:G tactical engine swaps in afterward behind that bridge. You're building for the President (Lincoln/Davis) with owner levers. Classic (hex/turn) is FROZEN — never regress it (verify with `tools/diag-classic.mjs` every splice). `.bak` + parse/hex/collision gate before each splice; self-verify on the real GPU (Intel UHD 617) with probes you READ. Honor the bare-name-globals / async-THREE / no-`*/`-in-comments gotchas and the modes-&-toggles spine + Verified/Inferred provenance. Confirm you've read the plan, give a 3-line plan for S0, then build continuously; surface questions only at a genuine design fork (Aaron likes popup rounds of 3 with Rec first).

@@ -1,0 +1,16 @@
+{
+  "comment": "S0 grand-strategy module splice order. Numeric prefix = splice order = override precedence (later wins by redeclaration). The build (tools/build.mjs) concatenates these in THIS order and splices them before the unique engine-end anchor in build/base.html, then writes civil_war_generals.html. Edit this list to add/reorder modules; never infer order from `ls`. 'overrides' lists base function names intentionally redeclared (the collision gate expects each to appear exactly twice: base + override).",
+  "modules": [
+    "10-president-state.js",
+    "20-president-render.js",
+    "30-president-shell.js",
+    "90-president-register.js"
+  ],
+  "overrides": [
+    "_t1InitAll",
+    "_t1Resolve",
+    "_wdRefresh",
+    "openWarDept",
+    "openUpgrade"
+  ]
+}

@@ -1,0 +1,22 @@
+# deps / tooling
+node_modules/
+package-lock.json
+# OS + scratch
+.DS_Store
+*.log
+.scratch/
+# local-only Claude settings (the all-Bash allowlist shouldn't ship)
+.claude/settings.local.json
+# local-only API keys for the asset pipeline — NEVER commit
+secrets.local.json
+*.local.json
+.secrets/
+# visual-regression output — keep only the milestone before/after record
+tools/shots/*.png
+tools/shots/*.log
+!tools/shots/milestone-*.png
+!tools/shots/baseline-*.png
+!tools/shots/after-*.png
+# backups (incl. timestamped snapshots)
+*.bak
+*.bak-*
