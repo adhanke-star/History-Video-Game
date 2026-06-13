@@ -1,0 +1,21 @@
+# PASTE THIS AS THE FIRST MESSAGE OF A NEW CHAT (12-hour autonomous run)
+
+---
+
+ultracode — Autonomous 12-hour build run for "The Civil War" (personal project at `~/Desktop/Video Game`, NOT MJI; full autonomy, $0/single-file, build bar 200/100). I'm away ~12 hours. Run a **self-perpetuating autonomous loop** that builds the game forward as far as possible without me — ship-quality, content-complete, and fully self-verified. Be maximally productive; go above and beyond.
+
+**READ FIRST (in order):** `AUTONOMOUS-RUN.md` (the operating manual — prime directive, the loop, phase roadmap, guardrails, recovery), then `HANDOFF.md` (⚡ CONTINUE-HERE block), `DECISIONS.md`, `GRAND-STRATEGY-PLAN.md` (THE design law — 63 locked decisions, §27 the balance principle), `data/economy.json` + `HISTORICAL-DATA-ECONOMY.md`, `MODERN-UGG-PLAN.md` (the tactical engine, built last), and `RUN-LOG.md` §"run i". Run `git log --oneline` (latest should be the S1b commit).
+
+**OPERATING PARAMETERS (Aaron-locked — do NOT re-ask, do NOT pop questions):** run the whole arc (S1c→S1d→S2→S3→S4→S5, then tactical P0→P5) · **always decide & log** every fork to `DECISIONS.md` with rationale (never pause mid-run) · **local commits only** (no GitHub push) · **content-complete each phase** (citation-grade research via parallel workflows → `data/*.json` + PD images, Verified/Inferred provenance, named scholars) · honor **the balance principle §27** (simple battle core stands alone; all depth optional, advisor-managed, non-blocking, ambient teaching).
+
+**THE LOOP (per `AUTONOMOUS-RUN.md` §3), every cycle:** plan the phase → (if content missing, launch a research workflow that writes to disk) → build new `src/NN-*.js` module(s) that EXTEND existing systems (bare-name globals `G`/`GAME_DATA`, never `window.G`; register per-turn ticks via the `_t1InitAll`/`_t1Resolve` overrides in `src/90-…`; surface in the President's Desk, advisor-managed + non-blocking) → `node tools/build.mjs` (must print `GATE OK`) → write + run an empirical `tools/probe-<phase>.mjs` (start `python3 -m http.server 8765` yourself + curl 200 first; exercise the system over turns via `_t1Resolve`; **READ the json + png**; assert the historical asymmetry) + re-run `probe-desk.mjs` + `diag-classic.mjs` (Classic no-regression; 0 pageerrors) → fix until green → **commit locally** + append `RUN-LOG.md`/`DECISIONS.md` → **update the handoff** (`AUTONOMOUS-RUN.md` §2 state + `HANDOFF.md` CONTINUE-HERE) → continue.
+
+**SELF-PERPETUATION:** this is a continuous loop. After each committed phase, call **ScheduleWakeup** (prompt = the sentinel `<<autonomous-loop-dynamic>>`; delay 60–270s while a background workflow is running, ~1200–1800s for an idle heartbeat) so the next cycle fires automatically. Keep going phase after phase for the whole session. Your disk state (commits + `DECISIONS.md` + `RUN-LOG.md` + `AUTONOMOUS-RUN.md`) is the source of truth across context summarization — not your chat context; that's why you update the handoff every phase.
+
+**USE WORKFLOWS AGGRESSIVELY (ultracode):** research fan-outs for content; parallel builds of independent modules; and an **adversarial bug-hunt / no-regression sweep** (spawn skeptics to find errors in the tick math + UI) before each commit and every ~2 phases.
+
+**GUARDRAILS (`AUTONOMOUS-RUN.md` §5):** never commit a red build; never regress Classic or existing systems (extend, don't duplicate); commit + update-handoff per phase (revertible + recoverable); scan `src/` for a stray `*/` inside block comments before each build (it parse-bombs); `portraitFor` → `window.portraitFor` from modules; THREE loads async; honor `reduceMotion`/`gfxQuality`. Probes flake on headless-swiftshader `page.goto` (bootprobe goto is 60s) — retry / A/B vs `build/base.html` to tell flakiness from a real regression.
+
+**STOP ONLY when** the arc is complete, ~12h elapsed, or you hit a truly irreversible blocker / a genuine contradiction in the locked design — then `PushNotification` Aaron, write the state to `AUTONOMOUS-RUN.md`, and stop. Otherwise NEVER stop; keep building.
+
+**Begin now:** confirm you've read `AUTONOMOUS-RUN.md` + the design law + `git log`, give a 3-line plan for **S1c (cotton / blockade / foreign trade)**, then start the loop and build continuously for the full session.
