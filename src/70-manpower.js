@@ -49,14 +49,18 @@ function _mpCfg(side) {
   return base;
 }
 
-/* Replacement ratio (replacements per casualty) by side+year. The US replaces
-   fully; the CS curve is the decisive collapse (economy.json attrition.replacementRatio). */
-function _mpReplacementRatio(side, year) {
+/* Replacement ratio (replacements per casualty) by side. The US replaces fully.
+   The CS curve is PERFORMANCE-DRIVEN, not scripted (design law §5): the year sets a
+   "if you are losing" FLOOR (the historical doom of a Confederacy that loses), and
+   war momentum lifts it toward full replacement — a WINNING South keeps its armies
+   filled. Arming the enslaved (Cleburne's path) raises it further. */
+function _mpReplacementRatio(side, year, mom, armed) {
   if (side === "US") return 1.0;
-  if (year <= 1862) return 0.9;
-  if (year === 1863) return 0.6;
-  if (year === 1864) return 0.3;
-  return 0.1;                       // 1865 — the armies cannot be refilled
+  var floor = (year <= 1862) ? 0.9 : (year === 1863) ? 0.55 : (year === 1864) ? 0.35 : 0.18;
+  var m = (typeof mom === "number") ? mom : 0.5;
+  var eff = floor + (0.95 - floor) * m;     // momentum lifts the floor toward near-full replacement
+  if (armed) eff = Math.min(0.95, eff + 0.30);
+  return Math.max(0, Math.min(0.95, eff));
 }
 
 function _mpPush(C, line) {
@@ -83,6 +87,7 @@ function manpowerInit(C) {
       desertionTotal: 0,            // thousand-men deserted (CS rising)
       ageBand: (side === "CS") ? "18-35" : "20-45",
       delegated: true,              // Sec. of War manages recruitment by default
+      armedApplied: false,          // one-time flag: the arm-the-enslaved pool surge
       lastTurn: null,
       log: []
     };
@@ -98,6 +103,7 @@ function manpowerInit(C) {
   if (typeof P.desertionTotal !== "number") P.desertionTotal = 0;
   if (typeof P.ageBand !== "string") P.ageBand = (side === "CS") ? "18-35" : "20-45";
   if (typeof P.delegated !== "boolean") P.delegated = true;
+  if (typeof P.armedApplied !== "boolean") P.armedApplied = false;
   if (!P.log) P.log = [];
 }
 
@@ -129,6 +135,14 @@ function manpowerOnResolve(winnerSide, type, B, C, win) {
       _mpPush(C, "Emancipation organizes the USCT — ~180,000 men join from the South's labor base.");
     }
 
+    // Confederate emancipation (the player's Cleburne lever, C.strategy.armEnslaved):
+    // a vast new pool from the South's OWN people — the boldest divergence.
+    if (side === "CS" && C.strategy && C.strategy.armEnslaved && !P.armedApplied) {
+      P.armedApplied = true;
+      P.pool += 600;
+      _mpPush(C, "Black Confederate regiments form — the ranks swell from an unthinkable source.");
+    }
+
     // --- Recruitment inflow this turn (thousand-men), drawn from the pool ---
     var volunteer;
     if (side === "US") {
@@ -144,19 +158,23 @@ function manpowerOnResolve(winnerSide, type, B, C, win) {
     P.pool = Math.max(0, P.pool - recruitsK);
     P.enlisted += recruitsK;
 
-    // --- Attrition + replacement (the decisive asymmetry) ---
+    // --- Attrition + replacement (the decisive asymmetry — now PERFORMANCE-driven) ---
+    var mom = (typeof vicMomentum === "function") ? vicMomentum(C) : 0.5;
+    var armed = !!(C.strategy && C.strategy.armEnslaved);
     var casK = (B && B.casualties && side) ? (B.casualties[side] || 0) / 1000 : 0;
     var attr = Math.min(_mpATTR_MAX, casK * _mpATTR_COEFF);
-    var ratio = _mpReplacementRatio(side, year);
+    var ratio = _mpReplacementRatio(side, year, mom, armed);
     P.replacementRatio = ratio;
     var poolFactor = (P.pool > 50) ? 1 : (P.pool / 50) * 0.6 + 0.1;   // an empty reserve cannot replace
     var replenish = attr * ratio * poolFactor;
     P.strength = Math.max(5, Math.min(100, P.strength - attr + replenish));
 
-    // Desertion (CS rising, tied to home-front distress + late war).
+    // Desertion (CS) is PERFORMANCE-driven: a WINNING South does not bleed deserters
+    // (design law §5 / Aaron). Losing + a weary home front drives men from the ranks;
+    // a deserter amnesty (C.strategy.amnesty) stems it.
     if (side === "CS") {
-      var wear = (C.clock && typeof C.clock.weariness === "number") ? C.clock.weariness : 30;
-      var desert = (year >= 1864 ? 7 : 2) + Math.round(wear / 25);
+      var amnesty = (C.strategy && C.strategy.amnesty) ? 0.45 : 1;
+      var desert = Math.max(0, Math.round(Math.pow(1 - mom, 1.6) * 16 * amnesty));
       P.desertionTotal += desert;
       P.pool = Math.max(0, P.pool - desert * 0.5);
     }

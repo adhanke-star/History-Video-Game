@@ -6,7 +6,8 @@
       "v": {
         "keys": [
           "diplomacy",
-          "economy"
+          "economy",
+          "manpower-teaching"
         ],
         "econKeys": [
           "_comment",

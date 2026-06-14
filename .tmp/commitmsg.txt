@@ -1,34 +1,35 @@
-S1d: manpower / conscription / the replacement-ratio collapse (S1 COMPLETE)
+S1e: Paths to Victory — make the South's collapse performance-driven, not scripted
 
-src/70-manpower.js + G.campaign.manpower — the decisive demographic asymmetry,
-the lever that ends the war:
-- US refills its armies: deep 4M pool + ~25% immigrant inflow + a one-time +180k
-  USCT pool at Emancipation 1863 (from the South's own labor base) -> strength holds
-- CS replacement ratio collapses 0.9->0.6->0.3->0.1 by 1865 (no immigration; won't
-  arm the 3.5M enslaved) -> the armies melt away
-- Union draft = a coercive STIMULUS to volunteering (x1.2; only ~6% direct, Geary),
-  NOT a direct add; CS conscription load-bearing (1862) + age-band 18-35->17-50 tell;
-  CS desertion rises with home-front distress
-- C.manpower.strength (0-100) is the army-strength index the S5 pre-battle bridge reads
-- "The Ranks" block in the War Effort overview; registered after prod (reads
-  B.casualties + year); no new manifest overrides
+Design-law correction (Aaron): S1c/S1d keyed the Confederate death spiral to the
+CALENDAR (replacement ratio by year, recognition foreclosed at 1863, ports fall on
+schedule), which made Southern defeat feel inevitable. The law is the opposite —
+§5 deterministic BY PERFORMANCE (history is the favored "par", not a rail); §8 the
+South wins by NOT losing; §29 a fair sandbox. Now WIN and the spiral does not happen.
 
-Content-complete: 11-agent research+verify+audit workflow -> data/manpower-teaching.json
-(5 multi-voice cards: Geary/Murdock/Moore/Anbinder/Lonn/Glatthaar/Levine; Black
-Americans as full agents, Lost Cause erasure countered; draft-as-stimulus, the
-Twenty-Slave Law, commutation-as-price-ceiling, the impossibility of CS Black
-enlistment) + a 9-claim numbers audit (7 CONFIRMED, 1 DISPUTED [the 0.9->0.1 ratios
-are direction-confirmed but not a published statistic -> kept as calibrated _inferred
-values], 1 CORRECTED [date precision only]). No sim data correction needed.
+src/80-victory.js + C.strategy + vicMomentum(C) (a 0..1 war-fortunes signal from
+win-rate, home-front will, political capital):
+- desertion is now (1-momentum)^1.6 -> a WINNING South barely bleeds deserters
+- the CS replacement ratio's year curve is a "if you are losing" FLOOR that momentum
+  lifts toward full replacement; arming the enslaved raises it further
+- runner ports hold, and recognition does NOT foreclose, for a winning/courting South
+- importFactor responds to runner investment + fortified ports
 
-VERIFIED: probe-manpower 9/9 (FULL _t1Resolve, 20 turns to 1865): US strength 100 /
-pool 2082 / USCT unlocked / ~2,098k enlisted (~real 2.13M ceiling) vs CS ratio 0.1 /
-strength 53-melting / pool 0 / desertion 145k / ~933k enlisted. Full no-regression
-suite green (probe-desk 12/12, economy 8/8, production 4/4, blockade 11/11, diag-classic
-Classic paints); 0 pageerrors. New gate tools/probe-manpower.mjs.
+Executable Southern avenues (the counter-game) on a new "Paths to Victory" desk tab:
+- Break Northern Will -> Negotiated Peace (the primary path; tracks the enemy's will,
+  which winning erodes -> a victory becomes reachable)
+- Foreign Recognition (kept open by winning or active courting)
+- counter-blockade levers: invest in runners, commission commerce raiders, fortify
+  ports; pursue recognition; deserter amnesty; arm-and-free the enslaved (Cleburne)
+- wild card: provoke the Trent crisis (Anglo-American war) — alt-history (§5)
 
-S1 is COMPLETE: finance/inflation + production/logistics + cotton/blockade/diplomacy
-+ manpower/conscription, all emergent + content-complete + interlinked. NEXT: S2
-(executive decisions + 3-layer morale + 1864 election + the advisor/cabinet system R25).
+Refactored 60-blockade.js + 70-manpower.js to read momentum + the levers; registered
+vicInit (early) + vicOnResolve (last) in the tick; 9th desk tab.
+
+VERIFIED (probe-victory 11/11): a WINNING South -> strength 93, desertion 9 (~none),
+ratio 0.83, ports held, recognition open, enemy will -> 0, negotiated-peace path opens;
+a LOSING South -> strength 38, desertion 297, ratio 0.22, ports gone, foreclosed.
+Counter-levers raise the lifeline; arm-the-enslaved surges the manpool. Full
+no-regression green (manpower 9/9 reframed to the losing-default, blockade 11/11,
+economy 8/8, desk 12/12, production 4/4, diag-classic paints); 0 pageerrors.
 
 Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>

@@ -22,6 +22,7 @@ function _t1InitAll(C) {
   try { if (typeof mrInit  === "function") mrInit(C);  } catch (e) {}
   try { if (typeof wrInit  === "function") wrInit(C);  } catch (e) {}
   try { if (typeof presInit === "function") presInit(C); } catch (e) {}   // S0: President's Desk
+  try { if (typeof vicInit === "function") vicInit(C); } catch (e) {}     // S1e: strategy/victory (read by blockade+manpower)
   try { if (typeof econInit === "function") econInit(C); } catch (e) {}   // S1a: economy/finance
   try { if (typeof blockadeInit === "function") blockadeInit(C); } catch (e) {}  // S1c: cotton/blockade/diplomacy
   try { if (typeof prodInit === "function") prodInit(C); } catch (e) {}   // S1b: war production
@@ -38,4 +39,5 @@ function _t1Resolve(winnerSide, type, B, C, win) {
   try { if (typeof manpowerOnResolve === "function") manpowerOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S1d: reads B.casualties + year → army strength
   try { if (typeof mrOnResolve  === "function") mrOnResolve(winnerSide, type, B, C, win);  } catch (e) {}
   try { if (typeof presOnResolve === "function") presOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S0: after clk (interlink)
+  try { if (typeof vicOnResolve === "function") vicOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S1e: LAST — enemy will, lever upkeep, victory detection
 }

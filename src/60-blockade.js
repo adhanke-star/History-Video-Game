@@ -51,12 +51,13 @@ function _blkRunnerSuccess(year) {
   return 0.55;
 }
 
-/* Runner ports still open by year (full schedule). Wilmington (the last) falls
-   with Fort Fisher, Jan 1865 -> the ocean lifeline is cut. */
-function _blkPortsByYear(year) {
-  if (year >= 1865) return 0;
-  if (year === 1864) return 2;
-  return 4;                     // Wilmington / Charleston / Mobile / Galveston
+/* Runner ports still open by year (full-schedule baseline). Wilmington (the last)
+   falls with Fort Fisher, Jan 1865 -> the ocean lifeline is cut. But that is only
+   what befalls a LOSING South: a winning or fortified South holds its ports (§5). */
+function _blkPortsByYear(year, mom, fortified) {
+  var base = (year >= 1865) ? 0 : (year === 1864) ? 2 : 4;   // Wilmington/Charleston/Mobile/Galveston
+  if ((typeof mom === "number" && mom >= 0.6) || fortified) base = Math.max(base, (year >= 1865) ? 2 : 4);
+  return base;
 }
 
 function _blkPush(C, line) {
@@ -134,11 +135,17 @@ function blockadeOnResolve(winnerSide, type, B, C, win) {
     }
 
     // ===================== Confederate cotton/blockade model =====================
+    // Performance + the player's counter-levers (design law §5): a winning or
+    // well-prepared South is NOT bound to the historical blockade schedule.
+    var mom = (typeof vicMomentum === "function") ? vicMomentum(C) : 0.5;
+    var S = C.strategy || {};
+
     // Resolve the per-voyage odds + open ports under the depth toggle.
     var cp, rs, ports;
     if (depth === "off") { cp = 0.0; rs = 1.0; ports = 4; }
     else if (depth === "flat") { cp = 0.25; rs = 0.75; ports = (year >= 1865 ? 2 : 4); }
-    else { cp = _blkCaptureProb(year); rs = _blkRunnerSuccess(year); ports = _blkPortsByYear(year); }
+    else { cp = _blkCaptureProb(year); rs = _blkRunnerSuccess(year); ports = _blkPortsByYear(year, mom, S.fortifyPorts); }
+    if (S.runnerInvestment) rs = Math.min(0.96, rs + 0.15);   // invest in faster, surer runners
     BL.portsOpen = ports;
     var pf = ports / 4;          // port factor (lifeline narrows as ports fall)
 
@@ -179,11 +186,16 @@ function blockadeOnResolve(winnerSide, type, B, C, win) {
       if (year === 1862) boost += 6;          // Lancashire famine bites (peak winter 1862-63)
       else if (year === 1863) boost += 3;
       else boost += 1;
-      if (win && (type === "decisive" || type === "win") && year <= 1862) boost += 5;  // early CS wins raise hopes
+      if (win && (type === "decisive" || type === "win")) boost += 5;   // battlefield success keeps Europe interested
+      if (S.pursueRecognition) boost += 5;                              // active courting of London & Paris
+      if (S.commerceRaiders) boost += 1;                               // raiders demonstrate reach
       if (embargoActive) boost = 0;           // the embargo trap: coercion yields no recognition
     }
     var decay = 0.9;                          // Indian/Egyptian/Brazilian substitution erodes leverage
-    if (year >= 1863 && !BL.recognitionForeclosed) {
+    // Foreclosure after Antietam is the DEFAULT fate — but only of a Confederacy that
+    // is losing and not courting Europe. Win, or press the cause, and the window the
+    // real CSA lost stays open (§5 alt-history; the 1862 crisis really was that close).
+    if (year >= 1863 && !BL.recognitionForeclosed && mom < 0.6 && !S.pursueRecognition) {
       BL.recognitionForeclosed = true;
       _blkPush(C, "Antietam and the Emancipation Proclamation slam the door on recognition.");
     }

@@ -8,6 +8,7 @@
     "50-production.js",
     "60-blockade.js",
     "70-manpower.js",
+    "80-victory.js",
     "90-president-register.js"
   ],
   "overrides": [

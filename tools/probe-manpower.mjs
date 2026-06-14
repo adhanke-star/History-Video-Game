@@ -30,9 +30,12 @@ const SETUP = `(() => {
     recoveryLossCount:0, recoveryMode:false, flipAtk:false, captured:[] }; }
   function fakeB(side, year){ var e=(side==='US')?'CS':'US'; var c={}; c[side]=1500; c[e]=1800; var inf={}; inf[side]=120; inf[e]=90;
     return { playerSide:side, enemySide:e, bd:{id:'x',name:'Engagement',year:year}, casualties:c, infl:inf, units:[] }; }
+  // Drive a LOSING South (the historical-default trajectory): the collapse is now
+  // PERFORMANCE-driven (S1e), so the doom only befalls a Confederacy that is losing.
+  // (probe-victory.mjs proves a WINNING South escapes it.)
   function run(side){ G.campaign=mkC(side); var C=G.campaign; _t1InitAll(C);
-    var series=[]; for(var t=0;t<20;t++){ C.stats.battles++; var winFlag=(t%3===0);
-      _t1Resolve(side, winFlag?'win':'draw', fakeB(side,1861+Math.floor(t/4)), C, winFlag);
+    var series=[]; for(var t=0;t<20;t++){ C.stats.battles++;
+      _t1Resolve(side, 'loss', fakeB(side,1861+Math.floor(t/4)), C, false);
       var P=C.manpower, lt=P.lastTurn||{};
       series.push({ t:t, year:lt.year, strength:Math.round(P.strength), pool:Math.round(P.pool),
         ratio:P.replacementRatio, recruits:lt.recruits, draft:P.draftActive, usct:P.usctUnlocked,
@@ -52,16 +55,16 @@ const SETUP = `(() => {
       if (us.finalPool < 1000) throw new Error('US pool should stay deep, got '+us.finalPool);
       return { strength:us.finalStrength, pool:us.finalPool }; });
 
-    step('CS replacement ratio COLLAPSES 0.9 -> 0.1', function(){
+    step('a LOSING CS sees its replacement ratio COLLAPSE', function(){
       var r0=cs.series[0].ratio, r19=cs.series[19].ratio;
       if (cs.series[19].year!==1865) throw new Error('turn-19 should be 1865, got '+cs.series[19].year);
-      if (!(r19 <= 0.1)) throw new Error('CS 1865 ratio should be <=0.1, got '+r19);
-      if (!(r19 < r0)) throw new Error('CS ratio should fall: '+r0+' -> '+r19);
+      if (!(r19 < 0.32)) throw new Error('losing CS 1865 ratio should collapse (<0.32), got '+r19);
+      if (!(r19 < r0 - 0.3)) throw new Error('CS ratio should fall sharply: '+r0+' -> '+r19);
       return { early:r0, late:r19 }; });
 
-    step('CS armies MELT — strength collapses below US', function(){
+    step('a LOSING CS army MELTS — strength collapses below US', function(){
       if (cs.finalStrength >= us.finalStrength) throw new Error('CS strength should fall below US: CS='+cs.finalStrength+' US='+us.finalStrength);
-      if (cs.finalStrength > 55) throw new Error('CS late-war strength should be low, got '+cs.finalStrength);
+      if (cs.finalStrength > 66) throw new Error('losing CS late-war strength should be low, got '+cs.finalStrength);
       if (!(cs.series[19].strength < cs.series[3].strength)) throw new Error('CS strength not declining over the war');
       return { csStrength:cs.finalStrength, usStrength:us.finalStrength }; });
 
