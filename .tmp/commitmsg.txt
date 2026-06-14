@@ -1,25 +1,34 @@
-S1c: cotton / blockade / foreign recognition (King Cotton trap, wired importFactor)
+S1d: manpower / conscription / the replacement-ratio collapse (S1 COMPLETE)
 
-src/60-blockade.js + G.campaign.blockade — the Confederate cotton/blockade/diplomacy
-layer, emergent and asymmetric:
-- 1861 King-Cotton self-embargo TRAP (rev~0 vs a glutted Britain; auto-lifts 1862)
-- blockade strangulation: capture-prob 0.10->0.33, runner success 0.90->0.67, ports
-  fall (Wilmington/Fort Fisher Jan 1865) -> a dynamic importFactor that WIRES the S1b
-  prodOnResolve placeholder (off>full CS arms, probe-confirmed)
-- cotton revenue -> C.funds; foreign recognition rises in the 1862 Lancashire-famine
-  window then is FORECLOSED 1863 (post-Antietam) -> pulls clock.intervention
-- blockade-depth toggle (full/flat/off, R14); new 8th "Diplomacy" desk tab
-- registered in _t1Resolve BEFORE prod; no new manifest overrides (extends, not dup)
+src/70-manpower.js + G.campaign.manpower — the decisive demographic asymmetry,
+the lever that ends the war:
+- US refills its armies: deep 4M pool + ~25% immigrant inflow + a one-time +180k
+  USCT pool at Emancipation 1863 (from the South's own labor base) -> strength holds
+- CS replacement ratio collapses 0.9->0.6->0.3->0.1 by 1865 (no immigration; won't
+  arm the 3.5M enslaved) -> the armies melt away
+- Union draft = a coercive STIMULUS to volunteering (x1.2; only ~6% direct, Geary),
+  NOT a direct add; CS conscription load-bearing (1862) + age-band 18-35->17-50 tell;
+  CS desertion rises with home-front distress
+- C.manpower.strength (0-100) is the army-strength index the S5 pre-battle bridge reads
+- "The Ranks" block in the War Effort overview; registered after prod (reads
+  B.casualties + year); no new manifest overrides
 
-Content-complete: 11-agent research+verify+audit workflow -> data/diplomacy.json
-(5 multi-voice teaching cards w/ named scholars + dissent + named-and-countered Lost
-Cause + primary sources; 9-claim numbers audit). Audit CORRECTED Erlanger net realized
-72%->45% (applied to data/economy.json) and confirmed the recognition-window-closes-1863
-model. Digest: HISTORICAL-DATA-DIPLOMACY.md.
+Content-complete: 11-agent research+verify+audit workflow -> data/manpower-teaching.json
+(5 multi-voice cards: Geary/Murdock/Moore/Anbinder/Lonn/Glatthaar/Levine; Black
+Americans as full agents, Lost Cause erasure countered; draft-as-stimulus, the
+Twenty-Slave Law, commutation-as-price-ceiling, the impossibility of CS Black
+enlistment) + a 9-claim numbers audit (7 CONFIRMED, 1 DISPUTED [the 0.9->0.1 ratios
+are direction-confirmed but not a published statistic -> kept as calibrated _inferred
+values], 1 CORRECTED [date precision only]). No sim data correction needed.
 
-VERIFIED: probe-blockade 11/11 (16-turn arc: 1861 trap -> 1862 window -> 1863 foreclosed
--> 1864 ports 2/importFactor 0.28/arms 2-vs-6-off); full no-regression suite green
-(probe-desk 12/12, probe-economy 8/8, probe-production 4/4, diag-classic Classic paints);
-0 pageerrors. New gate tools/probe-blockade.mjs.
+VERIFIED: probe-manpower 9/9 (FULL _t1Resolve, 20 turns to 1865): US strength 100 /
+pool 2082 / USCT unlocked / ~2,098k enlisted (~real 2.13M ceiling) vs CS ratio 0.1 /
+strength 53-melting / pool 0 / desertion 145k / ~933k enlisted. Full no-regression
+suite green (probe-desk 12/12, economy 8/8, production 4/4, blockade 11/11, diag-classic
+Classic paints); 0 pageerrors. New gate tools/probe-manpower.mjs.
+
+S1 is COMPLETE: finance/inflation + production/logistics + cotton/blockade/diplomacy
++ manpower/conscription, all emergent + content-complete + interlinked. NEXT: S2
+(executive decisions + 3-layer morale + 1864 election + the advisor/cabinet system R25).
 
 Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>

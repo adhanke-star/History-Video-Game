@@ -1,0 +1,256 @@
+{
+  "_comment": "S1d teaching content for the manpower/conscription layer. Citation-grade multi-voice debate cards (consensus + scholarly dissent + named-and-countered Lost Cause + primary sources) + a quantitative numbers audit, from an 11-agent research+verify+audit workflow (run i, 2026-06-13). Build-injected as GAME_DATA[\"manpower-teaching\"]; surfaced by src/70-manpower.js (The Ranks overview block) and the S4 codex. Black Americans treated as full historical agents (self-emancipation, USCT); Lost Cause erasure countered.",
+  "provenance": "Verified historiography. Scholars: McPherson, Geary, Murdock, Moore, Anbinder, Lonn, Glatthaar, Levine, Gallagher, Marvel. Every cited work adversarially fact-checked; fabricated/misattributed citations removed in the Verify pass.",
+  "schemaVersion": "1.0",
+  "teachingCards": [
+    {
+      "id": "mp-draft-supply",
+      "title": "Did the Union draft actually supply soldiers?",
+      "question": "If only ~6% of Union soldiers were draftees or substitutes, did the Enrollment Act of 1863 actually put men in the ranks — or did it \"work\" some other way?",
+      "consensus": {
+        "claim": "Scholars agree the Union draft failed as a direct troop-raising device but succeeded as a coercive spur to volunteering and re-enlistment. James W. Geary calculates that draftees personally held to service plus the substitutes they hired supplied only about 5.5% of the more than two million men who served the Union; the Provost Marshal General's records show that of the names drawn, the great majority paid the $300 commutation, hired a substitute, were exempted, or failed to report. As McPherson frames it, the act was a 'carrot and stick' to stimulate enlistment: the threat of a draft, paired with bounties, pushed localities to fill quotas with bounty-paid volunteers before the wheel turned — McPherson notes roughly 800,000 men volunteered or re-enlisted in the two years after the act against only about 46,000 held as draftees and 74,000 substitutes. Commutation, substitution, and bounty-jumping all leaked away the manpower the law nominally promised.",
+        "scholars": [
+          "James W. Geary, We Need Men: The Union Draft in the Civil War (1991) — the ~5.5% figure and the 'coercive stimulus to volunteering' thesis",
+          "Eugene C. Murdock, One Million Men: The Civil War Draft in the North (1971) and Patriotism Limited, 1862-1865: The Civil War Draft and the Bounty System (1967) — bounties, substitution, bounty-jumping",
+          "James M. McPherson, Battle Cry of Freedom (1988) and Ordeal by Fire — the draft as a 'carrot and stick' spur to volunteering",
+          "James B. Fry (Provost Marshal General), Final Report ... in 1863-1866 (congressional document, 2 parts, Washington, 1866) — official enrollment, call, commutation, and substitute figures"
+        ]
+      },
+      "dissent": {
+        "claim": "A revisionist line argues the 'only ~6%' figure understates the draft's manpower impact by counting only men literally held to service, while ignoring the threat-driven volunteers, re-enlistments, and substitutes the system flushed into the army — so the draft 'supplied' soldiers indirectly even where it failed directly. Scholars also stress that commutation was a deliberate price-capping mechanism (Geary argues it aimed to hold down the price of substitutes so workers could compete with the wealthy) rather than mere elite evasion, and that the Confederate draft (Albert Burton Moore) supplied a proportionally larger and more decisive share of its army, making the Union case distinctive rather than typical. Tyler Anbinder's work on the substitute market further complicates the 'rich man's war, poor man's fight' shorthand by showing immigrants were often underrepresented, not overrepresented, among those held to service.",
+        "scholars": [
+          "Eugene C. Murdock — the indirect volunteer-generating effect and the bounty economy",
+          "Albert Burton Moore, Conscription and Conflict in the Confederacy (Macmillan, 1924) — the comparatively heavier, more decisive weight of the Confederate draft",
+          "Tyler Anbinder, 'Which Poor Man's Fight? Immigrants and the Federal Conscription of 1863,' Civil War History 52 (2006) — the substitute market and immigrant under-representation among draftees"
+        ]
+      },
+      "fringe": {
+        "claim": "That the Union draft was a tyrannical, unconstitutional 'Lincoln despotism' that filled the ranks with hapless conscripts and friendless immigrants driven to slaughter — a Lost-Cause-adjacent inversion that recasts a largely ineffective, volunteer-spurring measure as the engine of a coerced army, while ignoring that the overwhelming majority of Union soldiers were volunteers and that the draft directly held only a small minority to service.",
+        "label": "Lost-Cause / outdated 'coerced army' framing — counter: Geary's and Fry's own figures show direct draftees plus substitutes were only ~5.5% of Union manpower; the army was overwhelmingly volunteer, and the draft's force lay in the threat, not a press-gang. Anbinder shows immigrants were under-, not over-represented among those held to service."
+      },
+      "takeaway": "When you trip a draft call in this layer, watch the volunteer/bounty needle move more than the conscript count: the Enrollment Act's lever is the THREAT, and commutation, substitution, and bounty-jumping bleed off most of the nominal levy before it reaches the front.",
+      "primarySources": [
+        "Enrollment Act of March 3, 1863 ('An Act for enrolling and calling out the national Forces, and for other Purposes'), 12 Stat. 731",
+        "Act of July 4, 1864 amending the Enrollment Act — abolished the $300 commutation clause except for conscientious objectors (substitution remained legal)",
+        "James B. Fry, Final Report of the Operations of the Bureau of the Provost-Marshal-General in 1863-1866 (congressional document, 2 parts, Washington, 1866) — enrollment, the federal calls, commutations paid, substitutes furnished, and men held to service",
+        "The War of the Rebellion: Official Records (OR), Series IV — Union mobilization correspondence and quota records of the Provost Marshal General's Bureau"
+      ],
+      "provenance": "Verified (high certainty on consensus). Confirmed against secondary scholarship and primary-source descriptions: Geary's ~5.5% (5.54%) figure and 'coercive stimulus' thesis; Murdock's two works with correct titles/dates (One Million Men, 1971; Patriotism Limited, 1967); McPherson's 'carrot and stick' framing with ~46,000 draftees / ~74,000 substitutes vs. ~800,000 volunteers; Moore (Macmillan, 1924); Anbinder, Civil War History 52 (2006); the $300 commutation and its July 1864 repeal (except for conscientious objectors); the Enrollment Act text. Correction applied: Fry's Final Report was a standalone 1866 congressional document, NOT printed in OR Series III, vol. 5 as the draft claimed; that misattribution has been removed and the OR is cited separately (the Provost Marshal Bureau's mobilization records appear in OR Series III/IV correspondence). Exact PMG sub-totals round slightly differently across sources, so specific counts are given as approximations."
+    },
+    {
+      "id": "mp-rich-mans-war",
+      "title": "\"A rich man's war and a poor man's fight\" — class inequity in the Union and Confederate drafts",
+      "question": "How real was the class inequity built into both drafts — was \"a rich man's war and a poor man's fight\" an accurate description of the conscription laws, or mostly the rhetoric of resentment?",
+      "consensus": {
+        "claim": "Both drafts contained statutory class privilege, and the slogan was grounded in law, not merely resentment — though the inequity worked differently North and South. The Union Enrollment Act of 1863 let a drafted man escape a given call by hiring a substitute or, until July 1864, by paying a $300 commutation fee (roughly a laborer's annual wage). James W. Geary's tabulation of the 1863 draft shows that of those held to service, fewer than 10,000 men were personally inducted, while about 52,000 paid commutation and roughly 26,000 furnished substitutes. The Confederacy's favoritism was starker and explicitly racialized: the October 11, 1862 Twenty-Slave (Twenty-Negro) Law exempted one white man on plantations holding twenty or more enslaved people, and substitution plus overseer and official exemptions further shielded slaveholders until reforms in 1863-64. Scholars stress that the laws' chief function was less to fill ranks directly than to coerce 'volunteering,' and that Republicans set the $300 fee partly as a price ceiling to keep substitute costs within reach of the working class.",
+        "scholars": [
+          "James W. Geary, We Need Men: The Union Draft in the Civil War (1991)",
+          "Eugene C. Murdock, One Million Men: The Civil War Draft in the North (1971); Patriotism Limited, 1862-1865: The Civil War Draft and the Bounty System (1967)",
+          "Albert Burton Moore, Conscription and Conflict in the Confederacy (1924)",
+          "James M. McPherson, Battle Cry of Freedom: The Civil War Era (1988)"
+        ]
+      },
+      "dissent": {
+        "claim": "A revisionist line holds that the slogan overstates the actual class burden, at least in the North. McPherson and others note the Union army was more demographically representative than the slogan implies, with middle-class and well-off men drafted and serving. Building on Eugene Murdock and Hugh G. Earnhart, they emphasize that the $300 commutation was deliberately capped to hold down substitute prices, and that towns, employers, and ward committees routinely raised bounty and commutation funds for poor draftees — so 'rich man's war' captured political grievance and perception more than a clean rich/poor sorting of who actually served. On this view the draft was chiefly a goad to volunteering rather than a regressive sorting machine.",
+        "scholars": [
+          "James M. McPherson, Battle Cry of Freedom: The Civil War Era (1988)",
+          "Eugene C. Murdock, Patriotism Limited, 1862-1865: The Civil War Draft and the Bounty System (1967)",
+          "Hugh G. Earnhart, 'Commutation: Democratic or Undemocratic?' Civil War History (1966)",
+          "Tyler Anbinder, Five Points (2001), on draft-bounty funds and immigrant New York"
+        ]
+      },
+      "fringe": {
+        "claim": "Lost Cause framing recasts the Confederate draft's inequities and the Twenty-Slave Law as minor or reluctant wartime expedients, and reframes the resulting desertion and resistance as principled defense of states' rights rather than class anger at planter privilege — minimizing how the law branded the conflict a slaveholders' war in poor white soldiers' own words (e.g., Sam Watkins). It also wrongly treats both drafts as roughly equivalent, obscuring that Confederate exemptions were explicitly tied to slaveholding and to keeping enslaved people in bondage and at labor.",
+        "label": "Lost Cause / false-equivalence framing — counter with the law's slaveholding threshold and soldiers' own 'rich man's war' testimony"
+      },
+      "takeaway": "When the player pays the commutation fee, buys a substitute, or claims a slaveholder exemption to keep a unit in the field, the manpower pool refills for the wealthy while the poor stay liable — and morale, desertion, and home-front unrest (NYC 1863) shift in response, exactly as the slogan predicted.",
+      "primarySources": [
+        "Enrollment Act of March 3, 1863 (12 Stat. 731) — sec. 13, substitution and $300 commutation",
+        "Act of July 4, 1864 (13 Stat. 379) repealing commutation except for conscientious objectors",
+        "Confederate Conscription Act, April 16, 1862; Exemption Act of October 11, 1862 (the Twenty-Slave / Twenty-Negro Law)",
+        "Confederate act of December 28, 1863 abolishing substitution; act of January 5, 1864 making principals who had hired substitutes liable to service",
+        "Final Report of the Provost Marshal General (James B. Fry), 1866 — Union draft statistics",
+        "The War of the Rebellion: Official Records, Series IV — Confederate conscription, exemption, and impressment correspondence",
+        "Sam R. Watkins, 'Co. Aytch' — soldier testimony reacting to the Twenty-Slave Law as a 'rich man's war, poor man's fight'"
+      ],
+      "provenance": "Verified (high certainty). Statutes, dates, and Geary's induction/commutation/substitution figures confirmed via scholarly and encyclopedic summaries (Geary's own tabulation: ~9,800 inducted, ~52,000 commuted, ~26,000 substitutes). The commutation-as-price-cap point is Geary's mainstream finding (placed in consensus); the stronger 'slogan overstates class sorting' claim rests on McPherson, Murdock, and Earnhart (placed in dissent). McPherson's 'For Cause and Comrades' and a duplicate price-cap attribution to the dissent were removed from the draft as non-supporting or redundant. Earnhart corrected to his 1966 Civil War History article, not a dissertation."
+    },
+    {
+      "id": "mp-arm-the-enslaved",
+      "title": "Arming the Enslaved: The Confederacy's Final Contradiction",
+      "question": "Could the Confederacy have solved its manpower crisis by arming the enslaved—and could it have done so without destroying the cause it was fighting for?",
+      "consensus": {
+        "claim": "The scholarly consensus is no: arming the enslaved could not have saved the Confederacy, because emancipation-for-service was politically and ideologically incompatible with a republic founded to perpetuate slavery. Patrick Cleburne's January 1864 proposal was suppressed by Jefferson Davis's order and his career stalled; only when defeat was certain did Lee endorse the measure and the Confederate Congress narrowly pass it (the act of March 13, 1865; implemented by General Orders No. 14, March 23, 1865), yielding a few dozen Richmond recruits who never saw combat. By then the enslaved had already voted with their feet—roughly 180,000 Black men served in the U.S. Colored Troops, and mass flight to Union lines had been dismantling slavery for three years. Historians treat the late debate as a measure of Confederate desperation and ideological collapse, not a missed war-winning opportunity.",
+        "scholars": [
+          "Bruce Levine, Confederate Emancipation: Southern Plans to Free and Arm Slaves during the Civil War (2006)",
+          "Robert F. Durden, The Gray and the Black: The Confederate Debate on Emancipation (1972)",
+          "James M. McPherson, Battle Cry of Freedom: The Civil War Era (1988)",
+          "Joseph T. Glatthaar, General Lee's Army: From Victory to Collapse (2008) and Forged in Battle: The Civil War Alliance of Black Soldiers and White Officers (1990)",
+          "Chandra Manning, What This Cruel War Was Over: Soldiers, Slavery, and the Civil War (2007)",
+          "Albert Burton Moore, Conscription and Conflict in the Confederacy (1924)"
+        ]
+      },
+      "dissent": {
+        "claim": "A minority emphasizes contingency over demographic impossibility: the Confederacy's failure to arm the enslaved was a failure of timing and political will, not of available manpower, and the policy might have unfolded differently had it been adopted in early 1864 rather than the war's final weeks. Philip Dillard argues that Davis ultimately persuaded a meaningful segment of Southern opinion that Confederate nationhood mattered more than slavery—suggesting the ideological barrier was higher than the practical one but not absolute. Stephanie McCurry stresses that it was the enslaved themselves who, through flight and resistance, forced the question onto the Confederate agenda in the first place.",
+        "scholars": [
+          "Philip D. Dillard, Jefferson Davis's Final Campaign: Confederate Nationalism and the Fight to Arm Slaves (2017)",
+          "Stephanie McCurry, Confederate Reckoning: Power and Politics in the Civil War South (2010)"
+        ]
+      },
+      "fringe": {
+        "claim": "The 'Black Confederates' myth holds that thousands of enslaved and free Black men willingly fought as soldiers for the Confederacy, supposedly proving the war was not about slavery. It conflates impressed camp laborers, body servants, teamsters, and cooks with combat soldiers; the Confederacy did not authorize Black soldiers until the war's final weeks, and General Orders No. 14 produced only a handful of unblooded Richmond recruits. The myth is a Lost-Cause artifact rejected by mainstream scholarship (Bruce Levine; Joseph Glatthaar; Kevin M. Levin, Searching for Black Confederates: The Civil War's Most Persistent Myth, 2019).",
+        "label": "Lost-Cause myth / pseudohistory"
+      },
+      "takeaway": "When the manpower meter runs critical, this option exists on the Confederate side—but choosing it spikes ideological-cohesion and political-collapse costs and arrives too slowly to add usable divisions, modeling the historical truth that the only large Black manpower mobilized in this war fought for the Union and for its own freedom.",
+      "primarySources": [
+        "Patrick R. Cleburne et al., proposal to the Army of Tennessee, January 2, 1864 (suppressed by order of Jefferson Davis; printed in OR, Series I, Vol. LII, Pt. 2, pp. 586–592)",
+        "Robert E. Lee to Andrew Hunter, January 11, 1865, endorsing enlistment of the enslaved coupled with gradual emancipation",
+        "Confederate Congress, 'An Act to Increase the Military Force of the Confederate States,' signed by Jefferson Davis March 13, 1865",
+        "General Orders No. 14, Adjutant and Inspector General's Office, Richmond, March 23, 1865",
+        "Howell Cobb to James A. Seddon, January 8, 1865 ('The day you make soldiers of them is the beginning of the end of the revolution. If slaves will make good soldiers our whole theory of slavery is wrong')",
+        "U.S. War Department, The War of the Rebellion: Official Records of the Union and Confederate Armies, Series IV (Confederate correspondence on impressment and conscription)",
+        "Provost Marshal General's Bureau / Bureau of Colored Troops records documenting roughly 180,000 USCT enlistments"
+      ],
+      "provenance": "Verified (high certainty). The Cleburne proposal of Jan. 2, 1864 and its suppression (OR Ser. I, Vol. LII, Pt. 2), Lee's Jan. 11, 1865 letter to Andrew Hunter, the Cobb-to-Seddon letter of Jan. 8, 1865 (quoted verbatim), the act of March 13, 1865 and General Orders No. 14 (March 23, 1865), and the negligible recruitment yield are confirmed against primary documents and the consensus literature; the ~180,000 USCT figure is standard. All scholar/work attributions were checked against catalog records (Dillard's full subtitle and Durden's 1972 date corrected; Levine removed from the dissent list to avoid misrepresenting his own consensus thesis). Counterfactual scale claims in the dissent are inherently Inferred."
+    },
+    {
+      "id": "mp-demographic-superiority",
+      "title": "How decisive was Union demographic superiority?",
+      "question": "The Union held roughly a 4:1 free-population advantage and fielded about 2.1 million soldiers against the Confederacy's 750,000-1,000,000. Did this demographic and manpower superiority make Union victory effectively inevitable, or did numbers alone fail to determine the outcome?",
+      "consensus": {
+        "claim": "The mainstream view holds that Union demographic and material superiority was a structurally decisive advantage the Confederacy could never overcome in a long war. The free-population edge of roughly 4:1 (about 22 million in the loyal states versus some 5.5 million free Southerners, alongside about 3.5 million enslaved) yielded a manpower pool of some 2.1 million Union enlistments against an estimated 750,000-1,000,000 Confederate. The decisive mechanism was the late-war replacement ratio: by 1864-65 the Union could absorb staggering casualties and refill its ranks (via the Enrollment Act, bounties, immigration, and about 180,000 USCT), while the Confederacy exhausted its manpower and could not replace its losses. Scholars stress this made Union victory highly probable but argue it still required sustained Northern political will for a long, costly war.",
+        "scholars": [
+          "James McPherson, Battle Cry of Freedom (1988) and Ordeal by Fire",
+          "James W. Geary, We Need Men: The Union Draft in the Civil War (1991)",
+          "Joseph T. Glatthaar, General Lee's Army: From Victory to Collapse (2008) and Forged in Battle (1990)",
+          "Richard N. Current, 'God and the Strongest Battalions' (in Why the North Won the Civil War, ed. David Donald, 1960)"
+        ]
+      },
+      "dissent": {
+        "claim": "A notable revisionist line, led by Gary Gallagher in The Confederate War (1997), argues that numbers and resources did not by themselves determine the outcome; the result turned on contingent battlefield events, leadership, and morale rather than arithmetic. Gallagher rejects the internal-collapse and 'loss of will' theses, insisting Confederates fought with remarkable tenacity and were beaten on the battlefield rather than failing from within. McPherson likewise stresses contingency in 'American Victory, American Defeat,' arguing that had a few 1862-64 campaigns gone otherwise (Antietam; the Atlanta and Shenandoah operations before Lincoln's reelection), Northern will might have broken and the larger army would not have mattered.",
+        "scholars": [
+          "Gary W. Gallagher, The Confederate War (1997)",
+          "James McPherson, 'American Victory, American Defeat' (in Why the Confederacy Lost, ed. Gabor Boritt, 1992)",
+          "Archer Jones, Civil War Command and Strategy (1992)"
+        ]
+      },
+      "fringe": {
+        "claim": "The Lost Cause framing turns the evidence into an alibi: the South was never beaten in skill or valor but merely 'overwhelmed by numbers and resources,' ground down by brute Northern mass against superior Southern generalship. The trope traces to Jubal Early and the postwar Southern Historical Society Papers and to Lee's own General Orders No. 9 ('compelled to yield to overwhelming numbers and resources'). It strips agency from Union strategy and from the roughly 180,000 Black soldiers whose enlistment helped create the numerical edge, and it ignores that the Confederacy chose to start a war on long structural odds while staking its cause on slavery.",
+        "label": "Lost Cause / outdated 'overwhelmed by numbers' apologia"
+      },
+      "takeaway": "When you watch the late-war manpower meter drain on the Confederate side while the Union pool refills, you are touching the single most durable Northern advantage; but the same model should let Northern will collapse if casualties spike before a decisive victory, showing that numbers set the odds without guaranteeing the result.",
+      "primarySources": [
+        "Lee's General Orders No. 9 (Farewell Address, Appomattox, April 10, 1865) - 'overwhelming numbers and resources'",
+        "Enrollment Act of 1863 (Mar. 3, 1863), establishing the Union draft",
+        "Provost Marshal General's Bureau Final Report (James B. Fry, 1866), Union enrollment and draft statistics",
+        "1860 U.S. Census population data (free vs. enslaved, by state)",
+        "Official Records (OR), Series IV (Confederate manpower and conscription correspondence)"
+      ],
+      "provenance": "Verified (high certainty): the ~4:1 free-population edge (~22M loyal-state vs. ~5.5M free Confederate plus ~3.5M enslaved), ~2.1M Union vs. ~750k-1M Confederate enlistments, ~180,000 USCT, and the late-war replacement-ratio collapse are firmly established in McPherson, Geary, and Glatthaar. The Gallagher and McPherson contingency dissent and the Lost Cause 'overwhelmed by numbers' trope are well-documented historiographical positions; all four consensus and three dissent citations were checked and confirmed real and correctly attributed. Confederate enlistment totals remain estimates due to incomplete records."
+    },
+    {
+      "id": "mp-immigrants-usct",
+      "title": "Immigrants and USCT in Union Manpower",
+      "question": "How decisive were foreign-born soldiers and United States Colored Troops to the Union's manpower advantage, and how did Black enlistment work as a \"double swing\" that added to the Union while draining the Confederacy?",
+      "consensus": {
+        "claim": "The Union's manpower edge rested heavily on populations the Confederacy could not match. About a quarter of Union soldiers were foreign-born—Ella Lonn put the total above 500,000, Germans first and Irish second (the standard nativity figures run roughly 200,000 German-born and 150,000 Irish-born), plus large numbers of British, Canadian, and other immigrants—a pool the North's immigrant-heavy free-labor economy supplied and the South almost wholly lacked. From late 1862, roughly 179,000–186,000 Black men served in the U.S. Colored Troops (about 10 percent of the Union army), plus some 18,000 in the Navy, drawn overwhelmingly from the enslaved and free Black labor base of the South itself. Historians stress the 'double swing': every Black recruit added a soldier to the Union and subtracted a laborer from the Confederate war economy. Black men were full agents in their own liberation through self-emancipation and USCT enlistment, not passive beneficiaries—a point now central to the scholarship.",
+        "scholars": [
+          "James M. McPherson, Battle Cry of Freedom and The Negro's Civil War: How American Negroes Felt and Acted During the War for the Union",
+          "Ella Lonn, Foreigners in the Union Army and Navy (1951)",
+          "Joseph T. Glatthaar, Forged in Battle: The Civil War Alliance of Black Soldiers and White Officers",
+          "Chandra Manning, What This Cruel War Was Over and Troubled Refuge: Struggling for Freedom in the Civil War",
+          "Dudley Taylor Cornish, The Sable Arm: Black Troops in the Union Army, 1861–1865"
+        ]
+      },
+      "dissent": {
+        "claim": "A notable strand qualifies the aggregate claim without denying Black agency. Because foreign-born men were roughly a quarter of soldiers but also a comparable share of the North's military-age population, some scholars caution that immigrants were not dramatically overrepresented relative to availability, warning against an 'immigrants won the war' framing. On the USCT, others note that Black troops were disproportionately assigned to garrison, fatigue, and labor duty and were paid unequally until mid-1864, so their impact is better measured by strategic and political weight—and by the Confederate labor they drained—than by combat headcount, even as Black units fought hard at Port Hudson, Milliken's Bend, Fort Wagner, the Crater, and Nashville.",
+        "scholars": [
+          "William Marvel, Lincoln's Mercenaries: Economic Motivation among Union Soldiers during the Civil War (on the social profile and motives of recruits)",
+          "Gary W. Gallagher, The Union War (cautioning against retrospective emphasis on emancipation and Black soldiers as the war's driving purpose for most white Northerners)"
+        ]
+      },
+      "fringe": {
+        "claim": "Lost-Cause and 'faithful slave' mythology long erased the USCT from the war's story—or inverted it with the fabricated claim that large numbers of armed 'Black Confederate soldiers' fought voluntarily for the South. The records do not support it: the Confederacy did not authorize Black combat enlistment until the act of March 13, 1865, promulgated as General Orders No. 14 on March 23, 1865, weeks before Appomattox, and essentially no such units saw combat. The myth works to deny that Black men overwhelmingly chose the Union and to obscure that the South's own labor base became Union soldiers.",
+        "label": "Lost-Cause / 'Black Confederate' myth — debunked"
+      },
+      "takeaway": "When you raise a USCT regiment or absorb an immigrant recruiting wave, you tap a manpower pool the Confederacy structurally cannot reach—and each freedman you enlist is a double counter, moving a body out of the enemy's labor column and into your own line.",
+      "primarySources": [
+        "Final Report of the Provost Marshal General's Bureau (Bvt. Brig. Gen. James B. Fry, 1866) — Union enlistment and recruitment totals",
+        "Official Records of the War of the Rebellion, Series III (Union mobilization and USCT organization correspondence)",
+        "War Department General Orders No. 143 (May 22, 1863), establishing the Bureau of Colored Troops",
+        "Confederate General Orders No. 14 (March 23, 1865), promulgating the act of March 13, 1865 authorizing Black enlistment in Confederate service",
+        "Ella Lonn, Foreigners in the Union Army and Navy (1951) — nativity estimates",
+        "Frederick Douglass, 'Men of Color, To Arms!' (1863) recruiting broadside"
+      ],
+      "provenance": "Verified (high certainty). Confirmed against reference sources during this task: the ~25 percent foreign-born share and Lonn's 500,000+ total with Germans first / Irish second; the ~179,000–186,000 USCT at ~10 percent of the army and ~18,000 Black sailors; and the dates of GO No. 143 (May 22, 1863) and the Confederate measure (act March 13, 1865; GO No. 14 March 23, 1865). All five consensus scholars and both dissent scholars were verified to hold the attributed views, and every work title is real and correctly attributed (Cornish's The Sable Arm: orig. 1956; Marvel's Lincoln's Mercenaries: 2018; Manning's Troubled Refuge: 2016). The 'double-swing' framing and Black-agency emphasis reflect current consensus (Glatthaar, Manning, McPherson); the dissent reflects genuine debate over proportionality and combat weight, not contested facts. One correction from the draft: the specific 200k/150k German/Irish figures are the standard nativity estimates Lonn worked from rather than precise counts she asserted, and the attribution is softened accordingly."
+    }
+  ],
+  "numbersAudit": {
+    "summary": "Audit of 9 quantitative manpower claims for the Civil War sim's conscription/manpower layer. Seven claims CONFIRMED against the established historiography (Geary, Lonn, Moore, Glatthaar, McPherson) and primary sources (Enrollment Act of 1863, Confederate Conscription Acts, Twenty-Negro Law, GO No. 14, Provost Marshal General Bureau final report). One CORRECTED for date precision (claim 9: the CS Black-soldier authorizing statute was signed March 13, 1865; General Orders No. 14 promulgating it was issued March 23, 1865 — both are valid referents, but the sim should distinguish them and represent the \"only dozens served\" outcome accurately). One DISPUTED (claim 4: the directional collapse of Confederate replacement capacity is solid consensus, but the specific 0.9→0.1 replacements-per-casualty ratios are a sim-internal modeling abstraction, not a published historian's statistic — they should be labeled as a designed model, not cited as a finding). Two figures carry honest scholarly-uncertainty flags the sim should teach rather than hide: Confederate total enlistments (genuinely unknowable within ~750k-1M due to destroyed/incomplete CS muster records) and the Union \"2.1M\" number (an enlistment count, not unique individuals — the individuals figure is lower and debated). Recommendation: ship claims 1-3, 5-9 as CONFIRMED; relabel claim 4 as a model assumption with a sourced directional justification; surface the enlistment-count vs. individuals distinction in claim 1 as a teachable historiographical point. No Lost-Cause framing detected in the claim set; the inclusion of USCT as ~10% of the army and the Twenty-Negro \"rich man's war, poor man's fight\" class critique are historiographically sound.",
+    "checks": [
+      {
+        "claim": "Union total enlistments ~2.1M (~2,128,948); Confederate ~750k-1,000k.",
+        "status": "CONFIRMED",
+        "figure": "Union: 2,128,948 enlistments is the canonical aggregate (Frederick Phisterer / Thomas L. Livermore / William F. Fox lineage, drawn from the Provost Marshal General's Bureau final report and Adjutant General returns). Confederate: ~750,000-1,000,000, with most modern estimates clustering 850,000-900,000 men who served.",
+        "source": "Provost Marshal General's Bureau, Final Report (J.B. Fry, 1866); Thomas L. Livermore, Numbers and Losses in the Civil War in America, 1861-65 (1900); William F. Fox, Regimental Losses in the American Civil War (1889); McPherson, Battle Cry of Freedom (1988), ~306-307.",
+        "note": "TEACHABLE DISTINCTION: 2,128,948 is an ENLISTMENT count (a three-year reenlistment counts twice; short-term militia call-ups inflate it), NOT unique individuals. The unique-individuals total is lower and genuinely debated (commonly cited ~2.0-2.2M for the Union, but with double-counting caveats). The Confederate range is wide precisely because CS muster rolls were destroyed/incomplete at war's end — this irreducible uncertainty is itself the honest history and should be surfaced, not papered over with a false-precision single number."
+      },
+      {
+        "claim": "Direct draftees+substitutes were only ~6% of Union soldiers; CS conscription structurally larger (~20% effect).",
+        "status": "CONFIRMED",
+        "figure": "Union: roughly 6% of those who served were direct products of the draft (~46,000 held-to-service conscripts + ~118,000 substitutes furnished = ~8% of post-1863 enlistments; ~2% of the whole army were actual held draftees). The Northern draft's PRIMARY function was a goad to stimulate volunteering and bounty enlistment, not direct manpower. CS conscription was proportionally far more central to filling Confederate ranks (commonly cited ~one-fifth-plus of CS soldiers entered via conscription, with the draft also coercing 'volunteering' ahead of being conscripted).",
+        "source": "James W. Geary, We Need Men: The Union Draft in the Civil War (1991); Eugene C. Murdock, One Million Men: The Civil War Draft in the North (1971); Albert Burton Moore, Conscription and Conflict in the Confederacy (1924); McPherson, Battle Cry of Freedom, ~600-601.",
+        "note": "The ~6% / ~20% contrast is sound as a teaching abstraction. Exact CS percentage varies by source and method; treat the ~20% as 'structurally larger, on the order of one-fifth+' rather than a precise audited figure. Geary's core point — the Union draft worked mainly indirectly — is consensus."
+      },
+      {
+        "claim": "USCT ~179,000-186,000 men (~10% of the Union army) plus ~18,000-20,000 in the Navy.",
+        "status": "CONFIRMED",
+        "figure": "USCT: ~179,000 served in the Army (Glatthaar's roster-derived 186,017 is the standard total counting all who passed through the ranks); roughly 10% of the Union army by war's end. Navy: ~18,000-19,000 Black sailors (estimates range ~18,000 to ~29,000 depending on method; ~18,000 is the conservative attested figure).",
+        "source": "Joseph T. Glatthaar, Forged in Battle: The Civil War Alliance of Black Soldiers and White Officers (1990) — 186,017; Dudley Taylor Cornish, The Sable Arm (1956); National Park Service / official records for the ~10% and Navy figures.",
+        "note": "Strongly attested. Frame Black soldiers and sailors as full historical agents (self-emancipation feeding USCT enlistment), consistent with Glatthaar, Cornish, and Chandra Manning. ~37,000 USCT died. The Navy count's range reflects that the Navy did not segregate by USCT-style units, complicating the count."
+      },
+      {
+        "claim": "Late-war Confederate replacement ratio fell from ~0.9 (early) toward ~0.1 (1865) — replacements per casualty.",
+        "status": "DISPUTED",
+        "figure": "DIRECTION confirmed; PRECISE RATIOS not a published statistic. Consensus: the Confederacy's ability to replace battle losses collapsed across 1864-65 (after Overland Campaign attrition, falling enlistment pools, mounting desertion, and loss of territory/recruiting base), while the Union replaced losses readily. The specific 0.9→0.1 replacements-per-casualty curve is a sim-internal model, not a figure attributable to a historian.",
+        "source": "McPherson, Battle Cry of Freedom (attrition/numbers, esp. 1864-65 chapters); Richard McMurry, Two Great Rebel Armies (1989) on CS manpower exhaustion; Moore, Conscription and Conflict.",
+        "note": "RECOMMENDATION: relabel in-sim as a DESIGNED model parameter ('declining replacement ratio, calibrated to represent documented collapse of CS replacement capacity'), not as a cited historical figure. Citing 0.9 and 0.1 as if from the literature would be false precision. The qualitative claim is unimpeachable; the exact numbers are the designer's, so attribute them honestly."
+      },
+      {
+        "claim": "Union $300 commutation; ~52,000 paid it in 1863; ~26,000 substitutes in 1863; commutation repealed July 1864.",
+        "status": "CONFIRMED",
+        "figure": "Of the 1863 draft, ~52,000 men paid the $300 commutation fee and ~26,000 furnished substitutes; only ~9,881 of those drawn were actually held to personal service. Commutation repealed July 4, 1864 (substitution retained). The $300 figure fueled the 'rich man's war, poor man's fight' critique.",
+        "source": "Enrollment Act of March 3, 1863 (12 Stat. 731); Geary, We Need Men; Provost Marshal General's Bureau Final Report; McPherson, Battle Cry of Freedom, ~601.",
+        "note": "Figures match the standard PMGB-derived counts for the 1863 draft specifically. Note for the sim: these 1863-call numbers should not be conflated with the larger 1864 calls, where substitution (not commutation) dominated after the July 1864 repeal."
+      },
+      {
+        "claim": "Confederate conscription ages: 18-35 (Apr 1862) widening to 17-50 (Feb 1864). Union draft ages 20-45.",
+        "status": "CONFIRMED",
+        "figure": "CS First Conscription Act (April 16/26, 1862): white males 18-35. Second Act (Sept 27, 1862): extended upper bound to 45. Third Act (Feb 17, 1864): widened to 17-50. Union Enrollment Act (March 3, 1863): able-bodied male citizens (and declarant immigrants) 20-45 (Class I, those 20-35 plus unmarried 35-45, called first).",
+        "source": "Confederate Conscription Acts of April 16, 1862, Sept 27, 1862, and Feb 17, 1864; Enrollment Act of March 3, 1863; Moore, Conscription and Conflict in the Confederacy.",
+        "note": "The April 1862 act is dated April 16, 1862 (approved); some sources cite April 26 — minor. The intermediate Sept 1862 extension to 45 is worth including in the sim so the 35→50 widening reads as the two-step escalation it actually was ('robbing the cradle and the grave')."
+      },
+      {
+        "claim": "Foreign-born ~25% of the Union army (German ~200k, Irish ~150k).",
+        "status": "CONFIRMED",
+        "figure": "~25% of Union soldiers were foreign-born (~500,000+ of ~2M). German-born ~200,000 and Irish-born ~150,000 are Ella Lonn's standard figures.",
+        "source": "Ella Lonn, Foreigners in the Union Army and Navy (LSU Press, 1951); William L. Burton, Melting Pot Soldiers (1988).",
+        "note": "Lonn's ~200k German / ~150k Irish are the canonical approximations; she and later scholars stress these are estimates without precise consensus. The ~25% foreign-born share is well-established. The sim can also note the Confederate army was overwhelmingly native-born, a genuine asymmetry."
+      },
+      {
+        "claim": "CS desertion ~104,000+ recorded (Lonn); accelerating 1864-65.",
+        "status": "CONFIRMED",
+        "figure": "Lonn's recorded Confederate desertion figure is ~103,400 enlisted deserters (often rounded to 'over 104,000'); the true total was substantially higher because records were incomplete. Desertion accelerated sharply in 1864-65 amid attrition, hardship at the front, and letters from suffering families.",
+        "source": "Ella Lonn, Desertion During the Civil War (1928); Mark A. Weitz, More Damning than Slaughter: Desertion in the Confederate Army (2005).",
+        "note": "Frame the ~104,000 as RECORDED desertions and a floor, not the true total (Lonn herself flags undercounting; Weitz argues it was decisive in CS collapse). The 1864-65 acceleration and its link to home-front suffering and class grievance is solid consensus and good teaching material."
+      },
+      {
+        "claim": "Twenty-Negro Law Oct 11 1862; CS substitution abolished Dec 28 1863; CS Black-soldier law (GO No. 14) Mar 1865 yielded only dozens.",
+        "status": "CORRECTED",
+        "figure": "Twenty-Negro Law: October 11, 1862 (exemption of one white man per 20 enslaved people) — CONFIRMED. CS substitution abolished: December 28, 1863 — CONFIRMED. CS Black-soldier measure: the authorizing STATUTE was signed by Davis March 13, 1865; GENERAL ORDERS No. 14 implementing it was issued March 23, 1865. Yielded only a few dozen to ~200 men, none in combat before surrender.",
+        "source": "Confederate Second Conscription Act / Twenty-Negro Law (Oct 11, 1862); Act of Dec 28, 1863 (abolishing substitution); Act of March 13, 1865 and General Orders No. 14 (March 23, 1865); Bruce Levine, Confederate Emancipation (2006).",
+        "note": "DATE PRECISION FIX: distinguish the statute (Mar 13, 1865) from GO No. 14 (Mar 23, 1865) — the claim labels 'GO No. 14' as 'Mar 1865,' which is fine, but the sim should not imply GO No. 14 itself was the March 13 act. Levine, Confederate Emancipation is the authoritative work: the measure came too late, manumission was required only with owner consent, and essentially no Black Confederate soldiers saw combat — directly rebutting Lost-Cause 'Black Confederate' mythology. Keep the 'only dozens' outcome explicit."
+      }
+    ]
+  }
+}

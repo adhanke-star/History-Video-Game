@@ -1,0 +1,581 @@
+{
+  "steps": [
+    {
+      "name": "US 20-turn integration",
+      "ok": true,
+      "v": {
+        "finalStrength": 100,
+        "finalPool": 2082,
+        "usct": true,
+        "enlisted": 2098
+      }
+    },
+    {
+      "name": "CS 20-turn integration",
+      "ok": true,
+      "v": {
+        "finalStrength": 53,
+        "finalPool": 0,
+        "finalRatio": 0.1,
+        "desertion": 145,
+        "enlisted": 933
+      }
+    },
+    {
+      "name": "US replaces casualties — strength HOLDS",
+      "ok": true,
+      "v": {
+        "strength": 100,
+        "pool": 2082
+      }
+    },
+    {
+      "name": "CS replacement ratio COLLAPSES 0.9 -> 0.1",
+      "ok": true,
+      "v": {
+        "early": 0.9,
+        "late": 0.1
+      }
+    },
+    {
+      "name": "CS armies MELT — strength collapses below US",
+      "ok": true,
+      "v": {
+        "csStrength": 53,
+        "usStrength": 100
+      }
+    },
+    {
+      "name": "US-only pools: USCT unlocks, immigrants flow",
+      "ok": true,
+      "v": {
+        "usEnlisted": 2098
+      }
+    },
+    {
+      "name": "CS desertion rises late-war",
+      "ok": true,
+      "v": {
+        "desertion": 145
+      }
+    },
+    {
+      "name": "War Effort overview shows The Ranks",
+      "ok": true,
+      "v": {
+        "len": 27311
+      }
+    },
+    {
+      "name": "teaching content surfaces (research injected)",
+      "ok": true,
+      "v": {
+        "whyLen": 335,
+        "cards": true
+      }
+    }
+  ],
+  "errors": [],
+  "ok": true,
+  "us": {
+    "series": [
+      {
+        "t": 0,
+        "year": 1861,
+        "strength": 100,
+        "pool": 3908,
+        "ratio": 1,
+        "recruits": 92,
+        "draft": false,
+        "usct": false,
+        "desertion": 0,
+        "enlisted": 92
+      },
+      {
+        "t": 1,
+        "year": 1861,
+        "strength": 100,
+        "pool": 3816,
+        "ratio": 1,
+        "recruits": 92,
+        "draft": false,
+        "usct": false,
+        "desertion": 0,
+        "enlisted": 184
+      },
+      {
+        "t": 2,
+        "year": 1861,
+        "strength": 100,
+        "pool": 3724,
+        "ratio": 1,
+        "recruits": 92,
+        "draft": false,
+        "usct": false,
+        "desertion": 0,
+        "enlisted": 276
+      },
+      {
+        "t": 3,
+        "year": 1861,
+        "strength": 100,
+        "pool": 3632,
+        "ratio": 1,
+        "recruits": 92,
+        "draft": false,
+        "usct": false,
+        "desertion": 0,
+        "enlisted": 368
+      },
+      {
+        "t": 4,
+        "year": 1862,
+        "strength": 100,
+        "pool": 3540,
+        "ratio": 1,
+        "recruits": 92,
+        "draft": false,
+        "usct": false,
+        "desertion": 0,
+        "enlisted": 460
+      },
+      {
+        "t": 5,
+        "year": 1862,
+        "strength": 100,
+        "pool": 3448,
+        "ratio": 1,
+        "recruits": 92,
+        "draft": false,
+        "usct": false,
+        "desertion": 0,
+        "enlisted": 552
+      },
+      {
+        "t": 6,
+        "year": 1862,
+        "strength": 100,
+        "pool": 3356,
+        "ratio": 1,
+        "recruits": 92,
+        "draft": false,
+        "usct": false,
+        "desertion": 0,
+        "enlisted": 644
+      },
+      {
+        "t": 7,
+        "year": 1862,
+        "strength": 100,
+        "pool": 3264,
+        "ratio": 1,
+        "recruits": 92,
+        "draft": false,
+        "usct": false,
+        "desertion": 0,
+        "enlisted": 736
+      },
+      {
+        "t": 8,
+        "year": 1863,
+        "strength": 100,
+        "pool": 3323,
+        "ratio": 1,
+        "recruits": 121,
+        "draft": true,
+        "usct": true,
+        "desertion": 0,
+        "enlisted": 857
+      },
+      {
+        "t": 9,
+        "year": 1863,
+        "strength": 100,
+        "pool": 3202,
+        "ratio": 1,
+        "recruits": 121,
+        "draft": true,
+        "usct": true,
+        "desertion": 0,
+        "enlisted": 978
+      },
+      {
+        "t": 10,
+        "year": 1863,
+        "strength": 100,
+        "pool": 3081,
+        "ratio": 1,
+        "recruits": 121,
+        "draft": true,
+        "usct": true,
+        "desertion": 0,
+        "enlisted": 1099
+      },
+      {
+        "t": 11,
+        "year": 1863,
+        "strength": 100,
+        "pool": 2960,
+        "ratio": 1,
+        "recruits": 121,
+        "draft": true,
+        "usct": true,
+        "desertion": 0,
+        "enlisted": 1220
+      },
+      {
+        "t": 12,
+        "year": 1864,
+        "strength": 100,
+        "pool": 2839,
+        "ratio": 1,
+        "recruits": 121,
+        "draft": true,
+        "usct": true,
+        "desertion": 0,
+        "enlisted": 1341
+      },
+      {
+        "t": 13,
+        "year": 1864,
+        "strength": 100,
+        "pool": 2718,
+        "ratio": 1,
+        "recruits": 121,
+        "draft": true,
+        "usct": true,
+        "desertion": 0,
+        "enlisted": 1462
+      },
+      {
+        "t": 14,
+        "year": 1864,
+        "strength": 100,
+        "pool": 2597,
+        "ratio": 1,
+        "recruits": 121,
+        "draft": true,
+        "usct": true,
+        "desertion": 0,
+        "enlisted": 1583
+      },
+      {
+        "t": 15,
+        "year": 1864,
+        "strength": 100,
+        "pool": 2478,
+        "ratio": 1,
+        "recruits": 119,
+        "draft": true,
+        "usct": true,
+        "desertion": 0,
+        "enlisted": 1702
+      },
+      {
+        "t": 16,
+        "year": 1865,
+        "strength": 100,
+        "pool": 2379,
+        "ratio": 1,
+        "recruits": 99,
+        "draft": true,
+        "usct": true,
+        "desertion": 0,
+        "enlisted": 1801
+      },
+      {
+        "t": 17,
+        "year": 1865,
+        "strength": 100,
+        "pool": 2280,
+        "ratio": 1,
+        "recruits": 99,
+        "draft": true,
+        "usct": true,
+        "desertion": 0,
+        "enlisted": 1900
+      },
+      {
+        "t": 18,
+        "year": 1865,
+        "strength": 100,
+        "pool": 2181,
+        "ratio": 1,
+        "recruits": 99,
+        "draft": true,
+        "usct": true,
+        "desertion": 0,
+        "enlisted": 1999
+      },
+      {
+        "t": 19,
+        "year": 1865,
+        "strength": 100,
+        "pool": 2082,
+        "ratio": 1,
+        "recruits": 99,
+        "draft": true,
+        "usct": true,
+        "desertion": 0,
+        "enlisted": 2098
+      }
+    ],
+    "finalStrength": 100,
+    "finalPool": 2082,
+    "finalRatio": 1,
+    "usct": true,
+    "desertion": 0,
+    "enlisted": 2098
+  },
+  "cs": {
+    "series": [
+      {
+        "t": 0,
+        "year": 1861,
+        "strength": 99,
+        "pool": 914,
+        "ratio": 0.9,
+        "recruits": 85,
+        "draft": false,
+        "usct": false,
+        "desertion": 3,
+        "enlisted": 85
+      },
+      {
+        "t": 1,
+        "year": 1861,
+        "strength": 99,
+        "pool": 827,
+        "ratio": 0.9,
+        "recruits": 85,
+        "draft": false,
+        "usct": false,
+        "desertion": 6,
+        "enlisted": 170
+      },
+      {
+        "t": 2,
+        "year": 1861,
+        "strength": 98,
+        "pool": 740,
+        "ratio": 0.9,
+        "recruits": 85,
+        "draft": false,
+        "usct": false,
+        "desertion": 10,
+        "enlisted": 255
+      },
+      {
+        "t": 3,
+        "year": 1861,
+        "strength": 98,
+        "pool": 653,
+        "ratio": 0.9,
+        "recruits": 85,
+        "draft": false,
+        "usct": false,
+        "desertion": 14,
+        "enlisted": 340
+      },
+      {
+        "t": 4,
+        "year": 1862,
+        "strength": 97,
+        "pool": 613,
+        "ratio": 0.9,
+        "recruits": 38,
+        "draft": true,
+        "usct": false,
+        "desertion": 18,
+        "enlisted": 378
+      },
+      {
+        "t": 5,
+        "year": 1862,
+        "strength": 97,
+        "pool": 573,
+        "ratio": 0.9,
+        "recruits": 38,
+        "draft": true,
+        "usct": false,
+        "desertion": 23,
+        "enlisted": 416
+      },
+      {
+        "t": 6,
+        "year": 1862,
+        "strength": 96,
+        "pool": 532,
+        "ratio": 0.9,
+        "recruits": 38,
+        "draft": true,
+        "usct": false,
+        "desertion": 28,
+        "enlisted": 454
+      },
+      {
+        "t": 7,
+        "year": 1862,
+        "strength": 96,
+        "pool": 492,
+        "ratio": 0.9,
+        "recruits": 38,
+        "draft": true,
+        "usct": false,
+        "desertion": 33,
+        "enlisted": 492
+      },
+      {
+        "t": 8,
+        "year": 1863,
+        "strength": 94,
+        "pool": 451,
+        "ratio": 0.6,
+        "recruits": 38,
+        "draft": true,
+        "usct": false,
+        "desertion": 39,
+        "enlisted": 530
+      },
+      {
+        "t": 9,
+        "year": 1863,
+        "strength": 92,
+        "pool": 410,
+        "ratio": 0.6,
+        "recruits": 38,
+        "draft": true,
+        "usct": false,
+        "desertion": 45,
+        "enlisted": 568
+      },
+      {
+        "t": 10,
+        "year": 1863,
+        "strength": 89,
+        "pool": 369,
+        "ratio": 0.6,
+        "recruits": 38,
+        "draft": true,
+        "usct": false,
+        "desertion": 51,
+        "enlisted": 606
+      },
+      {
+        "t": 11,
+        "year": 1863,
+        "strength": 87,
+        "pool": 328,
+        "ratio": 0.6,
+        "recruits": 38,
+        "draft": true,
+        "usct": false,
+        "desertion": 57,
+        "enlisted": 644
+      },
+      {
+        "t": 12,
+        "year": 1864,
+        "strength": 84,
+        "pool": 284,
+        "ratio": 0.3,
+        "recruits": 38,
+        "draft": true,
+        "usct": false,
+        "desertion": 68,
+        "enlisted": 682
+      },
+      {
+        "t": 13,
+        "year": 1864,
+        "strength": 80,
+        "pool": 241,
+        "ratio": 0.3,
+        "recruits": 38,
+        "draft": true,
+        "usct": false,
+        "desertion": 79,
+        "enlisted": 720
+      },
+      {
+        "t": 14,
+        "year": 1864,
+        "strength": 76,
+        "pool": 197,
+        "ratio": 0.3,
+        "recruits": 38,
+        "draft": true,
+        "usct": false,
+        "desertion": 90,
+        "enlisted": 758
+      },
+      {
+        "t": 15,
+        "year": 1864,
+        "strength": 73,
+        "pool": 154,
+        "ratio": 0.3,
+        "recruits": 38,
+        "draft": true,
+        "usct": false,
+        "desertion": 101,
+        "enlisted": 796
+      },
+      {
+        "t": 16,
+        "year": 1865,
+        "strength": 68,
+        "pool": 110,
+        "ratio": 0.1,
+        "recruits": 38,
+        "draft": true,
+        "usct": false,
+        "desertion": 112,
+        "enlisted": 834
+      },
+      {
+        "t": 17,
+        "year": 1865,
+        "strength": 63,
+        "pool": 67,
+        "ratio": 0.1,
+        "recruits": 38,
+        "draft": true,
+        "usct": false,
+        "desertion": 123,
+        "enlisted": 872
+      },
+      {
+        "t": 18,
+        "year": 1865,
+        "strength": 58,
+        "pool": 23,
+        "ratio": 0.1,
+        "recruits": 38,
+        "draft": true,
+        "usct": false,
+        "desertion": 134,
+        "enlisted": 910
+      },
+      {
+        "t": 19,
+        "year": 1865,
+        "strength": 53,
+        "pool": 0,
+        "ratio": 0.1,
+        "recruits": 23,
+        "draft": true,
+        "usct": false,
+        "desertion": 145,
+        "enlisted": 933
+      }
+    ],
+    "finalStrength": 53,
+    "finalPool": 0,
+    "finalRatio": 0.1,
+    "usct": false,
+    "desertion": 145,
+    "enlisted": 933
+  },
+  "pageerrors": []
+}

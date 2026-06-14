@@ -1,6 +1,16 @@
 # HANDOFF — "The Civil War"
 
-## ⚡ CONTINUE HERE — run i progress (S0 + S1a + S1b + S1c SHIPPED) → next: S1d (updated 2026-06-13)
+## ⚡ CONTINUE HERE — run i progress (S0 + S1 COMPLETE: a/b/c/d SHIPPED) → next: S2 (updated 2026-06-13)
+
+> **S1 is COMPLETE — the full asymmetric economy.** S1a finance/inflation · S1b production/logistics · S1c cotton/blockade/diplomacy · **S1d manpower/conscription (just shipped).** `src/70-manpower.js` + `G.campaign.manpower`: the replacement-ratio collapse (US 1.0 holds; CS 0.9→0.1 by 1865 → armies melt), Union draft-as-stimulus, +180k USCT pool at 1863, immigrant inflow, CS desertion; **`C.manpower.strength` is the army-strength index the S5 battle bridge reads.** Surfaced as "The Ranks" in the War Effort overview. Content-complete via an 11-agent workflow → `data/manpower-teaching.json` (5 multi-voice cards + 9-claim audit; no sim correction needed). **VERIFIED:** probe-manpower 9/9 (20-turn arc to 1865: US strength 100 / CS 53-melting / ratio 0.1 / pool 0); full no-regression suite green (desk 12/12, economy 8/8, production 4/4, blockade 11/11, diag-classic paints, 0 pageerrors).
+>
+> **NEXT = S2** (`GRAND-STRATEGY-PLAN` §3/§4/§16/§25, R25 the linchpin): the **advisor/cabinet system** — generalize the Treasury/Diplomacy/War per-domain Delegate toggle + the ambient "Why it mattered" teaching into a full system where each secretary auto-manages + recommends + TEACHES; wire `president.pendingChoices` curated non-blocking decision cards (the S0 stub); 3-layer morale (troop/leader-reputation+ambition/public); wire the 1864 election (`clk.resolved1864`) to consequences. The 10 economy/diplomacy/manpower card sets + the desk are the foundation to build on. Then S3 alt-history · S4 education/codex · S5 victory + the battle bridge.
+>
+> Eight desk tabs now: The War Effort (overview: treasury/home-front meters + War Production + The Ranks blocks) · The Treasury · Diplomacy · War Room · 1864 Clock · Muster Roll · Cabinet · Theater Map. Modules `src/10/20/30/40/50/60/70/90`. Tick order in `_t1Resolve`: clk → econ → wr → blockade → prod → manpower → mr → pres. Data: `data/{economy,diplomacy,manpower-teaching}.json` → `GAME_DATA`.
+
+---
+
+### (prior) ⚡ CONTINUE HERE — S0 + S1a + S1b + S1c SHIPPED → S1d
 
 > **S1c cotton/blockade/foreign just shipped + gated + committed.** `src/60-blockade.js` + `G.campaign.blockade`: the 1861 King-Cotton self-embargo trap (rev≈0), blockade strangulation (capture 0.10→0.33, ports fall, a dynamic `importFactor` that WIRED the S1b prod placeholder — off>full arms), cotton revenue→funds, foreign recognition (1862 famine window → foreclosed 1863) → `clock.intervention`; blockade-depth toggle (full/flat/off, R14); new 8th **Diplomacy** desk tab. Content-complete via an 11-agent research+verify+audit workflow → `data/diplomacy.json` (5 multi-voice cards + a 9-claim numbers audit that corrected Erlanger 72%→45% in `economy.json`) + `HISTORICAL-DATA-DIPLOMACY.md`. **VERIFIED:** probe-blockade 11/11 (16-turn arc), full no-regression suite green (desk 12/12, economy 8/8, production 4/4, diag-classic Classic paints, 0 pageerrors). **NEXT = S1d manpower/conscription** (`data/economy.json` → `manpower`): recruitment pools, the draft (US 1863 / CS 1862), the late-war **CS replacement-ratio collapse 1.0→0.1** (the war-ender), immigrant pool, enslaved-labor base (ties to S2 emancipation/contraband); feeds the pre-battle strength bridge (S5). New `src/70-manpower.js`, register a `manpowerOnResolve` tick. Then S2.
 
