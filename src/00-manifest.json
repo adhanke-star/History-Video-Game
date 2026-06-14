@@ -4,6 +4,7 @@
     "10-president-state.js",
     "20-president-render.js",
     "30-president-shell.js",
+    "31-cabinet.js",
     "40-economy.js",
     "50-production.js",
     "55-weapons.js",
@@ -27,6 +28,8 @@
     "openUpgrade",
     "authoredMap",
     "genForce",
-    "startBattleRuntime"
+    "startBattleRuntime",
+    "presRenderCabinet",
+    "presWireCabinet"
   ]
 }

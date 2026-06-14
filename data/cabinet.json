@@ -1,0 +1,1799 @@
+{
+  "_meta": {
+    "version": 1,
+    "system": "S2 cabinet + advisor system (R25 linchpin / §8.22 / §8.54)",
+    "note": "Full historical cabinet per side, INCLUDING the churn (date-aware holders). Each advisor: voice, ambition + tell, domain stances (one-line rec + expandable why + provenance), one teaching card. Roster/tenures are Verified standard cabinet records; voice/why/cards are enriched by the adversarially-verified s2-cabinet-research workflow at commit time. Domains war/treasury/state/navy are the interactive principals (map to the game systems); justice/post/interior are roster/teaching only. Holder of a domain at a strategic date = the advisor whose tenure contains that date (latest start wins).",
+    "provenancePolicy": "Verified = >=2 independent reputable sources; else Inferred. Nothing untagged."
+  },
+  "sides": {
+    "US": {
+      "head": "Lincoln",
+      "advisors": [
+        {
+          "id": "us-seward",
+          "name": "Seward",
+          "role": "Secretary of State",
+          "domain": "state",
+          "primary": true,
+          "tenure": {
+            "start": {
+              "y": 1861,
+              "m": 3
+            },
+            "end": null
+          },
+          "traits": [
+            "shrewd",
+            "worldly",
+            "once a rival"
+          ],
+          "voice": "Cigar between my fingers, I will bluster for the gallery and concede in the dispatch — Europe must believe America is a powder-keg too dangerous to touch, and believe it without our ever lighting the match.",
+          "ambition": 70,
+          "ambitionTell": "In the first weeks he wrote of himself as the natural premier and pressed Lincoln to hand him the helm; the April 1, 1861 memo all but offered to run the government — yet when Lincoln quietly answered that the President would do it himself, Seward folded the ambition into service and never tested it again.",
+          "stances": [
+            {
+              "condition": "recognitionRisk",
+              "oneLine": "Make Europe fear the cost of touching us — recognition of the rebels is a war with the United States, and say so to Lord Lyons before they need to ask.",
+              "why": "Seward's signature instrument was deterrence by menace: his Dispatch No. 10 to Charles Francis Adams (May 21, 1861) was so bellicose that Lincoln had to soften it — striking the most inflammatory passage and ordering Adams to treat it as guidance only — before it crossed the Atlantic. The teaching point is that the bluster was strategy, not temper: it raised the perceived price of recognizing the Confederacy until London judged the gamble not worth a war over cotton. Scholars (Stahr, Howard Jones; and Ferris, who reads the menace as controlled and calculated rather than reckless) treat this as deliberate, if dangerous, brinkmanship that helped keep Britain at arm's length. The same instinct ran the other way in the Trent crisis: Seward's Dec. 26, 1861 dispatch released Mason and Slidell, conceding Wilkes had erred in seizing them from a neutral ship, and denied London a casus belli — Lincoln's reported maxim was 'one war at a time.' Menace when bluster deters; climb down when a second war with the Royal Navy would break the blockade and the Union both.",
+              "provenance": "Verified",
+              "sources": [
+                "Walter Stahr, Seward: Lincoln's Indispensable Man (2012)",
+                "Howard Jones, Blue & Gray Diplomacy: A History of Union and Confederate Foreign Relations (2010)",
+                "Norman B. Ferris, Desperate Diplomacy: William H. Seward's Foreign Policy, 1861 (1976)",
+                "Gordon H. Warren, Fountain of Discontent: The Trent Affair and Freedom of the Seas (1981)",
+                "Norman B. Ferris, The Trent Affair: A Diplomatic Crisis (1977)"
+              ]
+            },
+            {
+              "condition": "always",
+              "oneLine": "Hold the long line: keep Britain and France neutral month upon month and the rebellion strangles on its own blockade without a single European frigate.",
+              "why": "Seward's whole foreign policy was attritional — there was no decisive diplomatic victory to win, only a recognition that never came. Defuse each crisis (Trent, the Laird rams, the Erlanger loan's reception) and let Union arms and the war's turn toward emancipation do the rest. The moral lever was not Seward's to manufacture: enslaved people forced the question by self-emancipating to Union lines by the hundreds of thousands, the Emancipation Proclamation (after Antietam) tied the Union cause to abolition, and British antislavery opinion — including Lancashire textile workers who backed the Union despite the cotton famine starving them — made open support for a slaveholders' republic politically toxic in Britain. Seward's patience converted that shift into permanent non-recognition, but he was riding a moral current Black agency and abolitionists had generated.",
+              "provenance": "Verified",
+              "sources": [
+                "Howard Jones, Union in Peril: The Crisis over British Intervention in the Civil War (1992)",
+                "Amanda Foreman, A World on Fire: Britain's Crucial Role in the American Civil War (2010)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "The Premier Who Learned to Serve",
+            "claim": "Seward entered office certain he, not the untried Lincoln, would govern — and his April 1, 1861 memo proposed it openly; Lincoln's quiet refusal turned a rival into the administration's indispensable man, and the State Department into the instrument that kept Europe out of the war.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "Seward expected to be the real head of the government. His 'Some Thoughts for the President's Consideration' (April 1, 1861) faulted Lincoln for having no policy, urged shifting the public question from slavery to 'Union or Disunion,' floated provoking war with Spain and France to reunite the country by foreign quarrel, and offered to take over the administration's direction himself. Lincoln answered the same day, calmly, that whatever must be done 'I must do it' — and the matter was closed. Historians treat the exchange as the hinge on which Lincoln's mastery and Seward's loyalty both turned."
+              },
+              {
+                "voice": "Scholar (Walter Stahr)",
+                "text": "Stahr's Seward: Lincoln's Indispensable Man (2012) recovers Seward from caricature: the bellicose dispatches, the Trent climb-down, and the long containment of European recognition were a coherent strategy of bluster-then-concede, run by a man who became Lincoln's closest counselor, survived Lewis Powell's knife on the assassination night, and remained Secretary of State under Andrew Johnson through 1869."
+              },
+              {
+                "voice": "Scholar (Norman B. Ferris)",
+                "text": "Ferris (Desperate Diplomacy: William H. Seward's Foreign Policy, 1861, 1976) argues the early menace was more controlled and less reckless than legend holds — calculated to deter, not to start, a war Seward never actually wanted with Britain or France."
+              },
+              {
+                "voice": "Primary source",
+                "text": "Seward to Lincoln, 'Some Thoughts for the President's Consideration,' April 1, 1861, and Lincoln's reply of the same date (Abraham Lincoln Papers, Library of Congress; reprinted in Bancroft's The Life of William H. Seward and the Collected Works of Lincoln)."
+              }
+            ],
+            "sources": [
+              "Walter Stahr, Seward: Lincoln's Indispensable Man (2012)",
+              "Norman B. Ferris, Desperate Diplomacy: William H. Seward's Foreign Policy, 1861 (1976)",
+              "Doris Kearns Goodwin, Team of Rivals: The Political Genius of Abraham Lincoln (2005)",
+              "Frederic Bancroft, The Life of William H. Seward (1900)",
+              "Seward to Lincoln, 'Some Thoughts for the President's Consideration,' April 1, 1861 (Abraham Lincoln Papers, Library of Congress)"
+            ],
+            "provenance": "Verified"
+          }
+        },
+        {
+          "id": "us-chase",
+          "name": "Chase",
+          "role": "Secretary of the Treasury",
+          "domain": "treasury",
+          "primary": true,
+          "tenure": {
+            "start": {
+              "y": 1861,
+              "m": 3
+            },
+            "end": {
+              "y": 1864,
+              "m": 7
+            }
+          },
+          "traits": [
+            "able",
+            "humorless",
+            "presidentially ambitious"
+          ],
+          "voice": "I gave the Union a currency and a bond it could believe in, Mr. President — and I should govern the nation that money saved.",
+          "ambition": 92,
+          "ambitionTell": "His friends pass the Pomeroy Circular while he sits at your Cabinet table; he tenders his resignation a fourth time over a New York clerkship — and this time you take it, sir.",
+          "stances": [
+            {
+              "condition": "inflationHigh",
+              "oneLine": "Stop the press and sell the people a bond — anchor the greenback before it floats off like the rebel dollar.",
+              "why": "Chase resisted fiat paper and accepted the first Legal Tender Act of February 1862 reluctantly, doubting its constitutionality (he later struck it down as Chief Justice in Hepburn v. Griswold, 1870 — a decision reversed in the Legal Tender Cases the next year). His instinct was to fund the war on borrowing and taxation; greenbacks were the lever he distrusted. Scholars credit the Union's roughly 80% wartime inflation — against Confederate hyperinflation — to legal-tender status, tax-receivability, and bond-convertibility anchoring the note. The complement to anchoring the note was mass-market borrowing: Chase turned banker Jay Cooke loose, and roughly 2,500 sub-agents retailed the 5-20 and 7-30 bonds to ordinary Northerners — making the public stakeholders in Union victory instead of inflating the currency to pay for it.",
+              "provenance": "Verified",
+              "sources": [
+                "McPherson, Battle Cry of Freedom (1988)",
+                "Hammond, Sovereignty and an Empty Purse (1970)",
+                "Larson, Jay Cooke, Private Banker (1936)",
+                "Lawson, Patriot Fires (2002)"
+              ]
+            },
+            {
+              "condition": "always",
+              "oneLine": "Charter national banks and make them hold our bonds — one uniform note, a captive market for the debt.",
+              "why": "The National Banking Acts of 1863-64 required chartered national banks to hold federal bonds against their note issue (up to 90% of bond value), creating both a uniform national currency and a built-in market for the war debt; hundreds of banks were chartered by the end of 1864, and an 1865 tax of 10% drove state-bank notes out of circulation. Bensel and Richardson read this as deliberate Republican nationalization of finance, not mere wartime expedient.",
+              "provenance": "Verified",
+              "sources": [
+                "Bensel, Yankee Leviathan (1990)",
+                "Richardson, The Greatest Nation of the Earth (1997)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "Chase: the man who built the machine and coveted the throne",
+            "claim": "Salmon P. Chase gave the Union a credit-driven war-finance system that worked — and spent the whole war scheming for the presidency he thought it entitled him to.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "Chase's department borrowed roughly two-thirds of the war's cost through bonds, taxed roughly a fifth, and printed the rest as legal-tender greenbacks — a balanced model that held cumulative inflation near 80% while the national debt rose many-fold."
+              },
+              {
+                "voice": "Scholar (John Niven)",
+                "text": "Niven's biography shows an administrator of real ability whose competence was perpetually undercut by a consuming, almost compulsive certainty that he, not Lincoln, deserved to be President."
+              },
+              {
+                "voice": "Primary source (Pomeroy Circular, Feb. 1864)",
+                "text": "Senator Pomeroy's secret circular touting Chase for the 1864 nomination circulated while Chase served in Lincoln's Cabinet; when it surfaced, Chase offered to resign and Lincoln declined — until a later, lesser quarrel let Lincoln finally accept the resignation in June 1864."
+              },
+              {
+                "voice": "Scholar (Walter Stahr)",
+                "text": "Stahr frames Chase as Lincoln's 'vital rival': indispensable to the war chest, exhausting at the council table, and rewarded — astonishingly — with the Chief Justiceship in December 1864."
+              },
+              {
+                "voice": "Lost Cause myth (countered)",
+                "text": "Lost Cause storytelling treats Northern victory as brute money crushing Southern valor. The truth is that the Union out-organized the Confederacy — and that the South's own choices defeated it. Its wealth was locked in the bodies of four million enslaved people it would neither tax efficiently nor liberate; and those same people were not passive capital. By the tens of thousands they withdrew their labor, fled to Union lines, and enlisted — some 180,000 in the U.S. Army — turning the Confederacy's supposed asset into the engine of its undoing."
+              }
+            ],
+            "sources": [
+              "McPherson, Battle Cry of Freedom (1988)",
+              "Niven, Salmon P. Chase: A Biography (1995)",
+              "Stahr, Salmon P. Chase: Lincoln's Vital Rival (2021)",
+              "Goodwin, Team of Rivals (2005)"
+            ],
+            "provenance": "Verified"
+          }
+        },
+        {
+          "id": "us-fessenden",
+          "name": "Fessenden",
+          "role": "Secretary of the Treasury",
+          "domain": "treasury",
+          "primary": true,
+          "tenure": {
+            "start": {
+              "y": 1864,
+              "m": 7
+            },
+            "end": {
+              "y": 1865,
+              "m": 3
+            }
+          },
+          "traits": [
+            "steady",
+            "respected",
+            "reluctant"
+          ],
+          "voice": "I did not want this chair, sir; I wanted the Finance Committee. But the costliest year of the war will be paid for in order, not in panic.",
+          "ambition": 18,
+          "ambitionTell": "He takes the post he did not seek, holds it eight hard months, and resigns the instant Maine will return him to the Senate — the office never tempted the man.",
+          "stances": [
+            {
+              "condition": "always",
+              "oneLine": "Keep faith with the bondholder; the credit Chase built is the only thing standing between us and the rebel dollar's fate.",
+              "why": "As longtime chairman of the Senate Finance Committee, Fessenden had helped write the war-revenue measures before he ever ran the department; taking the chair in July 1864 he prized continuity and the public credit over experiment. He steadied the Treasury through the war's most expensive stretch and Cooke's 7-30 campaign, then returned to the Senate in March 1865. Facing the war's costliest stretch he leaned on the durable federal tax machinery — the income tax and the Bureau of Internal Revenue built by the Revenue Acts of 1861-62 — and on continued mass bond sales rather than fresh fiat, the bonds-and-taxes-over-the-press orthodoxy that set Union finance apart from Confederate.",
+              "provenance": "Verified",
+              "sources": [
+                "McPherson, Battle Cry of Freedom (1988)",
+                "Goodwin, Team of Rivals (2005)",
+                "Richardson, The Greatest Nation of the Earth (1997)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "Fessenden: the steady hand that kept the credit",
+            "claim": "William Pitt Fessenden, the reluctant Senate finance veteran, succeeded Chase and stabilized the Treasury through the war's costliest year without abandoning the bonds-and-taxes model.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "Fessenden's value was continuity, not innovation: he protected the public credit, kept Cooke's bond machine running through 1864-65, and avoided the inflationary temptation of more greenbacks."
+              },
+              {
+                "voice": "Primary source",
+                "text": "He accepted the office only at Lincoln's urging, never having sought it, and left it the moment a Senate seat reopened in March 1865 — the rare Cabinet man who genuinely preferred the legislature."
+              },
+              {
+                "voice": "Scholar (McPherson)",
+                "text": "McPherson treats the Chase-to-Fessenden handoff as proof of institutional depth: the Union's finance survived the loss of its architect because the system, not one man, carried the war."
+              }
+            ],
+            "sources": [
+              "McPherson, Battle Cry of Freedom (1988)",
+              "Goodwin, Team of Rivals (2005)"
+            ],
+            "provenance": "Verified"
+          }
+        },
+        {
+          "id": "us-mcculloch",
+          "name": "McCulloch",
+          "role": "Secretary of the Treasury",
+          "domain": "treasury",
+          "primary": true,
+          "tenure": {
+            "start": {
+              "y": 1865,
+              "m": 3
+            },
+            "end": null
+          },
+          "traits": [
+            "banker",
+            "hard-money"
+          ],
+          "voice": "The war is won; now retire the paper. A nation that prints to fight must shrink the currency to make peace.",
+          "ambition": 10,
+          "ambitionTell": "A career banker with no presidential itch; his postwar fight was over the gold standard, not over himself.",
+          "stances": [
+            {
+              "condition": "always",
+              "oneLine": "Begin contracting the greenbacks toward specie — wartime fiat was a tool, not a permanent currency.",
+              "why": "Appointed by Lincoln in March 1865, and the first Comptroller of the Currency (from 1863) before that, McCulloch championed postwar contraction — retiring greenbacks to return to a gold basis — a policy Congress soon halted under debtor and inflationist pressure. His tenure, which ran to 1869, marks the pivot from war finance to the long Gilded-Age money debates.",
+              "provenance": "Verified",
+              "sources": [
+                "McCulloch, Men and Measures of Half a Century (1888)",
+                "McPherson, Battle Cry of Freedom (1988)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "McCulloch: war finance turns to the peace",
+            "claim": "Hugh McCulloch took the Treasury at the war's very end and immediately pressed to contract the wartime greenbacks back toward gold — opening the postwar money wars.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "McCulloch, a hard-money banker and the first Comptroller of the Currency, saw greenbacks as an emergency expedient to be retired; Congress, under debtor pressure, blocked rapid contraction."
+              },
+              {
+                "voice": "Scholar",
+                "text": "Historians treat his contraction fight as the hinge between Civil War finance and the decades-long greenback/gold-standard controversy that followed."
+              }
+            ],
+            "sources": [
+              "McCulloch, Men and Measures of Half a Century (1888)",
+              "Unger, The Greenback Era (1964)"
+            ],
+            "provenance": "Verified"
+          }
+        },
+        {
+          "id": "us-cameron",
+          "name": "Cameron",
+          "role": "Secretary of War",
+          "domain": "war",
+          "primary": true,
+          "tenure": {
+            "start": {
+              "y": 1861,
+              "m": 3
+            },
+            "end": {
+              "y": 1862,
+              "m": 1
+            }
+          },
+          "traits": [
+            "machine politician",
+            "loose with contracts"
+          ],
+          "voice": "I built a machine for moving votes and contracts, sir — and now you ask it to move armies; do not be astonished when the gears grind and a friend or two grows rich in the noise.",
+          "ambition": 62,
+          "ambitionTell": "He runs the War Department as he ran Pennsylvania — by the favor: a contract for a friend (Alexander Cummings buying straw hats and linen pantaloons — and Scotch ale, herring, and pickles — with army money), a colonelcy for a creditor. The self-interest is not treason; it is the spoilsman's reflex that he cannot switch off even with the Republic on fire.",
+          "stances": [
+            {
+              "condition": "always",
+              "oneLine": "Place the orders fast and place them wide — better a hundred contracts and some waste than an unarmed army in the field.",
+              "why": "The 1861 mobilization was genuinely without precedent: a Regular Army of about 16,000 had to become a force of half a million in months, and the bureaus were tiny and slow. Cameron's defenders (and Lincoln's own May 26, 1862 message to Congress accepting shared cabinet responsibility) note the emergency excused much haste. But the speed was also a license for fraud — shoddy uniforms that dissolved in rain, blind and spavined horses, condemned muskets resold to the government — and the House censured him 80–45 on April 30, 1862 for dealings 'highly injurious to the public service.' The teaching point: in 1861 there was no clean line between necessary urgency and corrupt favoritism, and Cameron never tried to draw one. His one stroke of foresight cut against his own instincts: Cameron's Dec. 1, 1861 War Department report urged that slaves escaping to Union lines be freed and armed — a year ahead of policy. Lincoln had the passage struck and copies recalled, unwilling to let his War Secretary set emancipation; but the enslaved were already walking into Union lines and forcing the question.",
+              "provenance": "Verified",
+              "sources": [
+                "Erwin Stanley Bradley, Simon Cameron, Lincoln's Secretary of War: A Political Biography (1966)",
+                "James M. McPherson, Battle Cry of Freedom: The Civil War Era (1988)",
+                "Roy P. Basler, ed., Collected Works of Abraham Lincoln, vol. 5 (Lincoln's message to Congress, May 26, 1862)",
+                "Erwin Stanley Bradley, Simon Cameron, Lincoln's Secretary of War (1966)",
+                "Ira Berlin, Joseph P. Reidy & Leslie S. Rowland et al., eds., Freedom: A Documentary History of Emancipation, ser. 1 (Freedmen and Southern Society Project)",
+                "Allen C. Guelzo, Lincoln's Emancipation Proclamation: The End of Slavery in America (2004)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "Simon Cameron: The Spoilsman in the War Office",
+            "claim": "Cameron was the wrong man for the largest procurement emergency in American history to date — a master of patronage installed to run a war he had no apparatus or temperament to manage — and his real significance is twofold: the corruption that forced his removal, and the December 1861 report in which the arming of freedmen first reached official War Department paper.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "Cameron got the War Department as payment of a debt — historians widely accept that his support (and that of his Pennsylvania bloc) at the 1860 Chicago convention was traded for a cabinet seat over Lincoln's reluctance. He proved administratively overwhelmed and ethically loose; the contract scandals were real, the censure was bipartisan, and Lincoln eased him out in January 1862 into the Russia ministership to remove him without a public rupture."
+              },
+              {
+                "voice": "Scholar (Erwin Stanley Bradley, 1966)",
+                "text": "Bradley's full biography complicates the cartoon villain: the 1861 mobilization would have strained any administrator, much of the 'waste' was the honest cost of improvisation at impossible speed, and Cameron's anti-slavery turn in the December report was not pure opportunism. He was incompetent for the scale and careless about graft — but he was not the singular monster the contract investigations made him."
+              },
+              {
+                "voice": "Scholar (Allan Nevins, The War for the Union, 1959–60)",
+                "text": "Nevins is harsher: the War Department under Cameron was 'a sink of waste and disorder,' and his departure was a clear gain for the Union war effort. The contrast with Stanton is the whole lesson — the same emergency, met first by a politician and then by an organizer."
+              },
+              {
+                "voice": "Primary source",
+                "text": "The House resolution of April 30, 1862 censured Cameron, by an 80–45 vote, for acts 'highly injurious to the public service'; Lincoln's May 26, 1862 message to Congress answered it by insisting the whole cabinet was 'at least equally responsible' for the irregular early procurement — a president shielding a discarded subordinate."
+              }
+            ],
+            "sources": [
+              "Erwin Stanley Bradley, Simon Cameron, Lincoln's Secretary of War: A Political Biography (1966)",
+              "Allan Nevins, The War for the Union, vols. 1–2 (1959–1960)",
+              "James M. McPherson, Battle Cry of Freedom: The Civil War Era (1988)",
+              "Roy P. Basler, ed., Collected Works of Abraham Lincoln, vol. 5 (1953)"
+            ],
+            "provenance": "Verified"
+          }
+        },
+        {
+          "id": "us-stanton",
+          "name": "Stanton",
+          "role": "Secretary of War",
+          "domain": "war",
+          "primary": true,
+          "tenure": {
+            "start": {
+              "y": 1862,
+              "m": 1
+            },
+            "end": null
+          },
+          "traits": [
+            "ferocious",
+            "incorruptible",
+            "tireless organizer"
+          ],
+          "voice": "I have no time to be liked, sir — there is an army to be clothed by morning and a general to be prodded by noon; bring me work or bring me a railroad timetable, and shut the door behind you.",
+          "ambition": 28,
+          "ambitionTell": "Stanton hoards power, not for a throne but for the war — he centralizes telegraph, railroads, arrests, and the press into the War Department's grip, and he will knife a general (McClellan) he judges too slow without a flicker of remorse. The danger in him is not greed; it is a zealot's certainty that what serves the war serves justice, which makes his hand on civil liberties heavy.",
+          "stances": [
+            {
+              "condition": "armyWeak",
+              "oneLine": "Cut the spoils-bred contractors loose, prosecute the fraud, and feed the supply through Meigs — a clean department arms more men than a corrupt one.",
+              "why": "Stanton inherited Cameron's swamp and drained a good deal of it: he reviewed outstanding contracts, voided the worst, and made the War Department's word mean something to honest suppliers. Quartermaster General Montgomery Meigs ultimately disbursed roughly $1.5 billion over the war — close to half its direct cost, the sinews of Union victory — and Stanton's reputation for incorruptibility was the political cover that let that spending survive congressional scrutiny. The lesson the game can model: clean administration is itself combat power, not a moral luxury. And when an offensive stalled, Stanton backed the generals who would FIGHT and broke the ones who would not — he aligned with the Joint Committee on the Conduct of the War to push McClellan aside and, in time, to elevate Grant.",
+              "provenance": "Verified",
+              "sources": [
+                "Walter Stahr, Stanton: Lincoln's War Secretary (2017)",
+                "Russell F. Weigley, Quartermaster General of the Union Army: A Biography of M. C. Meigs (1959)",
+                "Benjamin P. Thomas & Harold M. Hyman, Stanton: The Life and Times of Lincoln's Secretary of War (1962)",
+                "Bruce Tap, Over Lincoln's Shoulder: The Committee on the Conduct of the War (1998)"
+              ]
+            },
+            {
+              "condition": "always",
+              "oneLine": "Organize first: a war board of the bureau chiefs, the telegraph in my own office, and every order written down — an army is logistics before it is courage.",
+              "why": "On taking office Stanton built a war board of his bureau chiefs — Meigs as Quartermaster General, Ripley at Ordnance, Lorenzo Thomas as Adjutant General, Totten at Engineers, Taylor as Commissary — and pulled the military telegraph into the War Department so he could command time and distance. Where Cameron had improvised, Stanton systematized: contracts audited, fraud prosecuted, supply rationalized. The historiographical consensus (Thomas & Hyman; Stahr) is that this organizational genius, paired with Meigs's supply machine, was a decisive and underrated Union advantage. When manpower ran short he drove the Bureau of Colored Troops (General Orders No. 143, May 22, 1863) hard: roughly 179,000 Black men, overwhelmingly formerly enslaved, served in the USCT by war's end — close to a tenth of the Union army, and a manpower fact that helped decide the war.",
+              "provenance": "Verified",
+              "sources": [
+                "Benjamin P. Thomas & Harold M. Hyman, Stanton: The Life and Times of Lincoln's Secretary of War (1962)",
+                "Walter Stahr, Stanton: Lincoln's War Secretary (2017)",
+                "Joseph T. Glatthaar, Forged in Battle: The Civil War Alliance of Black Soldiers and White Officers (1990)",
+                "Ira Berlin, Joseph P. Reidy & Leslie S. Rowland, eds., Freedom: A Documentary History of Emancipation, ser. 2, The Black Military Experience (1982)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "Edwin M. Stanton: The Organizer of Union Victory",
+            "claim": "Stanton was the indispensable administrator of the Northern war — incorruptible, ferociously able, and abrasive to the point of cruelty — who turned Cameron's chaos into a disciplined war machine, allied with the Radicals to keep the army fighting, and helped build the apparatus that armed the freedman; the contrast between the two War Secretaries is one of the clearest object lessons in how the Union learned to fight.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "Scholars broadly agree Stanton was one of Lincoln's most effective appointments. A War Democrat and Buchanan's last Attorney General — where he opposed surrendering Fort Sumter — he came to the War Department in January 1862 and rebuilt it: war board of bureau chiefs, audited contracts, the telegraph and railroads under central control, and an unsparing work ethic that wore down his own health. The rough manner and the ruthlessness toward generals were real, but so was the result."
+              },
+              {
+                "voice": "Scholar (Walter Stahr, 2017)",
+                "text": "Stahr's modern biography rehabilitates a man long caricatured as a tyrant, foregrounding his administrative brilliance, his genuine partnership with Lincoln (whom he had once snubbed as a country lawyer), his drive behind the United States Colored Troops, and his commitment to a hard war and a just Reconstruction."
+              },
+              {
+                "voice": "Scholar (Thomas & Hyman, 1962)",
+                "text": "The standard older biography credits Stanton's logistical reorganization and incorruptibility as decisive Union assets, while not flinching from his abrasiveness, his expansive use of military arrests and press suppression, and the centralizing instinct that would later collide with Andrew Johnson and trigger the Tenure of Office crisis."
+              },
+              {
+                "voice": "Primary source / historiographical caution",
+                "text": "At Lincoln's deathbed on April 15, 1865, Stanton is famously said to have pronounced 'Now he belongs to the ages.' Honesty requires the caveat: the wording is disputed. Adam Gopnik's Angels and Ages (2009) shows that some accounts — and the shorthand-taking corporal James Tanner — recorded 'angels,' and Gopnik concludes the moment was 'befogged then, too.' Whatever the syllable, the grief was real: the abrasive Secretary wept openly for the President he had served and saved."
+              }
+            ],
+            "sources": [
+              "Walter Stahr, Stanton: Lincoln's War Secretary (2017)",
+              "Benjamin P. Thomas & Harold M. Hyman, Stanton: The Life and Times of Lincoln's Secretary of War (1962)",
+              "Adam Gopnik, Angels and Ages: A Short Book About Darwin, Lincoln, and Modern Life (2009)",
+              "James M. McPherson, Battle Cry of Freedom: The Civil War Era (1988)"
+            ],
+            "provenance": "Verified"
+          }
+        },
+        {
+          "id": "us-welles",
+          "name": "Welles",
+          "role": "Secretary of the Navy",
+          "domain": "navy",
+          "primary": true,
+          "tenure": {
+            "start": {
+              "y": 1861,
+              "m": 3
+            },
+            "end": null
+          },
+          "traits": [
+            "steady",
+            "shrewd",
+            "diarist"
+          ],
+          "voice": "Give me hulls, engines, and a tight chain of ports, and I will choke the rebellion by the sea-coast though it take three years and six hundred ships to do it.",
+          "ambition": 8,
+          "ambitionTell": "None worth the name. 'Father Neptune' schemed for his bureau's funds and against meddlers like Seward, but never against the cause; his ambition ran to the record, not the prize — he kept the diary that would damn the schemers, not a faction to advance himself.",
+          "stances": [
+            {
+              "condition": "blockadeLoose",
+              "oneLine": "Tighten the cordon — more steamers off Wilmington and Charleston, and take the runner ports, for a paper blockade convinces no one and feeds the rebel arsenal.",
+              "why": "Welles understood the blockade's decisive metric was aggregate strangulation, not per-voyage capture: runners often got through (success rates ~90% in 1861 falling to ~67% by 1864) yet total cotton export collapsed to roughly a tenth of peacetime, and inbound munitions with it. The Union squadrons grew to some 500 vessels on blockade duty; the war-ending blow was seizing the runner harbors themselves — Wilmington's fall after Fort Fisher in January 1865 closed the last great gate. The trade-off was ruinous cost and the diplomatic risk of a blockade that international law demanded be 'effective,' not merely declared. The decisive instrument was the ironclad: Welles pushed Ericsson's Monitor over heavy skepticism, and her draw with CSS Virginia at Hampton Roads (Mar. 9, 1862) saved the wooden blockading fleet and triggered a global naval revolution — though armor alone could not reduce forts without troops.",
+              "provenance": "Verified",
+              "sources": [
+                "Stephen R. Wise, Lifeline of the Confederacy: Blockade Running During the Civil War (1988)",
+                "Robert M. Browning Jr., From Cape Charles to Cape Fear: The North Atlantic Blockading Squadron During the Civil War (1993)",
+                "Craig L. Symonds, Lincoln and His Admirals (2008)",
+                "William H. Roberts, Civil War Ironclads: The U.S. Navy and Industrial Mobilization (2002)"
+              ]
+            },
+            {
+              "condition": "always",
+              "oneLine": "Hold the coast and the rivers; the navy wins the war the armies cannot reach.",
+              "why": "The river war was a joint Army-Navy enterprise: Eads-built City-class gunboats under Foote helped take Forts Henry and Donelson in February 1862, Farragut ran the New Orleans forts that April, and the fall of Vicksburg in July 1863 severed the Trans-Mississippi and opened the river 'unvexed to the sea.' Welles's department supplied the hulls and quarreled with the Army over command of the inland flotillas. The teaching point is combined operations — neither service could open the rivers alone.",
+              "provenance": "Verified",
+              "sources": [
+                "Spencer C. Tucker, Andrew Foote: Civil War Admiral on Western Waters (2000)",
+                "Gary D. Joiner, Mr. Lincoln's Brown Water Navy: The Mississippi Squadron (2007)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "A Fleet Conjured From Almost Nothing",
+            "claim": "Welles inherited a navy of a few dozen serviceable warships scattered across the globe and, within four years, built the force that strangled the Confederacy — and he held the post through Lincoln's whole presidency and on into Johnson's, until 1869.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "At Sumter the Navy had perhaps 90 ships on the books and only a fraction in home waters and ready for service; by war's end it counted on the order of 650-700 vessels and some 50,000-odd sailors. Welles and Assistant Secretary Gustavus Fox bought, chartered, and built furiously, organized the squadron system, and made the blockade — derided early as a 'paper' cordon — into the aggregate stranglehold that cut Southern foreign trade to roughly a tenth of its peacetime volume. Historians rate him among the ablest administrators in either cabinet, and he stayed at his post until March 1869."
+              },
+              {
+                "voice": "Scholar (John Niven)",
+                "text": "Niven's standard biography portrays a Connecticut newspaperman and Jacksonian-turned-Republican with no naval background who proved a superb organizer: patient, honest to a fault, resistant to the contract corruption that bled the War Department, and shrewd enough to gamble on the Monitor and to lean on the talented Fox. His value lay in steadiness and integrity, not dash."
+              },
+              {
+                "voice": "Primary source (the Welles Diary)",
+                "text": "Welles kept a detailed, candid diary — a cornerstone source for the inner Lincoln cabinet. It records the Monitor anxiety, the feud with Seward over the Powhatan and the Sumter relief, his contempt for Stanton's panics, and his clear-eyed affection for Lincoln. Used critically (Welles revised entries later and ground his own axes), it is indispensable."
+              },
+              {
+                "voice": "Black agency (named)",
+                "text": "The fleet Welles built was crewed in large part by Black sailors: roughly 18,000 Black men served in the Union Navy, about 15-20 percent of enlisted strength — a far higher proportion than in the Army, and on integrated crews, since the wartime Navy was never formally segregated. Self-emancipated 'contrabands' who reached Union ships were enlisted and fought the blockade they had helped make possible. The story of the squadrons is not only Welles's administration but their service."
+              },
+              {
+                "voice": "Lost Cause myth (named & countered)",
+                "text": "The Lost Cause minimizes the blockade as a porous nuisance that gallant runners routinely defeated. The per-voyage record looks that way — most runs succeeded — but that is the wrong metric: the decisive fact is aggregate collapse. Cotton exports and munitions imports fell catastrophically, the Confederate war economy starved, and by January 1865 every major runner port was in Union hands. The blockade worked precisely as Welles intended."
+              }
+            ],
+            "sources": [
+              "John Niven, Gideon Welles: Lincoln's Secretary of the Navy (1973)",
+              "Gideon Welles, Diary of Gideon Welles, ed. Howard K. Beale, 3 vols. (1960)",
+              "Stephen R. Wise, Lifeline of the Confederacy (1988)",
+              "Naval History and Heritage Command, African Americans in the U.S. Navy During the Civil War"
+            ],
+            "provenance": "Verified"
+          }
+        },
+        {
+          "id": "us-bates",
+          "name": "Bates",
+          "role": "Attorney General",
+          "domain": "justice",
+          "primary": false,
+          "tenure": {
+            "start": {
+              "y": 1861,
+              "m": 3
+            },
+            "end": {
+              "y": 1864,
+              "m": 11
+            }
+          },
+          "traits": [
+            "conservative",
+            "elder statesman"
+          ],
+          "voice": "Bates, gravely: 'The law must bend in war, sir, but not break — guard the Constitution even as you wield it.'",
+          "ambition": 30,
+          "ambitionTell": "",
+          "stances": [
+            {
+              "condition": "always",
+              "oneLine": "Mind the Constitution even in the emergency — the war is fought to preserve it.",
+              "why": "Bates, the conservative Missourian, counseled restraint on emancipation and emergency powers; his cautious legalism marked one pole of the cabinet's debates over how far the war could stretch the law.",
+              "provenance": "Inferred",
+              "sources": [
+                "Goodwin, Team of Rivals (2005)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "Bates and the law in wartime",
+            "claim": "The Attorney General embodied the cabinet's conservative caution on emancipation and emergency power.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "Bates resisted the war's most radical turns from within."
+              }
+            ],
+            "sources": [
+              "Goodwin, Team of Rivals (2005)"
+            ],
+            "provenance": "Inferred"
+          }
+        },
+        {
+          "id": "us-speed",
+          "name": "Speed",
+          "role": "Attorney General",
+          "domain": "justice",
+          "primary": false,
+          "tenure": {
+            "start": {
+              "y": 1864,
+              "m": 12
+            },
+            "end": null
+          },
+          "traits": [
+            "loyal",
+            "Kentuckian"
+          ],
+          "voice": "Speed: 'The law will follow where the war has led, sir — to a Union without slavery.'",
+          "ambition": 20,
+          "ambitionTell": "",
+          "stances": [
+            {
+              "condition": "always",
+              "oneLine": "The law follows the war's logic — toward emancipation made permanent.",
+              "why": "James Speed, brother of Lincoln's old friend, replaced Bates and aligned the Justice Department with the administration's harder, emancipationist late-war course.",
+              "provenance": "Inferred",
+              "sources": [
+                "Goodwin, Team of Rivals (2005)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "Speed and the war's hard turn",
+            "claim": "Lincoln's late Attorney General matched the law to a war now aimed at slavery's end.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "The cabinet's late membership reflected the war's radicalization."
+              }
+            ],
+            "sources": [
+              "Goodwin, Team of Rivals (2005)"
+            ],
+            "provenance": "Inferred"
+          }
+        },
+        {
+          "id": "us-blair",
+          "name": "Blair",
+          "role": "Postmaster General",
+          "domain": "post",
+          "primary": false,
+          "tenure": {
+            "start": {
+              "y": 1861,
+              "m": 3
+            },
+            "end": {
+              "y": 1864,
+              "m": 9
+            }
+          },
+          "traits": [
+            "conservative",
+            "combative",
+            "well-connected"
+          ],
+          "voice": "Montgomery Blair: 'Push the radicals too far, sir, and you lose the border and the moderate North both.'",
+          "ambition": 45,
+          "ambitionTell": "The Blairs are a political dynasty with their own designs; Montgomery's conservatism and feuds made him a liability the Radicals demanded Lincoln sacrifice — and in September 1864, to hold his coalition, Lincoln did.",
+          "stances": [
+            {
+              "condition": "always",
+              "oneLine": "Hold the border states and the moderates — do not let the radicals run ahead of the country.",
+              "why": "Blair, the conservative voice, fought emancipation's pace and feuded with the Radicals until Lincoln traded his resignation for party unity before the 1864 election — a study in the politics of coalition.",
+              "provenance": "Verified",
+              "sources": [
+                "Goodwin, Team of Rivals (2005)",
+                "McPherson, Battle Cry of Freedom (1988)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "Blair sacrificed for the coalition",
+            "claim": "Lincoln dropped a loyal but divisive minister to keep his 1864 coalition together.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "Blair's removal was the price of Radical support in the reelection campaign."
+              }
+            ],
+            "sources": [
+              "Goodwin, Team of Rivals (2005)"
+            ],
+            "provenance": "Verified"
+          }
+        },
+        {
+          "id": "us-dennison",
+          "name": "Dennison",
+          "role": "Postmaster General",
+          "domain": "post",
+          "primary": false,
+          "tenure": {
+            "start": {
+              "y": 1864,
+              "m": 9
+            },
+            "end": null
+          },
+          "traits": [
+            "organizer",
+            "Ohio Republican"
+          ],
+          "voice": "Dennison: 'The mails will run, sir, and the party will hold.'",
+          "ambition": 25,
+          "ambitionTell": "",
+          "stances": [
+            {
+              "condition": "always",
+              "oneLine": "Keep the mails running and the party machinery sound.",
+              "why": "Dennison, a former Ohio governor, replaced Blair as part of the 1864 coalition management.",
+              "provenance": "Inferred",
+              "sources": [
+                "Goodwin, Team of Rivals (2005)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "Dennison joins the coalition cabinet",
+            "claim": "The 1864 cabinet shuffle brought in men who unified the party.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "Late cabinet changes served reelection."
+              }
+            ],
+            "sources": [
+              "Goodwin, Team of Rivals (2005)"
+            ],
+            "provenance": "Inferred"
+          }
+        },
+        {
+          "id": "us-smith",
+          "name": "Smith",
+          "role": "Secretary of the Interior",
+          "domain": "interior",
+          "primary": false,
+          "tenure": {
+            "start": {
+              "y": 1861,
+              "m": 3
+            },
+            "end": {
+              "y": 1862,
+              "m": 12
+            }
+          },
+          "traits": [
+            "party man",
+            "ailing"
+          ],
+          "voice": "Caleb Smith: 'The Interior's business is the West, sir — lands, the tribes, the Pacific road.'",
+          "ambition": 20,
+          "ambitionTell": "",
+          "stances": [
+            {
+              "condition": "always",
+              "oneLine": "The West goes on — lands, the railroad, the tribes — even amid the war.",
+              "why": "Smith, a reward appointment, oversaw the wartime Interior — Indian affairs, public lands, the Pacific Railroad's launch — before retiring to a judgeship in 1862.",
+              "provenance": "Inferred",
+              "sources": [
+                "Goodwin, Team of Rivals (2005)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "The wartime Interior and the West",
+            "claim": "Even at war, the Union legislated the West — homesteads, land-grant colleges, the Pacific railroad.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "The 1862 Homestead and Pacific Railroad Acts reshaped the West during the war."
+              }
+            ],
+            "sources": [
+              "McPherson, Battle Cry of Freedom (1988)"
+            ],
+            "provenance": "Verified"
+          }
+        },
+        {
+          "id": "us-usher",
+          "name": "Usher",
+          "role": "Secretary of the Interior",
+          "domain": "interior",
+          "primary": false,
+          "tenure": {
+            "start": {
+              "y": 1863,
+              "m": 1
+            },
+            "end": null
+          },
+          "traits": [
+            "administrator",
+            "railroad man"
+          ],
+          "voice": "Usher: 'The Pacific road is the Union's future, sir — steel rails from sea to sea.'",
+          "ambition": 20,
+          "ambitionTell": "",
+          "stances": [
+            {
+              "condition": "always",
+              "oneLine": "Drive the transcontinental railroad — bind the West to the Union with iron.",
+              "why": "Usher carried forward the Pacific Railroad and Indian affairs, the long-term nation-building that proceeded beneath the war.",
+              "provenance": "Inferred",
+              "sources": [
+                "Goodwin, Team of Rivals (2005)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "Usher and the transcontinental road",
+            "claim": "Interior pressed nation-building even as armies fought.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "The Pacific Railroad advanced through the war years."
+              }
+            ],
+            "sources": [
+              "McPherson, Battle Cry of Freedom (1988)"
+            ],
+            "provenance": "Verified"
+          }
+        }
+      ]
+    },
+    "CS": {
+      "head": "Davis",
+      "advisors": [
+        {
+          "id": "cs-toombs",
+          "name": "Toombs",
+          "role": "Secretary of State",
+          "domain": "state",
+          "primary": true,
+          "tenure": {
+            "start": {
+              "y": 1861,
+              "m": 2
+            },
+            "end": {
+              "y": 1861,
+              "m": 7
+            }
+          },
+          "traits": [
+            "brilliant",
+            "vain",
+            "resentful"
+          ],
+          "voice": "Toombs, bristling, glass in hand: 'You ask me to push papers to Europe while other men win the battles, sir? The State Department of this Confederacy is a stool — and I'll not sit on it long.'",
+          "ambition": 80,
+          "ambitionTell": "Toombs believed the presidency was rightly his, not Davis's, and never forgave the convention that passed him over. He chafed at State for five months, quit it for a brigadier's commission, and spent the rest of the war a bitter critic of the man he served — the first and loudest casualty of Davis's jealous, fractious cabinet.",
+          "stances": [
+            {
+              "condition": "always",
+              "oneLine": "Win recognition with cannon, not cotton — one crushing victory in the field will open Europe's doors faster than any dispatch I can write.",
+              "why": "Toombs had no patience for the desk war of diplomacy and little faith that cotton coercion or polite notes would move London; he wanted the South to earn recognition by winning battles. He was right that 'King Cotton' would fail and wrong to think battlefield victory would deliver Europe — Britain recognized the Confederacy's belligerency but never its nationhood, waiting on an independence the South never secured and unwilling to underwrite a slaveholders' republic its own public despised. His early exit set the tone of a government riven by personal rivalry before it had fought a major battle.",
+              "provenance": "Verified",
+              "sources": [
+                "Rable, The Confederate Republic (1994)",
+                "Thompson, Robert Toombs of Georgia (1966)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "Toombs: the rival who walked away",
+            "claim": "Davis's first Secretary of State thought himself the better man for the presidency, lasted barely five months at a department he scorned, and left for the army an embittered foe of the administration — an omen of Confederate cabinet dysfunction before the first great battle.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "Toombs's resentment and rapid departure illustrate how personal rivalry and Davis's prickliness destabilized the Confederate cabinet from its first months."
+              },
+              {
+                "voice": "Scholar — George C. Rable",
+                "text": "The Confederacy built a government on men who had been peers and rivals, then asked them to defer to Davis; Toombs could not, and his flight to a generalship was the pattern's first instance, not its last."
+              }
+            ],
+            "sources": [
+              "Rable, The Confederate Republic (1994)",
+              "Thompson, Robert Toombs of Georgia (1966)"
+            ],
+            "provenance": "Verified"
+          }
+        },
+        {
+          "id": "cs-hunter",
+          "name": "Hunter",
+          "role": "Secretary of State",
+          "domain": "state",
+          "primary": true,
+          "tenure": {
+            "start": {
+              "y": 1861,
+              "m": 7
+            },
+            "end": {
+              "y": 1862,
+              "m": 3
+            }
+          },
+          "traits": [
+            "Virginian",
+            "senatorial",
+            "cautious"
+          ],
+          "voice": "Hunter, measured: 'Cotton is our ambassador, sir. Withhold it, and the looms of Lancashire fall silent — then Europe must come to us, hat in hand.'",
+          "ambition": 55,
+          "ambitionTell": "Hunter soon judged a seat in the Confederate Senate the better perch and left State around seven months in — another minister who would not, or could not, work under Davis's hand, and who kept one eye always on his own standing.",
+          "stances": [
+            {
+              "condition": "recognitionRisk",
+              "oneLine": "Press the cotton embargo — let Europe's idle mills and starving weavers force Britain and France to break the blockade and recognize us.",
+              "why": "Hunter carried forward the 'King Cotton' gamble: that Europe's dependence on Southern cotton would compel intervention. It was the Confederacy's central diplomatic miscalculation. Britain entered the war atop a cotton glut, found new supplies in Egypt and India, and — crucially — would not fight to prop up a slaveholders' republic its own public despised. The voluntary embargo squandered the South's one cash crop for nothing.",
+              "provenance": "Verified",
+              "sources": [
+                "Jones, Blue & Gray Diplomacy: A History of Union and Confederate Foreign Relations (2010)",
+                "Owsley, King Cotton Diplomacy (1931)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "Hunter and the failure of King Cotton",
+            "claim": "Confederate diplomacy bet that cotton hunger would coerce Europe into recognition and intervention — and lost the bet completely.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "Europe's cotton surplus, alternative sources in Egypt and India, and deep popular hostility to slavery doomed the recognition gamble that Hunter and his successors pursued."
+              },
+              {
+                "voice": "Scholar — Howard Jones",
+                "text": "Britain weighed intervention seriously only in the autumn of 1862, and the Emancipation Proclamation slammed that door — recasting the war as one against slavery, which no British government could be seen to oppose."
+              },
+              {
+                "voice": "Lost Cause myth — countered",
+                "text": "The legend that 'King Cotton' nearly worked ignores the documented record: London never seriously moved to break the blockade for a slave republic, and the self-imposed embargo was a self-inflicted wound. What moved European publics was not Southern cleverness but their own refusal to underwrite slavery."
+              }
+            ],
+            "sources": [
+              "Jones, Blue & Gray Diplomacy (2010)",
+              "Owsley, King Cotton Diplomacy (1931)"
+            ],
+            "provenance": "Verified"
+          }
+        },
+        {
+          "id": "cs-benjamin-state",
+          "name": "Benjamin",
+          "role": "Secretary of State",
+          "domain": "state",
+          "primary": true,
+          "tenure": {
+            "start": {
+              "y": 1862,
+              "m": 3
+            },
+            "end": null
+          },
+          "traits": [
+            "brilliant",
+            "unflappable",
+            "loyal to Davis"
+          ],
+          "voice": "I keep my own counsel and the President's secrets, and I smile while Richmond hunts a Jew to blame for powder it never had.",
+          "ambition": 18,
+          "ambitionTell": "Not self-seeking — his suppleness served Davis, not himself; he burned his papers and slipped out of the country rather than build a faction or bargain for his own skin.",
+          "stances": [
+            {
+              "condition": "recognitionRisk",
+              "oneLine": "Bait Europe with cotton and, at the last, with the only coin we have left — a promise to free the men who fight.",
+              "why": "As Secretary of State, Benjamin ran the cotton-diplomacy gamble and the secret mission of Duncan Kenner (1864–65) to offer emancipation in exchange for British and French recognition. Kenner sailed for Europe on Feb. 11, 1865; Palmerston and Napoleon III both refused, and the offer came too late and conceded the war's whole moral premise. Scholars (Owsley, King Cotton Diplomacy; Levine, Confederate Emancipation) treat the episode as proof the Confederacy would trade slavery itself for survival once the cotton lever failed. By Feb. 1865 he carried the gamble to its bitter end: before the African Church mass meeting he urged arming and freeing enslaved men, and the secret Kenner mission offered emancipation itself for recognition. Palmerston and Napoleon III refused — proof the Confederacy would trade slavery for survival, and that slavery was its diplomatic millstone all along.",
+              "provenance": "Verified",
+              "sources": [
+                "Frank L. Owsley, King Cotton Diplomacy (1931; rev. 1959)",
+                "Bruce Levine, Confederate Emancipation (2006)",
+                "Eli N. Evans, Judah P. Benjamin: The Jewish Confederate (1988)",
+                "Encyclopedia Virginia, Letter from Benjamin to R. E. Lee (Feb. 11, 1865)"
+              ]
+            },
+            {
+              "condition": "always",
+              "oneLine": "Protect the President. If a defeat must have a face, let it be mine, not his and not the army's empty magazines.",
+              "why": "Benjamin's defining trait was absorbing blame to shield Davis — most starkly over Roanoke Island (fell Feb. 8, 1862), when he took the Confederate Congress's censure in silence rather than expose the munitions shortage, then was moved to the State Department. The pattern made him Davis's most trusted minister and the cabinet's one point of stability, but it also let Davis evade accountability for systemic failures. Evans and Meade both read this loyalty as genuine, not merely careerist.",
+              "provenance": "Verified",
+              "sources": [
+                "Eli N. Evans, Judah P. Benjamin: The Jewish Confederate (1988)",
+                "Robert Douthat Meade, Judah P. Benjamin: Confederate Statesman (1943)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "Benjamin: 'the brains of the Confederacy,' the scapegoat, and the slurs he could not outrun",
+            "claim": "Judah P. Benjamin was the ablest and most durable man in Jefferson Davis's cabinet — the only one to hold three posts and survive every reshuffle — yet his career is inseparable from the antisemitism that dogged him and the loyalty that made him Davis's shield.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "Benjamin was extraordinarily capable: a New Orleans commercial lawyer, an early Jewish U.S. senator, and the cabinet's intellectual center. He served as Attorney General (from Feb. 25, 1861), Secretary of War (Sept. 1861–March 1862), and Secretary of State (March 1862–May 1865) — Davis's closest counselor and the lone fixed star in a rotating cabinet. (On the 'first Jewish senator' claim, see the note below: David Levy Yulee preceded him.)"
+              },
+              {
+                "voice": "Scholar (Eli N. Evans, 1988)",
+                "text": "Evans's standard biography reads Benjamin's Jewishness as the key to his life — the perpetual outsider who answered exclusion with brilliance and a famous, impenetrable smile, and who at war's end burned his papers so that no biographer (or prosecutor) could reach the inner man. Evans also called Benjamin the first professing-Jewish senator, but that claim is disputed (see the Yulee note)."
+              },
+              {
+                "voice": "Disputed — 'first Jewish senator'",
+                "text": "The often-repeated line that Benjamin was the first Jewish U.S. senator is contested. David Levy Yulee of Florida entered the Senate in 1845, eight years before Benjamin (1853). Evans defended Benjamin's 'first' status by arguing Yulee converted to Christianity in 1846, but the conversion claim is itself poorly documented and rejected by other scholars. The defensible statement is narrower: Benjamin was a prominent Jewish senator who never renounced his Jewish identity — not provably the first Jew in the Senate."
+              },
+              {
+                "voice": "Primary source — the Roanoke scapegoating",
+                "text": "After Roanoke Island fell (Feb. 8, 1862), Gen. Henry A. Wise charged that War Secretary Benjamin had denied him powder and reinforcements. Rather than reveal the Confederacy's crippling arms shortage, Benjamin took the Confederate Congress's censure in silence to protect Davis and the army; only later was the bargain understood. Davis 'rewarded' the loyalty by elevating him to State."
+              },
+              {
+                "voice": "Primary source — the antisemitism",
+                "text": "Benjamin endured relentless antisemitic abuse. Sen. Benjamin F. Wade of Ohio branded him 'an Israelite with Egyptian principles' (1858) — a jab at a Jew defending slavery; Confederate congressman Henry S. Foote was among his most venomous in-house attackers. Across the South he was scapegoated as the 'Jew' minister whenever the war went badly."
+              },
+              {
+                "voice": "Scholar (Bertram W. Korn, 1951)",
+                "text": "Korn cautions that Benjamin's celebrated riposte — that his ancestors received the Law at Sinai while his opponent's were 'herding swine in the forests of Great Britain' — is almost certainly apocryphal; Benjamin rarely invoked his Jewishness publicly. The Civil War unleashed some of the era's worst American antisemitism, and Benjamin was its most prominent target."
+              },
+              {
+                "voice": "Lost Cause myth — named & countered",
+                "text": "Lost Cause memory either erases Benjamin (no statues, little memory) or recasts him as a tragic loyal servant. Both dodge the plain fact: Benjamin owned enslaved people, built his early fortune partly on a sugar plantation worked by the enslaved, defended slavery on the Senate floor, and steered the diplomacy of a slaveholders' republic. The people he held and bargained over were not props in his story — they were human beings whose own flight and resistance helped break the system he served. His ability does not soften that; it sharpens it."
+              }
+            ],
+            "sources": [
+              "Eli N. Evans, Judah P. Benjamin: The Jewish Confederate (1988)",
+              "Robert Douthat Meade, Judah P. Benjamin: Confederate Statesman (1943)",
+              "Bertram Wallace Korn, American Jewry and the Civil War (1951)",
+              "Bruce Levine, Confederate Emancipation (2006)"
+            ],
+            "provenance": "Verified"
+          }
+        },
+        {
+          "id": "cs-memminger",
+          "name": "Memminger",
+          "role": "Secretary of the Treasury",
+          "domain": "treasury",
+          "primary": true,
+          "tenure": {
+            "start": {
+              "y": 1861,
+              "m": 2
+            },
+            "end": {
+              "y": 1864,
+              "m": 7
+            }
+          },
+          "traits": [
+            "earnest",
+            "powerless",
+            "overwhelmed"
+          ],
+          "voice": "Memminger, ledger trembling: 'Give me a tax the states will honor, sir, and I'll spare us the press — deny me one, and the press will print this nation into the grave.'",
+          "ambition": 18,
+          "ambitionTell": "",
+          "stances": [
+            {
+              "condition": "inflationHigh",
+              "oneLine": "I beg the Congress for a real tax — and am handed the printing press instead.",
+              "why": "Memminger pleaded for direct taxation from the start, but the Provisional Congress, jealous of the states, gave him only a token 1861 property tax that the states largely paid in their own borrowed paper rather than collect from citizens. Denied revenue, the Treasury financed the war on unbacked notes; by Ball's accounting taxes supplied only on the order of 8% of receipts while the press supplied roughly 60%. The inflation was thus baked into the Confederacy's own ideology — a government built to keep Richmond weak could not make Richmond solvent. His cleverest lever was the 1861 Produce Loan — bonds payable in cotton, the South's one great asset — but the blockade trapped the bales on the wharves. By Feb. 1864 even Memminger admitted the note issue was fatal; the Currency Reform Act forced holders to fund notes into bonds or lose a third of their value, repudiating roughly a third of the money stock for a brief dip in prices and no lasting confidence.",
+              "provenance": "Verified",
+              "sources": [
+                "Ball, Financial Failure and Confederate Defeat (1991)",
+                "Todd, Confederate Finance (1954)",
+                "Lerner, 'Money, Prices, and Wages in the Confederacy, 1861-65,' JPE (1955)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "Why the South could not pay for its war",
+            "claim": "Confederate finance collapsed for structural reasons — no enforceable taxing power, almost no specie, a blockaded export, and an ideology that forbade a strong central treasury — not for any want of effort by an honest, overmatched Secretary.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "Reliance on the printing press and the states' refusal to be taxed produced inflation of roughly 9,000% by 1865; the currency was effectively worthless before the armies surrendered."
+              },
+              {
+                "voice": "Scholar — Douglas B. Ball",
+                "text": "Financial failure was a primary, not secondary, cause of Confederate defeat: the South had taxable wealth it would not mobilize, and the choice to print rather than tax was a policy failure, not mere bad luck."
+              },
+              {
+                "voice": "Scholar — Eugene M. Lerner",
+                "text": "Lerner's price index — the standard measure of the collapse — rose from 100 in early 1861 to over 9,000 by April 1865, averaging on the order of a quarter each month across the war and steepening sharply in the final two years; the over-issue of notes drove it, with collapsing confidence accelerating the fall."
+              },
+              {
+                "voice": "Primary source — Memminger",
+                "text": "He told Congress repeatedly that without effective taxation the notes must multiply and depreciate; he was right, and was ignored, then blamed."
+              },
+              {
+                "voice": "Lost Cause myth — countered",
+                "text": "Defeat was not betrayal by faint hearts or a corrupt clerk in the Treasury; the Confederacy's own creed of weak central power and the sanctity of slaveholders' wealth made sound war finance structurally impossible. The honest fork: the South's 'riches' were enslaved human beings and the cotton their forced labor produced — wealth that was illiquid, that self-destructed on emancipation, and that was locked behind a blockade. The enslaved people counted as collateral were also the people most determined to see that collateral fail."
+              }
+            ],
+            "sources": [
+              "Ball, Financial Failure and Confederate Defeat (1991)",
+              "Lerner, 'Money, Prices, and Wages in the Confederacy, 1861-65,' JPE (1955)",
+              "Todd, Confederate Finance (1954)",
+              "McPherson, Battle Cry of Freedom (1988)"
+            ],
+            "provenance": "Verified"
+          }
+        },
+        {
+          "id": "cs-trenholm",
+          "name": "Trenholm",
+          "role": "Secretary of the Treasury",
+          "domain": "treasury",
+          "primary": true,
+          "tenure": {
+            "start": {
+              "y": 1864,
+              "m": 7
+            },
+            "end": null
+          },
+          "traits": [
+            "wealthy",
+            "blockade financier",
+            "too late"
+          ],
+          "voice": "Trenholm, dry as a bill of lading: 'I made a fortune slipping cotton past their gunboats, sir — but you cannot run a ruined currency through the blockade. There is no port that takes worthless paper.'",
+          "ambition": 28,
+          "ambitionTell": "",
+          "stances": [
+            {
+              "condition": "always",
+              "oneLine": "Pay the war in cotton and hard coin through the runners — though we come to it a year too late to matter.",
+              "why": "Trenholm built his fortune at Fraser, Trenholm & Co., the Charleston-Liverpool house that served as the Confederacy's overseas financial depository and ran a fleet of blockade-runners. As Secretary he pressed exactly the lever he knew — government cotton shipped through Wilmington for specie and supplies. But he took office in July 1864 with the currency already past saving, and Wilmington itself was sealed when Fort Fisher fell in January 1865; sound instincts arrived after the patient had died. And the 'fortune' was wrung from a trade that fattened private merchants while the public currency that ordinary Confederates — and the enslaved people forced to load those runners — were paid in collapsed. He understood what the markets understood: Confederate paper and the Erlanger cotton bonds traded as a real-time wager on military survival, tracking battlefield news rather than Treasury circulars. By late 1864 no financier could reverse a verdict the armies were writing in the field — finance follows the front, and the front was collapsing.",
+              "provenance": "Verified",
+              "sources": [
+                "Ball, Financial Failure and Confederate Defeat (1991)",
+                "Nepveux, George A. Trenholm: Financial Genius of the Confederacy (1999)",
+                "Weidenmier, 'Turning Points in the U.S. Civil War: Views from the Grayback Market,' Southern Economic Journal (2002)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "Trenholm: the financier who came too late",
+            "claim": "The Confederacy's last and ablest Treasury Secretary — the Charleston blockade-running magnate widely taken as Margaret Mitchell's model for Rhett Butler — brought genuine financial skill to a currency already destroyed, and could do nothing to save it.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "By July 1864 the Confederate dollar was worth a few cents in gold and falling; no minister, however gifted, could rescue a money already repudiated and a Treasury cut off from revenue. Trenholm's tenure is a study in how late competence cannot undo early structural failure."
+              },
+              {
+                "voice": "Scholar — Douglas B. Ball",
+                "text": "The fatal choices were made in 1861-63; Trenholm inherited their consequences. His real wealth and acumen only underline that the Confederacy's problem was never a shortage of clever men but a refusal to tax and a collapsing military base for its credit."
+              },
+              {
+                "voice": "Primary source / biography — Nepveux",
+                "text": "Trenholm's firm was the depository of Confederate funds abroad and a leader of the blockade-running trade, operating dozens of runners; his personal fortune could not be converted into a solvent government. (A family-authored biography — corroborate its claims against Ball and the archival record before treating any single detail as settled.)"
+              },
+              {
+                "voice": "Lost Cause myth — countered",
+                "text": "Popular memory romanticizes the dashing blockade-runner — Rhett Butler getting rich while fools cling to the Cause. The unromantic truth is that blockade-running profits flowed to private merchants in luxury cargoes and specie even as the public currency died, and the runners' holds were loaded and the cotton baled by enslaved laborers who saw none of the gold. The dashing runner is a symptom of the South's financial disorder and its dependence on forced labor, not a remedy for either."
+              }
+            ],
+            "sources": [
+              "Ball, Financial Failure and Confederate Defeat (1991)",
+              "Nepveux, George A. Trenholm: Financial Genius of the Confederacy (1999)",
+              "Weidenmier, 'Turning Points in the U.S. Civil War: Views from the Grayback Market,' Southern Economic Journal (2002)"
+            ],
+            "provenance": "Verified"
+          }
+        },
+        {
+          "id": "cs-walker",
+          "name": "Walker",
+          "role": "Secretary of War",
+          "domain": "war",
+          "primary": true,
+          "tenure": {
+            "start": {
+              "y": 1861,
+              "m": 2
+            },
+            "end": {
+              "y": 1861,
+              "m": 9
+            }
+          },
+          "traits": [
+            "Alabama lawyer",
+            "out of his depth"
+          ],
+          "voice": "Walker, with a boast the war would bury: 'We shall wipe up every drop of blood spilled in this quarrel with a pocket-handkerchief, sir.'",
+          "ambition": 35,
+          "ambitionTell": "Walker's failing was want of stamina, not surplus of ambition — he wanted out almost as badly as Davis wanted him gone, and took a brigadier's commission to escape the desk.",
+          "stances": [
+            {
+              "condition": "always",
+              "oneLine": "Defer to the President in all things military — he will run this office whether or not I sign the orders.",
+              "why": "Davis had been an able U.S. Secretary of War (1853-57) and a West Point graduate; he treated the Confederate War Department as his personal command post. Walker, an attorney with no military background, was overmatched by both the job and the President, and was eased out within seven months — the opening turn of the revolving door. Beneath the friction lay the founding paradox of Confederate mobilization: more eager volunteers than arms to give them. Walker had to turn men away for want of muskets — the agricultural South had almost no domestic arms industry in 1861 — a structural shortage, not a failure of will.",
+              "provenance": "Verified",
+              "sources": [
+                "Rable, The Confederate Republic (1994)",
+                "Cooper, Jefferson Davis, American (2000)",
+                "Thomas, The Confederate Nation (1979)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "Walker and the impossible War Office",
+            "claim": "The first Confederate War Secretary lasted seven months — overwhelmed by mobilization and by a President who meant to run the department himself.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "Walker mobilized hundreds of thousands of volunteers he could not arm, broke under the workload and his own ill health, and resigned in September 1861 — the first of six men to hold the post in four years."
+              },
+              {
+                "voice": "Scholar — George Rable",
+                "text": "The War Department's instability was no accident of personnel; it reflected an impossible task compounded by Davis's compulsion to supervise every military detail himself."
+              }
+            ],
+            "sources": [
+              "Rable, The Confederate Republic (1994)",
+              "Thomas, The Confederate Nation (1979)"
+            ],
+            "provenance": "Verified"
+          }
+        },
+        {
+          "id": "cs-benjamin-war",
+          "name": "Benjamin",
+          "role": "Secretary of War",
+          "domain": "war",
+          "primary": true,
+          "tenure": {
+            "start": {
+              "y": 1861,
+              "m": 9
+            },
+            "end": {
+              "y": 1862,
+              "m": 3
+            }
+          },
+          "traits": [
+            "brilliant",
+            "loyal",
+            "scapegoated"
+          ],
+          "voice": "I keep my own counsel and the President's secrets, and I smile while Richmond hunts a Jew to blame for powder it never had.",
+          "ambition": 18,
+          "ambitionTell": "Not self-seeking — his suppleness served Davis, not himself; he burned his papers and slipped out of the country rather than build a faction or bargain for his own skin.",
+          "stances": [
+            {
+              "condition": "armyWeak",
+              "oneLine": "Husband our scant powder and arms — and never let the enemy learn how little we have; if a defeat must wear a face, let it be mine.",
+              "why": "As Secretary of War, Benjamin concealed the army's desperate powder shortage and, when Roanoke Island fell (Feb. 8, 1862), absorbed the Confederate Congress's censure in silence rather than expose the empty magazines — then was moved to State. The loyalty made him Davis's most trusted minister and the cabinet's one point of stability, but it also let Davis evade accountability for systemic failures no War Secretary could have cured. Evans and Meade read the self-sacrifice as genuine, not merely careerist.",
+              "provenance": "Verified",
+              "sources": [
+                "Eli N. Evans, Judah P. Benjamin: The Jewish Confederate (1988)",
+                "Robert Douthat Meade, Judah P. Benjamin: Confederate Statesman (1943)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "Benjamin takes the fall for Roanoke",
+            "claim": "The Confederacy's ablest minister ran a War Department he could not supply, then took the blame for the loss of Roanoke Island rather than reveal the army's empty magazines — loyalty to Davis that cost him his own name.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "Roanoke Island fell on Feb. 8, 1862 for want of powder Benjamin had no power to conjure; he accepted the Confederate Congress's censure in silence rather than expose the shortage to the enemy, then was moved to the State Department — a scapegoating that protected Davis and military secrets both."
+              },
+              {
+                "voice": "Scholar (Eli Evans)",
+                "text": "Evans's Judah P. Benjamin: The Jewish Confederate (1988) reads the self-sacrifice as conviction, not careerism: the immigrant Jewish lawyer absorbed blame to shield the President and the army's secret weakness, and met relentless antisemitism with imperturbable competence across three cabinet posts."
+              },
+              {
+                "voice": "Scholar (Robert Douthat Meade)",
+                "text": "Meade's Judah P. Benjamin: Confederate Statesman (1943) likewise treats Benjamin's defining trait as a genuine loyalty that made him Davis's most trusted minister and the cabinet's one constant — even as it let Davis evade accountability for systemic failures."
+              }
+            ],
+            "sources": [
+              "Eli N. Evans, Judah P. Benjamin: The Jewish Confederate (1988)",
+              "Robert Douthat Meade, Judah P. Benjamin: Confederate Statesman (1943)"
+            ],
+            "provenance": "Verified"
+          }
+        },
+        {
+          "id": "cs-randolph",
+          "name": "Randolph",
+          "role": "Secretary of War",
+          "domain": "war",
+          "primary": true,
+          "tenure": {
+            "start": {
+              "y": 1862,
+              "m": 3
+            },
+            "end": {
+              "y": 1862,
+              "m": 11
+            }
+          },
+          "traits": [
+            "Virginian",
+            "strategic-minded",
+            "frustrated"
+          ],
+          "voice": "Randolph, drawing himself up: 'If the President will decide every detail himself, sir, he has no need of a Secretary of War — and I will not hold the office in name only.'",
+          "ambition": 35,
+          "ambitionTell": "Randolph wanted authority to match his title, not the President's chair. When Davis countermanded his order moving troops across the Mississippi, he resigned rather than serve as a clerk — ambition for competence, not for power.",
+          "stances": [
+            {
+              "condition": "always",
+              "oneLine": "Let your Secretary actually command something, sir, or you will wear out a procession of able men.",
+              "why": "Randolph quit after eight months, in declining health and in open frustration that Davis would not delegate. His departure is the clearest single case of the President strangling his own War Office: an intelligent, energetic administrator driven out not by incompetence but by being denied the power to do his job. The breaking point was strategic: Randolph, a grandson of Jefferson, grasped that the Confederacy had to coordinate its far-flung theaters and ordered troops moved eastward across the Mississippi to save the threatened West. Davis countermanded it as exceeding a secretary's authority — the clearest single case of the President strangling his own War Office.",
+              "provenance": "Verified",
+              "sources": [
+                "Rable, The Confederate Republic (1994)",
+                "Cooper, Jefferson Davis, American (2000)",
+                "Thomas, The Confederate Nation (1979)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "Randolph resigns over micromanagement",
+            "claim": "An able strategist with a clear grasp of the war's theaters quit because Davis would not let him decide anything.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "Randolph saw the strategic whole — especially the endangered West — but resigned in November 1862 after Davis countermanded his cross-Mississippi troop order, unwilling to be a secretary in name only."
+              },
+              {
+                "voice": "Scholar — George Rable",
+                "text": "Davis's refusal to delegate military decisions made the War Department a graveyard of talent; Randolph's resignation was its starkest illustration."
+              },
+              {
+                "voice": "Lost Cause myth — named & countered",
+                "text": "The Lost Cause blames defeat on Northern numbers alone. Randolph's case shows the South also lost by self-inflicted dysfunction — a President who could not, by temperament, build a functioning war ministry."
+              }
+            ],
+            "sources": [
+              "Rable, The Confederate Republic (1994)",
+              "Thomas, The Confederate Nation (1979)"
+            ],
+            "provenance": "Verified"
+          }
+        },
+        {
+          "id": "cs-seddon",
+          "name": "Seddon",
+          "role": "Secretary of War",
+          "domain": "war",
+          "primary": true,
+          "tenure": {
+            "start": {
+              "y": 1862,
+              "m": 11
+            },
+            "end": {
+              "y": 1865,
+              "m": 2
+            }
+          },
+          "traits": [
+            "gaunt",
+            "diligent",
+            "worn down"
+          ],
+          "voice": "Seddon, hollow-eyed and ashen: 'I will serve as long as I am able, sir, and feed armies the country can no longer feed.'",
+          "ambition": 30,
+          "ambitionTell": "",
+          "stances": [
+            {
+              "condition": "armyWeak",
+              "oneLine": "Scrape every man and ration from a shrinking country — conscription, impressment, the tax-in-kind, all of it.",
+              "why": "Seddon, the longest-serving Confederate War Secretary, ran the machinery of total mobilization as the South's resources collapsed: conscription extended to ages 17-50 by the 1864 act, impressment of food and of enslaved labor, the 10-percent tax-in-kind. These measures fed the armies a while longer at the cost of enraging states'-rights governors and ordinary farmers — and they could not replace the labor the Confederacy was losing as enslaved people fled to Union lines and refused to work, draining the South of the very forced labor its war effort depended on. He repeatedly urged reinforcing the West against Davis's instinct to guard Virginia, and that he held the post more than two years amid such friction reflects endurance, not agreement; he resigned, broken, in Feb. 1865 after the Confederate Congress demanded a cabinet shake-up.",
+              "provenance": "Verified",
+              "sources": [
+                "Rable, The Confederate Republic (1994)",
+                "Thomas, The Confederate Nation (1979)",
+                "Cooper, Jefferson Davis, American (2000)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "Seddon and the long starvation",
+            "claim": "The War Department's longest-serving head managed decline, not victory — worn to a skeleton presiding over the South's exhaustion.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "Seddon's twenty-seven months were a fighting retreat against the collapse of Confederate manpower and supply; he resigned in February 1865 under congressional pressure, physically and politically spent."
+              },
+              {
+                "voice": "Scholar — Emory Thomas",
+                "text": "By Seddon's tenure the central government had grown coercive — conscription, impressment, tax-in-kind — precisely as the states'-rights ideology that birthed the Confederacy turned against that centralization, hollowing out its own war effort."
+              },
+              {
+                "voice": "Consensus — Black agency",
+                "text": "The manpower and supply crisis Seddon fought was driven in large part by the enslaved themselves: hundreds of thousands fled to Union lines, withheld their labor, and seized freedom, denying the Confederacy the forced workforce that built its fortifications and fed its armies. Slavery's collapse from within was a Confederate military defeat, not a footnote to it."
+              },
+              {
+                "voice": "Lost Cause myth — named & countered",
+                "text": "The myth of a South united to the last ignores how Seddon's own mobilization measures provoked draft resistance, desertion, and open defiance from governors like Brown and Vance — and ignores the enslaved men and women whose flight and refusal to labor helped break the Confederacy. Internal fracture and Black self-emancipation, not just Northern force, brought the South down."
+              }
+            ],
+            "sources": [
+              "Rable, The Confederate Republic (1994)",
+              "Thomas, The Confederate Nation (1979)"
+            ],
+            "provenance": "Verified"
+          }
+        },
+        {
+          "id": "cs-breckinridge",
+          "name": "Breckinridge",
+          "role": "Secretary of War",
+          "domain": "war",
+          "primary": true,
+          "tenure": {
+            "start": {
+              "y": 1865,
+              "m": 2
+            },
+            "end": null
+          },
+          "traits": [
+            "former U.S. Vice President",
+            "clear-eyed",
+            "honorable"
+          ],
+          "voice": "Breckinridge, gravely: 'This has been a magnificent epic, sir; it should not be allowed to terminate in a farce. Let us end it like men.'",
+          "ambition": 40,
+          "ambitionTell": "",
+          "stances": [
+            {
+              "condition": "always",
+              "oneLine": "See the end clearly and meet it with honor — spare the country a guerrilla agony that cannot win and will not stop.",
+              "why": "Breckinridge, once Vice President of the United States, took the War Office in the Confederacy's final ten weeks, judged the cause irretrievably lost, and used his brief tenure to press for an orderly, honorable surrender rather than a dispersal into endless guerrilla war. He worked to safeguard records and secure decent terms — arguably the ablest and most clear-sighted of Davis's six secretaries, precisely because he refused the fantasy of fighting on. When some Confederates (Davis himself, briefly) entertained dispersing the armies into a partisan war, Breckinridge argued such a course would devastate the South far worse than surrender; his counsel helped move events toward the negotiated surrenders of spring 1865 rather than a prolonged, lawless insurgency.",
+              "provenance": "Verified",
+              "sources": [
+                "Davis, Breckinridge: Statesman, Soldier, Symbol (1974)",
+                "Rable, The Confederate Republic (1994)",
+                "Cooper, Jefferson Davis, American (2000)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "Breckinridge and an honorable end",
+            "claim": "The last Confederate War Secretary — and ablest — used his brief tenure to seek a dignified surrender, not a doomed guerrilla last stand.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "Breckinridge, a former U.S. Vice President, took the War Office in February 1865, recognized the war was lost, and pressed for honorable capitulation over a descent into partisan warfare."
+              },
+              {
+                "voice": "Scholar — William C. Davis",
+                "text": "His insistence that a 'magnificent epic' not end in 'a farce' put a humane, clear-eyed close on the Confederate war effort — the one secretary whose finest service was helping the cause die cleanly."
+              },
+              {
+                "voice": "Lost Cause myth — named & countered",
+                "text": "The Lost Cause prefers martyrs to realists. Breckinridge's value lay in seeing the truth the myth denies: that the cause was lost, that the war had been fought to preserve the enslavement of millions of Black Americans — who were freeing themselves as the Confederacy collapsed — and that prolonging the bloodshed would have been a crime against the South itself."
+              }
+            ],
+            "sources": [
+              "Davis, Breckinridge: Statesman, Soldier, Symbol (1974)",
+              "Rable, The Confederate Republic (1994)"
+            ],
+            "provenance": "Verified"
+          }
+        },
+        {
+          "id": "cs-mallory",
+          "name": "Mallory",
+          "role": "Secretary of the Navy",
+          "domain": "navy",
+          "primary": true,
+          "tenure": {
+            "start": {
+              "y": 1861,
+              "m": 2
+            },
+            "end": null
+          },
+          "traits": [
+            "innovative",
+            "resourceful",
+            "underestimated"
+          ],
+          "voice": "Mallory, charts spread across the desk: 'We cannot meet them keel for keel, sir — so we will not try. We will build the thing they have never seen and cannot answer.'",
+          "ambition": 20,
+          "ambitionTell": "",
+          "stances": [
+            {
+              "condition": "blockadeLoose",
+              "oneLine": "Stake everything on a few ironclads at the river mouths — one armored ram is worth a squadron of wooden frigates we cannot build.",
+              "why": "Mallory grasped early that the Confederacy could never match Northern numbers and so wagered on quality: the CSS Virginia, rebuilt from the scuttled USS Merrimack, savaged the wooden blockaders at Hampton Roads on 8 March 1862 before fighting the USS Monitor to a draw the next day — history's first clash of ironclads. The trade-off was brutal: armored ships needed iron, marine engines, and skilled labor a slave-based planter economy barely possessed — and much of the heavy work fell on enslaved and impressed Black laborers at yards like Tredegar. Most Confederate ironclads were therefore under-engined, slow, and trapped in their own harbors. The strategy could harass and delay, never break, a blockade backed by Northern foundries. Unable to lift the blockade, he took the war to the open ocean with commerce raiders — the CSS Alabama under Semmes took more than sixty Union prizes before the Kearsarge sank her off Cherbourg (1864) — and sowed the channels with 'torpedoes' (mines, which sank more Union vessels than every other Confederate naval arm combined) and the submarine H.L. Hunley, the first submarine to destroy a warship (USS Housatonic, Feb. 17, 1864). Poor men's weapons that pointed the way to twentieth-century naval warfare but could never seize the initiative.",
+              "provenance": "Verified",
+              "sources": [
+                "Symonds, The Civil War at Sea (2009)",
+                "Tucker, A Short History of the Civil War at Sea (2002)",
+                "Still, Iron Afloat: The Story of the Confederate Armorclads (1971)",
+                "Fox, Wolf of the Deep: Raphael Semmes and the Notorious Confederate Raider CSS Alabama (2007)",
+                "Spencer, The Confederate Navy in Europe (1983)",
+                "Kloeppel, Danger Beneath the Waves: A History of the Confederate Submarine H.L. Hunley (1987)",
+                "Schafer, Confederate Underwater Warfare (1996)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "Mallory's asymmetric navy: innovation on a shoestring",
+            "claim": "Commanding a nation with almost no shipyards, marine engines, or skilled iron labor, Mallory pioneered ironclad warships, ocean commerce raiders, naval mines, and submarine attack — punching far above the South's industrial weight, yet never able to overcome it.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "Mallory understood the Confederacy could not win a numbers war at sea and bet on technological surprise; his ironclads, raiders, torpedoes, and the Hunley reshaped naval warfare worldwide even as the Union blockade tightened to a stranglehold."
+              },
+              {
+                "voice": "Scholar — Craig L. Symonds",
+                "text": "The genius and the tragedy were the same: Confederate naval innovation was forced by industrial poverty, and that same poverty — too little iron, too few engines, too thin a base of mechanics — capped what the innovation could achieve."
+              },
+              {
+                "voice": "Scholar — William N. Still Jr.",
+                "text": "Most Confederate ironclads were slow, deep-drafted, and underpowered, bottled in the harbors they were built to defend; the armorclad program was a strategic improvisation that delayed defeat at the river mouths but could not reverse it."
+              },
+              {
+                "voice": "Lost Cause myth — countered",
+                "text": "Romantic memory casts the Alabama and the Hunley as proof of Southern daring nearly winning the sea war; in fact commerce raiding never touched the blockade's grip and the submarine's lone success cost its own crew their lives. The yards that built these wonders ran on enslaved and impressed Black labor — bravery and ingenuity that could harass the Union, never defeat it, in service of a republic founded to keep human beings in bondage."
+              }
+            ],
+            "sources": [
+              "Symonds, The Civil War at Sea (2009)",
+              "Still, Iron Afloat: The Story of the Confederate Armorclads (1971)",
+              "Durkin, Stephen R. Mallory: Confederate Navy Chief (1954)"
+            ],
+            "provenance": "Verified"
+          }
+        },
+        {
+          "id": "cs-reagan",
+          "name": "Reagan",
+          "role": "Postmaster General",
+          "domain": "post",
+          "primary": false,
+          "tenure": {
+            "start": {
+              "y": 1861,
+              "m": 3
+            },
+            "end": null
+          },
+          "traits": [
+            "Texan",
+            "diligent",
+            "the one constant"
+          ],
+          "voice": "Reagan: 'The post office will pay its own way, sir — the only department in this government that can say so.'",
+          "ambition": 25,
+          "ambitionTell": "",
+          "stances": [
+            {
+              "condition": "always",
+              "oneLine": "Keep the mails moving and the books balanced — small proof the South can govern itself.",
+              "why": "Reagan ran the Confederate Post Office Department — the only one to operate in the black — for the entire war, a rare island of competence and continuity in Davis's churning cabinet.",
+              "provenance": "Verified",
+              "sources": [
+                "Rable, The Confederate Republic (1994)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "Reagan: the department that worked",
+            "claim": "The Confederate Post Office, alone, was solvent and stable the whole war.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "Reagan's competence stood out against the cabinet's instability."
+              }
+            ],
+            "sources": [
+              "Rable, The Confederate Republic (1994)"
+            ],
+            "provenance": "Verified"
+          }
+        },
+        {
+          "id": "cs-bragg-ag",
+          "name": "Bragg",
+          "role": "Attorney General",
+          "domain": "justice",
+          "primary": false,
+          "tenure": {
+            "start": {
+              "y": 1861,
+              "m": 11
+            },
+            "end": {
+              "y": 1862,
+              "m": 3
+            }
+          },
+          "traits": [
+            "North Carolinian",
+            "brief"
+          ],
+          "voice": "Thomas Bragg: 'The law of a new nation must be written as the war is fought, sir.'",
+          "ambition": 25,
+          "ambitionTell": "",
+          "stances": [
+            {
+              "condition": "always",
+              "oneLine": "Build the legal scaffolding of a new nation under fire.",
+              "why": "The Confederate Attorney-Generalship rotated among several men; Thomas Bragg (brother of the general) was one, reflecting the same cabinet churn that plagued the War Office.",
+              "provenance": "Inferred",
+              "sources": [
+                "Rable, The Confederate Republic (1994)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "The revolving Attorney-Generalship",
+            "claim": "Even the Confederate law office churned through holders.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "Cabinet instability touched nearly every Confederate department."
+              }
+            ],
+            "sources": [
+              "Rable, The Confederate Republic (1994)"
+            ],
+            "provenance": "Inferred"
+          }
+        },
+        {
+          "id": "cs-watts-ag",
+          "name": "Watts",
+          "role": "Attorney General",
+          "domain": "justice",
+          "primary": false,
+          "tenure": {
+            "start": {
+              "y": 1862,
+              "m": 3
+            },
+            "end": {
+              "y": 1864,
+              "m": 1
+            }
+          },
+          "traits": [
+            "Alabamian",
+            "departed for governorship"
+          ],
+          "voice": "Thomas Watts: 'I am needed more in Alabama, sir, than at this desk.'",
+          "ambition": 35,
+          "ambitionTell": "",
+          "stances": [
+            {
+              "condition": "always",
+              "oneLine": "States and Richmond both have claims on a man — and the states often win.",
+              "why": "Watts left the Attorney-Generalship to become Governor of Alabama — an instance of the states'-rights pull that drained the Confederate central government of talent.",
+              "provenance": "Inferred",
+              "sources": [
+                "Rable, The Confederate Republic (1994)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "The states' pull on the cabinet",
+            "claim": "Confederate ministers often left Richmond for state office — states' rights in miniature.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "Loyalty to states over the central government weakened Richmond."
+              }
+            ],
+            "sources": [
+              "Rable, The Confederate Republic (1994)"
+            ],
+            "provenance": "Inferred"
+          }
+        },
+        {
+          "id": "cs-georgedavis-ag",
+          "name": "Davis",
+          "role": "Attorney General",
+          "domain": "justice",
+          "primary": false,
+          "tenure": {
+            "start": {
+              "y": 1864,
+              "m": 1
+            },
+            "end": null
+          },
+          "traits": [
+            "North Carolinian",
+            "last in office"
+          ],
+          "voice": "George Davis: 'We will keep the forms of law, sir, to the very last.'",
+          "ambition": 20,
+          "ambitionTell": "",
+          "stances": [
+            {
+              "condition": "always",
+              "oneLine": "Maintain the forms of law to the end.",
+              "why": "George Davis (no relation to the President) was the last Confederate Attorney General, serving to the collapse.",
+              "provenance": "Inferred",
+              "sources": [
+                "Rable, The Confederate Republic (1994)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "The last Confederate law officer",
+            "claim": "The Justice office, like the cabinet, served to the bitter end.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "George Davis closed out the revolving Attorney-Generalship."
+              }
+            ],
+            "sources": [
+              "Rable, The Confederate Republic (1994)"
+            ],
+            "provenance": "Inferred"
+          }
+        }
+      ]
+    }
+  },
+  "crossCards": [
+    {
+      "side": "US",
+      "title": "Lincoln's Team of Rivals",
+      "claim": "Lincoln filled his cabinet with men who had wanted his job — Seward, Chase, and Bates all sought the 1860 Republican nomination — and harnessed their ambition into a government that held together, while Richmond's did not. The Union's edge was not only armies and factories; it was political cohesion under a president who absorbed rivalry instead of being destroyed by it.",
+      "perspectives": [
+        {
+          "voice": "Scholar — Doris Kearns Goodwin (Team of Rivals, 2005)",
+          "text": "Goodwin's thesis: Lincoln's 'political genius' lay in placing his strongest rivals — Seward at State, Chase at Treasury, Bates as Attorney General — inside the cabinet, then managing their egos so the talent served the Union. (A fourth 1860 nomination contender, Pennsylvania's Simon Cameron, took the War Department before scandal forced him out in 1862.) The book's organizing claim is that Lincoln's emotional intelligence — his capacity to share credit, shoulder blame, and forgive — was itself a war-winning instrument."
+        },
+        {
+          "voice": "Scholar — James McPherson (Battle Cry of Freedom, 1988; Tried by War, 2008)",
+          "text": "McPherson centers the strategic payoff: the Union government survived Chase's serial intrigues, the Blair–Chase feuds, and the near-fatal cabinet crisis of December 1862 (when Senate Radicals tried to force Seward out) without fracturing. That durability — a commander-in-chief who grew into the role and held a quarrelsome coalition together through the 1864 crisis — was a decisive advantage over a Confederacy that was politically coming apart."
+        },
+        {
+          "voice": "Counter-scholar — James Oakes (NYT op-ed, Nov 20, 2008)",
+          "text": "Oakes presses the necessary corrective: appointing party rivals was not Lincoln's invention — John Quincy Adams gave State to his rival Henry Clay in 1825; the practice was old. Rivals for a party's nomination are not 'enemies' (Lincoln would never have seated his Democratic opponent Stephen Douglas). And the cabinet was, in Oakes's words, a 'contentious, envious and often dysfunctional collection of prima donnas.' Lincoln, Oakes argues, succeeded DESPITE the infighting as much as because of any harmonious 'team.' The romance must not obscure the friction."
+        },
+        {
+          "voice": "Primary source — the management of Chase",
+          "text": "The hardest case was Salmon Chase, an able Treasury chief who openly schemed for the 1864 nomination and repeatedly tendered his resignation as a lever. Lincoln declined his earlier offers — until June 30, 1864, when he finally accepted, replacing him with William Pitt Fessenden. Then, in December 1864, Lincoln named Chase Chief Justice: a calculated magnanimity that co-opted a 'rancorous political enemy,' rewarded radical antislavery credentials, and put Chase's ceaseless ambition to the country's use. Forgiveness as statecraft, not sentiment."
+        },
+        {
+          "voice": "Contrast — the Confederacy (Rable; Cooper)",
+          "text": "Set against Lincoln's two Secretaries of War (Cameron, Stanton) and one Navy Secretary (Welles) across four years, Jefferson Davis churned through five War Secretaries (Walker, Benjamin, Randolph, Seddon, Breckinridge), four State Secretaries, and three Treasury chiefs — micromanaging the War Office himself, distrusting able men, and clashing with and effectively pushing out George W. Randolph. Only Mallory (Navy) and Reagan (Post) lasted the war, Mallory chiefly because Davis's soldierly inattention to naval affairs spared the one department from his interference. Where Lincoln converted rivals into ministers, Davis converted ministers into rivals — and the states'-rights creed gave him governors (Brown of Georgia, Vance of North Carolina) who resisted conscription and impressment and hoarded men and matériel against Richmond. Confederate governance was a real cause of defeat, not a footnote to overwhelming Union numbers."
+        },
+        {
+          "voice": "Anti-Lost-Cause synthesis",
+          "text": "The Lost Cause holds that a united, gallant South fell only to brute numbers. The cabinet record refutes it from the inside: the Confederacy was divided against itself, weakened by the very localism it was founded to protect, while the Union's quarrelsome but unbroken government — built on managed ambition — proved the more durable war machine. And the cause both sides governed over remained slavery; Lincoln's coalition held together precisely because it bent, by 1862–63, toward emancipation as a war aim — a turn driven not only from above but by the enslaved themselves, whose flight to Union lines and service in the U.S. Colored Troops forced and then sustained that purpose, binding radicals like Chase to it."
+        }
+      ],
+      "sources": [
+        "Goodwin, Team of Rivals: The Political Genius of Abraham Lincoln (Simon & Schuster, 2005)",
+        "McPherson, Battle Cry of Freedom (Oxford University Press, 1988)",
+        "McPherson, Tried by War: Abraham Lincoln as Commander in Chief (Penguin Press, 2008)",
+        "Oakes, 'Lincoln's Team of Rivals,' op-ed, The New York Times (November 20, 2008)",
+        "Rable, The Confederate Republic: A Revolution Against Politics (University of North Carolina Press, 1994)",
+        "Cooper, Jefferson Davis, American (Alfred A. Knopf, 2000)"
+      ],
+      "provenance": "Verified"
+    },
+    {
+      "side": "CS",
+      "title": "Davis's revolving cabinet and the cost of states' rights",
+      "claim": "The Confederacy was crippled from within — by Davis's micromanaging temper, a War Office that churned through five secretaries (and a sixth ad interim) in four years, and governors who hoarded their states' men and matériel against Richmond. A nation founded to resist central power could not build the central power total war demanded. Defeat was not the betrayal of a gallant, united South by Northern numbers alone; it was, in real part, self-inflicted — and it ran atop a slave society whose own enslaved people were actively dismantling it from below.",
+      "perspectives": [
+        {
+          "voice": "Consensus",
+          "text": "Jefferson Davis tried to run the war himself. A trained soldier and former U.S. War Secretary, he buried himself in the detail of appointments and dispatches, feuded bitterly with subordinates and generals (Beauregard, Johnston), and could not delegate. The War Department paid the price: five confirmed secretaries between 1861 and 1865 — Walker, Benjamin, Randolph, Seddon, and Breckinridge — plus Gustavus W. Smith, who held the office ad interim for four days (Nov 17-21, 1862) before Seddon took over. Randolph resigned in November 1862, frustrated at being shut out of operations by a president who would not let a war secretary actually run the war. The instability was not bad luck; it was Davis strangling his own administration."
+        },
+        {
+          "voice": "Scholar — George Rable, The Confederate Republic (1994)",
+          "text": "The Confederacy's politics were paralyzed by an anti-party, anti-power ideology. Having seceded against centralized government, Confederates distrusted the very institutions — parties, a strong executive establishment, coercive taxation — that a modern war requires. They governed an anti-government, and it showed in every department."
+        },
+        {
+          "voice": "Scholar — Paul Escott, After Secession (1978)",
+          "text": "Davis never built a Confederate nationalism strong enough to override states' rights and class resentment. As conscription, impressment, and tax-in-kind fell hardest on yeoman farmers while planters claimed exemptions, common people lost faith in the cause. The failure was the administration's failure to answer the grievances of its own people — nationalism that never took root cannot sustain a war."
+        },
+        {
+          "voice": "Scholar — Emory Thomas, The Confederate Nation (1979)",
+          "text": "The cruel irony is that the Confederacy had to centralize — conscription, impressment, national taxation, government control of industry and railroads — to survive at all, becoming the very leviathan it had seceded to escape. It out-centralized the antebellum United States and still could not match the Union, and the centralizing wrecked its founding consensus in the process."
+        },
+        {
+          "voice": "Primary source — the obstructing governors",
+          "text": "Governor Joseph Brown of Georgia denounced conscription to Davis's face as 'subversive of her [Georgia's] sovereignty,' a 'palpable violation of the Constitution,' and an 'usurpation' tending to 'military despotism' — and he shielded thousands by appointing them to state offices. Governor Zebulon Vance of North Carolina kept large state stores of uniforms, shoes, and blankets reserved for North Carolina troops, and his broad reading of the exemption laws sheltered more men from the draft than any other governor — even as North Carolina, in fact, also fed the Confederate army more conscripts and supplies than any other state, which complicates the simple 'hoarding' charge. The states' rights creed, aimed at the Union, turned inward against Richmond."
+        },
+        {
+          "voice": "Primary source — Davis's vice president",
+          "text": "Alexander Stephens, the Confederacy's own Vice President, spent much of the war back home in Georgia leading the opposition — condemning conscription (in an anonymous 1862 newspaper letter) and, before the Georgia legislature in 1864, denouncing the suspension of habeas corpus as despotism. When the second-highest officer of the government wages a states'-rights war against his own administration, the dysfunction is not marginal; it is at the center."
+        },
+        {
+          "voice": "Lost Cause myth — named and countered",
+          "text": "The Lost Cause held that a noble, united South was overwhelmed only by brute Northern numbers and resources — defeat as tragedy, never as failure. The record refutes it. The Confederacy was divided against itself: governors withholding troops, a vice president in open opposition, a War Office in permanent crisis, common people deserting an elite's war, and enslaved people fleeing to Union lines by the hundreds of thousands. The South was not betrayed by faint hearts or crushed by numbers alone; its government was hollowed out by the localism it was founded to defend."
+        },
+        {
+          "voice": "Scholar — Frank Owsley, State Rights in the Confederacy (1925)",
+          "text": "The originating verdict, and the bluntest: the Confederacy 'died of states' rights.' Owsley's old thesis overstates a single cause and rests on a Lost-Cause-adjacent worldview, but it named the wound. Later scholars refined the mechanism — Davis's failures, weak nationalism, class fracture — without erasing the core insight that the South's own structure helped kill it."
+        },
+        {
+          "voice": "Caution — Beringer, Hattaway, Jones & Still, Why the South Lost the Civil War (1986)",
+          "text": "Not all scholars accept that states' rights was decisive. These authors argue the obstruction was more rhetoric than substance — that the Confederacy did centralize effectively — and locate defeat instead in a fragile nationalism and a failing will to fight, sapped by guilt over slavery and military reverses. The debate is live; but every camp here agrees the cause was substantially internal, not merely the arithmetic of men and guns."
+        },
+        {
+          "voice": "Synthesis — slavery at the root, and the enslaved as actors",
+          "text": "The governance dysfunction traces back to slavery. The states'-rights ideology that paralyzed Richmond existed to protect human bondage — Vice President Stephens himself, in the 1861 'Cornerstone Speech,' declared slavery and white supremacy the Confederacy's founding 'cornerstone.' The class fracture Escott describes pitted slaveholding planters, who won exemptions, against non-slaveholding yeomen, who bled. And the enslaved were not passive stakes in that quarrel: by fleeing to Union lines in the hundreds of thousands, resisting impressment, and ultimately taking up arms in U.S. uniform, they drained the Confederate labor and manpower base and forced the regime into the very coercive, centralizing measures that shattered its founding consensus. A republic built to perpetuate slavery could not cohere into a nation — its founding principle was the right of a local elite to resist any power, even its own, that threatened the institution — while the people it enslaved worked to bring it down. The contradiction was fatal."
+        }
+      ],
+      "sources": [
+        "Rable, The Confederate Republic: A Revolution against Politics (1994)",
+        "Thomas, The Confederate Nation, 1861-1865 (1979)",
+        "Escott, After Secession: Jefferson Davis and the Failure of Confederate Nationalism (1978)",
+        "Owsley, State Rights in the Confederacy (1925)",
+        "Beringer, Hattaway, Jones & Still, Why the South Lost the Civil War (1986)",
+        "McPherson, Battle Cry of Freedom (1988)",
+        "Brown-Davis Conscription Correspondence (DocSouth, UNC; primary source)",
+        "Stephens, 'Cornerstone Speech' (Savannah, Mar. 21, 1861; primary source)"
+      ],
+      "provenance": "Verified"
+    }
+  ]
+}

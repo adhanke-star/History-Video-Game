@@ -59,18 +59,20 @@ const SETUP = `(() => {
       return { len:tabContent().length, hasBond:!!document.getElementById('clkBond') }; });
     step('muster tab (existing)', function(){ _wdTab='muster'; _wdRefresh();
       return { len:tabContent().length }; });
-    step('cabinet tab', function(){ _wdTab='cabinet'; _wdRefresh(); var h=tabContent();
-      var dels=['war','treasury','state','navy'].map(function(d){return !!document.getElementById('pdDel_'+d);});
+    step('cabinet tab (S2 advisor system)', function(){ _wdTab='cabinet'; _wdRefresh(); var h=tabContent();
+      var dels=['war','treasury','state','navy'].map(function(d){return !!document.getElementById('cabDel_'+d);});
       var imgs=(h.match(/<img/g)||[]).length;
-      if(dels.filter(Boolean).length!==4) throw new Error('expected 4 delegate buttons, got '+dels.filter(Boolean).length);
+      if(dels.filter(Boolean).length!==4) throw new Error('expected 4 Delegate buttons (cabDel_*), got '+dels.filter(Boolean).length);
       if(imgs<4) throw new Error('expected >=4 portraits, got '+imgs);
-      return { delegates:dels.filter(Boolean).length, portraits:imgs }; });
+      // the sitting War Secretary must render (date-aware churn — Cameron in 1861)
+      var warSec=_cabHolder(C.side,'war',C.president.date);
+      if(warSec && h.indexOf(warSec.name)<0) throw new Error('sitting War Secretary '+warSec.name+' not rendered');
+      return { delegates:dels.filter(Boolean).length, portraits:imgs, warSec:warSec?warSec.name:null }; });
     step('delegate toggle persists', function(){
-      var before = C.president.cabinet[0].delegated;
-      var b=document.getElementById('pdDel_war'); if(!b) throw new Error('no pdDel_war'); b.click();
-      var war = C.president.cabinet.filter(function(a){return a.domain==='war';})[0];
-      if(war.delegated===before) throw new Error('delegate did not toggle');
-      return { wasDelegated:before, nowDelegated:war.delegated }; });
+      var before = !!C.president.cabinetState.war.delegated;
+      var b=document.getElementById('cabDel_war'); if(!b) throw new Error('no cabDel_war'); b.click();
+      if(C.president.cabinetState.war.delegated===before) throw new Error('delegate did not toggle');
+      return { wasDelegated:before, nowDelegated:C.president.cabinetState.war.delegated }; });
     step('map tab', function(){ _wdTab='map'; _wdRefresh(); var h=tabContent();
       if(h.indexOf('Eastern Theater')<0) throw new Error('no theaters'); return { len:h.length }; });
 

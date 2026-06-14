@@ -70,6 +70,11 @@ var _pdPRESIDENT = {
 function presInit(C) {
   if (!C) return;                                  // warWonScreen sets G.campaign=null — tolerate it
   var side = (C.side === "CS") ? "CS" : "US";
+  // A corrupt/imported save may carry president (or its fields) as a non-object
+  // primitive; under "use strict" assigning a property to a primitive THROWS,
+  // which would abort the cabinet render. Coerce a primitive president to null so
+  // the rebuild block below re-creates it. (Bug-hunt D49.1, HIGH.)
+  if (C.president && typeof C.president !== "object") C.president = null;
   if (!C.president) {
     C.president = {
       // Strategic clock. War opens at Fort Sumter (April 1861) — the layered
@@ -86,19 +91,19 @@ function presInit(C) {
     };
   }
   var P = C.president;
-  if (!P.date)               P.date = { year: 1861, month: 4 };
+  if (!P.date || typeof P.date !== "object" || Array.isArray(P.date)) P.date = { year: 1861, month: 4 };
   if (typeof P.date.year !== "number")  P.date.year = 1861;
   if (typeof P.date.month !== "number") P.date.month = 4;
-  if (!P.head)               P.head = { name: _pdPRESIDENT[side].name, title: _pdPRESIDENT[side].title, seat: _pdPRESIDENT[side].seat };
-  if (!P.cabinet || !P.cabinet.length) {
+  if (!P.head || typeof P.head !== "object") P.head = { name: _pdPRESIDENT[side].name, title: _pdPRESIDENT[side].title, seat: _pdPRESIDENT[side].seat };
+  if (!P.cabinet || !Array.isArray(P.cabinet) || !P.cabinet.length) {
     P.cabinet = _pdCABINET[side].map(function (a) {
       return { role: a.role, name: a.name, domain: a.domain, delegated: false };
     });
   }
-  if (!P.pendingChoices)     P.pendingChoices = [];
+  if (!P.pendingChoices || !Array.isArray(P.pendingChoices)) P.pendingChoices = [];
   if (typeof P.turn !== "number") P.turn = 0;
   if (typeof P.onboarded !== "boolean") P.onboarded = false;
-  if (!P.log)                P.log = [];
+  if (!P.log || !Array.isArray(P.log)) P.log = [];
 }
 
 /* Pretty month label for the strategic clock. */
