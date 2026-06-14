@@ -1,12 +1,16 @@
 # ☀️ WAKE-UP — overnight run j (2026-06-14, Opus 4.8)
 
-**Good morning. The battle layer A1–A5 shipped, verified, and is backed up to GitHub.** Five milestones, each gated + empirically probed + adversarially bug-hunted before commit, full no-regression suite green throughout, **0 pageerrors**, and **Classic never regressed** (diag-classic paints on every change). Everything is committed locally **and pushed** to `adhanke-star/History-Video-Game` (private).
+**Good morning. ⚑ THE BATTLE LAYER (A1–A6) IS COMPLETE — the owner-mode war is PLAYABLE END-TO-END — shipped, verified, and backed up to GitHub.** Seven milestones, each gated + empirically probed + **adversarially bug-hunted** before commit (≈40 confirmed findings caught & fixed across the night, incl. a HIGH Free-Battle arsenal-leak, a rail-repair equilibrium bug, a §27 conditioning mis-anchor, and an auto-resolve "could-never-lose" balance flaw), full no-regression suite green throughout (16 probe suites), **0 pageerrors**, and **Classic never regressed** (diag-classic paints on every change). Everything is committed **and pushed** to `adhanke-star/History-Video-Game` (private).
+
+**You can play the whole war now:** pick a side → run the President's Desk (economy/production/blockade/diplomacy/manpower + three buildable corps: small arms, the Cannon Corps, the Engineering Works) → field a *conditioned* army → at each battle **Auto-resolve OR Fight** (the weapons you bought, the terrain cover, and your war's condition are all real on the day) → the result feeds manpower/clock/strategy/enemy-will/victory → win via the chain or a path-to-victory.
 
 ---
 
 ## What shipped (newest → oldest)
 | Commit | Milestone | What it does | Verify |
 |---|---|---|---|
+| `149d07e` | **A6b Bridge auto-resolve** | Resolve a battle from the army your war fielded (vs Fight it) → drives `campaignAdvance` so the war feeds back identically. **Makes the war playable end-to-end.** | probe-auto-resolve 7/7 |
+| `88f878c` | **A6a Battle-day conditioning** | The strategic war scales the army you field (strength/morale/prep) + Field-Fortifications dig trench cover. `startBattleRuntime` override | probe-conditioning 6/6 |
 | `3959b65` | **A5 Targeting** | Verified the engine already lets the player pick specific fire targets (no engine change — §27, avoided gratuitous override risk) | probe-targeting 5/5 |
 | `47ae217` | **A4 Armory → battlefield** | Weapons you buy (`C.armory.loadout`) become what your brigades carry & fire (Spencers → +105% fire). Frozen-engine override of `genForce` | probe-armory-field 9/9 |
 | `b21b5d7` | **A3 Terrain cover** | 6 named cover types (stone wall, entrenchments, sunken road, boulders, forest, rail fence) stamped onto historical features (Sunken Road, Marye's Heights, Devil's Den, the woods, the redans). First frozen-engine override | probe-cover 8/8 |
@@ -28,21 +32,24 @@ Open **`civil_war_generals.html`** (open-and-play, ~970KB).
    - **The Cannon Corps** — raise Napoleon / 3-inch Ordnance / Parrott / Whitworth batteries.
    - **The Engineering Works Corps** — raise Construction / Fortifications / Pontoon / Siege capability (levels 0–3).
 3. Open the **pre-battle briefing** (from the between-battles interstitial): the **"army you field"** now shows live **Artillery (Cannon Corps)** and **Engineering (Works Corps)** facets that rise as you invest, plus Firepower from your small arms.
-4. **Fight a battle** (e.g. Antietam): your infantry now **carry the weapons you bought** (Spencers fire harder), and the **Sunken Road / Devil's Den / the woods are real cover** (a stone wall halves casualties). You pick exactly which enemy each unit fires at.
+4. Open the **pre-battle briefing** → choose **Auto-resolve** (resolve from the army your war fielded — a real gamble that your strategic edge decides, not luck) **or To the Field** (fight it). Either way the result feeds the war forward and the next turn surfaces.
+5. **If you fight** (e.g. Antietam): the army is **conditioned** by your whole war (a strong war fields more, steadier men), your infantry **carry the weapons you bought** (Spencers fire harder), and the **Sunken Road / Devil's Den / the woods are real cover** (a stone wall halves casualties; Field Fortifications dig trenches when you entrench). You pick exactly which enemy each unit fires at.
 
-**The strategic systems (run i): economy/finance, war production, blockade/diplomacy, manpower/conscription, Paths-to-Victory + wild cards — all still live and feed the bridge.** Pick a side, run the desk, fight the battles.
+**The strategic systems (run i): economy/finance, war production, blockade/diplomacy, manpower/conscription, Paths-to-Victory + wild cards — all live and feed the bridge.** Pick a side, run the desk, win the war.
 
 ---
 
-## ⚠️ NOT yet closed: the strategy↔battle loop (that's A6, next)
-The bridge **computes** the conditioned army and the pre-battle prep, and the battle now **reflects** your weapons + terrain. But the loop isn't fully **auto-applied/auto-resolved** yet:
-- **A6 (the keystone, NEXT):** override `startBattleRuntime` to (1) **scale the player force's strength/morale from `bridgeArmy(C)`** + apply `C.battlePrep`, (2) stamp **Field-Fortifications→trench** cover on the player's deploy zone, and (3) add a **bridge AUTO-RESOLVE** path (resolve from `bridgeArmy` + variance, feed casualties→manpower, result→clock/`enemyWill`) so the owner-mode war is **playable end-to-end without fighting every tactical battle** (keep "fight it" as the option). Full spec in `AUTONOMOUS-RUN.md` §2 + §7.
-- After A6: the strategic arc **S2→S5** (cabinet/advisors, 3-layer morale, 1864 election, press, command/generals, emancipation, civil liberties, events; codex/glossary/tutorial/WCAG-AA; victory + graded report + Reconstruction), then theaters, then tactical P0–P5.
+## ✅ The strategy↔battle loop is CLOSED (A6 done)
+A6a (battle-day conditioning) + A6b (the bridge auto-resolve) closed it: the bridge computes the conditioned army, the battle (fought or auto-resolved) reflects it, and the result feeds manpower/clock/strategy/enemy-will/victory. **The whole owner-mode war is playable end-to-end.**
+
+## What's NEXT: the STRATEGIC ARC (S2–S5)
+- **S2 (next):** the FULL historical cabinet + advisor UX (one-line rec / delegate / "why") + 3-layer morale (troop/leader/public, public-will decides late) + the 1864 election + a press/public-opinion system + command (appoint/promote/relieve generals) + emancipation as a dated decision + civil-liberties dilemmas + named generals + a curated home-front event deck. (Cached S2 research workflow may be recoverable — `AUTONOMOUS-RUN.md` §7 item 7.)
+- Then **S3** alt-history engine + gallery · **S4** education/codex/glossary/tutorial/WCAG-AA + difficulty presets · **S5** victory paths + the rich graded report + the Reconstruction coda · content systems · theaters (Western→Trans-Miss→naval) · tactical P0–P5.
 
 ---
 
 ## Decisions I made (decide-&-log) you may want to review
-All in `DECISIONS.md` **D42–D46**. The ones worth a glance:
+All in `DECISIONS.md` **D42–D48**. The ones worth a glance:
 - **D42.3** — CS artillery maluses are designer calibration (fuze ×0.96, horse ×0.95/×0.88, mixed-caliber ×0.94, 1863 massing US ×1.08 / CS ×1.04). Tunable.
 - **D43.1** — the Construction Corps **slows but never stops** CS rail decay (claws back a *fraction* of each turn's loss). A bug-hunt caught the original constant-repair pinning rail at 100 — fixed.
 - **⚑ D45.2 (flag for you)** — A4 honors the **engine's `WEAPONS.era`**: a weapon you bought is fielded only once the engine's era allows (e.g. Sharps from 1863), so the player can't out-tech the era-locked AI. *Trade-off:* a player might buy Sharps in 1861 and not see them on the field until 1863. I judged consistency/fairness > instant gratification; **override if you'd rather the armory's own (looser) year-gates rule.**
