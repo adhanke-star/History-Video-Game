@@ -15,6 +15,7 @@
     "70-manpower.js",
     "80-victory.js",
     "85-battle-bridge.js",
+    "86-battle-conditioning.js",
     "90-president-register.js"
   ],
   "overrides": [
@@ -24,6 +25,7 @@
     "openWarDept",
     "openUpgrade",
     "authoredMap",
-    "genForce"
+    "genForce",
+    "startBattleRuntime"
   ]
 }

@@ -32,6 +32,12 @@
 - **VERIFIED (probe-targeting 5/5):** two enemies in range → both targetable; fire mode highlights them; clicking ONE damages THAT enemy (512→483) and not the other; firing unit marked fired; already-fired unit has no targets. Doubles as a post-A1–A4 battle smoke test.
 - **Decision:** ship NO engine change — the feature is complete; adding redundant UI to a working engine is over-engineering (§27) + needless override risk. A5 satisfied by verification. Optional highlight/tooltip polish deferred.
 
+## A6a · BATTLE-DAY CONDITIONING SHIPPED + VERIFIED — the strategic war shapes the army that takes the field
+- **What it is:** `src/86-battle-conditioning.js` overrides `startBattleRuntime` (frozen-engine §8.2) to apply the bridge's conditioned army to the LIVE battle (campaign battles only). The player force is scaled by `bridgeArmy(C)` (strength ×[0.88..1.12], morale shift), `C.battlePrep` is applied (entrench/forced-march/raid-supply), and Field Fortifications (A2) stamp trench cover (A3) on the line when you entrench — closing A2→A3→the battlefield end-to-end.
+- **Adversarial bug-hunt** (5 lenses × verify, 15 agents) → 4 findings fixed (DECISIONS D47). The key one (§27): a fresh campaign's `bridgeArmy.overall` is ~74-76 not 50, so the original anchor silently buffed every no-investment army +10% — re-anchored so a fresh army plays ≈ Classic (ratio 1.009). Plus a narrowed band, the auto-trench gated on the entrench order (no free over-stack), a procedural-map fallback, and objective-tile preservation.
+- **VERIFIED:** probe-conditioning **6/6** (strong-war 6547 vs weak 5562; free-battle untouched; entrench +2 ent; raid-supply enemy morale 79→73; fresh≈Classic ratio 1.009; fortifications trench 68/91 when entrenching, 0 without); diag-classic Classic paints (no regression from the `startBattleRuntime` override); full no-regression green; 0 pageerrors. Deliverable ≈977KB.
+- **NEXT: A6b** — the bridge AUTO-RESOLVE (resolve a battle from `bridgeArmy` + variance → casualties/clock/enemyWill via `campaignAdvance`), so the owner-mode war is playable end-to-end without fighting every tactical battle.
+
 ---
 
 # RUN-LOG — 2026-06-13 (run i, Opus 4.8 — S0: owner-mode President's Desk + zero-dep build system)
