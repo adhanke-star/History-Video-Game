@@ -51,3 +51,107 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ## S1d — manpower / conscription (the war-ender)
 - **D24 · [CLAUDE]** Manpower teaching content via an 11-agent workflow → `data/manpower-teaching.json` (`GAME_DATA["manpower-teaching"]`; 5 multi-voice cards — Geary/Murdock/Moore/Anbinder/Lonn/Glatthaar/Levine; Black agency front-and-center, Lost Cause erasure countered) + a 9-claim audit (7 CONFIRMED, 1 DISPUTED [ratio direction], 1 CORRECTED [date precision: CS Black-soldier statute Mar 13 vs GO No. 14 Mar 23 1865 — `economy.json` already lists "Mar 13/23 1865", no change needed]). Verify pass removed a misattribution (Fry's Final Report is a standalone 1866 doc, not OR Series III). **Unlike S1c, no sim data correction was required.** (Source of truth on disk.)
+
+## D30 — OVERNIGHT AUTONOMOUS-RUN CHARTER — [AARON] (7 popup rounds, 2026-06-13)
+The standing authorization for all-night unsupervised runs. Full text lives in `AUTONOMOUS-RUN.md` §8 (the operating manual reads it first each run). Captured here so the decisions log is complete. All 20 are **[AARON]** unless noted; Aaron overrode the recommended option on three (marked ⚑).
+- **D30.1** Scope order = battle layer → S2–S5 → tactical P0–P5.
+- **D30.2** Frozen-engine overrides AUTHORIZED (new modules only, gated by `diag-classic`, revert on regression).
+- **D30.3** Halt only for irreversible/destructive OR money/external-account actions; else decide-&-log and never stop.
+- **D30.4** GitHub backup AUTHORIZED — PRIVATE repo `History-Video-Game` under `adhanke-star`, push every committed milestone. (The one pre-cleared external action; supersedes D15's no-remote for this project going forward.)
+- **D30.5** `_SAVE_VER` bumps OK with idempotent lazy migration (D7 pattern); prefer additive.
+- **D30.6** Compute UNLIMITED (ultracode aggressive).
+- **D30.7** Auto-tune balance via sim sweeps + log every changed number.
+- **D30.8** Visual art = code-only light touch (CSS/SVG/procedural); NO Blender/3D/external pipelines unattended.
+- **D30.9** Adversarial bug-hunt before EVERY commit + full no-regression suite.
+- **D30.10** Tactical engine starts only after battle layer + S2–S5.
+- **D30.11** Backlog cleared ⇒ polish/deepen existing design; don't invent major new systems.
+- **D30.12 ⚑** Morning goal = MAXIMUM SYSTEMS SHIPPED (breadth), each verified — Aaron chose breadth over the recommended "playable end-to-end war" (but D30.19 auto-resolve still delivers a playable loop cheaply).
+- **D30.13** Handoff = live `RUN-LOG.md`/`DECISIONS.md` + a root `WAKE-UP.md` (what shipped / what's playable / demo click-through / open Qs / flags) each session.
+- **D30.14** History stance = unflinching, scholarly, anti-Lost-Cause; CS playable without endorsement.
+- **D30.15 ⚑** Difficulty = ACCESSIBLE default; presets HARDEN for experts — Aaron chose accessible-default over the recommended punishing-default.
+- **D30.16** Conflicting on-disk numbers ⇒ auto-correct to better-sourced value + log citation (Erlanger pattern).
+- **D30.17** Player voice = period-flavored but tight; depth opt-in.
+- **D30.18** Accessibility = FULL WCAG 2.2 AA, built-in; run `wcag-auditor` on new UI (hold Aaron's MJI bar).
+- **D30.19** ADD auto-resolve from the bridge (conditioned army + variance) so the war is playable end-to-end now; keep the option to fight the tactical battle. (New item, folds into A6.)
+- **D30.20 ⚑** Onboarding = build a FULL guided tutorial — Aaron chose full over the recommended light/skippable (keep it skippable for experts regardless).
+
+## D31 — DESIGN-SCOPE DECISIONS — [AARON] (popup rounds 8–9, 2026-06-13)
+Full text in `AUTONOMOUS-RUN.md` §8 addendum. All chose maximal scope (consistent with D30.12 "max systems shipped").
+- **D31.1** Theaters in order: Eastern → Western core → Trans-Miss → coastal/naval.
+- **D31.2** FULL historical cabinet per side, incl. churn (each: voice/recs/ambition/teaching).
+- **D31.3** Start modes = 1861 campaign + scenario hinge-starts + full-sandbox toggle (all three).
+- **D31.4** Named-generals system (traits/reputation/ambition) → bridge leadership facet + S2 morale + promotions (replaces the leadership placeholder).
+- **D31.5** Home-front = curated conditional event deck (real choices, not random noise).
+- **D31.6** End-of-war = rich graded after-action (per-domain grades, turn-by-turn divergence, casualties vs historical, citations).
+
+## D32 — CONTENT-SYSTEM DECISIONS — [AARON] (popup rounds 10–11, 2026-06-13)
+Full text in `AUTONOMOUS-RUN.md` §8 addendum 2.
+- **D32.1** Emancipation = a dated Union player decision (radical 1861 / historical 1862 / never) trading border loyalty ↔ USCT manpower ↔ foreign opinion ↔ war aims.
+- **D32.2** Naval = dedicated system built at theater-expansion (ironclads, commerce raiders, river war) — not now.
+- **D32.3** Disease/medical = real attrition driver (~2× combat) + teaching layer (sanitation/hospitals/Sanitary Commission/Clara Barton; USCT toll).
+- **D32.4** Cavalry = DEFERRED to a supervised session.
+- **D32.5** Logistics = rail/supply-network system (USMRR vs CS decay, depots → bridge supply/fatigue).
+- **D32.6** POW = exchange-cartel-collapse thread (1863 USCT fault line) + manpower effect + Andersonville/Elmira.
+
+## D33 — SYSTEMS & ATMOSPHERE — [AARON] (popup rounds 12–13, 2026-06-13)
+Full text in `AUTONOMOUS-RUN.md` §8 addendum 3.
+- **D33.1** Hard war = system (Sherman/Sheridan; break enemy will/logistics + honest civilian/enslaved reckoning).
+- **D33.2 ⚑** Turn pacing = FIXED ~monthly (Aaron chose simple over the recommended §22 variable weekly/seasonal).
+- **D33.3** Reconstruction coda = short honest epilogue (13/14/15th, Foner unfinished revolution), scales to ending.
+- **D33.4** CS finance toolkit BUILT (Erlanger loan + cotton bonds + impressment + produce loan + printing spiral).
+- **D33.5** Irregular war = contained thread (Mosby; Quantrill/Lawrence; anti-guerrilla policy) — events + small system.
+- **D33.6 ⚑** Audio = RICHER (Aaron upgraded from light): period tunes + ambient soundscapes, code-only synth, toggleable/off-by-default.
+
+## D34 — PERSPECTIVES, AI, SCOPE — [AARON] (popup rounds 14–15, 2026-06-13)
+Full text in `AUTONOMOUS-RUN.md` §8 addendum 4.
+- **D34.1** ALL FOUR under-told perspective threads (enslaved agency, immigrant/ethnic units, Native nations, women's roles), woven in + sourced.
+- **D34.2** Enemy AI = reactive strategist (own choices, sues for peace at broken will, exploits weakness; presets tune sharpness).
+- **D34.3** Codex = multi-axis (timeline + topic + person + battle, cross-linked, provenance shown).
+- **D34.4** Single-file may grow to several MB (don't trade scope for bytes; keep gates).
+- **D34.5 ⚑** Information = mostly transparent (Aaron chose this over the recommended fog-of-war toggle).
+- **D34.6** Replay = alt-history gallery + teaching milestones.
+
+## D35 — SAVES, A11Y, PRESENTATION — [AARON] (popup rounds 16–17, 2026-06-13)
+Full text in `AUTONOMOUS-RUN.md` §8 addendum 5.
+- **D35.1** Saves = autosave + named slots + undo-last-turn on accessible difficulty (off on harder/ironman).
+- **D35.2** A11y = all four modes on baseline AA (high-contrast theme, CVD-safe palettes w/ patterns+labels, screen-reader ARIA-live narration, dyslexia-friendly font/spacing).
+- **D35.3** Inline glossary = every specialized term → definition + provenance, linked to codex.
+- **D35.4** Devices = responsive desktop-first; tablet/phone playable + touch.
+- **D35.5** Art direction LOCKED = period broadsheet/engraving aesthetic (procedural engraved portraits, broadsheet type, antique-chart maps; CSS/SVG/canvas).
+- **D35.6** Human cost rendered with gravity (numbers + regiment losses + occasional named soldier/letter + scale made legible; restrained, no spectacle).
+
+## D36 — CONTENT STANDARD, VICTORY, TUTORIAL — [AARON] (popup round 18, 2026-06-13)
+Full text in `AUTONOMOUS-RUN.md` §8 addendum 6.
+- **D36.1** Provenance: Verified needs ≥2 independent reputable sources; single-source/own calibration = Inferred; nothing untagged; adversarial-verify strips fabrications.
+- **D36.2** Victory = multiple honest paths per side incl. negotiated peace (CS: exhaust Northern will / recognition / hold to 1865; US: conquest / break rebellion / CS political collapse); hard-loss = military destruction.
+- **D36.3** Tutorial = interactive guided scenario (a real 1861 slice), learn-by-doing, optional why-callouts, skippable.
+
+## D37 — ADVISOR UX, SCENARIOS, THRESHOLDS — [AARON] (popup round 19, 2026-06-13)
+Full text in `AUTONOMOUS-RUN.md` §8 addendum 7.
+- **D37.1** Advisor UX = one-line rec + one-click accept/delegate + expandable why; ambition surfaces on self-interest.
+- **D37.2** Build all four scenario hinge-starts (Antietam/recognition 1862; Vicksburg 1863; 1864 election eve; First Bull Run 1861 = tutorial).
+- **D37.3** Win thresholds = accessible default (paths genuinely reachable), harden via presets.
+
+## D38 — PRESS, COMMAND, UNITS — [AARON] (popup round 20, 2026-06-13)
+Full text in `AUTONOMOUS-RUN.md` §8 addendum 8.
+- **D38.1** Press = public-opinion system (papers react → public morale + 1864 election; censorship/Vallandigham lever; ties broadsheet UI + 3-layer morale).
+- **D38.2** Command = appoint/promote/relieve generals (McClellan problem, political generals, fallout) → bridge leadership facet.
+- **D38.3** Flagship named units (54th Mass, Iron Brigade, Irish Brigade, Stonewall Brigade) with identity/history/teaching; ties human-cost + perspectives.
+
+## D39 — MODES, MORALE, CIVIL LIBERTIES — [AARON] (popup round 21, 2026-06-13)
+Full text in `AUTONOMOUS-RUN.md` §8 addendum 9.
+- **D39.1 ⚑** Play modes REVISED by Aaron: General+Commander = ONE battle/ops mode; President = full grand-strategy mode; Historian = a settings/realism/teaching LAYER over either mode, NOT a standalone mode. (Supersedes the R27 four-preset framing.)
+- **D39.2** 3-layer morale = troop + leader-reputation + public-will, interacting + visible; feeds bridge + 1864 election.
+- **D39.3** Civil-liberties = real dilemmas with costs (habeas corpus, Vallandigham/Copperheads, draft enforcement, censorship); both Lincoln and Davis.
+
+## D40 — DIPLOMACY, THE WEST, WAR FINANCE — [AARON] (popup round 22, 2026-06-13)
+Full text in `AUTONOMOUS-RUN.md` §8 addendum 10.
+- **D40.1** Diplomacy = a real system (Mason/Slidell, Trent war-scare, Laird rams, Russian fleet 1863, cotton vs King Wheat) feeding clock.intervention; builds on S1c.
+- **D40.2 ⚑** Western theater = SAME mechanics + new maps/battles (Aaron chose reuse over the recommended distinct Western texture).
+- **D40.3** War finance = civic+political (Jay Cooke bond drives, first income tax, greenbacks vs gold, taxation politics); Union popular finance vs CS failure.
+
+## D41 — BATTLE ROSTER, MORALE RESOLUTION, CADENCE — [AARON] (popup round 23, 2026-06-14)
+Full text in `AUTONOMOUS-RUN.md` §8 addendum 11.
+- **D41.1** Build next: Antietam, Vicksburg, Chickamauga/Chattanooga, Atlanta/the March (on top of existing Bull Run/Shiloh/Fredericksburg/Gettysburg/Malvern/Franklin).
+- **D41.2** Morale resolution: troop morale → battle (bridge); public will → strategic outcome (1864 election, negotiated peace); leader reputation modulates both.
+- **D41.3** Event cadence: 1–2 meaningful choices/turn, more at hinges.

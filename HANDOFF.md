@@ -1,5 +1,15 @@
 # HANDOFF — "The Civil War"
 
+## ⚡ CONTINUE HERE — run j (THE OVERNIGHT CHARTER is locked) → finish A1, then build the backlog (updated 2026-06-14)
+
+> **A 23-round popup charter session (2026-06-13/14) pre-cleared the entire all-night build.** The 68 Aaron-locked decisions live in **`AUTONOMOUS-RUN.md` §8 (+11 addenda)** and **`DECISIONS.md` D30–D41** — **read §8 FIRST; it governs the whole run.** The operating unblockers: **gated frozen-engine overrides AUTHORIZED · halt only for irreversible/destructive or money/external-account actions · GitHub backup AUTHORIZED (create PRIVATE `History-Video-Game` under the `adhanke-star` account, push every milestone) · `_SAVE_VER` bumps OK w/ lazy migration · unlimited compute · auto-tune balance+log · code-only art · adversarial bug-hunt before every commit · max systems shipped.**
+>
+> **IMMEDIATE NEXT = finish A1 · Cannon Corps** (scaffolded, uncommitted — full detail in `AUTONOMOUS-RUN.md` §2). On disk: `data/artillery.json` (5 guns + 4 teaching cards, from a verified 11-agent workflow — don't re-research) + `HISTORICAL-DATA-ARTILLERY.md`; `src/56-artillery.js` (battery-count corps) wired into the manifest + register (`artInit`) + the Armory tab (`src/30-president-shell.js`) + an additive `artillery` facet in `bridgeArmy` (`src/85-battle-bridge.js`); `tools/probe-cannon.mjs` written; `node tools/build.mjs --check` = GATE OK. **Remaining:** `node tools/build.mjs` → probe-cannon + full no-regression suite (READ the JSON) → adversarial bug-hunt → commit + push → then the §7 charter-integrated priority order (A2–A6 battle layer incl. bridge auto-resolve → S2–S5 charter-expanded → content systems → theaters → tactical).
+>
+> **To run it:** start a fresh chat and paste the kickoff prompt from `START-HERE.md` (the ▶ PASTE block, updated for the charter). Everything is on disk; load it, then execute the backlog continuously.
+
+---
+
 ## ⚡ CONTINUE HERE — run i progress (S0 + S1 COMPLETE: a/b/c/d SHIPPED) → next: S2 (updated 2026-06-13)
 
 > **S1 is COMPLETE — the full asymmetric economy.** S1a finance/inflation · S1b production/logistics · S1c cotton/blockade/diplomacy · **S1d manpower/conscription (just shipped).** `src/70-manpower.js` + `G.campaign.manpower`: the replacement-ratio collapse (US 1.0 holds; CS 0.9→0.1 by 1865 → armies melt), Union draft-as-stimulus, +180k USCT pool at 1863, immigrant inflow, CS desertion; **`C.manpower.strength` is the army-strength index the S5 battle bridge reads.** Surfaced as "The Ranks" in the War Effort overview. Content-complete via an 11-agent workflow → `data/manpower-teaching.json` (5 multi-voice cards + 9-claim audit; no sim correction needed). **VERIFIED:** probe-manpower 9/9 (20-turn arc to 1865: US strength 100 / CS 53-melting / ratio 0.1 / pool 0); full no-regression suite green (desk 12/12, economy 8/8, production 4/4, blockade 11/11, diag-classic paints, 0 pageerrors).
