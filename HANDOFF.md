@@ -1,6 +1,12 @@
 # HANDOFF — "The Civil War"
 
-## ⚡ CONTINUE HERE — run i progress (S0 + S1a + S1b SHIPPED) → next: S1c (updated 2026-06-13)
+## ⚡ CONTINUE HERE — run i progress (S0 + S1a + S1b + S1c SHIPPED) → next: S1d (updated 2026-06-13)
+
+> **S1c cotton/blockade/foreign just shipped + gated + committed.** `src/60-blockade.js` + `G.campaign.blockade`: the 1861 King-Cotton self-embargo trap (rev≈0), blockade strangulation (capture 0.10→0.33, ports fall, a dynamic `importFactor` that WIRED the S1b prod placeholder — off>full arms), cotton revenue→funds, foreign recognition (1862 famine window → foreclosed 1863) → `clock.intervention`; blockade-depth toggle (full/flat/off, R14); new 8th **Diplomacy** desk tab. Content-complete via an 11-agent research+verify+audit workflow → `data/diplomacy.json` (5 multi-voice cards + a 9-claim numbers audit that corrected Erlanger 72%→45% in `economy.json`) + `HISTORICAL-DATA-DIPLOMACY.md`. **VERIFIED:** probe-blockade 11/11 (16-turn arc), full no-regression suite green (desk 12/12, economy 8/8, production 4/4, diag-classic Classic paints, 0 pageerrors). **NEXT = S1d manpower/conscription** (`data/economy.json` → `manpower`): recruitment pools, the draft (US 1863 / CS 1862), the late-war **CS replacement-ratio collapse 1.0→0.1** (the war-ender), immigrant pool, enslaved-labor base (ties to S2 emancipation/contraband); feeds the pre-battle strength bridge (S5). New `src/70-manpower.js`, register a `manpowerOnResolve` tick. Then S2.
+
+---
+
+### (prior) ⚡ CONTINUE HERE — S0 + S1a + S1b SHIPPED → S1c
 
 > **For a long unsupervised run, read `AUTONOMOUS-RUN.md`** — the operating manual for the self-perpetuating 12-hour build loop (prime directive, loop steps, phase roadmap, guardrails, recovery).
 

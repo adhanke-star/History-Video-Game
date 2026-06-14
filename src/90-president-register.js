@@ -23,6 +23,7 @@ function _t1InitAll(C) {
   try { if (typeof wrInit  === "function") wrInit(C);  } catch (e) {}
   try { if (typeof presInit === "function") presInit(C); } catch (e) {}   // S0: President's Desk
   try { if (typeof econInit === "function") econInit(C); } catch (e) {}   // S1a: economy/finance
+  try { if (typeof blockadeInit === "function") blockadeInit(C); } catch (e) {}  // S1c: cotton/blockade/diplomacy
   try { if (typeof prodInit === "function") prodInit(C); } catch (e) {}   // S1b: war production
 }
 
@@ -31,7 +32,8 @@ function _t1Resolve(winnerSide, type, B, C, win) {
   try { if (typeof clkOnResolve === "function") clkOnResolve(winnerSide, type, B, C, win); } catch (e) {}
   try { if (typeof econOnResolve === "function") econOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S1a: after clk → feeds clock.weariness
   try { if (typeof wrOnResolve  === "function") wrOnResolve(winnerSide, type, B, C, win);  } catch (e) {}
-  try { if (typeof prodOnResolve === "function") prodOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S1b: after wr (reads nodes)
+  try { if (typeof blockadeOnResolve === "function") blockadeOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S1c: BEFORE prod → sets importFactor + funds + clock.intervention
+  try { if (typeof prodOnResolve === "function") prodOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S1b: after wr (reads nodes + blockade.importFactor)
   try { if (typeof mrOnResolve  === "function") mrOnResolve(winnerSide, type, B, C, win);  } catch (e) {}
   try { if (typeof presOnResolve === "function") presOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S0: after clk (interlink)
 }

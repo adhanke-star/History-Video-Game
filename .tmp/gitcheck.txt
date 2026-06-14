@@ -1,0 +1,22 @@
+2d56ca7 docs: comprehensive tiered read-prompt for the autonomous run
+e213d78 docs: 12-hour autonomous-run plan + new-chat prompt
+b2179d0 S1b: asymmetric war-production layer (extends the War Room)
+--- status ---
+ M AUTONOMOUS-RUN.md
+ M DECISIONS.md
+ M HANDOFF.md
+ M RUN-LOG.md
+ M civil_war_generals.html
+ M data/economy.json
+ M src/00-manifest.json
+ M src/30-president-shell.js
+ M src/50-production.js
+ M src/90-president-register.js
+ M tools/shots/probe-economy.json
+ M tools/shots/probe-production.json
+?? .tmp/
+?? HISTORICAL-DATA-DIPLOMACY.md
+?? data/diplomacy.json
+?? src/60-blockade.js
+?? tools/probe-blockade.mjs
+?? tools/shots/probe-blockade.json

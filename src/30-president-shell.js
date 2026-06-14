@@ -65,6 +65,9 @@ function _wdRefresh() {
   } else if (_wdTab === "treasury") {
     html = (typeof econRenderFinance === "function") ? econRenderFinance(C) : "";
     wire = (typeof econWireFinance === "function") ? econWireFinance : null;
+  } else if (_wdTab === "diplomacy") {
+    html = (typeof blockadeRenderDiplomacy === "function") ? blockadeRenderDiplomacy(C) : "";
+    wire = (typeof blockadeWireDiplomacy === "function") ? blockadeWireDiplomacy : null;
   } else if (_wdTab === "cabinet") {
     html = (typeof presRenderCabinet === "function") ? presRenderCabinet(C) : "";
     wire = (typeof presWireCabinet === "function") ? presWireCabinet : null;
@@ -76,7 +79,7 @@ function _wdRefresh() {
     wire = null;
   }
   cont.innerHTML = html || '<p class="lede" style="text-align:center;opacity:0.7">This office is not yet staffed.</p>';
-  var tabs = ["economy", "treasury", "warroom", "clock", "muster", "cabinet", "map"];
+  var tabs = ["economy", "treasury", "diplomacy", "warroom", "clock", "muster", "cabinet", "map"];
   for (var i = 0; i < tabs.length; i++) {
     var b = document.getElementById("wdTab_" + tabs[i]);
     if (b) b.style.opacity = (tabs[i] === _wdTab) ? "1" : "0.55";
@@ -107,6 +110,7 @@ function openWarDept() {
     '<div id="wdTabs" style="display:flex;gap:6px;justify-content:center;margin-bottom:12px;flex-wrap:wrap">' +
       _wdTabBtn("economy", "The War Effort") +
       _wdTabBtn("treasury", "The Treasury") +
+      _wdTabBtn("diplomacy", "Diplomacy") +
       _wdTabBtn("warroom", "War Room") +
       _wdTabBtn("clock", "1864 Clock") +
       _wdTabBtn("muster", "Muster Roll") +
@@ -122,7 +126,7 @@ function openWarDept() {
     if (_pdAfterDeskClose) { var cb = _pdAfterDeskClose; _pdAfterDeskClose = null; cb(); }
     else if (typeof closeSheet === "function") closeSheet();
   });
-  ["economy", "treasury", "warroom", "clock", "muster", "cabinet", "map"].forEach(function (k) {
+  ["economy", "treasury", "diplomacy", "warroom", "clock", "muster", "cabinet", "map"].forEach(function (k) {
     var b = document.getElementById("wdTab_" + k);
     if (b) b.addEventListener("click", function () { _wdTab = k; _wdRefresh(); });
   });

@@ -1,0 +1,25 @@
+S1c: cotton / blockade / foreign recognition (King Cotton trap, wired importFactor)
+
+src/60-blockade.js + G.campaign.blockade — the Confederate cotton/blockade/diplomacy
+layer, emergent and asymmetric:
+- 1861 King-Cotton self-embargo TRAP (rev~0 vs a glutted Britain; auto-lifts 1862)
+- blockade strangulation: capture-prob 0.10->0.33, runner success 0.90->0.67, ports
+  fall (Wilmington/Fort Fisher Jan 1865) -> a dynamic importFactor that WIRES the S1b
+  prodOnResolve placeholder (off>full CS arms, probe-confirmed)
+- cotton revenue -> C.funds; foreign recognition rises in the 1862 Lancashire-famine
+  window then is FORECLOSED 1863 (post-Antietam) -> pulls clock.intervention
+- blockade-depth toggle (full/flat/off, R14); new 8th "Diplomacy" desk tab
+- registered in _t1Resolve BEFORE prod; no new manifest overrides (extends, not dup)
+
+Content-complete: 11-agent research+verify+audit workflow -> data/diplomacy.json
+(5 multi-voice teaching cards w/ named scholars + dissent + named-and-countered Lost
+Cause + primary sources; 9-claim numbers audit). Audit CORRECTED Erlanger net realized
+72%->45% (applied to data/economy.json) and confirmed the recognition-window-closes-1863
+model. Digest: HISTORICAL-DATA-DIPLOMACY.md.
+
+VERIFIED: probe-blockade 11/11 (16-turn arc: 1861 trap -> 1862 window -> 1863 foreclosed
+-> 1864 ports 2/importFactor 0.28/arms 2-vs-6-off); full no-regression suite green
+(probe-desk 12/12, probe-economy 8/8, probe-production 4/4, diag-classic Classic paints);
+0 pageerrors. New gate tools/probe-blockade.mjs.
+
+Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>

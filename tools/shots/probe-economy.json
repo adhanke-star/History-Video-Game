@@ -5,6 +5,7 @@
       "ok": true,
       "v": {
         "keys": [
+          "diplomacy",
           "economy"
         ],
         "econKeys": [

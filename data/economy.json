@@ -129,12 +129,14 @@
           "unlockTurnEvent": "erlangerLoan1863",
           "faceValueGBP_millions": 3.0,
           "faceValueUSD_millions": 15.0,
-          "netProceedsPct": 0.72,
+          "issuePriceToErlanger": 77,
+          "publicOfferPrice": 90,
+          "netProceedsPct": 0.45,
           "couponPct": 7.0,
           "termYears": 20,
           "cottonBacked": true,
           "valueDecaysOnDefeat": true,
-          "_provenance": "verified (Britannica, Tontine, Ball): bonds taken at 77, ~5% commission, net ~72% of face; collapses worthless at surrender"
+          "_provenance": "verified (Gentry 1970; Britannica; S1c numbersAudit CORRECTED): 77 was Erlanger's BUY price, 90 the public offer (the 13pt spread + 5% commission = Erlanger's margin); after the post-Vicksburg/Gettysburg slide and Confederate price-propping repurchases, net realized was ~£1.4M of £3M (~45% of face, NOT the 72% first cited); worthless at surrender"
         }
       },
       "printing": {

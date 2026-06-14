@@ -14398,6 +14398,262 @@ function _m3dMixerUpdate(dt, now) {
 
 /* ===== data (build-injected from data/*.json) ===== */
 var GAME_DATA = {
+"diplomacy": {
+  "_comment": "S1c teaching content for the cotton/blockade/foreign-diplomacy layer. Citation-grade multi-voice debate cards (consensus + scholarly dissent + named-and-countered Lost Cause framing + primary sources) and a quantitative numbers audit, produced by an 11-agent research+adversarial-verify+audit workflow (run i, 2026-06-13). Build-injected as GAME_DATA.diplomacy; surfaced by src/60-blockade.js (the Diplomacy desk tab) and the S4 codex.",
+  "provenance": "Verified historiography. Scholars: Owsley, Surdam, Wise, Howard Jones, Amanda Foreman, McPherson, Ball, Gentry, Lester, Weidenmier, Lebergott, Beckert. Every cited work title adversarially fact-checked; fabricated/misattributed citations removed in the Verify pass. The numbersAudit CORRECTED three sim claims (see numbersAudit.summary).",
+  "schemaVersion": "1.0",
+  "teachingCards": [
+    {
+      "id": "cotton-king-chance",
+      "title": "Did King Cotton Diplomacy Ever Have a Chance?",
+      "question": "Could Confederate \"King Cotton\" diplomacy — the gamble that cotton-starved Britain and France would be forced to recognize the Confederacy and break the Union blockade — ever realistically have succeeded?",
+      "consensus": {
+        "claim": "The mainstream verdict is that King Cotton diplomacy failed and was unlikely to succeed under any plausible scenario. Britain entered 1861 with a record cotton glut — roughly a million surplus bales after the bumper 1859-60 crops — so the Confederacy's self-imposed 1861 embargo squandered its only leverage at the precise moment that leverage was worthless. By the time the Lancashire 'Cotton Famine' bit in late 1862, India, Egypt, and Brazil were raising output (imperfectly — short-staple Surat was a poor substitute for American fiber), and recognition was throttled by structural factors the South could not move: British dependence on Northern grain ('King Wheat' — the Union supplied roughly half of British wheat and flour imports in 1861-63), the naval and commercial risk of war with the U.S., antislavery opinion crystallized by the Emancipation Proclamation and the December 1862 Lancashire pro-Union meetings, and London's refusal to act without a decisive Confederate battlefield victory that never came after Antietam. Note the historiographical layering: Owsley (1931) already called the embargo a tactical blunder but still believed cotton was genuinely powerful leverage; the modern structural reading — that cotton was never as strong as the Confederates or Owsley thought — belongs to Surdam and later economic historians.",
+        "scholars": [
+          "Frank L. Owsley, *King Cotton Diplomacy: Foreign Relations of the Confederate States of America* (1931; 2nd ed. rev. Harriet Chappell Owsley, 1959) — the foundational study; judged the embargo a tactical blunder while still crediting cotton's underlying power",
+          "David G. Surdam, *Northern Naval Superiority and the Economics of the American Civil War* (2001), building on his article 'King Cotton: Monarch or Pretender?' (1998) — argues cotton leverage was structurally weak given the glut and intraregional-trade disruption",
+          "Howard Jones, *Blue & Gray Diplomacy: A History of Union and Confederate Foreign Relations* (2010) and *Union in Peril: The Crisis over British Intervention in the Civil War* (1992)",
+          "Amanda Foreman, *A World on Fire: Britain's Crucial Role in the American Civil War* (2010)",
+          "D.P. Crook, *The North, the South, and the Powers, 1861-1865* (1974)",
+          "Stephen R. Wise, *Lifeline of the Confederacy: Blockade Running During the Civil War* (1988) — on how the South actually traded through the blockade, undercutting the premise that cotton was withheld to coerce Europe"
+        ]
+      },
+      "dissent": {
+        "claim": "A notable minority stresses how close intervention came in autumn 1862, arguing the outcome was contingent, not foreordained. On this reading, the Lancashire distress was severe (hundreds of thousands on relief), and Palmerston and Russell seriously canvassed a joint mediation-and-armistice proposal in September-October 1862, with Gladstone's Newcastle speech ('Jefferson Davis... have made a nation') as the high-water mark. Had Lee won at Antietam, or had the cotton shortage struck a year earlier before the glut, European pressure for mediation might have forced the issue. This camp treats grain dependence and even antislavery opinion as real but not necessarily decisive, emphasizing instead battlefield news and cabinet politics as the swing variables.",
+        "scholars": [
+          "Amanda Foreman, *A World on Fire* (2010) — emphasizes contingency and how near the 1862 mediation crisis ran",
+          "Howard Jones, *Union in Peril* (1992) — reconstructs the autumn 1862 cabinet deliberations as a genuine near-miss",
+          "Brian Jenkins, *Britain and the War for the Union* (2 vols., McGill-Queen's UP, 1974-80)"
+        ]
+      },
+      "fringe": {
+        "claim": "The Lost Cause framing holds that cotton truly was 'King' and that only Yankee naval brute force and bad luck — not any structural weakness — denied the Confederacy a European recognition its economic indispensability had all but guaranteed; the embargo is recast as sound statecraft betrayed by circumstance rather than a self-inflicted wound. This inverts the evidence: the South voluntarily withheld cotton into a glutted market, and Britain's non-recognition rested on slavery politics, grain dependence, and war-risk calculation. The slogan traces to James Henry Hammond's 1858 Senate boast ('No power on earth dares to make war upon it. Cotton is king'), which historians read as antebellum hubris, not analysis.",
+        "label": "Lost Cause myth / outdated"
+      },
+      "takeaway": "When you embargo cotton or count on foreign recognition in the diplomacy layer, the game is modeling a bet the South historically lost: leverage withheld into a glut buys nothing, and imperfect substitution plus Northern grain plus slavery politics steadily drain the 'recognition' meter that no battlefield bluff can refill.",
+      "primarySources": [
+        "James Henry Hammond, 'Cotton is King' speech, U.S. Senate, March 4, 1858 (Congressional Globe, 35th Cong., 1st Sess.)",
+        "Confederate 'King Cotton' embargo of 1861 — informal but enforced via local committees and the Southern press; documented in the Official Records and Confederate State Department correspondence",
+        "W.E. Gladstone, Newcastle speech, October 7, 1862 ('Jefferson Davis... have made a nation')",
+        "Earl Russell-Lord Lyons diplomatic correspondence and the October 1862 British cabinet mediation debate (British Foreign Office records / Parliamentary Papers)",
+        "Address to President Lincoln by the Working-Men of Manchester, Free Trade Hall, December 31, 1862, and Lincoln's January 19, 1863 reply to the working-men of Manchester (Collected Works of Abraham Lincoln, vol. 6)",
+        "Board of Trade returns on raw-cotton stocks and Indian/Egyptian import figures, 1860-1864",
+        "U.S. grain export returns, 1860-1863, showing the North supplying roughly half of British wheat and flour imports"
+      ],
+      "provenance": "Verified (high certainty on consensus: the embargo-as-blunder verdict, the 1860-61 glut, the imperfect substitution, the grain dependence, and the December 1862 Lancashire meeting are well-documented and cross-confirmed; every cited scholar and work title was checked against published records. Contested only on the degree of 1862 contingency, which is a live scholarly debate rather than a settled fact. One change from the draft: Marc Egnal's *Clash of Extremes* was removed because it concerns the economic origins of the war, not King Cotton diplomacy or British intervention; the unverifiable 'Brazilian exports quadrupling' figure was dropped.)"
+    },
+    {
+      "id": "cotton-self-embargo",
+      "title": "The 1861 Cotton Embargo: Coercion or Self-Sabotage?",
+      "question": "Was the unofficial 1861 Southern cotton embargo a coherent coercion strategy to force European recognition, or a self-inflicted wound that forfeited a year of relatively blockade-free exports and the hard currency the Confederacy desperately needed?",
+      "consensus": {
+        "claim": "The 1861 embargo was a real but decentralized attempt to weaponize 'King Cotton' that backfired. It was driven by planters, local committees of public safety, and Southern editors, NOT by Confederate statute: Davis and his secretaries of state tacitly encouraged it and never opposed it, but Richmond did not legislate cotton-export control until 1864, far too late to matter. Crucially, the bumper crops of the late 1850s had left Britain with a large cotton surplus, so withholding the 1861 crop produced no immediate leverage. By voluntarily choking off exports during the one season the Union blockade was still thin and porous, the South forfeited its best window to ship cotton, accumulate specie, and buy arms abroad.",
+        "scholars": [
+          "Frank L. Owsley, King Cotton Diplomacy: Foreign Relations of the Confederate States of America (1931; 2nd ed. rev. Harriet Chappell Owsley, 1959) — established the framing and documented the committee- and planter-driven, non-statutory character; likened the belated 1864 control law to 'locking the stable after the mare has fled'",
+          "James M. McPherson, Battle Cry of Freedom: The Civil War Era (1988) — treats the self-imposed embargo as a strategic blunder that squandered the Confederacy's strongest early opening",
+          "Howard Jones, Blue and Gray Diplomacy: A History of Union and Confederate Foreign Relations (2010) — shows British policy in 1861 turned on surplus stocks, neutrality law, and self-interest rather than cotton hunger",
+          "Amanda Foreman, A World on Fire: Britain's Crucial Role in the American Civil War (2010) — documents the British cabinet response and the surplus-glut context",
+          "David G. Surdam, Northern Naval Superiority and the Economics of the American Civil War (2001) — analyzes the cotton revenue the Confederacy denied itself and the blockade's drain on Southern war finance",
+          "Douglas B. Ball, Financial Failure and Confederate Defeat (1991) — ties the lost export window to the collapse of Confederate hard-currency finance"
+        ]
+      },
+      "dissent": {
+        "claim": "A minority view holds that the embargo's economic cost is overstated, because the tightening Union blockade plus marine-insurance, freight, and neutral-shipping constraints would have throttled exports anyway, so the 'easy 1861 export year' is partly counterfactual: the South could not in fact have shipped its full multi-million-bale crop at 1860 prices. On this read the deeper failure was not the embargo decision but the planters' own profit-seeking and the Confederacy's slowness to ship cotton OUT to build overseas credit — the logic the Erlanger loan finally, belatedly, embodied.",
+        "scholars": [
+          "Stephen R. Wise, Lifeline of the Confederacy: Blockade Running During the Civil War (1988) — stresses the practical limits on 1861–62 export volume and the real constraints of blockade-running",
+          "Stanley Lebergott, 'Why the South Lost: Commercial Purpose in the Confederacy, 1861–1865' (Journal of American History 70, no. 1, 1983) — argues planters' individual profit-seeking and private cotton trading undercut any coherent national export or coercion strategy",
+          "David G. Surdam, Northern Naval Superiority and the Economics of the American Civil War (2001) — whose own counterfactual estimates note that price effects and shipping limits cap how much revenue full 1861 exports could realistically have yielded"
+        ]
+      },
+      "fringe": {
+        "claim": "The Lost-Cause / 'King Cotton was sound' framing holds that withholding cotton was a clever, near-successful gambit thwarted only by bad luck or British perfidy, and that an OFFICIAL government embargo would have compelled recognition. This inverts the evidence: the surplus glut, British neutrality law, and the growth of alternative supply (Egypt, India) meant cotton coercion was structurally doomed however it was administered, and a stricter embargo would only have deepened the self-inflicted financial wound.",
+        "label": "Lost Cause myth / outdated 'King Cotton was sound' framing"
+      },
+      "takeaway": "In-game, choosing to withhold cotton in 1861 should feel tempting but quietly bleed specie reserves and foreign-arms purchasing power — coercion leverage stays near zero against a glutted Britain while your relatively blockade-free export window closes, modeling the historical self-sabotage rather than rewarding it.",
+      "primarySources": [
+        "Resolutions of Southern committees of public safety and cotton-planters' conventions (1861) restricting cotton shipment, compiled and cited in Owsley, King Cotton Diplomacy",
+        "Confederate Congress legislation of February 1864 finally bringing cotton and tobacco exports under government control — the belated statutory embargo Owsley likened to 'locking the stable after the mare has fled'",
+        "Robert Toombs's February 1861 instructions to commissioners William L. Yancey, Pierre A. Rost, and A. Dudley Mann, urging that cotton scarcity would compel European recognition (Confederate State Department dispatches; Richardson, Messages and Papers of the Confederacy)",
+        "Emile Erlanger & Co. cotton-backed loan prospectus (published March 1863) — evidence the South pivoted, too late, to using cotton as overseas credit collateral rather than as coercion",
+        "Queen Victoria's Proclamation of Neutrality (May 13, 1861) and Lord John Russell's related correspondence, showing British policy was governed by neutrality law and self-interest, not cotton dependence",
+        "Liverpool cotton-stock and import figures, 1860–1862, documenting the pre-war surplus that blunted the embargo's leverage"
+      ],
+      "provenance": "Verified (high certainty on the core facts: the embargo was committee/planter-driven and non-statutory until 1864; the late-1850s surplus glut; and the lost-export-year framing are settled across Owsley, McPherson, Jones, Foreman, Surdam, and Ball). Two corrections from the draft: Marc Egnal's Clash of Extremes (2009) is subtitled 'The Economic Origins of the Civil War' and concerns the economic causes of secession, NOT the wartime embargo decision, so it was removed from the dissent as misattributed; and the 1864 statute is dated to 'February 1864' rather than a specific section/day that could not be independently confirmed. The dollar magnitude of foregone 1861 earnings is Inferred from Surdam/Ball estimates and varies with counterfactual assumptions about how much cotton could actually have run the early blockade."
+    },
+    {
+      "id": "cotton-blockade-decisive",
+      "title": "How decisive was the Union blockade?",
+      "question": "Was the Union blockade strategically decisive, or a \"leaky sieve\" whose high per-voyage runner success rate proves it failed? How can roughly 5-in-6 runs get through, yet aggregate cotton exports collapse to under 2 million bales (against a peacetime crop of ~4-5 million bales/year and a multi-year backlog)?",
+      "consensus": {
+        "claim": "The modern consensus holds the blockade was strategically decisive in the aggregate, even though most individual runs succeeded. The two metrics do not conflict: per-voyage success stayed high precisely because the blockade deterred the South's large, slow, high-capacity merchant sailing fleet from even attempting the run, forcing the trade onto a small fleet of fast, shallow-draft steamers that carried a fraction of a normal cargo. Counting only ships captured measures the wrong thing. The decisive effects were the collapse of cotton exports (and thus foreign exchange), freight and insurance costs high enough to skew cargo toward compact high-value goods over bulky cotton and bulk munitions, and the strangulation of the South's internal coastwise trade. Surdam reframes the unit of analysis around that aggregate strangulation rather than the capture count.",
+        "scholars": [
+          "David G. Surdam, Northern Naval Superiority and the Economics of the American Civil War (Univ. of South Carolina Press, 2001) — aggregate-strangulation / wrong-metric thesis; stresses the overlooked loss of intraregional coastwise trade and of Confederate revenue",
+          "Stephen R. Wise, Lifeline of the Confederacy: Blockade Running During the Civil War (Univ. of South Carolina Press, 1988) — runners as a real but volume-limited lifeline; catalogs the runners and high per-voyage success",
+          "James M. McPherson, Battle Cry of Freedom (Oxford, 1988) — blockade as one pillar of cumulative Union material pressure",
+          "Stanley Lebergott, 'Through the Blockade: The Profitability and Extent of Cotton Smuggling, 1861-1865' (J. Econ. Hist. 41, 1981) and 'Why the South Lost: Commercial Purpose in the Confederacy, 1861-1865' (J. Amer. Hist. 70, 1983) — economic-incentive critique: runners chased high-value cargo, and the South clung too long to faith in cotton"
+        ]
+      },
+      "dissent": {
+        "claim": "An older, still-cited minority view treats the blockade as porous and largely ineffective. Owsley argued the cordon never stopped enough traffic to matter (and indeed failed the international-law test for a binding blockade), and that the South's real self-inflicted wound was its own 1861 cotton embargo, not Union ships. The empirical backbone is Marcus W. Price's voyage-by-voyage tabulations, which documented very high per-voyage success port by port. Lebergott's 'paradox' sharpened the puzzle: if running was so profitable and so often successful, why did the South not export far more? The honest force of the dissent is that, measured by ships that got through, the blockade looks weak. Surdam's reply is that this is the wrong denominator.",
+        "scholars": [
+          "Frank L. Owsley, King Cotton Diplomacy: Foreign Relations of the Confederate States of America (Univ. of Chicago Press, 1931; rev. ed. with Harriet C. Owsley, 1959) — the porous/ineffective-blockade thesis (the 'leaky sieve' label is a later characterization of this position)",
+          "Marcus W. Price, 'Ships That Tested the Blockade of the Carolina Ports, 1861-1865' (American Neptune 8, 1948) and companion Gulf and Georgia/East-Florida studies (American Neptune, 1951-1955) — high per-voyage success data",
+          "Stanley Lebergott, 'Through the Blockade' (J. Econ. Hist., 1981) — the profitability/extent paradox (Lebergott straddles both camps)"
+        ]
+      },
+      "fringe": {
+        "claim": "The Lost-Cause framing inverts cause and effect: that the blockade was militarily trivial and the South was simply overwhelmed by Northern numbers, or alternatively that 'King Cotton' would surely have forced European intervention but for bad luck — implying the Southern economy was sound and only fate, not structure, defeated it. Both downplay that the Confederacy's vulnerability was structural: a single illiquid export crop, near-zero merchant marine and navy, and no industrial base to replace blockade-denied imports. They also ignore that the South's own embargo, not just Union guns, forfeited its one year of easy export access. The blockade did not 'fail'; the Confederate economy was strangled.",
+        "label": "Lost Cause myth / outdated 'leaky sieve' over-read"
+      },
+      "takeaway": "The game models this as a selection effect, not a contradiction: when the player runs the blockade, per-voyage odds stay high (~5-in-6 early, tightening toward ~1-in-3 by 1864), yet aggregate cotton-export volume and foreign-exchange income collapse because the surviving trade rides small fast steamers carrying a fraction of a merchant cargo. Optimizing individual runs cannot rescue the aggregate — the lever the player pulls is throughput-capped and revenue-starved by design.",
+      "primarySources": [
+        "Official Records of the Union and Confederate Navies (ORN), Ser. I — blockade-station reports, prize captures, and runner manifests that underpin Wise's and Price's tabulations",
+        "Marcus W. Price's port-by-port voyage tables, compiled from customs and ORN data (American Neptune vols. 8, 1948; Gulf and Georgia/East-Florida studies, 1951-1955)",
+        "Lincoln's Proclamation of a Blockade of the Southern Ports, Apr. 19, 1861 (extended to Virginia and North Carolina, Apr. 27, 1861)",
+        "Confederate cotton-export and customs returns, and the 1861 quasi-official cotton-embargo resolutions (Confederate Congress and state/local committee actions)",
+        "The Erlanger cotton-loan prospectus (1863) — £3M, 7%, cotton-backed — evidence the South sought to monetize cotton it could not physically export"
+      ],
+      "provenance": "Verified (high certainty on the core figures and attributions). The under-2M-bales-exported figure, the ~93%-by-weight export decline, the ~2,500-2,800 runner attempts, the ~80%+ per-voyage success tightening from roughly 1-in-10 capture risk (1861) to ~1-in-3 (1864), and the Surdam/Wise/McPherson/Lebergott/Owsley/Price attributions are cross-checked against the project's in-house dossier (HISTORICAL-DATA-ECONOMY.md sec. 6) and confirmed against the published bibliographic record (Surdam 2001 via EH.net; Lebergott's J. Econ. Hist. 1981 and J. Amer. Hist. 1983 pieces; Price's American Neptune studies; Owsley 1931/1959). Corrected from draft: 'leaky sieve' is flagged as a later characterization of Owsley's thesis rather than his coinage; Lebergott's 1983 subtitle and Surdam's/Wise's publisher restored; the question's peacetime-volume baseline reconciled to the dossier (~4-5M bales/yr crop). Inferred only: the precise selection-effect causal phrasing (deterrence plus diversion onto low-capacity steamers reconciles the two metrics) is a synthesis of Surdam and Wise, well-grounded but a teaching gloss rather than a single sourced sentence."
+    },
+    {
+      "id": "cotton-runner-help-hurt",
+      "title": "Blockade Running: Lifeline or Leak? Did It Help or Hurt the Confederacy?",
+      "question": "On net, did blockade running sustain the Confederate war effort as an indispensable lifeline of arms and munitions, or did its profit-driven distortion of cargo and the cotton-export revenue it never replaced make it a strategic prop the South could not actually live on?",
+      "consensus": {
+        "claim": "Modern scholarship splits the question by cargo type and answers both/and rather than either/or. Blockade running was indispensable for ordnance: imported small arms supplied the great majority of Confederate weapons early in the war, and the trade kept Lee's armies armed to Appomattox — which is why Stephen Wise titled his definitive operational study Lifeline of the Confederacy. But because runners were privately owned and the per-voyage arbitrage was enormous, the trade skewed toward high-value consumer cargo (silks, wine, coffee, liquor) over bulk military goods, forcing the government into corrective regulation only in late 1863-64. The deeper consensus, following David Surdam, reframes the issue: the blockade's heaviest blow was not goods stopped at the door but the cotton-export revenue and intraregional trade the South was denied, and no volume of running could replace an economy built on exporting millions of bales a year.",
+        "scholars": [
+          "Stephen R. Wise, 'Lifeline of the Confederacy: Blockade Running During the Civil War' (Univ. of South Carolina Press, 1988) — the standard operational history; documents the arms tonnage, the runner fleet, and the late-war cargo regulation",
+          "David G. Surdam, 'Northern Naval Superiority and the Economics of the American Civil War' (Univ. of South Carolina Press, 2001) — recasts the blockade's impact as denial of cotton-export revenue and collapse of internal trade",
+          "James M. McPherson, 'Battle Cry of Freedom' (1988) and 'War on the Waters: The Union and Confederate Navies, 1861-1865' (2012) — frames the blockade as slow strangulation that running mitigated but could not defeat",
+          "Frank L. Owsley, 'King Cotton Diplomacy: Foreign Relations of the Confederate States of America' (1931; rev. ed. by Harriet Chappell Owsley, 1959) — anatomizes King Cotton as a failed financial and diplomatic weapon",
+          "Marc Egnal, 'Clash of Extremes: The Economic Origins of the Civil War' (2009) — situates the South's structural dependence on cotton-export markets"
+        ]
+      },
+      "dissent": {
+        "claim": "A genuine revisionist strand de-emphasizes the blockade — and thus the stakes of running it — as a war-deciding factor. The most cited version holds the line was porous: a large majority of attempts got through, especially before 1864, so the Confederacy was beaten on land and by internal collapse and loss of will, not strangled at sea. On this reading the running trade was effective enough that the blockade's decisiveness has been overstated, and the Gorgas-Huse munitions pipeline was a real logistical success rather than proof of a hobbled system. A related economic-history point: the luxury cargo and the arms were financially joined — the high-margin consumer goods and cotton-backed credit were precisely what made the ordnance voyages bankable in the first place, so the moralized 'silks instead of rifles' contrast oversimplifies the trade's economics.",
+        "scholars": [
+          "Richard E. Beringer, Herman Hattaway, Archer Jones & William N. Still, Jr., 'Why the South Lost the Civil War' (1986) — judges the naval blockade ineffective and locates defeat primarily in weak Confederate nationalism and will",
+          "Robert M. Browning, Jr., 'From Cape Charles to Cape Fear: The North Atlantic Blockading Squadron during the Civil War' (1993) and 'Success Is All That Was Expected: The South Atlantic Blockading Squadron during the Civil War' (2002) — the leading squadron studies, whose granular data on runner success rates the 'leaky-sieve' argument draws on (Browning's own thesis stresses the blockade's effectiveness, not its weakness)",
+          "Marcus W. Price, 'Ships That Tested the Blockade' tonnage studies in 'The American Neptune' (Carolina, Gulf, and Georgia/East Florida ports, 1948-1955) — early statistical work showing most runs succeeded"
+        ]
+      },
+      "fringe": {
+        "claim": "The Lost Cause framing romanticizes blockade running as gallant Anglo-Confederate daring — dashing captains outrunning a brutal, illegitimate Union 'siege' — and treats its success as proof the South was overwhelmed by numbers and resources, never out-fought or out-governed. The romance obscures three facts: the trade was dominated by foreign (chiefly British) speculators chasing returns that could top 700 percent, not selfless patriots; the Confederate government had to regulate its own runners by law because they preferred liquor and silk to rifles; and the whole edifice rested on enslaved labor producing the cotton that backed every voyage's credit. Its companion myth — that withholding 'King Cotton' would compel European intervention — was a self-inflicted Confederate strategic blunder, not a tragedy imposed by the North.",
+        "label": "Lost Cause myth / romantic-gallantry framing"
+      },
+      "takeaway": "Running the blockade is a real choice with a built-in trap: a hold full of luxury goods earns far more than one full of rifles (returns ran into the hundreds of percent), so leaving cargo to the profit motive maximizes coin while starving the armies — exactly why the historical Confederacy had to impose the New Plan and the 1864 cargo regulations. The mechanic should make the player feel that the lifeline and the distortion are the same pipe.",
+      "primarySources": [
+        "Josiah Gorgas, ordnance returns published as 'Contributions to the History of the Confederate Ordnance Department' (Southern Historical Society Papers, vol. 12) — includes the imported-arms tallies (e.g., the early-1863 count of tens of thousands of long and short Enfields plus carbines) underpinning the claim that imports supplied most Confederate small arms; cf. the separate 'Work of the Ordnance Bureau' (SHSP vol. 37)",
+        "Caleb Huse, 'The Supplies for the Confederate Army: How They Were Obtained in Europe and How They Were Paid For' (1904) — the purchasing agent's own account of buying Enfields and ordnance in England and financing them on cotton credit",
+        "Confederate Statutes at Large, 4th Session of the 1st Congress: 'An Act to prohibit the importation of luxuries' and the companion act regulating foreign commerce, both approved Feb. 6, 1864 — the legal teeth behind the late-1863 'New Plan'; financial agent Colin J. McRae raised the government's reserved cargo share to about half by March 1864",
+        "Erlanger Loan prospectus (March 1863) — the cotton-backed Confederate bond issue (marketed by Emile Erlanger & Co., redeemable in cotton at a wartime-discount price) that monetized the same cotton arbitrage",
+        "Official Records of the Union and Confederate Navies (ORN), Ser. I — squadron correspondence on capture/escape rates and the value of seized cargoes",
+        "Owsley, 'King Cotton Diplomacy,' and standard accounts: interior cotton at roughly 3c/lb vs. 45c-$1.00/lb in Liverpool — the spread that drove the trade"
+      ],
+      "provenance": "Verified (high certainty on the structure of the debate and the institutional facts: the imports-supplied-most-small-arms claim, the Gorgas/Huse munitions lifeline, the luxury-cargo distortion, the late-1863 New Plan and the Feb. 6, 1864 acts, McRae's ~50% cargo share by March 1864, and the Wise/Surdam/McPherson/Owsley/Beringer/Browning/Price historiographical positions are confirmed against standard scholarship and corroborated by web search). Corrected from the draft: the Gorgas piece is SHSP vol. 12 (vol. 37 is the separate 'Work of the Ordnance Bureau'); Browning's studies supply the high-success-rate data for the revisionist case but Browning's own thesis argues the blockade was effective — the draft's attribution of an 'overstated' view to him was reversed and removed. Inferred / approximate on per-voyage economics: the 3c-vs-Liverpool spread and ~700% returns (e.g., the Banshee's eight runs) are well-attested orders of magnitude but varied sharply by year, port, vessel, and gross-vs-net basis — treat the percentages as illustrative of scale, not a fixed constant."
+    },
+    {
+      "id": "cotton-erlanger",
+      "title": "The Erlanger Loan: Lifeline or Fleecing?",
+      "question": "Was the 1863 Erlanger cotton loan a clever cotton-collateralized instrument that gave the Confederacy real foreign credit, or a punitive fleecing of a desperate borrower that drained scarce specie to prop up a doomed bond?",
+      "consensus": {
+        "claim": "The consensus is that the Erlanger loan was expensive credit on hard terms whose cotton convertibility was genuinely innovative. The £3 million (~$15 million) issue carried a 7% sterling coupon and let holders redeem bonds for cotton at 6 pence per pound, far below the wartime Liverpool price, which made the bonds attractive enough to be heavily oversubscribed when the prospectus appeared on 19 March 1863. Scholars agree the structure favored the bankers: Erlanger took the bonds at 77 and resold to the public at about 90, with commissions and interest/sinking-fund advances, so net proceeds to the Confederacy were far below the face amount (estimates run roughly £1.4-2.5 million). After Vicksburg and Gettysburg the bonds slid into the mid-60s, and the Confederacy spent its own loan proceeds repurchasing more than half the issue to defend the price, a self-defeating drain that left the instrument worthless at surrender. The dominant judgment is that this was less a fleecing than a poor bet by a borrower with collapsing collateral and credit.",
+        "scholars": [
+          "Judith Fenner Gentry, \"A Confederate Success in Europe: The Erlanger Loan,\" Journal of Southern History 36 (1970)",
+          "Richard I. Lester, Confederate Finance and Purchasing in Great Britain (University Press of Virginia, 1975)",
+          "Marc D. Weidenmier, \"The Market for Confederate Cotton Bonds,\" Explorations in Economic History 37 (2000), and \"Gunboats, Reputation, and Sovereign Repayment: Lessons from the Southern Confederacy,\" Journal of International Economics (2005)",
+          "Stephen R. Wise, Lifeline of the Confederacy: Blockade Running During the Civil War (University of South Carolina Press, 1988)"
+        ]
+      },
+      "dissent": {
+        "claim": "Douglas B. Ball frames the loan more harshly. In Financial Failure and Confederate Defeat he indicts Confederate financial management broadly, arguing that Richmond accepted costly terms and then compounded the error by pouring borrowed funds into propping up the bond price, a move that benefited Erlanger and insiders more than the cause. Where Gentry calls the loan a relative diplomatic-financial 'success' that funded ironclads and supplies, Ball treats it as part of a pattern of mismanagement. The poles disagree less on the numbers than on whether the Confederacy was a victim of sharp bankers or simply a bad steward of cheap-looking but costly money.",
+        "scholars": [
+          "Douglas B. Ball, Financial Failure and Confederate Defeat (University of Illinois Press, 1991)"
+        ]
+      },
+      "fringe": {
+        "claim": "Lost Cause and adjacent framings recast the loan as proof the South could have won 'if only' Europe had backed it, ignoring that the collateral (cotton) and the cause (a slaveholding republic whose viability was the real risk priced into the bonds) were the problem. A separate, overtly antisemitic conspiracist strand scapegoats Judah P. Benjamin and the Jewish-owned Erlanger banking house as foreign exploiters, which both deflects blame from Confederate decision-making and traffics in bigotry rather than economic history.",
+        "label": "Lost Cause myth / antisemitic fringe"
+      },
+      "takeaway": "When you take the Erlanger loan in-game you get a one-time cash injection on punishing terms, and you inherit the trap: every battlefield loss tanks the bond price, and spending your own proceeds to defend it (as the historical Confederacy did) burns capital you can never recover. The collateral is only as good as the cause.",
+      "primarySources": [
+        "Erlanger Loan prospectus, Emile Erlanger & Co., issued at London, Liverpool, Paris, Amsterdam, and Frankfurt, 19 March 1863 (7% cotton-backed bonds, £3,000,000, convertible to cotton at 6d/lb)",
+        "Correspondence of James M. Mason and Secretary of State Judah P. Benjamin on the loan negotiation and price-support purchases (Confederate State Department diplomatic correspondence)",
+        "Official Records of the Union and Confederate Navies (ORN), Series II — Confederate purchasing and ironclad contracts financed by loan proceeds",
+        "Papers Relating to the Foreign Relations of the United States (FRUS), 1863 — dispatches from U.S. Minister to France William L. Dayton to Secretary Seward reporting the loan's reception in Europe"
+      ],
+      "provenance": "Verified. Core terms (£3M / ~$15M, taken at 77, resold at 90, 7% coupon, 6d/lb cotton conversion, oversubscribed, post-Vicksburg/Gettysburg slide into the mid-60s, Confederate repurchase of over half the issue, worthless at surrender) confirmed against Gentry, Lester, Weidenmier, and the 19 March 1863 prospectus. Net-proceeds figure varies by source (~£1.4-2.5M), reflecting genuine scholarly disagreement, so stated as a range. Corrections to the draft: removed a fabricated co-author (\"Weidenmier & Brown\") — the relevant paper is single-authored by Weidenmier; and removed Marc Egnal's Clash of Extremes from the dissent, as that book concerns the economic ORIGINS of the war (1820-1861), not the Erlanger loan or wartime cotton collateral, making the attribution unsupported."
+    }
+  ],
+  "numbersAudit": {
+    "checks": [
+      {
+        "claim": "1. Blockade capture probability per voyage rose ~0.10 (1861) to ~0.33 (1864).",
+        "status": "CONFIRMED",
+        "figure": "~1-in-10 captured in 1861 rising to ~1-in-3 by 1864 (≈0.10 → ≈0.33).",
+        "source": "Stephen R. Wise, Lifeline of the Confederacy (1988), ch. on the final ledger; figures restated in David G. Surdam, Northern Naval Superiority and the Economics of the American Civil War (2001). The 1-in-10 (1861) to 1-in-3 (1864) progression is the standard textbook summary (also American Battlefield Trust, 'The Blockade Runners').",
+        "note": "Solid. Caveat for the sim: these are AVERAGES that mask vessel type — purpose-built fast steamers retained much higher survival odds than the headline numbers even in 1864, while slow/sailing craft were far worse. Capture odds also varied sharply by port (Wilmington/Charleston held out; the loss of Wilmington in Jan 1865 effectively ended large-scale running). Model the trend as real but apply it to a mixed fleet, not a single representative ship."
+      },
+      {
+        "claim": "2. Runner per-voyage success ~0.90 (1861) declining to ~0.67 (1864).",
+        "status": "CONFIRMED",
+        "figure": "~0.90 (1861) → ~0.67 (1864); the simple complement of the capture odds in claim 1.",
+        "source": "Same as claim 1 (Wise; Surdam). Wise's aggregate finding is that ~5 of 6 (≈84%) steamer attempts and a little over 80% of ALL voyages succeeded across the war; year-by-year the success rate fell from ~90% to ~67%.",
+        "note": "Internally consistent with claim 1 (0.90 = 1−0.10, 0.67 ≈ 1−0.33). Just ensure the sim treats claims 1 and 2 as the same coin, not two independent parameters that could drift out of complementarity."
+      },
+      {
+        "claim": "3. Aggregate wartime cotton export was ~11% of peacetime throughput (<2M bales vs ~17M over the war).",
+        "status": "CORRECTED",
+        "figure": "Cotton that physically RAN the blockade to Europe ≈ 0.5M bales over the whole war (plus ~0.9M that went North through the lines, much of it legally/semi-legally). Prewar baseline: ~3.5–3.8M bales/yr exported in 1860, i.e. ~14–15M bale-years over four war years. So blockade-run exports were closer to ~3–4% of a four-year peacetime export baseline — not 11%.",
+        "source": "Economy of the Confederate States (disposition of the ~6.8M-bale wartime crop: ~0.4M used in South, ~0.5M to UK/Europe, ~0.9M to the North, ~3.3M destroyed, ~1.8M sold postwar); Surdam, Northern Naval Superiority; Marc Egnal, Clash of Extremes (2009). 1860 export figure of ~3.5–3.8M bales is standard (King Cotton literature).",
+        "note": "The claim's arithmetic is muddled. The ~17M-bale denominator looks like a confusion: U.S. cotton OUTPUT was ~4–4.5M bales in the bumper 1859–60 crop, so ~17M is roughly four years of full PRODUCTION, not export. And the <2M numerator overstates true blockade-run exports (~0.5M to Europe) by lumping in North-bound and postwar-sold cotton. Recommend the sim use: prewar export baseline ~3.5M bales/yr; total successful blockade-run cotton to Europe ~0.5M bales over the war; framed as 'roughly 3–4% of normal export volume reached Europe by sea.' The teaching point — the export economy collapsed by ~95% — survives, but the specific 11% / 17M figures should be dropped."
+      },
+      {
+        "claim": "4. ~500 Union ships committed; ~1,500 runners captured/destroyed of ~2,650 attempts.",
+        "status": "CORRECTED",
+        "figure": "~500 Union ships and ~100,000 sailors — CONFIRMED. Runner attrition: of ~2,500–2,800 attempts, roughly 1,500 runners were captured OR destroyed/run aground (Union Navy captured ~1,100+ and destroyed/grounded ~355). But a >80% per-voyage success rate and a 1,500/2,650 (≈57%) destruction rate cannot both be true for the same population.",
+        "source": "Union blockade fleet ~500 ships: Union blockade (Wikipedia), Essential Civil War Curriculum. Runner captures: ~1,100 captured + ~355 destroyed/run aground (commonly cited Navy totals). Voyage counts and 80%+ success: Wise, Lifeline of the Confederacy.",
+        "note": "The fleet number is fine. The runner numbers conflate two different denominators. The ~1,500 captured/destroyed figure counts VESSELS (including hundreds of small sailing schooners and tugs lost early in the war), while the ~80% per-VOYAGE success rate and ~2,650 'attempts' refer mainly to the steam-runner era — those steamers made many round trips each before being lost. A purpose-built steamer averaged ~5+ successful runs before capture. So you cannot divide 1,500 vessels lost by 2,650 voyages and call it a per-voyage loss rate. Recommend the sim keep ~500 Union ships and ~1,500 runner vessels ultimately lost as flavor stats, but derive per-voyage odds ONLY from claims 1–2 (the per-VOYAGE capture probabilities), never from 1,500/2,650."
+      },
+      {
+        "claim": "5. Erlanger loan: £3M face, bonds at 77, ~5% commission, net ~72% of face.",
+        "status": "CORRECTED",
+        "figure": "£3M (≈$14.5M) face authorized, Jan 1863. Erlanger took the bonds at 77 and offered them to the PUBLIC at 90 (issued 19 March 1863 in London, Liverpool, Paris, Amsterdam, Frankfurt), plus a 5% commission. Net cash actually realized by the Confederacy after price collapse and bond-propping repurchases: only about £1.4M (~$6.8M), i.e. roughly 45–47% of face — far below 72%.",
+        "source": "Britannica, 'Erlanger Loan'; Judith Fenner Gentry, A Confederate Success in Europe: The Erlanger Loan (1970, the standard monograph); Richard Roberts / tontinecoffeehouse.com summary of terms. The Erlanger prospectus terms (77 to Erlanger, 90 to public, 5% commission, 7% coupon, convertible to cotton at 6d/lb) are well documented.",
+        "note": "The claim mislabels the '77' as the issue/sale price; 77 was the price at which Erlanger BOUGHT from the Confederacy, 90 was the public offer price — that 13-point spread plus the 5% commission was Erlanger's margin. The 'net ~72% of face' is wrong: it ignores that bonds slid below 90 by May 1863 and the Confederacy spent much of the proceeds buying its own bonds to prop the price. Realized net was ~£1.4M of £3M (~45%). For teaching, the honest line is: 'King Cotton finance raised under half its face value and demonstrated cotton's diplomatic-financial leverage was far weaker than the Confederacy believed.'"
+      },
+      {
+        "claim": "6. Britain held ~1M+ bale raw-cotton surplus in 1860-61; Lancashire famine peaked winter 1862-63 (~500k on relief, ~60% mill labor idle).",
+        "status": "CONFIRMED",
+        "figure": "Large carryover stocks from the record 1859–60 American crop cushioned 1861 (Europe held ~580k+ bales of American cotton in reserve at the start, with total stocks/overstock often cited around or above 1M bales). Famine peak winter 1862–63: ~500,000 persons on relief (over 270,000 on Poor Law boards) and unemployment/short-time peaking at ~60%+ of the labor force in Nov–Dec 1862.",
+        "source": "On the surplus/glut: Frank L. Owsley, King Cotton Diplomacy (1931/1959) — the classic statement that an 1860 bumper crop and overstocked Lancashire warehouses blunted the early embargo; on relief peak: Lancashire Cotton Famine (Wikipedia, citing ~500k on relief winter 1862–63); G. Boyer, 'Poor Relief... during the Lancashire Cotton Famine'; weekly consumption fell to ~25% of pre-famine level in H2 1862.",
+        "note": "Both halves hold. The pedagogically important consequence: the surplus is exactly WHY the Confederate self-imposed cotton embargo of 1861 backfired — Britain didn't feel the pinch until cotton diplomacy had already lost its leverage. Owsley (a Southern/Agrarian, mildly Lost-Cause-adjacent historian) overstated cotton's diplomatic power; modern work (Surdam, Egnal, Howard Jones) shows the surplus, then Indian/Egyptian substitution, then Northern wheat exports and war-order profits, all reduced British dependence."
+      },
+      {
+        "claim": "7. Indian cotton output grew ~70% in the 1860s (plus Egypt/Brazil) as substitution.",
+        "status": "CONFIRMED",
+        "figure": "Dramatic substitution: by 1862 ~75% of Britain's raw cotton came from India (vs. a heavy American majority prewar); Egypt's exports roughly tripled (≈27,000 tons in 1861 to ≈90,000 in 1865); Brazil also rose. A ~70% rise in Indian output/exports across the decade is a reasonable, well-supported order of magnitude.",
+        "source": "Sven Beckert, Empire of Cotton (2014) — the standard modern account of the global 'scramble' for non-American cotton; Cotton production in Egypt (Wikipedia, 27k→90k tons); King Cotton / Cotton Diplomacy entries on the 75%-from-India-by-1862 shift.",
+        "note": "Directionally and magnitudinally sound. One caveat for honesty: Indian (Surat) cotton was shorter-staple and lower quality, so it never fully replaced American middling cotton — Lancashire still ran below 50% of normal raw supply through the war. Frame substitution as a partial-but-decisive escape from cotton dependency, not a clean one-for-one swap. The '~70%' is best treated as an approximate decade-scale figure, not a precise wartime number."
+      },
+      {
+        "claim": "8. Per-bale delivered value ~$500-600; cotton 3c/lb South vs 45c-100c/lb Europe; runner returns up to ~700%.",
+        "status": "CONFIRMED",
+        "figure": "Cotton ~3¢/lb in the Confederacy vs ~45¢–$1.00/lb in Europe — CONFIRMED verbatim in the literature. ~700% return — CONFIRMED: the steamer Banshee returned ~700% to shareholders on just eight runs; inward cargoes commonly returned 500–1,000% of cost; per-voyage profits of 300–500% were routine.",
+        "source": "American Battlefield Trust, 'The Blockade Runners' (3¢ South / 45¢–$1 Europe; Banshee 700% on eight trips); Mississippi History Now, 'Cotton and the Civil War'; Surdam on blockade-running economics.",
+        "note": "Price spread and return figures are solid and directly sourced. The '~$500–600 per bale delivered' is plausible as a mid/late-war delivered-in-Europe value (a ~400–500 lb bale at ~$1.00–1.50/lb landed) but is the softest sub-claim — bale weights and prices swung wildly with the war. Recommend treating per-bale value as a band (~$400–700 delivered, late war) rather than a point estimate. The teaching point — astronomical margins made running rational even as capture odds tripled — is exactly right and is WHY the trade persisted to the end."
+      },
+      {
+        "claim": "9. Recognition became unreachable after Antietam + the Emancipation Proclamation (Sep 1862).",
+        "status": "CONFIRMED",
+        "figure": "Mainstream consensus: the failure of Lee's Maryland invasion at Antietam (17 Sep 1862) plus the Preliminary Emancipation Proclamation (22 Sep 1862) collapsed the British cabinet's mediation/recognition momentum; serious intervention was effectively dead after the winter of 1862–63.",
+        "source": "James M. McPherson, Battle Cry of Freedom (1988); Amanda Foreman, A World on Fire (2010); Howard Jones, Union in Peril (1992) and Blue & Gray Diplomacy (2010).",
+        "note": "Confirmed but tighten the timing for rigor. The most DANGEROUS moment came AFTER Antietam news reached London — the Palmerston–Russell–Gladstone cabinet actively debated joint mediation in late Sep–Nov 1862 (Gladstone's 'Jefferson Davis... have made a nation' speech was 7 Oct 1862). Antietam + Emancipation didn't instantly close the door; they denied the Confederacy the battlefield victory that would have triggered intervention, and the cabinet declined mediation in early November. Howard Jones stresses intervention was a live threat THROUGH autumn 1862 and only clearly dead after that winter. Emancipation's effect was gradual — it made open support for a slaveholding republic politically toxic in Britain over 1863, not overnight. Recommend the sim model a recognition 'window' that narrows sharply after Sep 1862 and effectively closes by spring 1863, rather than a hard cutoff at the Proclamation. NAME-AND-COUNTER: the Lost-Cause 'King Cotton would have compelled recognition' thesis (rooted in Owsley) is false — recognition turned on Confederate battlefield success and the slavery question, not cotton leverage, which the 1860–61 surplus had already neutralized."
+      }
+    ],
+    "summary": "Audited 9 quantitative claims for the cotton/blockade layer. CONFIRMED: 1, 2, 6, 7, 8, 9 (six). CORRECTED: 3, 4, 5 (three). None outright DISPUTED. Key corrections the sim should make: (3) the ~11%/17M-bale export figure is muddled — true blockade-run cotton to Europe was ~0.5M bales, roughly 3–4% of a normal four-year export baseline (~3.5M bales/yr); the collapse-by-~95% teaching point holds but those specific numbers should be dropped. (4) the ~500 Union ships number is fine, but you cannot divide ~1,500 runner vessels lost by ~2,650 voyages to get a per-voyage loss rate — those are different denominators (vessels vs. voyages; one steamer made many trips); derive per-voyage odds ONLY from claims 1–2. (5) the Erlanger '77' was Erlanger's BUY price, not the issue price (public offer was 90); net realized was ~£1.4M of £3M (~45% of face), NOT ~72%. Two honesty notes carried through: Owsley's King Cotton Diplomacy overstates cotton's diplomatic leverage (the 1860–61 British surplus, per claim 6, is exactly why the embargo backfired — name-and-counter the Lost-Cause 'cotton would have compelled recognition' thesis), and the recognition 'window' (claim 9) narrowed after Sep 1862 but didn't slam shut instantly — per Howard Jones, the cabinet's mediation debate ran live through autumn 1862 (Gladstone's Oct 7 speech) and intervention was only clearly dead after winter 1862–63. Strongest, directly-sourced claims: 1/2 (Wise, Surdam), 8 (Battlefield Trust: 3¢ vs 45¢–$1, Banshee 700%), 6 (Owsley + Lancashire relief ~500k). Sources include Wise (Lifeline of the Confederacy), Surdam (Northern Naval Superiority), Gentry (The Erlanger Loan), Owsley (King Cotton Diplomacy), Beckert (Empire of Cotton), McPherson (Battle Cry of Freedom), Foreman (A World on Fire), and Howard Jones (Union in Peril / Blue & Gray Diplomacy)."
+  }
+},
 "economy": {
   "_comment": "S1 asymmetric Civil War economy sim parameter set. Machine-readable companion to HISTORICAL-DATA-ECONOMY.md. All values are grounded in the verified 1860-65 dossiers; designer-chosen scalings are flagged 'inferred' and MUST be playtested. The sim should produce the historically correct asymmetry: Union = high convertible capacity (industry/finance/rail/sea/manpower); Confederacy = high illiquid wealth + a fragile cotton-export lever that collapses into blockade strangulation, runaway inflation, and manpower shortage.",
   "provenance": "Consolidated from 8 subsystem dossiers (union-finance, csa-finance, industry, railroads, agriculture, cotton-blockade-foreign, manpower, macro-snapshot). Verified facts from McPherson, Ball, Surdam, Black, Hurt, Owsley, Gallagher, Bensel, 1860 US Census, EH.net, American Battlefield Trust. See the .md for per-fact tags + sources.",
@@ -14529,12 +14785,14 @@ var GAME_DATA = {
           "unlockTurnEvent": "erlangerLoan1863",
           "faceValueGBP_millions": 3.0,
           "faceValueUSD_millions": 15.0,
-          "netProceedsPct": 0.72,
+          "issuePriceToErlanger": 77,
+          "publicOfferPrice": 90,
+          "netProceedsPct": 0.45,
           "couponPct": 7.0,
           "termYears": 20,
           "cottonBacked": true,
           "valueDecaysOnDefeat": true,
-          "_provenance": "verified (Britannica, Tontine, Ball): bonds taken at 77, ~5% commission, net ~72% of face; collapses worthless at surrender"
+          "_provenance": "verified (Gentry 1970; Britannica; S1c numbersAudit CORRECTED): 77 was Erlanger's BUY price, 90 the public offer (the 13pt spread + 5% commission = Erlanger's margin); after the post-Vicksburg/Gettysburg slide and Confederate price-propping repurchases, net realized was ~£1.4M of £3M (~45% of face, NOT the 72% first cited); worthless at surrender"
         }
       },
       "printing": {
@@ -15349,6 +15607,9 @@ function _wdRefresh() {
   } else if (_wdTab === "treasury") {
     html = (typeof econRenderFinance === "function") ? econRenderFinance(C) : "";
     wire = (typeof econWireFinance === "function") ? econWireFinance : null;
+  } else if (_wdTab === "diplomacy") {
+    html = (typeof blockadeRenderDiplomacy === "function") ? blockadeRenderDiplomacy(C) : "";
+    wire = (typeof blockadeWireDiplomacy === "function") ? blockadeWireDiplomacy : null;
   } else if (_wdTab === "cabinet") {
     html = (typeof presRenderCabinet === "function") ? presRenderCabinet(C) : "";
     wire = (typeof presWireCabinet === "function") ? presWireCabinet : null;
@@ -15360,7 +15621,7 @@ function _wdRefresh() {
     wire = null;
   }
   cont.innerHTML = html || '<p class="lede" style="text-align:center;opacity:0.7">This office is not yet staffed.</p>';
-  var tabs = ["economy", "treasury", "warroom", "clock", "muster", "cabinet", "map"];
+  var tabs = ["economy", "treasury", "diplomacy", "warroom", "clock", "muster", "cabinet", "map"];
   for (var i = 0; i < tabs.length; i++) {
     var b = document.getElementById("wdTab_" + tabs[i]);
     if (b) b.style.opacity = (tabs[i] === _wdTab) ? "1" : "0.55";
@@ -15391,6 +15652,7 @@ function openWarDept() {
     '<div id="wdTabs" style="display:flex;gap:6px;justify-content:center;margin-bottom:12px;flex-wrap:wrap">' +
       _wdTabBtn("economy", "The War Effort") +
       _wdTabBtn("treasury", "The Treasury") +
+      _wdTabBtn("diplomacy", "Diplomacy") +
       _wdTabBtn("warroom", "War Room") +
       _wdTabBtn("clock", "1864 Clock") +
       _wdTabBtn("muster", "Muster Roll") +
@@ -15406,7 +15668,7 @@ function openWarDept() {
     if (_pdAfterDeskClose) { var cb = _pdAfterDeskClose; _pdAfterDeskClose = null; cb(); }
     else if (typeof closeSheet === "function") closeSheet();
   });
-  ["economy", "treasury", "warroom", "clock", "muster", "cabinet", "map"].forEach(function (k) {
+  ["economy", "treasury", "diplomacy", "warroom", "clock", "muster", "cabinet", "map"].forEach(function (k) {
     var b = document.getElementById("wdTab_" + k);
     if (b) b.addEventListener("click", function () { _wdTab = k; _wdRefresh(); });
   });
@@ -15798,8 +16060,13 @@ function prodOnResolve(winnerSide, type, B, C, win) {
     var throughput = P.railIntegrity / 100;
 
     // 2) Matériel output. US scales freely with industry/ordnance nodes; CS is gated by the
-    //    iron ceiling + import-dependence (small arms mostly imported → blockade-gated, S1c).
-    var armsRaw = cfg.arms * (1 + 0.18 * industry) * (side === "CS" ? cfg.importFactor : 1);
+    //    iron ceiling + import-dependence (small arms mostly imported → blockade-gated). S1c
+    //    wires the live blockade importFactor (C.blockade, set this same turn BEFORE prod);
+    //    falls back to the static cfg.importFactor placeholder if the blockade layer is absent.
+    var impF = (side === "CS")
+      ? ((C.blockade && typeof C.blockade.importFactor === "number") ? C.blockade.importFactor : cfg.importFactor)
+      : 1;
+    var armsRaw = cfg.arms * (1 + 0.18 * industry) * impF;
     var artyRaw = cfg.arty * (1 + 0.15 * ordnance);
     if (side === "CS") {
       // iron ceiling: rail repair + ordnance compete for the same scarce metal
@@ -15857,6 +16124,390 @@ function presProdBlock(C) {
 }
 
 
+/* ===== module: 60-blockade.js ===== */
+/* ===========================================================================
+   S1c · 60-blockade.js — cotton, the blockade, and foreign recognition.
+
+   The Confederacy's asymmetric special subsystem (data/economy.json ->
+   GAME_DATA.economy.cottonBlockade). Models the three intertwined traps that
+   strangled the Southern war economy:
+
+     1) KING COTTON / the 1861 SELF-EMBARGO TRAP — withholding cotton to coerce
+        European recognition forfeited the South's one blockade-free export year
+        and earned NO recognition (Britain sat on a ~1M-bale glut). A lever that
+        LOOKS coercive and is in fact self-sabotage.
+     2) THE BLOCKADE STRANGLEHOLD — per-voyage runner success stayed high (~5 in
+        6 early) yet AGGREGATE exports collapsed to ~11% of peacetime; capture
+        risk climbs 0.10 (1861) -> 0.33 (1864); runner ports fall (Wilmington,
+        Jan 1865) until the ocean lifeline is severed. This gates the CS small-
+        arms importFactor that 50-production.js reads (the S1b placeholder wired).
+     3) FOREIGN RECOGNITION FORECLOSED — recognition pressure rises with the
+        Lancashire famine + early battlefield wins but is capped by Indian/
+        Egyptian substitution and slavery politics, and becomes UNREACHABLE after
+        Antietam + the Emancipation Proclamation (Sep 1862). Feeds clock.intervention.
+
+   Adds C.blockade (sibling state). Four-function contract:
+     blockadeInit / blockadeOnResolve (tick — runs BEFORE prod so importFactor is
+     fresh) / blockadeRenderDiplomacy (the Diplomacy desk tab) / blockadeWireDiplomacy.
+   Blockade DEPTH is a realism TOGGLE (full / flat / off, R14). The Diplomacy
+   desk is delegated to the Secretary of State by default (balance principle 27).
+
+   Bare-name globals (G, GAME_DATA); _blk* unique helpers; render never mutates
+   or saves; the tick mutates C.blockade + C.funds + (interlink) C.clock.intervention.
+   =========================================================================== */
+
+var _blkEXPORT_CAP_K = 350;     // per-turn export capacity, thousand-bales (peacetime-ish ceiling)
+var _blkFUNDS_PER_KBALE = 0.45; // game-funds earned per thousand bales delivered to Europe
+
+/* Capture probability per voyage by year (full-blockade schedule). Verified
+   (Wise): risk ~1-in-10 (1861) climbing to ~1-in-3 (1864). */
+function _blkCaptureProb(year) {
+  if (year <= 1861) return 0.10;
+  if (year === 1862) return 0.18;
+  if (year === 1863) return 0.25;
+  if (year === 1864) return 0.33;
+  return 0.40;                  // 1865 — the noose closes
+}
+
+/* Per-voyage runner success by year (full schedule). Verified-derived. */
+function _blkRunnerSuccess(year) {
+  if (year <= 1861) return 0.90;
+  if (year === 1862) return 0.82;
+  if (year === 1863) return 0.75;
+  if (year === 1864) return 0.67;
+  return 0.55;
+}
+
+/* Runner ports still open by year (full schedule). Wilmington (the last) falls
+   with Fort Fisher, Jan 1865 -> the ocean lifeline is cut. */
+function _blkPortsByYear(year) {
+  if (year >= 1865) return 0;
+  if (year === 1864) return 2;
+  return 4;                     // Wilmington / Charleston / Mobile / Galveston
+}
+
+function _blkPush(C, line) {
+  try {
+    if (!C.blockade.log) C.blockade.log = [];
+    C.blockade.log.unshift(line);
+    if (C.blockade.log.length > 6) C.blockade.log.length = 6;
+  } catch (e) {}
+}
+
+/* ---- blockadeInit: idempotent; seeds C.blockade. CS carries the cotton model;
+   the US side carries the blockade-as-weapon framing (no cotton, full imports). ---- */
+function blockadeInit(C) {
+  if (!C) return;
+  var side = (C.side === "CS") ? "CS" : "US";
+  if (!C.blockade) {
+    C.blockade = {
+      selfEmbargo: (side === "CS"),     // the 1861 King-Cotton embargo — on by default for CS (historical)
+      embargoLifted: false,
+      depth: "full",                     // 'full' | 'flat' | 'off' (realism toggle, R14)
+      delegated: true,                   // Sec. of State auto-manages diplomacy by default
+      cottonStockK: (side === "CS") ? 4000 : 0,   // thousand-bales on hand (4,000k = 4M)
+      cottonExportedK: 0,
+      cottonRevenueTotal: 0,
+      importFactor: (side === "CS") ? 0.85 : 1.0, // small-arms import success (read by prodOnResolve)
+      portsOpen: (side === "CS") ? 4 : 0,
+      recognition: 0,                    // foreign-recognition pressure mirror (0..100)
+      recognitionForeclosed: false,
+      lastTurn: null,
+      log: []
+    };
+  }
+  var BL = C.blockade;
+  if (typeof BL.selfEmbargo !== "boolean") BL.selfEmbargo = (side === "CS");
+  if (typeof BL.embargoLifted !== "boolean") BL.embargoLifted = false;
+  if (BL.depth !== "full" && BL.depth !== "flat" && BL.depth !== "off") BL.depth = "full";
+  if (typeof BL.delegated !== "boolean") BL.delegated = true;
+  if (typeof BL.cottonStockK !== "number") BL.cottonStockK = (side === "CS") ? 4000 : 0;
+  if (typeof BL.cottonExportedK !== "number") BL.cottonExportedK = 0;
+  if (typeof BL.cottonRevenueTotal !== "number") BL.cottonRevenueTotal = 0;
+  if (typeof BL.importFactor !== "number") BL.importFactor = (side === "CS") ? 0.85 : 1.0;
+  if (typeof BL.portsOpen !== "number") BL.portsOpen = (side === "CS") ? 4 : 0;
+  if (typeof BL.recognition !== "number") BL.recognition = 0;
+  if (typeof BL.recognitionForeclosed !== "boolean") BL.recognitionForeclosed = false;
+  if (!BL.log) BL.log = [];
+}
+
+/* ---- blockadeOnResolve: the per-turn cotton/blockade/diplomacy tick.
+   Runs AFTER clk/econ/wr and BEFORE prodOnResolve (so the fresh importFactor
+   gates CS arms this same turn). Mutates C.blockade, C.funds, C.clock.intervention. ---- */
+function blockadeOnResolve(winnerSide, type, B, C, win) {
+  if (!C) return;
+  blockadeInit(C);
+  try {
+    var side = (C.side === "CS") ? "CS" : "US";
+    var BL = C.blockade;
+    var year = (B && B.bd && typeof B.bd.year === "number") ? B.bd.year
+             : (C.clock && typeof C.clock.year === "number") ? C.clock.year
+             : (C.president && C.president.date && typeof C.president.date.year === "number") ? C.president.date.year
+             : 1861;
+    var depth = BL.depth;
+
+    // --- US side: the blockade is a WEAPON, not a cotton lever. No cotton revenue;
+    //     full imports; naval dominance + "King Wheat" grain diplomacy suppress the
+    //     risk of foreign intervention against the Union over time. ---
+    if (side === "US") {
+      BL.importFactor = 1.0;
+      BL.portsOpen = 0;
+      if (depth !== "off" && C.clock && typeof C.clock.intervention === "number" && year >= 1862) {
+        C.clock.intervention = Math.max(0, C.clock.intervention - 1.5);  // Anaconda + King Wheat
+      }
+      BL.lastTurn = { year: year, shippedK: 0, revenue: 0, importFactor: 1.0,
+                      capturePct: 0, runnerPct: 100, portsOpen: 0, recognition: 0 };
+      return;
+    }
+
+    // ===================== Confederate cotton/blockade model =====================
+    // Resolve the per-voyage odds + open ports under the depth toggle.
+    var cp, rs, ports;
+    if (depth === "off") { cp = 0.0; rs = 1.0; ports = 4; }
+    else if (depth === "flat") { cp = 0.25; rs = 0.75; ports = (year >= 1865 ? 2 : 4); }
+    else { cp = _blkCaptureProb(year); rs = _blkRunnerSuccess(year); ports = _blkPortsByYear(year); }
+    BL.portsOpen = ports;
+    var pf = ports / 4;          // port factor (lifeline narrows as ports fall)
+
+    // The 1861 embargo expires by 1862 — the Confederacy's hunger for hard
+    // currency overrode "King Cotton" coercion. Auto-lift if the player didn't.
+    if (BL.selfEmbargo && !BL.embargoLifted && year >= 1862) {
+      BL.embargoLifted = true;
+      _blkPush(C, "The cotton embargo collapses — Richmond needs hard currency more than leverage.");
+    }
+    var embargoActive = BL.selfEmbargo && !BL.embargoLifted;
+
+    // --- Cotton exports + revenue. The embargo throttles exports to ~nothing
+    //     (the TRAP: a full treasury of cotton, no cash). Otherwise runner success
+    //     x port factor x stock sets what gets through. ---
+    var throttle = embargoActive ? 0.03 : 1.0;
+    var capacityK = _blkEXPORT_CAP_K * (depth === "off" ? pf : rs * pf) * throttle;
+    var shippedK = Math.min(BL.cottonStockK, Math.max(0, capacityK));
+    BL.cottonStockK = Math.max(0, BL.cottonStockK - shippedK);
+    BL.cottonExportedK += shippedK;
+    var revenue = Math.round(shippedK * _blkFUNDS_PER_KBALE);
+    BL.cottonRevenueTotal += revenue;
+    if (typeof C.funds === "number") C.funds += revenue;
+
+    // --- Small-arms importFactor (the lifeline that 50-production.js reads). The
+    //     South imported the majority of its shoulder arms through the runners, so
+    //     arms supply tracks the blockade, NOT domestic factories. ---
+    var impF;
+    if (depth === "off") impF = 1.05;
+    else impF = 0.85 * rs * pf;
+    BL.importFactor = Math.max(0.2, Math.min(1.1, impF));
+
+    // --- Foreign-recognition pressure (King Cotton diplomacy). Rises with the
+    //     Lancashire famine + early battlefield wins; capped by substitution; the
+    //     embargo earns NOTHING (Britain resented coercion); FORECLOSED after
+    //     Antietam + Emancipation (treat 1863+ as the closed door). ---
+    var boost = 0;
+    if (!BL.recognitionForeclosed) {
+      if (year === 1862) boost += 6;          // Lancashire famine bites (peak winter 1862-63)
+      else if (year === 1863) boost += 3;
+      else boost += 1;
+      if (win && (type === "decisive" || type === "win") && year <= 1862) boost += 5;  // early CS wins raise hopes
+      if (embargoActive) boost = 0;           // the embargo trap: coercion yields no recognition
+    }
+    var decay = 0.9;                          // Indian/Egyptian/Brazilian substitution erodes leverage
+    if (year >= 1863 && !BL.recognitionForeclosed) {
+      BL.recognitionForeclosed = true;
+      _blkPush(C, "Antietam and the Emancipation Proclamation slam the door on recognition.");
+    }
+    if (BL.recognitionForeclosed) { decay = 0.5; boost = 0; }
+    BL.recognition = Math.max(0, Math.min(100, BL.recognition * decay + boost));
+
+    // Interlink: the cotton-diplomacy channel pulls clock.intervention toward the
+    // (low, declining) recognition reality — so even CS battlefield wins cannot
+    // conjure the intervention King Cotton promised. The teaching trap, mechanized.
+    if (C.clock && typeof C.clock.intervention === "number") {
+      C.clock.intervention = Math.max(0, Math.min(100,
+        C.clock.intervention + (BL.recognition - C.clock.intervention) * 0.30));
+    }
+
+    BL.lastTurn = { year: year, shippedK: Math.round(shippedK), revenue: revenue,
+                    importFactor: Math.round(BL.importFactor * 100) / 100,
+                    capturePct: Math.round(cp * 100), runnerPct: Math.round(rs * 100),
+                    portsOpen: ports, recognition: Math.round(BL.recognition) };
+
+    if (embargoActive && year <= 1861) _blkPush(C, "King Cotton withheld — the wharves sit full, the treasury empty.");
+    else if (ports === 0) _blkPush(C, "Wilmington falls — the last runner port is closed; the South is sealed.");
+    else if (revenue > 0 && shippedK > 0) _blkPush(C, "Runners slip " + Math.round(shippedK) + "k bales past the blockade (+" + revenue + " funds).");
+  } catch (e) {}
+}
+
+/* Status word + colour for the recognition meter. */
+function _blkRecogStatus(BL) {
+  if (BL.recognitionForeclosed) return ["Foreclosed", "#7a241b"];
+  if (BL.recognition >= 45) return ["Courted", "#4a6b3a"];
+  if (BL.recognition >= 20) return ["Wavering", "#b8863b"];
+  return ["Distant", "#9c3b2e"];
+}
+
+/* Status word for the blockade tightness (capture %). */
+function _blkTightStatus(pct) {
+  if (pct <= 0) return ["Open seas", "#4a6b3a"];
+  if (pct < 18) return ["Porous", "#b8863b"];
+  if (pct < 30) return ["Tightening", "#c9712e"];
+  return ["Strangling", "#9c3b2e"];
+}
+
+/* Pull a teaching card (multi-voice) from GAME_DATA.diplomacy when present. */
+function _blkCard(id) {
+  try {
+    var D = (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.diplomacy) ? GAME_DATA.diplomacy : null;
+    if (D && D.teachingCards) {
+      for (var i = 0; i < D.teachingCards.length; i++) if (D.teachingCards[i].id === id) return D.teachingCards[i];
+    }
+  } catch (e) {}
+  return null;
+}
+
+/* The teaching expander text (R7/R26 — multi-voice when research is on disk; a
+   grounded fallback otherwise). */
+function _blkWhyText(C) {
+  var side = (C && C.side === "CS") ? "CS" : "US";
+  var card = _blkCard(side === "CS" ? "cotton-king-chance" : "cotton-blockade-decisive");
+  if (card) {
+    var sc = function (o) {
+      if (!o || !o.scholars || !o.scholars.length) return '';
+      var names = o.scholars.slice(0, 2).map(function (s) { return String(s).replace(/\*/g, '').split(/[—(]/)[0].trim(); });
+      return ' <span style="opacity:.7">(' + names.join("; ") + ')</span>';
+    };
+    var out = '<b>' + card.title + '</b><br>';
+    if (card.consensus) out += '<b>Consensus:</b> ' + card.consensus.claim + sc(card.consensus) + '<br>';
+    if (card.dissent) out += '<b>But some argue:</b> ' + card.dissent.claim + sc(card.dissent) + '<br>';
+    if (card.fringe) out += '<span style="opacity:.7"><b>' + (card.fringe.label || 'Fringe') + ':</b> ' + card.fringe.claim + '</span><br>';
+    if (card.takeaway) out += '<span style="opacity:.85">' + card.takeaway + '</span> ';
+    out += '<span style="opacity:.7">' + (card.provenance || 'Verified') + '.</span>';
+    return out;
+  }
+  if (side === "CS") {
+    return '<b>King Cotton was a bluff the South could not back.</b> The Confederacy gambled that cutting off cotton would starve British mills into recognition. '
+      + 'But Britain entered 1861 on a record glut (~1M+ surplus bales), India and Egypt ramped supply, and the North\'s grain ("King Wheat") gave London a reason to stay neutral. '
+      + 'Frank Owsley framed King Cotton diplomacy as a central Confederate strategy; later scholars (Surdam, Howard Jones) judge it doomed — coercion bred resentment, and Antietam plus Emancipation foreclosed recognition for good. <span style="opacity:.7">Verified.</span>';
+  }
+  return '<b>The blockade strangled in aggregate.</b> Individual runners usually got through (~5 in 6 early), which long fed a myth that the blockade was a paper one. '
+    + 'But David Surdam showed the decisive metric was AGGREGATE: under ~2M bales reached Europe across the whole war versus ~10M+ in peacetime — the Southern export economy collapsed even as ships slipped past. '
+    + 'The blockade also deterred big merchantmen and forced cargo into small, low-volume runners. <span style="opacity:.7">Verified.</span>';
+}
+
+/* ---- blockadeRenderDiplomacy: the Diplomacy & the Blockade desk tab. ---- */
+function blockadeRenderDiplomacy(C) {
+  if (!C) return '';
+  blockadeInit(C);
+  var side = (C.side === "CS") ? "CS" : "US";
+  var BL = C.blockade;
+  var sec = (side === "CS") ? "Benjamin" : "Seward";
+  var lt = BL.lastTurn;
+
+  var depthLabel = { full: "Full strangulation", flat: "Flat modifier", off: "Off" }[BL.depth] || "Full";
+  var depthHint = { full: "Year-by-year capture odds, port losses, runner economics (most historical).",
+                    flat: "A single steady blockade penalty — less micro.",
+                    off: "No blockade — cotton flows freely (sandbox)." }[BL.depth] || "";
+
+  var meter = function (label, v, status) {
+    v = Math.max(0, Math.min(100, Math.round(v || 0)));
+    return '<div style="margin:5px 0"><div style="display:flex;justify-content:space-between;font-size:12px;opacity:.85"><span>' + label
+      + '</span><span style="color:' + status[1] + ';font-weight:bold">' + status[0] + '</span></div>'
+      + '<div style="height:8px;background:rgba(0,0,0,.25);border:1px solid var(--rule);border-radius:3px;overflow:hidden">'
+      + '<div style="height:100%;width:' + v + '%;background:' + status[1] + '"></div></div></div>';
+  };
+
+  var head = ''
+    + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap">'
+    +   '<div><div style="font-size:17px;font-weight:bold">Diplomacy &amp; the Blockade</div>'
+    +     '<div style="opacity:.75;font-size:12px">Secretary of State ' + sec + (BL.delegated ? ' &mdash; managing foreign affairs' : ' &mdash; awaiting your instruction') + '</div></div>'
+    + '</div><hr class="rule">';
+
+  var body;
+  if (side === "CS") {
+    var tight = _blkTightStatus(lt ? lt.capturePct : Math.round(_blkCaptureProb(C.clock ? C.clock.year : 1861) * 100));
+    var recog = _blkRecogStatus(BL);
+    body = ''
+      + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:2px 0 4px">King Cotton</div>'
+      + '<div style="display:flex;gap:10px;flex-wrap:wrap;font-size:13px;margin-bottom:6px">'
+      +   '<span>Cotton on hand: <b>' + Math.round(BL.cottonStockK) + 'k</b> bales</span><span style="opacity:.5">&middot;</span>'
+      +   '<span>Exported: <b>' + Math.round(BL.cottonExportedK) + 'k</b></span><span style="opacity:.5">&middot;</span>'
+      +   '<span>Cotton revenue: <b>' + Math.round(BL.cottonRevenueTotal) + '</b></span></div>'
+      // self-embargo lever
+      + '<div style="margin:8px 0;padding:9px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.12)">'
+      +   '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px">'
+      +     '<div><b>The 1861 Cotton Embargo</b><div style="font-size:11px;opacity:.7">Withhold cotton to coerce European recognition.</div></div>'
+      +     '<button id="blkEmbargo" type="button" class="upg">' + ((BL.selfEmbargo && !BL.embargoLifted) ? 'Embargo ON' : 'Embargo lifted') + '</button>'
+      +   '</div>'
+      +   '<div style="font-size:11px;opacity:.7;margin-top:5px;color:' + ((BL.selfEmbargo && !BL.embargoLifted) ? '#c9712e' : 'inherit') + '">'
+      +     ((BL.selfEmbargo && !BL.embargoLifted)
+            ? 'Warning: Britain holds a cotton glut. The embargo forfeits hard currency and wins no recognition &mdash; a trap.'
+            : 'Cotton flows to the runners; the embargo experiment is over.') + '</div>'
+      + '</div>'
+      + meter('Blockade pressure', lt ? lt.capturePct : 10, tight)
+      + meter('Foreign-recognition pressure', BL.recognition, recog)
+      + '<div style="display:flex;gap:10px;flex-wrap:wrap;font-size:12px;opacity:.85;margin-top:4px">'
+      +   '<span>Runner ports open: <b>' + BL.portsOpen + '</b>/4</span><span style="opacity:.5">&middot;</span>'
+      +   '<span>Runner success: <b>' + (lt ? lt.runnerPct : 90) + '%</b></span><span style="opacity:.5">&middot;</span>'
+      +   '<span>Arms import reliance: <b>' + Math.round(BL.importFactor * 100) + '%</b></span></div>';
+    if (lt && lt.shippedK > 0) body += '<div style="font-size:12px;opacity:.8;margin-top:4px">Last quarter: <b>' + lt.shippedK + 'k</b> bales run out, <b>+' + lt.revenue + '</b> funds earned.</div>';
+    else if (lt) body += '<div style="font-size:12px;opacity:.8;margin-top:4px">Last quarter: no cotton reached Europe.</div>';
+  } else {
+    body = ''
+      + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:2px 0 4px">The Anaconda</div>'
+      + '<p class="lede" style="font-size:13px">The Union\'s strategy is strangulation: blockade every Southern port, deny the Confederacy its cotton revenue and imported arms, '
+      + 'and use Northern grain (&ldquo;King Wheat&rdquo;) to keep Britain neutral. Each season the noose tightens and the chance of foreign intervention falls.</p>'
+      + meter('Foreign-intervention risk', (C.clock ? C.clock.intervention : 8), _blkTightStatus(C.clock ? C.clock.intervention : 8))
+      + '<p class="lede" style="font-size:12px;opacity:.7;margin-top:6px">Capturing Southern ports (Wilmington, Charleston, Mobile) severs blockade-runner lifelines outright.</p>';
+  }
+
+  var depthRow = ''
+    + '<hr class="rule"><div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:2px 0 4px">Blockade model (realism)</div>'
+    + '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px">'
+    +   '<div><b>' + depthLabel + '</b><div style="font-size:11px;opacity:.7">' + depthHint + '</div></div>'
+    +   '<button id="blkDepth" type="button" class="upg">Change</button>'
+    + '</div>';
+
+  var btns = ''
+    + '<div class="btn-row" style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">'
+    +   '<button id="blkDelegate" type="button" class="upg">' + (BL.delegated ? 'Take personal control' : 'Delegate to Sec. ' + sec) + '</button>'
+    +   '<button id="blkWhy" type="button" class="upg">Why it mattered</button>'
+    + '</div>'
+    + '<div id="blkWhyBox" style="display:none;margin-top:10px;padding:10px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.12);font-size:12px;line-height:1.5"></div>';
+
+  return head + body + depthRow + btns;
+}
+
+/* ---- blockadeWireDiplomacy: embargo toggle, depth cycle, delegate, teaching. ---- */
+function blockadeWireDiplomacy(C) {
+  if (!C || !C.blockade) return;
+  var BL = C.blockade;
+  var emb = document.getElementById("blkEmbargo");
+  if (emb) emb.addEventListener("click", function () {
+    if (BL.selfEmbargo && !BL.embargoLifted) { BL.embargoLifted = true; }
+    else { BL.selfEmbargo = true; BL.embargoLifted = false; }
+    if (typeof saveLocal === "function") saveLocal();
+    if (typeof _wdRefresh === "function") _wdRefresh();
+  });
+  var dep = document.getElementById("blkDepth");
+  if (dep) dep.addEventListener("click", function () {
+    BL.depth = (BL.depth === "full") ? "flat" : (BL.depth === "flat") ? "off" : "full";
+    if (typeof saveLocal === "function") saveLocal();
+    if (typeof _wdRefresh === "function") _wdRefresh();
+  });
+  var del = document.getElementById("blkDelegate");
+  if (del) del.addEventListener("click", function () {
+    BL.delegated = !BL.delegated;
+    if (typeof saveLocal === "function") saveLocal();
+    if (typeof _wdRefresh === "function") _wdRefresh();
+  });
+  var why = document.getElementById("blkWhy");
+  if (why) why.addEventListener("click", function () {
+    var box = document.getElementById("blkWhyBox");
+    if (!box) return;
+    if (box.style.display === "none") { box.innerHTML = _blkWhyText(C); box.style.display = "block"; }
+    else box.style.display = "none";
+  });
+}
+
+
 /* ===== module: 90-president-register.js ===== */
 /* ===========================================================================
    S0 · 90-president-register.js — register the President's-Desk system into
@@ -15883,6 +16534,7 @@ function _t1InitAll(C) {
   try { if (typeof wrInit  === "function") wrInit(C);  } catch (e) {}
   try { if (typeof presInit === "function") presInit(C); } catch (e) {}   // S0: President's Desk
   try { if (typeof econInit === "function") econInit(C); } catch (e) {}   // S1a: economy/finance
+  try { if (typeof blockadeInit === "function") blockadeInit(C); } catch (e) {}  // S1c: cotton/blockade/diplomacy
   try { if (typeof prodInit === "function") prodInit(C); } catch (e) {}   // S1b: war production
 }
 
@@ -15891,7 +16543,8 @@ function _t1Resolve(winnerSide, type, B, C, win) {
   try { if (typeof clkOnResolve === "function") clkOnResolve(winnerSide, type, B, C, win); } catch (e) {}
   try { if (typeof econOnResolve === "function") econOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S1a: after clk → feeds clock.weariness
   try { if (typeof wrOnResolve  === "function") wrOnResolve(winnerSide, type, B, C, win);  } catch (e) {}
-  try { if (typeof prodOnResolve === "function") prodOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S1b: after wr (reads nodes)
+  try { if (typeof blockadeOnResolve === "function") blockadeOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S1c: BEFORE prod → sets importFactor + funds + clock.intervention
+  try { if (typeof prodOnResolve === "function") prodOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S1b: after wr (reads nodes + blockade.importFactor)
   try { if (typeof mrOnResolve  === "function") mrOnResolve(winnerSide, type, B, C, win);  } catch (e) {}
   try { if (typeof presOnResolve === "function") presOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S0: after clk (interlink)
 }

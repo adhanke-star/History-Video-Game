@@ -83,8 +83,13 @@ function prodOnResolve(winnerSide, type, B, C, win) {
     var throughput = P.railIntegrity / 100;
 
     // 2) Matériel output. US scales freely with industry/ordnance nodes; CS is gated by the
-    //    iron ceiling + import-dependence (small arms mostly imported → blockade-gated, S1c).
-    var armsRaw = cfg.arms * (1 + 0.18 * industry) * (side === "CS" ? cfg.importFactor : 1);
+    //    iron ceiling + import-dependence (small arms mostly imported → blockade-gated). S1c
+    //    wires the live blockade importFactor (C.blockade, set this same turn BEFORE prod);
+    //    falls back to the static cfg.importFactor placeholder if the blockade layer is absent.
+    var impF = (side === "CS")
+      ? ((C.blockade && typeof C.blockade.importFactor === "number") ? C.blockade.importFactor : cfg.importFactor)
+      : 1;
+    var armsRaw = cfg.arms * (1 + 0.18 * industry) * impF;
     var artyRaw = cfg.arty * (1 + 0.15 * ordnance);
     if (side === "CS") {
       // iron ceiling: rail repair + ordnance compete for the same scarce metal
