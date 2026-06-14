@@ -21,6 +21,12 @@
 - **Adversarial bug-hunt** (5 lenses × verify, 13 agents) → 2 medium findings fixed (DECISIONS D44): the matcher's bare `"trench"` accidentally hit "The Retrenchment" (anchored to `"trenches"`/`"retrenchment"`), and the terrain swap silently changed movement cost incl. one high-ground speedup (fixed with stonewall cost→2 + a no-speedup guard; docs reframed as an honest terrain swap). Const-mutation timing/idempotency probed and confirmed safe.
 - **VERIFIED:** probe-cover **8/8** (def ladder, render colors, label matching, never-weaken, the terrain-swap invariant [11 stamps: 0 weaker, 0 faster], combat reduction); diag-classic Classic paints; full no-regression green; 0 pageerrors. Deliverable ≈962KB.
 
+## A4 · ARMORY → BATTLEFIELD SHIPPED + VERIFIED — the weapons you buy are what your brigades fire
+- **What it is:** the small arms bought in The Armory (`C.armory.loadout`) become what the player's brigades carry and fire on the day. New `src/59-armory-field.js` (frozen-engine override of `genForce`).
+- **How:** a unit's firepower = `WEAPONS[u.weapon].pow`. The override re-arms a fraction of the player's fresh infantry from the loadout, mapped armory-id → engine WEAPONS key (quality-monotonic). Buy Spencers → a slice of the line carries "spencer" (pow 2.05 vs the musket 1.00 = +105% fire); the rest keep standard issue, veterans keep their earned weapon, the enemy is untouched.
+- **Adversarial bug-hunt** (5 lenses × verify, 16 agents) → 5 findings fixed (DECISIONS D45). The big one (HIGH, a Classic regression): the re-arm fired whenever a campaign was merely in memory, so a **Free Battle could arm the AI enemy with the player's arsenal** — fixed by gating on `campaignCore` (the engine's own player-in-campaign discriminator). Plus an engine-era gate (no fielding arms before the engine's era) and a float-drift snap.
+- **VERIFIED:** probe-armory-field **9/9** (monotonic mapping, player-not-enemy, fraction, whole-army float-safe, veterans keep weapon, Spencer +105% pow, off-campaign no-op, era-gate, Free-Battle isolation); diag-classic Classic paints (no regression from the `genForce` override); full no-regression green; 0 pageerrors. Deliverable ≈970KB.
+
 ---
 
 # RUN-LOG — 2026-06-13 (run i, Opus 4.8 — S0: owner-mode President's Desk + zero-dep build system)

@@ -10,6 +10,7 @@
     "56-artillery.js",
     "57-engineering.js",
     "58-terrain-cover.js",
+    "59-armory-field.js",
     "60-blockade.js",
     "70-manpower.js",
     "80-victory.js",
@@ -22,6 +23,7 @@
     "_wdRefresh",
     "openWarDept",
     "openUpgrade",
-    "authoredMap"
+    "authoredMap",
+    "genForce"
   ]
 }
