@@ -1,26 +1,17 @@
-The Armory: buy real weapons with money (loot-style) + git hygiene
+docs: organize — START-HERE master index + legacy/ folder; backlog persisted
 
-Aaron: "money be a factor to buy best weapons for army person or brigade, partial or
-whole part of army" + Borderlands-style weapon specs / accuracy. Makes C.funds matter.
-
-data/weapons.json + src/55-weapons.js + a new "The Armory" desk tab (10th):
-- 9 real Civil War small arms with loot-style RARITY tiers (common -> legendary) and
-  specs (caliber/range/accuracy/rate-of-fire/quality): Model 1842 musket, Lorenz,
-  Springfield M1861, Enfield P1853, Richmond Rifle, Colt Revolving, Sharps, Spencer &
-  Henry repeaters.
-- Buy with funds; arm 10% at a time (your best brigades) or the whole line. Better guns
-  cost more -> you mix. CS pays a blockade premium on imports + can't buy Springfields
-  (captured only); repeaters unlock 1863; Richmond is Confederate-only.
-- The army weapon-SCORE (muskets 30 -> Springfield 62 -> Spencer 92) feeds the battle
-  bridge as a "firepower" facet -> better guns visibly strengthen the army you field.
-
-VERIFIED (probe-weapons 8/8): buying spends money, better/more weapons raise firepower,
-partial vs whole-army loadout, year + side gates, the tab renders, bridge firepower
-30->92 with Spencers. Bridge 6/6, desk 12/12, diag-classic paints; 0 pageerrors.
-
-Git hygiene (Aaron flagged a confusing pile of pending changes): gitignore the
-regenerable probe artifacts (tools/shots/*.json) + the .tmp/ scratch dir, and untrack
-the 39 already-committed shot JSONs, so the source-control view stays quiet between
-commits. Only source + the built deliverable are tracked now.
+Aaron flagged the 28-file root .md sprawl as confusing ("which strategy do new
+prompts follow?"). Fix:
+- START-HERE.md — the single canonical entry point: classifies every doc (canonical
+  vs legacy), the exact read-order for a zero-context new chat, the naming convention,
+  and the git/saving note. AUTONOMOUS-RUN.md is named as THE operating manual.
+- legacy/ — moved 17 superseded run-g/run-h docs (old kickoff/prompt/plan/graphics/
+  blender/asset/audit/playtest files) out of root. Root now shows only the 12 current
+  docs. Build unaffected (build.mjs references src/data/build only) — GATE OK.
+- AUTONOMOUS-RUN.md — refreshed §2 state (commits through 9f14fb6) and added §7, the
+  full OUTSTANDING BACKLOG for run j (battle layer: Cannon Corps, Engineering Corps,
+  terrain cover hierarchy, Armory->battle wiring, targeting, battle-day conditioning
+  application; then S2-S5; then tactical P0-P5), with the exact recovery path for the
+  already-researched S2 content (resumeFromRunId wf_6f68a916-ce9).
 
 Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
