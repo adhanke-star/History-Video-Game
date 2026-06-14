@@ -23,6 +23,7 @@ function _t1InitAll(C) {
   try { if (typeof wrInit  === "function") wrInit(C);  } catch (e) {}
   try { if (typeof presInit === "function") presInit(C); } catch (e) {}   // S0: President's Desk
   try { if (typeof cabInit === "function") cabInit(C); } catch (e) {}     // S2 m1: cabinet/advisor system (after presInit)
+  try { if (typeof cmdInit === "function") cmdInit(C); } catch (e) {}     // S2 m5: command/named-generals (after cabInit — seeds reputation, feeds the bridge leadership facet)
   try { if (typeof decInit === "function") decInit(C); } catch (e) {}     // S2 m2: executive decisions / pendingChoices loop
   try { if (typeof moraleInit === "function") moraleInit(C); } catch (e) {}  // S2 m3: 3-layer morale
   try { if (typeof pressInit === "function") pressInit(C); } catch (e) {}    // S2 m4: press / public opinion
@@ -49,6 +50,7 @@ function _t1Resolve(winnerSide, type, B, C, win) {
   try { if (typeof mrOnResolve  === "function") mrOnResolve(winnerSide, type, B, C, win);  } catch (e) {}
   try { if (typeof presOnResolve === "function") presOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S0: after clk (interlink)
   try { if (typeof cabOnResolve === "function") cabOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S2 m1: AFTER pres (date+turn advanced) -> detect cabinet churn
+  try { if (typeof cmdOnResolve === "function") cmdOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S2 m5: AFTER cab, BEFORE morale -> evolve the general's reputation; it feeds the leader-morale layer this turn
   try { if (typeof decOnResolve === "function") decOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S2 m2: AFTER pres -> surface/expire decision cards (owns pendingChoices)
   try { if (typeof pressOnResolve === "function") pressOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S2 m4: BEFORE morale -> the day's press sentiment feeds public will
   try { if (typeof moraleOnResolve === "function") moraleOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S2 m3: AFTER clk (weariness/election set), BEFORE vic (enemyWill change seen by victoryReady)

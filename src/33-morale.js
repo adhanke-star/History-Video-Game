@@ -61,6 +61,11 @@ function moraleCompute(C) {
   var won = (C && C.stats && C.stats.won) || 0, battles = Math.max(1, (C && C.stats && C.stats.battles) || 0);
   var winRate = won / battles, cwin = winRate - 0.5;                       // -0.5..0.5
   var lead = (typeof cabinetLeadership === "function") ? cabinetLeadership(C) : 64;
+  // S2 m5 NOTE: the leader layer stays on cabinetLeadership (the cabinet interaction the probe pins).
+  // The sitting field general's influence is deliberately confined to the BRIDGE leadership facet +
+  // the auto-resolve margin (commandLeadership / commandMarginEdge) — coupling it into morale here
+  // would double-count the cabinet (commandLeadership already folds it in) and confound the
+  // cabinet-isolating morale probe. Folding the general into morale is deferred (DECISIONS D53).
   var leadC = lead - 64;
   var infl = (typeof ec.inflation === "number") ? ec.inflation : 1.0;
   var inflPenalty = Math.min(22, Math.max(0, (infl - 1.5)) * 6);          // the CS spiral bites; US (~1.1) ~0

@@ -18383,6 +18383,950 @@ var GAME_DATA = {
   ],
   "_designNote": "Asymmetry is the point, again. The Union's military engineering was a decisive, under-celebrated advantage: the USMRR under Haupt and then McCallum rebuilt track and bridges faster than Confederate raiders could destroy them, the Engineer Battalion and volunteer pioneer regiments dug and bridged at scale, and the North's industry supplied the iron, timber framing, and prefabricated equipage. The Confederacy had able engineers (Gilmer, the Vicksburg and Petersburg defenders) but could not match the SCALE or resupply — the same iron shortage that decays its railroads starves its repair. So: (1) every branch costs the CS a materials/skilled-labor premium (costPremiumCS 1.25); (2) the Construction Corps claws back only a FRACTION of the rail lost each turn (railClawbackFractionPerLevel x level, capped railClawbackCap = 0.7 < 1; src/57-engineering.js engOnResolve reads src/50-production.js's railLossLast) — the headline CONFEDERATE benefit, slowing the South's irreversible decay without ever stopping or reversing it (no iron to truly rebuild), so rail still declines monotonically toward the floor, just more slowly; the recovery can never reach an equilibrium or pin rail at 100, even with the rail War-Room node fully funded; (3) the engineering score is symmetric per level otherwise, so the asymmetry is paid in cost, not effect, keeping the South's defensive engineering (its real historical strength at Vicksburg/Petersburg) viable. engScore = baselineEngineeringScore + sum(level * scorePerLevel), clamped 0-100; it feeds the bridge as an additive overall bonus (weight 0.10, like the artillery facet), plus construction raises the supply facet and pontoons lower the fatigue facet. Field Fortifications and Siege Works feed only the aggregate score in the STRATEGIC layer; their decisive defend/assault effects belong to the battle-day layer (A3 terrain cover + A6 conditioning) and the tactical engine (P-phases)."
 },
+"generals": {
+  "comment": "S2 m5 named-generals data. Per-general Verified command/death dates + ranks (web-grounded, anti-Lost-Cause); trait NUMBERS (skill/aggression/caution/ambition/reputation 0-100) are Inferred designer calibration from modern scholarly consensus. commandFrom/commandTo drive the date-aware DEFAULT (single-slot, iconic-army chain: US Army of the Potomac->Grant, CS ANV->Lee); the other principal-army commanders + Halleck are appointable via availableFrom but null-defaulted (see DECISIONS D53). name = portrait key (surname; Johnston-J/Johnston-A disambiguate the two Johnstons, stripped to 'Johnston' for display/portrait). Source workflow: s2-generals-research (10 agents, 4 research + 4 adversarial-verify + balance + teaching-cards).",
+  "sides": {
+    "US": {
+      "generals": [
+        {
+          "id": "us-scott",
+          "name": "Scott",
+          "fullName": "Winfield Scott",
+          "side": "US",
+          "rank": "Lieutenant General (brevet), General-in-Chief, U.S. Army",
+          "epithet": "Old Fuss and Feathers",
+          "availableFrom": {
+            "y": 1861,
+            "m": 4
+          },
+          "availableUntil": {
+            "y": 1861,
+            "m": 11
+          },
+          "commandFrom": {
+            "y": 1861,
+            "m": 4
+          },
+          "commandTo": {
+            "y": 1861,
+            "m": 11
+          },
+          "skill": 72,
+          "aggression": 45,
+          "caution": 70,
+          "ambition": 55,
+          "reputation": 85,
+          "relief": "easy",
+          "traits": [
+            "Anaconda strategist",
+            "Hero of two prior wars",
+            "Physically failing",
+            "Outmaneuvered by McClellan"
+          ],
+          "voice": "A booming, formal old soldier of the Republic — courtly, vain about his record, and quietly bitter that younger men dismissed the long view he alone had right.",
+          "strength": "Grand strategist: his derided 'Anaconda Plan' — blockade the coast, seize the Mississippi, strangle the Confederacy — became the actual blueprint of Union victory.",
+          "weakness": "Aged 74, obese, and infirm by 1861; could no longer mount a horse or take the field, and the war he correctly described had outrun the body that had to wage it.",
+          "bio": "The most accomplished American soldier between Washington and Grant. A hero of the War of 1812 and the architect of the brilliant 1847 Mexico City campaign, Scott was General-in-Chief at Fort Sumter and the lone senior figure who grasped the war's true scale from the start. His proposed strategy — naval blockade plus seizure of the Mississippi to split and asphyxiate the Confederacy — was mocked in the press as the 'Anaconda Plan,' yet modern scholarship recognizes it as essentially the winning Union grand strategy. Too old and ill to command in the field, Scott was undercut by his ambitious subordinate George McClellan and retired at his own request on November 1, 1861, succeeded by McClellan. Anti-Lost-Cause note: a Virginia-born Unionist who chose the nation over his state, the reverse of Lee's choice.",
+          "provenance": "Verified",
+          "sources": [
+            "General Orders No. 94, U.S. War Department, Nov. 1, 1861 (American Presidency Project; AmericanHistoryCentral)",
+            "American Battlefield Trust, 'Winfield Scott' biography",
+            "James M. McPherson, Battle Cry of Freedom (Anaconda Plan and Scott's retirement)"
+          ]
+        },
+        {
+          "id": "us-mcclellan",
+          "name": "McClellan",
+          "fullName": "George Brinton McClellan",
+          "side": "US",
+          "rank": "Major General, Commanding the Army of the Potomac; General-in-Chief Nov. 1861–Mar. 1862",
+          "epithet": "Young Napoleon",
+          "availableFrom": {
+            "y": 1861,
+            "m": 7
+          },
+          "availableUntil": null,
+          "commandFrom": {
+            "y": 1861,
+            "m": 7
+          },
+          "commandTo": {
+            "y": 1862,
+            "m": 11
+          },
+          "skill": 58,
+          "aggression": 22,
+          "caution": 92,
+          "ambition": 85,
+          "reputation": 80,
+          "relief": "very-costly",
+          "traits": [
+            "Brilliant organizer",
+            "Pathologically over-cautious",
+            "Politically ambitious",
+            "Beloved by his troops"
+          ],
+          "voice": "Imperious and self-justifying — refers to himself in Napoleonic terms, distrusts Lincoln ('the original gorilla'), and is forever one more reinforcement away from being ready.",
+          "strength": "Superb organizer, trainer, and administrator: he built the Army of the Potomac into a disciplined fighting machine and was adored by the rank and file.",
+          "weakness": "Chronic, near-pathological over-caution. He consistently overestimated enemy numbers (fed by Pinkerton's inflated counts), refused to commit reserves, and would not pursue a beaten foe — most damningly after Antietam.",
+          "bio": "The man who built the Army of the Potomac and could not bring himself to spend it. McClellan organized and trained the principal Union army superbly and was genuinely beloved by his soldiers, but as a field commander he was crippled by caution: he believed phantom Confederate hosts outnumbered him, stalled through the 1862 Peninsula Campaign, and at Antietam (Sept. 17, 1862) — the bloodiest single day in American history and a tactical Union check that became a strategic win — held back reserves that might have destroyed Lee, then failed to pursue. He held top field command from July 26, 1861, to November 1862, and additionally served as General-in-Chief from Scott's retirement until Lincoln narrowed his portfolio in March 1862. Lincoln signed the order relieving him on November 5, 1862; it reached him on November 7, and Burnside took over within days. 'Very-costly' to relieve: hugely popular, politically wired, and the 1864 Democratic presidential nominee who ran against Lincoln on a near-peace platform. Anti-Lost-Cause note: his failures were of nerve and pursuit, not the 'butcher' caricature later pinned on Grant — the contrast is instructive.",
+          "provenance": "Verified",
+          "sources": [
+            "American Battlefield Trust, 'George B. McClellan' biography",
+            "AmericanHistoryCentral, 'Army of the Potomac (USA)' (command dates July 26, 1861–Nov. 1862; relief order Nov. 5, received Nov. 7, 1862)",
+            "James M. McPherson, Battle Cry of Freedom (Peninsula, Antietam, 1864 election)"
+          ]
+        },
+        {
+          "id": "us-halleck",
+          "name": "Halleck",
+          "fullName": "Henry Wager Halleck",
+          "side": "US",
+          "rank": "Major General; General-in-Chief July 1862–Mar. 1864, then Chief of Staff",
+          "epithet": "Old Brains",
+          "availableFrom": {
+            "y": 1861,
+            "m": 11
+          },
+          "availableUntil": null,
+          "commandFrom": null,
+          "commandTo": null,
+          "skill": 55,
+          "aggression": 30,
+          "caution": 78,
+          "ambition": 62,
+          "reputation": 50,
+          "relief": "easy",
+          "traits": [
+            "Military theorist ('Old Brains')",
+            "Able administrator",
+            "Indecisive in the field",
+            "Bureaucratic micromanager"
+          ],
+          "voice": "A dry, lawyerly intellect — quotes Jomini, hedges every directive, and shifts responsibility downward; brilliant on paper, allergic to risk in the flesh.",
+          "strength": "First-rate military scholar and administrator — author of recognized texts on the art of war, an able organizer of the Western theater's logistics and a competent bureaucratic chief of staff under Grant.",
+          "weakness": "No stomach for command responsibility in the field: cautious, evasive, a micromanager who issued vague guidance and dodged decisions, and was personally cold and unpopular.",
+          "bio": "The Union's scholar-general, more comfortable with theory and paperwork than with battle. Halleck oversaw the Western theater early in the war and reaped credit for victories largely won by subordinates like Grant. Lincoln summoned him east as General-in-Chief, effective July 23, 1862; he proved an able administrator but an ineffectual strategic director, micromanaging without giving clear aim. When Grant was made lieutenant general and General-in-Chief in March 1864, Halleck was reassigned as Chief of Staff (March 12, 1864), a coordinating-and-administrative role in which he was genuinely useful — translating Grant's intent into orders and handling Washington. Easy to relieve: respected for brains, never beloved, and no political constituency.",
+          "provenance": "Verified",
+          "sources": [
+            "Wikipedia, 'Henry Halleck' (General-in-Chief July 23, 1862–Mar. 9, 1864; Chief of Staff Mar. 12, 1864–Apr. 19, 1865)",
+            "Encyclopaedia Britannica, 'Henry W. Halleck'",
+            "American Battlefield Trust, 'Henry W. Halleck' biography"
+          ]
+        },
+        {
+          "id": "us-grant",
+          "name": "Grant",
+          "fullName": "Ulysses S. Grant",
+          "side": "US",
+          "rank": "Lieutenant General, General-in-Chief of the Armies of the United States",
+          "epithet": "Unconditional Surrender Grant",
+          "availableFrom": {
+            "y": 1861,
+            "m": 8
+          },
+          "availableUntil": null,
+          "commandFrom": {
+            "y": 1864,
+            "m": 3
+          },
+          "commandTo": {
+            "y": 1865,
+            "m": 4
+          },
+          "skill": 92,
+          "aggression": 82,
+          "caution": 48,
+          "ambition": 60,
+          "reputation": 88,
+          "relief": "very-costly",
+          "traits": [
+            "Relentless operational genius",
+            "Calm under pressure",
+            "Total-war strategist",
+            "Won the war"
+          ],
+          "voice": "Plain, terse, unrattled — no bombast, no excuses; states the objective and moves toward it. 'I propose to fight it out on this line if it takes all summer.'",
+          "strength": "The war's finest operational and strategic mind: he grasped the whole theater, maneuvered relentlessly, accepted battle to destroy the enemy's ability to fight, and coordinated all Union armies toward a single end. Forts Henry/Donelson, Vicksburg, and Chattanooga are master campaigns.",
+          "weakness": "Could be hit hard when surprised (the first day at Shiloh) and his casualties in the 1864 Overland Campaign were heavy — but those losses bought the strategic strangulation of Lee, not the aimless slaughter the 'butcher' slander implies.",
+          "bio": "The general who won the war and the answer to the question every previous Union commander failed. Commissioned brigadier general of volunteers in August 1861, Grant took district command at Cairo and fought his first action at Belmont (Nov. 1861), then rose in the West with the captures of Forts Henry and Donelson (Feb. 1862, earning 'Unconditional Surrender'), recovered from the shock of Shiloh, executed the brilliant Vicksburg Campaign that split the Confederacy (July 4, 1863), and rescued Chattanooga. Lincoln gave him the revived rank of lieutenant general and named him General-in-Chief on March 10, 1864. Riding with the Army of the Potomac, he directed the grinding Overland Campaign and the Petersburg siege that pinned and bled Lee's Army of Northern Virginia to Appomattox (April 9, 1865), while orchestrating Sherman and the other armies as one coordinated whole. Anti-Lost-Cause note: the 'Grant the butcher' myth is rejected by modern scholarship — Lee's army inflicted and suffered proportionally similar or higher losses, and Grant's grand strategy, not blunt attrition alone, ended the war.",
+          "provenance": "Verified",
+          "sources": [
+            "Library of Congress, Grant's lieutenant general commission signed by Lincoln, Mar. 10, 1864",
+            "American Battlefield Trust, 'Ulysses S. Grant' biography; Army Historical Foundation, 'General Grant's First Battle (Belmont)' (brigadier general Aug. 1861, Cairo command Sept. 1861)",
+            "James M. McPherson, Battle Cry of Freedom (Donelson, Shiloh, Vicksburg, Overland Campaign; rebuttal of 'butcher' myth)"
+          ]
+        },
+        {
+          "id": "us-sherman",
+          "name": "Sherman",
+          "fullName": "William Tecumseh Sherman",
+          "side": "US",
+          "rank": "Major General, Commanding the Military Division of the Mississippi",
+          "epithet": "Uncle Billy",
+          "availableFrom": {
+            "y": 1861,
+            "m": 7
+          },
+          "availableUntil": null,
+          "commandFrom": null,
+          "commandTo": null,
+          "skill": 88,
+          "aggression": 80,
+          "caution": 45,
+          "ambition": 50,
+          "reputation": 82,
+          "relief": "very-costly",
+          "traits": [
+            "Hard-war pioneer",
+            "Brilliant maneuver and logistics",
+            "Volatile, intense temperament",
+            "Grant's trusted partner"
+          ],
+          "voice": "Restless, blunt, and quotable — fiercely loyal to Grant, contemptuous of romance about war ('war is cruelty, and you cannot refine it'), and forthright to the point of abrasiveness.",
+          "strength": "Master of operational maneuver and logistics: the Atlanta Campaign was a sustained turning movement against a skilled defender, and the March to the Sea pioneered modern 'hard war' — striking the enemy's economy and will rather than just its armies.",
+          "weakness": "Volatile temperament — an early-war nervous collapse and press-feuding nearly ended his career — and the destructiveness of his marches, while strategically sound, made him a figure of lasting Southern hatred.",
+          "bio": "Grant's indispensable partner and the prophet of modern war. Commissioned colonel of the 13th U.S. Infantry in May 1861, Sherman commanded a brigade at First Bull Run (July 21, 1861) and was promoted brigadier general of volunteers days later. After a shaky, near-broken interlude (he was briefly relieved amid charges of instability in late 1861), Sherman steadied at Shiloh and rose alongside Grant through Vicksburg and Chattanooga. When Grant went east in March 1864, Sherman took command of the Military Division of the Mississippi (General Orders No. 1, March 18, 1864). He fought the methodical Atlanta Campaign against Joseph E. Johnston and the reckless John Bell Hood, capturing Atlanta on September 2, 1864 — a victory that helped re-elect Lincoln — then cut loose on the March to the Sea (Atlanta to Savannah, Nov.–Dec. 1864) and the punishing Carolinas Campaign, taking Joseph E. Johnston's surrender at Bennett Place on April 26, 1865. Anti-Lost-Cause note: his 'hard war' targeted the slaveholding economy that sustained the rebellion; the marches were destructive but disciplined toward people relative to their reputation in Lost Cause memory.",
+          "provenance": "Verified",
+          "sources": [
+            "AmericanHistoryCentral, 'General Orders No. 1, Division of the Mississippi' (Mar. 18, 1864); 'William T. Sherman' (First Bull Run brigade command July 1861; Bennett Place surrender Apr. 26, 1865)",
+            "American Battlefield Trust, 'William T. Sherman' biography; Library of Congress, Sherman Papers timeline",
+            "James M. McPherson, Battle Cry of Freedom (Atlanta Campaign, March to the Sea, hard war)"
+          ]
+        },
+        {
+          "id": "us-thomas",
+          "name": "Thomas",
+          "fullName": "George Henry Thomas",
+          "side": "US",
+          "rank": "Major General",
+          "epithet": "The Rock of Chickamauga",
+          "availableFrom": {
+            "y": 1862,
+            "m": 1
+          },
+          "availableUntil": null,
+          "commandFrom": null,
+          "commandTo": null,
+          "skill": 86,
+          "aggression": 60,
+          "caution": 72,
+          "ambition": 28,
+          "reputation": 80,
+          "relief": "costly",
+          "strength": "Methodical, unflappable, and meticulous in preparation; built the most logistically sound and well-drilled army in the West. Equally superb on defense (Chickamauga) and on the attack (Nashville).",
+          "weakness": "Deliberate to a fault: his insistence on full preparation before striking infuriated Grant, who nearly relieved him before Nashville. A Virginian who stayed loyal, he was perpetually under-trusted and passed over for higher command.",
+          "traits": [
+            "methodical",
+            "imperturbable",
+            "loyal",
+            "thorough"
+          ],
+          "voice": "Quiet, exact, slow to promise and certain to deliver. Refuses to move until everything is ready, then moves like a hammer.",
+          "bio": "A Virginian who chose the Union over his native state, George H. Thomas was among the finest army commanders the war produced and one of the most consistently underrated. At Chickamauga (September 1863) his stand on Horseshoe Ridge held off the Confederate onslaught and saved Rosecrans's beaten army, earning him the name 'Rock of Chickamauga.' Given command of the Army of the Cumberland on October 19, 1863, he anchored the Chattanooga breakout and served as a steady pillar of Sherman's Atlanta Campaign. His masterpiece came at Nashville (December 15-16, 1864), where, after withstanding Grant's impatient pressure to attack prematurely, he annihilated John Bell Hood's Army of Tennessee in the most complete field victory of the war. Modern scholarship treats his deliberate pace not as timidity but as the discipline of a commander who never lost a battle he directed — elite generalship that nonetheless sits just below the war-winning trio of Grant, Sherman, and Lee, alongside Jackson.",
+          "provenance": "Verified",
+          "sources": [
+            "Britannica, 'George H. Thomas'",
+            "American Battlefield Trust biography",
+            "McPherson, Battle Cry of Freedom",
+            "National Park Service, 'George Thomas'"
+          ]
+        },
+        {
+          "id": "us-meade",
+          "name": "Meade",
+          "fullName": "George Gordon Meade",
+          "side": "US",
+          "rank": "Major General",
+          "epithet": "Victor of Gettysburg",
+          "availableFrom": {
+            "y": 1862,
+            "m": 9
+          },
+          "availableUntil": null,
+          "commandFrom": {
+            "y": 1863,
+            "m": 6
+          },
+          "commandTo": {
+            "y": 1865,
+            "m": 6
+          },
+          "skill": 76,
+          "aggression": 55,
+          "caution": 68,
+          "ambition": 45,
+          "reputation": 70,
+          "relief": "costly",
+          "strength": "A sound, professional defensive tactician who read terrain expertly. Took command three days before Gettysburg and fought the Confederacy's high-water mark to a decisive defeat under brutal pressure.",
+          "weakness": "Cautious in pursuit (criticized for letting Lee escape after Gettysburg) and possessed of a notoriously caustic temper that earned him the nickname 'Old Snapping Turtle' and poisoned relations with subordinates and the press.",
+          "traits": [
+            "professional",
+            "irascible",
+            "defensive-minded",
+            "steady"
+          ],
+          "voice": "Sharp-tongued and impatient with fools, but a careful engineer's mind beneath the temper. Worries about doing the right thing and being blamed regardless.",
+          "bio": "George G. Meade took command of the Army of the Potomac on June 28, 1863, only three days before the Battle of Gettysburg, and there won the most consequential Union victory in the East, repulsing Lee across three days and shattering Pickett's Charge on July 3. A capable engineer and corps commander, he was a sound if unspectacular general whose cautious pursuit allowed Lee's battered army to recross the Potomac, drawing Lincoln's frustration. When Grant came east as general-in-chief in March 1864, Meade retained command of the Army of the Potomac but operated under Grant's direct supervision through the Overland Campaign, the siege of Petersburg, and the surrender at Appomattox; he led the army until it was disbanded in June 1865. Loyal and professional, he accepted this subordination with bruised pride, his reputation overshadowed by Grant even as his army did the war's hardest fighting.",
+          "provenance": "Verified",
+          "sources": [
+            "Britannica, 'George G. Meade'",
+            "American Battlefield Trust biography",
+            "Encyclopedia Virginia, 'George Gordon Meade'",
+            "McPherson, Battle Cry of Freedom"
+          ]
+        },
+        {
+          "id": "us-burnside",
+          "name": "Burnside",
+          "fullName": "Ambrose Everett Burnside",
+          "side": "US",
+          "rank": "Major General",
+          "epithet": "The Reluctant Commander",
+          "availableFrom": {
+            "y": 1862,
+            "m": 3
+          },
+          "availableUntil": null,
+          "commandFrom": {
+            "y": 1862,
+            "m": 11
+          },
+          "commandTo": {
+            "y": 1863,
+            "m": 1
+          },
+          "skill": 38,
+          "aggression": 52,
+          "caution": 40,
+          "ambition": 25,
+          "reputation": 40,
+          "relief": "easy",
+          "strength": "A genial, modest, and personally brave officer who scored real early success in the 1862 North Carolina coastal expedition. Honest enough to twice tell Lincoln he was unfit for army command.",
+          "weakness": "Out of his depth at the army level. The frontal assaults at Fredericksburg (December 1862) produced roughly 13,000 Union casualties against impregnable positions, and the subsequent 'Mud March' collapsed his standing entirely. Later bungled the Crater at Petersburg.",
+          "traits": [
+            "genial",
+            "self-doubting",
+            "overmatched",
+            "earnest"
+          ],
+          "voice": "Affable and well-meaning, painfully aware he is in over his head, accepting responsibility for disasters he half-foresaw.",
+          "bio": "Ambrose Burnside is the rare commander who knew his own limits and was overruled. After capable service on the North Carolina coast (promoted major general of volunteers in March 1862) and at Antietam's lower bridge, he twice declined command of the Army of the Potomac before reluctantly accepting it on November 9, 1862. His tenure was brief and catastrophic: at Fredericksburg on December 13, 1862, he hurled his army in repeated futile assaults against Marye's Heights, suffering some 13,000 casualties. His attempt to recover with a flanking march bogged down in the infamous 'Mud March,' and Lincoln relieved him at his own request on January 25, 1863. He soldiered on in lesser roles, his reputation sealed by the disastrous Battle of the Crater at Petersburg in 1864. His name survives mostly in the word 'sideburns.'",
+          "provenance": "Verified",
+          "sources": [
+            "American Battlefield Trust, 'Ambrose E. Burnside'",
+            "HISTORY, 'Ambrose Burnside assumes command' (Nov 9, 1862)",
+            "Encyclopedia.com, 'Ambrose Burnside'",
+            "McPherson, Battle Cry of Freedom"
+          ]
+        },
+        {
+          "id": "us-hooker",
+          "name": "Hooker",
+          "fullName": "Joseph Hooker",
+          "side": "US",
+          "rank": "Major General",
+          "epithet": "Fighting Joe",
+          "availableFrom": {
+            "y": 1862,
+            "m": 3
+          },
+          "availableUntil": null,
+          "commandFrom": {
+            "y": 1863,
+            "m": 1
+          },
+          "commandTo": {
+            "y": 1863,
+            "m": 6
+          },
+          "skill": 58,
+          "aggression": 70,
+          "caution": 35,
+          "ambition": 80,
+          "reputation": 52,
+          "relief": "easy",
+          "strength": "A superb administrator and organizer who rebuilt the Army of the Potomac's morale, supply, and intelligence after Fredericksburg, and a hard-driving corps-level fighter. Devised a genuinely brilliant opening maneuver at Chancellorsville.",
+          "weakness": "Lost his nerve at the decisive moment. At Chancellorsville (May 1863) he surrendered the initiative to Lee, was outmaneuvered by Jackson's flank march, and abandoned a winning position. Intriguing, self-promoting, and disloyal to superiors.",
+          "traits": [
+            "boastful",
+            "energetic",
+            "self-promoting",
+            "nerve-failing"
+          ],
+          "voice": "Brash and confident on the eve of battle, prone to grand declarations, then fatally hesitant once Lee turns the tables on him.",
+          "bio": "Joseph 'Fighting Joe' Hooker took command of the Army of the Potomac on January 26, 1863, and proved a gifted administrator, restoring the army's health, morale, and reconnaissance after Burnside's disasters. His undoing was Chancellorsville (May 1-6, 1863): after a brilliantly conceived flanking march that put Lee at a severe disadvantage, Hooker inexplicably surrendered the initiative, allowing Stonewall Jackson's famous flank attack to roll up his line; he then ordered a retreat from a position many subordinates believed still winnable. Ambitious to a fault, he had openly intrigued against superiors and once mused that the country needed a dictator, drawing Lincoln's famous rebuke. He asked to be relieved during the Gettysburg approach and was replaced by Meade on June 28, 1863. He later served creditably under Grant and Sherman in the West, notably at Lookout Mountain.",
+          "provenance": "Verified",
+          "sources": [
+            "Britannica, 'Joseph Hooker'",
+            "American Battlefield Trust biography",
+            "Abraham Lincoln Online, Lincoln's letter to Hooker (Jan 26, 1863)",
+            "McPherson, Battle Cry of Freedom"
+          ]
+        },
+        {
+          "id": "us-sheridan",
+          "name": "Sheridan",
+          "fullName": "Philip Henry Sheridan",
+          "side": "US",
+          "rank": "Major General",
+          "epithet": "Little Phil",
+          "availableFrom": {
+            "y": 1862,
+            "m": 10
+          },
+          "availableUntil": null,
+          "commandFrom": null,
+          "commandTo": null,
+          "skill": 84,
+          "aggression": 88,
+          "caution": 30,
+          "ambition": 65,
+          "reputation": 80,
+          "relief": "costly",
+          "strength": "A ferocious, inspirational combat leader and the war's premier cavalry commander. Personally rallied a routed army to victory at Cedar Creek and pursued Lee relentlessly to Appomattox, sealing the surrender. One of the trio Grant trusted to win the war.",
+          "weakness": "Aggression shading into ruthlessness: 'The Burning' of the Shenandoah Valley devastated civilians, and his postwar Indian-campaign brutality and the apocryphal 'only good Indian' remark mark a hard, scorched-earth temperament.",
+          "traits": [
+            "ferocious",
+            "inspirational",
+            "relentless",
+            "ruthless"
+          ],
+          "voice": "Fiery and profane, leading from the front, turning panic into momentum by sheer force of presence. Total war without apology.",
+          "bio": "Philip H. Sheridan rose from infantry division command (Perryville and Stones River, 1862) to become Grant's most trusted cavalry commander and one of the architects of Union victory. Given command of the Army of the Shenandoah on August 7, 1864, he won the 1864 Valley Campaign in a string of victories, capped by Cedar Creek on October 19, where he galloped from Winchester to rally his surprised and broken army and convert disaster into a rout of Jubal Early. His campaign also included 'The Burning,' a deliberate devastation of the Valley's farms and supplies to break the Confederacy's logistical back. In the 1865 Appomattox Campaign his relentless cavalry pursuit cut off Lee's escape and forced the surrender. Alongside Grant and Sherman, Sheridan exemplified the hard-war strategy that ended the rebellion, a record shadowed by his later ruthlessness in the Indian Wars.",
+          "provenance": "Verified",
+          "sources": [
+            "American Battlefield Trust, 'Philip Sheridan'",
+            "HistoryNet, 'Philip Sheridan'",
+            "Shenandoah Valley Battlefields, 'Sheridan's 1864 Valley Campaign'",
+            "McPherson, Battle Cry of Freedom"
+          ]
+        }
+      ]
+    },
+    "CS": {
+      "generals": [
+        {
+          "id": "cs-lee",
+          "name": "Lee",
+          "fullName": "Robert Edward Lee",
+          "epithet": "Marse Robert",
+          "side": "CS",
+          "rank": "General",
+          "strength": "Reads an opponent's intentions and seizes the initiative against superior numbers; bold flanking maneuver (Second Manassas, Chancellorsville) and a gift for inspiring an outnumbered army to extraordinary effort.",
+          "availableFrom": {
+            "y": 1861,
+            "m": 5
+          },
+          "availableUntil": {
+            "y": 1865,
+            "m": 4
+          },
+          "commandFrom": {
+            "y": 1862,
+            "m": 6
+          },
+          "commandTo": {
+            "y": 1865,
+            "m": 4
+          },
+          "skill": 88,
+          "aggression": 82,
+          "caution": 45,
+          "ambition": 40,
+          "reputation": 95,
+          "relief": "very-costly",
+          "traits": [
+            "audacious-maneuver",
+            "beloved-by-troops",
+            "offensive-minded",
+            "outnumbered-improviser"
+          ],
+          "voice": "Courtly, restrained, devout. Speaks of duty and Providence; calls subordinates 'general' and softens orders into requests ('it would be well if...'), which works with Jackson but fails with lesser lieutenants.",
+          "weakness": "An offensive instinct the Confederacy could not afford to bankroll. Pickett's Charge at Gettysburg (July 3, 1863) threw away his army's irreplaceable manpower, and his discretionary orders failed when given to officers less capable than Jackson.",
+          "bio": "The Confederacy's preeminent field commander, but the anti-Lost-Cause verdict is that he was excellent, not infallible — a peer of Sherman, decidedly the inferior of Grant, who beat him. After Joseph Johnston's wounding he took command of the Army of Northern Virginia on June 1, 1862, and held it until the surrender at Appomattox on April 9, 1865. His Seven Days, Second Manassas, and Chancellorsville campaigns are textbook offensive generalship against larger forces. But his strategic theory of war required winning battles the South could not sustain in blood: Gettysburg, capped by the doomed Pickett's Charge, cost casualties he could never replace, and his repeated offensives steadily drained the manpower the outnumbered Confederacy needed to husband. Named Confederate general-in-chief in February 1865, far too late to matter. A superb operational artist whose aggressiveness, lionized by Lost Cause mythology, arguably hastened his own army's destruction. His towering contemporary reputation outran his actual rank among the war's commanders.",
+          "provenance": "Verified",
+          "sources": [
+            "Encyclopedia Virginia, 'Robert E. Lee (1807-1870)'",
+            "American Battlefield Trust, 'Robert E. Lee'",
+            "Library of Congress, Civil War in America biographies",
+            "McPherson, Battle Cry of Freedom"
+          ]
+        },
+        {
+          "id": "cs-jackson",
+          "name": "Jackson",
+          "fullName": "Thomas Jonathan Jackson",
+          "epithet": "Stonewall",
+          "side": "CS",
+          "rank": "Lieutenant General",
+          "strength": "Operational speed and deception. His 1862 Shenandoah Valley campaign tied down and outmaneuvered multiple Union armies with a fraction of their strength; his foot cavalry's flank march at Chancellorsville is the model of audacity.",
+          "availableFrom": {
+            "y": 1861,
+            "m": 6
+          },
+          "availableUntil": {
+            "y": 1863,
+            "m": 5
+          },
+          "commandFrom": null,
+          "commandTo": null,
+          "skill": 86,
+          "aggression": 90,
+          "caution": 30,
+          "ambition": 48,
+          "reputation": 90,
+          "relief": "costly",
+          "traits": [
+            "lightning-marches",
+            "relentless-pursuit",
+            "secretive",
+            "iron-discipline"
+          ],
+          "voice": "Terse, eccentric, intensely pious. Reveals nothing of his plans even to his own staff ('mystery is the secret of success'); answers in clipped phrases and quotes Scripture. Sucks lemons; marches men to the breaking point and expects no complaint.",
+          "weakness": "Obsessive secrecy that left subordinates guessing, and a rigidity that produced his sluggish, uncharacteristic performance during the Seven Days. A corps commander of genius who was never tested in independent top army command.",
+          "bio": "The Confederacy's most celebrated corps commander and Lee's right arm, but never a top army commander, so he holds no historical principal-army command in this game. Earned his nom de guerre at First Manassas (July 1861). His 1862 Shenandoah Valley campaign is a classic of maneuver warfare, defeating piecemeal a combined Union force several times his size. As commander of Lee's Second Corps he delivered the war-defining flank attack at Chancellorsville on May 2, 1863, then was accidentally shot by his own North Carolina troops in the dark. His left arm was amputated; he died of pneumonia on May 10, 1863. His loss removed the one lieutenant who could execute Lee's discretionary orders, a gap felt at Gettysburg two months later.",
+          "provenance": "Verified",
+          "sources": [
+            "Encyclopedia Virginia, 'Thomas J. \"Stonewall\" Jackson (1824-1863)'",
+            "HISTORY, 'Confederate general Thomas J. \"Stonewall\" Jackson dies, May 10, 1863'",
+            "American History Central, Stonewall Jackson facts",
+            "McPherson, Battle Cry of Freedom"
+          ]
+        },
+        {
+          "id": "cs-johnston-j",
+          "name": "Johnston-J",
+          "fullName": "Joseph Eggleston Johnston",
+          "epithet": "Old Joe",
+          "side": "CS",
+          "rank": "General",
+          "strength": "Skillful defensive maneuver and the fighting retreat. His 1864 Atlanta campaign withdrawal kept the Army of Tennessee intact and bled Sherman at Kennesaw while trading space for time, and his men trusted him to spend their lives sparingly.",
+          "availableFrom": {
+            "y": 1861,
+            "m": 5
+          },
+          "availableUntil": {
+            "y": 1865,
+            "m": 4
+          },
+          "commandFrom": {
+            "y": 1861,
+            "m": 7
+          },
+          "commandTo": {
+            "y": 1862,
+            "m": 6
+          },
+          "skill": 74,
+          "aggression": 35,
+          "caution": 85,
+          "ambition": 55,
+          "reputation": 70,
+          "relief": "costly",
+          "traits": [
+            "fighting-retreat",
+            "husbands-his-men",
+            "defensive-master",
+            "feuds-with-richmond"
+          ],
+          "voice": "Proud, prickly, defensive about his rank and prerogatives. Conducts a bitter running feud with Jefferson Davis over seniority; explains a withdrawal as preserving the army, never as a failure. Cares deeply for his soldiers' lives.",
+          "weakness": "Chronic reluctance to commit to the decisive battle Davis demanded, and a corrosive feud with his own government that cost him support when he needed it. His caution shaded into passivity, handing the initiative to the enemy.",
+          "bio": "A capable, methodical defensive commander whose career was defined by caution and a poisonous quarrel with President Davis over rank. He commanded the principal eastern army (the force that became the Army of Northern Virginia) at First Manassas and into 1862 until severely wounded at Seven Pines on May 31, 1862, which opened the door for Lee. Given command of the Army of Tennessee on December 27, 1863, he conducted a disciplined fighting withdrawal through north Georgia in 1864, husbanding his outnumbered army against Sherman, until Davis, demanding an offensive Johnston would not promise, relieved him on July 17, 1864, and replaced him with the reckless Hood, who promptly wrecked the army. Restored to command in February 1865, Johnston surrendered the war's largest body of Confederate troops to Sherman at Bennett Place on April 26, 1865.",
+          "provenance": "Verified",
+          "sources": [
+            "Britannica, 'Joseph E. Johnston'",
+            "American Battlefield Trust, 'Joseph E. Johnston'",
+            "Encyclopedia Virginia, 'Joseph E. Johnston (1807-1891)'",
+            "Friends of Bennett Place / Bennett Place Historic Site",
+            "McPherson, Battle Cry of Freedom"
+          ]
+        },
+        {
+          "id": "cs-johnston-a",
+          "name": "Johnston-A",
+          "fullName": "Albert Sidney Johnston",
+          "epithet": "Davis's Finest Soldier",
+          "side": "CS",
+          "rank": "General",
+          "strength": "Personal presence and the ability to organize and inspire raw recruits, and the boldness to seize the initiative, demonstrated by the surprise concentration that opened Shiloh as a near-Confederate victory.",
+          "availableFrom": {
+            "y": 1861,
+            "m": 9
+          },
+          "availableUntil": {
+            "y": 1862,
+            "m": 4
+          },
+          "commandFrom": null,
+          "commandTo": null,
+          "skill": 62,
+          "aggression": 70,
+          "caution": 45,
+          "ambition": 50,
+          "reputation": 78,
+          "relief": "costly",
+          "traits": [
+            "leads-from-the-front",
+            "overextended-front",
+            "davis-favorite"
+          ],
+          "voice": "Dignified, soldierly, conscious of carrying immense expectations. Speaks of redeeming his reputation after the loss of Tennessee; rallies green troops by personal example, riding into the fire himself.",
+          "weakness": "Asked to hold an impossibly long western line with too few men, his cordon defense collapsed at Forts Henry and Donelson. His habit of leading from the front got him killed at the one moment his army most needed direction.",
+          "bio": "Rated by Jefferson Davis as the finest soldier in the Confederacy, a judgment modern scholarship treats as inflated by Davis's friendship and Johnston's early death. Appointed full general (ranking from May 30, 1861) and assigned the vast Western Department on September 10, 1861, he was handed an undermanned cordon he could not hold: the loss of Forts Henry and Donelson in February 1862 surrendered Kentucky and most of Tennessee. He recovered the initiative with a surprise concentration at Shiloh on April 6, 1862, but while leading a charge from the front that afternoon he was struck behind the knee, the bullet severed an artery, and he bled to death, the highest-ranking officer killed on either side in the war. Davis called his loss 'the turning point of our fate', a romantic overstatement; Johnston's actual record was promising but unproven at the top level.",
+          "provenance": "Verified",
+          "sources": [
+            "Britannica, 'Albert Sidney Johnston'",
+            "American Battlefield Trust, 'Albert Sidney Johnston' and 'The Death of Albert Sidney Johnston'",
+            "Texas State Historical Association Handbook, 'Johnston, Albert Sidney'",
+            "HISTORY, 'Albert Sidney Johnston'",
+            "McPherson, Battle Cry of Freedom"
+          ]
+        },
+        {
+          "id": "cs-beauregard",
+          "name": "Beauregard",
+          "fullName": "Pierre Gustave Toutant Beauregard",
+          "epithet": "The Little Napoleon / Hero of Sumter",
+          "side": "CS",
+          "rank": "General",
+          "strength": "Defensive engineering and improvised fortification. His defense of Charleston (1863) and his shoestring holding of Petersburg in June 1864, bluffing a far larger Union force until Lee arrived, may have saved Richmond and were arguably his finest hours.",
+          "availableFrom": {
+            "y": 1861,
+            "m": 4
+          },
+          "availableUntil": {
+            "y": 1865,
+            "m": 4
+          },
+          "commandFrom": null,
+          "commandTo": null,
+          "skill": 68,
+          "aggression": 65,
+          "caution": 50,
+          "ambition": 80,
+          "reputation": 75,
+          "relief": "costly",
+          "traits": [
+            "grand-schemer",
+            "engineer-fortifier",
+            "self-promoter",
+            "feuds-with-richmond"
+          ],
+          "voice": "Flamboyant, Creole, theatrical. Drafts Napoleonic grand strategies far beyond his resources and signs proclamations with flourish; quick to claim credit and quicker to blame Richmond. Brilliant on defense behind earthworks.",
+          "weakness": "Grandiose offensive schemes detached from logistics, and an ego that kept him perpetually feuding with Davis, which marginalized one of the South's better defensive minds for much of the war. His Corinth retreat and unauthorized sick leave handed his army to Bragg.",
+          "bio": "The Confederacy's first hero and its most flamboyant general, a gifted defensive engineer hobbled by ambition and a feud with President Davis. He commanded the bombardment of Fort Sumter on April 12, 1861, and was the field commander of the victory at First Manassas in July 1861. As second-in-command he succeeded the mortally wounded Albert Sidney Johnston at Shiloh on April 6, 1862, calling off the assault that evening, a decision still debated, and led the Army of the Mississippi in its retreat from Corinth. When he took unauthorized medical leave in June 1862, relinquishing the army to Braxton Bragg on June 17, an enraged Davis relieved him of the Western command. Exiled to the defense of Charleston (1863), he withstood repeated Union assaults, and in June 1864 his thin, improvised line saved Petersburg. A first-rate fortifier and second-rate army commander, repeatedly sidelined by the personality clash with Richmond.",
+          "provenance": "Verified",
+          "sources": [
+            "Encyclopedia Virginia, 'G. T. Beauregard (1818-1893)'",
+            "HISTORY, 'P.G.T. Beauregard'",
+            "American History Central, 'P.G.T. Beauregard' and 'Braxton Bragg'",
+            "HistoryNet, 'P.G.T. Beauregard'",
+            "McPherson, Battle Cry of Freedom"
+          ]
+        },
+        {
+          "id": "cs-bragg",
+          "name": "Bragg",
+          "fullName": "Braxton Bragg",
+          "side": "CS",
+          "rank": "General",
+          "epithet": "The Quarrelsome",
+          "availableFrom": {
+            "y": 1862,
+            "m": 4
+          },
+          "availableUntil": null,
+          "commandFrom": null,
+          "commandTo": null,
+          "skill": 42,
+          "aggression": 58,
+          "caution": 50,
+          "ambition": 62,
+          "reputation": 30,
+          "relief": "easy",
+          "traits": [
+            "quarrelsome",
+            "harsh-disciplinarian",
+            "strong-organizer",
+            "poor-follow-through"
+          ],
+          "voice": "Cold, accusatory, forever blaming subordinates. Issues orders like indictments.",
+          "strength": "A capable organizer and strategist on paper who could maneuver an army into position and win the field, as at Chickamauga.",
+          "weakness": "Could not convert advantage into victory and was incapable of holding the loyalty of his officers; his command dissolved into open revolt.",
+          "bio": "Braxton Bragg commanded the Army of Tennessee, the Confederacy's principal western army, from June 1862 to late November 1863. He launched the ambitious Kentucky invasion that stalled at Perryville, fought the bloody draw at Stones River, and in September 1863 won the South's greatest western victory at Chickamauga. But he failed to follow up the win, let the Federals consolidate at Chattanooga, and was routed at Missionary Ridge that November. Modern scholarship treats Bragg as a flawed but not contemptible commander: a sound organizer and disciplinarian undone by a quarrelsome temperament that poisoned relations with nearly every senior subordinate, including Polk, Hardee, and Longstreet, who petitioned Davis to remove him. He asked to be relieved on November 29, 1863, and Davis granted it the next day. He spent the rest of the war as Davis's military adviser. His persistent inability to exploit success and his corrosive feuding make him one of the war's most damaging high commanders for the South.",
+          "provenance": "Verified",
+          "sources": [
+            "American Battlefield Trust — Braxton Bragg",
+            "McPherson, Battle Cry of Freedom",
+            "American History Central — Army of Tennessee / Braxton Bragg"
+          ]
+        },
+        {
+          "id": "cs-longstreet",
+          "name": "Longstreet",
+          "fullName": "James Longstreet",
+          "side": "CS",
+          "rank": "Lieutenant General",
+          "epithet": "Lee's Old War Horse",
+          "availableFrom": {
+            "y": 1862,
+            "m": 10
+          },
+          "availableUntil": null,
+          "commandFrom": null,
+          "commandTo": null,
+          "skill": 82,
+          "aggression": 55,
+          "caution": 68,
+          "ambition": 50,
+          "reputation": 72,
+          "relief": "costly",
+          "traits": [
+            "defensive-master",
+            "steady",
+            "modern-tactician",
+            "blunt"
+          ],
+          "voice": "Plainspoken and deliberate, a soldier who argues with his commander to his face and then obeys. No theatrics.",
+          "strength": "The army's most reliable corps commander and an early advocate of the tactical defensive — the modern insight that entrenched defenders with rifled muskets held a decisive edge.",
+          "weakness": "Slow and deliberate when speed mattered, as on the second day at Gettysburg, and never comfortable in fully independent command, as the failed Knoxville campaign showed.",
+          "bio": "James Longstreet was Robert E. Lee's senior lieutenant general and the steadiest corps commander in the Army of Northern Virginia, leading the First Corps from First Manassas through Appomattox. Promoted lieutenant general on October 9, 1862 — ranking ahead of Jackson as the senior officer of that grade in the army — he anchored the Confederate line at Fredericksburg and Antietam and grasped earlier than most that the rifled musket had made the tactical defensive supreme. At Gettysburg he argued against Lee's plan to assault Cemetery Ridge and was overruled; Pickett's Charge, which he reluctantly directed, failed bloodily — and Lost Cause writers later scapegoated him for the defeat to shield Lee's reputation. He fought well at Chickamauga but stumbled in independent command at Knoxville. He never held top field command of the army itself; he was always Lee's subordinate. Modern scholarship has rehabilitated him as one of the Confederacy's most able and forward-thinking generals. After the war he became a Republican, endorsed his old friend Grant, accepted federal appointments, and publicly defended Reconstruction — choices that made him a pariah to the Lost Cause faithful but place him on the right side of history.",
+          "provenance": "Verified",
+          "sources": [
+            "American Battlefield Trust — James Longstreet",
+            "Encyclopedia Virginia — James Longstreet (1821–1904)",
+            "McPherson, Battle Cry of Freedom"
+          ]
+        },
+        {
+          "id": "cs-stuart",
+          "name": "Stuart",
+          "fullName": "James Ewell Brown Stuart",
+          "side": "CS",
+          "rank": "Major General",
+          "epithet": "The Eyes of the Army",
+          "availableFrom": {
+            "y": 1862,
+            "m": 7
+          },
+          "availableUntil": {
+            "y": 1864,
+            "m": 5
+          },
+          "commandFrom": null,
+          "commandTo": null,
+          "skill": 80,
+          "aggression": 78,
+          "caution": 38,
+          "ambition": 58,
+          "reputation": 80,
+          "relief": "costly",
+          "traits": [
+            "dashing",
+            "superb-scout",
+            "glory-seeking",
+            "tireless"
+          ],
+          "voice": "Exuberant, plumed, theatrical — a cavalier who treats war as a grand ride and rallies men with a song and a banjo.",
+          "strength": "The Confederacy's premier cavalry commander: a brilliant scout and screen who repeatedly delivered Lee the intelligence that shaped his campaigns, and twice rode clean around the Union army.",
+          "weakness": "Hunger for glory could override the mission — his extended raid before Gettysburg deprived Lee of cavalry reconnaissance at the campaign's critical hour.",
+          "bio": "J.E.B. Stuart was the cavalry arm of the Army of Northern Virginia — Lee called him 'the eyes of the army.' Flamboyant in his plumed hat and red-lined cape, he was nonetheless a genuinely gifted commander whose reconnaissance and screening underpinned Lee's greatest campaigns, and who twice rode entirely around the Union army to humiliating effect. His reputation carries one large blemish: during the Gettysburg campaign he took his troopers on a long, glory-seeking raid and left Lee blind to Federal movements as the armies converged, a lapse historians count among the campaign's costly Confederate errors. He rose to command the cavalry corps but never held top field command of the army. On May 11, 1864, attempting to block Sheridan's cavalry thrust toward Richmond, he was mortally wounded at Yellow Tavern by a dismounted trooper of the 5th Michigan Cavalry and died in Richmond the next day, May 12. His death, like Jackson's a year earlier, stripped Lee of a commander he could not replace.",
+          "provenance": "Verified",
+          "sources": [
+            "History.com — J.E.B. Stuart Mortally Wounded (May 11, 1864)",
+            "Encyclopedia Virginia — J. E. B. Stuart (1833–1864)",
+            "McPherson, Battle Cry of Freedom"
+          ]
+        },
+        {
+          "id": "cs-hood",
+          "name": "Hood",
+          "fullName": "John Bell Hood",
+          "side": "CS",
+          "rank": "General (temporary)",
+          "epithet": "The Gallant Wreck",
+          "availableFrom": {
+            "y": 1864,
+            "m": 7
+          },
+          "availableUntil": null,
+          "commandFrom": null,
+          "commandTo": null,
+          "skill": 32,
+          "aggression": 95,
+          "caution": 12,
+          "ambition": 78,
+          "reputation": 28,
+          "relief": "easy",
+          "traits": [
+            "reckless",
+            "personally-brave",
+            "all-or-nothing",
+            "self-destructive"
+          ],
+          "voice": "Fierce, unyielding, contemptuous of caution; speaks of 'the bayonet' and frontal assault as though casualties were proof of valor.",
+          "strength": "A superb combat brigade and division commander — ferociously brave and inspiring at the point of attack, as at Gaines's Mill and Antietam.",
+          "weakness": "Promoted catastrophically beyond his ceiling: as an army commander he understood only the headlong frontal assault, and he annihilated his own army with it.",
+          "bio": "John Bell Hood was one of the Confederacy's hardest-hitting subordinate commanders — leader of the famed Texas Brigade, maimed at Gettysburg and crippled at Chickamauga — elevated far past his competence when Davis gave him the Army of Tennessee on July 18, 1864, replacing the cautious Joseph E. Johnston outside Atlanta. Hood attacked at once and repeatedly; the sorties bled his army and could not save the city, which fell on September 1. He then drove north into Tennessee on a doomed offensive. At Franklin on November 30, 1864, he hurled his men in a frontal assault across open ground that shattered his army and killed six of his generals; two weeks later George Thomas destroyed what remained at Nashville. The army that numbered over 50,000 in July was a wreck of fewer than 20,000 by Christmas. He was relieved at his own request on January 23, 1865. Modern scholarship regards Hood as a tragic case of valor without judgment — a brilliant fighter who, given an army, ruined it.",
+          "provenance": "Verified",
+          "sources": [
+            "American Battlefield Trust — John Bell Hood",
+            "American History Central — Franklin-Nashville Campaign",
+            "McPherson, Battle Cry of Freedom"
+          ]
+        },
+        {
+          "id": "cs-forrest",
+          "name": "Forrest",
+          "fullName": "Nathan Bedford Forrest",
+          "side": "CS",
+          "rank": "Lieutenant General",
+          "epithet": "The Wizard of the Saddle",
+          "availableFrom": {
+            "y": 1862,
+            "m": 7
+          },
+          "availableUntil": null,
+          "commandFrom": null,
+          "commandTo": null,
+          "skill": 84,
+          "aggression": 90,
+          "caution": 30,
+          "ambition": 70,
+          "reputation": 55,
+          "relief": "costly",
+          "traits": [
+            "instinctive-tactician",
+            "ruthless",
+            "relentless-pursuer",
+            "self-taught"
+          ],
+          "voice": "Rough, unlettered, intimidating — a self-made man who leads by ferocity and the credo of getting there 'first with the most.'",
+          "strength": "An instinctive cavalry genius with no formal training who out-thought professional opponents at Brice's Crossroads and across countless raids — arguably the war's finest mounted tactician.",
+          "weakness": "Pure raider and tactician, ruthless to the point of atrocity, with no claim to and no experience in army-level command; his savagery defined as much as his skill.",
+          "bio": "Nathan Bedford Forrest rose from private to lieutenant general (promoted February 28, 1865) without a day of military schooling, and as a cavalry tactician he was extraordinary — fast, aggressive, and devastating in raids and pursuits, most famously routing a far larger force at Brice's Crossroads. None of that softens who he was. Before the war Forrest was a Memphis slave trader, one of the largest in the Deep South, and he grew rich on the buying and selling of human beings. On April 12, 1864, his troops overran the Union garrison at Fort Pillow, Tennessee, and massacred surrendering soldiers — many of them Black US troops, a number of them formerly enslaved — in what the congressional Joint Committee on the Conduct of the War condemned as an atrocity; the Fort Pillow Massacre is inseparable from his name. After the war he served as the first Grand Wizard of the Ku Klux Klan in its founding years of terror against freedpeople during Reconstruction. He never held top field command of a principal army; he commanded cavalry. He died on October 29, 1877. He was a brilliant soldier and a war criminal and white-supremacist terrorist, and an honest account must hold both at once.",
+          "provenance": "Verified",
+          "sources": [
+            "Britannica — Nathan Bedford Forrest (incl. Fort Pillow & KKK)",
+            "American Battlefield Trust — Nathan Bedford Forrest",
+            "American History Central — Nathan Bedford Forrest",
+            "McPherson, Battle Cry of Freedom"
+          ]
+        }
+      ]
+    }
+  },
+  "teachingCards": [
+    {
+      "id": "cmd-mcclellan-problem",
+      "title": "The McClellan Problem",
+      "claim": "A general can be a brilliant organizer, beloved by his troops, and politically too dangerous to relieve — all while being too cautious to win the war you hired him to fight.",
+      "side": null,
+      "provenance": "Verified",
+      "perspectives": [
+        {
+          "voice": "Modern consensus (McPherson, Sears)",
+          "text": "George B. McClellan was a superb organizer who built and drilled the Army of the Potomac and earned its devotion, but he chronically overestimated enemy numbers, demanded endless reinforcement, and would not press an advantage — squandering the Peninsula in 1862 and failing to destroy Lee after Antietam; Lincoln finally relieved him in November 1862 despite the political cost, because caution this expensive was a strategic defeat."
+        },
+        {
+          "voice": "The civil-military tension",
+          "text": "McClellan openly held his commander-in-chief in contempt — he once kept the President waiting and went to bed rather than receive him, and privately called Lincoln a 'baboon' — making him the textbook case of a popular general whose political weight and insubordination made him costly to remove: relieve him too soon and you enrage his soldiers and his party; too late and the war drifts."
+        },
+        {
+          "voice": "The 1864 candidacy",
+          "text": "The danger was real: in 1864 McClellan ran against Lincoln as the Democratic nominee on a platform that branded the war a 'failure,' so the general Lincoln could not easily fire became the man who nearly replaced him — the political-general problem made flesh, defused only by Sherman taking Atlanta and Farragut taking Mobile Bay before the vote."
+        }
+      ],
+      "sources": [
+        "James M. McPherson, Battle Cry of Freedom (1988)",
+        "Stephen W. Sears, George B. McClellan: The Young Napoleon (1988)",
+        "Eliot A. Cohen, Supreme Command (2002)"
+      ]
+    },
+    {
+      "id": "cmd-lost-cause-generals",
+      "title": "The Lost Cause & the Generals",
+      "claim": "After the war, Southern writers rebuilt their defeated generals into a usable myth — inflating Lee into a flawless marble saint and laundering men like Forrest — and modern scholarship has spent decades restoring the human, and the criminal, record.",
+      "side": null,
+      "provenance": "Verified",
+      "perspectives": [
+        {
+          "voice": "The Lost Cause myth",
+          "text": "In the hands of Jubal Early and the Southern Historical Society, Lee became the 'marble man': a Christlike, faultless soldier beaten only by Grant's brute numbers, while Nathan Bedford Forrest — slave trader, Fort Pillow, first Klan Grand Wizard — was repackaged as a dashing 'wizard of the saddle,' his atrocities sanded away."
+        },
+        {
+          "voice": "Modern consensus (Connelly, Gallagher, Pryor)",
+          "text": "Thomas Connelly's The Marble Man showed the saint was a postwar construction; Elizabeth Brown Pryor's Reading the Man recovered a real, conflicted, fallible Lee from his own letters; and Gary Gallagher mapped how the Lost Cause deliberately shifted blame and erased slavery as the war's cause — not to demonize Lee, but to see him historically rather than devotionally."
+        },
+        {
+          "voice": "The record on Forrest",
+          "text": "The sanitizing is sharpest with Forrest: at Fort Pillow on April 12, 1864, troops under his command massacred surrendering Black U.S. soldiers, and after the war he helped found the Ku Klux Klan — facts the myth buried beneath cavalry-genius romance, and which modern historians put back at the center."
+        }
+      ],
+      "sources": [
+        "Thomas L. Connelly, The Marble Man: Robert E. Lee and His Image in American Society (1977)",
+        "Elizabeth Brown Pryor, Reading the Man: A Portrait of Robert E. Lee Through His Private Letters (2007)",
+        "Gary W. Gallagher & Alan T. Nolan, eds., The Myth of the Lost Cause and Civil War History (2000)",
+        "Andrew Ward, River Run Red: The Fort Pillow Massacre in the American Civil War (2005)"
+      ]
+    },
+    {
+      "id": "cmd-grant-the-butcher",
+      "title": "“Grant the Butcher”",
+      "claim": "The image of Grant as a dull butcher winning only by throwing bodies at Lee is Lost Cause arithmetic: by casualty RATE Grant was the more economical commander, and his strategy — not his recklessness — is what won the war.",
+      "side": null,
+      "provenance": "Verified",
+      "perspectives": [
+        {
+          "voice": "The Lost Cause myth",
+          "text": "The caricature holds that the genteel Lee was simply ground down by an unimaginative drunkard who spent Northern lives without conscience — 'Grant the Butcher,' anchored to the popular (and inflated) image of Cold Harbor as thousands slaughtered in minutes."
+        },
+        {
+          "voice": "The operational reality (Bonekemper, McPherson)",
+          "text": "By the numbers it inverts: in the 1864 Overland Campaign Grant lost about 15% of his force killed and wounded against roughly 20% for Lee, and across the whole war Lee — the supposed careful defender — inflicted and suffered HIGHER casualty rates as an aggressive offensive commander (the Seven Days, Gettysburg's Pickett's Charge); under Grant the Army of the Potomac lost fewer men than under all its prior commanders combined."
+        },
+        {
+          "voice": "The strategy that won",
+          "text": "Grant's genius was operational, not bloody-minded: simultaneous pressure on all fronts, continuous contact that denied Lee the chance to maneuver and recover, and a war aimed at the enemy's armies and resources rather than at terrain — a coherent national strategy that a string of cautious predecessors never managed."
+        }
+      ],
+      "sources": [
+        "Edward H. Bonekemper III, A Victor, Not a Butcher: Ulysses S. Grant's Overlooked Military Genius (2004)",
+        "James M. McPherson, Battle Cry of Freedom (1988)",
+        "Gordon C. Rhea, Cold Harbor: Grant and Lee, May 26–June 3, 1864 (2002)",
+        "Brooks D. Simpson, Ulysses S. Grant: Triumph over Adversity, 1822–1865 (2000)"
+      ]
+    },
+    {
+      "id": "cmd-what-makes-a-general",
+      "title": "What Makes a General",
+      "claim": "Neither pure aggression nor pure caution wins a war — the gambler who attacks his own army to death and the organizer who will never risk it both fail; the war is won by the balance of skill, calculated aggression, and judgment.",
+      "side": null,
+      "provenance": "Verified",
+      "perspectives": [
+        {
+          "voice": "The gambler's failure (Hood)",
+          "text": "John Bell Hood was brave to the point of ruin: handed the Army of Tennessee in 1864 to fight rather than maneuver, he flung it at Atlanta and then into the slaughter at Franklin (Nov 30, 1864), where six Confederate generals died and the army was gutted, then broke it for good at Nashville — aggression with no judgment is just self-destruction."
+        },
+        {
+          "voice": "The over-cautious organizer's failure (McClellan)",
+          "text": "McClellan was the mirror image: a peerless builder of armies who could not bear to spend the instrument he'd forged, so the Army of the Potomac sat magnificent and idle while chances to end the war passed — preparation without the will to strike loses just as surely as recklessness, only slower."
+        },
+        {
+          "voice": "The balance that won (Grant & Thomas)",
+          "text": "The winners married the two: Grant was aggressive but strategically disciplined, attacking where it broke the enemy's capacity to fight; George H. Thomas, the 'Rock of Chickamauga,' was methodical and unrushed yet, once ready at Nashville, destroyed Hood's army outright — proof that the war went to commanders who knew both when to dig in and when to gamble, not to those who only knew one."
+        }
+      ],
+      "sources": [
+        "Wiley Sword, The Confederacy's Last Hurrah: Spring Hill, Franklin, and Nashville (1992)",
+        "Stephen W. Sears, George B. McClellan: The Young Napoleon (1988)",
+        "Brian Steel Wills, George Henry Thomas: As True as Steel (2012)",
+        "James M. McPherson, Battle Cry of Freedom (1988)"
+      ]
+    }
+  ]
+},
 "manpower-teaching": {
   "_comment": "S1d teaching content for the manpower/conscription layer. Citation-grade multi-voice debate cards (consensus + scholarly dissent + named-and-countered Lost Cause + primary sources) + a quantitative numbers audit, from an 11-agent research+verify+audit workflow (run i, 2026-06-13). Build-injected as GAME_DATA[\"manpower-teaching\"]; surfaced by src/70-manpower.js (The Ranks overview block) and the S4 codex. Black Americans treated as full historical agents (self-emancipation, USCT); Lost Cause erasure countered.",
   "provenance": "Verified historiography. Scholars: McPherson, Geary, Murdock, Moore, Anbinder, Lonn, Glatthaar, Levine, Gallagher, Marvel. Every cited work adversarially fact-checked; fabricated/misattributed citations removed in the Verify pass.",
@@ -19382,6 +20326,9 @@ function _wdRefresh() {
   } else if (_wdTab === "cabinet") {
     html = (typeof presRenderCabinet === "function") ? presRenderCabinet(C) : "";
     wire = (typeof presWireCabinet === "function") ? presWireCabinet : null;
+  } else if (_wdTab === "command") {
+    html = (typeof cmdRenderTab === "function") ? cmdRenderTab(C) : "";
+    wire = (typeof cmdWireTab === "function") ? cmdWireTab : null;
   } else if (_wdTab === "decisions") {
     html = (typeof decRenderTab === "function") ? decRenderTab(C) : "";
     wire = (typeof decWireTab === "function") ? decWireTab : null;
@@ -19396,7 +20343,7 @@ function _wdRefresh() {
     wire = null;
   }
   cont.innerHTML = html || '<p class="lede" style="text-align:center;opacity:0.7">This office is not yet staffed.</p>';
-  var tabs = ["economy", "treasury", "diplomacy", "victory", "armory", "warroom", "clock", "muster", "cabinet", "decisions", "press", "map"];
+  var tabs = ["economy", "treasury", "diplomacy", "victory", "armory", "warroom", "clock", "muster", "cabinet", "command", "decisions", "press", "map"];
   for (var i = 0; i < tabs.length; i++) {
     var b = document.getElementById("wdTab_" + tabs[i]);
     if (b) b.style.opacity = (tabs[i] === _wdTab) ? "1" : "0.55";
@@ -19434,6 +20381,7 @@ function openWarDept() {
       _wdTabBtn("clock", "1864 Clock") +
       _wdTabBtn("muster", "Muster Roll") +
       _wdTabBtn("cabinet", "Cabinet") +
+      _wdTabBtn("command", "Command") +
       _wdTabBtn("decisions", "Decisions") +
       _wdTabBtn("press", "The Press") +
       _wdTabBtn("map", "Theater Map") +
@@ -19447,7 +20395,7 @@ function openWarDept() {
     if (_pdAfterDeskClose) { var cb = _pdAfterDeskClose; _pdAfterDeskClose = null; cb(); }
     else if (typeof closeSheet === "function") closeSheet();
   });
-  ["economy", "treasury", "diplomacy", "victory", "armory", "warroom", "clock", "muster", "cabinet", "decisions", "press", "map"].forEach(function (k) {
+  ["economy", "treasury", "diplomacy", "victory", "armory", "warroom", "clock", "muster", "cabinet", "command", "decisions", "press", "map"].forEach(function (k) {
     var b = document.getElementById("wdTab_" + k);
     if (b) b.addEventListener("click", function () { _wdTab = k; _wdRefresh(); });
   });
@@ -20319,6 +21267,11 @@ function moraleCompute(C) {
   var won = (C && C.stats && C.stats.won) || 0, battles = Math.max(1, (C && C.stats && C.stats.battles) || 0);
   var winRate = won / battles, cwin = winRate - 0.5;                       // -0.5..0.5
   var lead = (typeof cabinetLeadership === "function") ? cabinetLeadership(C) : 64;
+  // S2 m5 NOTE: the leader layer stays on cabinetLeadership (the cabinet interaction the probe pins).
+  // The sitting field general's influence is deliberately confined to the BRIDGE leadership facet +
+  // the auto-resolve margin (commandLeadership / commandMarginEdge) — coupling it into morale here
+  // would double-count the cabinet (commandLeadership already folds it in) and confound the
+  // cabinet-isolating morale probe. Folding the general into morale is deferred (DECISIONS D53).
   var leadC = lead - 64;
   var infl = (typeof ec.inflation === "number") ? ec.inflation : 1.0;
   var inflPenalty = Math.min(22, Math.max(0, (infl - 1.5)) * 6);          // the CS spiral bites; US (~1.1) ~0
@@ -20648,6 +21601,520 @@ function pressWireTab(C) {
         if (box) box.style.display = (box.style.display === "none") ? "block" : "none";
       });
     })(i);
+  }
+}
+
+
+/* ===== module: 35-command.js ===== */
+/* ===========================================================================
+   S2 m5 · 35-command.js — COMMAND: the NAMED-GENERALS system (§8.24/§8.58 /
+   D31.4/D38.2 / GRAND-STRATEGY-PLAN §19). The LAST big S2 sub-system.
+
+   The player is the President; he APPOINTS, PROMOTES, and RELIEVES the commanding
+   general of his side's principal army. Each historical commander carries:
+       - traits: skill / aggression / caution (the way he fights),
+       - an EVOLVING reputation (rises with victory, falls with defeat), and
+       - ambition (the McClellan problem: a popular, politically dangerous general
+         is COSTLY to relieve — it spends the President's political capital).
+
+   THE KEY WIRING (the whole point of the milestone): the sitting general's
+   LEADERSHIP rating (skill + reputation) blended with the cabinet's competence
+   (cabinetLeadership, m1) feeds the bridge's LEADERSHIP facet —
+   85-battle-bridge.js consumed a fixed `var leadership = 64;` placeholder (D49.7,
+   confirmed not-yet-consumed); m5 replaces it with commandLeadership(C), ANCHORED
+   at 64 so a default/historical command plays ≈ Classic (the A6a/D47.1 anchoring
+   lesson). A brilliant general lifts the army you field; a poor or discredited one
+   drags it. The general's aggression/caution also nudges the auto-resolve margin
+   (attack vs. defend). And commandLeadership feeds the m3 leader-morale layer, so a
+   beloved general lifts the troops and the home front.
+
+   THE DATE-AWARE DEFAULT (the McClellan problem, automatic): if the player never
+   touches Command, the HISTORICAL commander for the strategic date holds the post
+   (Scott → McClellan → Burnside → Hooker → Meade → Grant for the US; Beauregard →
+   J.E. Johnston → Lee for the CS) — so a US player who leaves it alone is dragged
+   by McClellan's caution until he spends the capital to relieve him, exactly as
+   Lincoln was. Appointing a specific general LOCKS the post to your choice.
+
+   Data: data/generals.json -> GAME_DATA.generals (Verified command dates/ranks;
+   trait numbers Inferred designer calibration from modern, anti-Lost-Cause
+   consensus; voice/bio web-grounded + adversarially verified). Falls back
+   gracefully (commandLeadership -> cabinetLeadership -> 64) if the data is absent.
+
+   EXTENDS: adds C.president.command (plain data; rides the save, no _SAVE_VER bump;
+   idempotent cmdInit = lazy migration). cmdInit/cmdOnResolve registered in 90
+   (cmdOnResolve AFTER cab, BEFORE morale so the fresh reputation feeds the leader
+   layer the same turn). New "Command" desk tab (13th) declared in 30/_wdRefresh.
+   Bare-name globals (G, GAME_DATA — never window.G); _cmd/cmd prefix; render NEVER
+   mutates or saves; the Wire fns + the tick do.
+   =========================================================================== */
+
+/* ---- relief cost (political capital) by the general's relief class. The
+   McClellan problem: a politically dangerous general is dear to remove. Scaled up
+   when a popular general (high reputation) is at the height of his prestige. ---- */
+var _cmdRELIEF_BASE = { easy: 4, costly: 12, "very-costly": 22 };
+
+/* data/generals.json -> GAME_DATA.generals (or null). */
+function _cmdData() {
+  return (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.generals) ? GAME_DATA.generals : null;
+}
+
+/* The side's full general roster (array) — empty if the data is absent. */
+function _cmdSideGenerals(side) {
+  var s = (side === "CS") ? "CS" : "US";
+  var d = _cmdData();
+  if (d && d.sides && d.sides[s] && d.sides[s].generals && d.sides[s].generals.length) return d.sides[s].generals;
+  return [];
+}
+
+function _cmdById(side, id) {
+  var r = _cmdSideGenerals(side);
+  for (var i = 0; i < r.length; i++) if (r[i] && r[i].id === id) return r[i];
+  return null;
+}
+
+/* Escape for innerHTML AND attribute contexts (quotes too — the D43.4 lesson). */
+function _cmdEsc(s) {
+  s = (s == null) ? "" : String(s);
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+/* Strip a disambiguation suffix ("Johnston-J" -> "Johnston") for display + portrait. */
+function _cmdName(gen) {
+  if (!gen) return "";
+  return String(gen.name || "").replace(/-[A-Za-z]$/, "");
+}
+
+/* A strategic date as a comparable integer (year*12 + month) — mirrors _cabDateNum. */
+function _cmdDateNum(d) {
+  if (!d || typeof d.year !== "number") return 1861 * 12 + 4;
+  return d.year * 12 + (typeof d.month === "number" ? d.month : 1);
+}
+function _cmdYM(t) { return t ? (t.y * 12 + (t.m || 1)) : 0; }
+
+/* Is this general alive / not-yet-removed and within his availability window at `date`? */
+function _cmdAlive(gen, date) {
+  if (!gen) return false;
+  var now = _cmdDateNum(date);
+  var from = gen.availableFrom ? _cmdYM(gen.availableFrom) : 0;
+  var until = gen.availableUntil ? _cmdYM(gen.availableUntil) : Infinity;
+  return now >= from && now <= until;
+}
+
+/* The HISTORICAL commander of the side's principal army at strategic date `date`:
+   the latest command tenure (commandFrom..commandTo) whose window contains the date
+   — so the chain resolves to ONE current holder (the same idiom as _cabHolder). */
+function _cmdHistoricalDefault(side, date) {
+  var roster = _cmdSideGenerals(side), now = _cmdDateNum(date), best = null, bestStart = -1;
+  for (var i = 0; i < roster.length; i++) {
+    var g = roster[i];
+    if (!g || !g.commandFrom) continue;
+    var st = _cmdYM(g.commandFrom);
+    var en = g.commandTo ? _cmdYM(g.commandTo) : Infinity;
+    if (st <= now && now <= en && st > bestStart) { best = g; bestStart = st; }
+  }
+  // No tenure spans the date. BEFORE the first tenure -> the earliest commander (the war's opening);
+  // AFTER the last tenure (a campaign that runs past the war's end) -> the LAST commander, for
+  // continuity, NOT a jump back to the first. (Bug-hunt D53.5.)
+  if (!best) {
+    var earliest = null, eStart = Infinity, latest = null, lEnd = -1;
+    for (var j = 0; j < roster.length; j++) {
+      var b = roster[j];
+      if (!b || !b.commandFrom) continue;
+      var bs = _cmdYM(b.commandFrom), be = b.commandTo ? _cmdYM(b.commandTo) : Infinity;
+      if (bs < eStart) { earliest = b; eStart = bs; }
+      if (be > lEnd) { latest = b; lEnd = be; }
+    }
+    best = (now > lEnd) ? latest : earliest;
+  }
+  return best;
+}
+
+/* The id of the active commanding general: the player's appointed man if still
+   valid at the date, else the historical default. */
+function cmdActiveId(C) {
+  if (!C) return null;
+  var side = (C.side === "CS") ? "CS" : "US";
+  var P = C.president; if (!P) return null;
+  var cmd = P.command;
+  var date = P.date;
+  if (cmd && cmd.fieldGeneral) {
+    var g = _cmdById(side, cmd.fieldGeneral);
+    if (g && _cmdAlive(g, date)) return cmd.fieldGeneral;   // your appointee, while he lives / serves
+  }
+  var def = _cmdHistoricalDefault(side, date);
+  return def ? def.id : null;
+}
+
+function cmdActiveGeneral(C) {
+  if (!C) return null;
+  var id = cmdActiveId(C);
+  return id ? _cmdById((C.side === "CS") ? "CS" : "US", id) : null;
+}
+
+/* ---- cmdInit: idempotent. C.president.command holds the appointment + the dynamic
+   per-general reputation. Seeds each general's reputation from his data startValue
+   ONCE (never resets — reputation evolves). Registered in _t1InitAll AFTER cabInit. ---- */
+function cmdInit(C) {
+  if (!C) return;
+  if (typeof presInit === "function") presInit(C);
+  if (!C.president) return;
+  var P = C.president, side = (C.side === "CS") ? "CS" : "US";
+  // reject a primitive / array masquerading as the command object (the D49.2 idiom).
+  if (Array.isArray(P.command) || !P.command || typeof P.command !== "object") {
+    P.command = { fieldGeneral: null, reputation: {}, appointedTurn: -1, history: [] };
+  }
+  var cmd = P.command;
+  if (typeof cmd.fieldGeneral !== "string") cmd.fieldGeneral = null;   // null = follow history
+  if (Array.isArray(cmd.reputation) || !cmd.reputation || typeof cmd.reputation !== "object") cmd.reputation = {};
+  if (typeof cmd.appointedTurn !== "number") cmd.appointedTurn = -1;
+  if (!Array.isArray(cmd.history)) cmd.history = [];
+  // seed reputation for every general on this side, once (idempotent: only if absent).
+  var roster = _cmdSideGenerals(side);
+  for (var i = 0; i < roster.length; i++) {
+    var g = roster[i]; if (!g || !g.id) continue;
+    var r = cmd.reputation[g.id];
+    if (typeof r !== "number" || !(r >= 0 && r <= 100)) {
+      cmd.reputation[g.id] = (typeof g.reputation === "number") ? Math.max(0, Math.min(100, g.reputation)) : 60;
+    }
+  }
+  // if the player's appointee has died / left the war, release the post back to history.
+  if (cmd.fieldGeneral) {
+    var ap = _cmdById(side, cmd.fieldGeneral);
+    if (!ap || !_cmdAlive(ap, P.date)) cmd.fieldGeneral = null;
+  }
+  // the cached handover-detection id rides the save too; clear it if it is stale (a removed/
+  // wrong-side general after a roster/data change) so handover logging starts clean. A
+  // just-died-but-still-in-roster id is KEPT — the next tick needs it to log the succession. (D53.6.)
+  if (cmd._activeId && !_cmdById(side, cmd._activeId)) cmd._activeId = null;
+}
+
+/* Current (evolving) reputation of a general, 0-100. */
+function _cmdReputation(C, id) {
+  if (!C || !C.president || !C.president.command) return 60;
+  var r = C.president.command.reputation[id];
+  if (typeof r === "number" && r >= 0 && r <= 100) return r;
+  var g = _cmdById((C.side === "CS") ? "CS" : "US", id);
+  return (g && typeof g.reputation === "number") ? g.reputation : 60;
+}
+
+/* A general's LEADERSHIP rating (0-100): operational skill blended with his current
+   standing. A neutral man (skill 64, reputation 64) rates 64 — the bridge anchor. */
+function _cmdGenRating(C, gen) {
+  if (!gen) return 64;
+  var skill = (typeof gen.skill === "number") ? gen.skill : 64;
+  var rep = _cmdReputation(C, gen.id);
+  return 0.55 * skill + 0.45 * rep;
+}
+
+/* ---- commandLeadership(C): THE bridge leadership facet (0-100). Anchored at 64:
+   a neutral general + a neutral cabinet -> 64 (= the old fixed placeholder, so a
+   fresh/default command is byte-equivalent to Classic). The sitting general weighs
+   most (0.7); the cabinet's competence modulates (0.3). Graceful fallback chain:
+   commandLeadership -> cabinetLeadership -> 64. ---- */
+function commandLeadership(C) {
+  if (!C) return 64;
+  var cab = (typeof cabinetLeadership === "function") ? cabinetLeadership(C) : 64;
+  var gen = cmdActiveGeneral(C);
+  if (!gen) return Math.max(42, Math.min(88, Math.round(cab)));   // no general data -> the cabinet (itself ~64-anchored)
+  var rating = _cmdGenRating(C, gen);
+  var lead = 64 + (rating - 64) * 0.7 + (cab - 64) * 0.3;
+  return Math.max(42, Math.min(88, Math.round(lead)));
+}
+
+/* The active general's combat traits, for the auto-resolve margin (attack/defend). */
+function cmdActiveTraits(C) {
+  var g = cmdActiveGeneral(C);
+  if (!g) return { skill: 64, aggression: 50, caution: 50 };
+  return {
+    skill: (typeof g.skill === "number") ? g.skill : 64,
+    aggression: (typeof g.aggression === "number") ? g.aggression : 50,
+    caution: (typeof g.caution === "number") ? g.caution : 50
+  };
+}
+
+/* The general's situational edge on the auto-resolve margin: an aggressive
+   commander presses the attack; a cautious one is sound on the defensive. Small,
+   deterministic, bounded ±~2 (it must not swamp the strategic facets — §27). The
+   sign of `playerAttacks` is the player's role in the coming battle. */
+function commandMarginEdge(C, playerAttacks) {
+  var t = cmdActiveTraits(C);
+  if (playerAttacks) return (t.aggression - 50) * 0.04;
+  return (t.caution - 50) * 0.04;
+}
+
+/* ---- cmdOnResolve: per-turn tick. Runs AFTER cabOnResolve (date/turn advanced)
+   and BEFORE moraleOnResolve (so the fresh reputation feeds the leader layer the
+   same turn). Evolves the ACTIVE general's reputation by the battle's outcome and
+   logs a handover when the historical default changes (player hasn't appointed).
+   Mutates C.president.command only; no DOM, no save. ---- */
+function cmdOnResolve(winnerSide, type, B, C, win) {
+  if (!C) return;
+  cmdInit(C);
+  try {
+    var P = C.president, side = (C.side === "CS") ? "CS" : "US", cmd = P.command;
+    var prevActive = cmd._activeId || null;
+    var id = cmdActiveId(C);
+    if (id) {
+      var cur = _cmdReputation(C, id), delta;
+      var draw = (type === "draw" || winnerSide == null);
+      if (draw) delta = -1;
+      else if (win) delta = (type === "decisive") ? 6 : 3;
+      else delta = (type === "decisive") ? -8 : -4;
+      cmd.reputation[id] = Math.max(5, Math.min(98, cur + delta));
+    }
+    // log a handover when the HISTORICAL default shifts and the player is following history.
+    if (!cmd.fieldGeneral && id && id !== prevActive && prevActive) {
+      var now = _cmdById(side, id), prev = _cmdById(side, prevActive);
+      if (now && typeof _pdLog === "function") {
+        _pdLog(C, "General " + _cmdName(now) + " takes field command" + (prev ? ", succeeding " + _cmdName(prev) : "") + ".");
+      }
+    }
+    cmd._activeId = id;
+  } catch (e) {}
+}
+
+/* ===== render: the "Command" desk tab ===== */
+
+function _cmdPortrait(gen, side, size) {
+  if (!gen || typeof window.portraitFor !== "function") return "";
+  try {
+    return '<img src="' + window.portraitFor(_cmdName(gen), side, { named: true }) + '" alt="General ' + _cmdEsc(_cmdName(gen))
+      + '" style="width:' + size + 'px;height:' + size + 'px;object-fit:cover;border:2px solid var(--rule);border-radius:4px;flex:0 0 auto">';
+  } catch (e) { return ""; }
+}
+
+function _cmdLeadWord(v) {
+  if (v >= 82) return ["Masterful", "#4a6b3a"];
+  if (v >= 70) return ["Able", "#6f9e5a"];
+  if (v >= 58) return ["Steady", "#b8863b"];
+  if (v >= 48) return ["Uneven", "#c9712e"];
+  return ["Faltering", "#9c3b2e"];
+}
+
+function _cmdTraitBar(label, v, hint) {
+  v = Math.max(0, Math.min(100, Math.round(v || 0)));
+  return '<div style="margin:3px 0"><div style="display:flex;justify-content:space-between;font-size:11px;opacity:.8"><span>' + _cmdEsc(label)
+    + '</span><span>' + v + '</span></div>'
+    + '<div style="height:6px;background:rgba(0,0,0,.25);border:1px solid var(--rule);border-radius:3px;overflow:hidden"><div style="height:100%;width:' + v + '%;background:#7d6b4a"></div></div>'
+    + (hint ? '<div style="font-size:10px;opacity:.5">' + _cmdEsc(hint) + '</div>' : '') + '</div>';
+}
+
+/* The relief cost (political capital) to remove a general now — scaled up for a
+   popular man at the height of his prestige (the McClellan problem). */
+function _cmdReliefCost(C, gen) {
+  if (!gen) return 0;
+  var base = _cmdRELIEF_BASE[gen.relief] || _cmdRELIEF_BASE.costly;
+  var rep = _cmdReputation(C, gen.id);
+  var prestige = Math.max(0, rep - 60) * 0.25;   // a beloved general is dearer to dismiss
+  return Math.round(base + prestige);
+}
+
+/* The card for the sitting commanding general. */
+function _cmdActiveCard(C) {
+  var side = (C.side === "CS") ? "CS" : "US", P = C.president;
+  var gen = cmdActiveGeneral(C);
+  if (!gen) return '<p class="lede" style="font-size:13px">No general holds the field command. Appoint a commander below.</p>';
+  var byHistory = !(P.command && P.command.fieldGeneral);
+  var lead = commandLeadership(C), lw = _cmdLeadWord(lead);
+  var rep = Math.round(_cmdReputation(C, gen.id));
+  var img = _cmdPortrait(gen, side, 84);
+  var traits = (gen.traits && gen.traits.length) ? gen.traits.join(" &middot; ") : "";
+  var amb = (typeof gen.ambition === "number") ? gen.ambition : 0;
+  var ambTell = (amb >= 70)
+    ? '<div style="margin-top:7px;font-size:11px;color:#9c3b2e;background:rgba(156,59,46,.08);border:1px solid rgba(156,59,46,.4);border-radius:4px;padding:7px">&#9873; <b>Ambition.</b> '
+        + _cmdEsc(gen.weakness || "He courts the newspapers and the politicians; removing him will cost you dearly.") + '</div>'
+    : '';
+  return ''
+    + '<div style="padding:12px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.14)">'
+    +   '<div style="display:flex;gap:14px;align-items:flex-start">'
+    +     img
+    +     '<div style="flex:1 1 auto">'
+    +       '<div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule)">' + (byHistory ? 'In command (by the course of the war)' : 'Your appointed commander') + '</div>'
+    +       '<div style="font-weight:bold;font-size:16px">' + _cmdEsc(gen.fullName || _cmdName(gen))
+    +         (gen.epithet ? ' <span style="font-weight:normal;opacity:.65;font-size:12px">&ldquo;' + _cmdEsc(gen.epithet) + '&rdquo;</span>' : '') + '</div>'
+    +       '<div style="opacity:.7;font-size:11px">' + _cmdEsc(gen.rank || "General") + (traits ? ' &middot; ' + _cmdEsc(gen.traits.join(" · ")) : '') + '</div>'
+    +       (gen.voice ? '<div style="font-style:italic;opacity:.85;font-size:12px;margin-top:5px;border-left:2px solid var(--rule);padding-left:8px">' + _cmdEsc(gen.voice) + '</div>' : '')
+    +     '</div>'
+    +     '<div style="flex:0 0 auto;text-align:right">'
+    +       '<div style="font-weight:bold;font-size:20px;color:' + lw[1] + '">' + lead + '</div>'
+    +       '<div style="font-size:10px;opacity:.6">' + lw[0] + ' command</div>'
+    +     '</div>'
+    +   '</div>'
+    +   '<div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:9px">'
+    +     '<div style="flex:1 1 180px;min-width:160px">'
+    +       _cmdTraitBar('Skill', gen.skill, 'Operational generalship.')
+    +       _cmdTraitBar('Reputation', rep, 'Rises with victory, falls with defeat.')
+    +     '</div>'
+    +     '<div style="flex:1 1 180px;min-width:160px">'
+    +       _cmdTraitBar('Aggression', gen.aggression, 'Presses the attack.')
+    +       _cmdTraitBar('Caution', gen.caution, 'Sound on the defensive; slow to move.')
+    +     '</div>'
+    +   '</div>'
+    +   (gen.bio ? '<div style="font-size:12px;opacity:.82;margin-top:8px">' + _cmdEsc(gen.bio) + '</div>' : '')
+    +   ambTell
+    +   (gen.provenance ? '<div style="margin-top:5px;font-size:10px;opacity:.55">' + _cmdEsc(gen.provenance) + (gen.sources && gen.sources.length ? ' &middot; ' + _cmdEsc(gen.sources.join("; ")) : '') + '</div>' : '')
+    +   (!byHistory ? '<button id="cmdRevert" type="button" class="upg" style="margin-top:8px;font-size:11px;padding:2px 8px">Restore the historical command</button>' : '')
+    + '</div>';
+}
+
+/* The available-generals pool — appoint / promote (relieve the incumbent). */
+function _cmdPoolHTML(C) {
+  var side = (C.side === "CS") ? "CS" : "US", P = C.president;
+  var roster = _cmdSideGenerals(side);
+  if (!roster.length) return "";
+  var activeId = cmdActiveId(C);
+  var incumbent = cmdActiveGeneral(C);
+  var cost = incumbent ? _cmdReliefCost(C, incumbent) : 0;
+  var cap = (C.clock && typeof C.clock.capital === "number") ? Math.round(C.clock.capital) : 0;
+  var rows = "";
+  // available men first, then the unavailable (greyed, with a reason), for context.
+  var avail = [], later = [];
+  for (var i = 0; i < roster.length; i++) {
+    var g = roster[i]; if (!g || g.id === activeId) continue;
+    if (_cmdAlive(g, P.date)) avail.push(g); else later.push(g);
+  }
+  function _cmdGenRow(g, ok) {
+    var rep = Math.round(_cmdReputation(C, g.id));
+    var rating = Math.round(_cmdGenRating(C, g));
+    var rw = _cmdLeadWord(rating);
+    var img = _cmdPortrait(g, side, 44);
+    var canAfford = cap >= cost;
+    var note = "";
+    if (!ok) {
+      var until = g.availableUntil;
+      note = (until && _cmdDateNum(P.date) > _cmdYM(until))
+        ? '<span style="font-size:11px;opacity:.6">Out of the war</span>'
+        : '<span style="font-size:11px;opacity:.6">Not yet available</span>';
+    } else if (canAfford) {
+      note = '<button id="cmdApp_' + _cmdEsc(g.id) + '" type="button" class="upg" style="flex:0 0 auto">Appoint</button>';
+    } else {
+      note = '<span style="font-size:11px;color:#9c3b2e" title="Relieving ' + _cmdEsc(_cmdName(incumbent)) + ' would cost ' + cost + ' political capital; you have ' + cap + '.">Needs ' + cost + ' capital</span>';
+    }
+    return '<div style="display:flex;gap:10px;align-items:center;padding:7px 0;border-bottom:1px dotted var(--rule)' + (ok ? '' : ';opacity:.5') + '">'
+      + img
+      + '<div style="flex:1 1 auto">'
+      +   '<div style="font-weight:bold;font-size:13px">' + _cmdEsc(_cmdName(g)) + (g.epithet ? ' <span style="font-weight:normal;opacity:.6;font-size:11px">&ldquo;' + _cmdEsc(g.epithet) + '&rdquo;</span>' : '') + '</div>'
+      +   '<div style="font-size:11px;opacity:.7">' + _cmdEsc(g.rank || "") + ' &middot; <span style="color:' + rw[1] + '">' + rw[0] + ' (' + rating + ')</span></div>'
+      +   (g.strength ? '<div style="font-size:11px;opacity:.6">' + _cmdEsc(g.strength) + '</div>' : '')
+      + '</div>'
+      + '<div style="flex:0 0 auto;text-align:right">' + note + '</div>'
+      + '</div>';
+  }
+  for (var a = 0; a < avail.length; a++) rows += _cmdGenRow(avail[a], true);
+  for (var b = 0; b < later.length; b++) rows += _cmdGenRow(later[b], false);
+  var capLine = incumbent
+    ? '<div style="font-size:11px;opacity:.7;margin:6px 0 2px">To appoint another is to relieve <b>' + _cmdEsc(_cmdName(incumbent)) + '</b> &mdash; a cost of <b>' + cost + '</b> political capital (you hold ' + cap + '). '
+        + (incumbent.relief === "very-costly" ? 'He is popular and dangerous; the country will not thank you for it.' : '') + '</div>'
+    : '';
+  return '<div style="margin-top:14px">'
+    + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin-bottom:2px">The generals at your call</div>'
+    + capLine
+    + rows
+    + '</div>';
+}
+
+function _cmdCardHTML(C) {
+  var d = _cmdData(), side = (C.side === "CS") ? "CS" : "US";
+  if (!d || !d.teachingCards || !d.teachingCards.length) return "";
+  var html = "";
+  for (var i = 0; i < d.teachingCards.length; i++) {
+    var c = d.teachingCards[i];
+    if (!c || (c.side && c.side !== side)) continue;
+    var persp = "";
+    if (c.perspectives) for (var p = 0; p < c.perspectives.length; p++) persp += '<div style="margin:4px 0;font-size:12px"><span style="opacity:.6;font-style:italic">' + _cmdEsc(c.perspectives[p].voice) + ':</span> ' + _cmdEsc(c.perspectives[p].text) + '</div>';
+    html += '<div style="margin-top:10px;padding:9px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.1)">'
+      + '<div style="font-weight:bold;font-size:13px">' + _cmdEsc(c.title) + '</div>'
+      + '<div style="font-size:12px;opacity:.85;margin:2px 0">' + _cmdEsc(c.claim) + '</div>'
+      + '<button id="cmdCard_' + i + '" type="button" class="upg" style="font-size:11px;padding:1px 8px;margin-top:3px">The historians &#9656;</button>'
+      + '<div id="cmdCardBox_' + i + '" style="display:none;margin-top:4px">' + persp
+      + '<div style="margin-top:4px;font-size:10px;opacity:.6">' + _cmdEsc(c.provenance || "Inferred") + (c.sources && c.sources.length ? ' &middot; ' + _cmdEsc(c.sources.join("; ")) : '') + '</div></div>'
+      + '</div>';
+  }
+  return html;
+}
+
+/* ---- cmdRenderTab: the Command desk tab. ---- */
+function cmdRenderTab(C) {
+  if (!C) return '';
+  try {
+    if (typeof presInit === "function") presInit(C);
+    cmdInit(C);
+  } catch (e) { return '<p class="lede" style="font-size:13px">Your generals await your orders.</p>'; }
+  if (!_cmdData()) return '<p class="lede" style="font-size:13px">Your generals await your orders.</p>';
+  return ''
+    + '<p class="lede" style="font-size:13px;margin-bottom:10px">You appoint the men who command your armies &mdash; and you relieve them. A great general lifts the army your war puts in the field; a cautious or discredited one squanders it. But a popular general is dangerous to dismiss: it costs you political capital, and the country is watching.</p>'
+    + _cmdActiveCard(C)
+    + _cmdPoolHTML(C)
+    + _cmdCardHTML(C);
+}
+
+/* ===== wire ===== */
+
+/* Appoint `id` to the field command — relieving the incumbent and paying the
+   political-capital cost. Bounded, clamped, logged. Mutates C.president.command +
+   C.clock.capital. */
+function cmdAppoint(C, id) {
+  if (!C || !C.president) return;
+  cmdInit(C);
+  var side = (C.side === "CS") ? "CS" : "US", P = C.president, cmd = P.command;
+  var g = _cmdById(side, id);
+  if (!g || !_cmdAlive(g, P.date)) return;
+  if (id === cmdActiveId(C)) return;                 // already in command
+  var incumbent = cmdActiveGeneral(C);
+  var cost = incumbent ? _cmdReliefCost(C, incumbent) : 0;
+  var clk = C.clock, cap = (clk && typeof clk.capital === "number") ? Math.round(clk.capital) : 0;   // round to match the pool's displayed capital (no soft-lock, D53.7)
+  if (cap < cost) return;                            // not enough political capital (the gate)
+  if (clk && typeof clk.capital === "number") clk.capital = Math.max(0, clk.capital - cost);
+  cmd.fieldGeneral = id;
+  cmd.appointedTurn = (P.turn || 0);
+  cmd.history.unshift({ turn: (P.turn || 0), id: id });
+  if (cmd.history.length > 8) cmd.history.length = 8;
+  if (typeof _pdLog === "function") {
+    _pdLog(C, "You give the field command to General " + _cmdName(g)
+      + (incumbent ? ", relieving " + _cmdName(incumbent) + (cost ? " (−" + cost + " capital)" : "") : "") + ".");
+  }
+}
+
+/* Restore the historical command (release the post — free). */
+function cmdRevert(C) {
+  if (!C || !C.president) return;
+  cmdInit(C);
+  C.president.command.fieldGeneral = null;
+  if (typeof _pdLog === "function") _pdLog(C, "You restore the command to the course of the war.");
+}
+
+function cmdWireTab(C) {
+  if (!C || !C.president) return;
+  cmdInit(C);
+  var side = (C.side === "CS") ? "CS" : "US";
+  var roster = _cmdSideGenerals(side);
+  for (var i = 0; i < roster.length; i++) {
+    (function (g) {
+      if (!g || !g.id) return;
+      var b = document.getElementById("cmdApp_" + _cmdEsc(g.id));   // escape to mirror the render id (D43.4 discipline)
+      if (b) b.addEventListener("click", function () {
+        cmdAppoint(C, g.id);
+        if (typeof saveLocal === "function") saveLocal();
+        if (typeof _wdRefresh === "function") _wdRefresh();
+      });
+    })(roster[i]);
+  }
+  var rev = document.getElementById("cmdRevert");
+  if (rev) rev.addEventListener("click", function () {
+    cmdRevert(C);
+    if (typeof saveLocal === "function") saveLocal();
+    if (typeof _wdRefresh === "function") _wdRefresh();
+  });
+  var d = _cmdData();
+  if (d && d.teachingCards) for (var c = 0; c < d.teachingCards.length; c++) {
+    (function (idx) {
+      var btn = document.getElementById("cmdCard_" + idx);
+      if (btn) btn.addEventListener("click", function () {
+        var box = document.getElementById("cmdCardBox_" + idx);
+        if (box) box.style.display = (box.style.display === "none") ? "block" : "none";
+      });
+    })(c);
   }
 }
 
@@ -23059,6 +24526,12 @@ var _brgPREP = [
   { key: "raidSupply", label: "Raid enemy supply", hint: "Cavalry against the depots — the enemy fights hungry and short of ammunition." }
 ];
 
+/* S2 m5: re-entrancy guard. bridgeArmy -> commandLeadership -> cabinetLeadership can call back into
+   bridgeArmy (via the War Secretary's ambition reading, _cabReading "war" -> bridgeArmy.overall); this
+   flag makes a RE-ENTRANT bridgeArmy use the neutral leadership anchor (64) instead of recursing into a
+   stack overflow. The outer (real) call still gets the true commandLeadership. (Bug-hunt D53.4.) */
+var _brgLeadGuard = false;
+
 function bridgeInit(C) {
   if (!C) return;
   if (!C.battlePrep || typeof C.battlePrep !== "object") {
@@ -23114,7 +24587,16 @@ function bridgeArmy(C) {
     supply = Math.min(100, supply + Math.round(engBranchBoost(C, "construction")));
     fatigue = Math.max(0, fatigue - Math.round(engBranchBoost(C, "pontoons")));
   }
-  var leadership = 64;   // placeholder until generals/cabinet wire in (S2/§19)
+  // S2 m5: the sitting field general + the cabinet now drive leadership (anchored at 64 so a
+  // default/historical command plays ≈ Classic; the A6a/D47.1 anchor lesson). The _brgLeadGuard
+  // breaks the bridgeArmy->commandLeadership->cabinet->_cabReading->bridgeArmy cycle (D53.4).
+  var leadership;
+  if (_brgLeadGuard || typeof commandLeadership !== "function") {
+    leadership = 64;
+  } else {
+    _brgLeadGuard = true;
+    try { leadership = commandLeadership(C); } finally { _brgLeadGuard = false; }
+  }
   var firepower = (typeof armoryWeaponScore === "function") ? armoryWeaponScore(C) : 30;  // the small arms you bought
   var artillery = (typeof artBatteryScore === "function") ? artBatteryScore(C) : 8;       // A1: the Cannon Corps you raised
   var engineering = (typeof engScore === "function") ? engScore(C) : 12;                   // A2: the Engineer Corps you raised
@@ -23125,6 +24607,10 @@ function bridgeArmy(C) {
   overall = Math.min(100, overall + Math.round(Math.max(0, artillery - artBase) * 0.12));
   var engBase = (typeof _engBaseline === "function") ? _engBaseline() : 12;
   overall = Math.min(100, overall + Math.round(Math.max(0, engineering - engBase) * 0.10));
+  // S2 m5: a BIDIRECTIONAL leadership edge (mirrors the additive arms above, but signed) — a
+  // masterful command lifts the army a few points; a poor or discredited one drags it. At the
+  // anchor (leadership 64) this is exactly 0, so a fresh/default command stays Classic-equivalent.
+  overall = Math.max(0, Math.min(100, overall + Math.round((leadership - 64) * 0.18)));
   return { side: side, strength: Math.round(strength), equip: Math.round(equip), arms: arms,
     morale: morale, supply: supply, fatigue: fatigue, leadership: leadership, firepower: firepower, artillery: artillery, engineering: engineering, overall: overall };
 }
@@ -23429,6 +24915,9 @@ function bridgeResolveOutcome(C, B) {
   var armyEdge = me - 74, foeEdge = foe - 64;
   var margin = (armyEdge - foeEdge) + (rnd() * 24 - 12);        // ±12 battle variance, baseline-anchored
   if (bd.atk && bd.atk !== ps) margin += 6; else margin -= 2;   // defending is easier than attacking
+  // S2 m5: the commanding general's temperament nudges the day — an aggressive general presses the
+  // attack, a cautious one is sound on the defensive (small, deterministic ±~2; never swamps the war).
+  if (typeof commandMarginEdge === "function") { try { margin += commandMarginEdge(C, bd.atk === ps); } catch (e) {} }
   var winnerSide, type;
   if (margin >= 18) { winnerSide = ps; type = "decisive"; }
   else if (margin >= 5) { winnerSide = ps; type = "win"; }
@@ -23527,6 +25016,7 @@ function _t1InitAll(C) {
   try { if (typeof wrInit  === "function") wrInit(C);  } catch (e) {}
   try { if (typeof presInit === "function") presInit(C); } catch (e) {}   // S0: President's Desk
   try { if (typeof cabInit === "function") cabInit(C); } catch (e) {}     // S2 m1: cabinet/advisor system (after presInit)
+  try { if (typeof cmdInit === "function") cmdInit(C); } catch (e) {}     // S2 m5: command/named-generals (after cabInit — seeds reputation, feeds the bridge leadership facet)
   try { if (typeof decInit === "function") decInit(C); } catch (e) {}     // S2 m2: executive decisions / pendingChoices loop
   try { if (typeof moraleInit === "function") moraleInit(C); } catch (e) {}  // S2 m3: 3-layer morale
   try { if (typeof pressInit === "function") pressInit(C); } catch (e) {}    // S2 m4: press / public opinion
@@ -23553,6 +25043,7 @@ function _t1Resolve(winnerSide, type, B, C, win) {
   try { if (typeof mrOnResolve  === "function") mrOnResolve(winnerSide, type, B, C, win);  } catch (e) {}
   try { if (typeof presOnResolve === "function") presOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S0: after clk (interlink)
   try { if (typeof cabOnResolve === "function") cabOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S2 m1: AFTER pres (date+turn advanced) -> detect cabinet churn
+  try { if (typeof cmdOnResolve === "function") cmdOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S2 m5: AFTER cab, BEFORE morale -> evolve the general's reputation; it feeds the leader-morale layer this turn
   try { if (typeof decOnResolve === "function") decOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S2 m2: AFTER pres -> surface/expire decision cards (owns pendingChoices)
   try { if (typeof pressOnResolve === "function") pressOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S2 m4: BEFORE morale -> the day's press sentiment feeds public will
   try { if (typeof moraleOnResolve === "function") moraleOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S2 m3: AFTER clk (weariness/election set), BEFORE vic (enemyWill change seen by victoryReady)

@@ -70,6 +70,9 @@ function bridgeResolveOutcome(C, B) {
   var armyEdge = me - 74, foeEdge = foe - 64;
   var margin = (armyEdge - foeEdge) + (rnd() * 24 - 12);        // ±12 battle variance, baseline-anchored
   if (bd.atk && bd.atk !== ps) margin += 6; else margin -= 2;   // defending is easier than attacking
+  // S2 m5: the commanding general's temperament nudges the day — an aggressive general presses the
+  // attack, a cautious one is sound on the defensive (small, deterministic ±~2; never swamps the war).
+  if (typeof commandMarginEdge === "function") { try { margin += commandMarginEdge(C, bd.atk === ps); } catch (e) {} }
   var winnerSide, type;
   if (margin >= 18) { winnerSide = ps; type = "decisive"; }
   else if (margin >= 5) { winnerSide = ps; type = "win"; }

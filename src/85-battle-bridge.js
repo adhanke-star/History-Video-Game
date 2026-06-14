@@ -32,6 +32,12 @@ var _brgPREP = [
   { key: "raidSupply", label: "Raid enemy supply", hint: "Cavalry against the depots — the enemy fights hungry and short of ammunition." }
 ];
 
+/* S2 m5: re-entrancy guard. bridgeArmy -> commandLeadership -> cabinetLeadership can call back into
+   bridgeArmy (via the War Secretary's ambition reading, _cabReading "war" -> bridgeArmy.overall); this
+   flag makes a RE-ENTRANT bridgeArmy use the neutral leadership anchor (64) instead of recursing into a
+   stack overflow. The outer (real) call still gets the true commandLeadership. (Bug-hunt D53.4.) */
+var _brgLeadGuard = false;
+
 function bridgeInit(C) {
   if (!C) return;
   if (!C.battlePrep || typeof C.battlePrep !== "object") {
@@ -87,7 +93,16 @@ function bridgeArmy(C) {
     supply = Math.min(100, supply + Math.round(engBranchBoost(C, "construction")));
     fatigue = Math.max(0, fatigue - Math.round(engBranchBoost(C, "pontoons")));
   }
-  var leadership = 64;   // placeholder until generals/cabinet wire in (S2/§19)
+  // S2 m5: the sitting field general + the cabinet now drive leadership (anchored at 64 so a
+  // default/historical command plays ≈ Classic; the A6a/D47.1 anchor lesson). The _brgLeadGuard
+  // breaks the bridgeArmy->commandLeadership->cabinet->_cabReading->bridgeArmy cycle (D53.4).
+  var leadership;
+  if (_brgLeadGuard || typeof commandLeadership !== "function") {
+    leadership = 64;
+  } else {
+    _brgLeadGuard = true;
+    try { leadership = commandLeadership(C); } finally { _brgLeadGuard = false; }
+  }
   var firepower = (typeof armoryWeaponScore === "function") ? armoryWeaponScore(C) : 30;  // the small arms you bought
   var artillery = (typeof artBatteryScore === "function") ? artBatteryScore(C) : 8;       // A1: the Cannon Corps you raised
   var engineering = (typeof engScore === "function") ? engScore(C) : 12;                   // A2: the Engineer Corps you raised
@@ -98,6 +113,10 @@ function bridgeArmy(C) {
   overall = Math.min(100, overall + Math.round(Math.max(0, artillery - artBase) * 0.12));
   var engBase = (typeof _engBaseline === "function") ? _engBaseline() : 12;
   overall = Math.min(100, overall + Math.round(Math.max(0, engineering - engBase) * 0.10));
+  // S2 m5: a BIDIRECTIONAL leadership edge (mirrors the additive arms above, but signed) — a
+  // masterful command lifts the army a few points; a poor or discredited one drags it. At the
+  // anchor (leadership 64) this is exactly 0, so a fresh/default command stays Classic-equivalent.
+  overall = Math.max(0, Math.min(100, overall + Math.round((leadership - 64) * 0.18)));
   return { side: side, strength: Math.round(strength), equip: Math.round(equip), arms: arms,
     morale: morale, supply: supply, fatigue: fatigue, leadership: leadership, firepower: firepower, artillery: artillery, engineering: engineering, overall: overall };
 }

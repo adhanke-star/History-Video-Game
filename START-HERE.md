@@ -38,8 +38,12 @@ Old kickoff prompts, the pre-modularization plans, the graphics/3D/Blender/asset
 - Anything superseded goes to **`legacy/`** immediately, so the root only ever shows what's current.
 - **Proposed deeper structure (next session, optional):** `docs/operating/` · `docs/design/` · `docs/research/` · `docs/handoff/` — deferred so the build's paths and the read-order references don't churn mid-flight; the root/`legacy` split already removes the confusion.
 
-## Git / saving
-Local commits only — **no GitHub remote is configured** (chosen for this project). Every change is committed the moment it's verified; `git log` is the durable record. `tools/shots/*` and `.tmp/` are gitignored, so the pending-changes view stays at ~0. To add off-machine backup, set up a remote (a human decision — ask the owner first).
+## Git / saving — commit AND push to GitHub, but ONLY after PROPER VETTING
+The remote is **LIVE**: `origin` → **github.com/adhanke-star/History-Video-Game** (private), branch `main`. **Every milestone is committed AND pushed (`git push origin main`) — but ONLY after PROPER VETTING passes** (Aaron standing instruction, 2026-06-14):
+
+> **PROPER VETTING gate:** `node tools/build.mjs` → **GATE OK** (parse/hex/collision) → the milestone's focused probe **+ the full no-regression suite + `diag-classic` green + 0 pageerrors** (READ the JSON — never assume) → **adversarial bug-hunt** workflow with every confirmed finding fixed → THEN commit → THEN `git push origin main`.
+
+Never push an unvetted / red / regressed / pageerror build. `tools/shots/*` and `.tmp/` are gitignored, so the pending-changes view stays at ~0; `git log` + the GitHub remote are the durable record.
 
 ---
 

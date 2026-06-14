@@ -83,6 +83,9 @@ function _wdRefresh() {
   } else if (_wdTab === "cabinet") {
     html = (typeof presRenderCabinet === "function") ? presRenderCabinet(C) : "";
     wire = (typeof presWireCabinet === "function") ? presWireCabinet : null;
+  } else if (_wdTab === "command") {
+    html = (typeof cmdRenderTab === "function") ? cmdRenderTab(C) : "";
+    wire = (typeof cmdWireTab === "function") ? cmdWireTab : null;
   } else if (_wdTab === "decisions") {
     html = (typeof decRenderTab === "function") ? decRenderTab(C) : "";
     wire = (typeof decWireTab === "function") ? decWireTab : null;
@@ -97,7 +100,7 @@ function _wdRefresh() {
     wire = null;
   }
   cont.innerHTML = html || '<p class="lede" style="text-align:center;opacity:0.7">This office is not yet staffed.</p>';
-  var tabs = ["economy", "treasury", "diplomacy", "victory", "armory", "warroom", "clock", "muster", "cabinet", "decisions", "press", "map"];
+  var tabs = ["economy", "treasury", "diplomacy", "victory", "armory", "warroom", "clock", "muster", "cabinet", "command", "decisions", "press", "map"];
   for (var i = 0; i < tabs.length; i++) {
     var b = document.getElementById("wdTab_" + tabs[i]);
     if (b) b.style.opacity = (tabs[i] === _wdTab) ? "1" : "0.55";
@@ -135,6 +138,7 @@ function openWarDept() {
       _wdTabBtn("clock", "1864 Clock") +
       _wdTabBtn("muster", "Muster Roll") +
       _wdTabBtn("cabinet", "Cabinet") +
+      _wdTabBtn("command", "Command") +
       _wdTabBtn("decisions", "Decisions") +
       _wdTabBtn("press", "The Press") +
       _wdTabBtn("map", "Theater Map") +
@@ -148,7 +152,7 @@ function openWarDept() {
     if (_pdAfterDeskClose) { var cb = _pdAfterDeskClose; _pdAfterDeskClose = null; cb(); }
     else if (typeof closeSheet === "function") closeSheet();
   });
-  ["economy", "treasury", "diplomacy", "victory", "armory", "warroom", "clock", "muster", "cabinet", "decisions", "press", "map"].forEach(function (k) {
+  ["economy", "treasury", "diplomacy", "victory", "armory", "warroom", "clock", "muster", "cabinet", "command", "decisions", "press", "map"].forEach(function (k) {
     var b = document.getElementById("wdTab_" + k);
     if (b) b.addEventListener("click", function () { _wdTab = k; _wdRefresh(); });
   });
