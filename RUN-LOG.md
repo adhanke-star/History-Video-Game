@@ -1,3 +1,15 @@
+# RUN-LOG — 2026-06-14 (run j, Opus 4.8 — the BATTLE LAYER: A1 Cannon Corps → A2…→ S2–S5 → tactical)
+
+**Context:** Overnight autonomous run under the §8 charter (D30–D41). Battle layer first (A1→A6), then the strategic arc S2→S5, then tactical P0–P5. GitHub backup authorized (`adhanke-star/History-Video-Game`, private). Ultracode on; adversarial bug-hunt before every commit; decide-&-log every fork.
+
+## A1 · THE CANNON CORPS SHIPPED + VERIFIED — buildable field artillery + the CS asymmetry made mechanical
+- **What it is:** "The Cannon Corps" block appended below The Armory tab. You raise real Civil War field batteries with `C.funds` (12-pdr Napoleon, 3-inch Ordnance Rifle, 10-pdr Parrott, Whitworth [rare import], 12-pdr howitzer — `data/artillery.json`, from an 11-agent verified research workflow), loot-tiered common→rare. A battery is a big-ticket buy (Napoleon ~$900) raised by the BATTERY (the corps you assemble), unlike the Armory's small-arms-by-fraction. The corps' battery-score (gun quality × park coverage, with the CS handicaps) feeds the battle bridge as a new **artillery** facet that adds punch to the army you field.
+- **Found + scaffolded by the prior session** (`src/56-artillery.js`, wiring into manifest / `_t1InitAll` / the Armory tab / the bridge `bridgeArmy`, `tools/probe-cannon.mjs`); this session BUILT → PROBED → bug-hunted → hardened → committed it as the first run-j milestone.
+- **Adversarial bug-hunt** (workflow: 5 lenses × independent verify, 21 agents) → 9 confirmed real findings, all fixed (DECISIONS D42): array-guard save-corruption holes in `artInit` (the big one — a JSON round-trip would silently wipe the park), battery-count sanitization, the **cosmetic 4-vs-6 handicap made mechanical** (CS batteries now fill the park ~2/3 as fast + CS-only fuze/horse/mixed-caliber maluses + the 1863 massing bonus with a Union Reserve edge), the Whitworth no longer cheapest-for-the-Union, and the usual hardening (cost-0 honored, no-id guard, data escaping, `n` coercion).
+- **VERIFIED:** probe-cannon **9/9** + a new US>CS divergence assertion (1863, 6× howitzer12: **US 44 vs CS 33**, CS not crushed to baseline — accessible default). Bridge artillery facet 8→63, overall 76→83. No-regression: diag-classic Classic paints, probe-desk 12/12, probe-weapons 8/8, probe-bridge 6/6; 0 pageerrors. Deliverable 905.6KB.
+
+---
+
 # RUN-LOG — 2026-06-13 (run i, Opus 4.8 — S0: owner-mode President's Desk + zero-dep build system)
 
 **Context:** First build chat after the run-h design session (63 locked decisions). Strategic-first: building the grand-strategy Owner-Mode war (GRAND-STRATEGY-PLAN §12, S0→S5) before the tactical engine. Personal project, NOT MJI. Ultracode on, $0/single-file, build bar 200/100.

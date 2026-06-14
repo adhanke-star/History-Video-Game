@@ -73,7 +73,11 @@ function _wdRefresh() {
     wire = (typeof vicWirePaths === "function") ? vicWirePaths : null;
   } else if (_wdTab === "armory") {
     html = (typeof armoryRenderArmory === "function") ? armoryRenderArmory(C) : "";
-    wire = (typeof armoryWireArmory === "function") ? armoryWireArmory : null;
+    if (typeof artRenderSection === "function") html += artRenderSection(C);   // A1: Cannon Corps appended below the small arms
+    wire = function (cc) {
+      if (typeof armoryWireArmory === "function") armoryWireArmory(cc);
+      if (typeof artWireSection === "function") artWireSection(cc);
+    };
   } else if (_wdTab === "cabinet") {
     html = (typeof presRenderCabinet === "function") ? presRenderCabinet(C) : "";
     wire = (typeof presWireCabinet === "function") ? presWireCabinet : null;

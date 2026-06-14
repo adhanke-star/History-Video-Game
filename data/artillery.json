@@ -1,0 +1,225 @@
+{
+  "_comment": "S5 Cannon Corps — real Civil War field artillery as a loot-style purchasable tier (common -> legendary), bought BATTERY by BATTERY so building an artillery arm feels like assembling a Borderlands kit: spend funds, raise batteries, lift your army's pre-battle firepower rating. A battery is a big-ticket object next to small arms — a fully-horsed six-gun Union battery was ~150 men, ~14 carriages, and ~110 horses (HISTORICAL-DATA.md L818). Specs are grounded in the period record (Hazlett/Olmstead/Parks firing tables, Hess, Naisawald): bore, effective range, ~2 aimed rounds/min, 9-man detachment. `quality` is a 0-100 designer composite (range + accuracy + versatility) that the battery score reads; `accuracy` and `rangeYds` are the underlying levers. Whitworth is csImport + rare: superb but ammunition-fragile and slow. Build-injected as GAME_DATA.artillery; consumed by src/56-artillery.js (the Cannon Corps tab) and the pre-battle firepower bridge.",
+  "provenance": "Verified specs (Hazlett, Olmstead & Parks, Field Artillery Weapons of the Civil War; Earl J. Hess, Civil War Field Artillery: Promise and Performance, 2022; L. VanLoan Naisawald, Grape and Canister; Instruction for Field Artillery 1860/1864 range tables; NPS ordnance references; cross-checked to HISTORICAL-DATA.md artillery tables and HISTORICAL-DATA-ECONOMY.md Tredegar facts). Rarity, costPerBattery, and quality are designer calibration (Inferred), tunable. Corrections applied per verify: 10-pdr Parrott max capped ~2,800 yds (the ~5,000 yd figure belongs to naval/siege Parrotts, not the field piece); Whitworth tube weight ~896 lb (not ~1,092); Whitworth's ~10,000-yd trial range is flavor only, never an in-game range.",
+  "schemaVersion": "1.0",
+  "baselineArtilleryScore": 8,
+  "batteryGunsUnion": 6,
+  "batteryGunsCS": 4,
+  "fullComplementBatteries": 12,
+  "guns": [
+    {
+      "id": "napoleon",
+      "name": "12-pdr Napoleon (Model 1857)",
+      "type": "smoothbore gun-howitzer",
+      "caliber": "4.62 in",
+      "rarity": "common",
+      "csImport": false,
+      "csOnly": false,
+      "usFavored": false,
+      "costPerBattery": 900,
+      "rangeYds": 1600,
+      "accuracy": 60,
+      "rateOfFire": 2,
+      "crew": 9,
+      "quality": 78,
+      "year": 1857,
+      "projectiles": [
+        "solid shot",
+        "common shell",
+        "spherical case",
+        "canister",
+        "double canister"
+      ],
+      "flavor": "Bronze, smoothbore, and beloved. At a thousand yards it is ordinary; at three hundred, loaded with double canister over a charging line, it is the most lethal thing on the field.",
+      "provenance": "Verified"
+    },
+    {
+      "id": "ordnance3in",
+      "name": "3-inch Ordnance Rifle",
+      "type": "rifled gun",
+      "caliber": "3.0 in",
+      "rarity": "uncommon",
+      "csImport": false,
+      "csOnly": false,
+      "usFavored": true,
+      "costPerBattery": 1500,
+      "rangeYds": 1830,
+      "accuracy": 90,
+      "rateOfFire": 2,
+      "crew": 9,
+      "quality": 80,
+      "year": 1861,
+      "projectiles": [
+        "bolt",
+        "Hotchkiss shell",
+        "Schenkl shell",
+        "case",
+        "canister"
+      ],
+      "flavor": "Wrought iron from the Phoenix works — the safest and most accurate rifle in the service. It almost never bursts. Its one fault is that canister sprays wild through a rifled bore, so keep a Napoleon next to it for the close work.",
+      "provenance": "Verified"
+    },
+    {
+      "id": "parrott10",
+      "name": "10-pdr Parrott Rifle",
+      "type": "rifled gun",
+      "caliber": "2.9-3.0 in",
+      "rarity": "uncommon",
+      "csImport": false,
+      "csOnly": false,
+      "usFavored": false,
+      "costPerBattery": 1300,
+      "rangeYds": 1900,
+      "accuracy": 82,
+      "rateOfFire": 2,
+      "crew": 9,
+      "quality": 72,
+      "year": 1861,
+      "projectiles": [
+        "Parrott shell",
+        "case",
+        "canister"
+      ],
+      "flavor": "Cast iron with a wrought-iron band shrunk over the breech — cheap, plentiful, and long-armed, which is why both sides fielded it by the hundred. Crews load it and step wide: the band does not always save the tube, and it bursts at the muzzle without warning.",
+      "provenance": "Verified"
+    },
+    {
+      "id": "whitworth",
+      "name": "Whitworth Rifle (12-pdr)",
+      "type": "rifled breechloader",
+      "caliber": "2.75 in (hexagonal)",
+      "rarity": "rare",
+      "csImport": true,
+      "csOnly": false,
+      "usFavored": false,
+      "costPerBattery": 3200,
+      "rangeYds": 2800,
+      "accuracy": 98,
+      "rateOfFire": 1,
+      "crew": 9,
+      "quality": 90,
+      "year": 1862,
+      "projectiles": [
+        "hexagonal bolt",
+        "hexagonal shell"
+      ],
+      "flavor": "A British import run through the blockade — twisted-hexagonal bore, a whistle you hear before the round arrives, and pinpoint hits past a mile and a half. At the 1863 Southport trials one threw a bolt nearly five miles. But the hexagonal ammunition cannot be made in the South, the bore fouls and jams, and it fires slowly: a precision instrument that goes silent the day its special rounds run out.",
+      "provenance": "Verified"
+    },
+    {
+      "id": "howitzer12",
+      "name": "12-pdr Field Howitzer (Model 1841)",
+      "type": "howitzer",
+      "caliber": "4.62 in",
+      "rarity": "common",
+      "csImport": false,
+      "csOnly": false,
+      "usFavored": false,
+      "costPerBattery": 850,
+      "rangeYds": 1070,
+      "accuracy": 50,
+      "rateOfFire": 2,
+      "crew": 9,
+      "quality": 58,
+      "year": 1841,
+      "projectiles": [
+        "common shell",
+        "spherical case",
+        "canister"
+      ],
+      "flavor": "Light, high-trajectory, and short-armed — a shell-and-canister thrower with no solid shot in the chest. The Napoleon swallowed its gun-plus-howitzer role by mid-war, so it lingers in the second-line and Confederate batteries that could not be choosy.",
+      "provenance": "Verified"
+    }
+  ],
+  "teachingCards": [
+    {
+      "id": "art-napoleon-dominance",
+      "title": "Why did a smoothbore — the Napoleon — stay dominant to the end of a 'rifled' war?",
+      "consensus": "By 1863 long-range rifles (the 3-inch Ordnance and the Parrott) outranged and outshot the bronze 12-pdr Napoleon on paper, yet the Napoleon remained the most numerous and most trusted field gun in both armies through Appomattox. The reason is tactical, not technical: Civil War terrain was wooded and broken, most decisive fighting happened well inside a half-mile, and at those ranges the Napoleon's versatility — solid shot, shell, case, and above all canister — made it the right tool. Rifles shot beautifully at long range but patterned canister poorly through a spun bore, leaving them weak at the exact moment a gun line mattered most: an infantry assault at two hundred yards. The Napoleon was the gun you wanted when the enemy got close, and in this war the enemy always got close.",
+      "voices": [
+        {
+          "scholar": "Earl J. Hess (Civil War Field Artillery, 2022)",
+          "view": "Stresses that battlefield performance, not catalog range, determined value: the Napoleon's all-purpose lethality at the short ranges where Civil War combat actually occurred kept it indispensable, while rifles were oversold as a revolution."
+        },
+        {
+          "scholar": "L. VanLoan Naisawald (Grape and Canister)",
+          "view": "Documents the Army of the Potomac's continued reliance on the Napoleon for close defense and counter-assault fire, with canister as its decisive load."
+        },
+        {
+          "scholar": "Hazlett, Olmstead & Parks (Field Artillery Weapons of the Civil War)",
+          "view": "Provide the firing tables showing the Napoleon's ~1,600-yard reach with solid shot but its real worth in the ~300-yard canister band, where rifled bores dispersed canister erratically."
+        }
+      ],
+      "takeaway": "Range is not the same as usefulness. In a game, the Napoleon should be cheap, common, and quietly excellent inside canister range — a reminder that the 'best' weapon is the one that fits the fight, not the one with the longest line on the spec sheet.",
+      "provenance": "Verified"
+    },
+    {
+      "id": "art-massing-battalion-1863",
+      "title": "Why did massed battalion artillery (Hunt, 1863) beat batteries scattered one-per-brigade?",
+      "consensus": "Through 1862 both armies 'penny-packeted' their guns — one battery attached to each infantry brigade, under infantry officers, with no senior gunner able to pull them together. The 1863 reorganizations reversed this: the Army of the Potomac pooled batteries into per-corps artillery brigades plus a powerful army-level Artillery Reserve under Chief of Artillery Henry J. Hunt, and Lee's army (battalion system approved Feb 16, 1863) grouped batteries into battalions of four-to-six guns under corps chiefs of artillery and army chief Col./Brig. Gen. William N. Pendleton. The payoff was concentration: converging fire from twenty to forty guns on one sector was decisively more destructive than the same guns spread along a line, the lesson Hunt drove home at Malvern Hill (1862) and Gettysburg (1863). Massing also let a chief of artillery ration ammunition and shift fire to the decisive point — command, not just firepower.",
+      "voices": [
+        {
+          "scholar": "Henry J. Hunt (Official Records; Battles and Leaders, vol. 3)",
+          "view": "Argued for centralized artillery control and an army-level Reserve so guns could be massed and their fire rationed by a professional gunner rather than dispersed by infantry commanders."
+        },
+        {
+          "scholar": "Jennings Cropper Wise (The Long Arm of Lee)",
+          "view": "Traces the Army of Northern Virginia's parallel move to the battalion system, which for the first time let the South mass its scarcer guns under artillerists — though after Chancellorsville Lee abolished the army-level reserve, pushing guns down to the corps."
+        },
+        {
+          "scholar": "Earl J. Hess (Civil War Field Artillery, 2022)",
+          "view": "Frames 1863 as the maturation of artillery command: organization and fire discipline, more than new ordnance, account for the long arm's growing effectiveness."
+        }
+      ],
+      "takeaway": "A 'Cannon Corps' is a command problem before it is a shopping problem. Batteries should be bought bottom-up but unlock a massing/battalion bonus in 1863 — and the army-level Reserve should be a Union strength, not a symmetric mechanic, because the Confederate model dropped its army reserve after Chancellorsville.",
+      "provenance": "Verified"
+    },
+    {
+      "id": "art-canister-stops-the-charge",
+      "title": "Canister stops the charge: the tactical truth of Pickett's Charge",
+      "consensus": "The single most reliable defensive truth of Civil War artillery is that massed canister at close range shatters an infantry assault crossing open ground. Canister turned each gun into a giant shotgun — a 12-pdr round held about 27 cast-iron balls (~1.5 inches, ~4-4.5 oz each) and needed no fuze, so it could not fail the way a time-fuzed shell could. 'Double canister' at point-blank range was the emergency assault-stopper, as at Antietam, Stones River, and at the Angle on July 3, 1863, where Cushing's double-shotted guns helped break Pickett's Charge. Critically, the defense won here by trading early counter-battery fire for decisive short-range fire: Hunt deliberately slowed his guns during Lee's bombardment to husband canister for the infantry — over the objection of Hancock, who wanted the guns firing for morale — so that when the gray lines closed, the canister was still in the chests.",
+      "voices": [
+        {
+          "scholar": "Henry J. Hunt (Battles and Leaders, vol. 3)",
+          "view": "Recorded his fire-discipline order to conserve long-range ammunition during the cannonade so canister would be available at the moment of contact — the active Union choice that helped repulse the charge."
+        },
+        {
+          "scholar": "Earl J. Hess (Pickett's Charge: The Last Attack at Gettysburg, 2001)",
+          "view": "Credits both defective Confederate fuzes that sent the bombardment long AND Hunt's deliberate husbanding and shift to canister — neither bad Confederate luck alone nor Union triumphalism alone."
+        },
+        {
+          "scholar": "Daniel Harvey Hill (after Malvern Hill, retrospectively)",
+          "view": "'It was not war, it was murder' — the verdict on sending infantry in piecemeal against unsuppressed, well-sited guns, written decades later but capturing the lesson."
+        }
+      ],
+      "takeaway": "Model canister as a short-range, fuze-immune assault-stopper that punishes frontal charges across open ground — and let a defender choose to husband ammunition (slow long-range fire) to keep canister in reserve. The repulse of Pickett's Charge is a Union achievement, not merely Southern misfortune.",
+      "provenance": "Verified"
+    },
+    {
+      "id": "art-cs-handicap-vs-lostcause",
+      "title": "The real Confederate artillery handicap — and the Lost Cause myth of gunner superiority",
+      "consensus": "There was no general Confederate artillery superiority. Confederate gunners were brave and occasionally brilliant, but the Union held the decisive material and organizational edge: more guns, more rifled guns, reliable ammunition and fuzes, and centralized command under Hunt with a real army-level Reserve. The South's handicaps were structural and stacking. (1) Manufacturing rested on a single dominant works, Tredegar in Richmond — about 1,100 cannon, roughly half of all Confederate domestic artillery — so the South leaned heavily on CAPTURED Federal guns and deliberately matched Federal calibers (3-inch, 10-pdr Parrott) to use captured ammunition; its gun strength partly scaled with Union battlefield losses. (2) The bronze shortage (worsened by the loss of the Ducktown copper mines in Nov 1863) forced Tredegar to switch from bronze Napoleons to riskier banded iron by early 1864. (3) Fuzes were the sharper tactical problem: the Confederacy made an unreliable copy of the Bormann time fuze that leaked flame into the burster and caused prematures, and abandoned it by early 1863 for irregular paper and wooden fuzes — so fuze-dependent shell and case routinely burst short, long, or not at all, while fuze-immune solid shot and canister were fine. (4) By 1864-65 starved, broken-down horses immobilized the guns, and batteries were abandoned for want of teams in the Appomattox campaign. The Lost Cause inverts this into a myth of innately superior Southern gunners; the record shows situational, mostly DEFENSIVE successes (Pelham's delay at Fredericksburg, Alexander's sited guns at Marye's Heights) against a systemic Union advantage.",
+      "voices": [
+        {
+          "scholar": "Jennings Cropper Wise (The Long Arm of Lee)",
+          "view": "Even this sympathetic chronicler of the ANV's artillery documents the heterogeneous, captured-gun, mixed-caliber batteries and the chronic shortage of guns and horses — not the picture of a superior arm."
+        },
+        {
+          "scholar": "Larry J. Daniel (Cannoneers in Gray)",
+          "view": "Traces the Western army's metallurgy, ammunition, and horseflesh failures, treating the late-war horse collapse as a decisive disabler of guns that could shoot but could not move."
+        },
+        {
+          "scholar": "Josiah Gorgas / Frank Vandiver (Ploughshares into Swords)",
+          "view": "Shows the Confederate Ordnance Bureau improvised an artillery establishment from near-zero under chronic iron, copper, fuze, and transport shortages — an achievement, but evidence of scarcity, not abundance."
+        },
+        {
+          "scholar": "Lost Cause claim (countered)",
+          "view": "Asserts Confederate gunners were inherently superior and that Pickett's Charge failed merely from defective fuzes and bad luck. Countered: Confederate fuze and powder problems were real but were a deficit of degree (Hess notes long-range fuzes were a problem NEITHER side fully solved), and the repulse owed equally to Hunt's deliberate ammunition husbanding and timely canister — the Union's systemic and command advantages, not Southern misfortune."
+        }
+      ],
+      "takeaway": "Model the Confederate artillery arm as four stacking penalties — fewer guns (some captured/Union-made), a per-shot dud/premature chance on fuzed shell and case only, a rare-but-fragile import tier (Whitworth) with a hard ammunition cap, and a horse/mobility penalty that worsens to severe in 1864-65 — against a Union baseline of standardized, reliable, well-horsed abundance. That asymmetry IS the history, and it refuses the Lost Cause's flattery of the Southern gunner.",
+      "provenance": "Verified"
+    }
+  ],
+  "_designNote": "Asymmetry is the point. UNION batteries are six guns, single-caliber, ammunition-secure, and well-horsed (~110 horses) — buy them and they work. CONFEDERATE batteries pay a stacking tax: (1) four guns per battery, not six, from chronic gun/horse shortage; (2) an import premium and rarity on the Whitworth/Blakely tier (run through the blockade, single-digit to low-dozens, with proprietary ammunition that cannot be resupplied — powerful but expended); (3) a per-shot reliability penalty on FUZE-DEPENDENT rounds (shell, spherical case) from the unreliable Bormann copy and irregular paper/wooden fuzes, with solid shot and canister immune because they need no fuze (the dud/premature rate is a game-balance interpolation, NOT a measured historical figure); (4) a horse-attrition mobility malus that worsens by phase and turns severe in 1864-65, risking gun loss on retreat; and (5) mixed-caliber batteries as a resupply malus, since the South fielded whatever it built at Tredegar or captured. Some Confederate guns are literally Union-made — tie a fraction of CS availability to prior Union battlefield losses. The army-level Artillery Reserve is a Union feature, not symmetric: after Chancellorsville the ANV abolished its general reserve. Costs scale as big-ticket purchases relative to small arms (a Napoleon battery ~900 funds vs. tens-to-hundreds for a rifle batch); the Whitworth is dearest (~3,200) and deliberately slow-but-deadly. baselineArtilleryScore (8) is the token of attached guns an army fields with zero batteries bought; fullComplementBatteries (12) is the coverage target for a strong artillery arm. IMPLEMENTATION STATUS (artBatteryScore, src/56-artillery.js; numbers logged DECISIONS.md D42): the STRATEGIC pre-battle score now models penalty (1) gun-ratio coverage (CS batteries fill the park at 4/6), (2) the import/captured price premiums (CS 1.5x import, US 1.2x foreign-import, CS 1.4x Federal-standard), (3) fuze unreliability as a small EXPECTED-VALUE haircut (x0.96 CS) rather than a per-shot roll, (4) a horse/forage mobility malus (CS x0.95 from 1862, x0.88 from 1864), and (5) a mixed-caliber resupply drag (CS x0.94 at 3+ calibers), plus the 1863 massing reform as a both-sides bonus with a larger Union factor (x1.08 vs x1.04) standing in for the army-level Artillery Reserve. DEFERRED to the battle-day layer (A6) and the tactical engine (P-phases), where they belong as live rolls rather than score haircuts: the per-shot dud/premature roll on fuzed shell+case, the Whitworth hard ammunition cap, and gun-loss-on-retreat from broken-down teams."
+}

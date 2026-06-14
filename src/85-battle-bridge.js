@@ -82,11 +82,15 @@ function bridgeArmy(C) {
   var fatigue = bp.forcedMarch ? 35 : 8;
   if (bp.raidSupply) supply = Math.min(100, supply + 6);
   var leadership = 64;   // placeholder until generals/cabinet wire in (S2/§19)
-  var firepower = (typeof armoryWeaponScore === "function") ? armoryWeaponScore(C) : 30;  // the weapons you bought
+  var firepower = (typeof armoryWeaponScore === "function") ? armoryWeaponScore(C) : 30;  // the small arms you bought
+  var artillery = (typeof artBatteryScore === "function") ? artBatteryScore(C) : 8;       // A1: the Cannon Corps you raised
   var overall = Math.round(0.22 * strength + 0.18 * equip + 0.18 * morale + 0.14 * firepower + 0.12 * arms + 0.10 * supply + 0.06 * leadership);
   overall = Math.max(0, Math.min(100, overall - Math.round(fatigue * 0.1)));
+  // The Cannon Corps is an ADDITIVE arm — its absence leaves the infantry math intact (baseline guns), its presence adds punch.
+  var artBase = (typeof _artBaseline === "function") ? _artBaseline() : 8;
+  overall = Math.min(100, overall + Math.round(Math.max(0, artillery - artBase) * 0.12));
   return { side: side, strength: Math.round(strength), equip: Math.round(equip), arms: arms,
-    morale: morale, supply: supply, fatigue: fatigue, leadership: leadership, firepower: firepower, overall: overall };
+    morale: morale, supply: supply, fatigue: fatigue, leadership: leadership, firepower: firepower, artillery: artillery, overall: overall };
 }
 
 function _brgWord(v) {
@@ -148,7 +152,7 @@ function bridgeBriefingHTML(C) {
     +   '<div style="flex:1 1 240px;min-width:220px">'
     +     '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin-bottom:2px">The army you field</div>'
     +     '<div style="text-align:right;font-size:20px;font-weight:bold;color:' + ow[1] + ';margin:-18px 0 2px">' + a.overall + ' &middot; ' + ow[0] + '</div>'
-    +     _brgBar('Strength', a.strength) + _brgBar('Firepower (weapons)', a.firepower) + _brgBar('Equipment', a.equip)
+    +     _brgBar('Strength', a.strength) + _brgBar('Firepower (small arms)', a.firepower) + _brgBar('Artillery (Cannon Corps)', a.artillery) + _brgBar('Equipment', a.equip)
     +     _brgBar('Small arms', a.arms) + _brgBar('Morale', a.morale) + _brgBar('Supply', a.supply) + _brgBar('Fatigue (lower is better)', 100 - a.fatigue)
     +   '</div>'
     +   '<div style="flex:1 1 240px;min-width:220px">'

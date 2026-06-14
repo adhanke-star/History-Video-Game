@@ -14398,6 +14398,231 @@ function _m3dMixerUpdate(dt, now) {
 
 /* ===== data (build-injected from data/*.json) ===== */
 var GAME_DATA = {
+"artillery": {
+  "_comment": "S5 Cannon Corps — real Civil War field artillery as a loot-style purchasable tier (common -> legendary), bought BATTERY by BATTERY so building an artillery arm feels like assembling a Borderlands kit: spend funds, raise batteries, lift your army's pre-battle firepower rating. A battery is a big-ticket object next to small arms — a fully-horsed six-gun Union battery was ~150 men, ~14 carriages, and ~110 horses (HISTORICAL-DATA.md L818). Specs are grounded in the period record (Hazlett/Olmstead/Parks firing tables, Hess, Naisawald): bore, effective range, ~2 aimed rounds/min, 9-man detachment. `quality` is a 0-100 designer composite (range + accuracy + versatility) that the battery score reads; `accuracy` and `rangeYds` are the underlying levers. Whitworth is csImport + rare: superb but ammunition-fragile and slow. Build-injected as GAME_DATA.artillery; consumed by src/56-artillery.js (the Cannon Corps tab) and the pre-battle firepower bridge.",
+  "provenance": "Verified specs (Hazlett, Olmstead & Parks, Field Artillery Weapons of the Civil War; Earl J. Hess, Civil War Field Artillery: Promise and Performance, 2022; L. VanLoan Naisawald, Grape and Canister; Instruction for Field Artillery 1860/1864 range tables; NPS ordnance references; cross-checked to HISTORICAL-DATA.md artillery tables and HISTORICAL-DATA-ECONOMY.md Tredegar facts). Rarity, costPerBattery, and quality are designer calibration (Inferred), tunable. Corrections applied per verify: 10-pdr Parrott max capped ~2,800 yds (the ~5,000 yd figure belongs to naval/siege Parrotts, not the field piece); Whitworth tube weight ~896 lb (not ~1,092); Whitworth's ~10,000-yd trial range is flavor only, never an in-game range.",
+  "schemaVersion": "1.0",
+  "baselineArtilleryScore": 8,
+  "batteryGunsUnion": 6,
+  "batteryGunsCS": 4,
+  "fullComplementBatteries": 12,
+  "guns": [
+    {
+      "id": "napoleon",
+      "name": "12-pdr Napoleon (Model 1857)",
+      "type": "smoothbore gun-howitzer",
+      "caliber": "4.62 in",
+      "rarity": "common",
+      "csImport": false,
+      "csOnly": false,
+      "usFavored": false,
+      "costPerBattery": 900,
+      "rangeYds": 1600,
+      "accuracy": 60,
+      "rateOfFire": 2,
+      "crew": 9,
+      "quality": 78,
+      "year": 1857,
+      "projectiles": [
+        "solid shot",
+        "common shell",
+        "spherical case",
+        "canister",
+        "double canister"
+      ],
+      "flavor": "Bronze, smoothbore, and beloved. At a thousand yards it is ordinary; at three hundred, loaded with double canister over a charging line, it is the most lethal thing on the field.",
+      "provenance": "Verified"
+    },
+    {
+      "id": "ordnance3in",
+      "name": "3-inch Ordnance Rifle",
+      "type": "rifled gun",
+      "caliber": "3.0 in",
+      "rarity": "uncommon",
+      "csImport": false,
+      "csOnly": false,
+      "usFavored": true,
+      "costPerBattery": 1500,
+      "rangeYds": 1830,
+      "accuracy": 90,
+      "rateOfFire": 2,
+      "crew": 9,
+      "quality": 80,
+      "year": 1861,
+      "projectiles": [
+        "bolt",
+        "Hotchkiss shell",
+        "Schenkl shell",
+        "case",
+        "canister"
+      ],
+      "flavor": "Wrought iron from the Phoenix works — the safest and most accurate rifle in the service. It almost never bursts. Its one fault is that canister sprays wild through a rifled bore, so keep a Napoleon next to it for the close work.",
+      "provenance": "Verified"
+    },
+    {
+      "id": "parrott10",
+      "name": "10-pdr Parrott Rifle",
+      "type": "rifled gun",
+      "caliber": "2.9-3.0 in",
+      "rarity": "uncommon",
+      "csImport": false,
+      "csOnly": false,
+      "usFavored": false,
+      "costPerBattery": 1300,
+      "rangeYds": 1900,
+      "accuracy": 82,
+      "rateOfFire": 2,
+      "crew": 9,
+      "quality": 72,
+      "year": 1861,
+      "projectiles": [
+        "Parrott shell",
+        "case",
+        "canister"
+      ],
+      "flavor": "Cast iron with a wrought-iron band shrunk over the breech — cheap, plentiful, and long-armed, which is why both sides fielded it by the hundred. Crews load it and step wide: the band does not always save the tube, and it bursts at the muzzle without warning.",
+      "provenance": "Verified"
+    },
+    {
+      "id": "whitworth",
+      "name": "Whitworth Rifle (12-pdr)",
+      "type": "rifled breechloader",
+      "caliber": "2.75 in (hexagonal)",
+      "rarity": "rare",
+      "csImport": true,
+      "csOnly": false,
+      "usFavored": false,
+      "costPerBattery": 3200,
+      "rangeYds": 2800,
+      "accuracy": 98,
+      "rateOfFire": 1,
+      "crew": 9,
+      "quality": 90,
+      "year": 1862,
+      "projectiles": [
+        "hexagonal bolt",
+        "hexagonal shell"
+      ],
+      "flavor": "A British import run through the blockade — twisted-hexagonal bore, a whistle you hear before the round arrives, and pinpoint hits past a mile and a half. At the 1863 Southport trials one threw a bolt nearly five miles. But the hexagonal ammunition cannot be made in the South, the bore fouls and jams, and it fires slowly: a precision instrument that goes silent the day its special rounds run out.",
+      "provenance": "Verified"
+    },
+    {
+      "id": "howitzer12",
+      "name": "12-pdr Field Howitzer (Model 1841)",
+      "type": "howitzer",
+      "caliber": "4.62 in",
+      "rarity": "common",
+      "csImport": false,
+      "csOnly": false,
+      "usFavored": false,
+      "costPerBattery": 850,
+      "rangeYds": 1070,
+      "accuracy": 50,
+      "rateOfFire": 2,
+      "crew": 9,
+      "quality": 58,
+      "year": 1841,
+      "projectiles": [
+        "common shell",
+        "spherical case",
+        "canister"
+      ],
+      "flavor": "Light, high-trajectory, and short-armed — a shell-and-canister thrower with no solid shot in the chest. The Napoleon swallowed its gun-plus-howitzer role by mid-war, so it lingers in the second-line and Confederate batteries that could not be choosy.",
+      "provenance": "Verified"
+    }
+  ],
+  "teachingCards": [
+    {
+      "id": "art-napoleon-dominance",
+      "title": "Why did a smoothbore — the Napoleon — stay dominant to the end of a 'rifled' war?",
+      "consensus": "By 1863 long-range rifles (the 3-inch Ordnance and the Parrott) outranged and outshot the bronze 12-pdr Napoleon on paper, yet the Napoleon remained the most numerous and most trusted field gun in both armies through Appomattox. The reason is tactical, not technical: Civil War terrain was wooded and broken, most decisive fighting happened well inside a half-mile, and at those ranges the Napoleon's versatility — solid shot, shell, case, and above all canister — made it the right tool. Rifles shot beautifully at long range but patterned canister poorly through a spun bore, leaving them weak at the exact moment a gun line mattered most: an infantry assault at two hundred yards. The Napoleon was the gun you wanted when the enemy got close, and in this war the enemy always got close.",
+      "voices": [
+        {
+          "scholar": "Earl J. Hess (Civil War Field Artillery, 2022)",
+          "view": "Stresses that battlefield performance, not catalog range, determined value: the Napoleon's all-purpose lethality at the short ranges where Civil War combat actually occurred kept it indispensable, while rifles were oversold as a revolution."
+        },
+        {
+          "scholar": "L. VanLoan Naisawald (Grape and Canister)",
+          "view": "Documents the Army of the Potomac's continued reliance on the Napoleon for close defense and counter-assault fire, with canister as its decisive load."
+        },
+        {
+          "scholar": "Hazlett, Olmstead & Parks (Field Artillery Weapons of the Civil War)",
+          "view": "Provide the firing tables showing the Napoleon's ~1,600-yard reach with solid shot but its real worth in the ~300-yard canister band, where rifled bores dispersed canister erratically."
+        }
+      ],
+      "takeaway": "Range is not the same as usefulness. In a game, the Napoleon should be cheap, common, and quietly excellent inside canister range — a reminder that the 'best' weapon is the one that fits the fight, not the one with the longest line on the spec sheet.",
+      "provenance": "Verified"
+    },
+    {
+      "id": "art-massing-battalion-1863",
+      "title": "Why did massed battalion artillery (Hunt, 1863) beat batteries scattered one-per-brigade?",
+      "consensus": "Through 1862 both armies 'penny-packeted' their guns — one battery attached to each infantry brigade, under infantry officers, with no senior gunner able to pull them together. The 1863 reorganizations reversed this: the Army of the Potomac pooled batteries into per-corps artillery brigades plus a powerful army-level Artillery Reserve under Chief of Artillery Henry J. Hunt, and Lee's army (battalion system approved Feb 16, 1863) grouped batteries into battalions of four-to-six guns under corps chiefs of artillery and army chief Col./Brig. Gen. William N. Pendleton. The payoff was concentration: converging fire from twenty to forty guns on one sector was decisively more destructive than the same guns spread along a line, the lesson Hunt drove home at Malvern Hill (1862) and Gettysburg (1863). Massing also let a chief of artillery ration ammunition and shift fire to the decisive point — command, not just firepower.",
+      "voices": [
+        {
+          "scholar": "Henry J. Hunt (Official Records; Battles and Leaders, vol. 3)",
+          "view": "Argued for centralized artillery control and an army-level Reserve so guns could be massed and their fire rationed by a professional gunner rather than dispersed by infantry commanders."
+        },
+        {
+          "scholar": "Jennings Cropper Wise (The Long Arm of Lee)",
+          "view": "Traces the Army of Northern Virginia's parallel move to the battalion system, which for the first time let the South mass its scarcer guns under artillerists — though after Chancellorsville Lee abolished the army-level reserve, pushing guns down to the corps."
+        },
+        {
+          "scholar": "Earl J. Hess (Civil War Field Artillery, 2022)",
+          "view": "Frames 1863 as the maturation of artillery command: organization and fire discipline, more than new ordnance, account for the long arm's growing effectiveness."
+        }
+      ],
+      "takeaway": "A 'Cannon Corps' is a command problem before it is a shopping problem. Batteries should be bought bottom-up but unlock a massing/battalion bonus in 1863 — and the army-level Reserve should be a Union strength, not a symmetric mechanic, because the Confederate model dropped its army reserve after Chancellorsville.",
+      "provenance": "Verified"
+    },
+    {
+      "id": "art-canister-stops-the-charge",
+      "title": "Canister stops the charge: the tactical truth of Pickett's Charge",
+      "consensus": "The single most reliable defensive truth of Civil War artillery is that massed canister at close range shatters an infantry assault crossing open ground. Canister turned each gun into a giant shotgun — a 12-pdr round held about 27 cast-iron balls (~1.5 inches, ~4-4.5 oz each) and needed no fuze, so it could not fail the way a time-fuzed shell could. 'Double canister' at point-blank range was the emergency assault-stopper, as at Antietam, Stones River, and at the Angle on July 3, 1863, where Cushing's double-shotted guns helped break Pickett's Charge. Critically, the defense won here by trading early counter-battery fire for decisive short-range fire: Hunt deliberately slowed his guns during Lee's bombardment to husband canister for the infantry — over the objection of Hancock, who wanted the guns firing for morale — so that when the gray lines closed, the canister was still in the chests.",
+      "voices": [
+        {
+          "scholar": "Henry J. Hunt (Battles and Leaders, vol. 3)",
+          "view": "Recorded his fire-discipline order to conserve long-range ammunition during the cannonade so canister would be available at the moment of contact — the active Union choice that helped repulse the charge."
+        },
+        {
+          "scholar": "Earl J. Hess (Pickett's Charge: The Last Attack at Gettysburg, 2001)",
+          "view": "Credits both defective Confederate fuzes that sent the bombardment long AND Hunt's deliberate husbanding and shift to canister — neither bad Confederate luck alone nor Union triumphalism alone."
+        },
+        {
+          "scholar": "Daniel Harvey Hill (after Malvern Hill, retrospectively)",
+          "view": "'It was not war, it was murder' — the verdict on sending infantry in piecemeal against unsuppressed, well-sited guns, written decades later but capturing the lesson."
+        }
+      ],
+      "takeaway": "Model canister as a short-range, fuze-immune assault-stopper that punishes frontal charges across open ground — and let a defender choose to husband ammunition (slow long-range fire) to keep canister in reserve. The repulse of Pickett's Charge is a Union achievement, not merely Southern misfortune.",
+      "provenance": "Verified"
+    },
+    {
+      "id": "art-cs-handicap-vs-lostcause",
+      "title": "The real Confederate artillery handicap — and the Lost Cause myth of gunner superiority",
+      "consensus": "There was no general Confederate artillery superiority. Confederate gunners were brave and occasionally brilliant, but the Union held the decisive material and organizational edge: more guns, more rifled guns, reliable ammunition and fuzes, and centralized command under Hunt with a real army-level Reserve. The South's handicaps were structural and stacking. (1) Manufacturing rested on a single dominant works, Tredegar in Richmond — about 1,100 cannon, roughly half of all Confederate domestic artillery — so the South leaned heavily on CAPTURED Federal guns and deliberately matched Federal calibers (3-inch, 10-pdr Parrott) to use captured ammunition; its gun strength partly scaled with Union battlefield losses. (2) The bronze shortage (worsened by the loss of the Ducktown copper mines in Nov 1863) forced Tredegar to switch from bronze Napoleons to riskier banded iron by early 1864. (3) Fuzes were the sharper tactical problem: the Confederacy made an unreliable copy of the Bormann time fuze that leaked flame into the burster and caused prematures, and abandoned it by early 1863 for irregular paper and wooden fuzes — so fuze-dependent shell and case routinely burst short, long, or not at all, while fuze-immune solid shot and canister were fine. (4) By 1864-65 starved, broken-down horses immobilized the guns, and batteries were abandoned for want of teams in the Appomattox campaign. The Lost Cause inverts this into a myth of innately superior Southern gunners; the record shows situational, mostly DEFENSIVE successes (Pelham's delay at Fredericksburg, Alexander's sited guns at Marye's Heights) against a systemic Union advantage.",
+      "voices": [
+        {
+          "scholar": "Jennings Cropper Wise (The Long Arm of Lee)",
+          "view": "Even this sympathetic chronicler of the ANV's artillery documents the heterogeneous, captured-gun, mixed-caliber batteries and the chronic shortage of guns and horses — not the picture of a superior arm."
+        },
+        {
+          "scholar": "Larry J. Daniel (Cannoneers in Gray)",
+          "view": "Traces the Western army's metallurgy, ammunition, and horseflesh failures, treating the late-war horse collapse as a decisive disabler of guns that could shoot but could not move."
+        },
+        {
+          "scholar": "Josiah Gorgas / Frank Vandiver (Ploughshares into Swords)",
+          "view": "Shows the Confederate Ordnance Bureau improvised an artillery establishment from near-zero under chronic iron, copper, fuze, and transport shortages — an achievement, but evidence of scarcity, not abundance."
+        },
+        {
+          "scholar": "Lost Cause claim (countered)",
+          "view": "Asserts Confederate gunners were inherently superior and that Pickett's Charge failed merely from defective fuzes and bad luck. Countered: Confederate fuze and powder problems were real but were a deficit of degree (Hess notes long-range fuzes were a problem NEITHER side fully solved), and the repulse owed equally to Hunt's deliberate ammunition husbanding and timely canister — the Union's systemic and command advantages, not Southern misfortune."
+        }
+      ],
+      "takeaway": "Model the Confederate artillery arm as four stacking penalties — fewer guns (some captured/Union-made), a per-shot dud/premature chance on fuzed shell and case only, a rare-but-fragile import tier (Whitworth) with a hard ammunition cap, and a horse/mobility penalty that worsens to severe in 1864-65 — against a Union baseline of standardized, reliable, well-horsed abundance. That asymmetry IS the history, and it refuses the Lost Cause's flattery of the Southern gunner.",
+      "provenance": "Verified"
+    }
+  ],
+  "_designNote": "Asymmetry is the point. UNION batteries are six guns, single-caliber, ammunition-secure, and well-horsed (~110 horses) — buy them and they work. CONFEDERATE batteries pay a stacking tax: (1) four guns per battery, not six, from chronic gun/horse shortage; (2) an import premium and rarity on the Whitworth/Blakely tier (run through the blockade, single-digit to low-dozens, with proprietary ammunition that cannot be resupplied — powerful but expended); (3) a per-shot reliability penalty on FUZE-DEPENDENT rounds (shell, spherical case) from the unreliable Bormann copy and irregular paper/wooden fuzes, with solid shot and canister immune because they need no fuze (the dud/premature rate is a game-balance interpolation, NOT a measured historical figure); (4) a horse-attrition mobility malus that worsens by phase and turns severe in 1864-65, risking gun loss on retreat; and (5) mixed-caliber batteries as a resupply malus, since the South fielded whatever it built at Tredegar or captured. Some Confederate guns are literally Union-made — tie a fraction of CS availability to prior Union battlefield losses. The army-level Artillery Reserve is a Union feature, not symmetric: after Chancellorsville the ANV abolished its general reserve. Costs scale as big-ticket purchases relative to small arms (a Napoleon battery ~900 funds vs. tens-to-hundreds for a rifle batch); the Whitworth is dearest (~3,200) and deliberately slow-but-deadly. baselineArtilleryScore (8) is the token of attached guns an army fields with zero batteries bought; fullComplementBatteries (12) is the coverage target for a strong artillery arm. IMPLEMENTATION STATUS (artBatteryScore, src/56-artillery.js; numbers logged DECISIONS.md D42): the STRATEGIC pre-battle score now models penalty (1) gun-ratio coverage (CS batteries fill the park at 4/6), (2) the import/captured price premiums (CS 1.5x import, US 1.2x foreign-import, CS 1.4x Federal-standard), (3) fuze unreliability as a small EXPECTED-VALUE haircut (x0.96 CS) rather than a per-shot roll, (4) a horse/forage mobility malus (CS x0.95 from 1862, x0.88 from 1864), and (5) a mixed-caliber resupply drag (CS x0.94 at 3+ calibers), plus the 1863 massing reform as a both-sides bonus with a larger Union factor (x1.08 vs x1.04) standing in for the army-level Artillery Reserve. DEFERRED to the battle-day layer (A6) and the tactical engine (P-phases), where they belong as live rolls rather than score haircuts: the per-shot dud/premature roll on fuzed shell+case, the Whitworth hard ammunition cap, and gun-loss-on-retreat from broken-down teams."
+},
 "diplomacy": {
   "_comment": "S1c teaching content for the cotton/blockade/foreign-diplomacy layer. Citation-grade multi-voice debate cards (consensus + scholarly dissent + named-and-countered Lost Cause framing + primary sources) and a quantitative numbers audit, produced by an 11-agent research+adversarial-verify+audit workflow (run i, 2026-06-13). Build-injected as GAME_DATA.diplomacy; surfaced by src/60-blockade.js (the Diplomacy desk tab) and the S4 codex.",
   "provenance": "Verified historiography. Scholars: Owsley, Surdam, Wise, Howard Jones, Amanda Foreman, McPherson, Ball, Gentry, Lester, Weidenmier, Lebergott, Beckert. Every cited work title adversarially fact-checked; fabricated/misattributed citations removed in the Verify pass. The numbersAudit CORRECTED three sim claims (see numbersAudit.summary).",
@@ -15911,7 +16136,11 @@ function _wdRefresh() {
     wire = (typeof vicWirePaths === "function") ? vicWirePaths : null;
   } else if (_wdTab === "armory") {
     html = (typeof armoryRenderArmory === "function") ? armoryRenderArmory(C) : "";
-    wire = (typeof armoryWireArmory === "function") ? armoryWireArmory : null;
+    if (typeof artRenderSection === "function") html += artRenderSection(C);   // A1: Cannon Corps appended below the small arms
+    wire = function (cc) {
+      if (typeof armoryWireArmory === "function") armoryWireArmory(cc);
+      if (typeof artWireSection === "function") artWireSection(cc);
+    };
   } else if (_wdTab === "cabinet") {
     html = (typeof presRenderCabinet === "function") ? presRenderCabinet(C) : "";
     wire = (typeof presWireCabinet === "function") ? presWireCabinet : null;
@@ -16622,6 +16851,243 @@ function armoryWireArmory(C) {
   var reset = document.getElementById("armReset");
   if (reset) reset.addEventListener("click", function () {
     C.armory.loadout = {};
+    if (typeof saveLocal === "function") saveLocal();
+    if (typeof _wdRefresh === "function") _wdRefresh();
+  });
+}
+
+
+/* ===== module: 56-artillery.js ===== */
+/* ===========================================================================
+   A1 · 56-artillery.js — The Cannon Corps: build an artillery arm, battery by
+   battery, with money. The companion to The Armory (55-weapons.js): small arms
+   are issued by FRACTION of the line; cannon are raised by the BATTERY (a corps
+   you assemble), because that is how the long arm actually scaled.
+
+   Aaron's directive (backlog A1): "an artillery tier in The Armory — 12-pdr
+   Napoleon, 3-inch Ordnance Rifle, 10-pdr Parrott, Whitworth (rare). Buildable as
+   a corps (battery counts) feeding the bridge 'firepower' + battle artillery."
+
+   Real Civil War field pieces (data/artillery.json -> GAME_DATA.artillery) carry
+   loot-style RARITY tiers and a `quality` composite. You spend funds to RAISE
+   batteries (Union ~6 guns, Confederate ~4 — the historical asymmetry); a battery
+   is a big-ticket purchase next to a rifle. The corps' BATTERY-SCORE (quality of
+   your guns x how full your park is) feeds the battle bridge as an "artillery"
+   facet that adds punch to the army you field. The CS pays an import premium on
+   the Whitworth and a captured-gun premium on Federal-standard pieces.
+
+   Adds C.artillery { batteries } (gunId -> battery count). artInit /
+   artBatteryScore / artBuy / artRenderSection / artWireSection. Bare-name globals;
+   _art* helpers; reuses _armRarityCol from 55-weapons; render never mutates/saves.
+   =========================================================================== */
+
+function _artData() {
+  return (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.artillery) ? GAME_DATA.artillery : null;
+}
+function _artGuns() { var D = _artData(); return (D && D.guns) ? D.guns : []; }
+function _artBaseline() { var D = _artData(); return (D && typeof D.baselineArtilleryScore === "number") ? D.baselineArtilleryScore : 8; }
+function _artFull() { var D = _artData(); return (D && typeof D.fullComplementBatteries === "number" && D.fullComplementBatteries > 0) ? D.fullComplementBatteries : 12; }
+function _artGunsPerBattery(C) {
+  var D = _artData(), side = (C && C.side === "CS") ? "CS" : "US";
+  if (!D) return side === "CS" ? 4 : 6;
+  return side === "CS" ? (D.batteryGunsCS || 4) : (D.batteryGunsUnion || 6);
+}
+function _artUnionGuns() { var D = _artData(); return (D && D.batteryGunsUnion) ? D.batteryGunsUnion : 6; }
+
+/* Honor a configured cost of 0 (a starter/gift gun); only fall back to 1000 when the field is missing/invalid. */
+function _artCost(g) { return (g && typeof g.costPerBattery === "number" && isFinite(g.costPerBattery) && g.costPerBattery >= 0) ? g.costPerBattery : 1000; }
+
+/* Escape data-driven text before it enters innerHTML — the catalog is tunable/untrusted-shaped data. */
+function _artEsc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+
+function artInit(C) {
+  if (!C) return;
+  // typeof [] === "object", so guard arrays explicitly: a JSON round-trip serializes an array as []
+  // and drops every named property, silently wiping the player's whole park on the next save.
+  if (Array.isArray(C.artillery) || !C.artillery || typeof C.artillery !== "object") C.artillery = { batteries: {} };
+  if (Array.isArray(C.artillery.batteries) || !C.artillery.batteries || typeof C.artillery.batteries !== "object") C.artillery.batteries = {};
+  // Sanitize the battery COUNTS once at the chokepoint: a corrupt/hand-edited/imported save can carry
+  // "3" / null / objects that would poison the score (string concatenation, NaN). Coerce or drop.
+  var b = C.artillery.batteries;
+  for (var k in b) if (b.hasOwnProperty(k)) {
+    var n = Math.floor(Number(b[k]));
+    if (!isFinite(n) || n <= 0) delete b[k];   // drop null/NaN/objects/<=0
+    else b[k] = n;                             // coerce "3" -> 3
+  }
+}
+
+function _artYear(C) {
+  return (C && C.clock && typeof C.clock.year === "number") ? C.clock.year
+       : (C && C.president && C.president.date && typeof C.president.date.year === "number") ? C.president.date.year : 1861;
+}
+
+/* Availability + the side's price multiplier for a gun. */
+function _artAvail(C, g) {
+  var side = (C && C.side === "CS") ? "CS" : "US";
+  var year = _artYear(C);
+  if (g.year && year < g.year) return { ok: false, reason: "Not yet available (" + g.year + ")" };
+  if (g.csOnly && side === "US") return { ok: false, reason: "Confederate manufacture only" };
+  if (g.usOnly && side === "CS") return { ok: false, reason: "Federal manufacture only" };
+  var mult = 1.0;
+  if (g.csImport) mult = (side === "CS") ? 1.5 : 1.2;   // a British import: blockade premium (CS) vs foreign-import premium (US) — the South pays more, but the rare tier is dear for everyone
+  else if (side === "CS" && g.usFavored) mult = 1.4;    // Federal-standard pieces scarce in the South — captured, mostly
+  return { ok: true, mult: mult };
+}
+
+function _artTotalBatteries(C) {
+  var b = C.artillery.batteries, t = 0;
+  for (var k in b) if (b.hasOwnProperty(k)) t += (Number(b[k]) || 0);
+  return t;
+}
+
+/* The corps' artillery-score (0-100): quality of your guns x how full your park is,
+   then the Confederate stacking handicaps that made the long arm a Union strength.
+   No batteries -> the baseline (a token of attached guns). A full park of fine
+   rifles -> the gun's quality; a few Napoleons -> a real but partial arm.
+
+   Asymmetry (data/artillery.json _designNote + the CS-handicap teaching card; numbers
+   are designer calibration, logged in DECISIONS.md D42):
+     · gun ratio   — a CS battery is 4 guns to the Union's 6, so its batteries fill the
+                     park ~2/3 as fast (the metal-per-battery handicap is mechanical now,
+                     not just a UI label).
+     · fuze        — a flat haircut for the unreliable Bormann copy: shell/case duds.
+                     Solid shot & canister need no fuze, so this is a small expected-value
+                     hit, NOT a per-shot roll (that roll + gun-loss-on-retreat belong to the
+                     battle-day layer A6 / tactical P-phases).
+     · horse/forage— a mobility malus that worsens to severe in 1864-65.
+     · mixed cal.  — a resupply drag once the park runs 3+ calibers.
+     · massing 1863— the battalion reorganizations concentrated fire (both armies); the Union
+                     kept an army-level Artillery Reserve the ANV abolished after Chancellorsville,
+                     so the Union bonus is larger. */
+function artBatteryScore(C) {
+  if (!C) return _artBaseline();
+  artInit(C);
+  var guns = _artGuns(), bat = C.artillery.batteries, full = _artFull();
+  var base = Math.max(0, Math.min(100, _artBaseline()));   // clamp the (data-tunable) baseline into range
+  var qById = {}; for (var i = 0; i < guns.length; i++) { var gid = guns[i] && guns[i].id; if (gid == null) continue; qById[gid] = guns[i].quality || 50; }
+  var total = 0, acc = 0, types = 0;
+  for (var k in bat) if (bat.hasOwnProperty(k)) { var n = Number(bat[k]) || 0; if (n > 0) { total += n; acc += n * (qById[k] || 50); types++; } }
+  if (total <= 0) return base;
+  var avgQ = acc / total;
+  var side = (C.side === "CS") ? "CS" : "US";
+  var gunRatio = (_artUnionGuns() > 0) ? (_artGunsPerBattery(C) / _artUnionGuns()) : 1;   // US 1.0, CS ~0.667
+  var coverage = Math.min(1, (total * gunRatio) / full);
+  var score = avgQ * (0.4 + 0.6 * coverage);
+  var year = _artYear(C);
+  if (side === "CS") {
+    score *= 0.96;                                                         // fuze unreliability (shell/case)
+    if (year >= 1864) score *= 0.88; else if (year >= 1862) score *= 0.95; // horse/forage collapse worsens late
+    if (types >= 3) score *= 0.94;                                         // mixed-caliber resupply drag
+  }
+  if (year >= 1863 && total >= 6) score *= (side === "US") ? 1.08 : 1.04;  // 1863 massing reform (Union Reserve edge)
+  return Math.round(Math.max(base, Math.min(100, score)));
+}
+
+/* Buy n batteries of a gun. Mutates C.funds + C.artillery.batteries. */
+function artBuy(C, gunId, n) {
+  if (!C) return { ok: false, reason: "no campaign" };
+  if (gunId == null) return { ok: false, reason: "unknown gun" };   // never buy into the "undefined" key
+  artInit(C);
+  n = Math.max(1, Math.round(Number(n) || 1));   // Number() so a stray non-numeric n can't yield NaN batteries
+  var guns = _artGuns(), g = null;
+  for (var i = 0; i < guns.length; i++) if (guns[i].id === gunId) { g = guns[i]; break; }
+  if (!g) return { ok: false, reason: "unknown gun" };
+  var av = _artAvail(C, g);
+  if (!av.ok) return { ok: false, reason: av.reason };
+  var cost = Math.round(_artCost(g) * (av.mult || 1) * n);
+  if ((C.funds || 0) < cost) return { ok: false, reason: "Insufficient funds ($" + cost + " for " + n + " " + (n > 1 ? "batteries" : "battery") + ")" };
+  C.funds -= cost;
+  C.artillery.batteries[gunId] = (C.artillery.batteries[gunId] || 0) + n;
+  return { ok: true, spent: cost, batteries: C.artillery.batteries[gunId] };
+}
+
+function _artScoreWord(v) {
+  if (v >= 80) return ["A grand battery", "#4a6b3a"];
+  if (v >= 62) return ["A strong park", "#6f9e5a"];
+  if (v >= 45) return ["A serviceable arm", "#b8863b"];
+  if (v >= 25) return ["A few guns", "#c9712e"];
+  return ["Almost no guns", "#9c3b2e"];
+}
+
+/* Rarity colour: reuse The Armory's palette so the two tiers read as one catalog. */
+function _artRar(r) {
+  return (typeof _armRarityCol === "function") ? _armRarityCol(r)
+    : (r === "legendary" ? "#b8863b" : r === "rare" ? "#7a5cff" : r === "uncommon" ? "#4a6b3a" : "#8a8276");
+}
+
+/* ---- artRenderSection: the Cannon Corps block, appended below The Armory. ---- */
+function artRenderSection(C) {
+  if (!C) return '';
+  artInit(C);
+  var guns = _artGuns();
+  if (!guns.length) return '';   // no data -> render nothing (The Armory still stands)
+  var score = artBatteryScore(C), sw = _artScoreWord(score);
+  var bat = C.artillery.batteries, totalBat = _artTotalBatteries(C), perBat = _artGunsPerBattery(C);
+  var names = {}; for (var i = 0; i < guns.length; i++) names[guns[i].id] = guns[i];
+
+  // current park summary
+  var park = "";
+  for (var k in bat) if (bat.hasOwnProperty(k) && bat[k] > 0) {
+    var gk = names[k] || { name: k, rarity: "common" };
+    park += '<span style="display:inline-block;margin:2px 6px 2px 0;padding:2px 7px;border:1px solid ' + _artRar(gk.rarity) + ';border-radius:3px;font-size:11px">'
+      + _artEsc(gk.name) + ' &times;<b>' + bat[k] + '</b></span>';
+  }
+
+  var cards = "";
+  for (var c = 0; c < guns.length; c++) {
+    var g = guns[c], av = _artAvail(C, g), col = _artRar(g.rarity);
+    var batCost = Math.round(_artCost(g) * (av.mult || 1));
+    var btnCost = Math.round(_artCost(g) * (av.mult || 1) * 3);
+    var owned = bat[g.id] || 0;
+    var disabled = !av.ok;
+    var proj = (g.projectiles && g.projectiles.length) ? g.projectiles.join(', ') : '';
+    cards += '<div style="padding:9px;border:1px solid ' + col + ';border-radius:5px;background:rgba(0,0,0,.12);opacity:' + (disabled ? '.5' : '1') + '">'
+      + '<div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font-size:13px">' + _artEsc(g.name) + '</b>'
+      + '<span style="font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:' + col + '">' + _artEsc(g.rarity) + '</span></div>'
+      + '<div style="font-size:11px;opacity:.6">' + _artEsc(g.caliber) + ' &middot; ' + g.rangeYds + ' yds &middot; ' + g.rateOfFire + '/min &middot; crew ' + g.crew + ' &middot; quality ' + g.quality + '</div>'
+      + (proj ? '<div style="font-size:10px;opacity:.5">' + _artEsc(proj) + '</div>' : '')
+      + '<div style="font-size:11px;opacity:.78;margin:4px 0">' + _artEsc(g.flavor) + '</div>'
+      + (owned ? '<div style="font-size:11px;color:' + col + '">In the park: ' + owned + ' ' + (owned > 1 ? 'batteries' : 'battery') + '</div>' : '');
+    if (disabled) cards += '<div style="font-size:11px;color:#9c3b2e">' + av.reason + '</div>';
+    else cards += '<div class="btn-row" style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap">'
+      + '<button class="upg" data-artbuy="' + g.id + '" data-artn="1" style="padding:2px 8px;font-size:11px">Raise a battery &middot; $' + batCost + '</button>'
+      + '<button class="upg" data-artbuy="' + g.id + '" data-artn="3" style="padding:2px 8px;font-size:11px">Raise a battalion (3) &middot; $' + btnCost + '</button></div>';
+    cards += '</div>';
+  }
+
+  return ''
+    + '<hr class="rule" style="margin:16px 0 10px">'
+    + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap">'
+    +   '<div><div style="font-size:17px;font-weight:bold">The Cannon Corps</div>'
+    +     '<div style="opacity:.75;font-size:12px">Raise batteries to build your long arm. Massed guns firing canister break a charge &mdash; but cannon cost dear, and the South gets ' + perBat + ' to the Union\'s ' + (_artData() ? (_artData().batteryGunsUnion || 6) : 6) + '.</div></div>'
+    +   '<div style="text-align:right"><div style="font-size:12px;opacity:.7">Artillery</div>'
+    +     '<div style="font-size:22px;font-weight:bold;color:' + sw[1] + '">' + score + '</div>'
+    +     '<div style="font-size:12px;color:' + sw[1] + '">' + sw[0] + '</div></div>'
+    + '</div>'
+    + '<div style="display:flex;gap:10px;flex-wrap:wrap;font-size:12px;margin:4px 0 6px"><span>Batteries: <b>' + totalBat + '</b></span><span>Guns: <b>' + (totalBat * perBat) + '</b></span><span>Treasury: <b>$' + (C.funds || 0) + '</b></span></div>'
+    + (park ? '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:4px 0 2px">Your park</div><div style="margin-bottom:8px">' + park + '</div>' : '')
+    + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:8px 0 4px">The ordnance catalog</div>'
+    + '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px">' + cards + '</div>'
+    + (totalBat ? '<div class="btn-row" style="margin-top:10px"><button id="artDisband" type="button" class="upg" style="font-size:11px">Disband the park</button></div>' : '');
+}
+
+function artWireSection(C) {
+  if (!C) return;
+  var btns = document.querySelectorAll('[data-artbuy]');
+  for (var i = 0; i < btns.length; i++) {
+    (function (b) {
+      b.addEventListener("click", function () {
+        var id = b.getAttribute("data-artbuy"), n = parseInt(b.getAttribute("data-artn"), 10) || 1;
+        var r = artBuy(C, id, n);
+        if (!r.ok && typeof toast === "function") toast(r.reason);
+        if (typeof saveLocal === "function") saveLocal();
+        if (typeof _wdRefresh === "function") _wdRefresh();
+      });
+    })(btns[i]);
+  }
+  var dis = document.getElementById("artDisband");
+  if (dis) dis.addEventListener("click", function () {
+    C.artillery.batteries = {};
     if (typeof saveLocal === "function") saveLocal();
     if (typeof _wdRefresh === "function") _wdRefresh();
   });
@@ -17740,11 +18206,15 @@ function bridgeArmy(C) {
   var fatigue = bp.forcedMarch ? 35 : 8;
   if (bp.raidSupply) supply = Math.min(100, supply + 6);
   var leadership = 64;   // placeholder until generals/cabinet wire in (S2/§19)
-  var firepower = (typeof armoryWeaponScore === "function") ? armoryWeaponScore(C) : 30;  // the weapons you bought
+  var firepower = (typeof armoryWeaponScore === "function") ? armoryWeaponScore(C) : 30;  // the small arms you bought
+  var artillery = (typeof artBatteryScore === "function") ? artBatteryScore(C) : 8;       // A1: the Cannon Corps you raised
   var overall = Math.round(0.22 * strength + 0.18 * equip + 0.18 * morale + 0.14 * firepower + 0.12 * arms + 0.10 * supply + 0.06 * leadership);
   overall = Math.max(0, Math.min(100, overall - Math.round(fatigue * 0.1)));
+  // The Cannon Corps is an ADDITIVE arm — its absence leaves the infantry math intact (baseline guns), its presence adds punch.
+  var artBase = (typeof _artBaseline === "function") ? _artBaseline() : 8;
+  overall = Math.min(100, overall + Math.round(Math.max(0, artillery - artBase) * 0.12));
   return { side: side, strength: Math.round(strength), equip: Math.round(equip), arms: arms,
-    morale: morale, supply: supply, fatigue: fatigue, leadership: leadership, firepower: firepower, overall: overall };
+    morale: morale, supply: supply, fatigue: fatigue, leadership: leadership, firepower: firepower, artillery: artillery, overall: overall };
 }
 
 function _brgWord(v) {
@@ -17806,7 +18276,7 @@ function bridgeBriefingHTML(C) {
     +   '<div style="flex:1 1 240px;min-width:220px">'
     +     '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin-bottom:2px">The army you field</div>'
     +     '<div style="text-align:right;font-size:20px;font-weight:bold;color:' + ow[1] + ';margin:-18px 0 2px">' + a.overall + ' &middot; ' + ow[0] + '</div>'
-    +     _brgBar('Strength', a.strength) + _brgBar('Firepower (weapons)', a.firepower) + _brgBar('Equipment', a.equip)
+    +     _brgBar('Strength', a.strength) + _brgBar('Firepower (small arms)', a.firepower) + _brgBar('Artillery (Cannon Corps)', a.artillery) + _brgBar('Equipment', a.equip)
     +     _brgBar('Small arms', a.arms) + _brgBar('Morale', a.morale) + _brgBar('Supply', a.supply) + _brgBar('Fatigue (lower is better)', 100 - a.fatigue)
     +   '</div>'
     +   '<div style="flex:1 1 240px;min-width:220px">'
@@ -17874,6 +18344,7 @@ function _t1InitAll(C) {
   try { if (typeof blockadeInit === "function") blockadeInit(C); } catch (e) {}  // S1c: cotton/blockade/diplomacy
   try { if (typeof prodInit === "function") prodInit(C); } catch (e) {}   // S1b: war production
   try { if (typeof armoryInit === "function") armoryInit(C); } catch (e) {}  // weapons procurement
+  try { if (typeof artInit === "function") artInit(C); } catch (e) {}     // A1: Cannon Corps (artillery batteries)
   try { if (typeof manpowerInit === "function") manpowerInit(C); } catch (e) {}  // S1d: manpower/conscription
   try { if (typeof bridgeInit === "function") bridgeInit(C); } catch (e) {}     // S5-seed: pre-battle conditioning prep
 }
