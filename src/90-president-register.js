@@ -28,6 +28,7 @@ function _t1InitAll(C) {
   try { if (typeof prodInit === "function") prodInit(C); } catch (e) {}   // S1b: war production
   try { if (typeof armoryInit === "function") armoryInit(C); } catch (e) {}  // weapons procurement
   try { if (typeof artInit === "function") artInit(C); } catch (e) {}     // A1: Cannon Corps (artillery batteries)
+  try { if (typeof engInit === "function") engInit(C); } catch (e) {}     // A2: Engineering Works Corps (capability levels)
   try { if (typeof manpowerInit === "function") manpowerInit(C); } catch (e) {}  // S1d: manpower/conscription
   try { if (typeof bridgeInit === "function") bridgeInit(C); } catch (e) {}     // S5-seed: pre-battle conditioning prep
 }
@@ -39,6 +40,7 @@ function _t1Resolve(winnerSide, type, B, C, win) {
   try { if (typeof wrOnResolve  === "function") wrOnResolve(winnerSide, type, B, C, win);  } catch (e) {}
   try { if (typeof blockadeOnResolve === "function") blockadeOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S1c: BEFORE prod → sets importFactor + funds + clock.intervention
   try { if (typeof prodOnResolve === "function") prodOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S1b: after wr (reads nodes + blockade.importFactor)
+  try { if (typeof engOnResolve === "function") engOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // A2: AFTER prod → Construction Corps repairs rail (slows CS decay)
   try { if (typeof manpowerOnResolve === "function") manpowerOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S1d: reads B.casualties + year → army strength
   try { if (typeof mrOnResolve  === "function") mrOnResolve(winnerSide, type, B, C, win);  } catch (e) {}
   try { if (typeof presOnResolve === "function") presOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S0: after clk (interlink)

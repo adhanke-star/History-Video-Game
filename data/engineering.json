@@ -1,0 +1,211 @@
+{
+  "_comment": "A2 Engineering Works Corps — Herman Haupt's U.S. Military Railroad Construction Corps and the field-engineering arm, as a buildable branch funded with C.funds. Four capabilities, each raised in levels (0-3): Construction Corps (rail/bridge repair), Field Fortifications (entrenchment), Pontoon Train (river crossings), Siege Works (saps/parallels/mortars). The engineering score feeds the pre-battle bridge as an additive 'engineering' facet, raises supply (construction) and lowers fatigue (pontoons); the Construction Corps also repairs rail each turn — the headline Confederate use, since it SLOWS (cannot stop) the South's irreversible rail decay (ties src/50-production.js). Asymmetry: Union engineering vastly outstripped the South's (the USMRR rebuilt faster than the Confederacy could wreck), so the CS pays a materials/skilled-labor premium. Build-injected as GAME_DATA.engineering; consumed by src/57-engineering.js + src/85-battle-bridge.js. costPerLevel[L] is the cost to RAISE the branch to level L (index 0 unused).",
+  "provenance": "Engineering facts are Verified against the standard record (Herman Haupt, Reminiscences of General Herman Haupt, 1901; Thomas Weber, The Northern Railroads in the Civil War; Festus P. Summers, The Baltimore and Ohio in the Civil War; Earl J. Hess, Field Armies and Fortifications in the Civil War & In the Trenches at Petersburg; Justin Solonick, Engineering Victory: The Union Siege of Vicksburg; Philip Shiman / NPS engineering references) and refined by the A2 research workflow (see teachingCards voices). Level counts, costPerLevel, scorePerLevel, supply/fatigue per-level, costPremiumCS, and the rail-clawback fraction are designer calibration (Inferred), tunable; logged in DECISIONS.md D43.",
+  "schemaVersion": "1.0",
+  "baselineEngineeringScore": 12,
+  "costPremiumCS": 1.25,
+  "railClawbackFractionPerLevel": 0.24,
+  "railClawbackCap": 0.7,
+  "fullEngineeringScore": 96,
+  "branches": [
+    {
+      "id": "construction",
+      "name": "Construction Corps",
+      "tagline": "Haupt's USMRR — rail & bridge repair",
+      "facet": "supply",
+      "maxLevel": 3,
+      "costPerLevel": [
+        0,
+        1200,
+        2400,
+        4200
+      ],
+      "scorePerLevel": 8,
+      "perLevelEffect": 4,
+      "effectLabel": "supply",
+      "levelNames": [
+        "None",
+        "A repair gang",
+        "A Construction Corps",
+        "Haupt's full establishment"
+      ],
+      "flavor": "Wreck a Confederate bridge and Haupt's men rebuilt it from standing timber in days — the Potomac Creek trestle, 400 feet long and 80 high, went up in nine days of 'beanpoles and cornstalks.' A standing Construction Corps with pre-framed truss spans and a wrecking train keeps your railheads moving with the army, so the depots stay full.",
+      "provenance": "Verified"
+    },
+    {
+      "id": "fortifications",
+      "name": "Field Fortifications",
+      "tagline": "The spade & the rifle pit",
+      "facet": "engineering",
+      "maxLevel": 3,
+      "costPerLevel": [
+        0,
+        900,
+        1800,
+        3200
+      ],
+      "scorePerLevel": 7,
+      "perLevelEffect": 0,
+      "effectLabel": "defense",
+      "levelNames": [
+        "None",
+        "Hasty rifle pits",
+        "Sited field works",
+        "Engineered lines"
+      ],
+      "flavor": "By 1864 every halt ended with the men digging. A trained engineer arm sites works that multiply a defender — the sunken road at Fredericksburg, the lines at Cold Harbor where an attack died in minutes. Spades win sieges; by Petersburg the armies lived underground.",
+      "provenance": "Verified"
+    },
+    {
+      "id": "pontoons",
+      "name": "Pontoon Train",
+      "tagline": "Bridging the rivers",
+      "facet": "fatigue",
+      "maxLevel": 3,
+      "costPerLevel": [
+        0,
+        1100,
+        2200,
+        3800
+      ],
+      "scorePerLevel": 6,
+      "perLevelEffect": 3,
+      "effectLabel": "mobility",
+      "levelNames": [
+        "None",
+        "A few boats",
+        "An engineer pontoon train",
+        "A full bridge equipage"
+      ],
+      "flavor": "An army moves at the speed of its rivers. When the pontoons came late to Fredericksburg the assault stalled and bled; when Grant's engineers threw a 2,200-foot bridge across the James in 1864 a whole army crossed unseen. A ready bridge train turns a barrier into a road and spares the men a forced march.",
+      "provenance": "Verified"
+    },
+    {
+      "id": "siege",
+      "name": "Siege Works",
+      "tagline": "Saps, parallels & mortars",
+      "facet": "engineering",
+      "maxLevel": 3,
+      "costPerLevel": [
+        0,
+        1400,
+        2800,
+        5000
+      ],
+      "scorePerLevel": 7,
+      "perLevelEffect": 0,
+      "effectLabel": "siege",
+      "levelNames": [
+        "None",
+        "Field batteries",
+        "Approaches & parallels",
+        "A formal siege train"
+      ],
+      "flavor": "When a place will not fall to assault, you dig toward it. At Vicksburg the Union sapped forward by parallels and blew a mine under the 3rd Louisiana Redan; at Petersburg the war became ten months of trench and mortar. A siege establishment trades blood for time and spadework.",
+      "provenance": "Verified"
+    }
+  ],
+  "teachingCards": [
+    {
+      "id": "eng-haupt-usmrr",
+      "title": "How did the Union rebuild blown-up bridges faster than the Confederates could wreck them — and why couldn't the South do the same?",
+      "consensus": "Herman Haupt — a West Point-trained civil engineer who ran the U.S. Military Railroad (USMRR) from April 1862 to September 1863, refusing pay and never formally accepting the brigadier's commission tied to his September 1862 promotion — turned battlefield railroad repair into an industrial process. His Construction Corps grew from roughly 300 men in 10-man squads in June 1862 to nearly 10,000 by war's end, drawing on career railroaders, soldiers, common laborers, and formerly enslaved people. Its signature methods were portable, standardized truss spans framed in advance in rear-area carpenter shops and shipped by rail to any break, plus dedicated wrecking and repair trains that carried tools, timber, and trained crews to the damage. The showcase was the Potomac Creek trestle — about 400 feet long and 80 feet high, rebuilt in nine days in May 1862 from roughly two million feet of local timber by inexperienced troops — which prompted Lincoln's marvel that \"there is nothing in it but cornstalks and beanpoles.\" Because spans were prefabricated and labor was organized into interchangeable crews, the USMRR routinely restored bridges in hours to days: the Bull Run bridge was destroyed and rebuilt many times (one rebuild in about a day), and some lines around Richmond-Fredericksburg were wrecked and rebuilt as many as five times. By 1865 the USMRR operated over 2,000 miles of railroad (about 2,105) with 419 locomotives and 6,330 cars under Military Director D.C. McCallum — a scale of repair-and-operate capacity the Confederacy, which made essentially no new rail (lacking the rolling-mill capacity and cut off by blockade from imported iron) and was forced to cannibalize branch lines while train speeds fell from about 25 to 10 mph, could never match.",
+      "voices": [
+        {
+          "scholar": "Thomas Weber, The Northern Railroads in the Civil War, 1861-1865 (King's Crown Press, 1952)",
+          "view": "The North's organized, well-supplied use of railroads — operation, maintenance, and rapid repair — contributed materially to Union victory; Weber wrote that the successful supply of Sherman's army in its campaign from Chattanooga to Atlanta was the most outstanding achievement of the military railroads, an organizational rather than a lucky feat."
+        },
+        {
+          "scholar": "Herman Haupt, Reminiscences of General Herman Haupt (Wright & Joys, 1901)",
+          "view": "Haupt's own account documents the Construction Corps system, prefabricated trusses, the wrecking/repair trains, and methods for destroying enemy track (Eben C. Smeed's rail-twister hook, which corkscrewed rails so they could not be reused; demolition torpedoes) — along with his governing principles that the military must never interfere with efficient railroad running and that rolling stock be unloaded and returned promptly."
+        },
+        {
+          "scholar": "Robert C. Black III, The Railroads of the Confederacy (University of North Carolina Press, 1952)",
+          "view": "Southern railroads decayed under the war's demands: cut off by blockade from imported rail and lacking the capacity to roll their own, the Confederacy stripped iron from secondary lines to patch main ones, and worn track and broken locomotives steadily degraded the network — a structural industrial deficit, not battlefield misfortune."
+        },
+        {
+          "scholar": "George Edgar Turner, Victory Rode the Rails (Bobbs-Merrill, 1953); Festus P. Summers, The Baltimore and Ohio in the Civil War (G.P. Putnam's Sons, 1939)",
+          "view": "Railroads held a decisive, sometimes war-shaping strategic place, and Northern industrial-organizational depth — embodied in the USMRR and the B&O's wartime operation — let the Union both move armies and out-repair the enemy at a scale the agrarian South could not replicate."
+        }
+      ],
+      "takeaway": "Model Union railroad engineering as an industrial repair engine, not a stat bonus: a Construction Corps that converts manpower + prefabricated truss spans + repair trains into bridge/track rebuilds measured in hours-to-days, so Confederate raids only delay rather than deny the supply line — while the South's identical raids on Union rail cost it more, because it can make essentially no new rail to replace what is destroyed and must cannibalize its own branch lines to repair the trunk. The asymmetry is industrial capacity and organization (Union systemic superiority), explicitly not luck or a generic \"Yankee numbers\" hand-wave.",
+      "provenance": "Verified"
+    },
+    {
+      "id": "eng-spade-fieldworks",
+      "title": "By 1864 the men dug in at every halt — did the rifle really make the spade \"as important as the rifle\"?",
+      "consensus": "By the 1864 Overland Campaign, infantry on both sides entrenched reflexively — a hasty scratch of rifle pits at every halt that, given days, hardened into engineered lines with head-logs, traverses, and abatis; at Petersburg this became 9-1/2 months of continuous trench warfare (June 15, 1864–April 2, 1865), the longest siege in U.S. military history, along a front whose works ultimately ran past 30 miles, a foreshadowing of 1914-18. The textbook explanation — that the rifle-musket's longer range made frontal assault on entrenched troops suicidal — is real in its effects but contested in its cause. Set-pieces show the lethality: at Fredericksburg (Dec 13, 1862) Confederates packed the sunken road behind a stone wall stretching 500+ yards and shredded wave after wave of Burnside's men, none reaching closer than ~50 yards; at Cold Harbor (June 3, 1864) a Union dawn assault broke against Lee's fieldworks at fearful cost. But revisionist scholarship (Griffith, Hess) argues the rifle-musket's battlefield impact was overstated — soldiers fired at short range, were poorly trained, and engagement distances changed little from Napoleonic norms — and Hess instead credits the rise of trench warfare to Grant's strategy of *continuous contact* with Lee's army, which kept the two forces always within striking distance and made digging in a survival reflex. So entrenchment's dominance is settled fact; attributing it primarily to rifle range is the part historians fight over.",
+      "voices": [
+        {
+          "scholar": "Earl J. Hess, Field Armies and Fortifications in the Civil War; Trench Warfare under Grant and Lee; In the Trenches at Petersburg; The Rifle Musket in Civil War Combat: Reality and Myth",
+          "view": "Field fortification ran through the Eastern theater from Big Bethel (1861) onward, but its 1864 dominance came from Grant's continuous-contact campaigning and soldiers' psychological need for cover under constant fire — NOT from the rifle-musket, whose real influence Hess confines to skirmishing and sniping because troops fired at short range, were badly trained, and the bullet's parabolic arc produced two killing zones with a relatively safe gap in between. At Petersburg the spade became a tool of Confederate defeat as much as defense (his subtitle is literally 'Field Fortifications and Confederate Defeat'): earthworks let an outnumbered Lee survive, but tied him to a line he could not hold once stretched."
+        },
+        {
+          "scholar": "Paddy Griffith, Battle Tactics of the Civil War (1989)",
+          "view": "The Civil War was the last Napoleonic war, not the first modern one. The rifle-musket's theoretical range was negated in practice: most firefights opened at close range and mediocre marksmanship meant the rifle's accuracy rarely told. Frontal assault failed for the old reasons (massed defensive fire, broken ground, exhaustion), so attributing entrenchment to a small-arms revolution overstates the technology. (Griffith raises the debate the consensus still argues over.)"
+        },
+        {
+          "scholar": "Gordon C. Rhea, Cold Harbor: Grant and Lee, May 26–June 3, 1864 (foremost authority on the Overland Campaign)",
+          "view": "The popular 'about 7,000 casualties in the first few minutes' line — long repeated in popular narrative and the Ken Burns documentary — is a myth. Rhea estimates the grand morning charge of the 2nd, 6th, and 18th Corps lasted roughly an hour and produced about 3,500 Union casualties, with another ~3,000-odd across the rest of the day (about 6,000 Union for June 3 against roughly 1,500 Confederate). Still a horrific repulse against fieldworks, but the famous figure compresses the loss into a span of minutes it never occupied; the assault was wrecked over a longer, bloodier morning."
+        },
+        {
+          "scholar": "Primary record / NPS & American Battlefield Trust (Fredericksburg, Petersburg)",
+          "view": "At Fredericksburg the sunken road and 500+-yard stone wall below Marye's Heights made the position 'almost impregnable, and a deathtrap'; Federal waves died on open, rising ground, none nearer than ~50 yards. At Petersburg, after frontal assaults failed in June 1864, the war settled into roughly 292 days of siege along trenches that ultimately ran for tens of miles — the longest siege in U.S. military history."
+        }
+      ],
+      "takeaway": "Model entrenchment as the dominant fact of 1864, not a free defensive bonus that scales with rifle range: make digging a per-halt action that hardens by stages (rifle pit → sited works → engineered line) the longer a force holds ground, and let CONTINUOUS CONTACT (the attacker refusing to disengage, à la Grant) be what forces both sides to dig — so a frontal assault on a hardened line is catastrophic for the attacker, but the designer should resist the lazy \"longer-range rifle = auto-lethal\" causal chain that Griffith and Hess dispute. For Cold Harbor, render a costly, demoralizing repulse without baking in the discredited \"7,000 in a few minutes\" number; cite Rhea's ~6,000-Union-for-the-day instead.",
+      "provenance": "Verified"
+    },
+    {
+      "id": "eng-pontoon-mobility",
+      "title": "If a river has no bridge, how does an entire army get across — and why did pontoons decide Fredericksburg and Grant's 1864 campaign?",
+      "consensus": "A pontoon train was the army's portable bridge: a wagon convoy hauling wooden boats (bateaux, ~1,250 lb each, needing roughly 20 men to lift), the heavy timber \"balks\" that spanned boat-to-boat, the \"chess\" planks that floored the roadway, plus anchor, rope, tool, and forge wagons — a standard Federal bridge train ran on the order of ~34 pontoon wagons + ~22 chess wagons + ~4 tool and ~2 forge wagons, each wagon drawn by six animals. Engineers slid the boats into the stream, anchored them in line, laid balks across, planked them with chess, and lashed the whole into a roadway; ready bridging let an army cross at the point and moment it chose, sparing the days-long forced marches needed to reach a ford or standing bridge. Fredericksburg is the cautionary case: Burnside's vanguard reached Falmouth on Nov 17, 1862 expecting his pontoons to be waiting, but bureaucratic and transport failures (Halleck and QM Gen. Meigs slow to act; Brig. Gen. Woodbury's engineer brigade and Maj. Ira Spaulding's 50th New York short of teams/draft animals and stalled in mud) meant the trains did not consolidate until ~Nov 24–25 — by which point Lee held the heights, surprise was gone, and the Dec 11 crossing had to be forced under fire from Barksdale's Mississippi sharpshooters. The countercase is Grant's mid-June 1864 crossing of the James: to slip away from Lee and lunge at Petersburg, Union engineers (Benham's Engineer Brigade, the 50th NY Engineers, and Capt. Mendell's U.S. Engineer Battalion) threw a tidal-water pontoon bridge of roughly 2,100 feet using about 101 boats — among the longest of the war — across the James near Weyanoke/Windmill Point in about seven to eight hours beginning June 14, anchored against a roughly 4-foot tide and strong current by schooners moored midstream, over which the army's three corps, plus artillery, wagons, and herds, crossed across the next several days.",
+      "voices": [
+        {
+          "scholar": "James M. McPherson, Battle Cry of Freedom (1988)",
+          "view": "Frames the James River crossing as a logistical masterstroke: Union engineers built 'perhaps the longest pontoon bridge in military history,' 2,100 feet, anchored to hold against strong tidal currents and a roughly four-foot tidal rise and fall — the engineering counterpoint to Fredericksburg, where the campaign foundered before a major shot because the bridging arrived too late."
+        },
+        {
+          "scholar": "Francis A. O'Reilly, The Fredericksburg Campaign: Winter War on the Rappahannock (LSU Press, 2003)",
+          "view": "Documents that Burnside's plan depended on crossing the Rappahannock before Lee could concentrate; the late pontoons (a chain of Washington-side and transport failures, not battlefield error) handed Lee the heights and converted a war of maneuver into the contested Dec 11 crossing and frontal assaults — bridging timing, not courage, set the terms of the battle."
+        },
+        {
+          "scholar": "Wesley Brainerd, Bridge Building in Wartime: Colonel Wesley Brainerd's Memoir of the 50th New York Volunteer Engineers (ed. Ed Malles, Univ. of Tennessee Press, 1997) & Maj. Ira Spaulding's Official Records reports",
+          "view": "As pontoniers of the 50th NY present at both the Rappahannock in 1862 (Brainerd a captain, Spaulding the regiment's major) and the James in 1864, their engineer accounts record bridge-laying drill under fire and against tide — the material reality of the pontoon train: boats slid from wagons, anchored in line, balked, chessed, and lashed, with success hinging on whether the train and its draft animals arrived on time."
+        },
+        {
+          "scholar": "Mark A. Smith, 'Rivers, Rails, and Wooden Bateaux: Civil War Pontoniering in the Eastern Theater,' Army History No. 132 (Summer 2024)",
+          "view": "Treats pontoon bridging as a key enabler of operational mobility in the Eastern Theater: an army moved at the speed of its rivers, and a pre-positioned, animal-drawn bridge train could be the difference between seizing a crossing by surprise and being pinned on the wrong bank — Fredericksburg and the James serve as paired negative and positive cases."
+        }
+      ],
+      "takeaway": "Model bridging as a logistics asset, not scenery: a pontoon-train unit that must physically arrive and deploy before an army can cross a river feature. Reward the player who pre-positions bridging (Grant on the James: fast crossing, surprise, no forced march) and punish the one whose train is delayed (Burnside at Fredericksburg: lost surprise, an entrenched far bank, a costly contested crossing) — so river crossings become a timing-and-supply puzzle, with bridge length, current/tide, and build-time scaling the difficulty.",
+      "provenance": "Verified"
+    },
+    {
+      "id": "eng-siege-engineering",
+      "title": "How did you actually take a fortress city like Vicksburg or Petersburg when you couldn't just storm it?",
+      "consensus": "When frontal assault failed -- Grant's bloody repulses at Vicksburg on May 19 and 22, 1863, and the slaughter that opened the Petersburg lines in June 1864 -- both armies turned to formal siege engineering: digging the enemy out instead of charging him. The method, inherited from the 17th-century science of Vauban, was the approach by parallels -- a besieger drives a zigzag \"sap\" trench forward (the kinks shield diggers from enfilade fire), halting to dig \"parallels\" across the front as fire steps and jump-off lines, creeping the assault distance down from hundreds of yards to a few dozen. At Vicksburg, Grant's Army of the Tennessee pushed roughly thirteen such approaches (about ten of them major) toward the Confederate works; the most famous, Logan's Approach, reached the 3rd Louisiana Redan, where Union diggers ran a tunnel about 40 feet under the fort, packed it with 2,200 pounds of black powder, and blew it on June 25, 1863 -- followed by a second 1,800-pound mine on July 1. At Petersburg the war went underground for about ten months; the two armies' opposing earthwork lines eventually stretched some 35 miles, and the total length of all trenches and redoubts they dug ran far more (on the order of 100-plus miles), climaxing in the Battle of the Crater on July 30, 1864, when the 48th Pennsylvania (coal miners under Lt. Col. Henry Pleasants) detonated about four tons of powder at the end of a roughly 511-foot tunnel under Elliott's Salient. Both mines blew spectacular holes -- and both follow-on assaults failed for want of competent infantry exploitation, the Crater costing the Union about 3,800 casualties to roughly 1,500 Confederate; siege engineering traded blood for time and spadework, and the Confederacy defended ably but could never match the Union's engineering depth, iron, and resupply.",
+      "voices": [
+        {
+          "scholar": "Justin S. Solonick, Engineering Victory: The Union Siege of Vicksburg (SIU Press, 2015)",
+          "view": "Vicksburg fell because the Confederates were dug out, not starved out -- directly challenging the Lost Cause myth that the garrison surrendered only for lack of provisions. Grant lacked enough professional engineers to run a textbook Vauban siege, so volunteer soldiers improvised, creatively applying siege maxims (saps, approaches, parallels, mining) with practical inventiveness. Their amateur engineering, in Solonick's account, was the decisive factor in the campaign -- though some reviewers find his claims for distinctively midwestern ingenuity overstated."
+        },
+        {
+          "scholar": "Earl J. Hess, In the Trenches at Petersburg: Field Fortifications and Confederate Defeat (UNC Press, 2009)",
+          "view": "Petersburg was the Civil War's great laboratory of trench warfare: an immense system of trenches, redoubts, mines and countermines, wire entanglements, torpedo (land-mine) fields, and bombproofs -- the aggregate length of earthworks dug runs to roughly 123 miles, even though the opposing lines themselves spanned about 35 miles by war's end. The elaborate Confederate field fortifications prolonged resistance, but the relentless Union extension of works and superior resources made defeat a matter of time -- fortifications bought the South months, not victory."
+        },
+        {
+          "scholar": "Earl J. Hess, Into the Crater: The Mine Attack at Petersburg (Univ. of South Carolina Press, 2010)",
+          "view": "The Crater (July 30, 1864) was a brilliantly engineered mine -- Pleasants's 48th Pennsylvania coal miners drove a ~511-foot gallery under Elliott's Salient and blew about four tons of powder -- wrecked by command failure above ground: poor leadership, a last-minute change of assault troops, and disorganized exploitation turned a promising opportunity into a one-sided slaughter. Engineering succeeded; generalship did not."
+        },
+        {
+          "scholar": "National Park Service / American Battlefield Trust (Vicksburg & Petersburg battlefield records)",
+          "view": "The 3rd Louisiana Redan mine (June 25, 1863) ran about 40 feet under Logan's Approach with 2,200 lbs of powder, opening a crater roughly 40 feet wide and 12 feet deep; the 45th Illinois rushed the crater but was repulsed after prolonged fighting, and the blown debris formed a new Confederate parapet. A second mine followed July 1 (1,800 lbs), with no assault attempted. The pattern -- successful blast, failed exploitation -- recurred at the Crater a year later."
+        }
+      ],
+      "takeaway": "Model siege engineering as a distinct path to victory that converts time and spadework into reduced assault cost: investing in saps/parallels shrinks the storming distance (lowering attacker casualties), and a mine can blow a breach -- but the breach only pays off if the player commits prepared, well-led infantry to exploit it, or the assault fails like the historical Crater. Give the Union an engineering-depth and resupply edge while keeping Confederate field fortifications a strong, time-buying defensive multiplier that cannot be sustained without iron.",
+      "provenance": "Verified"
+    }
+  ],
+  "_designNote": "Asymmetry is the point, again. The Union's military engineering was a decisive, under-celebrated advantage: the USMRR under Haupt and then McCallum rebuilt track and bridges faster than Confederate raiders could destroy them, the Engineer Battalion and volunteer pioneer regiments dug and bridged at scale, and the North's industry supplied the iron, timber framing, and prefabricated equipage. The Confederacy had able engineers (Gilmer, the Vicksburg and Petersburg defenders) but could not match the SCALE or resupply — the same iron shortage that decays its railroads starves its repair. So: (1) every branch costs the CS a materials/skilled-labor premium (costPremiumCS 1.25); (2) the Construction Corps claws back only a FRACTION of the rail lost each turn (railClawbackFractionPerLevel x level, capped railClawbackCap = 0.7 < 1; src/57-engineering.js engOnResolve reads src/50-production.js's railLossLast) — the headline CONFEDERATE benefit, slowing the South's irreversible decay without ever stopping or reversing it (no iron to truly rebuild), so rail still declines monotonically toward the floor, just more slowly; the recovery can never reach an equilibrium or pin rail at 100, even with the rail War-Room node fully funded; (3) the engineering score is symmetric per level otherwise, so the asymmetry is paid in cost, not effect, keeping the South's defensive engineering (its real historical strength at Vicksburg/Petersburg) viable. engScore = baselineEngineeringScore + sum(level * scorePerLevel), clamped 0-100; it feeds the bridge as an additive overall bonus (weight 0.10, like the artillery facet), plus construction raises the supply facet and pontoons lower the fatigue facet. Field Fortifications and Siege Works feed only the aggregate score in the STRATEGIC layer; their decisive defend/assault effects belong to the battle-day layer (A3 terrain cover + A6 conditioning) and the tactical engine (P-phases)."
+}

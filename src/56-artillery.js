@@ -38,7 +38,7 @@ function _artUnionGuns() { var D = _artData(); return (D && D.batteryGunsUnion) 
 function _artCost(g) { return (g && typeof g.costPerBattery === "number" && isFinite(g.costPerBattery) && g.costPerBattery >= 0) ? g.costPerBattery : 1000; }
 
 /* Escape data-driven text before it enters innerHTML — the catalog is tunable/untrusted-shaped data. */
-function _artEsc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+function _artEsc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
 
 function artInit(C) {
   if (!C) return;
@@ -50,8 +50,9 @@ function artInit(C) {
   // "3" / null / objects that would poison the score (string concatenation, NaN). Coerce or drop.
   var b = C.artillery.batteries;
   for (var k in b) if (b.hasOwnProperty(k)) {
-    var n = Math.floor(Number(b[k]));
-    if (!isFinite(n) || n <= 0) delete b[k];   // drop null/NaN/objects/<=0
+    var raw = b[k];   // only numbers/numeric-strings; reject booleans/objects (Number(true)===1 would grant a free battery)
+    var n = (typeof raw === "number" || typeof raw === "string") ? Math.floor(Number(raw)) : NaN;
+    if (!isFinite(n) || n <= 0) delete b[k];   // drop null/NaN/booleans/objects/<=0
     else b[k] = n;                             // coerce "3" -> 3
   }
 }
@@ -190,8 +191,8 @@ function artRenderSection(C) {
       + (owned ? '<div style="font-size:11px;color:' + col + '">In the park: ' + owned + ' ' + (owned > 1 ? 'batteries' : 'battery') + '</div>' : '');
     if (disabled) cards += '<div style="font-size:11px;color:#9c3b2e">' + av.reason + '</div>';
     else cards += '<div class="btn-row" style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap">'
-      + '<button class="upg" data-artbuy="' + g.id + '" data-artn="1" style="padding:2px 8px;font-size:11px">Raise a battery &middot; $' + batCost + '</button>'
-      + '<button class="upg" data-artbuy="' + g.id + '" data-artn="3" style="padding:2px 8px;font-size:11px">Raise a battalion (3) &middot; $' + btnCost + '</button></div>';
+      + '<button class="upg" data-artbuy="' + _artEsc(g.id) + '" data-artn="1" style="padding:2px 8px;font-size:11px">Raise a battery &middot; $' + batCost + '</button>'
+      + '<button class="upg" data-artbuy="' + _artEsc(g.id) + '" data-artn="3" style="padding:2px 8px;font-size:11px">Raise a battalion (3) &middot; $' + btnCost + '</button></div>';
     cards += '</div>';
   }
 

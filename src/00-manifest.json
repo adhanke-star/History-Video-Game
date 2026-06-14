@@ -8,6 +8,7 @@
     "50-production.js",
     "55-weapons.js",
     "56-artillery.js",
+    "57-engineering.js",
     "60-blockade.js",
     "70-manpower.js",
     "80-victory.js",

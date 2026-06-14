@@ -76,9 +76,12 @@ function prodOnResolve(winnerSide, type, B, C, win) {
     // 1) Rail integrity: CS decays irreversibly (no replacement iron); rail-node investment slows it a touch.
     if (cfg.railDecay > 0) {
       var decay = cfg.railDecay * (1 - 0.08 * railNode);    // depots/rail spending mitigates slightly
+      var railBefore = P.railIntegrity;
       P.railIntegrity = Math.max(8, P.railIntegrity * (1 - decay));
+      P.railLossLast = railBefore - P.railIntegrity;         // A2: the Engineer Corps may claw back a FRACTION of this (never all)
     } else {
       P.railIntegrity = Math.min(100, P.railIntegrity + 2);  // US repairs/USMRR keeps it full
+      P.railLossLast = 0;
     }
     var throughput = P.railIntegrity / 100;
 
