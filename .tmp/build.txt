@@ -1,8 +1,8 @@
 GATE OK · parse ✓ · hex ✓ · collision ✓
   data:      GAME_DATA = {diplomacy, economy, manpower-teaching}
   modules:   10-president-state.js, 20-president-render.js, 30-president-shell.js, 40-economy.js, 50-production.js, 60-blockade.js, 70-manpower.js, 80-victory.js, 90-president-register.js
-  new fns:   _pdLog, presInit, _pdMonthName, presOnResolve, _pdStat, _pdMeter, presRenderEconomy, presRenderCabinet, presRenderMap, _pdInterstitialHTML, presWireCabinet, _pdShowTurnInterstitial, _ecCfg, _ecSecretary, _ecPush, _ecNorm, econInit, econOnResolve, _ecInflStatus, econRenderFinance, _ecWhyText, econWireFinance, _prCfg, _prPush, prodInit, prodOnResolve, _prEquipStatus, presProdBlock, _blkCaptureProb, _blkRunnerSuccess, _blkPortsByYear, _blkPush, blockadeInit, blockadeOnResolve, _blkRecogStatus, _blkTightStatus, _blkCard, _blkWhyText, blockadeRenderDiplomacy, blockadeWireDiplomacy, _mpCfg, _mpReplacementRatio, _mpPush, manpowerInit, manpowerOnResolve, _mpStrengthStatus, _mpCard, _mpWhyText, presManpowerBlock, vicMomentum, _vicPush, vicInit, vicOnResolve, _vicMomWord, vicRenderPaths, _vicWhyText, vicWirePaths
+  new fns:   _pdLog, presInit, _pdMonthName, presOnResolve, _pdStat, _pdMeter, presRenderEconomy, presRenderCabinet, presRenderMap, _pdInterstitialHTML, presWireCabinet, _pdShowTurnInterstitial, _ecCfg, _ecSecretary, _ecPush, _ecNorm, econInit, econOnResolve, _ecInflStatus, econRenderFinance, _ecWhyText, econWireFinance, _prCfg, _prPush, prodInit, prodOnResolve, _prEquipStatus, presProdBlock, _blkCaptureProb, _blkRunnerSuccess, _blkPortsByYear, _blkPush, blockadeInit, blockadeOnResolve, _blkRecogStatus, _blkTightStatus, _blkCard, _blkWhyText, blockadeRenderDiplomacy, blockadeWireDiplomacy, _mpCfg, _mpReplacementRatio, _mpPush, manpowerInit, manpowerOnResolve, _mpStrengthStatus, _mpCard, _mpWhyText, presManpowerBlock, vicMomentum, _vicPush, vicInit, vicOnResolve, _vicMomWord, _vicApplyWild, _vicWildSection, vicRenderPaths, _vicWhyText, vicWirePaths
   overrides: _t1InitAll, _t1Resolve, _wdRefresh, openWarDept, openUpgrade (2x each ✓)
-  base 599.3KB + inject 234.8KB = out 834.2KB
-WROTE civil_war_generals.html (834.2KB)
+  base 599.3KB + inject 244.5KB = out 843.8KB
+WROTE civil_war_generals.html (843.8KB)
 NEXT: node tools/bootprobe.mjs && node tools/t1probe.mjs && node tools/diag-classic.mjs

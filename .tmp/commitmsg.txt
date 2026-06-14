@@ -1,35 +1,21 @@
-S1e: Paths to Victory — make the South's collapse performance-driven, not scripted
+S1e+: wild-card catalog — alt-history victory gambits for both sides
 
-Design-law correction (Aaron): S1c/S1d keyed the Confederate death spiral to the
-CALENDAR (replacement ratio by year, recognition foreclosed at 1863, ports fall on
-schedule), which made Southern defeat feel inevitable. The law is the opposite —
-§5 deterministic BY PERFORMANCE (history is the favored "par", not a rail); §8 the
-South wins by NOT losing; §29 a fair sandbox. Now WIN and the spiral does not happen.
+Aaron: "give me more southern wildcard paths... creative and absurd to preposterous
+okay if I'm entertained... same vice versa. this is a game after all."
 
-src/80-victory.js + C.strategy + vicMomentum(C) (a 0..1 war-fortunes signal from
-win-rate, home-front will, political capital):
-- desertion is now (1-momentum)^1.6 -> a WINNING South barely bleeds deserters
-- the CS replacement ratio's year curve is a "if you are losing" FLOOR that momentum
-  lifts toward full replacement; arming the enslaved raises it further
-- runner ports hold, and recognition does NOT foreclose, for a winning/courting South
-- importFactor responds to runner investment + fortified ports
+src/80-victory.js: a tiered wild-card catalog on the Paths-to-Victory tab, both sides,
+plausible -> long-shot -> fantastical/preposterous. Each is a one-shot alternate-history
+gambit with a real mechanical effect (_vicApplyWild):
+- Confederate (11): Provoke the Trent Crisis; Invade the North; Burn the cotton;
+  Arm & free the enslaved (Cleburne); Smuggle Spencer repeaters; Foment the Northwest
+  Conspiracy; Launch a submarine fleet; Maximilian's legions march north; Stonewall
+  lives; THE DECAPITATION PLOT (momentum-gated — lands or backfires); a gold strike.
+- Union (10): Hard War early; Radical Emancipation 1861; Anaconda Overdrive; a repeater
+  army; Grant from the start; the Jay Cooke bond firehose; Gatling gun legions; the
+  Russian alliance; armored trains & rail artillery; the general strike of the enslaved.
 
-Executable Southern avenues (the counter-game) on a new "Paths to Victory" desk tab:
-- Break Northern Will -> Negotiated Peace (the primary path; tracks the enemy's will,
-  which winning erodes -> a victory becomes reachable)
-- Foreign Recognition (kept open by winning or active courting)
-- counter-blockade levers: invest in runners, commission commerce raiders, fortify
-  ports; pursue recognition; deserter amnesty; arm-and-free the enslaved (Cleburne)
-- wild card: provoke the Trent crisis (Anglo-American war) — alt-history (§5)
-
-Refactored 60-blockade.js + 70-manpower.js to read momentum + the levers; registered
-vicInit (early) + vicOnResolve (last) in the tick; 9th desk tab.
-
-VERIFIED (probe-victory 11/11): a WINNING South -> strength 93, desertion 9 (~none),
-ratio 0.83, ports held, recognition open, enemy will -> 0, negotiated-peace path opens;
-a LOSING South -> strength 38, desertion 297, ratio 0.22, ports gone, foreclosed.
-Counter-levers raise the lifeline; arm-the-enslaved surges the manpool. Full
-no-regression green (manpower 9/9 reframed to the losing-default, blockade 11/11,
-economy 8/8, desk 12/12, production 4/4, diag-classic paints); 0 pageerrors.
+VERIFIED (probe-victory 12/12): catalog renders both sides with tier labels; effects
+apply (Maximilian -> recognition 85 + enemy will drops; the general strike craters enemy
+will + unlocks USCT). Full suite still green; 0 pageerrors.
 
 Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>

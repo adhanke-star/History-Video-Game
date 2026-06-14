@@ -104,9 +104,17 @@
       "name": "Paths-to-Victory tab renders (CS levers + US mirror + Trent wild card)",
       "ok": true,
       "v": {
-        "csLen": 5658,
+        "csLen": 11747,
         "trentEarly": true,
-        "usLen": 2761
+        "usLen": 8641
+      }
+    },
+    {
+      "name": "wild-card catalog: both sides, tiers, effects apply",
+      "ok": true,
+      "v": {
+        "maximilianRecog": 85,
+        "csWillDrop": 72
       }
     }
   ],

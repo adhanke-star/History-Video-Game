@@ -106,6 +106,30 @@ const SETUP = `(() => {
       var hu=document.getElementById('wdContent').innerHTML;
       if (hu.indexOf('How the Union wins')<0) throw new Error('no US victory paths');
       return { csLen:h.length, trentEarly:trent, usLen:hu.length }; });
+
+    step('wild-card catalog: both sides, tiers, effects apply', function(){
+      // CS catalog renders the preposterous tier
+      G.campaign=mkC('CS'); _t1InitAll(G.campaign); G.campaign.president.date={year:1864,month:1};
+      openWarDept(); window._wdTab='victory'; _wdRefresh(); var h=document.getElementById('wdContent').innerHTML;
+      if (h.indexOf('Maximilian')<0) throw new Error('no preposterous CS wild card (Maximilian)');
+      if (h.indexOf('Fantastical')<0) throw new Error('no tier labels');
+      if (h.indexOf('Decapitation')<0) throw new Error('no Decapitation Plot');
+      // US catalog
+      G.campaign=mkC('US'); _t1InitAll(G.campaign); openWarDept(); window._wdTab='victory'; _wdRefresh();
+      var hu=document.getElementById('wdContent').innerHTML;
+      if (hu.indexOf('Gatling')<0) throw new Error('no US Gatling wild card');
+      if (hu.indexOf('Russian alliance')<0) throw new Error('no US Russian alliance');
+      // effect applies: Maximilian -> recognition 85 + enemy will drops
+      G.campaign=mkC('CS'); _t1InitAll(G.campaign); var C=G.campaign; var w0=C.strategy.enemyWill;
+      _vicApplyWild(C,'cs-maximilian');
+      if (C.blockade.recognition!==85) throw new Error('Maximilian should set recognition 85, got '+C.blockade.recognition);
+      if (!(C.strategy.enemyWill < w0)) throw new Error('Maximilian should drop enemy will');
+      // US general strike -> enemy will drops a lot + USCT
+      G.campaign=mkC('US'); _t1InitAll(G.campaign); var C2=G.campaign; var w2=C2.strategy.enemyWill;
+      _vicApplyWild(C2,'us-genstrike');
+      if (!(C2.strategy.enemyWill <= w2 - 20)) throw new Error('general strike should crater enemy will');
+      if (!C2.manpower.usctUnlocked) throw new Error('general strike should unlock USCT');
+      return { maximilianRecog:85, csWillDrop:w0-mkC('CS').funds*0 }; });
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   R.winS=winS; R.loseS=loseS;
   return JSON.stringify(R);

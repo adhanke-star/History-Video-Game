@@ -17103,9 +17103,10 @@ function vicInit(C) {
       fortifyPorts: false,       // hold the runner ports past their historical fall
       armEnslaved: false,        // Cleburne's path — a manpool surge at the cost of the war aim (1863+)
       amnesty: false,            // deserter amnesty (reduce desertion)
-      trentAvailable: false,     // wild card: the Trent crisis becomes provokable (early war)
+      trentAvailable: false,     // (legacy) — Trent is now in the wild-card catalog
       trentProvoked: false,
       armEnslavedShock: false,   // one-time legitimacy shock applied flag
+      wildsPlayed: [],           // ids of alternate-history wild cards already engaged
       victoryReady: null,        // a path that has reached its win threshold (display + S5 hook)
       log: []
     };
@@ -17114,6 +17115,7 @@ function vicInit(C) {
   if (typeof S.enemyWill !== "number") S.enemyWill = (side === "CS") ? 72 : 70;
   var bools = ["runnerInvestment", "commerceRaiders", "pursueRecognition", "fortifyPorts", "armEnslaved", "amnesty", "trentAvailable", "trentProvoked", "armEnslavedShock"];
   for (var i = 0; i < bools.length; i++) if (typeof S[bools[i]] !== "boolean") S[bools[i]] = false;
+  if (!Array.isArray(S.wildsPlayed)) S.wildsPlayed = [];
   if (typeof S.victoryReady === "undefined") S.victoryReady = null;
   if (!S.log) S.log = [];
 }
@@ -17185,6 +17187,96 @@ function _vicMomWord(m) {
   return ["On the brink", "#9c3b2e"];
 }
 
+/* ---- The WILD-CARD CATALOG (R32/§5 alternate history) — ahistorical gambits for
+   BOTH sides, tiered plausible -> long-shot -> fantastical/preposterous. One-shot
+   opportunity cards on the Paths-to-Victory tab. Effects live in _vicApplyWild. ---- */
+var _vicWILDCARDS = [
+  // ---------------- Confederate ----------------
+  { id: "cs-trent",        side: "CS", tier: "plausible",   yearMax: 1862, cost: "reckless",       title: "Provoke the Trent Crisis", desc: "Force the seizure of Confederate envoys into an Anglo-American war — the blockade shatters, recognition follows." },
+  { id: "cs-invade-north", side: "CS", tier: "plausible",   cost: "high risk",     title: "Invade the North (Lee's gambit)", desc: "Carry the war to Pennsylvania — a victory on Northern soil could break the Union's will at a stroke (and risks your army)." },
+  { id: "cs-cotton-inferno", side: "CS", tier: "plausible", cost: "−cotton",  title: "Burn the cotton, force the famine", desc: "Torch the crop to starve Europe's mills into recognition — at the cost of your own export revenue." },
+  { id: "cs-cleburne",     side: "CS", tier: "longshot",    yearMin: 1863, cost: "legitimacy",     title: "Arm &amp; free the enslaved (Cleburne)", desc: "A vast new army from the South's own people — at the price of the Confederacy's reason for being." },
+  { id: "cs-repeaters",    side: "CS", tier: "longshot",    cost: "−funds",   title: "Smuggle Spencer repeaters en masse", desc: "Run thousands of repeating rifles through the blockade — outgun the blue line seven shots to one." },
+  { id: "cs-copperhead",   side: "CS", tier: "longshot",    cost: "−capital", title: "Foment the Northwest Conspiracy", desc: "Arm the Copperheads and the Sons of Liberty — set the Northern home front aflame." },
+  { id: "cs-hunley",       side: "CS", tier: "longshot",    cost: "−funds",   title: "Launch a submarine fleet", desc: "Scale up the Hunley — torpedo boats break the blockade from below." },
+  { id: "cs-maximilian",   side: "CS", tier: "fantastical", cost: "preposterous",  title: "Maximilian's legions march north", desc: "France's puppet empire in Mexico pours an expeditionary army across the Rio Grande. Recognition and rescue at once." },
+  { id: "cs-stonewall",    side: "CS", tier: "fantastical", cost: "legend",        title: "Stonewall lives — the Valley ghost", desc: "The Confederacy's deadliest commander never falls. The blue armies learn to dread the name." },
+  { id: "cs-decapitation", side: "CS", tier: "fantastical", cost: "all or nothing",title: "The Decapitation Plot", desc: "A daring strike at the Union's leadership. If the moment is right it throws the North into chaos — if not, it rallies them in fury." },
+  { id: "cs-gold",         side: "CS", tier: "fantastical", cost: "fortune",       title: "A Confederate gold strike", desc: "Rebel prospectors hit a mother lode in the Arizona Territory — hard specie floods Richmond." },
+  // ---------------- Union ----------------
+  { id: "us-hardwar",      side: "US", tier: "plausible",   cost: "−morale",  title: "Hard War, early (Sherman's doctrine)", desc: "Make the South feel the war — march through its heartland and break its will to resist." },
+  { id: "us-radical-emanc",side: "US", tier: "plausible",   cost: "political",     title: "Radical Emancipation, 1861", desc: "Free and arm the enslaved from the war's first year — a flood of USCT and the collapse of the slave economy." },
+  { id: "us-anaconda",     side: "US", tier: "plausible",   cost: "−funds",   title: "Anaconda Overdrive", desc: "Throw everything at the blockade and the river war — strangle the cotton economy outright." },
+  { id: "us-repeaters",    side: "US", tier: "longshot",    cost: "−funds",   title: "A repeater army", desc: "Re-arm the infantry with Spencer repeaters — seven shots to the rebels' one." },
+  { id: "us-grant",        side: "US", tier: "longshot",    cost: "command",       title: "Grant from the start", desc: "Hand the war to the general who will not stop — relentless, grinding offensive." },
+  { id: "us-greenback",    side: "US", tier: "longshot",    cost: "fortune",       title: "The Jay Cooke bond firehose", desc: "Mass-market war bonds to every household — fund an overwhelming force." },
+  { id: "us-gatling",      side: "US", tier: "fantastical", cost: "preposterous",  title: "Gatling gun legions", desc: "Field the new rapid-fire guns in quantity — the future of slaughter, a year early." },
+  { id: "us-russian",      side: "US", tier: "fantastical", cost: "diplomatic",    title: "The Russian alliance", desc: "The Tsar's fleet winters in New York and Charleston — and this time it stays to fight." },
+  { id: "us-railart",      side: "US", tier: "fantastical", cost: "industrial",    title: "Armored trains &amp; rail artillery", desc: "Iron-clad locomotives carry siege guns to the front on the USMRR." },
+  { id: "us-genstrike",    side: "US", tier: "fantastical", cost: "history",       title: "The general strike of the enslaved", desc: "Du Bois's general strike in full: the South's labor base downs tools and walks to Union lines en masse." }
+];
+
+/* Apply a wild card's mechanical effect. The single place effects live. */
+function _vicApplyWild(C, id) {
+  var S = C.strategy, BL = C.blockade || {}, M = C.manpower || {}, clk = C.clock || {};
+  var mom = vicMomentum(C);
+  var bump = function (k, v, cap) { if (typeof M[k] === "number") M[k] = Math.min(cap || 100, M[k] + v); };
+  switch (id) {
+    // Confederate
+    case "cs-trent": BL.recognition = Math.min(100, (BL.recognition || 0) + 35); BL.recognitionForeclosed = false; S.enemyWill = Math.max(0, S.enemyWill - 12); break;
+    case "cs-invade-north": S.enemyWill = Math.max(0, S.enemyWill - 15); if (typeof clk.weariness === "number") clk.weariness = Math.min(100, clk.weariness + 5); break;
+    case "cs-cotton-inferno": BL.recognition = Math.min(100, (BL.recognition || 0) + 18); if (typeof BL.cottonStockK === "number") BL.cottonStockK = Math.round(BL.cottonStockK * 0.3); break;
+    case "cs-cleburne": S.armEnslaved = true; break;
+    case "cs-repeaters": bump("strength", 12); if (typeof BL.importFactor === "number") BL.importFactor = Math.min(1.1, BL.importFactor + 0.1); break;
+    case "cs-copperhead": S.enemyWill = Math.max(0, S.enemyWill - 22); break;
+    case "cs-hunley": S.fortifyPorts = true; if (typeof BL.importFactor === "number") BL.importFactor = Math.min(1.1, BL.importFactor + 0.15); break;
+    case "cs-maximilian": S.enemyWill = Math.max(0, S.enemyWill - 25); BL.recognition = 85; BL.recognitionForeclosed = false; break;
+    case "cs-stonewall": bump("strength", 15); S.enemyWill = Math.max(0, S.enemyWill - 10); break;
+    case "cs-decapitation":
+      if (mom >= 0.5) { S.enemyWill = Math.max(0, S.enemyWill - 30); _vicPush(C, "The decapitation strike lands — the Union government reels into chaos."); }
+      else { S.enemyWill = Math.min(100, S.enemyWill + 12); if (typeof clk.weariness === "number") clk.weariness = Math.min(100, clk.weariness + 10); _vicPush(C, "The plot is exposed — the North rallies in fury."); }
+      break;
+    case "cs-gold": if (typeof C.funds === "number") C.funds += 4000; break;
+    // Union
+    case "us-hardwar": S.enemyWill = Math.max(0, S.enemyWill - 18); break;
+    case "us-radical-emanc": M.usctUnlocked = true; if (typeof M.pool === "number") M.pool += 200; S.enemyWill = Math.max(0, S.enemyWill - 8); break;
+    case "us-anaconda": S.enemyWill = Math.max(0, S.enemyWill - 12); break;
+    case "us-repeaters": bump("strength", 14); break;
+    case "us-grant": S.enemyWill = Math.max(0, S.enemyWill - 14); bump("strength", 6); break;
+    case "us-greenback": if (typeof C.funds === "number") C.funds += 4000; break;
+    case "us-gatling": bump("strength", 16); break;
+    case "us-russian": S.enemyWill = Math.max(0, S.enemyWill - 15); break;
+    case "us-railart": bump("strength", 12); S.enemyWill = Math.max(0, S.enemyWill - 8); break;
+    case "us-genstrike": S.enemyWill = Math.max(0, S.enemyWill - 25); if (typeof M.pool === "number") M.pool += 250; M.usctUnlocked = true; break;
+  }
+}
+
+/* Render the side's available wild cards, grouped by plausibility tier. */
+function _vicWildSection(C) {
+  var side = (C.side === "CS") ? "CS" : "US";
+  var S = C.strategy, played = S.wildsPlayed || [];
+  var year = (C.clock && C.clock.year) || (C.president && C.president.date && C.president.date.year) || 1861;
+  var tiers = [["plausible", "Plausible — actively debated", "#4a6b3a"], ["longshot", "Long shot — documented but improbable", "#b8863b"], ["fantastical", "Fantastical — video-game wild", "#9c3b2e"]];
+  var out = '<hr class="rule"><div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#9c3b2e;margin:2px 0 2px">Wild Cards &mdash; Alternate History</div>'
+    + '<div style="font-size:11px;opacity:.65;margin-bottom:2px">Ahistorical gambits. Some plausible, some preposterous &mdash; the war is yours to bend.</div>';
+  for (var ti = 0; ti < tiers.length; ti++) {
+    var tier = tiers[ti][0], rows = "";
+    for (var i = 0; i < _vicWILDCARDS.length; i++) {
+      var w = _vicWILDCARDS[i];
+      if (w.side !== side || w.tier !== tier) continue;
+      if (w.yearMin && year < w.yearMin) continue;
+      if (w.yearMax && year > w.yearMax) continue;
+      var done = played.indexOf(w.id) >= 0;
+      rows += '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 0;border-bottom:1px dotted var(--rule)">'
+        + '<div style="flex:1 1 auto"><b style="font-size:12px">' + w.title + '</b> <span style="font-size:10px;opacity:.5">' + w.cost + '</span>'
+        + '<div style="font-size:11px;opacity:.7">' + w.desc + '</div></div>'
+        + '<button id="wild_' + w.id + '" type="button" class="upg" style="flex:0 0 auto"' + (done ? ' disabled' : '') + '>' + (done ? 'Engaged &check;' : 'Engage') + '</button></div>';
+    }
+    if (rows) out += '<div style="margin-top:4px"><div style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:' + tiers[ti][2] + '">' + tiers[ti][1] + '</div>' + rows + '</div>';
+  }
+  return out;
+}
+
 /* ---- vicRenderPaths: the Paths to Victory desk tab. Side-aware; the Confederate
    view is the rich one (the counter-game). ---- */
 function vicRenderPaths(C) {
@@ -17241,10 +17333,7 @@ function vicRenderPaths(C) {
           ? lever('vicArm', S.armEnslaved, "Arm &amp; free the enslaved (Cleburne's plan)", 'A vast new army from the South\'s own people &mdash; at the price of the Confederacy\'s reason for being. The boldest divergence.', '(legitimacy shock)')
           : '<div style="padding:7px 0;font-size:11px;opacity:.5;border-bottom:1px dotted var(--rule)">Arm the enslaved &mdash; Cleburne will propose it; available from 1863.</div>');
 
-    var wild = S.trentAvailable
-      ? '<hr class="rule"><div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#9c3b2e;margin:2px 0 2px">Wild card &mdash; alternate history</div>'
-        + lever('vicTrent', S.trentProvoked, 'Provoke the Trent crisis', 'Force the seizure of Confederate envoys into an Anglo-American war &mdash; the blockade shatters, recognition follows. Reckless. Magnificent.', '(one chance, 1861-62)')
-      : '';
+    var wild = _vicWildSection(C);
 
     var teach = '<div id="vicWhyBox" style="display:none;margin-top:10px;padding:10px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.12);font-size:12px;line-height:1.5"></div>'
       + '<div class="btn-row" style="margin-top:10px"><button id="vicWhy" type="button" class="upg">Can the South really win?</button></div>';
@@ -17261,7 +17350,7 @@ function vicRenderPaths(C) {
         'Sustain Northern resolve to November 1864 &mdash; lose the election and the peace party may concede the South.')
     + pathCard('Strangle by Blockade', 100 - Math.round(((C.blockade && C.blockade.importFactor) || 1) * 90), 'The Anaconda', '#b8863b',
         'Tighten the blockade, take the rebel ports, and choke the cotton economy until the South cannot fight.');
-  return head + usPaths
+  return head + usPaths + _vicWildSection(C)
     + '<div id="vicWhyBox" style="display:none;margin-top:10px;padding:10px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.12);font-size:12px;line-height:1.5"></div>'
     + '<div class="btn-row" style="margin-top:10px"><button id="vicWhy" type="button" class="upg">The Union\'s harder problem</button></div>';
 }
@@ -17297,16 +17386,22 @@ function vicWirePaths(C) {
   toggle("vicRecog", "pursueRecognition");
   toggle("vicAmnesty", "amnesty");
   toggle("vicArm", "armEnslaved", true);          // one-way (you cannot un-free people)
-  var trent = document.getElementById("vicTrent");
-  if (trent) trent.addEventListener("click", function () {
-    S.trentProvoked = true; S.trentAvailable = false;
-    // the gamble pays in recognition + a blow to Northern will
-    if (C.blockade) { C.blockade.recognition = Math.min(100, (C.blockade.recognition || 0) + 35); C.blockade.recognitionForeclosed = false; }
-    S.enemyWill = Math.max(0, S.enemyWill - 12);
-    _vicPush(C, "The Trent crisis is provoked — Britain and the Union stand on the brink of war.");
-    if (typeof saveLocal === "function") saveLocal();
-    if (typeof _wdRefresh === "function") _wdRefresh();
-  });
+  // Wild-card catalog — each engages once, applies its alternate-history effect.
+  for (var wi = 0; wi < _vicWILDCARDS.length; wi++) {
+    (function (w) {
+      var b = document.getElementById("wild_" + w.id);
+      if (!b) return;
+      b.addEventListener("click", function () {
+        if (!S.wildsPlayed) S.wildsPlayed = [];
+        if (S.wildsPlayed.indexOf(w.id) >= 0) return;
+        S.wildsPlayed.push(w.id);
+        _vicApplyWild(C, w.id);
+        _vicPush(C, "Alternate history — " + (w.title || w.id).replace(/&amp;/g, "&") + ".");
+        if (typeof saveLocal === "function") saveLocal();
+        if (typeof _wdRefresh === "function") _wdRefresh();
+      });
+    })(_vicWILDCARDS[wi]);
+  }
   var why = document.getElementById("vicWhy");
   if (why) why.addEventListener("click", function () {
     var box = document.getElementById("vicWhyBox");

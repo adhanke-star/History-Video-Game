@@ -1,1 +1,1 @@
-probe-victory ok=true steps=11 pageerrors=0
+probe-victory ok=true steps=12 pageerrors=0
