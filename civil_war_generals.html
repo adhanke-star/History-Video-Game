@@ -18639,6 +18639,208 @@ var GAME_DATA = {
     ]
   }
 },
+"press": {
+  "_meta": {
+    "version": 1,
+    "system": "S2 m4 press / public-opinion (§8.57/D38.1)",
+    "note": "Real Civil War papers per side, each with a political lean that sets how it reacts to the war's turns; reactions shift the paper's favor toward/against the administration; the aggregate sentiment feeds C.morale.public (the m3 home-front layer) anchored at 50=neutral. favorShift -> delta: strongly-for +8 / for +4 / neutral 0 / against -4 / strongly-against -8. Papers/editors/leanings are Verified standard records; voice/editorials enriched by the adversarially-verified s2-press-research workflow at commit.",
+    "conditions": "victory|defeat|stalemate|heavy-casualties|emancipation|the-draft|habeas-suspension|recognition|hard-war|always"
+  },
+  "papers": [
+    {
+      "id": "ny-tribune", "name": "New-York Tribune", "city": "New York, New York", "side": "US", "lean": "radical", "editor": "Horace Greeley",
+      "voice": "Thundering, moralizing, impatient radical-Republican broadsheet that treats emancipation as the war's whole point and lashes the administration whenever it dawdles.",
+      "reactsTo": ["emancipation", "hard-war", "defeat", "the-draft", "stalemate"],
+      "editorials": [
+        { "condition": "emancipation", "headline": "AT LAST! THE PRAYER OF TWENTY MILLIONS IS ANSWERED — THE BONDMAN GOES FREE", "favorShift": "strongly-for", "provenance": "Verified", "sources": ["https://www.history.com/this-day-in-history/august-20/horace-greeleys-the-prayer-of-twenty-millions-is-published", "https://www.battlefields.org/learn/articles/new-york-tribune-civil-war"] },
+        { "condition": "stalemate", "headline": "FORWARD TO RICHMOND! THE NATION WAITS WHILE GENERALS DAWDLE", "favorShift": "against", "provenance": "Verified", "sources": ["https://www.battlefields.org/learn/articles/new-york-tribune-civil-war", "https://civilwarbookofdays.org/2011/06/24/new-york-tribune-forward-to-richmond/"] },
+        { "condition": "hard-war", "headline": "STRIKE SLAVERY AT THE ROOT — IT IS PREPOSTEROUS TO SPARE THE THING THAT FEEDS THE REBELLION", "favorShift": "strongly-for", "provenance": "Verified", "sources": ["https://www.history.com/this-day-in-history/august-20/horace-greeleys-the-prayer-of-twenty-millions-is-published", "https://www.abrahamlincolnonline.org/lincoln/speeches/greeley.htm"] },
+        { "condition": "the-draft", "headline": "THE CONSCRIPTION IS JUST — LET NO MOB OF SECESSION SYMPATHIZERS UNMAN THE REPUBLIC", "favorShift": "for", "provenance": "Verified", "sources": ["https://en.wikipedia.org/wiki/New_York_City_draft_riots", "https://www.battlefields.org/learn/articles/new-york-tribune-civil-war"] },
+        { "condition": "defeat", "headline": "DISASTER ON THE FIELD: THE COUNTRY DEMANDS COMMANDERS WHO WILL FIGHT, NOT RETREAT", "favorShift": "against", "provenance": "Inferred", "sources": ["https://www.battlefields.org/learn/articles/new-york-tribune-civil-war", "https://www.essentialcivilwarcurriculum.com/horace-greeley.html"] }
+      ]
+    },
+    {
+      "id": "the-liberator", "name": "The Liberator", "city": "Boston, Massachusetts", "side": "US", "lean": "abolitionist", "editor": "William Lloyd Garrison",
+      "voice": "Uncompromising, scripture-tongued immediatist weekly that judges every act of the war solely by whether it brings the slave one step nearer to instant, unconditional freedom.",
+      "reactsTo": ["emancipation", "hard-war", "stalemate", "heavy-casualties", "victory"],
+      "editorials": [
+        { "condition": "emancipation", "headline": "GLORY TO GOD — THE PROCLAMATION IS SIGNED; LET THE JUBILEE OF THE BONDMAN BEGIN", "favorShift": "strongly-for", "provenance": "Verified", "sources": ["https://www.britannica.com/topic/The-Liberator-American-newspaper", "https://www.nps.gov/articles/000/the-liberator.htm", "https://www.massmoments.org/moment-details/boston-abolitionists-await-emancipation-proclamation.html"] },
+        { "condition": "stalemate", "headline": "HALF-MEASURES SAVE NOTHING: NO UNION WITH SLAVEHOLDERS, NO PEACE WHILE A CHAIN REMAINS", "favorShift": "against", "provenance": "Verified", "sources": ["https://www.britannica.com/biography/William-Lloyd-Garrison", "https://en.wikipedia.org/wiki/The_Liberator_(newspaper)"] },
+        { "condition": "hard-war", "headline": "IMMEDIATE AND UNCONDITIONAL: ARM THE FREEDMAN AND LET HIM STRIKE FOR HIS OWN LIBERTY", "favorShift": "strongly-for", "provenance": "Inferred", "sources": ["https://www.nps.gov/articles/000/the-liberator.htm", "https://en.wikipedia.org/wiki/The_Liberator_(newspaper)"] },
+        { "condition": "victory", "headline": "THE SWORD OF FREEDOM PREVAILS — EVERY TRIUMPH IS A NAIL IN SLAVERY'S COFFIN", "favorShift": "for", "provenance": "Inferred", "sources": ["https://www.britannica.com/topic/The-Liberator-American-newspaper", "https://www.nps.gov/articles/000/the-liberator.htm"] },
+        { "condition": "heavy-casualties", "headline": "THE BLOOD OF THE FREE ATONES FOR THE NATION'S GUILT — WE DARE NOT FALTER NOW", "favorShift": "neutral", "provenance": "Inferred", "sources": ["https://www.britannica.com/biography/William-Lloyd-Garrison", "https://www.pbs.org/wgbh/americanexperience/features/abolitionists-films-principal-characters/"] }
+      ]
+    },
+    {
+      "id": "chicago-tribune", "name": "Chicago Tribune", "city": "Chicago, Illinois", "side": "US", "lean": "radical", "editor": "Joseph Medill",
+      "voice": "Aggressive Western Republican organ — Medill held a one-third interest and ran it as managing editor — that helped build the new party and push Lincoln's 1860 nomination, demanding emancipation early, hard war always, and no compromise with the slave power.",
+      "reactsTo": ["emancipation", "hard-war", "victory", "the-draft", "defeat"],
+      "editorials": [
+        { "condition": "emancipation", "headline": "THE PROCLAMATION COMES TOO LATE BY A YEAR — BUT WELCOME, AND NOW PROSECUTE IT TO THE HILT", "favorShift": "strongly-for", "provenance": "Verified", "sources": ["https://www.britannica.com/biography/Joseph-Medill", "https://www.mrlincolnandfriends.org/the-journalists/joseph-medill/"] },
+        { "condition": "hard-war", "headline": "NO COMPROMISE WITH TRAITORS: CRUSH THE REBELLION AND THE SLAVERY THAT BORE IT", "favorShift": "strongly-for", "provenance": "Verified", "sources": ["https://www.britannica.com/biography/Joseph-Medill", "https://en.wikipedia.org/wiki/Joseph_Medill"] },
+        { "condition": "victory", "headline": "THE WEST REJOICES — OUR ARMIES PROVE THE UNION SHALL NOT BE DISSOLVED", "favorShift": "for", "provenance": "Inferred", "sources": ["https://www.newworldencyclopedia.org/entry/Joseph_Medill", "https://en.wikipedia.org/wiki/Joseph_Medill"] },
+        { "condition": "the-draft", "headline": "FILL THE RANKS — ILLINOIS WILL NOT BE FOUND WANTING IN MEN FOR THE NATION'S LIFE", "favorShift": "for", "provenance": "Inferred", "sources": ["https://en.wikipedia.org/wiki/Joseph_Medill", "https://www.mrlincolnandfriends.org/the-journalists/joseph-medill/"] },
+        { "condition": "defeat", "headline": "BLUNDERS IN HIGH COMMAND COST US DEAR — GIVE US GENERALS WHO MEAN TO WIN", "favorShift": "against", "provenance": "Inferred", "sources": ["https://www.britannica.com/biography/Joseph-Medill", "https://en.wikipedia.org/wiki/Joseph_Medill"] }
+      ]
+    },
+    {
+      "id": "harpers-weekly", "name": "Harper's Weekly", "city": "New York, New York", "side": "US", "lean": "administration", "editor": "George William Curtis",
+      "voice": "Polished, illustrated 'Journal of Civilization' that began the war cautiously moderate on slavery — critics jeered 'Harper's Weakly' for courting Southern readers — then swung firmly behind Lincoln; once Curtis took the political editorship in 1863 it rallied the loyal North, ran the full Proclamation, glorified the Union in Nast's woodcuts, and pilloried Davis and the Copperheads.",
+      "reactsTo": ["victory", "emancipation", "the-draft", "defeat", "recognition"],
+      "editorials": [
+        { "condition": "victory", "headline": "THE STARS AND STRIPES ADVANCE — THE UNION ARMS VINDICATE THE NATION'S FAITH", "favorShift": "strongly-for", "provenance": "Verified", "sources": ["https://en.wikipedia.org/wiki/Harper's_Weekly", "https://library.osu.edu/site/thomasnast/harpers-weekly/"] },
+        { "condition": "emancipation", "headline": "EMANCIPATION: A REMARKABLE CHANGE OF OPINION — THE NATION TAKES ITS STAND FOR FREEDOM", "favorShift": "strongly-for", "provenance": "Verified", "sources": ["https://teachingamericanhistory.org/document/harpers-weekly-editorial-on-emancipation/", "https://thomasnast.com/cartoons/the-emancipation-of-the-negroes-january-1863-the-past-and-the-future/"] },
+        { "condition": "the-draft", "headline": "THE LAW MUST BE OBEYED — THE RIOTERS OF THE CITY DISGRACE THE LOYAL CAUSE", "favorShift": "for", "provenance": "Verified", "sources": ["https://en.wikipedia.org/wiki/Harper's_Weekly", "https://digitalhistory.hsp.org/hint/politics-graphic-detail/org/harpers-weekly"] },
+        { "condition": "recognition", "headline": "LET EUROPE BEWARE — NO FOREIGN POWER SHALL BLESS THE TRAITORS' CONFEDERACY", "favorShift": "for", "provenance": "Inferred", "sources": ["https://en.wikipedia.org/wiki/Harper's_Weekly", "https://digitalhistory.hsp.org/hint/politics-graphic-detail/org/harpers-weekly"] },
+        { "condition": "defeat", "headline": "REVERSES THERE MAY BE, BUT THE PEOPLE STAND FIRM BEHIND THE PRESIDENT AND THE UNION", "favorShift": "for", "provenance": "Inferred", "sources": ["https://en.wikipedia.org/wiki/Harper's_Weekly", "https://library.osu.edu/site/thomasnast/harpers-weekly/"] }
+      ]
+    },
+    {
+      "id": "chicago-times", "name": "Chicago Times", "city": "Chicago, Illinois", "side": "US", "lean": "copperhead", "editor": "Wilbur F. Storey",
+      "voice": "Vituperative, sneering, and openly white-supremacist — the loudest Copperhead sheet in the West, a paper Storey turned into a daily creed of anti-administration invective and naked racial demagoguery.",
+      "reactsTo": ["emancipation", "the-draft", "habeas-suspension", "defeat", "stalemate"],
+      "editorials": [
+        { "condition": "emancipation", "headline": "A WAR FOR THE NEGRO. — The white man's blood spent to break his own chains and forge the black man's freedom.", "favorShift": "strongly-against", "provenance": "Inferred", "sources": ["https://en.wikipedia.org/wiki/Chicago_Times", "https://en.wikipedia.org/wiki/Wilbur_F._Storey"] },
+        { "condition": "the-draft", "headline": "CONSCRIPTION! — Freemen DRAGGED to the shambles to fight a quarrel of the Abolitionists. Resist this tyranny.", "favorShift": "strongly-against", "provenance": "Inferred", "sources": ["https://quod.lib.umich.edu/j/jala/2629860.0032.105/--lincoln-s-critics-the-copperheads", "https://billofrightsinstitute.org/essays/the-draft-and-the-draft-riots-of-1863/"] },
+        { "condition": "habeas-suspension", "headline": "THE RIGHT OF FREE SPEECH HAS NOT PASSED AWAY. — We have, then, still a free press, in spite of the bayonet.", "favorShift": "strongly-against", "provenance": "Verified", "sources": ["https://ecommons.luc.edu/cgi/viewcontent.cgi?article=1314&context=luc_theses", "https://civilwarmonths.com/2023/06/03/the-chicago-times-suppression/"] },
+        { "condition": "defeat", "headline": "ANOTHER SLAUGHTER. — How many graves must be dug before the people end this hopeless and unholy carnage?", "favorShift": "strongly-against", "provenance": "Inferred", "sources": ["https://en.wikipedia.org/wiki/Chicago_Times", "https://quod.lib.umich.edu/j/jala/2629860.0032.105/--lincoln-s-critics-the-copperheads"] },
+        { "condition": "stalemate", "headline": "NO NEARER PEACE. — Two years of blood and the lines have not moved. The war cannot be won — let it END.", "favorShift": "strongly-against", "provenance": "Inferred", "sources": ["https://www.essentialcivilwarcurriculum.com/copperheads.html", "https://en.wikipedia.org/wiki/Chicago_Times"] }
+      ]
+    },
+    {
+      "id": "ny-world", "name": "New York World", "city": "New York, New York", "side": "US", "lean": "copperhead", "editor": "Manton Marble",
+      "voice": "Polished, lawyerly, and venomous — the organ of the New York Democracy, branding Lincoln a despot in elegant prose while peddling the rawest race-baiting of the war; its correspondents Croly and Wakeman coined the slur 'miscegenation' in 1864 to inflame white fear of emancipation.",
+      "reactsTo": ["emancipation", "the-draft", "habeas-suspension", "defeat", "recognition"],
+      "editorials": [
+        { "condition": "emancipation", "headline": "THE PROCLAMATION. — An unconstitutional usurpation that converts a war for the Union into a war for amalgamation.", "favorShift": "strongly-against", "provenance": "Verified", "sources": ["https://en.wikipedia.org/wiki/New_York_World", "https://en.wikipedia.org/wiki/Manton_Marble", "https://www.thedailybeast.com/how-a-racist-newspaper-defeated-lincoln-in-new-york-in-the-1864-election/"] },
+        { "condition": "the-draft", "headline": "THE CONSCRIPTION ACT. — A measure unknown to the Constitution; the people are not chattels of the War Office.", "favorShift": "strongly-against", "provenance": "Verified", "sources": ["https://www.mrlincolnandnewyork.org/new-yorkers/manton-marble-1834-1917/", "https://billofrightsinstitute.org/essays/the-draft-and-the-draft-riots-of-1863/"] },
+        { "condition": "habeas-suspension", "headline": "SEIZED BY THE BAYONET. — Our presses stopped, our editors threatened — is this the Republic, or the rule of Stanton?", "favorShift": "strongly-against", "provenance": "Verified", "sources": ["https://newseumed.org/tools/critical-debate/1864-lincoln-administration-seizes-opposition-newspapers", "https://en.wikipedia.org/wiki/New_York_World"] },
+        { "condition": "defeat", "headline": "THE COST OF THE WAR. — Defeat upon defeat, and still the Administration demands more men, more blood, more taxes.", "favorShift": "strongly-against", "provenance": "Inferred", "sources": ["https://en.wikipedia.org/wiki/Manton_Marble", "https://www.mrlincolnandnewyork.org/new-yorkers/manton-marble-1834-1917/"] },
+        { "condition": "recognition", "headline": "THE OLD UNION OR NONE. — Let an armistice and the ballot, not the bayonet, restore the Union of our fathers.", "favorShift": "against", "provenance": "Inferred", "sources": ["https://www.let.rug.nl/usa/outlines/history-1994/sectional-conflict/peace-democrats-copperheads-and-draft-riots.php", "https://en.wikipedia.org/wiki/Manton_Marble"] }
+      ]
+    },
+    {
+      "id": "ny-herald", "name": "New-York Herald", "city": "New York, New York", "side": "US", "lean": "war-democrat", "editor": "James Gordon Bennett",
+      "voice": "Sensational, independent, and gleefully contrarian — Bennett owed no party, backing Frémont, Breckinridge, Lincoln and Grant by turns. Fiercely pro-Union and pro-victory after Sumter, yet pro-slavery in sympathy and hostile to emancipation, flaying Lincoln daily; the one paper the President himself read each morning.",
+      "reactsTo": ["victory", "defeat", "emancipation", "the-draft", "hard-war"],
+      "editorials": [
+        { "condition": "victory", "headline": "GLORIOUS NEWS! — Push on the columns; the rebellion reels. The Union shall be preserved whatever the cost.", "favorShift": "for", "provenance": "Verified", "sources": ["https://www.mrlincolnandnewyork.org/new-yorkers/james-gordon-bennett-1795-1872/", "https://en.wikipedia.org/wiki/James_Gordon_Bennett_Sr."] },
+        { "condition": "defeat", "headline": "THE BLUNDERS OF THE ADMINISTRATION. — Good soldiers betrayed by bad statesmen; give us generals, not politicians.", "favorShift": "neutral", "provenance": "Verified", "sources": ["https://www.mrlincolnandnewyork.org/new-yorkers/james-gordon-bennett-1795-1872/", "https://www.encyclopedia.com/people/literature-and-arts/journalism-and-publishing-biographies/james-gordon-bennett-1795-1872"] },
+        { "condition": "emancipation", "headline": "EMANCIPATION. — A radical and dangerous experiment; the Union, not the negro, is the object of this war.", "favorShift": "against", "provenance": "Verified", "sources": ["https://www.mrlincolnandnewyork.org/new-yorkers/james-gordon-bennett-1795-1872/", "https://en.wikipedia.org/wiki/James_Gordon_Bennett_Sr."] },
+        { "condition": "the-draft", "headline": "FILL UP THE RANKS. — The draft is harsh medicine, but the armies MUST be fed if the Union is to live.", "favorShift": "for", "provenance": "Inferred", "sources": ["https://www.britannica.com/biography/James-Gordon-Bennett-American-editor-1795-1872", "https://billofrightsinstitute.org/essays/the-draft-and-the-draft-riots-of-1863/"] },
+        { "condition": "hard-war", "headline": "STRIKE THE REBELLION HARD. — No half-measures; whip the rebel armies into the dust and dictate peace at the cannon's mouth.", "favorShift": "strongly-for", "provenance": "Inferred", "sources": ["https://www.mrlincolnandnewyork.org/new-yorkers/james-gordon-bennett-1795-1872/", "https://en.wikipedia.org/wiki/James_Gordon_Bennett_Sr."] }
+      ]
+    },
+    {
+      "id": "the-crisis-columbus", "name": "The Crisis", "city": "Columbus, Ohio", "side": "US", "lean": "copperhead", "editor": "Samuel Medary",
+      "voice": "Defiant, agrarian, and unrepentantly Peace-Democrat — the Western Copperhead's gospel, its office sacked by Union cavalry in March 1863 and Medary himself indicted for conspiracy, yet preaching armistice and 'the Union as it was' to the last while casting emancipation as the ruin of the white laborer.",
+      "reactsTo": ["emancipation", "the-draft", "habeas-suspension", "defeat", "stalemate"],
+      "editorials": [
+        { "condition": "emancipation", "headline": "THE WAR PERVERTED. — Begun to save the Union, it is now a crusade for the negro and the ruin of the white laborer.", "favorShift": "strongly-against", "provenance": "Verified", "sources": ["https://en.wikipedia.org/wiki/The_Crisis_(newspaper)", "https://www.americanhistorycentral.com/entries/samuel-medary/", "https://www.ohiocivilwarcentral.com/samuel-medary/"] },
+        { "condition": "habeas-suspension", "headline": "VALLANDIGHAM BANISHED! — A citizen seized for words alone. Free speech is dead where the soldier rules the editor.", "favorShift": "strongly-against", "provenance": "Verified", "sources": ["https://en.wikipedia.org/wiki/The_Crisis_(newspaper)", "https://www.ohiocivilwarcentral.com/samuel-medary/", "http://civildiscourse-historyblog.com/blog/2015/11/30/righteous-or-riotous-the-2nd-ohio-cavalry-and-the-crisis"] },
+        { "condition": "the-draft", "headline": "THE CONSCRIPTION. — Ohio freemen will not be marched to a war for abolition at the point of the Federal bayonet.", "favorShift": "strongly-against", "provenance": "Verified", "sources": ["https://www.americanhistorycentral.com/entries/samuel-medary/", "https://www.let.rug.nl/usa/outlines/history-1994/sectional-conflict/peace-democrats-copperheads-and-draft-riots.php"] },
+        { "condition": "defeat", "headline": "BLOOD AND TREASURE WASTED. — Another army wrecked. How long will the people endure this useless butchery?", "favorShift": "strongly-against", "provenance": "Inferred", "sources": ["https://en.wikipedia.org/wiki/The_Crisis_(newspaper)", "https://www.americanhistorycentral.com/entries/samuel-medary/"] },
+        { "condition": "stalemate", "headline": "PEACE — THE UNION AS IT WAS. — The sword has failed; let an honorable armistice end what no battle can.", "favorShift": "strongly-against", "provenance": "Verified", "sources": ["https://en.wikipedia.org/wiki/The_Crisis_(newspaper)", "https://www.americanhistorycentral.com/entries/samuel-medary/", "https://ohiomemory.ohiohistory.org/archives/1462"] }
+      ]
+    },
+    {
+      "id": "richmond-examiner", "name": "Richmond Examiner", "city": "Richmond, Virginia", "side": "CS", "lean": "fire-eater", "editor": "John M. Daniel",
+      "voice": "A mordant, duel-fighting rapier of a paper that backs slavery and secession but flays Davis's every blunder with caustic, states'-rights venom — the loudest organ of dissent in the Confederate capital.",
+      "reactsTo": ["defeat", "the-draft", "habeas-suspension", "hard-war", "heavy-casualties", "stalemate"],
+      "editorials": [
+        { "condition": "defeat", "headline": "EVERY MISFORTUNE TRACED TO ONE HAND: Mr. Davis Meddles, Our Generals Bleed", "favorShift": "strongly-against", "provenance": "Verified", "sources": ["https://encyclopediavirginia.org/entries/newspapers-in-virginia-during-the-civil-war-confederate/", "https://en.wikipedia.org/wiki/Richmond_Examiner"] },
+        { "condition": "the-draft", "headline": "ARBITRARY IMPRESSMENTS TOUCH THE PEOPLE'S PRIDE: Congress, Order This Plunder by Law or Not at All", "favorShift": "against", "provenance": "Verified", "sources": ["https://encyclopediavirginia.org/entries/confederate-impressment-during-the-civil-war/", "https://encyclopediavirginia.org/entries/newspapers-in-virginia-during-the-civil-war-confederate/"] },
+        { "condition": "habeas-suspension", "headline": "THE PRESIDENT WOULD BE DICTATOR: We Did Not Quit One Tyranny to Crown Another in Richmond", "favorShift": "strongly-against", "provenance": "Inferred", "sources": ["https://en.wikipedia.org/wiki/Richmond_Examiner", "https://encyclopediavirginia.org/entries/daniel-john-m-1825-1865/"] },
+        { "condition": "hard-war", "headline": "THE VANDAL BURNS THE VALLEY: Sheridan Makes War on Barns and Women — Answer Fire With Fire", "favorShift": "for", "provenance": "Inferred", "sources": ["https://archive.org/details/richmondexaminer00dani", "https://en.wikipedia.org/wiki/Richmond_Examiner"] },
+        { "condition": "stalemate", "headline": "HAD MR. DAVIS BEEN A PLAIN PLANTER He Had Never Fancied Himself Fit to Move Armies From a Desk", "favorShift": "strongly-against", "provenance": "Inferred", "sources": ["https://encyclopediavirginia.org/entries/newspapers-in-virginia-during-the-civil-war-confederate/", "https://en.wikipedia.org/wiki/Richmond_Examiner"] }
+      ]
+    },
+    {
+      "id": "richmond-enquirer", "name": "Richmond Enquirer", "city": "Richmond, Virginia", "side": "CS", "lean": "administration", "editor": "Nathaniel Tyler",
+      "voice": "Virginia's oldest sheet and the President's organ — restrained, literary, and quick to scold 'newspaper generals' who second-guess the government in time of trial.",
+      "reactsTo": ["victory", "defeat", "the-draft", "habeas-suspension", "recognition", "hard-war"],
+      "editorials": [
+        { "condition": "victory", "headline": "THE WISDOM OF THE EXECUTIVE VINDICATED: Trust the Government, and the Republic Shall Stand", "favorShift": "strongly-for", "provenance": "Verified", "sources": ["https://encyclopediavirginia.org/entries/newspapers-in-virginia-during-the-civil-war-confederate/", "https://www.loc.gov/item/sn84024735/"] },
+        { "condition": "the-draft", "headline": "CONSCRIPTION IS THE PRICE OF NATIONHOOD: Let No Man Skulk Behind a Substitute While the Cause Bleeds", "favorShift": "for", "provenance": "Inferred", "sources": ["https://encyclopediavirginia.org/entries/newspapers-in-virginia-during-the-civil-war-confederate/", "https://www.loc.gov/item/sn84024735/"] },
+        { "condition": "habeas-suspension", "headline": "EDITORS WHO CARP IMPERIL THE STATE: In War the President Must Have a Free Hand", "favorShift": "for", "provenance": "Verified", "sources": ["https://encyclopediavirginia.org/entries/newspapers-in-virginia-during-the-civil-war-confederate/", "https://www.loc.gov/chroniclingamerica/essays/1205/"] },
+        { "condition": "defeat", "headline": "A REVERSE, NOT A RUIN: Faith in Mr. Davis and the Army Will Carry Us Through the Dark Hour", "favorShift": "for", "provenance": "Inferred", "sources": ["https://encyclopediavirginia.org/entries/newspapers-in-virginia-during-the-civil-war-confederate/", "https://www.loc.gov/item/sn84024735/"] },
+        { "condition": "recognition", "headline": "EUROPE CANNOT FOREVER AVERT HER EYES: Cotton and Valor Must Yet Compel a Hearing Abroad", "favorShift": "for", "provenance": "Inferred", "sources": ["https://www.loc.gov/chroniclingamerica/essays/1205/", "https://www.loc.gov/item/sn84024735/"] }
+      ]
+    },
+    {
+      "id": "charleston-mercury", "name": "Charleston Mercury", "city": "Charleston, South Carolina", "side": "CS", "lean": "fire-eater", "editor": "R. Barnwell Rhett Jr. (editor); Robert Barnwell Rhett (owner)",
+      "voice": "The trumpet of the 'Father of Secession' — a pro-slavery, states'-rights fire-eater that demanded disunion first and then turned its lash on Davis for fighting too cautiously.",
+      "reactsTo": ["victory", "defeat", "recognition", "the-draft", "hard-war", "stalemate"],
+      "editorials": [
+        { "condition": "recognition", "headline": "COTTON IS KING — AND KINGS ARE OBEYED: Let Davis's Timid Diplomats Stand Aside", "favorShift": "against", "provenance": "Verified", "sources": ["https://www.battlefields.org/learn/articles/charleston-mercury", "https://en.wikipedia.org/wiki/R._Barnwell_Rhett_Jr."] },
+        { "condition": "stalemate", "headline": "A DEFENSIVE WAR IS A LOSING WAR: The President Sits On His Hands While the Yankee Gathers Strength", "favorShift": "strongly-against", "provenance": "Verified", "sources": ["https://www.scencyclopedia.org/sce/entries/charleston-mercury/", "https://en.wikipedia.org/wiki/R._Barnwell_Rhett_Jr."] },
+        { "condition": "the-draft", "headline": "CONSCRIPTION TRAMPLES STATE SOVEREIGNTY: We Seceded From Coercion, Not To Embrace It in Richmond", "favorShift": "strongly-against", "provenance": "Inferred", "sources": ["https://www.scencyclopedia.org/sce/entries/charleston-mercury/", "https://en.wikipedia.org/wiki/Charleston_Mercury"] },
+        { "condition": "victory", "headline": "SO PERISH ALL WHO INVADE THE SOUTH: A Triumph Won Despite the Government, Not Because of It", "favorShift": "against", "provenance": "Inferred", "sources": ["https://en.wikipedia.org/wiki/Charleston_Mercury", "https://www.scencyclopedia.org/sce/entries/charleston-mercury/"] },
+        { "condition": "defeat", "headline": "RICHMOND'S BLUNDERS BLEED CAROLINA: Davis and His Pet Generals Answer for This Disaster", "favorShift": "strongly-against", "provenance": "Verified", "sources": ["https://www.battlefields.org/learn/articles/charleston-mercury", "https://www.scencyclopedia.org/sce/entries/charleston-mercury/"] }
+      ]
+    },
+    {
+      "id": "richmond-dispatch", "name": "Richmond Daily Dispatch", "city": "Richmond, Virginia", "side": "CS", "lean": "moderate", "editor": "Hugh R. Pleasants (editor); James A. Cowardin (founder/proprietor)",
+      "voice": "The South's biggest penny daily — a plain, news-first sheet that cheers the cause and steadies morale rather than feud with the President; heavy on news, light on combative editorials.",
+      "reactsTo": ["victory", "defeat", "heavy-casualties", "hard-war", "the-draft"],
+      "editorials": [
+        { "condition": "victory", "headline": "GLORIOUS NEWS FROM THE FRONT! Our Boys Sweep the Field — Richmond Rejoices", "favorShift": "strongly-for", "provenance": "Verified", "sources": ["https://encyclopediavirginia.org/entries/newspapers-in-virginia-during-the-civil-war-confederate/", "https://www.loc.gov/item/sn84024738/"] },
+        { "condition": "hard-war", "headline": "THE ENEMY MAKES WAR ON HOMES: Yankee Torch and Pillage Only Steel the People's Resolve", "favorShift": "for", "provenance": "Inferred", "sources": ["https://www.loc.gov/item/sn84024738/", "https://encyclopediavirginia.org/entries/newspapers-in-virginia-during-the-civil-war-confederate/"] },
+        { "condition": "heavy-casualties", "headline": "THE KILLED AND WOUNDED — A Mournful Column, Borne For Liberty's Sake", "favorShift": "against", "provenance": "Verified", "sources": ["https://www.loc.gov/item/sn84024738/", "https://encyclopediavirginia.org/entries/newspapers-in-virginia-during-the-civil-war-confederate/"] },
+        { "condition": "the-draft", "headline": "THE CONSCRIPT OFFICER'S NOTICE: Every Man To His Post — The Country Calls", "favorShift": "for", "provenance": "Inferred", "sources": ["https://www.loc.gov/item/sn84024738/", "https://encyclopediavirginia.org/entries/newspapers-in-virginia-during-the-civil-war-confederate/"] },
+        { "condition": "defeat", "headline": "REVERSES WILL COME, BUT COURAGE ENDURES: Steady, Citizens — The Cause Is Not Lost", "favorShift": "neutral", "provenance": "Inferred", "sources": ["https://www.loc.gov/item/sn84024738/", "https://encyclopediavirginia.org/entries/newspapers-in-virginia-during-the-civil-war-confederate/"] }
+      ]
+    }
+  ],
+  "teachingCards": [
+    {
+      "title": "The press and the people's will",
+      "claim": "Newspapers were the great engine of public opinion North and South — and BOTH presses were bitterly divided, not the united fronts the Lost Cause imagines.",
+      "perspectives": [
+        { "voice": "Consensus", "text": "A partisan press shaped morale and elections; Northern Copperhead sheets amplified defeatism while the radical press demanded emancipation and hard war." },
+        { "voice": "Scholar — J. Cutler Andrews", "text": "The Confederate press, far from a propaganda monolith, savaged Davis's government — the Examiner and the Charleston Mercury were among his fiercest critics." },
+        { "voice": "Lost Cause myth — countered", "text": "The image of a gallant, unified South is belied by its own newspapers, which raged at conscription, impressment, and the administration throughout the war." }
+      ],
+      "sources": ["Andrews, The South Reports the Civil War (1970)", "Harris, Blue & Gray in Black & White (1999)"],
+      "provenance": "Verified"
+    },
+    {
+      "title": "The Radical Press Was Lincoln's Ally and His Sharpest Critic at Once",
+      "claim": "The Union's radical and abolitionist newspapers did not simply cheer the administration; they pushed it relentlessly toward emancipation and hard war, praising Lincoln when he moved and lashing him when he hesitated. Their loyalty was conditional on the war becoming a war against slavery — and their target was the Confederacy built to perpetuate slavery and the Northern Copperheads who would have made peace with it.",
+      "perspectives": [
+        { "voice": "Horace Greeley, New-York Tribune (radical Republican)", "text": "In 'The Prayer of Twenty Millions' (Aug. 1862) Greeley publicly demanded Lincoln enforce the Confiscation Acts and free the enslaved, calling it 'preposterous and futile' to crush the rebellion while sparing slavery — yet a year later he backed conscription so firmly that during the July 1863 draft riots an Irish working-class mob tried to burn the Tribune building and Greeley escaped through a side door." },
+        { "voice": "William Lloyd Garrison, The Liberator (immediatist abolitionist)", "text": "Garrison's Boston weekly judged the war by one measure — immediate, unconditional emancipation — and his slogan 'No Union with Slaveholders' meant he distrusted half-measures even from a Republican administration until the Proclamation made freedom the cause. A lifelong pacifist, he nonetheless subordinated that conviction to backing Lincoln once emancipation was on the line." },
+        { "voice": "George William Curtis & Thomas Nast, Harper's Weekly (pro-administration)", "text": "Harper's began the war cautiously moderate on slavery — mocked as 'Harper's Weakly' for protecting its Southern readership — then swung behind Lincoln, printed the full Emancipation Proclamation, and used Nast's woodcuts to glorify the Union and vilify the Confederacy and the Copperheads. It was the administration's most effective popular megaphone, more cheerleader than scold, and its anti-slavery posture was a wartime conversion, not an original creed." }
+      ],
+      "sources": ["https://www.history.com/this-day-in-history/august-20/horace-greeleys-the-prayer-of-twenty-millions-is-published", "https://www.abrahamlincolnonline.org/lincoln/speeches/greeley.htm", "https://en.wikipedia.org/wiki/New_York_City_draft_riots", "https://www.britannica.com/topic/The-Liberator-American-newspaper", "https://www.nps.gov/articles/000/the-liberator.htm", "https://en.wikipedia.org/wiki/Harper's_Weekly", "https://teachingamericanhistory.org/document/harpers-weekly-editorial-on-emancipation/", "https://www.britannica.com/biography/Joseph-Medill"],
+      "provenance": "Verified"
+    },
+    {
+      "title": "The Copperhead Press: Dissent, Demagoguery, and the Limits of Wartime Liberty",
+      "claim": "The Northern Peace-Democrat ('Copperhead') press opposed Lincoln's war by attacking emancipation, conscription, and the suspension of habeas corpus — but its opposition was bound up with open white supremacy, and the Lincoln administration met it with suppression that tested the Constitution it claimed to defend.",
+      "perspectives": [
+        { "voice": "Copperhead editor (Storey, Marble, Medary)", "text": "We are not traitors but constitutionalists: the Union our fathers made is being destroyed by an Abolition war for the negro, by drafts unknown to the Constitution, and by a President who jails editors and exiles congressmen. Yet this same 'principled' dissent traded openly in racial fear — casting emancipation as the ruin of the white laborer and 'amalgamation' of the races. Storey's Chicago Times was openly white-supremacist; the World's own correspondents coined the slur 'miscegenation' in 1864 to terrify white voters. The racism is not incidental to the dissent — it is at its core, and must be named, not excused." },
+        { "voice": "War-Unionist editor (Bennett's Herald)", "text": "Save the Union first and last. Lincoln is no statesman and emancipation is a dangerous experiment — I owe no party and say so daily — but a Northerner who cheers Union defeat or counsels armistice serves the rebellion. Win the war hard, then argue the politics. (Bennett's own pro-slavery sympathies are part of this picture, not separate from it.)" },
+        { "voice": "Lincoln administration / Union military", "text": "A free press is sacred, but Burnside's suppression of the Chicago Times and the 1864 seizure of the World show how war pressures bend that principle. Lincoln himself revoked the Times order — and the World was seized for printing a forged presidential proclamation, not merely for its opinions — evidence that the line between disloyalty, fraud, and protected dissent was contested in real time." },
+        { "voice": "Historian's caution (anti-Lost-Cause)", "text": "Copperhead 'peace' was not neutral. To demand an armistice and 'the Union as it was' in 1863-64 was to demand a negotiated end that preserved slavery and risked Confederate independence. Understanding these papers means taking their constitutional arguments seriously while refusing to launder the white supremacy at their core — and refusing the Lost-Cause move of recasting pro-slavery dissent as mere principled libertarianism." }
+      ],
+      "sources": ["https://en.wikipedia.org/wiki/Chicago_Times", "https://en.wikipedia.org/wiki/Wilbur_F._Storey", "https://ecommons.luc.edu/cgi/viewcontent.cgi?article=1314&context=luc_theses", "https://civilwarmonths.com/2023/06/03/the-chicago-times-suppression/", "https://en.wikipedia.org/wiki/New_York_World", "https://en.wikipedia.org/wiki/Manton_Marble", "https://www.thedailybeast.com/how-a-racist-newspaper-defeated-lincoln-in-new-york-in-the-1864-election/", "https://newseumed.org/tools/critical-debate/1864-lincoln-administration-seizes-opposition-newspapers", "https://en.wikipedia.org/wiki/The_Crisis_(newspaper)", "https://www.americanhistorycentral.com/entries/samuel-medary/", "https://www.mrlincolnandnewyork.org/new-yorkers/james-gordon-bennett-1795-1872/", "https://quod.lib.umich.edu/j/jala/2629860.0032.105/--lincoln-s-critics-the-copperheads"],
+      "provenance": "Verified"
+    },
+    {
+      "title": "The Confederate Press Was at War With Itself",
+      "claim": "There was no single 'gallant South' in print. Richmond's and Charleston's leading papers savaged each other and President Davis over conscription, impressment, defensive strategy, and habeas corpus — even as all of them defended slavery and secession and raged at Union 'hard war.' The fracture was real, and it was loudest among the most extreme secessionists, the fire-eaters who had demanded disunion first.",
+      "perspectives": [
+        { "voice": "Richmond Examiner (John M. Daniel)", "text": "Every military misfortune of the country is palpably and confessedly due to the personal interference of Mr. Davis — and these arbitrary impressments touch the people's pride and sense of justice." },
+        { "voice": "Charleston Mercury (R. B. Rhett Jr., for owner Robert Barnwell Rhett)", "text": "The fire-eater's organ that printed 'THE UNION IS DISSOLVED!' Cotton is King and the South must strike, not cower. A defensive war is a losing war; conscription out of Richmond is the coercion we seceded to escape." },
+        { "voice": "Richmond Enquirer (Nathaniel Tyler, administration organ)", "text": "Editors who carp imperil the state. In war the President must have a free hand — the 'newspaper generals' who order victories with their meals bear none of the responsibility he does." },
+        { "voice": "Richmond Daily Dispatch (Hugh R. Pleasants, ed.; James A. Cowardin, proprietor)", "text": "Glorious news from the front, and a mournful column of the fallen — the biggest penny daily kept morale up and feuds down, with a circulation equal to its three Richmond rivals combined." }
+      ],
+      "sources": ["https://encyclopediavirginia.org/entries/newspapers-in-virginia-during-the-civil-war-confederate/", "https://encyclopediavirginia.org/entries/confederate-impressment-during-the-civil-war/", "https://en.wikipedia.org/wiki/Richmond_Examiner", "https://www.battlefields.org/learn/articles/charleston-mercury", "https://en.wikipedia.org/wiki/R._Barnwell_Rhett_Jr.", "https://www.scencyclopedia.org/sce/entries/charleston-mercury/", "https://www.loc.gov/item/sn84024738/"],
+      "provenance": "Verified"
+    }
+  ]
+},
 "terrain-cover": {
   "_comment": "A3 Terrain cover hierarchy — named cover types slotted into the frozen engine's EXISTING terrain/defense model. The battle engine reduces fire damage by dividing by TERRAIN[tile.t].def (build/base.html resolveFire ~1038); the `cover` field on TERRAIN entries was defined but UNUSED. This adds six named cover types as new TERRAIN keys with real `def` values, so combat picks them up automatically through the existing .def path (no fire-function override needed). src/58-terrain-cover.js mutates the frozen const objects TERRAIN / TCOL / PALETTE (adding keys is allowed on a const object) and OVERRIDES authoredMap to stamp these cover types onto the historical battlefield features that already carry labels (Antietam's Sunken Road, Gettysburg's Devil's Den, the Vicksburg redans, the West/East Woods …). Gated by diag-classic; reverts on any Classic regression. def ordering (strong->light): stonewall 2.00 > trench 1.95 > sunkenroad 1.85 > boulders 1.70 > forest 1.50 > woodfence 1.25, all slotting between clear (1.00) and works/fort (2.10). `colors` = [skin0, skin1, skin2], applied to both TCOL and PALETTE so the new tiles render in period tone, not the gray fallback. `match` = lowercase substrings tested against authored feature labels; the strongest (highest-def) match wins. Designer calibration (Inferred); teaching is Verified (see card). Logged DECISIONS.md D44.",
   "schemaVersion": "1.0",
@@ -19183,6 +19385,9 @@ function _wdRefresh() {
   } else if (_wdTab === "decisions") {
     html = (typeof decRenderTab === "function") ? decRenderTab(C) : "";
     wire = (typeof decWireTab === "function") ? decWireTab : null;
+  } else if (_wdTab === "press") {
+    html = (typeof pressRenderTab === "function") ? pressRenderTab(C) : "";
+    wire = (typeof pressWireTab === "function") ? pressWireTab : null;
   } else if (_wdTab === "map") {
     html = (typeof presRenderMap === "function") ? presRenderMap(C) : "";
     wire = null;
@@ -19191,7 +19396,7 @@ function _wdRefresh() {
     wire = null;
   }
   cont.innerHTML = html || '<p class="lede" style="text-align:center;opacity:0.7">This office is not yet staffed.</p>';
-  var tabs = ["economy", "treasury", "diplomacy", "victory", "armory", "warroom", "clock", "muster", "cabinet", "decisions", "map"];
+  var tabs = ["economy", "treasury", "diplomacy", "victory", "armory", "warroom", "clock", "muster", "cabinet", "decisions", "press", "map"];
   for (var i = 0; i < tabs.length; i++) {
     var b = document.getElementById("wdTab_" + tabs[i]);
     if (b) b.style.opacity = (tabs[i] === _wdTab) ? "1" : "0.55";
@@ -19230,6 +19435,7 @@ function openWarDept() {
       _wdTabBtn("muster", "Muster Roll") +
       _wdTabBtn("cabinet", "Cabinet") +
       _wdTabBtn("decisions", "Decisions") +
+      _wdTabBtn("press", "The Press") +
       _wdTabBtn("map", "Theater Map") +
     '</div>' +
     '<div id="wdContent"></div>' +
@@ -19241,7 +19447,7 @@ function openWarDept() {
     if (_pdAfterDeskClose) { var cb = _pdAfterDeskClose; _pdAfterDeskClose = null; cb(); }
     else if (typeof closeSheet === "function") closeSheet();
   });
-  ["economy", "treasury", "diplomacy", "victory", "armory", "warroom", "clock", "muster", "cabinet", "decisions", "map"].forEach(function (k) {
+  ["economy", "treasury", "diplomacy", "victory", "armory", "warroom", "clock", "muster", "cabinet", "decisions", "press", "map"].forEach(function (k) {
     var b = document.getElementById("wdTab_" + k);
     if (b) b.addEventListener("click", function () { _wdTab = k; _wdRefresh(); });
   });
@@ -20131,9 +20337,10 @@ function moraleCompute(C) {
   }
 
   var repudPenalty = (M && M.repudiated) ? 12 : 0;                                          // a DURABLE home-front shock after a lost 1864 election (D51.4)
+  var pressTerm = ((typeof pressSentiment === "function") ? pressSentiment(C) : 50) - 50;   // S2 m4: the press swings public will (anchored at 50 = neutral, a no-op until the press reacts)
   var leader = _morClamp(48 + cwin * 50 + leadC * 0.5 - ambFriction);
   var troop = _morClamp(bMorale * 0.6 + leader * 0.25 + supply * 0.15);                     // leadership lifts the troops
-  var publicWill = _morClamp(52 + cwin * 36 - casPenalty - inflPenalty + leadC * 0.3 + recogEffect - repudPenalty);  // the human cost + economy + a repudiation sink it
+  var publicWill = _morClamp(52 + cwin * 36 - casPenalty - inflPenalty + leadC * 0.3 + recogEffect - repudPenalty + pressTerm * 0.2);  // the human cost + economy + the press + a repudiation
   return { troop: Math.round(troop), leader: Math.round(leader), public: Math.round(publicWill),
     casToll: Math.round(casToll), casPenalty: Math.round(casPenalty), inflPenalty: Math.round(inflPenalty), winRate: Math.round(winRate * 100) / 100 };
 }
@@ -20221,6 +20428,227 @@ function presMoraleBlock(C) {
     +   '</div>'
     + '</div>'
     + '<p class="lede" style="font-size:11px;opacity:.65;margin-top:8px">Three wills wage the war together: a beloved general lifts the troops; a bloody, fruitless year sinks the public; and when the public will breaks, even a winning army cannot save the cause. The ballot box is the South\'s surest road to a negotiated peace.</p>';
+}
+
+
+/* ===== module: 34-press.js ===== */
+/* ===========================================================================
+   S2 m4 · 34-press.js — THE PRESS / PUBLIC-OPINION SYSTEM (§8.57 / D38.1).
+
+   The real Civil War newspapers, North and South, react to your war's turns with
+   period-voice broadsheet editorials. Each paper has a LEAN (radical / administration
+   / war-democrat / copperhead / fire-eater / abolitionist / moderate) that sets HOW it
+   reacts: a victory rallies the administration sheets and the radicals; a bloody defeat
+   is meat for the Copperheads; emancipation splits the Northern press; the Confederate
+   press (the Examiner, the Mercury) savages Davis whatever happens. Each turn the papers
+   shift their FAVOR toward or against the war effort; the aggregate SENTIMENT feeds
+   C.morale.public (the m3 home-front layer) — so the press is a real driver of the
+   public will that decides the 1864 election. (Censorship is the lever: the existing
+   us-press-censorship / us-vallandigham decision cards act on it.)
+
+   Data: data/press.json -> GAME_DATA.press (real papers/editors/leanings, Verified;
+   voice/editorials web-grounded + adversarially verified). EXTENDS: adds C.press
+   (plain data; rides the save, no _SAVE_VER bump). The ONE sim coupling is read-only
+   from morale's side (moraleCompute reads pressSentiment, anchored at 50=neutral, a
+   no-op until the press has reacted — so it perturbs nothing at init).
+
+   pressInit / pressOnResolve registered in 90 (pressOnResolve BEFORE moraleOnResolve so
+   morale reads the fresh sentiment). pressRenderTab = a new "The Press" desk tab (12th),
+   the period broadsheet. Bare-name globals; _prs/press prefix; render never mutates/saves.
+   =========================================================================== */
+
+var _prsLEAN_BASE = { administration: 66, radical: 63, abolitionist: 66, moderate: 50, "war-democrat": 48, copperhead: 34, "fire-eater": 37 };
+var _prsFAVOR_DELTA = { "strongly-for": 8, "for": 4, "neutral": 0, "against": -4, "strongly-against": -8 };
+var _prsLEAN_LABEL = { administration: "Administration", radical: "Radical", abolitionist: "Abolitionist", moderate: "Moderate", "war-democrat": "War Democrat", copperhead: "Copperhead", "fire-eater": "Fire-Eater" };
+
+function _prsData() { return (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.press) ? GAME_DATA.press : null; }
+function _prsAllPapers() { var d = _prsData(); return (d && d.papers && d.papers.length) ? d.papers : []; }
+function _prsPapers(side) {
+  var s = (side === "CS") ? "CS" : "US", all = _prsAllPapers(), out = [];
+  for (var i = 0; i < all.length; i++) if (all[i] && all[i].side === s) out.push(all[i]);
+  return out;
+}
+function _prsById(id) { var all = _prsAllPapers(); for (var i = 0; i < all.length; i++) if (all[i] && all[i].id === id) return all[i]; return null; }
+function _prsEsc(s) {
+  s = (s == null) ? "" : String(s);
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+function _prsBaseline(p) { return (p && _prsLEAN_BASE[p.lean] != null) ? _prsLEAN_BASE[p.lean] : 50; }
+
+/* ---- pressInit: idempotent. C.press = per-paper favor + aggregate sentiment + the
+   day's headlines. sentiment stays a NEUTRAL 50 until the press first reacts. ---- */
+function pressInit(C) {
+  if (!C) return;
+  var side = (C.side === "CS") ? "CS" : "US";
+  if (!C.press || typeof C.press !== "object" || Array.isArray(C.press)) {
+    C.press = { favor: {}, sentiment: 50, reacted: false, headlines: [], emancipationReacted: false };
+  }
+  var P = C.press;
+  if (!P.favor || typeof P.favor !== "object" || Array.isArray(P.favor)) P.favor = {};
+  if (typeof P.sentiment !== "number" || !isFinite(P.sentiment)) P.sentiment = 50; else P.sentiment = Math.max(0, Math.min(100, P.sentiment));   // D52.2: NaN/range guard (typeof NaN === "number")
+  if (typeof P.reacted !== "boolean") P.reacted = false;
+  if (!Array.isArray(P.headlines)) P.headlines = [];
+  else { var _ph = []; for (var hh = 0; hh < P.headlines.length; hh++) { var _he = P.headlines[hh]; if (_he && typeof _he === "object" && !Array.isArray(_he)) _ph.push(_he); } P.headlines = _ph; }   // D52.1: drop malformed headline entries so pressRenderTab can't crash
+  if (typeof P.emancipationReacted !== "boolean") P.emancipationReacted = false;
+  var papers = _prsPapers(side);
+  for (var i = 0; i < papers.length; i++) {
+    var id = papers[i].id;
+    if (typeof P.favor[id] !== "number" || !(P.favor[id] >= 0 && P.favor[id] <= 100)) P.favor[id] = _prsBaseline(papers[i]);
+  }
+}
+
+/* The war conditions the papers react to THIS turn (priority order applied later). */
+function _prsConditions(B, C, win, type, winnerSide) {
+  var conds = [], side = (C.side === "CS") ? "CS" : "US";
+  if (type === "draw" || winnerSide == null) conds.push("stalemate");   // D52.5: mirror endBattle's draw definition, don't trust the type string alone
+  else if (win) conds.push("victory");
+  else conds.push("defeat");
+  var cas = (B && B.casualties && B.casualties[side]) ? (B.casualties[side] || 0) : 0;
+  if (cas >= 8000) conds.push("heavy-casualties");
+  // emancipation: the Northern press reacts ONCE when the Proclamation issues
+  var em = C.president && C.president.emancipation;
+  if (side === "US" && em && em.issued && C.press && !C.press.emancipationReacted) { conds.push("emancipation"); }
+  return conds;
+}
+
+/* Pick the editorial a paper runs for the active conditions (priority: emancipation >
+   heavy-casualties > the battle result). Returns the editorial or null. */
+function _prsPickEditorial(paper, conds) {
+  if (!paper || !paper.editorials) return null;
+  var priority = ["emancipation", "heavy-casualties", "victory", "defeat", "stalemate"];
+  for (var pr = 0; pr < priority.length; pr++) {
+    var want = priority[pr];
+    if (conds.indexOf(want) < 0) continue;
+    for (var e = 0; e < paper.editorials.length; e++) if (paper.editorials[e].condition === want) return paper.editorials[e];
+  }
+  // fall back to an "always" editorial if present
+  for (var a = 0; a < paper.editorials.length; a++) if (paper.editorials[a].condition === "always") return paper.editorials[a];
+  return null;
+}
+
+/* ---- pressOnResolve: the papers react. Runs BEFORE moraleOnResolve so the fresh
+   sentiment feeds the public-will layer the same turn. ---- */
+function pressOnResolve(winnerSide, type, B, C, win) {
+  if (!C) return;
+  pressInit(C);
+  try {
+    var P = C.press, side = (C.side === "CS") ? "CS" : "US";
+    var conds = _prsConditions(B, C, win, type, winnerSide);
+    var papers = _prsPapers(side), heads = [], sum = 0, n = 0, firedEmancipation = false;
+    for (var i = 0; i < papers.length; i++) {
+      var p = papers[i], ed = _prsPickEditorial(p, conds), base = _prsBaseline(p);
+      var cur = (typeof P.favor[p.id] === "number") ? P.favor[p.id] : base;
+      if (ed) {
+        var delta = _prsFAVOR_DELTA[ed.favorShift] || 0;
+        cur = Math.max(0, Math.min(100, cur + delta));
+        if (ed.condition === "emancipation") firedEmancipation = true;
+        if (ed.headline) heads.push({ id: p.id, name: p.name, lean: p.lean, headline: ed.headline });   // D52.7: skip an empty headline
+      } else {
+        // no editorial for today's news -> drift a step back toward the paper's standing disposition
+        cur = cur + (base > cur ? 1 : (base < cur ? -1 : 0));
+        cur = Math.max(0, Math.min(100, cur));
+      }
+      P.favor[p.id] = cur; sum += cur; n++;
+    }
+    if (firedEmancipation) P.emancipationReacted = true;   // D52.4: latch ONLY when a paper actually printed an emancipation editorial
+    P.sentiment = n ? Math.round(sum / n) : 50;
+    P.reacted = true;
+    P.headlines = heads;
+  } catch (e) {}
+}
+
+/* The aggregate press sentiment toward the war effort (0-100). NEUTRAL 50 until the
+   press has first reacted, so it perturbs nothing at init / in unrelated probes. */
+function pressSentiment(C) {
+  if (!C || !C.press || !C.press.reacted || typeof C.press.sentiment !== "number" || !(C.press.sentiment >= 0 && C.press.sentiment <= 100)) return 50;   // D52.6: range test rejects NaN/Infinity
+  return C.press.sentiment;
+}
+
+/* ===== render: "The Press" desk tab — the period broadsheet ===== */
+
+function _prsFavorWord(v) {
+  if (v >= 70) return ["Solidly behind the war", "#4a6b3a"];
+  if (v >= 55) return ["Supportive", "#6f9e5a"];
+  if (v >= 45) return ["Wavering", "#b8863b"];
+  if (v >= 30) return ["Critical", "#c9712e"];
+  return ["In open opposition", "#9c3b2e"];
+}
+
+function pressRenderTab(C) {
+  if (!C) return '';
+  pressInit(C);
+  if (!_prsData()) return '<p class="lede" style="font-size:13px">The presses are quiet.</p>';
+  var side = (C.side === "CS") ? "CS" : "US", P = C.press, papers = _prsPapers(side);
+  var sent = pressSentiment(C), sw = _prsFavorWord(sent);
+
+  // the day's headlines (the broadsheet front page)
+  var front = "";
+  if (P.reacted && P.headlines && P.headlines.length) {
+    front = '<div style="margin:8px 0;padding:10px;border:2px double var(--rule);border-radius:4px;background:rgba(0,0,0,.1)">'
+      + '<div style="text-align:center;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--rule);border-bottom:1px solid var(--rule);padding-bottom:3px;margin-bottom:5px">From the day\'s editions</div>';
+    for (var h = 0; h < P.headlines.length; h++) {
+      var hd = P.headlines[h]; if (!hd) continue;   // D52.1: defense-in-depth
+      front += '<div style="margin:5px 0"><span style="font-size:10px;opacity:.6">' + _prsEsc(hd.name) + ':</span> '
+        + '<span style="font-weight:bold;font-size:13px;font-style:italic">&ldquo;' + _prsEsc(hd.headline) + '&rdquo;</span></div>';
+    }
+    front += '</div>';
+  } else {
+    front = '<p class="lede" style="font-size:12px;opacity:.7">The presses await the next turn of the war.</p>';
+  }
+
+  // each paper's standing stance
+  var rows = "";
+  for (var i = 0; i < papers.length; i++) {
+    var p = papers[i], fav = (typeof P.favor[p.id] === "number") ? P.favor[p.id] : _prsBaseline(p), fw = _prsFavorWord(fav);
+    rows += '<div style="padding:8px 0;border-bottom:1px dotted var(--rule)">'
+      + '<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px">'
+      +   '<span style="font-weight:bold;font-size:13px">' + _prsEsc(p.name) + ' <span style="font-weight:normal;opacity:.6;font-size:11px">&middot; ' + _prsEsc(_prsLEAN_LABEL[p.lean] || p.lean) + (p.editor ? ' &middot; ' + _prsEsc(p.editor) : '') + '</span></span>'
+      +   '<span style="font-size:11px;color:' + fw[1] + '">' + fw[0] + '</span>'
+      + '</div>'
+      + (p.voice ? '<div style="font-size:11px;opacity:.7;margin-top:2px">' + _prsEsc(p.voice) + '</div>' : '')
+      + '</div>';
+  }
+
+  return ''
+    + '<p class="lede" style="font-size:13px;margin-bottom:6px">The newspapers are the voice &mdash; and the maker &mdash; of the public mind. They cheer your victories, magnify your defeats, and carry the people toward November 1864.</p>'
+    + '<div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)">'
+    +   '<span style="font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--rule)">The press, on the whole</span>'
+    +   '<span style="font-weight:bold;color:' + sw[1] + '">' + (P.reacted ? sent + ' &middot; ' + sw[0] : 'Not yet in print') + '</span>'
+    + '</div>'
+    + front
+    + '<div style="margin-top:8px">' + rows + '</div>'
+    + _prsCardHTML(C);
+}
+
+function _prsCardHTML(C) {
+  var d = _prsData();
+  if (!d || !d.teachingCards || !d.teachingCards.length) return "";
+  var html = "";
+  for (var i = 0; i < d.teachingCards.length; i++) {
+    var c = d.teachingCards[i], persp = "";
+    if (c.perspectives) for (var p = 0; p < c.perspectives.length; p++) persp += '<div style="margin:4px 0;font-size:12px"><span style="opacity:.6;font-style:italic">' + _prsEsc(c.perspectives[p].voice) + ':</span> ' + _prsEsc(c.perspectives[p].text) + '</div>';
+    html += '<div style="margin-top:10px;padding:9px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.1)">'
+      + '<div style="font-weight:bold;font-size:13px">' + _prsEsc(c.title) + '</div>'
+      + '<div style="font-size:12px;opacity:.85;margin:2px 0">' + _prsEsc(c.claim) + '</div>'
+      + '<button id="prsCard_' + i + '" type="button" class="upg" style="font-size:11px;padding:1px 8px;margin-top:3px">The historians &#9656;</button>'
+      + '<div id="prsCardBox_' + i + '" style="display:none;margin-top:4px">' + persp
+      + '<div style="margin-top:4px;font-size:10px;opacity:.6">' + _prsEsc(c.provenance || "Inferred") + (c.sources && c.sources.length ? ' &middot; ' + _prsEsc(c.sources.join("; ")) : '') + '</div></div>'
+      + '</div>';
+  }
+  return html;
+}
+
+function pressWireTab(C) {
+  var d = _prsData();
+  if (d && d.teachingCards) for (var i = 0; i < d.teachingCards.length; i++) {
+    (function (idx) {
+      var b = document.getElementById("prsCard_" + idx);
+      if (b) b.addEventListener("click", function () {
+        var box = document.getElementById("prsCardBox_" + idx);
+        if (box) box.style.display = (box.style.display === "none") ? "block" : "none";
+      });
+    })(i);
+  }
 }
 
 
@@ -23101,6 +23529,7 @@ function _t1InitAll(C) {
   try { if (typeof cabInit === "function") cabInit(C); } catch (e) {}     // S2 m1: cabinet/advisor system (after presInit)
   try { if (typeof decInit === "function") decInit(C); } catch (e) {}     // S2 m2: executive decisions / pendingChoices loop
   try { if (typeof moraleInit === "function") moraleInit(C); } catch (e) {}  // S2 m3: 3-layer morale
+  try { if (typeof pressInit === "function") pressInit(C); } catch (e) {}    // S2 m4: press / public opinion
   try { if (typeof vicInit === "function") vicInit(C); } catch (e) {}     // S1e: strategy/victory (read by blockade+manpower)
   try { if (typeof econInit === "function") econInit(C); } catch (e) {}   // S1a: economy/finance
   try { if (typeof blockadeInit === "function") blockadeInit(C); } catch (e) {}  // S1c: cotton/blockade/diplomacy
@@ -23125,6 +23554,7 @@ function _t1Resolve(winnerSide, type, B, C, win) {
   try { if (typeof presOnResolve === "function") presOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S0: after clk (interlink)
   try { if (typeof cabOnResolve === "function") cabOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S2 m1: AFTER pres (date+turn advanced) -> detect cabinet churn
   try { if (typeof decOnResolve === "function") decOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S2 m2: AFTER pres -> surface/expire decision cards (owns pendingChoices)
+  try { if (typeof pressOnResolve === "function") pressOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S2 m4: BEFORE morale -> the day's press sentiment feeds public will
   try { if (typeof moraleOnResolve === "function") moraleOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S2 m3: AFTER clk (weariness/election set), BEFORE vic (enemyWill change seen by victoryReady)
   try { if (typeof vicOnResolve === "function") vicOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S1e: LAST — enemy will, lever upkeep, victory detection
   try { if (typeof bridgeOnResolve === "function") bridgeOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S5-seed: reset pre-battle prep

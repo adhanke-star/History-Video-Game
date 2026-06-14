@@ -86,6 +86,9 @@ function _wdRefresh() {
   } else if (_wdTab === "decisions") {
     html = (typeof decRenderTab === "function") ? decRenderTab(C) : "";
     wire = (typeof decWireTab === "function") ? decWireTab : null;
+  } else if (_wdTab === "press") {
+    html = (typeof pressRenderTab === "function") ? pressRenderTab(C) : "";
+    wire = (typeof pressWireTab === "function") ? pressWireTab : null;
   } else if (_wdTab === "map") {
     html = (typeof presRenderMap === "function") ? presRenderMap(C) : "";
     wire = null;
@@ -94,7 +97,7 @@ function _wdRefresh() {
     wire = null;
   }
   cont.innerHTML = html || '<p class="lede" style="text-align:center;opacity:0.7">This office is not yet staffed.</p>';
-  var tabs = ["economy", "treasury", "diplomacy", "victory", "armory", "warroom", "clock", "muster", "cabinet", "decisions", "map"];
+  var tabs = ["economy", "treasury", "diplomacy", "victory", "armory", "warroom", "clock", "muster", "cabinet", "decisions", "press", "map"];
   for (var i = 0; i < tabs.length; i++) {
     var b = document.getElementById("wdTab_" + tabs[i]);
     if (b) b.style.opacity = (tabs[i] === _wdTab) ? "1" : "0.55";
@@ -133,6 +136,7 @@ function openWarDept() {
       _wdTabBtn("muster", "Muster Roll") +
       _wdTabBtn("cabinet", "Cabinet") +
       _wdTabBtn("decisions", "Decisions") +
+      _wdTabBtn("press", "The Press") +
       _wdTabBtn("map", "Theater Map") +
     '</div>' +
     '<div id="wdContent"></div>' +
@@ -144,7 +148,7 @@ function openWarDept() {
     if (_pdAfterDeskClose) { var cb = _pdAfterDeskClose; _pdAfterDeskClose = null; cb(); }
     else if (typeof closeSheet === "function") closeSheet();
   });
-  ["economy", "treasury", "diplomacy", "victory", "armory", "warroom", "clock", "muster", "cabinet", "decisions", "map"].forEach(function (k) {
+  ["economy", "treasury", "diplomacy", "victory", "armory", "warroom", "clock", "muster", "cabinet", "decisions", "press", "map"].forEach(function (k) {
     var b = document.getElementById("wdTab_" + k);
     if (b) b.addEventListener("click", function () { _wdTab = k; _wdRefresh(); });
   });

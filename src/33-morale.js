@@ -79,9 +79,10 @@ function moraleCompute(C) {
   }
 
   var repudPenalty = (M && M.repudiated) ? 12 : 0;                                          // a DURABLE home-front shock after a lost 1864 election (D51.4)
+  var pressTerm = ((typeof pressSentiment === "function") ? pressSentiment(C) : 50) - 50;   // S2 m4: the press swings public will (anchored at 50 = neutral, a no-op until the press reacts)
   var leader = _morClamp(48 + cwin * 50 + leadC * 0.5 - ambFriction);
   var troop = _morClamp(bMorale * 0.6 + leader * 0.25 + supply * 0.15);                     // leadership lifts the troops
-  var publicWill = _morClamp(52 + cwin * 36 - casPenalty - inflPenalty + leadC * 0.3 + recogEffect - repudPenalty);  // the human cost + economy + a repudiation sink it
+  var publicWill = _morClamp(52 + cwin * 36 - casPenalty - inflPenalty + leadC * 0.3 + recogEffect - repudPenalty + pressTerm * 0.2);  // the human cost + economy + the press + a repudiation
   return { troop: Math.round(troop), leader: Math.round(leader), public: Math.round(publicWill),
     casToll: Math.round(casToll), casPenalty: Math.round(casPenalty), inflPenalty: Math.round(inflPenalty), winRate: Math.round(winRate * 100) / 100 };
 }
