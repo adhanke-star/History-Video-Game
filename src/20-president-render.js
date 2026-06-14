@@ -102,6 +102,7 @@ function presRenderEconomy(C) {
     + '</div>'
     + (typeof presProdBlock === "function" ? presProdBlock(C) : '')
     + (typeof presManpowerBlock === "function" ? presManpowerBlock(C) : '')
+    + (typeof presMoraleBlock === "function" ? presMoraleBlock(C) : '')
     + dispatches
     + '<hr class="rule">'
     + '<p class="lede" style="font-size:12px;opacity:.7">Full executive management of ' + sideName
