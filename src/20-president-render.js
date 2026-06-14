@@ -184,8 +184,10 @@ function _pdInterstitialHTML(C) {
     + '<p class="lede" style="text-align:center;font-size:14px">' + dispatch + '</p>'
     + '<p class="lede" style="text-align:center;font-size:12px;opacity:.7">As President of ' + sideName
     + ', you may review the war effort and confer with your cabinet — or press on to the front.</p>'
-    + '<div class="btn-row" style="margin-top:16px;display:flex;gap:10px;justify-content:center">'
+    + (typeof _brgArmySummaryHTML === "function" ? _brgArmySummaryHTML(C) : '')
+    + '<div class="btn-row" style="margin-top:16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">'
     +   '<button id="pdGoDesk" type="button" class="upg">Review the War Effort</button>'
+    +   '<button id="pdGoBrief" type="button" class="upg">Pre-Battle Briefing</button>'
     +   '<button id="pdGoOn" type="button" class="bigbtn">Continue &#9654;</button>'
     + '</div>';
 }

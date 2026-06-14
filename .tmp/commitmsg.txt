@@ -1,21 +1,25 @@
-S1e+: wild-card catalog — alt-history victory gambits for both sides
+S5(seed): the strategy->battle bridge (pre-battle conditioning half)
 
-Aaron: "give me more southern wildcard paths... creative and absurd to preposterous
-okay if I'm entertained... same vice versa. this is a game after all."
+Aaron's directive: battles shaped by pre-battle history + preparation + battle-day
+tactics, for both sides. This builds the SAFE, additive half — the pre-battle
+conditioning + briefing — without touching the frozen battle engine (scaling the
+actual units is the deliberate, separately-probed next step).
 
-src/80-victory.js: a tiered wild-card catalog on the Paths-to-Victory tab, both sides,
-plausible -> long-shot -> fantastical/preposterous. Each is a one-shot alternate-history
-gambit with a real mechanical effect (_vicApplyWild):
-- Confederate (11): Provoke the Trent Crisis; Invade the North; Burn the cotton;
-  Arm & free the enslaved (Cleburne); Smuggle Spencer repeaters; Foment the Northwest
-  Conspiracy; Launch a submarine fleet; Maximilian's legions march north; Stonewall
-  lives; THE DECAPITATION PLOT (momentum-gated — lands or backfires); a gold strike.
-- Union (10): Hard War early; Radical Emancipation 1861; Anaconda Overdrive; a repeater
-  army; Grant from the start; the Jay Cooke bond firehose; Gatling gun legions; the
-  Russian alliance; armored trains & rail artillery; the general strike of the enslaved.
+src/85-battle-bridge.js + C.battlePrep:
+- bridgeArmy(C): THE CONDITIONING MATH — the army you field, computed from the whole
+  war state (manpower.strength -> numbers, production.equipIndex+momentum -> equipment,
+  blockade.importFactor -> small arms, momentum+home-front -> morale, warroom -> supply),
+  as 0-100 facets + an overall index. A winning war fields a strong army; a collapsing
+  one fields a brittle army — same battle, different army.
+- a pre-battle BRIEFING (the detailed-but-skippable planning screen, R24) with PREP
+  OPTIONS stored in C.battlePrep (entrench / forced-march / concentrate / feint /
+  raid-supply); surfaced in the between-battles interstitial ("the army you will field"
+  + a Pre-Battle Briefing button) and reset after each battle.
 
-VERIFIED (probe-victory 12/12): catalog renders both sides with tier labels; effects
-apply (Maximilian -> recognition 85 + enemy will drops; the general strike craters enemy
-will + unlocks USCT). Full suite still green; 0 pageerrors.
+VERIFIED (probe-bridge 6/6): a winning South fields overall 63 (Strong) vs a losing
+South 36 (Strained) from the same battle; forced-march raises fatigue; the briefing +
+interstitial render. Classic no-regression (diag paints, desk 12/12); 0 pageerrors.
+The battle-day APPLICATION (an override of startBattleRuntime that scales the player
+force, gated by diag-classic) is the next step.
 
 Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>

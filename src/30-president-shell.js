@@ -151,6 +151,13 @@ function _pdShowTurnInterstitial() {
     _pdAfterDeskClose = function () { if (typeof openUpgrade === "function") openUpgrade(); };
     openWarDept();
   });
+  var brief = document.getElementById("pdGoBrief");
+  if (brief && typeof bridgeBriefingHTML === "function") brief.addEventListener("click", function () {
+    openSheet(bridgeBriefingHTML(C));
+    if (typeof bridgeWireBriefing === "function") bridgeWireBriefing(C,
+      function () { _pdShowTurnInterstitial(); },                                   // Back → the interstitial
+      function () { if (typeof openUpgrade === "function") openUpgrade(); });        // To the Field → Quartermaster/battle
+  });
 }
 
 /* ---- openUpgrade OVERRIDE: surface the strategic turn once, then the base flow.

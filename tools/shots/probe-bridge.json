@@ -1,0 +1,89 @@
+{
+  "steps": [
+    {
+      "name": "conditioning reflects a WINNING war",
+      "ok": true,
+      "v": {
+        "side": "CS",
+        "strength": 95,
+        "equip": 35,
+        "arms": 57,
+        "morale": 70,
+        "supply": 45,
+        "fatigue": 8,
+        "leadership": 64,
+        "overall": 63
+      }
+    },
+    {
+      "name": "conditioning reflects a LOSING war",
+      "ok": true,
+      "v": {
+        "side": "CS",
+        "strength": 65,
+        "equip": 18,
+        "arms": 28,
+        "morale": 25,
+        "supply": 31,
+        "fatigue": 8,
+        "leadership": 64,
+        "overall": 36
+      }
+    },
+    {
+      "name": "the bridge SEPARATES the two armies",
+      "ok": true,
+      "v": {
+        "winOverall": 63,
+        "loseOverall": 36
+      }
+    },
+    {
+      "name": "forced-march prep raises fatigue (preview)",
+      "ok": true,
+      "v": {
+        "before": 8,
+        "after": 35
+      }
+    },
+    {
+      "name": "pre-battle briefing renders (army + prep + to-the-field)",
+      "ok": true,
+      "v": {
+        "len": 5644
+      }
+    },
+    {
+      "name": "interstitial shows the army you will field",
+      "ok": true,
+      "v": {
+        "len": 2902
+      }
+    }
+  ],
+  "errors": [],
+  "ok": true,
+  "winA": {
+    "side": "CS",
+    "strength": 95,
+    "equip": 35,
+    "arms": 57,
+    "morale": 70,
+    "supply": 45,
+    "fatigue": 8,
+    "leadership": 64,
+    "overall": 63
+  },
+  "loseA": {
+    "side": "CS",
+    "strength": 65,
+    "equip": 18,
+    "arms": 28,
+    "morale": 25,
+    "supply": 31,
+    "fatigue": 8,
+    "leadership": 64,
+    "overall": 36
+  },
+  "pageerrors": []
+}
