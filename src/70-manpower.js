@@ -112,6 +112,7 @@ function manpowerInit(C) {
 function manpowerOnResolve(winnerSide, type, B, C, win) {
   if (!C) return;
   manpowerInit(C);
+  if (typeof decInit === "function") decInit(C);   // D50.1: sanitize C.president.emancipation BEFORE the USCT gate reads it (manpower ticks before dec)
   try {
     var side = (C.side === "CS") ? "CS" : "US";
     var cfg = _mpCfg(side);
@@ -128,8 +129,13 @@ function manpowerOnResolve(winnerSide, type, B, C, win) {
     }
     if (side === "CS") P.ageBand = (year >= 1864) ? "17-50" : (year >= 1862 ? "18-35" : "18-35");
 
-    // USCT unlock (US, Emancipation 1863): a NEW pool from the South's own labor base.
-    if (side === "US" && !P.usctUnlocked && year >= 1863) {
+    // USCT unlock (US): a NEW pool from the South's own labor base. Gated on the
+    // EMANCIPATION decision (S2 m2): unlocks as soon as the Proclamation is issued
+    // (earlier than 1863 if radical); the historical 1863 calendar is the DEFAULT if
+    // the player never decides; NEVER unlocks if emancipation was explicitly declined.
+    var _mpEm = C.president && C.president.emancipation;
+    var _mpEmIssued = _mpEm && _mpEm.issued, _mpEmDeclined = _mpEm && _mpEm.declined;
+    if (side === "US" && !P.usctUnlocked && !_mpEmDeclined && (_mpEmIssued || year >= 1863)) {
       P.usctUnlocked = true;
       P.pool += cfg.usct;           // ~180k added
       _mpPush(C, "Emancipation organizes the USCT — ~180,000 men join from the South's labor base.");

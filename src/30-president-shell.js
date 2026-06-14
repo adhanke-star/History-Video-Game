@@ -83,6 +83,9 @@ function _wdRefresh() {
   } else if (_wdTab === "cabinet") {
     html = (typeof presRenderCabinet === "function") ? presRenderCabinet(C) : "";
     wire = (typeof presWireCabinet === "function") ? presWireCabinet : null;
+  } else if (_wdTab === "decisions") {
+    html = (typeof decRenderTab === "function") ? decRenderTab(C) : "";
+    wire = (typeof decWireTab === "function") ? decWireTab : null;
   } else if (_wdTab === "map") {
     html = (typeof presRenderMap === "function") ? presRenderMap(C) : "";
     wire = null;
@@ -91,7 +94,7 @@ function _wdRefresh() {
     wire = null;
   }
   cont.innerHTML = html || '<p class="lede" style="text-align:center;opacity:0.7">This office is not yet staffed.</p>';
-  var tabs = ["economy", "treasury", "diplomacy", "victory", "armory", "warroom", "clock", "muster", "cabinet", "map"];
+  var tabs = ["economy", "treasury", "diplomacy", "victory", "armory", "warroom", "clock", "muster", "cabinet", "decisions", "map"];
   for (var i = 0; i < tabs.length; i++) {
     var b = document.getElementById("wdTab_" + tabs[i]);
     if (b) b.style.opacity = (tabs[i] === _wdTab) ? "1" : "0.55";
@@ -129,6 +132,7 @@ function openWarDept() {
       _wdTabBtn("clock", "1864 Clock") +
       _wdTabBtn("muster", "Muster Roll") +
       _wdTabBtn("cabinet", "Cabinet") +
+      _wdTabBtn("decisions", "Decisions") +
       _wdTabBtn("map", "Theater Map") +
     '</div>' +
     '<div id="wdContent"></div>' +
@@ -140,7 +144,7 @@ function openWarDept() {
     if (_pdAfterDeskClose) { var cb = _pdAfterDeskClose; _pdAfterDeskClose = null; cb(); }
     else if (typeof closeSheet === "function") closeSheet();
   });
-  ["economy", "treasury", "diplomacy", "victory", "armory", "warroom", "clock", "muster", "cabinet", "map"].forEach(function (k) {
+  ["economy", "treasury", "diplomacy", "victory", "armory", "warroom", "clock", "muster", "cabinet", "decisions", "map"].forEach(function (k) {
     var b = document.getElementById("wdTab_" + k);
     if (b) b.addEventListener("click", function () { _wdTab = k; _wdRefresh(); });
   });
@@ -168,6 +172,8 @@ function _pdShowTurnInterstitial() {
       function () { _pdShowTurnInterstitial(); },                                   // Back → the interstitial
       function () { if (typeof openUpgrade === "function") openUpgrade(); });        // To the Field → Quartermaster/battle
   });
+  // S2 m2: wire the inline decision cards; re-render the interstitial after a choice
+  if (typeof decWireInterstitial === "function") decWireInterstitial(C, function () { _pdShowTurnInterstitial(); });
 }
 
 /* ---- openUpgrade OVERRIDE: surface the strategic turn once, then the base flow.

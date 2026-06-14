@@ -23,6 +23,7 @@ function _t1InitAll(C) {
   try { if (typeof wrInit  === "function") wrInit(C);  } catch (e) {}
   try { if (typeof presInit === "function") presInit(C); } catch (e) {}   // S0: President's Desk
   try { if (typeof cabInit === "function") cabInit(C); } catch (e) {}     // S2 m1: cabinet/advisor system (after presInit)
+  try { if (typeof decInit === "function") decInit(C); } catch (e) {}     // S2 m2: executive decisions / pendingChoices loop
   try { if (typeof vicInit === "function") vicInit(C); } catch (e) {}     // S1e: strategy/victory (read by blockade+manpower)
   try { if (typeof econInit === "function") econInit(C); } catch (e) {}   // S1a: economy/finance
   try { if (typeof blockadeInit === "function") blockadeInit(C); } catch (e) {}  // S1c: cotton/blockade/diplomacy
@@ -46,6 +47,7 @@ function _t1Resolve(winnerSide, type, B, C, win) {
   try { if (typeof mrOnResolve  === "function") mrOnResolve(winnerSide, type, B, C, win);  } catch (e) {}
   try { if (typeof presOnResolve === "function") presOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S0: after clk (interlink)
   try { if (typeof cabOnResolve === "function") cabOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S2 m1: AFTER pres (date+turn advanced) -> detect cabinet churn
+  try { if (typeof decOnResolve === "function") decOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S2 m2: AFTER pres -> surface/expire decision cards (owns pendingChoices)
   try { if (typeof vicOnResolve === "function") vicOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S1e: LAST — enemy will, lever upkeep, victory detection
   try { if (typeof bridgeOnResolve === "function") bridgeOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S5-seed: reset pre-battle prep
 }

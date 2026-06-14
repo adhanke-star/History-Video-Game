@@ -1,0 +1,951 @@
+{
+  "_meta": {
+    "version": 1,
+    "system": "S2 m2 executive decisions / pendingChoices loop (§8.27 emancipation-dated · §8.62 civil liberties · §8.68 cadence)",
+    "note": "Curated, non-blocking decision cards. Each option's effects[] are bounded, clamped, logged deltas the engine maps to game state (weariness/capital/intervention/importFactor/strength); option.sets.emancipation drives C.president.emancipation, which the manpower module reads to gate the USCT pool. Field semantics for the player: lower weariness = better; higher capital = better; higher intervention = good for CS / bad for US. Roster/effects are designer calibration; situation/teaching/cards are enriched by the adversarially-verified s2-decisions-research workflow at commit time.",
+    "fields": "weariness|capital|borderLoyalty(->capital)|legitimacy(->capital)|intervention|importFactor|strength"
+  },
+  "cards": [
+    {
+      "id": "emancipation-proclamation",
+      "side": "US",
+      "category": "emancipation",
+      "title": "The Question of Emancipation",
+      "trigger": {
+        "earliestYear": 1862,
+        "latestYear": null,
+        "hinge": true,
+        "note": "The great moral hinge of the war — surfaces from 1862, once."
+      },
+      "situation": "They come by the thousands — across the picket lines, into the camps, offering their hands and their knowledge of the country. Your generals have twice declared them free, and twice you have struck the orders down to hold Kentucky in the Union. Congress presses; Greeley thunders in the Tribune; London watches. The enslaved have already decided. The question left to you is whether the United States will say aloud what its own armies are doing in fact — and when.",
+      "options": [
+        {
+          "id": "issue",
+          "label": "Hold. Let Congress confiscate, keep the border States, and wait for a victory in the field — then proclaim freedom as a measure of war.",
+          "historicalNote": "This is the path Lincoln took. He read a first draft to his cabinet on 22 Jul 1862 but, on Seward's counsel, held it lest it read as a shriek of despair after defeats. Antietam (17 Sept 1862) gave him his victory; the Preliminary Proclamation followed five days later (22 Sept 1862), the final on 1 Jan 1863. The Second Confiscation Act (17 Jul 1862) had already laid the legal ground.",
+          "resultText": "You wait through a hard summer, and after the carnage along Antietam Creek you strike. The Preliminary Proclamation gives the rebel States one hundred days to return; none does. On the first of January you sign, your hand stiff from three hours of New Year's handshaking. The war is now, openly, a war for freedom — and the army of freedom may now be recruited from the freed.",
+          "teaching": "By framing emancipation as a military necessity under his war powers, Lincoln rooted it in the Constitution he was sworn to defend, kept the loyal border States exempt (and so in the Union), and timed it to a victory so it read as strength, not desperation. The price of that lawyerly precision was the proclamation's notorious narrowness — it freed those it could not reach and exempted those it could. Foner (The Fiery Trial) and Oakes (Freedom National) argue this was strategy, not timidity: a war measure had to look like one to survive the courts and hold the coalition. The decisive consequence was authorizing Black enlistment — the single act that opened the army to ~180,000 Black men, most of them formerly enslaved, and foreclosed European recognition of a slaveholding Confederacy.",
+          "provenance": "Verified",
+          "sources": [
+            "The Emancipation Proclamation (text, 1 Jan 1863): National Archives — https://www.archives.gov/milestone-documents/emancipation-proclamation",
+            "Preliminary Proclamation (22 Sept 1862), with border-state and occupied-area exemptions: Library of Congress, Abraham Lincoln and Emancipation — https://www.loc.gov/collections/abraham-lincoln-papers/articles-and-essays/abraham-lincoln-and-emancipation/",
+            "First draft read to cabinet 22 Jul 1862, then held on Seward's counsel until a victory: American Battlefield Trust, 10 Facts: The Emancipation Proclamation — https://www.battlefields.org/learn/articles/10-facts-emancipation-proclamation",
+            "Eric Foner, The Fiery Trial: Abraham Lincoln and American Slavery (Norton, 2010); James Oakes, Freedom National (Norton, 2013)"
+          ],
+          "effects": [
+            {
+              "field": "intervention",
+              "delta": -5
+            },
+            {
+              "field": "capital",
+              "delta": -3
+            },
+            {
+              "field": "strength",
+              "delta": 2
+            }
+          ],
+          "sets": {
+            "emancipation": "issue"
+          }
+        },
+        {
+          "id": "radical",
+          "label": "Let the generals' orders stand. Proclaim freedom now, wherever our armies reach — and arm the freedmen at once.",
+          "historicalNote": "This is the path Frémont actually took in Missouri (30 Aug 1861) and Hunter in the Department of the South (9 May 1862). Lincoln revoked both — Frémont's publicly on 11 Sept 1861 (after a private request to modify on 2 Sept), Hunter's on 19 May 1862 — precisely to keep Kentucky and the other border states from bolting. The radical Republicans and abolitionists, Black and white, urged exactly this.",
+          "resultText": "The order goes out, and the country shudders. The freedmen flock to the colors and the abolition press cheers — but in Frankfort the legislature seethes, a Kentucky company throws down its arms and disbands, and you are reminded that you must hold Kentucky or risk losing the whole game. The thing freedom gains you in men, it may cost you in States.",
+          "teaching": "Lincoln's own arithmetic, stated to Orville Browning on 22 Sept 1861, was blunt: a general freeing slaves by proclamation was 'simply dictatorship,' and 'to lose Kentucky is nearly the same as to lose the whole game.' The border slave states held men, rivers, and railroads the Union could not spare in 1861 — and when Frémont issued his order, Gen. Robert Anderson reported a company of Kentucky Union volunteers threw down their arms. Yet the cost of waiting was also real: every month of conservative policy turned the self-emancipating enslaved back at the lines. Early, sweeping emancipation was morally clarifying and militarily potent — and, in 1861, politically perilous in a way Lincoln judged he could not yet survive.",
+          "provenance": "Verified",
+          "sources": [
+            "Lincoln to Orville Browning, 22 Sept 1861 ('simply dictatorship'; 'to lose Kentucky is nearly the same as to lose the whole game'): Teaching American History — https://teachingamericanhistory.org/document/letter-to-o-h-browning/",
+            "Lincoln's private request to Frémont to modify his proclamation (2 Sept 1861), formal revocation following 11 Sept: House Divided, Dickinson College — https://housedivided.dickinson.edu/sites/lincoln/letter-to-john-fremont-september-2-1861/",
+            "Hunter's General Order No. 11 (9 May 1862) and Lincoln's revocation (19 May 1862): Freedmen & Southern Society Project, Univ. of Maryland — https://www.freedmen.umd.edu/hunter.htm",
+            "James M. McPherson, Battle Cry of Freedom (Oxford, 1988); James Oakes, Freedom National (Norton, 2013)"
+          ],
+          "effects": [
+            {
+              "field": "intervention",
+              "delta": -7
+            },
+            {
+              "field": "capital",
+              "delta": -6
+            },
+            {
+              "field": "strength",
+              "delta": 3
+            }
+          ],
+          "sets": {
+            "emancipation": "issue"
+          }
+        },
+        {
+          "id": "refuse",
+          "label": "Touch nothing. Save the Union under the Constitution as it is — if I can save it without freeing a single slave, I will.",
+          "historicalNote": "This is the position Lincoln voiced publicly in his 22 Aug 1862 reply to Horace Greeley — written, notably, a month after he had already read a draft Proclamation to his cabinet (22 Jul 1862) and was waiting for a victory. The letter was a public-opinion maneuver as much as a creed, conditioning a wary North for what was coming.",
+          "resultText": "You write the words and the conservative press approves: the Union, and only the Union. But the contrabands keep coming, the war grinds on without the men only emancipation can supply, and across the ocean the cotton-spinners' governments wait to see whether this is a war over freedom or merely over a map. To forbear, you find, is itself a policy — and not a costless one.",
+          "teaching": "Lincoln's Greeley letter — 'My paramount object in this struggle is to save the Union, and is not either to save or to destroy slavery' — is the most-abused passage of his presidency. Lost Cause writers seize on it to claim the war was not about slavery. The record refutes this: he wrote it weeks after reading a draft Proclamation to his cabinet, and closed by reaffirming his wish 'that all men every where could be free.' More fundamentally the choice was already foreclosed by the enslaved themselves. Du Bois named it the 'general strike' — by walking to Union lines hundreds of thousands made a slavery-untouched Union impossible in fact long before it became impossible in law. Holding back kept the border states in hand but forfeited the USCT manpower and the moral high ground abroad.",
+          "provenance": "Verified",
+          "sources": [
+            "Lincoln's Letter to Horace Greeley (22 Aug 1862): Abraham Lincoln Online — https://www.abrahamlincolnonline.org/lincoln/speeches/greeley.htm",
+            "Lincoln to Greeley, 22 Aug 1862 (clipping): Library of Congress — https://www.loc.gov/resource/mal.4233400/?st=text",
+            "W. E. B. Du Bois, Black Reconstruction in America (1935), ch. 4 'The General Strike'; nonsite.org, 'DuBois's General Strike' — https://nonsite.org/duboiss-general-strike/",
+            "Eric Foner, The Fiery Trial (Norton, 2010); James M. McPherson, Battle Cry of Freedom (1988)"
+          ],
+          "effects": [
+            {
+              "field": "capital",
+              "delta": 5
+            },
+            {
+              "field": "intervention",
+              "delta": 4
+            }
+          ],
+          "sets": {
+            "emancipation": "decline"
+          }
+        }
+      ],
+      "card": {
+        "claim": "Emancipation was not a gift bestowed by one man's pen but a war measure Lincoln issued under military necessity in stages — Preliminary on 22 Sept 1862 (after Antietam), final on 1 Jan 1863 — after the enslaved had already forced the question by self-emancipating to Union lines in their thousands, and after he had twice revoked his own generals' freedom orders (Frémont, Sept 1861; Hunter, May 1862) to keep the border slave states in the Union.",
+        "perspectives": [
+          {
+            "voice": "Abraham Lincoln, 22 Aug 1862 (to Greeley)",
+            "text": "If I could save the Union without freeing any slave I would do it, and if I could save it by freeing all the slaves I would do it... What I do about slavery, and the colored race, I do because I believe it helps to save the Union."
+          },
+          {
+            "voice": "W. E. B. Du Bois, Black Reconstruction (1935)",
+            "text": "The slave entered upon a general strike against slavery... He ran away to the first place of safety and offered his services to the Federal Army... This withdrawal and bestowal of his labor decided the war."
+          },
+          {
+            "voice": "James Oakes, Freedom National (2013)",
+            "text": "The Proclamation was framed as a war measure on purpose — its constitutional armor was the war power, and its narrowness was the price of its legality. It exempted what it could not reach lest a court unmake the whole."
+          },
+          {
+            "voice": "Myth named and countered — the Lost Cause",
+            "text": "The Lost Cause cites the Greeley letter to claim the war was not about slavery. But Lincoln wrote it with a draft Proclamation already read to his cabinet, and ~180,000 Black soldiers — most of them formerly enslaved — would soon make freedom and Union one war, not two."
+          }
+        ],
+        "sources": [
+          "Emancipation Proclamation, final text (1 Jan 1863): National Archives — https://www.archives.gov/milestone-documents/emancipation-proclamation",
+          "Preliminary Proclamation (22 Sept 1862) and exemptions: Library of Congress — https://www.loc.gov/collections/abraham-lincoln-papers/articles-and-essays/abraham-lincoln-and-emancipation/",
+          "Lincoln to Greeley (22 Aug 1862): Abraham Lincoln Online — https://www.abrahamlincolnonline.org/lincoln/speeches/greeley.htm",
+          "USCT ~180,000 (most formerly enslaved): American Battlefield Trust — https://www.battlefields.org/learn/articles/role-usct-civil-war",
+          "W. E. B. Du Bois, Black Reconstruction in America (1935); Eric Foner, The Fiery Trial (Norton, 2010); James Oakes, Freedom National (Norton, 2013)"
+        ],
+        "provenance": "Verified"
+      }
+    },
+    {
+      "id": "us-habeas-corpus",
+      "side": "US",
+      "category": "civil-liberties",
+      "title": "Habeas Corpus and the Loyal Rear",
+      "trigger": {
+        "earliestYear": 1861,
+        "latestYear": 1864,
+        "hinge": false,
+        "note": "Secessionists and draft-resisters strain the loyal states."
+      },
+      "situation": "Secessionist mobs have torn up the Baltimore railroads and the wires; the capital sits cut off, ringed by a slave State that has not yet seceded. Saboteurs and recruiters for the rebellion walk free because the civil courts will not hold them. The Constitution permits suspending the privilege of the writ of habeas corpus 'when in Cases of Rebellion or Invasion the public Safety may require it' — but says not one word as to whose hand may pull that lever.",
+      "options": [
+        {
+          "id": "broad",
+          "label": "Suspend broadly, by my own authority — let the army arrest and hold whoever menaces the war, and answer to Congress after.",
+          "historicalNote": "This is the road Lincoln actually walked. He authorized suspension on the Washington–Philadelphia line on April 27, 1861, widened it repeatedly, and by his September 24, 1862 proclamation declared a nationwide suspension reaching persons arrested by military authority for aiding the rebellion or discouraging enlistment. He did not wait for Congress; he summoned it after the fact on July 4, 1861. Congress ratified the power in the Act of March 3, 1863.",
+          "resultText": "It is done. The army holds Fort McHenry's cells and a thousand more. When Chief Justice Taney, riding circuit, commands the fort to produce one John Merryman, the commander declines, and you answer the Court not in a brief but to the Congress: 'Are all the laws but one to go unexecuted, and the Government itself go to pieces lest that one be violated?'",
+          "teaching": "Lincoln's unilateral suspension provoked Ex parte Merryman (1861), where Taney held that only Congress — not the President — may suspend the writ, the power sitting in Article I. Lincoln ignored the ruling and defended himself in the July 4, 1861 message and the 1863 Corning letter. Neely's Pulitzer-winning Fate of Liberty (1991) shows the arrests numbered in the thousands and fell mostly on blockade-runners, draft-dodgers, and fraudulent contractors rather than dissenting editors — but also that the program ran with little oversight and real abuses. The Supreme Court rebuked the use of military courts where civil courts functioned only after the war (Ex parte Milligan, 1866).",
+          "provenance": "Verified",
+          "sources": [
+            "Ex parte Merryman, 17 F. Cas. 144 (C.C.D. Md. 1861) (Taney, Cir. J.)",
+            "Lincoln, Message to Congress in Special Session, July 4, 1861 (Miller Center; Teaching American History)",
+            "Lincoln, Proclamation 94, Suspending the Writ of Habeas Corpus, Sept. 24, 1862 (American Presidency Project)",
+            "Mark E. Neely Jr., The Fate of Liberty: Abraham Lincoln and Civil Liberties (Oxford Univ. Press, 1991); James M. McPherson, Battle Cry of Freedom (1988)"
+          ],
+          "effects": [
+            {
+              "field": "weariness",
+              "delta": -3
+            },
+            {
+              "field": "capital",
+              "delta": -3
+            }
+          ]
+        },
+        {
+          "id": "narrow",
+          "label": "Suspend, but narrowly and under law — confine it to the theaters of active rebellion and require lists of prisoners be laid before the civil courts.",
+          "historicalNote": "This describes the path Congress charted in the Habeas Corpus Suspension Act of March 3, 1863, which authorized the President to suspend but required the Secretaries of State and War to furnish federal judges lists of those held, mandating release of any not indicted by the next sitting grand jury. In practice the safeguard was honored unevenly, and broad detentions continued.",
+          "resultText": "Congress speaks, and you sign on the third of March, 1863: suspension during the present rebellion, whenever the public Safety may require it. But the law binds you too — the Secretaries must hand the judges a list of every man held, and any soul the grand jury does not indict must go free. The power is no longer yours alone; it is the Republic's, exercised through its forms.",
+          "teaching": "The 1863 Act answered Taney's central objection by supplying explicit congressional authorization, and its list-and-grand-jury machinery was a real attempt to fence the power with due process — the tension at the heart of emergency power. Yet Neely documents that the safeguards were applied loosely: many prisoners were never listed, and military detentions persisted far from any battlefield. The narrow course buys legitimacy and answers the constitutional charge, but does not by itself prevent the abuses a determined provost-marshal can still work in the field. This is the difference between lawful authority and disciplined administration.",
+          "provenance": "Inferred",
+          "sources": [
+            "Habeas Corpus Suspension Act, ch. 81, 12 Stat. 755 (Mar. 3, 1863)",
+            "Constitution Annotated, Art. I, S9, C2 (Suspension Clause) (constitution.congress.gov)",
+            "Mark E. Neely Jr., The Fate of Liberty (Oxford Univ. Press, 1991)"
+          ],
+          "effects": [
+            {
+              "field": "weariness",
+              "delta": -1
+            },
+            {
+              "field": "capital",
+              "delta": -1
+            }
+          ]
+        },
+        {
+          "id": "refuse",
+          "label": "Refuse — keep the writ inviolate. Let the civil courts try every man, and trust that a free government can win without jailing its citizens untried.",
+          "historicalNote": "No Union President took this course, but it is the principle the Democratic opposition, the Maryland bench, and Taney pressed — and the principle the Supreme Court would vindicate, postwar, in Ex parte Milligan (1866). Its wartime cost would have been borne in saboteurs freed and a capital left exposed.",
+          "resultText": "The writ stands; no fort holds a man the courts have not condemned. Taney is satisfied, and the Democratic press names you a friend of liberty. But the Baltimore wires are cut again, the recruiting agent for the rebellion takes his oath before a sympathetic Maryland jury and walks, and the capital sits a day's march from a State you dare not garrison. Dissent runs freer — and so do those who would undo the Union from within.",
+          "teaching": "Upholding the writ preserved the legitimacy of the cause but left disloyalty and draft resistance harder to check — the genuine cost of restraint in wartime. It is not a strawman: it is the constitutional principle the Court ultimately affirmed in Ex parte Milligan (1866), where a unanimous bench (opinion by Justice Davis) freed Lambdin Milligan and held that civilians may not be tried by military commission where the civil courts remain open. Milligan was the postwar rebuke — a vindication of liberty delivered safely after the emergency had passed, and a standing warning against the precedent Lincoln set.",
+          "provenance": "Inferred",
+          "sources": [
+            "Ex parte Milligan, 71 U.S. (4 Wall.) 2 (1866) (Davis, J.)",
+            "Ex parte Merryman, 17 F. Cas. 144 (C.C.D. Md. 1861)",
+            "Mark E. Neely Jr., The Fate of Liberty (Oxford Univ. Press, 1991)"
+          ],
+          "effects": [
+            {
+              "field": "weariness",
+              "delta": 2
+            },
+            {
+              "field": "capital",
+              "delta": 2
+            }
+          ]
+        }
+      ],
+      "card": {
+        "claim": "Lincoln authorized suspension of the privilege of the writ of habeas corpus by his own authority beginning April 1861, and thousands of civilians were held without trial; Chief Justice Taney's Ex parte Merryman (1861) ruled the power belonged to Congress alone, Lincoln defied it, Congress authorized suspension in the Act of March 3, 1863, and the unanimous Ex parte Milligan (1866) rebuked the use of military tribunals against civilians where civil courts remained open.",
+        "perspectives": [
+          {
+            "voice": "Abraham Lincoln (Message to Congress, July 4, 1861)",
+            "text": "Are all the laws but one to go unexecuted, and the Government itself go to pieces lest that one be violated? The Constitution itself is silent as to which or who is to exercise the power, and it cannot be believed the framers intended the danger should run its course until Congress could be assembled."
+          },
+          {
+            "voice": "Chief Justice Roger B. Taney (Ex parte Merryman, 1861) [paraphrase]",
+            "text": "The clause sits in Article I, among the powers of Congress; the President cannot suspend the writ, nor authorize a military officer to do it. If the executive may seize and hold a citizen beyond the reach of the courts, the people are no longer living under a government of laws."
+          },
+          {
+            "voice": "Justice David Davis (Ex parte Milligan, 1866)",
+            "text": "Martial law cannot arise from a threatened invasion. The necessity must be actual and present; the invasion real, such as effectually closes the courts. The courts being open, a citizen not in the military service may not be tried by a tribunal that the Constitution never made his judge."
+          },
+          {
+            "voice": "Mark E. Neely Jr., The Fate of Liberty (1991) [paraphrase of findings]",
+            "text": "The record, read in full through the provost-marshal arrest files, shows most of the thousands held were blockade-runners, deserters, defrauding contractors, and men in the war zones, not silenced editors; yet the system ran with scant oversight and worked real injustices. The danger was genuine, and so was the danger of the remedy."
+          }
+        ],
+        "sources": [
+          "Ex parte Merryman, 17 F. Cas. 144 (C.C.D. Md. 1861) (Taney, Cir. J.)",
+          "Lincoln, Message to Congress in Special Session, July 4, 1861 (Miller Center; Teaching American History)",
+          "Habeas Corpus Suspension Act, ch. 81, 12 Stat. 755 (Mar. 3, 1863)",
+          "Ex parte Milligan, 71 U.S. (4 Wall.) 2 (1866) (Davis, J.)",
+          "Mark E. Neely Jr., The Fate of Liberty: Abraham Lincoln and Civil Liberties (Oxford Univ. Press, 1991) (Pulitzer Prize for History, 1992); James M. McPherson, Battle Cry of Freedom (1988)"
+        ],
+        "provenance": "Verified"
+      }
+    },
+    {
+      "id": "cs-bread-riot",
+      "side": "CS",
+      "category": "home-front",
+      "title": "The Richmond Bread Riot",
+      "trigger": {
+        "earliestYear": 1863,
+        "latestYear": 1864,
+        "hinge": false,
+        "note": "Inflation and impressment starve the Confederate home front."
+      },
+      "situation": "Thursday of Easter week, and several hundred women — ordnance hands, ironworkers' wives, soldiers' wives — pour out of Capitol Square into the shops of Richmond. They carry knives, hatchets, a few revolvers, and they are taking bread, bacon, and shoes by force. The cry is 'Bread or blood.' You, Mr. President, stand on a dray in the street before your own starving people.",
+      "options": [
+        {
+          "id": "troops",
+          "label": "Mount the cart, empty my pockets to them, and give the order: disperse, or the militia fires.",
+          "historicalNote": "What Davis did, by the dominant tradition. By Varina Davis's memoir he pleaded with the crowd, threw them what money he had, and then threatened to have the militia open fire; the women dispersed. (Some accounts credit Governor Letcher, not Davis, with the order to fire — the sources genuinely differ.) Order was restored within the hour.",
+          "resultText": "The guard loads. You tell them the time they have. The women look at the leveled muskets of men whose pay feeds no one, and they scatter — back to empty larders. The Square is clear; some seventy are taken up, though only about a dozen women are convicted. Secretary Seddon begs the telegraph and papers to say nothing, lest the Yankees learn the capital's women starve. But the story gets out, and on April 8 it is on the front page of the New York Times.",
+          "teaching": "Davis answered hunger with bayonets and a press blackout — and it worked, in the narrow sense that the Square emptied. But threatening to fire on soldiers' wives, then jailing and convicting them, exposed the regime's deepest fault line: a slaveholders' government that fought to keep four million people enslaved was willing to point muskets at the poor white families whose men it had conscripted. Chesson shows the famous 'pulled-out-his-watch, five-minutes-to-fire' tableau leans on a hostile, embellishing press — much of it a Lost Cause-era reconstruction — and should be read with care; the core fact, that lethal force was threatened and the women yielded, is well attested.",
+          "provenance": "Verified",
+          "sources": [
+            "Michael B. Chesson, 'Harlots or Heroines? A New Look at the Richmond Bread Riot,' Virginia Magazine of History and Biography 92, no. 2 (April 1984): 131-175",
+            "Stephanie McCurry, Confederate Reckoning: Power and Politics in the Civil War South (Harvard University Press, 2010), ch. 5, 'Women Numerous and Armed'",
+            "Encyclopedia Virginia, 'Bread Riot, Richmond' (encyclopediavirginia.org/entries/bread-riot-richmond/)",
+            "Varina Davis, Jefferson Davis... A Memoir by His Wife (Belford, 1890), vol. 2"
+          ],
+          "effects": [
+            {
+              "field": "weariness",
+              "delta": 4
+            },
+            {
+              "field": "capital",
+              "delta": -2
+            }
+          ]
+        },
+        {
+          "id": "relief",
+          "label": "Open the government commissary and the army's stores to the city's poor — feed them now.",
+          "historicalNote": "Not what Davis did, but the live alternative the women were forcing. Within days Richmond and the state did open subsidized 'free markets' and expanded poor relief for the 'meritorious poor' — relief built, in McCurry's reading, in the image of the soldiers' wives who demanded it.",
+          "resultText": "The warehouse doors swing open and meal goes out by the barrel. The hunger in Oregon Hill eases for a season, and the city stands up free markets where a soldier's wife can buy at a price she can pay. But the granaries you have opened were filling Lee's haversacks, and the quartermaster's ledger shows the cost. You have conceded, in iron and flour, that the Confederate state owes its poor women bread — a claim they will not now surrender.",
+          "teaching": "McCurry's central argument: the bread riots were not blind hunger but organized political action by women who had reinvented themselves as 'soldiers' wives' with a claim on the state. Their pressure forced an unprecedented expansion of Confederate public welfare — in North Carolina under an act titled 'An Act for the Relief of the Wives and Families of Soldiers in the Army' (ratified Feb. 10, 1863). Feeding them bought morale and order at a real cost to army supply. Note the limit, against Lost Cause myth: it was relief for white soldiers' wives, inside a war fought to preserve the enslavement of Black families who had no such claim on the state at all.",
+          "provenance": "Inferred",
+          "sources": [
+            "Stephanie McCurry, Confederate Reckoning (Harvard University Press, 2010), esp. ch. 4 'Soldiers' Wives and the Politics of Subsistence' and ch. 5",
+            "Encyclopedia Virginia, 'Poverty and Poor Relief during the Civil War' (encyclopediavirginia.org/entries/poverty-and-poor-relief-during-the-civil-war/)",
+            "Encyclopedia Virginia, 'Bread Riot, Richmond'"
+          ],
+          "effects": [
+            {
+              "field": "weariness",
+              "delta": -3
+            },
+            {
+              "field": "strength",
+              "delta": -2
+            }
+          ]
+        },
+        {
+          "id": "impressment",
+          "label": "Order the impressment agents to pay fair market price and stop stripping the farms that feed Richmond.",
+          "historicalNote": "The structural root the women never reached. Davis defended impressment as a war necessity and did not roll it back; the March 26, 1863 Impressment Act fixed prices roughly 50 percent below market, driving the hoarding and inflation that emptied the city's larders.",
+          "resultText": "You tell the commissaries to pay what the market asks. The farmers near the railroads, who had taken to hiding their corn, bring their wagons back to market — and prices in Richmond soften. But the army that lived by seizing food below cost must now buy it with a currency already worth pennies, and the Treasury prints more to cover the bill. You have eased one fire by feeding another.",
+          "teaching": "Impressment at fixed, below-market prices was the policy engine behind the hunger: it made hoarding rational, punished loyal farmers, and fed the cry 'rich man's war, poor man's fight.' War Department clerk Robert G. H. Kean warned the policy would starve both army and cities. Easing it would have addressed the cause — but it cut against the Confederacy's core problem, a state too weak in money and rails to feed an army except by force. By March 1865 the government had issued some $500 million in impressment certificates and unpaid invoices; the regime never solved the trade-off between feeding the army and not starving its own people.",
+          "provenance": "Inferred",
+          "sources": [
+            "Encyclopedia Virginia, 'Confederate Impressment During the Civil War' (encyclopediavirginia.org/entries/confederate-impressment-during-the-civil-war/)",
+            "The Statutes at Large of the Confederate States, 'An Act to Regulate Impressments,' approved March 26, 1863 (docsouth.unc.edu/imls/22conf/1863stat.html)",
+            "Stephanie McCurry, Confederate Reckoning (Harvard University Press, 2010)"
+          ],
+          "effects": [
+            {
+              "field": "weariness",
+              "delta": -2
+            },
+            {
+              "field": "strength",
+              "delta": -2
+            }
+          ]
+        }
+      ],
+      "card": {
+        "claim": "On April 2, 1863, several hundred Richmond women — most of them poor, many of them soldiers' wives — armed with knives, hatchets, and pistols, seized food and goods by force in the Confederate capital; Jefferson Davis confronted them in person and the crowd was warned the militia would fire before it dispersed, and the riot helped force an expansion of Confederate public relief.",
+        "perspectives": [
+          {
+            "voice": "Mary Jackson and the women of Oregon Hill (organizers)",
+            "text": "We are the wives of the men you took for soldiers, and our children are starving while the speculators grow fat. We met at the church, we resolved to ask the governor for bread, and when he gave us none we took it. This is our right to live."
+          },
+          {
+            "voice": "Stephanie McCurry (Confederate Reckoning)",
+            "text": "These were not spasms of raw hunger but disciplined political acts. Poor white women claimed a new public identity as 'soldiers' wives' and made a claim on the Confederate state — and they frightened that state into building, for the first time, a system of public welfare in their image."
+          },
+          {
+            "voice": "Michael Chesson (Harlots or Heroines?)",
+            "text": "The rioters were neither the whores the Examiner painted nor saints — they were ordinary women driven to it. Much of what we 'know' of that day, including the most theatrical details of Davis on the cart with his watch, descends from a hostile, embellishing press reconstructed decades later, and must be read with care."
+          },
+          {
+            "voice": "Lost Cause myth (named and countered)",
+            "text": "The myth says the home front suffered nobly and as one, a united white South bearing privation for the Cause. The bread riot gives that lie: the suffering was sorted by class, the government threatened to shoot its own poor white families while it fought to keep Black families enslaved, and the women's own words — 'rich man's war, poor man's fight' — named the fracture out loud."
+          }
+        ],
+        "sources": [
+          "Michael B. Chesson, 'Harlots or Heroines? A New Look at the Richmond Bread Riot,' Virginia Magazine of History and Biography 92, no. 2 (1984): 131-175",
+          "Stephanie McCurry, Confederate Reckoning: Power and Politics in the Civil War South (Harvard University Press, 2010)",
+          "George C. Rable, Civil Wars: Women and the Crisis of Southern Nationalism (Univ. of Illinois Press, 1989)",
+          "Encyclopedia Virginia, 'Bread Riot, Richmond' and 'Confederate Impressment During the Civil War'"
+        ],
+        "provenance": "Verified"
+      }
+    },
+    {
+      "id": "us-vallandigham",
+      "side": "US",
+      "category": "civil-liberties",
+      "title": "The Wily Agitator: Vallandigham and the Copperhead Question",
+      "trigger": {
+        "earliestYear": 1863,
+        "latestYear": 1863,
+        "hinge": false,
+        "note": "Fires May 1863 after Gen. Burnside's General Order No. 38 (13 April 1863) and Vallandigham's Mount Vernon, Ohio speech (1 May 1863). It lands a fait accompli on the President's desk in the run-up to the 1863 fall elections."
+      },
+      "situation": "Clement L. Vallandigham — ex-Congressman, chief of the 'Copperhead' Peace Democrats — denounces your war as 'wicked, cruel, and unnecessary,' a war 'for the freedom of the blacks and the enslavement of the whites,' and rails against the draft. He is already in irons: Gen. Burnside arrested him on his own authority on 5 May, a military commission has convicted him, and the sentence sits on YOUR desk. Touch him and you may forge a martyr; free him and you appear to wink at men who talk soldiers into desertion.",
+      "options": [
+        {
+          "id": "affirm-military-commission",
+          "label": "Let the commission's sentence stand — close confinement for the duration of the war.",
+          "historicalNote": "This is what Burnside's commission decreed: imprisonment in a military fort (Fort Warren was designated). Burnside arrested and tried Vallandigham WITHOUT the President's prior knowledge or order — Lincoln inherited the act.",
+          "resultText": "You sustain the commission. The Democratic press erupts: a civilian, jailed by soldiers for a speech, in a state where the courts sit open. 'King Lincoln,' they cry. The Albany Democrats and Erastus Corning forward stinging resolutions — and you must answer them, for a man behind bars makes the principle look worse than the man.",
+          "teaching": "Mark Neely (The Fate of Liberty, Pulitzer 1992) calls the Vallandigham affair, with the Habeas Corpus Act of 3 March 1863, a low-water mark for American civil liberty. Trying a civilian by military commission where civil courts functioned is precisely what the Supreme Court would later forbid in Ex parte Milligan (1866) — though in Ex parte Vallandigham (1864) the Court dodged, holding it had no power to review a commission by certiorari. Imprisonment kept the agitator visible and aggrieved, the worst of both worlds.",
+          "provenance": "Verified",
+          "sources": [
+            "Mark E. Neely Jr., The Fate of Liberty: Abraham Lincoln and Civil Liberties (Oxford Univ. Press, 1991; Pulitzer Prize for History, 1992): https://archive.org/details/fateofliberty00mark_0",
+            "Ex parte Vallandigham, 68 U.S. (1 Wall.) 243 (1864): https://en.wikipedia.org/wiki/Ex_parte_Vallandigham",
+            "General Order Number 38 / Vallandigham arrest, Encyclopedia.com: https://www.encyclopedia.com/history/dictionaries-thesauruses-pictures-and-press-releases/general-order-no-38"
+          ],
+          "effects": [
+            {
+              "field": "weariness",
+              "delta": -2
+            },
+            {
+              "field": "capital",
+              "delta": -5
+            }
+          ]
+        },
+        {
+          "id": "banish-to-confederacy",
+          "label": "Commute the sentence — banish him through the lines into the Confederacy.",
+          "historicalNote": "Lincoln's actual order, 19 May 1863; Vallandigham was delivered to Confederate lines on 25-26 May 1863. The clever compromise: punish without imprisoning, and brand the peace-man a guest of the enemy he claimed not to serve.",
+          "resultText": "You send him South. The Confederates, embarrassed, will not keep him; he slips to Bermuda, then to Windsor in Canada, and from a hotel runs for Governor of Ohio in absentia. Then comes the answer you needed — you write Erastus Corning: 'Must I shoot a simple-minded soldier boy who deserts, while I must not touch a hair of a wily agitator who induces him to desert?' In October, Ohio buries Vallandigham: John Brough beats him by better than 100,000 votes.",
+          "teaching": "The banishment turned a free-speech grievance into a spectacle — the peace champion dumped on the doorstep of the slaveholders' republic. Lincoln then fought the argument on paper, not in a cell: the Corning (Albany) letter of 12 June 1863 is among the great state papers on emergency power, conceding nothing yet leaving Vallandigham free to be beaten at the ballot box. He was — crushed in the 1863 Ohio governor's race after Gettysburg and Vicksburg. Note the honest caveat: the maneuver was deft, but it still rested on a military trial of a civilian, the very thing Milligan would condemn.",
+          "provenance": "Verified",
+          "sources": [
+            "Lincoln to Erastus Corning, full text, Teaching American History: https://teachingamericanhistory.org/document/to-erastus-corning-et-al/",
+            "Lincoln to Erastus Corning and Others, 12 June 1863 — LOC, Abraham Lincoln Papers: https://www.loc.gov/resource/mal.2399500/?st=text",
+            "Clement Vallandigham — banishment, Windsor exile, 1863 election (Brough 288,374 to 187,492): https://en.wikipedia.org/wiki/Clement_Vallandigham",
+            "Clement L. Vallandigham, Britannica: https://www.britannica.com/biography/Clement-L-Vallandigham"
+          ],
+          "effects": [
+            {
+              "field": "capital",
+              "delta": 4
+            },
+            {
+              "field": "weariness",
+              "delta": -2
+            }
+          ]
+        },
+        {
+          "id": "release-let-him-speak",
+          "label": "Repudiate the arrest — release him and let him talk.",
+          "historicalNote": "The road not taken. Some in the Cabinet and many Republicans privately thought the arrest a blunder; Lincoln himself reportedly regretted that Burnside ever made it, but judged a public climb-down would shame the army.",
+          "resultText": "You order him freed and disavow the general. The First Amendment is vindicated and the martyr is denied his crown — but Burnside is humiliated before his own troops, and every Copperhead orator learns the administration will flinch. With desertion bleeding the ranks, your generals ask why a soldier hangs for leaving while the man who talked him into it walks.",
+          "teaching": "This is the civil-libertarian's preferred ending, and on the law it is the soundest — Milligan (1866) would later hold flatly that military commissions cannot try civilians while the courts are open. But it was politically near-impossible in May 1863: overruling Burnside in public would have read as weakness amid a draft crisis and mounting desertion. Lincoln's genius was to find a third path that neither jailed the man nor surrendered the principle of wartime authority. The teaching tension is real: the legally cleanest option carried the steepest immediate cost to morale and command.",
+          "provenance": "Inferred",
+          "sources": [
+            "Mark E. Neely Jr., The Fate of Liberty (Oxford Univ. Press, 1991) — Lincoln 'prone to mercy,' Vallandigham as low tide: https://archive.org/details/fateofliberty00mark_0",
+            "Ex parte Milligan, 71 U.S. 2 (1866) — civilians may not be tried by military commission where civil courts are open: https://en.wikipedia.org/wiki/Ex_parte_Milligan"
+          ],
+          "effects": [
+            {
+              "field": "capital",
+              "delta": 6
+            },
+            {
+              "field": "weariness",
+              "delta": 4
+            }
+          ]
+        }
+      ],
+      "card": {
+        "claim": "In May 1863 Gen. Ambrose Burnside, on his own authority and without Lincoln's prior knowledge, arrested Copperhead leader Clement Vallandigham under General Order No. 38; a military commission convicted the civilian, and Lincoln defused the crisis by commuting the sentence to banishment into the Confederacy and defending the policy in the Corning letter.",
+        "perspectives": [
+          {
+            "voice": "Lincoln (Corning letter, 12 June 1863)",
+            "text": "'Must I shoot a simple-minded soldier boy who deserts, while I must not touch a hair of a wily agitator who induces him to desert?' To silence the agitator and save the boy, he wrote, 'is not only constitutional, but, withal, a great mercy.'"
+          },
+          {
+            "voice": "Vallandigham (and the Peace Democrats)",
+            "text": "He damned the conflict as 'a wicked, cruel, and unnecessary war' for 'the freedom of the blacks and the enslavement of the whites,' and cast Lincoln as 'King Lincoln,' a despot suspending the people's liberties — the Copperhead creed of 'the Constitution as it is, the Union as it was.'"
+          },
+          {
+            "voice": "The historian (Mark Neely, anti-Lost-Cause reading)",
+            "text": "Neely's Pulitzer-winning Fate of Liberty marks the Vallandigham affair as a low point for civil liberty, yet refuses the Copperhead's self-portrait: Vallandigham's 'free speech' was speech weaponized to break the army that was, in the end, dismantling slavery. The myth to name is the Lost-Cause inversion that makes the agitator a victim and erases what he was agitating FOR — a negotiated peace that would have left four million people enslaved."
+          }
+        ],
+        "sources": [
+          "Lincoln to Erastus Corning and Others, 12 June 1863 — Library of Congress, Abraham Lincoln Papers: https://www.loc.gov/resource/mal.2399500/?st=text",
+          "Reply of President Lincoln to the Albany Democrats, 12 June 1863 — Historical Society of Pennsylvania (text): https://hsp.org/sites/default/files/presidentlincolnreplytoalbanydemocrats.pdf",
+          "Lincoln to Erastus Corning, full text — Teaching American History: https://teachingamericanhistory.org/document/to-erastus-corning-et-al/",
+          "Mark E. Neely Jr., The Fate of Liberty (Oxford Univ. Press, 1991) — Internet Archive: https://archive.org/details/fateofliberty00mark_0",
+          "Clement Vallandigham — Wikipedia: https://en.wikipedia.org/wiki/Clement_Vallandigham ; Britannica: https://www.britannica.com/biography/Clement-L-Vallandigham"
+        ],
+        "provenance": "Verified"
+      }
+    },
+    {
+      "id": "us-draft-riots",
+      "side": "US",
+      "category": "home-front",
+      "title": "The Draft and the New York Riots",
+      "trigger": {
+        "earliestYear": 1863,
+        "latestYear": 1863,
+        "hinge": false,
+        "note": "Fires mid-July 1863, days after Gettysburg, when the first federal Enrollment Act draft lottery sparks four days of insurrection in New York City. Whether the national draft survives its first test, and on what terms."
+      },
+      "situation": "The first names drawn under the Enrollment Act have set New York ablaze. For four days a mob has burned the draft office, sacked the homes of Republicans and the well-to-do, hunted Black men through the streets, hanged eleven, and torched the Colored Orphan Asylum with two hundred and thirty-three colored children inside — who escaped only by the back door. The militia is gone to Pennsylvania. Governor Seymour begs you to halt the draft. The Union needs the men.",
+      "options": [
+        {
+          "id": "send-troops",
+          "label": "Order regiments down from Pennsylvania and put the riot down with the bayonet. The draft will go forward.",
+          "historicalNote": "This is substantially what happened. The War Department detached regiments fresh from the Gettysburg campaign — the 7th New York State Militia among them, by forced march from Maryland — and by July 16 more than 4,000 federal troops were firing volleys into the crowds. The draft was postponed only to restore order, then resumed under guard on August 19 and finished within ten days.",
+          "resultText": "The regiments come on by rail and forced march, the same men who broke Lee's charge a fortnight gone. They sweep the avenues with grape and musketry; the barricades fall. The draft wheel turns again on the 19th of August under fixed bayonets, and turns to its end. Order is restored at the cost of perhaps a hundred and twenty lives — but the Republic has shown it can compel its own to fight.",
+          "teaching": "Lincoln chose force and continuity over appeasement: when Governor Seymour asked him on August 3 to suspend the draft pending a Supreme Court ruling, Lincoln refused on August 7 — 'I can not consent to suspend the draft in New-York... because, among other reasons, time is too important,' for the enemy 'drives every able bodied man he can reach, into his ranks.' Crushing the riot asserted federal authority over conscription for the first time in American history. The cost was real — the violence exposed how deeply class and racial grievance ran in the loyal North — but yielding would have invited resistance in every Northern city.",
+          "provenance": "Verified",
+          "sources": [
+            "Iver Bernstein, The New York City Draft Riots: Their Significance for American Society and Politics in the Age of the Civil War (Oxford University Press, 1990)",
+            "James M. McPherson, Battle Cry of Freedom (Oxford University Press, 1988), pp. 600-611",
+            "Abraham Lincoln to Horatio Seymour, August 7, 1863, Collected Works vol. 6 (housedivided.dickinson.edu/sites/lincoln/letter-to-horatio-seymour-august-7-1863/)",
+            "History.com, 'New York Draft Riots: 1863, Civil War & Causes' (history.com/articles/draft-riots)"
+          ],
+          "effects": [
+            {
+              "field": "weariness",
+              "delta": -3
+            },
+            {
+              "field": "strength",
+              "delta": 4
+            },
+            {
+              "field": "capital",
+              "delta": -3
+            }
+          ]
+        },
+        {
+          "id": "suspend-the-draft",
+          "label": "Suspend the draft in New York to cool tempers, and let the courts test the law before any further enrollment.",
+          "historicalNote": "This is precisely what Governor Seymour urged and Lincoln rejected. Lincoln did quietly trim New York's quota and tolerate scrutiny of the enrollment lists for fraud, but he would not stop the machine — to halt it under mob pressure would have surrendered the principle that the nation could levy soldiers.",
+          "resultText": "The streets fall quiet, for the mob has had its way. But word travels: a city that burns hard enough need not send its sons. In Boston, in Albany, in the coal counties of Pennsylvania, men mark the lesson. The armies in Virginia and along the Tennessee wait for reinforcements that the wheel was meant to bring, and that now will not come on time.",
+          "teaching": "Suspension would have traded the war effort for short-term calm. McPherson's accounting shows how marginal conscription's direct yield already was — yet the draft's chief value was as a goad: the threat of being drafted drove volunteering and re-enlistment. To suspend it under fire would have shattered that threat nationwide and signaled that organized violence could veto national policy. The Lost Cause habit of casting the riots as honest 'resistance to tyranny' obscures this — the draft was the Union's instrument for survival, and the rioters' own violence targeted Black neighbors far more than draft offices.",
+          "provenance": "Verified",
+          "sources": [
+            "Abraham Lincoln to Horatio Seymour, August 7, 1863, Collected Works vol. 6 (housedivided.dickinson.edu/sites/lincoln/letter-to-horatio-seymour-august-7-1863/)",
+            "James M. McPherson, Battle Cry of Freedom (Oxford University Press, 1988), pp. 600-611",
+            "Iver Bernstein, The New York City Draft Riots (Oxford University Press, 1990)"
+          ],
+          "effects": [
+            {
+              "field": "weariness",
+              "delta": 2
+            },
+            {
+              "field": "strength",
+              "delta": -5
+            },
+            {
+              "field": "capital",
+              "delta": -4
+            }
+          ]
+        },
+        {
+          "id": "keep-commutation",
+          "label": "Keep the $300 commutation clause — let those who can pay buy out, to ease the law through and spare a wider rebellion.",
+          "historicalNote": "The commutation fee was already law under the 1863 Enrollment Act and remained until Congress repealed it in 1864 (substitution survived). Its retention is exactly the inequity that gave the war its bitter nickname.",
+          "resultText": "The clause stands. A drafted man with three hundred dollars walks free; a laborer with three hundred cents shoulders the musket or runs. The newspapers christen it plainly — a rich man's war and a poor man's fight — and the phrase outlives the war. The Treasury fills a little; the law's good name empties faster.",
+          "teaching": "The $300 commutation was the single most resented feature of conscription, the engine of the slogan 'a rich man's war and a poor man's fight' — $300 being near a full year's wages for a laborer. By McPherson's figures, of about 207,000 men actually drafted, roughly 87,000 paid commutation and 74,000 furnished substitutes; only about 46,000 served in person. The provision blunted elite resistance but stamped the draft as class-biased and handed Copperhead Democrats their sharpest weapon. Note Bernstein's deeper irony: the rioters channeled class grievance not against the rich who bought out, but into the lynching of Black workingmen who could not even be drafted — the Enrollment Act applied only to citizens, and Black men were not yet recognized as such.",
+          "provenance": "Verified",
+          "sources": [
+            "James M. McPherson, Battle Cry of Freedom (Oxford University Press, 1988), pp. 600-611",
+            "Iver Bernstein, The New York City Draft Riots (Oxford University Press, 1990)",
+            "Bill of Rights Institute, 'The Draft and the Draft Riots of 1863' (billofrightsinstitute.org/essays/the-draft-and-the-draft-riots-of-1863)"
+          ],
+          "effects": [
+            {
+              "field": "capital",
+              "delta": -5
+            },
+            {
+              "field": "weariness",
+              "delta": -1
+            }
+          ]
+        }
+      ],
+      "card": {
+        "claim": "In July 1863 the first federal draft lottery touched off the deadliest urban insurrection in American history; Lincoln answered with troops fresh from Gettysburg and refused to suspend conscription, even as the riots' worst violence fell not on draft offices but on Black New Yorkers — eleven lynched, the Colored Orphan Asylum burned.",
+        "perspectives": [
+          {
+            "voice": "Iver Bernstein, The New York City Draft Riots (1990)",
+            "text": "The riots were no simple anti-draft protest but a complex class and racial upheaval: laborers who began by attacking the $300 commutation's visible injustice turned their fury, as the days wore on, against the Black workingmen who were their economic and symbolic rivals — and who, not being citizens, could not even be conscripted. The mob's racial violence was the riot's defining, not incidental, feature."
+          },
+          {
+            "voice": "James M. McPherson, Battle Cry of Freedom (1988)",
+            "text": "Of roughly 207,000 men drafted, only about 46,000 served in person; some 87,000 paid commutation and 74,000 sent substitutes. The draft's real power lay less in the soldiers it produced than in the volunteering it spurred. The riots killed about 120 — the largest civil insurrection in U.S. history short of the rebellion itself — and Lincoln met them with force while declining to halt the law."
+          },
+          {
+            "voice": "Anti-Lost-Cause corrective",
+            "text": "These were not noble freedom-fighters resisting tyranny. Their first sustained targets after the draft office were Black New Yorkers: eleven men and boys hanged and mutilated, neighborhoods sacked, and an orphanage of 233 Black children put to the torch. To romanticize the riots as anti-government resistance is to launder a pogrom. The draft, for all its inequities, served emancipation and Union; the mob served white supremacy."
+          }
+        ],
+        "sources": [
+          "Iver Bernstein, The New York City Draft Riots: Their Significance for American Society and Politics in the Age of the Civil War (Oxford University Press, 1990)",
+          "James M. McPherson, Battle Cry of Freedom: The Civil War Era (Oxford University Press, 1988), pp. 600-611",
+          "Abraham Lincoln to Horatio Seymour, August 7, 1863, Collected Works vol. 6 (housedivided.dickinson.edu/sites/lincoln/letter-to-horatio-seymour-august-7-1863/)",
+          "New-York Historical Society, 'The Burning of the Colored Orphan Asylum' (nyhistory.org/blogs/burning-of-orphan-asylum)",
+          "National Museum of American History, '150 Years Ago Today: Civil War Draft Riots Grip New York' (americanhistory.si.edu/explore/stories/150-years-ago-today-civil-war-draft-riots-grip-new-york)"
+        ],
+        "provenance": "Verified"
+      }
+    },
+    {
+      "id": "us-press-censorship",
+      "side": "US",
+      "category": "civil-liberties",
+      "title": "The Disloyal Press: Bayonets, the Mails, or the First Amendment",
+      "trigger": {
+        "earliestYear": 1864,
+        "latestYear": 1864,
+        "hinge": false,
+        "note": "Sharpest in May 1864, when the New York World and Journal of Commerce print a forged proclamation calling up 400,000 men — a hoax that spikes the gold price and reaches the President's desk as an apparent breach of military secrecy. Opposition papers attack the war, the draft, and emancipation throughout."
+      },
+      "situation": "Mr. President, two New York sheets — the World and the Journal of Commerce, organs of the Democracy — have this morning printed over your name a proclamation you never wrote, calling up four hundred thousand men. Gold leaps; the city panics. War Secretary Stanton and Secretary Seward press you to act before the wire carries it abroad. The papers also call your war a tyrant's war and your Emancipation a crime. The Constitution you swore to defend guarantees a free press. What is your order?",
+      "options": [
+        {
+          "id": "suppress-by-force",
+          "label": "Seize the presses and jail the editors. By military force, hold the offices of the World and the Journal of Commerce 'until further orders.'",
+          "historicalNote": "This is what Lincoln actually did. His order of May 18, 1864 directed Gen. John A. Dix to arrest the editors and take military possession of both establishments; the New York staff of the Independent Telegraph Company were also arrested and its offices closed in Baltimore, Harrisburg, Pittsburgh, and Philadelphia. The papers were shut for several days, resuming May 23; the arrest orders were soon rescinded, and the real forger (Joseph Howard Jr.) was jailed at Fort Lafayette.",
+          "resultText": "It is done. By your order Dix's soldiers stand in the World's composing room and the Journal of Commerce goes dark. The hoax is throttled — but within hours the truth is plain: the editors were dupes, not traitors. Even your own friends recoil. Navy Secretary Welles writes in his diary (May 23, 1864) that the act was 'hasty, rash, inconsiderate, and wrong, and cannot be defended,' laying the blame chiefly on Seward and Stanton. Manton Marble of the World answers with a public open letter, 'Freedom of the Press Wantonly Violated.' The Democracy has its election-year martyr.",
+          "teaching": "The May 1864 suppression is the clearest case of Lincoln-era prior restraint, and it backfired. The administration believed a military secret had leaked; in fact two Democratic papers had been hoaxed by a forger chasing a gold profit. Suppressing them — while Republican papers that had also received and rejected the dispatch went untouched — handed the opposition a free-press grievance four months before the election. Scholars stress this was an aberration, not policy: Mark E. Neely Jr. (The Fate of Liberty, 1991, Pulitzer Prize for History) shows the popular myth of a vast Lincoln press dragnet is false, and that arrests were driven far more by military exigency than by a design to crush political dissent.",
+          "provenance": "Verified",
+          "sources": [
+            "Abraham Lincoln, Executive Order to Maj. Gen. John A. Dix, May 18, 1864, Collected Works vol. 7 (Basler ed., Rutgers Univ. Press)",
+            "The American Presidency Project (UCSB), 'Executive Order — Arrest and Imprisonment of Irresponsible Newspaper Reporters and Editors'",
+            "Mark E. Neely Jr., The Fate of Liberty: Abraham Lincoln and Civil Liberties (Oxford Univ. Press, 1991)",
+            "'Civil War gold hoax,' Wikipedia (dates, papers, Howard/Mallison, May 23 resumption, Independent Telegraph closures)"
+          ],
+          "effects": [
+            {
+              "field": "weariness",
+              "delta": -2
+            },
+            {
+              "field": "capital",
+              "delta": -5
+            }
+          ]
+        },
+        {
+          "id": "let-them-print",
+          "label": "Let them print. Run down the forgery in the open, expose the hoaxer, and leave the press free — even the press that hates you.",
+          "historicalNote": "This was Lincoln's instinct in most cases. In June 1863 Gen. Ambrose Burnside suppressed the anti-war Chicago Times; Lincoln, advised it was doing more harm than good, telegraphed Stanton on June 4, 1863 to revoke the order, and the Times resumed. The pattern of the record — emphasized by Neely — is forbearance toward hostile papers far more often than seizure.",
+          "resultText": "You stay your hand. Seward issues a public denial that very afternoon; the wire services correct the record; the gold market settles within the day. The Copperhead sheets keep flaying you — 'Abolition war,' 'Lincoln the despot' — and the abuse stings. But no editor becomes a martyr, no grand jury convenes against your generals, and your enemies are left to argue with the truth instead of with your bayonets. The forger Howard is run down and jailed; the principle of the free press is left standing for the next President who will need it more than you.",
+          "teaching": "Restraint was Lincoln's more characteristic course, and the Chicago Times reversal of June 1863 is the proof: he overruled his own general rather than martyr a hostile paper. The deeper lesson is that opposition speech in a democracy is self-correcting where the government can answer it — and that the cost of suppression (legitimacy, the moral high ground over a slaveholders' rebellion fought to keep four million people enslaved) usually exceeded the fleeting security gain. Neely's bottom-up study dismantles the Lost Cause-adjacent myth that Lincoln ran a sweeping censorship regime: the great majority of papers, including venomous ones, printed throughout the war.",
+          "provenance": "Verified",
+          "sources": [
+            "Abraham Lincoln to Edwin M. Stanton, June 4, 1863 (revoking the suppression of the Chicago Times), Collected Works of Abraham Lincoln",
+            "'President Lincoln Revokes Suspension of Chicago Times,' Abraham Lincoln and the Civil War (quoting the June 4, 1863 Stanton telegram)",
+            "Mark E. Neely Jr., The Fate of Liberty (Oxford Univ. Press, 1991)",
+            "Library of Congress, 'Oppression!! Suppressing the press' (Civil War press-suppression print)"
+          ],
+          "effects": [
+            {
+              "field": "capital",
+              "delta": 6
+            },
+            {
+              "field": "weariness",
+              "delta": 1
+            }
+          ]
+        },
+        {
+          "id": "pressure-via-the-mails",
+          "label": "Choke them quietly. Deny the disloyal sheets the United States mails — no seizure, no jailed editor, just no postage.",
+          "historicalNote": "This was the administration's real first weapon against the opposition press, wielded by Postmaster General Montgomery Blair beginning in 1861. On August 22, 1861 the Journal of Commerce and the Brooklyn Daily Eagle (among others) were barred from the mails on grounds of 'disloyalty,' following a New York grand-jury presentment. Crippled in circulation, the Journal of Commerce's editor Gerard Hallock stepped down on August 31, 1861.",
+          "resultText": "You let Blair do the work the army should not. The postmarks stop; the disloyal sheets, cut off from their out-of-town subscribers, wither without a single bayonet in the pressroom. The Journal of Commerce loses its reach and its editor resigns. It is quieter than seizure, and harder to make a martyr of — yet it is the same hand on the same throat, only gloved. The precedent that the government may ration the mails by a paper's politics outlives the war.",
+          "teaching": "Postal exclusion was the administration's subtler and more sustained instrument of press control. Blair held that wartime duty let him close the mails to 'seditious' matter; the result was de facto suppression of papers like the Journal of Commerce and the Brooklyn Eagle without the spectacle of soldiers in a newsroom. It teaches that censorship need not be dramatic to be real — a denial of distribution can silence as surely as a padlock, while leaving the formal 'free press' guarantee technically intact. Honest history names this for what it was: an erosion of press liberty, even where it avoided the open scandal of the World shutdown.",
+          "provenance": "Verified",
+          "sources": [
+            "Smithsonian National Postal Museum, 'Montgomery Blair, the Civil War: Censorship' (Journal of Commerce and Brooklyn Daily Eagle barred from the mails, Aug. 22, 1861)",
+            "Miller Center (Univ. of Virginia), 'Montgomery Blair (1861–1864)'",
+            "'The Journal of Commerce,' Wikipedia (1861 mail-privilege suspension; Hallock's resignation Aug. 31, 1861)",
+            "The First Amendment Encyclopedia (MTSU), 'Civil War, U.S.' (federal grand-jury presentments against disloyal papers)"
+          ],
+          "effects": [
+            {
+              "field": "weariness",
+              "delta": -2
+            },
+            {
+              "field": "capital",
+              "delta": -4
+            }
+          ]
+        }
+      ],
+      "card": {
+        "claim": "In May 1864 Lincoln ordered the military seizure of the New York World and Journal of Commerce after they printed a forged proclamation — the sharpest act of prior restraint of his presidency, and one his own cabinet called indefensible. It was an aberration, not a system: across the war the administration more often tolerated a hostile press or throttled it quietly through the mails, and the myth of a vast Lincoln censorship dragnet does not survive the record.",
+        "perspectives": [
+          {
+            "voice": "Gideon Welles, Secretary of the Navy (diary, May 23, 1864)",
+            "text": "The whole proceeding was hasty, rash, inconsiderate, and wrong, and cannot be defended. The papers were imposed upon as much as the public; to seize their presses for that is to punish the victim of a forgery. (Welles blamed Seward, and to a lesser degree Stanton, for the order.)"
+          },
+          {
+            "voice": "Manton Marble, editor of the New York World (paraphrase of his open letter, 'Freedom of the Press Wantonly Violated,' 1864)",
+            "text": "Is there a different law for your opponents and for your supporters? The Republican papers had the same forged dispatch in their hands; they go free, and my presses are held by soldiers. That is not security — it is partisanship in a uniform. (Reconstructed in Marble's voice from the argument of his actual published letter.)"
+          },
+          {
+            "voice": "Mark E. Neely Jr., The Fate of Liberty (1991), paraphrase",
+            "text": "The popular image of a North blanketed by censorship is a myth. Most arrests sprang from the friction of war — desertion, contraband, the border states — not from a design to crush political dissent. The World suppression was a blunder born of panic, and it stands out precisely because it was uncharacteristic. (Paraphrase of Neely's thesis, not a verbatim quotation.)"
+          },
+          {
+            "voice": "Postmaster General Montgomery Blair (characterization of his stated position)",
+            "text": "It is my duty in time of war to keep seditious matter out of the mails. A government need not jail an editor when it can simply decline to carry his lies to the enemy's friends. (Reconstruction of Blair's wartime rationale for postal exclusion, not a verbatim quotation.)"
+          }
+        ],
+        "sources": [
+          "Collected Works of Abraham Lincoln, vol. 7 (Basler ed.) — Executive Order to Gen. Dix, May 18, 1864, and Lincoln to Stanton, June 4, 1863 (Chicago Times)",
+          "The American Presidency Project (UCSB) — Executive Order on arrest/imprisonment of editors",
+          "Mark E. Neely Jr., The Fate of Liberty: Abraham Lincoln and Civil Liberties (Oxford Univ. Press, 1991; Pulitzer Prize for History)",
+          "Diary of Gideon Welles, entry May 23, 1864 ('hasty, rash, inconsiderate, and wrong')",
+          "Smithsonian National Postal Museum, 'Montgomery Blair, the Civil War: Censorship'; Miller Center, 'Montgomery Blair (1861–1864)'; 'Civil War gold hoax' and 'The Journal of Commerce,' Wikipedia"
+        ],
+        "provenance": "Verified"
+      }
+    },
+    {
+      "id": "cs-habeas-corpus",
+      "side": "CS",
+      "category": "civil-liberties",
+      "title": "The States'-Rights Republic Suspends the Writ",
+      "trigger": {
+        "earliestYear": 1862,
+        "latestYear": 1864,
+        "hinge": false,
+        "note": "Fires when desertion, draft resistance, and disloyalty pressure the central government — the Confederate Congress passes the first suspension act on Feb. 27, 1862, vesting Davis with the power; the hinge recurs at the renewal of Oct. 1862 (expiring Feb. 1863) and the third act of Feb. 1864."
+      },
+      "situation": "You lead a republic founded on the doctrine that the States, not the central government, are sovereign — and now the war demands you arrest deserters, draft resisters, and Unionists without answering a judge's writ. Your own Vice-President calls it a step toward military despotism. To centralize is to betray the cause you raised; to refuse is to let the armies bleed out through desertion.",
+      "options": [
+        {
+          "id": "suspend",
+          "label": "I ask Congress to suspend the writ. The independence we contend for cannot be hazarded for the technicalities of the law.",
+          "historicalNote": "What Davis actually did, three times. The Confederate Congress passed the first suspension act on Feb. 27, 1862, vesting the power in Davis; renewed it in Oct. 1862 (expiring Feb. 1863); and granted a third on Feb. 15, 1864, limited to the President and Secretary of War, expiring Aug. 2, 1864. In his Feb. 3, 1864 message Davis cited desertion, 'discontent, disaffection, and disloyalty,' the enemy's secret friends, and rising reunion sentiment.",
+          "resultText": "Congress grants the power after acrimonious debate, hedging it with limits and an expiration date. The provost marshals fill the jails — but the cry of 'dictator' rises from your own side, and Georgia and North Carolina prepare to defy you.",
+          "teaching": "Neely's arrest records document roughly 4,000 Confederate political prisoners, handled by extra-judicial habeas corpus commissioners who held no trials — and he argues liberty was repressed more broadly, in more places, for longer, than the Lost-Cause claim of uniquely Southern liberty allows, demolishing the myth of Confederate constitutionalism. Note what the 1864 act enumerated among its arrest categories: inciting 'servile insurrection.' The suspension power was built in part to crush the resistance of the enslaved — Black agency was a force the regime feared and legislated against, not a passive backdrop. Rable frames the wider tragedy: a 'revolution against politics' founded on decentralization, driven by war to centralize. Escott reads the resulting alienation of ordinary, largely nonslaveholding Southerners as an internal collapse that preceded military defeat.",
+          "provenance": "Verified",
+          "sources": [
+            "Mark E. Neely Jr., Southern Rights: Political Prisoners and the Myth of Confederate Constitutionalism (Univ. Press of Virginia, 1999) — https://www.amazon.com/Southern-Rights-Political-Confederate-Constitutionalism/dp/0813918944",
+            "George C. Rable, The Confederate Republic: A Revolution against Politics (Univ. of North Carolina Press, 1994) — https://uncpress.org/9780807858189/the-confederate-republic/",
+            "Essential Civil War Curriculum, 'Habeas Corpus' — https://www.essentialcivilwarcurriculum.com/habeas-corpus.html",
+            "Civil War Months, 'Davis Urges Suspension of Habeas Corpus' (Feb. 3, 1864 message; Feb. 15, 1864 act, expiring Aug. 2, 1864) — https://civilwarmonths.com/2024/02/03/davis-urges-suspension-of-habeas-corpus/"
+          ],
+          "effects": [
+            {
+              "field": "strength",
+              "delta": 4
+            },
+            {
+              "field": "capital",
+              "delta": -5
+            }
+          ]
+        },
+        {
+          "id": "yield",
+          "label": "I yield to the Governors. We did not leave one centralized power to raise another; the writ stands.",
+          "historicalNote": "The position Stephens, Gov. Joseph Brown of Georgia, and Gov. Zebulon Vance of North Carolina pressed. Stephens called suspension 'a blow at the very vitals of liberty.' Vance argued (in his May 17, 1864 message to the legislature) that Congress had no power to alter arrest and warrant procedure — only the writ's protection after arrest — and invoked English kings who suspended the writ to crush opposition, not protect the people.",
+          "resultText": "The states'-rights men cheer; the doctrine of '61 stands vindicated on paper. But deserters slip home unpunished, state judges free conscripts on writs, and the armies thin. Holding the principle, the republic loses the means to defend it.",
+          "teaching": "This is the Confederacy's central contradiction made into policy: a war for national survival waged by a government forbidden the tools of survival. As the Richmond Law Review study shows, state judges in conscription cases (in North Carolina, Alabama, and Georgia in 1863) uniformly claimed jurisdiction to issue habeas writs against conscription officers — the very states'-rights machinery the Confederacy was built on now corroding its army. And the writ the Governors defended was a liberty for white men only — the same republic enslaved Black Southerners and criminalized their bid for freedom as 'servile insurrection.'",
+          "provenance": "Verified",
+          "sources": [
+            "EBSCO Research Starters, 'Analysis: Governor's Message on the Suspension of Writ of Habeas Corpus' (Vance, May 17, 1864) — https://www.ebsco.com/research-starters/history/analysis-governors-message-suspension-writ-habeas-corpus-general-assembly",
+            "George C. Rable, The Confederate Republic: A Revolution against Politics (Univ. of North Carolina Press, 1994) — https://uncpress.org/9780807858189/the-confederate-republic/",
+            "Winthrop Rutherford, 'Drawing Lines of Sovereignty: State Habeas Doctrine ... in Confederate Conscription Cases,' 51 U. Rich. L. Rev. (2017) — https://lawreview.richmond.edu/2017/04/08/drawing-lines-of-sovereignty-state-habeas-doctrine-and-the-substance-of-states-rights-in-confederate-conscription-cases/"
+          ],
+          "effects": [
+            {
+              "field": "capital",
+              "delta": 4
+            },
+            {
+              "field": "strength",
+              "delta": -5
+            }
+          ]
+        },
+        {
+          "id": "partial",
+          "label": "A narrow grant: power vested in the President and Secretary of War alone, hedged to named offenses and a fixed expiration.",
+          "historicalNote": "Close to what Congress actually enacted. In Aug. 1862 Senator Barksdale pressed a 20-day limit on Davis's martial-law power; the Feb. 15, 1864 act confined suspension to the President and Secretary of War, tied arrests to enumerated categories (the act named thirteen — among them treason, desertion, spying, aiding the enemy, and inciting 'servile insurrection'), and set a hard expiration of Aug. 2, 1864, on which it lapsed.",
+          "resultText": "Congress carves the power thin and stamps it with an expiry. Enough to jail spies and deserters in named districts; not enough to satisfy your generals, nor to quiet Stephens, who reads any suspension as the road to one-man rule. The compromise pleases no one and bites least where the desertion runs deepest.",
+          "teaching": "The historical middle path shows the Confederate Congress trying to thread war necessity through a states'-rights needle — limited grantees, enumerated offenses, sunset clauses. Neely's point cuts against complacency: even hedged, the practical regime of provost arrests, martial law, and extra-judicial habeas commissioners ran wide, and the limits on paper did not always bind in the field. The enumerated offenses themselves give the lie to any 'restraint' reading: a clause aimed at 'servile insurrection' wrote the suppression of enslaved people's resistance directly into the statute. The myth of Confederate constitutional restraint survives the documents poorly.",
+          "provenance": "Verified",
+          "sources": [
+            "Essential Civil War Curriculum, 'Habeas Corpus' (Barksdale 20-day limit; 1864 renewal) — https://www.essentialcivilwarcurriculum.com/habeas-corpus.html",
+            "Mark E. Neely Jr., Southern Rights: Political Prisoners and the Myth of Confederate Constitutionalism (Univ. Press of Virginia, 1999) — https://www.amazon.com/Southern-Rights-Political-Confederate-Constitutionalism/dp/0813918944",
+            "Civil War Months, 'Davis Urges Suspension of Habeas Corpus' (Feb. 15, 1864 act, expiring Aug. 2, 1864) — https://civilwarmonths.com/2024/02/03/davis-urges-suspension-of-habeas-corpus/"
+          ],
+          "effects": [
+            {
+              "field": "strength",
+              "delta": 2
+            },
+            {
+              "field": "capital",
+              "delta": -2
+            }
+          ]
+        }
+      ],
+      "card": {
+        "claim": "The Confederacy, founded on the supremacy of state sovereignty over central power, was driven by the war to suspend habeas corpus and centralize — and its own states'-rights leaders, Vice-President Stephens and Governors Brown and Vance, denounced that centralization as the despotism they had seceded to escape. The liberty they fought over was a white men's liberty: the same statutes named 'servile insurrection' as a thing to be crushed.",
+        "perspectives": [
+          {
+            "voice": "Jefferson Davis (President, C.S.A.), Feb. 3, 1864",
+            "text": "Must the independence for which we are contending be put in peril for the sake of conformity to the technicalities of the law? Desertion, disaffection, and the enemy's secret friends among us demand the power to hold the disloyal without a judge's writ."
+          },
+          {
+            "voice": "Alexander H. Stephens (Vice-President, C.S.A.)",
+            "text": "Suspension is a blow at the very vitals of liberty — and the man who asks it grasps at absolute power. Away with the idea of getting independence first and looking for liberty afterward; our liberties, once lost, may be lost forever."
+          },
+          {
+            "voice": "Gov. Zebulon Vance (North Carolina), May 17, 1864",
+            "text": "Congress may not touch the manner of arrest, only the writ that follows it. Kings have always suspended this protection to crush their opponents, never to shield the people. I am bound to enter the State's complaint."
+          },
+          {
+            "voice": "Mark E. Neely Jr., historian (Southern Rights, 1999)",
+            "text": "The arrest ledgers hold some four thousand political prisoners, judged by commissioners who held no trials — and liberty was repressed more widely, in more places, for longer in the Confederacy than the Lost Cause has ever admitted. The myth of Confederate constitutionalism does not survive its own records."
+          },
+          {
+            "voice": "Paul D. Escott / George C. Rable, historians",
+            "text": "A revolution launched against centralized power could not wage modern war without it. The alienation of ordinary, mostly nonslaveholding Southerners from a government that conscripted and jailed them was an internal collapse that ran ahead of, and hastened, military defeat."
+          }
+        ],
+        "sources": [
+          "Mark E. Neely Jr., Southern Rights: Political Prisoners and the Myth of Confederate Constitutionalism (Univ. Press of Virginia, 1999)",
+          "George C. Rable, The Confederate Republic: A Revolution against Politics (Univ. of North Carolina Press, 1994) — https://uncpress.org/9780807858189/the-confederate-republic/",
+          "Paul D. Escott, After Secession: Jefferson Davis and the Failure of Confederate Nationalism (Louisiana State Univ. Press, 1978) — https://mail.lsupress.org/books/detail/after-secession/",
+          "EBSCO Research Starters, Gov. Vance's Message on Suspension of the Writ (May 17, 1864)",
+          "Civil War Months, 'Davis Urges Suspension of Habeas Corpus'; Essential Civil War Curriculum, 'Habeas Corpus'; Winthrop Rutherford, 51 U. Rich. L. Rev. (2017)"
+        ],
+        "provenance": "Verified"
+      }
+    },
+    {
+      "id": "cs-conscription",
+      "side": "CS",
+      "category": "home-front",
+      "title": "The Twenty-Slave Law and the Rich Man's War",
+      "trigger": {
+        "earliestYear": 1862,
+        "latestYear": 1864,
+        "hinge": false,
+        "note": "Fires after the first Conscription Act (Apr 16, 1862) and the twenty-slave overseer exemption (Oct 11, 1862); pressure mounts through the desertion crises of 1863-64."
+      },
+      "situation": "Mr. President, your conscription has reached down to grasp the planters' poorer neighbors, but spares one white man on every plantation of twenty bondsmen. From the camps and the upcountry farms rises a single cry — 'a rich man's war and a poor man's fight' — and the deserters thicken in the hills. Hold the exemption, strike it, or grind the draft deeper still?",
+      "options": [
+        {
+          "id": "keep-exemption",
+          "label": "Keep the twenty-slave exemption. A plantation left to women and children is a powder-train for servile insurrection; an overseer at home is the price of order behind our lines.",
+          "historicalNote": "This was the choice the Confederate Congress actually made on October 11, 1862, and largely sustained. The exemption was defended in the language of securing the 'police of the country' — keeping white men over the enslaved after Lincoln's preliminary Emancipation Proclamation (Sept. 22, 1862) sharpened the long-standing slaveholder dread of a rising.",
+          "resultText": "The exemption stands. The great houses keep their overseers and their crops; the cotton is policed and the bondsmen kept to the rows. But the yeoman in the ranks reads the law plainly — that twenty Negroes will buy a man out of the trenches and his own poverty will not. 'It gave us the blues,' writes one private; 'we wanted 20 negroes.' In the piedmont and the mountains, men who will not be made to fight a rich man's war drift home with their muskets, and whole counties pass beyond the conscript-officer's reach.",
+          "teaching": "The exemption made the Confederate state legible as a class instrument: it protected the very property — enslaved people — that was the war's cause, while pressing non-slaveholders into the ranks. The law's stated purpose, keeping a white man over the enslaved, only makes sense because the enslaved themselves wanted freedom and acted on it — fleeing to Union lines and forcing the question the planters feared. The 'insurrection' the law guarded against was not a planter fantasy but the slaveholders' recognition of Black people's own will to be free. McCurry shows soldiers' wives turning their fury directly on slaveholders shielded by the law, while Escott traces how the perceived inequity corroded Confederate nationalism from below. The Lost Cause myth of a unified white South dissolves here.",
+          "provenance": "Verified",
+          "sources": [
+            "Stephanie McCurry, Confederate Reckoning: Power and Politics in the Civil War South (Harvard Univ. Press, 2010) — https://www.hup.harvard.edu/books/9780674064218",
+            "Paul D. Escott, After Secession: Jefferson Davis and the Failure of Confederate Nationalism (LSU Press, 1978)",
+            "Albert Burton Moore, Conscription and Conflict in the Confederacy (Macmillan, 1924) — https://catalog.hathitrust.org/Record/000454349",
+            "Twenty-Slave Law, Encyclopedia Virginia — https://encyclopediavirginia.org/entries/twenty-slave-law/ ; The Twenty Negro Law, American Battlefield Trust — https://www.battlefields.org/learn/articles/twenty-negro-law"
+          ],
+          "effects": [
+            {
+              "field": "weariness",
+              "delta": 5
+            },
+            {
+              "field": "capital",
+              "delta": -5
+            }
+          ]
+        },
+        {
+          "id": "repeal-narrow-exemption",
+          "label": "Strike the exemption — or narrow it hard. Let no man buy exemption with the bodies he owns. Equity in the ranks is worth more to our cause than the planters' comfort.",
+          "historicalNote": "Congress did partly retreat: the May 1, 1863 amendment limited the exemption to overseers on plantations of minors, the infirm, single women, or absent soldiers, and required a $500 fee plus an affidavit that no draft-exempt overseer could be found. Outright repeal was urged but never carried — planter influence in Congress blunted every reform.",
+          "resultText": "The law is pared back — the exemption now reaching only the overseer on the place of a widow, an orphan, or a soldier gone to the front, and that purchased with a $500 fee and a sheaf of affidavits. The yeoman grumble eases a degree; the cry of 'rich man's war' loses a little of its edge. But the planters, who fill the seats of Congress, hold that you have laid bare their fields to ruin and rebellion, and their loyalty to the central government cools by the same measure that the soldier's warms.",
+          "teaching": "The 1863 amendment is the historical hinge: the Confederate Congress felt the resentment keenly enough to act, but planter power ensured the reform was partial, not abolition. Albert Moore's 'Conscription and Conflict in the Confederacy' frames this as the central paradox — a states'-rights republic forced toward centralized coercion, yet unable to coerce its own slaveholding elite. The episode refutes the Lost Cause portrait of selfless planter sacrifice: the men who declared the war defended their exemption from it.",
+          "provenance": "Verified",
+          "sources": [
+            "Albert Burton Moore, Conscription and Conflict in the Confederacy (Macmillan, 1924) — https://catalog.hathitrust.org/Record/000454349",
+            "Twenty-Slave Law (May 1, 1863 amendment), Encyclopedia Virginia — https://encyclopediavirginia.org/entries/twenty-slave-law/",
+            "Stephanie McCurry, Confederate Reckoning (Harvard Univ. Press, 2010) — https://www.hup.harvard.edu/books/9780674064218",
+            "Paul D. Escott, After Secession (LSU Press, 1978)"
+          ],
+          "effects": [
+            {
+              "field": "weariness",
+              "delta": -4
+            },
+            {
+              "field": "capital",
+              "delta": 2
+            }
+          ]
+        },
+        {
+          "id": "tighten-conscription",
+          "label": "Tighten the draft. Raise the age, abolish substitution, sweep the exempt rolls — total war demands every man the law can reach, planter and yeoman alike.",
+          "historicalNote": "This is broadly the path Congress took: substitution was abolished (Dec. 28, 1863; men who had hired substitutes made liable Jan. 5, 1864) and the February 17, 1864 act widened the ages (17 to 50) and lowered the slave threshold from twenty to fifteen. But the twenty-slave principle survived in altered form, so the deepened draft still fell hardest on those who could not buy out.",
+          "resultText": "The net is drawn tighter — boys of seventeen and men of fifty called, the hired substitute struck down, the exempt rolls combed, the slaveholder's threshold dropped from twenty bondsmen to fifteen. On paper the army swells. But abolishing substitution after the rich have already bought their way clear only sharpens the injustice in the poor man's eye, and as the conscript-bands push into the mountains they meet not recruits but armed deserters offering battle. Every man dragged to the front by force is half a soldier and a quarter of a deserter.",
+          "teaching": "Tightening conscription bought manpower at the cost of consent — and consent, once lost, took men out of the ranks faster than the draft put them in. Ella Lonn's and Albert Moore's work on Confederate desertion, and Escott's on failed nationalism, show enforcement breeding open resistance in the upcountry and piedmont. The deeper lesson cuts against the Lost Cause: the Confederate war effort was not undone solely by Northern numbers but by its own internal class war, in which non-slaveholders withdrew their bodies from a fight they came to see as the slaveholders'.",
+          "provenance": "Verified",
+          "sources": [
+            "Albert Burton Moore, Conscription and Conflict in the Confederacy (Macmillan, 1924) — https://catalog.hathitrust.org/Record/000454349",
+            "Ella Lonn, Desertion During the Civil War (1928; rpt. Univ. of Nebraska Press, 1998) — https://www.nebraskapress.unl.edu/nebraska-paperback/9780803279759/desertion-during-the-civil-war/",
+            "Paul D. Escott, After Secession (LSU Press, 1978)",
+            "The Twenty Negro Law, American Battlefield Trust — https://www.battlefields.org/learn/articles/twenty-negro-law"
+          ],
+          "effects": [
+            {
+              "field": "strength",
+              "delta": 4
+            },
+            {
+              "field": "weariness",
+              "delta": 5
+            }
+          ]
+        }
+      ],
+      "card": {
+        "claim": "The Confederate Conscription Act of April 16, 1862 — the first national draft in American history — was followed on October 11, 1862 by an exemption of one white man for every twenty enslaved people (the 'twenty-Negro law'), justified as insurrection control but branded by non-slaveholders as proof of 'a rich man's war and a poor man's fight,' fueling class resentment and desertion that the partial 1863 reform never cured.",
+        "perspectives": [
+          {
+            "voice": "Confederate planter / Congress",
+            "text": "An overseer must remain where twenty bondsmen labor, lest the plantations — left to women and children — become the seedbed of servile insurrection. The exemption secures the police of the country and the food that feeds the army."
+          },
+          {
+            "voice": "Yeoman soldier (Sam Watkins and his like)",
+            "text": "The law gave us the blues; we wanted twenty Negroes too. Let the man with slaves do his own fighting. This is a rich man's war and a poor man's fight, and I'll not die for the master's cotton."
+          },
+          {
+            "voice": "Confederate soldier's wife (per McCurry)",
+            "text": "My husband is sent to the front while the slaveholder keeps his man at home by act of Congress. I am a soldier's wife; I have given my share, and I will petition, riot, and demand bread of a state that protects the rich and starves the poor."
+          },
+          {
+            "voice": "The enslaved (whose freedom the law fought)",
+            "text": "The masters keep an overseer over us by act of their Congress because they know what we want. When the Union army nears we leave the rows for its lines; the war they call ours to fear is our chance to be free, and we take it."
+          },
+          {
+            "voice": "Modern scholarship (anti-Lost-Cause)",
+            "text": "The exemption made the Confederacy's purpose explicit — it shielded slave property while conscripting the non-slaveholder. The 'insurrection' the law guarded against was the enslaved people's own demonstrated will to freedom. Slavery was both the war's cause and the fault line that cracked white Southern unity. The myth of a united, classless Confederacy cannot survive the twenty-slave law."
+          }
+        ],
+        "sources": [
+          "Stephanie McCurry, Confederate Reckoning: Power and Politics in the Civil War South (Harvard Univ. Press, 2010) — https://www.hup.harvard.edu/books/9780674064218",
+          "Paul D. Escott, After Secession: Jefferson Davis and the Failure of Confederate Nationalism (LSU Press, 1978)",
+          "Albert Burton Moore, Conscription and Conflict in the Confederacy (Macmillan, 1924) — https://catalog.hathitrust.org/Record/000454349",
+          "Twenty-Slave Law, Encyclopedia Virginia — https://encyclopediavirginia.org/entries/twenty-slave-law/",
+          "The Twenty Negro Law, American Battlefield Trust — https://www.battlefields.org/learn/articles/twenty-negro-law"
+        ],
+        "provenance": "Verified"
+      }
+    }
+  ]
+}

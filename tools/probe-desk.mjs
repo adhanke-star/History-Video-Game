@@ -73,6 +73,13 @@ const SETUP = `(() => {
       var b=document.getElementById('cabDel_war'); if(!b) throw new Error('no cabDel_war'); b.click();
       if(C.president.cabinetState.war.delegated===before) throw new Error('delegate did not toggle');
       return { wasDelegated:before, nowDelegated:C.president.cabinetState.war.delegated }; });
+    step('decisions tab (S2 m2)', function(){
+      if(typeof decOnResolve==='function') decOnResolve('US','win',{bd:{year:C.president.date.year}},C,true);  // surface eligible cards (1861 -> habeas)
+      _wdTab='decisions'; _wdRefresh(); var h=tabContent();
+      var pend=(C.president.pendingChoices||[]).length;
+      if(pend>0 && h.indexOf('decChoose_tab_')<0) throw new Error('pending decisions but no Decide button rendered');
+      if(pend>0 && h.indexOf('Habeas')<0) throw new Error('expected the habeas card title in 1861, got len '+h.length);
+      return { len:h.length, pending:pend, hasDecideBtn:h.indexOf('decChoose_tab_')>=0 }; });
     step('map tab', function(){ _wdTab='map'; _wdRefresh(); var h=tabContent();
       if(h.indexOf('Eastern Theater')<0) throw new Error('no theaters'); return { len:h.length }; });
 

@@ -135,11 +135,11 @@ function presOnResolve(winnerSide, type, B, C, win) {
       d.year = C.clock.year;
     }
 
-    // 2) Surface curated, NON-BLOCKING executive choices for the next turn.
-    //    S0 keeps this an empty stub (the loop is live but content-light); S1+
-    //    fills it with preset-gated, advisor-mediated options (economy, finance,
-    //    appointments, diplomacy, home-front events). Reset each turn.
-    P.pendingChoices = [];
+    // 2) Curated executive decisions: the pendingChoices QUEUE is OWNED by the S2
+    //    decision system (decOnResolve, registered after this) — it adds cards by
+    //    trigger and drops them on resolution/expiry. Do NOT reset here: that would
+    //    wipe every unanswered decision each turn. (S0 stub reset removed in S2 m2.)
+    if (!Array.isArray(P.pendingChoices)) P.pendingChoices = [];
 
     // 3) Log a dispatch to the Executive Mansion (newest-first, capped).
     var bn = (B && B.bd && B.bd.name) ? B.bd.name : (B && B.name) ? B.name : "the field";
