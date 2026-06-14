@@ -15452,6 +15452,43 @@ var GAME_DATA = {
       }
     ]
   }
+},
+"weapons": {
+  "_comment": "S? Weapons & Armory catalog — real Civil War small arms with loot-game-style rarity tiers (common -> legendary) so procurement feels like Borderlands: spend funds, arm part or all of your army with better guns, raise battlefield firepower/accuracy. Specs grounded in the period record (calibers, effective ranges, rates of fire); `quality` is a 0-100 composite (accuracy + rate-of-fire + range) used by the armory weapon-score. CS-import arms carry a blockade premium (csCostMult) and the repeaters unlock in 1863. Build-injected as GAME_DATA.weapons; consumed by src/55-weapons.js (The Armory tab) and the battle bridge.",
+  "provenance": "Verified specs (Earl J. Hess, The Rifle Musket in Civil War Combat; American Rifleman; National Park Service weapons references; HISTORICAL-DATA.md weapons tables). Rarity/cost are designer calibration (inferred), tunable.",
+  "schemaVersion": "1.0",
+  "baselineQuality": 30,
+  "batchFraction": 0.1,
+  "weapons": [
+    { "id": "smoothbore", "name": "Model 1842 Musket", "type": "smoothbore", "caliber": ".69", "rarity": "common",
+      "cost": 28, "rangeYds": 100, "accuracy": 25, "rateOfFire": 3, "quality": 22, "year": 1861,
+      "flavor": "Buck-and-ball is murderous at fifty yards and useless past a hundred. The war's starting weapon.", "provenance": "Verified" },
+    { "id": "lorenz", "name": "Lorenz Rifle", "type": "rifle-musket", "caliber": ".54", "rarity": "common", "csImport": true,
+      "cost": 44, "rangeYds": 250, "accuracy": 55, "rateOfFire": 3, "quality": 48, "year": 1861,
+      "flavor": "Cheap Austrian imports — the third-most-common rifle of the war, serviceable if inconsistent.", "provenance": "Verified" },
+    { "id": "springfield", "name": "Springfield M1861", "type": "rifle-musket", "caliber": ".58", "rarity": "uncommon",
+      "cost": 60, "rangeYds": 300, "accuracy": 72, "rateOfFire": 3, "quality": 62, "year": 1861,
+      "flavor": "The Union standard — accurate, reliable, single-shot. ~1.5 million made. For the South, captured only.", "provenance": "Verified" },
+    { "id": "enfield", "name": "Enfield P1853", "type": "rifle-musket", "caliber": ".577", "rarity": "uncommon", "csImport": true,
+      "cost": 64, "rangeYds": 300, "accuracy": 70, "rateOfFire": 3, "quality": 61, "year": 1861,
+      "flavor": "The British rifle-musket — the most-imported arm of the war, run through the blockade by the hundred thousand.", "provenance": "Verified" },
+    { "id": "richmond", "name": "Richmond Rifle", "type": "rifle-musket", "caliber": ".58", "rarity": "uncommon", "csOnly": true,
+      "cost": 70, "rangeYds": 280, "accuracy": 66, "rateOfFire": 3, "quality": 57, "year": 1862,
+      "flavor": "Confederate-made on captured Harpers Ferry machinery — every one a small triumph of Gorgas's bureau.", "provenance": "Verified" },
+    { "id": "colt", "name": "Colt Revolving Rifle", "type": "revolving", "caliber": ".56", "rarity": "rare", "csImport": true,
+      "cost": 110, "rangeYds": 300, "accuracy": 68, "rateOfFire": 7, "quality": 70, "year": 1861,
+      "flavor": "Five fast shots — and the occasional chain-fire that takes your off hand with it.", "provenance": "Verified" },
+    { "id": "sharps", "name": "Sharps Rifle", "type": "breechloader", "caliber": ".52", "rarity": "rare", "csImport": true,
+      "cost": 120, "rangeYds": 350, "accuracy": 80, "rateOfFire": 8, "quality": 80, "year": 1861,
+      "flavor": "Breech-loading — load lying down and fire three times as fast. Berdan's Sharpshooters' weapon of choice.", "provenance": "Verified" },
+    { "id": "spencer", "name": "Spencer Repeater", "type": "repeater", "caliber": ".56-56", "rarity": "legendary", "usFavored": true,
+      "cost": 200, "rangeYds": 300, "accuracy": 78, "rateOfFire": 14, "quality": 92, "year": 1863,
+      "flavor": "Seven shots without reloading. At Hoover's Gap and Gettysburg it changed what a battle line could do.", "provenance": "Verified" },
+    { "id": "henry", "name": "Henry Repeater", "type": "repeater", "caliber": ".44", "rarity": "legendary", "usFavored": true,
+      "cost": 240, "rangeYds": 250, "accuracy": 74, "rateOfFire": 16, "quality": 94, "year": 1863,
+      "flavor": "'That damned Yankee rifle you load on Sunday and shoot all week.' Sixteen rounds — often bought by soldiers out of their own pockets.", "provenance": "Verified" }
+  ],
+  "_designNote": "Money matters: arming a whole army with Spencers is ruinous; you mix — repeaters for your best brigades, rifle-muskets for the line, muskets for the green. CS pays a blockade premium on imports and cannot buy Springfields (captured only). Artillery (Napoleon, 3-inch Ordnance, Parrott) is a planned second tier."
 }
 };
 
@@ -15872,6 +15909,9 @@ function _wdRefresh() {
   } else if (_wdTab === "victory") {
     html = (typeof vicRenderPaths === "function") ? vicRenderPaths(C) : "";
     wire = (typeof vicWirePaths === "function") ? vicWirePaths : null;
+  } else if (_wdTab === "armory") {
+    html = (typeof armoryRenderArmory === "function") ? armoryRenderArmory(C) : "";
+    wire = (typeof armoryWireArmory === "function") ? armoryWireArmory : null;
   } else if (_wdTab === "cabinet") {
     html = (typeof presRenderCabinet === "function") ? presRenderCabinet(C) : "";
     wire = (typeof presWireCabinet === "function") ? presWireCabinet : null;
@@ -15883,7 +15923,7 @@ function _wdRefresh() {
     wire = null;
   }
   cont.innerHTML = html || '<p class="lede" style="text-align:center;opacity:0.7">This office is not yet staffed.</p>';
-  var tabs = ["economy", "treasury", "diplomacy", "victory", "warroom", "clock", "muster", "cabinet", "map"];
+  var tabs = ["economy", "treasury", "diplomacy", "victory", "armory", "warroom", "clock", "muster", "cabinet", "map"];
   for (var i = 0; i < tabs.length; i++) {
     var b = document.getElementById("wdTab_" + tabs[i]);
     if (b) b.style.opacity = (tabs[i] === _wdTab) ? "1" : "0.55";
@@ -15916,6 +15956,7 @@ function openWarDept() {
       _wdTabBtn("treasury", "The Treasury") +
       _wdTabBtn("diplomacy", "Diplomacy") +
       _wdTabBtn("victory", "Paths to Victory") +
+      _wdTabBtn("armory", "The Armory") +
       _wdTabBtn("warroom", "War Room") +
       _wdTabBtn("clock", "1864 Clock") +
       _wdTabBtn("muster", "Muster Roll") +
@@ -15931,7 +15972,7 @@ function openWarDept() {
     if (_pdAfterDeskClose) { var cb = _pdAfterDeskClose; _pdAfterDeskClose = null; cb(); }
     else if (typeof closeSheet === "function") closeSheet();
   });
-  ["economy", "treasury", "diplomacy", "victory", "warroom", "clock", "muster", "cabinet", "map"].forEach(function (k) {
+  ["economy", "treasury", "diplomacy", "victory", "armory", "warroom", "clock", "muster", "cabinet", "map"].forEach(function (k) {
     var b = document.getElementById("wdTab_" + k);
     if (b) b.addEventListener("click", function () { _wdTab = k; _wdRefresh(); });
   });
@@ -16391,6 +16432,199 @@ function presProdBlock(C) {
     + bar('Food reaching the front', P.foodDist * 100, P.foodDist > 0.6 ? '#4a6b3a' : '#b8863b');
   if (lt) out += '<div style="font-size:12px;opacity:.8;margin-top:4px">Last quarter: <b>' + lt.arms + '</b>k shoulder arms, <b>' + lt.arty + '</b> guns produced.</div>';
   return out;
+}
+
+
+/* ===== module: 55-weapons.js ===== */
+/* ===========================================================================
+   S? · 55-weapons.js — The Armory: buy real weapons with money, loot-game style.
+
+   Aaron's directive: battlefield accuracy boosts + weapon upgrades "like Borderlands,
+   weapons spec fun", AND "money be a factor to buy best weapons for army person or
+   brigade, partial or whole part of army." This is §6 (procure/issue real arms via
+   the economy, cost/supply-limited) + §19 (RPG-style weapon variety) made concrete —
+   and it finally makes C.funds matter.
+
+   Real Civil War small arms (data/weapons.json -> GAME_DATA.weapons) carry loot-style
+   RARITY tiers (common -> legendary) and specs (range/accuracy/rate-of-fire/quality).
+   You spend funds to ARM a fraction of your army with a weapon — 10% at a time (your
+   best brigades) or the whole line. Better guns cost more; arming everyone with
+   Spencers is ruinous, so you mix. The army's weapon-SCORE feeds the battle bridge
+   (firepower/equipment) — and, once the battle-day hook lands, on-field accuracy.
+
+   Adds C.armory { loadout } (weaponId -> fraction of the army). armoryInit /
+   armoryWeaponScore / armoryBuy / armoryRenderArmory / armoryWireArmory. Bare-name
+   globals; _arm* helpers; render never mutates or saves.
+   =========================================================================== */
+
+function _armData() {
+  return (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.weapons) ? GAME_DATA.weapons : null;
+}
+function _armCat() {
+  var D = _armData();
+  return (D && D.weapons) ? D.weapons : [];
+}
+function _armBaseline() { var D = _armData(); return (D && typeof D.baselineQuality === "number") ? D.baselineQuality : 30; }
+function _armBatch() { var D = _armData(); return (D && typeof D.batchFraction === "number") ? D.batchFraction : 0.1; }
+
+function armoryInit(C) {
+  if (!C) return;
+  if (!C.armory || typeof C.armory !== "object") C.armory = { loadout: {} };
+  if (!C.armory.loadout || typeof C.armory.loadout !== "object") C.armory.loadout = {};
+}
+
+function _armYear(C) {
+  return (C && C.clock && typeof C.clock.year === "number") ? C.clock.year
+       : (C && C.president && C.president.date && typeof C.president.date.year === "number") ? C.president.date.year : 1861;
+}
+
+/* Availability + the side's price for a weapon. */
+function _armAvail(C, w) {
+  var side = (C && C.side === "CS") ? "CS" : "US";
+  var year = _armYear(C);
+  if (w.year && year < w.year) return { ok: false, reason: "Not yet available (" + w.year + ")" };
+  if (w.csOnly && side === "US") return { ok: false, reason: "Confederate manufacture only" };
+  var mult = 1.0;
+  if (side === "CS") {
+    if (w.csImport) mult = 1.4;            // blockade premium on imports
+    else if (w.id === "springfield") mult = 1.6;  // captured Federal arms
+    else if (w.usFavored) mult = 1.5;      // scarce in the South
+  }
+  return { ok: true, mult: mult };
+}
+
+function _armSumLoadout(C) {
+  var lo = C.armory.loadout, t = 0;
+  for (var k in lo) if (lo.hasOwnProperty(k)) t += (lo[k] || 0);
+  return Math.min(1, t);
+}
+
+/* The army's weapon-score (0-100): issued weapons by fraction + the musket baseline. */
+function armoryWeaponScore(C) {
+  if (!C) return _armBaseline();
+  armoryInit(C);
+  var cat = _armCat(), lo = C.armory.loadout, base = _armBaseline();
+  var qById = {}; for (var i = 0; i < cat.length; i++) qById[cat[i].id] = cat[i].quality || base;
+  var total = 0, acc = 0;
+  for (var k in lo) if (lo.hasOwnProperty(k)) { var f = lo[k] || 0; total += f; acc += f * (qById[k] || base); }
+  total = Math.min(1, total);
+  acc += (1 - total) * base;
+  return Math.round(Math.max(0, Math.min(100, acc)));
+}
+
+/* Buy: mode "batch" arms one batch (~10%) more; mode "all" re-arms the whole line.
+   Returns { ok, reason }. Mutates C.funds + C.armory.loadout. */
+function armoryBuy(C, weaponId, mode) {
+  if (!C) return { ok: false, reason: "no campaign" };
+  armoryInit(C);
+  var cat = _armCat(), w = null;
+  for (var i = 0; i < cat.length; i++) if (cat[i].id === weaponId) { w = cat[i]; break; }
+  if (!w) return { ok: false, reason: "unknown weapon" };
+  var av = _armAvail(C, w);
+  if (!av.ok) return { ok: false, reason: av.reason };
+  var batch = _armBatch();
+  if (mode === "all") {
+    var costAll = Math.round(w.cost * (1 / batch) * av.mult);
+    if ((C.funds || 0) < costAll) return { ok: false, reason: "Insufficient funds ($" + costAll + " needed)" };
+    C.funds -= costAll;
+    C.armory.loadout = {}; C.armory.loadout[weaponId] = 1.0;
+    return { ok: true, spent: costAll };
+  }
+  var total = _armSumLoadout(C);
+  var room = Math.max(0, 1 - total);
+  var added = Math.min(batch, room);
+  if (added <= 0.0001) return { ok: false, reason: "Whole army already armed — re-arm the line to upgrade" };
+  var cost = Math.round(w.cost * (added / batch) * av.mult);
+  if ((C.funds || 0) < cost) return { ok: false, reason: "Insufficient funds ($" + cost + " needed)" };
+  C.funds -= cost;
+  C.armory.loadout[weaponId] = (C.armory.loadout[weaponId] || 0) + added;
+  return { ok: true, spent: cost };
+}
+
+function _armRarityCol(r) {
+  return r === "legendary" ? "#b8863b" : r === "rare" ? "#7a5cff" : r === "uncommon" ? "#4a6b3a" : "#8a8276";
+}
+function _armScoreWord(v) {
+  if (v >= 80) return ["Devastating", "#4a6b3a"];
+  if (v >= 62) return ["Modern", "#6f9e5a"];
+  if (v >= 45) return ["Rifled line", "#b8863b"];
+  if (v >= 32) return ["Mixed arms", "#c9712e"];
+  return ["Antiquated", "#9c3b2e"];
+}
+
+/* ---- armoryRenderArmory: The Armory desk tab. ---- */
+function armoryRenderArmory(C) {
+  if (!C) return '';
+  armoryInit(C);
+  var cat = _armCat();
+  if (!cat.length) return '<p class="lede" style="text-align:center;opacity:.7">The armory records are not yet available.</p>';
+  var score = armoryWeaponScore(C), sw = _armScoreWord(score);
+  var lo = C.armory.loadout, total = Math.round(_armSumLoadout(C) * 100);
+
+  // current loadout summary
+  var issued = "";
+  var names = {}; for (var i = 0; i < cat.length; i++) names[cat[i].id] = cat[i];
+  for (var k in lo) if (lo.hasOwnProperty(k) && lo[k] > 0.001) {
+    var wk = names[k] || { name: k, rarity: "common" };
+    issued += '<span style="display:inline-block;margin:2px 6px 2px 0;padding:2px 7px;border:1px solid ' + _armRarityCol(wk.rarity) + ';border-radius:3px;font-size:11px">'
+      + wk.name + ' <b>' + Math.round(lo[k] * 100) + '%</b></span>';
+  }
+  if (total < 100) issued += '<span style="display:inline-block;margin:2px 6px 2px 0;padding:2px 7px;border:1px solid var(--rule);border-radius:3px;font-size:11px;opacity:.7">Model 1842 Musket <b>' + (100 - total) + '%</b></span>';
+
+  var cards = "";
+  for (var c = 0; c < cat.length; c++) {
+    var w = cat[c], av = _armAvail(C, w), col = _armRarityCol(w.rarity);
+    var batchCost = Math.round(w.cost * (av.mult || 1));
+    var allCost = Math.round(w.cost * (1 / _armBatch()) * (av.mult || 1));
+    var disabled = !av.ok;
+    cards += '<div style="padding:9px;border:1px solid ' + col + ';border-radius:5px;background:rgba(0,0,0,.12);opacity:' + (disabled ? '.5' : '1') + '">'
+      + '<div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font-size:13px">' + w.name + '</b>'
+      + '<span style="font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:' + col + '">' + w.rarity + '</span></div>'
+      + '<div style="font-size:11px;opacity:.6">' + w.caliber + ' &middot; ' + w.rangeYds + ' yds &middot; acc ' + w.accuracy + ' &middot; ' + w.rateOfFire + '/min &middot; quality ' + w.quality + '</div>'
+      + '<div style="font-size:11px;opacity:.78;margin:4px 0">' + w.flavor + '</div>';
+    if (disabled) cards += '<div style="font-size:11px;color:#9c3b2e">' + av.reason + '</div>';
+    else cards += '<div class="btn-row" style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap">'
+      + '<button class="upg" data-armbuy="' + w.id + '" data-armmode="batch" style="padding:2px 8px;font-size:11px">Arm 10% &middot; $' + batchCost + '</button>'
+      + '<button class="upg" data-armbuy="' + w.id + '" data-armmode="all" style="padding:2px 8px;font-size:11px">Arm the line &middot; $' + allCost + '</button></div>';
+    cards += '</div>';
+  }
+
+  return ''
+    + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap">'
+    +   '<div><div style="font-size:17px;font-weight:bold">The Armory</div>'
+    +     '<div style="opacity:.75;font-size:12px">Procure arms for your army — the best guns win firefights, but money is a factor.</div></div>'
+    +   '<div style="text-align:right"><div style="font-size:12px;opacity:.7">Army firepower</div>'
+    +     '<div style="font-size:22px;font-weight:bold;color:' + sw[1] + '">' + score + '</div>'
+    +     '<div style="font-size:12px;color:' + sw[1] + '">' + sw[0] + '</div></div>'
+    + '</div><hr class="rule">'
+    + '<div style="display:flex;gap:10px;flex-wrap:wrap;font-size:13px;margin-bottom:4px"><span>Treasury: <b>$' + (C.funds || 0) + '</b></span></div>'
+    + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:4px 0 2px">How your army is armed</div>'
+    + '<div style="margin-bottom:8px">' + (issued || '<span style="opacity:.6;font-size:12px">Muskets, all.</span>') + '</div>'
+    + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:8px 0 4px">The catalog</div>'
+    + '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px">' + cards + '</div>'
+    + '<div class="btn-row" style="margin-top:10px"><button id="armReset" type="button" class="upg" style="font-size:11px">Reset to muskets</button></div>';
+}
+
+function armoryWireArmory(C) {
+  if (!C) return;
+  var btns = document.querySelectorAll('[data-armbuy]');
+  for (var i = 0; i < btns.length; i++) {
+    (function (b) {
+      b.addEventListener("click", function () {
+        var id = b.getAttribute("data-armbuy"), mode = b.getAttribute("data-armmode");
+        var r = armoryBuy(C, id, mode);
+        if (!r.ok && typeof toast === "function") toast(r.reason);
+        if (typeof saveLocal === "function") saveLocal();
+        if (typeof _wdRefresh === "function") _wdRefresh();
+      });
+    })(btns[i]);
+  }
+  var reset = document.getElementById("armReset");
+  if (reset) reset.addEventListener("click", function () {
+    C.armory.loadout = {};
+    if (typeof saveLocal === "function") saveLocal();
+    if (typeof _wdRefresh === "function") _wdRefresh();
+  });
 }
 
 
@@ -17506,10 +17740,11 @@ function bridgeArmy(C) {
   var fatigue = bp.forcedMarch ? 35 : 8;
   if (bp.raidSupply) supply = Math.min(100, supply + 6);
   var leadership = 64;   // placeholder until generals/cabinet wire in (S2/§19)
-  var overall = Math.round(0.26 * strength + 0.22 * equip + 0.20 * morale + 0.16 * arms + 0.10 * supply + 0.06 * leadership);
+  var firepower = (typeof armoryWeaponScore === "function") ? armoryWeaponScore(C) : 30;  // the weapons you bought
+  var overall = Math.round(0.22 * strength + 0.18 * equip + 0.18 * morale + 0.14 * firepower + 0.12 * arms + 0.10 * supply + 0.06 * leadership);
   overall = Math.max(0, Math.min(100, overall - Math.round(fatigue * 0.1)));
   return { side: side, strength: Math.round(strength), equip: Math.round(equip), arms: arms,
-    morale: morale, supply: supply, fatigue: fatigue, leadership: leadership, overall: overall };
+    morale: morale, supply: supply, fatigue: fatigue, leadership: leadership, firepower: firepower, overall: overall };
 }
 
 function _brgWord(v) {
@@ -17539,7 +17774,7 @@ function _brgArmySummaryHTML(C) {
     + '<span style="font-weight:bold;color:' + ow[1] + '">' + a.overall + ' &middot; ' + ow[0] + '</span></div>'
     + '<div style="font-size:11px;opacity:.65;margin:2px 0 6px">Conditioned by your war &mdash; manpower, equipment, the blockade, and the home front decide the men who march.</div>'
     + _brgBar('Strength (replacements)', a.strength)
-    + _brgBar('Equipment &amp; weapons', a.equip)
+    + _brgBar('Firepower (weapons)', a.firepower)
     + _brgBar('Small-arms supply', a.arms)
     + _brgBar('Morale', a.morale)
     + '</div>';
@@ -17571,8 +17806,8 @@ function bridgeBriefingHTML(C) {
     +   '<div style="flex:1 1 240px;min-width:220px">'
     +     '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin-bottom:2px">The army you field</div>'
     +     '<div style="text-align:right;font-size:20px;font-weight:bold;color:' + ow[1] + ';margin:-18px 0 2px">' + a.overall + ' &middot; ' + ow[0] + '</div>'
-    +     _brgBar('Strength', a.strength) + _brgBar('Equipment', a.equip) + _brgBar('Small arms', a.arms)
-    +     _brgBar('Morale', a.morale) + _brgBar('Supply', a.supply) + _brgBar('Fatigue (lower is better)', 100 - a.fatigue)
+    +     _brgBar('Strength', a.strength) + _brgBar('Firepower (weapons)', a.firepower) + _brgBar('Equipment', a.equip)
+    +     _brgBar('Small arms', a.arms) + _brgBar('Morale', a.morale) + _brgBar('Supply', a.supply) + _brgBar('Fatigue (lower is better)', 100 - a.fatigue)
     +   '</div>'
     +   '<div style="flex:1 1 240px;min-width:220px">'
     +     '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin-bottom:2px">Your orders for the day</div>'
@@ -17638,6 +17873,7 @@ function _t1InitAll(C) {
   try { if (typeof econInit === "function") econInit(C); } catch (e) {}   // S1a: economy/finance
   try { if (typeof blockadeInit === "function") blockadeInit(C); } catch (e) {}  // S1c: cotton/blockade/diplomacy
   try { if (typeof prodInit === "function") prodInit(C); } catch (e) {}   // S1b: war production
+  try { if (typeof armoryInit === "function") armoryInit(C); } catch (e) {}  // weapons procurement
   try { if (typeof manpowerInit === "function") manpowerInit(C); } catch (e) {}  // S1d: manpower/conscription
   try { if (typeof bridgeInit === "function") bridgeInit(C); } catch (e) {}     // S5-seed: pre-battle conditioning prep
 }

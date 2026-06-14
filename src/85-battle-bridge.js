@@ -82,10 +82,11 @@ function bridgeArmy(C) {
   var fatigue = bp.forcedMarch ? 35 : 8;
   if (bp.raidSupply) supply = Math.min(100, supply + 6);
   var leadership = 64;   // placeholder until generals/cabinet wire in (S2/§19)
-  var overall = Math.round(0.26 * strength + 0.22 * equip + 0.20 * morale + 0.16 * arms + 0.10 * supply + 0.06 * leadership);
+  var firepower = (typeof armoryWeaponScore === "function") ? armoryWeaponScore(C) : 30;  // the weapons you bought
+  var overall = Math.round(0.22 * strength + 0.18 * equip + 0.18 * morale + 0.14 * firepower + 0.12 * arms + 0.10 * supply + 0.06 * leadership);
   overall = Math.max(0, Math.min(100, overall - Math.round(fatigue * 0.1)));
   return { side: side, strength: Math.round(strength), equip: Math.round(equip), arms: arms,
-    morale: morale, supply: supply, fatigue: fatigue, leadership: leadership, overall: overall };
+    morale: morale, supply: supply, fatigue: fatigue, leadership: leadership, firepower: firepower, overall: overall };
 }
 
 function _brgWord(v) {
@@ -115,7 +116,7 @@ function _brgArmySummaryHTML(C) {
     + '<span style="font-weight:bold;color:' + ow[1] + '">' + a.overall + ' &middot; ' + ow[0] + '</span></div>'
     + '<div style="font-size:11px;opacity:.65;margin:2px 0 6px">Conditioned by your war &mdash; manpower, equipment, the blockade, and the home front decide the men who march.</div>'
     + _brgBar('Strength (replacements)', a.strength)
-    + _brgBar('Equipment &amp; weapons', a.equip)
+    + _brgBar('Firepower (weapons)', a.firepower)
     + _brgBar('Small-arms supply', a.arms)
     + _brgBar('Morale', a.morale)
     + '</div>';
@@ -147,8 +148,8 @@ function bridgeBriefingHTML(C) {
     +   '<div style="flex:1 1 240px;min-width:220px">'
     +     '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin-bottom:2px">The army you field</div>'
     +     '<div style="text-align:right;font-size:20px;font-weight:bold;color:' + ow[1] + ';margin:-18px 0 2px">' + a.overall + ' &middot; ' + ow[0] + '</div>'
-    +     _brgBar('Strength', a.strength) + _brgBar('Equipment', a.equip) + _brgBar('Small arms', a.arms)
-    +     _brgBar('Morale', a.morale) + _brgBar('Supply', a.supply) + _brgBar('Fatigue (lower is better)', 100 - a.fatigue)
+    +     _brgBar('Strength', a.strength) + _brgBar('Firepower (weapons)', a.firepower) + _brgBar('Equipment', a.equip)
+    +     _brgBar('Small arms', a.arms) + _brgBar('Morale', a.morale) + _brgBar('Supply', a.supply) + _brgBar('Fatigue (lower is better)', 100 - a.fatigue)
     +   '</div>'
     +   '<div style="flex:1 1 240px;min-width:220px">'
     +     '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin-bottom:2px">Your orders for the day</div>'

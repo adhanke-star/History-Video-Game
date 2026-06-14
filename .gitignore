@@ -11,12 +11,16 @@ package-lock.json
 secrets.local.json
 *.local.json
 .secrets/
-# visual-regression output — keep only the milestone before/after record
+# visual-regression + probe output — regenerable; kept out of source control so the
+# pending-changes view stays quiet (keep only the milestone before/after record)
 tools/shots/*.png
+tools/shots/*.json
 tools/shots/*.log
 !tools/shots/milestone-*.png
 !tools/shots/baseline-*.png
 !tools/shots/after-*.png
+# autonomous-run scratch (probe TMPDIR + build/commit temp files)
+.tmp/
 # backups (incl. timestamped snapshots)
 *.bak
 *.bak-*

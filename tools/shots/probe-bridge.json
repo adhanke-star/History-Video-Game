@@ -9,10 +9,11 @@
         "equip": 35,
         "arms": 57,
         "morale": 70,
-        "supply": 45,
+        "supply": 46,
         "fatigue": 8,
         "leadership": 64,
-        "overall": 63
+        "firepower": 30,
+        "overall": 58
       }
     },
     {
@@ -24,18 +25,19 @@
         "equip": 18,
         "arms": 28,
         "morale": 25,
-        "supply": 31,
+        "supply": 20,
         "fatigue": 8,
         "leadership": 64,
-        "overall": 36
+        "firepower": 30,
+        "overall": 34
       }
     },
     {
       "name": "the bridge SEPARATES the two armies",
       "ok": true,
       "v": {
-        "winOverall": 63,
-        "loseOverall": 36
+        "winOverall": 58,
+        "loseOverall": 34
       }
     },
     {
@@ -50,14 +52,14 @@
       "name": "pre-battle briefing renders (army + prep + to-the-field)",
       "ok": true,
       "v": {
-        "len": 5644
+        "len": 6029
       }
     },
     {
       "name": "interstitial shows the army you will field",
       "ok": true,
       "v": {
-        "len": 2902
+        "len": 2901
       }
     }
   ],
@@ -69,10 +71,11 @@
     "equip": 35,
     "arms": 57,
     "morale": 70,
-    "supply": 45,
+    "supply": 46,
     "fatigue": 8,
     "leadership": 64,
-    "overall": 63
+    "firepower": 30,
+    "overall": 58
   },
   "loseA": {
     "side": "CS",
@@ -80,10 +83,11 @@
     "equip": 18,
     "arms": 28,
     "morale": 25,
-    "supply": 31,
+    "supply": 20,
     "fatigue": 8,
     "leadership": 64,
-    "overall": 36
+    "firepower": 30,
+    "overall": 34
   },
   "pageerrors": []
 }

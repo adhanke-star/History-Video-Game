@@ -37,7 +37,8 @@ const SETUP = `(() => {
     G.mode='menu';
     var winA, loseA;
     step('conditioning reflects a WINNING war', function(){ var C=drive('CS','win',16); winA=bridgeArmy(C);
-      if (winA.overall < 60) throw new Error('a winning South should field a strong army, got '+winA.overall);
+      // un-armed (muskets, firepower ~30) but a strong war-state -> "Fair+" overall
+      if (winA.overall < 54) throw new Error('a winning South should field a solid army, got '+winA.overall);
       return winA; });
     step('conditioning reflects a LOSING war', function(){ var C=drive('CS','lose',16); loseA=bridgeArmy(C);
       if (loseA.overall > 50) throw new Error('a losing South should field a brittle army, got '+loseA.overall);

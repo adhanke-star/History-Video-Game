@@ -1,25 +1,26 @@
-S5(seed): the strategy->battle bridge (pre-battle conditioning half)
+The Armory: buy real weapons with money (loot-style) + git hygiene
 
-Aaron's directive: battles shaped by pre-battle history + preparation + battle-day
-tactics, for both sides. This builds the SAFE, additive half — the pre-battle
-conditioning + briefing — without touching the frozen battle engine (scaling the
-actual units is the deliberate, separately-probed next step).
+Aaron: "money be a factor to buy best weapons for army person or brigade, partial or
+whole part of army" + Borderlands-style weapon specs / accuracy. Makes C.funds matter.
 
-src/85-battle-bridge.js + C.battlePrep:
-- bridgeArmy(C): THE CONDITIONING MATH — the army you field, computed from the whole
-  war state (manpower.strength -> numbers, production.equipIndex+momentum -> equipment,
-  blockade.importFactor -> small arms, momentum+home-front -> morale, warroom -> supply),
-  as 0-100 facets + an overall index. A winning war fields a strong army; a collapsing
-  one fields a brittle army — same battle, different army.
-- a pre-battle BRIEFING (the detailed-but-skippable planning screen, R24) with PREP
-  OPTIONS stored in C.battlePrep (entrench / forced-march / concentrate / feint /
-  raid-supply); surfaced in the between-battles interstitial ("the army you will field"
-  + a Pre-Battle Briefing button) and reset after each battle.
+data/weapons.json + src/55-weapons.js + a new "The Armory" desk tab (10th):
+- 9 real Civil War small arms with loot-style RARITY tiers (common -> legendary) and
+  specs (caliber/range/accuracy/rate-of-fire/quality): Model 1842 musket, Lorenz,
+  Springfield M1861, Enfield P1853, Richmond Rifle, Colt Revolving, Sharps, Spencer &
+  Henry repeaters.
+- Buy with funds; arm 10% at a time (your best brigades) or the whole line. Better guns
+  cost more -> you mix. CS pays a blockade premium on imports + can't buy Springfields
+  (captured only); repeaters unlock 1863; Richmond is Confederate-only.
+- The army weapon-SCORE (muskets 30 -> Springfield 62 -> Spencer 92) feeds the battle
+  bridge as a "firepower" facet -> better guns visibly strengthen the army you field.
 
-VERIFIED (probe-bridge 6/6): a winning South fields overall 63 (Strong) vs a losing
-South 36 (Strained) from the same battle; forced-march raises fatigue; the briefing +
-interstitial render. Classic no-regression (diag paints, desk 12/12); 0 pageerrors.
-The battle-day APPLICATION (an override of startBattleRuntime that scales the player
-force, gated by diag-classic) is the next step.
+VERIFIED (probe-weapons 8/8): buying spends money, better/more weapons raise firepower,
+partial vs whole-army loadout, year + side gates, the tab renders, bridge firepower
+30->92 with Spencers. Bridge 6/6, desk 12/12, diag-classic paints; 0 pageerrors.
+
+Git hygiene (Aaron flagged a confusing pile of pending changes): gitignore the
+regenerable probe artifacts (tools/shots/*.json) + the .tmp/ scratch dir, and untrack
+the 39 already-committed shot JSONs, so the source-control view stays quiet between
+commits. Only source + the built deliverable are tracked now.
 
 Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
