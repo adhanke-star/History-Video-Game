@@ -24,3 +24,6 @@ tools/shots/*.log
 # backups (incl. timestamped snapshots)
 *.bak
 *.bak-*
+
+# editor
+.vscode/
