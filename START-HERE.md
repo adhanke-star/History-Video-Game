@@ -40,3 +40,17 @@ Old kickoff prompts, the pre-modularization plans, the graphics/3D/Blender/asset
 
 ## Git / saving
 Local commits only — **no GitHub remote is configured** (chosen for this project). Every change is committed the moment it's verified; `git log` is the durable record. `tools/shots/*` and `.tmp/` are gitignored, so the pending-changes view stays at ~0. To add off-machine backup, set up a remote (a human decision — ask the owner first).
+
+---
+
+## ▶ PASTE THIS INTO A NEW CHAT (zero-context autonomous kickoff)
+
+> **ultracode** — Autonomous build run for "The Civil War" (personal project at `~/Desktop/Video Game`; NOT MJI). Full autonomy, $0/single-file, build bar 200/100. You have ZERO context — everything lives on disk; load it, then execute the backlog continuously without me.
+>
+> **STEP 1 — LOAD CONTEXT, in order:** (1) `START-HERE.md` — the master index (which docs are canonical vs legacy). (2) `AUTONOMOUS-RUN.md` — THE operating manual: live state (§2), the build loop (§3), guardrails (§5), and the **OUTSTANDING BACKLOG (§7)** you will execute. (3) `DECISIONS.md` — every resolved fork (don't relitigate; append new ones). (4) `GRAND-STRATEGY-PLAN.md` — the design LAW (63 locked decisions + §27 balance). (5) `src/00-manifest.json` + every `src/*.js`, `tools/build.mjs` + `tools/probe-*.mjs`. (6) run `git log --oneline -15`.
+>
+> **STEP 2 — EXECUTE THE BACKLOG (`AUTONOMOUS-RUN.md` §7) autonomously, in order:** the BATTLE LAYER first (Cannon Corps → Engineering Works Corps → terrain-cover hierarchy → wire The Armory into battle → targeting → battle-day conditioning application), then the strategic arc (S2 advisor/cabinet + 3-layer morale + 1864 election → S3 alt-history → S4 education/codex → S5 victory + full bridge), then tactical P0–P5. For EACH item: plan → (launch a research workflow if content is missing) → build a new `src/NN-*.js` module that EXTENDS existing systems (NEVER edit `build/base.html`; bare-name globals; register ticks via the `_t1InitAll`/`_t1Resolve` overrides) → `node tools/build.mjs` (must print `GATE OK`) → write+run a `tools/probe-<item>.mjs` you READ (start `python3 -m http.server 8765` yourself; `2>/dev/null`; read `tools/shots/*.json`) + the full no-regression suite (`diag-classic` + `probe-desk` + all `probe-*`) → fix until green, 0 pageerrors → commit locally + append `RUN-LOG.md`/`DECISIONS.md` → update `AUTONOMOUS-RUN.md` §2/§7 + `HANDOFF.md` → `ScheduleWakeup` (sentinel `<<autonomous-loop-dynamic>>`) → next item.
+>
+> **PARAMETERS (locked — don't re-ask):** run the whole backlog; always decide & log forks to `DECISIONS.md` (never stall mid-run); local commits only (no remote); content-complete each system (citation-grade data, named scholars, Verified/Inferred); honor §27 balance (the simple battle core stands alone, all depth optional/advisor-managed/non-blocking/ambient-teaching). Use **ultracode workflows aggressively** (research fan-outs, parallel module builds, an adversarial bug-hunt before each commit). NEVER regress Classic (`diag-classic` every change). Git stays clean (`tools/shots/*` + `.tmp/` gitignored; commit promptly). **Tooling note:** the harness task-output tmpfs throws a spurious "0MB free" ENOSPC — run probes foreground, read `tools/shots/*.json`, verify commits via `.git/logs/HEAD`, and clear `/private/tmp/claude-501/*/tasks/*.output` if Bash blocks.
+>
+> **CONFIRM in 3 lines:** (a) current state + latest commit, (b) the first unbuilt backlog item, (c) your 3-line plan for it. Then build continuously. Do not stop to check in.
