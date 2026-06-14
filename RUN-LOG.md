@@ -27,6 +27,11 @@
 - **Adversarial bug-hunt** (5 lenses × verify, 16 agents) → 5 findings fixed (DECISIONS D45). The big one (HIGH, a Classic regression): the re-arm fired whenever a campaign was merely in memory, so a **Free Battle could arm the AI enemy with the player's arsenal** — fixed by gating on `campaignCore` (the engine's own player-in-campaign discriminator). Plus an engine-era gate (no fielding arms before the engine's era) and a float-drift snap.
 - **VERIFIED:** probe-armory-field **9/9** (monotonic mapping, player-not-enemy, fraction, whole-army float-safe, veterans keep weapon, Spencer +105% pow, off-campaign no-op, era-gate, Free-Battle isolation); diag-classic Classic paints (no regression from the `genForce` override); full no-regression green; 0 pageerrors. Deliverable ≈970KB.
 
+## A5 · TARGETING VERIFIED — the player already picks specific fire targets (no engine change)
+- **Finding:** the frozen engine ALREADY supports full player target choice. `fireTargets(u)` returns the in-range visible enemies; `onHexClick` fires at the exact clicked hex (`resolveFire(sel,c,r)`) in fire mode — the player chooses, not an auto-pick (only the AI uses `chooseBestFireTarget`); targets are highlighted (2D + 3D); keyboard aiming works (F→arrows→Enter).
+- **VERIFIED (probe-targeting 5/5):** two enemies in range → both targetable; fire mode highlights them; clicking ONE damages THAT enemy (512→483) and not the other; firing unit marked fired; already-fired unit has no targets. Doubles as a post-A1–A4 battle smoke test.
+- **Decision:** ship NO engine change — the feature is complete; adding redundant UI to a working engine is over-engineering (§27) + needless override risk. A5 satisfied by verification. Optional highlight/tooltip polish deferred.
+
 ---
 
 # RUN-LOG — 2026-06-13 (run i, Opus 4.8 — S0: owner-mode President's Desk + zero-dep build system)
