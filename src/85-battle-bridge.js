@@ -171,8 +171,9 @@ function bridgeBriefingHTML(C) {
     + '</div>'
     + '<p class="lede" style="font-size:11px;opacity:.6;margin-top:10px">Your strategic war shapes the army that takes the field; your orders shape how it fights. '
     + 'History flavors the day &mdash; it never decides it. The battle is yours to win.</p>'
-    + '<div class="btn-row" style="margin-top:14px;display:flex;gap:10px;justify-content:center">'
+    + '<div class="btn-row" style="margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">'
     +   '<button id="brgBack" type="button" class="upg">Back</button>'
+    +   '<button id="brgAuto" type="button" class="upg" title="Resolve from the army you fielded, without fighting the tactical battle">Auto-resolve</button>'
     +   '<button id="brgToField" type="button" class="bigbtn">To the Field &#9654;</button>'
     + '</div>';
 }
@@ -194,6 +195,8 @@ function bridgeWireBriefing(C, onBack, onField) {
   }
   var back = document.getElementById("brgBack");
   if (back) back.addEventListener("click", function () { if (typeof onBack === "function") onBack(); });
+  var auto = document.getElementById("brgAuto");
+  if (auto) auto.addEventListener("click", function () { if (typeof bridgeAutoResolve === "function") bridgeAutoResolve(C); });   // A6b: resolve from the conditioned army, skip the tactical fight
   var go = document.getElementById("brgToField");
   if (go) go.addEventListener("click", function () { if (typeof onField === "function") onField(); });
 }

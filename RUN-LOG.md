@@ -38,6 +38,12 @@
 - **VERIFIED:** probe-conditioning **6/6** (strong-war 6547 vs weak 5562; free-battle untouched; entrench +2 ent; raid-supply enemy morale 79→73; fresh≈Classic ratio 1.009; fortifications trench 68/91 when entrenching, 0 without); diag-classic Classic paints (no regression from the `startBattleRuntime` override); full no-regression green; 0 pageerrors. Deliverable ≈977KB.
 - **NEXT: A6b** — the bridge AUTO-RESOLVE (resolve a battle from `bridgeArmy` + variance → casualties/clock/enemyWill via `campaignAdvance`), so the owner-mode war is playable end-to-end without fighting every tactical battle.
 
+## A6b · BRIDGE AUTO-RESOLVE SHIPPED + VERIFIED — ⚑ THE BATTLE LAYER (A1–A6) IS COMPLETE; the owner-mode war is PLAYABLE END-TO-END
+- **What it is:** `src/87-auto-resolve.js` + an "Auto-resolve" button in the pre-battle briefing. Resolve a battle from the army your whole war fielded — without playing the tactical fight; "To the Field" remains. It builds the A6a-conditioned battle, decides the outcome (your edge over baseline vs the enemy + variance), then drives the engine's OWN `campaignAdvance` so the war feeds back (manpower/clock/strategy/enemyWill/victory/funds/roster) IDENTICALLY to a fought battle.
+- **Adversarial bug-hunt** (5 lenses × verify, 24 agents) → 11 findings, 6 fixes (DECISIONS D48). The big one: the original margin made a competent Union NEVER lose (auto-resolve easier than fighting, a foregone conclusion) — re-anchored on the edge-over-baseline so a baseline army is a real gamble and auto-resolve is outcome-equivalent to fighting. Plus the battle-audio teardown (was playing over the result screen), flipAtk recovery, XP parity, casualty/funds parity.
+- **VERIFIED:** probe-auto-resolve **7/7** (strong war wins at margin 11, weak loses at −28 = real jeopardy; loser bleeds more; kills credited; flipAtk honored; campaignAdvance advances idx + feeds the tick); diag-classic Classic paints; full no-regression green; 0 pageerrors. Deliverable ≈987KB.
+- **The loop is closed:** pick a side → run economy/production/blockade/diplomacy/manpower/the three buildable corps on the President's Desk → field a conditioned army → auto-resolve or fight each battle (weapons + terrain cover + conditioning all real) → results drive the war → win via the chain or a path-to-victory + the "your war vs history" framing. **NEXT: the strategic arc S2–S5.**
+
 ---
 
 # RUN-LOG — 2026-06-13 (run i, Opus 4.8 — S0: owner-mode President's Desk + zero-dep build system)
