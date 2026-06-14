@@ -15889,6 +15889,72 @@ var GAME_DATA = {
     ]
   }
 },
+"terrain-cover": {
+  "_comment": "A3 Terrain cover hierarchy — named cover types slotted into the frozen engine's EXISTING terrain/defense model. The battle engine reduces fire damage by dividing by TERRAIN[tile.t].def (build/base.html resolveFire ~1038); the `cover` field on TERRAIN entries was defined but UNUSED. This adds six named cover types as new TERRAIN keys with real `def` values, so combat picks them up automatically through the existing .def path (no fire-function override needed). src/58-terrain-cover.js mutates the frozen const objects TERRAIN / TCOL / PALETTE (adding keys is allowed on a const object) and OVERRIDES authoredMap to stamp these cover types onto the historical battlefield features that already carry labels (Antietam's Sunken Road, Gettysburg's Devil's Den, the Vicksburg redans, the West/East Woods …). Gated by diag-classic; reverts on any Classic regression. def ordering (strong->light): stonewall 2.00 > trench 1.95 > sunkenroad 1.85 > boulders 1.70 > forest 1.50 > woodfence 1.25, all slotting between clear (1.00) and works/fort (2.10). `colors` = [skin0, skin1, skin2], applied to both TCOL and PALETTE so the new tiles render in period tone, not the gray fallback. `match` = lowercase substrings tested against authored feature labels; the strongest (highest-def) match wins. Designer calibration (Inferred); teaching is Verified (see card). Logged DECISIONS.md D44.",
+  "schemaVersion": "1.0",
+  "types": [
+    {
+      "id": "stonewall",
+      "terrain": { "name": "Stone Wall", "cost": 2, "def": 2.00, "cover": 0.8, "scout": 0, "v": 5 },
+      "colors": ["#9a948a", "#8a857a", "#a8a39a"],
+      "match": ["stone wall", "stonewall", "stone fence", "marye"]
+    },
+    {
+      "id": "trench",
+      "terrain": { "name": "Entrenchments", "cost": 1, "def": 1.95, "cover": 0.75, "scout": 0, "v": 5 },
+      "colors": ["#8a7a5a", "#7a6a4a", "#9a8a6a"],
+      "match": ["redan", "redoubt", "lunette", "salient", "entrench", "earthwork", "rifle pit", "trenches", "retrenchment", "the works", "fortified line"]
+    },
+    {
+      "id": "sunkenroad",
+      "terrain": { "name": "Sunken Road", "cost": 1, "def": 1.85, "cover": 0.7, "scout": 0, "v": 5 },
+      "colors": ["#9a8560", "#876f4a", "#a89070"],
+      "match": ["sunken road", "sunken lane", "bloody lane", "sunken"]
+    },
+    {
+      "id": "boulders",
+      "terrain": { "name": "Boulders", "cost": 2, "def": 1.70, "cover": 0.65, "scout": 1, "v": 4 },
+      "colors": ["#9a9088", "#877d72", "#a89e92"],
+      "match": ["devil's den", "devils den", "boulder", "rocky", "the rocks", "round top"]
+    },
+    {
+      "id": "forest",
+      "terrain": { "name": "Dense Forest", "cost": 2, "def": 1.50, "cover": 0.7, "scout": -1, "v": 3 },
+      "colors": ["#5a7340", "#4a6035", "#6a8050"],
+      "match": ["woods", "forest", "timber", "thicket", "the wilderness"]
+    },
+    {
+      "id": "woodfence",
+      "terrain": { "name": "Rail Fence", "cost": 1, "def": 1.25, "cover": 0.4, "scout": 0, "v": 6 },
+      "colors": ["#b89a6a", "#a8855a", "#c0a878"],
+      "match": ["rail fence", "worm fence", "wood fence", "fence", "post and rail"]
+    }
+  ],
+  "teachingCards": [
+    {
+      "id": "cover-killing-ground",
+      "title": "Why was a stone wall or a sunken road worth a division of men?",
+      "consensus": "Civil War tactics turned on cover. A defender behind a stone wall, in a sunken road, or in even hastily dug rifle pits multiplied his combat power so sharply that frontal assaults across open ground against such positions failed again and again at catastrophic cost. The archetypes are exact: at Fredericksburg (Dec 13, 1862) Confederates stood four ranks deep in a sunken road behind a stone wall along the base of Marye's Heights and broke fourteen Union brigades in succession — no attacker reached closer than roughly 25-40 yards, and the position was, in the National Park Service's words, 'almost impregnable, and a deathtrap.' At Antietam the 'Sunken Road' (Bloody Lane) let a thin Confederate line hold for hours until it was finally enfiladed. The cover hierarchy was real and graded — a stone wall or entrenchment was worth far more than a rail fence or open cropland — which is why, by 1864, troops fortified reflexively and the spade became as vital as the rifle. A wargame that does not make a stone wall genuinely deadlier than a fence misrepresents the central tactical fact of the war.",
+      "voices": [
+        {
+          "scholar": "Earl J. Hess (Field Armies and Fortifications in the Civil War; Trench Warfare under Grant and Lee)",
+          "view": "Field fortification — from a sunken road or stone wall to engineered lines — was the decisive defensive multiplier of the war's second half, and its rise was driven as much by continuous contact between the armies (Grant pinning Lee) and soldiers' need for cover as by the rifle musket. Cover should be modeled as a strong, graded defensive bonus."
+        },
+        {
+          "scholar": "National Park Service / American Battlefield Trust (Fredericksburg)",
+          "view": "The 600-yard stone wall and sunken road below Marye's Heights made the Confederate position 'almost impregnable, and a deathtrap'; successive Union waves died on the open, rising ground without ever closing to the wall — a textbook demonstration of cover as killing ground."
+        },
+        {
+          "scholar": "Paddy Griffith (Battle Tactics of the Civil War)",
+          "view": "Frontal assaults failed for largely Napoleonic reasons — massed defensive fire, broken ground, and exhaustion — so the lethality of cover is best understood as a defender's positional advantage, not solely a small-arms revolution. The grading of cover (wall vs. fence vs. open) is what made terrain choice decisive."
+        }
+      ],
+      "takeaway": "Model cover as a graded hierarchy — stone wall and entrenchment strongest, sunken road and boulders strong, forest moderate, a rail fence light — and let it sharply reduce the damage a defender takes, so the player learns the war's hardest lesson: do not charge prepared infantry behind good cover across open ground.",
+      "provenance": "Verified"
+    }
+  ],
+  "_designNote": "Slotted into the EXISTING def model (no fire-function override): combat already divides damage by TERRAIN[tile.t].def, so giving each cover type a real def value makes it mechanically live the instant a tile carries that type. The six types are placed by OVERRIDING authoredMap (verbatim base body + a decoration pass) to stamp cover onto the historical features the authored maps already label. Decoration is a TERRAIN SWAP (the tile takes the cover type's def, move-cost, and color), applied conservatively under two guards: it only stamps when the cover STRENGTHENS defense (cover.def > the tile's current def, so it never weakens an authored position), AND never when the cover would make the tile FASTER to cross (cover.cost >= the tile's current cost) — so a stone wall or sunken road can add a mild traversal cost (an obstacle) but high ground / works never become cheaper to move through. Water/river/ford/shoal tiles and objective ownership/elevation are never touched. Real result (10 authored maps): ~11 stamps — Devil's Den & the Round Tops -> boulders, the East/West/Groveton Woods & the Wilderness -> forest, the Sunken Roads & the Stone Wall/Marye's Heights -> sunkenroad/stonewall, the redans/redoubts/lunettes/salients/retrenchment on weak ground -> trench. Positions ALREADY modeled as 'fort'/'works' (def 2.10) — e.g. the Vicksburg redans and Antietam's Bloody Lane — are correctly LEFT as-is by the no-weaken guard (fort 2.10 already exceeds every cover type). Procedural (genMap) battles are NOT decorated in A3 — they already carry woods/town/works cover; the named hierarchy is the historical-battlefield value-add. The unused TERRAIN.cover field is now populated on the new types for future LOS/skirmish use. The Field-Fortifications branch (A2) will stamp 'trench' cover onto the player's deploy zone in A6 (battle-day conditioning), tying the Engineer Corps to the field. Numbers are designer calibration (Inferred), tunable; the teaching card is Verified (Hess, NPS/ABT, Griffith — the same sources vetted for A2's engineering cards)."
+},
 "weapons": {
   "_comment": "S? Weapons & Armory catalog — real Civil War small arms with loot-game-style rarity tiers (common -> legendary) so procurement feels like Borderlands: spend funds, arm part or all of your army with better guns, raise battlefield firepower/accuracy. Specs grounded in the period record (calibers, effective ranges, rates of fire); `quality` is a 0-100 composite (accuracy + rate-of-fire + range) used by the armory weapon-score. CS-import arms carry a blockade premium (csCostMult) and the repeaters unlock in 1863. Build-injected as GAME_DATA.weapons; consumed by src/55-weapons.js (The Armory tab) and the battle bridge.",
   "provenance": "Verified specs (Earl J. Hess, The Rifle Musket in Civil War Combat; American Rifleman; National Park Service weapons references; HISTORICAL-DATA.md weapons tables). Rarity/cost are designer calibration (inferred), tunable.",
@@ -17535,6 +17601,147 @@ function engWireSection(C) {
       });
     })(btns[i]);
   }
+}
+
+
+/* ===== module: 58-terrain-cover.js ===== */
+/* ===========================================================================
+   A3 · 58-terrain-cover.js — the terrain COVER hierarchy.
+
+   Aaron's directive (backlog A3): "add named cover — stone wall (strong),
+   forest (strong), wood fence (less strong), trenches, boulders, sunken road —
+   slotted into the EXISTING TERRAIN def/cover model."
+
+   How it works (investigated against build/base.html):
+     · Combat reduces fire damage by dividing by TERRAIN[tile.t].def (resolveFire
+       ~1038, return fire ~1051, charge ~1068). The `cover` field on TERRAIN was
+       defined but NEVER read. So we ADD six named cover types as new TERRAIN keys
+       with real `def` values — combat picks them up automatically through the
+       existing .def path. NO fire-function override (lowest engine risk).
+     · TERRAIN / TCOL / PALETTE are frozen `const`s, but ADDING keys to a const
+       object/array element is legal. We mutate them at module load (this code
+       runs after the base defs, before any battle). Unknown terrain keys already
+       fall back to gray in the renderer (TCOL[skin][t]||"#bbb"); we add real
+       colors so the new tiles paint in period tone.
+     · We OVERRIDE authoredMap (frozen-engine override, §8.2) — verbatim base body
+       + a decoration pass that stamps the cover types onto the historical features
+       the authored maps already label (Antietam's Sunken Road, Devil's Den, the
+       Vicksburg redans, the woods …). Gated by diag-classic; revert on regression.
+
+   Adds NO campaign state. New fns: _tcData / _tcTypes / _tcApplyDefs (load-time
+   mutation) / _tcCoverFor / tcDecorateMap. Overrides: authoredMap (manifest).
+   Bare-name globals (TERRAIN, TCOL, PALETTE, AUTHORED_MAPS, mulberry, hashStr,
+   makeTile); _tc* helpers; decoration never weakens a tile or touches water.
+   =========================================================================== */
+
+function _tcData() {
+  // build keys data by filename: data/terrain-cover.json -> GAME_DATA["terrain-cover"] (hyphenated, like manpower-teaching)
+  return (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA["terrain-cover"]) ? GAME_DATA["terrain-cover"] : null;
+}
+function _tcTypes() { var D = _tcData(); return (D && D.types && D.types.length) ? D.types : []; }
+
+/* Install the cover types into the frozen engine consts (idempotent). */
+function _tcApplyDefs() {
+  if (typeof TERRAIN === "undefined") return false;
+  var types = _tcTypes();
+  for (var i = 0; i < types.length; i++) {
+    var t = types[i]; if (!t || !t.id || !t.terrain) continue;
+    if (!TERRAIN[t.id]) TERRAIN[t.id] = t.terrain;   // add the new cover terrain (def picked up by combat)
+    var cols = t.colors || [];
+    if (typeof TCOL !== "undefined" && TCOL.length) {
+      for (var s = 0; s < TCOL.length; s++) { var c = cols[s] || cols[cols.length - 1] || "#9a9088"; if (TCOL[s] && !TCOL[s][t.id]) TCOL[s][t.id] = c; }
+    }
+    if (typeof PALETTE !== "undefined" && PALETTE && PALETTE.length) {
+      for (var p = 0; p < PALETTE.length; p++) { var pc = cols[p] || cols[cols.length - 1] || "#9a9088"; if (PALETTE[p] && !PALETTE[p][t.id]) PALETTE[p][t.id] = pc; }
+    }
+  }
+  return true;
+}
+_tcApplyDefs();   // run at module load (after base defs, before any battle)
+
+/* Map an authored feature label -> the strongest matching cover terrain id (or null).
+   The strongest (highest-def) matching type wins, so "Sunken Road redoubt" -> the harder of the two. */
+function _tcCoverFor(label) {
+  if (!label || typeof TERRAIN === "undefined") return null;
+  var s = String(label).toLowerCase(), types = _tcTypes(), best = null, bestDef = -1;
+  for (var i = 0; i < types.length; i++) {
+    var t = types[i], m = t.match || [];
+    var hit = false;
+    for (var j = 0; j < m.length; j++) { if (m[j] && s.indexOf(String(m[j]).toLowerCase()) >= 0) { hit = true; break; } }
+    if (!hit) continue;
+    var def = (TERRAIN[t.id] && typeof TERRAIN[t.id].def === "number") ? TERRAIN[t.id].def : 0;
+    if (def > bestDef) { bestDef = def; best = t.id; }
+  }
+  return best;
+}
+
+/* Stamp cover terrain onto an authored map's labelled features. This is a TERRAIN
+   SWAP (def + move-cost + color come from the cover type), applied conservatively:
+   only when it STRENGTHENS defense (cover.def > current.def) AND never makes the tile
+   FASTER to traverse (cover.cost >= current.cost — so high ground / works never become
+   cheaper to cross); never on water/river/ford/shoal; objectives/owner/elev untouched
+   (only the terrain key changes). Idempotent. */
+function tcDecorateMap(M) {
+  if (!M || !M.map || !M.key || typeof TERRAIN === "undefined") return 0;
+  var feats = M.authoredFeatures || [], stamped = 0, skip = { water: 1, river: 1, ford: 1, shoal: 1 };
+  for (var i = 0; i < feats.length; i++) {
+    var f = feats[i]; if (!f || typeof f.c !== "number" || typeof f.r !== "number") continue;
+    var cover = _tcCoverFor(f.label); if (!cover || !TERRAIN[cover]) continue;
+    var tile = M.map[M.key(f.c, f.r)]; if (!tile) continue;
+    if (skip[tile.t]) continue;                                   // never wall off a river
+    var curT = TERRAIN[tile.t] || {};
+    var curDef = (typeof curT.def === "number") ? curT.def : 1;
+    var curCost = (typeof curT.cost === "number") ? curT.cost : 1;
+    if (TERRAIN[cover].def <= curDef) continue;                   // never weaken an authored position
+    var covCost = (typeof TERRAIN[cover].cost === "number") ? TERRAIN[cover].cost : 1;
+    if (covCost < curCost) continue;                              // never make a position FASTER to cross (no-speedup guard)
+    tile.t = cover; tile.cover = cover; stamped++;                // tag for any future cover-aware code
+  }
+  return stamped;
+}
+
+/* ---- authoredMap OVERRIDE (frozen-engine §8.2): the VERBATIM base body
+   (build/base.html 4987-5022) + a decoration pass before the return. ---- */
+function authoredMap(bd) {
+  const A = AUTHORED_MAPS[bd && bd.id];
+  if (!A) return null;
+  RND = mulberry(hashStr(bd.id) ^ 0x5C1B1E); // match genMap's deterministic seed
+  const GW = A.GW, GH = A.GH, map = {}, key = (c, r) => c + "," + r;
+  for (let r = 0; r < GH; r++) {
+    const row = A.grid[r] || "";
+    for (let c = 0; c < GW; c++) {
+      const ch = row[c] || ".";
+      const t = A.legend[ch] || "clear";
+      map[key(c, r)] = makeTile(c, r, t);
+    }
+  }
+  // objectives — push the actual tile objects so owner updates flow through
+  const objs = [];
+  (A.objs || []).forEach(o => {
+    const t = map[key(o.c, o.r)];
+    if (t) { t.obj = { val: o.val }; t.owner = 0; objs.push(t); }
+  });
+  // deployment zones → per-side Sets of "c,r"
+  let deploy = null;
+  if (A.deploy && A.deploy.length) {
+    deploy = { US: new Set(), CS: new Set() };
+    for (let r = 0; r < GH; r++) {
+      const row = A.deploy[r] || "";
+      for (let c = 0; c < GW; c++) {
+        const z = row[c];
+        if (z === "U") deploy.US.add(key(c, r));
+        else if (z === "C") deploy.CS.add(key(c, r));
+      }
+    }
+  }
+  const __M = {
+    GW, GH, map, key, objs, naval: false,
+    authored: true, authoredFeatures: (A.features || []), deploy,
+    ground: (A.ground || "")
+  };
+  // A3: stamp the named cover hierarchy onto the labelled historical features.
+  if (typeof tcDecorateMap === "function") { try { tcDecorateMap(__M); } catch (e) {} }
+  return __M;
 }
 
 

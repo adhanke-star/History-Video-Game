@@ -1,0 +1,66 @@
+{
+  "_comment": "A3 Terrain cover hierarchy — named cover types slotted into the frozen engine's EXISTING terrain/defense model. The battle engine reduces fire damage by dividing by TERRAIN[tile.t].def (build/base.html resolveFire ~1038); the `cover` field on TERRAIN entries was defined but UNUSED. This adds six named cover types as new TERRAIN keys with real `def` values, so combat picks them up automatically through the existing .def path (no fire-function override needed). src/58-terrain-cover.js mutates the frozen const objects TERRAIN / TCOL / PALETTE (adding keys is allowed on a const object) and OVERRIDES authoredMap to stamp these cover types onto the historical battlefield features that already carry labels (Antietam's Sunken Road, Gettysburg's Devil's Den, the Vicksburg redans, the West/East Woods …). Gated by diag-classic; reverts on any Classic regression. def ordering (strong->light): stonewall 2.00 > trench 1.95 > sunkenroad 1.85 > boulders 1.70 > forest 1.50 > woodfence 1.25, all slotting between clear (1.00) and works/fort (2.10). `colors` = [skin0, skin1, skin2], applied to both TCOL and PALETTE so the new tiles render in period tone, not the gray fallback. `match` = lowercase substrings tested against authored feature labels; the strongest (highest-def) match wins. Designer calibration (Inferred); teaching is Verified (see card). Logged DECISIONS.md D44.",
+  "schemaVersion": "1.0",
+  "types": [
+    {
+      "id": "stonewall",
+      "terrain": { "name": "Stone Wall", "cost": 2, "def": 2.00, "cover": 0.8, "scout": 0, "v": 5 },
+      "colors": ["#9a948a", "#8a857a", "#a8a39a"],
+      "match": ["stone wall", "stonewall", "stone fence", "marye"]
+    },
+    {
+      "id": "trench",
+      "terrain": { "name": "Entrenchments", "cost": 1, "def": 1.95, "cover": 0.75, "scout": 0, "v": 5 },
+      "colors": ["#8a7a5a", "#7a6a4a", "#9a8a6a"],
+      "match": ["redan", "redoubt", "lunette", "salient", "entrench", "earthwork", "rifle pit", "trenches", "retrenchment", "the works", "fortified line"]
+    },
+    {
+      "id": "sunkenroad",
+      "terrain": { "name": "Sunken Road", "cost": 1, "def": 1.85, "cover": 0.7, "scout": 0, "v": 5 },
+      "colors": ["#9a8560", "#876f4a", "#a89070"],
+      "match": ["sunken road", "sunken lane", "bloody lane", "sunken"]
+    },
+    {
+      "id": "boulders",
+      "terrain": { "name": "Boulders", "cost": 2, "def": 1.70, "cover": 0.65, "scout": 1, "v": 4 },
+      "colors": ["#9a9088", "#877d72", "#a89e92"],
+      "match": ["devil's den", "devils den", "boulder", "rocky", "the rocks", "round top"]
+    },
+    {
+      "id": "forest",
+      "terrain": { "name": "Dense Forest", "cost": 2, "def": 1.50, "cover": 0.7, "scout": -1, "v": 3 },
+      "colors": ["#5a7340", "#4a6035", "#6a8050"],
+      "match": ["woods", "forest", "timber", "thicket", "the wilderness"]
+    },
+    {
+      "id": "woodfence",
+      "terrain": { "name": "Rail Fence", "cost": 1, "def": 1.25, "cover": 0.4, "scout": 0, "v": 6 },
+      "colors": ["#b89a6a", "#a8855a", "#c0a878"],
+      "match": ["rail fence", "worm fence", "wood fence", "fence", "post and rail"]
+    }
+  ],
+  "teachingCards": [
+    {
+      "id": "cover-killing-ground",
+      "title": "Why was a stone wall or a sunken road worth a division of men?",
+      "consensus": "Civil War tactics turned on cover. A defender behind a stone wall, in a sunken road, or in even hastily dug rifle pits multiplied his combat power so sharply that frontal assaults across open ground against such positions failed again and again at catastrophic cost. The archetypes are exact: at Fredericksburg (Dec 13, 1862) Confederates stood four ranks deep in a sunken road behind a stone wall along the base of Marye's Heights and broke fourteen Union brigades in succession — no attacker reached closer than roughly 25-40 yards, and the position was, in the National Park Service's words, 'almost impregnable, and a deathtrap.' At Antietam the 'Sunken Road' (Bloody Lane) let a thin Confederate line hold for hours until it was finally enfiladed. The cover hierarchy was real and graded — a stone wall or entrenchment was worth far more than a rail fence or open cropland — which is why, by 1864, troops fortified reflexively and the spade became as vital as the rifle. A wargame that does not make a stone wall genuinely deadlier than a fence misrepresents the central tactical fact of the war.",
+      "voices": [
+        {
+          "scholar": "Earl J. Hess (Field Armies and Fortifications in the Civil War; Trench Warfare under Grant and Lee)",
+          "view": "Field fortification — from a sunken road or stone wall to engineered lines — was the decisive defensive multiplier of the war's second half, and its rise was driven as much by continuous contact between the armies (Grant pinning Lee) and soldiers' need for cover as by the rifle musket. Cover should be modeled as a strong, graded defensive bonus."
+        },
+        {
+          "scholar": "National Park Service / American Battlefield Trust (Fredericksburg)",
+          "view": "The 600-yard stone wall and sunken road below Marye's Heights made the Confederate position 'almost impregnable, and a deathtrap'; successive Union waves died on the open, rising ground without ever closing to the wall — a textbook demonstration of cover as killing ground."
+        },
+        {
+          "scholar": "Paddy Griffith (Battle Tactics of the Civil War)",
+          "view": "Frontal assaults failed for largely Napoleonic reasons — massed defensive fire, broken ground, and exhaustion — so the lethality of cover is best understood as a defender's positional advantage, not solely a small-arms revolution. The grading of cover (wall vs. fence vs. open) is what made terrain choice decisive."
+        }
+      ],
+      "takeaway": "Model cover as a graded hierarchy — stone wall and entrenchment strongest, sunken road and boulders strong, forest moderate, a rail fence light — and let it sharply reduce the damage a defender takes, so the player learns the war's hardest lesson: do not charge prepared infantry behind good cover across open ground.",
+      "provenance": "Verified"
+    }
+  ],
+  "_designNote": "Slotted into the EXISTING def model (no fire-function override): combat already divides damage by TERRAIN[tile.t].def, so giving each cover type a real def value makes it mechanically live the instant a tile carries that type. The six types are placed by OVERRIDING authoredMap (verbatim base body + a decoration pass) to stamp cover onto the historical features the authored maps already label. Decoration is a TERRAIN SWAP (the tile takes the cover type's def, move-cost, and color), applied conservatively under two guards: it only stamps when the cover STRENGTHENS defense (cover.def > the tile's current def, so it never weakens an authored position), AND never when the cover would make the tile FASTER to cross (cover.cost >= the tile's current cost) — so a stone wall or sunken road can add a mild traversal cost (an obstacle) but high ground / works never become cheaper to move through. Water/river/ford/shoal tiles and objective ownership/elevation are never touched. Real result (10 authored maps): ~11 stamps — Devil's Den & the Round Tops -> boulders, the East/West/Groveton Woods & the Wilderness -> forest, the Sunken Roads & the Stone Wall/Marye's Heights -> sunkenroad/stonewall, the redans/redoubts/lunettes/salients/retrenchment on weak ground -> trench. Positions ALREADY modeled as 'fort'/'works' (def 2.10) — e.g. the Vicksburg redans and Antietam's Bloody Lane — are correctly LEFT as-is by the no-weaken guard (fort 2.10 already exceeds every cover type). Procedural (genMap) battles are NOT decorated in A3 — they already carry woods/town/works cover; the named hierarchy is the historical-battlefield value-add. The unused TERRAIN.cover field is now populated on the new types for future LOS/skirmish use. The Field-Fortifications branch (A2) will stamp 'trench' cover onto the player's deploy zone in A6 (battle-day conditioning), tying the Engineer Corps to the field. Numbers are designer calibration (Inferred), tunable; the teaching card is Verified (Hess, NPS/ABT, Griffith — the same sources vetted for A2's engineering cards)."
+}
