@@ -172,6 +172,7 @@ function fldMakeUnit(o) {
 function fldResetRun() {
   __FIELD.t = 0; __FIELD.winner = null; __FIELD.holdSecs = { US: 0, CS: 0 };
   __FIELD.vis = null; __FIELD.lastSeen = {};   // fog visibility set + last-known "ghost" positions, recomputed per tick
+  __FIELD._apReason = null;                     // active auto-pause: the current decision-point reason (if paused by it)
   __FIELD.routEverCount = 0; __FIELD.sel = []; __FIELD.drag = null;
   __FIELD.phase = "deploy"; __FIELD.paused = true; __FIELD.speed = 1; __FIELD.acc = 0;
   _fldAiClock = 0; _fldAiIdx = 0;   // reset the AI cadence so every launch is deterministic
@@ -192,6 +193,11 @@ function fldInitSim(opts) {
   // fog of war (P1b): a persisted toggle (default OFF). OFF -> fldVisible() is always true -> every fog
   // gate below is a no-op and the sim/render is byte-behavior-identical to the pre-fog engine.
   __FIELD.fog = (opts.fog != null) ? !!opts.fog : !!(typeof G !== "undefined" && G.settings && G.settings.tacticalFog);
+  // active auto-pause (P1b): pause at decision points (a brigade breaks / is destroyed / reinforcements
+  // arrive) so a low-APM player keeps up. A toggle, default ON. Lives ONLY in the RAF loop (fldAutoPauseScan),
+  // so the headless probe stepper (fldStepN) never auto-pauses -> zero probe/determinism impact.
+  __FIELD.autoPause = (opts.autoPause != null) ? !!opts.autoPause : !(typeof G !== "undefined" && G.settings && G.settings.tacticalAutoPause === false);
+  __FIELD._apReason = null;
   if (sc !== "sandbox" && typeof fldScenarioInit === "function" && fldScenarioInit(opts)) return;
   __FIELD.scenario = "sandbox";
   fldBuildTerrain();
@@ -676,12 +682,14 @@ function fldBuildDom() {
     ["fldBtnCharge", "Charge", "Charge nearest enemy (F)"],
     ["fldBtnHold", "Hold", "Halt in place (H)"],
     ["fldBtnFog", "Fog: " + (__FIELD.fog ? "On" : "Off"), "Toggle fog of war — line-of-sight scouting (V)"],
+    ["fldBtnAuto", "Auto-pause: " + (__FIELD.autoPause ? "On" : "Off"), "Toggle active auto-pause at key moments (P)"],
     ["fldBtnExit", "Exit", "Leave the sandbox (Esc)"],
   ];
   for (var i = 0; i < btns.length; i++) {
     var b = document.createElement("button");
     b.id = btns[i][0]; b.innerHTML = btns[i][1]; b.title = btns[i][2]; b.setAttribute("aria-label", btns[i][2]);
     if (btns[i][0] === "fldBtnFog") b.setAttribute("aria-pressed", String(!!__FIELD.fog));   // a toggle button: convey on/off state to AT
+    if (btns[i][0] === "fldBtnAuto") b.setAttribute("aria-pressed", String(!!__FIELD.autoPause));
     b.style.cssText = "background:#1c1610;color:#e9dcc0;border:1px solid #766040;border-radius:4px;padding:7px 11px;font:13px Georgia,serif;cursor:pointer;"; /* wcag-auditor: contrast fix #4a3c28->#766040 border on #1c1610/#10141a (was 1.68/1.73:1, now 3.00/3.09:1) WCAG 1.4.11 */
     bar.appendChild(b);
   }
@@ -709,6 +717,36 @@ function fldAnnounce(msg) {
 /* ===========================================================================
    THE RAF LOOP  (fixed-timestep accumulator)
    =========================================================================== */
+function fldCountAlive() { var n = 0; for (var i = 0; i < __FIELD.units.length; i++) if (__FIELD.units[i].alive) n++; return n; }
+// active auto-pause: after a live-loop sim advance, pause once on a decision-point event (lives in the RAF
+// loop only, so the headless fldStepN never triggers it). Priority: a break, then a destroyed brigade,
+// then arriving reinforcements. Announces (aria-live) + surfaces the reason in the phase indicator.
+function fldAutoPauseScan(prevRouts, prevAlive, prevN) {
+  if (__FIELD.paused) return;
+  // detect EVERY decision-point event this frame (a frame can advance up to 16 ticks). Reinforcements
+  // only ever push ALIVE units, so kills-this-frame = prevAlive - (aliveNow - spawned) — robust to a
+  // same-frame spawn masking a death in the net headcount. Report all reasons; keep priority for the label.
+  var spawned = __FIELD.units.length - prevN, killed = prevAlive - (fldCountAlive() - spawned), reasons = [];
+  if (__FIELD.routEverCount > prevRouts) reasons.push("A brigade has broken");
+  if (killed > 0) reasons.push("A brigade is destroyed");
+  if (spawned > 0) reasons.push("Reinforcements arrive");
+  if (!reasons.length) return;
+  __FIELD.paused = true; __FIELD._apReason = reasons[0];
+  var b = document.getElementById("fldBtnPlay"); if (b) { b.innerHTML = "&#9654; Resume"; b.setAttribute("aria-label", "Resume — auto-paused: " + reasons.join("; ")); }
+  fldAnnounce("Auto-paused — " + reasons.join("; ") + ". Press Space to resume.");
+}
+function fldToggleAutoPause() {
+  __FIELD.autoPause = !__FIELD.autoPause;
+  try { if (typeof G !== "undefined") { G.settings = G.settings || {}; G.settings.tacticalAutoPause = __FIELD.autoPause; } } catch (e) {}
+  var b = document.getElementById("fldBtnAuto"); if (b) { b.innerHTML = "Auto-pause: " + (__FIELD.autoPause ? "On" : "Off"); b.setAttribute("aria-pressed", String(__FIELD.autoPause)); }
+  // turning the feature OFF while it is actively holding the battle paused must RELEASE that pause
+  // (otherwise the most-likely escape control doesn't escape).
+  if (!__FIELD.autoPause && __FIELD._apReason) {
+    __FIELD.paused = false; __FIELD._apReason = null;
+    var pb = document.getElementById("fldBtnPlay"); if (pb) { pb.innerHTML = "&#10074;&#10074; Pause"; pb.setAttribute("aria-label", "Begin / pause the battle (Space)"); }
+  }
+  fldAnnounce(__FIELD.autoPause ? "Active auto-pause ON — the battle pauses at key moments." : "Active auto-pause OFF.");
+}
 function fldStartLoop() {
   if (__FIELD.raf) { cancelAnimationFrame(__FIELD.raf); __FIELD.raf = 0; }   // never run two RAF chains
   __FIELD.last = (typeof performance !== "undefined" && performance.now) ? performance.now() : 0;
@@ -719,9 +757,13 @@ function fldStartLoop() {
     var dt = (now - __FIELD.last) / 1000; __FIELD.last = now;
     if (dt > 0.1) dt = 0.1;                              // clamp tab-switch spikes
     if (__FIELD.phase === "battle" && !__FIELD.paused) {
+      // snapshot for active auto-pause (live loop only — never from the headless fldStepN)
+      var apOn = __FIELD.autoPause, apR0 = 0, apA0 = 0, apN0 = 0;
+      if (apOn) { apR0 = __FIELD.routEverCount; apA0 = fldCountAlive(); apN0 = __FIELD.units.length; }
       __FIELD.acc += dt * __FIELD.speed;
       var guard = 0;
       while (__FIELD.acc >= FLD.FIXED_DT && guard < 16) { fldSimStep(FLD.FIXED_DT); __FIELD.acc -= FLD.FIXED_DT; guard++; }
+      if (apOn && __FIELD.phase === "battle") fldAutoPauseScan(apR0, apA0, apN0);
     }
     fldRender();
     fldRenderTop();
@@ -748,7 +790,7 @@ function fldRenderTop() {
     o.textContent = "Objective: " + lead;
   }
   var p = document.getElementById("fldPhase");
-  if (p) p.textContent = __FIELD.phase === "deploy" ? "Press Begin (Space) to advance" : (__FIELD.paused ? "PAUSED" : (__FIELD.speed + "×"));
+  if (p) p.textContent = __FIELD.phase === "deploy" ? "Press Begin (Space) to advance" : (__FIELD.paused ? ("⏸ " + (__FIELD._apReason ? __FIELD._apReason + " — Space to resume" : "PAUSED")) : (__FIELD.speed + "×"));
   // fog: keep the no-selection "N Rebel brigades sighted" HUD line live as scouting changes (throttled ~3x/sec)
   if (__FIELD.fog) { __FIELD._hudTick = (__FIELD._hudTick || 0) + 1; if (__FIELD._hudTick % 20 === 0 && !fldPlayerSel().length) fldRenderHud(); }
 }
@@ -772,6 +814,7 @@ function fldWireControls() {
   w("fldBtnCharge", function () { fldSelCharge(); });
   w("fldBtnHold", function () { fldSelHold(); });
   w("fldBtnFog", function () { fldToggleFog(); });
+  w("fldBtnAuto", function () { fldToggleAutoPause(); });
   w("fldBtnExit", function () { fldExit(false); });
 }
 function fldToggleFog() {
@@ -785,7 +828,8 @@ function fldToggleFog() {
 function fldTogglePlay() {
   if (__FIELD.phase === "deploy") { __FIELD.phase = "battle"; __FIELD.paused = false; fldAnnounce("Battle begins."); }
   else if (__FIELD.phase === "battle") { __FIELD.paused = !__FIELD.paused; fldAnnounce(__FIELD.paused ? "Paused." : "Resumed."); }
-  var b = document.getElementById("fldBtnPlay"); if (b) b.innerHTML = __FIELD.paused ? "&#9654; Resume" : "&#10074;&#10074; Pause";
+  if (!__FIELD.paused) __FIELD._apReason = null;   // clear any auto-pause reason once the player resumes
+  var b = document.getElementById("fldBtnPlay"); if (b) { b.innerHTML = __FIELD.paused ? "&#9654; Resume" : "&#10074;&#10074; Pause"; b.setAttribute("aria-label", __FIELD.paused ? "Resume the battle (Space)" : "Begin / pause the battle (Space)"); }
 }
 function fldCycleSpeed() { __FIELD.speed = __FIELD.speed === 1 ? 2 : (__FIELD.speed === 2 ? 4 : 1); var b = document.getElementById("fldBtnSpd"); if (b) b.innerHTML = __FIELD.speed + "&times;"; }
 function fldPlayerSel() { var out = []; for (var i = 0; i < __FIELD.sel.length; i++) { var u = fldById(__FIELD.sel[i]); if (u && u.alive && u.side === "US" && !u.ai) out.push(u); } return out; }
@@ -806,6 +850,7 @@ function fldKey(e) {
   else if (k === "f" || k === "F" || k === "Enter") fldSelCharge();
   else if (k === "h" || k === "H") fldSelHold();
   else if (k === "v" || k === "V") fldToggleFog();
+  else if (k === "p" || k === "P") fldToggleAutoPause();
   else if (k === "a" || k === "A") { __FIELD.sel = []; for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side === "US" && u.alive && !u.ai) __FIELD.sel.push(u.id); } fldRenderHud(); }
   else if (k === "Tab") { if (__FIELD.phase === "battle") { e.preventDefault(); fldCycleSel(); } } // only steal Tab mid-battle
   var b = document.getElementById("fldBtnSpd"); if (b) b.innerHTML = __FIELD.speed + "&times;";
