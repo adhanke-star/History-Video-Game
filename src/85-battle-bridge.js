@@ -192,8 +192,9 @@ function bridgeBriefingHTML(C) {
     + 'History flavors the day &mdash; it never decides it. The battle is yours to win.</p>'
     + '<div class="btn-row" style="margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">'
     +   '<button id="brgBack" type="button" class="upg">Back</button>'
-    +   '<button id="brgAuto" type="button" class="upg" title="Resolve from the army you fielded, without fighting the tactical battle">Auto-resolve</button>'
-    +   '<button id="brgToField" type="button" class="bigbtn">To the Field &#9654;</button>'
+    +   '<button id="brgAuto" type="button" class="upg" title="Resolve from the army you fielded, without fighting the battle">Auto-resolve</button>'
+    +   '<button id="brgRealTime" type="button" class="upg" title="Fight this battle in the real-time tactical engine — your conditioned army, drag-to-maneuver">Fight in real time &#9876;</button>'
+    +   '<button id="brgToField" type="button" class="bigbtn" title="Fight on the Classic hex map">To the Field (Classic) &#9654;</button>'
     + '</div>';
 }
 
@@ -216,6 +217,10 @@ function bridgeWireBriefing(C, onBack, onField) {
   if (back) back.addEventListener("click", function () { if (typeof onBack === "function") onBack(); });
   var auto = document.getElementById("brgAuto");
   if (auto) auto.addEventListener("click", function () { if (typeof bridgeAutoResolve === "function") bridgeAutoResolve(C); });   // A6b: resolve from the conditioned army, skip the tactical fight
+  // Phase A (A2): fight this campaign battle in the real-time tactical engine, conditioned by the same
+  // army (A1); the outcome feeds back into the campaign (A3). The Classic-hex option remains below.
+  var rt = document.getElementById("brgRealTime");
+  if (rt) rt.addEventListener("click", function () { if (typeof fldLaunchCampaignBattle === "function") fldLaunchCampaignBattle(C); else if (typeof onField === "function") onField(); });
   var go = document.getElementById("brgToField");
   if (go) go.addEventListener("click", function () { if (typeof onField === "function") onField(); });
 }

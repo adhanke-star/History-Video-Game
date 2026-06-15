@@ -15,6 +15,10 @@ Build the game forward, continuously, for the whole session, and **never stall w
 - **Above and beyond** — polish to ship-quality each phase: period art (R30), ambient teaching (R26), ant the balance principle (§27: simple core stands alone, all depth optional/advisor-managed/non-blocking).
 
 ## 2 · STATE AS OF THIS HANDOFF (run i — verified + committed)
+
+> **⚑ LIVE HEAD (run k, 2026-06-15) — the roadmap is now `V1-CHECKLIST.md` (D61); read `HANDOFF.md`'s top block first.** Shipped + pushed since S2: **Tactical P0 sandbox · P1a Bull Run · P1b-i fog · P1b-ii auto-pause · P1b-iii role-aware defender AI** (D56–D60) → **PHASE A · CONNECT THE TWO LAYERS** (D62): the strategic-desk army now conditions + fields in the real-time tactical battle (A1), launchable from the bridge "Fight in real time ⚔" + a FREE skirmish menu (A2), with the fight's REAL casualties feeding back via `campaignAdvance`→`_t1Resolve` — substitutable for Classic/auto-resolve (A3). `src/tactical/T2-campaign-link.js`; probe-campaign-link 16/16; full no-regression GREEN. **NEXT = Phase B tactical depth** (smarter attacker AI [fork #2] · officers · logistics · arm roles · presets · CS-player mode [fork #10]). **Subagent model routing = HYBRID (D63).** The run-i state below is retained for history.
+
+
 Commits (latest first): `512fe5d` docs(START-HERE) · `9f14fb6` Armory + git-hygiene · `6e65787` battle-bridge(seed) · `bd59824` wild-cards · `84feeba` S1e Paths-to-Victory · `8c7ef8e` S1d · `8a72755` S1c · `b2179d0` S1b · `3a6aad6` S1a · `673894f` S0. **S1 COMPLETE; S1e + bridge-seed + Armory shipped. See §7 for the full BACKLOG (run j).**
 
 > **⚑ RUN-K STATE (2026-06-14, the STRATEGIC ARC S2 — newest):**

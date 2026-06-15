@@ -96,6 +96,10 @@ function fldScenarioTick(dt) {
 }
 function fldReinforceSpawn(spec) {
   var u = fldMakeUnit(spec);
+  // Phase A (A1): in a campaign-launched battle, a PLAYER-side reinforcement is conditioned by the
+  // strategic war too (men / morale / re-arm) as it detrains — your war fields stronger reserves. No-op
+  // for a standalone scenario (campaignCtx null) or an enemy unit (the conditioner is player-side-gated).
+  if (__FIELD.campaignCtx && typeof fldCampaignConditionUnit === "function") { try { fldCampaignConditionUnit(u); } catch (e) {} }
   // a PLAYER-side (non-AI) reinforcement marches onto the field toward the objective on arrival — so it
   // joins the battle instead of idling in the rear (the player controls only the US; the AI commands the
   // CS + any autoBoth side). The player can redirect it once it is up. AI units are driven by fldAiUnit.

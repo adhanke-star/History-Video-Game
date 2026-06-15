@@ -22,20 +22,24 @@ content-complete v1 (still a perpetual project after — D54). Built from `MODER
 ## DONE SO FAR (shipped + pushed)
 S0–S1 economy/production/blockade/manpower/victory · Battle layer A1–A6 (owner-mode war playable end-to-end) ·
 S2 m1–m5 (cabinet, decisions, 3-layer morale + 1864 election, press, command/named-generals) · **Tactical
-P0 sandbox · P1a First Bull Run · P1b-i fog · P1b-ii auto-pause · P1b-iii role-aware DEFENDER AI.**
+P0 sandbox · P1a First Bull Run · P1b-i fog · P1b-ii auto-pause · P1b-iii role-aware DEFENDER AI · PHASE A
+connect-the-layers (A1 conditioning · A2 fight-from-bridge + FREE skirmish · A3 result feedback).**
 
 ---
 
 ## THE V1 CHECKLIST (proposed order — edit freely)
 
-### Phase A — CONNECT THE TWO LAYERS  ‹NEXT — locked priority›
-- [ ] **A1 Bridge conditioning into tactical:** the strategic-desk army (weapons bought, the 3 corps,
+### Phase A — CONNECT THE TWO LAYERS  ‹✅ DONE — run k, 2026-06-15, DECISIONS D62›
+- [x] **A1 Bridge conditioning into tactical:** the strategic-desk army (weapons bought, the 3 corps,
       general/leadership, morale, manpower strength) conditions the tactical battle's forces (strength /
       firepower / quality / morale / fatigue) — the owner-mode army you built actually fields in the real-time fight.
-- [ ] **A2 Tactical FREE mode:** a menu entry to launch a custom skirmish (pick side / forces / terrain) and
+      *(`src/tactical/T2-campaign-link.js` `fldCampaignCondition`; 74-anchor ±12% identical to Classic/auto-resolve; re-arms from the loadout incl. reinforcements.)*
+- [x] **A2 Tactical FREE mode:** a menu entry to launch a custom skirmish (pick side / forces / terrain) and
       to fight the Bull Run scenario from the bridge (not just the standalone demo).
-- [ ] **A3 Result feedback loop:** the real-time battle outcome flows back into the campaign (casualties,
+      *("Fight in real time ⚔" on the bridge briefing; First Bull Run [US]→bullrun1 else a conditioned procedural fight; a "⚔ SKIRMISH" main-menu setup [side/size/ground/year/fog].)*
+- [x] **A3 Result feedback loop:** the real-time battle outcome flows back into the campaign (casualties,
       ground, `enemyWill`) — substitutable for the existing Classic / auto-resolve result (MODERN-UGG §2).
+      *(REAL casualty fractions from the fight → `startBattleRuntime`+`_arApplyCasualties`+`campaignAdvance`→`_t1Resolve`; win advances, loss recovers; deterministic. probe-campaign-link 16/16.)*
 
 ### Phase B — TACTICAL DEPTH  (P2–P5, real-time engine)
 - [ ] **B1 Smarter ATTACKER AI** — defender-favored, fog aids the defender (LOCKED); attacker doctrinally

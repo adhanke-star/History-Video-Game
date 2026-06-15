@@ -189,6 +189,10 @@ function fldResetRun() {
   __FIELD.routEverCount = 0; __FIELD.sel = []; __FIELD.drag = null;
   __FIELD.phase = "deploy"; __FIELD.paused = true; __FIELD.speed = 1; __FIELD.acc = 0;
   _fldAiClock = 0; _fldAiIdx = 0;   // reset the AI cadence so every launch is deterministic
+  // Phase A (A1): condition the army the strategic war fielded (bridgeArmy) onto the player's units —
+  // the single chokepoint shared by the sandbox / scenario / skirmish paths. No-op when campaignCtx is
+  // null (every standalone launch), so the conditioning never perturbs the sandbox/Bull-Run probes.
+  if (__FIELD.campaignCtx && typeof fldCampaignCondition === "function") { try { fldCampaignCondition(); } catch (e) {} }
   // fog ON at launch: prime the visibility set so the DEPLOY screen already shows what is in sight
   // (matching the in-battle toggle) instead of a blacked-out field until the first sim tick.
   if (__FIELD.fog && __FIELD.units && __FIELD.units.length) fldComputeVisibility();
@@ -203,6 +207,10 @@ function fldInitSim(opts) {
   var sc = opts.scenario || "sandbox"; __FIELD.scenario = sc;
   __FIELD.reinforce = null; __FIELD.holdToWin = FLD.HOLD_TO_WIN; __FIELD.timeLimit = FLD.TIME_LIMIT; __FIELD.attacker = null;
   __FIELD.scenData = null; __FIELD.defender = null; __FIELD.winBy = null;   // cleared every launch (scenario init re-sets); no stale leak into the sandbox
+  // Phase A (campaign link): a campaign-launched battle carries a ctx (the bd + conditioning params);
+  // null for every standalone launch -> the fldResetRun conditioning hook + the campaign end screen are
+  // no-ops then (byte-behavior-identical sandbox/Bull-Run; probe-field/bullrun hold). Set by T2.
+  __FIELD.campaignCtx = opts.campaign || null;
   // fog of war (P1b): a persisted toggle (default OFF). OFF -> fldVisible() is always true -> every fog
   // gate below is a no-op and the sim/render is byte-behavior-identical to the pre-fog engine.
   __FIELD.fog = (opts.fog != null) ? !!opts.fog : !!(typeof G !== "undefined" && G.settings && G.settings.tacticalFog);
@@ -213,6 +221,10 @@ function fldInitSim(opts) {
   __FIELD._apReason = null;
   __FIELD._aiGenericAll = false;   // role-aware AI test hook: reset per launch like every other flag (bug-hunt #4); probe-ai sets it AFTER launch
   if (sc !== "sandbox" && typeof fldScenarioInit === "function" && fldScenarioInit(opts)) return;
+  // Phase A (A2): a custom FREE skirmish / procedural campaign battle is built by T2's fldSkirmishOOB
+  // (terrain + a parameterized OOB), which calls fldResetRun and returns true. Absent opts.skirmish this
+  // is a no-op and the verbatim 2-brigade sandbox below runs unchanged (probe-field byte-identical).
+  if (opts.skirmish && typeof fldSkirmishOOB === "function" && fldSkirmishOOB(opts)) return;
   __FIELD.scenario = "sandbox";
   fldBuildTerrain();
   var ox = FLD.FIELD_W / 2, t = __FIELD.terrain;
@@ -745,7 +757,11 @@ function fldExit(silent) {
   if (__FIELD.root && __FIELD.root.parentNode) __FIELD.root.parentNode.removeChild(__FIELD.root);
   __FIELD.root = null; __FIELD.cv2d = null; __FIELD.ctx2d = null; __FIELD.mode3d = false;
   __FIELD.launched = false; __FIELD.phase = "idle"; __FIELD.units = []; __FIELD.sel = [];
-  if (!silent) { try { if (typeof openMainMenu === "function") openMainMenu(); } catch (e) {} }
+  // Phase A: a campaign-launched battle sets _returnFn (-> the bridge briefing) so a non-silent exit
+  // (Esc / Exit before the battle ends) drops back into the campaign, re-launchable, instead of the main
+  // menu; cleared here so it never leaks into a later standalone launch. Default stays openMainMenu.
+  var _ret = __FIELD._returnFn; __FIELD._returnFn = null; __FIELD.campaignCtx = null;
+  if (!silent) { try { if (typeof _ret === "function") _ret(); else if (typeof openMainMenu === "function") openMainMenu(); } catch (e) {} }
 }
 function fldBuildDom() {
   /* wcag-auditor: inject :focus-visible styles for all tactical buttons (WCAG 2.4.7 / 2.4.11).
@@ -941,7 +957,18 @@ function fldSelHold() { var s = fldPlayerSel(); for (var i = 0; i < s.length; i+
 function fldKey(e) {
   // Escape always exits; otherwise let native activation handle a focused button (Space/Enter)
   // so control-bar / end-screen buttons don't double-fire, and the end screen stays keyboard-operable.
-  if (e.key === "Escape") { fldExit(false); return; }
+  if (e.key === "Escape") {
+    // Phase A (bug-hunt F1): on a FINISHED campaign battle, Esc must RESOLVE the decided result (not
+    // abort-and-discard it via _returnFn — that would lose the win/loss + casualties and be save-scummable).
+    // Mirrors the #fldCampReturn button. Mid-battle Esc still aborts (the re-launchable abort, by design).
+    if (__FIELD.phase === "over" && __FIELD.campaignCtx) {
+      var oc = (typeof fldCampaignComputeOutcome === "function") ? fldCampaignComputeOutcome() : null;
+      fldExit(true);
+      if (oc && typeof fldCampaignApplyOutcome === "function") fldCampaignApplyOutcome(oc);
+      return;
+    }
+    fldExit(false); return;
+  }
   if (e.target && e.target.tagName === "BUTTON") return;
   if (__FIELD.phase === "over") return; // end screen: native Tab/Enter/Space reach #fldAgain / #fldDone
   var k = e.key;
@@ -1036,14 +1063,35 @@ function fldOnOver() {
   e.setAttribute("role", "dialog"); e.setAttribute("aria-modal", "true"); e.setAttribute("aria-label", msg); /* wcag-auditor: added aria-modal=true so AT users know focus is constrained (WCAG 4.1.2) */
   // P1a seam: a scenario can append its teaching payoff (what really happened / your war vs history).
   var scNote = (typeof fldScenarioEndHtml === "function") ? (fldScenarioEndHtml(w) || "") : "";
+  // Phase A seam: a campaign battle appends its strategic-consequence note (no-op standalone).
+  if (__FIELD.campaignCtx && typeof fldCampaignEndHtml === "function") { try { scNote += (fldCampaignEndHtml(w) || ""); } catch (eC) {} }
+  var _inCampaign = !!__FIELD.campaignCtx;
   e.innerHTML =
     '<div style="text-align:center;background:#0c0f14;border:1px solid #745e3f;border-radius:8px;padding:26px 34px;max-width:640px;max-height:88vh;overflow:auto;">' /* wcag-auditor: contrast fix #4a3c28->#745e3f border on #0c0f14 (was 1.80:1, now 3.12:1) WCAG 1.4.11 */ +
     '<div style="font-size:26px;letter-spacing:1px;margin-bottom:8px;color:#e9dcc0;">' + msg + '</div>' +
     '<div style="opacity:.8;margin-bottom:6px;">Held the field at ' + Math.floor(__FIELD.t / 60) + ':' + ("0" + (Math.floor(__FIELD.t) % 60)).slice(-2) + '.</div>' +
     '<div style="opacity:.7;font-size:13px;margin-bottom:18px;">Union ' + fldArmyStrength("US") + ' &middot; Confederate ' + fldArmyStrength("CS") + ' still under arms.</div>' +
     scNote +
-    '<button id="fldAgain" style="background:#1c1610;color:#e9dcc0;border:1px solid #766040;border-radius:4px;padding:9px 16px;font:14px Georgia,serif;cursor:pointer;margin-right:8px;">Fight Again</button>' +
-    '<button id="fldDone" style="background:#1c1610;color:#e9dcc0;border:1px solid #766040;border-radius:4px;padding:9px 16px;font:14px Georgia,serif;cursor:pointer;">Main Menu</button></div>'; /* wcag-auditor: contrast fix #4a3c28->#766040 border on #1c1610 (was 1.68:1, now 3.00:1) WCAG 1.4.11 */
+    (_inCampaign
+      ? '<button id="fldCampReturn" type="button" style="background:#1c1610;color:#e9dcc0;border:1px solid #766040;border-radius:4px;padding:9px 18px;font:14px Georgia,serif;cursor:pointer;">Return to Headquarters &#9654;</button></div>' /* wcag-auditor: added type=button (WCAG 4.1.2 — explicit role semantics; prevents accidental form submit) */
+      : ('<button id="fldAgain" style="background:#1c1610;color:#e9dcc0;border:1px solid #766040;border-radius:4px;padding:9px 16px;font:14px Georgia,serif;cursor:pointer;margin-right:8px;">Fight Again</button>' +
+         '<button id="fldDone" style="background:#1c1610;color:#e9dcc0;border:1px solid #766040;border-radius:4px;padding:9px 16px;font:14px Georgia,serif;cursor:pointer;">Main Menu</button></div>')); /* wcag-auditor: contrast fix #4a3c28->#766040 border on #1c1610 (was 1.68:1, now 3.00:1) WCAG 1.4.11 */
+  if (_inCampaign) {
+    // Phase A (A3): a campaign battle returns to headquarters — compute the outcome from the FINISHED
+    // sim (before fldExit clears units), tear down the tactical UI silently, then feed the result into
+    // the campaign (build a conditioned hex roster + apply the real loss fractions + campaignAdvance).
+    var rb = document.getElementById("fldCampReturn");
+    if (rb) rb.addEventListener("click", function () {
+      var o = (typeof fldCampaignComputeOutcome === "function") ? fldCampaignComputeOutcome() : null;
+      fldExit(true);
+      if (o && typeof fldCampaignApplyOutcome === "function") fldCampaignApplyOutcome(o);
+    });
+    // Phase A (bug-hunt F2): the end dialog is aria-modal, so trap Tab/Shift+Tab on the single button
+    // (otherwise focus escapes to the battle controls behind it). One button -> Tab keeps focus on it.
+    e.addEventListener("keydown", function (ev) { if (ev.key === "Tab") { ev.preventDefault(); if (rb) rb.focus(); } });
+    if (rb) { try { rb.focus(); } catch (e2) {} }
+    return;
+  }
   var a = document.getElementById("fldAgain"), d = document.getElementById("fldDone");
   // rematch preserves the scenario (sandbox OR a battle like bullrun1) — capture before fldExit clears state.
   if (a) a.addEventListener("click", function () { var k = __FIELD.rendererKind, sc = __FIELD.scenario, sd = (__FIELD.seed + 7) >>> 0; fldExit(true); fldLaunchSandbox({ renderer: k, seed: sd, scenario: sc }); });
@@ -1352,6 +1400,9 @@ function fldInjectMenuButton() {
     if (anchor.nextSibling) anchor.parentNode.insertBefore(b, anchor.nextSibling); else anchor.parentNode.appendChild(b);
     // P1a seam: registered scenarios (e.g. First Bull Run) inject their own menu buttons after the sandbox button.
     if (typeof fldInjectScenarioButtons === "function") fldInjectScenarioButtons(b);
+    // Phase A (A2) seam: the custom FREE skirmish setup menu button (after the sandbox / Bull Run buttons).
+    var lastBtn = document.getElementById("fldBullRunBtn") || b;
+    if (typeof fldInjectSkirmishButton === "function") fldInjectSkirmishButton(lastBtn);
   } catch (e) {}
 }
 function fldInstallMenuObserver() {
