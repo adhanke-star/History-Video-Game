@@ -47,6 +47,10 @@
           "teach": "Gen. Jackson is hit — the anchor of the Henry Hill line wavers." }
       ]
     },
+    "supply": {
+      "US": { "x": 600, "z": 860, "name": "Union train — the Sudley road" },
+      "CS": { "x": 600, "z": 205, "name": "Confederate train — the Manassas road" }
+    },
     "terrain": {
       "hills": [
         { "name": "Henry House Hill", "x": 600, "z": 450, "h": 32, "s": 205, "note": "The decisive crest (the objective)." },

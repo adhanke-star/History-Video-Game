@@ -42,7 +42,7 @@ const SETUP = `(() => {
   try {
     if (typeof fldLaunchSandbox!=='function' || typeof __FIELD==='undefined' || typeof fldScenarioInit!=='function')
       return JSON.stringify({ok:false, fatal:'__FIELD engine / scenario seam missing'});
-    G.settings=G.settings||{}; G.settings.gfx='classic'; G.mode='menu'; __FIELD._officersOff=true;   // B-2: lock the PRE-officer sim core BYTE-IDENTICAL (the officer layer has its own probe-officers)
+    G.settings=G.settings||{}; G.settings.gfx='classic'; G.mode='menu'; __FIELD._officersOff=true; __FIELD._logisticsOff=true;   // B-2/B-3: lock the PRE-officer/PRE-logistics sim core BYTE-IDENTICAL (each layer has its own probe)
     var DATA = (GAME_DATA && GAME_DATA.bullrun) ? GAME_DATA.bullrun.bullrun1 : null;
 
     step('DATA present: GAME_DATA.bullrun.bullrun1 with OOB + terrain + reinforcements (full engaged force)', function(){

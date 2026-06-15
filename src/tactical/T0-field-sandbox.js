@@ -208,6 +208,8 @@ function fldResetRun() {
   // officers & command (B-2): build the named field leaders for this battle (scenario cast / the appointed
   // general / a generic pair). No-op when officers are off (gate inside) -> probe baselines unperturbed.
   if (typeof fldBuildOfficers === "function") { try { fldBuildOfficers(); } catch (e) {} }
+  // in-battle logistics (B-3): build the ammunition trains (no-op when logistics off / a side has no units).
+  if (typeof fldBuildSupply === "function") { try { fldBuildSupply(); } catch (e) {} }
   // fog ON at launch: prime the visibility set so the DEPLOY screen already shows what is in sight
   // (matching the in-battle toggle) instead of a blacked-out field until the first sim tick.
   if (__FIELD.fog && __FIELD.units && __FIELD.units.length) fldComputeVisibility();
@@ -241,6 +243,12 @@ function fldInitSim(opts) {
   // (u.cmdBonus||0) reads in fldMoraleStep are exactly 0 -> the new layer is provably the only change).
   __FIELD.officers = __FIELD._officersOff ? false : ((opts.officers != null) ? !!opts.officers : true);
   __FIELD.leaders = [];
+  // in-battle logistics (B-3): ammunition trains + resupply + exhaustion. Same per-launch gate / sticky
+  // _logisticsOff test hook — the field/bullrun/fog/autopause/ai/campaign-link + officers probes set it so
+  // no trains build, fldLogisticsStep / the AI override never run, and u.exhausted is never set (the
+  // (u.exhausted) read in fldStepMovement stays falsy) -> those baselines remain BYTE-IDENTICAL.
+  __FIELD.logistics = __FIELD._logisticsOff ? false : ((opts.logistics != null) ? !!opts.logistics : true);
+  __FIELD.trains = null;
   __FIELD._aiGenericAll = false; __FIELD._aiGenericAtk = false;   // role-aware AI test hooks: reset per launch (bug-hunt #4); probe-ai sets them AFTER launch (A/B the defender + attacker doctrines)
   if (sc !== "sandbox" && typeof fldScenarioInit === "function" && fldScenarioInit(opts)) return;
   // Phase A (A2): a custom FREE skirmish / procedural campaign battle is built by T2's fldSkirmishOOB
@@ -393,6 +401,7 @@ function fldStepMovement(u, dt) {
     tx = o.tx; tz = o.tz;
     var col = u.formation === "column";
     spd = (col ? FLD.SPD_COL : FLD.SPD_LINE) * (1 - (u.fatigue / 100) * 0.4) * fldMoveFactor(u.x, u.z);
+    if (u.exhausted) spd *= 0.62;   // B-3: a SPENT brigade can barely drag itself forward (set only when logistics on -> falsy/byte-identical otherwise)
     desiredFace = (typeof o.tface === "number") ? o.tface : u.facing;
   }
   var dx = tx - u.x, dz = tz - u.z, dd = Math.sqrt(dx * dx + dz * dz);
@@ -493,6 +502,9 @@ function fldById(id) { for (var i = 0; i < __FIELD.units.length; i++) if (__FIEL
 
 function fldAiUnit(u) {
   if (!u.alive || u.state === "routing" || !u.ai) return;
+  // in-battle logistics (B-3): a low-ammo brigade not under assault falls back to its train to refill — this
+  // OVERRIDES the normal doctrine for that brigade (returns true). No-op when logistics off (byte-identical).
+  if (__FIELD.logistics && typeof fldLogisticsAiUnit === "function" && fldLogisticsAiUnit(u)) return;
   // ROLE-AWARE AI (P1b-iii): in an ASYMMETRIC scenario (attacker set) the DEFENDER holds ground + cover
   // and counterattacks disordered attackers instead of advancing off its good ground like an attacker.
   // The symmetric SANDBOX (attacker === null) runs fldAiGeneric for BOTH sides -> byte-behavior-identical
@@ -710,6 +722,9 @@ function fldSimStep(dt) {
   if (__FIELD.reinforce && typeof fldScenarioTick === "function") fldScenarioTick(dt);
   // fog of war (P1b): recompute per-side visibility before AI/targeting consult it (no-op when fog OFF).
   if (__FIELD.fog) fldComputeVisibility();
+  // in-battle logistics (B-3): refill cartridge boxes from the trains + flag low-ammo / spent BEFORE the AI
+  // (so the resupply doctrine sees the fresh flags) and BEFORE fire (so a refilled brigade can volley this tick).
+  if (__FIELD.logistics && typeof fldLogisticsStep === "function") fldLogisticsStep(dt);
   // AI: throttle — step a slice of units per tick toward AI_HZ
   _fldAiClock += dt;
   if (_fldAiClock >= 1 / FLD.AI_HZ) {
@@ -1150,7 +1165,8 @@ function fldRenderHud() {
     if (__FIELD.fog) { var seen = 0; for (var fi = 0; fi < __FIELD.units.length; fi++) { var fu = __FIELD.units[fi]; if (fu.side === "CS" && fu.alive && fldVisible("US", fu)) seen++; } foeLine = seen + ' Rebel brigades sighted'; }
     else foeLine = fldArmyLive("CS") + ' Rebel brigades afield';
     el.innerHTML = '<div style="opacity:.7;">Click a brigade to select. Drag from open ground to march &amp; face. (' + fldArmyLive("US") + ' Union vs ' + foeLine + '.)</div>'
-      + (typeof fldOfficerHudRoster === "function" ? fldOfficerHudRoster() : "");   // B-2: a field-officer status line
+      + (typeof fldOfficerHudRoster === "function" ? fldOfficerHudRoster() : "")   // B-2: a field-officer status line
+      + (typeof fldLogisticsHudReserve === "function" ? fldLogisticsHudReserve() : "");   // B-3: the ammunition-reserve line
     return;
   }
   var u = sel[0];
@@ -1163,6 +1179,7 @@ function fldRenderHud() {
     fldBar("Morale", u.morale, u.maxMor, u.morale > 35 ? "#7faf6a" : "#c98a3a") +
     fldBar("Fatigue", u.fatigue, 100, "#a08050") +
     fldBar("Ammo", u.ammo, 100, "#8a9bb0") +
+    (typeof fldLogisticsHudSelected === "function" ? fldLogisticsHudSelected(u) : "") +   // B-3: ammo/resupply/spent status
     (typeof fldOfficerHudSelected === "function" ? fldOfficerHudSelected(u) : "");   // B-2: brigade leader + in-command status
 }
 function fldOnOver() {
@@ -1178,6 +1195,8 @@ function fldOnOver() {
   if (__FIELD.campaignCtx && typeof fldCampaignEndHtml === "function") { try { scNote += (fldCampaignEndHtml(w) || ""); } catch (eC) {} }
   // B-2 seam: the officer teaching payoff (who fell, why command-from-the-saddle mattered). No-op when off / none lost.
   if (typeof fldOfficerEndHtml === "function") { try { scNote += (fldOfficerEndHtml(w) || ""); } catch (eO) {} }
+  // B-3 seam: the ammunition-economy teaching payoff (if a side's reserve ran low). No-op when off / reserves held.
+  if (typeof fldLogisticsEndHtml === "function") { try { scNote += (fldLogisticsEndHtml() || ""); } catch (eL) {} }
   var _inCampaign = !!__FIELD.campaignCtx;
   e.innerHTML =
     '<div style="text-align:center;background:#0c0f14;border:1px solid #745e3f;border-radius:8px;padding:26px 34px;max-width:640px;max-height:88vh;overflow:auto;">' /* wcag-auditor: contrast fix #4a3c28->#745e3f border on #0c0f14 (was 1.80:1, now 3.12:1) WCAG 1.4.11 */ +
@@ -1278,6 +1297,8 @@ function fld2dDraw() {
     ctx.fillStyle = u.morale > 35 ? "#7faf6a" : "#c98a3a"; ctx.fillRect(cx - 12, cz - depth / 2 - 9, 24 * (u.morale / u.maxMor), 3);
     if (u.state === "routing") { ctx.fillStyle = "#ffd27a"; ctx.font = "10px Georgia"; ctx.fillText("ROUT", cx - 13, cz + depth / 2 + 12); }
   }
+  // in-battle logistics (B-3): the ammunition trains + resupply rings (drawn under the officers; no-op when off)
+  if (typeof fldDrawSupply === "function") fldDrawSupply(ctx, v);
   // officers & command (B-2): command rings + mounted-officer markers + fallen crosses (no-op when off / no leaders)
   if (typeof fldDrawOfficers === "function") fldDrawOfficers(ctx, v);
   // drag arrow
@@ -1355,6 +1376,8 @@ function fld3dInit() {
   fld3dBuildUnits();
   // officers & command (B-2): mounted-officer figures + ground command auras (no-op when off / no leaders)
   if (typeof fld3dBuildOfficers === "function") { try { fld3dBuildOfficers(); } catch (e) {} }
+  // in-battle logistics (B-3): ammunition-wagon meshes + resupply rings (no-op when off / no trains)
+  if (typeof fld3dBuildSupply === "function") { try { fld3dBuildSupply(); } catch (e) {} }
 }
 function fldLow() { try { var q = G && G.settings && G.settings.gfxQuality; if (q === "low") return true; if (q === "high") return false; return Math.min(window.innerWidth, window.innerHeight) <= 720; } catch (e) { return false; } }
 function fld3dBuildTerrain() {
@@ -1475,6 +1498,7 @@ function fld3dRender() {
   if (__FIELD.controls) __FIELD.controls.update();
   for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; var g = __FIELD._u3d[u.id]; if (g) fld3dSyncUnit(u, g); }
   if (typeof fld3dSyncOfficers === "function") fld3dSyncOfficers();   // B-2: officer figures + auras
+  if (typeof fld3dSyncSupply === "function") fld3dSyncSupply();       // B-3: ammunition-train wagons
   __FIELD.renderer.render(__FIELD.scene, __FIELD.camera);
 }
 function fld3dPick(clientX, clientY) {
@@ -1498,6 +1522,7 @@ function fld3dDispose() {
   } catch (e) {}
   __FIELD.scene = null; __FIELD.camera = null; __FIELD.controls = null; __FIELD.renderer = null; __FIELD.groups = null; __FIELD._u3d = null; __FIELD.ground = null;
   __FIELD._ld3dGroup = null; __FIELD._ld3d = null;   // B-2: the officer group's geometries were disposed in the scene traverse above; drop the refs
+  __FIELD._sup3dGroup = null; __FIELD._sup3d = null; // B-3: same for the ammunition-train wagons
 }
 
 /* ===========================================================================

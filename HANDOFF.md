@@ -1,5 +1,25 @@
 # HANDOFF — "The Civil War"
 
+## ⚡ CONTINUE HERE — run k (2026-06-15): **PHASE B-3 · IN-BATTLE LOGISTICS ✅ SHIPPED + VETTED + PUSHED** → NEXT = B-4 distinct arm roles
+
+> **PHASE B-3 — the ammunition economy on the real-time field — is complete** (DECISIONS **D66**). New `src/tactical/T4-logistics.js` + guarded T0 seams + the Bull Run `supply` block + `tools/probe-logistics.mjs`. Deliverable ≈**1608KB**.
+>
+> **✅ B-3 — supply trains + resupply + exhaustion:** each side fields a rear **ammunition train** with a finite **reserve**; a DISENGAGED brigade within reach refills (draining the reserve); a brigade OUT of cartridges holding the objective fires dry → bayonet (the 20th Maine); a SPENT brigade (fatigue>84) drags. The **attacker's train sits far behind its start line** (it outruns its supply) and the **defender's just behind the objective** → balance-neutral. **Ties strategic supply:** the reserve scales with `bridgeArmy().supply`; a raid-supply order cuts the enemy's. Gated + BYTE-IDENTICAL behind `__FIELD.logistics` (the 7 baselines + officers set sticky `_logisticsOff`).
+>
+> **THE FOG FIX (the headline — a HIGH bug-hunt finding, surfaced to Aaron):** with **fog ON**, logistics first INVERTED "fog aids the defender" (D58/D64) — Bull Run AI-vs-AI fog-ON **CS 8/8 → 0/8** (under fog the attacker cycled fresh brigades to its safe far-rear train and out-sustained the long fire-trade). Aaron's first pick (a defender's-depot rule) provably did nothing (the defender wasn't the ammo-constrained side); the fix that works (Aaron-approved) is **choking the ATTACKER's resupply under fog** (`ATK_FOG_RESUPPLY`=0 — an attacker advancing blind can't run its trains forward). **Result: logistics is balance-NEUTRAL in BOTH fog states — fog-OFF CS 5/8, fog-ON CS 8/8** (each = the no-logistics baseline; fog-aids-defender preserved). A FOG REGRESSION GUARD probe step locks it.
+>
+> **✅ FULLY VETTED:** adversarial bug-hunt **64 agents → 9 confirmed + 2 critic gaps, ALL ADDRESSED** (1 HIGH fog + 6 LOW probe-fidelity/correctness: probe boundary test, two-sided balance band, asymmetry + fog-reveal + supply-curve probe steps, reinforcement-only-side train). **probe-logistics 14/14, 0 pe** · full no-regression GREEN (7 baselines byte-identical · bootprobe ok · t1probe 14/14 · diag-classic 346) · wcag clean (1 HUD-contrast fix). Committed + pushed.
+>
+> **What's playable:** unchanged entry points (campaign "Fight in real time ⚔" · the ⚔ SKIRMISH menu · the standalone Sandbox + First Bull Run). The difference: each side now has a rear **ammunition train** (a ❈ wagon marker + a faint resupply ring); a brigade out of close action near its train refills, the reserve is finite, and a brigade out of cartridges on the objective fires dry then bayonets; the HUD shows the reserve ("ample / running low / …") + a selected brigade's ammo/resupply/spent status. Turn on Fog (V) and the defender still holds the hill — the attacker outruns its supply.
+>
+> **IMMEDIATE NEXT = PHASE B (continued):** **B4** distinct arm roles (artillery canister/long-range; cavalry scout/flank/screen/raid) — **design drafted** (`.tmp/B4-arm-roles-design.md`: the `ARM`-melee dangling hook to fill; Bull Run already fields Griffin/Ricketts as `art` + Stuart as `cav`; the Cannon-Corps→field-battery bridge; the cav-raid↔B-3-train tie) · **B5** difficulty/realism presets · **B6** the CS-player "command either side" mode (fork #10). **B5+B6 also sketched** (`.tmp/B5-B6-design-sketch.md`). **PUSH per milestone after PROPER VETTING (D53-OPS). Subagent models = HYBRID (D63).**
+>
+> **Resume map:** `START-HERE.md` → `V1-CHECKLIST.md` (Phase A + B1 + B2 + B3 ticked; B4 next) → `DECISIONS.md` **D66** (B-3) + **D65/D64/D62/D63/D61** → `src/tactical/T4-logistics.js` (`FLDL` incl. `ATK_FOG_RESUPPLY`; `fldBuildSupply`/`fldSupplyRearPos`/`fldLogisticsStep`/`fldUnitInCloseAction`/`fldLogisticsAiUnit`) + `tools/probe-logistics.mjs`. Everything is on disk and pushed.
+>
+> **Session-env note:** global CC permissions = **bypassPermissions** (`~/.claude/settings.json`); MJI data/tooling/transcripts **purged** from this machine (personal-projects-only now); `~/.claude/CLAUDE.md` rewritten accordingly. None of that affects the game build.
+
+---
+
 ## ⚡ CONTINUE HERE — run k (2026-06-15): **PHASE B-2 · OFFICERS & COMMAND ✅ SHIPPED + VETTED + PUSHED** → NEXT = Phase B continues (B3 logistics · B4 arm roles · B5 presets · B6 CS-player)
 
 > **PHASE B-2 — leadership ON the field — is complete** (DECISIONS **D65**; charter fork: officers/command). New `src/tactical/T3-officers.js` + guarded T0 seams + the real Bull Run command cast in `data/bullrun.json.leaders`.

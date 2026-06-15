@@ -41,13 +41,14 @@ connect-the-layers (A1 conditioning · A2 fight-from-bridge + FREE skirmish · A
       ground, `enemyWill`) — substitutable for the existing Classic / auto-resolve result (MODERN-UGG §2).
       *(REAL casualty fractions from the fight → `startBattleRuntime`+`_arApplyCasualties`+`campaignAdvance`→`_t1Resolve`; win advances, loss recovers; deterministic. probe-campaign-link 16/16.)*
 
-### Phase B — TACTICAL DEPTH  (P2–P5, real-time engine)  ‹B1 ✅ D64 · B2 ✅ D65 — run k, 2026-06-15›
+### Phase B — TACTICAL DEPTH  (P2–P5, real-time engine)  ‹B1 ✅ D64 · B2 ✅ D65 · B3 ✅ D66 — run k, 2026-06-15›
 - [x] **B1 Smarter ATTACKER AI** — defender-favored, fog aids the defender (LOCKED); attacker doctrinally
       sound (concentrate / assault) but the fog inversion tuned out. (Prototype exists: `ATTACKER-AI-PROPOSAL.md`.)
       *(`fldAiAttacker`: concentrate-on-weaker-flank / close / assault, GRADUAL per-unit commit [no knife-edge] + CAUTIOUS-WHEN-BLIND. Sweep: both-doctrines Bull Run fog-OFF CS 6/8, fog-ON 8/8 — fog aids the defender; def-cas 4592 vs the passive 1276. probe-ai 15/15.)*
 - [x] **B2 Officers / command** — leaders with command radius + morale bonus, can be hit (ties named-generals). ‹✅ — run k, 2026-06-15, DECISIONS D65›
       *(`src/tactical/T3-officers.js`: a command AURA [faster recovery / rally / capped rout-resistance] + an exposure→wound→fall hazard with a one-time command shock; per-leader HISTORICAL fate + risk-decay + cover so army commanders survive [10/10] and only the real casualties [Bee/Bartow] are fall-prone; ties `bridgeArmy` leadership; the real Bull Run cast in `data/bullrun.json`. Officers-ON Bull Run CS 7/8 fog-OFF · 8/8 fog-ON. probe-officers 15/15; 6 baselines byte-identical.)*
-- [ ] **B3 In-battle logistics** — ammo + fatigue depth (seeded; deepen) + supply.
+- [x] **B3 In-battle logistics** — ammo + fatigue depth + supply. ‹✅ — run k, 2026-06-15, DECISIONS D66›
+      *(`src/tactical/T4-logistics.js`: rear ammunition trains w/ finite reserve, disengaged-resupply, out-of-ammo→bayonet on the objective, exhaustion move penalty; attacker-far/defender-near train asymmetry. **Bug-hunt caught a fog inversion** [logistics-ON inverted fog-aids-defender, CS 8/8→0/8]; surfaced to Aaron → fixed by choking the ATTACKER's resupply under fog → balance-NEUTRAL both fog states [fog-OFF CS 5/8, fog-ON CS 8/8]. Ties strategic supply + raid. probe-logistics 14/14; 7 baselines byte-identical.)*
 - [ ] **B4 Distinct arm roles** — artillery (canister / long-range), cavalry (scout / flank / screen / raid).
 - [ ] **B5 Difficulty/realism presets** for the AI + sim depth.
 - [ ] **B6 CS-player tactical mode** ‹LOCKED: yes, Phase B› — command EITHER side in a battle (you defend as

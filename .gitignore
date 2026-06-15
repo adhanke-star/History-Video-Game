@@ -5,6 +5,7 @@ package-lock.json
 .DS_Store
 *.log
 .scratch/
+.ccout*
 # local-only Claude settings (the all-Bash allowlist shouldn't ship)
 .claude/settings.local.json
 # local-only API keys for the asset pipeline — NEVER commit

@@ -41,6 +41,7 @@ const SETUP = `(() => {
       return JSON.stringify({ok:false, fatal:'officer layer fns missing'});
     G.settings=G.settings||{}; G.settings.gfx='classic'; G.mode='menu'; G.settings.tacticalFog=false;
     __FIELD._officersOff = false;   // this probe EXERCISES the officer layer (the others lock it off)
+    __FIELD._logisticsOff = true;   // ...but ISOLATES it from the B-3 logistics layer (which has its own probe-logistics)
 
     step('BUILD: a scenario builds its real cast (Bull Run 7), the sandbox builds 2 generic, _officersOff builds 0', function(){
       fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:1});
