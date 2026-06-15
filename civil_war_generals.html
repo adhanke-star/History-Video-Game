@@ -14623,6 +14623,107 @@ var GAME_DATA = {
   ],
   "_designNote": "Asymmetry is the point. UNION batteries are six guns, single-caliber, ammunition-secure, and well-horsed (~110 horses) — buy them and they work. CONFEDERATE batteries pay a stacking tax: (1) four guns per battery, not six, from chronic gun/horse shortage; (2) an import premium and rarity on the Whitworth/Blakely tier (run through the blockade, single-digit to low-dozens, with proprietary ammunition that cannot be resupplied — powerful but expended); (3) a per-shot reliability penalty on FUZE-DEPENDENT rounds (shell, spherical case) from the unreliable Bormann copy and irregular paper/wooden fuzes, with solid shot and canister immune because they need no fuze (the dud/premature rate is a game-balance interpolation, NOT a measured historical figure); (4) a horse-attrition mobility malus that worsens by phase and turns severe in 1864-65, risking gun loss on retreat; and (5) mixed-caliber batteries as a resupply malus, since the South fielded whatever it built at Tredegar or captured. Some Confederate guns are literally Union-made — tie a fraction of CS availability to prior Union battlefield losses. The army-level Artillery Reserve is a Union feature, not symmetric: after Chancellorsville the ANV abolished its general reserve. Costs scale as big-ticket purchases relative to small arms (a Napoleon battery ~900 funds vs. tens-to-hundreds for a rifle batch); the Whitworth is dearest (~3,200) and deliberately slow-but-deadly. baselineArtilleryScore (8) is the token of attached guns an army fields with zero batteries bought; fullComplementBatteries (12) is the coverage target for a strong artillery arm. IMPLEMENTATION STATUS (artBatteryScore, src/56-artillery.js; numbers logged DECISIONS.md D42): the STRATEGIC pre-battle score now models penalty (1) gun-ratio coverage (CS batteries fill the park at 4/6), (2) the import/captured price premiums (CS 1.5x import, US 1.2x foreign-import, CS 1.4x Federal-standard), (3) fuze unreliability as a small EXPECTED-VALUE haircut (x0.96 CS) rather than a per-shot roll, (4) a horse/forage mobility malus (CS x0.95 from 1862, x0.88 from 1864), and (5) a mixed-caliber resupply drag (CS x0.94 at 3+ calibers), plus the 1863 massing reform as a both-sides bonus with a larger Union factor (x1.08 vs x1.04) standing in for the army-level Artillery Reserve. DEFERRED to the battle-day layer (A6) and the tactical engine (P-phases), where they belong as live rolls rather than score haircuts: the per-shot dud/premature roll on fuzed shell+case, the Whitworth hard ammunition cap, and gun-loss-on-retreat from broken-down teams."
 },
+"bullrun": {
+  "_comment": "TACTICAL P1a — First Bull Run (First Manassas) scenario data for the __FIELD real-time engine. Distilled from HISTORICAL-DATA.md (the citation-grade Bull Run dossier). Brigade-scale, the ENGAGED main-field force only (Matthews Hill -> Henry House Hill -> Chinn Ridge); rear-area/unengaged brigades are omitted by design. The battle is modeled as ARRIVAL WAVES, matching the real engagement: at T=0 only the lead Union brigades (Burnside, Porter) are in contact with the Confederate delaying force (Evans, then Bee/Bartow) on Matthews Hill; both sides then FEED brigades onto the field over the morning, the Confederates rallying on Henry House Hill and — the teaching mechanic — receiving rail-borne reinforcements (Jackson, then Early + Elzey on Chinn Ridge) that historically turned the Union right and won the day. COORDINATE NOTE: the engine field is 1200x900 yards. Per the engine convention US sits at HIGH z and faces -z (facing 0); CS sits at LOW z and faces +z (facing PI). In THIS field's coordinates: high z = the Union approach (Sudley Ford / Matthews Hill); center = Henry House Hill (the decisive crest = the objective); low z = the Confederate rear (Manassas Junction); low x (west) = the Union RIGHT flank = Chinn Ridge, where the rail-borne reinforcements turned the day. Strength figures are brigade-scale approximations from after-action reports (Inferred/medium per the dossier); the engaged-force asymmetry and the reinforcement TIMELINE are the Verified, teaching-bearing facts.",
+  "bullrun1": {
+    "id": "bullrun1",
+    "name": "First Bull Run (First Manassas)",
+    "date": "July 21, 1861",
+    "place": "Bull Run, near Manassas Junction, Prince William County, Virginia",
+    "blurb": "The first major land battle of the war. McDowell's green Union army turned the Confederate left at Sudley Ford and drove Evans, Bee and Bartow off Matthews Hill through the morning — then broke on Henry House Hill, where Jackson's brigade stood 'like a stone wall', and shattered when fresh Confederate brigades arrived BY RAIL from the Shenandoah and rolled up the Union right at Chinn Ridge. Hold Henry House Hill before the trains run out.",
+    "provenance": "Verified (high) for OOB, commanders, terrain, and the engagement sequence; Inferred (medium) for per-brigade strengths and the exact reinforcement minute. Sources: Wikipedia First Bull Run OOBs (drawn from the Official Records); American Battlefield Trust; Encyclopedia Virginia; NPS Manassas; Bull Runnings compilation. Anti-Lost-Cause framing: the 'stone wall' wording is contested (Bee died next day, no record); this is the war's opening illusion that it would be short and bloodless.",
+    "field": { "w": 1200, "h": 900 },
+    "attacker": "US",
+    "defender": "CS",
+    "timeLimitSec": 480,
+    "holdToWinSec": 140,
+    "objective": {
+      "name": "Henry House Hill",
+      "x": 600, "z": 450, "r": 140,
+      "note": "The dominant plateau where the battle was decided. Jackson's reverse-slope line, the lost Union batteries, and the climactic infantry fight. Holding it bought time for the Valley reinforcements to arrive. (Verified)"
+    },
+    "terrain": {
+      "hills": [
+        { "name": "Henry House Hill", "x": 600, "z": 450, "h": 32, "s": 205, "note": "The decisive crest (the objective)." },
+        { "name": "Matthews Hill", "x": 560, "z": 660, "h": 22, "s": 162, "note": "First high ground south of Sudley Ford; the Union morning high-water mark, where Evans/Bee/Bartow were driven off. (Verified)" },
+        { "name": "Chinn Ridge", "x": 245, "z": 415, "h": 21, "s": 150, "note": "West of Henry Hill; where Early and Elzey turned the exposed Union right ~4 p.m. and triggered the rout. (Verified)" }
+      ],
+      "woods": [
+        { "x": 500, "z": 560, "r": 116, "note": "The wooded swale of Young's Branch between the hills." },
+        { "x": 815, "z": 320, "r": 138, "note": "Timber along the Stone Bridge sector." },
+        { "x": 305, "z": 605, "r": 108 },
+        { "x": 905, "z": 520, "r": 124 },
+        { "x": 380, "z": 290, "r": 96 }
+      ],
+      "walls": [
+        { "x1": 505, "z1": 524, "x2": 700, "z2": 520, "note": "The lane/fence line by the Robinson House on the north face of Henry Hill — strong cover for the defender of the crest." }
+      ],
+      "markers": [
+        { "kind": "ford", "name": "Sudley Springs Ford", "x": 195, "z": 855, "note": "The upstream, lightly guarded crossing that let the Union flank column (~12,000) turn the Confederate left. (Verified)" },
+        { "kind": "bridge", "name": "Stone Bridge", "x": 1055, "z": 235, "note": "Carried the Warrenton Turnpike over Bull Run; anchor of the Confederate left and the focus of Tyler's fixing demonstration. (Verified)" },
+        { "kind": "creek", "name": "Bull Run", "path": [[1120, 60], [1040, 240], [930, 430], [880, 640], [820, 860]], "note": "The meandering creek that channelized all movement; crossable only at fords and the Stone Bridge." },
+        { "kind": "stream", "name": "Young's Branch", "path": [[160, 560], [430, 585], [640, 600], [880, 590]], "note": "The valley the Confederates retreated across from Matthews Hill toward Henry Hill." },
+        { "kind": "road", "name": "Warrenton Turnpike", "path": [[60, 540], [380, 552], [700, 560], [1000, 470], [1140, 360]], "note": "The battle's axis and the rout's escape route." },
+        { "kind": "label", "name": "to Manassas Junction", "x": 600, "z": 55, "note": "The rail hub whose Manassas Gap Railroad delivered Johnston's decisive reinforcements." }
+      ]
+    },
+    "oob": {
+      "US": [
+        { "id": "us_porter",  "name": "Porter's Brigade",   "commander": "Col. Andrew Porter",       "arm": "inf", "weapon": "rifled", "men": 3300, "xp": 2, "x": 660, "z": 850, "facing": 0, "formation": "column", "note": "1st Bde, Hunter's div: Sykes's U.S. Regulars, 8th/14th NY Militia, 27th NY, the Marine battalion. Lead element of the flank march; first across Sudley Ford; opened the main battle on Matthews Hill. ~464 cas. (Verified)" },
+        { "id": "us_burnside","name": "Burnside's Brigade", "commander": "Col. Ambrose E. Burnside",  "arm": "inf", "weapon": "rifled", "men": 3000, "xp": 1, "x": 520, "z": 850, "facing": 0, "formation": "column", "note": "2nd Bde, Hunter's div: 2nd RI (in the lead), 1st RI, 2nd NH, 71st NY. Fired the opening infantry volleys of the main battle at Matthews Hill against Evans's demi-brigade. Col. John Slocum (2nd RI) killed. (Verified)" }
+      ],
+      "CS": [
+        { "id": "cs_evans",  "name": "Evans's Demi-Brigade", "commander": "Col. Nathan G. 'Shanks' Evans", "arm": "inf", "weapon": "smooth", "men": 1100, "xp": 1, "x": 560, "z": 665, "facing": 3.14159, "formation": "line", "note": "7th (Demi) Brigade, ~1,100: 1st Louisiana Special Bn ('Wheat's Tigers') + 4th South Carolina. Warned by Capt. E. P. Alexander's wig-wag signal ('Look to your left, you are turned'), Evans pivoted from the Stone Bridge to Matthews Hill and bought the critical early hours — widely credited with saving the Confederate left. Wheat shot through both lungs (survived). (Verified)" },
+        { "id": "cs_bee",    "name": "Bee's Brigade",       "commander": "Brig. Gen. Barnard E. Bee",      "arm": "inf", "weapon": "smooth", "men": 1900, "xp": 1, "x": 505, "z": 600, "facing": 3.14159, "formation": "line", "note": "3rd Bde, Army of the Shenandoah: 4th Alabama, 2nd & 11th Mississippi, 6th North Carolina. Reinforced Evans on Matthews Hill, fell back to Henry Hill, and is traditionally credited with the rallying cry that named Jackson. Bee mortally wounded, died July 22 — the exact words and his intent are CONTESTED. (Verified fact of the stand; contested quotation.)" },
+        { "id": "cs_bartow", "name": "Bartow's Brigade",    "commander": "Col. Francis S. Bartow",         "arm": "inf", "weapon": "smooth", "men": 1100, "xp": 1, "x": 650, "z": 600, "facing": 3.14159, "formation": "line", "note": "2nd Bde, Army of the Shenandoah: 7th & 8th Georgia + Pelham's battery. Bartow led his Georgians to reinforce Evans, then fell back to Henry Hill where he was killed rallying the 7th Georgia — among the highest-ranking Confederates to die that day. (Verified)" }
+      ]
+    },
+    "reinforcements": [
+      { "id": "cs_hampton", "side": "CS", "atSec": 45,  "name": "Hampton's Legion",    "commander": "Col. Wade Hampton",              "arm": "inf", "weapon": "rifled", "men": 600,  "xp": 2, "x": 600, "z": 405, "facing": 3.14159, "formation": "line",   "entry": "the Henry House Hill front", "note": "Unattached, ~600 engaged, 121 casualties. Fought hard on the Robinson House / Henry Hill front, helping anchor the line before Jackson formed up. Hampton wounded. (Verified)" },
+      { "id": "us_griffin", "side": "US", "atSec": 60,  "name": "Griffin's Battery",   "commander": "Capt. Charles Griffin",          "arm": "art", "weapon": "rifled", "men": 160,  "xp": 3, "x": 600, "z": 800, "facing": 0,       "formation": "line",   "entry": "the Sudley road", "note": "Battery D, 5th U.S. Artillery, 6 guns. Advanced (with Ricketts's) onto the Henry Hill crest in the afternoon, too close for its long-range rifles — overrun by the 33rd Virginia's point-blank volley. The loss of the two regular batteries broke the Union attack. (Verified)" },
+      { "id": "us_sherman", "side": "US", "atSec": 75,  "name": "Sherman's Brigade",   "commander": "Col. William T. Sherman",        "arm": "inf", "weapon": "smooth", "men": 3000, "xp": 1, "x": 790, "z": 845, "facing": 0,       "formation": "column", "entry": "an unguarded ford", "note": "3rd Bde, Tyler's div: 13th/69th/79th NY, 2nd Wisconsin. Found an unguarded ford, crossed, and assaulted Henry Hill in piecemeal regimental waves that were repulsed in succession. Heaviest brigade loss in the division, ~605; the 79th and 69th NY shattered; Col. Cameron (79th) killed, Col. Corcoran (69th) wounded & captured. (Verified)" },
+      { "id": "us_ricketts","side": "US", "atSec": 80,  "name": "Ricketts's Battery",  "commander": "Capt. James B. Ricketts",        "arm": "art", "weapon": "rifled", "men": 160,  "xp": 3, "x": 665, "z": 800, "facing": 0,       "formation": "line",   "entry": "the Sudley road", "note": "Battery I, 1st U.S. Artillery, 6 guns. Pushed to the crest near the Henry House and captured/recaptured repeatedly; Ricketts wounded & captured. Mrs. Judith Henry, bedridden in her house, was killed by battery fire — the battle's only civilian death. (Verified)" },
+      { "id": "cs_cocke",   "side": "CS", "atSec": 85,  "name": "Cocke's Brigade",     "commander": "Col. Philip St. George Cocke",   "arm": "inf", "weapon": "smooth", "men": 1800, "xp": 1, "x": 770, "z": 385, "facing": 3.14159, "formation": "line",   "entry": "the Stone Bridge sector", "note": "5th Bde, Army of the Potomac: 8th/18th/19th/28th Virginia. Covered the Stone Bridge sector; elements fed into the Henry Hill fight as the battle shifted left. (Verified)" },
+      { "id": "us_keyes",   "side": "US", "atSec": 110, "name": "Keyes's Brigade",     "commander": "Col. Erasmus D. Keyes",          "arm": "inf", "weapon": "smooth", "men": 2800, "xp": 1, "x": 880, "z": 845, "facing": 0,       "formation": "column", "entry": "the Union left, along the turnpike", "note": "1st Bde, Tyler's div: 1st/2nd/3rd Connecticut, 2nd Maine. An abortive flanking attempt along the eastern foot of Henry Hill that drifted off without pressing home. ~223 cas. (Verified)" },
+      { "id": "cs_jackson", "side": "CS", "atSec": 135, "name": "Jackson's Brigade ('Stonewall')", "commander": "Brig. Gen. Thomas J. Jackson", "arm": "inf", "weapon": "smooth", "men": 2600, "xp": 2, "x": 600, "z": 350, "facing": 3.14159, "formation": "line", "entry": "Henry House Hill (reverse slope)", "note": "1st Bde, Army of the Shenandoah, ~2,600: 2nd/4th/5th/27th/33rd Virginia + Rockbridge Artillery. Posted on the reverse (southern) slope of Henry Hill behind massed guns, screened in tall grass — the disciplined line onto which the broken brigades rallied. The 33rd Virginia (in blue uniforms) closed to point-blank and wiped out the crest batteries. Origin of the 'Stonewall' name. Jackson wounded in the hand. (Verified)" },
+      { "id": "us_franklin","side": "US", "atSec": 140, "name": "Franklin's Brigade",  "commander": "Col. William B. Franklin",       "arm": "inf", "weapon": "rifled", "men": 2000, "xp": 1, "x": 470, "z": 860, "facing": 0,       "formation": "column", "entry": "Sudley Ford", "note": "1st Bde, Heintzelman's div: 5th/11th Massachusetts, 1st Minnesota. (The 4th Pennsylvania marched to the rear that morning, its 90-day term expired, despite McDowell's appeal.) Fed into Henry Hill behind the batteries. (Verified)" },
+      { "id": "us_willcox", "side": "US", "atSec": 170, "name": "Willcox's Brigade",   "commander": "Col. Orlando B. Willcox",        "arm": "inf", "weapon": "smooth", "men": 2000, "xp": 1, "x": 700, "z": 865, "facing": 0,       "formation": "column", "entry": "Sudley Ford", "note": "2nd Bde, Heintzelman's div: 11th NY 'Fire Zouaves', 38th NY, 1st & 4th Michigan. The Zouaves supported the crest batteries and were broken by Stuart's cavalry charge and Confederate infantry. Willcox wounded & captured. (Verified)" },
+      { "id": "cs_stuart",  "side": "CS", "atSec": 180, "name": "Stuart's Cavalry",    "commander": "Col. J. E. B. Stuart",           "arm": "cav", "weapon": "carbine", "men": 300, "xp": 2, "x": 175, "z": 560, "facing": 3.14159, "formation": "line",   "entry": "the Union right", "note": "1st Virginia Cavalry. Charged the Union right (routing the 11th NY 'Fire Zouaves' area) and then harassed the retreat. (Verified)" },
+      { "id": "us_howard",  "side": "US", "atSec": 215, "name": "Howard's Brigade",    "commander": "Col. Oliver O. Howard",          "arm": "inf", "weapon": "smooth", "men": 1900, "xp": 1, "x": 250, "z": 845, "facing": 0,       "formation": "column", "entry": "Chinn Ridge (the Union right)", "note": "3rd Bde, Heintzelman's div: 3rd/4th/5th Maine, 2nd Vermont. Arrived last and exhausted from the march and climbed Chinn Ridge to extend the Union right — straight into the fresh Confederate flank attack. Its collapse triggered the army-wide rout. (Verified)" },
+      { "id": "cs_early",   "side": "CS", "atSec": 220, "name": "Early's Brigade",     "commander": "Col. Jubal A. Early",            "arm": "inf", "weapon": "smooth", "men": 1900, "xp": 1, "x": 220, "z": 360, "facing": 3.14159, "formation": "column", "entry": "Chinn Ridge (from the Confederate right)", "note": "6th Bde, Army of the Potomac: 7th Louisiana, 13th Mississippi, 7th & 24th Virginia. Marched the length of the army's rear to arrive on Chinn Ridge ~4 p.m. and roll up the exposed Union right. (Verified)" },
+      { "id": "cs_elzey",   "side": "CS", "atSec": 275, "name": "Elzey's Brigade (ex-Kirby Smith)", "commander": "Col. Arnold Elzey", "arm": "inf", "weapon": "smooth", "men": 1700, "xp": 2, "x": 195, "z": 300, "facing": 3.14159, "formation": "column", "entry": "Chinn Ridge ('off the train')", "note": "4th Bde, Army of the Shenandoah: 1st Maryland Bn, 3rd Tennessee, 10th Virginia. DETRAINED from the Manassas Gap Railroad on the afternoon of July 21 — the freshest troops on the field, the rail pivot's final card. Kirby Smith wounded on arrival; Elzey led them onto Chinn Ridge beside Early. Dubbed the 'Blucher of Manassas'. Their arrival converted a hard-fought defense into a rout. (Verified)" }
+    ],
+    "teaching": {
+      "title": "The Battle That Ended the Illusion",
+      "cards": [
+        {
+          "id": "br_rail",
+          "head": "The railroad that won the battle",
+          "body": "Johnston's Army of the Shenandoah slipped away from Patterson and rode the Manassas Gap Railroad to Manassas Junction beginning July 18-19 — the first time in history troops were moved to a battlefield by rail to achieve strategic concentration. Some brigades (Elzey's, off the train) reached the field DURING the battle and decided it. In this scenario the Confederate reinforcements arrive on that timeline; that is why the Union must win the morning quickly.",
+          "provenance": "Verified (high) — Encyclopedia Virginia; Wikipedia."
+        },
+        {
+          "id": "br_stonewall",
+          "head": "'Like a stone wall' — what the legend leaves out",
+          "body": "Bee is said to have pointed to Jackson on Henry Hill and cried 'There stands Jackson like a stone wall!' But Bee was mortally wounded minutes later and died the next day without a report, so no firsthand record survives. Some who were there thought he spoke in FRUSTRATION — that Jackson stood like a wall instead of advancing to help. The heroic reading became canonical and named a general. The fact of the stand is solid; the words are not.",
+          "provenance": "Contested (low-med) wording; Verified stand — Encyclopedia Virginia; American Battlefield Trust."
+        },
+        {
+          "id": "br_illusion",
+          "head": "The short-war illusion, and the cost",
+          "body": "Washington civilians — congressmen, sightseers, picnickers in carriages — rode out to watch the victory and were swept up in the 'Great Skedaddle' back to the capital. Both sides had believed the war would be short and nearly bloodless. ~4,700 men fell here in a single day; it was the bloodiest battle in American history to that point, and a small one by what came after. Bull Run taught the North the war would be long and the South a dangerous overconfidence.",
+          "provenance": "Verified (high) — multiple; casualty totals Union ~2,700-2,900 / Confederate ~1,982."
+        }
+      ],
+      "codex": {
+        "id": "codex_bullrun1",
+        "title": "First Bull Run (First Manassas), July 21, 1861",
+        "summary": "McDowell's flank march turned the Confederate left and carried Matthews Hill by noon, then broke on Henry House Hill and shattered when rail-borne reinforcements hit the Union right at Chinn Ridge. A Confederate victory that ended the illusion of a short war.",
+        "axes": { "timeline": "1861", "theater": "Eastern", "people": ["McDowell", "Beauregard", "Johnston", "Jackson", "Evans", "Bee", "Sherman", "Burnside", "Stuart", "Early", "Elzey", "Hampton"], "battle": "First Bull Run" }
+      }
+    }
+  }
+},
 "cabinet": {
   "_meta": {
     "version": 1,
@@ -25100,32 +25201,43 @@ function fldBuildTerrain() {
     wall: { x1: ox - 110, z1: oz - 70, x2: ox + 120, z2: oz - 70 }, // a stone wall north of the crest
   };
 }
+// terrain accessors (P1a scenario seam): scenarios supply MULTIPLE hills/walls
+// (terrain.hills[] / terrain.walls[]); the P0 sandbox supplies ONE (terrain.hill /
+// terrain.wall). These normalize both shapes so every reader/renderer is shape-agnostic.
+// For the single-hill sandbox the loops below iterate exactly one element -> the computed
+// height/cover values are byte-identical to the pre-seam code (verified by probe-field +
+// the terrain golden-snapshot guard).
+function fldHills() { var t = __FIELD.terrain; if (!t) return []; return t.hills || (t.hill ? [t.hill] : []); }
+function fldWalls() { var t = __FIELD.terrain; if (!t) return []; return t.walls || (t.wall ? [t.wall] : []); }
 function fldTerrainH(x, z) {
   var t = __FIELD.terrain; if (!t) return 0;
-  var dx = x - t.hill.x, dz = z - t.hill.z, r2 = dx * dx + dz * dz;
-  var h = t.hill.h * Math.exp(-r2 / (2 * t.hill.s * t.hill.s));
-  h += Math.sin(x * 0.012) * 2.2 + Math.cos(z * 0.015) * 2.0; // gentle undulation
+  var h = Math.sin(x * 0.012) * 2.2 + Math.cos(z * 0.015) * 2.0; // gentle undulation
+  var hs = fldHills();
+  for (var i = 0; i < hs.length; i++) { var hh = hs[i], dx = x - hh.x, dz = z - hh.z, r2 = dx * dx + dz * dz; h += hh.h * Math.exp(-r2 / (2 * hh.s * hh.s)); }
   return h;
 }
 function fldInWoods(x, z) {
-  var t = __FIELD.terrain; if (!t) return false;
+  var t = __FIELD.terrain; if (!t || !t.woods) return false;
   for (var i = 0; i < t.woods.length; i++) { var w = t.woods[i]; var dx = x - w.x, dz = z - w.z; if (dx * dx + dz * dz < w.r * w.r) return true; }
   return false;
 }
 function fldNearWall(x, z) {
-  var t = __FIELD.terrain; if (!t || !t.wall) return false;
-  var w = t.wall, dx = w.x2 - w.x1, dz = w.z2 - w.z1, L2 = dx * dx + dz * dz;
-  var tt = L2 ? fldClamp(((x - w.x1) * dx + (z - w.z1) * dz) / L2, 0, 1) : 0;
-  var px = w.x1 + tt * dx, pz = w.z1 + tt * dz, ex = x - px, ez = z - pz;
-  return (ex * ex + ez * ez) < 26 * 26;
+  var ws = fldWalls();
+  for (var i = 0; i < ws.length; i++) {
+    var w = ws[i], dx = w.x2 - w.x1, dz = w.z2 - w.z1, L2 = dx * dx + dz * dz;
+    var tt = L2 ? fldClamp(((x - w.x1) * dx + (z - w.z1) * dz) / L2, 0, 1) : 0;
+    var px = w.x1 + tt * dx, pz = w.z1 + tt * dz, ex = x - px, ez = z - pz;
+    if ((ex * ex + ez * ez) < 26 * 26) return true;
+  }
+  return false;
 }
 // cover def multiplier (higher = safer); mirrors the base TERRAIN .def ladder spirit.
 function fldCoverAt(x, z) {
   var d = 1.0;
   if (fldNearWall(x, z)) d = 1.7;
   else if (fldInWoods(x, z)) d = 1.4;
-  var t = __FIELD.terrain;
-  if (t) { var dx = x - t.hill.x, dz = z - t.hill.z; if (dx * dx + dz * dz < (t.hill.s * 0.7) * (t.hill.s * 0.7)) d *= 1.12; }
+  var hs = fldHills();
+  for (var i = 0; i < hs.length; i++) { var hh = hs[i], dx = x - hh.x, dz = z - hh.z; if (dx * dx + dz * dz < (hh.s * 0.7) * (hh.s * 0.7)) { d *= 1.12; break; } }
   return d;
 }
 function fldMoveFactor(x, z) { return fldInWoods(x, z) ? 0.62 : 1.0; }
@@ -25146,9 +25258,26 @@ function fldMakeUnit(o) {
     casTick: 0, underFire: 0, flankHit: 0,
   };
 }
+// the per-launch run reset — shared by the sandbox path and every scenario (T1+) so the
+// deploy/clock/selection state is initialized in exactly ONE place (deterministic launch).
+function fldResetRun() {
+  __FIELD.t = 0; __FIELD.winner = null; __FIELD.holdSecs = { US: 0, CS: 0 };
+  __FIELD.routEverCount = 0; __FIELD.sel = []; __FIELD.drag = null;
+  __FIELD.phase = "deploy"; __FIELD.paused = true; __FIELD.speed = 1; __FIELD.acc = 0;
+  _fldAiClock = 0; _fldAiIdx = 0;   // reset the AI cadence so every launch is deterministic
+}
 function fldInitSim(opts) {
   opts = opts || {};
   __FIELD.seed = (opts.seed || 1) >>> 0;
+  // scenario seam (P1a): a non-sandbox scenario (e.g. "bullrun1") is built by a registered
+  // fldScenarioInit (src/tactical/T1-*). It returns true once it has populated terrain + units
+  // + the reinforcement schedule + holdToWin/timeLimit, then we early-return. The sandbox path
+  // below runs verbatim/unchanged whenever scenario === "sandbox" (the default).
+  var sc = opts.scenario || "sandbox"; __FIELD.scenario = sc;
+  __FIELD.reinforce = null; __FIELD.holdToWin = FLD.HOLD_TO_WIN; __FIELD.timeLimit = FLD.TIME_LIMIT; __FIELD.attacker = null;
+  __FIELD.scenData = null; __FIELD.defender = null; __FIELD.winBy = null;   // cleared every launch (scenario init re-sets); no stale leak into the sandbox
+  if (sc !== "sandbox" && typeof fldScenarioInit === "function" && fldScenarioInit(opts)) return;
+  __FIELD.scenario = "sandbox";
   fldBuildTerrain();
   var ox = FLD.FIELD_W / 2, t = __FIELD.terrain;
   var south = FLD.FIELD_H - 150, north = 150;       // US deploys south, CS north
@@ -25163,10 +25292,7 @@ function fldInitSim(opts) {
     fldMakeUnit({ id: "CS1", side: "CS", name: "Jackson's Brigade", arm: "inf", weapon: "rifled", xp: 2, men: 1500, x: ox - 160, z: north, facing: faceS, ai: true }),
     fldMakeUnit({ id: "CS2", side: "CS", name: "Bee's Brigade", arm: "inf", weapon: "smooth", xp: 1, men: 1400, x: ox + 160, z: north, facing: faceS, ai: true }),
   ];
-  __FIELD.t = 0; __FIELD.winner = null; __FIELD.holdSecs = { US: 0, CS: 0 };
-  __FIELD.routEverCount = 0; __FIELD.sel = []; __FIELD.drag = null;
-  __FIELD.phase = "deploy"; __FIELD.paused = true; __FIELD.speed = 1; __FIELD.acc = 0;
-  _fldAiClock = 0; _fldAiIdx = 0;   // reset the AI cadence so every launch is deterministic
+  fldResetRun();
 }
 
 /* ===========================================================================
@@ -25389,6 +25515,9 @@ var _fldAiClock = 0, _fldAiIdx = 0;
 function fldSimStep(dt) {
   if (__FIELD.phase !== "battle") return;
   __FIELD.t += dt;
+  // scenario seam (P1a): per-tick reinforcement schedule (keyed on sim-time __FIELD.t).
+  // Null for the sandbox (no reinforcements) -> this is a no-op on the sandbox path.
+  if (__FIELD.reinforce && typeof fldScenarioTick === "function") fldScenarioTick(dt);
   // AI: throttle — step a slice of units per tick toward AI_HZ
   _fldAiClock += dt;
   if (_fldAiClock >= 1 / FLD.AI_HZ) {
@@ -25443,19 +25572,46 @@ function fldArmyLive(side) {
 function fldArmyStrength(side) {
   var n = 0; for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side === side && u.alive) n += u.men; } return n;
 }
+// pending (scheduled-but-not-yet-arrived) reinforcements for a side. 0 for the sandbox
+// (reinforce === null) -> the collapse checks below behave exactly as the pre-seam engine.
+function fldArmyPending(side) {
+  var r = __FIELD.reinforce; if (!r) return 0;
+  var n = 0; for (var i = 0; i < r.length; i++) { if (!r[i].done && r[i].spec && r[i].spec.side === side) n++; } return n;
+}
+// is a side eliminated? Never while reinforcements are still detraining. In a SCENARIO a routing
+// line is alive and can still rally, so the side is gone only when NO live men remain; the SANDBOX
+// keeps its original routing-counts-as-gone rule (byte-identical to the pre-seam engine).
+function fldGoneCheck(side) {
+  if (fldArmyPending(side) > 0) return false;
+  if (__FIELD.attacker) {
+    for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side === side && u.alive) return false; }
+    return true;
+  }
+  return fldArmyLive(side) === 0;
+}
 function fldCheckVictory() {
   if (__FIELD.phase !== "battle") return;
-  var w = null;
-  if (fldArmyLive("US") === 0 && fldArmyLive("CS") > 0) w = "CS";
-  else if (fldArmyLive("CS") === 0 && fldArmyLive("US") > 0) w = "US";
-  else if (fldArmyLive("US") === 0 && fldArmyLive("CS") === 0) w = "draw";
-  else if (__FIELD.holdSecs.US >= FLD.HOLD_TO_WIN) w = "US";
-  else if (__FIELD.holdSecs.CS >= FLD.HOLD_TO_WIN) w = "CS";
-  else if (__FIELD.t >= FLD.TIME_LIMIT) {
-    var sU = fldArmyStrength("US"), sC = fldArmyStrength("CS");
-    w = sU > sC * 1.05 ? "US" : (sC > sU * 1.05 ? "CS" : "draw");
+  var w = null, by = null;
+  var usGone = fldGoneCheck("US"), csGone = fldGoneCheck("CS");
+  if (usGone && !csGone) { w = "CS"; by = "destroy"; }
+  else if (csGone && !usGone) { w = "US"; by = "destroy"; }
+  else if (usGone && csGone) { w = "draw"; by = "destroy"; }
+  else if (__FIELD.attacker) {
+    // ASYMMETRIC (scenario): only the ATTACKER wins by seizing-and-holding the objective; the
+    // DEFENDER wins by denying it to the time limit (the historical attacker-must-take-the-hill shape).
+    var att = __FIELD.attacker, def = fldEnemy(att);
+    if (__FIELD.holdSecs[att] >= __FIELD.holdToWin) { w = att; by = "hold"; }
+    else if (__FIELD.t >= __FIELD.timeLimit) { w = def; by = "timeout"; }
+  } else {
+    // SYMMETRIC (sandbox): either side can win by holding the crest, else strength at the time limit.
+    if (__FIELD.holdSecs.US >= __FIELD.holdToWin) { w = "US"; by = "hold"; }
+    else if (__FIELD.holdSecs.CS >= __FIELD.holdToWin) { w = "CS"; by = "hold"; }
+    else if (__FIELD.t >= __FIELD.timeLimit) {
+      var sU = fldArmyStrength("US"), sC = fldArmyStrength("CS");
+      w = sU > sC * 1.05 ? "US" : (sC > sU * 1.05 ? "CS" : "draw"); by = "timeout";
+    }
   }
-  if (w) { __FIELD.winner = w; __FIELD.phase = "over"; fldOnOver(); }
+  if (w) { __FIELD.winner = w; __FIELD.winBy = by; __FIELD.phase = "over"; fldOnOver(); }
 }
 
 /* headless stepper for probes (no render) */
@@ -25516,17 +25672,26 @@ function fldExit(silent) {
   if (!silent) { try { if (typeof openMainMenu === "function") openMainMenu(); } catch (e) {} }
 }
 function fldBuildDom() {
+  /* wcag-auditor: inject :focus-visible styles for all tactical buttons (WCAG 2.4.7 / 2.4.11).
+     Inline-styled buttons have no explicit outline suppression, but browser defaults vary in
+     contrast on dark backgrounds. Explicit ring (#e8c84a, 11:1 vs #10141a) guarantees AA. */
+  if (!document.getElementById("fldFocusStyle")) {
+    var st = document.createElement("style");
+    st.id = "fldFocusStyle";
+    st.textContent = "#fldBar button:focus-visible,#fldEnd button:focus-visible,#fldBrief button:focus-visible{outline:2px solid #e8c84a;outline-offset:2px;}";
+    document.head.appendChild(st);
+  }
   var r = document.createElement("div");
   r.id = "fldRoot";
   r.style.cssText = "position:fixed;inset:0;z-index:5000;background:#10141a;overflow:hidden;font-family:Georgia,serif;color:#f2e8d5;";
   r.innerHTML =
     '<canvas id="fldGl" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></canvas>' +
     '<div id="fldTop" style="position:absolute;top:0;left:0;right:0;padding:8px 12px;display:flex;gap:10px;align-items:center;background:linear-gradient(#000a,#0000);pointer-events:none;">' +
-      '<b style="letter-spacing:1px;">&#9876; TACTICAL SANDBOX</b><span id="fldClock" style="opacity:.85;">0:00</span>' +
+      '<b id="fldTitle" style="letter-spacing:1px;">&#9876; TACTICAL SANDBOX</b><span id="fldClock" style="opacity:.85;">0:00</span>' +
       '<span id="fldObj" style="opacity:.85;">Objective: contested</span><span style="flex:1"></span>' +
       '<span id="fldPhase" style="opacity:.85;"></span>' +
     '</div>' +
-    '<div id="fldHud" role="region" aria-label="Selected unit" style="position:absolute;left:12px;bottom:12px;min-width:240px;max-width:320px;background:#0c0f14e6;border:1px solid #4a3c28;border-radius:6px;padding:10px 12px;font-size:13px;"></div>' +
+    '<div id="fldHud" role="region" aria-label="Selected unit" style="position:absolute;left:12px;bottom:12px;min-width:240px;max-width:320px;background:#0c0f14e6;border:1px solid #745e3f;border-radius:6px;padding:10px 12px;font-size:13px;"></div>'/* wcag-auditor: contrast fix #4a3c28->#745e3f border on #0c0f14/#10141a (was 1.80:1, now 3.12/3.00:1) WCAG 1.4.11 */ +
     '<div id="fldBar" style="position:absolute;left:50%;bottom:14px;transform:translateX(-50%);display:flex;gap:6px;"></div>' +
     '<div id="fldLive" aria-live="polite" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;"></div>' +
     '<div id="fldEnd" class="hidden" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#000a;"></div>';
@@ -25547,7 +25712,7 @@ function fldBuildDom() {
   for (var i = 0; i < btns.length; i++) {
     var b = document.createElement("button");
     b.id = btns[i][0]; b.innerHTML = btns[i][1]; b.title = btns[i][2]; b.setAttribute("aria-label", btns[i][2]);
-    b.style.cssText = "background:#1c1610;color:#e9dcc0;border:1px solid #4a3c28;border-radius:4px;padding:7px 11px;font:13px Georgia,serif;cursor:pointer;";
+    b.style.cssText = "background:#1c1610;color:#e9dcc0;border:1px solid #766040;border-radius:4px;padding:7px 11px;font:13px Georgia,serif;cursor:pointer;"; /* wcag-auditor: contrast fix #4a3c28->#766040 border on #1c1610/#10141a (was 1.68/1.73:1, now 3.00/3.09:1) WCAG 1.4.11 */
     bar.appendChild(b);
   }
   fldWireControls();
@@ -25598,10 +25763,18 @@ function fldRender() {
 }
 function fldRenderTop() {
   var c = document.getElementById("fldClock"); if (c) { var s = Math.floor(__FIELD.t); c.textContent = Math.floor(s / 60) + ":" + ("0" + (s % 60)).slice(-2); }
+  var ti = document.getElementById("fldTitle");
+  if (ti) { var wantT = (__FIELD.scenData && __FIELD.scenData.name) ? ("⚔ " + __FIELD.scenData.name) : "⚔ TACTICAL SANDBOX"; if (ti.textContent !== wantT) ti.textContent = wantT; }
   var o = document.getElementById("fldObj");
   if (o) {
-    var hU = __FIELD.holdSecs.US, hC = __FIELD.holdSecs.CS;
-    var lead = hU > hC + 0.5 ? "Union holds " + Math.floor(hU) + "s/" + FLD.HOLD_TO_WIN : (hC > hU + 0.5 ? "Confederate holds " + Math.floor(hC) + "s/" + FLD.HOLD_TO_WIN : "contested");
+    var hU = __FIELD.holdSecs.US, hC = __FIELD.holdSecs.CS, lead;
+    if (__FIELD.attacker) {
+      // asymmetric: only the attacker's hold progresses toward a win; the defender is denying.
+      var att = __FIELD.attacker, hA = Math.floor(__FIELD.holdSecs[att]), an = att === "US" ? "Union" : "Confederate";
+      lead = hA > 0 ? (an + " holds " + hA + "s/" + __FIELD.holdToWin) : "must be seized";
+    } else {
+      lead = hU > hC + 0.5 ? "Union holds " + Math.floor(hU) + "s/" + __FIELD.holdToWin : (hC > hU + 0.5 ? "Confederate holds " + Math.floor(hC) + "s/" + __FIELD.holdToWin : "contested");
+    }
     o.textContent = "Objective: " + lead;
   }
   var p = document.getElementById("fldPhase");
@@ -25618,7 +25791,7 @@ function fldWireControls() {
   window.addEventListener("pointerup", fldPointerUp);
   document.getElementById("fldRoot").addEventListener("keydown", fldKey);
   document.getElementById("fldRoot").setAttribute("tabindex", "0");
-  setTimeout(function () { try { document.getElementById("fldRoot").focus(); } catch (e) {} }, 30);
+  setTimeout(function () { try { if (!document.getElementById("fldBrief")) document.getElementById("fldRoot").focus(); } catch (e) {} }, 30);
   var w = function (id, fn) { var el = document.getElementById(id); if (el) el.addEventListener("click", fn); };
   w("fldBtnPlay", function () { fldTogglePlay(); });
   w("fldBtnSpd", function () { fldCycleSpeed(); });
@@ -25726,17 +25899,29 @@ function fldOnOver() {
   var msg = w === "draw" ? "Stalemate" : (w === "US" ? "Union Victory" : "Confederate Victory");
   fldAnnounce(msg);
   e.classList.remove("hidden");
-  e.setAttribute("role", "dialog"); e.setAttribute("aria-label", msg);
+  e.setAttribute("role", "dialog"); e.setAttribute("aria-modal", "true"); e.setAttribute("aria-label", msg); /* wcag-auditor: added aria-modal=true so AT users know focus is constrained (WCAG 4.1.2) */
+  // P1a seam: a scenario can append its teaching payoff (what really happened / your war vs history).
+  var scNote = (typeof fldScenarioEndHtml === "function") ? (fldScenarioEndHtml(w) || "") : "";
   e.innerHTML =
-    '<div style="text-align:center;background:#0c0f14;border:1px solid #4a3c28;border-radius:8px;padding:26px 34px;">' +
+    '<div style="text-align:center;background:#0c0f14;border:1px solid #745e3f;border-radius:8px;padding:26px 34px;max-width:640px;max-height:88vh;overflow:auto;">' /* wcag-auditor: contrast fix #4a3c28->#745e3f border on #0c0f14 (was 1.80:1, now 3.12:1) WCAG 1.4.11 */ +
     '<div style="font-size:26px;letter-spacing:1px;margin-bottom:8px;color:#e9dcc0;">' + msg + '</div>' +
     '<div style="opacity:.8;margin-bottom:6px;">Held the field at ' + Math.floor(__FIELD.t / 60) + ':' + ("0" + (Math.floor(__FIELD.t) % 60)).slice(-2) + '.</div>' +
     '<div style="opacity:.7;font-size:13px;margin-bottom:18px;">Union ' + fldArmyStrength("US") + ' &middot; Confederate ' + fldArmyStrength("CS") + ' still under arms.</div>' +
-    '<button id="fldAgain" style="background:#1c1610;color:#e9dcc0;border:1px solid #4a3c28;border-radius:4px;padding:9px 16px;font:14px Georgia,serif;cursor:pointer;margin-right:8px;">Fight Again</button>' +
-    '<button id="fldDone" style="background:#1c1610;color:#e9dcc0;border:1px solid #4a3c28;border-radius:4px;padding:9px 16px;font:14px Georgia,serif;cursor:pointer;">Main Menu</button></div>';
+    scNote +
+    '<button id="fldAgain" style="background:#1c1610;color:#e9dcc0;border:1px solid #766040;border-radius:4px;padding:9px 16px;font:14px Georgia,serif;cursor:pointer;margin-right:8px;">Fight Again</button>' +
+    '<button id="fldDone" style="background:#1c1610;color:#e9dcc0;border:1px solid #766040;border-radius:4px;padding:9px 16px;font:14px Georgia,serif;cursor:pointer;">Main Menu</button></div>'; /* wcag-auditor: contrast fix #4a3c28->#766040 border on #1c1610 (was 1.68:1, now 3.00:1) WCAG 1.4.11 */
   var a = document.getElementById("fldAgain"), d = document.getElementById("fldDone");
-  if (a) a.addEventListener("click", function () { var k = __FIELD.rendererKind, sd = (__FIELD.seed + 7) >>> 0; fldExit(true); fldLaunchSandbox({ renderer: k, seed: sd }); });
+  // rematch preserves the scenario (sandbox OR a battle like bullrun1) — capture before fldExit clears state.
+  if (a) a.addEventListener("click", function () { var k = __FIELD.rendererKind, sc = __FIELD.scenario, sd = (__FIELD.seed + 7) >>> 0; fldExit(true); fldLaunchSandbox({ renderer: k, seed: sd, scenario: sc }); });
   if (d) d.addEventListener("click", function () { fldExit(false); });
+  // focus trap (WCAG 2.4.11): the end screen is aria-modal, so confine Tab/Shift+Tab to its two buttons.
+  e.addEventListener("keydown", function (ev) {
+    if (ev.key !== "Tab") return;
+    var act = document.activeElement;
+    if (!ev.shiftKey && act === d) { ev.preventDefault(); if (a) a.focus(); }
+    else if (ev.shiftKey && act === a) { ev.preventDefault(); if (d) d.focus(); }
+    else if (act !== a && act !== d) { ev.preventDefault(); if (a) a.focus(); }
+  });
   if (a) { try { a.focus(); } catch (e2) {} }   // move focus into the end dialog for keyboard users
 }
 
@@ -25762,11 +25947,15 @@ function fld2dDraw() {
   var t = __FIELD.terrain;
   // woods
   ctx.fillStyle = "#2c3a22";
-  for (var i = 0; i < t.woods.length; i++) { var wd = t.woods[i]; ctx.beginPath(); ctx.arc(v.ox + wd.x * v.s, v.oz + wd.z * v.s, wd.r * v.s, 0, 7); ctx.fill(); }
-  // hill ring
-  ctx.strokeStyle = "#5a6a44"; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(v.ox + t.hill.x * v.s, v.oz + t.hill.z * v.s, t.hill.s * 0.55 * v.s, 0, 7); ctx.stroke();
-  // wall
-  ctx.strokeStyle = "#8a8070"; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(v.ox + t.wall.x1 * v.s, v.oz + t.wall.z1 * v.s); ctx.lineTo(v.ox + t.wall.x2 * v.s, v.oz + t.wall.z2 * v.s); ctx.stroke();
+  if (t.woods) for (var i = 0; i < t.woods.length; i++) { var wd = t.woods[i]; ctx.beginPath(); ctx.arc(v.ox + wd.x * v.s, v.oz + wd.z * v.s, wd.r * v.s, 0, 7); ctx.fill(); }
+  // hill rings (one for the sandbox; several for a scenario)
+  ctx.strokeStyle = "#5a6a44"; ctx.lineWidth = 2;
+  var _hs = fldHills(); for (var hi = 0; hi < _hs.length; hi++) { var hh = _hs[hi]; ctx.beginPath(); ctx.arc(v.ox + hh.x * v.s, v.oz + hh.z * v.s, hh.s * 0.55 * v.s, 0, 7); ctx.stroke(); }
+  // walls
+  ctx.strokeStyle = "#8a8070"; ctx.lineWidth = 4;
+  var _ws = fldWalls(); for (var wi = 0; wi < _ws.length; wi++) { var ww = _ws[wi]; ctx.beginPath(); ctx.moveTo(v.ox + ww.x1 * v.s, v.oz + ww.z1 * v.s); ctx.lineTo(v.ox + ww.x2 * v.s, v.oz + ww.z2 * v.s); ctx.stroke(); }
+  // scenario markers (creek / stream / road / ford / bridge / place-labels) — render + teaching atmosphere
+  fld2dDrawMarkers(ctx, v);
   // objective
   var o = __FIELD.objective; ctx.strokeStyle = "#d8c87a"; ctx.lineWidth = 2; ctx.setLineDash([6, 5]); ctx.beginPath(); ctx.arc(v.ox + o.x * v.s, v.oz + o.z * v.s, o.r * v.s, 0, 7); ctx.stroke(); ctx.setLineDash([]);
   // units
@@ -25793,6 +25982,33 @@ function fld2dDraw() {
   }
   // drag arrow
   if (__FIELD.drag) { var dr = __FIELD.drag; ctx.strokeStyle = "#ffe9a8"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(v.ox + dr.x0 * v.s, v.oz + dr.z0 * v.s); ctx.lineTo(v.ox + dr.x * v.s, v.oz + dr.z * v.s); ctx.stroke(); }
+}
+// scenario terrain markers (Bull Run: Bull Run creek, Young's Branch, the Warrenton Turnpike,
+// Sudley Ford, the Stone Bridge, place-labels). The sandbox has no markers -> a no-op.
+function fld2dDrawMarkers(ctx, v) {
+  var t = __FIELD.terrain; if (!t || !t.markers) return;
+  for (var i = 0; i < t.markers.length; i++) {
+    var mk = t.markers[i];
+    if (mk.path && mk.path.length > 1) {
+      ctx.lineWidth = mk.kind === "road" ? 5 : (mk.kind === "creek" ? 6 : 3);
+      ctx.strokeStyle = mk.kind === "road" ? "#caa86a" : "#5a7da0";
+      ctx.beginPath();
+      for (var p = 0; p < mk.path.length; p++) { var pt = mk.path[p], X = v.ox + pt[0] * v.s, Z = v.oz + pt[1] * v.s; if (p === 0) ctx.moveTo(X, Z); else ctx.lineTo(X, Z); }
+      ctx.stroke();
+      var midp = mk.path[Math.floor(mk.path.length / 2)];
+      if (mk.name) fld2dLabel(ctx, mk.name, v.ox + midp[0] * v.s, v.oz + midp[1] * v.s - 6);
+    } else if (typeof mk.x === "number") {
+      if (mk.kind === "ford" || mk.kind === "bridge") { ctx.fillStyle = mk.kind === "bridge" ? "#9a8a6a" : "#5a7da0"; ctx.beginPath(); ctx.arc(v.ox + mk.x * v.s, v.oz + mk.z * v.s, 5, 0, 7); ctx.fill(); }
+      if (mk.name) fld2dLabel(ctx, mk.name, v.ox + mk.x * v.s, v.oz + mk.z * v.s - 8);
+    }
+  }
+}
+function fld2dLabel(ctx, text, x, z) {
+  ctx.save();
+  ctx.font = "11px Georgia"; ctx.textAlign = "center"; ctx.textBaseline = "alphabetic";
+  ctx.lineWidth = 3; ctx.strokeStyle = "rgba(8,10,14,0.85)"; ctx.strokeText(text, x, z);
+  ctx.fillStyle = "#e9dcc0"; ctx.fillText(text, x, z);
+  ctx.restore();
 }
 
 /* ===========================================================================
@@ -25840,13 +26056,18 @@ function fld3dBuildTerrain() {
   var o = __FIELD.objective;
   var ring = new T.Mesh(new T.RingGeometry(o.r - 6, o.r, 40), new T.MeshBasicMaterial({ color: "#d8c87a", side: T.DoubleSide, transparent: true, opacity: 0.7 }));
   ring.rotation.x = -Math.PI / 2; ring.position.set(o.x, fldTerrainH(o.x, o.z) + 1.5, o.z); __FIELD.scene.add(ring);
-  // wall
-  var t = __FIELD.terrain, wdx = t.wall.x2 - t.wall.x1, wdz = t.wall.z2 - t.wall.z1, wlen = Math.hypot(wdx, wdz);
-  var wall = new T.Mesh(new T.BoxGeometry(wlen, 14, 8), new T.MeshLambertMaterial({ color: "#8a8070" }));
-  wall.position.set((t.wall.x1 + t.wall.x2) / 2, fldTerrainH(t.wall.x1, t.wall.z1) + 7, (t.wall.z1 + t.wall.z2) / 2);
-  wall.rotation.y = -Math.atan2(wdz, wdx); __FIELD.scene.add(wall);
+  // walls (one for the sandbox; several for a scenario)
+  var t = __FIELD.terrain, _ws = fldWalls();
+  for (var wq = 0; wq < _ws.length; wq++) {
+    var wl = _ws[wq], wdx = wl.x2 - wl.x1, wdz = wl.z2 - wl.z1, wlen = Math.hypot(wdx, wdz);
+    var wall = new T.Mesh(new T.BoxGeometry(wlen, 14, 8), new T.MeshLambertMaterial({ color: "#8a8070" }));
+    wall.position.set((wl.x1 + wl.x2) / 2, fldTerrainH(wl.x1, wl.z1) + 7, (wl.z1 + wl.z2) / 2);
+    wall.rotation.y = -Math.atan2(wdz, wdx); __FIELD.scene.add(wall);
+  }
+  // scenario markers (roads/creeks as low ribbons; ford/bridge as small markers) — Bull Run only
+  fld3dBuildMarkers();
   // woods (instanced cones)
-  for (var w = 0; w < t.woods.length; w++) {
+  if (t.woods) for (var w = 0; w < t.woods.length; w++) {
     var wd = t.woods[w], n = fldLow() ? 14 : 34;
     var im = new T.InstancedMesh(new T.ConeGeometry(16, 46, 6), new T.MeshLambertMaterial({ color: "#2c3a22" }), n);
     var dummy = new T.Object3D();
@@ -25858,9 +26079,40 @@ function fld3dBuildTerrain() {
     __FIELD.scene.add(im);
   }
 }
+function fld3dBuildMarkers() {
+  var t = __FIELD.terrain; if (!t || !t.markers || !window.THREE) return;
+  var T = window.THREE;
+  for (var i = 0; i < t.markers.length; i++) {
+    var mk = t.markers[i];
+    var col = mk.kind === "road" ? "#c2a063" : (mk.kind === "bridge" ? "#9a8a6a" : "#4f739a");
+    if (mk.path && mk.path.length > 1) {
+      var wgt = mk.kind === "road" ? 16 : 12, hgt = mk.kind === "road" ? 1.4 : 0.8;
+      for (var p = 1; p < mk.path.length; p++) {
+        var a = mk.path[p - 1], b = mk.path[p], dx = b[0] - a[0], dz = b[1] - a[1], len = Math.hypot(dx, dz);
+        if (len < 1) continue;
+        var seg = new T.Mesh(new T.BoxGeometry(len, hgt, wgt), new T.MeshLambertMaterial({ color: col }));
+        var mx = (a[0] + b[0]) / 2, mz = (a[1] + b[1]) / 2;
+        seg.position.set(mx, fldTerrainH(mx, mz) + hgt, mz); seg.rotation.y = -Math.atan2(dz, dx);
+        __FIELD.scene.add(seg);
+      }
+    } else if (typeof mk.x === "number" && (mk.kind === "ford" || mk.kind === "bridge")) {
+      var m2 = new T.Mesh(new T.BoxGeometry(22, mk.kind === "bridge" ? 7 : 2, 22), new T.MeshLambertMaterial({ color: col }));
+      m2.position.set(mk.x, fldTerrainH(mk.x, mk.z) + 3, mk.z); __FIELD.scene.add(m2);
+    }
+  }
+}
 function fld3dBuildUnits() {
   var T = window.THREE;
-  while (__FIELD.groups.children.length) __FIELD.groups.remove(__FIELD.groups.children[0]);
+  // dispose each child's geometry/material BEFORE detaching — this runs on every reinforcement
+  // arrival (a full rebuild), so skipping disposal would leak GPU buffers wave after wave.
+  while (__FIELD.groups.children.length) {
+    var ch = __FIELD.groups.children[0];
+    if (ch.traverse) ch.traverse(function (o) {
+      if (o.geometry && o.geometry.dispose) o.geometry.dispose();
+      if (o.material) { var m = o.material; if (Array.isArray(m)) { for (var i = 0; i < m.length; i++) m[i] && m[i].dispose && m[i].dispose(); } else if (m.dispose) m.dispose(); }
+    });
+    __FIELD.groups.remove(ch);
+  }
   __FIELD._u3d = {};
   for (var i = 0; i < __FIELD.units.length; i++) {
     var u = __FIELD.units[i];
@@ -25942,6 +26194,8 @@ function fldInjectMenuButton() {
       '<span class="gn-deck">Real-time skirmish (Beta) &mdash; drag to maneuver, volley, flank, and break the foe. Two brigades a side, on the open 3D field.</span>';
     b.addEventListener("click", function () { fldLaunchSandbox({ renderer: "3d" }); });
     if (anchor.nextSibling) anchor.parentNode.insertBefore(b, anchor.nextSibling); else anchor.parentNode.appendChild(b);
+    // P1a seam: registered scenarios (e.g. First Bull Run) inject their own menu buttons after the sandbox button.
+    if (typeof fldInjectScenarioButtons === "function") fldInjectScenarioButtons(b);
   } catch (e) {}
 }
 function fldInstallMenuObserver() {
@@ -25962,6 +26216,210 @@ function fldInstallMenuObserver() {
     else fldInstallMenuObserver();
   } catch (e) {}
 })();
+
+
+/* ===== module: tactical/T1-bull-run.js ===== */
+/* ============================================================================
+   src/tactical/T1-bull-run.js  —  TACTICAL ENGINE · P1a (the FIRST BULL RUN scenario)
+
+   The first REAL battle on the __FIELD real-time engine: First Bull Run (First
+   Manassas), July 21, 1861, at brigade scale, on a historical-terrain field, with
+   the rail-pivot REINFORCEMENT TIMELINE as the teaching mechanic. Per the run-k
+   charter (DECISIONS D54/D55) the tactical engine is built FIRST; D56 shipped the
+   P0 sandbox; this is the P1a vertical slice (scale to the real OOB + historical
+   terrain + strategic conditioning via the reinforcement schedule + a tactical-only
+   FREE entry from the menu). The hex-mode toggle, full owner-mode bridge
+   conditioning, and deeper PBR/HDRI are the subsequent P1b/P1c slices.
+
+   ARCHITECTURE (the design judge-panel verdict, logged as D57):
+   - EXTENSION via the T0 SCENARIO SEAMS (NOT an override of T0's sim loop). T0
+     (src/tactical/T0-field-sandbox.js) exposes three no-op-by-default seams keyed on
+     __FIELD.scenario: fldScenarioInit (build), fldScenarioTick (per-tick reinforce
+     hook), fldInjectScenarioButtons + fldScenarioEndHtml (UI). The sandbox path is
+     untouched -> probe-field 13/13 holds by construction; Classic is never touched.
+   - THIS MODULE ORCHESTRATES ONLY: it builds terrain, instantiates the OOB via
+     fldMakeUnit, and splices reinforcements on schedule. It NEVER duplicates combat /
+     morale / objective math — every per-unit computation flows through T0's unchanged
+     leaf helpers via the shared fldSimStep, so a future T0 balance fix reaches Bull
+     Run automatically.
+   - DETERMINISM: reinforcements spawn in array order at scheduled sim-times, with
+     ZERO spawn-time RNG (fldMakeUnit consumes none) -> same seed => same battle.
+
+   Content: data/bullrun.json (GAME_DATA.bullrun.bullrun1) — the engaged main-field
+   OOB distilled from HISTORICAL-DATA.md, provenance-tagged, anti-Lost-Cause. Bare-name
+   globals only (GAME_DATA, __FIELD, FLD, and the fld* helpers from T0). All new helpers
+   are uniquely prefixed and defined once. No literal comment-closer in this block.
+   ============================================================================ */
+
+/* ---- the scenario data (one place) ---- */
+function fldBrData() {
+  try { if (typeof GAME_DATA !== "undefined" && GAME_DATA.bullrun && GAME_DATA.bullrun.bullrun1) return GAME_DATA.bullrun.bullrun1; } catch (e) {}
+  return null;
+}
+/* ---- a data OOB/reinforcement entry -> an fldMakeUnit spec (player = US; CS is AI).
+   The on-field OOB carries its side via the data KEY (oob.US / oob.CS), not a per-entry
+   field, so the side is passed in; reinforcement entries carry their own d.side. ---- */
+function fldBrSpec(d, side, autoBoth) {
+  var s = d.side || side;
+  return {
+    id: d.id, side: s, name: d.name, arm: d.arm, weapon: d.weapon,
+    men: d.men, xp: d.xp || 1, x: d.x, z: d.z, facing: d.facing,
+    formation: d.formation || "line", entry: d.entry || "",
+    ai: (s === "CS") ? true : !!autoBoth,
+  };
+}
+
+/* ===========================================================================
+   fldScenarioInit — the T0 build seam. Returns true once it has populated terrain
+   + units + the reinforcement schedule + win thresholds (else false -> T0 sandbox).
+   =========================================================================== */
+function fldScenarioInit(opts) {
+  if (!opts || opts.scenario !== "bullrun1") return false;
+  var data = fldBrData();
+  if (!data || !data.oob || !data.terrain || !data.objective) return false;   // data missing/malformed -> fall back to the sandbox
+  __FIELD.scenData = data;
+  __FIELD.autoBoth = !!opts.autoBoth;
+  // terrain: the multi-hill / multi-wall / markers shape the generalized T0 readers + renderers expect.
+  __FIELD.terrain = data.terrain;
+  __FIELD.objective = { x: data.objective.x, z: data.objective.z, r: data.objective.r, name: data.objective.name };
+  __FIELD.holdToWin = data.holdToWinSec || FLD.HOLD_TO_WIN;
+  __FIELD.timeLimit = data.timeLimitSec || FLD.TIME_LIMIT;
+  __FIELD.attacker = data.attacker || "US";   // asymmetric: the Union must SEIZE the hill; the CS denies it
+  __FIELD.defender = data.defender || "CS";
+  // OOB present on the field at T=0
+  var units = [], us = data.oob.US || [], cs = data.oob.CS || [], i;
+  for (i = 0; i < us.length; i++) units.push(fldMakeUnit(fldBrSpec(us[i], "US", __FIELD.autoBoth)));
+  for (i = 0; i < cs.length; i++) units.push(fldMakeUnit(fldBrSpec(cs[i], "CS", __FIELD.autoBoth)));
+  __FIELD.units = units;
+  // reinforcement schedule: sorted by arrival, spawned IN ARRAY ORDER, no spawn-time RNG.
+  var sched = [], rs = data.reinforcements || [];
+  for (i = 0; i < rs.length; i++) sched.push({ atSec: rs[i].atSec, spec: fldBrSpec(rs[i], rs[i].side, __FIELD.autoBoth), done: false });
+  sched.sort(function (a, b) { return a.atSec - b.atSec; });
+  __FIELD.reinforce = sched;
+  fldResetRun();   // shared T0 deploy/clock/selection reset (one source of truth)
+  return true;
+}
+
+/* ===========================================================================
+   fldScenarioTick — the T0 per-tick seam. Splices in any reinforcement whose
+   scheduled sim-time has arrived (idempotent; array order; deterministic).
+   =========================================================================== */
+function fldScenarioTick(dt) {
+  var r = __FIELD.reinforce; if (!r) return;
+  var arrivals = [];
+  for (var i = 0; i < r.length; i++) {
+    var e = r[i];
+    if (!e.done && __FIELD.t >= e.atSec) { e.done = true; arrivals.push(fldReinforceSpawn(e.spec)); }
+  }
+  // batch the aria-live announcement: a single #fldLive update conveys EVERY arrival in this tick
+  // (overwriting per-unit would let a screen reader hear only the last of a clustered arrival).
+  if (arrivals.length) fldAnnounce(arrivals.join("  "));
+}
+function fldReinforceSpawn(spec) {
+  var u = fldMakeUnit(spec);
+  // a PLAYER-side (non-AI) reinforcement marches onto the field toward the objective on arrival — so it
+  // joins the battle instead of idling in the rear (the player controls only the US; the AI commands the
+  // CS + any autoBoth side). The player can redirect it once it is up. AI units are driven by fldAiUnit.
+  if (!u.ai && __FIELD.objective) {
+    var ob = __FIELD.objective, f = Math.atan2(ob.x - u.x, -(ob.z - u.z));
+    u.formation = "column";
+    u.order = { type: "move", tx: ob.x + (u.x - ob.x) * 0.32, tz: ob.z + (u.z - ob.z) * 0.32, tface: f };
+  }
+  __FIELD.units.push(u);
+  var line = u.name + " arrives" + (spec.entry ? " — " + spec.entry : "") + "!";
+  fldScenarioBanner(line, u.side);   // a visual banner per unit (they stack vertically)
+  // rebuild the 3D meshes so the fresh brigade appears (cheap: < 20 units; the next render syncs all).
+  if (__FIELD.mode3d && typeof window !== "undefined" && window.THREE && __FIELD.groups) { try { fld3dBuildUnits(); } catch (e) {} }
+  return line;
+}
+
+/* ===========================================================================
+   UI:  the menu button · the pre-battle briefing · arrival banners · the end note
+   =========================================================================== */
+function fldInjectScenarioButtons(afterBtn) {
+  try {
+    if (document.getElementById("fldBullRunBtn")) return;
+    if (!afterBtn || !afterBtn.parentNode) return;
+    if (!fldBrData()) return;
+    var b = document.createElement("button");
+    b.className = "gn-btn"; b.id = "fldBullRunBtn";
+    b.setAttribute("aria-label", "First Bull Run, 1861 — the real-time historical battle. Turn the Confederate left and seize Henry House Hill before the Confederate reinforcements arrive by rail.");
+    b.innerHTML = '<span class="gn-hl">&#9876; BATTLE &mdash; FIRST BULL RUN (1861)</span>' +
+      '<span class="gn-deck">The real First Manassas, brigade scale: turn the Confederate left, take Henry House Hill &mdash; and beat the trains bringing Jackson, Early, and Elzey to the field.</span>';
+    b.addEventListener("click", function () { fldLaunchBattle("bullrun1"); });
+    if (afterBtn.nextSibling) afterBtn.parentNode.insertBefore(b, afterBtn.nextSibling); else afterBtn.parentNode.appendChild(b);
+  } catch (e) {}
+}
+function fldLaunchBattle(scn) {
+  fldLaunchSandbox({ scenario: scn, renderer: "3d" });
+  if (scn === "bullrun1") { try { fldBullRunBriefing(); } catch (e) {} }
+}
+function fldBullRunBriefing() {
+  var root = document.getElementById("fldRoot"); if (!root) return;
+  var sd = __FIELD.scenData; if (!sd) return;   // the top-bar title is set each frame by fldRenderTop from scenData.name
+  if (document.getElementById("fldBrief")) return;
+  var ov = document.createElement("div");
+  ov.id = "fldBrief";
+  ov.setAttribute("role", "dialog"); ov.setAttribute("aria-modal", "true"); ov.setAttribute("aria-label", "Battle briefing: " + sd.name);
+  ov.style.cssText = "position:absolute;inset:0;z-index:6000;display:flex;align-items:center;justify-content:center;background:#070a0ecc;";
+  var cards = (sd.teaching && sd.teaching.cards) ? sd.teaching.cards : [], teach = "", n = Math.min(2, cards.length);
+  for (var i = 0; i < n; i++) teach += '<div style="margin-top:10px;"><b style="color:#d8c87a;">' + cards[i].head + '</b><div style="opacity:.85;font-size:13px;margin-top:2px;line-height:1.45;">' + cards[i].body + '</div></div>';
+  ov.innerHTML =
+    '<div style="max-width:600px;max-height:86vh;overflow:auto;background:#0c0f14;border:1px solid #745e3f;border-radius:8px;padding:22px 26px;">' /* wcag-auditor: contrast fix #4a3c28->#745e3f border on #0c0f14 (was 1.80:1, now 3.12:1) WCAG 1.4.11 */ +
+      '<div style="font-size:12px;letter-spacing:2px;opacity:.7;">' + sd.date + ' &middot; ' + sd.place + '</div>' +
+      '<div style="font-size:24px;color:#e9dcc0;margin:2px 0 8px;">' + sd.name + '</div>' +
+      '<div style="opacity:.9;font-size:14px;line-height:1.5;">' + sd.blurb + '</div>' +
+      '<div style="margin-top:12px;padding:9px 11px;background:#15110b;border:1px solid #715e3e;border-radius:5px;font-size:13px;line-height:1.5;"><b>Your objective:</b> seize and hold <b>' + sd.objective.name + '</b> for ' + __FIELD.holdToWin + 's — or break the enemy. The Confederate reserves arrive on the rail timeline, so win the morning before the trains run out. <b>This is your war:</b> a Union victory here rewrites 1861.</div>' /* wcag-auditor: contrast fix #3a3020->#715e3e border on #15110b (was 1.45:1, now 3.02:1) WCAG 1.4.11 */ +
+      teach +
+      '<div style="opacity:.6;font-size:11px;margin-top:12px;line-height:1.4;">' + sd.provenance + '</div>' +
+      '<div style="text-align:center;margin-top:16px;"><button id="fldBriefGo" style="background:#1c1610;color:#e9dcc0;border:1px solid #736241;border-radius:4px;padding:9px 18px;font:14px Georgia,serif;cursor:pointer;">Take command &#9654;</button></div>' /* wcag-auditor: contrast fix #6a5a3c->#736241 border on #1c1610/#0c0f14 (was 2.68:1, now 3.03/3.25:1) WCAG 1.4.11 */ +
+    '</div>';
+  root.appendChild(ov);
+  var go = document.getElementById("fldBriefGo");
+  var close = function () { if (ov.parentNode) ov.parentNode.removeChild(ov); try { var rr = document.getElementById("fldRoot"); if (rr) rr.focus(); } catch (e) {} };
+  // modal keyboard: Esc closes ONLY the briefing (stopPropagation so it never reaches fldKey -> fldExit),
+  // and Tab is trapped to the single Take-command button so focus cannot leak to the canvas/controls behind.
+  ov.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") { e.stopPropagation(); e.preventDefault(); close(); }
+    else if (e.key === "Tab") { e.preventDefault(); if (go) go.focus(); }
+  });
+  if (go) { go.addEventListener("click", close); try { go.focus(); } catch (e) {} }
+  fldAnnounce("Briefing: " + sd.name + ". " + sd.blurb);
+}
+function fldScenarioBanner(text, side) {
+  try {
+    var root = document.getElementById("fldRoot"); if (!root) return;
+    var stack = root.querySelectorAll(".fldBanner").length;   // stack vertically so clustered arrivals don't overlap
+    var col = side === "US" ? "#6c8ebf" : (side === "CS" ? "#c08574" : "#9a8a5c");
+    var b = document.createElement("div");
+    b.className = "fldBanner";
+    b.setAttribute("role", "status");
+    b.style.cssText = "position:absolute;top:" + (52 + stack * 38) + "px;left:50%;transform:translateX(-50%);z-index:5500;background:#0c0f14f2;border:1px solid " + col + ";border-left:5px solid " + col + ";border-radius:5px;padding:7px 14px;color:#f2e8d5;font:14px Georgia,serif;max-width:74vw;white-space:nowrap;box-shadow:0 2px 12px #000a;";
+    b.textContent = text;
+    root.appendChild(b);
+    setTimeout(function () { try { if (b.parentNode) b.parentNode.removeChild(b); } catch (e) {} }, 3800);
+  } catch (e) {}
+}
+/* the end-screen teaching payoff: "your war vs history" + the cards with provenance */
+function fldScenarioEndHtml(winner) {
+  var sd = __FIELD.scenData; if (!sd || __FIELD.scenario !== "bullrun1") return "";
+  var hist = winner === "US"
+    ? "History diverges. You took Henry House Hill — the ground that historically broke the Union assault. In 1861 McDowell's army lost it and streamed back to Washington in the 'Great Skedaddle'."
+    : (winner === "CS"
+      ? "History holds. As in 1861, the stand on Henry House Hill and the rail-borne brigades on Chinn Ridge carried the day for the Confederacy."
+      : "A bloodier stalemate than history's clear Confederate victory — but the rebellion was not broken here.");
+  var cards = (sd.teaching && sd.teaching.cards) ? sd.teaching.cards : [];
+  var out = '<div style="text-align:left;background:#15110b;border:1px solid #715e3e;border-radius:6px;padding:12px 14px;margin-bottom:16px;">' /* wcag-auditor: contrast fix #3a3020->#715e3e border on #15110b (was 1.45:1, now 3.02:1) WCAG 1.4.11 */ +
+    '<div style="color:#d8c87a;font-weight:bold;margin-bottom:6px;">Your war vs. history</div>' +
+    '<div style="font-size:13px;opacity:.9;line-height:1.5;margin-bottom:8px;">' + hist + '</div>';
+  for (var i = 0; i < cards.length; i++) {
+    out += '<div style="margin-top:9px;border-top:1px solid #6f5f3f;padding-top:7px;"><b style="color:#cdbb88;">' + cards[i].head + '</b>' /* wcag-auditor: contrast fix #2a2418->#6f5f3f divider on #15110b (was 1.22:1, now 3.03:1) WCAG 1.4.11 */ +
+      '<div style="font-size:12.5px;opacity:.84;line-height:1.46;margin-top:1px;">' + cards[i].body + '</div>' +
+      '<div style="font-size:11px;opacity:.55;margin-top:2px;">' + cards[i].provenance + '</div></div>';
+  }
+  out += '</div>';
+  return out;
+}
 
 
 /* ===== module: 90-president-register.js ===== */

@@ -1,0 +1,101 @@
+{
+  "_comment": "TACTICAL P1a — First Bull Run (First Manassas) scenario data for the __FIELD real-time engine. Distilled from HISTORICAL-DATA.md (the citation-grade Bull Run dossier). Brigade-scale, the ENGAGED main-field force only (Matthews Hill -> Henry House Hill -> Chinn Ridge); rear-area/unengaged brigades are omitted by design. The battle is modeled as ARRIVAL WAVES, matching the real engagement: at T=0 only the lead Union brigades (Burnside, Porter) are in contact with the Confederate delaying force (Evans, then Bee/Bartow) on Matthews Hill; both sides then FEED brigades onto the field over the morning, the Confederates rallying on Henry House Hill and — the teaching mechanic — receiving rail-borne reinforcements (Jackson, then Early + Elzey on Chinn Ridge) that historically turned the Union right and won the day. COORDINATE NOTE: the engine field is 1200x900 yards. Per the engine convention US sits at HIGH z and faces -z (facing 0); CS sits at LOW z and faces +z (facing PI). In THIS field's coordinates: high z = the Union approach (Sudley Ford / Matthews Hill); center = Henry House Hill (the decisive crest = the objective); low z = the Confederate rear (Manassas Junction); low x (west) = the Union RIGHT flank = Chinn Ridge, where the rail-borne reinforcements turned the day. Strength figures are brigade-scale approximations from after-action reports (Inferred/medium per the dossier); the engaged-force asymmetry and the reinforcement TIMELINE are the Verified, teaching-bearing facts.",
+  "bullrun1": {
+    "id": "bullrun1",
+    "name": "First Bull Run (First Manassas)",
+    "date": "July 21, 1861",
+    "place": "Bull Run, near Manassas Junction, Prince William County, Virginia",
+    "blurb": "The first major land battle of the war. McDowell's green Union army turned the Confederate left at Sudley Ford and drove Evans, Bee and Bartow off Matthews Hill through the morning — then broke on Henry House Hill, where Jackson's brigade stood 'like a stone wall', and shattered when fresh Confederate brigades arrived BY RAIL from the Shenandoah and rolled up the Union right at Chinn Ridge. Hold Henry House Hill before the trains run out.",
+    "provenance": "Verified (high) for OOB, commanders, terrain, and the engagement sequence; Inferred (medium) for per-brigade strengths and the exact reinforcement minute. Sources: Wikipedia First Bull Run OOBs (drawn from the Official Records); American Battlefield Trust; Encyclopedia Virginia; NPS Manassas; Bull Runnings compilation. Anti-Lost-Cause framing: the 'stone wall' wording is contested (Bee died next day, no record); this is the war's opening illusion that it would be short and bloodless.",
+    "field": { "w": 1200, "h": 900 },
+    "attacker": "US",
+    "defender": "CS",
+    "timeLimitSec": 480,
+    "holdToWinSec": 140,
+    "objective": {
+      "name": "Henry House Hill",
+      "x": 600, "z": 450, "r": 140,
+      "note": "The dominant plateau where the battle was decided. Jackson's reverse-slope line, the lost Union batteries, and the climactic infantry fight. Holding it bought time for the Valley reinforcements to arrive. (Verified)"
+    },
+    "terrain": {
+      "hills": [
+        { "name": "Henry House Hill", "x": 600, "z": 450, "h": 32, "s": 205, "note": "The decisive crest (the objective)." },
+        { "name": "Matthews Hill", "x": 560, "z": 660, "h": 22, "s": 162, "note": "First high ground south of Sudley Ford; the Union morning high-water mark, where Evans/Bee/Bartow were driven off. (Verified)" },
+        { "name": "Chinn Ridge", "x": 245, "z": 415, "h": 21, "s": 150, "note": "West of Henry Hill; where Early and Elzey turned the exposed Union right ~4 p.m. and triggered the rout. (Verified)" }
+      ],
+      "woods": [
+        { "x": 500, "z": 560, "r": 116, "note": "The wooded swale of Young's Branch between the hills." },
+        { "x": 815, "z": 320, "r": 138, "note": "Timber along the Stone Bridge sector." },
+        { "x": 305, "z": 605, "r": 108 },
+        { "x": 905, "z": 520, "r": 124 },
+        { "x": 380, "z": 290, "r": 96 }
+      ],
+      "walls": [
+        { "x1": 505, "z1": 524, "x2": 700, "z2": 520, "note": "The lane/fence line by the Robinson House on the north face of Henry Hill — strong cover for the defender of the crest." }
+      ],
+      "markers": [
+        { "kind": "ford", "name": "Sudley Springs Ford", "x": 195, "z": 855, "note": "The upstream, lightly guarded crossing that let the Union flank column (~12,000) turn the Confederate left. (Verified)" },
+        { "kind": "bridge", "name": "Stone Bridge", "x": 1055, "z": 235, "note": "Carried the Warrenton Turnpike over Bull Run; anchor of the Confederate left and the focus of Tyler's fixing demonstration. (Verified)" },
+        { "kind": "creek", "name": "Bull Run", "path": [[1120, 60], [1040, 240], [930, 430], [880, 640], [820, 860]], "note": "The meandering creek that channelized all movement; crossable only at fords and the Stone Bridge." },
+        { "kind": "stream", "name": "Young's Branch", "path": [[160, 560], [430, 585], [640, 600], [880, 590]], "note": "The valley the Confederates retreated across from Matthews Hill toward Henry Hill." },
+        { "kind": "road", "name": "Warrenton Turnpike", "path": [[60, 540], [380, 552], [700, 560], [1000, 470], [1140, 360]], "note": "The battle's axis and the rout's escape route." },
+        { "kind": "label", "name": "to Manassas Junction", "x": 600, "z": 55, "note": "The rail hub whose Manassas Gap Railroad delivered Johnston's decisive reinforcements." }
+      ]
+    },
+    "oob": {
+      "US": [
+        { "id": "us_porter",  "name": "Porter's Brigade",   "commander": "Col. Andrew Porter",       "arm": "inf", "weapon": "rifled", "men": 3300, "xp": 2, "x": 660, "z": 850, "facing": 0, "formation": "column", "note": "1st Bde, Hunter's div: Sykes's U.S. Regulars, 8th/14th NY Militia, 27th NY, the Marine battalion. Lead element of the flank march; first across Sudley Ford; opened the main battle on Matthews Hill. ~464 cas. (Verified)" },
+        { "id": "us_burnside","name": "Burnside's Brigade", "commander": "Col. Ambrose E. Burnside",  "arm": "inf", "weapon": "rifled", "men": 3000, "xp": 1, "x": 520, "z": 850, "facing": 0, "formation": "column", "note": "2nd Bde, Hunter's div: 2nd RI (in the lead), 1st RI, 2nd NH, 71st NY. Fired the opening infantry volleys of the main battle at Matthews Hill against Evans's demi-brigade. Col. John Slocum (2nd RI) killed. (Verified)" }
+      ],
+      "CS": [
+        { "id": "cs_evans",  "name": "Evans's Demi-Brigade", "commander": "Col. Nathan G. 'Shanks' Evans", "arm": "inf", "weapon": "smooth", "men": 1100, "xp": 1, "x": 560, "z": 665, "facing": 3.14159, "formation": "line", "note": "7th (Demi) Brigade, ~1,100: 1st Louisiana Special Bn ('Wheat's Tigers') + 4th South Carolina. Warned by Capt. E. P. Alexander's wig-wag signal ('Look to your left, you are turned'), Evans pivoted from the Stone Bridge to Matthews Hill and bought the critical early hours — widely credited with saving the Confederate left. Wheat shot through both lungs (survived). (Verified)" },
+        { "id": "cs_bee",    "name": "Bee's Brigade",       "commander": "Brig. Gen. Barnard E. Bee",      "arm": "inf", "weapon": "smooth", "men": 1900, "xp": 1, "x": 505, "z": 600, "facing": 3.14159, "formation": "line", "note": "3rd Bde, Army of the Shenandoah: 4th Alabama, 2nd & 11th Mississippi, 6th North Carolina. Reinforced Evans on Matthews Hill, fell back to Henry Hill, and is traditionally credited with the rallying cry that named Jackson. Bee mortally wounded, died July 22 — the exact words and his intent are CONTESTED. (Verified fact of the stand; contested quotation.)" },
+        { "id": "cs_bartow", "name": "Bartow's Brigade",    "commander": "Col. Francis S. Bartow",         "arm": "inf", "weapon": "smooth", "men": 1100, "xp": 1, "x": 650, "z": 600, "facing": 3.14159, "formation": "line", "note": "2nd Bde, Army of the Shenandoah: 7th & 8th Georgia + Pelham's battery. Bartow led his Georgians to reinforce Evans, then fell back to Henry Hill where he was killed rallying the 7th Georgia — among the highest-ranking Confederates to die that day. (Verified)" }
+      ]
+    },
+    "reinforcements": [
+      { "id": "cs_hampton", "side": "CS", "atSec": 45,  "name": "Hampton's Legion",    "commander": "Col. Wade Hampton",              "arm": "inf", "weapon": "rifled", "men": 600,  "xp": 2, "x": 600, "z": 405, "facing": 3.14159, "formation": "line",   "entry": "the Henry House Hill front", "note": "Unattached, ~600 engaged, 121 casualties. Fought hard on the Robinson House / Henry Hill front, helping anchor the line before Jackson formed up. Hampton wounded. (Verified)" },
+      { "id": "us_griffin", "side": "US", "atSec": 60,  "name": "Griffin's Battery",   "commander": "Capt. Charles Griffin",          "arm": "art", "weapon": "rifled", "men": 160,  "xp": 3, "x": 600, "z": 800, "facing": 0,       "formation": "line",   "entry": "the Sudley road", "note": "Battery D, 5th U.S. Artillery, 6 guns. Advanced (with Ricketts's) onto the Henry Hill crest in the afternoon, too close for its long-range rifles — overrun by the 33rd Virginia's point-blank volley. The loss of the two regular batteries broke the Union attack. (Verified)" },
+      { "id": "us_sherman", "side": "US", "atSec": 75,  "name": "Sherman's Brigade",   "commander": "Col. William T. Sherman",        "arm": "inf", "weapon": "smooth", "men": 3000, "xp": 1, "x": 790, "z": 845, "facing": 0,       "formation": "column", "entry": "an unguarded ford", "note": "3rd Bde, Tyler's div: 13th/69th/79th NY, 2nd Wisconsin. Found an unguarded ford, crossed, and assaulted Henry Hill in piecemeal regimental waves that were repulsed in succession. Heaviest brigade loss in the division, ~605; the 79th and 69th NY shattered; Col. Cameron (79th) killed, Col. Corcoran (69th) wounded & captured. (Verified)" },
+      { "id": "us_ricketts","side": "US", "atSec": 80,  "name": "Ricketts's Battery",  "commander": "Capt. James B. Ricketts",        "arm": "art", "weapon": "rifled", "men": 160,  "xp": 3, "x": 665, "z": 800, "facing": 0,       "formation": "line",   "entry": "the Sudley road", "note": "Battery I, 1st U.S. Artillery, 6 guns. Pushed to the crest near the Henry House and captured/recaptured repeatedly; Ricketts wounded & captured. Mrs. Judith Henry, bedridden in her house, was killed by battery fire — the battle's only civilian death. (Verified)" },
+      { "id": "cs_cocke",   "side": "CS", "atSec": 85,  "name": "Cocke's Brigade",     "commander": "Col. Philip St. George Cocke",   "arm": "inf", "weapon": "smooth", "men": 1800, "xp": 1, "x": 770, "z": 385, "facing": 3.14159, "formation": "line",   "entry": "the Stone Bridge sector", "note": "5th Bde, Army of the Potomac: 8th/18th/19th/28th Virginia. Covered the Stone Bridge sector; elements fed into the Henry Hill fight as the battle shifted left. (Verified)" },
+      { "id": "us_keyes",   "side": "US", "atSec": 110, "name": "Keyes's Brigade",     "commander": "Col. Erasmus D. Keyes",          "arm": "inf", "weapon": "smooth", "men": 2800, "xp": 1, "x": 880, "z": 845, "facing": 0,       "formation": "column", "entry": "the Union left, along the turnpike", "note": "1st Bde, Tyler's div: 1st/2nd/3rd Connecticut, 2nd Maine. An abortive flanking attempt along the eastern foot of Henry Hill that drifted off without pressing home. ~223 cas. (Verified)" },
+      { "id": "cs_jackson", "side": "CS", "atSec": 135, "name": "Jackson's Brigade ('Stonewall')", "commander": "Brig. Gen. Thomas J. Jackson", "arm": "inf", "weapon": "smooth", "men": 2600, "xp": 2, "x": 600, "z": 350, "facing": 3.14159, "formation": "line", "entry": "Henry House Hill (reverse slope)", "note": "1st Bde, Army of the Shenandoah, ~2,600: 2nd/4th/5th/27th/33rd Virginia + Rockbridge Artillery. Posted on the reverse (southern) slope of Henry Hill behind massed guns, screened in tall grass — the disciplined line onto which the broken brigades rallied. The 33rd Virginia (in blue uniforms) closed to point-blank and wiped out the crest batteries. Origin of the 'Stonewall' name. Jackson wounded in the hand. (Verified)" },
+      { "id": "us_franklin","side": "US", "atSec": 140, "name": "Franklin's Brigade",  "commander": "Col. William B. Franklin",       "arm": "inf", "weapon": "rifled", "men": 2000, "xp": 1, "x": 470, "z": 860, "facing": 0,       "formation": "column", "entry": "Sudley Ford", "note": "1st Bde, Heintzelman's div: 5th/11th Massachusetts, 1st Minnesota. (The 4th Pennsylvania marched to the rear that morning, its 90-day term expired, despite McDowell's appeal.) Fed into Henry Hill behind the batteries. (Verified)" },
+      { "id": "us_willcox", "side": "US", "atSec": 170, "name": "Willcox's Brigade",   "commander": "Col. Orlando B. Willcox",        "arm": "inf", "weapon": "smooth", "men": 2000, "xp": 1, "x": 700, "z": 865, "facing": 0,       "formation": "column", "entry": "Sudley Ford", "note": "2nd Bde, Heintzelman's div: 11th NY 'Fire Zouaves', 38th NY, 1st & 4th Michigan. The Zouaves supported the crest batteries and were broken by Stuart's cavalry charge and Confederate infantry. Willcox wounded & captured. (Verified)" },
+      { "id": "cs_stuart",  "side": "CS", "atSec": 180, "name": "Stuart's Cavalry",    "commander": "Col. J. E. B. Stuart",           "arm": "cav", "weapon": "carbine", "men": 300, "xp": 2, "x": 175, "z": 560, "facing": 3.14159, "formation": "line",   "entry": "the Union right", "note": "1st Virginia Cavalry. Charged the Union right (routing the 11th NY 'Fire Zouaves' area) and then harassed the retreat. (Verified)" },
+      { "id": "us_howard",  "side": "US", "atSec": 215, "name": "Howard's Brigade",    "commander": "Col. Oliver O. Howard",          "arm": "inf", "weapon": "smooth", "men": 1900, "xp": 1, "x": 250, "z": 845, "facing": 0,       "formation": "column", "entry": "Chinn Ridge (the Union right)", "note": "3rd Bde, Heintzelman's div: 3rd/4th/5th Maine, 2nd Vermont. Arrived last and exhausted from the march and climbed Chinn Ridge to extend the Union right — straight into the fresh Confederate flank attack. Its collapse triggered the army-wide rout. (Verified)" },
+      { "id": "cs_early",   "side": "CS", "atSec": 220, "name": "Early's Brigade",     "commander": "Col. Jubal A. Early",            "arm": "inf", "weapon": "smooth", "men": 1900, "xp": 1, "x": 220, "z": 360, "facing": 3.14159, "formation": "column", "entry": "Chinn Ridge (from the Confederate right)", "note": "6th Bde, Army of the Potomac: 7th Louisiana, 13th Mississippi, 7th & 24th Virginia. Marched the length of the army's rear to arrive on Chinn Ridge ~4 p.m. and roll up the exposed Union right. (Verified)" },
+      { "id": "cs_elzey",   "side": "CS", "atSec": 275, "name": "Elzey's Brigade (ex-Kirby Smith)", "commander": "Col. Arnold Elzey", "arm": "inf", "weapon": "smooth", "men": 1700, "xp": 2, "x": 195, "z": 300, "facing": 3.14159, "formation": "column", "entry": "Chinn Ridge ('off the train')", "note": "4th Bde, Army of the Shenandoah: 1st Maryland Bn, 3rd Tennessee, 10th Virginia. DETRAINED from the Manassas Gap Railroad on the afternoon of July 21 — the freshest troops on the field, the rail pivot's final card. Kirby Smith wounded on arrival; Elzey led them onto Chinn Ridge beside Early. Dubbed the 'Blucher of Manassas'. Their arrival converted a hard-fought defense into a rout. (Verified)" }
+    ],
+    "teaching": {
+      "title": "The Battle That Ended the Illusion",
+      "cards": [
+        {
+          "id": "br_rail",
+          "head": "The railroad that won the battle",
+          "body": "Johnston's Army of the Shenandoah slipped away from Patterson and rode the Manassas Gap Railroad to Manassas Junction beginning July 18-19 — the first time in history troops were moved to a battlefield by rail to achieve strategic concentration. Some brigades (Elzey's, off the train) reached the field DURING the battle and decided it. In this scenario the Confederate reinforcements arrive on that timeline; that is why the Union must win the morning quickly.",
+          "provenance": "Verified (high) — Encyclopedia Virginia; Wikipedia."
+        },
+        {
+          "id": "br_stonewall",
+          "head": "'Like a stone wall' — what the legend leaves out",
+          "body": "Bee is said to have pointed to Jackson on Henry Hill and cried 'There stands Jackson like a stone wall!' But Bee was mortally wounded minutes later and died the next day without a report, so no firsthand record survives. Some who were there thought he spoke in FRUSTRATION — that Jackson stood like a wall instead of advancing to help. The heroic reading became canonical and named a general. The fact of the stand is solid; the words are not.",
+          "provenance": "Contested (low-med) wording; Verified stand — Encyclopedia Virginia; American Battlefield Trust."
+        },
+        {
+          "id": "br_illusion",
+          "head": "The short-war illusion, and the cost",
+          "body": "Washington civilians — congressmen, sightseers, picnickers in carriages — rode out to watch the victory and were swept up in the 'Great Skedaddle' back to the capital. Both sides had believed the war would be short and nearly bloodless. ~4,700 men fell here in a single day; it was the bloodiest battle in American history to that point, and a small one by what came after. Bull Run taught the North the war would be long and the South a dangerous overconfidence.",
+          "provenance": "Verified (high) — multiple; casualty totals Union ~2,700-2,900 / Confederate ~1,982."
+        }
+      ],
+      "codex": {
+        "id": "codex_bullrun1",
+        "title": "First Bull Run (First Manassas), July 21, 1861",
+        "summary": "McDowell's flank march turned the Confederate left and carried Matthews Hill by noon, then broke on Henry House Hill and shattered when rail-borne reinforcements hit the Union right at Chinn Ridge. A Confederate victory that ended the illusion of a short war.",
+        "axes": { "timeline": "1861", "theater": "Eastern", "people": ["McDowell", "Beauregard", "Johnston", "Jackson", "Evans", "Bee", "Sherman", "Burnside", "Stuart", "Early", "Elzey", "Hampton"], "battle": "First Bull Run" }
+      }
+    }
+  }
+}

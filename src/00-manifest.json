@@ -23,6 +23,7 @@
     "86-battle-conditioning.js",
     "87-auto-resolve.js",
     "tactical/T0-field-sandbox.js",
+    "tactical/T1-bull-run.js",
     "90-president-register.js"
   ],
   "overrides": [

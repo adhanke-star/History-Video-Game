@@ -107,32 +107,43 @@ function fldBuildTerrain() {
     wall: { x1: ox - 110, z1: oz - 70, x2: ox + 120, z2: oz - 70 }, // a stone wall north of the crest
   };
 }
+// terrain accessors (P1a scenario seam): scenarios supply MULTIPLE hills/walls
+// (terrain.hills[] / terrain.walls[]); the P0 sandbox supplies ONE (terrain.hill /
+// terrain.wall). These normalize both shapes so every reader/renderer is shape-agnostic.
+// For the single-hill sandbox the loops below iterate exactly one element -> the computed
+// height/cover values are byte-identical to the pre-seam code (verified by probe-field +
+// the terrain golden-snapshot guard).
+function fldHills() { var t = __FIELD.terrain; if (!t) return []; return t.hills || (t.hill ? [t.hill] : []); }
+function fldWalls() { var t = __FIELD.terrain; if (!t) return []; return t.walls || (t.wall ? [t.wall] : []); }
 function fldTerrainH(x, z) {
   var t = __FIELD.terrain; if (!t) return 0;
-  var dx = x - t.hill.x, dz = z - t.hill.z, r2 = dx * dx + dz * dz;
-  var h = t.hill.h * Math.exp(-r2 / (2 * t.hill.s * t.hill.s));
-  h += Math.sin(x * 0.012) * 2.2 + Math.cos(z * 0.015) * 2.0; // gentle undulation
+  var h = Math.sin(x * 0.012) * 2.2 + Math.cos(z * 0.015) * 2.0; // gentle undulation
+  var hs = fldHills();
+  for (var i = 0; i < hs.length; i++) { var hh = hs[i], dx = x - hh.x, dz = z - hh.z, r2 = dx * dx + dz * dz; h += hh.h * Math.exp(-r2 / (2 * hh.s * hh.s)); }
   return h;
 }
 function fldInWoods(x, z) {
-  var t = __FIELD.terrain; if (!t) return false;
+  var t = __FIELD.terrain; if (!t || !t.woods) return false;
   for (var i = 0; i < t.woods.length; i++) { var w = t.woods[i]; var dx = x - w.x, dz = z - w.z; if (dx * dx + dz * dz < w.r * w.r) return true; }
   return false;
 }
 function fldNearWall(x, z) {
-  var t = __FIELD.terrain; if (!t || !t.wall) return false;
-  var w = t.wall, dx = w.x2 - w.x1, dz = w.z2 - w.z1, L2 = dx * dx + dz * dz;
-  var tt = L2 ? fldClamp(((x - w.x1) * dx + (z - w.z1) * dz) / L2, 0, 1) : 0;
-  var px = w.x1 + tt * dx, pz = w.z1 + tt * dz, ex = x - px, ez = z - pz;
-  return (ex * ex + ez * ez) < 26 * 26;
+  var ws = fldWalls();
+  for (var i = 0; i < ws.length; i++) {
+    var w = ws[i], dx = w.x2 - w.x1, dz = w.z2 - w.z1, L2 = dx * dx + dz * dz;
+    var tt = L2 ? fldClamp(((x - w.x1) * dx + (z - w.z1) * dz) / L2, 0, 1) : 0;
+    var px = w.x1 + tt * dx, pz = w.z1 + tt * dz, ex = x - px, ez = z - pz;
+    if ((ex * ex + ez * ez) < 26 * 26) return true;
+  }
+  return false;
 }
 // cover def multiplier (higher = safer); mirrors the base TERRAIN .def ladder spirit.
 function fldCoverAt(x, z) {
   var d = 1.0;
   if (fldNearWall(x, z)) d = 1.7;
   else if (fldInWoods(x, z)) d = 1.4;
-  var t = __FIELD.terrain;
-  if (t) { var dx = x - t.hill.x, dz = z - t.hill.z; if (dx * dx + dz * dz < (t.hill.s * 0.7) * (t.hill.s * 0.7)) d *= 1.12; }
+  var hs = fldHills();
+  for (var i = 0; i < hs.length; i++) { var hh = hs[i], dx = x - hh.x, dz = z - hh.z; if (dx * dx + dz * dz < (hh.s * 0.7) * (hh.s * 0.7)) { d *= 1.12; break; } }
   return d;
 }
 function fldMoveFactor(x, z) { return fldInWoods(x, z) ? 0.62 : 1.0; }
@@ -153,9 +164,26 @@ function fldMakeUnit(o) {
     casTick: 0, underFire: 0, flankHit: 0,
   };
 }
+// the per-launch run reset — shared by the sandbox path and every scenario (T1+) so the
+// deploy/clock/selection state is initialized in exactly ONE place (deterministic launch).
+function fldResetRun() {
+  __FIELD.t = 0; __FIELD.winner = null; __FIELD.holdSecs = { US: 0, CS: 0 };
+  __FIELD.routEverCount = 0; __FIELD.sel = []; __FIELD.drag = null;
+  __FIELD.phase = "deploy"; __FIELD.paused = true; __FIELD.speed = 1; __FIELD.acc = 0;
+  _fldAiClock = 0; _fldAiIdx = 0;   // reset the AI cadence so every launch is deterministic
+}
 function fldInitSim(opts) {
   opts = opts || {};
   __FIELD.seed = (opts.seed || 1) >>> 0;
+  // scenario seam (P1a): a non-sandbox scenario (e.g. "bullrun1") is built by a registered
+  // fldScenarioInit (src/tactical/T1-*). It returns true once it has populated terrain + units
+  // + the reinforcement schedule + holdToWin/timeLimit, then we early-return. The sandbox path
+  // below runs verbatim/unchanged whenever scenario === "sandbox" (the default).
+  var sc = opts.scenario || "sandbox"; __FIELD.scenario = sc;
+  __FIELD.reinforce = null; __FIELD.holdToWin = FLD.HOLD_TO_WIN; __FIELD.timeLimit = FLD.TIME_LIMIT; __FIELD.attacker = null;
+  __FIELD.scenData = null; __FIELD.defender = null; __FIELD.winBy = null;   // cleared every launch (scenario init re-sets); no stale leak into the sandbox
+  if (sc !== "sandbox" && typeof fldScenarioInit === "function" && fldScenarioInit(opts)) return;
+  __FIELD.scenario = "sandbox";
   fldBuildTerrain();
   var ox = FLD.FIELD_W / 2, t = __FIELD.terrain;
   var south = FLD.FIELD_H - 150, north = 150;       // US deploys south, CS north
@@ -170,10 +198,7 @@ function fldInitSim(opts) {
     fldMakeUnit({ id: "CS1", side: "CS", name: "Jackson's Brigade", arm: "inf", weapon: "rifled", xp: 2, men: 1500, x: ox - 160, z: north, facing: faceS, ai: true }),
     fldMakeUnit({ id: "CS2", side: "CS", name: "Bee's Brigade", arm: "inf", weapon: "smooth", xp: 1, men: 1400, x: ox + 160, z: north, facing: faceS, ai: true }),
   ];
-  __FIELD.t = 0; __FIELD.winner = null; __FIELD.holdSecs = { US: 0, CS: 0 };
-  __FIELD.routEverCount = 0; __FIELD.sel = []; __FIELD.drag = null;
-  __FIELD.phase = "deploy"; __FIELD.paused = true; __FIELD.speed = 1; __FIELD.acc = 0;
-  _fldAiClock = 0; _fldAiIdx = 0;   // reset the AI cadence so every launch is deterministic
+  fldResetRun();
 }
 
 /* ===========================================================================
@@ -396,6 +421,9 @@ var _fldAiClock = 0, _fldAiIdx = 0;
 function fldSimStep(dt) {
   if (__FIELD.phase !== "battle") return;
   __FIELD.t += dt;
+  // scenario seam (P1a): per-tick reinforcement schedule (keyed on sim-time __FIELD.t).
+  // Null for the sandbox (no reinforcements) -> this is a no-op on the sandbox path.
+  if (__FIELD.reinforce && typeof fldScenarioTick === "function") fldScenarioTick(dt);
   // AI: throttle — step a slice of units per tick toward AI_HZ
   _fldAiClock += dt;
   if (_fldAiClock >= 1 / FLD.AI_HZ) {
@@ -450,19 +478,46 @@ function fldArmyLive(side) {
 function fldArmyStrength(side) {
   var n = 0; for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side === side && u.alive) n += u.men; } return n;
 }
+// pending (scheduled-but-not-yet-arrived) reinforcements for a side. 0 for the sandbox
+// (reinforce === null) -> the collapse checks below behave exactly as the pre-seam engine.
+function fldArmyPending(side) {
+  var r = __FIELD.reinforce; if (!r) return 0;
+  var n = 0; for (var i = 0; i < r.length; i++) { if (!r[i].done && r[i].spec && r[i].spec.side === side) n++; } return n;
+}
+// is a side eliminated? Never while reinforcements are still detraining. In a SCENARIO a routing
+// line is alive and can still rally, so the side is gone only when NO live men remain; the SANDBOX
+// keeps its original routing-counts-as-gone rule (byte-identical to the pre-seam engine).
+function fldGoneCheck(side) {
+  if (fldArmyPending(side) > 0) return false;
+  if (__FIELD.attacker) {
+    for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side === side && u.alive) return false; }
+    return true;
+  }
+  return fldArmyLive(side) === 0;
+}
 function fldCheckVictory() {
   if (__FIELD.phase !== "battle") return;
-  var w = null;
-  if (fldArmyLive("US") === 0 && fldArmyLive("CS") > 0) w = "CS";
-  else if (fldArmyLive("CS") === 0 && fldArmyLive("US") > 0) w = "US";
-  else if (fldArmyLive("US") === 0 && fldArmyLive("CS") === 0) w = "draw";
-  else if (__FIELD.holdSecs.US >= FLD.HOLD_TO_WIN) w = "US";
-  else if (__FIELD.holdSecs.CS >= FLD.HOLD_TO_WIN) w = "CS";
-  else if (__FIELD.t >= FLD.TIME_LIMIT) {
-    var sU = fldArmyStrength("US"), sC = fldArmyStrength("CS");
-    w = sU > sC * 1.05 ? "US" : (sC > sU * 1.05 ? "CS" : "draw");
+  var w = null, by = null;
+  var usGone = fldGoneCheck("US"), csGone = fldGoneCheck("CS");
+  if (usGone && !csGone) { w = "CS"; by = "destroy"; }
+  else if (csGone && !usGone) { w = "US"; by = "destroy"; }
+  else if (usGone && csGone) { w = "draw"; by = "destroy"; }
+  else if (__FIELD.attacker) {
+    // ASYMMETRIC (scenario): only the ATTACKER wins by seizing-and-holding the objective; the
+    // DEFENDER wins by denying it to the time limit (the historical attacker-must-take-the-hill shape).
+    var att = __FIELD.attacker, def = fldEnemy(att);
+    if (__FIELD.holdSecs[att] >= __FIELD.holdToWin) { w = att; by = "hold"; }
+    else if (__FIELD.t >= __FIELD.timeLimit) { w = def; by = "timeout"; }
+  } else {
+    // SYMMETRIC (sandbox): either side can win by holding the crest, else strength at the time limit.
+    if (__FIELD.holdSecs.US >= __FIELD.holdToWin) { w = "US"; by = "hold"; }
+    else if (__FIELD.holdSecs.CS >= __FIELD.holdToWin) { w = "CS"; by = "hold"; }
+    else if (__FIELD.t >= __FIELD.timeLimit) {
+      var sU = fldArmyStrength("US"), sC = fldArmyStrength("CS");
+      w = sU > sC * 1.05 ? "US" : (sC > sU * 1.05 ? "CS" : "draw"); by = "timeout";
+    }
   }
-  if (w) { __FIELD.winner = w; __FIELD.phase = "over"; fldOnOver(); }
+  if (w) { __FIELD.winner = w; __FIELD.winBy = by; __FIELD.phase = "over"; fldOnOver(); }
 }
 
 /* headless stepper for probes (no render) */
@@ -523,17 +578,26 @@ function fldExit(silent) {
   if (!silent) { try { if (typeof openMainMenu === "function") openMainMenu(); } catch (e) {} }
 }
 function fldBuildDom() {
+  /* wcag-auditor: inject :focus-visible styles for all tactical buttons (WCAG 2.4.7 / 2.4.11).
+     Inline-styled buttons have no explicit outline suppression, but browser defaults vary in
+     contrast on dark backgrounds. Explicit ring (#e8c84a, 11:1 vs #10141a) guarantees AA. */
+  if (!document.getElementById("fldFocusStyle")) {
+    var st = document.createElement("style");
+    st.id = "fldFocusStyle";
+    st.textContent = "#fldBar button:focus-visible,#fldEnd button:focus-visible,#fldBrief button:focus-visible{outline:2px solid #e8c84a;outline-offset:2px;}";
+    document.head.appendChild(st);
+  }
   var r = document.createElement("div");
   r.id = "fldRoot";
   r.style.cssText = "position:fixed;inset:0;z-index:5000;background:#10141a;overflow:hidden;font-family:Georgia,serif;color:#f2e8d5;";
   r.innerHTML =
     '<canvas id="fldGl" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></canvas>' +
     '<div id="fldTop" style="position:absolute;top:0;left:0;right:0;padding:8px 12px;display:flex;gap:10px;align-items:center;background:linear-gradient(#000a,#0000);pointer-events:none;">' +
-      '<b style="letter-spacing:1px;">&#9876; TACTICAL SANDBOX</b><span id="fldClock" style="opacity:.85;">0:00</span>' +
+      '<b id="fldTitle" style="letter-spacing:1px;">&#9876; TACTICAL SANDBOX</b><span id="fldClock" style="opacity:.85;">0:00</span>' +
       '<span id="fldObj" style="opacity:.85;">Objective: contested</span><span style="flex:1"></span>' +
       '<span id="fldPhase" style="opacity:.85;"></span>' +
     '</div>' +
-    '<div id="fldHud" role="region" aria-label="Selected unit" style="position:absolute;left:12px;bottom:12px;min-width:240px;max-width:320px;background:#0c0f14e6;border:1px solid #4a3c28;border-radius:6px;padding:10px 12px;font-size:13px;"></div>' +
+    '<div id="fldHud" role="region" aria-label="Selected unit" style="position:absolute;left:12px;bottom:12px;min-width:240px;max-width:320px;background:#0c0f14e6;border:1px solid #745e3f;border-radius:6px;padding:10px 12px;font-size:13px;"></div>'/* wcag-auditor: contrast fix #4a3c28->#745e3f border on #0c0f14/#10141a (was 1.80:1, now 3.12/3.00:1) WCAG 1.4.11 */ +
     '<div id="fldBar" style="position:absolute;left:50%;bottom:14px;transform:translateX(-50%);display:flex;gap:6px;"></div>' +
     '<div id="fldLive" aria-live="polite" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;"></div>' +
     '<div id="fldEnd" class="hidden" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#000a;"></div>';
@@ -554,7 +618,7 @@ function fldBuildDom() {
   for (var i = 0; i < btns.length; i++) {
     var b = document.createElement("button");
     b.id = btns[i][0]; b.innerHTML = btns[i][1]; b.title = btns[i][2]; b.setAttribute("aria-label", btns[i][2]);
-    b.style.cssText = "background:#1c1610;color:#e9dcc0;border:1px solid #4a3c28;border-radius:4px;padding:7px 11px;font:13px Georgia,serif;cursor:pointer;";
+    b.style.cssText = "background:#1c1610;color:#e9dcc0;border:1px solid #766040;border-radius:4px;padding:7px 11px;font:13px Georgia,serif;cursor:pointer;"; /* wcag-auditor: contrast fix #4a3c28->#766040 border on #1c1610/#10141a (was 1.68/1.73:1, now 3.00/3.09:1) WCAG 1.4.11 */
     bar.appendChild(b);
   }
   fldWireControls();
@@ -605,10 +669,18 @@ function fldRender() {
 }
 function fldRenderTop() {
   var c = document.getElementById("fldClock"); if (c) { var s = Math.floor(__FIELD.t); c.textContent = Math.floor(s / 60) + ":" + ("0" + (s % 60)).slice(-2); }
+  var ti = document.getElementById("fldTitle");
+  if (ti) { var wantT = (__FIELD.scenData && __FIELD.scenData.name) ? ("⚔ " + __FIELD.scenData.name) : "⚔ TACTICAL SANDBOX"; if (ti.textContent !== wantT) ti.textContent = wantT; }
   var o = document.getElementById("fldObj");
   if (o) {
-    var hU = __FIELD.holdSecs.US, hC = __FIELD.holdSecs.CS;
-    var lead = hU > hC + 0.5 ? "Union holds " + Math.floor(hU) + "s/" + FLD.HOLD_TO_WIN : (hC > hU + 0.5 ? "Confederate holds " + Math.floor(hC) + "s/" + FLD.HOLD_TO_WIN : "contested");
+    var hU = __FIELD.holdSecs.US, hC = __FIELD.holdSecs.CS, lead;
+    if (__FIELD.attacker) {
+      // asymmetric: only the attacker's hold progresses toward a win; the defender is denying.
+      var att = __FIELD.attacker, hA = Math.floor(__FIELD.holdSecs[att]), an = att === "US" ? "Union" : "Confederate";
+      lead = hA > 0 ? (an + " holds " + hA + "s/" + __FIELD.holdToWin) : "must be seized";
+    } else {
+      lead = hU > hC + 0.5 ? "Union holds " + Math.floor(hU) + "s/" + __FIELD.holdToWin : (hC > hU + 0.5 ? "Confederate holds " + Math.floor(hC) + "s/" + __FIELD.holdToWin : "contested");
+    }
     o.textContent = "Objective: " + lead;
   }
   var p = document.getElementById("fldPhase");
@@ -625,7 +697,7 @@ function fldWireControls() {
   window.addEventListener("pointerup", fldPointerUp);
   document.getElementById("fldRoot").addEventListener("keydown", fldKey);
   document.getElementById("fldRoot").setAttribute("tabindex", "0");
-  setTimeout(function () { try { document.getElementById("fldRoot").focus(); } catch (e) {} }, 30);
+  setTimeout(function () { try { if (!document.getElementById("fldBrief")) document.getElementById("fldRoot").focus(); } catch (e) {} }, 30);
   var w = function (id, fn) { var el = document.getElementById(id); if (el) el.addEventListener("click", fn); };
   w("fldBtnPlay", function () { fldTogglePlay(); });
   w("fldBtnSpd", function () { fldCycleSpeed(); });
@@ -733,17 +805,29 @@ function fldOnOver() {
   var msg = w === "draw" ? "Stalemate" : (w === "US" ? "Union Victory" : "Confederate Victory");
   fldAnnounce(msg);
   e.classList.remove("hidden");
-  e.setAttribute("role", "dialog"); e.setAttribute("aria-label", msg);
+  e.setAttribute("role", "dialog"); e.setAttribute("aria-modal", "true"); e.setAttribute("aria-label", msg); /* wcag-auditor: added aria-modal=true so AT users know focus is constrained (WCAG 4.1.2) */
+  // P1a seam: a scenario can append its teaching payoff (what really happened / your war vs history).
+  var scNote = (typeof fldScenarioEndHtml === "function") ? (fldScenarioEndHtml(w) || "") : "";
   e.innerHTML =
-    '<div style="text-align:center;background:#0c0f14;border:1px solid #4a3c28;border-radius:8px;padding:26px 34px;">' +
+    '<div style="text-align:center;background:#0c0f14;border:1px solid #745e3f;border-radius:8px;padding:26px 34px;max-width:640px;max-height:88vh;overflow:auto;">' /* wcag-auditor: contrast fix #4a3c28->#745e3f border on #0c0f14 (was 1.80:1, now 3.12:1) WCAG 1.4.11 */ +
     '<div style="font-size:26px;letter-spacing:1px;margin-bottom:8px;color:#e9dcc0;">' + msg + '</div>' +
     '<div style="opacity:.8;margin-bottom:6px;">Held the field at ' + Math.floor(__FIELD.t / 60) + ':' + ("0" + (Math.floor(__FIELD.t) % 60)).slice(-2) + '.</div>' +
     '<div style="opacity:.7;font-size:13px;margin-bottom:18px;">Union ' + fldArmyStrength("US") + ' &middot; Confederate ' + fldArmyStrength("CS") + ' still under arms.</div>' +
-    '<button id="fldAgain" style="background:#1c1610;color:#e9dcc0;border:1px solid #4a3c28;border-radius:4px;padding:9px 16px;font:14px Georgia,serif;cursor:pointer;margin-right:8px;">Fight Again</button>' +
-    '<button id="fldDone" style="background:#1c1610;color:#e9dcc0;border:1px solid #4a3c28;border-radius:4px;padding:9px 16px;font:14px Georgia,serif;cursor:pointer;">Main Menu</button></div>';
+    scNote +
+    '<button id="fldAgain" style="background:#1c1610;color:#e9dcc0;border:1px solid #766040;border-radius:4px;padding:9px 16px;font:14px Georgia,serif;cursor:pointer;margin-right:8px;">Fight Again</button>' +
+    '<button id="fldDone" style="background:#1c1610;color:#e9dcc0;border:1px solid #766040;border-radius:4px;padding:9px 16px;font:14px Georgia,serif;cursor:pointer;">Main Menu</button></div>'; /* wcag-auditor: contrast fix #4a3c28->#766040 border on #1c1610 (was 1.68:1, now 3.00:1) WCAG 1.4.11 */
   var a = document.getElementById("fldAgain"), d = document.getElementById("fldDone");
-  if (a) a.addEventListener("click", function () { var k = __FIELD.rendererKind, sd = (__FIELD.seed + 7) >>> 0; fldExit(true); fldLaunchSandbox({ renderer: k, seed: sd }); });
+  // rematch preserves the scenario (sandbox OR a battle like bullrun1) — capture before fldExit clears state.
+  if (a) a.addEventListener("click", function () { var k = __FIELD.rendererKind, sc = __FIELD.scenario, sd = (__FIELD.seed + 7) >>> 0; fldExit(true); fldLaunchSandbox({ renderer: k, seed: sd, scenario: sc }); });
   if (d) d.addEventListener("click", function () { fldExit(false); });
+  // focus trap (WCAG 2.4.11): the end screen is aria-modal, so confine Tab/Shift+Tab to its two buttons.
+  e.addEventListener("keydown", function (ev) {
+    if (ev.key !== "Tab") return;
+    var act = document.activeElement;
+    if (!ev.shiftKey && act === d) { ev.preventDefault(); if (a) a.focus(); }
+    else if (ev.shiftKey && act === a) { ev.preventDefault(); if (d) d.focus(); }
+    else if (act !== a && act !== d) { ev.preventDefault(); if (a) a.focus(); }
+  });
   if (a) { try { a.focus(); } catch (e2) {} }   // move focus into the end dialog for keyboard users
 }
 
@@ -769,11 +853,15 @@ function fld2dDraw() {
   var t = __FIELD.terrain;
   // woods
   ctx.fillStyle = "#2c3a22";
-  for (var i = 0; i < t.woods.length; i++) { var wd = t.woods[i]; ctx.beginPath(); ctx.arc(v.ox + wd.x * v.s, v.oz + wd.z * v.s, wd.r * v.s, 0, 7); ctx.fill(); }
-  // hill ring
-  ctx.strokeStyle = "#5a6a44"; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(v.ox + t.hill.x * v.s, v.oz + t.hill.z * v.s, t.hill.s * 0.55 * v.s, 0, 7); ctx.stroke();
-  // wall
-  ctx.strokeStyle = "#8a8070"; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(v.ox + t.wall.x1 * v.s, v.oz + t.wall.z1 * v.s); ctx.lineTo(v.ox + t.wall.x2 * v.s, v.oz + t.wall.z2 * v.s); ctx.stroke();
+  if (t.woods) for (var i = 0; i < t.woods.length; i++) { var wd = t.woods[i]; ctx.beginPath(); ctx.arc(v.ox + wd.x * v.s, v.oz + wd.z * v.s, wd.r * v.s, 0, 7); ctx.fill(); }
+  // hill rings (one for the sandbox; several for a scenario)
+  ctx.strokeStyle = "#5a6a44"; ctx.lineWidth = 2;
+  var _hs = fldHills(); for (var hi = 0; hi < _hs.length; hi++) { var hh = _hs[hi]; ctx.beginPath(); ctx.arc(v.ox + hh.x * v.s, v.oz + hh.z * v.s, hh.s * 0.55 * v.s, 0, 7); ctx.stroke(); }
+  // walls
+  ctx.strokeStyle = "#8a8070"; ctx.lineWidth = 4;
+  var _ws = fldWalls(); for (var wi = 0; wi < _ws.length; wi++) { var ww = _ws[wi]; ctx.beginPath(); ctx.moveTo(v.ox + ww.x1 * v.s, v.oz + ww.z1 * v.s); ctx.lineTo(v.ox + ww.x2 * v.s, v.oz + ww.z2 * v.s); ctx.stroke(); }
+  // scenario markers (creek / stream / road / ford / bridge / place-labels) — render + teaching atmosphere
+  fld2dDrawMarkers(ctx, v);
   // objective
   var o = __FIELD.objective; ctx.strokeStyle = "#d8c87a"; ctx.lineWidth = 2; ctx.setLineDash([6, 5]); ctx.beginPath(); ctx.arc(v.ox + o.x * v.s, v.oz + o.z * v.s, o.r * v.s, 0, 7); ctx.stroke(); ctx.setLineDash([]);
   // units
@@ -800,6 +888,33 @@ function fld2dDraw() {
   }
   // drag arrow
   if (__FIELD.drag) { var dr = __FIELD.drag; ctx.strokeStyle = "#ffe9a8"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(v.ox + dr.x0 * v.s, v.oz + dr.z0 * v.s); ctx.lineTo(v.ox + dr.x * v.s, v.oz + dr.z * v.s); ctx.stroke(); }
+}
+// scenario terrain markers (Bull Run: Bull Run creek, Young's Branch, the Warrenton Turnpike,
+// Sudley Ford, the Stone Bridge, place-labels). The sandbox has no markers -> a no-op.
+function fld2dDrawMarkers(ctx, v) {
+  var t = __FIELD.terrain; if (!t || !t.markers) return;
+  for (var i = 0; i < t.markers.length; i++) {
+    var mk = t.markers[i];
+    if (mk.path && mk.path.length > 1) {
+      ctx.lineWidth = mk.kind === "road" ? 5 : (mk.kind === "creek" ? 6 : 3);
+      ctx.strokeStyle = mk.kind === "road" ? "#caa86a" : "#5a7da0";
+      ctx.beginPath();
+      for (var p = 0; p < mk.path.length; p++) { var pt = mk.path[p], X = v.ox + pt[0] * v.s, Z = v.oz + pt[1] * v.s; if (p === 0) ctx.moveTo(X, Z); else ctx.lineTo(X, Z); }
+      ctx.stroke();
+      var midp = mk.path[Math.floor(mk.path.length / 2)];
+      if (mk.name) fld2dLabel(ctx, mk.name, v.ox + midp[0] * v.s, v.oz + midp[1] * v.s - 6);
+    } else if (typeof mk.x === "number") {
+      if (mk.kind === "ford" || mk.kind === "bridge") { ctx.fillStyle = mk.kind === "bridge" ? "#9a8a6a" : "#5a7da0"; ctx.beginPath(); ctx.arc(v.ox + mk.x * v.s, v.oz + mk.z * v.s, 5, 0, 7); ctx.fill(); }
+      if (mk.name) fld2dLabel(ctx, mk.name, v.ox + mk.x * v.s, v.oz + mk.z * v.s - 8);
+    }
+  }
+}
+function fld2dLabel(ctx, text, x, z) {
+  ctx.save();
+  ctx.font = "11px Georgia"; ctx.textAlign = "center"; ctx.textBaseline = "alphabetic";
+  ctx.lineWidth = 3; ctx.strokeStyle = "rgba(8,10,14,0.85)"; ctx.strokeText(text, x, z);
+  ctx.fillStyle = "#e9dcc0"; ctx.fillText(text, x, z);
+  ctx.restore();
 }
 
 /* ===========================================================================
@@ -847,13 +962,18 @@ function fld3dBuildTerrain() {
   var o = __FIELD.objective;
   var ring = new T.Mesh(new T.RingGeometry(o.r - 6, o.r, 40), new T.MeshBasicMaterial({ color: "#d8c87a", side: T.DoubleSide, transparent: true, opacity: 0.7 }));
   ring.rotation.x = -Math.PI / 2; ring.position.set(o.x, fldTerrainH(o.x, o.z) + 1.5, o.z); __FIELD.scene.add(ring);
-  // wall
-  var t = __FIELD.terrain, wdx = t.wall.x2 - t.wall.x1, wdz = t.wall.z2 - t.wall.z1, wlen = Math.hypot(wdx, wdz);
-  var wall = new T.Mesh(new T.BoxGeometry(wlen, 14, 8), new T.MeshLambertMaterial({ color: "#8a8070" }));
-  wall.position.set((t.wall.x1 + t.wall.x2) / 2, fldTerrainH(t.wall.x1, t.wall.z1) + 7, (t.wall.z1 + t.wall.z2) / 2);
-  wall.rotation.y = -Math.atan2(wdz, wdx); __FIELD.scene.add(wall);
+  // walls (one for the sandbox; several for a scenario)
+  var t = __FIELD.terrain, _ws = fldWalls();
+  for (var wq = 0; wq < _ws.length; wq++) {
+    var wl = _ws[wq], wdx = wl.x2 - wl.x1, wdz = wl.z2 - wl.z1, wlen = Math.hypot(wdx, wdz);
+    var wall = new T.Mesh(new T.BoxGeometry(wlen, 14, 8), new T.MeshLambertMaterial({ color: "#8a8070" }));
+    wall.position.set((wl.x1 + wl.x2) / 2, fldTerrainH(wl.x1, wl.z1) + 7, (wl.z1 + wl.z2) / 2);
+    wall.rotation.y = -Math.atan2(wdz, wdx); __FIELD.scene.add(wall);
+  }
+  // scenario markers (roads/creeks as low ribbons; ford/bridge as small markers) — Bull Run only
+  fld3dBuildMarkers();
   // woods (instanced cones)
-  for (var w = 0; w < t.woods.length; w++) {
+  if (t.woods) for (var w = 0; w < t.woods.length; w++) {
     var wd = t.woods[w], n = fldLow() ? 14 : 34;
     var im = new T.InstancedMesh(new T.ConeGeometry(16, 46, 6), new T.MeshLambertMaterial({ color: "#2c3a22" }), n);
     var dummy = new T.Object3D();
@@ -865,9 +985,40 @@ function fld3dBuildTerrain() {
     __FIELD.scene.add(im);
   }
 }
+function fld3dBuildMarkers() {
+  var t = __FIELD.terrain; if (!t || !t.markers || !window.THREE) return;
+  var T = window.THREE;
+  for (var i = 0; i < t.markers.length; i++) {
+    var mk = t.markers[i];
+    var col = mk.kind === "road" ? "#c2a063" : (mk.kind === "bridge" ? "#9a8a6a" : "#4f739a");
+    if (mk.path && mk.path.length > 1) {
+      var wgt = mk.kind === "road" ? 16 : 12, hgt = mk.kind === "road" ? 1.4 : 0.8;
+      for (var p = 1; p < mk.path.length; p++) {
+        var a = mk.path[p - 1], b = mk.path[p], dx = b[0] - a[0], dz = b[1] - a[1], len = Math.hypot(dx, dz);
+        if (len < 1) continue;
+        var seg = new T.Mesh(new T.BoxGeometry(len, hgt, wgt), new T.MeshLambertMaterial({ color: col }));
+        var mx = (a[0] + b[0]) / 2, mz = (a[1] + b[1]) / 2;
+        seg.position.set(mx, fldTerrainH(mx, mz) + hgt, mz); seg.rotation.y = -Math.atan2(dz, dx);
+        __FIELD.scene.add(seg);
+      }
+    } else if (typeof mk.x === "number" && (mk.kind === "ford" || mk.kind === "bridge")) {
+      var m2 = new T.Mesh(new T.BoxGeometry(22, mk.kind === "bridge" ? 7 : 2, 22), new T.MeshLambertMaterial({ color: col }));
+      m2.position.set(mk.x, fldTerrainH(mk.x, mk.z) + 3, mk.z); __FIELD.scene.add(m2);
+    }
+  }
+}
 function fld3dBuildUnits() {
   var T = window.THREE;
-  while (__FIELD.groups.children.length) __FIELD.groups.remove(__FIELD.groups.children[0]);
+  // dispose each child's geometry/material BEFORE detaching — this runs on every reinforcement
+  // arrival (a full rebuild), so skipping disposal would leak GPU buffers wave after wave.
+  while (__FIELD.groups.children.length) {
+    var ch = __FIELD.groups.children[0];
+    if (ch.traverse) ch.traverse(function (o) {
+      if (o.geometry && o.geometry.dispose) o.geometry.dispose();
+      if (o.material) { var m = o.material; if (Array.isArray(m)) { for (var i = 0; i < m.length; i++) m[i] && m[i].dispose && m[i].dispose(); } else if (m.dispose) m.dispose(); }
+    });
+    __FIELD.groups.remove(ch);
+  }
   __FIELD._u3d = {};
   for (var i = 0; i < __FIELD.units.length; i++) {
     var u = __FIELD.units[i];
@@ -949,6 +1100,8 @@ function fldInjectMenuButton() {
       '<span class="gn-deck">Real-time skirmish (Beta) &mdash; drag to maneuver, volley, flank, and break the foe. Two brigades a side, on the open 3D field.</span>';
     b.addEventListener("click", function () { fldLaunchSandbox({ renderer: "3d" }); });
     if (anchor.nextSibling) anchor.parentNode.insertBefore(b, anchor.nextSibling); else anchor.parentNode.appendChild(b);
+    // P1a seam: registered scenarios (e.g. First Bull Run) inject their own menu buttons after the sandbox button.
+    if (typeof fldInjectScenarioButtons === "function") fldInjectScenarioButtons(b);
   } catch (e) {}
 }
 function fldInstallMenuObserver() {
