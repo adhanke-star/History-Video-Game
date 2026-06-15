@@ -72,6 +72,19 @@ var FLD = {
   // fog of war (P1b — a toggle, default OFF): per-arm sight radius (yd); woods block line-of-sight.
   SIGHT_INF: 430, SIGHT_ART: 470, SIGHT_CAV: 720, // cavalry are the scouts (wide recon)
   WOODS_SEE_THRU: 75,                    // yards of woods a sight line can penetrate before it is blocked
+  // role-aware tactical AI (P1b-iii): the DEFENDER doctrine for an ASYMMETRIC scenario (attacker set).
+  // A defender HOLDS the objective's forward face + cover and makes the attacker assault uphill,
+  // conducts a fighting withdrawal when pressed, and counterattacks a disordered attacker that has
+  // closed on the hill (then returns to the line). The symmetric SANDBOX (attacker null) runs the
+  // generic AI for both sides -> byte-behavior-identical (probe-field holds by construction).
+  AI_LOCAL_R: 360,        // radius for the local force-balance read (yd)
+  DEF_FACE_FRAC: 0.55,    // the hold line sits this fraction of OBJ_R forward of the crest, toward the threat
+  DEF_LANE: 1.6,          // lateral spread of the hold line = this * OBJ_R either side of the threat bearing
+  DEF_HOLD_TOL: 50,       // within this of the line band -> treat as "on the line", don't reposition (yd)
+  DEF_FALLBACK_RATIO: 0.6,// a forward (delaying) unit outnumbered below this locally -> fall back to the line
+  CTR_REACH: 175,         // a disordered visible enemy within this -> a defender may counterattack (yd)
+  CTR_LEASH: 150,         // ...only if the target stays within OBJ_R + this of the objective (don't chase off the hill)
+  CTR_RATIO: 0.9,         // ...and only with local friendly men >= this * local enemy men (don't over-commit)
 };
 
 /* ---- seeded RNG (LCG) ---- */
@@ -198,6 +211,7 @@ function fldInitSim(opts) {
   // so the headless probe stepper (fldStepN) never auto-pauses -> zero probe/determinism impact.
   __FIELD.autoPause = (opts.autoPause != null) ? !!opts.autoPause : !(typeof G !== "undefined" && G.settings && G.settings.tacticalAutoPause === false);
   __FIELD._apReason = null;
+  __FIELD._aiGenericAll = false;   // role-aware AI test hook: reset per launch like every other flag (bug-hunt #4); probe-ai sets it AFTER launch
   if (sc !== "sandbox" && typeof fldScenarioInit === "function" && fldScenarioInit(opts)) return;
   __FIELD.scenario = "sandbox";
   fldBuildTerrain();
@@ -443,6 +457,18 @@ function fldById(id) { for (var i = 0; i < __FIELD.units.length; i++) if (__FIEL
 
 function fldAiUnit(u) {
   if (!u.alive || u.state === "routing" || !u.ai) return;
+  // ROLE-AWARE AI (P1b-iii): in an ASYMMETRIC scenario (attacker set) the DEFENDER holds ground + cover
+  // and counterattacks disordered attackers instead of advancing off its good ground like an attacker.
+  // The symmetric SANDBOX (attacker === null) runs fldAiGeneric for BOTH sides -> byte-behavior-identical
+  // (probe-field holds by construction). The defender lives in the same headless sim path -> probe-testable.
+  // __FIELD._aiGenericAll (default falsy, set only by probe-ai for an A/B) forces the pre-P1b-iii
+  // generic-for-both behavior so the probe can measure the defender doctrine's effect on identical seeds.
+  if (!__FIELD._aiGenericAll && __FIELD.attacker && __FIELD.objective && u.side === fldEnemy(__FIELD.attacker)) { fldAiDefender(u); return; }
+  fldAiGeneric(u);
+}
+/* the GENERIC doctrine: advance toward the objective, halt at good fire range, press a wavering enemy.
+   Used by BOTH sides in the sandbox and by the ATTACKER in a scenario. (Unchanged from P0/P1a.) */
+function fldAiGeneric(u) {
   var obj = __FIELD.objective;
   // nearest enemy
   var near = null, nd = 1e9, weakNear = null, wd = 1e9;
@@ -478,6 +504,82 @@ function fldAiUnit(u) {
     var tz = obj.z + (u.z - obj.z) * 0.28;
     u.order = { type: "move", tx: tx, tz: tz, tface: face };
   }
+}
+
+/* the DEFENDER doctrine (asymmetric scenario only — see fldAiUnit). A defender HOLDS the objective's
+   forward face in cover and makes the attacker assault uphill; a forward delaying unit fights to buy
+   time then withdraws when locally outnumbered; a rear reinforcement marches up to the line; a steady
+   unit counterattacks a disordered attacker that has closed on the hill (the melee code then returns
+   it to hold). Deterministic — no RNG — so probes reproduce. This is the historical Henry House Hill
+   defense AND the lever that answers the logged "AI leans Union" gap (cover + delay + counterattack). */
+function fldAiDefender(u) {
+  var obj = __FIELD.objective, att = __FIELD.attacker;
+  // scan VISIBLE enemies: nearest, nearest CATCHABLE-disordered, and the local force balance within AI_LOCAL_R.
+  // weak tracks WAVERING only — a routing unit flees at SPD_ROUT (62) faster than a charge marches (SPD_LINE
+  // 30), so chasing a rout can never make contact and only walks the defender off its ground (bug-hunt #3).
+  var near = null, nd = 1e9, weak = null, wd = 1e9, foeMen = 0, friendMen = u.men;
+  for (var i = 0; i < __FIELD.units.length; i++) {
+    var e = __FIELD.units[i]; if (!e.alive) continue;
+    if (e.side === u.side) { if (e !== u && e.state !== "routing" && fldDist(u, e) < FLD.AI_LOCAL_R) friendMen += e.men; continue; }
+    if (__FIELD.fog && !fldVisible(u.side, e)) continue;   // react only to what it can see (fog aids the defender)
+    var d = fldDist(u, e);
+    if (d < FLD.AI_LOCAL_R) foeMen += e.men;
+    if (d < nd) { nd = d; near = e; }
+    if (e.state === "wavering" && d < wd) { wd = d; weak = e; }
+  }
+  var face = near ? Math.atan2(near.x - u.x, -(near.z - u.z)) : Math.atan2(0, -(fldHomeEdgeZ(att) - u.z));
+  // STABLE defensive frame (bug-hunt #1/#2): the engine models the two armies on the +z / -z home edges, so
+  // the approach axis is z and the lateral frontage axis is world x. Deriving the frame from the MOMENTARY
+  // nearest-enemy bearing collapsed the line onto one point on a flank threat (Chinn Ridge) and flipped the
+  // forward/behind gate when an attacker crossed the crest (stranding rear reserves). fwdSign points from the
+  // crest toward the attacker's home edge and never rotates; `face` still tracks the threat (we aim, not move).
+  var fwdSign = (fldHomeEdgeZ(att) > obj.z) ? 1 : -1;
+  var lane = fldClamp(u.x - obj.x, -obj.r * FLD.DEF_LANE, obj.r * FLD.DEF_LANE);   // this unit's stable lateral slot
+  var proj = (u.z - obj.z) * fwdSign;                                              // signed distance forward of the crest
+  var holdDist = obj.r * FLD.DEF_FACE_FRAC;
+  // a hold point at this unit's lane on the forward face (faceFrac>0) or the reverse slope (faceFrac<0),
+  // CLAMPED inside the objective control radius so a holding defender actually DENIES the objective rather
+  // than parking up to ~237yd outside the 140yd ring it is meant to hold (bug-hunt #5).
+  function fldDefHold(faceFrac) {
+    var hx = obj.x + lane, hz = obj.z + fwdSign * obj.r * faceFrac;
+    var hd = Math.sqrt((hx - obj.x) * (hx - obj.x) + (hz - obj.z) * (hz - obj.z));
+    if (hd > obj.r) { var sc = obj.r / hd; hx = obj.x + (hx - obj.x) * sc; hz = obj.z + (hz - obj.z) * sc; }
+    return { x: hx, z: hz };
+  }
+
+  // (1) SURVIVAL: wavering with a stronger enemy close -> a fighting withdrawal to the reverse slope (behind
+  //     the crest), still facing the threat so it can rally and rejoin — not a deep flight off the field.
+  if (u.state === "wavering" && near && nd < 240 && near.men > u.men * 1.05) {
+    var rs = fldDefHold(-0.5);
+    u.formation = "line"; u.order = { type: "move", tx: rs.x, tz: rs.z, tface: face };
+    return;
+  }
+  // (2) COUNTERATTACK: steady + a CATCHABLE (wavering) enemy within reach that has closed on the hill +
+  //     local parity-or-better -> charge. The DUAL leash (the target AND the defender's OWN position both
+  //     bounded near the objective) keeps the defender from being walked off the ground it denies (#3/#6).
+  if (weak && u.state === "steady" && wd < FLD.CTR_REACH && fldDist(weak, obj) < obj.r + FLD.CTR_LEASH
+      && fldDist(u, obj) < obj.r + FLD.CTR_LEASH * 0.5 && friendMen >= foeMen * FLD.CTR_RATIO) {
+    u.order = { type: "charge", tx: weak.x, tz: weak.z, tface: Math.atan2(weak.x - u.x, -(weak.z - u.z)) };
+    return;
+  }
+  // (3) DELAY: a unit FORWARD of the line (the delaying force) holds its ground and fights to buy time;
+  //     it falls back to the line only when locally outnumbered (a pressed withdrawal, not a rout).
+  if (proj > holdDist + FLD.DEF_HOLD_TOL) {
+    u.formation = "line";
+    if (foeMen > 0 && friendMen < foeMen * FLD.DEF_FALLBACK_RATIO) { var fp = fldDefHold(FLD.DEF_FACE_FRAC); u.order = { type: "move", tx: fp.x, tz: fp.z, tface: face }; }
+    else u.order = { type: "hold", tx: u.x, tz: u.z, tface: face };
+    return;
+  }
+  // (4) ADVANCE TO THE LINE: a rear unit (a fresh reinforcement behind the crest) marches up to the hold line.
+  if (proj < holdDist - FLD.DEF_HOLD_TOL) {
+    var ap = fldDefHold(FLD.DEF_FACE_FRAC);
+    u.formation = (fldDist(u, ap) > 280) ? "column" : "line";
+    u.order = { type: "move", tx: ap.x, tz: ap.z, tface: face };
+    return;
+  }
+  // (5) HOLD THE LINE: on the forward face in cover, face the threat, pour fire — never advance into the open.
+  var hp = fldDefHold(FLD.DEF_FACE_FRAC);
+  u.formation = "line"; u.order = { type: "hold", tx: hp.x, tz: hp.z, tface: face };
 }
 
 /* ===========================================================================
