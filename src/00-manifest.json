@@ -22,6 +22,7 @@
     "85-battle-bridge.js",
     "86-battle-conditioning.js",
     "87-auto-resolve.js",
+    "tactical/T0-field-sandbox.js",
     "90-president-register.js"
   ],
   "overrides": [

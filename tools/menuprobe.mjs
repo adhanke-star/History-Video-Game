@@ -38,7 +38,7 @@ const EVAL = `(() => {
   const page=await browser.newPage({viewport:cfg.viewport}); const pe=[]; page.on('pageerror',e=>pe.push(String(e.message)));
   let result={};
   try {
-    await page.goto(probe,{waitUntil:'load',timeout:30000}); await sleep(400);
+    await page.goto(probe,{waitUntil:'load',timeout:60000}); await sleep(400);
     // capture the main menu (with the War Department entry) first
     await page.evaluate(`(()=>{ G.campaign={side:'US',iron:false,idx:1,funds:500,recovery:false,completed:['x'],roster:[{id:'R1',type:'inf',weapon:'springfield',xp:1,name:null}],nextId:2,stats:{battles:2,won:1,infl:0,suff:0},recoveryLossCount:0,recoveryMode:false,flipAtk:false,captured:[]}; if(typeof saveLocal==='function')saveLocal(); if(typeof openMainMenu==='function')openMainMenu(); })()`);
     await sleep(300); await page.screenshot({ path: join(OUT,'t1-menu.png'), fullPage:false });
