@@ -25163,6 +25163,9 @@ var FLD = {
   FATIGUE_MARCH: 1.5, FATIGUE_FIGHT: 2.4, FATIGUE_REST: 3.0, // /s
   AMMO_DRAIN: 0.9,                       // /s of sustained fire (ammo is 0..100)
   AI_HZ: 2.5,
+  // fog of war (P1b — a toggle, default OFF): per-arm sight radius (yd); woods block line-of-sight.
+  SIGHT_INF: 430, SIGHT_ART: 470, SIGHT_CAV: 720, // cavalry are the scouts (wide recon)
+  WOODS_SEE_THRU: 75,                    // yards of woods a sight line can penetrate before it is blocked
 };
 
 /* ---- seeded RNG (LCG) ---- */
@@ -25262,9 +25265,13 @@ function fldMakeUnit(o) {
 // deploy/clock/selection state is initialized in exactly ONE place (deterministic launch).
 function fldResetRun() {
   __FIELD.t = 0; __FIELD.winner = null; __FIELD.holdSecs = { US: 0, CS: 0 };
+  __FIELD.vis = null; __FIELD.lastSeen = {};   // fog visibility set + last-known "ghost" positions, recomputed per tick
   __FIELD.routEverCount = 0; __FIELD.sel = []; __FIELD.drag = null;
   __FIELD.phase = "deploy"; __FIELD.paused = true; __FIELD.speed = 1; __FIELD.acc = 0;
   _fldAiClock = 0; _fldAiIdx = 0;   // reset the AI cadence so every launch is deterministic
+  // fog ON at launch: prime the visibility set so the DEPLOY screen already shows what is in sight
+  // (matching the in-battle toggle) instead of a blacked-out field until the first sim tick.
+  if (__FIELD.fog && __FIELD.units && __FIELD.units.length) fldComputeVisibility();
 }
 function fldInitSim(opts) {
   opts = opts || {};
@@ -25276,6 +25283,9 @@ function fldInitSim(opts) {
   var sc = opts.scenario || "sandbox"; __FIELD.scenario = sc;
   __FIELD.reinforce = null; __FIELD.holdToWin = FLD.HOLD_TO_WIN; __FIELD.timeLimit = FLD.TIME_LIMIT; __FIELD.attacker = null;
   __FIELD.scenData = null; __FIELD.defender = null; __FIELD.winBy = null;   // cleared every launch (scenario init re-sets); no stale leak into the sandbox
+  // fog of war (P1b): a persisted toggle (default OFF). OFF -> fldVisible() is always true -> every fog
+  // gate below is a no-op and the sim/render is byte-behavior-identical to the pre-fog engine.
+  __FIELD.fog = (opts.fog != null) ? !!opts.fog : !!(typeof G !== "undefined" && G.settings && G.settings.tacticalFog);
   if (sc !== "sandbox" && typeof fldScenarioInit === "function" && fldScenarioInit(opts)) return;
   __FIELD.scenario = "sandbox";
   fldBuildTerrain();
@@ -25354,6 +25364,7 @@ function fldResolveMelee(a, b, dt) {
 function fldKill(u) {
   if (!u.alive) return;
   u.alive = false; u.men = 0; u.state = "destroyed";
+  if (__FIELD.lastSeen) delete __FIELD.lastSeen[u.id];   // a destroyed unit leaves no fog "ghost" (it's gone, not merely unseen)
   fldAnnounce(u.name + " is destroyed.");
 }
 // moraleCheck shape (base ~1015): drop ~ sev*60/rally; rout when below threshold.
@@ -25455,11 +25466,59 @@ function fldOrderCharge(u) {
 /* ===========================================================================
    TARGETING + AI
    =========================================================================== */
+/* ---------------------------------------------------------------------------
+   FOG OF WAR  (P1b — a toggle, default OFF). Per-side line-of-sight visibility:
+   an enemy is seen only when a friendly unit is within sight range with a clear
+   line (woods block sight); cavalry scout widest. Drives AI/targeting/render.
+   fldVisible() short-circuits true when fog is OFF -> every caller is a no-op then.
+   --------------------------------------------------------------------------- */
+function fldUnitSight(u) { return u.arm === "cav" ? FLD.SIGHT_CAV : (u.arm === "art" ? FLD.SIGHT_ART : FLD.SIGHT_INF); }
+function fldLosClear(ax, az, bx, bz) {
+  // EXACT segment-vs-woods test: sum the length of the sight line that lies inside any woods disk;
+  // block only when the line penetrates more than WOODS_SEE_THRU yards of timber. This is robust where
+  // a fixed-sample walk failed both ways — a thin grazing chord stays visible (short penetration) and a
+  // line straight through a woods is blocked (long penetration); two units in the SAME woods close
+  // together still see each other (short chord). O(woods) per call, no RNG.
+  var t = __FIELD.terrain; if (!t || !t.woods) return true;
+  var dx = bx - ax, dz = bz - az, segLen = Math.sqrt(dx * dx + dz * dz);
+  if (segLen < 1e-6) return true;
+  var inside = 0;
+  for (var i = 0; i < t.woods.length; i++) {
+    var w = t.woods[i], fx = ax - w.x, fz = az - w.z;
+    // |P0 + t*D - C|^2 = r^2  ->  A t^2 + B t + Cc = 0, t in [0,1]
+    var A = dx * dx + dz * dz, B = 2 * (fx * dx + fz * dz), Cc = fx * fx + fz * fz - w.r * w.r;
+    var disc = B * B - 4 * A * Cc; if (disc <= 0) continue;
+    var sq = Math.sqrt(disc), t0 = (-B - sq) / (2 * A), t1 = (-B + sq) / (2 * A);
+    if (t0 < 0) t0 = 0; if (t1 > 1) t1 = 1; if (t1 > t0) inside += (t1 - t0) * segLen;
+    if (inside > FLD.WOODS_SEE_THRU) return false;
+  }
+  return inside <= FLD.WOODS_SEE_THRU;
+}
+function fldComputeVisibility() {
+  var vis = { US: {}, CS: {} }, U = __FIELD.units, i, j;
+  for (i = 0; i < U.length; i++) {
+    var e = U[i]; if (!e.alive) continue; var foe = fldEnemy(e.side);
+    // is e visible to its foe? -> some alive foe-unit within sight + clear LOS
+    for (j = 0; j < U.length; j++) {
+      var o = U[j]; if (o.side !== foe || !o.alive) continue;
+      if (fldDist(o, e) <= fldUnitSight(o) && fldLosClear(o.x, o.z, e.x, e.z)) { vis[foe][e.id] = 1; break; }
+    }
+    if (vis[foe][e.id]) __FIELD.lastSeen[e.id] = { x: e.x, z: e.z, facing: e.facing, formation: e.formation, men: e.men, maxMen: e.maxMen, side: e.side };
+  }
+  __FIELD.vis = vis;
+}
+// can `side` see `target` right now? Always true with fog OFF (the no-op fast path).
+function fldVisible(side, target) {
+  if (!__FIELD.fog) return true;
+  var v = __FIELD.vis && __FIELD.vis[side];
+  return !!(v && v[target.id]);
+}
 function fldAcquireTarget(u) {
   if (!u.alive || u.state === "routing" || u.ammo <= 0) { u.targetId = null; return; }
   var best = null, score = -1;
   for (var i = 0; i < __FIELD.units.length; i++) {
     var e = __FIELD.units[i]; if (e.side === u.side || !e.alive) continue;
+    if (__FIELD.fog && !fldVisible(u.side, e)) continue;   // can't fire at what you can't see
     var d = fldDist(u, e); if (d > u.rng) continue;
     // prefer closer + weaker + flank-exposed targets
     var fr = fldFrontageExposed(u, e);
@@ -25477,6 +25536,7 @@ function fldAiUnit(u) {
   var near = null, nd = 1e9, weakNear = null, wd = 1e9;
   for (var i = 0; i < __FIELD.units.length; i++) {
     var e = __FIELD.units[i]; if (e.side === u.side || !e.alive) continue;
+    if (__FIELD.fog && !fldVisible(u.side, e)) continue;   // AI reacts only to enemies it can see
     var d = fldDist(u, e);
     if (d < nd) { nd = d; near = e; }
     if ((e.state === "wavering" || e.state === "routing") && d < wd) { wd = d; weakNear = e; }
@@ -25518,6 +25578,8 @@ function fldSimStep(dt) {
   // scenario seam (P1a): per-tick reinforcement schedule (keyed on sim-time __FIELD.t).
   // Null for the sandbox (no reinforcements) -> this is a no-op on the sandbox path.
   if (__FIELD.reinforce && typeof fldScenarioTick === "function") fldScenarioTick(dt);
+  // fog of war (P1b): recompute per-side visibility before AI/targeting consult it (no-op when fog OFF).
+  if (__FIELD.fog) fldComputeVisibility();
   // AI: throttle — step a slice of units per tick toward AI_HZ
   _fldAiClock += dt;
   if (_fldAiClock >= 1 / FLD.AI_HZ) {
@@ -25707,11 +25769,13 @@ function fldBuildDom() {
     ["fldBtnCol", "Column", "Form column — fast march (C)"],
     ["fldBtnCharge", "Charge", "Charge nearest enemy (F)"],
     ["fldBtnHold", "Hold", "Halt in place (H)"],
+    ["fldBtnFog", "Fog: " + (__FIELD.fog ? "On" : "Off"), "Toggle fog of war — line-of-sight scouting (V)"],
     ["fldBtnExit", "Exit", "Leave the sandbox (Esc)"],
   ];
   for (var i = 0; i < btns.length; i++) {
     var b = document.createElement("button");
     b.id = btns[i][0]; b.innerHTML = btns[i][1]; b.title = btns[i][2]; b.setAttribute("aria-label", btns[i][2]);
+    if (btns[i][0] === "fldBtnFog") b.setAttribute("aria-pressed", String(!!__FIELD.fog));   // a toggle button: convey on/off state to AT
     b.style.cssText = "background:#1c1610;color:#e9dcc0;border:1px solid #766040;border-radius:4px;padding:7px 11px;font:13px Georgia,serif;cursor:pointer;"; /* wcag-auditor: contrast fix #4a3c28->#766040 border on #1c1610/#10141a (was 1.68/1.73:1, now 3.00/3.09:1) WCAG 1.4.11 */
     bar.appendChild(b);
   }
@@ -25779,6 +25843,8 @@ function fldRenderTop() {
   }
   var p = document.getElementById("fldPhase");
   if (p) p.textContent = __FIELD.phase === "deploy" ? "Press Begin (Space) to advance" : (__FIELD.paused ? "PAUSED" : (__FIELD.speed + "×"));
+  // fog: keep the no-selection "N Rebel brigades sighted" HUD line live as scouting changes (throttled ~3x/sec)
+  if (__FIELD.fog) { __FIELD._hudTick = (__FIELD._hudTick || 0) + 1; if (__FIELD._hudTick % 20 === 0 && !fldPlayerSel().length) fldRenderHud(); }
 }
 
 /* ===========================================================================
@@ -25799,7 +25865,16 @@ function fldWireControls() {
   w("fldBtnCol", function () { fldSetFormation("column"); });
   w("fldBtnCharge", function () { fldSelCharge(); });
   w("fldBtnHold", function () { fldSelHold(); });
+  w("fldBtnFog", function () { fldToggleFog(); });
   w("fldBtnExit", function () { fldExit(false); });
+}
+function fldToggleFog() {
+  __FIELD.fog = !__FIELD.fog;
+  try { if (typeof G !== "undefined") { G.settings = G.settings || {}; G.settings.tacticalFog = __FIELD.fog; } } catch (e) {}
+  if (__FIELD.fog) fldComputeVisibility(); else { __FIELD.vis = null; }   // ON: scout now; OFF: everything visible again
+  var b = document.getElementById("fldBtnFog"); if (b) { b.innerHTML = "Fog: " + (__FIELD.fog ? "On" : "Off"); b.setAttribute("aria-pressed", String(__FIELD.fog)); }
+  fldAnnounce(__FIELD.fog ? "Fog of war ON — you see only what your units scout." : "Fog of war OFF — the whole field is visible.");
+  fldRenderHud();
 }
 function fldTogglePlay() {
   if (__FIELD.phase === "deploy") { __FIELD.phase = "battle"; __FIELD.paused = false; fldAnnounce("Battle begins."); }
@@ -25824,6 +25899,7 @@ function fldKey(e) {
   else if (k === "c" || k === "C") fldSetFormation("column");
   else if (k === "f" || k === "F" || k === "Enter") fldSelCharge();
   else if (k === "h" || k === "H") fldSelHold();
+  else if (k === "v" || k === "V") fldToggleFog();
   else if (k === "a" || k === "A") { __FIELD.sel = []; for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side === "US" && u.alive && !u.ai) __FIELD.sel.push(u.id); } fldRenderHud(); }
   else if (k === "Tab") { if (__FIELD.phase === "battle") { e.preventDefault(); fldCycleSel(); } } // only steal Tab mid-battle
   var b = document.getElementById("fldBtnSpd"); if (b) b.innerHTML = __FIELD.speed + "&times;";
@@ -25881,7 +25957,12 @@ function fldBar(label, val, max, col) {
 function fldRenderHud() {
   var el = document.getElementById("fldHud"); if (!el) return;
   var sel = fldPlayerSel();
-  if (!sel.length) { el.innerHTML = '<div style="opacity:.7;">Click a brigade to select. Drag from open ground to march &amp; face. (' + fldArmyLive("US") + ' Union vs ' + fldArmyLive("CS") + ' Rebel brigades afield.)</div>'; return; }
+  if (!sel.length) {
+    var foeLine;
+    if (__FIELD.fog) { var seen = 0; for (var fi = 0; fi < __FIELD.units.length; fi++) { var fu = __FIELD.units[fi]; if (fu.side === "CS" && fu.alive && fldVisible("US", fu)) seen++; } foeLine = seen + ' Rebel brigades sighted'; }
+    else foeLine = fldArmyLive("CS") + ' Rebel brigades afield';
+    el.innerHTML = '<div style="opacity:.7;">Click a brigade to select. Drag from open ground to march &amp; face. (' + fldArmyLive("US") + ' Union vs ' + foeLine + '.)</div>'; return;
+  }
   var u = sel[0];
   var sideCol = u.side === "US" ? "#6c8ebf" : "#b06a5a";
   var wn = (typeof WEAPONS !== "undefined" && WEAPONS[u.weapon]) ? WEAPONS[u.weapon].name : u.weapon;
@@ -25958,9 +26039,12 @@ function fld2dDraw() {
   fld2dDrawMarkers(ctx, v);
   // objective
   var o = __FIELD.objective; ctx.strokeStyle = "#d8c87a"; ctx.lineWidth = 2; ctx.setLineDash([6, 5]); ctx.beginPath(); ctx.arc(v.ox + o.x * v.s, v.oz + o.z * v.s, o.r * v.s, 0, 7); ctx.stroke(); ctx.setLineDash([]);
+  // last-known "ghosts" for enemies once seen but now hidden by fog (drawn beneath the live units)
+  fld2dGhosts(ctx, v);
   // units
   for (var u2 = 0; u2 < __FIELD.units.length; u2++) {
     var u = __FIELD.units[u2]; if (!u.alive) continue;
+    if (__FIELD.fog && u.side !== "US" && !fldVisible("US", u)) continue;   // hidden enemy (the player sees only what is scouted)
     var cx = v.ox + u.x * v.s, cz = v.oz + u.z * v.s;
     var frontW = (u.formation === "column" ? 36 : 96) * v.s * (0.5 + 0.5 * u.men / u.maxMen);
     var depth = (u.formation === "column" ? 60 : 26) * v.s;
@@ -26009,6 +26093,24 @@ function fld2dLabel(ctx, text, x, z) {
   ctx.lineWidth = 3; ctx.strokeStyle = "rgba(8,10,14,0.85)"; ctx.strokeText(text, x, z);
   ctx.fillStyle = "#e9dcc0"; ctx.fillText(text, x, z);
   ctx.restore();
+}
+// fog "ghosts": a faded last-known marker for each enemy once seen but now out of sight.
+function fld2dGhosts(ctx, v) {
+  if (!__FIELD.fog || !__FIELD.lastSeen) return;
+  for (var id in __FIELD.lastSeen) {
+    if (!Object.prototype.hasOwnProperty.call(__FIELD.lastSeen, id)) continue;
+    var g = __FIELD.lastSeen[id]; if (g.side === "US") continue;          // only enemy ghosts
+    var live = fldById(id);
+    if (!live || !live.alive || fldVisible("US", live)) continue;          // skip if gone, dead, or currently seen (the live unit is drawn)
+    var cx = v.ox + g.x * v.s, cz = v.oz + g.z * v.s;
+    ctx.save(); ctx.globalAlpha = 0.4;
+    ctx.strokeStyle = "#9a8a7a"; ctx.setLineDash([4, 3]); ctx.lineWidth = 1.5;
+    var w = (g.formation === "column" ? 36 : 84) * v.s, d = (g.formation === "column" ? 54 : 24) * v.s;
+    ctx.translate(cx, cz); ctx.rotate(g.facing || 0); ctx.strokeRect(-w / 2, -d / 2, w, d); ctx.restore();
+    ctx.save(); ctx.globalAlpha = 0.6; ctx.fillStyle = "#cdbb88"; ctx.font = "bold 11px Georgia"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillText("?", cx, cz); ctx.restore();
+    ctx.textAlign = "start"; ctx.textBaseline = "alphabetic";
+  }
 }
 
 /* ===========================================================================
@@ -26137,7 +26239,8 @@ function fld3dBuildUnits() {
 }
 function fld3dSyncUnit(u, g) {
   var T = window.THREE;
-  g.visible = u.alive;
+  // fog: a hidden enemy (not currently scouted) is not drawn (no-op when fog OFF).
+  g.visible = u.alive && !(__FIELD.fog && u.side !== "US" && !fldVisible("US", u));
   if (!u.alive) return;
   var y = fldTerrainH(u.x, u.z);
   g.position.set(u.x, y + 4, u.z); g.rotation.y = -u.facing; // align the block front (local -z) to sim forward
