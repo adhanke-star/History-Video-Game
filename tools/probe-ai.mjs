@@ -54,7 +54,7 @@ const SETUP = `(() => {
   try {
     if (typeof fldLaunchSandbox!=='function' || typeof __FIELD==='undefined' || typeof fldAiDefender!=='function' || typeof fldAiGeneric!=='function')
       return JSON.stringify({ok:false, fatal:'__FIELD engine / role-aware AI fns missing'});
-    G.settings=G.settings||{}; G.settings.gfx='classic'; G.mode='menu'; G.settings.tacticalFog=false;
+    G.settings=G.settings||{}; G.settings.gfx='classic'; G.mode='menu'; G.settings.tacticalFog=false; __FIELD._officersOff=true;   // B-2: lock the AI doctrine sweep BYTE-IDENTICAL (officers off; officer layer -> probe-officers)
 
     step('ROUTING: a scenario sets attacker/defender (CS=defender); the sandbox is symmetric (attacker null)', function(){
       fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:1});

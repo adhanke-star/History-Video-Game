@@ -45,7 +45,7 @@ const SETUP = `(() => {
     if (typeof fldLaunchSandbox!=='function' || typeof __FIELD==='undefined' || typeof fldCampaignCondition!=='function'
         || typeof fldCampaignComputeOutcome!=='function' || typeof fldCampaignApplyOutcome!=='function' || typeof BATTLES==='undefined')
       return JSON.stringify({ok:false, fatal:'Phase A campaign-link missing'});
-    G.settings=G.settings||{}; G.settings.gfx='classic'; G.mode='menu';
+    G.settings=G.settings||{}; G.settings.gfx='classic'; G.mode='menu'; __FIELD._officersOff=true;   // B-2: lock the PRE-officer A-layer BYTE-IDENTICAL (officer layer -> probe-officers)
 
     // ---------- A1 — conditioning ----------
     step('A1: a STRONG war fields more men than a WEAK war (same battle/seed); FRESH ~ nominal (74 anchor)', function(){

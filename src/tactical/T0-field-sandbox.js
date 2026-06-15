@@ -182,6 +182,7 @@ function fldMakeUnit(o) {
   var prof = fldWeaponProfile(o.weapon, o.arm || "inf");
   return {
     id: o.id, side: o.side, name: o.name, arm: o.arm || "inf", weapon: o.weapon,
+    commander: o.commander || null,   // B-2: the brigade's named leader (from the OOB data); labels it in the HUD
     pow: prof.pow, rng: prof.rng, xp: o.xp || 1,
     x: o.x, z: o.z, facing: o.facing, formation: o.formation || "line",
     men: o.men, maxMen: o.men, morale: o.morale || 78, maxMor: o.morale || 78,
@@ -204,6 +205,9 @@ function fldResetRun() {
   // the single chokepoint shared by the sandbox / scenario / skirmish paths. No-op when campaignCtx is
   // null (every standalone launch), so the conditioning never perturbs the sandbox/Bull-Run probes.
   if (__FIELD.campaignCtx && typeof fldCampaignCondition === "function") { try { fldCampaignCondition(); } catch (e) {} }
+  // officers & command (B-2): build the named field leaders for this battle (scenario cast / the appointed
+  // general / a generic pair). No-op when officers are off (gate inside) -> probe baselines unperturbed.
+  if (typeof fldBuildOfficers === "function") { try { fldBuildOfficers(); } catch (e) {} }
   // fog ON at launch: prime the visibility set so the DEPLOY screen already shows what is in sight
   // (matching the in-battle toggle) instead of a blacked-out field until the first sim tick.
   if (__FIELD.fog && __FIELD.units && __FIELD.units.length) fldComputeVisibility();
@@ -230,6 +234,13 @@ function fldInitSim(opts) {
   // so the headless probe stepper (fldStepN) never auto-pauses -> zero probe/determinism impact.
   __FIELD.autoPause = (opts.autoPause != null) ? !!opts.autoPause : !(typeof G !== "undefined" && G.settings && G.settings.tacticalAutoPause === false);
   __FIELD._apReason = null;
+  // officers & command (B-2): named field leaders project a command radius (morale lift / faster rally / rout
+  // resistance) and CAN BE HIT. A per-launch gate, default ON for every live launch; the sticky _officersOff
+  // test hook forces it OFF — set once by the field/bullrun/fog/autopause/ai/campaign-link probes so their
+  // PRE-officer baselines stay BYTE-IDENTICAL (no leaders are built, fldOfficersStep never runs, and the
+  // (u.cmdBonus||0) reads in fldMoraleStep are exactly 0 -> the new layer is provably the only change).
+  __FIELD.officers = __FIELD._officersOff ? false : ((opts.officers != null) ? !!opts.officers : true);
+  __FIELD.leaders = [];
   __FIELD._aiGenericAll = false; __FIELD._aiGenericAtk = false;   // role-aware AI test hooks: reset per launch (bug-hunt #4); probe-ai sets them AFTER launch (A/B the defender + attacker doctrines)
   if (sc !== "sandbox" && typeof fldScenarioInit === "function" && fldScenarioInit(opts)) return;
   // Phase A (A2): a custom FREE skirmish / procedural campaign battle is built by T2's fldSkirmishOOB
@@ -341,8 +352,10 @@ function fldMoraleStep(u, dt) {
       if (e.side === u.side || !e.alive) continue;
       if (fldDist(e, u) < FLD.RANGE_RIFLE * 0.9) { safe = false; break; }
     }
-    if (safe) u.morale += FLD.MOR_RECOVER * dt;
+    if (safe) u.morale += FLD.MOR_RECOVER * (1 + 0.4 * (u.cmdBonus || 0)) * dt;   // B-2: a general's presence speeds recovery (moderated — §27: meaningful, not dominant)
   }
+  // B-2 command presence: a leader in radius steadies the troops (a small passive lift; 0 when out of command / officers off)
+  if (u.cmdBonus) u.morale += 0.3 * u.cmdBonus * dt;
   u.morale = fldClamp(u.morale, 0, u.maxMor);
   // (4) state machine + rout roll
   var routThresh = FLD.ROUT_THRESH - u.xp * 1.5;       // veterans hold longer (base)
@@ -354,12 +367,12 @@ function fldMoraleStep(u, dt) {
       if (en.side === u.side || !en.alive) continue;
       if (fldDist(en, u) < FLD.RALLY_R) { danger = true; break; }
     }
-    if (!danger) { u.rallyT += dt; if (u.rallyT >= FLD.RALLY_SECS) { u.state = "wavering"; u.morale = Math.max(u.morale, 30); u.rallyT = 0; fldAnnounce(u.name + " rallies."); } }
+    if (!danger) { u.rallyT += dt; var _need = FLD.RALLY_SECS / (1 + 0.4 * (u.cmdBonus || 0)); if (u.rallyT >= _need) { u.state = "wavering"; u.morale = Math.max(u.morale, 30); u.rallyT = 0; fldAnnounce(u.name + " rallies."); } }   /* B-2: a leader near a routed unit rallies it sooner */
     else u.rallyT = 0;
     return;
   }
   if (u.morale < routThresh) {
-    var save = 0.5 * rally;
+    var save = Math.min(0.95, (0.5 + 0.12 * (u.cmdBonus || 0)) * rally);   // B-2: a general in command stiffens resolve against the rout (moderated + capped — never total immunity)
     if (fldRng() > save) { u.state = "routing"; u.rallyT = 0; __FIELD.routEverCount++; fldAnnounce(u.name + " breaks and routs!"); return; }
   }
   u.state = u.morale > 55 ? "steady" : (u.morale > 35 ? "shaken" : "wavering");
@@ -727,6 +740,10 @@ function fldSimStep(dt) {
     fldAcquireTarget(s);
     if (s.targetId) { var tg = fldById(s.targetId); if (tg) fldResolveFire(s, tg, dt); }
   }
+  // officers & command (B-2): ride leaders to the line, apply the command aura (u.cmdBonus), accrue the
+  // leader exposure-hazard + any general-down shock — all BEFORE morale, so this tick's morale resolution
+  // reflects them. No-op when officers are off (fldOfficersStep early-returns; u.cmdBonus stays unset -> 0).
+  if (__FIELD.officers && typeof fldOfficersStep === "function") fldOfficersStep(dt);
   // morale
   for (var mo = 0; mo < __FIELD.units.length; mo++) fldMoraleStep(__FIELD.units[mo], dt);
   // objective + victory
@@ -1132,7 +1149,9 @@ function fldRenderHud() {
     var foeLine;
     if (__FIELD.fog) { var seen = 0; for (var fi = 0; fi < __FIELD.units.length; fi++) { var fu = __FIELD.units[fi]; if (fu.side === "CS" && fu.alive && fldVisible("US", fu)) seen++; } foeLine = seen + ' Rebel brigades sighted'; }
     else foeLine = fldArmyLive("CS") + ' Rebel brigades afield';
-    el.innerHTML = '<div style="opacity:.7;">Click a brigade to select. Drag from open ground to march &amp; face. (' + fldArmyLive("US") + ' Union vs ' + foeLine + '.)</div>'; return;
+    el.innerHTML = '<div style="opacity:.7;">Click a brigade to select. Drag from open ground to march &amp; face. (' + fldArmyLive("US") + ' Union vs ' + foeLine + '.)</div>'
+      + (typeof fldOfficerHudRoster === "function" ? fldOfficerHudRoster() : "");   // B-2: a field-officer status line
+    return;
   }
   var u = sel[0];
   var sideCol = u.side === "US" ? "#6c8ebf" : "#b06a5a";
@@ -1143,7 +1162,8 @@ function fldRenderHud() {
     fldBar("Men", u.men, u.maxMen, "#cdbb88") +
     fldBar("Morale", u.morale, u.maxMor, u.morale > 35 ? "#7faf6a" : "#c98a3a") +
     fldBar("Fatigue", u.fatigue, 100, "#a08050") +
-    fldBar("Ammo", u.ammo, 100, "#8a9bb0");
+    fldBar("Ammo", u.ammo, 100, "#8a9bb0") +
+    (typeof fldOfficerHudSelected === "function" ? fldOfficerHudSelected(u) : "");   // B-2: brigade leader + in-command status
 }
 function fldOnOver() {
   var e = document.getElementById("fldEnd"); if (!e) { fldAnnounce("Battle over."); return; }
@@ -1156,6 +1176,8 @@ function fldOnOver() {
   var scNote = (typeof fldScenarioEndHtml === "function") ? (fldScenarioEndHtml(w) || "") : "";
   // Phase A seam: a campaign battle appends its strategic-consequence note (no-op standalone).
   if (__FIELD.campaignCtx && typeof fldCampaignEndHtml === "function") { try { scNote += (fldCampaignEndHtml(w) || ""); } catch (eC) {} }
+  // B-2 seam: the officer teaching payoff (who fell, why command-from-the-saddle mattered). No-op when off / none lost.
+  if (typeof fldOfficerEndHtml === "function") { try { scNote += (fldOfficerEndHtml(w) || ""); } catch (eO) {} }
   var _inCampaign = !!__FIELD.campaignCtx;
   e.innerHTML =
     '<div style="text-align:center;background:#0c0f14;border:1px solid #745e3f;border-radius:8px;padding:26px 34px;max-width:640px;max-height:88vh;overflow:auto;">' /* wcag-auditor: contrast fix #4a3c28->#745e3f border on #0c0f14 (was 1.80:1, now 3.12:1) WCAG 1.4.11 */ +
@@ -1256,6 +1278,8 @@ function fld2dDraw() {
     ctx.fillStyle = u.morale > 35 ? "#7faf6a" : "#c98a3a"; ctx.fillRect(cx - 12, cz - depth / 2 - 9, 24 * (u.morale / u.maxMor), 3);
     if (u.state === "routing") { ctx.fillStyle = "#ffd27a"; ctx.font = "10px Georgia"; ctx.fillText("ROUT", cx - 13, cz + depth / 2 + 12); }
   }
+  // officers & command (B-2): command rings + mounted-officer markers + fallen crosses (no-op when off / no leaders)
+  if (typeof fldDrawOfficers === "function") fldDrawOfficers(ctx, v);
   // drag arrow
   if (__FIELD.drag) { var dr = __FIELD.drag; ctx.strokeStyle = "#ffe9a8"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(v.ox + dr.x0 * v.s, v.oz + dr.z0 * v.s); ctx.lineTo(v.ox + dr.x * v.s, v.oz + dr.z * v.s); ctx.stroke(); }
 }
@@ -1329,6 +1353,8 @@ function fld3dInit() {
   fld3dBuildTerrain();
   __FIELD.groups = new T.Group(); scene.add(__FIELD.groups);
   fld3dBuildUnits();
+  // officers & command (B-2): mounted-officer figures + ground command auras (no-op when off / no leaders)
+  if (typeof fld3dBuildOfficers === "function") { try { fld3dBuildOfficers(); } catch (e) {} }
 }
 function fldLow() { try { var q = G && G.settings && G.settings.gfxQuality; if (q === "low") return true; if (q === "high") return false; return Math.min(window.innerWidth, window.innerHeight) <= 720; } catch (e) { return false; } }
 function fld3dBuildTerrain() {
@@ -1448,6 +1474,7 @@ function fld3dRender() {
   if (!__FIELD.renderer) return;
   if (__FIELD.controls) __FIELD.controls.update();
   for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; var g = __FIELD._u3d[u.id]; if (g) fld3dSyncUnit(u, g); }
+  if (typeof fld3dSyncOfficers === "function") fld3dSyncOfficers();   // B-2: officer figures + auras
   __FIELD.renderer.render(__FIELD.scene, __FIELD.camera);
 }
 function fld3dPick(clientX, clientY) {
@@ -1470,6 +1497,7 @@ function fld3dDispose() {
     if (__FIELD.renderer) { try { if (__FIELD.renderer.forceContextLoss) __FIELD.renderer.forceContextLoss(); } catch (e3) {} if (__FIELD.renderer.dispose) __FIELD.renderer.dispose(); }
   } catch (e) {}
   __FIELD.scene = null; __FIELD.camera = null; __FIELD.controls = null; __FIELD.renderer = null; __FIELD.groups = null; __FIELD._u3d = null; __FIELD.ground = null;
+  __FIELD._ld3dGroup = null; __FIELD._ld3d = null;   // B-2: the officer group's geometries were disposed in the scene traverse above; drop the refs
 }
 
 /* ===========================================================================

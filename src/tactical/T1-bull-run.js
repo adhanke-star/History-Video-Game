@@ -42,6 +42,7 @@ function fldBrSpec(d, side, autoBoth) {
   var s = d.side || side;
   return {
     id: d.id, side: s, name: d.name, arm: d.arm, weapon: d.weapon,
+    commander: d.commander || null,   // B-2: the named brigade leader (HUD label; the leaders layer reads scenData.leaders)
     men: d.men, xp: d.xp || 1, x: d.x, z: d.z, facing: d.facing,
     formation: d.formation || "line", entry: d.entry || "",
     ai: (s === "CS") ? true : !!autoBoth,

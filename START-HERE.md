@@ -50,7 +50,7 @@ Never push an unvetted / red / regressed / pageerror build. `tools/shots/*` and 
 
 ## ▶ PASTE THIS INTO A NEW CHAT (zero-context, looping v1 build run — Opus 4.8 / ultracode / high effort)
 
-**Live head as of this edit (2026-06-15): Phase A ✅ (D62, `1f338b5`) + Phase B-1 attacker AI ✅ (D64, `a7e74a2`) shipped + pushed; first unchecked = Phase B-2 (officers/command).** The block below is self-updating — it points at `HANDOFF.md`'s top block + `git log` for live state, so it stays correct as milestones ship.
+**Live head as of this edit (2026-06-15): Phase A ✅ (D62) + B-1 attacker AI ✅ (D64) + B-2 officers/command ✅ (D65) shipped + pushed; first unchecked = Phase B-3 (in-battle logistics).** The block below is self-updating — it points at `HANDOFF.md`'s top block + `git log` for live state, so it stays correct as milestones ship.
 
 > **ultracode — high effort.** You are Opus 4.8 driving an autonomous, **self-looping** build run for **"The Civil War"**, a single-file teaching wargame at `~/Desktop/Video Game` (a personal project — NOT MJI). $0 / single-file (several MB is fine) / no build step beyond `tools/build.mjs`. You have **ZERO context — everything lives on disk; load it first.** The roadmap (`V1-CHECKLIST.md`, DECISIONS **D61**) is fully cleared, so you don't re-litigate scope — you **build it, beautifully, to completion, looping**. **Bar: best appearance AND function possible — go above and beyond the basics in EVERY aspect. Nothing ships ugly, minimal, or barebones.**
 >

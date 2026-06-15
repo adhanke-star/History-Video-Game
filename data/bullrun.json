@@ -17,6 +17,36 @@
       "x": 600, "z": 450, "r": 140,
       "note": "The dominant plateau where the battle was decided. Jackson's reverse-slope line, the lost Union batteries, and the climactic infantry fight. Holding it bought time for the Valley reinforcements to arrive. (Verified)"
     },
+    "leaders": {
+      "_note": "fate = a per-leader durability multiplier weighting the casualty model to HISTORY: >1 endures the day (the army commanders, Jackson), <1 is fall-prone. Only Bee and Bartow actually became casualties at First Bull Run; the others survived — so the rest fall only in a rare alt-history turn, and never narrate a death as historical fact.",
+      "US": [
+        { "id": "ld_mcdowell", "name": "Brig. Gen. Irvin McDowell", "short": "McDowell", "quality": 0.55, "radius": 280, "x": 590, "z": 815, "fate": 2.4,
+          "note": "McDowell devised an ambitious turning movement, but could not coordinate green regiments over the distances it required; his assault arrived piecemeal and was beaten in detail. He survived the battle (and the war). (Verified)",
+          "teach": "Gen. McDowell is unhorsed and carried from the field — the Union attack loses its guiding hand and falters." },
+        { "id": "ld_heintzelman", "name": "Col. Samuel P. Heintzelman", "short": "Heintzelman", "quality": 0.52, "radius": 230, "x": 700, "z": 845, "fate": 1.0,
+          "note": "Heintzelman's division pressed the later assaults up Henry Hill against the lost-battery line; he was wounded in the arm but stayed in the field and survived. (Verified)",
+          "teach": "Col. Heintzelman is hit and borne to the rear — the assault on Henry Hill loses its momentum." }
+      ],
+      "CS": [
+        { "id": "ld_beauregard", "name": "Brig. Gen. P. G. T. Beauregard", "short": "Beauregard", "quality": 0.62, "radius": 280, "x": 600, "z": 410, "fate": 2.5,
+          "note": "Beauregard commanded on the field but mishandled his early orders; the day was salvaged by his subordinates' stand and by Johnston's rail-borne reinforcements, not by his plan. He was unhurt. (Verified)",
+          "teach": "Gen. Beauregard is struck down — the Confederate command on the hill is thrown into confusion." },
+        { "id": "ld_johnston", "name": "Brig. Gen. Joseph E. Johnston", "short": "Johnston", "quality": 0.66, "radius": 280, "x": 555, "z": 385, "fate": 2.7,
+          "note": "Johnston was the senior Confederate present; his Army of the Shenandoah, shuttled to Manassas on the Manassas Gap Railroad — the first strategic use of rail to reinforce a battle — decided the field. He survived to 1891. (Verified)",
+          "teach": "Gen. Johnston is unhorsed and borne to the rear — the senior command's steadying hand is lost." },
+        { "id": "ld_bee", "name": "Brig. Gen. Barnard E. Bee", "short": "Bee", "quality": 0.60, "radius": 180, "attach": "cs_bee", "fate": 0.42,
+          "note": "Bee rallied his broken brigade by pointing to Jackson's fresh line. Mortally wounded July 21, he died the next day; whether his famous cry praised Jackson's steadiness or cursed his stillness is debated. (Verified / Inferred)",
+          "teach": "Gen. Bee is mortally struck — and his rallying cry, its exact words long debated, steadies the wavering line behind Jackson's brigade.",
+          "teachReq": "ld_jackson",
+          "teachAlt": "Gen. Bee is mortally struck — his shaken brigade streams back toward the Henry House plateau." },
+        { "id": "ld_bartow", "name": "Col. Francis S. Bartow", "short": "Bartow", "quality": 0.55, "radius": 175, "attach": "cs_bartow", "fate": 0.5,
+          "note": "Bartow, a Georgia politician-colonel, was killed leading on Henry Hill — among the first field officers to die in the war. (Verified)",
+          "teach": "Col. Bartow is killed — 'they have killed me, but boys, never give up the field.'" },
+        { "id": "ld_jackson", "name": "Brig. Gen. Thomas J. Jackson", "short": "Jackson", "quality": 0.82, "radius": 205, "attach": "cs_jackson", "atSec": 135, "fate": 3.2,
+          "note": "Jackson's brigade held the reverse slope of Henry Hill, earning him the name 'Stonewall.' Discipline and position, not invincibility, won the ground — and the name fixed a myth onto a real soldier; his own wound that day was a broken finger. (Verified)",
+          "teach": "Gen. Jackson is hit — the anchor of the Henry Hill line wavers." }
+      ]
+    },
     "terrain": {
       "hills": [
         { "name": "Henry House Hill", "x": 600, "z": 450, "h": 32, "s": 205, "note": "The decisive crest (the objective)." },

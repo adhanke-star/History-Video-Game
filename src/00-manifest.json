@@ -25,6 +25,7 @@
     "tactical/T0-field-sandbox.js",
     "tactical/T1-bull-run.js",
     "tactical/T2-campaign-link.js",
+    "tactical/T3-officers.js",
     "90-president-register.js"
   ],
   "overrides": [
