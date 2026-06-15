@@ -25184,6 +25184,17 @@ var FLD = {
   CTR_REACH: 175,         // a disordered visible enemy within this -> a defender may counterattack (yd)
   CTR_LEASH: 150,         // ...only if the target stays within OBJ_R + this of the objective (don't chase off the hill)
   CTR_RATIO: 0.9,         // ...and only with local friendly men >= this * local enemy men (don't over-commit)
+  // role-aware ATTACKER doctrine (P1b-iv): the complement to the defender. A covered defender wins a
+  // long-range fire trade, so the attacker CONCENTRATES on the weaker flank, CLOSES, and ASSAULTS — but
+  // GRADUALLY (per-unit local concentration, not a knife-edge global commit) and CAUTIOUSLY UNDER FOG
+  // (it can't assault what it can't see, so fog AIDS the defender, consistent with D58 — fork #2). Gated to
+  // the scenario attacker -> the symmetric sandbox is byte-identical (fldAiGeneric for both).
+  ATK_CHARGE_R: 170,       // charge a VISIBLE disordered (wavering) defender within this (yd)
+  ATK_ASSAULT_R: 130,      // closed enough to assault a STEADY defender — press the bayonet home (yd)
+  ATK_ASSAULT_STANDOFF: 70,// ...only when within OBJ_R + this of the objective (assault the position)
+  ATK_LOCAL_RATIO: 1.1,    // ...and only with LOCAL men >= this * local VISIBLE-foe men (gradual concentration, not a global flip)
+  ATK_GLOBAL_FLOOR: 0.85,  // never throw the army onto the bayonet while globally outnumbered below this
+  ATK_FLANK_BIAS: 0.5,     // pull the approach this fraction toward the weaker (thinner) flank of the objective
 };
 
 /* ---- seeded RNG (LCG) ---- */
@@ -25318,7 +25329,7 @@ function fldInitSim(opts) {
   // so the headless probe stepper (fldStepN) never auto-pauses -> zero probe/determinism impact.
   __FIELD.autoPause = (opts.autoPause != null) ? !!opts.autoPause : !(typeof G !== "undefined" && G.settings && G.settings.tacticalAutoPause === false);
   __FIELD._apReason = null;
-  __FIELD._aiGenericAll = false;   // role-aware AI test hook: reset per launch like every other flag (bug-hunt #4); probe-ai sets it AFTER launch
+  __FIELD._aiGenericAll = false; __FIELD._aiGenericAtk = false;   // role-aware AI test hooks: reset per launch (bug-hunt #4); probe-ai sets them AFTER launch (A/B the defender + attacker doctrines)
   if (sc !== "sandbox" && typeof fldScenarioInit === "function" && fldScenarioInit(opts)) return;
   // Phase A (A2): a custom FREE skirmish / procedural campaign battle is built by T2's fldSkirmishOOB
   // (terrain + a parameterized OOB), which calls fldResetRun and returns true. Absent opts.skirmish this
@@ -25572,9 +25583,13 @@ function fldAiUnit(u) {
   // and counterattacks disordered attackers instead of advancing off its good ground like an attacker.
   // The symmetric SANDBOX (attacker === null) runs fldAiGeneric for BOTH sides -> byte-behavior-identical
   // (probe-field holds by construction). The defender lives in the same headless sim path -> probe-testable.
-  // __FIELD._aiGenericAll (default falsy, set only by probe-ai for an A/B) forces the pre-P1b-iii
-  // generic-for-both behavior so the probe can measure the defender doctrine's effect on identical seeds.
-  if (!__FIELD._aiGenericAll && __FIELD.attacker && __FIELD.objective && u.side === fldEnemy(__FIELD.attacker)) { fldAiDefender(u); return; }
+  // P1b-iv: the ATTACKER side now runs fldAiAttacker (concentrate / close / assault, fog-cautious). Test-only
+  // hooks (default falsy, reset per launch, set only by probe-ai for A/B isolation): _aiGenericAll forces
+  // generic for BOTH; _aiGenericAtk forces generic for the ATTACKER only (to isolate the attacker doctrine).
+  if (!__FIELD._aiGenericAll && __FIELD.attacker && __FIELD.objective) {
+    if (u.side === fldEnemy(__FIELD.attacker)) { fldAiDefender(u); return; }
+    if (u.side === __FIELD.attacker && !__FIELD._aiGenericAtk) { fldAiAttacker(u); return; }
+  }
   fldAiGeneric(u);
 }
 /* the GENERIC doctrine: advance toward the objective, halt at good fire range, press a wavering enemy.
@@ -25615,6 +25630,82 @@ function fldAiGeneric(u) {
     var tz = obj.z + (u.z - obj.z) * 0.28;
     u.order = { type: "move", tx: tx, tz: tz, tface: face };
   }
+}
+
+/* the ATTACKER doctrine (asymmetric scenario only — see fldAiUnit; P1b-iv, DECISIONS D64). A covered defender
+   wins a long-range fire trade, so the attacker CONCENTRATES on the objective's weaker (thinner) flank,
+   CLOSES, and ASSAULTS with the bayonet (melee + numbers beat fire + cover). Two design locks (charter fork #2):
+   (a) GRADUAL commitment — the assault is a PER-UNIT, LOCAL-concentration decision (a unit assaults once it has
+       CLOSED on the objective AND locally out-masses the VISIBLE defenders it faces), with the local bar
+       modulated SMOOTHLY by the global force ratio + a global floor — NOT a knife-edge "commit the whole army
+       at ratio R" flip (the prototype's phase transition). The army commits incrementally as it masses.
+   (b) FOG AIDS THE DEFENDER (consistent with D58) — UNDER FOG the attacker NEVER launches a massed assault
+       on a position (it can't trust its sight: a hidden reverse-slope reserve or rail-borne brigade may hold
+       the hill) and never column-rushes; it advances cautiously in LINE, trades fire / probes, and only
+       exploits a VISIBLE BROKEN unit. So fog denies it the unseen-close melee win and lets the concealed
+       reserves maul the piecemeal advance — the attacker never BENEFITS from fog. (This gates on fog DIRECTLY,
+       not on whether a defender is currently sighted: a lone visible picket must not "unblind" an assault into
+       the hidden mass behind it — bug-hunt P1b-iv #1.) Deterministic — no RNG (probes reproduce). */
+function fldAiAttacker(u) {
+  var obj = __FIELD.objective;
+  // scan VISIBLE defenders: nearest, nearest CATCHABLE-disordered (wavering only — a rout outruns a charge),
+  // local force balance (within AI_LOCAL_R), and the flank split (men left/right of the objective).
+  var near = null, nd = 1e9, weak = null, wd = 1e9, foeMen = 0, friendMen = u.men, defLeft = 0, defRight = 0;
+  for (var i = 0; i < __FIELD.units.length; i++) {
+    var e = __FIELD.units[i]; if (!e.alive) continue;
+    if (e.side === u.side) { if (e !== u && e.state !== "routing" && fldDist(u, e) < FLD.AI_LOCAL_R) friendMen += e.men; continue; }
+    if (__FIELD.fog && !fldVisible(u.side, e)) continue;   // react only to what it can see
+    var d = fldDist(u, e);
+    if (d < FLD.AI_LOCAL_R) foeMen += e.men;
+    if (d < nd) { nd = d; near = e; }
+    if (e.state === "wavering" && d < wd) { wd = d; weak = e; }
+    if (e.x < obj.x) defLeft += e.men; else defRight += e.men;
+  }
+  var face = near ? Math.atan2(near.x - u.x, -(near.z - u.z)) : Math.atan2(0, -(obj.z - u.z));
+  var dObj = fldDist(u, obj);
+  // (a) GRADUAL local-concentration commit. The global ratio modulates the LOCAL bar smoothly (ahead -> press
+  //     at lower local odds; behind -> demand more); a global FLOOR forbids the bayonet while badly outnumbered.
+  var atkTot = fldArmyStrength(u.side), defTot = fldArmyStrength(fldEnemy(u.side));
+  var globRatio = atkTot / Math.max(1, defTot);
+  var effLocal = FLD.ATK_LOCAL_RATIO * fldClamp(1 / Math.max(0.5, globRatio), 0.75, 1.4);
+  var localSup = foeMen > 0 && friendMen >= foeMen * effLocal;     // must SEE the foe AND locally out-mass it
+  var canCommit = globRatio >= FLD.ATK_GLOBAL_FLOOR;
+
+  // (1) SURVIVAL: wavering + a stronger enemy close -> fall back to rally (an assault can break too).
+  if (u.state === "wavering" && near && nd < 220 && near.men > u.men * 1.05) {
+    u.order = { type: "move", tx: u.x, tz: (fldHomeEdgeZ(u.side) > FLD.FIELD_H ? FLD.FIELD_H - 120 : 120), tface: face };
+    return;
+  }
+  // (2) ASSAULT: charge a VISIBLE disordered defender on sight (safe under fog too — it's a confirmed broken
+  //     unit, not a blind rush); OR — ONLY WITH FOG OFF — press the bayonet home on a steady defender once
+  //     CLOSED on the objective with LOCAL superiority + the global floor. Under fog the massed assault is
+  //     withheld (b): the attacker cannot trust its sight of the position, so it will not commit blind.
+  if (u.state !== "wavering" && near) {
+    var chargeWeak = weak && wd < FLD.ATK_CHARGE_R;
+    var assaultSteady = !__FIELD.fog && canCommit && localSup && nd < FLD.ATK_ASSAULT_R && dObj < obj.r + FLD.ATK_ASSAULT_STANDOFF;
+    if (chargeWeak || assaultSteady) {
+      var t = chargeWeak ? weak : near;
+      u.order = { type: "charge", tx: t.x, tz: t.z, tface: Math.atan2(t.x - u.x, -(t.z - u.z)) };
+      return;
+    }
+  }
+  // (3) SUPPRESS / PROBE: in fire range but not assaulting (under fog, or no local superiority yet) -> hold +
+  //     pour fire in LINE while the mass forms (don't bleed forward piecemeal, don't retreat). Under fog this
+  //     is the cautious probe that lets the concealed reserves reveal + keeps the fight slow (fog aids defender).
+  if (near && nd <= u.rng * 0.92 && (__FIELD.fog || !localSup || !canCommit)) {
+    u.formation = "line";
+    u.order = { type: "hold", tx: u.x, tz: u.z, tface: face };
+    return;
+  }
+  // (4) CLOSE on the weaker (thinner) flank. An ASSAULT COLUMN (fast SPD_COL, narrow 0.7 head-on frontage)
+  //     crosses the killing zone with far less loss — but ONLY with FOG OFF when committed; under fog the
+  //     attacker closes cautiously in LINE (no unseen-column rush — that is what made fog favor the attacker).
+  var flankX = (defLeft <= defRight) ? (obj.x - obj.r * 0.6) : (obj.x + obj.r * 0.6);
+  var aimX = u.x + (flankX - u.x) * FLD.ATK_FLANK_BIAS;
+  var sign = (fldHomeEdgeZ(u.side) > obj.z) ? 1 : -1;     // press onto the attacker-side face of the objective
+  var aimZ = obj.z + sign * obj.r * 0.25;
+  u.formation = (!__FIELD.fog && canCommit && dObj > 160) ? "column" : "line";
+  u.order = { type: "move", tx: aimX, tz: aimZ, tface: face };
 }
 
 /* the DEFENDER doctrine (asymmetric scenario only — see fldAiUnit). A defender HOLDS the objective's

@@ -1,5 +1,19 @@
 # HANDOFF — "The Civil War"
 
+## ⚡ CONTINUE HERE — run k (2026-06-15): **PHASE B-1 · the smarter ATTACKER AI ✅ SHIPPED + VETTED + PUSHED** → NEXT = Phase B continues (B2 officers · B3 logistics · B4 arm roles · B5 presets · B6 CS-player)
+
+> **PHASE B (tactical depth) is underway. B1 — the smarter DEFENDER-FAVORED ATTACKER AI — is complete** (DECISIONS **D64**; charter fork #2). The complement to the P1b-iii defender: a real attacker doctrine `fldAiAttacker` in `src/tactical/T0-field-sandbox.js`, dispatched to the scenario attacker (the symmetric sandbox + the defender stay byte-identical — unreachable when `__FIELD.attacker===null`).
+>
+> **✅ B1 — `fldAiAttacker`:** a covered defender wins the long-range fire trade, so the attacker CONCENTRATES on the weaker flank, CLOSES, and ASSAULTS (melee + numbers beat fire + cover). **Two locks (fork #2):** (a) **GRADUAL** per-unit local-concentration commit (no knife-edge global flip — fixed the prototype) and (b) **FOG AIDS THE DEFENDER** — under fog the attacker NEVER mass-assaults / column-rushes (it can't trust its sight of the hidden reserves), only exploits visibly-broken units + probes in line. **Balance A/B (8 seeds, Bull Run AI-vs-AI, CS=defender wins):** both-generic fog-OFF **2/8** (the logged gap) → both-doctrines fog-OFF **6/8** (CS-favored but competitive — US breaks 2/8) / fog-ON **8/8** (fog aids the defender — the prototype's inversion tuned out); defender casualties **4592** vs the passive attacker's 1276 (~3.6×, a real bloody assault). **Bug-hunt 4 finders → 2 findings, BOTH FIXED** (a picket-unblind hole that broke the fog lock → gated the assault directly on `!fog`; a dead-constant doc nit → deleted). **probe-ai 15/15**; tactical no-regression GREEN (field 13/13, bullrun 15/15, fog 13/13, autopause 13/13, diag-classic paints); 0 pageerrors. Deliverable ≈**1552KB**.
+>
+> **What's playable:** unchanged entry points (campaign "Fight in real time ⚔" · the ⚔ SKIRMISH menu · the standalone Sandbox + First Bull Run). The difference: in any asymmetric battle the **ATTACKER AI now fights for real** — it masses on a flank and presses the bayonet (fog OFF) instead of trading fire it loses; under fog it advances cautiously, so the defender's hidden reserves matter. AI-vs-AI Bull Run is now a bloody, historically-faithful Confederate-favored fight rather than a Union walkover.
+>
+> **IMMEDIATE NEXT = PHASE B (continued):** **B2** officers/command (leaders: command radius + morale bonus, can be hit; ties named-generals) · **B3** in-battle logistics (ammo + fatigue depth + supply) · **B4** distinct arm roles (artillery canister/long-range; cavalry scout/flank/screen/raid) · **B5** difficulty/realism presets · **B6** the **CS-player "command either side" mode** (fork #10 — makes this attacker AI player-facing: you defend, the AI attacks). Then **Phase C** breadth → **D** full hex → **E** strategic S3–S5 → **H** graphics/footage/audio → **I** loot → **J** polish. **PUSH per milestone after PROPER VETTING (D53-OPS). Subagent models = HYBRID (D63).**
+>
+> **Resume map:** `START-HERE.md` → `V1-CHECKLIST.md` (Phase A + B1 ticked; B2 next) → `DECISIONS.md` **D64** (B1) + **D62/D63** + D54/D55/D61 → `ATTACKER-AI-PROPOSAL.md` (the prototype + the locked answers) → `src/tactical/T0-field-sandbox.js` (`fldAiAttacker`/`fldAiDefender`/`fldAiUnit`) + `tools/probe-ai.mjs`. Everything is on disk and pushed.
+
+---
+
 ## ⚡ CONTINUE HERE — run k (2026-06-15): **PHASE A · CONNECT THE TWO LAYERS ✅ SHIPPED + VETTED + PUSHED** → NEXT = Phase B (tactical depth)
 
 > **The V1-CHECKLIST drives the run (D61).** Phase A — the connective tissue between the owner-mode GRAND STRATEGY desk and the real-time TACTICAL engine — is **complete** (DECISIONS **D62**). The two layers were disconnected; now the army your war built FIELDS in the real-time fight, and the fight's result flows back into the campaign.

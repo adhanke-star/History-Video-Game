@@ -33,19 +33,22 @@ const SETUP = `(() => {
   // a steady, full unit at (x,z) — the helper for the behavioral setups
   function mk(id, side, x, z, men, st){ var u=fldMakeUnit({id:id, side:side, name:id, arm:'inf', weapon:'rifled', men:men, xp:2, x:x, z:z, facing:(side==='US'?0:Math.PI), ai:true});
     u.state = st || 'steady'; u.morale = (st==='wavering') ? 40 : 78; return u; }
-  // run a full Bull Run AI-vs-AI battle headless under (seed, fog, genericAll) and report the verdict
-  function runBR(seed, fog, genericAll){
+  function casTot(side){ var c=0; for(var i=0;i<__FIELD.units.length;i++){ var u=__FIELD.units[i]; if(u.side===side) c+=((u.maxMen||0)-(u.men||0)); } return Math.round(c); }
+  // run a full Bull Run AI-vs-AI battle headless under (seed, fog, mode) and report the verdict.
+  // mode: 'gen' = both sides generic (pre-P1b-iii) · 'def' = defender doctrine only (P1b-iii) · 'both' = + attacker (P1b-iv)
+  function runBR(seed, fog, mode){
     fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:seed});
-    __FIELD.fog = !!fog; __FIELD._aiGenericAll = !!genericAll;
+    __FIELD.fog = !!fog;
+    __FIELD._aiGenericAll = (mode === 'gen'); __FIELD._aiGenericAtk = (mode === 'def');   // 'both' -> neither hook
     __FIELD.phase='battle'; __FIELD.paused=false;
     var n=0; while(__FIELD.phase==='battle' && n<20000){ fldSimStep(0.05); n++; }
-    return { winner:__FIELD.winner, by:__FIELD.winBy, t:Math.round(__FIELD.t), us:strength('US'), cs:strength('CS') };
+    return { winner:__FIELD.winner, by:__FIELD.winBy, t:Math.round(__FIELD.t), us:strength('US'), cs:strength('CS'), csCas:casTot('CS'), usCas:casTot('US') };
   }
   function csScore(r){ var d=r.cs-r.us; if(r.winner==='CS') return 1000000+d; if(r.winner==='draw') return 500000+d; return r.t*1000+d; }
-  function tally(acc, r){ acc[r.winner]=(acc[r.winner]||0)+1; acc.score+=csScore(r); return acc; }
-  function sweep(seeds, fog){
-    var base={US:0,CS:0,draw:0,score:0}, doc={US:0,CS:0,draw:0,score:0};
-    for(var i=0;i<seeds.length;i++){ tally(base, runBR(seeds[i], fog, true)); tally(doc, runBR(seeds[i], fog, false)); }
+  function tally(acc, r){ acc[r.winner]=(acc[r.winner]||0)+1; acc.score+=csScore(r); acc.csCas+=r.csCas; return acc; }
+  function sweep(seeds, fog, docMode){
+    var base={US:0,CS:0,draw:0,score:0,csCas:0}, doc={US:0,CS:0,draw:0,score:0,csCas:0};
+    for(var i=0;i<seeds.length;i++){ tally(base, runBR(seeds[i], fog, 'gen')); tally(doc, runBR(seeds[i], fog, docMode||'def')); }
     return { base:base, doc:doc, seeds:seeds.length };
   }
   try {
@@ -174,8 +177,53 @@ const SETUP = `(() => {
         matrix:{ fogOff:{base:off.base.CS, doctrine:off.doc.CS}, fogOn:{base:on.base.CS, doctrine:on.doc.CS} },
         note:'CS-win counts /'+seeds.length+'; defender doctrine vs the old generic-for-both AI' }; });
 
+    // ---------- P1b-iv: the ATTACKER doctrine ----------
+    step('ATTACKER ROUTING: in a scenario the ATTACKER side runs fldAiAttacker; the sandbox + the _aiGenericAtk hook fall back to generic', function(){
+      fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:2});
+      if(typeof fldAiAttacker!=='function') throw new Error('fldAiAttacker missing');
+      if(__FIELD._aiGenericAtk) throw new Error('the A/B hook _aiGenericAtk must default falsy (inert)');
+      fldLaunchSandbox({renderer:'none', autoBoth:true, seed:2});  // sandbox: attacker null -> generic for both
+      if(__FIELD.attacker!==null) throw new Error('sandbox attacker should be null');
+      return { attackerDoctrine:true, hookInert:true, sandboxSymmetric:true }; });
+
+    step('ATTACKER ASSAULTS a SIGHTED steady defender once CLOSED with local superiority (fog OFF) — presses the bayonet, not a fire trade', function(){
+      fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:2});
+      __FIELD.fog=false; __FIELD._aiGenericAll=false; __FIELD._aiGenericAtk=false;
+      var o=__FIELD.objective;
+      var cs=mk('CSdef','CS', o.x, o.z+20, 1200, 'steady');                 // a steady defender on the hill
+      var a1=mk('USa','US', o.x-30, o.z+90, 1500, 'steady'); a1.ai=true;     // closed (nd~76<130, dObj~95<obj.r+70)
+      var a2=mk('USb','US', o.x+30, o.z+95, 1500, 'steady'); a2.ai=true;     // a 2nd brigade -> local mass + global weight
+      __FIELD.units=[cs,a1,a2]; fldAiUnit(a1);
+      if(a1.order.type!=='charge') throw new Error('attacker did not assault a sighted+closed+locally-outmassed steady defender: '+a1.order.type);
+      if(Math.abs(a1.order.tx-cs.x)>1 || Math.abs(a1.order.tz-cs.z)>1) throw new Error('assault not aimed at the defender');
+      return { assault:true }; });
+
+    step('ATTACKER is CAUTIOUS WHEN BLIND (fog ON, objective unsighted) — advances, does NOT blind-assault into hidden reserves (fog AIDS the defender)', function(){
+      fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:2});
+      __FIELD.fog=true; __FIELD._aiGenericAll=false; __FIELD._aiGenericAtk=false;
+      var o=__FIELD.objective;
+      var a1=mk('USa','US', o.x, o.z+100, 1500, 'steady'); a1.ai=true;       // closed on the (apparently empty) crest
+      var cs=mk('CShid','CS', o.x, o.z-420, 1500, 'steady');                 // the defense is unseen (out of sight, far from the objective)
+      __FIELD.units=[a1, cs]; __FIELD.vis={US:{},CS:{}};                     // fog: nothing scouted -> blind
+      fldAiUnit(a1);
+      if(a1.order.type==='charge') throw new Error('a BLIND attacker launched an assault into the unseen objective (fog must make it cautious -> aids the defender)');
+      // contrast: fog OFF with a SIGHTED close defender -> it WOULD assault (proven by the prior step) — so fog changed the behavior
+      return { blindOrder:a1.order.type, assaultedBlind:false }; });
+
+    step('BALANCE A/B (P1b-iv both doctrines): Bull Run stays CS-FAVORED fog-OFF, FOG AIDS THE DEFENDER (no inversion), the attacker PRESSES (bloodier)', function(){
+      var seeds=[101,202,303,404,505,606,707,909];
+      var off=sweep(seeds,false,'both'), on=sweep(seeds,true,'both'), defOff=sweep(seeds,false,'def');
+      // (1) defender-FAVORED fog-OFF — a CS majority (historical: the South won First Bull Run) but competitive (US can break through)
+      if(!(off.doc.CS >= Math.ceil(seeds.length/2))) throw new Error('both-doctrines fog-OFF not CS-favored: '+off.doc.CS+'/'+seeds.length);
+      // (2) FOG AIDS THE DEFENDER (the fork-#2 lock): fog-ON CS win count >= fog-OFF — the prototype INVERTED here; tuned out.
+      if(!(on.doc.CS >= off.doc.CS)) throw new Error('fog did NOT aid the defender (inversion not tuned out): fogON CS='+on.doc.CS+' < fogOFF CS='+off.doc.CS);
+      // (3) the attacker doctrine WORKS — it presses real assaults, so the defender bleeds far more than vs the passive (defender-only) attacker
+      if(!(off.doc.csCas > defOff.doc.csCas * 1.5)) throw new Error('the attacker did not press (defender casualties not materially > defender-only): '+off.doc.csCas+' vs '+defOff.doc.csCas);
+      return { seeds:seeds.length, fogOff_CS:off.doc.CS, fogOn_CS:on.doc.CS, fogAidsDefender:(on.doc.CS>=off.doc.CS),
+        csCas_both:Math.round(off.doc.csCas/seeds.length), csCas_defOnly:Math.round(defOff.doc.csCas/seeds.length), attackerPresses:true }; });
+
     step('DETERMINISM under the doctrine: same seed -> same winner + same casualties', function(){
-      var a=runBR(909, false, false), b=runBR(909, false, false);
+      var a=runBR(909, false, 'both'), b=runBR(909, false, 'both');
       if(a.winner!==b.winner) throw new Error('non-deterministic winner: '+a.winner+' vs '+b.winner);
       if(a.us!==b.us || a.cs!==b.cs) throw new Error('non-deterministic strength');
       return { winner:a.winner, us:a.us, cs:a.cs, endSec:a.t }; });
@@ -191,7 +239,7 @@ const SETUP = `(() => {
 
     step('NO CLASSIC CONTAMINATION: a doctrine battle never wrote G.battle / G.mode', function(){
       var modeBefore=G.mode;
-      runBR(3, false, false);
+      runBR(3, false, 'both');
       if(typeof G.battle!=='undefined' && G.battle && G.battle.M) throw new Error('created a Classic G.battle');
       if(G.mode!==modeBefore) throw new Error('mutated G.mode: '+G.mode);
       try{ fldExit(true); }catch(e){}

@@ -41,9 +41,10 @@ connect-the-layers (A1 conditioning · A2 fight-from-bridge + FREE skirmish · A
       ground, `enemyWill`) — substitutable for the existing Classic / auto-resolve result (MODERN-UGG §2).
       *(REAL casualty fractions from the fight → `startBattleRuntime`+`_arApplyCasualties`+`campaignAdvance`→`_t1Resolve`; win advances, loss recovers; deterministic. probe-campaign-link 16/16.)*
 
-### Phase B — TACTICAL DEPTH  (P2–P5, real-time engine)
-- [ ] **B1 Smarter ATTACKER AI** — defender-favored, fog aids the defender (LOCKED); attacker doctrinally
+### Phase B — TACTICAL DEPTH  (P2–P5, real-time engine)  ‹B1 ✅ — run k, 2026-06-15, DECISIONS D64›
+- [x] **B1 Smarter ATTACKER AI** — defender-favored, fog aids the defender (LOCKED); attacker doctrinally
       sound (concentrate / assault) but the fog inversion tuned out. (Prototype exists: `ATTACKER-AI-PROPOSAL.md`.)
+      *(`fldAiAttacker`: concentrate-on-weaker-flank / close / assault, GRADUAL per-unit commit [no knife-edge] + CAUTIOUS-WHEN-BLIND. Sweep: both-doctrines Bull Run fog-OFF CS 6/8, fog-ON 8/8 — fog aids the defender; def-cas 4592 vs the passive 1276. probe-ai 15/15.)*
 - [ ] **B2 Officers / command** — leaders with command radius + morale bonus, can be hit (ties named-generals).
 - [ ] **B3 In-battle logistics** — ammo + fatigue depth (seeded; deepen) + supply.
 - [ ] **B4 Distinct arm roles** — artillery (canister / long-range), cavalry (scout / flank / screen / raid).
