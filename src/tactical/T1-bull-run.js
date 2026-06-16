@@ -60,6 +60,7 @@ function fldBrSpec(d, side, autoBoth) {
   return {
     id: d.id, side: s, name: d.name, arm: d.arm, weapon: d.weapon,
     commander: d.commander || null,   // B-2: the named brigade leader (HUD label; the leaders layer reads scenData.leaders)
+    guns: d.guns || 0,                // D74: carry a battery's GUN COUNT from the data (the universal gun model). 0 for inf/cav + legacy batteries -> men-based fire (byte-identical)
     men: d.men, xp: d.xp || 1, x: d.x, z: d.z, facing: d.facing,
     formation: d.formation || "line", entry: d.entry || "",
     ai: (s === ps) ? !!autoBoth : true,

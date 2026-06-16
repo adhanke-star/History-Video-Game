@@ -186,6 +186,7 @@ function fldMakeUnit(o) {
     id: o.id, side: o.side, name: o.name, arm: o.arm || "inf", weapon: o.weapon,
     commander: o.commander || null,   // B-2: the brigade's named leader (from the OOB data); labels it in the HUD
     role: o.role || null,             // B-4: a cavalry brigade's role (scout/flank/screen/raid); null/ignored for inf+art
+    guns: o.guns || 0,                // D74: a battery's GUN COUNT (universal gun model; fldArtFireStr). 0 for inf/cav and for a legacy battery with no count -> the men-based fire path (byte-identical)
     pow: prof.pow, rng: prof.rng, xp: o.xp || 1,
     x: o.x, z: o.z, facing: o.facing, formation: o.formation || "line",
     men: o.men, maxMen: o.men, morale: o.morale || 78, maxMor: o.morale || 78,
@@ -334,7 +335,12 @@ function fldResolveFire(u, tgt, dt) {
   var d = fldDist(u, tgt); if (d > u.rng) return;
   // range falloff: full near, FALLOFF at max range
   var rngF = fldClamp(1 - (d / u.rng) * (1 - FLD.FALLOFF), FLD.FALLOFF, 1);
-  var strF = u.men / 1500;
+  // universal gun model (B-4/D74): a battery's volume of fire derives from its GUN COUNT (guns * GUN_FIRE_WEIGHT),
+  // a consistent measure across every battle — never a per-battle "men" fudge. fldArtFireStr returns u.men for
+  // infantry, an arms-off launch, OR a legacy battery with no `guns` (Bull Run's realistic 160-men batteries) ->
+  // strF is then exactly u.men/1500 as before -> byte-identical (only gun-equipped batteries take the new path).
+  var fireMen = (__FIELD.arms && u.arm === "art" && typeof fldArtFireStr === "function") ? fldArtFireStr(u) : u.men;
+  var strF = fireMen / 1500;
   var xpF = 0.85 + u.xp * 0.05;                        // base resolveFire xpF
   var ammoF = fldClamp(0.5 + 0.5 * (u.ammo / 100), 0.5, 1);   // fire tapers as the cartridge boxes empty
   var morF = 0.6 + 0.4 * (u.morale / u.maxMor);

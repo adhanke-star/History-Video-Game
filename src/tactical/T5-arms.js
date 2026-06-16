@@ -40,6 +40,16 @@
    ============================================================================ */
 
 var FLDA = {
+  // ---- the UNIVERSAL ARTILLERY GUN MODEL (DECISIONS D74 — one consistent ruleset across EVERY battle) ----
+  // A battery's volume of fire derives from its GUN COUNT, not from a per-battle "men" fudge. GUN_FIRE_WEIGHT is the
+  // fire-strength contribution of ONE gun, in the SAME men-equivalent unit the fire model's strF=men/1500 uses — so a
+  // gun throws the same weight of metal in Antietam as in Fredericksburg as in Bull Run; only the scenario differs.
+  // CALIBRATION: a standard 6-gun regular battery -> 6*27 = 162 ~ Bull Run's already-realistic 160-men/6-gun Griffin &
+  // Ricketts (data/bullrun.json) — so the gun model is CONSISTENT with the existing realistic batteries, not merely
+  // gated around them. The universal canister/bombardment rule (fldArtFireMult) does the killing on top of this.
+  // BYTE-IDENTITY: fldArtFireStr falls back to u.men for any battery that declares no `guns` (the legacy realistic
+  // batteries, e.g. Bull Run's) AND whenever arms is off -> probe-arms 23/23 + probe-bullrun 15/15 hold unchanged.
+  GUN_FIRE_WEIGHT: 27,        // fire-strength (men-equivalent) per gun — UNIVERSAL across all battles; never tuned per-battle
   CANISTER_R: 150,            // canister band (yd): a battery is a giant shotgun inside this
   CANISTER_MULT: 2.7,        // canister damage spike vs an in-the-open target at close range
   CANISTER_COVER_K: 1.15,    // how sharply cover attenuates canister (works/woods defeat the balls)
@@ -96,6 +106,38 @@ function fldArtFireMult(u, tgt, d, cover) {
   }
   u._canisterLive = 0;
   return FLDA.LONG_MULT;                                             // long-range bombardment: lower kill, suppression
+}
+
+/* ===========================================================================
+   UNIVERSAL GUN MODEL (T0 fldResolveFire seam — DECISIONS D74). Returns the fire-strength
+   NUMERATOR for a unit (what the fire model divides by 1500 to get strF). For a battery that
+   declares a GUN COUNT this is guns * GUN_FIRE_WEIGHT — a consistent, per-battle-fudge-free
+   measure of the metal it throws, identical in every battle. For infantry, an arms-off launch,
+   or a LEGACY battery with no `guns` (Bull Run's realistic 160-men/6-gun Griffin & Ricketts),
+   it returns u.men EXACTLY as the pre-D74 code did -> byte-identical (the gate is `guns`). The
+   battery's CREW (u.men) still governs melee overrun, casualties, and the HUD — so de-fudging a
+   battery's fire (real gun count) and giving it realistic crew makes it MORE overrun-able when
+   infantry reach it (historical), without inflating men to fake fire volume.
+
+   CAMPAIGN SEMANTICS (bug-hunt note, D74): the GUN COUNT is the army-size-invariant "hardware" — a
+   battery has its guns regardless of the strategic army's manpower. So fldCampaignConditionUnit's
+   strengthMul (which scales men AND maxMen together, T2) leaves a gun-battery's crew RATIO ~1.0 and
+   therefore its VOLUME of fire unchanged — intentionally. A bigger strategic army strengthens its
+   guns through the Cannon-Corps bridge instead (the bought gun type -> _canisterScale + reach/pow via
+   _fldArtProfile), the proper "better guns, not more guns from manpower" lever. (Antietam/Fredericksburg
+   are standalone today, so this path is dormant; documented so a future campaign-linked gun battery
+   doesn't silently inherit a dead volume lever.)
+   =========================================================================== */
+function fldArtFireStr(u) {
+  if (!__FIELD.arms || !u || u.arm !== "art") return u ? u.men : 0;
+  if (typeof u.guns === "number" && u.guns > 0) {
+    // RATED fire = guns * the universal per-gun weight; scaled by CREW AVAILABILITY (men/maxMen) so a battery losing
+    // its cannoneers serves its guns more slowly and fades smoothly (not full-volume-then-zero). At full crew this is
+    // exactly guns * GUN_FIRE_WEIGHT — the consistent, battle-agnostic rated output.
+    var crew = (u.maxMen > 0) ? fldClamp(u.men / u.maxMen, 0, 1) : 1;
+    return u.guns * FLDA.GUN_FIRE_WEIGHT * crew;
+  }
+  return u.men;   // legacy battery (no gun count) -> men-based, byte-identical
 }
 
 /* ===========================================================================
@@ -330,7 +372,11 @@ function fldArmsHudSelected(u) {
     var band = (nd <= FLDA.CANISTER_R)
       ? '<span style="color:#e0b15a;">&#9888; Canister range &mdash; murderous in the open</span>'
       : '<span style="color:#9db4cc;">Long range &mdash; bombardment</span>';
-    return '<div style="font-size:12px;margin-top:2px;">Battery &middot; ' + band + ' &middot; reach ' + Math.round(u.rng) + ' yd</div>';
+    // D74: show the GUN COUNT for a battery built on the universal gun model (its fire derives from guns, not "men").
+    // A LEGACY men-based battery (Bull Run's Griffin/Ricketts — kept byte-identical, no `guns` field) shows no count;
+    // it migrates to the gun model (gaining the count) whenever its balance is intentionally re-vetted. Cosmetic.
+    var gunTxt = (typeof u.guns === "number" && u.guns > 0) ? (u.guns + (u.guns === 1 ? " gun &middot; " : " guns &middot; ")) : "";
+    return '<div style="font-size:12px;margin-top:2px;">Battery &middot; ' + gunTxt + band + ' &middot; reach ' + Math.round(u.rng) + ' yd</div>';
   }
   if (u.arm === "cav") {
     var role = u.role || "flank";

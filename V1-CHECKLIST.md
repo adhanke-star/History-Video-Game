@@ -74,7 +74,7 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       Byte-identical for US; CS defense winnable 8/8 fog-ON; live stacked still CS 8/8. probe-csplayer 16/16; 10 baselines byte-identical.)*
 
 ### Phase C — TACTICAL BREADTH  (more real-time battles, data-driven)
-- [~] **C1 Eastern marquee (IN PROGRESS):** ~~Fredericksburg~~ ✅ (D73 — the Marye's-Heights slaughter on the data-driven engine: a scenario REGISTRY + data-driven scenario UI + the gated "doomed-assault" AI posture; adding a battle is now a data file + a registry line). Remaining: Antietam · Gettysburg · Chancellorsville · Malvern Hill (same recipe).
+- [~] **C1 Eastern marquee (IN PROGRESS):** ~~Fredericksburg~~ ✅ (D73 — the Marye's-Heights slaughter on the data-driven engine: a scenario REGISTRY + data-driven scenario UI + the gated "doomed-assault" AI posture; adding a battle is now a data file + a registry line). ~~The universal artillery gun model~~ ✅ (D75 — replaced Fredericksburg's per-battle "volume-of-fire proxy men" with a consistent gun-count/battery-weight fire model used identically in every battle; CS 8/8 + ratio 2.06 re-tuned via geometry, byte-identical baselines). Remaining: **Antietam (NEXT, as a MULTI-PHASE epic — the gated `phases[]` engine)** · Gettysburg · Chancellorsville · Malvern Hill.
 - [ ] **C2 Western** ‹LOCKED: Phase C, with breadth›: Shiloh, Vicksburg, Chickamauga/Chattanooga, Atlanta/the March, Franklin.
 - [ ] **C3 USCT battles (1863–65):** the Crater, New Market Heights, Olustee, Nashville (the flagship teachable arc).
 - [ ] **C4 Custom-battle builder** (D54).

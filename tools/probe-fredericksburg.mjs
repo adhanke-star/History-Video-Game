@@ -4,7 +4,8 @@
 // the OOB instantiates from GAME_DATA.fredericksburg.fredericksburg; the historical terrain (the SUNKEN-ROAD STONE
 // WALL + Marye's Heights crest + the open glacis) builds and the WALL GIVES THE DEFENDER COVER the open glacis does
 // not; reinforcements (Kershaw thickening the wall, Alexander relieving the crest guns, the seven Union waves) arrive
-// on schedule, in order, idempotently; the balance is CS-FAVORED under the default (fog OFF + the wall + canister =
+// on schedule, in order, idempotently; the crest batteries use the D74 UNIVERSAL GUN MODEL (real gun counts + realistic
+// crew, fire = guns*weight, no per-battle proxy-men fudge); the balance is CS-FAVORED under the default (fog OFF + the wall + canister =
 // the historical slaughter) with a lopsided Union casualty ratio; a CS player AND a US player both resolve to a
 // decided result with no hang/NaN; the side-aware briefing/objective/end framing + the side-choice card + the menu
 // button all build; determinism; no Classic contamination; and the SANDBOX + BULL RUN are unregressed. Bull Run's
@@ -58,6 +59,50 @@ const SETUP = `(() => {
       if(usTot<6) throw new Error('want >=6 US brigades total (the seven assault waves), got '+usTot);
       if(rf.length<8) throw new Error('want >=8 reinforcement waves, got '+rf.length);
       return { usTotal:usTot, csTotal:csTot, waves:rf.length, wall:DATA.terrain.walls.length }; });
+
+    step('UNIVERSAL GUN MODEL (D74): the crest batteries carry real GUN COUNTS + realistic crew (NOT inflated "volume-of-fire proxy men"); the engine derives a battery\\'s fire from guns * the universal weight — consistent across every battle, the universal canister rule doing the killing', function(){
+      // every CS battery (initial OOB + reinforcement) must declare a gun count + realistic crew, not a proxy-men fudge.
+      var allCs=DATA.oob.CS.concat((DATA.reinforcements||[]).filter(function(r){return r.side==='CS';}));
+      var arts=allCs.filter(function(a){return a.arm==='art';});
+      if(arts.length<2) throw new Error('expected >=2 CS batteries, got '+arts.length);
+      for(var j=0;j<arts.length;j++){ var a=arts[j];
+        if(!(typeof a.guns==='number' && a.guns>0)) throw new Error(a.id+' declares no gun count (the D74 universal gun model)');
+        if(!(a.men>0 && a.men <= a.guns*40)) throw new Error(a.id+' crew not realistic for '+a.guns+' guns: men='+a.men+' (>40/gun looks like a proxy-men fudge)'); }
+      if(typeof fldArtFireStr!=='function') throw new Error('fldArtFireStr (the gun model) missing');
+      if(typeof FLDA!=='object' || !(FLDA.GUN_FIRE_WEIGHT>0)) throw new Error('FLDA.GUN_FIRE_WEIGHT not defined');
+      // LIVE: a gun-equipped battery fires by guns*weight (not men); infantry + arms-off fall back to men (byte-identity).
+      fldLaunchSandbox({renderer:'none', scenario:'fredericksburg', autoBoth:true, seed:1}); __FIELD._armsOff=false;
+      var wash=null, inf=null;
+      for(var k=0;k<__FIELD.units.length;k++){ var u=__FIELD.units[k]; if(u.id==='cs_wash_arty') wash=u; if(!inf && u.arm==='inf') inf=u; }
+      if(!wash) throw new Error('cs_wash_arty not on field');
+      var fs=fldArtFireStr(wash);
+      if(fs!==wash.guns*FLDA.GUN_FIRE_WEIGHT) throw new Error('gun-model fire != guns*weight: '+fs+' vs '+(wash.guns*FLDA.GUN_FIRE_WEIGHT));
+      if(fs===wash.men) throw new Error('battery fire still tied to men (the proxy fudge persists)');
+      // CREW-SCALING (D74): rated fire = guns*weight at full crew, scaled by crew availability (men/maxMen) as the
+      // cannoneers fall — so a half-strength battery serves its guns at half volume (not full-then-zero).
+      var _m=wash.men; wash.men=Math.round(wash.maxMen/2); var halfFs=fldArtFireStr(wash); wash.men=_m;
+      if(Math.abs(halfFs - wash.guns*FLDA.GUN_FIRE_WEIGHT*0.5) > 1) throw new Error('crew-scaling wrong at half crew: '+halfFs+' want '+(wash.guns*FLDA.GUN_FIRE_WEIGHT*0.5));
+      if(inf && fldArtFireStr(inf)!==inf.men) throw new Error('fldArtFireStr must return men for infantry');
+      __FIELD.arms=false; var off=fldArtFireStr(wash); __FIELD.arms=true;
+      if(off!==wash.men) throw new Error('arms-off must fall back to men (byte-identity guarantee), got '+off);
+      return { batteries:arts.length, washGuns:wash.guns, washCrew:wash.men, washFireStr:fs, gunWeight:FLDA.GUN_FIRE_WEIGHT, totalGuns:arts.reduce(function(s,a){return s+a.guns;},0) }; });
+
+    step('THE CREST GUNS SURVIVE + FIRE: the de-fudged batteries (realistic crew -> a steeper morale slope) are NOT silently routed early — in the majority of seeds a pre-sighted crest battery is still in action mid-battle AND has fired (guards the bug-hunt MED: a smaller maxMen must not neuter the guns while the wall masks it)', function(){
+      var seeds=[1,7,21,42,55,101,303,909], aliveMid=0, firedAny=0;
+      for(var s=0;s<seeds.length;s++){
+        __FIELD._officersOff=false; __FIELD._logisticsOff=false; __FIELD._armsOff=false;
+        fldLaunchSandbox({renderer:'none', scenario:'fredericksburg', autoBoth:true, seed:seeds[s]});
+        __FIELD.phase='battle'; __FIELD.paused=false;
+        for(var t=0;t<2400 && __FIELD.phase==='battle';t++) fldSimStep(0.05);   // ~120s mid-battle
+        var liveGuns=0, firedGuns=0;
+        for(var i=0;i<__FIELD.units.length;i++){ var b=__FIELD.units[i];
+          if(b.side==='CS' && b.arm==='art'){ if(b.alive && b.state!=='routing') liveGuns++; if(b.ammo < 99.5) firedGuns++; } }   // ammo<100 -> it fired (AMMO_DRAIN)
+        if(liveGuns>=1) aliveMid++;
+        if(firedGuns>=1) firedAny++;
+      }
+      if(aliveMid < 5) throw new Error('the crest guns are routed/destroyed mid-battle in too many seeds (survival '+aliveMid+'/8) — the de-fudge over-fragilized the batteries');
+      if(firedAny < 5) throw new Error('the crest batteries are not firing in the majority of seeds ('+firedAny+'/8) — the guns are inert');
+      return { batteriesAliveMid:aliveMid+'/8', batteriesFired:firedAny+'/8' }; });
 
     step('LAUNCH fredericksburg instantiates the OOB at T=0 + fog OFF default (clear glacis)', function(){
       fldLaunchSandbox({renderer:'none', scenario:'fredericksburg', autoBoth:true, seed:12345});
@@ -152,7 +197,7 @@ const SETUP = `(() => {
 
     step('A LOPSIDED UNION CASUALTY RATIO (the wall is a killing machine): Union losses far exceed Confederate losses', function(){
       // sum the casualties (men fielded incl. reinforcements minus men surviving) over a few seeds.
-      function fielded(side){ var c=0; for(var i=0;i<__FIELD.units.length;i++){ var u=__FIELD.units[i]; if(u.side===side) c+=(u.men0||u.men); }
+      function fielded(side){ var c=0; for(var i=0;i<__FIELD.units.length;i++){ var u=__FIELD.units[i]; if(u.side===side) c+=(u.maxMen||u.men); }   /* original strength: maxMen IS set = o.men at creation (the engine's original-strength field, as T2 fielded uses); the old u.men0 was a typo that only worked because fielded() is read pre-battle */
         // add the pending reinforcements' nominal strength so casualties count the full committed force
         var rf=__FIELD.reinforce||[]; for(var j=0;j<rf.length;j++){ if(!rf[j].done && rf[j].spec && rf[j].spec.side===side) c+=(rf[j].spec.men||0); } return c; }
       var seeds=[7,42,303], usLoss=0, csLoss=0;
@@ -166,20 +211,27 @@ const SETUP = `(() => {
       if(!(usLoss > csLoss)) throw new Error('Union losses did not exceed Confederate (not a slaughter): US '+usLoss+' vs CS '+csLoss);
       return { unionLosses:Math.round(usLoss), confederateLosses:Math.round(csLoss), ratio:Math.round(usLoss/Math.max(1,csLoss)*100)/100 }; });
 
-    step('THE WALL IS LOAD-BEARING: removing the stone wall (the defender\\'s cover) collapses the Confederate edge', function(){
-      // a CS-defender score: a CS win dominates; else the longer/cheaper the Union seizure, the worse for the rebels.
-      function csScore(){ var d=strength('CS')-strength('US');
-        if(__FIELD.winner==='CS') return 1000000+d; if(__FIELD.winner==='draw') return 500000+d; return Math.round(__FIELD.t*1000)+d; }
-      __FIELD._officersOff=false; __FIELD._logisticsOff=false; __FIELD._armsOff=false;
-      fldLaunchSandbox({renderer:'none', scenario:'fredericksburg', autoBoth:true, seed:55}); runToEnd(20000);
-      var wWith=__FIELD.winner, sWith=csScore();
-      __FIELD._officersOff=false; __FIELD._logisticsOff=false; __FIELD._armsOff=false;
-      fldLaunchSandbox({renderer:'none', scenario:'fredericksburg', autoBoth:true, seed:55});
-      __FIELD.terrain = Object.assign({}, __FIELD.terrain, { walls: [] });   // tear the wall down for this run only
-      runToEnd(20000);
-      var wWithout=__FIELD.winner, sWithout=csScore();
-      if(!(sWith>=sWithout)) throw new Error('the wall is not load-bearing for the defense: csScore with='+sWith+' without='+sWithout);
-      return { winnerWithWall:wWith, winnerWithoutWall:wWithout, csScoreWith:sWith, csScoreWithout:sWithout }; });
+    step('THE WALL IS LOAD-BEARING: the stone wall measurably REDUCES Confederate casualties (the killing machine shields its line) — multi-seed, since the cautious assault is denied with or without the wall, the wall\\'s effect is the casualty EXCHANGE (D74: outcomes emerge from design, the wall is a real lever not a fudge)', function(){
+      function fielded(side){ var c=0; for(var i=0;i<__FIELD.units.length;i++){ var u=__FIELD.units[i]; if(u.side===side) c+=(u.maxMen||u.men); }   /* original strength: maxMen IS set = o.men at creation (the engine's original-strength field, as T2 fielded uses); the old u.men0 was a typo that only worked because fielded() is read pre-battle */
+        var rf=__FIELD.reinforce||[]; for(var j=0;j<rf.length;j++){ if(!rf[j].done && rf[j].spec && rf[j].spec.side===side) c+=(rf[j].spec.men||0); } return c; }
+      var seeds=[1,7,55,101,303], csLossWall=0, csLossNoWall=0, csWins=0;
+      for(var s=0;s<seeds.length;s++){
+        // WITH the wall
+        __FIELD._officersOff=false; __FIELD._logisticsOff=false; __FIELD._armsOff=false;
+        fldLaunchSandbox({renderer:'none', scenario:'fredericksburg', autoBoth:true, seed:seeds[s]});
+        var cs0=fielded('CS'); runToEnd(20000);
+        csLossWall += (cs0 - strength('CS')); if(__FIELD.winner==='CS') csWins++;
+        // WITHOUT the wall (torn down for this run only) — the defenders lose their cover
+        __FIELD._officersOff=false; __FIELD._logisticsOff=false; __FIELD._armsOff=false;
+        fldLaunchSandbox({renderer:'none', scenario:'fredericksburg', autoBoth:true, seed:seeds[s]});
+        __FIELD.terrain = Object.assign({}, __FIELD.terrain, { walls: [] });
+        var cs0b=fielded('CS'); runToEnd(20000);
+        csLossNoWall += (cs0b - strength('CS'));
+      }
+      if(!(csLossNoWall > csLossWall)) throw new Error('the wall is not load-bearing: CS losses WITH the wall '+Math.round(csLossWall)+' >= WITHOUT '+Math.round(csLossNoWall)+' (the wall must reduce Confederate casualties)');
+      if(!(csLossNoWall > csLossWall*1.06)) throw new Error('the wall barely matters (<6% CS-casualty reduction): with '+Math.round(csLossWall)+' without '+Math.round(csLossNoWall));
+      if(csWins < seeds.length) throw new Error('the wall defense is not CS-favored across the sample: '+csWins+'/'+seeds.length);
+      return { csLossWithWall:Math.round(csLossWall), csLossWithoutWall:Math.round(csLossNoWall), wallReducesCsLossPct:Math.round((csLossNoWall-csLossWall)/csLossNoWall*100), csWins:csWins+'/'+seeds.length }; });
 
     step('CS PLAYER + US PLAYER both resolve (no hang/NaN): a passive player on either side reaches a decided result', function(){
       delete G.settings.tacticalFog;
