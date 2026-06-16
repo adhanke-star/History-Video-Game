@@ -34,7 +34,7 @@ const SETUP = `(() => {
   try {
     if (typeof fldLaunchSandbox!=='function' || typeof fldVisible!=='function' || typeof fldComputeVisibility!=='function')
       return JSON.stringify({ok:false, fatal:'fog engine missing'});
-    G.settings=G.settings||{}; G.settings.gfx='classic'; G.mode='menu'; G.settings.tacticalFog=false; __FIELD._officersOff=true; __FIELD._logisticsOff=true;   // B-2/B-3: lock the PRE-officer/PRE-logistics sim core BYTE-IDENTICAL (each layer -> its own probe)
+    G.settings=G.settings||{}; G.settings.gfx='classic'; G.mode='menu'; G.settings.tacticalFog=false; __FIELD._officersOff=true; __FIELD._logisticsOff=true; __FIELD._armsOff=true;   // B-2/B-3/B-4: lock the PRE-officer/PRE-logistics/PRE-arms sim core BYTE-IDENTICAL (each layer -> its own probe)
 
     step('DEFAULT OFF: __FIELD.fog false and fldVisible() is always true (the no-op fast path)', function(){
       fldLaunchSandbox({renderer:'none', autoBoth:true, seed:1});

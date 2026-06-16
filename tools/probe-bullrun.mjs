@@ -42,7 +42,7 @@ const SETUP = `(() => {
   try {
     if (typeof fldLaunchSandbox!=='function' || typeof __FIELD==='undefined' || typeof fldScenarioInit!=='function')
       return JSON.stringify({ok:false, fatal:'__FIELD engine / scenario seam missing'});
-    G.settings=G.settings||{}; G.settings.gfx='classic'; G.mode='menu'; __FIELD._officersOff=true; __FIELD._logisticsOff=true;   // B-2/B-3: lock the PRE-officer/PRE-logistics sim core BYTE-IDENTICAL (each layer has its own probe)
+    G.settings=G.settings||{}; G.settings.gfx='classic'; G.mode='menu'; G.settings.tacticalFog=false; __FIELD._officersOff=true; __FIELD._logisticsOff=true; __FIELD._armsOff=true;   // B-2/B-3/B-4: lock the PRE-officer/PRE-logistics/PRE-arms sim core BYTE-IDENTICAL (bullrun1 fields art+cav; each layer has its own probe). tacticalFog pinned OFF: bullrun1 now DEFAULTS fog ON (D67) -> pin it so this baseline stays clear-weather byte-identical.
     var DATA = (GAME_DATA && GAME_DATA.bullrun) ? GAME_DATA.bullrun.bullrun1 : null;
 
     step('DATA present: GAME_DATA.bullrun.bullrun1 with OOB + terrain + reinforcements (full engaged force)', function(){

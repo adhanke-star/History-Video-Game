@@ -28,7 +28,7 @@
      reinvented — then adapted to continuous, positional, per-tick resolution.
    - Seeded RNG (fldRng) so probes run reproducibly + balance is tunable.
 
-   Bare-name globals only (G, WEAPONS, ARM, _m3dLoadScripts, toast); window.THREE is
+   Bare-name globals only (G, WEAPONS, the T5 arm helpers fldArmMelee/fldArtFireMult/FLDA, _m3dLoadScripts, toast); window.THREE is
    the loaded lib. All helpers are uniquely prefixed `fld` to satisfy the collision
    gate. THREE is referenced ONLY inside runtime fns (it loads async). No literal
    comment-closer inside this block.
@@ -45,7 +45,8 @@ var __FIELD = {
   groups: null, _ro: null, _obsInstalled: false,
 };
 
-/* ---- tunable constants (seeded from the base WEAPONS/ARM tables + tuned via probe) ---- */
+/* ---- tunable constants (seeded from the base WEAPONS table + tuned via probe; the per-arm melee/canister
+   table lives in T5 FLDA, gated on __FIELD.arms) ---- */
 var FLD = {
   FIELD_W: 1200, FIELD_H: 900,          // yards (x by z)
   FIXED_DT: 0.05,                        // 20 Hz sim
@@ -183,6 +184,7 @@ function fldMakeUnit(o) {
   return {
     id: o.id, side: o.side, name: o.name, arm: o.arm || "inf", weapon: o.weapon,
     commander: o.commander || null,   // B-2: the brigade's named leader (from the OOB data); labels it in the HUD
+    role: o.role || null,             // B-4: a cavalry brigade's role (scout/flank/screen/raid); null/ignored for inf+art
     pow: prof.pow, rng: prof.rng, xp: o.xp || 1,
     x: o.x, z: o.z, facing: o.facing, formation: o.formation || "line",
     men: o.men, maxMen: o.men, morale: o.morale || 78, maxMor: o.morale || 78,
@@ -228,9 +230,14 @@ function fldInitSim(opts) {
   // null for every standalone launch -> the fldResetRun conditioning hook + the campaign end screen are
   // no-ops then (byte-behavior-identical sandbox/Bull-Run; probe-field/bullrun hold). Set by T2.
   __FIELD.campaignCtx = opts.campaign || null;
-  // fog of war (P1b): a persisted toggle (default OFF). OFF -> fldVisible() is always true -> every fog
-  // gate below is a no-op and the sim/render is byte-behavior-identical to the pre-fog engine.
-  __FIELD.fog = (opts.fog != null) ? !!opts.fog : !!(typeof G !== "undefined" && G.settings && G.settings.tacticalFog);
+  // fog of war (P1b): a toggle. PRECEDENCE: an explicit opts.fog wins; else an explicit global setting
+  // (G.settings.tacticalFog, set once the player presses V or a probe pins it) wins; else the SCENARIO default
+  // applies (set in fldScenarioInit from scenData.defaultFog — First Bull Run defaults fog ON, D67: under fog the
+  // stacked tactical layers keep the battle Confederate-favoured, the historically faithful result + "fog aids the
+  // defender"). _fogSpecified records whether fog was pinned, so the scenario default only fills an UNSET fog.
+  var _fogGlobalSet = (typeof G !== "undefined" && G.settings && G.settings.tacticalFog != null);
+  __FIELD._fogSpecified = (opts.fog != null) || _fogGlobalSet;
+  __FIELD.fog = (opts.fog != null) ? !!opts.fog : (_fogGlobalSet ? !!G.settings.tacticalFog : false);
   // active auto-pause (P1b): pause at decision points (a brigade breaks / is destroyed / reinforcements
   // arrive) so a low-APM player keeps up. A toggle, default ON. Lives ONLY in the RAF loop (fldAutoPauseScan),
   // so the headless probe stepper (fldStepN) never auto-pauses -> zero probe/determinism impact.
@@ -249,6 +256,13 @@ function fldInitSim(opts) {
   // (u.exhausted) read in fldStepMovement stays falsy) -> those baselines remain BYTE-IDENTICAL.
   __FIELD.logistics = __FIELD._logisticsOff ? false : ((opts.logistics != null) ? !!opts.logistics : true);
   __FIELD.trains = null;
+  // distinct arm roles (B-4): artillery canister/bombardment + battery doctrine; cavalry scout/flank/screen/raid;
+  // the ARM melee table; the Cannon-Corps->field-battery bridge. Same per-launch gate / sticky _armsOff test hook
+  // — the field/bullrun/fog/autopause/ai/campaign-link + officers + logistics probes set it so the ARM table is
+  // not consulted (melee stays the 1.0 default), no canister branch fires, no role AI / raid runs, and
+  // u.role/_canisterScale stay inert -> those baselines (INCLUDING bullrun1, which FIELDS Griffin/Ricketts as art
+  // and Stuart as cav) remain BYTE-IDENTICAL. The gate is exactly what protects them. Coverage = probe-arms.mjs.
+  __FIELD.arms = __FIELD._armsOff ? false : ((opts.arms != null) ? !!opts.arms : true);
   __FIELD._aiGenericAll = false; __FIELD._aiGenericAtk = false;   // role-aware AI test hooks: reset per launch (bug-hunt #4); probe-ai sets them AFTER launch (A/B the defender + attacker doctrines)
   if (sc !== "sandbox" && typeof fldScenarioInit === "function" && fldScenarioInit(opts)) return;
   // Phase A (A2): a custom FREE skirmish / procedural campaign battle is built by T2's fldSkirmishOOB
@@ -303,6 +317,10 @@ function fldResolveFire(u, tgt, dt) {
   var fr = fldFrontageExposed(u, tgt);
   var cover = fldCoverAt(tgt.x, tgt.z);
   var power = FLD.FIRE_BASE * strF * u.pow * rngF * xpF * ammoF * morF * fatF;
+  // distinct arm roles (B-4): artillery fires CANISTER up close (a giant shotgun — devastating in the open,
+  // defeated by works/woods) and a softening long-range bombardment beyond. A gated multiplier on the base fire
+  // (1.0 / no-op when arms off or the shooter is not artillery -> byte-identical, incl. bullrun1's batteries).
+  if (__FIELD.arms && u.arm === "art" && typeof fldArtFireMult === "function") power *= fldArtFireMult(u, tgt, d, cover);
   var cas = power * fr.mult * fr.frontW / cover * (0.78 + fldRng() * 0.44) * dt;
   cas = Math.min(cas, tgt.men);
   if (cas <= 0) return;
@@ -315,8 +333,13 @@ function fldResolveFire(u, tgt, dt) {
 // continuous melee when blocks are in contact.
 function fldResolveMelee(a, b, dt) {
   if (!a.alive || !b.alive) return;
-  var meleeA = (typeof ARM !== "undefined" && ARM[a.arm] ? ARM[a.arm].melee : 1.0);
-  var meleeB = (typeof ARM !== "undefined" && ARM[b.arm] ? ARM[b.arm].melee : 1.0);
+  // distinct arm roles (B-4): the ARM melee table. When arms is ON, fldArmMelee gives the deepened values
+  // (art 0.35 overrun, cav 1.4 shock / 0.9 braced, inf 1.0). When arms is OFF, fall back to the BASE engine's
+  // ARM table (base.html: inf 1.00 / cav 1.05 / art 0.40) EXACTLY as the pre-B4 code did — the build concatenates
+  // base + src so ARM is in scope; this fallback is what keeps the arms-OFF baselines byte-identical (the design's
+  // "ARM is never defined -> 1.0" was wrong; the base table was live, and reverting to 1.0 shifted the balance).
+  var meleeA = (__FIELD.arms && typeof fldArmMelee === "function") ? fldArmMelee(a, b) : (typeof ARM !== "undefined" && ARM[a.arm] ? ARM[a.arm].melee : 1.0);
+  var meleeB = (__FIELD.arms && typeof fldArmMelee === "function") ? fldArmMelee(b, a) : (typeof ARM !== "undefined" && ARM[b.arm] ? ARM[b.arm].melee : 1.0);
   var atk = a.men * meleeA * (0.6 + 0.4 * a.morale / a.maxMor) * (0.9 + a.xp * 0.06);
   var def = b.men * meleeB * (0.6 + 0.4 * b.morale / b.maxMor) * (0.9 + b.xp * 0.06) * fldCoverAt(b.x, b.z);
   var ratio = atk / Math.max(1, def);
@@ -494,6 +517,9 @@ function fldAcquireTarget(u) {
     // prefer closer + weaker + flank-exposed targets
     var fr = fldFrontageExposed(u, e);
     var s = (u.rng - d) / u.rng * 1.0 + fr.mult * 0.4 + (1 - e.men / e.maxMen) * 0.5;
+    // distinct arm roles (B-4): arm-aware target preference (artillery -> dense/exposed canister fodder; cavalry ->
+    // disordered/flanked). Returns 0 for infantry AND when arms off -> infantry/baseline targeting is byte-identical.
+    if (__FIELD.arms && typeof fldArmTargetBias === "function") s += fldArmTargetBias(u, e, d, fr);
     if (s > score) { score = s; best = e; }
   }
   u.targetId = best ? best.id : null;
@@ -505,6 +531,10 @@ function fldAiUnit(u) {
   // in-battle logistics (B-3): a low-ammo brigade not under assault falls back to its train to refill — this
   // OVERRIDES the normal doctrine for that brigade (returns true). No-op when logistics off (byte-identical).
   if (__FIELD.logistics && typeof fldLogisticsAiUnit === "function" && fldLogisticsAiUnit(u)) return;
+  // distinct arm roles (B-4): artillery + cavalry run their OWN doctrines (battery stand/displace; cavalry
+  // scout/flank/screen/raid), OVERRIDING the infantry doctrine for those arms. No-op when arms off OR the unit is
+  // infantry (returns false -> falls through to the existing generic/attacker/defender doctrines, byte-identical).
+  if (__FIELD.arms && typeof fldArmsAiUnit === "function" && fldArmsAiUnit(u)) return;
   // ROLE-AWARE AI (P1b-iii): in an ASYMMETRIC scenario (attacker set) the DEFENDER holds ground + cover
   // and counterattacks disordered attackers instead of advancing off its good ground like an attacker.
   // The symmetric SANDBOX (attacker === null) runs fldAiGeneric for BOTH sides -> byte-behavior-identical
@@ -755,6 +785,9 @@ function fldSimStep(dt) {
     fldAcquireTarget(s);
     if (s.targetId) { var tg = fldById(s.targetId); if (tg) fldResolveFire(s, tg, dt); }
   }
+  // distinct arm roles (B-4): decay the muzzle-flash/charge visual timers + apply the cavalry RAID on an enemy
+  // ammunition train (the B-3 tie). No-op when arms off (byte-identical) / no trains.
+  if (__FIELD.arms && typeof fldArmsStep === "function") fldArmsStep(dt);
   // officers & command (B-2): ride leaders to the line, apply the command aura (u.cmdBonus), accrue the
   // leader exposure-hazard + any general-down shock — all BEFORE morale, so this tick's morale resolution
   // reflects them. No-op when officers are off (fldOfficersStep early-returns; u.cmdBonus stays unset -> 0).
@@ -1180,6 +1213,7 @@ function fldRenderHud() {
     fldBar("Fatigue", u.fatigue, 100, "#a08050") +
     fldBar("Ammo", u.ammo, 100, "#8a9bb0") +
     (typeof fldLogisticsHudSelected === "function" ? fldLogisticsHudSelected(u) : "") +   // B-3: ammo/resupply/spent status
+    (typeof fldArmsHudSelected === "function" ? fldArmsHudSelected(u) : "") +   // B-4: battery range-band / cavalry role
     (typeof fldOfficerHudSelected === "function" ? fldOfficerHudSelected(u) : "");   // B-2: brigade leader + in-command status
 }
 function fldOnOver() {
@@ -1197,6 +1231,8 @@ function fldOnOver() {
   if (typeof fldOfficerEndHtml === "function") { try { scNote += (fldOfficerEndHtml(w) || ""); } catch (eO) {} }
   // B-3 seam: the ammunition-economy teaching payoff (if a side's reserve ran low). No-op when off / reserves held.
   if (typeof fldLogisticsEndHtml === "function") { try { scNote += (fldLogisticsEndHtml() || ""); } catch (eL) {} }
+  // B-4 seam: the arms-of-the-service teaching (lost batteries / the cavalry charge). No-op when off / none afield.
+  if (typeof fldArmsEndHtml === "function") { try { scNote += (fldArmsEndHtml() || ""); } catch (eA) {} }
   var _inCampaign = !!__FIELD.campaignCtx;
   e.innerHTML =
     '<div style="text-align:center;background:#0c0f14;border:1px solid #745e3f;border-radius:8px;padding:26px 34px;max-width:640px;max-height:88vh;overflow:auto;">' /* wcag-auditor: contrast fix #4a3c28->#745e3f border on #0c0f14 (was 1.80:1, now 3.12:1) WCAG 1.4.11 */ +
@@ -1299,6 +1335,8 @@ function fld2dDraw() {
   }
   // in-battle logistics (B-3): the ammunition trains + resupply rings (drawn under the officers; no-op when off)
   if (typeof fldDrawSupply === "function") fldDrawSupply(ctx, v);
+  // distinct arm roles (B-4): brass gun/limber + mounted-trooper markers, muzzle flash, canister cone, charge trail (no-op when off)
+  if (typeof fldDrawArms === "function") fldDrawArms(ctx, v);
   // officers & command (B-2): command rings + mounted-officer markers + fallen crosses (no-op when off / no leaders)
   if (typeof fldDrawOfficers === "function") fldDrawOfficers(ctx, v);
   // drag arrow
@@ -1378,6 +1416,8 @@ function fld3dInit() {
   if (typeof fld3dBuildOfficers === "function") { try { fld3dBuildOfficers(); } catch (e) {} }
   // in-battle logistics (B-3): ammunition-wagon meshes + resupply rings (no-op when off / no trains)
   if (typeof fld3dBuildSupply === "function") { try { fld3dBuildSupply(); } catch (e) {} }
+  // distinct arm roles (B-4): gun + mounted-trooper meshes (no-op when off / no art+cav)
+  if (typeof fld3dBuildArms === "function") { try { fld3dBuildArms(); } catch (e) {} }
 }
 function fldLow() { try { var q = G && G.settings && G.settings.gfxQuality; if (q === "low") return true; if (q === "high") return false; return Math.min(window.innerWidth, window.innerHeight) <= 720; } catch (e) { return false; } }
 function fld3dBuildTerrain() {
@@ -1499,6 +1539,7 @@ function fld3dRender() {
   for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; var g = __FIELD._u3d[u.id]; if (g) fld3dSyncUnit(u, g); }
   if (typeof fld3dSyncOfficers === "function") fld3dSyncOfficers();   // B-2: officer figures + auras
   if (typeof fld3dSyncSupply === "function") fld3dSyncSupply();       // B-3: ammunition-train wagons
+  if (typeof fld3dSyncArms === "function") fld3dSyncArms();           // B-4: gun + trooper markers + muzzle flash
   __FIELD.renderer.render(__FIELD.scene, __FIELD.camera);
 }
 function fld3dPick(clientX, clientY) {

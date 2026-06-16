@@ -99,6 +99,42 @@ function fldCampaignConditionUnit(u) {
     }
     p._armIdx = (p._armIdx || 0) + 1;
   }
+  // B-4: condition the player's ARTILLERY from the bought Cannon Corps (the dominant battery type) — the
+  // artillery arm you built on the President's Desk becomes the battery you field (reach / per-shot weight /
+  // canister strength). No-op when arms off OR no batteries bought (p.artProfile null) -> the field battery
+  // keeps its nominal scenario profile, so a no-Cannon-Corps army fields ~ the nominal piece (balanced like A1).
+  if (__FIELD.arms && u.arm === "art" && p.artProfile) {
+    if (typeof p.artProfile.rng === "number") u.rng = p.artProfile.rng;
+    if (typeof p.artProfile.pow === "number") u.pow = p.artProfile.pow;
+    u._canisterScale = (typeof p.artProfile.canisterScale === "number") ? p.artProfile.canisterScale : 1;
+  }
+}
+/* B-4: map the player's bought Cannon Corps (C.artillery.batteries -> the DOMINANT gun type in
+   GAME_DATA.artillery) onto a field-battery profile. Anchored ~ the Napoleon (rangeYds 1600, quality 78,
+   accuracy 60) so no investment -> null -> the nominal field battery (balanced like the A1 strength anchor).
+   "Build Napoleons -> murderous canister; build Whitworths -> long-range counter-battery with no close spike."
+   Deterministic; reads only data + C. FLD.* / fldClamp are T0 globals (resolved at launch). */
+function _fldArtProfile(C) {
+  try {
+    if (!C || !C.artillery || !C.artillery.batteries || typeof GAME_DATA === "undefined" || !GAME_DATA.artillery || !GAME_DATA.artillery.guns) return null;
+    var bats = C.artillery.batteries, guns = GAME_DATA.artillery.guns;
+    // dominant battery type by count; SORTED keys + a stable id tie-break so the choice is order-independent
+    // (bug-hunt LOW: removes the only Object-key-order dependence in the arms layer — deterministic on ties).
+    var keys = []; for (var kk in bats) { if (bats.hasOwnProperty(kk)) keys.push(kk); }
+    keys.sort();
+    var bestId = null, bestN = 0;
+    for (var ki = 0; ki < keys.length; ki++) { var id = keys[ki], n = Number(bats[id]) || 0; if (n > bestN) { bestN = n; bestId = id; } }
+    if (!bestId || bestN <= 0) return null;                       // no investment -> neutral (the nominal field battery)
+    var g = null; for (var i = 0; i < guns.length; i++) { if (guns[i].id === bestId) { g = guns[i]; break; } }
+    if (!g) return null;
+    var rangeYds = Number(g.rangeYds) || 1600, quality = Number(g.quality) || 70, accuracy = Number(g.accuracy) || 70;
+    var hasCanister = false, pr = g.projectiles || [];
+    for (var k = 0; k < pr.length; k++) { if (String(pr[k]).toLowerCase().indexOf("canister") >= 0) { hasCanister = true; break; } }
+    var rng = fldClamp(FLD.RANGE_ART * (rangeYds / 1600), 560, 1700);                  // Whitworth reaches far; a howitzer is short-armed
+    var pow = fldClamp(0.9 + (accuracy - 60) / 100 * 0.55, 0.85, 1.45);                // accuracy lifts per-shot weight
+    var canisterScale = hasCanister ? fldClamp(0.7 + (quality - 58) / 100 * 0.7, 0.7, 1.2) : 0.28;  // a no-canister gun (Whitworth) loses the close spike
+    return { rng: rng, pow: pow, canisterScale: canisterScale, gun: g.name, hasCanister: hasCanister };
+  } catch (e) { return null; }
 }
 /* Condition the whole fielded army from bridgeArmy(C) + the battle-prep orders. Called once
    per launch from the T0 fldResetRun hook (campaignCtx set only on a campaign launch).
@@ -132,6 +168,7 @@ function fldCampaignCondition() {
     entrench: !!bp.entrench,
     armPlan: _fldArmPlan(C, year, infN),
     _armIdx: 0,
+    artProfile: _fldArtProfile(C),   // B-4: the bought Cannon Corps -> the field battery's reach/power/canister (null = nominal)
   };
   for (i = 0; i < __FIELD.units.length; i++) fldCampaignConditionUnit(__FIELD.units[i]);
   // raid-supply prep: the enemy fights hungry and short of cartridges (mirrors _a6Condition's enemy debuff)

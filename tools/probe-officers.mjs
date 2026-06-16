@@ -42,6 +42,7 @@ const SETUP = `(() => {
     G.settings=G.settings||{}; G.settings.gfx='classic'; G.mode='menu'; G.settings.tacticalFog=false;
     __FIELD._officersOff = false;   // this probe EXERCISES the officer layer (the others lock it off)
     __FIELD._logisticsOff = true;   // ...but ISOLATES it from the B-3 logistics layer (which has its own probe-logistics)
+    __FIELD._armsOff = true;        // ...and from the B-4 arm-roles layer (probe-arms covers it) -> the officer sweep stays isolated
 
     step('BUILD: a scenario builds its real cast (Bull Run 7), the sandbox builds 2 generic, _officersOff builds 0', function(){
       fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:1});

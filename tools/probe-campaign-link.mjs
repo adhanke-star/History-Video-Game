@@ -45,7 +45,7 @@ const SETUP = `(() => {
     if (typeof fldLaunchSandbox!=='function' || typeof __FIELD==='undefined' || typeof fldCampaignCondition!=='function'
         || typeof fldCampaignComputeOutcome!=='function' || typeof fldCampaignApplyOutcome!=='function' || typeof BATTLES==='undefined')
       return JSON.stringify({ok:false, fatal:'Phase A campaign-link missing'});
-    G.settings=G.settings||{}; G.settings.gfx='classic'; G.mode='menu'; __FIELD._officersOff=true; __FIELD._logisticsOff=true;   // B-2/B-3: lock the PRE-officer/PRE-logistics A-layer BYTE-IDENTICAL (each layer -> its own probe)
+    G.settings=G.settings||{}; G.settings.gfx='classic'; G.mode='menu'; G.settings.tacticalFog=false; __FIELD._officersOff=true; __FIELD._logisticsOff=true; __FIELD._armsOff=true;   // B-2/B-3/B-4: lock the PRE-officer/PRE-logistics/PRE-arms A-layer BYTE-IDENTICAL (each layer -> its own probe). tacticalFog pinned OFF (D67: bullrun1 now defaults fog ON).
 
     // ---------- A1 — conditioning ----------
     step('A1: a STRONG war fields more men than a WEAK war (same battle/seed); FRESH ~ nominal (74 anchor)', function(){

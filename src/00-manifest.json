@@ -27,6 +27,7 @@
     "tactical/T2-campaign-link.js",
     "tactical/T3-officers.js",
     "tactical/T4-logistics.js",
+    "tactical/T5-arms.js",
     "90-president-register.js"
   ],
   "overrides": [

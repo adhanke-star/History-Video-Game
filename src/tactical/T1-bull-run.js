@@ -76,6 +76,11 @@ function fldScenarioInit(opts) {
   for (i = 0; i < rs.length; i++) sched.push({ atSec: rs[i].atSec, spec: fldBrSpec(rs[i], rs[i].side, __FIELD.autoBoth), done: false });
   sched.sort(function (a, b) { return a.atSec - b.atSec; });
   __FIELD.reinforce = sched;
+  // D67: First Bull Run DEFAULTS to fog ON (data.defaultFog) when fog was not explicitly pinned — the historically
+  // faithful battle (smoke, broken terrain, green troops) in which fog AIDS THE DEFENDER, keeping the stacked
+  // officers+logistics+arms config Confederate-favoured. An explicit opts.fog / G.settings.tacticalFog still wins
+  // (so the probes that pin fog are unaffected). Set BEFORE fldResetRun so deploy-screen visibility primes correctly.
+  if (!__FIELD._fogSpecified && data.defaultFog) __FIELD.fog = true;
   fldResetRun();   // shared T0 deploy/clock/selection reset (one source of truth)
   return true;
 }
@@ -113,7 +118,14 @@ function fldReinforceSpawn(spec) {
   var line = u.name + " arrives" + (spec.entry ? " — " + spec.entry : "") + "!";
   fldScenarioBanner(line, u.side);   // a visual banner per unit (they stack vertically)
   // rebuild the 3D meshes so the fresh brigade appears (cheap: < 20 units; the next render syncs all).
-  if (__FIELD.mode3d && typeof window !== "undefined" && window.THREE && __FIELD.groups) { try { fld3dBuildUnits(); } catch (e) {} }
+  // B-4 (bug-hunt HIGH): also rebuild the ARM meshes — Griffin/Ricketts (art) and Stuart (cav) all DETRAIN as
+  // reinforcements, so the once-at-init fld3dBuildArms found no art/cav and built nothing; without this rebuild
+  // they would render as plain blocks (no gun/limber or horse/rider) in the default 3D Bull Run. fld3dBuildArms
+  // self-disposes first, so the per-arrival rebuild is leak-safe (same justification as fld3dBuildUnits).
+  if (__FIELD.mode3d && typeof window !== "undefined" && window.THREE && __FIELD.groups) {
+    try { fld3dBuildUnits(); } catch (e) {}
+    if (typeof fld3dBuildArms === "function") { try { fld3dBuildArms(); } catch (e) {} }
+  }
   return line;
 }
 

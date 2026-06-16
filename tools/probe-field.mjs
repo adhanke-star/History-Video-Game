@@ -34,7 +34,7 @@ const SETUP = `(() => {
   try {
     if (typeof fldLaunchSandbox!=='function' || typeof __FIELD==='undefined' || typeof fldSimStep!=='function')
       return JSON.stringify({ok:false, fatal:'__FIELD engine missing'});
-    G.settings=G.settings||{}; G.settings.gfx='classic'; G.mode='menu'; __FIELD._officersOff=true; __FIELD._logisticsOff=true;   // B-2/B-3: lock the PRE-officer/PRE-logistics sim core BYTE-IDENTICAL (each layer has its own probe)
+    G.settings=G.settings||{}; G.settings.gfx='classic'; G.mode='menu'; __FIELD._officersOff=true; __FIELD._logisticsOff=true; __FIELD._armsOff=true;   // B-2/B-3/B-4: lock the PRE-officer/PRE-logistics/PRE-arms sim core BYTE-IDENTICAL (each layer has its own probe)
 
     step('launch (headless) deploys ~2 brigades/side: 4 units, 2 US + 2 CS', function(){
       fldLaunchSandbox({renderer:'none', autoBoth:true, seed:12345});

@@ -36,6 +36,7 @@ const SETUP = `(() => {
     G.settings=G.settings||{}; G.settings.gfx='classic'; G.mode='menu'; G.settings.tacticalFog=false;
     __FIELD._officersOff = true;    // ISOLATE: this probe exercises ONLY the B-3 logistics layer (officers off)
     __FIELD._logisticsOff = false;
+    __FIELD._armsOff = true;        // ...and the B-4 arm-roles layer off (probe-arms covers it) -> logistics stays isolated
 
     step('BUILD: a scenario builds a rear train per side (data positions; CS = Manassas Junction); the sandbox builds 2 procedural; _logisticsOff builds none', function(){
       fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:1});

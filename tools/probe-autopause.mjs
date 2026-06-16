@@ -31,7 +31,7 @@ const SETUP = `(() => {
   try {
     if (typeof fldLaunchSandbox!=='function' || typeof fldAutoPauseScan!=='function' || typeof fldToggleAutoPause!=='function')
       return JSON.stringify({ok:false, fatal:'auto-pause engine missing'});
-    G.settings=G.settings||{}; G.settings.gfx='classic'; G.mode='menu'; delete G.settings.tacticalAutoPause; __FIELD._officersOff=true; __FIELD._logisticsOff=true;   // B-2/B-3: lock the PRE-officer/PRE-logistics sim core BYTE-IDENTICAL (each layer -> its own probe)
+    G.settings=G.settings||{}; G.settings.gfx='classic'; G.mode='menu'; G.settings.tacticalFog=false; delete G.settings.tacticalAutoPause; __FIELD._officersOff=true; __FIELD._logisticsOff=true; __FIELD._armsOff=true;   // B-2/B-3/B-4: lock the PRE-officer/PRE-logistics/PRE-arms sim core BYTE-IDENTICAL (each layer -> its own probe). tacticalFog pinned OFF (D67: bullrun1 now defaults fog ON).
 
     step('DEFAULT ON (accessible low-APM default)', function(){
       fldLaunchSandbox({renderer:'none', autoBoth:true, seed:1});

@@ -23,7 +23,8 @@ content-complete v1 (still a perpetual project after — D54). Built from `MODER
 S0–S1 economy/production/blockade/manpower/victory · Battle layer A1–A6 (owner-mode war playable end-to-end) ·
 S2 m1–m5 (cabinet, decisions, 3-layer morale + 1864 election, press, command/named-generals) · **Tactical
 P0 sandbox · P1a First Bull Run · P1b-i fog · P1b-ii auto-pause · P1b-iii role-aware DEFENDER AI · PHASE A
-connect-the-layers (A1 conditioning · A2 fight-from-bridge + FREE skirmish · A3 result feedback).**
+connect-the-layers (A1 conditioning · A2 fight-from-bridge + FREE skirmish · A3 result feedback) · Phase B
+tactical depth (B1 attacker AI · B2 officers/command · B3 in-battle logistics · B4 distinct arm roles).**
 
 ---
 
@@ -41,7 +42,7 @@ connect-the-layers (A1 conditioning · A2 fight-from-bridge + FREE skirmish · A
       ground, `enemyWill`) — substitutable for the existing Classic / auto-resolve result (MODERN-UGG §2).
       *(REAL casualty fractions from the fight → `startBattleRuntime`+`_arApplyCasualties`+`campaignAdvance`→`_t1Resolve`; win advances, loss recovers; deterministic. probe-campaign-link 16/16.)*
 
-### Phase B — TACTICAL DEPTH  (P2–P5, real-time engine)  ‹B1 ✅ D64 · B2 ✅ D65 · B3 ✅ D66 — run k, 2026-06-15›
+### Phase B — TACTICAL DEPTH  (P2–P5, real-time engine)  ‹B1 ✅ D64 · B2 ✅ D65 · B3 ✅ D66 · B4 ✅ D67 — run k, 2026-06-15›
 - [x] **B1 Smarter ATTACKER AI** — defender-favored, fog aids the defender (LOCKED); attacker doctrinally
       sound (concentrate / assault) but the fog inversion tuned out. (Prototype exists: `ATTACKER-AI-PROPOSAL.md`.)
       *(`fldAiAttacker`: concentrate-on-weaker-flank / close / assault, GRADUAL per-unit commit [no knife-edge] + CAUTIOUS-WHEN-BLIND. Sweep: both-doctrines Bull Run fog-OFF CS 6/8, fog-ON 8/8 — fog aids the defender; def-cas 4592 vs the passive 1276. probe-ai 15/15.)*
@@ -49,8 +50,11 @@ connect-the-layers (A1 conditioning · A2 fight-from-bridge + FREE skirmish · A
       *(`src/tactical/T3-officers.js`: a command AURA [faster recovery / rally / capped rout-resistance] + an exposure→wound→fall hazard with a one-time command shock; per-leader HISTORICAL fate + risk-decay + cover so army commanders survive [10/10] and only the real casualties [Bee/Bartow] are fall-prone; ties `bridgeArmy` leadership; the real Bull Run cast in `data/bullrun.json`. Officers-ON Bull Run CS 7/8 fog-OFF · 8/8 fog-ON. probe-officers 15/15; 6 baselines byte-identical.)*
 - [x] **B3 In-battle logistics** — ammo + fatigue depth + supply. ‹✅ — run k, 2026-06-15, DECISIONS D66›
       *(`src/tactical/T4-logistics.js`: rear ammunition trains w/ finite reserve, disengaged-resupply, out-of-ammo→bayonet on the objective, exhaustion move penalty; attacker-far/defender-near train asymmetry. **Bug-hunt caught a fog inversion** [logistics-ON inverted fog-aids-defender, CS 8/8→0/8]; surfaced to Aaron → fixed by choking the ATTACKER's resupply under fog → balance-NEUTRAL both fog states [fog-OFF CS 5/8, fog-ON CS 8/8]. Ties strategic supply + raid. probe-logistics 14/14; 7 baselines byte-identical.)*
-- [ ] **B4 Distinct arm roles** — artillery (canister / long-range), cavalry (scout / flank / screen / raid).
-- [ ] **B5 Difficulty/realism presets** for the AI + sim depth.
+- [x] **B4 Distinct arm roles** — artillery (canister / long-range), cavalry (scout / flank / screen / raid). ‹✅ — run k, 2026-06-15, DECISIONS D67›
+      *(`src/tactical/T5-arms.js`: canister spike vs cover-attenuation + long-range bombardment; the ASYMMETRIC battery doctrine [defender-safe / attacker-forward-and-catchable, the lost crest guns]; the ARM melee table [art 0.35 overrun, cav 1.4 shock / 0.9 braced]; cavalry scout/flank/screen/raid [raid drains the enemy B-3 train]; the Cannon-Corps→field-battery bridge [`_fldArtProfile`: Napoleon→canister, Whitworth→long-range]. **Vetting caught a real byte-identity bug** [the base.html `ARM` melee table was live, not undefined → fixed via a base-ARM fallback when arms off] and **surfaced a stacked-balance fork** [officers+logistics+arms made clear-weather AI-vs-AI Union-favoured; Aaron's call → **First Bull Run now DEFAULTS to fog ON**, the faithful battle where fog aids the defender → live CS 8/8]. arms-only fog-OFF CS 7/8. probe-arms 23/23; 8 baselines byte-identical.)*
+- [ ] **B5 Difficulty/realism presets** for the AI + sim depth. **Must expose the effectiveness/realism sliders
+      that the TACTICAL ENGINEERING CORPS effects key off** (entrench time, parapet cover, pontoon-required-to-cross,
+      sapper speed, engineering-rating→field-corps size) — Aaron directive, run-k; see Phase F engineering idea.
 - [ ] **B6 CS-player tactical mode** ‹LOCKED: yes, Phase B› — command EITHER side in a battle (you defend as
       the CS, AI attacks). Makes the attacker AI (B1) player-facing. Doubles tactical replayability.
 
@@ -79,6 +83,25 @@ connect-the-layers (A1 conditioning · A2 fight-from-bridge + FREE skirmish · A
 - [ ] Logistics/rail network · POW exchange-collapse · disease/medical · hard war · irregular war · the four
       under-told-perspective threads · flagship named units · CS finance toolkit · war-finance civics · a real
       diplomacy system · the human-cost-with-gravity treatment. (All from §8 D31–D41.)
+- [ ] **Women in the war — soldier & relief threads (Aaron, run-k idea, 2026-06-15).** Add **female leads in the
+      soldier-story rotation**, not only male: the women who enlisted **disguised as men** (est. several hundred —
+      e.g. Sarah Rosetta Wakeman / "Pvt. Lyons Wakeman", Jennie Hodgers / "Albert Cashier" [served the whole war,
+      drew a pension], Loreta Janeta Velázquez / "Harry T. Buford" on the CS side — frame the contested memoir as
+      contested), and a **Clara Barton arc** (the "Angel of the Battlefield" → the Missing Soldiers Office → the
+      American Red Cross). Neighbors: **Dr. Mary Edwards Walker** (the only woman awarded the Medal of Honor) and
+      **Harriet Tubman** (scout/spy; the Combahee River Raid, 1863). Verified/anti-Lost-Cause; ties USCT (C3) +
+      the human-cost treatment. ‹idea — implement when soldier-stories / the codex land; not B-4 scope›
+- [ ] **Tactical Engineering Corps — units, features & effects tied to the effectiveness/realism sliders (Aaron,
+      run-k directive, 2026-06-15).** Extend the strategic **Engineer Works Corps** (`src/57-engineering.js`, D43;
+      `bridgeArmy(C).engineering`) onto the real-time field as a distinct arm/role (the same gated-seam pattern
+      B-4 used for art/cav): **pontoon bridges** (cross a creek/river — the Bull Run terrain already has
+      Young's Branch / the Stone Bridge), **field fortifications / entrenchments** (raise cover on the objective),
+      **abatis / obstacles** (slow an assault), **obstacle-clearing / road & railhead repair** (restore movement).
+      **The "make it make sense" requirement: these effects must INTERACT with the B-5 effectiveness/realism
+      sliders** — e.g. the realism preset scales how long entrenching takes, how much cover a parapet confers,
+      whether pontoons are required to cross vs. fordable, sapper speed, and how the strategic engineering rating
+      gates the field corps' size/quality (the A1-bridge anchor, like B-4 wired Cannon-Corps→battery). Surface a
+      concrete design when B-5 / a tactical-engineering milestone is reached. ‹idea + B-5 wiring requirement›
 
 ### Phase G — THEATERS
 - [ ] Eastern (largely done) → **Western** (same mechanics, new content — D40/D54). Naval/riverine/trans-Miss DEFERRED.
@@ -86,6 +109,13 @@ connect-the-layers (A1 conditioning · A2 fight-from-bridge + FREE skirmish · A
 ### Phase H — "MAKE IT COME TO LIFE"  (graphics/footage — LOCKED: AFTER gameplay-complete)
 - [ ] **H1 PD images:** weapons / flags / USCT / scenes (have 131 portraits) via LoC + Internet Archive +
       Wikimedia, linked-assets + offline fallback.
+- [ ] **H1b Brigade BADGES & INSIGNIA — the battle flags (Aaron, run-k idea, 2026-06-15).** Render each brigade's
+      identity with its **battle flag / colors** on the unit badge: the various Confederate battle flags (ANV
+      Southern Cross, Hardee/Polk Western patterns, the national flags), the U.S. national & regimental colors,
+      and the **Army of the Potomac corps badges** (Kearny patch, the corps shapes/colors). Tasteful period
+      engraving on the 2D/3D unit markers + the selected-brigade HUD; CVD-safe (shape + label, not flag-color
+      alone); honor reduceMotion. Pairs with the B-4 arm markers (gun/limber + trooper) already shipped.
+      ‹idea — graphics pass; not now›
 - [ ] **H2 Reenactment footage** cutaways at key beats (skippable, offline→procedural fallback).
 - [ ] **H3 Richer 3D/animation** on the tactical engine (reuse run-h PBR/HDRI/post-FX); period broadsheet/engraving UI throughout.
 - [ ] **H4 Richer audio** ‹LOCKED: Phase H›: PD period tunes + battlefield/camp soundscapes + UI cues, all
