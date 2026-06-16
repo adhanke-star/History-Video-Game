@@ -14638,6 +14638,25 @@ var GAME_DATA = {
     "defender": "CS",
     "timeLimitSec": 480,
     "holdToWinSec": 140,
+    "sides": {
+      "heading": "First Bull Run — Take Which Command?",
+      "intro": "July 21, 1861 · the first great battle of the war. Lead the army of your choosing.",
+      "US": {
+        "title": "Lead the Union",
+        "badge": "&#9876; ATTACK",
+        "deck": "Cross Bull Run, turn the Confederate left and storm Henry House Hill — the historical assault. Beat the trains bringing Jackson, Early, and Elzey to the field."
+      },
+      "CS": {
+        "title": "Hold for the Confederacy",
+        "badge": "&#9819; DEFEND",
+        "deck": "Stand on Henry House Hill and deny it to McDowell's army until the rail-borne reserves arrive. You face the attacking-AI doctrine pressing uphill."
+      },
+      "foot": "The other army is commanded by the AI. Fog is on by default — the historically faithful field, where the defender holds the hill (press V in battle to clear it)."
+    },
+    "brief": {
+      "attack": "The Confederate reserves arrive on the rail timeline, so win the morning before the trains run out. <b>This is your war:</b> a Union victory here rewrites 1861.",
+      "defend": "Your reserves ride the rail line to your aid; spend the morning making the enemy pay for every yard. <b>This is your war:</b> hold here as the army did in 1861."
+    },
     "objective": {
       "name": "Henry House Hill",
       "x": 600, "z": 450, "r": 140,
@@ -18518,6 +18537,184 @@ var GAME_DATA = {
     }
   ],
   "_designNote": "Asymmetry is the point, again. The Union's military engineering was a decisive, under-celebrated advantage: the USMRR under Haupt and then McCallum rebuilt track and bridges faster than Confederate raiders could destroy them, the Engineer Battalion and volunteer pioneer regiments dug and bridged at scale, and the North's industry supplied the iron, timber framing, and prefabricated equipage. The Confederacy had able engineers (Gilmer, the Vicksburg and Petersburg defenders) but could not match the SCALE or resupply — the same iron shortage that decays its railroads starves its repair. So: (1) every branch costs the CS a materials/skilled-labor premium (costPremiumCS 1.25); (2) the Construction Corps claws back only a FRACTION of the rail lost each turn (railClawbackFractionPerLevel x level, capped railClawbackCap = 0.7 < 1; src/57-engineering.js engOnResolve reads src/50-production.js's railLossLast) — the headline CONFEDERATE benefit, slowing the South's irreversible decay without ever stopping or reversing it (no iron to truly rebuild), so rail still declines monotonically toward the floor, just more slowly; the recovery can never reach an equilibrium or pin rail at 100, even with the rail War-Room node fully funded; (3) the engineering score is symmetric per level otherwise, so the asymmetry is paid in cost, not effect, keeping the South's defensive engineering (its real historical strength at Vicksburg/Petersburg) viable. engScore = baselineEngineeringScore + sum(level * scorePerLevel), clamped 0-100; it feeds the bridge as an additive overall bonus (weight 0.10, like the artillery facet), plus construction raises the supply facet and pontoons lower the fatigue facet. Field Fortifications and Siege Works feed only the aggregate score in the STRATEGIC layer; their decisive defend/assault effects belong to the battle-day layer (A3 terrain cover + A6 conditioning) and the tactical engine (P-phases)."
+},
+"fredericksburg": {
+  "_comment": "PHASE C-1 — Fredericksburg (the Marye's Heights assault), Dec 13, 1862, for the __FIELD real-time engine. Second data-driven scenario (the bullrun1 pattern, GAME_DATA.fredericksburg.fredericksburg, registered in src/tactical/T1 fldScenarioRegistry). Models the ICONIC FRONTAL ASSAULT only: Burnside's army storms WEST/uphill from the town across the open glacis toward the SUNKEN TELEGRAPH ROAD, where Longstreet's men crouch behind a 4-foot stone wall at the foot of Marye's Heights, with pre-sighted artillery on the crest. The Union fed seven divisions in piecemeal — some fourteen charges, none reaching the wall (closest ~25-40 yd) — and lost ~8,000 men before it. Modeled as Union assault WAVES vs a walled defense that THICKENS as CS reinforcements crowd up. The southern front (Franklin vs Jackson at Prospect Hill / Meade's breakthrough) is teaching context only, not the playable field. COORDINATE NOTE: the engine field is 1200x900 yards; per engine convention the ATTACKER (US) sits at HIGH z facing -z (facing 0) and the DEFENDER (CS) at LOW z facing +z (facing PI). In THIS field: high z = the town + the Rappahannock (the Union start/rear); a canal/millrace crosses the plain ~z 640 (3 narrow bridges); the open killing glacis is ~z 420-600; the STONE WALL + sunken road front the objective ~z 400; the defenders hold just behind it ~z 355; Marye's Heights + its crest artillery rise at low z ~235. defaultFog is FALSE (the morning fog had lifted by the main assault — the slaughter happened in clear fields of fire: 'a chicken could not live on that field'). Per-brigade strengths are Inferred approximations; the Verified, teaching-bearing facts are the wave order/commanders, the walled-defense geometry, and the futility/casualty ratio.",
+  "fredericksburg": {
+    "id": "fredericksburg",
+    "name": "Fredericksburg — the Assault on Marye's Heights",
+    "date": "December 13, 1862",
+    "place": "Marye's Heights, Fredericksburg, Spotsylvania County, Virginia",
+    "blurb": "Burnside's Army of the Potomac storms uphill from the town, across an open plain cut by a canal, toward the sunken Telegraph Road — where Longstreet's men crouch behind a four-foot stone wall at the foot of Marye's Heights, the crest above crowned with pre-sighted guns. Seven Union divisions are fed in piecemeal for some fourteen separate charges; in history none reached the wall, and ~8,000 men fell on the glacis before it. Cross the millrace, climb the open swale, and try to do what the real Army of the Potomac could not.",
+    "provenance": "Verified (high) for the wave order, commanders, terrain transect, and the futility/casualty ratio; Inferred (medium) for per-brigade strengths and exact arrival minutes. The count of charges is a genuine historiographical spread — Wikipedia/American Battlefield Trust say 14 (seven divisions); NPS calls Hawkins's 'the fifteenth such Federal unit to charge the Sunken Road'; looser accounts give 16+. Sources: Wikipedia 'Battle of Fredericksburg' + Union/Confederate OOB (drawn from the Official Records); NPS Fredericksburg & Spotsylvania (the Sunken Road / Marye's Heights pages); American Battlefield Trust; USGS Circular 1264 (terrain); Frank O'Reilly, 'The Fredericksburg Campaign.' Anti-Lost-Cause framing: the lesson is a DOOMED FRONTAL ASSAULT into prepared defensive fire and the cost of piecemeal command — NOT Confederate invincibility. Lee won a defensive battle handed to him by a delayed-pontoon gamble and by Burnside's persistence after surprise was gone ('It is well that war is so terrible...').",
+    "field": { "w": 1200, "h": 900 },
+    "attacker": "US",
+    "defaultFog": false,
+    "defender": "CS",
+    "assaultDoctrine": "cautious",
+    "_assaultDoctrineNote": "The AI Union attacker fights the DOOMED FRONTAL ASSAULT — it advances in line across the open glacis and trades fire, but never column-rushes the killing ground or presses the mass bayonet on the covered sunken-road line (Burnside's piecemeal disaster, not the B-1 concentration doctrine). So the AI never carries the wall; the stone wall + pre-sighted crest guns repel it, the historical result. A HUMAN commanding the Union is unbound by this — the alt-history hook: do what the Army of the Potomac could not. Default fog OFF: the slaughter was in clear fields of fire, so 'fog aids the defender' is NOT the lever here — the cautious posture + the wall cover are.",
+    "timeLimitSec": 480,
+    "holdToWinSec": 140,
+    "menu": {
+      "title": "FREDERICKSBURG (1862)",
+      "deck": "The assault on Marye's Heights, brigade scale — command either side: storm the sunken road across the open glacis as Burnside's army, or hold the four-foot stone wall for Longstreet as charge after charge breaks before it.",
+      "aria": "Fredericksburg, December 1862 — the real-time historical battle. Command either army: lead the doomed Union assault across the open plain toward the sunken road and the stone wall, or hold the wall for the Confederacy as fourteen charges break before it."
+    },
+    "sides": {
+      "heading": "Fredericksburg — Take Which Command?",
+      "intro": "December 13, 1862 · Burnside's grand assault on Marye's Heights. Lead the army of your choosing.",
+      "US": {
+        "title": "Lead the Union assault",
+        "badge": "&#9876; ATTACK",
+        "deck": "Form in the town, cross the canal under fire, and storm the open glacis toward the sunken road — and try to do what the Army of the Potomac could not."
+      },
+      "CS": {
+        "title": "Hold for the Confederacy",
+        "badge": "&#9819; DEFEND",
+        "deck": "Crouch your line behind the stone wall in the sunken road and rake the open ground; bring the crest guns and your reserves to bear as the charges come on."
+      },
+      "foot": "The other army is commanded by the AI. The morning fog has lifted — clear fields of fire over open ground (press V in battle to toggle fog)."
+    },
+    "brief": {
+      "attack": "Cross the millrace and climb the open, rising glacis into the fire of the wall and the crest guns. <b>This is your war:</b> in December 1862 some fourteen charges broke here and none reached the wall — carry it, and you rewrite the slaughter.",
+      "defend": "Hold the sunken road behind the four-foot wall and let the open ground do its work — every charge must cross it under your fire and the pre-sighted guns above. <b>This is your war:</b> make the glacis a killing field, as Longstreet's men did."
+    },
+    "objective": {
+      "name": "The Sunken Road & Stone Wall",
+      "x": 600, "z": 331, "r": 130,
+      "note": "The sunken Telegraph Road behind its 4-foot stone wall at the base of Marye's Heights — the defender's line. The control CENTER sits just BEHIND the wall (z 331) so the defender doctrine's forward face (obj.z + obj.r*DEF_FACE_FRAC) lands the holding line exactly ON the wall (z ~403) in cover, the way Bull Run's objective seats its defenders on the Robinson-House fence — the wall is the forward face of the position, not a feature behind it. Historically no Union soldier held it; for a HUMAN Union player, seizing and HOLDING this line means clearing the whole sunken-road position (the wall line AND the guns sited just behind it), a high-cost alt-history lodgment the AI assault never achieves; the Confederate denies it to the clock. (Verified line; the Union taking it is alt-history.)"
+    },
+    "leaders": {
+      "_note": "fate = a per-leader durability multiplier weighting the casualty model to HISTORY: >1 endures the day, <1 is fall-prone. At Marye's Heights only Cobb became a field-officer casualty among those modeled (mortally wounded); the others survived, so they fall only in a rare alt-history turn and never narrate a death as historical fact.",
+      "US": [
+        { "id": "ld_sumner", "name": "Maj. Gen. Edwin V. 'Bull' Sumner", "short": "Sumner", "quality": 0.55, "radius": 250, "x": 600, "z": 860, "fate": 2.6,
+          "note": "Right Grand Division (II + IX Corps). His wing's 'secondary' attack on the stone wall became the main slaughter. Burnside kept him sending divisions in; Sumner survived the war's end. (Verified)",
+          "teach": "Gen. Sumner is hit and carried from the town front — the assault loses its driving hand." },
+        { "id": "ld_hancock", "name": "Maj. Gen. Winfield Scott Hancock", "short": "Hancock", "quality": 0.70, "radius": 240, "x": 660, "z": 845, "fate": 2.7,
+          "note": "1st Division, II Corps — the heaviest single-division loss of the battle (~2,032). His brigades (Zook, the Irish Brigade, Caldwell) reached the closest sustained ground. He survived. (Verified)",
+          "teach": "Gen. Hancock is struck down — the hardest-driving division on the field falters." },
+        { "id": "ld_humphreys", "name": "Brig. Gen. Andrew A. Humphreys", "short": "Humphreys", "quality": 0.64, "radius": 200, "attach": "us_humphreys", "fate": 2.2,
+          "note": "3rd Division, V Corps — the dusk bayonet charge with unloaded rifles; two horses were shot under him and he came through. (Verified)",
+          "teach": "Gen. Humphreys's horse is shot from under him — and he presses the charge on foot into the dusk." },
+        { "id": "ld_kimball", "name": "Brig. Gen. Nathan Kimball", "short": "Kimball", "quality": 0.55, "radius": 175, "attach": "us_kimball", "fate": 0.6,
+          "note": "Led French's first charge; severely wounded in the leg ~125 yards from the wall as his brigade was cut down (~25% loss). He survived the wound. (Verified)",
+          "teach": "Gen. Kimball goes down wounded short of the wall — the first charge loses its leader on the glacis." }
+      ],
+      "CS": [
+        { "id": "ld_longstreet", "name": "Lt. Gen. James Longstreet", "short": "Longstreet", "quality": 0.78, "radius": 285, "x": 600, "z": 205, "fate": 2.9,
+          "note": "First Corps, holding Marye's Heights. His engineer's eye for the sunken road and the artillery on the crest made the position a killing machine; E. P. Alexander told him 'a chicken could not live on that field.' He survived to 1904. (Verified)",
+          "teach": "Gen. Longstreet is unhorsed on the heights — the steadying hand behind the wall is lost." },
+        { "id": "ld_cobb", "name": "Brig. Gen. Thomas R. R. Cobb", "short": "Cobb", "quality": 0.62, "radius": 185, "attach": "cs_cobb", "fate": 0.42,
+          "note": "Commanded the wall sector at the outset. Mortally wounded near the Stephens house — a femoral artery severed; he bled to death December 13. The cause is contested (artillery shrapnel preponderance vs a rifle ball vs friendly fire); his brigadier's commission was still unconfirmed at his death. (Verified death; contested cause)",
+          "teach": "Gen. Cobb is mortally struck at the Stephens house — the wall's first commander is carried away dying, and the Georgians close ranks behind the stone." },
+        { "id": "ld_kershaw", "name": "Brig. Gen. Joseph B. Kershaw", "short": "Kershaw", "quality": 0.66, "radius": 205, "attach": "cs_kershaw", "fate": 2.4,
+          "note": "Brought his South Carolina brigade DOWN from the crest to thicken the firing line at the wall after Cobb fell — the line stacked from two ranks to four. He survived the war. (Verified)",
+          "teach": "Gen. Kershaw rides the line at the wall — the firing ranks stack deeper and the volume of fire redoubles." }
+      ]
+    },
+    "supply": {
+      "US": { "x": 600, "z": 865, "name": "Union train — the pontoon crossings & the town" },
+      "CS": { "x": 600, "z": 165, "name": "Confederate train — the Telegraph Road behind the heights" }
+    },
+    "terrain": {
+      "hills": [
+        { "name": "Marye's Heights", "x": 600, "z": 235, "h": 26, "s": 210, "note": "The crest above the wall (Brompton, the Marye house). Only ~40-50 ft above the plain — its lethality was the wall at its base plus the pre-sighted artillery on top, not its height. (Verified)" },
+        { "name": "Willis Hill", "x": 440, "z": 250, "h": 22, "s": 150, "note": "The southern portion of the heights, where Getty's final twilight assault struck along the unfinished railroad. (Verified)" },
+        { "name": "Stansbury / Taylor's Hill", "x": 775, "z": 240, "h": 20, "s": 150, "note": "The northern continuation of the heights chain anchoring the Confederate left above the wall. (Verified)" }
+      ],
+      "woods": [
+        { "x": 600, "z": 560, "r": 75, "note": "The shallow SWALE — the only meaningful cover on the plain above the canal; Union infantry sheltered here before crossing the open, gently-rising glacis (the final ~80 yards to the wall, z 403-485, are open killing ground under the wall and the crest guns). (Verified)" },
+        { "x": 250, "z": 230, "r": 120, "note": "Timber along the southern heights / Willis Hill flank." },
+        { "x": 950, "z": 235, "r": 118, "note": "Timber along the northern heights flank." }
+      ],
+      "walls": [
+        { "x1": 360, "z1": 405, "x2": 840, "z2": 402, "note": "THE STONE WALL of the sunken Telegraph Road — a 4-foot wall fronting a roadbed cut below grade, a ready-made breastwork giving near-total cover for the firing line (log breastworks + abatis in places). ~480-500 yards long on the Union-facing side. This is the defender's hold line. (Verified)" }
+      ],
+      "markers": [
+        { "kind": "stream", "name": "the canal / millrace", "path": [[120, 650], [400, 645], [700, 640], [1080, 650]], "note": "A 15-ft-wide, water-filled (iced) ditch ~200 yd west of the town, crossable only at three partly-destroyed street bridges — it funneled the assault into vulnerable columns. (Verified)" },
+        { "kind": "bridge", "name": "Hanover Street bridge", "x": 600, "z": 644, "note": "The central canal crossing on the axis of advance toward the wall. (Verified)" },
+        { "kind": "bridge", "name": "William Street bridge", "x": 470, "z": 646, "note": "A southern canal crossing the assault funneled through. (Verified)" },
+        { "kind": "bridge", "name": "Prussia Street bridge", "x": 720, "z": 645, "note": "A northern canal crossing the assault funneled through. (Verified)" },
+        { "kind": "road", "name": "Telegraph Road (the Sunken Road)", "path": [[355, 408], [600, 404], [845, 401]], "note": "The pre-war County Road, cut below grade — 'Sunken Road' is the post-battle name. The stone wall retains its eastern bank. (Verified)" },
+        { "kind": "road", "name": "Hanover Street", "path": [[600, 858], [600, 645], [600, 412]], "note": "The central axis from the town across the canal to the foot of the heights. (Verified)" },
+        { "kind": "creek", "name": "the Rappahannock River", "path": [[100, 892], [400, 880], [700, 874], [1100, 886]], "note": "The Union rear; the army crossed on pontoon bridges under the guns of Stafford Heights. The late pontoons forfeited the surprise. (Verified)" },
+        { "kind": "label", "name": "Fredericksburg (the town)", "x": 600, "z": 838, "note": "The Union marshalling ground; brigades formed in its streets under fire and crossed the canal onto the glacis." },
+        { "kind": "label", "name": "the open glacis — 'a chicken could not live on that field'", "x": 600, "z": 515, "note": "~300-400 yd of smooth, gently-rising open ground above the canal, raked by the wall and the crest guns. (Verified)" },
+        { "kind": "label", "name": "to the Telegraph Road & the heights", "x": 600, "z": 120, "note": "The Confederate rear behind Marye's Heights." }
+      ]
+    },
+    "oob": {
+      "US": [
+        { "id": "us_kimball", "name": "Kimball's Brigade", "commander": "Brig. Gen. Nathan Kimball", "arm": "inf", "weapon": "rifled", "men": 1500, "xp": 2, "x": 600, "z": 800, "facing": 0, "formation": "column", "note": "1st Bde, French's 3rd Div, II Corps — the very first charge (~noon). Crossed the millrace on the narrow bridges, formed behind the swale, and was cut down ~125 yd from the wall (~25% loss, ~520 casualties per Mason's OR report); Kimball severely wounded. (Verified order; Inferred strength)" },
+        { "id": "us_french2", "name": "Andrews's Brigade", "commander": "Col. John W. Andrews", "arm": "inf", "weapon": "rifled", "men": 1250, "xp": 1, "x": 470, "z": 822, "facing": 0, "formation": "column", "note": "3rd Bde, French's 3rd Div — followed Kimball up the glacis with Palmer's brigade and was broken on the same ground (~50% loss). Trailing-brigade order Inferred. (Verified that French's div opened the assault)" }
+      ],
+      "CS": [
+        { "id": "cs_cobb", "name": "Cobb's Brigade", "commander": "Brig. Gen. Thomas R. R. Cobb", "arm": "inf", "weapon": "smooth", "men": 2500, "xp": 3, "x": 560, "z": 390, "facing": 3.14159, "formation": "line", "note": "McLaws's Div, Longstreet's First Corps: 16th/18th/24th Georgia + Cobb's & Phillips' Legions, crouched behind the stone wall in the sunken road (z 390, hard against the wall at z ~403 — within the cover radius). Veterans (xp3 — Longstreet's First Corps). Strength varies by source/definition (Wikipedia ~3,000 Georgians; ~2,000 on the wider McLaws front) — Inferred. Cobb mortally wounded near the Stephens house. (Verified identity; Inferred strength)" },
+        { "id": "cs_ransom_nc", "name": "24th North Carolina (Ransom)", "commander": "Brig. Gen. Robert Ransom", "arm": "inf", "weapon": "smooth", "men": 1300, "xp": 3, "x": 700, "z": 390, "facing": 3.14159, "formation": "line", "note": "Of Ransom's brigade — stood at the wall alongside Cobb's Georgians from the outset on the northern stretch of the sunken road (z 390, in the wall's cover). (Verified)" },
+        { "id": "cs_wash_arty", "name": "Washington Artillery (New Orleans)", "commander": "Col. J. B. Walton", "arm": "art", "weapon": "rifled", "role": "defend", "men": 500, "xp": 3, "x": 600, "z": 330, "facing": 3.14159, "formation": "line", "note": "~9 guns of the Washington Artillery, on the forward slope behind the sunken road (z 330, within canister reach of the open glacis), firing pre-sighted interlocking fire that raked the whole approach; held until ammunition ran low late in the day. The 'men' figure is a VOLUME-OF-FIRE proxy for the massed, pre-sighted grand battery on the heights, not literal crew. (Verified position/role; strength is a sim proxy.)" },
+        { "id": "cs_marye_guns", "name": "Marye's Hill Battery (the grand battery)", "commander": "the Reserve Artillery", "arm": "art", "weapon": "rifled", "role": "defend", "men": 440, "xp": 3, "x": 690, "z": 332, "facing": 3.14159, "formation": "line", "note": "The other guns crowning Marye's and Willis Hill — Maurin's, the Donaldsonville Artillery, and the batteries echeloned down the slope that, with the Washington Artillery, made the crest a continuous arc of fire over the sunken road. Modeled as a second forward-slope battery so the massed, pre-sighted crest fire (the dominant killer on the open glacis) is represented at proper volume. (Verified that massed artillery crowned the heights; the single 'battery' is a sim aggregate.)" }
+      ]
+    },
+    "reinforcements": [
+      { "id": "us_zook", "side": "US", "atSec": 50, "name": "Zook's Brigade", "commander": "Col. Samuel K. Zook", "arm": "inf", "weapon": "rifled", "men": 1250, "xp": 1, "x": 630, "z": 850, "facing": 0, "formation": "column", "entry": "behind French — Hancock's lead brigade", "note": "3rd Bde, Hancock's 1st Div, II Corps — first of Hancock's brigades up the glacis, broken short of the wall. (Verified)" },
+      { "id": "us_irish", "side": "US", "atSec": 72, "name": "the Irish Brigade (Meagher's)", "commander": "Brig. Gen. Thomas F. Meagher", "arm": "inf", "weapon": "rifled", "men": 1100, "xp": 2, "x": 540, "z": 856, "facing": 0, "formation": "column", "entry": "boxwood sprigs in their caps", "note": "2nd Bde, Hancock's div, ~1,200-1,315: the 69th/63rd/88th NY, 28th Mass, 116th Pa. Charged into the fire of Confederate Irishmen (Cobb's) and lost ~545 (~45%). Meagher, his knee injured, addressed and dispatched the regiments but did NOT reach the wall on foot. (Verified — do not narrate him at the wall)" },
+      { "id": "us_caldwell", "side": "US", "atSec": 95, "name": "Caldwell's Brigade", "commander": "Brig. Gen. John C. Caldwell", "arm": "inf", "weapon": "rifled", "men": 1350, "xp": 1, "x": 690, "z": 856, "facing": 0, "formation": "column", "entry": "the closest sustained approach", "note": "1st Bde, Hancock's div. Col. Nelson Miles led two regiments to within ~40 yd of the wall — the closest any sustained line came — and was shot through the throat (survived); Caldwell hit twice. (Verified)" },
+      { "id": "cs_kershaw", "side": "CS", "atSec": 112, "name": "Kershaw's Brigade", "commander": "Brig. Gen. Joseph B. Kershaw", "arm": "inf", "weapon": "smooth", "men": 2300, "xp": 3, "x": 560, "z": 345, "facing": 3.14159, "formation": "line", "entry": "down from the crest to thicken the wall", "note": "2nd/3rd/7th/8th/15th South Carolina + 3rd Bn. Came down off Marye's Heights after Cobb fell to reinforce the sunken road (detrains just behind the line, then crowds up to the wall) — the firing line stacked from two ranks to four, redoubling the fire. Veterans (xp3). (Verified)" },
+      { "id": "us_owen", "side": "US", "atSec": 128, "name": "Owen's Brigade", "commander": "Brig. Gen. Joshua T. Owen", "arm": "inf", "weapon": "rifled", "men": 1250, "xp": 1, "x": 400, "z": 850, "facing": 0, "formation": "column", "entry": "Howard's division, diverted from the left", "note": "Philadelphia Brigade, Howard's 2nd Div, II Corps — diverted from a planned envelopment of the Confederate left and fed straight forward over the fallen; all repulsed. (Verified)" },
+      { "id": "cs_cooke", "side": "CS", "atSec": 146, "name": "Cooke's Brigade", "commander": "Brig. Gen. John R. Cooke", "arm": "inf", "weapon": "smooth", "men": 1700, "xp": 2, "x": 700, "z": 345, "facing": 3.14159, "formation": "line", "entry": "Ransom's North Carolinians, up to the wall", "note": "15th/27th/46th/48th NC of Ransom's division — crowded down to the wall in close succession with Kershaw to deepen the line on the northern stretch. Cooke wounded in the forehead. (Verified)" },
+      { "id": "us_sturgis", "side": "US", "atSec": 165, "name": "Sturgis's Division (Nagle & Ferrero)", "commander": "Brig. Gen. Samuel D. Sturgis", "arm": "inf", "weapon": "rifled", "men": 1500, "xp": 1, "x": 785, "z": 850, "facing": 0, "formation": "column", "entry": "IX Corps, into the gap", "note": "2nd Div, IX Corps — Nagle's and Ferrero's brigades committed in tandem with Howard but uncoordinated, fed piecemeal against the wall (~1,011 casualties). (Verified)" },
+      { "id": "cs_alexander", "side": "CS", "atSec": 205, "name": "Alexander's Reserve Artillery", "commander": "Col. E. Porter Alexander", "arm": "art", "weapon": "rifled", "role": "defend", "men": 500, "xp": 3, "x": 520, "z": 330, "facing": 3.14159, "formation": "line", "entry": "relieving the Washington Artillery on the crest", "note": "~9 guns (Woolfolk / Donnell Smith / Moody) relieved the Washington Artillery ~3 p.m. as its ammunition ran low, in time to help break Humphreys's charge — Alexander it was who told Longstreet 'a chicken could not live on that field.' On the forward slope (z 330) within canister reach of the glacis. Strength a volume-of-fire proxy. (Verified position/role)" },
+      { "id": "us_griffin", "side": "US", "atSec": 228, "name": "Griffin's Division (V Corps)", "commander": "Brig. Gen. Charles Griffin", "arm": "inf", "weapon": "rifled", "men": 1600, "xp": 1, "x": 600, "z": 860, "facing": 0, "formation": "column", "entry": "Hooker's grand division renews the attack", "note": "1st Div, V Corps — Barnes's, Sweitzer's, and Stockton's brigades smashed against the wall 'one by one' to relieve Sturgis. (Verified)" },
+      { "id": "us_humphreys", "side": "US", "atSec": 300, "name": "Humphreys's Division (the bayonet charge)", "commander": "Brig. Gen. Andrew A. Humphreys", "arm": "inf", "weapon": "rifled", "men": 1950, "xp": 1, "x": 560, "z": 865, "facing": 0, "formation": "column", "entry": "a bayonet charge with UNLOADED rifles into the dusk", "note": "3rd Div, V Corps — Allabach's and Tyler's brigades of green nine-month Pennsylvanians, sent on a false report the Confederates were retreating. Reached ~50 yd; division loss ~1,019 (~25%), Allabach's brigade ~581. (Verified)" },
+      { "id": "us_getty", "side": "US", "atSec": 365, "name": "Getty's Division (Hawkins's Brigade)", "commander": "Brig. Gen. George W. Getty", "arm": "inf", "weapon": "rifled", "men": 1500, "xp": 1, "x": 420, "z": 860, "facing": 0, "formation": "column", "entry": "along the unfinished railroad, at dusk", "note": "3rd Div, IX Corps — the last assault, against Willis Hill on the Confederate left, approaching along the unfinished RF&P railroad in the gathering twilight (Hawkins's brigade, 'the fifteenth such Federal unit to charge the Sunken Road'); repulsed. (Verified)" }
+    ],
+    "endNote": {
+      "US": {
+        "US": "History is overturned. Your assault did what the Army of the Potomac could not — it crossed the killing glacis and carried the sunken road. In December 1862 some fourteen charges broke before this wall and roughly 8,000 Union soldiers fell on the open ground in front of it.",
+        "CS": "History is overturned. The Union assault carried the sunken road your men held — the stone wall that in 1862 stopped fourteen charges and cost the attackers some 8,000 men gave way under your defense."
+      },
+      "CS": {
+        "US": "History holds. As in December 1862, the stone wall and the pre-sighted guns on Marye's Heights broke every charge; your assault joined the roughly 8,000 Union soldiers who fell on the open glacis before a wall no one reached.",
+        "CS": "History holds. As in December 1862, your line behind the stone wall in the sunken road broke charge after charge across the open plain; roughly 8,000 Union soldiers fell on the glacis and none reached the wall."
+      },
+      "draw": "A grinding, bloodier repulse than history's lopsided slaughter — but the stone wall still held the sunken road when the winter light failed."
+    },
+    "teaching": {
+      "title": "The Slaughter Pen of the War",
+      "cards": [
+        {
+          "id": "fb_slaughter",
+          "head": "Fourteen charges, and none reached the wall",
+          "body": "Seven Union divisions were fed up the glacis one or two brigades at a time — some fourteen separate charges (NPS counts a fifteenth unit). None reached the stone wall; the closest dead fell ~25-40 yards short. Roughly 8,000 Union soldiers fell in front of the wall against a fraction of that behind it. This was the rifle-musket and the entrenched defender at their deadliest: prepared cover and pre-sighted artillery against men crossing open ground. It is why a frontal assault on a ready position was, by 1862, a way to destroy your own army.",
+          "provenance": "Verified (high) — NPS Fredericksburg & Spotsylvania; American Battlefield Trust; the Official Records. ~8,000 Union before the wall firm; the ~1,200 Confederate-at-the-wall subset is single-source (Inferred at that granularity)."
+        },
+        {
+          "id": "fb_pontoons",
+          "head": "The bridges that lost the battle",
+          "body": "Burnside's plan depended on pontoon bridges to cross the Rappahannock and seize the heights before Lee concentrated. The pontoons arrived weeks late; by the time the army crossed, Longstreet held Marye's Heights and Jackson the ground to the south. Burnside attacked frontally anyway. The lesson here is a command failure compounded by persistence after surprise was gone — not Confederate invincibility.",
+          "provenance": "Verified (high) — American Battlefield Trust; NPS; Frank O'Reilly, 'The Fredericksburg Campaign.'"
+        },
+        {
+          "id": "fb_lee",
+          "head": "'It is well that war is so terrible'",
+          "body": "Watching the assaults break against his line, Lee is said to have remarked to Longstreet, 'It is well that war is so terrible — we should grow too fond of it.' A lopsided defensive victory is the most seductive kind: it looks like genius and costs the winner little. But Fredericksburg settled nothing — Lee could not counterattack across the same open ground, and the war ground on. The victory's chief lesson was about the murderous new power of the defense, a lesson both armies would relearn at a far greater cost.",
+          "provenance": "Verified (high) for the battle's character; the exact quotation is traditional/attributed (Inferred wording). Sources: American Battlefield Trust; NPS."
+        },
+        {
+          "id": "fb_kirkland",
+          "head": "The wounded on the cold plain",
+          "body": "Thousands of wounded Union men lay on the frozen glacis through a bitter night, unreachable under Confederate fire; an aurora borealis is reported in the aftermath. Sgt. Richard Kirkland of South Carolina is remembered as 'the Angel of Marye's Heights' for carrying water to the enemy wounded over the wall — a deed documented after the war and debated in its details, but emblematic of the human cost the slaughter left on the field.",
+          "provenance": "Contested (low-med) in detail (the Kirkland story and the aurora date, Dec 13 vs 14, are disputed); Verified that the wounded froze on the field overnight. Sources: NPS; American Battlefield Trust."
+        }
+      ],
+      "codex": {
+        "id": "codex_fredericksburg",
+        "title": "Fredericksburg — the Assault on Marye's Heights, December 13, 1862",
+        "summary": "Burnside's repeated frontal assaults across the open plain broke against Longstreet's stone-wall line at the foot of Marye's Heights; ~8,000 Union soldiers fell before a wall no charge reached. A one-sided Confederate defensive victory and the war's clearest lesson in the deadliness of prepared defense.",
+        "axes": { "timeline": "1862", "theater": "Eastern", "people": ["Burnside", "Sumner", "Hancock", "Humphreys", "Kimball", "Meagher", "Longstreet", "Cobb", "Kershaw", "Ransom", "Alexander"], "battle": "Fredericksburg" }
+      }
+    }
+  }
 },
 "generals": {
   "comment": "S2 m5 named-generals data. Per-general Verified command/death dates + ranks (web-grounded, anti-Lost-Cause); trait NUMBERS (skill/aggression/caution/ambition/reputation 0-100) are Inferred designer calibration from modern scholarly consensus. commandFrom/commandTo drive the date-aware DEFAULT (single-slot, iconic-army chain: US Army of the Potomac->Grant, CS ANV->Lee); the other principal-army commanders + Halleck are appointable via availableFrom but null-defaulted (see DECISIONS D53). name = portrait key (surname; Johnston-J/Johnston-A disambiguate the two Johnstons, stripped to 'Johnston' for display/portrait). Source workflow: s2-generals-research (10 agents, 4 research + 4 adversarial-verify + balance + teaching-cards).",
@@ -25231,6 +25428,7 @@ var FLD = {
   ATK_LOCAL_RATIO: 1.1,    // ...and only with LOCAL men >= this * local VISIBLE-foe men (gradual concentration, not a global flip)
   ATK_GLOBAL_FLOOR: 0.85,  // never throw the army onto the bayonet while globally outnumbered below this
   ATK_FLANK_BIAS: 0.5,     // pull the approach this fraction toward the weaker (thinner) flank of the objective
+  ATK_CAUTIOUS_HOLD: 0.85, // Phase C: a "doomed-assault" (cautious) attacker presses in LINE to within OBJ_R*this of the objective before it holds + trades. Tuned so the hold band sits in the OPEN just OUTSIDE the defender's wall-cover radius (the covered line holds the forward face at OBJ_R*DEF_FACE_FRAC=0.55; the wall's cover band is ~26yd, so 0.85 keeps the attacker exposed at cover 1.0 while the defender stays at 1.7) — the attacker dies on the open glacis at close range and never carries the wall (the Fredericksburg slaughter). Default doctrine never reaches this branch.
 };
 
 /* ---- seeded RNG (LCG) ---- */
@@ -25417,6 +25615,7 @@ function fldInitSim(opts) {
   // and Stuart as cav) remain BYTE-IDENTICAL. The gate is exactly what protects them. Coverage = probe-arms.mjs.
   __FIELD.arms = __FIELD._armsOff ? false : ((opts.arms != null) ? !!opts.arms : true);
   __FIELD._aiGenericAll = false; __FIELD._aiGenericAtk = false;   // role-aware AI test hooks: reset per launch (bug-hunt #4); probe-ai sets them AFTER launch (A/B the defender + attacker doctrines)
+  __FIELD._atkCautious = false;   // Phase C: the AI-attacker "doomed frontal assault" posture (Fredericksburg). Reset per launch; fldScenarioInit sets it true ONLY for a scenario whose data declares assaultDoctrine:"cautious" -> Bull Run/sandbox/skirmish stay byte-identical.
   if (sc !== "sandbox" && typeof fldScenarioInit === "function" && fldScenarioInit(opts)) return;
   // Phase A (A2): a custom FREE skirmish / procedural campaign battle is built by T2's fldSkirmishOOB
   // (terrain + a parameterized OOB), which calls fldResetRun and returns true. Absent opts.skirmish this
@@ -25800,6 +25999,14 @@ function fldAiAttacker(u) {
   var effLocal = FLD.ATK_LOCAL_RATIO / (__FIELD.aiSkill || 1) * fldClamp(1 / Math.max(0.5, globRatio), 0.75, 1.4);
   var localSup = foeMen > 0 && friendMen >= foeMen * effLocal;     // must SEE the foe AND locally out-mass it
   var canCommit = globRatio >= FLD.ATK_GLOBAL_FLOOR;
+  // Phase C (Fredericksburg): a scenario may declare its AI attacker's posture "cautious" (scenData.assaultDoctrine,
+  // mirrored to __FIELD._atkCautious in fldScenarioInit) — the DOOMED FRONTAL ASSAULT. Such an attacker advances in
+  // LINE and trades fire but NEVER column-rushes the killing ground and NEVER presses the mass bayonet on a steady
+  // line in cover — Burnside's piecemeal disaster, the opposite of the B-1 doctrine. So the covered defender (the
+  // stone wall + the pre-sighted crest guns) is never carried by the AI. Default off -> aggressive === !fog, so Bull
+  // Run, the sandbox, and skirmishes are byte-identical. (A HUMAN attacker is unbound by this — the alt-history hook:
+  // do what the Army of the Potomac could not.) Disordered-pursuit (chargeWeak) stays allowed for either posture.
+  var aggressive = !__FIELD.fog && !__FIELD._atkCautious;
 
   // (1) SURVIVAL: wavering + a stronger enemy close -> fall back to rally (an assault can break too).
   if (u.state === "wavering" && near && nd < 220 && near.men > u.men * 1.05) {
@@ -25812,17 +26019,28 @@ function fldAiAttacker(u) {
   //     withheld (b): the attacker cannot trust its sight of the position, so it will not commit blind.
   if (u.state !== "wavering" && near) {
     var chargeWeak = weak && wd < FLD.ATK_CHARGE_R;
-    var assaultSteady = !__FIELD.fog && canCommit && localSup && nd < FLD.ATK_ASSAULT_R && dObj < obj.r + FLD.ATK_ASSAULT_STANDOFF;
+    var assaultSteady = aggressive && canCommit && localSup && nd < FLD.ATK_ASSAULT_R && dObj < obj.r + FLD.ATK_ASSAULT_STANDOFF;
     if (chargeWeak || assaultSteady) {
       var t = chargeWeak ? weak : near;
       u.order = { type: "charge", tx: t.x, tz: t.z, tface: Math.atan2(t.x - u.x, -(t.z - u.z)) };
       return;
     }
   }
-  // (3) SUPPRESS / PROBE: in fire range but not assaulting (under fog, or no local superiority yet) -> hold +
-  //     pour fire in LINE while the mass forms (don't bleed forward piecemeal, don't retreat). Under fog this
-  //     is the cautious probe that lets the concealed reserves reveal + keeps the fight slow (fog aids defender).
-  if (near && nd <= u.rng * 0.92 && (__FIELD.fog || !localSup || !canCommit)) {
+  // (3) SUPPRESS / HOLD.
+  //   (3a) DOOMED-ASSAULT posture (cautious, Fredericksburg): do NOT stop at long rifle range — press in LINE
+  //        across the open glacis ALL THE WAY into the killing ground, then hold + trade at point-blank against
+  //        the covered line (the assault dies under the wall + the crest guns at close range, but never carries
+  //        it — no mass bayonet). Until close, fall through to (4) to keep advancing under fire.
+  //   (3b) NORMAL posture: in fire range but not assaulting (under fog, or no local superiority yet) -> hold +
+  //        pour fire in LINE while the mass forms. Under fog this is the cautious probe that lets the concealed
+  //        reserves reveal + keeps the fight slow (fog aids the defender). Byte-identical when not cautious.
+  if (__FIELD._atkCautious && near) {
+    if (dObj < obj.r * FLD.ATK_CAUTIOUS_HOLD) {
+      u.formation = "line";
+      u.order = { type: "hold", tx: u.x, tz: u.z, tface: face };
+      return;
+    }
+  } else if (near && nd <= u.rng * 0.92 && (__FIELD.fog || !localSup || !canCommit)) {
     u.formation = "line";
     u.order = { type: "hold", tx: u.x, tz: u.z, tface: face };
     return;
@@ -25834,7 +26052,7 @@ function fldAiAttacker(u) {
   var aimX = u.x + (flankX - u.x) * FLD.ATK_FLANK_BIAS;
   var sign = (fldHomeEdgeZ(u.side) > obj.z) ? 1 : -1;     // press onto the attacker-side face of the objective
   var aimZ = obj.z + sign * obj.r * 0.25;
-  u.formation = (!__FIELD.fog && canCommit && dObj > 160) ? "column" : "line";
+  u.formation = (aggressive && canCommit && dObj > 160) ? "column" : "line";
   u.order = { type: "move", tx: aimX, tz: aimZ, tface: face };
 }
 
@@ -26796,10 +27014,11 @@ function fldInjectMenuButton() {
       '<span class="gn-deck">Real-time skirmish (Beta) &mdash; drag to maneuver, volley, flank, and break the foe. Two brigades a side, on the open 3D field.</span>';
     b.addEventListener("click", function () { fldLaunchSandbox({ renderer: "3d" }); });
     if (anchor.nextSibling) anchor.parentNode.insertBefore(b, anchor.nextSibling); else anchor.parentNode.appendChild(b);
-    // P1a seam: registered scenarios (e.g. First Bull Run) inject their own menu buttons after the sandbox button.
-    if (typeof fldInjectScenarioButtons === "function") fldInjectScenarioButtons(b);
-    // Phase A (A2) seam: the custom FREE skirmish setup menu button (after the sandbox / Bull Run buttons).
-    var lastBtn = document.getElementById("fldBullRunBtn") || b;
+    // P1a/Phase C seam: registered scenarios inject their own menu buttons after the sandbox button (one per
+    // battle now); the seam returns the LAST button so the skirmish/preset buttons anchor after the whole block.
+    var lastScnBtn = (typeof fldInjectScenarioButtons === "function") ? fldInjectScenarioButtons(b) : null;
+    // Phase A (A2) seam: the custom FREE skirmish setup menu button (after the full scenario-button block).
+    var lastBtn = lastScnBtn || document.getElementById("fldBullRunBtn") || b;
     if (typeof fldInjectSkirmishButton === "function") fldInjectSkirmishButton(lastBtn);
     // Phase B-5 seam: the Command & Realism (difficulty/realism presets) menu button (after the skirmish button).
     var lastBtn2 = document.getElementById("fldSkirmishBtn") || lastBtn;
@@ -26859,11 +27078,24 @@ function fldInstallMenuObserver() {
    are uniquely prefixed and defined once. No literal comment-closer in this block.
    ============================================================================ */
 
-/* ---- the scenario data (one place) ---- */
-function fldBrData() {
-  try { if (typeof GAME_DATA !== "undefined" && GAME_DATA.bullrun && GAME_DATA.bullrun.bullrun1) return GAME_DATA.bullrun.bullrun1; } catch (e) {}
-  return null;
+/* ---- the data-driven SCENARIO REGISTRY (Phase C). Each historical battle is DATA (data/<battle>.json injected as
+   GAME_DATA.<battle>) + one registry entry here; the engine (fldScenarioInit & the per-tick reinforce/UI seams) is
+   battle-agnostic and reads the SAME shape for every scenario (field/attacker/defender/objective/leaders/supply/
+   terrain[hills,walls,markers]/oob/reinforcements/teaching). Bull Run is just the first entry — adding Fredericksburg
+   etc. is a data file + a line here, no new combat code. ---- */
+function fldScenarioRegistry() {
+  var R = {};
+  try {
+    if (typeof GAME_DATA !== "undefined") {
+      if (GAME_DATA.bullrun && GAME_DATA.bullrun.bullrun1) R.bullrun1 = GAME_DATA.bullrun.bullrun1;
+      if (GAME_DATA.fredericksburg && GAME_DATA.fredericksburg.fredericksburg) R.fredericksburg = GAME_DATA.fredericksburg.fredericksburg;
+    }
+  } catch (e) {}
+  return R;
 }
+function fldScenarioData(id) { var R = fldScenarioRegistry(); return (id && R[id]) ? R[id] : null; }
+/* back-compat alias: First Bull Run is the canonical first scenario (the menu button + briefing still call this). */
+function fldBrData() { return fldScenarioData("bullrun1"); }
 /* ---- a data OOB/reinforcement entry -> an fldMakeUnit spec. The on-field OOB carries its side via
    the data KEY (oob.US / oob.CS), not a per-entry field, so the side is passed in; reinforcement entries
    carry their own d.side. B-6 (command either side): the PLAYER's side (__FIELD.playerSide, resolved in
@@ -26887,8 +27119,10 @@ function fldBrSpec(d, side, autoBoth) {
    + units + the reinforcement schedule + win thresholds (else false -> T0 sandbox).
    =========================================================================== */
 function fldScenarioInit(opts) {
-  if (!opts || opts.scenario !== "bullrun1") return false;
-  var data = fldBrData();
+  // Phase C: data-driven — ANY registered scenario id builds from its data; "sandbox"/unknown falls through to T0.
+  // Bull Run resolves the identical data object it always did (fldScenarioData("bullrun1")) -> byte-identical.
+  if (!opts || !opts.scenario || opts.scenario === "sandbox") return false;
+  var data = fldScenarioData(opts.scenario);
   if (!data || !data.oob || !data.terrain || !data.objective) return false;   // data missing/malformed -> fall back to the sandbox
   __FIELD.scenData = data;
   __FIELD.autoBoth = !!opts.autoBoth;
@@ -26899,6 +27133,11 @@ function fldScenarioInit(opts) {
   __FIELD.timeLimit = data.timeLimitSec || FLD.TIME_LIMIT;
   __FIELD.attacker = data.attacker || "US";   // asymmetric: the Union must SEIZE the hill; the CS denies it
   __FIELD.defender = data.defender || "CS";
+  // Phase C: a scenario may declare its AI attacker's posture (data.assaultDoctrine). "cautious" = the doomed
+  // frontal assault (Fredericksburg): the AI attacker advances in line and trades but never column-rushes the
+  // killing ground or presses the mass bayonet on a covered line, so the stone-wall defense is never carried by
+  // the AI. Default (absent / any other value) = the full B-1 doctrine -> byte-identical for Bull Run.
+  __FIELD._atkCautious = (data.assaultDoctrine === "cautious");
   // OOB present on the field at T=0
   var units = [], us = data.oob.US || [], cs = data.oob.CS || [], i;
   for (i = 0; i < us.length; i++) units.push(fldMakeUnit(fldBrSpec(us[i], "US", __FIELD.autoBoth)));
@@ -26976,11 +27215,70 @@ function fldReinforceSpawn(spec) {
 /* ===========================================================================
    UI:  the menu button · the pre-battle briefing · arrival banners · the end note
    =========================================================================== */
+/* Phase C: the marquee battle buttons on the main menu — ONE per registered scenario, in date order with First
+   Bull Run (the hand-authored opener) leading. Each opens a side-choice card, then launches with the chosen army.
+   Returns the LAST button injected, so the caller can anchor the next menu item after the whole block. Idempotent
+   (per-id). Bull Run is just the first entry now — adding a battle is a data file + a registry line, no new UI code. */
 function fldInjectScenarioButtons(afterBtn) {
+  var last = null;
   try {
-    if (document.getElementById("fldBullRunBtn")) return;
-    if (!afterBtn || !afterBtn.parentNode) return;
-    if (!fldBrData()) return;
+    if (!afterBtn || !afterBtn.parentNode) return null;
+    var reg = (typeof fldScenarioRegistry === "function") ? fldScenarioRegistry() : {};
+    var order = fldScenarioMenuOrder(reg), prev = afterBtn;
+    for (var i = 0; i < order.length; i++) {
+      var id = order[i]; if (!reg[id]) continue;
+      var b = _fldInjectOneScenarioButton(id, reg[id], prev);
+      if (b) { prev = b; last = b; }
+    }
+  } catch (e) {}
+  return last;
+}
+/* Marquee order: First Bull Run first (the opening battle + the hand-authored marquee), then the rest by year. */
+function fldScenarioMenuOrder(reg) {
+  var ids = [], k;
+  for (k in reg) if (reg.hasOwnProperty(k)) ids.push(k);
+  ids.sort(function (a, b) {
+    if (a === "bullrun1") return -1; if (b === "bullrun1") return 1;
+    var ya = (String((reg[a] || {}).date || "").match(/\d{4}/) || ["9999"])[0];
+    var yb = (String((reg[b] || {}).date || "").match(/\d{4}/) || ["9999"])[0];
+    if (ya !== yb) return ya < yb ? -1 : 1;
+    return a < b ? -1 : (a > b ? 1 : 0);
+  });
+  return ids;
+}
+/* Inject ONE scenario's menu button after `afterBtn`, returning it (or the existing button). Bull Run keeps its
+   bespoke hand-authored marquee button (id fldBullRunBtn); every other scenario gets a button built from its data
+   (data.menu, else derived from name/date/blurb). The click opens the side-choice card, then launches the pick. */
+function _fldInjectOneScenarioButton(id, data, afterBtn) {
+  if (id === "bullrun1") return _fldInjectBullRunButton(afterBtn);
+  try {
+    var btnId = "fldScnBtn_" + id;
+    var existing = document.getElementById(btnId); if (existing) return existing;
+    if (!afterBtn || !afterBtn.parentNode || !data) return null;
+    var menu = data.menu || {}, yr = (String(data.date || "").match(/\d{4}/) || [""])[0];
+    var hl = menu.title || (String(data.name || id).split(" — ")[0].toUpperCase() + (yr ? " (" + yr + ")" : ""));
+    var deck = menu.deck || (data.blurb ? String(data.blurb) : "A real-time historical battle — command either side.");
+    var aria = menu.aria || (String(data.name || id) + (yr ? ", " + yr : "") + " — the real-time historical battle; command either army.");
+    var b = document.createElement("button");
+    b.className = "gn-btn"; b.id = btnId;
+    b.setAttribute("aria-label", aria);
+    b.innerHTML = '<span class="gn-hl">&#9876; BATTLE &mdash; ' + hl + '</span>' +
+      '<span class="gn-deck">' + deck + '</span>';
+    b.addEventListener("click", function () {
+      if (typeof fldScenarioSideChoice === "function") fldScenarioSideChoice(id, function (side) { fldLaunchBattle(id, side); });
+      else fldLaunchBattle(id, "US");
+    });
+    if (afterBtn.nextSibling) afterBtn.parentNode.insertBefore(b, afterBtn.nextSibling); else afterBtn.parentNode.appendChild(b);
+    return b;
+  } catch (e) { return null; }
+}
+/* The bespoke First Bull Run marquee button (the opener; hand-authored copy). Returns the button (or the existing
+   one) so the registry loop can chain the next scenario after it. Unchanged from the B-6 button. */
+function _fldInjectBullRunButton(afterBtn) {
+  try {
+    var existing = document.getElementById("fldBullRunBtn"); if (existing) return existing;
+    if (!afterBtn || !afterBtn.parentNode) return null;
+    if (!fldBrData()) return null;
     var b = document.createElement("button");
     b.className = "gn-btn"; b.id = "fldBullRunBtn";
     b.setAttribute("aria-label", "First Bull Run, 1861 — the real-time historical battle. Command either army: lead the Union assault to seize Henry House Hill, or hold the hill for the Confederacy against the attack.");
@@ -26993,11 +27291,14 @@ function fldInjectScenarioButtons(afterBtn) {
       else fldLaunchBattle("bullrun1", "US");
     });
     if (afterBtn.nextSibling) afterBtn.parentNode.insertBefore(b, afterBtn.nextSibling); else afterBtn.parentNode.appendChild(b);
-  } catch (e) {}
+    return b;
+  } catch (e) { return null; }
 }
 function fldLaunchBattle(scn, side) {
   fldLaunchSandbox({ scenario: scn, renderer: "3d", playerSide: (side === "CS") ? "CS" : "US" });
-  if (scn === "bullrun1") { try { fldBullRunBriefing(); } catch (e) {} }
+  // Phase C: the pre-battle briefing fires for ANY registered scenario — fldBullRunBriefing reads __FIELD.scenData,
+  // so it is battle-agnostic. No-op for the sandbox (no scenData) or a stripped build (fn missing).
+  try { if (typeof fldBullRunBriefing === "function") fldBullRunBriefing(); } catch (e) {}
 }
 function fldBullRunBriefing() {
   var root = document.getElementById("fldRoot"); if (!root) return;
@@ -27049,24 +27350,42 @@ function fldScenarioBanner(text, side) {
     setTimeout(function () { try { if (b.parentNode) b.parentNode.removeChild(b); } catch (e) {} }, 3800);
   } catch (e) {}
 }
-/* the end-screen teaching payoff: "your war vs history" + the cards with provenance */
+/* the end-screen teaching payoff: "your war vs history" + the cards with provenance. Phase C: data-driven for any
+   registered scenario — Bull Run keeps its hand-authored branch (byte-identical), every other battle draws its
+   framing from sd.endNote (keyed by the winning side then the player's side). */
 function fldScenarioEndHtml(winner) {
-  var sd = __FIELD.scenData; if (!sd || __FIELD.scenario !== "bullrun1") return "";
-  // B-6: the "your war vs history" pronoun follows the side you commanded. A US player reads the original
-  // strings verbatim; a CS player (who DEFENDED the hill) gets the mirror-image framing.
-  var ps = (typeof fldPlayerSide === "function") ? fldPlayerSide() : "US";
-  var hist;
-  if (winner === "US") hist = (ps === "US")
-    ? "History diverges. You took Henry House Hill — the ground that historically broke the Union assault. In 1861 McDowell's army lost it and streamed back to Washington in the 'Great Skedaddle'."
-    : "History diverges. The Union carried Henry House Hill — the ground your army held in 1861. The historical stand here broke McDowell's assault; under your command, this time it gave way.";
-  else if (winner === "CS") hist = (ps === "US")
-    ? "History holds. As in 1861, the stand on Henry House Hill and the rail-borne brigades on Chinn Ridge carried the day for the Confederacy."
-    : "History holds. As in 1861, your stand on Henry House Hill and the rail-borne brigades on Chinn Ridge carried the day for the Confederacy — McDowell's army lost the hill and streamed back to Washington in the 'Great Skedaddle'.";
-  else hist = "A bloodier stalemate than history's clear Confederate victory — but the rebellion was not broken here.";
+  var sd = __FIELD.scenData; if (!sd) return "";
   var cards = (sd.teaching && sd.teaching.cards) ? sd.teaching.cards : [];
+  // B-6: the "your war vs history" pronoun follows the side you commanded. A US player reads the original
+  // strings verbatim; a CS player (who DEFENDED) gets the mirror-image framing.
+  var ps = (typeof fldPlayerSide === "function") ? fldPlayerSide() : "US";
+  if (__FIELD.scenario === "bullrun1") {
+    var hist;
+    if (winner === "US") hist = (ps === "US")
+      ? "History diverges. You took Henry House Hill — the ground that historically broke the Union assault. In 1861 McDowell's army lost it and streamed back to Washington in the 'Great Skedaddle'."
+      : "History diverges. The Union carried Henry House Hill — the ground your army held in 1861. The historical stand here broke McDowell's assault; under your command, this time it gave way.";
+    else if (winner === "CS") hist = (ps === "US")
+      ? "History holds. As in 1861, the stand on Henry House Hill and the rail-borne brigades on Chinn Ridge carried the day for the Confederacy."
+      : "History holds. As in 1861, your stand on Henry House Hill and the rail-borne brigades on Chinn Ridge carried the day for the Confederacy — McDowell's army lost the hill and streamed back to Washington in the 'Great Skedaddle'.";
+    else hist = "A bloodier stalemate than history's clear Confederate victory — but the rebellion was not broken here.";
+    return _fldScenarioEndBox(hist, cards);
+  }
+  // Phase C: any other registered scenario draws its framing from data (sd.endNote, keyed winner -> player side).
+  var en = sd.endNote || null, hist2 = "";
+  if (en) {
+    if (winner === "draw") hist2 = en.draw || "";
+    else { var w = en[winner]; hist2 = w ? (typeof w === "string" ? w : (w[ps] || w.US || w.CS || "")) : ""; }
+  }
+  if (!hist2 && !cards.length) return "";
+  return _fldScenarioEndBox(hist2, cards);
+}
+/* the shared "Your war vs. history" + teaching-cards box — one markup source for every scenario end-screen.
+   Byte-identical to the inline Bull Run markup it replaced (so the bullrun branch is unchanged on the wire). */
+function _fldScenarioEndBox(hist, cards) {
   var out = '<div style="text-align:left;background:#15110b;border:1px solid #715e3e;border-radius:6px;padding:12px 14px;margin-bottom:16px;">' /* wcag-auditor: contrast fix #3a3020->#715e3e border on #15110b (was 1.45:1, now 3.02:1) WCAG 1.4.11 */ +
     '<div style="color:#d8c87a;font-weight:bold;margin-bottom:6px;">Your war vs. history</div>' +
-    '<div style="font-size:13px;opacity:.9;line-height:1.5;margin-bottom:8px;">' + hist + '</div>';
+    (hist ? '<div style="font-size:13px;opacity:.9;line-height:1.5;margin-bottom:8px;">' + hist + '</div>' : '');
+  cards = cards || [];
   for (var i = 0; i < cards.length; i++) {
     out += '<div style="margin-top:9px;border-top:1px solid #6f5f3f;padding-top:7px;"><b style="color:#cdbb88;">' + cards[i].head + '</b>' /* wcag-auditor: contrast fix #2a2418->#6f5f3f divider on #15110b (was 1.22:1, now 3.03:1) WCAG 1.4.11 */ +
       '<div style="font-size:12.5px;opacity:.84;line-height:1.46;margin-top:1px;">' + cards[i].body + '</div>' +
@@ -29255,9 +29574,17 @@ function _fldSideNameFull(side) { return side === "CS" ? "Confederate" : "Union"
 function fldBriefObjectiveHtml(ps, sd, holdToWin) {
   var attacking = (__FIELD.attacker === ps);
   var objName = (sd && sd.objective && sd.objective.name) ? sd.objective.name : "the objective";
+  // Phase C: the scenario-specific flavour sentence comes from the data (sd.brief.attack / .defend); a generic line
+  // covers any battle that ships no brief block. The keyword SKELETON ("seize and hold" / "HOLD" / "deny") is
+  // constant, so the role reads right — and probe-csplayer's side-aware assertion holds — for every scenario.
+  var brief = (sd && sd.brief) ? sd.brief : null;
+  var flavor = brief ? (attacking ? brief.attack : brief.defend) : null;
+  if (!flavor) flavor = attacking
+    ? '<b>This is your war:</b> a victory here, against the historical result, rewrites the campaign.'
+    : '<b>This is your war:</b> hold the ground the defenders held, and deny the enemy his place in history.';
   var body = attacking
-    ? '<b>Your objective:</b> seize and hold <b>' + objName + '</b> for ' + holdToWin + 's &mdash; or break the enemy. The Confederate reserves arrive on the rail timeline, so win the morning before the trains run out. <b>This is your war:</b> a Union victory here rewrites 1861.'
-    : '<b>Your objective:</b> <b>HOLD ' + objName + '</b> &mdash; deny the crest to the Union assault until the clock runs out, or break their attack. Your reserves ride the rail line to your aid; spend the morning making the enemy pay for every yard. <b>This is your war:</b> hold here as the army did in 1861.';
+    ? '<b>Your objective:</b> seize and hold <b>' + objName + '</b> for ' + holdToWin + 's &mdash; or break the enemy. ' + flavor
+    : '<b>Your objective:</b> <b>HOLD ' + objName + '</b> &mdash; deny it to the enemy until the clock runs out, or break their assault. ' + flavor;
   return '<div style="margin-top:12px;padding:9px 11px;background:#15110b;border:1px solid #715e3e;border-radius:5px;font-size:13px;line-height:1.5;">' + body + '</div>';
 }
 
@@ -29279,25 +29606,39 @@ function fldPlayerOutcomeLine(winner) {
   return won ? "You won the field." : "The enemy carried the field against you.";
 }
 
-/* The standalone First Bull Run side-choice card — pick the army you command before launch
-   (the scenario builds the units' AI flags from the chosen side, so the choice must precede
-   fldLaunchBattle). A period-broadsheet sheet matching the Skirmish menu; full keyboard + ARIA.
-   `go` is the launcher callback, invoked with "US" or "CS". Falls back to a US launch if the
-   sheet system is unavailable (headless / a stripped build) so the entry point never dead-ends. */
-function fldBullRunSideChoice(go) {
+/* The side-choice card for any registered scenario — pick the army you command before launch (the scenario builds
+   the units' AI flags from the chosen side, so the choice must precede fldLaunchBattle). A period-broadsheet sheet
+   matching the Skirmish menu; full keyboard + ARIA. Copy is DATA-DRIVEN (sd.sides — heading/intro/foot + a per-side
+   title/badge/deck) with generic role fallbacks, so every battle gets its own card; the attacking side is listed
+   first. `go` is the launcher callback, invoked with "US" or "CS". Falls back to a US launch when the sheet system
+   is unavailable (headless / a stripped build) so the entry point never dead-ends. */
+function fldScenarioSideChoice(id, go) {
   if (typeof openSheet !== "function") { go("US"); return; }
-  var sd = (typeof fldBrData === "function") ? fldBrData() : null;
-  var objName = (sd && sd.objective && sd.objective.name) ? sd.objective.name : "Henry House Hill";
+  var sd = (typeof fldScenarioData === "function") ? fldScenarioData(id) : null;
+  var objName = (sd && sd.objective && sd.objective.name) ? sd.objective.name : "the objective";
+  var sides = (sd && sd.sides) ? sd.sides : null;
+  var atkSide = (sd && sd.attacker) ? sd.attacker : "US", defSide = (atkSide === "CS") ? "US" : "CS";
+  var heading = (sides && sides.heading) ? sides.heading : ((sd && sd.name ? String(sd.name).split(" — ")[0] : "Battle") + " — Take Which Command?");
+  var intro = (sides && sides.intro) ? sides.intro : ((sd && sd.date ? sd.date + " · " : "") + "Lead the army of your choosing.");
+  var foot = (sides && sides.foot) ? sides.foot : ("The other army is commanded by the AI. Fog is " + ((sd && sd.defaultFog) ? "on" : "off") + " by default (press V in battle to toggle it).");
+  function card(side) {
+    var s = (sides && sides[side]) ? sides[side] : {}, attacking = (atkSide === side);
+    var title = s.title || (attacking ? ("Lead the " + _fldSideNameFull(side)) : ("Hold for the " + _fldSideNameFull(side)));
+    var badge = s.badge || (attacking ? "&#9876; ATTACK" : "&#9819; DEFEND");
+    var deck = s.deck || (attacking
+      ? ("Take the offensive and seize " + objName + " before the enemy reserves can arrive.")
+      : ("Stand on " + objName + " and deny it to the enemy assault until the clock runs out."));
+    return _fldBrSideCard(side, title, badge, deck, attacking);
+  }
   var html = ''
-    + '<h1 class="title-xl" style="text-align:center">First Bull Run &mdash; Take Which Command?</h1>'
-    + '<p class="title-sub" style="text-align:center">July 21, 1861 &middot; the first great battle of the war. Lead the army of your choosing.</p>'
+    + '<h1 class="title-xl" style="text-align:center">' + heading + '</h1>'
+    + '<p class="title-sub" style="text-align:center">' + intro + '</p>'
     + '<hr class="rule">'
     + '<div style="max-width:560px;margin:0 auto">'
     + '<div role="group" aria-label="Choose the army you will command" style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center">'
-    + _fldBrSideCard("US", "Lead the Union", "&#9876; ATTACK", "Cross Bull Run, turn the Confederate left and storm " + objName + " &mdash; the historical assault. Beat the trains bringing Jackson, Early, and Elzey to the field.")
-    + _fldBrSideCard("CS", "Hold for the Confederacy", "&#9819; DEFEND", "Stand on " + objName + " and deny it to McDowell's army until the rail-borne reserves arrive. You face the attacking-AI doctrine pressing uphill.")
+    + card(atkSide) + card(defSide)
     + '</div>'
-    + '<p class="lede" style="font-size:11px;opacity:.6;margin-top:12px;text-align:center">The other army is commanded by the AI. Fog is on by default &mdash; the historically faithful field, where the defender holds the hill (press V in battle to clear it).</p>'
+    + '<p class="lede" style="font-size:11px;opacity:.6;margin-top:12px;text-align:center">' + foot + '</p>'
     + '<div class="btn-row" style="margin-top:12px;display:flex;gap:10px;justify-content:center">'
     + '<button id="fldBrSideBack" type="button" class="upg">Back</button>'
     + '</div></div>';
@@ -29316,8 +29657,14 @@ function fldBullRunSideChoice(go) {
   if (back) back.addEventListener("click", function () { if (typeof openMainMenu === "function") openMainMenu(); });
   try { var first = document.querySelector('[data-brside]'); if (first) first.focus(); } catch (e) {}
 }
+/* back-compat: the First Bull Run menu button + probe-csplayer call fldBullRunSideChoice directly. */
+function fldBullRunSideChoice(go) { return fldScenarioSideChoice("bullrun1", go); }
 /* one commission-style choice card (a focusable button) for the Bull Run side picker. */
-function _fldBrSideCard(side, title, badge, deck) {
+function _fldBrSideCard(side, title, badge, deck, attacking) {
+  // accent is a SIDE identity colour (Union blue / Confederate butternut-red) — keyed to side, NOT to role, so it is
+  // correct regardless of which army attacks. The spoken ROLE word follows `attacking` (the data-driven attacker),
+  // not side, so a future CS-attacker scenario reads right (bug-hunt C-1: the aria role had been hardwired US=attack).
+  if (typeof attacking === "undefined") attacking = (side === "US");   // back-compat default (US = the historical attacker)
   var accent = side === "US" ? "#6c8ebf" : "#b77668";   /* wcag-auditor: CS accent #b06a5a -> #b77668 (2.89:1->4.72:1 on .upg bg #241a10, AA body-text); decorative border also updated */ // CVD-safe: role named in text
   // bug-hunt (B-6): the aria-label is interpolated into a double-quoted attribute, so neutralize " and < in the
   // dynamic title/deck (a future data-driven objective.name could carry them). The literal " &mdash; " below is
@@ -29325,7 +29672,7 @@ function _fldBrSideCard(side, title, badge, deck) {
   var _aTitle = String(title).replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   var _aDeck = deck.replace(/<[^>]+>/g, "").replace(/&[a-z]+;/g, " ").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   return '<button type="button" data-brside="' + side + '" class="upg" '
-    + 'aria-label="' + _aTitle + ' &mdash; ' + (side === "US" ? "attack" : "defend") + '. ' + _aDeck + '" '
+    + 'aria-label="' + _aTitle + ' &mdash; ' + (attacking ? "attack" : "defend") + '. ' + _aDeck + '" '
     + 'style="flex:1 1 220px;max-width:260px;text-align:left;padding:14px 15px;border-left:5px solid ' + accent + ';line-height:1.45;cursor:pointer">'
     + '<div style="font-size:12px;letter-spacing:1px;color:' + accent + '">' + badge + '</div>'/* wcag-auditor: removed opacity:.75 — effective ratio was 3.43:1 (US) / 2.89:1 (CS) on #241a10, both fail AA 4.5:1; full-opacity gives 5.09:1 / 4.72:1 */
     + '<div style="font-size:17px;font-weight:bold;margin:3px 0 5px;color:#e9dcc0">' + title + '</div>'

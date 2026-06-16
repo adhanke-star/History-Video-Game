@@ -13,6 +13,25 @@
     "defender": "CS",
     "timeLimitSec": 480,
     "holdToWinSec": 140,
+    "sides": {
+      "heading": "First Bull Run — Take Which Command?",
+      "intro": "July 21, 1861 · the first great battle of the war. Lead the army of your choosing.",
+      "US": {
+        "title": "Lead the Union",
+        "badge": "&#9876; ATTACK",
+        "deck": "Cross Bull Run, turn the Confederate left and storm Henry House Hill — the historical assault. Beat the trains bringing Jackson, Early, and Elzey to the field."
+      },
+      "CS": {
+        "title": "Hold for the Confederacy",
+        "badge": "&#9819; DEFEND",
+        "deck": "Stand on Henry House Hill and deny it to McDowell's army until the rail-borne reserves arrive. You face the attacking-AI doctrine pressing uphill."
+      },
+      "foot": "The other army is commanded by the AI. Fog is on by default — the historically faithful field, where the defender holds the hill (press V in battle to clear it)."
+    },
+    "brief": {
+      "attack": "The Confederate reserves arrive on the rail timeline, so win the morning before the trains run out. <b>This is your war:</b> a Union victory here rewrites 1861.",
+      "defend": "Your reserves ride the rail line to your aid; spend the morning making the enemy pay for every yard. <b>This is your war:</b> hold here as the army did in 1861."
+    },
     "objective": {
       "name": "Henry House Hill",
       "x": 600, "z": 450, "r": 140,

@@ -97,6 +97,7 @@ var FLD = {
   ATK_LOCAL_RATIO: 1.1,    // ...and only with LOCAL men >= this * local VISIBLE-foe men (gradual concentration, not a global flip)
   ATK_GLOBAL_FLOOR: 0.85,  // never throw the army onto the bayonet while globally outnumbered below this
   ATK_FLANK_BIAS: 0.5,     // pull the approach this fraction toward the weaker (thinner) flank of the objective
+  ATK_CAUTIOUS_HOLD: 0.85, // Phase C: a "doomed-assault" (cautious) attacker presses in LINE to within OBJ_R*this of the objective before it holds + trades. Tuned so the hold band sits in the OPEN just OUTSIDE the defender's wall-cover radius (the covered line holds the forward face at OBJ_R*DEF_FACE_FRAC=0.55; the wall's cover band is ~26yd, so 0.85 keeps the attacker exposed at cover 1.0 while the defender stays at 1.7) — the attacker dies on the open glacis at close range and never carries the wall (the Fredericksburg slaughter). Default doctrine never reaches this branch.
 };
 
 /* ---- seeded RNG (LCG) ---- */
@@ -283,6 +284,7 @@ function fldInitSim(opts) {
   // and Stuart as cav) remain BYTE-IDENTICAL. The gate is exactly what protects them. Coverage = probe-arms.mjs.
   __FIELD.arms = __FIELD._armsOff ? false : ((opts.arms != null) ? !!opts.arms : true);
   __FIELD._aiGenericAll = false; __FIELD._aiGenericAtk = false;   // role-aware AI test hooks: reset per launch (bug-hunt #4); probe-ai sets them AFTER launch (A/B the defender + attacker doctrines)
+  __FIELD._atkCautious = false;   // Phase C: the AI-attacker "doomed frontal assault" posture (Fredericksburg). Reset per launch; fldScenarioInit sets it true ONLY for a scenario whose data declares assaultDoctrine:"cautious" -> Bull Run/sandbox/skirmish stay byte-identical.
   if (sc !== "sandbox" && typeof fldScenarioInit === "function" && fldScenarioInit(opts)) return;
   // Phase A (A2): a custom FREE skirmish / procedural campaign battle is built by T2's fldSkirmishOOB
   // (terrain + a parameterized OOB), which calls fldResetRun and returns true. Absent opts.skirmish this
@@ -666,6 +668,14 @@ function fldAiAttacker(u) {
   var effLocal = FLD.ATK_LOCAL_RATIO / (__FIELD.aiSkill || 1) * fldClamp(1 / Math.max(0.5, globRatio), 0.75, 1.4);
   var localSup = foeMen > 0 && friendMen >= foeMen * effLocal;     // must SEE the foe AND locally out-mass it
   var canCommit = globRatio >= FLD.ATK_GLOBAL_FLOOR;
+  // Phase C (Fredericksburg): a scenario may declare its AI attacker's posture "cautious" (scenData.assaultDoctrine,
+  // mirrored to __FIELD._atkCautious in fldScenarioInit) — the DOOMED FRONTAL ASSAULT. Such an attacker advances in
+  // LINE and trades fire but NEVER column-rushes the killing ground and NEVER presses the mass bayonet on a steady
+  // line in cover — Burnside's piecemeal disaster, the opposite of the B-1 doctrine. So the covered defender (the
+  // stone wall + the pre-sighted crest guns) is never carried by the AI. Default off -> aggressive === !fog, so Bull
+  // Run, the sandbox, and skirmishes are byte-identical. (A HUMAN attacker is unbound by this — the alt-history hook:
+  // do what the Army of the Potomac could not.) Disordered-pursuit (chargeWeak) stays allowed for either posture.
+  var aggressive = !__FIELD.fog && !__FIELD._atkCautious;
 
   // (1) SURVIVAL: wavering + a stronger enemy close -> fall back to rally (an assault can break too).
   if (u.state === "wavering" && near && nd < 220 && near.men > u.men * 1.05) {
@@ -678,17 +688,28 @@ function fldAiAttacker(u) {
   //     withheld (b): the attacker cannot trust its sight of the position, so it will not commit blind.
   if (u.state !== "wavering" && near) {
     var chargeWeak = weak && wd < FLD.ATK_CHARGE_R;
-    var assaultSteady = !__FIELD.fog && canCommit && localSup && nd < FLD.ATK_ASSAULT_R && dObj < obj.r + FLD.ATK_ASSAULT_STANDOFF;
+    var assaultSteady = aggressive && canCommit && localSup && nd < FLD.ATK_ASSAULT_R && dObj < obj.r + FLD.ATK_ASSAULT_STANDOFF;
     if (chargeWeak || assaultSteady) {
       var t = chargeWeak ? weak : near;
       u.order = { type: "charge", tx: t.x, tz: t.z, tface: Math.atan2(t.x - u.x, -(t.z - u.z)) };
       return;
     }
   }
-  // (3) SUPPRESS / PROBE: in fire range but not assaulting (under fog, or no local superiority yet) -> hold +
-  //     pour fire in LINE while the mass forms (don't bleed forward piecemeal, don't retreat). Under fog this
-  //     is the cautious probe that lets the concealed reserves reveal + keeps the fight slow (fog aids defender).
-  if (near && nd <= u.rng * 0.92 && (__FIELD.fog || !localSup || !canCommit)) {
+  // (3) SUPPRESS / HOLD.
+  //   (3a) DOOMED-ASSAULT posture (cautious, Fredericksburg): do NOT stop at long rifle range — press in LINE
+  //        across the open glacis ALL THE WAY into the killing ground, then hold + trade at point-blank against
+  //        the covered line (the assault dies under the wall + the crest guns at close range, but never carries
+  //        it — no mass bayonet). Until close, fall through to (4) to keep advancing under fire.
+  //   (3b) NORMAL posture: in fire range but not assaulting (under fog, or no local superiority yet) -> hold +
+  //        pour fire in LINE while the mass forms. Under fog this is the cautious probe that lets the concealed
+  //        reserves reveal + keeps the fight slow (fog aids the defender). Byte-identical when not cautious.
+  if (__FIELD._atkCautious && near) {
+    if (dObj < obj.r * FLD.ATK_CAUTIOUS_HOLD) {
+      u.formation = "line";
+      u.order = { type: "hold", tx: u.x, tz: u.z, tface: face };
+      return;
+    }
+  } else if (near && nd <= u.rng * 0.92 && (__FIELD.fog || !localSup || !canCommit)) {
     u.formation = "line";
     u.order = { type: "hold", tx: u.x, tz: u.z, tface: face };
     return;
@@ -700,7 +721,7 @@ function fldAiAttacker(u) {
   var aimX = u.x + (flankX - u.x) * FLD.ATK_FLANK_BIAS;
   var sign = (fldHomeEdgeZ(u.side) > obj.z) ? 1 : -1;     // press onto the attacker-side face of the objective
   var aimZ = obj.z + sign * obj.r * 0.25;
-  u.formation = (!__FIELD.fog && canCommit && dObj > 160) ? "column" : "line";
+  u.formation = (aggressive && canCommit && dObj > 160) ? "column" : "line";
   u.order = { type: "move", tx: aimX, tz: aimZ, tface: face };
 }
 
@@ -1662,10 +1683,11 @@ function fldInjectMenuButton() {
       '<span class="gn-deck">Real-time skirmish (Beta) &mdash; drag to maneuver, volley, flank, and break the foe. Two brigades a side, on the open 3D field.</span>';
     b.addEventListener("click", function () { fldLaunchSandbox({ renderer: "3d" }); });
     if (anchor.nextSibling) anchor.parentNode.insertBefore(b, anchor.nextSibling); else anchor.parentNode.appendChild(b);
-    // P1a seam: registered scenarios (e.g. First Bull Run) inject their own menu buttons after the sandbox button.
-    if (typeof fldInjectScenarioButtons === "function") fldInjectScenarioButtons(b);
-    // Phase A (A2) seam: the custom FREE skirmish setup menu button (after the sandbox / Bull Run buttons).
-    var lastBtn = document.getElementById("fldBullRunBtn") || b;
+    // P1a/Phase C seam: registered scenarios inject their own menu buttons after the sandbox button (one per
+    // battle now); the seam returns the LAST button so the skirmish/preset buttons anchor after the whole block.
+    var lastScnBtn = (typeof fldInjectScenarioButtons === "function") ? fldInjectScenarioButtons(b) : null;
+    // Phase A (A2) seam: the custom FREE skirmish setup menu button (after the full scenario-button block).
+    var lastBtn = lastScnBtn || document.getElementById("fldBullRunBtn") || b;
     if (typeof fldInjectSkirmishButton === "function") fldInjectSkirmishButton(lastBtn);
     // Phase B-5 seam: the Command & Realism (difficulty/realism presets) menu button (after the skirmish button).
     var lastBtn2 = document.getElementById("fldSkirmishBtn") || lastBtn;
