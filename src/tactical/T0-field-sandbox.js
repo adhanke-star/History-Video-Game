@@ -219,6 +219,13 @@ function fldResetRun() {
 function fldInitSim(opts) {
   opts = opts || {};
   __FIELD.seed = (opts.seed || 1) >>> 0;
+  // difficulty/realism presets (B-5): read G.settings.tacticalPreset -> set __FIELD.sev (the per-layer severity
+  // multipliers) + aiSkill/aiResolve/aiCushion, and (only when a preset is configured) the global fog/auto-pause
+  // the precedence reads below honour. Run BEFORE the fog/auto-pause precedence + the gate reads. With NO preset
+  // configured (the probes never set one) it writes the NEUTRAL config and touches nothing else -> every severity
+  // seam multiplies by 1.0 / adds 0 -> the 8 tactical baselines + bullrun stay BYTE-IDENTICAL. Coverage = probe-presets.
+  if (typeof fldPresetsApply === "function") fldPresetsApply(opts);
+  else { __FIELD.sev = { attrition: 1, canister: 1, supply: 1, cmdShock: 1, sight: 1, veteran: 1 }; __FIELD.aiSkill = 1; __FIELD.aiResolve = 1; __FIELD.aiCushion = 0; }
   // scenario seam (P1a): a non-sandbox scenario (e.g. "bullrun1") is built by a registered
   // fldScenarioInit (src/tactical/T1-*). It returns true once it has populated terrain + units
   // + the reinforcement schedule + holdToWin/timeLimit, then we early-return. The sandbox path
@@ -321,7 +328,8 @@ function fldResolveFire(u, tgt, dt) {
   // defeated by works/woods) and a softening long-range bombardment beyond. A gated multiplier on the base fire
   // (1.0 / no-op when arms off or the shooter is not artillery -> byte-identical, incl. bullrun1's batteries).
   if (__FIELD.arms && u.arm === "art" && typeof fldArtFireMult === "function") power *= fldArtFireMult(u, tgt, d, cover);
-  var cas = power * fr.mult * fr.frontW / cover * (0.78 + fldRng() * 0.44) * dt;
+  // difficulty/realism presets (B-5): scale the casualties by the attrition severity (1.0 = neutral = byte-identical).
+  var cas = power * fr.mult * fr.frontW / cover * (0.78 + fldRng() * 0.44) * dt * (__FIELD.sev ? __FIELD.sev.attrition : 1);
   cas = Math.min(cas, tgt.men);
   if (cas <= 0) return;
   tgt.men -= cas; tgt.casTick += cas; tgt.underFire = 1.2;
@@ -343,8 +351,9 @@ function fldResolveMelee(a, b, dt) {
   var atk = a.men * meleeA * (0.6 + 0.4 * a.morale / a.maxMor) * (0.9 + a.xp * 0.06);
   var def = b.men * meleeB * (0.6 + 0.4 * b.morale / b.maxMor) * (0.9 + b.xp * 0.06) * fldCoverAt(b.x, b.z);
   var ratio = atk / Math.max(1, def);
-  var aCas = Math.min(a.men, FLD.MELEE_BASE * (def / Math.max(1, atk)) * (0.7 + fldRng() * 0.6) * dt * 12);
-  var bCas = Math.min(b.men, FLD.MELEE_BASE * (atk / Math.max(1, def)) * (0.7 + fldRng() * 0.6) * dt * 12);
+  var _att = (__FIELD.sev ? __FIELD.sev.attrition : 1);   // B-5: attrition severity (1.0 = neutral = byte-identical)
+  var aCas = Math.min(a.men, FLD.MELEE_BASE * (def / Math.max(1, atk)) * (0.7 + fldRng() * 0.6) * dt * 12 * _att);
+  var bCas = Math.min(b.men, FLD.MELEE_BASE * (atk / Math.max(1, def)) * (0.7 + fldRng() * 0.6) * dt * 12 * _att);
   a.men -= aCas; b.men -= bCas; a.casTick += aCas; b.casTick += bCas;
   a.fatigue = Math.min(100, a.fatigue + FLD.FATIGUE_FIGHT * dt);
   b.fatigue = Math.min(100, b.fatigue + FLD.FATIGUE_FIGHT * dt);
@@ -361,7 +370,12 @@ function fldKill(u) {
 // moraleCheck shape (base ~1015): drop ~ sev*60/rally; rout when below threshold.
 function fldMoraleStep(u, dt) {
   if (!u.alive) return;
-  var rally = 1 + u.xp * 0.12;                          // leader/veteran rally proxy
+  // difficulty/realism presets (B-5): _vet = experience weight (1.0 = neutral), _cu = a PLAYER-side morale cushion
+  // (> 0 only at the easiest AI tier), _ar = the AI-unit resilience multiplier (<= 1.0 — a handicap, never a buff).
+  // ALL neutral (1 / 0 / 1) when no preset -> every term below is byte-identical. The cushion/resolve only ever
+  // touch live play (a probe AI-vs-AI run is autoBoth, so !u.ai is false and _ar is 1 unless a preset is set).
+  var _vet = (__FIELD.sev ? __FIELD.sev.veteran : 1), _cu = (__FIELD.aiCushion || 0), _ar = (__FIELD.aiResolve == null ? 1 : __FIELD.aiResolve);
+  var rally = 1 + u.xp * 0.12 * _vet;                   // leader/veteran rally proxy
   // (1) casualties taken this tick
   if (u.casTick > 0) { var sev = u.casTick / u.maxMen; u.morale -= (sev * 60 / rally); u.casTick = 0; }
   // (2) ambient pressure
@@ -383,13 +397,18 @@ function fldMoraleStep(u, dt) {
       if (e.side === u.side || !e.alive) continue;
       if (fldDist(e, u) < FLD.RANGE_RIFLE * 0.9) { safe = false; break; }
     }
-    if (safe) u.morale += FLD.MOR_RECOVER * (1 + 0.4 * (u.cmdBonus || 0)) * dt;   // B-2: a general's presence speeds recovery (moderated — §27: meaningful, not dominant)
+    if (safe) {
+      var _rec = FLD.MOR_RECOVER * (1 + 0.4 * (u.cmdBonus || 0)) * dt;   // B-2: a general's presence speeds recovery (moderated — §27: meaningful, not dominant)
+      if (u.ai) { if (_ar !== 1) _rec *= _ar; }                          // B-5: an AI brigade recovers slower at the easy tiers (brittler — a handicap, never a buff: _ar <= 1)
+      else if (_cu) _rec += FLD.MOR_RECOVER * _cu * dt;                  // B-5: the Recruit player cushion — your men steady faster
+      u.morale += _rec;
+    }
   }
   // B-2 command presence: a leader in radius steadies the troops (a small passive lift; 0 when out of command / officers off)
   if (u.cmdBonus) u.morale += 0.3 * u.cmdBonus * dt;
   u.morale = fldClamp(u.morale, 0, u.maxMor);
   // (4) state machine + rout roll
-  var routThresh = FLD.ROUT_THRESH - u.xp * 1.5;       // veterans hold longer (base)
+  var routThresh = FLD.ROUT_THRESH - u.xp * 1.5 * _vet; // veterans hold longer (base; B-5 experience weight, 1.0 = neutral)
   if (u.state === "routing") {
     // rally if it reached safety + held for RALLY_SECS
     var danger = false;
@@ -403,7 +422,10 @@ function fldMoraleStep(u, dt) {
     return;
   }
   if (u.morale < routThresh) {
-    var save = Math.min(0.95, (0.5 + 0.12 * (u.cmdBonus || 0)) * rally);   // B-2: a general in command stiffens resolve against the rout (moderated + capped — never total immunity)
+    var _saveBase = (0.5 + 0.12 * (u.cmdBonus || 0)) * rally;   // B-2: a general in command stiffens resolve against the rout (moderated + capped — never total immunity)
+    if (u.ai) { if (_ar !== 1) _saveBase *= _ar; }              // B-5: AI brigades break sooner at the easy tiers (_ar <= 1 -> easier, never a cheat)
+    else if (_cu) _saveBase += _cu * 0.3;                       // B-5: the Recruit player cushion vs the rout
+    var save = Math.min(0.95, _saveBase);
     if (fldRng() > save) { u.state = "routing"; u.rallyT = 0; __FIELD.routEverCount++; fldAnnounce(u.name + " breaks and routs!"); return; }
   }
   u.state = u.morale > 55 ? "steady" : (u.morale > 35 ? "shaken" : "wavering");
@@ -466,7 +488,7 @@ function fldOrderCharge(u) {
    line (woods block sight); cavalry scout widest. Drives AI/targeting/render.
    fldVisible() short-circuits true when fog is OFF -> every caller is a no-op then.
    --------------------------------------------------------------------------- */
-function fldUnitSight(u) { return u.arm === "cav" ? FLD.SIGHT_CAV : (u.arm === "art" ? FLD.SIGHT_ART : FLD.SIGHT_INF); }
+function fldUnitSight(u) { var _b = u.arm === "cav" ? FLD.SIGHT_CAV : (u.arm === "art" ? FLD.SIGHT_ART : FLD.SIGHT_INF); return _b * (__FIELD.sev ? __FIELD.sev.sight : 1); }   /* B-5: scouting/LOS range severity (1.0 = neutral = byte-identical) */
 function fldLosClear(ax, az, bx, bz) {
   // EXACT segment-vs-woods test: sum the length of the sight line that lies inside any woods disk;
   // block only when the line penetrates more than WOODS_SEE_THRU yards of timber. This is robust where
@@ -623,7 +645,9 @@ function fldAiAttacker(u) {
   //     at lower local odds; behind -> demand more); a global FLOOR forbids the bayonet while badly outnumbered.
   var atkTot = fldArmyStrength(u.side), defTot = fldArmyStrength(fldEnemy(u.side));
   var globRatio = atkTot / Math.max(1, defTot);
-  var effLocal = FLD.ATK_LOCAL_RATIO * fldClamp(1 / Math.max(0.5, globRatio), 0.75, 1.4);
+  // B-5 AI sharpness: a sharper AI commits with slightly less local superiority (lower bar). aiSkill 1.0 = neutral
+  // -> FLD.ATK_LOCAL_RATIO / 1.0 is exactly the constant -> byte-identical. Bounded; only differs when a preset is set.
+  var effLocal = FLD.ATK_LOCAL_RATIO / (__FIELD.aiSkill || 1) * fldClamp(1 / Math.max(0.5, globRatio), 0.75, 1.4);
   var localSup = foeMen > 0 && friendMen >= foeMen * effLocal;     // must SEE the foe AND locally out-mass it
   var canCommit = globRatio >= FLD.ATK_GLOBAL_FLOOR;
 
@@ -715,8 +739,9 @@ function fldAiDefender(u) {
   // (2) COUNTERATTACK: steady + a CATCHABLE (wavering) enemy within reach that has closed on the hill +
   //     local parity-or-better -> charge. The DUAL leash (the target AND the defender's OWN position both
   //     bounded near the objective) keeps the defender from being walked off the ground it denies (#3/#6).
-  if (weak && u.state === "steady" && wd < FLD.CTR_REACH && fldDist(weak, obj) < obj.r + FLD.CTR_LEASH
-      && fldDist(u, obj) < obj.r + FLD.CTR_LEASH * 0.5 && friendMen >= foeMen * FLD.CTR_RATIO) {
+  var _sk = (__FIELD.aiSkill || 1);   // B-5 AI sharpness: a sharper defender counterattacks on a slightly longer leash + lower local-odds bar (1.0 = neutral = byte-identical)
+  if (weak && u.state === "steady" && wd < FLD.CTR_REACH && fldDist(weak, obj) < obj.r + FLD.CTR_LEASH * _sk
+      && fldDist(u, obj) < obj.r + FLD.CTR_LEASH * 0.5 * _sk && friendMen >= foeMen * FLD.CTR_RATIO / _sk) {
     u.order = { type: "charge", tx: weak.x, tz: weak.z, tface: Math.atan2(weak.x - u.x, -(weak.z - u.z)) };
     return;
   }
@@ -957,6 +982,7 @@ function fldBuildDom() {
     ["fldBtnHold", "Hold", "Halt in place (H)"],
     ["fldBtnFog", "Fog: " + (__FIELD.fog ? "On" : "Off"), "Toggle fog of war — line-of-sight scouting (V)"],
     ["fldBtnAuto", "Auto-pause: " + (__FIELD.autoPause ? "On" : "Off"), "Toggle active auto-pause at key moments (P)"],
+    ["fldBtnSettings", "&#9881; Settings", "Battle settings — fog, auto-pause, speed & difficulty (G)"],
     ["fldBtnExit", "Exit", "Leave the sandbox (Esc)"],
   ];
   for (var i = 0; i < btns.length; i++) {
@@ -1089,6 +1115,7 @@ function fldWireControls() {
   w("fldBtnHold", function () { fldSelHold(); });
   w("fldBtnFog", function () { fldToggleFog(); });
   w("fldBtnAuto", function () { fldToggleAutoPause(); });
+  w("fldBtnSettings", function () { if (typeof fldOpenSettingsDrawer === "function") fldOpenSettingsDrawer(); });   // B-5: the in-battle settings drawer
   w("fldBtnExit", function () { fldExit(false); });
 }
 function fldToggleFog() {
@@ -1111,6 +1138,10 @@ function fldSetFormation(f) { var s = fldPlayerSel(); for (var i = 0; i < s.leng
 function fldSelCharge() { var s = fldPlayerSel(); for (var i = 0; i < s.length; i++) fldOrderCharge(s[i]); fldAnnounce("Charge ordered."); }
 function fldSelHold() { var s = fldPlayerSel(); for (var i = 0; i < s.length; i++) { var u = s[i]; u.order = { type: "hold", tx: u.x, tz: u.z, tface: u.facing }; } fldAnnounce("Hold ordered."); }
 function fldKey(e) {
+  // B-5: while the in-battle settings drawer (an aria-modal dialog) is open, NO battlefield hotkey fires — the
+  // drawer owns the keyboard (its own handler does stopPropagation + handles Escape/Tab). This guard is the
+  // belt-and-suspenders so even a key dispatched outside the drawer subtree never reaches fldExit / the toggles.
+  if (typeof document !== "undefined" && document.getElementById("fldDrawer")) return;
   // Escape always exits; otherwise let native activation handle a focused button (Space/Enter)
   // so control-bar / end-screen buttons don't double-fire, and the end screen stays keyboard-operable.
   if (e.key === "Escape") {
@@ -1136,6 +1167,7 @@ function fldKey(e) {
   else if (k === "h" || k === "H") fldSelHold();
   else if (k === "v" || k === "V") fldToggleFog();
   else if (k === "p" || k === "P") fldToggleAutoPause();
+  else if (k === "g" || k === "G") { if (typeof fldOpenSettingsDrawer === "function") fldOpenSettingsDrawer(); }   // B-5: the in-battle settings drawer
   else if (k === "a" || k === "A") { __FIELD.sel = []; for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side === "US" && u.alive && !u.ai) __FIELD.sel.push(u.id); } fldRenderHud(); }
   else if (k === "Tab") { if (__FIELD.phase === "battle") { e.preventDefault(); fldCycleSel(); } } // only steal Tab mid-battle
   var b = document.getElementById("fldBtnSpd"); if (b) b.innerHTML = __FIELD.speed + "&times;";
@@ -1588,6 +1620,9 @@ function fldInjectMenuButton() {
     // Phase A (A2) seam: the custom FREE skirmish setup menu button (after the sandbox / Bull Run buttons).
     var lastBtn = document.getElementById("fldBullRunBtn") || b;
     if (typeof fldInjectSkirmishButton === "function") fldInjectSkirmishButton(lastBtn);
+    // Phase B-5 seam: the Command & Realism (difficulty/realism presets) menu button (after the skirmish button).
+    var lastBtn2 = document.getElementById("fldSkirmishBtn") || lastBtn;
+    if (typeof fldInjectPresetButton === "function") fldInjectPresetButton(lastBtn2);
   } catch (e) {}
 }
 function fldInstallMenuObserver() {

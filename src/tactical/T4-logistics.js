@@ -123,7 +123,11 @@ function fldSupplyReserve(side) {
       }
     }
   } catch (e) {}
-  return Math.round(base);
+  // difficulty/realism presets (B-5): supply generosity severity (>1 generous / <1 strict; 1.0 = neutral = byte-identical).
+  // The severity is clamped >0 at the preset apply seam; floor the rounded reserve at >=1 as defense-in-depth so a
+  // malformed/hand-edited preset can never produce a non-positive ammunition reserve.
+  base *= (__FIELD.sev ? __FIELD.sev.supply : 1);
+  return Math.max(1, Math.round(base));
 }
 function fldSupplyFor(side) { var t = __FIELD.trains; return (t && t[side]) ? t[side] : null; }
 

@@ -1,5 +1,23 @@
 # HANDOFF — "The Civil War"
 
+## ⚡ CONTINUE HERE — run k (2026-06-16): **PHASE B-5 · DIFFICULTY/REALISM PRESETS ✅ SHIPPED + VETTED + PUSHED** → NEXT = B-6 CS-player "command either side"
+
+> **PHASE B-5 — the Command & Realism layer — is complete** (DECISIONS **D70**). New gated `src/tactical/T6-presets.js` + guarded seams in T0/T3/T4/T5 + a Difficulty row in the T2 skirmish setup + `tools/probe-presets.mjs`. Deliverable ≈**1684KB**.
+>
+> **✅ B-5 — difficulty + realism presets:** **TWO AXES** — an **AI tier** (Recruit / Regular / Veteran / Hardee) × a **realism bundle** (Arcade / Balanced / Historian), plus an **"Advanced"** per-lever expander. Read ONCE at `fldInitSim` (`fldPresetsApply`, before the fog/auto-pause precedence) → sets `__FIELD.sev`{attrition·canister·supply·cmdShock·sight·veteran} + aiSkill/aiResolve/aiCushion → **WIRES the already-existing B-1..B-4 knobs** (attrition→fire/melee cas · canister→`fldArtFireMult` · supply→`fldSupplyReserve` · cmdShock→`fldOfficerFalls` · sight→`fldUnitSight` · veteran→`fldMoraleStep` · aiSkill→`fldAiAttacker`/`fldAiDefender` thresholds · the Recruit cushion+brittle-enemy→`fldMoraleStep`). Mostly WIRING + a UI, not new sim (D69).
+>
+> **SMARTER-NOT-CHEATING, CODE-ENFORCED:** `aiResolve` HARD-capped ≤1.0 (never an enemy steadiness buff — in `_fldClampCfg`, not just the data table); the player cushion exists ONLY at a GENUINE Recruit (dropped if the AI-sharpness chip is tuned off the tier); **Hardee = sharper DECISIONS (aiSkill), not stat bonuses**; **Veteran = aiSkill 1.0 / no handicap = the shipped opponent.** **BYTE-IDENTITY:** no preset → NEUTRAL config (all 1.0 / 0), every seam ×1.0/+0 → the 9 tactical baselines stay byte-identical; **"Balanced" == today's shipped CS 8/8 (live stacked, fog ON) SEED-FOR-SEED.** The tactical **Engineering Corps stays SPLIT** (D69) — B-5 ships the sliders + hooks, not the corps.
+>
+> **✅ FULLY VETTED:** adversarial bug-hunt **76 agents → 13 confirmed + 6 critic gaps, ALL FIXED** (HIGH: drawer-Escape-tore-down-the-battle → `stopPropagation`+`fldKey` guard; HIGH: picker ARIA radiogroup→group+aria-pressed; MED: a malformed-preset clamp `_fldClampCfg`; MED: the fog-"scenario" V-toggle wipe → no-op at apply; MED: drawer focus-jump/stacked-listener/resume-behind-modal; + 7 probe gaps). **probe-presets 26/26, 0 pe** · full no-regression GREEN (9 tactical baselines byte-identical · bootprobe ok · t1probe 14/14 · diag-classic 346) · wcag clean (3 contrast fixes). Committed + pushed.
+>
+> **What's playable:** a new main-menu **"⚙ COMMAND & REALISM"** button + a Difficulty row in the ⚔ SKIRMISH setup open a period-broadsheet picker (pick an AI tier × realism bundle, or open Advanced for per-lever chips); the choice persists and governs EVERY real-time battle (campaign "Fight in real time", skirmish, the standalone Sandbox + First Bull Run). In any battle, the control bar's **"⚙ Settings"** (key **G**) opens a focus-trapped drawer with live fog/auto-pause/speed toggles + the current difficulty. Pick **Recruit × Arcade** for the gentle on-ramp, **Hardee × Historian** for the unforgiving real thing — the AI never cheats.
+>
+> **IMMEDIATE NEXT = PHASE B-6 · CS-player "command either side"** (fork #10 — `fldPlayerSide` already honored from B-2): command EITHER side, so you DEFEND as the CS while the B-1 attacker AI presses you. Makes the attacker doctrine player-facing; doubles tactical replayability. Then **Phase C** breadth (Eastern marquee first — Antietam/Fredericksburg/Gettysburg/Chancellorsville on the data-driven engine, D69). **PUSH per milestone after PROPER VETTING (D53-OPS). Subagent models = HYBRID (D63).**
+>
+> **Resume map:** `START-HERE.md` → `V1-CHECKLIST.md` (Phase A + B1–B5 ticked; B6 next) → `DECISIONS.md` **D70** (B-5) + **D69** (the B-5 design clear) + **D68** (the Q&A) + **D67/D66/D65/D64/D62/D63/D61** → `src/tactical/T6-presets.js` (`FLDP`; `fldPresetCompute`/`fldPresetsApply`/`_fldClampCfg`; the picker `fldPresetMenu` + the drawer `fldOpenSettingsDrawer`) + the per-layer seams (grep `__FIELD.sev`/`aiSkill`/`aiResolve`/`aiCushion` across T0/T3/T4/T5) + `tools/probe-presets.mjs`. Everything is on disk and pushed.
+
+---
+
 ## ⚡ CONTINUE HERE — run k (2026-06-15): **PHASE B-4 · DISTINCT ARM ROLES ✅ SHIPPED + VETTED + PUSHED** → NEXT = B-5 difficulty/realism presets
 
 > **PHASE B-4 — artillery + cavalry get real ROLES — is complete** (DECISIONS **D67**). New `src/tactical/T5-arms.js` + guarded T0/T1/T2 seams + `data/bullrun.json` (Stuart `role:flank`, `defaultFog:true`) + `tools/probe-arms.mjs`. Deliverable ≈**1646KB**.

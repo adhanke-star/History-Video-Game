@@ -221,7 +221,8 @@ function fldOfficerFalls(ld) {
   for (var i = 0; i < U.length; i++) {
     var u = U[i]; if (!u.alive || u.side !== ld.side) continue;
     var d = fldDist(u, ld); if (d > ld.radius) continue;
-    u.morale = fldClamp(u.morale - FLDO.SHOCK * (1 - d / ld.radius), 0, u.maxMor);   // the general-down shock
+    var _cs = (__FIELD.sev ? __FIELD.sev.cmdShock : 1);   // B-5: command-shock severity (1.0 = neutral = byte-identical)
+    u.morale = fldClamp(u.morale - FLDO.SHOCK * _cs * (1 - d / ld.radius), 0, u.maxMor);   // the general-down shock
   }
   // the teach line may reference an event that hasn't happened yet (e.g., Bee naming Jackson, who arrives at
   // 135s) — fall back to a neutral line when its precondition isn't met, so the narration is never anachronistic

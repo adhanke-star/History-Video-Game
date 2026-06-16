@@ -90,8 +90,9 @@ function fldArtFireMult(u, tgt, d, cover) {
     // canister: murderous in the open, defeated by cover (a fuze-immune close-range shotgun)
     var pen = fldClamp(1 - (cover - 1) * FLDA.CANISTER_COVER_K, FLDA.CANISTER_COVER_FLOOR, 1);
     var scale = (typeof u._canisterScale === "number") ? u._canisterScale : 1;   // bridge: the bought gun's canister strength
+    var csev = (__FIELD.sev ? __FIELD.sev.canister : 1);                         // B-5: canister lethality severity (1.0 = neutral = byte-identical)
     u._canisterLive = FLDA.FLASH_T;
-    return FLDA.CANISTER_MULT * pen * scale;
+    return FLDA.CANISTER_MULT * pen * scale * csev;
   }
   u._canisterLive = 0;
   return FLDA.LONG_MULT;                                             // long-range bombardment: lower kill, suppression

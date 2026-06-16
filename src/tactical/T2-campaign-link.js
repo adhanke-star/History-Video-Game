@@ -344,13 +344,27 @@ function _fldSkirmishHTML() {
     + _fldSkOptRow("Ground", "terrain", [{ v: "open", label: "Open field" }, { v: "woods", label: "Wooded" }, { v: "ridge", label: "Ridge &amp; crest" }], s.terrain)
     + _fldSkOptRow("Year (arms)", "era", [{ v: 1861, label: "1861" }, { v: 1862, label: "1862" }, { v: 1863, label: "1863" }, { v: 1864, label: "1864" }], s.era)
     + _fldSkOptRow("Fog of war", "fog", [{ v: "0", label: "Off" }, { v: "1", label: "On" }], s.fog ? "1" : "0")
+    + _fldSkDifficultyRow()
     + '<p class="lede" style="font-size:11px;opacity:.6;margin-top:6px">The two armies start on opposite edges; seize and hold the central crest, or break the enemy. Auto-pause helps a low-APM commander.</p>'
     + '<div class="btn-row" style="margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">'
     + '<button id="fldSkBack" type="button" class="upg">Back</button>'
     + '<button id="fldSkGo" type="button" class="bigbtn">Begin Skirmish &#9876;</button>'
     + '</div></div>';
 }
+/* B-5: a difficulty/realism summary + a "Change" link into the Command & Realism picker (returns here). */
+function _fldSkDifficultyRow() {
+  var lbl = "Veteran &times; Balanced";
+  try {
+    var c = (typeof fldPresetResolve === "function") ? fldPresetResolve() : null;
+    if (c && typeof FLDP !== "undefined") { var ai = FLDP.ai[c.ai], rm = FLDP.realism[c.realism]; lbl = (ai ? ai.label : "Custom") + " &times; " + (rm ? rm.label : "Custom"); }
+  } catch (e) {}
+  return '<div style="margin:9px 0"><div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin-bottom:4px">Difficulty &amp; realism</div>'
+    + '<div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap"><span style="font-size:13px">Current: <b id="fldSkDiff">' + lbl + '</b></span>'
+    + '<button id="fldSkDiffBtn" type="button" class="upg" style="padding:5px 10px;font-size:12px">Change&hellip;</button></div></div>';
+}
 function _fldSkWire() {
+  var diffBtn = document.getElementById("fldSkDiffBtn");
+  if (diffBtn) diffBtn.addEventListener("click", function () { if (typeof fldPresetMenu === "function") fldPresetMenu("skirmish"); });
   var btns = document.querySelectorAll('[data-skg]');
   for (var i = 0; i < btns.length; i++) {
     (function (b) {
