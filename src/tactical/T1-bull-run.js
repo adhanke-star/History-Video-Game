@@ -41,6 +41,7 @@ function fldScenarioRegistry() {
     if (typeof GAME_DATA !== "undefined") {
       if (GAME_DATA.bullrun && GAME_DATA.bullrun.bullrun1) R.bullrun1 = GAME_DATA.bullrun.bullrun1;
       if (GAME_DATA.fredericksburg && GAME_DATA.fredericksburg.fredericksburg) R.fredericksburg = GAME_DATA.fredericksburg.fredericksburg;
+      if (GAME_DATA.antietam && GAME_DATA.antietam.antietam) R.antietam = GAME_DATA.antietam.antietam;   // Phase C-2: the first MULTI-PHASE epic (data.phases[] -> the T8 engine)
     }
   } catch (e) {}
   return R;
@@ -76,6 +77,9 @@ function fldScenarioInit(opts) {
   // Bull Run resolves the identical data object it always did (fldScenarioData("bullrun1")) -> byte-identical.
   if (!opts || !opts.scenario || opts.scenario === "sandbox") return false;
   var data = fldScenarioData(opts.scenario);
+  // Phase C (D74): a MULTI-PHASE scenario (data.phases[]) is built by the gated T8 engine — its OOB/terrain/objective
+  // live PER PHASE, so it bypasses the single-objective build + guard below. Default (no data.phases) -> unchanged.
+  if (data && data.phases && data.phases.length && typeof _fldScenarioInitPhased === "function") return _fldScenarioInitPhased(opts, data);
   if (!data || !data.oob || !data.terrain || !data.objective) return false;   // data missing/malformed -> fall back to the sandbox
   __FIELD.scenData = data;
   __FIELD.autoBoth = !!opts.autoBoth;

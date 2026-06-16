@@ -237,6 +237,10 @@ function fldInitSim(opts) {
   var sc = opts.scenario || "sandbox"; __FIELD.scenario = sc;
   __FIELD.reinforce = null; __FIELD.holdToWin = FLD.HOLD_TO_WIN; __FIELD.timeLimit = FLD.TIME_LIMIT; __FIELD.attacker = null;
   __FIELD.scenData = null; __FIELD.defender = null; __FIELD.winBy = null;   // cleared every launch (scenario init re-sets); no stale leak into the sandbox
+  // Phase C (D74): the MULTI-PHASE state (T8). Cleared every launch -> only a data.phases[] scenario sets it (via
+  // _fldScenarioInitPhased), so the single-objective path (sandbox/bullrun/fredericksburg/skirmish) is byte-identical
+  // (the fldCheckVictory intercept, the fldRenderTop label, and the fldOnOver seam are all no-ops when phases is null).
+  __FIELD.phases = null; __FIELD.phaseIdx = 0; __FIELD._scenTop = null;
   // Phase A (campaign link): a campaign-launched battle carries a ctx (the bd + conditioning params);
   // null for every standalone launch -> the fldResetRun conditioning hook + the campaign end screen are
   // no-ops then (byte-behavior-identical sandbox/Bull-Run; probe-field/bullrun hold). Set by T2.
@@ -923,7 +927,12 @@ function fldCheckVictory() {
       w = sU > sC * 1.05 ? "US" : (sC > sU * 1.05 ? "CS" : "draw"); by = "timeout";
     }
   }
-  if (w) { __FIELD.winner = w; __FIELD.winBy = by; __FIELD.phase = "over"; fldOnOver(); }
+  if (w) {
+    // Phase C (D74): a MULTI-PHASE scenario records the phase + advances to the next sector instead of ending the
+    // battle (the LAST phase ends it with the aggregate winner). No-op when phases is null -> byte-identical.
+    if (__FIELD.phases && typeof _fldPhaseResolved === "function") { _fldPhaseResolved(w, by); return; }
+    __FIELD.winner = w; __FIELD.winBy = by; __FIELD.phase = "over"; fldOnOver();
+  }
 }
 
 /* headless stepper for probes (no render) */
@@ -1141,7 +1150,10 @@ function fldRenderTop() {
     } else {
       lead = hU > hC + 0.5 ? "Union holds " + Math.floor(hU) + "s/" + __FIELD.holdToWin : (hC > hU + 0.5 ? "Confederate holds " + Math.floor(hC) + "s/" + __FIELD.holdToWin : "contested");
     }
-    o.textContent = "Objective: " + lead;
+    // Phase C (D74): a MULTI-PHASE battle prefixes the running phase/sector tally ("Phase 2/3 · the Sunken Road ·
+    // sectors US 1 – CS 1"). "" for a single-objective battle -> byte-identical text.
+    var _pl = (__FIELD.phases && typeof _fldPhaseTopLabel === "function") ? _fldPhaseTopLabel() : "";
+    o.textContent = (_pl ? _pl + " · " : "") + "Objective: " + lead;
   }
   var p = document.getElementById("fldPhase");
   if (p) p.textContent = __FIELD.phase === "deploy" ? "Press Begin (Space) to advance" : (__FIELD.paused ? ("⏸ " + (__FIELD._apReason ? __FIELD._apReason + " — Space to resume" : "PAUSED")) : (__FIELD.speed + "×"));
@@ -1318,6 +1330,9 @@ function fldOnOver() {
   e.setAttribute("role", "dialog"); e.setAttribute("aria-modal", "true"); e.setAttribute("aria-label", msg); /* wcag-auditor: added aria-modal=true so AT users know focus is constrained (WCAG 4.1.2) */
   // P1a seam: a scenario can append its teaching payoff (what really happened / your war vs history).
   var scNote = (typeof fldScenarioEndHtml === "function") ? (fldScenarioEndHtml(w) || "") : "";
+  // Phase C (D74): a MULTI-PHASE battle prepends its phase-by-phase result table + the aggregate verdict (alongside
+  // the data-driven endNote that fldScenarioEndHtml renders from the top-level scenario). No-op when phases is null.
+  if (__FIELD.phases && typeof _fldPhasesEndHtml === "function") { try { scNote = (_fldPhasesEndHtml() || "") + scNote; } catch (eP) {} }
   // Phase A seam: a campaign battle appends its strategic-consequence note (no-op standalone).
   if (__FIELD.campaignCtx && typeof fldCampaignEndHtml === "function") { try { scNote += (fldCampaignEndHtml(w) || ""); } catch (eC) {} }
   // B-2 seam: the officer teaching payoff (who fell, why command-from-the-saddle mattered). No-op when off / none lost.

@@ -14398,6 +14398,326 @@ function _m3dMixerUpdate(dt, now) {
 
 /* ===== data (build-injected from data/*.json) ===== */
 var GAME_DATA = {
+"antietam": {
+  "_comment": "PHASE C-2 — ANTIETAM / SHARPSBURG, September 17 1862 — the FIRST MULTI-PHASE epic for the __FIELD real-time engine (DECISIONS D74/D76). Three sequential phases fought in one scenario via the gated T8 phases[] engine: PHASE 1 the CORNFIELD (dawn, the Confederate left — Hooker's I Corps + Mansfield's XII Corps vs Jackson's wing + Hood's counterattack, 'Artillery Hell'); PHASE 2 the SUNKEN ROAD / 'Bloody Lane' (mid-morning, the center — Sumner's II Corps vs D.H. Hill in a worn farm-lane trench, carried by Barlow's enfilade + a misheard Confederate order); PHASE 3 BURNSIDE'S BRIDGE (afternoon, the Confederate right — the IX Corps bottleneck across the Lower/Rohrbach Bridge, held for hours by Toombs's few Georgians, the breakthrough toward Sharpsburg halted by A.P. Hill's Light Division force-marching from Harpers Ferry). Each phase is its own sector/OOB/objective; the running casualty tally + the per-phase sector results carry forward; the overall battle is scored as a weighted aggregate with a draw band (the historical TACTICAL DRAW / marginal-Union-strategic-check emerges). COORDINATE NOTE: each phase field is 1200x900 yards; per engine convention the ATTACKER (US, every phase) sits at HIGH z facing -z (facing 0) and the DEFENDER (CS) at LOW z facing +z (facing PI); the objective sits at low-center z. ARTILLERY uses the D75 UNIVERSAL GUN MODEL (real gun counts + realistic crew; fire = guns * the universal weight). ANTI-LOST-CAUSE: the lessons are command failure on BOTH sides, terrain + contingency over martial 'genius', the appalling cost (the bloodiest single day), McClellan's wasted ~2:1 advantage + withheld reserves, and ABOVE ALL the Emancipation Proclamation five days later that turned the war against slavery. Strengths are Inferred division/brigade-scale approximations (Carman/Sears/OR differ); the Verified, teaching-bearing facts are the phase sequence, the commanders + their fate, the terrain, and the casualty weight. Sources: NPS Antietam, American Battlefield Trust, the Official Records (via aotw.org), Sears 'Landscape Turned Red', McPherson 'Crossroads of Freedom'.",
+  "antietam": {
+    "id": "antietam",
+    "name": "Antietam — the Bloodiest Day",
+    "date": "September 17, 1862",
+    "place": "Sharpsburg, Washington County, Maryland — along Antietam Creek",
+    "blurb": "Lee's first invasion of the North is brought to battle along Antietam Creek. In one day — the bloodiest in American history, ~23,000 fell — three separate struggles rage across the rolling farmland: the dawn slaughter in Miller's Cornfield, the midday horror of the Sunken Road, and the afternoon fight for the stone bridge on the Confederate right. McClellan holds the Lost Order and nearly two-to-one numbers; Lee holds a thin line with his back to a single ford. Command the day, phase by phase — and learn why a near-run, badly managed bloodbath gave Lincoln the moment to free the slaves.",
+    "provenance": "Verified (high) for the phase sequence, the commanders and their fate, the terrain, and the casualty weight; Inferred (medium) for per-unit strengths and exact arrival minutes (Carman, Sears, and the Official Records differ — all corps/division totals are contested estimates). Sources: NPS Antietam National Battlefield (the Cornfield, S.D. Lee's 'Artillery Hell', the Bloody Lane, the Final Attack); American Battlefield Trust (casualties 12,401 US / 10,316 CS / 22,717 total); the Official Records via Antietam on the Web (S.D. Lee's 'twelve guns, all that could be manned'; Battery B 4th US — Campbell wounded, command to Lt. Stewart; A.P. Hill's report — in motion 7:30 a.m., reached the field ~2:30 p.m.; the 16th CT mustered Aug 24 1862; the 9th NY's 240/373 loss; the 51st NY & 51st PA carrying the bridge); HistoryNet; Emerging Civil War (the revisionist A.P. Hill reading); Sears, 'Landscape Turned Red'; McPherson, 'Crossroads of Freedom'. ANTI-LOST-CAUSE: the lessons are command failure on BOTH sides, terrain + contingency over martial 'genius', the wasted Union advantage, and the Emancipation Proclamation — Confederate survival traces to McClellan's piecemeal method, an accidental ditch, a 12-foot bottleneck, an unscouted ford, and a misheard order, NOT innate Southern prowess.",
+    "field": { "w": 1200, "h": 900 },
+    "attacker": "US",
+    "defender": "CS",
+    "defaultFog": false,
+    "timeLimitSec": 220,
+    "holdToWinSec": 70,
+    "menu": {
+      "title": "ANTIETAM (1862)",
+      "deck": "The bloodiest single day — a MULTI-PHASE epic. Fight the Cornfield, the Sunken Road, and Burnside's Bridge in sequence; survivors and the running cost carry forward. Command either army across all three sectors of September 17, 1862.",
+      "aria": "Antietam, September 1862 — the bloodiest day, a multi-phase real-time battle in three sectors: the Cornfield, the Sunken Road 'Bloody Lane', and Burnside's Bridge. Command either army through all three phases."
+    },
+    "sides": {
+      "heading": "Antietam — Take Which Command?",
+      "intro": "September 17, 1862 · the bloodiest single day. Three sectors, fought in sequence. Lead the army of your choosing.",
+      "US": {
+        "title": "Command the Union (McClellan's army)",
+        "badge": "&#9876; ATTACK",
+        "deck": "Break the Confederate line in all three sectors — the Cornfield, the Sunken Road, the bridge. Do what McClellan would not: commit your weight and destroy Lee's outnumbered, river-pinned army."
+      },
+      "CS": {
+        "title": "Command the Confederacy (Lee's army)",
+        "badge": "&#9819; DEFEND",
+        "deck": "Hold a thin gray line all day across three sectors with your back to a single ford — the Cornfield, the lane, the bluffs above the bridge — and survive to fight another day."
+      },
+      "foot": "The other army is commanded by the AI. Three phases play in sequence; the cost carries forward (press V in battle to toggle fog)."
+    },
+    "brief": {
+      "attack": "Three sectors, one terrible day. Carry the Cornfield, storm the Sunken Road, and force the bridge before A.P. Hill's men reach the field. <b>This is your war:</b> McClellan had the Lost Order and nearly two-to-one numbers and let Lee escape — commit your weight and end the rebellion here.",
+      "defend": "Three sectors, one thin line. Hold the Cornfield, the lane, and the bluffs above the bridge long enough for the day to end and the army to escape across the Potomac. <b>This is your war:</b> survive the bloodiest day, as Lee's army did."
+    },
+    "objective": { "x": 600, "z": 380, "r": 150, "name": "the field of Antietam" },
+    "phases": [
+      {
+        "id": "cornfield",
+        "name": "The Cornfield",
+        "sector": "the Confederate left — Miller's Cornfield, the East & West Woods, the Dunker Church plateau",
+        "timing": "dawn — ~9:30 a.m.",
+        "attacker": "US", "defender": "CS",
+        "assaultDoctrine": null,
+        "defaultFog": false,
+        "holdToWinSec": 70, "timeLimitSec": 220,
+        "scoreWeight": 1,
+        "objective": { "x": 600, "z": 360, "r": 150, "name": "the Dunker Church plateau" },
+        "transition": { "title": "The Cornfield", "lead": "It is not yet seven in the morning. Hooker's guns open along the Hagerstown Pike; the corn stands shoulder-high between the lines. By nine o'clock it will be cut level, as with a scythe, and the dead will lie in rows where they stood." },
+        "terrain": {
+          "hills": [
+            { "name": "the Dunker Church plateau", "x": 600, "z": 300, "h": 18, "s": 175, "note": "The low rise around the whitewashed Dunker (German Baptist) Church and the West Woods edge — the contested high ground and S.D. Lee's artillery position. (Verified)" },
+            { "name": "Nicodemus Hill", "x": 300, "z": 320, "h": 16, "s": 130, "note": "West of the pike; Confederate horse-artillery (Stuart's guns) enfiladed the Union right from here. (Verified)" }
+          ],
+          "woods": [
+            { "x": 600, "z": 470, "r": 95, "note": "MILLER'S CORNFIELD — the 24-acre field of standing corn (lethal concealment; the corn was cut level by the firing). Models as cover/concealment over the killing ground. (Verified ~24 acres, NPS/ABT — sources vary 24-30.)" },
+            { "x": 430, "z": 300, "r": 105, "note": "the WEST WOODS — where Sumner's Sedgwick division would later be shattered in minutes; the Confederate left's cover. (Verified)" },
+            { "x": 780, "z": 430, "r": 95, "note": "the EAST WOODS — the Union left-center approach; Mansfield mortally wounded near here. (Verified)" },
+            { "x": 600, "z": 820, "r": 90, "note": "the NORTH WOODS — Hooker's I Corps forming ground at dawn. (Verified)" }
+          ],
+          "walls": [],
+          "markers": [
+            { "kind": "road", "name": "the Hagerstown Pike", "path": [[600, 860], [600, 470], [600, 120]], "note": "The axis of the dawn assault, lined with post-and-rail fences that channeled the fighting and the canister. (Verified)" },
+            { "kind": "label", "name": "the Dunker Church", "x": 600, "z": 285, "note": "The pacifist German Baptist meetinghouse that became the Confederate left's anchor and the iconic landmark of the morning fight." },
+            { "kind": "label", "name": "Miller's Cornfield — 'every stalk cut as with a knife'", "x": 600, "z": 480, "note": "The 24-acre cornfield that changed hands repeatedly; ~8,000 fell in and around it in some three hours." },
+            { "kind": "label", "name": "to the North Woods (Union right)", "x": 600, "z": 840, "note": "Hooker's I Corps forming ground." }
+          ]
+        },
+        "leaders": {
+          "_note": "fate = a per-leader durability multiplier weighting the casualty model to HISTORY (>1 endures, <1 is fall-prone). At the Cornfield, Mansfield was mortally wounded and Starke killed; Hooker was wounded in the foot; Lawton wounded; Hood's division wrecked. The others survived.",
+          "US": [
+            { "id": "ld_hooker", "name": "Maj. Gen. Joseph Hooker", "short": "Hooker", "quality": 0.66, "radius": 250, "x": 600, "z": 820, "fate": 0.7,
+              "note": "I Corps; opened the assault down the pike. Wounded in the foot mid-morning and carried from the field, which cost the Union attack its driving hand. He survived. (Verified)",
+              "teach": "Gen. Hooker is hit in the foot and carried off — the dawn assault loses its momentum at the worst moment." },
+            { "id": "ld_mansfield", "name": "Maj. Gen. Joseph K. F. Mansfield", "short": "Mansfield", "quality": 0.58, "radius": 220, "attach": "us_xii_williams", "fate": 0.32,
+              "note": "XII Corps; the oldest general on the field (59), in command only two days. Mortally wounded near the East Woods riding forward to steady his green regiments; died the next day. Williams succeeded him. (Verified)",
+              "teach": "Gen. Mansfield is mortally struck near the East Woods — fifty-nine years old, two days in command, and gone." }
+          ],
+          "CS": [
+            { "id": "ld_jackson", "name": "Maj. Gen. Thomas J. 'Stonewall' Jackson", "short": "Jackson", "quality": 0.78, "radius": 270, "x": 600, "z": 230, "fate": 2.8,
+              "note": "Commanded the Confederate left after capturing Harpers Ferry. His thin line survived the morning by McClellan's piecemeal commitment as much as by its own discipline — NOT invincibility. He survived. (Verified; anti-Lost-Cause framing)",
+              "teach": "Gen. Jackson steadies the left near the Dunker Church — but the gray line holds as much by the enemy's piecemeal attacks as by its own valor." },
+            { "id": "ld_hood", "name": "Brig. Gen. John B. Hood", "short": "Hood", "quality": 0.72, "radius": 200, "attach": "cs_hood_texas", "fate": 2.2,
+              "note": "Committed his division from reserve near the Dunker Church ~7 a.m. — his men caught cooking their first hot rations in days. They counterattacked through the corn and were wrecked (~60% down; the 1st Texas lost ~82%). Asked where his division was, Hood answered: 'Dead on the field.' That is the cost, not a boast. (Verified)",
+              "teach": "Gen. Hood's division counterattacks through the corn and is annihilated to buy minutes — 'Dead on the field,' he will say. The price of a charge, not its glory." }
+          ]
+        },
+        "supply": {
+          "US": { "x": 600, "z": 865, "name": "Union ammunition train — the North Woods" },
+          "CS": { "x": 600, "z": 150, "name": "Confederate train — behind the West Woods" }
+        },
+        "oob": {
+          "US": [
+            { "id": "us_doubleday", "name": "Doubleday's Division (the Iron Brigade)", "commander": "Brig. Gen. Abner Doubleday", "arm": "inf", "weapon": "rifled", "men": 3200, "xp": 2, "x": 540, "z": 810, "facing": 0, "formation": "line", "note": "1st Div, I Corps, incl. Gibbon's Iron Brigade (2nd/6th/7th Wisconsin, 19th Indiana). Drove down the pike's west side into the corn; the Iron Brigade's ~348 casualties anchor the strength estimate. (Verified identity; Inferred strength)" },
+            { "id": "us_ricketts", "name": "Ricketts's Division", "commander": "Brig. Gen. James B. Ricketts", "arm": "inf", "weapon": "rifled", "men": 3200, "xp": 1, "x": 680, "z": 820, "facing": 0, "formation": "line", "note": "2nd Div, I Corps; attacked through the East Woods and the corn and lost roughly a third of its strength in the morning. (Verified)" },
+            { "id": "us_battery_b", "name": "Battery B, 4th U.S. Artillery", "commander": "Capt. J. B. Campbell (w), then Lt. James Stewart", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 6, "men": 100, "xp": 3, "x": 600, "z": 770, "facing": 0, "formation": "line", "note": "Fired double canister up the Hagerstown Pike near Miller's barn — some of the most famous gunnery of the war. Campbell was wounded early and Lt. Stewart directed much of the fire (credit both). Universal gun model (D75): 6 guns, ~100 crew. (Verified, 6 guns)" }
+          ],
+          "CS": [
+            { "id": "cs_lawton", "name": "Lawton's Division", "commander": "Brig. Gen. A. R. Lawton (w)", "arm": "inf", "weapon": "smooth", "men": 3300, "xp": 2, "x": 590, "z": 410, "facing": 3.14159, "formation": "line", "note": "Ewell's old division, holding the Cornfield front at dawn; wrecked (about half down) before Hood relieved it. Lawton wounded and carried off. (Verified identity; Inferred strength)" },
+            { "id": "cs_jr_jones", "name": "J. R. Jones's Division", "commander": "Brig. Gen. J. R. Jones", "arm": "inf", "weapon": "smooth", "men": 2000, "xp": 2, "x": 470, "z": 360, "facing": 3.14159, "formation": "line", "note": "Jackson's own division, in the West Woods sector. Jones stunned and concussed early; Brig. Gen. William Starke (succeeding to command) killed — the Confederate defense was itself disjointed, not a serene wall. (Verified)" },
+            { "id": "cs_sd_lee_arty", "name": "S. D. Lee's Artillery Battalion", "commander": "Col. Stephen D. Lee", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 12, "men": 300, "xp": 3, "x": 600, "z": 300, "facing": 3.14159, "formation": "line", "note": "Five batteries (Woolfolk, Parker, Rhett, Jordan, Moody) massed on the Dunker Church plateau — 'Artillery Hell.' Universal gun model (D75): 12 servable guns (Lee's report: 'twelve guns, all that could be manned'), ~300 crew; 86 casualties, 60 horses killed. Answered ~20 Union rifled guns firing crossfire from across Antietam Creek. (Verified)" }
+          ]
+        },
+        "reinforcements": [
+          { "id": "cs_hood_texas", "side": "CS", "atSec": 55, "name": "Hood's Division (the Texas Brigade)", "commander": "Brig. Gen. John B. Hood", "arm": "inf", "weapon": "smooth", "men": 2000, "xp": 3, "x": 600, "z": 320, "facing": 3.14159, "formation": "line", "entry": "from reserve at the Dunker Church — the counterattack", "note": "Texas Brigade (Wofford) + Law's Brigade, ~2,000. Counterattacked through the corn ~7 a.m. and drove the Federals back to their start line, then was wrecked (~60% down; 1st Texas ~82%, colors lost). (Verified)" },
+          { "id": "us_xii_williams", "side": "US", "atSec": 95, "name": "Williams's Division (XII Corps)", "commander": "Brig. Gen. Alpheus S. Williams", "arm": "inf", "weapon": "rifled", "men": 2500, "xp": 1, "x": 560, "z": 850, "facing": 0, "formation": "column", "entry": "Mansfield's corps, renewing the attack", "note": "1st Div, XII Corps; came up after the I Corps assault stalled. Williams succeeded to corps command when Mansfield was mortally wounded. (Verified)" },
+          { "id": "us_xii_greene", "side": "US", "atSec": 120, "name": "Greene's Division (XII Corps)", "commander": "Brig. Gen. George S. Greene", "arm": "inf", "weapon": "rifled", "men": 2400, "xp": 2, "x": 660, "z": 855, "facing": 0, "formation": "column", "entry": "the deepest Union penetration", "note": "2nd Div, XII Corps; pushed to the Dunker Church plateau, forced S.D. Lee's guns back, and held the high-water mark for about two hours before being driven out for want of support — the un-exploited breakthrough. (Verified)" },
+          { "id": "cs_early_west", "side": "CS", "atSec": 150, "name": "Early's Brigade", "commander": "Brig. Gen. Jubal A. Early", "arm": "inf", "weapon": "smooth", "men": 1700, "xp": 2, "x": 470, "z": 330, "facing": 3.14159, "formation": "line", "entry": "up from the West Woods to restore the left", "note": "Took command of Lawton's division after Lawton fell; helped restore the Confederate left and retake the plateau as Greene's unsupported division was driven back. (Verified)" }
+        ],
+        "teaching": {
+          "head": "The most savage field of the war",
+          "body": "Some 8,000 men fell in and around this cornfield in about three hours. It was command failure on both sides, not glory: McClellan fed in the I Corps, then the XII Corps, piecemeal — never together — so Jackson's thin line survived by his opponent's method. Hood's division was annihilated to buy minutes. The corn was cut level by the firing, and the dead lay in rows where they had stood.",
+          "provenance": "Verified (high) — NPS; American Battlefield Trust; the Official Records."
+        }
+      },
+      {
+        "id": "sunkenroad",
+        "name": "The Sunken Road (Bloody Lane)",
+        "sector": "the Confederate center — the worn farm lane between the Roulette and Piper farms",
+        "timing": "~9:30 a.m. — ~1:00 p.m.",
+        "attacker": "US", "defender": "CS",
+        "assaultDoctrine": null,
+        "defaultFog": false,
+        "holdToWinSec": 70, "timeLimitSec": 220,
+        "scoreWeight": 1,
+        "objective": { "x": 600, "z": 358, "r": 140, "name": "the Sunken Road" },
+        "transition": { "title": "The Sunken Road", "lead": "The fight shifts to the center. D.H. Hill's men crouch in a worn farm lane, sunk several feet below the fields, fence rails piled on its lip — an accidental trench. Sumner's II Corps must cross the open rise into its fire. By one o'clock the lane will be choked with the dead, and history will call it the Bloody Lane." },
+        "terrain": {
+          "hills": [
+            { "name": "the ridge before the lane", "x": 600, "z": 520, "h": 12, "s": 150, "note": "The open rise the Union II Corps had to crest to reach the lane — every line was silhouetted against the sky as it came over. (Verified)" },
+            { "name": "the high ground on the flank", "x": 820, "z": 430, "h": 14, "s": 120, "note": "Where Barlow wheeled the 61st & 64th New York to enfilade the length of the lane — the maneuver that broke it. (Verified)" }
+          ],
+          "woods": [
+            { "x": 360, "z": 470, "r": 85, "note": "Roulette-farm orchard cover on the Union approach." },
+            { "x": 600, "z": 230, "r": 90, "note": "the Piper farm — the Confederate rear and artillery position, behind the lane." }
+          ],
+          "walls": [
+            { "x1": 380, "z1": 408, "x2": 820, "z2": 405, "note": "THE SUNKEN ROAD — a pre-war farm lane worn several feet below grade, with fence rails piled along its forward edge: an ACCIDENTAL trench giving the defender heavy cover. The lethality is TERRAIN, not martial superiority. This is the defender's hold line. (Verified)" }
+          ],
+          "markers": [
+            { "kind": "road", "name": "the Sunken Road (the Bloody Lane)", "path": [[380, 410], [600, 407], [820, 404]], "note": "The worn farm lane that became a ready-made trench — and then a mass grave when its defenders were enfiladed out of it. (Verified)" },
+            { "kind": "label", "name": "the Roulette Farm (Union approach)", "x": 380, "z": 560, "note": "The II Corps crossed the Roulette farm and orchard to reach the open rise before the lane." },
+            { "kind": "label", "name": "the Piper Farm (Confederate rear)", "x": 600, "z": 215, "note": "Behind the lane; D.H. Hill's reserve and artillery, and the line of any Confederate retreat." },
+            { "kind": "label", "name": "Mumma Farm — burned that morning", "x": 770, "z": 600, "note": "Confederates burned the Mumma farm at dawn to deny its buildings to Union sharpshooters." }
+          ]
+        },
+        "leaders": {
+          "_note": "fate: at the Sunken Road, Richardson was mortally wounded (the price of carrying the lane); Rodes and G.B. Anderson (CS) were wounded/mortally wounded; the others endured. Apply the 'real men, not romance' standard EVENLY — to Rodes's Alabamians and Anderson's North Carolinians as to the Irish Brigade.",
+          "US": [
+            { "id": "ld_richardson", "name": "Maj. Gen. Israel B. Richardson", "short": "Richardson", "quality": 0.74, "radius": 240, "attach": "us_richardson", "fate": 0.4,
+              "note": "1st Div, II Corps; drove the attack that finally carried the lane. Mortally wounded by a shell fragment as he brought up a gun; taken to the Pry House, died Nov 3, 1862. (Verified)",
+              "teach": "Gen. Richardson is struck down by a shell fragment at the moment of victory — the hardest-driving general on the field, gone." },
+            { "id": "ld_french", "name": "Brig. Gen. William H. French", "short": "French", "quality": 0.6, "radius": 215, "x": 600, "z": 800, "fate": 2.3,
+              "note": "3rd Div, II Corps; opened the assault on the lane ~9:30 a.m. and was repulsed with about a third of his division down. He survived. (Verified)",
+              "teach": "Gen. French's division is thrown back from the lane — a third of his men down on the open rise." }
+          ],
+          "CS": [
+            { "id": "ld_dh_hill", "name": "Maj. Gen. Daniel Harvey Hill", "short": "D.H. Hill", "quality": 0.7, "radius": 235, "x": 600, "z": 300, "fate": 2.4,
+              "note": "Held the Confederate center in the lane with about 2,500 men. The position's strength was the worn ditch and piled rails — ordinary soldiers multiplied by terrain — not invincibility. He survived. (Verified; anti-Lost-Cause framing)",
+              "teach": "Gen. D.H. Hill holds the center in the sunken lane — a thin line made deadly by an accident of terrain, not by destiny." },
+            { "id": "ld_rodes", "name": "Brig. Gen. Robert E. Rodes", "short": "Rodes", "quality": 0.66, "radius": 185, "attach": "cs_dh_hill", "fate": 0.7,
+              "note": "Held the lane's center with his Alabamians; wounded. A misheard 'about face'/realignment order pulled part of his line out — and that error, as much as Barlow's enfilade, opened the gap in Lee's center. Contingency, not fate. (Verified)",
+              "teach": "Gen. Rodes is wounded, and a misheard order empties part of the lane — the gap in Lee's center opens by accident, not design." }
+          ]
+        },
+        "supply": {
+          "US": { "x": 600, "z": 865, "name": "Union train — behind the Roulette farm" },
+          "CS": { "x": 600, "z": 175, "name": "Confederate train — the Piper farm lane" }
+        },
+        "oob": {
+          "US": [
+            { "id": "us_french", "name": "French's Division (II Corps)", "commander": "Brig. Gen. William H. French", "arm": "inf", "weapon": "rifled", "men": 4400, "xp": 1, "x": 540, "z": 800, "facing": 0, "formation": "line", "note": "3rd Div, II Corps; the first assault on the lane ~9:30 a.m., repulsed with ~1,750 lost (about a third). Many were green regiments in their first fight. (Verified)" },
+            { "id": "us_battery_k", "name": "Battery K, 1st U.S. Artillery", "commander": "Lt. William M. Graham", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 6, "men": 100, "xp": 3, "x": 600, "z": 760, "facing": 0, "formation": "line", "note": "Supported the II Corps assault on the lane. Universal gun model (D75): 6 guns, ~100 crew. (Verified)" }
+          ],
+          "CS": [
+            { "id": "cs_dh_hill", "name": "D. H. Hill's Division (in the lane)", "commander": "Maj. Gen. D. H. Hill", "arm": "inf", "weapon": "smooth", "men": 2400, "xp": 3, "x": 600, "z": 388, "facing": 3.14159, "formation": "line", "note": "Rodes's Alabamians and G.B. Anderson's North Carolinians, crouched in the sunken lane (z 388, hard behind the rail-topped bank at z ~405, within the cover band). Veterans; the position — not the men — was the killing machine, and the assault into it cost the Union dearly before the lane was enfiladed out. (Verified identity; Inferred strength)" },
+            { "id": "cs_gb_anderson", "name": "G. B. Anderson's Brigade", "commander": "Brig. Gen. George B. Anderson (mw)", "arm": "inf", "weapon": "smooth", "men": 1300, "xp": 2, "x": 720, "z": 390, "facing": 3.14159, "formation": "line", "note": "North Carolinians holding the eastern stretch of the lane. Anderson struck near the ankle; the wound led to amputation and his death Oct 16, 1862. (Verified)" }
+          ]
+        },
+        "reinforcements": [
+          { "id": "cs_rh_anderson", "side": "CS", "atSec": 60, "name": "R. H. Anderson's Division", "commander": "Maj. Gen. Richard H. Anderson (w)", "arm": "inf", "weapon": "smooth", "men": 2100, "xp": 1, "x": 600, "z": 300, "facing": 3.14159, "formation": "line", "entry": "up through the Piper farm to thicken the center", "note": "Came up ~10:00-10:30 a.m. to reinforce Hill, but was committed DISJOINTEDLY and wrecked by noon — it did not save the lane; Anderson wounded bringing it up. (Verified)" },
+          { "id": "us_richardson", "side": "US", "atSec": 80, "name": "Richardson's Division (the Irish Brigade)", "commander": "Brig. Gen. Israel B. Richardson", "arm": "inf", "weapon": "rifled", "men": 3800, "xp": 2, "x": 640, "z": 850, "facing": 0, "formation": "column", "entry": "on French's left — Meagher's Irish Brigade", "note": "1st Div, II Corps; the Irish Brigade (63rd/69th/88th NY + 29th Mass) charged the lane and lost ~540 (~60%); Caldwell's brigade then relieved them. (Verified — the Irish Brigade at Antietam was these four regiments only.)" },
+          { "id": "us_barlow", "side": "US", "atSec": 110, "name": "Caldwell's Brigade (Barlow's enfilade)", "commander": "Brig. Gen. John C. Caldwell", "arm": "inf", "weapon": "rifled", "men": 1500, "xp": 2, "x": 800, "z": 850, "facing": 0, "formation": "column", "entry": "wheeling onto the flank high ground", "note": "Col. Francis Barlow wheeled the 61st & 64th New York onto high ground enfilading the length of the lane — the maneuver that, with a misheard Confederate order, broke the center and took ~300 prisoners. The lane fell to a flank move + a command error, not to a frontal triumph. (Verified)" }
+        ],
+        "teaching": {
+          "head": "An accident of terrain, a misheard order — not destiny",
+          "body": "About 5,500 fell in and around this lane. The defenders were ordinary soldiers multiplied by terrain — a worn ditch and fence rails — not Southern invincibility. The position fell to a Union flank maneuver plus a Confederate command error. And the deepest lesson is the breakthrough McClellan would not exploit: believing himself outnumbered when in fact he heavily outnumbered Lee, he withheld a fresh reserve of more than 20,000 men that might have split the Confederate army in two.",
+          "provenance": "Verified (high) — NPS Bloody Lane Trail; American Battlefield Trust; the Official Records. The reserve figure is 'more than 20,000' (Franklin's VI + Porter's V Corps); McClellan's belief he was outnumbered is paired with the reality that he was not."
+        }
+      },
+      {
+        "id": "burnsidebridge",
+        "name": "Burnside's Bridge",
+        "sector": "the Confederate right — the Lower (Rohrbach) Bridge over Antietam Creek and the road to Sharpsburg",
+        "timing": "~10:00 a.m. — dark (bridge carried ~1:00 p.m.; A.P. Hill's counterattack ~3:30-4:00 p.m.)",
+        "attacker": "US", "defender": "CS",
+        "assaultDoctrine": null,
+        "defaultFog": false,
+        "holdToWinSec": 90, "timeLimitSec": 240,
+        "scoreWeight": 1,
+        "objective": { "x": 600, "z": 295, "r": 140, "name": "the bluffs above the bridge & the road to Sharpsburg" },
+        "transition": { "title": "Burnside's Bridge", "lead": "On the Confederate right, the IX Corps must force a narrow stone bridge over Antietam Creek. Four hundred Georgians on the bluffs above hold it for three hours against thousands — a twelve-foot bottleneck, an unscouted ford, and Union hesitation, not Southern magic. Carry the bridge and reach for Sharpsburg and Lee's only line of retreat — before A.P. Hill's men arrive from Harpers Ferry." },
+        "terrain": {
+          "hills": [
+            { "name": "the west bluffs", "x": 600, "z": 290, "h": 22, "s": 150, "note": "The high, wooded ground above the western bank that Toombs's Georgians held, firing down on every attempt to rush the bridge. (Verified)" },
+            { "name": "the Sharpsburg ridge", "x": 600, "z": 200, "h": 18, "s": 160, "note": "The rising ground toward the town; the road to Boteler's Ford — Lee's single line of retreat — ran behind it. (Verified)" }
+          ],
+          "woods": [
+            { "x": 600, "z": 350, "r": 80, "note": "John Otto's cornfield and the wooded bluffs where A.P. Hill's counterattack struck and the green 16th Connecticut routed. (Verified)" },
+            { "x": 380, "z": 300, "r": 95, "note": "timber along the western bank below the bluffs." }
+          ],
+          "walls": [
+            { "x1": 470, "z1": 368, "x2": 730, "z2": 365, "note": "the wooded BLUFFS above the bridge — heavy cover for the defending Georgians, who fired down on the chokepoint. Seated so the defender doctrine's forward face (obj.z 295 + obj.r*0.55 ~ 367) lands the holding line ON the bluff in cover (the Fredericksburg pattern), forcing the Union to assault UP into the bluff and the canister. Models the bottleneck's defensive advantage. (Verified)" }
+          ],
+          "markers": [
+            { "kind": "creek", "name": "Antietam Creek", "path": [[120, 560], [400, 575], [700, 580], [1080, 565]], "note": "The creek that channelized the whole assault — crossable only at the bridge and at fords the Union failed to scout in time. (Verified)" },
+            { "kind": "bridge", "name": "the Lower (Rohrbach) Bridge — 'Burnside's Bridge'", "x": 600, "z": 575, "note": "A three-arched limestone span ~125 ft long and only ~12 ft WIDE (completed 1836) — the twelve-foot bottleneck that let a few hundred defenders stall an entire corps for three hours. (Verified)" },
+            { "kind": "ford", "name": "Snavely's Ford (downstream)", "x": 250, "z": 600, "note": "The downstream ford Rodman's division finally found and crossed ~1 p.m. — the flanking move that, with the bridge, forced Toombs off the bluffs. Burnside's failure to scout the fords sooner was a major Union lapse. (Verified)" },
+            { "kind": "label", "name": "to Sharpsburg & Boteler's Ford (Lee's retreat)", "x": 600, "z": 130, "note": "The town and Lee's single line of retreat across the Potomac, which the 9th NY's advance briefly threatened." },
+            { "kind": "label", "name": "John Otto's cornfield", "x": 600, "z": 360, "note": "Where A.P. Hill's late counterattack struck the exposed Union left and the three-week-old 16th Connecticut broke." }
+          ]
+        },
+        "leaders": {
+          "_note": "fate: at the bridge sector, Rodman (US) was mortally wounded crossing at Snavely's Ford; A.P. Hill's brigadier Branch was killed and Gregg wounded; Toombs survived. A.P. Hill's arrival is reframed: he collapsed an already over-extended, unsupported, low-on-ammunition Union advance — the trigger, not a lone miracle.",
+          "US": [
+            { "id": "ld_burnside", "name": "Maj. Gen. Ambrose E. Burnside", "short": "Burnside", "quality": 0.5, "radius": 230, "x": 600, "z": 830, "fate": 2.4,
+              "note": "IX Corps; funneled his men across the narrow bridge for hours when the creek was fordable elsewhere, then advanced slowly and halted after crossing — the delay let the Confederate right be rescued. He survived. (Verified)",
+              "teach": "Gen. Burnside feeds his corps over the narrow bridge — and the hours lost there will cost the army its chance to cut Lee's retreat." },
+            { "id": "ld_rodman", "name": "Brig. Gen. Isaac P. Rodman", "short": "Rodman", "quality": 0.6, "radius": 195, "attach": "us_rodman", "fate": 0.35,
+              "note": "3rd Div, IX Corps; found and crossed Snavely's Ford downstream to flank the bluffs. Mortally wounded (a ball through the left lung) when A.P. Hill struck the exposed left; died Sept 20, 1862. (Verified)",
+              "teach": "Gen. Rodman is mortally struck as A.P. Hill's men hit the flank — the officer who turned the bluffs falls with them." }
+          ],
+          "CS": [
+            { "id": "ld_toombs", "name": "Brig. Gen. Robert Toombs", "short": "Toombs", "quality": 0.62, "radius": 185, "attach": "cs_toombs", "fate": 2.3,
+              "note": "Held the bluffs above the bridge with ~400-550 Georgians (2nd & 20th Georgia) for more than three hours — a bottleneck defense, not a miracle of valor: only a few thousand attackers could press the twelve-foot span at a time. He survived. (Verified; anti-Lost-Cause framing)",
+              "teach": "Gen. Toombs holds the bluffs with a few hundred Georgians — because a twelve-foot bridge let only a handful of the enemy come on at once." },
+            { "id": "ld_ap_hill", "name": "Maj. Gen. A. P. Hill", "short": "A.P. Hill", "quality": 0.76, "radius": 240, "attach": "cs_ap_hill_branch", "fate": 2.6,
+              "note": "Force-marched his Light Division ~17 miles from Harpers Ferry (in motion 7:30 a.m., on the field ~2:30 p.m.) and struck the exposed Union left ~3:30-4:00 p.m. He did not work a miracle — he collapsed an over-extended, unsupported, low-on-ammunition advance, exploiting McClellan's refusal to reinforce. He survived. (Verified; reframed per Emerging Civil War)",
+              "teach": "Gen. A.P. Hill's division arrives from Harpers Ferry and strikes the flank — the trigger that topples an already-faltering, unsupported Union advance." }
+          ]
+        },
+        "supply": {
+          "US": { "x": 600, "z": 865, "name": "Union train — the eastern bank" },
+          "CS": { "x": 600, "z": 150, "name": "Confederate train — the Sharpsburg road" }
+        },
+        "oob": {
+          "US": [
+            { "id": "us_sturgis", "name": "Sturgis's Division (Ferrero's Brigade)", "commander": "Brig. Gen. Samuel D. Sturgis", "arm": "inf", "weapon": "rifled", "men": 3000, "xp": 2, "x": 600, "z": 800, "facing": 0, "formation": "column", "note": "2nd Div, IX Corps; after Crook's and Nagle's brigades were repulsed, the 51st NY (Potter) and 51st PA (Hartranft) of Ferrero's brigade finally carried the bridge ~1 p.m. (Verified)" },
+            { "id": "us_benjamin", "name": "Benjamin's Battery (IX Corps guns)", "commander": "Capt. Samuel N. Benjamin", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 6, "men": 110, "xp": 3, "x": 600, "z": 830, "facing": 0, "formation": "line", "note": "Heavy 20-pounder Parrott rifles firing from the high east bank to cover the crossing. Universal gun model (D75): 6 heavy guns, ~110 crew; long reach, no close canister spike. (Verified)" }
+          ],
+          "CS": [
+            { "id": "cs_toombs", "name": "Toombs's Brigade (the bridge defense)", "commander": "Brig. Gen. Robert Toombs", "arm": "inf", "weapon": "smooth", "men": 1100, "xp": 3, "x": 600, "z": 360, "facing": 3.14159, "formation": "line", "note": "2nd & 20th Georgia (+ a 50th Georgia detachment), ~400-550 historically, hard on the wooded bluffs above the bridge (z 360, within the bluff cover band at z ~365). Held the bottleneck for over three hours; modeled heavier so the engine's positional cover represents the bottleneck's hours-long delay (a 12-foot span the engine cannot literally funnel). (Verified identity; the bottleneck is the lever)" },
+            { "id": "cs_dr_jones", "name": "D. R. Jones's thin line", "commander": "Brig. Gen. David R. Jones", "arm": "inf", "weapon": "smooth", "men": 2000, "xp": 2, "x": 720, "z": 358, "facing": 3.14159, "formation": "line", "note": "Nearly all Lee had left to hold the Sharpsburg ridge on the right — a thin line stretched to cover the town and the retreat road, until A.P. Hill's Light Division came up. Holds the eastern stretch of the bluff line (z 358, in cover). (Verified identity; Inferred strength)" }
+          ]
+        },
+        "reinforcements": [
+          { "id": "us_rodman", "side": "US", "atSec": 70, "name": "Rodman's Division (Snavely's Ford)", "commander": "Brig. Gen. Isaac P. Rodman", "arm": "inf", "weapon": "rifled", "men": 2400, "xp": 1, "x": 280, "z": 840, "facing": 0, "formation": "column", "entry": "across Snavely's Ford, onto the Confederate flank", "note": "3rd Div, IX Corps; crossed downstream ~1 p.m. to flank the bluffs — incl. the 9th NY (Hawkins' Zouaves, who reached the edge of Sharpsburg and lost 240 of 373) and the three-week-old 16th Connecticut. (Verified)" },
+          { "id": "us_willcox_ix", "side": "US", "atSec": 120, "name": "Willcox's Division (toward Sharpsburg)", "commander": "Brig. Gen. Orlando B. Willcox", "arm": "inf", "weapon": "rifled", "men": 2200, "xp": 1, "x": 660, "z": 850, "facing": 0, "formation": "column", "entry": "the advance on the town", "note": "1st Div, IX Corps; pushed up the slope toward Sharpsburg in the afternoon, nearly reaching Lee's line of retreat before the counterattack struck. (Verified)" },
+          { "id": "cs_ap_hill_branch", "side": "CS", "atSec": 120, "name": "A. P. Hill — Branch's & Gregg's Brigades", "commander": "Brig. Gen. L. O'B. Branch (k)", "arm": "inf", "weapon": "smooth", "men": 2200, "xp": 3, "x": 480, "z": 305, "facing": 3.14159, "formation": "line", "entry": "from Harpers Ferry — onto the Union left flank", "note": "The leading brigades of Hill's Light Division after the ~17-mile march, striking the exposed Union left. Branch shot through the head and killed instantly; Gregg wounded; some men wore Union blue captured at Harpers Ferry, which made the green Connecticut regiments hesitate. (Verified; arrival timing compressed to the phase clock — Hill must matter)" },
+          { "id": "cs_ap_hill_archer", "side": "CS", "atSec": 150, "name": "A. P. Hill — Archer's Brigade & Walker's guns", "commander": "Brig. Gen. James J. Archer", "arm": "inf", "weapon": "smooth", "men": 1500, "xp": 3, "x": 700, "z": 300, "facing": 3.14159, "formation": "line", "entry": "completing Hill's attacking line", "note": "Archer's brigade with Walker's artillery battalion (Pegram, Crenshaw, McIntosh) — the guns opened first, then the infantry rolled up the exposed, unsupported Union left and drove the IX Corps back toward the creek as the light failed. (Verified)" }
+        ],
+        "teaching": {
+          "head": "Contingent, not destiny",
+          "body": "A few hundred Georgians stalled an entire corps for three hours — but the cause was a twelve-foot bottleneck, an unscouted creek, and timid Union command, not innate Confederate prowess: only a few thousand attackers could press the span at a time. A.P. Hill's blow was the trigger that toppled an already over-extended, low-on-ammunition advance — exploiting McClellan's refusal to commit his reserves as much as rescuing Lee. Lee's army survived to recross the Potomac in the night.",
+          "provenance": "Verified (high) — NPS Final Attack Trail; American Battlefield Trust; the Official Records (A.P. Hill's report); Emerging Civil War (the revisionist reading) alongside Sears."
+        }
+      }
+    ],
+    "endNote": {
+      "US": {
+        "US": "History is overturned. You did what McClellan would not — you committed your weight across all three sectors and broke Lee's outnumbered, river-pinned army where the real Army of the Potomac let it survive and escape. In September 1862 this was a near-run, badly managed draw; under your command it became the decisive victory that might have ended the war.",
+        "CS": "History is overturned. The Union broke your thin gray line across the sectors and pinned your army against the Potomac — the destruction Lee's army escaped in 1862, under your defense, it did not."
+      },
+      "CS": {
+        "US": "History holds — the bloodiest day was a tactical draw, and Lee's army slipped away across the Potomac in the night. Like McClellan, you held the field but could not destroy a divided, outnumbered enemy. Yet turning back the invasion was a strategic Union check — and five days later Lincoln issued the preliminary Emancipation Proclamation.",
+        "CS": "History holds. Your thin line held across all three sectors through the bloodiest single day in American history, and your army lived to recross the Potomac in the night. But the invasion was turned back — a strategic Union check — and five days later Lincoln answered Sharpsburg with the preliminary Emancipation Proclamation that doomed Confederate hopes of foreign recognition."
+      },
+      "draw": "A tactical draw, as it was in history — the bloodiest single day in American history, and neither army driven from the field. Lee held on the 18th, then withdrew across the Potomac in the night. Turning back the invasion was a strategic Union check, and five days later it gave Lincoln the moment to issue the preliminary Emancipation Proclamation."
+    },
+    "teaching": {
+      "title": "The Bloodiest Day — and the Turning Point",
+      "cards": [
+        {
+          "id": "an_cost",
+          "head": "The price, not the glory",
+          "body": "About 23,000 men were killed, wounded, or missing on September 17, 1862 — more Americans than fell in the War of 1812, the Mexican-American War, and the Spanish-American War combined, in a single day. Alexander Gardner's photographs of the dead in rows along the Sunken Road and the Hagerstown Pike were the first time Americans saw their own war's corpses. The Cornfield and the Bloody Lane are monuments to slaughter, not to maneuver.",
+          "provenance": "Verified (high) — American Battlefield Trust (12,401 US / 10,316 CS / 22,717 total); NPS."
+        },
+        {
+          "id": "an_wasted",
+          "head": "Overwhelming advantage, wasted",
+          "body": "McClellan had the Lost Order — Lee's entire divided plan of march, found wrapped around three cigars — and nearly two-to-one numbers, with Lee pinned against the Potomac and a single ford. And still he attacked piecemeal, sector by sector, withheld more than 20,000 men in reserve, and let a divided, outnumbered army survive and escape. Advantages mean nothing without the will to use them. Lee survived as much by his opponent's caution as by his own skill — the opposite of 'Southern martial genius.'",
+          "provenance": "Verified (high) — Sears, 'Landscape Turned Red' (the piecemeal-commitment thesis); HistoryNet 'McClellan's Missed Opportunities'. Pair McClellan's belief he was outnumbered with the reality that he was not."
+        },
+        {
+          "id": "an_contingency",
+          "head": "Command failure on both sides, not heroism on one",
+          "body": "Confederate survival traces to terrain and contingency, not innate prowess: an accidental ditch in the center, a twelve-foot bottleneck on the right, an unscouted ford, captured blue uniforms, a misheard order that emptied the lane. And the Confederate defense was itself disjointed — Jones stunned, Starke killed, Lawton wrecked, Hood's division annihilated. There is no 'Jackson the wizard' here and no 'gallant outnumbered few' — only ordinary soldiers, terrible ground, and chance, on both sides.",
+          "provenance": "Verified (high) — NPS; the Official Records; Emerging Civil War. The de-romanticizing standard applies evenly to Rodes's Alabamians and Anderson's Carolinians as to the Irish Brigade."
+        },
+        {
+          "id": "an_emancipation",
+          "head": "Emancipation — the real significance",
+          "body": "Tactically September 17 was a brutal draw; Lee held the 18th, then withdrew. But turning back the first invasion of the North was strategic check enough for Lincoln, who had held the Emancipation Proclamation since July on Seward's advice not to look desperate. Five days later, on September 22, 1862, he issued the preliminary Proclamation. Antietam transformed the war from a struggle to restore the Union into a war against slavery, and made foreign recognition of a slaveholding Confederacy politically impossible. To dwell on Confederate tenacity while skipping this is to miss the entire point of why this day is remembered.",
+          "provenance": "Verified (high) — McPherson, 'Crossroads of Freedom'; American Battlefield Trust. Omitting emancipation from an Antietam treatment is the classic Lost-Cause erasure."
+        }
+      ],
+      "codex": {
+        "id": "codex_antietam",
+        "title": "Antietam / Sharpsburg, September 17, 1862",
+        "summary": "The bloodiest single day in American history — three sequential struggles (the Cornfield, the Sunken Road, Burnside's Bridge) along Antietam Creek. A tactical draw that turned back Lee's first invasion of the North; five days later it gave Lincoln the moment to issue the preliminary Emancipation Proclamation, redirecting the moral purpose of the war.",
+        "axes": { "timeline": "1862", "theater": "Eastern", "people": ["McClellan", "Hooker", "Mansfield", "Sumner", "Richardson", "Burnside", "Rodman", "Lee", "Jackson", "D.H. Hill", "Hood", "A.P. Hill", "Toombs", "S.D. Lee"], "battle": "Antietam" }
+      }
+    }
+  }
+},
 "artillery": {
   "_comment": "S5 Cannon Corps — real Civil War field artillery as a loot-style purchasable tier (common -> legendary), bought BATTERY by BATTERY so building an artillery arm feels like assembling a Borderlands kit: spend funds, raise batteries, lift your army's pre-battle firepower rating. A battery is a big-ticket object next to small arms — a fully-horsed six-gun Union battery was ~150 men, ~14 carriages, and ~110 horses (HISTORICAL-DATA.md L818). Specs are grounded in the period record (Hazlett/Olmstead/Parks firing tables, Hess, Naisawald): bore, effective range, ~2 aimed rounds/min, 9-man detachment. `quality` is a 0-100 designer composite (range + accuracy + versatility) that the battery score reads; `accuracy` and `rangeYds` are the underlying levers. Whitworth is csImport + rare: superb but ammunition-fragile and slow. Build-injected as GAME_DATA.artillery; consumed by src/56-artillery.js (the Cannon Corps tab) and the pre-battle firepower bridge.",
   "provenance": "Verified specs (Hazlett, Olmstead & Parks, Field Artillery Weapons of the Civil War; Earl J. Hess, Civil War Field Artillery: Promise and Performance, 2022; L. VanLoan Naisawald, Grape and Canister; Instruction for Field Artillery 1860/1864 range tables; NPS ordnance references; cross-checked to HISTORICAL-DATA.md artillery tables and HISTORICAL-DATA-ECONOMY.md Tredegar facts). Rarity, costPerBattery, and quality are designer calibration (Inferred), tunable. Corrections applied per verify: 10-pdr Parrott max capped ~2,800 yds (the ~5,000 yd figure belongs to naval/siege Parrotts, not the field piece); Whitworth tube weight ~896 lb (not ~1,092); Whitworth's ~10,000-yd trial range is flavor only, never an in-game range.",
@@ -25568,6 +25888,10 @@ function fldInitSim(opts) {
   var sc = opts.scenario || "sandbox"; __FIELD.scenario = sc;
   __FIELD.reinforce = null; __FIELD.holdToWin = FLD.HOLD_TO_WIN; __FIELD.timeLimit = FLD.TIME_LIMIT; __FIELD.attacker = null;
   __FIELD.scenData = null; __FIELD.defender = null; __FIELD.winBy = null;   // cleared every launch (scenario init re-sets); no stale leak into the sandbox
+  // Phase C (D74): the MULTI-PHASE state (T8). Cleared every launch -> only a data.phases[] scenario sets it (via
+  // _fldScenarioInitPhased), so the single-objective path (sandbox/bullrun/fredericksburg/skirmish) is byte-identical
+  // (the fldCheckVictory intercept, the fldRenderTop label, and the fldOnOver seam are all no-ops when phases is null).
+  __FIELD.phases = null; __FIELD.phaseIdx = 0; __FIELD._scenTop = null;
   // Phase A (campaign link): a campaign-launched battle carries a ctx (the bd + conditioning params);
   // null for every standalone launch -> the fldResetRun conditioning hook + the campaign end screen are
   // no-ops then (byte-behavior-identical sandbox/Bull-Run; probe-field/bullrun hold). Set by T2.
@@ -26254,7 +26578,12 @@ function fldCheckVictory() {
       w = sU > sC * 1.05 ? "US" : (sC > sU * 1.05 ? "CS" : "draw"); by = "timeout";
     }
   }
-  if (w) { __FIELD.winner = w; __FIELD.winBy = by; __FIELD.phase = "over"; fldOnOver(); }
+  if (w) {
+    // Phase C (D74): a MULTI-PHASE scenario records the phase + advances to the next sector instead of ending the
+    // battle (the LAST phase ends it with the aggregate winner). No-op when phases is null -> byte-identical.
+    if (__FIELD.phases && typeof _fldPhaseResolved === "function") { _fldPhaseResolved(w, by); return; }
+    __FIELD.winner = w; __FIELD.winBy = by; __FIELD.phase = "over"; fldOnOver();
+  }
 }
 
 /* headless stepper for probes (no render) */
@@ -26472,7 +26801,10 @@ function fldRenderTop() {
     } else {
       lead = hU > hC + 0.5 ? "Union holds " + Math.floor(hU) + "s/" + __FIELD.holdToWin : (hC > hU + 0.5 ? "Confederate holds " + Math.floor(hC) + "s/" + __FIELD.holdToWin : "contested");
     }
-    o.textContent = "Objective: " + lead;
+    // Phase C (D74): a MULTI-PHASE battle prefixes the running phase/sector tally ("Phase 2/3 · the Sunken Road ·
+    // sectors US 1 – CS 1"). "" for a single-objective battle -> byte-identical text.
+    var _pl = (__FIELD.phases && typeof _fldPhaseTopLabel === "function") ? _fldPhaseTopLabel() : "";
+    o.textContent = (_pl ? _pl + " · " : "") + "Objective: " + lead;
   }
   var p = document.getElementById("fldPhase");
   if (p) p.textContent = __FIELD.phase === "deploy" ? "Press Begin (Space) to advance" : (__FIELD.paused ? ("⏸ " + (__FIELD._apReason ? __FIELD._apReason + " — Space to resume" : "PAUSED")) : (__FIELD.speed + "×"));
@@ -26649,6 +26981,9 @@ function fldOnOver() {
   e.setAttribute("role", "dialog"); e.setAttribute("aria-modal", "true"); e.setAttribute("aria-label", msg); /* wcag-auditor: added aria-modal=true so AT users know focus is constrained (WCAG 4.1.2) */
   // P1a seam: a scenario can append its teaching payoff (what really happened / your war vs history).
   var scNote = (typeof fldScenarioEndHtml === "function") ? (fldScenarioEndHtml(w) || "") : "";
+  // Phase C (D74): a MULTI-PHASE battle prepends its phase-by-phase result table + the aggregate verdict (alongside
+  // the data-driven endNote that fldScenarioEndHtml renders from the top-level scenario). No-op when phases is null.
+  if (__FIELD.phases && typeof _fldPhasesEndHtml === "function") { try { scNote = (_fldPhasesEndHtml() || "") + scNote; } catch (eP) {} }
   // Phase A seam: a campaign battle appends its strategic-consequence note (no-op standalone).
   if (__FIELD.campaignCtx && typeof fldCampaignEndHtml === "function") { try { scNote += (fldCampaignEndHtml(w) || ""); } catch (eC) {} }
   // B-2 seam: the officer teaching payoff (who fell, why command-from-the-saddle mattered). No-op when off / none lost.
@@ -27095,6 +27430,7 @@ function fldScenarioRegistry() {
     if (typeof GAME_DATA !== "undefined") {
       if (GAME_DATA.bullrun && GAME_DATA.bullrun.bullrun1) R.bullrun1 = GAME_DATA.bullrun.bullrun1;
       if (GAME_DATA.fredericksburg && GAME_DATA.fredericksburg.fredericksburg) R.fredericksburg = GAME_DATA.fredericksburg.fredericksburg;
+      if (GAME_DATA.antietam && GAME_DATA.antietam.antietam) R.antietam = GAME_DATA.antietam.antietam;   // Phase C-2: the first MULTI-PHASE epic (data.phases[] -> the T8 engine)
     }
   } catch (e) {}
   return R;
@@ -27130,6 +27466,9 @@ function fldScenarioInit(opts) {
   // Bull Run resolves the identical data object it always did (fldScenarioData("bullrun1")) -> byte-identical.
   if (!opts || !opts.scenario || opts.scenario === "sandbox") return false;
   var data = fldScenarioData(opts.scenario);
+  // Phase C (D74): a MULTI-PHASE scenario (data.phases[]) is built by the gated T8 engine — its OOB/terrain/objective
+  // live PER PHASE, so it bypasses the single-objective build + guard below. Default (no data.phases) -> unchanged.
+  if (data && data.phases && data.phases.length && typeof _fldScenarioInitPhased === "function") return _fldScenarioInitPhased(opts, data);
   if (!data || !data.oob || !data.terrain || !data.objective) return false;   // data missing/malformed -> fall back to the sandbox
   __FIELD.scenData = data;
   __FIELD.autoBoth = !!opts.autoBoth;
@@ -29731,6 +30070,241 @@ function _fldBrSideCard(side, title, badge, deck, attacking) {
     + '<div style="font-size:17px;font-weight:bold;margin:3px 0 5px;color:#e9dcc0">' + title + '</div>'
     + '<div style="font-size:12.5px;opacity:.85">' + deck + '</div></button>';
 }
+
+
+/* ===== module: tactical/T8-phases.js ===== */
+/* ============================================================================
+   src/tactical/T8-phases.js  —  TACTICAL ENGINE · PHASE C (MULTI-PHASE BATTLES)
+
+   The NEW gated engine capability for the MULTI-PHASE epics (DECISIONS D74 #2):
+   a single scenario runs as SEQUENTIAL phases, each a sub-battle on a fresh sector
+   with its own objective / OOB / terrain / commanders / doctrine / reinforcements.
+   When a phase is DECIDED (its objective resolves — hold / timeout / destroy), the
+   next phase opens on a fresh sector; the running CASUALTY tally + the per-phase
+   results carry forward; the overall battle is scored across phases. Built for
+   Antietam (the Cornfield -> the Sunken Road "Bloody Lane" -> Burnside's Bridge).
+
+   ARCHITECTURE (the design, .tmp/B-antietam-multiphase-design.md):
+   - DISCRETE SEQUENTIAL SUB-BATTLES (not one cluttered field): each phase has its own
+     sector/OOB/objective fought to decision; an inter-phase transition card; the next
+     phase loads fresh. Cleaner teaching (each phase = a distinct lesson) + the perf floor.
+   - CARRY-OVER = the running casualty tally + the per-phase score/results. Antietam's
+     phases are DIFFERENT troops in DIFFERENT places, so each spawns fresh; the cumulative
+     casualties + the score carry (D74 "carrying forward survivors/casualty + running result").
+   - SCORING = a weighted aggregate with a real DRAW band, so Antietam's historical TACTICAL
+     DRAW / marginal-Union-strategic-check EMERGES (win the Cornfield, lose the Bridge).
+   - PER-PHASE scenData VIEW: a phase's leaders/supply/objective are spliced onto a copy of
+     the top-level scenario, so the officers (T3) + logistics (T4) layers build the phase's
+     cast/trains with ZERO change to those modules (they read __FIELD.scenData.leaders/.supply).
+
+   GATING / BYTE-IDENTITY: ALL of this is reached only when __FIELD.phases is set (a scenario
+   declaring a data.phases[] block). fldInitSim clears __FIELD.phases = null every launch, and
+   fldScenarioInit only routes here when data.phases exists -> the single-objective path
+   (Bull Run / Fredericksburg / the sandbox / skirmishes) is byte-identical (no phases -> the
+   fldCheckVictory intercept, the HUD label, and the end-screen seam are all no-ops). The
+   headless stepper (fldStepN) auto-advances phases (no UI) so probes run a full multi-phase
+   battle deterministically; in real play the inter-phase card gates the advance.
+
+   Bare-name globals (G, __FIELD, FLD, document, the fld* helpers from T0/T1/T3). All helpers
+   uniquely prefixed + defined once. No literal comment-closer inside this block.
+   ============================================================================ */
+
+/* the T1 fldScenarioInit route (called when data.phases exists). Builds phase 0 + the running
+   tally; returns true (fldScenarioInit early-returns on a populated scenario). */
+function _fldScenarioInitPhased(opts, data) {
+  __FIELD._scenTop = data;                 // the WHOLE scenario (UI: name/date/blurb/teaching/endNote/sides/brief)
+  __FIELD.autoBoth = !!opts.autoBoth;
+  __FIELD.phases = data.phases;
+  __FIELD.phaseIdx = 0;
+  __FIELD.phaseScore = { US: 0, CS: 0 };   // weighted per-phase points
+  __FIELD.phaseLog = [];                   // [{idx,name,winner,winBy,usCas,csCas}]
+  __FIELD.battleCas = { US: 0, CS: 0 };    // cumulative casualties across phases
+  // top-level fog default (like the single-objective path) — only fills an UNSET fog
+  if (!__FIELD._fogSpecified && data.defaultFog) __FIELD.fog = true;
+  _fldBuildPhase(0);                       // sets terrain/objective/oob/reinforce/doctrine + fldResetRun
+  return true;
+}
+
+/* a per-phase scenData VIEW: the top-level scenario with the phase's leaders/supply/objective
+   spliced in, so the officers/logistics layers (which read __FIELD.scenData.leaders/.supply) build
+   the phase's cast/trains, while the UI keeps the top-level name/date/blurb/teaching/endNote. */
+function _fldPhaseView(top, p) {
+  var v = {}, k;
+  for (k in top) if (Object.prototype.hasOwnProperty.call(top, k)) v[k] = top[k];
+  if (p.leaders) v.leaders = p.leaders;
+  if (p.supply) v.supply = p.supply;
+  if (p.objective) v.objective = p.objective;
+  v._phase = p;                            // a back-reference (the inter-phase card / HUD read it)
+  return v;
+}
+
+/* build phase i: terrain/objective/win-thresholds/attacker/defender/doctrine + the OOB + the
+   reinforcement schedule, then fldResetRun (which rebuilds officers + trains from the phase view). */
+function _fldBuildPhase(i) {
+  var top = __FIELD._scenTop, p = top.phases[i]; if (!p) return;
+  __FIELD.scenData = _fldPhaseView(top, p);
+  __FIELD.terrain = p.terrain || top.terrain || {};
+  __FIELD.objective = { x: p.objective.x, z: p.objective.z, r: p.objective.r, name: p.objective.name };
+  __FIELD.holdToWin = p.holdToWinSec || top.holdToWinSec || FLD.HOLD_TO_WIN;
+  __FIELD.timeLimit = p.timeLimitSec || top.timeLimitSec || FLD.TIME_LIMIT;
+  __FIELD.attacker = p.attacker || top.attacker || "US";
+  __FIELD.defender = p.defender || top.defender || "CS";
+  __FIELD._atkCautious = (p.assaultDoctrine === "cautious");
+  if (typeof p.defaultFog === "boolean" && !__FIELD._fogSpecified) __FIELD.fog = p.defaultFog;   // a phase may set its own fog (else inherit)
+  var units = [], us = (p.oob && p.oob.US) || [], cs = (p.oob && p.oob.CS) || [], k;
+  for (k = 0; k < us.length; k++) units.push(fldMakeUnit(fldBrSpec(us[k], "US", __FIELD.autoBoth)));
+  for (k = 0; k < cs.length; k++) units.push(fldMakeUnit(fldBrSpec(cs[k], "CS", __FIELD.autoBoth)));
+  __FIELD.units = units;
+  var sched = [], rs = p.reinforcements || [];
+  for (k = 0; k < rs.length; k++) sched.push({ atSec: rs[k].atSec, spec: fldBrSpec(rs[k], rs[k].side, __FIELD.autoBoth), done: false });
+  sched.sort(function (a, b) { return a.atSec - b.atSec; });
+  __FIELD.reinforce = sched;
+  fldResetRun();   // resets t/holdSecs/winner/phase=deploy + rebuilds officers (phase cast) + trains (phase supply)
+}
+
+/* the per-side casualties of the CURRENT phase (committed force = the units that spawned this
+   phase; their maxMen minus the survivors' men). Pending (un-arrived) reinforcements aren't counted. */
+function _fldSidePhaseCas(side) {
+  var fielded = 0, surv = 0, i, U = __FIELD.units;
+  for (i = 0; i < U.length; i++) { var u = U[i]; if (u.side !== side) continue; fielded += (u.maxMen || 0); if (u.alive) surv += u.men; }
+  return Math.max(0, Math.round(fielded - surv));
+}
+
+/* the aggregate battle winner from the weighted phase score, with a DRAW band (a tight split is
+   the historical tactical draw). Called when the LAST phase resolves. */
+function _fldBattleWinner() {
+  var us = __FIELD.phaseScore.US, cs = __FIELD.phaseScore.CS, diff = us - cs;
+  if (Math.abs(diff) < 0.5) return "draw";
+  return diff > 0 ? "US" : "CS";
+}
+
+/* the fldCheckVictory intercept (T0 seam): a phase has resolved (winner w, by `by`). Record it +
+   the casualties; if it was the LAST phase, end the battle with the aggregate winner; else advance
+   (headless -> immediately; UI -> the inter-phase card gates it). */
+function _fldPhaseResolved(w, by) {
+  var top = __FIELD._scenTop, idx = __FIELD.phaseIdx, p = top.phases[idx];
+  var usCas = _fldSidePhaseCas("US"), csCas = _fldSidePhaseCas("CS");
+  __FIELD.battleCas.US += usCas; __FIELD.battleCas.CS += csCas;
+  var pts = (typeof p.scoreWeight === "number") ? p.scoreWeight : 1;
+  if (w === "draw") { __FIELD.phaseScore.US += pts / 2; __FIELD.phaseScore.CS += pts / 2; }
+  else if (w === "US" || w === "CS") __FIELD.phaseScore[w] += pts;
+  __FIELD.phaseLog.push({ idx: idx, name: p.name, winner: w, winBy: by, usCas: usCas, csCas: csCas });
+  if (idx >= top.phases.length - 1) {
+    __FIELD.winner = _fldBattleWinner(); __FIELD.winBy = "phases"; __FIELD.phase = "over";
+    fldOnOver();
+    return;
+  }
+  __FIELD.phaseIdx = idx + 1;
+  if (_fldPhasesHasUI()) { __FIELD.phase = "interphase"; __FIELD.paused = true; _fldInterphaseCard(idx, w, by); }
+  else { _fldAdvancePhase(); }   // headless: build the next phase + resume the stepper
+}
+
+/* build the next phase (phaseIdx already advanced) + resume. Headless -> phase "battle" so fldStepN
+   keeps stepping; UI -> phase "battle" but PAUSED so the player surveys the fresh sector then unpauses. */
+function _fldAdvancePhase() {
+  _fldBuildPhase(__FIELD.phaseIdx);   // fldResetRun set phase=deploy, paused=true
+  __FIELD.phase = "battle";
+  __FIELD.paused = _fldPhasesHasUI();   // headless false (run on), UI true (survey then play)
+  if (_fldPhasesHasUI() && __FIELD.fog && __FIELD.units && __FIELD.units.length && typeof fldComputeVisibility === "function") fldComputeVisibility();
+}
+
+function _fldPhasesHasUI() {
+  return !!(typeof document !== "undefined" && document.getElementById && document.getElementById("fldRoot"));
+}
+
+/* the running-tally TOP-BAR label (T0 fldRenderTop seam). "" for a single-objective battle. */
+function _fldPhaseTopLabel() {
+  if (!__FIELD.phases) return "";
+  var n = __FIELD.phases.length, i = __FIELD.phaseIdx + 1, nm = (__FIELD.scenData && __FIELD.scenData._phase) ? __FIELD.scenData._phase.name : "";
+  var sc = __FIELD.phaseScore || { US: 0, CS: 0 };
+  function fmt(v) { return (v === Math.floor(v)) ? String(v) : v.toFixed(1); }
+  return "Phase " + i + "/" + n + (nm ? " · " + nm : "") + " · sectors US " + fmt(sc.US) + " – CS " + fmt(sc.CS);
+}
+
+/* the INTER-PHASE transition card (UI only). A period-broadsheet modal: the just-resolved phase
+   result + the running tally + the NEXT phase's name/sector/lead + its teaching card. role=dialog,
+   aria-modal, focus-trapped, Enter/Esc continues, reduceMotion-static. Continue -> _fldAdvancePhase. */
+function _fldInterphaseCard(prevIdx, w, by) {
+  var root = document.getElementById("fldRoot"); if (!root) { _fldAdvancePhase(); return; }
+  if (document.getElementById("fldInterphase")) return;
+  var top = __FIELD._scenTop, prev = top.phases[prevIdx], next = top.phases[__FIELD.phaseIdx];
+  var _logEntry = __FIELD.phaseLog[prevIdx] || { usCas: 0, csCas: 0 };
+  var ps = (typeof fldPlayerSide === "function") ? fldPlayerSide() : "US";
+  var prevAtk = prev.attacker || top.attacker || "US", prevDef = (prevAtk === "US") ? "CS" : "US";
+  // who held the sector — phrased by sector control, not just side
+  var held = (w === "draw") ? "The sector was left in bloody deadlock"
+    : (w === prevDef ? (_fldSideFull(prevDef) + " held " + prev.objective.name)
+      : (_fldSideFull(prevAtk) + " carried " + prev.objective.name));
+  var sc = __FIELD.phaseScore, cas = __FIELD.battleCas;
+  var tcard = (next.teaching && next.teaching.head) ? next.teaching : ((next.teaching && next.teaching.card) ? next.teaching.card : null);
+  var trans = next.transition || {};
+  var rm = (typeof fldReduceMotion === "function") && fldReduceMotion();
+  var ov = document.createElement("div");
+  ov.id = "fldInterphase";
+  ov.setAttribute("role", "dialog"); ov.setAttribute("aria-modal", "true");
+  ov.setAttribute("aria-label", "Phase complete: " + prev.name + ". Next: " + next.name);
+  ov.style.cssText = "position:absolute;inset:0;z-index:6200;display:flex;align-items:center;justify-content:center;background:#070a0ed8;" + (rm ? "" : "animation:fldFadeIn .35s ease;");
+  ov.innerHTML =
+    '<div style="max-width:560px;max-height:88vh;overflow:auto;background:#0c0f14;border:1px solid #8a6f49;border-radius:8px;padding:22px 26px;box-shadow:0 6px 30px #000b;">' +
+      '<div style="font-size:11px;letter-spacing:3px;opacity:.65;text-transform:uppercase;">Phase ' + (prevIdx + 1) + ' of ' + top.phases.length + ' complete</div>' +
+      '<div style="font-size:21px;color:#e9dcc0;margin:3px 0 4px;">' + _fldEscPh(prev.name) + '</div>' +
+      '<div style="font-size:13.5px;line-height:1.5;color:#d8c87a;margin-bottom:10px;">' + held + '. <span style="opacity:.8;color:#cdbb88;">' + _fldSideFull("US") + ' ' + _fldComma(_logEntry.usCas) + ' &middot; ' + _fldSideFull("CS") + ' ' + _fldComma(_logEntry.csCas) + ' fell here.</span></div>' +
+      '<div style="display:flex;gap:10px;justify-content:center;margin:12px 0;padding:9px 0;border-top:1px solid #4a3c28;border-bottom:1px solid #4a3c28;">' +
+        '<div style="text-align:center;"><div style="font-size:11px;opacity:.6;letter-spacing:1px;">SECTORS</div><div style="font-size:17px;color:#9fb6d8;">Union ' + _fldScFmt(sc.US) + '</div></div>' +
+        '<div style="align-self:center;color:#8c8478;">vs</div>' + /* wcag-auditor: contrast fix from inherited-color@.5 (eff #7b766a, ratio 4.24) to #8c8478 (ratio 5.20) for AA compliance */
+        '<div style="text-align:center;"><div style="font-size:11px;opacity:.6;letter-spacing:1px;">SECTORS</div><div style="font-size:17px;color:#d8a79f;">Confederate ' + _fldScFmt(sc.CS) + '</div></div>' +
+      '</div>' +
+      '<div style="font-size:11px;opacity:.6;text-align:center;margin-bottom:14px;">Cumulative cost — Union ' + _fldComma(cas.US) + ' &middot; Confederate ' + _fldComma(cas.CS) + '</div>' +
+      '<div style="font-size:11px;letter-spacing:2px;opacity:.65;text-transform:uppercase;">Next &mdash; Phase ' + (__FIELD.phaseIdx + 1) + '</div>' +
+      '<div style="font-size:19px;color:#e9dcc0;margin:2px 0 4px;">' + _fldEscPh(next.name) + '</div>' +
+      (trans.lead ? '<div style="font-size:13.5px;opacity:.9;line-height:1.5;margin-bottom:8px;">' + trans.lead + '</div>' : '') +
+      (tcard ? '<div style="margin-top:8px;padding:9px 11px;background:#15110b;border:1px solid #715e3e;border-radius:5px;"><b style="color:#d8c87a;">' + _fldEscPh(tcard.head || "") + '</b><div style="font-size:12.5px;opacity:.85;line-height:1.45;margin-top:2px;">' + (tcard.body || "") + '</div></div>' : '') +
+      '<div style="text-align:center;margin-top:18px;"><button id="fldPhaseGo" type="button" style="background:#1c1610;color:#e9dcc0;border:1px solid #8a6f49;border-radius:4px;padding:10px 22px;font:15px Georgia,serif;cursor:pointer;outline:2px solid transparent;outline-offset:2px;" onfocus="this.style.outline=\'2px solid #d8c87a\'" onblur="this.style.outline=\'2px solid transparent\'">Take the field &#9654;</button></div>' + /* wcag-auditor: focus indicator added (#d8c87a outline, ratio 10.64 on btn bg; 11.39 on modal bg) — #fldInterphase not covered by T0 global :focus-visible rule (WCAG 2.4.7/2.4.11) */
+    '</div>';
+  root.appendChild(ov);
+  if (typeof fldAnnounce === "function") fldAnnounce("Phase complete: " + held + ". Next: " + next.name + ". " + (trans.lead ? String(trans.lead).replace(/<[^>]+>/g, "") : ""));
+  var go = document.getElementById("fldPhaseGo");
+  var cont = function () { if (ov.parentNode) ov.parentNode.removeChild(ov); _fldAdvancePhase(); try { var rr = document.getElementById("fldRoot"); if (rr) rr.focus(); } catch (e) {} };
+  ov.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" || e.key === "Enter") { e.stopPropagation(); e.preventDefault(); cont(); }
+    else if (e.key === "Tab") { e.preventDefault(); if (go) go.focus(); }   // single-button focus trap
+  });
+  if (go) { go.addEventListener("click", cont); try { go.focus(); } catch (e) {} }
+}
+
+/* the aggregate END-SCREEN box (T0 fldOnOver seam): the phase-by-phase result table + the overall
+   cost + the tactical/strategic framing. "" for a single-objective battle. Appended ALONGSIDE the
+   data-driven fldScenarioEndHtml (which renders the top-level endNote + the overall teaching cards). */
+function _fldPhasesEndHtml() {
+  if (!__FIELD.phases || !__FIELD.phaseLog) return "";
+  var top = __FIELD._scenTop, rows = "";
+  for (var i = 0; i < __FIELD.phaseLog.length; i++) {
+    var e = __FIELD.phaseLog[i], p = top.phases[e.idx], atk = p.attacker || top.attacker || "US", def = (atk === "US") ? "CS" : "US";
+    var outcome = (e.winner === "draw") ? "deadlock"
+      : (e.winner === def ? (_fldSideFull(def) + " held") : (_fldSideFull(atk) + " broke through"));
+    var col = e.winner === "US" ? "#9fb6d8" : (e.winner === "CS" ? "#d8a79f" : "#cdbb88");
+    /* wcag-auditor: casCol replaces opacity:.6 on inherited col — effective ratios on #15110b were 3.97/#9fb6d8, 3.91/#d8a79f, 4.24/#cdbb88 (all FAIL 4.5:1); explicit muted hue-matched colors pass at 4.75/4.78/4.81 respectively */
+    var casCol = e.winner === "US" ? "#738196" : (e.winner === "CS" ? "#9c7871" : "#8d805c");
+    rows += '<div style="display:flex;justify-content:space-between;gap:10px;padding:4px 0;border-top:1px solid #4a3c28;font-size:12.5px;">' +
+      '<span style="opacity:.9;">' + (e.idx + 1) + '. ' + _fldEscPh(p.name) + '</span>' +
+      '<span style="color:' + col + ';white-space:nowrap;">' + outcome + ' <span style="color:' + casCol + ';">(' + _fldComma(e.usCas + e.csCas) + ' fell)</span></span></div>';
+  }
+  var sc = __FIELD.phaseScore, cas = __FIELD.battleCas;
+  var verdict = (__FIELD.winner === "draw")
+    ? "A tactical draw — the bloodiest single day, and neither army was driven from the field."
+    : (__FIELD.winner === "US" ? "A Union tactical edge across the sectors." : "A Confederate tactical edge across the sectors.");
+  return '<div style="text-align:left;background:#15110b;border:1px solid #715e3e;border-radius:6px;padding:12px 14px;margin-bottom:16px;">' +
+    '<div style="color:#d8c87a;font-weight:bold;margin-bottom:4px;">The day, phase by phase</div>' +
+    rows +
+    '<div style="margin-top:8px;padding-top:7px;border-top:1px solid #6f5f3f;font-size:12.5px;opacity:.9;">' + verdict +
+    ' <span style="opacity:.75;">Sectors: Union ' + _fldScFmt(sc.US) + ' &middot; Confederate ' + _fldScFmt(sc.CS) + '. Cost: Union ' + _fldComma(cas.US) + ' &middot; Confederate ' + _fldComma(cas.CS) + '.</span></div></div>';
+}
+
+/* small shared helpers (uniquely prefixed). */
+function _fldSideFull(side) { return side === "CS" ? "Confederate" : "Union"; }
+function _fldScFmt(v) { v = v || 0; return (v === Math.floor(v)) ? String(v) : v.toFixed(1); }
+function _fldComma(n) { n = Math.round(n || 0); return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+function _fldEscPh(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 
 
 /* ===== module: 90-president-register.js ===== */
