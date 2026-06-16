@@ -35,17 +35,21 @@ function fldBrData() {
   try { if (typeof GAME_DATA !== "undefined" && GAME_DATA.bullrun && GAME_DATA.bullrun.bullrun1) return GAME_DATA.bullrun.bullrun1; } catch (e) {}
   return null;
 }
-/* ---- a data OOB/reinforcement entry -> an fldMakeUnit spec (player = US; CS is AI).
-   The on-field OOB carries its side via the data KEY (oob.US / oob.CS), not a per-entry
-   field, so the side is passed in; reinforcement entries carry their own d.side. ---- */
+/* ---- a data OOB/reinforcement entry -> an fldMakeUnit spec. The on-field OOB carries its side via
+   the data KEY (oob.US / oob.CS), not a per-entry field, so the side is passed in; reinforcement entries
+   carry their own d.side. B-6 (command either side): the PLAYER's side (__FIELD.playerSide, resolved in
+   fldInitSim BEFORE this runs) is the non-AI side; the other side is AI. With the default US player this is
+   byte-identical to the old "(s === 'CS') ? true : !!autoBoth" — US -> !!autoBoth, CS -> true. ---- */
 function fldBrSpec(d, side, autoBoth) {
-  var s = d.side || side;
+  // B-6: the PLAYER's side is the non-AI side. Resolve via fldPlayerSide() (which honours a CS campaign live +
+  // the explicit per-launch side) so a CS player commands the CS OOB; default "US" -> byte-identical AI flags.
+  var s = d.side || side, ps = (typeof fldPlayerSide === "function") ? fldPlayerSide() : ((__FIELD.playerSide === "CS") ? "CS" : "US");
   return {
     id: d.id, side: s, name: d.name, arm: d.arm, weapon: d.weapon,
     commander: d.commander || null,   // B-2: the named brigade leader (HUD label; the leaders layer reads scenData.leaders)
     men: d.men, xp: d.xp || 1, x: d.x, z: d.z, facing: d.facing,
     formation: d.formation || "line", entry: d.entry || "",
-    ai: (s === "CS") ? true : !!autoBoth,
+    ai: (s === ps) ? !!autoBoth : true,
   };
 }
 
@@ -96,9 +100,10 @@ function fldScenarioTick(dt) {
     var e = r[i];
     if (!e.done && __FIELD.t >= e.atSec) { e.done = true; arrivals.push(fldReinforceSpawn(e.spec)); }
   }
-  // batch the aria-live announcement: a single #fldLive update conveys EVERY arrival in this tick
-  // (overwriting per-unit would let a screen reader hear only the last of a clustered arrival).
-  if (arrivals.length) fldAnnounce(arrivals.join("  "));
+  // batch the aria-live announcement: a single #fldLive update conveys EVERY revealed arrival this tick
+  // (overwriting per-unit would let a screen reader hear only the last of a clustered arrival). B-6: hidden
+  // enemy arrivals return "" from fldReinforceSpawn (the fog-leak guard) -> filter them out of the batch.
+  var _spoken = arrivals.filter(Boolean); if (_spoken.length) fldAnnounce(_spoken.join("  "));
 }
 function fldReinforceSpawn(spec) {
   var u = fldMakeUnit(spec);
@@ -107,16 +112,26 @@ function fldReinforceSpawn(spec) {
   // for a standalone scenario (campaignCtx null) or an enemy unit (the conditioner is player-side-gated).
   if (__FIELD.campaignCtx && typeof fldCampaignConditionUnit === "function") { try { fldCampaignConditionUnit(u); } catch (e) {} }
   // a PLAYER-side (non-AI) reinforcement marches onto the field toward the objective on arrival — so it
-  // joins the battle instead of idling in the rear (the player controls only the US; the AI commands the
-  // CS + any autoBoth side). The player can redirect it once it is up. AI units are driven by fldAiUnit.
+  // joins the battle instead of idling in the rear (B-6: the player controls his OWN side per __FIELD.playerSide
+  // — US by default, CS when the Confederate command is taken; the AI commands the other side + any autoBoth
+  // side; the gate is the side-agnostic !u.ai). The player can redirect it once it is up. AI units run fldAiUnit.
   if (!u.ai && __FIELD.objective) {
     var ob = __FIELD.objective, f = Math.atan2(ob.x - u.x, -(ob.z - u.z));
     u.formation = "column";
     u.order = { type: "move", tx: ob.x + (u.x - ob.x) * 0.32, tz: ob.z + (u.z - ob.z) * 0.32, tface: f };
   }
   __FIELD.units.push(u);
-  var line = u.name + " arrives" + (spec.entry ? " — " + spec.entry : "") + "!";
-  fldScenarioBanner(line, u.side);   // a visual banner per unit (they stack vertically)
+  // B-6 fog-leak guard (invariant #2 — no enemy-info leak): cue an arrival (banner + the batched aria-live
+  // announce) ONLY when the player can see it — his own side, or fog off, or the brigade is already scouted.
+  // A hidden ENEMY detrainment under fog stays silent (you learn of it when you scout it). Fog OFF reveals every
+  // arrival -> byte-identical to the pre-B-6 behaviour. fldVisible is a pure read (no sim mutation).
+  var _ps = (typeof fldPlayerSide === "function") ? fldPlayerSide() : "US";
+  var revealed = (u.side === _ps) || !__FIELD.fog || (typeof fldVisible === "function" && fldVisible(_ps, u));
+  var line = "";
+  if (revealed) {
+    line = u.name + " arrives" + (spec.entry ? " — " + spec.entry : "") + "!";
+    fldScenarioBanner(line, u.side);   // a visual banner per unit (they stack vertically)
+  }
   // rebuild the 3D meshes so the fresh brigade appears (cheap: < 20 units; the next render syncs all).
   // B-4 (bug-hunt HIGH): also rebuild the ARM meshes — Griffin/Ricketts (art) and Stuart (cav) all DETRAIN as
   // reinforcements, so the once-at-init fld3dBuildArms found no art/cav and built nothing; without this rebuild
@@ -139,15 +154,20 @@ function fldInjectScenarioButtons(afterBtn) {
     if (!fldBrData()) return;
     var b = document.createElement("button");
     b.className = "gn-btn"; b.id = "fldBullRunBtn";
-    b.setAttribute("aria-label", "First Bull Run, 1861 — the real-time historical battle. Turn the Confederate left and seize Henry House Hill before the Confederate reinforcements arrive by rail.");
+    b.setAttribute("aria-label", "First Bull Run, 1861 — the real-time historical battle. Command either army: lead the Union assault to seize Henry House Hill, or hold the hill for the Confederacy against the attack.");
     b.innerHTML = '<span class="gn-hl">&#9876; BATTLE &mdash; FIRST BULL RUN (1861)</span>' +
-      '<span class="gn-deck">The real First Manassas, brigade scale: turn the Confederate left, take Henry House Hill &mdash; and beat the trains bringing Jackson, Early, and Elzey to the field.</span>';
-    b.addEventListener("click", function () { fldLaunchBattle("bullrun1"); });
+      '<span class="gn-deck">The real First Manassas, brigade scale &mdash; command either side: storm Henry House Hill as the Union, or hold it for the Confederacy as the trains bring Jackson, Early, and Elzey to the field.</span>';
+    // B-6: the menu button opens the side-choice card first (command the Union assault OR the Confederate defense),
+    // then launches with the chosen side. The side must be picked BEFORE launch (it sets the units' AI flags).
+    b.addEventListener("click", function () {
+      if (typeof fldBullRunSideChoice === "function") fldBullRunSideChoice(function (side) { fldLaunchBattle("bullrun1", side); });
+      else fldLaunchBattle("bullrun1", "US");
+    });
     if (afterBtn.nextSibling) afterBtn.parentNode.insertBefore(b, afterBtn.nextSibling); else afterBtn.parentNode.appendChild(b);
   } catch (e) {}
 }
-function fldLaunchBattle(scn) {
-  fldLaunchSandbox({ scenario: scn, renderer: "3d" });
+function fldLaunchBattle(scn, side) {
+  fldLaunchSandbox({ scenario: scn, renderer: "3d", playerSide: (side === "CS") ? "CS" : "US" });
   if (scn === "bullrun1") { try { fldBullRunBriefing(); } catch (e) {} }
 }
 function fldBullRunBriefing() {
@@ -165,7 +185,11 @@ function fldBullRunBriefing() {
       '<div style="font-size:12px;letter-spacing:2px;opacity:.7;">' + sd.date + ' &middot; ' + sd.place + '</div>' +
       '<div style="font-size:24px;color:#e9dcc0;margin:2px 0 8px;">' + sd.name + '</div>' +
       '<div style="opacity:.9;font-size:14px;line-height:1.5;">' + sd.blurb + '</div>' +
-      '<div style="margin-top:12px;padding:9px 11px;background:#15110b;border:1px solid #715e3e;border-radius:5px;font-size:13px;line-height:1.5;"><b>Your objective:</b> seize and hold <b>' + sd.objective.name + '</b> for ' + __FIELD.holdToWin + 's — or break the enemy. The Confederate reserves arrive on the rail timeline, so win the morning before the trains run out. <b>This is your war:</b> a Union victory here rewrites 1861.</div>' /* wcag-auditor: contrast fix #3a3020->#715e3e border on #15110b (was 1.45:1, now 3.02:1) WCAG 1.4.11 */ +
+      // B-6: the objective copy follows the side you took (attack & seize vs hold & deny). fldBriefObjectiveHtml
+      // falls back to the historical US-attacker text for a US player -> the standalone Bull Run reads as before.
+      (typeof fldBriefObjectiveHtml === "function"
+        ? fldBriefObjectiveHtml(fldPlayerSide(), sd, __FIELD.holdToWin)
+        : '<div style="margin-top:12px;padding:9px 11px;background:#15110b;border:1px solid #715e3e;border-radius:5px;font-size:13px;line-height:1.5;"><b>Your objective:</b> seize and hold <b>' + sd.objective.name + '</b> for ' + __FIELD.holdToWin + 's — or break the enemy. The Confederate reserves arrive on the rail timeline, so win the morning before the trains run out. <b>This is your war:</b> a Union victory here rewrites 1861.</div>') /* wcag-auditor: contrast fix #3a3020->#715e3e border on #15110b (was 1.45:1, now 3.02:1) WCAG 1.4.11 */ +
       teach +
       '<div style="opacity:.6;font-size:11px;margin-top:12px;line-height:1.4;">' + sd.provenance + '</div>' +
       '<div style="text-align:center;margin-top:16px;"><button id="fldBriefGo" style="background:#1c1610;color:#e9dcc0;border:1px solid #736241;border-radius:4px;padding:9px 18px;font:14px Georgia,serif;cursor:pointer;">Take command &#9654;</button></div>' /* wcag-auditor: contrast fix #6a5a3c->#736241 border on #1c1610/#0c0f14 (was 2.68:1, now 3.03/3.25:1) WCAG 1.4.11 */ +
@@ -199,11 +223,17 @@ function fldScenarioBanner(text, side) {
 /* the end-screen teaching payoff: "your war vs history" + the cards with provenance */
 function fldScenarioEndHtml(winner) {
   var sd = __FIELD.scenData; if (!sd || __FIELD.scenario !== "bullrun1") return "";
-  var hist = winner === "US"
+  // B-6: the "your war vs history" pronoun follows the side you commanded. A US player reads the original
+  // strings verbatim; a CS player (who DEFENDED the hill) gets the mirror-image framing.
+  var ps = (typeof fldPlayerSide === "function") ? fldPlayerSide() : "US";
+  var hist;
+  if (winner === "US") hist = (ps === "US")
     ? "History diverges. You took Henry House Hill — the ground that historically broke the Union assault. In 1861 McDowell's army lost it and streamed back to Washington in the 'Great Skedaddle'."
-    : (winner === "CS"
-      ? "History holds. As in 1861, the stand on Henry House Hill and the rail-borne brigades on Chinn Ridge carried the day for the Confederacy."
-      : "A bloodier stalemate than history's clear Confederate victory — but the rebellion was not broken here.");
+    : "History diverges. The Union carried Henry House Hill — the ground your army held in 1861. The historical stand here broke McDowell's assault; under your command, this time it gave way.";
+  else if (winner === "CS") hist = (ps === "US")
+    ? "History holds. As in 1861, the stand on Henry House Hill and the rail-borne brigades on Chinn Ridge carried the day for the Confederacy."
+    : "History holds. As in 1861, your stand on Henry House Hill and the rail-borne brigades on Chinn Ridge carried the day for the Confederacy — McDowell's army lost the hill and streamed back to Washington in the 'Great Skedaddle'.";
+  else hist = "A bloodier stalemate than history's clear Confederate victory — but the rebellion was not broken here.";
   var cards = (sd.teaching && sd.teaching.cards) ? sd.teaching.cards : [];
   var out = '<div style="text-align:left;background:#15110b;border:1px solid #715e3e;border-radius:6px;padding:12px 14px;margin-bottom:16px;">' /* wcag-auditor: contrast fix #3a3020->#715e3e border on #15110b (was 1.45:1, now 3.02:1) WCAG 1.4.11 */ +
     '<div style="color:#d8c87a;font-weight:bold;margin-bottom:6px;">Your war vs. history</div>' +

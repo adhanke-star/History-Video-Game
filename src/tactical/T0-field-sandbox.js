@@ -218,6 +218,8 @@ function fldResetRun() {
 }
 function fldInitSim(opts) {
   opts = opts || {};
+  __FIELD._launchOpts = opts;   // B-6: stash the resolved launch spec so the end-screen "Fight Again" can REPLAY it
+                                // faithfully (same scenario/skirmish/side/fog, bumped seed) — never read by the sim.
   __FIELD.seed = (opts.seed || 1) >>> 0;
   // difficulty/realism presets (B-5): read G.settings.tacticalPreset -> set __FIELD.sev (the per-layer severity
   // multipliers) + aiSkill/aiResolve/aiCushion, and (only when a preset is configured) the global fog/auto-pause
@@ -237,6 +239,16 @@ function fldInitSim(opts) {
   // null for every standalone launch -> the fldResetRun conditioning hook + the campaign end screen are
   // no-ops then (byte-behavior-identical sandbox/Bull-Run; probe-field/bullrun hold). Set by T2.
   __FIELD.campaignCtx = opts.campaign || null;
+  // command either side (B-6): the AUTHORITATIVE player side for this launch. PRECEDENCE: an explicit
+  // opts.playerSide (the Bull Run side toggle) wins; else a skirmish's playerSide; else a campaign ctx side;
+  // else "US" (the historical Bull Run attacker + the sandbox default). Resolved ONCE here so the control
+  // layer (fldPlayerSel & friends), the render/HUD fog VIEWER, the friend/foe text, the objective copy, and
+  // fldPlayerSide() (T3) all read the SAME side. Defaulting "US" keeps every standalone/probe launch
+  // byte-identical (and the headless probes never reach the control/render layer anyway). Coverage = probe-csplayer.
+  __FIELD.playerSide =
+    (opts.playerSide === "US" || opts.playerSide === "CS") ? opts.playerSide
+    : (opts.skirmish && (opts.skirmish.playerSide === "US" || opts.skirmish.playerSide === "CS")) ? opts.skirmish.playerSide
+    : (opts.campaign && typeof _fldCamp === "function" && _fldCamp() && _fldCamp().side === "CS") ? "CS" : "US";
   // fog of war (P1b): a toggle. PRECEDENCE: an explicit opts.fog wins; else an explicit global setting
   // (G.settings.tacticalFog, set once the player presses V or a probe pins it) wins; else the SCENARIO default
   // applies (set in fldScenarioInit from scenData.defaultFog — First Bull Run defaults fog ON, D67: under fog the
@@ -285,11 +297,15 @@ function fldInitSim(opts) {
   var faceN = 0, faceS = Math.PI;
   var pAI = !!opts.autoBoth;                          // probe / demo: both sides AI
   __FIELD.autoBoth = pAI;
+  // B-6: the PLAYER's side is controllable (ai = pAI), the OTHER side is AI. US default -> US units ai=pAI,
+  // CS units ai=true = byte-identical to the pre-B-6 sandbox; a CS launch flips it so the sandbox is never a
+  // zero-control state for a Confederate player (defence-in-depth; the standalone Sandbox button still launches US).
+  var _sbPs = (typeof fldPlayerSide === "function") ? fldPlayerSide() : "US";
   __FIELD.units = [
-    fldMakeUnit({ id: "US1", side: "US", name: "1st Brigade", arm: "inf", weapon: "spring", xp: 1, men: 1500, x: ox - 170, z: south, facing: faceN, ai: pAI }),
-    fldMakeUnit({ id: "US2", side: "US", name: "2nd Brigade", arm: "inf", weapon: "rifled", xp: 2, men: 1400, x: ox + 170, z: south, facing: faceN, ai: pAI }),
-    fldMakeUnit({ id: "CS1", side: "CS", name: "Jackson's Brigade", arm: "inf", weapon: "rifled", xp: 2, men: 1500, x: ox - 160, z: north, facing: faceS, ai: true }),
-    fldMakeUnit({ id: "CS2", side: "CS", name: "Bee's Brigade", arm: "inf", weapon: "smooth", xp: 1, men: 1400, x: ox + 160, z: north, facing: faceS, ai: true }),
+    fldMakeUnit({ id: "US1", side: "US", name: "1st Brigade", arm: "inf", weapon: "spring", xp: 1, men: 1500, x: ox - 170, z: south, facing: faceN, ai: (_sbPs === "US") ? pAI : true }),
+    fldMakeUnit({ id: "US2", side: "US", name: "2nd Brigade", arm: "inf", weapon: "rifled", xp: 2, men: 1400, x: ox + 170, z: south, facing: faceN, ai: (_sbPs === "US") ? pAI : true }),
+    fldMakeUnit({ id: "CS1", side: "CS", name: "Jackson's Brigade", arm: "inf", weapon: "rifled", xp: 2, men: 1500, x: ox - 160, z: north, facing: faceS, ai: (_sbPs === "CS") ? pAI : true }),
+    fldMakeUnit({ id: "CS2", side: "CS", name: "Bee's Brigade", arm: "inf", weapon: "smooth", xp: 1, men: 1400, x: ox + 160, z: north, facing: faceS, ai: (_sbPs === "CS") ? pAI : true }),
   ];
   fldResetRun();
 }
@@ -1029,7 +1045,18 @@ function fldAutoPauseScan(prevRouts, prevAlive, prevN) {
   var spawned = __FIELD.units.length - prevN, killed = prevAlive - (fldCountAlive() - spawned), reasons = [];
   if (__FIELD.routEverCount > prevRouts) reasons.push("A brigade has broken");
   if (killed > 0) reasons.push("A brigade is destroyed");
-  if (spawned > 0) reasons.push("Reinforcements arrive");
+  // B-6 fog-leak guard: cue "Reinforcements arrive" only for a PLAYER-VISIBLE arrival — reinforcements are PUSHED
+  // to the end of the array, so the last `spawned` entries are this frame's arrivals; fire if one is the player's
+  // own side, or fog is off, or it is already scouted. Fog OFF -> always fires (byte-identical to the pre-B-6 cue);
+  // under fog a hidden ENEMY detrainment must not auto-pause + betray the enemy's reserves.
+  if (spawned > 0) {
+    var _aps = (typeof fldPlayerSide === "function") ? fldPlayerSide() : "US", _visArr = false;
+    for (var sp = Math.max(0, __FIELD.units.length - spawned); sp < __FIELD.units.length; sp++) {
+      var su = __FIELD.units[sp];
+      if (su && (su.side === _aps || !__FIELD.fog || (typeof fldVisible === "function" && fldVisible(_aps, su)))) { _visArr = true; break; }
+    }
+    if (_visArr) reasons.push("Reinforcements arrive");
+  }
   if (!reasons.length) return;
   __FIELD.paused = true; __FIELD._apReason = reasons[0];
   var b = document.getElementById("fldBtnPlay"); if (b) { b.innerHTML = "&#9654; Resume"; b.setAttribute("aria-label", "Resume — auto-paused: " + reasons.join("; ")); }
@@ -1133,7 +1160,9 @@ function fldTogglePlay() {
   var b = document.getElementById("fldBtnPlay"); if (b) { b.innerHTML = __FIELD.paused ? "&#9654; Resume" : "&#10074;&#10074; Pause"; b.setAttribute("aria-label", __FIELD.paused ? "Resume the battle (Space)" : "Begin / pause the battle (Space)"); }
 }
 function fldCycleSpeed() { __FIELD.speed = __FIELD.speed === 1 ? 2 : (__FIELD.speed === 2 ? 4 : 1); var b = document.getElementById("fldBtnSpd"); if (b) b.innerHTML = __FIELD.speed + "&times;"; }
-function fldPlayerSel() { var out = []; for (var i = 0; i < __FIELD.sel.length; i++) { var u = fldById(__FIELD.sel[i]); if (u && u.alive && u.side === "US" && !u.ai) out.push(u); } return out; }
+// B-6 (command either side): the player's selectable brigades are HIS side's non-AI units — fldPlayerSide()
+// resolves "US" by default (byte-identical) and "CS" when the player took the Confederate command.
+function fldPlayerSel() { var ps = fldPlayerSide(), out = []; for (var i = 0; i < __FIELD.sel.length; i++) { var u = fldById(__FIELD.sel[i]); if (u && u.alive && u.side === ps && !u.ai) out.push(u); } return out; }
 function fldSetFormation(f) { var s = fldPlayerSel(); for (var i = 0; i < s.length; i++) s[i].formation = f; fldRenderHud(); }
 function fldSelCharge() { var s = fldPlayerSel(); for (var i = 0; i < s.length; i++) fldOrderCharge(s[i]); fldAnnounce("Charge ordered."); }
 function fldSelHold() { var s = fldPlayerSel(); for (var i = 0; i < s.length; i++) { var u = s[i]; u.order = { type: "hold", tx: u.x, tz: u.z, tface: u.facing }; } fldAnnounce("Hold ordered."); }
@@ -1168,12 +1197,12 @@ function fldKey(e) {
   else if (k === "v" || k === "V") fldToggleFog();
   else if (k === "p" || k === "P") fldToggleAutoPause();
   else if (k === "g" || k === "G") { if (typeof fldOpenSettingsDrawer === "function") fldOpenSettingsDrawer(); }   // B-5: the in-battle settings drawer
-  else if (k === "a" || k === "A") { __FIELD.sel = []; for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side === "US" && u.alive && !u.ai) __FIELD.sel.push(u.id); } fldRenderHud(); }
+  else if (k === "a" || k === "A") { var _psa = fldPlayerSide(); __FIELD.sel = []; for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side === _psa && u.alive && !u.ai) __FIELD.sel.push(u.id); } fldRenderHud(); }
   else if (k === "Tab") { if (__FIELD.phase === "battle") { e.preventDefault(); fldCycleSel(); } } // only steal Tab mid-battle
   var b = document.getElementById("fldBtnSpd"); if (b) b.innerHTML = __FIELD.speed + "&times;";
 }
 function fldCycleSel() {
-  var us = []; for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side === "US" && u.alive && !u.ai) us.push(u.id); }
+  var _psc = fldPlayerSide(), us = []; for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side === _psc && u.alive && !u.ai) us.push(u.id); }
   if (!us.length) return;
   var cur = __FIELD.sel.length ? us.indexOf(__FIELD.sel[0]) : -1;
   __FIELD.sel = [us[(cur + 1) % us.length]]; fldRenderHud();
@@ -1184,8 +1213,8 @@ function fldPointerDown(e) {
   if (__FIELD.phase === "over") return;
   var wp = fldPick(e.clientX, e.clientY); if (!wp) return;
   // select the friendly brigade nearest the click (within grab radius), else start a move-drag
-  var best = null, bd = 70;
-  for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side !== "US" || !u.alive || u.ai) continue; var d = Math.hypot(u.x - wp.x, u.z - wp.z); if (d < bd) { bd = d; best = u; } }
+  var best = null, bd = 70, _psd = fldPlayerSide();
+  for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side !== _psd || !u.alive || u.ai) continue; var d = Math.hypot(u.x - wp.x, u.z - wp.z); if (d < bd) { bd = d; best = u; } }
   if (best) { if (e.shiftKey && __FIELD.sel.indexOf(best.id) < 0) __FIELD.sel.push(best.id); else __FIELD.sel = [best.id]; fldRenderHud(); __FIELD.drag = null; return; }
   // empty ground with a selection -> begin a move/face drag
   if (fldPlayerSel().length) __FIELD.drag = { x0: wp.x, z0: wp.z, x: wp.x, z: wp.z };
@@ -1226,10 +1255,12 @@ function fldRenderHud() {
   var el = document.getElementById("fldHud"); if (!el) return;
   var sel = fldPlayerSel();
   if (!sel.length) {
-    var foeLine;
-    if (__FIELD.fog) { var seen = 0; for (var fi = 0; fi < __FIELD.units.length; fi++) { var fu = __FIELD.units[fi]; if (fu.side === "CS" && fu.alive && fldVisible("US", fu)) seen++; } foeLine = seen + ' Rebel brigades sighted'; }
-    else foeLine = fldArmyLive("CS") + ' Rebel brigades afield';
-    el.innerHTML = '<div style="opacity:.7;">Click a brigade to select. Drag from open ground to march &amp; face. (' + fldArmyLive("US") + ' Union vs ' + foeLine + '.)</div>'
+    // B-6: the friend/foe line is from the PLAYER's side (ps). fldPlayerSide() is "US" by default (byte-identical
+    // copy: "N Union vs M Rebel ...") and "CS" when the player took the Confederate command (friendly = Rebel).
+    var ps = fldPlayerSide(), es = fldEnemy(ps), foeLine;
+    if (__FIELD.fog) { var seen = 0; for (var fi = 0; fi < __FIELD.units.length; fi++) { var fu = __FIELD.units[fi]; if (fu.side === es && fu.alive && fldVisible(ps, fu)) seen++; } foeLine = seen + ' ' + _fldSideName(es) + ' brigades sighted'; }
+    else foeLine = fldArmyLive(es) + ' ' + _fldSideName(es) + ' brigades afield';
+    el.innerHTML = '<div style="opacity:.7;">Click a brigade to select. Drag from open ground to march &amp; face. (' + fldArmyLive(ps) + ' ' + _fldSideNameFull(ps) + ' vs ' + foeLine + '.)</div>'
       + (typeof fldOfficerHudRoster === "function" ? fldOfficerHudRoster() : "")   // B-2: a field-officer status line
       + (typeof fldLogisticsHudReserve === "function" ? fldLogisticsHudReserve() : "");   // B-3: the ammunition-reserve line
     return;
@@ -1252,7 +1283,10 @@ function fldOnOver() {
   var e = document.getElementById("fldEnd"); if (!e) { fldAnnounce("Battle over."); return; }
   var w = __FIELD.winner;
   var msg = w === "draw" ? "Stalemate" : (w === "US" ? "Union Victory" : "Confederate Victory");
-  fldAnnounce(msg);
+  // B-6: also speak the player-perspective outcome on the aria-live region (parity with the visible line);
+  // strip the HTML entities since fldAnnounce writes textContent.
+  var _outSpoken = (typeof fldPlayerOutcomeLine === "function") ? String(fldPlayerOutcomeLine(w)).replace(/&mdash;/g, "—").replace(/&[a-z]+;/g, " ").trim() : "";
+  fldAnnounce(_outSpoken ? (msg + ". " + _outSpoken) : msg);
   e.classList.remove("hidden");
   e.setAttribute("role", "dialog"); e.setAttribute("aria-modal", "true"); e.setAttribute("aria-label", msg); /* wcag-auditor: added aria-modal=true so AT users know focus is constrained (WCAG 4.1.2) */
   // P1a seam: a scenario can append its teaching payoff (what really happened / your war vs history).
@@ -1269,7 +1303,9 @@ function fldOnOver() {
   e.innerHTML =
     '<div style="text-align:center;background:#0c0f14;border:1px solid #745e3f;border-radius:8px;padding:26px 34px;max-width:640px;max-height:88vh;overflow:auto;">' /* wcag-auditor: contrast fix #4a3c28->#745e3f border on #0c0f14 (was 1.80:1, now 3.12:1) WCAG 1.4.11 */ +
     '<div style="font-size:26px;letter-spacing:1px;margin-bottom:8px;color:#e9dcc0;">' + msg + '</div>' +
-    '<div style="opacity:.8;margin-bottom:6px;">Held the field at ' + Math.floor(__FIELD.t / 60) + ':' + ("0" + (Math.floor(__FIELD.t) % 60)).slice(-2) + '.</div>' +
+    // B-6: a player-perspective "you" line (teaches from the side you actually commanded), atop the factual title.
+    (typeof fldPlayerOutcomeLine === "function" ? '<div style="opacity:.92;font-size:14px;margin-bottom:8px;color:#d8c87a;">' + fldPlayerOutcomeLine(w) + '</div>' : '') +
+    '<div style="opacity:.8;margin-bottom:6px;">Battle ran to ' + Math.floor(__FIELD.t / 60) + ':' + ("0" + (Math.floor(__FIELD.t) % 60)).slice(-2) + '.</div>' +
     '<div style="opacity:.7;font-size:13px;margin-bottom:18px;">Union ' + fldArmyStrength("US") + ' &middot; Confederate ' + fldArmyStrength("CS") + ' still under arms.</div>' +
     scNote +
     (_inCampaign
@@ -1294,7 +1330,11 @@ function fldOnOver() {
   }
   var a = document.getElementById("fldAgain"), d = document.getElementById("fldDone");
   // rematch preserves the scenario (sandbox OR a battle like bullrun1) — capture before fldExit clears state.
-  if (a) a.addEventListener("click", function () { var k = __FIELD.rendererKind, sc = __FIELD.scenario, sd = (__FIELD.seed + 7) >>> 0; fldExit(true); fldLaunchSandbox({ renderer: k, seed: sd, scenario: sc }); });
+  // B-6: "Fight Again" REPLAYS the same battle — the full launch spec (scenario/skirmish/side/fog), bumped seed —
+  // so a skirmish rematch rebuilds the SAME skirmish (and a CS player keeps their CS command) instead of falling
+  // through to the generic US sandbox (which left a CS player with zero controllable units). Falls back to the
+  // legacy reconstruction if no stashed opts (defensive).
+  if (a) a.addEventListener("click", function () { var sd = (__FIELD.seed + 7) >>> 0, lo = __FIELD._launchOpts, k = __FIELD.rendererKind, sc = __FIELD.scenario, ps = __FIELD.playerSide; fldExit(true); fldLaunchSandbox(lo ? Object.assign({}, lo, { seed: sd }) : { renderer: k, seed: sd, scenario: sc, playerSide: ps }); });
   if (d) d.addEventListener("click", function () { fldExit(false); });
   // focus trap (WCAG 2.4.11): the end screen is aria-modal, so confine Tab/Shift+Tab to its two buttons.
   e.addEventListener("keydown", function (ev) {
@@ -1343,9 +1383,10 @@ function fld2dDraw() {
   // last-known "ghosts" for enemies once seen but now hidden by fog (drawn beneath the live units)
   fld2dGhosts(ctx, v);
   // units
+  var _drawPs = fldPlayerSide();   // B-6: the viewer side for fog-hiding (US default -> byte-identical render)
   for (var u2 = 0; u2 < __FIELD.units.length; u2++) {
     var u = __FIELD.units[u2]; if (!u.alive) continue;
-    if (__FIELD.fog && u.side !== "US" && !fldVisible("US", u)) continue;   // hidden enemy (the player sees only what is scouted)
+    if (__FIELD.fog && u.side !== _drawPs && !fldVisible(_drawPs, u)) continue;   // B-6: hidden ENEMY (player's side _drawPs sees only what it scouts)
     var cx = v.ox + u.x * v.s, cz = v.oz + u.z * v.s;
     var frontW = (u.formation === "column" ? 36 : 96) * v.s * (0.5 + 0.5 * u.men / u.maxMen);
     var depth = (u.formation === "column" ? 60 : 26) * v.s;
@@ -1404,11 +1445,12 @@ function fld2dLabel(ctx, text, x, z) {
 // fog "ghosts": a faded last-known marker for each enemy once seen but now out of sight.
 function fld2dGhosts(ctx, v) {
   if (!__FIELD.fog || !__FIELD.lastSeen) return;
+  var _gPs = fldPlayerSide();   // B-6: ghosts are last-known ENEMY positions from the player's perspective
   for (var id in __FIELD.lastSeen) {
     if (!Object.prototype.hasOwnProperty.call(__FIELD.lastSeen, id)) continue;
-    var g = __FIELD.lastSeen[id]; if (g.side === "US") continue;          // only enemy ghosts
+    var g = __FIELD.lastSeen[id]; if (g.side === _gPs) continue;          // only enemy ghosts (skip the player's own side)
     var live = fldById(id);
-    if (!live || !live.alive || fldVisible("US", live)) continue;          // skip if gone, dead, or currently seen (the live unit is drawn)
+    if (!live || !live.alive || fldVisible(_gPs, live)) continue;          // skip if gone, dead, or currently seen (the live unit is drawn)
     var cx = v.ox + g.x * v.s, cz = v.oz + g.z * v.s;
     ctx.save(); ctx.globalAlpha = 0.4;
     ctx.strokeStyle = "#9a8a7a"; ctx.setLineDash([4, 3]); ctx.lineWidth = 1.5;
@@ -1433,7 +1475,11 @@ function fld3dInit() {
   scene.background = new T.Color("#acc2d6"); scene.fog = new T.Fog("#acc2d6", 700, 1900);
   var cam = new T.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 6000);
   var ctr = __FIELD.objective;
-  cam.position.set(ctr.x, 620, FLD.FIELD_H + 380);
+  // B-6: seat the camera behind the PLAYER's own home edge so a defender looks across his line at the
+  // advancing enemy (not from behind the foe). US deploys south (z high), CS north (z low). US default
+  // resolves FLD.FIELD_H+380 -> byte-identical framing; a CS player gets the mirror view from the north.
+  var _camPs = (typeof fldPlayerSide === "function") ? fldPlayerSide() : "US";
+  cam.position.set(ctr.x, 620, (_camPs === "CS") ? -380 : (FLD.FIELD_H + 380));
   var controls = new T.OrbitControls(cam, cv);
   controls.target.set(ctr.x, 0, ctr.z); controls.enableDamping = !fldReduceMotion(); controls.dampingFactor = 0.08;
   controls.maxPolarAngle = Math.PI * 0.47; controls.minDistance = 120; controls.maxDistance = 2200;
@@ -1553,7 +1599,8 @@ function fld3dBuildUnits() {
 function fld3dSyncUnit(u, g) {
   var T = window.THREE;
   // fog: a hidden enemy (not currently scouted) is not drawn (no-op when fog OFF).
-  g.visible = u.alive && !(__FIELD.fog && u.side !== "US" && !fldVisible("US", u));
+  var _vPs = fldPlayerSide();   // B-6: fog hides ENEMY meshes from the player's side (US default -> byte-identical)
+  g.visible = u.alive && !(__FIELD.fog && u.side !== _vPs && !fldVisible(_vPs, u));
   if (!u.alive) return;
   var y = fldTerrainH(u.x, u.z);
   g.position.set(u.x, y + 4, u.z); g.rotation.y = -u.facing; // align the block front (local -z) to sim forward

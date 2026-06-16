@@ -23,8 +23,8 @@ content-complete v1 (still a perpetual project after — D54). Built from `MODER
 S0–S1 economy/production/blockade/manpower/victory · Battle layer A1–A6 (owner-mode war playable end-to-end) ·
 S2 m1–m5 (cabinet, decisions, 3-layer morale + 1864 election, press, command/named-generals) · **Tactical
 P0 sandbox · P1a First Bull Run · P1b-i fog · P1b-ii auto-pause · P1b-iii role-aware DEFENDER AI · PHASE A
-connect-the-layers (A1 conditioning · A2 fight-from-bridge + FREE skirmish · A3 result feedback) · Phase B
-tactical depth (B1 attacker AI · B2 officers/command · B3 in-battle logistics · B4 distinct arm roles · B5 difficulty/realism presets).**
+connect-the-layers (A1 conditioning · A2 fight-from-bridge + FREE skirmish · A3 result feedback) · **Phase B
+tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle logistics · B4 distinct arm roles · B5 difficulty/realism presets · B6 CS-player "command either side").**
 
 ---
 
@@ -42,7 +42,7 @@ tactical depth (B1 attacker AI · B2 officers/command · B3 in-battle logistics 
       ground, `enemyWill`) — substitutable for the existing Classic / auto-resolve result (MODERN-UGG §2).
       *(REAL casualty fractions from the fight → `startBattleRuntime`+`_arApplyCasualties`+`campaignAdvance`→`_t1Resolve`; win advances, loss recovers; deterministic. probe-campaign-link 16/16.)*
 
-### Phase B — TACTICAL DEPTH  (P2–P5, real-time engine)  ‹B1 ✅ D64 · B2 ✅ D65 · B3 ✅ D66 · B4 ✅ D67 · B5 ✅ D70 — run k, 2026-06-15/16›
+### Phase B — TACTICAL DEPTH  (P2–P5, real-time engine)  ‹✅ COMPLETE — B1 D64 · B2 D65 · B3 D66 · B4 D67 · B5 D70 · B6 D72 — run k, 2026-06-15/16›
 - [x] **B1 Smarter ATTACKER AI** — defender-favored, fog aids the defender (LOCKED); attacker doctrinally
       sound (concentrate / assault) but the fog inversion tuned out. (Prototype exists: `ATTACKER-AI-PROPOSAL.md`.)
       *(`fldAiAttacker`: concentrate-on-weaker-flank / close / assault, GRADUAL per-unit commit [no knife-edge] + CAUTIOUS-WHEN-BLIND. Sweep: both-doctrines Bull Run fog-OFF CS 6/8, fog-ON 8/8 — fog aids the defender; def-cas 4592 vs the passive 1276. probe-ai 15/15.)*
@@ -63,8 +63,15 @@ tactical depth (B1 attacker AI · B2 officers/command · B3 in-battle logistics 
       "Command & Realism" picker + an in-battle "⚙ Settings" drawer; WCAG-AA, CVD-safe, reduceMotion, deterministic.
       Bug-hunt 76 agents → 13 confirmed + 6 critic gaps ALL fixed [drawer-Escape-tore-down-battle, picker ARIA, a
       malformed-preset clamp, the fog-scenario V-toggle wipe, …]. probe-presets 26/26; 9 baselines byte-identical.)*
-- [ ] **B6 CS-player tactical mode** ‹LOCKED: yes, Phase B› — command EITHER side in a battle (you defend as
-      the CS, AI attacks). Makes the attacker AI (B1) player-facing. Doubles tactical replayability.
+- [x] **B6 CS-player tactical mode** ‹LOCKED: yes, Phase B› — command EITHER side in a battle (you defend as
+      the CS, AI attacks). Makes the attacker AI (B1) player-facing. Doubles tactical replayability. ‹✅ — run k, 2026-06-16, DECISIONS D72›
+      *(`src/tactical/T7-command-side.js` + seams in T0/T1/T3: `__FIELD.playerSide` authoritative [opts/skirmish/`_fldCamp().side`/US];
+      the control layer + the render/HUD FOG VIEWER + the friend/foe line generalized from literal "US" to `fldPlayerSide()`; `fldBrSpec`
+      flips the scenario AI flags by side [a CS player DEFENDS; attacker stays US → faces the B-1 AI]; a period side-choice card + side-aware
+      briefing/objective/end-"you"-line + a player-home-edge 3D camera. **Vetting caught + fixed a CS-campaign officer/fog regression**
+      [fldPlayerSide must resolve a CS campaign LIVE from G.campaign.side]; bug-hunt 52 agents → 11 confirmed + 7 critic gaps, the HIGH
+      [skirmish-rematch soft-lock] + 3 MED [side-aware camera · fog-leak reinforcement cue · a render-fog probe gap] + LOW polish all fixed.
+      Byte-identical for US; CS defense winnable 8/8 fog-ON; live stacked still CS 8/8. probe-csplayer 16/16; 10 baselines byte-identical.)*
 
 ### Phase C — TACTICAL BREADTH  (more real-time battles, data-driven)
 - [ ] **C1 Eastern marquee:** Antietam, Fredericksburg, Gettysburg, Chancellorsville, Malvern Hill.
@@ -116,7 +123,10 @@ tactical depth (B1 attacker AI · B2 officers/command · B3 in-battle logistics 
 
 ### Phase H — "MAKE IT COME TO LIFE"  (graphics/footage — LOCKED: AFTER gameplay-complete)
 - [ ] **H1 PD images:** weapons / flags / USCT / scenes (have 131 portraits) via LoC + Internet Archive +
-      Wikimedia, linked-assets + offline fallback.
+      Wikimedia, linked-assets + offline fallback. **Asset-ingestion (D71):** extend `tools/build.mjs` (Node, not a
+      separate script) to Base64-embed + TIER/COMPRESS media w/ offline fallback so the single file stays portable as
+      it grows (D68 #7). **Guardrail (D71):** no Phase-H media lib may require `SharedArrayBuffer` (COOP/COEP headers
+      can't be set on GitHub Pages; `coi-serviceworker` is the shim if ever needed). PD imagery > AI art (aesthetic / IP / anachronism).
 - [ ] **H1b Brigade BADGES & INSIGNIA — the battle flags (Aaron, run-k idea, 2026-06-15).** Render each brigade's
       identity with its **battle flag / colors** on the unit badge: the various Confederate battle flags (ANV
       Southern Cross, Hardee/Polk Western patterns, the national flags), the U.S. national & regimental colors,
@@ -136,6 +146,9 @@ tactical depth (B1 attacker AI · B2 officers/command · B3 in-battle logistics 
 ### Phase J — POLISH / META
 - [ ] **Saves** ‹PROPOSED per D54›: localStorage + named slots + export/import; undo-last-turn on the accessible preset.
 - [ ] Mod-friendly data + shareable saves/scenarios. **Hosting DEFERRED** (GitHub Pages on request — D54).
+      **Publish options when wanted (D71):** GitHub Pages (simplest for one file) OR itch.io + Butler (best indie
+      discovery + in-browser play + auto-deploy); Vercel unnecessary. **$0 nuance:** Pages on a PRIVATE repo needs
+      GitHub Pro — for true $0 use a public deploy repo or itch.io; rename `civil_war_generals.html`→`index.html` at publish.
 - [ ] **Full-campaign playthrough probe** added to the no-regression suite (D54).
 
 ---

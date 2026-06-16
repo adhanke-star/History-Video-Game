@@ -232,9 +232,20 @@ function fldOfficerFalls(ld) {
   fldAnnounce(line);
   if (typeof fldScenarioBanner === "function") { try { fldScenarioBanner(line, ld.side); } catch (e) {} }
 }
-/* the side the human commands: CS only in a CS-player campaign; US for every standalone scenario / sandbox.
-   (B6 will make the CS-player tactical mode player-facing; the officer HUD + fog must already honor it.) */
-function fldPlayerSide() { try { var C = (typeof _fldCamp === "function") ? _fldCamp() : null; if (__FIELD.campaignCtx && C && C.side === "CS") return "CS"; } catch (e) {} return "US"; }
+/* the side the human commands. B-6 (command either side): fldInitSim resolves __FIELD.playerSide
+   AUTHORITATIVELY for every launch (Bull Run side toggle / skirmish pick / campaign side / "US" default),
+   so this is the single read-point the control layer, the render/HUD fog viewer, and the B-2/B-3/B-4
+   display layers all share. The legacy campaign fallback is kept as belt-and-suspenders for any pre-B-6
+   caller or a launch that somehow didn't set __FIELD.playerSide. */
+function fldPlayerSide() {
+  // A CS campaign is AUTHORITATIVE and computed LIVE from G.campaign.side (the legacy contract — the officer
+  // roster, the fog viewer, and the HUD read this even mid-setup, before any relaunch sets __FIELD.playerSide).
+  try { var C = (typeof _fldCamp === "function") ? _fldCamp() : null; if (__FIELD.campaignCtx && C && C.side === "CS") return "CS"; } catch (e) {}
+  // else the explicit per-launch side (B-6: the Bull Run side toggle / the skirmish pick), default "US".
+  var s = __FIELD.playerSide;
+  if (s === "US" || s === "CS") return s;
+  return "US";
+}
 /* lists for the end-screen / HUD: which named officers fell. */
 function fldOfficersDownList(side) {
   var L = __FIELD.leaders, out = []; if (!L) return out;
