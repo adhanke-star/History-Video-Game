@@ -34,7 +34,7 @@ function _pdLog(C, line) {
     if (!C.president.log) C.president.log = [];
     C.president.log.unshift(line);
     if (C.president.log.length > _pdLOG_MAX) C.president.log.length = _pdLOG_MAX;
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_pdLog:", e); }
 }
 
 /* Authored cabinet rosters. No cabinet/advisor data exists anywhere in the repo
@@ -145,5 +145,5 @@ function presOnResolve(winnerSide, type, B, C, win) {
     var bn = (B && B.bd && B.bd.name) ? B.bd.name : (B && B.name) ? B.name : "the field";
     _pdLog(C, (win ? "Victory" : (type === "draw" ? "Stalemate" : "Setback"))
               + " at " + bn + " — " + _pdMonthName(d.month) + " " + d.year + ".");
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("presOnResolve:", e); }
 }

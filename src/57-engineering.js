@@ -155,7 +155,7 @@ function engOnResolve(winnerSide, type, B, C, win) {
     var cap = (D && typeof D.railClawbackCap === "number") ? D.railClawbackCap : 0.70;
     var frac = Math.min(cap, Math.max(0, lvl * fpl));   // < 1 always -> net rail loss remains positive
     C.production.railIntegrity = Math.min(100, C.production.railIntegrity + loss * frac);
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("engOnResolve:", e); }
 }
 
 function _engScoreWord(v) {

@@ -80,7 +80,7 @@ function moraleCompute(C) {
   // ambition friction: a War Secretary serving himself costs cohesion (the cabinet tie)
   var ambFriction = 0;
   if (typeof _cabHolder === "function" && typeof _cabAmbitionActive === "function") {
-    try { var ws = _cabHolder(side, "war", C.president && C.president.date); if (ws && _cabAmbitionActive(ws, C)) ambFriction = 5; } catch (e) {}
+    try { var ws = _cabHolder(side, "war", C.president && C.president.date); if (ws && _cabAmbitionActive(ws, C)) ambFriction = 5; } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("moraleCompute ambition:", e); }
   }
 
   var repudPenalty = (M && M.repudiated) ? 12 : 0;                                          // a DURABLE home-front shock after a lost 1864 election (D51.4)
@@ -130,7 +130,7 @@ function moraleOnResolve(winnerSide, type, B, C, win) {
     // compute + store the three layers (display) AFTER the election block
     var m = moraleCompute(C);
     M.troop = m.troop; M.leader = m.leader; M.public = m.public;
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("moraleOnResolve:", e); }
 }
 
 /* ===== render: "The Nation's Will" block for the War Effort overview ===== */

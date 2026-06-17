@@ -133,6 +133,6 @@ function authoredMap(bd) {
     ground: (A.ground || "")
   };
   // A3: stamp the named cover hierarchy onto the labelled historical features.
-  if (typeof tcDecorateMap === "function") { try { tcDecorateMap(__M); } catch (e) {} }
+  if (typeof tcDecorateMap === "function") { try { tcDecorateMap(__M); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("tcDecorateMap:", e); } }
   return __M;
 }

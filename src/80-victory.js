@@ -40,7 +40,7 @@ function vicMomentum(C) {
     var willHold = 1 - Math.max(0, Math.min(1, weary / 100));
     var capF = Math.max(0, Math.min(1, cap / 120));
     return Math.max(0, Math.min(1, 0.55 * winRate + 0.30 * willHold + 0.15 * capF));
-  } catch (e) { return 0.5; }
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("vicMomentum:", e); return 0.5; }
 }
 
 function _vicPush(C, line) {
@@ -48,7 +48,7 @@ function _vicPush(C, line) {
     if (!C.strategy.log) C.strategy.log = [];
     C.strategy.log.unshift(line);
     if (C.strategy.log.length > 6) C.strategy.log.length = 6;
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_vicPush:", e); }
 }
 
 /* ---- vicInit: idempotent; seeds C.strategy (levers + the enemy-will tracker). ---- */
@@ -138,7 +138,7 @@ function vicOnResolve(winnerSide, type, B, C, win) {
         ? "Europe moves toward recognition — independence is within reach."
         : "Northern resolve is breaking — a negotiated peace is within reach.");
     }
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("vicOnResolve:", e); }
 }
 
 /* Status word for a 0..1 momentum. */
