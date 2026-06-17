@@ -109,7 +109,7 @@
       "name": "warroom tab renders",
       "ok": true,
       "v": {
-        "len": 3763,
+        "len": 3863,
         "hasBuild": true
       }
     },
@@ -117,8 +117,8 @@
       "name": "war-room build click (spend funds)",
       "ok": true,
       "v": {
-        "fundsBefore": 407,
-        "fundsAfter": 107,
+        "fundsBefore": 380,
+        "fundsAfter": 80,
         "industryLv": 3
       }
     },
@@ -128,8 +128,8 @@
       "v": {
         "capBefore": 33,
         "capAfter": 13,
-        "fundsBefore": 107,
-        "fundsAfter": 257
+        "fundsBefore": 80,
+        "fundsAfter": 230
       }
     }
   ],

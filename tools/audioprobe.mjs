@@ -4,7 +4,7 @@
 // pageerror, (2) the public API (musicStart/bugleCall/dinSet/scoreSampleBattle) runs
 // without throwing, (3) the scoreSampleBattle casualty-delta responds to G.battle's
 // real {US,CS} shape (the bug fixed this run). Writes tools/shots/audioprobe.json.
-import { chromium } from 'playwright-core';
+import { chromium } from 'playwright';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
@@ -13,7 +13,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..'), OUT = join(__dirname, 'shots');
 mkdirSync(OUT, { recursive: true });
 const BASE = 'http://localhost:8765', FILE = 'civil_war_generals.html', PORT = 8765;
-const GL = ['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist','--enable-webgl','--disable-dev-shm-usage','--autoplay-policy=no-user-gesture-required'];
+const GL = ['--no-sandbox','--ignore-gpu-blocklist','--enable-webgl','--disable-dev-shm-usage','--autoplay-policy=no-user-gesture-required'];
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const up = async u => { try { const r = await fetch(u,{method:'HEAD'}); return r.ok||r.status===200; } catch { return false; } };
 
@@ -23,8 +23,8 @@ const up = async u => { try { const r = await fetch(u,{method:'HEAD'}); return r
   if (!(await up(probe))) { srv = spawn('python3',['-m','http.server',String(PORT)],{cwd:ROOT,stdio:'ignore'}); for (let i=0;i<50;i++){ if(await up(probe))break; await sleep(120);} }
   const out = { errors: [] };
   let browser;
-  try { browser = await chromium.launch({ channel:'chrome', headless:true, args:GL }); }
-  catch { browser = await chromium.launch({ executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless:true, args:GL }); }
+  try { browser = await chromium.launch({ headless:true, args:GL }); }
+  catch { browser = await chromium.launch({ channel:'chrome', headless:true, args:GL }); }
   const ctx = await browser.newContext({ viewport:{width:1200,height:800} });
   const page = await ctx.newPage();
   page.on('pageerror', e => out.errors.push('[pageerror] ' + e.message));
