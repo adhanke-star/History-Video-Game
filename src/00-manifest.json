@@ -31,6 +31,8 @@
     "tactical/T6-presets.js",
     "tactical/T7-command-side.js",
     "tactical/T8-phases.js",
+    "tactical/T9-audio.js",
+    "tactical/T10-flags.js",
     "90-president-register.js"
   ],
   "overrides": [
