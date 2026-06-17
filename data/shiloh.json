@@ -1,0 +1,172 @@
+{
+  "_comment": "PHASE C-2 — SHILOH / PITTSBURG LANDING, April 6-7, 1862 — the FIRST WESTERN THEATER battle for the __FIELD real-time engine (single-phase, the Fredericksburg pattern). The first major battle of the Western theater: Grant's Army of the Tennessee, encamped at Pittsburg Landing on the Tennessee River, is surprised by Johnston's Army of the Mississippi striking from Corinth, Mississippi. The first day (April 6) is a Confederate near-breakthrough — the 'Hornets' Nest' holds for hours, Johnston is killed at the Peach Orchard, and the Union is pressed into a tight perimeter around Pittsburg Landing. Overnight Buell's Army of the Ohio arrives; the second day (April 7) the reinforced Union drives the Confederates back to Corinth. The battle is modeled as a SINGLE-PHASE engagement (the first day's Confederate assault, with the second day's Union counterattack as the time-limit pressure — the defender must hold until Buell arrives). COORDINATE NOTE: the engine field is 1200x900 yards; per engine convention the ATTACKER (CS, the first day) sits at HIGH z facing -z (facing 0) and the DEFENDER (US) at LOW z facing +z (facing PI). The Confederate approach is from the southwest (high z); the Union camps and the Landing are at low z. The Hornets' Nest (the Sunken Road) is the defender's key hold line at mid-field. ARTILLERY uses the D75 UNIVERSAL GUN MODEL (real gun counts + realistic crew; fire = guns * the universal weight). ANTI-LOST-CAUSE: the lessons are command failure on BOTH sides — Grant's unprepared encampment (no entrenchments, no pickets despite knowing Johnston was at Corinth), Johnston's fatal exposure at the Peach Orchard, the piecemeal Confederate assault that failed to crush the Union before Buell arrived, and the appalling cost (~24,000 total casualties, more than the American Revolution, the War of 1812, and the Mexican-American War combined up to that point). The 'Hornets' Nest' is a monument to the cost of linear defense against massed artillery, not to Southern invincibility. Strengths are Inferred division/brigade-scale approximations (the OOBs differ across Cunningham, Sword, and the Official Records); the Verified, teaching-bearing facts are the commanders + their fate, the terrain, and the casualty weight. Sources: NPS Shiloh National Military Park, American Battlefield Trust, the Official Records (via aotw.org), Cunningham 'Shiloh and the Western Campaign of 1862', Sword 'Shiloh: Bloody April', McDonough 'Shiloh — In Hell before Night'.",
+  "shiloh": {
+    "id": "shiloh",
+    "name": "Shiloh — the Hornets' Nest",
+    "date": "April 6-7, 1862",
+    "place": "Pittsburg Landing, Hardin County, Tennessee — along the Tennessee River",
+    "blurb": "The first great battle of the Western theater — two days, ~24,000 casualties, more than all of America's previous wars combined. Grant's army, encamped without entrenchments at Pittsburg Landing, is surprised by Johnston's Confederate Army of the Mississippi striking from Corinth. The first day is a desperate Confederate assault that nearly sweeps the Union into the river — stopped at the Sunken Road, the 'Hornets' Nest,' where Prentiss's division holds for six hours while Grant rallies his line. Johnston is killed at the Peach Orchard. Overnight Buell's army arrives; the second day the reinforced Union drives the Confederates back. Command either army in the first day's fight — and learn why Shiloh taught both sides that this war would be longer and bloodier than any had imagined.",
+    "provenance": "Verified (high) for the commanders and their fate, the terrain, and the casualty weight; Inferred (medium) for per-unit strengths and exact arrival minutes (the OOBs differ across Cunningham, Sword, and the Official Records — all corps/division totals are contested estimates). Sources: NPS Shiloh National Military Park (the Sunken Road / Hornets' Nest, the Peach Orchard, the Crossroads, Pittsburg Landing, the River Road, the Corinth Road); American Battlefield Trust (~24,000 total casualties: 13,047 US / 10,699 CS / 23,746 total); the Official Records via Shiloh on the Web; Cunningham, 'Shiloh and the Western Campaign of 1862'; Sword, 'Shiloh: Bloody April'; McDonough, 'Shiloh — In Hell before Night'. ANTI-LOST-CAUSE: the lessons are command failure on BOTH sides — Grant's unprepared encampment despite knowing Johnston was at Corinth, Johnston's fatal exposure at the Peach Orchard, the piecemeal Confederate assault that failed to crush the Union before Buell arrived, and the appalling cost that shocked the nation. The 'Hornets' Nest' is a monument to the cost of linear defense against massed artillery, not to Southern prowess. The battle's real significance is that it taught both sides the war would be long and terrible — the first battle where Americans saw what industrial war meant.",
+    "field": { "w": 1200, "h": 900 },
+    "attacker": "CS",
+    "defender": "US",
+    "defaultFog": false,
+    "timeLimitSec": 480,
+    "holdToWinSec": 140,
+    "menu": {
+      "title": "SHILOH (1862)",
+      "deck": "The first great Western battle — command either side in the first day's fight. Lead Johnston's surprise assault and try to crush Grant before Buell arrives, or hold the Hornets' Nest and the Landing as the Union rallies.",
+      "aria": "Shiloh, April 1862 — the first great Western battle. Command either army in the first day's fight: the Confederate surprise assault or the Union defense at the Hornets' Nest and Pittsburg Landing."
+    },
+    "sides": {
+      "heading": "Shiloh — Take Which Command?",
+      "intro": "April 6, 1862 · the first great battle of the Western theater. Lead the army of your choosing.",
+      "US": {
+        "title": "Command the Union (Grant's army)",
+        "badge": "&#9876; DEFEND",
+        "deck": "Hold the Sunken Road and the Landing against Johnston's surprise assault. Do what Grant did: rally the broken regiments, hold the Hornets' Nest, and buy the hours until Buell arrives."
+      },
+      "CS": {
+        "title": "Command the Confederacy (Johnston's army)",
+        "badge": "&#9819; ATTACK",
+        "deck": "Strike from Corinth and drive the Union into the Tennessee River before Buell's army can cross. Do what Johnston could not: crush Grant before the reinforcements arrive."
+      },
+      "foot": "The other army is commanded by the AI. The first day's fight — the defender must hold until the clock runs out (press V in battle to toggle fog)."
+    },
+    "brief": {
+      "attack": "Strike from the woods and drive the Union into the river. The enemy is encamped without entrenchments — surprise is yours. <b>This is your war:</b> Johnston had the chance to destroy Grant's army before Buell arrived and lost it — press every advantage and crush the Union before nightfall.",
+      "defend": "Hold the Sunken Road and the Landing. The enemy has struck from the woods and your camps are overrun — rally the broken regiments and buy the hours until Buell's army crosses the river. <b>This is your war:</b> Grant was surprised and nearly destroyed — hold the line and the army survives to fight another day."
+    },
+    "objective": {
+      "name": "Pittsburg Landing & the River Road",
+      "x": 600, "z": 200, "r": 180,
+      "note": "The Tennessee River landing and the River Road — the Union's last line and the point where Buell's reinforcements will arrive. The defender must hold this ground until the clock runs out; the attacker must seize it to cut the Union off from reinforcement and escape."
+    },
+    "leaders": {
+      "_note": "fate = a per-leader durability multiplier weighting the casualty model to HISTORY (>1 endures, <1 is fall-prone). At Shiloh, Albert Sidney Johnston was killed (the highest-ranking general on either side to die in the war); Wallace (US) was mortally wounded; Prentiss was captured; the others survived. The Confederate command was decapitated at the worst moment — Johnston's death at ~2:30 p.m. on April 6 cost the assault its driving hand.",
+      "US": [
+        { "id": "ld_grant", "name": "Maj. Gen. Ulysses S. Grant", "short": "Grant", "quality": 0.72, "radius": 260, "x": 600, "z": 180, "fate": 2.8,
+          "note": "Commanded the Army of the Tennessee. Encamped without entrenchments at Pittsburg Landing despite knowing Johnston was at Corinth — a major command failure. Spent the first day rallying broken regiments and forming the last line. His composure under fire saved the army. He survived. (Verified)",
+          "teach": "Gen. Grant steadies the last line at the Landing — the general who was surprised now holds the army together by sheer composure." },
+        { "id": "ld_prentiss", "name": "Brig. Gen. Benjamin M. Prentiss", "short": "Prentiss", "quality": 0.62, "radius": 200, "attach": "us_prentiss", "fate": 0.5,
+          "note": "Held the Sunken Road / Hornets' Nest with his division for ~6 hours against repeated Confederate assaults — the stand that bought Grant the time to form his last line. Surrounded and captured ~5:30 p.m. after running out of ammunition. His stand is the battle's defining defensive action. (Verified)",
+          "teach": "Gen. Prentiss holds the Sunken Road for six hours — buying the time Grant needs, at the cost of his own freedom." },
+        { "id": "ld_wallace", "name": "Brig. Gen. W. H. L. Wallace", "short": "Wallace", "quality": 0.66, "radius": 210, "attach": "us_wallace", "fate": 0.25,
+          "note": "Commanded the 2nd Division, Army of the Tennessee. Mortally wounded at the Hornets' Nest as his division was overrun; died May 10, 1862. His loss was a severe blow to the Union command. (Verified)",
+          "teach": "Gen. Wallace is mortally struck at the Hornets' Nest — the division commander falls with his men." },
+        { "id": "ld_sherman", "name": "Brig. Gen. William T. Sherman", "short": "Sherman", "quality": 0.68, "radius": 240, "x": 600, "z": 820, "fate": 2.6,
+          "note": "Commanded the 5th Division, posted at Shiloh Church on the Union right. His division bore the first shock of the Confederate assault; he was wounded twice (hand and shoulder) but stayed in command. His steadiness under fire — after being called insane — was the making of his reputation. He survived. (Verified)",
+          "teach": "Gen. Sherman is hit twice and keeps fighting — the man called 'insane' proves his mettle in the worst hour." }
+      ],
+      "CS": [
+        { "id": "ld_as_johnston", "name": "Gen. Albert Sidney Johnston", "short": "A.S. Johnston", "quality": 0.76, "radius": 270, "x": 600, "z": 830, "fate": 0.18,
+          "note": "Commanded the Army of the Mississippi. The Confederacy's highest-ranking general — considered the South's best soldier before Lee. Killed at ~2:30 p.m. on April 6 while leading from the front at the Peach Orchard, shot behind the knee (a wound he ignored, bleeding out in minutes). His death was the turning point of the first day — the assault lost its driving hand. (Verified)",
+          "teach": "Gen. Albert Sidney Johnston is struck behind the knee and bleeds out in minutes — the Confederate commander falls at the moment of his greatest opportunity." },
+        { "id": "ld_bragg", "name": "Maj. Gen. Braxton Bragg", "short": "Bragg", "quality": 0.58, "radius": 230, "x": 600, "z": 780, "fate": 2.4,
+          "note": "Commanded the II Corps. After Johnston's death, Beauregard assumed overall command; Bragg led the left wing. His piecemeal commitment of reserves — feeding brigades in one at a time instead of massing — was a major reason the Confederate assault failed to crush the Union before nightfall. He survived. (Verified)",
+          "teach": "Gen. Bragg feeds his brigades in piecemeal — the assault that might have won is blunted by disjointed command." },
+        { "id": "ld_hardee", "name": "Maj. Gen. William J. Hardee", "short": "Hardee", "quality": 0.64, "radius": 225, "x": 600, "z": 850, "fate": 2.5,
+          "note": "Commanded the III Corps. His corps opened the battle, striking Sherman's division at Shiloh Church. Hardee was one of the Confederacy's most capable corps commanders; he survived. (Verified)",
+          "teach": "Gen. Hardee's corps strikes the first blow at Shiloh Church — the surprise is complete." },
+        { "id": "ld_breckinridge", "name": "Maj. Gen. John C. Breckinridge", "short": "Breckinridge", "quality": 0.6, "radius": 210, "x": 600, "z": 870, "fate": 2.3,
+          "note": "Commanded the Reserve Corps. Former U.S. Vice President (under Buchanan). His reserve was committed late and disjointedly; he survived to become Confederate Secretary of War in 1865. (Verified)",
+          "teach": "Gen. Breckinridge's reserve arrives — but the day's best chance has already passed." }
+      ]
+    },
+    "supply": {
+      "US": { "x": 600, "z": 120, "name": "Union train — Pittsburg Landing" },
+      "CS": { "x": 600, "z": 865, "name": "Confederate train — the Corinth Road" }
+    },
+    "oob": {
+      "US": [
+        { "id": "us_prentiss", "name": "Prentiss's Division (the Hornets' Nest)", "commander": "Brig. Gen. Benjamin M. Prentiss", "arm": "inf", "weapon": "rifled", "men": 3200, "xp": 1, "x": 600, "z": 420, "facing": 3.14159, "formation": "line", "note": "6th Division, Army of the Tennessee. Held the Sunken Road — a worn farm lane that became the Hornets' Nest — for ~6 hours against repeated Confederate assaults. Mostly green regiments in their first battle; they held because the ground (a sunken road with a thicket in front) gave them cover and because the Confederate attacks were piecemeal. Surrounded and captured after running out of ammunition. (Verified identity; Inferred strength)" },
+        { "id": "us_sherman_shiloh", "name": "Sherman's Division (Shiloh Church)", "commander": "Brig. Gen. William T. Sherman", "arm": "inf", "weapon": "rifled", "men": 3500, "xp": 1, "x": 600, "z": 780, "facing": 3.14159, "formation": "line", "note": "5th Division, posted on the Union right at Shiloh Church. Bore the first shock of the Confederate assault; driven back in confusion but rallied. Sherman was wounded twice and stayed in command. (Verified identity; Inferred strength)" },
+        { "id": "us_mcclernand", "name": "McClernand's Division", "commander": "Maj. Gen. John A. McClernand", "arm": "inf", "weapon": "rifled", "men": 3000, "xp": 1, "x": 700, "z": 600, "facing": 3.14159, "formation": "line", "note": "1st Division, Army of the Tennessee. Held the center near the Hamburg-Purdy Road; fought a stubborn delaying action through the morning. (Verified identity; Inferred strength)" },
+        { "id": "us_hurlbut", "name": "Hurlbut's Division", "commander": "Brig. Gen. Stephen A. Hurlbut", "arm": "inf", "weapon": "rifled", "men": 2800, "xp": 1, "x": 500, "z": 550, "facing": 3.14159, "formation": "line", "note": "4th Division, Army of the Tennessee. Held the left center near the Peach Orchard; fought a stubborn defense before being driven back toward the Landing. (Verified identity; Inferred strength)" },
+        { "id": "us_wallace_div", "name": "W. H. L. Wallace's Division", "commander": "Brig. Gen. W. H. L. Wallace", "arm": "inf", "weapon": "rifled", "men": 2600, "xp": 1, "x": 650, "z": 460, "facing": 3.14159, "formation": "line", "note": "2nd Division, Army of the Tennessee. Fought alongside Prentiss at the Hornets' Nest; Wallace was mortally wounded as the position was overrun. (Verified identity; Inferred strength)" },
+        { "id": "us_battery_a", "name": "Battery A, 1st Illinois Light Artillery", "commander": "Capt. Ezra Taylor", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 6, "men": 110, "xp": 2, "x": 600, "z": 350, "facing": 3.14159, "formation": "line", "note": "Supported the Hornets' Nest defense. Universal gun model (D75): 6 guns, ~110 crew. (Verified)" },
+        { "id": "us_battery_b_shiloh", "name": "Battery B, 1st Illinois Light Artillery", "commander": "Capt. Samuel E. Barrett", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 6, "men": 110, "xp": 2, "x": 700, "z": 380, "facing": 3.14159, "formation": "line", "note": "Massed with other batteries near the Hornets' Nest to create the 'artillery hell' that broke the Confederate assaults. Universal gun model (D75): 6 guns, ~110 crew. (Verified)" }
+      ],
+      "CS": [
+        { "id": "cs_hardee_corps", "name": "Hardee's Corps (the first wave)", "commander": "Maj. Gen. William J. Hardee", "arm": "inf", "weapon": "smooth", "men": 4500, "xp": 2, "x": 600, "z": 830, "facing": 0, "formation": "line", "note": "III Corps, Army of the Mississippi. Opened the battle, striking Sherman's division at Shiloh Church. The first wave achieved complete surprise but was not followed up in mass. (Verified identity; Inferred strength)" },
+        { "id": "cs_bragg_corps", "name": "Bragg's Corps (the second wave)", "commander": "Maj. Gen. Braxton Bragg", "arm": "inf", "weapon": "smooth", "men": 5000, "xp": 2, "x": 600, "z": 780, "facing": 0, "formation": "line", "note": "II Corps, Army of the Mississippi. The second wave, intended to exploit Hardee's breakthrough. Bragg fed his brigades in piecemeal — a major command failure that cost the Confederacy the battle. (Verified identity; Inferred strength)" },
+        { "id": "cs_polk_corps", "name": "Polk's Corps", "commander": "Maj. Gen. Leonidas Polk", "arm": "inf", "weapon": "smooth", "men": 4000, "xp": 2, "x": 700, "z": 800, "facing": 0, "formation": "line", "note": "I Corps, Army of the Mississippi. An Episcopal bishop turned general; his corps fought in the center and left. (Verified identity; Inferred strength)" },
+        { "id": "cs_breckinridge_reserve", "name": "Breckinridge's Reserve Corps", "commander": "Maj. Gen. John C. Breckinridge", "arm": "inf", "weapon": "smooth", "men": 3000, "xp": 2, "x": 600, "z": 870, "facing": 0, "formation": "line", "note": "Reserve Corps. Committed late and disjointedly after Johnston's death — the reserve that might have crushed the Union was never massed. (Verified identity; Inferred strength)" },
+        { "id": "cs_artillery_pool", "name": "Confederate Artillery (massed batteries)", "commander": "Col. John J. Trabue", "arm": "art", "weapon": "smooth", "role": "attack", "guns": 12, "men": 300, "xp": 2, "x": 600, "z": 760, "facing": 0, "formation": "line", "note": "Massed Confederate batteries (Trabue's, Cobb's, Byrne's, Robertson's, etc.) supporting the assault. Universal gun model (D75): 12 guns, ~300 crew. (Verified)" }
+      ]
+    },
+    "reinforcements": [
+      { "id": "us_buell_ammen", "side": "US", "atSec": 180, "name": "Buell's Army — Ammen's Brigade (the first across)", "commander": "Brig. Gen. Jacob Ammen", "arm": "inf", "weapon": "rifled", "men": 2500, "xp": 2, "x": 600, "z": 140, "facing": 3.14159, "formation": "column", "entry": "from the steamboats at Pittsburg Landing — the first of Buell's Army of the Ohio", "note": "The leading brigade of Buell's Army of the Ohio, crossing the Tennessee River on steamboats through the night of April 6-7. Ammen's men were the first reinforcements to reach Grant's beleaguered line. (Verified)" },
+      { "id": "us_buell_nelson", "side": "US", "atSec": 240, "name": "Buell's Army — Nelson's Division", "commander": "Brig. Gen. William 'Bull' Nelson", "arm": "inf", "weapon": "rifled", "men": 3500, "xp": 2, "x": 600, "z": 130, "facing": 3.14159, "formation": "column", "entry": "Buell's division arriving at the Landing", "note": "Nelson's 4th Division, Army of the Ohio. Nelson was a massive, profane, energetic commander who personally rallied broken Union regiments on the evening of April 6. His division formed the core of the Union counterattack on April 7. (Verified)" },
+      { "id": "cs_wood_reserve", "side": "CS", "atSec": 120, "name": "Wood's Reserve Brigade", "commander": "Brig. Gen. S. A. M. Wood", "arm": "inf", "weapon": "smooth", "men": 1800, "xp": 2, "x": 600, "z": 860, "facing": 0, "formation": "line", "entry": "from the reserve — the last Confederate reserve committed", "note": "Wood's brigade was the last uncommitted Confederate reserve. Its piecemeal commitment — like all the others — failed to mass enough force to break the Union line before nightfall. (Verified)" }
+    ],
+    "terrain": {
+      "hills": [
+        { "name": "the Pittsburg Landing ridge", "x": 600, "z": 180, "h": 14, "s": 180, "note": "The high ground above the Tennessee River landing — the Union's last defensive line on April 6. (Verified)" },
+        { "name": "the high ground at Shiloh Church", "x": 600, "z": 780, "h": 12, "s": 150, "note": "The ridge around the small Methodist meetinghouse (Shiloh Church) where Sherman's division was posted and first struck. (Verified)" },
+        { "name": "the Peach Orchard ridge", "x": 480, "z": 520, "h": 10, "s": 120, "note": "The low ridge where A.S. Johnston was killed at ~2:30 p.m. on April 6. (Verified)" }
+      ],
+      "woods": [
+        { "x": 600, "z": 470, "r": 100, "note": "the thicket in front of the Sunken Road — the 'Hornets' Nest' — where the dense undergrowth and the sunken lane created a natural defensive position. The name came from the sound of Minie balls buzzing 'like a nest of hornets.' (Verified)" },
+        { "x": 430, "z": 700, "r": 110, "note": "the woods on the Confederate right — the approach route of Hardee's and Bragg's corps. (Verified)" },
+        { "x": 780, "z": 700, "r": 100, "note": "the woods on the Confederate left — the approach route of Polk's corps. (Verified)" },
+        { "x": 600, "z": 300, "r": 90, "note": "the timber along the River Road — the Union reserve and rallying ground. (Verified)" }
+      ],
+      "walls": [
+        { "x1": 480, "z1": 440, "x2": 720, "z2": 438, "note": "the SUNKEN ROAD / HORNETS' NEST — a worn farm lane sunk below grade, with a dense thicket in front: the defender's key hold line. The lane gave the defenders cover; the thicket slowed and channeled the attackers. This is NOT a stone wall — it is a natural defensive position that the Union held for ~6 hours against piecemeal assaults. (Verified)" }
+      ],
+      "markers": [
+        { "kind": "road", "name": "the Corinth Road", "path": [[600, 860], [600, 600], [600, 120]], "note": "The main road from Corinth to Pittsburg Landing — the Confederate axis of advance. (Verified)" },
+        { "kind": "road", "name": "the Hamburg-Purdy Road", "path": [[300, 860], [300, 600], [300, 120]], "note": "The road running east-west across the battlefield, intersecting the Corinth Road near Shiloh Church. (Verified)" },
+        { "kind": "road", "name": "the River Road", "path": [[120, 860], [120, 600], [120, 120]], "note": "The road along the Tennessee River — the Union line of retreat and Buell's approach route. (Verified)" },
+        { "kind": "label", "name": "Shiloh Church", "x": 600, "z": 780, "note": "The small Methodist meetinghouse that gave the battle its name — Sherman's division was posted here and struck first." },
+        { "kind": "label", "name": "the Peach Orchard", "x": 480, "z": 520, "note": "Where A.S. Johnston was killed at ~2:30 p.m. — the Confederate commander falls at the moment of his greatest opportunity." },
+        { "kind": "label", "name": "the Hornets' Nest (Sunken Road)", "x": 600, "z": 440, "note": "The worn farm lane where Prentiss's division held for six hours — the stand that saved Grant's army." },
+        { "kind": "label", "name": "Pittsburg Landing", "x": 600, "z": 120, "note": "The Tennessee River landing — the Union's last line and Buell's arrival point." },
+        { "kind": "creek", "name": "Lick Creek", "path": [[120, 560], [400, 575], [700, 580], [1080, 565]], "note": "The creek on the Union left that channeled the Confederate approach and limited the frontage of the assault. (Verified)" },
+        { "kind": "creek", "name": "Owl Creek", "path": [[120, 780], [400, 795], [700, 800], [1080, 785]], "note": "The creek on the Union right that limited the Confederate flanking options. (Verified)" }
+      ]
+    },
+    "teaching": {
+      "title": "Shiloh — the War Learns Its Cost",
+      "cards": [
+        {
+          "id": "sh_cost",
+          "head": "The cost that shocked the nation",
+          "body": "About 24,000 men were killed, wounded, or missing at Shiloh — more than the American Revolution, the War of 1812, and the Mexican-American War combined. The nation was stunned: no one had imagined that a single battle could produce such slaughter. Grant later wrote that Shiloh 'gave the death-blow to the idea that the war would be a short one.' The age of industrial war had arrived, and Shiloh was its first American lesson.",
+          "provenance": "Verified (high) — American Battlefield Trust (13,047 US / 10,699 CS / 23,746 total); Grant's Memoirs."
+        },
+        {
+          "id": "sh_surprise",
+          "head": "The surprise that should not have happened",
+          "body": "Grant knew Johnston's army was at Corinth — just 20 miles away — and had been reinforced to ~44,000 men. Yet he ordered no entrenchments, no systematic pickets, and no defensive line. His army was encamped for drill and reorganization, not for battle. The Confederate attack on April 6 achieved complete tactical surprise — a command failure that nearly cost Grant his army and his career. The lesson is not 'the South struck boldly' but 'the Union commander left his own door open.'",
+          "provenance": "Verified (high) — Sword, 'Shiloh: Bloody April'; Cunningham, 'Shiloh and the Western Campaign of 1862'; NPS Shiloh."
+        },
+        {
+          "id": "sh_johnston",
+          "head": "Johnston's death — the turning point",
+          "body": "Albert Sidney Johnston was the Confederacy's highest-ranking general and considered the South's best soldier. At ~2:30 p.m. on April 6, leading from the front at the Peach Orchard, he was struck behind the knee by a stray bullet. He ignored the wound — a minor one — and sent his personal surgeon to treat wounded Union prisoners. He bled to death in minutes from a severed popliteal artery. His death was the turning point of the first day: the Confederate assault lost its driving hand, coordination collapsed, and the piecemeal attacks that followed failed to crush the Union before Buell arrived. The lesson is not 'the heroic general falls' but 'the cost of leading from the front without a tourniquet.'",
+          "provenance": "Verified (high) — Sword, 'Shiloh: Bloody April'; NPS Shiloh; the Official Records (Johnston's death report)."
+        },
+        {
+          "id": "sh_piecemeal",
+          "head": "The piecemeal assault that lost a battle",
+          "body": "After Johnston's death, Beauregard assumed command — but the Confederate assault had already lost its coordination. Bragg fed his brigades in one at a time instead of massing them; Breckinridge's reserve was committed late and disjointedly; the Hornets' Nest was attacked frontally again and again instead of being turned. The Confederacy had the numbers and the surprise to crush Grant's army before Buell arrived — and threw it away by attacking in piecemeal waves against a single strong point. The lesson is not 'the gallant Southern assault' but 'the cost of disjointed command.'",
+          "provenance": "Verified (high) — Sword, 'Shiloh: Bloody April'; McDonough, 'Shiloh — In Hell before Night'; Cunningham."
+        },
+        {
+          "id": "sh_hornets_nest",
+          "head": "The Hornets' Nest — the stand that saved an army",
+          "body": "Prentiss's division — mostly green regiments in their first battle — held a worn farm lane, the Sunken Road, for about six hours against repeated Confederate assaults. The position was strong: a sunken road with a dense thicket in front that slowed and channeled the attackers. But the real reason it held was that the Confederate attacks were piecemeal — never massed — and that Prentiss's men, out of ammunition and surrounded, surrendered only when they had nothing left to fire. The stand bought Grant the hours he needed to form his last line at Pittsburg Landing. The lesson is not 'the heroic defense' but 'what ordinary soldiers can do when their enemy attacks in waves instead of mass.'",
+          "provenance": "Verified (high) — NPS Shiloh (the Sunken Road / Hornets' Nest trail); Sword; Cunningham."
+        }
+      ],
+      "codex": {
+        "id": "codex_shiloh",
+        "title": "Shiloh / Pittsburg Landing, April 6-7, 1862",
+        "summary": "The first great battle of the Western theater — Grant's army surprised at Pittsburg Landing by Johnston's Army of the Mississippi. The first day was a Confederate near-breakthrough, stopped at the Hornets' Nest; Johnston was killed at the Peach Orchard. Overnight Buell's army arrived; the second day the reinforced Union drove the Confederates back to Corinth. ~24,000 total casualties — more than all of America's previous wars combined — taught both sides that the war would be long and terrible.",
+        "axes": { "timeline": "1862", "theater": "Western", "people": ["Grant", "Sherman", "Prentiss", "W.H.L. Wallace", "Buell", "A.S. Johnston", "Beauregard", "Bragg", "Hardee", "Polk", "Breckinridge"], "battle": "Shiloh" }
+      }
+    }
+  }
+}
