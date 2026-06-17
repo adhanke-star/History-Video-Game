@@ -25,7 +25,7 @@ var _ecDEMAND   = 100;         // normalized per-turn war-financing demand (both
 /* Pull a side's finance config from GAME_DATA with hardcoded fallbacks that
    mirror data/economy.json (so the module works even if GAME_DATA is absent). */
 function _ecCfg(side) {
-  var G2 = (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.economy) ? GAME_DATA.economy : null;
+  var G2 = gameData("economy");
   var d = {
     US: { startFunds: 6500, mix: { bonds: 0.66, taxes: 0.21, printing: 0.13 },
           taxEff: 0.80, bondAbsorb: 100, inflCoeff: 0.06, spiral: 1.0, target: 1.8, secretary: "Chase" },
@@ -57,13 +57,7 @@ function _ecSecretary(C) {
   return (side === "CS") ? "Memminger" : "Chase";
 }
 
-function _ecPush(C, line) {
-  try {
-    if (!C.economy.log) C.economy.log = [];
-    C.economy.log.unshift(line);
-    if (C.economy.log.length > 6) C.economy.log.length = 6;
-  } catch (e) {}
-}
+function _ecPush(C, line) { logPush(C && C.economy, "log", line); }
 
 /* Normalize the 3-way mix to sum to 1 (after a lever shift). */
 function _ecNorm(mix) {

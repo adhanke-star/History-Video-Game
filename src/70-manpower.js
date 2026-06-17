@@ -28,7 +28,7 @@ var _mpATTR_COEFF = 3.5;   // strength-points lost per thousand casualties
 var _mpATTR_MAX   = 14;    // per-turn attrition clamp
 
 function _mpCfg(side) {
-  var M = (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.economy && GAME_DATA.economy.manpower) ? GAME_DATA.economy.manpower : null;
+  var _d = gameData("economy"); var M = (_d && _d.manpower) ? _d.manpower : null;
   var d = {
     US: { pool: 4000, ceiling: 2129, immigrant: 350, usct: 180 },
     CS: { pool: 1000, ceiling: 850,  immigrant: 0,   usct: 0 }
@@ -63,13 +63,7 @@ function _mpReplacementRatio(side, year, mom, armed) {
   return Math.max(0, Math.min(0.95, eff));
 }
 
-function _mpPush(C, line) {
-  try {
-    if (!C.manpower.log) C.manpower.log = [];
-    C.manpower.log.unshift(line);
-    if (C.manpower.log.length > 6) C.manpower.log.length = 6;
-  } catch (e) {}
-}
+function _mpPush(C, line) { logPush(C && C.manpower, "log", line); }
 
 function manpowerInit(C) {
   if (!C) return;

@@ -20543,6 +20543,64 @@ var GAME_DATA = {
 }
 };
 
+/* ===== module: 01-utils.js ===== */
+/* ===========================================================================
+   01-utils.js — shared utility helpers used across grand-strategy modules.
+
+   Loaded FIRST (manifest position 0) so every module can call these by bare
+   name.  Six helpers that were previously copy-pasted across 6-12 modules,
+   now a single source of truth.
+
+   Bare-name globals (GAME_DATA — never window.GAME_DATA); no module-specific
+   prefix (these are intentionally cross-cutting); no state; no DOM.
+   =========================================================================== */
+
+/* HTML-escape for innerHTML AND attribute contexts (quotes included).
+   Replaces _cabEsc / _decEsc / _prsEsc / _cmdEsc / _artEsc / _engEsc. */
+function htmlEsc(s) {
+  s = (s == null) ? "" : String(s);
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+/* Append a line to a capped, newest-first log on obj[key].
+   Replaces _pdLog / _ecPush / _prPush / _blkPush / _mpPush / _vicPush. */
+function logPush(obj, key, line, max) {
+  try {
+    if (!obj) return;
+    if (!obj[key]) obj[key] = [];
+    obj[key].unshift(line);
+    if (obj[key].length > (max || 6)) obj[key].length = (max || 6);
+  } catch (e) {}
+}
+
+/* Safe accessor for a GAME_DATA sub-object.
+   gameData("cabinet") → GAME_DATA.cabinet, or null if absent.
+   Replaces the per-module typeof-guard boilerplate. */
+function gameData(key) {
+  return (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA[key]) ? GAME_DATA[key] : null;
+}
+
+/* The campaign's current year from C.clock or C.president.date, default 1861.
+   Replaces _armYear / _artYear / _engYear (identical copies). */
+function campaignYear(C) {
+  return (C && C.clock && typeof C.clock.year === "number") ? C.clock.year
+       : (C && C.president && C.president.date && typeof C.president.date.year === "number") ? C.president.date.year : 1861;
+}
+
+/* Strategic date {year,month} → comparable integer (year×12 + month).
+   defMonth is the fallback month when d is null/invalid (default 4 = April).
+   Replaces _cabDateNum (defMonth 2) and _cmdDateNum (defMonth 4). */
+function dateToNum(d, defMonth) {
+  if (!d || typeof d.year !== "number") return 1861 * 12 + (typeof defMonth === "number" ? defMonth : 4);
+  return d.year * 12 + (typeof d.month === "number" ? d.month : 1);
+}
+
+/* Tenure {y,m} → comparable integer, 0 if absent.
+   Replaces _cabTenureNum and _cmdYM (identical). */
+function tenureToNum(t) { return t ? (t.y * 12 + (t.m || 1)) : 0; }
+
+
 /* ===== module: 10-president-state.js ===== */
 /* ===========================================================================
    S0 · 10-president-state.js — The President's Desk: STATE + per-battle tick.
@@ -20575,12 +20633,7 @@ var _pdLOG_MAX = 6;
 /* Append a dispatch line to the President's log (newest-first, capped) —
    mirrors the clk/wr log convention. Guarded; never throws into the tick. */
 function _pdLog(C, line) {
-  try {
-    if (!C || !C.president) return;
-    if (!C.president.log) C.president.log = [];
-    C.president.log.unshift(line);
-    if (C.president.log.length > _pdLOG_MAX) C.president.log.length = _pdLOG_MAX;
-  } catch (e) {}
+  logPush(C && C.president, "log", line, _pdLOG_MAX);
 }
 
 /* Authored cabinet rosters. No cabinet/advisor data exists anywhere in the repo
@@ -20758,7 +20811,7 @@ function presRenderEconomy(C) {
   var dispatches = "";
   if (P.log && P.log.length) {
     dispatches = '<div style="margin-top:12px"><div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin-bottom:4px">From the Wires</div>';
-    for (var d = 0; d < P.log.length; d++) dispatches += '<div style="font-size:12px;opacity:.85;padding:2px 0">&bull; ' + (typeof _cabEsc === "function" ? _cabEsc(P.log[d]) : P.log[d]) + '</div>';   // D49.8: escape (cabinet now writes dynamic dispatch text)
+    for (var d = 0; d < P.log.length; d++) dispatches += '<div style="font-size:12px;opacity:.85;padding:2px 0">&bull; ' + htmlEsc(P.log[d]) + '</div>';   // D49.8: escape (cabinet now writes dynamic dispatch text)
     dispatches += '</div>';
   } else {
     dispatches = '<p class="lede" style="opacity:.6;font-size:12px;margin-top:12px">No dispatches yet — the war is young.</p>';
@@ -20874,7 +20927,7 @@ function presRenderMap(C) {
 function _pdInterstitialHTML(C) {
   var P = (C && C.president) ? C.president : null;
   var when = P ? (_pdMonthName(P.date.month) + ' ' + P.date.year) : '';
-  var dispatch = (P && P.log && P.log.length) ? (typeof _cabEsc === "function" ? _cabEsc(P.log[0]) : P.log[0]) : 'The armies rest, and the work of the war goes on.';
+  var dispatch = (P && P.log && P.log.length) ? htmlEsc(P.log[0]) : 'The armies rest, and the work of the war goes on.';
   var sideName = (C && C.side === "CS") ? "the Confederate States" : "the United States";
   return ''
     + '<h1 class="title-xl" style="text-align:center">To the Executive Mansion</h1>'
@@ -21148,9 +21201,7 @@ var _cabDOMAIN_LABEL = {
 };
 
 /* data/cabinet.json -> GAME_DATA.cabinet (or null). */
-function _cabData() {
-  return (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.cabinet) ? GAME_DATA.cabinet : null;
-}
+function _cabData() { return gameData("cabinet"); }
 
 /* The side's full advisor roster (array) — falls back to the S0 stub names. */
 function _cabSideRoster(side) {
@@ -21160,19 +21211,13 @@ function _cabSideRoster(side) {
   return [];
 }
 
-/* Escape for innerHTML AND attribute contexts (quotes too — the D43.4 lesson). */
-function _cabEsc(s) {
-  s = (s == null) ? "" : String(s);
-  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-}
+/* Escape — delegates to shared htmlEsc (01-utils.js). Alias kept for
+   cross-module callers that guard with typeof _cabEsc === "function". */
+var _cabEsc = htmlEsc;
 
-/* A strategic date as a comparable integer (year*12 + month). */
-function _cabDateNum(d) {
-  if (!d || typeof d.year !== "number") return 1861 * 12 + 2;
-  return d.year * 12 + (typeof d.month === "number" ? d.month : 1);
-}
-function _cabTenureNum(t) { return t ? (t.y * 12 + (t.m || 1)) : 0; }
+/* Strategic date / tenure helpers — delegate to shared 01-utils.js. */
+function _cabDateNum(d) { return dateToNum(d, 2); }
+function _cabTenureNum(t) { return tenureToNum(t); }
 
 /* The advisor who held `domain` at strategic date `date` — latest tenure-start
    whose window contains the date (so the churn resolves to one current holder). */
@@ -21617,16 +21662,11 @@ function presWireCabinet(C) {
    globals; _dec/dec prefix; render never mutates/saves; the tick + the choose-handler do.
    =========================================================================== */
 
-function _decData() {
-  return (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.decisions) ? GAME_DATA.decisions : null;
-}
+function _decData() { return gameData("decisions"); }
 function _decCards() { var d = _decData(); return (d && d.cards && d.cards.length) ? d.cards : []; }
 function _decById(id) { var cs = _decCards(); for (var i = 0; i < cs.length; i++) if (cs[i] && cs[i].id === id) return cs[i]; return null; }
 function _decClamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
-function _decEsc(s) {
-  s = (s == null) ? "" : String(s);
-  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-}
+var _decEsc = htmlEsc;
 /* Sanitize an id used BOTH as an element-id attribute AND a getElementById key —
    must stay in lockstep, so NOT _decEsc (whose entities would desync them). D50.11 */
 function _decIdSafe(s) { return String(s == null ? "" : s).replace(/[^A-Za-z0-9_-]/g, "_"); }
@@ -22067,7 +22107,7 @@ var _prsLEAN_BASE = { administration: 66, radical: 63, abolitionist: 66, moderat
 var _prsFAVOR_DELTA = { "strongly-for": 8, "for": 4, "neutral": 0, "against": -4, "strongly-against": -8 };
 var _prsLEAN_LABEL = { administration: "Administration", radical: "Radical", abolitionist: "Abolitionist", moderate: "Moderate", "war-democrat": "War Democrat", copperhead: "Copperhead", "fire-eater": "Fire-Eater" };
 
-function _prsData() { return (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.press) ? GAME_DATA.press : null; }
+function _prsData() { return gameData("press"); }
 function _prsAllPapers() { var d = _prsData(); return (d && d.papers && d.papers.length) ? d.papers : []; }
 function _prsPapers(side) {
   var s = (side === "CS") ? "CS" : "US", all = _prsAllPapers(), out = [];
@@ -22075,10 +22115,7 @@ function _prsPapers(side) {
   return out;
 }
 function _prsById(id) { var all = _prsAllPapers(); for (var i = 0; i < all.length; i++) if (all[i] && all[i].id === id) return all[i]; return null; }
-function _prsEsc(s) {
-  s = (s == null) ? "" : String(s);
-  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-}
+var _prsEsc = htmlEsc;
 function _prsBaseline(p) { return (p && _prsLEAN_BASE[p.lean] != null) ? _prsLEAN_BASE[p.lean] : 50; }
 
 /* ---- pressInit: idempotent. C.press = per-paper favor + aggregate sentiment + the
@@ -22307,9 +22344,7 @@ function pressWireTab(C) {
 var _cmdRELIEF_BASE = { easy: 4, costly: 12, "very-costly": 22 };
 
 /* data/generals.json -> GAME_DATA.generals (or null). */
-function _cmdData() {
-  return (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.generals) ? GAME_DATA.generals : null;
-}
+function _cmdData() { return gameData("generals"); }
 
 /* The side's full general roster (array) — empty if the data is absent. */
 function _cmdSideGenerals(side) {
@@ -22325,12 +22360,7 @@ function _cmdById(side, id) {
   return null;
 }
 
-/* Escape for innerHTML AND attribute contexts (quotes too — the D43.4 lesson). */
-function _cmdEsc(s) {
-  s = (s == null) ? "" : String(s);
-  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-}
+var _cmdEsc = htmlEsc;
 
 /* Strip a disambiguation suffix ("Johnston-J" -> "Johnston") for display + portrait. */
 function _cmdName(gen) {
@@ -22338,12 +22368,9 @@ function _cmdName(gen) {
   return String(gen.name || "").replace(/-[A-Za-z]$/, "");
 }
 
-/* A strategic date as a comparable integer (year*12 + month) — mirrors _cabDateNum. */
-function _cmdDateNum(d) {
-  if (!d || typeof d.year !== "number") return 1861 * 12 + 4;
-  return d.year * 12 + (typeof d.month === "number" ? d.month : 1);
-}
-function _cmdYM(t) { return t ? (t.y * 12 + (t.m || 1)) : 0; }
+/* Strategic date / tenure helpers — delegate to shared 01-utils.js. */
+function _cmdDateNum(d) { return dateToNum(d); }
+function _cmdYM(t) { return tenureToNum(t); }
 
 /* Is this general alive / not-yet-removed and within his availability window at `date`? */
 function _cmdAlive(gen, date) {
@@ -22800,7 +22827,7 @@ var _ecDEMAND   = 100;         // normalized per-turn war-financing demand (both
 /* Pull a side's finance config from GAME_DATA with hardcoded fallbacks that
    mirror data/economy.json (so the module works even if GAME_DATA is absent). */
 function _ecCfg(side) {
-  var G2 = (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.economy) ? GAME_DATA.economy : null;
+  var G2 = gameData("economy");
   var d = {
     US: { startFunds: 6500, mix: { bonds: 0.66, taxes: 0.21, printing: 0.13 },
           taxEff: 0.80, bondAbsorb: 100, inflCoeff: 0.06, spiral: 1.0, target: 1.8, secretary: "Chase" },
@@ -22832,13 +22859,7 @@ function _ecSecretary(C) {
   return (side === "CS") ? "Memminger" : "Chase";
 }
 
-function _ecPush(C, line) {
-  try {
-    if (!C.economy.log) C.economy.log = [];
-    C.economy.log.unshift(line);
-    if (C.economy.log.length > 6) C.economy.log.length = 6;
-  } catch (e) {}
-}
+function _ecPush(C, line) { logPush(C && C.economy, "log", line); }
 
 /* Normalize the 3-way mix to sum to 1 (after a lever shift). */
 function _ecNorm(mix) {
@@ -23055,7 +23076,7 @@ var _prRAIL_DECAY_CS = 0.07;     // CS rail throughput lost per turn (no replace
 var _prARMS_NEED = 45;           // per-turn small-arms need (both sides, normalized vs CS 16-turn scale)
 
 function _prCfg(side) {
-  var P = (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.economy && GAME_DATA.economy.production) ? GAME_DATA.economy.production : null;
+  var _d = gameData("economy"); var P = (_d && _d.production) ? _d.production : null;
   var d = {
     US: { arms: 85, arty: 40, foodDist: 0.85, importFactor: 1.0, railDecay: 0, ironCeiling: 9999 },
     CS: { arms: 6, arty: 17, foodDist: 0.45, importFactor: 0.6, railDecay: 0.07, ironCeiling: 20 }
@@ -23073,13 +23094,7 @@ function _prCfg(side) {
   return base;
 }
 
-function _prPush(C, line) {
-  try {
-    if (!C.production.log) C.production.log = [];
-    C.production.log.unshift(line);
-    if (C.production.log.length > 6) C.production.log.length = 6;
-  } catch (e) {}
-}
+function _prPush(C, line) { logPush(C && C.production, "log", line); }
 
 function prodInit(C) {
   if (!C) return;
@@ -23206,9 +23221,7 @@ function presProdBlock(C) {
    globals; _arm* helpers; render never mutates or saves.
    =========================================================================== */
 
-function _armData() {
-  return (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.weapons) ? GAME_DATA.weapons : null;
-}
+function _armData() { return gameData("weapons"); }
 function _armCat() {
   var D = _armData();
   return (D && D.weapons) ? D.weapons : [];
@@ -23222,10 +23235,7 @@ function armoryInit(C) {
   if (!C.armory.loadout || typeof C.armory.loadout !== "object") C.armory.loadout = {};
 }
 
-function _armYear(C) {
-  return (C && C.clock && typeof C.clock.year === "number") ? C.clock.year
-       : (C && C.president && C.president.date && typeof C.president.date.year === "number") ? C.president.date.year : 1861;
-}
+function _armYear(C) { return campaignYear(C); }
 
 /* Availability + the side's price for a weapon. */
 function _armAvail(C, w) {
@@ -23401,9 +23411,7 @@ function armoryWireArmory(C) {
    _art* helpers; reuses _armRarityCol from 55-weapons; render never mutates/saves.
    =========================================================================== */
 
-function _artData() {
-  return (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.artillery) ? GAME_DATA.artillery : null;
-}
+function _artData() { return gameData("artillery"); }
 function _artGuns() { var D = _artData(); return (D && D.guns) ? D.guns : []; }
 function _artBaseline() { var D = _artData(); return (D && typeof D.baselineArtilleryScore === "number") ? D.baselineArtilleryScore : 8; }
 function _artFull() { var D = _artData(); return (D && typeof D.fullComplementBatteries === "number" && D.fullComplementBatteries > 0) ? D.fullComplementBatteries : 12; }
@@ -23417,8 +23425,7 @@ function _artUnionGuns() { var D = _artData(); return (D && D.batteryGunsUnion) 
 /* Honor a configured cost of 0 (a starter/gift gun); only fall back to 1000 when the field is missing/invalid. */
 function _artCost(g) { return (g && typeof g.costPerBattery === "number" && isFinite(g.costPerBattery) && g.costPerBattery >= 0) ? g.costPerBattery : 1000; }
 
-/* Escape data-driven text before it enters innerHTML — the catalog is tunable/untrusted-shaped data. */
-function _artEsc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
+var _artEsc = htmlEsc;
 
 function artInit(C) {
   if (!C) return;
@@ -23437,10 +23444,7 @@ function artInit(C) {
   }
 }
 
-function _artYear(C) {
-  return (C && C.clock && typeof C.clock.year === "number") ? C.clock.year
-       : (C && C.president && C.president.date && typeof C.president.date.year === "number") ? C.president.date.year : 1861;
-}
+function _artYear(C) { return campaignYear(C); }
 
 /* Availability + the side's price multiplier for a gun. */
 function _artAvail(C, g) {
@@ -23647,9 +23651,7 @@ function artWireSection(C) {
    Array.isArray guards, value coercion, data escaped before innerHTML.
    =========================================================================== */
 
-function _engData() {
-  return (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.engineering) ? GAME_DATA.engineering : null;
-}
+function _engData() { return gameData("engineering"); }
 function _engBranches() { var D = _engData(); return (D && D.branches && D.branches.length) ? D.branches : []; }
 function _engBaseline() { var D = _engData(); return (D && typeof D.baselineEngineeringScore === "number") ? D.baselineEngineeringScore : 12; }
 function _engMax(b) {
@@ -23668,14 +23670,9 @@ function _engLevelCost(b, lvl) {
   return (typeof c === "number" && isFinite(c) && c >= 0) ? c : null;
 }
 
-/* Escape data-driven text before it enters innerHTML — quote-safe so it is also correct in
-   attribute position (data-engbuy="..."), not just element text. */
-function _engEsc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
+var _engEsc = htmlEsc;
 
-function _engYear(C) {
-  return (C && C.clock && typeof C.clock.year === "number") ? C.clock.year
-       : (C && C.president && C.president.date && typeof C.president.date.year === "number") ? C.president.date.year : 1861;
-}
+function _engYear(C) { return campaignYear(C); }
 
 function engInit(C) {
   if (!C) return;
@@ -23872,10 +23869,7 @@ function engWireSection(C) {
    makeTile); _tc* helpers; decoration never weakens a tile or touches water.
    =========================================================================== */
 
-function _tcData() {
-  // build keys data by filename: data/terrain-cover.json -> GAME_DATA["terrain-cover"] (hyphenated, like manpower-teaching)
-  return (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA["terrain-cover"]) ? GAME_DATA["terrain-cover"] : null;
-}
+function _tcData() { return gameData("terrain-cover"); }
 function _tcTypes() { var D = _tcData(); return (D && D.types && D.types.length) ? D.types : []; }
 
 /* Install the cover types into the frozen engine consts (idempotent). */
@@ -24016,9 +24010,7 @@ function authoredMap(bd) {
    clamp); _af* helpers; no campaign state added; guarded for non-campaign battles.
    =========================================================================== */
 
-function _afData() {
-  return (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.weapons) ? GAME_DATA.weapons : null;
-}
+function _afData() { return gameData("weapons"); }
 
 /* Bind strategic armory ids -> engine WEAPONS keys, quality-monotonically
    (a higher-quality purchase always maps to >= field power). */
@@ -24174,13 +24166,7 @@ function _blkPortsByYear(year, mom, fortified) {
   return base;
 }
 
-function _blkPush(C, line) {
-  try {
-    if (!C.blockade.log) C.blockade.log = [];
-    C.blockade.log.unshift(line);
-    if (C.blockade.log.length > 6) C.blockade.log.length = 6;
-  } catch (e) {}
-}
+function _blkPush(C, line) { logPush(C && C.blockade, "log", line); }
 
 /* ---- blockadeInit: idempotent; seeds C.blockade. CS carries the cotton model;
    the US side carries the blockade-as-weapon framing (no cotton, full imports). ---- */
@@ -24354,7 +24340,7 @@ function _blkTightStatus(pct) {
 /* Pull a teaching card (multi-voice) from GAME_DATA.diplomacy when present. */
 function _blkCard(id) {
   try {
-    var D = (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.diplomacy) ? GAME_DATA.diplomacy : null;
+    var D = gameData("diplomacy");
     if (D && D.teachingCards) {
       for (var i = 0; i < D.teachingCards.length; i++) if (D.teachingCards[i].id === id) return D.teachingCards[i];
     }
@@ -24538,7 +24524,7 @@ var _mpATTR_COEFF = 3.5;   // strength-points lost per thousand casualties
 var _mpATTR_MAX   = 14;    // per-turn attrition clamp
 
 function _mpCfg(side) {
-  var M = (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.economy && GAME_DATA.economy.manpower) ? GAME_DATA.economy.manpower : null;
+  var _d = gameData("economy"); var M = (_d && _d.manpower) ? _d.manpower : null;
   var d = {
     US: { pool: 4000, ceiling: 2129, immigrant: 350, usct: 180 },
     CS: { pool: 1000, ceiling: 850,  immigrant: 0,   usct: 0 }
@@ -24573,13 +24559,7 @@ function _mpReplacementRatio(side, year, mom, armed) {
   return Math.max(0, Math.min(0.95, eff));
 }
 
-function _mpPush(C, line) {
-  try {
-    if (!C.manpower.log) C.manpower.log = [];
-    C.manpower.log.unshift(line);
-    if (C.manpower.log.length > 6) C.manpower.log.length = 6;
-  } catch (e) {}
-}
+function _mpPush(C, line) { logPush(C && C.manpower, "log", line); }
 
 function manpowerInit(C) {
   if (!C) return;
@@ -24813,13 +24793,7 @@ function vicMomentum(C) {
   } catch (e) { return 0.5; }
 }
 
-function _vicPush(C, line) {
-  try {
-    if (!C.strategy.log) C.strategy.log = [];
-    C.strategy.log.unshift(line);
-    if (C.strategy.log.length > 6) C.strategy.log.length = 6;
-  } catch (e) {}
-}
+function _vicPush(C, line) { logPush(C && C.strategy, "log", line); }
 
 /* ---- vicInit: idempotent; seeds C.strategy (levers + the enemy-will tracker). ---- */
 function vicInit(C) {

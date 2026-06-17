@@ -19,9 +19,7 @@
    globals; _arm* helpers; render never mutates or saves.
    =========================================================================== */
 
-function _armData() {
-  return (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.weapons) ? GAME_DATA.weapons : null;
-}
+function _armData() { return gameData("weapons"); }
 function _armCat() {
   var D = _armData();
   return (D && D.weapons) ? D.weapons : [];
@@ -35,10 +33,7 @@ function armoryInit(C) {
   if (!C.armory.loadout || typeof C.armory.loadout !== "object") C.armory.loadout = {};
 }
 
-function _armYear(C) {
-  return (C && C.clock && typeof C.clock.year === "number") ? C.clock.year
-       : (C && C.president && C.president.date && typeof C.president.date.year === "number") ? C.president.date.year : 1861;
-}
+function _armYear(C) { return campaignYear(C); }
 
 /* Availability + the side's price for a weapon. */
 function _armAvail(C, w) {

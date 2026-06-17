@@ -60,7 +60,7 @@ function presRenderEconomy(C) {
   var dispatches = "";
   if (P.log && P.log.length) {
     dispatches = '<div style="margin-top:12px"><div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin-bottom:4px">From the Wires</div>';
-    for (var d = 0; d < P.log.length; d++) dispatches += '<div style="font-size:12px;opacity:.85;padding:2px 0">&bull; ' + (typeof _cabEsc === "function" ? _cabEsc(P.log[d]) : P.log[d]) + '</div>';   // D49.8: escape (cabinet now writes dynamic dispatch text)
+    for (var d = 0; d < P.log.length; d++) dispatches += '<div style="font-size:12px;opacity:.85;padding:2px 0">&bull; ' + htmlEsc(P.log[d]) + '</div>';   // D49.8: escape (cabinet now writes dynamic dispatch text)
     dispatches += '</div>';
   } else {
     dispatches = '<p class="lede" style="opacity:.6;font-size:12px;margin-top:12px">No dispatches yet — the war is young.</p>';
@@ -176,7 +176,7 @@ function presRenderMap(C) {
 function _pdInterstitialHTML(C) {
   var P = (C && C.president) ? C.president : null;
   var when = P ? (_pdMonthName(P.date.month) + ' ' + P.date.year) : '';
-  var dispatch = (P && P.log && P.log.length) ? (typeof _cabEsc === "function" ? _cabEsc(P.log[0]) : P.log[0]) : 'The armies rest, and the work of the war goes on.';
+  var dispatch = (P && P.log && P.log.length) ? htmlEsc(P.log[0]) : 'The armies rest, and the work of the war goes on.';
   var sideName = (C && C.side === "CS") ? "the Confederate States" : "the United States";
   return ''
     + '<h1 class="title-xl" style="text-align:center">To the Executive Mansion</h1>'

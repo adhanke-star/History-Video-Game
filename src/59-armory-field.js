@@ -30,9 +30,7 @@
    clamp); _af* helpers; no campaign state added; guarded for non-campaign battles.
    =========================================================================== */
 
-function _afData() {
-  return (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.weapons) ? GAME_DATA.weapons : null;
-}
+function _afData() { return gameData("weapons"); }
 
 /* Bind strategic armory ids -> engine WEAPONS keys, quality-monotonically
    (a higher-quality purchase always maps to >= field power). */

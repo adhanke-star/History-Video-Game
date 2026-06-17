@@ -41,9 +41,7 @@ var _cabDOMAIN_LABEL = {
 };
 
 /* data/cabinet.json -> GAME_DATA.cabinet (or null). */
-function _cabData() {
-  return (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.cabinet) ? GAME_DATA.cabinet : null;
-}
+function _cabData() { return gameData("cabinet"); }
 
 /* The side's full advisor roster (array) — falls back to the S0 stub names. */
 function _cabSideRoster(side) {
@@ -53,19 +51,13 @@ function _cabSideRoster(side) {
   return [];
 }
 
-/* Escape for innerHTML AND attribute contexts (quotes too — the D43.4 lesson). */
-function _cabEsc(s) {
-  s = (s == null) ? "" : String(s);
-  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-}
+/* Escape — delegates to shared htmlEsc (01-utils.js). Alias kept for
+   cross-module callers that guard with typeof _cabEsc === "function". */
+var _cabEsc = htmlEsc;
 
-/* A strategic date as a comparable integer (year*12 + month). */
-function _cabDateNum(d) {
-  if (!d || typeof d.year !== "number") return 1861 * 12 + 2;
-  return d.year * 12 + (typeof d.month === "number" ? d.month : 1);
-}
-function _cabTenureNum(t) { return t ? (t.y * 12 + (t.m || 1)) : 0; }
+/* Strategic date / tenure helpers — delegate to shared 01-utils.js. */
+function _cabDateNum(d) { return dateToNum(d, 2); }
+function _cabTenureNum(t) { return tenureToNum(t); }
 
 /* The advisor who held `domain` at strategic date `date` — latest tenure-start
    whose window contains the date (so the churn resolves to one current holder). */

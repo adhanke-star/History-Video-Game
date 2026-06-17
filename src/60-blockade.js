@@ -60,13 +60,7 @@ function _blkPortsByYear(year, mom, fortified) {
   return base;
 }
 
-function _blkPush(C, line) {
-  try {
-    if (!C.blockade.log) C.blockade.log = [];
-    C.blockade.log.unshift(line);
-    if (C.blockade.log.length > 6) C.blockade.log.length = 6;
-  } catch (e) {}
-}
+function _blkPush(C, line) { logPush(C && C.blockade, "log", line); }
 
 /* ---- blockadeInit: idempotent; seeds C.blockade. CS carries the cotton model;
    the US side carries the blockade-as-weapon framing (no cotton, full imports). ---- */
@@ -240,7 +234,7 @@ function _blkTightStatus(pct) {
 /* Pull a teaching card (multi-voice) from GAME_DATA.diplomacy when present. */
 function _blkCard(id) {
   try {
-    var D = (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.diplomacy) ? GAME_DATA.diplomacy : null;
+    var D = gameData("diplomacy");
     if (D && D.teachingCards) {
       for (var i = 0; i < D.teachingCards.length; i++) if (D.teachingCards[i].id === id) return D.teachingCards[i];
     }

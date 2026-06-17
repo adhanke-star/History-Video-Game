@@ -29,9 +29,7 @@
    Array.isArray guards, value coercion, data escaped before innerHTML.
    =========================================================================== */
 
-function _engData() {
-  return (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.engineering) ? GAME_DATA.engineering : null;
-}
+function _engData() { return gameData("engineering"); }
 function _engBranches() { var D = _engData(); return (D && D.branches && D.branches.length) ? D.branches : []; }
 function _engBaseline() { var D = _engData(); return (D && typeof D.baselineEngineeringScore === "number") ? D.baselineEngineeringScore : 12; }
 function _engMax(b) {
@@ -50,14 +48,9 @@ function _engLevelCost(b, lvl) {
   return (typeof c === "number" && isFinite(c) && c >= 0) ? c : null;
 }
 
-/* Escape data-driven text before it enters innerHTML — quote-safe so it is also correct in
-   attribute position (data-engbuy="..."), not just element text. */
-function _engEsc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
+var _engEsc = htmlEsc;
 
-function _engYear(C) {
-  return (C && C.clock && typeof C.clock.year === "number") ? C.clock.year
-       : (C && C.president && C.president.date && typeof C.president.date.year === "number") ? C.president.date.year : 1861;
-}
+function _engYear(C) { return campaignYear(C); }
 
 function engInit(C) {
   if (!C) return;
