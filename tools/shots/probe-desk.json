@@ -32,7 +32,7 @@
       "name": "economy tab",
       "ok": true,
       "v": {
-        "len": 26807,
+        "len": 29171,
         "hasMeter": true,
         "hasPortrait": true
       }
@@ -61,11 +61,12 @@
       }
     },
     {
-      "name": "cabinet tab",
+      "name": "cabinet tab (S2 advisor system)",
       "ok": true,
       "v": {
         "delegates": 4,
-        "portraits": 4
+        "portraits": 4,
+        "warSec": "Cameron"
       }
     },
     {
@@ -74,6 +75,15 @@
       "v": {
         "wasDelegated": false,
         "nowDelegated": true
+      }
+    },
+    {
+      "name": "decisions tab (S2 m2)",
+      "ok": true,
+      "v": {
+        "len": 7822,
+        "pending": 1,
+        "hasDecideBtn": true
       }
     },
     {

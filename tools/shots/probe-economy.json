@@ -5,9 +5,19 @@
       "ok": true,
       "v": {
         "keys": [
+          "artillery",
+          "bullrun",
+          "cabinet",
+          "decisions",
           "diplomacy",
           "economy",
-          "manpower-teaching"
+          "engineering",
+          "fredericksburg",
+          "generals",
+          "manpower-teaching",
+          "press",
+          "terrain-cover",
+          "weapons"
         ],
         "econKeys": [
           "_comment",

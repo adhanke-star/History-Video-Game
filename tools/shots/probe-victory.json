@@ -629,7 +629,7 @@
         "recog": 1,
         "foreclosed": true,
         "impF": 0.28,
-        "enemyWill": 96,
+        "enemyWill": 100,
         "vr": null
       },
       {
@@ -644,7 +644,7 @@
         "recog": 0,
         "foreclosed": true,
         "impF": 0.28,
-        "enemyWill": 98,
+        "enemyWill": 100,
         "vr": null
       },
       {

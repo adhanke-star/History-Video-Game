@@ -31,6 +31,7 @@
     "tactical/T6-presets.js",
     "tactical/T7-command-side.js",
     "tactical/T8-phases.js",
+    "tactical/T9-audio.js",
     "90-president-register.js",
     "91-save-slots.js",
     "92-help-overlay.js"
