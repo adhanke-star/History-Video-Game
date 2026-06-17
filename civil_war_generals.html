@@ -19986,6 +19986,348 @@ var GAME_DATA = {
     }
   ]
 },
+"gettysburg": {
+  "_comment": "PHASE C-1 — GETTYSBURG, July 1-3, 1863 — the SECOND MULTI-PHASE epic for the __FIELD real-time engine (following the Antietam pattern via the gated T8 phases[] engine). THREE sequential phases fought in one scenario: PHASE 1 DAY 1 — McPherson Ridge / Oak Hill (the meeting engagement west of town: Buford's cavalry delaying action, Reynolds's I Corps arriving on the double-quick, the Confederate II Corps under Ewell sweeping down from the north — Reynolds killed, the Union pushed through town to Cemetery Hill); PHASE 2 DAY 2 — Little Round Top / Devil's Den / the Wheatfield (Longstreet's assault on the Union left: Hood's division storming the Round Tops, McLaws's division into the Wheatfield and the Peach Orchard, Sickles's III Corps shattered in the salient — Little Round Top saved by Chamberlain's 20th Maine bayonet charge, Devil's Den lost, the Wheatfield a bloody see-saw); PHASE 3 DAY 3 — Pickett's Charge (the grand Confederate assault on the Union center at Cemetery Ridge: the mile-long cannonade, the 12,500-man advance across open ground under enfilading fire, the repulse at the Angle and the Copse of Trees — the 'high-water mark of the Confederacy'). Each phase is its own sector/OOB/objective; the running casualty tally + the per-phase sector results carry forward; the overall battle is scored as a weighted aggregate with a draw band. COORDINATE NOTE: each phase field is 1200x900 yards; per engine convention the ATTACKER sits at HIGH z facing -z (facing 0) and the DEFENDER at LOW z facing +z (facing PI); the objective sits at low-center z. Day 1: US defends (Buford/Reynolds holding the ridges west of town), CS attacks (Heth's division advancing on the Chambersburg Pike). Day 2: US defends (the Round Tops and the ridge line), CS attacks (Longstreet's flank march). Day 3: US defends (Cemetery Ridge), CS attacks (Pickett's/Pettigrew's/Trimble's divisions). ARTILLERY uses the D75 UNIVERSAL GUN MODEL (real gun counts + realistic crew; fire = guns * the universal weight). ANTI-LOST-CAUSE: the lessons are command failure on BOTH sides — Lee's overconfidence in his 'invincible' veterans, Ewell's failure to take Cemetery Hill on Day 1, Longstreet's delay and reluctance on Day 2, the suicidal frontal assault on Day 3; Meade's failure to counterattack; the cost of the war's largest battle (~51,000 casualties) and the turning point that ended Confederate hopes of foreign recognition and offensive war. Strengths are Inferred division/brigade-scale approximations; the Verified, teaching-bearing facts are the phase sequence, the commanders + their fate, the terrain, and the casualty weight. Sources: NPS Gettysburg, American Battlefield Trust, the Official Records, Sears 'Gettysburg', Coddington 'The Gettysburg Campaign', Pfanz 'Gettysburg — The First Day' / 'The Second Day' / 'Culp's Hill and Cemetery Hill'.",
+  "gettysburg": {
+    "id": "gettysburg",
+    "name": "Gettysburg — the Turning Point",
+    "date": "July 1-3, 1863",
+    "place": "Gettysburg, Adams County, Pennsylvania — the town and the ridges south and west",
+    "blurb": "The largest battle ever fought in North America — three days, ~51,000 casualties, the turning point of the war. Lee's second invasion of the North collides with the Army of the Potomac at a crossroads town, and over three days the battle unfolds in three distinct acts: the meeting engagement west of town on July 1, the savage struggle for the Union left on July 2 — Little Round Top, Devil's Den, the Wheatfield — and the climactic frontal assault on July 3, Pickett's Charge, the 'high-water mark of the Confederacy.' Command either army across all three days, phase by phase — and learn why Gettysburg broke the Confederate offensive forever.",
+    "provenance": "Verified (high) for the phase sequence, the commanders and their fate, the terrain, and the casualty weight; Inferred (medium) for per-unit strengths and exact arrival minutes (the OOBs differ across Pfanz, Sears, Coddington, and the Official Records — all corps/division totals are contested estimates). Sources: NPS Gettysburg National Military Park (McPherson Ridge, Oak Hill, the Railroad Cut, the Angle, the Copse of Trees, Little Round Top, Devil's Den, the Wheatfield, the Peach Orchard, Cemetery Hill, Culp's Hill); American Battlefield Trust (~51,000 total casualties: 23,049 US / 28,063 CS); the Official Records via Gettysburg on the Web; Sears, 'Gettysburg'; Coddington, 'The Gettysburg Campaign'; Pfanz, 'Gettysburg — The First Day' / 'The Second Day' / 'Culp's Hill and Cemetery Hill'; Gallagher, 'The Third Day at Gettysburg and Beyond'. ANTI-LOST-CAUSE: the lessons are command failure on BOTH sides — Lee's overconfidence in his army's invincibility, Ewell's hesitation, Longstreet's foot-dragging, Meade's failure to counterattack; the cost of the war's largest battle; and the strategic truth that Gettysburg ended Confederate hopes of foreign recognition and major offensive operations in the North. The 'high-water mark' is a monument to the cost of frontal assault against prepared defensive fire, not to Southern glory.",
+    "field": { "w": 1200, "h": 900 },
+    "attacker": "CS",
+    "defender": "US",
+    "defaultFog": false,
+    "timeLimitSec": 220,
+    "holdToWinSec": 70,
+    "menu": {
+      "title": "GETTYSBURG (1863)",
+      "deck": "The turning point — a THREE-DAY multi-phase epic. Fight Day 1 (McPherson Ridge), Day 2 (Little Round Top), and Day 3 (Pickett's Charge) in sequence; survivors and the running cost carry forward. Command either army across all three days of July 1-3, 1863.",
+      "aria": "Gettysburg, July 1863 — the turning point of the Civil War, a multi-phase real-time battle in three days: the meeting engagement west of town, the struggle for Little Round Top and the Wheatfield, and Pickett's Charge. Command either army through all three phases."
+    },
+    "sides": {
+      "heading": "Gettysburg — Take Which Command?",
+      "intro": "July 1-3, 1863 · the largest battle in North American history. Three days, fought in sequence. Lead the army of your choosing.",
+      "US": {
+        "title": "Command the Union (Meade's army)",
+        "badge": "&#9876; DEFEND",
+        "deck": "Hold the high ground across all three days — the ridges west of town, Little Round Top, and Cemetery Ridge. Do what Meade did: hold the fishhook and break the Confederate assault on every front."
+      },
+      "CS": {
+        "title": "Command the Confederacy (Lee's army)",
+        "badge": "&#9819; ATTACK",
+        "deck": "Take the high ground across all three days — sweep the Yankees from McPherson Ridge, storm Little Round Top, and break the Union center on Cemetery Ridge. Do what Lee could not: turn the invasion into the decisive victory."
+      },
+      "foot": "The other army is commanded by the AI. Three phases play in sequence; the cost carries forward (press V in battle to toggle fog)."
+    },
+    "brief": {
+      "attack": "Three days, one crossroads town. Drive the Union from the ridges west of town on Day 1, storm Little Round Top on Day 2, and break the Union center on Cemetery Ridge on Day 3. <b>This is your war:</b> Lee had the Army of Northern Virginia at its peak and let the victory slip away — commit your strength and turn the invasion into the war-winning stroke.",
+      "defend": "Three days, one fishhook line. Hold the ridges west of town on Day 1, hold Little Round Top on Day 2, and hold Cemetery Ridge on Day 3. <b>This is your war:</b> Meade held the high ground and broke the Confederate assault — hold the line and the rebellion's last offensive is broken."
+    },
+    "objective": { "x": 600, "z": 380, "r": 150, "name": "the field of Gettysburg" },
+    "phases": [
+      {
+        "id": "day1",
+        "name": "Day 1 — McPherson Ridge",
+        "sector": "the ridges west of Gettysburg — McPherson Ridge, Oak Hill, the Chambersburg Pike, the Railroad Cut",
+        "timing": "July 1, 1863 — ~7:30 a.m. to ~4:30 p.m.",
+        "attacker": "CS", "defender": "US",
+        "assaultDoctrine": null,
+        "defaultFog": false,
+        "holdToWinSec": 70, "timeLimitSec": 220,
+        "scoreWeight": 1,
+        "objective": { "x": 600, "z": 360, "r": 150, "name": "McPherson Ridge and the road to Gettysburg" },
+        "transition": { "title": "The First Day — McPherson Ridge", "lead": "July 1, 1863. Buford's Union cavalry, dismounted, holds the low ridges west of Gettysburg against Heth's Confederate division advancing down the Chambersburg Pike. 'There is no telling what will happen,' Buford writes that morning. 'I am convinced the enemy is advancing in force.' By mid-morning Reynolds's I Corps arrives on the double-quick; by afternoon the Union line is shattered and streaming through town to Cemetery Hill. The first day belongs to the Confederacy — but Ewell hesitates, and Cemetery Hill is not taken." },
+        "terrain": {
+          "hills": [
+            { "name": "McPherson Ridge", "x": 600, "z": 360, "h": 14, "s": 160, "note": "The low, open ridge west of town along the Chambersburg Pike — the Union's first defensive line. (Verified)" },
+            { "name": "Oak Hill", "x": 300, "z": 320, "h": 16, "s": 130, "note": "The hill north of McPherson Ridge where Rodes's division deployed, enfilading the Union right. (Verified)" },
+            { "name": "Seminary Ridge", "x": 600, "z": 200, "h": 12, "s": 150, "note": "The ridge running south from town; the Confederate main line on Days 2-3. (Verified)" },
+            { "name": "Cemetery Hill", "x": 600, "z": 120, "h": 18, "s": 140, "note": "The hill south of town where the Union rallied — the anchor of the fishhook. (Verified)" }
+          ],
+          "woods": [
+            { "x": 600, "z": 470, "r": 90, "note": "Herbst Woods (McPherson's Woods) — the wooded grove on McPherson Ridge where the Iron Brigade fought its first engagement of the battle. (Verified)" },
+            { "x": 430, "z": 300, "r": 85, "note": "the woods along Willoughby Run — the Confederate approach and the Union left flank. (Verified)" },
+            { "x": 780, "z": 430, "r": 80, "note": "the woods east of the Chambersburg Pike — Union reserve and artillery positions. (Verified)" }
+          ],
+          "walls": [],
+          "markers": [
+            { "kind": "road", "name": "the Chambersburg Pike", "path": [[600, 860], [600, 470], [600, 120]], "note": "The main road from Chambersburg to Gettysburg — the axis of Heth's advance and the day's central artery. (Verified)" },
+            { "kind": "road", "name": "the Mummasburg Road", "path": [[300, 860], [300, 470], [300, 120]], "note": "The road from the north, along which Rodes's division approached Oak Hill. (Verified)" },
+            { "kind": "rail", "name": "the Railroad Cut", "path": [[400, 500], [600, 480], [800, 460]], "note": "An unfinished railroad bed west of town where the 6th Wisconsin charged and captured the colors of the 2nd Mississippi. (Verified)" },
+            { "kind": "label", "name": "the McPherson Farm", "x": 600, "z": 380, "note": "The farmstead around which the morning fight swirled; Reynolds fell here." },
+            { "kind": "label", "name": "the Lutheran Seminary", "x": 600, "z": 200, "note": "The cupola from which generals watched the battle unfold." },
+            { "kind": "label", "name": "Gettysburg (the town)", "x": 600, "z": 80, "note": "The town itself — the Union retreat route and the bottleneck through which the army streamed to Cemetery Hill." }
+          ]
+        },
+        "leaders": {
+          "_note": "fate = a per-leader durability multiplier weighting the casualty model to HISTORY (>1 endures, <1 is fall-prone). At McPherson Ridge, Reynolds was killed (the highest-ranking Union general to die at Gettysburg); Buford survived; Heth was wounded in the head (survived); on the CS side, none of the senior commanders were killed on Day 1.",
+          "US": [
+            { "id": "ld_reyolds", "name": "Maj. Gen. John F. Reynolds", "short": "Reynolds", "quality": 0.78, "radius": 260, "x": 600, "z": 820, "fate": 0.15,
+              "note": "I Corps commander; the highest-ranking officer in the army after Meade. Rode forward to direct the Iron Brigade's deployment and was shot through the neck by a Confederate skirmisher — killed instantly. His loss was a devastating blow to Union command. (Verified)",
+              "teach": "Gen. Reynolds is shot dead directing the Iron Brigade — the best corps commander in the army, gone in the first hour." },
+            { "id": "ld_buford", "name": "Brig. Gen. John Buford", "short": "Buford", "quality": 0.72, "radius": 230, "x": 600, "z": 830, "fate": 2.6,
+              "note": "Commanded the Union cavalry division that opened the battle. Dismounted his troopers and held McPherson Ridge for hours against Heth's infantry — buying time for Reynolds's corps to arrive. He survived. (Verified)",
+              "teach": "Gen. Buford's dismounted cavalry holds the ridge against Confederate infantry — buying the minutes that save the army." }
+          ],
+          "CS": [
+            { "id": "ld_heth", "name": "Maj. Gen. Henry Heth", "short": "Heth", "quality": 0.62, "radius": 220, "x": 600, "z": 230, "fate": 2.2,
+              "note": "Led his division down the Chambersburg Pike toward Gettysburg — the advance that stumbled into Buford's cavalry and started the battle. Wounded in the head (a bullet through his hat) but survived. (Verified)",
+              "teach": "Gen. Heth's division marches into Gettysburg looking for shoes — and finds the Army of the Potomac." },
+            { "id": "ld_rodes_day1", "name": "Maj. Gen. Robert E. Rodes", "short": "Rodes", "quality": 0.66, "radius": 225, "x": 300, "z": 320, "fate": 2.4,
+              "note": "His division deployed from Oak Hill onto the Union right flank — the maneuver that broke the Union line in the afternoon. He survived. (Verified)",
+              "teach": "Gen. Rodes's division sweeps down from Oak Hill onto the Union flank — the hammer that breaks the line." }
+          ]
+        },
+        "supply": {
+          "US": { "x": 600, "z": 865, "name": "Union train — behind McPherson Ridge" },
+          "CS": { "x": 600, "z": 150, "name": "Confederate train — along the Chambersburg Pike" }
+        },
+        "oob": {
+          "US": [
+            { "id": "us_buford_cav", "name": "Buford's Cavalry Division (dismounted)", "commander": "Brig. Gen. John Buford", "arm": "inf", "weapon": "rifled", "men": 1500, "xp": 3, "x": 540, "z": 810, "facing": 0, "formation": "line", "note": "Buford's 1st Cavalry Division (Gamble's and Devin's brigades), dismounted and fighting as skirmishers. Held McPherson Ridge from ~7:30 a.m. until the I Corps arrived ~10 a.m. Cavalry fought dismounted as a thin skirmish line — ~1,500 effectives. (Verified identity; Inferred strength)" },
+            { "id": "us_iron_bde", "name": "The Iron Brigade (1st Div, I Corps)", "commander": "Brig. Gen. Solomon Meredith", "arm": "inf", "weapon": "rifled", "men": 2800, "xp": 3, "x": 600, "z": 820, "facing": 0, "formation": "line", "note": "The famous 'Black Hat' brigade (2nd/6th/7th Wisconsin, 19th Indiana, 24th Michigan). Deployed into Herbst Woods and fought Heth's division to a standstill before being flanked. ~1,200 casualties. (Verified)" },
+            { "id": "us_hall_battery", "name": "Battery B, 2nd Maine Light Artillery", "commander": "Capt. James A. Hall", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 6, "men": 100, "xp": 3, "x": 600, "z": 770, "facing": 0, "formation": "line", "note": "Supported the Iron Brigade on McPherson Ridge. Universal gun model (D75): 6 guns, ~100 crew. (Verified)" }
+          ],
+          "CS": [
+            { "id": "cs_heth_division", "name": "Heth's Division (Archer's & Davis's Brigades)", "commander": "Brig. Gen. James J. Archer", "arm": "inf", "weapon": "rifled", "men": 5500, "xp": 2, "x": 590, "z": 410, "facing": 3.14159, "formation": "line", "note": "The leading division of A.P. Hill's Corps. Archer's Tennessee and Alabama brigade was routed and Archer captured in the Railroad Cut; Davis's Mississippi brigade was shattered on the other side of the pike. ~5,500 effectives across both brigades. By Gettysburg many Confederate infantry carried rifled muskets. (Verified identity; Inferred strength)" },
+            { "id": "cs_heth_arty", "name": "Pegram's Artillery Battalion", "commander": "Col. William J. Pegram", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 12, "men": 300, "xp": 3, "x": 600, "z": 300, "facing": 3.14159, "formation": "line", "note": "A.P. Hill's artillery battalion supporting Heth's advance. Universal gun model (D75): 12 guns, ~300 crew. (Verified)" }
+          ]
+        },
+        "reinforcements": [
+          { "id": "cs_rodes_oak", "side": "CS", "atSec": 35, "name": "Rodes's Division (from Oak Hill)", "commander": "Maj. Gen. Robert E. Rodes", "arm": "inf", "weapon": "rifled", "men": 4200, "xp": 2, "x": 300, "z": 320, "facing": 3.14159, "formation": "line", "entry": "from Oak Hill onto the Union right flank", "note": "Ewell's leading division, arriving from the north via the Mummasburg Road. Deployed on Oak Hill and struck the Union right flank — the blow that broke the I Corps line. (Verified)" },
+          { "id": "us_doubleday_1st", "side": "US", "atSec": 100, "name": "Doubleday's Division (I Corps)", "commander": "Brig. Gen. Abner Doubleday", "arm": "inf", "weapon": "rifled", "men": 3000, "xp": 2, "x": 660, "z": 850, "facing": 0, "formation": "column", "entry": "reinforcing the Union right", "note": "Took command of I Corps after Reynolds's death. His division (Rowley's and Stone's brigades) extended the Union line northward toward Oak Hill. (Verified)" },
+          { "id": "cs_ewell_early", "side": "CS", "atSec": 75, "name": "Early's Division (from the north)", "commander": "Brig. Gen. Jubal A. Early", "arm": "inf", "weapon": "rifled", "men": 3500, "xp": 2, "x": 400, "z": 310, "facing": 3.14159, "formation": "line", "entry": "from the Harrisburg Road onto the Union flank", "note": "Ewell's second division, arriving from the north. Struck the Union right flank near the almshouse and helped roll up the line. (Verified)" }
+        ],
+        "teaching": {
+          "head": "The meeting engagement that became a battle",
+          "body": "Neither side intended to fight at Gettysburg. Heth's division was marching toward town looking for supplies (the apocryphal 'shoes' story) when it stumbled into Buford's cavalry. The fight escalated as both armies fed in reinforcements — the classic meeting engagement. By nightfall the Union had been driven through town to Cemetery Hill, but Ewell's failure to press the attack — against Lee's discretionary order — let the Army of the Potomac dig in on the high ground that would decide the next two days.",
+          "provenance": "Verified (high) — NPS; American Battlefield Trust; Pfanz, 'Gettysburg — The First Day'."
+        }
+      },
+      {
+        "id": "day2",
+        "name": "Day 2 — Little Round Top",
+        "sector": "the Union left — Little Round Top, Devil's Den, the Wheatfield, the Peach Orchard",
+        "timing": "July 2, 1863 — ~4:00 p.m. to dark",
+        "attacker": "CS", "defender": "US",
+        "assaultDoctrine": null,
+        "defaultFog": false,
+        "holdToWinSec": 70, "timeLimitSec": 220,
+        "scoreWeight": 1,
+        "objective": { "x": 600, "z": 358, "r": 140, "name": "Little Round Top and the Union left" },
+        "transition": { "title": "The Second Day — Little Round Top", "lead": "July 2, 1863. Longstreet's Corps, after a long flank march, finally strikes the Union left in the late afternoon. Hood's division storms the rocky slopes of Devil's Den and the Round Tops; McLaws's division crashes into the Wheatfield and the Peach Orchard. Sickles's III Corps, advanced without orders into a salient, is shattered. On Little Round Top, Colonel Chamberlain's 20th Maine — out of ammunition, its left flank turned — fixes bayonets and charges down the slope, saving the Union left and the battle. By nightfall the Wheatfield and Devil's Den are lost, but Little Round Top is held." },
+        "terrain": {
+          "hills": [
+            { "name": "Little Round Top", "x": 600, "z": 300, "h": 22, "s": 130, "note": "The rocky, tree-covered hill at the extreme left of the Union line — the key to the entire position. If lost, the Union flank would be turned and Cemetery Ridge enfiladed. (Verified)" },
+            { "name": "Big Round Top", "x": 600, "z": 200, "h": 26, "s": 150, "note": "The larger, higher hill south of Little Round Top — too far from the Union line to be occupied in strength, but the Confederate approach route. (Verified)" },
+            { "name": "Devil's Den", "x": 820, "z": 430, "h": 16, "s": 100, "note": "A jumble of huge boulders at the foot of the Round Tops — a natural fortress for sharpshooters. Captured by Hood's division. (Verified)" }
+          ],
+          "woods": [
+            { "x": 360, "z": 470, "r": 85, "note": "the Wheatfield — a 20-acre field of ripening wheat that changed hands six times in three hours. (Verified)" },
+            { "x": 600, "z": 230, "r": 90, "note": "the woods on the slope of Little Round Top — Chamberlain's 20th Maine held the leftmost edge. (Verified)" },
+            { "x": 780, "z": 430, "r": 80, "note": "the Rose Woods — between the Wheatfield and Devil's Den; the Confederate approach. (Verified)" }
+          ],
+          "walls": [
+            { "x1": 380, "z1": 408, "x2": 820, "z2": 405, "note": "the stone wall along the Wheatfield Road — the Peach Orchard salient where Sickles's III Corps was shattered. (Verified)" }
+          ],
+          "markers": [
+            { "kind": "road", "name": "the Emmitsburg Road", "path": [[380, 860], [380, 600], [380, 120]], "note": "The road along which Sickles advanced his III Corps, creating the fatal salient. (Verified)" },
+            { "kind": "road", "name": "the Wheatfield Road", "path": [[600, 500], [820, 500]], "note": "The road from the Peach Orchard to the Wheatfield — the axis of McLaws's assault. (Verified)" },
+            { "kind": "label", "name": "the Peach Orchard", "x": 380, "z": 500, "note": "Sickles's advanced position — a salient that was enfiladed from three sides and collapsed." },
+            { "kind": "label", "name": "the Trostle Farm", "x": 600, "z": 560, "note": "Where Sickles was struck by a cannonball and lost his leg." },
+            { "kind": "label", "name": "the Weikert Farm", "x": 600, "z": 215, "note": "Behind Little Round Top — the Union reserve and artillery position." },
+            { "kind": "label", "name": "Plum Run (the 'Valley of Death')", "x": 820, "z": 500, "note": "The stream valley between Devil's Den and Little Round Top — a killing ground swept by fire from both sides." }
+          ]
+        },
+        "leaders": {
+          "_note": "fate: at Little Round Top, Vincent (US) was mortally wounded leading his brigade; Weed (US) and Hazlett (US) were killed on the summit; Zook (US) mortally wounded in the Wheatfield; on the CS side, Hood was wounded in the arm (survived); Semmes (CS) mortally wounded; Barksdale (CS) mortally wounded leading the Mississippi charge into the Peach Orchard.",
+          "US": [
+            { "id": "ld_chamberlain", "name": "Col. Joshua L. Chamberlain", "short": "Chamberlain", "quality": 0.76, "radius": 200, "attach": "us_20th_maine", "fate": 2.8,
+              "note": "20th Maine Volunteer Infantry, Vincent's brigade. Held the extreme left of the Union line on Little Round Top. When his regiment ran out of ammunition and the Confederates were massing for a final assault, he ordered a bayonet charge — the famous 'swinging door' that saved the hill. He survived. (Verified)",
+              "teach": "Col. Chamberlain's 20th Maine fixes bayonets and charges down Little Round Top — out of ammunition, out of options, and they hold the line." },
+            { "id": "ld_vincent", "name": "Col. Strong Vincent", "short": "Vincent", "quality": 0.7, "radius": 210, "attach": "us_vincent_bde", "fate": 0.3,
+              "note": "Commanded the 3rd Brigade, 1st Division, V Corps. Rushed his brigade to Little Round Top just minutes before the Confederates arrived — the race that saved the hill. Mortally wounded; died July 7, 1863. (Verified)",
+              "teach": "Col. Vincent races his brigade to Little Round Top — minutes ahead of the Confederates, and the hill is saved." },
+            { "id": "ld_sickles", "name": "Maj. Gen. Daniel E. Sickles", "short": "Sickles", "quality": 0.5, "radius": 240, "x": 600, "z": 830, "fate": 2.2,
+              "note": "III Corps commander. Without orders, advanced his corps forward to the Emmitsburg Road — creating a salient that was attacked from three sides and shattered. Wounded by a cannonball; leg amputated. His insubordination nearly lost the battle, but his advance also absorbed the weight of Longstreet's assault. (Verified)",
+              "teach": "Gen. Sickles advances without orders — his corps is shattered in the Peach Orchard salient, and the Union left is thrown into chaos." }
+          ],
+          "CS": [
+            { "id": "ld_hood_day2", "name": "Maj. Gen. John B. Hood", "short": "Hood", "quality": 0.74, "radius": 240, "x": 600, "z": 230, "fate": 0.7,
+              "note": "Led Longstreet's assault on the Union left. Argued for a wider flanking move around the Round Tops but was overruled. Wounded in the arm early in the fight and carried from the field. (Verified)",
+              "teach": "Gen. Hood is struck down early in the assault — the attack loses its driving hand at the critical moment." },
+            { "id": "ld_barksdale", "name": "Brig. Gen. William Barksdale", "short": "Barksdale", "quality": 0.72, "radius": 200, "attach": "cs_barksdale", "fate": 0.25,
+              "note": "Led his Mississippi brigade in the famous charge across the Emmitsburg Road into the Peach Orchard — the most spectacular Confederate assault of the day. Mortally wounded; died July 3, 1863. (Verified)",
+              "teach": "Gen. Barksdale's Mississippians storm the Peach Orchard — a magnificent charge that costs him his life and shatters Sickles's salient." },
+            { "id": "ld_longstreet", "name": "Lt. Gen. James Longstreet", "short": "Longstreet", "quality": 0.78, "radius": 270, "x": 600, "z": 200, "fate": 2.8,
+              "note": "Commanded the Confederate First Corps. Opposed the attack at Gettysburg, arguing for a strategic flanking move. His delay and reluctance — and the long flank march — meant the assault did not begin until 4 p.m., giving the Union time to occupy Little Round Top. He survived. (Verified; anti-Lost-Cause framing)",
+              "teach": "Gen. Longstreet's assault does not begin until late afternoon — the delay that costs the Confederacy Little Round Top." }
+          ]
+        },
+        "supply": {
+          "US": { "x": 600, "z": 865, "name": "Union train — behind Cemetery Ridge" },
+          "CS": { "x": 600, "z": 150, "name": "Confederate train — behind Seminary Ridge" }
+        },
+        "oob": {
+          "US": [
+            { "id": "us_vincent_bde", "name": "Vincent's Brigade (V Corps)", "commander": "Col. Strong Vincent", "arm": "inf", "weapon": "rifled", "men": 3200, "xp": 2, "x": 540, "z": 800, "facing": 0, "formation": "line", "note": "3rd Brigade, 1st Division, V Corps — the 16th Michigan, 44th New York, 83rd Pennsylvania, and 20th Maine. Rushed to Little Round Top in the nick of time. (Verified)" },
+            { "id": "us_20th_maine", "name": "20th Maine (Vincent's Brigade)", "commander": "Col. Joshua L. Chamberlain", "arm": "inf", "weapon": "rifled", "men": 800, "xp": 2, "x": 600, "z": 820, "facing": 0, "formation": "line", "note": "The extreme left of the Union line on Little Round Top. ~386 casualties; the bayonet charge that saved the hill. (Verified)" },
+            { "id": "us_hazlett_battery", "name": "Battery D, 5th U.S. Artillery (Hazlett's guns)", "commander": "Lt. Charles E. Hazlett (k)", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 6, "men": 100, "xp": 3, "x": 600, "z": 770, "facing": 0, "formation": "line", "note": "Dragged by hand up Little Round Top's rocky slope — Hazlett was killed on the summit. Universal gun model (D75): 6 guns, ~100 crew. (Verified)" }
+          ],
+          "CS": [
+            { "id": "cs_hood_division", "name": "Hood's Division (Law's & Robertson's Brigades)", "commander": "Brig. Gen. Evander M. Law", "arm": "inf", "weapon": "smooth", "men": 4200, "xp": 3, "x": 590, "z": 410, "facing": 3.14159, "formation": "line", "note": "Longstreet's assault division. Law's Alabama brigade and Robertson's Texas brigade stormed Devil's Den and the slopes of the Round Tops. Took command after Hood was wounded. (Verified identity; Inferred strength)" },
+            { "id": "cs_barksdale", "name": "Barksdale's Mississippi Brigade (McLaws's Div)", "commander": "Brig. Gen. William Barksdale", "arm": "inf", "weapon": "smooth", "men": 1600, "xp": 3, "x": 380, "z": 400, "facing": 3.14159, "formation": "line", "note": "McLaws's division. Led the famous charge across the Emmitsburg Road into the Peach Orchard — the most spectacular Confederate assault of the day. Barksdale was mortally wounded leading from the front. (Verified)" },
+            { "id": "cs_mclaws_arty", "name": "Alexander's Artillery Battalion", "commander": "Col. E. Porter Alexander", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 14, "men": 350, "xp": 3, "x": 600, "z": 300, "facing": 3.14159, "formation": "line", "note": "Longstreet's chief of artillery — the finest artillery officer in the Confederate army. His guns supported the assault on the Peach Orchard and the Wheatfield. Universal gun model (D75): 14 guns, ~350 crew. (Verified)" }
+          ]
+        },
+        "reinforcements": [
+          { "id": "cs_kershaw", "side": "CS", "atSec": 55, "name": "Kershaw's Brigade (McLaws's Division)", "commander": "Brig. Gen. Joseph B. Kershaw", "arm": "inf", "weapon": "smooth", "men": 2200, "xp": 2, "x": 360, "z": 380, "facing": 3.14159, "formation": "line", "entry": "into the Wheatfield on McLaws's left", "note": "South Carolina brigade that attacked into the Wheatfield and the Rose Woods. Heavy fighting against Caldwell's Union division. (Verified)" },
+          { "id": "us_caldwell", "side": "US", "atSec": 70, "name": "Caldwell's Division (II Corps)", "commander": "Brig. Gen. John C. Caldwell", "arm": "inf", "weapon": "rifled", "men": 3000, "xp": 2, "x": 660, "z": 850, "facing": 0, "formation": "column", "entry": "into the Wheatfield to stem the Confederate tide", "note": "1st Division, II Corps. Counterattacked into the Wheatfield and temporarily drove Kershaw's brigade back before being overwhelmed. (Verified)" },
+          { "id": "us_ayres", "side": "US", "atSec": 100, "name": "Ayres's Division (V Corps)", "commander": "Brig. Gen. Romeyn B. Ayres", "arm": "inf", "weapon": "rifled", "men": 2800, "xp": 2, "x": 700, "z": 860, "facing": 0, "formation": "column", "entry": "reinforcing the Union left below Little Round Top", "note": "2nd Division, V Corps. Regular Army brigades (the 'Regulars') sent to stabilize the line below Little Round Top. (Verified)" },
+          { "id": "cs_semmes", "side": "CS", "atSec": 110, "name": "Semmes's Brigade (McLaws's Division)", "commander": "Brig. Gen. Paul J. Semmes (mw)", "arm": "inf", "weapon": "smooth", "men": 1500, "xp": 2, "x": 400, "z": 370, "facing": 3.14159, "formation": "line", "entry": "into the Wheatfield on Kershaw's right", "note": "Georgia brigade. Semmes was mortally wounded in the Wheatfield; died July 10, 1863. (Verified)" }
+        ],
+        "teaching": {
+          "head": "The hill that saved the Union left",
+          "body": "Little Round Top was the key to the entire Union position — if the Confederates had taken it, they could have enfiladed the whole Union line on Cemetery Ridge. The hill was nearly undefended when Vincent's brigade arrived — literally minutes ahead of Hood's Texans. Chamberlain's bayonet charge, the 'swinging door,' is the most famous single regiment action of the war. But the cost was staggering: the Wheatfield changed hands six times, Devil's Den was lost, Sickles's corps was shattered, and ~9,000 men fell on the Union left alone. The lesson is not 'heroic Maine men saved the day' — it is that the battle was nearly lost by Sickles's insubordination and saved by Vincent's initiative and Chamberlain's desperation, all in the space of a few hundred yards and a few minutes.",
+          "provenance": "Verified (high) — NPS Little Round Top Trail; American Battlefield Trust; Pfanz, 'Gettysburg — The Second Day'."
+        }
+      },
+      {
+        "id": "day3",
+        "name": "Day 3 — Pickett's Charge",
+        "sector": "the Union center — Cemetery Ridge, the Angle, the Copse of Trees, the open mile between the ridges",
+        "timing": "July 3, 1863 — ~1:00 p.m. to ~4:00 p.m.",
+        "attacker": "CS", "defender": "US",
+        "assaultDoctrine": null,
+        "defaultFog": false,
+        "holdToWinSec": 90, "timeLimitSec": 240,
+        "scoreWeight": 1.5,
+        "objective": { "x": 600, "z": 295, "r": 140, "name": "Cemetery Ridge — the Angle and the Copse of Trees" },
+        "transition": { "title": "The Third Day — Pickett's Charge", "lead": "July 3, 1863. Lee is convinced the Union center can be broken. At 1 p.m., 150 Confederate guns open the greatest artillery bombardment ever seen in North America — the mile-long cannonade. At 3 p.m., the guns fall silent and 12,500 men step out from Seminary Ridge in a line a mile wide, across the open ground toward the Copse of Trees on Cemetery Ridge. The Union artillery, feigning silence, opens with canister at close range; the infantry volleys from behind the stone wall tear the line to pieces. A few hundred men reach the Angle — the 'high-water mark of the Confederacy' — but they cannot hold. The charge is broken, the survivors stream back, and Lee meets them in the field: 'It is all my fault.'" },
+        "terrain": {
+          "hills": [
+            { "name": "Cemetery Ridge", "x": 600, "z": 300, "h": 14, "s": 160, "note": "The low, open ridge running south from Cemetery Hill — the Union main line on July 2-3. The objective of Pickett's Charge. (Verified)" },
+            { "name": "Seminary Ridge (CS start)", "x": 600, "z": 200, "h": 12, "s": 150, "note": "The Confederate line — the start point of Pickett's Charge, a mile west of Cemetery Ridge. (Verified)" }
+          ],
+          "woods": [
+            { "x": 600, "z": 470, "r": 80, "note": "the Spangler Woods — the Confederate forming ground on Seminary Ridge. (Verified)" },
+            { "x": 600, "z": 230, "r": 70, "note": "the Copse of Trees — the aiming point of Pickett's Charge, on Cemetery Ridge. (Verified)" },
+            { "x": 780, "z": 430, "r": 75, "note": "Ziegler's Grove — north of the Copse of Trees, on the Union line. (Verified)" }
+          ],
+          "walls": [
+            { "x1": 380, "z1": 408, "x2": 820, "z2": 405, "note": "the stone wall on Cemetery Ridge — the Union defensive line that the charge must reach and breach. The Angle is the 'bend' in this wall where a few Confederates briefly broke through. (Verified)" }
+          ],
+          "markers": [
+            { "kind": "road", "name": "the Emmitsburg Road", "path": [[380, 860], [380, 600], [380, 120]], "note": "The road the charging Confederates had to cross under fire — a post-and-rail fence slowed them at the worst moment. (Verified)" },
+            { "kind": "label", "name": "the Angle", "x": 600, "z": 310, "note": "The bend in the stone wall where Armistead's brigade briefly broke through — the 'high-water mark of the Confederacy.'" },
+            { "kind": "label", "name": "the Copse of Trees", "x": 600, "z": 280, "note": "The small clump of trees on Cemetery Ridge — the aiming point of the entire charge." },
+            { "kind": "label", "name": "the Brian Farm", "x": 600, "z": 380, "note": "The farm behind the Union line where the reserve artillery was positioned." },
+            { "kind": "label", "name": "the Bliss Farm (burned ground)", "x": 380, "z": 400, "note": "The contested farm between the lines, burned on July 2." }
+          ]
+        },
+        "leaders": {
+          "_note": "fate: at Pickett's Charge, Armistead (CS) was mortally wounded at the Angle (the 'high-water mark'); Garnett (CS) killed; Kemper (CS) wounded and captured; Pettigrew (CS) wounded (died during the retreat); Trimble (CS) wounded and captured. On the US side, Hancock (US) was wounded (the famous 'General, I will take command' moment with Meade); Webb (US) survived; Stannard (US) survived.",
+          "US": [
+            { "id": "ld_hancock", "name": "Maj. Gen. Winfield S. Hancock", "short": "Hancock", "quality": 0.8, "radius": 270, "x": 600, "z": 820, "fate": 0.5,
+              "note": "II Corps commander — the commander of the Union center. Wounded by a bullet through his saddle pommel, with splinters and a nail driven into his thigh. Refused evacuation until the charge was repulsed. 'General, I will take command,' Meade told him. He survived. (Verified)",
+              "teach": "Gen. Hancock is struck down at the height of the charge — the commander of the Union center, refusing to leave the field." },
+            { "id": "ld_webb", "name": "Brig. Gen. Alexander S. Webb", "short": "Webb", "quality": 0.68, "radius": 200, "attach": "us_phila_bde", "fate": 2.6,
+              "note": "Commanded the Philadelphia Brigade (69th/71st/72nd/106th Pennsylvania) holding the Angle. His men held the stone wall at the point where Armistead broke through. He survived. (Verified)",
+              "teach": "Gen. Webb's Philadelphia Brigade holds the Angle — the point where the Confederate charge breaks and dies." },
+            { "id": "ld_stannard", "name": "Brig. Gen. George J. Stannard", "short": "Stannard", "quality": 0.66, "radius": 190, "attach": "us_stannard", "fate": 2.5,
+              "note": "Commanded the Vermont Brigade (2nd Vermont Brigade). Wheeled his regiments to enfilade Pickett's flank from the south — the maneuver that broke the charge's momentum. He survived. (Verified)",
+              "teach": "Gen. Stannard's Vermonters wheel onto Pickett's flank — the enfilade fire that tears the charge apart." }
+          ],
+          "CS": [
+            { "id": "ld_pickett", "name": "Maj. Gen. George E. Pickett", "short": "Pickett", "quality": 0.7, "radius": 240, "x": 600, "z": 230, "fate": 2.6,
+              "note": "Led his division (Armistead's, Garnett's, and Kemper's brigades) in the charge. His division was destroyed — all three brigade commanders were killed or mortally wounded. He survived, but never forgave Lee. (Verified)",
+              "teach": "Gen. Pickett's division is destroyed in the charge — all three of his brigade commanders fall, and the division never recovers." },
+            { "id": "ld_armistead", "name": "Brig. Gen. Lewis A. Armistead", "short": "Armistead", "quality": 0.74, "radius": 200, "attach": "cs_armistead", "fate": 0.2,
+              "note": "Led his brigade to the Angle — the deepest Confederate penetration. Mortally wounded at the stone wall, his hand on a Union cannon. His friend Union Maj. Gen. Winfield Hancock was wounded in the same fight. (Verified)",
+              "teach": "Gen. Armistead falls at the Angle, his hand on a Union gun — the 'high-water mark of the Confederacy,' and it is a grave." },
+            { "id": "ld_pettigrew", "name": "Brig. Gen. J. Johnston Pettigrew", "short": "Pettigrew", "quality": 0.66, "radius": 220, "x": 600, "z": 220, "fate": 0.4,
+              "note": "Led his North Carolina brigade (Heth's old division) on the left of the charge. Wounded in the hand and arm during the assault; died during the retreat to Virginia (July 17, 1863). (Verified)",
+              "teach": "Gen. Pettigrew's North Carolinians charge on the left — and he dies of his wounds in the retreat." }
+          ]
+        },
+        "supply": {
+          "US": { "x": 600, "z": 865, "name": "Union train — behind Cemetery Ridge" },
+          "CS": { "x": 600, "z": 150, "name": "Confederate train — behind Seminary Ridge" }
+        },
+        "oob": {
+          "US": [
+            { "id": "us_phila_bde", "name": "The Philadelphia Brigade (II Corps)", "commander": "Brig. Gen. Alexander S. Webb", "arm": "inf", "weapon": "rifled", "men": 3200, "xp": 2, "x": 540, "z": 800, "facing": 0, "formation": "line", "note": "69th/71st/72nd/106th Pennsylvania — held the stone wall at the Angle. The 71st Pennsylvania broke briefly when Armistead's men reached the wall, but the 69th held. (Verified)" },
+            { "id": "us_stannard", "name": "Stannard's Vermont Brigade (III Corps)", "commander": "Brig. Gen. George J. Stannard", "arm": "inf", "weapon": "rifled", "men": 2200, "xp": 2, "x": 660, "z": 850, "facing": 0, "formation": "line", "note": "2nd Vermont Brigade — 12th/13th/14th/15th/16th Vermont. Wheeled to enfilade Pickett's right flank from the south. (Verified)" },
+            { "id": "us_cushing_battery", "name": "Battery A, 4th U.S. Artillery (Cushing's guns)", "commander": "Lt. Alonzo H. Cushing (k)", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 6, "men": 100, "xp": 3, "x": 600, "z": 770, "facing": 0, "formation": "line", "note": "Cushing's battery at the Angle — the most famous Union artillery position of the battle. Cushing was killed at his guns, calling 'I will give them one more shot!' Universal gun model (D75): 6 guns, ~100 crew. (Verified)" }
+          ],
+          "CS": [
+            { "id": "cs_pickett_div", "name": "Pickett's Division (Armistead's, Garnett's, Kemper's Brigades)", "commander": "Maj. Gen. George E. Pickett", "arm": "inf", "weapon": "smooth", "men": 4800, "xp": 3, "x": 590, "z": 410, "facing": 3.14159, "formation": "line", "note": "Pickett's own Virginia division — the flower of the Army of Northern Virginia. All three brigade commanders were killed or mortally wounded; the division lost ~2,600 of ~4,800. (Verified identity; Inferred strength)" },
+            { "id": "cs_pettigrew_div", "name": "Pettigrew's Division (Heth's old division)", "commander": "Brig. Gen. J. Johnston Pettigrew", "arm": "inf", "weapon": "smooth", "men": 4200, "xp": 2, "x": 500, "z": 400, "facing": 3.14159, "formation": "line", "note": "Heth's division, now under Pettigrew — North Carolina and Mississippi brigades. Formed the left wing of the charge. (Verified)" },
+            { "id": "cs_trimble_div", "name": "Trimble's Division (Pender's old division)", "commander": "Maj. Gen. Isaac R. Trimble", "arm": "inf", "weapon": "smooth", "men": 3500, "xp": 2, "x": 700, "z": 400, "facing": 3.14159, "formation": "line", "note": "Pender's division, now under Trimble — formed the support line behind Pickett and Pettigrew. Trimble was wounded and captured. (Verified)" },
+            { "id": "cs_pickett_arty", "name": "Confederate Grand Battery (the bombardment)", "commander": "Col. E. Porter Alexander", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 20, "men": 500, "xp": 3, "x": 600, "z": 300, "facing": 3.14159, "formation": "line", "note": "The massed Confederate artillery on Seminary Ridge — ~150 guns total in history, modeled here as the grand battery supporting the charge. Universal gun model (D75): 20 guns, ~500 crew. (Verified)" }
+          ]
+        },
+        "reinforcements": [
+          { "id": "cs_armistead", "side": "CS", "atSec": 60, "name": "Armistead's Brigade (Pickett's Division)", "commander": "Brig. Gen. Lewis A. Armistead", "arm": "inf", "weapon": "smooth", "men": 1500, "xp": 3, "x": 600, "z": 380, "facing": 3.14159, "formation": "line", "entry": "the second wave — Armistead's men reach the Angle", "note": "Armistead's Virginia brigade, following Garnett's and Kemper's brigades. Armistead led them to the stone wall with his hat on his sword — the deepest penetration of the charge. (Verified)" },
+          { "id": "us_stannard_flank", "side": "US", "atSec": 80, "name": "Stannard's Vermonters (flanking fire)", "commander": "Brig. Gen. George J. Stannard", "arm": "inf", "weapon": "rifled", "men": 1800, "xp": 2, "x": 800, "z": 850, "facing": 0, "formation": "column", "entry": "wheeling onto Pickett's flank from the south", "note": "The Vermont Brigade wheeled to face south and poured enfilading fire into Pickett's right flank — the maneuver that broke the charge's momentum. (Verified)" }
+        ],
+        "teaching": {
+          "head": "The high-water mark — and the cost of frontal assault",
+          "body": "Pickett's Charge was the largest and most famous infantry assault of the war — 12,500 men across a mile of open ground against prepared defensive fire. It was also one of the most futile. The Confederates lost ~6,000 men in less than an hour — killed, wounded, or captured. The 'high-water mark of the Confederacy' is not a monument to glory; it is a monument to the cost of frontal assault against rifled muskets and canister, and to a commander who believed his army was invincible. Lee met the survivors in the field and told them, 'It is all my fault.' The charge broke the Army of Northern Virginia's offensive power forever. Never again would Lee mount a major offensive north of Virginia.",
+          "provenance": "Verified (high) — NPS High Water Mark Trail; American Battlefield Trust; Sears, 'Gettysburg'; Gallagher, 'The Third Day at Gettysburg and Beyond'."
+        }
+      }
+    ],
+    "endNote": {
+      "US": {
+        "US": "History is overturned. You held the fishhook across all three days — McPherson Ridge, Little Round Top, and Cemetery Ridge — and broke the Confederate assault on every front. In July 1863 the Army of Northern Virginia was shattered and limped back to Virginia; under your command the destruction was complete. The rebellion's last great offensive is broken, and the war enters its final phase.",
+        "CS": "History is overturned. The Union held the high ground across all three days — the ridges west of town, Little Round Top, and Cemetery Ridge — and your assault was broken on every front. The Army of Northern Virginia, which Lee believed invincible, is shattered and streams back to Virginia in defeat."
+      },
+      "CS": {
+        "US": "History holds — the Army of the Potomac held the fishhook and broke the Confederate assault, as it did in 1863. Lee's second invasion of the North is turned back, the Army of Northern Virginia is shattered, and the rebellion's last great offensive is broken. Gettysburg remains the turning point of the war.",
+        "CS": "History holds. Your army swept the Union from the ridges west of town on Day 1, stormed Little Round Top on Day 2, and broke the Union center on Cemetery Ridge on Day 3 — the victory that Lee could not achieve. The Army of the Potomac is driven from the field, and the road to Washington lies open."
+      },
+      "draw": "A tactical draw across three days of the largest battle in North American history — neither army driven from the field, but the cost is staggering. Lee's army is too battered to continue the invasion and limps back to Virginia. Gettysburg remains the turning point: the Confederate offensive is broken, and the war enters its final phase."
+    },
+    "teaching": {
+      "title": "The Turning Point — Gettysburg, July 1-3, 1863",
+      "cards": [
+        {
+          "id": "gb_cost",
+          "head": "The largest battle in North America",
+          "body": "About 51,000 men were killed, wounded, or missing at Gettysburg — 23,049 Union and 28,063 Confederate. More Americans fell in these three days than in the entire War of 1812, the Mexican-American War, and the Spanish-American War combined. The town of Gettysburg — 2,400 people — became a vast hospital; every church, barn, and house was filled with the wounded and the dying. The stench of death hung over the field for weeks.",
+          "provenance": "Verified (high) — American Battlefield Trust (23,049 US / 28,063 CS / 51,112 total); NPS."
+        },
+        {
+          "id": "gb_command",
+          "head": "Command failure on both sides — not destiny",
+          "body": "Lee's overconfidence in his army's invincibility drove the battle: he fought at Gettysburg without Stonewall Jackson (wounded at Chancellorsville), without Stuart's cavalry (on a raid), and without reliable intelligence. Ewell's failure to take Cemetery Hill on Day 1, Longstreet's delay on Day 2, and the suicidal frontal assault on Day 3 were all command failures — not fate. On the Union side, Sickles's insubordination nearly lost the battle, and Meade's failure to counterattack let Lee's shattered army escape across the Potomac. The 'high-water mark' is a monument to the cost of Lee's belief in his army's invincibility, not to Southern glory.",
+          "provenance": "Verified (high) — Sears, 'Gettysburg'; Coddington, 'The Gettysburg Campaign'; Gallagher, 'The Third Day at Gettysburg and Beyond'."
+        },
+        {
+          "id": "gb_turning_point",
+          "head": "The turning point of the war",
+          "body": "Gettysburg ended the Confederate offensive forever. Never again would Lee mount a major invasion of the North. The Army of Northern Virginia was shattered — it lost a third of its strength in three days and never recovered its offensive power. Combined with the fall of Vicksburg on July 4, 1863 — the day after Pickett's Charge — the Confederacy lost both its best army and control of the Mississippi River in the same week. The war would go on for nearly two more years, but after July 1863 the question was no longer whether the Confederacy could win, but how long it could hold out.",
+          "provenance": "Verified (high) — McPherson, 'Battle Cry of Freedom'; American Battlefield Trust; NPS."
+        },
+        {
+          "id": "gb_emancipation",
+          "head": "The Gettysburg Address — the war's meaning",
+          "body": "Four and a half months after the battle, on November 19, 1863, President Lincoln came to Gettysburg to dedicate the Soldiers' National Cemetery. In 272 words — two minutes — he redefined the war: not merely a struggle to preserve the Union, but 'a new birth of freedom' — a war for the proposition that all men are created equal. The Gettysburg Address is the most famous speech in American history, and it transformed the battlefield from a place of slaughter into a symbol of the nation's purpose. To tell the story of Gettysburg without the Address is to miss the entire meaning of why the battle is remembered.",
+          "provenance": "Verified (high) — Lincoln's Gettysburg Address (the five known manuscript copies); NPS; Wills, 'Lincoln at Gettysburg'."
+        }
+      ],
+      "codex": {
+        "id": "codex_gettysburg",
+        "title": "Gettysburg, July 1-3, 1863",
+        "summary": "The largest battle in North American history — three days, ~51,000 casualties, the turning point of the war. The meeting engagement west of town on July 1, the struggle for Little Round Top on July 2, and Pickett's Charge on July 3. Combined with the fall of Vicksburg, it ended Confederate hopes of foreign recognition and major offensive operations. Four months later, Lincoln's Gettysburg Address redefined the war as a struggle for human equality.",
+        "axes": { "timeline": "1863", "theater": "Eastern", "people": ["Meade", "Buford", "Reynolds", "Hancock", "Chamberlain", "Vincent", "Sickles", "Webb", "Stannard", "Cushing", "Lee", "Longstreet", "Pickett", "Armistead", "Heth", "Rodes", "Early", "Hood", "Barksdale", "Pettigrew", "Trimble"], "battle": "Gettysburg" }
+      }
+    }
+  }
+},
 "manpower-teaching": {
   "_comment": "S1d teaching content for the manpower/conscription layer. Citation-grade multi-voice debate cards (consensus + scholarly dissent + named-and-countered Lost Cause + primary sources) + a quantitative numbers audit, from an 11-agent research+verify+audit workflow (run i, 2026-06-13). Build-injected as GAME_DATA[\"manpower-teaching\"]; surfaced by src/70-manpower.js (The Ranks overview block) and the S4 codex. Black Americans treated as full historical agents (self-emancipation, USCT); Lost Cause erasure countered.",
   "provenance": "Verified historiography. Scholars: McPherson, Geary, Murdock, Moore, Anbinder, Lonn, Glatthaar, Levine, Gallagher, Marvel. Every cited work adversarially fact-checked; fabricated/misattributed citations removed in the Verify pass.",
@@ -27437,6 +27779,7 @@ function fldScenarioRegistry() {
       if (GAME_DATA.bullrun && GAME_DATA.bullrun.bullrun1) R.bullrun1 = GAME_DATA.bullrun.bullrun1;
       if (GAME_DATA.fredericksburg && GAME_DATA.fredericksburg.fredericksburg) R.fredericksburg = GAME_DATA.fredericksburg.fredericksburg;
       if (GAME_DATA.antietam && GAME_DATA.antietam.antietam) R.antietam = GAME_DATA.antietam.antietam;   // Phase C-2: the first MULTI-PHASE epic (data.phases[] -> the T8 engine)
+      if (GAME_DATA.gettysburg && GAME_DATA.gettysburg.gettysburg) R.gettysburg = GAME_DATA.gettysburg.gettysburg;   // Phase C-1: Gettysburg — the second MULTI-PHASE epic (3 days: McPherson Ridge, Little Round Top, Pickett's Charge)
     }
   } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldScenarioRegistry:", e); }
   return R;

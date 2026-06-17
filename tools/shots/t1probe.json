@@ -44,8 +44,8 @@
         "clockYear": 1862,
         "weariness": 20.22704,
         "capital": 11,
-        "funds": 336,
-        "supply": 51,
+        "funds": 316,
+        "supply": 39,
         "r1name": "1st Maine Infantry",
         "r1kills": 2,
         "r2status": "fallen",
@@ -117,8 +117,8 @@
       "name": "war-room build click (spend funds)",
       "ok": true,
       "v": {
-        "fundsBefore": 380,
-        "fundsAfter": 80,
+        "fundsBefore": 377,
+        "fundsAfter": 77,
         "industryLv": 3
       }
     },
@@ -128,8 +128,8 @@
       "v": {
         "capBefore": 33,
         "capAfter": 13,
-        "fundsBefore": 80,
-        "fundsAfter": 230
+        "fundsBefore": 77,
+        "fundsAfter": 227
       }
     }
   ],
