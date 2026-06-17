@@ -1316,7 +1316,8 @@ function fldRenderHud() {
     fldBar("Ammo", u.ammo, 100, "#8a9bb0") +
     (typeof fldLogisticsHudSelected === "function" ? fldLogisticsHudSelected(u) : "") +   // B-3: ammo/resupply/spent status
     (typeof fldArmsHudSelected === "function" ? fldArmsHudSelected(u) : "") +   // B-4: battery range-band / cavalry role
-    (typeof fldOfficerHudSelected === "function" ? fldOfficerHudSelected(u) : "");   // B-2: brigade leader + in-command status
+    (typeof fldOfficerHudSelected === "function" ? fldOfficerHudSelected(u) : "") +   // B-2: brigade leader + in-command status
+    (typeof fldFlagHudSelected === "function" ? fldFlagHudSelected(u) : "");   // H1b: battle flag + corps badge in the HUD
 }
 function fldOnOver() {
   var e = document.getElementById("fldEnd"); if (!e) { fldAnnounce("Battle over."); return; }
@@ -1454,6 +1455,8 @@ function fld2dDraw() {
   if (typeof fldDrawArms === "function") fldDrawArms(ctx, v);
   // officers & command (B-2): command rings + mounted-officer markers + fallen crosses (no-op when off / no leaders)
   if (typeof fldDrawOfficers === "function") fldDrawOfficers(ctx, v);
+  // battle flags & insignia (H1b): brigade colors + corps badges on the 2D markers (no-op when off / module absent)
+  if (typeof fldDrawFlags === "function") fldDrawFlags(ctx, v);
   // drag arrow
   if (__FIELD.drag) { var dr = __FIELD.drag; ctx.strokeStyle = "#ffe9a8"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(v.ox + dr.x0 * v.s, v.oz + dr.z0 * v.s); ctx.lineTo(v.ox + dr.x * v.s, v.oz + dr.z * v.s); ctx.stroke(); }
 }
@@ -1538,6 +1541,8 @@ function fld3dInit() {
   if (typeof fld3dBuildSupply === "function") { try { fld3dBuildSupply(); } catch (e) {} }
   // distinct arm roles (B-4): gun + mounted-trooper meshes (no-op when off / no art+cav)
   if (typeof fld3dBuildArms === "function") { try { fld3dBuildArms(); } catch (e) {} }
+  // battle flags & insignia (H1b): textured brigade colors on the 3D unit markers (no-op when off / module absent)
+  if (typeof fld3dBuildFlags === "function") { try { fld3dBuildFlags(); } catch (e) {} }
 }
 function fldLow() { try { var q = G && G.settings && G.settings.gfxQuality; if (q === "low") return true; if (q === "high") return false; return Math.min(window.innerWidth, window.innerHeight) <= 720; } catch (e) { return false; } }
 function fld3dBuildTerrain() {
