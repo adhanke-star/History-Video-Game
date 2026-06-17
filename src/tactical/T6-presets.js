@@ -161,7 +161,7 @@ function fldPresetBootLoad() {
     if (G.settings.tacticalPreset) return;                 // a loaded campaign save already carries one
     if (typeof localStorage === "undefined") return;
     var raw = localStorage.getItem(FLDP.STORE_KEY); if (!raw) return;
-    var c = JSON.parse(raw); if (c && typeof c === "object") G.settings.tacticalPreset = c;
+    var c = JSON.parse(raw); if (c && typeof c === "object") { delete c.__proto__; delete c.constructor; delete c.prototype; G.settings.tacticalPreset = c; }
   } catch (e) {}
 }
 

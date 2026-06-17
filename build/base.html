@@ -3152,8 +3152,14 @@ function loadLocal() {
 // Merges sv.settings onto the live G.settings so any keys added in later
 // engine versions keep their defaults rather than being wiped.
 // G.campaign is replaced wholesale (null is valid — means no active campaign).
+// Security: reject __proto__ / constructor / prototype keys to prevent prototype pollution.
 function applySave(sv) {
-  Object.assign(G.settings, sv.settings);
+  var src = sv.settings;
+  for (var k in src) {
+    if (!src.hasOwnProperty(k)) continue;
+    if (k === "__proto__" || k === "constructor" || k === "prototype") continue;
+    G.settings[k] = src[k];
+  }
   G.campaign = sv.campaign || null;
 }
 
