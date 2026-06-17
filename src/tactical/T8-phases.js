@@ -34,8 +34,13 @@
    uniquely prefixed + defined once. No literal comment-closer inside this block.
    ============================================================================ */
 
-/* the T1 fldScenarioInit route (called when data.phases exists). Builds phase 0 + the running
-   tally; returns true (fldScenarioInit early-returns on a populated scenario). */
+/**
+ * The T1 fldScenarioInit route (called when data.phases exists). Builds phase 0
+ * + the running tally; returns true (fldScenarioInit early-returns on a populated scenario).
+ * @param {{ autoBoth?: boolean }} opts - Launch options.
+ * @param {import('../types').ScenarioData} data - The scenario data with phases[].
+ * @returns {true} Always returns true to signal scenario was handled.
+ */
 function _fldScenarioInitPhased(opts, data) {
   __FIELD._scenTop = data;                 // the WHOLE scenario (UI: name/date/blurb/teaching/endNote/sides/brief)
   __FIELD.autoBoth = !!opts.autoBoth;
@@ -50,9 +55,14 @@ function _fldScenarioInitPhased(opts, data) {
   return true;
 }
 
-/* a per-phase scenData VIEW: the top-level scenario with the phase's leaders/supply/objective
-   spliced in, so the officers/logistics layers (which read __FIELD.scenData.leaders/.supply) build
-   the phase's cast/trains, while the UI keeps the top-level name/date/blurb/teaching/endNote. */
+/**
+ * A per-phase scenData VIEW: the top-level scenario with the phase's leaders/supply/objective
+ * spliced in, so the officers/logistics layers build the phase's cast/trains,
+ * while the UI keeps the top-level name/date/blurb/teaching/endNote.
+ * @param {import('../types').ScenarioData} top - The top-level scenario data.
+ * @param {import('../types').PhaseData} p - The current phase data.
+ * @returns {import('../types').ScenarioData & { _phase: import('../types').PhaseData }}
+ */
 function _fldPhaseView(top, p) {
   var v = {}, k;
   for (k in top) if (Object.prototype.hasOwnProperty.call(top, k)) v[k] = top[k];
@@ -96,16 +106,22 @@ function _fldSidePhaseCas(side) {
 }
 
 /* the aggregate battle winner from the weighted phase score, with a DRAW band (a tight split is
-   the historical tactical draw). Called when the LAST phase resolves. */
+   the historical tactical draw). Called when the LAST phase resolves.
+ * @returns {'US' | 'CS' | 'draw'} The overall winner based on weighted phase scores.
+ */
 function _fldBattleWinner() {
   var us = __FIELD.phaseScore.US, cs = __FIELD.phaseScore.CS, diff = us - cs;
   if (Math.abs(diff) < 0.5) return "draw";
   return diff > 0 ? "US" : "CS";
 }
 
-/* the fldCheckVictory intercept (T0 seam): a phase has resolved (winner w, by `by`). Record it +
-   the casualties; if it was the LAST phase, end the battle with the aggregate winner; else advance
-   (headless -> immediately; UI -> the inter-phase card gates it). */
+/**
+ * The fldCheckVictory intercept (T0 seam): a phase has resolved. Record it +
+ * the casualties; if it was the LAST phase, end the battle with the aggregate winner;
+ * else advance (headless -> immediately; UI -> the inter-phase card gates it).
+ * @param {'US' | 'CS' | 'draw'} w - Phase winner.
+ * @param {string} by - How the phase was won ('hold', 'timeout', 'destroy').
+ */
 function _fldPhaseResolved(w, by) {
   var top = __FIELD._scenTop, idx = __FIELD.phaseIdx, p = top.phases[idx];
   var usCas = _fldSidePhaseCas("US"), csCas = _fldSidePhaseCas("CS");

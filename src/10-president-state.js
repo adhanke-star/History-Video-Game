@@ -24,10 +24,15 @@
        it rides the save with NO _SAVE_VER bump; back-compat = idempotent presInit).
    =========================================================================== */
 
+/** @type {number} Maximum dispatch log entries retained. */
 var _pdLOG_MAX = 6;
 
-/* Append a dispatch line to the President's log (newest-first, capped) —
-   mirrors the clk/wr log convention. Guarded; never throws into the tick. */
+/**
+ * Append a dispatch line to the President's log (newest-first, capped).
+ * Mirrors the clk/wr log convention. Guarded; never throws into the tick.
+ * @param {import('./types').Campaign | null} C - The campaign state.
+ * @param {string} line - The log entry to prepend.
+ */
 function _pdLog(C, line) {
   try {
     if (!C || !C.president) return;
@@ -63,10 +68,13 @@ var _pdPRESIDENT = {
   CS: { name: "Davis",   title: "President of the Confederate States",  seat: "Executive Mansion, Richmond"   }
 };
 
-/* ---- presInit: idempotent lazy init — the back-compat / migration mechanism ----
-   Old (pre-S0) ver-1 saves gain C.president on the next desk-open or battle tick;
-   applySave restores G.campaign wholesale and does NOT re-run init, so EVERY
-   reader must call presInit first. Re-validates each field for partial objects. */
+/**
+ * Idempotent lazy init — the back-compat / migration mechanism.
+ * Old (pre-S0) ver-1 saves gain C.president on the next desk-open or battle tick;
+ * applySave restores G.campaign wholesale and does NOT re-run init, so EVERY
+ * reader must call presInit first. Re-validates each field for partial objects.
+ * @param {import('./types').Campaign | null} C - The campaign state (tolerates null).
+ */
 function presInit(C) {
   if (!C) return;                                  // warWonScreen sets G.campaign=null — tolerate it
   var side = (C.side === "CS") ? "CS" : "US";
@@ -106,16 +114,27 @@ function presInit(C) {
   if (!P.log || !Array.isArray(P.log)) P.log = [];
 }
 
-/* Pretty month label for the strategic clock. */
+/**
+ * Pretty month label for the strategic clock.
+ * @param {number} m - Month index (1-12).
+ * @returns {string} Month name or empty string for invalid input.
+ */
 function _pdMonthName(m) {
   var names = ["", "January", "February", "March", "April", "May", "June",
                "July", "August", "September", "October", "November", "December"];
   return names[m] || "";
 }
 
-/* ---- presOnResolve: per-battle strategic-turn tick. Mutate C.president ONLY.
-   No DOM, no saveLocal. Runs AFTER clkOnResolve in _t1Resolve, so C.clock
-   exists if we want to read/feed it (interlink pattern, like wr→clk.capital). ---- */
+/**
+ * Per-battle strategic-turn tick. Mutates C.president ONLY.
+ * No DOM, no saveLocal. Runs AFTER clkOnResolve in _t1Resolve, so C.clock
+ * exists if we want to read/feed it (interlink pattern, like wr→clk.capital).
+ * @param {'US' | 'CS'} winnerSide - Which side won the battle.
+ * @param {string} type - Battle type ('battle', 'decisive', 'draw', 'objwin').
+ * @param {import('./types').BattleDescriptor} B - Battle descriptor.
+ * @param {import('./types').Campaign | null} C - The campaign state.
+ * @param {boolean} win - Whether the player's side won.
+ */
 function presOnResolve(winnerSide, type, B, C, win) {
   if (!C) return;
   presInit(C);                                     // belt-and-suspenders for wholesale-restored saves

@@ -1,0 +1,19 @@
+#!/bin/sh
+# Pre-commit hook: run unit tests + build gate before allowing a commit.
+# Install: git config core.hooksPath .githooks
+
+echo "Running unit tests..."
+npm test
+if [ $? -ne 0 ]; then
+  echo "Unit tests failed. Commit aborted."
+  exit 1
+fi
+
+echo "Running build gate..."
+node tools/build.mjs --check
+if [ $? -ne 0 ]; then
+  echo "Build gate failed. Commit aborted."
+  exit 1
+fi
+
+echo "All checks passed."

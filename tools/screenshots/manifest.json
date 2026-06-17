@@ -1,0 +1,20 @@
+{
+  "captured": "2026-06-17T01:32:27.377Z",
+  "results": [
+    {
+      "name": "title-screen",
+      "status": "UPDATED",
+      "description": "The main title/menu screen on load"
+    },
+    {
+      "name": "campaign-start",
+      "status": "UPDATED",
+      "description": "Campaign selection / new game screen"
+    },
+    {
+      "name": "war-department",
+      "status": "UPDATED",
+      "description": "War Department / President's Desk overview"
+    }
+  ]
+}
