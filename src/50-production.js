@@ -34,7 +34,7 @@ function _prCfg(side) {
       if (P.rail && P.rail.deteriorationPerTurnPct && typeof P.rail.deteriorationPerTurnPct[side] === "number") base.railDecay = P.rail.deteriorationPerTurnPct[side] / 100;
       var ag = P.agriculture && P.agriculture.distributionEfficiency;
       if (ag) { if (side === "US" && typeof ag.US === "number") base.foodDist = ag.US; else if (side === "CS" && ag.CS_byTurn && typeof ag.CS_byTurn.start === "number") base.foodDist = ag.CS_byTurn.start; }
-    } catch (e) {}
+    } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_prCfg data load:", e); }
   }
   return base;
 }
@@ -113,7 +113,7 @@ function prodOnResolve(winnerSide, type, B, C, win) {
     }
     if (side === "CS" && P.railIntegrity < 50) _prPush(C, "The railroads fail — stores rot in depots while the men go hungry.");
     else if (side === "US" && P.equipIndex >= 90) _prPush(C, "The arsenals and railroads keep the armies well-found.");
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("prodOnResolve:", e); }
 }
 
 /* Status word for the equip index. */

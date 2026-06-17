@@ -52,7 +52,7 @@ function presRenderEconomy(C) {
     try {
       portrait = '<img src="' + window.portraitFor(head.name, C.side, { named: true }) + '" alt="'
         + (head.name || 'President') + '" style="width:84px;height:84px;object-fit:cover;border:2px solid var(--rule);border-radius:4px;flex:0 0 auto">';
-    } catch (e) {}
+    } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("presRenderEconomy portrait:", e); }
   }
   var nodeLevels = 0, nodeKeys = ["industry", "ordnance", "provisions", "rail", "depot"];
   if (wr.nodes) for (var i = 0; i < nodeKeys.length; i++) nodeLevels += (wr.nodes[nodeKeys[i]] || 0);
@@ -126,7 +126,7 @@ function presRenderCabinet(C) {
       try {
         img = '<img src="' + window.portraitFor(a.name, C.side, { named: true }) + '" alt="Secretary ' + a.name
           + '" style="width:72px;height:72px;object-fit:cover;border:2px solid var(--rule);border-radius:4px;flex:0 0 auto">';
-      } catch (e) {}
+      } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("presRenderCabinet portrait:", e); }
     }
     var on = !!a.delegated;
     cards += '<div style="display:flex;gap:12px;align-items:center;padding:10px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.12)">'

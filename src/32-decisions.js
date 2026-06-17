@@ -84,7 +84,7 @@ function decOnResolve(winnerSide, type, B, C, win) {
       if (!hinge) added++;
       if (typeof _pdLog === "function") _pdLog(C, "A matter awaits your decision: " + c.title + ".");
     }
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("decOnResolve:", e); }
 }
 
 /* ---- the effect applier: bounded, clamped, logged. ---- */

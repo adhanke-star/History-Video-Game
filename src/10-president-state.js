@@ -140,5 +140,5 @@ function presOnResolve(winnerSide, type, B, C, win) {
     var bn = (B && B.bd && B.bd.name) ? B.bd.name : (B && B.name) ? B.name : "the field";
     _pdLog(C, (win ? "Victory" : (type === "draw" ? "Stalemate" : "Setback"))
               + " at " + bn + " — " + _pdMonthName(d.month) + " " + d.year + ".");
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("presOnResolve:", e); }
 }

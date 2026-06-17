@@ -75,7 +75,7 @@ function _fldArmPlan(C, year, count) {
       var cnt = Math.floor(count * fr + 1e-9);
       for (var k = 0; k < cnt; k++) out.push(ek);
     }
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldCampaignArmory:", e); }
   return out;
 }
 /* Condition ONE player unit. Reads the per-launch params stashed on the campaign ctx
@@ -238,7 +238,7 @@ function fldLaunchCampaignBattle(C) {
     try { if (typeof fldBullRunBriefing === "function") fldBullRunBriefing(); } catch (e) {}
   } else {
     fldLaunchSandbox({ renderer: "3d", campaign: ctx, skirmish: _fldCampaignSkirmishParams(fightBd, C) });
-    try { fldCampaignBriefing(C, fightBd); } catch (e) {}
+    try { fldCampaignBriefing(C, fightBd); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldCampaignBriefing:", e); }
   }
   // abort (Esc / Exit before the battle ends) returns to the bridge briefing rather than the main menu
   __FIELD._returnFn = function () { fldCampaignReturn(C); };
@@ -491,7 +491,7 @@ function fldCampaignApplyOutcome(o) {
   startBattleRuntime(o.bd, ps, true);                  // build + condition (A6a) the hex roster in one JS turn
   var B = (typeof G !== "undefined") ? G.battle : null;
   if (!B) { campaignAdvance(o.winnerSide, o.type); return; }
-  if (typeof _audLeaveBattle === "function") { try { _audLeaveBattle(); } catch (e) {} }
+  if (typeof _audLeaveBattle === "function") { try { _audLeaveBattle(); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldCampaignApplyOutcome _audLeaveBattle:", e); } }
   if (typeof G !== "undefined") G.mode = "result";     // never paint the now-occluded hex field
   var pCas = (typeof _arApplyCasualties === "function") ? _arApplyCasualties(B, ps, o.pFrac) : 0;
   var eCas = (typeof _arApplyCasualties === "function") ? _arApplyCasualties(B, es, o.eFrac) : 0;
@@ -504,7 +504,7 @@ function fldCampaignApplyOutcome(o) {
   B.casualties[ps] = pCas; B.casualties[es] = eCas;
   B.infl[ps] = eCas; B.infl[es] = pCas;   // infl[X] = what X inflicted = what the enemy suffered
   B.over = true;
-  if (o.winnerSide && typeof playSfx === "function") { try { playSfx(o.win ? "bugle" : "rout"); } catch (e) {} }
+  if (o.winnerSide && typeof playSfx === "function") { try { playSfx(o.win ? "bugle" : "rout"); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldCampaignApplyOutcome playSfx:", e); } }
   campaignAdvance(o.winnerSide, o.type);
 }
 /* the campaign end-screen teaching/result snippet (T0 fldOnOver hook) — appended beneath any

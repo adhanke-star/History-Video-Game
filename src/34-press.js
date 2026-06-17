@@ -117,7 +117,7 @@ function pressOnResolve(winnerSide, type, B, C, win) {
     P.sentiment = n ? Math.round(sum / n) : 50;
     P.reacted = true;
     P.headlines = heads;
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("pressOnResolve:", e); }
 }
 
 /* The aggregate press sentiment toward the war effort (0-100). NEUTRAL 50 until the

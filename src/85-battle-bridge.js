@@ -53,7 +53,7 @@ function bridgeInit(C) {
 function bridgeOnResolve(winnerSide, type, B, C, win) {
   if (!C) return;
   bridgeInit(C);
-  try { C.battlePrep = { entrench: false, forcedMarch: false, concentrate: false, feint: false, raidSupply: false }; } catch (e) {}
+  try { C.battlePrep = { entrench: false, forcedMarch: false, concentrate: false, feint: false, raidSupply: false }; } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("bridgeOnResolve:", e); }
 }
 
 /* Find the next campaign battle definition (bare-name CHAINS/BATTLES from base). */
@@ -63,7 +63,7 @@ function _brgNextBattle(C) {
     var chain = CHAINS[C.side]; if (!chain) return null;
     var id = chain[C.idx]; if (!id) return null;
     return BATTLES.find(function (b) { return b.id === id; }) || null;
-  } catch (e) { return null; }
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_brgNextBattle:", e); return null; }
 }
 
 /* ---- bridgeArmy: THE CONDITIONING MATH. The army the player will field, derived

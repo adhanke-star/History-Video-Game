@@ -253,7 +253,7 @@ function cmdOnResolve(winnerSide, type, B, C, win) {
       }
     }
     cmd._activeId = id;
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("cmdOnResolve:", e); }
 }
 
 /* ===== render: the "Command" desk tab ===== */
@@ -263,7 +263,7 @@ function _cmdPortrait(gen, side, size) {
   try {
     return '<img src="' + window.portraitFor(_cmdName(gen), side, { named: true }) + '" alt="General ' + _cmdEsc(_cmdName(gen))
       + '" style="width:' + size + 'px;height:' + size + 'px;object-fit:cover;border:2px solid var(--rule);border-radius:4px;flex:0 0 auto">';
-  } catch (e) { return ""; }
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_cmdPortrait:", e); return ""; }
 }
 
 function _cmdLeadWord(v) {
@@ -422,7 +422,7 @@ function cmdRenderTab(C) {
   try {
     if (typeof presInit === "function") presInit(C);
     cmdInit(C);
-  } catch (e) { return '<p class="lede" style="font-size:13px">Your generals await your orders.</p>'; }
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("cmdRenderTab:", e); return '<p class="lede" style="font-size:13px">Your generals await your orders.</p>'; }
   if (!_cmdData()) return '<p class="lede" style="font-size:13px">Your generals await your orders.</p>';
   return ''
     + '<p class="lede" style="font-size:13px;margin-bottom:10px">You appoint the men who command your armies &mdash; and you relieve them. A great general lifts the army your war puts in the field; a cautious or discredited one squanders it. But a popular general is dangerous to dismiss: it costs you political capital, and the country is watching.</p>'

@@ -212,7 +212,7 @@ function blockadeOnResolve(winnerSide, type, B, C, win) {
     if (embargoActive && year <= 1861) _blkPush(C, "King Cotton withheld — the wharves sit full, the treasury empty.");
     else if (ports === 0) _blkPush(C, "Wilmington falls — the last runner port is closed; the South is sealed.");
     else if (revenue > 0 && shippedK > 0) _blkPush(C, "Runners slip " + Math.round(shippedK) + "k bales past the blockade (+" + revenue + " funds).");
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("blockadeOnResolve:", e); }
 }
 
 /* Status word + colour for the recognition meter. */
@@ -238,7 +238,7 @@ function _blkCard(id) {
     if (D && D.teachingCards) {
       for (var i = 0; i < D.teachingCards.length; i++) if (D.teachingCards[i].id === id) return D.teachingCards[i];
     }
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_blkCard:", e); }
   return null;
 }
 

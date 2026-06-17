@@ -43,7 +43,7 @@ function fldScenarioRegistry() {
       if (GAME_DATA.fredericksburg && GAME_DATA.fredericksburg.fredericksburg) R.fredericksburg = GAME_DATA.fredericksburg.fredericksburg;
       if (GAME_DATA.antietam && GAME_DATA.antietam.antietam) R.antietam = GAME_DATA.antietam.antietam;   // Phase C-2: the first MULTI-PHASE epic (data.phases[] -> the T8 engine)
     }
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldScenarioRegistry:", e); }
   return R;
 }
 function fldScenarioData(id) { var R = fldScenarioRegistry(); return (id && R[id]) ? R[id] : null; }
@@ -135,7 +135,7 @@ function fldReinforceSpawn(spec) {
   // Phase A (A1): in a campaign-launched battle, a PLAYER-side reinforcement is conditioned by the
   // strategic war too (men / morale / re-arm) as it detrains — your war fields stronger reserves. No-op
   // for a standalone scenario (campaignCtx null) or an enemy unit (the conditioner is player-side-gated).
-  if (__FIELD.campaignCtx && typeof fldCampaignConditionUnit === "function") { try { fldCampaignConditionUnit(u); } catch (e) {} }
+  if (__FIELD.campaignCtx && typeof fldCampaignConditionUnit === "function") { try { fldCampaignConditionUnit(u); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldReinforceSpawn condition:", e); } }
   // a PLAYER-side (non-AI) reinforcement marches onto the field toward the objective on arrival — so it
   // joins the battle instead of idling in the rear (B-6: the player controls his OWN side per __FIELD.playerSide
   // — US by default, CS when the Confederate command is taken; the AI commands the other side + any autoBoth
@@ -187,7 +187,7 @@ function fldInjectScenarioButtons(afterBtn) {
       var b = _fldInjectOneScenarioButton(id, reg[id], prev);
       if (b) { prev = b; last = b; }
     }
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldInjectScenarioButtons:", e); }
   return last;
 }
 /* Marquee order: First Bull Run first (the opening battle + the hand-authored marquee), then the rest by year. */

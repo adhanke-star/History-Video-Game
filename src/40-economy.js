@@ -47,7 +47,7 @@ function _ecCfg(side) {
       }
       var inf = G2.finance && G2.finance.inflation && G2.finance.inflation[side];
       if (inf) { if (typeof inf.spiralCoefficient === "number") base.spiral = inf.spiralCoefficient; if (typeof inf.cumulativeTargetMultiplier === "number") base.target = inf.cumulativeTargetMultiplier; }
-    } catch (e) {}
+    } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_ecCfg data load:", e); }
   }
   return base;
 }
@@ -139,7 +139,7 @@ function econOnResolve(winnerSide, type, B, C, win) {
 
     if (E.inflation > before * 1.08) _ecPush(C, "Prices surge — paper money buys ×" + (Math.round(E.inflation * 10) / 10) + " of 1861.");
     else if (printed > _ecDEMAND * 0.5) _ecPush(C, "The Treasury leans hard on the printing press this quarter.");
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("econOnResolve:", e); }
 }
 
 /* Status word for an inflation multiplier. */
