@@ -30,7 +30,7 @@ bl_info = {
     "category": "Interface",
 }
 
-RODIN_FREE_TRIAL_KEY = "vibecoding"
+RODIN_FREE_TRIAL_KEY = os.getenv("RODIN_FREE_TRIAL_KEY", "vibecoding")
 
 # Add User-Agent as required by Poly Haven API
 REQ_HEADERS = requests.utils.default_headers()
@@ -488,12 +488,45 @@ class BlenderMCPServer:
         except Exception as e:
             return {"error": str(e)}
 
+    # Disallowed patterns in user-supplied code — prevent file-system access,
+    # network calls, process spawning, and module imports outside bpy.
+    _CODE_BLOCKLIST = [
+        "import os", "import sys", "import subprocess", "import socket",
+        "import shutil", "import requests", "from os", "from sys",
+        "from subprocess", "from socket", "from shutil", "from requests",
+        "__import__", "eval(", "exec(", "compile(", "open(",
+        "os.system", "os.popen", "os.exec", "os.spawn",
+        "subprocess.run", "subprocess.call", "subprocess.Popen",
+    ]
+
     def execute_code(self, code):
-        """Execute arbitrary Blender Python code"""
-        # This is powerful but potentially dangerous - use with caution
+        """Execute Blender Python code with safety restrictions.
+
+        Only bpy operations are allowed. System-level access (os, subprocess,
+        socket, file I/O, eval/exec chains) is blocked to prevent misuse over
+        the unauthenticated local socket.
+        """
+        if not isinstance(code, str) or not code.strip():
+            return {"error": "Code must be a non-empty string"}
+
+        # Block dangerous patterns
+        code_lower = code.lower()
+        for pattern in self._CODE_BLOCKLIST:
+            if pattern.lower() in code_lower:
+                return {"error": f"Blocked: use of '{pattern}' is not permitted in execute_code"}
+
         try:
-            # Create a local namespace for execution
-            namespace = {"bpy": bpy}
+            # Restricted namespace — only bpy and safe builtins
+            safe_builtins = {
+                k: __builtins__[k] if isinstance(__builtins__, dict) else getattr(__builtins__, k)
+                for k in ("print", "len", "range", "int", "float", "str", "list",
+                          "dict", "tuple", "set", "bool", "None", "True", "False",
+                          "round", "abs", "min", "max", "sorted", "enumerate", "zip",
+                          "isinstance", "type", "getattr", "setattr", "hasattr", "dir")
+                if (isinstance(__builtins__, dict) and k in __builtins__) or
+                   (not isinstance(__builtins__, dict) and hasattr(__builtins__, k))
+            }
+            namespace = {"bpy": bpy, "mathutils": mathutils, "__builtins__": safe_builtins}
 
             # Capture stdout during execution, and return it as result
             capture_buffer = io.StringIO()
