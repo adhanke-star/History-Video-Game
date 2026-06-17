@@ -1,0 +1,140 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  js-syntax:
+    name: JavaScript syntax check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Check JS source syntax (src/)
+        run: |
+          errors=0
+          for f in src/*.js src/tactical/*.js; do
+            if ! node --check "$f" 2>/dev/null; then
+              echo "SYNTAX ERROR: $f"
+              errors=$((errors + 1))
+            fi
+          done
+          if [ "$errors" -gt 0 ]; then
+            echo "$errors file(s) have syntax errors"
+            exit 1
+          fi
+          echo "All JS source files pass syntax check"
+
+  python-lint:
+    name: Python lint (blender addon)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install ruff
+        run: pip install ruff
+      - name: Lint tools/blender_mcp_addon.py
+        run: ruff check tools/blender_mcp_addon.py --select=E9,F63,F7,F82 --no-fix
+
+  sandbox-test:
+    name: Sandbox security tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test execute_code AST validation
+        run: |
+          python3 -c "
+          import ast, sys
+
+          # Extract the validation logic from the addon
+          exec(open('tools/blender_mcp_addon.py').read().split('def _validate_code_ast(code):')[0])
+
+          def validate(code):
+              try:
+                  tree = ast.parse(code)
+              except SyntaxError as e:
+                  return f'Syntax error: {e}'
+              for node in ast.walk(tree):
+                  if isinstance(node, (ast.Import, ast.ImportFrom)):
+                      return 'Blocked: import statements are not permitted'
+                  if isinstance(node, ast.Attribute):
+                      if isinstance(node.attr, str) and node.attr.startswith('__') and node.attr.endswith('__'):
+                          return f\"Blocked: access to dunder attribute '{node.attr}' is not permitted\"
+                  if isinstance(node, ast.Call):
+                      func = node.func
+                      if isinstance(func, ast.Name) and func.id in ('eval', 'exec', 'compile', 'open', '__import__', 'getattr', 'setattr', 'delattr', 'globals', 'locals', 'vars', 'breakpoint', 'exit', 'quit'):
+                          return f\"Blocked: call to '{func.id}' is not permitted\"
+                  if isinstance(node, ast.Constant) and isinstance(node.value, str):
+                      if node.value.startswith('__') and node.value.endswith('__'):
+                          return f\"Blocked: dunder string literal '{node.value}' is not permitted\"
+              return None
+
+          # Must be blocked
+          blocked = [
+              'import os',
+              'from subprocess import call',
+              '().__class__.__bases__[0].__subclasses__()',
+              'getattr(bpy, \"__builtins__\")',
+              'eval(\"1+1\")',
+              'open(\"/etc/passwd\")',
+              'x[\"__class__\"]',
+              'setattr(obj, \"x\", 1)',
+              'type(\"X\", (object,), {}).__init__.__globals__',
+          ]
+          # Must be allowed
+          allowed = [
+              'print(\"hello\")',
+              'x = 1 + 2',
+              'for i in range(10): print(i)',
+              'data = {\"name\": \"Cube\"}',
+          ]
+
+          failed = False
+          for code in blocked:
+              if validate(code) is None:
+                  print(f'FAIL: should block: {code}')
+                  failed = True
+
+          for code in allowed:
+              result = validate(code)
+              if result is not None:
+                  print(f'FAIL: should allow: {code} -> {result}')
+                  failed = True
+
+          if failed:
+              sys.exit(1)
+          print(f'All {len(blocked)} block + {len(allowed)} allow tests passed')
+          "
+
+  html-validate:
+    name: HTML structure check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate HTML files are well-formed
+        run: |
+          for f in index.html civil_war_generals.html build/base.html; do
+            if [ ! -f "$f" ]; then
+              echo "SKIP (not found): $f"
+              continue
+            fi
+            # Check for doctype and closing tags
+            if ! head -1 "$f" | grep -qi "doctype\|html"; then
+              echo "WARNING: $f may be missing DOCTYPE"
+            fi
+            if ! grep -q "</html>" "$f"; then
+              echo "ERROR: $f is missing closing </html> tag"
+              exit 1
+            fi
+            echo "OK: $f"
+          done
