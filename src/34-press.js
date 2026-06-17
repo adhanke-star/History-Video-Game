@@ -43,6 +43,11 @@ function _prsBaseline(p) { return (p && _prsLEAN_BASE[p.lean] != null) ? _prsLEA
 
 /* ---- pressInit: idempotent. C.press = per-paper favor + aggregate sentiment + the
    day's headlines. sentiment stays a NEUTRAL 50 until the press first reacts. ---- */
+/**
+ * Initialize the press subsystem state.
+ * Idempotent — safe to call multiple times.
+ * @param {import('./types').Campaign | null} C
+ */
 function pressInit(C) {
   if (!C) return;
   var side = (C.side === "CS") ? "CS" : "US";
@@ -94,6 +99,14 @@ function _prsPickEditorial(paper, conds) {
 
 /* ---- pressOnResolve: the papers react. Runs BEFORE moraleOnResolve so the fresh
    sentiment feeds the public-will layer the same turn. ---- */
+/**
+ * Per-battle tick for the press subsystem.
+ * @param {'US'|'CS'} winnerSide
+ * @param {string} type - Battle outcome type.
+ * @param {object} B - Battle descriptor.
+ * @param {import('./types').Campaign | null} C
+ * @param {boolean} win - Whether the player's side won.
+ */
 function pressOnResolve(winnerSide, type, B, C, win) {
   if (!C) return;
   pressInit(C);
@@ -125,6 +138,10 @@ function pressOnResolve(winnerSide, type, B, C, win) {
 
 /* The aggregate press sentiment toward the war effort (0-100). NEUTRAL 50 until the
    press has first reacted, so it perturbs nothing at init / in unrelated probes. */
+/**
+ * pressSentiment.
+ * @param {*} C
+ */
 function pressSentiment(C) {
   if (!C || !C.press || !C.press.reacted || typeof C.press.sentiment !== "number" || !(C.press.sentiment >= 0 && C.press.sentiment <= 100)) return 50;   // D52.6: range test rejects NaN/Infinity
   return C.press.sentiment;
@@ -140,6 +157,11 @@ function _prsFavorWord(v) {
   return ["In open opposition", "#9c3b2e"];
 }
 
+/**
+ * Render the press UI section.
+ * @param {import('./types').Campaign} C
+ * @returns {string} HTML string.
+ */
 function pressRenderTab(C) {
   if (!C) return '';
   pressInit(C);
@@ -204,6 +226,10 @@ function _prsCardHTML(C) {
   return html;
 }
 
+/**
+ * pressWireTab.
+ * @param {*} C
+ */
 function pressWireTab(C) {
   var d = _prsData();
   if (d && d.teachingCards) for (var i = 0; i < d.teachingCards.length; i++) {

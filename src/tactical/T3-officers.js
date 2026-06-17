@@ -86,6 +86,10 @@ function fldProceduralOfficers() {
   return out;
 }
 /* the side's mean position pulled back toward its home edge — the leader's start "command post". */
+/**
+ * fldSideCentroid.
+ * @param {*} side
+ */
 function fldSideCentroid(side) {
   var sx = 0, sz = 0, n = 0, U = __FIELD.units;
   for (var i = 0; i < U.length; i++) { var u = U[i]; if (u.side !== side || !u.alive) continue; sx += u.x; sz += u.z; n++; }
@@ -95,6 +99,10 @@ function fldSideCentroid(side) {
 }
 /* the PLAYER side's commander in a campaign is the appointed general (name + leadership);
    every other case is a competent default. Maps the 42..88 leadership band -> a 0.18..0.95 field quality. */
+/**
+ * fldOfficerSideQuality.
+ * @param {*} side
+ */
 function fldOfficerSideQuality(side) {
   var C = (typeof _fldCamp === "function") ? _fldCamp() : null;
   var playerSide = (C && C.side === "CS") ? "CS" : "US";
@@ -111,6 +119,10 @@ function fldOfficerSideQuality(side) {
   }
   return { quality: 0.55, name: side === "US" ? "Union Commander" : "Confederate Commander", short: side === "US" ? "Union" : "Confederate" };
 }
+/**
+ * fldMakeOfficer.
+ * @param {*} o
+ */
 function fldMakeOfficer(o) {
   if (!o) return null;
   var ld = {
@@ -134,12 +146,20 @@ function fldMakeOfficer(o) {
   return ld;
 }
 function _fldLastName(s) { s = String(s == null ? "" : s).replace(/['"]/g, "").trim(); var p = s.split(/\s+/); return p.length ? p[p.length - 1] : s; }
+/**
+ * fldOfficerById.
+ * @param {*} id
+ */
 function fldOfficerById(id) { var L = __FIELD.leaders; if (!L) return null; for (var i = 0; i < L.length; i++) if (L[i].id === id) return L[i]; return null; }
 
 /* ===========================================================================
    THE PER-TICK STEP  (T0 fldSimStep seam — runs AFTER fire, BEFORE morale, so the
    command bonus + any command-shock land in this tick's morale resolution).
    =========================================================================== */
+/**
+ * fldOfficersStep.
+ * @param {*} dt
+ */
 function fldOfficersStep(dt) {
   var L = __FIELD.leaders; if (!L || !L.length) return;
   var U = __FIELD.units, i, j;
@@ -159,6 +179,10 @@ function fldOfficersStep(dt) {
     }
   }
 }
+/**
+ * fldOfficerActivate.
+ * @param {*} ld
+ */
 function fldOfficerActivate(ld) {
   ld.active = true;
   var au = ld.attach ? fldById(ld.attach) : null;
@@ -169,6 +193,10 @@ function fldOfficerActivate(ld) {
   if (typeof fldScenarioBanner === "function") { try { fldScenarioBanner(line, ld.side); } catch (e) {} }
 }
 /* the brigade the leader keeps with: its attached unit if alive, else the nearest steady-ish friendly. */
+/**
+ * fldOfficerAnchorUnit.
+ * @param {*} ld
+ */
 function fldOfficerAnchorUnit(ld) {
   if (ld.attach) { var a = fldById(ld.attach); if (a && a.alive && a.state !== "routing") return a; }
   var best = null, bd = 1e9, U = __FIELD.units;
@@ -176,6 +204,11 @@ function fldOfficerAnchorUnit(ld) {
   return best;
 }
 /* the leader rides to a post just behind its anchor brigade (toward home), so command follows the line. */
+/**
+ * fldOfficerMove.
+ * @param {*} ld
+ * @param {*} dt
+ */
 function fldOfficerMove(ld, dt) {
   var anchor = fldOfficerAnchorUnit(ld);
   var hx = ld.x, hz = ld.z;
@@ -186,6 +219,11 @@ function fldOfficerMove(ld, dt) {
 }
 /* exposure near the firing line accrues risk; past WOUND_FRAC of the fate threshold the leader is
    wounded (aura halves), past the threshold he falls. Deterministic (the threshold was seeded at build). */
+/**
+ * fldOfficerHazard.
+ * @param {*} ld
+ * @param {*} dt
+ */
 function fldOfficerHazard(ld, dt) {
   var U = __FIELD.units, exposure = 0;
   for (var i = 0; i < U.length; i++) {
@@ -207,6 +245,10 @@ function fldOfficerHazard(ld, dt) {
     if (ld.wounded && ld._risk <= ld._fate * FLDO.WOUND_FRAC * 0.55) ld.wounded = false;
   }
 }
+/**
+ * fldOfficerWounded.
+ * @param {*} ld
+ */
 function fldOfficerWounded(ld) {
   if (ld.wounded || !ld.alive) return;
   ld.wounded = true;
@@ -214,6 +256,10 @@ function fldOfficerWounded(ld) {
   fldAnnounce(line);
   if (typeof fldScenarioBanner === "function") { try { fldScenarioBanner(line, ld.side); } catch (e) {} }
 }
+/**
+ * fldOfficerFalls.
+ * @param {*} ld
+ */
 function fldOfficerFalls(ld) {
   if (!ld.alive) return;
   ld.alive = false; ld.fellAt = { x: ld.x, z: ld.z };
@@ -247,6 +293,10 @@ function fldPlayerSide() {
   return "US";
 }
 /* lists for the end-screen / HUD: which named officers fell. */
+/**
+ * fldOfficersDownList.
+ * @param {*} side
+ */
 function fldOfficersDownList(side) {
   var L = __FIELD.leaders, out = []; if (!L) return out;
   for (var i = 0; i < L.length; i++) { var ld = L[i]; if (side && ld.side !== side) continue; if (!ld.alive) out.push(ld.short || ld.name); }
@@ -257,6 +307,10 @@ function fldOfficersDownList(side) {
    HUD  (T0 fldRenderHud seam) — commander + command-range for a selected unit;
    a field-officer roster line when nothing is selected.
    =========================================================================== */
+/**
+ * fldOfficerHudSelected.
+ * @param {*} u
+ */
 function fldOfficerHudSelected(u) {
   if (!__FIELD.officers || !u) return "";
   var cmdr = u.commander ? ('<div style="opacity:.78;font-size:12px;margin-top:4px;">Brigade: <b>' + _fldEscO(u.commander) + '</b></div>') : "";
@@ -267,6 +321,10 @@ function fldOfficerHudSelected(u) {
     : '<span style="color:#c08a5a;">&#9679; Out of command range</span>';
   return cmdr + '<div style="font-size:12px;margin-top:2px;">' + status + '</div>';
 }
+/**
+ * fldNearestLeaderName.
+ * @param {*} u
+ */
 function fldNearestLeaderName(u) {
   var L = __FIELD.leaders; if (!L) return null; var best = null, bd = 1e9;
   for (var i = 0; i < L.length; i++) { var ld = L[i]; if (!ld.alive || !ld.active || ld.side !== u.side) continue; var d = fldDist(u, ld); if (d <= ld.radius && d < bd) { bd = d; best = ld; } }
@@ -290,6 +348,11 @@ function fldOfficerHudRoster() {
 function _fldEscO(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 
 /* the end-screen officer teaching payoff (T0 fldOnOver seam) — who was lost, and why it mattered. */
+/**
+ * Render the fldOfficerEndHtml UI section.
+ * @param {import('./types').Campaign} C
+ * @returns {string} HTML string.
+ */
 function fldOfficerEndHtml(winner) {
   if (!__FIELD.officers) return "";
   var L = __FIELD.leaders; if (!L || !L.length) return "";
@@ -308,6 +371,11 @@ function fldOfficerEndHtml(winner) {
    2D RENDERER  (T0 fld2dDraw seam) — command ring + a mounted-officer marker.
    CVD-safe: a star glyph + a name label, never colour alone; a cross for the fallen.
    =========================================================================== */
+/**
+ * fldDrawOfficers.
+ * @param {*} ctx
+ * @param {*} v
+ */
 function fldDrawOfficers(ctx, v) {
   if (!__FIELD.officers) return;
   var L = __FIELD.leaders; if (!L || !L.length) return;
@@ -341,6 +409,14 @@ function fldDrawOfficers(ctx, v) {
     if (typeof fld2dLabel === "function") fld2dLabel(ctx, nm, cx, cz + 20);
   }
 }
+/**
+ * fldStar.
+ * @param {*} ctx
+ * @param {*} cx
+ * @param {*} cy
+ * @param {*} rO
+ * @param {*} rI
+ */
 function fldStar(ctx, cx, cy, rO, rI) {
   ctx.beginPath();
   for (var k = 0; k < 10; k++) { var r = (k % 2 === 0) ? rO : rI, a = -Math.PI / 2 + k * Math.PI / 5; var x = cx + Math.cos(a) * r, y = cy + Math.sin(a) * r; if (k === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); }
@@ -349,6 +425,10 @@ function fldStar(ctx, cx, cy, rO, rI) {
 /* fog: the PLAYER's own leaders are always shown; an ENEMY leader is revealed only when a brigade of his
    side near him is currently scouted (you spot the general's flag where you can see his troops). Once ever
    seen, _everSeen is latched so a fallen enemy commander keeps his casualty marker (fog memory). */
+/**
+ * fldOfficerSeen.
+ * @param {*} ld
+ */
 function fldOfficerSeen(ld) {
   var ps = fldPlayerSide();
   if (!__FIELD.fog || ld.side === ps) { ld._everSeen = true; return true; }

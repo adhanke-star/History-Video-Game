@@ -70,6 +70,11 @@ function _blkPush(C, line) {
 
 /* ---- blockadeInit: idempotent; seeds C.blockade. CS carries the cotton model;
    the US side carries the blockade-as-weapon framing (no cotton, full imports). ---- */
+/**
+ * Initialize the blockade subsystem state.
+ * Idempotent — safe to call multiple times.
+ * @param {import('./types').Campaign | null} C
+ */
 function blockadeInit(C) {
   if (!C) return;
   var side = (C.side === "CS") ? "CS" : "US";
@@ -108,6 +113,14 @@ function blockadeInit(C) {
 /* ---- blockadeOnResolve: the per-turn cotton/blockade/diplomacy tick.
    Runs AFTER clk/econ/wr and BEFORE prodOnResolve (so the fresh importFactor
    gates CS arms this same turn). Mutates C.blockade, C.funds, C.clock.intervention. ---- */
+/**
+ * Per-battle tick for the blockade subsystem.
+ * @param {'US'|'CS'} winnerSide
+ * @param {string} type - Battle outcome type.
+ * @param {object} B - Battle descriptor.
+ * @param {import('./types').Campaign | null} C
+ * @param {boolean} win - Whether the player's side won.
+ */
 function blockadeOnResolve(winnerSide, type, B, C, win) {
   if (!C) return;
   blockadeInit(C);
@@ -278,6 +291,11 @@ function _blkWhyText(C) {
 }
 
 /* ---- blockadeRenderDiplomacy: the Diplomacy & the Blockade desk tab. ---- */
+/**
+ * Render the blockade UI section.
+ * @param {import('./types').Campaign} C
+ * @returns {string} HTML string.
+ */
 function blockadeRenderDiplomacy(C) {
   if (!C) return '';
   blockadeInit(C);
@@ -361,6 +379,10 @@ function blockadeRenderDiplomacy(C) {
 }
 
 /* ---- blockadeWireDiplomacy: embargo toggle, depth cycle, delegate, teaching. ---- */
+/**
+ * blockadeWireDiplomacy.
+ * @param {*} C
+ */
 function blockadeWireDiplomacy(C) {
   if (!C || !C.blockade) return;
   var BL = C.blockade;

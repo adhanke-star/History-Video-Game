@@ -41,6 +41,11 @@ function _pdMeter(label, v, hi) {
 
 /* ---- "The War Effort": the President's state-of-the-war overview (S0). ----
    A live ledger drawn from the existing systems; full economy/finance is S1. */
+/**
+ * Render the pres UI section.
+ * @param {import('./types').Campaign} C
+ * @returns {string} HTML string.
+ */
 function presRenderEconomy(C) {
   if (!C) return '';
   if (typeof presInit === "function") presInit(C);
@@ -114,6 +119,11 @@ function presRenderEconomy(C) {
    Per-domain "Delegate" toggle is live (presWireCabinet); auto-manage + the
    teaching voice land in S2. portraitFor renders these civilians via the
    engraving fallback (no PD photo on file → period engraving). */
+/**
+ * Render the pres UI section.
+ * @param {import('./types').Campaign} C
+ * @returns {string} HTML string.
+ */
 function presRenderCabinet(C) {
   if (!C) return '';
   if (typeof presInit === "function") presInit(C);
@@ -150,6 +160,11 @@ function presRenderCabinet(C) {
 }
 
 /* Theater Map placeholder — the living strategic map (armies/rail/rivers, §18) is S1. */
+/**
+ * Render the pres UI section.
+ * @param {import('./types').Campaign} C
+ * @returns {string} HTML string.
+ */
 function presRenderMap(C) {
   if (!C) return '';
   var theaters = [

@@ -77,6 +77,10 @@ function fldBuildSupply() {
   }
   __FIELD.trains = trains;
 }
+/**
+ * fldSideHasUnits.
+ * @param {*} side
+ */
 function fldSideHasUnits(side) {
   var U = __FIELD.units, i;
   if (U) for (i = 0; i < U.length; i++) if (U[i].side === side) return true;
@@ -92,6 +96,10 @@ function fldSideHasUnits(side) {
    - an ATTACKER's train sits behind its START LINE — it advances AWAY from its supply, so a deep assault
      outruns its cartridges (Clausewitz's culminating point; the offensive that runs dry stalls). This keeps
      the ammunition economy DEFENDER-FAVORING (consistent with cover + fog), not a free gift to the attacker. */
+/**
+ * fldSupplyRearPos.
+ * @param {*} side
+ */
 function fldSupplyRearPos(side) {
   var sx = 0, n = 0, U = __FIELD.units;
   for (var i = 0; i < U.length; i++) { var u = U[i]; if (u.side !== side) continue; sx += u.x; n++; }
@@ -105,6 +113,10 @@ function fldSupplyRearPos(side) {
 }
 /* the battle ammunition reserve: scaled by the strategic SUPPLY the player built (campaign), else nominal;
    a raid-supply order cuts the enemy's. Deterministic. */
+/**
+ * fldSupplyReserve.
+ * @param {*} side
+ */
 function fldSupplyReserve(side) {
   var base = FLDL.RESERVE_MAX;
   try {
@@ -129,12 +141,20 @@ function fldSupplyReserve(side) {
   base *= (__FIELD.sev ? __FIELD.sev.supply : 1);
   return Math.max(1, Math.round(base));
 }
+/**
+ * fldSupplyFor.
+ * @param {*} side
+ */
 function fldSupplyFor(side) { var t = __FIELD.trains; return (t && t[side]) ? t[side] : null; }
 
 /* ===========================================================================
    THE PER-TICK STEP  (T0 fldSimStep seam — runs before officers/morale).
    Refills cartridge boxes from the train, flags low-ammo / spent, drains the reserve.
    =========================================================================== */
+/**
+ * fldLogisticsStep.
+ * @param {*} dt
+ */
 function fldLogisticsStep(dt) {
   if (!__FIELD.logistics) return;
   var U = __FIELD.units, i;
@@ -162,6 +182,10 @@ function fldLogisticsStep(dt) {
     u.ammoLow = (u.ammo <= FLDL.LOW_AMMO);
   }
 }
+/**
+ * fldUnitInCloseAction.
+ * @param {*} u
+ */
 function fldUnitInCloseAction(u) {
   var U = __FIELD.units;
   for (var i = 0; i < U.length; i++) {
@@ -179,6 +203,10 @@ function fldUnitInCloseAction(u) {
    rest, then (once refilled) the normal AI resumes. A brigade out of powder with the
    enemy on it is left to the normal AI (it holds / goes to the bayonet — melee needs none).
    =========================================================================== */
+/**
+ * fldLogisticsAiUnit.
+ * @param {*} u
+ */
 function fldLogisticsAiUnit(u) {
   if (!__FIELD.logistics || !u.alive || u.state === "routing") return false;
   // only a brigade that is genuinely OUT breaks off to the train (a last resort, not a tempo weapon) — a merely
@@ -207,6 +235,10 @@ function fldLogisticsAiUnit(u) {
 /* ===========================================================================
    HUD  (T0 fldRenderHud seams)
    =========================================================================== */
+/**
+ * fldLogisticsHudSelected.
+ * @param {*} u
+ */
 function fldLogisticsHudSelected(u) {
   if (!__FIELD.logistics || !u) return "";
   var s = "";
@@ -227,6 +259,11 @@ function fldLogisticsHudReserve() {
 }
 
 /* end-screen teaching payoff (T0 fldOnOver seam) — the ammunition economy, if a reserve ran low. */
+/**
+ * Render fldLogisticsEndHtml UI.
+
+ * @returns {string} HTML string.
+ */
 function fldLogisticsEndHtml() {
   if (!__FIELD.logistics) return "";
   var t = __FIELD.trains; if (!t) return "";
@@ -247,6 +284,11 @@ function _fldEscL(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").
    2D RENDERER  (T0 fld2dDraw seam) — an ammunition wagon + a faint resupply ring.
    Fog: the player's own train is always shown; an enemy train only when scouted near.
    =========================================================================== */
+/**
+ * fldDrawSupply.
+ * @param {*} ctx
+ * @param {*} v
+ */
 function fldDrawSupply(ctx, v) {
   if (!__FIELD.logistics) return;
   var t = __FIELD.trains; if (!t) return;
@@ -271,6 +313,11 @@ function fldDrawSupply(ctx, v) {
     if (typeof fld2dLabel === "function") fld2dLabel(ctx, "❈ Train", cx, cz + 20);
   }
 }
+/**
+ * fldSupplySeen.
+ * @param {*} tr
+ * @param {*} ps
+ */
 function fldSupplySeen(tr, ps) {
   if (!__FIELD.fog || tr.side === ps) return true;
   var U = __FIELD.units;

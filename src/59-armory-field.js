@@ -84,6 +84,14 @@ function _afWireUnits(units, side, C, year) {
 
 /* ---- genForce OVERRIDE (frozen-engine §8.2): the VERBATIM base body
    (build/base.html 685-716) + a player-armory re-arm pass before the return. ---- */
+/**
+ * genForce.
+ * @param {*} bd
+ * @param {*} side
+ * @param {*} isAttacker
+ * @param {*} M
+ * @param {*} campaignCore
+ */
 function genForce(bd, side, isAttacker, M, campaignCore){
   const men = side==="US"? bd.us : bd.cs;
   let n=unitsFor(men);

@@ -56,6 +56,11 @@ function _arEnemyRating(C, bd, ps) {
 }
 
 /* Decide + apply the outcome on a (conditioned) battle B. Returns the outcome; does NOT advance the campaign. */
+/**
+ * bridgeResolveOutcome.
+ * @param {*} C
+ * @param {*} B
+ */
 function bridgeResolveOutcome(C, B) {
   if (!C || !B) return null;
   var ps = B.playerSide, es = B.enemySide, bd = B.bd || {};
@@ -104,6 +109,10 @@ function bridgeResolveOutcome(C, B) {
 
 /* Orchestrate the full auto-resolve: build the conditioned battle, resolve, show a brief result,
    then drive the engine's campaignAdvance (which advances the war + re-enters the next turn). */
+/**
+ * bridgeAutoResolve.
+ * @param {*} C
+ */
 function bridgeAutoResolve(C) {
   if (!C) return null;
   var bd = (typeof _brgNextBattle === "function") ? _brgNextBattle(C) : null;

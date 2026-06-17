@@ -59,6 +59,11 @@ function _engYear(C) {
        : (C && C.president && C.president.date && typeof C.president.date.year === "number") ? C.president.date.year : 1861;
 }
 
+/**
+ * Initialize the eng subsystem state.
+ * Idempotent — safe to call multiple times.
+ * @param {import('./types').Campaign | null} C
+ */
 function engInit(C) {
   if (!C) return;
   // typeof [] === "object" — guard arrays explicitly so a corrupt/imported save can't survive
@@ -80,6 +85,11 @@ function engInit(C) {
 }
 
 /* Current level (0..max) of a branch, defensively read. */
+/**
+ * engBranchLevel.
+ * @param {*} C
+ * @param {*} id
+ */
 function engBranchLevel(C, id) {
   if (!C || id == null) return 0;
   engInit(C);
@@ -88,6 +98,11 @@ function engBranchLevel(C, id) {
 }
 
 /* The corps' engineering-score (0-100): baseline + the levels you have raised. */
+/**
+ * Compute eng score.
+ * @param {*} C
+ * @returns {number}
+ */
 function engScore(C) {
   if (!C) return _engBaseline();
   engInit(C);
@@ -102,6 +117,11 @@ function engScore(C) {
 }
 
 /* A branch's targeted facet boost = its per-level effect x its level (supply/fatigue use this). */
+/**
+ * engBranchBoost.
+ * @param {*} C
+ * @param {*} id
+ */
 function engBranchBoost(C, id) {
   if (!C || id == null) return 0;
   engInit(C);
@@ -115,6 +135,11 @@ function engBranchBoost(C, id) {
 }
 
 /* Raise a branch one level. Mutates C.funds + C.engineering.levels. */
+/**
+ * Purchase/upgrade action for eng.
+ * @param {*} C
+ * @param {*} id
+ */
 function engBuy(C, id) {
   if (!C) return { ok: false, reason: "no campaign" };
   if (id == null) return { ok: false, reason: "unknown branch" };
@@ -136,6 +161,14 @@ function engBuy(C, id) {
 /* Per-turn tick — runs AFTER prodOnResolve so it can repair the rail prod just decayed.
    The Construction Corps adds rail integrity back; for the South this SLOWS the
    irreversible decay (additive vs multiplicative loss → the net trend still declines). */
+/**
+ * Per-battle tick for the eng subsystem.
+ * @param {'US'|'CS'} winnerSide
+ * @param {string} type - Battle outcome type.
+ * @param {object} B - Battle descriptor.
+ * @param {import('./types').Campaign | null} C
+ * @param {boolean} win - Whether the player's side won.
+ */
 function engOnResolve(winnerSide, type, B, C, win) {
   if (!C) return;
   try {
@@ -167,6 +200,11 @@ function _engScoreWord(v) {
 }
 
 /* ---- engRenderSection: the Engineering Works block, appended below the Cannon Corps. ---- */
+/**
+ * Render the eng UI section.
+ * @param {import('./types').Campaign} C
+ * @returns {string} HTML string.
+ */
 function engRenderSection(C) {
   if (!C) return '';
   engInit(C);
@@ -208,6 +246,10 @@ function engRenderSection(C) {
     + '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px">' + cards + '</div>';
 }
 
+/**
+ * engWireSection.
+ * @param {*} C
+ */
 function engWireSection(C) {
   if (!C) return;
   var btns = document.querySelectorAll('[data-engbuy]');

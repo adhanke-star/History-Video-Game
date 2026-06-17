@@ -105,13 +105,38 @@ function fldRng() {
   __FIELD.seed = (__FIELD.seed * 1664525 + 1013904223) % 4294967296;
   return __FIELD.seed / 4294967296;
 }
+/**
+ * fldClamp.
+ * @param {*} v
+ * @param {*} a
+ * @param {*} b
+ */
 function fldClamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
+/**
+ * fldDist.
+ * @param {*} a
+ * @param {*} b
+ */
 function fldDist(a, b) { var dx = a.x - b.x, dz = a.z - b.z; return Math.sqrt(dx * dx + dz * dz); }
+/**
+ * fldAngDiff.
+ * @param {*} a
+ * @param {*} b
+ */
 function fldAngDiff(a, b) { var d = a - b; while (d > Math.PI) d -= Math.PI * 2; while (d < -Math.PI) d += Math.PI * 2; return d; }
+/**
+ * fldEnemy.
+ * @param {*} side
+ */
 function fldEnemy(side) { return side === "US" ? "CS" : "US"; }
 function fldReduceMotion() { try { return !!(G && G.settings && G.settings.reduceMotion); } catch (e) { return false; } }
 
 /* ---- weapon profile (effective range + power) from the base WEAPONS table when present ---- */
+/**
+ * fldWeaponProfile.
+ * @param {*} key
+ * @param {*} arm
+ */
 function fldWeaponProfile(key, arm) {
   var pow = 1.0, rng = FLD.RANGE_RIFLE;
   try {
@@ -144,6 +169,11 @@ function fldBuildTerrain() {
 // the terrain golden-snapshot guard).
 function fldHills() { var t = __FIELD.terrain; if (!t) return []; return t.hills || (t.hill ? [t.hill] : []); }
 function fldWalls() { var t = __FIELD.terrain; if (!t) return []; return t.walls || (t.wall ? [t.wall] : []); }
+/**
+ * fldTerrainH.
+ * @param {*} x
+ * @param {*} z
+ */
 function fldTerrainH(x, z) {
   var t = __FIELD.terrain; if (!t) return 0;
   var h = Math.sin(x * 0.012) * 2.2 + Math.cos(z * 0.015) * 2.0; // gentle undulation
@@ -151,11 +181,21 @@ function fldTerrainH(x, z) {
   for (var i = 0; i < hs.length; i++) { var hh = hs[i], dx = x - hh.x, dz = z - hh.z, r2 = dx * dx + dz * dz; h += hh.h * Math.exp(-r2 / (2 * hh.s * hh.s)); }
   return h;
 }
+/**
+ * fldInWoods.
+ * @param {*} x
+ * @param {*} z
+ */
 function fldInWoods(x, z) {
   var t = __FIELD.terrain; if (!t || !t.woods) return false;
   for (var i = 0; i < t.woods.length; i++) { var w = t.woods[i]; var dx = x - w.x, dz = z - w.z; if (dx * dx + dz * dz < w.r * w.r) return true; }
   return false;
 }
+/**
+ * fldNearWall.
+ * @param {*} x
+ * @param {*} z
+ */
 function fldNearWall(x, z) {
   var ws = fldWalls();
   for (var i = 0; i < ws.length; i++) {
@@ -167,6 +207,11 @@ function fldNearWall(x, z) {
   return false;
 }
 // cover def multiplier (higher = safer); mirrors the base TERRAIN .def ladder spirit.
+/**
+ * fldCoverAt.
+ * @param {*} x
+ * @param {*} z
+ */
 function fldCoverAt(x, z) {
   var d = 1.0;
   if (fldNearWall(x, z)) d = 1.7;
@@ -175,11 +220,20 @@ function fldCoverAt(x, z) {
   for (var i = 0; i < hs.length; i++) { var hh = hs[i], dx = x - hh.x, dz = z - hh.z; if (dx * dx + dz * dz < (hh.s * 0.7) * (hh.s * 0.7)) { d *= 1.12; break; } }
   return d;
 }
+/**
+ * fldMoveFactor.
+ * @param {*} x
+ * @param {*} z
+ */
 function fldMoveFactor(x, z) { return fldInWoods(x, z) ? 0.62 : 1.0; }
 
 /* ===========================================================================
    SIM SETUP  —  the P0 sandbox order of battle (2 brigades/side)
    =========================================================================== */
+/**
+ * fldMakeUnit.
+ * @param {*} o
+ */
 function fldMakeUnit(o) {
   var prof = fldWeaponProfile(o.weapon, o.arm || "inf");
   return {
@@ -218,6 +272,10 @@ function fldResetRun() {
   // (matching the in-battle toggle) instead of a blacked-out field until the first sim tick.
   if (__FIELD.fog && __FIELD.units && __FIELD.units.length) fldComputeVisibility();
 }
+/**
+ * fldInitSim.
+ * @param {*} opts
+ */
 function fldInitSim(opts) {
   opts = opts || {};
   __FIELD._launchOpts = opts;   // B-6: stash the resolved launch spec so the end-screen "Fight Again" can REPLAY it
@@ -320,6 +378,11 @@ function fldInitSim(opts) {
 /* ===========================================================================
    COMBAT  (ported from base resolveFire / resolveCharge / moraleCheck)
    =========================================================================== */
+/**
+ * fldFrontageExposed.
+ * @param {*} shooter
+ * @param {*} tgt
+ */
 function fldFrontageExposed(shooter, tgt) {
   // a line target presents its broad front; a column presents a thin column.
   // flank/rear of either is fully exposed. bearing = from tgt to shooter.
@@ -334,6 +397,12 @@ function fldFrontageExposed(shooter, tgt) {
   return { mult: arc, frontW: frontW, isFlank: arc > 1.0 };
 }
 // continuous fire: shooter at target for this tick (dt seconds).
+/**
+ * fldResolveFire.
+ * @param {*} u
+ * @param {*} tgt
+ * @param {*} dt
+ */
 function fldResolveFire(u, tgt, dt) {
   if (!u.alive || !tgt.alive || u.state === "routing" || u.men <= 0 || u.ammo <= 0) return;
   var d = fldDist(u, tgt); if (d > u.rng) return;
@@ -367,6 +436,12 @@ function fldResolveFire(u, tgt, dt) {
   if (tgt.men <= 0) fldKill(tgt);
 }
 // continuous melee when blocks are in contact.
+/**
+ * fldResolveMelee.
+ * @param {*} a
+ * @param {*} b
+ * @param {*} dt
+ */
 function fldResolveMelee(a, b, dt) {
   if (!a.alive || !b.alive) return;
   // distinct arm roles (B-4): the ARM melee table. When arms is ON, fldArmMelee gives the deepened values
@@ -389,6 +464,10 @@ function fldResolveMelee(a, b, dt) {
   // the loser of the melee ratio takes a sharp morale shock
   if (ratio < 0.85) a.morale -= 9 * dt * 5; else if (ratio > 1.18) b.morale -= 9 * dt * 5;
 }
+/**
+ * fldKill.
+ * @param {*} u
+ */
 function fldKill(u) {
   if (!u.alive) return;
   u.alive = false; u.men = 0; u.state = "destroyed";
@@ -396,6 +475,11 @@ function fldKill(u) {
   fldAnnounce(u.name + " is destroyed.");
 }
 // moraleCheck shape (base ~1015): drop ~ sev*60/rally; rout when below threshold.
+/**
+ * fldMoraleStep.
+ * @param {*} u
+ * @param {*} dt
+ */
 function fldMoraleStep(u, dt) {
   if (!u.alive) return;
   // difficulty/realism presets (B-5): _vet = experience weight (1.0 = neutral), _cu = a PLAYER-side morale cushion
@@ -462,7 +546,16 @@ function fldMoraleStep(u, dt) {
 /* ===========================================================================
    MOVEMENT + ORDERS
    =========================================================================== */
+/**
+ * fldHomeEdgeZ.
+ * @param {*} side
+ */
 function fldHomeEdgeZ(side) { return side === "US" ? FLD.FIELD_H + 60 : -60; }
+/**
+ * fldStepMovement.
+ * @param {*} u
+ * @param {*} dt
+ */
 function fldStepMovement(u, dt) {
   if (!u.alive) return;
   var tx, tz, spd, desiredFace;
@@ -496,10 +589,21 @@ function fldStepMovement(u, dt) {
     }
   }
 }
+/**
+ * fldOrderMove.
+ * @param {*} u
+ * @param {*} tx
+ * @param {*} tz
+ * @param {*} tface
+ */
 function fldOrderMove(u, tx, tz, tface) {
   if (!u.alive || u.state === "routing") return;
   u.order = { type: "move", tx: tx, tz: tz, tface: (typeof tface === "number") ? tface : u.facing };
 }
+/**
+ * fldOrderCharge.
+ * @param {*} u
+ */
 function fldOrderCharge(u) {
   if (!u.alive || u.state === "routing") return;
   var best = null, bd = 1e9;
@@ -516,7 +620,18 @@ function fldOrderCharge(u) {
    line (woods block sight); cavalry scout widest. Drives AI/targeting/render.
    fldVisible() short-circuits true when fog is OFF -> every caller is a no-op then.
    --------------------------------------------------------------------------- */
+/**
+ * fldUnitSight.
+ * @param {*} u
+ */
 function fldUnitSight(u) { var _b = u.arm === "cav" ? FLD.SIGHT_CAV : (u.arm === "art" ? FLD.SIGHT_ART : FLD.SIGHT_INF); return _b * (__FIELD.sev ? __FIELD.sev.sight : 1); }   /* B-5: scouting/LOS range severity (1.0 = neutral = byte-identical) */
+/**
+ * fldLosClear.
+ * @param {*} ax
+ * @param {*} az
+ * @param {*} bx
+ * @param {*} bz
+ */
 function fldLosClear(ax, az, bx, bz) {
   // EXACT segment-vs-woods test: sum the length of the sight line that lies inside any woods disk;
   // block only when the line penetrates more than WOODS_SEE_THRU yards of timber. This is robust where
@@ -538,6 +653,11 @@ function fldLosClear(ax, az, bx, bz) {
   }
   return inside <= FLD.WOODS_SEE_THRU;
 }
+/**
+ * Compute fld compute visibility.
+
+ * @returns {number}
+ */
 function fldComputeVisibility() {
   var vis = { US: {}, CS: {} }, U = __FIELD.units, i, j;
   for (i = 0; i < U.length; i++) {
@@ -552,11 +672,20 @@ function fldComputeVisibility() {
   __FIELD.vis = vis;
 }
 // can `side` see `target` right now? Always true with fog OFF (the no-op fast path).
+/**
+ * fldVisible.
+ * @param {*} side
+ * @param {*} target
+ */
 function fldVisible(side, target) {
   if (!__FIELD.fog) return true;
   var v = __FIELD.vis && __FIELD.vis[side];
   return !!(v && v[target.id]);
 }
+/**
+ * fldAcquireTarget.
+ * @param {*} u
+ */
 function fldAcquireTarget(u) {
   if (!u.alive || u.state === "routing" || u.ammo <= 0) { u.targetId = null; return; }
   var best = null, score = -1;
@@ -574,8 +703,16 @@ function fldAcquireTarget(u) {
   }
   u.targetId = best ? best.id : null;
 }
+/**
+ * fldById.
+ * @param {*} id
+ */
 function fldById(id) { for (var i = 0; i < __FIELD.units.length; i++) if (__FIELD.units[i].id === id) return __FIELD.units[i]; return null; }
 
+/**
+ * fldAiUnit.
+ * @param {*} u
+ */
 function fldAiUnit(u) {
   if (!u.alive || u.state === "routing" || !u.ai) return;
   // in-battle logistics (B-3): a low-ammo brigade not under assault falls back to its train to refill — this
@@ -600,6 +737,10 @@ function fldAiUnit(u) {
 }
 /* the GENERIC doctrine: advance toward the objective, halt at good fire range, press a wavering enemy.
    Used by BOTH sides in the sandbox and by the ATTACKER in a scenario. (Unchanged from P0/P1a.) */
+/**
+ * fldAiGeneric.
+ * @param {*} u
+ */
 function fldAiGeneric(u) {
   var obj = __FIELD.objective;
   // nearest enemy
@@ -652,6 +793,10 @@ function fldAiGeneric(u) {
        reserves maul the piecemeal advance — the attacker never BENEFITS from fog. (This gates on fog DIRECTLY,
        not on whether a defender is currently sighted: a lone visible picket must not "unblind" an assault into
        the hidden mass behind it — bug-hunt P1b-iv #1.) Deterministic — no RNG (probes reproduce). */
+/**
+ * fldAiAttacker.
+ * @param {*} u
+ */
 function fldAiAttacker(u) {
   var obj = __FIELD.objective;
   // scan VISIBLE defenders: nearest, nearest CATCHABLE-disordered (wavering only — a rout outruns a charge),
@@ -741,6 +886,10 @@ function fldAiAttacker(u) {
    unit counterattacks a disordered attacker that has closed on the hill (the melee code then returns
    it to hold). Deterministic — no RNG — so probes reproduce. This is the historical Henry House Hill
    defense AND the lever that answers the logged "AI leans Union" gap (cover + delay + counterattack). */
+/**
+ * fldAiDefender.
+ * @param {*} u
+ */
 function fldAiDefender(u) {
   var obj = __FIELD.objective, att = __FIELD.attacker;
   // scan VISIBLE enemies: nearest, nearest CATCHABLE-disordered, and the local force balance within AI_LOCAL_R.
@@ -816,6 +965,10 @@ function fldAiDefender(u) {
    THE SIM STEP  (one fixed tick)
    =========================================================================== */
 var _fldAiClock = 0, _fldAiIdx = 0;
+/**
+ * fldSimStep.
+ * @param {*} dt
+ */
 function fldSimStep(dt) {
   if (__FIELD.phase !== "battle") return;
   __FIELD.t += dt;
@@ -870,6 +1023,10 @@ function fldSimStep(dt) {
   fldObjectiveStep(dt);
   fldCheckVictory();
 }
+/**
+ * fldObjectiveStep.
+ * @param {*} dt
+ */
 function fldObjectiveStep(dt) {
   var obj = __FIELD.objective, near = { US: 0, CS: 0 };
   for (var i = 0; i < __FIELD.units.length; i++) {
@@ -882,14 +1039,26 @@ function fldObjectiveStep(dt) {
     else if (near[foe] > near[side]) __FIELD.holdSecs[side] = Math.max(0, __FIELD.holdSecs[side] - dt * 0.5);
   }
 }
+/**
+ * fldArmyLive.
+ * @param {*} side
+ */
 function fldArmyLive(side) {
   var n = 0; for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side === side && u.alive && u.state !== "routing") n++; } return n;
 }
+/**
+ * fldArmyStrength.
+ * @param {*} side
+ */
 function fldArmyStrength(side) {
   var n = 0; for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side === side && u.alive) n += u.men; } return n;
 }
 // pending (scheduled-but-not-yet-arrived) reinforcements for a side. 0 for the sandbox
 // (reinforce === null) -> the collapse checks below behave exactly as the pre-seam engine.
+/**
+ * fldArmyPending.
+ * @param {*} side
+ */
 function fldArmyPending(side) {
   var r = __FIELD.reinforce; if (!r) return 0;
   var n = 0; for (var i = 0; i < r.length; i++) { if (!r[i].done && r[i].spec && r[i].spec.side === side) n++; } return n;
@@ -897,6 +1066,10 @@ function fldArmyPending(side) {
 // is a side eliminated? Never while reinforcements are still detraining. In a SCENARIO a routing
 // line is alive and can still rally, so the side is gone only when NO live men remain; the SANDBOX
 // keeps its original routing-counts-as-gone rule (byte-identical to the pre-seam engine).
+/**
+ * fldGoneCheck.
+ * @param {*} side
+ */
 function fldGoneCheck(side) {
   if (fldArmyPending(side) > 0) return false;
   if (__FIELD.attacker) {
@@ -936,6 +1109,11 @@ function fldCheckVictory() {
 }
 
 /* headless stepper for probes (no render) */
+/**
+ * fldStepN.
+ * @param {*} n
+ * @param {*} dt
+ */
 function fldStepN(n, dt) {
   dt = dt || FLD.FIXED_DT;
   if (__FIELD.phase === "deploy") { __FIELD.phase = "battle"; __FIELD.paused = false; }
@@ -946,6 +1124,10 @@ function fldStepN(n, dt) {
 /* ===========================================================================
    LAUNCH / TEARDOWN  +  DOM
    =========================================================================== */
+/**
+ * fldLaunchSandbox.
+ * @param {*} opts
+ */
 function fldLaunchSandbox(opts) {
   opts = opts || {};
   if (__FIELD.launched) fldExit(true);
@@ -980,6 +1162,10 @@ function fldResetCanvasForFallback() {
     nc.addEventListener("pointermove", fldPointerMove);
   } catch (e) {}
 }
+/**
+ * fldExit.
+ * @param {*} silent
+ */
 function fldExit(silent) {
   if (!__FIELD.launched) return;
   __FIELD._gen = (__FIELD._gen || 0) + 1;   // invalidate any in-flight async loader callback
@@ -1062,6 +1248,10 @@ function fldResizeCanvas() {
     if (__FIELD.ctx2d) { __FIELD.ctx2d.setTransform(dpr, 0, 0, dpr, 0, 0); if (__FIELD.terrain) fld2dDraw(); } // repaint after the clear (no resize flicker)
   }
 }
+/**
+ * fldAnnounce.
+ * @param {*} msg
+ */
 function fldAnnounce(msg) {
   try { var l = document.getElementById("fldLive"); if (l) l.textContent = msg; } catch (e) {}
 }
@@ -1073,6 +1263,12 @@ function fldCountAlive() { var n = 0; for (var i = 0; i < __FIELD.units.length; 
 // active auto-pause: after a live-loop sim advance, pause once on a decision-point event (lives in the RAF
 // loop only, so the headless fldStepN never triggers it). Priority: a break, then a destroyed brigade,
 // then arriving reinforcements. Announces (aria-live) + surfaces the reason in the phase indicator.
+/**
+ * fldAutoPauseScan.
+ * @param {*} prevRouts
+ * @param {*} prevAlive
+ * @param {*} prevN
+ */
 function fldAutoPauseScan(prevRouts, prevAlive, prevN) {
   if (__FIELD.paused) return;
   // detect EVERY decision-point event this frame (a frame can advance up to 16 ticks). Reinforcements
@@ -1133,9 +1329,19 @@ function fldStartLoop() {
   };
   __FIELD.raf = requestAnimationFrame(step);
 }
+/**
+ * Render fldRender UI.
+
+ * @returns {string} HTML string.
+ */
 function fldRender() {
   if (__FIELD.mode3d) fld3dRender(); else fld2dDraw();
 }
+/**
+ * Render fldRenderTop UI.
+
+ * @returns {string} HTML string.
+ */
 function fldRenderTop() {
   var c = document.getElementById("fldClock"); if (c) { var s = Math.floor(__FIELD.t); c.textContent = Math.floor(s / 60) + ":" + ("0" + (s % 60)).slice(-2); }
   var ti = document.getElementById("fldTitle");
@@ -1202,9 +1408,17 @@ function fldCycleSpeed() { __FIELD.speed = __FIELD.speed === 1 ? 2 : (__FIELD.sp
 // B-6 (command either side): the player's selectable brigades are HIS side's non-AI units — fldPlayerSide()
 // resolves "US" by default (byte-identical) and "CS" when the player took the Confederate command.
 function fldPlayerSel() { var ps = fldPlayerSide(), out = []; for (var i = 0; i < __FIELD.sel.length; i++) { var u = fldById(__FIELD.sel[i]); if (u && u.alive && u.side === ps && !u.ai) out.push(u); } return out; }
+/**
+ * fldSetFormation.
+ * @param {*} f
+ */
 function fldSetFormation(f) { var s = fldPlayerSel(); for (var i = 0; i < s.length; i++) s[i].formation = f; fldRenderHud(); }
 function fldSelCharge() { var s = fldPlayerSel(); for (var i = 0; i < s.length; i++) fldOrderCharge(s[i]); fldAnnounce("Charge ordered."); }
 function fldSelHold() { var s = fldPlayerSel(); for (var i = 0; i < s.length; i++) { var u = s[i]; u.order = { type: "hold", tx: u.x, tz: u.z, tface: u.facing }; } fldAnnounce("Hold ordered."); }
+/**
+ * fldKey.
+ * @param {*} e
+ */
 function fldKey(e) {
   // B-5: while the in-battle settings drawer (an aria-modal dialog) is open, NO battlefield hotkey fires — the
   // drawer owns the keyboard (its own handler does stopPropagation + handles Escape/Tab). This guard is the
@@ -1247,7 +1461,16 @@ function fldCycleSel() {
   __FIELD.sel = [us[(cur + 1) % us.length]]; fldRenderHud();
 }
 // screen -> world (delegates to the active renderer's picker)
+/**
+ * fldPick.
+ * @param {*} clientX
+ * @param {*} clientY
+ */
 function fldPick(clientX, clientY) { return __FIELD.mode3d ? fld3dPick(clientX, clientY) : fld2dPick(clientX, clientY); }
+/**
+ * fldPointerDown.
+ * @param {*} e
+ */
 function fldPointerDown(e) {
   if (__FIELD.phase === "over") return;
   var wp = fldPick(e.clientX, e.clientY); if (!wp) return;
@@ -1259,6 +1482,10 @@ function fldPointerDown(e) {
   if (fldPlayerSel().length) __FIELD.drag = { x0: wp.x, z0: wp.z, x: wp.x, z: wp.z };
   else __FIELD.sel = [];
 }
+/**
+ * fldPointerMove.
+ * @param {*} e
+ */
 function fldPointerMove(e) {
   var wp = fldPick(e.clientX, e.clientY); __FIELD.hover = wp || null;
   if (__FIELD.drag && wp) { __FIELD.drag.x = wp.x; __FIELD.drag.z = wp.z; }
@@ -1282,7 +1509,18 @@ function fldPointerUp() {
 /* ===========================================================================
    HUD  +  END SCREEN
    =========================================================================== */
+/**
+ * fldStateLabel.
+ * @param {*} u
+ */
 function fldStateLabel(u) { return u.state.charAt(0).toUpperCase() + u.state.slice(1); }
+/**
+ * fldBar.
+ * @param {*} label
+ * @param {*} val
+ * @param {*} max
+ * @param {*} col
+ */
 function fldBar(label, val, max, col) {
   var pct = Math.round(fldClamp(val / max, 0, 1) * 100);
   return '<div style="margin:3px 0;"><span style="display:inline-block;width:64px;opacity:.8;">' + label + '</span>' +
@@ -1290,6 +1528,11 @@ function fldBar(label, val, max, col) {
     '<span style="display:block;height:100%;width:' + pct + '%;background:' + col + ';"></span></span> ' +
     '<span style="opacity:.75;">' + Math.round(val) + '</span></div>';
 }
+/**
+ * Render fldRenderHud UI.
+
+ * @returns {string} HTML string.
+ */
 function fldRenderHud() {
   var el = document.getElementById("fldHud"); if (!el) return;
   var sel = fldPlayerSel();
@@ -1392,6 +1635,11 @@ function fldOnOver() {
 /* ===========================================================================
    2D FALLBACK RENDERER  (top-down — the mandatory offline path, D54)
    =========================================================================== */
+/**
+ * Initialize the fld2d subsystem state.
+ * Idempotent — safe to call multiple times.
+ * @param {import('./types').Campaign | null} C
+ */
 function fld2dInit() { if (!__FIELD.cv2d) return; __FIELD.ctx2d = __FIELD.cv2d.getContext("2d"); __FIELD.mode3d = false; fldResizeCanvas(); }
 function fld2dView() {
   var w = window.innerWidth, h = window.innerHeight;
@@ -1399,6 +1647,11 @@ function fld2dView() {
   var s = Math.max(0.05, Math.min(sx, sz));   // clamp — a tiny viewport must not yield a negative draw scale
   return { s: s, ox: (w - FLD.FIELD_W * s) / 2, oz: (h - FLD.FIELD_H * s) / 2 + 8 };
 }
+/**
+ * fld2dPick.
+ * @param {*} clientX
+ * @param {*} clientY
+ */
 function fld2dPick(clientX, clientY) {
   var v = fld2dView(); var rect = __FIELD.cv2d.getBoundingClientRect();
   return { x: (clientX - rect.left - v.ox) / v.s, z: (clientY - rect.top - v.oz) / v.s };
@@ -1459,6 +1712,11 @@ function fld2dDraw() {
 }
 // scenario terrain markers (Bull Run: Bull Run creek, Young's Branch, the Warrenton Turnpike,
 // Sudley Ford, the Stone Bridge, place-labels). The sandbox has no markers -> a no-op.
+/**
+ * fld2dDrawMarkers.
+ * @param {*} ctx
+ * @param {*} v
+ */
 function fld2dDrawMarkers(ctx, v) {
   var t = __FIELD.terrain; if (!t || !t.markers) return;
   for (var i = 0; i < t.markers.length; i++) {
@@ -1477,6 +1735,13 @@ function fld2dDrawMarkers(ctx, v) {
     }
   }
 }
+/**
+ * fld2dLabel.
+ * @param {*} ctx
+ * @param {*} text
+ * @param {*} x
+ * @param {*} z
+ */
 function fld2dLabel(ctx, text, x, z) {
   ctx.save();
   ctx.font = "11px Georgia"; ctx.textAlign = "center"; ctx.textBaseline = "alphabetic";
@@ -1485,6 +1750,11 @@ function fld2dLabel(ctx, text, x, z) {
   ctx.restore();
 }
 // fog "ghosts": a faded last-known marker for each enemy once seen but now out of sight.
+/**
+ * fld2dGhosts.
+ * @param {*} ctx
+ * @param {*} v
+ */
 function fld2dGhosts(ctx, v) {
   if (!__FIELD.fog || !__FIELD.lastSeen) return;
   var _gPs = fldPlayerSide();   // B-6: ghosts are last-known ENEMY positions from the player's perspective
@@ -1507,6 +1777,11 @@ function fld2dGhosts(ctx, v) {
 /* ===========================================================================
    3D RENDERER  (sibling THREE scene; sunlit-field art direction)
    =========================================================================== */
+/**
+ * Initialize the fld3d subsystem state.
+ * Idempotent — safe to call multiple times.
+ * @param {import('./types').Campaign | null} C
+ */
 function fld3dInit() {
   var T = window.THREE, cv = __FIELD.cv2d;
   __FIELD._colUS = new T.Color("#3a5a9a"); __FIELD._colCS = new T.Color("#9a4a3a"); // hoisted — no per-frame alloc
@@ -1638,6 +1913,11 @@ function fld3dBuildUnits() {
     __FIELD.groups.add(g); __FIELD._u3d[u.id] = g;
   }
 }
+/**
+ * fld3dSyncUnit.
+ * @param {*} u
+ * @param {*} g
+ */
 function fld3dSyncUnit(u, g) {
   var T = window.THREE;
   // fog: a hidden enemy (not currently scouted) is not drawn (no-op when fog OFF).
@@ -1654,6 +1934,11 @@ function fld3dSyncUnit(u, g) {
   if (flag) flag.position.y = u.state === "routing" ? 14 : 34;
   if (ring) ring.material.opacity = (__FIELD.sel.indexOf(u.id) >= 0) ? 0.85 : 0;
 }
+/**
+ * Render fld3dRender UI.
+
+ * @returns {string} HTML string.
+ */
 function fld3dRender() {
   if (!__FIELD.renderer) return;
   if (__FIELD.controls) __FIELD.controls.update();
@@ -1663,6 +1948,11 @@ function fld3dRender() {
   if (typeof fld3dSyncArms === "function") fld3dSyncArms();           // B-4: gun + trooper markers + muzzle flash
   __FIELD.renderer.render(__FIELD.scene, __FIELD.camera);
 }
+/**
+ * fld3dPick.
+ * @param {*} clientX
+ * @param {*} clientY
+ */
 function fld3dPick(clientX, clientY) {
   var T = window.THREE; if (!__FIELD.raycaster || !__FIELD.ground) return null;
   var rect = __FIELD.cv2d.getBoundingClientRect();

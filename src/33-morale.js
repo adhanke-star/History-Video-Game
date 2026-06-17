@@ -31,6 +31,11 @@
    Bare-name globals; _mor/morale prefix; render never mutates/saves.
    =========================================================================== */
 
+/**
+ * Initialize the morale subsystem state.
+ * Idempotent — safe to call multiple times.
+ * @param {import('./types').Campaign | null} C
+ */
 function moraleInit(C) {
   if (!C) return;
   if (typeof presInit === "function") presInit(C);
@@ -54,6 +59,11 @@ function _morClamp(v) { return Math.max(0, Math.min(100, v)); }
 
 /* ---- moraleCompute: the three layers as a readout (no state mutation). Callable
    from the tick AND the render so the displayed numbers are always current. ---- */
+/**
+ * Compute morale compute.
+ * @param {*} C
+ * @returns {number}
+ */
 function moraleCompute(C) {
   var side = (C && C.side === "CS") ? "CS" : "US";
   var clk = (C && C.clock) || {}, wr = (C && C.warroom) || {}, ec = (C && C.economy) || {}, bl = (C && C.blockade) || {};
@@ -104,6 +114,14 @@ function _morElectionForecast(C) {
 
 /* ---- moraleOnResolve: per-turn tick. Runs AFTER clk (weariness/election set) and
    BEFORE vic (enemyWill change seen by victoryReady detection). ---- */
+/**
+ * Per-battle tick for the morale subsystem.
+ * @param {'US'|'CS'} winnerSide
+ * @param {string} type - Battle outcome type.
+ * @param {object} B - Battle descriptor.
+ * @param {import('./types').Campaign | null} C
+ * @param {boolean} win - Whether the player's side won.
+ */
 function moraleOnResolve(winnerSide, type, B, C, win) {
   if (!C) return;
   moraleInit(C);
@@ -144,6 +162,10 @@ function _morMeter(label, v, hint) {
     + (hint ? '<div style="font-size:10px;opacity:.55;margin-top:1px">' + hint + '</div>' : '') + '</div>';
 }
 
+/**
+ * presMoraleBlock.
+ * @param {*} C
+ */
 function presMoraleBlock(C) {
   if (!C) return '';
   moraleInit(C);

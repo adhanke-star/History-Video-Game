@@ -40,6 +40,11 @@ function _artCost(g) { return (g && typeof g.costPerBattery === "number" && isFi
 /* Escape data-driven text before it enters innerHTML — the catalog is tunable/untrusted-shaped data. */
 function _artEsc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
 
+/**
+ * Initialize the art subsystem state.
+ * Idempotent — safe to call multiple times.
+ * @param {import('./types').Campaign | null} C
+ */
 function artInit(C) {
   if (!C) return;
   // typeof [] === "object", so guard arrays explicitly: a JSON round-trip serializes an array as []
@@ -100,6 +105,11 @@ function _artTotalBatteries(C) {
      · massing 1863— the battalion reorganizations concentrated fire (both armies); the Union
                      kept an army-level Artillery Reserve the ANV abolished after Chancellorsville,
                      so the Union bonus is larger. */
+/**
+ * Compute art battery score.
+ * @param {*} C
+ * @returns {number}
+ */
 function artBatteryScore(C) {
   if (!C) return _artBaseline();
   artInit(C);
@@ -125,6 +135,12 @@ function artBatteryScore(C) {
 }
 
 /* Buy n batteries of a gun. Mutates C.funds + C.artillery.batteries. */
+/**
+ * Purchase/upgrade action for art.
+ * @param {*} C
+ * @param {*} gunId
+ * @param {*} n
+ */
 function artBuy(C, gunId, n) {
   if (!C) return { ok: false, reason: "no campaign" };
   if (gunId == null) return { ok: false, reason: "unknown gun" };   // never buy into the "undefined" key
@@ -157,6 +173,11 @@ function _artRar(r) {
 }
 
 /* ---- artRenderSection: the Cannon Corps block, appended below The Armory. ---- */
+/**
+ * Render the art UI section.
+ * @param {import('./types').Campaign} C
+ * @returns {string} HTML string.
+ */
 function artRenderSection(C) {
   if (!C) return '';
   artInit(C);
@@ -212,6 +233,10 @@ function artRenderSection(C) {
     + (totalBat ? '<div class="btn-row" style="margin-top:10px"><button id="artDisband" type="button" class="upg" style="font-size:11px">Disband the park</button></div>' : '');
 }
 
+/**
+ * artWireSection.
+ * @param {*} C
+ */
 function artWireSection(C) {
   if (!C) return;
   var btns = document.querySelectorAll('[data-artbuy]');

@@ -27,6 +27,10 @@ var _pdTurnAck = false;
 var _pdAfterDeskClose = null;
 
 /* Wire the Cabinet tab's per-domain Delegate toggles (R25 stub). */
+/**
+ * presWireCabinet.
+ * @param {*} C
+ */
 function presWireCabinet(C) {
   if (!C || !C.president) return;
   var cab = C.president.cabinet || [];

@@ -95,6 +95,12 @@ function _a6Condition() {
 
 /* ---- startBattleRuntime OVERRIDE (frozen-engine §8.2): the VERBATIM base body
    (build/base.html 772-796) + the conditioning pass after G.battle is built. ---- */
+/**
+ * startBattleRuntime.
+ * @param {*} bd
+ * @param {*} playerSide
+ * @param {*} fromCampaign
+ */
 function startBattleRuntime(bd, playerSide, fromCampaign){
   HEX=30;
   const M=(typeof authoredMap==="function" && authoredMap(bd)) || genMap(bd);

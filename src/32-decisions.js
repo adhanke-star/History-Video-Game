@@ -42,6 +42,11 @@ function _decEsc(s) {
 function _decIdSafe(s) { return String(s == null ? "" : s).replace(/[^A-Za-z0-9_-]/g, "_"); }
 
 /* ---- decInit: idempotent. ---- */
+/**
+ * Initialize the dec subsystem state.
+ * Idempotent — safe to call multiple times.
+ * @param {import('./types').Campaign | null} C
+ */
 function decInit(C) {
   if (!C) return;
   if (typeof presInit === "function") presInit(C);
@@ -68,6 +73,14 @@ function _decEligible(C, c) {
 /* ---- decOnResolve: per-turn tick (AFTER presOnResolve advanced date/turn). OWNS
    the pendingChoices queue: drops resolved/expired, adds newly-eligible at the §8.68
    cadence (<=2 new non-hinge per turn; hinges always surface). ---- */
+/**
+ * Per-battle tick for the dec subsystem.
+ * @param {'US'|'CS'} winnerSide
+ * @param {string} type - Battle outcome type.
+ * @param {object} B - Battle descriptor.
+ * @param {import('./types').Campaign | null} C
+ * @param {boolean} win - Whether the player's side won.
+ */
 function decOnResolve(winnerSide, type, B, C, win) {
   if (!C) return;
   decInit(C);
@@ -117,6 +130,12 @@ function _decApply(C, opt) {
 }
 
 /* ---- decResolve: the player chooses an option. ---- */
+/**
+ * decResolve.
+ * @param {*} C
+ * @param {*} cardId
+ * @param {*} optionId
+ */
 function decResolve(C, cardId, optionId) {
   if (!C || !C.president) return;
   decInit(C);
@@ -134,6 +153,10 @@ function decResolve(C, cardId, optionId) {
   if (typeof _pdLog === "function" && opt.resultText) _pdLog(C, opt.resultText);
 }
 
+/**
+ * decPendingCount.
+ * @param {*} C
+ */
 function decPendingCount(C) {
   if (!C || !C.president) return 0;
   decInit(C);
@@ -180,6 +203,11 @@ function _decCardHTML(C, card, ns) {
 }
 
 /* The "Decisions" desk tab: pending cards + a resolved-history expander. */
+/**
+ * Render the dec UI section.
+ * @param {import('./types').Campaign} C
+ * @returns {string} HTML string.
+ */
 function decRenderTab(C) {
   if (!C) return '';
   decInit(C);
@@ -233,6 +261,10 @@ function _decWireCards(C, ns, cardIds, afterChoose) {
   }
 }
 
+/**
+ * decWireTab.
+ * @param {*} C
+ */
 function decWireTab(C) {
   if (!C || !C.president) return;
   decInit(C);
@@ -245,6 +277,11 @@ function decWireTab(C) {
 }
 
 /* ---- the interstitial surface: the pending decisions, inline in the between-battles flow. ---- */
+/**
+ * Render the decInterstitial UI section.
+ * @param {import('./types').Campaign} C
+ * @returns {string} HTML string.
+ */
 function decInterstitialHTML(C) {
   if (!C || !C.president) return '';
   decInit(C);
@@ -259,6 +296,11 @@ function decInterstitialHTML(C) {
     + '</div>';
 }
 
+/**
+ * decWireInterstitial.
+ * @param {*} C
+ * @param {*} afterChoose
+ */
 function decWireInterstitial(C, afterChoose) {
   if (!C || !C.president) return;
   decInit(C);

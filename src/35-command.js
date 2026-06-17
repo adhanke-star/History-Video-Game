@@ -124,6 +124,10 @@ function _cmdHistoricalDefault(side, date) {
 
 /* The id of the active commanding general: the player's appointed man if still
    valid at the date, else the historical default. */
+/**
+ * cmdActiveId.
+ * @param {*} C
+ */
 function cmdActiveId(C) {
   if (!C) return null;
   var side = (C.side === "CS") ? "CS" : "US";
@@ -138,6 +142,10 @@ function cmdActiveId(C) {
   return def ? def.id : null;
 }
 
+/**
+ * cmdActiveGeneral.
+ * @param {*} C
+ */
 function cmdActiveGeneral(C) {
   if (!C) return null;
   var id = cmdActiveId(C);
@@ -147,6 +155,11 @@ function cmdActiveGeneral(C) {
 /* ---- cmdInit: idempotent. C.president.command holds the appointment + the dynamic
    per-general reputation. Seeds each general's reputation from his data startValue
    ONCE (never resets — reputation evolves). Registered in _t1InitAll AFTER cabInit. ---- */
+/**
+ * Initialize the cmd subsystem state.
+ * Idempotent — safe to call multiple times.
+ * @param {import('./types').Campaign | null} C
+ */
 function cmdInit(C) {
   if (!C) return;
   if (typeof presInit === "function") presInit(C);
@@ -204,6 +217,11 @@ function _cmdGenRating(C, gen) {
    fresh/default command is byte-equivalent to Classic). The sitting general weighs
    most (0.7); the cabinet's competence modulates (0.3). Graceful fallback chain:
    commandLeadership -> cabinetLeadership -> 64. ---- */
+/**
+ * Compute command leadership.
+ * @param {*} C
+ * @returns {number}
+ */
 function commandLeadership(C) {
   if (!C) return 64;
   var cab = (typeof cabinetLeadership === "function") ? cabinetLeadership(C) : 64;
@@ -215,6 +233,10 @@ function commandLeadership(C) {
 }
 
 /* The active general's combat traits, for the auto-resolve margin (attack/defend). */
+/**
+ * cmdActiveTraits.
+ * @param {*} C
+ */
 function cmdActiveTraits(C) {
   var g = cmdActiveGeneral(C);
   if (!g) return { skill: 64, aggression: 50, caution: 50 };
@@ -229,6 +251,11 @@ function cmdActiveTraits(C) {
    commander presses the attack; a cautious one is sound on the defensive. Small,
    deterministic, bounded ±~2 (it must not swamp the strategic facets — §27). The
    sign of `playerAttacks` is the player's role in the coming battle. */
+/**
+ * commandMarginEdge.
+ * @param {*} C
+ * @param {*} playerAttacks
+ */
 function commandMarginEdge(C, playerAttacks) {
   var t = cmdActiveTraits(C);
   if (playerAttacks) return (t.aggression - 50) * 0.04;
@@ -240,6 +267,14 @@ function commandMarginEdge(C, playerAttacks) {
    same turn). Evolves the ACTIVE general's reputation by the battle's outcome and
    logs a handover when the historical default changes (player hasn't appointed).
    Mutates C.president.command only; no DOM, no save. ---- */
+/**
+ * Per-battle tick for the cmd subsystem.
+ * @param {'US'|'CS'} winnerSide
+ * @param {string} type - Battle outcome type.
+ * @param {object} B - Battle descriptor.
+ * @param {import('./types').Campaign | null} C
+ * @param {boolean} win - Whether the player's side won.
+ */
 function cmdOnResolve(winnerSide, type, B, C, win) {
   if (!C) return;
   cmdInit(C);
@@ -427,6 +462,11 @@ function _cmdCardHTML(C) {
 }
 
 /* ---- cmdRenderTab: the Command desk tab. ---- */
+/**
+ * Render the cmd UI section.
+ * @param {import('./types').Campaign} C
+ * @returns {string} HTML string.
+ */
 function cmdRenderTab(C) {
   if (!C) return '';
   try {
@@ -446,6 +486,11 @@ function cmdRenderTab(C) {
 /* Appoint `id` to the field command — relieving the incumbent and paying the
    political-capital cost. Bounded, clamped, logged. Mutates C.president.command +
    C.clock.capital. */
+/**
+ * cmdAppoint.
+ * @param {*} C
+ * @param {*} id
+ */
 function cmdAppoint(C, id) {
   if (!C || !C.president) return;
   cmdInit(C);
@@ -469,6 +514,10 @@ function cmdAppoint(C, id) {
 }
 
 /* Restore the historical command (release the post — free). */
+/**
+ * cmdRevert.
+ * @param {*} C
+ */
 function cmdRevert(C) {
   if (!C || !C.president) return;
   cmdInit(C);
@@ -476,6 +525,10 @@ function cmdRevert(C) {
   if (typeof _pdLog === "function") _pdLog(C, "You restore the command to the course of the war.");
 }
 
+/**
+ * cmdWireTab.
+ * @param {*} C
+ */
 function cmdWireTab(C) {
   if (!C || !C.president) return;
   cmdInit(C);

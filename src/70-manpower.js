@@ -71,6 +71,11 @@ function _mpPush(C, line) {
   } catch (e) {}
 }
 
+/**
+ * Initialize the manpower subsystem state.
+ * Idempotent — safe to call multiple times.
+ * @param {import('./types').Campaign | null} C
+ */
 function manpowerInit(C) {
   if (!C) return;
   var side = (C.side === "CS") ? "CS" : "US";
@@ -109,6 +114,14 @@ function manpowerInit(C) {
 
 /* ---- manpowerOnResolve: the per-turn recruitment + attrition tick. Reads
    B.casualties + the year; mutates C.manpower + (interlink) C.clock.weariness. ---- */
+/**
+ * Per-battle tick for the manpower subsystem.
+ * @param {'US'|'CS'} winnerSide
+ * @param {string} type - Battle outcome type.
+ * @param {object} B - Battle descriptor.
+ * @param {import('./types').Campaign | null} C
+ * @param {boolean} win - Whether the player's side won.
+ */
 function manpowerOnResolve(winnerSide, type, B, C, win) {
   if (!C) return;
   manpowerInit(C);
@@ -229,6 +242,10 @@ function _mpWhyText(C) {
 }
 
 /* ---- presManpowerBlock: "The Ranks" — overview fragment for the War Effort tab. ---- */
+/**
+ * presManpowerBlock.
+ * @param {*} C
+ */
 function presManpowerBlock(C) {
   if (!C || !C.manpower) return '';
   var side = (C.side === "CS") ? "CS" : "US";

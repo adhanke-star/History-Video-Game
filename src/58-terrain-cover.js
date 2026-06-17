@@ -74,6 +74,10 @@ function _tcCoverFor(label) {
    FASTER to traverse (cover.cost >= current.cost — so high ground / works never become
    cheaper to cross); never on water/river/ford/shoal; objectives/owner/elev untouched
    (only the terrain key changes). Idempotent. */
+/**
+ * tcDecorateMap.
+ * @param {*} M
+ */
 function tcDecorateMap(M) {
   if (!M || !M.map || !M.key || typeof TERRAIN === "undefined") return 0;
   var feats = M.authoredFeatures || [], stamped = 0, skip = { water: 1, river: 1, ford: 1, shoal: 1 };
@@ -95,6 +99,10 @@ function tcDecorateMap(M) {
 
 /* ---- authoredMap OVERRIDE (frozen-engine §8.2): the VERBATIM base body
    (build/base.html 4987-5022) + a decoration pass before the return. ---- */
+/**
+ * authoredMap.
+ * @param {*} bd
+ */
 function authoredMap(bd) {
   const A = AUTHORED_MAPS[bd && bd.id];
   if (!A) return null;

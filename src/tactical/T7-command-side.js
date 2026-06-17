@@ -36,6 +36,13 @@ function _fldSideNameFull(side) { return side === "CS" ? "Confederate" : "Union"
    must seize-and-hold the crest before the enemy reserves arrive; a DEFENDER must deny it to
    the clock (the historical Confederate task on Henry House Hill). __FIELD.attacker is set by
    the scenario (US at Bull Run), so the player's role follows from which side they command. */
+/**
+ * Render fldBriefObjectiveHtml UI.
+ * @param {*} ps
+ * @param {*} sd
+ * @param {*} holdToWin
+ * @returns {string} HTML string.
+ */
 function fldBriefObjectiveHtml(ps, sd, holdToWin) {
   var attacking = (__FIELD.attacker === ps);
   var objName = (sd && sd.objective && sd.objective.name) ? sd.objective.name : "the objective";
@@ -58,6 +65,10 @@ function fldBriefObjectiveHtml(ps, sd, holdToWin) {
    vs defender) so "your assault was repulsed" reads right for an attacker and "your line held"
    for a defender. Returns "" for a draw with no extra colour. Pure string -> safe to skip in
    the headless probe (fldOnOver early-returns when there is no #fldEnd element). */
+/**
+ * fldPlayerOutcomeLine.
+ * @param {*} winner
+ */
 function fldPlayerOutcomeLine(winner) {
   var ps = (typeof fldPlayerSide === "function") ? fldPlayerSide() : "US";
   if (winner === "draw") return "The field is yours to dispute another day &mdash; neither army broke.";
@@ -77,6 +88,11 @@ function fldPlayerOutcomeLine(winner) {
    title/badge/deck) with generic role fallbacks, so every battle gets its own card; the attacking side is listed
    first. `go` is the launcher callback, invoked with "US" or "CS". Falls back to a US launch when the sheet system
    is unavailable (headless / a stripped build) so the entry point never dead-ends. */
+/**
+ * fldScenarioSideChoice.
+ * @param {*} id
+ * @param {*} go
+ */
 function fldScenarioSideChoice(id, go) {
   if (typeof openSheet !== "function") { go("US"); return; }
   var sd = (typeof fldScenarioData === "function") ? fldScenarioData(id) : null;
@@ -123,6 +139,10 @@ function fldScenarioSideChoice(id, go) {
   try { var first = document.querySelector('[data-brside]'); if (first) first.focus(); } catch (e) {}
 }
 /* back-compat: the First Bull Run menu button + probe-csplayer call fldBullRunSideChoice directly. */
+/**
+ * fldBullRunSideChoice.
+ * @param {*} go
+ */
 function fldBullRunSideChoice(go) { return fldScenarioSideChoice("bullrun1", go); }
 /* one commission-style choice card (a focusable button) for the Bull Run side picker. */
 function _fldBrSideCard(side, title, badge, deck, attacking) {

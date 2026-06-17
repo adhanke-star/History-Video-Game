@@ -47,6 +47,11 @@ function _prPush(C, line) {
   } catch (e) {}
 }
 
+/**
+ * Initialize the prod subsystem state.
+ * Idempotent — safe to call multiple times.
+ * @param {import('./types').Campaign | null} C
+ */
 function prodInit(C) {
   if (!C) return;
   var side = (C.side === "CS") ? "CS" : "US";
@@ -62,6 +67,14 @@ function prodInit(C) {
 }
 
 /* Per-turn production tick. Reads the War Room nodes; runs AFTER wrOnResolve. */
+/**
+ * Per-battle tick for the prod subsystem.
+ * @param {'US'|'CS'} winnerSide
+ * @param {string} type - Battle outcome type.
+ * @param {object} B - Battle descriptor.
+ * @param {import('./types').Campaign | null} C
+ * @param {boolean} win - Whether the player's side won.
+ */
 function prodOnResolve(winnerSide, type, B, C, win) {
   if (!C) return;
   prodInit(C);
@@ -131,6 +144,10 @@ function _prEquipStatus(v) {
 }
 
 /* Overview fragment for the War Effort tab (called by presRenderEconomy). */
+/**
+ * presProdBlock.
+ * @param {*} C
+ */
 function presProdBlock(C) {
   if (!C || !C.production) return '';
   var P = C.production, es = _prEquipStatus(P.equipIndex);

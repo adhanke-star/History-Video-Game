@@ -46,6 +46,10 @@ function fldScenarioRegistry() {
   } catch (e) {}
   return R;
 }
+/**
+ * fldScenarioData.
+ * @param {*} id
+ */
 function fldScenarioData(id) { var R = fldScenarioRegistry(); return (id && R[id]) ? R[id] : null; }
 /* back-compat alias: First Bull Run is the canonical first scenario (the menu button + briefing still call this). */
 function fldBrData() { return fldScenarioData("bullrun1"); }
@@ -54,6 +58,12 @@ function fldBrData() { return fldScenarioData("bullrun1"); }
    carry their own d.side. B-6 (command either side): the PLAYER's side (__FIELD.playerSide, resolved in
    fldInitSim BEFORE this runs) is the non-AI side; the other side is AI. With the default US player this is
    byte-identical to the old "(s === 'CS') ? true : !!autoBoth" — US -> !!autoBoth, CS -> true. ---- */
+/**
+ * fldBrSpec.
+ * @param {*} d
+ * @param {*} side
+ * @param {*} autoBoth
+ */
 function fldBrSpec(d, side, autoBoth) {
   // B-6: the PLAYER's side is the non-AI side. Resolve via fldPlayerSide() (which honours a CS campaign live +
   // the explicit per-launch side) so a CS player commands the CS OOB; default "US" -> byte-identical AI flags.
@@ -72,6 +82,11 @@ function fldBrSpec(d, side, autoBoth) {
    fldScenarioInit — the T0 build seam. Returns true once it has populated terrain
    + units + the reinforcement schedule + win thresholds (else false -> T0 sandbox).
    =========================================================================== */
+/**
+ * Initialize the fldScenario subsystem state.
+ * Idempotent — safe to call multiple times.
+ * @param {import('./types').Campaign | null} C
+ */
 function fldScenarioInit(opts) {
   // Phase C: data-driven — ANY registered scenario id builds from its data; "sandbox"/unknown falls through to T0.
   // Bull Run resolves the identical data object it always did (fldScenarioData("bullrun1")) -> byte-identical.
@@ -118,6 +133,10 @@ function fldScenarioInit(opts) {
    fldScenarioTick — the T0 per-tick seam. Splices in any reinforcement whose
    scheduled sim-time has arrived (idempotent; array order; deterministic).
    =========================================================================== */
+/**
+ * fldScenarioTick.
+ * @param {*} dt
+ */
 function fldScenarioTick(dt) {
   var r = __FIELD.reinforce; if (!r) return;
   var arrivals = [];
@@ -130,6 +149,10 @@ function fldScenarioTick(dt) {
   // enemy arrivals return "" from fldReinforceSpawn (the fog-leak guard) -> filter them out of the batch.
   var _spoken = arrivals.filter(Boolean); if (_spoken.length) fldAnnounce(_spoken.join("  "));
 }
+/**
+ * fldReinforceSpawn.
+ * @param {*} spec
+ */
 function fldReinforceSpawn(spec) {
   var u = fldMakeUnit(spec);
   // Phase A (A1): in a campaign-launched battle, a PLAYER-side reinforcement is conditioned by the
@@ -176,6 +199,10 @@ function fldReinforceSpawn(spec) {
    Bull Run (the hand-authored opener) leading. Each opens a side-choice card, then launches with the chosen army.
    Returns the LAST button injected, so the caller can anchor the next menu item after the whole block. Idempotent
    (per-id). Bull Run is just the first entry now — adding a battle is a data file + a registry line, no new UI code. */
+/**
+ * fldInjectScenarioButtons.
+ * @param {*} afterBtn
+ */
 function fldInjectScenarioButtons(afterBtn) {
   var last = null;
   try {
@@ -191,6 +218,10 @@ function fldInjectScenarioButtons(afterBtn) {
   return last;
 }
 /* Marquee order: First Bull Run first (the opening battle + the hand-authored marquee), then the rest by year. */
+/**
+ * fldScenarioMenuOrder.
+ * @param {*} reg
+ */
 function fldScenarioMenuOrder(reg) {
   var ids = [], k;
   for (k in reg) if (reg.hasOwnProperty(k)) ids.push(k);
@@ -251,6 +282,11 @@ function _fldInjectBullRunButton(afterBtn) {
     return b;
   } catch (e) { return null; }
 }
+/**
+ * fldLaunchBattle.
+ * @param {*} scn
+ * @param {*} side
+ */
 function fldLaunchBattle(scn, side) {
   fldLaunchSandbox({ scenario: scn, renderer: "3d", playerSide: (side === "CS") ? "CS" : "US" });
   // Phase C: the pre-battle briefing fires for ANY registered scenario — fldBullRunBriefing reads __FIELD.scenData,
@@ -293,6 +329,11 @@ function fldBullRunBriefing() {
   if (go) { go.addEventListener("click", close); try { go.focus(); } catch (e) {} }
   fldAnnounce("Briefing: " + sd.name + ". " + sd.blurb);
 }
+/**
+ * fldScenarioBanner.
+ * @param {*} text
+ * @param {*} side
+ */
 function fldScenarioBanner(text, side) {
   try {
     var root = document.getElementById("fldRoot"); if (!root) return;
@@ -310,6 +351,11 @@ function fldScenarioBanner(text, side) {
 /* the end-screen teaching payoff: "your war vs history" + the cards with provenance. Phase C: data-driven for any
    registered scenario — Bull Run keeps its hand-authored branch (byte-identical), every other battle draws its
    framing from sd.endNote (keyed by the winning side then the player's side). */
+/**
+ * Render the fldScenarioEndHtml UI section.
+ * @param {import('./types').Campaign} C
+ * @returns {string} HTML string.
+ */
 function fldScenarioEndHtml(winner) {
   var sd = __FIELD.scenData; if (!sd) return "";
   var cards = (sd.teaching && sd.teaching.cards) ? sd.teaching.cards : [];

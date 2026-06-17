@@ -86,6 +86,13 @@ function fldPresetNeutral() {
 }
 /* build a full effective config from an AI tier + realism bundle + optional lever overrides.
    The UI writes the result of this to G.settings.tacticalPreset (and localStorage). */
+/**
+ * Compute fld preset compute.
+ * @param {*} aiKey
+ * @param {*} rmKey
+ * @param {*} lv
+ * @returns {number}
+ */
 function fldPresetCompute(aiKey, rmKey, lv) {
   var ai = FLDP.ai[aiKey] || FLDP.ai.veteran, rm = FLDP.realism[rmKey] || FLDP.realism.balanced;
   var c = { ai: (FLDP.ai[aiKey] ? aiKey : "veteran"), realism: (FLDP.realism[rmKey] ? rmKey : "balanced"),
@@ -125,6 +132,10 @@ function fldPresetResolve() {
 }
 /* APPLY (fldInitSim seam). Populate __FIELD.sev / aiSkill / aiResolve / aiCushion every launch; when a preset is
    configured, also set the global fog / auto-pause the precedence below honours. NO preset -> neutral, touch nothing. */
+/**
+ * fldPresetsApply.
+ * @param {*} opts
+ */
 function fldPresetsApply(opts) {
   __FIELD.sev = { attrition: 1, canister: 1, supply: 1, cmdShock: 1, sight: 1, veteran: 1 };
   __FIELD.aiSkill = 1; __FIELD.aiResolve = 1; __FIELD.aiCushion = 0;
@@ -150,6 +161,10 @@ function fldPresetsApply(opts) {
 function _fldNum(v, d) { var n = (typeof v === "number") ? v : parseFloat(v); return (isFinite(n)) ? n : d; }
 
 /* persistence: a dedicated localStorage key (no campaign save / no toast) + G.settings (rides the campaign save). */
+/**
+ * fldPresetPersist.
+ * @param {*} c
+ */
 function fldPresetPersist(c) {
   try { if (typeof G !== "undefined") { G.settings = G.settings || {}; G.settings.tacticalPreset = c; } } catch (e) {}
   try { if (typeof localStorage !== "undefined") localStorage.setItem(FLDP.STORE_KEY, JSON.stringify(c)); } catch (e2) {}
@@ -180,6 +195,10 @@ function _fldPresetInitState(returnTo) {
       fog: c.fog || "scenario", autoPause: c.autoPause },
   };
 }
+/**
+ * fldPresetMenu.
+ * @param {*} returnTo
+ */
 function fldPresetMenu(returnTo) {
   _fldPresetInitState(returnTo);
   if (typeof openSheet !== "function") return;
@@ -314,6 +333,10 @@ function _fldPresetReturn() {
   if (typeof openMainMenu === "function") { openMainMenu(); return; }
 }
 /* main-menu injection — a button beside the Skirmish / Bull Run buttons (the same .gn-btn idiom). */
+/**
+ * fldInjectPresetButton.
+ * @param {*} afterBtn
+ */
 function fldInjectPresetButton(afterBtn) {
   try {
     if (document.getElementById("fldPresetBtn")) return;

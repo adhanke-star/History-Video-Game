@@ -28,6 +28,11 @@
 /* ---- vicMomentum: the player side's WAR FORTUNES, 0 (losing) .. 1 (winning).
    The single performance signal the S1c/S1d pressures key off. Blends cumulative
    win-rate, home-front will (inverse weariness), and political capital. ---- */
+/**
+ * Compute vic momentum.
+ * @param {*} C
+ * @returns {number}
+ */
 function vicMomentum(C) {
   try {
     if (!C) return 0.5;
@@ -52,6 +57,11 @@ function _vicPush(C, line) {
 }
 
 /* ---- vicInit: idempotent; seeds C.strategy (levers + the enemy-will tracker). ---- */
+/**
+ * Initialize the vic subsystem state.
+ * Idempotent — safe to call multiple times.
+ * @param {import('./types').Campaign | null} C
+ */
 function vicInit(C) {
   if (!C) return;
   var side = (C.side === "CS") ? "CS" : "US";
@@ -85,6 +95,14 @@ function vicInit(C) {
 /* ---- vicOnResolve: runs LAST in the tick. Updates the enemy's will from the
    battle result + raiders + slow war-weariness, charges lever upkeep, and detects
    a reachable victory path. Mutates C.strategy + C.funds/clock only. ---- */
+/**
+ * Per-battle tick for the vic subsystem.
+ * @param {'US'|'CS'} winnerSide
+ * @param {string} type - Battle outcome type.
+ * @param {object} B - Battle descriptor.
+ * @param {import('./types').Campaign | null} C
+ * @param {boolean} win - Whether the player's side won.
+ */
 function vicOnResolve(winnerSide, type, B, C, win) {
   if (!C) return;
   vicInit(C);
@@ -241,6 +259,11 @@ function _vicWildSection(C) {
 
 /* ---- vicRenderPaths: the Paths to Victory desk tab. Side-aware; the Confederate
    view is the rich one (the counter-game). ---- */
+/**
+ * Render the vic UI section.
+ * @param {import('./types').Campaign} C
+ * @returns {string} HTML string.
+ */
 function vicRenderPaths(C) {
   if (!C) return '';
   vicInit(C);
@@ -330,6 +353,10 @@ function _vicWhyText(C) {
 }
 
 /* ---- vicWirePaths: the lever toggles + the teaching expander. ---- */
+/**
+ * vicWirePaths.
+ * @param {*} C
+ */
 function vicWirePaths(C) {
   if (!C || !C.strategy) return;
   var S = C.strategy;

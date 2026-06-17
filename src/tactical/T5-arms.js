@@ -82,6 +82,11 @@ var FLDA = {
    MELEE — the ARM table (T0 fldResolveMelee seam). meleeFor the ATTACKER `att`
    given the DEFENDER `def`. 1.0 for infantry AND when arms off -> byte-identical.
    =========================================================================== */
+/**
+ * fldArmMelee.
+ * @param {*} att
+ * @param {*} def
+ */
 function fldArmMelee(att, def) {
   if (!__FIELD.arms || !att) return 1.0;
   if (att.arm === "art") return FLDA.ART_MELEE;                      // a battery overrun in melee
@@ -93,6 +98,13 @@ function fldArmMelee(att, def) {
    ARTILLERY FIRE — canister / bombardment (T0 fldResolveFire seam). Returns a
    multiplier on the base fire power; 1.0 / inert when arms off or non-artillery.
    =========================================================================== */
+/**
+ * fldArtFireMult.
+ * @param {*} u
+ * @param {*} tgt
+ * @param {*} d
+ * @param {*} cover
+ */
 function fldArtFireMult(u, tgt, d, cover) {
   if (!__FIELD.arms || !u || u.arm !== "art") return 1.0;
   u._artFlash = FLDA.FLASH_T;                                        // light the muzzle for the renderer
@@ -128,6 +140,10 @@ function fldArtFireMult(u, tgt, d, cover) {
    are standalone today, so this path is dormant; documented so a future campaign-linked gun battery
    doesn't silently inherit a dead volume lever.)
    =========================================================================== */
+/**
+ * fldArtFireStr.
+ * @param {*} u
+ */
 function fldArtFireStr(u) {
   if (!__FIELD.arms || !u || u.arm !== "art") return u ? u.men : 0;
   if (typeof u.guns === "number" && u.guns > 0) {
@@ -144,6 +160,13 @@ function fldArtFireStr(u) {
    TARGETING — arm-aware preference (T0 fldAcquireTarget seam). Returns a score
    delta; 0 for infantry AND when arms off -> baseline targeting unchanged.
    =========================================================================== */
+/**
+ * fldArmTargetBias.
+ * @param {*} u
+ * @param {*} e
+ * @param {*} d
+ * @param {*} fr
+ */
 function fldArmTargetBias(u, e, d, fr) {
   if (!__FIELD.arms || !u) return 0;
   if (u.arm === "art") {
@@ -160,6 +183,10 @@ function fldArmTargetBias(u, e, d, fr) {
    ROLE AI (T0 fldAiUnit seam) — artillery + cavalry run their own doctrines,
    OVERRIDING the infantry doctrine for those arms. Returns true if it handled u.
    =========================================================================== */
+/**
+ * fldArmsAiUnit.
+ * @param {*} u
+ */
 function fldArmsAiUnit(u) {
   if (!__FIELD.arms || !u.alive || u.state === "routing") return false;
   if (u.arm === "art") { fldAiArtillery(u); return true; }
@@ -169,6 +196,10 @@ function fldArmsAiUnit(u) {
 
 /* a shared scan of VISIBLE enemies (fog-respecting) + the local force balance. Mirrors the
    defender/attacker scanners so cavalry/artillery react only to what their side can see. */
+/**
+ * fldArmsScan.
+ * @param {*} u
+ */
 function fldArmsScan(u) {
   var near = null, nd = 1e9, weak = null, wd = 1e9, foeMen = 0, friendMen = u.men, enemyCav = null, ed = 1e9;
   var U = __FIELD.units, i;
@@ -192,6 +223,10 @@ function fldArmsScan(u) {
      (exposed) and bolts only at point-blank — so it CAN be overrun if its infantry screen fails (Griffin's and
      Ricketts's crest guns, whose loss broke the Union attack). This asymmetry is historical AND the balance
      counter to the attacker's un-answered guns (verified by a seed-isolation sweep — DECISIONS D67). */
+/**
+ * fldAiArtillery.
+ * @param {*} u
+ */
 function fldAiArtillery(u) {
   var obj = __FIELD.objective; if (!obj) { fldAiGeneric(u); return; }
   var attacking = !!(__FIELD.attacker && u.side === __FIELD.attacker);
@@ -230,6 +265,10 @@ function fldAiArtillery(u) {
 }
 
 /* the CAVALRY doctrine — dispatch on the unit's role (default "flank"). */
+/**
+ * fldAiCavalry.
+ * @param {*} u
+ */
 function fldAiCavalry(u) {
   var role = u.role || "flank";
   if (role === "scout") { fldCavScout(u); return; }
@@ -240,6 +279,11 @@ function fldAiCavalry(u) {
 
 /* the enemy's exposed flank: a point beyond the objective toward the enemy's rear, offset to
    whichever lateral side this trooper is already nearer (wrap the open wing). */
+/**
+ * fldArmsFlankPoint.
+ * @param {*} u
+ * @param {*} obj
+ */
 function fldArmsFlankPoint(u, obj) {
   var foe = fldEnemy(u.side), homeZf = fldHomeEdgeZ(foe);
   var dir = (homeZf > obj.z) ? 1 : -1;                               // toward the enemy's home (their rear)
@@ -254,6 +298,10 @@ function fldArmsFlankPoint(u, obj) {
    has closed on the objective and otherwise guards the threatened wing (Stuart hit the Union right NEAR
    Henry House Hill; he did not abandon it). An ATTACKING flanker rides for the enemy's exposed wing.
    Fall back if caught wavering by a stronger enemy (cavalry won't trade a firefight it loses). */
+/**
+ * fldCavFlank.
+ * @param {*} u
+ */
 function fldCavFlank(u) {
   var obj = __FIELD.objective; if (!obj) { fldAiGeneric(u); return; }
   var s = fldArmsScan(u);
@@ -290,6 +338,10 @@ function fldCavFlank(u) {
 
 /* SCOUT: range wide toward the enemy flank/rear to lift the fog (a cavalry brigade's wide sight
    is the side's recon); AVOID a stronger enemy that closes (a scout caught is a scout wasted). */
+/**
+ * fldCavScout.
+ * @param {*} u
+ */
 function fldCavScout(u) {
   var obj = __FIELD.objective; if (!obj) { fldAiGeneric(u); return; }
   var s = fldArmsScan(u);
@@ -304,6 +356,10 @@ function fldCavScout(u) {
 
 /* SCREEN: interpose between the nearest enemy scout/cav (else the nearest enemy) and the
    objective — deny the enemy his eyes and a clean flanking lane; drive off a broken scout. */
+/**
+ * fldCavScreen.
+ * @param {*} u
+ */
 function fldCavScreen(u) {
   var obj = __FIELD.objective; if (!obj) { fldAiGeneric(u); return; }
   var s = fldArmsScan(u), threat = s.enemyCav || s.near;
@@ -323,6 +379,10 @@ function fldCavScreen(u) {
 /* RAID: make for the enemy AMMUNITION TRAIN (the strategic raid-supply order, realized on the
    field); peel off a stronger interceptor en route; the actual reserve drain happens in
    fldArmsStep while the raider sits on the depot. No train (logistics off) -> behave as a flanker. */
+/**
+ * fldCavRaid.
+ * @param {*} u
+ */
 function fldCavRaid(u) {
   var trains = __FIELD.trains, et = trains ? trains[fldEnemy(u.side)] : null;
   if (!et || !et.alive || et.reserve <= 0) { fldCavFlank(u); return; }
@@ -339,6 +399,10 @@ function fldCavRaid(u) {
    THE PER-TICK STEP (T0 fldSimStep seam) — decay the visual timers, record charges
    (for the end-screen teaching), and apply the cavalry RAID on an enemy train.
    =========================================================================== */
+/**
+ * fldArmsStep.
+ * @param {*} dt
+ */
 function fldArmsStep(dt) {
   if (!__FIELD.arms) return;
   var U = __FIELD.units, i, u;
@@ -360,6 +424,10 @@ function fldArmsStep(dt) {
 /* ===========================================================================
    HUD  (T0 fldRenderHud seam) — a battery's range band / a trooper's role.
    =========================================================================== */
+/**
+ * fldArmsHudSelected.
+ * @param {*} u
+ */
 function fldArmsHudSelected(u) {
   if (!__FIELD.arms || !u) return "";
   if (u.arm === "art") {
@@ -388,6 +456,11 @@ function fldArmsHudSelected(u) {
 }
 
 /* end-screen teaching payoff (T0 fldOnOver seam) — the lost battery / the cavalry charge. */
+/**
+ * Render fldArmsEndHtml UI.
+
+ * @returns {string} HTML string.
+ */
 function fldArmsEndHtml() {
   if (!__FIELD.arms) return "";
   var U = __FIELD.units, lostArt = 0, hadCav = false, i, u;
@@ -410,6 +483,11 @@ function fldArmsEndHtml() {
    a canister cone toward the target) and a mounted trooper for cavalry (a charge trail).
    CVD-safe: distinct SHAPES, not colour alone; honors reduceMotion (no flash/cone/trail).
    =========================================================================== */
+/**
+ * fldDrawArms.
+ * @param {*} ctx
+ * @param {*} v
+ */
 function fldDrawArms(ctx, v) {
   if (!__FIELD.arms) return;
   var U = __FIELD.units, ps = (typeof fldPlayerSide === "function") ? fldPlayerSide() : "US";
@@ -423,6 +501,14 @@ function fldDrawArms(ctx, v) {
     else fldDrawTrooper(ctx, u, cx, cz, rm);
   }
 }
+/**
+ * fldDrawBattery.
+ * @param {*} ctx
+ * @param {*} u
+ * @param {*} cx
+ * @param {*} cz
+ * @param {*} rm
+ */
 function fldDrawBattery(ctx, u, cx, cz, rm) {
   ctx.save(); ctx.translate(cx, cz); ctx.rotate(u.facing);          // local -y = the gun's front (toward facing)
   if (!rm && u._canisterLive > 0) {                                 // the canister cone (a faint wedge toward the target)
@@ -436,6 +522,14 @@ function fldDrawBattery(ctx, u, cx, cz, rm) {
   ctx.beginPath(); ctx.arc(5, 4, 3.2, 0, 7); ctx.stroke();
   ctx.restore();
 }
+/**
+ * fldDrawTrooper.
+ * @param {*} ctx
+ * @param {*} u
+ * @param {*} cx
+ * @param {*} cz
+ * @param {*} rm
+ */
 function fldDrawTrooper(ctx, u, cx, cz, rm) {
   var charging = !!(u.order && u.order.type === "charge");
   ctx.save(); ctx.translate(cx, cz); ctx.rotate(u.facing);          // local -y = the front; +y = behind

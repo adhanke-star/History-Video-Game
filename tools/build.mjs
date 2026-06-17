@@ -21,8 +21,9 @@
 
    Usage:  node tools/build.mjs            # build + gate
            node tools/build.mjs --check    # gate the assembled output, do NOT write
+           node tools/build.mjs --minify   # build + gate + minify (production build)
    Exit:   0 ok · 2 parse fail · 3 invalid-hex · 4 collision · 5 structural · 1 internal
-   No external deps — node:fs / node:path / node:child_process only.
+   Dependencies: terser (devDependency, only for --minify).
    =========================================================================== */
 import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
@@ -40,6 +41,7 @@ const MANIFEST = join(SRC, '00-manifest.json');
 const MARKER = '/*__ENGINE' + '_END__*/';
 const HEX_BOMB = /0x[0-9a-fA-F]*[g-z]/;            // invalid hex literal -> parse bomb
 const checkOnly = process.argv.includes('--check');
+const doMinify = process.argv.includes('--minify');
 
 function die(code, msg) { console.error('BUILD FAIL [' + code + '] ' + msg); process.exit(code); }
 
@@ -130,6 +132,22 @@ console.log('  overrides: ' + ([...overrides].join(', ') || '(none)') + ' (2x ea
 console.log('  base ' + KB(base) + ' + inject ' + KB(inject) + ' = out ' + KB(out));
 
 if (checkOnly) { console.log('--check: gates passed, NOT writing ' + OUT.split('/').pop()); process.exit(0); }
-writeFileSync(OUT, out);
-console.log('WROTE ' + OUT.split('/').pop() + ' (' + KB(out) + ')');
+
+// ---- 6. optional minification (--minify) ----
+let finalOut = out;
+if (doMinify) {
+  console.log('Minifying with terser...');
+  const { minify } = await import('terser');
+  const result = await minify(body, {
+    compress: { dead_code: true, drop_console: false, passes: 2 },
+    mangle: { toplevel: false },  // preserve global function names (override-by-redeclaration pattern)
+    format: { comments: false },
+  });
+  if (result.error) die(1, 'terser failed: ' + result.error.message);
+  finalOut = out.slice(0, so + '<script>'.length) + result.code + out.slice(sc);
+  console.log('  minified: ' + KB(body) + ' → ' + KB(result.code) + ' (' + Math.round((1 - result.code.length / body.length) * 100) + '% reduction)');
+}
+
+writeFileSync(OUT, finalOut);
+console.log('WROTE ' + OUT.split('/').pop() + ' (' + KB(finalOut) + ')');
 console.log('NEXT: node tools/bootprobe.mjs && node tools/t1probe.mjs && node tools/diag-classic.mjs');

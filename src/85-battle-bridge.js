@@ -38,6 +38,11 @@ var _brgPREP = [
    stack overflow. The outer (real) call still gets the true commandLeadership. (Bug-hunt D53.4.) */
 var _brgLeadGuard = false;
 
+/**
+ * Initialize the bridge subsystem state.
+ * Idempotent — safe to call multiple times.
+ * @param {import('./types').Campaign | null} C
+ */
 function bridgeInit(C) {
   if (!C) return;
   if (!C.battlePrep || typeof C.battlePrep !== "object") {
@@ -50,6 +55,14 @@ function bridgeInit(C) {
 }
 
 /* Reset the prep after a battle is fought (each new turn chooses fresh). */
+/**
+ * Per-battle tick for the bridge subsystem.
+ * @param {'US'|'CS'} winnerSide
+ * @param {string} type - Battle outcome type.
+ * @param {object} B - Battle descriptor.
+ * @param {import('./types').Campaign | null} C
+ * @param {boolean} win - Whether the player's side won.
+ */
 function bridgeOnResolve(winnerSide, type, B, C, win) {
   if (!C) return;
   bridgeInit(C);
@@ -70,6 +83,10 @@ function _brgNextBattle(C) {
    from the whole strategic state — manpower (numbers/morale), production+blockade
    (equipment/arms), the home front (will), logistics (supply). Returns 0-100 facets
    + an overall index + status words. This is what the battle layer will consume. ---- */
+/**
+ * bridgeArmy.
+ * @param {*} C
+ */
 function bridgeArmy(C) {
   var side = (C && C.side === "CS") ? "CS" : "US";
   var mp = (C && C.manpower) || {}, pr = (C && C.production) || {}, bl = (C && C.blockade) || {}, clk = (C && C.clock) || {}, wr = (C && C.warroom) || {};
@@ -155,6 +172,11 @@ function _brgArmySummaryHTML(C) {
 }
 
 /* ---- The full pre-battle briefing sheet (army + the field + prep options). ---- */
+/**
+ * Render the bridgeBriefing UI section.
+ * @param {import('./types').Campaign} C
+ * @returns {string} HTML string.
+ */
 function bridgeBriefingHTML(C) {
   if (!C) return '';
   bridgeInit(C);
@@ -198,6 +220,12 @@ function bridgeBriefingHTML(C) {
     + '</div>';
 }
 
+/**
+ * bridgeWireBriefing.
+ * @param {*} C
+ * @param {*} onBack
+ * @param {*} onField
+ */
 function bridgeWireBriefing(C, onBack, onField) {
   if (!C) return;
   bridgeInit(C);

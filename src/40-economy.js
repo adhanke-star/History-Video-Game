@@ -73,6 +73,11 @@ function _ecNorm(mix) {
 }
 
 /* ---- econInit: idempotent; seeds C.economy from the side's finance config. ---- */
+/**
+ * Initialize the econ subsystem state.
+ * Idempotent — safe to call multiple times.
+ * @param {import('./types').Campaign | null} C
+ */
 function econInit(C) {
   if (!C) return;
   var side = (C.side === "CS") ? "CS" : "US";
@@ -104,6 +109,14 @@ function econInit(C) {
    (CS thin + shrinks as inflation rises); WHATEVER is left must be PRINTED →
    inflation. The CS shortfall forces the press → spiral; the US covers demand
    with bonds+taxes → stays anchored. */
+/**
+ * Per-battle tick for the econ subsystem.
+ * @param {'US'|'CS'} winnerSide
+ * @param {string} type - Battle outcome type.
+ * @param {object} B - Battle descriptor.
+ * @param {import('./types').Campaign | null} C
+ * @param {boolean} win - Whether the player's side won.
+ */
 function econOnResolve(winnerSide, type, B, C, win) {
   if (!C) return;
   econInit(C);
@@ -158,6 +171,11 @@ function _ecInflStatus(m) {
 }
 
 /* ---- econRenderFinance: the Treasury tab. ---- */
+/**
+ * Render the econ UI section.
+ * @param {import('./types').Campaign} C
+ * @returns {string} HTML string.
+ */
 function econRenderFinance(C) {
   if (!C) return '';
   econInit(C);
@@ -219,6 +237,10 @@ function _ecWhyText(C) {
 }
 
 /* ---- econWireFinance: lever buttons, delegate toggle, teaching expander. ---- */
+/**
+ * econWireFinance.
+ * @param {*} C
+ */
 function econWireFinance(C) {
   if (!C || !C.economy) return;
   var E = C.economy;

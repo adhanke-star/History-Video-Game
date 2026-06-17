@@ -29,6 +29,11 @@ function _armCat() {
 function _armBaseline() { var D = _armData(); return (D && typeof D.baselineQuality === "number") ? D.baselineQuality : 30; }
 function _armBatch() { var D = _armData(); return (D && typeof D.batchFraction === "number") ? D.batchFraction : 0.1; }
 
+/**
+ * Initialize the armory subsystem state.
+ * Idempotent — safe to call multiple times.
+ * @param {import('./types').Campaign | null} C
+ */
 function armoryInit(C) {
   if (!C) return;
   if (!C.armory || typeof C.armory !== "object") C.armory = { loadout: {} };
@@ -62,6 +67,11 @@ function _armSumLoadout(C) {
 }
 
 /* The army's weapon-score (0-100): issued weapons by fraction + the musket baseline. */
+/**
+ * Compute armory weapon score.
+ * @param {*} C
+ * @returns {number}
+ */
 function armoryWeaponScore(C) {
   if (!C) return _armBaseline();
   armoryInit(C);
@@ -76,6 +86,12 @@ function armoryWeaponScore(C) {
 
 /* Buy: mode "batch" arms one batch (~10%) more; mode "all" re-arms the whole line.
    Returns { ok, reason }. Mutates C.funds + C.armory.loadout. */
+/**
+ * Purchase/upgrade action for armory.
+ * @param {*} C
+ * @param {*} weaponId
+ * @param {*} mode
+ */
 function armoryBuy(C, weaponId, mode) {
   if (!C) return { ok: false, reason: "no campaign" };
   armoryInit(C);
@@ -115,6 +131,11 @@ function _armScoreWord(v) {
 }
 
 /* ---- armoryRenderArmory: The Armory desk tab. ---- */
+/**
+ * Render the armory UI section.
+ * @param {import('./types').Campaign} C
+ * @returns {string} HTML string.
+ */
 function armoryRenderArmory(C) {
   if (!C) return '';
   armoryInit(C);
@@ -167,6 +188,10 @@ function armoryRenderArmory(C) {
     + '<div class="btn-row" style="margin-top:10px"><button id="armReset" type="button" class="upg" style="font-size:11px">Reset to muskets</button></div>';
 }
 
+/**
+ * armoryWireArmory.
+ * @param {*} C
+ */
 function armoryWireArmory(C) {
   if (!C) return;
   var btns = document.querySelectorAll('[data-armbuy]');

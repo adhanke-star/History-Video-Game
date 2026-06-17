@@ -92,6 +92,11 @@ function _cabHolder(side, domain, date) {
 
 /* ---- cabInit: idempotent. Builds the dynamic cabinet state, migrating the S0
    stub's delegated flags. Registered in _t1InitAll AFTER presInit. ---- */
+/**
+ * Initialize the cab subsystem state.
+ * Idempotent — safe to call multiple times.
+ * @param {import('./types').Campaign | null} C
+ */
 function cabInit(C) {
   if (!C) return;
   if (typeof presInit === "function") presInit(C);
@@ -130,6 +135,14 @@ function cabInit(C) {
 /* ---- cabOnResolve: per-turn tick. Runs AFTER presOnResolve (date + turn already
    advanced), so it sees the NEW strategic date. Detects office handovers (the
    churn) and logs them; mutates C.president only. No DOM, no save. ---- */
+/**
+ * Per-battle tick for the cab subsystem.
+ * @param {'US'|'CS'} winnerSide
+ * @param {string} type - Battle outcome type.
+ * @param {object} B - Battle descriptor.
+ * @param {import('./types').Campaign | null} C
+ * @param {boolean} win - Whether the player's side won.
+ */
 function cabOnResolve(winnerSide, type, B, C, win) {
   if (!C) return;
   cabInit(C);
@@ -229,6 +242,11 @@ function _cabAmbitionActive(advisor, C) {
    Exposed for the generals/command milestone to feed bridgeArmy's leadership
    facet (NOT yet consumed — wired + tuned there). Anchored near 64 so a default
    cabinet ~= the current bridge placeholder. ---- */
+/**
+ * Compute cabinet leadership.
+ * @param {*} C
+ * @returns {number}
+ */
 function cabinetLeadership(C) {
   if (!C) return 64;
   var side = (C.side === "CS") ? "CS" : "US";
@@ -383,6 +401,11 @@ function _cabCrossCardHTML(C) {
 }
 
 /* ---- presRenderCabinet OVERRIDE: the full advisor desk. ---- */
+/**
+ * Render the pres UI section.
+ * @param {import('./types').Campaign} C
+ * @returns {string} HTML string.
+ */
 function presRenderCabinet(C) {
   if (!C) return '';
   try {
@@ -437,6 +460,10 @@ function _cabHeed(C, domain) {
 }
 
 /* ---- presWireCabinet OVERRIDE ---- */
+/**
+ * presWireCabinet.
+ * @param {*} C
+ */
 function presWireCabinet(C) {
   if (!C || !C.president) return;
   if (typeof cabInit === "function") cabInit(C);

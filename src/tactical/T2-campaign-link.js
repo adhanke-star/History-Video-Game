@@ -82,6 +82,10 @@ function _fldArmPlan(C, year, count) {
    (computed once by fldCampaignCondition). Used for the initial line AND for player-side
    reinforcements as they detrain (T1 fldReinforceSpawn seam) -> your war fields stronger
    reserves too. No-op for the enemy / off-campaign. Deterministic (index-based re-arm). */
+/**
+ * fldCampaignConditionUnit.
+ * @param {*} u
+ */
 function fldCampaignConditionUnit(u) {
   var ctx = __FIELD.campaignCtx; if (!ctx || !ctx._params || !u) return;
   var p = ctx._params;
@@ -222,6 +226,10 @@ function _fldCampaignSkirmishParams(bd, C) {
    Routes to the historical scenario or a conditioned procedural fight, sets the campaign ctx
    so fldResetRun conditions the army (A1) and the end screen feeds it back (A3), and wires the
    abort-return so leaving before the battle ends drops back to the briefing (re-launchable). */
+/**
+ * fldLaunchCampaignBattle.
+ * @param {*} C
+ */
 function fldLaunchCampaignBattle(C) {
   C = C || _fldCamp(); if (!C) return;
   if (typeof _brgNextBattle !== "function") return;
@@ -245,6 +253,10 @@ function fldLaunchCampaignBattle(C) {
 }
 /* The abort-return surface: reopen the bridge briefing wired the same as the interstitial did
    (Back -> the strategic turn; To the Field -> the Quartermaster/Classic battle). */
+/**
+ * fldCampaignReturn.
+ * @param {*} C
+ */
 function fldCampaignReturn(C) {
   C = C || _fldCamp(); if (!C) return;
   try {
@@ -275,6 +287,10 @@ function _fldApplyTerrainVariant(variant) {
    from opts.skirmish and returns true; T0 then runs fldResetRun (which conditions the army if a
    campaign ctx is set) and early-returns. Returns false if there are no skirmish params (T0
    falls through to the verbatim 2-brigade sandbox -> byte-identical, probe-field holds). */
+/**
+ * fldSkirmishOOB.
+ * @param {*} opts
+ */
 function fldSkirmishOOB(opts) {
   var sk = opts && opts.skirmish; if (!sk) return false;
   __FIELD.scenario = "skirmish";
@@ -398,6 +414,10 @@ function fldSkirmishLaunch() {
   fldLaunchSandbox({ renderer: "3d", skirmish: sk, fog: s.fog });
 }
 /* main-menu injection (T0 fldInjectMenuButton hook) — a button beside the sandbox / Bull Run. */
+/**
+ * fldInjectSkirmishButton.
+ * @param {*} afterBtn
+ */
 function fldInjectSkirmishButton(afterBtn) {
   try {
     if (document.getElementById("fldSkirmishBtn")) return;
@@ -415,6 +435,11 @@ function fldInjectSkirmishButton(afterBtn) {
 /* ===========================================================================
    A2 — the procedural campaign-battle briefing (period broadsheet)
    =========================================================================== */
+/**
+ * fldCampaignBriefing.
+ * @param {*} C
+ * @param {*} bd
+ */
 function fldCampaignBriefing(C, bd) {
   var root = document.getElementById("fldRoot"); if (!root || !bd) return;
   if (document.getElementById("fldBrief")) return;
@@ -455,6 +480,11 @@ function _fldEsc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").r
    men lost / men fielded per side, where "fielded" sums every unit's maxMen (so it counts
    reinforcements that arrived and units that were destroyed) and "remaining" sums live men.
    Must be called BEFORE fldExit clears __FIELD.units. Returns null off-campaign. */
+/**
+ * Compute fld campaign compute outcome.
+
+ * @returns {number}
+ */
 function fldCampaignComputeOutcome() {
   var ctx = __FIELD.campaignCtx; if (!ctx) return null;
   var C = _fldCamp(); if (!C) return null;
@@ -481,6 +511,10 @@ function fldCampaignComputeOutcome() {
    with _arApplyCasualties, set casualties/infl, then drive the engine's OWN campaignAdvance
    (roster reconcile + _t1Resolve + funds + advance/recovery). Mirrors bridgeAutoResolve (87)
    so the war moves on IDENTICALLY to a fought / auto-resolved battle. */
+/**
+ * fldCampaignApplyOutcome.
+ * @param {*} o
+ */
 function fldCampaignApplyOutcome(o) {
   var C = _fldCamp(); if (!C || !o || !o.bd) return;
   var ps = o.playerSide, es = fldEnemy(ps);
@@ -509,6 +543,11 @@ function fldCampaignApplyOutcome(o) {
 }
 /* the campaign end-screen teaching/result snippet (T0 fldOnOver hook) — appended beneath any
    scenario teaching; states the strategic consequence of this real-time fight. */
+/**
+ * Render the fldCampaignEndHtml UI section.
+ * @param {import('./types').Campaign} C
+ * @returns {string} HTML string.
+ */
 function fldCampaignEndHtml(winner) {
   var ctx = __FIELD.campaignCtx; if (!ctx) return "";
   var C = _fldCamp(); var ps = (C && C.side === "CS") ? "CS" : "US";
