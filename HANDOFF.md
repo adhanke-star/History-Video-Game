@@ -1,6 +1,32 @@
 # HANDOFF — "The Civil War"
 
-## ⚡ CONTINUE HERE — run k (2026-06-16): **PHASE C-2 · ANTIETAM — the FIRST MULTI-PHASE EPIC ✅ SHIPPED + PUSHED (bug-hunt to finish)** → NEXT = finish the Antietam bug-hunt, then DEMO-POLISH / graphics (Aaron's weekend demo)
+## ⚡CONTINUE HERE — run l (2026-06-17): **WEEKEND POLISH + PHASE H MEDIA ARCHITECTURE ✅SHIPPED** → NEXT = finish Antietam bug-hunt, then continue Phase C breadth (next Eastern marquee battle)
+
+> **Two new feature PRs shipped (Devin session, 2026-06-17) — the game is ready for Aaron's weekend demo with his brother-in-law.** Deliverable ≈**1862KB**.
+>
+> **✅WEEKEND POLISH (PR #5, merged):**
+> - `src/91-save-slots.js`: **3 named save slots** (`localStorage gor_slot_0..2`) — two players can maintain separate campaigns on the same browser. "SAVE & LOAD CAMPAIGNS" button injected into main-menu Notices column (MutationObserver). Per-slot save/load/delete + metadata display (side, turn, game date). Enhanced export with descriptive filenames (`civil_war_union_turn12_save.json`).
+> - `src/92-help-overlay.js`: **First-launch welcome card** (shown once per browser, orients new players to the three layers). **Full How-to-Play reference** (main menu button + `?` hotkey). **In-battle tactical help overlay** (`?` button on HUD control bar + `?` hotkey during battle). **Enhanced PAUSED indicator** (centered text during tactical battle pause).
+>
+> **✅PHASE H MEDIA ARCHITECTURE (PR #7):**
+> - `src/93-asset-loader.js`: the external-media loading system. `assetUrl(path)` resolves relative paths (works on file://, Pages, itch.io — respects `<base>` tag). `assetLoad(path, type)` returns Promise<resource|null> with graceful fallback. `assetAudio(path)` convenience wrapper. `_AL_MANIFEST` declares assets by category + priority (critical/normal/lazy). Progress bar UI at boot for critical assets. **Zero regression: all loading optional — game works identically with empty assets/ folder.**
+> - `tools/build.mjs` updated: new informational asset audit reports file counts per category after GATE OK.
+> - `assets/audio/` folder structure created: `sfx/`, `music/`, `ambient/` subfolders with README documenting naming conventions. Procedural Web Audio synthesis remains the default; dropped files override individual sounds.
+>
+> **THE ARCHITECTURE DECISION:** `civil_war_generals.html` stays as the entry point. All media loads from `assets/` via relative paths (not Base64-embedded). `new Image().src` for images (works on file://), fetch+XHR for audio/binary. The build does NOT inline media — it stays external. This keeps the HTML lean (~1862KB code) while the `assets/` folder (currently 115MB: 131 portraits + 13 terrain tiles + 3 HDRI skies + 27 PBR textures) loads incrementally at runtime.
+>
+> **Manifest order:** `[..., "90-president-register.js", "91-save-slots.js", "92-help-overlay.js", "93-asset-loader.js"]`. All new function names uniquely prefixed (`_sl*`, `_hp*`, `_al*`, `asset*`). Collision gate: PASS.
+>
+> **IMMEDIATE NEXT:**
+> 1. Finish the Antietam adversarial bug-hunt (the one open gate from C-2).
+> 2. Continue Phase C breadth (next Eastern marquee battle per V1-CHECKLIST).
+> 3. Phase H content: drop real audio files into `assets/audio/` as they become available — the loader picks them up on refresh, no code change needed.
+>
+> **Resume map:** `START-HERE.md` → `V1-CHECKLIST.md` Phase C → the weekend-polish modules (`src/91-save-slots.js`, `src/92-help-overlay.js`, `src/93-asset-loader.js`) + `tools/build.mjs` (asset audit) + `assets/audio/README.txt` (conventions). Everything is pushed.
+
+---
+
+## ⚡CONTINUE HERE — run k (2026-06-16): **PHASE C-2 · ANTIETAM — the FIRST MULTI-PHASE EPIC ✅SHIPPED + PUSHED (bug-hunt to finish)** → NEXT = finish the Antietam bug-hunt, then DEMO-POLISH / graphics (Aaron's weekend demo)
 
 > **Antietam — the bloodiest day, as a 3-phase epic — is built, vetted (except the bug-hunt), and pushed** (DECISIONS **D76**). A NEW gated engine capability (sequential phases in one scenario) + the citation-grade 3-phase scenario: **the Cornfield → the Sunken Road "Bloody Lane" → Burnside's Bridge**. New `src/tactical/T8-phases.js` + surgical T0/T1 seams + `data/antietam.json` + a registry line + `tools/probe-antietam.mjs`. Deliverable ≈**1814.7KB**.
 >
