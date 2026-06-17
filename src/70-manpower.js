@@ -44,7 +44,7 @@ function _mpCfg(side) {
       if (side === "US" && us && typeof us.newManpoolThousands === "number") base.usct = us.newManpoolThousands;
       var im = M.immigrantPool && M.immigrantPool.US;
       if (side === "US" && im) { var g = im.germanBornThousands || 0, ir = im.irishBornThousands || 0; if (g + ir > 0) base.immigrant = g + ir; }
-    } catch (e) {}
+    } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_mpCfg data load:", e); }
   }
   return base;
 }
@@ -68,7 +68,7 @@ function _mpPush(C, line) {
     if (!C.manpower.log) C.manpower.log = [];
     C.manpower.log.unshift(line);
     if (C.manpower.log.length > 6) C.manpower.log.length = 6;
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_mpPush:", e); }
 }
 
 function manpowerInit(C) {
@@ -197,7 +197,7 @@ function manpowerOnResolve(winnerSide, type, B, C, win) {
 
     if (side === "CS" && P.strength < 40) _mpPush(C, "The ranks thin — casualties outrun every replacement the South can find.");
     else if (side === "US" && P.usctUnlocked && P.strength >= 80) _mpPush(C, "The armies refill from a deep well — volunteers, immigrants, and freedmen.");
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("manpowerOnResolve:", e); }
 }
 
 /* Status word for the army-strength index. */
@@ -215,7 +215,7 @@ function _mpCard(id) {
     if (D && D.teachingCards) {
       for (var i = 0; i < D.teachingCards.length; i++) if (D.teachingCards[i].id === id) return D.teachingCards[i];
     }
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_mpCard:", e); }
   return null;
 }
 

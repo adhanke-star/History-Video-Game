@@ -122,7 +122,7 @@ function fldSupplyReserve(side) {
         base = FLDL.RESERVE_MAX * (bp.raidSupply ? 0.6 : 0.95);                  // the enemy you raided fights short of cartridges
       }
     }
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldInitialAmmo:", e); }
   // difficulty/realism presets (B-5): supply generosity severity (>1 generous / <1 strict; 1.0 = neutral = byte-identical).
   // The severity is clamped >0 at the preset apply seam; floor the rounded reserve at >=1 as defense-in-depth so a
   // malformed/hand-edited preset can never produce a non-positive ammunition reserve.

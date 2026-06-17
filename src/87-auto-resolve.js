@@ -72,7 +72,7 @@ function bridgeResolveOutcome(C, B) {
   if (bd.atk && bd.atk !== ps) margin += 6; else margin -= 2;   // defending is easier than attacking
   // S2 m5: the commanding general's temperament nudges the day — an aggressive general presses the
   // attack, a cautious one is sound on the defensive (small, deterministic ±~2; never swamps the war).
-  if (typeof commandMarginEdge === "function") { try { margin += commandMarginEdge(C, bd.atk === ps); } catch (e) {} }
+  if (typeof commandMarginEdge === "function") { try { margin += commandMarginEdge(C, bd.atk === ps); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("bridgeResolveOutcome commandMarginEdge:", e); } }
   var winnerSide, type;
   if (margin >= 18) { winnerSide = ps; type = "decisive"; }
   else if (margin >= 5) { winnerSide = ps; type = "win"; }
@@ -117,9 +117,9 @@ function bridgeAutoResolve(C) {
   var B = (typeof G !== "undefined") ? G.battle : null; if (!B) return null;
   var o = bridgeResolveOutcome(C, B);
   // tear down the battle audio + render the way endBattle does (auto-resolve bypasses endBattle, so it must):
-  if (typeof _audLeaveBattle === "function") { try { _audLeaveBattle(); } catch (e) {} }   // silence the martial bed + wind + din
+  if (typeof _audLeaveBattle === "function") { try { _audLeaveBattle(); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("bridgeAutoResolve _audLeaveBattle:", e); } }   // silence the martial bed + wind + din
   if (typeof G !== "undefined") G.mode = "result";      // stop the rAF redrawing the now-occluded battlefield
-  if (o && !o.draw && typeof playSfx === "function") { try { playSfx(o.win ? "bugle" : "rout"); } catch (e) {} }
+  if (o && !o.draw && typeof playSfx === "function") { try { playSfx(o.win ? "bugle" : "rout"); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("bridgeAutoResolve playSfx:", e); } }
   if (o) _arShowResult(C, B, o);
   return o;
 }

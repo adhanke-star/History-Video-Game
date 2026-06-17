@@ -101,7 +101,7 @@ function fldOfficerSideQuality(side) {
   var isPlayer = !!(__FIELD.campaignCtx && C && side === playerSide);
   if (isPlayer) {
     var lead = 64;
-    try { if (typeof bridgeArmy === "function") { var a = bridgeArmy(C); if (a && typeof a.leadership === "number" && isFinite(a.leadership)) lead = a.leadership; } } catch (e) {}
+    try { if (typeof bridgeArmy === "function") { var a = bridgeArmy(C); if (a && typeof a.leadership === "number" && isFinite(a.leadership)) lead = a.leadership; } } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldOfficerSideQuality bridgeArmy:", e); }
     var nm = null;
     try { if (typeof cmdActiveGeneral === "function") { var g = cmdActiveGeneral(C); if (g && g.name) nm = String(g.name); } } catch (e2) {}
     var q = fldClamp((lead - 42) / 46, 0.18, 0.95);

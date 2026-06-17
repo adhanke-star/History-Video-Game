@@ -105,7 +105,7 @@ function _wdRefresh() {
     var b = document.getElementById("wdTab_" + tabs[i]);
     if (b) b.style.opacity = (tabs[i] === _wdTab) ? "1" : "0.55";
   }
-  if (wire) { try { wire(C); } catch (e) {} }
+  if (wire) { try { wire(C); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_wdRefresh wire (" + _wdTab + "):", e); } }
 }
 
 /* ---- openWarDept OVERRIDE: the President's Desk (expand-in-place). ---- */

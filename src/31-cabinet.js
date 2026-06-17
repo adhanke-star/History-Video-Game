@@ -150,7 +150,7 @@ function cabOnResolve(winnerSide, type, B, C, win) {
         if (P.cabHolders) P.cabHolders[dom] = now.id;
       }
     }
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("cabOnResolve:", e); }
 }
 
 function _cabById(side, id) {
@@ -196,7 +196,7 @@ function _cabReading(C, domain) {
       var imf = (C.blockade && typeof C.blockade.importFactor === "number") ? C.blockade.importFactor : 1.0;
       return (imf > 0.55) ? "blockadeLoose" : "always";
     }
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_cabReading:", e); }
   return "always";
 }
 
@@ -255,7 +255,7 @@ function _cabPortrait(name, side, size) {
   try {
     return '<img src="' + window.portraitFor(name, side, { named: true }) + '" alt="Secretary ' + _cabEsc(name)
       + '" style="width:' + size + 'px;height:' + size + 'px;object-fit:cover;border:2px solid var(--rule);border-radius:4px;flex:0 0 auto">';
-  } catch (e) { return ""; }
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_cabPortrait:", e); return ""; }
 }
 
 function _cabTenureLabel(advisor, date) {
@@ -388,7 +388,7 @@ function presRenderCabinet(C) {
   try {
     if (typeof presInit === "function") presInit(C);
     if (typeof cabInit === "function") cabInit(C);
-  } catch (e) { return '<p class="lede" style="font-size:13px">Your cabinet stands ready.</p>'; }   // D49.1 defense-in-depth
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("presRenderCabinet init:", e); return '<p class="lede" style="font-size:13px">Your cabinet stands ready.</p>'; }   // D49.1 defense-in-depth
   if (!_cabData()) {
     // graceful fallback: no cabinet data -> a minimal note (should not happen post-build)
     return '<p class="lede" style="font-size:13px">Your cabinet stands ready.</p>';
