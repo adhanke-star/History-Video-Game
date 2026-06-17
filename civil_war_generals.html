@@ -20586,7 +20586,7 @@ function _pdLog(C, line) {
     if (!C.president.log) C.president.log = [];
     C.president.log.unshift(line);
     if (C.president.log.length > _pdLOG_MAX) C.president.log.length = _pdLOG_MAX;
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_pdLog:", e); }
 }
 
 /* Authored cabinet rosters. No cabinet/advisor data exists anywhere in the repo
@@ -20697,7 +20697,7 @@ function presOnResolve(winnerSide, type, B, C, win) {
     var bn = (B && B.bd && B.bd.name) ? B.bd.name : (B && B.name) ? B.name : "the field";
     _pdLog(C, (win ? "Victory" : (type === "draw" ? "Stalemate" : "Setback"))
               + " at " + bn + " — " + _pdMonthName(d.month) + " " + d.year + ".");
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("presOnResolve:", e); }
 }
 
 
@@ -20756,7 +20756,7 @@ function presRenderEconomy(C) {
     try {
       portrait = '<img src="' + window.portraitFor(head.name, C.side, { named: true }) + '" alt="'
         + (head.name || 'President') + '" style="width:84px;height:84px;object-fit:cover;border:2px solid var(--rule);border-radius:4px;flex:0 0 auto">';
-    } catch (e) {}
+    } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("presRenderEconomy portrait:", e); }
   }
   var nodeLevels = 0, nodeKeys = ["industry", "ordnance", "provisions", "rail", "depot"];
   if (wr.nodes) for (var i = 0; i < nodeKeys.length; i++) nodeLevels += (wr.nodes[nodeKeys[i]] || 0);
@@ -20830,7 +20830,7 @@ function presRenderCabinet(C) {
       try {
         img = '<img src="' + window.portraitFor(a.name, C.side, { named: true }) + '" alt="Secretary ' + a.name
           + '" style="width:72px;height:72px;object-fit:cover;border:2px solid var(--rule);border-radius:4px;flex:0 0 auto">';
-      } catch (e) {}
+      } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("presRenderCabinet portrait:", e); }
     }
     var on = !!a.delegated;
     cards += '<div style="display:flex;gap:12px;align-items:center;padding:10px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.12)">'
@@ -21007,7 +21007,7 @@ function _wdRefresh() {
     var b = document.getElementById("wdTab_" + tabs[i]);
     if (b) b.style.opacity = (tabs[i] === _wdTab) ? "1" : "0.55";
   }
-  if (wire) { try { wire(C); } catch (e) {} }
+  if (wire) { try { wire(C); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_wdRefresh wire (" + _wdTab + "):", e); } }
 }
 
 /* ---- openWarDept OVERRIDE: the President's Desk (expand-in-place). ---- */
@@ -21263,7 +21263,7 @@ function cabOnResolve(winnerSide, type, B, C, win) {
         if (P.cabHolders) P.cabHolders[dom] = now.id;
       }
     }
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("cabOnResolve:", e); }
 }
 
 function _cabById(side, id) {
@@ -21309,7 +21309,7 @@ function _cabReading(C, domain) {
       var imf = (C.blockade && typeof C.blockade.importFactor === "number") ? C.blockade.importFactor : 1.0;
       return (imf > 0.55) ? "blockadeLoose" : "always";
     }
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_cabReading:", e); }
   return "always";
 }
 
@@ -21368,7 +21368,7 @@ function _cabPortrait(name, side, size) {
   try {
     return '<img src="' + window.portraitFor(name, side, { named: true }) + '" alt="Secretary ' + _cabEsc(name)
       + '" style="width:' + size + 'px;height:' + size + 'px;object-fit:cover;border:2px solid var(--rule);border-radius:4px;flex:0 0 auto">';
-  } catch (e) { return ""; }
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_cabPortrait:", e); return ""; }
 }
 
 function _cabTenureLabel(advisor, date) {
@@ -21501,7 +21501,7 @@ function presRenderCabinet(C) {
   try {
     if (typeof presInit === "function") presInit(C);
     if (typeof cabInit === "function") cabInit(C);
-  } catch (e) { return '<p class="lede" style="font-size:13px">Your cabinet stands ready.</p>'; }   // D49.1 defense-in-depth
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("presRenderCabinet init:", e); return '<p class="lede" style="font-size:13px">Your cabinet stands ready.</p>'; }   // D49.1 defense-in-depth
   if (!_cabData()) {
     // graceful fallback: no cabinet data -> a minimal note (should not happen post-build)
     return '<p class="lede" style="font-size:13px">Your cabinet stands ready.</p>';
@@ -21685,7 +21685,7 @@ function decOnResolve(winnerSide, type, B, C, win) {
       if (!hinge) added++;
       if (typeof _pdLog === "function") _pdLog(C, "A matter awaits your decision: " + c.title + ".");
     }
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("decOnResolve:", e); }
 }
 
 /* ---- the effect applier: bounded, clamped, logged. ---- */
@@ -21945,7 +21945,7 @@ function moraleCompute(C) {
   // ambition friction: a War Secretary serving himself costs cohesion (the cabinet tie)
   var ambFriction = 0;
   if (typeof _cabHolder === "function" && typeof _cabAmbitionActive === "function") {
-    try { var ws = _cabHolder(side, "war", C.president && C.president.date); if (ws && _cabAmbitionActive(ws, C)) ambFriction = 5; } catch (e) {}
+    try { var ws = _cabHolder(side, "war", C.president && C.president.date); if (ws && _cabAmbitionActive(ws, C)) ambFriction = 5; } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("moraleCompute ambition:", e); }
   }
 
   var repudPenalty = (M && M.repudiated) ? 12 : 0;                                          // a DURABLE home-front shock after a lost 1864 election (D51.4)
@@ -21995,7 +21995,7 @@ function moraleOnResolve(winnerSide, type, B, C, win) {
     // compute + store the three layers (display) AFTER the election block
     var m = moraleCompute(C);
     M.troop = m.troop; M.leader = m.leader; M.public = m.public;
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("moraleOnResolve:", e); }
 }
 
 /* ===== render: "The Nation's Will" block for the War Effort overview ===== */
@@ -22166,7 +22166,7 @@ function pressOnResolve(winnerSide, type, B, C, win) {
     P.sentiment = n ? Math.round(sum / n) : 50;
     P.reacted = true;
     P.headlines = heads;
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("pressOnResolve:", e); }
 }
 
 /* The aggregate press sentiment toward the war effort (0-100). NEUTRAL 50 until the
@@ -22530,7 +22530,7 @@ function cmdOnResolve(winnerSide, type, B, C, win) {
       }
     }
     cmd._activeId = id;
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("cmdOnResolve:", e); }
 }
 
 /* ===== render: the "Command" desk tab ===== */
@@ -22540,7 +22540,7 @@ function _cmdPortrait(gen, side, size) {
   try {
     return '<img src="' + window.portraitFor(_cmdName(gen), side, { named: true }) + '" alt="General ' + _cmdEsc(_cmdName(gen))
       + '" style="width:' + size + 'px;height:' + size + 'px;object-fit:cover;border:2px solid var(--rule);border-radius:4px;flex:0 0 auto">';
-  } catch (e) { return ""; }
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_cmdPortrait:", e); return ""; }
 }
 
 function _cmdLeadWord(v) {
@@ -22699,7 +22699,7 @@ function cmdRenderTab(C) {
   try {
     if (typeof presInit === "function") presInit(C);
     cmdInit(C);
-  } catch (e) { return '<p class="lede" style="font-size:13px">Your generals await your orders.</p>'; }
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("cmdRenderTab:", e); return '<p class="lede" style="font-size:13px">Your generals await your orders.</p>'; }
   if (!_cmdData()) return '<p class="lede" style="font-size:13px">Your generals await your orders.</p>';
   return ''
     + '<p class="lede" style="font-size:13px;margin-bottom:10px">You appoint the men who command your armies &mdash; and you relieve them. A great general lifts the army your war puts in the field; a cautious or discredited one squanders it. But a popular general is dangerous to dismiss: it costs you political capital, and the country is watching.</p>'
@@ -22828,7 +22828,7 @@ function _ecCfg(side) {
       }
       var inf = G2.finance && G2.finance.inflation && G2.finance.inflation[side];
       if (inf) { if (typeof inf.spiralCoefficient === "number") base.spiral = inf.spiralCoefficient; if (typeof inf.cumulativeTargetMultiplier === "number") base.target = inf.cumulativeTargetMultiplier; }
-    } catch (e) {}
+    } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_ecCfg data load:", e); }
   }
   return base;
 }
@@ -22843,7 +22843,7 @@ function _ecPush(C, line) {
     if (!C.economy.log) C.economy.log = [];
     C.economy.log.unshift(line);
     if (C.economy.log.length > 6) C.economy.log.length = 6;
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_ecPush:", e); }
 }
 
 /* Normalize the 3-way mix to sum to 1 (after a lever shift). */
@@ -22926,7 +22926,7 @@ function econOnResolve(winnerSide, type, B, C, win) {
 
     if (E.inflation > before * 1.08) _ecPush(C, "Prices surge — paper money buys ×" + (Math.round(E.inflation * 10) / 10) + " of 1861.");
     else if (printed > _ecDEMAND * 0.5) _ecPush(C, "The Treasury leans hard on the printing press this quarter.");
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("econOnResolve:", e); }
 }
 
 /* Status word for an inflation multiplier. */
@@ -23074,7 +23074,7 @@ function _prCfg(side) {
       if (P.rail && P.rail.deteriorationPerTurnPct && typeof P.rail.deteriorationPerTurnPct[side] === "number") base.railDecay = P.rail.deteriorationPerTurnPct[side] / 100;
       var ag = P.agriculture && P.agriculture.distributionEfficiency;
       if (ag) { if (side === "US" && typeof ag.US === "number") base.foodDist = ag.US; else if (side === "CS" && ag.CS_byTurn && typeof ag.CS_byTurn.start === "number") base.foodDist = ag.CS_byTurn.start; }
-    } catch (e) {}
+    } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_prCfg data load:", e); }
   }
   return base;
 }
@@ -23084,7 +23084,7 @@ function _prPush(C, line) {
     if (!C.production.log) C.production.log = [];
     C.production.log.unshift(line);
     if (C.production.log.length > 6) C.production.log.length = 6;
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_prPush:", e); }
 }
 
 function prodInit(C) {
@@ -23159,7 +23159,7 @@ function prodOnResolve(winnerSide, type, B, C, win) {
     }
     if (side === "CS" && P.railIntegrity < 50) _prPush(C, "The railroads fail — stores rot in depots while the men go hungry.");
     else if (side === "US" && P.equipIndex >= 90) _prPush(C, "The arsenals and railroads keep the armies well-found.");
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("prodOnResolve:", e); }
 }
 
 /* Status word for the equip index. */
@@ -23779,7 +23779,7 @@ function engOnResolve(winnerSide, type, B, C, win) {
     var cap = (D && typeof D.railClawbackCap === "number") ? D.railClawbackCap : 0.70;
     var frac = Math.min(cap, Math.max(0, lvl * fpl));   // < 1 always -> net rail loss remains positive
     C.production.railIntegrity = Math.min(100, C.production.railIntegrity + loss * frac);
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("engOnResolve:", e); }
 }
 
 function _engScoreWord(v) {
@@ -23984,7 +23984,7 @@ function authoredMap(bd) {
     ground: (A.ground || "")
   };
   // A3: stamp the named cover hierarchy onto the labelled historical features.
-  if (typeof tcDecorateMap === "function") { try { tcDecorateMap(__M); } catch (e) {} }
+  if (typeof tcDecorateMap === "function") { try { tcDecorateMap(__M); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("tcDecorateMap:", e); } }
   return __M;
 }
 
@@ -24185,7 +24185,7 @@ function _blkPush(C, line) {
     if (!C.blockade.log) C.blockade.log = [];
     C.blockade.log.unshift(line);
     if (C.blockade.log.length > 6) C.blockade.log.length = 6;
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_blkPush:", e); }
 }
 
 /* ---- blockadeInit: idempotent; seeds C.blockade. CS carries the cotton model;
@@ -24338,7 +24338,7 @@ function blockadeOnResolve(winnerSide, type, B, C, win) {
     if (embargoActive && year <= 1861) _blkPush(C, "King Cotton withheld — the wharves sit full, the treasury empty.");
     else if (ports === 0) _blkPush(C, "Wilmington falls — the last runner port is closed; the South is sealed.");
     else if (revenue > 0 && shippedK > 0) _blkPush(C, "Runners slip " + Math.round(shippedK) + "k bales past the blockade (+" + revenue + " funds).");
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("blockadeOnResolve:", e); }
 }
 
 /* Status word + colour for the recognition meter. */
@@ -24364,7 +24364,7 @@ function _blkCard(id) {
     if (D && D.teachingCards) {
       for (var i = 0; i < D.teachingCards.length; i++) if (D.teachingCards[i].id === id) return D.teachingCards[i];
     }
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_blkCard:", e); }
   return null;
 }
 
@@ -24560,7 +24560,7 @@ function _mpCfg(side) {
       if (side === "US" && us && typeof us.newManpoolThousands === "number") base.usct = us.newManpoolThousands;
       var im = M.immigrantPool && M.immigrantPool.US;
       if (side === "US" && im) { var g = im.germanBornThousands || 0, ir = im.irishBornThousands || 0; if (g + ir > 0) base.immigrant = g + ir; }
-    } catch (e) {}
+    } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_mpCfg data load:", e); }
   }
   return base;
 }
@@ -24584,7 +24584,7 @@ function _mpPush(C, line) {
     if (!C.manpower.log) C.manpower.log = [];
     C.manpower.log.unshift(line);
     if (C.manpower.log.length > 6) C.manpower.log.length = 6;
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_mpPush:", e); }
 }
 
 function manpowerInit(C) {
@@ -24713,7 +24713,7 @@ function manpowerOnResolve(winnerSide, type, B, C, win) {
 
     if (side === "CS" && P.strength < 40) _mpPush(C, "The ranks thin — casualties outrun every replacement the South can find.");
     else if (side === "US" && P.usctUnlocked && P.strength >= 80) _mpPush(C, "The armies refill from a deep well — volunteers, immigrants, and freedmen.");
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("manpowerOnResolve:", e); }
 }
 
 /* Status word for the army-strength index. */
@@ -24731,7 +24731,7 @@ function _mpCard(id) {
     if (D && D.teachingCards) {
       for (var i = 0; i < D.teachingCards.length; i++) if (D.teachingCards[i].id === id) return D.teachingCards[i];
     }
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_mpCard:", e); }
   return null;
 }
 
@@ -24816,7 +24816,7 @@ function vicMomentum(C) {
     var willHold = 1 - Math.max(0, Math.min(1, weary / 100));
     var capF = Math.max(0, Math.min(1, cap / 120));
     return Math.max(0, Math.min(1, 0.55 * winRate + 0.30 * willHold + 0.15 * capF));
-  } catch (e) { return 0.5; }
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("vicMomentum:", e); return 0.5; }
 }
 
 function _vicPush(C, line) {
@@ -24824,7 +24824,7 @@ function _vicPush(C, line) {
     if (!C.strategy.log) C.strategy.log = [];
     C.strategy.log.unshift(line);
     if (C.strategy.log.length > 6) C.strategy.log.length = 6;
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_vicPush:", e); }
 }
 
 /* ---- vicInit: idempotent; seeds C.strategy (levers + the enemy-will tracker). ---- */
@@ -24914,7 +24914,7 @@ function vicOnResolve(winnerSide, type, B, C, win) {
         ? "Europe moves toward recognition — independence is within reach."
         : "Northern resolve is breaking — a negotiated peace is within reach.");
     }
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("vicOnResolve:", e); }
 }
 
 /* Status word for a 0..1 momentum. */
@@ -25206,7 +25206,7 @@ function bridgeInit(C) {
 function bridgeOnResolve(winnerSide, type, B, C, win) {
   if (!C) return;
   bridgeInit(C);
-  try { C.battlePrep = { entrench: false, forcedMarch: false, concentrate: false, feint: false, raidSupply: false }; } catch (e) {}
+  try { C.battlePrep = { entrench: false, forcedMarch: false, concentrate: false, feint: false, raidSupply: false }; } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("bridgeOnResolve:", e); }
 }
 
 /* Find the next campaign battle definition (bare-name CHAINS/BATTLES from base). */
@@ -25216,7 +25216,7 @@ function _brgNextBattle(C) {
     var chain = CHAINS[C.side]; if (!chain) return null;
     var id = chain[C.idx]; if (!id) return null;
     return BATTLES.find(function (b) { return b.id === id; }) || null;
-  } catch (e) { return null; }
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_brgNextBattle:", e); return null; }
 }
 
 /* ---- bridgeArmy: THE CONDITIONING MATH. The army the player will field, derived
@@ -25581,7 +25581,7 @@ function bridgeResolveOutcome(C, B) {
   if (bd.atk && bd.atk !== ps) margin += 6; else margin -= 2;   // defending is easier than attacking
   // S2 m5: the commanding general's temperament nudges the day — an aggressive general presses the
   // attack, a cautious one is sound on the defensive (small, deterministic ±~2; never swamps the war).
-  if (typeof commandMarginEdge === "function") { try { margin += commandMarginEdge(C, bd.atk === ps); } catch (e) {} }
+  if (typeof commandMarginEdge === "function") { try { margin += commandMarginEdge(C, bd.atk === ps); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("bridgeResolveOutcome commandMarginEdge:", e); } }
   var winnerSide, type;
   if (margin >= 18) { winnerSide = ps; type = "decisive"; }
   else if (margin >= 5) { winnerSide = ps; type = "win"; }
@@ -25626,9 +25626,9 @@ function bridgeAutoResolve(C) {
   var B = (typeof G !== "undefined") ? G.battle : null; if (!B) return null;
   var o = bridgeResolveOutcome(C, B);
   // tear down the battle audio + render the way endBattle does (auto-resolve bypasses endBattle, so it must):
-  if (typeof _audLeaveBattle === "function") { try { _audLeaveBattle(); } catch (e) {} }   // silence the martial bed + wind + din
+  if (typeof _audLeaveBattle === "function") { try { _audLeaveBattle(); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("bridgeAutoResolve _audLeaveBattle:", e); } }   // silence the martial bed + wind + din
   if (typeof G !== "undefined") G.mode = "result";      // stop the rAF redrawing the now-occluded battlefield
-  if (o && !o.draw && typeof playSfx === "function") { try { playSfx(o.win ? "bugle" : "rout"); } catch (e) {} }
+  if (o && !o.draw && typeof playSfx === "function") { try { playSfx(o.win ? "bugle" : "rout"); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("bridgeAutoResolve playSfx:", e); } }
   if (o) _arShowResult(C, B, o);
   return o;
 }
@@ -27438,7 +27438,7 @@ function fldScenarioRegistry() {
       if (GAME_DATA.fredericksburg && GAME_DATA.fredericksburg.fredericksburg) R.fredericksburg = GAME_DATA.fredericksburg.fredericksburg;
       if (GAME_DATA.antietam && GAME_DATA.antietam.antietam) R.antietam = GAME_DATA.antietam.antietam;   // Phase C-2: the first MULTI-PHASE epic (data.phases[] -> the T8 engine)
     }
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldScenarioRegistry:", e); }
   return R;
 }
 function fldScenarioData(id) { var R = fldScenarioRegistry(); return (id && R[id]) ? R[id] : null; }
@@ -27530,7 +27530,7 @@ function fldReinforceSpawn(spec) {
   // Phase A (A1): in a campaign-launched battle, a PLAYER-side reinforcement is conditioned by the
   // strategic war too (men / morale / re-arm) as it detrains — your war fields stronger reserves. No-op
   // for a standalone scenario (campaignCtx null) or an enemy unit (the conditioner is player-side-gated).
-  if (__FIELD.campaignCtx && typeof fldCampaignConditionUnit === "function") { try { fldCampaignConditionUnit(u); } catch (e) {} }
+  if (__FIELD.campaignCtx && typeof fldCampaignConditionUnit === "function") { try { fldCampaignConditionUnit(u); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldReinforceSpawn condition:", e); } }
   // a PLAYER-side (non-AI) reinforcement marches onto the field toward the objective on arrival — so it
   // joins the battle instead of idling in the rear (B-6: the player controls his OWN side per __FIELD.playerSide
   // — US by default, CS when the Confederate command is taken; the AI commands the other side + any autoBoth
@@ -27582,7 +27582,7 @@ function fldInjectScenarioButtons(afterBtn) {
       var b = _fldInjectOneScenarioButton(id, reg[id], prev);
       if (b) { prev = b; last = b; }
     }
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldInjectScenarioButtons:", e); }
   return last;
 }
 /* Marquee order: First Bull Run first (the opening battle + the hand-authored marquee), then the rest by year. */
@@ -27826,7 +27826,7 @@ function _fldArmPlan(C, year, count) {
       var cnt = Math.floor(count * fr + 1e-9);
       for (var k = 0; k < cnt; k++) out.push(ek);
     }
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldCampaignArmory:", e); }
   return out;
 }
 /* Condition ONE player unit. Reads the per-launch params stashed on the campaign ctx
@@ -27989,7 +27989,7 @@ function fldLaunchCampaignBattle(C) {
     try { if (typeof fldBullRunBriefing === "function") fldBullRunBriefing(); } catch (e) {}
   } else {
     fldLaunchSandbox({ renderer: "3d", campaign: ctx, skirmish: _fldCampaignSkirmishParams(fightBd, C) });
-    try { fldCampaignBriefing(C, fightBd); } catch (e) {}
+    try { fldCampaignBriefing(C, fightBd); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldCampaignBriefing:", e); }
   }
   // abort (Esc / Exit before the battle ends) returns to the bridge briefing rather than the main menu
   __FIELD._returnFn = function () { fldCampaignReturn(C); };
@@ -28242,7 +28242,7 @@ function fldCampaignApplyOutcome(o) {
   startBattleRuntime(o.bd, ps, true);                  // build + condition (A6a) the hex roster in one JS turn
   var B = (typeof G !== "undefined") ? G.battle : null;
   if (!B) { campaignAdvance(o.winnerSide, o.type); return; }
-  if (typeof _audLeaveBattle === "function") { try { _audLeaveBattle(); } catch (e) {} }
+  if (typeof _audLeaveBattle === "function") { try { _audLeaveBattle(); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldCampaignApplyOutcome _audLeaveBattle:", e); } }
   if (typeof G !== "undefined") G.mode = "result";     // never paint the now-occluded hex field
   var pCas = (typeof _arApplyCasualties === "function") ? _arApplyCasualties(B, ps, o.pFrac) : 0;
   var eCas = (typeof _arApplyCasualties === "function") ? _arApplyCasualties(B, es, o.eFrac) : 0;
@@ -28255,7 +28255,7 @@ function fldCampaignApplyOutcome(o) {
   B.casualties[ps] = pCas; B.casualties[es] = eCas;
   B.infl[ps] = eCas; B.infl[es] = pCas;   // infl[X] = what X inflicted = what the enemy suffered
   B.over = true;
-  if (o.winnerSide && typeof playSfx === "function") { try { playSfx(o.win ? "bugle" : "rout"); } catch (e) {} }
+  if (o.winnerSide && typeof playSfx === "function") { try { playSfx(o.win ? "bugle" : "rout"); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldCampaignApplyOutcome playSfx:", e); } }
   campaignAdvance(o.winnerSide, o.type);
 }
 /* the campaign end-screen teaching/result snippet (T0 fldOnOver hook) — appended beneath any
@@ -28380,7 +28380,7 @@ function fldOfficerSideQuality(side) {
   var isPlayer = !!(__FIELD.campaignCtx && C && side === playerSide);
   if (isPlayer) {
     var lead = 64;
-    try { if (typeof bridgeArmy === "function") { var a = bridgeArmy(C); if (a && typeof a.leadership === "number" && isFinite(a.leadership)) lead = a.leadership; } } catch (e) {}
+    try { if (typeof bridgeArmy === "function") { var a = bridgeArmy(C); if (a && typeof a.leadership === "number" && isFinite(a.leadership)) lead = a.leadership; } } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldOfficerSideQuality bridgeArmy:", e); }
     var nm = null;
     try { if (typeof cmdActiveGeneral === "function") { var g = cmdActiveGeneral(C); if (g && g.name) nm = String(g.name); } } catch (e2) {}
     var q = fldClamp((lead - 42) / 46, 0.18, 0.95);
@@ -28810,7 +28810,7 @@ function fldSupplyReserve(side) {
         base = FLDL.RESERVE_MAX * (bp.raidSupply ? 0.6 : 0.95);                  // the enemy you raided fights short of cartridges
       }
     }
-  } catch (e) {}
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldInitialAmmo:", e); }
   // difficulty/realism presets (B-5): supply generosity severity (>1 generous / <1 strict; 1.0 = neutral = byte-identical).
   // The severity is clamped >0 at the preset apply seam; floor the rounded reserve at >=1 as defense-in-depth so a
   // malformed/hand-edited preset can never produce a non-positive ammunition reserve.
@@ -30334,44 +30334,44 @@ function _fldEscPh(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;")
 
 function _t1InitAll(C) {
   if (!C) return;
-  try { if (typeof clkInit === "function") clkInit(C); } catch (e) {}
-  try { if (typeof mrInit  === "function") mrInit(C);  } catch (e) {}
-  try { if (typeof wrInit  === "function") wrInit(C);  } catch (e) {}
-  try { if (typeof presInit === "function") presInit(C); } catch (e) {}   // S0: President's Desk
-  try { if (typeof cabInit === "function") cabInit(C); } catch (e) {}     // S2 m1: cabinet/advisor system (after presInit)
-  try { if (typeof cmdInit === "function") cmdInit(C); } catch (e) {}     // S2 m5: command/named-generals (after cabInit — seeds reputation, feeds the bridge leadership facet)
-  try { if (typeof decInit === "function") decInit(C); } catch (e) {}     // S2 m2: executive decisions / pendingChoices loop
-  try { if (typeof moraleInit === "function") moraleInit(C); } catch (e) {}  // S2 m3: 3-layer morale
-  try { if (typeof pressInit === "function") pressInit(C); } catch (e) {}    // S2 m4: press / public opinion
-  try { if (typeof vicInit === "function") vicInit(C); } catch (e) {}     // S1e: strategy/victory (read by blockade+manpower)
-  try { if (typeof econInit === "function") econInit(C); } catch (e) {}   // S1a: economy/finance
-  try { if (typeof blockadeInit === "function") blockadeInit(C); } catch (e) {}  // S1c: cotton/blockade/diplomacy
-  try { if (typeof prodInit === "function") prodInit(C); } catch (e) {}   // S1b: war production
-  try { if (typeof armoryInit === "function") armoryInit(C); } catch (e) {}  // weapons procurement
-  try { if (typeof artInit === "function") artInit(C); } catch (e) {}     // A1: Cannon Corps (artillery batteries)
-  try { if (typeof engInit === "function") engInit(C); } catch (e) {}     // A2: Engineering Works Corps (capability levels)
-  try { if (typeof manpowerInit === "function") manpowerInit(C); } catch (e) {}  // S1d: manpower/conscription
-  try { if (typeof bridgeInit === "function") bridgeInit(C); } catch (e) {}     // S5-seed: pre-battle conditioning prep
+  try { if (typeof clkInit === "function") clkInit(C); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1InitAll clkInit:", e); }
+  try { if (typeof mrInit  === "function") mrInit(C);  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1InitAll mrInit:", e); }
+  try { if (typeof wrInit  === "function") wrInit(C);  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1InitAll wrInit:", e); }
+  try { if (typeof presInit === "function") presInit(C); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1InitAll presInit:", e); }   // S0: President's Desk
+  try { if (typeof cabInit === "function") cabInit(C); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1InitAll cabInit:", e); }     // S2 m1: cabinet/advisor system (after presInit)
+  try { if (typeof cmdInit === "function") cmdInit(C); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1InitAll cmdInit:", e); }     // S2 m5: command/named-generals (after cabInit — seeds reputation, feeds the bridge leadership facet)
+  try { if (typeof decInit === "function") decInit(C); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1InitAll decInit:", e); }     // S2 m2: executive decisions / pendingChoices loop
+  try { if (typeof moraleInit === "function") moraleInit(C); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1InitAll moraleInit:", e); }  // S2 m3: 3-layer morale
+  try { if (typeof pressInit === "function") pressInit(C); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1InitAll pressInit:", e); }    // S2 m4: press / public opinion
+  try { if (typeof vicInit === "function") vicInit(C); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1InitAll vicInit:", e); }     // S1e: strategy/victory (read by blockade+manpower)
+  try { if (typeof econInit === "function") econInit(C); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1InitAll econInit:", e); }   // S1a: economy/finance
+  try { if (typeof blockadeInit === "function") blockadeInit(C); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1InitAll blockadeInit:", e); }  // S1c: cotton/blockade/diplomacy
+  try { if (typeof prodInit === "function") prodInit(C); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1InitAll prodInit:", e); }   // S1b: war production
+  try { if (typeof armoryInit === "function") armoryInit(C); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1InitAll armoryInit:", e); }  // weapons procurement
+  try { if (typeof artInit === "function") artInit(C); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1InitAll artInit:", e); }     // A1: Cannon Corps (artillery batteries)
+  try { if (typeof engInit === "function") engInit(C); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1InitAll engInit:", e); }     // A2: Engineering Works Corps (capability levels)
+  try { if (typeof manpowerInit === "function") manpowerInit(C); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1InitAll manpowerInit:", e); }  // S1d: manpower/conscription
+  try { if (typeof bridgeInit === "function") bridgeInit(C); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1InitAll bridgeInit:", e); }     // S5-seed: pre-battle conditioning prep
 }
 
 function _t1Resolve(winnerSide, type, B, C, win) {
   if (!C) return;
-  try { if (typeof clkOnResolve === "function") clkOnResolve(winnerSide, type, B, C, win); } catch (e) {}
-  try { if (typeof econOnResolve === "function") econOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S1a: after clk → feeds clock.weariness
-  try { if (typeof wrOnResolve  === "function") wrOnResolve(winnerSide, type, B, C, win);  } catch (e) {}
-  try { if (typeof blockadeOnResolve === "function") blockadeOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S1c: BEFORE prod → sets importFactor + funds + clock.intervention
-  try { if (typeof prodOnResolve === "function") prodOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S1b: after wr (reads nodes + blockade.importFactor)
-  try { if (typeof engOnResolve === "function") engOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // A2: AFTER prod → Construction Corps repairs rail (slows CS decay)
-  try { if (typeof manpowerOnResolve === "function") manpowerOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S1d: reads B.casualties + year → army strength
-  try { if (typeof mrOnResolve  === "function") mrOnResolve(winnerSide, type, B, C, win);  } catch (e) {}
-  try { if (typeof presOnResolve === "function") presOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S0: after clk (interlink)
-  try { if (typeof cabOnResolve === "function") cabOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S2 m1: AFTER pres (date+turn advanced) -> detect cabinet churn
-  try { if (typeof cmdOnResolve === "function") cmdOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S2 m5: AFTER cab, BEFORE morale -> evolve the general's reputation; it feeds the leader-morale layer this turn
-  try { if (typeof decOnResolve === "function") decOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S2 m2: AFTER pres -> surface/expire decision cards (owns pendingChoices)
-  try { if (typeof pressOnResolve === "function") pressOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S2 m4: BEFORE morale -> the day's press sentiment feeds public will
-  try { if (typeof moraleOnResolve === "function") moraleOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S2 m3: AFTER clk (weariness/election set), BEFORE vic (enemyWill change seen by victoryReady)
-  try { if (typeof vicOnResolve === "function") vicOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S1e: LAST — enemy will, lever upkeep, victory detection
-  try { if (typeof bridgeOnResolve === "function") bridgeOnResolve(winnerSide, type, B, C, win); } catch (e) {}  // S5-seed: reset pre-battle prep
+  try { if (typeof clkOnResolve === "function") clkOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve clkOnResolve:", e); }
+  try { if (typeof econOnResolve === "function") econOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve econOnResolve:", e); }  // S1a: after clk → feeds clock.weariness
+  try { if (typeof wrOnResolve  === "function") wrOnResolve(winnerSide, type, B, C, win);  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve wrOnResolve:", e); }
+  try { if (typeof blockadeOnResolve === "function") blockadeOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve blockadeOnResolve:", e); }  // S1c: BEFORE prod → sets importFactor + funds + clock.intervention
+  try { if (typeof prodOnResolve === "function") prodOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve prodOnResolve:", e); }  // S1b: after wr (reads nodes + blockade.importFactor)
+  try { if (typeof engOnResolve === "function") engOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve engOnResolve:", e); }  // A2: AFTER prod → Construction Corps repairs rail (slows CS decay)
+  try { if (typeof manpowerOnResolve === "function") manpowerOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve manpowerOnResolve:", e); }  // S1d: reads B.casualties + year → army strength
+  try { if (typeof mrOnResolve  === "function") mrOnResolve(winnerSide, type, B, C, win);  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve mrOnResolve:", e); }
+  try { if (typeof presOnResolve === "function") presOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve presOnResolve:", e); }  // S0: after clk (interlink)
+  try { if (typeof cabOnResolve === "function") cabOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve cabOnResolve:", e); }  // S2 m1: AFTER pres (date+turn advanced) -> detect cabinet churn
+  try { if (typeof cmdOnResolve === "function") cmdOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve cmdOnResolve:", e); }  // S2 m5: AFTER cab, BEFORE morale -> evolve the general's reputation; it feeds the leader-morale layer this turn
+  try { if (typeof decOnResolve === "function") decOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve decOnResolve:", e); }  // S2 m2: AFTER pres -> surface/expire decision cards (owns pendingChoices)
+  try { if (typeof pressOnResolve === "function") pressOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve pressOnResolve:", e); }  // S2 m4: BEFORE morale -> the day's press sentiment feeds public will
+  try { if (typeof moraleOnResolve === "function") moraleOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve moraleOnResolve:", e); }  // S2 m3: AFTER clk (weariness/election set), BEFORE vic (enemyWill change seen by victoryReady)
+  try { if (typeof vicOnResolve === "function") vicOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve vicOnResolve:", e); }  // S1e: LAST — enemy will, lever upkeep, victory detection
+  try { if (typeof bridgeOnResolve === "function") bridgeOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve bridgeOnResolve:", e); }  // S5-seed: reset pre-battle prep
 }
 
 
@@ -30961,6 +30961,323 @@ function _hpUpdatePause() {
       if (ind3) ind3.style.display = "none";
     }
   }, 500);
+})();
+
+
+/* ===== module: 93-asset-loader.js ===== */
+/* ===========================================================================
+   H-media · 93-asset-loader.js — ASSET LOADER + MANIFEST + PRELOAD PROGRESS.
+
+   The Phase-H media architecture. Provides:
+   (1) A runtime ASSET MANIFEST (`_AL_MANIFEST`) declaring every known external
+       asset path + type + priority (critical / normal / lazy).
+   (2) A preloader with progress UI (a loading bar shown before the menu when
+       critical assets are still in-flight).
+   (3) `assetUrl(path)` — the SINGLE source-of-truth for asset path resolution.
+       Respects a `<base>` tag if present; falls back to relative resolution.
+       Works identically on file://, localhost, GitHub Pages, and itch.io.
+   (4) `assetLoad(path, type)` — returns a Promise that resolves to the loaded
+       resource (Image, AudioBuffer, ArrayBuffer, JSON) or null on failure.
+       Failures are silent (graceful fallback to procedural rendering).
+   (5) `assetAudio(path)` — loads an audio file and returns an AudioBuffer,
+       or null if the file is missing. Uses the existing Web Audio context.
+
+   Design constraints:
+   - ZERO regression: all asset loading is optional. The game boots and runs
+     identically with an EMPTY assets/ folder (or on file:// where fetch fails).
+   - Works on file://: uses `new Image()` for images (not fetch), and
+     `new Audio()` or XHR for audio (with silent failure).
+   - No Base64 inlining: assets stay as external files.
+   - Build-step integration: `tools/build.mjs` can optionally validate the
+     manifest against the actual assets/ folder (future enhancement).
+
+   Bare-name globals: G, toast. All helpers prefixed `_al` (asset-loader).
+   =========================================================================== */
+
+/* ============ ASSET BASE PATH RESOLUTION ============ */
+var _AL_BASE = "";
+
+(function () {
+  /* Resolve the asset base path. Strategy:
+     1. If a <base href="..."> tag exists, use it.
+     2. If the page URL contains a path (e.g., /repo-name/civil_war_generals.html),
+        derive the base from the directory portion.
+     3. Otherwise, assets/ is relative to the HTML file (default). */
+  try {
+    var baseEl = document.querySelector("base[href]");
+    if (baseEl && baseEl.href) {
+      _AL_BASE = baseEl.href.replace(/\/$/, "") + "/";
+    } else {
+      /* Derive from the page location */
+      var loc = window.location.href;
+      var lastSlash = loc.lastIndexOf("/");
+      if (lastSlash > 0) {
+        _AL_BASE = loc.substring(0, lastSlash + 1);
+      }
+    }
+  } catch (e) {
+    _AL_BASE = "";
+  }
+})();
+
+/* Resolve an asset path to a full URL (works on file://, Pages, itch.io). */
+function assetUrl(relativePath) {
+  if (!relativePath) return "";
+  /* Already absolute? Return as-is. */
+  if (/^https?:\/\/|^data:|^blob:/.test(relativePath)) return relativePath;
+  /* Strip leading "./" if present */
+  var clean = relativePath.replace(/^\.\//, "");
+  return _AL_BASE + clean;
+}
+
+/* ============ ASSET MANIFEST ============ */
+/* Priority: "critical" = blocks menu render, "normal" = loads after boot, "lazy" = on-demand */
+var _AL_MANIFEST = {
+  terrain: {
+    priority: "critical",
+    type: "image",
+    paths: [
+      "assets/terrain/clear.png", "assets/terrain/field.png",
+      "assets/terrain/woods.png", "assets/terrain/hills.png",
+      "assets/terrain/ridge.png", "assets/terrain/town.png",
+      "assets/terrain/road.png",  "assets/terrain/river.png",
+      "assets/terrain/ford.png",  "assets/terrain/swamp.png",
+      "assets/terrain/fort.png",  "assets/terrain/water.png",
+      "assets/terrain/shoal.png"
+    ]
+  },
+  portraits: {
+    priority: "normal",
+    type: "image",
+    paths: []  /* Populated dynamically from PHOTO_MANIFEST (base.html) if present */
+  },
+  audio_sfx: {
+    priority: "lazy",
+    type: "audio",
+    paths: [
+      "assets/audio/sfx/cannon_fire.mp3",
+      "assets/audio/sfx/musket_volley.mp3",
+      "assets/audio/sfx/bugle_charge.mp3",
+      "assets/audio/sfx/bugle_retreat.mp3",
+      "assets/audio/sfx/cheer.mp3",
+      "assets/audio/sfx/rout_cry.mp3"
+    ]
+  },
+  audio_music: {
+    priority: "lazy",
+    type: "audio",
+    paths: [
+      "assets/audio/music/camp_ambient.ogg",
+      "assets/audio/music/battle_march.ogg",
+      "assets/audio/music/victory_fanfare.ogg"
+    ]
+  },
+  audio_ambient: {
+    priority: "lazy",
+    type: "audio",
+    paths: [
+      "assets/audio/ambient/wind.ogg",
+      "assets/audio/ambient/rain.ogg",
+      "assets/audio/ambient/campfire.ogg",
+      "assets/audio/ambient/crowd_murmur.ogg"
+    ]
+  },
+  env_hdr: {
+    priority: "normal",
+    type: "binary",
+    paths: [
+      "assets/3d/env/sky_day.hdr",
+      "assets/3d/env/sky_overcast.hdr",
+      "assets/3d/env/sky_dusk.hdr"
+    ]
+  }
+};
+
+/* ============ ASSET LOADING UTILITIES ============ */
+var _AL_CACHE = {};  /* path -> loaded resource (Image, AudioBuffer, etc.) or null */
+var _AL_PENDING = {};  /* path -> Promise */
+
+/* Load an image asset. Returns a Promise<Image|null>. */
+function _alLoadImage(path) {
+  var url = assetUrl(path);
+  return new Promise(function (resolve) {
+    if (typeof Image === "undefined") { resolve(null); return; }
+    var img = new Image();
+    img.onload = function () { resolve(img); };
+    img.onerror = function () { resolve(null); };
+    try { img.src = url; } catch (e) { resolve(null); }
+  });
+}
+
+/* Load an audio asset as an AudioBuffer. Returns Promise<AudioBuffer|null>. */
+function _alLoadAudio(path) {
+  var url = assetUrl(path);
+  return new Promise(function (resolve) {
+    /* Try fetch first (works on http/https), fall back to XHR */
+    if (typeof fetch !== "undefined" && !/^file:/.test(window.location.protocol)) {
+      fetch(url).then(function (r) {
+        if (!r.ok) { resolve(null); return; }
+        return r.arrayBuffer();
+      }).then(function (buf) {
+        if (!buf) { resolve(null); return; }
+        _alDecodeAudio(buf, resolve);
+      }).catch(function () { resolve(null); });
+    } else {
+      /* file:// fallback via XHR (some browsers allow this) */
+      try {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "arraybuffer";
+        xhr.onload = function () {
+          if (xhr.status === 0 || xhr.status === 200) {
+            _alDecodeAudio(xhr.response, resolve);
+          } else { resolve(null); }
+        };
+        xhr.onerror = function () { resolve(null); };
+        xhr.send();
+      } catch (e) { resolve(null); }
+    }
+  });
+}
+
+function _alDecodeAudio(buf, resolve) {
+  try {
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) { resolve(null); return; }
+    var ctx = new AC();
+    ctx.decodeAudioData(buf, function (decoded) {
+      resolve(decoded);
+    }, function () { resolve(null); });
+  } catch (e) { resolve(null); }
+}
+
+/* Load a binary asset (e.g., .hdr, .glb). Returns Promise<ArrayBuffer|null>. */
+function _alLoadBinary(path) {
+  var url = assetUrl(path);
+  return new Promise(function (resolve) {
+    if (typeof fetch !== "undefined" && !/^file:/.test(window.location.protocol)) {
+      fetch(url).then(function (r) {
+        if (!r.ok) { resolve(null); return; }
+        return r.arrayBuffer();
+      }).then(function (buf) { resolve(buf || null); })
+        .catch(function () { resolve(null); });
+    } else {
+      try {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "arraybuffer";
+        xhr.onload = function () {
+          if (xhr.status === 0 || xhr.status === 200) { resolve(xhr.response); }
+          else { resolve(null); }
+        };
+        xhr.onerror = function () { resolve(null); };
+        xhr.send();
+      } catch (e) { resolve(null); }
+    }
+  });
+}
+
+/* Generic asset load dispatcher. Returns Promise<resource|null>. */
+function assetLoad(path, type) {
+  if (_AL_CACHE[path] !== undefined) {
+    return Promise.resolve(_AL_CACHE[path]);
+  }
+  if (_AL_PENDING[path]) return _AL_PENDING[path];
+
+  var loader;
+  if (type === "image") loader = _alLoadImage(path);
+  else if (type === "audio") loader = _alLoadAudio(path);
+  else loader = _alLoadBinary(path);
+
+  _AL_PENDING[path] = loader.then(function (result) {
+    _AL_CACHE[path] = result;
+    delete _AL_PENDING[path];
+    return result;
+  });
+  return _AL_PENDING[path];
+}
+
+/* Convenience: load audio and return AudioBuffer or null. */
+function assetAudio(path) {
+  return assetLoad(path, "audio");
+}
+
+/* ============ PRELOAD PROGRESS UI ============ */
+var _AL_PROGRESS = { total: 0, done: 0, started: false };
+
+function _alProgressPct() {
+  if (_AL_PROGRESS.total === 0) return 100;
+  return Math.round((_AL_PROGRESS.done / _AL_PROGRESS.total) * 100);
+}
+
+function _alShowProgress() {
+  var bar = document.getElementById("alProgressBar");
+  if (!bar) return;
+  var pct = _alProgressPct();
+  bar.style.width = pct + "%";
+  var label = document.getElementById("alProgressLabel");
+  if (label) label.textContent = pct + "%";
+  if (pct >= 100) {
+    var container = document.getElementById("alProgressContainer");
+    if (container) {
+      setTimeout(function () {
+        container.style.opacity = "0";
+        setTimeout(function () { container.style.display = "none"; }, 400);
+      }, 300);
+    }
+  }
+}
+
+function _alInjectProgressBar() {
+  /* Only inject if we have critical assets to load */
+  var critical = _AL_MANIFEST.terrain;
+  if (!critical || !critical.paths || critical.paths.length === 0) return;
+
+  var container = document.createElement("div");
+  container.id = "alProgressContainer";
+  container.style.cssText = "position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:99998;background:rgba(13,10,7,.92);border:1px solid #8b7a56;border-radius:6px;padding:10px 20px;min-width:200px;text-align:center;font-family:Georgia,serif;color:#cdb87f;font-size:12px;transition:opacity .4s";
+  container.innerHTML =
+    '<div style="margin-bottom:6px">Loading assets&hellip; <span id="alProgressLabel">0%</span></div>' +
+    '<div style="background:rgba(139,122,86,.25);border-radius:3px;height:6px;overflow:hidden">' +
+      '<div id="alProgressBar" style="height:100%;background:#c9a85f;border-radius:3px;width:0%;transition:width .2s"></div>' +
+    '</div>';
+  document.body.appendChild(container);
+}
+
+/* ============ PRELOAD CRITICAL + NORMAL ASSETS ============ */
+function _alPreloadCategory(category) {
+  var cat = _AL_MANIFEST[category];
+  if (!cat || !cat.paths || cat.paths.length === 0) return;
+  _AL_PROGRESS.total += cat.paths.length;
+  _alShowProgress();
+
+  for (var i = 0; i < cat.paths.length; i++) {
+    (function (path) {
+      assetLoad(path, cat.type).then(function () {
+        _AL_PROGRESS.done++;
+        _alShowProgress();
+      });
+    })(cat.paths[i]);
+  }
+}
+
+/* Boot sequence: load critical assets first, then normal, then let lazy load on-demand. */
+(function () {
+  if (typeof document === "undefined") return;  /* jsdom/headless: skip */
+
+  /* Wait for body to exist */
+  function _alBoot() {
+    _alInjectProgressBar();
+    _alPreloadCategory("terrain");
+    /* Normal-priority assets load after a short delay to not block the menu */
+    setTimeout(function () {
+      _alPreloadCategory("portraits");
+      _alPreloadCategory("env_hdr");
+    }, 1000);
+  }
+
+  if (document.body) { _alBoot(); }
+  else { document.addEventListener("DOMContentLoaded", _alBoot); }
 })();
 
 /*__ENGINE_END__*/

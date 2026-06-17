@@ -129,6 +129,24 @@ console.log('  new fns:   ' + (newFns.map(x => x.name).join(', ') || '(none)'));
 console.log('  overrides: ' + ([...overrides].join(', ') || '(none)') + ' (2x each ✓)');
 console.log('  base ' + KB(base) + ' + inject ' + KB(inject) + ' = out ' + KB(out));
 
+// ---- 5a. asset manifest audit (informational, does not block the build) ----
+const ASSETS = join(ROOT, 'assets');
+if (existsSync(ASSETS)) {
+  const assetFolders = ['terrain', 'portraits', '3d/env', '3d/materials/terrain', 'audio/sfx', 'audio/music', 'audio/ambient'];
+  let present = 0, missing = 0;
+  const summary = [];
+  for (const sub of assetFolders) {
+    const dir = join(ASSETS, sub);
+    if (existsSync(dir)) {
+      const files = readdirSync(dir).filter(f => !f.startsWith('.') && f !== 'README.txt');
+      present += files.length;
+      if (files.length) summary.push(sub + ':' + files.length);
+    }
+  }
+  if (summary.length) console.log('  assets:    ' + summary.join(' · ') + ' (' + present + ' files)');
+  else console.log('  assets:    (empty — game uses procedural fallbacks)');
+}
+
 if (checkOnly) { console.log('--check: gates passed, NOT writing ' + OUT.split('/').pop()); process.exit(0); }
 writeFileSync(OUT, out);
 console.log('WROTE ' + OUT.split('/').pop() + ' (' + KB(out) + ')');
