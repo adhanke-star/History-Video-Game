@@ -128,6 +128,10 @@ function _fldPhaseResolved(w, by) {
    keeps stepping; UI -> phase "battle" but PAUSED so the player surveys the fresh sector then unpauses. */
 function _fldAdvancePhase() {
   _fldBuildPhase(__FIELD.phaseIdx);   // fldResetRun set phase=deploy, paused=true
+  // rebuild the 3D terrain/walls/woods/markers for the new phase's sector (no-op in 2D / headless)
+  if (__FIELD.mode3d && typeof fld3dRebuildTerrain === "function") { try { fld3dRebuildTerrain(); } catch (e) {} }
+  // rebuild the 3D unit meshes for the new phase's OOB
+  if (__FIELD.mode3d && typeof fld3dBuildUnits === "function") { try { fld3dBuildUnits(); } catch (e) {} }
   __FIELD.phase = "battle";
   __FIELD.paused = _fldPhasesHasUI();   // headless false (run on), UI true (survey then play)
   if (_fldPhasesHasUI() && __FIELD.fog && __FIELD.units && __FIELD.units.length && typeof fldComputeVisibility === "function") fldComputeVisibility();
@@ -182,8 +186,8 @@ function _fldInterphaseCard(prevIdx, w, by) {
       '<div style="font-size:11px;opacity:.6;text-align:center;margin-bottom:14px;">Cumulative cost — Union ' + _fldComma(cas.US) + ' &middot; Confederate ' + _fldComma(cas.CS) + '</div>' +
       '<div style="font-size:11px;letter-spacing:2px;opacity:.65;text-transform:uppercase;">Next &mdash; Phase ' + (__FIELD.phaseIdx + 1) + '</div>' +
       '<div style="font-size:19px;color:#e9dcc0;margin:2px 0 4px;">' + _fldEscPh(next.name) + '</div>' +
-      (trans.lead ? '<div style="font-size:13.5px;opacity:.9;line-height:1.5;margin-bottom:8px;">' + trans.lead + '</div>' : '') +
-      (tcard ? '<div style="margin-top:8px;padding:9px 11px;background:#15110b;border:1px solid #715e3e;border-radius:5px;"><b style="color:#d8c87a;">' + _fldEscPh(tcard.head || "") + '</b><div style="font-size:12.5px;opacity:.85;line-height:1.45;margin-top:2px;">' + (tcard.body || "") + '</div></div>' : '') +
+      (trans.lead ? '<div style="font-size:13.5px;opacity:.9;line-height:1.5;margin-bottom:8px;">' + _fldEscPh(trans.lead) + '</div>' : '') +
+      (tcard ? '<div style="margin-top:8px;padding:9px 11px;background:#15110b;border:1px solid #715e3e;border-radius:5px;"><b style="color:#d8c87a;">' + _fldEscPh(tcard.head || "") + '</b><div style="font-size:12.5px;opacity:.85;line-height:1.45;margin-top:2px;">' + _fldEscPh(tcard.body || "") + '</div></div>' : '') +
       '<div style="text-align:center;margin-top:18px;"><button id="fldPhaseGo" type="button" style="background:#1c1610;color:#e9dcc0;border:1px solid #8a6f49;border-radius:4px;padding:10px 22px;font:15px Georgia,serif;cursor:pointer;outline:2px solid transparent;outline-offset:2px;" onfocus="this.style.outline=\'2px solid #d8c87a\'" onblur="this.style.outline=\'2px solid transparent\'">Take the field &#9654;</button></div>' + /* wcag-auditor: focus indicator added (#d8c87a outline, ratio 10.64 on btn bg; 11.39 on modal bg) — #fldInterphase not covered by T0 global :focus-visible rule (WCAG 2.4.7/2.4.11) */
     '</div>';
   root.appendChild(ov);

@@ -230,7 +230,7 @@ function fldLaunchCampaignBattle(C) {
   // the real-time path is abort-relaunchable (Esc returns to the briefing), so consuming at launch would
   // lose the flip if the player backs out and re-attempts in ANY mode. It is consumed once, at RESOLUTION
   // (fldCampaignApplyOutcome). launchCampaignBattle / bridgeAutoResolve still see the live flag if used.
-  var fightBd = C.flipAtk ? Object.assign({}, bd, { atk: (bd.atk === "US" ? "CS" : "US") }) : bd;
+  var fightBd; if (C.flipAtk) { fightBd = {}; for (var _fk in bd) if (Object.prototype.hasOwnProperty.call(bd, _fk)) fightBd[_fk] = bd[_fk]; fightBd.atk = (bd.atk === "US" ? "CS" : "US"); } else { fightBd = bd; }
   var scn = _fldCampaignScenarioFor(bd, C);   // null on a recovery flip (F7) -> procedural honors the flipped atk
   var ctx = { bd: fightBd, scn: scn, fromCampaign: true, _conditioned: false };
   if (scn) {
