@@ -25902,10 +25902,11 @@ function fldInitSim(opts) {
   // layer (fldPlayerSel & friends), the render/HUD fog VIEWER, the friend/foe text, the objective copy, and
   // fldPlayerSide() (T3) all read the SAME side. Defaulting "US" keeps every standalone/probe launch
   // byte-identical (and the headless probes never reach the control/render layer anyway). Coverage = probe-csplayer.
+  var _campVal = (opts.campaign && typeof _fldCamp === "function") ? _fldCamp() : null;
   __FIELD.playerSide =
     (opts.playerSide === "US" || opts.playerSide === "CS") ? opts.playerSide
     : (opts.skirmish && (opts.skirmish.playerSide === "US" || opts.skirmish.playerSide === "CS")) ? opts.skirmish.playerSide
-    : (opts.campaign && typeof _fldCamp === "function" && _fldCamp() && _fldCamp().side === "CS") ? "CS" : "US";
+    : (_campVal && _campVal.side === "CS") ? "CS" : "US";
   // fog of war (P1b): a toggle. PRECEDENCE: an explicit opts.fog wins; else an explicit global setting
   // (G.settings.tacticalFog, set once the player presses V or a probe pins it) wins; else the SCENARIO default
   // applies (set in fldScenarioInit from scenData.defaultFog — First Bull Run defaults fog ON, D67: under fog the
@@ -26983,7 +26984,7 @@ function fldOnOver() {
   var scNote = (typeof fldScenarioEndHtml === "function") ? (fldScenarioEndHtml(w) || "") : "";
   // Phase C (D74): a MULTI-PHASE battle prepends its phase-by-phase result table + the aggregate verdict (alongside
   // the data-driven endNote that fldScenarioEndHtml renders from the top-level scenario). No-op when phases is null.
-  if (__FIELD.phases && typeof _fldPhasesEndHtml === "function") { try { scNote = (_fldPhasesEndHtml() || "") + scNote; } catch (eP) {} }
+  if (__FIELD.phases && typeof _fldPhasesEndHtml === "function") { try { scNote = (_fldPhasesEndHtml() || "") + scNote; } catch (eP) { if (typeof console !== "undefined" && console.warn) console.warn("[T8] _fldPhasesEndHtml error:", eP); } }
   // Phase A seam: a campaign battle appends its strategic-consequence note (no-op standalone).
   if (__FIELD.campaignCtx && typeof fldCampaignEndHtml === "function") { try { scNote += (fldCampaignEndHtml(w) || ""); } catch (eC) {} }
   // B-2 seam: the officer teaching payoff (who fell, why command-from-the-saddle mattered). No-op when off / none lost.
@@ -27027,7 +27028,7 @@ function fldOnOver() {
   // so a skirmish rematch rebuilds the SAME skirmish (and a CS player keeps their CS command) instead of falling
   // through to the generic US sandbox (which left a CS player with zero controllable units). Falls back to the
   // legacy reconstruction if no stashed opts (defensive).
-  if (a) a.addEventListener("click", function () { var sd = (__FIELD.seed + 7) >>> 0, lo = __FIELD._launchOpts, k = __FIELD.rendererKind, sc = __FIELD.scenario, ps = __FIELD.playerSide; fldExit(true); fldLaunchSandbox(lo ? Object.assign({}, lo, { seed: sd }) : { renderer: k, seed: sd, scenario: sc, playerSide: ps }); });
+  if (a) a.addEventListener("click", function () { var sd = (__FIELD.seed + 7) >>> 0, lo = __FIELD._launchOpts, k = __FIELD.rendererKind, sc = __FIELD.scenario, ps = __FIELD.playerSide; fldExit(true); var _o; if (lo) { _o = {}; for (var _k in lo) if (Object.prototype.hasOwnProperty.call(lo, _k)) _o[_k] = lo[_k]; _o.seed = sd; } else { _o = { renderer: k, seed: sd, scenario: sc, playerSide: ps }; } fldLaunchSandbox(_o); });
   if (d) d.addEventListener("click", function () { fldExit(false); });
   // focus trap (WCAG 2.4.11): the end screen is aria-modal, so confine Tab/Shift+Tab to its two buttons.
   e.addEventListener("keydown", function (ev) {
@@ -27179,7 +27180,7 @@ function fld3dInit() {
   var sun = new T.DirectionalLight("#fff2d0", 1.15); sun.position.set(FLD.FIELD_W * 0.2, 1200, -FLD.FIELD_H * 0.2); scene.add(sun);
   scene.add(new T.HemisphereLight("#dceaff", "#5a4a32", 0.72));
   __FIELD.renderer = rnd; __FIELD.scene = scene; __FIELD.camera = cam; __FIELD.controls = controls;
-  __FIELD.raycaster = new T.Raycaster(); __FIELD.ground = null;
+  __FIELD.raycaster = new T.Raycaster(); __FIELD.ground = null; __FIELD._terrainObjs = [];
   fld3dBuildTerrain();
   __FIELD.groups = new T.Group(); scene.add(__FIELD.groups);
   fld3dBuildUnits();
@@ -27206,10 +27207,13 @@ function fld3dBuildTerrain() {
   var mesh = new T.Mesh(geo, new T.MeshLambertMaterial({ vertexColors: true }));
   mesh.position.set(FLD.FIELD_W / 2, 0, FLD.FIELD_H / 2);
   __FIELD.scene.add(mesh); __FIELD.ground = mesh;
+  if (!__FIELD._terrainObjs) __FIELD._terrainObjs = [];
+  __FIELD._terrainObjs.push(mesh);
   // objective marker
   var o = __FIELD.objective;
   var ring = new T.Mesh(new T.RingGeometry(o.r - 6, o.r, 40), new T.MeshBasicMaterial({ color: "#d8c87a", side: T.DoubleSide, transparent: true, opacity: 0.7 }));
   ring.rotation.x = -Math.PI / 2; ring.position.set(o.x, fldTerrainH(o.x, o.z) + 1.5, o.z); __FIELD.scene.add(ring);
+  __FIELD._terrainObjs.push(ring);
   // walls (one for the sandbox; several for a scenario)
   var t = __FIELD.terrain, _ws = fldWalls();
   for (var wq = 0; wq < _ws.length; wq++) {
@@ -27217,6 +27221,7 @@ function fld3dBuildTerrain() {
     var wall = new T.Mesh(new T.BoxGeometry(wlen, 14, 8), new T.MeshLambertMaterial({ color: "#8a8070" }));
     wall.position.set((wl.x1 + wl.x2) / 2, fldTerrainH(wl.x1, wl.z1) + 7, (wl.z1 + wl.z2) / 2);
     wall.rotation.y = -Math.atan2(wdz, wdx); __FIELD.scene.add(wall);
+    __FIELD._terrainObjs.push(wall);
   }
   // scenario markers (roads/creeks as low ribbons; ford/bridge as small markers) — Bull Run only
   fld3dBuildMarkers();
@@ -27231,7 +27236,23 @@ function fld3dBuildTerrain() {
       dummy.position.set(tx, fldTerrainH(tx, tz) + 23, tz); dummy.updateMatrix(); im.setMatrixAt(k, dummy.matrix);
     }
     __FIELD.scene.add(im);
+    __FIELD._terrainObjs.push(im);
   }
+}
+/* dispose + rebuild all 3D terrain objects (ground mesh, objective ring, walls, woods, markers).
+   Called on phase advance so the new phase's terrain/objective renders correctly in 3D mode. */
+function fld3dRebuildTerrain() {
+  if (!__FIELD.scene || !window.THREE) return;
+  var objs = __FIELD._terrainObjs || [];
+  for (var i = 0; i < objs.length; i++) {
+    var obj = objs[i];
+    if (obj.geometry && obj.geometry.dispose) obj.geometry.dispose();
+    if (obj.material) { var m = obj.material; if (Array.isArray(m)) { for (var j = 0; j < m.length; j++) m[j] && m[j].dispose && m[j].dispose(); } else if (m.dispose) m.dispose(); }
+    __FIELD.scene.remove(obj);
+  }
+  __FIELD._terrainObjs = [];
+  __FIELD.ground = null;
+  fld3dBuildTerrain();
 }
 function fld3dBuildMarkers() {
   var t = __FIELD.terrain; if (!t || !t.markers || !window.THREE) return;
@@ -27248,10 +27269,12 @@ function fld3dBuildMarkers() {
         var mx = (a[0] + b[0]) / 2, mz = (a[1] + b[1]) / 2;
         seg.position.set(mx, fldTerrainH(mx, mz) + hgt, mz); seg.rotation.y = -Math.atan2(dz, dx);
         __FIELD.scene.add(seg);
+        if (__FIELD._terrainObjs) __FIELD._terrainObjs.push(seg);
       }
     } else if (typeof mk.x === "number" && (mk.kind === "ford" || mk.kind === "bridge")) {
       var m2 = new T.Mesh(new T.BoxGeometry(22, mk.kind === "bridge" ? 7 : 2, 22), new T.MeshLambertMaterial({ color: col }));
       m2.position.set(mk.x, fldTerrainH(mk.x, mk.z) + 3, mk.z); __FIELD.scene.add(m2);
+      if (__FIELD._terrainObjs) __FIELD._terrainObjs.push(m2);
     }
   }
 }
@@ -27333,7 +27356,7 @@ function fld3dDispose() {
     if (__FIELD.controls && __FIELD.controls.dispose) { try { __FIELD.controls.dispose(); } catch (e2) {} }
     if (__FIELD.renderer) { try { if (__FIELD.renderer.forceContextLoss) __FIELD.renderer.forceContextLoss(); } catch (e3) {} if (__FIELD.renderer.dispose) __FIELD.renderer.dispose(); }
   } catch (e) {}
-  __FIELD.scene = null; __FIELD.camera = null; __FIELD.controls = null; __FIELD.renderer = null; __FIELD.groups = null; __FIELD._u3d = null; __FIELD.ground = null;
+  __FIELD.scene = null; __FIELD.camera = null; __FIELD.controls = null; __FIELD.renderer = null; __FIELD.groups = null; __FIELD._u3d = null; __FIELD.ground = null; __FIELD._terrainObjs = null;
   __FIELD._ld3dGroup = null; __FIELD._ld3d = null;   // B-2: the officer group's geometries were disposed in the scene traverse above; drop the refs
   __FIELD._sup3dGroup = null; __FIELD._sup3d = null; // B-3: same for the ammunition-train wagons
 }
@@ -27975,7 +27998,7 @@ function fldLaunchCampaignBattle(C) {
   // the real-time path is abort-relaunchable (Esc returns to the briefing), so consuming at launch would
   // lose the flip if the player backs out and re-attempts in ANY mode. It is consumed once, at RESOLUTION
   // (fldCampaignApplyOutcome). launchCampaignBattle / bridgeAutoResolve still see the live flag if used.
-  var fightBd = C.flipAtk ? Object.assign({}, bd, { atk: (bd.atk === "US" ? "CS" : "US") }) : bd;
+  var fightBd; if (C.flipAtk) { fightBd = {}; for (var _fk in bd) if (Object.prototype.hasOwnProperty.call(bd, _fk)) fightBd[_fk] = bd[_fk]; fightBd.atk = (bd.atk === "US" ? "CS" : "US"); } else { fightBd = bd; }
   var scn = _fldCampaignScenarioFor(bd, C);   // null on a recovery flip (F7) -> procedural honors the flipped atk
   var ctx = { bd: fightBd, scn: scn, fromCampaign: true, _conditioned: false };
   if (scn) {
@@ -29637,7 +29660,8 @@ function fldPresetsApply(opts) {
   __FIELD.aiSkill = 1; __FIELD.aiResolve = 1; __FIELD.aiCushion = 0;
   var c = fldPresetResolve();
   if (!c) return;   // nothing configured -> NEUTRAL (byte-identical to the pre-B5 engine); do not touch G.settings
-  c = _fldClampCfg(Object.assign({}, c));   // clamp a CLONE (don't mutate the stored preset): a hand-edited / older-shape persisted preset is bounded here -> no inverted lever, no zeroed casualties, no AI buff
+  var _cc = {}, _ck; for (_ck in c) if (Object.prototype.hasOwnProperty.call(c, _ck)) _cc[_ck] = c[_ck];
+  c = _fldClampCfg(_cc);   // clamp a CLONE (don't mutate the stored preset): a hand-edited / older-shape persisted preset is bounded here -> no inverted lever, no zeroed casualties, no AI buff
   __FIELD.sev = { attrition: c.attrition, canister: c.canister, supply: c.supply, cmdShock: c.cmdShock, sight: c.sight, veteran: c.veteran };
   __FIELD.aiSkill = c.aiSkill; __FIELD.aiResolve = c.aiResolve; __FIELD.aiCushion = c.aiCushion;
   // the fog lever -> the global setting the T0/T1 precedence reads (an explicit opts.fog STILL wins). "scenario" is a
@@ -30203,6 +30227,10 @@ function _fldPhaseResolved(w, by) {
    keeps stepping; UI -> phase "battle" but PAUSED so the player surveys the fresh sector then unpauses. */
 function _fldAdvancePhase() {
   _fldBuildPhase(__FIELD.phaseIdx);   // fldResetRun set phase=deploy, paused=true
+  // rebuild the 3D terrain/walls/woods/markers for the new phase's sector (no-op in 2D / headless)
+  if (__FIELD.mode3d && typeof fld3dRebuildTerrain === "function") { try { fld3dRebuildTerrain(); } catch (e) {} }
+  // rebuild the 3D unit meshes for the new phase's OOB
+  if (__FIELD.mode3d && typeof fld3dBuildUnits === "function") { try { fld3dBuildUnits(); } catch (e) {} }
   __FIELD.phase = "battle";
   __FIELD.paused = _fldPhasesHasUI();   // headless false (run on), UI true (survey then play)
   if (_fldPhasesHasUI() && __FIELD.fog && __FIELD.units && __FIELD.units.length && typeof fldComputeVisibility === "function") fldComputeVisibility();
@@ -30257,8 +30285,8 @@ function _fldInterphaseCard(prevIdx, w, by) {
       '<div style="font-size:11px;opacity:.6;text-align:center;margin-bottom:14px;">Cumulative cost — Union ' + _fldComma(cas.US) + ' &middot; Confederate ' + _fldComma(cas.CS) + '</div>' +
       '<div style="font-size:11px;letter-spacing:2px;opacity:.65;text-transform:uppercase;">Next &mdash; Phase ' + (__FIELD.phaseIdx + 1) + '</div>' +
       '<div style="font-size:19px;color:#e9dcc0;margin:2px 0 4px;">' + _fldEscPh(next.name) + '</div>' +
-      (trans.lead ? '<div style="font-size:13.5px;opacity:.9;line-height:1.5;margin-bottom:8px;">' + trans.lead + '</div>' : '') +
-      (tcard ? '<div style="margin-top:8px;padding:9px 11px;background:#15110b;border:1px solid #715e3e;border-radius:5px;"><b style="color:#d8c87a;">' + _fldEscPh(tcard.head || "") + '</b><div style="font-size:12.5px;opacity:.85;line-height:1.45;margin-top:2px;">' + (tcard.body || "") + '</div></div>' : '') +
+      (trans.lead ? '<div style="font-size:13.5px;opacity:.9;line-height:1.5;margin-bottom:8px;">' + _fldEscPh(trans.lead) + '</div>' : '') +
+      (tcard ? '<div style="margin-top:8px;padding:9px 11px;background:#15110b;border:1px solid #715e3e;border-radius:5px;"><b style="color:#d8c87a;">' + _fldEscPh(tcard.head || "") + '</b><div style="font-size:12.5px;opacity:.85;line-height:1.45;margin-top:2px;">' + _fldEscPh(tcard.body || "") + '</div></div>' : '') +
       '<div style="text-align:center;margin-top:18px;"><button id="fldPhaseGo" type="button" style="background:#1c1610;color:#e9dcc0;border:1px solid #8a6f49;border-radius:4px;padding:10px 22px;font:15px Georgia,serif;cursor:pointer;outline:2px solid transparent;outline-offset:2px;" onfocus="this.style.outline=\'2px solid #d8c87a\'" onblur="this.style.outline=\'2px solid transparent\'">Take the field &#9654;</button></div>' + /* wcag-auditor: focus indicator added (#d8c87a outline, ratio 10.64 on btn bg; 11.39 on modal bg) — #fldInterphase not covered by T0 global :focus-visible rule (WCAG 2.4.7/2.4.11) */
     '</div>';
   root.appendChild(ov);
