@@ -56,9 +56,7 @@ jobs:
           python3 -c "
           import ast, sys
 
-          # Extract the validation logic from the addon
-          exec(open('tools/blender_mcp_addon.py').read().split('def _validate_code_ast(code):')[0])
-
+          # Self-contained replica of _validate_code_ast from blender_mcp_addon.py
           def validate(code):
               try:
                   tree = ast.parse(code)
