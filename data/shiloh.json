@@ -127,6 +127,17 @@
         { "kind": "creek", "name": "Owl Creek", "path": [[120, 780], [400, 795], [700, 800], [1080, 785]], "note": "The creek on the Union right that limited the Confederate flanking options. (Verified)" }
       ]
     },
+    "endNote": {
+      "US": {
+        "US": "History is overturned. Your army held the Sunken Road and the Landing — the ground that historically broke under the Confederate assault. In April 1862 Grant's surprised army was pressed into a tight perimeter around Pittsburg Landing, saved only by Buell's overnight arrival; under your command the line held and the Hornets' Nest never fell.",
+        "CS": "History is overturned. The Union held the Sunken Road and the Landing — the ground your army historically carried in the first day's assault. In April 1862 Johnston's surprise attack nearly swept Grant into the river; under your defense the Confederate assault broke against the Hornets' Nest and never reached the Landing."
+      },
+      "CS": {
+        "US": "History holds. As in April 1862, the Confederate surprise assault carried the field — the Union camps were overrun, the Hornets' Nest was surrounded, and Grant's army was pressed into a tight perimeter around Pittsburg Landing. Johnston's death at the Peach Orchard cost the Confederacy its best chance to destroy Grant before Buell arrived.",
+        "CS": "History holds. As in April 1862, your surprise assault carried the field — the Union camps were overrun, the Hornets' Nest was surrounded, and Grant's army was pressed into a tight perimeter around Pittsburg Landing. But Johnston's death at the Peach Orchard cost the assault its driving hand, and the piecemeal attacks that followed failed to crush the Union before Buell's army crossed the river."
+      },
+      "draw": "A bloodier stalemate than history's clear Confederate first-day victory — but the Hornets' Nest held long enough that the battle's outcome was still undecided when the light failed."
+    },
     "teaching": {
       "title": "Shiloh — the War Learns Its Cost",
       "cards": [
