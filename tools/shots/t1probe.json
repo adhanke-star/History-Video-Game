@@ -1,5 +1,5 @@
 {
   "ok": false,
-  "fatal": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:8765/civil_war_generals.html\nCall log:\n\u001b[2m  - navigating to \"http://localhost:8765/civil_war_generals.html\", waiting until \"load\"\u001b[22m\n",
+  "fatal": "page.goto: Timeout 60000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"http://localhost:8765/civil_war_generals.html\", waiting until \"load\"\u001b[22m\n",
   "pageerrors": []
 }

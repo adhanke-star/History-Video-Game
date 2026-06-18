@@ -29,12 +29,7 @@ var _pdLOG_MAX = 6;
 /* Append a dispatch line to the President's log (newest-first, capped) —
    mirrors the clk/wr log convention. Guarded; never throws into the tick. */
 function _pdLog(C, line) {
-  try {
-    if (!C || !C.president) return;
-    if (!C.president.log) C.president.log = [];
-    C.president.log.unshift(line);
-    if (C.president.log.length > _pdLOG_MAX) C.president.log.length = _pdLOG_MAX;
-  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_pdLog:", e); }
+  logPush(C && C.president, "log", line, _pdLOG_MAX);
 }
 
 /* Authored cabinet rosters. No cabinet/advisor data exists anywhere in the repo

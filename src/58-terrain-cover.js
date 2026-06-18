@@ -27,10 +27,7 @@
    makeTile); _tc* helpers; decoration never weakens a tile or touches water.
    =========================================================================== */
 
-function _tcData() {
-  // build keys data by filename: data/terrain-cover.json -> GAME_DATA["terrain-cover"] (hyphenated, like manpower-teaching)
-  return (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA["terrain-cover"]) ? GAME_DATA["terrain-cover"] : null;
-}
+function _tcData() { return gameData("terrain-cover"); }
 function _tcTypes() { var D = _tcData(); return (D && D.types && D.types.length) ? D.types : []; }
 
 /* Install the cover types into the frozen engine consts (idempotent). */

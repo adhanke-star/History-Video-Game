@@ -21,9 +21,7 @@
    _art* helpers; reuses _armRarityCol from 55-weapons; render never mutates/saves.
    =========================================================================== */
 
-function _artData() {
-  return (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.artillery) ? GAME_DATA.artillery : null;
-}
+function _artData() { return gameData("artillery"); }
 function _artGuns() { var D = _artData(); return (D && D.guns) ? D.guns : []; }
 function _artBaseline() { var D = _artData(); return (D && typeof D.baselineArtilleryScore === "number") ? D.baselineArtilleryScore : 8; }
 function _artFull() { var D = _artData(); return (D && typeof D.fullComplementBatteries === "number" && D.fullComplementBatteries > 0) ? D.fullComplementBatteries : 12; }
@@ -37,8 +35,7 @@ function _artUnionGuns() { var D = _artData(); return (D && D.batteryGunsUnion) 
 /* Honor a configured cost of 0 (a starter/gift gun); only fall back to 1000 when the field is missing/invalid. */
 function _artCost(g) { return (g && typeof g.costPerBattery === "number" && isFinite(g.costPerBattery) && g.costPerBattery >= 0) ? g.costPerBattery : 1000; }
 
-/* Escape data-driven text before it enters innerHTML — the catalog is tunable/untrusted-shaped data. */
-function _artEsc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
+var _artEsc = htmlEsc;
 
 function artInit(C) {
   if (!C) return;
@@ -57,10 +54,7 @@ function artInit(C) {
   }
 }
 
-function _artYear(C) {
-  return (C && C.clock && typeof C.clock.year === "number") ? C.clock.year
-       : (C && C.president && C.president.date && typeof C.president.date.year === "number") ? C.president.date.year : 1861;
-}
+function _artYear(C) { return campaignYear(C); }
 
 /* Availability + the side's price multiplier for a gun. */
 function _artAvail(C, g) {

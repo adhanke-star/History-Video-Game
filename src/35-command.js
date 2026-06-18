@@ -46,9 +46,7 @@
 var _cmdRELIEF_BASE = { easy: 4, costly: 12, "very-costly": 22 };
 
 /* data/generals.json -> GAME_DATA.generals (or null). */
-function _cmdData() {
-  return (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.generals) ? GAME_DATA.generals : null;
-}
+function _cmdData() { return gameData("generals"); }
 
 /* The side's full general roster (array) — empty if the data is absent. */
 function _cmdSideGenerals(side) {
@@ -64,12 +62,7 @@ function _cmdById(side, id) {
   return null;
 }
 
-/* Escape for innerHTML AND attribute contexts (quotes too — the D43.4 lesson). */
-function _cmdEsc(s) {
-  s = (s == null) ? "" : String(s);
-  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-}
+var _cmdEsc = htmlEsc;
 
 /* Strip a disambiguation suffix ("Johnston-J" -> "Johnston") for display + portrait. */
 function _cmdName(gen) {
@@ -77,12 +70,9 @@ function _cmdName(gen) {
   return String(gen.name || "").replace(/-[A-Za-z]$/, "");
 }
 
-/* A strategic date as a comparable integer (year*12 + month) — mirrors _cabDateNum. */
-function _cmdDateNum(d) {
-  if (!d || typeof d.year !== "number") return 1861 * 12 + 4;
-  return d.year * 12 + (typeof d.month === "number" ? d.month : 1);
-}
-function _cmdYM(t) { return t ? (t.y * 12 + (t.m || 1)) : 0; }
+/* Strategic date / tenure helpers — delegate to shared 01-utils.js. */
+function _cmdDateNum(d) { return dateToNum(d); }
+function _cmdYM(t) { return tenureToNum(t); }
 
 /* Is this general alive / not-yet-removed and within his availability window at `date`? */
 function _cmdAlive(gen, date) {

@@ -27,7 +27,7 @@ var _prsLEAN_BASE = { administration: 66, radical: 63, abolitionist: 66, moderat
 var _prsFAVOR_DELTA = { "strongly-for": 8, "for": 4, "neutral": 0, "against": -4, "strongly-against": -8 };
 var _prsLEAN_LABEL = { administration: "Administration", radical: "Radical", abolitionist: "Abolitionist", moderate: "Moderate", "war-democrat": "War Democrat", copperhead: "Copperhead", "fire-eater": "Fire-Eater" };
 
-function _prsData() { return (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.press) ? GAME_DATA.press : null; }
+function _prsData() { return gameData("press"); }
 function _prsAllPapers() { var d = _prsData(); return (d && d.papers && d.papers.length) ? d.papers : []; }
 function _prsPapers(side) {
   var s = (side === "CS") ? "CS" : "US", all = _prsAllPapers(), out = [];
@@ -35,10 +35,7 @@ function _prsPapers(side) {
   return out;
 }
 function _prsById(id) { var all = _prsAllPapers(); for (var i = 0; i < all.length; i++) if (all[i] && all[i].id === id) return all[i]; return null; }
-function _prsEsc(s) {
-  s = (s == null) ? "" : String(s);
-  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-}
+var _prsEsc = htmlEsc;
 function _prsBaseline(p) { return (p && _prsLEAN_BASE[p.lean] != null) ? _prsLEAN_BASE[p.lean] : 50; }
 
 /* ---- pressInit: idempotent. C.press = per-paper favor + aggregate sentiment + the

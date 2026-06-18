@@ -43,13 +43,7 @@ function vicMomentum(C) {
   } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("vicMomentum:", e); return 0.5; }
 }
 
-function _vicPush(C, line) {
-  try {
-    if (!C.strategy.log) C.strategy.log = [];
-    C.strategy.log.unshift(line);
-    if (C.strategy.log.length > 6) C.strategy.log.length = 6;
-  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_vicPush:", e); }
-}
+function _vicPush(C, line) { logPush(C && C.strategy, "log", line); }
 
 /* ---- vicInit: idempotent; seeds C.strategy (levers + the enemy-will tracker). ---- */
 function vicInit(C) {

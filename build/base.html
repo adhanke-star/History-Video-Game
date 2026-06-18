@@ -8625,23 +8625,24 @@ function openMainMenu() {
   // SYNCHRONOUSLY. Same-origin files keep the canvas untainted. Lookup tries "<lastname>_<side>"
   // then "<lastname>" (only Anderson/Gregg differ by side). Late loads swap into visible badges.
   const PHOTO_MANIFEST = [
-    "anderson_cs","anderson_us","ayres","banks","barlow","barrett","beauregard","birney",
-    "blunt","bowen","bragg","breckinridge","buchanan","buell","buford","burnside",
-    "canby","churchill","corse","crawford","crittenden","curtis","custer","devens",
-    "dhhill","doubleday","dowling","early","evans","ewell","farragut","finegan",
+    "anderson_cs","anderson_us","ayres","banks","barlow","barrett","bates","beauregard","benjamin","birney",
+    "blair","blunt","bowen","bragg","breckinridge","buchanan","buell","buford","burnside",
+    "cameron","canby","chase","churchill","corse","crawford","crittenden","curtis","custer",
+    "davis","dennison","devens",
+    "dhhill","doubleday","dowling","early","evans","ewell","farragut","fessenden","finegan",
     "fitzhughlee","floyd","ford","forrest","fremont","french","gardner","geary",
     "getty","gibbon","gordon","grant","gregg_cs","gregg_us","hampton","hancock",
     "hardee","hays","heth","hill","hindman","hood","hooker","howard",
     "humphreys","hunter","imboden","jackson","johnson","johnston","jones","kenly",
-    "kershaw","kilpatrick","lamb","law","lee","longstreet","lyon","mackall",
-    "magruder","mahone","mcclellan","mcclernand","mcculloch","mcdowell","mclaws","mcpherson",
-    "meade","merritt","miles","milroy","newton","parke","pemberton","pender",
-    "pickett","pleasonton","pope","porter","price","ramseur","reynolds","ricketts",
-    "rodes","rosecrans","schofield","schurz","scurry","sedgwick","seymour","sheridan",
-    "sherman","shields","sibley","sickles","sigel","slocum","slough","stevens",
-    "stone","stuart","sturgis","sykes","taylor","terry","thomas","tilghman",
-    "trimble","tyler","vandorn","wade","wallace","warren","wheeler","wilcox",
-    "williams","worden","wright"
+    "kershaw","kilpatrick","lamb","law","lee","lincoln","longstreet","lyon","mackall",
+    "magruder","mahone","mallory","mcclellan","mcclernand","mcculloch","mcdowell","mclaws","mcpherson",
+    "meade","memminger","merritt","miles","milroy","newton","parke","pemberton","pender",
+    "pickett","pleasonton","pope","porter","price","ramseur","randolph","reagan","reynolds","ricketts",
+    "rodes","rosecrans","schofield","schurz","scurry","seddon","sedgwick","seward","seymour","sheridan",
+    "sherman","shields","sibley","sickles","sigel","slocum","slough","smith","speed","stanton","stevens",
+    "stone","stuart","sturgis","sykes","taylor","terry","thomas","tilghman","toombs",
+    "trenholm","trimble","tyler","usher","vandorn","wade","walker","wallace","warren","watts",
+    "welles","wheeler","wilcox","williams","worden","wright"
   ];
   const PHOTO_SET   = new Set(PHOTO_MANIFEST);
   const PHOTO_CACHE = {};                 // key -> framed dataURL (ready)

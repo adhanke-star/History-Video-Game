@@ -21,7 +21,7 @@ var _prRAIL_DECAY_CS = 0.07;     // CS rail throughput lost per turn (no replace
 var _prARMS_NEED = 45;           // per-turn small-arms need (both sides, normalized vs CS 16-turn scale)
 
 function _prCfg(side) {
-  var P = (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.economy && GAME_DATA.economy.production) ? GAME_DATA.economy.production : null;
+  var _d = gameData("economy"); var P = (_d && _d.production) ? _d.production : null;
   var d = {
     US: { arms: 85, arty: 40, foodDist: 0.85, importFactor: 1.0, railDecay: 0, ironCeiling: 9999 },
     CS: { arms: 6, arty: 17, foodDist: 0.45, importFactor: 0.6, railDecay: 0.07, ironCeiling: 20 }
@@ -39,13 +39,7 @@ function _prCfg(side) {
   return base;
 }
 
-function _prPush(C, line) {
-  try {
-    if (!C.production.log) C.production.log = [];
-    C.production.log.unshift(line);
-    if (C.production.log.length > 6) C.production.log.length = 6;
-  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_prPush:", e); }
-}
+function _prPush(C, line) { logPush(C && C.production, "log", line); }
 
 function prodInit(C) {
   if (!C) return;

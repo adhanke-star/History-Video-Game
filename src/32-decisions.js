@@ -27,16 +27,11 @@
    globals; _dec/dec prefix; render never mutates/saves; the tick + the choose-handler do.
    =========================================================================== */
 
-function _decData() {
-  return (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.decisions) ? GAME_DATA.decisions : null;
-}
+function _decData() { return gameData("decisions"); }
 function _decCards() { var d = _decData(); return (d && d.cards && d.cards.length) ? d.cards : []; }
 function _decById(id) { var cs = _decCards(); for (var i = 0; i < cs.length; i++) if (cs[i] && cs[i].id === id) return cs[i]; return null; }
 function _decClamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
-function _decEsc(s) {
-  s = (s == null) ? "" : String(s);
-  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-}
+var _decEsc = htmlEsc;
 /* Sanitize an id used BOTH as an element-id attribute AND a getElementById key —
    must stay in lockstep, so NOT _decEsc (whose entities would desync them). D50.11 */
 function _decIdSafe(s) { return String(s == null ? "" : s).replace(/[^A-Za-z0-9_-]/g, "_"); }
