@@ -1,0 +1,183 @@
+{
+  "_comment": "PHASE C-1 — CHANCELLORSVILLE, April 30-May 6, 1863 — the THIRD EASTERN MARQUEE battle for the __FIELD real-time engine (single-phase, the Fredericksburg/Shiloh pattern). Lee's greatest victory and his costliest: the Army of Northern Virginia, outnumbered ~2:1 (133,000 US vs 60,000 CS), splits its army in the face of the enemy — Jackson's legendary flank march on May 2 that crushed Hooker's XI Corps, the desperate fighting around the Chancellor House, Hazel Grove, and Fairview, and the mortal wounding of Stonewall Jackson by his own men at dusk on May 2. The battle is modeled as a SINGLE-PHASE engagement focused on the decisive action: Jackson's flank attack on the Union right (the XI Corps rout near Dowdall's Tavern / Wilderness Church), with the Confederate assault pressing toward the Chancellor House and the Union defense trying to rally and hold the crossroads. COORDINATE NOTE: the engine field is 1200x900 yards; per engine convention the ATTACKER (CS, the flank march) sits at HIGH z facing -z (facing 0) and the DEFENDER (US) forms nearer LOW/mid z facing +z (facing PI). The Chancellor House / crossroads is the defender's key hold line at mid-field. ARTILLERY uses the D75 UNIVERSAL GUN MODEL (real gun counts + realistic crew; fire = guns * the universal weight). ANTI-LOST-CAUSE: the lessons are command failure on BOTH sides — Hooker's loss of nerve (despite a ~2:1 advantage and a sound plan), Jackson's fatal wounding by friendly fire, the piecemeal Confederate attacks after Jackson fell, and the appalling cost (~30,000 total casualties; Lee lost roughly a fifth of his army, a rate he could not sustain). The 'flank march' is a monument to audacity AND to the cost of audacity: Jackson's death was the war's greatest single loss to the Confederate command. Sources: NPS Fredericksburg & Spotsylvania National Military Park (Chancellorsville Battlefield), American Battlefield Trust, the Official Records, Sears 'Chancellorsville', Gallagher 'The Battle of Chancellorsville', Krick 'Chancellorsville — Lee's Greatest Victory'.",
+  "chancellorsville": {
+    "id": "chancellorsville",
+    "name": "Chancellorsville — Lee's Greatest Victory",
+    "date": "May 1-3, 1863",
+    "place": "Chancellorsville, Spotsylvania County, Virginia — the Wilderness",
+    "blurb": "Lee's most audacious battle — outnumbered nearly two to one, he splits his army in the face of the enemy and sends Jackson on a twelve-mile flank march through the tangled Wilderness to crush Hooker's unsuspecting right wing. The surprise attack at dusk on May 2 routs the Union XI Corps and drives Hooker back to the Chancellor House — but in the twilight, Jackson is shot by his own men and dies eight days later, a loss Lee called 'losing my right arm.' Command either army in the decisive flank attack and the desperate Union rally — and learn why Chancellorsville was Lee's greatest victory and his costliest.",
+    "provenance": "Verified (high) for the phase sequence, the commanders and their fate, the terrain, and the casualty weight; Inferred (medium) for per-unit strengths and exact arrival minutes (the OOBs differ across Sears, Gallagher, Krick, and the Official Records — all corps/division totals are contested estimates). Sources: NPS Fredericksburg & Spotsylvania National Military Park (Chancellorsville Battlefield — the Chancellor House, the Wilderness Church, Dowdall's Tavern, the Flank March route, Hazel Grove, Fairview, Salem Church); American Battlefield Trust (~30,000 total casualties: 17,287 US / 13,303 CS / 30,590 total); the Official Records via aotw.org; Sears, 'Chancellorsville'; Gallagher, 'The Battle of Chancellorsville'; Krick, 'Chancellorsville — Lee's Greatest Victory'; Bigelow, 'The Campaign of Chancellorsville'. ANTI-LOST-CAUSE: the lessons are command failure on BOTH sides — Hooker's loss of nerve despite a ~2:1 advantage and a sound plan, Jackson's fatal wounding by friendly fire, the piecemeal Confederate attacks after Jackson fell, and the appalling cost that bled the Army of Northern Virginia of irreplaceable leadership. The 'flank march' is a monument to audacity AND to the cost of audacity: Jackson's death was the war's greatest single loss to the Confederate command, and Chancellorsville's victory did not solve Lee's strategic problem — the invasion of Pennsylvania that followed (Gettysburg) ended the Confederate offensive forever.",
+    "field": { "w": 1200, "h": 900 },
+    "attacker": "CS",
+    "defender": "US",
+    "defaultFog": false,
+    "timeLimitSec": 480,
+    "holdToWinSec": 140,
+    "menu": {
+      "title": "CHANCELLORSVILLE (1863)",
+      "deck": "Lee's greatest victory — the legendary flank march. Command either side in the decisive action: Jackson's surprise attack that crushed the Union right, or Hooker's desperate rally at the Chancellor House.",
+      "aria": "Chancellorsville, May 1863 — Lee's greatest victory. Command either army in the decisive flank attack and the Union rally: Jackson's surprise assault through the Wilderness or Hooker's defense of the Chancellor crossroads."
+    },
+    "sides": {
+      "heading": "Chancellorsville — Take Which Command?",
+      "intro": "May 1-3, 1863 · Lee's most audacious battle. Lead the army of your choosing.",
+      "US": {
+        "title": "Command the Union (Hooker's army)",
+        "badge": "&#9876; DEFEND",
+        "deck": "Hold the Chancellor crossroads against Jackson's flank attack. Do what Hooker could not: rally the broken XI Corps, hold the line, and turn a two-to-one advantage into a victory instead of a rout."
+      },
+      "CS": {
+        "title": "Command the Confederacy (Lee's army)",
+        "badge": "&#9819; ATTACK",
+        "deck": "Lead Jackson's flank march through the Wilderness and crush the Union right wing. Do what Jackson did: strike the unsuspecting flank and drive Hooker's army from the field."
+      },
+      "foot": "The other army is commanded by the AI. The decisive flank attack — the Confederate attacker must break the Union line before it rallies (press V in battle to toggle fog)."
+    },
+    "brief": {
+      "attack": "March through the tangled Wilderness and strike the Union right wing where it least expects you. The enemy's XI Corps is unsuspecting, their flank exposed — crush them before they can rally. <b>This is your war:</b> Jackson's flank march was the most audacious stroke of the war — repeat it and drive Hooker from the field.",
+      "defend": "The enemy has marched through the Wilderness and struck your right wing — the XI Corps is reeling. Rally the broken regiments, hold the Chancellor crossroads, and turn the battle. <b>This is your war:</b> Hooker had a two-to-one advantage and lost his nerve — hold the line and the greatest Confederate victory becomes a defeat."
+    },
+    "objective": {
+      "name": "The Chancellor House & the Crossroads",
+      "x": 600, "z": 394, "r": 80,
+      "note": "The Chancellor House and the vital crossroads at the center of Hooker's line. The Chancellor family plantation house served as Hooker's headquarters; the crossroads controlled the road network through the Wilderness. If the Confederate attacker seizes and holds it, Hooker's position collapses toward the Rappahannock. If the Union denies it until the clock runs out, the flank attack is contained and the army survives."
+    },
+    "leaders": {
+      "_note": "fate = a per-leader durability multiplier weighting the casualty model to HISTORY (>1 endures, <1 is fall-prone). At Chancellorsville, Jackson was mortally wounded by friendly fire (the war's greatest single loss to the Confederate command); Paxton was killed; Hooker was concussed by a cannonball striking his headquarters pillar; Berry was killed; the others survived.",
+      "US": [
+        { "id": "ld_hooker", "name": "Maj. Gen. Joseph Hooker", "short": "Hooker", "quality": 0.62, "radius": 260, "x": 600, "z": 180, "fate": 2.2,
+          "note": "Commanded the Army of the Potomac. Had a sound plan and a ~2:1 advantage — and lost his nerve after Jackson's flank attack. Concussed when a cannonball struck the pillar of the Chancellor House where he was standing; never fully recovered his composure. He survived. (Verified)",
+          "teach": "Gen. Hooker is struck by debris at the Chancellor House — the commanding general who had every advantage loses his nerve as the battle turns." },
+        { "id": "ld_howard", "name": "Maj. Gen. Oliver O. Howard", "short": "Howard", "quality": 0.48, "radius": 220, "x": 600, "z": 820, "fate": 2.4,
+          "note": "Commanded the XI Corps — the corps that was shattered by Jackson's flank attack. Howard had posted no pickets on his exposed right flank despite warnings; the corps was routed with ~2,400 casualties. He survived to command the Freedmen's Bureau after the war. (Verified)",
+          "teach": "Gen. Howard's XI Corps is shattered — the flank was exposed and Jackson's men pour out of the Wilderness onto the unsuspecting line." },
+        { "id": "ld_berry", "name": "Maj. Gen. Hiram G. Berry", "short": "Berry", "quality": 0.58, "radius": 190, "attach": "us_berry", "fate": 0.35,
+          "note": "Commanded the II Corps division that counterattacked to stem the rout. Killed on May 3 while rallying his men near the Chancellor House — one of the Union's most promising division commanders. (Verified)",
+          "teach": "Gen. Berry falls rallying his division — the counterattack loses its leader at the critical moment." },
+        { "id": "ld_sickles", "name": "Maj. Gen. Daniel E. Sickles", "short": "Sickles", "quality": 0.56, "radius": 230, "x": 600, "z": 500, "fate": 2.5,
+          "note": "Commanded the III Corps. His aggressive advance to Hazel Grove on May 2 created the gap that Jackson's flank march exploited — but his corps fought stubbornly to hold the high ground. He survived (lost a leg at Gettysburg two months later). (Verified)",
+          "teach": "Gen. Sickles's corps holds Hazel Grove — the high ground that buys time for the shattered line to reform." }
+      ],
+      "CS": [
+        { "id": "ld_jackson", "name": "Lt. Gen. Thomas J. 'Stonewall' Jackson", "short": "Jackson", "quality": 0.82, "radius": 280, "x": 600, "z": 830, "fate": 0.12,
+          "note": "Commanded the Second Corps, Army of Northern Virginia. Executed the legendary twelve-mile flank march through the Wilderness on May 2, crushing the Union XI Corps. At dusk on May 2, returning from a reconnaissance, he was shot by his own men — the 18th North Carolina Infantry — who mistook his party for Union cavalry. He died of pneumonia on May 10, 1863, eight days after being wounded. Lee said, 'He has lost his left arm, but I have lost my right arm.' (Verified)",
+          "teach": "Gen. Stonewall Jackson is struck down by his own men in the twilight — the Confederacy's greatest combat commander falls at the moment of his greatest triumph." },
+        { "id": "ld_stuart", "name": "Maj. Gen. J. E. B. Stuart", "short": "Stuart", "quality": 0.68, "radius": 250, "x": 600, "z": 780, "fate": 2.3,
+          "note": "Took command of Jackson's corps after Jackson was wounded. Pressed the attack on May 3 with characteristic energy, driving the Union from the field. He survived (killed at Yellow Tavern, May 1864). (Verified)",
+          "teach": "Gen. Stuart takes command after Jackson falls — the cavalryman leads the infantry forward in the dawn assault." },
+        { "id": "ld_rodes", "name": "Maj. Gen. Robert E. Rodes", "short": "Rodes", "quality": 0.66, "radius": 230, "attach": "cs_rodes_div", "fate": 2.0,
+          "note": "Commanded the lead division of Jackson's flank attack. Rodes's men struck Howard's exposed XI Corps first and drove the rout eastward along the Orange Turnpike. He survived Chancellorsville (killed at Third Winchester, September 1864). (Verified)",
+          "teach": "Gen. Rodes's division opens the attack — the flank assault crashes into the unsuspecting Union line." },
+        { "id": "ld_a_p_hill", "name": "Maj. Gen. A. P. Hill", "short": "A.P. Hill", "quality": 0.63, "radius": 220, "attach": "cs_ap_hill_div", "fate": 1.8,
+          "note": "Commanded the Light Division, the rear division of Jackson's column. After Jackson was wounded, Hill briefly took command before he too was wounded, passing the corps to Stuart. He survived Chancellorsville (killed at Petersburg, April 1865). (Verified)",
+          "teach": "Gen. A.P. Hill is wounded as command passes down the line — Jackson's corps keeps attacking while its senior leaders fall." },
+        { "id": "ld_paxton", "name": "Brig. Gen. Elisha F. Paxton", "short": "Paxton", "quality": 0.54, "radius": 180, "attach": "cs_ap_hill_div", "fate": 0.3,
+          "note": "Commanded the Stonewall Brigade — Jackson's old brigade. Killed on May 3 while leading his brigade in the dawn assault. He was the only Stonewall Brigade commander killed in the war. (Verified)",
+          "teach": "Gen. Paxton falls at the head of the Stonewall Brigade — Jackson's old command loses its leader in the dawn attack." }
+      ]
+    },
+    "supply": {
+      "US": { "x": 600, "z": 120, "name": "Union train — the United States Ford road to the Rappahannock" },
+      "CS": { "x": 600, "z": 865, "name": "Confederate train — the Orange Turnpike" }
+    },
+    "oob": {
+      "US": [
+        { "id": "us_xi_corps", "name": "XI Corps (Howard's shattered division)", "commander": "Maj. Gen. Oliver O. Howard", "arm": "inf", "weapon": "rifled", "men": 3200, "xp": 1, "x": 600, "z": 780, "facing": 3.14159, "formation": "line", "note": "The XI Corps — German-American regiments (the 'Dutchmen') unfairly blamed for the rout. Posted on the Union right with no pickets on the exposed flank; shattered by Jackson's surprise attack. The survivors rallied at the Chancellor House. (Verified identity; Inferred strength)" },
+        { "id": "us_ii_corps_chanc", "name": "II Corps (Hancock's division)", "commander": "Maj. Gen. Winfield Scott Hancock", "arm": "inf", "weapon": "rifled", "men": 3400, "xp": 2, "x": 600, "z": 450, "facing": 3.14159, "formation": "line", "note": "Hancock's division of the II Corps — held the center near the Chancellor House. Fought a stubborn defensive action as the flank collapsed. (Verified identity; Inferred strength)" },
+        { "id": "us_iii_corps_chanc", "name": "III Corps (Sickles's division)", "commander": "Maj. Gen. Daniel E. Sickles", "arm": "inf", "weapon": "rifled", "men": 3000, "xp": 2, "x": 500, "z": 520, "facing": 3.14159, "formation": "line", "note": "Sickles's III Corps — had advanced to Hazel Grove, creating a gap that Jackson exploited. Fought stubbornly to hold the high ground. (Verified identity; Inferred strength)" },
+        { "id": "us_berry_div", "name": "Berry's Division (the counterattack)", "commander": "Maj. Gen. Hiram G. Berry", "arm": "inf", "weapon": "rifled", "men": 2600, "xp": 2, "x": 600, "z": 360, "facing": 3.14159, "formation": "line", "note": "Berry's division of the II Corps — counterattacked to stem the rout from the flank attack. Berry was killed on May 3 rallying his men. (Verified identity; Inferred strength)" },
+        { "id": "us_battery_chanc", "name": "Union Artillery — Fairview batteries", "commander": "Capt. George W. Hazzard", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 8, "men": 160, "xp": 2, "x": 600, "z": 320, "facing": 3.14159, "formation": "line", "note": "Massed Union batteries at Fairview — the artillery platform that covered the Chancellor crossroads and broke up Confederate attacks on May 3. Universal gun model (D75): 8 guns, ~160 crew. (Verified)" }
+      ],
+      "CS": [
+        { "id": "cs_rodes_div", "name": "Jackson's Vanguard — Rodes's Division", "commander": "Maj. Gen. Robert E. Rodes", "arm": "inf", "weapon": "smooth", "men": 5200, "xp": 3, "x": 600, "z": 830, "facing": 0, "formation": "line", "note": "Rodes's division — the leading element of Jackson's flank attack. Struck the unsuspecting XI Corps from the west, routing them in minutes. Veterans (xp3 — Jackson's corps). (Verified identity; Inferred strength)" },
+        { "id": "cs_colston_div", "name": "Jackson's Main Body — Colston's Division", "commander": "Brig. Gen. Raleigh E. Colston", "arm": "inf", "weapon": "smooth", "men": 4800, "xp": 3, "x": 700, "z": 800, "facing": 0, "formation": "line", "note": "Colston's division — the second wave of Jackson's flank attack, following Rodes to exploit the breakthrough. Veterans (xp3). (Verified identity; Inferred strength)" },
+        { "id": "cs_ap_hill_div", "name": "Jackson's Reserve — A.P. Hill's Light Division", "commander": "Maj. Gen. A. P. Hill", "arm": "inf", "weapon": "smooth", "men": 3800, "xp": 3, "x": 800, "z": 820, "facing": 0, "formation": "line", "note": "A.P. Hill's Light Division — the rear division of Jackson's column, containing the Stonewall Brigade. Hill was wounded after Jackson fell; Stuart then took command of the corps. (Verified identity; Inferred strength)" },
+        { "id": "cs_stuart_cav_chanc", "name": "Stuart's Cavalry (horse artillery)", "commander": "Maj. Gen. J. E. B. Stuart", "arm": "cav", "weapon": "smooth", "men": 1200, "xp": 3, "x": 500, "z": 840, "facing": 0, "formation": "line", "note": "Stuart's cavalry — screened Jackson's flank march and pressed the pursuit after the XI Corps broke. (Verified identity; Inferred strength)" },
+        { "id": "cs_artillery_chanc", "name": "Confederate Artillery — Jackson's Corps batteries", "commander": "Col. Stapleton Crutchfield", "arm": "art", "weapon": "smooth", "role": "attack", "guns": 10, "men": 320, "xp": 3, "x": 600, "z": 780, "facing": 0, "formation": "line", "note": "Jackson's corps artillery — batteries that accompanied the flank march and unlimbered to support the assault on the Chancellor House. Universal gun model (D75): 10 guns, ~320 crew. (Verified)" }
+      ]
+    },
+    "reinforcements": [
+      { "id": "us_sedgwick", "side": "US", "atSec": 180, "name": "Sedgwick's VI Corps (from Fredericksburg)", "commander": "Maj. Gen. John Sedgwick", "arm": "inf", "weapon": "rifled", "men": 4000, "xp": 2, "x": 600, "z": 140, "facing": 3.14159, "formation": "column", "entry": "from the Fredericksburg crossing — Sedgwick's corps pressures Lee's rear", "note": "Sedgwick's VI Corps — had been left to demonstrate against Fredericksburg while Hooker marched on Chancellorsville. Sedgwick took Marye's Heights on May 3, then was checked at Salem Church; in this focused scenario his arrival represents the pressure from the Fredericksburg front that divided Lee's attention. (Verified context; Inferred field timing)" },
+      { "id": "cs_anderson", "side": "CS", "atSec": 150, "name": "Anderson's Division (Longstreet's Corps)", "commander": "Maj. Gen. Richard H. Anderson", "arm": "inf", "weapon": "smooth", "men": 3500, "xp": 2, "x": 600, "z": 860, "facing": 0, "formation": "line", "entry": "from the Confederate left — Anderson's division marches to reinforce the flank attack", "note": "Anderson's division of Longstreet's First Corps — held the Confederate left opposite Fredericksburg and was ordered to march to Jackson's support after the flank attack succeeded. (Verified)" },
+      { "id": "us_whipple", "side": "US", "atSec": 100, "name": "Whipple's Division (III Corps reserve)", "commander": "Brig. Gen. Amiel W. Whipple", "arm": "inf", "weapon": "rifled", "men": 2200, "xp": 1, "x": 600, "z": 280, "facing": 3.14159, "formation": "column", "entry": "from the reserve — Whipple's division rushes to plug the gap", "note": "Whipple's division of the III Corps — the reserve rushed forward to plug the gap created by the XI Corps rout. (Verified)" }
+    ],
+    "terrain": {
+      "hills": [
+        { "name": "the Chancellor House ridge", "x": 600, "z": 394, "h": 10, "s": 120, "note": "The low ridge around the Chancellor House — Hooker's headquarters and the key crossroads. The Union's last defensible line after the flank attack. (Verified)" },
+        { "name": "Hazel Grove", "x": 480, "z": 520, "h": 12, "s": 100, "note": "The high ground Sickles's III Corps advanced to — a key artillery platform that changed hands during the battle. (Verified)" },
+        { "name": "Fairview", "x": 600, "z": 320, "h": 8, "s": 90, "note": "The high ground just south of the Chancellor House where the Union massed its artillery to break up the Confederate attacks on May 3. (Verified)" }
+      ],
+      "woods": [
+        { "x": 600, "z": 700, "r": 180, "note": "the tangled Wilderness — dense second-growth forest of scrub oak and pine, so thick that lines of battle could not be maintained and artillery could barely move. The terrain that made Jackson's flank march possible (the Union could not see him coming) and that made the battle a confused, close-range melee. (Verified)" },
+        { "x": 400, "z": 600, "r": 100, "note": "the woods on the Union left — the approach route of the Confederate flank march. (Verified)" },
+        { "x": 800, "z": 600, "r": 100, "note": "the woods on the Union right — the direction of the Confederate main attack. (Verified)" },
+        { "x": 600, "z": 250, "r": 80, "note": "the timber south of the Chancellor House — the Union rallying ground and Sedgwick's approach route. (Verified)" }
+      ],
+      "walls": [
+        { "x1": 480, "z1": 440, "x2": 720, "z2": 438, "note": "the breastworks at the Chancellor House — hasty log-and-earth entrenchments thrown up by the Union defenders on May 2-3. Not a stone wall, but improvised cover that helped the rallied Union line hold. (Verified)" }
+      ],
+      "markers": [
+        { "kind": "road", "name": "the Orange Turnpike", "path": [[600, 860], [600, 600], [600, 120]], "note": "The main road from Orange Court House to Fredericksburg — Jackson's flank march route and the Confederate axis of advance. (Verified)" },
+        { "kind": "road", "name": "the Orange Plank Road", "path": [[300, 860], [300, 600], [300, 120]], "note": "The secondary road running parallel to the Turnpike — the other axis of the Confederate advance. (Verified)" },
+        { "kind": "road", "name": "the Ely's Ford Road", "path": [[120, 860], [120, 600], [120, 120]], "note": "The road from the Rappahannock to the Chancellor House — Hooker's line of communication and retreat. (Verified)" },
+        { "kind": "label", "name": "the Chancellor House", "x": 600, "z": 394, "note": "Hooker's headquarters — the key crossroads and the Union's last defensible line." },
+        { "kind": "label", "name": "the Wilderness — Jackson's flank march route", "x": 600, "z": 700, "note": "The tangled second-growth forest through which Jackson marched 12 miles to strike the Union right — the most audacious flank march of the war." },
+        { "kind": "label", "name": "Dowdall's Tavern", "x": 600, "z": 780, "note": "The XI Corps position — where Jackson's flank attack struck the unsuspecting Union right wing at ~5:15 p.m. on May 2." },
+        { "kind": "label", "name": "to the Rappahannock & United States Ford", "x": 600, "z": 120, "note": "The Union line of retreat — Hooker's army fell back across the river on the night of May 5-6." },
+        { "kind": "creek", "name": "Lewis Creek", "path": [[120, 560], [400, 575], [700, 580], [1080, 565]], "note": "A small creek that ran through the Wilderness — a minor terrain obstacle. (Verified)" }
+      ]
+    },
+    "endNote": {
+      "US": {
+        "US": "History is overturned. Your army held the Chancellor crossroads against Jackson's flank attack — the ground that historically was lost when the XI Corps was routed. In May 1863 Hooker's army was driven from the field in Lee's greatest victory; under your command the line held and the Army of the Potomac did not retreat across the Rappahannock.",
+        "CS": "History is overturned. The Union held the Chancellor crossroads — the ground your army historically carried in the flank attack. In May 1863 Jackson's march crushed the Union right and drove Hooker from the field; under your defense the Confederate assault broke against the rallied Union line and never reached the crossroads."
+      },
+      "CS": {
+        "US": "History holds. As in May 1863, Jackson's flank march crushed the Union right wing and drove Hooker's army from the field — the Chancellor crossroads fell, the XI Corps was shattered, and the Army of the Potomac retreated across the Rappahannock. But Jackson was mortally wounded by his own men in the twilight, a loss that cost the Confederacy its greatest combat commander on the eve of Gettysburg.",
+        "CS": "History holds. As in May 1863, your flank march crushed the Union right wing and drove Hooker's army from the field — the Chancellor crossroads fell, the XI Corps was shattered, and the Army of the Potomac retreated across the Rappahannock. But Jackson was mortally wounded by his own men in the twilight, a loss that cost the Confederacy its greatest combat commander on the eve of Gettysburg."
+      },
+      "draw": "A bloodier stalemate than history's clear Confederate victory — the Chancellor crossroads changed hands in the chaos of the Wilderness, and neither army could claim the field when the fighting died."
+    },
+    "teaching": {
+      "title": "Chancellorsville — Audacity and Its Cost",
+      "cards": [
+        {
+          "id": "cv_flank_march",
+          "head": "The flank march — audacity at its peak",
+          "body": "Outnumbered nearly two to one, Lee made the most audacious decision of the war: he split his army in the face of the enemy. Jackson marched 12 miles through the tangled Wilderness — a route so difficult that his own officers doubted it could be done — and at ~5:15 p.m. on May 2, his 28,000 men crashed into the unsuspecting Union right wing. The XI Corps, posted without pickets on its exposed flank, was routed in minutes. The flank march is a monument to audacity — and to the cost of audacity: Jackson was mortally wounded by his own men that same night.",
+          "provenance": "Verified (high) — NPS Fredericksburg & Spotsylvania; American Battlefield Trust; Sears, 'Chancellorsville'; Krick, 'Chancellorsville — Lee's Greatest Victory'."
+        },
+        {
+          "id": "cv_hooker",
+          "head": "Hooker's lost nerve — the other side of the story",
+          "body": "Joseph Hooker had a sound plan: leave a holding force at Fredericksburg, march the main army through the Wilderness to turn Lee's left, and fight on ground of his choosing. He had ~133,000 men against Lee's ~60,000 — a two-to-one advantage. When Jackson's flank attack struck, Hooker's plan was still working on paper — but he lost his nerve. Concussed when a cannonball struck the pillar of the Chancellor House where he stood, he abandoned the offensive and ordered a retreat. The lesson is not 'Lee was a genius' but 'a commander with every advantage can lose a battle by losing his composure.'",
+          "provenance": "Verified (high) — Sears, 'Chancellorsville'; Gallagher, 'The Battle of Chancellorsville'; NPS Fredericksburg & Spotsylvania."
+        },
+        {
+          "id": "cv_jackson_death",
+          "head": "Jackson's death — the war's greatest loss to the Confederate command",
+          "body": "At ~9:00 p.m. on May 2, returning from a reconnaissance beyond his lines, Jackson and his party were mistaken for Union cavalry by the 18th North Carolina Infantry. The regiment fired a volley that struck Jackson three times — twice in the left arm, once in the right hand. His left arm was amputated, but pneumonia set in, and he died on May 10, 1863, at Guinea Station. Lee wrote: 'He has lost his left arm, but I have lost my right arm.' Jackson's death was the war's greatest single loss to the Confederate command — the man who had been Lee's most aggressive and reliable corps commander was gone on the eve of Gettysburg, where his absence would be felt in every critical decision.",
+          "provenance": "Verified (high) — NPS Fredericksburg & Spotsylvania (Jackson Shrine); American Battlefield Trust; Sears; Krick."
+        },
+        {
+          "id": "cv_cost",
+          "head": "The cost of victory — Lee's irreplaceable losses",
+          "body": "Chancellorsville cost ~30,000 total casualties and imposed a brutal percentage loss on Lee's smaller army. Lee lost ~13,000 men out of ~60,000 (roughly a fifth), a rate he could not sustain. Among the dead or mortally wounded were Jackson (the army's best corps commander), Paxton (the Stonewall Brigade's commander), and dozens of field officers. The victory did not solve Lee's strategic problem: the invasion of Pennsylvania that followed ended at Gettysburg. Chancellorsville is the war's clearest lesson that a tactical victory can still become a strategic liability.",
+          "provenance": "Verified (high) — American Battlefield Trust (30,590 total: 17,287 US / 13,303 CS); Sears; Gallagher."
+        },
+        {
+          "id": "cv_xi_corps",
+          "head": "The 'Dutchmen' — the scapegoats of Chancellorsville",
+          "body": "The XI Corps was largely composed of German-American immigrants — the 'Dutchmen' of the popular press. After the rout, they were unfairly blamed for the defeat: cowardly foreigners who ran at the first shot. The truth is more complex: Howard had posted no pickets on his exposed right flank despite repeated warnings; the corps was struck by 28,000 men advancing out of a forest where no attack was expected; and many XI Corps regiments fought stubbornly before being overwhelmed. The scapegoating of the German-Americans is a lesson in how defeat is blamed on the 'other' — a pattern that would repeat throughout American history.",
+          "provenance": "Verified (high) — NPS Fredericksburg & Spotsylvania; Sears; Keller, 'Chancellorsville and the Germans' (in 'The Battle of Chancellorsville', ed. Gallagher)."
+        }
+      ],
+      "codex": {
+        "id": "codex_chancellorsville",
+        "title": "Chancellorsville — Lee's Greatest Victory, April 30-May 6, 1863",
+        "summary": "Lee's most audacious battle — outnumbered ~2:1, he split his army and sent Jackson on a twelve-mile flank march through the Wilderness that crushed Hooker's XI Corps and drove the Army of the Potomac from the field. But Jackson was mortally wounded by friendly fire, and the victory cost Lee ~22% of his army — irreplaceable losses on the eve of Gettysburg. Chancellorsville is the war's clearest lesson that a tactical victory can be a strategic disaster.",
+        "axes": { "timeline": "1863", "theater": "Eastern", "people": ["Hooker", "Howard", "Berry", "Sickles", "Sedgwick", "Lee", "Jackson", "Stuart", "Rodes", "A.P. Hill", "Paxton", "Colston"], "battle": "Chancellorsville" }
+      }
+    }
+  }
+}

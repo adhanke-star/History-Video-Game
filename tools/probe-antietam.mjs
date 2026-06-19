@@ -229,18 +229,20 @@ const DOM = `(() => {
       try{ fldExit(true); }catch(e){}
       return { interphasePaused:true, advancedTo:__FIELD.objective.name, idxBefore:idxBefore }; });
 
-    step('RUNNING-TALLY HUD: fldRenderTop prefixes the phase/sector label ("Phase N/3 ... sectors US x - CS y") on a multi-phase battle, and is "" on a single-objective battle (byte-identical text)', function(){
+    step('RUNNING-TALLY HUD: fldRenderTop exposes the compact phase/sector chip ("Phase N/3 ... US x / CS y") on a multi-phase battle, with fuller sector tooltip text available, and is "" on a single-objective battle (byte-identical text)', function(){
       if(typeof _fldPhaseTopLabel!=='function') throw new Error('_fldPhaseTopLabel missing');
       fldLaunchSandbox({renderer:'2d', scenario:'antietam', autoBoth:true, seed:1});
-      var lbl=_fldPhaseTopLabel();
-      if(lbl.indexOf('Phase 1/3')<0 || lbl.toLowerCase().indexOf('sectors')<0) throw new Error('multi-phase top label wrong: '+lbl);
+      var lbl=_fldPhaseTopLabel(), parts=(typeof _fldPhaseTopParts==='function')?_fldPhaseTopParts():null;
+      if(lbl.indexOf('Phase 1/3')<0 || lbl.indexOf('US ')<0 || lbl.indexOf(' / CS ')<0) throw new Error('multi-phase top label wrong: '+lbl);
+      if(!parts || parts.chip!==lbl || !parts.full || parts.full.toLowerCase().indexOf('sectors')<0) throw new Error('phase top parts wrong: '+JSON.stringify(parts));
+      if(!document.getElementById('fldSector')) throw new Error('compact phase chip #fldSector missing from tactical top bar');
       fldExit(true);
       // single-objective -> ""
       fldLaunchSandbox({renderer:'2d', scenario:'fredericksburg', autoBoth:true, seed:1});
       var lbl2=_fldPhaseTopLabel();
       if(lbl2!=='') throw new Error('single-objective top label must be "" (byte-identical), got: '+lbl2);
       fldExit(true);
-      return { multiPhaseLabel:lbl, singleObjectiveLabel:lbl2 }; });
+      return { multiPhaseLabel:lbl, fullLabel:parts.full, singleObjectiveLabel:lbl2 }; });
 
     step('AGGREGATE END-SCREEN: _fldPhasesEndHtml builds the phase-by-phase table + the aggregate verdict (and is "" for a single-objective battle)', function(){
       if(typeof _fldPhasesEndHtml!=='function') throw new Error('_fldPhasesEndHtml missing');

@@ -36,9 +36,20 @@ const SETUP = `(() => {
   function strength(side){ var c=0; for(var i=0;i<__FIELD.units.length;i++){ var u=__FIELD.units[i]; if(u.side===side&&u.alive) c+=u.men; } return Math.round(c); }
   function liveCount(){ return __FIELD.units.length; }
   function runToEnd(maxSteps){ if(__FIELD.phase==='deploy'){__FIELD.phase='battle';__FIELD.paused=false;} var n=0; while(__FIELD.phase==='battle' && n<maxSteps){ fldSimStep(0.05); n++; } return n; }
+  function launchOpts(opts){ var out={}, k; opts=opts||{}; for(k in opts){ if(Object.prototype.hasOwnProperty.call(opts,k) && k!=='maxSteps') out[k]=opts[k]; } return out; }
   // run Shiloh to completion with the LIVE stacked config (officers+logistics+arms ON), honouring the
   // scenario default fog (OFF). autoBoth -> AI both sides.
-  function runSH(opts){ __FIELD._officersOff=false; __FIELD._logisticsOff=false; __FIELD._armsOff=false; fldLaunchSandbox(opts); __FIELD.phase='battle'; __FIELD.paused=false; var n=runToEnd(20000); return { w:__FIELD.winner, us:strength('US'), cs:strength('CS'), steps:n, t:Math.round(__FIELD.t), winBy:__FIELD.winBy, atk:__FIELD.attacker }; }
+  function runSH(opts){
+    opts=opts||{};
+    var maxSteps = opts.maxSteps || ((opts.scenario==='antietam'||opts.scenario==='gettysburg') ? 60000 : 20000);
+    __FIELD._officersOff=false; __FIELD._logisticsOff=false; __FIELD._armsOff=false;
+    fldLaunchSandbox(launchOpts(opts)); __FIELD.phase='battle'; __FIELD.paused=false;
+    var n=runToEnd(maxSteps), log=(__FIELD.phaseLog||[]).map(function(e){ return { name:e.name, w:e.winner, by:e.winBy }; });
+    return { w:__FIELD.winner, us:strength('US'), cs:strength('CS'), steps:n, t:Math.round(__FIELD.t), winBy:__FIELD.winBy,
+      atk:__FIELD.attacker, phase:__FIELD.phase, scenario:__FIELD.scenario, phasesPlayed:log.length, idx:__FIELD.phaseIdx,
+      score:__FIELD.phaseScore ? { US:__FIELD.phaseScore.US, CS:__FIELD.phaseScore.CS } : null,
+      log:log, hold:{ US:Math.round(__FIELD.holdSecs.US), CS:Math.round(__FIELD.holdSecs.CS) } };
+  }
   try {
     if (typeof fldLaunchSandbox!=='function' || typeof __FIELD==='undefined' || typeof fldScenarioInit!=='function')
       return JSON.stringify({ok:false, fatal:'__FIELD engine / scenario seam missing'});
@@ -47,7 +58,7 @@ const SETUP = `(() => {
 
     var DATA = (GAME_DATA && GAME_DATA.shiloh) ? GAME_DATA.shiloh.shiloh : null;
 
-    step('DATA present: GAME_DATA.shiloh.shiloh with OOB + the Hornets\' Nest wall + reinforcements', function(){
+    step('DATA present: GAME_DATA.shiloh.shiloh with OOB + the Hornets\\' Nest wall + reinforcements', function(){
       if(!DATA) throw new Error('GAME_DATA.shiloh.shiloh missing');
       if(!DATA.terrain || !DATA.terrain.walls || !DATA.terrain.walls.length) throw new Error('no Hornets Nest wall in terrain');
       if(!DATA.objective || DATA.objective.name.indexOf('Pittsburg Landing')<0) throw new Error('objective not Pittsburg Landing: '+(DATA.objective&&DATA.objective.name));
@@ -59,7 +70,7 @@ const SETUP = `(() => {
       if(rf.length<3) throw new Error('want >=3 reinforcement waves (Buell + Nelson + Wood), got '+rf.length);
     });
 
-    step('DATA: attacker is CS (the first day\'s surprise assault)', function(){
+    step('DATA: attacker is CS (the first day\\'s surprise assault)', function(){
       if(DATA.attacker!=='CS') throw new Error('attacker must be CS for Shiloh: '+DATA.attacker);
       if(DATA.defender!=='US') throw new Error('defender must be US for Shiloh: '+DATA.defender);
     });
@@ -87,7 +98,7 @@ const SETUP = `(() => {
       for(var i=0;i<csArt.length;i++){ if(!csArt[i].guns) throw new Error('CS battery '+csArt[i].id+' missing guns field'); }
     });
 
-    step('DATA: teaching cards present (the cost, the surprise, Johnston\'s death, the piecemeal assault, the Hornets\' Nest)', function(){
+    step('DATA: teaching cards present (the cost, the surprise, Johnston\\'s death, the piecemeal assault, the Hornets\\' Nest)', function(){
       var cards=DATA.teaching&&DATA.teaching.cards||[];
       if(cards.length<5) throw new Error('want >=5 teaching cards, got '+cards.length);
       var ids=cards.map(function(c){return c.id;}).join(',');
@@ -105,7 +116,7 @@ const SETUP = `(() => {
       if(codex.axes.theater!=='Western') throw new Error('codex theater wrong: '+codex.axes.theater);
     });
 
-    step('DATA: terrain has the Sunken Road / Hornets\' Nest wall', function(){
+    step('DATA: terrain has the Sunken Road / Hornets\\' Nest wall', function(){
       var walls=DATA.terrain.walls||[];
       var found=false;
       for(var i=0;i<walls.length;i++){ if(walls[i].note.indexOf('SUNKEN ROAD')>=0||walls[i].note.indexOf('HORNETS')>=0) found=true; }
@@ -140,11 +151,12 @@ const SETUP = `(() => {
     });
 
     // ---- EMPIRICAL: run the battle AI-vs-AI (autoBoth) with the LIVE stacked config ----
-    var r1 = runSH({ scenario:'shiloh', renderer:'classic', autoBoth:true, playerSide:'US' });
+    var r1 = runSH({ scenario:'shiloh', renderer:'none', autoBoth:true, playerSide:'US', seed:101 });
     step('Shiloh AI-vs-AI resolves to a winner (no hang, no NaN)', function(){
       if(!r1.w) throw new Error('no winner after '+r1.steps+' steps, t='+r1.t);
       if(r1.steps<100) throw new Error('battle ended too fast: '+r1.steps+' steps');
       if(r1.steps>19999) throw new Error('battle did not resolve (hit step limit): '+r1.steps);
+      return r1;
     });
 
     step('Shiloh AI-vs-AI: no NaN in any unit after resolution', function(){
@@ -162,23 +174,28 @@ const SETUP = `(() => {
       var usLoss=usStart-r1.us, csLoss=csStart-r1.cs;
       if(usLoss<100) throw new Error('US casualties too low: '+usLoss+' (start '+usStart+', end '+r1.us+')');
       if(csLoss<100) throw new Error('CS casualties too low: '+csLoss+' (start '+csStart+', end '+r1.cs+')');
+      return { usLoss:usLoss, csLoss:csLoss, winner:r1.w, winBy:r1.winBy };
     });
 
-    step('Shiloh AI-vs-AI: attacker is CS (the first day\'s assault)', function(){
+    step('Shiloh AI-vs-AI: attacker is CS (the first day\\'s assault)', function(){
       if(r1.atk!=='CS') throw new Error('attacker should be CS: '+r1.atk);
+      return { attacker:r1.atk, winner:r1.w, winBy:r1.winBy };
     });
 
     // ---- DETERMINISM: same seed -> same winner ----
-    var r2 = runSH({ scenario:'shiloh', renderer:'classic', autoBoth:true, playerSide:'US' });
+    var r2 = runSH({ scenario:'shiloh', renderer:'none', autoBoth:true, playerSide:'US', seed:101 });
     step('Shiloh AI-vs-AI: deterministic (same seed -> same winner)', function(){
       if(r1.w!==r2.w) throw new Error('winner changed: '+r1.w+' vs '+r2.w);
+      if(r1.steps!==r2.steps || r1.winBy!==r2.winBy) throw new Error('same seed changed shape: '+JSON.stringify(r1)+' vs '+JSON.stringify(r2));
+      return { winner:r1.w, winBy:r1.winBy, steps:r1.steps };
     });
 
     // ---- CS player: command the Confederacy ----
-    var rCS = runSH({ scenario:'shiloh', renderer:'classic', autoBoth:false, playerSide:'CS' });
+    var rCS = runSH({ scenario:'shiloh', renderer:'none', autoBoth:false, playerSide:'CS', seed:7 });
     step('Shiloh CS player: resolves to a winner (no hang)', function(){
       if(!rCS.w) throw new Error('CS player: no winner after '+rCS.steps+' steps');
       if(rCS.steps>19999) throw new Error('CS player: did not resolve (hit step limit)');
+      return rCS;
     });
 
     step('Shiloh CS player: no NaN in any unit', function(){
@@ -186,10 +203,11 @@ const SETUP = `(() => {
     });
 
     // ---- US player: command the Union ----
-    var rUS = runSH({ scenario:'shiloh', renderer:'classic', autoBoth:false, playerSide:'US' });
+    var rUS = runSH({ scenario:'shiloh', renderer:'none', autoBoth:false, playerSide:'US', seed:7 });
     step('Shiloh US player: resolves to a winner (no hang)', function(){
       if(!rUS.w) throw new Error('US player: no winner after '+rUS.steps+' steps');
       if(rUS.steps>19999) throw new Error('US player: did not resolve (hit step limit)');
+      return rUS;
     });
 
     step('Shiloh US player: no NaN in any unit', function(){
@@ -197,47 +215,57 @@ const SETUP = `(() => {
     });
 
     // ---- REGRESSION GUARD: the sandbox still builds and resolves ----
-    var sand = runSH({ scenario:'sandbox', renderer:'classic', autoBoth:true });
+    var sand = runSH({ scenario:'sandbox', renderer:'none', autoBoth:true, seed:101 });
     step('Sandbox still resolves (no regression from Shiloh)', function(){
       if(!sand.w) throw new Error('sandbox: no winner');
       if(sand.steps>19999) throw new Error('sandbox: did not resolve');
+      return sand;
     });
 
     // ---- REGRESSION GUARD: Bull Run still builds and resolves ----
-    var br = runSH({ scenario:'bullrun1', renderer:'classic', autoBoth:true });
+    var br = runSH({ scenario:'bullrun1', renderer:'none', autoBoth:true, seed:101 });
     step('Bull Run still resolves (no regression from Shiloh)', function(){
       if(!br.w) throw new Error('Bull Run: no winner');
       if(br.steps>19999) throw new Error('Bull Run: did not resolve');
+      return br;
     });
 
     // ---- REGRESSION GUARD: Fredericksburg still builds and resolves ----
-    var fb = runSH({ scenario:'fredericksburg', renderer:'classic', autoBoth:true });
+    var fb = runSH({ scenario:'fredericksburg', renderer:'none', autoBoth:true, seed:101 });
     step('Fredericksburg still resolves (no regression from Shiloh)', function(){
       if(!fb.w) throw new Error('Fredericksburg: no winner');
       if(fb.steps>19999) throw new Error('Fredericksburg: did not resolve');
+      return fb;
     });
 
     // ---- REGRESSION GUARD: Antietam still builds and resolves ----
-    var ant = runSH({ scenario:'antietam', renderer:'classic', autoBoth:true });
+    var ant = runSH({ scenario:'antietam', renderer:'none', autoBoth:true, seed:101, maxSteps:60000 });
     step('Antietam still resolves (no regression from Shiloh)', function(){
       if(!ant.w) throw new Error('Antietam: no winner');
-      if(ant.steps>19999) throw new Error('Antietam: did not resolve');
+      if(ant.steps>59999) throw new Error('Antietam: did not resolve');
+      if(ant.phasesPlayed!==3 || ant.winBy!=='phases') throw new Error('Antietam phase run incomplete: '+JSON.stringify(ant));
+      return ant;
     });
 
     // ---- REGRESSION GUARD: Gettysburg still builds and resolves ----
-    var gt = runSH({ scenario:'gettysburg', renderer:'classic', autoBoth:true });
+    var gt = runSH({ scenario:'gettysburg', renderer:'none', autoBoth:true, seed:101, maxSteps:60000 });
     step('Gettysburg still resolves (no regression from Shiloh)', function(){
       if(!gt.w) throw new Error('Gettysburg: no winner');
-      if(gt.steps>19999) throw new Error('Gettysburg: did not resolve');
+      if(gt.steps>59999) throw new Error('Gettysburg: did not resolve');
+      if(gt.phasesPlayed!==3 || gt.winBy!=='phases') throw new Error('Gettysburg phase run incomplete: '+JSON.stringify(gt));
+      return gt;
     });
 
     // ---- BALANCE: Shiloh should be CS-favored (the first day's surprise assault) ----
     // Run 8 seeds to check balance
-    var seeds = []; for(var si=0;si<8;si++){ seeds.push(runSH({ scenario:'shiloh', renderer:'classic', autoBoth:true, playerSide:'US' })); }
+    var seedVals = [1,7,21,42,55,101,303,909];
+    var seeds = []; for(var si=0;si<seedVals.length;si++){ seeds.push(runSH({ scenario:'shiloh', renderer:'none', autoBoth:true, playerSide:'US', seed:seedVals[si] })); }
     var csWins = 0, usWins = 0, draws = 0;
     for(var si=0;si<seeds.length;si++){ if(seeds[si].w==='CS')csWins++; else if(seeds[si].w==='US')usWins++; else draws++; }
-    step('Shiloh balance (8 seeds): CS wins >=4/8 (the first day\'s assault is CS-favored)', function(){
-      if(csWins<4) throw new Error('CS wins only '+csWins+'/8 — Shiloh should be CS-favored: CS '+csWins+' US '+usWins+' draw '+draws);
+    step('Shiloh balance (8 seeds): CS wins >=4/8 (the first day\\'s assault is CS-favored)', function(){
+      var outcomes = seeds.map(function(r,i){ return seedVals[i]+':'+r.w+'/'+r.winBy+'@'+r.t+'s'; });
+      if(csWins<4) throw new Error('CS wins only '+csWins+'/8 — Shiloh should be CS-favored: CS '+csWins+' US '+usWins+' draw '+draws+' ['+outcomes.join(', ')+']');
+      return { csWins:csWins+'/8', usWins:usWins+'/8', draws:draws+'/8', outcomes:outcomes };
     });
 
     // ---- MENU BUTTON: the Shiloh button injects ----
@@ -259,30 +287,43 @@ const SETUP = `(() => {
 })()`;
 
 async function main() {
-  var html = readFileSync(join(ROOT, 'civil_war_generals.html'), 'utf8');
   var server = null, browser = null;
+  var probe = cfg.baseUrl + '/' + cfg.file;
   try {
-    // start a static server
-    server = spawn('python3', ['-m', 'http.server', '0', '--bind', '127.0.0.1'], { cwd: ROOT, stdio: ['ignore', 'pipe', 'pipe'] });
-    var addr = '';
-    for await (var chunk of server.stdout) { addr += String(chunk); if (addr.includes('Serving HTTP') || addr.includes('127.0.0.1')) break; }
-    var port = (addr.match(/127\.0\.0\.1:(\d+)/) || [])[1];
-    if (!port) { console.error('server start failed:', addr); process.exit(1); }
-    var url = 'http://127.0.0.1:' + port + '/civil_war_generals.html';
-    console.log('server on :' + port);
+    if (!(await up(probe))) {
+      server = spawn('python3', ['-m', 'http.server', String(cfg.port)], { cwd: ROOT, stdio: 'ignore' });
+      for (var i = 0; i < 60; i++) { if (await up(probe)) break; await sleep(150); }
+    }
 
-    // launch headed Chrome with SwiftShader
-    browser = await chromium.launch({ headless: false, args: GL });
-    var page = await browser.newPage();
-    page.on('console', function(msg) { if (msg.type() === 'error') console.error('  [PAGE]', msg.text()); });
-    page.on('pageerror', function(err) { console.error('  [PAGE ERROR]', err.message); });
+    try { browser = await chromium.launch({ channel: 'chrome', headless: true, args: GL }); }
+    catch (e) { browser = await chromium.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true, args: GL }); }
+    var page = await browser.newPage({ viewport: cfg.viewport });
+    var pageerrors = [];
+    page.on('pageerror', function(err) { pageerrors.push(String(err.message)); });
 
-    await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
-    await sleep(2000);
+    await page.goto(probe, { waitUntil: 'load', timeout: 60000 });
+    await sleep(500);
 
     // inject the probe
     var result = await page.evaluate(SETUP);
     var data = JSON.parse(result);
+    data.pageerrors = pageerrors;
+    data.screenshot = await page.evaluate(`(() => {
+      try {
+        fldLaunchSandbox({ renderer:'2d', scenario:'shiloh', autoBoth:true, playerSide:'US', seed:21 });
+        __FIELD.phase='battle'; __FIELD.paused=false;
+        if (typeof fldStepN === 'function') fldStepN(900, 0.05);
+        else for (var i=0;i<900 && __FIELD.phase==='battle';i++) fldSimStep(0.05);
+        __FIELD.paused=true;
+        if (typeof fld2dDraw === 'function') fld2dDraw();
+        if (typeof fldRenderTop === 'function') fldRenderTop();
+        if (typeof fldRenderHud === 'function') fldRenderHud();
+        return { scenario:__FIELD.scenario, phase:__FIELD.phase, winner:__FIELD.winner, t:Math.round(__FIELD.t), units:__FIELD.units.length };
+      } catch(e) {
+        return { error:String(e&&e.message||e) };
+      }
+    })()`);
+    await sleep(250);
 
     // write the probe result
     var outPath = join(OUT, 'probe-shiloh.json');
@@ -297,15 +338,16 @@ async function main() {
     var ok = data.steps.filter(function(s){ return s.ok; }).length;
     var fail = data.steps.filter(function(s){ return !s.ok; }).length;
     console.log('\nprobe-shiloh: ' + ok + '/' + data.steps.length + ' steps ok' + (fail ? ', ' + fail + ' FAIL' : ', 0 fail'));
-    if (!data.ok || fail) {
+    if (!data.ok || fail || pageerrors.length) {
       data.steps.forEach(function(s){ if (!s.ok) console.error('  FAIL:', s.name, s.err); });
       if (data.errors && data.errors.length) data.errors.forEach(function(e){ console.error('  GLOBAL ERROR:', e); });
+      if (pageerrors.length) pageerrors.forEach(function(e){ console.error('  PAGE ERROR:', e); });
       process.exit(1);
     }
     console.log('ALL OK');
   } finally {
     if (browser) try { await browser.close(); } catch(e) {}
-    if (server) { server.kill('SIGTERM'); setTimeout(function(){ try{ server.kill('SIGKILL'); }catch(e){} }, 2000); }
+    if (server) server.kill();
   }
 }
 main().catch(function(e){ console.error('FATAL:', e); process.exit(1); });

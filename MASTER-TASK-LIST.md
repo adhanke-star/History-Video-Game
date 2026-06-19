@@ -1,9 +1,9 @@
 # MASTER TASK LIST — The Civil War Video Game
 
-**Last updated:** 2026-06-17  
-**Live head:** `ad0338c` — Phase C-2.5: T9-audio.js audio system (D77)  
-**Phases complete:** A ✅, B (B1–B6) ✅, C-2 (Antietam bug-hunt) ✅  
-**Phase in progress:** C (tactical breadth)
+**Last updated:** 2026-06-19
+**Live head:** working tree — D85 leftover gate closed + 3D objective beacon complete
+**Phases complete:** A ✅, B (B1–B6) ✅, C-1 Eastern marquee ✅, C-2 (Antietam bug-hunt) ✅
+**Phase in progress:** C (tactical breadth — Western theater / Vicksburg or C3 USCT next)
 
 ---
 
@@ -20,19 +20,48 @@
 ## 🔴 IMMEDIATE / UNFINISHED (open items from last session)
 
 - [x] **Complete the Antietam bug-hunt (D76)** — The adversarial bug-hunt for the multi-phase Antietam milestone was launched but NOT completed before commit. Must finish: run the hunt, fix any confirmed findings, re-probe, re-commit. (Dossier complete ✅, all probes pass ✅)
-- [ ] **Phase C-1 remaining Eastern marquee battles** — Gettysburg (3-day multi-phase), Chancellorsville, Malvern Hill. Same data-driven recipe as Fredericksburg/Antietam.
+- [x] **Phase C-1 Eastern marquee battles** — Malvern Hill is now complete and verified (data/malvern-hill.json + probe-malvern-hill 24/24). Eastern marquee C1 is complete.
+- [x] **Custom-battle builder C4** — First-class single-phase tactical scenario builder with validation, JSON import/export, local slots, explicit custom-ID launch path, focused probe, and full regression gate (D84).
+- [x] **D77-D84 leftover gate** — Codex audited the uncommitted lower-model/session leftovers, fixed one Gettysburg probe-output bug, vetted the C4/Malvern/Chancellorsville/custom-builder/visual/help work, and kept Blender closed. (D85)
+
+## 🧭 PRIORITY PICKER / MODEL ROUTING (use when Aaron asks to choose from the list)
+
+### Best suited to Codex / high-reasoning
+- [ ] **Vicksburg / siege campaign architecture** — Decide single-phase vs multi-phase vs siege-shaped pattern; design data/OOB/terrain/timing/probes without combat fudges.
+- [ ] **Chickamauga / Chattanooga design pass** — Decide whether this is one battle, linked battles, or phases; solve theater framing, terrain lessons, balance, and roster placement.
+- [x] **Custom-battle builder C4** — Scenario schema UI, validation, launch contracts, export/shareable JSON, local slots, focused probe, and no-regression. Complete 2026-06-18 (D84).
+- [ ] **Modern battles selectable in Classic hex / Phase D start** — Frozen-Classic bridge work; high regression risk.
+- [ ] **Tactical Engineering Corps on the field** — Pontoons, entrenchments, abatis, obstacle clearing, B5 slider interaction, and strategic engineering linkage.
+- [ ] **Full-campaign playthrough probe** — Long-running cross-layer gate from strategy to battle result to saves/victory.
+- [ ] **USCT battle arc design** — The Crater, New Market Heights, Olustee, Nashville; historically sensitive and mechanically distinct.
+- [ ] **S3 alt-history engine** — Divergence tiers, hinge forks, emergent-only toggle, and divergence log.
+- [ ] **S4 codex/glossary architecture** — Multi-axis codex by timeline/topic/person/battle with provenance and cross-links.
+- [ ] **Comprehensive WCAG 2.2 AA audit plan + first pass** — Broad UI judgment and remediation sequencing.
+- [ ] **Phase H asset-ingestion pipeline** — Extend `tools/build.mjs` for tiered/compressed PD media with offline fallback.
+- [ ] **Western theater roster/order/probe framework** — Lock Shiloh → Vicksburg → Chickamauga/Chattanooga → Atlanta/March → Franklin/Nashville ordering and guardrails.
+
+### Suitable for DeepSeek / Cline only after Codex packets it
+- [ ] Draft source dossiers from specified URLs/books into a fixed template.
+- [ ] Fill teaching-card copy after Codex defines schema, sources, and acceptance criteria.
+- [ ] Mechanical help-copy updates after roster changes.
+- [ ] Add simple probe assertions copied from an existing probe pattern.
+- [ ] Run exact gate commands and paste exact outputs.
+- [ ] Screenshot cataloging / artifact inventory.
+- [ ] Small JSON cleanup with strict acceptance criteria.
+
+**Loot status:** Armory/Cannon Corps have loot-style rarity tiers, but Phase I standalone loot/survival is not built. Standalone drops/inventory, light survival, and Oregon-Trail journey mode remain open.
 
 ---
 
 ## 🟠 PHASE C — TACTICAL BREADTH (more real-time battles, data-driven)
 
-### C1 Eastern marquee (remaining)
-- [ ] **Gettysburg** — 3-day multi-phase epic (Day 1: McPherson Ridge/Oak Hill; Day 2: Little Round Top/Devil's Den/Wheatfield; Day 3: Pickett's Charge)
-- [ ] **Chancellorsville** — Jackson's flank march, Stonewall's wounding
-- [ ] **Malvern Hill** — The Seven Days' culminating artillery duel
+### C1 Eastern marquee (complete)
+- [x] **Gettysburg** — 3-day multi-phase epic (Day 1: McPherson Ridge/Oak Hill; Day 2: Little Round Top/Devil's Den/Wheatfield; Day 3: Pickett's Charge; probe-gettysburg 16/16 in latest gate)
+- [x] **Chancellorsville** — Jackson's flank march, Stonewall's wounding (data/chancellorsville.json + registry + menu rank 35; probe-chancellorsville 24/24; 2026-06-18)
+- [x] **Malvern Hill** — The Seven Days' culminating artillery duel (data/malvern-hill.json + registry/menu rank 18; probe-malvern-hill 24/24; roster order now Bull Run → Malvern Hill → Antietam → Fredericksburg → Chancellorsville → Gettysburg → Shiloh; 2026-06-18)
 
 ### C2 Western theater battles
-- [ ] **Shiloh** (already has data scaffold)
+- [x] **Shiloh** — First Western theater battle (probe-shiloh 29/29 in latest gate)
 - [ ] **Vicksburg** (siege campaign)
 - [ ] **Chickamauga / Chattanooga**
 - [ ] **Atlanta / the March to the Sea**
@@ -45,7 +74,7 @@
 - [ ] **Nashville** (Dec 1864 — USCT-heavy)
 
 ### C4 Custom-battle builder
-- [ ] **Custom-battle builder** — Tools-first, ahead of some breadth (D68). Let players design their own scenarios.
+- [x] **Custom-battle builder** — Tools-first, ahead of some breadth (D68). Players can author single-phase real-time tactical scenarios with metadata, sides/briefs, objective/field size, terrain/markers, OOB, artillery, reinforcements, optional leaders/supply/teaching/provenance, validation, export/import/shareable JSON, six local slots, and launch through `fldScenarioInit`. Phase authoring remains deferred honestly; no per-custom combat fudges. (D84, 2026-06-18)
 
 ---
 
@@ -121,7 +150,7 @@
 - [ ] **H1b Brigade badges & insignia / battle flags** (Aaron's run-k idea) — Each brigade's battle flag/colors on the unit badge; ANV Southern Cross, Hardee/Polk Western patterns, US national & regimental colors, Army of the Potomac corps badges
 - [ ] **Asset-ingestion pipeline** (D71) — Extend `tools/build.mjs` to Base64-embed + TIER/COMPRESS media w/ offline fallback so the single file stays portable as it grows
 - [ ] **H2 Reenactment footage** — Contextual cutaways at key beats (skippable, offline→procedural fallback)
-- [ ] **H3 Richer 3D/animation** — Reuse run-h PBR/HDRI/post-FX; period broadsheet/engraving UI throughout
+- [~] **H3 Richer 3D/animation** — Reuse run-h PBR/HDRI/post-FX; period broadsheet/engraving UI throughout. Partial: D85 adds a procedural 3D objective beacon and extends the tactical visual probe to 8 captures with beacon assertions.
 - [ ] **H4 Richer audio** — PD period tunes + battlefield/camp soundscapes + UI cues, all accessible (toggles/captions/volume), default off. (T9-audio.js D77 is the start of this.)
 
 ---
@@ -159,7 +188,7 @@ The real-time UG:G-style engine is largely BUILT (P0 sandbox ✅, P1a Bull Run �
 - [x] **Antietam bug-hunt completion** — Dossier complete, all probes pass, committed.
 - [ ] **Phase order confirmation** — C (breadth) → D (hex) → E (strategic) → F (content) → G (theaters) → H (graphics) → I (loot) → J (polish) per D61. Confirm still correct.
 - [ ] **Audio (H4) timing** — D61 says Phase H, but D77 (T9-audio.js) already started it. Confirm whether audio work continues now or pauses.
-- [ ] **Custom-battle builder (C4)** — D68 said "EARLY" (tools-first, ahead of some breadth). Clarify when.
+- [x] **Custom-battle builder (C4)** — Built as a single-phase V1 tactical scenario authoring tool with import/export, slots, validation, launch contract, and focused/regression probes. (D84)
 - [ ] **Loot/survival (Phase I)** — D68 elevated to "core pillar" (always-on progression + journey mode). D61 says defer. Resolve the tension.
 - [ ] **Zoomable battle scale** (D68) — Brigades expand into regiments on zoom. New tactical-engine requirement beyond current brigade abstraction. Not yet designed.
 - [ ] **Heavy embedded media** (D68) — Bundle PD imagery/footage into deliverable. Plan Phase H to compress/tier so portability survives.
@@ -183,7 +212,9 @@ The real-time UG:G-style engine is largely BUILT (P0 sandbox ✅, P1a Bull Run �
 - **Phase B-4** — Distinct arm roles (artillery/cavalry) (D67)
 - **Phase B-5** — Difficulty/realism presets (D70)
 - **Phase B-6** — CS-player "command either side" (D72)
-- **Phase C-1** — Fredericksburg (D73)
+- **Phase C-1** — Eastern marquee battles complete: Fredericksburg (D73), Gettysburg, Chancellorsville (D81), Malvern Hill (D82)
 - **Phase C-1.5** — Universal artillery gun model (D75)
-- **Phase C-2** — Antietam multi-phase epic (D76 — bug-hunt incomplete)
+- **Phase C-2** — Antietam multi-phase epic (D76 — bug-hunt later completed; current probe green)
 - **Phase C-2.5** — T9-audio.js audio system (D77)
+- **Phase C-4** — Custom-battle builder single-phase V1 complete (D84)
+- **D85** — Uncommitted D77-D84 leftover gate closed; tactical 3D objective beacon + visual probe 8/8

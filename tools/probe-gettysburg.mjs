@@ -24,6 +24,17 @@ const cfg = JSON.parse(readFileSync(join(__dirname, 'shots.json'), 'utf8'));
 const GL = ['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist','--enable-webgl','--disable-dev-shm-usage'];
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 async function up(u){ try{ const r=await fetch(u,{method:'HEAD'}); return r.ok||r.status===200; }catch{ return false; } }
+async function closeBrowser(browser){
+  if (!browser) return;
+  try {
+    await Promise.race([browser.close(), sleep(3000)]);
+  } catch {}
+}
+function printResult(result){
+  console.log('probe-gettysburg ok=' + result.ok + ' steps=' + (result.steps?result.steps.length:0) + ' pageerrors=' + (result.pageerrors?result.pageerrors.length:0));
+  if (result.fatal) console.log('  FATAL ' + result.fatal);
+  if (result.steps) for (const s of result.steps) { if (!s.ok) console.log('  FAIL ' + s.name + ' :: ' + s.err); else console.log('  ok   ' + s.name.slice(0,60) + ' :: ' + JSON.stringify(s.v)); }
+}
 
 const SETUP = `(() => {
   var R = { steps: [], errors: [], ok: true };
@@ -152,12 +163,13 @@ const SETUP = `(() => {
       try{ fldExit(true); }catch(e){}
       return { gMode:G.mode }; });
 
-    step('SINGLE-OBJECTIVE PATH UNREGRESSED: the sandbox + Bull Run + Fredericksburg + Antietam still build & resolve with NO phase machinery (phases===null) -> byte-identity preserved', function(){
+    step('SINGLE-OBJECTIVE PATH UNREGRESSED: the sandbox + Bull Run + Fredericksburg still build & resolve with NO phase machinery, while Antietam still uses phases', function(){
       // sandbox
       fldLaunchSandbox({renderer:'none', autoBoth:true, seed:12345});
       if(__FIELD.scenario!=='sandbox') throw new Error('sandbox tag wrong');
       if(__FIELD.phases!==null) throw new Error('phase machinery LEAKED into the sandbox: phases='+__FIELD.phases);
       if(__FIELD.units.length!==4) throw new Error('sandbox want 4 units, got '+__FIELD.units.length);
+      var sandboxPhases=__FIELD.phases;
       // bull run: single-objective, phases must be null
       G.settings.tacticalFog=false; __FIELD._officersOff=true; __FIELD._logisticsOff=true; __FIELD._armsOff=true;
       fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:101});
@@ -173,9 +185,10 @@ const SETUP = `(() => {
       // antietam: multi-phase, phases must be set
       fldLaunchSandbox({renderer:'none', scenario:'antietam', autoBoth:true, seed:101});
       if(__FIELD.phases===null) throw new Error('Antietam phases not set');
+      var antietamPhases=__FIELD.phases.length;
       __FIELD.phase='battle'; __FIELD.paused=false; n=0; while(__FIELD.phase==='battle'&&n<60000){ fldSimStep(0.05); n++; } var anW=__FIELD.winner;
       if(['US','CS','draw'].indexOf(anW)<0) throw new Error('Antietam did not resolve: '+anW);
-      return { sandboxPhases:__FIELD.phases, bullrunWinner:brW, fredericksburgWinner:fbW, antietamWinner:anW }; });
+      return { sandboxPhases:sandboxPhases, bullrunWinner:brW, fredericksburgWinner:fbW, antietamPhases:antietamPhases, antietamWinner:anW }; });
 
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
@@ -232,11 +245,12 @@ const DOM = `(() => {
       try{ fldExit(true); }catch(e){}
       return { interphasePaused:true, advancedTo:__FIELD.objective.name, idxBefore:idxBefore }; });
 
-    step('RUNNING-TALLY HUD: fldRenderTop prefixes the phase/sector label ("Phase N/3 ... sectors US x - CS y") on a multi-phase battle, and is "" on a single-objective battle (byte-identical text)', function(){
+    step('RUNNING-TALLY HUD: fldRenderTop exposes the compact phase/sector chip ("Phase N/3 ... US x / CS y") on a multi-phase battle, and is "" on a single-objective battle (byte-identical text)', function(){
       if(typeof _fldPhaseTopLabel!=='function') throw new Error('_fldPhaseTopLabel missing');
       fldLaunchSandbox({renderer:'2d', scenario:'gettysburg', autoBoth:true, seed:1});
       var lbl=_fldPhaseTopLabel();
-      if(lbl.indexOf('Phase 1/3')<0 || lbl.toLowerCase().indexOf('sectors')<0) throw new Error('multi-phase top label wrong: '+lbl);
+      if(lbl.indexOf('Phase 1/3')<0 || lbl.indexOf('US ')<0 || lbl.indexOf(' / CS ')<0) throw new Error('multi-phase top label wrong: '+lbl);
+      if(!document.getElementById('fldSector')) throw new Error('compact phase chip #fldSector missing from tactical top bar');
       fldExit(true);
       // single-objective -> ""
       fldLaunchSandbox({renderer:'2d', scenario:'fredericksburg', autoBoth:true, seed:1});
@@ -299,9 +313,8 @@ const DOM = `(() => {
   } catch(e){ result = { ok:false, fatal:String(e&&e.message||e), pageerrors }; }
   finally {
     writeFileSync(join(OUT,'probe-gettysburg.json'), JSON.stringify(result, null, 2));
-    await browser.close(); if (srv) srv.kill();
+    printResult(result);
+    await closeBrowser(browser); if (srv) srv.kill();
   }
-  console.log('probe-gettysburg ok=' + result.ok + ' steps=' + (result.steps?result.steps.length:0) + ' pageerrors=' + (result.pageerrors?result.pageerrors.length:0));
-  if (result.fatal) console.log('  FATAL ' + result.fatal);
-  if (result.steps) for (const s of result.steps) { if (!s.ok) console.log('  FAIL ' + s.name + ' :: ' + s.err); else console.log('  ok   ' + s.name.slice(0,60) + ' :: ' + JSON.stringify(s.v)); }
+  if (!result.ok || result.fatal || (result.pageerrors && result.pageerrors.length)) process.exit(1);
 })();

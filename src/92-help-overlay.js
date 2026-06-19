@@ -47,8 +47,8 @@ function _hpShowWelcome() {
     '</div>' +
     '<hr class="rule">' +
     '<p style="font-size:13px;opacity:.8;margin-bottom:10px"><strong>Quick start:</strong> ' +
-      'Click <em>"Federal Armies Muster for War"</em> for a Union campaign, or try a standalone ' +
-      'battle (Bull Run, Fredericksburg, or Antietam) from the Field Dispatches or tactical battle buttons.</p>' +
+      'Click <em>"Federal Armies Muster for War"</em> for a Union campaign, or use the tactical battle buttons for ' +
+      'First Bull Run, Malvern Hill, Antietam, Fredericksburg, Chancellorsville, Gettysburg, or Shiloh. The Skirmish button opens a custom real-time fight.</p>' +
     '<p style="font-size:12px;opacity:.65;margin-bottom:14px">Press <kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;font-size:11px">?</kbd> anytime for controls help.</p>' +
     '<div class="btn-row">' +
       '<button class="bigbtn" id="hpWelcomeOk" aria-label="Got it — proceed to the main menu">To the Field</button>' +
@@ -73,7 +73,7 @@ function _hpShowHelp() {
     '<div style="font-size:12px;line-height:1.7;opacity:.9">' +
       '<div style="margin-bottom:4px"><strong>Start:</strong> Choose Union or Confederate from the main menu.</div>' +
       '<div style="margin-bottom:4px"><strong>Between battles:</strong> The President\'s Desk auto-surfaces. Manage your economy, buy weapons, appoint generals, handle politics.</div>' +
-      '<div style="margin-bottom:4px"><strong>War Department tabs:</strong> The War Effort &middot; Cabinet &middot; Command &middot; Treasury &middot; Armory &middot; Diplomacy &middot; Victory &middot; Decisions &middot; The Press &middot; Morale.</div>' +
+      '<div style="margin-bottom:4px"><strong>War Department tabs:</strong> Use the War Effort overview, Treasury, Armory, Diplomacy, Cabinet, Decisions, The Press, Command, Victory, and related tabs as they appear.</div>' +
       '<div style="margin-bottom:4px"><strong>Battles:</strong> The pre-battle briefing shows your army strength. Choose prep options (entrench, forced march, etc.) then fight.</div>' +
       '<div style="margin-bottom:4px"><strong>Victory:</strong> Break the enemy\'s will to fight (negotiated peace) or achieve military dominance. Both sides have distinct paths.</div>' +
     '</div>' +
@@ -81,33 +81,36 @@ function _hpShowHelp() {
 
     '<h2 style="font-size:15px;margin:12px 0 6px">Tactical Battles (Real-Time)</h2>' +
     '<div style="font-size:12px;line-height:1.7;opacity:.9">' +
-      '<div style="margin-bottom:4px"><strong>Select:</strong> Click a brigade. Shift+click to multi-select.</div>' +
-      '<div style="margin-bottom:4px"><strong>Move:</strong> Drag the selected unit(s) to a position. Facing = drag direction.</div>' +
-      '<div style="margin-bottom:4px"><strong>Orders:</strong> <kbd>L</kbd>=Line &middot; <kbd>C</kbd>=Column &middot; <kbd>H</kbd>=Hold &middot; <kbd>A</kbd>=Charge/Attack &middot; <kbd>R</kbd>=Retreat/Rally.</div>' +
-      '<div style="margin-bottom:4px"><strong>Speed:</strong> <kbd>1</kbd>/<kbd>2</kbd>/<kbd>3</kbd> set sim speed. <kbd>Space</kbd> = pause/resume.</div>' +
-      '<div style="margin-bottom:4px"><strong>Camera:</strong> Scroll wheel or <kbd>+</kbd>/<kbd>&minus;</kbd> to zoom. Right-drag or arrow keys to pan.</div>' +
-      '<div style="margin-bottom:4px"><strong>Win:</strong> Hold the objective (red circle) for 45 continuous seconds, or rout all enemy units.</div>' +
+      '<div style="margin-bottom:4px"><strong>Select:</strong> Click a friendly brigade. Shift+click adds another brigade; <kbd>A</kbd> selects all of your live brigades.</div>' +
+      '<div style="margin-bottom:4px"><strong>Move:</strong> With a selection, drag from open ground to place the line. Facing follows the drag direction.</div>' +
+      '<div style="margin-bottom:4px"><strong>Orders:</strong> <kbd>L</kbd>=Line &middot; <kbd>C</kbd>=Column &middot; <kbd>H</kbd>=Hold &middot; <kbd>F</kbd>/<kbd>Enter</kbd>=Charge.</div>' +
+      '<div style="margin-bottom:4px"><strong>Speed:</strong> <kbd>1</kbd>/<kbd>2</kbd>/<kbd>3</kbd> set 1x / 2x / 4x. <kbd>Space</kbd> begins, pauses, or resumes.</div>' +
+      '<div style="margin-bottom:4px"><strong>Battle settings:</strong> <kbd>V</kbd> toggles fog, <kbd>P</kbd> toggles auto-pause, and <kbd>G</kbd> opens the settings drawer.</div>' +
+      '<div style="margin-bottom:4px"><strong>Win:</strong> Carry or deny the scenario objective, break the enemy, or in multi-phase battles win enough sectors for the aggregate result.</div>' +
     '</div>' +
     '<hr class="rule">' +
 
     '<h2 style="font-size:15px;margin:12px 0 6px">Keyboard Shortcuts</h2>' +
     '<div style="display:grid;grid-template-columns:auto 1fr;gap:2px 14px;font-size:12px;opacity:.85">' +
       '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">Space</kbd><span>Pause / Resume</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">1 2 3</kbd><span>Speed 1× / 2× / 3×</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">1 2 3</kbd><span>Speed 1x / 2x / 4x</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">L</kbd><span>Line formation</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">C</kbd><span>Column formation</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">H</kbd><span>Hold position</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">A</kbd><span>Charge / Attack</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">R</kbd><span>Retreat / Rally</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">F / Enter</kbd><span>Charge nearest enemy</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">A</kbd><span>Select all friendly brigades</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">Tab</kbd><span>Next unit</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">Esc</kbd><span>Deselect / Close overlay</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">V</kbd><span>Fog of war on/off</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">P</kbd><span>Auto-pause on/off</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">G</kbd><span>Battle settings drawer</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">Esc</kbd><span>Exit battle or close an open tactical dialog</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">?</kbd><span>This help panel</span>' +
     '</div>' +
     '<hr class="rule">' +
 
     '<h2 style="font-size:15px;margin:12px 0 6px">Tips for New Players</h2>' +
     '<div style="font-size:12px;line-height:1.7;opacity:.85">' +
-      '<div style="margin-bottom:4px">&bull; <strong>Try a standalone battle first</strong> — Bull Run or the Skirmish sandbox — before starting a campaign.</div>' +
+      '<div style="margin-bottom:4px">&bull; <strong>Try a standalone battle first</strong> — First Bull Run, Malvern Hill, Shiloh, or the Skirmish sandbox — before starting a campaign.</div>' +
       '<div style="margin-bottom:4px">&bull; <strong>Use the Recruit preset</strong> (Command &amp; Realism button on the menu) for easier AI on your first battle.</div>' +
       '<div style="margin-bottom:4px">&bull; <strong>Fog of war</strong> is ON by default for Bull Run (historically accurate). Toggle in battle settings if you prefer full visibility.</div>' +
       '<div style="margin-bottom:4px">&bull; <strong>Flanking</strong> is devastating — get a unit on the enemy\'s side or rear for massive morale damage.</div>' +
@@ -129,11 +132,18 @@ function _hpShowHelp() {
 /* ============ (3) IN-BATTLE TACTICAL HELP OVERLAY ============ */
 function _hpShowTacticalHelp() {
   var overlay = document.getElementById("hpTacOverlay");
-  if (overlay) { overlay.style.display = (overlay.style.display === "none") ? "flex" : "none"; return; }
+  if (overlay) {
+    overlay.style.display = (overlay.style.display === "none") ? "flex" : "none";
+    if (overlay.style.display !== "none") {
+      try { var cb0 = document.getElementById("hpTacClose"); if (cb0) cb0.focus(); } catch (e0) {}
+    }
+    return;
+  }
 
   overlay = document.createElement("div");
   overlay.id = "hpTacOverlay";
   overlay.setAttribute("role", "dialog");
+  overlay.setAttribute("aria-modal", "true");
   overlay.setAttribute("aria-label", "Tactical controls reference");
   overlay.style.cssText = "position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.7);padding:20px";
   overlay.innerHTML =
@@ -143,23 +153,24 @@ function _hpShowTacticalHelp() {
       '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px">' +
         '<div><strong>Select unit:</strong> Click</div>' +
         '<div><strong>Multi-select:</strong> Shift+Click</div>' +
-        '<div><strong>Move:</strong> Drag to position</div>' +
+        '<div><strong>Select all:</strong> A</div>' +
         '<div><strong>Facing:</strong> Drag direction</div>' +
+        '<div><strong>Move:</strong> Drag open ground</div>' +
         '<div><strong>Space:</strong> Pause/Resume</div>' +
-        '<div><strong>1/2/3:</strong> Speed</div>' +
+        '<div><strong>1/2/3:</strong> 1x / 2x / 4x</div>' +
         '<div><strong>L:</strong> Line formation</div>' +
         '<div><strong>C:</strong> Column (march)</div>' +
         '<div><strong>H:</strong> Hold position</div>' +
-        '<div><strong>A:</strong> Charge!</div>' +
-        '<div><strong>R:</strong> Retreat/Rally</div>' +
+        '<div><strong>F / Enter:</strong> Charge</div>' +
+        '<div><strong>V:</strong> Fog on/off</div>' +
+        '<div><strong>P:</strong> Auto-pause</div>' +
+        '<div><strong>G:</strong> Settings</div>' +
         '<div><strong>Tab:</strong> Next unit</div>' +
-        '<div><strong>+/&minus;:</strong> Zoom</div>' +
-        '<div><strong>Arrows:</strong> Pan camera</div>' +
-        '<div><strong>Esc:</strong> Close this</div>' +
+        '<div><strong>Esc:</strong> Close dialog</div>' +
         '<div><strong>?:</strong> Toggle help</div>' +
       '</div>' +
       '<hr style="border:none;border-top:1px solid #8b7a56;margin:10px 0">' +
-      '<p style="font-size:11px;opacity:.7;margin:0;text-align:center">Hold the objective (red zone) for 45s to win &mdash; or break all enemy morale.</p>' +
+      '<p style="font-size:11px;opacity:.7;margin:0;text-align:center">Carry or deny the objective, break the enemy, or win the multi-phase sector tally.</p>' +
       '<div style="text-align:center;margin-top:12px">' +
         '<button id="hpTacClose" style="padding:6px 20px;background:#2a2418;border:1px solid #8b7a56;color:#cdb87f;border-radius:4px;cursor:pointer;font-family:Georgia,serif">Got it</button>' +
       '</div>' +
@@ -168,8 +179,13 @@ function _hpShowTacticalHelp() {
   var root = document.getElementById("fldRoot") || document.body;
   root.appendChild(overlay);
   overlay.addEventListener("click", function (e) { if (e.target === overlay) overlay.style.display = "none"; });
+  overlay.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); overlay.style.display = "none"; try { var rr = document.getElementById("fldRoot"); if (rr) rr.focus(); } catch (e2) {} }
+    else if (e.key === "Tab") { e.preventDefault(); var cb = document.getElementById("hpTacClose"); if (cb) cb.focus(); }
+  });
   var closeBtn = document.getElementById("hpTacClose");
   if (closeBtn) closeBtn.addEventListener("click", function () { overlay.style.display = "none"; });
+  try { if (closeBtn) closeBtn.focus(); } catch (e3) {}
 }
 
 /* ============ (4) ENHANCED PAUSE INDICATOR ============ */
@@ -182,8 +198,8 @@ function _hpInjectPauseIndicator() {
 
   var ind = document.createElement("div");
   ind.id = "hpPauseInd";
-  ind.style.cssText = "position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:28px;font-weight:bold;letter-spacing:3px;color:rgba(205,184,127,.8);text-shadow:0 2px 8px rgba(0,0,0,.7);pointer-events:none;z-index:9990;display:none;font-family:Georgia,serif";
-  ind.textContent = "⏸ PAUSED";
+  ind.style.cssText = "position:absolute;top:42px;right:14px;max-width:min(360px,56vw);font-size:12px;font-weight:bold;letter-spacing:.08em;color:#f2e8d5;background:#0c0f14d9;border:1px solid #8b7a56;border-radius:4px;padding:5px 9px;pointer-events:none;z-index:9990;display:none;font-family:Georgia,serif;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;";
+  ind.textContent = "Paused";
   ind.setAttribute("aria-live", "polite");
   root.appendChild(ind);
 }
@@ -193,6 +209,7 @@ function _hpUpdatePause() {
   var ind = document.getElementById("hpPauseInd");
   if (!ind) return;
   if (__FIELD && __FIELD.launched && __FIELD.paused && __FIELD.phase === "battle") {
+    ind.textContent = __FIELD._apReason ? ("Paused: " + __FIELD._apReason) : "Paused";
     ind.style.display = "block";
   } else {
     ind.style.display = "none";

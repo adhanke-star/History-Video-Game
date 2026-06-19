@@ -1,3 +1,71 @@
+# WAKE-UP — 2026-06-19: LEFTOVER GATE CLOSED + 3D OBJECTIVE BEACON (C4/Malvern/Chancellorsville vetted; visual probe 8/8)
+
+**Newest:** Codex first inspected the uncommitted Cline/DeepSeek/lower-model leftovers in the dirty working tree. The D77-D84-era C4/Malvern/Chancellorsville/custom-builder/roster/visual/help/docs work matched prior live status, so it was preserved and fully vetted rather than reverted. No unrelated user/project changes were reset.
+
+**Fix:** `tools/probe-gettysburg.mjs` had a misleading summary value: it read `sandboxPhases` after launching Antietam as a control, so the output looked like Gettysburg had Antietam phases. The probe now captures Gettysburg's single-objective state before the Antietam launch and reports `antietamPhases` separately. No gameplay behavior changed.
+
+**Visual/readability pass:** `src/tactical/T0-field-sandbox.js` now adds a procedural 3D `objectiveBeacon` at the scenario objective. It is code-only Three.js geometry/materials, with no imported assets/textures, no browsing/downloads/accounts, and no Blender. It does not alter sim rules, balance, AI, controls, 2D, or Classic.
+
+**Verified:** build GATE OK; custom builder 9/9; roster 8/8; Chancellorsville 24/24; Malvern Hill 24/24; Shiloh 29/29; Gettysburg 16/16; Antietam 16/16; Fredericksburg 22/22; Bull Run 15/15; field 13/13; officers/logistics/arms/presets/csplayer/campaign-link all green; tactical visuals 8/8 with 0 pageerrors and `textureWarnings:0`; broad legacy probe sweep green (`ai`, `autopause`, `fog`, `auto-resolve`, `armory-field`, `blockade`, `bridge`, `cab-exploit`, `cabinet`, `cannon`, `command`, `conditioning`, `cover`, `decisions`, `desk`, `economy`, `engineering`, `manpower`, `morale`, `motion`, `portraits`, `press`, `production`, `targeting`, `victory`, `weapons`); bootprobe/t1probe ok; Classic diag paints (`nonBlank:346`); `git diff --check` clean; `node tools/build.mjs --check` GATE OK.
+
+**Known residuals:** tolerated pre-existing resource/favIcon 404 console messages and benign Chromium readback/performance warnings in screenshot paths. Blender remains closed.
+
+**Next chat priority:** continue Codex-owned Phase C breadth, likely Vicksburg/siege architecture and probes. A good graphics follow-up is 3D unit label/selection readability after the objective beacon.
+
+---
+
+# ☀ WAKE-UP — 2026-06-18: **CUSTOM BATTLE BUILDER C4 COMPLETE** (single-phase tactical scenario authoring; import/export/slots/launch gates green)
+
+**Newest:** C4 is now playable and verified. The main menu has a first-class **Custom Battle Builder** flow for real-time tactical scenarios: scenario metadata, sides/briefs, objective, field size, terrain hills/woods/walls/markers, OOB units, artillery/gun counts, reinforcement/deployment timing, optional leaders, supply, teaching cards, provenance, export/shareable JSON, import, and six local persistence slots.
+
+**Architecture:** C4 is intentionally **single-phase V1**. Phase authoring is deferred until an editor for `phases[]` can be probed as safely as authored historical phases. Custom scenarios stay out of the historical `fldScenarioRegistry()`; `fldScenarioData(id)` falls back to `fldCustomScenarioData(id)` only for explicit `custom_...` IDs. Valid customs launch through the same single-phase `fldScenarioInit` path as historical battles, with field size reset every launch before custom `field.w/h` is applied.
+
+**Validation:** required fields, safe unique IDs, unsafe JSON keys, duplicate IDs, bounds/clamps, objective placement, reinforcement timing, side ownership, leader attachment ownership, realistic artillery crew ratios (12-40 per gun), malformed JSON, `phases[]`, and forbidden combat/damage keys are all blocked. Custom artillery uses the universal gun model; no per-battle damage fudge was added.
+
+**Verified:** `node tools/build.mjs` GATE OK; `node tools/probe-custom-battle-builder.mjs` 9/9; `node tools/probe-tactical-roster.mjs` 8/8; `node tools/probe-field.mjs` 13/13; `node tools/probe-bullrun.mjs` 15/15; `node tools/probe-malvern-hill.mjs` 24/24; `node tools/probe-antietam.mjs` 16/16; `node tools/probe-fredericksburg.mjs` 22/22; `node tools/probe-chancellorsville.mjs` 24/24; `node tools/probe-gettysburg.mjs` 16/16; `node tools/probe-shiloh.mjs` 29/29; officers/logistics/arms/presets/csplayer/campaign-link probes all green; `node tools/probe-tactical-visuals.mjs` 6/6; boot/t1 ok; Classic diag nonBlank 346; `git diff --check` clean. Known residual console noise remains the tolerated resource 404s / Chromium warnings already present in the probe artifacts.
+
+**Next chat priority:** C4 is complete. Continue Phase C breadth with Western theater work (likely Vicksburg), C3 USCT battles, or another Codex-owned priority-picker item.
+
+---
+
+# ☀ WAKE-UP — 2026-06-18: **MALVERN HILL COMPLETE + EASTERN MARQUEE C1 COMPLETE** (Seven Days artillery duel; roster/order/gates green)
+
+**Newest:** Malvern Hill is now playable and verified. `data/malvern-hill.json` adds the Seven Days' culminating artillery duel as a data-driven single-phase scenario: CS attacker, US defender, fog off, cautious Confederate AI assault, Crew House Ridge / Malvern Plateau objective, open killing fields, approach woods/ravines, roads, James River gunboat marker, leaders, gun-model artillery, reinforcements, teaching/codex, side cards, and end-note framing.
+
+**Roster guard:** the public battle order is now First Bull Run → Malvern Hill → Antietam → Fredericksburg → Chancellorsville → Gettysburg → Shiloh. `tools/probe-tactical-roster.mjs` guards the seven-battle registry/menu/side-choice/launch contract; `tools/probe-malvern-hill.mjs` guards the new battle's data, terrain, artillery, no-fudge keys, balance, UI, and regression smokes.
+
+**Balance:** Malvern uses the universal combat/gun model, not per-battle damage tuning. Current focused-probe shape: seed 101 = US timeout at 500s, US losses 1,336 vs CS losses 6,545; 8-seed balance = US 7/8, CS 1/8. The Union gun line usually holds, with a narrow Confederate alt-history opening.
+
+**Verified:** `node tools/build.mjs` GATE OK; `node tools/probe-malvern-hill.mjs` 24/24; `node tools/probe-tactical-roster.mjs` 8/8; `node tools/bootprobe.mjs` ok=true with known/tolerated 404 resource console entries; `node tools/t1probe.mjs` ok=true; `node tools/diag-classic.mjs` nonBlank 346; `node tools/probe-bullrun.mjs` 15/15; `node tools/probe-fredericksburg.mjs` 22/22; `node tools/probe-chancellorsville.mjs` 24/24; `node tools/probe-shiloh.mjs` 29/29; `node tools/probe-antietam.mjs` 16/16 after a probe-only update for T8's current compact HUD chip; `node tools/probe-gettysburg.mjs` ok=true, 16 steps; `node tools/probe-tactical-visuals.mjs` 6/6, 0 pageerrors.
+
+**Next chat priority:** Eastern marquee C1 is complete. Continue Phase C breadth with Western theater work (likely Vicksburg), or choose C4 custom-battle builder if Aaron wants tooling before more authored battles.
+
+**Priority picker saved:** `START-HERE.md` and `MASTER-TASK-LIST.md` contain the Codex-vs-DeepSeek/Cline priority list for future "pick from the list" instructions. Loot/survival is not complete; only Armory/Cannon loot-style rarity tiers exist so far.
+
+---
+
+# ☀ WAKE-UP — 2026-06-18: **CHANCELLORSVILLE VERIFIED + ROSTER GUARD GREEN** (explicit battle order + registry/menu/launch guard; visual warning gate still green)
+
+**Newest:** the interrupted Chancellorsville pass is now finished and verified. `data/chancellorsville.json` is registered, appears between Fredericksburg and Gettysburg, and has a dedicated completion probe (`tools/probe-chancellorsville.mjs`) covering data/historical-contract checks, launch shape, terrain cover, reinforcements, deterministic sim, CS-favored balance, side cards, end-note framing, and roster regressions.
+
+**Tactical cohesion:** the tactical layer is now much less noisy and less stale. The help/welcome/control overlays match the current game: First Bull Run, Antietam, Fredericksburg, Chancellorsville, Gettysburg, Shiloh, and Skirmish are named; controls now document click/Shift-click/A selection, drag-to-place/facing, L/C/H/F/Enter orders, 1/2/3 speed, V fog, P auto-pause, G settings, Tab, and Esc. The in-battle controls card is modal/focus-safe and Escape closes it without also leaving the field.
+
+**Readability pass:** the giant centered pause banner is gone; pause is a small top-right chip. The top tactical label stack is now compact title/clock/sector/objective/status chips, with multi-phase progress in its own `#fldSector` chip and the objective line reduced to `Obj: ...`. Reinforcement/teaching banners are smaller, shorter-lived, and ellipsized instead of covering the field.
+
+**New probe + fixed warning:** `tools/probe-tactical-visuals.mjs` captures real Shiloh and Gettysburg sessions in 2D plus live 3D. It writes `tools/shots/probe-tactical-visuals.json` plus `visual-shiloh-2d.png`, `visual-shiloh-3d.png`, `visual-gettysburg-2d.png`, and `visual-gettysburg-3d.png`. The probe now treats the known Three.js warning `Texture marked for update but image is undefined` as a failure. The flag texture path in `src/tactical/T10-flags.js` no longer uses immediate SVG `TextureLoader().load(svg)` + `tex.needsUpdate`; it paints procedural flags to cached offscreen canvases, creates ready `CanvasTexture` maps, and disposes replaced texture maps during flag rebuild/unit rebuild/3D teardown. The generated `civil_war_generals.html` T10 block is aligned so browser probes exercise the fix.
+
+**Roster guard:** Codex added `tools/probe-tactical-roster.mjs` and made the battle menu order explicit: First Bull Run → Antietam → Fredericksburg → Chancellorsville → Gettysburg → Shiloh. The probe checks exact registry ids, data contracts, phase shape, gun-count artillery, menu DOM order/idempotency, side-choice callbacks for both armies, and renderer-none launches across all current historical battles. No simulation or balance code changed.
+
+**Verified:** `node tools/build.mjs` GATE OK; `node tools/probe-tactical-roster.mjs` 8/8; `node tools/probe-chancellorsville.mjs` 24/24; `node tools/probe-bullrun.mjs` 15/15; `node tools/probe-shiloh.mjs` 29/29; `node tools/probe-gettysburg.mjs` 16/16; `node tools/probe-tactical-visuals.mjs` 4/4; `node tools/diag-classic.mjs` nonBlank 346. All relevant probes reported 0 pageerrors where reported. Recent repo history also has Gettysburg, Shiloh, T10 flags, T9 audio, portraits, save slots, and help overlay work; older paragraphs below are historical snapshots. Known residual console noise: benign Chromium `ReadPixels` warnings from the roster screenshot path and the pre-existing favicon 404 in roster/diag-classic.
+
+**Blender status:** Blender is closed and does **not** need reopening for current code/browser/Three.js tactical work. Reopen it only for an explicit future Phase-H asset pipeline job; no current probe or implementation depends on it.
+
+**AI implementer standards:** any model working through VS Code now follows the same project contract in `START-HERE.md` and `AUTONOMOUS-RUN.md` §1A: repo-ground first, work in small reversible edits, self-audit diffs and outputs, run/read the proper gates, record lessons back into repo docs/probes, and report truthfully. Codex owns reasoning-heavy architecture/sim/balance/probe/integration work; Cline/DeepSeek/lower models only get bounded packets and must stop on ambiguity or red gates.
+
+**Historical snapshot:** this Chancellorsville-era priority is superseded by the Malvern Hill completion block above. Cline/DeepSeek remain packet-only for bounded mechanical work.
+
+---
+
 # ☀ WAKE-UP — run k (2026-06-16): **PHASE C-1 — FREDERICKSBURG SHIPPED** (the Marye's-Heights slaughter is now playable: storm the open glacis as the Union, or hold the stone wall for the Confederacy as charge after charge breaks before it — and the tactical engine is now data-driven, so each new battle is just a data file)
 
 **⚔ NEWEST (this firing) — PHASE C-1 · FREDERICKSBURG (the Assault on Marye's Heights):** the SECOND real-time battle, and the start of Phase C (tactical breadth). A new **⚔ Battle — Fredericksburg (1862)** button on the main menu opens a side-choice card: **lead the Union assault** (form in the town, cross the canal, and storm the open glacis toward the sunken Telegraph Road — try to do what the Army of the Potomac could not) or **hold for the Confederacy** behind the four-foot stone wall, the pre-sighted guns on Marye's Heights raking the field, as charge after charge breaks before you. The big change under the hood: the engine is now **battle-agnostic** — Fredericksburg added zero new combat code; it is a data file (`data/fredericksburg.json`) plus one registry line, with all the menu/side-choice/briefing/end-screen text now read from the data. Adding Antietam or Gettysburg next is the same recipe.

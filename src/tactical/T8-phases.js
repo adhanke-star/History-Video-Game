@@ -137,13 +137,26 @@ function _fldPhasesHasUI() {
   return !!(typeof document !== "undefined" && document.getElementById && document.getElementById("fldRoot"));
 }
 
-/* the running-tally TOP-BAR label (T0 fldRenderTop seam). "" for a single-objective battle. */
-function _fldPhaseTopLabel() {
-  if (!__FIELD.phases) return "";
+/* the running-tally TOP-BAR chip (T0 fldRenderTop seam). null for a single-objective battle. */
+function _fldPhaseTopParts() {
+  if (!__FIELD.phases) return null;
   var n = __FIELD.phases.length, i = __FIELD.phaseIdx + 1, nm = (__FIELD.scenData && __FIELD.scenData._phase) ? __FIELD.scenData._phase.name : "";
   var sc = __FIELD.phaseScore || { US: 0, CS: 0 };
   function fmt(v) { return (v === Math.floor(v)) ? String(v) : v.toFixed(1); }
-  return "Phase " + i + "/" + n + (nm ? " · " + nm : "") + " · sectors US " + fmt(sc.US) + " – CS " + fmt(sc.CS);
+  var phase = "Phase " + i + "/" + n;
+  var score = "US " + fmt(sc.US) + " / CS " + fmt(sc.CS);
+  return {
+    phase: phase,
+    sector: nm,
+    score: score,
+    chip: phase + (nm ? " · " + nm : "") + " · " + score,
+    full: phase + (nm ? " · " + nm : "") + " · sectors " + score.replace(" / ", " - ")
+  };
+}
+/* Back-compat for probes and older callers: compact label, "" for single-objective. */
+function _fldPhaseTopLabel() {
+  var p = _fldPhaseTopParts();
+  return p ? p.chip : "";
 }
 
 /* the INTER-PHASE transition card (UI only). A period-broadsheet modal: the just-resolved phase

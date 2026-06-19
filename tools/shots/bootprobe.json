@@ -1,6 +1,31 @@
 {
-  "errors": [],
-  "steps": {},
-  "fatal": "page.goto: Timeout 60000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"http://localhost:8765/civil_war_generals.html\", waiting until \"load\"\u001b[22m\n",
-  "ok": false
+  "errors": [
+    "[console.error] Failed to load resource: the server responded with a status of 404 (File not found)",
+    "[console.error] Failed to load resource: the server responded with a status of 404 (File not found)",
+    "[console.error] Failed to load resource: the server responded with a status of 404 (File not found)",
+    "[console.error] Failed to load resource: the server responded with a status of 404 (File not found)",
+    "[console.error] Failed to load resource: the server responded with a status of 404 (File not found)",
+    "[console.error] Failed to load resource: the server responded with a status of 404 (File not found)",
+    "[console.error] Failed to load resource: the server responded with a status of 404 (File not found)",
+    "[console.error] Failed to load resource: the server responded with a status of 404 (File not found)",
+    "[console.error] Failed to load resource: the server responded with a status of 404 (File not found)",
+    "[console.error] Failed to load resource: the server responded with a status of 404 (File not found)"
+  ],
+  "steps": {
+    "menu": {
+      "gfx": "modern",
+      "m3dReady": true,
+      "m3dFailed": false,
+      "hasMenu": true
+    },
+    "enter": "entered gfx=modern",
+    "battle": {
+      "gfx": "modern",
+      "m3dReady": true,
+      "m3dFailed": false,
+      "units": 32
+    }
+  },
+  "realErrors": [],
+  "ok": true
 }

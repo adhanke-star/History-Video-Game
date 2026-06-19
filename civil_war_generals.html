@@ -16904,6 +16904,189 @@ var GAME_DATA = {
     }
   ]
 },
+"chancellorsville": {
+  "_comment": "PHASE C-1 — CHANCELLORSVILLE, April 30-May 6, 1863 — the THIRD EASTERN MARQUEE battle for the __FIELD real-time engine (single-phase, the Fredericksburg/Shiloh pattern). Lee's greatest victory and his costliest: the Army of Northern Virginia, outnumbered ~2:1 (133,000 US vs 60,000 CS), splits its army in the face of the enemy — Jackson's legendary flank march on May 2 that crushed Hooker's XI Corps, the desperate fighting around the Chancellor House, Hazel Grove, and Fairview, and the mortal wounding of Stonewall Jackson by his own men at dusk on May 2. The battle is modeled as a SINGLE-PHASE engagement focused on the decisive action: Jackson's flank attack on the Union right (the XI Corps rout near Dowdall's Tavern / Wilderness Church), with the Confederate assault pressing toward the Chancellor House and the Union defense trying to rally and hold the crossroads. COORDINATE NOTE: the engine field is 1200x900 yards; per engine convention the ATTACKER (CS, the flank march) sits at HIGH z facing -z (facing 0) and the DEFENDER (US) forms nearer LOW/mid z facing +z (facing PI). The Chancellor House / crossroads is the defender's key hold line at mid-field. ARTILLERY uses the D75 UNIVERSAL GUN MODEL (real gun counts + realistic crew; fire = guns * the universal weight). ANTI-LOST-CAUSE: the lessons are command failure on BOTH sides — Hooker's loss of nerve (despite a ~2:1 advantage and a sound plan), Jackson's fatal wounding by friendly fire, the piecemeal Confederate attacks after Jackson fell, and the appalling cost (~30,000 total casualties; Lee lost roughly a fifth of his army, a rate he could not sustain). The 'flank march' is a monument to audacity AND to the cost of audacity: Jackson's death was the war's greatest single loss to the Confederate command. Sources: NPS Fredericksburg & Spotsylvania National Military Park (Chancellorsville Battlefield), American Battlefield Trust, the Official Records, Sears 'Chancellorsville', Gallagher 'The Battle of Chancellorsville', Krick 'Chancellorsville — Lee's Greatest Victory'.",
+  "chancellorsville": {
+    "id": "chancellorsville",
+    "name": "Chancellorsville — Lee's Greatest Victory",
+    "date": "May 1-3, 1863",
+    "place": "Chancellorsville, Spotsylvania County, Virginia — the Wilderness",
+    "blurb": "Lee's most audacious battle — outnumbered nearly two to one, he splits his army in the face of the enemy and sends Jackson on a twelve-mile flank march through the tangled Wilderness to crush Hooker's unsuspecting right wing. The surprise attack at dusk on May 2 routs the Union XI Corps and drives Hooker back to the Chancellor House — but in the twilight, Jackson is shot by his own men and dies eight days later, a loss Lee called 'losing my right arm.' Command either army in the decisive flank attack and the desperate Union rally — and learn why Chancellorsville was Lee's greatest victory and his costliest.",
+    "provenance": "Verified (high) for the phase sequence, the commanders and their fate, the terrain, and the casualty weight; Inferred (medium) for per-unit strengths and exact arrival minutes (the OOBs differ across Sears, Gallagher, Krick, and the Official Records — all corps/division totals are contested estimates). Sources: NPS Fredericksburg & Spotsylvania National Military Park (Chancellorsville Battlefield — the Chancellor House, the Wilderness Church, Dowdall's Tavern, the Flank March route, Hazel Grove, Fairview, Salem Church); American Battlefield Trust (~30,000 total casualties: 17,287 US / 13,303 CS / 30,590 total); the Official Records via aotw.org; Sears, 'Chancellorsville'; Gallagher, 'The Battle of Chancellorsville'; Krick, 'Chancellorsville — Lee's Greatest Victory'; Bigelow, 'The Campaign of Chancellorsville'. ANTI-LOST-CAUSE: the lessons are command failure on BOTH sides — Hooker's loss of nerve despite a ~2:1 advantage and a sound plan, Jackson's fatal wounding by friendly fire, the piecemeal Confederate attacks after Jackson fell, and the appalling cost that bled the Army of Northern Virginia of irreplaceable leadership. The 'flank march' is a monument to audacity AND to the cost of audacity: Jackson's death was the war's greatest single loss to the Confederate command, and Chancellorsville's victory did not solve Lee's strategic problem — the invasion of Pennsylvania that followed (Gettysburg) ended the Confederate offensive forever.",
+    "field": { "w": 1200, "h": 900 },
+    "attacker": "CS",
+    "defender": "US",
+    "defaultFog": false,
+    "timeLimitSec": 480,
+    "holdToWinSec": 140,
+    "menu": {
+      "title": "CHANCELLORSVILLE (1863)",
+      "deck": "Lee's greatest victory — the legendary flank march. Command either side in the decisive action: Jackson's surprise attack that crushed the Union right, or Hooker's desperate rally at the Chancellor House.",
+      "aria": "Chancellorsville, May 1863 — Lee's greatest victory. Command either army in the decisive flank attack and the Union rally: Jackson's surprise assault through the Wilderness or Hooker's defense of the Chancellor crossroads."
+    },
+    "sides": {
+      "heading": "Chancellorsville — Take Which Command?",
+      "intro": "May 1-3, 1863 · Lee's most audacious battle. Lead the army of your choosing.",
+      "US": {
+        "title": "Command the Union (Hooker's army)",
+        "badge": "&#9876; DEFEND",
+        "deck": "Hold the Chancellor crossroads against Jackson's flank attack. Do what Hooker could not: rally the broken XI Corps, hold the line, and turn a two-to-one advantage into a victory instead of a rout."
+      },
+      "CS": {
+        "title": "Command the Confederacy (Lee's army)",
+        "badge": "&#9819; ATTACK",
+        "deck": "Lead Jackson's flank march through the Wilderness and crush the Union right wing. Do what Jackson did: strike the unsuspecting flank and drive Hooker's army from the field."
+      },
+      "foot": "The other army is commanded by the AI. The decisive flank attack — the Confederate attacker must break the Union line before it rallies (press V in battle to toggle fog)."
+    },
+    "brief": {
+      "attack": "March through the tangled Wilderness and strike the Union right wing where it least expects you. The enemy's XI Corps is unsuspecting, their flank exposed — crush them before they can rally. <b>This is your war:</b> Jackson's flank march was the most audacious stroke of the war — repeat it and drive Hooker from the field.",
+      "defend": "The enemy has marched through the Wilderness and struck your right wing — the XI Corps is reeling. Rally the broken regiments, hold the Chancellor crossroads, and turn the battle. <b>This is your war:</b> Hooker had a two-to-one advantage and lost his nerve — hold the line and the greatest Confederate victory becomes a defeat."
+    },
+    "objective": {
+      "name": "The Chancellor House & the Crossroads",
+      "x": 600, "z": 394, "r": 80,
+      "note": "The Chancellor House and the vital crossroads at the center of Hooker's line. The Chancellor family plantation house served as Hooker's headquarters; the crossroads controlled the road network through the Wilderness. If the Confederate attacker seizes and holds it, Hooker's position collapses toward the Rappahannock. If the Union denies it until the clock runs out, the flank attack is contained and the army survives."
+    },
+    "leaders": {
+      "_note": "fate = a per-leader durability multiplier weighting the casualty model to HISTORY (>1 endures, <1 is fall-prone). At Chancellorsville, Jackson was mortally wounded by friendly fire (the war's greatest single loss to the Confederate command); Paxton was killed; Hooker was concussed by a cannonball striking his headquarters pillar; Berry was killed; the others survived.",
+      "US": [
+        { "id": "ld_hooker", "name": "Maj. Gen. Joseph Hooker", "short": "Hooker", "quality": 0.62, "radius": 260, "x": 600, "z": 180, "fate": 2.2,
+          "note": "Commanded the Army of the Potomac. Had a sound plan and a ~2:1 advantage — and lost his nerve after Jackson's flank attack. Concussed when a cannonball struck the pillar of the Chancellor House where he was standing; never fully recovered his composure. He survived. (Verified)",
+          "teach": "Gen. Hooker is struck by debris at the Chancellor House — the commanding general who had every advantage loses his nerve as the battle turns." },
+        { "id": "ld_howard", "name": "Maj. Gen. Oliver O. Howard", "short": "Howard", "quality": 0.48, "radius": 220, "x": 600, "z": 820, "fate": 2.4,
+          "note": "Commanded the XI Corps — the corps that was shattered by Jackson's flank attack. Howard had posted no pickets on his exposed right flank despite warnings; the corps was routed with ~2,400 casualties. He survived to command the Freedmen's Bureau after the war. (Verified)",
+          "teach": "Gen. Howard's XI Corps is shattered — the flank was exposed and Jackson's men pour out of the Wilderness onto the unsuspecting line." },
+        { "id": "ld_berry", "name": "Maj. Gen. Hiram G. Berry", "short": "Berry", "quality": 0.58, "radius": 190, "attach": "us_berry", "fate": 0.35,
+          "note": "Commanded the II Corps division that counterattacked to stem the rout. Killed on May 3 while rallying his men near the Chancellor House — one of the Union's most promising division commanders. (Verified)",
+          "teach": "Gen. Berry falls rallying his division — the counterattack loses its leader at the critical moment." },
+        { "id": "ld_sickles", "name": "Maj. Gen. Daniel E. Sickles", "short": "Sickles", "quality": 0.56, "radius": 230, "x": 600, "z": 500, "fate": 2.5,
+          "note": "Commanded the III Corps. His aggressive advance to Hazel Grove on May 2 created the gap that Jackson's flank march exploited — but his corps fought stubbornly to hold the high ground. He survived (lost a leg at Gettysburg two months later). (Verified)",
+          "teach": "Gen. Sickles's corps holds Hazel Grove — the high ground that buys time for the shattered line to reform." }
+      ],
+      "CS": [
+        { "id": "ld_jackson", "name": "Lt. Gen. Thomas J. 'Stonewall' Jackson", "short": "Jackson", "quality": 0.82, "radius": 280, "x": 600, "z": 830, "fate": 0.12,
+          "note": "Commanded the Second Corps, Army of Northern Virginia. Executed the legendary twelve-mile flank march through the Wilderness on May 2, crushing the Union XI Corps. At dusk on May 2, returning from a reconnaissance, he was shot by his own men — the 18th North Carolina Infantry — who mistook his party for Union cavalry. He died of pneumonia on May 10, 1863, eight days after being wounded. Lee said, 'He has lost his left arm, but I have lost my right arm.' (Verified)",
+          "teach": "Gen. Stonewall Jackson is struck down by his own men in the twilight — the Confederacy's greatest combat commander falls at the moment of his greatest triumph." },
+        { "id": "ld_stuart", "name": "Maj. Gen. J. E. B. Stuart", "short": "Stuart", "quality": 0.68, "radius": 250, "x": 600, "z": 780, "fate": 2.3,
+          "note": "Took command of Jackson's corps after Jackson was wounded. Pressed the attack on May 3 with characteristic energy, driving the Union from the field. He survived (killed at Yellow Tavern, May 1864). (Verified)",
+          "teach": "Gen. Stuart takes command after Jackson falls — the cavalryman leads the infantry forward in the dawn assault." },
+        { "id": "ld_rodes", "name": "Maj. Gen. Robert E. Rodes", "short": "Rodes", "quality": 0.66, "radius": 230, "attach": "cs_rodes_div", "fate": 2.0,
+          "note": "Commanded the lead division of Jackson's flank attack. Rodes's men struck Howard's exposed XI Corps first and drove the rout eastward along the Orange Turnpike. He survived Chancellorsville (killed at Third Winchester, September 1864). (Verified)",
+          "teach": "Gen. Rodes's division opens the attack — the flank assault crashes into the unsuspecting Union line." },
+        { "id": "ld_a_p_hill", "name": "Maj. Gen. A. P. Hill", "short": "A.P. Hill", "quality": 0.63, "radius": 220, "attach": "cs_ap_hill_div", "fate": 1.8,
+          "note": "Commanded the Light Division, the rear division of Jackson's column. After Jackson was wounded, Hill briefly took command before he too was wounded, passing the corps to Stuart. He survived Chancellorsville (killed at Petersburg, April 1865). (Verified)",
+          "teach": "Gen. A.P. Hill is wounded as command passes down the line — Jackson's corps keeps attacking while its senior leaders fall." },
+        { "id": "ld_paxton", "name": "Brig. Gen. Elisha F. Paxton", "short": "Paxton", "quality": 0.54, "radius": 180, "attach": "cs_ap_hill_div", "fate": 0.3,
+          "note": "Commanded the Stonewall Brigade — Jackson's old brigade. Killed on May 3 while leading his brigade in the dawn assault. He was the only Stonewall Brigade commander killed in the war. (Verified)",
+          "teach": "Gen. Paxton falls at the head of the Stonewall Brigade — Jackson's old command loses its leader in the dawn attack." }
+      ]
+    },
+    "supply": {
+      "US": { "x": 600, "z": 120, "name": "Union train — the United States Ford road to the Rappahannock" },
+      "CS": { "x": 600, "z": 865, "name": "Confederate train — the Orange Turnpike" }
+    },
+    "oob": {
+      "US": [
+        { "id": "us_xi_corps", "name": "XI Corps (Howard's shattered division)", "commander": "Maj. Gen. Oliver O. Howard", "arm": "inf", "weapon": "rifled", "men": 3200, "xp": 1, "x": 600, "z": 780, "facing": 3.14159, "formation": "line", "note": "The XI Corps — German-American regiments (the 'Dutchmen') unfairly blamed for the rout. Posted on the Union right with no pickets on the exposed flank; shattered by Jackson's surprise attack. The survivors rallied at the Chancellor House. (Verified identity; Inferred strength)" },
+        { "id": "us_ii_corps_chanc", "name": "II Corps (Hancock's division)", "commander": "Maj. Gen. Winfield Scott Hancock", "arm": "inf", "weapon": "rifled", "men": 3400, "xp": 2, "x": 600, "z": 450, "facing": 3.14159, "formation": "line", "note": "Hancock's division of the II Corps — held the center near the Chancellor House. Fought a stubborn defensive action as the flank collapsed. (Verified identity; Inferred strength)" },
+        { "id": "us_iii_corps_chanc", "name": "III Corps (Sickles's division)", "commander": "Maj. Gen. Daniel E. Sickles", "arm": "inf", "weapon": "rifled", "men": 3000, "xp": 2, "x": 500, "z": 520, "facing": 3.14159, "formation": "line", "note": "Sickles's III Corps — had advanced to Hazel Grove, creating a gap that Jackson exploited. Fought stubbornly to hold the high ground. (Verified identity; Inferred strength)" },
+        { "id": "us_berry_div", "name": "Berry's Division (the counterattack)", "commander": "Maj. Gen. Hiram G. Berry", "arm": "inf", "weapon": "rifled", "men": 2600, "xp": 2, "x": 600, "z": 360, "facing": 3.14159, "formation": "line", "note": "Berry's division of the II Corps — counterattacked to stem the rout from the flank attack. Berry was killed on May 3 rallying his men. (Verified identity; Inferred strength)" },
+        { "id": "us_battery_chanc", "name": "Union Artillery — Fairview batteries", "commander": "Capt. George W. Hazzard", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 8, "men": 160, "xp": 2, "x": 600, "z": 320, "facing": 3.14159, "formation": "line", "note": "Massed Union batteries at Fairview — the artillery platform that covered the Chancellor crossroads and broke up Confederate attacks on May 3. Universal gun model (D75): 8 guns, ~160 crew. (Verified)" }
+      ],
+      "CS": [
+        { "id": "cs_rodes_div", "name": "Jackson's Vanguard — Rodes's Division", "commander": "Maj. Gen. Robert E. Rodes", "arm": "inf", "weapon": "smooth", "men": 5200, "xp": 3, "x": 600, "z": 830, "facing": 0, "formation": "line", "note": "Rodes's division — the leading element of Jackson's flank attack. Struck the unsuspecting XI Corps from the west, routing them in minutes. Veterans (xp3 — Jackson's corps). (Verified identity; Inferred strength)" },
+        { "id": "cs_colston_div", "name": "Jackson's Main Body — Colston's Division", "commander": "Brig. Gen. Raleigh E. Colston", "arm": "inf", "weapon": "smooth", "men": 4800, "xp": 3, "x": 700, "z": 800, "facing": 0, "formation": "line", "note": "Colston's division — the second wave of Jackson's flank attack, following Rodes to exploit the breakthrough. Veterans (xp3). (Verified identity; Inferred strength)" },
+        { "id": "cs_ap_hill_div", "name": "Jackson's Reserve — A.P. Hill's Light Division", "commander": "Maj. Gen. A. P. Hill", "arm": "inf", "weapon": "smooth", "men": 3800, "xp": 3, "x": 800, "z": 820, "facing": 0, "formation": "line", "note": "A.P. Hill's Light Division — the rear division of Jackson's column, containing the Stonewall Brigade. Hill was wounded after Jackson fell; Stuart then took command of the corps. (Verified identity; Inferred strength)" },
+        { "id": "cs_stuart_cav_chanc", "name": "Stuart's Cavalry (horse artillery)", "commander": "Maj. Gen. J. E. B. Stuart", "arm": "cav", "weapon": "smooth", "men": 1200, "xp": 3, "x": 500, "z": 840, "facing": 0, "formation": "line", "note": "Stuart's cavalry — screened Jackson's flank march and pressed the pursuit after the XI Corps broke. (Verified identity; Inferred strength)" },
+        { "id": "cs_artillery_chanc", "name": "Confederate Artillery — Jackson's Corps batteries", "commander": "Col. Stapleton Crutchfield", "arm": "art", "weapon": "smooth", "role": "attack", "guns": 10, "men": 320, "xp": 3, "x": 600, "z": 780, "facing": 0, "formation": "line", "note": "Jackson's corps artillery — batteries that accompanied the flank march and unlimbered to support the assault on the Chancellor House. Universal gun model (D75): 10 guns, ~320 crew. (Verified)" }
+      ]
+    },
+    "reinforcements": [
+      { "id": "us_sedgwick", "side": "US", "atSec": 180, "name": "Sedgwick's VI Corps (from Fredericksburg)", "commander": "Maj. Gen. John Sedgwick", "arm": "inf", "weapon": "rifled", "men": 4000, "xp": 2, "x": 600, "z": 140, "facing": 3.14159, "formation": "column", "entry": "from the Fredericksburg crossing — Sedgwick's corps pressures Lee's rear", "note": "Sedgwick's VI Corps — had been left to demonstrate against Fredericksburg while Hooker marched on Chancellorsville. Sedgwick took Marye's Heights on May 3, then was checked at Salem Church; in this focused scenario his arrival represents the pressure from the Fredericksburg front that divided Lee's attention. (Verified context; Inferred field timing)" },
+      { "id": "cs_anderson", "side": "CS", "atSec": 150, "name": "Anderson's Division (Longstreet's Corps)", "commander": "Maj. Gen. Richard H. Anderson", "arm": "inf", "weapon": "smooth", "men": 3500, "xp": 2, "x": 600, "z": 860, "facing": 0, "formation": "line", "entry": "from the Confederate left — Anderson's division marches to reinforce the flank attack", "note": "Anderson's division of Longstreet's First Corps — held the Confederate left opposite Fredericksburg and was ordered to march to Jackson's support after the flank attack succeeded. (Verified)" },
+      { "id": "us_whipple", "side": "US", "atSec": 100, "name": "Whipple's Division (III Corps reserve)", "commander": "Brig. Gen. Amiel W. Whipple", "arm": "inf", "weapon": "rifled", "men": 2200, "xp": 1, "x": 600, "z": 280, "facing": 3.14159, "formation": "column", "entry": "from the reserve — Whipple's division rushes to plug the gap", "note": "Whipple's division of the III Corps — the reserve rushed forward to plug the gap created by the XI Corps rout. (Verified)" }
+    ],
+    "terrain": {
+      "hills": [
+        { "name": "the Chancellor House ridge", "x": 600, "z": 394, "h": 10, "s": 120, "note": "The low ridge around the Chancellor House — Hooker's headquarters and the key crossroads. The Union's last defensible line after the flank attack. (Verified)" },
+        { "name": "Hazel Grove", "x": 480, "z": 520, "h": 12, "s": 100, "note": "The high ground Sickles's III Corps advanced to — a key artillery platform that changed hands during the battle. (Verified)" },
+        { "name": "Fairview", "x": 600, "z": 320, "h": 8, "s": 90, "note": "The high ground just south of the Chancellor House where the Union massed its artillery to break up the Confederate attacks on May 3. (Verified)" }
+      ],
+      "woods": [
+        { "x": 600, "z": 700, "r": 180, "note": "the tangled Wilderness — dense second-growth forest of scrub oak and pine, so thick that lines of battle could not be maintained and artillery could barely move. The terrain that made Jackson's flank march possible (the Union could not see him coming) and that made the battle a confused, close-range melee. (Verified)" },
+        { "x": 400, "z": 600, "r": 100, "note": "the woods on the Union left — the approach route of the Confederate flank march. (Verified)" },
+        { "x": 800, "z": 600, "r": 100, "note": "the woods on the Union right — the direction of the Confederate main attack. (Verified)" },
+        { "x": 600, "z": 250, "r": 80, "note": "the timber south of the Chancellor House — the Union rallying ground and Sedgwick's approach route. (Verified)" }
+      ],
+      "walls": [
+        { "x1": 480, "z1": 440, "x2": 720, "z2": 438, "note": "the breastworks at the Chancellor House — hasty log-and-earth entrenchments thrown up by the Union defenders on May 2-3. Not a stone wall, but improvised cover that helped the rallied Union line hold. (Verified)" }
+      ],
+      "markers": [
+        { "kind": "road", "name": "the Orange Turnpike", "path": [[600, 860], [600, 600], [600, 120]], "note": "The main road from Orange Court House to Fredericksburg — Jackson's flank march route and the Confederate axis of advance. (Verified)" },
+        { "kind": "road", "name": "the Orange Plank Road", "path": [[300, 860], [300, 600], [300, 120]], "note": "The secondary road running parallel to the Turnpike — the other axis of the Confederate advance. (Verified)" },
+        { "kind": "road", "name": "the Ely's Ford Road", "path": [[120, 860], [120, 600], [120, 120]], "note": "The road from the Rappahannock to the Chancellor House — Hooker's line of communication and retreat. (Verified)" },
+        { "kind": "label", "name": "the Chancellor House", "x": 600, "z": 394, "note": "Hooker's headquarters — the key crossroads and the Union's last defensible line." },
+        { "kind": "label", "name": "the Wilderness — Jackson's flank march route", "x": 600, "z": 700, "note": "The tangled second-growth forest through which Jackson marched 12 miles to strike the Union right — the most audacious flank march of the war." },
+        { "kind": "label", "name": "Dowdall's Tavern", "x": 600, "z": 780, "note": "The XI Corps position — where Jackson's flank attack struck the unsuspecting Union right wing at ~5:15 p.m. on May 2." },
+        { "kind": "label", "name": "to the Rappahannock & United States Ford", "x": 600, "z": 120, "note": "The Union line of retreat — Hooker's army fell back across the river on the night of May 5-6." },
+        { "kind": "creek", "name": "Lewis Creek", "path": [[120, 560], [400, 575], [700, 580], [1080, 565]], "note": "A small creek that ran through the Wilderness — a minor terrain obstacle. (Verified)" }
+      ]
+    },
+    "endNote": {
+      "US": {
+        "US": "History is overturned. Your army held the Chancellor crossroads against Jackson's flank attack — the ground that historically was lost when the XI Corps was routed. In May 1863 Hooker's army was driven from the field in Lee's greatest victory; under your command the line held and the Army of the Potomac did not retreat across the Rappahannock.",
+        "CS": "History is overturned. The Union held the Chancellor crossroads — the ground your army historically carried in the flank attack. In May 1863 Jackson's march crushed the Union right and drove Hooker from the field; under your defense the Confederate assault broke against the rallied Union line and never reached the crossroads."
+      },
+      "CS": {
+        "US": "History holds. As in May 1863, Jackson's flank march crushed the Union right wing and drove Hooker's army from the field — the Chancellor crossroads fell, the XI Corps was shattered, and the Army of the Potomac retreated across the Rappahannock. But Jackson was mortally wounded by his own men in the twilight, a loss that cost the Confederacy its greatest combat commander on the eve of Gettysburg.",
+        "CS": "History holds. As in May 1863, your flank march crushed the Union right wing and drove Hooker's army from the field — the Chancellor crossroads fell, the XI Corps was shattered, and the Army of the Potomac retreated across the Rappahannock. But Jackson was mortally wounded by his own men in the twilight, a loss that cost the Confederacy its greatest combat commander on the eve of Gettysburg."
+      },
+      "draw": "A bloodier stalemate than history's clear Confederate victory — the Chancellor crossroads changed hands in the chaos of the Wilderness, and neither army could claim the field when the fighting died."
+    },
+    "teaching": {
+      "title": "Chancellorsville — Audacity and Its Cost",
+      "cards": [
+        {
+          "id": "cv_flank_march",
+          "head": "The flank march — audacity at its peak",
+          "body": "Outnumbered nearly two to one, Lee made the most audacious decision of the war: he split his army in the face of the enemy. Jackson marched 12 miles through the tangled Wilderness — a route so difficult that his own officers doubted it could be done — and at ~5:15 p.m. on May 2, his 28,000 men crashed into the unsuspecting Union right wing. The XI Corps, posted without pickets on its exposed flank, was routed in minutes. The flank march is a monument to audacity — and to the cost of audacity: Jackson was mortally wounded by his own men that same night.",
+          "provenance": "Verified (high) — NPS Fredericksburg & Spotsylvania; American Battlefield Trust; Sears, 'Chancellorsville'; Krick, 'Chancellorsville — Lee's Greatest Victory'."
+        },
+        {
+          "id": "cv_hooker",
+          "head": "Hooker's lost nerve — the other side of the story",
+          "body": "Joseph Hooker had a sound plan: leave a holding force at Fredericksburg, march the main army through the Wilderness to turn Lee's left, and fight on ground of his choosing. He had ~133,000 men against Lee's ~60,000 — a two-to-one advantage. When Jackson's flank attack struck, Hooker's plan was still working on paper — but he lost his nerve. Concussed when a cannonball struck the pillar of the Chancellor House where he stood, he abandoned the offensive and ordered a retreat. The lesson is not 'Lee was a genius' but 'a commander with every advantage can lose a battle by losing his composure.'",
+          "provenance": "Verified (high) — Sears, 'Chancellorsville'; Gallagher, 'The Battle of Chancellorsville'; NPS Fredericksburg & Spotsylvania."
+        },
+        {
+          "id": "cv_jackson_death",
+          "head": "Jackson's death — the war's greatest loss to the Confederate command",
+          "body": "At ~9:00 p.m. on May 2, returning from a reconnaissance beyond his lines, Jackson and his party were mistaken for Union cavalry by the 18th North Carolina Infantry. The regiment fired a volley that struck Jackson three times — twice in the left arm, once in the right hand. His left arm was amputated, but pneumonia set in, and he died on May 10, 1863, at Guinea Station. Lee wrote: 'He has lost his left arm, but I have lost my right arm.' Jackson's death was the war's greatest single loss to the Confederate command — the man who had been Lee's most aggressive and reliable corps commander was gone on the eve of Gettysburg, where his absence would be felt in every critical decision.",
+          "provenance": "Verified (high) — NPS Fredericksburg & Spotsylvania (Jackson Shrine); American Battlefield Trust; Sears; Krick."
+        },
+        {
+          "id": "cv_cost",
+          "head": "The cost of victory — Lee's irreplaceable losses",
+          "body": "Chancellorsville cost ~30,000 total casualties and imposed a brutal percentage loss on Lee's smaller army. Lee lost ~13,000 men out of ~60,000 (roughly a fifth), a rate he could not sustain. Among the dead or mortally wounded were Jackson (the army's best corps commander), Paxton (the Stonewall Brigade's commander), and dozens of field officers. The victory did not solve Lee's strategic problem: the invasion of Pennsylvania that followed ended at Gettysburg. Chancellorsville is the war's clearest lesson that a tactical victory can still become a strategic liability.",
+          "provenance": "Verified (high) — American Battlefield Trust (30,590 total: 17,287 US / 13,303 CS); Sears; Gallagher."
+        },
+        {
+          "id": "cv_xi_corps",
+          "head": "The 'Dutchmen' — the scapegoats of Chancellorsville",
+          "body": "The XI Corps was largely composed of German-American immigrants — the 'Dutchmen' of the popular press. After the rout, they were unfairly blamed for the defeat: cowardly foreigners who ran at the first shot. The truth is more complex: Howard had posted no pickets on his exposed right flank despite repeated warnings; the corps was struck by 28,000 men advancing out of a forest where no attack was expected; and many XI Corps regiments fought stubbornly before being overwhelmed. The scapegoating of the German-Americans is a lesson in how defeat is blamed on the 'other' — a pattern that would repeat throughout American history.",
+          "provenance": "Verified (high) — NPS Fredericksburg & Spotsylvania; Sears; Keller, 'Chancellorsville and the Germans' (in 'The Battle of Chancellorsville', ed. Gallagher)."
+        }
+      ],
+      "codex": {
+        "id": "codex_chancellorsville",
+        "title": "Chancellorsville — Lee's Greatest Victory, April 30-May 6, 1863",
+        "summary": "Lee's most audacious battle — outnumbered ~2:1, he split his army and sent Jackson on a twelve-mile flank march through the Wilderness that crushed Hooker's XI Corps and drove the Army of the Potomac from the field. But Jackson was mortally wounded by friendly fire, and the victory cost Lee ~22% of his army — irreplaceable losses on the eve of Gettysburg. Chancellorsville is the war's clearest lesson that a tactical victory can be a strategic disaster.",
+        "axes": { "timeline": "1863", "theater": "Eastern", "people": ["Hooker", "Howard", "Berry", "Sickles", "Sedgwick", "Lee", "Jackson", "Stuart", "Rodes", "A.P. Hill", "Paxton", "Colston"], "battle": "Chancellorsville" }
+      }
+    }
+  }
+},
 "decisions": {
   "_meta": {
     "version": 1,
@@ -20329,6 +20512,269 @@ var GAME_DATA = {
     }
   }
 },
+"malvern-hill": {
+  "_comment": "PHASE C-1 - MALVERN HILL, July 1, 1862 - the remaining Eastern marquee battle for the __FIELD real-time engine (single-phase, the Fredericksburg/Shiloh pattern). The Seven Days ended on a modest open plateau north of the James River, where Fitz John Porter and artillery chief Henry J. Hunt turned Malvern Hill into a killing ground. Lee attempted to silence the Union guns with badly coordinated Confederate grand batteries, then sent piecemeal infantry attacks across open slopes. The battle is modeled as a SINGLE-PHASE Confederate assault against a Union gun line: CS attacks from the high-z woods and roads; US defends the Crew house ridge / Malvern plateau at low-mid z. ARTILLERY uses the D75 UNIVERSAL GUN MODEL (guns * the universal weight, crew-scaled) with no battle-specific damage constants. ANTI-LOST-CAUSE: the lesson is not Confederate valor or Union timidity in isolation; it is command failure, staff confusion, ineffective Confederate artillery concentration, Hunt's professional gun handling, Porter's field command, and McClellan's retreat from a tactical victory to Harrison's Landing. Sources: NPS Richmond National Battlefield Park; NPS History Civil War Series 'The Battles for Richmond, 1862'; American Battlefield Trust Malvern Hill article, battle summary, and map; Encyclopedia Virginia; OR-derived OOB summaries. Strengths and exact arrival minutes are Inferred at brigade/division abstraction scale.",
+  "malvernHill": {
+    "id": "malvernHill",
+    "name": "Malvern Hill - the Seven Days' Artillery Duel",
+    "date": "July 1, 1862",
+    "place": "Malvern Hill, Henrico County, Virginia - near the James River",
+    "blurb": "The Seven Days end in a roar on an open plateau north of the James. Porter holds the crest while Henry Hunt masses the Army of the Potomac's guns along Crew house ridge; Lee tries to break the position with grand batteries and then with infantry attacks fed in by fragment and rumor. Cross the open fields under the Union gun line as the Confederacy, or hold the hill and prove that artillery, terrain, and command discipline can stop Lee's first great offensive.",
+    "provenance": "Verified (high) for date, place, commanders, the open slope, the Union tactical victory, Hunt's massed artillery, Lee's failed two-grand-battery plan, Magruder's late/piecemeal attacks, D.H. Hill's center assault, the James River gunboat context, and the casualty asymmetry. Inferred (medium) for per-unit strengths, exact field minutes, and the brigade-scale compression. Sources: NPS Richmond National Battlefield Park; NPS History Civil War Series 'The Battles for Richmond, 1862'; American Battlefield Trust Malvern Hill article/summary/map; Encyclopedia Virginia; OR-derived OOB summaries and modern battlefield scholarship including Gallagher/Burton/O'Reilly.",
+    "field": { "w": 1200, "h": 900 },
+    "attacker": "CS",
+    "defender": "US",
+    "defaultFog": false,
+    "assaultDoctrine": "cautious",
+    "_assaultDoctrineNote": "The AI Confederate attacker models Malvern Hill's disjointed frontal assaults: it presses in line across the open ground and trades under the guns, but it does not get the modern B-1 column rush/massed bayonet solution that would erase Lee's command failure. A human Confederate player can still attempt a better-coordinated attack.",
+    "timeLimitSec": 500,
+    "holdToWinSec": 135,
+    "menu": {
+      "title": "MALVERN HILL (1862)",
+      "deck": "The Seven Days' culminating artillery duel - command either side: hold Hunt and Porter's gun line on the open plateau, or try to coordinate Lee's shattered assaults across the killing fields.",
+      "aria": "Malvern Hill, July 1862 - the Seven Days' culminating artillery duel. Command either army: hold the Union gun line on Malvern Hill or attack it with Lee's army."
+    },
+    "sides": {
+      "heading": "Malvern Hill - Take Which Command?",
+      "intro": "July 1, 1862 - the final battle of the Seven Days. Lead the army of your choosing.",
+      "US": {
+        "title": "Command the Union (Porter's line)",
+        "badge": "&#9876; DEFEND",
+        "deck": "Hold the Crew house ridge with Porter's infantry and Hunt's massed guns. Keep the batteries firing, feed fresh divisions into the line, and stop Lee's assaults short of the crest."
+      },
+      "CS": {
+        "title": "Command the Confederacy (Lee's army)",
+        "badge": "&#9819; ATTACK",
+        "deck": "Bring order to a confused attack. Silence the Federal guns, push Armistead, Magruder, and D.H. Hill forward together, and try to take the hill before darkness ends the Seven Days."
+      },
+      "foot": "The other army is commanded by the AI. The historical Confederate attack was piecemeal and badly coordinated; press V in battle to toggle fog."
+    },
+    "brief": {
+      "attack": "Your guns have not silenced Hunt's ridge, and the open ground ahead is swept by Federal artillery. Push the infantry through the ravines and across the plateau before darkness ends Lee's offensive. <b>This is your war:</b> make a coordinated assault out of the chaos that historically became murder.",
+      "defend": "Hold the open crest with infantry behind the batteries. Hunt's guns dominate the slopes, Porter is the field commander, and the James River is at your back. <b>This is your war:</b> turn Malvern Hill's fields of fire into a real tactical victory and deny Lee the climactic blow he wanted."
+    },
+    "objective": {
+      "name": "Crew House Ridge and the Malvern Plateau",
+      "x": 600, "z": 330, "r": 120,
+      "note": "The open crest around the Crew house and Willis Church Road. The defender doctrine's forward face sits on the gun line near z 396, while the Confederate attacker must cross the open slope from the woods and ravines. Historically Hunt's guns and Porter's infantry held this plateau; Lee's attacks stopped short."
+    },
+    "leaders": {
+      "_note": "fate = a per-leader durability multiplier weighting the casualty model to history. Porter, Hunt, Lee, Jackson, Magruder, D.H. Hill, and Armistead survived Malvern Hill; the battle's command lesson is disordered control, not a scripted famous-death event.",
+      "US": [
+        {
+          "id": "ld_porter_malvern",
+          "name": "Maj. Gen. Fitz John Porter",
+          "short": "Porter",
+          "quality": 0.74,
+          "radius": 270,
+          "x": 600,
+          "z": 250,
+          "fate": 2.8,
+          "note": "Porter's V Corps anchored the western ridge and he functioned as the de facto field commander while McClellan was away from the immediate front. His placement of infantry and reserves made the ridge a coherent position. (Verified)",
+          "teach": "Gen. Porter steadies the ridge - the field commander who makes the position fight as a system."
+        },
+        {
+          "id": "ld_hunt_malvern",
+          "name": "Brig. Gen. Henry J. Hunt",
+          "short": "Hunt",
+          "quality": 0.82,
+          "radius": 285,
+          "x": 600,
+          "z": 305,
+          "fate": 3.0,
+          "note": "Chief of Artillery, Army of the Potomac. At Malvern Hill he concentrated the guns, shifted batteries as they exhausted ammunition, and crushed Confederate counter-battery efforts. (Verified)",
+          "teach": "Gen. Hunt massed the guns - professional artillery command turns open ground into a defensive machine."
+        },
+        {
+          "id": "ld_couch_malvern",
+          "name": "Brig. Gen. Darius N. Couch",
+          "short": "Couch",
+          "quality": 0.66,
+          "radius": 220,
+          "attach": "us_couch",
+          "fate": 2.4,
+          "note": "Couch's division held the center/right of the Union line and reinforced the plateau as the attacks came in. (Verified)",
+          "teach": "Gen. Couch feeds the line - the center holds because reserves arrive before the crest breaks."
+        },
+        {
+          "id": "ld_morell_malvern",
+          "name": "Brig. Gen. George W. Morell",
+          "short": "Morell",
+          "quality": 0.62,
+          "radius": 210,
+          "attach": "us_morell",
+          "fate": 2.3,
+          "note": "Morell's division of Porter's V Corps held the left/western ridge near the Crew house. (Verified)",
+          "teach": "Gen. Morell's division hugs the gun line - infantry and artillery hold as one arm."
+        }
+      ],
+      "CS": [
+        {
+          "id": "ld_lee_malvern",
+          "name": "Gen. Robert E. Lee",
+          "short": "Lee",
+          "quality": 0.68,
+          "radius": 260,
+          "x": 600,
+          "z": 840,
+          "fate": 3.0,
+          "note": "Lee wanted one final blow before McClellan reached the James, but staff work and command coordination failed him. Malvern Hill is a major early example of Lee's offensive aggression turning costly. (Verified)",
+          "teach": "Gen. Lee's final blow misfires - boldness without staff control becomes a ruinous frontal attack."
+        },
+        {
+          "id": "ld_magruder_malvern",
+          "name": "Maj. Gen. John B. Magruder",
+          "short": "Magruder",
+          "quality": 0.46,
+          "radius": 190,
+          "attach": "cs_magruder",
+          "fate": 2.4,
+          "note": "Magruder's guides misled him; his division arrived late, and he launched attacks under confusing and erroneous orders. (Verified)",
+          "teach": "Gen. Magruder reaches the field late - the attack starts by rumor rather than design."
+        },
+        {
+          "id": "ld_dh_hill_malvern",
+          "name": "Maj. Gen. D. H. Hill",
+          "short": "D.H. Hill",
+          "quality": 0.66,
+          "radius": 225,
+          "attach": "cs_dh_hill_malvern",
+          "fate": 2.5,
+          "note": "Hill warned that Malvern Hill should be left alone if McClellan held it in strength. His division nevertheless advanced into the center late in the day and suffered heavily. (Verified)",
+          "teach": "Gen. D.H. Hill sees the trap - and still his division is fed into it."
+        },
+        {
+          "id": "ld_armistead_malvern",
+          "name": "Brig. Gen. Lewis A. Armistead",
+          "short": "Armistead",
+          "quality": 0.58,
+          "radius": 190,
+          "attach": "cs_armistead",
+          "fate": 2.2,
+          "note": "Armistead's brigade moved first against Union skirmishers and became the mistaken signal for a larger attack. He survived Malvern Hill; his more famous mortal wound came at Gettysburg in 1863. (Verified)",
+          "teach": "Gen. Armistead's advance is mistaken for success - a skirmisher fight becomes the signal for disaster."
+        },
+        {
+          "id": "ld_jackson_malvern",
+          "name": "Lt. Gen. Thomas J. 'Stonewall' Jackson",
+          "short": "Jackson",
+          "quality": 0.58,
+          "radius": 215,
+          "x": 770,
+          "z": 820,
+          "fate": 2.4,
+          "note": "Jackson's wing was finally in place on Lee's left, but his Seven Days performance remained sluggish and uncharacteristic. His troops could not turn the ridge. (Verified)",
+          "teach": "Gen. Jackson's wing is present at last - but the offensive machine still cannot coordinate."
+        }
+      ]
+    },
+    "supply": {
+      "US": { "x": 600, "z": 120, "name": "Union train - Malvern House and the James River road" },
+      "CS": { "x": 600, "z": 860, "name": "Confederate train - Willis Church Road and the Richmond approaches" }
+    },
+    "terrain": {
+      "hills": [
+        { "name": "Malvern Hill plateau", "x": 600, "z": 330, "h": 18, "s": 245, "note": "A modest elevation, roughly a hundred feet above the surrounding ground. Its strength was not height alone but open fields of fire. (Verified)" },
+        { "name": "Crew House ridge", "x": 545, "z": 385, "h": 12, "s": 150, "note": "The western ridge near the Cornelius Crew house where Porter's line and Hunt's batteries dominated the open slope. (Verified)" },
+        { "name": "Willis Church Road shoulder", "x": 725, "z": 410, "h": 8, "s": 135, "note": "The road shoulder that framed the Federal center and the Confederate approach lanes. (Verified)" }
+      ],
+      "woods": [
+        { "x": 600, "z": 660, "r": 135, "note": "The woods and ravines from which Armistead, Magruder, and D.H. Hill emerged before crossing the open slope. (Verified)" },
+        { "x": 420, "z": 690, "r": 105, "note": "Western approach woods near Carter's Mill Road - the Confederate right's confused route toward the plateau. (Verified)" },
+        { "x": 820, "z": 700, "r": 115, "note": "Northern/eastern approach woods near Jackson's front. (Verified)" },
+        { "x": 260, "z": 340, "r": 90, "note": "Malvern Cliffs and broken ground on the Union left - difficult terrain that limited Huger's flank attack. (Verified)" }
+      ],
+      "markers": [
+        { "kind": "road", "name": "Willis Church Road", "path": [[600, 860], [600, 640], [600, 410], [600, 150]], "note": "The north-south road through Lee's headquarters area and the Union center. (Verified)" },
+        { "kind": "road", "name": "Carter's Mill Road", "path": [[400, 860], [430, 650], [500, 470], [550, 340]], "note": "One of the Confederate approach routes; confusion along these roads fed the piecemeal attacks. (Verified)" },
+        { "kind": "road", "name": "River Road to Harrison's Landing", "path": [[120, 145], [360, 132], [700, 125], [1080, 150]], "note": "The road toward the James River base and the retreat McClellan ordered after the tactical victory. (Verified)" },
+        { "kind": "label", "name": "Crew house ridge - Hunt's gun line", "x": 560, "z": 365, "note": "Hunt's batteries straddled the ridge and Willis Church Road, firing west, north, and east. (Verified)" },
+        { "kind": "label", "name": "open killing fields", "x": 600, "z": 535, "note": "The barren slopes in front of the plateau. Confederate infantry crossed this ground under artillery and rifle fire. (Verified)" },
+        { "kind": "label", "name": "Poindexter / Crew fields", "x": 465, "z": 525, "note": "The farm fields where the Confederate attacks bogged down short of the crest. (Verified)" },
+        { "kind": "label", "name": "to the James River gunboats", "x": 870, "z": 120, "note": "Federal gunboats on the James lobbed heavy shells into Confederate positions; impressive and frightening, but not the main cause of the repulse. (Verified)" },
+        { "kind": "stream", "name": "Western Run and ravines", "path": [[140, 610], [350, 620], [600, 640], [930, 610], [1080, 585]], "note": "Ravines and broken ground in front of the plateau disrupted Confederate formations before they reached open ground. (Verified)" }
+      ]
+    },
+    "oob": {
+      "US": [
+        { "id": "us_morell", "name": "Morell's Division (Porter's V Corps)", "commander": "Brig. Gen. George W. Morell", "arm": "inf", "weapon": "rifled", "men": 3400, "xp": 2, "x": 470, "z": 392, "facing": 3.14159, "formation": "line", "note": "V Corps division holding the western ridge near the Crew house. (Verified identity; Inferred strength)" },
+        { "id": "us_couch", "name": "Couch's Division (IV Corps)", "commander": "Brig. Gen. Darius N. Couch", "arm": "inf", "weapon": "rifled", "men": 3400, "xp": 2, "x": 720, "z": 390, "facing": 3.14159, "formation": "line", "note": "Couch's division strengthened the Union center/right and worked closely with Porter's line. (Verified identity; Inferred strength)" },
+        { "id": "us_sykes_regulars", "name": "Sykes's Regulars", "commander": "Brig. Gen. George Sykes", "arm": "inf", "weapon": "rifled", "men": 2500, "xp": 3, "x": 600, "z": 335, "facing": 3.14159, "formation": "line", "note": "Regular infantry in Porter's corps, held as a disciplined support behind the gun line. (Verified identity; Inferred strength)" },
+        { "id": "us_ames_battery", "name": "Ames's Battery A, 5th U.S. Artillery", "commander": "Lt. Adelbert Ames", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 12, "men": 270, "xp": 3, "x": 500, "z": 355, "facing": 3.14159, "formation": "line", "note": "Ames's regular battery was one of the hard-firing Federal batteries at Malvern Hill. Universal gun model: 12 guns, realistic full detachment abstraction. (Verified battery role; Inferred aggregate gun count)" },
+        { "id": "us_hunt_reserve", "name": "Hunt's Artillery Reserve (center)", "commander": "Brig. Gen. Henry J. Hunt", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 16, "men": 360, "xp": 3, "x": 620, "z": 340, "facing": 3.14159, "formation": "line", "note": "The central mass of Hunt's reserve guns along the plateau. Universal gun model: 16 guns, realistic crew/detachment count. (Verified massed artillery; Inferred battery aggregation)" },
+        { "id": "us_parrott_line", "name": "Reserve Artillery - Parrott and Napoleon line", "commander": "Col. Henry Hunt's staff", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 12, "men": 270, "xp": 3, "x": 760, "z": 365, "facing": 3.14159, "formation": "line", "note": "Right-center batteries facing Jackson and D.H. Hill. Universal gun model: 12 guns. (Verified artillery mass; Inferred grouping)" }
+      ],
+      "CS": [
+        { "id": "cs_armistead", "name": "Armistead's Brigade", "commander": "Brig. Gen. Lewis A. Armistead", "arm": "inf", "weapon": "smooth", "men": 2500, "xp": 2, "x": 545, "z": 780, "facing": 0, "formation": "line", "note": "Armistead's brigade moved first against Union skirmishers and became the mistaken signal for the wider attack. (Verified identity; Inferred strength)" },
+        { "id": "cs_dh_hill_malvern", "name": "D.H. Hill's Division", "commander": "Maj. Gen. D. H. Hill", "arm": "inf", "weapon": "smooth", "men": 4600, "xp": 3, "x": 630, "z": 810, "facing": 0, "formation": "line", "note": "Hill's division advanced in the Confederate center near Crew's field and suffered heavily. (Verified identity; Inferred strength)" },
+        { "id": "cs_jackson_wing", "name": "Jackson's Wing", "commander": "Lt. Gen. Thomas J. Jackson", "arm": "inf", "weapon": "smooth", "men": 3900, "xp": 2, "x": 780, "z": 795, "facing": 0, "formation": "line", "note": "Jackson's troops were at last in place on Lee's left, but the wing could not coordinate a decisive assault. (Verified identity; Inferred strength)" },
+        { "id": "cs_left_grand_battery", "name": "Confederate Left Grand Battery", "commander": "Jackson's artillery officers", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 8, "men": 220, "xp": 2, "x": 760, "z": 705, "facing": 0, "formation": "line", "note": "Part of Lee's intended crossfire. Historically the Confederate guns were poorly coordinated and quickly beaten by Hunt's counter-battery fire. Universal gun model: 8 guns. (Verified plan; Inferred aggregation)" },
+        { "id": "cs_right_grand_battery", "name": "Confederate Right Grand Battery", "commander": "Longstreet's artillery officers", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 8, "men": 220, "xp": 2, "x": 430, "z": 705, "facing": 0, "formation": "line", "note": "The other half of Lee's planned converging artillery fire. Poor staff work and Union counter-battery fire prevented a real crossfire. Universal gun model: 8 guns. (Verified plan; Inferred aggregation)" }
+      ]
+    },
+    "reinforcements": [
+      { "id": "us_kearny", "side": "US", "atSec": 145, "name": "Kearny's Division (III Corps reserve)", "commander": "Brig. Gen. Philip Kearny", "arm": "inf", "weapon": "rifled", "men": 2800, "xp": 2, "x": 700, "z": 150, "facing": 3.14159, "formation": "column", "entry": "from the reserve behind the hill", "note": "Kearny's division was part of the Union depth behind the line. It represents the fresh infantry Porter could feed forward. (Verified context; Inferred timing)" },
+      { "id": "us_hooker", "side": "US", "atSec": 210, "name": "Hooker's Division (III Corps reserve)", "commander": "Brig. Gen. Joseph Hooker", "arm": "inf", "weapon": "rifled", "men": 2600, "xp": 2, "x": 520, "z": 145, "facing": 3.14159, "formation": "column", "entry": "from the reserve on the James River road", "note": "Hooker's division formed part of the mass of reserve infantry behind Malvern Hill. (Verified context; Inferred timing)" },
+      { "id": "us_hunt_relay", "side": "US", "atSec": 95, "name": "Hunt's Relief Batteries", "commander": "the Artillery Reserve", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 10, "men": 240, "xp": 3, "x": 610, "z": 300, "facing": 3.14159, "formation": "line", "entry": "fresh batteries moved onto the crest as ammunition wagons worked behind the line", "note": "Hunt shifted fresh batteries to keep the line firing. Universal gun model: 10 guns. (Verified practice; Inferred grouping)" },
+      { "id": "cs_magruder", "side": "CS", "atSec": 105, "name": "Magruder's Division", "commander": "Maj. Gen. John B. Magruder", "arm": "inf", "weapon": "smooth", "men": 4200, "xp": 2, "x": 470, "z": 860, "facing": 0, "formation": "line", "entry": "late to the field after bad guides and confusing orders", "note": "Magruder's late arrival and piecemeal attack on the Confederate right became the main infantry effort after Armistead's movement. (Verified; Inferred strength/timing)" },
+      { "id": "cs_huger", "side": "CS", "atSec": 150, "name": "Huger's Division (right flank)", "commander": "Maj. Gen. Benjamin Huger", "arm": "inf", "weapon": "smooth", "men": 3000, "xp": 1, "x": 360, "z": 850, "facing": 0, "formation": "line", "entry": "toward the narrow western approach and Malvern Cliffs", "note": "Huger's troops were meant to press Porter's left, but terrain and poor coordination limited the effort. (Verified context; Inferred strength/timing)" },
+      { "id": "cs_whiting", "side": "CS", "atSec": 230, "name": "Whiting's Division (Jackson's support)", "commander": "Brig. Gen. W. H. C. Whiting", "arm": "inf", "weapon": "smooth", "men": 2600, "xp": 2, "x": 820, "z": 855, "facing": 0, "formation": "line", "entry": "from Jackson's left, too late to make the attack coherent", "note": "A supporting division from Jackson's wing, representing the late surge of units fed into the attack. (Verified context; Inferred strength/timing)" },
+      { "id": "cs_hill_batteries", "side": "CS", "atSec": 170, "name": "D.H. Hill's Supporting Batteries", "commander": "D.H. Hill's artillery", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 6, "men": 170, "xp": 2, "x": 620, "z": 735, "facing": 0, "formation": "line", "entry": "brought forward into Hunt's counter-battery fire", "note": "Additional Confederate guns tried to support Hill's center assault but could not overcome the Federal ridge batteries. Universal gun model: 6 guns. (Verified context; Inferred grouping)" }
+    ],
+    "endNote": {
+      "US": {
+        "US": "History holds tactically. As at Malvern Hill on July 1, 1862, the Union gun line and Porter's infantry broke the Confederate attacks before they could take the crest. The harder question comes after victory: McClellan still retreated to Harrison's Landing, ending the Peninsula Campaign.",
+        "CS": "History holds tactically, but against your army. The Union gun line held Malvern Hill and the Confederate attacks stopped short of the crest; Lee saved Richmond only because McClellan retreated after winning the field."
+      },
+      "CS": {
+        "US": "History is overturned. The Confederate assault took the plateau that Hunt and Porter historically held. In reality, Lee's attacks were beaten back by artillery, infantry, and open ground; this time the gun line broke.",
+        "CS": "History is overturned. Your army took Malvern Hill, coordinating the attack that historically collapsed into piecemeal assaults and artillery slaughter. Richmond's defense becomes a battlefield victory instead of a saved campaign by retreat."
+      },
+      "draw": "A bloodier stalemate than history's clear Union tactical victory - the gun line held long enough to blunt Lee's final blow, but the plateau remained contested when darkness fell."
+    },
+    "teaching": {
+      "title": "Malvern Hill - Artillery, Open Ground, and Command Failure",
+      "cards": [
+        {
+          "id": "mh_hunt",
+          "head": "Henry Hunt's gun line",
+          "body": "Malvern Hill was not a fortress. It was a modest plateau with open fields of fire. Henry Hunt made it deadly by massing batteries along the ridge, shifting guns as ammunition ran low, and using counter-battery fire to crush Lee's planned crossfire. This is the professional artillery lesson that will matter again at Gettysburg.",
+          "provenance": "Verified (high) - NPS Richmond; American Battlefield Trust; Encyclopedia Virginia."
+        },
+        {
+          "id": "mh_grand_batteries",
+          "head": "The failed Confederate grand batteries",
+          "body": "Lee and Longstreet hoped two Confederate artillery positions would converge on the Federal guns and suppress them before the infantry attacked. Poor communication, brigade-attached batteries, and Union counter-battery fire ruined the plan. Of the guns available, only a handful fired effectively together at any one time.",
+          "provenance": "Verified (high) - Encyclopedia Virginia; NPS History Civil War Series; American Battlefield Trust map."
+        },
+        {
+          "id": "mh_piecemeal",
+          "head": "Piecemeal assault by rumor",
+          "body": "Armistead's move against skirmishers, reports that mistook wagons for a Union withdrawal, Magruder's late arrival, and D.H. Hill's assault in the center turned Lee's plan into a sequence of isolated attacks. The soldiers were brave; the command system failed them.",
+          "provenance": "Verified (high) - American Battlefield Trust; Encyclopedia Virginia; NPS."
+        },
+        {
+          "id": "mh_mcclellan",
+          "head": "Retreat from a tactical victory",
+          "body": "Malvern Hill was a clear Union tactical victory, yet McClellan ordered the army back to Harrison's Landing the next morning. The Seven Days had saved Richmond and broken McClellan's offensive nerve. The battle is therefore two lessons at once: tactical success on the field and strategic failure in the campaign.",
+          "provenance": "Verified (high) - Encyclopedia Virginia; NPS Richmond; American Battlefield Trust."
+        },
+        {
+          "id": "mh_james_river",
+          "head": "The James River guns",
+          "body": "Union gunboats on the James threw heavy shells toward the Confederate positions. Their fire was frightening and dramatic, though imprecise; the decisive killing power came from Hunt's field batteries and the infantry on the plateau. The river mattered strategically because it gave McClellan a secure base and line of retreat.",
+          "provenance": "Verified (medium-high) - NPS History Civil War Series; American Battlefield Trust."
+        }
+      ],
+      "codex": {
+        "id": "codex_malvern_hill",
+        "title": "Malvern Hill, July 1, 1862",
+        "summary": "The final battle of the Seven Days. Porter and Henry Hunt used Malvern Hill's open fields of fire to mass Union artillery and repel Lee's poorly coordinated attacks. The result was a Union tactical victory with heavy Confederate losses, but McClellan still retreated to Harrison's Landing, ending the Peninsula Campaign.",
+        "axes": { "timeline": "1862", "theater": "Eastern", "people": ["McClellan", "Porter", "Hunt", "Couch", "Morell", "Lee", "Longstreet", "Magruder", "D.H. Hill", "Armistead", "Jackson"], "battle": "Malvern Hill" }
+      }
+    }
+  }
+},
 "manpower-teaching": {
   "_comment": "S1d teaching content for the manpower/conscription layer. Citation-grade multi-voice debate cards (consensus + scholarly dissent + named-and-countered Lost Cause + primary sources) + a quantitative numbers audit, from an 11-agent research+verify+audit workflow (run i, 2026-06-13). Build-injected as GAME_DATA[\"manpower-teaching\"]; surfaced by src/70-manpower.js (The Ranks overview block) and the S4 codex. Black Americans treated as full historical agents (self-emancipation, USCT); Lost Cause erasure countered.",
   "provenance": "Verified historiography. Scholars: McPherson, Geary, Murdock, Moore, Anbinder, Lonn, Glatthaar, Levine, Gallagher, Marvel. Every cited work adversarially fact-checked; fabricated/misattributed citations removed in the Verify pass.",
@@ -20827,9 +21273,9 @@ var GAME_DATA = {
       "defend": "Hold the Sunken Road and the Landing. The enemy has struck from the woods and your camps are overrun — rally the broken regiments and buy the hours until Buell's army crosses the river. <b>This is your war:</b> Grant was surprised and nearly destroyed — hold the line and the army survives to fight another day."
     },
     "objective": {
-      "name": "Pittsburg Landing & the River Road",
-      "x": 600, "z": 200, "r": 180,
-      "note": "The Tennessee River landing and the River Road — the Union's last line and the point where Buell's reinforcements will arrive. The defender must hold this ground until the clock runs out; the attacker must seize it to cut the Union off from reinforcement and escape."
+      "name": "The Hornets' Nest Road to Pittsburg Landing",
+      "x": 600, "z": 394, "r": 80,
+      "note": "The Sunken Road / Hornets' Nest corridor covering the road back to Pittsburg Landing. In this single-phase first-day model, the defender's hold line sits on the Hornets' Nest; if the Confederate attacker clears and holds it long enough, Grant's field position collapses toward the Landing. If the Union denies it until the clock runs out, Buell's lead brigades stiffen the final Landing line."
     },
     "leaders": {
       "_note": "fate = a per-leader durability multiplier weighting the casualty model to HISTORY (>1 endures, <1 is fall-prone). At Shiloh, Albert Sidney Johnston was killed (the highest-ranking general on either side to die in the war); Wallace (US) was mortally wounded; Prentiss was captured; the others survived. The Confederate command was decapitated at the worst moment — Johnston's death at ~2:30 p.m. on April 6 cost the assault its driving hand.",
@@ -20868,25 +21314,25 @@ var GAME_DATA = {
     },
     "oob": {
       "US": [
-        { "id": "us_prentiss", "name": "Prentiss's Division (the Hornets' Nest)", "commander": "Brig. Gen. Benjamin M. Prentiss", "arm": "inf", "weapon": "rifled", "men": 3200, "xp": 1, "x": 600, "z": 420, "facing": 3.14159, "formation": "line", "note": "6th Division, Army of the Tennessee. Held the Sunken Road — a worn farm lane that became the Hornets' Nest — for ~6 hours against repeated Confederate assaults. Mostly green regiments in their first battle; they held because the ground (a sunken road with a thicket in front) gave them cover and because the Confederate attacks were piecemeal. Surrounded and captured after running out of ammunition. (Verified identity; Inferred strength)" },
-        { "id": "us_sherman_shiloh", "name": "Sherman's Division (Shiloh Church)", "commander": "Brig. Gen. William T. Sherman", "arm": "inf", "weapon": "rifled", "men": 3500, "xp": 1, "x": 600, "z": 780, "facing": 3.14159, "formation": "line", "note": "5th Division, posted on the Union right at Shiloh Church. Bore the first shock of the Confederate assault; driven back in confusion but rallied. Sherman was wounded twice and stayed in command. (Verified identity; Inferred strength)" },
-        { "id": "us_mcclernand", "name": "McClernand's Division", "commander": "Maj. Gen. John A. McClernand", "arm": "inf", "weapon": "rifled", "men": 3000, "xp": 1, "x": 700, "z": 600, "facing": 3.14159, "formation": "line", "note": "1st Division, Army of the Tennessee. Held the center near the Hamburg-Purdy Road; fought a stubborn delaying action through the morning. (Verified identity; Inferred strength)" },
-        { "id": "us_hurlbut", "name": "Hurlbut's Division", "commander": "Brig. Gen. Stephen A. Hurlbut", "arm": "inf", "weapon": "rifled", "men": 2800, "xp": 1, "x": 500, "z": 550, "facing": 3.14159, "formation": "line", "note": "4th Division, Army of the Tennessee. Held the left center near the Peach Orchard; fought a stubborn defense before being driven back toward the Landing. (Verified identity; Inferred strength)" },
-        { "id": "us_wallace_div", "name": "W. H. L. Wallace's Division", "commander": "Brig. Gen. W. H. L. Wallace", "arm": "inf", "weapon": "rifled", "men": 2600, "xp": 1, "x": 650, "z": 460, "facing": 3.14159, "formation": "line", "note": "2nd Division, Army of the Tennessee. Fought alongside Prentiss at the Hornets' Nest; Wallace was mortally wounded as the position was overrun. (Verified identity; Inferred strength)" },
-        { "id": "us_battery_a", "name": "Battery A, 1st Illinois Light Artillery", "commander": "Capt. Ezra Taylor", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 6, "men": 110, "xp": 2, "x": 600, "z": 350, "facing": 3.14159, "formation": "line", "note": "Supported the Hornets' Nest defense. Universal gun model (D75): 6 guns, ~110 crew. (Verified)" },
-        { "id": "us_battery_b_shiloh", "name": "Battery B, 1st Illinois Light Artillery", "commander": "Capt. Samuel E. Barrett", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 6, "men": 110, "xp": 2, "x": 700, "z": 380, "facing": 3.14159, "formation": "line", "note": "Massed with other batteries near the Hornets' Nest to create the 'artillery hell' that broke the Confederate assaults. Universal gun model (D75): 6 guns, ~110 crew. (Verified)" }
+        { "id": "us_prentiss", "name": "Prentiss's Division (the Hornets' Nest)", "commander": "Brig. Gen. Benjamin M. Prentiss", "arm": "inf", "weapon": "rifled", "men": 2720, "xp": 1, "x": 600, "z": 420, "facing": 3.14159, "formation": "line", "note": "6th Division, Army of the Tennessee. Held the Sunken Road — a worn farm lane that became the Hornets' Nest — for ~6 hours against repeated Confederate assaults. Mostly green regiments in their first battle; they held because the ground (a sunken road with a thicket in front) gave them cover and because the Confederate attacks were piecemeal. Surrounded and captured after running out of ammunition. (Verified identity; Inferred strength)" },
+        { "id": "us_sherman_shiloh", "name": "Sherman's Division (Shiloh Church)", "commander": "Brig. Gen. William T. Sherman", "arm": "inf", "weapon": "rifled", "men": 2975, "xp": 1, "x": 600, "z": 780, "facing": 3.14159, "formation": "line", "note": "5th Division, posted on the Union right at Shiloh Church. Bore the first shock of the Confederate assault; driven back in confusion but rallied. Sherman was wounded twice and stayed in command. (Verified identity; Inferred strength)" },
+        { "id": "us_mcclernand", "name": "McClernand's Division", "commander": "Maj. Gen. John A. McClernand", "arm": "inf", "weapon": "rifled", "men": 2550, "xp": 1, "x": 700, "z": 600, "facing": 3.14159, "formation": "line", "note": "1st Division, Army of the Tennessee. Held the center near the Hamburg-Purdy Road; fought a stubborn delaying action through the morning. (Verified identity; Inferred strength)" },
+        { "id": "us_hurlbut", "name": "Hurlbut's Division", "commander": "Brig. Gen. Stephen A. Hurlbut", "arm": "inf", "weapon": "rifled", "men": 2380, "xp": 1, "x": 500, "z": 550, "facing": 3.14159, "formation": "line", "note": "4th Division, Army of the Tennessee. Held the left center near the Peach Orchard; fought a stubborn defense before being driven back toward the Landing. (Verified identity; Inferred strength)" },
+        { "id": "us_wallace_div", "name": "W. H. L. Wallace's Division", "commander": "Brig. Gen. W. H. L. Wallace", "arm": "inf", "weapon": "rifled", "men": 2210, "xp": 1, "x": 650, "z": 460, "facing": 3.14159, "formation": "line", "note": "2nd Division, Army of the Tennessee. Fought alongside Prentiss at the Hornets' Nest; Wallace was mortally wounded as the position was overrun. (Verified identity; Inferred strength)" },
+        { "id": "us_battery_a", "name": "Battery A, 1st Illinois Light Artillery", "commander": "Capt. Ezra Taylor", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 6, "men": 94, "xp": 2, "x": 600, "z": 350, "facing": 3.14159, "formation": "line", "note": "Supported the Hornets' Nest defense. Universal gun model (D75): 6 guns, ~94 crew. (Verified)" },
+        { "id": "us_battery_b_shiloh", "name": "Battery B, 1st Illinois Light Artillery", "commander": "Capt. Samuel E. Barrett", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 6, "men": 94, "xp": 2, "x": 700, "z": 380, "facing": 3.14159, "formation": "line", "note": "Massed with other batteries near the Hornets' Nest to create the 'artillery hell' that broke the Confederate assaults. Universal gun model (D75): 6 guns, ~94 crew. (Verified)" }
       ],
       "CS": [
-        { "id": "cs_hardee_corps", "name": "Hardee's Corps (the first wave)", "commander": "Maj. Gen. William J. Hardee", "arm": "inf", "weapon": "smooth", "men": 4500, "xp": 2, "x": 600, "z": 830, "facing": 0, "formation": "line", "note": "III Corps, Army of the Mississippi. Opened the battle, striking Sherman's division at Shiloh Church. The first wave achieved complete surprise but was not followed up in mass. (Verified identity; Inferred strength)" },
-        { "id": "cs_bragg_corps", "name": "Bragg's Corps (the second wave)", "commander": "Maj. Gen. Braxton Bragg", "arm": "inf", "weapon": "smooth", "men": 5000, "xp": 2, "x": 600, "z": 780, "facing": 0, "formation": "line", "note": "II Corps, Army of the Mississippi. The second wave, intended to exploit Hardee's breakthrough. Bragg fed his brigades in piecemeal — a major command failure that cost the Confederacy the battle. (Verified identity; Inferred strength)" },
-        { "id": "cs_polk_corps", "name": "Polk's Corps", "commander": "Maj. Gen. Leonidas Polk", "arm": "inf", "weapon": "smooth", "men": 4000, "xp": 2, "x": 700, "z": 800, "facing": 0, "formation": "line", "note": "I Corps, Army of the Mississippi. An Episcopal bishop turned general; his corps fought in the center and left. (Verified identity; Inferred strength)" },
-        { "id": "cs_breckinridge_reserve", "name": "Breckinridge's Reserve Corps", "commander": "Maj. Gen. John C. Breckinridge", "arm": "inf", "weapon": "smooth", "men": 3000, "xp": 2, "x": 600, "z": 870, "facing": 0, "formation": "line", "note": "Reserve Corps. Committed late and disjointedly after Johnston's death — the reserve that might have crushed the Union was never massed. (Verified identity; Inferred strength)" },
-        { "id": "cs_artillery_pool", "name": "Confederate Artillery (massed batteries)", "commander": "Col. John J. Trabue", "arm": "art", "weapon": "smooth", "role": "attack", "guns": 12, "men": 300, "xp": 2, "x": 600, "z": 760, "facing": 0, "formation": "line", "note": "Massed Confederate batteries (Trabue's, Cobb's, Byrne's, Robertson's, etc.) supporting the assault. Universal gun model (D75): 12 guns, ~300 crew. (Verified)" }
+        { "id": "cs_hardee_corps", "name": "Hardee's Corps (the first wave)", "commander": "Maj. Gen. William J. Hardee", "arm": "inf", "weapon": "smooth", "men": 5850, "xp": 2, "x": 600, "z": 830, "facing": 0, "formation": "line", "note": "III Corps, Army of the Mississippi. Opened the battle, striking Sherman's division at Shiloh Church. The first wave achieved complete surprise but was not followed up in mass. (Verified identity; Inferred strength)" },
+        { "id": "cs_bragg_corps", "name": "Bragg's Corps (the second wave)", "commander": "Maj. Gen. Braxton Bragg", "arm": "inf", "weapon": "smooth", "men": 6500, "xp": 2, "x": 600, "z": 780, "facing": 0, "formation": "line", "note": "II Corps, Army of the Mississippi. The second wave, intended to exploit Hardee's breakthrough. Bragg fed his brigades in piecemeal — a major command failure that cost the Confederacy the battle. (Verified identity; Inferred strength)" },
+        { "id": "cs_polk_corps", "name": "Polk's Corps", "commander": "Maj. Gen. Leonidas Polk", "arm": "inf", "weapon": "smooth", "men": 5200, "xp": 2, "x": 700, "z": 800, "facing": 0, "formation": "line", "note": "I Corps, Army of the Mississippi. An Episcopal bishop turned general; his corps fought in the center and left. (Verified identity; Inferred strength)" },
+        { "id": "cs_breckinridge_reserve", "name": "Breckinridge's Reserve Corps", "commander": "Maj. Gen. John C. Breckinridge", "arm": "inf", "weapon": "smooth", "men": 3900, "xp": 2, "x": 600, "z": 870, "facing": 0, "formation": "line", "note": "Reserve Corps. Committed late and disjointedly after Johnston's death — the reserve that might have crushed the Union was never massed. (Verified identity; Inferred strength)" },
+        { "id": "cs_artillery_pool", "name": "Confederate Artillery (massed batteries)", "commander": "Col. John J. Trabue", "arm": "art", "weapon": "smooth", "role": "attack", "guns": 12, "men": 390, "xp": 2, "x": 600, "z": 760, "facing": 0, "formation": "line", "note": "Massed Confederate batteries (Trabue's, Cobb's, Byrne's, Robertson's, etc.) supporting the assault. Universal gun model (D75): 12 guns, ~390 crew. (Verified)" }
       ]
     },
     "reinforcements": [
-      { "id": "us_buell_ammen", "side": "US", "atSec": 180, "name": "Buell's Army — Ammen's Brigade (the first across)", "commander": "Brig. Gen. Jacob Ammen", "arm": "inf", "weapon": "rifled", "men": 2500, "xp": 2, "x": 600, "z": 140, "facing": 3.14159, "formation": "column", "entry": "from the steamboats at Pittsburg Landing — the first of Buell's Army of the Ohio", "note": "The leading brigade of Buell's Army of the Ohio, crossing the Tennessee River on steamboats through the night of April 6-7. Ammen's men were the first reinforcements to reach Grant's beleaguered line. (Verified)" },
-      { "id": "us_buell_nelson", "side": "US", "atSec": 240, "name": "Buell's Army — Nelson's Division", "commander": "Brig. Gen. William 'Bull' Nelson", "arm": "inf", "weapon": "rifled", "men": 3500, "xp": 2, "x": 600, "z": 130, "facing": 3.14159, "formation": "column", "entry": "Buell's division arriving at the Landing", "note": "Nelson's 4th Division, Army of the Ohio. Nelson was a massive, profane, energetic commander who personally rallied broken Union regiments on the evening of April 6. His division formed the core of the Union counterattack on April 7. (Verified)" },
+      { "id": "us_buell_ammen", "side": "US", "atSec": 270, "name": "Buell's Army — Ammen's Brigade (the first across)", "commander": "Brig. Gen. Jacob Ammen", "arm": "inf", "weapon": "rifled", "men": 2500, "xp": 2, "x": 600, "z": 140, "facing": 3.14159, "formation": "column", "entry": "from the steamboats at Pittsburg Landing — the first of Buell's Army of the Ohio", "note": "The leading brigade of Buell's Army of the Ohio, crossing the Tennessee River on steamboats through the night of April 6-7. Ammen's men were the first reinforcements to reach Grant's beleaguered line. (Verified)" },
+      { "id": "us_buell_nelson", "side": "US", "atSec": 330, "name": "Buell's Army — Nelson's Division", "commander": "Brig. Gen. William 'Bull' Nelson", "arm": "inf", "weapon": "rifled", "men": 3500, "xp": 2, "x": 600, "z": 130, "facing": 3.14159, "formation": "column", "entry": "Buell's division arriving at the Landing", "note": "Nelson's 4th Division, Army of the Ohio. Nelson was a massive, profane, energetic commander who personally rallied broken Union regiments on the evening of April 6. His division formed the core of the Union counterattack on April 7. (Verified)" },
       { "id": "cs_wood_reserve", "side": "CS", "atSec": 120, "name": "Wood's Reserve Brigade", "commander": "Brig. Gen. S. A. M. Wood", "arm": "inf", "weapon": "smooth", "men": 1800, "xp": 2, "x": 600, "z": 860, "facing": 0, "formation": "line", "entry": "from the reserve — the last Confederate reserve committed", "note": "Wood's brigade was the last uncommitted Confederate reserve. Its piecemeal commitment — like all the others — failed to mass enough force to break the Union line before nightfall. (Verified)" }
     ],
     "terrain": {
@@ -26205,6 +26651,7 @@ var __FIELD = {
 /* ---- tunable constants (seeded from the base WEAPONS table + tuned via probe; the per-arm melee/canister
    table lives in T5 FLDA, gated on __FIELD.arms) ---- */
 var FLD = {
+  BASE_FIELD_W: 1200, BASE_FIELD_H: 900,  // reset every launch; custom scenarios may override FIELD_W/H safely
   FIELD_W: 1200, FIELD_H: 900,          // yards (x by z)
   FIXED_DT: 0.05,                        // 20 Hz sim
   TIME_LIMIT: 480,                       // sim-seconds (8 min) -> objective decides
@@ -26377,6 +26824,8 @@ function fldResetRun() {
 }
 function fldInitSim(opts) {
   opts = opts || {};
+  FLD.FIELD_W = FLD.BASE_FIELD_W || 1200;
+  FLD.FIELD_H = FLD.BASE_FIELD_H || 900;
   __FIELD._launchOpts = opts;   // B-6: stash the resolved launch spec so the end-screen "Fight Again" can REPLAY it
                                 // faithfully (same scenario/skirmish/side/fog, bumped seed) — never read by the sim.
   __FIELD.seed = (opts.seed || 1) >>> 0;
@@ -27168,10 +27617,12 @@ function fldBuildDom() {
   r.style.cssText = "position:fixed;inset:0;z-index:5000;background:#10141a;overflow:hidden;font-family:Georgia,serif;color:#f2e8d5;";
   r.innerHTML =
     '<canvas id="fldGl" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></canvas>' +
-    '<div id="fldTop" style="position:absolute;top:0;left:0;right:0;padding:8px 12px;display:flex;gap:10px;align-items:center;background:linear-gradient(#000a,#0000);pointer-events:none;">' +
-      '<b id="fldTitle" style="letter-spacing:1px;">&#9876; TACTICAL SANDBOX</b><span id="fldClock" style="opacity:.85;">0:00</span>' +
-      '<span id="fldObj" style="opacity:.85;">Objective: contested</span><span style="flex:1"></span>' +
-      '<span id="fldPhase" style="opacity:.85;"></span>' +
+    '<div id="fldTop" style="position:absolute;top:0;left:0;right:0;padding:7px 10px;display:flex;gap:7px;align-items:center;background:linear-gradient(#0009,#0000);pointer-events:none;font-size:12px;line-height:1.2;">' +
+      '<b id="fldTitle" style="letter-spacing:.6px;max-width:30vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">&#9876; TACTICAL SANDBOX</b>' +
+      '<span id="fldClock" style="opacity:.9;background:#0c0f14bf;border:1px solid #5c513d;border-radius:4px;padding:3px 7px;white-space:nowrap;">0:00</span>' +
+      '<span id="fldSector" style="display:none;max-width:32vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;opacity:.9;background:#0c0f14bf;border:1px solid #5c513d;border-radius:4px;padding:3px 7px;"></span>' +
+      '<span id="fldObj" style="max-width:28vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;opacity:.9;background:#0c0f14bf;border:1px solid #5c513d;border-radius:4px;padding:3px 7px;">Obj: contested</span><span style="flex:1"></span>' +
+      '<span id="fldPhase" style="opacity:.9;background:#0c0f14bf;border:1px solid #5c513d;border-radius:4px;padding:3px 7px;white-space:nowrap;"></span>' +
     '</div>' +
     '<div id="fldHud" role="region" aria-label="Selected unit" style="position:absolute;left:12px;bottom:12px;min-width:240px;max-width:320px;background:#0c0f14e6;border:1px solid #745e3f;border-radius:6px;padding:10px 12px;font-size:13px;"></div>'/* wcag-auditor: contrast fix #4a3c28->#745e3f border on #0c0f14/#10141a (was 1.80:1, now 3.12/3.00:1) WCAG 1.4.11 */ +
     '<div id="fldBar" style="position:absolute;left:50%;bottom:14px;transform:translateX(-50%);display:flex;gap:6px;"></div>' +
@@ -27297,6 +27748,19 @@ function fldRenderTop() {
   var c = document.getElementById("fldClock"); if (c) { var s = Math.floor(__FIELD.t); c.textContent = Math.floor(s / 60) + ":" + ("0" + (s % 60)).slice(-2); }
   var ti = document.getElementById("fldTitle");
   if (ti) { var wantT = (__FIELD.scenData && __FIELD.scenData.name) ? ("⚔ " + __FIELD.scenData.name) : "⚔ TACTICAL SANDBOX"; if (ti.textContent !== wantT) ti.textContent = wantT; }
+  var sec = document.getElementById("fldSector");
+  if (sec) {
+    var _parts = (__FIELD.phases && typeof _fldPhaseTopParts === "function") ? _fldPhaseTopParts() : null;
+    if (_parts) {
+      sec.style.display = "inline-block";
+      sec.textContent = _parts.chip;
+      sec.title = _parts.full;
+    } else {
+      sec.style.display = "none";
+      sec.textContent = "";
+      sec.title = "";
+    }
+  }
   var o = document.getElementById("fldObj");
   if (o) {
     var hU = __FIELD.holdSecs.US, hC = __FIELD.holdSecs.CS, lead;
@@ -27307,13 +27771,15 @@ function fldRenderTop() {
     } else {
       lead = hU > hC + 0.5 ? "Union holds " + Math.floor(hU) + "s/" + __FIELD.holdToWin : (hC > hU + 0.5 ? "Confederate holds " + Math.floor(hC) + "s/" + __FIELD.holdToWin : "contested");
     }
-    // Phase C (D74): a MULTI-PHASE battle prefixes the running phase/sector tally ("Phase 2/3 · the Sunken Road ·
-    // sectors US 1 – CS 1"). "" for a single-objective battle -> byte-identical text.
-    var _pl = (__FIELD.phases && typeof _fldPhaseTopLabel === "function") ? _fldPhaseTopLabel() : "";
-    o.textContent = (_pl ? _pl + " · " : "") + "Objective: " + lead;
+    o.textContent = "Obj: " + lead;
+    o.title = "Objective: " + lead;
   }
   var p = document.getElementById("fldPhase");
-  if (p) p.textContent = __FIELD.phase === "deploy" ? "Press Begin (Space) to advance" : (__FIELD.paused ? ("⏸ " + (__FIELD._apReason ? __FIELD._apReason + " — Space to resume" : "PAUSED")) : (__FIELD.speed + "×"));
+  if (p) {
+    var phaseTxt = __FIELD.phase === "deploy" ? "Begin: Space" : (__FIELD.paused ? (__FIELD._apReason ? "Paused: " + __FIELD._apReason : "Paused") : (__FIELD.speed + "x"));
+    p.textContent = phaseTxt;
+    p.title = __FIELD.phase === "deploy" ? "Press Begin or Space to start the battle" : (__FIELD.paused ? "Press Space to resume" : "Current battle speed");
+  }
   // fog: keep the no-selection "N Rebel brigades sighted" HUD line live as scouting changes (throttled ~3x/sec)
   if (__FIELD.fog) { __FIELD._hudTick = (__FIELD._hudTick || 0) + 1; if (__FIELD._hudTick % 20 === 0 && !fldPlayerSel().length) fldRenderHud(); }
 }
@@ -27721,6 +28187,7 @@ function fld3dBuildTerrain() {
   var o = __FIELD.objective;
   var ring = new T.Mesh(new T.RingGeometry(o.r - 6, o.r, 40), new T.MeshBasicMaterial({ color: "#d8c87a", side: T.DoubleSide, transparent: true, opacity: 0.7 }));
   ring.rotation.x = -Math.PI / 2; ring.position.set(o.x, fldTerrainH(o.x, o.z) + 1.5, o.z); __FIELD.scene.add(ring);
+  fld3dBuildObjectiveBeacon(T, o);
   // walls (one for the sandbox; several for a scenario)
   var t = __FIELD.terrain, _ws = fldWalls();
   for (var wq = 0; wq < _ws.length; wq++) {
@@ -27743,6 +28210,24 @@ function fld3dBuildTerrain() {
     }
     __FIELD.scene.add(im);
   }
+}
+function fld3dBuildObjectiveBeacon(T, o) {
+  if (!T || !o) return;
+  var y = fldTerrainH(o.x, o.z), r = Math.max(18, Math.min(34, (o.r || 120) * 0.16));
+  var g = new T.Group();
+  g.name = "objectiveBeacon";
+  g.position.set(o.x, y + 2, o.z);
+  var gold = new T.MeshBasicMaterial({ color: "#f3dc8a", transparent: true, opacity: 0.92 });
+  var dark = new T.MeshBasicMaterial({ color: "#17110c", transparent: true, opacity: 0.88 });
+  var foot = new T.Mesh(new T.RingGeometry(r * 0.58, r * 0.82, 36), gold);
+  foot.name = "objectiveBeaconFoot"; foot.rotation.x = -Math.PI / 2; foot.position.y = 2; g.add(foot);
+  var pole = new T.Mesh(new T.CylinderGeometry(2.2, 2.2, 78, 8), dark);
+  pole.name = "objectiveBeaconPole"; pole.position.y = 39; g.add(pole);
+  var crown = new T.Mesh(new T.TorusGeometry(r, 2.2, 8, 40), gold);
+  crown.name = "objectiveBeaconCrown"; crown.rotation.x = Math.PI / 2; crown.position.y = 82; g.add(crown);
+  var core = new T.Mesh(new T.OctahedronGeometry(8, 0), gold);
+  core.name = "objectiveBeaconCore"; core.position.y = 82; g.add(core);
+  __FIELD.scene.add(g);
 }
 function fld3dBuildMarkers() {
   var t = __FIELD.terrain; if (!t || !t.markers || !window.THREE) return;
@@ -27944,11 +28429,18 @@ function fldScenarioRegistry() {
       if (GAME_DATA.antietam && GAME_DATA.antietam.antietam) R.antietam = GAME_DATA.antietam.antietam;   // Phase C-2: the first MULTI-PHASE epic (data.phases[] -> the T8 engine)
       if (GAME_DATA.gettysburg && GAME_DATA.gettysburg.gettysburg) R.gettysburg = GAME_DATA.gettysburg.gettysburg;   // Phase C-1: Gettysburg — the second MULTI-PHASE epic (3 days: McPherson Ridge, Little Round Top, Pickett's Charge)
       if (GAME_DATA.shiloh && GAME_DATA.shiloh.shiloh) R.shiloh = GAME_DATA.shiloh.shiloh;   // Phase C-2: Shiloh — the first WESTERN THEATER battle (single-phase, the Fredericksburg pattern)
+      if (GAME_DATA.chancellorsville && GAME_DATA.chancellorsville.chancellorsville) R.chancellorsville = GAME_DATA.chancellorsville.chancellorsville;   // Phase C-1: Chancellorsville — Lee's greatest victory, Jackson's flank march (single-phase, the Fredericksburg/Shiloh pattern)
+      if (GAME_DATA["malvern-hill"] && GAME_DATA["malvern-hill"].malvernHill) R.malvernHill = GAME_DATA["malvern-hill"].malvernHill;   // Phase C-1: Malvern Hill - the Seven Days' culminating artillery duel (single-phase, gun-line defense)
     }
   } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldScenarioRegistry:", e); }
   return R;
 }
-function fldScenarioData(id) { var R = fldScenarioRegistry(); return (id && R[id]) ? R[id] : null; }
+function fldScenarioData(id) {
+  var R = fldScenarioRegistry();
+  if (id && R[id]) return R[id];
+  if (id && typeof fldCustomScenarioData === "function") return fldCustomScenarioData(id);
+  return null;
+}
 /* back-compat alias: First Bull Run is the canonical first scenario (the menu button + briefing still call this). */
 function fldBrData() { return fldScenarioData("bullrun1"); }
 /* ---- a data OOB/reinforcement entry -> an fldMakeUnit spec. The on-field OOB carries its side via
@@ -27983,6 +28475,10 @@ function fldScenarioInit(opts) {
   // live PER PHASE, so it bypasses the single-objective build + guard below. Default (no data.phases) -> unchanged.
   if (data && data.phases && data.phases.length && typeof _fldScenarioInitPhased === "function") return _fldScenarioInitPhased(opts, data);
   if (!data || !data.oob || !data.terrain || !data.objective) return false;   // data missing/malformed -> fall back to the sandbox
+  if (data.field) {
+    FLD.FIELD_W = fldClamp(+data.field.w || FLD.FIELD_W, 700, 1800);
+    FLD.FIELD_H = fldClamp(+data.field.h || FLD.FIELD_H, 550, 1400);
+  }
   __FIELD.scenData = data;
   __FIELD.autoBoth = !!opts.autoBoth;
   // terrain: the multi-hill / multi-wall / markers shape the generalized T0 readers + renderers expect.
@@ -28092,18 +28588,31 @@ function fldInjectScenarioButtons(afterBtn) {
   } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldInjectScenarioButtons:", e); }
   return last;
 }
-/* Marquee order: First Bull Run first (the opening battle + the hand-authored marquee), then the rest by year. */
+/* Marquee order: the public Phase-C roster order, then future additions by full date.
+   Keep the current playable arc stable for the help copy / demo route: the opening Bull Run, the Eastern
+   marquee battles already shipped, then the first Western battle. */
 function fldScenarioMenuOrder(reg) {
   var ids = [], k;
   for (k in reg) if (reg.hasOwnProperty(k)) ids.push(k);
   ids.sort(function (a, b) {
-    if (a === "bullrun1") return -1; if (b === "bullrun1") return 1;
-    var ya = (String((reg[a] || {}).date || "").match(/\d{4}/) || ["9999"])[0];
-    var yb = (String((reg[b] || {}).date || "").match(/\d{4}/) || ["9999"])[0];
-    if (ya !== yb) return ya < yb ? -1 : 1;
+    var ra = fldScenarioMenuRank(a), rb = fldScenarioMenuRank(b);
+    if (ra !== rb) return ra - rb;
+    var da = fldScenarioDateSortValue((reg[a] || {}).date), db = fldScenarioDateSortValue((reg[b] || {}).date);
+    if (da !== db) return da - db;
     return a < b ? -1 : (a > b ? 1 : 0);
   });
   return ids;
+}
+function fldScenarioMenuRank(id) {
+  var order = { bullrun1: 10, malvernHill: 18, antietam: 20, fredericksburg: 30, chancellorsville: 35, gettysburg: 40, shiloh: 50 };
+  return order[id] || 1000;
+}
+function fldScenarioDateSortValue(date) {
+  var s = String(date || "").toLowerCase(), m = s.match(/\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+(\d{1,2}),\s*(\d{4})\b/);
+  var months = { january: 1, february: 2, march: 3, april: 4, may: 5, june: 6, july: 7, august: 8, september: 9, october: 10, november: 11, december: 12 };
+  if (m && months[m[1]]) return (+m[3]) * 10000 + months[m[1]] * 100 + (+m[2]);
+  var y = (s.match(/\d{4}/) || ["9999"])[0];
+  return (+y) * 10000 + 9999;
 }
 /* Inject ONE scenario's menu button after `afterBtn`, returning it (or the existing button). Bull Run keeps its
    bespoke hand-authored marquee button (id fldBullRunBtn); every other scenario gets a button built from its data
@@ -28203,10 +28712,11 @@ function fldScenarioBanner(text, side) {
     var b = document.createElement("div");
     b.className = "fldBanner";
     b.setAttribute("role", "status");
-    b.style.cssText = "position:absolute;top:" + (52 + stack * 38) + "px;left:50%;transform:translateX(-50%);z-index:5500;background:#0c0f14f2;border:1px solid " + col + ";border-left:5px solid " + col + ";border-radius:5px;padding:7px 14px;color:#f2e8d5;font:14px Georgia,serif;max-width:74vw;white-space:nowrap;box-shadow:0 2px 12px #000a;";
+    b.style.cssText = "position:absolute;top:" + (44 + stack * 30) + "px;left:50%;transform:translateX(-50%);z-index:5500;background:#0c0f14e8;border:1px solid " + col + ";border-left:4px solid " + col + ";border-radius:4px;padding:5px 10px;color:#f2e8d5;font:12.5px Georgia,serif;max-width:58vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 2px 9px #0008;";
+    b.title = text;
     b.textContent = text;
     root.appendChild(b);
-    setTimeout(function () { try { if (b.parentNode) b.parentNode.removeChild(b); } catch (e) {} }, 3800);
+    setTimeout(function () { try { if (b.parentNode) b.parentNode.removeChild(b); } catch (e) {} }, 3000);
   } catch (e) {}
 }
 /* the end-screen teaching payoff: "your war vs history" + the cards with provenance. Phase C: data-driven for any
@@ -30725,13 +31235,26 @@ function _fldPhasesHasUI() {
   return !!(typeof document !== "undefined" && document.getElementById && document.getElementById("fldRoot"));
 }
 
-/* the running-tally TOP-BAR label (T0 fldRenderTop seam). "" for a single-objective battle. */
-function _fldPhaseTopLabel() {
-  if (!__FIELD.phases) return "";
+/* the running-tally TOP-BAR chip (T0 fldRenderTop seam). null for a single-objective battle. */
+function _fldPhaseTopParts() {
+  if (!__FIELD.phases) return null;
   var n = __FIELD.phases.length, i = __FIELD.phaseIdx + 1, nm = (__FIELD.scenData && __FIELD.scenData._phase) ? __FIELD.scenData._phase.name : "";
   var sc = __FIELD.phaseScore || { US: 0, CS: 0 };
   function fmt(v) { return (v === Math.floor(v)) ? String(v) : v.toFixed(1); }
-  return "Phase " + i + "/" + n + (nm ? " · " + nm : "") + " · sectors US " + fmt(sc.US) + " – CS " + fmt(sc.CS);
+  var phase = "Phase " + i + "/" + n;
+  var score = "US " + fmt(sc.US) + " / CS " + fmt(sc.CS);
+  return {
+    phase: phase,
+    sector: nm,
+    score: score,
+    chip: phase + (nm ? " · " + nm : "") + " · " + score,
+    full: phase + (nm ? " · " + nm : "") + " · sectors " + score.replace(" / ", " - ")
+  };
+}
+/* Back-compat for probes and older callers: compact label, "" for single-objective. */
+function _fldPhaseTopLabel() {
+  var p = _fldPhaseTopParts();
+  return p ? p.chip : "";
 }
 
 /* the INTER-PHASE transition card (UI only). A period-broadsheet modal: the just-resolved phase
@@ -31459,6 +31982,147 @@ function _fldFlagSvg(flag, w, h) {
   return 'data:image/svg+xml,' + encodeURIComponent(svg);
 }
 
+/* ---- 3D flag texture cache (procedural canvas; no async image load) ------ */
+var _FLD_FLAG_CANVAS_CACHE = {};
+
+function _fldFlagTextureKey(flag, w, h) {
+  var c = (flag && flag.colors) ? flag.colors.join("|") : "";
+  return (flag && flag.pattern || "solid") + "|" + c + "|" + (w || 0) + "x" + (h || 0);
+}
+
+function _fldFlagDrawCanvas(ctx, flag, w, h) {
+  var c = flag.colors || ["#ccc", "#fff", "#333"];
+  var rect = function (x, y, rw, rh, fill) { ctx.fillStyle = fill; ctx.fillRect(x, y, rw, rh); };
+  var circle = function (x, y, r, fill) { ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fillStyle = fill; ctx.fill(); };
+  var poly = function (points, fill) {
+    if (!points.length) return;
+    ctx.beginPath(); ctx.moveTo(points[0][0], points[0][1]);
+    for (var pi = 1; pi < points.length; pi++) ctx.lineTo(points[pi][0], points[pi][1]);
+    ctx.closePath(); ctx.fillStyle = fill; ctx.fill();
+  };
+  ctx.clearRect(0, 0, w, h);
+  ctx.lineJoin = "round";
+
+  switch (flag.pattern) {
+    case "stars-stripes":
+      rect(0, 0, w, h, c[0]);
+      var stripeH = h / 13;
+      for (var si = 0; si < 13; si++) if (si % 2 === 0) rect(0, si * stripeH, w, stripeH, c[1]);
+      var cantonW = w * 0.4, cantonH = h * 7 / 13;
+      rect(0, 0, cantonW, cantonH, c[2]);
+      var starR = cantonH * 0.08;
+      for (var row = 0; row < 5; row++) {
+        for (var col = 0; col < 7; col++) {
+          if (row * 7 + col >= 34) break;
+          circle(cantonW * (0.08 + col * 0.14), cantonH * (0.12 + row * 0.19), starR, c[0]);
+        }
+      }
+      break;
+
+    case "southern-cross":
+      rect(0, 0, w, h, c[0]);
+      poly([[0, 0], [w * 0.35, 0], [w, h * 0.65], [w, h], [w * 0.65, h], [0, h * 0.35]], c[2]);
+      poly([[w, 0], [w, h * 0.35], [w * 0.65, h], [0, h], [0, h * 0.65], [w * 0.35, 0]], c[2]);
+      var starPositions = [[0.5, 0.15], [0.3, 0.35], [0.5, 0.5], [0.7, 0.35], [0.5, 0.85], [0.2, 0.5], [0.8, 0.5], [0.35, 0.65], [0.65, 0.65], [0.5, 0.35], [0.4, 0.5], [0.6, 0.5]];
+      for (var sti = 0; sti < starPositions.length; sti++) circle(starPositions[sti][0] * w, starPositions[sti][1] * h, h * 0.06, c[1]);
+      ctx.strokeStyle = c[1]; ctx.lineWidth = 1.5; ctx.strokeRect(0.75, 0.75, w - 1.5, h - 1.5);
+      break;
+
+    case "harp":
+      rect(0, 0, w, h, c[0]);
+      ctx.strokeStyle = c[1]; ctx.lineWidth = 2; ctx.strokeRect(1, 1, w - 2, h - 2);
+      ctx.beginPath();
+      ctx.moveTo(w * 0.3, h * 0.2); ctx.lineTo(w * 0.3, h * 0.8); ctx.lineTo(w * 0.7, h * 0.8); ctx.lineTo(w * 0.7, h * 0.3);
+      ctx.quadraticCurveTo(w * 0.5, h * 0.1, w * 0.3, h * 0.2);
+      ctx.stroke();
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(w * 0.35, h * 0.35); ctx.lineTo(w * 0.65, h * 0.35);
+      ctx.moveTo(w * 0.35, h * 0.5); ctx.lineTo(w * 0.65, h * 0.5);
+      ctx.moveTo(w * 0.35, h * 0.65); ctx.lineTo(w * 0.6, h * 0.65);
+      ctx.stroke();
+      break;
+
+    case "lone-star":
+      rect(0, 0, w, h, c[0]);
+      rect(w / 3, 0, w * 2 / 3, h / 2, c[1]);
+      rect(w / 3, h / 2, w * 2 / 3, h / 2, c[2]);
+      var starCx = w / 6, starCy = h / 2, starR2 = h * 0.25;
+      ctx.beginPath();
+      for (var pt = 0; pt < 5; pt++) {
+        var angle = -Math.PI / 2 + pt * 2 * Math.PI / 5;
+        var angleInner = angle + Math.PI / 5;
+        var ox = starCx + starR2 * Math.cos(angle), oy = starCy + starR2 * Math.sin(angle);
+        var ix = starCx + starR2 * 0.38 * Math.cos(angleInner), iy = starCy + starR2 * 0.38 * Math.sin(angleInner);
+        if (pt === 0) ctx.moveTo(ox, oy); else ctx.lineTo(ox, oy);
+        ctx.lineTo(ix, iy);
+      }
+      ctx.closePath(); ctx.fillStyle = c[1]; ctx.fill();
+      break;
+
+    default:
+      rect(0, 0, w, h, c[0] || "#888");
+      break;
+  }
+}
+
+function _fldFlagCanvas(flag, w, h) {
+  if (!flag || typeof document === "undefined") return null;
+  w = w || 88; h = h || 56;
+  var key = _fldFlagTextureKey(flag, w, h);
+  if (_FLD_FLAG_CANVAS_CACHE[key]) return _FLD_FLAG_CANVAS_CACHE[key];
+  var cv = document.createElement("canvas");
+  cv.width = w; cv.height = h;
+  var ctx = cv.getContext && cv.getContext("2d");
+  if (!ctx) return null;
+  _fldFlagDrawCanvas(ctx, flag, w, h);
+  _FLD_FLAG_CANVAS_CACHE[key] = cv;
+  return cv;
+}
+
+function _fldFlagCanvasTexture(T, flag, w, h) {
+  var cv = _fldFlagCanvas(flag, w, h);
+  if (!cv || !T) return null;
+  var tex = T.CanvasTexture ? new T.CanvasTexture(cv) : (T.Texture ? new T.Texture(cv) : null);
+  if (!tex) return null;
+  tex.needsUpdate = true;
+  if (T.SRGBColorSpace) tex.colorSpace = T.SRGBColorSpace;
+  else if (T.sRGBEncoding !== undefined) tex.encoding = T.sRGBEncoding;
+  if (T.LinearFilter) { tex.minFilter = T.LinearFilter; tex.magFilter = T.LinearFilter; }
+  tex.generateMipmaps = false;
+  tex.anisotropy = 2;
+  return tex;
+}
+
+function _fldFlagDisposeMaterialMaps(material) {
+  if (!material) return;
+  var mats = Array.isArray(material) ? material : [material];
+  for (var i = 0; i < mats.length; i++) {
+    var m = mats[i]; if (!m || !m.map) continue;
+    try { if (m.map.dispose) m.map.dispose(); } catch (e) {}
+    m.map = null;
+  }
+}
+
+function _fldFlagDisposeMesh(mesh) {
+  if (!mesh) return;
+  if (mesh.geometry && mesh.geometry.dispose) mesh.geometry.dispose();
+  _fldFlagDisposeMaterialMaps(mesh.material);
+  if (mesh.material) {
+    var mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+    for (var i = 0; i < mats.length; i++) { try { if (mats[i] && mats[i].dispose) mats[i].dispose(); } catch (e) {} }
+  }
+}
+
+function _fld3dDisposeFlagMaps() {
+  try {
+    if (typeof __FIELD === "undefined" || !__FIELD.groups || !__FIELD.groups.traverse) return;
+    __FIELD.groups.traverse(function (o) {
+      if (o && o.name === "flag") _fldFlagDisposeMaterialMaps(o.material);
+    });
+  } catch (e) {}
+}
+
 /* ---- 2D flag rendering (called from fld2dDraw seam) --------------------- */
 function fldDrawFlags(ctx, v) {
   try {
@@ -31509,11 +32173,10 @@ function fld3dBuildFlags() {
       if (!flag) continue;
       // Remove the old generic flag mesh
       var oldFlag = g.getObjectByName("flag");
-      if (oldFlag) { g.remove(oldFlag); if (oldFlag.geometry) oldFlag.geometry.dispose(); if (oldFlag.material) oldFlag.material.dispose(); }
-      // Create a textured flag from SVG data URI
-      var svg = _fldFlagSvg(flag, 88, 56);
-      var tex = new T.TextureLoader().load(svg);
-      tex.needsUpdate = true;
+      if (oldFlag) { g.remove(oldFlag); _fldFlagDisposeMesh(oldFlag); }
+      // Create a ready-to-upload canvas texture; avoids async SVG TextureLoader warnings.
+      var tex = _fldFlagCanvasTexture(T, flag, 88, 56);
+      if (!tex) continue;
       var flagMesh = new T.Mesh(
         new T.PlaneGeometry(22, 14),
         new T.MeshBasicMaterial({ map: tex, side: T.DoubleSide, transparent: true })
@@ -31555,11 +32218,685 @@ function _fldFlagOn() {
 (function _fldFlagInstall() {
   try {
     _fldFlagInitSettings();
-    // The seam pattern: existing code checks typeof fldDrawFlags === "function"
-    // before calling it. We define the function at module scope so it's available.
-    // No wrapping needed — the seam is already in the render pipeline.
+    if (typeof fld3dBuildUnits === "function" && !fld3dBuildUnits._t10FlagMaps) {
+      var _origFld3dBuildUnits = fld3dBuildUnits;
+      fld3dBuildUnits = function () {
+        try { _fld3dDisposeFlagMaps(); } catch (e) {}
+        return _origFld3dBuildUnits.apply(this, arguments);
+      };
+      fld3dBuildUnits._t10FlagMaps = true;
+    }
+    if (typeof fld3dDispose === "function" && !fld3dDispose._t10FlagMaps) {
+      var _origFld3dDispose = fld3dDispose;
+      fld3dDispose = function () {
+        try { _fld3dDisposeFlagMaps(); } catch (e) {}
+        return _origFld3dDispose.apply(this, arguments);
+      };
+      fld3dDispose._t10FlagMaps = true;
+    }
+    // The draw/build seams stay additive; the wrappers only dispose texture maps
+    // before unit or scene teardown.
   } catch (e) {}
 })();
+
+
+/* ===== module: tactical/T11-custom-battle.js ===== */
+/* ===========================================================================
+   T11 Custom Battle Builder (C4)
+   Data-driven single-phase scenario authoring. Custom scenarios do not enter the
+   canonical battle registry; fldScenarioData(id) asks this module only for IDs
+   explicitly launched by the builder or loaded from local slots.
+   =========================================================================== */
+
+var FLDCB_STORE = "cw_custom_battles_v1";
+var FLDCB_SCHEMA = "cw_custom_battle_v1";
+var FLDCB_SLOTS = 6;
+var _fldCbState = null;
+var _fldCbLast = null;
+var _fldCbActiveScenario = null;
+
+function _fldCbCopy(o) { return JSON.parse(JSON.stringify(o || {})); }
+function _fldCbEsc(s) {
+  return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+    return c === "&" ? "&amp;" : (c === "<" ? "&lt;" : (c === ">" ? "&gt;" : (c === '"' ? "&quot;" : "&#39;")));
+  });
+}
+function _fldCbNum(v, d, lo, hi) {
+  var n = +v;
+  if (!isFinite(n)) n = d;
+  if (typeof lo === "number" && n < lo) n = lo;
+  if (typeof hi === "number" && n > hi) n = hi;
+  return n;
+}
+function _fldCbInt(v, d, lo, hi) { return Math.round(_fldCbNum(v, d, lo, hi)); }
+function _fldCbSlug(s) {
+  var out = String(s || "custom battle").toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "");
+  return out || "custom_battle";
+}
+function _fldCbSafeId(s, prefix) {
+  var raw = String(s || "").trim();
+  raw = raw.replace(/[^A-Za-z0-9_-]+/g, "_").replace(/^_+|_+$/g, "");
+  if (!raw) raw = prefix || "unit";
+  if (!/^[A-Za-z]/.test(raw)) raw = (prefix || "id") + "_" + raw;
+  return raw.slice(0, 48);
+}
+function _fldCbScenarioId(name, id) {
+  var s = String(id || "").trim();
+  if (!s) s = "custom_" + _fldCbSlug(name);
+  s = s.replace(/[^A-Za-z0-9_-]+/g, "_").replace(/^_+|_+$/g, "");
+  if (s.indexOf("custom_") !== 0) s = "custom_" + s;
+  return s.slice(0, 56);
+}
+function _fldCbSideName(s) { return s === "CS" ? "Confederacy" : "Union"; }
+function _fldCbEnemy(s) { return s === "CS" ? "US" : "CS"; }
+function _fldCbForbiddenRe() { return /^(damage|dmg|fireScale|killScale|combatScale|battleDamage|battleFire|casualtyScale|attritionScale|lethality|fireBase|moraleDamage|gunFireWeight)$/i; }
+function _fldCbWalk(o, path, errors) {
+  if (!o || typeof o !== "object") return;
+  for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) {
+    if (k === "__proto__" || k === "constructor" || k === "prototype") { errors.push("Unsafe JSON key: " + (path ? path + "." : "") + k); continue; }
+    if (_fldCbForbiddenRe().test(k)) errors.push("Forbidden battle-specific combat key: " + (path ? path + "." : "") + k);
+    _fldCbWalk(o[k], path ? path + "." + k : k, errors);
+  }
+}
+function _fldCbScrub(o) {
+  if (Array.isArray(o)) {
+    var a = [];
+    for (var i = 0; i < o.length; i++) a.push(_fldCbScrub(o[i]));
+    return a;
+  }
+  if (!o || typeof o !== "object") return o;
+  var out = {};
+  for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) {
+    if (k === "__proto__" || k === "constructor" || k === "prototype") continue;
+    out[k] = _fldCbScrub(o[k]);
+  }
+  return out;
+}
+function _fldCbMarkerPath(v, field) {
+  if (Array.isArray(v)) return v;
+  var s = String(v || "").trim();
+  if (!s) return null;
+  var pts = [], chunks = s.split(";");
+  for (var i = 0; i < chunks.length; i++) {
+    var p = chunks[i].split(",");
+    if (p.length < 2) continue;
+    pts.push([_fldCbInt(p[0], 0, 0, field.w), _fldCbInt(p[1], 0, 0, field.h)]);
+  }
+  return pts.length > 1 ? pts : null;
+}
+function _fldCbPathString(path) {
+  if (!Array.isArray(path) || path.length < 2) return "";
+  var out = [];
+  for (var i = 0; i < path.length; i++) out.push(Math.round(+path[i][0] || 0) + "," + Math.round(+path[i][1] || 0));
+  return out.join(";");
+}
+
+function fldCustomDefaultDraft() {
+  return {
+    id: "custom_crossroads_ridge",
+    name: "Crossroads Ridge",
+    date: "Summer 1863",
+    place: "Virginia crossroads",
+    provenance: "Player-authored custom scenario.",
+    attacker: "US",
+    defender: "CS",
+    defaultFog: false,
+    assaultDoctrine: "standard",
+    fieldW: 1200,
+    fieldH: 900,
+    timeLimitSec: 540,
+    holdToWinSec: 100,
+    objective: { name: "Crossroads Ridge", x: 600, z: 445, r: 125 },
+    sideCopy: {
+      US: { title: "Lead the Union attack", deck: "Press up the road, silence the ridge guns, and hold the crossroads." },
+      CS: { title: "Hold for the Confederacy", deck: "Use the ridge, wall, and reserves to deny the crossroads." }
+    },
+    brief: {
+      attack: "Your infantry must close on the ridge under artillery fire, then hold the crossroads long enough to settle the field.",
+      defend: "Your line begins near the ridge. Hold the crest, protect the guns, and counterattack only when the assault is spent."
+    },
+    terrain: {
+      hills: [{ x: 610, z: 405, h: 24, s: 210 }, { x: 410, z: 615, h: 12, s: 150 }],
+      woods: [{ x: 280, z: 475, r: 135 }, { x: 915, z: 315, r: 150 }],
+      walls: [{ x1: 455, z1: 360, x2: 745, z2: 350 }],
+      markers: [
+        { kind: "road", name: "Crossroads Road", path: "90,690;430,545;620,445;1110,315" },
+        { kind: "bridge", name: "Stone Bridge", x: 385, z: 550 }
+      ]
+    },
+    units: [
+      { side: "US", id: "us_1", name: "1st Union Brigade", commander: "Col. Walker", arm: "inf", weapon: "rifled", men: 1900, xp: 2, x: 430, z: 730, facing: 0, formation: "line", atSec: 0 },
+      { side: "US", id: "us_2", name: "2nd Union Brigade", commander: "Col. Finch", arm: "inf", weapon: "smooth", men: 1700, xp: 1, x: 690, z: 735, facing: 0, formation: "line", atSec: 0 },
+      { side: "US", id: "us_guns", name: "Union Battery", commander: "Capt. Hale", arm: "art", weapon: "rifled", men: 120, guns: 6, xp: 2, x: 560, z: 790, facing: 0, formation: "line", atSec: 0 },
+      { side: "US", id: "us_reserve", name: "Union Reserve Brigade", commander: "Col. Ames", arm: "inf", weapon: "rifled", men: 1500, xp: 2, x: 240, z: 910, facing: 0, formation: "column", atSec: 150 },
+      { side: "CS", id: "cs_1", name: "1st Confederate Brigade", commander: "Brig. Gen. Cobb", arm: "inf", weapon: "rifled", men: 1750, xp: 2, x: 500, z: 315, facing: 3.14, formation: "line", atSec: 0 },
+      { side: "CS", id: "cs_2", name: "2nd Confederate Brigade", commander: "Col. Pryor", arm: "inf", weapon: "smooth", men: 1650, xp: 2, x: 725, z: 305, facing: 3.14, formation: "line", atSec: 0 },
+      { side: "CS", id: "cs_guns", name: "Confederate Battery", commander: "Capt. Poague", arm: "art", weapon: "smooth", men: 96, guns: 4, xp: 2, x: 620, z: 260, facing: 3.14, formation: "line", atSec: 0 },
+      { side: "CS", id: "cs_reserve", name: "Confederate Reserve", commander: "Col. Branch", arm: "inf", weapon: "rifled", men: 1400, xp: 2, x: 960, z: -20, facing: 3.14, formation: "column", atSec: 185 }
+    ],
+    leaders: [
+      { side: "US", id: "us_cmd", name: "Union Field Commander", quality: 1.08, radius: 190, x: 560, z: 710, attach: "us_1" },
+      { side: "CS", id: "cs_cmd", name: "Confederate Field Commander", quality: 1.08, radius: 190, x: 630, z: 285, attach: "cs_1" }
+    ],
+    supply: {
+      US: { name: "Union ammunition train", x: 585, z: 850 },
+      CS: { name: "Confederate ammunition train", x: 615, z: 70 }
+    },
+    teachingCards: [
+      { id: "custom_builder_note", head: "Custom battle", body: "A single-phase player-authored scenario using the shared tactical field model.", provenance: "Player-authored." }
+    ]
+  };
+}
+
+function _fldCbSource(raw) {
+  var src = raw;
+  if (src && src.scenario) src = src.scenario;
+  if (src && src.customBattle) src = src.customBattle;
+  return src || {};
+}
+function _fldCbFlatUnits(src) {
+  if (Array.isArray(src.units)) return _fldCbCopy(src.units);
+  var out = [], sides = ["US", "CS"], i, j, side, list, d;
+  if (src.oob) for (i = 0; i < sides.length; i++) {
+    side = sides[i]; list = src.oob[side] || [];
+    for (j = 0; j < list.length; j++) { d = _fldCbCopy(list[j]); d.side = d.side || side; d.atSec = d.atSec || 0; out.push(d); }
+  }
+  list = src.reinforcements || [];
+  for (j = 0; j < list.length; j++) { d = _fldCbCopy(list[j]); d.atSec = d.atSec || 1; out.push(d); }
+  return out;
+}
+function _fldCbDraftFromScenario(sc) {
+  sc = _fldCbSource(sc);
+  var d = fldCustomDefaultDraft();
+  d.id = sc.id || d.id;
+  d.name = sc.name || d.name;
+  d.date = sc.date || d.date;
+  d.place = sc.place || d.place;
+  d.provenance = sc.provenance || d.provenance;
+  d.attacker = sc.attacker === "CS" ? "CS" : "US";
+  d.defender = sc.defender === "US" ? "US" : "CS";
+  d.defaultFog = !!sc.defaultFog;
+  d.assaultDoctrine = sc.assaultDoctrine === "cautious" ? "cautious" : "standard";
+  d.fieldW = sc.field && sc.field.w ? sc.field.w : d.fieldW;
+  d.fieldH = sc.field && sc.field.h ? sc.field.h : d.fieldH;
+  d.timeLimitSec = sc.timeLimitSec || d.timeLimitSec;
+  d.holdToWinSec = sc.holdToWinSec || d.holdToWinSec;
+  d.objective = _fldCbCopy(sc.objective || d.objective);
+  d.sideCopy = _fldCbCopy(sc.sides || d.sideCopy);
+  d.brief = _fldCbCopy(sc.brief || d.brief);
+  d.terrain = _fldCbCopy(sc.terrain || d.terrain);
+  if (d.terrain && d.terrain.markers) for (var m = 0; m < d.terrain.markers.length; m++) if (d.terrain.markers[m].path) d.terrain.markers[m].path = _fldCbPathString(d.terrain.markers[m].path);
+  d.units = _fldCbFlatUnits(sc);
+  d.leaders = [];
+  if (sc.leaders) {
+    var sides = ["US", "CS"], i, list, j, x;
+    for (i = 0; i < sides.length; i++) {
+      list = sc.leaders[sides[i]] || [];
+      for (j = 0; j < list.length; j++) { x = _fldCbCopy(list[j]); x.side = sides[i]; d.leaders.push(x); }
+    }
+  }
+  d.supply = _fldCbCopy(sc.supply || d.supply);
+  d.teachingCards = sc.teaching && sc.teaching.cards ? _fldCbCopy(sc.teaching.cards) : d.teachingCards;
+  return d;
+}
+
+function fldCustomValidate(raw) {
+  var errors = [], warnings = [], src = _fldCbSource(raw || {});
+  if (!src || typeof src !== "object" || Array.isArray(src)) return { ok: false, errors: ["Scenario JSON must be an object."], warnings: [], scenario: null, json: "" };
+  _fldCbWalk(src, "", errors);
+  if (src.phases) errors.push("Custom Battle Builder V1 exports one single-phase scenario; phase authoring is deferred.");
+  var name = String(src.name || "").trim();
+  var date = String(src.date || "").trim();
+  var place = String(src.place || "").trim();
+  if (!name) errors.push("Scenario name is required.");
+  if (!date) errors.push("Scenario date is required.");
+  if (!place) errors.push("Scenario place is required.");
+  var id = _fldCbScenarioId(name, src.id);
+  if (!/^custom_[A-Za-z0-9_-]{3,56}$/.test(id)) errors.push("Scenario ID must be safe and start with custom_.");
+  var attacker = src.attacker === "CS" ? "CS" : "US";
+  var defender = src.defender === "US" ? "US" : "CS";
+  if (attacker === defender) errors.push("Attacker and defender must be different sides.");
+  var field = { w: _fldCbInt(src.fieldW || (src.field && src.field.w), 1200, 700, 1800), h: _fldCbInt(src.fieldH || (src.field && src.field.h), 900, 550, 1400) };
+  var objective = src.objective || {};
+  objective = {
+    name: String(objective.name || "").trim(),
+    x: _fldCbInt(objective.x, field.w / 2, 40, field.w - 40),
+    z: _fldCbInt(objective.z, field.h / 2, 40, field.h - 40),
+    r: _fldCbInt(objective.r, 125, 50, 220)
+  };
+  if (!objective.name) errors.push("Objective name is required.");
+  if (objective.x - objective.r < 0 || objective.x + objective.r > field.w || objective.z - objective.r < 0 || objective.z + objective.r > field.h) errors.push("Objective radius must fit inside the field.");
+  var timeLimitSec = _fldCbInt(src.timeLimitSec, 540, 180, 1800);
+  var holdToWinSec = _fldCbInt(src.holdToWinSec, 100, 20, Math.max(25, Math.min(600, timeLimitSec - 10)));
+  var terrainSrc = src.terrain || {};
+  var terrain = { hills: [], woods: [], walls: [], markers: [] }, i, d, p;
+  var hills = terrainSrc.hills || (terrainSrc.hill ? [terrainSrc.hill] : []);
+  for (i = 0; i < hills.length; i++) {
+    d = hills[i] || {};
+    terrain.hills.push({ x: _fldCbInt(d.x, field.w / 2, 0, field.w), z: _fldCbInt(d.z, field.h / 2, 0, field.h), h: _fldCbNum(d.h, 16, 0, 60), s: _fldCbInt(d.s || d.r, 180, 45, 420) });
+  }
+  var woods = terrainSrc.woods || [];
+  for (i = 0; i < woods.length; i++) {
+    d = woods[i] || {};
+    terrain.woods.push({ x: _fldCbInt(d.x, field.w / 2, 0, field.w), z: _fldCbInt(d.z, field.h / 2, 0, field.h), r: _fldCbInt(d.r, 120, 25, 280) });
+  }
+  var walls = terrainSrc.walls || (terrainSrc.wall ? [terrainSrc.wall] : []);
+  for (i = 0; i < walls.length; i++) {
+    d = walls[i] || {};
+    terrain.walls.push({ x1: _fldCbInt(d.x1, field.w / 2 - 80, 0, field.w), z1: _fldCbInt(d.z1, field.h / 2, 0, field.h), x2: _fldCbInt(d.x2, field.w / 2 + 80, 0, field.w), z2: _fldCbInt(d.z2, field.h / 2, 0, field.h) });
+  }
+  var markers = terrainSrc.markers || [];
+  for (i = 0; i < markers.length; i++) {
+    d = markers[i] || {};
+    var mk = { kind: String(d.kind || "label").replace(/[^A-Za-z0-9_-]/g, "").slice(0, 18) || "label", name: String(d.name || "").trim().slice(0, 80) };
+    p = _fldCbMarkerPath(d.path, field);
+    if (p) mk.path = p;
+    else { mk.x = _fldCbInt(d.x, field.w / 2, 0, field.w); mk.z = _fldCbInt(d.z, field.h / 2, 0, field.h); }
+    terrain.markers.push(mk);
+  }
+  var unitIds = {}, bySide = { US: [], CS: [] }, reinforcements = [], units = _fldCbFlatUnits(src);
+  if (!units.length) errors.push("At least one unit per side is required.");
+  for (i = 0; i < units.length; i++) {
+    d = units[i] || {};
+    var side = d.side === "CS" ? "CS" : "US";
+    var atSec = _fldCbInt(d.atSec, 0, 0, timeLimitSec);
+    var arm = d.arm === "art" ? "art" : (d.arm === "cav" ? "cav" : "inf");
+    var uid = _fldCbSafeId(d.id, side.toLowerCase() + "_unit");
+    if (unitIds[uid]) errors.push("Duplicate unit/leader ID: " + uid);
+    unitIds[uid] = side;
+    if (!d.id || !/^[A-Za-z][A-Za-z0-9_-]{1,48}$/.test(String(d.id))) warnings.push("Unit ID normalized to " + uid + ".");
+    var guns = arm === "art" ? _fldCbInt(d.guns, 4, 1, 24) : 0;
+    var rawMen = +d.men;
+    var men = _fldCbInt(d.men, arm === "art" ? guns * 22 : 1500, arm === "art" ? guns * 12 : 80, arm === "art" ? guns * 40 : 7000);
+    if (arm === "art") {
+      if (isFinite(rawMen) && (rawMen < guns * 12 || rawMen > guns * 40)) errors.push(uid + " has unrealistic artillery crew count; use 12-40 men per gun.");
+    }
+    var u = {
+      id: uid,
+      side: side,
+      name: String(d.name || uid).trim().slice(0, 90),
+      commander: String(d.commander || "").trim().slice(0, 80),
+      arm: arm,
+      weapon: String(d.weapon || (arm === "cav" ? "carbine" : "rifled")).replace(/[^A-Za-z0-9_-]/g, "").slice(0, 24) || "rifled",
+      men: men,
+      guns: guns,
+      xp: _fldCbInt(d.xp, 2, 1, 4),
+      x: _fldCbInt(d.x, side === "US" ? field.w * 0.45 : field.w * 0.55, -80, field.w + 80),
+      z: _fldCbInt(d.z, side === "US" ? field.h - 120 : 120, -120, field.h + 120),
+      facing: _fldCbNum(d.facing, side === "US" ? 0 : 3.14, -6.29, 6.29),
+      formation: d.formation === "column" ? "column" : "line",
+      entry: String(d.entry || "").trim().slice(0, 100)
+    };
+    if (!u.name) errors.push(uid + " needs a unit name.");
+    if (atSec > 0) { u.atSec = atSec; reinforcements.push(u); }
+    else bySide[side].push(u);
+  }
+  if (!bySide.US.length && !reinforcements.some(function (u) { return u.side === "US"; })) errors.push("Union must have at least one unit.");
+  if (!bySide.CS.length && !reinforcements.some(function (u) { return u.side === "CS"; })) errors.push("Confederacy must have at least one unit.");
+  var leaders = { US: [], CS: [] }, leaderSrc = [];
+  if (Array.isArray(src.leaders)) leaderSrc = src.leaders;
+  else if (src.leaders) {
+    ["US", "CS"].forEach(function (s) { var list = src.leaders[s] || []; for (var li = 0; li < list.length; li++) { var q = _fldCbCopy(list[li]); q.side = s; leaderSrc.push(q); } });
+  }
+  for (i = 0; i < leaderSrc.length; i++) {
+    d = leaderSrc[i] || {};
+    side = d.side === "CS" ? "CS" : "US";
+    uid = _fldCbSafeId(d.id, side.toLowerCase() + "_leader");
+    if (unitIds[uid]) errors.push("Duplicate unit/leader ID: " + uid);
+    unitIds[uid] = side;
+    var attach = String(d.attach || "").trim();
+    if (attach && unitIds[attach] && unitIds[attach] !== side) errors.push(uid + " attaches to a unit owned by the other side.");
+    if (attach && !unitIds[attach]) warnings.push(uid + " attach target is not a known unit.");
+    leaders[side].push({
+      id: uid,
+      name: String(d.name || uid).trim().slice(0, 80),
+      quality: _fldCbNum(d.quality, 1.05, 0.7, 1.35),
+      radius: _fldCbInt(d.radius, 180, 80, 340),
+      x: _fldCbInt(d.x, side === "US" ? field.w * 0.48 : field.w * 0.52, 0, field.w),
+      z: _fldCbInt(d.z, side === "US" ? field.h - 150 : 150, 0, field.h),
+      attach: attach || "",
+      fate: String(d.fate || "").trim().slice(0, 120)
+    });
+  }
+  var sides = src.sides || src.sideCopy || {};
+  sides = {
+    US: { title: String((sides.US && sides.US.title) || "Lead the Union").trim(), deck: String((sides.US && sides.US.deck) || "Take and hold the objective.").trim() },
+    CS: { title: String((sides.CS && sides.CS.title) || "Lead the Confederacy").trim(), deck: String((sides.CS && sides.CS.deck) || "Hold the objective and break the attack.").trim() }
+  };
+  var brief = src.brief || {};
+  brief = {
+    attack: String(brief.attack || ("Attack toward " + objective.name + " and hold it.")).trim(),
+    defend: String(brief.defend || ("Defend " + objective.name + " until the clock runs out.")).trim()
+  };
+  var supplySrc = src.supply || {};
+  var supply = {
+    US: {
+      name: String((supplySrc.US && supplySrc.US.name) || "Union ammunition train").trim(),
+      x: _fldCbInt(supplySrc.US && supplySrc.US.x, field.w * 0.5, 0, field.w),
+      z: _fldCbInt(supplySrc.US && supplySrc.US.z, field.h - 55, 0, field.h)
+    },
+    CS: {
+      name: String((supplySrc.CS && supplySrc.CS.name) || "Confederate ammunition train").trim(),
+      x: _fldCbInt(supplySrc.CS && supplySrc.CS.x, field.w * 0.5, 0, field.w),
+      z: _fldCbInt(supplySrc.CS && supplySrc.CS.z, 55, 0, field.h)
+    }
+  };
+  var cards = (src.teachingCards || (src.teaching && src.teaching.cards) || []);
+  var teaching = { title: "Custom Battle Notes", cards: [] };
+  for (i = 0; i < cards.length; i++) {
+    d = cards[i] || {};
+    if (!d.head && !d.body) continue;
+    teaching.cards.push({ id: _fldCbSafeId(d.id || ("custom_note_" + (i + 1)), "custom_note"), head: String(d.head || "Custom note").trim().slice(0, 80), body: String(d.body || "").trim().slice(0, 520), provenance: String(d.provenance || src.provenance || "Player-authored.").trim().slice(0, 220) });
+  }
+  var scenario = {
+    id: id,
+    name: name || "Custom Battle",
+    date: date || "Undated",
+    place: place || "Unspecified field",
+    blurb: String(src.blurb || ("A player-authored single-phase battle at " + (place || "an unspecified field") + ".")).trim(),
+    provenance: String(src.provenance || "Player-authored custom scenario.").trim(),
+    field: field,
+    attacker: attacker,
+    defender: defender,
+    defaultFog: !!src.defaultFog,
+    assaultDoctrine: src.assaultDoctrine === "cautious" ? "cautious" : "standard",
+    timeLimitSec: timeLimitSec,
+    holdToWinSec: holdToWinSec,
+    menu: { title: "Custom Battle - " + (name || "Untitled"), deck: (date || "Undated") + " - " + (place || "Unspecified field"), aria: "Custom Battle Builder scenario " + (name || "Untitled") },
+    sides: sides,
+    brief: brief,
+    objective: objective,
+    terrain: terrain,
+    oob: { US: bySide.US, CS: bySide.CS },
+    reinforcements: reinforcements.sort(function (a, b) { return a.atSec - b.atSec; }),
+    leaders: leaders,
+    supply: supply,
+    teaching: teaching,
+    endNote: { US: "The Union holds " + objective.name + ".", CS: "The Confederacy denies " + objective.name + ".", draw: "The fight ends inconclusively at " + objective.name + "." }
+  };
+  return { ok: !errors.length, errors: errors, warnings: warnings, scenario: scenario, json: JSON.stringify({ schema: FLDCB_SCHEMA, scenario: scenario }, null, 2) };
+}
+
+function fldCustomExportScenario(scenario) {
+  var r = fldCustomValidate(scenario || _fldCbState || fldCustomDefaultDraft());
+  return r.ok ? r.json : "";
+}
+function fldCustomImportJson(text) {
+  var raw;
+  try { raw = JSON.parse(String(text || "")); }
+  catch (e) { return { ok: false, errors: ["Malformed JSON: " + (e && e.message ? e.message : e)], warnings: [], scenario: null, draft: null }; }
+  raw = _fldCbScrub(raw);
+  var r = fldCustomValidate(raw);
+  if (r.ok) r.draft = _fldCbDraftFromScenario(r.scenario);
+  return r;
+}
+function fldCustomLoadStore() {
+  try {
+    var raw = localStorage.getItem(FLDCB_STORE);
+    if (!raw) return { version: 1, slots: [] };
+    var parsed = JSON.parse(raw);
+    if (!parsed || !Array.isArray(parsed.slots)) return { version: 1, slots: [] };
+    return parsed;
+  } catch (e) { return { version: 1, slots: [] }; }
+}
+function fldCustomWriteStore(store) {
+  try { localStorage.setItem(FLDCB_STORE, JSON.stringify(store || { version: 1, slots: [] })); return true; }
+  catch (e) { return false; }
+}
+function fldCustomListSlots() {
+  var st = fldCustomLoadStore(), out = [];
+  for (var i = 0; i < FLDCB_SLOTS; i++) out.push(st.slots[i] || null);
+  return out;
+}
+function fldCustomSaveScenario(slot, scenario) {
+  slot = _fldCbInt(slot, 0, 0, FLDCB_SLOTS - 1);
+  var r = fldCustomValidate(scenario || _fldCbState);
+  if (!r.ok) return r;
+  var st = fldCustomLoadStore();
+  while (st.slots.length < FLDCB_SLOTS) st.slots.push(null);
+  st.slots[slot] = { id: r.scenario.id, name: r.scenario.name, updatedAt: new Date().toISOString(), scenario: r.scenario };
+  if (!fldCustomWriteStore(st)) return { ok: false, errors: ["Could not write local persistence slot."], warnings: [], scenario: r.scenario };
+  return r;
+}
+function fldCustomDeleteSlot(slot) {
+  slot = _fldCbInt(slot, 0, 0, FLDCB_SLOTS - 1);
+  var st = fldCustomLoadStore();
+  while (st.slots.length < FLDCB_SLOTS) st.slots.push(null);
+  st.slots[slot] = null;
+  return fldCustomWriteStore(st);
+}
+function fldCustomScenarioData(id) {
+  if (!id || String(id).indexOf("custom_") !== 0) return null;
+  if (_fldCbActiveScenario && _fldCbActiveScenario.id === id) return _fldCbActiveScenario;
+  var slots = fldCustomListSlots();
+  for (var i = 0; i < slots.length; i++) {
+    if (slots[i] && slots[i].scenario && slots[i].scenario.id === id) {
+      var r = fldCustomValidate(slots[i].scenario);
+      if (r.ok) return r.scenario;
+    }
+  }
+  return null;
+}
+
+function _fldCbEnsureState() { if (!_fldCbState) _fldCbState = fldCustomDefaultDraft(); }
+function _fldCbVal(k) { return _fldCbEsc((_fldCbState && _fldCbState[k]) || ""); }
+function _fldCbObjVal(obj, k) { return _fldCbEsc((obj && obj[k]) == null ? "" : obj[k]); }
+function _fldCbNumInput(name, value, min, max, step) {
+  return '<input type="number" data-cb-field="' + name + '" value="' + _fldCbEsc(value) + '" min="' + min + '" max="' + max + '" step="' + (step || 1) + '">';
+}
+function _fldCbStatusHtml() {
+  if (!_fldCbLast) return '<div class="fld-cb-status muted">Single-phase V1. Phase authoring is intentionally deferred until its editor can be probed as safely as authored phase data.</div>';
+  var cls = _fldCbLast.ok ? "ok" : "bad";
+  var html = '<div class="fld-cb-status ' + cls + '"><b>' + (_fldCbLast.ok ? "Valid scenario" : "Validation blocked") + '</b>';
+  if (_fldCbLast.errors && _fldCbLast.errors.length) html += '<ul>' + _fldCbLast.errors.map(function (e) { return '<li>' + _fldCbEsc(e) + '</li>'; }).join("") + '</ul>';
+  if (_fldCbLast.warnings && _fldCbLast.warnings.length) html += '<ul class="warn">' + _fldCbLast.warnings.slice(0, 8).map(function (e) { return '<li>' + _fldCbEsc(e) + '</li>'; }).join("") + '</ul>';
+  html += '</div>';
+  return html;
+}
+function _fldCbSelect(val, list, attr) {
+  var h = '<select ' + attr + '>';
+  for (var i = 0; i < list.length; i++) {
+    var x = list[i], v = Array.isArray(x) ? x[0] : x, label = Array.isArray(x) ? x[1] : x;
+    h += '<option value="' + _fldCbEsc(v) + '"' + (String(val) === String(v) ? " selected" : "") + '>' + _fldCbEsc(label) + '</option>';
+  }
+  return h + '</select>';
+}
+function _fldCbTerrainRows(kind) {
+  var arr = (_fldCbState.terrain && _fldCbState.terrain[kind]) || [], h = "";
+  for (var i = 0; i < arr.length; i++) {
+    var d = arr[i];
+    h += '<tr>';
+    if (kind === "hills") h += '<td><input data-cb-list="terrain.hills" data-cb-idx="' + i + '" data-cb-key="x" value="' + _fldCbObjVal(d, "x") + '"></td><td><input data-cb-list="terrain.hills" data-cb-idx="' + i + '" data-cb-key="z" value="' + _fldCbObjVal(d, "z") + '"></td><td><input data-cb-list="terrain.hills" data-cb-idx="' + i + '" data-cb-key="h" value="' + _fldCbObjVal(d, "h") + '"></td><td><input data-cb-list="terrain.hills" data-cb-idx="' + i + '" data-cb-key="s" value="' + _fldCbObjVal(d, "s") + '"></td>';
+    if (kind === "woods") h += '<td><input data-cb-list="terrain.woods" data-cb-idx="' + i + '" data-cb-key="x" value="' + _fldCbObjVal(d, "x") + '"></td><td><input data-cb-list="terrain.woods" data-cb-idx="' + i + '" data-cb-key="z" value="' + _fldCbObjVal(d, "z") + '"></td><td><input data-cb-list="terrain.woods" data-cb-idx="' + i + '" data-cb-key="r" value="' + _fldCbObjVal(d, "r") + '"></td>';
+    if (kind === "walls") h += '<td><input data-cb-list="terrain.walls" data-cb-idx="' + i + '" data-cb-key="x1" value="' + _fldCbObjVal(d, "x1") + '"></td><td><input data-cb-list="terrain.walls" data-cb-idx="' + i + '" data-cb-key="z1" value="' + _fldCbObjVal(d, "z1") + '"></td><td><input data-cb-list="terrain.walls" data-cb-idx="' + i + '" data-cb-key="x2" value="' + _fldCbObjVal(d, "x2") + '"></td><td><input data-cb-list="terrain.walls" data-cb-idx="' + i + '" data-cb-key="z2" value="' + _fldCbObjVal(d, "z2") + '"></td>';
+    h += '<td><button class="mini" data-cb-act="del-' + kind + '" data-idx="' + i + '">Remove</button></td></tr>';
+  }
+  return h || '<tr><td colspan="5" class="muted">None</td></tr>';
+}
+function _fldCbMarkerRows() {
+  var arr = (_fldCbState.terrain && _fldCbState.terrain.markers) || [], h = "";
+  for (var i = 0; i < arr.length; i++) {
+    var d = arr[i];
+    h += '<tr><td>' + _fldCbSelect(d.kind || "label", [["label", "Label"], ["road", "Road"], ["creek", "Creek"], ["bridge", "Bridge"], ["ford", "Ford"]], 'data-cb-list="terrain.markers" data-cb-idx="' + i + '" data-cb-key="kind"') + '</td>'
+      + '<td><input data-cb-list="terrain.markers" data-cb-idx="' + i + '" data-cb-key="name" value="' + _fldCbObjVal(d, "name") + '"></td>'
+      + '<td><input data-cb-list="terrain.markers" data-cb-idx="' + i + '" data-cb-key="x" value="' + _fldCbObjVal(d, "x") + '"></td>'
+      + '<td><input data-cb-list="terrain.markers" data-cb-idx="' + i + '" data-cb-key="z" value="' + _fldCbObjVal(d, "z") + '"></td>'
+      + '<td><input data-cb-list="terrain.markers" data-cb-idx="' + i + '" data-cb-key="path" value="' + _fldCbObjVal(d, "path") + '" placeholder="x,z;x,z"></td>'
+      + '<td><button class="mini" data-cb-act="del-markers" data-idx="' + i + '">Remove</button></td></tr>';
+  }
+  return h || '<tr><td colspan="6" class="muted">None</td></tr>';
+}
+function _fldCbUnitRows() {
+  var arr = _fldCbState.units || [], h = "";
+  for (var i = 0; i < arr.length; i++) {
+    var d = arr[i];
+    h += '<tr><td>' + _fldCbSelect(d.side || "US", ["US", "CS"], 'data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="side"') + '</td>'
+      + '<td><input data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="id" value="' + _fldCbObjVal(d, "id") + '"></td>'
+      + '<td><input data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="name" value="' + _fldCbObjVal(d, "name") + '"></td>'
+      + '<td><input data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="commander" value="' + _fldCbObjVal(d, "commander") + '"></td>'
+      + '<td>' + _fldCbSelect(d.arm || "inf", [["inf", "Inf"], ["art", "Art"], ["cav", "Cav"]], 'data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="arm"') + '</td>'
+      + '<td>' + _fldCbSelect(d.weapon || "rifled", ["rifled", "smooth", "carbine"], 'data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="weapon"') + '</td>'
+      + '<td><input data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="men" value="' + _fldCbObjVal(d, "men") + '"></td>'
+      + '<td><input data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="guns" value="' + _fldCbObjVal(d, "guns") + '"></td>'
+      + '<td><input data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="x" value="' + _fldCbObjVal(d, "x") + '"></td>'
+      + '<td><input data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="z" value="' + _fldCbObjVal(d, "z") + '"></td>'
+      + '<td><input data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="facing" value="' + _fldCbObjVal(d, "facing") + '"></td>'
+      + '<td><input data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="xp" value="' + _fldCbObjVal(d, "xp") + '"></td>'
+      + '<td><input data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="atSec" value="' + _fldCbObjVal(d, "atSec") + '"></td>'
+      + '<td><button class="mini" data-cb-act="del-unit" data-idx="' + i + '">Remove</button></td></tr>';
+  }
+  return h || '<tr><td colspan="14" class="muted">No units</td></tr>';
+}
+function _fldCbLeaderRows() {
+  var arr = _fldCbState.leaders || [], h = "";
+  for (var i = 0; i < arr.length; i++) {
+    var d = arr[i];
+    h += '<tr><td>' + _fldCbSelect(d.side || "US", ["US", "CS"], 'data-cb-list="leaders" data-cb-idx="' + i + '" data-cb-key="side"') + '</td>'
+      + '<td><input data-cb-list="leaders" data-cb-idx="' + i + '" data-cb-key="id" value="' + _fldCbObjVal(d, "id") + '"></td>'
+      + '<td><input data-cb-list="leaders" data-cb-idx="' + i + '" data-cb-key="name" value="' + _fldCbObjVal(d, "name") + '"></td>'
+      + '<td><input data-cb-list="leaders" data-cb-idx="' + i + '" data-cb-key="quality" value="' + _fldCbObjVal(d, "quality") + '"></td>'
+      + '<td><input data-cb-list="leaders" data-cb-idx="' + i + '" data-cb-key="radius" value="' + _fldCbObjVal(d, "radius") + '"></td>'
+      + '<td><input data-cb-list="leaders" data-cb-idx="' + i + '" data-cb-key="x" value="' + _fldCbObjVal(d, "x") + '"></td>'
+      + '<td><input data-cb-list="leaders" data-cb-idx="' + i + '" data-cb-key="z" value="' + _fldCbObjVal(d, "z") + '"></td>'
+      + '<td><input data-cb-list="leaders" data-cb-idx="' + i + '" data-cb-key="attach" value="' + _fldCbObjVal(d, "attach") + '"></td>'
+      + '<td><button class="mini" data-cb-act="del-leader" data-idx="' + i + '">Remove</button></td></tr>';
+  }
+  return h || '<tr><td colspan="9" class="muted">No leaders</td></tr>';
+}
+function _fldCbCardRows() {
+  var arr = _fldCbState.teachingCards || [], h = "";
+  for (var i = 0; i < arr.length; i++) {
+    var d = arr[i];
+    h += '<tr><td><input data-cb-list="teachingCards" data-cb-idx="' + i + '" data-cb-key="id" value="' + _fldCbObjVal(d, "id") + '"></td>'
+      + '<td><input data-cb-list="teachingCards" data-cb-idx="' + i + '" data-cb-key="head" value="' + _fldCbObjVal(d, "head") + '"></td>'
+      + '<td><input data-cb-list="teachingCards" data-cb-idx="' + i + '" data-cb-key="body" value="' + _fldCbObjVal(d, "body") + '"></td>'
+      + '<td><input data-cb-list="teachingCards" data-cb-idx="' + i + '" data-cb-key="provenance" value="' + _fldCbObjVal(d, "provenance") + '"></td>'
+      + '<td><button class="mini" data-cb-act="del-card" data-idx="' + i + '">Remove</button></td></tr>';
+  }
+  return h || '<tr><td colspan="5" class="muted">No teaching cards</td></tr>';
+}
+function _fldCbSlotsHtml() {
+  var slots = fldCustomListSlots(), h = "";
+  for (var i = 0; i < slots.length; i++) {
+    var s = slots[i], label = s ? _fldCbEsc(s.name) + '<small>' + _fldCbEsc(s.updatedAt || "") + '</small>' : '<span class="muted">Empty slot</span>';
+    h += '<div class="fld-cb-slot"><b>Slot ' + (i + 1) + '</b><span>' + label + '</span><button class="mini" data-cb-act="save-slot" data-slot="' + i + '">Save</button><button class="mini" data-cb-act="load-slot" data-slot="' + i + '"' + (s ? "" : " disabled") + '>Load</button><button class="mini" data-cb-act="delete-slot" data-slot="' + i + '"' + (s ? "" : " disabled") + '>Delete</button></div>';
+  }
+  return h;
+}
+function _fldCbHtml() {
+  _fldCbEnsureState();
+  var o = _fldCbState.objective || {}, us = (_fldCbState.sideCopy && _fldCbState.sideCopy.US) || {}, cs = (_fldCbState.sideCopy && _fldCbState.sideCopy.CS) || {}, br = _fldCbState.brief || {}, sp = _fldCbState.supply || {};
+  return '<style>.fld-cb{max-width:1180px}.fld-cb h1{margin:0 0 8px}.fld-cb h2{font-size:18px;margin:16px 0 8px}.fld-cb-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.fld-cb label{display:grid;gap:4px;font-size:12px;color:#d8c8aa}.fld-cb input,.fld-cb select,.fld-cb textarea{box-sizing:border-box;width:100%;background:#17120d;color:#f5ead6;border:1px solid #765f3e;border-radius:4px;padding:6px}.fld-cb textarea{min-height:190px;font:12px ui-monospace,Menlo,monospace}.fld-cb-table{overflow:auto;border:1px solid #4c3b25;border-radius:6px}.fld-cb table{width:100%;border-collapse:collapse;min-width:760px}.fld-cb th,.fld-cb td{border-bottom:1px solid #3b2d1e;padding:4px;text-align:left}.fld-cb th{font-size:11px;color:#c9b58e}.fld-cb td input,.fld-cb td select{min-width:74px;padding:4px}.fld-cb-actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.fld-cb .mini{padding:5px 8px;border-radius:4px}.fld-cb-status{padding:8px;border-radius:6px;border:1px solid #665136;background:#20170f}.fld-cb-status.ok{border-color:#5e8d58}.fld-cb-status.bad{border-color:#9b534b}.fld-cb-status ul{margin:6px 0 0 18px}.fld-cb-status .warn{color:#e4c677}.fld-cb .muted{color:#a99778}.fld-cb-slot{display:grid;grid-template-columns:70px 1fr auto auto auto;gap:6px;align-items:center;border-bottom:1px solid #3b2d1e;padding:5px 0}.fld-cb-slot small{display:block;color:#9e8a68}.fld-cb-wide{grid-column:span 2}@media(max-width:850px){.fld-cb-grid{grid-template-columns:1fr}.fld-cb-wide{grid-column:span 1}.fld-cb-slot{grid-template-columns:1fr 1fr}.fld-cb-slot span{grid-column:1/-1}}</style>'
+    + '<div class="fld-cb upg"><h1>Custom Battle Builder</h1>' + _fldCbStatusHtml()
+    + '<div class="fld-cb-actions"><button data-cb-act="validate">Validate</button><button data-cb-act="launch">Launch</button><button data-cb-act="export">Export / Share JSON</button><button data-cb-act="import">Import JSON</button><button data-cb-act="reset">New Draft</button><button onclick="openMainMenu()">Main Menu</button></div>'
+    + '<h2>Scenario</h2><div class="fld-cb-grid"><label>Name<input data-cb-field="name" value="' + _fldCbVal("name") + '"></label><label>ID<input data-cb-field="id" value="' + _fldCbVal("id") + '"></label><label>Date<input data-cb-field="date" value="' + _fldCbVal("date") + '"></label><label>Place<input data-cb-field="place" value="' + _fldCbVal("place") + '"></label><label>Attacker' + _fldCbSelect(_fldCbState.attacker || "US", ["US", "CS"], 'data-cb-field="attacker"') + '</label><label>Defender' + _fldCbSelect(_fldCbState.defender || "CS", ["CS", "US"], 'data-cb-field="defender"') + '</label><label>Fog' + _fldCbSelect(_fldCbState.defaultFog ? "yes" : "no", [["no", "Off"], ["yes", "On"]], 'data-cb-field="defaultFog"') + '</label><label>Doctrine' + _fldCbSelect(_fldCbState.assaultDoctrine || "standard", [["standard", "Standard"], ["cautious", "Cautious"]], 'data-cb-field="assaultDoctrine"') + '</label><label>Field W' + _fldCbNumInput("fieldW", _fldCbState.fieldW, 700, 1800) + '</label><label>Field H' + _fldCbNumInput("fieldH", _fldCbState.fieldH, 550, 1400) + '</label><label>Time limit' + _fldCbNumInput("timeLimitSec", _fldCbState.timeLimitSec, 180, 1800) + '</label><label>Hold to win' + _fldCbNumInput("holdToWinSec", _fldCbState.holdToWinSec, 20, 600) + '</label></div>'
+    + '<h2>Objective</h2><div class="fld-cb-grid"><label>Name<input data-cb-obj="objective" data-cb-key="name" value="' + _fldCbObjVal(o, "name") + '"></label><label>X<input data-cb-obj="objective" data-cb-key="x" value="' + _fldCbObjVal(o, "x") + '"></label><label>Z<input data-cb-obj="objective" data-cb-key="z" value="' + _fldCbObjVal(o, "z") + '"></label><label>Radius<input data-cb-obj="objective" data-cb-key="r" value="' + _fldCbObjVal(o, "r") + '"></label></div>'
+    + '<h2>Sides</h2><div class="fld-cb-grid"><label class="fld-cb-wide">Union title<input data-cb-obj="sideCopy.US" data-cb-key="title" value="' + _fldCbObjVal(us, "title") + '"></label><label class="fld-cb-wide">Union deck<input data-cb-obj="sideCopy.US" data-cb-key="deck" value="' + _fldCbObjVal(us, "deck") + '"></label><label class="fld-cb-wide">Confederate title<input data-cb-obj="sideCopy.CS" data-cb-key="title" value="' + _fldCbObjVal(cs, "title") + '"></label><label class="fld-cb-wide">Confederate deck<input data-cb-obj="sideCopy.CS" data-cb-key="deck" value="' + _fldCbObjVal(cs, "deck") + '"></label><label class="fld-cb-wide">Attack brief<input data-cb-obj="brief" data-cb-key="attack" value="' + _fldCbObjVal(br, "attack") + '"></label><label class="fld-cb-wide">Defense brief<input data-cb-obj="brief" data-cb-key="defend" value="' + _fldCbObjVal(br, "defend") + '"></label></div>'
+    + '<h2>Terrain</h2><div class="fld-cb-actions"><button class="mini" data-cb-act="add-hills">Add Hill</button><button class="mini" data-cb-act="add-woods">Add Woods</button><button class="mini" data-cb-act="add-walls">Add Wall</button><button class="mini" data-cb-act="add-marker">Add Marker</button></div><div class="fld-cb-table"><table><thead><tr><th colspan="5">Hills x z height spread</th></tr></thead><tbody>' + _fldCbTerrainRows("hills") + '</tbody></table><table><thead><tr><th colspan="4">Woods x z radius</th></tr></thead><tbody>' + _fldCbTerrainRows("woods") + '</tbody></table><table><thead><tr><th colspan="5">Walls x1 z1 x2 z2</th></tr></thead><tbody>' + _fldCbTerrainRows("walls") + '</tbody></table><table><thead><tr><th>Kind</th><th>Name</th><th>X</th><th>Z</th><th>Path</th><th></th></tr></thead><tbody>' + _fldCbMarkerRows() + '</tbody></table></div>'
+    + '<h2>Order of Battle</h2><div class="fld-cb-actions"><button class="mini" data-cb-act="add-unit">Add Unit</button></div><div class="fld-cb-table"><table><thead><tr><th>Side</th><th>ID</th><th>Name</th><th>Commander</th><th>Arm</th><th>Weapon</th><th>Men</th><th>Guns</th><th>X</th><th>Z</th><th>Facing</th><th>XP</th><th>At sec</th><th></th></tr></thead><tbody>' + _fldCbUnitRows() + '</tbody></table></div>'
+    + '<h2>Leaders, Supply, Teaching</h2><div class="fld-cb-actions"><button class="mini" data-cb-act="add-leader">Add Leader</button><button class="mini" data-cb-act="add-card">Add Teaching Card</button></div><div class="fld-cb-table"><table><thead><tr><th>Side</th><th>ID</th><th>Name</th><th>Quality</th><th>Radius</th><th>X</th><th>Z</th><th>Attach</th><th></th></tr></thead><tbody>' + _fldCbLeaderRows() + '</tbody></table><table><thead><tr><th>ID</th><th>Head</th><th>Body</th><th>Provenance</th><th></th></tr></thead><tbody>' + _fldCbCardRows() + '</tbody></table></div><div class="fld-cb-grid"><label>Union supply name<input data-cb-obj="supply.US" data-cb-key="name" value="' + _fldCbObjVal(sp.US, "name") + '"></label><label>Union supply X<input data-cb-obj="supply.US" data-cb-key="x" value="' + _fldCbObjVal(sp.US, "x") + '"></label><label>Union supply Z<input data-cb-obj="supply.US" data-cb-key="z" value="' + _fldCbObjVal(sp.US, "z") + '"></label><label>Provenance<input data-cb-field="provenance" value="' + _fldCbVal("provenance") + '"></label><label>Confed supply name<input data-cb-obj="supply.CS" data-cb-key="name" value="' + _fldCbObjVal(sp.CS, "name") + '"></label><label>Confed supply X<input data-cb-obj="supply.CS" data-cb-key="x" value="' + _fldCbObjVal(sp.CS, "x") + '"></label><label>Confed supply Z<input data-cb-obj="supply.CS" data-cb-key="z" value="' + _fldCbObjVal(sp.CS, "z") + '"></label></div>'
+    + '<h2>Persistence</h2><div>' + _fldCbSlotsHtml() + '</div><h2>Import / Export</h2><textarea id="fldCbJson" spellcheck="false" aria-label="Custom battle JSON"></textarea></div>';
+}
+function _fldCbSetPath(path, key, val) {
+  var parts = path.split("."), obj = _fldCbState;
+  for (var i = 0; i < parts.length; i++) { obj[parts[i]] = obj[parts[i]] || {}; obj = obj[parts[i]]; }
+  obj[key] = val;
+}
+function _fldCbReadForm() {
+  _fldCbEnsureState();
+  var nodes = document.querySelectorAll("[data-cb-field]");
+  for (var i = 0; i < nodes.length; i++) {
+    var n = nodes[i], k = n.getAttribute("data-cb-field");
+    if (k === "defaultFog") _fldCbState[k] = n.value === "yes";
+    else _fldCbState[k] = n.value;
+  }
+  nodes = document.querySelectorAll("[data-cb-obj]");
+  for (i = 0; i < nodes.length; i++) {
+    n = nodes[i]; _fldCbSetPath(n.getAttribute("data-cb-obj"), n.getAttribute("data-cb-key"), n.value);
+  }
+  nodes = document.querySelectorAll("[data-cb-list]");
+  for (i = 0; i < nodes.length; i++) {
+    n = nodes[i];
+    var list = n.getAttribute("data-cb-list"), idx = +n.getAttribute("data-cb-idx"), key = n.getAttribute("data-cb-key");
+    var arr = null;
+    if (list === "units") arr = _fldCbState.units;
+    else if (list === "leaders") arr = _fldCbState.leaders;
+    else if (list === "teachingCards") arr = _fldCbState.teachingCards;
+    else if (list.indexOf("terrain.") === 0) arr = _fldCbState.terrain[list.split(".")[1]];
+    if (arr && arr[idx]) arr[idx][key] = n.value;
+  }
+}
+function _fldCbRefresh() { if (typeof openSheet === "function") { openSheet(_fldCbHtml()); _fldCbWire(); } }
+function _fldCbAdd(kind) {
+  _fldCbReadForm();
+  if (kind === "hills") _fldCbState.terrain.hills.push({ x: 600, z: 450, h: 14, s: 150 });
+  if (kind === "woods") _fldCbState.terrain.woods.push({ x: 300, z: 450, r: 120 });
+  if (kind === "walls") _fldCbState.terrain.walls.push({ x1: 480, z1: 430, x2: 720, z2: 430 });
+  if (kind === "marker") _fldCbState.terrain.markers.push({ kind: "label", name: "Marker", x: 600, z: 450, path: "" });
+  if (kind === "unit") _fldCbState.units.push({ side: "US", id: "us_new", name: "New Brigade", commander: "", arm: "inf", weapon: "rifled", men: 1500, guns: 0, xp: 2, x: 500, z: 720, facing: 0, formation: "line", atSec: 0 });
+  if (kind === "leader") _fldCbState.leaders.push({ side: "US", id: "us_leader_new", name: "New Leader", quality: 1.05, radius: 180, x: 520, z: 700, attach: "" });
+  if (kind === "card") _fldCbState.teachingCards.push({ id: "custom_note_new", head: "Custom note", body: "", provenance: _fldCbState.provenance || "Player-authored." });
+  _fldCbRefresh();
+}
+function _fldCbDel(kind, idx) {
+  _fldCbReadForm();
+  var arr = null;
+  if (kind === "unit") arr = _fldCbState.units;
+  if (kind === "leader") arr = _fldCbState.leaders;
+  if (kind === "card") arr = _fldCbState.teachingCards;
+  if (kind === "hills" || kind === "woods" || kind === "walls" || kind === "markers") arr = _fldCbState.terrain[kind];
+  if (arr) arr.splice(+idx, 1);
+  _fldCbRefresh();
+}
+function _fldCbWire() {
+  var root = document.querySelector(".fld-cb"); if (!root) return;
+  root.addEventListener("click", function (ev) {
+    var b = ev.target.closest && ev.target.closest("[data-cb-act]"); if (!b) return;
+    ev.preventDefault();
+    var act = b.getAttribute("data-cb-act");
+    if (act === "validate") { _fldCbReadForm(); _fldCbLast = fldCustomValidate(_fldCbState); _fldCbRefresh(); return; }
+    if (act === "export") { _fldCbReadForm(); _fldCbLast = fldCustomValidate(_fldCbState); _fldCbRefresh(); var ta = document.getElementById("fldCbJson"); if (ta && _fldCbLast.ok) ta.value = _fldCbLast.json; return; }
+    if (act === "import") { var ta2 = document.getElementById("fldCbJson"); _fldCbLast = fldCustomImportJson(ta2 ? ta2.value : ""); if (_fldCbLast.ok) _fldCbState = _fldCbLast.draft; _fldCbRefresh(); return; }
+    if (act === "launch") { _fldCbReadForm(); _fldCbLast = fldCustomValidate(_fldCbState); if (_fldCbLast.ok) { _fldCbActiveScenario = _fldCbLast.scenario; if (typeof fldScenarioSideChoice === "function") fldScenarioSideChoice(_fldCbActiveScenario.id, function (side) { fldLaunchBattle(_fldCbActiveScenario.id, side); }); else if (typeof fldLaunchSandbox === "function") fldLaunchSandbox({ scenario: _fldCbActiveScenario.id, playerSide: "US" }); } else _fldCbRefresh(); return; }
+    if (act === "reset") { _fldCbState = fldCustomDefaultDraft(); _fldCbLast = null; _fldCbRefresh(); return; }
+    if (act.indexOf("add-") === 0) { _fldCbAdd(act.replace("add-", "")); return; }
+    if (act.indexOf("del-") === 0) { _fldCbDel(act.replace("del-", ""), b.getAttribute("data-idx")); return; }
+    if (act === "save-slot") { _fldCbReadForm(); _fldCbLast = fldCustomSaveScenario(+b.getAttribute("data-slot"), _fldCbState); _fldCbRefresh(); return; }
+    if (act === "load-slot") { var slots = fldCustomListSlots(), s = slots[+b.getAttribute("data-slot")]; if (s && s.scenario) { _fldCbState = _fldCbDraftFromScenario(s.scenario); _fldCbLast = fldCustomValidate(_fldCbState); } _fldCbRefresh(); return; }
+    if (act === "delete-slot") { fldCustomDeleteSlot(+b.getAttribute("data-slot")); _fldCbRefresh(); return; }
+  });
+}
+function fldCustomBattleBuilderMenu() {
+  _fldCbEnsureState();
+  if (typeof openSheet !== "function") return;
+  openSheet(_fldCbHtml());
+  _fldCbWire();
+}
+function fldCustomInjectBuilderButton() {
+  try {
+    if (document.getElementById("fldCustomBuilderBtn")) return;
+    var afterBtn = document.getElementById("fldPresetBtn") || document.getElementById("fldSkirmishBtn") || document.getElementById("fldSandboxBtn") || document.getElementById("gnFree");
+    if (!afterBtn || !afterBtn.parentNode) return;
+    var b = document.createElement("button");
+    b.className = "gn-btn"; b.id = "fldCustomBuilderBtn";
+    b.setAttribute("aria-label", "Custom Battle Builder - author a data-driven tactical scenario.");
+    b.innerHTML = '<span class="gn-hl">&#9876; CUSTOM BATTLE BUILDER</span><span class="gn-deck">Create, validate, save, import, export, and launch a single-phase field scenario.</span>';
+    b.addEventListener("click", function () { fldCustomBattleBuilderMenu(); });
+    if (afterBtn.nextSibling) afterBtn.parentNode.insertBefore(b, afterBtn.nextSibling); else afterBtn.parentNode.appendChild(b);
+  } catch (e) {}
+}
+function fldCustomInstallMenuObserver() {
+  if (typeof document === "undefined" || typeof MutationObserver === "undefined") return;
+  try {
+    fldCustomInjectBuilderButton();
+    var obs = new MutationObserver(function () { fldCustomInjectBuilderButton(); });
+    obs.observe(document.body, { childList: true, subtree: true });
+  } catch (e) {}
+}
+if (typeof window !== "undefined") {
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", fldCustomInstallMenuObserver);
+  else fldCustomInstallMenuObserver();
+}
 
 
 /* ===== module: 90-president-register.js ===== */
@@ -31929,8 +33266,8 @@ function _hpShowWelcome() {
     '</div>' +
     '<hr class="rule">' +
     '<p style="font-size:13px;opacity:.8;margin-bottom:10px"><strong>Quick start:</strong> ' +
-      'Click <em>"Federal Armies Muster for War"</em> for a Union campaign, or try a standalone ' +
-      'battle (Bull Run, Fredericksburg, or Antietam) from the Field Dispatches or tactical battle buttons.</p>' +
+      'Click <em>"Federal Armies Muster for War"</em> for a Union campaign, or use the tactical battle buttons for ' +
+      'First Bull Run, Malvern Hill, Antietam, Fredericksburg, Chancellorsville, Gettysburg, or Shiloh. The Skirmish button opens a custom real-time fight.</p>' +
     '<p style="font-size:12px;opacity:.65;margin-bottom:14px">Press <kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;font-size:11px">?</kbd> anytime for controls help.</p>' +
     '<div class="btn-row">' +
       '<button class="bigbtn" id="hpWelcomeOk" aria-label="Got it — proceed to the main menu">To the Field</button>' +
@@ -31955,7 +33292,7 @@ function _hpShowHelp() {
     '<div style="font-size:12px;line-height:1.7;opacity:.9">' +
       '<div style="margin-bottom:4px"><strong>Start:</strong> Choose Union or Confederate from the main menu.</div>' +
       '<div style="margin-bottom:4px"><strong>Between battles:</strong> The President\'s Desk auto-surfaces. Manage your economy, buy weapons, appoint generals, handle politics.</div>' +
-      '<div style="margin-bottom:4px"><strong>War Department tabs:</strong> The War Effort &middot; Cabinet &middot; Command &middot; Treasury &middot; Armory &middot; Diplomacy &middot; Victory &middot; Decisions &middot; The Press &middot; Morale.</div>' +
+      '<div style="margin-bottom:4px"><strong>War Department tabs:</strong> Use the War Effort overview, Treasury, Armory, Diplomacy, Cabinet, Decisions, The Press, Command, Victory, and related tabs as they appear.</div>' +
       '<div style="margin-bottom:4px"><strong>Battles:</strong> The pre-battle briefing shows your army strength. Choose prep options (entrench, forced march, etc.) then fight.</div>' +
       '<div style="margin-bottom:4px"><strong>Victory:</strong> Break the enemy\'s will to fight (negotiated peace) or achieve military dominance. Both sides have distinct paths.</div>' +
     '</div>' +
@@ -31963,33 +33300,36 @@ function _hpShowHelp() {
 
     '<h2 style="font-size:15px;margin:12px 0 6px">Tactical Battles (Real-Time)</h2>' +
     '<div style="font-size:12px;line-height:1.7;opacity:.9">' +
-      '<div style="margin-bottom:4px"><strong>Select:</strong> Click a brigade. Shift+click to multi-select.</div>' +
-      '<div style="margin-bottom:4px"><strong>Move:</strong> Drag the selected unit(s) to a position. Facing = drag direction.</div>' +
-      '<div style="margin-bottom:4px"><strong>Orders:</strong> <kbd>L</kbd>=Line &middot; <kbd>C</kbd>=Column &middot; <kbd>H</kbd>=Hold &middot; <kbd>A</kbd>=Charge/Attack &middot; <kbd>R</kbd>=Retreat/Rally.</div>' +
-      '<div style="margin-bottom:4px"><strong>Speed:</strong> <kbd>1</kbd>/<kbd>2</kbd>/<kbd>3</kbd> set sim speed. <kbd>Space</kbd> = pause/resume.</div>' +
-      '<div style="margin-bottom:4px"><strong>Camera:</strong> Scroll wheel or <kbd>+</kbd>/<kbd>&minus;</kbd> to zoom. Right-drag or arrow keys to pan.</div>' +
-      '<div style="margin-bottom:4px"><strong>Win:</strong> Hold the objective (red circle) for 45 continuous seconds, or rout all enemy units.</div>' +
+      '<div style="margin-bottom:4px"><strong>Select:</strong> Click a friendly brigade. Shift+click adds another brigade; <kbd>A</kbd> selects all of your live brigades.</div>' +
+      '<div style="margin-bottom:4px"><strong>Move:</strong> With a selection, drag from open ground to place the line. Facing follows the drag direction.</div>' +
+      '<div style="margin-bottom:4px"><strong>Orders:</strong> <kbd>L</kbd>=Line &middot; <kbd>C</kbd>=Column &middot; <kbd>H</kbd>=Hold &middot; <kbd>F</kbd>/<kbd>Enter</kbd>=Charge.</div>' +
+      '<div style="margin-bottom:4px"><strong>Speed:</strong> <kbd>1</kbd>/<kbd>2</kbd>/<kbd>3</kbd> set 1x / 2x / 4x. <kbd>Space</kbd> begins, pauses, or resumes.</div>' +
+      '<div style="margin-bottom:4px"><strong>Battle settings:</strong> <kbd>V</kbd> toggles fog, <kbd>P</kbd> toggles auto-pause, and <kbd>G</kbd> opens the settings drawer.</div>' +
+      '<div style="margin-bottom:4px"><strong>Win:</strong> Carry or deny the scenario objective, break the enemy, or in multi-phase battles win enough sectors for the aggregate result.</div>' +
     '</div>' +
     '<hr class="rule">' +
 
     '<h2 style="font-size:15px;margin:12px 0 6px">Keyboard Shortcuts</h2>' +
     '<div style="display:grid;grid-template-columns:auto 1fr;gap:2px 14px;font-size:12px;opacity:.85">' +
       '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">Space</kbd><span>Pause / Resume</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">1 2 3</kbd><span>Speed 1× / 2× / 3×</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">1 2 3</kbd><span>Speed 1x / 2x / 4x</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">L</kbd><span>Line formation</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">C</kbd><span>Column formation</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">H</kbd><span>Hold position</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">A</kbd><span>Charge / Attack</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">R</kbd><span>Retreat / Rally</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">F / Enter</kbd><span>Charge nearest enemy</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">A</kbd><span>Select all friendly brigades</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">Tab</kbd><span>Next unit</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">Esc</kbd><span>Deselect / Close overlay</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">V</kbd><span>Fog of war on/off</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">P</kbd><span>Auto-pause on/off</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">G</kbd><span>Battle settings drawer</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">Esc</kbd><span>Exit battle or close an open tactical dialog</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">?</kbd><span>This help panel</span>' +
     '</div>' +
     '<hr class="rule">' +
 
     '<h2 style="font-size:15px;margin:12px 0 6px">Tips for New Players</h2>' +
     '<div style="font-size:12px;line-height:1.7;opacity:.85">' +
-      '<div style="margin-bottom:4px">&bull; <strong>Try a standalone battle first</strong> — Bull Run or the Skirmish sandbox — before starting a campaign.</div>' +
+      '<div style="margin-bottom:4px">&bull; <strong>Try a standalone battle first</strong> — First Bull Run, Malvern Hill, Shiloh, or the Skirmish sandbox — before starting a campaign.</div>' +
       '<div style="margin-bottom:4px">&bull; <strong>Use the Recruit preset</strong> (Command &amp; Realism button on the menu) for easier AI on your first battle.</div>' +
       '<div style="margin-bottom:4px">&bull; <strong>Fog of war</strong> is ON by default for Bull Run (historically accurate). Toggle in battle settings if you prefer full visibility.</div>' +
       '<div style="margin-bottom:4px">&bull; <strong>Flanking</strong> is devastating — get a unit on the enemy\'s side or rear for massive morale damage.</div>' +
@@ -32011,11 +33351,18 @@ function _hpShowHelp() {
 /* ============ (3) IN-BATTLE TACTICAL HELP OVERLAY ============ */
 function _hpShowTacticalHelp() {
   var overlay = document.getElementById("hpTacOverlay");
-  if (overlay) { overlay.style.display = (overlay.style.display === "none") ? "flex" : "none"; return; }
+  if (overlay) {
+    overlay.style.display = (overlay.style.display === "none") ? "flex" : "none";
+    if (overlay.style.display !== "none") {
+      try { var cb0 = document.getElementById("hpTacClose"); if (cb0) cb0.focus(); } catch (e0) {}
+    }
+    return;
+  }
 
   overlay = document.createElement("div");
   overlay.id = "hpTacOverlay";
   overlay.setAttribute("role", "dialog");
+  overlay.setAttribute("aria-modal", "true");
   overlay.setAttribute("aria-label", "Tactical controls reference");
   overlay.style.cssText = "position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.7);padding:20px";
   overlay.innerHTML =
@@ -32025,23 +33372,24 @@ function _hpShowTacticalHelp() {
       '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px">' +
         '<div><strong>Select unit:</strong> Click</div>' +
         '<div><strong>Multi-select:</strong> Shift+Click</div>' +
-        '<div><strong>Move:</strong> Drag to position</div>' +
+        '<div><strong>Select all:</strong> A</div>' +
         '<div><strong>Facing:</strong> Drag direction</div>' +
+        '<div><strong>Move:</strong> Drag open ground</div>' +
         '<div><strong>Space:</strong> Pause/Resume</div>' +
-        '<div><strong>1/2/3:</strong> Speed</div>' +
+        '<div><strong>1/2/3:</strong> 1x / 2x / 4x</div>' +
         '<div><strong>L:</strong> Line formation</div>' +
         '<div><strong>C:</strong> Column (march)</div>' +
         '<div><strong>H:</strong> Hold position</div>' +
-        '<div><strong>A:</strong> Charge!</div>' +
-        '<div><strong>R:</strong> Retreat/Rally</div>' +
+        '<div><strong>F / Enter:</strong> Charge</div>' +
+        '<div><strong>V:</strong> Fog on/off</div>' +
+        '<div><strong>P:</strong> Auto-pause</div>' +
+        '<div><strong>G:</strong> Settings</div>' +
         '<div><strong>Tab:</strong> Next unit</div>' +
-        '<div><strong>+/&minus;:</strong> Zoom</div>' +
-        '<div><strong>Arrows:</strong> Pan camera</div>' +
-        '<div><strong>Esc:</strong> Close this</div>' +
+        '<div><strong>Esc:</strong> Close dialog</div>' +
         '<div><strong>?:</strong> Toggle help</div>' +
       '</div>' +
       '<hr style="border:none;border-top:1px solid #8b7a56;margin:10px 0">' +
-      '<p style="font-size:11px;opacity:.7;margin:0;text-align:center">Hold the objective (red zone) for 45s to win &mdash; or break all enemy morale.</p>' +
+      '<p style="font-size:11px;opacity:.7;margin:0;text-align:center">Carry or deny the objective, break the enemy, or win the multi-phase sector tally.</p>' +
       '<div style="text-align:center;margin-top:12px">' +
         '<button id="hpTacClose" style="padding:6px 20px;background:#2a2418;border:1px solid #8b7a56;color:#cdb87f;border-radius:4px;cursor:pointer;font-family:Georgia,serif">Got it</button>' +
       '</div>' +
@@ -32050,8 +33398,13 @@ function _hpShowTacticalHelp() {
   var root = document.getElementById("fldRoot") || document.body;
   root.appendChild(overlay);
   overlay.addEventListener("click", function (e) { if (e.target === overlay) overlay.style.display = "none"; });
+  overlay.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); overlay.style.display = "none"; try { var rr = document.getElementById("fldRoot"); if (rr) rr.focus(); } catch (e2) {} }
+    else if (e.key === "Tab") { e.preventDefault(); var cb = document.getElementById("hpTacClose"); if (cb) cb.focus(); }
+  });
   var closeBtn = document.getElementById("hpTacClose");
   if (closeBtn) closeBtn.addEventListener("click", function () { overlay.style.display = "none"; });
+  try { if (closeBtn) closeBtn.focus(); } catch (e3) {}
 }
 
 /* ============ (4) ENHANCED PAUSE INDICATOR ============ */
@@ -32064,8 +33417,8 @@ function _hpInjectPauseIndicator() {
 
   var ind = document.createElement("div");
   ind.id = "hpPauseInd";
-  ind.style.cssText = "position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:28px;font-weight:bold;letter-spacing:3px;color:rgba(205,184,127,.8);text-shadow:0 2px 8px rgba(0,0,0,.7);pointer-events:none;z-index:9990;display:none;font-family:Georgia,serif";
-  ind.textContent = "⏸ PAUSED";
+  ind.style.cssText = "position:absolute;top:42px;right:14px;max-width:min(360px,56vw);font-size:12px;font-weight:bold;letter-spacing:.08em;color:#f2e8d5;background:#0c0f14d9;border:1px solid #8b7a56;border-radius:4px;padding:5px 9px;pointer-events:none;z-index:9990;display:none;font-family:Georgia,serif;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;";
+  ind.textContent = "Paused";
   ind.setAttribute("aria-live", "polite");
   root.appendChild(ind);
 }
@@ -32075,6 +33428,7 @@ function _hpUpdatePause() {
   var ind = document.getElementById("hpPauseInd");
   if (!ind) return;
   if (__FIELD && __FIELD.launched && __FIELD.paused && __FIELD.phase === "battle") {
+    ind.textContent = __FIELD._apReason ? ("Paused: " + __FIELD._apReason) : "Paused";
     ind.style.display = "block";
   } else {
     ind.style.display = "none";

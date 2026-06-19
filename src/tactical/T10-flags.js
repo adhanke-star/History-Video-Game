@@ -252,6 +252,147 @@ function _fldFlagSvg(flag, w, h) {
   return 'data:image/svg+xml,' + encodeURIComponent(svg);
 }
 
+/* ---- 3D flag texture cache (procedural canvas; no async image load) ------ */
+var _FLD_FLAG_CANVAS_CACHE = {};
+
+function _fldFlagTextureKey(flag, w, h) {
+  var c = (flag && flag.colors) ? flag.colors.join("|") : "";
+  return (flag && flag.pattern || "solid") + "|" + c + "|" + (w || 0) + "x" + (h || 0);
+}
+
+function _fldFlagDrawCanvas(ctx, flag, w, h) {
+  var c = flag.colors || ["#ccc", "#fff", "#333"];
+  var rect = function (x, y, rw, rh, fill) { ctx.fillStyle = fill; ctx.fillRect(x, y, rw, rh); };
+  var circle = function (x, y, r, fill) { ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fillStyle = fill; ctx.fill(); };
+  var poly = function (points, fill) {
+    if (!points.length) return;
+    ctx.beginPath(); ctx.moveTo(points[0][0], points[0][1]);
+    for (var pi = 1; pi < points.length; pi++) ctx.lineTo(points[pi][0], points[pi][1]);
+    ctx.closePath(); ctx.fillStyle = fill; ctx.fill();
+  };
+  ctx.clearRect(0, 0, w, h);
+  ctx.lineJoin = "round";
+
+  switch (flag.pattern) {
+    case "stars-stripes":
+      rect(0, 0, w, h, c[0]);
+      var stripeH = h / 13;
+      for (var si = 0; si < 13; si++) if (si % 2 === 0) rect(0, si * stripeH, w, stripeH, c[1]);
+      var cantonW = w * 0.4, cantonH = h * 7 / 13;
+      rect(0, 0, cantonW, cantonH, c[2]);
+      var starR = cantonH * 0.08;
+      for (var row = 0; row < 5; row++) {
+        for (var col = 0; col < 7; col++) {
+          if (row * 7 + col >= 34) break;
+          circle(cantonW * (0.08 + col * 0.14), cantonH * (0.12 + row * 0.19), starR, c[0]);
+        }
+      }
+      break;
+
+    case "southern-cross":
+      rect(0, 0, w, h, c[0]);
+      poly([[0, 0], [w * 0.35, 0], [w, h * 0.65], [w, h], [w * 0.65, h], [0, h * 0.35]], c[2]);
+      poly([[w, 0], [w, h * 0.35], [w * 0.65, h], [0, h], [0, h * 0.65], [w * 0.35, 0]], c[2]);
+      var starPositions = [[0.5, 0.15], [0.3, 0.35], [0.5, 0.5], [0.7, 0.35], [0.5, 0.85], [0.2, 0.5], [0.8, 0.5], [0.35, 0.65], [0.65, 0.65], [0.5, 0.35], [0.4, 0.5], [0.6, 0.5]];
+      for (var sti = 0; sti < starPositions.length; sti++) circle(starPositions[sti][0] * w, starPositions[sti][1] * h, h * 0.06, c[1]);
+      ctx.strokeStyle = c[1]; ctx.lineWidth = 1.5; ctx.strokeRect(0.75, 0.75, w - 1.5, h - 1.5);
+      break;
+
+    case "harp":
+      rect(0, 0, w, h, c[0]);
+      ctx.strokeStyle = c[1]; ctx.lineWidth = 2; ctx.strokeRect(1, 1, w - 2, h - 2);
+      ctx.beginPath();
+      ctx.moveTo(w * 0.3, h * 0.2); ctx.lineTo(w * 0.3, h * 0.8); ctx.lineTo(w * 0.7, h * 0.8); ctx.lineTo(w * 0.7, h * 0.3);
+      ctx.quadraticCurveTo(w * 0.5, h * 0.1, w * 0.3, h * 0.2);
+      ctx.stroke();
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(w * 0.35, h * 0.35); ctx.lineTo(w * 0.65, h * 0.35);
+      ctx.moveTo(w * 0.35, h * 0.5); ctx.lineTo(w * 0.65, h * 0.5);
+      ctx.moveTo(w * 0.35, h * 0.65); ctx.lineTo(w * 0.6, h * 0.65);
+      ctx.stroke();
+      break;
+
+    case "lone-star":
+      rect(0, 0, w, h, c[0]);
+      rect(w / 3, 0, w * 2 / 3, h / 2, c[1]);
+      rect(w / 3, h / 2, w * 2 / 3, h / 2, c[2]);
+      var starCx = w / 6, starCy = h / 2, starR2 = h * 0.25;
+      ctx.beginPath();
+      for (var pt = 0; pt < 5; pt++) {
+        var angle = -Math.PI / 2 + pt * 2 * Math.PI / 5;
+        var angleInner = angle + Math.PI / 5;
+        var ox = starCx + starR2 * Math.cos(angle), oy = starCy + starR2 * Math.sin(angle);
+        var ix = starCx + starR2 * 0.38 * Math.cos(angleInner), iy = starCy + starR2 * 0.38 * Math.sin(angleInner);
+        if (pt === 0) ctx.moveTo(ox, oy); else ctx.lineTo(ox, oy);
+        ctx.lineTo(ix, iy);
+      }
+      ctx.closePath(); ctx.fillStyle = c[1]; ctx.fill();
+      break;
+
+    default:
+      rect(0, 0, w, h, c[0] || "#888");
+      break;
+  }
+}
+
+function _fldFlagCanvas(flag, w, h) {
+  if (!flag || typeof document === "undefined") return null;
+  w = w || 88; h = h || 56;
+  var key = _fldFlagTextureKey(flag, w, h);
+  if (_FLD_FLAG_CANVAS_CACHE[key]) return _FLD_FLAG_CANVAS_CACHE[key];
+  var cv = document.createElement("canvas");
+  cv.width = w; cv.height = h;
+  var ctx = cv.getContext && cv.getContext("2d");
+  if (!ctx) return null;
+  _fldFlagDrawCanvas(ctx, flag, w, h);
+  _FLD_FLAG_CANVAS_CACHE[key] = cv;
+  return cv;
+}
+
+function _fldFlagCanvasTexture(T, flag, w, h) {
+  var cv = _fldFlagCanvas(flag, w, h);
+  if (!cv || !T) return null;
+  var tex = T.CanvasTexture ? new T.CanvasTexture(cv) : (T.Texture ? new T.Texture(cv) : null);
+  if (!tex) return null;
+  tex.needsUpdate = true;
+  if (T.SRGBColorSpace) tex.colorSpace = T.SRGBColorSpace;
+  else if (T.sRGBEncoding !== undefined) tex.encoding = T.sRGBEncoding;
+  if (T.LinearFilter) { tex.minFilter = T.LinearFilter; tex.magFilter = T.LinearFilter; }
+  tex.generateMipmaps = false;
+  tex.anisotropy = 2;
+  return tex;
+}
+
+function _fldFlagDisposeMaterialMaps(material) {
+  if (!material) return;
+  var mats = Array.isArray(material) ? material : [material];
+  for (var i = 0; i < mats.length; i++) {
+    var m = mats[i]; if (!m || !m.map) continue;
+    try { if (m.map.dispose) m.map.dispose(); } catch (e) {}
+    m.map = null;
+  }
+}
+
+function _fldFlagDisposeMesh(mesh) {
+  if (!mesh) return;
+  if (mesh.geometry && mesh.geometry.dispose) mesh.geometry.dispose();
+  _fldFlagDisposeMaterialMaps(mesh.material);
+  if (mesh.material) {
+    var mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+    for (var i = 0; i < mats.length; i++) { try { if (mats[i] && mats[i].dispose) mats[i].dispose(); } catch (e) {} }
+  }
+}
+
+function _fld3dDisposeFlagMaps() {
+  try {
+    if (typeof __FIELD === "undefined" || !__FIELD.groups || !__FIELD.groups.traverse) return;
+    __FIELD.groups.traverse(function (o) {
+      if (o && o.name === "flag") _fldFlagDisposeMaterialMaps(o.material);
+    });
+  } catch (e) {}
+}
+
 /* ---- 2D flag rendering (called from fld2dDraw seam) --------------------- */
 function fldDrawFlags(ctx, v) {
   try {
@@ -302,11 +443,10 @@ function fld3dBuildFlags() {
       if (!flag) continue;
       // Remove the old generic flag mesh
       var oldFlag = g.getObjectByName("flag");
-      if (oldFlag) { g.remove(oldFlag); if (oldFlag.geometry) oldFlag.geometry.dispose(); if (oldFlag.material) oldFlag.material.dispose(); }
-      // Create a textured flag from SVG data URI
-      var svg = _fldFlagSvg(flag, 88, 56);
-      var tex = new T.TextureLoader().load(svg);
-      tex.needsUpdate = true;
+      if (oldFlag) { g.remove(oldFlag); _fldFlagDisposeMesh(oldFlag); }
+      // Create a ready-to-upload canvas texture; avoids async SVG TextureLoader warnings.
+      var tex = _fldFlagCanvasTexture(T, flag, 88, 56);
+      if (!tex) continue;
       var flagMesh = new T.Mesh(
         new T.PlaneGeometry(22, 14),
         new T.MeshBasicMaterial({ map: tex, side: T.DoubleSide, transparent: true })
@@ -348,8 +488,23 @@ function _fldFlagOn() {
 (function _fldFlagInstall() {
   try {
     _fldFlagInitSettings();
-    // The seam pattern: existing code checks typeof fldDrawFlags === "function"
-    // before calling it. We define the function at module scope so it's available.
-    // No wrapping needed — the seam is already in the render pipeline.
+    if (typeof fld3dBuildUnits === "function" && !fld3dBuildUnits._t10FlagMaps) {
+      var _origFld3dBuildUnits = fld3dBuildUnits;
+      fld3dBuildUnits = function () {
+        try { _fld3dDisposeFlagMaps(); } catch (e) {}
+        return _origFld3dBuildUnits.apply(this, arguments);
+      };
+      fld3dBuildUnits._t10FlagMaps = true;
+    }
+    if (typeof fld3dDispose === "function" && !fld3dDispose._t10FlagMaps) {
+      var _origFld3dDispose = fld3dDispose;
+      fld3dDispose = function () {
+        try { _fld3dDisposeFlagMaps(); } catch (e) {}
+        return _origFld3dDispose.apply(this, arguments);
+      };
+      fld3dDispose._t10FlagMaps = true;
+    }
+    // The draw/build seams stay additive; the wrappers only dispose texture maps
+    // before unit or scene teardown.
   } catch (e) {}
 })();

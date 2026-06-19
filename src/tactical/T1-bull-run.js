@@ -44,11 +44,18 @@ function fldScenarioRegistry() {
       if (GAME_DATA.antietam && GAME_DATA.antietam.antietam) R.antietam = GAME_DATA.antietam.antietam;   // Phase C-2: the first MULTI-PHASE epic (data.phases[] -> the T8 engine)
       if (GAME_DATA.gettysburg && GAME_DATA.gettysburg.gettysburg) R.gettysburg = GAME_DATA.gettysburg.gettysburg;   // Phase C-1: Gettysburg — the second MULTI-PHASE epic (3 days: McPherson Ridge, Little Round Top, Pickett's Charge)
       if (GAME_DATA.shiloh && GAME_DATA.shiloh.shiloh) R.shiloh = GAME_DATA.shiloh.shiloh;   // Phase C-2: Shiloh — the first WESTERN THEATER battle (single-phase, the Fredericksburg pattern)
+      if (GAME_DATA.chancellorsville && GAME_DATA.chancellorsville.chancellorsville) R.chancellorsville = GAME_DATA.chancellorsville.chancellorsville;   // Phase C-1: Chancellorsville — Lee's greatest victory, Jackson's flank march (single-phase, the Fredericksburg/Shiloh pattern)
+      if (GAME_DATA["malvern-hill"] && GAME_DATA["malvern-hill"].malvernHill) R.malvernHill = GAME_DATA["malvern-hill"].malvernHill;   // Phase C-1: Malvern Hill - the Seven Days' culminating artillery duel (single-phase, gun-line defense)
     }
   } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldScenarioRegistry:", e); }
   return R;
 }
-function fldScenarioData(id) { var R = fldScenarioRegistry(); return (id && R[id]) ? R[id] : null; }
+function fldScenarioData(id) {
+  var R = fldScenarioRegistry();
+  if (id && R[id]) return R[id];
+  if (id && typeof fldCustomScenarioData === "function") return fldCustomScenarioData(id);
+  return null;
+}
 /* back-compat alias: First Bull Run is the canonical first scenario (the menu button + briefing still call this). */
 function fldBrData() { return fldScenarioData("bullrun1"); }
 /* ---- a data OOB/reinforcement entry -> an fldMakeUnit spec. The on-field OOB carries its side via
@@ -83,6 +90,10 @@ function fldScenarioInit(opts) {
   // live PER PHASE, so it bypasses the single-objective build + guard below. Default (no data.phases) -> unchanged.
   if (data && data.phases && data.phases.length && typeof _fldScenarioInitPhased === "function") return _fldScenarioInitPhased(opts, data);
   if (!data || !data.oob || !data.terrain || !data.objective) return false;   // data missing/malformed -> fall back to the sandbox
+  if (data.field) {
+    FLD.FIELD_W = fldClamp(+data.field.w || FLD.FIELD_W, 700, 1800);
+    FLD.FIELD_H = fldClamp(+data.field.h || FLD.FIELD_H, 550, 1400);
+  }
   __FIELD.scenData = data;
   __FIELD.autoBoth = !!opts.autoBoth;
   // terrain: the multi-hill / multi-wall / markers shape the generalized T0 readers + renderers expect.
@@ -192,18 +203,31 @@ function fldInjectScenarioButtons(afterBtn) {
   } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldInjectScenarioButtons:", e); }
   return last;
 }
-/* Marquee order: First Bull Run first (the opening battle + the hand-authored marquee), then the rest by year. */
+/* Marquee order: the public Phase-C roster order, then future additions by full date.
+   Keep the current playable arc stable for the help copy / demo route: the opening Bull Run, the Eastern
+   marquee battles already shipped, then the first Western battle. */
 function fldScenarioMenuOrder(reg) {
   var ids = [], k;
   for (k in reg) if (reg.hasOwnProperty(k)) ids.push(k);
   ids.sort(function (a, b) {
-    if (a === "bullrun1") return -1; if (b === "bullrun1") return 1;
-    var ya = (String((reg[a] || {}).date || "").match(/\d{4}/) || ["9999"])[0];
-    var yb = (String((reg[b] || {}).date || "").match(/\d{4}/) || ["9999"])[0];
-    if (ya !== yb) return ya < yb ? -1 : 1;
+    var ra = fldScenarioMenuRank(a), rb = fldScenarioMenuRank(b);
+    if (ra !== rb) return ra - rb;
+    var da = fldScenarioDateSortValue((reg[a] || {}).date), db = fldScenarioDateSortValue((reg[b] || {}).date);
+    if (da !== db) return da - db;
     return a < b ? -1 : (a > b ? 1 : 0);
   });
   return ids;
+}
+function fldScenarioMenuRank(id) {
+  var order = { bullrun1: 10, malvernHill: 18, antietam: 20, fredericksburg: 30, chancellorsville: 35, gettysburg: 40, shiloh: 50 };
+  return order[id] || 1000;
+}
+function fldScenarioDateSortValue(date) {
+  var s = String(date || "").toLowerCase(), m = s.match(/\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+(\d{1,2}),\s*(\d{4})\b/);
+  var months = { january: 1, february: 2, march: 3, april: 4, may: 5, june: 6, july: 7, august: 8, september: 9, october: 10, november: 11, december: 12 };
+  if (m && months[m[1]]) return (+m[3]) * 10000 + months[m[1]] * 100 + (+m[2]);
+  var y = (s.match(/\d{4}/) || ["9999"])[0];
+  return (+y) * 10000 + 9999;
 }
 /* Inject ONE scenario's menu button after `afterBtn`, returning it (or the existing button). Bull Run keeps its
    bespoke hand-authored marquee button (id fldBullRunBtn); every other scenario gets a button built from its data
@@ -303,10 +327,11 @@ function fldScenarioBanner(text, side) {
     var b = document.createElement("div");
     b.className = "fldBanner";
     b.setAttribute("role", "status");
-    b.style.cssText = "position:absolute;top:" + (52 + stack * 38) + "px;left:50%;transform:translateX(-50%);z-index:5500;background:#0c0f14f2;border:1px solid " + col + ";border-left:5px solid " + col + ";border-radius:5px;padding:7px 14px;color:#f2e8d5;font:14px Georgia,serif;max-width:74vw;white-space:nowrap;box-shadow:0 2px 12px #000a;";
+    b.style.cssText = "position:absolute;top:" + (44 + stack * 30) + "px;left:50%;transform:translateX(-50%);z-index:5500;background:#0c0f14e8;border:1px solid " + col + ";border-left:4px solid " + col + ";border-radius:4px;padding:5px 10px;color:#f2e8d5;font:12.5px Georgia,serif;max-width:58vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 2px 9px #0008;";
+    b.title = text;
     b.textContent = text;
     root.appendChild(b);
-    setTimeout(function () { try { if (b.parentNode) b.parentNode.removeChild(b); } catch (e) {} }, 3800);
+    setTimeout(function () { try { if (b.parentNode) b.parentNode.removeChild(b); } catch (e) {} }, 3000);
   } catch (e) {}
 }
 /* the end-screen teaching payoff: "your war vs history" + the cards with provenance. Phase C: data-driven for any

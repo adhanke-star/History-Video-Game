@@ -48,6 +48,7 @@ var __FIELD = {
 /* ---- tunable constants (seeded from the base WEAPONS table + tuned via probe; the per-arm melee/canister
    table lives in T5 FLDA, gated on __FIELD.arms) ---- */
 var FLD = {
+  BASE_FIELD_W: 1200, BASE_FIELD_H: 900,  // reset every launch; custom scenarios may override FIELD_W/H safely
   FIELD_W: 1200, FIELD_H: 900,          // yards (x by z)
   FIXED_DT: 0.05,                        // 20 Hz sim
   TIME_LIMIT: 480,                       // sim-seconds (8 min) -> objective decides
@@ -220,6 +221,8 @@ function fldResetRun() {
 }
 function fldInitSim(opts) {
   opts = opts || {};
+  FLD.FIELD_W = FLD.BASE_FIELD_W || 1200;
+  FLD.FIELD_H = FLD.BASE_FIELD_H || 900;
   __FIELD._launchOpts = opts;   // B-6: stash the resolved launch spec so the end-screen "Fight Again" can REPLAY it
                                 // faithfully (same scenario/skirmish/side/fog, bumped seed) — never read by the sim.
   __FIELD.seed = (opts.seed || 1) >>> 0;
@@ -1011,10 +1014,12 @@ function fldBuildDom() {
   r.style.cssText = "position:fixed;inset:0;z-index:5000;background:#10141a;overflow:hidden;font-family:Georgia,serif;color:#f2e8d5;";
   r.innerHTML =
     '<canvas id="fldGl" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></canvas>' +
-    '<div id="fldTop" style="position:absolute;top:0;left:0;right:0;padding:8px 12px;display:flex;gap:10px;align-items:center;background:linear-gradient(#000a,#0000);pointer-events:none;">' +
-      '<b id="fldTitle" style="letter-spacing:1px;">&#9876; TACTICAL SANDBOX</b><span id="fldClock" style="opacity:.85;">0:00</span>' +
-      '<span id="fldObj" style="opacity:.85;">Objective: contested</span><span style="flex:1"></span>' +
-      '<span id="fldPhase" style="opacity:.85;"></span>' +
+    '<div id="fldTop" style="position:absolute;top:0;left:0;right:0;padding:7px 10px;display:flex;gap:7px;align-items:center;background:linear-gradient(#0009,#0000);pointer-events:none;font-size:12px;line-height:1.2;">' +
+      '<b id="fldTitle" style="letter-spacing:.6px;max-width:30vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">&#9876; TACTICAL SANDBOX</b>' +
+      '<span id="fldClock" style="opacity:.9;background:#0c0f14bf;border:1px solid #5c513d;border-radius:4px;padding:3px 7px;white-space:nowrap;">0:00</span>' +
+      '<span id="fldSector" style="display:none;max-width:32vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;opacity:.9;background:#0c0f14bf;border:1px solid #5c513d;border-radius:4px;padding:3px 7px;"></span>' +
+      '<span id="fldObj" style="max-width:28vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;opacity:.9;background:#0c0f14bf;border:1px solid #5c513d;border-radius:4px;padding:3px 7px;">Obj: contested</span><span style="flex:1"></span>' +
+      '<span id="fldPhase" style="opacity:.9;background:#0c0f14bf;border:1px solid #5c513d;border-radius:4px;padding:3px 7px;white-space:nowrap;"></span>' +
     '</div>' +
     '<div id="fldHud" role="region" aria-label="Selected unit" style="position:absolute;left:12px;bottom:12px;min-width:240px;max-width:320px;background:#0c0f14e6;border:1px solid #745e3f;border-radius:6px;padding:10px 12px;font-size:13px;"></div>'/* wcag-auditor: contrast fix #4a3c28->#745e3f border on #0c0f14/#10141a (was 1.80:1, now 3.12/3.00:1) WCAG 1.4.11 */ +
     '<div id="fldBar" style="position:absolute;left:50%;bottom:14px;transform:translateX(-50%);display:flex;gap:6px;"></div>' +
@@ -1140,6 +1145,19 @@ function fldRenderTop() {
   var c = document.getElementById("fldClock"); if (c) { var s = Math.floor(__FIELD.t); c.textContent = Math.floor(s / 60) + ":" + ("0" + (s % 60)).slice(-2); }
   var ti = document.getElementById("fldTitle");
   if (ti) { var wantT = (__FIELD.scenData && __FIELD.scenData.name) ? ("⚔ " + __FIELD.scenData.name) : "⚔ TACTICAL SANDBOX"; if (ti.textContent !== wantT) ti.textContent = wantT; }
+  var sec = document.getElementById("fldSector");
+  if (sec) {
+    var _parts = (__FIELD.phases && typeof _fldPhaseTopParts === "function") ? _fldPhaseTopParts() : null;
+    if (_parts) {
+      sec.style.display = "inline-block";
+      sec.textContent = _parts.chip;
+      sec.title = _parts.full;
+    } else {
+      sec.style.display = "none";
+      sec.textContent = "";
+      sec.title = "";
+    }
+  }
   var o = document.getElementById("fldObj");
   if (o) {
     var hU = __FIELD.holdSecs.US, hC = __FIELD.holdSecs.CS, lead;
@@ -1150,13 +1168,15 @@ function fldRenderTop() {
     } else {
       lead = hU > hC + 0.5 ? "Union holds " + Math.floor(hU) + "s/" + __FIELD.holdToWin : (hC > hU + 0.5 ? "Confederate holds " + Math.floor(hC) + "s/" + __FIELD.holdToWin : "contested");
     }
-    // Phase C (D74): a MULTI-PHASE battle prefixes the running phase/sector tally ("Phase 2/3 · the Sunken Road ·
-    // sectors US 1 – CS 1"). "" for a single-objective battle -> byte-identical text.
-    var _pl = (__FIELD.phases && typeof _fldPhaseTopLabel === "function") ? _fldPhaseTopLabel() : "";
-    o.textContent = (_pl ? _pl + " · " : "") + "Objective: " + lead;
+    o.textContent = "Obj: " + lead;
+    o.title = "Objective: " + lead;
   }
   var p = document.getElementById("fldPhase");
-  if (p) p.textContent = __FIELD.phase === "deploy" ? "Press Begin (Space) to advance" : (__FIELD.paused ? ("⏸ " + (__FIELD._apReason ? __FIELD._apReason + " — Space to resume" : "PAUSED")) : (__FIELD.speed + "×"));
+  if (p) {
+    var phaseTxt = __FIELD.phase === "deploy" ? "Begin: Space" : (__FIELD.paused ? (__FIELD._apReason ? "Paused: " + __FIELD._apReason : "Paused") : (__FIELD.speed + "x"));
+    p.textContent = phaseTxt;
+    p.title = __FIELD.phase === "deploy" ? "Press Begin or Space to start the battle" : (__FIELD.paused ? "Press Space to resume" : "Current battle speed");
+  }
   // fog: keep the no-selection "N Rebel brigades sighted" HUD line live as scouting changes (throttled ~3x/sec)
   if (__FIELD.fog) { __FIELD._hudTick = (__FIELD._hudTick || 0) + 1; if (__FIELD._hudTick % 20 === 0 && !fldPlayerSel().length) fldRenderHud(); }
 }
@@ -1564,6 +1584,7 @@ function fld3dBuildTerrain() {
   var o = __FIELD.objective;
   var ring = new T.Mesh(new T.RingGeometry(o.r - 6, o.r, 40), new T.MeshBasicMaterial({ color: "#d8c87a", side: T.DoubleSide, transparent: true, opacity: 0.7 }));
   ring.rotation.x = -Math.PI / 2; ring.position.set(o.x, fldTerrainH(o.x, o.z) + 1.5, o.z); __FIELD.scene.add(ring);
+  fld3dBuildObjectiveBeacon(T, o);
   // walls (one for the sandbox; several for a scenario)
   var t = __FIELD.terrain, _ws = fldWalls();
   for (var wq = 0; wq < _ws.length; wq++) {
@@ -1586,6 +1607,24 @@ function fld3dBuildTerrain() {
     }
     __FIELD.scene.add(im);
   }
+}
+function fld3dBuildObjectiveBeacon(T, o) {
+  if (!T || !o) return;
+  var y = fldTerrainH(o.x, o.z), r = Math.max(18, Math.min(34, (o.r || 120) * 0.16));
+  var g = new T.Group();
+  g.name = "objectiveBeacon";
+  g.position.set(o.x, y + 2, o.z);
+  var gold = new T.MeshBasicMaterial({ color: "#f3dc8a", transparent: true, opacity: 0.92 });
+  var dark = new T.MeshBasicMaterial({ color: "#17110c", transparent: true, opacity: 0.88 });
+  var foot = new T.Mesh(new T.RingGeometry(r * 0.58, r * 0.82, 36), gold);
+  foot.name = "objectiveBeaconFoot"; foot.rotation.x = -Math.PI / 2; foot.position.y = 2; g.add(foot);
+  var pole = new T.Mesh(new T.CylinderGeometry(2.2, 2.2, 78, 8), dark);
+  pole.name = "objectiveBeaconPole"; pole.position.y = 39; g.add(pole);
+  var crown = new T.Mesh(new T.TorusGeometry(r, 2.2, 8, 40), gold);
+  crown.name = "objectiveBeaconCrown"; crown.rotation.x = Math.PI / 2; crown.position.y = 82; g.add(crown);
+  var core = new T.Mesh(new T.OctahedronGeometry(8, 0), gold);
+  core.name = "objectiveBeaconCore"; core.position.y = 82; g.add(core);
+  __FIELD.scene.add(g);
 }
 function fld3dBuildMarkers() {
   var t = __FIELD.terrain; if (!t || !t.markers || !window.THREE) return;

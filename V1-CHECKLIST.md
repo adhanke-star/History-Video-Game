@@ -74,10 +74,10 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       Byte-identical for US; CS defense winnable 8/8 fog-ON; live stacked still CS 8/8. probe-csplayer 16/16; 10 baselines byte-identical.)*
 
 ### Phase C — TACTICAL BREADTH  (more real-time battles, data-driven)
-- [~] **C1 Eastern marquee (IN PROGRESS):** ~~Fredericksburg~~ ✅ (D73 — the Marye's-Heights slaughter on the data-driven engine: a scenario REGISTRY + data-driven scenario UI + the gated "doomed-assault" AI posture; adding a battle is now a data file + a registry line). ~~The universal artillery gun model~~ ✅ (D75 — replaced Fredericksburg's per-battle "volume-of-fire proxy men" with a consistent gun-count/battery-weight fire model used identically in every battle; CS 8/8 + ratio 2.06 re-tuned via geometry, byte-identical baselines). ~~Antietam~~ ✅ (D76 — the FIRST MULTI-PHASE epic: a NEW gated `phases[]` engine [`src/tactical/T8-phases.js`] runs the Cornfield → the Sunken Road "Bloody Lane" → Burnside's Bridge in sequence, survivors/casualties + the running result carried forward, weighted-aggregate scoring with a draw band, a period inter-phase transition card; per-phase outcomes historically faithful, CS 2-1, the Emancipation turning point taught; byte-identical single-objective path; ‹bug-hunt to finish next session›). Remaining: Gettysburg (its 3 days = the next multi-phase) · Chancellorsville · Malvern Hill.
-- [ ] **C2 Western** ‹LOCKED: Phase C, with breadth›: Shiloh, Vicksburg, Chickamauga/Chattanooga, Atlanta/the March, Franklin.
+- [x] **C1 Eastern marquee (COMPLETE):** ~~Fredericksburg~~ ✅ (D73). ~~Universal artillery gun model~~ ✅ (D75). ~~Antietam~~ ✅ (D76 — first multi-phase epic, bug-hunt later completed in repo history). ~~Gettysburg~~ ✅ (multi-phase Day 1/2/3 scenario present, probe-gettysburg 16/16 after the 2026-06-18 HUD/assertion refresh). ~~Chancellorsville~~ ✅ (Jackson's flank march, single-phase Fredericksburg/Shiloh pattern; data/chancellorsville.json + registry + menu rank 35; 2026-06-18). ~~Malvern Hill~~ ✅ (Seven Days artillery duel, single-phase gun-line defense; data/malvern-hill.json + registry/menu rank 18; probe-malvern-hill 24/24; 2026-06-18). Current roster/order/side-choice/launch contracts are guarded by `tools/probe-tactical-roster.mjs` (D80/D82).
+- [~] **C2 Western** ‹LOCKED: Phase C, with breadth›: ~~Shiloh~~ ✅ (first Western theater battle, single-phase Fredericksburg-pattern scenario; probe-shiloh 29/29). Remaining: Vicksburg, Chickamauga/Chattanooga, Atlanta/the March, Franklin.
 - [ ] **C3 USCT battles (1863–65):** the Crater, New Market Heights, Olustee, Nashville (the flagship teachable arc).
-- [ ] **C4 Custom-battle builder** (D54).
+- [x] **C4 Custom-battle builder** (D54/D84): single-phase V1 tactical scenario authoring UI, validation, export/shareable JSON, import/round-trip, six local slots, explicit `custom_...` launch contract through `fldScenarioInit`, and focused/no-regression probes. Phase authoring remains deferred until a phase editor can be proven safely.
 
 ### Phase D — FULL HEX TACTICAL ENGINE  (co-equal, selectable — LOCKED "full engine", after depth)
 - [ ] **D1** A complete parallel hex/turn-based tactical mode on the modern OOB/scenario data, selectable per
@@ -127,17 +127,18 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       separate script) to Base64-embed + TIER/COMPRESS media w/ offline fallback so the single file stays portable as
       it grows (D68 #7). **Guardrail (D71):** no Phase-H media lib may require `SharedArrayBuffer` (COOP/COEP headers
       can't be set on GitHub Pages; `coi-serviceworker` is the shim if ever needed). PD imagery > AI art (aesthetic / IP / anachronism).
-- [ ] **H1b Brigade BADGES & INSIGNIA — the battle flags (Aaron, run-k idea, 2026-06-15).** Render each brigade's
+- [~] **H1b Brigade BADGES & INSIGNIA — the battle flags (Aaron, run-k idea, 2026-06-15).** Render each brigade's
       identity with its **battle flag / colors** on the unit badge: the various Confederate battle flags (ANV
       Southern Cross, Hardee/Polk Western patterns, the national flags), the U.S. national & regimental colors,
       and the **Army of the Potomac corps badges** (Kearny patch, the corps shapes/colors). Tasteful period
       engraving on the 2D/3D unit markers + the selected-brigade HUD; CVD-safe (shape + label, not flag-color
       alone); honor reduceMotion. Pairs with the B-4 arm markers (gun/limber + trooper) already shipped.
-      ‹idea — graphics pass; not now›
+      ‹partial: `src/tactical/T10-flags.js` shipped unit flags/insignia; 2026-06-18 follow-up replaced the 3D SVG TextureLoader warning path with cached canvas-backed `CanvasTexture` maps and disposal hooks. `tools/probe-tactical-visuals.mjs` now fails on the known Three.js texture warning and passes with `textureWarnings:0`. Broader Phase-H visual polish remains open.›
 - [ ] **H2 Reenactment footage** cutaways at key beats (skippable, offline→procedural fallback).
-- [ ] **H3 Richer 3D/animation** on the tactical engine (reuse run-h PBR/HDRI/post-FX); period broadsheet/engraving UI throughout.
-- [ ] **H4 Richer audio** ‹LOCKED: Phase H›: PD period tunes + battlefield/camp soundscapes + UI cues, all
-      accessible (toggles/captions/volume), default off.
+- [~] **H3 Richer 3D/animation** on the tactical engine (reuse run-h PBR/HDRI/post-FX); period broadsheet/engraving UI throughout.
+      ‹partial: 2026-06-19 D85 adds a procedural 3D objective beacon to the live tactical engine and extends `tools/probe-tactical-visuals.mjs` to 8 captures with beacon-coordinate assertions. Broader H3 rendering/animation/readability work remains open.›
+- [~] **H4 Richer audio** ‹LOCKED: Phase H›: PD period tunes + battlefield/camp soundscapes + UI cues, all
+      accessible (toggles/captions/volume), default off. ‹partial: `src/tactical/T9-audio.js` / audio work exists in recent repo history; full Phase-H polish still pending.›
 
 ### Phase I — LOOT / SURVIVAL  (LOCKED: DEFER to after core)
 - [ ] Standalone rarity-tiered loot + inventory (all modes) · light survival (rations/weather/forage/disease,
