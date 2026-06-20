@@ -1,5 +1,19 @@
 # HANDOFF — "The Civil War"
 
+## ⚡ CONTINUE HERE — 2026-06-20 **ENGINEERING CORPS — increment 1: FIELD ENTRENCHMENTS shipped** (the spade; byte-identical; probe 8/8) — D87
+
+> **The Tactical Engineering Corps has begun.** Aaron locked the full corps ("all of the above" — entrench + abatis + pontoons), so it ships as one module `src/tactical/T13-engineering.js` in vetted increments. Increment 1 = FIELD ENTRENCHMENTS: a player brigade ordered to Entrench (key **E** + control-bar button + help copy) digs in over ~70 sim-seconds for earned, facing-aware parapet cover; marching off abandons the works. Reads the B-5 realism slider (Arcade fast/×1.43, Balanced ×1.62, Historian slow/×1.81). 2D dirt parapet + 3D dirt berm (low-tier aware, reduceMotion-safe).
+>
+> **Architecture:** 9 guarded byte-identical T0 seams (fldResolveFire/fldResolveMelee cover, fldSimStep step, fldKey E, control-bar button, fldRenderHud line, fld2dDraw + 3D build/sync hooks, fld3dDispose ref-nulling) + the T13 module + `tools/probe-engineering-corps.mjs` (8/8). Entrenchment is **player-only** this increment (no scenario/AI digs), and `fldEngCover` returns EXACTLY 1 for any non-entrenched unit — so every AI-vs-AI baseline is byte-for-byte unchanged.
+>
+> **Bug-hunt (17 agents):** 1 confirmed — cover was omnidirectional; fixed facing-aware (front full / flank half / rear none) so flanking counters works. Critics triaged: melee charger-exposed is the correct base convention; the multi-phase 3D works self-heal via fld3dSyncEng stale-disposal; the fog-ghost-works case is deferred to the AI/scenario-entrench increment (noted in the T13 header).
+>
+> **Verification:** build GATE OK; probe-engineering-corps 8/8; full no-regression suite byte-identical (field/bullrun/shiloh/fog/ai/autopause + all battle probes + officers/logistics/arms/presets/csplayer/campaign-link); tactical-visuals 8/8 (textureWarnings:0); diag-classic nonBlank 346; boot/t1 ok; 0 pageerrors.
+>
+> **Next (the rest of "all of the above"):** ABATIS / obstacles (a fldEngMoveFactor slow seam + cross-belt disorder step + engineer placement), then PONTOON bridging (a NEW river/water terrain feature + bridge-laying + crossing gate) — each its own vetted increment extending T13. The T13 module header lists the EXTENSION POINTS. **Resume map:** START-HERE.md → this block → WAKE-UP.md top block → newest RUN-LOG.md entry → DECISIONS.md D87 → src/tactical/T13-engineering.js (header) + the T0 seams (grep "T13"/"fldEng") → tools/probe-engineering-corps.mjs.
+
+---
+
 ## ⚡ CONTINUE HERE — 2026-06-20 **VICKSBURG: the 3-phase river-fortress SIEGE shipped + adversarially hardened** (the last Codex project, finished) — D86
 
 > **Vicksburg is the first SIEGE in the game and the last open Codex project, now finished and vetted.** Built as a three-phase battle on the T8 multi-phase engine — **Stockade Redan (May 19) → Forlorn Hope / Great Redoubt (May 22) → the Saps and the Mine vs the 3rd Louisiana Redan (June 25)**. New `data/vicksburg.json` + registry line in `src/tactical/T1-bull-run.js` (menu rank 55) + `tools/probe-vicksburg.mjs` (18 steps) + the new `tools/sweep-vicksburg.mjs` balance harness. Universal gun-count model only; no per-battle damage fudge. Anti-Lost-Cause: dug out, not starved out.

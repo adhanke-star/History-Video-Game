@@ -31,7 +31,7 @@
 - [ ] **Chickamauga / Chattanooga design pass** — Decide whether this is one battle, linked battles, or phases; solve theater framing, terrain lessons, balance, and roster placement.
 - [x] **Custom-battle builder C4** — Scenario schema UI, validation, launch contracts, export/shareable JSON, local slots, focused probe, and no-regression. Complete 2026-06-18 (D84).
 - [ ] **Modern battles selectable in Classic hex / Phase D start** — Frozen-Classic bridge work; high regression risk.
-- [ ] **Tactical Engineering Corps on the field** — Pontoons, entrenchments, abatis, obstacle clearing, B5 slider interaction, and strategic engineering linkage.
+- [~] **Tactical Engineering Corps on the field** — Aaron locked "all of the above" (D87). `src/tactical/T13-engineering.js`, built in vetted increments. ✅ Field entrenchments (key E, facing-aware cover, B-5 realism coupling, probe 8/8, byte-identical). Remaining: abatis/obstacles, pontoon bridging (new river terrain).
 - [ ] **Full-campaign playthrough probe** — Long-running cross-layer gate from strategy to battle result to saves/victory.
 - [ ] **USCT battle arc design** — The Crater, New Market Heights, Olustee, Nashville; historically sensitive and mechanically distinct.
 - [ ] **S3 alt-history engine** — Divergence tiers, hinge forks, emergent-only toggle, and divergence log.

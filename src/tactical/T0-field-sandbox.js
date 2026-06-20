@@ -354,6 +354,10 @@ function fldResolveFire(u, tgt, dt) {
   var fatF = 1 - (u.fatigue / 100) * 0.35;
   var fr = fldFrontageExposed(u, tgt);
   var cover = fldCoverAt(tgt.x, tgt.z);
+  // Engineering Corps (T13): a target sheltering in its own EARTHWORKS adds earned cover, but only
+  // against fire from the parapet's FRONT arc (pass the shooter's position). fldEngCover returns
+  // EXACTLY 1.0 for any unit that never entrenched -> byte-identical for every baseline.
+  if (typeof fldEngCover === "function") cover *= fldEngCover(tgt, u.x, u.z);
   var power = FLD.FIRE_BASE * strF * u.pow * rngF * xpF * ammoF * morF * fatF;
   // distinct arm roles (B-4): artillery fires CANISTER up close (a giant shotgun — devastating in the open,
   // defeated by works/woods) and a softening long-range bombardment beyond. A gated multiplier on the base fire
@@ -380,7 +384,7 @@ function fldResolveMelee(a, b, dt) {
   var meleeA = (__FIELD.arms && typeof fldArmMelee === "function") ? fldArmMelee(a, b) : (typeof ARM !== "undefined" && ARM[a.arm] ? ARM[a.arm].melee : 1.0);
   var meleeB = (__FIELD.arms && typeof fldArmMelee === "function") ? fldArmMelee(b, a) : (typeof ARM !== "undefined" && ARM[b.arm] ? ARM[b.arm].melee : 1.0);
   var atk = a.men * meleeA * (0.6 + 0.4 * a.morale / a.maxMor) * (0.9 + a.xp * 0.06);
-  var def = b.men * meleeB * (0.6 + 0.4 * b.morale / b.maxMor) * (0.9 + b.xp * 0.06) * fldCoverAt(b.x, b.z);
+  var def = b.men * meleeB * (0.6 + 0.4 * b.morale / b.maxMor) * (0.9 + b.xp * 0.06) * fldCoverAt(b.x, b.z) * (typeof fldEngCover === "function" ? fldEngCover(b, a.x, a.z) : 1);
   var ratio = atk / Math.max(1, def);
   var _att = (__FIELD.sev ? __FIELD.sev.attrition : 1);   // B-5: attrition severity (1.0 = neutral = byte-identical)
   var aCas = Math.min(a.men, FLD.MELEE_BASE * (def / Math.max(1, atk)) * (0.7 + fldRng() * 0.6) * dt * 12 * _att);
@@ -838,6 +842,10 @@ function fldSimStep(dt) {
   }
   // movement
   for (var m = 0; m < __FIELD.units.length; m++) fldStepMovement(__FIELD.units[m], dt);
+  // Engineering Corps (T13): advance entrenchment AFTER movement (so a unit that marched off its works
+  // abandons them this tick) and BEFORE fire/melee (so this tick's cover reflects the works). No-op for any
+  // unit that never dug -> byte-identical for every baseline.
+  if (typeof fldEngStep === "function") fldEngStep(dt);
   // melee (charging units in contact). fldResolveMelee is symmetric (hits BOTH sides), so resolve
   // each unordered pair AT MOST ONCE per tick — a mutual charge must not double-bill casualties.
   var _meleeDone = {};
@@ -1037,6 +1045,7 @@ function fldBuildDom() {
     ["fldBtnCol", "Column", "Form column — fast march (C)"],
     ["fldBtnCharge", "Charge", "Charge nearest enemy (F)"],
     ["fldBtnHold", "Hold", "Halt in place (H)"],
+    ["fldBtnEntrench", "Entrench", "Dig in for cover — the spade (E)"],
     ["fldBtnFog", "Fog: " + (__FIELD.fog ? "On" : "Off"), "Toggle fog of war — line-of-sight scouting (V)"],
     ["fldBtnAuto", "Auto-pause: " + (__FIELD.autoPause ? "On" : "Off"), "Toggle active auto-pause at key moments (P)"],
     ["fldBtnSettings", "&#9881; Settings", "Battle settings — fog, auto-pause, speed & difficulty (G)"],
@@ -1199,6 +1208,7 @@ function fldWireControls() {
   w("fldBtnCol", function () { fldSetFormation("column"); });
   w("fldBtnCharge", function () { fldSelCharge(); });
   w("fldBtnHold", function () { fldSelHold(); });
+  w("fldBtnEntrench", function () { if (typeof fldSelEntrench === "function") fldSelEntrench(); });
   w("fldBtnFog", function () { fldToggleFog(); });
   w("fldBtnAuto", function () { fldToggleAutoPause(); });
   w("fldBtnSettings", function () { if (typeof fldOpenSettingsDrawer === "function") fldOpenSettingsDrawer(); });   // B-5: the in-battle settings drawer
@@ -1253,6 +1263,7 @@ function fldKey(e) {
   else if (k === "c" || k === "C") fldSetFormation("column");
   else if (k === "f" || k === "F" || k === "Enter") fldSelCharge();
   else if (k === "h" || k === "H") fldSelHold();
+  else if (k === "e" || k === "E") { if (typeof fldSelEntrench === "function") fldSelEntrench(); }   // T13: entrench (dig in)
   else if (k === "v" || k === "V") fldToggleFog();
   else if (k === "p" || k === "P") fldToggleAutoPause();
   else if (k === "g" || k === "G") { if (typeof fldOpenSettingsDrawer === "function") fldOpenSettingsDrawer(); }   // B-5: the in-battle settings drawer
@@ -1337,7 +1348,8 @@ function fldRenderHud() {
     (typeof fldLogisticsHudSelected === "function" ? fldLogisticsHudSelected(u) : "") +   // B-3: ammo/resupply/spent status
     (typeof fldArmsHudSelected === "function" ? fldArmsHudSelected(u) : "") +   // B-4: battery range-band / cavalry role
     (typeof fldOfficerHudSelected === "function" ? fldOfficerHudSelected(u) : "") +   // B-2: brigade leader + in-command status
-    (typeof fldFlagHudSelected === "function" ? fldFlagHudSelected(u) : "");   // H1b: battle flag + corps badge in the HUD
+    (typeof fldFlagHudSelected === "function" ? fldFlagHudSelected(u) : "") +   // H1b: battle flag + corps badge in the HUD
+    (typeof fldEngHudSelected === "function" ? fldEngHudSelected(u) : "");   // T13: entrenchment status (empty unless digging)
 }
 function fldOnOver() {
   var e = document.getElementById("fldEnd"); if (!e) { fldAnnounce("Battle over."); return; }
@@ -1469,6 +1481,8 @@ function fld2dDraw() {
     ctx.fillStyle = u.morale > 35 ? "#7faf6a" : "#c98a3a"; ctx.fillRect(cx - 12, cz - depth / 2 - 9, 24 * (u.morale / u.maxMor), 3);
     if (u.state === "routing") { ctx.fillStyle = "#ffd27a"; ctx.font = "10px Georgia"; ctx.fillText("ROUT", cx - 13, cz + depth / 2 + 12); }
   }
+  // Engineering Corps (T13): dirt parapets along entrenched units' fronts (no-op when no unit is dug in)
+  if (typeof fldEngDraw2d === "function") fldEngDraw2d(ctx, v);
   // in-battle logistics (B-3): the ammunition trains + resupply rings (drawn under the officers; no-op when off)
   if (typeof fldDrawSupply === "function") fldDrawSupply(ctx, v);
   // distinct arm roles (B-4): brass gun/limber + mounted-trooper markers, muzzle flash, canister cone, charge trail (no-op when off)
@@ -1563,6 +1577,8 @@ function fld3dInit() {
   if (typeof fld3dBuildArms === "function") { try { fld3dBuildArms(); } catch (e) {} }
   // battle flags & insignia (H1b): textured brigade colors on the 3D unit markers (no-op when off / module absent)
   if (typeof fld3dBuildFlags === "function") { try { fld3dBuildFlags(); } catch (e) {} }
+  // Engineering Corps (T13): the entrenchment group (berms are added/synced per entrenched unit; empty here)
+  if (typeof fld3dBuildEng === "function") { try { fld3dBuildEng(); } catch (e) {} }
 }
 function fldLow() { try { var q = G && G.settings && G.settings.gfxQuality; if (q === "low") return true; if (q === "high") return false; return Math.min(window.innerWidth, window.innerHeight) <= 720; } catch (e) { return false; } }
 function fld3dBuildTerrain() {
@@ -1705,6 +1721,7 @@ function fld3dRender() {
   if (typeof fld3dSyncOfficers === "function") fld3dSyncOfficers();   // B-2: officer figures + auras
   if (typeof fld3dSyncSupply === "function") fld3dSyncSupply();       // B-3: ammunition-train wagons
   if (typeof fld3dSyncArms === "function") fld3dSyncArms();           // B-4: gun + trooper markers + muzzle flash
+  if (typeof fld3dSyncEng === "function") fld3dSyncEng();             // T13: entrenchment berms (no-op when none dug in)
   __FIELD.renderer.render(__FIELD.scene, __FIELD.camera);
 }
 function fld3dPick(clientX, clientY) {
@@ -1729,6 +1746,7 @@ function fld3dDispose() {
   __FIELD.scene = null; __FIELD.camera = null; __FIELD.controls = null; __FIELD.renderer = null; __FIELD.groups = null; __FIELD._u3d = null; __FIELD.ground = null;
   __FIELD._ld3dGroup = null; __FIELD._ld3d = null;   // B-2: the officer group's geometries were disposed in the scene traverse above; drop the refs
   __FIELD._sup3dGroup = null; __FIELD._sup3d = null; // B-3: same for the ammunition-train wagons
+  __FIELD._engGroup = null; __FIELD._engMeshes = null; // T13: the entrenchment berms were disposed in the traverse above; drop the refs
 }
 
 /* ===========================================================================

@@ -1,3 +1,17 @@
+# ☀ WAKE-UP — 2026-06-20: **ENGINEERING CORPS — FIELD ENTRENCHMENTS** (the spade; increment 1 of "all of the above"; probe 8/8, byte-identical)
+
+**Newest:** the Tactical Engineering Corps has begun. A player brigade can now **Entrench** (key **E**, or the in-battle "Entrench" button) — it digs in where it stands and, over ~70 sim-seconds, earns parapet-grade **cover** (the war's drift toward trench warfare). Marching off the works abandons them. The dig **reads the B-5 realism slider**: Arcade digs fast for modest cover (×1.43), Historian slow for strong cover (×1.81), Balanced ×1.62. The parapet is **facing-aware** — it shelters the front, so a flank/rear maneuver still beats fixed works. Rendered as a 2D dirt parapet + a 3D dirt berm (low-tier aware, reduceMotion-safe).
+
+Aaron locked the full corps ("**all of the above**" — entrench + abatis + pontoons), so this is **increment 1**; it ships as `src/tactical/T13-engineering.js` (architected to host the other two). Built as 9 guarded byte-identical T0 seams + `tools/probe-engineering-corps.mjs` (8/8). Entrenchment is a **player tool** in this increment (no scenario/AI digs), so every AI-vs-AI baseline is byte-for-byte unchanged.
+
+**Bug-hunt (17 agents):** 1 confirmed — the cover was omnidirectional; fixed to be facing-aware (front full / flank half / rear none) so flanking counters works. Critics triaged (melee charger-exposed is the correct base convention; the multi-phase 3D works self-heal; the fog-ghost-works case is deferred to when AI/scenario entrenchment lands).
+
+**Verified:** build GATE OK; probe-engineering-corps 8/8; full no-regression suite byte-identical (field/bullrun/shiloh/fog/ai/autopause + all battle probes + officers/logistics/arms/presets/csplayer/campaign-link); tactical-visuals 8/8 (`textureWarnings:0`); diag-classic `nonBlank:346`; boot/t1 ok; 0 pageerrors. (D87.)
+
+**Next (the rest of the corps):** ABATIS / obstacles, then PONTOON bridging (needs a new river terrain feature) — each its own vetted increment extending T13. See the T13 module header for the EXTENSION POINTS.
+
+---
+
 # ☀ WAKE-UP — 2026-06-20: **VICKSBURG — THE 3-PHASE RIVER-FORTRESS SIEGE** (the last Codex project, finished + adversarially hardened; probe 18/18)
 
 **Newest:** Vicksburg is now playable and verified — the first SIEGE in the game, built as a three-phase battle on the T8 multi-phase engine: **the Stockade Redan (May 19) → the Forlorn Hope at the Great Redoubt (May 22) → the Saps and the Mine against the 3rd Louisiana Redan (June 25)**. A new **⚔ BATTLE — VICKSBURG (1863)** main-menu button opens the side-choice card; command Grant's besiegers or Pemberton's garrison across all three sectors, the cost carrying forward, and the end-screen scores the siege phase-by-phase with the Mississippi split and the city's fall. Anti-Lost-Cause throughout: Vicksburg is *dug out*, not merely starved out.

@@ -2,6 +2,15 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## ENGINEERING CORPS (Phase F) — increment 1: FIELD ENTRENCHMENTS — 2026-06-20
+- **What it is:** the first increment of Aaron's Tactical Engineering Corps directive (he locked "all of the above" — entrench + abatis + pontoons). A player brigade ordered to ENTRENCH (key **E** + control-bar button + help copy) digs in over ~70 sim-seconds and earns parapet-grade COVER; marching off the works abandons them. New `src/tactical/T13-engineering.js` + 9 guarded T0 seams + `tools/probe-engineering-corps.mjs`.
+- **B-5 coupling:** dig speed + cover strength read the realism slider (Arcade fast/×1.43, Balanced ×1.62, Historian slow/×1.81), derived from `__FIELD.sev.attrition`.
+- **Facing-aware (bug-hunt fix):** the parapet protects its FRONT arc only — flank = half, rear = none — so flanking still counters fixed works (matches the one-sided berm render).
+- **Byte-identical:** entrenchment is player-only; no scenario/AI triggers it, and `fldEngCover` returns exactly 1 for any non-entrenched unit, so every AI-vs-AI baseline is byte-for-byte unchanged.
+- **Bug-hunt (17 agents):** 1 confirmed (omnidirectional cover → fixed facing-aware); critics triaged (melee charger-exposed is correct base behavior; multi-phase 3D self-heals; fog-ghost-works deferred to the AI-entrench increment).
+- **Verification:** build GATE OK; probe-engineering-corps 8/8; full no-regression suite byte-identical (field/bullrun/shiloh/fog/ai/autopause + all battles + officers/logistics/arms/presets/csplayer/campaign-link); tactical-visuals 8/8 (textureWarnings:0); diag-classic nonBlank 346; boot/t1 ok; 0 pageerrors. (D87.)
+- **Next:** ABATIS / obstacles, then PONTOON bridging (new river terrain) — each its own vetted increment extending T13.
+
 ## VICKSBURG — Phase C-2 Western breadth: the 3-phase river-fortress SIEGE, finished + adversarially hardened — 2026-06-20
 - **What it is:** the first SIEGE in the game and the last open Codex project. Vicksburg, May 19–July 4 1863, as a THREE-PHASE battle on the T8 multi-phase engine: the Stockade Redan (May 19) → the Forlorn Hope / Great Redoubt (May 22) → the Saps and the Mine vs the 3rd Louisiana Redan (June 25). New `data/vicksburg.json` + registry line + menu rank 55 in `src/tactical/T1-bull-run.js` + `tools/probe-vicksburg.mjs` (18 steps). Universal gun-count model only; anti-Lost-Cause ("dug out, not starved out").
 - **Finished the Codex draft:** switched the readability probe's WebGL screenshot from the hanging Playwright `page.screenshot()` to the proven render→`canvas.toDataURL()` same-tick capture; updated `tools/probe-tactical-roster.mjs` to guard `vicksburg` (the Codex left it out, so the menu-order step was failing).

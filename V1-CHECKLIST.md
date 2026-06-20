@@ -106,8 +106,12 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       American Red Cross). Neighbors: **Dr. Mary Edwards Walker** (the only woman awarded the Medal of Honor) and
       **Harriet Tubman** (scout/spy; the Combahee River Raid, 1863). Verified/anti-Lost-Cause; ties USCT (C3) +
       the human-cost treatment. ‹idea — implement when soldier-stories / the codex land; not B-4 scope›
-- [ ] **Tactical Engineering Corps — units, features & effects tied to the effectiveness/realism sliders (Aaron,
-      run-k directive, 2026-06-15).** Extend the strategic **Engineer Works Corps** (`src/57-engineering.js`, D43;
+- [~] **Tactical Engineering Corps — units, features & effects tied to the effectiveness/realism sliders (Aaron,
+      run-k directive, 2026-06-15; "all of the above" locked 2026-06-20, D87).** Built as `src/tactical/T13-engineering.js`
+      in vetted increments. ~~Field entrenchments~~ ✅ (key E; dig-in → facing-aware parapet cover; reads the B-5
+      realism slider Arcade ×1.43 / Balanced ×1.62 / Historian ×1.81; 2D+3D works; probe-engineering-corps 8/8;
+      byte-identical, player-only; D87). Remaining: ABATIS / obstacles, then PONTOON bridging (new river terrain).
+      Extend the strategic **Engineer Works Corps** (`src/57-engineering.js`, D43;
       `bridgeArmy(C).engineering`) onto the real-time field as a distinct arm/role (the same gated-seam pattern
       B-4 used for art/cav): **pontoon bridges** (cross a creek/river — the Bull Run terrain already has
       Young's Branch / the Stone Bridge), **field fortifications / entrenchments** (raise cover on the objective),

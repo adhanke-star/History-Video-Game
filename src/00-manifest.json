@@ -36,6 +36,7 @@
     "tactical/T10-flags.js",
     "tactical/T11-custom-battle.js",
     "tactical/T12-3d-readability.js",
+    "tactical/T13-engineering.js",
     "90-president-register.js",
     "91-save-slots.js",
     "92-help-overlay.js"
