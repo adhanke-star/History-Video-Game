@@ -1,9 +1,9 @@
 # MASTER TASK LIST — The Civil War Video Game
 
-**Last updated:** 2026-06-19
-**Live head:** working tree — D85 leftover gate closed + 3D objective beacon complete
-**Phases complete:** A ✅, B (B1–B6) ✅, C-1 Eastern marquee ✅, C-2 (Antietam bug-hunt) ✅
-**Phase in progress:** C (tactical breadth — Western theater / Vicksburg or C3 USCT next)
+**Last updated:** 2026-06-20
+**Live head:** Vicksburg 3-phase siege finished + adversarially hardened (D86)
+**Phases complete:** A ✅, B (B1–B6) ✅, C-1 Eastern marquee ✅, C-2 Western (Shiloh ✅, Vicksburg ✅)
+**Phase in progress:** C (tactical breadth — Chickamauga/Chattanooga or C3 USCT next); next non-battle priority = Tactical Engineering Corps (Aaron directive)
 
 ---
 
@@ -27,7 +27,7 @@
 ## 🧭 PRIORITY PICKER / MODEL ROUTING (use when Aaron asks to choose from the list)
 
 ### Best suited to Codex / high-reasoning
-- [ ] **Vicksburg / siege campaign architecture** — Decide single-phase vs multi-phase vs siege-shaped pattern; design data/OOB/terrain/timing/probes without combat fudges.
+- [x] **Vicksburg / siege campaign architecture** — Built as a 3-phase siege (Stockade Redan → Forlorn Hope → Saps & Mine) on the T8 engine; data/OOB/terrain/timing/probe, universal gun model, no fudges. The failed May assaults cost the attacker, the siege wins, the city falls. Complete 2026-06-20 (D86).
 - [ ] **Chickamauga / Chattanooga design pass** — Decide whether this is one battle, linked battles, or phases; solve theater framing, terrain lessons, balance, and roster placement.
 - [x] **Custom-battle builder C4** — Scenario schema UI, validation, launch contracts, export/shareable JSON, local slots, focused probe, and no-regression. Complete 2026-06-18 (D84).
 - [ ] **Modern battles selectable in Classic hex / Phase D start** — Frozen-Classic bridge work; high regression risk.
@@ -62,7 +62,7 @@
 
 ### C2 Western theater battles
 - [x] **Shiloh** — First Western theater battle (probe-shiloh 29/29 in latest gate)
-- [ ] **Vicksburg** (siege campaign)
+- [x] **Vicksburg** (siege campaign) — 3-phase siege; probe-vicksburg 18/18; the May assaults cost the attacker, the siege wins (D86, 2026-06-20)
 - [ ] **Chickamauga / Chattanooga**
 - [ ] **Atlanta / the March to the Sea**
 - [ ] **Franklin / Nashville**

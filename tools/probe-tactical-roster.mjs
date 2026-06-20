@@ -21,7 +21,7 @@ async function up(u) { try { const r = await fetch(u, { method: 'HEAD' }); retur
 
 const SETUP = `(() => {
   var R = { ok:true, steps:[] };
-  var EXPECTED = ['bullrun1', 'malvernHill', 'antietam', 'fredericksburg', 'chancellorsville', 'gettysburg', 'shiloh'];
+  var EXPECTED = ['bullrun1', 'malvernHill', 'antietam', 'fredericksburg', 'chancellorsville', 'gettysburg', 'shiloh', 'vicksburg'];
   function step(name, fn) {
     try { var v = fn(); R.steps.push({ name:name, ok:true, v:v === undefined ? null : v }); }
     catch(e) { R.ok = false; R.steps.push({ name:name, ok:false, err:String(e && e.message || e) }); }
@@ -55,7 +55,7 @@ const SETUP = `(() => {
       return { ids:ids };
     });
 
-    step('MENU ORDER: public roster order matches help/demo route (Bull Run -> Malvern Hill -> Antietam -> Fredericksburg -> Chancellorsville -> Gettysburg -> Shiloh)', function() {
+    step('MENU ORDER: public roster order matches help/demo route (Bull Run -> Malvern Hill -> Antietam -> Fredericksburg -> Chancellorsville -> Gettysburg -> Shiloh -> Vicksburg)', function() {
       var order = fldScenarioMenuOrder(reg);
       if (!eq(order, EXPECTED)) throw new Error('menu order '+order.join(' -> ')+' != '+EXPECTED.join(' -> '));
       return { order:order };
@@ -115,7 +115,7 @@ const SETUP = `(() => {
     step('MENU DOM: all registered battle buttons inject once, in roster order, before Skirmish/Command buttons', function() {
       if (typeof openMainMenu !== 'function') return { skipped:'no openMainMenu' };
       openMainMenu(); fldInjectMenuButton();
-      var ids = ['fldBullRunBtn', 'fldScnBtn_malvernHill', 'fldScnBtn_antietam', 'fldScnBtn_fredericksburg', 'fldScnBtn_chancellorsville', 'fldScnBtn_gettysburg', 'fldScnBtn_shiloh'];
+      var ids = ['fldBullRunBtn', 'fldScnBtn_malvernHill', 'fldScnBtn_antietam', 'fldScnBtn_fredericksburg', 'fldScnBtn_chancellorsville', 'fldScnBtn_gettysburg', 'fldScnBtn_shiloh', 'fldScnBtn_vicksburg'];
       var found = [];
       for (var i = 0; i < ids.length; i++) {
         var btn = document.getElementById(ids[i]);

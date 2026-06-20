@@ -1,5 +1,23 @@
 # HANDOFF — "The Civil War"
 
+## ⚡ CONTINUE HERE — 2026-06-20 **VICKSBURG: the 3-phase river-fortress SIEGE shipped + adversarially hardened** (the last Codex project, finished) — D86
+
+> **Vicksburg is the first SIEGE in the game and the last open Codex project, now finished and vetted.** Built as a three-phase battle on the T8 multi-phase engine — **Stockade Redan (May 19) → Forlorn Hope / Great Redoubt (May 22) → the Saps and the Mine vs the 3rd Louisiana Redan (June 25)**. New `data/vicksburg.json` + registry line in `src/tactical/T1-bull-run.js` (menu rank 55) + `tools/probe-vicksburg.mjs` (18 steps) + the new `tools/sweep-vicksburg.mjs` balance harness. Universal gun-count model only; no per-battle damage fudge. Anti-Lost-Cause: dug out, not starved out.
+>
+> **Finish work over the Codex draft:** (1) the readability probe's WebGL screenshot was switched from the hanging `page.screenshot()` to the proven render→`canvas.toDataURL()` capture; (2) `tools/probe-tactical-roster.mjs` was updated to guard `vicksburg` (the Codex left it out, so the menu-order step had been failing).
+>
+> **Adversarial bug-hunt (25 agents) confirmed + fixed:** the **Hebert→M.L. Smith** historical misattribution at the Stockade Redan (Hebert relocated to his real 3rd-Louisiana-Redan sector); the **inverted May-assault casualties** (the dug-in defender was bleeding more than the exposed attacker — rebalanced toward fire parity + the fortress's historical gun edge so the assaults now cost the attacker US:CS 1.93 / 2.64, the redans still hold 8/8, the siege wins 8/8, the city falls 8/8 with a clear US 3 / CS 2 margin); a new **casualty-direction probe gate** so it can't re-invert; the **T12 GPU leak** (per-sync materials/geometries now disposed via a `__M3D._t12Disp` registry), a **low-tier halo gate**, and a **WCAG dark-pill** behind the strength count.
+>
+> **Verification:** build GATE OK; `probe-vicksburg` 18/18, 0 pe (assaultCostUStoCS 1.96 / 2.71, totalGuns 56); `probe-tactical-roster` 8/8; bullrun 15/15; malvern-hill 24/24; antietam 16/16; fredericksburg 22/22; chancellorsville 24/24; gettysburg 16/16; shiloh 29/29; field 13/13; officers 15/15; logistics 14/14; arms 23/23; presets 26/26; csplayer 16/16; campaign-link 16/16; `probe-tactical-visuals` 8/8, 0 pe, `textureWarnings:0`; bootprobe ok (10 tolerated 404s); t1probe ok; diag-classic `nonBlank:346`; `git diff --check` clean. Sim engine T0–T8 untouched.
+>
+> **Known limitation (LOW, deferred):** passive (player-side, non-`autoBoth`) headless resolution is side-asymmetric — a demo-only artifact (real play has a human commanding). Noted for a future passive-AI pass.
+>
+> **Next Codex-owned task (non-battle):** the **Tactical Engineering Corps** on the field (pontoons / entrenchments / abatis / obstacle-clearing) interacting with the B-5 difficulty/realism sliders — Aaron's run-k directive (V1-CHECKLIST Phase F + B-5 pointer). Other open items: C3 USCT battles, S3 alt-history, S4 codex/glossary, the comprehensive WCAG pass, the full-campaign playthrough probe.
+>
+> **Resume map:** `START-HERE.md` → this block → `WAKE-UP.md` top block → newest `RUN-LOG.md` entry → `DECISIONS.md` D86 → `V1-CHECKLIST.md` Phase C/F → `data/vicksburg.json`, `src/tactical/T8-phases.js`, `src/tactical/T1-bull-run.js`, `src/tactical/T12-3d-readability.js`, `tools/probe-vicksburg.mjs`, `tools/sweep-vicksburg.mjs`.
+
+---
+
 ## CONTINUE HERE — 2026-06-19 leftover gate closed + 3D objective beacon complete — C4/Malvern/Chancellorsville/custom-builder vetted, visual probe 8/8
 
 > **Critical first job is complete.** Codex inspected the dirty working tree before starting new work. The uncommitted D77-D84-era C4/Malvern/Chancellorsville/custom-builder/roster/visual/help/docs state matched prior live docs, so it was treated as lower-model/session leftovers and brought to a vetted state rather than reverted. No unrelated user/project changes were reset.

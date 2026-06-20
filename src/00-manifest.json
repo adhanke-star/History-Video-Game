@@ -35,6 +35,7 @@
     "tactical/T9-audio.js",
     "tactical/T10-flags.js",
     "tactical/T11-custom-battle.js",
+    "tactical/T12-3d-readability.js",
     "90-president-register.js",
     "91-save-slots.js",
     "92-help-overlay.js"
@@ -49,6 +50,8 @@
     "genForce",
     "startBattleRuntime",
     "presRenderCabinet",
-    "presWireCabinet"
+    "presWireCabinet",
+    "_m3dBadgeCanvas",
+    "_m3dDecorateUnits"
   ]
 }

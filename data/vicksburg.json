@@ -1,0 +1,330 @@
+{
+  "_comment": "PHASE C WESTERN BREADTH - VICKSBURG, May-July 1863. A three-phase siege battle for the __FIELD real-time engine: May 19 Stockade Redan, May 22 Forlorn Hope / Great Redoubt, and the June siege approaches / mine against the 3rd Louisiana Redan. The teaching point is architectural: Vicksburg was not a single field battle but a fortress system of loess ravines, ridge roads, redans, lunettes, artillery batteries, covered approaches, mines, and collapsing logistics. Strengths are Inferred brigade-scale approximations; the phase sequence, principal ground, siege works, failed assaults, and Union engineering pressure are the teaching-bearing facts.",
+  "vicksburg": {
+    "id": "vicksburg",
+    "name": "Vicksburg - Siege of the River Fortress",
+    "date": "May 19-July 4, 1863",
+    "place": "Vicksburg, Warren County, Mississippi - the bluffs above the Mississippi River",
+    "blurb": "Grant's army has crossed below Vicksburg, won the inland campaign, and driven Pemberton behind the city's earthworks. The fortress is a six-and-a-half-mile arc of redans, redoubts, lunettes, batteries, ridge roads, and ravines, with both flanks resting on the Mississippi. The May assaults fail against the parapets; the siege is won by the spade, the sap, the mine, and the naval-battery pressure that makes surrender inevitable.",
+    "provenance": "Verified (high) for the siege sequence, the May 19 and May 22 assaults, the Stockade Redan / 3rd Louisiana Redan / Great Redoubt / Railroad Redoubt, Battery DeGolyer, the covered approaches and mines, the July 4 surrender, and the strategic result splitting the Confederacy at the Mississippi. Inferred (medium) for per-unit strengths and exact sector timing. Anti-Lost-Cause frame: Vicksburg fell because Union maneuver isolated it and Union engineering dug it out; hunger mattered, but the siege architecture and campaign logistics made surrender unavoidable.",
+    "field": { "w": 1200, "h": 900 },
+    "attacker": "US",
+    "defender": "CS",
+    "defaultFog": false,
+    "timeLimitSec": 230,
+    "holdToWinSec": 76,
+    "menu": {
+      "title": "VICKSBURG (1863)",
+      "deck": "The river fortress - a three-phase Western siege. Test the May assaults against the redans, then drive the saps, batteries, and mine that make the city untenable.",
+      "aria": "Vicksburg, May to July 1863 - a multi-phase Western Theater siege battle: Stockade Redan, the Forlorn Hope against the Great Redoubt, and the siege approaches and mine."
+    },
+    "sides": {
+      "heading": "Vicksburg - Take Which Command?",
+      "intro": "May-July 1863 - the Mississippi fortress. Three siege sectors, fought in sequence. Lead the army of your choosing.",
+      "US": {
+        "title": "Command the Union (Grant's army)",
+        "badge": "&#9876; BESIEGE",
+        "deck": "Probe the ridge-gates, survive the failed assaults, and then win as Grant did: batteries, covered approaches, mines, and relentless logistics."
+      },
+      "CS": {
+        "title": "Command the Confederacy (Pemberton's garrison)",
+        "badge": "&#9819; DEFEND",
+        "deck": "Hold the redans, protect the ridge roads, and keep the garrison alive long enough to defy Grant's siege lines."
+      },
+      "foot": "The other army is commanded by the AI. Three phases play in sequence; the cost carries forward (press V in battle to toggle fog)."
+    },
+    "brief": {
+      "attack": "This is not one charge across one field. First test the Stockade Redan, then the May 22 assault at the Great Redoubt, then turn to the spade: saps, batteries, and the mine. <b>This is your war:</b> Vicksburg is dug out, not simply starved out.",
+      "defend": "Hold the gates of the fortress: the Stockade Redan, the 3rd Louisiana Redan, the Great Redoubt, and the cratered line. <b>This is your war:</b> keep the ridge roads shut and make Grant pay for every yard."
+    },
+    "objective": { "x": 600, "z": 360, "r": 150, "name": "the Vicksburg earthworks" },
+    "phases": [
+      {
+        "id": "stockade-redan",
+        "name": "May 19 - Stockade Redan",
+        "sector": "the northern ridge gate - Graveyard Road and the Stockade Redan",
+        "timing": "May 19, 1863 - the first direct assault",
+        "attacker": "US",
+        "defender": "CS",
+        "assaultDoctrine": "cautious",
+        "defaultFog": false,
+        "holdToWinSec": 74,
+        "timeLimitSec": 220,
+        "scoreWeight": 1,
+        "objective": { "x": 600, "z": 355, "r": 135, "name": "Stockade Redan and Graveyard Road" },
+        "transition": {
+          "title": "Stockade Redan",
+          "lead": "May 19. Grant tries a quick assault before Pemberton's shaken army can settle. Sherman's men climb the ravines toward the Stockade Redan on Graveyard Road - and discover that the loess ridges turn every road into a defended throat."
+        },
+        "terrain": {
+          "hills": [
+            { "name": "the loess ridge before Graveyard Road", "x": 600, "z": 445, "h": 20, "s": 170, "note": "Wind-cut yellow loess made narrow ridges and steep ravines around Vicksburg. Every approach road climbed a defended spine. (Verified)" },
+            { "name": "the Stockade Redan parapet", "x": 600, "z": 345, "h": 24, "s": 135, "note": "The northern earthwork astride Graveyard Road, one of the first assault targets on May 19. (Verified)" },
+            { "name": "Fort Hill / river flank", "x": 360, "z": 270, "h": 22, "s": 140, "note": "The northern river-facing flank of the Vicksburg works, tying the line to the Mississippi. (Verified)" }
+          ],
+          "woods": [
+            { "x": 455, "z": 500, "r": 95, "note": "Ravine timber screening the Union approach before the slope opens under fire." },
+            { "x": 750, "z": 500, "r": 90, "note": "The broken side-ravines that made units lose alignment before reaching the parapet." }
+          ],
+          "walls": [
+            { "x1": 430, "z1": 375, "x2": 775, "z2": 370, "note": "STOCKADE REDAN PARAPET - the earthwork lip covering Graveyard Road. This is a siege wall, not open-field cover. (Verified)" },
+            { "x1": 470, "z1": 420, "x2": 730, "z2": 418, "note": "ABATIS AND RIFLE PITS - forward obstacles below the redan that slow the assault and keep the attackers under musketry. (Inferred placement)" }
+          ],
+          "markers": [
+            { "kind": "road", "name": "Graveyard Road", "path": [[600, 850], [600, 600], [600, 340]], "note": "The northern road into Vicksburg and the axis of Sherman's May 19 assault. (Verified)" },
+            { "kind": "label", "name": "Stockade Redan", "x": 600, "z": 345, "note": "A redan is an angled earthwork projecting from the main line; this one guarded Graveyard Road." },
+            { "kind": "label", "name": "loess ravines", "x": 760, "z": 520, "note": "The maze-like terrain that broke assault columns before they reached the works." },
+            { "kind": "label", "name": "Mississippi River flank", "x": 230, "z": 260, "note": "Both ends of Pemberton's line rested near the river bluffs, reducing the chance of a simple flank attack." }
+          ]
+        },
+        "leaders": {
+          "_note": "The first assault tests the works before the siege has fully tightened. Grant and Sherman press quickly; Pemberton and Hebert hold the northern line.",
+          "US": [
+            { "id": "ld_grant_vb", "name": "Maj. Gen. Ulysses S. Grant", "short": "Grant", "quality": 0.78, "radius": 270, "x": 600, "z": 820, "fate": 3.0, "note": "Army commander. Grant tried the May 19 assault hoping to exploit Confederate disorganization after Champion Hill and Big Black River. When it failed, he continued probing rather than withdrawing. (Verified)" },
+            { "id": "ld_sherman_vb", "name": "Maj. Gen. William T. Sherman", "short": "Sherman", "quality": 0.7, "radius": 240, "attach": "us_sherman_stockade", "fate": 2.5, "note": "Sherman's corps attacked the northern approaches, including the Stockade Redan sector. (Verified)" }
+          ],
+          "CS": [
+            { "id": "ld_pemberton_vb", "name": "Lt. Gen. John C. Pemberton", "short": "Pemberton", "quality": 0.6, "radius": 250, "x": 600, "z": 230, "fate": 2.7, "note": "Commander of the Vicksburg garrison. He had lost the field campaign, but his engineers gave him a formidable defensive shell. (Verified)" },
+            { "id": "ld_smith_vb", "name": "Maj. Gen. Martin L. Smith", "short": "Smith", "quality": 0.64, "radius": 200, "attach": "cs_smith_stockade", "fate": 2.3, "note": "Smith's division held the northern Vicksburg sector astride Graveyard Road, including the Stockade Redan; Shoup's brigade and the Missouri/Louisiana troops manned the works that broke Sherman's May 19 assault. (Verified at division-sector level; brigade-scale placement Inferred)" }
+          ]
+        },
+        "supply": {
+          "US": { "x": 600, "z": 865, "name": "Union ordnance park - the approach roads" },
+          "CS": { "x": 600, "z": 170, "name": "Confederate interior line - Vicksburg magazines" }
+        },
+        "oob": {
+          "US": [
+            { "id": "us_sherman_stockade", "name": "Sherman's Assault Column", "commander": "Maj. Gen. William T. Sherman", "arm": "inf", "weapon": "rifled", "men": 3600, "xp": 2, "x": 560, "z": 810, "facing": 0, "formation": "column", "note": "Sherman's corps carried the northern assault, climbing the Graveyard Road ravines into converging fire. Strength is brigade-scale abstraction. (Verified role; Inferred strength)" },
+            { "id": "us_blair_stockade", "name": "Blair's Division", "commander": "Maj. Gen. Francis P. Blair", "arm": "inf", "weapon": "rifled", "men": 2800, "xp": 2, "x": 700, "z": 825, "facing": 0, "formation": "line", "note": "Union infantry pressing the Graveyard Road ravines toward the redan, exposed on the open approach. (Verified role; Inferred strength)" },
+            { "id": "us_deg_road_battery", "name": "Approach Batteries", "commander": "Army of the Tennessee artillery", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 4, "men": 90, "xp": 2, "x": 600, "z": 775, "facing": 0, "formation": "line", "note": "Only light field batteries supported the May 19 rush; the siege artillery park was not yet built, and guns could not reduce the earthwork. Universal gun model: 4 guns. (Inferred)" }
+          ],
+          "CS": [
+            { "id": "cs_smith_stockade", "name": "Smith's Division - Stockade Redan Defense", "commander": "Maj. Gen. Martin L. Smith", "arm": "inf", "weapon": "rifled", "men": 3400, "xp": 3, "x": 600, "z": 365, "facing": 3.14159, "formation": "line", "note": "Smith's division (Shoup's and Cockrell's troops) behind the Stockade Redan parapet; the works multiply their power and break the exposed assault. (Verified division-sector; Inferred strength)" },
+            { "id": "cs_fort_hill_det", "name": "Fort Hill Detachment", "commander": "Vicksburg garrison", "arm": "inf", "weapon": "rifled", "men": 2400, "xp": 2, "x": 460, "z": 345, "facing": 3.14159, "formation": "line", "note": "Northern flank troops tying the redan sector to the river-facing works. (Inferred)" },
+            { "id": "cs_stockade_guns", "name": "Redan Batteries", "commander": "Confederate artillery", "arm": "art", "weapon": "smooth", "role": "defend", "guns": 9, "men": 240, "xp": 3, "x": 650, "z": 315, "facing": 3.14159, "formation": "line", "note": "Pre-sited fortress guns firing from and behind the parapet into the Graveyard Road approach - the defender's fire edge in the May assault. Universal gun model: 9 guns. (Inferred)" }
+          ]
+        },
+        "reinforcements": [
+          { "id": "us_ewing_support", "side": "US", "atSec": 82, "name": "Ewing's Support Line", "commander": "Brig. Gen. Hugh Ewing", "arm": "inf", "weapon": "rifled", "men": 1900, "xp": 2, "x": 520, "z": 850, "facing": 0, "formation": "column", "entry": "up the Graveyard Road ravines", "note": "Additional Union infantry fed into the northern assault after the lead line stalls - and into the same converging fire. (Inferred)" },
+          { "id": "cs_stockade_reserve", "side": "CS", "atSec": 120, "name": "Interior Reserve", "commander": "Vicksburg garrison", "arm": "inf", "weapon": "rifled", "men": 1600, "xp": 2, "x": 630, "z": 250, "facing": 3.14159, "formation": "line", "entry": "from the covered interior road", "note": "The defenders can shift short interior reserves behind the works faster than the attacker can climb the ravines. (Inferred)" }
+        ],
+        "teaching": {
+          "head": "The first assault meets the architecture",
+          "body": "The May 19 attack proves that Vicksburg is not just a city on a bluff. The road into it is a defended ridge throat, walled by ravines and capped by an angled earthwork. The Confederates are not superhuman; the geometry is doing work for them. Grant learns the lesson and keeps tightening the ring.",
+          "provenance": "Verified (high) for the May 19 assault and Stockade Redan sector; exact tactical strengths inferred."
+        }
+      },
+      {
+        "id": "forlorn-hope",
+        "name": "May 22 - The Forlorn Hope",
+        "sector": "the Jackson Road sector - 3rd Louisiana Redan, Great Redoubt, and Railroad Redoubt",
+        "timing": "May 22, 1863 - the general assault",
+        "attacker": "US",
+        "defender": "CS",
+        "assaultDoctrine": "cautious",
+        "defaultFog": false,
+        "holdToWinSec": 76,
+        "timeLimitSec": 230,
+        "scoreWeight": 1,
+        "objective": { "x": 600, "z": 360, "r": 140, "name": "3rd Louisiana Redan and Great Redoubt" },
+        "transition": {
+          "title": "The Forlorn Hope",
+          "lead": "May 22. Grant orders a general assault. Volunteers carrying boards and ladders - the Forlorn Hope - rush first, trying to bridge the ditch and open the way into the 3rd Louisiana Redan and Great Redoubt sector. They reach the works in places, but the line does not break."
+        },
+        "terrain": {
+          "hills": [
+            { "name": "3rd Louisiana Redan", "x": 560, "z": 345, "h": 24, "s": 135, "note": "Major earthwork in the Jackson Road sector, later targeted by mines. (Verified)" },
+            { "name": "Great Redoubt", "x": 675, "z": 340, "h": 24, "s": 145, "note": "Large work near the Jackson Road approach, one of the key May 22 assault points. (Verified)" },
+            { "name": "Railroad Redoubt", "x": 440, "z": 390, "h": 20, "s": 120, "note": "The rail gap sector briefly penetrated during the May 22 assault before Confederate counteraction. (Verified)" }
+          ],
+          "woods": [
+            { "x": 420, "z": 520, "r": 80, "note": "Broken ravines near the railroad approach." },
+            { "x": 760, "z": 520, "r": 80, "note": "Ravines below the Great Redoubt and Shirley House." }
+          ],
+          "walls": [
+            { "x1": 360, "z1": 397, "x2": 835, "z2": 386, "note": "MAIN CONFEDERATE EARTHWORK LINE - 3rd Louisiana Redan, Great Redoubt, and adjoining rifle pits. (Verified)" },
+            { "x1": 485, "z1": 430, "x2": 705, "z2": 430, "note": "DITCH AND OBSTACLE LINE - the Forlorn Hope boards and ladders were meant to cross this killing strip. (Verified concept; inferred placement)" }
+          ],
+          "markers": [
+            { "kind": "road", "name": "Jackson Road", "path": [[650, 850], [650, 610], [635, 360], [620, 190]], "note": "The approach toward the 3rd Louisiana Redan and Great Redoubt, past the Shirley House. (Verified)" },
+            { "kind": "rail", "name": "Southern Railroad cut", "path": [[350, 840], [420, 610], [455, 390], [520, 180]], "note": "The railroad gap and nearby redoubt were among the most important openings in the line. (Verified)" },
+            { "kind": "label", "name": "Forlorn Hope boards and ladders", "x": 600, "z": 455, "note": "The first assault party carried materials to bridge the ditch and scale the parapet. (Verified)" },
+            { "kind": "label", "name": "Shirley House", "x": 710, "z": 420, "note": "A landmark near the Jackson Road siege approaches and batteries. (Verified)" },
+            { "kind": "label", "name": "Battery DeGolyer", "x": 730, "z": 610, "note": "Union siege battery near the Jackson Road sector. (Verified)" }
+          ]
+        },
+        "leaders": {
+          "_note": "The second assault is broader and bloodier. McClernand reports success too generously; Grant refuses to keep feeding the army against unbroken works after this day.",
+          "US": [
+            { "id": "ld_mcclernand_vb", "name": "Maj. Gen. John A. McClernand", "short": "McClernand", "quality": 0.55, "radius": 235, "x": 555, "z": 820, "fate": 2.4, "note": "Commanded XIII Corps. His May 22 reports helped convince Grant to renew pressure, but the line did not actually break. (Verified)" },
+            { "id": "ld_logan_vb", "name": "Maj. Gen. John A. Logan", "short": "Logan", "quality": 0.72, "radius": 230, "attach": "us_logan_jackson", "fate": 2.6, "note": "Commanded a division in McPherson's XVII Corps and later pushed siege approaches toward the 3rd Louisiana Redan. (Verified)" },
+            { "id": "ld_mcpherson_vb", "name": "Maj. Gen. James B. McPherson", "short": "McPherson", "quality": 0.74, "radius": 250, "x": 700, "z": 800, "fate": 2.8, "note": "XVII Corps commander, Grant's trusted engineer-soldier. His front worked the Jackson Road sector hard. (Verified)" }
+          ],
+          "CS": [
+            { "id": "ld_forney_vb", "name": "Maj. Gen. John H. Forney", "short": "Forney", "quality": 0.64, "radius": 220, "x": 640, "z": 250, "fate": 2.4, "note": "Forney's division held much of the central Vicksburg line - the Jackson Road sector with the 3rd Louisiana Redan and the Great Redoubt, the sectors later mined. (Verified sector)" },
+            { "id": "ld_hebert_vb", "name": "Brig. Gen. Louis Hebert", "short": "Hebert", "quality": 0.66, "radius": 205, "attach": "cs_3rd_louisiana", "fate": 2.2, "note": "Hebert's brigade (Forney's division) held the 3rd Louisiana Redan - the work named for his old regiment - against the May 22 assault and the later June 25 mine. This is his historical sector. (Verified)" },
+            { "id": "ld_bowen_vb", "name": "Maj. Gen. John S. Bowen", "short": "Bowen", "quality": 0.72, "radius": 220, "x": 600, "z": 230, "fate": 1.8, "note": "One of Pemberton's most capable subordinates. Bowen had fought well in the campaign before the army was forced inside Vicksburg. (Verified)" }
+          ]
+        },
+        "supply": {
+          "US": { "x": 650, "z": 865, "name": "Union ammunition train - Jackson Road" },
+          "CS": { "x": 600, "z": 160, "name": "Confederate magazines - inner Vicksburg" }
+        },
+        "oob": {
+          "US": [
+            { "id": "us_forlorn_hope", "name": "The Forlorn Hope", "commander": "Volunteer storming party", "arm": "inf", "weapon": "rifled", "men": 900, "xp": 3, "x": 600, "z": 760, "facing": 0, "formation": "column", "note": "The ~150 volunteers who led the May 22 assault carrying boards and ladders to bridge the ditch, abstracted here as a small storming brigade. (Verified role; Inferred strength)" },
+            { "id": "us_logan_jackson", "name": "Logan's Division", "commander": "Maj. Gen. John A. Logan", "arm": "inf", "weapon": "rifled", "men": 3400, "xp": 2, "x": 690, "z": 815, "facing": 0, "formation": "line", "note": "XVII Corps pressure in the Jackson Road sector, advancing across the open ground before the redans. (Verified role; Inferred strength)" },
+            { "id": "us_mcclernand_xiii", "name": "McClernand's XIII Corps Column", "commander": "Maj. Gen. John A. McClernand", "arm": "inf", "weapon": "rifled", "men": 3300, "xp": 2, "x": 500, "z": 820, "facing": 0, "formation": "line", "note": "Part of the general assault of May 22, exposed on the approach to the Railroad Redoubt. (Verified role; Inferred strength)" },
+            { "id": "us_deg_battery", "name": "Battery DeGolyer", "commander": "Capt. Samuel De Golyer", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 6, "men": 150, "xp": 3, "x": 730, "z": 700, "facing": 0, "formation": "line", "note": "Field-battery support for the May 22 assault; the heavy siege park came later. Universal gun model: 6 guns. (Verified landmark; Inferred battery grouping)" }
+          ],
+          "CS": [
+            { "id": "cs_3rd_louisiana", "name": "3rd Louisiana Redan Defense", "commander": "Brig. Gen. Louis Hebert", "arm": "inf", "weapon": "rifled", "men": 3000, "xp": 3, "x": 560, "z": 370, "facing": 3.14159, "formation": "line", "note": "Hebert's brigade (Forney's division) in and around the 3rd Louisiana Redan, firing from the parapet into the May 22 assault. (Verified sector; Inferred strength)" },
+            { "id": "cs_great_redoubt", "name": "Great Redoubt Garrison", "commander": "Forney's division", "arm": "inf", "weapon": "rifled", "men": 3000, "xp": 3, "x": 690, "z": 365, "facing": 3.14159, "formation": "line", "note": "Infantry holding the Great Redoubt and adjacent rifle pits. (Verified sector; Inferred strength)" },
+            { "id": "cs_railroad_redoubt", "name": "Railroad Redoubt Detachment", "commander": "Vicksburg garrison", "arm": "inf", "weapon": "rifled", "men": 2000, "xp": 2, "x": 440, "z": 395, "facing": 3.14159, "formation": "line", "note": "Troops guarding the rail gap and redoubt sector, briefly penetrated on May 22 before a counterattack sealed it. (Verified sector; Inferred strength)" },
+            { "id": "cs_jackson_road_guns", "name": "Jackson Road Batteries", "commander": "Confederate artillery", "arm": "art", "weapon": "smooth", "role": "defend", "guns": 11, "men": 290, "xp": 3, "x": 635, "z": 300, "facing": 3.14159, "formation": "line", "note": "Pre-sited fortress guns firing from the parapets and interior positions - the defender's fire edge over the open assault. Universal gun model: 11 guns. (Inferred)" }
+          ]
+        },
+        "reinforcements": [
+          { "id": "us_siege_ladders", "side": "US", "atSec": 55, "name": "Second Wave with Ladders", "commander": "Army of the Tennessee", "arm": "inf", "weapon": "rifled", "men": 2000, "xp": 2, "x": 610, "z": 850, "facing": 0, "formation": "column", "entry": "following the Forlorn Hope into the ditch", "note": "The assault wave meant to exploit any breach opened by the lead volunteers - and to die in the same ditch. (Inferred)" },
+          { "id": "cs_jackson_reserve", "side": "CS", "atSec": 95, "name": "Counterattack Reserve", "commander": "Vicksburg garrison", "arm": "inf", "weapon": "rifled", "men": 1500, "xp": 2, "x": 600, "z": 245, "facing": 3.14159, "formation": "line", "entry": "moving along the interior road", "note": "Short interior movement lets the defense seal a threatened point. (Inferred)" }
+        ],
+        "teaching": {
+          "head": "A storming party cannot solve a fortress",
+          "body": "The Forlorn Hope shows courage, but courage is not engineering. Boards and ladders get men into the ditch; they do not erase a prepared earthwork, interlocking artillery, and interior reserves. After May 22, Grant turns fully to siege craft.",
+          "provenance": "Verified (high) for the May 22 assault and Forlorn Hope role; exact unit strengths inferred."
+        }
+      },
+      {
+        "id": "siege-approaches",
+        "name": "The Saps and the Mine",
+        "sector": "the siege lines - Battery DeGolyer, Logan's approach, and the mined 3rd Louisiana Redan",
+        "timing": "June 25-July 4, 1863 - the engineered siege",
+        "attacker": "US",
+        "defender": "CS",
+        "assaultDoctrine": null,
+        "defaultFog": false,
+        "holdToWinSec": 84,
+        "timeLimitSec": 250,
+        "scoreWeight": 3,
+        "objective": { "x": 600, "z": 335, "r": 145, "name": "the mined 3rd Louisiana Redan" },
+        "transition": {
+          "title": "The Saps and the Mine",
+          "lead": "The assaults have failed. Now the siege speaks in yards: parallels, zig-zag saps, protected batteries, sharpshooter pits, and mine galleries creeping toward the redans. At the 3rd Louisiana Redan, Union soldiers tunnel under the parapet and blow a crater in the line."
+        },
+        "terrain": {
+          "hills": [
+            { "name": "3rd Louisiana Redan crater", "x": 600, "z": 335, "h": 22, "s": 135, "note": "The mine under the 3rd Louisiana Redan exploded June 25; a second mine followed July 1. (Verified)" },
+            { "name": "Battery DeGolyer ridge", "x": 760, "z": 600, "h": 16, "s": 150, "note": "Union siege batteries on the Jackson Road front pounded the works and protected the approach. (Verified)" },
+            { "name": "interior Vicksburg ridge", "x": 600, "z": 190, "h": 18, "s": 160, "note": "The interior high ground and magazines behind the threatened redan. (Verified as strategic geography; exact field placement inferred)" }
+          ],
+          "woods": [
+            { "x": 390, "z": 515, "r": 70, "note": "ravine cover on the left approach" },
+            { "x": 800, "z": 500, "r": 70, "note": "ravine cover near the Jackson Road battery positions" }
+          ],
+          "walls": [
+            { "x1": 430, "z1": 370, "x2": 780, "z2": 360, "note": "CRATERED CONFEDERATE PARAPET - the 3rd Louisiana Redan after mining, still dangerous but physically breached. (Verified)" },
+            { "x1": 455, "z1": 535, "x2": 715, "z2": 520, "note": "UNION FIRST PARALLEL - protected trench line from which the saps push forward. (Verified concept; inferred placement)" },
+            { "x1": 500, "z1": 455, "x2": 690, "z2": 440, "note": "ZIG-ZAG SAP - covered approach trench advancing toward the mine gallery. (Verified concept; inferred placement)" }
+          ],
+          "markers": [
+            { "kind": "road", "name": "Jackson Road", "path": [[660, 850], [650, 620], [620, 335], [610, 160]], "note": "The road and ridge line that focused Union siege work near the 3rd Louisiana Redan. (Verified)" },
+            { "kind": "trench", "name": "Logan's approach", "path": [[500, 780], [535, 640], [560, 520], [590, 405], [600, 335]], "note": "A covered approach toward the 3rd Louisiana Redan, representing the Union siege saps. (Verified concept)" },
+            { "kind": "mine", "name": "mine gallery", "path": [[585, 445], [595, 390], [600, 335]], "note": "Union miners tunneled under the redan and exploded a mine on June 25. (Verified)" },
+            { "kind": "label", "name": "powder crater", "x": 600, "z": 335, "note": "The blast opened a crater but did not instantly collapse the entire line; fighting continued around the breach." },
+            { "kind": "label", "name": "countermine galleries", "x": 720, "z": 330, "note": "Defenders listened and dug countermines, another layer of siege architecture. (Verified concept)" },
+            { "kind": "label", "name": "Battery DeGolyer", "x": 760, "z": 600, "note": "A named Union battery site on the siege front. (Verified)" }
+          ]
+        },
+        "leaders": {
+          "_note": "The final phase gives the Union the tools that made Vicksburg fall: engineering, siege guns, mines, logistics, and time.",
+          "US": [
+            { "id": "ld_grant_siege_vb", "name": "Maj. Gen. Ulysses S. Grant", "short": "Grant", "quality": 0.82, "radius": 280, "x": 620, "z": 815, "fate": 3.2, "note": "Grant accepts that direct assault is the wrong answer and uses the full machinery of siege war. (Verified)" },
+            { "id": "ld_logan_siege_vb", "name": "Maj. Gen. John A. Logan", "short": "Logan", "quality": 0.74, "radius": 240, "attach": "us_logan_saps", "fate": 2.7, "note": "Logan's front pushed close against the 3rd Louisiana Redan and its mined sector. (Verified sector; exact game attachment inferred)" }
+          ],
+          "CS": [
+            { "id": "ld_pemberton_siege_vb", "name": "Lt. Gen. John C. Pemberton", "short": "Pemberton", "quality": 0.58, "radius": 245, "x": 600, "z": 205, "fate": 2.2, "note": "Pemberton's army is trapped, short of supplies, and under constant artillery and mining pressure. (Verified)" },
+            { "id": "ld_forney_siege_vb", "name": "Maj. Gen. John H. Forney", "short": "Forney", "quality": 0.62, "radius": 215, "attach": "cs_forney_crater", "fate": 2.0, "note": "Forney's men held part of the mined central front. (Verified sector; exact game attachment inferred)" }
+          ]
+        },
+        "supply": {
+          "US": { "x": 650, "z": 865, "name": "Union siege depot - roads to the Yazoo and river batteries" },
+          "CS": { "x": 600, "z": 125, "name": "Confederate ration magazines - nearly exhausted" }
+        },
+        "oob": {
+          "US": [
+            { "id": "us_logan_saps", "name": "Logan's Siege Approach", "commander": "Maj. Gen. John A. Logan", "arm": "inf", "weapon": "rifled", "men": 3400, "xp": 3, "x": 560, "z": 780, "facing": 0, "formation": "line", "note": "Infantry and pioneers pushing protected approaches toward the 3rd Louisiana Redan. (Verified role; Inferred strength)" },
+            { "id": "us_engineer_detail", "name": "Engineer and Miner Details", "commander": "Union engineer detachments", "arm": "inf", "weapon": "rifled", "men": 1700, "xp": 3, "x": 630, "z": 760, "facing": 0, "formation": "column", "note": "The siege is won by technical work: trenching, mining, revetments, and battery protection - not by storming. (Verified role; Inferred strength)" },
+            { "id": "us_siege_guns_vb", "name": "Siege Batteries", "commander": "Army of the Tennessee artillery", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 14, "men": 360, "xp": 3, "x": 725, "z": 650, "facing": 0, "formation": "line", "note": "The siege-battery abstraction: sustained fire protecting the saps and slowly battering the parapets. Universal gun model: 14 guns. (Inferred grouping)" }
+          ],
+          "CS": [
+            { "id": "cs_forney_crater", "name": "Forney's Crater Line", "commander": "Brig. Gen. Louis Hebert (Forney's div.)", "arm": "inf", "weapon": "rifled", "men": 2400, "xp": 3, "x": 590, "z": 350, "facing": 3.14159, "formation": "line", "note": "Hebert's and Forney's exhausted defenders holding the mined 3rd Louisiana Redan, dug in behind the cratered parapet. (Verified sector; Inferred strength)" },
+            { "id": "cs_countermine_detail", "name": "Countermine Detail", "commander": "Vicksburg garrison", "arm": "inf", "weapon": "rifled", "men": 1200, "xp": 2, "x": 710, "z": 335, "facing": 3.14159, "formation": "line", "note": "Defenders trying to detect, counter-mine, and seal Union tunnel work. (Verified concept; Inferred strength)" },
+            { "id": "cs_siege_guns_worn", "name": "Worn Confederate Batteries", "commander": "Confederate artillery", "arm": "art", "weapon": "smooth", "role": "defend", "guns": 6, "men": 155, "xp": 2, "x": 640, "z": 260, "facing": 3.14159, "formation": "line", "note": "The garrison guns are fewer, worn, and short of ammunition as the siege closes. Universal gun model: 6 guns. (Inferred)" }
+          ]
+        },
+        "reinforcements": [
+          { "id": "us_mine_assault_party", "side": "US", "atSec": 60, "name": "Mine Assault Party", "commander": "Logan's front", "arm": "inf", "weapon": "rifled", "men": 1700, "xp": 3, "x": 600, "z": 845, "facing": 0, "formation": "column", "entry": "through the covered approach after the blast", "note": "Infantry moving through the sap toward the crater after the mine explosion. (Inferred)" },
+          { "id": "us_naval_pressure", "side": "US", "atSec": 120, "name": "River Battery Pressure", "commander": "Mississippi Squadron support", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 6, "men": 150, "xp": 3, "x": 440, "z": 700, "facing": 0, "formation": "line", "entry": "naval and river-facing pressure tightening the fortress", "note": "Abstracts the wider Union fire pressure from river and siege batteries. Universal gun model: 6 guns. (Verified effect; Inferred field placement)" },
+          { "id": "cs_last_reserve_vb", "side": "CS", "atSec": 135, "name": "Last Interior Reserve", "commander": "Vicksburg garrison", "arm": "inf", "weapon": "rifled", "men": 1100, "xp": 2, "x": 600, "z": 210, "facing": 3.14159, "formation": "line", "entry": "from the inner streets and magazines", "note": "By late June, the defense can still counterattack locally, but every reserve is smaller and hungrier. (Inferred)" }
+        ],
+        "teaching": {
+          "head": "The siege is a machine",
+          "body": "This is the phase that makes Vicksburg Vicksburg: batteries pin the parapets, saps shorten the killing ground, mines break the geometry, and logistics squeeze the garrison. Hunger is real, but it is the result of operational isolation plus siege architecture, not a substitute for it.",
+          "provenance": "Verified (high) for the mines and siege approaches; exact field abstraction inferred."
+        }
+      }
+    ],
+    "endNote": {
+      "US": {
+        "US": "History holds. Vicksburg falls because the field campaign isolated it and the siege works made continued defense impossible. The Mississippi is opened from Minnesota to the Gulf, the Confederacy is cut in two, and Grant's reputation becomes national.",
+        "CS": "History holds against you. The garrison held the parapets in May, but the siege machine kept coming: batteries, saps, mines, and hunger. Vicksburg surrenders on July 4, 1863, and the Mississippi is lost."
+      },
+      "CS": {
+        "US": "History is overturned. Pemberton's garrison has kept the ridge gates shut and survived the mining pressure longer than history allowed. The Mississippi remains contested, and Grant's western victory is delayed.",
+        "CS": "History is overturned. Your garrison holds the redans, checks the saps, and keeps Vicksburg alive past the historical breaking point. The river fortress still bars the Mississippi."
+      },
+      "draw": "The fortress is neither taken nor saved. Some sectors held and some gave way, the siege approaches still crawl forward, and the fate of the Mississippi hangs on the next week."
+    },
+    "teaching": {
+      "title": "Vicksburg - Dug Out of the Bluffs",
+      "cards": [
+        {
+          "id": "vb_river",
+          "head": "The river was the strategic prize",
+          "body": "Vicksburg controlled the Mississippi bend from high bluffs. When it fell, the Confederacy lost its last major hold on the river and the Trans-Mississippi was effectively severed from the eastern Confederacy. Gettysburg and Vicksburg landed in the same week; one broke Lee's offensive power, the other broke the Confederate map.",
+          "provenance": "Verified (high) - campaign sequence and strategic result."
+        },
+        {
+          "id": "vb_failed_assaults",
+          "head": "The May assaults failed for architectural reasons",
+          "body": "The defenders fought from redans, redoubts, rifle pits, and batteries placed on narrow ridge roads above ravines. The first lesson is not romance; it is geometry. Attackers had to climb broken ground, cross obstacles, and arrive disordered under converging fire.",
+          "provenance": "Verified (high) - Stockade Redan, 3rd Louisiana Redan, Great Redoubt, and Railroad Redoubt sectors."
+        },
+        {
+          "id": "vb_spade",
+          "head": "Grant turned to the spade",
+          "body": "After May 22, the battle becomes engineering. Union troops dug parallels and zig-zag saps, built batteries, pushed mines under the works, and reduced the distance to the parapets yard by yard. Vicksburg was dug out, not merely waited out.",
+          "provenance": "Verified (high) - siege approaches and mines against the 3rd Louisiana Redan."
+        },
+        {
+          "id": "vb_pemberton",
+          "head": "Pemberton's trap was operational",
+          "body": "Pemberton did not lose Vicksburg only at the parapet. He was beaten in the campaign before the siege: Grant crossed below the city, moved inland, won at Champion Hill and Big Black River, and drove the army into a fortress with no open road out.",
+          "provenance": "Verified (high) - Vicksburg campaign sequence."
+        },
+        {
+          "id": "vb_black_agency",
+          "head": "The river war also changed slavery's geography",
+          "body": "Union control of the Mississippi turned movement, labor, and information against the slaveholding war effort. Camps, levees, military labor, and flight to Union lines made the river corridor a corridor of emancipation as well as supply.",
+          "provenance": "Verified (medium-high) - strategic river control and emancipation geography; tactical effects abstracted."
+        }
+      ],
+      "codex": {
+        "id": "codex_vicksburg",
+        "title": "Vicksburg, May 18-July 4, 1863",
+        "summary": "Grant's inland campaign drove Pemberton into Vicksburg, whose bluffs and earthworks barred the Mississippi. Direct assaults on May 19 and May 22 failed, especially at the Stockade Redan, 3rd Louisiana Redan, Great Redoubt, and Railroad Redoubt. Grant then settled into siege: batteries, saps, mines, and logistics broke the fortress. The July 4 surrender opened the Mississippi and split the Confederacy.",
+        "axes": { "timeline": "1863", "theater": "Western", "people": ["Grant", "Sherman", "McClernand", "McPherson", "Logan", "Pemberton", "Forney", "Bowen"], "battle": "Vicksburg" }
+      }
+    }
+  }
+}
