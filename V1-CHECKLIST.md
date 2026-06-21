@@ -79,12 +79,12 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
 - [ ] **C3 USCT battles (1863–65):** the Crater, New Market Heights, Olustee, Nashville (the flagship teachable arc).
 - [x] **C4 Custom-battle builder** (D54/D84): single-phase V1 tactical scenario authoring UI, validation, export/shareable JSON, import/round-trip, six local slots, explicit `custom_...` launch contract through `fldScenarioInit`, and focused/no-regression probes. Phase authoring remains deferred until a phase editor can be proven safely.
 
-### Phase D — FULL HEX TACTICAL ENGINE  (co-equal, selectable — LOCKED "full engine", after depth)
+### Phase D — FULL HEX TACTICAL ENGINE  ‹⏸ DEFERRED TO v2 — D91 (the real-time engine is mature; a parallel hex engine is no longer a v1 requirement)›
 - [ ] **D1** A complete parallel hex/turn-based tactical mode on the modern OOB/scenario data, selectable per
       battle alongside real-time. (Legacy "Classic" hex battles stay frozen; this is a NEW, data-driven hex layer.)
       ‹LOCKED: sits here, after tactical depth, so it duplicates onto a mature engine.›
 
-### Phase E — STRATEGIC ARC COMPLETION  (S3–S5)
+### Phase E — STRATEGIC ARC COMPLETION  (S3–S5)  ‹▶ NEXT after C breadth — D91 (pulled ahead of the hex engine; the biggest content-thin pillar)›
 - [ ] **E1 S3 alt-history:** tiered divergence + hinge forks + emergent toggle + the player-driven "your war
       vs history" tracker + divergence log (no thumb on the scale — D54).
 - [ ] **E2 S4 education:** multi-axis codex + inline glossary + the full guided tutorial + play-style presets
@@ -153,7 +153,7 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
 - [~] **H4 Richer audio** ‹LOCKED: Phase H›: PD period tunes + battlefield/camp soundscapes + UI cues, all
       accessible (toggles/captions/volume), default off. ‹partial: `src/tactical/T9-audio.js` / audio work exists in recent repo history; full Phase-H polish still pending.›
 
-### Phase I — LOOT / SURVIVAL  (LOCKED: DEFER to after core)
+### Phase I — LOOT / SURVIVAL  ‹⭐ PROMOTED to a CORE PILLAR — D91 (D68 over D61; build it, no longer deferred)›
 - [ ] Standalone rarity-tiered loot + inventory (all modes) · light survival (rations/weather/forage/disease,
       default off) · the Oregon-Trail journey mode. All preset-gated (§27).
 
@@ -170,13 +170,14 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
 ## ITEMS NEEDING YOUR CONFIRM (the last clarifications)
 1. **Phase ORDER** — is A→B→C→D→E→…→H→I→J right? In particular: **strategic S3–S5 (E) vs tactical breadth/hex
    (C/D)** — which first? And does the **full hex engine (D)** really sit after tactical depth, or sooner?
+   **✅ RESOLVED (D91): new v1 order = C (finish Chattanooga + USCT) → E (strategic S3–S5) → F → G → H → I → J; the full hex engine (Phase D) is DEFERRED TO v2.**
 2. **B6 CS-player tactical mode** — include in v1 (command either side)? Here in Phase B, or later? *(SHIPPED — D72.)*
 3. **Western theater (C2)** — fold into tactical breadth as drafted, or its own later phase?
-4. **Audio (H4)** — in the come-to-life pass as drafted, or sooner? *(NOTE: `T9-audio.js` already started it under D77, ahead of Phase H — confirm whether audio work continues now or pauses.)*
+4. **Audio (H4)** — in the come-to-life pass as drafted, or sooner? *(NOTE: `T9-audio.js` already started it under D77, ahead of Phase H.)* **✅ RESOLVED (D91): CONTINUE INCREMENTALLY now — deepen audio a little per milestone, accessible + default-off.**
 5. Anything **missing** from v1, or anything here you'd **cut** to v2?
 
 ### Open design tensions to resolve (ported from the retired MASTER-TASK-LIST, sourced to D68)
-6. **Loot/survival (Phase I) — D68 vs D61 tension:** D68 elevated loot/survival to an always-on "core pillar" (progression + journey mode); D61 says DEFER to after core. Resolve which governs.
-7. **Zoomable battle scale (D68):** brigades expanding into regiments on zoom — a new tactical-engine requirement beyond the current brigade abstraction; not yet designed.
+6. **Loot/survival (Phase I) — D68 vs D61 tension:** D68 elevated loot/survival to an always-on "core pillar" (progression + journey mode); D61 says DEFER to after core. Resolve which governs. **✅ RESOLVED (D91): CORE PILLAR now (D68 wins) — build standalone loot + inventory + light survival + the Oregon-Trail journey mode as a built pillar, no longer deferred.**
+7. **Zoomable battle scale (D68):** brigades expanding into regiments on zoom — a new tactical-engine requirement beyond the current brigade abstraction; not yet designed. **✅ RESOLVED (D91): DEFER TO v2 — keep the brigade-per-marker abstraction for v1.**
 8. **Heavy embedded media (D68):** bundling PD imagery/footage into the single-file deliverable — plan the Phase-H tier/compress pipeline so portability survives (ties H1 + the D71 asset-ingestion pipeline).
 9. **Deferred tooling (D54):** the `src/` subsystem folder reorg (`src/strategy/` · `src/render/` etc. — `src/tactical/` already exists), perf presets + hotpath profiling for the Intel UHD-617 floor, and a reusable historical-data layer + in-game sources codex (ties E2).
