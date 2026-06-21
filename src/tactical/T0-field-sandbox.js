@@ -309,6 +309,9 @@ function fldInitSim(opts) {
   if (opts.skirmish && typeof fldSkirmishOOB === "function" && fldSkirmishOOB(opts)) return;
   __FIELD.scenario = "sandbox";
   fldBuildTerrain();
+  // Engineering Corps (T13): an OPT-IN river (the focused probe / a river skirmish). Absent opts.river this is a
+  // no-op and the verbatim sandbox terrain is byte-identical (probe-field holds).
+  if (opts.river && typeof fldEngInstallRiver === "function") fldEngInstallRiver(opts);
   var ox = FLD.FIELD_W / 2, t = __FIELD.terrain;
   var south = FLD.FIELD_H - 150, north = 150;       // US deploys south, CS north
   // facing convention is atan2(dx, -dz): 0 = north (-z), PI = south (+z). US faces north toward
@@ -506,15 +509,21 @@ function fldStepMovement(u, dt) {
     var nx = u.x + (dx / dd) * spd * dt, nz = u.z + (dz / dd) * spd * dt;
     // T13: record obstacle crossings and, for river terrain, gate an illegal water step.
     // Null is the identity path; only a returned coordinate pair changes the move.
+    var eg = null;
     if (typeof fldEngMoveGate === "function") {
-      var eg = fldEngMoveGate(u, u.x, u.z, nx, nz, dt);
+      eg = fldEngMoveGate(u, u.x, u.z, nx, nz, dt);
       if (eg && typeof eg.x === "number" && typeof eg.z === "number") { nx = eg.x; nz = eg.z; }
     }
+    // T13: a river clamp that yields ~no forward progress means the ordered path runs into impassable water with no
+    // crossing — settle to HOLD at the bank instead of marching in place and bleeding fatigue to 100 forever (a soft
+    // deadlock). eg is null on every no-river/no-obstacle baseline (the gate returns null), so this is byte-identical.
+    var stalled = !!eg && ((nx - u.x) * (nx - u.x) + (nz - u.z) * (nz - u.z) < 0.25) && u.state !== "routing";
+    if (stalled && u.order && u.order.type === "move") u.order = { type: "hold", tx: u.x, tz: u.z, tface: u.facing };
     u.x = fldClamp(nx, 10, FLD.FIELD_W - 10);
     u.z = fldClamp(nz, -80, FLD.FIELD_H + 80);
     // face along travel while marching
     u.facing += fldClamp(fldAngDiff(mvFace, u.facing), -FLD.TURN_RATE * dt, FLD.TURN_RATE * dt);
-    u.fatigue = Math.min(100, u.fatigue + FLD.FATIGUE_MARCH * dt);
+    if (!stalled) u.fatigue = Math.min(100, u.fatigue + FLD.FATIGUE_MARCH * dt);
   } else {
     // arrived: settle to ordered facing; rest recovers fatigue
     if (u.state !== "routing") {
@@ -1069,6 +1078,7 @@ function fldBuildDom() {
     ["fldBtnEntrench", "Entrench", "Dig in for cover — the spade (E)"],
     ["fldBtnAbatis", "Abatis", "Build a timber obstacle belt with pioneer details (B)"],
     ["fldBtnClear", "Clear", "Clear the nearest obstacle belt (X)"],
+    ["fldBtnPontoon", "Pontoon", "Lay a pontoon bridge across a river (N)"],
     ["fldBtnFog", "Fog: " + (__FIELD.fog ? "On" : "Off"), "Toggle fog of war — line-of-sight scouting (V)"],
     ["fldBtnAuto", "Auto-pause: " + (__FIELD.autoPause ? "On" : "Off"), "Toggle active auto-pause at key moments (P)"],
     ["fldBtnSettings", "&#9881; Settings", "Battle settings — fog, auto-pause, speed & difficulty (G)"],
@@ -1234,6 +1244,7 @@ function fldWireControls() {
   w("fldBtnEntrench", function () { if (typeof fldSelEntrench === "function") fldSelEntrench(); });
   w("fldBtnAbatis", function () { if (typeof fldSelAbatis === "function") fldSelAbatis(); });
   w("fldBtnClear", function () { if (typeof fldSelClearObstacle === "function") fldSelClearObstacle(); });
+  w("fldBtnPontoon", function () { if (typeof fldSelPontoon === "function") fldSelPontoon(); });
   w("fldBtnFog", function () { fldToggleFog(); });
   w("fldBtnAuto", function () { fldToggleAutoPause(); });
   w("fldBtnSettings", function () { if (typeof fldOpenSettingsDrawer === "function") fldOpenSettingsDrawer(); });   // B-5: the in-battle settings drawer
@@ -1291,6 +1302,7 @@ function fldKey(e) {
   else if (k === "e" || k === "E") { if (typeof fldSelEntrench === "function") fldSelEntrench(); }   // T13: entrench (dig in)
   else if (k === "b" || k === "B") { if (typeof fldSelAbatis === "function") fldSelAbatis(); }       // T13: timber obstacle belt
   else if (k === "x" || k === "X") { if (typeof fldSelClearObstacle === "function") fldSelClearObstacle(); } // T13: obstacle clearing
+  else if (k === "n" || k === "N") { if (typeof fldSelPontoon === "function") fldSelPontoon(); }             // T13: lay a pontoon bridge
   else if (k === "v" || k === "V") fldToggleFog();
   else if (k === "p" || k === "P") fldToggleAutoPause();
   else if (k === "g" || k === "G") { if (typeof fldOpenSettingsDrawer === "function") fldOpenSettingsDrawer(); }   // B-5: the in-battle settings drawer
@@ -1480,6 +1492,8 @@ function fld2dDraw() {
   // walls
   ctx.strokeStyle = "#8a8070"; ctx.lineWidth = 4;
   var _ws = fldWalls(); for (var wi = 0; wi < _ws.length; wi++) { var ww = _ws[wi]; ctx.beginPath(); ctx.moveTo(v.ox + ww.x1 * v.s, v.oz + ww.z1 * v.s); ctx.lineTo(v.ox + ww.x2 * v.s, v.oz + ww.z2 * v.s); ctx.stroke(); }
+  // Engineering Corps (T13): the river band + fords + pontoon bridges (no-op when no river declared -> byte-identical)
+  if (typeof fldEngDrawWater2d === "function") fldEngDrawWater2d(ctx, v);
   // scenario markers (creek / stream / road / ford / bridge / place-labels) — render + teaching atmosphere
   fld2dDrawMarkers(ctx, v);
   // objective
@@ -1640,6 +1654,8 @@ function fld3dBuildTerrain() {
   }
   // scenario markers (roads/creeks as low ribbons; ford/bridge as small markers) — Bull Run only
   fld3dBuildMarkers();
+  // Engineering Corps (T13): the static river water plane + fords (no-op when no river declared -> byte-identical)
+  if (typeof fld3dBuildWater === "function") { try { fld3dBuildWater(); } catch (e) {} }
   // woods (instanced cones)
   if (t.woods) for (var w = 0; w < t.woods.length; w++) {
     var wd = t.woods[w], n = fldLow() ? 14 : 34;
@@ -1776,6 +1792,7 @@ function fld3dDispose() {
   __FIELD._ld3dGroup = null; __FIELD._ld3d = null;   // B-2: the officer group's geometries were disposed in the scene traverse above; drop the refs
   __FIELD._sup3dGroup = null; __FIELD._sup3d = null; // B-3: same for the ammunition-train wagons
   __FIELD._engGroup = null; __FIELD._engMeshes = null; __FIELD._engAbatisMeshes = null; // T13: fieldworks/obstacles were disposed in the traverse above; drop refs
+  __FIELD._engPontoonMeshes = null; __FIELD._waterGroup = null;   // T13 (increment 3): pontoon meshes + the river water group were disposed in the traverse above; drop refs
 }
 
 /* ===========================================================================

@@ -83,7 +83,8 @@ function _hpShowHelp() {
     '<div style="font-size:12px;line-height:1.7;opacity:.9">' +
       '<div style="margin-bottom:4px"><strong>Select:</strong> Click a friendly brigade. Shift+click adds another brigade; <kbd>A</kbd> selects all of your live brigades.</div>' +
       '<div style="margin-bottom:4px"><strong>Move:</strong> With a selection, drag from open ground to place the line. Facing follows the drag direction.</div>' +
-      '<div style="margin-bottom:4px"><strong>Orders:</strong> <kbd>L</kbd>=Line &middot; <kbd>C</kbd>=Column &middot; <kbd>H</kbd>=Hold &middot; <kbd>E</kbd>=Entrench (dig in for cover) &middot; <kbd>F</kbd>/<kbd>Enter</kbd>=Charge.</div>' +
+      '<div style="margin-bottom:4px"><strong>Orders:</strong> <kbd>L</kbd>=Line &middot; <kbd>C</kbd>=Column &middot; <kbd>H</kbd>=Hold &middot; <kbd>F</kbd>/<kbd>Enter</kbd>=Charge.</div>' +
+      '<div style="margin-bottom:4px"><strong>Engineering Corps:</strong> <kbd>E</kbd>=Entrench (dig in for cover) &middot; <kbd>B</kbd>=Abatis (timber belt) &middot; <kbd>X</kbd>=Clear obstacle &middot; <kbd>N</kbd>=Lay pontoon bridge (in a river skirmish). Each reads the realism slider.</div>' +
       '<div style="margin-bottom:4px"><strong>Speed:</strong> <kbd>1</kbd>/<kbd>2</kbd>/<kbd>3</kbd> set 1x / 2x / 4x. <kbd>Space</kbd> begins, pauses, or resumes.</div>' +
       '<div style="margin-bottom:4px"><strong>Battle settings:</strong> <kbd>V</kbd> toggles fog, <kbd>P</kbd> toggles auto-pause, and <kbd>G</kbd> opens the settings drawer.</div>' +
       '<div style="margin-bottom:4px"><strong>Win:</strong> Carry or deny the scenario objective, break the enemy, or in multi-phase battles win enough sectors for the aggregate result.</div>' +
@@ -98,6 +99,9 @@ function _hpShowHelp() {
       '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">C</kbd><span>Column formation</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">H</kbd><span>Hold position</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">E</kbd><span>Entrench (dig in for cover)</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">B</kbd><span>Abatis (timber obstacle belt)</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">X</kbd><span>Clear nearest obstacle</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">N</kbd><span>Lay pontoon bridge (river)</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">F / Enter</kbd><span>Charge nearest enemy</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">A</kbd><span>Select all friendly brigades</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">Tab</kbd><span>Next unit</span>' +
@@ -163,6 +167,9 @@ function _hpShowTacticalHelp() {
         '<div><strong>C:</strong> Column (march)</div>' +
         '<div><strong>H:</strong> Hold position</div>' +
         '<div><strong>E:</strong> Entrench (dig in)</div>' +
+        '<div><strong>B:</strong> Abatis (timber belt)</div>' +
+        '<div><strong>X:</strong> Clear obstacle</div>' +
+        '<div><strong>N:</strong> Lay pontoon (river)</div>' +
         '<div><strong>F / Enter:</strong> Charge</div>' +
         '<div><strong>V:</strong> Fog on/off</div>' +
         '<div><strong>P:</strong> Auto-pause</div>' +

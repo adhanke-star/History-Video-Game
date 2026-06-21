@@ -33,6 +33,9 @@ const SETUP = `(() => {
     fldLaunchSandbox(Object.assign({ renderer: 'none', autoBoth: false, seed: 7 }, opts || {}));
     __FIELD.phase = 'battle'; __FIELD.paused = true;
   }
+  function freshRiver() { freshSandbox({ river: true }); }
+  function river0() { return (__FIELD.terrain && __FIELD.terrain.rivers && __FIELD.terrain.rivers[0]) || null; }
+  function fordOf(deep) { var r = river0(); if (!r) return null; for (var i = 0; i < r.crossings.length; i++) { var c = r.crossings[i]; if (c.kind === 'ford' && !!c.deep === !!deep) return c; } return null; }
   function usInf() {
     for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.alive && u.side === 'US') return u; }
     return null;
@@ -44,12 +47,18 @@ const SETUP = `(() => {
     try { delete G.settings.tacticalPreset; } catch (e) {}
 
     step('WIRING: the engineering seams exist and fldEngCover is the byte-identical identity for a clean unit', function() {
-      ['fldEngCover', 'fldEngStep', 'fldSelEntrench', 'fldSelAbatis', 'fldSelClearObstacle', 'fldEngMoveFactor', 'fldEngMoveGate', 'fldEngFireFactor', 'fldEngRealism', 'fldEngHudSelected', 'fldEngDraw2d', 'fld3dBuildEng', 'fld3dSyncEng', 'fldEngEndHtml'].forEach(function(fn) {
+      ['fldEngCover', 'fldEngStep', 'fldSelEntrench', 'fldSelAbatis', 'fldSelClearObstacle', 'fldEngMoveFactor', 'fldEngMoveGate', 'fldEngFireFactor', 'fldEngRealism', 'fldEngHudSelected', 'fldEngDraw2d', 'fld3dBuildEng', 'fld3dSyncEng', 'fldEngEndHtml',
+       'fldSelPontoon', 'fldEngCrossAt', 'fldEngInstallRiver', 'fldEngDrawWater2d', 'fld3dBuildWater'].forEach(function(fn) {
         if (typeof window[fn] !== 'function') throw new Error('missing engineering fn ' + fn);
       });
       if (fldEngCover({}) !== 1) throw new Error('fldEngCover(clean) must be exactly 1, got ' + fldEngCover({}));
       if (fldEngCover({ entrench: 0 }) !== 1) throw new Error('fldEngCover(entrench:0) must be exactly 1');
-      return { engCoverClean: fldEngCover({}) };
+      // INCREMENT 3 no-op identities with NO river declared (every shipped scenario): the gate is inert.
+      freshSandbox();
+      if (fldEngCrossAt(100, 100) !== null) throw new Error('fldEngCrossAt must be null with no river declared');
+      if (fldEngMoveGate({ x: 100, z: 100, state: 'steady' }, 100, 100, 110, 110, 0.1) !== null) throw new Error('fldEngMoveGate must be null with no river/obstacle');
+      if (fldEngMoveFactor(100, 100, { side: 'US' }) !== 1) throw new Error('fldEngMoveFactor must be exactly 1 with no river/obstacle');
+      return { engCoverClean: fldEngCover({}), crossNoRiver: fldEngCrossAt(100, 100) };
     });
 
     step('DIG: an ordered brigade entrenches over time and its earned cover rises toward a parapet', function() {
@@ -199,7 +208,9 @@ const SETUP = `(() => {
       if (anyEnt) throw new Error(anyEnt + ' units entrenched in an AI baseline (AI must not auto-dig)');
       if (anyCover) throw new Error(anyCover + ' units have a non-1 eng cover in a baseline');
       if (__FIELD.engObstacles && __FIELD.engObstacles.length) throw new Error('AI baseline created obstacle belts');
-      return { units: __FIELD.units.length, entrenched: anyEnt, obstacles: (__FIELD.engObstacles || []).length, nonIdentityCover: anyCover };
+      if (__FIELD.terrain && __FIELD.terrain.rivers) throw new Error('AI baseline declared a river (must be opt-in only)');
+      if (__FIELD.engPontoons && __FIELD.engPontoons.length) throw new Error('AI baseline created pontoon bridges');
+      return { units: __FIELD.units.length, entrenched: anyEnt, obstacles: (__FIELD.engObstacles || []).length, nonIdentityCover: anyCover, rivers: !!(__FIELD.terrain && __FIELD.terrain.rivers), pontoons: (__FIELD.engPontoons || []).length };
     });
 
     step('RENDER + HUD: the 2D parapet draws without error and the HUD reports the works', function() {
@@ -276,6 +287,134 @@ const SETUP = `(() => {
       if (enemy.morale !== m0) throw new Error('a routing unit must not be morale-docked by the belt: ' + enemy.morale + ' vs ' + m0);
       if (enemy.engDisorder) throw new Error('a routing unit must not be disordered by the belt');
       return { moraleUnchanged: enemy.morale === m0, disorder: enemy.engDisorder };
+    });
+
+    step('RIVER: an opt-in river installs a water band with two fords and BLOCKS an illegal water step', function() {
+      freshRiver();
+      var r = river0(); if (!r) throw new Error('opts.river did not install a river');
+      if (!(r.crossings && r.crossings.length >= 2)) throw new Error('the river should declare crossings (fords)');
+      var base = fordOf(false).z, ox = 600;   // the river centerline z (fords sit on it); ox is between the two flank fords -> no crossing
+      var u = usInf(); __FIELD.sev = null; u.x = ox; u.z = base + 150; u.arm = 'inf';   // dry, south of the band
+      var cBlock = fldEngCrossAt(ox, base);
+      if (!cBlock || cBlock.open) throw new Error('mid-river (no crossing) must be blocked water: ' + JSON.stringify(cBlock));
+      var clamp = fldEngMoveGate(u, ox, base + 150, ox, base, 0.1);
+      if (!clamp || typeof clamp.z !== 'number') throw new Error('an illegal water step must return a clamped bank point');
+      // marching toward the band from the south, the unit must HALT on the near (south) bank (~base + halfW), not wade in
+      if (!(clamp.z > base + 20 && clamp.z <= base + 150)) throw new Error('the clamp must stop the unit on the near bank, not in the water: z=' + clamp.z + ' base=' + base);
+      var atBank = fldEngCrossAt(clamp.x, clamp.z);
+      if (atBank && !atBank.open) throw new Error('the bank point must be a legal (non-blocked) position');
+      return { crossings: r.crossings.length, base: base, blockedKind: cBlock.kind, bankZ: Math.round(clamp.z) };
+    });
+
+    step('RIVER LEAK GUARD: a unit on an OPEN ford cannot sidestep off it into deep water (bug-hunt fix)', function() {
+      freshRiver(); __FIELD.sev = null;
+      var f = fordOf(false), base = f.z, u = usInf(); u.arm = 'inf';
+      // stand the unit ON the open ford, then order a step laterally ALONG the river off the ford into deep water
+      u.x = f.x; u.z = base;
+      var onFord = fldEngCrossAt(u.x, u.z); if (!onFord || !onFord.open) throw new Error('precondition: the unit should be on an OPEN ford');
+      var offX = f.x + 200;   // 200yd along the river, well past the 88yd ford corridor, still in the band
+      var deep = fldEngCrossAt(offX, base); if (!deep || deep.open) throw new Error('precondition: 200yd off the ford should be blocked water: ' + JSON.stringify(deep));
+      var clamp = fldEngMoveGate(u, f.x, base, offX, base, 0.1);
+      if (!clamp) throw new Error('stepping off an open ford into deep water must be GATED (the sidestep leak), got null');
+      var at = fldEngCrossAt(clamp.x, clamp.z);
+      if (at && !at.open) throw new Error('the clamp must land the unit on a legal (open/dry) position, not in deep water');
+      // ...but a unit already mired in the water can still crawl back out (no permanent trap)
+      u.x = offX; u.z = base;   // pretend it is in the water
+      var escape = fldEngMoveGate(u, offX, base, offX, base + 120, 0.1);   // crawl toward the south bank
+      if (escape) { var e2 = fldEngCrossAt(escape.x, escape.z); if (e2 && !e2.open && (escape.z <= base)) throw new Error('a mired unit must be able to crawl out, not be trapped'); }
+      return { onFordKind: onFord.kind, leakGated: !!clamp, clampLegal: !(at && !at.open) };
+    });
+
+    step('FORD: a shallow ford is passable but slow; a friendly march elsewhere on dry land is full speed', function() {
+      freshRiver(); __FIELD.sev = null;
+      var f = fordOf(false); if (!f) throw new Error('no shallow ford');
+      var u = usInf();
+      var cr = fldEngCrossAt(f.x, f.z);
+      if (!cr || !cr.open || cr.kind !== 'ford') throw new Error('the shallow ford must be an OPEN ford crossing: ' + JSON.stringify(cr));
+      var slow = fldEngMoveFactor(f.x, f.z, u);
+      if (!(slow > 0.30 && slow < 1)) throw new Error('fording must slow movement below 1 (and above the floor): ' + slow);
+      var dry = fldEngMoveFactor(50, 50, u);   // a corner far from the river
+      if (dry !== 1) throw new Error('dry-land movement must stay exactly 1: ' + dry);
+      return { fordSlow: Number(slow.toFixed(3)), dryFactor: dry };
+    });
+
+    step('REALISM FORDABILITY (B-5): a DEEP ford is fordable at Arcade but requires a pontoon at Historian', function() {
+      freshRiver();
+      var d = fordOf(true); if (!d) throw new Error('no deep ford');
+      __FIELD.sev = { attrition: 0.7 };   // Arcade
+      var arc = fldEngCrossAt(d.x, d.z);
+      __FIELD.sev = { attrition: 1.3 };   // Historian
+      var his = fldEngCrossAt(d.x, d.z);
+      __FIELD.sev = null;
+      if (!arc || !arc.open) throw new Error('a deep ford must be fordable at Arcade realism: ' + JSON.stringify(arc));
+      if (!his || his.open) throw new Error('a deep ford must NOT be fordable at Historian realism (needs a pontoon): ' + JSON.stringify(his));
+      return { arcadeOpen: arc.open, historianOpen: his.open, historianKind: his.kind };
+    });
+
+    step('PONTOON: a brigade on the bank lays a bridge that opens a fast crossing where none existed', function() {
+      freshRiver(); __FIELD.sev = null;
+      var base = fordOf(false).z;
+      var u = usInf(); u.x = 600; u.z = base + 90; u.arm = 'inf'; __FIELD.sel = [u.id];   // near the bank, away from both fords
+      if (fldEngCrossAt(600, base) && fldEngCrossAt(600, base).open) throw new Error('precondition: mid-river should be impassable before bridging');
+      fldSelPontoon();
+      var pp = __FIELD.engPontoons || []; if (!pp.length) throw new Error('fldSelPontoon laid no bridge');
+      var pn = pp[0];
+      for (var t = 0; t < 900; t++) fldEngStep(0.1);   // ~90 sim-seconds (build is ~58s balanced)
+      if (!(pn.strength >= 1) || pn.building) throw new Error('the pontoon should complete after ~90s: ' + pn.strength);
+      var cr = fldEngCrossAt(pn.x, pn.z);
+      if (!cr || !cr.open || cr.kind !== 'pontoon') throw new Error('a completed pontoon must be an OPEN crossing: ' + JSON.stringify(cr));
+      // a step into the band AT the pontoon corridor is now allowed (no clamp); full speed across it
+      var clamp = fldEngMoveGate(u, pn.x, pn.z + 90, pn.x, pn.z, 0.1);
+      if (clamp) throw new Error('stepping onto the finished pontoon must be allowed (no clamp), got ' + JSON.stringify(clamp));
+      if (fldEngMoveFactor(pn.x, pn.z, u) !== 1) throw new Error('a pontoon/bridge corridor must be full speed (factor 1)');
+      // ...while the same step at a NON-crossing span is still blocked
+      var blocked = fldEngMoveGate(u, pn.x - 150, pn.z + 90, pn.x - 150, pn.z, 0.1);
+      if (!blocked) throw new Error('a non-crossing span must still block (the bridge is a local corridor, not a ford of the whole river)');
+      return { strength: Number(pn.strength.toFixed(3)), crossKind: cr.kind, ponId: pn.id, blockedElsewhere: !!blocked };
+    });
+
+    step('PONTOON REALISM + WASH-OUT: Historian lays slower than Arcade; an abandoned half-bridge washes away', function() {
+      function layFixed(attr, secs) {
+        freshRiver(); __FIELD.sev = { attrition: attr };
+        var base = fordOf(false).z, u = usInf(); u.x = 600; u.z = base + 90; u.arm = 'inf'; __FIELD.sel = [u.id];
+        fldSelPontoon();
+        var pn = (__FIELD.engPontoons || [])[0]; if (!pn) throw new Error('no bridge ordered');
+        for (var t = 0; t < secs * 10; t++) fldEngStep(0.1);
+        return pn.strength;
+      }
+      var arc = layFixed(0.7, 25), his = layFixed(1.3, 25);
+      if (!(arc > his)) throw new Error('Arcade must lay a pontoon faster than Historian: arc ' + arc + ' vs his ' + his);
+      // wash-out: the escorting brigade marches off before completion -> the half-laid bridge decays away
+      freshRiver(); __FIELD.sev = null;
+      var base2 = fordOf(false).z, u2 = usInf(); u2.x = 600; u2.z = base2 + 90; u2.arm = 'inf'; __FIELD.sel = [u2.id]; fldSelPontoon();
+      for (var w = 0; w < 80; w++) fldEngStep(0.1);   // partial lay
+      u2.order = { type: 'move', tx: 600, tz: 30, tface: 0 }; u2.x = 600; u2.z = 200;   // march far off
+      for (var d2 = 0; d2 < 400; d2++) fldEngStep(0.1);
+      if ((__FIELD.engPontoons || []).length) throw new Error('an abandoned half-bridge must wash away, not linger: ' + JSON.stringify(__FIELD.engPontoons));
+      __FIELD.sev = null;
+      return { arc25s: Number(arc.toFixed(3)), his25s: Number(his.toFixed(3)), washedOut: true };
+    });
+
+    step('WATER RENDER + TEACHING: the river/pontoon 2D draw issues calls and the pontoon teaching card is sourced', function() {
+      freshRiver();
+      var base = fordOf(false).z, u = usInf(); u.x = 600; u.z = base + 90; u.arm = 'inf'; __FIELD.sel = [u.id]; fldSelPontoon();
+      var calls = 0;
+      var stub = { save: function(){}, restore: function(){}, translate: function(){}, rotate: function(){},
+        beginPath: function(){}, moveTo: function(){}, lineTo: function(){}, closePath: function(){}, arc: function(){}, ellipse: function(){},
+        fill: function(){ calls++; }, stroke: function(){ calls++; }, fillText: function(){}, strokeText: function(){},
+        set fillStyle(v){}, set strokeStyle(v){}, set lineWidth(v){}, set lineCap(v){}, set lineJoin(v){}, set font(v){}, set textAlign(v){}, set textBaseline(v){} };
+      fldEngDrawWater2d(stub, { ox: 0, oz: 0, s: 1 });
+      if (calls < 3) throw new Error('the river 2D render should issue draw calls: ' + calls);
+      // no-op on a riverless field
+      freshSandbox(); var calls0 = 0;
+      var stub0 = Object.assign({}, stub); stub0.stroke = function(){ calls0++; }; stub0.fill = function(){ calls0++; };
+      fldEngDrawWater2d(stub0, { ox: 0, oz: 0, s: 1 });
+      if (calls0 !== 0) throw new Error('fldEngDrawWater2d must be a no-op with no river: ' + calls0);
+      __FIELD._engUsed = { pontoon: true };
+      var card = fldEngEndHtml();
+      if (card.indexOf('pontoon') < 0 && card.indexOf('Pontoon') < 0) throw new Error('pontoon teaching card missing');
+      if (card.indexOf('Verified') < 0 || card.indexOf('Rappahannock') < 0) throw new Error('pontoon teaching card must be sourced (Fredericksburg/Rappahannock): ' + card.slice(0, 120));
+      return { riverDrawCalls: calls, riverlessCalls: calls0, teaching: card.indexOf('Verified') >= 0 };
     });
 
   } catch (e) { R.ok = false; R.steps.push({ name: 'FATAL', ok: false, err: String(e && e.message || e) }); }

@@ -170,6 +170,11 @@ function fldCampaignCondition() {
     _armIdx: 0,
     artProfile: _fldArtProfile(C),   // B-4: the bought Cannon Corps -> the field battery's reach/power/canister (null = nominal)
   };
+  // T13 (pontoon bridging): the strategic Engineer Works Corps (57-engineering -> bridgeArmy.engineering) lays
+  // field bridges faster — the A1 anchor, the same way B-4 wired the Cannon Corps onto the field battery. >1 =
+  // faster sappers; defensively read (the facet may be absent), and only on a campaign launch (standalone stays 1).
+  var engR = (typeof a.engineering === "number" && isFinite(a.engineering)) ? a.engineering : null;
+  if (engR != null) __FIELD.engCorpsSpeed = fldClamp(1 + (engR - 50) * 0.006, 0.78, 1.34);
   for (i = 0; i < __FIELD.units.length; i++) fldCampaignConditionUnit(__FIELD.units[i]);
   // raid-supply prep: the enemy fights hungry and short of cartridges (mirrors _a6Condition's enemy debuff)
   if (bp.raidSupply) {
@@ -269,6 +274,7 @@ function _fldApplyTerrainVariant(variant) {
   var t = __FIELD.terrain; if (!t) return;
   if (variant === "open") { t.woods = []; }
   else if (variant === "ridge") { if (t.hill) { t.hill.h = 40; t.hill.s = 250; } t.woods = [t.woods && t.woods[0]].filter(Boolean); }
+  else if (variant === "river") { t.woods = [t.woods && t.woods[0]].filter(Boolean); if (typeof fldEngInstallRiver === "function") fldEngInstallRiver(); }   // T13: a river to ford or bridge
   // "woods" = the default fldBuildTerrain shape (unchanged)
 }
 /* THE GENERALIZED OOB BUILDER (T0 fldInitSim skirmish seam). Builds terrain + a custom OOB
@@ -341,7 +347,7 @@ function _fldSkirmishHTML() {
     + '<div style="max-width:540px;margin:0 auto">'
     + _fldSkOptRow("Your side", "side", [{ v: "US", label: "Union" }, { v: "CS", label: "Confederate" }], s.side)
     + _fldSkOptRow("Army size", "size", [{ v: 2, label: "2 brigades" }, { v: 3, label: "3 brigades" }, { v: 4, label: "4 brigades" }, { v: 5, label: "5 brigades" }], s.size)
-    + _fldSkOptRow("Ground", "terrain", [{ v: "open", label: "Open field" }, { v: "woods", label: "Wooded" }, { v: "ridge", label: "Ridge &amp; crest" }], s.terrain)
+    + _fldSkOptRow("Ground", "terrain", [{ v: "open", label: "Open field" }, { v: "woods", label: "Wooded" }, { v: "ridge", label: "Ridge &amp; crest" }, { v: "river", label: "River crossing" }], s.terrain)
     + _fldSkOptRow("Year (arms)", "era", [{ v: 1861, label: "1861" }, { v: 1862, label: "1862" }, { v: 1863, label: "1863" }, { v: 1864, label: "1864" }], s.era)
     + _fldSkOptRow("Fog of war", "fog", [{ v: "0", label: "Off" }, { v: "1", label: "On" }], s.fog ? "1" : "0")
     + _fldSkDifficultyRow()
