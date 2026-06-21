@@ -85,6 +85,7 @@ function _fldBuildPhase(i) {
   sched.sort(function (a, b) { return a.atSec - b.atSec; });
   __FIELD.reinforce = sched;
   fldResetRun();   // resets t/holdSecs/winner/phase=deploy + rebuilds officers (phase cast) + trains (phase supply)
+  if (typeof fldEngPhaseReset === "function") fldEngPhaseReset();   // T13: drop the prior sector's obstacle belts per phase (keeps _engUsed for the aggregate end-card)
 }
 
 /* the per-side casualties of the CURRENT phase (committed force = the units that spawned this

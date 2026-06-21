@@ -1,8 +1,9 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-engineering-corps.mjs - Phase F: the Tactical Engineering Corps.
-// INCREMENT 1 verifies FIELD ENTRENCHMENTS (T13): the dig-in order, the earned-cover
-// rise, the B-5 realism coupling, the fire/melee cover effect, abandon-on-march, the
-// HUD, the render seams, and (critically) byte-identity of every AI-vs-AI baseline.
+// INCREMENTS 1-2 verify FIELD ENTRENCHMENTS + ABATIS/OBSTACLES (T13): earned cover,
+// obstacle placement/slow/disorder/clear, B-5 coupling, render/teaching, and the
+// byte-identity of every AI-vs-AI baseline.
 // Writes tools/shots/probe-engineering-corps.{json,png}.
 import { chromium } from 'playwright-core';
 import { spawn } from 'node:child_process';
@@ -43,7 +44,7 @@ const SETUP = `(() => {
     try { delete G.settings.tacticalPreset; } catch (e) {}
 
     step('WIRING: the engineering seams exist and fldEngCover is the byte-identical identity for a clean unit', function() {
-      ['fldEngCover', 'fldEngStep', 'fldSelEntrench', 'fldEngRealism', 'fldEngHudSelected', 'fldEngDraw2d', 'fld3dBuildEng', 'fld3dSyncEng'].forEach(function(fn) {
+      ['fldEngCover', 'fldEngStep', 'fldSelEntrench', 'fldSelAbatis', 'fldSelClearObstacle', 'fldEngMoveFactor', 'fldEngMoveGate', 'fldEngFireFactor', 'fldEngRealism', 'fldEngHudSelected', 'fldEngDraw2d', 'fld3dBuildEng', 'fld3dSyncEng', 'fldEngEndHtml'].forEach(function(fn) {
         if (typeof window[fn] !== 'function') throw new Error('missing engineering fn ' + fn);
       });
       if (fldEngCover({}) !== 1) throw new Error('fldEngCover(clean) must be exactly 1, got ' + fldEngCover({}));
@@ -135,6 +136,55 @@ const SETUP = `(() => {
       return { movedTo: Math.round(u.x), digging: u.digging, entrenchAfter: Number(u.entrench.toFixed(3)) };
     });
 
+    step('ABATIS: pioneer order builds a capped front belt; enemies slow while friends retain lanes', function() {
+      freshSandbox(); __FIELD.sev = { attrition: 1 };
+      var u = usInf(); u.facing = 0; __FIELD.sel = [u.id];
+      fldSelAbatis();
+      var obs = __FIELD.engObstacles || [], a = obs[0]; if (!a) throw new Error('abatis order created no belt');
+      for (var t = 0; t < 520; t++) fldEngStep(0.1);
+      if (!(a.strength > 0.98) || a.building) throw new Error('belt should complete near 48s: ' + a.strength);
+      var cx = (a.x1 + a.x2) / 2, cz = (a.z1 + a.z2) / 2;
+      var enemy = null; for (var i = 0; i < __FIELD.units.length; i++) if (__FIELD.units[i].side === 'CS') { enemy = __FIELD.units[i]; break; }
+      var slow = fldEngMoveFactor(cx, cz, enemy), friendly = fldEngMoveFactor(cx, cz, u);
+      if (!(slow < 0.5)) throw new Error('full balanced belt should slow enemy below half speed: ' + slow);
+      if (friendly !== 1) throw new Error('friendly lanes must retain exact factor 1: ' + friendly);
+      return { belts: obs.length, strength: Number(a.strength.toFixed(3)), enemyFactor: Number(slow.toFixed(3)), friendlyFactor: friendly };
+    });
+
+    step('ABATIS CONTACT: crossing disorders morale/fire once, then cohesion recovers', function() {
+      freshSandbox(); __FIELD.sev = { attrition: 1 };
+      var u = usInf(); __FIELD.sel = [u.id]; fldSelAbatis();
+      var a = __FIELD.engObstacles[0]; a.strength = 1; a.building = false;
+      var enemy = null; for (var i = 0; i < __FIELD.units.length; i++) if (__FIELD.units[i].side === 'CS') { enemy = __FIELD.units[i]; break; }
+      var cx = (a.x1 + a.x2) / 2, cz = (a.z1 + a.z2) / 2, m0 = enemy.morale;
+      fldEngMoveGate(enemy, cx, cz + 30, cx, cz - 30, 0.1);
+      var m1 = enemy.morale, f1 = fldEngFireFactor(enemy);
+      fldEngMoveGate(enemy, cx, cz + 4, cx, cz - 4, 0.1);
+      if (!(m1 < m0) || !(enemy.engDisorder > 0)) throw new Error('crossing must impose morale + disorder');
+      if (enemy.morale !== m1) throw new Error('same contact must not double-charge morale');
+      if (!(f1 < 1) || fldEngFireFactor({}) !== 1) throw new Error('disorder fire factor must penalize only affected unit');
+      for (var t = 0; t < 200; t++) fldEngStep(0.1);
+      if (enemy.engDisorder !== 0 || fldEngFireFactor(enemy) !== 1) throw new Error('cohesion should recover to exact identity');
+      return { moraleDrop: Number((m0 - m1).toFixed(2)), disorderFire: f1, recovered: fldEngFireFactor(enemy) };
+    });
+
+    step('CLEAR + REALISM: nearby infantry opens a lane; Historian clears slower than Arcade', function() {
+      freshSandbox();
+      var u = usInf(); __FIELD.sel = [u.id]; fldSelAbatis();
+      var a = __FIELD.engObstacles[0]; a.strength = 1; a.building = false;
+      u.x = (a.x1 + a.x2) / 2; u.z = (a.z1 + a.z2) / 2;
+      function clearTen(attr) {
+        a.strength = 1; a.building = false; u.engClearId = null; __FIELD.sev = { attrition: attr };
+        fldSelClearObstacle(); for (var t = 0; t < 100; t++) fldEngStep(0.1); return a.strength;
+      }
+      var arcade = clearTen(0.7), historian = clearTen(1.3);
+      if (!(arcade < historian)) throw new Error('Arcade must clear faster: ' + arcade + ' vs ' + historian);
+      __FIELD.sev = { attrition: 1 }; a.strength = 0.05; u.engClearId = a.id;
+      for (var q = 0; q < 30; q++) fldEngStep(0.1);
+      if ((__FIELD.engObstacles || []).length) throw new Error('fully cleared belt should be removed');
+      return { arcadeAfter10s: Number(arcade.toFixed(3)), historianAfter10s: Number(historian.toFixed(3)), removed: true };
+    });
+
     step('BYTE-IDENTITY: a full AI-vs-AI baseline never entrenches and fldEngCover stays 1 for every unit', function() {
       __FIELD._officersOff = false; __FIELD._logisticsOff = false; __FIELD._armsOff = false;
       fldLaunchSandbox({ renderer: 'none', autoBoth: true, seed: 3 });
@@ -148,7 +198,8 @@ const SETUP = `(() => {
       }
       if (anyEnt) throw new Error(anyEnt + ' units entrenched in an AI baseline (AI must not auto-dig)');
       if (anyCover) throw new Error(anyCover + ' units have a non-1 eng cover in a baseline');
-      return { units: __FIELD.units.length, entrenched: anyEnt, nonIdentityCover: anyCover };
+      if (__FIELD.engObstacles && __FIELD.engObstacles.length) throw new Error('AI baseline created obstacle belts');
+      return { units: __FIELD.units.length, entrenched: anyEnt, obstacles: (__FIELD.engObstacles || []).length, nonIdentityCover: anyCover };
     });
 
     step('RENDER + HUD: the 2D parapet draws without error and the HUD reports the works', function() {
@@ -163,7 +214,9 @@ const SETUP = `(() => {
       var hud = fldEngHudSelected(u);
       if (hud.indexOf('%') < 0 || (hud.indexOf('cover') < 0 && hud.indexOf('×') < 0)) throw new Error('HUD should report entrench % + cover: ' + hud);
       if (fldEngHudSelected({}) !== '') throw new Error('HUD must be empty for a non-entrenching unit');
-      return { drawCalls: calls, hudHasPct: hud.indexOf('%') >= 0 };
+      __FIELD._engUsed = { abatis: true };
+      var card = fldEngEndHtml(); if (card.indexOf('Mahan') < 0 || card.indexOf('abatis') < 0) throw new Error('abatis teaching card/provenance missing');
+      return { drawCalls: calls, hudHasPct: hud.indexOf('%') >= 0, teaching: card.indexOf('Mahan') >= 0 };
     });
 
     step('ART/ROUTING SANITY: a routed unit does not progress; the order seam survives an empty selection', function() {
@@ -177,6 +230,54 @@ const SETUP = `(() => {
       return { routingEntrench: u.entrench };
     });
 
+    step('MULTI-PHASE RESET: a phase advance drops the prior sector belts but KEEPS the teaching flag', function() {
+      freshSandbox(); __FIELD.sev = { attrition: 1 };
+      var u = usInf(); __FIELD.sel = [u.id]; fldSelAbatis();
+      __FIELD._engUsed = { abatis: true };
+      if (!(__FIELD.engObstacles && __FIELD.engObstacles.length)) throw new Error('precondition: a belt should exist before the phase reset');
+      if (typeof fldEngPhaseReset !== 'function') throw new Error('fldEngPhaseReset missing (the multi-phase obstacle-leak fix)');
+      fldEngPhaseReset();
+      if (__FIELD.engObstacles) throw new Error('phase reset must drop the prior sector belts (HIGH bug): ' + JSON.stringify(__FIELD.engObstacles));
+      if (!(__FIELD._engUsed && __FIELD._engUsed.abatis)) throw new Error('phase reset must KEEP _engUsed so the end-card still fires across phases');
+      return { obstaclesAfter: (__FIELD.engObstacles || []).length, engUsedKept: !!(__FIELD._engUsed && __FIELD._engUsed.abatis) };
+    });
+
+    step('ABANDONED BELT DECAYS: an immature belt whose builder marches off fades and frees the cap', function() {
+      freshSandbox(); __FIELD.sev = { attrition: 1 };
+      var u = usInf(); u.facing = 0; __FIELD.sel = [u.id]; fldSelAbatis();
+      if (!(__FIELD.engObstacles && __FIELD.engObstacles.length === 1)) throw new Error('expected exactly one fresh belt');
+      u.order = { type: 'move', tx: u.x + 600, tz: u.z, tface: u.facing }; u.x += 600;   // abandon before maturity
+      for (var t = 0; t < 400; t++) fldEngStep(0.1);
+      if ((__FIELD.engObstacles || []).length) throw new Error('an abandoned immature belt must decay away, not linger and eat a build-cap slot: ' + JSON.stringify(__FIELD.engObstacles));
+      return { remaining: (__FIELD.engObstacles || []).length };
+    });
+
+    step('UNIQUE IDS: two single-unit belts ordered at the same frozen sim-tick get distinct ids', function() {
+      freshSandbox(); __FIELD.sev = { attrition: 1 };
+      var us = []; for (var i = 0; i < __FIELD.units.length; i++) if (__FIELD.units[i].side === 'US' && __FIELD.units[i].alive) us.push(__FIELD.units[i]);
+      if (us.length < 2) throw new Error('need two US brigades for the collision test');
+      us[0].arm = 'inf'; us[1].arm = 'inf'; __FIELD.t = 5;   // frozen tick: the old time-keyed id would collide here
+      __FIELD.sel = [us[0].id]; fldSelAbatis();
+      __FIELD.sel = [us[1].id]; fldSelAbatis();
+      var obs = __FIELD.engObstacles || [];
+      if (obs.length !== 2) throw new Error('expected two belts, got ' + obs.length);
+      if (obs[0].id === obs[1].id) throw new Error('belt ids collided at the same tick: ' + obs[0].id);
+      return { ids: [obs[0].id, obs[1].id], distinct: obs[0].id !== obs[1].id };
+    });
+
+    step('ROUTING IMMUNITY: a routed unit fleeing through a belt is not further morale-docked', function() {
+      freshSandbox(); __FIELD.sev = { attrition: 1 };
+      var u = usInf(); __FIELD.sel = [u.id]; fldSelAbatis();
+      var a = __FIELD.engObstacles[0]; a.strength = 1; a.building = false;
+      var enemy = null; for (var i = 0; i < __FIELD.units.length; i++) if (__FIELD.units[i].side === 'CS') { enemy = __FIELD.units[i]; break; }
+      enemy.state = 'routing'; enemy._engObsTouch = null; enemy.engDisorder = 0; var m0 = enemy.morale;
+      var cx = (a.x1 + a.x2) / 2, cz = (a.z1 + a.z2) / 2;
+      fldEngMoveGate(enemy, cx, cz + 30, cx, cz - 30, 0.1);
+      if (enemy.morale !== m0) throw new Error('a routing unit must not be morale-docked by the belt: ' + enemy.morale + ' vs ' + m0);
+      if (enemy.engDisorder) throw new Error('a routing unit must not be disordered by the belt');
+      return { moraleUnchanged: enemy.morale === m0, disorder: enemy.engDisorder };
+    });
+
   } catch (e) { R.ok = false; R.steps.push({ name: 'FATAL', ok: false, err: String(e && e.message || e) }); }
   return JSON.stringify(R);
 })()`;
@@ -184,18 +285,26 @@ const SETUP = `(() => {
 (async () => {
   const probe = `${cfg.baseUrl}/${cfg.file}`;
   let srv = null, browser = null;
-  if (!(await up(probe))) {
-    srv = spawn('python3', ['-m', 'http.server', String(cfg.port)], { cwd: ROOT, stdio: 'ignore' });
-    for (let i = 0; i < 60; i++) { if (await up(probe)) break; await sleep(150); }
-  }
   const pageerrors = [];
-  try { browser = await chromium.launch({ channel: 'chrome', headless: true, args: GL }); }
-  catch (e) { browser = await chromium.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true, args: GL }); }
-  const page = await browser.newPage({ viewport: cfg.viewport });
-  await page.addInitScript(() => { try { localStorage.setItem('gor_welcomed', '1'); } catch (e) {} });
-  page.on('pageerror', e => pageerrors.push(String(e.message)));
   let result = { ok: false };
   try {
+    if (!(await up(probe))) {
+      srv = spawn('python3', ['-m', 'http.server', String(cfg.port)], { cwd: ROOT, stdio: 'ignore' });
+      let ready = false;
+      for (let i = 0; i < 60; i++) { if (await up(probe)) { ready = true; break; } await sleep(150); }
+      if (!ready) throw new Error(`local probe server did not bind on ${cfg.baseUrl}`);
+    }
+    // A macOS GUI browser launched as a child of Codex Seatbelt aborts inside HIServices
+    // (TransformProcessType) before Playwright can connect. Refuse that known-bad launch
+    // cleanly: no crash report, and the finally block still owns/terminates any server.
+    if (process.env.CODEX_SANDBOX === 'seatbelt') {
+      throw new Error('browser launch blocked by Codex Seatbelt; restart Codex with default_permissions=":danger-full-access" or run this probe from a normal terminal');
+    }
+    try { browser = await chromium.launch({ channel: 'chrome', headless: true, args: GL }); }
+    catch (e) { browser = await chromium.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true, args: GL }); }
+    const page = await browser.newPage({ viewport: cfg.viewport });
+    await page.addInitScript(() => { try { localStorage.setItem('gor_welcomed', '1'); } catch (e) {} });
+    page.on('pageerror', e => pageerrors.push(String(e.message)));
     await page.goto(probe, { waitUntil: 'load', timeout: 60000 });
     await sleep(400);
     result = JSON.parse(await page.evaluate(SETUP));
@@ -212,7 +321,7 @@ const SETUP = `(() => {
       else console.log('  ok   ' + s.name.slice(0, 60) + ' :: ' + JSON.stringify(s.v));
     }
     if (browser) try { await Promise.race([browser.close(), sleep(2500)]); } catch (e) {}
-    if (srv) srv.kill();
+    if (srv) { try { srv.kill(); } catch (e) {} }
   }
   if (!result.ok || result.fatal || (result.pageerrors && result.pageerrors.length)) process.exit(1);
 })().catch(e => { console.error('FATAL', e); process.exit(1); });

@@ -176,7 +176,13 @@ function fldCoverAt(x, z) {
   for (var i = 0; i < hs.length; i++) { var hh = hs[i], dx = x - hh.x, dz = z - hh.z; if (dx * dx + dz * dz < (hh.s * 0.7) * (hh.s * 0.7)) { d *= 1.12; break; } }
   return d;
 }
-function fldMoveFactor(x, z) { return fldInWoods(x, z) ? 0.62 : 1.0; }
+function fldMoveFactor(x, z, u) {
+  var f = fldInWoods(x, z) ? 0.62 : 1.0;
+  // T13: an active obstacle belt may slow an enemy moving through it. The hook returns
+  // exactly 1 when no applicable belt exists, preserving every pre-engineering baseline.
+  if (typeof fldEngMoveFactor === "function") f *= fldEngMoveFactor(x, z, u);
+  return f;
+}
 
 /* ===========================================================================
    SIM SETUP  —  the P0 sandbox order of battle (2 brigades/side)
@@ -293,6 +299,9 @@ function fldInitSim(opts) {
   __FIELD.arms = __FIELD._armsOff ? false : ((opts.arms != null) ? !!opts.arms : true);
   __FIELD._aiGenericAll = false; __FIELD._aiGenericAtk = false;   // role-aware AI test hooks: reset per launch (bug-hunt #4); probe-ai sets them AFTER launch (A/B the defender + attacker doctrines)
   __FIELD._atkCautious = false;   // Phase C: the AI-attacker "doomed frontal assault" posture (Fredericksburg). Reset per launch; fldScenarioInit sets it true ONLY for a scenario whose data declares assaultDoctrine:"cautious" -> Bull Run/sandbox/skirmish stay byte-identical.
+  // T13: clear engineering-owned transient state before any scenario/sandbox build. This touches only
+  // T13 fields; all simulation hooks remain exact identities until the player uses an engineering order.
+  if (typeof fldEngReset === "function") fldEngReset();
   if (sc !== "sandbox" && typeof fldScenarioInit === "function" && fldScenarioInit(opts)) return;
   // Phase A (A2): a custom FREE skirmish / procedural campaign battle is built by T2's fldSkirmishOOB
   // (terrain + a parameterized OOB), which calls fldResetRun and returns true. Absent opts.skirmish this
@@ -359,6 +368,9 @@ function fldResolveFire(u, tgt, dt) {
   // EXACTLY 1.0 for any unit that never entrenched -> byte-identical for every baseline.
   if (typeof fldEngCover === "function") cover *= fldEngCover(tgt, u.x, u.z);
   var power = FLD.FIRE_BASE * strF * u.pow * rngF * xpF * ammoF * morF * fatF;
+  // T13: forcing an obstacle belt disorders a brigade and makes its next volleys ragged.
+  // A clean unit receives exactly 1, so no pre-engineering fire result changes.
+  if (typeof fldEngFireFactor === "function") power *= fldEngFireFactor(u);
   // distinct arm roles (B-4): artillery fires CANISTER up close (a giant shotgun — devastating in the open,
   // defeated by works/woods) and a softening long-range bombardment beyond. A gated multiplier on the base fire
   // (1.0 / no-op when arms off or the shooter is not artillery -> byte-identical, incl. bullrun1's batteries).
@@ -483,7 +495,7 @@ function fldStepMovement(u, dt) {
     var o = u.order;
     tx = o.tx; tz = o.tz;
     var col = u.formation === "column";
-    spd = (col ? FLD.SPD_COL : FLD.SPD_LINE) * (1 - (u.fatigue / 100) * 0.4) * fldMoveFactor(u.x, u.z);
+    spd = (col ? FLD.SPD_COL : FLD.SPD_LINE) * (1 - (u.fatigue / 100) * 0.4) * fldMoveFactor(u.x, u.z, u);
     if (u.exhausted) spd *= 0.62;   // B-3: a SPENT brigade can barely drag itself forward (set only when logistics on -> falsy/byte-identical otherwise)
     desiredFace = (typeof o.tface === "number") ? o.tface : u.facing;
   }
@@ -492,6 +504,12 @@ function fldStepMovement(u, dt) {
   if (moving) {
     var mvFace = Math.atan2(dx, -dz);
     var nx = u.x + (dx / dd) * spd * dt, nz = u.z + (dz / dd) * spd * dt;
+    // T13: record obstacle crossings and, for river terrain, gate an illegal water step.
+    // Null is the identity path; only a returned coordinate pair changes the move.
+    if (typeof fldEngMoveGate === "function") {
+      var eg = fldEngMoveGate(u, u.x, u.z, nx, nz, dt);
+      if (eg && typeof eg.x === "number" && typeof eg.z === "number") { nx = eg.x; nz = eg.z; }
+    }
     u.x = fldClamp(nx, 10, FLD.FIELD_W - 10);
     u.z = fldClamp(nz, -80, FLD.FIELD_H + 80);
     // face along travel while marching
@@ -1049,6 +1067,8 @@ function fldBuildDom() {
     ["fldBtnCharge", "Charge", "Charge nearest enemy (F)"],
     ["fldBtnHold", "Hold", "Halt in place (H)"],
     ["fldBtnEntrench", "Entrench", "Dig in for cover — the spade (E)"],
+    ["fldBtnAbatis", "Abatis", "Build a timber obstacle belt with pioneer details (B)"],
+    ["fldBtnClear", "Clear", "Clear the nearest obstacle belt (X)"],
     ["fldBtnFog", "Fog: " + (__FIELD.fog ? "On" : "Off"), "Toggle fog of war — line-of-sight scouting (V)"],
     ["fldBtnAuto", "Auto-pause: " + (__FIELD.autoPause ? "On" : "Off"), "Toggle active auto-pause at key moments (P)"],
     ["fldBtnSettings", "&#9881; Settings", "Battle settings — fog, auto-pause, speed & difficulty (G)"],
@@ -1212,6 +1232,8 @@ function fldWireControls() {
   w("fldBtnCharge", function () { fldSelCharge(); });
   w("fldBtnHold", function () { fldSelHold(); });
   w("fldBtnEntrench", function () { if (typeof fldSelEntrench === "function") fldSelEntrench(); });
+  w("fldBtnAbatis", function () { if (typeof fldSelAbatis === "function") fldSelAbatis(); });
+  w("fldBtnClear", function () { if (typeof fldSelClearObstacle === "function") fldSelClearObstacle(); });
   w("fldBtnFog", function () { fldToggleFog(); });
   w("fldBtnAuto", function () { fldToggleAutoPause(); });
   w("fldBtnSettings", function () { if (typeof fldOpenSettingsDrawer === "function") fldOpenSettingsDrawer(); });   // B-5: the in-battle settings drawer
@@ -1267,6 +1289,8 @@ function fldKey(e) {
   else if (k === "f" || k === "F" || k === "Enter") fldSelCharge();
   else if (k === "h" || k === "H") fldSelHold();
   else if (k === "e" || k === "E") { if (typeof fldSelEntrench === "function") fldSelEntrench(); }   // T13: entrench (dig in)
+  else if (k === "b" || k === "B") { if (typeof fldSelAbatis === "function") fldSelAbatis(); }       // T13: timber obstacle belt
+  else if (k === "x" || k === "X") { if (typeof fldSelClearObstacle === "function") fldSelClearObstacle(); } // T13: obstacle clearing
   else if (k === "v" || k === "V") fldToggleFog();
   else if (k === "p" || k === "P") fldToggleAutoPause();
   else if (k === "g" || k === "G") { if (typeof fldOpenSettingsDrawer === "function") fldOpenSettingsDrawer(); }   // B-5: the in-battle settings drawer
@@ -1377,6 +1401,8 @@ function fldOnOver() {
   if (typeof fldLogisticsEndHtml === "function") { try { scNote += (fldLogisticsEndHtml() || ""); } catch (eL) {} }
   // B-4 seam: the arms-of-the-service teaching (lost batteries / the cavalry charge). No-op when off / none afield.
   if (typeof fldArmsEndHtml === "function") { try { scNote += (fldArmsEndHtml() || ""); } catch (eA) {} }
+  // T13: engineering teaching cards appear only for effects actually used in this battle.
+  if (typeof fldEngEndHtml === "function") { try { scNote += (fldEngEndHtml() || ""); } catch (eE) {} }
   var _inCampaign = !!__FIELD.campaignCtx;
   e.innerHTML =
     '<div style="text-align:center;background:#0c0f14;border:1px solid #745e3f;border-radius:8px;padding:26px 34px;max-width:640px;max-height:88vh;overflow:auto;">' /* wcag-auditor: contrast fix #4a3c28->#745e3f border on #0c0f14 (was 1.80:1, now 3.12:1) WCAG 1.4.11 */ +
@@ -1749,7 +1775,7 @@ function fld3dDispose() {
   __FIELD.scene = null; __FIELD.camera = null; __FIELD.controls = null; __FIELD.renderer = null; __FIELD.groups = null; __FIELD._u3d = null; __FIELD.ground = null;
   __FIELD._ld3dGroup = null; __FIELD._ld3d = null;   // B-2: the officer group's geometries were disposed in the scene traverse above; drop the refs
   __FIELD._sup3dGroup = null; __FIELD._sup3d = null; // B-3: same for the ammunition-train wagons
-  __FIELD._engGroup = null; __FIELD._engMeshes = null; // T13: the entrenchment berms were disposed in the traverse above; drop the refs
+  __FIELD._engGroup = null; __FIELD._engMeshes = null; __FIELD._engAbatisMeshes = null; // T13: fieldworks/obstacles were disposed in the traverse above; drop refs
 }
 
 /* ===========================================================================
