@@ -384,7 +384,10 @@ function fldResolveMelee(a, b, dt) {
   var meleeA = (__FIELD.arms && typeof fldArmMelee === "function") ? fldArmMelee(a, b) : (typeof ARM !== "undefined" && ARM[a.arm] ? ARM[a.arm].melee : 1.0);
   var meleeB = (__FIELD.arms && typeof fldArmMelee === "function") ? fldArmMelee(b, a) : (typeof ARM !== "undefined" && ARM[b.arm] ? ARM[b.arm].melee : 1.0);
   var atk = a.men * meleeA * (0.6 + 0.4 * a.morale / a.maxMor) * (0.9 + a.xp * 0.06);
-  var def = b.men * meleeB * (0.6 + 0.4 * b.morale / b.maxMor) * (0.9 + b.xp * 0.06) * fldCoverAt(b.x, b.z) * (typeof fldEngCover === "function" ? fldEngCover(b, a.x, a.z) : 1);
+  // T13: entrenchment shelters a unit HOLDING its works (front-arc), not one that has charged out — so a
+  // mutual charge (both order 'charge') gives neither side the earthwork, and the benefit is order-independent.
+  var bEng = (typeof fldEngCover === "function" && b.order && b.order.type !== "charge") ? fldEngCover(b, a.x, a.z) : 1;
+  var def = b.men * meleeB * (0.6 + 0.4 * b.morale / b.maxMor) * (0.9 + b.xp * 0.06) * fldCoverAt(b.x, b.z) * bEng;
   var ratio = atk / Math.max(1, def);
   var _att = (__FIELD.sev ? __FIELD.sev.attrition : 1);   // B-5: attrition severity (1.0 = neutral = byte-identical)
   var aCas = Math.min(a.men, FLD.MELEE_BASE * (def / Math.max(1, atk)) * (0.7 + fldRng() * 0.6) * dt * 12 * _att);
