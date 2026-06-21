@@ -1,7 +1,7 @@
 # GRAND-STRATEGY-PLAN.md — Owner-Mode War + Alternate-History Teaching Engine (authoritative)
 
 **Written 2026-06-13 (run h, Opus 4.8) from a 10-round / 30-question popup design session with Aaron. Personal project — NOT MJI.**
-**This is the LAW for the STRATEGIC layer.** Companion docs: `MODERN-UGG-PLAN.md` (the real-time tactical battle engine), `HISTORICAL-DATA.md` (citation-grade content), `MODERN-UGG-KICKOFF.md` (new-chat prompt). Coding happens in a NEW chat. Decisions below are LOCKED by Aaron via popup Q&A — honor verbatim.
+**This is the LAW for the STRATEGIC layer** (economy · politics · morale · decisions · alt-history · victory · §27 the balance principle). Companion design docs: `MODERN-UGG-PLAN.md` (the real-time tactical engine LAW) + `HISTORICAL-DATA.md` (citation-grade content). Decisions below are LOCKED by Aaron via popup Q&A — honor verbatim. *(Process note, 2026-06-21: work ships directly each session per `AUTONOMOUS-RUN.md`; the old "coding happens in a new chat / `MODERN-UGG-KICKOFF.md`" workflow is legacy. The entrypoint for any AI tool is `START-HERE.md`.)*
 
 ---
 

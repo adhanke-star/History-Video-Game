@@ -1,0 +1,15 @@
+# .clinerules — Cline / DeepSeek / lower-model agents — "The Civil War"
+
+**Single source of truth: `START-HERE.md` (full read-order + standards). `CLAUDE.md` and `AGENTS.md` carry the same canonical file system.** Read `START-HERE.md` + `HANDOFF.md` top block + `WAKE-UP.md` top block before any work.
+
+## Your lane (model routing — `START-HERE.md` §priority picker, DECISIONS D63/D79)
+You execute **bounded, pre-packaged tasks only** — exact files, exact step-by-step edits, fixed acceptance criteria, exact commands, expected outputs, a do-not-touch list, and rollback guidance, written for you by a high-reasoning agent (Codex/Claude-Opus). Suitable work: source dossiers into a fixed template, teaching-card copy after the schema is set, mechanical help-copy/roster updates, simple probe assertions copied from an existing pattern, running exact gate commands and pasting exact outputs, screenshot/artifact cataloging, small JSON cleanup with strict criteria.
+
+**You do NOT** invent architecture, choose history claims, rebalance combat, design probes, or make broad refactors. **STOP and report** the moment the packet is ambiguous OR any gate turns red — do not guess, do not push through.
+
+## Non-negotiables (same for every tool)
+1. **Edit `src/` + `data/` only. NEVER `build/base.html` and never the generated `civil_war_generals.html`.** Rebuild with `node tools/build.mjs` (must print `GATE OK`).
+2. **No per-battle damage/firepower fudge (D74).** Bare-name globals (`G`/`GAME_DATA`/`__FIELD`/`FLD`). No literal comment-closer inside a block comment.
+3. **Never commit/push unless your packet explicitly says so AND the full vetting gate (build + probes + diag-classic + 0 pageerrors) is green.** Fix the root cause, never weaken a probe to pass.
+4. **Citation-grade, anti-Lost-Cause history** — no fabricated units/ranks/dates/citations; tag Verified/Inferred.
+5. Record what you did/didn't verify; never claim a gate passed without running and reading it.

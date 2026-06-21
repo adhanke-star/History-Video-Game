@@ -46,8 +46,8 @@ The remote is **LIVE**: `origin` → **github.com/adhanke-star/History-Video-Gam
 
 Never push an unvetted / red / regressed / pageerror build. `tools/shots/*` and `.tmp/` are gitignored, so the pending-changes view stays at ~0; `git log` + the GitHub remote are the durable record.
 
-## Universal AI implementer standards — Codex / Cline / DeepSeek / any VS Code agent
-Every model implementing Aaron's instructions through VS Code follows the same operating contract, regardless of vendor or model size:
+## Universal AI implementer standards — Claude / Codex / Copilot / DeepSeek / Cline / any VS Code agent
+**Each AI tool has a native entrypoint file that points to THIS file as the single source of truth — `CLAUDE.md` (Claude Code), `AGENTS.md` (Codex), `.github/copilot-instructions.md` (GitHub Copilot), `.clinerules` (Cline / DeepSeek).** They are thin pointers (the canonical read-order + the hardest non-negotiables); if the read-order or the non-negotiables below change, update them too. Every model implementing Aaron's instructions follows the same operating contract, regardless of vendor or model size:
 
 - **Repo-ground first:** read `START-HERE.md`, `HANDOFF.md` top block, `WAKE-UP.md` top block, current `RUN-LOG.md` top entries, latest `DECISIONS.md`, `V1-CHECKLIST.md`, `src/00-manifest.json`, and the files/probes directly touched by the task before editing.
 - **Work from reversible steps:** inspect before changing, keep edits scoped, preserve user/unrelated changes, make source edits in `src/` and data edits in `data/`, and touch generated `civil_war_generals.html` only when the repo's build/probe reality requires it and the source path is also aligned.
@@ -59,7 +59,7 @@ Every model implementing Aaron's instructions through VS Code follows the same o
 - **Reporting discipline:** every handoff/final report names files changed, commands run, pass/fail results, unverified areas, residual risks, and any docs updated. Do not claim completion for work that was not run or inspected.
 
 ## Priority picker + model routing — use when Aaron says "pick from the list"
-When Aaron asks a new chat to choose from a priority list, use this list plus `MASTER-TASK-LIST.md`. These are the work items Codex is expected to handle better than DeepSeek/Cline because they require architecture, balance judgment, cross-module repo reasoning, probe design, or high-risk regression control.
+When Aaron asks a new chat to choose from a priority list, use this list (cross-check `V1-CHECKLIST.md` for the ordered roadmap). *(`MASTER-TASK-LIST.md` was retired 2026-06-21 — it duplicated this picker + the roadmap + the live head; it is now a pointer stub.)* These are the work items Codex is expected to handle better than DeepSeek/Cline because they require architecture, balance judgment, cross-module repo reasoning, probe design, or high-risk regression control.
 
 **Codex / high-reasoning preferred**
 - **Vicksburg / siege campaign architecture:** decide single-phase vs multi-phase vs siege-shaped pattern; design data/OOB/terrain/timing/probes without combat fudges.

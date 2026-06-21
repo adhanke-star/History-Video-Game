@@ -170,7 +170,13 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
 ## ITEMS NEEDING YOUR CONFIRM (the last clarifications)
 1. **Phase ORDER** — is A→B→C→D→E→…→H→I→J right? In particular: **strategic S3–S5 (E) vs tactical breadth/hex
    (C/D)** — which first? And does the **full hex engine (D)** really sit after tactical depth, or sooner?
-2. **B6 CS-player tactical mode** — include in v1 (command either side)? Here in Phase B, or later?
+2. **B6 CS-player tactical mode** — include in v1 (command either side)? Here in Phase B, or later? *(SHIPPED — D72.)*
 3. **Western theater (C2)** — fold into tactical breadth as drafted, or its own later phase?
-4. **Audio (H4)** — in the come-to-life pass as drafted, or sooner?
+4. **Audio (H4)** — in the come-to-life pass as drafted, or sooner? *(NOTE: `T9-audio.js` already started it under D77, ahead of Phase H — confirm whether audio work continues now or pauses.)*
 5. Anything **missing** from v1, or anything here you'd **cut** to v2?
+
+### Open design tensions to resolve (ported from the retired MASTER-TASK-LIST, sourced to D68)
+6. **Loot/survival (Phase I) — D68 vs D61 tension:** D68 elevated loot/survival to an always-on "core pillar" (progression + journey mode); D61 says DEFER to after core. Resolve which governs.
+7. **Zoomable battle scale (D68):** brigades expanding into regiments on zoom — a new tactical-engine requirement beyond the current brigade abstraction; not yet designed.
+8. **Heavy embedded media (D68):** bundling PD imagery/footage into the single-file deliverable — plan the Phase-H tier/compress pipeline so portability survives (ties H1 + the D71 asset-ingestion pipeline).
+9. **Deferred tooling (D54):** the `src/` subsystem folder reorg (`src/strategy/` · `src/render/` etc. — `src/tactical/` already exists), perf presets + hotpath profiling for the Intel UHD-617 floor, and a reusable historical-data layer + in-game sources codex (ties E2).

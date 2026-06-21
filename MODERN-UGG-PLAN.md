@@ -1,7 +1,7 @@
 # MODERN = ULTIMATE GENERAL: GETTYSBURG-STYLE — BUILD SPEC (authoritative)
 
 **Written 2026-06-13 (run h, Opus 4.8), planning session. Personal project — NOT MJI.**
-**This doc is the LAW for the Modern real-time engine. The actual coding happens in a NEW chat** — paste `MODERN-UGG-KICKOFF.md` §PASTE there. Decisions below are LOCKED by Aaron via popup Q&A; honor them verbatim.
+**This doc is the LAW for the Modern real-time tactical engine** — the locked design spec (vision · locked decisions · architecture · data model · systems · engine seams · gotchas). Decisions below are LOCKED by Aaron via popup Q&A; honor them verbatim. *(Process note, 2026-06-21: the engine is now largely BUILT — P0 sandbox → Phase B B1–B6 and the Phase-C battles ship directly each session per `AUTONOMOUS-RUN.md`; the old "paste `MODERN-UGG-KICKOFF.md` in a new chat" workflow is legacy. The DESIGN below stays authoritative — pull the section a task needs. The entrypoint for any AI tool is `START-HERE.md`.)*
 
 ---
 
