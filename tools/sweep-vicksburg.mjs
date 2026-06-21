@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/sweep-vicksburg.mjs - headless A/B balance sweep for the Vicksburg 3-phase siege.
 // Runs N seeds AI-vs-AI and reports, per phase, who held + US/CS casualties (and the
 // attacker-pays ratio), plus the aggregate winner/score. Used to tune the data so the

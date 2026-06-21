@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-campaign-link.mjs — PHASE A: connect the strategic desk <-> the real-time tactical engine.
 // Verifies A1 (the strategic army conditions the tactical brigades: a strong war fields more men + the
 // bought loadout re-arms the line; fresh ~ nominal; PLAYER-side only; standalone untouched), A2 (the

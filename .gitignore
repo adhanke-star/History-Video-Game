@@ -28,3 +28,5 @@ tools/shots/*.log
 
 # editor
 .vscode/
+# codex local tooling config (environment-specific MCP registration — not project work)
+.codex/

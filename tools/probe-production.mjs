@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-production.mjs — S1b war-production gate + FULL integration regression.
 // Runs the real _t1Resolve (clk+econ+wr+mr+pres+prod, all six ticks) over 12 turns
 // for each side and verifies the production asymmetry: the Union stays well-found

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/shot-gpu.mjs — REAL-GPU visual verification (sibling to shot.mjs).
 // shot.mjs uses SwiftShader software-WebGL (deterministic but can't render bloom/SSAO/
 // HDRI/PBR faithfully). THIS harness launches a GPU-backed Chrome on the Mac (Metal via

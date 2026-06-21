@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/shot-ui.mjs — boots modern, selects a player unit so the orders panel + info panel +
 // lead-badge render, then screenshots the full HUD. Verifies the M3D_UI_SKIN2 art pass
 // (drawn order-icons, engraved frames, portrait mat). Reports pageerrors + which panels showed.

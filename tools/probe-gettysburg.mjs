@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-gettysburg.mjs — TACTICAL ENGINE C-1 (the SECOND MULTI-PHASE epic: Gettysburg, July 1-3, 1863 —
 // Day 1 McPherson Ridge -> Day 2 Little Round Top -> Day 3 Pickett's Charge). Verifies the gated T8 phases[]
 // engine + the 3-day scenario EMPIRICALLY on the renderer-agnostic sim: the data declares 3 phases with

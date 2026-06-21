@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/shot.mjs — one-command visual-regression harness for The Civil War (Vol. I).
 // Drives the locally-installed Google Chrome via playwright-core (NO browser download),
 // software-WebGL via SwiftShader so the Modern (Three.js) renderer produces deterministic

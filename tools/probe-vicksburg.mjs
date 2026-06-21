@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-vicksburg.mjs - Phase C Western breadth.
 // Verifies the Vicksburg real-time tactical scenario as a 3-phase siege
 // (Stockade Redan -> Forlorn Hope -> saps/mine), plus the Modern 3D

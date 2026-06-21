@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-arms.mjs — TACTICAL ENGINE B-4 (distinct arm roles: artillery canister/bombardment + battery
 // doctrine; cavalry scout/flank/screen/raid; the ARM melee table; the Cannon-Corps->field-battery bridge).
 // Verifies EMPIRICALLY on the renderer-agnostic sim: bullrun1 fields art (Griffin/Ricketts) + cav (Stuart) and

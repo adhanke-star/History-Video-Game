@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-portraits.mjs — verifies the PD-photo portrait layer. Boots modern, waits for the
 // photo cache to warm, then (1) classifies portraitFor() output per leader as PHOTO (jpeg) vs
 // ENGRAVING (png), (2) renders a labeled montage of real names for a visual read. Reports

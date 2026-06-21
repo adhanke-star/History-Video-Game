@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-custom-battle-builder.mjs
 // Focused C4 gate: renders the Custom Battle Builder, validates bad + good
 // scenarios, proves JSON round-trip/persistence, launches through fldScenarioInit,
@@ -21,7 +22,7 @@ async function up(u) { try { const r = await fetch(u, { method: 'HEAD' }); retur
 
 const SETUP = `(() => {
   var R = { ok:true, steps:[] };
-  var EXPECTED = ['bullrun1', 'malvernHill', 'antietam', 'fredericksburg', 'chancellorsville', 'gettysburg', 'shiloh'];
+  var EXPECTED = ['bullrun1', 'malvernHill', 'antietam', 'fredericksburg', 'chancellorsville', 'gettysburg', 'shiloh', 'vicksburg'];
   function step(name, fn) {
     try { var v = fn(); R.steps.push({ name:name, ok:true, v:v === undefined ? null : v }); }
     catch(e) { R.ok = false; R.steps.push({ name:name, ok:false, err:String(e && e.message || e) }); }

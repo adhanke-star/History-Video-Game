@@ -13,7 +13,8 @@
       "WebSearch",
       "WebFetch",
       "Bash",
-      "Bash(mkdir -p \"/Users/aaronhanke/.claude/projects/-Users-aaronhanke-Desktop-Video-Game/memory/\" && echo created)"
+      "Bash(mkdir -p \"/Users/aaronhanke/.claude/projects/-Users-aaronhanke-Desktop-Video-Game/memory/\" && echo created)",
+      "Read(//tmp/**)"
     ],
     "additionalDirectories": [
       "/Users/aaronhanke/.claude/projects/-Users-aaronhanke-Desktop-Video-Game"

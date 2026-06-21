@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-antietam.mjs — TACTICAL ENGINE C-2 (the FIRST MULTI-PHASE epic: Antietam / Sharpsburg, Sep 17 1862 —
 // the Cornfield -> the Sunken Road 'Bloody Lane' -> Burnside's Bridge). Verifies the gated T8 phases[] engine + the
 // 3-phase scenario EMPIRICALLY on the renderer-agnostic sim: the data declares 3 phases with gun-model artillery; a

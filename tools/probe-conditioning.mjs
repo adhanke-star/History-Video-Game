@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-conditioning.mjs — A6a battle-day conditioning. Verifies the strategic war shapes
 // the army that takes the field: a strong war fields stronger, steadier player units than a weak
 // one (same battle, deterministic baseline); the conditioning applies ONLY to campaign battles

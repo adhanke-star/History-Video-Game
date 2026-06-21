@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-desk.mjs — functional + visual gate for the S0 President's Desk.
 // Boots the real game, builds a campaign (with president state), opens the
 // expanded War Department (now the President's Desk), exercises all SIX tabs,

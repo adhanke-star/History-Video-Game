@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-tactical-visuals.mjs
 // Dedicated real-time visual probe for the __FIELD tactical engine. It captures
 // Shiloh, Malvern Hill, Gettysburg, and Chancellorsville in the 2D fallback renderer and the live Three.js 3D

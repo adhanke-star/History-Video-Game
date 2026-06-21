@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-bullrun.mjs — TACTICAL ENGINE P1a (the First Bull Run scenario). Verifies the
 // real-OOB historical battle EMPIRICALLY on the renderer-agnostic sim (no GPU → no swiftshader
 // flake): the engaged OOB instantiates; the historical terrain (Henry House Hill / Matthews Hill /

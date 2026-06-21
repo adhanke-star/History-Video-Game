@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-press.mjs — S2 m4 press / public-opinion. Verifies: the papers load
 // side-correct; pressInit builds per-paper favor; the press stays NEUTRAL (50) until it
 // reacts (so it perturbs nothing at init); pressOnResolve reacts to victory/defeat (the

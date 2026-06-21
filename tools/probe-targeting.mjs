@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-targeting.mjs — A5 verify the player can pick SPECIFIC fire targets. The engine
 // already supports full player target choice (onHexClick line ~1273 fires at the exact clicked
 // hex when in fire mode), so this is a VERIFICATION probe (no engine change). It boots a real

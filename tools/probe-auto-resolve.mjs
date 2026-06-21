@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-auto-resolve.mjs — A6b the bridge auto-resolve (playable end-to-end). Verifies the
 // outcome is decided by the army the war fielded: a strong war out-resolves a weak one; both sides
 // take casualties (the loser more); the enemy rating reflects the historical asymmetry; the result

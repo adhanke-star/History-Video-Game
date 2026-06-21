@@ -1,3 +1,0 @@
-probe-bridge ok=true steps=6 pageerrors=0
-
-  FAIL conditioning reflects a WINNING war :: a winning South should field a strong army, got 58

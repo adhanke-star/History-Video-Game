@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/menuprobe.mjs — verifies the main-menu "War Department" entry (the with-save path).
 // Boots the game, persists a campaign, opens the main menu, asserts the #gnWarDept button is
 // present, clicks it, and confirms the War Department sheet opens. Writes results to disk.

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-cover.mjs — A3 terrain cover hierarchy. Verifies the six named cover types are
 // installed in the frozen TERRAIN with the strong->light def ordering, that they render
 // (TCOL + PALETTE colors, not the gray fallback), that _tcCoverFor maps historical feature

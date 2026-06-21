@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-command.mjs — S2 m5 COMMAND / named-generals. Verifies: the generals load
 // side-correct + schema-clean; cmdInit builds command state + seeds reputation; a FRESH/default
 // command ANCHORS leadership near 64 so bridgeArmy stays Classic-safe (the A6a/D47.1 anchor);

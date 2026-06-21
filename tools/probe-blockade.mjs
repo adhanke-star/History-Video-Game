@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-blockade.mjs — S1c cotton/blockade/foreign gate + integration regression.
 // Runs the real _t1Resolve (clk+econ+wr+blockade+prod+mr+pres) over 16 turns per side
 // and verifies the Confederate cotton/blockade traps:

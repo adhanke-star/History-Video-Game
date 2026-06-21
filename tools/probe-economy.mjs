@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-economy.mjs — functional + visual gate for S1 finance core.
 // Verifies the EMERGENT inflation asymmetry (Union stays anchored, Confederacy
 // spirals into hyperinflation) — the marquee S1 teaching mechanic — plus the

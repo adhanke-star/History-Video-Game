@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-logistics.mjs — TACTICAL ENGINE B-3 (in-battle logistics: ammo trains + resupply + exhaustion).
 // Verifies EMPIRICALLY on the renderer-agnostic sim: a scenario builds a rear ammunition train per side (data
 // positions; the sandbox procedural), _logisticsOff builds none; a low-ammo brigade out of close action refills

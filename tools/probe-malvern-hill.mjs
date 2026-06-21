@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-malvern-hill.mjs
 // Focused completion probe for the Malvern Hill data-driven __FIELD battle.
 // It verifies the historical/data contract, single-phase launch seam, open-plateau

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/t1probe.mjs — functional gate for the §24 War Department (1864 Clock / Muster Roll / War Room).
 // Boots the real game in Chrome, builds a realistic campaign, ticks _t1Resolve across several
 // battles (incl. a 1864 election trigger + a fallen regiment + an unnamed auto-fill veteran),

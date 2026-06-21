@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-victory.mjs — S1e Paths-to-Victory: prove the South's collapse is
 // PERFORMANCE-driven, not scripted (design law §5 / Aaron). A WINNING South escapes
 // the death spiral (desertion ~stops, ranks refill, ports hold, recognition stays

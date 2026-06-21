@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-shiloh.mjs — TACTICAL ENGINE C-2 (Shiloh / Pittsburg Landing, April 6-7 1862 — the first WESTERN
 // THEATER battle on the __FIELD real-time engine). Verifies the battle EMPIRICALLY on the renderer-agnostic sim:
 // the OOB instantiates from GAME_DATA.shiloh.shiloh; the historical terrain (the Sunken Road / Hornets' Nest, the

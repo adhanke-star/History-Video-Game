@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-officers.mjs — TACTICAL ENGINE B-2 (officers & command on the field).
 // Verifies EMPIRICALLY on the renderer-agnostic sim (no GPU): a scenario builds its real command cast,
 // the sandbox builds two generic army commanders, and _officersOff builds NONE (the byte-identical gate);

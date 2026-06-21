@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-weapons.mjs — The Armory: buy weapons with money, loot-style, feeding
 // the battle bridge. Verifies procurement spends funds, better/more weapons raise the
 // army weapon-score, partial vs whole-army loadout, year + side gates, the Armory tab

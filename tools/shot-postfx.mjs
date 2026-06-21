@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/shot-postfx.mjs — focused real-GPU verification of the post-processing pipeline.
 // Waits for the EffectComposer to actually build (post scripts load async from the CDN),
 // then screenshots the TRUE full-stack frame. Reports GL renderer, composer pass list,

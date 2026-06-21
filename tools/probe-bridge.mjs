@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-bridge.mjs — S5(seed) strategy->battle bridge (pre-battle half).
 // Verifies the conditioned army (bridgeArmy) reflects the strategic state (a winning
 // South fields a strong army; a collapsing one fields a brittle army), the pre-battle

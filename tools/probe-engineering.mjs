@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-engineering.mjs — A2 The Engineering Works Corps: build engineer capability
 // with money, feeding the battle bridge + slowing CS rail decay. Verifies the corps starts
 // near baseline, raising a branch spends funds + lifts the level + the engineering score,

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/bootprobe.mjs — verifies the DEFAULT boot path (no forced gfx override).
 // Confirms: (1) a fresh profile defaults to Modern, (2) the menu boots with no
 // pageerror, (3) entering a battle brings up the 3D renderer (__M3D.ready) cleanly.

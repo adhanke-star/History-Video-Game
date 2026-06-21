@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-ai.mjs — TACTICAL ENGINE P1b-iii (role-aware AI: the smarter CS DEFENDER doctrine).
 // Verifies EMPIRICALLY on the renderer-agnostic sim (no GPU → no swiftshader flake): the asymmetric
 // scenario routes the DEFENDER (CS) to fldAiDefender and the ATTACKER (US) + the SANDBOX to the

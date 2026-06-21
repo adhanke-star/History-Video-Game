@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-fredericksburg.mjs — TACTICAL ENGINE C-1 (the SECOND data-driven scenario: Fredericksburg, the
 // assault on Marye's Heights, Dec 13 1862). Verifies the battle EMPIRICALLY on the renderer-agnostic sim (no GPU):
 // the OOB instantiates from GAME_DATA.fredericksburg.fredericksburg; the historical terrain (the SUNKEN-ROAD STONE

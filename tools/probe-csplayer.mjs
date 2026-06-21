@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-csplayer.mjs — TACTICAL ENGINE B-6 (COMMAND EITHER SIDE). Verifies that the player can command
 // EITHER army: the authoritative __FIELD.playerSide resolves from the launch (US default), fldPlayerSide() reads
 // it, the scenario AI flags flip by side (a CS player DEFENDS; the US side becomes the B-1 attacker AI), the

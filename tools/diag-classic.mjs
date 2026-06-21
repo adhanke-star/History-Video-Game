@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // Diagnostic: does the Classic 2D renderer actually paint the #map canvas?
 import { chromium } from 'playwright-core';
 import { spawn } from 'node:child_process';

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-field.mjs — TACTICAL ENGINE P0 (the sandbox skirmish). Verifies the full core loop
 // EMPIRICALLY on the renderer-agnostic sim (no GPU needed → no swiftshader flake): deploy →
 // maneuver → fire → casualties → morale/rout → a declared winner; determinism under a fixed seed;

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-fog.mjs — TACTICAL P1b (the fog-of-war toggle). Verifies the per-side line-of-sight
 // visibility model EMPIRICALLY on the renderer-agnostic sim: default OFF is the no-op fast path (every
 // pair visible); fog ON hides enemies beyond sight range and behind woods; AI/targeting engage ONLY

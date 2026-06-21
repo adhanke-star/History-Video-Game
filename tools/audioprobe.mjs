@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/audioprobe.mjs — verifies the adaptive score wiring in real Chrome WebAudio.
 // Can't hear it here, but confirms: (1) entering a battle brings the score up with NO
 // pageerror, (2) the public API (musicStart/bugleCall/dinSet/scoreSampleBattle) runs

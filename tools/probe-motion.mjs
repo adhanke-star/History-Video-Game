@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-motion.mjs — empirical verification of _m3dMixerUpdate (procedural unit motion).
 // A screenshot can't show motion, so this samples billboard sprite positions over real frames
 // on the real GPU and asserts: (1) idle bob animates, (2) a u.fired edge triggers recoil +

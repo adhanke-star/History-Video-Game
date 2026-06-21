@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-presets.mjs — TACTICAL ENGINE B-5 (difficulty/realism presets). Verifies EMPIRICALLY on the
 // renderer-agnostic sim that the preset layer wires the existing knobs WITHOUT moving the shipped balance when
 // neutral: NEUTRAL (no preset) -> __FIELD.sev all 1.0 / aiSkill 1.0 / aiResolve 1.0 / aiCushion 0 and the live

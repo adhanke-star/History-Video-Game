@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-tactical-roster.mjs
 // Focused integration probe for the data-driven __FIELD battle roster. It verifies the
 // current playable battle registry, main-menu order, side-choice cards, launch contracts,

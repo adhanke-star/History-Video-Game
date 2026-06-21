@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-autopause.mjs — TACTICAL P1b (active auto-pause). The feature lives in the RAF loop
 // (fldAutoPauseScan), so this drives that pure scan directly: it pauses once on a decision-point event
 // (a break, a destroyed brigade, arriving reinforcements), no-ops when nothing changed, returns early

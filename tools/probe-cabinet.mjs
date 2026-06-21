@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-cabinet.mjs — S2 m1 cabinet & advisor system. Verifies: the data loads;
 // the CHURN is date-aware (Cameron->Stanton, Walker->...->Breckinridge, Benjamin's rotation);
 // advisor stances are selected by war-state condition; ambition surfaces for the schemers and

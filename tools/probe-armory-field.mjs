@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-armory-field.mjs — A4 wire The Armory -> the battlefield. Verifies the
 // strategic armory ids map to valid engine WEAPONS keys quality-monotonically, that the
 // genForce override re-arms the PLAYER's fresh infantry with the weapons bought in

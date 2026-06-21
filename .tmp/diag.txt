@@ -1,1 +1,0 @@
-"gfx":"classic" "mode":"battle" "nonBlank":346 [diag]

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-cannon.mjs — A1 The Cannon Corps: raise artillery batteries with money,
 // feeding the battle bridge. Verifies the corps starts near-empty, buying batteries spends
 // funds, raising batteries + better guns raises the artillery score, coverage scales it,

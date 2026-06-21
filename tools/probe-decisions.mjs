@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-decisions.mjs — S2 m2 executive decisions + the pendingChoices loop.
 // Verifies: the deck loads; decOnResolve surfaces cards by side + year and OWNS the
 // queue (persists across turns, drops resolved/expired); decResolve applies bounded

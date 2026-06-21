@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-morale.mjs — S2 m3 three-layer morale + the 1864 election hinge.
 // Verifies: moraleInit/moraleCompute build the troop/leader/public layers; the
 // interactions hold (winning lifts leader+public; the accumulating casualty toll and

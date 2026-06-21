@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-manpower.mjs — S1d manpower/conscription gate + integration regression.
 // Runs the real _t1Resolve (clk+econ+wr+blockade+prod+manpower+mr+pres) over 20 turns
 // per side and verifies the decisive demographic asymmetry: the Union refills its

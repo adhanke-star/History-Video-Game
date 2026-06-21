@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import "./guard-probe-browser.mjs";
 // tools/probe-chancellorsville.mjs
 // Focused completion probe for the Chancellorsville data-driven __FIELD battle.
 // It verifies the historical/data contract, the single-phase launch seam, terrain
