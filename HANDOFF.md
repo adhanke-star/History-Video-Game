@@ -1,5 +1,21 @@
 # HANDOFF — "The Civil War"
 
+## ⚡ CONTINUE HERE — 2026-06-21 **ENGINEERING CORPS — increment 2: ABATIS / OBSTACLES shipped + hardened** (the axe; player-only/byte-identical; probe 15/15) — D88
+
+> **The Engineering Corps is 2 of 3 increments done.** A selected player infantry brigade now builds an **abatis** — a capped timber belt across its front (key **B** / "Abatis" button); enemies forcing it are slowed, disordered once per crossing (morale + fatigue), and fire raggedly until they recover; a nearby brigade **clears** a lane (key **X**). Build/clear time, slow, and disorder all read the **B-5 realism slider** (`fldEngRealism()`). 2D stake-line + 3D crossed-timber (fog-gated), HUD lines, and a Mahan-sourced teaching end-card. **Player-only → every AI-vs-AI baseline is byte-identical.**
+>
+> **Provenance:** the abatis code was authored 2026-06-20 but left uncommitted/unvetted when the prior **Codex** session ran out of usage (its only landed work was the browser-probe Seatbelt guard — committed separately as `679ee7d`). This session vetted it through the full gate + bug-hunt and pushed it (`02b2dd8`).
+>
+> **Architecture:** the abatis half of `src/tactical/T13-engineering.js` + guarded T0 seams (`fldMoveFactor` gains `u`, `fldResolveFire` fire factor, `fldStepMovement` move-gate, `fldInitSim` reset, `fldOnOver` end-card, DOM buttons + keys B/X) + a **T8 `_fldBuildPhase` per-phase reset** (`fldEngPhaseReset`). Every seam is an exact identity with no live belt.
+>
+> **Bug-hunt (16 agents, Opus): 8 confirmed + 4 critic, all fixed.** HIGH: belts leaked across phases in multi-phase battles (Vicksburg/Antietam/Gettysburg) → `fldEngPhaseReset` (keeps `_engUsed` for the end-card). MED: abandoned belts never decayed → fade like abandoned entrenchments. MED: render ignored fog → fog-gated 2D+3D. LOW: same-tick id collision → monotonic `_engObsSeq`. LOW: routing-unit morale dock → routing guard. **Kept (deliberate):** entrench+abatis on one brigade (historically correct — Fredericksburg/Cold Harbor apron) and one disorder shock per crossing.
+>
+> **Verification:** build GATE OK; `probe-engineering-corps` **15/15** (added: multi-phase reset, abandoned decay, unique ids, routing immunity); full no-regression **GREEN (50 probes, 0 pageerrors, diag-classic `nonBlank:346`)**. Also fixed a D86 leftover: `probe-custom-battle-builder` was red since Vicksburg shipped (EXPECTED registry omitted `vicksburg`) → 9/9.
+>
+> **Next (the LAST engineering increment):** **PONTOON bridging** — a NEW river/water terrain feature + a bridge-laying engineer step + a crossing gate (fordable vs requires-pontoon, realism-gated); the Bull Run terrain already has Young's Branch / the Stone Bridge to build against. Then C tactical breadth (Chickamauga/Chattanooga, C3 USCT). **Resume map:** START-HERE.md → this block → WAKE-UP.md top block → newest RUN-LOG.md entry → DECISIONS.md D88 → `src/tactical/T13-engineering.js` (header + the abatis fns) + the T0/T8 seams (grep `T13`/`fldEng`) → `tools/probe-engineering-corps.mjs`.
+
+---
+
 ## ⚡ CONTINUE HERE — 2026-06-20 **ENGINEERING CORPS — increment 1: FIELD ENTRENCHMENTS shipped** (the spade; byte-identical; probe 8/8) — D87
 
 > **The Tactical Engineering Corps has begun.** Aaron locked the full corps ("all of the above" — entrench + abatis + pontoons), so it ships as one module `src/tactical/T13-engineering.js` in vetted increments. Increment 1 = FIELD ENTRENCHMENTS: a player brigade ordered to Entrench (key **E** + control-bar button + help copy) digs in over ~70 sim-seconds for earned, facing-aware parapet cover; marching off abandons the works. Reads the B-5 realism slider (Arcade fast/×1.43, Balanced ×1.62, Historian slow/×1.81). 2D dirt parapet + 3D dirt berm (low-tier aware, reduceMotion-safe).

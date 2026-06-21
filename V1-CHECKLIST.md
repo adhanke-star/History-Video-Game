@@ -110,7 +110,10 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       run-k directive, 2026-06-15; "all of the above" locked 2026-06-20, D87).** Built as `src/tactical/T13-engineering.js`
       in vetted increments. ~~Field entrenchments~~ ✅ (key E; dig-in → facing-aware parapet cover; reads the B-5
       realism slider Arcade ×1.43 / Balanced ×1.62 / Historian ×1.81; 2D+3D works; probe-engineering-corps 8/8;
-      byte-identical, player-only; D87). Remaining: ABATIS / obstacles, then PONTOON bridging (new river terrain).
+      byte-identical, player-only; D87). ~~ABATIS / obstacles~~ ✅ (key **B** build / **X** clear; slow + once-per-crossing
+      disorder + ragged fire; reads the B-5 realism slider; fog-gated 2D+3D; multi-phase-safe; player-only/byte-identical;
+      probe-engineering-corps **15/15**; Mahan-sourced teaching card; bug-hunt 16 agents → 8 confirmed + 4 critic, all
+      fixed; **D88**). Remaining: **PONTOON bridging** (a NEW river/water terrain feature + bridge-laying + crossing gate) — the last increment.
       Extend the strategic **Engineer Works Corps** (`src/57-engineering.js`, D43;
       `bridgeArmy(C).engineering`) onto the real-time field as a distinct arm/role (the same gated-seam pattern
       B-4 used for art/cav): **pontoon bridges** (cross a creek/river — the Bull Run terrain already has

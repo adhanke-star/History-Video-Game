@@ -1,9 +1,9 @@
 # MASTER TASK LIST — The Civil War Video Game
 
-**Last updated:** 2026-06-20
-**Live head:** Vicksburg 3-phase siege finished + adversarially hardened (D86)
-**Phases complete:** A ✅, B (B1–B6) ✅, C-1 Eastern marquee ✅, C-2 Western (Shiloh ✅, Vicksburg ✅)
-**Phase in progress:** C (tactical breadth — Chickamauga/Chattanooga or C3 USCT next); next non-battle priority = Tactical Engineering Corps (Aaron directive)
+**Last updated:** 2026-06-21
+**Live head:** Engineering Corps increment 2 — ABATIS / obstacles shipped + adversarially hardened (D88); entrenchments were D87
+**Phases complete:** A ✅, B (B1–B6) ✅, C-1 Eastern marquee ✅, C-2 Western (Shiloh ✅, Vicksburg ✅); Engineering Corps 2 of 3 increments (entrench ✅, abatis ✅, pontoons remaining)
+**Phase in progress:** Engineering Corps final increment = **PONTOON bridging** (new river/water terrain) — then C tactical breadth (Chickamauga/Chattanooga or C3 USCT)
 
 ---
 
@@ -31,7 +31,7 @@
 - [ ] **Chickamauga / Chattanooga design pass** — Decide whether this is one battle, linked battles, or phases; solve theater framing, terrain lessons, balance, and roster placement.
 - [x] **Custom-battle builder C4** — Scenario schema UI, validation, launch contracts, export/shareable JSON, local slots, focused probe, and no-regression. Complete 2026-06-18 (D84).
 - [ ] **Modern battles selectable in Classic hex / Phase D start** — Frozen-Classic bridge work; high regression risk.
-- [~] **Tactical Engineering Corps on the field** — Aaron locked "all of the above" (D87). `src/tactical/T13-engineering.js`, built in vetted increments. ✅ Field entrenchments (key E, facing-aware cover, B-5 realism coupling, probe 8/8, byte-identical). Remaining: abatis/obstacles, pontoon bridging (new river terrain).
+- [~] **Tactical Engineering Corps on the field** — Aaron locked "all of the above" (D87). `src/tactical/T13-engineering.js`, built in vetted increments. ✅ Field entrenchments (key E, facing-aware cover, B-5 realism coupling, probe 8/8, byte-identical; D87). ✅ Abatis/obstacles (key B build / X clear, slow + once-per-crossing disorder + ragged fire, B-5-coupled, fog-gated 2D+3D, multi-phase-safe, probe 15/15; bug-hunt 8 confirmed + 4 critic all fixed; D88). Remaining: **pontoon bridging** (new river/water terrain) — the last increment.
 - [ ] **Full-campaign playthrough probe** — Long-running cross-layer gate from strategy to battle result to saves/victory.
 - [ ] **USCT battle arc design** — The Crater, New Market Heights, Olustee, Nashville; historically sensitive and mechanically distinct.
 - [ ] **S3 alt-history engine** — Divergence tiers, hinge forks, emergent-only toggle, and divergence log.
