@@ -31,6 +31,8 @@ const scenes = [
   { name: 'visual-gettysburg-3d', scenario: 'gettysburg', renderer: '3d', seed: 7, steps: 460, settle: 1000 },
   { name: 'visual-chancellorsville-2d', scenario: 'chancellorsville', renderer: '2d', seed: 21, steps: 520, settle: 350 },
   { name: 'visual-chancellorsville-3d', scenario: 'chancellorsville', renderer: '3d', seed: 21, steps: 520, settle: 1000 },
+  { name: 'visual-chickamauga-2d', scenario: 'chickamauga', renderer: '2d', seed: 7, steps: 480, settle: 350 },
+  { name: 'visual-chickamauga-3d', scenario: 'chickamauga', renderer: '3d', seed: 7, steps: 480, settle: 1000 },
 ];
 
 async function ensureServer() {

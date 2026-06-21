@@ -48,7 +48,7 @@ function _hpShowWelcome() {
     '<hr class="rule">' +
     '<p style="font-size:13px;opacity:.8;margin-bottom:10px"><strong>Quick start:</strong> ' +
       'Click <em>"Federal Armies Muster for War"</em> for a Union campaign, or use the tactical battle buttons for ' +
-      'First Bull Run, Malvern Hill, Antietam, Fredericksburg, Chancellorsville, Gettysburg, or Shiloh. The Skirmish button opens a custom real-time fight.</p>' +
+      'First Bull Run, Malvern Hill, Antietam, Fredericksburg, Chancellorsville, Gettysburg, Shiloh, Vicksburg, or Chickamauga. The Skirmish button opens a custom real-time fight.</p>' +
     '<p style="font-size:12px;opacity:.65;margin-bottom:14px">Press <kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;font-size:11px">?</kbd> anytime for controls help.</p>' +
     '<div class="btn-row">' +
       '<button class="bigbtn" id="hpWelcomeOk" aria-label="Got it — proceed to the main menu">To the Field</button>' +

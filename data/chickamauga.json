@@ -1,0 +1,328 @@
+{
+  "_comment": "PHASE C WESTERN BREADTH - CHICKAMAUGA, September 19-20, 1863. A three-phase epic on the __FIELD real-time multi-phase (T8) engine: P0 The Battle in the Woods (Sep 19 meeting engagement in dense timber; the woods themselves blind both armies, fog-of-war off by default but heavy woods terrain - the Union line holds the road Sep 19, which is historical: the breakthrough came the next day), P1 Longstreet's Breakthrough (Sep 20 late morning, the Wood gap at the Brotherton farm - the decisive, scoreWeight-3 phase), P2 The Rock of Chickamauga (Sep 20 afternoon, Thomas holds Snodgrass Hill / Horseshoe Ridge - a Union defensive success in which the cautious CS assault pays the failed-assault price). The teaching is CONTINGENCY OVER GENIUS: a Confederate victory handed to Longstreet by a Union staff error, then squandered by Bragg's failure to pursue. Outcomes EMERGE from OOB / terrain / timing / doctrine under the ONE universal combat model (D74) - NO per-battle damage fudge. BALANCE (AI-vs-AI, 32 seeds, deterministic): P0 US-holds 32/32 (mutual bloodbath), P1 CS-breakthrough 32/32, P2 US-holds 32/32 with the CS attacker paying ~3:1; aggregate CS 32/32 (CS 3 / US 2 via the weight-3 breakthrough), with the alt-history path that a human US player who closes the gap in P1 overturns the battle. Top-level attacker=CS / defender=US across all three phases: the Army of the Cumberland fought on the defensive throughout, so the CS player takes the offensive (Bragg) and the US player holds (Thomas). Strengths are Inferred brigade-scale abstractions (a division per marker); the sequence, ground, command facts, and leader fates are Verified (and were run through an adversarial fact-check that corrected Hood's wounding to Sep 20 / Maj. Gen., Helm to Breckinridge's division, restored Cheatham, removed Loring, and left the gap-reporter's identity flagged as disputed).",
+  "chickamauga": {
+    "id": "chickamauga",
+    "name": "Chickamauga - The River of Death",
+    "date": "September 19-20, 1863",
+    "place": "West Chickamauga Creek, Catoosa & Walker Counties, Georgia - twelve miles south of Chattanooga",
+    "blurb": "The bloodiest battle of the Western Theater, and the Confederacy's greatest victory there - won, then squandered. In dense second-growth timber along West Chickamauga Creek, two armies grope into a confused meeting engagement on September 19. On the 20th a Union staff error pulls Wood's division out of line at the Brotherton farm at the exact moment Longstreet's deep assault column happens to strike that point; the Union right and center disintegrate. What saves the Army of the Cumberland from annihilation is George Thomas's stand on Snodgrass Hill and Horseshoe Ridge - the Rock of Chickamauga - and Granger and Steedman marching unordered to the sound of the guns. Bragg wins the field but fails to pursue; the Federals fall back into Chattanooga and are besieged, setting the stage for Grant's reversal that November.",
+    "provenance": "Verified (high) for the two-day sequence, the Sep 19 woods fight, the Sep 20 Wood-gap order and Longstreet's coincident breakthrough at the Brotherton farm, Thomas's Snodgrass Hill / Horseshoe Ridge stand, Granger and Steedman's unordered relief (~95,000 rounds, per Granger's report), the casualty totals (~34,000 combined; CS ~18,454; US ~16,170), and the named leader fates. Inferred (medium) for per-unit strengths and exact field placement. Anti-Lost-Cause frame: the breakthrough was contingency - a misread report, a literal-minded obedience, and a timing coincidence - not Confederate martial genius; and the victory was strategically squandered. The popular gloss of 'Chickamauga' as Cherokee for 'River of Death' is a DISPUTED folk etymology, carried here only as the name the soldiers gave it, never as documented fact.",
+    "field": { "w": 1200, "h": 900 },
+    "attacker": "CS",
+    "defender": "US",
+    "defaultFog": false,
+    "timeLimitSec": 230,
+    "holdToWinSec": 78,
+    "menu": {
+      "title": "CHICKAMAUGA (1863)",
+      "deck": "The river of death - a three-phase Western epic. Grope through the fogged woods of Sep 19, pour through the Brotherton gap behind Longstreet, then storm - or hold - Thomas's ridge.",
+      "aria": "Chickamauga, September 19 to 20, 1863 - a multi-phase Western Theater battle: the meeting engagement in the woods, Longstreet's breakthrough at the Brotherton gap, and Thomas's stand on Snodgrass Hill and Horseshoe Ridge."
+    },
+    "sides": {
+      "heading": "Chickamauga - Take Which Command?",
+      "intro": "September 19-20, 1863 - the woods south of Chattanooga. Three sectors, fought in sequence. Lead the army of your choosing.",
+      "US": {
+        "title": "Command the Union (Rosecrans / Thomas)",
+        "badge": "&#9819; HOLD",
+        "deck": "Fight the blind woods, survive the breakthrough that wrecked the right, and then BE the Rock: hold Snodgrass Hill and Horseshoe Ridge until dark and save the Army of the Cumberland."
+      },
+      "CS": {
+        "title": "Command the Confederacy (Bragg / Longstreet)",
+        "badge": "&#9876; ATTACK",
+        "deck": "Win the woods, pour the assault column through the Brotherton gap, and try what Bragg could not: carry Thomas's ridge and destroy the Federal army before it reaches Chattanooga."
+      },
+      "foot": "The other army is commanded by the AI. Three phases play in sequence; the cost carries forward. The Sep 19 woods are a blind tangle of timber where neither army could see far (press V in battle to toggle fog-of-war)."
+    },
+    "brief": {
+      "attack": "This is not one charge. First win the blind slugging match in the timber, then exploit the gap Wood's withdrawal opens behind Longstreet's column, then turn on Thomas's ridge. <b>This is your war:</b> history won the field here and threw the victory away - can you carry the ridge that Bragg never could?",
+      "defend": "Hold the woods as best you can, ride out the breakthrough that shatters the right, and then make your stand where Thomas made his: Snodgrass Hill and Horseshoe Ridge, covering the only road out. <b>This is your war:</b> the field may be lost, but the army can be saved."
+    },
+    "objective": { "x": 600, "z": 345, "r": 150, "name": "the Chickamauga line" },
+    "phases": [
+      {
+        "id": "the-woods",
+        "name": "Sep 19 - The Battle in the Woods",
+        "sector": "the West Chickamauga Creek bottomland - Winfrey, Brock, and Viniard Fields along the LaFayette Road",
+        "timing": "September 19, 1863 - from morning until dark",
+        "attacker": "CS",
+        "defender": "US",
+        "assaultDoctrine": null,
+        "defaultFog": false,
+        "holdToWinSec": 76,
+        "timeLimitSec": 220,
+        "scoreWeight": 1,
+        "objective": { "x": 600, "z": 350, "r": 150, "name": "the LaFayette Road crossing" },
+        "transition": {
+          "title": "The Battle in the Woods",
+          "lead": "September 19. Thomas sends Brannan east to destroy what is reported as one isolated Confederate brigade near Jay's Mill. Instead he strikes Forrest's dismounted cavalry and the lead of Walker's Reserve Corps, and the fight mushrooms all along the line. Both armies feed divisions piecemeal into blind timber, firing at sound."
+        },
+        "terrain": {
+          "hills": [
+            { "name": "the low rise west of the creek", "x": 600, "z": 470, "h": 10, "s": 200, "note": "Gentle ground sloping up from West Chickamauga Creek toward the LaFayette Road; minor elevation in mostly flat, wooded bottomland. (Inferred relief; Verified character)" }
+          ],
+          "woods": [
+            { "x": 600, "z": 600, "r": 150, "note": "Dense second-growth oak/pine/cedar with laurel thickets - the dominant terrain. Spotting and command degrade within a hundred yards; artillery is nearly useless. (Verified)" },
+            { "x": 360, "z": 560, "r": 120, "note": "The blind northern timber where Brannan's advance ran into Forrest and Liddell. (Verified character)" },
+            { "x": 840, "z": 560, "r": 120, "note": "Southern timber screening the approach toward the Viniard farm. (Verified character)" },
+            { "x": 470, "z": 420, "r": 95, "note": "Thickets crowding the LaFayette Road - the clearings were the only islands of visibility." },
+            { "x": 740, "z": 420, "r": 95, "note": "Brush along the road where lines overlapped and fired into one another." }
+          ],
+          "walls": [
+            { "x1": 470, "z1": 405, "x2": 740, "z2": 405, "note": "RAIL-FENCE AND LOG COVER - the only field works on Sep 19; Thomas's men begin throwing up rough breastworks late in the day. Light cover, not a fortified line. (Verified concept; Inferred placement)" }
+          ],
+          "markers": [
+            { "kind": "road", "name": "LaFayette Road", "path": [[600, 850], [600, 600], [600, 350], [600, 120]], "note": "The north-south road both armies grope toward - the Union army's lifeline back to Chattanooga via Rossville. (Verified)" },
+            { "kind": "label", "name": "West Chickamauga Creek", "x": 600, "z": 830, "note": "The Confederate axis of entry, crossed at Reed's and Alexander's bridges on Sep 18. The name is Cherokee; the popular 'River of Death' gloss is a disputed legend. (Verified geography)" },
+            { "kind": "label", "name": "Winfrey Field", "x": 380, "z": 470, "note": "Northern first-contact clearing; Brig. Gen. Preston Smith was killed near here that night, riding into Union lines in the dark. (Verified)" },
+            { "kind": "label", "name": "Brock Field", "x": 600, "z": 430, "note": "Where Thomas's line extended north all day to avoid being flanked. (Verified)" },
+            { "kind": "label", "name": "Viniard Field", "x": 820, "z": 460, "note": "Southern sector; Hood's arriving brigades drove for the LaFayette Road here in mid-afternoon. Col. Hans Heg was mortally wounded in this fighting. (Verified)" }
+          ]
+        },
+        "leaders": {
+          "_note": "A meeting engagement: both armies attacking by sound. Thomas holds and extends the Union left; the Confederates feed in division after division but cannot land a decision in the timber.",
+          "US": [
+            { "id": "ld_thomas_woods", "name": "Maj. Gen. George H. Thomas", "short": "Thomas", "quality": 0.8, "radius": 270, "x": 600, "z": 230, "fate": 3.4, "note": "Commander of XIV Corps and the Union left. He extended his line north all day to avoid a flank and began fortifying log breastworks overnight - the decision that saved his corps the next day. (Verified)" },
+            { "id": "ld_brannan_woods", "name": "Brig. Gen. John Brannan", "short": "Brannan", "quality": 0.66, "radius": 220, "attach": "us_brannan_woods", "fate": 2.6, "note": "Sent to destroy a reported isolated brigade, his advance instead ignited the general engagement. (Verified)" }
+          ],
+          "CS": [
+            { "id": "ld_cheatham_woods", "name": "Maj. Gen. Frank Cheatham", "short": "Cheatham", "quality": 0.7, "radius": 230, "attach": "cs_cheatham_woods", "fate": 2.4, "note": "His Tennesseans (Maney, Wright, Strahl, Jackson) fought the hardest of the day at Winfrey Field. (Verified; division restored to the OOB after the fact-check flagged its omission)" },
+            { "id": "ld_stewart_woods", "name": "Maj. Gen. Alexander P. Stewart", "short": "Stewart", "quality": 0.68, "radius": 220, "x": 720, "z": 800, "fate": 2.3, "note": "Made the deepest Confederate drives of the day toward the LaFayette Road before darkness and Federal artillery stopped them. (Verified)" },
+            { "id": "ld_liddell_woods", "name": "Brig. Gen. St. John R. Liddell", "short": "Liddell", "quality": 0.64, "radius": 200, "x": 470, "z": 805, "fate": 2.2, "note": "Walker's Reserve Corps; made significant penetrations in the woods but could not exploit without support. (Verified)" }
+          ]
+        },
+        "supply": {
+          "US": { "x": 600, "z": 150, "name": "Union trains - the LaFayette / Rossville road" },
+          "CS": { "x": 600, "z": 855, "name": "Confederate trains - the Chickamauga Creek crossings" }
+        },
+        "oob": {
+          "US": [
+            { "id": "us_brannan_woods", "name": "Brannan's Division, XIV Corps", "commander": "Brig. Gen. John Brannan", "arm": "inf", "weapon": "rifled", "men": 3550, "xp": 2, "x": 560, "z": 400, "facing": 3.14159, "formation": "line", "note": "Opened the battle east of the LaFayette Road; held the Union left-center through the day. (Verified role; Inferred strength)" },
+            { "id": "us_baird_woods", "name": "Baird's Division, XIV Corps", "commander": "Brig. Gen. Absalom Baird", "arm": "inf", "weapon": "rifled", "men": 3350, "xp": 2, "x": 410, "z": 385, "facing": 3.14159, "formation": "line", "note": "Anchored the northern extension of Thomas's line against the Confederate right. (Verified role; Inferred strength)" },
+            { "id": "us_davis_woods", "name": "Davis's Division, XX Corps", "commander": "Brig. Gen. Jefferson C. Davis", "arm": "inf", "weapon": "rifled", "men": 3600, "xp": 2, "x": 730, "z": 415, "facing": 3.14159, "formation": "line", "note": "Held the Viniard sector on the south; Col. Hans Heg's brigade was wrecked here, Heg mortally wounded. (Verified role; Inferred strength)" },
+            { "id": "us_lilly_battery", "name": "18th Indiana Battery (Wilder's Brigade)", "commander": "Capt. Eli Lilly", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 6, "men": 150, "xp": 3, "x": 600, "z": 305, "facing": 3.14159, "formation": "line", "note": "Light artillery of Wilder's mounted-infantry 'Lightning Brigade'; one of the few guns that could be brought to bear in the timber. Universal gun model: 6 guns. NOTE: the 18th Indiana BATTERY, not the infantry regiment. (Verified unit; Inferred placement)" }
+          ],
+          "CS": [
+            { "id": "cs_cheatham_woods", "name": "Cheatham's Division, Polk's Wing", "commander": "Maj. Gen. Frank Cheatham", "arm": "inf", "weapon": "rifled", "men": 3500, "xp": 3, "x": 560, "z": 790, "facing": 0, "formation": "line", "note": "Four Tennessee brigades; the hardest fighting of the day at Winfrey Field. (Verified role; Inferred strength)" },
+            { "id": "cs_stewart_woods", "name": "Stewart's Division, Buckner's Corps", "commander": "Maj. Gen. Alexander P. Stewart", "arm": "inf", "weapon": "rifled", "men": 3400, "xp": 3, "x": 730, "z": 800, "facing": 0, "formation": "line", "note": "Drove deepest toward the LaFayette Road in the afternoon. (Verified role; Inferred strength)" },
+            { "id": "cs_liddell_woods", "name": "Liddell's Division, Walker's Reserve Corps", "commander": "Brig. Gen. St. John R. Liddell", "arm": "inf", "weapon": "rifled", "men": 3300, "xp": 3, "x": 410, "z": 800, "facing": 0, "formation": "line", "note": "Walker's Reserve Corps on the Confederate right, where the battle opened against Brannan. (Verified role; Inferred strength)" },
+            { "id": "cs_reserve_battery_woods", "name": "Reserve Corps Battery", "commander": "Walker's wing artillery", "arm": "art", "weapon": "smooth", "role": "attack", "guns": 6, "men": 150, "xp": 2, "x": 600, "z": 850, "facing": 0, "formation": "line", "note": "Battalion artillery attached to the wing; the timber neutered most Confederate gunnery on Sep 19. Universal gun model: 6 guns. (Verified concept; Inferred battery/placement)" }
+          ]
+        },
+        "reinforcements": [
+          { "id": "cs_hood_arrives", "side": "CS", "atSec": 50, "name": "Hood's Arriving Brigades", "commander": "Maj. Gen. John Bell Hood", "arm": "inf", "weapon": "rifled", "men": 2900, "xp": 3, "x": 700, "z": 850, "facing": 0, "formation": "column", "entry": "off the cars and into the Viniard fight", "note": "The lead of Longstreet's corps, just off the trains from Virginia, thrown straight into the afternoon drive on the LaFayette Road. (Verified arrival; Inferred strength)" },
+          { "id": "us_reynolds_woods", "side": "US", "atSec": 78, "name": "Reynolds's Division", "commander": "Maj. Gen. Joseph Reynolds", "arm": "inf", "weapon": "rifled", "men": 2700, "xp": 2, "x": 560, "z": 130, "facing": 3.14159, "formation": "column", "entry": "into the center from the reserve", "note": "XIV Corps reserve fed in to shore up the center as the line is pressed. (Verified presence; Inferred timing/strength)" }
+        ],
+        "teaching": {
+          "head": "The Fields Were the Battle",
+          "body": "In second-growth timber a brigade lost alignment within a hundred yards; units fought by sound, overlapped, and fired into each other. The clearings were the only islands of visibility, artillery, and road access - whoever held a field could see and shoot, while the woods between were corridors where commands vanished from control. That is why September 19 produced enormous casualties and no decision: nobody could see enough to win.",
+          "provenance": "Verified (high) - the terrain character and the command chaos it caused are well-documented."
+        }
+      },
+      {
+        "id": "longstreet-breakthrough",
+        "name": "Sep 20 - Longstreet's Breakthrough",
+        "sector": "the Brotherton farm on the LaFayette Road; exploitation through Dyer Field toward the Dry Valley Road",
+        "timing": "September 20, 1863 - late morning, the gap and the half-hour after (~11:00 a.m.)",
+        "attacker": "CS",
+        "defender": "US",
+        "assaultDoctrine": null,
+        "defaultFog": false,
+        "holdToWinSec": 44,
+        "timeLimitSec": 210,
+        "scoreWeight": 3,
+        "objective": { "x": 600, "z": 350, "r": 150, "name": "the Brotherton gap and Dyer Field" },
+        "transition": {
+          "title": "Longstreet's Breakthrough",
+          "lead": "September 20, late morning. An order from Rosecrans - on a staff officer's faulty report that Brannan was out of line - tells Wood to 'close up on Reynolds and support him.' Wood obeys literally and pulls his division OUT of line, opening a quarter-mile gap at the Brotherton farm. At that exact moment, Longstreet's deep assault column happens to strike that point."
+        },
+        "terrain": {
+          "hills": [
+            { "name": "the Dyer Field rise", "x": 600, "z": 470, "h": 12, "s": 220, "note": "Open, gently rolling farmland west of the LaFayette Road - the exploitation ground where the Confederate column fanned out into the Union rear. (Verified character)" }
+          ],
+          "woods": [
+            { "x": 340, "z": 540, "r": 110, "note": "Timber on the north flank of the breakthrough corridor." },
+            { "x": 870, "z": 540, "r": 110, "note": "Timber on the south flank, toward the collapsing Union right." }
+          ],
+          "walls": [],
+          "markers": [
+            { "kind": "road", "name": "LaFayette Road", "path": [[600, 850], [600, 600], [600, 350], [600, 120]], "note": "The seam that opens: the Brotherton crossing is where Wood's withdrawal tears the line. (Verified)" },
+            { "kind": "road", "name": "Dry Valley Road", "path": [[300, 840], [360, 600], [430, 380], [520, 170]], "note": "The Union right's retreat route - and the axis Longstreet's column drives toward. (Verified)" },
+            { "kind": "label", "name": "Brotherton Cabin", "x": 600, "z": 360, "note": "The farm at the gap - the hinge of the entire battle. There is no wall here, and no line: that is the point. (Verified)" },
+            { "kind": "label", "name": "Dyer Field", "x": 470, "z": 470, "note": "The open ground the column poured across once through the gap. (Verified)" },
+            { "kind": "label", "name": "Snodgrass Farm", "x": 760, "z": 250, "note": "Where the survivors of the broken right begin to coalesce - the next stand. (Verified)" }
+          ]
+        },
+        "leaders": {
+          "_note": "The hinge, and the case study in contingency. A misread report, a literal-minded obedience, and a timing coincidence hand Longstreet a clean penetration. Hood is wounded leading the column in; Lytle is killed rallying against it.",
+          "US": [
+            { "id": "ld_wood_gap", "name": "Brig. Gen. Thomas J. Wood", "short": "Wood", "quality": 0.55, "radius": 200, "attach": "us_wood_gap", "fate": 2.6, "note": "Obeyed a flawed order literally rather than querying it - likely conditioned by a recent public reprimand from Rosecrans for slowness - and pulled his division out of line, creating the gap. (Verified act; the psychological cause is a documented Inference)" },
+            { "id": "ld_lytle_gap", "name": "Brig. Gen. William H. Lytle", "short": "Lytle", "quality": 0.62, "radius": 190, "attach": "us_sheridan_gap", "fate": 1.5, "note": "Brigade commander in Sheridan's division and a noted poet; shot from his horse rallying his men against the assault. Widely mourned in the North. (Verified fate - killed Sep 20; low fate weight = exposed)" }
+          ],
+          "CS": [
+            { "id": "ld_longstreet_gap", "name": "Lt. Gen. James Longstreet", "short": "Longstreet", "quality": 0.82, "radius": 270, "x": 600, "z": 840, "fate": 3.2, "note": "Arranged the deep assault column. He did NOT know the gap would open - he struck where ordered, and his column's depth made exploitation unstoppable once it penetrated. (Verified)" },
+            { "id": "ld_hood_gap", "name": "Maj. Gen. John Bell Hood", "short": "Hood", "quality": 0.74, "radius": 220, "attach": "cs_johnson_gap", "fate": 1.7, "note": "Commanded the left-wing assault column. Wounded DURING this Sep 20 assault; right leg amputated near the hip; survived. A MAJOR general at this battle - the lieutenant-generalcy came afterward. (Verified - corrected from a common Sep-19 / Lt.-Gen. error; low fate weight = exposed leading the column)" },
+            { "id": "ld_johnson_gap", "name": "Brig. Gen. Bushrod R. Johnson", "short": "Johnson", "quality": 0.72, "radius": 215, "x": 600, "z": 795, "fate": 2.5, "note": "His division entered the gap first and drove cleanly through into the Union rear toward the Dry Valley Road (McNair, Gregg, Fulton brigades). (Verified)" }
+          ]
+        },
+        "supply": {
+          "US": { "x": 600, "z": 150, "name": "Union trains - the Dry Valley / Rossville road" },
+          "CS": { "x": 600, "z": 855, "name": "Confederate trains - east of the LaFayette Road" }
+        },
+        "oob": {
+          "US": [
+            { "id": "us_wood_gap", "name": "Wood's Division (out of line)", "commander": "Brig. Gen. Thomas J. Wood", "arm": "inf", "weapon": "rifled", "men": 2000, "xp": 2, "x": 430, "z": 235, "facing": 3.14159, "formation": "column", "note": "Caught in column marching behind Brannan when the assault struck - well to the rear and out of position to defend the very ground it had just vacated, which is why it cannot stop the breakthrough. (Verified act; Inferred strength/placement)" },
+            { "id": "us_sheridan_gap", "name": "Sheridan's Division, XX Corps", "commander": "Maj. Gen. Philip H. Sheridan", "arm": "inf", "weapon": "rifled", "men": 2400, "xp": 2, "x": 760, "z": 430, "facing": 3.14159, "formation": "line", "note": "On the right, struck in flank and rolled up; Lytle killed here. Sheridan reassembled fragments only north of the field. (Verified role; Inferred strength)" },
+            { "id": "us_davis_gap", "name": "Davis's Division, XX Corps", "commander": "Brig. Gen. Jefferson C. Davis", "arm": "inf", "weapon": "rifled", "men": 2000, "xp": 2, "x": 600, "z": 455, "facing": 3.14159, "formation": "line", "note": "The thin line directly at the Brotherton seam, overrun as the column came through. (Verified role; Inferred strength)" },
+            { "id": "us_brotherton_battery", "name": "Brotherton Road Battery", "commander": "XX Corps divisional artillery", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 4, "men": 100, "xp": 2, "x": 615, "z": 320, "facing": 3.14159, "formation": "line", "note": "A couple of Union guns near the Brotherton Road, engaged just before the gap opened and swamped by the breakthrough. Universal gun model: 4 guns. (Verified concept; Inferred grouping)" }
+          ],
+          "CS": [
+            { "id": "cs_johnson_gap", "name": "Johnson's Division - the spearhead", "commander": "Brig. Gen. Bushrod R. Johnson", "arm": "inf", "weapon": "rifled", "men": 4100, "xp": 3, "x": 600, "z": 780, "facing": 0, "formation": "column", "note": "Led the penetrating column straight through the Brotherton gap - the mass of infantry, in column, that depth made unstoppable. (Verified role; Inferred strength)" },
+            { "id": "cs_law_gap", "name": "Law's Division (Hood's old ANV division)", "commander": "Brig. Gen. Evander Law", "arm": "inf", "weapon": "rifled", "men": 3600, "xp": 3, "x": 470, "z": 800, "facing": 0, "formation": "line", "note": "Veteran Army of Northern Virginia brigades (Sheffield, Robertson, Benning); Law took the division when Hood was wounded during the assault. (Verified role; Inferred strength)" },
+            { "id": "cs_hindman_gap", "name": "Hindman's Division", "commander": "Maj. Gen. Thomas C. Hindman", "arm": "inf", "weapon": "rifled", "men": 3500, "xp": 3, "x": 730, "z": 800, "facing": 0, "formation": "line", "note": "Attacked on Johnson's flank, widening the breach and exploiting toward the Dry Valley Road. (Verified role; Inferred strength)" },
+            { "id": "cs_leftwing_battery_gap", "name": "Left-Wing Battery", "commander": "Longstreet's left-wing artillery", "arm": "art", "weapon": "smooth", "role": "attack", "guns": 8, "men": 200, "xp": 3, "x": 600, "z": 850, "facing": 0, "formation": "line", "note": "Confederate guns played a larger role on Sep 20 in the more open breakthrough corridor. Universal gun model: 8 guns. (Verified concept; Inferred battery/count)" }
+          ]
+        },
+        "reinforcements": [
+          { "id": "cs_kershaw_exploit", "side": "CS", "atSec": 34, "name": "Kershaw's Brigades", "commander": "Brig. Gen. Joseph Kershaw", "arm": "inf", "weapon": "rifled", "men": 3200, "xp": 3, "x": 540, "z": 850, "facing": 0, "formation": "column", "entry": "exploiting the breach behind Johnson", "note": "On-field elements of McLaws's division (Kershaw, Humphreys); McLaws himself was not yet up. Fed in early to deepen the exploitation. (Verified - Kershaw led the on-field elements; Inferred timing/strength)" },
+          { "id": "us_negley_late", "side": "US", "atSec": 110, "name": "Negley's Fragments", "commander": "Maj. Gen. James Negley", "arm": "inf", "weapon": "rifled", "men": 1600, "xp": 1, "x": 470, "z": 130, "facing": 3.14159, "formation": "column", "entry": "a thin counter that arrives too late", "note": "Negley's controversial Sep 20 conduct - he withdrew much of his division before consolidation and was later court-martialed (acquitted). Represented as a weak, late reaction that cannot undo the breakthrough. (Verified controversy; Inferred timing/strength)" }
+        ],
+        "teaching": {
+          "head": "Contingency, Not Genius",
+          "body": "The breakthrough was a Union command failure exploited by a well-organized assault column, joined by a timing coincidence neither side anticipated. A staff officer misread a screened position; a general obeyed a flawed order literally; a gap opened at the moment and place of a pre-planned attack. Longstreet's real contribution was the depth and mass of his column, which made exploitation unstoppable once penetration occurred - but he did not produce the gap. Shift any one variable - the report read right, the order queried, the column twenty minutes off - and the day likely ends as a costly Confederate repulse against a continuous line. Decisive battles are usually made this way, by compounding accident, not by the martial superiority the Lost Cause imagined.",
+          "provenance": "Verified (high) for the Wood order, its faulty premise, and the coincident assault; the exact identity of the staff officer who reported the gap is Disputed (commonly attributed to Capt. Sanford Kellogg) and is not asserted here."
+        }
+      },
+      {
+        "id": "snodgrass-horseshoe",
+        "name": "Sep 20 - The Rock of Chickamauga",
+        "sector": "Snodgrass Hill and Horseshoe Ridge, west of the LaFayette Road, covering the Dry Valley Road escape",
+        "timing": "September 20, 1863 - afternoon into dusk (assaults ~2:00-6:00 p.m.)",
+        "attacker": "CS",
+        "defender": "US",
+        "assaultDoctrine": "cautious",
+        "defaultFog": false,
+        "holdToWinSec": 92,
+        "timeLimitSec": 250,
+        "scoreWeight": 1,
+        "objective": { "x": 600, "z": 330, "r": 150, "name": "Snodgrass Hill and Horseshoe Ridge" },
+        "transition": {
+          "title": "The Rock of Chickamauga",
+          "lead": "September 20, afternoon. As the right collapses, Thomas consolidates his intact XIV Corps core and the fugitives on Snodgrass Hill and Horseshoe Ridge - a wooded crescent rising a hundred feet that covers the army's only road out. Longstreet hurls division after division up the steep slopes. Hold until dark, and the Army of the Cumberland escapes."
+        },
+        "terrain": {
+          "hills": [
+            { "name": "Horseshoe Ridge", "x": 600, "z": 330, "h": 26, "s": 185, "note": "The curved wooded crest, ~100 ft, where Thomas's line bent back on itself. Attackers had to climb blind through scrub while defenders fired from the high ground. (Verified)" },
+            { "name": "Snodgrass Hill", "x": 760, "z": 360, "h": 22, "s": 130, "note": "The right end of the final position and Thomas's command post. (Verified)" },
+            { "name": "the Kelly Field rise", "x": 380, "z": 380, "h": 14, "s": 130, "note": "The northern anchor of the fishhook line, behind the breastworks, holding throughout. (Verified)" }
+          ],
+          "woods": [
+            { "x": 600, "z": 470, "r": 140, "note": "The steep, timbered southern face of Horseshoe Ridge - the defensive multiplier: Confederate brigades climbed blind through scrub into fire from the crest. (Verified)" },
+            { "x": 430, "z": 520, "r": 95, "note": "Wooded approaches below the Kelly Field line." },
+            { "x": 800, "z": 480, "r": 95, "note": "Timber below Snodgrass Hill on the right of the position." }
+          ],
+          "walls": [
+            { "x1": 470, "z1": 370, "x2": 740, "z2": 360, "note": "BREASTWORKS ON THE CREST - the log and rail works Thomas's men threw up to crown Horseshoe Ridge; earned cover that breaks the climbing assault. (Verified concept; Inferred placement)" },
+            { "x1": 300, "z1": 395, "x2": 470, "z2": 390, "note": "KELLY FIELD BREASTWORKS - the fortified northern anchor, held all afternoon so Thomas could strip nothing from it. (Verified concept; Inferred placement)" }
+          ],
+          "markers": [
+            { "kind": "road", "name": "Dry Valley Road", "path": [[600, 600], [500, 430], [400, 280], [300, 130]], "note": "The army's escape corridor below the western face - what the stand protects. (Verified)" },
+            { "kind": "label", "name": "McFarland's Gap / Rossville", "x": 250, "z": 150, "note": "The withdrawal axis. Thomas held until dusk, then peeled his units off the ridge in sequence and withdrew in order toward Rossville. (Verified)" },
+            { "kind": "label", "name": "Snodgrass House", "x": 770, "z": 345, "note": "Thomas's command post on the hill. (Verified)" },
+            { "kind": "label", "name": "Granger's approach from Rossville", "x": 430, "z": 165, "note": "Maj. Gen. Gordon Granger marched the Reserve Corps here unordered - 'to the sound of the guns' - with Steedman's division and ~95,000 rounds (per Granger's report). (Verified)" }
+          ]
+        },
+        "leaders": {
+          "_note": "The defensive success that limited the catastrophe. Thomas holds the high ground that covers the only road out; Granger and Steedman arrive unordered to secure the right. The Confederate assaults are costly and repulsed - the failed-assault lesson, mirrored from Fredericksburg.",
+          "US": [
+            { "id": "ld_thomas_rock", "name": "Maj. Gen. George H. Thomas", "short": "Thomas", "quality": 0.86, "radius": 290, "x": 600, "z": 250, "fate": 3.6, "note": "The Rock of Chickamauga: rallied broken troops, absorbed fugitives, built a coherent defense, held five hours, then withdrew in order. Grant later called it one of the finest tactical performances of the war. The army itself gave him the name. (Verified)" },
+            { "id": "ld_granger_rock", "name": "Maj. Gen. Gordon Granger", "short": "Granger", "quality": 0.74, "radius": 240, "attach": "us_steedman_rock", "fate": 2.7, "note": "Without orders, on his own initiative, marched the Reserve Corps to the sound of the guns and reinforced Thomas's right. A MAJOR general at the battle - corrected from a common Brigadier error. (Verified)" }
+          ],
+          "CS": [
+            { "id": "ld_longstreet_rock", "name": "Lt. Gen. James Longstreet", "short": "Longstreet", "quality": 0.78, "radius": 260, "x": 600, "z": 840, "fate": 3.0, "note": "Fed division after division up the ridge through the afternoon, but the high ground, the breastworks, and Granger's timely relief held. (Verified)" },
+            { "id": "ld_preston_rock", "name": "Brig. Gen. William Preston", "short": "Preston", "quality": 0.66, "radius": 205, "attach": "cs_preston_rock", "fate": 2.3, "note": "His fresh, unspent division (Gracie, Trigg, Kelly) made the late, bloody assaults on Horseshoe Ridge - costly and repulsed. Survived; not to be confused with Preston Smith, killed Sep 19. (Verified)" },
+            { "id": "ld_breck_rock", "name": "Maj. Gen. John C. Breckinridge", "short": "Breckinridge", "quality": 0.72, "radius": 220, "x": 380, "z": 800, "fate": 2.5, "note": "Pressed the Kelly Field line and tried to turn Thomas's left. Brig. Gen. Ben Hardin Helm - Lincoln's brother-in-law, commanding the Kentucky 'Orphan Brigade' in THIS division - was mortally wounded assaulting the breastworks that morning. (Verified - Helm corrected to Breckinridge's division, not Cleburne's)" }
+          ]
+        },
+        "supply": {
+          "US": { "x": 600, "z": 140, "name": "Union trains - the Dry Valley Road, and Granger's ammunition" },
+          "CS": { "x": 600, "z": 855, "name": "Confederate trains - the captured ground east of the road" }
+        },
+        "oob": {
+          "US": [
+            { "id": "us_brannan_rock", "name": "Brannan's Division, XIV Corps", "commander": "Brig. Gen. John Brannan", "arm": "inf", "weapon": "rifled", "men": 3300, "xp": 3, "x": 560, "z": 395, "facing": 3.14159, "formation": "line", "note": "Held the center of Horseshoe Ridge through the afternoon assaults. (Verified role; Inferred strength)" },
+            { "id": "us_reynolds_rock", "name": "Reynolds's Division, XIV Corps", "commander": "Maj. Gen. Joseph Reynolds", "arm": "inf", "weapon": "rifled", "men": 3300, "xp": 3, "x": 430, "z": 400, "facing": 3.14159, "formation": "line", "note": "The XIV Corps core that held the left all morning, intact into the stand on the ridge and the Kelly Field line. (Verified role; Inferred strength)" },
+            { "id": "us_harker_rock", "name": "Harker's Brigade (Wood's Division)", "commander": "Col. Charles Harker", "arm": "inf", "weapon": "rifled", "men": 2700, "xp": 3, "x": 700, "z": 400, "facing": 3.14159, "formation": "line", "note": "Harker's brigade made repeated famous stands on the right of Horseshoe Ridge / Snodgrass Hill, anchoring the position against Kershaw's and Preston's assaults. (Verified - Col. Harker on Horseshoe Ridge; he was a COLONEL at the battle, like Hans Heg - his brigadier-generalcy was dated to Sep 20 1863 but came afterward; Inferred strength)" },
+            { "id": "us_snodgrass_battery", "name": "Crest Battery (Snodgrass-Horseshoe)", "commander": "Union divisional artillery", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 6, "men": 150, "xp": 3, "x": 600, "z": 300, "facing": 3.14159, "formation": "line", "note": "Federal guns on the crest helped anchor the position and rake the climbing assaults. Universal gun model: 6 guns. (Verified concept; Inferred grouping)" }
+          ],
+          "CS": [
+            { "id": "cs_preston_rock", "name": "Preston's Division, Buckner's Corps", "commander": "Brig. Gen. William Preston", "arm": "inf", "weapon": "rifled", "men": 3300, "xp": 3, "x": 560, "z": 790, "facing": 0, "formation": "line", "note": "Fresh division thrown at Horseshoe Ridge in the late afternoon; the costliest of the assaults, and repulsed. (Verified role; Inferred strength)" },
+            { "id": "cs_kershaw_rock", "name": "Kershaw's Brigades", "commander": "Brig. Gen. Joseph Kershaw", "arm": "inf", "weapon": "rifled", "men": 2800, "xp": 3, "x": 720, "z": 800, "facing": 0, "formation": "line", "note": "On-field elements of McLaws's division assaulting the Snodgrass-Horseshoe slopes; McLaws himself was not present. (Verified role; Inferred strength)" },
+            { "id": "cs_breck_rock", "name": "Breckinridge's Division, Polk's Wing", "commander": "Maj. Gen. John C. Breckinridge", "arm": "inf", "weapon": "rifled", "men": 3200, "xp": 3, "x": 400, "z": 800, "facing": 0, "formation": "line", "note": "Pressed the Kelly Field breastworks on the Union left; Helm's Orphan Brigade was wrecked here. (Verified role; Inferred strength)" },
+            { "id": "cs_leftwing_battery_rock", "name": "Left-Wing Battery", "commander": "Longstreet's left-wing artillery", "arm": "art", "weapon": "smooth", "role": "attack", "guns": 8, "men": 200, "xp": 3, "x": 600, "z": 850, "facing": 0, "formation": "line", "note": "Supported the afternoon assaults, but could not soften a crest line behind breastworks. Universal gun model: 8 guns. (Verified concept; Inferred battery/count)" }
+          ]
+        },
+        "reinforcements": [
+          { "id": "us_steedman_rock", "side": "US", "atSec": 38, "name": "Steedman's Division (Granger's relief)", "commander": "Brig. Gen. James B. Steedman", "arm": "inf", "weapon": "rifled", "men": 3800, "xp": 3, "x": 540, "z": 215, "facing": 3.14159, "formation": "column", "entry": "marching unordered to the sound of the guns, ~95,000 rounds with them", "note": "Granger and Steedman arrived ~2:00-3:00 p.m. on Thomas's right; Steedman did not merely reinforce but counterattacked, his horse shot under him, driving back the force turning the Federal right and bringing the ammunition that let the ridge hold. (Verified - the relief march and the round-count, per Granger's report)" },
+          { "id": "cs_renewed_assault", "side": "CS", "atSec": 92, "name": "Renewed Assault Wave", "commander": "Longstreet's left wing", "arm": "inf", "weapon": "rifled", "men": 2800, "xp": 3, "x": 660, "z": 850, "facing": 0, "formation": "line", "entry": "another wave up the timbered slope", "note": "Successive Confederate waves climbed the ridge into the evening - and were spent against the crest. (Verified pattern; Inferred timing/strength)" }
+        ],
+        "teaching": {
+          "head": "The Stand That Limited the Disaster",
+          "body": "Without the Snodgrass / Horseshoe stand, Longstreet's breakthrough would have rolled the whole Federal army against impassable terrain with no line of retreat. Thomas held the high ground that covered the Dry Valley Road and McFarland's Gap - the army's only escape - until dusk, then peeled his units off the ridge in sequence and withdrew in order. The battle produced two acts of command independence: Longstreet's assault that nearly destroyed the Union army, and Granger's unordered march that saved what was left of it. A Confederate tactical victory on the field; an army preserved to fight again because one general did not run.",
+          "provenance": "Verified (high) - the stand, Granger and Steedman's unordered relief, the ~95,000 rounds (per Granger's report), and the dusk withdrawal are all documented."
+        }
+      }
+    ],
+    "endNote": {
+      "US": {
+        "US": "History is overturned. You blunted Longstreet's breakthrough and held the field of Chickamauga - the Wood gap that doomed the Army of the Cumberland in 1863 did not undo you. On this timeline there is no rout to Chattanooga, no siege, no Missionary Ridge reversal needed: the road to Georgia is barred from the start.",
+        "CS": "History is overturned against you. The breakthrough that won Chickamauga in 1863 never came clean - the Federal line held at the Brotherton farm, and the field stayed Union. The gateway to Georgia stays shut, and Bragg has no victory to squander."
+      },
+      "CS": {
+        "US": "History holds. The field is lost, as it was in September 1863 - but if Thomas held Horseshoe Ridge, the Army of the Cumberland slipped away through McFarland's Gap to fight again. A defensive success inside a defeat: that is the Rock of Chickamauga, and it is the real-history Union win condition here.",
+        "CS": "History holds - and you may have exceeded it. You won the field at Chickamauga as Bragg did. But remember what came next: Bragg failed to pursue, the army tore itself apart in the 'round robin' against him, and that November Grant broke the siege at Chattanooga and opened Georgia to Sherman. If you also carried Thomas's ridge - which history denied the Confederacy - you took the one thing that saved the Union army. The question the battle leaves is not whether the South could win here. It is whether winning here was worth what it cost."
+      },
+      "draw": "Neither army is driven from the field. Thomas's stand blunted the breakthrough enough to deny the Confederacy its clean victory - the bloodiest stalemate of the Western war, the Army of the Cumberland bloodied but intact, and the road to Chattanooga still contested."
+    },
+    "teaching": {
+      "title": "Chickamauga - The Victory They Threw Away",
+      "cards": [
+        {
+          "id": "ck_contingency",
+          "head": "Contingency Beat Genius",
+          "body": "The September 20 breakthrough was not Confederate martial superiority but a chain of accidents: a staff officer (commonly attributed to Capt. Sanford Kellogg, though the sources conflict) misread Brannan's screened position; Wood obeyed a flawed order literally; the gap opened at the exact moment and place Longstreet's pre-planned column happened to strike. Longstreet did not know the gap would open. His genuine merit was a deep, mass column that made exploitation unstoppable once penetration occurred - but the penetration itself was a gift of Union error. Shift any one variable and the day ends as a costly Confederate repulse.",
+          "provenance": "Verified (high) - the Wood order and the coincident assault are documented; the gap-reporter's exact identity is Disputed and is not asserted as fact."
+        },
+        {
+          "id": "ck_squandered",
+          "head": "The Victory They Squandered",
+          "body": "Bragg won the field but mounted no serious pursuit - exhaustion, broken command communications, and characteristic caution - and declined Forrest's urging to press toward Chattanooga. The Army of the Cumberland reached the city intact and fortified it. Then the army that won tore itself apart: the 'round robin' petition (Longstreet, Polk, D.H. Hill, Buckner and others) sought Bragg's removal; Davis visited in October and kept Bragg anyway; Polk and Hill were removed; Longstreet was sent off to Knoxville. In November, Grant's arrival and the assault up Missionary Ridge destroyed the siege. The victory consumed the instrument needed to exploit it.",
+          "provenance": "Verified (high) - the failure to pursue, the command implosion, and the November reversal are well-documented."
+        },
+        {
+          "id": "ck_railroad",
+          "head": "Longstreet's Railroad - A System With No Margin",
+          "body": "Longstreet's two divisions (Hood and McLaws, ~11,000 men) left Virginia about September 9, hauled some 800-900 miles via Wilmington, Augusta, and Atlanta because Burnside's occupation of Knoxville had cut the direct line - the longest strategic rail movement by either army in the war. It is cited as a logistics feat, and it was, barely: antiquated equipment, mismatched gauges that forced men to detrain and retrain, horses sent around by road, the corps arriving piecemeal (only about five brigades up in time, Longstreet reaching Catoosa Station the afternoon of Sep 19). The movement strained a deteriorating Southern rail network that had no slack left - the material context the Lost Cause omits.",
+          "provenance": "Verified (high) - the Knoxville cut and the long roundabout haul; mileage figures vary by source."
+        },
+        {
+          "id": "ck_cost",
+          "head": "The Human Cost",
+          "body": "About 34,000 to 35,000 men killed, wounded, or missing in two days - the second-costliest battle of the war after Gettysburg, and the bloodiest of the Western Theater. The Confederate army that 'won' lost roughly 28 percent of its engaged strength and never fought at full strength again. Among the dead: Ben Hardin Helm (mortally wounded, Lincoln's brother-in-law), Preston Smith (killed in a confused night action), James Deshler (killed by a shell), and on the Union side William Lytle (killed rallying his brigade) and Col. Hans Heg. Hood lost a leg. Much of the killing happened at fifty to a hundred yards in timber where men fought what they could not see.",
+          "provenance": "Verified (high) - casualty totals are standard OR-derived aggregates; engaged strengths are Inferred."
+        },
+        {
+          "id": "ck_river_of_death",
+          "head": "Debunking 'River of Death'",
+          "body": "The popular claim that 'Chickamauga' is Cherokee for 'river of death' is a dubious folk etymology - wide circulation, weak documentation. The name is Cherokee in origin (the Chickamauga were a Cherokee faction), but the 'river of death' gloss is not reliably attested in Cherokee linguistic sources and appears to derive from romantic post-battle narrative; the actual derivation is uncertain. It is irresistible because the battle earned the image - but in a teaching game the honest move is to flag it. Use it as the soldiers used it, as legend, never as documented fact.",
+          "provenance": "Disputed - carried only as legend; flagged prominently and never asserted as documented fact."
+        }
+      ],
+      "codex": {
+        "id": "codex_chickamauga",
+        "title": "Chickamauga, September 19-20, 1863",
+        "summary": "After Rosecrans maneuvered Bragg out of Chattanooga (Sep 9) but scattered his own army across the mountains, the armies collided along West Chickamauga Creek. Sep 19 was a blind, indecisive meeting engagement in dense timber. On Sep 20 a faulty staff report led Rosecrans to order Wood out of line at the Brotherton farm, opening a gap exactly as Longstreet's deep assault column struck it; the Union right and center collapsed. George Thomas's stand on Snodgrass Hill and Horseshoe Ridge, reinforced by Granger and Steedman marching unordered to the guns, saved the army, which withdrew into Chattanooga and was besieged. The clear Confederate tactical victory (~34,000 combined casualties) was squandered when Bragg failed to pursue; Grant reversed it at Chattanooga that November.",
+        "axes": { "timeline": "1863", "theater": "Western", "people": ["Rosecrans", "Thomas", "Granger", "Steedman", "Wood", "Sheridan", "Bragg", "Longstreet", "Hood", "Bushrod Johnson", "Cheatham", "Breckinridge", "Preston"], "battle": "Chickamauga" }
+      }
+    }
+  }
+}

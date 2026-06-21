@@ -47,6 +47,7 @@ function fldScenarioRegistry() {
       if (GAME_DATA.vicksburg && GAME_DATA.vicksburg.vicksburg) R.vicksburg = GAME_DATA.vicksburg.vicksburg;   // Phase C Western breadth: Vicksburg — the river-fortress siege (3 phases: redans -> Forlorn Hope -> saps/mine)
       if (GAME_DATA.chancellorsville && GAME_DATA.chancellorsville.chancellorsville) R.chancellorsville = GAME_DATA.chancellorsville.chancellorsville;   // Phase C-1: Chancellorsville — Lee's greatest victory, Jackson's flank march (single-phase, the Fredericksburg/Shiloh pattern)
       if (GAME_DATA["malvern-hill"] && GAME_DATA["malvern-hill"].malvernHill) R.malvernHill = GAME_DATA["malvern-hill"].malvernHill;   // Phase C-1: Malvern Hill - the Seven Days' culminating artillery duel (single-phase, gun-line defense)
+      if (GAME_DATA.chickamauga && GAME_DATA.chickamauga.chickamauga) R.chickamauga = GAME_DATA.chickamauga.chickamauga;   // Phase C-2 Western breadth: Chickamauga - the river of death (3 phases: the woods -> Longstreet's breakthrough -> Thomas at Snodgrass Hill / Horseshoe Ridge)
     }
   } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldScenarioRegistry:", e); }
   return R;
@@ -220,7 +221,7 @@ function fldScenarioMenuOrder(reg) {
   return ids;
 }
 function fldScenarioMenuRank(id) {
-  var order = { bullrun1: 10, malvernHill: 18, antietam: 20, fredericksburg: 30, chancellorsville: 35, gettysburg: 40, shiloh: 50, vicksburg: 55 };
+  var order = { bullrun1: 10, malvernHill: 18, antietam: 20, fredericksburg: 30, chancellorsville: 35, gettysburg: 40, shiloh: 50, vicksburg: 55, chickamauga: 60 };
   return order[id] || 1000;
 }
 function fldScenarioDateSortValue(date) {
