@@ -325,7 +325,12 @@ function _cmdActiveCard(C) {
   var gen = cmdActiveGeneral(C);
   if (!gen) return '<p class="lede" style="font-size:13px">No general holds the field command. Appoint a commander below.</p>';
   var byHistory = !(P.command && P.command.fieldGeneral);
-  var lead = commandLeadership(C), lw = _cmdLeadWord(lead);
+  var lead = commandLeadership(C);
+  // R-2: the OVR read-out. The officer OVR (_cmdGenRating, 0.55*skill+0.45*reputation — A+ reachable for the
+  // legendary) is carried as number + A-F report-card grade + word (TRIPLE-ENCODED, colour DECORATIVE only); the
+  // 42-88 bridge value `lead` (what the army actually fields) stays as a secondary line. Pure display, no sim change.
+  var ovr = Math.round(_cmdGenRating(C, gen));
+  var gr = (typeof fldRatingGrade === "function") ? fldRatingGrade(ovr) : { ovr: ovr, letter: "", word: _cmdLeadWord(ovr)[0], color: _cmdLeadWord(ovr)[1] };
   var rep = Math.round(_cmdReputation(C, gen.id));
   var img = _cmdPortrait(gen, side, 84);
   var traits = (gen.traits && gen.traits.length) ? gen.traits.join(" &middot; ") : "";
@@ -339,15 +344,18 @@ function _cmdActiveCard(C) {
     +   '<div style="display:flex;gap:14px;align-items:flex-start">'
     +     img
     +     '<div style="flex:1 1 auto">'
-    +       '<div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule)">' + (byHistory ? 'In command (by the course of the war)' : 'Your appointed commander') + '</div>'
+    +       '<div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#b3925e">' + (byHistory ? 'In command (by the course of the war)' : 'Your appointed commander') + '</div>'/* a11y: --rule #8a7350 was 3.25:1 on the lightest .sheet ground (#2e2816 = #26200f + the 4% light overlay); #b3925e = 5.0:1 there / 5.4:1 on the card overlay -> AA normal text (1.4.3), measured vs the real desk gradient not pure black (R-2 bug-hunt). Comment kept OUTSIDE the style string so it never ships into the DOM. */
     +       '<div style="font-weight:bold;font-size:16px">' + _cmdEsc(gen.fullName || _cmdName(gen))
     +         (gen.epithet ? ' <span style="font-weight:normal;opacity:.65;font-size:12px">&ldquo;' + _cmdEsc(gen.epithet) + '&rdquo;</span>' : '') + '</div>'
     +       '<div style="opacity:.7;font-size:11px">' + _cmdEsc(gen.rank || "General") + (traits ? ' &middot; ' + _cmdEsc(gen.traits.join(" · ")) : '') + '</div>'
     +       (gen.voice ? '<div style="font-style:italic;opacity:.85;font-size:12px;margin-top:5px;border-left:2px solid var(--rule);padding-left:8px">' + _cmdEsc(gen.voice) + '</div>' : '')
     +     '</div>'
     +     '<div style="flex:0 0 auto;text-align:right">'
-    +       '<div style="font-weight:bold;font-size:20px;color:' + lw[1] + '">' + lead + '</div>'
-    +       '<div style="font-size:10px;opacity:.6">' + lw[0] + ' command</div>'
+    +       '<div style="display:inline-flex;align-items:center;gap:8px;border-left:4px solid ' + gr.color + ';padding-left:9px">'
+    +         '<div style="text-align:right"><div style="font-weight:bold;font-size:23px;line-height:1">' + ovr + '</div><div style="font-size:9px;opacity:.6;letter-spacing:.06em">OVR</div></div>'
+    +         '<div style="text-align:left"><div style="font-weight:bold;font-size:16px;line-height:1.15" aria-label="grade ' + _cmdEsc(gr.letter) + '">' + _cmdEsc(gr.letter) + '</div><div style="font-size:10px;opacity:.78">' + _cmdEsc(gr.word) + '</div></div>'
+    +       '</div>'
+    +       '<div style="font-size:10px;opacity:.55;margin-top:4px">Fields command at ' + lead + '</div>'
     +     '</div>'
     +   '</div>'
     +   '<div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:9px">'
@@ -386,7 +394,7 @@ function _cmdPoolHTML(C) {
   function _cmdGenRow(g, ok) {
     var rep = Math.round(_cmdReputation(C, g.id));
     var rating = Math.round(_cmdGenRating(C, g));
-    var rw = _cmdLeadWord(rating);
+    var gr = (typeof fldRatingGrade === "function") ? fldRatingGrade(rating) : { letter: "", word: _cmdLeadWord(rating)[0], color: _cmdLeadWord(rating)[1] };
     var img = _cmdPortrait(g, side, 44);
     var canAfford = cap >= cost;
     var note = "";
@@ -404,7 +412,7 @@ function _cmdPoolHTML(C) {
       + img
       + '<div style="flex:1 1 auto">'
       +   '<div style="font-weight:bold;font-size:13px">' + _cmdEsc(_cmdName(g)) + (g.epithet ? ' <span style="font-weight:normal;opacity:.6;font-size:11px">&ldquo;' + _cmdEsc(g.epithet) + '&rdquo;</span>' : '') + '</div>'
-      +   '<div style="font-size:11px;opacity:.7">' + _cmdEsc(g.rank || "") + ' &middot; <span style="color:' + rw[1] + '">' + rw[0] + ' (' + rating + ')</span></div>'
+      +   '<div style="font-size:11px;opacity:.75">' + _cmdEsc(g.rank || "") + ' &middot; <span aria-hidden="true" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:' + gr.color + ';margin-right:3px"></span><b>' + _cmdEsc(gr.letter) + '</b> ' + _cmdEsc(gr.word) + ' (' + rating + ' OVR)</div>'
       +   (g.strength ? '<div style="font-size:11px;opacity:.6">' + _cmdEsc(g.strength) + '</div>' : '')
       + '</div>'
       + '<div style="flex:0 0 auto;text-align:right">' + note + '</div>'
@@ -417,7 +425,7 @@ function _cmdPoolHTML(C) {
         + (incumbent.relief === "very-costly" ? 'He is popular and dangerous; the country will not thank you for it.' : '') + '</div>'
     : '';
   return '<div style="margin-top:14px">'
-    + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin-bottom:2px">The generals at your call</div>'
+    + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#b3925e;margin-bottom:2px">The generals at your call</div>'/* a11y: --rule #8a7350 was 3.25:1 on the lightest .sheet ground (#2e2816); #b3925e = 5.0:1 there / 6.0:1 at the gradient edge -> AA normal text (1.4.3), measured vs the real desk gradient (R-2 bug-hunt) */
     + capLine
     + rows
     + '</div>';

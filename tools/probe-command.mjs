@@ -190,6 +190,18 @@ const SETUP = `(() => {
       if(html.indexOf('Skill</span><span>'+eff+'</span>')<0) throw new Error('the rendered Skill bar does not show the effective skill '+eff+' (display reads a stale source)');
       return { general:g.id, effectiveSkill:eff }; });
 
+    step('R-2 UI: the Command desk renders the general OVR + A-F grade (active card + pool rows, triple-encoded)', function(){
+      if(typeof fldRatingGrade!=='function') return { skipped:'no fldRatingGrade (pre-R-2 build)' };
+      var C=mkC('US',1863,3); C.clock.capital=100; cmdAppoint(C,'us-grant');
+      var g=cmdActiveGeneral(C); var ovr=Math.round(_cmdGenRating(C,g)); var gr=fldRatingGrade(ovr);
+      var html=cmdRenderTab(C);
+      if(html.indexOf('>'+ovr+'<')<0) throw new Error('active card missing the OVR number '+ovr);
+      if(html.indexOf('OVR')<0) throw new Error('active card missing the OVR label');
+      if(html.indexOf('>'+gr.letter+'<')<0) throw new Error('active card missing the grade letter '+gr.letter);
+      if(html.indexOf(gr.word)<0) throw new Error('active card missing the grade word '+gr.word);
+      if(html.indexOf(' OVR)')<0) throw new Error('pool rows missing the "(NN OVR)" grade');
+      return { general:g.id, ovr:ovr, letter:gr.letter, word:gr.word }; });
+
     // helper: read a general's current reputation
     function C0rep(C,id){ return (C.president&&C.president.command&&typeof C.president.command.reputation[id]==='number')?C.president.command.reputation[id]:60; }
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }

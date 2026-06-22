@@ -180,6 +180,19 @@ const SETUP = `(() => {
       if(un.radius!==200) throw new Error('unrated radius changed from 200: '+un.radius);
       return { ratedQ:Math.round(rated.quality*1000)/1000, authoredQ:authoredQ, ratedRadius:rated.radius, noPidQ:noPid.quality, unratedQ:un.quality, unratedRadius:un.radius }; });
 
+    step('R-2 UI: fldRatingHudSelected renders a brigade OVR + A-F grade, TRIPLE-encoded (number + letter + word)', function(){
+      if(typeof fldRatingHudSelected!=='function') throw new Error('fldRatingHudSelected missing');
+      var u={xp:3, weapon:'rifled', morale:100, maxMor:100, fatigue:0, cmdBonus:0.3};
+      var ovr=fldUnitRatingOVR(u), g=fldRatingGrade(ovr);
+      var html=fldRatingHudSelected(u);
+      if(!html) throw new Error('expected a non-empty HUD line for a unit with ratings data');
+      if(html.indexOf(String(ovr))<0) throw new Error('HUD missing the OVR number '+ovr);
+      if(html.indexOf('OVR')<0) throw new Error('HUD missing the OVR label');
+      if(html.indexOf(g.letter)<0) throw new Error('HUD missing the grade letter '+g.letter);
+      if(html.indexOf(g.word)<0) throw new Error('HUD missing the grade word '+g.word);
+      if(fldRatingHudSelected(null)!=='') throw new Error('a null unit should yield an empty HUD line (no crash)');
+      return { ovr:ovr, letter:g.letter, word:g.word, len:html.length }; });
+
     step('PURITY: rating fns do not mutate G or __FIELD (R-0 is inert / byte-identical)', function(){
       var beforeMode=(typeof G!=='undefined')?G.mode:null;
       var fu=(typeof __FIELD!=='undefined' && __FIELD.units)?__FIELD.units.length:null;

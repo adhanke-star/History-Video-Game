@@ -1,5 +1,21 @@
 # HANDOFF — "The Civil War"
 
+## ⚡ CONTINUE HERE — 2026-06-22 **RATING SYSTEM R-2 — the OVR read-out UI (Command-desk A–F grades + tactical HUD brigade OVR)** (overnight run, D96)
+
+> **The Madden layer is now VISIBLE.** R-2 surfaces the rating numbers the R-1 spine already produces, graded **A–F**, across two surfaces — **PURE DISPLAY, no sim change** (full no-regression confirms all 9 battles byte-identical).
+>
+> **Command desk (`src/35-command.js`):** the active-general card headline shows the **officer OVR** (`round(_cmdGenRating)` — A+ ≥90 reachable, unlike the 42–88-clamped `commandLeadership`) + the **A–F grade letter** + the word, band colour as a decorative left-border accent, with the bridge value kept as a secondary "Fields command at NN" line; the appoint-pool rows show a colour dot + bold A–F letter + word + "(NN OVR)".
+>
+> **Tactical HUD (`src/tactical/T14-ratings.js` `fldRatingHudSelected` → `T0` `fldRenderHud`):** the selected brigade's computed OVR (`fldUnitRatingOVR`, pure read) + A–F grade, as a new guarded HUD line (byte-identical when ratings data absent).
+>
+> **WCAG 2.2 AA + CVD-safe:** triple-encoded everywhere — **number + letter-grade + word in high-contrast `--parch` text; colour DECORATIVE only** (aria-hidden stripes/dots). `wcag-auditor` PASSED all three new surfaces; two pre-existing sub-AA secondary labels lifted `--rule #8a7350 → #b3925e` (5.0:1 measured against the **real** `.sheet` gradient, not pure black — the bug-hunt caught the auditor's first #8d7551 being computed against #000 and still failing).
+>
+> **Vet:** GATE OK; `probe-ratings` 14/14 + `probe-command` 16/16 (new R-2 UI steps); FULL no-regression GREEN (28 probes byte-identical); diag-classic `nonBlank:346`; 0 pageerrors. Bug-hunt (3 Opus lenses × refute-verify + critic): 2 confirmed (false-AA contrast → fixed/honestly-measured) + 2 critic (a `/* */` audit comment leaking into the rendered DOM → moved out of the JS string, DOM-leak signature now 0; `gr.word`/`g.word` unescaped → escaped, defense-in-depth). All fixed + re-vetted.
+>
+> **NEXT = R-3** (the BADGE ENGINE — the first rating→combat seam): a guarded `fldBadgeFactor(u, lever)` (identity 1.0/0 when `__FIELD.badges` absent, mirroring `(u.cmdBonus||0)`) + the `u._spdMul` march seam + the `cohesion` rally extension in `fldMoraleStep`; the **global per-unit per-lever stacking cap** (realism-scaled via `fldRatingRealismCap`); the **no-fudge build-gate assertion** (no badge handler may write `cas`/`aCas`/`bCas`/victory/`tgt.men` or out-of-band `sev.*`); ship Star/Superstar + the Verified negatives (Bragg Piecemeal / McClellan Slows / Burnside Rigid / Green Levies / Powder-Shy). **Badges-off byte-identical; badges-on bounded + reversed by removing data.** Resume map: START-HERE → this block → `RATING-SYSTEM-DESIGN.md` §4 (the badge catalog) + §6 (engine wiring, the exact seam table) + §9 (R-3 probe asserts) → DECISIONS D96/D95/D94* → `src/tactical/T14-ratings.js` (`fldBadgeDef`/`fldRatingRealismCap` already defined) + `data/ratings.json` (`badgeDefs`/`badgeRungs`/`realismCaps`) + `src/tactical/T0-field-sandbox.js` (`fldResolveFire`/`fldMoraleStep`/`fldMoveFactor` — the `xpF`/rally/move lines to add the one-token factor) + `src/tactical/T3-officers.js` (`cmdBonus` aura) + `tools/probe-ratings.mjs`.
+
+---
+
 ## ⚡ CONTINUE HERE — 2026-06-22 **RATING SYSTEM R-1 — officer derivation wired into the command + field pipes (the persona is now the source of truth)** (overnight run, D95)
 
 > **The first WIRING increment of the D94 Madden layer is SHIPPED + vetted + pushed** (R-0 shipped the pure-function data spine on 2026-06-21; this is R-1). A documented persona now SEEDS the two pipes the engine already reads — strategic `gen.skill` and tactical officer `quality`/`radius`/`fate` — with the **no-fudge keystone intact** (the persona only sets INPUTS at build/make time; nothing is ever read at casualty/winner/rout time) and **every unrated entity byte-identical**.

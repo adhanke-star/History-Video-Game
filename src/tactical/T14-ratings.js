@@ -41,6 +41,10 @@ function _ratData() { return (typeof gameData === "function") ? gameData("rating
 
 function _fldRatNum(v, dflt) { return (typeof v === "number" && isFinite(v)) ? v : dflt; }
 
+/* HTML-escape for the R-2 read-out UI (defense-in-depth: the grade words/letters are hardcoded
+   constants today, so this is byte-identical, but it future-proofs a data-driven gradeBands). */
+function _fldRatEsc(s) { return (typeof htmlEsc === "function") ? htmlEsc(s) : String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+
 /* one persona attribute, defaulting to the neutral anchor (so a missing attr is a no-op). */
 function fldAttr(p, key) {
   if (!p) return FLDR.ANCHOR;
@@ -187,4 +191,23 @@ function fldUnitRatingOVR(u) {
   var wsum = w.manQuality + w.materiel + w.condition + w.leadership;
   ovr = wsum > 0 ? ovr / wsum : FLDR.ANCHOR;
   return Math.round(ovr < 0 ? 0 : (ovr > 100 ? 100 : ovr));
+}
+
+/* ===== R-2 · the OVR READ-OUT UI (pure display; no sim change, byte-identical) ===== */
+
+/* The selected brigade's computed OVR + A-F report-card grade, for the tactical HUD (a T0
+   fldRenderHud seam). Pure read of existing unit fields (fldUnitRatingOVR), nothing stored.
+   TRIPLE-ENCODED + CVD-safe + WCAG-AA: the meaning rides number + letter-grade + word in the
+   default high-contrast text colour; the band colour is DECORATIVE only (a left accent stripe).
+   Empty when the ratings data is absent (so a build without it is byte-identical). */
+function fldRatingHudSelected(u) {
+  if (!u || !_ratData()) return "";
+  var ovr = fldUnitRatingOVR(u);
+  var g = fldRatingGrade(ovr);
+  return '<div style="display:flex;align-items:center;gap:7px;margin-top:5px;border-top:1px solid #795c3e;padding-top:5px">'
+    + '<span aria-hidden="true" style="display:inline-block;width:4px;height:22px;background:' + g.color + ';border-radius:2px"></span>'
+    + '<span style="font-weight:bold;font-size:16px;line-height:1">' + ovr + '</span>'
+    + '<span style="font-size:9px;opacity:.6;letter-spacing:.05em">OVR</span>'
+    + '<span style="font-size:12px;opacity:.9;margin-left:2px;">Grade <b>' + _fldRatEsc(g.letter) + '</b> &middot; ' + _fldRatEsc(g.word) + '</span>'
+    + '</div>';
 }

@@ -1388,7 +1388,8 @@ function fldRenderHud() {
     (typeof fldArmsHudSelected === "function" ? fldArmsHudSelected(u) : "") +   // B-4: battery range-band / cavalry role
     (typeof fldOfficerHudSelected === "function" ? fldOfficerHudSelected(u) : "") +   // B-2: brigade leader + in-command status
     (typeof fldFlagHudSelected === "function" ? fldFlagHudSelected(u) : "") +   // H1b: battle flag + corps badge in the HUD
-    (typeof fldEngHudSelected === "function" ? fldEngHudSelected(u) : "");   // T13: entrenchment status (empty unless digging)
+    (typeof fldEngHudSelected === "function" ? fldEngHudSelected(u) : "") +   // T13: entrenchment status (empty unless digging)
+    (typeof fldRatingHudSelected === "function" ? fldRatingHudSelected(u) : "");   // R-2: brigade OVR + A-F grade (pure display)
 }
 function fldOnOver() {
   var e = document.getElementById("fldEnd"); if (!e) { fldAnnounce("Battle over."); return; }
