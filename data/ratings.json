@@ -333,7 +333,10 @@
       "mag": 0.06,
       "tilt": "defend",
       "prov": "Verified",
-      "sources": [],
+      "sources": [
+        "Tucker 1960",
+        "Jordan 1988"
+      ],
       "note": "Recovers wavering units in radius (Hancock the Superb)."
     },
     {
@@ -348,7 +351,10 @@
       "mag": 0.06,
       "tilt": "attack",
       "prov": "Verified",
-      "sources": [],
+      "sources": [
+        "Sears 1996",
+        "Furgurson 1992"
+      ],
       "note": "The audacious turning movement (Jackson at Chancellorsville)."
     },
     {
@@ -363,8 +369,11 @@
       "mag": 0.08,
       "tilt": "defend",
       "prov": "Verified",
-      "sources": [],
-      "note": "Concentrates the guns (Hunt, Alexander, Pelham)."
+      "sources": [
+        "Hunt OR Ser.I Vol.XXVII",
+        "Alexander 1907"
+      ],
+      "note": "Concentrates the guns (Hunt, Alexander)."
     },
     {
       "key": "feared",
@@ -378,8 +387,11 @@
       "mag": 0.06,
       "tilt": "attack",
       "prov": "Verified",
-      "sources": [],
-      "note": "His name dents enemy morale (Forrest)."
+      "sources": [
+        "Wills 1992",
+        "Hurst 1993"
+      ],
+      "note": "His name dents enemy morale (Forrest). Two modern critical biographies (Wills, Hurst), not the Lost-Cause-era hagiography."
     },
     {
       "key": "beloved",
@@ -392,9 +404,11 @@
       "fldLever": "rally",
       "mag": 0.06,
       "tilt": "defend",
-      "prov": "Verified",
-      "sources": [],
-      "note": "His men will not break for him (Lee, Cleburne)."
+      "prov": "Inferred",
+      "sources": [
+        "Symonds 1997"
+      ],
+      "note": "His men will not break for him (Lee, Cleburne). One solid cite (Symonds on Cleburne); the obvious Lee source (Freeman) is Lost-Cause-tinged and held out, so this stays Inferred until a second non-hagiographic Lee cite is added."
     },
     {
       "key": "pontoon_master",
@@ -408,7 +422,10 @@
       "mag": 0.06,
       "tilt": "neutral",
       "prov": "Verified",
-      "sources": [],
+      "sources": [
+        "Thompson 1910",
+        "OR Ser.I Vol.XXI"
+      ],
       "note": "Lays bridges fast (the Engineer Works Corps tie-in)."
     },
     {
@@ -424,7 +441,8 @@
       "tilt": "attack",
       "prov": "Verified",
       "sources": [
-        "Robertson 1997"
+        "Robertson 1997",
+        "Tanner 1976"
       ],
       "note": "Jackson's infantry that marched like cavalry. ACTIVATES on redeploy."
     },
@@ -441,7 +459,8 @@
       "tilt": "defend",
       "prov": "Verified",
       "sources": [
-        "Cozzens 1992"
+        "Cozzens 1992",
+        "Einolf 2007"
       ],
       "note": "Thomas holds when all else breaks. ACTIVATES when nearby morale collapses."
     },
@@ -458,7 +477,8 @@
       "tilt": "defend",
       "prov": "Verified",
       "sources": [
-        "Pullen 1957"
+        "Pullen 1957",
+        "Desjardin 1995"
       ],
       "note": "Chamberlain's charge when the cartridges run out. ACTIVATES on empty ammo."
     },
@@ -475,9 +495,10 @@
       "tilt": "attack",
       "prov": "Verified",
       "sources": [
-        "Trudeau 1998"
+        "Trudeau 1998",
+        "Glatthaar 1990"
       ],
-      "note": "USCT at New Market Heights — valor under fire that won 14 Medals of Honor."
+      "note": "USCT at New Market Heights — valor under fire that won 14 of the 16 Medals of Honor awarded to Black soldiers (Army) in the war."
     },
     {
       "key": "grand_charge",
@@ -490,9 +511,13 @@
       "fldLever": "none",
       "mag": 0.1,
       "tilt": "attack",
-      "prov": "Inferred",
-      "sources": [],
-      "note": "Pickett's Charge: a huge surge that can ALSO break the unit (double-edged). R-4 delivers the bounded UPSIDE (the capped cmdBonus surge); the doomed double-edge — the charge that breaks the unit — lands as a bounded morale-cost INPUT lever when this badge is assigned to a unit (R-6). Prov is Inferred until the catalog-wide badge-sourcing sweep adds >=2 citations (R-6 content pass)."
+      "prov": "Verified",
+      "sources": [
+        "Stewart 1959",
+        "Hess 2001",
+        "Sears 2003"
+      ],
+      "note": "Pickett's Charge: a huge surge that can ALSO break the unit (double-edged). R-4 delivers the bounded UPSIDE (the capped cmdBonus surge); the doomed double-edge — the charge that breaks the unit — lands as a bounded morale-cost INPUT lever when this badge is assigned to a unit (R-6). Now Verified by the standard Pickett's Charge literature (R-6 catalog-wide sourcing sweep, D103)."
     },
     {
       "key": "first_with_the_most",
@@ -573,7 +598,8 @@
       "tilt": "attack",
       "prov": "Verified",
       "sources": [
-        "Sears 1988"
+        "Sears 1988",
+        "Rafuse 2005"
       ],
       "note": "McClellan's chronic caution — Lincoln's word. Slows his own commitment. No enemy buff."
     },
@@ -590,7 +616,8 @@
       "tilt": "attack",
       "prov": "Verified",
       "sources": [
-        "Marvel 1991"
+        "Marvel 1991",
+        "O'Reilly 2003"
       ],
       "note": "Burnside ground forward to plan against fortified ground (Fredericksburg). Suppresses replan."
     },
@@ -607,7 +634,8 @@
       "tilt": "attack",
       "prov": "Verified",
       "sources": [
-        "McMurry 1982"
+        "McMurry 1982",
+        "Sword 1992"
       ],
       "note": "Hood's all-out aggression — can help the attack BUT raises his own leader-fall risk + exhausts the command (double-edged)."
     }
@@ -684,6 +712,7 @@
       ],
       "provenance": "Verified",
       "sources": [
+        "Detzer 2004",
         "OR Ser.I Vol.II"
       ],
       "authoredQuality": 0.52,
@@ -840,7 +869,8 @@
       "fellAt": "Henry Hill, Jul 21 1861",
       "provenance": "Verified",
       "sources": [
-        "OR Ser.I Vol.II"
+        "OR Ser.I Vol.II",
+        "Detzer 2004"
       ],
       "authoredQuality": 0.55,
       "bio": "A Georgia congressman-turned-colonel; killed leading his Georgians against the Union batteries — among the highest-ranking to die that day."

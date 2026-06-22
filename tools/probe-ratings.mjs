@@ -475,6 +475,24 @@ const SETUP = `(() => {
       if(fldPromotePerson(null,'Captain')!==null) throw new Error('null person promotion should return null (no crash)');
       return { vetMean:vet, greenMean:green, hugeSample:huge.sample.length, represents:huge.represents, genName:gp.name, latentCmd:gp.latentCommand, promotedCmd:promoted.persona.command, jacksonOVR:jp.ovr, htmlLen:html.length, aliasGuarded:true }; });
 
+    step('R-6 CITATION-PROVENANCE SWEEP (D103): every Verified badgeDef has >=2 sources; beloved held Inferred; grand_charge upgraded; catalog-wide gate clean', function(){
+      var defs = D && D.badgeDefs ? D.badgeDefs : null;
+      if(!defs || !defs.length) throw new Error('badgeDefs missing');
+      if(defs.length < 26) throw new Error('badgeDefs count dropped below 26 ('+defs.length+') — a silent data deletion?');
+      var bad=[];
+      for(var i=0;i<defs.length;i++){ var b=defs[i]; if(b.prov==='Verified' && (!Array.isArray(b.sources)||b.sources.length<2)) bad.push(b.key+'('+((b.sources||[]).length)+')'); }
+      if(bad.length) throw new Error('Verified badgeDef(s) with <2 sources: '+bad.join(', '));
+      var by={}; for(var j=0;j<defs.length;j++) by[defs[j].key]=defs[j];
+      if(!by.beloved || by.beloved.prov!=='Inferred') throw new Error('beloved should be held Inferred (the Lost-Cause Freeman cite was dropped)');
+      if(!by.grand_charge || by.grand_charge.prov!=='Verified' || by.grand_charge.sources.length<2) throw new Error('grand_charge should be Verified with >=2 sources');
+      if(!by.the_slows || by.the_slows.prov!=='Verified' || by.the_slows.sources.length<2) throw new Error('the_slows (a negative badge on a real man) must be firmly Verified with >=2 sources');
+      // catalog-wide invariant (mirrors build gate 4e): no Verified record ANYWHERE in GAME_DATA carries <2 sources
+      var nrm=function(v){ return (typeof v==='string')?v.trim().toLowerCase():''; };
+      var off=0; (function walk(n){ if(Array.isArray(n)){ for(var a=0;a<n.length;a++) walk(n[a]); return; } if(n&&typeof n==='object'){ if(nrm(n.prov)==='verified'||nrm(n.provenance)==='verified'){ var sc=Array.isArray(n.sources)?n.sources.length:(Array.isArray(n.src)?n.src.length:0); if(sc<2) off++; } for(var k in n) if(n.hasOwnProperty(k)) walk(n[k]); } })(typeof GAME_DATA!=='undefined'?GAME_DATA:{});
+      if(off>0) throw new Error(off+' Verified-with-<2-source record(s) remain in GAME_DATA (build gate 4e should have failed)');
+      var verified=0; for(var m=0;m<defs.length;m++) if(defs[m].prov==='Verified') verified++;
+      return { badgeDefs:defs.length, verifiedBadges:verified, belovedProv:by.beloved.prov, grandChargeSrc:by.grand_charge.sources.length, catalogVerifiedClean:true }; });
+
     step('PURITY: rating fns do not mutate G or __FIELD (R-0 is inert / byte-identical)', function(){
       var beforeMode=(typeof G!=='undefined')?G.mode:null;
       var fu=(typeof __FIELD!=='undefined' && __FIELD.units)?__FIELD.units.length:null;

@@ -31,7 +31,12 @@
         "double canister"
       ],
       "flavor": "Bronze, smoothbore, and beloved. At a thousand yards it is ordinary; at three hundred, loaded with double canister over a charging line, it is the most lethal thing on the field.",
-      "provenance": "Verified"
+      "provenance": "Verified",
+      "sources": [
+        "Hazlett, Olmstead & Parks 2004",
+        "Naisawald 1960",
+        "Hess 2022"
+      ]
     },
     {
       "id": "ordnance3in",
@@ -57,7 +62,12 @@
         "canister"
       ],
       "flavor": "Wrought iron from the Phoenix works — the safest and most accurate rifle in the service. It almost never bursts. Its one fault is that canister sprays wild through a rifled bore, so keep a Napoleon next to it for the close work.",
-      "provenance": "Verified"
+      "provenance": "Verified",
+      "sources": [
+        "Hazlett, Olmstead & Parks 2004",
+        "Coggins 1962",
+        "Hess 2022"
+      ]
     },
     {
       "id": "parrott10",
@@ -81,7 +91,12 @@
         "canister"
       ],
       "flavor": "Cast iron with a wrought-iron band shrunk over the breech — cheap, plentiful, and long-armed, which is why both sides fielded it by the hundred. Crews load it and step wide: the band does not always save the tube, and it bursts at the muzzle without warning.",
-      "provenance": "Verified"
+      "provenance": "Verified",
+      "sources": [
+        "Hazlett, Olmstead & Parks 2004",
+        "Coggins 1962",
+        "Naisawald 1960"
+      ]
     },
     {
       "id": "whitworth",
@@ -103,8 +118,13 @@
         "hexagonal bolt",
         "hexagonal shell"
       ],
-      "flavor": "A British import run through the blockade — twisted-hexagonal bore, a whistle you hear before the round arrives, and pinpoint hits past a mile and a half. At the 1863 Southport trials one threw a bolt nearly five miles. But the hexagonal ammunition cannot be made in the South, the bore fouls and jams, and it fires slowly: a precision instrument that goes silent the day its special rounds run out.",
-      "provenance": "Verified"
+      "flavor": "A British import run through the blockade — twisted-hexagonal bore, a whistle you hear before the round arrives, and pinpoint hits past a mile and a half. At the 1863 Southport trials one threw a bolt over five miles. But the hexagonal ammunition cannot be made in the South, the bore fouls and jams, and it fires slowly: a precision instrument that goes silent the day its special rounds run out.",
+      "provenance": "Verified",
+      "sources": [
+        "Hazlett, Olmstead & Parks 2004",
+        "Daniel 1984",
+        "Wise 1915"
+      ]
     },
     {
       "id": "howitzer12",
@@ -128,7 +148,11 @@
         "canister"
       ],
       "flavor": "Light, high-trajectory, and short-armed — a shell-and-canister thrower with no solid shot in the chest. The Napoleon swallowed its gun-plus-howitzer role by mid-war, so it lingers in the second-line and Confederate batteries that could not be choosy.",
-      "provenance": "Verified"
+      "provenance": "Verified",
+      "sources": [
+        "Hazlett, Olmstead & Parks 2004",
+        "Coggins 1962"
+      ]
     }
   ],
   "teachingCards": [
@@ -151,12 +175,17 @@
         }
       ],
       "takeaway": "Range is not the same as usefulness. In a game, the Napoleon should be cheap, common, and quietly excellent inside canister range — a reminder that the 'best' weapon is the one that fits the fight, not the one with the longest line on the spec sheet.",
-      "provenance": "Verified"
+      "provenance": "Verified",
+      "sources": [
+        "Hess 2022",
+        "Naisawald 1960",
+        "Hazlett, Olmstead & Parks 2004"
+      ]
     },
     {
       "id": "art-massing-battalion-1863",
       "title": "Why did massed battalion artillery (Hunt, 1863) beat batteries scattered one-per-brigade?",
-      "consensus": "Through 1862 both armies 'penny-packeted' their guns — one battery attached to each infantry brigade, under infantry officers, with no senior gunner able to pull them together. The 1863 reorganizations reversed this: the Army of the Potomac pooled batteries into per-corps artillery brigades plus a powerful army-level Artillery Reserve under Chief of Artillery Henry J. Hunt, and Lee's army (battalion system approved Feb 16, 1863) grouped batteries into battalions of four-to-six guns under corps chiefs of artillery and army chief Col./Brig. Gen. William N. Pendleton. The payoff was concentration: converging fire from twenty to forty guns on one sector was decisively more destructive than the same guns spread along a line, the lesson Hunt drove home at Malvern Hill (1862) and Gettysburg (1863). Massing also let a chief of artillery ration ammunition and shift fire to the decisive point — command, not just firepower.",
+      "consensus": "Through 1862 both armies 'penny-packeted' their guns — one battery attached to each infantry brigade, under infantry officers, with no senior gunner able to pull them together. The 1863 reorganizations reversed this: the Army of the Potomac pooled batteries into per-corps artillery brigades plus a powerful army-level Artillery Reserve under Chief of Artillery Henry J. Hunt, and Lee's army (battalion system approved Feb 16, 1863) grouped batteries into battalions of four-to-six guns under corps chiefs of artillery and army chief Col./Brig. Gen. William N. Pendleton. The payoff was concentration: converging fire from twenty to forty guns on one sector was far more destructive than the same guns spread along a line, the lesson Hunt drove home at Malvern Hill (1862) and Gettysburg (1863). Massing also let a chief of artillery ration ammunition and shift fire to the decisive point — command, not just firepower.",
       "voices": [
         {
           "scholar": "Henry J. Hunt (Official Records; Battles and Leaders, vol. 3)",
@@ -172,7 +201,12 @@
         }
       ],
       "takeaway": "A 'Cannon Corps' is a command problem before it is a shopping problem. Batteries should be bought bottom-up but unlock a massing/battalion bonus in 1863 — and the army-level Reserve should be a Union strength, not a symmetric mechanic, because the Confederate model dropped its army reserve after Chancellorsville.",
-      "provenance": "Verified"
+      "provenance": "Verified",
+      "sources": [
+        "Wise 1915",
+        "Hunt B&L Vol.III",
+        "OR Ser.I Vol.XXVII Pt.1"
+      ]
     },
     {
       "id": "art-canister-stops-the-charge",
@@ -193,12 +227,17 @@
         }
       ],
       "takeaway": "Model canister as a short-range, fuze-immune assault-stopper that punishes frontal charges across open ground — and let a defender choose to husband ammunition (slow long-range fire) to keep canister in reserve. The repulse of Pickett's Charge is a Union achievement, not merely Southern misfortune.",
-      "provenance": "Verified"
+      "provenance": "Verified",
+      "sources": [
+        "Hess 2001",
+        "Hunt B&L Vol.III",
+        "Hazlett, Olmstead & Parks 2004"
+      ]
     },
     {
       "id": "art-cs-handicap-vs-lostcause",
       "title": "The real Confederate artillery handicap — and the Lost Cause myth of gunner superiority",
-      "consensus": "There was no general Confederate artillery superiority. Confederate gunners were brave and occasionally brilliant, but the Union held the decisive material and organizational edge: more guns, more rifled guns, reliable ammunition and fuzes, and centralized command under Hunt with a real army-level Reserve. The South's handicaps were structural and stacking. (1) Manufacturing rested on a single dominant works, Tredegar in Richmond — about 1,100 cannon, roughly half of all Confederate domestic artillery — so the South leaned heavily on CAPTURED Federal guns and deliberately matched Federal calibers (3-inch, 10-pdr Parrott) to use captured ammunition; its gun strength partly scaled with Union battlefield losses. (2) The bronze shortage (worsened by the loss of the Ducktown copper mines in Nov 1863) forced Tredegar to switch from bronze Napoleons to riskier banded iron by early 1864. (3) Fuzes were the sharper tactical problem: the Confederacy made an unreliable copy of the Bormann time fuze that leaked flame into the burster and caused prematures, and abandoned it by early 1863 for irregular paper and wooden fuzes — so fuze-dependent shell and case routinely burst short, long, or not at all, while fuze-immune solid shot and canister were fine. (4) By 1864-65 starved, broken-down horses immobilized the guns, and batteries were abandoned for want of teams in the Appomattox campaign. The Lost Cause inverts this into a myth of innately superior Southern gunners; the record shows situational, mostly DEFENSIVE successes (Pelham's delay at Fredericksburg, Alexander's sited guns at Marye's Heights) against a systemic Union advantage.",
+      "consensus": "There was no general Confederate artillery superiority. Confederate gunners were brave and occasionally brilliant, but the Union held the decisive material and organizational edge: more guns, more rifled guns, reliable ammunition and fuzes, and centralized command under Hunt with a real army-level Reserve. The South's handicaps were structural and stacking. (1) Manufacturing rested on a single dominant works, Tredegar in Richmond — roughly 1,100 cannon, roughly half of all Confederate domestic artillery — so the South leaned heavily on CAPTURED Federal guns and deliberately matched Federal calibers (3-inch, 10-pdr Parrott) to use captured ammunition; its gun strength partly scaled with Union battlefield losses. (2) The bronze shortage (worsened by the loss of the Ducktown copper mines in late 1863) forced Tredegar to switch from bronze Napoleons to riskier banded iron by 1864. (3) Fuzes were the sharper tactical problem: the Confederacy made an unreliable copy of the Bormann time fuze that leaked flame into the burster and caused prematures, and abandoned it by 1863 for irregular paper and wooden fuzes — so fuze-dependent shell and case routinely burst short, long, or not at all, while fuze-immune solid shot and canister were fine. (4) By 1864-65 starved, broken-down horses immobilized the guns, and batteries were abandoned for want of teams in the Appomattox campaign. The Lost Cause inverts this into a myth of innately superior Southern gunners; the record shows situational, mostly DEFENSIVE successes (Pelham's delay at Fredericksburg, Alexander's sited guns at Marye's Heights) against a systemic Union advantage.",
       "voices": [
         {
           "scholar": "Jennings Cropper Wise (The Long Arm of Lee)",
@@ -218,7 +257,12 @@
         }
       ],
       "takeaway": "Model the Confederate artillery arm as four stacking penalties — fewer guns (some captured/Union-made), a per-shot dud/premature chance on fuzed shell and case only, a rare-but-fragile import tier (Whitworth) with a hard ammunition cap, and a horse/mobility penalty that worsens to severe in 1864-65 — against a Union baseline of standardized, reliable, well-horsed abundance. That asymmetry IS the history, and it refuses the Lost Cause's flattery of the Southern gunner.",
-      "provenance": "Verified"
+      "provenance": "Verified",
+      "sources": [
+        "Vandiver 1952",
+        "Daniel 1984",
+        "Wise 1915"
+      ]
     }
   ],
   "_designNote": "Asymmetry is the point. UNION batteries are six guns, single-caliber, ammunition-secure, and well-horsed (~110 horses) — buy them and they work. CONFEDERATE batteries pay a stacking tax: (1) four guns per battery, not six, from chronic gun/horse shortage; (2) an import premium and rarity on the Whitworth/Blakely tier (run through the blockade, single-digit to low-dozens, with proprietary ammunition that cannot be resupplied — powerful but expended); (3) a per-shot reliability penalty on FUZE-DEPENDENT rounds (shell, spherical case) from the unreliable Bormann copy and irregular paper/wooden fuzes, with solid shot and canister immune because they need no fuze (the dud/premature rate is a game-balance interpolation, NOT a measured historical figure); (4) a horse-attrition mobility malus that worsens by phase and turns severe in 1864-65, risking gun loss on retreat; and (5) mixed-caliber batteries as a resupply malus, since the South fielded whatever it built at Tredegar or captured. Some Confederate guns are literally Union-made — tie a fraction of CS availability to prior Union battlefield losses. The army-level Artillery Reserve is a Union feature, not symmetric: after Chancellorsville the ANV abolished its general reserve. Costs scale as big-ticket purchases relative to small arms (a Napoleon battery ~900 funds vs. tens-to-hundreds for a rifle batch); the Whitworth is dearest (~3,200) and deliberately slow-but-deadly. baselineArtilleryScore (8) is the token of attached guns an army fields with zero batteries bought; fullComplementBatteries (12) is the coverage target for a strong artillery arm. IMPLEMENTATION STATUS (artBatteryScore, src/56-artillery.js; numbers logged DECISIONS.md D42): the STRATEGIC pre-battle score now models penalty (1) gun-ratio coverage (CS batteries fill the park at 4/6), (2) the import/captured price premiums (CS 1.5x import, US 1.2x foreign-import, CS 1.4x Federal-standard), (3) fuze unreliability as a small EXPECTED-VALUE haircut (x0.96 CS) rather than a per-shot roll, (4) a horse/forage mobility malus (CS x0.95 from 1862, x0.88 from 1864), and (5) a mixed-caliber resupply drag (CS x0.94 at 3+ calibers), plus the 1863 massing reform as a both-sides bonus with a larger Union factor (x1.08 vs x1.04) standing in for the army-level Artillery Reserve. DEFERRED to the battle-day layer (A6) and the tactical engine (P-phases), where they belong as live rolls rather than score haircuts: the per-shot dud/premature roll on fuzed shell+case, the Whitworth hard ammunition cap, and gun-loss-on-retreat from broken-down teams."

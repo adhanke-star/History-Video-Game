@@ -43,7 +43,7 @@
     {
       "id": "cover-killing-ground",
       "title": "Why was a stone wall or a sunken road worth a division of men?",
-      "consensus": "Civil War tactics turned on cover. A defender behind a stone wall, in a sunken road, or in even hastily dug rifle pits multiplied his combat power so sharply that frontal assaults across open ground against such positions failed again and again at catastrophic cost. The archetypes are exact: at Fredericksburg (Dec 13, 1862) Confederates stood four ranks deep in a sunken road behind a stone wall along the base of Marye's Heights and broke fourteen Union brigades in succession — no attacker reached closer than roughly 25-40 yards, and the position was, in the National Park Service's words, 'almost impregnable, and a deathtrap.' At Antietam the 'Sunken Road' (Bloody Lane) let a thin Confederate line hold for hours until it was finally enfiladed. The cover hierarchy was real and graded — a stone wall or entrenchment was worth far more than a rail fence or open cropland — which is why, by 1864, troops fortified reflexively and the spade became as vital as the rifle. A wargame that does not make a stone wall genuinely deadlier than a fence misrepresents the central tactical fact of the war.",
+      "consensus": "Civil War tactics turned on cover. A defender behind a stone wall, in a sunken road, or in even hastily dug rifle pits multiplied his combat power so sharply that frontal assaults across open ground against such positions failed again and again at catastrophic cost. The archetypes are exact: at Fredericksburg (Dec 13, 1862) Confederates stood four ranks deep in a sunken road behind a stone wall along the base of Marye's Heights and broke fourteen Union brigades in succession — no attacker reached closer than roughly 25-40 yards, and the position proved virtually impregnable, and the open, rising ground before the wall became a byword for slaughter. At Antietam the 'Sunken Road' (Bloody Lane) let a thin Confederate line hold for hours until it was finally enfiladed. The cover hierarchy was real and graded — a stone wall or entrenchment was worth far more than a rail fence or open cropland — which is why, by 1864, troops fortified reflexively and the spade became as vital as the rifle. A wargame that does not make a stone wall genuinely deadlier than a fence misrepresents the central tactical fact of the war.",
       "voices": [
         {
           "scholar": "Earl J. Hess (Field Armies and Fortifications in the Civil War; Trench Warfare under Grant and Lee)",
@@ -51,7 +51,7 @@
         },
         {
           "scholar": "National Park Service / American Battlefield Trust (Fredericksburg)",
-          "view": "The 600-yard stone wall and sunken road below Marye's Heights made the Confederate position 'almost impregnable, and a deathtrap'; successive Union waves died on the open, rising ground without ever closing to the wall — a textbook demonstration of cover as killing ground."
+          "view": "The 600-yard stone wall and sunken road below Marye's Heights made the Confederate position virtually impregnable; successive Union waves died on the open, rising ground without ever closing to the wall — a textbook demonstration of cover as killing ground."
         },
         {
           "scholar": "Paddy Griffith (Battle Tactics of the Civil War)",
@@ -59,6 +59,11 @@
         }
       ],
       "takeaway": "Model cover as a graded hierarchy — stone wall and entrenchment strongest, sunken road and boulders strong, forest moderate, a rail fence light — and let it sharply reduce the damage a defender takes, so the player learns the war's hardest lesson: do not charge prepared infantry behind good cover across open ground.",
+      "sources": [
+        "Hess 2005",
+        "Griffith 1989",
+        "McWhiney & Jamieson 1982"
+      ],
       "provenance": "Verified"
     }
   ],

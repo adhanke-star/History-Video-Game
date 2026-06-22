@@ -147,9 +147,48 @@ for (const rm of RATING_MODULES) {
   }
 }
 
+// 4e. CITATION-PROVENANCE GATE (D92/D103) — the citation-grade, anti-Lost-Cause non-negotiable enforced
+// STRUCTURALLY: any record stamped prov/provenance:"Verified" MUST carry >=2 sources. Honest history means
+// an authored claim either has >=2 independent citations (Verified) or is downgraded to Inferred/Disputed —
+// never a "Verified" stamp resting on 0-1 sources. Scans every data/*.json recursively so the rule cannot be
+// eroded by a later record anywhere in the catalog (mirrors the 4d no-fudge wall: a non-negotiable made
+// un-erodable by the build itself).
+{
+  const offenders = [];
+  const SRC_KEYS = ['sources', 'src'];
+  const walk = (node, file, trail) => {
+    if (Array.isArray(node)) { node.forEach((v, i) => walk(v, file, trail + '[' + i + ']')); return; }
+    if (node && typeof node === 'object') {
+      // match BOTH keys independently (so an Inferred `prov` can't mask a Verified `provenance`), and
+      // normalize trim+case so a bare stamp of "Verified " / "verified" / "VERIFIED" cannot evade. The
+      // long descriptive forms ("Verified specs (…)", "Verified (high) — …") trim-lowercase to something
+      // other than exactly "verified", so they stay out of the structured-source gate by design (their
+      // citations live inline in the prose) — R-6 bug-hunt hardening, D103.
+      const norm = (v) => (typeof v === 'string' ? v.trim().toLowerCase() : '');
+      const isVerified = norm(node.prov) === 'verified' || norm(node.provenance) === 'verified';
+      if (isVerified) {
+        let sc = 0;
+        for (const k of SRC_KEYS) { if (Array.isArray(node[k])) { sc = node[k].length; break; } }
+        if (sc < 2) {
+          const id = node.key || node.name || node.id || node.label || trail || '(record)';
+          offenders.push(file + ' :: ' + id + ' (Verified, ' + sc + ' source' + (sc === 1 ? '' : 's') + ')');
+        }
+      }
+      for (const k in node) walk(node[k], file, trail ? trail + '.' + k : k);
+    }
+  };
+  if (existsSync(DATA)) {
+    for (const f of readdirSync(DATA).filter(f => f.endsWith('.json')).sort()) {
+      let j; try { j = JSON.parse(readFileSync(join(DATA, f), 'utf8')); } catch (e) { continue; } // JSON already gated in 2a
+      walk(j, 'data/' + f, '');
+    }
+  }
+  if (offenders.length) die(5, 'citation-provenance: ' + offenders.length + ' record(s) stamped "Verified" with <2 sources (the >=2-source non-negotiable, D92/D103) — add a second independent REAL source or downgrade prov to "Inferred"/"Disputed":\n  ' + offenders.join('\n  '));
+}
+
 // ---- 5. report + write ----
 const KB = (s) => (s.length / 1024).toFixed(1) + 'KB';
-console.log('GATE OK · parse ✓ · hex ✓ · collision ✓ · no-fudge ✓');
+console.log('GATE OK · parse ✓ · hex ✓ · collision ✓ · no-fudge ✓ · citations ✓');
 console.log('  data:      GAME_DATA = {' + (dataKeys.join(', ') || '(none)') + '}');
 console.log('  modules:   ' + modules.join(', '));
 console.log('  new fns:   ' + (newFns.map(x => x.name).join(', ') || '(none)'));

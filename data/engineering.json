@@ -30,7 +30,12 @@
         "Haupt's full establishment"
       ],
       "flavor": "Wreck a Confederate bridge and Haupt's men rebuilt it from standing timber in days — the Potomac Creek trestle, 400 feet long and 80 high, went up in nine days of 'beanpoles and cornstalks.' A standing Construction Corps with pre-framed truss spans and a wrecking train keeps your railheads moving with the army, so the depots stay full.",
-      "provenance": "Verified"
+      "provenance": "Verified",
+      "sources": [
+        "Haupt 1901",
+        "Weber 1952",
+        "Black 1952"
+      ]
     },
     {
       "id": "fortifications",
@@ -54,7 +59,12 @@
         "Engineered lines"
       ],
       "flavor": "By 1864 every halt ended with the men digging. A trained engineer arm sites works that multiply a defender — the sunken road at Fredericksburg, the lines at Cold Harbor where an attack died in minutes. Spades win sieges; by Petersburg the armies lived underground.",
-      "provenance": "Verified"
+      "provenance": "Verified",
+      "sources": [
+        "Mahan 1836",
+        "Hess 2005",
+        "Hess 2009"
+      ]
     },
     {
       "id": "pontoons",
@@ -78,7 +88,12 @@
         "A full bridge equipage"
       ],
       "flavor": "An army moves at the speed of its rivers. When the pontoons came late to Fredericksburg the assault stalled and bled; when Grant's engineers threw a 2,200-foot bridge across the James in 1864 a whole army crossed unseen. A ready bridge train turns a barrier into a road and spares the men a forced march.",
-      "provenance": "Verified"
+      "provenance": "Verified",
+      "sources": [
+        "O'Reilly 2003",
+        "McPherson 1988",
+        "OR Ser.I Vol.XXI"
+      ]
     },
     {
       "id": "siege",
@@ -102,7 +117,12 @@
         "A formal siege train"
       ],
       "flavor": "When a place will not fall to assault, you dig toward it. At Vicksburg the Union sapped forward by parallels and blew a mine under the 3rd Louisiana Redan; at Petersburg the war became ten months of trench and mortar. A siege establishment trades blood for time and spadework.",
-      "provenance": "Verified"
+      "provenance": "Verified",
+      "sources": [
+        "Solonick 2015",
+        "Hess 2009",
+        "Hess 2010"
+      ]
     }
   ],
   "teachingCards": [
@@ -129,7 +149,12 @@
         }
       ],
       "takeaway": "Model Union railroad engineering as an industrial repair engine, not a stat bonus: a Construction Corps that converts manpower + prefabricated truss spans + repair trains into bridge/track rebuilds measured in hours-to-days, so Confederate raids only delay rather than deny the supply line — while the South's identical raids on Union rail cost it more, because it can make essentially no new rail to replace what is destroyed and must cannibalize its own branch lines to repair the trunk. The asymmetry is industrial capacity and organization (Union systemic superiority), explicitly not luck or a generic \"Yankee numbers\" hand-wave.",
-      "provenance": "Verified"
+      "provenance": "Verified",
+      "sources": [
+        "Haupt 1901",
+        "Weber 1952",
+        "Black 1952"
+      ]
     },
     {
       "id": "eng-spade-fieldworks",
@@ -154,7 +179,12 @@
         }
       ],
       "takeaway": "Model entrenchment as the dominant fact of 1864, not a free defensive bonus that scales with rifle range: make digging a per-halt action that hardens by stages (rifle pit → sited works → engineered line) the longer a force holds ground, and let CONTINUOUS CONTACT (the attacker refusing to disengage, à la Grant) be what forces both sides to dig — so a frontal assault on a hardened line is catastrophic for the attacker, but the designer should resist the lazy \"longer-range rifle = auto-lethal\" causal chain that Griffith and Hess dispute. For Cold Harbor, render a costly, demoralizing repulse without baking in the discredited \"7,000 in a few minutes\" number; cite Rhea's ~6,000-Union-for-the-day instead.",
-      "provenance": "Verified"
+      "provenance": "Verified",
+      "sources": [
+        "Hess 2005",
+        "Griffith 1989",
+        "Rhea 2002"
+      ]
     },
     {
       "id": "eng-pontoon-mobility",
@@ -179,7 +209,12 @@
         }
       ],
       "takeaway": "Model bridging as a logistics asset, not scenery: a pontoon-train unit that must physically arrive and deploy before an army can cross a river feature. Reward the player who pre-positions bridging (Grant on the James: fast crossing, surprise, no forced march) and punish the one whose train is delayed (Burnside at Fredericksburg: lost surprise, an entrenched far bank, a costly contested crossing) — so river crossings become a timing-and-supply puzzle, with bridge length, current/tide, and build-time scaling the difficulty.",
-      "provenance": "Verified"
+      "provenance": "Verified",
+      "sources": [
+        "McPherson 1988",
+        "O'Reilly 2003",
+        "OR Ser.I Vol.XXI"
+      ]
     },
     {
       "id": "eng-siege-engineering",
@@ -204,7 +239,12 @@
         }
       ],
       "takeaway": "Model siege engineering as a distinct path to victory that converts time and spadework into reduced assault cost: investing in saps/parallels shrinks the storming distance (lowering attacker casualties), and a mine can blow a breach -- but the breach only pays off if the player commits prepared, well-led infantry to exploit it, or the assault fails like the historical Crater. Give the Union an engineering-depth and resupply edge while keeping Confederate field fortifications a strong, time-buying defensive multiplier that cannot be sustained without iron.",
-      "provenance": "Verified"
+      "provenance": "Verified",
+      "sources": [
+        "Solonick 2015",
+        "Hess 2009",
+        "Hess 2010"
+      ]
     }
   ],
   "_designNote": "Asymmetry is the point, again. The Union's military engineering was a decisive, under-celebrated advantage: the USMRR under Haupt and then McCallum rebuilt track and bridges faster than Confederate raiders could destroy them, the Engineer Battalion and volunteer pioneer regiments dug and bridged at scale, and the North's industry supplied the iron, timber framing, and prefabricated equipage. The Confederacy had able engineers (Gilmer, the Vicksburg and Petersburg defenders) but could not match the SCALE or resupply — the same iron shortage that decays its railroads starves its repair. So: (1) every branch costs the CS a materials/skilled-labor premium (costPremiumCS 1.25); (2) the Construction Corps claws back only a FRACTION of the rail lost each turn (railClawbackFractionPerLevel x level, capped railClawbackCap = 0.7 < 1; src/57-engineering.js engOnResolve reads src/50-production.js's railLossLast) — the headline CONFEDERATE benefit, slowing the South's irreversible decay without ever stopping or reversing it (no iron to truly rebuild), so rail still declines monotonically toward the floor, just more slowly; the recovery can never reach an equilibrium or pin rail at 100, even with the rail War-Room node fully funded; (3) the engineering score is symmetric per level otherwise, so the asymmetry is paid in cost, not effect, keeping the South's defensive engineering (its real historical strength at Vicksburg/Petersburg) viable. engScore = baselineEngineeringScore + sum(level * scorePerLevel), clamped 0-100; it feeds the bridge as an additive overall bonus (weight 0.10, like the artillery facet), plus construction raises the supply facet and pontoons lower the fatigue facet. Field Fortifications and Siege Works feed only the aggregate score in the STRATEGIC layer; their decisive defend/assault effects belong to the battle-day layer (A3 terrain cover + A6 conditioning) and the tactical engine (P-phases)."
