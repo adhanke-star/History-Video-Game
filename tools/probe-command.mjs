@@ -202,6 +202,93 @@ const SETUP = `(() => {
       if(html.indexOf(' OVR)')<0) throw new Error('pool rows missing the "(NN OVR)" grade');
       return { general:g.id, ovr:ovr, letter:gr.letter, word:gr.word }; });
 
+    step('Q9: cmdInit seeds the seniority currency + an empty promotions map (byte-identical default)', function(){
+      if(typeof cmdPromote!=='function') return { skipped:'pre-Q9 build' };
+      var C=mkC('US',1863,3), cmd=C.president.command;
+      if(typeof cmd.seniority!=='number'||!(cmd.seniority>=0)) throw new Error('seniority not seeded: '+cmd.seniority);
+      if(!cmd.promotions||typeof cmd.promotions!=='object'||Object.keys(cmd.promotions).length!==0) throw new Error('promotions should start empty');
+      return { seniority:cmd.seniority, promotions:Object.keys(cmd.promotions).length }; });
+
+    step('Q9: cmdInit RE-CLAMPS a valid-but-out-of-band stored seniority to the cap on LOAD (save-tamper hardening)', function(){
+      if(typeof cmdPromote!=='function') return { skipped:'pre-Q9' };
+      var C=mkC('US',1863,3); C.president.command.seniority=1e9;   // a tampered/stale save value that passes the >=0 guard
+      cmdInit(C);                                                  // idempotent re-init must clamp it on load (not wait for the next resolve)
+      if(!(C.president.command.seniority<=60)) throw new Error('out-of-band seniority not clamped on load: '+C.president.command.seniority);
+      return { clampedTo:C.president.command.seniority }; });
+
+    step('Q9: the strategic grade ladder parses the verbose generals.json ranks correctly', function(){
+      if(typeof _cmdBaseGrade!=='function') return { skipped:'pre-Q9' };
+      var gl=_cmdBaseGrade(_cmdById('CS','cs-lee')), gg=_cmdBaseGrade(_cmdById('US','us-grant')), gm=_cmdBaseGrade(_cmdById('US','us-meade')), gs=_cmdBaseGrade(_cmdById('CS','cs-stuart'));
+      if(gl!=='General') throw new Error('Lee -> General, got '+gl);
+      if(gg!=='Lt. Gen.') throw new Error('Grant -> Lt. Gen., got '+gg);
+      if(gm!=='Maj. Gen.') throw new Error('Meade -> Maj. Gen., got '+gm);
+      if(gs!=='Maj. Gen.') throw new Error('Stuart -> Maj. Gen., got '+gs);
+      return { lee:gl, grant:gg, meade:gm, stuart:gs }; });
+
+    step('Q9: a top-grade general (Lee = General) is NOT promotable', function(){
+      if(typeof _cmdPromoteInfo!=='function') return { skipped:'pre-Q9' };
+      var C=mkC('CS',1863,3);
+      if(_cmdPromoteInfo(C,_cmdById('CS','cs-lee'))!==null) throw new Error('Lee (General) should not be promotable');
+      return { leePromotable:false }; });
+
+    step('Q9: promotion is GATED when a currency is short, SPENDS both when affordable, and stores the grade', function(){
+      if(typeof cmdPromote!=='function') return { skipped:'pre-Q9' };
+      var C=mkC('US',1863,3), cmd=C.president.command, meade=_cmdById('US','us-meade');   // Maj. Gen. -> Lt. Gen.
+      C.clock.capital=0; cmd.seniority=50; cmdPromote(C,'us-meade');
+      if(cmd.promotions['us-meade']) throw new Error('promotion should be BLOCKED with 0 capital');
+      C.clock.capital=80; cmd.seniority=0; cmdPromote(C,'us-meade');
+      if(cmd.promotions['us-meade']) throw new Error('promotion should be BLOCKED with 0 seniority');
+      var info=_cmdPromoteInfo(C,meade); C.clock.capital=80; cmd.seniority=50;
+      var cap0=C.clock.capital, sen0=cmd.seniority; cmdPromote(C,'us-meade');
+      if(cmd.promotions['us-meade']!==info.next) throw new Error('should store the next grade '+info.next+', got '+cmd.promotions['us-meade']);
+      if(!(C.clock.capital<cap0)) throw new Error('should spend capital');
+      if(!(cmd.seniority<sen0)) throw new Error('should spend seniority');
+      return { storedGrade:cmd.promotions['us-meade'], capSpent:cap0-C.clock.capital, senSpent:sen0-cmd.seniority }; });
+
+    step('Q9: an EARNED promotion raises reputation; an ABOVE-MERIT one costs more capital + cuts reputation (jealousy)', function(){
+      if(typeof cmdPromote!=='function') return { skipped:'pre-Q9' };
+      var meade=_cmdById('US','us-meade');
+      var Ce=mkC('US',1863,3); Ce.clock.capital=80; Ce.president.command.seniority=50; Ce.president.command.reputation['us-meade']=80;
+      var infoE=_cmdPromoteInfo(Ce,meade); if(!infoE.earned) throw new Error('rep 80 should be EARNED for '+infoE.next+' (bar '+infoE.meritBar+')');
+      var rep0e=Ce.president.command.reputation['us-meade']; cmdPromote(Ce,'us-meade'); var rep1e=Ce.president.command.reputation['us-meade'];
+      if(!(rep1e>rep0e)) throw new Error('earned promotion should RAISE reputation: '+rep0e+'->'+rep1e);
+      var Ca=mkC('US',1863,3); Ca.clock.capital=80; Ca.president.command.seniority=50; Ca.president.command.reputation['us-meade']=40;
+      var infoA=_cmdPromoteInfo(Ca,meade); if(infoA.earned) throw new Error('rep 40 should be ABOVE-merit for '+infoA.next+' (bar '+infoA.meritBar+')');
+      if(!(infoA.capital>infoE.capital)) throw new Error('above-merit should cost MORE capital: '+infoA.capital+' vs '+infoE.capital);
+      var rep0a=Ca.president.command.reputation['us-meade']; cmdPromote(Ca,'us-meade'); var rep1a=Ca.president.command.reputation['us-meade'];
+      if(!(rep1a<rep0a)) throw new Error('above-merit promotion should LOWER reputation (jealousy): '+rep0a+'->'+rep1a);
+      return { earnedCap:infoE.capital, aboveCap:infoA.capital, earnedRep:rep0e+'->'+rep1e, aboveRep:rep0a+'->'+rep1a }; });
+
+    step('Q9: a promotion lifts effective skill (BOUNDED) -> reaches commandLeadership; un-promoted reads byte-identical', function(){
+      if(typeof cmdPromote!=='function') return { skipped:'pre-Q9' };
+      var meade=_cmdById('US','us-meade');
+      var C0=mkC('US',1863,3);
+      if(_cmdEffectiveSkill(meade)!==_cmdEffectiveSkill(meade,C0)) throw new Error('un-promoted: skill(g) must equal skill(g,C)');
+      var C=mkC('US',1863,3); C.clock.capital=100; C.president.command.seniority=60; C.president.command.reputation['us-meade']=80;
+      cmdAppoint(C,'us-meade'); var lead0=commandLeadership(C), skill0=_cmdEffectiveSkill(meade,C);
+      cmdPromote(C,'us-meade'); var skill1=_cmdEffectiveSkill(meade,C), lead1=commandLeadership(C);
+      if(!(skill1>skill0)) throw new Error('promotion should raise effective skill: '+skill0+'->'+skill1);
+      if(!((skill1-skill0)<=6.001)) throw new Error('skill lift must stay bounded (<=6): '+(skill1-skill0));
+      if(!(lead1>=lead0)) throw new Error('promotion should not lower commandLeadership: '+lead0+'->'+lead1);
+      return { skill:skill0+'->'+Math.round(skill1*100)/100, lead:lead0+'->'+lead1 }; });
+
+    step('Q9: an un-promoted campaign is byte-identical — every general reads the SAME effective skill with/without C', function(){
+      if(typeof cmdPromote!=='function') return { skipped:'pre-Q9' };
+      var sides=['US','CS'], n=0;
+      for(var s=0;s<sides.length;s++){ var roster=_cmdSideGenerals(sides[s]), C=mkC(sides[s],1863,3);
+        for(var i=0;i<roster.length;i++){ var g=roster[i]; n++;
+          if(_cmdEffectiveSkill(g)!==_cmdEffectiveSkill(g,C)) throw new Error('un-promoted skill drift for '+g.id+': '+_cmdEffectiveSkill(g)+' vs '+_cmdEffectiveSkill(g,C)); } }
+      return { generalsChecked:n, identical:true }; });
+
+    step('Q9: the Command desk renders the Officer Corps promotions section (currencies + a Promote control)', function(){
+      if(typeof _cmdPromotionsHTML!=='function') return { skipped:'pre-Q9' };
+      var C=mkC('US',1863,3); C.clock.capital=80; C.president.command.seniority=50;
+      var html=cmdRenderTab(C);
+      if(html.indexOf('officer corps')<0) throw new Error('render missing the promotions section header');
+      if(html.indexOf('Seniority')<0) throw new Error('render missing the seniority currency');
+      if(html.indexOf('Promote to')<0) throw new Error('render missing a Promote control');
+      return { len:html.length }; });
+
     // helper: read a general's current reputation
     function C0rep(C,id){ return (C.president&&C.president.command&&typeof C.president.command.reputation[id]==='number')?C.president.command.reputation[id]:60; }
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }

@@ -21704,6 +21704,24 @@ var GAME_DATA = {
     { "key": "pvt", "rank": "Private", "role": "in the ranks" }
   ],
   "_r5Note": "D94 R-5 (the prosopography scale-out): the LAZY-MATERIALIZATION sample template a brigade inspect/muster-roll builds rows from. fldBrigadeMuster materializes ONE row per slot here (HARD-capped <=6), NEVER u.men rows; the brigade token carries one recomputable fldMenMeanOVR instead (§8 scale rule). Generated rows are Inferred (a hatched bar via fldProvenanceStyle marks a derived rating distinct from a sourced one, §10). fldPromotePerson is the latent-command play-as-anyone hook; fldPersonTeam the EA-style journey hook.",
+  "promotion": {
+    "_note": "Q9 (D102): THE GM PROMOTION ECONOMY — the first depth-chart MOVE (RATING-SYSTEM-DESIGN §12.2 / §14.3 / §15). The President promotes a general one grade up the strategic ladder, spending the MULTI-CURRENCY (political capital, primary + a seniority pool) and MERIT-gated by reputation. Promotion raises the general's grade -> a small BOUNDED effective-skill lift (rankBase delta * skillLiftWeight, clamped to skillLiftCap) that reaches the bridge ONLY via the existing _cmdEffectiveSkill -> _cmdGenRating -> commandLeadership pipe — an INPUT, never the scoreboard (honors D74/D94 no-fudge). EARNED (rep >= the grade's meritBar) -> a confidence rep bump; ABOVE-MERIT -> the aboveMeritMul capital surcharge + a jealousy rep hit (so over-promoting a favorite can LOWER his OVR — the honest teaching). LEAPFROGGING a passed-over senior costs extra seniority. BYTE-IDENTICAL until the player promotes (no promotion stored -> _cmdEffectiveSkill returns its pre-Q9 value). DEFERRED to a later GM increment (logged D102): the symmetric AI-GM (needs enemy-commander->combat wiring), cross-theater Transfer (needs authored theaters), Commission + the full corps/division depth-chart tree (needs the strategic<->tactical OOB mapping, the Q8b blocker family).",
+    "ladder": ["Brig. Gen.", "Maj. Gen.", "Lt. Gen.", "General"],
+    "meritBar": { "Maj. Gen.": 55, "Lt. Gen.": 66, "General": 76 },
+    "capitalCost": { "Maj. Gen.": 6, "Lt. Gen.": 10, "General": 16 },
+    "aboveMeritMul": 1.8,
+    "seniorityCostBase": 10,
+    "seniorityLeapfrog": 8,
+    "seniorityStart": 18,
+    "seniorityPerTurn": 3,
+    "seniorityWinBonus": 6,
+    "seniorityCap": 60,
+    "earnedRepBonus": 3,
+    "aboveMeritRepHit": 4,
+    "skillLiftWeight": 0.92,
+    "skillLiftCap": 6,
+    "topCommandPreferredGrade": "Lt. Gen."
+  },
   "realismCaps": {
     "arcade": {
       "cmdBonus": 1.35,
@@ -25343,6 +25361,12 @@ function cmdInit(C) {
   if (Array.isArray(cmd.reputation) || !cmd.reputation || typeof cmd.reputation !== "object") cmd.reputation = {};
   if (typeof cmd.appointedTurn !== "number") cmd.appointedTurn = -1;
   if (!Array.isArray(cmd.history)) cmd.history = [];
+  // Q9 (D102): the promotion economy's state — a seniority currency (the second axis beside political capital) +
+  // the per-general promoted grade. Seeded ONCE (idempotent); plain data riding the save (no _SAVE_VER bump).
+  // Empty `promotions` -> _cmdPromoteSkillLift is 0 -> byte-identical until the player promotes.
+  if (typeof cmd.seniority !== "number" || !(cmd.seniority >= 0)) { var _pc = _cmdPromoCfg(); cmd.seniority = (_pc && typeof _pc.seniorityStart === "number") ? _pc.seniorityStart : 18; }
+  else { var _pc2 = _cmdPromoCfg(); cmd.seniority = Math.max(0, Math.min((_pc2 && typeof _pc2.seniorityCap === "number") ? _pc2.seniorityCap : 60, cmd.seniority)); }   // Q9 bug-hunt (LOW): re-clamp a valid-but-out-of-band stored value (a tampered/stale save) to the cap on LOAD, not only on the next resolve — normal play (accrual already capped) is byte-identical
+  if (Array.isArray(cmd.promotions) || !cmd.promotions || typeof cmd.promotions !== "object") cmd.promotions = {};
   // seed reputation for every general on this side, once (idempotent: only if absent).
   var roster = _cmdSideGenerals(side);
   for (var i = 0; i < roster.length; i++) {
@@ -25388,20 +25412,29 @@ function _cmdGenPersona(gen) {
   var rec = d.generalPersonas[gen.id];
   return (rec && rec.persona) ? rec : null;
 }
-function _cmdEffectiveSkill(gen) {
+function _cmdEffectiveSkill(gen, C) {
+  var base;
   var rec = _cmdGenPersona(gen);
   if (rec && typeof fldOfficerSkillSeed === "function") {
     var seed = fldOfficerSkillSeed(rec.persona);
-    if (typeof seed === "number" && isFinite(seed)) return Math.round(seed);
+    base = (typeof seed === "number" && isFinite(seed)) ? Math.round(seed) : ((gen && typeof gen.skill === "number") ? gen.skill : 64);
+  } else {
+    base = (gen && typeof gen.skill === "number") ? gen.skill : 64;
   }
-  return (gen && typeof gen.skill === "number") ? gen.skill : 64;
+  // Q9 (D102): a PROMOTION lifts effective skill — a small BOUNDED rank-grade delta that reaches the army ONLY
+  // through the existing _cmdGenRating -> commandLeadership pipe (an INPUT the bridge already reads; never the
+  // scoreboard, honoring D74/D94). The lift is 0 when the general is un-promoted (no C, or no stored promotion),
+  // so every pre-Q9 reading is BYTE-IDENTICAL. clamp to 100.
+  var lift = (C && typeof _cmdPromoteSkillLift === "function") ? _cmdPromoteSkillLift(C, gen) : 0;
+  var v = base + lift;
+  return v > 100 ? 100 : v;
 }
 
 /* A general's LEADERSHIP rating (0-100): operational skill blended with his current
    standing. A neutral man (skill 64, reputation 64) rates 64 — the bridge anchor. */
 function _cmdGenRating(C, gen) {
   if (!gen) return 64;
-  var skill = _cmdEffectiveSkill(gen);
+  var skill = _cmdEffectiveSkill(gen, C);   // Q9: C carries the promotion lift (0 / byte-identical when un-promoted)
   var rep = _cmdReputation(C, gen.id);
   return 0.55 * skill + 0.45 * rep;
 }
@@ -25427,6 +25460,123 @@ function _cmdGenDualOVR(C, gen) {
   return { headline: ovr, attack: _cl(ovr + atkT), defend: _cl(ovr + defT) };
 }
 
+/* ===========================================================================
+   Q9 (D102) · THE GM PROMOTION ECONOMY — the first depth-chart MOVE (RATING-SYSTEM-DESIGN §12.2/§14.3/§15).
+
+   The President promotes a general one grade up the strategic ladder (Brig. Gen. -> Maj. Gen. -> Lt. Gen. ->
+   General), spending the MULTI-CURRENCY — political capital (primary, C.clock.capital) + a seniority pool
+   (cmd.seniority) — and MERIT-gated by his reputation. A promotion raises the general's grade, which lifts his
+   effective skill by a small BOUNDED amount (the rankBase delta x skillLiftWeight, clamped to skillLiftCap);
+   that lift reaches the army ONLY through the existing _cmdEffectiveSkill -> _cmdGenRating -> commandLeadership
+   pipe — an INPUT the bridge already reads, NEVER the scoreboard (D74/D94 no-fudge wall). EARNED on merit ->
+   a confidence reputation bump; ABOVE merit -> the capital surcharge + a jealousy reputation hit (so
+   over-promoting a favorite can LOWER his OVR — the honest history). Leapfrogging a passed-over senior costs
+   extra seniority. BYTE-IDENTICAL until the player promotes (empty cmd.promotions -> zero lift everywhere).
+
+   DEFERRED to a later GM increment (logged D102): the symmetric AI-GM (needs enemy-commander->combat wiring;
+   would break byte-identity / risk fudge), cross-theater Transfer (needs authored theaters), Commission + the
+   full corps/division depth-chart tree (needs the strategic<->tactical OOB mapping — the Q8b blocker family).
+   =========================================================================== */
+
+function _cmdNum(v, d) { return (typeof v === "number" && isFinite(v)) ? v : d; }
+function _cmdPromoCfg() { var d = gameData("ratings"); return (d && d.promotion) ? d.promotion : null; }
+function _cmdRankBase(grade) { var d = gameData("ratings"), t = d && d.rankBase; return (t && grade != null && typeof t[grade] === "number") ? t[grade] : 64; }
+
+/* parse a general's VERBOSE generals.json rank ("Major General, Commanding the Army of the Potomac; ...") down
+   to one clean ladder grade. Order matters: the multi-word grades contain the bare "General". Deterministic. */
+function _cmdBaseGrade(gen) {
+  var r = String((gen && gen.rank) || "");
+  if (/Lieutenant General|Lt\.?\s*Gen/i.test(r)) return "Lt. Gen.";
+  if (/Major General|Maj\.?\s*Gen/i.test(r)) return "Maj. Gen.";
+  if (/Brigadier|Brig\.?\s*Gen/i.test(r)) return "Brig. Gen.";
+  if (/General/i.test(r)) return "General";
+  return "Brig. Gen.";   // Q9 bug-hunt (LOW): an UNRECOGNIZED rank defaults to the LOWEST ladder grade — never invent a man two grades up. Unreachable on the shipped surface (all 20 named generals match a real token); hardens the DEFERRED depth-chart/prosopography path (a non-named officer must not be over-graded onto the General ladder).
+}
+function _cmdGradeIdx(grade) { var cfg = _cmdPromoCfg(); if (!cfg || !cfg.ladder) return -1; for (var i = 0; i < cfg.ladder.length; i++) if (cfg.ladder[i] === grade) return i; return -1; }
+function _cmdNextGrade(grade) { var cfg = _cmdPromoCfg(); if (!cfg || !cfg.ladder) return null; var i = _cmdGradeIdx(grade); return (i >= 0 && i + 1 < cfg.ladder.length) ? cfg.ladder[i + 1] : null; }
+
+/* the general's CURRENT effective grade — the stored promoted grade if it sits ABOVE his parsed base grade,
+   else the base grade. A junk/invalid stored grade has idx -1 (never > base) -> harmlessly ignored. */
+function _cmdCurrentGrade(C, gen) {
+  var base = _cmdBaseGrade(gen);
+  var cmd = C && C.president && C.president.command;
+  var promoted = (cmd && cmd.promotions && gen && gen.id) ? cmd.promotions[gen.id] : null;
+  return (promoted && _cmdGradeIdx(promoted) > _cmdGradeIdx(base)) ? promoted : base;
+}
+
+/* the BOUNDED effective-skill lift a stored promotion confers (read by _cmdEffectiveSkill). 0 when un-promoted
+   -> byte-identical. The rankBase grade delta x skillLiftWeight, clamped to skillLiftCap (§27: small, never
+   dominant). Reaches the fight ONLY via the existing skill->rating->bridge pipe. */
+function _cmdPromoteSkillLift(C, gen) {
+  if (!C || !gen || !gen.id) return 0;
+  var cmd = C.president && C.president.command;
+  if (!cmd || !cmd.promotions || !cmd.promotions[gen.id]) return 0;
+  var cfg = _cmdPromoCfg(); if (!cfg) return 0;
+  var lift = (_cmdRankBase(_cmdCurrentGrade(C, gen)) - _cmdRankBase(_cmdBaseGrade(gen))) * _cmdNum(cfg.skillLiftWeight, 0.92);
+  if (lift < 0) lift = 0;
+  var capL = _cmdNum(cfg.skillLiftCap, 6);
+  return lift > capL ? capL : lift;
+}
+
+/* would promoting `gen` to `nextGrade` LEAPFROG a more-senior man? — another available same-side general who
+   already sits AT/ABOVE the target grade AND outranks him in reputation (the passed-over senior the seniority
+   system frowns on). Adds the leapfrog seniority surcharge. */
+function _cmdLeapfrogged(C, gen, nextGrade) {
+  var side = (C.side === "CS") ? "CS" : "US", roster = _cmdSideGenerals(side);
+  var nIdx = _cmdGradeIdx(nextGrade), myRep = _cmdReputation(C, gen.id);
+  for (var i = 0; i < roster.length; i++) {
+    var o = roster[i]; if (!o || o.id === gen.id || !_cmdAlive(o, C.president.date)) continue;
+    if (_cmdGradeIdx(_cmdCurrentGrade(C, o)) >= nIdx && _cmdReputation(C, o.id) > myRep) return true;
+  }
+  return false;
+}
+
+/* the full promotion offer for `gen` — the next grade + the multi-currency cost + merit/leapfrog state — or
+   null if he is at the top grade (or no config). Pure; reads only. */
+function _cmdPromoteInfo(C, gen) {
+  var cfg = _cmdPromoCfg(); if (!cfg || !gen) return null;
+  var cur = _cmdCurrentGrade(C, gen), next = _cmdNextGrade(cur);
+  if (!next) return null;   // already at the top grade
+  var rep = _cmdReputation(C, gen.id);
+  var bar = (cfg.meritBar && typeof cfg.meritBar[next] === "number") ? cfg.meritBar[next] : 64;
+  var earned = rep >= bar;
+  var capBase = (cfg.capitalCost && typeof cfg.capitalCost[next] === "number") ? cfg.capitalCost[next] : 10;
+  var capital = Math.round(capBase * (earned ? 1 : _cmdNum(cfg.aboveMeritMul, 1.8)));
+  var leapfrog = _cmdLeapfrogged(C, gen, next);
+  var seniority = Math.round(_cmdNum(cfg.seniorityCostBase, 10) + (leapfrog ? _cmdNum(cfg.seniorityLeapfrog, 8) : 0));
+  return { next: next, current: cur, capital: capital, seniority: seniority, earned: earned, leapfrog: leapfrog, meritBar: bar, rep: Math.round(rep) };
+}
+
+/* THE MOVE — promote `id` one grade, spending BOTH currencies (gated on both), recording the grade, and
+   applying the merit reputation effect. Bounded, clamped, logged. Mutates C.president.command + C.clock.capital. */
+function cmdPromote(C, id) {
+  if (!C || !C.president) return;
+  cmdInit(C);
+  var side = (C.side === "CS") ? "CS" : "US", cmd = C.president.command;
+  var g = _cmdById(side, id);
+  if (!g || !_cmdAlive(g, C.president.date)) return;
+  var info = _cmdPromoteInfo(C, g);
+  if (!info) return;                                   // at the top grade / no config
+  var clk = C.clock, cap = (clk && typeof clk.capital === "number") ? Math.round(clk.capital) : 0;
+  var sen = _cmdNum(cmd.seniority, 0);
+  if (cap < info.capital || sen < info.seniority) return;   // gated on BOTH currencies (the scarce budget)
+  // Q9 bug-hunt (LOW): debit the SAME rounded value the gate compared (cap), not the raw clk.capital, so the
+  // gate and the spend share one lens — a fractional balance can't pass the rounded gate yet be floor-absorbed
+  // on the raw spend. Byte-identical under every current integer-only capital path.
+  if (clk && typeof clk.capital === "number") clk.capital = Math.max(0, cap - info.capital);
+  cmd.seniority = Math.max(0, sen - info.seniority);
+  if (Array.isArray(cmd.promotions) || !cmd.promotions || typeof cmd.promotions !== "object") cmd.promotions = {};
+  cmd.promotions[id] = info.next;
+  var cfg = _cmdPromoCfg(), cur = _cmdReputation(C, id);
+  var rd = info.earned ? _cmdNum(cfg && cfg.earnedRepBonus, 3) : -_cmdNum(cfg && cfg.aboveMeritRepHit, 4);
+  cmd.reputation[id] = Math.max(5, Math.min(98, cur + rd));   // earned -> confidence; above-merit -> jealousy (can lower his OVR)
+  if (typeof _pdLog === "function") {
+    _pdLog(C, "You promote General " + _cmdName(g) + " to " + info.next
+      + (info.earned ? " — a promotion he has earned." : " — over more senior men; the army murmurs.")
+      + " (−" + info.capital + " capital, −" + info.seniority + " seniority).");
+  }
+}
+
 /* ---- commandLeadership(C): THE bridge leadership facet (0-100). Anchored at 64:
    a neutral general + a neutral cabinet -> 64 (= the old fixed placeholder, so a
    fresh/default command is byte-equivalent to Classic). The sitting general weighs
@@ -25449,7 +25599,7 @@ function cmdActiveTraits(C) {
   var g = cmdActiveGeneral(C);
   if (!g) return { skill: 64, aggression: 50, caution: 50 };
   return {
-    skill: _cmdEffectiveSkill(g),
+    skill: _cmdEffectiveSkill(g, C),
     aggression: (typeof g.aggression === "number") ? g.aggression : 50,
     caution: (typeof g.caution === "number") ? g.caution : 50
   };
@@ -25484,6 +25634,14 @@ function cmdOnResolve(winnerSide, type, B, C, win) {
       else if (win) delta = (type === "decisive") ? 6 : 3;
       else delta = (type === "decisive") ? -8 : -4;
       cmd.reputation[id] = Math.max(5, Math.min(98, cur + delta));
+    }
+    // Q9 (D102): the seniority pool accrues over the campaign (the officer corps' standing grows — a passive
+    // bench gain + a victory bonus), capped. It is a PROMOTION currency that NOTHING in combat reads, so the
+    // accrual is invisible — every battle outcome is BYTE-IDENTICAL; it only ever funds a future promotion.
+    var pcfg = _cmdPromoCfg();
+    if (pcfg) {
+      var add = _cmdNum(pcfg.seniorityPerTurn, 3) + (win ? _cmdNum(pcfg.seniorityWinBonus, 6) : 0);
+      cmd.seniority = Math.max(0, Math.min(_cmdNum(pcfg.seniorityCap, 60), _cmdNum(cmd.seniority, 0) + add));
     }
     // log a handover when the HISTORICAL default shifts and the player is following history.
     if (!cmd.fieldGeneral && id && id !== prevActive && prevActive) {
@@ -25578,7 +25736,7 @@ function _cmdActiveCard(C) {
     +   '</div>'
     +   '<div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:9px">'
     +     '<div style="flex:1 1 180px;min-width:160px">'
-    +       _cmdTraitBar('Skill', _cmdEffectiveSkill(gen), 'Operational generalship.')
+    +       _cmdTraitBar('Skill', _cmdEffectiveSkill(gen, C), 'Operational generalship.')
     +       _cmdTraitBar('Reputation', rep, 'Rises with victory, falls with defeat.')
     +     '</div>'
     +     '<div style="flex:1 1 180px;min-width:160px">'
@@ -25651,6 +25809,60 @@ function _cmdPoolHTML(C) {
     + '</div>';
 }
 
+/* ---- Q9: the "Officer Corps — Promotions" section (the depth-chart MOVE surface). Each available general's
+   current grade + OVR + a Promote control (next grade + the multi-currency cost), gated on capital + seniority,
+   merit-annotated. Pure display; the Wire fn binds the buttons. Returns "" with no config (byte-identical). ---- */
+function _cmdPromoRow(C, g, cap, sen, activeId) {
+  var cur = _cmdCurrentGrade(C, g), base = _cmdBaseGrade(g);
+  var promoted = _cmdGradeIdx(cur) > _cmdGradeIdx(base);
+  var ovr = Math.round(_cmdGenRating(C, g));
+  var gr = (typeof fldRatingGrade === "function") ? fldRatingGrade(ovr) : { letter: "", word: _cmdLeadWord(ovr)[0], color: _cmdLeadWord(ovr)[1] };
+  var info = _cmdPromoteInfo(C, g), ctrl;
+  if (!info) {
+    ctrl = '<span style="font-size:11px;opacity:.65">At the top grade</span>';
+  } else if (cap >= info.capital && sen >= info.seniority) {
+    var meritTag = info.earned ? '' : ' <span title="Above his merit — it costs more and his standing will suffer" style="color:#d66040">(above merit)</span>';/* a11y: #d66040 4.51:1 on lightest .sheet ground (#2e2816) -> AA (wcag-auditor: contrast fix from #c2502e to #d66040; #c2502e measured 3.74:1, below 4.5:1 required for 11px normal text); meaning also carried by the word "(above merit)" */
+    ctrl = '<button id="cmdProm_' + _cmdEsc(g.id) + '" type="button" class="upg" style="flex:0 0 auto" title="Promote to ' + _cmdEsc(info.next) + ' — ' + info.capital + ' political capital + ' + info.seniority + ' seniority' + (info.leapfrog ? '; he leapfrogs more senior men (+seniority)' : '') + '">Promote to ' + _cmdEsc(info.next) + '</button>'
+      + '<div style="font-size:10px;opacity:.7;margin-top:2px">&minus;' + info.capital + ' cap &middot; &minus;' + info.seniority + ' sen' + meritTag + '</div>';
+  } else {
+    ctrl = '<span style="font-size:11px;color:#d66040" title="Promotion to ' + _cmdEsc(info.next) + ' needs ' + info.capital + ' political capital + ' + info.seniority + ' seniority">Needs ' + info.capital + ' cap / ' + info.seniority + ' sen</span>';/* a11y: #d66040 4.51:1 on lightest .sheet ground (#2e2816) -> AA (wcag-auditor: contrast fix from #c2502e to #d66040; #c2502e measured 3.74:1, below 4.5:1 required for 11px normal text) */
+  }
+  var isActive = (g.id === activeId);
+  return '<div style="display:flex;gap:10px;align-items:center;padding:6px 0;border-bottom:1px dotted var(--rule)">'
+    + '<div style="flex:1 1 auto">'
+    +   '<div style="font-size:12px"><b>' + _cmdEsc(_cmdName(g)) + '</b>' + (isActive ? ' <span style="font-size:10px;opacity:.72">(in command)</span>' : '') + '</div>'
+    +   '<div style="font-size:11px;opacity:.82"><span aria-hidden="true" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:' + gr.color + ';margin-right:3px"></span>' + _cmdEsc(cur)
+    +     (promoted ? ' <span title="Promoted from ' + _cmdEsc(base) + '" style="color:#6f9e5a">&uarr;</span>' : '') + ' &middot; <b>' + _cmdEsc(gr.letter) + '</b> ' + ovr + ' OVR</div>'
+    + '</div>'
+    + '<div style="flex:0 0 auto;text-align:right">' + ctrl + '</div>'
+    + '</div>';
+}
+function _cmdPromotionsHTML(C) {
+  var cfg = _cmdPromoCfg(); if (!cfg) return "";
+  var side = (C.side === "CS") ? "CS" : "US", P = C.president, cmd = P.command;
+  var roster = _cmdSideGenerals(side); if (!roster.length) return "";
+  var cap = (C.clock && typeof C.clock.capital === "number") ? Math.round(C.clock.capital) : 0;
+  var sen = Math.round(_cmdNum(cmd.seniority, 0));
+  var activeId = cmdActiveId(C), rows = "";
+  for (var i = 0; i < roster.length; i++) { var g = roster[i]; if (!g || !_cmdAlive(g, P.date)) continue; rows += _cmdPromoRow(C, g, cap, sen, activeId); }
+  if (!rows) return "";
+  // the top-command preferred-grade prompt: the army command is properly a senior grade's billet
+  var pref = cfg.topCommandPreferredGrade, act = cmdActiveGeneral(C), prompt = "";
+  if (act && pref && _cmdGradeIdx(_cmdCurrentGrade(C, act)) >= 0 && _cmdGradeIdx(_cmdCurrentGrade(C, act)) < _cmdGradeIdx(pref)) {
+    prompt = '<div style="font-size:11px;opacity:.85;margin:4px 0 6px;color:#b3925e">The army command is properly a ' + _cmdEsc(pref) + '&rsquo;s billet &mdash; <b>' + _cmdEsc(_cmdName(act)) + '</b> holds it at ' + _cmdEsc(_cmdCurrentGrade(C, act)) + '. Promote him to field it without friction.</div>';
+  }
+  return '<div style="margin-top:16px">'
+    + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#b3925e;margin-bottom:2px">The officer corps &mdash; promotions</div>'/* a11y: #b3925e 5.0:1 on the lightest .sheet ground -> AA (the R-2 measured value) */
+    + '<div style="display:flex;gap:16px;flex-wrap:wrap;font-size:11px;opacity:.9;margin:3px 0 6px">'
+    +   '<span title="Political capital — the primary currency (shared with relief/appointment)">&#9873; Political capital <b>' + cap + '</b></span>'
+    +   '<span title="Seniority — the institutional standing to elevate an officer through the grades; it grows over the campaign">&#9876;&#65039; Seniority <b>' + sen + '</b></span>'
+    + '</div>'
+    + '<div style="font-size:11px;opacity:.78;margin-bottom:5px">A promotion raises a general&rsquo;s grade &mdash; and, earned on merit, his confidence and standing. Elevate a man past his record and the army resents it: it costs more, and his reputation suffers.</div>'
+    + prompt
+    + rows
+    + '</div>';
+}
+
 function _cmdCardHTML(C) {
   var d = _cmdData(), side = (C.side === "CS") ? "CS" : "US";
   if (!d || !d.teachingCards || !d.teachingCards.length) return "";
@@ -25683,6 +25895,7 @@ function cmdRenderTab(C) {
     + '<p class="lede" style="font-size:13px;margin-bottom:10px">You appoint the men who command your armies &mdash; and you relieve them. A great general lifts the army your war puts in the field; a cautious or discredited one squanders it. But a popular general is dangerous to dismiss: it costs you political capital, and the country is watching.</p>'
     + _cmdActiveCard(C)
     + _cmdPoolHTML(C)
+    + _cmdPromotionsHTML(C)
     + _cmdCardHTML(C);
 }
 
@@ -25736,6 +25949,18 @@ function cmdWireTab(C) {
         if (typeof _wdRefresh === "function") _wdRefresh();
       });
     })(roster[i]);
+  }
+  // Q9: wire the promotion buttons (one per available general; ids mirror the render, escaped — D43.4)
+  for (var p = 0; p < roster.length; p++) {
+    (function (g) {
+      if (!g || !g.id) return;
+      var pb = document.getElementById("cmdProm_" + _cmdEsc(g.id));
+      if (pb) pb.addEventListener("click", function () {
+        cmdPromote(C, g.id);
+        if (typeof saveLocal === "function") saveLocal();
+        if (typeof _wdRefresh === "function") _wdRefresh();
+      });
+    })(roster[p]);
   }
   var rev = document.getElementById("cmdRevert");
   if (rev) rev.addEventListener("click", function () {

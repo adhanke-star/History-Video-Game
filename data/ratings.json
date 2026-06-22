@@ -141,6 +141,24 @@
     { "key": "pvt", "rank": "Private", "role": "in the ranks" }
   ],
   "_r5Note": "D94 R-5 (the prosopography scale-out): the LAZY-MATERIALIZATION sample template a brigade inspect/muster-roll builds rows from. fldBrigadeMuster materializes ONE row per slot here (HARD-capped <=6), NEVER u.men rows; the brigade token carries one recomputable fldMenMeanOVR instead (§8 scale rule). Generated rows are Inferred (a hatched bar via fldProvenanceStyle marks a derived rating distinct from a sourced one, §10). fldPromotePerson is the latent-command play-as-anyone hook; fldPersonTeam the EA-style journey hook.",
+  "promotion": {
+    "_note": "Q9 (D102): THE GM PROMOTION ECONOMY — the first depth-chart MOVE (RATING-SYSTEM-DESIGN §12.2 / §14.3 / §15). The President promotes a general one grade up the strategic ladder, spending the MULTI-CURRENCY (political capital, primary + a seniority pool) and MERIT-gated by reputation. Promotion raises the general's grade -> a small BOUNDED effective-skill lift (rankBase delta * skillLiftWeight, clamped to skillLiftCap) that reaches the bridge ONLY via the existing _cmdEffectiveSkill -> _cmdGenRating -> commandLeadership pipe — an INPUT, never the scoreboard (honors D74/D94 no-fudge). EARNED (rep >= the grade's meritBar) -> a confidence rep bump; ABOVE-MERIT -> the aboveMeritMul capital surcharge + a jealousy rep hit (so over-promoting a favorite can LOWER his OVR — the honest teaching). LEAPFROGGING a passed-over senior costs extra seniority. BYTE-IDENTICAL until the player promotes (no promotion stored -> _cmdEffectiveSkill returns its pre-Q9 value). DEFERRED to a later GM increment (logged D102): the symmetric AI-GM (needs enemy-commander->combat wiring), cross-theater Transfer (needs authored theaters), Commission + the full corps/division depth-chart tree (needs the strategic<->tactical OOB mapping, the Q8b blocker family).",
+    "ladder": ["Brig. Gen.", "Maj. Gen.", "Lt. Gen.", "General"],
+    "meritBar": { "Maj. Gen.": 55, "Lt. Gen.": 66, "General": 76 },
+    "capitalCost": { "Maj. Gen.": 6, "Lt. Gen.": 10, "General": 16 },
+    "aboveMeritMul": 1.8,
+    "seniorityCostBase": 10,
+    "seniorityLeapfrog": 8,
+    "seniorityStart": 18,
+    "seniorityPerTurn": 3,
+    "seniorityWinBonus": 6,
+    "seniorityCap": 60,
+    "earnedRepBonus": 3,
+    "aboveMeritRepHit": 4,
+    "skillLiftWeight": 0.92,
+    "skillLiftCap": 6,
+    "topCommandPreferredGrade": "Lt. Gen."
+  },
   "realismCaps": {
     "arcade": {
       "cmdBonus": 1.35,
