@@ -68,13 +68,16 @@ const SETUP = `(() => {
       var a=runLive(21), b=runLive(21); if(a.w!==b.w||a.us!==b.us||a.cs!==b.cs||a.steps!==b.steps) throw new Error('neutral non-deterministic');
       return { noPresetCS:csNo+'/8', veteranBalancedCS:csVb+'/8', identicalSeedForSeed:true }; });
 
-    step('BYTE-IDENTITY GUARD: arms-OFF Bull Run == the committed CS 5/8 even with the presets layer present (no perturbation)', function(){
+    step('BYTE-IDENTITY GUARD: officers/logistics/arms/badges-OFF Bull Run == the committed CS 5/8 even with the presets layer present (no perturbation)', function(){
       clearPreset(); G.settings.tacticalFog=false;
-      function run(seed){ __FIELD._officersOff=true; __FIELD._logisticsOff=true; __FIELD._armsOff=true; G.settings.tacticalFog=false; fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:seed, fog:false}); __FIELD.phase='battle'; __FIELD.paused=false; var n=0; while(__FIELD.phase==='battle'&&n<20000){ fldSimStep(0.05); n++; } return __FIELD.winner; }
+      // R-6 (D104): badges is a default-ON optional combat layer that LEGITIMATELY shifts Bull Run (the assigned
+      // CS stonewalls + weakened US attackers make it CS 8/8). This guard isolates the PRESETS/arms layer's
+      // byte-identity, so badges must be OFF here alongside officers/logistics/arms -> the pristine committed CS 5/8.
+      function run(seed){ __FIELD._officersOff=true; __FIELD._logisticsOff=true; __FIELD._armsOff=true; __FIELD._badgesOff=true; G.settings.tacticalFog=false; fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:seed, fog:false}); __FIELD.phase='battle'; __FIELD.paused=false; var n=0; while(__FIELD.phase==='battle'&&n<20000){ fldSimStep(0.05); n++; } return __FIELD.winner; }
       var seeds=[1,7,21,42,55,101,303,909], cs=0; for(var i=0;i<seeds.length;i++){ if(run(seeds[i])==='CS') cs++; }
-      __FIELD._armsOff=false; delete G.settings.tacticalFog;
-      if(cs!==5) throw new Error('arms-OFF bullrun != 5/8 with presets present (byte-identity broken): '+cs+'/8');
-      return { armsOffCS:cs+'/8' }; });
+      __FIELD._armsOff=false; __FIELD._badgesOff=false; delete G.settings.tacticalFog;
+      if(cs!==5) throw new Error('layers-OFF bullrun != 5/8 with presets present (byte-identity broken): '+cs+'/8');
+      return { layersOffCS:cs+'/8' }; });
 
     step('AI TIERS resolve as designed: Veteran=neutral; cushion + brittle-enemy ONLY at Recruit; aiResolve NEVER > 1 (smarter-not-cheating)', function(){
       var rows={};

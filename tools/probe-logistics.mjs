@@ -145,11 +145,14 @@ const SETUP = `(() => {
       if(rNominal!==FLDL.RESERVE_MAX) throw new Error('no-campaign reserve != RESERVE_MAX nominal: '+rNominal);
       return { reserveHiSupply:rHi, expectHi:expect, reserveLoSupply:rLo, enemyNormal:rEnemyNorm, enemyRaided:rEnemyRaid, nominal:rNominal }; });
 
-    step('BALANCE (logistics ON, officers OFF): Bull Run resolves deterministically and stays CS-competitive (logistics does not wreck balance)', function(){
-      function runBR(seed){ __FIELD._officersOff=true; __FIELD._logisticsOff=false; fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:seed}); __FIELD.phase='battle'; __FIELD.paused=false; var n=0; while(__FIELD.phase==='battle'&&n<20000){ fldSimStep(0.05); n++; } return { w:__FIELD.winner, us:strength('US'), cs:strength('CS') }; }
+    step('BALANCE (logistics ON, officers/badges OFF): Bull Run resolves deterministically and stays CS-competitive (logistics does not wreck balance)', function(){
+      // R-6 (D104): badges OFF here too — the default-ON badges layer shifts bullrun1 (the assigned CS stonewalls
+      // -> CS 8/8), so isolate it to measure the LOGISTICS layer against the pristine CS 5/8 baseline, not a confound.
+      function runBR(seed){ __FIELD._officersOff=true; __FIELD._logisticsOff=false; __FIELD._badgesOff=true; fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:seed}); __FIELD.phase='battle'; __FIELD.paused=false; var n=0; while(__FIELD.phase==='battle'&&n<20000){ fldSimStep(0.05); n++; } return { w:__FIELD.winner, us:strength('US'), cs:strength('CS') }; }
       var a=runBR(21), b=runBR(21);
       if(a.w!==b.w||a.us!==b.us||a.cs!==b.cs) throw new Error('logistics-ON non-deterministic');
       var seeds=[1,7,21,42,55,101,303,909], cs=0; for(var i=0;i<seeds.length;i++){ if(runBR(seeds[i]).w==='CS') cs++; }
+      __FIELD._badgesOff=false;
       // logistics must be balance-NEUTRAL fog-OFF: the no-layer baseline is CS 5/8, so the ON count stays in the
       // ~5/8 band [4,6] — catching BOTH a defender-weakening regression AND an over-favouring one (the layer's
       // headline risk: a defender refilling while holding could otherwise push CS past balance).
@@ -157,8 +160,10 @@ const SETUP = `(() => {
       return { deterministic:true, cs_of:seeds.length, csWins:cs }; });
 
     step('FOG REGRESSION GUARD: with FOG ON, logistics keeps the defender favoured (D58/D64) — the attacker-fog-choke prevents the ammo economy inverting "fog aids the defender"', function(){
-      function runBR(seed){ __FIELD._officersOff=true; __FIELD._logisticsOff=false; fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:seed, fog:true}); __FIELD.phase='battle'; __FIELD.paused=false; var n=0; while(__FIELD.phase==='battle'&&n<20000){ fldSimStep(0.05); n++; } return __FIELD.winner; }
+      // R-6 (D104): badges OFF to isolate the logistics/fog interaction from the default-ON CS badges (which also aid the defender).
+      function runBR(seed){ __FIELD._officersOff=true; __FIELD._logisticsOff=false; __FIELD._badgesOff=true; fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:seed, fog:true}); __FIELD.phase='battle'; __FIELD.paused=false; var n=0; while(__FIELD.phase==='battle'&&n<20000){ fldSimStep(0.05); n++; } return __FIELD.winner; }
       var seeds=[1,7,21,42,55,101,303,909], cs=0; for(var i=0;i<seeds.length;i++){ if(runBR(seeds[i])==='CS') cs++; }
+      __FIELD._badgesOff=false;
       // fog-ON logistics-OFF is CS 8/8 (fog aids the defender). The fog-inversion bug (D66) made logistics-ON CS 0/8 —
       // the attacker freely resupplied its long fog fire-trade. FLDL.ATK_FOG_RESUPPLY (~0) restores it: the attacker
       // can't run its trains forward blind, so the fight stays cover-decided. CS must stay >=6 (currently 8/8).

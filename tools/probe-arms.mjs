@@ -264,10 +264,12 @@ const SETUP = `(() => {
       __FIELD._armsOff=false;
       return { winner:aOff.w, identical:true, steps:aOff.steps }; });
 
-    step('BYTE-IDENTITY (the art/cav scenario): arms-OFF bullrun1 AI-vs-AI == the committed CS 5/8 baseline (the base.html ARM melee table is honoured, NOT 1.0)', function(){
-      function run(seed){ __FIELD._officersOff=true; __FIELD._logisticsOff=true; __FIELD._armsOff=true; G.settings.tacticalFog=false; fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:seed, fog:false}); __FIELD.phase='battle'; __FIELD.paused=false; var n=0; while(__FIELD.phase==='battle'&&n<20000){ fldSimStep(0.05); n++; } return __FIELD.winner; }
+    step('BYTE-IDENTITY (the art/cav scenario): arms/badges-OFF bullrun1 AI-vs-AI == the committed CS 5/8 baseline (the base.html ARM melee table is honoured, NOT 1.0)', function(){
+      // R-6 (D104): badges is a default-ON optional combat layer that legitimately shifts bullrun1 (its assigned
+      // CS stonewalls -> CS 8/8). This guard isolates the ARMS layer's byte-identity, so badges is OFF here too -> CS 5/8.
+      function run(seed){ __FIELD._officersOff=true; __FIELD._logisticsOff=true; __FIELD._armsOff=true; __FIELD._badgesOff=true; G.settings.tacticalFog=false; fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:seed, fog:false}); __FIELD.phase='battle'; __FIELD.paused=false; var n=0; while(__FIELD.phase==='battle'&&n<20000){ fldSimStep(0.05); n++; } return __FIELD.winner; }
       var seeds=[1,7,21,42,55,101,303,909], cs=0; for(var i=0;i<seeds.length;i++){ if(run(seeds[i])==='CS') cs++; }
-      __FIELD._armsOff=false;
+      __FIELD._armsOff=false; __FIELD._badgesOff=false;
       // arms OFF must reproduce the committed bare bullrun balance EXACTLY (CS 5/8). A miss here means the arms-OFF
       // path is not byte-identical — e.g. the base.html ARM melee table (art 0.40 / cav 1.05) was dropped to 1.0
       // (the bug the asymmetric melee fallback fixes). bullrun1 FIELDS art+cav, so it is the scenario that exercises it.

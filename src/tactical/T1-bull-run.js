@@ -75,6 +75,11 @@ function fldBrSpec(d, side, autoBoth) {
     guns: d.guns || 0,                // D74: carry a battery's GUN COUNT from the data (the universal gun model). 0 for inf/cav + legacy batteries -> men-based fire (byte-identical)
     men: d.men, xp: d.xp || 1, x: d.x, z: d.z, facing: d.facing,
     formation: d.formation || "line", entry: d.entry || "",
+    // R-6: the unit's rating badges — an inline spec `d.badges` (Custom Battle authoring) wins; else the central
+    // rosterBadges assignment for THIS scenario+unit (data/ratings.json, the documented traits). null when neither
+    // -> the badge seams are no-ops -> byte-identical. A fresh array (copied) so combat never aliases canonical data.
+    badges: (d.badges && d.badges.length) ? d.badges.slice()
+          : ((typeof fldScenarioRosterBadges === "function") ? fldScenarioRosterBadges(__FIELD.scenario, d.id) : null),
     ai: (s === ps) ? !!autoBoth : true,
   };
 }

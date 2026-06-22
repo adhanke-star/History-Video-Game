@@ -176,6 +176,20 @@ function fldBadgeDef(key) {
   return null;
 }
 
+/* R-6 · THE ROSTER-BADGE ASSIGNMENT lookup. The 9 shipped battles' documented commander/unit traits live in
+   ONE reviewable place — data/ratings.json `rosterBadges[scenarioId][unitId]` — not scattered across the pure
+   historical OOB JSONs. fldBrSpec (T1) calls this per scenario unit; returns a FRESH array (never the shared
+   data array, so combat reads can't alias canonical GAME_DATA) or null when the unit carries no assignment ->
+   the badge seams are exact no-ops -> BYTE-IDENTICAL. An inline `d.badges` on a spec (e.g. a Custom Battle)
+   takes precedence in fldBrSpec; this is the fallback for the authored scenarios. null-safe. */
+function fldScenarioRosterBadges(scenarioId, unitId) {
+  if (!scenarioId || !unitId) return null;
+  var d = _ratData(); var R = d && d.rosterBadges;
+  var s = R && R[scenarioId];
+  var b = s && s[unitId];
+  return (b && b.length) ? b.slice() : null;
+}
+
 /* The realism-scaled INPUT cap for a lever (D94-softcap): Arcade generous, Historian
    tight. The OUTPUT wall is enforced elsewhere; this only sets how hard inputs may push. */
 function fldRatingRealismCap(tier, leverKey) {
@@ -285,6 +299,42 @@ function fldRatingHudSelected(u) {
 }
 
 /* ===========================================================================
+   R-6 · THE BADGE-CHIP READ-OUT — surface the documented traits a brigade carries (the R-6 sweep assigns
+   real badges to the shipped rosters). PURE DISPLAY (no sim read); "" when the unit carries no badge or
+   ratings data is absent -> byte-identical. TRIPLE-ENCODED + CVD-SAFE + WCAG-AA: each chip's meaning rides
+   a RUNG glyph (★ Star / ◆ Superstar / ⬥ X-Factor) + an explicit POLARITY sign (＋ strength / － flaw, never
+   colour-alone) + the label word + a per-chip aria-label; the band tint is decorative only. The flaws show
+   as plainly as the virtues (anti-Lost-Cause). =========================================================== */
+var _FLD_RUNG_GLYPH = { star: "★", superstar: "◆", xfactor: "⬥" };
+function fldRatingBadgesHtml(u) {
+  if (!u || !u.badges || !u.badges.length || !_ratData()) return "";
+  var chips = "", any = false;
+  for (var i = 0; i < u.badges.length; i++) {
+    var def = fldBadgeDef(u.badges[i]); if (!def) continue;
+    any = true;
+    var neg = def.polarity === "neg";
+    var sign = neg ? "−" : "+";                          // − (minus) / + : the polarity, a TEXT glyph (never colour-alone)
+    var glyph = _FLD_RUNG_GLYPH[def.rung] || "•";
+    var col = neg ? "#c98a5e" : "#86b06a";                    // decorative left-tint only (meaning is the glyph+sign+word)
+    var label = String(def.label || def.key);
+    var kind = neg ? "a documented flaw" : "a documented strength";
+    var aria = label + ", " + kind + (def.prov ? " (" + def.prov + ")" : "");
+    chips += '<span role="listitem" aria-label="' + _fldRatEsc(aria) + '" title="' + _fldRatEsc(aria) + '"'
+      + ' style="display:inline-flex;align-items:center;gap:3px;font-size:10px;padding:1px 7px;margin:3px 4px 0 0;'
+      + 'border:1px solid ' + col + ';border-left:3px solid ' + col + ';border-radius:9px;background:rgba(0,0,0,.18)">'
+      + '<span aria-hidden="true" style="font-size:9px;opacity:.95">' + glyph + '</span>'
+      + '<b aria-hidden="true">' + sign + '</b>'
+      + '<span aria-hidden="true">' + _fldRatEsc(label) + '</span>'
+      + '</span>';
+  }
+  if (!any) return "";
+  return '<div style="margin-top:5px;border-top:1px solid #795c3e;padding-top:4px">'
+    + '<div style="font-size:9px;opacity:.72;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1px">Traits &amp; Abilities</div>'
+    + '<div role="list" aria-label="Brigade traits and abilities" style="display:flex;flex-wrap:wrap">' + chips + '</div>'
+    + '</div>';
+}
+
+/* ===========================================================================
    R-4 · THE X-FACTORS — the dramatic "in the zone" Madden surge (inside the no-fudge wall).
 
    An X-Factor is a Superstar badge with an ACTIVATION: when its situational trigger fires, the unit
@@ -383,6 +433,7 @@ function fldXFactorStep(dt) {
       // honored, and the speed effect is not double-routed into cmdBonus). This keeps each X-Factor on one channel.
       u._xfActive = (pos && !viaSpeed) ? amp : 1;
       if (viaSpeed) u._spdMul = pos ? Math.min(1.15, 1 + rise) : Math.max(0.85, 1 - rise);
+      else if (u._spdMul != null) u._spdMul = _fldXfDecay(u._spdMul, 1, dt);   // R-6 bug-hunt (LOW): a NON-speed X-Factor activating must decay any DORMANT speed-surge toward identity (only the live channel surges), so a unit carrying both a speed + a non-speed X-Factor can't keep a stale _spdMul
       u._xfGlow = pos ? 1 : 0;                           // glow the heroic surge; the named-flaw drag does not glow
       if (u._xfOn !== active.key) {                      // one-shot on the rising edge (re-arms after leaving the zone)
         u._xfOn = active.key;

@@ -493,6 +493,67 @@ const SETUP = `(() => {
       var verified=0; for(var m=0;m<defs.length;m++) if(defs[m].prov==='Verified') verified++;
       return { badgeDefs:defs.length, verifiedBadges:verified, belovedProv:by.beloved.prov, grandChargeSrc:by.grand_charge.sources.length, catalogVerifiedClean:true }; });
 
+    step('R-6 ROSTER-BADGE ASSIGNMENT (D104): rosterBadges resolves to real defs; the seam STAMPS scenario units; byte-identical when off; anti-Lost-Cause balance (both sides carry +/-); chips triple-encoded', function(){
+      if(typeof fldScenarioRosterBadges!=='function'||typeof fldRatingBadgesHtml!=='function') throw new Error('R-6 fns missing (fldScenarioRosterBadges/fldRatingBadgesHtml)');
+      var RB = D && D.rosterBadges; if(!RB) throw new Error('rosterBadges missing from ratings data');
+      var scns = Object.keys(RB);
+      if(scns.length<9) throw new Error('expected all 9 shipped battles in rosterBadges, got '+scns.length);
+      // (1) every assigned badge key resolves to a real badgeDef AND every assigned UNIT ID resolves to a real
+      // token in THAT scenario's OOB (across all 9 battles — not just bullrun1; D104 bug-hunt MED: an OOB rename
+      // could otherwise rot 39 of the 44 assignments to silent dead no-ops with no probe failing). Tally polarity.
+      function _scnUnitIds(scn){ var data=(typeof fldScenarioData==='function')?fldScenarioData(scn):null; var ids={};
+        function add(a){ if(a&&a.length) for(var k=0;k<a.length;k++){ if(a[k]&&a[k].id) ids[a[k].id]=1; } }
+        if(data){ if(data.phases&&data.phases.length){ for(var p=0;p<data.phases.length;p++){ var ph=data.phases[p]; if(ph.oob){ add(ph.oob.US); add(ph.oob.CS); } add(ph.reinforcements); } }
+          else { if(data.oob){ add(data.oob.US); add(data.oob.CS); } add(data.reinforcements); } }
+        return ids; }
+      var usPos=0,usNeg=0,csPos=0,csNeg=0,total=0,orphans=[];
+      for(var si=0;si<scns.length;si++){ var s=RB[scns[si]], scnIds=_scnUnitIds(scns[si]); for(var uid in s){ if(!s.hasOwnProperty(uid)) continue;
+        if(!scnIds[uid]) orphans.push(scns[si]+'/'+uid);   // <- the rot guard: the assigned unit no longer exists in the scenario
+        var side = uid.indexOf('us_')===0?'US':(uid.indexOf('cs_')===0?'CS':'?');
+        var arr=s[uid]; for(var bi=0;bi<arr.length;bi++){ total++; var def=fldBadgeDef(arr[bi]);
+          if(!def) throw new Error('rosterBadges['+scns[si]+']['+uid+'] -> unknown badge key '+arr[bi]);
+          var neg=def.polarity==='neg'; if(side==='US'){ neg?usNeg++:usPos++; } else if(side==='CS'){ neg?csNeg++:csPos++; } } } }
+      if(orphans.length) throw new Error('rosterBadges assigned to unit id(s) absent from their scenario OOB (dead no-ops): '+orphans.join(', '));
+      if(total<30) throw new Error('expected a substantial roster sweep, got '+total+' assignments');
+      // (2) ANTI-LOST-CAUSE balance FLOORS (D104 bug-hunt LOW: lock the documented tally so a regression trips the
+      // gate, not just nonzero). Both sides carry virtues AND flaws; the Union's flaws are named as plainly as the CS's.
+      if(!(usNeg>=8 && csNeg>=4)) throw new Error('anti-Lost-Cause floor breach: US flaws '+usNeg+' (>=8) / CS flaws '+csNeg+' (>=4)');
+      if(!(usPos>=6 && csPos>=8)) throw new Error('virtue floor breach: US '+usPos+' (>=6) / CS '+csPos+' (>=8)');
+      // (3) fldScenarioRosterBadges resolves a marquee assignment + returns a FRESH array (never aliases canonical data)
+      var jb=fldScenarioRosterBadges('bullrun1','cs_jackson');
+      if(!jb||jb.indexOf('stonewall')<0) throw new Error('Jackson at Bull Run should carry stonewall');
+      jb.push('TAINT'); if(fldScenarioRosterBadges('bullrun1','cs_jackson').indexOf('TAINT')>=0) throw new Error('fldScenarioRosterBadges must return a FRESH array (it aliased canonical rosterBadges)');
+      if(fldScenarioRosterBadges('bullrun1','nonexistent_unit')!==null) throw new Error('an unassigned unit should resolve null');
+      if(fldScenarioRosterBadges(null,null)!==null) throw new Error('null args -> null (no crash)');
+      // (4) THE SEAM STAMPS: launching a scenario stamps the assigned badges onto the live units; unassigned -> null
+      var saveB=(typeof __FIELD!=='undefined')?__FIELD.badges:undefined;
+      fldLaunchSandbox({renderer:'none',autoBoth:true,seed:1,scenario:'bullrun1'});
+      function _find(id){ for(var i=0;i<__FIELD.units.length;i++) if(__FIELD.units[i].id===id) return __FIELD.units[i]; return null; }
+      var evans=_find('cs_evans'), plain=_find('us_porter');   // both in the INITIAL OOB
+      if(!evans||!evans.badges||evans.badges.indexOf('stonewall')<0) throw new Error('the seam did not stamp stonewall onto cs_evans (initial OOB)');
+      if(plain&&plain.badges) throw new Error('an unassigned unit (us_porter) must carry null badges (byte-identical)');
+      // REINFORCEMENT stamping: step until cs_jackson (a Bull Run reinforcement) arrives — it must carry stonewall too
+      __FIELD.badges=true; var jack=null; for(var st=0; st<6000 && !jack; st++){ fldStepN(1); jack=_find('cs_jackson'); }
+      if(!jack) throw new Error('cs_jackson reinforcement never arrived (cannot verify reinforcement stamping)');
+      if(!jack.badges||jack.badges.indexOf('stonewall')<0) throw new Error('the seam did not stamp stonewall onto the cs_jackson REINFORCEMENT (fldScenarioTick path)');
+      // (5) BYTE-IDENTICAL WHEN OFF: with the engine off, a stamped unit's badge factor is identity 1
+      __FIELD.badges=false;
+      if(fldBadgeFactor(evans,'rally')!==1) throw new Error('badges OFF: a stamped unit must read identity 1 (byte-identical)');
+      __FIELD.badges=true;
+      if(!(fldBadgeFactor(evans,'rally')>1)) throw new Error('badges ON: stonewall should lift cs_evans rally');
+      // (6) the_slows on the antietam bridge assault (the marquee Union flaw; data has NO McClellan army token, D92)
+      var slows=fldScenarioRosterBadges('antietam','us_sturgis');
+      if(!slows||slows.indexOf('the_slows')<0) throw new Error('the_slows should sit on antietam us_sturgis');
+      // (7) CHIPS: fldRatingBadgesHtml names the badge + carries a header; "" for a no-badge / null unit (byte-identical)
+      var html=fldRatingBadgesHtml(evans);
+      if(!html||html.indexOf('Stonewall')<0) throw new Error('badge chip should name the badge label');
+      if(html.indexOf('Traits')<0) throw new Error('badge chip block missing its header');
+      if(fldRatingBadgesHtml({badges:null})!=='') throw new Error('a no-badge unit -> "" (byte-identical)');
+      if(fldRatingBadgesHtml(null)!=='') throw new Error('null unit -> "" (no crash)');
+      var jr=Math.round(fldBadgeFactor(evans,'rally')*1000)/1000;
+      if(typeof __FIELD!=='undefined') __FIELD.badges=saveB;
+      return { battles:scns.length, assignments:total, usPos:usPos, usNeg:usNeg, csPos:csPos, csNeg:csNeg, jacksonRally:jr }; });
+
     step('PURITY: rating fns do not mutate G or __FIELD (R-0 is inert / byte-identical)', function(){
       var beforeMode=(typeof G!=='undefined')?G.mode:null;
       var fu=(typeof __FIELD!=='undefined' && __FIELD.units)?__FIELD.units.length:null;

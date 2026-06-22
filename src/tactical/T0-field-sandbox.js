@@ -212,6 +212,11 @@ function fldMakeUnit(o) {
     order: { type: "hold", tx: o.x, tz: o.z, tface: o.facing },
     targetId: null, reload: 0, rallyT: 0, ai: !!o.ai, alive: true,
     casTick: 0, underFire: 0, flankHit: 0,
+    // R-6: the rating BADGES carried from the OOB data (the documented commander/unit traits). A fresh
+    // COPY (never the shared data array) so combat reads never alias canonical GAME_DATA, and null when
+    // the spec carries none -> fldBadgeFactor / fldXFactorStep are exact no-ops -> BYTE-IDENTICAL. Every
+    // sandbox spec (and any scenario unit before the R-6 sweep) carries no badges -> null -> unchanged.
+    badges: (o.badges && o.badges.length) ? o.badges.slice() : null,
   };
 }
 // the per-launch run reset — shared by the sandbox path and every scenario (T1+) so the
@@ -1426,7 +1431,8 @@ function fldRenderHud() {
     (typeof fldFlagHudSelected === "function" ? fldFlagHudSelected(u) : "") +   // H1b: battle flag + corps badge in the HUD
     (typeof fldEngHudSelected === "function" ? fldEngHudSelected(u) : "") +   // T13: entrenchment status (empty unless digging)
     (typeof fldRatingHudSelected === "function" ? fldRatingHudSelected(u) : "") +   // R-2: brigade OVR + A-F grade (pure display)
-    (typeof fldMusterHudLine === "function" ? fldMusterHudLine(u) : "");   // R-5: the men's-mean OVR + provenance-hatched accent (lazy materialization; pure display)
+    (typeof fldMusterHudLine === "function" ? fldMusterHudLine(u) : "") +   // R-5: the men's-mean OVR + provenance-hatched accent (lazy materialization; pure display)
+    (typeof fldRatingBadgesHtml === "function" ? fldRatingBadgesHtml(u) : "");   // R-6: the brigade's documented trait/ability chips (pure display; "" when no badge -> byte-identical)
 }
 function fldOnOver() {
   var e = document.getElementById("fldEnd"); if (!e) { fldAnnounce("Battle over."); return; }
