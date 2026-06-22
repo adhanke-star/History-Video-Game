@@ -466,9 +466,27 @@
       "fldLever": "none",
       "mag": 0.1,
       "tilt": "attack",
-      "prov": "Verified",
+      "prov": "Inferred",
       "sources": [],
-      "note": "Pickett's Charge: a huge surge that can ALSO break the unit (double-edged, historically honest)."
+      "note": "Pickett's Charge: a huge surge that can ALSO break the unit (double-edged). R-4 delivers the bounded UPSIDE (the capped cmdBonus surge); the doomed double-edge — the charge that breaks the unit — lands as a bounded morale-cost INPUT lever when this badge is assigned to a unit (R-6). Prov is Inferred until the catalog-wide badge-sourcing sweep adds >=2 citations (R-6 content pass)."
+    },
+    {
+      "key": "first_with_the_most",
+      "label": "First with the Most",
+      "rung": "xfactor",
+      "polarity": "pos",
+      "kind": "historical",
+      "trigger": "flanking",
+      "lever": "charge_cmdbonus",
+      "fldLever": "none",
+      "mag": 0.1,
+      "tilt": "attack",
+      "prov": "Verified",
+      "sources": [
+        "Wills 1992",
+        "Wyeth 1899"
+      ],
+      "note": "Forrest's maxim — get there first with the most men. ACTIVATES when his cavalry charges a flank; the surge routes through the capped cmdBonus (fldLever none), never a static lever."
     },
     {
       "key": "green_levies",

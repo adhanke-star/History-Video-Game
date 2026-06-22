@@ -236,6 +236,105 @@ const SETUP = `(() => {
       } finally { if(typeof __FIELD!=='undefined'){ __FIELD.badges=savedB; __FIELD.realismTier=savedT; } }
     });
 
+    step('R-4 X-FACTOR SURGE: off byte-identical; SPEED X-Factor surges ONLY _spdMul (no cmdBonus); NON-speed surges cmdBonus capped at the wall; COMBINED speed clamped to [0.75,1.30]; negative drags; realism-scaled; decays; non-X-Factor units untouched', function(){
+      var need=['fldXFactorStep','fldXFactorApplyCmd','_fldUnitXFactors','_fldXFactorInZone','_fldXfDecay','fldMoveFactor','fldLaunchSandbox'];
+      for(var i=0;i<need.length;i++) if(typeof window[need[i]]!=='function') throw new Error('missing R-4 fn '+need[i]);
+      var CAP=(typeof FLDO!=='undefined'&&FLDO.CMD_BONUS_CAP)?FLDO.CMD_BONUS_CAP:0.9;
+      function mk(extra){ var u={ id:'XF', side:'CS', name:'Test Bde', arm:'inf', alive:true, state:'steady', x:800, z:200, morale:78, maxMor:78, ammo:100, cmdBonus:0, order:{type:'move',tx:800,tz:1400} }; for(var k in extra) u[k]=extra[k]; return u; }
+      function lastStand(extra){ var e={ order:{type:'hold',tx:800,tz:200}, morale:30, maxMor:78 }; for(var k in extra) e[k]=extra[k]; return mk(e); }
+      var savedU=(typeof __FIELD!=='undefined')?__FIELD.units:undefined, savedB=(typeof __FIELD!=='undefined')?__FIELD.badges:undefined, savedT=(typeof __FIELD!=='undefined')?__FIELD.realismTier:undefined;
+      try {
+        fldLaunchSandbox({renderer:'none', autoBoth:true, seed:1});   // populate __FIELD.terrain so fldMoveFactor (fldInWoods) is safe; we overwrite __FIELD.units per sub-test
+        __FIELD.realismTier='balanced';
+        // (1) OFF: badges off -> fldXFactorStep is a no-op (the byte-identical guarantee)
+        var off=mk({badges:['foot_cavalry']}); __FIELD.units=[off]; __FIELD.badges=false;
+        fldXFactorStep(0.05);
+        if(off._xfActive!==undefined||off._spdMul!==undefined||off._xfGlow!==undefined) throw new Error('badges OFF must leave the unit untouched');
+        // (1b) a unit with NO X-Factor badge is untouched even when the engine is ON (byte-identical for every shipped scenario)
+        __FIELD.badges=true; var plain=mk({badges:['marksman']}); __FIELD.units=[plain]; fldXFactorStep(0.05);
+        if(plain._xfActive!==undefined||plain._spdMul!==undefined) throw new Error('a non-X-Factor unit must be untouched (byte-identical)');
+        var amp=fldRatingRealismCap('balanced','xfactor');
+        // (2) SPEED X-Factor (foot_cavalry, moving): surges ONLY _spdMul in (1,1.15]; does NOT surge the command aura; glows
+        var fc=mk({badges:['foot_cavalry']}); __FIELD.units=[fc]; fldXFactorStep(0.05);
+        if(!(fc._spdMul>1 && fc._spdMul<=1.15+1e-9)) throw new Error('foot_cavalry _spdMul out of (1,1.15]: '+fc._spdMul);
+        if(fc._xfActive>1.0001) throw new Error('a SPEED X-Factor must NOT surge the command aura (declared lever honored): '+fc._xfActive);
+        if(!(fc._xfGlow>0)) throw new Error('an active heroic surge should glow');
+        // (3) NON-SPEED X-Factor (rock_of_chickamauga, holding + low morale): surges cmdBonus (_xfActive=amp), sets no _spdMul
+        var rk=lastStand({badges:['rock_of_chickamauga']}); __FIELD.units=[rk]; fldXFactorStep(0.05);
+        if(Math.abs(rk._xfActive-amp)>1e-9) throw new Error('rock_of_chickamauga should surge _xfActive to amp '+amp+', got '+rk._xfActive);
+        if(rk._spdMul!==undefined) throw new Error('a non-speed X-Factor must not set _spdMul: '+rk._spdMul);
+        if(!(rk._xfGlow>0)) throw new Error('rock surge should glow');
+        // a holding unit OUT of the last-stand zone (full morale) does NOT surge
+        var rkHold=mk({badges:['rock_of_chickamauga'], order:{type:'hold',tx:800,tz:200}}); __FIELD.units=[rkHold]; fldXFactorStep(0.05);
+        if(rkHold._xfActive>1.0001) throw new Error('rock should not surge a steady holding unit: '+rkHold._xfActive);
+        // (4) cmdBonus CAP: the surge scales the aura toward the wall, NEVER beyond
+        var cu=lastStand({badges:['rock_of_chickamauga'], cmdBonus:0.8}); __FIELD.units=[cu]; __FIELD.realismTier='arcade'; fldXFactorStep(0.05); fldXFactorApplyCmd(cu);
+        if(cu.cmdBonus>CAP+1e-9) throw new Error('X-Factor pushed cmdBonus past the cap '+CAP+': '+cu.cmdBonus);
+        if(!(cu.cmdBonus>0.8-1e-9)) throw new Error('X-Factor should lift cmdBonus toward the cap, got '+cu.cmdBonus);
+        var cu2=lastStand({badges:['rock_of_chickamauga'], cmdBonus:0.4}); __FIELD.units=[cu2]; fldXFactorStep(0.05); fldXFactorApplyCmd(cu2);
+        if(!(cu2.cmdBonus>0.4 && cu2.cmdBonus<=CAP+1e-9)) throw new Error('small-aura surge out of (0.4,cap]: '+cu2.cmdBonus);
+        __FIELD.realismTier='balanced';
+        // (5) NEGATIVE speed X-Factor (the_slows): _spdMul drags <1, no aura surge, no glow (the named flaw, anti-Lost-Cause)
+        var sl=mk({badges:['the_slows']}); __FIELD.units=[sl]; fldXFactorStep(0.05);
+        if(!(sl._spdMul<1 && sl._spdMul>=0.85-1e-9)) throw new Error('the_slows _spdMul should drag into [0.85,1): '+sl._spdMul);
+        if(sl._xfActive>1.0001) throw new Error('a negative X-Factor must not surge the aura: '+sl._xfActive);
+        if(sl._xfGlow>0) throw new Error('the named-flaw drag must not glow');
+        // (6) COMBINED SPEED CLAMP (fldMoveFactor): a heavy stack (foot_cavalry + hardy_marcher + horseman, in-zone, arcade)
+        //     raw ~1.33 must clamp to <= 1.30; a drag stack must floor at >= 0.75. Ratio vs a plain unit cancels terrain.
+        __FIELD.realismTier='arcade';
+        var stk=mk({arm:'cav', badges:['foot_cavalry','hardy_marcher','horseman']}); __FIELD.units=[stk]; fldXFactorStep(0.05);
+        var plainU=mk({arm:'cav'});
+        var ratio=fldMoveFactor(stk.x,stk.z,stk)/fldMoveFactor(plainU.x,plainU.z,plainU);
+        if(ratio>1.30+1e-6) throw new Error('COMBINED speed clamp breached: ratio '+ratio+' > 1.30');
+        if(!(ratio>1.15)) throw new Error('a heavy speed stack should bind near the 1.30 clamp, got '+ratio);
+        var slStk=mk({badges:['the_slows','green_levies']}); __FIELD.units=[slStk]; fldXFactorStep(0.05);
+        var slRatio=fldMoveFactor(slStk.x,slStk.z,slStk)/fldMoveFactor(plainU.x,plainU.z,plainU);
+        if(slRatio<0.75-1e-6) throw new Error('COMBINED speed drag floor breached: '+slRatio+' < 0.75');
+        __FIELD.realismTier='balanced';
+        // (7) REALISM-SCALED amp (non-speed rock): arcade > balanced > historian (D94-softcap)
+        function ampAt(t){ var a=lastStand({badges:['rock_of_chickamauga']}); __FIELD.units=[a]; __FIELD.realismTier=t; fldXFactorStep(0.05); return a._xfActive; }
+        var aa=ampAt('arcade'), ab=ampAt('balanced'), ah=ampAt('historian');
+        if(!(aa>ab && ab>ah)) throw new Error('xfactor amp not realism-monotone arcade>balanced>historian: '+aa+'/'+ab+'/'+ah);
+        __FIELD.realismTier='balanced';
+        // (8) DECAY: a unit that leaves the zone decays _xfActive toward identity over ticks
+        var dz=lastStand({badges:['rock_of_chickamauga']}); __FIELD.units=[dz]; fldXFactorStep(0.05); var hot=dz._xfActive;
+        dz.morale=78;   // morale recovers -> out of the last-stand zone
+        for(var s=0;s<80;s++) fldXFactorStep(0.05);
+        if(!(dz._xfActive<hot)) throw new Error('decay: _xfActive should fall after leaving the zone');
+        if(Math.abs(dz._xfActive-1)>1e-3) throw new Error('decay: _xfActive should converge to 1, got '+dz._xfActive);
+        // (9) PURITY of fldXFactorApplyCmd guard: undefined _xfActive -> strict no-op
+        var pu={cmdBonus:0.5}; fldXFactorApplyCmd(pu); if(pu.cmdBonus!==0.5) throw new Error('apply on a unit with no _xfActive must be a no-op');
+        return { amp:amp, fcSpd:Math.round(fc._spdMul*1000)/1000, rockXf:Math.round(rk._xfActive*1000)/1000, capHi:Math.round(cu.cmdBonus*1000)/1000, slowsSpd:Math.round(sl._spdMul*1000)/1000, stackRatio:Math.round(ratio*1000)/1000, slStackRatio:Math.round(slRatio*1000)/1000, ampArc:aa, ampHis:ah, decayTo:Math.round(dz._xfActive*1000)/1000 };
+      } finally { if(typeof __FIELD!=='undefined'){ __FIELD.units=savedU; __FIELD.badges=savedB; __FIELD.realismTier=savedT; } }
+    });
+
+    step('R-4 NO-FUDGE REPLAY GATE: deterministic seed-replay — an X-Factor shifts the outcome ONLY within the bounded lever band (never a scripted result); the cmdBonus wall holds', function(){
+      var CAP=(typeof FLDO!=='undefined'&&FLDO.CMD_BONUS_CAP)?FLDO.CMD_BONUS_CAP:0.9;
+      function runToEnd(maxSteps){ if(__FIELD.phase==='deploy'){__FIELD.phase='battle';__FIELD.paused=false;} var n=0; while(__FIELD.phase==='battle'&&n<maxSteps){ fldSimStep(0.05); n++; } return n; }
+      function totalCas(){ var c=0; for(var i=0;i<__FIELD.units.length;i++){ var u=__FIELD.units[i]; c+=(u.maxMen-u.men); } return Math.round(c); }
+      function maxCmd(){ var m=0; for(var i=0;i<__FIELD.units.length;i++){ var b=__FIELD.units[i].cmdBonus||0; if(b>m)m=b; } return m; }
+      var SEED=4242;
+      // BASELINE: a plain sandbox (no badge assigned) — deterministic
+      fldLaunchSandbox({renderer:'none', autoBoth:true, seed:SEED});
+      var nA=runToEnd(8000), casA=totalCas(), winA=__FIELD.winner;
+      // SAME seed, but one CS brigade carries the foot_cavalry X-Factor. Everything else identical.
+      fldLaunchSandbox({renderer:'none', autoBoth:true, seed:SEED});
+      __FIELD.badges=true;
+      var tagged=null; for(var i=0;i<__FIELD.units.length;i++){ if(__FIELD.units[i].side==='CS'){ __FIELD.units[i].badges=['foot_cavalry']; tagged=__FIELD.units[i].id; break; } }
+      if(!tagged) throw new Error('no CS unit to tag');
+      var nB=runToEnd(8000), casB=totalCas(), winB=__FIELD.winner, mc=maxCmd();
+      // (a) it BITES: the surge changes the deterministic replay (not a silent no-op)
+      if(casA===casB && nA===nB) throw new Error('the X-Factor produced an IDENTICAL replay (it never bit)');
+      // (b) BOUNDED: the shift stays inside the lever band — not a scripted blowout (the no-fudge keystone)
+      var rel=Math.abs(casB-casA)/Math.max(1,casA);
+      if(rel>0.5) throw new Error('casualty delta '+(rel*100).toFixed(1)+'% exceeds the bounded lever band (a scripted-result smell)');
+      // (c) the WALL holds: no unit ever ended above CMD_BONUS_CAP
+      if(mc>CAP+1e-9) throw new Error('a unit cmdBonus '+mc+' exceeded the no-fudge wall '+CAP);
+      // valid winners both runs (no NaN / no deadlock)
+      if(['US','CS','draw'].indexOf(winA)<0||['US','CS','draw'].indexOf(winB)<0) throw new Error('invalid winner A='+winA+' B='+winB);
+      return { casBaseline:casA, casXfactor:casB, deltaPct:Math.round(rel*1000)/10, winA:winA, winB:winB, maxCmd:Math.round(mc*1000)/1000, tagged:tagged };
+    });
+
     step('PURITY: rating fns do not mutate G or __FIELD (R-0 is inert / byte-identical)', function(){
       var beforeMode=(typeof G!=='undefined')?G.mode:null;
       var fu=(typeof __FIELD!=='undefined' && __FIELD.units)?__FIELD.units.length:null;

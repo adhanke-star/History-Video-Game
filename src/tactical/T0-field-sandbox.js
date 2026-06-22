@@ -181,10 +181,17 @@ function fldMoveFactor(x, z, u) {
   // T13: an active obstacle belt may slow an enemy moving through it. The hook returns
   // exactly 1 when no applicable belt exists, preserving every pre-engineering baseline.
   if (typeof fldEngMoveFactor === "function") f *= fldEngMoveFactor(x, z, u);
-  // R-3 badge seam: a badge may quicken (Hardy Marcher / Horseman) or drag (The Slows) the march.
-  // Identity 1.0 when the badge engine is off or the unit carries no speed badge -> byte-identical.
-  // u._spdMul is the reserved R-4 X-Factor surge term (undefined -> 1 -> no-op today).
-  if (u) { if (u._spdMul) f *= u._spdMul; if (typeof fldBadgeFactor === "function") f *= fldBadgeFactor(u, "speed"); }
+  // R-3/R-4 rating speed: the R-3 static badge factor (Hardy Marcher / Horseman quicken, The Slows drag) AND
+  // the R-4 X-Factor surge (u._spdMul) both contribute to the march. Compute the COMBINED factor and clamp it
+  // to ONE documented band [0.75, 1.30], so no stack (e.g. Hardy Marcher + Horseman + an in-zone Foot Cavalry)
+  // can breach the bound the design promises. _sf is EXACTLY 1 when no rating speed input exists (badges off /
+  // no speed badge / _spdMul undefined) -> the clamp+multiply is skipped -> byte-identical for every baseline.
+  if (u) {
+    var _sf = 1;
+    if (u._spdMul) _sf *= u._spdMul;
+    if (typeof fldBadgeFactor === "function") _sf *= fldBadgeFactor(u, "speed");
+    if (_sf !== 1) { _sf = _sf < 0.75 ? 0.75 : (_sf > 1.30 ? 1.30 : _sf); f *= _sf; }
+  }
   return f;
 }
 
@@ -920,10 +927,20 @@ function fldSimStep(dt) {
   // distinct arm roles (B-4): decay the muzzle-flash/charge visual timers + apply the cavalry RAID on an enemy
   // ammunition train (the B-3 tie). No-op when arms off (byte-identical) / no trains.
   if (__FIELD.arms && typeof fldArmsStep === "function") fldArmsStep(dt);
+  // R-4 X-Factor (the rating "in the zone" surge): set/clear each X-Factor unit's _xfActive/_spdMul/glow
+  // BEFORE the command aura is summed, so fldOfficersStep can scale the summed cmdBonus by the surge (capped
+  // at the wall). Gated on __FIELD.badges; a unit carrying no X-Factor is untouched -> byte-identical for
+  // every baseline (no shipped scenario assigns X-Factors yet — that is the R-6 sweep).
+  if (__FIELD.badges && typeof fldXFactorStep === "function") fldXFactorStep(dt);
   // officers & command (B-2): ride leaders to the line, apply the command aura (u.cmdBonus), accrue the
   // leader exposure-hazard + any general-down shock — all BEFORE morale, so this tick's morale resolution
   // reflects them. No-op when officers are off (fldOfficersStep early-returns; u.cmdBonus stays unset -> 0).
   if (__FIELD.officers && typeof fldOfficersStep === "function") fldOfficersStep(dt);
+  // R-4 X-Factor: scale each in-the-zone unit's freshly-summed command aura toward the cap by its active
+  // X-Factor surge. Runs AFTER the aura is summed (fldOfficersStep) and is gated on __FIELD.badges (NOT
+  // officers), so the cmdBonus surge and the _spdMul surge share ONE gate — consistent whether officers are
+  // on or off. Strict no-op for any unit without an active X-Factor (u._xfActive undefined/<=1) -> byte-identical.
+  if (__FIELD.badges && typeof fldXFactorApplyCmd === "function") { for (var xf = 0; xf < __FIELD.units.length; xf++) fldXFactorApplyCmd(__FIELD.units[xf]); }
   // morale
   for (var mo = 0; mo < __FIELD.units.length; mo++) fldMoraleStep(__FIELD.units[mo], dt);
   // objective + victory
@@ -1543,6 +1560,28 @@ function fld2dDraw() {
     // morale pip
     ctx.fillStyle = u.morale > 35 ? "#7faf6a" : "#c98a3a"; ctx.fillRect(cx - 12, cz - depth / 2 - 9, 24 * (u.morale / u.maxMor), 3);
     if (u.state === "routing") { ctx.fillStyle = "#ffd27a"; ctx.font = "10px Georgia"; ctx.fillText("ROUT", cx - 13, cz + depth / 2 + 12); }
+    // R-4 X-Factor "in the zone" glow (CVD-safe: an amber burst RING + a ⚡ glyph above the block — the SHAPE
+    // carries the meaning, colour is secondary; reduceMotion -> a steady ring, else a gentle pulse). Guarded on
+    // u._xfGlow (>0 only for an active heroic surge) -> drawn for NO shipped unit today -> byte-identical.
+    if (u._xfGlow > 0) {
+      var _rm = fldReduceMotion();
+      var _pulse = _rm ? 0.85 : (0.6 + 0.4 * Math.abs(Math.sin(__FIELD.t * 5)));
+      var _rr = Math.max(frontW, depth) * 0.62 + 6;
+      ctx.save();
+      ctx.globalAlpha = Math.min(0.8, 0.3 + 0.45 * u._xfGlow * _pulse);
+      ctx.strokeStyle = "#ffcf6a"; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.arc(cx, cz, _rr, 0, 7); ctx.stroke();
+      if (!_rm) { ctx.globalAlpha = 0.18 * u._xfGlow * _pulse; ctx.lineWidth = 5; ctx.beginPath(); ctx.arc(cx, cz, _rr + 4, 0, 7); ctx.stroke(); }
+      // a VECTOR lightning bolt above the marker (platform-independent — no emoji-font dependency / tofu risk;
+      // the ring already carries the CVD-safe shape cue, this bolt is the dramatic "in the zone" flourish).
+      ctx.globalAlpha = 0.92 * Math.min(1, u._xfGlow + 0.2);
+      ctx.fillStyle = "#ffe9a8";
+      var _bx = cx, _by = cz - depth / 2 - 18;
+      ctx.beginPath();
+      ctx.moveTo(_bx + 1.5, _by - 7); ctx.lineTo(_bx - 4, _by + 1.5); ctx.lineTo(_bx - 0.5, _by + 1.5);
+      ctx.lineTo(_bx - 2, _by + 7); ctx.lineTo(_bx + 4.5, _by - 2); ctx.lineTo(_bx + 1, _by - 2);
+      ctx.closePath(); ctx.fill();
+      ctx.restore();
+    }
   }
   // Engineering Corps (T13): dirt parapets along entrenched units' fronts (no-op when no unit is dug in)
   if (typeof fldEngDraw2d === "function") fldEngDraw2d(ctx, v);

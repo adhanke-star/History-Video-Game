@@ -22029,9 +22029,27 @@ var GAME_DATA = {
       "fldLever": "none",
       "mag": 0.1,
       "tilt": "attack",
-      "prov": "Verified",
+      "prov": "Inferred",
       "sources": [],
-      "note": "Pickett's Charge: a huge surge that can ALSO break the unit (double-edged, historically honest)."
+      "note": "Pickett's Charge: a huge surge that can ALSO break the unit (double-edged). R-4 delivers the bounded UPSIDE (the capped cmdBonus surge); the doomed double-edge — the charge that breaks the unit — lands as a bounded morale-cost INPUT lever when this badge is assigned to a unit (R-6). Prov is Inferred until the catalog-wide badge-sourcing sweep adds >=2 citations (R-6 content pass)."
+    },
+    {
+      "key": "first_with_the_most",
+      "label": "First with the Most",
+      "rung": "xfactor",
+      "polarity": "pos",
+      "kind": "historical",
+      "trigger": "flanking",
+      "lever": "charge_cmdbonus",
+      "fldLever": "none",
+      "mag": 0.1,
+      "tilt": "attack",
+      "prov": "Verified",
+      "sources": [
+        "Wills 1992",
+        "Wyeth 1899"
+      ],
+      "note": "Forrest's maxim — get there first with the most men. ACTIVATES when his cavalry charges a flank; the surge routes through the capped cmdBonus (fldLever none), never a static lever."
     },
     {
       "key": "green_levies",
@@ -28707,10 +28725,17 @@ function fldMoveFactor(x, z, u) {
   // T13: an active obstacle belt may slow an enemy moving through it. The hook returns
   // exactly 1 when no applicable belt exists, preserving every pre-engineering baseline.
   if (typeof fldEngMoveFactor === "function") f *= fldEngMoveFactor(x, z, u);
-  // R-3 badge seam: a badge may quicken (Hardy Marcher / Horseman) or drag (The Slows) the march.
-  // Identity 1.0 when the badge engine is off or the unit carries no speed badge -> byte-identical.
-  // u._spdMul is the reserved R-4 X-Factor surge term (undefined -> 1 -> no-op today).
-  if (u) { if (u._spdMul) f *= u._spdMul; if (typeof fldBadgeFactor === "function") f *= fldBadgeFactor(u, "speed"); }
+  // R-3/R-4 rating speed: the R-3 static badge factor (Hardy Marcher / Horseman quicken, The Slows drag) AND
+  // the R-4 X-Factor surge (u._spdMul) both contribute to the march. Compute the COMBINED factor and clamp it
+  // to ONE documented band [0.75, 1.30], so no stack (e.g. Hardy Marcher + Horseman + an in-zone Foot Cavalry)
+  // can breach the bound the design promises. _sf is EXACTLY 1 when no rating speed input exists (badges off /
+  // no speed badge / _spdMul undefined) -> the clamp+multiply is skipped -> byte-identical for every baseline.
+  if (u) {
+    var _sf = 1;
+    if (u._spdMul) _sf *= u._spdMul;
+    if (typeof fldBadgeFactor === "function") _sf *= fldBadgeFactor(u, "speed");
+    if (_sf !== 1) { _sf = _sf < 0.75 ? 0.75 : (_sf > 1.30 ? 1.30 : _sf); f *= _sf; }
+  }
   return f;
 }
 
@@ -29446,10 +29471,20 @@ function fldSimStep(dt) {
   // distinct arm roles (B-4): decay the muzzle-flash/charge visual timers + apply the cavalry RAID on an enemy
   // ammunition train (the B-3 tie). No-op when arms off (byte-identical) / no trains.
   if (__FIELD.arms && typeof fldArmsStep === "function") fldArmsStep(dt);
+  // R-4 X-Factor (the rating "in the zone" surge): set/clear each X-Factor unit's _xfActive/_spdMul/glow
+  // BEFORE the command aura is summed, so fldOfficersStep can scale the summed cmdBonus by the surge (capped
+  // at the wall). Gated on __FIELD.badges; a unit carrying no X-Factor is untouched -> byte-identical for
+  // every baseline (no shipped scenario assigns X-Factors yet — that is the R-6 sweep).
+  if (__FIELD.badges && typeof fldXFactorStep === "function") fldXFactorStep(dt);
   // officers & command (B-2): ride leaders to the line, apply the command aura (u.cmdBonus), accrue the
   // leader exposure-hazard + any general-down shock — all BEFORE morale, so this tick's morale resolution
   // reflects them. No-op when officers are off (fldOfficersStep early-returns; u.cmdBonus stays unset -> 0).
   if (__FIELD.officers && typeof fldOfficersStep === "function") fldOfficersStep(dt);
+  // R-4 X-Factor: scale each in-the-zone unit's freshly-summed command aura toward the cap by its active
+  // X-Factor surge. Runs AFTER the aura is summed (fldOfficersStep) and is gated on __FIELD.badges (NOT
+  // officers), so the cmdBonus surge and the _spdMul surge share ONE gate — consistent whether officers are
+  // on or off. Strict no-op for any unit without an active X-Factor (u._xfActive undefined/<=1) -> byte-identical.
+  if (__FIELD.badges && typeof fldXFactorApplyCmd === "function") { for (var xf = 0; xf < __FIELD.units.length; xf++) fldXFactorApplyCmd(__FIELD.units[xf]); }
   // morale
   for (var mo = 0; mo < __FIELD.units.length; mo++) fldMoraleStep(__FIELD.units[mo], dt);
   // objective + victory
@@ -30069,6 +30104,28 @@ function fld2dDraw() {
     // morale pip
     ctx.fillStyle = u.morale > 35 ? "#7faf6a" : "#c98a3a"; ctx.fillRect(cx - 12, cz - depth / 2 - 9, 24 * (u.morale / u.maxMor), 3);
     if (u.state === "routing") { ctx.fillStyle = "#ffd27a"; ctx.font = "10px Georgia"; ctx.fillText("ROUT", cx - 13, cz + depth / 2 + 12); }
+    // R-4 X-Factor "in the zone" glow (CVD-safe: an amber burst RING + a ⚡ glyph above the block — the SHAPE
+    // carries the meaning, colour is secondary; reduceMotion -> a steady ring, else a gentle pulse). Guarded on
+    // u._xfGlow (>0 only for an active heroic surge) -> drawn for NO shipped unit today -> byte-identical.
+    if (u._xfGlow > 0) {
+      var _rm = fldReduceMotion();
+      var _pulse = _rm ? 0.85 : (0.6 + 0.4 * Math.abs(Math.sin(__FIELD.t * 5)));
+      var _rr = Math.max(frontW, depth) * 0.62 + 6;
+      ctx.save();
+      ctx.globalAlpha = Math.min(0.8, 0.3 + 0.45 * u._xfGlow * _pulse);
+      ctx.strokeStyle = "#ffcf6a"; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.arc(cx, cz, _rr, 0, 7); ctx.stroke();
+      if (!_rm) { ctx.globalAlpha = 0.18 * u._xfGlow * _pulse; ctx.lineWidth = 5; ctx.beginPath(); ctx.arc(cx, cz, _rr + 4, 0, 7); ctx.stroke(); }
+      // a VECTOR lightning bolt above the marker (platform-independent — no emoji-font dependency / tofu risk;
+      // the ring already carries the CVD-safe shape cue, this bolt is the dramatic "in the zone" flourish).
+      ctx.globalAlpha = 0.92 * Math.min(1, u._xfGlow + 0.2);
+      ctx.fillStyle = "#ffe9a8";
+      var _bx = cx, _by = cz - depth / 2 - 18;
+      ctx.beginPath();
+      ctx.moveTo(_bx + 1.5, _by - 7); ctx.lineTo(_bx - 4, _by + 1.5); ctx.lineTo(_bx - 0.5, _by + 1.5);
+      ctx.lineTo(_bx - 2, _by + 7); ctx.lineTo(_bx + 4.5, _by - 2); ctx.lineTo(_bx + 1, _by - 2);
+      ctx.closePath(); ctx.fill();
+      ctx.restore();
+    }
   }
   // Engineering Corps (T13): dirt parapets along entrenched units' fronts (no-op when no unit is dug in)
   if (typeof fldEngDraw2d === "function") fldEngDraw2d(ctx, v);
@@ -36260,6 +36317,130 @@ function fldRatingHudSelected(u) {
     + '<span style="font-size:9px;opacity:.6;letter-spacing:.05em">OVR</span>'
     + '<span style="font-size:12px;opacity:.9;margin-left:2px;">Grade <b>' + _fldRatEsc(g.letter) + '</b> &middot; ' + _fldRatEsc(g.word) + '</span>'
     + '</div>';
+}
+
+/* ===========================================================================
+   R-4 · THE X-FACTORS — the dramatic "in the zone" Madden surge (inside the no-fudge wall).
+
+   An X-Factor is a Superstar badge with an ACTIVATION: when its situational trigger fires, the unit
+   enters "in the zone" — a bounded surge on EXACTLY ONE channel (its declared lever):
+     - a NON-speed X-Factor (rally/melee/none) scales its ALREADY-SUMMED command aura (cmdBonus) toward
+       the hard FLDO.CMD_BONUS_CAP (0.9) wall via u._xfActive, NEVER beyond;
+     - a SPEED X-Factor (Foot Cavalry / The Slows) quickens/drags the march via u._spdMul (the _spdMul
+       term itself is capped to [0.85, 1.15]) and does NOT also surge the command aura (one channel only).
+   A one-shot ⚡ announce fires; the marker pulses (u._xfGlow). The amplification is realism-scaled
+   (fldRatingRealismCap(tier,"xfactor"): Arcade 1.45 dramatic / Balanced 1.20 / Historian 1.08 tight,
+   D94-softcap). fldMoveFactor (T0) additionally clamps the COMBINED speed factor (the _spdMul surge ×
+   the R-3 static speed-badge factor) to ONE documented band [0.75, 1.30], so no stack can breach it.
+
+   THE NO-FUDGE OUTPUT WALL (D74/D94, build-gate 4d): fldXFactorStep writes ONLY the _xf* / _spdMul
+   surge fields and announces; fldXFactorApplyCmd writes ONLY the cmdBonus INPUT lever (clamped at the cap). NEITHER ever
+   writes cas/aCas/bCas/victory/.men/sev.*. A surging brigade holds longer / rallies sooner / bleeds the
+   enemy less EMERGENTLY — the engine runs its NORMAL morale/rally/rout-save formula on the higher
+   (capped) cmdBonus input; the rating never touches the scoreboard.
+
+   BYTE-IDENTICAL WHEN OFF: gated on __FIELD.badges; a unit carrying NO X-Factor badge is left wholly
+   untouched (_xfActive/_spdMul/_xfGlow stay undefined -> the fldMoveFactor (u._spdMul) read and the
+   fldXFactorApplyCmd guard are exact no-ops). No shipped scenario assigns X-Factors yet (the R-6 sweep),
+   so every battle is byte-for-byte identical whether badges are on or off. NO RNG -> seed-replayable.
+
+   TWO-LAYER MODEL (kept deliberately distinct from R-3): the R-3 static fldBadgeFactor remains the
+   always-on BASELINE (an X-Factor badge with an fldLever still contributes its capped static factor);
+   R-4 adds the situational SURGE on top. The situational sharpening lives in _fldXFactorInZone (the
+   activation), NOT in _fldBadgeTrig — so the R-3 static path (and its probe) is untouched.
+   =========================================================================== */
+
+/* the unit's X-Factor (rung:"xfactor") badge defs, in catalog order. Empty for any unit that carries
+   none -> fldXFactorStep skips it entirely (byte-identical). */
+function _fldUnitXFactors(u) {
+  var out = []; if (!u || !u.badges || !u.badges.length) return out;
+  for (var i = 0; i < u.badges.length; i++) { var def = fldBadgeDef(u.badges[i]); if (def && def.rung === "xfactor") out.push(def); }
+  return out;
+}
+/* is this unit moving under a march order (a real change of position, not a settled hold)? */
+function _fldXfMoving(u) {
+  if (!u || !u.order || u.order.type !== "move") return false;
+  var arr = (typeof FLD !== "undefined" && FLD.ARRIVE) ? FLD.ARRIVE : 14;
+  var dx = u.order.tx - u.x, dz = u.order.tz - u.z;
+  return (dx * dx + dz * dz) > arr * arr;
+}
+/* is a friendly brigade routing within 220yd (the "all else is breaking" last-stand condition)? */
+function _fldXfNearRout(u) {
+  var U = (typeof __FIELD !== "undefined" && __FIELD) ? __FIELD.units : null; if (!U) return false;
+  for (var i = 0; i < U.length; i++) { var f = U[i]; if (f === u || f.side !== u.side || !f.alive || f.state !== "routing") continue; if (typeof fldDist === "function" && fldDist(f, u) < 220) return true; }
+  return false;
+}
+/* _fldXFactorInZone(u, def): the situational ACTIVATION test per X-Factor trigger. Engine-observable
+   state only (order / ammo / morale / arm / nearby routing) -> deterministic, replayable. */
+function _fldXFactorInZone(u, def) {
+  if (!u || !u.alive || u.state === "routing") return false;
+  var t = def && def.trigger;
+  var charging = !!(u.order && u.order.type === "charge");
+  var holding = !!(u.order && u.order.type === "hold");
+  var lowMorale = (u.maxMor > 0) && (u.morale / u.maxMor < 0.5);
+  switch (t) {
+    case "march_vigor":       return _fldXfMoving(u);                                  // Foot Cavalry — on the march
+    case "his_offensive":     return _fldXfMoving(u) || charging;                      // The Slows — committing to the attack
+    case "ammo_low_defend":   return (u.ammo < 12) && !charging;                       // Bayonet! — out of cartridges, holding the line
+    case "last_stand_defend": return holding && (lowMorale || _fldXfNearRout(u));      // Rock of Chickamauga — the line is breaking
+    case "usct_assault":      return charging;                                         // Earned in Blood — storming the works
+    case "mass_assault":      return charging;                                         // The Grand Charge
+    case "flanking":          return (u.arm === "cav") && charging;                    // First with the Most — Forrest's troopers
+    default:                  return charging || _fldXfMoving(u);                      // any other X-Factor: on a committed move
+  }
+}
+/* decay a surge value toward target at a fixed rate (deterministic; ~1s to converge; snaps when within eps). */
+function _fldXfDecay(v, target, dt) {
+  if (typeof v !== "number" || !isFinite(v)) return target;
+  var nv = v + (target - v) * Math.min(1, dt * 3.2);
+  return (Math.abs(nv - target) < 1e-4) ? target : nv;
+}
+/* fldXFactorStep(dt): per-tick activation. For each unit carrying an X-Factor, set the surge when in the
+   zone (decay it toward identity when out), fire a one-shot ⚡ announce on the rising edge, and drive the
+   marker glow. Gated on __FIELD.badges; a unit with no X-Factor is untouched. NO RNG (deterministic). */
+function fldXFactorStep(dt) {
+  if (!_fldBadgeActive()) return;
+  var U = (typeof __FIELD !== "undefined" && __FIELD) ? __FIELD.units : null; if (!U || !U.length) return;
+  var tier = (__FIELD && __FIELD.realismTier) ? __FIELD.realismTier : "balanced";
+  var amp = fldRatingRealismCap(tier, "xfactor"); if (!(amp > 1)) amp = 1.2;
+  var rise = amp - 1;                                   // the surge magnitude above identity
+  for (var i = 0; i < U.length; i++) {
+    var u = U[i];
+    var defs = _fldUnitXFactors(u);
+    if (!defs.length) continue;                         // <-- byte-identical: units without an X-Factor untouched
+    var active = null;
+    for (var j = 0; j < defs.length; j++) { if (_fldXFactorInZone(u, defs[j])) { active = defs[j]; break; } }
+    if (active && u.alive) {
+      var pos = active.polarity !== "neg";
+      var viaSpeed = (active.fldLever === "speed");
+      // the cmdBonus aura surge fires ONLY for a positive, NON-speed X-Factor — a pure-speed badge (Foot
+      // Cavalry / The Slows) surges ONLY the march via _spdMul, never the command aura (its declared lever is
+      // honored, and the speed effect is not double-routed into cmdBonus). This keeps each X-Factor on one channel.
+      u._xfActive = (pos && !viaSpeed) ? amp : 1;
+      if (viaSpeed) u._spdMul = pos ? Math.min(1.15, 1 + rise) : Math.max(0.85, 1 - rise);
+      u._xfGlow = pos ? 1 : 0;                           // glow the heroic surge; the named-flaw drag does not glow
+      if (u._xfOn !== active.key) {                      // one-shot on the rising edge (re-arms after leaving the zone)
+        u._xfOn = active.key;
+        var line = (pos ? "⚡ " : "") + (u.name || "A brigade") + " — " + (active.label || active.key) + (pos ? "!" : ".");
+        if (typeof fldAnnounce === "function") fldAnnounce(line);
+        if (pos && typeof fldScenarioBanner === "function") { try { fldScenarioBanner(line, u.side); } catch (e) {} }
+      }
+    } else {
+      u._xfOn = null;                                    // out of zone -> re-arm + decay the surge toward identity
+      u._xfActive = _fldXfDecay(u._xfActive, 1, dt);
+      if (u._spdMul != null) u._spdMul = _fldXfDecay(u._spdMul, 1, dt);
+      u._xfGlow = (u._xfGlow > 0) ? Math.max(0, u._xfGlow - dt * 2.2) : 0;
+    }
+  }
+}
+/* fldXFactorApplyCmd(u): scale the unit's ALREADY-SUMMED command aura by its active X-Factor, hard-capped
+   at FLDO.CMD_BONUS_CAP — the surge pushes cmdBonus toward the wall, NEVER beyond. Called at the END of
+   fldOfficersStep (after the aura is summed). A strict no-op unless an X-Factor is active (byte-identical). */
+function fldXFactorApplyCmd(u) {
+  if (!u || typeof u._xfActive !== "number" || u._xfActive <= 1) return;
+  var cap = (typeof FLDO !== "undefined" && FLDO.CMD_BONUS_CAP) ? FLDO.CMD_BONUS_CAP : 0.9;
+  var v = (u.cmdBonus || 0) * u._xfActive;
+  u.cmdBonus = (v > cap) ? cap : v;
 }
 
 
