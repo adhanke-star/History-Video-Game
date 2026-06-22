@@ -21561,6 +21561,141 @@ var GAME_DATA = {
     }
   ]
 },
+"ratings": {
+  "_meta": "GAME_DATA.ratings — the D94 rating system (the OVR / Madden layer) data spine. Design law: RATING-SYSTEM-DESIGN.md. R-0: pure DATA + tables read by src/tactical/T14-ratings.js. NOTHING here is wired into combat yet (byte-identical). Attributes are 0-100, NEUTRAL at 64 (matching commandLeadership's anchor); a missing attribute reads 64 -> no-op. Provenance: 2+ sources = Verified, else Inferred/Disputed (D92 rigor).",
+
+  "attributes": [
+    "tactical", "command", "initiative", "resolve", "discipline",
+    "marksmanship", "vigor", "charisma", "aggression", "grit",
+    "logistics", "engineering", "cavalry", "artillery", "political"
+  ],
+  "_attrNote": "15 attributes (D94 R2). General-tier strategic skills are composites: operationalManeuver=f(tactical,initiative); grandTacticalCoordination=f(command,discipline); plus the standalone logistics + political. aggression is BIDIRECTIONAL and is EXCLUDED from the headline OVR roll-up (D94 anti-Lost-Cause guard) — it bends the Attack tilt instead.",
+
+  "ovrWeights": {
+    "individual": { "tactical": 0.20, "command": 0.16, "resolve": 0.16, "discipline": 0.14, "marksmanship": 0.10, "initiative": 0.08, "grit": 0.08, "charisma": 0.04, "vigor": 0.04 },
+    "officerSkillSeed": { "command": 0.45, "tactical": 0.35, "discipline": 0.20 },
+    "brigade": { "manQuality": 0.42, "materiel": 0.28, "condition": 0.15, "leadership": 0.15 }
+  },
+  "_ovrNote": "individual weights sum to 1.0 and DELIBERATELY omit aggression (bidirectional) + the arm sub-skills (those flow into matchups/badges, not the headline). officerSkillSeed (command/tactical/discipline) is the persona->gen.skill projection used for the calibration oracle; it reproduces the authored leader quality via fldClamp((seed-42)/46,0.18,0.95). brigade materiel bumped 0.25->0.28 / condition 0.18->0.15 (D94 §14 rec: armory choices should visibly move OVR).",
+
+  "dualOvrTilt": {
+    "attack": { "aggressionWeight": 0.25, "initiativeWeight": 0.10, "anchor": 64 },
+    "defend": { "resolveWeight": 0.20, "gritWeight": 0.10, "anchor": 64 }
+  },
+  "_dualNote": "OVR_attack = headline + round((aggression-64)*0.25 + (initiative-64)*0.10); OVR_defend = headline + round((resolve-64)*0.20 + (grit-64)*0.10). aggression — out of the headline — drives the Attack tilt so recklessness shows up exactly where it should. Plus per-badge attack/defend bias added at R-3.",
+
+  "gradeBands": [
+    { "min": 90, "letter": "A+", "word": "Legendary", "color": "#2f5130" },
+    { "min": 82, "letter": "A",  "word": "Masterful", "color": "#4a6b3a" },
+    { "min": 70, "letter": "B",  "word": "Able",      "color": "#6f9e5a" },
+    { "min": 58, "letter": "C",  "word": "Steady",    "color": "#b8863b" },
+    { "min": 48, "letter": "D",  "word": "Uneven",    "color": "#c9712e" },
+    { "min": 0,  "letter": "F",  "word": "Faltering", "color": "#9c3b2e" }
+  ],
+  "_gradeNote": "A-F report card (Aaron-locked, no gaming S tier). A+ >=90 = the Legendary club. The five lower words+colors are _cmdLeadWord verbatim (one vocabulary). Neutral 64 -> C/Steady.",
+
+  "rankBase": {
+    "Private": 48, "Pvt": 48, "Corporal": 50, "Sergeant": 54, "Sgt": 54,
+    "Lieutenant": 58, "Lt": 58, "1st Lt": 58, "Captain": 60, "Capt": 60,
+    "Major": 62, "Maj": 62, "Lt. Col.": 63, "Colonel": 64, "Col": 64, "Col.": 64,
+    "Brig. Gen.": 66, "Brigadier": 66, "Maj. Gen.": 68, "Major General": 68,
+    "Lt. Gen.": 70, "Lieutenant General": 70, "General": 72, "Gen.": 72
+  },
+  "branchTilt": { "inf": 0, "art": 2, "cav": 1 },
+  "yearDrift": { "1861": -2, "1862": 0, "1863": 2, "1864": 3, "1865": 3 },
+  "jitterSpan": 6,
+  "_genNote": "fldDerivePerson generates an unnamed person's attributes = rankBase[rank] + branchTilt[branch] + yearDrift[year] + seededJitter(pid,+/-jitterSpan). Jitter is DETERMINISTIC from a pid hash (no runtime RNG). Generated -> provenance Inferred, pinned near 64; never invents a HIGH number. CALIBRATION ORACLE: this table is regression-locked against the 9 shipped scenarios' authored quality/xp before any mass generation.",
+
+  "realismCaps": {
+    "arcade":    { "cmdBonus": 1.35, "badgeLever": 0.16, "sev": 1.30, "xfactor": 1.45 },
+    "balanced":  { "cmdBonus": 0.90, "badgeLever": 0.10, "sev": 1.20, "xfactor": 1.20 },
+    "historian": { "cmdBonus": 0.72, "badgeLever": 0.06, "sev": 1.12, "xfactor": 1.08 }
+  },
+  "_capNote": "D94-softcap (Aaron: 'soften the cap for power-fantasy', reconciled): the OUTPUT wall is absolute (no rating read at casualty/winner time, ever); the INPUT caps soften and SCALE WITH the B-5 realism slider. Arcade = generous/dramatic dream-team power-fantasy; Historian = the tight historical wall (cmdBonus 0.72 ~= today's FLDO.CMD_BONUS_CAP band). cmdBonus = the per-unit summed command-aura ceiling; badgeLever = the global per-unit per-lever summed badge delta cap; sev = the per-key sev.* band ceiling; xfactor = the X-Factor 'in the zone' amplification ceiling. Balanced ~= today's shipped numbers so the default is unchanged.",
+
+  "badgeRungs": {
+    "star":      { "label": "Star",      "shape": "dot",     "note": "common, always-on, small static nudge (resolves to a seed at build)" },
+    "superstar": { "label": "Superstar", "shape": "ring",    "note": "named figures, conditional, larger effect gated by an engine-observable trigger" },
+    "xfactor":   { "label": "X-Factor",  "shape": "diamond", "note": "rare, ACTIVATED 'in the zone' moment with a dramatic surge (banner+glow), routed through the capped cmdBonus/sev path" }
+  },
+
+  "badgeDefs": [
+    { "key": "marksman",        "label": "Marksman",            "rung": "star", "polarity": "pos", "kind": "drill",      "trigger": "always", "lever": "fire", "tilt": "attack",  "prov": "Inferred", "sources": [], "note": "Steady aimed fire. (R-0 def only; wired R-3.)" },
+    { "key": "disciplined",     "label": "Disciplined",         "rung": "star", "polarity": "pos", "kind": "drill",      "trigger": "always", "lever": "cohesion", "tilt": "defend", "prov": "Inferred", "sources": [], "note": "Holds formation under fire." },
+    { "key": "hardy_marcher",   "label": "Hardy Marcher",       "rung": "star", "polarity": "pos", "kind": "drill",      "trigger": "march",  "lever": "speed", "tilt": "neutral", "prov": "Inferred", "sources": [], "note": "Endures the march, arrives fresh." },
+    { "key": "woods_fighter",   "label": "Woods-Fighter",       "rung": "star", "polarity": "pos", "kind": "terrain",    "trigger": "in_woods", "lever": "fire", "tilt": "neutral", "prov": "Inferred", "sources": [], "note": "Fights well in broken/wooded ground." },
+    { "key": "horseman",        "label": "Horseman",            "rung": "star", "polarity": "pos", "kind": "arm",        "trigger": "arm_cav", "lever": "speed", "tilt": "attack", "prov": "Inferred", "sources": [], "note": "Natural cavalryman." },
+    { "key": "cannoneer",       "label": "Cannoneer",           "rung": "star", "polarity": "pos", "kind": "arm",        "trigger": "arm_art", "lever": "canister", "tilt": "defend", "prov": "Inferred", "sources": [], "note": "Well-drilled gun crew." },
+    { "key": "blooded",         "label": "Blooded",             "rung": "star", "polarity": "pos", "kind": "veteran",    "trigger": "always", "lever": "cohesion", "tilt": "neutral", "prov": "Inferred", "sources": [], "note": "Campaign-hardened veterans." },
+
+    { "key": "stonewall",       "label": "Stonewall",           "rung": "superstar", "polarity": "pos", "kind": "aura",       "trigger": "defend_objective", "lever": "fate_quality", "tilt": "defend", "prov": "Verified", "sources": ["Robertson 1997", "OR Ser.I Vol.II"], "note": "Stands like a stone wall; steadies the line. (Jackson / the Stonewall Bde.)" },
+    { "key": "rally",           "label": "Rally the Line",      "rung": "superstar", "polarity": "pos", "kind": "aura",       "trigger": "nearby_routing", "lever": "cmdbonus", "tilt": "defend", "prov": "Verified", "sources": [], "note": "Recovers wavering units in radius (Hancock the Superb)." },
+    { "key": "flank_march",     "label": "Flank March",         "rung": "superstar", "polarity": "pos", "kind": "tactic",     "trigger": "flanking", "lever": "edge", "tilt": "attack", "prov": "Verified", "sources": [], "note": "The audacious turning movement (Jackson at Chancellorsville)." },
+    { "key": "massed_battery",  "label": "Massed Battery",      "rung": "superstar", "polarity": "pos", "kind": "tactic",     "trigger": "arm_art", "lever": "canister", "tilt": "defend", "prov": "Verified", "sources": [], "note": "Concentrates the guns (Hunt, Alexander, Pelham)." },
+    { "key": "feared",          "label": "Feared",              "rung": "superstar", "polarity": "pos", "kind": "reputation", "trigger": "enemy_nearby", "lever": "enemy_morale", "tilt": "attack", "prov": "Verified", "sources": [], "note": "His name dents enemy morale (Forrest)." },
+    { "key": "beloved",         "label": "Beloved",             "rung": "superstar", "polarity": "pos", "kind": "reputation", "trigger": "always", "lever": "cohesion", "tilt": "defend", "prov": "Verified", "sources": [], "note": "His men will not break for him (Lee, Cleburne)." },
+    { "key": "pontoon_master",  "label": "Pontoon Master",      "rung": "superstar", "polarity": "pos", "kind": "engineering","trigger": "river", "lever": "engineer_speed", "tilt": "neutral", "prov": "Verified", "sources": [], "note": "Lays bridges fast (the Engineer Works Corps tie-in)." },
+
+    { "key": "foot_cavalry",    "label": "Foot Cavalry",        "rung": "xfactor", "polarity": "pos", "kind": "historical", "trigger": "march_vigor", "lever": "speed", "tilt": "attack", "prov": "Verified", "sources": ["Robertson 1997"], "note": "Jackson's infantry that marched like cavalry. ACTIVATES on redeploy." },
+    { "key": "rock_of_chickamauga", "label": "Rock of Chickamauga", "rung": "xfactor", "polarity": "pos", "kind": "historical", "trigger": "last_stand_defend", "lever": "rally_sev", "tilt": "defend", "prov": "Verified", "sources": ["Cozzens 1992"], "note": "Thomas holds when all else breaks. ACTIVATES when nearby morale collapses." },
+    { "key": "bayonet",         "label": "Bayonet!",            "rung": "xfactor", "polarity": "pos", "kind": "heroic",     "trigger": "ammo_low_defend", "lever": "melee_cmdbonus", "tilt": "defend", "prov": "Verified", "sources": ["Pullen 1957"], "note": "Chamberlain's charge when the cartridges run out. ACTIVATES on empty ammo." },
+    { "key": "earned_in_blood", "label": "Earned in Blood",     "rung": "xfactor", "polarity": "pos", "kind": "historical", "trigger": "usct_assault", "lever": "melee_sev", "tilt": "attack", "prov": "Verified", "sources": ["Trudeau 1998"], "note": "USCT at New Market Heights — valor under fire that won 14 Medals of Honor." },
+    { "key": "grand_charge",    "label": "The Grand Charge",    "rung": "xfactor", "polarity": "dual", "kind": "doomed",     "trigger": "mass_assault", "lever": "surge_risk", "tilt": "attack", "prov": "Verified", "sources": [], "note": "Pickett's Charge: a huge surge that can ALSO break the unit (double-edged, historically honest)." },
+
+    { "key": "green_levies",    "label": "Green Levies",        "rung": "star", "polarity": "neg", "kind": "unit_frailty", "trigger": "first_fire", "lever": "cohesion", "tilt": "neutral", "prov": "Inferred", "sources": [], "note": "Raw regiments, brittle under the first volley. Damper only." },
+    { "key": "powder_shy",      "label": "Powder-Shy",          "rung": "star", "polarity": "neg", "kind": "unit_frailty", "trigger": "surprised", "lever": "morale_start", "tilt": "neutral", "prov": "Inferred", "sources": [], "note": "Surprised/conscript troops start shaky." },
+    { "key": "piecemeal",       "label": "Piecemeal Commitment","rung": "superstar", "polarity": "neg", "kind": "command_flaw", "trigger": "his_attack", "lever": "edge_quality", "tilt": "attack", "prov": "Verified", "sources": ["Cozzens 1992", "Daniel 1997"], "note": "Bragg fed brigades in one at a time. A DRAG on his own coordination, never an enemy buff." },
+    { "key": "the_slows",       "label": "The Slows",           "rung": "xfactor", "polarity": "neg", "kind": "command_flaw", "trigger": "his_offensive", "lever": "speed_edge", "tilt": "attack", "prov": "Verified", "sources": ["Sears 1988"], "note": "McClellan's chronic caution — Lincoln's word. Slows his own commitment. No enemy buff." },
+    { "key": "rigid_plan",      "label": "Rigid Plan",          "rung": "superstar", "polarity": "neg", "kind": "command_flaw", "trigger": "attack_fortified", "lever": "quality", "tilt": "attack", "prov": "Verified", "sources": ["Marvel 1991"], "note": "Burnside ground forward to plan against fortified ground (Fredericksburg). Suppresses replan." },
+    { "key": "reckless_valor",  "label": "Reckless Valor",      "rung": "superstar", "polarity": "dual", "kind": "command_flaw", "trigger": "his_attack", "lever": "edge_fate", "tilt": "attack", "prov": "Verified", "sources": ["McMurry 1982"], "note": "Hood's all-out aggression — can help the attack BUT raises his own leader-fall risk + exhausts the command (double-edged)." }
+  ],
+
+  "personas": {
+    "_note": "R-0 authors the Bull Run leadership cast (Verified). command/tactical/discipline are CALIBRATED so the persona->quality projection reproduces each leader's AUTHORED quality in data/bullrun.json within tolerance (the calibration oracle). Other attributes are historical character. The full prosopography (every identifiable individual) is the D93 target, built via per-army research workflows over this spine.",
+
+    "ld_mcdowell": { "pid": "ld_mcdowell", "name": "Irvin McDowell", "side": "US", "rank": "Brig. Gen.", "branch": "inf", "fate": 2.4,
+      "persona": { "tactical": 70, "command": 66, "initiative": 58, "resolve": 64, "discipline": 66, "marksmanship": 60, "vigor": 62, "charisma": 54, "aggression": 58, "grit": 60, "logistics": 66, "engineering": 58, "cavalry": 50, "artillery": 60, "political": 50 },
+      "flaws": ["green-army"], "badges": [], "personaTags": ["sound-but-overwhelmed"],
+      "provenance": "Verified", "sources": ["Detzer 2004", "OR Ser.I Vol.II"], "authoredQuality": 0.55,
+      "bio": "Planned a sound turning movement at Bull Run, but commanded the rawest army yet fielded; the plan outran the men." },
+
+    "ld_heintzelman": { "pid": "ld_heintzelman", "name": "Samuel P. Heintzelman", "side": "US", "rank": "Col.", "branch": "inf", "fate": 1.0,
+      "persona": { "tactical": 68, "command": 64, "initiative": 56, "resolve": 70, "discipline": 66, "marksmanship": 60, "vigor": 60, "charisma": 50, "aggression": 56, "grit": 66, "logistics": 60, "engineering": 54, "cavalry": 48, "artillery": 58, "political": 46 },
+      "flaws": [], "badges": [], "personaTags": ["steady-division-cmdr"],
+      "provenance": "Verified", "sources": ["OR Ser.I Vol.II"], "authoredQuality": 0.52,
+      "bio": "A regular-army division commander; his rank at Bull Run is itself disputed (the D92-surfaced Col. vs Brig. Gen. case)." },
+
+    "ld_beauregard": { "pid": "ld_beauregard", "name": "P. G. T. Beauregard", "side": "CS", "rank": "Brig. Gen.", "branch": "inf", "fate": 2.5,
+      "persona": { "tactical": 72, "command": 70, "initiative": 70, "resolve": 66, "discipline": 68, "marksmanship": 58, "vigor": 64, "charisma": 72, "aggression": 72, "grit": 64, "logistics": 58, "engineering": 72, "cavalry": 54, "artillery": 70, "political": 60 },
+      "flaws": ["grandiose-plans"], "badges": [], "personaTags": ["flamboyant", "engineer"],
+      "provenance": "Verified", "sources": ["Williams 1955", "OR Ser.I Vol.II"], "authoredQuality": 0.62,
+      "bio": "The hero of Sumter; an engineer by training, fond of Napoleonic grand designs his green army couldn't always execute." },
+
+    "ld_johnston": { "pid": "ld_johnston", "name": "Joseph E. Johnston", "side": "CS", "rank": "Brig. Gen.", "branch": "inf", "fate": 2.7,
+      "persona": { "tactical": 74, "command": 72, "initiative": 64, "resolve": 70, "discipline": 70, "marksmanship": 58, "vigor": 62, "charisma": 64, "aggression": 56, "grit": 70, "logistics": 70, "engineering": 60, "cavalry": 58, "artillery": 62, "political": 54 },
+      "flaws": ["cautious-withdrawer"], "badges": [], "personaTags": ["senior-professional"],
+      "provenance": "Verified", "sources": ["Symonds 1992", "OR Ser.I Vol.II"], "authoredQuality": 0.66,
+      "bio": "The ranking officer on the field; brought the Shenandoah army by rail — the pivot that won the day." },
+
+    "ld_bee": { "pid": "ld_bee", "name": "Barnard E. Bee", "side": "CS", "rank": "Brig. Gen.", "branch": "inf", "fate": 0.42,
+      "persona": { "tactical": 70, "command": 68, "initiative": 66, "resolve": 78, "discipline": 72, "marksmanship": 60, "vigor": 66, "charisma": 66, "aggression": 72, "grit": 58, "logistics": 54, "engineering": 50, "cavalry": 52, "artillery": 58, "political": 44 },
+      "flaws": [], "badges": ["beloved"], "personaTags": ["gave-jackson-his-name"], "fellAt": "Henry Hill, Jul 21 1861",
+      "provenance": "Verified", "sources": ["Detzer 2004", "OR Ser.I Vol.II"], "authoredQuality": 0.60,
+      "bio": "Rallied his brigade on Henry Hill and — by tradition — named Jackson 'Stonewall' before falling mortally wounded." },
+
+    "ld_bartow": { "pid": "ld_bartow", "name": "Francis S. Bartow", "side": "CS", "rank": "Col.", "branch": "inf", "fate": 0.5,
+      "persona": { "tactical": 68, "command": 66, "initiative": 64, "resolve": 76, "discipline": 70, "marksmanship": 58, "vigor": 64, "charisma": 64, "aggression": 74, "grit": 56, "logistics": 50, "engineering": 48, "cavalry": 50, "artillery": 56, "political": 56 },
+      "flaws": [], "badges": [], "personaTags": ["killed-leading-the-charge"], "fellAt": "Henry Hill, Jul 21 1861",
+      "provenance": "Verified", "sources": ["OR Ser.I Vol.II"], "authoredQuality": 0.55,
+      "bio": "A Georgia congressman-turned-colonel; killed leading his Georgians against the Union batteries — among the highest-ranking to die that day." },
+
+    "ld_jackson": { "pid": "ld_jackson", "name": "Thomas J. Jackson", "side": "CS", "rank": "Brig. Gen.", "branch": "inf", "fate": 3.2,
+      "persona": { "tactical": 80, "command": 78, "initiative": 86, "resolve": 96, "discipline": 82, "marksmanship": 66, "vigor": 92, "charisma": 62, "aggression": 84, "grit": 86, "logistics": 60, "engineering": 56, "cavalry": 58, "artillery": 78, "political": 38 },
+      "flaws": ["secretive-orders"], "badges": ["stonewall"], "personaTags": ["iron_defense", "audacious_marcher"],
+      "provenance": "Verified", "sources": ["Robertson 1997", "OR Ser.I Vol.II"], "authoredQuality": 0.82,
+      "bio": "A VMI artillery professor who stood like a stone wall on Henry Hill and earned the name that made him legend. His OVR rises with the war (dev-traits)." }
+  }
+},
 "shiloh": {
   "_comment": "PHASE C-2 — SHILOH / PITTSBURG LANDING, April 6-7, 1862 — the FIRST WESTERN THEATER battle for the __FIELD real-time engine (single-phase, the Fredericksburg pattern). The first major battle of the Western theater: Grant's Army of the Tennessee, encamped at Pittsburg Landing on the Tennessee River, is surprised by Johnston's Army of the Mississippi striking from Corinth, Mississippi. The first day (April 6) is a Confederate near-breakthrough — the 'Hornets' Nest' holds for hours, Johnston is killed at the Peach Orchard, and the Union is pressed into a tight perimeter around Pittsburg Landing. Overnight Buell's Army of the Ohio arrives; the second day (April 7) the reinforced Union drives the Confederates back to Corinth. The battle is modeled as a SINGLE-PHASE engagement (the first day's Confederate assault, with the second day's Union counterattack as the time-limit pressure — the defender must hold until Buell arrives). COORDINATE NOTE: the engine field is 1200x900 yards; per engine convention the ATTACKER (CS, the first day) sits at HIGH z facing -z (facing 0) and the DEFENDER (US) at LOW z facing +z (facing PI). The Confederate approach is from the southwest (high z); the Union camps and the Landing are at low z. The Hornets' Nest (the Sunken Road) is the defender's key hold line at mid-field. ARTILLERY uses the D75 UNIVERSAL GUN MODEL (real gun counts + realistic crew; fire = guns * the universal weight). ANTI-LOST-CAUSE: the lessons are command failure on BOTH sides — Grant's unprepared encampment (no entrenchments, no pickets despite knowing Johnston was at Corinth), Johnston's fatal exposure at the Peach Orchard, the piecemeal Confederate assault that failed to crush the Union before Buell arrived, and the appalling cost (~24,000 total casualties, more than the American Revolution, the War of 1812, and the Mexican-American War combined up to that point). The 'Hornets' Nest' is a monument to the cost of linear defense against massed artillery, not to Southern invincibility. Strengths are Inferred division/brigade-scale approximations (the OOBs differ across Cunningham, Sword, and the Official Records); the Verified, teaching-bearing facts are the commanders + their fate, the terrain, and the casualty weight. Sources: NPS Shiloh National Military Park, American Battlefield Trust, the Official Records (via aotw.org), Cunningham 'Shiloh and the Western Campaign of 1862', Sword 'Shiloh: Bloody April', McDonough 'Shiloh — In Hell before Night'.",
   "shiloh": {
@@ -34665,6 +34800,199 @@ function _fldEngCard(head, body, prov) {
     '<div style="color:#d8c87a;font-weight:bold;margin-bottom:6px;">' + head + '</div>' +
     '<div style="font-size:12.5px;opacity:.88;line-height:1.48;">' + body + '</div>' +
     '<div style="font-size:11px;opacity:.62;margin-top:4px;">' + prov + '</div></div>';
+}
+
+
+/* ===== module: tactical/T14-ratings.js ===== */
+/* ============================================================================
+   src/tactical/T14-ratings.js  —  THE RATING SYSTEM (the OVR / "Madden layer")
+
+   Aaron-directed (D94). A unified 1-100 OVR + badges over three entity tiers
+   (individual / officer / brigade), the substrate for the D93 "Soldier's Story".
+   Design law: RATING-SYSTEM-DESIGN.md.
+
+   THE KEYSTONE (honors D74/D92): the OVR is a READ-OUT, not a force. A documented
+   persona is DERIVED into true attributes; those attributes SEED the levers the
+   engine already reads (xp, officer quality -> cmdBonus, weapon, radius, fate,
+   bounded sev). No rating is ever read when a casualty / melee / rout / victory is
+   computed. This module hosts the whole system; it ships in vetted increments.
+
+   INCREMENT R-0 (this file's current scope) — THE DATA SPINE, PURE FUNCTIONS ONLY:
+     The OVR / grade / derivation math + the badge-def + realism-cap accessors. NONE
+     of it is wired into combat (no T0/T3 seam), so every AI-vs-AI baseline resolves
+     byte-for-byte as before. Attributes are 0-100, NEUTRAL at 64 (matching
+     commandLeadership's anchor); a missing attribute reads 64 -> no-op. The grade
+     reuses _cmdLeadWord (one vocabulary) and adds the A+ Legendary band (>=90).
+
+   EXTENSION POINTS (kept here so the system grows in one place):
+     - R-1 officer derivation: persona -> gen.skill (feeds _cmdGenRating) +
+       quality / radius / fate (feeds fldMakeOfficer). At the FRONT of the existing
+       pipe; no downstream edits.
+     - R-3 badge engine: fldBadgeFactor(u, lever) (identity when __FIELD.badges
+       absent) + the global per-unit per-lever stacking cap (realism-scaled).
+     - R-4 X-Factors: u._xfActive scales the already-summed cmdBonus, hard-capped by
+       the realism-scaled ceiling (fldRatingRealismCap). DRAMATIC surge feel.
+     - Army GM layer (strategic): the depth chart + transfers spend political capital
+       (extends cmdAppoint / _cmdReliefCost).
+   D94-softcap: the OUTPUT wall is absolute; the INPUT caps soften and scale with the
+   B-5 realism slider (Arcade generous / Historian tight) via fldRatingRealismCap.
+   ============================================================================ */
+
+var FLDR = {
+  ANCHOR: 64,                 // the neutral attribute value (= commandLeadership anchor)
+  QMIN: 0.18, QMAX: 0.95      // the officer-quality clamp band (matches fldOfficerSideQuality)
+};
+
+function _ratData() { return (typeof gameData === "function") ? gameData("ratings") : null; }
+
+function _fldRatNum(v, dflt) { return (typeof v === "number" && isFinite(v)) ? v : dflt; }
+
+/* one persona attribute, defaulting to the neutral anchor (so a missing attr is a no-op). */
+function fldAttr(p, key) {
+  if (!p) return FLDR.ANCHOR;
+  var src = p.persona ? p.persona : p;       // accept a record OR a bare persona object
+  return _fldRatNum(src[key], FLDR.ANCHOR);
+}
+
+/* ---- The HEADLINE individual OVR (0-100): a transparent weighted mean of the
+   combat-relevant attributes. aggression (bidirectional) + the arm sub-skills are
+   DELIBERATELY excluded from the headline (D94 anti-Lost-Cause guard) — they flow
+   into the dual Attack/Defend tilt + matchups + badges, not the headline number. ---- */
+function fldPersonaOVR(p) {
+  var d = _ratData();
+  var w = (d && d.ovrWeights && d.ovrWeights.individual) ? d.ovrWeights.individual
+        : { tactical: 0.20, command: 0.16, resolve: 0.16, discipline: 0.14, marksmanship: 0.10, initiative: 0.08, grit: 0.08, charisma: 0.04, vigor: 0.04 };
+  var sum = 0, wsum = 0;
+  for (var k in w) { if (!w.hasOwnProperty(k)) continue; sum += fldAttr(p, k) * w[k]; wsum += w[k]; }
+  return wsum > 0 ? Math.round(sum / wsum) : FLDR.ANCHOR;
+}
+
+/* The persona -> gen.skill projection (the officer seed): the value that, run through
+   the EXISTING quality clamp, reproduces a leader's authored quality (calibration). */
+function fldOfficerSkillSeed(p) {
+  var d = _ratData();
+  var w = (d && d.ovrWeights && d.ovrWeights.officerSkillSeed) ? d.ovrWeights.officerSkillSeed
+        : { command: 0.45, tactical: 0.35, discipline: 0.20 };
+  var sum = 0, wsum = 0;
+  for (var k in w) { if (!w.hasOwnProperty(k)) continue; sum += fldAttr(p, k) * w[k]; wsum += w[k]; }
+  return wsum > 0 ? (sum / wsum) : FLDR.ANCHOR;
+}
+
+/* The derived OFFICER field-quality (0..1), via the EXACT map fldOfficerSideQuality
+   uses: clamp((lead-42)/46). This is the calibration target (reproduces authored quality). */
+function fldPersonaQuality(p) {
+  var seed = fldOfficerSkillSeed(p);
+  var clampFn = (typeof fldClamp === "function") ? fldClamp : function (v, a, b) { return v < a ? a : (v > b ? b : v); };
+  return clampFn((seed - 42) / 46, FLDR.QMIN, FLDR.QMAX);
+}
+
+/* The dual situational OVR (D94 §13): Attack and Defend beside the headline, so
+   matchups matter (Thomas A+ defend / C attack). aggression bends Attack; resolve/grit bend Defend. */
+function fldDualOVR(p) {
+  var d = _ratData();
+  var t = (d && d.dualOvrTilt) ? d.dualOvrTilt : { attack: { aggressionWeight: 0.25, initiativeWeight: 0.10 }, defend: { resolveWeight: 0.20, gritWeight: 0.10 } };
+  var head = fldPersonaOVR(p), A = FLDR.ANCHOR;
+  var atk = Math.round(head + (fldAttr(p, "aggression") - A) * _fldRatNum(t.attack.aggressionWeight, 0.25) + (fldAttr(p, "initiative") - A) * _fldRatNum(t.attack.initiativeWeight, 0.10));
+  var def = Math.round(head + (fldAttr(p, "resolve") - A) * _fldRatNum(t.defend.resolveWeight, 0.20) + (fldAttr(p, "grit") - A) * _fldRatNum(t.defend.gritWeight, 0.10));
+  return { headline: head, attack: atk, defend: def };
+}
+
+/* ---- The A-F grade (Aaron-locked report card; NO gaming S tier). A+ >=90 = the
+   Legendary club; the five lower bands REUSE _cmdLeadWord (one vocabulary, two
+   surfaces can't disagree). Neutral 64 -> C / Steady. ---- */
+function fldRatingGrade(ovr) {
+  var v = Math.round(_fldRatNum(ovr, FLDR.ANCHOR));
+  if (v < 0) v = 0; if (v > 100) v = 100;
+  if (v >= 90) return { ovr: v, letter: "A+", word: "Legendary", color: "#2f5130" };
+  var letter = v >= 82 ? "A" : v >= 70 ? "B" : v >= 58 ? "C" : v >= 48 ? "D" : "F";
+  var wc = (typeof _cmdLeadWord === "function") ? _cmdLeadWord(v) : ["Steady", "#b8863b"];
+  return { ovr: v, letter: letter, word: wc[0], color: wc[1] };
+}
+
+/* ===== the persona DERIVATION pipeline (authored figures + generated masses) ===== */
+
+function _fldRatRankBase(rank) {
+  var d = _ratData(), t = d && d.rankBase;
+  if (t && rank != null && typeof t[rank] === "number") return t[rank];
+  return FLDR.ANCHOR;
+}
+function _fldRatBranchTilt(branch) {
+  var d = _ratData(), t = d && d.branchTilt;
+  return (t && branch != null && typeof t[branch] === "number") ? t[branch] : 0;
+}
+function _fldRatYearDrift(year) {
+  var d = _ratData(), t = d && d.yearDrift;
+  return (t && year != null && typeof t[String(year)] === "number") ? t[String(year)] : 0;
+}
+
+/* deterministic 32-bit hash (FNV-1a) — the ONLY randomness source (NO Math.random,
+   so a derived persona is reproducible and the build stays deterministic). */
+function _fldRatHash(s) {
+  s = String(s == null ? "" : s);
+  var h = 2166136261;
+  for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = (h * 16777619) >>> 0; }
+  return h >>> 0;
+}
+function fldRatSeededJitter(seed, span) {
+  span = span || 6;
+  var h = _fldRatHash(seed);
+  return (h % (2 * span + 1)) - span;          // integer in [-span, +span]
+}
+
+/* fldDerivePerson(record, year): authored persona pass-through (with its provenance),
+   else GENERATE from rank + branch + year + a deterministic per-attribute jitter.
+   A generated persona is tagged Inferred and pinned near 64 (never invents a HIGH number). */
+function fldDerivePerson(record, year) {
+  if (!record) return null;
+  if (record.persona) return { persona: record.persona, provenance: record.provenance || "Inferred", generated: false };
+  var base = _fldRatRankBase(record.rank), tilt = _fldRatBranchTilt(record.branch), drift = _fldRatYearDrift(year != null ? year : record.year);
+  var pid = record.pid || record.id || record.name || "x";
+  var d = _ratData(), span = (d && typeof d.jitterSpan === "number") ? d.jitterSpan : 6;
+  var attrs = (d && d.attributes && d.attributes.length) ? d.attributes : ["tactical", "command", "resolve", "discipline", "marksmanship"];
+  var persona = {};
+  for (var i = 0; i < attrs.length; i++) {
+    var k = attrs[i], v = base + tilt + drift + fldRatSeededJitter(pid + ":" + k, span);
+    persona[k] = v < 20 ? 20 : (v > 88 ? 88 : v);    // generated never reaches the Legendary ceiling
+  }
+  return { persona: persona, provenance: "Inferred", generated: true };
+}
+
+/* ===== badge-def + realism-cap accessors (consumed by R-3 / R-4; defined now) ===== */
+
+function fldBadgeDef(key) {
+  var d = _ratData(); if (!d || !d.badgeDefs) return null;
+  for (var i = 0; i < d.badgeDefs.length; i++) if (d.badgeDefs[i].key === key) return d.badgeDefs[i];
+  return null;
+}
+
+/* The realism-scaled INPUT cap for a lever (D94-softcap): Arcade generous, Historian
+   tight. The OUTPUT wall is enforced elsewhere; this only sets how hard inputs may push. */
+function fldRatingRealismCap(tier, leverKey) {
+  var d = _ratData(), caps = d && d.realismCaps;
+  var t = (caps && caps[tier]) ? caps[tier] : (caps && caps.balanced);
+  if (!t || typeof t[leverKey] !== "number") return (leverKey === "cmdBonus") ? 0.9 : 1.0;
+  return t[leverKey];
+}
+
+/* A BRIGADE token's computed OVR (display): men-quality floor + materiel + condition +
+   live leadership (cmdBonus). Pure read of existing unit fields; nothing is stored. */
+function fldUnitRatingOVR(u) {
+  if (!u) return FLDR.ANCHOR;
+  var d = _ratData();
+  var w = (d && d.ovrWeights && d.ovrWeights.brigade) ? d.ovrWeights.brigade : { manQuality: 0.42, materiel: 0.28, condition: 0.15, leadership: 0.15 };
+  var xp = _fldRatNum(u.xp, 2);
+  var manQ = FLDR.ANCHOR + (xp - 2) * 8;                                   // authored xp -> man-quality
+  var wkey = String(u.weapon || "");
+  var materiel = wkey === "rifled" ? 74 : wkey === "carbine" ? 70 : wkey === "smooth" ? 62 : FLDR.ANCHOR;
+  if (u.arm === "art" && _fldRatNum(u.guns, 0) > 0) materiel = Math.min(90, materiel + Math.min(16, u.guns));
+  var maxMor = _fldRatNum(u.maxMor, 100), mor = _fldRatNum(u.morale, maxMor);
+  var fat = _fldRatNum(u.fatigue, 0);
+  var condition = FLDR.ANCHOR + (maxMor > 0 ? (mor / maxMor - 0.75) * 40 : 0) - fat * 0.15;
+  var leadership = FLDR.ANCHOR + _fldRatNum(u.cmdBonus, 0) * 30;           // live aura, never stored
+  var ovr = manQ * w.manQuality + materiel * w.materiel + condition * w.condition + leadership * w.leadership;
+  var wsum = w.manQuality + w.materiel + w.condition + w.leadership;
+  ovr = wsum > 0 ? ovr / wsum : FLDR.ANCHOR;
+  return Math.round(ovr < 0 ? 0 : (ovr > 100 ? 100 : ovr));
 }
 
 
