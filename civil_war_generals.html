@@ -21698,6 +21698,12 @@ var GAME_DATA = {
   },
   "jitterSpan": 6,
   "_genNote": "fldDerivePerson generates an unnamed person's attributes = rankBase[rank] + branchTilt[branch] + yearDrift[year] + seededJitter(pid,+/-jitterSpan). Jitter is DETERMINISTIC from a pid hash (no runtime RNG). Generated -> provenance Inferred, pinned near 64; never invents a HIGH number. CALIBRATION ORACLE: this table is regression-locked against the 9 shipped scenarios' authored quality/xp before any mass generation.",
+  "musterTemplate": [
+    { "key": "cmd", "rank": "Captain", "role": "company commander" },
+    { "key": "nco", "rank": "Sergeant", "role": "file closer" },
+    { "key": "pvt", "rank": "Private", "role": "in the ranks" }
+  ],
+  "_r5Note": "D94 R-5 (the prosopography scale-out): the LAZY-MATERIALIZATION sample template a brigade inspect/muster-roll builds rows from. fldBrigadeMuster materializes ONE row per slot here (HARD-capped <=6), NEVER u.men rows; the brigade token carries one recomputable fldMenMeanOVR instead (§8 scale rule). Generated rows are Inferred (a hatched bar via fldProvenanceStyle marks a derived rating distinct from a sourced one, §10). fldPromotePerson is the latent-command play-as-anyone hook; fldPersonTeam the EA-style journey hook.",
   "realismCaps": {
     "arcade": {
       "cmdBonus": 1.35,
@@ -30242,7 +30248,8 @@ function fldRenderHud() {
     (typeof fldOfficerHudSelected === "function" ? fldOfficerHudSelected(u) : "") +   // B-2: brigade leader + in-command status
     (typeof fldFlagHudSelected === "function" ? fldFlagHudSelected(u) : "") +   // H1b: battle flag + corps badge in the HUD
     (typeof fldEngHudSelected === "function" ? fldEngHudSelected(u) : "") +   // T13: entrenchment status (empty unless digging)
-    (typeof fldRatingHudSelected === "function" ? fldRatingHudSelected(u) : "");   // R-2: brigade OVR + A-F grade (pure display)
+    (typeof fldRatingHudSelected === "function" ? fldRatingHudSelected(u) : "") +   // R-2: brigade OVR + A-F grade (pure display)
+    (typeof fldMusterHudLine === "function" ? fldMusterHudLine(u) : "");   // R-5: the men's-mean OVR + provenance-hatched accent (lazy materialization; pure display)
 }
 function fldOnOver() {
   var e = document.getElementById("fldEnd"); if (!e) { fldAnnounce("Battle over."); return; }
@@ -36880,6 +36887,213 @@ function _fldNumComma(n) {
   var s = String(n < 0 ? -n : n), out = "", c = 0;
   for (var i = s.length - 1; i >= 0; i--) { out = s.charAt(i) + out; if (++c % 3 === 0 && i > 0) out = "," + out; }
   return (n < 0 ? "-" : "") + out;
+}
+
+/* ===========================================================================
+   R-5 · THE PROSOPOGRAPHY SCALE-OUT — bulk per-person derivation + LAZY MATERIALIZATION.
+   (design law: RATING-SYSTEM-DESIGN.md §5/§8/§15; DECISIONS D101)
+
+   THE LAZY-MATERIALIZATION KEYSTONE (§8): a brigade TOKEN carries ONE aggregate number — fldMenMeanOVR
+   (its men's mean OVR), derived O(1) from rank-mix + xp + arm + year, NEVER by building N rows and
+   averaging. Per-person rows are materialized ON DEMAND: fldMaterializePerson builds exactly ONE row
+   (inspect / play-as), and fldBrigadeMuster builds a HARD-CAPPED (<=6) representative sample, never u.men
+   rows (a 10,000-man brigade still builds <=6). The mean is always RECOMPUTABLE, never the source of truth,
+   so a future zoom-to-regiment is a roll-up of materialized rows (not a stored mean). NO RNG (deterministic
+   seeded jitter only) -> reproducible; PURE READS only (no scoreboard write) -> byte-identical. No shipped
+   scenario assigns bulk persons yet, so every battle is byte-for-byte identical (this is data + display,
+   not a combat path). Latent-command promotion (fldPromotePerson) is the play-as-anyone hook; fldPersonTeam
+   is the EA-style "team" journey hook; fldProvenanceStyle makes Inferred ratings visually distinct (§10).
+   =========================================================================== */
+
+/* the men's-mean OVR for a brigade TOKEN — ONE number, O(1), no N-row build. Anchored to the AUTHORED
+   man-quality (64 + (xp-2)*8 — the same xp->man-quality the brigade combat OVR uses), plus branch/year drift
+   + a small DETERMINISTIC per-brigade jitter (so two same-xp brigades differ). Clamped [20,88]: a brigade
+   AVERAGE never reaches the Legendary individual ceiling. Distinct from fldUnitRatingOVR (which folds in
+   materiel + live condition + the colonel's aura) — this is the men's prosopography seasoning alone. Pure. */
+function fldMenMeanOVR(u, year) {
+  if (!u) return FLDR.ANCHOR;
+  var xp = _fldRatNum(u.xp, 2);
+  var base = FLDR.ANCHOR + (xp - 2) * 8;
+  var tilt = _fldRatBranchTilt(u.arm === "art" ? "art" : (u.arm === "cav" ? "cav" : "inf"));
+  var drift = (year != null) ? _fldRatYearDrift(year) : 0;
+  var jit = fldRatSeededJitter("men:" + (u.id || u.name || "bde"), 3);   // +/-3, deterministic per brigade id
+  var v = Math.round(base + tilt + drift + jit);
+  return v < 20 ? 20 : (v > 88 ? 88 : v);
+}
+
+/* the EA-style "team" (journey-mode hook, §8): a person's army/corps allegiance — the anchor a play-as-anyone
+   career starts from. From an authored record's team{} when present, else a minimal {side}. */
+function fldPersonTeam(rec) {
+  if (!rec) return null;
+  if (rec.team && typeof rec.team === "object") return { side: rec.side || rec.team.side || null, army: rec.team.army || null, corps: rec.team.corps || null };
+  return { side: rec.side || null, army: null, corps: null };
+}
+
+/* deterministic period-name synthesis for a GENERATED (unnamed) soldier — a stand-in until the real
+   muster-roll-names pass (§15 R9). NO RNG: the name is a stable function of the pid hash. */
+var _FLD_FIRST = ["James", "John", "William", "Charles", "George", "Henry", "Thomas", "Samuel", "Robert", "Edward", "Joseph", "Andrew", "Francis", "Daniel", "Albert", "Benjamin", "Patrick", "Michael", "David", "Isaac", "Nathaniel", "Hiram", "Elias", "Reuben"];
+var _FLD_LAST = ["Carter", "Mason", "Bryant", "Holloway", "Tanner", "Whitlock", "Abbott", "Crandall", "Dudley", "Larkin", "Mercer", "Norton", "Osgood", "Parrish", "Sawyer", "Tilden", "Underwood", "Wexler", "Yates", "Bishop", "Conley", "Foster", "Hale", "Kendrick"];
+function _fldSynthName(seed) {
+  var h = _fldRatHash("name:" + String(seed));
+  return _FLD_FIRST[h % _FLD_FIRST.length] + " " + _FLD_LAST[(h >>> 8) % _FLD_LAST.length];
+}
+
+/* LAZY MATERIALIZATION — build exactly ONE person row, on demand (inspect / play-as). Reuses the R-0
+   derivation (authored persona pass-through with its provenance, else GENERATED from rank/branch/year +
+   deterministic jitter), then projects the headline + dual OVR + grade. A generated row gets a deterministic
+   synthesized name + Inferred provenance; latentCommand exposes the dormant command attribute (the play-as
+   promotion seed, §2). Pure; nothing stored. null-safe. */
+function fldMaterializePerson(spec, year) {
+  if (!spec) return null;
+  var der = fldDerivePerson(spec, year);
+  if (!der || !der.persona) return null;
+  // DEFENSIVE COPY (R-5 bug-hunt, LOW): fldDerivePerson's AUTHORED branch returns the record's persona BY
+  // REFERENCE (the live GAME_DATA.ratings object). Copy it at the materialization boundary so a materialized
+  // person NEVER aliases canonical data — a future play-as/career path that writes persona.* (XP/wound/dev-trait)
+  // must not silently rewrite the source-of-truth ratings + de-sync the deterministic sim. Persona attrs are flat
+  // numeric scalars, so a shallow copy suffices; this is a pure read-path add (returned numbers are unchanged).
+  var pcopy = {}; for (var pk in der.persona) { if (der.persona.hasOwnProperty(pk)) pcopy[pk] = der.persona[pk]; }
+  var ovr = fldPersonaOVR(pcopy), dual = fldDualOVR(pcopy), grade = fldRatingGrade(ovr);
+  var rank = spec.rank || (der.generated ? "Private" : null);
+  var pid = spec.pid || spec.id || ("p:" + (spec.name || rank || "x"));
+  var name = spec.name || spec.short || (der.generated ? _fldSynthName(pid) : (spec.fullName || pid));
+  return {
+    pid: pid, name: String(name), rank: rank, branch: spec.branch || "inf", role: spec.role || null,
+    side: spec.side || null, persona: pcopy, ovr: ovr, dual: dual, grade: grade,
+    provenance: der.provenance, generated: !!der.generated,
+    latentCommand: Math.round(_fldRatNum(pcopy.command, FLDR.ANCHOR)),   // the dormant command seed (play-as promotion)
+    team: fldPersonTeam(spec), sources: (spec.sources && spec.sources.slice) ? spec.sources.slice() : []   // copy the sources array too (same aliasing class)
+  };
+}
+
+/* a defensive shallow clone of a person row (persona + sources copied, not shared) — so a no-op promotion
+   still honors fldPromotePerson's "returns a NEW person; never mutates the input" contract (R-5 bug-hunt LOW). */
+function _fldClonePerson(person) {
+  if (!person) return person;
+  var out = {}; for (var k in person) { if (person.hasOwnProperty(k)) out[k] = person[k]; }
+  if (person.persona) { var np = {}; for (var a in person.persona) { if (person.persona.hasOwnProperty(a)) np[a] = person.persona[a]; } out.persona = np; }
+  if (person.sources && person.sources.slice) out.sources = person.sources.slice();
+  return out;
+}
+
+/* LATENT-COMMAND PROMOTION (play-as-anyone, §2): activate a person's dormant command for a higher billet.
+   Promotion lifts the billet-relevant axes (command/tactical/discipline/charisma) by the rank-base delta —
+   the latent capacity always in the persona surfaces as he climbs; combat axes (marks/vigor) are unchanged.
+   Returns a NEW person (pure; never mutates the input). The recomputed OVR + grade reflect the new billet;
+   officerTier flips true at/above Captain (the tier where command becomes the dominant attribute). */
+function fldPromotePerson(person, toRank) {
+  if (!person) return person;
+  if (!person.persona) return _fldClonePerson(person);   // malformed (no persona to promote) -> a clone, honoring the no-mutate contract (R-5 bug-hunt LOW)
+  // UNKNOWN-RANK GUARD (R-5 bug-hunt LOW): an unmapped/typo'd/null toRank would make _fldRatRankBase fall back to
+  // the 64 anchor -> a large unearned lift + a false officerTier. Require a real rankBase key; else a clean no-op clone.
+  var rd = _ratData(), rb = rd && rd.rankBase;
+  if (toRank == null || !(rb && typeof rb[toRank] === "number")) return _fldClonePerson(person);
+  var delta = _fldRatRankBase(toRank) - _fldRatRankBase(person.rank);
+  var lead = { command: 1, tactical: 1, discipline: 0.6, charisma: 0.5 };   // the billet-relevant lift weights
+  var np = {}; for (var k in person.persona) { if (person.persona.hasOwnProperty(k)) np[k] = person.persona[k]; }
+  for (var a in lead) { if (lead.hasOwnProperty(a)) { var v = _fldRatNum(np[a], FLDR.ANCHOR) + delta * lead[a]; np[a] = v < 20 ? 20 : (v > 99 ? 99 : Math.round(v)); } }
+  var ovr = fldPersonaOVR(np), out = {};
+  for (var p in person) { if (person.hasOwnProperty(p)) out[p] = person[p]; }
+  out.persona = np; out.rank = toRank; out.ovr = ovr; out.dual = fldDualOVR(np); out.grade = fldRatingGrade(ovr);
+  out.sources = (person.sources && person.sources.slice) ? person.sources.slice() : person.sources;   // don't propagate a shared sources ref (R-5 bug-hunt LOW)
+  out.officerTier = _fldRatRankBase(toRank) >= _fldRatRankBase("Captain"); out.promotedFrom = person.rank;
+  return out;
+}
+
+/* the muster slot template (a representative captain / sergeant / private). Data-driven (data override),
+   with a code fallback so a build without it still works. */
+function _fldMusterTemplate() {
+  var d = _ratData();
+  if (d && Array.isArray(d.musterTemplate) && d.musterTemplate.length) return d.musterTemplate;
+  return [
+    { key: "cmd", rank: "Captain", role: "company commander" },
+    { key: "nco", rank: "Sergeant", role: "file closer" },
+    { key: "pvt", rank: "Private", role: "in the ranks" }
+  ];
+}
+/* a brigade's representative MUSTER — the men-mean OVR + a HARD-CAPPED (<=6) lazily-materialized sample,
+   NEVER u.men rows (the §8 scale rule). `represents` records the true head-count the sample stands in for.
+   Pure read; deterministic per brigade id. null-safe. */
+function fldBrigadeMuster(u, n, year) {
+  if (!u) return null;
+  var CAP = 6;
+  n = (typeof n === "number" && n > 0) ? (n < CAP ? n : CAP) : 3;
+  var mean = fldMenMeanOVR(u, year);
+  var tmpl = _fldMusterTemplate(), sample = [];
+  var branch = (u.arm === "art") ? "art" : (u.arm === "cav" ? "cav" : "inf");
+  for (var i = 0; i < n && i < tmpl.length; i++) {
+    var t = tmpl[i];
+    var spec = { pid: (u.id || u.name || "bde") + ":" + t.key, rank: t.rank, branch: branch, role: t.role, side: u.side };
+    if (i === 0 && u.commander) spec.name = String(u.commander);   // the named brigade leader fills the command slot
+    var pers = fldMaterializePerson(spec, year);
+    if (pers) sample.push(pers);
+  }
+  return { menMeanOVR: mean, grade: fldRatingGrade(mean), provenance: "Inferred", sample: sample, represents: _fldRatNum(u.men, 0), cap: CAP };
+}
+
+/* the Inferred-vs-Verified VISUAL DISTINCTION (§10): the player must never mistake a generated number for a
+   sourced one. Verified -> a SOLID bar; Inferred -> a HATCHED (striped) bar; Disputed -> a dashed outline.
+   The PATTERN + the glyph + the word carry the meaning (CVD-safe; colour is decorative). Returns a style
+   descriptor (CSS fill + glyph + label + title) reused by every read-out surface. */
+function fldProvenanceStyle(prov, color) {
+  var c = color || "#8a7350";
+  if (prov === "Verified") return { fill: "background:" + c, glyph: "✓", label: "sourced", title: "Verified — 2+ sources" };
+  if (prov === "Disputed") return { fill: "background:" + c + ";outline:1px dashed " + c + ";outline-offset:1px", glyph: "?", label: "disputed", title: "Disputed — sources conflict" };
+  return { fill: "background:repeating-linear-gradient(45deg," + c + "," + c + " 2px,transparent 2px,transparent 5px)", glyph: "~", label: "derived", title: "Inferred — derived, not directly sourced" };   // hatched: reads distinct WITHOUT relying on hue
+}
+
+/* the COMPACT muster line for the in-battle inspect HUD (R-5): the men's mean OVR + grade with a
+   PROVENANCE-HATCHED accent (the men's number is Inferred/derived — visually distinct from a sourced one).
+   TRIPLE-ENCODED (number + letter + word) + CVD-safe (the hatch + glyph carry meaning, not colour). Pure
+   display; "" when ratings data absent (byte-identical). Appended after the R-2 combat-OVR line. */
+function fldMusterHudLine(u) {
+  if (!u || !_ratData()) return "";
+  var m = fldBrigadeMuster(u, 3);
+  if (!m) return "";
+  var g = m.grade, ps = fldProvenanceStyle("Inferred", g.color);
+  return '<div style="display:flex;align-items:center;gap:7px;margin-top:4px">'
+    + '<span aria-hidden="true" title="' + _fldRatEsc(ps.title) + '" style="display:inline-block;width:4px;height:18px;border-radius:2px;' + ps.fill + '"></span>'
+    + '<span style="font-weight:bold;font-size:14px;line-height:1">' + m.menMeanOVR + '</span>'
+    + '<span style="font-size:9px;opacity:.65;letter-spacing:.05em">MEN OVR</span>'/* wcag-auditor: contrast fix opacity .6→.65 for AA compliance (was 4.19:1, now ~4.64:1 vs #2b2016 panel ground) */
+    + '<span style="font-size:11px;opacity:.85">Grade <b>' + _fldRatEsc(g.letter) + '</b> &middot; ' + _fldRatEsc(g.word) + '</span>'
+    + '<span style="font-size:9px;opacity:.65;margin-left:auto">' + ps.glyph + ' ' + _fldRatEsc(ps.label) + '</span>'/* wcag-auditor: contrast fix opacity .55→.65 for AA compliance (was 3.78:1, now ~4.64:1 vs #2b2016 panel ground) */
+    + '</div>';
+}
+
+/* fldMusterRollHtml(u): the FULL "Muster Roll" inspect panel — the men-mean OVR + the lazily-materialized
+   representative sample (each a real materialized person row: OVR + grade + name + rank + provenance bar).
+   The EA-roster inspect / journey-mode character-sheet surface (ready; the live HUD wires the compact line).
+   TRIPLE-ENCODED + CVD-safe + WCAG-AA. Pure display; "" when ratings data absent (byte-identical). */
+function fldMusterRollHtml(u) {
+  if (!u || !_ratData()) return "";
+  var m = fldBrigadeMuster(u, 3);
+  if (!m || !m.sample.length) return "";
+  function row(p) {
+    var ps = fldProvenanceStyle(p.provenance, p.grade.color);
+    return '<div style="display:flex;align-items:center;gap:8px;padding:3px 0;border-top:1px solid rgba(120,92,62,.4)">'
+      + '<span aria-hidden="true" title="' + _fldRatEsc(ps.title) + '" style="flex:none;display:inline-block;width:5px;height:24px;border-radius:2px;' + ps.fill + '"></span>'
+      + '<span style="flex:none;font-weight:bold;font-size:15px;width:26px;text-align:right">' + p.ovr + '</span>'
+      + '<span style="flex:none;font-size:11px"><b>' + _fldRatEsc(p.grade.letter) + '</b></span>'
+      + '<span style="flex:1 1 auto;min-width:0"><span style="font-size:12px">' + _fldRatEsc(p.name) + '</span>'
+      + '<span style="font-size:10px;opacity:.65"> &middot; ' + _fldRatEsc(p.rank || "") + (p.role ? " &middot; " + _fldRatEsc(p.role) : "") + '</span></span>'
+      + '<span style="flex:none;font-size:9px;opacity:.65">' + ps.glyph + ' ' + _fldRatEsc(ps.label) + '</span>'/* wcag-auditor: contrast fix opacity .6→.65 for AA compliance (was 4.19:1, now ~4.64:1 vs #2b2016 panel ground) */
+      + '</div>';
+  }
+  var rows = ""; for (var i = 0; i < m.sample.length; i++) rows += row(m.sample[i]);
+  var mg = m.grade, mps = fldProvenanceStyle("Inferred", mg.color);
+  return '<div style="margin-top:8px;padding:8px 10px;border:1px solid var(--rule);border-radius:6px;background:rgba(0,0,0,.12)">'
+    + '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px">'
+    +   '<span style="font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#b3925e">Muster Roll</span>'
+    +   '<span style="font-size:10px;opacity:.7">' + _fldNumComma(m.represents) + ' men &middot; sample of ' + m.sample.length + '</span>'
+    + '</div>'
+    + '<div style="display:flex;align-items:center;gap:7px;margin-bottom:3px">'
+    +   '<span aria-hidden="true" title="' + _fldRatEsc(mps.title) + '" style="display:inline-block;width:5px;height:18px;border-radius:2px;' + mps.fill + '"></span>'
+    +   '<span style="font-weight:bold;font-size:15px">' + m.menMeanOVR + '</span><span style="font-size:9px;opacity:.65">MEN OVR</span>'/* wcag-auditor: contrast fix opacity .6→.65 for AA compliance (was 4.19:1, now ~4.64:1 vs #2b2016 panel ground) */
+    +   '<span style="font-size:11px;opacity:.85">Grade <b>' + _fldRatEsc(mg.letter) + '</b> &middot; ' + _fldRatEsc(mg.word) + '</span>'
+    + '</div>'
+    + rows
+    + '<div style="font-size:9.5px;opacity:.65;margin-top:5px;line-height:1.4">Derived from the brigade&rsquo;s seasoning &amp; arm — a hatched bar marks a derived (Inferred) rating, a solid bar a sourced one. Rows are materialized on inspect, never stored.</div>'/* wcag-auditor: contrast fix opacity .55→.65 for AA compliance (was 3.78:1, now ~4.64:1 vs #2b2016 panel ground) */
+    + '</div>';
 }
 
 

@@ -135,6 +135,12 @@
   },
   "jitterSpan": 6,
   "_genNote": "fldDerivePerson generates an unnamed person's attributes = rankBase[rank] + branchTilt[branch] + yearDrift[year] + seededJitter(pid,+/-jitterSpan). Jitter is DETERMINISTIC from a pid hash (no runtime RNG). Generated -> provenance Inferred, pinned near 64; never invents a HIGH number. CALIBRATION ORACLE: this table is regression-locked against the 9 shipped scenarios' authored quality/xp before any mass generation.",
+  "musterTemplate": [
+    { "key": "cmd", "rank": "Captain", "role": "company commander" },
+    { "key": "nco", "rank": "Sergeant", "role": "file closer" },
+    { "key": "pvt", "rank": "Private", "role": "in the ranks" }
+  ],
+  "_r5Note": "D94 R-5 (the prosopography scale-out): the LAZY-MATERIALIZATION sample template a brigade inspect/muster-roll builds rows from. fldBrigadeMuster materializes ONE row per slot here (HARD-capped <=6), NEVER u.men rows; the brigade token carries one recomputable fldMenMeanOVR instead (§8 scale rule). Generated rows are Inferred (a hatched bar via fldProvenanceStyle marks a derived rating distinct from a sourced one, §10). fldPromotePerson is the latent-command play-as-anyone hook; fldPersonTeam the EA-style journey hook.",
   "realismCaps": {
     "arcade": {
       "cmdBonus": 1.35,

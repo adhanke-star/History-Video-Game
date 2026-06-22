@@ -394,6 +394,87 @@ const SETUP = `(() => {
       if(JSON.stringify(br.oob||br.phases)!==snap) throw new Error('matchup mutated the scenario OOB');
       return { dualTilt:{atk:ta,def:td}, brUSovr:us.ovr, brCSovr:cs.ovr, brUSmen:us.men, antietamN:anUS.n, fracUS:Math.round(b.fracUS*1000)/1000, edge:b.edge.lead+' '+b.edge.word, htmlLen:html.length }; });
 
+    step('R-5 PROSOPOGRAPHY SCALE-OUT: one mean per token; LAZY materialization (sample<=6, never N rows); generated=Inferred + synth name + latent command; promotion surfaces command; team hook; Inferred hatched vs Verified solid; render triple-encoded; pure', function(){
+      var need=['fldMenMeanOVR','fldMaterializePerson','fldBrigadeMuster','fldPromotePerson','fldPersonTeam','fldProvenanceStyle','fldMusterRollHtml','fldMusterHudLine'];
+      for(var i=0;i<need.length;i++) if(typeof window[need[i]]!=='function') throw new Error('missing R-5 fn '+need[i]);
+      // (1) ONE MEAN PER TOKEN: O(1) number, bounded [20,88], deterministic, veteran>green, never Legendary
+      var vet=fldMenMeanOVR({id:'v',xp:3,arm:'inf'}), green=fldMenMeanOVR({id:'g',xp:0,arm:'inf'});
+      if(!(vet>green)) throw new Error('veteran men-mean '+vet+' should exceed green '+green);
+      if(fldMenMeanOVR({id:'v',xp:3,arm:'inf'})!==vet) throw new Error('men-mean not deterministic (RNG leak)');
+      if(!(vet>=20 && vet<=88)) throw new Error('men-mean out of [20,88]: '+vet);
+      if(fldMenMeanOVR({id:'cap',xp:20,arm:'art'})>=90) throw new Error('a brigade AVERAGE must never reach the Legendary ceiling');
+      if(fldMenMeanOVR(null)!==64) throw new Error('null unit men-mean should be the 64 anchor');
+      // (2) THE LAZY-MATERIALIZATION INVARIANT: a 100,000-man brigade still materializes a HARD-CAPPED sample
+      //     (<=6), NEVER u.men rows. The token carries one recomputable mean; rows are built on demand only.
+      var huge=fldBrigadeMuster({id:'huge',xp:2,men:100000,side:'CS'});
+      if(!huge) throw new Error('muster null for a valid brigade');
+      if(huge.sample.length>6) throw new Error('LAZY INVARIANT BREACHED: sample '+huge.sample.length+' > 6 (N-row build smell)');
+      if(huge.represents!==100000) throw new Error('represents should record the true head-count: '+huge.represents);
+      if(typeof huge.menMeanOVR!=='number') throw new Error('muster missing the one-per-token mean');
+      if(fldBrigadeMuster({id:'h2',xp:2,men:5000},50).sample.length>6) throw new Error('explicit n must stay capped <=6');
+      // (3) LAZY MATERIALIZE one row: generated private -> Inferred + generated + synth name + latent command seed
+      var gp=fldMaterializePerson({pid:'gen_pvt_1',rank:'Private',branch:'inf',side:'US'},1862);
+      if(!gp||gp.provenance!=='Inferred'||!gp.generated) throw new Error('generated private should be Inferred+generated');
+      if(!gp.name||gp.name.length<3) throw new Error('generated person should get a synthesized name, got "'+(gp&&gp.name)+'"');
+      if(fldMaterializePerson({pid:'gen_pvt_1',rank:'Private',branch:'inf'},1862).name!==gp.name) throw new Error('synth name not deterministic');
+      if(!(gp.latentCommand>0 && gp.latentCommand<88)) throw new Error('latentCommand (the play-as seed) out of band: '+gp.latentCommand);
+      if(typeof gp.ovr!=='number'||!gp.grade||!gp.grade.letter) throw new Error('materialized row missing ovr/grade');
+      // an AUTHORED persona passes through Verified with its real name (no synth)
+      var jp=fldMaterializePerson(D.personas.ld_jackson,1861);
+      if(!jp||jp.provenance!=='Verified'||jp.generated) throw new Error('authored Jackson should materialize Verified, not generated');
+      if(jp.name.indexOf('Jackson')<0) throw new Error('authored person should keep his real name, got '+jp.name);
+      if(!(jp.ovr>gp.ovr)) throw new Error('Jackson OVR '+jp.ovr+' should exceed a generated private '+gp.ovr);
+      // (4) LATENT-COMMAND PROMOTION (play-as-anyone): promotion surfaces the dormant command; PURE (original intact)
+      var snapGp=JSON.stringify(gp);
+      var promoted=fldPromotePerson(gp,'Captain');
+      if(!(promoted.persona.command>gp.persona.command)) throw new Error('promotion should raise the latent command: '+promoted.persona.command+' vs '+gp.persona.command);
+      if(!(promoted.ovr>=gp.ovr)) throw new Error('promotion should not lower OVR: '+promoted.ovr+' vs '+gp.ovr);
+      if(promoted.officerTier!==true) throw new Error('a Captain should be officerTier');
+      if(promoted.promotedFrom!=='Private') throw new Error('promotedFrom should record the prior rank');
+      if(JSON.stringify(gp)!==snapGp) throw new Error('fldPromotePerson mutated the input (must be pure)');
+      // (5) TEAM hook (journey mode): team{} surfaces army/corps; {side}-only -> side, null army
+      var t1=fldPersonTeam({side:'CS',team:{army:'ANV',corps:'II Corps'}});
+      if(!t1||t1.army!=='ANV'||t1.corps!=='II Corps'||t1.side!=='CS') throw new Error('team hook lost army/corps: '+JSON.stringify(t1));
+      var t2=fldPersonTeam({side:'US'});
+      if(!t2||t2.side!=='US'||t2.army!==null) throw new Error('side-only team should have null army: '+JSON.stringify(t2));
+      // (6) PROVENANCE VISUAL DISTINCTION (§10): Inferred = HATCHED (repeating-linear-gradient), Verified = SOLID;
+      //     meaning rides the PATTERN + glyph + word, NOT colour alone (CVD-safe). The two fills must differ.
+      var pv=fldProvenanceStyle('Verified','#4a6b3a'), pi=fldProvenanceStyle('Inferred','#4a6b3a'), pd=fldProvenanceStyle('Disputed','#4a6b3a');
+      if(pi.fill.indexOf('repeating-linear-gradient')<0) throw new Error('Inferred must render a hatch (repeating-linear-gradient)');
+      if(pv.fill.indexOf('repeating-linear-gradient')>=0) throw new Error('Verified must render a SOLID fill (no hatch)');
+      if(pv.fill===pi.fill) throw new Error('Verified and Inferred fills must be visually distinct');
+      if(!pv.glyph||!pv.label||!pi.glyph||!pi.label||pv.glyph===pi.glyph) throw new Error('each provenance needs a distinct glyph + label (CVD-safe, not colour-alone)');
+      if(pd.fill.indexOf('dashed')<0) throw new Error('Disputed should render a dashed outline');
+      // (7) RENDER: the full muster roll + the compact HUD line — triple-encoded (number + grade letter + word),
+      //     the hatch present, graceful "" for null
+      var u={id:'br_test',arm:'inf',xp:3,men:1800,side:'US',commander:'Capt. Smith'};
+      var html=fldMusterRollHtml(u), m=fldBrigadeMuster(u,3);
+      if(!html||html.indexOf('Muster Roll')<0||html.indexOf('MEN OVR')<0) throw new Error('muster roll missing its header/MEN OVR channel');
+      if(html.indexOf(String(m.menMeanOVR))<0) throw new Error('muster roll missing the men-mean OVR number');
+      if(html.indexOf('repeating-linear-gradient')<0) throw new Error('muster roll should show the Inferred hatch');
+      if(html.indexOf(m.grade.word)<0) throw new Error('muster roll missing the grade WORD (triple-encode)');
+      var hud=fldMusterHudLine(u);
+      if(!hud||hud.indexOf('MEN OVR')<0||hud.indexOf(String(m.menMeanOVR))<0) throw new Error('compact HUD line missing MEN OVR / number');
+      if(fldMusterRollHtml(null)!=='') throw new Error('null unit -> "" (no crash)');
+      if(fldMusterHudLine(null)!=='') throw new Error('null HUD line -> "" (no crash)');
+      // (8) PURITY: the materialization path must not mutate the unit (pure read; byte-identical guarantee)
+      var snapU=JSON.stringify(u); fldMenMeanOVR(u); fldBrigadeMuster(u); fldMusterRollHtml(u);
+      if(JSON.stringify(u)!==snapU) throw new Error('R-5 materialization mutated the unit');
+      // (9) BUG-HUNT HARDENING (all LOW, latent): a materialized AUTHORED person's persona + sources are COPIES,
+      //     never the GAME_DATA reference (so a future career write can't corrupt canonical ratings); and
+      //     fldPromotePerson guards an unknown rank (no garbage 64-anchor lift) + honors its no-mutate contract.
+      var srcCmd=D.personas.ld_jackson.persona.command, srcSources=D.personas.ld_jackson.sources;
+      var jp2=fldMaterializePerson(D.personas.ld_jackson,1861); jp2.persona.command=1;   // mutate the materialized copy
+      if(D.personas.ld_jackson.persona.command!==srcCmd) throw new Error('materialized persona ALIASES GAME_DATA (mutation leaked to the source-of-truth)');
+      if(jp2.sources===srcSources) throw new Error('materialized sources aliases the GAME_DATA array (should be a copy)');
+      var noop=fldPromotePerson(gp,'NotARealRank');   // unknown rank -> a clean no-op clone, not a +64-anchor lift
+      if(noop.persona.command!==gp.persona.command || noop.ovr!==gp.ovr) throw new Error('unknown-rank promotion changed stats (must be a no-op)');
+      if(noop===gp) throw new Error('promotion must return a NEW object even on a no-op (purity contract)');
+      var mal=fldPromotePerson({rank:'Private'},'Captain');   // persona-less person -> a clone, not the input ref
+      if(mal===null) throw new Error('a persona-less person should clone, not crash');
+      if(fldPromotePerson(null,'Captain')!==null) throw new Error('null person promotion should return null (no crash)');
+      return { vetMean:vet, greenMean:green, hugeSample:huge.sample.length, represents:huge.represents, genName:gp.name, latentCmd:gp.latentCommand, promotedCmd:promoted.persona.command, jacksonOVR:jp.ovr, htmlLen:html.length, aliasGuarded:true }; });
+
     step('PURITY: rating fns do not mutate G or __FIELD (R-0 is inert / byte-identical)', function(){
       var beforeMode=(typeof G!=='undefined')?G.mode:null;
       var fu=(typeof __FIELD!=='undefined' && __FIELD.units)?__FIELD.units.length:null;
