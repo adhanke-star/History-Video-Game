@@ -106,6 +106,16 @@ function bridgeArmy(C) {
   var firepower = (typeof armoryWeaponScore === "function") ? armoryWeaponScore(C) : 30;  // the small arms you bought
   var artillery = (typeof artBatteryScore === "function") ? artBatteryScore(C) : 8;       // A1: the Cannon Corps you raised
   var engineering = (typeof engScore === "function") ? engScore(C) : 12;                   // A2: the Engineer Corps you raised
+  // Q8: the between-battle camp loop — drilling raises the army's facets (musketry->firepower, maneuver->morale,
+  // entrenching->supply, endurance->less fatigue) + a small general sharpness. campTrainingBonus returns EXACTLY
+  // 0 for an army that never drilled (camp absent / all drill 0) -> every bridge/conditioning baseline is byte-identical.
+  var _camp = (typeof campTrainingBonus === "function") ? campTrainingBonus(C) : null;
+  if (_camp) {
+    firepower = Math.min(100, firepower + _camp.firepower);
+    morale = Math.min(100, morale + _camp.morale);
+    supply = Math.min(100, supply + _camp.supply);
+    fatigue = Math.max(0, fatigue - _camp.fatigueRelief);
+  }
   var overall = Math.round(0.22 * strength + 0.18 * equip + 0.18 * morale + 0.14 * firepower + 0.12 * arms + 0.10 * supply + 0.06 * leadership);
   overall = Math.max(0, Math.min(100, overall - Math.round(fatigue * 0.1)));
   // The Cannon Corps + Engineer Corps are ADDITIVE arms — absent, the infantry math is intact (baseline); present, they add punch.
@@ -117,6 +127,7 @@ function bridgeArmy(C) {
   // masterful command lifts the army a few points; a poor or discredited one drags it. At the
   // anchor (leadership 64) this is exactly 0, so a fresh/default command stays Classic-equivalent.
   overall = Math.max(0, Math.min(100, overall + Math.round((leadership - 64) * 0.18)));
+  if (_camp && _camp.overall) overall = Math.min(100, overall + _camp.overall);   // Q8: a small drill "sharpness" on top of the facet lifts (0 when undrilled -> byte-identical)
   return { side: side, strength: Math.round(strength), equip: Math.round(equip), arms: arms,
     morale: morale, supply: supply, fatigue: fatigue, leadership: leadership, firepower: firepower, artillery: artillery, engineering: engineering, overall: overall };
 }

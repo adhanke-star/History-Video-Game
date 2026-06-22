@@ -1,4 +1,18 @@
-# ☀ WAKE-UP — 2026-06-22: **RATING SYSTEM Q7 — the GM matchup layer: who to appoint, and the pre-battle scouting board**
+# ☀ WAKE-UP — 2026-06-22: **RATING SYSTEM Q8 — the camp loop: drill your army between battles**
+
+**Newest (overnight run, D100):** You can now *grow* your army between battles. A new **"Camp" tab** on the President's Desk lets you drill the men in four ways — musketry, maneuver, entrenching, endurance — each raising the army's training toward a ceiling but costing fatigue (tired troops drill poorly, so rest matters), or you can **delegate** the drilling to your field officer for a steady hands-off gain. A well-drilled army takes the field measurably sharper (better fire, steadier morale, surer supply, fresher legs), and victory **seasons** it further while a battle that bleeds it white **dulls its edge** as green replacements come in. The tab also shows your sitting general's overall rating climbing with his record over the war. It's all a *read-out that seeds the inputs* — the drilled army conditions stronger, but nothing is ever written to the scoreboard, and a campaign that never opens the Camp plays byte-for-byte as before (a one-flag "engaged" gate keeps the whole loop inert until you use it).
+
+**The bug-hunt caught a real one.** A 21-agent hunt found that the "this battle bled us white" check was comparing a raw casualty count against a 0–100 strength *index* — wrong units — so nearly every real battle read as "bloody," which silently meant a victory **never** seasoned the army (the headline feature was inverted to decay-only). Fixed to compare the casualty *share* (your losses vs the total), re-tuned, and the test re-tooled with realistic numbers plus a pyrrhic-victory case (a battle you won but bled heavily in correctly still dulls the army). Three smaller cleanups too.
+
+**Verified:** GATE OK; the camp probe 8/8; byte-identity across sandbox + all 9 battles vs the last commit IDENTICAL; the strategic conditioning probes unchanged (an un-camped army conditions exactly as before); Classic still paints; zero page errors; WCAG clean. Committed + pushed.
+
+**A process note (new standing rule, Aaron):** at ~25% remaining context on a long/looping run, stop at the next clean milestone and hand off a paste-ready continuation prompt rather than grind a strained window — now enforced in memory + the operating docs. This milestone was built, then closed out cleanly across that handoff.
+
+**Next: R-5 — the prosopography scale-out** (bulk per-person rating rows + lazy materialization + the play-as-anyone hook), then the GM depth-chart moves, then the negative-badge + provenance sweep.
+
+---
+
+## Earlier — 2026-06-22: **RATING SYSTEM Q7 — the GM matchup layer: who to appoint, and the pre-battle scouting board**
 
 **Newest (overnight run, D99):** The rating system now pays off where you make decisions. On the President's Desk, each general now shows not just one overall number but an **Attack rating and a Defend rating** — the situational truth beside "general competence" (the audacious Jackson grades higher on the attack, the cautious McClellan higher on the defensive) — surfaced on his card and on every name in the appoint pool, so you can match the man to the job. And before any battle, the side-choice screen now shows an **"Order of Battle — the Matchup"** board: each army's **force rating** (its brigades' quality, men-weighted) and total strength, the principal commander, and a labeled **predicted-edge bar** — a Madden-style scouting read-out of the odds, drawn straight from the historical order of battle. It only ever *forecasts*; it never touches the result (the whole thing is a pure read-out — every one of the nine battles plus the sandbox is byte-for-byte identical to last night's build).
 
