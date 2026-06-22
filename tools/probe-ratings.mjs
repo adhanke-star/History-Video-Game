@@ -335,6 +335,65 @@ const SETUP = `(() => {
       return { casBaseline:casA, casXfactor:casB, deltaPct:Math.round(rel*1000)/10, winA:winA, winB:winB, maxCmd:Math.round(mc*1000)/1000, tagged:tagged };
     });
 
+    step('Q7 DUAL OVR + MATCHUP: dual tilt directional + fldDualOVR-consistent; force OVR from OOB (single- AND multi-phase); matchup board + edge; render triple-encoded; graceful when no OOB', function(){
+      var need=['fldDualTilt','fldOOBSideOVR','fldMatchupBoard','fldMatchupEdgeWord','fldMatchupHtml','fldScenarioData'];
+      for(var i=0;i<need.length;i++) if(typeof window[need[i]]!=='function') throw new Error('missing Q7 fn '+need[i]);
+      function neutral(){ var p={},A=['tactical','command','initiative','resolve','discipline','marksmanship','vigor','charisma','aggression','grit','logistics','engineering','cavalry','artillery','political'];for(var i=0;i<A.length;i++)p[A[i]]=64;return p; }
+      // (1) DUAL TILT directional: aggression -> attack tilt; resolve/grit -> defend tilt
+      var atkP=neutral(); atkP.aggression=92; atkP.initiative=88;
+      var defP=neutral(); defP.resolve=92; defP.grit=90;
+      var ta=fldDualTilt(atkP), td=fldDualTilt(defP);
+      if(!(ta.attack>0 && ta.attack>ta.defend)) throw new Error('aggressive persona attack tilt should dominate: '+JSON.stringify(ta));
+      if(!(td.defend>0 && td.defend>td.attack)) throw new Error('steady persona defend tilt should dominate: '+JSON.stringify(td));
+      // (1b) CONSISTENCY: fldDualOVR(p).attack === fldPersonaOVR(p) + fldDualTilt(p).attack (the refactor invariant)
+      var dovr=fldDualOVR(atkP), head=fldPersonaOVR(atkP);
+      if(dovr.attack!==head+ta.attack || dovr.defend!==head+ta.defend) throw new Error('fldDualTilt diverges from fldDualOVR: '+JSON.stringify({dovr:dovr,head:head,tilt:ta}));
+      // (2) FORCE OVR from a SINGLE-phase OOB (bullrun): non-null, men>0, n>=2, plausible band
+      var br=fldScenarioData('bullrun1'); if(!br) throw new Error('no bullrun1 scenario data');
+      var us=fldOOBSideOVR(br,'US'), cs=fldOOBSideOVR(br,'CS');
+      if(!us||!cs) throw new Error('fldOOBSideOVR null for bullrun');
+      if(!(us.men>0 && us.n>=2 && us.ovr>=40 && us.ovr<=92)) throw new Error('bullrun US force OVR implausible: '+JSON.stringify({ovr:us.ovr,men:us.men,n:us.n}));
+      if(!(us.brigades.length && us.brigades[0].ovr>=us.brigades[us.brigades.length-1].ovr)) throw new Error('brigades should be sorted strongest-first');
+      // (3) FORCE OVR from a MULTI-phase OOB (antietam): scoped to the OPENING phase (NOT the all-phase sum,
+      // which over-counts the attacker and falsely favoured the CS at Gettysburg — Q7 bug-hunt HIGH).
+      var an=fldScenarioData('antietam'); if(!an) throw new Error('no antietam scenario data');
+      var anUS=fldOOBSideOVR(an,'US');
+      if(!anUS||!(anUS.n>=2 && anUS.men>0)) throw new Error('multi-phase force OVR failed (opening-phase path): '+JSON.stringify(anUS));
+      var anB=fldMatchupBoard(an);
+      if(!anB || anB.phased!==true) throw new Error('a multi-phase battle board must be flagged phased');
+      // the opening-phase scoping must be STRICTLY less than the all-phase sum would be (proves we are not summing all phases)
+      var anPhaseUnits=0; for(var pp=0;pp<an.phases.length;pp++){ var po=an.phases[pp].oob; if(po&&po.US) anPhaseUnits+=po.US.length; }
+      if(!(anUS.n<anPhaseUnits || an.phases.length===1)) throw new Error('opening-phase force should be a SLICE, not the all-phase sum: n='+anUS.n+' vs allPhaseUnits='+anPhaseUnits);
+      // the marquee multi-phase battles must keep their commander line (phase-0 leaders) and the "Opening Engagement" framing
+      var anCmdr=_fldMatchupCommander(an,'CS');
+      if(!anCmdr||!anCmdr.name) throw new Error('multi-phase commander line lost (should read phase-0 leaders)');
+      var anHtml=fldMatchupHtml(an);
+      if(anHtml.indexOf('Opening Engagement')<0) throw new Error('a multi-phase board must be labeled the Opening Engagement (anti-Lost-Cause framing)');
+      // ANTI-LOST-CAUSE FRAMING GUARD: gettysburg (a multi-phase battle the larger Union army won) must NOT present
+      // an un-caveated whole-battle verdict — its board is the OPENING (day 1) engagement, explicitly labeled.
+      var gb=fldScenarioData('gettysburg');
+      if(gb){ var gbB=fldMatchupBoard(gb); if(!gbB||gbB.phased!==true) throw new Error('gettysburg board must be phased (opening-engagement framing)');
+        if(fldMatchupHtml(gb).indexOf('Opening Engagement')<0) throw new Error('gettysburg board must be labeled the Opening Engagement'); }
+      // (4) MATCHUP BOARD: attacker US, both sides, fracUS in (0,1), edge has lead+word
+      var b=fldMatchupBoard(br);
+      if(!b||b.attacker!=='US') throw new Error('matchup attacker should be US for bullrun: '+(b&&b.attacker));
+      if(!(b.fracUS>0 && b.fracUS<1)) throw new Error('fracUS out of (0,1): '+(b&&b.fracUS));
+      if(!(b.edge && (b.edge.lead==='US'||b.edge.lead==='CS') && b.edge.word)) throw new Error('edge malformed: '+JSON.stringify(b&&b.edge));
+      // (5) EDGE WORD: even at 0.5, a lead at 0.7
+      if(fldMatchupEdgeWord(0.5).word!=='Evenly matched') throw new Error('0.5 should be Evenly matched');
+      var e7=fldMatchupEdgeWord(0.72); if(!(e7.lead==='US' && e7.mag>0.2)) throw new Error('0.72 should be a US strong edge: '+JSON.stringify(e7));
+      var e3=fldMatchupEdgeWord(0.28); if(e3.lead!=='CS') throw new Error('0.28 should lead CS');
+      // (6) RENDER: non-empty + triple-encoded (FORCE OVR + Predicted edge + a grade word); graceful "" when no OOB
+      var html=fldMatchupHtml(br);
+      if(!html || html.indexOf('FORCE OVR')<0 || html.indexOf('Predicted edge')<0) throw new Error('matchup html missing the OVR/edge channels');
+      if(html.indexOf(String(b.US.ovr))<0) throw new Error('matchup html missing the US force OVR number');
+      if(fldMatchupHtml({})!=='' ) throw new Error('a scenario with no OOB should render "" (graceful)');
+      if(fldMatchupHtml(null)!=='') throw new Error('null scenario should render "" (no crash)');
+      // (7) byte-identity guard: fldMatchupBoard / fldOOBSideOVR must not mutate the scenario data (pure read)
+      var snap=JSON.stringify(br.oob||br.phases); fldMatchupBoard(br); fldMatchupHtml(br);
+      if(JSON.stringify(br.oob||br.phases)!==snap) throw new Error('matchup mutated the scenario OOB');
+      return { dualTilt:{atk:ta,def:td}, brUSovr:us.ovr, brCSovr:cs.ovr, brUSmen:us.men, antietamN:anUS.n, fracUS:Math.round(b.fracUS*1000)/1000, edge:b.edge.lead+' '+b.edge.word, htmlLen:html.length }; });
+
     step('PURITY: rating fns do not mutate G or __FIELD (R-0 is inert / byte-identical)', function(){
       var beforeMode=(typeof G!=='undefined')?G.mode:null;
       var fu=(typeof __FIELD!=='undefined' && __FIELD.units)?__FIELD.units.length:null;

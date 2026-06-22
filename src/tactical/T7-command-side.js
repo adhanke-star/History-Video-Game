@@ -103,6 +103,9 @@ function fldScenarioSideChoice(id, go) {
     + '<div role="group" aria-label="Choose the army you will command" style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center">'
     + card(atkSide) + card(defSide)
     + '</div>'
+    // Q7 (D94 GM layer): the pre-battle MATCHUP board — each army's force OVR + a predicted-edge bar, a
+    // pure read-out of the historical OOB (no sim change). "" when the scenario has no readable OOB.
+    + ((typeof fldMatchupHtml === "function") ? fldMatchupHtml(sd) : "")
     + '<p class="lede" style="font-size:11px;opacity:.6;margin-top:12px;text-align:center">' + foot + '</p>'
     + '<div class="btn-row" style="margin-top:12px;display:flex;gap:10px;justify-content:center">'
     + '<button id="fldBrSideBack" type="button" class="upg">Back</button>'

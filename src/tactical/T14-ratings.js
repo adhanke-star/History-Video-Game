@@ -95,6 +95,19 @@ function fldDualOVR(p) {
   return { headline: head, attack: atk, defend: def };
 }
 
+/* The dual Attack/Defend TILT DELTAS (not the absolute OVRs) for a 64-anchored persona — factored so a
+   caller can apply the same situational tilt to ANY headline (e.g. the strategic _cmdGenRating, which
+   uses a different 0.55*skill+0.45*rep blend) without re-deriving fldPersonaOVR. Because a headline is an
+   integer, round(head)+round(tilt) === fldDualOVR's round(head+tilt), so fldDualOVR stays byte-identical. */
+function fldDualTilt(p) {
+  var d = _ratData();
+  var t = (d && d.dualOvrTilt) ? d.dualOvrTilt : { attack: { aggressionWeight: 0.25, initiativeWeight: 0.10 }, defend: { resolveWeight: 0.20, gritWeight: 0.10 } };
+  var A = FLDR.ANCHOR;
+  var atk = (fldAttr(p, "aggression") - A) * _fldRatNum(t.attack.aggressionWeight, 0.25) + (fldAttr(p, "initiative") - A) * _fldRatNum(t.attack.initiativeWeight, 0.10);
+  var def = (fldAttr(p, "resolve") - A) * _fldRatNum(t.defend.resolveWeight, 0.20) + (fldAttr(p, "grit") - A) * _fldRatNum(t.defend.gritWeight, 0.10);
+  return { attack: Math.round(atk), defend: Math.round(def) };
+}
+
 /* ---- The A-F grade (Aaron-locked report card; NO gaming S tier). A+ >=90 = the
    Legendary club; the five lower bands REUSE _cmdLeadWord (one vocabulary, two
    surfaces can't disagree). Neutral 64 -> C / Steady. ---- */
@@ -393,4 +406,154 @@ function fldXFactorApplyCmd(u) {
   var cap = (typeof FLDO !== "undefined" && FLDO.CMD_BONUS_CAP) ? FLDO.CMD_BONUS_CAP : 0.9;
   var v = (u.cmdBonus || 0) * u._xfActive;
   u.cmdBonus = (v > cap) ? cap : v;
+}
+
+/* ===========================================================================
+   Q7 · THE GM MATCHUP LAYER — the pre-battle matchup screen (RATING-SYSTEM-DESIGN §13).
+
+   PURE READ-OUT, no sim change. A side's FORCE rating is the men-weighted mean of its brigades' computed
+   OVRs (fldUnitRatingOVR over the scenario's authored OOB — full strength, no live state) — the same
+   number the tactical HUD shows for a live brigade, aggregated. The predicted-edge bar blends quality
+   (mean OVR) with quantity (men) into a share — the honest historical inputs the D74 model consumes, so
+   the board PREDICTS the emergent result, it does not create one (no rating is read at resolve-time).
+   Handles single-phase (sd.oob) AND multi-phase (sd.phases[].oob) scenarios; dedupes a brigade that
+   recurs across phases by id. Returns null (graceful) for a scenario with no readable OOB.
+   =========================================================================== */
+function _fldOOBUnits(sd, side) {
+  var out = [], seen = {}, anon = 0;
+  function add(arr) {
+    if (!arr || !arr.length) return;
+    for (var k = 0; k < arr.length; k++) {
+      var u = arr[k]; if (!u) continue;
+      if ((u.side || side) !== side) continue;                 // oob[side] units carry no side field; reinforcements do
+      var key = u.id || ("anon:" + (++anon));                  // globally-unique fallback so two id-less units never collide (Q7 bug-hunt LOW)
+      if (seen[key]) continue; seen[key] = 1;                  // dedup a brigade recurring by id (e.g. oob + reinforcements)
+      out.push(u);
+    }
+  }
+  if (sd) {
+    if (Array.isArray(sd.phases) && sd.phases.length) {
+      // MULTI-PHASE (antietam/gettysburg/vicksburg/chickamauga): each phase's oob is a per-SECTOR/day slice
+      // with DISTINCT brigade ids per phase. The matchup previews the OPENING engagement (phase 0) — the fight
+      // the player launches into (§13 "the coming fight") — NOT the sum of all phases, which over-counts the
+      // attacker who engages across every sector and would falsely favour him (the Q7 bug-hunt HIGH: the
+      // all-phase sum forecast a CS edge at Gettysburg, a battle the larger Union army won). (Anti-Lost-Cause.)
+      var p0 = sd.phases[0];
+      if (p0) { if (p0.oob && p0.oob[side]) add(p0.oob[side]); if (Array.isArray(p0.reinforcements)) add(p0.reinforcements); }
+    } else {
+      if (sd.oob && sd.oob[side]) add(sd.oob[side]);
+      if (Array.isArray(sd.reinforcements)) add(sd.reinforcements);
+    }
+  }
+  return out;
+}
+/* a side's aggregate FORCE OVR + strength + the brigade list (sorted strongest-first), from the OOB. */
+function fldOOBSideOVR(sd, side) {
+  side = (side === "CS") ? "CS" : "US";
+  var units = _fldOOBUnits(sd, side);
+  if (!units.length) return null;
+  var sumW = 0, men = 0, brigs = [];
+  for (var i = 0; i < units.length; i++) {
+    var u = units[i], m = _fldRatNum(u.men, 1000), o = fldUnitRatingOVR(u);
+    sumW += o * m; men += m;
+    brigs.push({ name: String(u.name || u.id || ("Brigade " + (i + 1))), ovr: o, men: m });
+  }
+  brigs.sort(function (a, b) { return b.ovr - a.ovr; });
+  return { side: side, ovr: men > 0 ? Math.round(sumW / men) : FLDR.ANCHOR, men: men, n: units.length, brigades: brigs };
+}
+/* the predicted edge from the two sides' force-power (quality x quantity). Returns the leading side + a
+   labeled magnitude word + the US share fraction (for the bar). The bar/word carry the meaning, not colour. */
+function fldMatchupEdgeWord(fracUS) {
+  var f = _fldRatNum(fracUS, 0.5), d = f - 0.5, mag = Math.abs(d);
+  var word = mag < 0.04 ? "Evenly matched" : (mag < 0.11 ? "slight edge" : (mag < 0.20 ? "clear edge" : "strong edge"));
+  return { lead: d >= 0 ? "US" : "CS", word: word, mag: mag };
+}
+/* fldMatchupBoard(sd): the full pre-battle matchup data (both sides' force OVR + the edge). null if either
+   side has no readable OOB. */
+function fldMatchupBoard(sd) {
+  if (!sd) return null;
+  var atk = (sd.attacker === "CS") ? "CS" : (sd.attacker === "US" ? "US" : "US");
+  var us = fldOOBSideOVR(sd, "US"), cs = fldOOBSideOVR(sd, "CS");
+  if (!us || !cs) return null;
+  function power(s) { return Math.max(1, s.ovr) * Math.max(1, s.men); }
+  var pUS = power(us), pCS = power(cs), tot = pUS + pCS;
+  var fracUS = tot > 0 ? pUS / tot : 0.5;
+  var phased = !!(sd.phases && sd.phases.length);
+  var phaseName = (phased && sd.phases[0] && sd.phases[0].name) ? String(sd.phases[0].name) : "";
+  return { attacker: atk, defender: (atk === "CS") ? "US" : "CS", US: us, CS: cs, fracUS: fracUS, edge: fldMatchupEdgeWord(fracUS), phased: phased, phaseName: phaseName };
+}
+
+/* The principal field commander for a side from the scenario leaders (highest authored quality), with his
+   OVR mapped back through the EXISTING (lead-42)/46 quality map -> lead = quality*46+42 -> a grade. For a
+   multi-phase battle the leaders live per-phase, so fall back to the OPENING phase's leaders (matching the
+   phase-0 force scoping) so the marquee battles' commanders (Lee, Bragg, Grant) still surface. (Q7 bug-hunt MED.) */
+function _fldMatchupCommander(sd, side) {
+  var L = sd && sd.leaders && sd.leaders[side];
+  if ((!Array.isArray(L) || !L.length) && sd && Array.isArray(sd.phases) && sd.phases[0] && sd.phases[0].leaders) L = sd.phases[0].leaders[side];
+  if (!Array.isArray(L) || !L.length) return null;
+  var best = null;
+  for (var i = 0; i < L.length; i++) { var l = L[i]; if (!l) continue; var q = _fldRatNum(l.quality, 0.55); if (!best || q > best.q) best = { name: String(l.short || l.name || "Commander"), q: q }; }
+  if (!best) return null;
+  var lead = Math.round(best.q * 46 + 42);
+  return { name: best.name, ovr: lead, grade: fldRatingGrade(lead) };
+}
+
+/* fldMatchupHtml(sd): the pre-battle "Order of Battle — The Matchup" board for the side-choice card. PURE
+   DISPLAY (the headless probe never reaches it). TRIPLE-ENCODED + CVD-safe: force OVR rides number + A-F
+   grade + word; the edge rides a labeled % bar (names + percentages in text); colour is decorative only.
+   Returns "" when there is no readable OOB (graceful — the card renders without the board). */
+function fldMatchupHtml(sd) {
+  if (!_ratData()) return "";
+  var b = fldMatchupBoard(sd); if (!b) return "";
+  var COL = { US: "#6c8ebf", CS: "#b77668" }, NAME = { US: "Union", CS: "Confederate" };
+  function _e(s) { return _fldRatEsc(s); }
+  function sideCol(side) {
+    var s = b[side], g = fldRatingGrade(s.ovr), posture = (b.attacker === side) ? "On the offensive" : "Holding the ground";
+    var top = (s.brigades && s.brigades.length) ? s.brigades[0] : null;
+    var cmdr = _fldMatchupCommander(sd, side);
+    return '<div style="flex:1 1 200px;min-width:180px;border-left:4px solid ' + COL[side] + ';padding:6px 0 6px 10px">'
+      + '<div style="font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#b3925e">' + _e(NAME[side]) + ' &middot; ' + _e(posture) + '</div>'
+      + '<div style="display:flex;align-items:baseline;gap:7px;margin:2px 0">'
+      +   '<span style="font-weight:bold;font-size:22px;line-height:1">' + s.ovr + '</span>'
+      +   '<span style="font-size:9px;opacity:.6;letter-spacing:.05em">FORCE OVR</span>'
+      +   '<span aria-hidden="true" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:' + g.color + '"></span>'
+      +   '<span style="font-size:12px"><b>' + _e(g.letter) + '</b> ' + _e(g.word) + '</span>'
+      + '</div>'
+      + '<div style="font-size:11px;opacity:.8">' + s.n + ' brigades &middot; ' + _fldNumComma(s.men) + ' men engaged</div>'
+      + (top ? '<div style="font-size:11px;opacity:.7;margin-top:2px">Strongest: ' + _e(top.name) + ' (' + top.ovr + ')</div>' : '')
+      + (cmdr ? '<div style="font-size:11px;opacity:.7;margin-top:2px">Commander: ' + _e(cmdr.name) + ' &middot; <b>' + _e(cmdr.grade.letter) + '</b> ' + _e(cmdr.grade.word) + '</div>' : '')
+      + '</div>';
+  }
+  var usPct = Math.round(b.fracUS * 100), csPct = 100 - usPct;
+  var ed = b.edge, edgeText = (ed.word === "Evenly matched") ? "Evenly matched" : (NAME[ed.lead] + " " + ed.word);
+  // the predicted-edge bar (decorative split; the % + names + word carry the meaning)
+  var bar = '<div style="margin-top:10px">'
+    + '<div style="display:flex;justify-content:space-between;font-size:11px;opacity:.85;margin-bottom:3px"><span>Predicted edge</span><span><b>' + _e(edgeText) + '</b></span></div>'
+    + '<div role="img" aria-label="Predicted force balance: Union ' + usPct + ' percent, Confederate ' + csPct + ' percent — ' + _e(edgeText) + '" style="display:flex;height:14px;border:1px solid var(--rule);border-radius:3px;overflow:hidden">'
+    +   '<div style="width:' + usPct + '%;background:' + COL.US + '"></div><div style="width:' + csPct + '%;background:' + COL.CS + '"></div>'
+    + '</div>'
+    + '<div style="display:flex;justify-content:space-between;font-size:10px;opacity:.7;margin-top:2px"><span>Union ' + usPct + '%</span><span>' + csPct + '% Confederate</span></div>'
+    + '</div>';
+  // header + note are phase-aware: a multi-phase battle's board previews the OPENING engagement (phase 0),
+  // NOT the whole battle (its later phases shift sector + force), so it is labeled as such — honest framing
+  // that keeps a day-1 attacker edge (e.g. the CS driving the Union through Gettysburg town on July 1) from
+  // reading as a verdict on the whole battle. (Q7 bug-hunt HIGH — anti-Lost-Cause framing.)
+  var hdr = b.phased ? ("Order of Battle &mdash; the Opening Engagement" + (b.phaseName ? " (" + _e(b.phaseName) + ")" : "")) : "Order of Battle &mdash; the Matchup";
+  var noteBody = b.phased
+    ? "A read-out of the OPENING engagement's order of battle — strength &times; quality. Later phases shift the ground and the forces. The defender holds; counters and terrain decide the rest. The number forecasts the odds; it never fixes the result."
+    : "A read-out of the historical order of battle — strength &times; quality. The defender holds the ground; counters and terrain decide the rest. The number forecasts the odds; it never fixes the result.";
+  var note = '<div style="font-size:10.5px;opacity:.6;margin-top:7px;line-height:1.4">' + noteBody + '</div>';
+  var atkSide = b.attacker, defSide = b.defender;
+  return '<div style="max-width:560px;margin:14px auto 0;padding:11px 13px;border:1px solid var(--rule);border-radius:6px;background:rgba(0,0,0,.14)">'
+    + '<div style="text-align:center;font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:#b3925e;margin-bottom:6px">' + hdr + '</div>'
+    + '<div style="display:flex;gap:14px;flex-wrap:wrap">' + sideCol(atkSide) + sideCol(defSide) + '</div>'
+    + bar + note
+    + '</div>';
+}
+/* thousands separator (no Intl dependency; deterministic). */
+function _fldNumComma(n) {
+  n = Math.round(_fldRatNum(n, 0));
+  var s = String(n < 0 ? -n : n), out = "", c = 0;
+  for (var i = s.length - 1; i >= 0; i--) { out = s.charAt(i) + out; if (++c % 3 === 0 && i > 0) out = "," + out; }
+  return (n < 0 ? "-" : "") + out;
 }

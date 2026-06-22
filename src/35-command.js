@@ -214,6 +214,27 @@ function _cmdGenRating(C, gen) {
   return 0.55 * skill + 0.45 * rep;
 }
 
+/* ---- Q7 (D94 GM layer §13): the DUAL Attack/Defend OVR — the situational truth beside the headline.
+   The headline _cmdGenRating is "general competence"; the Attack/Defend pair shows where the man's gift
+   lies (the audacious Jackson grades higher on the attack; the cautious McClellan higher on the defensive —
+   both rated personas; an unrated general tilts from his generals.json aggression/caution). Tilt source: the documented persona's
+   aggression/initiative & resolve/grit (64-anchored, via fldDualTilt) when rated; else the general's own
+   aggression/caution from generals.json (50-anchored). Pure read-out — never seeds the sim. ---- */
+function _cmdGenDualOVR(C, gen) {
+  var ovr = Math.round(_cmdGenRating(C, gen));
+  var rec = (typeof _cmdGenPersona === "function") ? _cmdGenPersona(gen) : null;
+  var atkT, defT;
+  if (rec && rec.persona && typeof fldDualTilt === "function") {
+    var t = fldDualTilt(rec.persona); atkT = t.attack; defT = t.defend;
+  } else {
+    var agg = (gen && typeof gen.aggression === "number") ? gen.aggression : 50;
+    var cau = (gen && typeof gen.caution === "number") ? gen.caution : 50;
+    atkT = Math.round((agg - 50) * 0.18); defT = Math.round((cau - 50) * 0.18);
+  }
+  function _cl(v) { return v < 0 ? 0 : (v > 100 ? 100 : v); }
+  return { headline: ovr, attack: _cl(ovr + atkT), defend: _cl(ovr + defT) };
+}
+
 /* ---- commandLeadership(C): THE bridge leadership facet (0-100). Anchored at 64:
    a neutral general + a neutral cabinet -> 64 (= the old fixed placeholder, so a
    fresh/default command is byte-equivalent to Classic). The sitting general weighs
@@ -331,6 +352,7 @@ function _cmdActiveCard(C) {
   // 42-88 bridge value `lead` (what the army actually fields) stays as a secondary line. Pure display, no sim change.
   var ovr = Math.round(_cmdGenRating(C, gen));
   var gr = (typeof fldRatingGrade === "function") ? fldRatingGrade(ovr) : { ovr: ovr, letter: "", word: _cmdLeadWord(ovr)[0], color: _cmdLeadWord(ovr)[1] };
+  var dual = _cmdGenDualOVR(C, gen);   // Q7: the situational Attack/Defend split beside the headline
   var rep = Math.round(_cmdReputation(C, gen.id));
   var img = _cmdPortrait(gen, side, 84);
   var traits = (gen.traits && gen.traits.length) ? gen.traits.join(" &middot; ") : "";
@@ -354,6 +376,10 @@ function _cmdActiveCard(C) {
     +       '<div style="display:inline-flex;align-items:center;gap:8px;border-left:4px solid ' + gr.color + ';padding-left:9px">'
     +         '<div style="text-align:right"><div style="font-weight:bold;font-size:23px;line-height:1">' + ovr + '</div><div style="font-size:9px;opacity:.6;letter-spacing:.06em">OVR</div></div>'
     +         '<div style="text-align:left"><div style="font-weight:bold;font-size:16px;line-height:1.15" aria-label="grade ' + _cmdEsc(gr.letter) + '">' + _cmdEsc(gr.letter) + '</div><div style="font-size:10px;opacity:.78">' + _cmdEsc(gr.word) + '</div></div>'
+    +       '</div>'
+    +       '<div style="display:inline-flex;gap:5px;margin-top:5px;font-size:11px">'
+    +         '<span title="Attack OVR — his gift on the offensive" style="background:rgba(108,142,191,.16);border:1px solid rgba(108,142,191,.5);border-radius:3px;padding:1px 6px">ATK <b>' + dual.attack + '</b></span>'
+    +         '<span title="Defend OVR — his gift holding the ground" style="background:rgba(183,118,104,.16);border:1px solid rgba(183,118,104,.5);border-radius:3px;padding:1px 6px">DEF <b>' + dual.defend + '</b></span>'
     +       '</div>'
     +       '<div style="font-size:10px;opacity:.55;margin-top:4px">Fields command at ' + lead + '</div>'
     +     '</div>'
@@ -395,6 +421,7 @@ function _cmdPoolHTML(C) {
     var rep = Math.round(_cmdReputation(C, g.id));
     var rating = Math.round(_cmdGenRating(C, g));
     var gr = (typeof fldRatingGrade === "function") ? fldRatingGrade(rating) : { letter: "", word: _cmdLeadWord(rating)[0], color: _cmdLeadWord(rating)[1] };
+    var dual = _cmdGenDualOVR(C, g);   // Q7: the situational Attack/Defend split, so the appointment compares fit
     var img = _cmdPortrait(g, side, 44);
     var canAfford = cap >= cost;
     var note = "";
@@ -413,6 +440,7 @@ function _cmdPoolHTML(C) {
       + '<div style="flex:1 1 auto">'
       +   '<div style="font-weight:bold;font-size:13px">' + _cmdEsc(_cmdName(g)) + (g.epithet ? ' <span style="font-weight:normal;opacity:.6;font-size:11px">&ldquo;' + _cmdEsc(g.epithet) + '&rdquo;</span>' : '') + '</div>'
       +   '<div style="font-size:11px;opacity:.75">' + _cmdEsc(g.rank || "") + ' &middot; <span aria-hidden="true" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:' + gr.color + ';margin-right:3px"></span><b>' + _cmdEsc(gr.letter) + '</b> ' + _cmdEsc(gr.word) + ' (' + rating + ' OVR)</div>'
+      +   '<div style="font-size:10px;opacity:.6">ATK ' + dual.attack + ' &middot; DEF ' + dual.defend + '</div>'
       +   (g.strength ? '<div style="font-size:11px;opacity:.6">' + _cmdEsc(g.strength) + '</div>' : '')
       + '</div>'
       + '<div style="flex:0 0 auto;text-align:right">' + note + '</div>'
