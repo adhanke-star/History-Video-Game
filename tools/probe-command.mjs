@@ -180,6 +180,16 @@ const SETUP = `(() => {
       if(html.indexOf('generals at your call')<0) throw new Error('render missing the pool');
       return { len:html.length, active:(g?g.id:null) }; });
 
+    step('R-1: cmdActiveTraits.skill + the rendered Skill bar read the persona-DERIVED _cmdEffectiveSkill (ONE source of truth, no drift)', function(){
+      if(typeof _cmdEffectiveSkill!=='function') return { skipped:'no _cmdEffectiveSkill (pre-R-1 build)' };
+      var C=mkC('US',1863,3); C.clock.capital=100; cmdAppoint(C,'us-grant');
+      var g=cmdActiveGeneral(C); if(!g) throw new Error('no active general');
+      var eff=_cmdEffectiveSkill(g);
+      if(cmdActiveTraits(C).skill!==eff) throw new Error('cmdActiveTraits.skill '+cmdActiveTraits(C).skill+' != _cmdEffectiveSkill '+eff+' (source-of-truth drift)');
+      var html=cmdRenderTab(C);
+      if(html.indexOf('Skill</span><span>'+eff+'</span>')<0) throw new Error('the rendered Skill bar does not show the effective skill '+eff+' (display reads a stale source)');
+      return { general:g.id, effectiveSkill:eff }; });
+
     // helper: read a general's current reputation
     function C0rep(C,id){ return (C.president&&C.president.command&&typeof C.president.command.reputation[id]==='number')?C.president.command.reputation[id]:60; }
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }

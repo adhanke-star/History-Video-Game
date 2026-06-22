@@ -180,11 +180,36 @@ function _cmdReputation(C, id) {
   return (g && typeof g.reputation === "number") ? g.reputation : 60;
 }
 
+/* ---- R-1 (D94 RATING SYSTEM) · the persona-DERIVED operational skill. When a documented
+   persona is linked (data/ratings.json -> generalPersonas, keyed by the general id), the
+   `skill` is DERIVED from it (command/tactical/discipline -> fldOfficerSkillSeed), so the
+   documented persona — not a static hand-typed number — is the SOURCE feeding _cmdGenRating
+   -> commandLeadership -> the bridge/auto-resolve/conditioning. The personas are calibrated
+   so the derived skill reproduces the Verified gen.skill EXACTLY -> the whole strategic layer
+   stays byte-identical and the appoint-pool words still match history. A general with NO
+   linked persona keeps his authored gen.skill -> byte-identical for unrated generals. The
+   T14 rating fns load after this module; the typeof guards keep us safe if they are absent. ---- */
+function _cmdGenPersona(gen) {
+  if (!gen || !gen.id) return null;
+  var d = gameData("ratings");
+  if (!d || !d.generalPersonas) return null;
+  var rec = d.generalPersonas[gen.id];
+  return (rec && rec.persona) ? rec : null;
+}
+function _cmdEffectiveSkill(gen) {
+  var rec = _cmdGenPersona(gen);
+  if (rec && typeof fldOfficerSkillSeed === "function") {
+    var seed = fldOfficerSkillSeed(rec.persona);
+    if (typeof seed === "number" && isFinite(seed)) return Math.round(seed);
+  }
+  return (gen && typeof gen.skill === "number") ? gen.skill : 64;
+}
+
 /* A general's LEADERSHIP rating (0-100): operational skill blended with his current
    standing. A neutral man (skill 64, reputation 64) rates 64 — the bridge anchor. */
 function _cmdGenRating(C, gen) {
   if (!gen) return 64;
-  var skill = (typeof gen.skill === "number") ? gen.skill : 64;
+  var skill = _cmdEffectiveSkill(gen);
   var rep = _cmdReputation(C, gen.id);
   return 0.55 * skill + 0.45 * rep;
 }
@@ -204,12 +229,14 @@ function commandLeadership(C) {
   return Math.max(42, Math.min(88, Math.round(lead)));
 }
 
-/* The active general's combat traits, for the auto-resolve margin (attack/defend). */
+/* The active general's combat traits, for the auto-resolve margin (attack/defend). `skill`
+   reads the persona-DERIVED _cmdEffectiveSkill (R-1) so every surface shares ONE source of
+   truth; byte-identical today (the 9 personas calibrate to gen.skill exactly). */
 function cmdActiveTraits(C) {
   var g = cmdActiveGeneral(C);
   if (!g) return { skill: 64, aggression: 50, caution: 50 };
   return {
-    skill: (typeof g.skill === "number") ? g.skill : 64,
+    skill: _cmdEffectiveSkill(g),
     aggression: (typeof g.aggression === "number") ? g.aggression : 50,
     caution: (typeof g.caution === "number") ? g.caution : 50
   };
@@ -325,7 +352,7 @@ function _cmdActiveCard(C) {
     +   '</div>'
     +   '<div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:9px">'
     +     '<div style="flex:1 1 180px;min-width:160px">'
-    +       _cmdTraitBar('Skill', gen.skill, 'Operational generalship.')
+    +       _cmdTraitBar('Skill', _cmdEffectiveSkill(gen), 'Operational generalship.')
     +       _cmdTraitBar('Reputation', rep, 'Rises with victory, falls with defeat.')
     +     '</div>'
     +     '<div style="flex:1 1 180px;min-width:160px">'

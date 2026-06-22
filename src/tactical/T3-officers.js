@@ -111,14 +111,48 @@ function fldOfficerSideQuality(side) {
   }
   return { quality: 0.55, name: side === "US" ? "Union Commander" : "Confederate Commander", short: side === "US" ? "Union" : "Confederate" };
 }
+/* ---- R-1 (D94 RATING SYSTEM) · the documented persona for a field leader. The link is an
+   EXPLICIT opt-in: a leader derives from a persona ONLY when it names one via `pid` (the
+   persona key in data/ratings.json -> personas). We do NOT fall back to the bare `id`, because
+   leader ids are reused across scenarios (e.g. `ld_jackson` is the 1861 brigadier at Bull Run
+   but a corps commander at Antietam/Chancellorsville) — an id-match would leak the wrong
+   persona across battles. No `pid` (every scenario but the opted-in Bull Run cast, the
+   procedural default, and the probes' synthetic leaders) ⇒ null ⇒ the officer is BYTE-IDENTICAL. ---- */
+function fldOfficerPersona(o) {
+  if (!o || !o.pid) return null;
+  var d = (typeof gameData === "function") ? gameData("ratings") : null;
+  if (!d || !d.personas) return null;
+  var rec = d.personas[o.pid];
+  return (rec && rec.persona) ? rec : null;
+}
 function fldMakeOfficer(o) {
   if (!o) return null;
+  // R-1 OFFICER DERIVATION: a RATED leader takes his field quality / aura-radius / fate from his
+  // documented persona (the source of truth), so the man's history drives the field. quality is
+  // derived through the EXISTING (lead-42)/46 map (fldPersonaQuality), calibrated to reproduce the
+  // authored field quality within tolerance (the R-0 oracle) -> a rated aura SHIFTS only slightly.
+  // An UNRATED leader (no persona, incl. the procedural default + the probes' synthetic leaders)
+  // keeps every authored value -> byte-identical. Every persona read is typeof-guarded (T14 loads
+  // after this module) so the layer degrades to the authored numbers if the rating data is absent.
+  var rec = (typeof fldOfficerPersona === "function") ? fldOfficerPersona(o) : null;
+  var pq = (rec && typeof fldPersonaQuality === "function") ? fldPersonaQuality(rec.persona) : null;
+  var quality = (typeof pq === "number" && isFinite(pq)) ? pq
+              : ((typeof o.quality === "number") ? o.quality : 0.55);
+  var baseR = (typeof o.radius === "number" && o.radius > 0) ? o.radius : 220;
+  // radius: the authored ECHELON range (army/division/brigade), modulated for a rated leader by his
+  // persona charisma (an inspiring presence carries a touch farther) and held inside the 160-290 band.
+  var radius = baseR;
+  if (rec && typeof fldAttr === "function") radius = fldClamp(Math.round(baseR + (fldAttr(rec.persona, "charisma") - 64) * 0.6), 160, 290);
+  // fate (the seeded-fate durability multiplier): the persona's fate for the rated cast (it matches
+  // the authored scenario fate), else the authored scenario fate, else neutral 1.
+  var fateMul = (rec && typeof rec.fate === "number" && rec.fate > 0) ? rec.fate
+              : ((typeof o.fate === "number" && o.fate > 0) ? o.fate : 1);
   var ld = {
     id: o.id || ("ld_" + (o.side || "X") + "_" + Math.round((o.x || 0))),
     side: (o.side === "CS") ? "CS" : "US",
     name: o.name || "Commander", short: o.short || _fldLastName(o.name || "Commander"),
-    quality: fldClamp((typeof o.quality === "number") ? o.quality : 0.55, 0.1, 0.98),
-    radius: (typeof o.radius === "number" && o.radius > 0) ? o.radius : 220,
+    quality: fldClamp(quality, 0.1, 0.98),
+    radius: radius,
     x: (typeof o.x === "number") ? o.x : FLD.FIELD_W / 2,
     z: (typeof o.z === "number") ? o.z : FLD.FIELD_H / 2,
     attach: o.attach || null, atSec: (typeof o.atSec === "number") ? o.atSec : null,
@@ -129,7 +163,6 @@ function fldMakeOfficer(o) {
   if (ld.attach) { var au = fldById(ld.attach); if (au) { ld.x = au.x; ld.z = au.z; } }   // ride with the brigade if it's on the field
   // hidden, SEEDED fate threshold (the only randomness): the per-leader `fate` (data) weights it to HISTORY —
   // >1 endures the day (army commanders / Jackson), <1 is fall-prone (Bee, Bartow). Quality adds; jitter is luck.
-  var fateMul = (typeof o.fate === "number" && o.fate > 0) ? o.fate : 1;
   ld._fate = FLDO.FATE_BASE * fateMul * (1 + ld.quality) * (0.6 + fldRng() * 0.9);
   return ld;
 }

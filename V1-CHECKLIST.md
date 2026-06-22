@@ -166,6 +166,7 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       model + start-anywhere engine) → (4) **interpersonal/romance** (women-in-the-war / USCT / immigrant hooks;
       period-honest, anti-Lost-Cause). **Hard prereq: accurate rank+position+unit per person — the D92 roster
       hardening is its first roster data.** (Memory `civilwar-soldiers-story-pillar`; DECISIONS D93.)
+- [~] **The RATING SYSTEM / "Madden layer" (D94) — the cross-cutting substrate this pillar is built on.** Design law: `RATING-SYSTEM-DESIGN.md`; increments R-0→R-6 (§9). Pulled AHEAD of Chattanooga (D94 fork 1). Shipped: **R-0** the data spine (`data/ratings.json` + `src/tactical/T14-ratings.js` pure fns + `tools/probe-ratings.mjs`; byte-identical) ✅; **R-1** officer derivation into the command + field pipes — persona→`gen.skill` (9 strategic-general personas, exact calibration) + persona→officer `quality`/`radius`/`fate` (explicit-`pid` opt-in, Bull Run cast) ✅ (D95). Next: R-2 OVR read-out UI (A–F grade, WCAG/CVD triple-encode) → R-3 badge engine → R-4 X-Factors → GM franchise layer (Q7) → camp loop (Q8) → R-5 prosopography scale-out → R-6 negative-badge sweep + live dev-traits. (DECISIONS D94/D95.)
 
 ### Phase J — POLISH / META
 - [ ] **Saves** ‹PROPOSED per D54›: localStorage + named slots + export/import; undo-last-turn on the accessible preset.

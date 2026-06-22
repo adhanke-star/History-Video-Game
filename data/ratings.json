@@ -131,5 +131,63 @@
       "flaws": ["secretive-orders"], "badges": ["stonewall"], "personaTags": ["iron_defense", "audacious_marcher"],
       "provenance": "Verified", "sources": ["Robertson 1997", "OR Ser.I Vol.II"], "authoredQuality": 0.82,
       "bio": "A VMI artillery professor who stood like a stone wall on Henry Hill and earned the name that made him legend. His OVR rises with the war (dev-traits)." }
+  },
+
+  "generalPersonas": {
+    "_note": "R-1 (D94): the STRATEGIC army-commander cast — keyed by the data/generals.json id — so the President's-Desk command pipe is persona-SOURCED. CALIBRATION ORACLE (strategic leg): command/tactical/discipline are set so round(0.45*command + 0.35*tactical + 0.20*discipline) === the Verified gen.skill EXACTLY (fldOfficerSkillSeed -> _cmdEffectiveSkill -> _cmdGenRating), so the appoint-pool words MATCH HISTORY and the whole strategic layer stays byte-identical while the persona becomes the source of truth. The other 12 attributes are Inferred designer calibration anchored to each general's Verified documented character (provenance + sources mirror generals.json; aggression tracks the documented temperament; it is EXCLUDED from the headline OVR roll-up). These are a SEPARATE record from the Bull Run FIELD cast above (war-long army commander vs the 1861 brigade officer); R-5 unifies them into one prosopography person. The 9 = the principal commanders of the 9 D92-hardened battles (Bull Run is covered by the field cast above). NOTE: skill (the calibration target) and the documented gen.skill are Verified; the attribute VECTOR is Inferred calibration.",
+
+    "cs-lee": { "pid": "cs-lee", "name": "Robert E. Lee", "side": "CS", "rank": "General", "branch": "inf", "skill": 88, "fate": 2.9,
+      "persona": { "tactical": 92, "command": 88, "initiative": 90, "resolve": 88, "discipline": 82, "marksmanship": 64, "vigor": 70, "charisma": 90, "aggression": 82, "grit": 84, "logistics": 66, "engineering": 78, "cavalry": 70, "artillery": 74, "political": 72 },
+      "flaws": ["costly-offensives"], "badges": ["beloved"], "personaTags": ["audacious_maneuver", "outnumbered_improviser"],
+      "provenance": "Verified", "sources": ["McPherson 1988", "Encyclopedia Virginia: Lee", "American Battlefield Trust: Lee"],
+      "bio": "The Army of Northern Virginia's commander — audacious maneuver against long odds (Antietam, Fredericksburg, Chancellorsville, Gettysburg). Anti-Lost-Cause: a brilliant operational improviser whose offensives also bled an irreplaceable army." },
+
+    "cs-jackson": { "pid": "cs-jackson", "name": "Thomas J. Jackson", "side": "CS", "rank": "Lieutenant General", "branch": "inf", "skill": 86, "fate": 3.2,
+      "persona": { "tactical": 88, "command": 84, "initiative": 90, "resolve": 96, "discipline": 86, "marksmanship": 66, "vigor": 92, "charisma": 64, "aggression": 88, "grit": 86, "logistics": 62, "engineering": 56, "cavalry": 60, "artillery": 78, "political": 38 },
+      "flaws": ["secretive-orders"], "badges": ["foot_cavalry", "flank_march", "stonewall"], "personaTags": ["audacious_marcher", "iron_defense"],
+      "provenance": "Verified", "sources": ["Robertson 1997", "McPherson 1988", "Encyclopedia Virginia: Jackson"],
+      "bio": "Lee's right arm — the Valley campaign and the Chancellorsville flank march, the model of operational speed and audacity. The war-long corps commander (distinct from the 1861 brigadier in the field cast above)." },
+
+    "cs-johnston-a": { "pid": "cs-johnston-a", "name": "Albert Sidney Johnston", "side": "CS", "rank": "General", "branch": "inf", "skill": 62, "fate": 0.5,
+      "persona": { "tactical": 62, "command": 64, "initiative": 64, "resolve": 72, "discipline": 58, "marksmanship": 60, "vigor": 70, "charisma": 70, "aggression": 68, "grit": 58, "logistics": 56, "engineering": 52, "cavalry": 58, "artillery": 60, "political": 66 },
+      "flaws": ["overextended-front"], "badges": [], "personaTags": ["leads_from_front", "davis_favorite"],
+      "provenance": "Verified", "sources": ["McPherson 1988", "American Battlefield Trust: A.S. Johnston", "TSHA Handbook: Johnston"],
+      "bio": "Davis's favorite, who held an overextended Western front and led from the front at Shiloh — where he bled to death from a leg wound (the low fate). Surprise won the morning; his death and a piecemeal afternoon lost it." },
+
+    "cs-bragg": { "pid": "cs-bragg", "name": "Braxton Bragg", "side": "CS", "rank": "General", "branch": "inf", "skill": 42, "fate": 2.0,
+      "persona": { "tactical": 44, "command": 38, "initiative": 40, "resolve": 58, "discipline": 48, "marksmanship": 56, "vigor": 58, "charisma": 30, "aggression": 56, "grit": 58, "logistics": 60, "engineering": 52, "cavalry": 50, "artillery": 64, "political": 44 },
+      "flaws": ["quarrelsome", "poor-follow-through"], "badges": ["piecemeal"], "personaTags": ["harsh_disciplinarian", "strong_organizer"],
+      "provenance": "Verified", "sources": ["McPherson 1988", "Hess 2016", "American Battlefield Trust: Bragg"],
+      "bio": "A harsh disciplinarian and able organizer who could not coordinate a battle: at Chickamauga he fed brigades in piecemeal and failed to pursue a won field. The Verified, plainly-named flaw (anti-Lost-Cause: flaws rate as honestly as virtues)." },
+
+    "cs-longstreet": { "pid": "cs-longstreet", "name": "James Longstreet", "side": "CS", "rank": "Lieutenant General", "branch": "inf", "skill": 82, "fate": 2.6,
+      "persona": { "tactical": 84, "command": 82, "initiative": 66, "resolve": 84, "discipline": 78, "marksmanship": 64, "vigor": 70, "charisma": 66, "aggression": 52, "grit": 82, "logistics": 70, "engineering": 64, "cavalry": 56, "artillery": 72, "political": 54 },
+      "flaws": [], "badges": [], "personaTags": ["defensive_master", "modern_tactician"],
+      "provenance": "Verified", "sources": ["McPherson 1988", "Wert 1993", "Encyclopedia Virginia: Longstreet"],
+      "bio": "Lee's 'Old War Horse' — a modern defensive tactician whose Chickamauga breakthrough decided the day. Anti-Lost-Cause: scapegoated postwar precisely because his clear-eyed defensive doctrine and postwar Republicanism affronted the Lost Cause myth." },
+
+    "us-mcclellan": { "pid": "us-mcclellan", "name": "George B. McClellan", "side": "US", "rank": "Major General", "branch": "inf", "skill": 58, "fate": 2.6,
+      "persona": { "tactical": 52, "command": 64, "initiative": 36, "resolve": 60, "discipline": 56, "marksmanship": 60, "vigor": 56, "charisma": 78, "aggression": 26, "grit": 60, "logistics": 80, "engineering": 70, "cavalry": 58, "artillery": 64, "political": 64 },
+      "flaws": ["pathological-caution"], "badges": ["the_slows"], "personaTags": ["master_organizer", "beloved"],
+      "provenance": "Verified", "sources": ["Sears 1988", "McPherson 1988", "American Battlefield Trust: McClellan"],
+      "bio": "The 'Young Napoleon' — a superb organizer beloved by his men, but chronically over-cautious (Lincoln's 'the slows'): he built the Army of the Potomac and then would not risk it (Malvern Hill, Antietam). His genius is in logistics/organization, not the attack." },
+
+    "us-grant": { "pid": "us-grant", "name": "Ulysses S. Grant", "side": "US", "rank": "Lieutenant General", "branch": "inf", "skill": 92, "fate": 2.8,
+      "persona": { "tactical": 94, "command": 92, "initiative": 90, "resolve": 94, "discipline": 90, "marksmanship": 66, "vigor": 78, "charisma": 64, "aggression": 82, "grit": 88, "logistics": 84, "engineering": 68, "cavalry": 66, "artillery": 70, "political": 70 },
+      "flaws": [], "badges": [], "personaTags": ["relentless", "calm_under_pressure"],
+      "provenance": "Verified", "sources": ["McPherson 1988", "Chernow 2017", "Library of Congress: Grant commission"],
+      "bio": "The general who won the war — relentless operational pressure, calm under fire, total-war strategy (Donelson, Shiloh, Vicksburg, the Overland Campaign). Anti-Lost-Cause: the 'butcher' label is a Lost Cause distortion; his loss rates were comparable to Lee's against a smaller foe." },
+
+    "us-burnside": { "pid": "us-burnside", "name": "Ambrose E. Burnside", "side": "US", "rank": "Major General", "branch": "inf", "skill": 38, "fate": 2.2,
+      "persona": { "tactical": 34, "command": 40, "initiative": 38, "resolve": 56, "discipline": 42, "marksmanship": 56, "vigor": 58, "charisma": 66, "aggression": 50, "grit": 56, "logistics": 50, "engineering": 54, "cavalry": 52, "artillery": 58, "political": 48 },
+      "flaws": ["overmatched", "self-doubting"], "badges": ["rigid_plan"], "personaTags": ["earnest"],
+      "provenance": "Verified", "sources": ["Marvel 1991", "McPherson 1988", "American Battlefield Trust: Burnside"],
+      "bio": "Genial, earnest, and honest about being overmatched in army command — he ground his army forward to a fixed plan against the stone wall at Fredericksburg. The Verified flaw is the rigidity, not the man's character." },
+
+    "us-meade": { "pid": "us-meade", "name": "George G. Meade", "side": "US", "rank": "Major General", "branch": "inf", "skill": 76, "fate": 2.6,
+      "persona": { "tactical": 78, "command": 76, "initiative": 62, "resolve": 78, "discipline": 74, "marksmanship": 62, "vigor": 64, "charisma": 50, "aggression": 52, "grit": 74, "logistics": 66, "engineering": 72, "cavalry": 56, "artillery": 70, "political": 48 },
+      "flaws": ["cautious-pursuit"], "badges": [], "personaTags": ["defensive_minded", "steady"],
+      "provenance": "Verified", "sources": ["McPherson 1988", "Britannica: Meade", "American Battlefield Trust: Meade"],
+      "bio": "The irascible 'Old Snapping Turtle' and engineer — a steady, defensive-minded professional who won the defensive masterpiece at Gettysburg, then drew Lincoln's frustration for a cautious pursuit." }
   }
 }

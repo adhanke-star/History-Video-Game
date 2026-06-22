@@ -128,6 +128,58 @@ const SETUP = `(() => {
       if(vet<70) throw new Error('a veteran rifled brigade with a colonel should grade well, got '+vet);
       return { veteranOVR:vet, greenOVR:green }; });
 
+    step('R-1 STRATEGIC: every general effective-skill is persona-DERIVED yet reproduces gen.skill EXACTLY (byte-identical pipe; appoint-pool words match history)', function(){
+      if(typeof _cmdEffectiveSkill!=='function'||typeof _cmdGenPersona!=='function'||typeof _cmdSideGenerals!=='function'||typeof _cmdLeadWord!=='function') throw new Error('command pipe fns missing');
+      var GP=D.generalPersonas; if(!GP) throw new Error('no generalPersonas in GAME_DATA.ratings');
+      var rated=0, all=0, sides=['US','CS'], sample=[];
+      for(var s=0;s<sides.length;s++){ var roster=_cmdSideGenerals(sides[s]);
+        for(var i=0;i<roster.length;i++){ var g=roster[i]; all++;
+          var eff=_cmdEffectiveSkill(g);
+          if(eff!==g.skill) throw new Error(g.id+': effective skill '+eff+' != authored gen.skill '+g.skill+' (pipe not byte-identical)');
+          var rec=_cmdGenPersona(g);
+          if(rec){ rated++;
+            var seed=Math.round(fldOfficerSkillSeed(rec.persona));
+            if(seed!==g.skill) throw new Error(g.id+': persona seed '+seed+' != gen.skill '+g.skill+' (calibration drift)');
+            if(typeof rec.skill==='number' && rec.skill!==g.skill) throw new Error(g.id+': generalPersonas.skill '+rec.skill+' != gen.skill '+g.skill);
+            // the leadership WORD from the derived spine must equal the pre-R-1 authored spine (history match)
+            var rW=_cmdLeadWord(0.55*eff+0.45*60), aW=_cmdLeadWord(0.55*g.skill+0.45*60);
+            if(rW[0]!==aW[0]) throw new Error(g.id+': derived word '+rW[0]+' != authored '+aW[0]);
+            if(sample.length<3) sample.push({id:g.id, skill:g.skill, word:rW[0]});
+          }
+        }
+      }
+      if(rated<9) throw new Error('want >=9 rated strategic generals (the D92-hardened commanders), got '+rated);
+      return { generals:all, rated:rated, sample:sample }; });
+
+    step('R-1 STRATEGIC: an UNRATED general (no persona) keeps his authored skill -> byte-identical', function(){
+      var us=_cmdSideGenerals('US').concat(_cmdSideGenerals('CS')), unrated=null;
+      for(var i=0;i<us.length;i++){ if(!_cmdGenPersona(us[i])){ unrated=us[i]; break; } }
+      if(!unrated) throw new Error('expected at least one unrated general (only 9 of 20 are authored)');
+      if(_cmdEffectiveSkill(unrated)!==unrated.skill) throw new Error(unrated.id+': unrated effective skill changed from '+unrated.skill);
+      return { unrated:unrated.id, skill:unrated.skill }; });
+
+    step('R-1 TACTICAL: a RATED field leader takes quality/radius/fate from his persona (aura shifts ~authored); an UNRATED leader is byte-identical', function(){
+      if(typeof fldMakeOfficer!=='function'||typeof fldPersonaQuality!=='function') throw new Error('officer/rating fns missing');
+      if(typeof __FIELD!=='undefined') __FIELD.seed=999;   // make fldRng deterministic for the seeded _fate
+      var rec=D.personas.ld_jackson; if(!rec||!rec.persona) throw new Error('no ld_jackson field persona'); var authoredQ=rec.authoredQuality;
+      // RATED: the leader OPTS IN via pid -> quality is DERIVED (the input 0.5 is overridden by history)
+      var rated=fldMakeOfficer({ side:'CS', pid:'ld_jackson', id:'ld_jackson', name:'Jackson', short:'Jackson', quality:0.5, radius:205, fate:1.0 });
+      var pq=fldPersonaQuality(rec.persona);
+      if(Math.abs(rated.quality-pq)>1e-9) throw new Error('rated quality '+rated.quality+' != persona-derived '+pq);
+      if(Math.abs(rated.quality-authoredQ)>0.02) throw new Error('rated quality '+rated.quality+' drifted from authored '+authoredQ+' (calibration)');
+      if(Math.abs(rated.quality-0.5)<1e-9) throw new Error('rated quality should follow the persona, not the input 0.5');
+      if(!(rated.radius>=160 && rated.radius<=290)) throw new Error('rated radius out of the 160-290 band: '+rated.radius);
+      // COLLISION GUARD: the SAME id but NO pid must NOT derive -> a reused id (ld_jackson also
+      // appears at Antietam/Chancellorsville) cannot leak the Bull Run persona across scenarios.
+      var noPid=fldMakeOfficer({ side:'CS', id:'ld_jackson', name:'Jackson', short:'Jackson', quality:0.5, radius:205, fate:1.0 });
+      if(Math.abs(noPid.quality-0.5)>1e-9) throw new Error('id-only (no pid) leader derived a persona — cross-scenario id leak: '+noPid.quality);
+      if(noPid.radius!==205) throw new Error('id-only (no pid) radius changed from 205: '+noPid.radius);
+      // UNRATED: a synthetic id with no persona/pid -> every authored value preserved (byte-identical)
+      var un=fldMakeOfficer({ side:'US', id:'SYN_TEST_LT', name:'Test', short:'Test', quality:0.8, radius:200, fate:1.5 });
+      if(Math.abs(un.quality-0.8)>1e-9) throw new Error('unrated quality changed from 0.8: '+un.quality);
+      if(un.radius!==200) throw new Error('unrated radius changed from 200: '+un.radius);
+      return { ratedQ:Math.round(rated.quality*1000)/1000, authoredQ:authoredQ, ratedRadius:rated.radius, noPidQ:noPid.quality, unratedQ:un.quality, unratedRadius:un.radius }; });
+
     step('PURITY: rating fns do not mutate G or __FIELD (R-0 is inert / byte-identical)', function(){
       var beforeMode=(typeof G!=='undefined')?G.mode:null;
       var fu=(typeof __FIELD!=='undefined' && __FIELD.units)?__FIELD.units.length:null;
