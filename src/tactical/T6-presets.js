@@ -128,11 +128,13 @@ function fldPresetResolve() {
 function fldPresetsApply(opts) {
   __FIELD.sev = { attrition: 1, canister: 1, supply: 1, cmdShock: 1, sight: 1, veteran: 1 };
   __FIELD.aiSkill = 1; __FIELD.aiResolve = 1; __FIELD.aiCushion = 0;
+  __FIELD.realismTier = "balanced";   // R-3: the rating badge per-lever cap tier (reset each launch -> no stale). Balanced ~= today's shipped numbers.
   var c = fldPresetResolve();
   if (!c) return;   // nothing configured -> NEUTRAL (byte-identical to the pre-B5 engine); do not touch G.settings
   c = _fldClampCfg(Object.assign({}, c));   // clamp a CLONE (don't mutate the stored preset): a hand-edited / older-shape persisted preset is bounded here -> no inverted lever, no zeroed casualties, no AI buff
   __FIELD.sev = { attrition: c.attrition, canister: c.canister, supply: c.supply, cmdShock: c.cmdShock, sight: c.sight, veteran: c.veteran };
   __FIELD.aiSkill = c.aiSkill; __FIELD.aiResolve = c.aiResolve; __FIELD.aiCushion = c.aiCushion;
+  __FIELD.realismTier = (c.realism === "arcade" || c.realism === "historian") ? c.realism : "balanced";   // R-3: scale the badge per-lever cap to the realism bundle (Arcade generous / Historian tight, D94-softcap)
   // the fog lever -> the global setting the T0/T1 precedence reads (an explicit opts.fog STILL wins). "scenario" is a
   // NO-OP on the global (so a live V-toggle survives, and the T0 precedence falls through to the battle default) —
   // a stale on/off pin is cleared at SAVE time (the picker), distinct from honouring a live toggle. Done BEFORE the

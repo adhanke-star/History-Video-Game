@@ -172,6 +172,65 @@ function fldRatingRealismCap(tier, leverKey) {
   return t[leverKey];
 }
 
+/* ===========================================================================
+   R-3 · THE BADGE ENGINE — the first rating->combat seam.
+
+   fldBadgeFactor(u, lever) is the guarded ONE-TOKEN MULTIPLICATIVE factor the tactical engine
+   multiplies into its EXISTING fire / rally / speed / melee lines (T0). It is IDENTITY (1.0) when
+   the badge engine is off (__FIELD.badges falsy) OR the unit carries no matching badge -> every
+   pre-badge AI-vs-AI baseline is BYTE-IDENTICAL (it mirrors the (u.cmdBonus||0) no-op pattern).
+   When active it SUMS the matching badges' signed `mag`s for `lever`, gates each by its trigger
+   against the unit's live state, then CLAMPS the summed delta to the realism-scaled per-unit
+   per-lever cap (fldRatingRealismCap(tier,"badgeLever") -> Arcade generous / Historian tight) so
+   "stack every positive badge in one brigade" can never saturate a lever.
+
+   THE NO-FUDGE OUTPUT WALL (D74/D94, build-gate-asserted in tools/build.mjs): this module ONLY
+   READS unit fields and RETURNS a factor; it NEVER writes cas/aCas/bCas/victory/tgt.men or sev.*.
+   The strong unit dominates EMERGENTLY because the engine then runs its NORMAL formula on the
+   seeded input — the rating reaches the casualty count via the soldiers' stats, never the scoreboard.
+   =========================================================================== */
+function _fldBadgeActive() {
+  return (typeof __FIELD !== "undefined" && __FIELD && __FIELD.badges) ? true : false;
+}
+/* is this badge's trigger satisfied by the unit's current state? Unrecognized triggers default
+   to TRUE (an always-on effect); the fine-grained situational triggers are an R-4 refinement. */
+function _fldBadgeTrig(u, def) {
+  var t = def && def.trigger;
+  if (!t || t === "always" || t === "march") return true;
+  if (t === "in_woods") return (typeof fldInWoods === "function") ? !!fldInWoods(u.x, u.z) : true;
+  if (t === "arm_cav") return u.arm === "cav";
+  if (t === "arm_art") return u.arm === "art";
+  return true;   // defend_objective / first_fire / surprised / his_attack / ... -> on (R-4 sharpens these)
+}
+function fldBadgeFactor(u, lever) {
+  if (!u || !lever || !_fldBadgeActive()) return 1;
+  var b = u.badges; if (!b || !b.length) return 1;
+  var sum = 0, i, def;
+  for (i = 0; i < b.length; i++) {
+    def = fldBadgeDef(b[i]);
+    if (!def || def.fldLever !== lever) continue;
+    if (typeof def.mag !== "number" || !isFinite(def.mag)) continue;
+    if (!_fldBadgeTrig(u, def)) continue;
+    sum += def.mag;
+  }
+  if (sum === 0) return 1;
+  var tier = (typeof __FIELD !== "undefined" && __FIELD && __FIELD.realismTier) ? __FIELD.realismTier : "balanced";
+  var cap = fldRatingRealismCap(tier, "badgeLever");
+  if (!(cap > 0)) cap = 0.10;
+  if (sum > cap) sum = cap; else if (sum < -cap) sum = -cap;
+  return 1 + sum;
+}
+/* the unit cohesion in [-1,1] for the fldMoraleStep rally extension: (cohesion-50)/50. ABSENT
+   cohesion -> 0 (BYTE-IDENTICAL; authoring `cohesion` is the D94-forks #4 migration). NOTE: the
+   COMBAT rally term defaults to neutral (0) when absent — a derive-from-xp default here would shift
+   the rally of every xp!=2 unit and break byte-identity, so the xp-derived cohesion lives only in
+   the OVR DISPLAY (fldUnitRatingOVR, which already derives manQuality from xp), not this term. */
+function fldUnitCohesion(u) {
+  if (!u || typeof u.cohesion !== "number" || !isFinite(u.cohesion)) return 0;
+  var c = (u.cohesion - 50) / 50;
+  return c < -1 ? -1 : (c > 1 ? 1 : c);
+}
+
 /* A BRIGADE token's computed OVR (display): men-quality floor + materiel + condition +
    live leadership (cmdBonus). Pure read of existing unit fields; nothing is stored. */
 function fldUnitRatingOVR(u) {

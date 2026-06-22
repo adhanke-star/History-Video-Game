@@ -120,9 +120,36 @@ for (const name of overrides) {
   if (n !== 2) die(4, 'override ' + name + ' defined ' + n + 'x (expected 2: base + override)');
 }
 
+// 4d. NO-FUDGE OUTPUT WALL (D74/D94 R-3) — the rating / badge module may only READ unit fields and
+// RETURN factors; it must NEVER write a casualty count, a winner, unit strength, or an out-of-band
+// sev.* at resolution time (the scripted "higher rating => auto-win" hack). Enforced STRUCTURALLY so
+// the invariant cannot be eroded by a later increment. The combat modules (T0 etc.) legitimately write
+// these — the wall scopes to the rating/badge module(s), which exist only to seed inputs.
+const RATING_MODULES = ['tactical/T14-ratings.js'];
+const NO_FUDGE_FORBIDDEN = [
+  { re: /\b(cas|aCas|bCas)\s*(\+=|-=|=)(?!=)/, what: 'a casualty count (cas/aCas/bCas)' },
+  { re: /\.victory\s*=(?!=)/, what: 'the victory result (.victory)' },
+  { re: /\.men\s*(\+=|-=|=)(?!=)/, what: 'unit strength (.men)' },
+  { re: /\bsev\.[A-Za-z_$][\w$]*\s*=(?!=)/, what: 'a severity lever (sev.*) out of band' },
+  // bracket-notation variants — close the computed-member bypass (u["men"]=0 etc.) so the wall cannot be
+  // eroded by a later increment writing the scoreboard via brackets (R-3 bug-hunt hardening). A full AST scan
+  // would also catch aliasing; this fast textual pass covers the direct bracket forms.
+  { re: /\[\s*['"](?:men|cas|aCas|bCas|victory)['"]\s*\]\s*(\+=|-=|=)(?!=)/, what: 'a scoreboard field via bracket notation (["men"]/["victory"]/["cas"]…)' },
+  { re: /\bsev\s*\[\s*['"][^'"]+['"]\s*\]\s*(\+=|-=|=)(?!=)/, what: 'a severity lever via bracket notation (sev["…"])' },
+];
+for (const rm of RATING_MODULES) {
+  const rp = join(SRC, rm);
+  if (!existsSync(rp)) continue;
+  const rsrc = readFileSync(rp, 'utf8');
+  for (const f of NO_FUDGE_FORBIDDEN) {
+    const m = rsrc.match(f.re);
+    if (m) die(5, 'no-fudge OUTPUT-WALL: ' + rm + ' writes ' + f.what + ' ("' + m[0].trim() + '") — the rating/badge layer may only SEED inputs + RETURN factors, never write the scoreboard at resolution time (D74/D94).');
+  }
+}
+
 // ---- 5. report + write ----
 const KB = (s) => (s.length / 1024).toFixed(1) + 'KB';
-console.log('GATE OK · parse ✓ · hex ✓ · collision ✓');
+console.log('GATE OK · parse ✓ · hex ✓ · collision ✓ · no-fudge ✓');
 console.log('  data:      GAME_DATA = {' + (dataKeys.join(', ') || '(none)') + '}');
 console.log('  modules:   ' + modules.join(', '));
 console.log('  new fns:   ' + (newFns.map(x => x.name).join(', ') || '(none)'));

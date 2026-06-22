@@ -1,5 +1,23 @@
 # HANDOFF — "The Civil War"
 
+## ⚡ CONTINUE HERE — 2026-06-22 **RATING SYSTEM R-3 — the badge engine (the first rating→combat seam) + the no-fudge build-gate** (overnight run, D97)
+
+> **The first place a rating TOUCHES combat is shipped.** A guarded one-token factor seeds the levers the engine already reads; **byte-identical when off** (proven: sandbox + all 9 battles produce IDENTICAL deterministic results on the R-3 build vs the committed R-2 build).
+>
+> **`fldBadgeFactor(u, lever)` (`src/tactical/T14-ratings.js`):** guarded MULTIPLICATIVE one-token factor — identity 1.0 when `__FIELD.badges` off / no matching badge. Sums the unit's badges' signed `mag`s for a lever, gates by trigger (`_fldBadgeTrig`), CLAMPS the sum to the realism-scaled per-lever cap (`fldRatingRealismCap(tier,"badgeLever")` — arcade .16 / balanced .10 / historian .06). Negatives DAMP (≥1−cap), never enemy buffs. Plus `fldUnitCohesion` (rally term, 0 when unauthored).
+>
+> **Four guarded seams (`src/tactical/T0-field-sandbox.js`):** fire (`fldResolveFire`), rally+cohesion (`fldMoraleStep`), melee (`fldResolveMelee`), speed (`fldMoveFactor` — `_spdMul` reserved for the R-4 X-Factor surge). `__FIELD.badges` gate (default ON, `_badgesOff` hook) + `__FIELD.realismTier` (`T6 fldPresetsApply`).
+>
+> **Badge data (`data/ratings.json`):** 25 badgeDefs gain `fldLever` + signed `mag`. Ships Star/Superstar positives + the Verified negatives with real bite (McClellan Slows / Bragg Piecemeal / Burnside Rigid / Green Levies / Powder-Shy). **NOT yet assigned to shipped rosters** (that's the R-6 sweep) → battles byte-identical.
+>
+> **No-fudge OUTPUT-WALL build-gate (`tools/build.mjs` gate 4d):** scans the rating module for any `cas`/`aCas`/`bCas`/`.victory`/`.men`/`sev.*` write — **dot AND bracket notation** — build FAILS (exit 5) if found. Verified firing on planted `u.men=0`, `u["men"]=0`, `F.sev["attrition"]=2`; clean build prints `GATE OK · … · no-fudge ✓`.
+>
+> **⚠ VETTING — environmental deviation (READ before re-vetting):** the standard `load`-based probe suite was **blocked** this session — headless Chrome's `load` event never fires for the game page (the THREE-CDN `<script>` stalls in headless; it breaks the committed-green R-2 build identically; a trivial page fires `load` in 73ms; `domcontentloaded` loads everything incl. THREE in ~1.5s). Contributors: the single-threaded `python -m http.server` chokes on the page's ~170 local asset requests (**use a ThreadingHTTPServer**), + the THREE-CDN `load` stall (documented gotcha). R-3 was vetted via a **`domcontentloaded` byte-identity harness** (`.tmp/r3-verify.mjs`): sandbox + all 9 battles deterministic, R-3 build vs committed R-2 → **IDENTICAL** for all 10, + the full badge-logic assertions, 0 pageerrors. Bug-hunt (4 Opus lenses × verify + critic): 2 confirmed (gate-4d bracket bypass → fixed; phantom `sharpshooters` key → fixed). **NEXT SESSION: re-run the standard `load` suite (serve with `python3 -c "from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer; ThreadingHTTPServer(('',8765),SimpleHTTPRequestHandler).serve_forever()"`); if `load` still stalls, the fix is a domcontentloaded+settle wait in the probe runner or vendoring THREE locally.**
+>
+> **NEXT = R-4** (the X-FACTORS — the dramatic Madden surge): `u._xfActive` activation ("in the zone") that scales the **already-summed** `cmdBonus` aura, hard-capped by `fldRatingRealismCap(tier,"xfactor")` (never breaching `CMD_BONUS_CAP`); `abZap`/`fldAnnounce` one-shot + HUD glow; ship Foot Cavalry, Rock of Chickamauga, Bayonet!, First with the Most, Earned in Blood, The Slows. **The no-fudge replay gate:** deterministic seed-replay shows badges-on final casualties differ from badges-off only within the bounded lever delta; X-Factor never exceeds `CMD_BONUS_CAP`. Resume map: START-HERE → this block → `RATING-SYSTEM-DESIGN.md` §4 (the X-Factor rows) + §6 (the `u._xfActive` seam: "scales the already-summed cmdBonus, clamped at CMD_BONUS_CAP") + §9 (R-4 asserts) → DECISIONS D97/D96/D95/D94* → `src/tactical/T14-ratings.js` (fldBadgeFactor + the realism caps) + `src/tactical/T3-officers.js` (`fldOfficersStep` — the cmdBonus aura sum, where `_xfActive` scales) + `src/tactical/T0-field-sandbox.js` (`fldAnnounce`/HUD glow) + `tools/probe-ratings.mjs`.
+
+---
+
 ## ⚡ CONTINUE HERE — 2026-06-22 **RATING SYSTEM R-2 — the OVR read-out UI (Command-desk A–F grades + tactical HUD brigade OVR)** (overnight run, D96)
 
 > **The Madden layer is now VISIBLE.** R-2 surfaces the rating numbers the R-1 spine already produces, graded **A–F**, across two surfaces — **PURE DISPLAY, no sim change** (full no-regression confirms all 9 battles byte-identical).

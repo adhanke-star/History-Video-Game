@@ -181,6 +181,10 @@ function fldMoveFactor(x, z, u) {
   // T13: an active obstacle belt may slow an enemy moving through it. The hook returns
   // exactly 1 when no applicable belt exists, preserving every pre-engineering baseline.
   if (typeof fldEngMoveFactor === "function") f *= fldEngMoveFactor(x, z, u);
+  // R-3 badge seam: a badge may quicken (Hardy Marcher / Horseman) or drag (The Slows) the march.
+  // Identity 1.0 when the badge engine is off or the unit carries no speed badge -> byte-identical.
+  // u._spdMul is the reserved R-4 X-Factor surge term (undefined -> 1 -> no-op today).
+  if (u) { if (u._spdMul) f *= u._spdMul; if (typeof fldBadgeFactor === "function") f *= fldBadgeFactor(u, "speed"); }
   return f;
 }
 
@@ -297,6 +301,11 @@ function fldInitSim(opts) {
   // u.role/_canisterScale stay inert -> those baselines (INCLUDING bullrun1, which FIELDS Griffin/Ricketts as art
   // and Stuart as cav) remain BYTE-IDENTICAL. The gate is exactly what protects them. Coverage = probe-arms.mjs.
   __FIELD.arms = __FIELD._armsOff ? false : ((opts.arms != null) ? !!opts.arms : true);
+  // R-3 the RATING BADGE engine: the per-launch gate (same sticky _badgesOff test hook). Default ON, but the
+  // badge SEAMS (fldBadgeFactor + the cohesion rally term) are IDENTITY for any unit that carries no badges and
+  // no authored cohesion -> since NO shipped scenario assigns badges/cohesion yet (that arrives with the R-6 sweep),
+  // every AI-vs-AI baseline stays BYTE-IDENTICAL whether this is on or off. _badgesOff lets a probe force it off.
+  __FIELD.badges = __FIELD._badgesOff ? false : ((opts.badges != null) ? !!opts.badges : true);
   __FIELD._aiGenericAll = false; __FIELD._aiGenericAtk = false;   // role-aware AI test hooks: reset per launch (bug-hunt #4); probe-ai sets them AFTER launch (A/B the defender + attacker doctrines)
   __FIELD._atkCautious = false;   // Phase C: the AI-attacker "doomed frontal assault" posture (Fredericksburg). Reset per launch; fldScenarioInit sets it true ONLY for a scenario whose data declares assaultDoctrine:"cautious" -> Bull Run/sandbox/skirmish stay byte-identical.
   // T13: clear engineering-owned transient state before any scenario/sandbox build. This touches only
@@ -374,6 +383,9 @@ function fldResolveFire(u, tgt, dt) {
   // T13: forcing an obstacle belt disorders a brigade and makes its next volleys ragged.
   // A clean unit receives exactly 1, so no pre-engineering fire result changes.
   if (typeof fldEngFireFactor === "function") power *= fldEngFireFactor(u);
+  // R-3 badge seam: a fire badge (Marksman / Woods-Fighter) lifts, a command flaw
+  // (Burnside's Rigid Plan) dampens, the volume of fire. Identity 1.0 when off / no fire badge -> byte-identical.
+  if (typeof fldBadgeFactor === "function") power *= fldBadgeFactor(u, "fire");
   // distinct arm roles (B-4): artillery fires CANISTER up close (a giant shotgun — devastating in the open,
   // defeated by works/woods) and a softening long-range bombardment beyond. A gated multiplier on the base fire
   // (1.0 / no-op when arms off or the shooter is not artillery -> byte-identical, incl. bullrun1's batteries).
@@ -403,6 +415,9 @@ function fldResolveMelee(a, b, dt) {
   // mutual charge (both order 'charge') gives neither side the earthwork, and the benefit is order-independent.
   var bEng = (typeof fldEngCover === "function" && b.order && b.order.type !== "charge") ? fldEngCover(b, a.x, a.z) : 1;
   var def = b.men * meleeB * (0.6 + 0.4 * b.morale / b.maxMor) * (0.9 + b.xp * 0.06) * fldCoverAt(b.x, b.z) * bEng;
+  // R-3 badge seam: a melee badge (Bayonet! / Earned in Blood — assigned + activated in R-4) lifts a unit's
+  // shock. Identity 1.0 when off / no melee badge -> byte-identical for every pre-badge baseline.
+  if (typeof fldBadgeFactor === "function") { atk *= fldBadgeFactor(a, "melee"); def *= fldBadgeFactor(b, "melee"); }
   var ratio = atk / Math.max(1, def);
   var _att = (__FIELD.sev ? __FIELD.sev.attrition : 1);   // B-5: attrition severity (1.0 = neutral = byte-identical)
   var aCas = Math.min(a.men, FLD.MELEE_BASE * (def / Math.max(1, atk)) * (0.7 + fldRng() * 0.6) * dt * 12 * _att);
@@ -428,7 +443,11 @@ function fldMoraleStep(u, dt) {
   // ALL neutral (1 / 0 / 1) when no preset -> every term below is byte-identical. The cushion/resolve only ever
   // touch live play (a probe AI-vs-AI run is autoBoth, so !u.ai is false and _ar is 1 unless a preset is set).
   var _vet = (__FIELD.sev ? __FIELD.sev.veteran : 1), _cu = (__FIELD.aiCushion || 0), _ar = (__FIELD.aiResolve == null ? 1 : __FIELD.aiResolve);
-  var rally = 1 + u.xp * 0.12 * _vet;                   // leader/veteran rally proxy
+  // leader/veteran rally proxy. R-3 extends it: + an authored-cohesion term (Disciplined/Iron Brigade drill,
+  // Green Levies brittleness) and a rally badge factor. fldUnitCohesion is 0 when cohesion is unauthored and
+  // fldBadgeFactor is 1.0 when the badge engine is off / no rally badge -> byte-identical for every baseline.
+  var rally = (1 + u.xp * 0.12 * _vet + 0.06 * (typeof fldUnitCohesion === "function" ? fldUnitCohesion(u) : 0) * _vet)
+            * (typeof fldBadgeFactor === "function" ? fldBadgeFactor(u, "rally") : 1);
   // (1) casualties taken this tick
   if (u.casTick > 0) { var sev = u.casTick / u.maxMen; u.morale -= (sev * 60 / rally); u.casTick = 0; }
   // (2) ambient pressure

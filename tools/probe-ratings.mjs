@@ -193,6 +193,49 @@ const SETUP = `(() => {
       if(fldRatingHudSelected(null)!=='') throw new Error('a null unit should yield an empty HUD line (no crash)');
       return { ovr:ovr, letter:g.letter, word:g.word, len:html.length }; });
 
+    step('R-3 BADGE ENGINE: off byte-identical (factor 1); on bounded + data-reversible; the per-lever stacking cap holds; negatives DAMP; realism-scaled; pure', function(){
+      if(typeof fldBadgeFactor!=='function'||typeof fldUnitCohesion!=='function'||typeof fldRatingRealismCap!=='function') throw new Error('badge fns missing');
+      var savedB=(typeof __FIELD!=='undefined')?__FIELD.badges:undefined, savedT=(typeof __FIELD!=='undefined')?__FIELD.realismTier:undefined;
+      try {
+        // OFF: the engine off -> IDENTITY even with badges on the unit (byte-identical guarantee)
+        __FIELD.badges=false; __FIELD.realismTier='balanced';
+        if(fldBadgeFactor({badges:['marksman','woods_fighter'],xp:2,arm:'inf'},'fire')!==1) throw new Error('badges OFF must be identity 1.0');
+        // ON but no badge data -> identity (this is what keeps every shipped scenario byte-identical)
+        __FIELD.badges=true;
+        if(fldBadgeFactor({badges:[],xp:2},'fire')!==1) throw new Error('empty badges must be identity 1.0');
+        if(fldBadgeFactor({xp:2},'fire')!==1) throw new Error('absent badges must be identity 1.0');
+        var cap=fldRatingRealismCap('balanced','badgeLever');
+        // ON: a single fire badge lifts, inside (1, 1+cap]
+        var one=fldBadgeFactor({badges:['marksman'],xp:2,arm:'inf'},'fire');
+        if(!(one>1 && one<=1+cap+1e-9)) throw new Error('single fire badge out of (1,1+cap]: '+one);
+        // STACKING CAP (tested on the rally lever, which has 3 always-on positives): disciplined(.06)+blooded(.05)
+        // +beloved(.06)=.17 -> clamped to the balanced cap .10 -> exactly 1.10. "Stack every positive" cannot breach.
+        var STK=['disciplined','blooded','beloved'];
+        var stack=fldBadgeFactor({badges:STK,xp:2},'rally');
+        if(Math.abs(stack-(1+cap))>1e-9) throw new Error('stacked rally factor should clamp to exactly 1+cap ('+(1+cap)+'), got '+stack);
+        if(!(stack>fldBadgeFactor({badges:['disciplined'],xp:2},'rally'))) throw new Error('a 3-badge stack should exceed a single badge (pre-clamp)');
+        // DATA-REVERSIBLE: remove the data -> identity restored
+        if(fldBadgeFactor({badges:[],xp:2},'rally')!==1) throw new Error('removing badge data must restore identity');
+        // NEGATIVE = a DAMPER (factor<1), bounded by 1-cap, never an enemy buff
+        var neg=fldBadgeFactor({badges:['green_levies'],xp:2},'rally');
+        if(!(neg<1 && neg>=1-cap-1e-9)) throw new Error('negative rally badge out of [1-cap,1): '+neg);
+        if(!(fldBadgeFactor({badges:['the_slows']},'speed')<1)) throw new Error('the_slows must drag speed');
+        if(!(fldBadgeFactor({badges:['hardy_marcher']},'speed')>1)) throw new Error('hardy_marcher must quicken speed');
+        if(!(fldBadgeFactor({badges:['rigid_plan']},'fire')<1)) throw new Error('rigid_plan must dampen fire');
+        // REALISM-SCALED cap: arcade(.16) allows a bigger stack than balanced(.10) than historian(.06) (D94-softcap)
+        __FIELD.realismTier='arcade'; var arc=fldBadgeFactor({badges:STK,xp:2},'rally');
+        __FIELD.realismTier='historian'; var his=fldBadgeFactor({badges:STK,xp:2},'rally');
+        if(!(arc>stack && stack>his)) throw new Error('cap not realism-monotone arcade>balanced>historian: '+arc+'/'+stack+'/'+his);
+        // PURITY: fldBadgeFactor must not mutate the unit (it only seeds inputs by RETURNING a factor)
+        var pu={badges:['marksman'],xp:2,arm:'inf'}, snap=JSON.stringify(pu); fldBadgeFactor(pu,'fire'); if(JSON.stringify(pu)!==snap) throw new Error('fldBadgeFactor mutated the unit');
+        // COHESION rally term: absent -> 0 (byte-identical); set -> (c-50)/50 clamped [-1,1]
+        if(fldUnitCohesion({})!==0) throw new Error('absent cohesion must be 0 (byte-identical)');
+        if(Math.abs(fldUnitCohesion({cohesion:75})-0.5)>1e-9) throw new Error('cohesion 75 -> 0.5');
+        if(fldUnitCohesion({cohesion:200})!==1 || fldUnitCohesion({cohesion:-50})!==-1) throw new Error('cohesion must clamp to [-1,1]');
+        return { cap:cap, single:Math.round(one*1000)/1000, balStack:Math.round(stack*1000)/1000, arcStack:Math.round(arc*1000)/1000, hisStack:Math.round(his*1000)/1000, greenLevies:Math.round(neg*1000)/1000 };
+      } finally { if(typeof __FIELD!=='undefined'){ __FIELD.badges=savedB; __FIELD.realismTier=savedT; } }
+    });
+
     step('PURITY: rating fns do not mutate G or __FIELD (R-0 is inert / byte-identical)', function(){
       var beforeMode=(typeof G!=='undefined')?G.mode:null;
       var fu=(typeof __FIELD!=='undefined' && __FIELD.units)?__FIELD.units.length:null;
