@@ -85,7 +85,7 @@
           ],
           "CS": [
             { "id": "ld_pemberton_vb", "name": "Lt. Gen. John C. Pemberton", "short": "Pemberton", "quality": 0.6, "radius": 250, "x": 600, "z": 230, "fate": 2.7, "note": "Commander of the Vicksburg garrison. He had lost the field campaign, but his engineers gave him a formidable defensive shell. (Verified)" },
-            { "id": "ld_smith_vb", "name": "Maj. Gen. Martin L. Smith", "short": "Smith", "quality": 0.64, "radius": 200, "attach": "cs_smith_stockade", "fate": 2.3, "note": "Smith's division held the northern Vicksburg sector astride Graveyard Road, including the Stockade Redan; Shoup's brigade and the Missouri/Louisiana troops manned the works that broke Sherman's May 19 assault. (Verified at division-sector level; brigade-scale placement Inferred)" }
+            { "id": "ld_smith_vb", "name": "Brig. Gen. Martin L. Smith", "short": "Smith", "quality": 0.64, "radius": 200, "attach": "cs_smith_stockade", "fate": 2.3, "note": "Smith's division held the northern Vicksburg sector astride Graveyard Road, including the Stockade Redan; Shoup's brigade and the Missouri/Louisiana troops manned the works that broke Sherman's May 19 assault. (Verified at division-sector level; brigade-scale placement Inferred. Rank corrected: BRIG. GEN. for the entire siege; his major-generalcy is dated Nov 4, 1863, four months AFTER the July 4 surrender, while he was a prisoner of war.)" }
           ]
         },
         "supply": {
@@ -99,7 +99,7 @@
             { "id": "us_deg_road_battery", "name": "Approach Batteries", "commander": "Army of the Tennessee artillery", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 4, "men": 90, "xp": 2, "x": 600, "z": 775, "facing": 0, "formation": "line", "note": "Only light field batteries supported the May 19 rush; the siege artillery park was not yet built, and guns could not reduce the earthwork. Universal gun model: 4 guns. (Inferred)" }
           ],
           "CS": [
-            { "id": "cs_smith_stockade", "name": "Smith's Division - Stockade Redan Defense", "commander": "Maj. Gen. Martin L. Smith", "arm": "inf", "weapon": "rifled", "men": 3400, "xp": 3, "x": 600, "z": 365, "facing": 3.14159, "formation": "line", "note": "Smith's division (Shoup's and Cockrell's troops) behind the Stockade Redan parapet; the works multiply their power and break the exposed assault. (Verified division-sector; Inferred strength)" },
+            { "id": "cs_smith_stockade", "name": "Smith's Division - Stockade Redan Defense", "commander": "Brig. Gen. Martin L. Smith", "arm": "inf", "weapon": "rifled", "men": 3400, "xp": 3, "x": 600, "z": 365, "facing": 3.14159, "formation": "line", "note": "Smith's division (Shoup's and Cockrell's troops) behind the Stockade Redan parapet; the works multiply their power and break the exposed assault. (Verified division-sector; Inferred strength. Rank: BRIG. GEN. - his MG dated Nov 1863, after the surrender.)" },
             { "id": "cs_fort_hill_det", "name": "Fort Hill Detachment", "commander": "Vicksburg garrison", "arm": "inf", "weapon": "rifled", "men": 2400, "xp": 2, "x": 460, "z": 345, "facing": 3.14159, "formation": "line", "note": "Northern flank troops tying the redan sector to the river-facing works. (Inferred)" },
             { "id": "cs_stockade_guns", "name": "Redan Batteries", "commander": "Confederate artillery", "arm": "art", "weapon": "smooth", "role": "defend", "guns": 9, "men": 240, "xp": 3, "x": 650, "z": 315, "facing": 3.14159, "formation": "line", "note": "Pre-sited fortress guns firing from and behind the parapet into the Graveyard Road approach - the defender's fire edge in the May assault. Universal gun model: 9 guns. (Inferred)" }
           ]
@@ -163,7 +163,7 @@
           "CS": [
             { "id": "ld_forney_vb", "name": "Maj. Gen. John H. Forney", "short": "Forney", "quality": 0.64, "radius": 220, "x": 640, "z": 250, "fate": 2.4, "note": "Forney's division held much of the central Vicksburg line - the Jackson Road sector with the 3rd Louisiana Redan and the Great Redoubt, the sectors later mined. (Verified sector)" },
             { "id": "ld_hebert_vb", "name": "Brig. Gen. Louis Hebert", "short": "Hebert", "quality": 0.66, "radius": 205, "attach": "cs_3rd_louisiana", "fate": 2.2, "note": "Hebert's brigade (Forney's division) held the 3rd Louisiana Redan - the work named for his old regiment - against the May 22 assault and the later June 25 mine. This is his historical sector. (Verified)" },
-            { "id": "ld_bowen_vb", "name": "Maj. Gen. John S. Bowen", "short": "Bowen", "quality": 0.72, "radius": 220, "x": 600, "z": 230, "fate": 1.8, "note": "One of Pemberton's most capable subordinates. Bowen had fought well in the campaign before the army was forced inside Vicksburg. (Verified)" }
+            { "id": "ld_bowen_vb", "name": "Brig. Gen. John S. Bowen", "short": "Bowen", "quality": 0.72, "radius": 220, "x": 600, "z": 230, "fate": 1.8, "note": "One of Pemberton's most capable subordinates. Bowen had fought well in the campaign before the army was forced inside Vicksburg. (Verified - rank corrected: BRIG. GEN. on the May 22 assault date; his major-generalcy is dated May 25, 1863, three days later, and was never confirmed by the Confederate Congress.)" }
           ]
         },
         "supply": {

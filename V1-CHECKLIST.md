@@ -153,9 +153,19 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
 - [~] **H4 Richer audio** ‹LOCKED: Phase H›: PD period tunes + battlefield/camp soundscapes + UI cues, all
       accessible (toggles/captions/volume), default off. ‹partial: `src/tactical/T9-audio.js` / audio work exists in recent repo history; full Phase-H polish still pending.›
 
-### Phase I — LOOT / SURVIVAL  ‹⭐ PROMOTED to a CORE PILLAR — D91 (D68 over D61; build it, no longer deferred)›
+### Phase I — LOOT / SURVIVAL + "THE SOLDIER'S STORY"  ‹⭐ CORE PILLAR — D91 (loot) + D93 (the character/journey layer)›
 - [ ] Standalone rarity-tiered loot + inventory (all modes) · light survival (rations/weather/forage/disease,
       default off) · the Oregon-Trail journey mode. All preset-gated (§27).
+- [ ] **"The Soldier's Story" (D93, Aaron) — build AFTER the C+E roadmap; unified with the journey mode above.**
+      An EA-Sports-style **prosopography DB** — *every identifiable individual* (granularity = exhaustive) with
+      **bio, stats/ratings, character history, portrait, team (army→corps→division→brigade→regiment→company)** — +
+      a **play-as-anyone whole-war mode**: pick any person, choose when+where to start, proceed from their **REAL
+      rank/position**, then play forward into alt-history. Bottom-up build: (1) granular OOB + per-person/regiment
+      **detail cards** (DATA, reuses teaching cards, NO engine change — brigades stay one marker per the D68
+      zoom-deferral) → (2) codex **person/unit axis** (Phase E/S4) → (3) the **playthrough mode** (career/trajectory
+      model + start-anywhere engine) → (4) **interpersonal/romance** (women-in-the-war / USCT / immigrant hooks;
+      period-honest, anti-Lost-Cause). **Hard prereq: accurate rank+position+unit per person — the D92 roster
+      hardening is its first roster data.** (Memory `civilwar-soldiers-story-pillar`; DECISIONS D93.)
 
 ### Phase J — POLISH / META
 - [ ] **Saves** ‹PROPOSED per D54›: localStorage + named slots + export/import; undo-last-turn on the accessible preset.

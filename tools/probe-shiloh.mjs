@@ -68,7 +68,7 @@ const SETUP = `(() => {
       for(var i=0;i<rf.length;i++){ if(rf[i].side==='US')usTot++; else if(rf[i].side==='CS')csTot++; }
       if(usTot<5) throw new Error('want >=5 US brigades total, got '+usTot);
       if(csTot<4) throw new Error('want >=4 CS brigades total, got '+csTot);
-      if(rf.length<3) throw new Error('want >=3 reinforcement waves (Buell + Nelson + Wood), got '+rf.length);
+      if(rf.length<3) throw new Error('want >=3 reinforcement waves (Buell + Nelson + Chalmers), got '+rf.length);
     });
 
     step('DATA: attacker is CS (the first day\\'s surprise assault)', function(){

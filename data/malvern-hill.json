@@ -49,26 +49,26 @@
       "US": [
         {
           "id": "ld_porter_malvern",
-          "name": "Maj. Gen. Fitz John Porter",
+          "name": "Brig. Gen. Fitz John Porter",
           "short": "Porter",
           "quality": 0.74,
           "radius": 270,
           "x": 600,
           "z": 250,
           "fate": 2.8,
-          "note": "Porter's V Corps anchored the western ridge and he functioned as the de facto field commander while McClellan was away from the immediate front. His placement of infantry and reserves made the ridge a coherent position. (Verified)",
+          "note": "Porter's V Corps anchored the western ridge and he functioned as the de facto field commander while McClellan was away from the immediate front. His placement of infantry and reserves made the ridge a coherent position. (Verified - rank corrected: he was a BRIGADIER general at Malvern Hill; his major-generalcy is dated July 4, 1862, three days AFTER the battle, the same July-4 date the file correctly withholds from Couch, Morell, and Kearny - do not re-promote by analogy to his later rank.)",
           "teach": "Gen. Porter steadies the ridge - the field commander who makes the position fight as a system."
         },
         {
           "id": "ld_hunt_malvern",
-          "name": "Brig. Gen. Henry J. Hunt",
+          "name": "Col. Henry J. Hunt",
           "short": "Hunt",
           "quality": 0.82,
           "radius": 285,
           "x": 600,
           "z": 305,
           "fate": 3.0,
-          "note": "Chief of Artillery, Army of the Potomac. At Malvern Hill he concentrated the guns, shifted batteries as they exhausted ammunition, and crushed Confederate counter-battery efforts. (Verified)",
+          "note": "Chief of Artillery, Army of the Potomac. At Malvern Hill he concentrated the guns, shifted batteries as they exhausted ammunition, and crushed Confederate counter-battery efforts. (Verified - rank corrected: he was a COLONEL at the battle; his brigadier-generalcy dated Sept 15, 1862 - the file already calls him 'Col.' in us_parrott_line.)",
           "teach": "Gen. Hunt massed the guns - professional artillery command turns open ground into a defensive machine."
         },
         {
@@ -142,14 +142,14 @@
         },
         {
           "id": "ld_jackson_malvern",
-          "name": "Lt. Gen. Thomas J. 'Stonewall' Jackson",
+          "name": "Maj. Gen. Thomas J. 'Stonewall' Jackson",
           "short": "Jackson",
           "quality": 0.58,
           "radius": 215,
           "x": 770,
           "z": 820,
           "fate": 2.4,
-          "note": "Jackson's wing was finally in place on Lee's left, but his Seven Days performance remained sluggish and uncharacteristic. His troops could not turn the ridge. (Verified)",
+          "note": "Jackson's wing was finally in place on Lee's left, but his Seven Days performance remained sluggish and uncharacteristic. His troops could not turn the ridge. (Verified - rank corrected: he was a MAJOR general at Malvern Hill; the Confederate lieutenant-general grade did not exist until October 1862 - the same Hood-at-Chickamauga anachronism, avoided here.)",
           "teach": "Gen. Jackson's wing is present at last - but the offensive machine still cannot coordinate."
         }
       ]
@@ -187,20 +187,20 @@
         { "id": "us_couch", "name": "Couch's Division (IV Corps)", "commander": "Brig. Gen. Darius N. Couch", "arm": "inf", "weapon": "rifled", "men": 3400, "xp": 2, "x": 720, "z": 390, "facing": 3.14159, "formation": "line", "note": "Couch's division strengthened the Union center/right and worked closely with Porter's line. (Verified identity; Inferred strength)" },
         { "id": "us_sykes_regulars", "name": "Sykes's Regulars", "commander": "Brig. Gen. George Sykes", "arm": "inf", "weapon": "rifled", "men": 2500, "xp": 3, "x": 600, "z": 335, "facing": 3.14159, "formation": "line", "note": "Regular infantry in Porter's corps, held as a disciplined support behind the gun line. (Verified identity; Inferred strength)" },
         { "id": "us_ames_battery", "name": "Ames's Battery A, 5th U.S. Artillery", "commander": "Lt. Adelbert Ames", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 12, "men": 270, "xp": 3, "x": 500, "z": 355, "facing": 3.14159, "formation": "line", "note": "Ames's regular battery was one of the hard-firing Federal batteries at Malvern Hill. Universal gun model: 12 guns, realistic full detachment abstraction. (Verified battery role; Inferred aggregate gun count)" },
-        { "id": "us_hunt_reserve", "name": "Hunt's Artillery Reserve (center)", "commander": "Brig. Gen. Henry J. Hunt", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 16, "men": 360, "xp": 3, "x": 620, "z": 340, "facing": 3.14159, "formation": "line", "note": "The central mass of Hunt's reserve guns along the plateau. Universal gun model: 16 guns, realistic crew/detachment count. (Verified massed artillery; Inferred battery aggregation)" },
+        { "id": "us_hunt_reserve", "name": "Hunt's Artillery Reserve (center)", "commander": "Col. Henry J. Hunt", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 16, "men": 360, "xp": 3, "x": 620, "z": 340, "facing": 3.14159, "formation": "line", "note": "The central mass of Hunt's reserve guns along the plateau. Universal gun model: 16 guns, realistic crew/detachment count. (Verified massed artillery; Inferred battery aggregation)" },
         { "id": "us_parrott_line", "name": "Reserve Artillery - Parrott and Napoleon line", "commander": "Col. Henry Hunt's staff", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 12, "men": 270, "xp": 3, "x": 760, "z": 365, "facing": 3.14159, "formation": "line", "note": "Right-center batteries facing Jackson and D.H. Hill. Universal gun model: 12 guns. (Verified artillery mass; Inferred grouping)" }
       ],
       "CS": [
         { "id": "cs_armistead", "name": "Armistead's Brigade", "commander": "Brig. Gen. Lewis A. Armistead", "arm": "inf", "weapon": "smooth", "men": 2500, "xp": 2, "x": 545, "z": 780, "facing": 0, "formation": "line", "note": "Armistead's brigade moved first against Union skirmishers and became the mistaken signal for the wider attack. (Verified identity; Inferred strength)" },
         { "id": "cs_dh_hill_malvern", "name": "D.H. Hill's Division", "commander": "Maj. Gen. D. H. Hill", "arm": "inf", "weapon": "smooth", "men": 4600, "xp": 3, "x": 630, "z": 810, "facing": 0, "formation": "line", "note": "Hill's division advanced in the Confederate center near Crew's field and suffered heavily. (Verified identity; Inferred strength)" },
-        { "id": "cs_jackson_wing", "name": "Jackson's Wing", "commander": "Lt. Gen. Thomas J. Jackson", "arm": "inf", "weapon": "smooth", "men": 3900, "xp": 2, "x": 780, "z": 795, "facing": 0, "formation": "line", "note": "Jackson's troops were at last in place on Lee's left, but the wing could not coordinate a decisive assault. (Verified identity; Inferred strength)" },
+        { "id": "cs_jackson_wing", "name": "Jackson's Wing", "commander": "Maj. Gen. Thomas J. Jackson", "arm": "inf", "weapon": "smooth", "men": 3900, "xp": 2, "x": 780, "z": 795, "facing": 0, "formation": "line", "note": "Jackson's troops were at last in place on Lee's left, but the wing could not coordinate a decisive assault. (Verified identity; Inferred strength. Rank: MAJ. GEN. at the battle - no CSA lieutenant-general grade until Oct 1862.)" },
         { "id": "cs_left_grand_battery", "name": "Confederate Left Grand Battery", "commander": "Jackson's artillery officers", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 8, "men": 220, "xp": 2, "x": 760, "z": 705, "facing": 0, "formation": "line", "note": "Part of Lee's intended crossfire. Historically the Confederate guns were poorly coordinated and quickly beaten by Hunt's counter-battery fire. Universal gun model: 8 guns. (Verified plan; Inferred aggregation)" },
         { "id": "cs_right_grand_battery", "name": "Confederate Right Grand Battery", "commander": "Longstreet's artillery officers", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 8, "men": 220, "xp": 2, "x": 430, "z": 705, "facing": 0, "formation": "line", "note": "The other half of Lee's planned converging artillery fire. Poor staff work and Union counter-battery fire prevented a real crossfire. Universal gun model: 8 guns. (Verified plan; Inferred aggregation)" }
       ]
     },
     "reinforcements": [
       { "id": "us_kearny", "side": "US", "atSec": 145, "name": "Kearny's Division (III Corps reserve)", "commander": "Brig. Gen. Philip Kearny", "arm": "inf", "weapon": "rifled", "men": 2800, "xp": 2, "x": 700, "z": 150, "facing": 3.14159, "formation": "column", "entry": "from the reserve behind the hill", "note": "Kearny's division was part of the Union depth behind the line. It represents the fresh infantry Porter could feed forward. (Verified context; Inferred timing)" },
-      { "id": "us_hooker", "side": "US", "atSec": 210, "name": "Hooker's Division (III Corps reserve)", "commander": "Brig. Gen. Joseph Hooker", "arm": "inf", "weapon": "rifled", "men": 2600, "xp": 2, "x": 520, "z": 145, "facing": 3.14159, "formation": "column", "entry": "from the reserve on the James River road", "note": "Hooker's division formed part of the mass of reserve infantry behind Malvern Hill. (Verified context; Inferred timing)" },
+      { "id": "us_hooker", "side": "US", "atSec": 210, "name": "Hooker's Division (III Corps reserve)", "commander": "Brig. Gen. Joseph Hooker", "arm": "inf", "weapon": "rifled", "men": 2600, "xp": 2, "x": 520, "z": 145, "facing": 3.14159, "formation": "column", "entry": "from the reserve on the James River road", "note": "Hooker's division formed part of the mass of reserve infantry behind Malvern Hill. (Verified context; Inferred timing. Rank: BRIG. GEN. at the battle - his major-generalcy of volunteers was ISSUED July 26, 1862 and backdated to May 5, 1862, so like Porter, Couch, and Kearny he was still a brigadier on the field July 1; the canonical Seven Days OOB lists him BG. The earlier D92 'promotion' to Maj. Gen. by date-of-rank was reverted as inconsistent with the file's own rule against promoting by analogy to later rank.)" },
       { "id": "us_hunt_relay", "side": "US", "atSec": 95, "name": "Hunt's Relief Batteries", "commander": "the Artillery Reserve", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 10, "men": 240, "xp": 3, "x": 610, "z": 300, "facing": 3.14159, "formation": "line", "entry": "fresh batteries moved onto the crest as ammunition wagons worked behind the line", "note": "Hunt shifted fresh batteries to keep the line firing. Universal gun model: 10 guns. (Verified practice; Inferred grouping)" },
       { "id": "cs_magruder", "side": "CS", "atSec": 105, "name": "Magruder's Division", "commander": "Maj. Gen. John B. Magruder", "arm": "inf", "weapon": "smooth", "men": 4200, "xp": 2, "x": 470, "z": 860, "facing": 0, "formation": "line", "entry": "late to the field after bad guides and confusing orders", "note": "Magruder's late arrival and piecemeal attack on the Confederate right became the main infantry effort after Armistead's movement. (Verified; Inferred strength/timing)" },
       { "id": "cs_huger", "side": "CS", "atSec": 150, "name": "Huger's Division (right flank)", "commander": "Maj. Gen. Benjamin Huger", "arm": "inf", "weapon": "smooth", "men": 3000, "xp": 1, "x": 360, "z": 850, "facing": 0, "formation": "line", "entry": "toward the narrow western approach and Malvern Cliffs", "note": "Huger's troops were meant to press Porter's left, but terrain and poor coordination limited the effort. (Verified context; Inferred strength/timing)" },
