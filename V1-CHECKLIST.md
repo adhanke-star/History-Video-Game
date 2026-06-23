@@ -94,13 +94,25 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       [declined/early/1862/late], CS arm-the-enslaved, foreign recognition, the 1864 election (US) / CS
       home-front break, the CS trajectory, each wild card. probe-divergence 14/14; bug-hunt invariantsHold=TRUE.
       **Remaining:** deeper INTERACTIVE hinge-point forks (build on the decisions deck) + curated alt-history
-      scenarios; the divergence-log read-back lands in the E4 graded after-action report.›
+      scenarios. ‹✅ the divergence-log read-back landed in the E4 graded after-action report (D112).››
 - [ ] **E2 S4 education:** multi-axis codex + inline glossary + the full guided tutorial + play-style presets
       (President / General-Commander, + the Historian settings overlay — D39) + difficulty/realism sliders.
 - [ ] **E3 S4 accessibility:** the dedicated FULL WCAG 2.2 AA pass + the 4 a11y modes (high-contrast, CVD-safe,
       SR turn/battle narration, dyslexia font) — your professional bar.
-- [ ] **E4 S5 victory:** multiple honest paths incl. negotiated peace + the rich graded after-action report +
+- [~] **E4 S5 victory:** multiple honest paths incl. negotiated peace + the rich graded after-action report +
       the Reconstruction coda.
+      ‹✅ increment 1 (D112): **the rich GRADED AFTER-ACTION REPORT** — an A–F report card (D94 scale, neutral
+      64=C, CVD triple-encoded) across 6 domains (Battlefield · Treasury · Diplomacy/Blockade · Home Front & the
+      1864 election · the war's PURPOSE [US=emancipation timing; CS=an honest NON-graded "Confederate Cause"
+      panel, anti-Lost-Cause] · High Command) + a headline overall grade + a **read-back of the D111 divergence
+      ledger** (`divScan`/`divIndex`) + the human cost vs the ~750k historical toll (Hacker 2011) + a forward
+      **Reconstruction coda** keyed to the emancipation choice (Foner). Surfaced as a live **"After-Action"** desk
+      tab (16th, pure read-out) AND the war-end final report (the authorized `warWonScreen` override). New
+      `src/82-after-action.js`; no tactical file touched → combat byte-identical by construction. probe-afteraction
+      10/10; bug-hunt invariantsHold=TRUE (1 LOW + 2 critic-LOW, one NaN root cause, fixed+probe-locked); wcag AA.
+      **Remaining:** **E4-i2** — wire `victoryReady` (negotiated peace / recognition) to an actual war-END so the
+      final report fires for a non-chain-complete victory + the §12.3 election-support relief-bind (now unblocked —
+      the home-front domain surfaces the 1864-election state); the honest multi-path victory framing.›
 
 ### Phase F — CONTENT SYSTEMS  (folded into the phase each best fits)
 - [ ] Logistics/rail network · POW exchange-collapse · disease/medical · hard war · irregular war · the four
