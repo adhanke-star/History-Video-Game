@@ -1013,6 +1013,93 @@ const SETUP = `(() => {
       if(tab.indexOf('Divisions of I Corps')<0) throw new Error('the Command tab must include the division sub-rows');
       return { gatedRender:true, nestsUnderCorps:true, namesCommander:true }; });
 
+    // ===== D113 — §12.3 THE ELECTION-SUPPORT RELIEF-BIND =====
+    step('D113: byte-identity — a ROSTER general carries NO election surcharge in any year (relief cost = the pre-bind base+prestige)', function(){
+      if(typeof _cmdElectionSupportSurcharge!=='function') return { skipped:'pre-D113' };
+      var grant=_cmdById('US','us-grant'); if(!grant) throw new Error('no us-grant');
+      var years=[1861,1862,1863,1864,1865];
+      for(var i=0;i<years.length;i++){ var C=mkC('US',years[i],9);
+        if(_cmdElectionSupportSurcharge(C,grant)!==0) throw new Error('a roster general must have 0 election surcharge in '+years[i]); }
+      // therefore _cmdReliefCost is byte-identical to the base+prestige formula
+      var Cy=mkC('US',1864,9); var rep=_cmdReputation(Cy,'us-grant'); var expect=Math.round((_cmdRELIEF_BASE[grant.relief]||_cmdRELIEF_BASE.costly)+Math.max(0,rep-60)*0.25);
+      if(_cmdReliefCost(Cy,grant)!==expect) throw new Error('a roster general\\'s relief cost must equal base+prestige, got '+_cmdReliefCost(Cy,grant)+' vs '+expect);
+      return { rosterSurcharge:0, byteIdentical:true }; });
+
+    step('D113: a commissioned POLITICAL general (Banks, pv 82) costs MORE to relieve in the 1864 pre-election window than his base+prestige', function(){
+      if(typeof _cmdElectionSupportSurcharge!=='function') return { skipped:'pre-D113' };
+      var banks=_cmdCommissionEntry('US','us-banks'); if(!banks) return { skipped:'no us-banks' };
+      if(_cmdPoliticalValue(banks)<=0) throw new Error('Banks must read a political value');
+      var C=mkC('US',1864,9); C.clock.resolved1864=false;
+      var sur=_cmdElectionSupportSurcharge(C,banks);
+      if(!(sur>0)) throw new Error('a political general in the 1864 window must carry a surcharge, got '+sur);
+      var rep=_cmdReputation(C,'us-banks'); var noBind=Math.round((_cmdRELIEF_BASE[banks.relief]||_cmdRELIEF_BASE.costly)+Math.max(0,rep-60)*0.25);
+      if(!(_cmdReliefCost(C,banks)>noBind)) throw new Error('the bind must raise the relief cost above base+prestige');
+      if(_cmdReliefCost(C,banks)!==noBind+sur) throw new Error('relief cost must equal base+prestige+surcharge');
+      return { surcharge:sur, withBind:_cmdReliefCost(C,banks), noBind:noBind }; });
+
+    step('D113: the bind RELAXES once the 1864 verdict is rendered (resolved1864 -> surcharge 0, relief back to base+prestige)', function(){
+      if(typeof _cmdElectionSupportSurcharge!=='function') return { skipped:'pre-D113' };
+      var banks=_cmdCommissionEntry('US','us-banks'); if(!banks) return { skipped:'no us-banks' };
+      var C=mkC('US',1864,12); C.clock.resolved1864=true;
+      if(_cmdElectionSupportSurcharge(C,banks)!==0) throw new Error('after the election resolves, the surcharge must fall to 0 (the bind is spent)');
+      var rep=_cmdReputation(C,'us-banks'); var noBind=Math.round((_cmdRELIEF_BASE[banks.relief]||_cmdRELIEF_BASE.costly)+Math.max(0,rep-60)*0.25);
+      if(_cmdReliefCost(C,banks)!==noBind) throw new Error('post-election relief cost must be exactly base+prestige');
+      return { relaxed:true }; });
+
+    step('D113: the surcharge RAMPS toward Nov 1864 (1861=0 <= 1862 < 1863 < 1864) and is BOUNDED by surchargeMax; a professional kind reads 0', function(){
+      if(typeof _cmdElectionSupportSurcharge!=='function') return { skipped:'pre-D113' };
+      var banks=_cmdCommissionEntry('US','us-banks'); if(!banks) return { skipped:'no us-banks' };
+      var s=function(y){ var C=mkC('US',y,6); C.clock.resolved1864=false; return _cmdElectionSupportSurcharge(C,banks); };
+      var s61=s(1861),s62=s(1862),s63=s(1863),s64=s(1864);
+      if(!(s61===0 && s61<=s62 && s62<s63 && s63<s64)) throw new Error('the surcharge must ramp 1861(0) <= 1862 < 1863 < 1864: '+[s61,s62,s63,s64].join('/'));
+      var cfg=_cmdElectionBindCfg(); var max=cfg?cfg.surchargeMax:0;
+      if(s64>max) throw new Error('the surcharge must be bounded by surchargeMax ('+max+'), got '+s64);
+      // a non-political (professional) commission kind reads 0
+      var fake={ id:'fake', relief:'costly', commission:{ kind:'professional', politicalValue:90 } };
+      if(_cmdPoliticalValue(fake)!==0) throw new Error('only kind==="political" carries an election value');
+      var Cb=mkC('US',1864,6); if(_cmdElectionSupportSurcharge(Cb,fake)!==0) throw new Error('a professional-kind officer must have 0 surcharge');
+      return { ramp:[s61,s62,s63,s64], max:max }; });
+
+    step('D113: the teaching TELL renders when a commissioned political general is in command before the vote (constituency + the +capital cost)', function(){
+      if(typeof cmdCommission!=='function'||typeof _cmdElectionSupportSurcharge!=='function') return { skipped:'pre-D113' };
+      var C=mkC('US',1864,9); C.clock.capital=200; C.clock.resolved1864=false;   // Butler served until Jan 1865 (the historical bind: relieved after the election)
+      cmdCommission(C,'us-butler'); cmdAppoint(C,'us-butler');
+      var active=cmdActiveGeneral(C);
+      if(!active||active.id!=='us-butler') return { skipped:'Butler not seated (service window)' };
+      var html=cmdRenderTab(C);
+      if(html.indexOf('Election support')<0) throw new Error('the active card must show the election-support tell for a seated political general in the window');
+      if(html.indexOf('political capital')<0) throw new Error('the tell must name the +capital relief cost');
+      if(html.indexOf('NaN')>=0||html.indexOf('undefined')>=0) throw new Error('the tell leaked NaN/undefined');
+      return { tell:true }; });
+
+    step('D113 bug-hunt (MED): the bind is UNION-ONLY — a CS political general (Floyd, pv 78) carries NO surcharge and NO "Lincoln" tell (the CSA held no 1864 election)', function(){
+      if(typeof _cmdElectionSupportSurcharge!=='function') return { skipped:'pre-D113' };
+      var floyd=_cmdCommissionEntry('CS','cs-floyd'); if(!floyd) return { skipped:'no cs-floyd' };
+      if(_cmdPoliticalValue(floyd)<=0) throw new Error('Floyd should read a political value (he IS a political general — the gate must be by SIDE, not by political-value)');
+      var C=mkC('CS',1862,2); C.clock.resolved1864=false;
+      if(_cmdElectionSupportSurcharge(C,floyd)!==0) throw new Error('a CS political general must carry 0 election surcharge (the Union-only bind)');
+      var rep=_cmdReputation(C,'cs-floyd'); var noBind=Math.round((_cmdRELIEF_BASE[floyd.relief]||_cmdRELIEF_BASE.costly)+Math.max(0,rep-60)*0.25);
+      if(_cmdReliefCost(C,floyd)!==noBind) throw new Error('CS relief cost must equal base+prestige (byte-identical, no surcharge)');
+      C.clock.capital=200; cmdCommission(C,'cs-floyd'); cmdAppoint(C,'cs-floyd');
+      if(cmdActiveGeneral(C)&&cmdActiveGeneral(C).id==='cs-floyd'){ var html=cmdRenderTab(C);
+        if(html.indexOf('Lincoln lived this bind')>=0) throw new Error('a CS card must NOT render the "Lincoln lived this bind" tell (fabricated attribution)');
+        if(html.indexOf('Election support')>=0) throw new Error('a CS card must NOT render the election-support tell'); }
+      return { csSurcharge:0, unionOnly:true }; });
+
+    step('D113 bug-hunt (MED): a tampered NaN windowByYear can never poison the surcharge (isFinite guard) — stays finite & bounded', function(){
+      if(typeof _cmdElectionWindow!=='function'||typeof gameData!=='function') return { skipped:'pre-D113' };
+      var cfg=gameData('ratings'); if(!cfg||!cfg.electionReliefBind||!cfg.electionReliefBind.windowByYear) return { skipped:'no config' };
+      var by=cfg.electionReliefBind.windowByYear, saved=by['1864'];
+      try {
+        by['1864']=NaN;
+        var banks=_cmdCommissionEntry('US','us-banks'), C=mkC('US',1864,9); C.clock.resolved1864=false;
+        var w=_cmdElectionWindow(C); if(!isFinite(w)) throw new Error('a NaN windowByYear must fall to a finite default, got '+w);
+        var sur=_cmdElectionSupportSurcharge(C,banks); if(!isFinite(sur)||sur<0) throw new Error('the surcharge must stay finite & >=0 under a NaN window, got '+sur);
+        if(sur>cfg.electionReliefBind.surchargeMax) throw new Error('surcharge must stay bounded by surchargeMax even under a tampered window');
+        if(!isFinite(_cmdReliefCost(C,banks))) throw new Error('relief cost must stay finite under a tampered window (no NaN-capital poison)');
+      } finally { by['1864']=saved; }
+      return { nanSafe:true }; });
+
     // helper: read a general's current reputation
     function C0rep(C,id){ return (C.president&&C.president.command&&typeof C.president.command.reputation[id]==='number')?C.president.command.reputation[id]:60; }
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }

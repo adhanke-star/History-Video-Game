@@ -110,9 +110,12 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       tab (16th, pure read-out) AND the war-end final report (the authorized `warWonScreen` override). New
       `src/82-after-action.js`; no tactical file touched → combat byte-identical by construction. probe-afteraction
       10/10; bug-hunt invariantsHold=TRUE (1 LOW + 2 critic-LOW, one NaN root cause, fixed+probe-locked); wcag AA.
+      ‹✅ the §12.3 ELECTION-SUPPORT RELIEF-BIND shipped (D113): a commissioned UNION political general costs extra
+      political capital to relieve before the 1864 vote (rises 1862<1863<1864, relaxes once `resolved1864`); a
+      teaching tell on the active-general card; UNION-only + byte-identical for the roster + the CS side;
+      probe-command 76/76; bug-hunt 3 confirmed (2 MED + 1 LOW) all fixed.›
       **Remaining:** **E4-i2** — wire `victoryReady` (negotiated peace / recognition) to an actual war-END so the
-      final report fires for a non-chain-complete victory + the §12.3 election-support relief-bind (now unblocked —
-      the home-front domain surfaces the 1864-election state); the honest multi-path victory framing.›
+      final report fires for a non-chain-complete victory; the honest multi-path victory framing.›
 
 ### Phase F — CONTENT SYSTEMS  (folded into the phase each best fits)
 - [ ] Logistics/rail network · POW exchange-collapse · disease/medical · hard war · irregular war · the four

@@ -1291,14 +1291,75 @@ function _cmdTraitBar(label, v, hint) {
     + (hint ? '<div style="font-size:10px;opacity:.5">' + _cmdEsc(hint) + '</div>' : '') + '</div>';
 }
 
+/* ---- §12.3 (D113) THE ELECTION-SUPPORT BIND — the command-politics keystone the
+   COMMISSION move (D109) was built around. A commissioned POLITICAL general delivers
+   his constituency's votes to the war effort while he serves, so relieving him in the
+   run-up to the 1864 election forfeits that support: an ADDITIVE surcharge on his
+   relief cost that rises year over year toward the 1864 vote (1862 < 1863 < 1864) and
+   FALLS to zero once the verdict is in (resolved1864 — the bind is spent, dismiss him
+   freely). UNION-ONLY: the Confederacy held no 1864 presidential election (Davis served
+   a single six-year term from Feb 1862), so this is Lincoln's bind alone — a CS political
+   general (Floyd/Pillow) keeps only his BASE relief cost. EXACTLY 0 for every non-political
+   general, the entire CS side, and outside the window -> _cmdReliefCost stays byte-identical
+   for the whole starting roster, in every year, until you commission AND field a UNION
+   political general in the 1862-64 pre-election window. NEVER on the combat path (a
+   strategic political-capital cost). Data: ratings.json -> electionReliefBind. ---- */
+function _cmdElectionBindCfg() {
+  var r = (typeof gameData === "function") ? gameData("ratings") : null;
+  return (r && r.electionReliefBind && typeof r.electionReliefBind === "object") ? r.electionReliefBind : null;
+}
+
+/* The general's political value (0..100) IF he is a commissioned political general; else 0. */
+function _cmdPoliticalValue(gen) {
+  if (!gen || !gen.commission || gen.commission.kind !== "political") return 0;
+  var pv = gen.commission.politicalValue;
+  return (typeof pv === "number" && isFinite(pv)) ? Math.max(0, Math.min(100, pv)) : 0;
+}
+
+/* The 1864-election window strength (0..1): rises toward Nov 1864, ZERO once the
+   verdict is rendered (resolved1864 -> the bind is spent, relieve him freely). */
+function _cmdElectionWindow(C) {
+  var clk = (C && C.clock) || {};
+  if (clk.resolved1864) return 0;                                  // the election is past — the bind relaxes
+  var cfg = _cmdElectionBindCfg();
+  var by = (cfg && cfg.windowByYear && typeof cfg.windowByYear === "object") ? cfg.windowByYear : {};
+  var year = (typeof clk.year === "number") ? clk.year
+    : (C && C.president && C.president.date && typeof C.president.date.year === "number") ? C.president.date.year : 1861;
+  var w = by[String(year)];
+  if (typeof w !== "number" || !isFinite(w)) w = (year >= 1864) ? 1 : 0;   // a NaN/non-number entry (tampered config) falls to the documented default; a later year stays in the window (D113 bug-hunt MED — typeof NaN === "number")
+  return Math.max(0, Math.min(1, w));
+}
+
+/* The election-support surcharge (political capital) on a political general's relief
+   cost. Bounded [0, surchargeMax]; EXACTLY 0 for any non-political general or outside
+   the window -> _cmdReliefCost is byte-identical for the whole starting roster. */
+function _cmdElectionSupportSurcharge(C, gen) {
+  var pv = _cmdPoliticalValue(gen);
+  if (pv <= 0) return 0;
+  // §12.3 (D113 bug-hunt MED): the election-support bind is a UNION phenomenon — the
+  // Confederacy held no 1864 presidential election (Davis served one six-year term from
+  // Feb 1862), so "Lincoln's bind" has no CS analogue. A CS political general (Floyd/Pillow)
+  // keeps only his BASE relief cost; the surcharge + the "Lincoln lived this bind" tell are
+  // US-only. This also keeps the CS side fully byte-identical (surcharge always 0).
+  if (!C || C.side === "CS") return 0;
+  var cfg = _cmdElectionBindCfg();
+  var max = (cfg && typeof cfg.surchargeMax === "number" && isFinite(cfg.surchargeMax)) ? Math.max(0, cfg.surchargeMax) : 0;
+  if (max <= 0) return 0;
+  var w = _cmdElectionWindow(C);
+  if (!(w > 0)) return 0;   // !(NaN > 0) -> true: a non-finite window can never produce a surcharge (defense-in-depth with the _cmdElectionWindow isFinite guard)
+  return Math.max(0, Math.min(max, Math.round((pv / 100) * w * max)));
+}
+
 /* The relief cost (political capital) to remove a general now — scaled up for a
-   popular man at the height of his prestige (the McClellan problem). */
+   popular man at the height of his prestige (the McClellan problem), plus the §12.3
+   election-support surcharge for a commissioned political general before the 1864 vote. */
 function _cmdReliefCost(C, gen) {
   if (!gen) return 0;
   var base = _cmdRELIEF_BASE[gen.relief] || _cmdRELIEF_BASE.costly;
   var rep = _cmdReputation(C, gen.id);
   var prestige = Math.max(0, rep - 60) * 0.25;   // a beloved general is dearer to dismiss
-  return Math.round(base + prestige);
+  var electionBind = _cmdElectionSupportSurcharge(C, gen);   // §12.3 (D113): 0 (byte-identical) for non-political generals + outside the 1864-election window
+  return Math.round(base + prestige + electionBind);
 }
 
 /* The card for the sitting commanding general. */
@@ -1321,6 +1382,12 @@ function _cmdActiveCard(C) {
   var ambTell = (amb >= 70)
     ? '<div style="margin-top:7px;font-size:11px;color:#9c3b2e;background:rgba(156,59,46,.08);border:1px solid rgba(156,59,46,.4);border-radius:4px;padding:7px">&#9873; <b>Ambition.</b> '
         + _cmdEsc(gen.weakness || "He courts the newspapers and the politicians; removing him will cost you dearly.") + '</div>'
+    : '';
+  // §12.3 (D113): the election-support bind — a commissioned political general in command before the 1864 vote.
+  var elecSur = _cmdElectionSupportSurcharge(C, gen);
+  var electionTell = (elecSur > 0 && _cmdPoliticalValue(gen) > 0)
+    ? '<div style="margin-top:7px;font-size:11px;color:#cbb27a;background:rgba(203,178,122,.07);border:1px solid rgba(203,178,122,.4);border-radius:4px;padding:7px">&#9873; <b>Election support.</b> '
+        + 'He delivers ' + _cmdEsc(gen.constituency || "a constituency the coalition needs") + ' to the war effort. Relieving him before the 1864 verdict would forfeit it &mdash; his removal now costs <b>+' + elecSur + ' political capital</b>, until the polls are past. Lincoln lived this bind, keeping in command men he could not afford to fire.</div>'
     : '';
   return ''
     + '<div style="padding:12px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.14)">'
@@ -1357,6 +1424,7 @@ function _cmdActiveCard(C) {
     +   '</div>'
     +   (gen.bio ? '<div style="font-size:12px;opacity:.82;margin-top:8px">' + _cmdEsc(gen.bio) + '</div>' : '')
     +   ambTell
+    +   electionTell
     +   (gen.provenance ? '<div style="margin-top:5px;font-size:10px;opacity:.55">' + _cmdEsc(gen.provenance) + (gen.sources && gen.sources.length ? ' &middot; ' + _cmdEsc(gen.sources.join("; ")) : '') + '</div>' : '')
     +   (!byHistory ? '<button id="cmdRevert" type="button" class="upg" style="margin-top:8px;font-size:11px;padding:2px 8px">Restore the historical command</button>' : '')
     + '</div>';
