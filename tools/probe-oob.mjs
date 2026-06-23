@@ -35,7 +35,7 @@ const SETUP = `(() => {
   // every brigade across a side's corps tree (flatten).
   function allBrigs(sideOOB){ var out=[]; for(var c=0;c<sideOOB.corps.length;c++){ var co=sideOOB.corps[c]; for(var b=0;b<co.brigades.length;b++) out.push(co.brigades[b]); } return out; }
   try {
-    var fns=['fldOOBForSide','fldCampaignOOB','fldCampaignOOBHtml','_fldOOBDerive','_fldOOBAuthored','_fldOOBProvFromNote'];
+    var fns=['fldOOBForSide','fldCampaignOOB','fldCampaignOOBHtml','_fldOOBDerive','_fldOOBAuthored','_fldOOBProvFromNote','_fldScoutPosture','_fldOOBSideScouted'];
     for(var i=0;i<fns.length;i++) if(typeof window[fns[i]]!=='function') return JSON.stringify({ok:false, fatal:'missing OOB fn '+fns[i]});
     if(typeof BATTLES==='undefined') return JSON.stringify({ok:false, fatal:'no BATTLES'});
     G.settings=G.settings||{}; G.settings.gfx='classic'; G.mode='menu';
@@ -192,6 +192,47 @@ const SETUP = `(() => {
       // the fuzzy board shows only the PLAYER's brigade men rows; full adds the ENEMY's -> strictly more
       if(fl<=fr) throw new Error('reveal:full must add enemy brigade men rows (fuzzy '+fr+' vs full '+fl+')');
       return { fuzzyMenRows:fr, fullMenRows:fl }; });
+
+    step('SCOUT TIERS (Q8b): light->better->full reveal ladder; "better" names + per-corps + posture, NO per-brigade leak', function(){
+      var C=mkC('US',1861,7);   // bullrun1 -> authored OOB both sides
+      var light=fldCampaignOOBHtml(C);                       // default = light (the passive estimate)
+      var better=fldCampaignOOBHtml(C, { reveal:'better' });
+      var full=fldCampaignOOBHtml(C, { reveal:'full' });
+      if(!light||!better||!full) throw new Error('a tier rendered empty');
+      // the CTA gates only the light tier; better/full have been revealed
+      if(light.indexOf('not yet known')<0) throw new Error('light should carry the scouting CTA');
+      if(better.indexOf('not yet known')>=0) throw new Error('better should drop the unscouted CTA');
+      if(better.indexOf('SCOUTED')<0) throw new Error('better should carry the SCOUTED framing');
+      // the enemy commander surfaces in "better" (the historical cmdCS of the ACTUAL next battle), + a posture advisory
+      var nbd=_brgNextBattle(C);
+      if(nbd && nbd.cmdCS && better.indexOf(nbd.cmdCS)<0) throw new Error('better recon must name the enemy commander ('+nbd.cmdCS+')');
+      if(!/defensive|attack|initiative/.test(better)) throw new Error('better recon must show a posture advisory');
+      // NO-LEAK: count brigade men rows — "better" must add NO enemy per-brigade rows over light (per-corps only);
+      // only "full" lays the enemy's brigades bare.
+      function menRows(s){ return s.split(' men</span>').length - 1; }
+      var lr=menRows(light), br=menRows(better), fr=menRows(full);
+      if(br!==lr) throw new Error('better recon LEAKED enemy per-brigade men rows (light '+lr+' vs better '+br+')');
+      if(fr<=br) throw new Error('full recon must add the enemy per-brigade rows (better '+br+' vs full '+fr+')');
+      // _fldScoutPosture is pure + derives posture from bd.atk (the attacker side), terrain from bd.feat
+      var pAtk=_fldScoutPosture({ atk:'CS', feat:'river,ridge,woods' }, 'CS');   // enemy CS is the attacker
+      var pDef=_fldScoutPosture({ atk:'US', feat:'works' }, 'CS');               // enemy CS is the defender
+      if(!/attack/i.test(pAtk)) throw new Error('an enemy that IS the attacker should read "attack"');
+      if(!/defensive/i.test(pDef)) throw new Error('an enemy that is NOT the attacker should read "defensive"');
+      if(_fldScoutPosture(null,'CS')!=='') throw new Error('null bd -> "" (graceful)');
+      // Q8b bug-hunt (LOW): the posture honors a pending alt-history attacker-flip (C.flipAtk) — direction-agnostic.
+      // The posture LEAD is "massing to <b>attack</b>" OR "stands on the <b>defensive</b>" (the terrain note's
+      // "standing on the defensive" is distinct -> matched by .indexOf, not a slash-regex, per the SETUP gotcha).
+      function leadAtt(s){ return s.indexOf('massing to')>=0; }
+      function leadDef(s){ return s.indexOf('stands on the')>=0; }
+      if(!(leadAtt(better)||leadDef(better))) throw new Error('precondition: the next battle should have a clear posture lead');
+      var atkBefore=nbd && nbd.atk;
+      C.flipAtk=true;
+      var betterFlip=fldCampaignOOBHtml(C,{ reveal:'better' });
+      C.flipAtk=false;
+      if(leadAtt(better)===leadAtt(betterFlip)) throw new Error('a pending flipAtk must FLIP the posture lead (attack <-> defensive)');
+      // the flip is NON-MUTATING: the BATTLES entry's atk is untouched after the render (a fresh copy was used)
+      if((_brgNextBattle(C)||{}).atk!==atkBefore) throw new Error('flipAtk render MUTATED the BATTLES entry (must be a copy)');
+      return { menRows:{ light:lr, better:br, full:fr }, flipHonored:true, nextBattle:nbd&&nbd.id }; });
 
     step('GRACEFUL: null inputs + a campaign with no next battle return null / "" (no crash)', function(){
       if(fldCampaignOOB(null)!==null) throw new Error('null C should -> null');

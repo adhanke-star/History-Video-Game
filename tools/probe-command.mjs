@@ -428,6 +428,99 @@ const SETUP = `(() => {
       if(html2.indexOf('(+')<0) throw new Error('a winning general should render a positive career delta');
       return { branches:'Untested/Rising/Fading/Holding', label:dt.label }; });
 
+    // ===== Q8b (D107): THE CAVALRY RECONNAISSANCE — scout the next-battle enemy OOB, tiered by cavalry =====
+    step('Q8b: _cmdScoutTierForCavalry maps cavalry -> tier at the configured threshold; a fresh campaign reads "light"', function(){
+      if(typeof _cmdScoutTierForCavalry!=='function'||typeof cmdScoutTier!=='function') return { skipped:'pre-Q8b' };
+      var thr=(_cmdScoutCfg().cavalryFullThreshold)||65;
+      if(_cmdScoutTierForCavalry(thr)!=='full') throw new Error('at the threshold should be full');
+      if(_cmdScoutTierForCavalry(thr+5)!=='full') throw new Error('above the threshold should be full');
+      if(_cmdScoutTierForCavalry(thr-1)!=='better') throw new Error('below the threshold should be better');
+      if(_cmdScoutTierForCavalry(NaN)!=='better') throw new Error('garbage cavalry must fall back to better, never full');
+      var C=mkC('US',1861,7);   // idx 0 -> bullrun1 is the next battle; never scouted
+      if(cmdScoutTier(C)!=='light') throw new Error('an unscouted campaign must read light (byte-identical default)');
+      return { thr:thr, fresh:cmdScoutTier(C) }; });
+
+    step('Q8b: cmdScout reveals the enemy at the appointed general\\'s cavalry tier + debits EXACTLY the cost (capital only)', function(){
+      if(typeof cmdScout!=='function') return { skipped:'pre-Q8b' };
+      var cost=(_cmdScoutCfg().cost)||3;
+      // a high-cavalry general (Grant, cav 66 >= 65) -> FULL recon
+      var Cg=mkC('US',1863,3); Cg.clock.capital=100; cmdAppoint(Cg,'us-grant');
+      var capBefore=Math.round(Cg.clock.capital);
+      cmdScout(Cg);
+      var sc=Cg.president.command.scout;
+      if(!sc) throw new Error('cmdScout set no scout record');
+      if(sc.tier!=='full') throw new Error('Grant (cav 66) should yield FULL recon, got '+sc.tier);
+      var bd=_brgNextBattle(Cg); if(sc.battleId!==bd.id) throw new Error('scout record keyed to the wrong battle: '+sc.battleId+' vs '+bd.id);
+      if(Math.round(Cg.clock.capital)!==capBefore-cost) throw new Error('capital not debited exactly the cost: '+capBefore+' -> '+Math.round(Cg.clock.capital)+' (cost '+cost+')');
+      if(cmdScoutTier(Cg)!=='full') throw new Error('cmdScoutTier should now read full');
+      var html=cmdRenderTab(Cg);
+      if(html.indexOf('Reconnaissance complete')<0) throw new Error('the scouted board must show the reconnaissance-complete badge');
+      // a mid-cavalry general (McClellan, cav 58 < 65) -> BETTER recon
+      var Cm=mkC('US',1862,9); Cm.clock.capital=100; cmdAppoint(Cm,'us-mcclellan');
+      cmdScout(Cm);
+      var sm=Cm.president.command.scout;
+      if(!sm||sm.tier!=='better') throw new Error('McClellan (cav 58) should yield BETTER recon, got '+(sm&&sm.tier));
+      // no player appointee -> the HISTORICAL DEFAULT commander's cavalry drives recon (the flat baseline only
+      // applies when there is truly no active general); a default-command campaign can still scout.
+      var Cn=mkC('CS',1863,5); Cn.clock.capital=100; cmdScout(Cn);
+      if(!Cn.president.command.scout) throw new Error('a default-command campaign should still be able to scout');
+      return { grant:sc.tier, mcclellan:sm.tier, defaultCmd:Cn.president.command.scout.tier, cost:cost }; });
+
+    step('Q8b: the gate + idempotence — short capital is a no-op; re-scouting the same engagement does not re-charge', function(){
+      if(typeof cmdScout!=='function') return { skipped:'pre-Q8b' };
+      var cost=(_cmdScoutCfg().cost)||3;
+      // insufficient capital -> no scout, no debit
+      var Cp=mkC('US',1863,3); Cp.clock.capital=cost-1; cmdAppoint(Cp,'us-grant'); var capPoor=Math.round(Cp.clock.capital);
+      cmdScout(Cp);
+      if(Cp.president.command.scout) throw new Error('scouted despite insufficient capital');
+      if(Math.round(Cp.clock.capital)!==capPoor) throw new Error('capital changed on a gated (failed) scout');
+      // re-scout the SAME battle -> no double charge
+      var Cr=mkC('US',1863,3); Cr.clock.capital=100; cmdAppoint(Cr,'us-grant');
+      cmdScout(Cr); var cap1=Math.round(Cr.clock.capital);
+      cmdScout(Cr); var cap2=Math.round(Cr.clock.capital);
+      if(cap1!==cap2) throw new Error('re-scouting the same engagement charged again: '+cap1+' -> '+cap2);
+      return { gatedNoOp:true, reScoutFree:true }; });
+
+    step('Q8b: stale recon — when the next engagement changes, the reveal reverts to light (fresh intel per battle)', function(){
+      if(typeof cmdScout!=='function') return { skipped:'pre-Q8b' };
+      var C=mkC('US',1863,3); C.clock.capital=100; cmdAppoint(C,'us-grant');   // 1863 so the Grant appointment (cav 66) sticks
+      cmdScout(C);
+      if(cmdScoutTier(C)!=='full') throw new Error('precondition: should be scouted full at idx0');
+      C.idx=1;   // advance to the next engagement (a different battle id)
+      var bd1=_brgNextBattle(C);
+      if(bd1 && bd1.id===C.president.command.scout.battleId) return { note:'idx1 same battle id; skip' };
+      if(cmdScoutTier(C)!=='light') throw new Error('a changed next-battle must revert the reveal to light, got '+cmdScoutTier(C));
+      return { staleRevertsToLight:true }; });
+
+    step('Q8b: SAVE-TAMPER hardening — a malformed scout record is dropped on cmdInit; a valid one survives + is bounded', function(){
+      if(typeof cmdScout!=='function') return { skipped:'pre-Q8b' };
+      var C=mkC('US',1863,3);
+      C.president.command.scout={ battleId:'', tier:'wat', turn:-9, cavalry:9e9 };   // poison
+      cmdInit(C);
+      if(C.president.command.scout!==null) throw new Error('a malformed scout record must be dropped to null on load');
+      // a valid-but-out-of-band record is kept + bounded
+      C.president.command.scout={ battleId:'bullrun1', tier:'full', turn:-3, cavalry:500 };
+      cmdInit(C);
+      var s=C.president.command.scout;
+      if(!s) throw new Error('a valid scout record must survive sanitize');
+      if(s.turn<0||!isFinite(s.turn)) throw new Error('turn not bounded: '+s.turn);
+      if(s.cavalry<0||s.cavalry>100) throw new Error('cavalry not clamped: '+s.cavalry);
+      return { droppedBad:true, boundedGood:{turn:s.turn,cavalry:s.cavalry} }; });
+
+    step('Q8b: NO output gate — cmdScout writes ONLY cmd.scout + C.clock.capital (no scoreboard); unscouted board is the light default', function(){
+      if(typeof cmdScout!=='function') return { skipped:'pre-Q8b' };
+      var C=mkC('US',1863,3); C.clock.capital=100; cmdAppoint(C,'us-grant');
+      var snap=JSON.stringify({ idx:C.idx, stats:C.stats, strength:(C.manpower&&C.manpower.strength), fieldGeneral:C.president.command.fieldGeneral });
+      cmdScout(C);
+      if(JSON.stringify({ idx:C.idx, stats:C.stats, strength:(C.manpower&&C.manpower.strength), fieldGeneral:C.president.command.fieldGeneral })!==snap)
+        throw new Error('cmdScout mutated campaign/combat state beyond cmd.scout + capital');
+      // the control on an UNSCOUTED board offers the button; on a scouted board shows the complete badge
+      var Cu=mkC('US',1863,3); Cu.clock.capital=100;
+      var ctrlU=cmdScoutControlHtml(Cu);
+      if(ctrlU.indexOf('id="cmdScout"')<0) throw new Error('the unscouted control must render the scout button');
+      if(cmdScoutTier(Cu)!=='light') throw new Error('unscouted must read light');
+      return { pure:true, unscoutedOffersButton:true }; });
+
     // helper: read a general's current reputation
     function C0rep(C,id){ return (C.president&&C.president.command&&typeof C.president.command.reputation[id]==='number')?C.president.command.reputation[id]:60; }
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }

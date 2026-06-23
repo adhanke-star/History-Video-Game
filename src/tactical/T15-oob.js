@@ -348,15 +348,87 @@ function _fldOOBSideFuzzy(o, accent) {
     + '</div>'
     + '</div>';
 }
+
+/* a flip-adjusted copy of a battle when an alt-history attacker-swap is pending (C.flipAtk) — the SAME
+   swap the resolver applies (87-auto-resolve.js / T2 fightBd): a NEW object with atk reversed, NEVER a
+   mutation of the BATTLES entry. So the posture advisory stays truthful for a recovery refight in the
+   reversed orientation. Q8b bug-hunt (LOW). */
+function _fldOOBFlipAtk(bd) { return Object.assign({}, bd, { atk: (bd.atk === "US" ? "CS" : "US") }); }
+
+/* a POSTURE + TERRAIN advisory for the "better" recon tier (§15 "named + posture") — derived PURELY
+   from the battle the campaign has already set: the attacker side (bd.atk), the terrain features
+   (bd.feat), and the objective (bd.obj). No invented facts — a reading of the engagement. "" when bd
+   is absent (graceful). Q8b (D107). */
+function _fldScoutPosture(bd, enemySide) {
+  if (!bd) return "";
+  var atk = String(bd.atk == null ? "" : bd.atk);
+  var enemyAttacks = (atk === enemySide);
+  var lead = enemyAttacks
+    ? 'Your scouts report the enemy massing to <b>attack</b> &mdash; expect them to come on.'
+    : (atk ? 'The enemy stands on the <b>defensive</b> &mdash; they mean to hold their ground.'
+           : 'Neither side has yet seized the initiative.');
+  var feat = String(bd.feat == null ? "" : bd.feat);
+  var terr = [];
+  if (/river|ford|creek|swamp|bayou/.test(feat)) terr.push("a river line");
+  if (/ridge|hill|heights|bluff|mountain/.test(feat)) terr.push("high ground");
+  if (/woods|forest/.test(feat)) terr.push("broken, wooded country");
+  if (/works|fort|trench|abatis|entrench|redoubt/.test(feat)) terr.push("prepared works");
+  var terrNote = terr.length ? (" The field includes " + terr.slice(0, 2).join(" and ")
+    + " &mdash; ground that rewards the side standing on the defensive.") : "";
+  return lead + terrNote;
+}
+
+/* the ENEMY rendered at "BETTER" recon (§15 "named badges + posture") — the firmer force OVR, the
+   named commander, the per-CORPS grades, and the posture/terrain advisory, but NO per-brigade detail
+   (that is what FULL recon / a higher cavalry rating buys). The step between the light estimate and
+   the full order of battle. Q8b (D107). */
+function _fldOOBSideScouted(o, accent, bd, enemySide) {
+  var g = _fldOOBGrade(o.forceOVR);
+  var head = ''
+    + '<div style="display:flex;align-items:baseline;gap:7px;margin:1px 0 2px">'
+    +   '<span aria-hidden="true" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:' + g.color + '"></span>'
+    +   '<span style="font-weight:bold;font-size:18px;line-height:1">' + o.forceOVR + '</span>'
+    +   '<span style="font-size:9px;opacity:.62;letter-spacing:.05em">FORCE OVR &middot; SCOUTED</span>'
+    +   '<span style="font-size:12px"><b>' + _fldOOBEsc(g.letter) + '</b> ' + _fldOOBEsc(g.word) + '</span>'
+    + '</div>'
+    + '<div style="font-size:11px;opacity:.78">about ' + o.n + ' brigades'
+    +   (o.commander ? ' &middot; ' + _fldOOBEsc(o.commander.name) : '')
+    + '</div>';
+  var body = '<div style="margin-top:7px">';
+  for (var c = 0; c < o.corps.length; c++) {
+    var co = o.corps[c], cg = _fldOOBGrade(co.ovr);
+    body += '<div style="display:flex;justify-content:space-between;align-items:baseline;font-size:11px;padding:3px 0;border-top:1px solid rgba(120,92,62,.32)">'
+      + '<span style="color:#b3925e">' + _fldOOBEsc(co.label) + '</span>'
+      + '<span style="opacity:.92"><b>' + co.ovr + '</b> &middot; <b>' + _fldOOBEsc(cg.letter) + '</b> ' + _fldOOBEsc(cg.word) + '</span>'
+      + '</div>';
+  }
+  body += '</div>';
+  var posture = _fldScoutPosture(bd, enemySide);
+  var adv = posture ? ('<div style="margin-top:8px;padding:7px 9px;border:1px solid var(--rule);border-radius:5px;font-size:11px;opacity:.85;line-height:1.45">' + posture
+    + ' <span style="opacity:.8">Their exact brigades remain hidden &mdash; only a sharper cavalry arm would lay them bare.</span></div>') : '';
+  return '<div style="flex:1 1 280px;min-width:240px;border-left:4px solid ' + accent + ';padding:4px 0 4px 11px">' + head + body + adv + '</div>';
+}
 function fldCampaignOOBHtml(C, opts) {
   if (!_fldOOBReady()) return "";
   var data = fldCampaignOOB(C); if (!data) return "";
   opts = opts || {};
-  var reveal = opts.reveal === "full" ? "full" : "fuzzy";
+  // Q8b (D107): three recon tiers — "light" (the passive estimate, unscouted; the D106 default), "better"
+  // (scouted: named + per-corps grade + posture), "full" (great: the complete enemy OOB). The command layer
+  // passes the tier earned by scouting (cmdScoutTier); a bare call (the probe / no campaign) defaults to light.
+  // "fuzzy" is accepted as a back-compat alias for "light".
+  var reveal = (opts.reveal === "full") ? "full" : (opts.reveal === "better") ? "better" : "light";
+  var reconHtml = (typeof opts.reconHtml === "string") ? opts.reconHtml : "";   // the command-layer "Order a reconnaissance" control, embedded in the board (the WRITE lives in 35-command.js; T15 stays pure-read)
   var COL = { US: "#6c8ebf", CS: "#b77668" }, NAME = { US: "Union", CS: "Confederate" };
   var ps = data.playerSide, es = data.enemySide, bd = data.bd;
   var playerCol = _fldOOBSideExact(data.player, COL[ps]);
-  var enemyCol = (reveal === "full") ? _fldOOBSideExact(data.enemy, COL[es]) : _fldOOBSideFuzzy(data.enemy, COL[es]);
+  // Q8b bug-hunt (LOW): the "better"-tier posture must honor a pending alt-history attacker-flip (C.flipAtk),
+  // the SAME swap the resolver applies — so "the enemy massing to attack" stays truthful when the player
+  // refights in the reversed orientation (the alt-history pillar). Strength/edge are attacker-symmetric, so
+  // only the posture line needs it.
+  var postureBd = (C && C.flipAtk && bd && bd.atk) ? _fldOOBFlipAtk(bd) : bd;
+  var enemyCol = (reveal === "full") ? _fldOOBSideExact(data.enemy, COL[es])
+               : (reveal === "better") ? _fldOOBSideScouted(data.enemy, COL[es], postureBd, es)
+               : _fldOOBSideFuzzy(data.enemy, COL[es]);
   // the predicted-edge bar (player share). Decorative split; the % + names + word carry the meaning.
   var ed = data.edge;
   var pPct = Math.round(data.fracPlayer * 100), ePct = 100 - pPct;
@@ -378,18 +450,24 @@ function fldCampaignOOBHtml(C, opts) {
   var phaseTag = data.phased ? (' &mdash; the opening engagement' + (data.phaseName ? ' (' + _fldOOBEsc(data.phaseName) + ')' : '')) : '';
   var when = _fldOOBEsc(bd.name || "the next engagement") + (bd.year ? (' &middot; ' + bd.year) : '') + phaseTag;
   var rosterScope = data.phased ? "the historical roster of this engagement&rsquo;s OPENING phase (later phases shift the ground and the forces)" : "the historical roster of this engagement";
+  // Q8b: the footer's enemy clause depends on the recon tier — unscouted invites scouting; scouted credits it.
+  var enemyClause = (reveal === "light")
+    ? "the enemy is revealed by scouting."
+    : (reveal === "full" ? "the enemy order of battle has been laid bare by your cavalry reconnaissance."
+                         : "the enemy strength shown is what your cavalry reconnaissance has brought in &mdash; their exact brigades await a sharper recon.");
   var srcNote = (data.player.source === "authored")
-    ? ("Your order of battle is drawn from " + rosterScope + "; the enemy is revealed by scouting.")
-    : "Your order of battle is an estimate derived from your army&rsquo;s strength and the year; sourced figures are marked, derived ones hatched. The enemy is revealed by scouting.";
+    ? ("Your order of battle is drawn from " + rosterScope + "; " + enemyClause)
+    : ("Your order of battle is an estimate derived from your army&rsquo;s strength and the year; sourced figures are marked, derived ones hatched. " + (enemyClause.charAt(0).toUpperCase() + enemyClause.slice(1)));
   var oddsScope = data.phased ? "the odds of the opening clash" : "the odds";
   return '<div style="margin-top:14px;padding:11px 13px;border:1px solid var(--rule);border-radius:6px;background:rgba(0,0,0,.12)">'
     + '<div style="text-align:center;font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:#b3925e;margin-bottom:2px">Order of Battle &mdash; the Next Engagement</div>'
     + '<div style="text-align:center;font-size:11px;opacity:.7;margin-bottom:8px">' + when + '</div>'
     + '<div style="display:flex;gap:14px;flex-wrap:wrap">'
     +   '<div style="flex:1 1 280px;min-width:240px"><div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;opacity:.72;margin-bottom:2px">Your army (exact)</div>' + playerCol + '</div>'
-    +   '<div style="flex:1 1 280px;min-width:240px"><div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;opacity:.72;margin-bottom:2px">The enemy' + (reveal === "full" ? " (scouted)" : " (estimate)") + '</div>' + enemyCol + '</div>'
+    +   '<div style="flex:1 1 280px;min-width:240px"><div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;opacity:.72;margin-bottom:2px">The enemy' + (reveal === "light" ? " (estimate)" : " (scouted)") + '</div>' + enemyCol + '</div>'
     + '</div>'
     + bar
+    + reconHtml
     + '<div style="font-size:10.5px;opacity:.62;margin-top:8px;line-height:1.4">' + srcNote
     +   ' A read-out of strength &times; quality &mdash; it forecasts ' + oddsScope + ', it never fixes the result.</div>'
     + '</div>';

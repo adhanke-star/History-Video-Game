@@ -134,6 +134,113 @@ function cmdActiveGeneral(C) {
   return id ? _cmdById((C.side === "CS") ? "CS" : "US", id) : null;
 }
 
+/* ===========================================================================
+   Q8b (D107) · THE BETWEEN-BATTLE CAVALRY RECONNAISSANCE (RATING-SYSTEM-DESIGN §15)
+   The camp loop's deferred SCOUTING (deferred at D100 until the D106 OOB substrate existed).
+   The President orders a recon of the next engagement on the Command desk: it spends a small
+   amount of political capital (the existing GM currency) and reveals the enemy Order of Battle —
+   rendered by T15's fldCampaignOOBHtml — to a tier scaled by the appointed army commander's persona
+   `cavalry` attribute (Stuart's eyes vs the Gettysburg intelligence vacuum). PURE DISPLAY + an
+   economy spend: cmdScout writes ONLY cmd.scout (the revealed tier, keyed to the next-battle id so
+   intel is fresh per engagement) + debits capital — it NEVER writes the scoreboard (build-gate 4d).
+   A campaign that never scouts is byte-identical to the pre-Q8b build (no scout record -> light tier).
+   =========================================================================== */
+function _cmdScoutCfg() { var d = gameData("ratings"); return (d && d.scout) ? d.scout : {}; }
+
+/* the appointed army commander's persona `cavalry` (his use of and skill with the mounted arm /
+   reconnaissance); the configured baseline when no general is appointed (the default historical
+   command). Clamped [0,100]. */
+function _cmdScoutCavalry(C) {
+  var cfg = _cmdScoutCfg(), base = _cmdNum(cfg.baselineCavalry, 54);
+  try {
+    var gen = (typeof cmdActiveGeneral === "function") ? cmdActiveGeneral(C) : null;
+    if (gen) {
+      var rec = _cmdGenPersona(gen);
+      if (rec && rec.persona && typeof rec.persona.cavalry === "number" && isFinite(rec.persona.cavalry)) {
+        return Math.max(0, Math.min(100, rec.persona.cavalry));
+      }
+    }
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_cmdScoutCavalry:", e); }
+  return Math.max(0, Math.min(100, base));
+}
+
+/* PURE: the recon tier a given cavalry rating earns — at/above the threshold the FULL enemy OOB
+   ("great" recon, §15), below it a "better" recon (named + per-corps grade + posture). Garbage cav
+   -> the baseline -> a safe "better" (never throws, never "full" by accident). */
+function _cmdScoutTierForCavalry(cav) {
+  var cfg = _cmdScoutCfg(), thr = _cmdNum(cfg.cavalryFullThreshold, 65);
+  var c = _cmdNum(cav, _cmdNum(cfg.baselineCavalry, 54));
+  return (c >= thr) ? "full" : "better";
+}
+
+/* the reveal tier the board should render for the CURRENT next-battle: the stored scout tier when it
+   was taken for THIS engagement, else "light" (the passive estimate). Stale recon (the engagement
+   changed) reverts to light — fresh intelligence per battle. Read-only. */
+function cmdScoutTier(C) {
+  if (!C || !C.president) return "light";
+  var cmd = C.president.command;
+  if (!cmd || !cmd.scout || !cmd.scout.battleId) return "light";
+  var bd = (typeof _brgNextBattle === "function") ? _brgNextBattle(C) : null;
+  if (!bd || !bd.id || cmd.scout.battleId !== bd.id) return "light";
+  return (cmd.scout.tier === "full") ? "full" : (cmd.scout.tier === "better") ? "better" : "light";
+}
+
+/* THE WRITE — order a reconnaissance of the next engagement. Gates on political capital (mirrors
+   cmdAppoint), reveals the enemy OOB to the tier the appointed general's cavalry earns, and records it
+   keyed to the battle id. No-op when there is no next battle, it is already scouted, or capital is
+   short. Writes ONLY cmd.scout + C.clock.capital — never the scoreboard. */
+function cmdScout(C) {
+  if (!C || !C.president) return;
+  cmdInit(C);
+  var bd = (typeof _brgNextBattle === "function") ? _brgNextBattle(C) : null;
+  if (!bd || !bd.id) return;
+  var cmd = C.president.command;
+  if (cmd.scout && cmd.scout.battleId === bd.id) return;        // already reconnoitred this engagement (no re-charge)
+  var cfg = _cmdScoutCfg(), cost = Math.max(0, Math.round(_cmdNum(cfg.cost, 3)));
+  var clk = C.clock, cap = (clk && typeof clk.capital === "number") ? Math.round(clk.capital) : 0;   // round to the displayed capital (the cmdAppoint idiom)
+  if (cap < cost) return;                                       // can't afford the reconnaissance (the gate)
+  if (clk && typeof clk.capital === "number") clk.capital = Math.max(0, cap - cost);   // Q8b bug-hunt (LOW): debit the SAME rounded value the gate compared (the hardened cmdPromote idiom), so a fractional balance can't pass the rounded gate yet be floor-absorbed on the raw spend — byte-identical under every current integer-only capital path
+  var cav = _cmdScoutCavalry(C), tier = _cmdScoutTierForCavalry(cav);
+  cmd.scout = { battleId: bd.id, tier: tier, turn: (C.president.turn || 0), cavalry: Math.round(cav) };
+  if (typeof _pdLog === "function") {
+    _pdLog(C, "Your cavalry rides out to reconnoiter " + (bd.name || "the next engagement")
+      + (cost ? " (−" + cost + " capital)" : "") + " — "
+      + (tier === "full" ? "they bring back the enemy's full order of battle."
+                         : "they sketch the enemy's corps and posture."));
+  }
+}
+
+/* the recon CONTROL embedded in the OOB board (passed to fldCampaignOOBHtml as opts.reconHtml). When
+   unscouted: a button (affordable) or a needs-capital note (mirrors _cmdPromoRow), plus the teaching.
+   When scouted: a "reconnaissance complete" badge naming the tier reached. "" when no next battle. */
+function cmdScoutControlHtml(C) {
+  if (!C || !C.president) return "";
+  var bd = (typeof _brgNextBattle === "function") ? _brgNextBattle(C) : null;
+  if (!bd || !bd.id) return "";
+  var cmd = C.president.command || {};
+  var cfg = _cmdScoutCfg(), cost = Math.max(0, Math.round(_cmdNum(cfg.cost, 3)));
+  var wrap = function (inner) {
+    return '<div style="margin-top:11px;padding:9px 11px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.08)">'
+      + '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">' + inner + '</div></div>';
+  };
+  if (cmd.scout && cmd.scout.battleId === bd.id) {
+    var tier = (cmd.scout.tier === "full") ? "full" : "better";
+    var label = (tier === "full") ? "their full order of battle is in hand" : "their corps and posture are scouted";
+    return wrap(
+      '<span aria-hidden="true" style="font-size:15px;flex:0 0 auto">&#9876;</span>'
+      + '<span style="font-size:12px;flex:1 1 200px;min-width:160px"><b>Reconnaissance complete</b> &mdash; ' + _cmdEsc(label) + '. '
+      + '<span style="opacity:.66">Fresh intelligence awaits the next engagement.</span></span>'
+    );
+  }
+  var clk = C.clock, cap = (clk && typeof clk.capital === "number") ? Math.round(clk.capital) : 0;
+  var ctrl = (cap >= cost)
+    ? '<button id="cmdScout" type="button" class="upg" style="flex:0 0 auto" title="Order a cavalry reconnaissance of ' + _cmdEsc(bd.name || "the next engagement") + ' &mdash; ' + cost + ' political capital. How much it reveals scales with your army&rsquo;s cavalry leadership.">Order a reconnaissance <span style="opacity:.8">(&minus;' + cost + ' cap)</span></button>'
+    : '<span style="font-size:11px;color:#e86840;flex:0 0 auto" title="A reconnaissance needs ' + cost + ' political capital">Needs ' + cost + ' capital to scout</span>';/* wcag-auditor: contrast fix from #d66040 to #e86840 for AA compliance — #d66040 yields 3.92:1 on #2e2816 (sheet lightest) and 4.33:1 on the effective rendered bg; #e86840 yields ≥4.53:1 on all rendered backgrounds (same hue, L 0.545→0.580) */
+  var hint = 'Send your cavalry to reconnoiter the enemy &mdash; how much they uncover (an outline of corps and posture, or the full order of battle) scales with your army&rsquo;s cavalry leadership. '
+    + '<span style="opacity:.82">Good cavalry were an army&rsquo;s eyes: Stuart&rsquo;s rides screened Lee, and his absence before Gettysburg left Lee blind.</span>';
+  return wrap(ctrl + '<span style="font-size:10.5px;opacity:.74;flex:1 1 220px;min-width:180px;line-height:1.42">' + hint + '</span>');
+}
+
 /* ---- cmdInit: idempotent. C.president.command holds the appointment + the dynamic
    per-general reputation. Seeds each general's reputation from his data startValue
    ONCE (never resets — reputation evolves). Registered in _t1InitAll AFTER cabInit. ---- */
@@ -157,6 +264,21 @@ function cmdInit(C) {
   if (typeof cmd.seniority !== "number" || !(cmd.seniority >= 0)) { var _pc = _cmdPromoCfg(); cmd.seniority = (_pc && typeof _pc.seniorityStart === "number") ? _pc.seniorityStart : 18; }
   else { var _pc2 = _cmdPromoCfg(); cmd.seniority = Math.max(0, Math.min((_pc2 && typeof _pc2.seniorityCap === "number") ? _pc2.seniorityCap : 60, cmd.seniority)); }   // Q9 bug-hunt (LOW): re-clamp a valid-but-out-of-band stored value (a tampered/stale save) to the cap on LOAD, not only on the next resolve — normal play (accrual already capped) is byte-identical
   if (Array.isArray(cmd.promotions) || !cmd.promotions || typeof cmd.promotions !== "object") cmd.promotions = {};
+  // Q8b (D107): the cavalry-reconnaissance record — the revealed enemy-OOB tier, keyed to the next-battle id so
+  // intel is fresh per engagement. Absent/null -> no reveal (the board shows the light/passive estimate) ->
+  // byte-identical until the player scouts. SANITIZE a stale/tampered/imported record on LOAD (the Q9 re-clamp
+  // idiom): a malformed record is dropped to null rather than poisoning the board; a valid one is bounded.
+  if (cmd.scout != null) {
+    var _sc = cmd.scout;
+    var _okScout = _sc && typeof _sc === "object" && !Array.isArray(_sc)
+      && typeof _sc.battleId === "string" && _sc.battleId.length
+      && (_sc.tier === "better" || _sc.tier === "full");
+    if (!_okScout) { cmd.scout = null; }
+    else {
+      _sc.turn = (typeof _sc.turn === "number" && isFinite(_sc.turn) && _sc.turn >= 0) ? Math.floor(_sc.turn) : 0;
+      _sc.cavalry = (typeof _sc.cavalry === "number" && isFinite(_sc.cavalry)) ? Math.max(0, Math.min(100, _sc.cavalry)) : 0;
+    }
+  }
   // seed reputation for every general on this side, once (idempotent: only if absent).
   var roster = _cmdSideGenerals(side);
   for (var i = 0; i < roster.length; i++) {
@@ -876,7 +998,7 @@ function cmdRenderTab(C) {
     + '<p class="lede" style="font-size:13px;margin-bottom:10px">You appoint the men who command your armies &mdash; and you relieve them. A great general lifts the army your war puts in the field; a cautious or discredited one squanders it. But a popular general is dangerous to dismiss: it costs you political capital, and the country is watching.</p>'
     + _cmdActiveCard(C)
     + _cmdCareerArcHTML(C)
-    + ((typeof fldCampaignOOBHtml === "function") ? fldCampaignOOBHtml(C) : '')   /* D106: the read-only Order-of-Battle board (the §12.1 roster screen — substrate the GM moves + scouting query) */
+    + ((typeof fldCampaignOOBHtml === "function") ? fldCampaignOOBHtml(C, { reveal: cmdScoutTier(C), reconHtml: cmdScoutControlHtml(C) }) : '')   /* D106 board + Q8b (D107): the recon tier earned by scouting + the "Order a reconnaissance" control embedded in the board (the WRITE lives in cmdScout; T15 stays pure-read) */
     + _cmdPoolHTML(C)
     + _cmdPromotionsHTML(C)
     + _cmdCardHTML(C);
@@ -948,6 +1070,13 @@ function cmdWireTab(C) {
   var rev = document.getElementById("cmdRevert");
   if (rev) rev.addEventListener("click", function () {
     cmdRevert(C);
+    if (typeof saveLocal === "function") saveLocal();
+    if (typeof _wdRefresh === "function") _wdRefresh();
+  });
+  // Q8b (D107): wire the "Order a reconnaissance" button (one per board; absent when already scouted / unaffordable)
+  var sct = document.getElementById("cmdScout");
+  if (sct) sct.addEventListener("click", function () {
+    cmdScout(C);
     if (typeof saveLocal === "function") saveLocal();
     if (typeof _wdRefresh === "function") _wdRefresh();
   });
