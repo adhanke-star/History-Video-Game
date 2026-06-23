@@ -136,8 +136,8 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       (President / General-Commander, + the Historian settings overlay — D39) + difficulty/realism sliders.
 - [ ] **E3 S4 accessibility:** the dedicated FULL WCAG 2.2 AA pass + the 4 a11y modes (high-contrast, CVD-safe,
       SR turn/battle narration, dyslexia font) — your professional bar.
-- [~] **E4 S5 victory:** multiple honest paths incl. negotiated peace + the rich graded after-action report +
-      the Reconstruction coda.
+- [x] **E4 S5 victory:** multiple honest paths incl. negotiated peace + the rich graded after-action report +
+      the Reconstruction coda. ‹✅ COMPLETE through D119.›
       ‹✅ increment 1 (D112): **the rich GRADED AFTER-ACTION REPORT** — an A–F report card (D94 scale, neutral
       64=C, CVD triple-encoded) across 6 domains (Battlefield · Treasury · Diplomacy/Blockade · Home Front & the
       1864 election · the war's PURPOSE [US=emancipation timing; CS=an honest NON-graded "Confederate Cause"
@@ -151,8 +151,15 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       political capital to relieve before the 1864 vote (rises 1862<1863<1864, relaxes once `resolved1864`); a
       teaching tell on the active-general card; UNION-only + byte-identical for the roster + the CS side;
       probe-command 76/76; bug-hunt 3 confirmed (2 MED + 1 LOW) all fixed.›
-      **Remaining:** **E4-i2** — wire `victoryReady` (negotiated peace / recognition) to an actual war-END so the
-      final report fires for a non-chain-complete victory; the honest multi-path victory framing.›
+      ‹✅ increment 2 (D119): **E4-i2 — THE STRATEGIC WAR-END.** A reached `victoryReady` (a negotiated peace /
+      a recognized independence) now CONCLUDES the war through the same D112 graded report, surfaced as a NON-FORCED
+      offer on the between-battles interstitial ("The war can be concluded", or fight on) — the war-end fires for a
+      non-chain-complete victory. New helpers in `src/82-after-action.js` (`aarStrategicEndAvailable`/`aarConcludeWar`
+      + the `warWonScreen` framing); side-correct ("recognition" CS-only — the Union never wins by the South's
+      recognition; "will" side-aware; a CS victory framed honestly, never valorized). Byte-identical interstitial when
+      no offer; byte-identical D112 screen at chain completion; no tactical file → battles byte-identical. probe-
+      afteraction 15/15 (+5 D119); bug-hunt invariantsHold=TRUE (1 LOW + 2 critic [1 MED side-aware-toast + 1 LOW]
+      all fixed+probe-locked); wcag AA. The honest multi-path victory framing is the graded report (D112).›
 
 ### Phase F — CONTENT SYSTEMS  (folded into the phase each best fits)
 - [ ] Logistics/rail network · POW exchange-collapse · disease/medical · hard war · irregular war · the four

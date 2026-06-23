@@ -178,6 +178,13 @@ function _pdShowTurnInterstitial() {
   if (typeof presInit === "function") presInit(C);
   if (typeof openSheet !== "function") { _pdTurnAck = false; if (typeof openUpgrade === "function") openUpgrade(); return; }
   openSheet(_pdInterstitialHTML(C));
+  // E4-i2 (D119): the strategic war-END offer — conclude the war by a negotiated peace /
+  // a recognized independence (the graded final report via the warWonScreen override).
+  var conclude = document.getElementById("pdConcludeWar");
+  if (conclude) conclude.addEventListener("click", function () {
+    var reason = conclude.getAttribute("data-reason");
+    if (typeof aarConcludeWar === "function") aarConcludeWar(reason);
+  });
   var on = document.getElementById("pdGoOn");
   if (on) on.addEventListener("click", function () { if (typeof openUpgrade === "function") openUpgrade(); });
   var desk = document.getElementById("pdGoDesk");

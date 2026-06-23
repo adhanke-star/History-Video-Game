@@ -356,22 +356,91 @@ function aarRenderTab(C) {
   return aarRenderReport(C, { final: false });
 }
 
+/* ---- E4-i2 (D119): the STRATEGIC war-END. A reached `victoryReady` (a negotiated
+   peace / a recognized independence) can CONCLUDE the war through the same graded
+   warWonScreen report — a victory that did NOT complete the battle chain. Surfaced as
+   a non-forced OFFER on the between-battles interstitial (20-president-render.js /
+   30-president-shell.js). Side-correct: "will" (the enemy's resolve breaks) is a victory
+   for EITHER side; "recognition" (Europe recognizes the Confederacy) is a CS-ONLY path —
+   the Union does not win by the South gaining recognition. PURE READ + the existing
+   warWonScreen; no sim write, no combat path reads any of this. NO save state (the
+   reason is a transient one-shot). ---- */
+var _aarEndReason = null;   // transient: set by aarConcludeWar, read+cleared by warWonScreen (null = chain-completion military victory)
+
+/* The reason a strategic war-end is OFFERABLE this turn, or null. */
+function aarStrategicEndAvailable(C) {
+  if (!C || !C.strategy) return null;
+  var vr = C.strategy.victoryReady;
+  if (vr === "will") return "will";                                  // the enemy sues for terms — either side
+  if (vr === "recognition" && C.side === "CS") return "recognition"; // CS-only (the Union does not win by the South's recognition)
+  return null;
+}
+
+/* Side-aware framing for a strategic conclusion (the war-end screen + the offer copy). */
+function _aarEndFraming(C, reason) {
+  var side = (C && C.side === "CS") ? "CS" : "US";
+  var sideLabel = (side === "CS") ? "Confederate" : "Union";
+  if (reason === "will") {
+    return {
+      title: "A Negotiated Peace",
+      subtitle: sideLabel + " Campaign &mdash; The Guns Fall Silent",
+      verdict: (side === "CS")
+        ? "Northern resolve breaks &mdash; Washington consents to let the South go."
+        : "The rebellion's resolve breaks &mdash; the Confederacy lays down its arms.",
+      offerLine: (side === "CS")
+        ? "Northern will has broken. You may conclude the war now, on terms of Confederate independence &mdash; or fight on."
+        : "The rebellion's will has broken. You may conclude the war now and end the rebellion &mdash; or fight on for an unconditional victory.",
+      offerBtn: "Conclude the war &mdash; accept the peace"
+    };
+  }
+  if (reason === "recognition") {   // CS-only (gated in aarStrategicEndAvailable)
+    return {
+      title: "Recognized Independence",
+      subtitle: sideLabel + " Campaign &mdash; Independence Won",
+      verdict: "A European power recognizes the Confederacy &mdash; the blockade is broken and the war is brought to a close.",
+      offerLine: "A European power stands ready to recognize the Confederacy. You may conclude the war now, on terms of independence &mdash; or fight on.",
+      offerBtn: "Conclude the war &mdash; claim independence"
+    };
+  }
+  return { title: "The War is Won", subtitle: sideLabel + " Campaign &mdash; Final Dispatch", verdict: "Victory!", offerLine: "", offerBtn: "" };
+}
+
+/* The between-battles OFFER (or null): {reason, line, btn}. Read by _pdInterstitialHTML. */
+function aarStrategicEndOffer(C) {
+  var reason = aarStrategicEndAvailable(C);
+  if (!reason) return null;
+  var f = _aarEndFraming(C, reason);
+  return { reason: reason, line: f.offerLine, btn: f.offerBtn };
+}
+
+/* Conclude the war by a strategic path — frame it, then fire the graded final report. */
+function aarConcludeWar(reason) {
+  _aarEndReason = (reason === "will" || reason === "recognition") ? reason : null;
+  if (typeof warWonScreen === "function") warWonScreen();
+}
+
 /* ---- warWonScreen OVERRIDE (the authorized frozen-base override; D30.2) ----
    The end of the campaign chain now shows the graded FINAL report (with the
    Reconstruction coda) instead of the bare base dispatch. The Main-Menu wiring +
    campaign-nullify are reproduced VERBATIM from the base (base ~2781-2839); the
    override adds no sim write and is byte-identical to the base everywhere the base
-   path is not the war-won screen (Classic never calls it). ---- */
+   path is not the war-won screen (Classic never calls it). E4-i2 (D119): when reached
+   via a strategic conclusion (aarConcludeWar sets _aarEndReason), the title/verdict
+   frame the negotiated peace / recognized independence; at chain completion the reason
+   is null -> the byte-identical "The War is Won / Victory!" framing (D112). ---- */
 function warWonScreen() {
   var C = G.campaign;
-  if (!C) return;
-  var sideLabel = (C.side === "CS") ? "Confederate" : "Union";
+  if (!C) { _aarEndReason = null; return; }   // bug-hunt LOW (D119): clear the one-shot even on the null guard (defensive — a stale reason must never mis-frame a later war-end)
+  // bug-hunt LOW (D119): the strategic-conclude exit (aarConcludeWar) bypasses openUpgrade's `_pdTurnAck=false` reset; clear it at the single war-end chokepoint so the NEXT campaign surfaces its first strategic interstitial (chain completion already clears it via the prior interstitial — idempotent here).
+  if (typeof _pdTurnAck !== "undefined") _pdTurnAck = false;
+  var reason = _aarEndReason; _aarEndReason = null;   // E4-i2: one-shot strategic-conclusion framing (null = chain completion)
+  var fr = _aarEndFraming(C, reason);
   var report = aarRenderReport(C, { final: true });
   var html =
-    '<h1 class="title-xl" style="text-align:center">The War is Won</h1>' +
-    '<p class="title-sub" style="text-align:center">' + sideLabel + ' Campaign &mdash; Final Dispatch</p>' +
+    '<h1 class="title-xl" style="text-align:center">' + fr.title + '</h1>' +
+    '<p class="title-sub" style="text-align:center">' + fr.subtitle + '</p>' +
     '<hr class="rule">' +
-    '<div class="verdict win">Victory!</div>' +
+    '<div class="verdict win">' + fr.verdict + '</div>' +
     '<hr class="rule">' +
     '<div id="wwReport">' + report + '</div>' +
     '<div class="btn-row" style="margin-top:14px">' +

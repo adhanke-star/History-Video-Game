@@ -179,6 +179,92 @@ const SETUP = `(() => {
       if(typeof closeSheet==='function') closeSheet();
       return { rendered:true }; });
 
+    // ---- E4-i2 (D119): the STRATEGIC war-END — a reached victoryReady concludes the war. ----
+    step('D119 strategic-end availability is side-correct (will = either side; recognition = CS-only)', function(){
+      if(typeof aarStrategicEndAvailable!=='function') throw new Error('aarStrategicEndAvailable missing');
+      var U=mkC('US',1864,9); U.strategy.victoryReady='will';
+      if(aarStrategicEndAvailable(U)!=='will') throw new Error('US victoryReady=will must offer a strategic end (the rebellion sues for terms)');
+      var S=mkC('CS',1864,9); S.strategy.victoryReady='will';
+      if(aarStrategicEndAvailable(S)!=='will') throw new Error('CS victoryReady=will must offer a strategic end');
+      var Sr=mkC('CS',1863,6); Sr.strategy.victoryReady='recognition';
+      if(aarStrategicEndAvailable(Sr)!=='recognition') throw new Error('CS victoryReady=recognition must offer a strategic end');
+      var Ur=mkC('US',1863,6); Ur.strategy.victoryReady='recognition';
+      if(aarStrategicEndAvailable(Ur)!==null) throw new Error('the Union must NOT win by the Confederacy gaining recognition (recognition is CS-only)');
+      var Cn=mkC('US',1864,9); Cn.strategy.victoryReady=null;
+      if(aarStrategicEndAvailable(Cn)!==null) throw new Error('no victoryReady -> no strategic end');
+      if(aarStrategicEndAvailable(null)!==null) throw new Error('null campaign -> no strategic end (no throw)');
+      return { ok:true }; });
+
+    step('D119 the offer copy is side-aware (CS: let the South go; US: end the rebellion)', function(){
+      var S=mkC('CS',1864,9); S.strategy.victoryReady='will'; var so=aarStrategicEndOffer(S);
+      if(!so||so.reason!=='will'||!so.line||!so.btn) throw new Error('CS will offer must carry reason/line/btn');
+      if(so.line.indexOf('Northern')<0) throw new Error('the CS negotiated-peace offer should name the breaking Northern will');
+      var U=mkC('US',1864,9); U.strategy.victoryReady='will'; var uo=aarStrategicEndOffer(U);
+      if(uo.line.indexOf('rebellion')<0) throw new Error('the US negotiated-peace offer should name ending the rebellion');
+      if(so.line===uo.line) throw new Error('the offer copy must be side-aware (CS vs US lines must differ)');
+      var Sr=mkC('CS',1863,6); Sr.strategy.victoryReady='recognition'; var ro=aarStrategicEndOffer(Sr);
+      if(!ro||ro.reason!=='recognition'||ro.line.toLowerCase().indexOf('recogn')<0) throw new Error('the CS recognition offer should name recognition');
+      if(aarStrategicEndOffer(mkC('US',1864,9))!==null) throw new Error('a fresh campaign (victoryReady null) -> no offer');
+      return { ok:true }; });
+
+    step('D119 the between-battles interstitial surfaces the Conclude-the-war offer ONLY when available', function(){
+      if(typeof _pdInterstitialHTML!=='function') return { skipped:'no interstitial' };
+      var C=mkC('US',1864,9); C.strategy.victoryReady='will';
+      var h=_pdInterstitialHTML(C);
+      if(h.indexOf('pdConcludeWar')<0) throw new Error('the interstitial must surface the Conclude-the-war button when a strategic end is reached');
+      if(h.indexOf('The war can be concluded')<0) throw new Error('the offer banner heading must render');
+      if(h.indexOf('data-reason="will"')<0) throw new Error('the offer button must carry its reason');
+      var C0=mkC('US',1864,9); C0.strategy.victoryReady=null;
+      if(_pdInterstitialHTML(C0).indexOf('pdConcludeWar')>=0) throw new Error('no strategic end -> NO offer button (byte-identical interstitial)');
+      return { ok:true }; });
+
+    step('D119 aarConcludeWar fires the graded report with side-aware framing + ENDS the war', function(){
+      if(typeof openSheet!=='function') throw new Error('openSheet missing — cannot exercise the strategic war-end');
+      // CS negotiated peace
+      function sheet(){ var p=document.getElementById('sheetPad'); return (p?p.innerHTML:'')||''; }   // openSheet REPLACES #sheetPad — scope to it (document.body retains stale prior sheets)
+      var S=mkC('CS',1864,11); S.strategy.victoryReady='will'; S.stats={battles:10,won:7,infl:30000,suff:25000};
+      aarConcludeWar('will');
+      var b1=sheet();
+      if(b1.indexOf('A Negotiated Peace')<0) throw new Error('a will-conclusion must title "A Negotiated Peace"');
+      if(b1.indexOf('let the South go')<0) throw new Error('the CS negotiated-peace verdict must name letting the South go');
+      if(b1.indexOf('Reconstruction to Come')<0) throw new Error('the strategic conclusion must still render the graded final report (the Reconstruction coda)');
+      if(b1.indexOf('The War is Won')>=0) throw new Error('a strategic conclusion must NOT use the chain-completion title');
+      if(G.campaign!==null) throw new Error('aarConcludeWar must END the war (nullify the campaign)');
+      if(typeof closeSheet==='function') closeSheet();
+      // CS recognized independence
+      var Sr=mkC('CS',1863,6); Sr.strategy.victoryReady='recognition'; Sr.stats={battles:8,won:6,infl:20000,suff:15000};
+      aarConcludeWar('recognition');
+      var b2=sheet();
+      if(b2.indexOf('Recognized Independence')<0) throw new Error('a recognition-conclusion must title "Recognized Independence"');
+      if(G.campaign!==null) throw new Error('the recognition conclusion must END the war');
+      if(typeof closeSheet==='function') closeSheet();
+      // bug-hunt LOW (D119): a strategic conclude must reset _pdTurnAck so the NEXT campaign surfaces its first interstitial
+      if(typeof _pdTurnAck!=='undefined'){
+        _pdTurnAck=true; var Sx=mkC('CS',1864,11); Sx.strategy.victoryReady='will'; aarConcludeWar('will');
+        if(_pdTurnAck!==false) throw new Error('a strategic conclude must reset _pdTurnAck=false (else the next campaign skips its first interstitial)');
+        if(typeof closeSheet==='function') closeSheet();
+      }
+      return { ok:true }; });
+
+    step('D119 chain-completion (no strategic reason) keeps the byte-identical "The War is Won / Victory!" framing', function(){
+      if(typeof openSheet!=='function') throw new Error('openSheet missing');
+      var C=mkC('US',1865,4); C.stats={battles:12,won:11,infl:60000,suff:25000};
+      C.president.emancipation={issued:true,declined:false,year:1863,month:1}; C.clock.resolved1864=true; C.clock.elected=true;
+      warWonScreen();   // the base chain-completion path — _aarEndReason is null
+      var p=document.getElementById('sheetPad'); var b=(p?p.innerHTML:'')||'';
+      if(b.indexOf('The War is Won')<0) throw new Error('chain completion must keep the "The War is Won" title (D112 byte-identical)');
+      if(b.indexOf('Victory!')<0) throw new Error('chain completion must keep the "Victory!" verdict');
+      if(b.indexOf('A Negotiated Peace')>=0||b.indexOf('Recognized Independence')>=0) throw new Error('chain completion must NOT use a strategic-conclusion title');
+      if(G.campaign!==null) throw new Error('warWonScreen must nullify the campaign');
+      if(typeof closeSheet==='function') closeSheet();
+      // bug-hunt LOW (D119): the CS chain-completion subtitle stays side-correct
+      var Cs=mkC('CS',1865,4); Cs.stats={battles:12,won:11,infl:60000,suff:25000};
+      warWonScreen();
+      var pc=document.getElementById('sheetPad'); var bc=(pc?pc.innerHTML:'')||'';
+      if(bc.indexOf('Confederate Campaign')<0) throw new Error('a CS chain completion must carry the "Confederate Campaign" subtitle (side-correct)');
+      if(typeof closeSheet==='function') closeSheet();
+      return { ok:true }; });
+
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
 })()`;

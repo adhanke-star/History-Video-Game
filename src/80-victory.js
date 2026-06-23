@@ -128,9 +128,15 @@ function vicOnResolve(winnerSide, type, B, C, win) {
     else if (recog >= 60) S.victoryReady = "recognition";
     else if (S.enemyWill <= 18) S.victoryReady = "will";                   // total collapse of enemy resolve, any year
     if (S.victoryReady && S.victoryReady !== prevReady) {
+      // bug-hunt MED (D119): the "will" cue must be SIDE-AWARE — enemyWill is the ENEMY's resolve,
+      // so for a US player it is the rebellion's (not "Northern") will breaking. (D119 makes this a
+      // live war-ending offer, so a side-wrong cue would contradict the side-correct offer copy.)
+      var _vicWillMsg = (C.side === "CS")
+        ? "Northern resolve is breaking — a negotiated peace is within reach."
+        : "The rebellion's resolve is breaking — a negotiated peace is within reach.";
       _vicPush(C, S.victoryReady === "recognition"
         ? "Europe moves toward recognition — independence is within reach."
-        : "Northern resolve is breaking — a negotiated peace is within reach.");
+        : _vicWillMsg);
     }
   } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("vicOnResolve:", e); }
 }

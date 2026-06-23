@@ -187,6 +187,18 @@ function _pdInterstitialHTML(C) {
     + ', you may review the war effort and confer with your cabinet — or press on to the front.</p>'
     + (typeof decInterstitialHTML === "function" ? decInterstitialHTML(C) : '')
     + (typeof _brgArmySummaryHTML === "function" ? _brgArmySummaryHTML(C) : '')
+    // E4-i2 (D119): the strategic war-END offer — when a victoryReady path (a negotiated
+    // peace / a recognized independence) is reached, the President may CONCLUDE the war
+    // here (the graded final report), or fight on. Absent the offer this is byte-identical.
+    + (function () {
+        var offer = (typeof aarStrategicEndOffer === "function") ? aarStrategicEndOffer(C) : null;
+        if (!offer) return '';
+        return '<div style="margin:14px auto 0;max-width:560px;border:1px solid #b8863b;border-radius:6px;background:rgba(184,134,59,.10);padding:11px;text-align:center">'
+          + '<div style="font-size:13px;font-weight:bold;color:#cbb27a;letter-spacing:.03em;margin-bottom:3px">The war can be concluded</div>'
+          + '<div style="font-size:12px;opacity:.85;line-height:1.5;margin-bottom:8px">' + offer.line + '</div>'
+          + '<button id="pdConcludeWar" type="button" class="bigbtn" data-reason="' + offer.reason + '">' + offer.btn + '</button>'
+          + '</div>';
+      })()
     + '<div class="btn-row" style="margin-top:16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">'
     +   '<button id="pdGoDesk" type="button" class="upg">Review the War Effort</button>'
     +   '<button id="pdGoBrief" type="button" class="upg">Pre-Battle Briefing</button>'
