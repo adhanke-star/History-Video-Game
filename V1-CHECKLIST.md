@@ -93,8 +93,18 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       (`src/81-divergence.js`; no tactical file touched → combat byte-identical). Detects emancipation timing
       [declined/early/1862/late], CS arm-the-enslaved, foreign recognition, the 1864 election (US) / CS
       home-front break, the CS trajectory, each wild card. probe-divergence 14/14; bug-hunt invariantsHold=TRUE.
-      **Remaining:** deeper INTERACTIVE hinge-point forks (build on the decisions deck) + curated alt-history
-      scenarios. ‹✅ the divergence-log read-back landed in the E4 graded after-action report (D112).››
+      ‹✅ increment 2 (D115): **ALTERNATE ENDINGS — the fantastical tier** (Aaron's D114 catalog, build-order
+      pick). 8 fantastical alt-history end-states (4/side: A British war · Maximilian's legions · Stonewall lives ·
+      the Golden Circle; the rapid-fire war · a Russo-American century · Lincoln lives Reconstruction · the 13th
+      early), each EARNED (a gambit/emancipation/victory `precond` OPENS it, a `vicMomentum`/recognition/election
+      `gate` SECURES it → ★ Reached / ◇ Within reach + a secure-hint). New `src/83-endings.js`
+      (`_END_CATALOG`/`endScan`/`endRenderSection`); surfaced in the "Your War vs History" tab + the after-action
+      report via guarded embeds; pure read-out, no tactical file → combat byte-identical. probe-endings 9/9;
+      bug-hunt invariantsHold=TRUE (all 8 counterfactuals verified; 2 fixed). The Golden Circle named honestly,
+      anti-Lost-Cause.›
+      **Remaining:** the **GROUNDED tier** (the 16 plausible/longshot D114 end-states, authored the same way in
+      `_END_CATALOG`) + interactive HINGE-FORK decision cards on the `decResolve` engine that STEER toward the
+      endings. ‹✅ the divergence-log read-back landed in the E4 graded after-action report (D112).››
 - [ ] **E2 S4 education:** multi-axis codex + inline glossary + the full guided tutorial + play-style presets
       (President / General-Commander, + the Historian settings overlay — D39) + difficulty/realism sliders.
 - [ ] **E3 S4 accessibility:** the dedicated FULL WCAG 2.2 AA pass + the 4 a11y modes (high-contrast, CVD-safe,

@@ -288,7 +288,11 @@ function divRenderTab(C) {
     + 'A higher index is not a better war — only a stranger one. '
     + '<span style="opacity:.85">Sources: McPherson, <i>Battle Cry of Freedom</i>; Foner, <i>The Fiery Trial</i>; Howard Jones, <i>Blue &amp; Gray Diplomacy</i>; Levine, <i>Confederate Emancipation</i>. Verified history; the divergence is yours.</span></div>';
 
-  return head + idxPanel + togPanel + ledger + foot;
+  // E1 deepening (D115): the alternate-endings section (fantastical tier) — guarded,
+  // byte-identical when 83-endings.js is absent.
+  var endings = (typeof endRenderSection === "function") ? endRenderSection(C) : '';
+
+  return head + idxPanel + togPanel + ledger + endings + foot;
 }
 
 /* ---- divWireTab(C): the emergent-only toggle handler (the ONLY writer). ---- */

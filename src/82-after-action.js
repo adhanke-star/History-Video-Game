@@ -327,7 +327,9 @@ function aarRenderReport(C, opts) {
         + '<span style="font-size:11.5px;color:' + ix.col + ';font-weight:bold">' + _aarEsc(ix.word) + '</span></div>'
         + '<div style="font-size:11px;opacity:.72;margin-top:1px">Divergence index ' + ix.idx + " / 100 · " + ix.count + ' recorded divergence' + (ix.count === 1 ? '' : 's') + '.'
         + (entries.length ? ' See the <b>Your War vs History</b> tab for the full ledger and the history each entry departs from.' : ' Your war has so far followed the documented record.') + '</div>'
-        + (lines ? '<ul style="margin:6px 0 0;padding-left:18px;font-size:11px;opacity:.82">' + lines + '</ul>' : '') + '</div>';
+        + (lines ? '<ul style="margin:6px 0 0;padding-left:18px;font-size:11px;opacity:.82">' + lines + '</ul>' : '')
+        + ((typeof endRenderSection === "function") ? endRenderSection(C, { compact: true }) : '')   // E1 (D115): alternate endings reached/within reach
+        + '</div>';
     } catch (e) { divPanel = ''; }
   }
 
