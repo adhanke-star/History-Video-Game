@@ -166,6 +166,27 @@ function cmdInit(C) {
       cmd.reputation[g.id] = (typeof g.reputation === "number") ? Math.max(0, Math.min(100, g.reputation)) : 60;
     }
   }
+  // D105 (LIVE DEV-TRAITS): the dev-track — a PURE observation record of each general's reputation arc over the
+  // campaign (start / peak / low / battles). Seeded ONCE, idempotent; NOTHING in combat reads it (it drives the
+  // Career-Arc read-out only) -> byte-identical. devTrack[id].start anchors the dev-trait's RELATIVE ceiling/floor
+  // band (a fixed value, so the band does not drift as reputation evolves). The seed mirrors the reputation seed.
+  if (Array.isArray(cmd.devTrack) || !cmd.devTrack || typeof cmd.devTrack !== "object") cmd.devTrack = {};
+  for (var k = 0; k < roster.length; k++) {
+    var dg = roster[k]; if (!dg || !dg.id) continue;
+    var tr = cmd.devTrack[dg.id];
+    if (!tr || typeof tr !== "object" || !isFinite(tr.start)) {
+      var rp = _cmdReputation(C, dg.id);
+      cmd.devTrack[dg.id] = { start: rp, peak: rp, low: rp, battles: 0 };
+    } else {
+      // D105 bug-hunt: SANITIZE a stale/tampered/imported record on LOAD (the Q9 seniority-reclamp pattern). start
+      // is the band anchor (load-bearing); peak/low/battles are observation-only but must stay finite for the
+      // read-out. A legitimately-seeded record is already in range -> this is a no-op (byte-identical normal play).
+      tr.start = Math.max(0, Math.min(100, tr.start));
+      tr.peak = isFinite(tr.peak) ? Math.max(0, Math.min(100, tr.peak)) : tr.start;
+      tr.low = isFinite(tr.low) ? Math.max(0, Math.min(100, tr.low)) : tr.start;
+      tr.battles = (isFinite(tr.battles) && tr.battles >= 0) ? Math.floor(tr.battles) : 0;
+    }
+  }
   // if the player's appointee has died / left the war, release the post back to history.
   if (cmd.fieldGeneral) {
     var ap = _cmdById(side, cmd.fieldGeneral);
@@ -367,6 +388,88 @@ function cmdPromote(C, id) {
   }
 }
 
+/* ===========================================================================
+   D105 · LIVE DEV-TRAITS — the Madden development arc (RATING-SYSTEM-DESIGN §9-R-6 / §14.6 / §15-R3;
+   D94-fork-#5: "Reputation->OVR dev-traits = LIVE in-campaign"). cmdOnResolve already evolves a general's
+   reputation by battle outcome (decisive win +6 / win +3 / draw -1 / loss -4 / decisive loss -8), and
+   _cmdGenRating (0.55*skill + 0.45*reputation) -> commandLeadership already reads it — so winning a campaign
+   already nudges a general's OVR. This adds the hidden DEV-TRAIT that SHAPES that arc: a potential CEILING
+   (how high he can climb), a FLOOR (how far he can fall), a development RATE (rise vs fall), and an
+   attritionDrag (the §15-R3 decline-with-heavy-attrition). data/ratings.json -> devTraits.
+
+   ACCURATE INPUTS, never an output gate (D74/D92): a dev-trait only shapes the general's REPUTATION — an INPUT
+   the existing _cmdGenRating/commandLeadership pipe already consumes — it NEVER writes a casualty/winner.
+   BYTE-IDENTICAL by construction: an UNASSIGNED general (or absent devTraits data) -> _cmdDevTrait returns null
+   -> cmdOnResolve takes the literal pre-D105 path (clamp [5,98], rate 1, no drag); the deliberate, citation-grade,
+   historically-directed change is the authored data.assign map (mirrors how R-6's rosterBadges changed combat).
+   The ceiling/floor are RELATIVE to the general's SEEDED starting reputation (devTrack.start, fixed) so every
+   assigned general keeps headroom to rise AND room to fall (ceilingAbove>=5, floorBelow>=5) — the pre-D105
+   "a winning general gains reputation / a losing one loses it" invariant holds for all.
+   =========================================================================== */
+
+function _cmdDevCfg() { var d = gameData("ratings"); return (d && d.devTraits) ? d.devTraits : null; }
+
+/* the general's SEEDED starting reputation — the fixed anchor for the relative ceiling/floor band. The devTrack
+   start if built (cmdInit always builds it before any resolve), else the live reputation / data seed (a safety
+   net so the band is well-defined even pre-init). */
+function _cmdDevStart(C, gen) {
+  if (!gen || !gen.id) return 64;
+  var cmd = C && C.president && C.president.command;
+  if (cmd && cmd.devTrack && cmd.devTrack[gen.id] && typeof cmd.devTrack[gen.id].start === "number") return cmd.devTrack[gen.id].start;
+  return _cmdReputation(C, gen.id);
+}
+
+/* the resolved ABSOLUTE dev-trait for a general (ceiling/floor computed from his seeded start), or null when he
+   is UNASSIGNED / there is no config -> the caller takes the byte-identical default path. Pure read. */
+function _cmdDevTrait(C, gen) {
+  if (!gen || !gen.id) return null;
+  var cfg = _cmdDevCfg(); if (!cfg || !cfg.assign || !cfg.archetypes) return null;
+  var a = cfg.assign[gen.id]; if (!a || !a.trait) return null;
+  var arch = cfg.archetypes[a.trait]; if (!arch) return null;
+  // D105 bug-hunt (the keystone hardening): coerce the band anchor through _cmdNum + clamp to [0,100] BEFORE it
+  // reaches ceiling/floor. A legitimately-seeded start is always a clamped [0,100] reputation, so this is a no-op
+  // in normal play (byte-identical); but a tampered/stale/imported devTrack.start (NaN, or 500) would otherwise
+  // poison the ceiling/floor band and clamp a NaN / out-of-band reputation through cmdOnResolve. Clamp it once.
+  var start = Math.max(0, Math.min(100, _cmdNum(_cmdDevStart(C, gen), _cmdReputation(C, gen.id))));
+  var ceiling = Math.min(98, start + _cmdNum(arch.ceilingAbove, 34));
+  var floor = Math.max(5, start - _cmdNum(arch.floorBelow, 59));
+  if (ceiling < floor) ceiling = floor;   // degenerate-data guard (never on the shipped catalog)
+  return {
+    key: a.trait, label: String(arch.label || a.trait), glyph: String(arch.glyph || ""), polarity: String(arch.polarity || "="),
+    desc: String(arch.desc || ""), note: String(a.note || ""), src: (a.src && a.src.length) ? a.src : [], prov: String(a.prov || "Inferred"),
+    ceiling: ceiling, floor: floor, start: start,
+    riseRate: _cmdNum(arch.riseRate, 1), fallRate: _cmdNum(arch.fallRate, 1), attritionDrag: Math.max(0, _cmdNum(arch.attritionDrag, 0))
+  };
+}
+
+/* the extra reputation drag when THIS side bled the lion's share of a battle (the §15-R3 decline-with-attrition).
+   0 unless the trait has attritionDrag>0 AND the casualty SHARE (this side / both-sides total — the D100
+   unit-correct measure) exceeds the pivot. Bounded by attritionDragMax. Pure; reads B.casualties only. */
+function _cmdAttritionDrag(dt, side, B) {
+  if (!dt || !(dt.attritionDrag > 0) || !B || !B.casualties) return 0;
+  var cfg = _cmdDevCfg(), tun = (cfg && cfg.tuning) ? cfg.tuning : null;
+  var pivot = _cmdNum(tun && tun.attritionPivot, 0.55), scale = _cmdNum(tun && tun.attritionDragScale, 8), maxD = _cmdNum(tun && tun.attritionDragMax, 4);
+  var enemy = (side === "CS") ? "US" : "CS";
+  var me = _cmdNum(B.casualties[side], 0), them = _cmdNum(B.casualties[enemy], 0), tot = me + them;
+  if (!(tot > 0)) return 0;
+  var share = me / tot;
+  if (share <= pivot) return 0;
+  var drag = dt.attritionDrag * (share - pivot) * scale;
+  return Math.max(0, Math.min(maxD, drag));
+}
+
+/* update the PURE observation record after the reputation moved (peak / low / battles). NOTHING in combat reads
+   devTrack — it drives the Career-Arc read-out only, so this is byte-identical to the sim. */
+function _cmdDevTrackUpdate(C, id, nrep) {
+  var cmd = C && C.president && C.president.command; if (!cmd || !id) return;
+  if (Array.isArray(cmd.devTrack) || !cmd.devTrack || typeof cmd.devTrack !== "object") cmd.devTrack = {};
+  var tr = cmd.devTrack[id];
+  if (!tr || typeof tr !== "object" || typeof tr.start !== "number") { tr = cmd.devTrack[id] = { start: nrep, peak: nrep, low: nrep, battles: 0 }; }
+  if (nrep > tr.peak) tr.peak = nrep;
+  if (nrep < tr.low) tr.low = nrep;
+  tr.battles = (typeof tr.battles === "number" ? tr.battles : 0) + 1;
+}
+
 /* ---- commandLeadership(C): THE bridge leadership facet (0-100). Anchored at 64:
    a neutral general + a neutral cabinet -> 64 (= the old fixed placeholder, so a
    fresh/default command is byte-equivalent to Classic). The sitting general weighs
@@ -423,7 +526,22 @@ function cmdOnResolve(winnerSide, type, B, C, win) {
       if (draw) delta = -1;
       else if (win) delta = (type === "decisive") ? 6 : 3;
       else delta = (type === "decisive") ? -8 : -4;
-      cmd.reputation[id] = Math.max(5, Math.min(98, cur + delta));
+      // D105 (LIVE DEV-TRAITS): the dev-trait SHAPES the arc. An UNASSIGNED general (or absent devTraits data)
+      // -> dt is null -> the LITERAL pre-D105 path (clamp [5,98], rate 1, no drag) -> BYTE-IDENTICAL. An assigned
+      // general's base delta is scaled by his development rate (rise vs fall direction) plus an extra attrition
+      // drag when his army bled the lion's share, then clamped to HIS ceiling/floor band. ACCURATE INPUTS — it
+      // shapes the reputation an INPUT pipe already reads, NEVER the scoreboard (D74/D92).
+      var dt = _cmdDevTrait(C, _cmdById(side, id));
+      var nrep;
+      if (!dt) {
+        nrep = Math.max(5, Math.min(98, cur + delta));   // <-- the exact pre-D105 arithmetic
+      } else {
+        var d2 = delta * ((delta >= 0) ? dt.riseRate : dt.fallRate);
+        d2 -= _cmdAttritionDrag(dt, side, B);            // 0 unless attritionDrag>0 AND this side bled heavily
+        nrep = Math.max(dt.floor, Math.min(dt.ceiling, cur + d2));
+      }
+      cmd.reputation[id] = nrep;
+      _cmdDevTrackUpdate(C, id, nrep);                   // pure observation (peak/low/battles); combat never reads it
     }
     // Q9 (D102): the seniority pool accrues over the campaign (the officer corps' standing grows — a passive
     // bench gain + a victory bonus), capped. It is a PROMOTION currency that NOTHING in combat reads, so the
@@ -673,6 +791,79 @@ function _cmdCardHTML(C) {
   return html;
 }
 
+/* ---- D105 (LIVE DEV-TRAITS): the "Career Arc" read-out. Surfaces the sitting general's Madden dev-trait —
+   his tier, the arc his reputation/OVR has traced over the campaign (start -> now -> peak), a trend verdict, and
+   his hidden potential band (floor..ceiling). PURE DISPLAY over numbers the sim already evolves; nothing here
+   mutates or seeds. Triple-encoded (word + sign + number; the glyph + colour are decorative) -> CVD-safe. ---- */
+
+/* the trajectory verdict from the OVR movement since the campaign began. delta in OVR points. */
+function _cmdDevTrend(battles, delta) {
+  if (!(battles > 0)) return { word: "Untested", glyph: "·", color: "#b3925e" };   // middot — no arc yet
+  if (delta >= 2) return { word: "Rising", glyph: "▲", color: "#6f9e5a" };          // ▲
+  if (delta <= -2) return { word: "Fading", glyph: "▼", color: "#c9712e" };          // ▼
+  return { word: "Holding", glyph: "→", color: "#b8863b" };                          // →
+}
+
+function _cmdCareerArcHTML(C) {
+  var gen = cmdActiveGeneral(C);
+  var dt = gen ? _cmdDevTrait(C, gen) : null;
+  if (!gen || !dt) return "";   // no sitting general, or he carries no documented arc -> render nothing
+  var skill = _cmdEffectiveSkill(gen, C);
+  function ovrAt(r) { return Math.round(0.55 * skill + 0.45 * r); }
+  var cmd = C.president.command;
+  var curRep = _cmdReputation(C, gen.id);
+  // D105 bug-hunt: coerce the WHOLE observation record through _cmdNum, not just start, so a tampered/stale save
+  // (peak/low/battles NaN) can never render "peak NaN" or an off-track left:NaN% marker. cmdInit already sanitizes
+  // on load; this is defense-in-depth at the render site (the band anchor `start` is re-clamped to [0,100] too).
+  var rawTr = (cmd.devTrack && cmd.devTrack[gen.id] && typeof cmd.devTrack[gen.id] === "object") ? cmd.devTrack[gen.id] : null;
+  var tStart = Math.max(0, Math.min(100, _cmdNum(rawTr && rawTr.start, curRep)));
+  var tr = { start: tStart, peak: _cmdNum(rawTr && rawTr.peak, tStart), low: _cmdNum(rawTr && rawTr.low, tStart), battles: Math.max(0, Math.floor(_cmdNum(rawTr && rawTr.battles, 0))) };
+  var ovrNow = ovrAt(curRep), ovrStart = ovrAt(tr.start), ovrPeak = ovrAt(tr.peak);
+  var ovrFloor = ovrAt(dt.floor), ovrCeil = ovrAt(dt.ceiling);
+  var delta = ovrNow - ovrStart;
+  var trend = _cmdDevTrend(tr.battles, delta);
+  var ceilGrade = (typeof fldRatingGrade === "function") ? fldRatingGrade(ovrCeil) : { letter: "", word: "" };
+  // the potential-room note (the hidden-ceiling "feel" — surfaced as a soft verdict, not a bare number).
+  var head = dt.ceiling - curRep, foot = curRep - dt.floor, room;
+  if (head <= 3) room = "At the height of his powers — little room left to rise.";
+  else if (foot <= 3) room = "At his lowest ebb — his standing can fall no further.";
+  else if (head <= 12) room = "Approaching his ceiling.";
+  else room = "Room yet to grow into.";
+  // the floor..ceiling band as a track; a fill to the current OVR; start + peak ticks.
+  function pct(o) { var span = Math.max(1, ovrCeil - ovrFloor); var v = ((o - ovrFloor) / span) * 100; return Math.max(0, Math.min(100, v)); }
+  var fillPct = pct(ovrNow), startPct = pct(ovrStart), peakPct = pct(ovrPeak);
+  var sign = (dt.polarity === "+") ? "+" : (dt.polarity === "−" || dt.polarity === "-") ? "−" : (dt.polarity === "~") ? "±" : "=";
+  var arcAria = "Career arc: started at OVR " + ovrStart + ", now " + ovrNow + ", peak " + ovrPeak
+    + "; potential band floor " + ovrFloor + " to ceiling " + ovrCeil + ". " + trend.word + ".";
+  var deltaStr = (delta > 0 ? "+" + delta : (delta < 0 ? "−" + Math.abs(delta) : "±0"));
+  return ''
+    + '<div style="margin-top:14px;padding:11px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.12)">'
+    +   '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#b3925e;margin-bottom:3px">Career arc &mdash; the development trait</div>'/* a11y: #b3925e 5.0:1 on the lightest .sheet ground -> AA (the R-2 measured value) */
+    +   '<div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap">'
+    +     '<span style="font-weight:bold;font-size:14px"><span aria-hidden="true" style="opacity:.85">' + _cmdEsc(dt.glyph) + '</span> ' + _cmdEsc(dt.label) + '</span>'
+    +     '<span aria-hidden="true" style="font-size:11px;opacity:.7;border:1px solid var(--rule);border-radius:3px;padding:0 5px">trait ' + _cmdEsc(sign) + '</span>'
+    +   '</div>'
+    +   '<div style="font-size:11.5px;opacity:.82;margin:3px 0 8px;font-style:italic">' + _cmdEsc(dt.desc) + '</div>'
+    +   '<div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:6px">'
+    +     '<div style="display:inline-flex;align-items:baseline;gap:6px"><span style="font-weight:bold;font-size:21px;line-height:1">' + ovrNow + '</span><span style="font-size:9px;opacity:.6;letter-spacing:.06em">OVR NOW</span></div>'
+    +     '<div style="font-size:12px"><span aria-hidden="true" style="color:' + trend.color + '">' + trend.glyph + '</span> <b>' + _cmdEsc(trend.word) + '</b> '
+    +       '<span style="opacity:.7" aria-label="net change ' + deltaStr + ' over ' + tr.battles + ' battles">(' + deltaStr + ' over ' + tr.battles + ' battle' + (tr.battles === 1 ? '' : 's') + ')</span></div>'
+    +   '</div>'
+    +   '<div role="img" aria-label="' + _cmdEsc(arcAria) + '" style="position:relative;height:12px;background:rgba(0,0,0,.28);border:1px solid var(--rule);border-radius:3px;overflow:hidden">'
+    +     '<div style="position:absolute;left:0;top:0;height:100%;width:' + fillPct.toFixed(1) + '%;background:linear-gradient(90deg,#5a4d34,#7d6b4a)"></div>'
+    +     '<div aria-hidden="true" title="Started here" style="position:absolute;left:' + startPct.toFixed(1) + '%;top:-1px;width:2px;height:14px;background:#cdbb91;opacity:.85"></div>'
+    +     '<div aria-hidden="true" title="Campaign peak" style="position:absolute;left:' + peakPct.toFixed(1) + '%;top:-2px;width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid #6f9e5a;transform:translateX(-4px)"></div>'
+    +   '</div>'
+    +   '<div style="display:flex;justify-content:space-between;font-size:10px;opacity:.62;margin-top:2px">'
+    +     '<span>Floor ' + ovrFloor + '</span><span style="opacity:.9">start ' + ovrStart + ' &middot; peak ' + ovrPeak + '</span><span>Ceiling ' + ovrCeil + (ceilGrade.letter ? ' (' + _cmdEsc(ceilGrade.letter) + ')' : '') + '</span>'
+    +   '</div>'/* wcag-auditor: contrast fix opacity:.8->.9 on "start · peak" inner span; nested inside outer opacity:.62 div making effective opacity .496 (3.93:1) → .558 (4.57:1) for AA 1.4.3 compliance on 10px text vs #282313 card ground */
+    +   '<div style="font-size:11px;opacity:.8;margin-top:6px">' + _cmdEsc(room) + '</div>'
+    +   (dt.note ? '<div style="font-size:11px;opacity:.78;margin-top:5px;border-left:2px solid var(--rule);padding-left:8px">' + _cmdEsc(dt.note) + '</div>' : '')
+    +   '<div style="font-size:10px;opacity:.55;margin-top:5px">' + _cmdEsc(dt.prov || "Inferred") + ' &middot; a calibrated reading of his documented career'
+    +     (dt.src && dt.src.length ? ' &middot; ' + _cmdEsc(dt.src.join("; ")) : '') + '</div>'
+    + '</div>';
+}
+
 /* ---- cmdRenderTab: the Command desk tab. ---- */
 function cmdRenderTab(C) {
   if (!C) return '';
@@ -684,6 +875,7 @@ function cmdRenderTab(C) {
   return ''
     + '<p class="lede" style="font-size:13px;margin-bottom:10px">You appoint the men who command your armies &mdash; and you relieve them. A great general lifts the army your war puts in the field; a cautious or discredited one squanders it. But a popular general is dangerous to dismiss: it costs you political capital, and the country is watching.</p>'
     + _cmdActiveCard(C)
+    + _cmdCareerArcHTML(C)
     + _cmdPoolHTML(C)
     + _cmdPromotionsHTML(C)
     + _cmdCardHTML(C);

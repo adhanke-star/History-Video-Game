@@ -37,6 +37,9 @@ const SETUP = `(() => {
     for(var t=0;t<turns;t++){ C.stats.battles++; if(win) C.stats.won++; var c={}; c[side]=win?900:2200; c[e]=win?2600:700;
       _t1Resolve(side, win?(type||'win'):(type||'loss'), {playerSide:side,enemySide:e,bd:{name:'x',year:C.president.date.year},casualties:c,infl:{},units:[]}, C, win); }
     return C; }
+  // D105: a single resolve with an EXPLICIT casualty split (so the attrition-drag tests can dial the share).
+  function resolveCas(C, win, type, casMe, casEnemy){ var side=C.side, e=(side==='US')?'CS':'US'; var c={}; c[side]=casMe; c[e]=casEnemy;
+    _t1Resolve(side, win?(type||'win'):(type||'loss'), {playerSide:side,enemySide:e,bd:{name:'x',year:C.president.date.year},casualties:c,infl:{},units:[]}, C, win); return C; }
   try {
     if (typeof _cmdData!=='function' || typeof commandLeadership!=='function' || typeof cmdInit!=='function')
       return JSON.stringify({ok:false,fatal:'command module missing'});
@@ -288,6 +291,142 @@ const SETUP = `(() => {
       if(html.indexOf('Seniority')<0) throw new Error('render missing the seniority currency');
       if(html.indexOf('Promote to')<0) throw new Error('render missing a Promote control');
       return { len:html.length }; });
+
+    // ===== D105 · LIVE DEV-TRAITS (the Madden development arc) =====
+
+    step('D105: devTraits data loads — every named general carries a real archetype, all Inferred (citation-gate-safe), anti-Lost-Cause balanced', function(){
+      if(typeof _cmdDevTrait!=='function'||typeof _cmdDevCfg!=='function') return { skipped:'pre-D105' };
+      var cfg=_cmdDevCfg(); if(!cfg||!cfg.assign||!cfg.archetypes) throw new Error('no devTraits config');
+      var ids=[]; ['US','CS'].forEach(function(s){ var r=_cmdSideGenerals(s); for(var i=0;i<r.length;i++) ids.push([s,r[i].id]); });
+      var pos={US:0,CS:0}, neg={US:0,CS:0}, fail={US:0,CS:0};   // fail = the NAMED-FAILURE set: hard-negative (−) OR double-edged (~), so the both-sides check doesn't rest on the single cs-bragg (−) record (CM#3)
+      for(var j=0;j<ids.length;j++){ var s2=ids[j][0], id=ids[j][1], a=cfg.assign[id];
+        if(!a) throw new Error('unassigned general '+id);
+        if(!cfg.archetypes[a.trait]) throw new Error('unknown archetype '+a.trait+' for '+id);
+        if(a.prov!=='Inferred') throw new Error('non-Inferred dev-trait (citation-gate risk) '+id+'='+a.prov);
+        var pol=cfg.archetypes[a.trait].polarity;
+        if(pol==='+') pos[s2]++;
+        if(pol==='−'||pol==='-') neg[s2]++;
+        if(pol==='−'||pol==='-'||pol==='~') fail[s2]++; }
+      if(!(pos.US>=pos.CS)) throw new Error('anti-Lost-Cause: US positive risers ('+pos.US+') must be >= CS ('+pos.CS+')');
+      if(!(fail.US>=1&&fail.CS>=1)) throw new Error('named command failures (− or double-edged ~) must appear on BOTH sides: US='+fail.US+' CS='+fail.CS);
+      return { assigned:ids.length, posUS:pos.US, posCS:pos.CS, negUS:neg.US, negCS:neg.CS, failUS:fail.US, failCS:fail.CS }; });
+
+    // NOTE: _t1Resolve advances the strategic date, which would change the HISTORICAL-default commander mid-drive
+    // (e.g. McClellan's tenure ends Nov 1862) and freeze the tested general's reputation. So these steps LOCK the
+    // tested general via cmd.fieldGeneral (the same effect cmdAppoint has, minus the capital cost) so every
+    // resolve evolves the SAME man — isolating the dev-trait arithmetic from the command-rotation.
+    function lock(C, id){ C.president.command.fieldGeneral = id; return id; }
+
+    step('D105: BYTE-IDENTICAL when off — EVERY outcome quadrant + the [5,98] clamp rails take the LITERAL pre-D105 path', function(){
+      if(typeof _cmdDevTrait!=='function') return { skipped:'pre-D105' };
+      var cfg=_cmdDevCfg(); var savedAssign=cfg.assign; cfg.assign={};   // disable every dev-trait -> the default path for all
+      try {
+        // each win/loss quadrant: one resolve, asserted == the literal clamp(cur+delta,5,98) (Grant, long tenure, locked)
+        function one(win,type,d){ var C=mkC('US',1864,3); var id=lock(C,cmdActiveId(C)); var s=C0rep(C,id);
+          resolveCas(C,win,type, win?900:2200, win?2600:700);
+          if(cmdActiveId(C)!==id) throw new Error('active general changed mid-test');
+          var got=C0rep(C,id), exp=Math.max(5,Math.min(98,s+d));
+          if(Math.abs(got-exp)>1e-9) throw new Error(type+(win?'-win':'-loss')+' default not byte-identical: '+s+'->'+got+' (exp '+exp+')'); return got; }
+        one(true,'decisive',6); one(true,'win',3); one(false,'loss',-4); one(false,'decisive',-8);
+        // a DRAW (winnerSide null): delta -1
+        var Cd=mkC('US',1864,3); var idd=lock(Cd,cmdActiveId(Cd)); var sd=C0rep(Cd,idd);
+        _t1Resolve(null,'draw',{playerSide:'US',enemySide:'CS',bd:{name:'x',year:1864},casualties:{US:1500,CS:1500},infl:{},units:[]},Cd,false);
+        if(Math.abs(C0rep(Cd,idd)-Math.max(5,Math.min(98,sd-1)))>1e-9) throw new Error('draw default not byte-identical');
+        // the clamp RAILS: a near-98 general caps at 98 on a decisive win; a near-5 general floors at 5 on a decisive loss
+        var Ch=mkC('US',1864,3); var idh=lock(Ch,cmdActiveId(Ch)); Ch.president.command.reputation[idh]=97;
+        resolveCas(Ch,true,'decisive',900,2600); if(C0rep(Ch,idh)!==98) throw new Error('high rail != 98: '+C0rep(Ch,idh));
+        var Cl=mkC('US',1864,3); var idl=lock(Cl,cmdActiveId(Cl)); Cl.president.command.reputation[idl]=6;
+        resolveCas(Cl,false,'decisive',2200,700); if(C0rep(Cl,idl)!==5) throw new Error('low rail != 5: '+C0rep(Cl,idl));
+        return { quadrants:'win/decisive/loss/decisive-loss/draw all byte-identical', railHi:98, railLo:5 }; }
+      finally { cfg.assign=savedAssign; } });
+
+    step('D105: the off-test RESTORED the shared devTraits.assign (no global-state leak into the following steps)', function(){
+      if(typeof _cmdDevCfg!=='function') return { skipped:'pre-D105' };
+      var n=Object.keys((_cmdDevCfg()&&_cmdDevCfg().assign)||{}).length;
+      if(n<20) throw new Error('devTraits.assign not restored to the full 20-general map (got '+n+') — the off-test leaked global state');
+      return { assignRestored:n }; });
+
+    step('D105: a Rising Star (Grant) climbs faster + higher than a Plateau (McClellan); the ceiling caps the plateau', function(){
+      if(typeof _cmdDevTrait!=='function') return { skipped:'pre-D105' };
+      var Cg=mkC('US',1864,3); var idg=lock(Cg,cmdActiveId(Cg)); var g0=C0rep(Cg,idg);
+      resolveCas(Cg,true,'win',900,2600); resolveCas(Cg,true,'win',900,2600); var gGain=C0rep(Cg,idg)-g0;
+      var Cm=mkC('US',1862,9); var idm=lock(Cm,cmdActiveId(Cm)); var m0=C0rep(Cm,idm);
+      resolveCas(Cm,true,'win',900,2600); resolveCas(Cm,true,'win',900,2600); var mGain=C0rep(Cm,idm)-m0;
+      if(!(gGain>mGain)) throw new Error('Rising Star should gain faster than Plateau: '+idg+' +'+gGain+' vs '+idm+' +'+mGain);
+      var Cm2=mkC('US',1862,9); var idm2=lock(Cm2,cmdActiveId(Cm2)); var dt=_cmdDevTrait(Cm2,_cmdById('US',idm2));
+      for(var w=0;w<14;w++) resolveCas(Cm2,true,'decisive',900,2600);
+      var mCap=C0rep(Cm2,idm2);
+      if(!(mCap<=dt.ceiling+1e-9)) throw new Error('plateau rep exceeded its ceiling: '+mCap+' > '+dt.ceiling);
+      if(!(mCap<90)) throw new Error('a plateau must never reach the legendary band: '+mCap);
+      return { grantGain:+gGain.toFixed(2), mcclellanGain:+mGain.toFixed(2), mcclellanCeiling:dt.ceiling, mcclellanCappedAt:+mCap.toFixed(2) }; });
+
+    step('D105: the FLOOR caps the fall — an Established Legend (Lee) bottoms at his floor, not at 5', function(){
+      if(typeof _cmdDevTrait!=='function') return { skipped:'pre-D105' };
+      var C=mkC('CS',1863,7); var id=lock(C,cmdActiveId(C)); var dt=_cmdDevTrait(C,_cmdById('CS',id));
+      if(dt.key!=='established_legend') throw new Error('expected the 1863 CS default (Lee) = established_legend, got '+id+'='+dt.key);
+      for(var l=0;l<16;l++) resolveCas(C,false,'decisive',2600,700);
+      if(cmdActiveId(C)!==id) throw new Error('locked general changed mid-test ('+id+' -> '+cmdActiveId(C)+')');
+      var lo=C0rep(C,id);
+      if(!(lo>=dt.floor-1e-9)) throw new Error('rep fell below the floor: '+lo+' < '+dt.floor);
+      if(!(lo>55)) throw new Error('an established legend must not crater to the basement: '+lo);
+      return { general:id, trait:dt.key, floor:dt.floor, bottomedAt:+lo.toFixed(2) }; });
+
+    step('D105: attrition drag — a bloody loss erodes reputation MORE than a clean one (bounded); the §15-R3 decline-with-attrition', function(){
+      if(typeof _cmdAttritionDrag!=='function') return { skipped:'pre-D105' };
+      var Cb=mkC('US',1862,9); var idb=lock(Cb,cmdActiveId(Cb)); var b0=C0rep(Cb,idb);
+      if(_cmdDevTrait(Cb,_cmdById('US',idb)).key!=='plateau') throw new Error('expected the 1862 US default (McClellan) = plateau, got '+idb+'='+_cmdDevTrait(Cb,_cmdById('US',idb)).key);
+      resolveCas(Cb,false,'loss',8000,2000); var bloody=b0-C0rep(Cb,idb);   // share 0.8 > pivot -> drag (McClellan plateau drag 0.50)
+      var Cc=mkC('US',1862,9); var idc=lock(Cc,cmdActiveId(Cc)); var c0=C0rep(Cc,idc);
+      resolveCas(Cc,false,'loss',1000,4000); var clean=c0-C0rep(Cc,idc);     // share 0.2 < pivot -> no drag
+      if(!(bloody>clean)) throw new Error('a bloody loss should erode MORE than a clean one: bloody -'+bloody+' vs clean -'+clean);
+      if(!((bloody-clean)<=4+1e-9)) throw new Error('attrition drag must stay bounded (<= attritionDragMax): '+(bloody-clean));
+      return { bloodyDrop:+bloody.toFixed(2), cleanDrop:+clean.toFixed(2), extraDrag:+(bloody-clean).toFixed(2) }; });
+
+    step('D105: NO output gate — cmdOnResolve writes only reputation/devTrack, never the battle B; devTrack peak/low/battles never feed combat', function(){
+      if(typeof cmdOnResolve!=='function') return { skipped:'pre-D105' };
+      var C=mkC('US',1863,5);
+      var B={playerSide:'US',enemySide:'CS',bd:{name:'x',year:1863},casualties:{US:1500,CS:1200},infl:{},units:[]};
+      var casBefore=JSON.stringify(B.casualties), keysBefore=Object.keys(B).sort().join(',');
+      cmdOnResolve('US','win',B,C,true);
+      if(JSON.stringify(B.casualties)!==casBefore) throw new Error('cmdOnResolve mutated B.casualties (no-fudge wall)');
+      if(Object.keys(B).sort().join(',')!==keysBefore) throw new Error('cmdOnResolve added a key to B (a scoreboard write)');
+      var Ca=mkC('US',1864,3), Cb2=mkC('US',1864,3); var ida=lock(Ca,cmdActiveId(Ca)); lock(Cb2,ida);
+      Cb2.president.command.devTrack[ida].peak=999; Cb2.president.command.devTrack[ida].low=-999; Cb2.president.command.devTrack[ida].battles=123;
+      resolveCas(Ca,true,'win',900,2600); resolveCas(Cb2,true,'win',900,2600);
+      if(Math.abs(C0rep(Ca,ida)-C0rep(Cb2,ida))>1e-9) throw new Error('devTrack peak/low/battles leaked into reputation: '+C0rep(Ca,ida)+' vs '+C0rep(Cb2,ida));
+      return { bCasUnchanged:true, devTrackObservationPure:true }; });
+
+    step('D105: SAVE-TAMPER hardening — a corrupt devTrack.start (the load-bearing band anchor) degrades safely: finite + in-band reputation, no NaN in the render', function(){
+      if(typeof _cmdDevTrait!=='function') return { skipped:'pre-D105' };
+      function tamper(v){ var C=mkC('US',1864,3); var id=lock(C,cmdActiveId(C));
+        C.president.command.devTrack[id].start=v; cmdInit(C);   // simulate a save LOAD (cmdInit sanitizes), then a battle
+        resolveCas(C,true,'win',900,2600);
+        var rep=C0rep(C,id);
+        if(!isFinite(rep)) throw new Error('start='+v+' -> non-finite reputation '+rep);
+        if(!(rep>=5&&rep<=98)) throw new Error('start='+v+' -> out-of-band reputation '+rep);
+        var html=cmdRenderTab(C);
+        if(html.indexOf('NaN')>=0) throw new Error('start='+v+' -> "NaN" leaked into the Career Arc render');
+        return +rep.toFixed(2); }
+      return { fromNaN:tamper(NaN), from500:tamper(500), fromNeg:tamper(-99) }; });
+
+    step('D105: the Career Arc renders + _cmdDevTrend covers all four verdict branches (incl. the battles=0 edge)', function(){
+      if(typeof _cmdCareerArcHTML!=='function'||typeof _cmdDevTrend!=='function') return { skipped:'pre-D105' };
+      // _cmdDevTrend branch coverage (pure, deterministic — independent of the OVR arithmetic)
+      if(_cmdDevTrend(0,5).word!=='Untested') throw new Error('battles=0 should read Untested');
+      if(_cmdDevTrend(5,10).word!=='Rising') throw new Error('a positive delta should read Rising');
+      if(_cmdDevTrend(5,-10).word!=='Fading') throw new Error('a negative delta should read Fading');
+      if(_cmdDevTrend(5,0).word!=='Holding') throw new Error('a flat delta should read Holding');
+      // render integration
+      var C=mkC('US',1864,3); var id=lock(C,cmdActiveId(C)); var dt=_cmdDevTrait(C,_cmdById('US',id));
+      var html=cmdRenderTab(C);
+      if(html.toLowerCase().indexOf('career arc')<0) throw new Error('render missing the Career Arc section');
+      if(html.indexOf(dt.label)<0) throw new Error('render missing the active general dev-trait label "'+dt.label+'"');
+      if(html.indexOf('OVR NOW')<0) throw new Error('render missing the OVR-now read-out');
+      if(html.indexOf('Untested')<0||html.indexOf('0 battle')<0) throw new Error('a fresh (battles=0) arc should render the Untested verdict + "0 battles"');
+      resolveCas(C,true,'decisive',900,2600); resolveCas(C,true,'decisive',900,2600); resolveCas(C,true,'decisive',900,2600);
+      var html2=cmdRenderTab(C);
+      if(html2.indexOf('(+')<0) throw new Error('a winning general should render a positive career delta');
+      return { branches:'Untested/Rising/Fading/Holding', label:dt.label }; });
 
     // helper: read a general's current reputation
     function C0rep(C,id){ return (C.president&&C.president.command&&typeof C.president.command.reputation[id]==='number')?C.president.command.reputation[id]:60; }

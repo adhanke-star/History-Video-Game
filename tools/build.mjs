@@ -125,7 +125,11 @@ for (const name of overrides) {
 // sev.* at resolution time (the scripted "higher rating => auto-win" hack). Enforced STRUCTURALLY so
 // the invariant cannot be eroded by a later increment. The combat modules (T0 etc.) legitimately write
 // these — the wall scopes to the rating/badge module(s), which exist only to seed inputs.
-const RATING_MODULES = ['tactical/T14-ratings.js'];
+// D105 (bug-hunt): 35-command.js carries the STRATEGIC rating code now (the dev-trait reputation-shaping —
+// cmdOnResolve / _cmdDevTrait / _cmdAttritionDrag), which also only seeds an INPUT (reputation) and must never
+// write the scoreboard. It writes solely command state (reputation/seniority/capital/devTrack), none of which
+// match the forbidden set, so scoping the same wall over it closes the no-fudge coverage gap.
+const RATING_MODULES = ['tactical/T14-ratings.js', '35-command.js'];
 const NO_FUDGE_FORBIDDEN = [
   { re: /\b(cas|aCas|bCas)\s*(\+=|-=|=)(?!=)/, what: 'a casualty count (cas/aCas/bCas)' },
   { re: /\.victory\s*=(?!=)/, what: 'the victory result (.victory)' },
