@@ -85,8 +85,8 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       ‹LOCKED: sits here, after tactical depth, so it duplicates onto a mature engine.›
 
 ### Phase E — STRATEGIC ARC COMPLETION  (S3–S5)  ‹▶ NEXT after C breadth — D91 (pulled ahead of the hex engine; the biggest content-thin pillar)›
-- [~] **E1 S3 alt-history:** tiered divergence + hinge forks + emergent toggle + the player-driven "your war
-      vs history" tracker + divergence log (no thumb on the scale — D54).
+- [x] **E1 S3 alt-history:** tiered divergence + hinge forks + emergent toggle + the player-driven "your war
+      vs history" tracker + divergence log (no thumb on the scale — D54). ‹✅ COMPLETE through D118.›
       ‹✅ increment 1 (D111): the flagship **"Your War vs History"** desk tab — a tiered (minor/major/radical),
       dated DIVERGENCE LEDGER with the historical counterfactual per entry + a 0..100 divergence INDEX + the
       EMERGENT-ONLY toggle (withholds the wild-card gambits). Pure read-out over the S1e `C.strategy` seeds
@@ -120,7 +120,17 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       probe-endings 24/24 (+8 D117 steps); bug-hunt invariantsHold=TRUE (8 agents; 1 confirmed MED fixed — the
       general-strike USCT count corrected from "tens of thousands" to ~180,000, matching the game's own after-action
       figure). wcag-auditor AA (data-only, no edits).›
-      **Remaining:** interactive HINGE-FORK decision cards on the `decResolve` engine that STEER toward the endings.
+      ‹✅ increment 5 (D118): **interactive HINGE-FORK decision cards** on the proven `decResolve`/`_decApply`
+      engine (pure data → byte-identical by construction). 4 citation-grade strategic forks (2 US, 2 CS) that
+      STEER the war's trajectory toward the ending spectrum: us-hard-war (total war/conciliation/grind → hard-war
+      collapse) · us-reconstruction-terms (10% Plan/Wade-Davis/forty-acres → Reconstruction-that-holds) ·
+      cs-king-cotton (embargo/export/burn → recognized independence/King Cotton) · cs-peace-feelers
+      (negotiate/fight-on/husband → negotiated peace/Fabian). All `trigger.hinge` with the rich multi-voice `card`
+      block + a named-and-countered Lost-Cause myth voice; deck 8 → 12. Cards use only the existing `_decApply`
+      vocabulary (move momentum [the dominant ending gate] + foreign/blockade/manpower); each option's prose names
+      the ending it steers toward. probe-decisions 19/19 (+5 D118 steps); research+verify (8 agents) + bug-hunt
+      (6 agents) invariantsHold=TRUE, 0 confirmed; wcag-auditor auto-fixed 2 PRE-EXISTING AA contrast failures in
+      the decision render. (The wild/lever/recognition openers stay on the Paths-to-Victory surface, by design.)›
       ‹✅ the divergence-log read-back landed in the E4 graded after-action report (D112).››
 - [ ] **E2 S4 education:** multi-axis codex + inline glossary + the full guided tutorial + play-style presets
       (President / General-Commander, + the Historian settings overlay — D39) + difficulty/realism sliders.

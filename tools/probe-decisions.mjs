@@ -181,6 +181,62 @@ const SETUP = `(() => {
       if(threw) throw new Error('decWireTab threw');
       if(!hasBtn) throw new Error('Decide button not in DOM');
       return { tabLen:tab.length, interLen:inter.length, wired:true }; });
+
+    // ---- D118: the 4 new strategic HINGE-FORK cards that STEER toward the endings ----
+    step('D118 new strategic hinges load with full schema, 3 options, + a named+countered myth voice', function(){
+      var ids=['us-hard-war','us-reconstruction-terms','cs-king-cotton','cs-peace-feelers'];
+      for(var i=0;i<ids.length;i++){ var c=_decById(ids[i]);
+        if(!c) throw new Error('missing new card '+ids[i]);
+        if(!(c.trigger&&c.trigger.hinge)) throw new Error(ids[i]+' must be a hinge');
+        if(!c.card||!c.card.claim||!Array.isArray(c.card.perspectives)||c.card.perspectives.length<3) throw new Error(ids[i]+' missing rich card content');
+        if(c.options.length!==3) throw new Error(ids[i]+' must have exactly 3 options');
+        var hasMyth=c.card.perspectives.some(function(p){ return /myth|lost cause|dunning/i.test(p.voice); });
+        if(!hasMyth) throw new Error(ids[i]+' must carry a named+countered myth voice (anti-Lost-Cause)'); }
+      return { ok:true }; });
+
+    step('D118 SIDE-gate: US hinges surface for US 1864 (not CS); CS hinges for CS (not US)', function(){
+      var U=mkC('US',1864,9); decOnResolve('US','win',{bd:{year:1864}},U,true); var pu=pend(U);
+      if(pu.indexOf('us-hard-war')<0) throw new Error('us-hard-war should surface for US 1864');
+      if(pu.indexOf('us-reconstruction-terms')<0) throw new Error('us-reconstruction-terms should surface for US 1864');
+      if(pu.indexOf('cs-king-cotton')>=0||pu.indexOf('cs-peace-feelers')>=0) throw new Error('a US campaign must not surface a CS hinge');
+      var S=mkC('CS',1864,9); decOnResolve('CS','win',{bd:{year:1864}},S,true); var ps=pend(S);
+      if(ps.indexOf('cs-peace-feelers')<0) throw new Error('cs-peace-feelers should surface for CS 1864');
+      if(ps.indexOf('us-hard-war')>=0||ps.indexOf('us-reconstruction-terms')>=0) throw new Error('a CS campaign must not surface a US hinge');
+      return { usPending:pu, csPending:ps }; });
+
+    step('D118 YEAR-gate: cs-king-cotton (1861-1862) opens early + CLOSES in 1863+; the US hinges are 1864+', function(){
+      var S62=mkC('CS',1862,3); decOnResolve('CS','win',{bd:{year:1862}},S62,true);
+      if(pend(S62).indexOf('cs-king-cotton')<0) throw new Error('cs-king-cotton should surface for CS 1862');
+      var S63=mkC('CS',1863,6); decOnResolve('CS','win',{bd:{year:1863}},S63,true);
+      if(pend(S63).indexOf('cs-king-cotton')>=0) throw new Error('cs-king-cotton (latest 1862) must NOT surface in 1863');
+      var U62=mkC('US',1862,6); decOnResolve('US','win',{bd:{year:1862}},U62,true);
+      if(pend(U62).indexOf('us-hard-war')>=0) throw new Error('us-hard-war (1864+) must NOT surface in 1862');
+      return { ok:true }; });
+
+    step('D118 effects apply bounded+clamped (momentum / foreign / blockade levers)', function(){
+      // us-hard-war "total" -> weariness -5, capital +2 (lifts momentum)
+      var U=mkC('US',1864,9); decOnResolve('US','win',{bd:{year:1864}},U,true);
+      var w0=U.clock.weariness, cap0=U.clock.capital;
+      decResolve(U,'us-hard-war','total');
+      if(U.clock.weariness!==w0-5) throw new Error('us-hard-war total weariness '+w0+'->'+U.clock.weariness+' (expected -5)');
+      if(U.clock.capital!==cap0+2) throw new Error('us-hard-war total capital '+cap0+'->'+U.clock.capital+' (expected +2)');
+      // cs-king-cotton "embargo" -> intervention +3, importFactor -0.05 (clamped), capital -3
+      var S=mkC('CS',1862,3); decOnResolve('CS','win',{bd:{year:1862}},S,true);
+      if(!S.blockade) S.blockade={}; S.blockade.importFactor=0.5;
+      var iv0=S.clock.intervention, scap0=S.clock.capital;
+      decResolve(S,'cs-king-cotton','embargo');
+      if(S.clock.intervention!==iv0+3) throw new Error('king-cotton embargo intervention '+iv0+'->'+S.clock.intervention+' (expected +3)');
+      if(Math.abs(S.blockade.importFactor-0.45)>1e-9) throw new Error('king-cotton embargo importFactor expected 0.45, got '+S.blockade.importFactor);
+      if(S.clock.capital!==Math.max(0,scap0-3)) throw new Error('king-cotton embargo capital '+scap0+'->'+S.clock.capital+' (expected -3)');
+      return { ok:true }; });
+
+    step('D118 CADENCE unchanged: all US hinges surface past the non-hinge cap', function(){
+      var C=mkC('US',1864,9); decOnResolve('US','win',{bd:{year:1864}},C,true);
+      var p=pend(C);
+      var nh=p.filter(function(id){ var c=_decById(id); return c && !(c.trigger&&c.trigger.hinge); });
+      if(nh.length>2) throw new Error('more than 2 non-hinge surfaced in one turn: '+nh);
+      if(p.indexOf('us-hard-war')<0||p.indexOf('us-reconstruction-terms')<0||p.indexOf('emancipation-proclamation')<0) throw new Error('all US hinges must surface even past the non-hinge cap');
+      return { nonHinge:nh.length, pending:p.length }; });
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
 })()`;

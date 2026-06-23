@@ -18412,6 +18412,459 @@ var GAME_DATA = {
         ],
         "provenance": "Verified"
       }
+    },
+    {
+      "id": "us-hard-war",
+      "side": "US",
+      "category": "war-strategy",
+      "title": "The Hard Hand of War",
+      "trigger": {
+        "earliestYear": 1864,
+        "latestYear": null,
+        "hinge": true,
+        "note": "The central strategic temper of the war's fourth year — how hard the Union hand falls. Steers the war's momentum toward (or away from) a fast, hard-war collapse."
+      },
+      "situation": "Mr. President, it is the summer of 1864 and the country's patience is bleeding away. Grant is fighting his way toward Richmond at a butcher's cost, Atlanta has not yet fallen, and your re-election is in doubt. The generals await your guidance on the central question of this war's fourth year: how hard shall the Union hand fall upon the South — upon its armies alone, or upon the farms, mills, and railroads that feed them? Choose the temper of the war to come.",
+      "options": [
+        {
+          "id": "total",
+          "label": "Make the South feel the war — Sherman to the sea, Sheridan in the Valley. Destroy the means and the will to resist.",
+          "historicalNote": "This is the path the Union actually took. After Atlanta fell on September 2, 1864, Sheridan laid waste the Shenandoah Valley — \"The Burning,\" roughly September 26 to October 8, 1864 — torching some 2,000 barns and 70 mills on Grant's instruction that the Valley be left \"a barren waste.\" Sherman then cut loose from Atlanta on November 15, marching to Savannah (taken December 21, 1864) and on through the Carolinas into 1865, wrecking railroads, depots, and the war economy in his path.",
+          "resultText": "The torch goes ahead of the bayonet. Sheridan's troopers fire the barns and mills of the Valley until the smoke is seen from the Blue Ridge; Sherman's columns carve a band of ruin from Atlanta to the sea, tearing up the iron roads and emptying the granaries that feed the rebel armies. The South's will to fight begins to break — not in the trenches, but at the kitchen hearth. The North, heartened by victory, returns you to office. This is the road to a hard-war collapse.",
+          "teaching": "Mark Grimsley (The Hard Hand of War, Cambridge, 1995) calls this \"hard war\" — a deliberate, escalating policy aimed at the Confederacy's war-making capacity and civilian morale, not a license for indiscriminate cruelty. McPherson (Battle Cry of Freedom, Oxford, 1988) shows Atlanta's fall and these campaigns rescued Lincoln's re-election and shortened the war. The cost was real and one-sided: Southern farms, mills, and railroads were systematically destroyed, and tens of thousands of freedpeople followed Sherman's columns toward an uncertain freedom. Hard war was effective and, by the laws of war then understood, largely lawful — but it was destruction visited deliberately on a region, and honest history names that plainly.",
+          "provenance": "Verified",
+          "sources": [
+            "Mark Grimsley, The Hard Hand of War: Union Military Policy Toward Southern Civilians, 1861-1865 (Cambridge University Press, 1995)",
+            "James M. McPherson, Battle Cry of Freedom (Oxford University Press, 1988)"
+          ],
+          "effects": [
+            {
+              "field": "weariness",
+              "delta": -5
+            },
+            {
+              "field": "capital",
+              "delta": 2
+            }
+          ]
+        },
+        {
+          "id": "conciliation",
+          "label": "Wage a limited war — guard Southern property and win the plain people back to the Union.",
+          "historicalNote": "This was the Union's actual opening policy in 1861-62 — what Grimsley terms the \"conciliation\" phase. Generals like McClellan guarded Southern property, returned fugitive slaves, and sought to woo a supposed silent Unionist majority back into the fold. It failed: the rebellion only deepened, slavery propped up the Confederate war effort, and by mid-1862 Union policy hardened into \"pragmatism\" and then hard war, codified in part by the Emancipation Proclamation and Lieber's General Orders No. 100 (1863).",
+          "resultText": "You stay the soft hand. Southern barns are guarded, civilian property spared, fugitive slaves turned back to their masters — all in hope the plain people of the South will weary of secession and come home to the old flag. They do not come. The Confederacy, its farms and slaves untouched, fights on with undiminished means, and the war grinds longer into a war-weary North that begins to doubt whether it can be won at all.",
+          "teaching": "Grimsley (The Hard Hand of War, 1995) documents that conciliation rested on a false premise — that white Southern Unionism was strong enough to reclaim. McPherson (Battle Cry of Freedom, 1988) and Eric Foner (The Fiery Trial: Abraham Lincoln and American Slavery, Norton, 2010) show the policy's fatal flaw was that it protected slavery, the institution that was the war's cause and the engine of Confederate logistics. Guarding rebel property meant prolonging the rebellion; the longer war it produced cost more Northern lives, not fewer. The Union abandoned conciliation precisely because it did not work.",
+          "provenance": "Verified",
+          "sources": [
+            "Mark Grimsley, The Hard Hand of War: Union Military Policy Toward Southern Civilians, 1861-1865 (Cambridge University Press, 1995)",
+            "James M. McPherson, Battle Cry of Freedom (Oxford University Press, 1988)",
+            "Eric Foner, The Fiery Trial: Abraham Lincoln and American Slavery (W. W. Norton, 2010)"
+          ],
+          "effects": [
+            {
+              "field": "weariness",
+              "delta": 3
+            },
+            {
+              "field": "capital",
+              "delta": 2
+            }
+          ]
+        },
+        {
+          "id": "grind",
+          "label": "Grant's relentless grind — accept the bloody arithmetic of attrition until Lee's army breaks.",
+          "historicalNote": "This is the strategy Grant actually pursued in the East. The Overland Campaign of May-June 1864 — the Wilderness (May 5-7), Spotsylvania (where Grant wrote on May 11, \"I propose to fight it out on this line if it takes all summer\"), and Cold Harbor (June 1-3), where thousands fell in minutes — cost the Army of the Potomac roughly 55,000 casualties in about six weeks. Grant accepted that arithmetic, pinned Lee against Richmond and Petersburg in a siege from June 1864, and ground the Army of Northern Virginia toward its surrender at Appomattox on April 9, 1865.",
+          "resultText": "You back Grant, and the casualty lists grow long enough to silence a city. The Wilderness, Spotsylvania, Cold Harbor — the dead pile in the thousands, and Northern newspapers brand your general a butcher. But Grant does not turn back as others did; he fixes Lee in place, bleeds an army that cannot replace its losses, and the slow vise closes. Victory comes — at a price counted in a generation of young men.",
+          "teaching": "Grant's attrition was sound strategy resting on a brutal truth: the Union could replace its losses and the Confederacy could not. Gary W. Gallagher (The Confederate War, Harvard, 1997) and McPherson (Battle Cry of Freedom, 1988) reject the Lost-Cause caricature of Grant as a mindless butcher; Gordon C. Rhea, in his studies of the Overland Campaign, documents that Grant's proportional losses were not in fact higher than Lee's, whose earlier offensives had bled the South past recovery. Yet the human cost was staggering and must not be sanitized: Cold Harbor alone became a byword for futile slaughter, and the 1864 casualty lists nearly cost Lincoln the election. The grind worked because it was relentless, and it was terrible because it was relentless.",
+          "provenance": "Verified",
+          "sources": [
+            "James M. McPherson, Battle Cry of Freedom (Oxford University Press, 1988)",
+            "Gary W. Gallagher, The Confederate War (Harvard University Press, 1997)",
+            "Gordon C. Rhea, The Overland Campaign series (Louisiana State University Press, 1994-2017); Ulysses S. Grant, Personal Memoirs of U. S. Grant (1885-86)"
+          ],
+          "effects": [
+            {
+              "field": "weariness",
+              "delta": -2
+            },
+            {
+              "field": "strength",
+              "delta": -3
+            }
+          ]
+        }
+      ],
+      "card": {
+        "claim": "By 1864 the Union deliberately adopted \"hard war\" — Sheridan's destruction of the Shenandoah Valley and Sherman's March to the Sea targeting the Confederacy's war-making capacity and civilian morale — after its early conciliation policy failed and alongside Grant's costly war of attrition in Virginia.",
+        "perspectives": [
+          {
+            "voice": "Lt. Gen. Ulysses S. Grant, General-in-Chief, to Sheridan, 1864",
+            "text": "\"If the war is to last another year, we want the Shenandoah Valley to remain a barren waste.\" Grant's design was to strip the Confederacy of the farms, mills, and railroads that armed and fed its armies, and to fix Lee in place until his army could no longer replace what it lost."
+          },
+          {
+            "voice": "Historian Mark Grimsley, The Hard Hand of War (Cambridge, 1995)",
+            "text": "Grimsley traces three phases — conciliation, pragmatism, and hard war — and insists \"hard war\" (a term Union men actually used) is more accurate than \"total war\": it was a directed, escalating policy aimed at the South's capacity to resist, marked by real restraint, not the wanton ruin of legend."
+          },
+          {
+            "voice": "Historian James M. McPherson, Battle Cry of Freedom (Oxford, 1988)",
+            "text": "McPherson shows the choice was strategic, not vengeful: Atlanta's fall and the Valley and Georgia campaigns broke Confederate morale and rescued Lincoln's re-election, while Grant's attrition in Virginia, costly as it was, exploited the one resource the South could never match — manpower."
+          },
+          {
+            "voice": "MYTH — \"Sherman's march was a uniquely barbaric war crime against innocents\" (Lost Cause)",
+            "text": "Named and countered: the documented record shows the march targeted war-making capacity — railroads, depots, mills, granaries — not lives. Murders of civilians were rare relative to the property destroyed; Sheridan's orders even spared the farms of widows and orphans, and the campaigns operated within the laws of war as then codified (Lieber's General Orders No. 100, 1863). Grimsley dismantles the barbarity legend as Lost-Cause invention."
+          }
+        ],
+        "sources": [
+          "Mark Grimsley, The Hard Hand of War: Union Military Policy Toward Southern Civilians, 1861-1865 (Cambridge University Press, 1995)",
+          "James M. McPherson, Battle Cry of Freedom (Oxford University Press, 1988)",
+          "Gary W. Gallagher, The Confederate War (Harvard University Press, 1997)"
+        ],
+        "provenance": "Verified"
+      }
+    },
+    {
+      "id": "us-reconstruction-terms",
+      "side": "US",
+      "category": "reconstruction",
+      "title": "The Terms of Reunion",
+      "trigger": {
+        "earliestYear": 1864,
+        "latestYear": null,
+        "hinge": true,
+        "note": "On what terms the conquered South returns — and what becomes of four million freedpeople. Steers toward a Reconstruction that holds (or a reunion that betrays it)."
+      },
+      "situation": "Mr. President, the rebel armies fray and the end of the war is now a question of months, not years. But a harder question waits behind it: on what terms is the conquered South to be made part of the Union again — and what is owed to the four million who were property a year ago and will be citizens, in some fashion, when the guns fall silent? Your generals can take the land; only you can decide what \"reunion\" shall mean for the freedpeople who watered that land with their labor. Choose, knowing that whatever peace you build will outlast you.",
+      "options": [
+        {
+          "id": "lenient",
+          "label": "The Ten Percent Plan — readmit a State on a tenth of its voters' loyalty oath. Bind the wounds quickly.",
+          "historicalNote": "This was Lincoln's chosen road. His Proclamation of Amnesty and Reconstruction (8 Dec 1863) offered pardon to most Confederates who swore future loyalty and let a state form a government once just one-tenth of its 1860 voters had taken the oath — the 'Ten Percent Plan.' He defended it in his last speech (11 Apr 1865) and his Second Inaugural's 'with malice toward none' (4 Mar 1865). After his murder, Andrew Johnson's even laxer version let ex-Confederates write the Black Codes; the lenient road bent, through the disputed 1876 election and the Compromise of 1877, into the withdrawal of federal troops and the long night of Jim Crow.",
+          "resultText": "You bind the wounds quickly. Loyal governments rise in Louisiana and Tennessee on a tenth of the old electorate, and the rejoicing is loud. But the men who take the new oaths are too often the men who took the old ones, and the freedpeople you meant to lift find the planter's hand still on the land and the law. The peace comes fast — and it does not hold.",
+          "teaching": "Lincoln framed speed as mercy and as constitutional caution: a war to restore the Union should restore it, not punish it. But Eric Foner (Reconstruction, 1988) shows the 10% threshold handed power back to the planter class almost intact, leaving the freedpeople's status to the goodwill of their former owners — goodwill that produced the Black Codes within months. Historians debate how far Lincoln would have moved leftward had he lived; in his last speech he endorsed limited Black suffrage. What is not in dispute, per David Blight (Race and Reunion, 2001), is that the reconciliationist 'bind the wounds' impulse, carried to its end, purchased white reunion at the price of Black freedom.",
+          "provenance": "Verified",
+          "sources": [
+            "Abraham Lincoln, Proclamation of Amnesty and Reconstruction (8 Dec 1863); Second Inaugural Address (4 Mar 1865)",
+            "Eric Foner, Reconstruction: America's Unfinished Revolution, 1863-1877 (Harper & Row, 1988)",
+            "David W. Blight, Race and Reunion: The Civil War in American Memory (Harvard, 2001)"
+          ],
+          "effects": [
+            {
+              "field": "capital",
+              "delta": 4
+            },
+            {
+              "field": "weariness",
+              "delta": -2
+            }
+          ]
+        },
+        {
+          "id": "radical",
+          "label": "The Wade-Davis terms — a majority loyalty oath, the planter leadership barred, Black citizenship secured by federal power.",
+          "historicalNote": "Congress offered this road and you, as Lincoln, refused it. The Wade-Davis Bill (passed 2 Jul 1864) required a majority — 50 percent — of a state's white men to swear past and future loyalty before reconstruction could begin, and barred Confederate leaders from the new governments; Lincoln killed it with a pocket veto. The Radical Republican program it foreshadowed prevailed after his death: the Fourteenth Amendment (ratified 1868) made the freedpeople citizens with equal protection, and the Fifteenth (1870) barred racial denial of the vote. Black men voted, held office, and built public schools across the South until white-supremacist violence and Northern fatigue tore it down.",
+          "resultText": "You demand a true majority's loyalty and shut the war's authors out of the new state houses. The work is slower and the cost in occupation steeper, but the governments that rise rest on more than a tenth of the people — and federal bayonets stand behind the freedman's ballot. For a season, an interracial democracy governs in the conquered South. Whether the North will pay to defend it is the question you leave to those who come after. This is the road to a Reconstruction that holds.",
+          "teaching": "The Wade-Davis terms aimed at what Foner (Reconstruction, 1988) calls the era's central problem: a Reconstruction that could hold required dismantling planter power and arming Black citizenship with federal force, not goodwill. W.E.B. Du Bois (Black Reconstruction in America, 1935) documented the genuine achievements of the Radical state governments — public education, expanded suffrage, civil rights — long dismissed by earlier historians. The Reconstruction Amendments rewrote the Constitution's meaning of citizenship, as Foner details in The Second Founding (2019). The tragedy, scholars agree, was not that the program was too harsh but that the nation abandoned its enforcement.",
+          "provenance": "Verified",
+          "sources": [
+            "Wade-Davis Bill (2 Jul 1864) and Lincoln's pocket veto: National Archives — https://www.archives.gov/milestone-documents/wade-davis-bill",
+            "Eric Foner, Reconstruction: America's Unfinished Revolution, 1863-1877 (Harper & Row, 1988); Eric Foner, The Second Founding (Norton, 2019)",
+            "W. E. B. Du Bois, Black Reconstruction in America, 1860-1880 (Harcourt, Brace, 1935)"
+          ],
+          "effects": [
+            {
+              "field": "capital",
+              "delta": -4
+            }
+          ]
+        },
+        {
+          "id": "land",
+          "label": "Land to the freedpeople — Sherman's forty acres, the confiscated plantations redistributed.",
+          "historicalNote": "Sherman issued Special Field Order No. 15 on 16 Jan 1865, setting aside a coastal strip from Charleston to the St. Johns River — some 400,000 acres — for freed families in forty-acre plots; an army mule often went with the grant, hence 'forty acres and a mule.' Within six months roughly 40,000 freedpeople were settling that land. The Freedmen's Bureau (est. Mar 1865) briefly administered it. Then President Andrew Johnson, through the autumn of 1865, ordered the land restored to its pardoned former owners and evicted the freedpeople. The promise of an economic foundation for freedom was made and broken within a single year.",
+          "resultText": "You put the freedpeople on the land — the confiscated acres of the men who held them — and back the deed with the Bureau and the army. Families who owned nothing a year ago plant their own crops, school their own children, and post their own guards against the night riders. Real freedom, it turns out, has an address and a fence line. The only question is whether the government that granted the deed will defend it when the old owner returns with a pardon in his hand. This is the road to forty acres enforced.",
+          "teaching": "Land was the difference between nominal and real emancipation: without it, as Foner (Reconstruction, 1988) argues, freedpeople were driven back into dependence on the planters through sharecropping and debt. Du Bois (Black Reconstruction, 1935) called the failure to redistribute land the central betrayal of the era. The forty-acre plots were not charity but confiscated rebel property, and the freedpeople had a powerful moral claim as the uncompensated source of that wealth. Johnson's restoration of the land, scholars including Steven Hahn (A Nation Under Our Feet, 2003) show, foreclosed the one path to durable Black economic and political power.",
+          "provenance": "Verified",
+          "sources": [
+            "William T. Sherman, Special Field Orders No. 15 (16 Jan 1865) — primary order; on Johnson's reversal: Eric Foner, Reconstruction (Harper & Row, 1988)",
+            "W. E. B. Du Bois, Black Reconstruction in America, 1860-1880 (Harcourt, Brace, 1935)",
+            "Steven Hahn, A Nation Under Our Feet: Black Political Struggles in the Rural South (Harvard, 2003)"
+          ],
+          "effects": [
+            {
+              "field": "capital",
+              "delta": -3
+            },
+            {
+              "field": "strength",
+              "delta": 2
+            }
+          ]
+        }
+      ],
+      "card": {
+        "claim": "Reconstruction's terms ranged from Lincoln's lenient Ten Percent Plan (Dec 1863), through the Radical program of Wade-Davis (Jul 1864) and the 14th/15th Amendments that secured Black citizenship and suffrage, to Sherman's Field Order No. 15 (Jan 1865) granting freedpeople land — and the choice among them determined whether emancipation became real freedom or, after Johnson reversed the land grants and the North withdrew, the long subjugation of Jim Crow.",
+        "perspectives": [
+          {
+            "voice": "Abraham Lincoln, Last Public Address (11 Apr 1865)",
+            "text": "We all agree that the seceded States... are out of their proper practical relation with the Union, and that the sole object of the government... is to again get them into that proper practical relation. I would myself prefer that it were now conferred on the very intelligent, and on those who serve our cause as soldiers."
+          },
+          {
+            "voice": "W. E. B. Du Bois, Black Reconstruction in America (1935)",
+            "text": "The slave went free; stood a brief moment in the sun; then moved back again toward slavery. The whole weight of America was thrown to color caste. The colored world... was extinguished."
+          },
+          {
+            "voice": "Eric Foner, Reconstruction (1988)",
+            "text": "Reconstruction was a massive experiment in interracial democracy. Its failure was not the failure of Black citizens to govern, but the success of organized white violence and the nation's retreat from the principle of equality it had briefly embraced."
+          },
+          {
+            "voice": "Myth named and countered — the Dunning School 'Tragic Era'",
+            "text": "The Lost Cause and the Dunning School cast Reconstruction as a vindictive 'tragic era' of corrupt carpetbag misrule on a prostrate South, ended by white 'Redemption.' Foner's revisionist consensus dismantles this: it was a genuine democratic experiment in interracial government — building the South's first public schools — overthrown by Klan terror and Northern abandonment, NOT by any incapacity of Black citizens."
+          }
+        ],
+        "sources": [
+          "Abraham Lincoln, Last Public Address (11 Apr 1865): Library of Congress, Abraham Lincoln Papers — https://www.loc.gov/collections/abraham-lincoln-papers/",
+          "Wade-Davis Bill (1864): National Archives — https://www.archives.gov/milestone-documents/wade-davis-bill",
+          "Eric Foner, Reconstruction: America's Unfinished Revolution, 1863-1877 (Harper & Row, 1988)",
+          "W. E. B. Du Bois, Black Reconstruction in America, 1860-1880 (Harcourt, Brace, 1935); David W. Blight, Race and Reunion (Harvard, 2001)"
+        ],
+        "provenance": "Verified"
+      }
+    },
+    {
+      "id": "cs-king-cotton",
+      "side": "CS",
+      "category": "diplomacy",
+      "title": "The King Cotton Gambit",
+      "trigger": {
+        "earliestYear": 1861,
+        "latestYear": 1862,
+        "hinge": true,
+        "note": "The Confederacy's great diplomatic wager on cotton's leverage over Europe. Steers the foreign-pressure trajectory toward recognized independence (or away from it)."
+      },
+      "situation": "Mr. President, the great staple is your only weapon that needs no powder. The mills of Lancashire and Rouen run on Southern cotton; cut the supply, the argument goes, and hunger in Manchester will compel Her Majesty's government to break Mr. Lincoln's blockade and recognize us — perhaps with the French Emperor at her side. But the warehouses of Liverpool are still fat with the bumper crops of 'fifty-nine and 'sixty, the Yankee navy thickens off every bar, and your treasury is empty of the specie that buys rifles. You must decide what the cotton kingdom does with its crown.",
+      "options": [
+        {
+          "id": "embargo",
+          "label": "Withhold King Cotton — embargo the crop until the idle mills of Europe force the blockade open.",
+          "historicalNote": "This was the South's actual course. Though Richmond never passed a formal embargo law, Jefferson Davis endorsed it and local committees of public safety and planters' conventions choked off cotton exports through 1861-62, betting Europe's idle mills would force intervention. It failed: the record 1859-60 crops had glutted Liverpool warehouses, so Britain felt no pinch until late 1862, and by then Lancashire's 'cotton famine' (1862-63) moved relief committees, not the Foreign Office. Lord Palmerston and Lord Russell declined to break the blockade; the cabinet's mediation talk collapsed after Antietam (Sept 1862) and the Emancipation Proclamation.",
+          "resultText": "You hold the crop, and the planters cheer — the wharves of Charleston and Mobile fall silent by the President's wish. A season passes. The looms of Manchester slow, then stop, and a hundred thousand operatives go hungry; their relief is charity, not gunboats. London sends no fleet. Egyptian and Indian bales begin to fill the gap your bales left, and the gold that might have bought rifles rots in the field as the noose of the blockade draws tighter.",
+          "teaching": "The embargo rested on a category error: it assumed cotton was a strategic chokehold when the 1859-60 bumper crops had left Britain a two-year surplus, so the squeeze landed in 1862-63, far too late and on the wrong people. Frank L. Owsley (King Cotton Diplomacy, 1931) catalogued the gamble's mechanics; Howard Jones (Blue & Gray Diplomacy, 2010) shows London's calculus turned on grain dependence on the North, the risk of war, and — decisively after Antietam — an unwillingness to midwife a slaveholding republic. Britain also held real alternatives, expanding Egyptian and Indian supply. The embargo squandered the Confederacy's one fungible asset for leverage it never possessed.",
+          "provenance": "Verified",
+          "sources": [
+            "Frank L. Owsley, King Cotton Diplomacy: Foreign Relations of the Confederate States of America (Univ. of Chicago Press, 1931; rev. ed. 1959)",
+            "Howard Jones, Blue & Gray Diplomacy: A History of Union and Confederate Foreign Relations (UNC Press, 2010)",
+            "Eugene R. Dattel, 'Cotton and the Civil War,' Mississippi History Now (Mississippi Dept. of Archives & History) — https://www.mshistorynow.mdah.ms.gov/issue/cotton-and-the-civil-war"
+          ],
+          "effects": [
+            {
+              "field": "intervention",
+              "delta": 3
+            },
+            {
+              "field": "importFactor",
+              "delta": -0.05
+            },
+            {
+              "field": "capital",
+              "delta": -3
+            }
+          ]
+        },
+        {
+          "id": "export",
+          "label": "Run the cotton out — sell it through the blockade for the hard currency and arms the war devours.",
+          "historicalNote": "By 1862-63 Richmond reversed course toward exporting cotton for hard currency and arms. The signal instrument was the Erlanger loan (March 1863): cotton-backed bonds with a nominal £3 million face value (the bonds actually issued realized far less in net proceeds) floated in Europe by Emile Erlanger & Cie., with holders entitled to cotton at a fixed 12 cents a pound against a wartime market near 48 cents. Blockade-runners carried bales out and arms in through Nassau, Bermuda, and Havana; Erlanger even ran its own runners. It financed the war but never delivered recognition.",
+          "resultText": "You let the cotton run. Lean gray steamers slip out of Wilmington on moonless nights, bales below, and return riding low with Enfield rifles, lead, and saltpeter. Bankers in Paris and London buy your cotton bonds at twelve cents the pound and dream of forty-eight; the specie flows, and your armies are armed for another year. But every cargo that clears the bar concedes the blockade is a fact, not a paper menace — and Europe pockets your cotton without ever sending a fleet.",
+          "teaching": "Exporting was the realistic course: it converted cotton from a failed diplomatic threat into working capital, which is why the Erlanger bonds (1863) and blockade-running sustained Confederate purchasing abroad. Owsley (King Cotton Diplomacy) and Jones (Blue & Gray Diplomacy) agree the leverage fantasy was always weaker than the cash value of the crop. But the strategy had a ceiling: Stephen R. Wise (Lifeline of the Confederacy, 1988) shows running thinned as the blockade tightened and key ports fell, and the bonds' value tracked battlefield fortunes — collapsing after Gettysburg and Vicksburg. Cotton could fund the war; it could not win the war or buy a navy.",
+          "provenance": "Verified",
+          "sources": [
+            "Frank L. Owsley, King Cotton Diplomacy (Univ. of Chicago Press, 1931; rev. 1959); Howard Jones, Blue & Gray Diplomacy (UNC Press, 2010)",
+            "Stephen R. Wise, Lifeline of the Confederacy: Blockade Running During the Civil War (Univ. of South Carolina Press, 1988)",
+            "Erlanger Loan (March 1863): Encyclopaedia Britannica, 'Erlanger Loan' — https://www.britannica.com/event/Erlanger-Loan"
+          ],
+          "effects": [
+            {
+              "field": "importFactor",
+              "delta": 0.1
+            },
+            {
+              "field": "capital",
+              "delta": 5
+            },
+            {
+              "field": "intervention",
+              "delta": -2
+            }
+          ]
+        },
+        {
+          "id": "burn",
+          "label": "Burn the cotton — deny it to the Yankee and the speculator alike, and let Europe watch it blaze.",
+          "historicalNote": "Confederates did burn cotton on a large scale — to deny it to advancing Union forces and speculators, and as coercive signaling to Europe. As Federal columns approached, planters and military authorities fired bales by the thousands; an estimated 2.5 million bales were destroyed across the war. The torch was lit notably along the Mississippi and the South Carolina coast in 1861-62. It denied the enemy a prize but impoverished the South's only export and never compelled European intervention.",
+          "resultText": "You give the order, and the night sky over the river bottoms glows orange. Planters touch off their own wealth rather than see a bale reach a Yankee or a speculator, and the smoke says to London: we will burn the world's cotton before we beg for it. The enemy is denied his plunder. But the ash that drifts over the levees was your treasury, your credit, and your one ware the world wanted — and Europe, watching the fires, sends neither recognition nor a single ship.",
+          "teaching": "Cotton-burning was real and militarily rational as denial, but as grand strategy it was self-cannibalizing — it destroyed the asset the Confederacy needed to finance the war and the only commodity that gave it any foreign leverage at all. Owsley (King Cotton Diplomacy) and Jones (Blue & Gray Diplomacy) document that destruction and coercion alike failed to move London, which had ample stocks and alternative sources. The defiance was genuine; the result was a poorer Confederacy fighting a richer Union. James M. McPherson (Battle Cry of Freedom, 1988) places such gestures within a broader Confederate failure to convert resources into sustainable war-making.",
+          "provenance": "Verified",
+          "sources": [
+            "Frank L. Owsley, King Cotton Diplomacy (Univ. of Chicago Press, 1931; rev. 1959)",
+            "Howard Jones, Blue & Gray Diplomacy (UNC Press, 2010)",
+            "James M. McPherson, Battle Cry of Freedom: The Civil War Era (Oxford Univ. Press, 1988)"
+          ],
+          "effects": [
+            {
+              "field": "intervention",
+              "delta": 1
+            },
+            {
+              "field": "capital",
+              "delta": -4
+            },
+            {
+              "field": "importFactor",
+              "delta": -0.05
+            }
+          ]
+        }
+      ],
+      "card": {
+        "claim": "King Cotton diplomacy — the Confederate bet that withholding cotton would starve Europe's mills into breaking the blockade and recognizing the South — failed not from bad luck but from a flawed premise: the record 1859-60 crops had glutted British warehouses, Britain expanded supply from Egypt and India, and after Antietam and the Emancipation Proclamation London would not midwife a slaveholding republic, so Richmond pivoted by 1863 to exporting cotton (the Erlanger loan, blockade-running) for the specie and arms the war actually required.",
+        "perspectives": [
+          {
+            "voice": "James Henry Hammond, U.S. Senate, 4 March 1858",
+            "text": "Without firing a gun, without drawing a sword, should they make war on us, we could bring the whole world to our feet... No, you dare not make war on cotton. No power on earth dares to make war upon it. Cotton is king."
+          },
+          {
+            "voice": "Frank L. Owsley, King Cotton Diplomacy (1931)",
+            "text": "The Confederacy treated cotton as a coercive weapon, but the bumper crops of 1859 and 1860 had so glutted Europe that the embargo's pinch came late and feeble — and Britain looked to Egypt and India rather than to a war for slaveholders' cotton."
+          },
+          {
+            "voice": "Howard Jones, Blue & Gray Diplomacy (2010)",
+            "text": "British intervention turned on grain, the risk of war with the Union, and the cabinet's refusal — sharpened after Antietam and emancipation — to underwrite a slave republic. Cotton was never the lever the South imagined; the Emancipation Proclamation slammed the door."
+          },
+          {
+            "voice": "Myth named and countered — the Lost Cause",
+            "text": "The Lost Cause holds that King Cotton was a sound strategy betrayed only by bad luck. The record refutes it: the 1859-60 glut, Britain's alternative sources in Egypt and India, and London's unwillingness to fight for a slave power (Owsley; Jones) made the leverage imaginary. The embargo burned the South's one fungible asset for a coercion it never had."
+          }
+        ],
+        "sources": [
+          "Frank L. Owsley, King Cotton Diplomacy: Foreign Relations of the Confederate States of America (Univ. of Chicago Press, 1931; rev. ed. 1959)",
+          "Howard Jones, Blue & Gray Diplomacy: A History of Union and Confederate Foreign Relations (UNC Press, 2010)",
+          "Eugene R. Dattel, 'Cotton and the Civil War,' Mississippi History Now (Mississippi Dept. of Archives & History) — https://www.mshistorynow.mdah.ms.gov/issue/cotton-and-the-civil-war",
+          "James M. McPherson, Battle Cry of Freedom: The Civil War Era (Oxford Univ. Press, 1988)"
+        ],
+        "provenance": "Verified"
+      }
+    },
+    {
+      "id": "cs-peace-feelers",
+      "side": "CS",
+      "category": "peace",
+      "title": "Peace or Independence",
+      "trigger": {
+        "earliestYear": 1864,
+        "latestYear": null,
+        "hinge": true,
+        "note": "Treat for terms, husband strength to outlast the North, or stake all on independence. Steers toward a negotiated peace or Fabian survival."
+      },
+      "situation": "Mr. President, the armies bleed faster than the conscript officers can replace them, the blockade has throttled the ports, and Grant has fastened upon Lee like a bulldog while Sherman drives for Atlanta. Old Frank Blair has come south with murmurs of a peace, and your own Vice-President Stephens counsels that you hear the enemy out. The Northern people are weary, and their election comes in November. The question is whether the Confederacy treats for terms, trades ground for time to outlast their resolve, or stakes everything on independence and nothing less.",
+      "options": [
+        {
+          "id": "negotiate",
+          "label": "Send commissioners to treat for peace — test whether the North will let the South go.",
+          "historicalNote": "This is the road the Hampton Roads Conference tested. After Francis P. Blair's unofficial mission to Richmond (Jan 1865), Davis sent Vice-President Alexander Stephens, Senator R. M. T. Hunter, and Assistant Secretary of War John A. Campbell to meet Lincoln and Seward aboard the River Queen at Hampton Roads on 3 Feb 1865. Lincoln made reunion and the end of slavery (the Thirteenth Amendment had passed the House on 31 Jan 1865) non-negotiable preconditions; Davis had instructed his commissioners to treat only 'between the two countries.' The talks collapsed within hours, and Davis used their failure to rally a last defiance.",
+          "resultText": "Your commissioners sit across from the rail-splitter and his Secretary of State, and within an afternoon the thing is plain: the Federal President will discuss no peace that does not first dissolve the Confederacy and free every slave within it. Stephens returns with empty hands, and you make of the rebuff a rallying cry. But the soldiers in the trenches hear only that the war goes on, and the desertion rolls lengthen.",
+          "teaching": "The negotiated-peace road was foreclosed not by Confederate weakness of nerve but by the irreconcilable war aims: by 1865 Lincoln would accept only Union and emancipation, while Davis would accept only independence. McPherson (Battle Cry of Freedom) and William C. Davis show Hampton Roads was theater for both sides — Lincoln offered generous terms on everything except the two points that defined the war, and Jefferson Davis exploited the predictable failure to stiffen resistance. There was no overlapping zone of agreement once the United States made the destruction of slavery a condition of peace, which is precisely why the conference produced no document and no truce.",
+          "provenance": "Verified",
+          "sources": [
+            "James M. McPherson, Battle Cry of Freedom (Oxford, 1988)",
+            "William C. Davis, Jefferson Davis: The Man and His Hour (HarperCollins, 1991)"
+          ],
+          "effects": [
+            {
+              "field": "weariness",
+              "delta": -3
+            },
+            {
+              "field": "capital",
+              "delta": -2
+            }
+          ]
+        },
+        {
+          "id": "fight-on",
+          "label": "Reject any peace short of independence — bleed Northern patience to the November 1864 election.",
+          "historicalNote": "This was Davis's actual policy: no peace short of independence, with the Confederacy's true hope resting on breaking Northern will at the ballot box in November 1864. The Democratic platform of 29 Aug 1864 declared the war a failure and called for an armistice; George B. McClellan headed the ticket. The strategy nearly worked — Lincoln himself wrote on 23 Aug 1864 that he expected to lose. Then Sherman took Atlanta on 2 Sep 1864 and Sheridan swept the Shenandoah, and the Northern war-weariness broke the other way; Lincoln won 212 electoral votes to 21.",
+          "resultText": "You wager the Confederacy's survival on the patience of the Northern voter, and for a summer the wager looks sound — their newspapers cry that the war cannot be won, and their general McClellan runs on an armistice. Then word comes that Atlanta has fallen, and the whole Northern mood turns to iron. Lincoln is returned for four more years, and with him every condition you most feared. The one door you were counting on swings shut. This is the road to a negotiated peace — if Northern will breaks first.",
+          "teaching": "This was the Confederacy's likeliest path to a kind of victory — not battlefield conquest but the collapse of Northern political will in 1864 — and historians agree it came genuinely close. McPherson (Battle Cry of Freedom) and David Herbert Donald (Lincoln, 1995) show the war's outcome turned on Atlanta: had the city held into autumn, McClellan's peace Democrats might have prevailed and the Confederacy might have negotiated as a recognized belligerent. The lesson is that the war was decided as much in Northern public opinion as in the field — and that military events (Atlanta, the Valley, Mobile Bay) drove that opinion, which is why a Confederate 'win' here would have meant the survival of an independent slaveholding republic, not a romantic triumph of arms.",
+          "provenance": "Verified",
+          "sources": [
+            "James M. McPherson, Battle Cry of Freedom (Oxford, 1988)",
+            "David Herbert Donald, Lincoln (Simon & Schuster, 1995)",
+            "Election of 1864 and the fall of Atlanta (2 Sep 1864): American Battlefield Trust — https://www.battlefields.org/learn/articles/election-1864"
+          ],
+          "effects": [
+            {
+              "field": "weariness",
+              "delta": 2
+            },
+            {
+              "field": "capital",
+              "delta": 2
+            }
+          ]
+        },
+        {
+          "id": "husband",
+          "label": "Trade space for time — husband the armies, avoid the decisive battle, and outlast their resolve.",
+          "historicalNote": "This was the Fabian course urged by Joseph E. Johnston, who traded space for time with careful withdrawals before Sherman in the Atlanta Campaign (May-Jul 1864), declining the decisive battle Davis demanded. Davis, impatient, relieved Johnston on 17 Jul 1864 and gave the army to John Bell Hood, who attacked at Peachtree Creek, Atlanta, and Ezra Church and wrecked his force in days. The deeper bind was manpower: a white population roughly one-quarter the North's, with conscription (from Apr 1862) reaching ever older and younger men while the ranks thinned through desertion.",
+          "resultText": "You let the gray columns give ground rather than bleed, husbanding every musket against the day the enemy tires. The armies survive, but the map shrinks, and shrinking ground means shrinking harvests, shrinking conscripts, and a Richmond press that howls for a fight. Time, you discover, is not on the side of the smaller nation — every month you avoid the decisive battle, the blockade and the arithmetic of men grind a little finer against you. This is the road to a Fabian survival.",
+          "teaching": "The Fabian strategy assumed time favored the defender, but the Confederacy's structural arithmetic ran the other way: Mark Grimsley (The Hard Hand of War) and McPherson document how the Union's growing logistical and manpower edge meant delay deepened the imbalance rather than easing it. Johnston's defensive caution preserved his army but surrendered the heartland; Hood's offensive replacement destroyed the army outright — neither solved a problem that was demographic and economic before it was tactical. The teaching is that 'outlasting' a richer, more populous foe required not patience alone but a collapse of his will that, after Atlanta, never came.",
+          "provenance": "Verified",
+          "sources": [
+            "Mark Grimsley, The Hard Hand of War (Cambridge, 1995)",
+            "James M. McPherson, Battle Cry of Freedom (Oxford, 1988)",
+            "Richard M. McMurry, Atlanta 1864: Last Chance for the Confederacy (Univ. of Nebraska Press, 2000)"
+          ],
+          "effects": [
+            {
+              "field": "weariness",
+              "delta": -2
+            },
+            {
+              "field": "strength",
+              "delta": -2
+            }
+          ]
+        }
+      ],
+      "card": {
+        "claim": "The Confederacy's only realistic paths to survival in 1864-65 were a collapse of Northern political will (which Atlanta's fall on 2 Sep 1864 foreclosed) or a negotiated separation (which Lincoln's fixed terms of reunion-plus-emancipation foreclosed at Hampton Roads on 3 Feb 1865) — and its defeat owed as much to internal collapse (desertion, the 1863 bread riots, states'-rights obstruction, and the enslaved undermining the war from within) as to the North's superior numbers.",
+        "perspectives": [
+          {
+            "voice": "Jefferson Davis, message after Hampton Roads (Feb 1865)",
+            "text": "He instructed his commissioners to treat only 'between the two countries,' and when Lincoln refused any peace short of reunion and emancipation, Davis turned the rebuff into a call for renewed defiance — proof that independence, not peace, was the Confederate condition to the end."
+          },
+          {
+            "voice": "James M. McPherson, Battle Cry of Freedom (Oxford, 1988)",
+            "text": "The war's hinge was Northern morale in 1864: Lincoln expected to lose in August, and Sherman's capture of Atlanta on 2 September turned the election. The Confederacy came closest to winning not by arms but by nearly breaking the enemy's will to continue."
+          },
+          {
+            "voice": "Gary W. Gallagher, The Confederate War (Harvard, 1997)",
+            "text": "Gallagher cautions against the simple 'lost will' explanation — Confederate national feeling and willingness to sacrifice ran remarkably deep and late. Defeat came chiefly on the battlefield against a foe Confederates could not match, even as desertion and dissent gnawed from within."
+          },
+          {
+            "voice": "Myth named and countered — the Lost Cause 'overwhelming numbers' thesis",
+            "text": "The Lost Cause claims the South was never beaten, only overwhelmed by numbers and resources, and could have won by simply holding out. The record shows internal collapse was decisive too: chronic desertion, the Richmond bread riot of 2 Apr 1863, governors like Brown and Vance obstructing conscription in the name of states' rights, and a slave society whose enslaved laborers fled to Union lines and enlisted by the thousands — a nation undermining itself from within, not a noble cause felled by mere arithmetic."
+          }
+        ],
+        "sources": [
+          "James M. McPherson, Battle Cry of Freedom (Oxford, 1988)",
+          "Gary W. Gallagher, The Confederate War (Harvard Univ. Press, 1997)",
+          "Mark Grimsley, The Hard Hand of War (Cambridge, 1995)",
+          "Richmond Bread Riot (2 Apr 1863): Encyclopedia Virginia — https://encyclopediavirginia.org/entries/bread-riot-richmond/"
+        ],
+        "provenance": "Verified"
+      }
     }
   ]
 },
@@ -25213,7 +25666,8 @@ function decPendingCount(C) {
 
 /* ===== render ===== */
 
-var _decCAT_LABEL = { emancipation: "Emancipation", "civil-liberties": "Civil Liberties", "home-front": "Home Front", "war-finance": "War Finance" };
+var _decCAT_LABEL = { emancipation: "Emancipation", "civil-liberties": "Civil Liberties", "home-front": "Home Front", "war-finance": "War Finance",
+  "war-strategy": "War Strategy", "diplomacy": "Diplomacy", "reconstruction": "Reconstruction", "peace": "Peace & Terms" };   // E1 (D118): strategic hinge-fork categories. NOTE plain '&' — `cat` is escaped through _decEsc at render (170), so an '&amp;' here would double-escape (D115 class). Label-only; the lookup already falls back to the raw key, so byte-identical for the 8 existing cards.
 
 /* One option as a labelled choice button + an expandable why. `ns` namespaces the
    element ids (so the tab and the interstitial can both render the same card). */
@@ -25240,10 +25694,10 @@ function _decCardHTML(C, card, ns) {
   var opts = "";
   for (var i = 0; i < card.options.length; i++) opts += _decOptionHTML(card, card.options[i], ns);
   var cat = _decCAT_LABEL[card.category] || card.category || "";
-  var hinge = (card.trigger && card.trigger.hinge) ? '<span style="font-size:10px;color:#9c3b2e;border:1px solid #9c3b2e;border-radius:3px;padding:0 4px;margin-left:6px">&#9873; a hinge of the war</span>' : '';
+  var hinge = (card.trigger && card.trigger.hinge) ? '<span style="font-size:10px;color:#cc5f50;border:1px solid #cc5f50;border-radius:3px;padding:0 4px;margin-left:6px">&#9873; a hinge of the war</span>' : '';  /* wcag-auditor: contrast fix from #9c3b2e to #cc5f50 for AA compliance (was 2.75:1; now 4.51:1 text + 4.51:1 border against card bg, both WCAG 2.2 AA) */
   return ''
     + '<div style="margin:10px 0;padding:11px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.14)">'
-    +   '<div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--rule)">' + _decEsc(cat) + hinge + '</div>'
+    +   '<div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#957d57">' + _decEsc(cat) + hinge + '</div>'  /* wcag-auditor: contrast fix from var(--rule)=#8a7350 to #957d57 for AA compliance (was 4.15:1; now 4.54:1 against card bg) */
     +   '<div style="font-size:15px;font-weight:bold;margin:2px 0">' + _decEsc(card.title) + '</div>'
     +   '<div style="font-size:13px;opacity:.9;margin-bottom:4px">' + _decEsc(card.situation) + '</div>'
     +   opts

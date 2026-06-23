@@ -137,7 +137,8 @@ function decPendingCount(C) {
 
 /* ===== render ===== */
 
-var _decCAT_LABEL = { emancipation: "Emancipation", "civil-liberties": "Civil Liberties", "home-front": "Home Front", "war-finance": "War Finance" };
+var _decCAT_LABEL = { emancipation: "Emancipation", "civil-liberties": "Civil Liberties", "home-front": "Home Front", "war-finance": "War Finance",
+  "war-strategy": "War Strategy", "diplomacy": "Diplomacy", "reconstruction": "Reconstruction", "peace": "Peace & Terms" };   // E1 (D118): strategic hinge-fork categories. NOTE plain '&' — `cat` is escaped through _decEsc at render (170), so an '&amp;' here would double-escape (D115 class). Label-only; the lookup already falls back to the raw key, so byte-identical for the 8 existing cards.
 
 /* One option as a labelled choice button + an expandable why. `ns` namespaces the
    element ids (so the tab and the interstitial can both render the same card). */
@@ -164,10 +165,10 @@ function _decCardHTML(C, card, ns) {
   var opts = "";
   for (var i = 0; i < card.options.length; i++) opts += _decOptionHTML(card, card.options[i], ns);
   var cat = _decCAT_LABEL[card.category] || card.category || "";
-  var hinge = (card.trigger && card.trigger.hinge) ? '<span style="font-size:10px;color:#9c3b2e;border:1px solid #9c3b2e;border-radius:3px;padding:0 4px;margin-left:6px">&#9873; a hinge of the war</span>' : '';
+  var hinge = (card.trigger && card.trigger.hinge) ? '<span style="font-size:10px;color:#cc5f50;border:1px solid #cc5f50;border-radius:3px;padding:0 4px;margin-left:6px">&#9873; a hinge of the war</span>' : '';  /* wcag-auditor: contrast fix from #9c3b2e to #cc5f50 for AA compliance (was 2.75:1; now 4.51:1 text + 4.51:1 border against card bg, both WCAG 2.2 AA) */
   return ''
     + '<div style="margin:10px 0;padding:11px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.14)">'
-    +   '<div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--rule)">' + _decEsc(cat) + hinge + '</div>'
+    +   '<div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#957d57">' + _decEsc(cat) + hinge + '</div>'  /* wcag-auditor: contrast fix from var(--rule)=#8a7350 to #957d57 for AA compliance (was 4.15:1; now 4.54:1 against card bg) */
     +   '<div style="font-size:15px;font-weight:bold;margin:2px 0">' + _decEsc(card.title) + '</div>'
     +   '<div style="font-size:13px;opacity:.9;margin-bottom:4px">' + _decEsc(card.situation) + '</div>'
     +   opts
