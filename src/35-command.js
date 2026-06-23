@@ -314,6 +314,11 @@ function cmdInit(C) {
     var ap = _cmdById(side, cmd.fieldGeneral);
     if (!ap || !_cmdAlive(ap, P.date)) cmd.fieldGeneral = null;
   }
+  // Q10 (D108): the CORPS DEPTH-CHART — seed cmd.corps once (empty -> zero leadership lift -> byte-identical)
+  // and SANITIZE a stale/tampered/imported record on LOAD (drop invalid slots/ids/dead generals/the army
+  // commander; one corps per general — the Q9/Q8b sanitize-on-load idiom). Placed AFTER fieldGeneral is
+  // finalized so cmdActiveId (which _cmdCorpsClean excludes from the corps) is stable. Plain data, rides the save.
+  if (typeof _cmdCorpsClean === "function") _cmdCorpsClean(C, true);
   // the cached handover-detection id rides the save too; clear it if it is stale (a removed/
   // wrong-side general after a roster/data change) so handover logging starts clean. A
   // just-died-but-still-in-roster id is KEPT — the next tick needs it to log the succession. (D53.6.)
@@ -511,6 +516,182 @@ function cmdPromote(C, id) {
 }
 
 /* ===========================================================================
+   Q10 (D108) · THE CORPS DEPTH-CHART — the GM depth-chart MOVE (RATING-SYSTEM-DESIGN §12.1/§12.2/§12.4).
+
+   Beyond appointing the ARMY commander (the cmdAppoint billet), the President now SEATS pool generals into
+   the army's CORPS billets (I..IV Corps) over the D106 OOB tree, spending political capital (the existing GM
+   currency — no new resource, §12). HOW IT REACHES THE FIGHT (no new combat path; honors D74/D94 no-fudge):
+   seated corps commanders only shape the army's LEADERSHIP facet — an INPUT the bridge already reads — via a
+   small BOUNDED lift folded into commandLeadership: lift = clamp( SUM over seated slots of
+   (effectiveCorpsRating - 64) * perSlotWeight, -liftCap, +liftCap ). effectiveCorpsRating = the general's GM
+   OVR (_cmdGenRating, which already carries the Q9 promotion lift) minus belowGradePenalty when his current
+   grade is below `preferredGrade` (a corps is properly a Maj. Gen.'s billet — seat a junior man and he leads
+   stretched; promote him first to lift the penalty — the Q9 synergy). BYTE-IDENTICAL until the player seats a
+   corps: no corps seated -> the SUM is over zero slots -> lift 0 -> commandLeadership unchanged -> the sandbox
+   + all 9 battles identical (a vacant billet contributes 0, NOT a baseline penalty — that would break
+   byte-identity). The seated commanders also NAME the player's DERIVED corps on the OOB board (pure display via
+   T15's fldCampaignOOB; the predicted edge is unchanged — leadership is captured in the actual fight, never
+   double-counted in the display). cmd.corps rides the save (no _SAVE_VER bump); cmdInit sanitizes a
+   stale/tampered/imported record on LOAD (drop invalid slots/ids/dead generals/the army commander; one corps
+   per general). Writes ONLY cmd.corps + C.clock.capital — never the scoreboard (build-gate 4d scans this file).
+   =========================================================================== */
+function _cmdCorpsCfg() { var d = gameData("ratings"); return (d && d.corpsCommand) ? d.corpsCommand : null; }
+function _cmdCorpsSlots() { var cfg = _cmdCorpsCfg(); var n = cfg ? Math.floor(_cmdNum(cfg.slots, 4)) : 4; return Math.max(1, Math.min(8, n)); }
+function _cmdCorpsLabel(idx) {
+  var cfg = _cmdCorpsCfg(), labels = cfg && cfg.labels;
+  if (labels && labels[idx] != null) return String(labels[idx]);
+  var R = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"];
+  return (R[idx] || String(idx + 1)) + " Corps";
+}
+/* the corps preferred grade for a side (SIDE-AWARE: a US corps was a Maj. Gen.'s command, a CS corps a
+   Lt. Gen.'s — the CS authorized the Lt. Gen. grade Sept. 18, 1862, promoting Longstreet/Jackson that Oct. to
+   command the ANV's new corps). Accepts the config as either a {US,CS} map or a bare string. */
+function _cmdCorpsPreferredGrade(C) {
+  var cfg = _cmdCorpsCfg(); var pg = cfg && cfg.preferredGrade;
+  var side = (C && C.side === "CS") ? "CS" : "US";
+  if (pg && typeof pg === "object") return String(pg[side] || pg.US || "Maj. Gen.");
+  return pg ? String(pg) : "Maj. Gen.";
+}
+
+/* the SANITIZED corps depth chart as { slotIndex: generalId }: only valid slots, alive same-side generals who
+   are NOT the army commander, one corps per general (first slot wins). persist=true writes the clean map back
+   (the cmdInit load-sanitize, the Q9/Q8b idiom); persist=false is a PURE read (the lift/render/T15 path). */
+function _cmdCorpsClean(C, persist) {
+  var out = {};
+  var cmd = C && C.president && C.president.command;
+  if (!cmd) return out;
+  var raw = cmd.corps;
+  if (Array.isArray(raw) || !raw || typeof raw !== "object") { if (persist) cmd.corps = {}; return out; }
+  var slots = _cmdCorpsSlots(), side = (C.side === "CS") ? "CS" : "US";
+  var activeId = (typeof cmdActiveId === "function") ? cmdActiveId(C) : null;
+  var used = {};
+  for (var k in raw) {
+    if (!raw.hasOwnProperty(k)) continue;
+    var idx = Math.floor(_cmdNum(parseInt(k, 10), -1));
+    if (!(idx >= 0 && idx < slots)) continue;            // invalid / out-of-range slot
+    var id = raw[k];
+    if (typeof id !== "string" || !id) continue;
+    if (id === activeId) continue;                       // the army commander can't also hold a corps
+    var g = _cmdById(side, id);
+    if (!g || !_cmdAlive(g, C.president.date)) continue;  // gone / dead / not in the war
+    if (used[id]) continue;                              // already placed in an earlier slot (dedupe)
+    used[id] = 1; out[idx] = id;
+  }
+  if (persist) cmd.corps = out;
+  return out;
+}
+function cmdCorpsSeated(C) { return _cmdCorpsClean(C, false); }
+
+/* is `gen`'s CURRENT grade below the corps preferred grade? (a corps is a Maj. Gen.'s billet — a junior man
+   leads stretched). Q9-aware: a promotion that lifts him to/above the grade removes the penalty. */
+function _cmdCorpsBelowGrade(C, gen) {
+  var cfg = _cmdCorpsCfg(); if (!cfg || !gen) return false;
+  var prefIdx = _cmdGradeIdx(_cmdCorpsPreferredGrade(C));
+  if (prefIdx < 0) return false;
+  return _cmdGradeIdx(_cmdCurrentGrade(C, gen)) < prefIdx;
+}
+/* the effective corps-command rating a seated general contributes: his GM OVR (carries the Q9 lift) minus the
+   below-grade penalty when his rank does not fit the billet. Clamped [0,100]. Pure read. */
+function _cmdCorpsEffRating(C, gen) {
+  var r = _cmdGenRating(C, gen);
+  if (_cmdCorpsBelowGrade(C, gen)) r -= Math.max(0, _cmdNum((_cmdCorpsCfg() || {}).belowGradePenalty, 6));
+  return Math.max(0, Math.min(100, r));
+}
+
+/* THE LIFT — the bounded leadership the staffed corps add to commandLeadership. 0 when NO corps are seated
+   (the byte-identity keystone) or there is no config. SUM over seated slots of (effRating-64)*perSlotWeight,
+   clamped to ±liftCap (§27: small, never dominant; the army commander still weighs most). Pure read. */
+function _cmdCorpsLift(C) {
+  var cfg = _cmdCorpsCfg(); if (!cfg) return 0;
+  // fast path (the byte-identity hot path): no seated corps -> 0 WITHOUT walking the roster / cmdActiveId.
+  var cmd0 = C && C.president && C.president.command;
+  if (!cmd0 || !cmd0.corps || typeof cmd0.corps !== "object" || Array.isArray(cmd0.corps)) return 0;
+  var hasAny = false; for (var kk0 in cmd0.corps) { if (cmd0.corps.hasOwnProperty(kk0)) { hasAny = true; break; } }
+  if (!hasAny) return 0;
+  var seated = cmdCorpsSeated(C), side = (C.side === "CS") ? "CS" : "US";
+  var w = _cmdNum(cfg.perSlotWeight, 0.05), cap = Math.max(0, _cmdNum(cfg.liftCap, 4));
+  var sum = 0, any = false;
+  for (var k in seated) {
+    if (!seated.hasOwnProperty(k)) continue;
+    var g = _cmdById(side, seated[k]); if (!g) continue;
+    sum += (_cmdCorpsEffRating(C, g) - 64); any = true;
+  }
+  if (!any) return 0;
+  var lift = sum * w;
+  return lift > cap ? cap : (lift < -cap ? -cap : lift);
+}
+
+/* the seated commander of corps `idx` for the render + the T15 board — {id,name,ovr,grade,belowGrade} or null. */
+function cmdCorpsCommanderFor(C, idx) {
+  if (!C) return null;
+  var seated = cmdCorpsSeated(C), id = seated[idx];
+  if (id == null) return null;
+  var g = _cmdById((C.side === "CS") ? "CS" : "US", id);
+  if (!g) return null;
+  return { id: id, name: _cmdName(g), ovr: Math.round(_cmdGenRating(C, g)), grade: _cmdCurrentGrade(C, g), belowGrade: _cmdCorpsBelowGrade(C, g) };
+}
+
+/* the pool of generals free to take corps `idx`: alive same-side men who are neither the army commander nor
+   already seated in ANOTHER corps (the one currently here is allowed, for a re-render). */
+function _cmdCorpsPoolFor(C, idx) {
+  var side = (C.side === "CS") ? "CS" : "US", roster = _cmdSideGenerals(side);
+  var seated = cmdCorpsSeated(C), activeId = cmdActiveId(C), pool = [];
+  for (var i = 0; i < roster.length; i++) {
+    var g = roster[i]; if (!g || !g.id) continue;
+    if (!_cmdAlive(g, C.president.date)) continue;
+    if (g.id === activeId) continue;
+    var elsewhere = false;
+    for (var kk in seated) { if (seated.hasOwnProperty(kk) && seated[kk] === g.id && String(kk) !== String(idx)) { elsewhere = true; break; } }
+    if (elsewhere) continue;
+    pool.push(g);
+  }
+  return pool;
+}
+
+/* THE MOVE — seat general `id` in corps `idx`, spending seatCost political capital. Reassigns (clears him from
+   any other corps); no-op when the slot/general is invalid, he is the army commander, he already holds the
+   slot, or capital is short. Writes ONLY cmd.corps + C.clock.capital. Bounded, logged. */
+function cmdSeatCorps(C, idx, id) {
+  if (!C || !C.president) return;
+  cmdInit(C);
+  var cfg = _cmdCorpsCfg(); if (!cfg) return;
+  idx = Math.floor(_cmdNum(idx, -1));
+  if (!(idx >= 0 && idx < _cmdCorpsSlots())) return;             // invalid slot
+  var side = (C.side === "CS") ? "CS" : "US", cmd = C.president.command;
+  var g = _cmdById(side, id);
+  if (!g || !_cmdAlive(g, C.president.date)) return;             // invalid / unavailable general
+  if (id === cmdActiveId(C)) return;                             // the army commander can't double-hold
+  if (Array.isArray(cmd.corps) || !cmd.corps || typeof cmd.corps !== "object") cmd.corps = {};
+  if (cmd.corps[idx] === id) return;                             // already seated here (no re-charge)
+  var cost = Math.max(0, Math.round(_cmdNum(cfg.seatCost, 3)));
+  var clk = C.clock, cap = (clk && typeof clk.capital === "number") ? Math.round(clk.capital) : 0;
+  if (cap < cost) return;                                        // can't afford the seating (the gate)
+  if (clk && typeof clk.capital === "number") clk.capital = Math.max(0, cap - cost);   // debit the SAME rounded value the gate compared (the Q9/Q8b hardened idiom)
+  for (var k in cmd.corps) { if (cmd.corps.hasOwnProperty(k) && cmd.corps[k] === id) delete cmd.corps[k]; }   // reassign: one corps per general
+  cmd.corps[idx] = id;
+  if (typeof _pdLog === "function") {
+    _pdLog(C, "You give General " + _cmdName(g) + " command of " + _cmdCorpsLabel(idx)
+      + (cost ? " (−" + cost + " capital)" : "") + (_cmdCorpsBelowGrade(C, g) ? " — he leads below his grade; promote him to steady the corps." : "") + ".");
+  }
+}
+
+/* THE MOVE — vacate corps `idx` (return its commander to the reserve). Free, like cmdRevert. */
+function cmdVacateCorps(C, idx) {
+  if (!C || !C.president) return;
+  cmdInit(C);
+  var cmd = C.president.command;
+  idx = Math.floor(_cmdNum(idx, -1));
+  if (!cmd.corps || typeof cmd.corps !== "object" || Array.isArray(cmd.corps)) return;
+  var id = cmd.corps[idx];
+  if (id == null) return;
+  delete cmd.corps[idx];
+  if (typeof _pdLog === "function") {
+    var g = _cmdById((C.side === "CS") ? "CS" : "US", id);
+    _pdLog(C, "You return " + (g ? "General " + _cmdName(g) : "the corps commander") + " to the reserve; " + _cmdCorpsLabel(idx) + " stands without a commander.");
+  }
+}
+
+/* ===========================================================================
    D105 · LIVE DEV-TRAITS — the Madden development arc (RATING-SYSTEM-DESIGN §9-R-6 / §14.6 / §15-R3;
    D94-fork-#5: "Reputation->OVR dev-traits = LIVE in-campaign"). cmdOnResolve already evolves a general's
    reputation by battle outcome (decisive win +6 / win +3 / draw -1 / loss -4 / decisive loss -8), and
@@ -603,7 +784,10 @@ function commandLeadership(C) {
   var gen = cmdActiveGeneral(C);
   if (!gen) return Math.max(42, Math.min(88, Math.round(cab)));   // no general data -> the cabinet (itself ~64-anchored)
   var rating = _cmdGenRating(C, gen);
-  var lead = 64 + (rating - 64) * 0.7 + (cab - 64) * 0.3;
+  // Q10 (D108): the staffed corps add a small BOUNDED leadership lift through this SAME facet the bridge already
+  // reads (never the scoreboard, D74/D94). 0 when no corps are seated -> byte-identical to the pre-Q10 build.
+  var corps = (typeof _cmdCorpsLift === "function") ? _cmdCorpsLift(C) : 0;
+  var lead = 64 + (rating - 64) * 0.7 + (cab - 64) * 0.3 + corps;
   return Math.max(42, Math.min(88, Math.round(lead)));
 }
 
@@ -893,6 +1077,65 @@ function _cmdPromotionsHTML(C) {
     + '</div>';
 }
 
+/* ---- Q10 (D108): the "Corps Command — Depth Chart" section. Each corps billet shows its seated commander
+   (name + grade + OVR + a below-grade tell) with a Vacate control, or "Vacant" + a pool select + a Seat
+   control (gated on political capital). A live read-out of the net leadership the staffed corps add. Pure
+   display; cmdSeatCorps/cmdVacateCorps do the writes. Returns "" with no config / no roster (byte-identical). ---- */
+function _cmdCorpsSelect(C, idx, pool) {
+  var opts = '<option value="">&mdash; choose a general &mdash;</option>';
+  for (var i = 0; i < pool.length; i++) {
+    var g = pool[i], rating = Math.round(_cmdGenRating(C, g)), grade = _cmdCurrentGrade(C, g);
+    opts += '<option value="' + _cmdEsc(g.id) + '">' + _cmdEsc(_cmdName(g)) + ' &middot; ' + _cmdEsc(grade) + ' &middot; ' + rating + ' OVR</option>';
+  }
+  return '<select id="cmdCorpsSel_' + idx + '" aria-label="Choose a general for ' + _cmdEsc(_cmdCorpsLabel(idx)) + '" style="font-size:11px;max-width:230px;padding:2px 5px;background:#241c10;color:#efe6d2;border:1px solid var(--rule);border-radius:4px">' + opts + '</select>';
+}
+function _cmdCorpsSlotRow(C, idx, cap, cost) {
+  var cc = cmdCorpsCommanderFor(C, idx), label = _cmdCorpsLabel(idx);
+  var head = '<div style="font-size:12px;font-weight:bold;color:#b3925e;flex:0 0 86px;min-width:74px">' + _cmdEsc(label) + '</div>';/* a11y: #b3925e 5.0:1 on the lightest .sheet ground -> AA (the R-2 measured value) */
+  var body, ctrl;
+  if (cc) {
+    var gr = (typeof fldRatingGrade === "function") ? fldRatingGrade(cc.ovr) : { letter: "", color: "#b8863b" };
+    var bg = cc.belowGrade ? ' <span title="He commands below grade — a corps is properly a ' + _cmdEsc(_cmdCorpsPreferredGrade(C)) + '&rsquo;s billet. Promote him to lead it without strain." style="color:#d17936;font-size:10px">&#9650; below grade</span>' : '';/* a11y: contrast fix #c9712e (4.11:1) -> #d17936 (4.54:1) on #2e2816 broadsheet for AA 1.4.3; meaning also carried by the words "below grade" + the glyph */
+    body = '<div style="flex:1 1 auto;min-width:0;font-size:12px">'
+      + '<b>' + _cmdEsc(cc.name) + '</b> <span style="opacity:.74">' + _cmdEsc(cc.grade) + '</span>'
+      + ' <span aria-hidden="true" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:' + gr.color + ';margin:0 2px"></span><b>' + _cmdEsc(gr.letter) + '</b> ' + cc.ovr + ' OVR' + bg + '</div>';
+    ctrl = '<button id="cmdCorpsVac_' + idx + '" type="button" class="upg" style="flex:0 0 auto;font-size:11px;padding:2px 8px">Vacate</button>';
+  } else {
+    var pool = _cmdCorpsPoolFor(C, idx);
+    if (!pool.length) {
+      body = '<div style="flex:1 1 auto;font-size:11px;opacity:.65">Vacant &mdash; no generals are free to command this corps.</div>'; ctrl = '';
+    } else if (cap < cost) {
+      body = '<div style="flex:1 1 auto;font-size:11px;opacity:.72">Vacant &mdash; a leaderless corps.</div>';
+      ctrl = '<span style="font-size:11px;color:#e86840" title="Seating a corps commander costs ' + cost + ' political capital">Needs ' + cost + ' cap</span>';/* a11y: #e86840 >=4.5:1 on the rendered desk grounds -> AA (the Q8b-measured value); meaning also in the words */
+    } else {
+      body = '<div style="flex:1 1 auto;display:flex;gap:6px;align-items:center;flex-wrap:wrap"><span style="font-size:11px;opacity:.72">Vacant</span>' + _cmdCorpsSelect(C, idx, pool) + '</div>';
+      ctrl = '<button id="cmdCorpsSeat_' + idx + '" type="button" class="upg" style="flex:0 0 auto;font-size:11px;padding:2px 8px" title="Seat the chosen general in ' + _cmdEsc(label) + ' &mdash; ' + cost + ' political capital">Seat <span style="opacity:.8">(&minus;' + cost + ' cap)</span></button>';
+    }
+  }
+  return '<div style="display:flex;gap:10px;align-items:center;padding:6px 0;border-bottom:1px dotted var(--rule)">' + head + body + ctrl + '</div>';
+}
+function _cmdCorpsDepthHTML(C) {
+  var cfg = _cmdCorpsCfg(); if (!cfg) return "";
+  var side = (C.side === "CS") ? "CS" : "US";
+  if (!_cmdSideGenerals(side).length) return "";
+  var slots = _cmdCorpsSlots();
+  var cap = (C.clock && typeof C.clock.capital === "number") ? Math.round(C.clock.capital) : 0;
+  var cost = Math.max(0, Math.round(_cmdNum(cfg.seatCost, 3)));
+  var rows = "";
+  for (var i = 0; i < slots; i++) rows += _cmdCorpsSlotRow(C, i, cap, cost);
+  var lift = Math.round(_cmdCorpsLift(C)), eff;
+  if (lift > 0) eff = '<span aria-hidden="true" style="color:#6f9e5a">&#9650;</span> <b>+' + lift + '</b> to the army&rsquo;s command in the field &mdash; a sound corps staff';
+  else if (lift < 0) eff = '<span aria-hidden="true" style="color:#c9712e">&#9660;</span> <b>&minus;' + Math.abs(lift) + '</b> to the army&rsquo;s command &mdash; weak or stretched corps leadership drags it';
+  else eff = 'No net effect yet &mdash; seat able generals to lift the army, or leave the corps to the course of the war';
+  return '<div style="margin-top:16px">'
+    + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#b3925e;margin-bottom:2px">The corps command &mdash; depth chart</div>'/* a11y: #b3925e 5.0:1 -> AA */
+    + '<div style="font-size:11px;opacity:.8;margin-bottom:6px">An army fought as corps. Seat your generals at the head of each &mdash; who you place, and whether his rank fits the billet, shapes how well the whole army fights. It costs <b>' + cost + '</b> political capital to seat a commander, the same clout you spend to appoint and promote.</div>'
+    + '<div style="font-size:11px;opacity:.92;margin-bottom:6px;padding:6px 9px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.08)">Corps staff: ' + eff + '.</div>'
+    + rows
+    + '<div style="font-size:10.5px;opacity:.62;margin-top:6px;line-height:1.4">Your corps commanders shape the army&rsquo;s leadership in every battle; where the historical order of battle is known above, your appointees take their places in it. A corps is properly a ' + _cmdEsc(_cmdCorpsPreferredGrade(C)) + '&rsquo;s billet &mdash; seat a junior general and he leads stretched until you promote him.</div>'
+    + '</div>';
+}
+
 function _cmdCardHTML(C) {
   var d = _cmdData(), side = (C.side === "CS") ? "CS" : "US";
   if (!d || !d.teachingCards || !d.teachingCards.length) return "";
@@ -1001,6 +1244,7 @@ function cmdRenderTab(C) {
     + ((typeof fldCampaignOOBHtml === "function") ? fldCampaignOOBHtml(C, { reveal: cmdScoutTier(C), reconHtml: cmdScoutControlHtml(C) }) : '')   /* D106 board + Q8b (D107): the recon tier earned by scouting + the "Order a reconnaissance" control embedded in the board (the WRITE lives in cmdScout; T15 stays pure-read) */
     + _cmdPoolHTML(C)
     + _cmdPromotionsHTML(C)
+    + _cmdCorpsDepthHTML(C)
     + _cmdCardHTML(C);
 }
 
@@ -1022,6 +1266,11 @@ function cmdAppoint(C, id) {
   if (cap < cost) return;                            // not enough political capital (the gate)
   if (clk && typeof clk.capital === "number") clk.capital = Math.max(0, clk.capital - cost);
   cmd.fieldGeneral = id;
+  // Q10 (D108): the new army commander cannot also hold a corps billet — vacate it immediately (cmdInit also
+  // re-cleans on the next load, but keep the live state consistent).
+  if (cmd.corps && typeof cmd.corps === "object" && !Array.isArray(cmd.corps)) {
+    for (var ck in cmd.corps) { if (cmd.corps.hasOwnProperty(ck) && cmd.corps[ck] === id) delete cmd.corps[ck]; }
+  }
   cmd.appointedTurn = (P.turn || 0);
   cmd.history.unshift({ turn: (P.turn || 0), id: id });
   if (cmd.history.length > 8) cmd.history.length = 8;
@@ -1080,6 +1329,28 @@ function cmdWireTab(C) {
     if (typeof saveLocal === "function") saveLocal();
     if (typeof _wdRefresh === "function") _wdRefresh();
   });
+  // Q10 (D108): wire the corps depth-chart controls — a Seat button (reads its slot's select) + a Vacate button
+  // per slot (ids mirror the render, the slot index is integer so no escaping is needed).
+  var corpsSlots = _cmdCorpsSlots();
+  for (var s = 0; s < corpsSlots; s++) {
+    (function (idx) {
+      var seatBtn = document.getElementById("cmdCorpsSeat_" + idx);
+      if (seatBtn) seatBtn.addEventListener("click", function () {
+        var sel = document.getElementById("cmdCorpsSel_" + idx);
+        var gid = sel ? sel.value : "";
+        if (!gid) return;                                  // no general chosen — no-op
+        cmdSeatCorps(C, idx, gid);
+        if (typeof saveLocal === "function") saveLocal();
+        if (typeof _wdRefresh === "function") _wdRefresh();
+      });
+      var vacBtn = document.getElementById("cmdCorpsVac_" + idx);
+      if (vacBtn) vacBtn.addEventListener("click", function () {
+        cmdVacateCorps(C, idx);
+        if (typeof saveLocal === "function") saveLocal();
+        if (typeof _wdRefresh === "function") _wdRefresh();
+      });
+    })(s);
+  }
   var d = _cmdData();
   if (d && d.teachingCards) for (var c = 0; c < d.teachingCards.length; c++) {
     (function (idx) {

@@ -521,6 +521,145 @@ const SETUP = `(() => {
       if(cmdScoutTier(Cu)!=='light') throw new Error('unscouted must read light');
       return { pure:true, unscoutedOffersButton:true }; });
 
+    // ===== Q10 (D108): THE CORPS DEPTH-CHART — seat pool generals into corps billets over the OOB tree =====
+    step('Q10: corpsCommand config loads — slots/labels/seatCost/SIDE-AWARE preferredGrade/perSlotWeight/liftCap + >=2 src', function(){
+      if(typeof _cmdCorpsCfg!=='function') return { skipped:'pre-Q10' };
+      var cfg=_cmdCorpsCfg(); if(!cfg) throw new Error('no corpsCommand config');
+      if(!(cfg.slots>=1)) throw new Error('bad slots');
+      if(!Array.isArray(cfg.labels)||cfg.labels.length<cfg.slots) throw new Error('labels missing');
+      if(!(cfg.seatCost>=0)) throw new Error('bad seatCost');
+      if(!cfg.preferredGrade||typeof cfg.preferredGrade!=='object') throw new Error('preferredGrade must be side-aware {US,CS}');
+      if(cfg.preferredGrade.US!=='Maj. Gen.'||cfg.preferredGrade.CS!=='Lt. Gen.') throw new Error('preferredGrade must be US=Maj. Gen. / CS=Lt. Gen. (the historical corps grades)');
+      if(!(cfg.perSlotWeight>0)||!(cfg.liftCap>0)) throw new Error('bad lift calibration');
+      if(String(cfg.prov||'').trim().toLowerCase()==='verified'&&(!Array.isArray(cfg.src)||cfg.src.length<2)) throw new Error('Verified needs >=2 src (gate-4e)');
+      if(!Array.isArray(cfg.src)||cfg.src.length<2) throw new Error('want >=2 sources for the corps-org teaching');
+      return { slots:cfg.slots, pref:cfg.preferredGrade, cost:cfg.seatCost, w:cfg.perSlotWeight, cap:cfg.liftCap, src:cfg.src.length }; });
+
+    step('Q10: BYTE-IDENTICAL when no corps seated — _cmdCorpsLift is 0 and commandLeadership matches an ABSENT record (pre-Q10 save)', function(){
+      if(typeof _cmdCorpsLift!=='function') return { skipped:'pre-Q10' };
+      var C=mkC('US',1864,5);
+      if(_cmdCorpsLift(C)!==0) throw new Error('a fresh campaign must have 0 corps lift, got '+_cmdCorpsLift(C));
+      var L0=commandLeadership(C);
+      delete C.president.command.corps;                 // an absent record (a pre-Q10 save) must read identically
+      if(_cmdCorpsLift(C)!==0) throw new Error('an absent corps record must also give 0 lift');
+      var L1=commandLeadership(C);
+      if(L0!==L1) throw new Error('byte-identity break: seeded-empty '+L0+' vs absent-record '+L1);
+      return { lift0:true, leadership:L0 }; });
+
+    step('Q10: seating SPENDS exactly seatCost, is GATED when capital is short, stores the slot; re-seat no-op; vacate is free', function(){
+      if(typeof cmdSeatCorps!=='function') return { skipped:'pre-Q10' };
+      var C=mkC('US',1864,5), army=cmdActiveId(C), cost=_cmdCorpsCfg().seatCost;
+      var g=['us-thomas','us-sherman','us-sheridan'].filter(function(x){return x!==army;})[0];
+      C.clock.capital=Math.max(0,cost-1);               // short -> gated
+      cmdSeatCorps(C,0,g);
+      if(C.president.command.corps[0]===g) throw new Error('seating must be GATED when capital is short');
+      C.clock.capital=20; var cap0=C.clock.capital;
+      cmdSeatCorps(C,0,g);
+      if(C.president.command.corps[0]!==g) throw new Error('an affordable seat must store the slot');
+      if(C.clock.capital!==cap0-cost) throw new Error('seat must debit exactly '+cost+', spent '+(cap0-C.clock.capital));
+      var cap1=C.clock.capital; cmdSeatCorps(C,0,g);     // re-seat same -> no re-charge
+      if(C.clock.capital!==cap1) throw new Error('re-seating the same general must not re-charge');
+      var cap2=C.clock.capital; cmdVacateCorps(C,0);
+      if(C.president.command.corps[0]!=null) throw new Error('vacate must empty the slot');
+      if(C.clock.capital!==cap2) throw new Error('vacate must be free');
+      return { gated:true, spent:cost, vacateFree:true }; });
+
+    step('Q10: a seated able corps commander LIFTS the army (bounded by liftCap); more strong commanders never reduce the lift', function(){
+      if(typeof _cmdCorpsLift!=='function') return { skipped:'pre-Q10' };
+      var C=mkC('US',1864,5); C.clock.capital=1000; cmdAppoint(C,'us-meade');
+      var army=cmdActiveId(C);
+      var pick=['us-grant','us-thomas','us-sherman','us-sheridan'].filter(function(x){return x!==army;});
+      if(_cmdCorpsLift(C)!==0) throw new Error('baseline lift must be 0');
+      cmdSeatCorps(C,0,pick[0]);
+      var l1=_cmdCorpsLift(C);
+      if(!(l1>0)) throw new Error('an able commander must give a positive lift, got '+l1);
+      for(var i=1;i<pick.length;i++) cmdSeatCorps(C,i,pick[i]);
+      var lN=_cmdCorpsLift(C), cap=_cmdCorpsCfg().liftCap;
+      if(!(lN>=l1-1e-9)) throw new Error('more strong commanders must not reduce the lift: '+lN+' < '+l1);
+      if(lN>cap+1e-9) throw new Error('lift exceeds the cap: '+lN+' > '+cap);
+      // it reaches the fight through commandLeadership (an INPUT) — never the scoreboard
+      var Lbefore=(function(){ var D=mkC('US',1864,5); cmdAppoint.call(null,D,'us-meade'); return commandLeadership(D); })();
+      return { oneStrong:Number(l1.toFixed(3)), fullStaff:Number(lN.toFixed(3)), cap:cap, leadershipBaseline:Lbefore }; });
+
+    step('Q10: the SIDE-AWARE below-grade penalty bites on the CS roster (Stuart, a Maj. Gen., is stretched over a corps); promoting him to Lt. Gen. removes it (the Q9 synergy)', function(){
+      if(typeof _cmdCorpsBelowGrade!=='function') return { skipped:'pre-Q10' };
+      var C=mkC('CS',1863,9); C.clock.capital=1000; C.president.command.seniority=60;
+      var stuart=_cmdById('CS','cs-stuart'); if(!stuart) return { skipped:'no cs-stuart' };
+      if(_cmdCorpsPreferredGrade(C)!=='Lt. Gen.') throw new Error('a CS corps preferred grade must be Lt. Gen., got '+_cmdCorpsPreferredGrade(C));
+      if(_cmdCorpsBelowGrade(C,stuart)!==true) throw new Error('Stuart (Maj. Gen.) must be BELOW grade for a CS corps');
+      var ovr=Math.round(_cmdGenRating(C,stuart)), effBefore=_cmdCorpsEffRating(C,stuart);
+      if(!(effBefore<ovr)) throw new Error('a below-grade commander must contribute below his OVR: eff '+effBefore+' vs ovr '+ovr);
+      cmdPromote(C,'cs-stuart');
+      if(_cmdCurrentGrade(C,stuart)!=='Lt. Gen.') return { note:'promotion gated/short; below-grade math verified', belowGrade:true, effBefore:effBefore, ovr:ovr };
+      if(_cmdCorpsBelowGrade(C,stuart)!==false) throw new Error('a promoted (Lt. Gen.) Stuart must FIT the corps billet');
+      var effAfter=_cmdCorpsEffRating(C,stuart);
+      if(!(effAfter>effBefore)) throw new Error('promoting to grade must raise the corps contribution: '+effAfter+' !> '+effBefore);
+      // a US Maj. Gen. (Thomas) by contrast already MEETS the US corps floor -> not below grade
+      var D=mkC('US',1864,5), thomas=_cmdById('US','us-thomas');
+      if(thomas&&_cmdCorpsBelowGrade(D,thomas)!==false) throw new Error('a US Maj. Gen. must MEET the US corps floor');
+      return { csBelowGrade:true, effBefore:effBefore, effAfter:effAfter, ovr:ovr, usFloorMet:true }; });
+
+    step('Q10: one corps per general — reassign moves him; appointing a seated general to ARMY command clears his corps; the army commander cannot be seated', function(){
+      if(typeof cmdSeatCorps!=='function') return { skipped:'pre-Q10' };
+      var C=mkC('US',1864,5); C.clock.capital=1000; var army=cmdActiveId(C);
+      var g=['us-thomas','us-sherman','us-sheridan'].filter(function(x){return x!==army;})[0];
+      cmdSeatCorps(C,0,g);
+      if(C.president.command.corps[0]!==g) throw new Error('seat slot 0 failed');
+      cmdSeatCorps(C,2,g);                               // reassign -> slot 0 clears (one corps per general)
+      if(C.president.command.corps[0]===g) throw new Error('reassign must clear the old slot');
+      if(C.president.command.corps[2]!==g) throw new Error('reassign must set the new slot');
+      cmdAppoint(C,g);                                   // promote him to ARMY command -> his corps clears
+      if(C.president.command.fieldGeneral!==g) throw new Error('appoint failed (capital/availability?)');
+      for(var k in C.president.command.corps) if(C.president.command.corps[k]===g) throw new Error('the army commander must not also hold a corps');
+      var capX=C.clock.capital; cmdSeatCorps(C,1,g);     // seating the army commander -> no-op, no charge
+      for(var k2 in C.president.command.corps) if(C.president.command.corps[k2]===g) throw new Error('the army commander cannot be seated in a corps');
+      if(C.clock.capital!==capX) throw new Error('a refused seat must not charge');
+      return { reassigned:true, appointClears:true, armyCmdNotSeatable:true }; });
+
+    step('Q10: SAVE-TAMPER hardening — cmdInit sanitizes a malformed cmd.corps (array/bad slot/non-string/bogus/duplicate/the army commander) on LOAD', function(){
+      if(typeof cmdSeatCorps!=='function') return { skipped:'pre-Q10' };
+      var C=mkC('US',1864,5), army=cmdActiveId(C);
+      var good=['us-thomas','us-sherman','us-sheridan'].filter(function(x){return x!==army;})[0];
+      C.president.command.corps={ '0':good, '1':good, '7':good, '2':12345, '3':'no-such-general', '4':army };
+      cmdInit(C);
+      var c=C.president.command.corps;
+      if(Array.isArray(c)||typeof c!=='object') throw new Error('corps must sanitize to a clean object');
+      if(c[0]!==good) throw new Error('the first valid placement must survive');
+      if(c[1]===good) throw new Error('a duplicate (one corps per general) must be dropped');
+      if(c[7]!==undefined) throw new Error('an out-of-range slot must be dropped');
+      if(c[2]!==undefined) throw new Error('a non-string id must be dropped');
+      if(c[3]!==undefined) throw new Error('a bogus id must be dropped');
+      if(c[4]!==undefined) throw new Error('the army commander must be dropped from the corps');
+      C.president.command.corps=[good]; cmdInit(C);
+      if(Array.isArray(C.president.command.corps)) throw new Error('an array corps must be replaced by an object');
+      return { sanitized:true }; });
+
+    step('Q10: NO output gate — cmdSeatCorps/cmdVacateCorps write ONLY cmd.corps + C.clock.capital (no scoreboard, no reputation/seniority)', function(){
+      if(typeof cmdSeatCorps!=='function') return { skipped:'pre-Q10' };
+      var C=mkC('US',1864,5); C.clock.capital=100; var army=cmdActiveId(C);
+      var g=['us-thomas','us-sherman','us-sheridan'].filter(function(x){return x!==army;})[0];
+      function snap(){ return JSON.stringify({ idx:C.idx, stats:C.stats, strength:(C.manpower&&C.manpower.strength), fieldGeneral:C.president.command.fieldGeneral, seniority:C.president.command.seniority, rep:C.president.command.reputation[g] }); }
+      var s0=snap(); cmdSeatCorps(C,0,g); cmdVacateCorps(C,0);
+      if(snap()!==s0) throw new Error('seat/vacate mutated state beyond cmd.corps + capital');
+      return { pure:true }; });
+
+    step('Q10: the Command desk renders the depth-chart section (slot labels + a Seat/Vacate control + the net-effect line); the full tab includes it', function(){
+      if(typeof _cmdCorpsDepthHTML!=='function') return { skipped:'pre-Q10' };
+      var C=mkC('US',1864,5); C.clock.capital=100;
+      var h0=_cmdCorpsDepthHTML(C);
+      if(h0.toLowerCase().indexOf('depth chart')<0) throw new Error('missing the depth-chart header');
+      if(h0.indexOf('I Corps')<0) throw new Error('missing the I Corps slot label');
+      if(h0.indexOf('cmdCorpsSeat_0')<0&&h0.indexOf('cmdCorpsSel_0')<0) throw new Error('a vacant slot must offer a seat control');
+      var army=cmdActiveId(C); var g=['us-thomas','us-sherman','us-sheridan'].filter(function(x){return x!==army;})[0];
+      cmdSeatCorps(C,0,g);
+      var h1=_cmdCorpsDepthHTML(C);
+      if(h1.indexOf('cmdCorpsVac_0')<0) throw new Error('a seated slot must offer a Vacate control');
+      if(h1.indexOf(_cmdName(_cmdById('US',g)))<0) throw new Error('a seated slot must name its commander');
+      if(h1.indexOf('Corps staff')<0) throw new Error('missing the net-effect line');
+      var tab=cmdRenderTab(C);
+      if(tab.toLowerCase().indexOf('depth chart')<0) throw new Error('the Command tab must include the depth-chart section');
+      return { rendered:true }; });
+
     // helper: read a general's current reputation
     function C0rep(C,id){ return (C.president&&C.president.command&&typeof C.president.command.reputation[id]==='number')?C.president.command.reputation[id]:60; }
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }

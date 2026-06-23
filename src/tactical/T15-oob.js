@@ -269,6 +269,24 @@ function fldCampaignOOB(C) {
   var player = fldOOBForSide(bd, playerSide, pOpts);
   var enemy = fldOOBForSide(bd, enemySide, { forceDerive: forceDerive });
   if (!player || !enemy) return null;
+  // Q10 (D108): NAME the player's DERIVED corps with the commanders he has SEATED in his depth chart (a PURE
+  // display join — the seated staff's combat effect lives in commandLeadership, never here, so the predicted
+  // edge below is UNCHANGED by seating; leadership is captured in the fight, never double-counted on the board).
+  // Only DERIVED corps map to depth-chart slots — an AUTHORED OOB shows the historical brigades under one node,
+  // not the player's corps billets. No commander seated -> nothing attached -> byte-identical to the D107 board.
+  try {
+    if (player.source === "derived" && typeof cmdCorpsCommanderFor === "function") {
+      for (var ci = 0; ci < player.corps.length; ci++) {
+        // Q10 bug-hunt (LOW): only attach to an actual "<Roman> Corps" node — a sub-1200-man force derives to a
+        // single "Garrison" node (a fort/detachment, NOT a corps billet), so a seated general must NOT be shown
+        // commanding it (the depth-chart slot is "I Corps", the node "Garrison" — a label mismatch + naming a
+        // real man over a garrison). Byte-identical for any battle that derives to real corps.
+        if (!player.corps[ci] || !/ Corps$/.test(String(player.corps[ci].label || ""))) continue;
+        var cc = cmdCorpsCommanderFor(C, ci);
+        if (cc && cc.name) player.corps[ci].commander = cc;   // {id,name,ovr,grade,belowGrade}
+      }
+    }
+  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldCampaignOOB corps staff:", e); }
   // the predicted edge: force-power (quality x quantity), expressed from the PLAYER's vantage.
   function _fldOOBPow(s) { return Math.max(1, s.forceOVR) * Math.max(1, s.men); }
   var pP = _fldOOBPow(player), eP = _fldOOBPow(enemy), tot = pP + eP;
@@ -319,9 +337,16 @@ function _fldOOBSideExact(o, accent) {
   var body = "";
   for (var c = 0; c < o.corps.length; c++) {
     var co = o.corps[c], cg = _fldOOBGrade(co.ovr);
+    /* Q10 (D108): name the seated corps commander beside the label (normal case, so the surname stays readable
+       against the uppercased header). A below-grade tell (glyph + title) marks a junior man stretched in the
+       billet. Absent when no commander is seated -> the header renders exactly as the D107 board (byte-identical). */
+    var coCmdr = (co.commander && co.commander.name)
+      ? ' <span style="text-transform:none;font-weight:normal;opacity:.92">&middot; ' + _fldOOBEsc(co.commander.name)/* a11y: contrast fix opacity .82->.92 (#b3925e×.82=3.88:1 fail -> ×.92=4.50:1 AA pass on #2e2816) */
+        + (co.commander.belowGrade ? '<span title="commands below grade" aria-label="commands below grade" style="opacity:.92"> &#9650;</span>' : '') + '</span>'/* a11y: contrast fix opacity .9->.92 (#b3925e×.9=4.35:1 fail -> ×.92=4.50:1 AA pass on #2e2816) */
+      : '';
     body += '<div style="margin-top:8px">'
       + '<div style="display:flex;justify-content:space-between;align-items:baseline;font-size:11px;color:#b3925e;text-transform:uppercase;letter-spacing:.05em">'
-      +   '<span>' + _fldOOBEsc(co.label) + '</span>'
+      +   '<span>' + _fldOOBEsc(co.label) + coCmdr + '</span>'
       +   '<span style="opacity:.9">OVR ' + co.ovr + ' &middot; <b>' + _fldOOBEsc(cg.letter) + '</b> &middot; ' + _fldOOBComma(co.strength) + ' men</span>' /* wcag-auditor: contrast fix opacity .8->.9 (#b3925e×0.8 on #2b2016 ≈4.25:1 fail → ×0.9 ≈4.83:1 AA pass) */
       + '</div>';
     for (var b = 0; b < co.brigades.length; b++) body += _fldOOBBrigRow(co.brigades[b]);

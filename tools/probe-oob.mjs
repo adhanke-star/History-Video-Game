@@ -234,6 +234,38 @@ const SETUP = `(() => {
       if((_brgNextBattle(C)||{}).atk!==atkBefore) throw new Error('flipAtk render MUTATED the BATTLES entry (must be a copy)');
       return { menRows:{ light:lr, better:br, full:fr }, flipHonored:true, nextBattle:nbd&&nbd.id }; });
 
+    step('Q10 (D108): a player who SEATS corps commanders NAMES his derived CORPS on the board (never a Garrison); the predicted edge is UNCHANGED (display-only, no double-count)', function(){
+      if(typeof cmdSeatCorps!=='function'||typeof cmdCorpsCommanderFor!=='function') return { skipped:'pre-Q10' };
+      function isCorps(lbl){ return String(lbl||'').indexOf('Corps')>=0; }   // string method (no literal regex in the SETUP template)
+      // find a campaign next-battle whose PLAYER OOB DERIVES to a REAL corps node (a >=1200-man force; not a "Garrison")
+      var C=mkC('US',1862,9), found=-1;
+      for(var k=0;k<60;k++){ C.idx=k; var dd=fldCampaignOOB(C); if(!dd) break; if(dd.player.source==='derived' && dd.player.corps[0] && isCorps(dd.player.corps[0].label)){ found=k; break; } }
+      if(found<0) return { note:'no derived corps-deriving campaign next-battle in range; board-naming is latent for authored battles (the seated staff still lifts leadership + shows in the depth-chart section, probe-command Q10 #9)', authoredOnly:true };
+      C.idx=found; C.clock.capital=1000;
+      var army=cmdActiveId(C), g=['us-thomas','us-sherman','us-sheridan','us-grant'].filter(function(x){return x!==army;})[0];
+      var before=fldCampaignOOB(C), edge0=JSON.stringify(before.edge)+'|'+before.fracPlayer;
+      if(before.player.corps[0].commander!=null) throw new Error('an unseated derived corps must have no commander');
+      cmdSeatCorps(C,0,g);
+      var after=fldCampaignOOB(C), name=_cmdName(_cmdById('US',g));
+      if(!after.player.corps[0]||!after.player.corps[0].commander||after.player.corps[0].commander.name!==name)
+        throw new Error('the seated commander must NAME the derived corps slot 0');
+      if(JSON.stringify(after.edge)+'|'+after.fracPlayer!==edge0)
+        throw new Error('seating must NOT change the predicted edge (display-only; leadership is captured in the fight, never double-counted)');
+      var html=fldCampaignOOBHtml(C, { reveal:'full' });
+      if(html.indexOf(name)<0) throw new Error('the board must render the seated commander name on the player column');
+      // ENEMY corps are never named by the player's depth chart (you do not staff the enemy)
+      if(after.enemy.corps.some&&after.enemy.corps.some(function(co){ return co.commander&&co.commander.name===name; })) throw new Error('the player depth chart must never name an enemy corps');
+      // Q10 bug-hunt (LOW): a derived GARRISON node (a sub-1200 fort/detachment, NOT a corps) must NOT be named
+      // from the depth chart, even with a general seated in slot 0.
+      var garrison=false;
+      var Cg=mkC('US',1862,9);
+      for(var k2=0;k2<60;k2++){ Cg.idx=k2; var dg=fldCampaignOOB(Cg); if(!dg) break; if(dg.player.source==='derived' && dg.player.corps[0] && !isCorps(dg.player.corps[0].label)){
+        Cg.clock.capital=1000; var ga=cmdActiveId(Cg), gg=['us-thomas','us-sherman'].filter(function(x){return x!==ga;})[0];
+        cmdSeatCorps(Cg,0,gg);
+        if(fldCampaignOOB(Cg).player.corps[0].commander!=null) throw new Error('a derived non-corps (Garrison) node must NOT be named from the depth chart: '+dg.player.corps[0].label);
+        garrison=true; break; } }
+      return { foundIdx:found, named:name, edgeUnchanged:true, garrisonGuardTested:garrison }; });
+
     step('GRACEFUL: null inputs + a campaign with no next battle return null / "" (no crash)', function(){
       if(fldCampaignOOB(null)!==null) throw new Error('null C should -> null');
       if(fldCampaignOOBHtml(null)!=='') throw new Error('null C html should -> ""');
