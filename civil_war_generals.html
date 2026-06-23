@@ -31219,6 +31219,79 @@ var _END_CATALOG = [
     gate: function (C) { return _endMomentum(C) >= 0.5; },
     secureHint: "Hold the war and the political will so an early Proclamation can be made permanent in the Constitution.",
     hist: "In history the Thirteenth Amendment passed the House only on January 31, 1865 and was ratified that December — abolition came as the war ended, not at its start. (Foner, The Fiery Trial.)"
+  },
+  // ---------------- Union (grounded: plausible / long shot — D117, the D114 catalog) ----------------
+  {
+    id: "us-reconstruction-holds", side: "US", tier: "plausible",
+    title: "A Reconstruction that holds — the 14th and 15th enforced past 1877",
+    when: "the peace", opensWith: "an emancipation war won outright",
+    precond: function (C) { var em = _endEmancipation(C); return !!em.issued && _endWon(C) >= 4; },
+    gate: function (C) { return _endElected(C) && _endMomentum(C) >= 0.55; },
+    secureHint: "Win the war as a war against slavery and carry the 1864 election — only a decisive, mandated victory could enforce Black citizenship and suffrage past the Compromise of 1877.",
+    hist: "In history Reconstruction's gains — the 14th and 15th Amendments, Black citizenship and the vote — were rolled back after the disputed 1876 election; the Compromise of 1877 withdrew federal troops from the South, ushering in Jim Crow, disenfranchisement, and nearly a century of legalized white supremacy. A Reconstruction that held is among the era's great unrealized possibilities. (Eric Foner, Reconstruction: America's Unfinished Revolution.)"
+  },
+  {
+    id: "us-early-abolition", side: "US", tier: "plausible",
+    title: "An early abolition war — the enslaved freed and armed from the start",
+    when: "1861–62", opensWith: "radical emancipation (the gambit)",
+    precond: function (C) { return _endWildPlayed(C, "us-radical-emanc"); },
+    gate: function (C) { return _endMomentum(C) >= 0.5; },
+    secureHint: "Carry the radical-emancipation gambit and keep winning — turn the war against slavery in its first year and the USCT flood in early.",
+    hist: "In history Lincoln moved cautiously: he revoked Frémont's 1861 and Hunter's 1862 emancipation orders for fear of losing the loyal border states, and issued the Emancipation Proclamation only on January 1, 1863. An abolition war waged from 1861–62 — arming the enslaved years earlier — was the radical Republicans' demand and a real, fiercely-debated road not taken. (Foner, The Fiery Trial; McPherson.)"
+  },
+  {
+    id: "us-hardwar-collapse", side: "US", tier: "plausible",
+    title: "Hard war, early — the Confederacy collapses fast",
+    when: "the war's course", opensWith: "Sherman's doctrine, early (the gambit)",
+    precond: function (C) { return _endWildPlayed(C, "us-hardwar"); },
+    gate: function (C) { return _endVictoryReady(C) === "will" || _endEnemyWill(C) <= 25; },
+    secureHint: "Bring hard war to the Southern heartland and break the will to resist — destroy the means and the morale, not just the armies.",
+    hist: "In history hard war came late: Sherman's March to the Sea (Nov–Dec 1864) and through the Carolinas (1865) broke the Confederacy's will and capacity only in the war's final months. Applied years earlier — destroying the South's war-making resources and morale from the outset — it might have collapsed Confederate resistance far sooner. (McPherson; Mark Grimsley, The Hard Hand of War.)"
+  },
+  {
+    id: "us-reunion-no-emancipation", side: "US", tier: "longshot",
+    title: "Reunion without emancipation — the war's purpose abandoned",
+    when: "the dark path", opensWith: "emancipation refused",
+    precond: function (C) { var em = _endEmancipation(C); return !!em.declined; },
+    gate: function (C) { return _endVictoryReady(C) === "will" || _endMomentum(C) >= 0.6; },
+    secureHint: "Win the war for Union alone, having refused emancipation — a victory that leaves slavery intact.",
+    hist: "In history the war became a war against slavery: the Emancipation Proclamation (1863) and the 13th Amendment (1865) made Union victory and abolition inseparable. A reunion that preserved slavery — the Union's stated aim in 1861 — would have been a profound moral failure, leaving four million people in bondage and the war's deepest injustice intact. It is named here as the failure it would have been, not a triumph. (Foner; McPherson.)"
+  },
+  {
+    id: "us-1862-knockout", side: "US", tier: "longshot",
+    title: "The 1862 knockout — Richmond falls early",
+    when: "1862", opensWith: "an overwhelming early-war record",
+    precond: function (C) { return _endYear(C) <= 1862 && _endWon(C) >= 5; },
+    gate: function (C) { return _endVictoryReady(C) != null || (_endMomentum(C) >= 0.7 && _endWon(C) >= 7); },
+    secureHint: "Win big and win early — drive on Richmond in 1862 before the Confederacy can consolidate.",
+    hist: "In history McClellan's 1862 Peninsula Campaign came within sight of Richmond's church spires before Lee drove him back in the Seven Days; Union caution and McClellan's hesitancy let the chance slip. An early capture of the Confederate capital might have ended the war in 1862 — though Richmond's fall in 1865 showed the Confederacy could fight on even after losing it. (McPherson; Stephen Sears, To the Gates of Richmond.)"
+  },
+  {
+    id: "us-forty-acres", side: "US", tier: "longshot",
+    title: "Forty acres enforced — land, not just freedom",
+    when: "the peace", opensWith: "a radical, mandated emancipation victory",
+    precond: function (C) { var em = _endEmancipation(C); return !!em.issued && _endElected(C); },
+    gate: function (C) { return _endVictoryReady(C) != null && _endMomentum(C) >= 0.6 && _endWon(C) >= 5; },
+    secureHint: "Win an emancipation war with a radical mandate — only an overwhelming victory could carry land redistribution through over the planter class.",
+    hist: "In history Sherman's Field Order No. 15 (Jan 1865) set aside coastal land — '40 acres and a mule' — for freed families, but President Andrew Johnson reversed it within months and restored the land to the former enslavers. Without land, emancipation left most freedpeople economically dependent on the planters. Enforced land redistribution was the radical road to real Black economic freedom — and the era's greatest unkept promise. (Foner, Reconstruction; Du Bois, Black Reconstruction.)"
+  },
+  {
+    id: "us-compensated-bloodless", side: "US", tier: "longshot",
+    title: "A compensated, bloodless end — slavery ends by purchase",
+    when: "1862", opensWith: "an early settlement with emancipation in hand",
+    precond: function (C) { var em = _endEmancipation(C); return _endYear(C) <= 1862 && !!em.issued; },
+    gate: function (C) { return _endVictoryReady(C) != null && _endMomentum(C) >= 0.6; },
+    secureHint: "End the war early with emancipation secured — the road of purchase and settlement Lincoln actually proposed, sparing the bloodletting.",
+    hist: "In history Lincoln repeatedly urged compensated emancipation — federal payment to free the enslaved, as Britain had done in 1833 — and drafted plans for the border states in 1862; every offer was refused. A bloodless, purchased end to slavery, sparing some 750,000 lives, was Lincoln's genuine hope and the war's most poignant road not taken. (McPherson; Foner, The Fiery Trial.)"
+  },
+  {
+    id: "us-general-strike", side: "US", tier: "longshot",
+    title: "The general strike triumphant — the enslaved down tools en masse",
+    when: "the war's course", opensWith: "the general strike (the gambit)",
+    precond: function (C) { return _endWildPlayed(C, "us-genstrike"); },
+    gate: function (C) { return _endVictoryReady(C) === "will" || _endEnemyWill(C) <= 25; },
+    secureHint: "Carry the mass self-emancipation and keep winning — collapse the Confederate labor base the enslaved sustained.",
+    hist: "In history W. E. B. Du Bois named the enslaved people's mass flight to Union lines a 'general strike': perhaps half a million withdrew their labor from the Confederate economy and some 180,000 took up arms for the Union — roughly one in ten Union soldiers by war's end. It was decisive but gradual; a sudden, total withdrawal of the South's enslaved labor base would have collapsed the Confederate war economy outright. (Du Bois, Black Reconstruction in America.)"
   }
 ];
 
@@ -31284,24 +31357,17 @@ function endRenderSection(C, opts) {
   var headLabel = '<hr class="rule"><div style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#9b8560;margin-bottom:2px">Alternate endings</div>';
 
   if (!nReached && !nNear) {
-    // bug-hunt LOW (D116): side-filter the teaser examples so a player is never promised
-    // the other side's endings (the rest of the feature is side-gated in endScan). The
-    // GROUNDED tier ships CS-half first (D116): until the US grounded tier lands, the US
-    // side has ONLY fantastical endings, so its teaser names only those and keeps the
-    // "labeled fantastical" framing — it must NOT advertise plausible/long-shot tiers (or
-    // unbuilt grounded outcomes) the US player cannot yet reach (bug-hunt LOW). When the
-    // US grounded tier ships, switch the US branch to the CS-style spectrum framing.
+    // Side-filter the teaser examples so a player is never promised the other side's
+    // endings (the rest of the feature is side-gated in endScan). Both halves of the
+    // GROUNDED tier now ship (D116 CS, D117 US), so each side advertises the full
+    // labeled spectrum (plausible -> long shot -> fantastical) with its own grounded +
+    // fantastical examples.
     var teaseSide = (C.side === "CS") ? "CS" : "US";
-    var egs, spectrumNote;
-    if (teaseSide === "CS") {
-      egs = "a recognized independence, a negotiated peace, an emancipated Confederacy &mdash; or the <i>fantastical</i>: a British war, Maximilian’s legions, Stonewall surviving";
-      spectrumNote = "each labeled by how far it strays (plausible, long shot, or fantastical)";
-    } else {
-      egs = "repeaters ending the war early, the Tsar’s fleet fighting on, Lincoln living to lead Reconstruction, the 13th written in early";
-      spectrumNote = "each clearly labeled <i>fantastical</i>";
-    }
+    var egs = (teaseSide === "CS")
+      ? "a recognized independence, a negotiated peace, an emancipated Confederacy &mdash; or the <i>fantastical</i>: a British war, Maximilian’s legions, Stonewall surviving"
+      : "a Reconstruction that holds, an early abolition war, a bloodless compensated end &mdash; or the <i>fantastical</i>: repeaters ending the war early, the Tsar’s fleet fighting on, Lincoln living to lead Reconstruction";
     return headLabel
-      + '<div style="font-size:11px;opacity:.72;line-height:1.5">Play the strategic game well and the boldest alternate outcomes &mdash; ' + egs + ' &mdash; come within reach here, ' + spectrumNote + ' and set beside what really happened.</div>';
+      + '<div style="font-size:11px;opacity:.72;line-height:1.5">Play the strategic game well and the boldest alternate outcomes &mdash; ' + egs + ' &mdash; come within reach here, each labeled by how far it strays (plausible, long shot, or fantastical) and set beside what really happened.</div>';
   }
 
   var out = headLabel

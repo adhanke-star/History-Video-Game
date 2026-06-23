@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 import "./guard-probe-browser.mjs";
-// tools/probe-endings.mjs — E1 (D115) ALTERNATE ENDINGS (the fantastical-tier alt-history
-// RESULTS a well-played war earns). Verifies: the module loads; a fresh campaign has no
+// tools/probe-endings.mjs — E1 ALTERNATE ENDINGS (the alt-history RESULTS a well-played war
+// earns): D115 fantastical tier + D116 GROUNDED tier (CS-half) + D117 GROUNDED tier (US-half).
+// Verifies: the module loads; a fresh campaign has no
 // reached/near endings; an ending is EARNED — its gambit/precond OPENS it (within reach)
 // and the performance GATE (momentum / victory / the 1864 election) SECURES it (reached);
 // side-awareness (US endings only for US, CS only for CS); each carries a real (non-generic)
@@ -131,12 +132,14 @@ const SETUP = `(() => {
       var Ues=endRenderSection(mkC('US',1863,6));   // empty state, US
       if(Ues.indexOf('Maximilian')>=0||Ues.indexOf('British war')>=0) throw new Error('a US empty-state teaser must NOT promise CS-only endings');
       if(Ues.indexOf('Lincoln')<0&&Ues.indexOf('Tsar')<0&&Ues.indexOf('repeaters')<0) throw new Error('a US empty-state teaser should name US-side examples');
-      // bug-hunt D116-LOW: the US side has ONLY fantastical endings until the US grounded tier ships —
-      // its teaser must NOT advertise the plausible/long-shot spectrum or name unbuilt US grounded outcomes.
-      if(Ues.indexOf('plausible, long shot')>=0) throw new Error('the US empty-state must not advertise the plausible/long-shot spectrum (US has only fantastical endings until the US grounded tier ships)');
-      if(Ues.indexOf('Reconstruction that holds')>=0||Ues.indexOf('compensated end')>=0) throw new Error('the US empty-state must not name unbuilt US grounded endings');
+      // D117: the US GROUNDED tier now ships, so the US empty-state advertises the FULL labeled
+      // spectrum (plausible -> long shot -> fantastical) with its OWN grounded examples, exactly
+      // like the CS side (mirror the positive CS check below). It must still NOT leak CS-only
+      // endings — the Maximilian/British-war guard above stays.
+      if(Ues.indexOf('plausible, long shot')<0) throw new Error('the US empty-state should advertise the full plausible/long-shot/fantastical spectrum (the US grounded tier shipped, D117)');
+      if(Ues.indexOf('Reconstruction that holds')<0) throw new Error('the US empty-state should name a US grounded example (e.g. a Reconstruction that holds)');
       if(Ues.indexOf('fantastical')<0) throw new Error('the US empty-state must still name the fantastical tier');
-      // the CS side, which DOES ship grounded endings, keeps the full spectrum framing
+      // the CS side also ships grounded endings — keeps the full spectrum framing
       var Ccs=endRenderSection(mkC('CS',1863,6));
       if(Ccs.indexOf('plausible, long shot')<0) throw new Error('the CS empty-state should advertise the full plausible/long-shot/fantastical spectrum (the CS grounded tier shipped)');
       var Ces=endRenderSection(mkC('CS',1863,6));   // empty state, CS
@@ -223,6 +226,94 @@ const SETUP = `(() => {
       if(html.indexOf('Plausible')<0) throw new Error('the grounded recognized-independence must render under the Plausible band');
       if(html.indexOf('Fantastical')<0) throw new Error('the fantastical British-war must render under the Fantastical band');
       if(html.indexOf('NaN')>=0||html.indexOf('>undefined')>=0) throw new Error('the banded render leaked NaN/undefined');
+      return { noLeak:true, banded:true }; });
+
+    // ---- D117: the GROUNDED tier (US-half) — 8 plausible/long-shot end-states. ----
+    step('D117 fresh-US: a fresh Union campaign (no wilds/levers/emancipation, 1862, light play) opens NO grounded ending', function(){
+      var C=mkC('US',1862,2); setMom(C,1,2,30,40);   // early, light play, nothing chosen
+      var sc=endScan(C);
+      if(sc.reached.length!==0||sc.near.length!==0) throw new Error('a fresh US campaign must open no ending, got '+JSON.stringify({r:sc.reached.map(function(e){return e.id;}),n:sc.near.map(function(e){return e.id;})}));
+      return { reached:0, near:0 }; });
+
+    step('D117 reconstruction-holds: an emancipation war won (em.issued + won>=4) OPENS it; the 1864 verdict + momentum SECURES it', function(){
+      var Cn=mkC('US',1864,9); Cn.president.emancipation={issued:true,declined:false,year:1863,month:1}; setMom(Cn,4,8,40,60);   // won 4, election not yet won
+      var n=endScan(Cn); if(!has(n.near,'us-reconstruction-holds')) throw new Error('em.issued + won>=4 (election not yet won) must put a Reconstruction-that-holds within reach');
+      if(has(n.reached,'us-reconstruction-holds')) throw new Error('without the won 1864 election a Reconstruction-that-holds must NOT be secured');
+      var Cr=mkC('US',1864,11); Cr.president.emancipation={issued:true,declined:false,year:1863,month:1}; Cr.clock.resolved1864=true; Cr.clock.elected=true; setMom(Cr,8,10,15,110);   // mom ~0.83
+      var r=endScan(Cr); if(!has(r.reached,'us-reconstruction-holds')) throw new Error('em.issued + won>=4 + the won 1864 election + momentum>=0.55 must REACH a Reconstruction that holds');
+      if(r.reached.filter(function(e){return e.id==='us-reconstruction-holds';})[0].hist.indexOf('1877')<0) throw new Error('the Reconstruction-holds counterfactual must name the Compromise of 1877');
+      var Cw=mkC('US',1864,9); Cw.president.emancipation={issued:true,declined:false,year:1863,month:1}; setMom(Cw,3,8,40,60);   // won 3 < 4
+      if(has(endScan(Cw).near,'us-reconstruction-holds')||has(endScan(Cw).reached,'us-reconstruction-holds')) throw new Error('won<4 must NOT open a Reconstruction that holds');
+      return { ok:true }; });
+
+    step('D117 early-abolition: the radical-emancipation gambit OPENS it (NOT a bare 1863 usctUnlocked); momentum SECURES it', function(){
+      var Cr=mkC('US',1862,6); Cr.strategy.wildsPlayed=['us-radical-emanc']; setMom(Cr,6,10,30,80);   // mom ~0.64
+      if(!has(endScan(Cr).reached,'us-early-abolition')) throw new Error('the us-radical-emanc gambit + momentum>=0.5 must REACH an early abolition war');
+      // a bare 1863 emancipation auto-trips M.usctUnlocked (70-manpower.js) but must NOT open early-abolition — the OPENER is the WILD, not the auto-unlock
+      var Cb=mkC('US',1863,6); Cb.president.emancipation={issued:true,declined:false,year:1863,month:1}; setMom(Cb,6,10,30,80);
+      if(has(endScan(Cb).near,'us-early-abolition')||has(endScan(Cb).reached,'us-early-abolition')) throw new Error('a bare 1863 emancipation (auto-unlocked USCT, no gambit) must NOT open early-abolition — only the us-radical-emanc gambit does');
+      return { ok:true }; });
+
+    step('D117 hard-war + general-strike: each opens on its gambit; a broken enemy will (or a will-victory) SECURES it', function(){
+      var Ch=mkC('US',1864,6); Ch.strategy.wildsPlayed=['us-hardwar']; Ch.strategy.enemyWill=20; setMom(Ch,7,9,25,90);
+      if(!has(endScan(Ch).reached,'us-hardwar-collapse')) throw new Error('us-hardwar + enemyWill<=25 must REACH a hard-war collapse');
+      var Ch0=mkC('US',1863,6); Ch0.strategy.wildsPlayed=['us-hardwar']; Ch0.strategy.enemyWill=70; Ch0.strategy.victoryReady=null; setMom(Ch0,5,9,40,40);
+      if(!has(endScan(Ch0).near,'us-hardwar-collapse')) throw new Error('us-hardwar with high enemy (Confederate) will + no will-victory must be within reach, not reached');
+      if(has(endScan(Ch0).reached,'us-hardwar-collapse')) throw new Error('us-hardwar must not be secured without a broken will / will-victory');
+      var Cg=mkC('US',1864,6); Cg.strategy.wildsPlayed=['us-genstrike']; Cg.strategy.victoryReady='will'; setMom(Cg,7,9,25,90);
+      var g=endScan(Cg); if(!has(g.reached,'us-general-strike')) throw new Error('us-genstrike + a will-victory must REACH the general strike triumphant');
+      if(g.reached.filter(function(e){return e.id==='us-general-strike';})[0].hist.indexOf('Du Bois')<0) throw new Error('the general-strike counterfactual must cite Du Bois');
+      var Cn0=mkC('US',1864,6); setMom(Cn0,7,9,25,90);   // no gambit played
+      if(has(endScan(Cn0).near,'us-hardwar-collapse')||has(endScan(Cn0).near,'us-general-strike')) throw new Error('neither hard-war nor general-strike may open without its gambit');
+      return { ok:true }; });
+
+    step('D117 reunion-without-emancipation: refusing emancipation OPENS it; the counterfactual names slavery + the moral failure (anti-Lost-Cause)', function(){
+      var Cr=mkC('US',1864,9); Cr.president.emancipation={issued:false,declined:true}; Cr.strategy.victoryReady='will'; setMom(Cr,7,9,30,80);
+      var r=endScan(Cr); if(!has(r.reached,'us-reunion-no-emancipation')) throw new Error('em.declined + a will-victory must REACH reunion-without-emancipation');
+      var h=r.reached.filter(function(e){return e.id==='us-reunion-no-emancipation';})[0].hist;
+      if(h.indexOf('slavery')<0) throw new Error('the reunion-without-emancipation counterfactual must name slavery plainly');
+      if(h.indexOf('moral failure')<0) throw new Error('the reunion-without-emancipation counterfactual must name it as a moral failure, not a triumph (anti-Lost-Cause)');
+      var Cn=mkC('US',1863,6); Cn.president.emancipation={issued:true,declined:false,year:1863,month:1}; setMom(Cn,7,9,30,80);   // emancipation issued, not declined
+      if(has(endScan(Cn).near,'us-reunion-no-emancipation')||has(endScan(Cn).reached,'us-reunion-no-emancipation')) throw new Error('an emancipation war (not declined) must NOT open reunion-without-emancipation');
+      return { ok:true }; });
+
+    step('D117 1862-knockout: an overwhelming 1862 record (year<=1862 & won>=5) OPENS it; year>1862 is CLOSED', function(){
+      var Cn=mkC('US',1862,6); Cn.strategy.victoryReady=null; setMom(Cn,5,8,40,40);   // mom ~0.57 (< 0.7); no reachable victory
+      var n=endScan(Cn); if(!has(n.near,'us-1862-knockout')) throw new Error('year<=1862 & won>=5 (no reachable victory, mom<0.7) must put the 1862 knockout within reach');
+      if(has(n.reached,'us-1862-knockout')) throw new Error('without a reachable victory (or mom>=0.7 & won>=7) the 1862 knockout must NOT be secured');
+      var Cr=mkC('US',1862,6); Cr.strategy.victoryReady='will'; setMom(Cr,6,8,30,80);
+      if(!has(endScan(Cr).reached,'us-1862-knockout')) throw new Error('year<=1862 & won>=5 + a reachable victory must REACH the 1862 knockout');
+      var Cc=mkC('US',1863,6); Cc.strategy.victoryReady='will'; setMom(Cc,8,10,20,100);   // a year too late
+      if(has(endScan(Cc).near,'us-1862-knockout')||has(endScan(Cc).reached,'us-1862-knockout')) throw new Error('the 1862 knockout must be CLOSED after 1862 (year>1862)');
+      return { ok:true }; });
+
+    step('D117 forty-acres + compensated-bloodless: the radical/early emancipation paths; cited to Foner/Du Bois/Lincoln', function(){
+      // forty-acres — an emancipation war with the 1864 mandate + a reachable, dominant victory
+      var Cf=mkC('US',1864,11); Cf.president.emancipation={issued:true,declined:false,year:1863,month:1}; Cf.clock.resolved1864=true; Cf.clock.elected=true; Cf.strategy.victoryReady='will'; setMom(Cf,8,10,15,110);
+      var rf=endScan(Cf); if(!has(rf.reached,'us-forty-acres')) throw new Error('em.issued + the won 1864 election + a reachable victory + momentum>=0.6 + won>=5 must REACH forty-acres');
+      var hf=rf.reached.filter(function(e){return e.id==='us-forty-acres';})[0].hist;
+      if(hf.indexOf('Foner')<0 && hf.indexOf('Du Bois')<0) throw new Error('the forty-acres counterfactual must cite Foner / Du Bois');
+      if(hf.indexOf('Field Order')<0 && hf.indexOf('40 acres')<0) throw new Error('the forty-acres counterfactual must name the historical Field Order No. 15 / "40 acres"');
+      // compensated-bloodless — an early (1862) settlement with emancipation in hand
+      var Cc=mkC('US',1862,9); Cc.president.emancipation={issued:true,declined:false,year:1862,month:4}; Cc.strategy.victoryReady='will'; setMom(Cc,7,9,20,90);
+      var rc=endScan(Cc); if(!has(rc.reached,'us-compensated-bloodless')) throw new Error('year<=1862 + em.issued + a reachable victory + momentum>=0.6 must REACH a compensated, bloodless end');
+      if(rc.reached.filter(function(e){return e.id==='us-compensated-bloodless';})[0].hist.indexOf('Lincoln')<0) throw new Error('the compensated-bloodless counterfactual must name Lincoln (who actually urged compensated emancipation)');
+      var Cc2=mkC('US',1863,6); Cc2.president.emancipation={issued:true,declined:false,year:1863,month:1}; Cc2.strategy.victoryReady='will'; setMom(Cc2,7,9,20,90);   // 1863 — too late for a 1862 compensated end
+      if(has(endScan(Cc2).near,'us-compensated-bloodless')||has(endScan(Cc2).reached,'us-compensated-bloodless')) throw new Error('a compensated, bloodless 1862 end must be CLOSED after 1862');
+      return { ok:true }; });
+
+    step('D117 side-gate: a CS campaign never surfaces a US grounded ending; the labeled spectrum renders banded for US', function(){
+      var S=mkC('CS',1864,9); S.president.emancipation={issued:true,declined:true,year:1863,month:1}; S.clock.resolved1864=true; S.clock.elected=true; S.strategy.victoryReady='will'; S.strategy.wildsPlayed=['us-radical-emanc','us-hardwar','us-genstrike']; S.strategy.enemyWill=10; setMom(S,8,10,15,110);
+      var cs=endScan(S);
+      var leak=['us-reconstruction-holds','us-early-abolition','us-hardwar-collapse','us-reunion-no-emancipation','us-1862-knockout','us-forty-acres','us-compensated-bloodless','us-general-strike'];
+      for(var i=0;i<leak.length;i++) if(has(cs.reached,leak[i])||has(cs.near,leak[i])) throw new Error('a CS campaign must not surface the US grounded ending '+leak[i]);
+      // banded render — a US war with a grounded (plausible + long-shot) reached + a fantastical reached shows all three band labels
+      var C=mkC('US',1864,11); C.president.emancipation={issued:true,declined:false,year:1863,month:1}; C.clock.resolved1864=true; C.clock.elected=true; C.strategy.victoryReady='will'; C.strategy.wildsPlayed=['us-russian']; setMom(C,9,10,15,110);
+      var html=endRenderSection(C);
+      if(html.indexOf('Plausible')<0) throw new Error('the grounded Reconstruction-holds must render under the Plausible band');
+      if(html.indexOf('Long shot')<0) throw new Error('a US long-shot grounded ending (forty-acres) must render under the Long shot band');
+      if(html.indexOf('Fantastical')<0) throw new Error('the fantastical Russo-American must render under the Fantastical band');
+      if(html.indexOf('NaN')>=0||html.indexOf('>undefined')>=0) throw new Error('the banded US render leaked NaN/undefined');
       return { noLeak:true, banded:true }; });
 
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }

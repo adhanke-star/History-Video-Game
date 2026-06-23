@@ -109,12 +109,19 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       `endRenderSection` rewritten into a CVD-safe LABELED SPECTRUM (Plausible → Long shot → Fantastical bands).
       Pure read-out → battles byte-identical. probe-endings 16/16; bug-hunt invariantsHold=TRUE (4 confirmed + 2
       critic-LOW fixed: the trans-miss passage-of-time open, the US teaser over-promise, the Fabian fortify-ports
-      opener, the negotiated-peace hint, + reachability/coverage). US-half staged (scratchpad design).›
-      **Remaining:** the **GROUNDED tier — US-half** (the 8 Union end-states: Reconstruction-that-holds · Early
-      abolition · Hard-war collapse · Reunion-without-emancipation · 1862 knockout · Forty-acres · Compensated-
-      bloodless · the general strike — staged, D117 next) + interactive HINGE-FORK decision cards on the
-      `decResolve` engine that STEER toward the endings. ‹✅ the divergence-log read-back landed in the E4 graded
-      after-action report (D112).››
+      opener, the negotiated-peace hint, + reachability/coverage).›
+      ‹✅ increment 4 (D117): **the GROUNDED tier — US-half** (the 8 Union end-states, the D114 catalog:
+      Reconstruction-that-holds · Early abolition [the `us-radical-emanc` WILD, not the auto-tripping usctUnlocked] ·
+      Hard-war collapse · Reunion-without-emancipation [named as the moral failure it would have been, NOT a triumph] ·
+      1862 knockout [year≤1862 & won≥5] · Forty-acres [Foner/Du Bois] · Compensated-bloodless [em.year≤1862; Lincoln] ·
+      the general strike [Du Bois]), authored the same way in `_END_CATALOG`; the US teaser flipped so BOTH sides now
+      advertise the full labeled spectrum. **The labeled grounded→fantastical spectrum is now complete on both sides —
+      24/24 of the D114 catalog's end-states live (12 CS + 12 US).** Pure read-out → battles byte-identical.
+      probe-endings 24/24 (+8 D117 steps); bug-hunt invariantsHold=TRUE (8 agents; 1 confirmed MED fixed — the
+      general-strike USCT count corrected from "tens of thousands" to ~180,000, matching the game's own after-action
+      figure). wcag-auditor AA (data-only, no edits).›
+      **Remaining:** interactive HINGE-FORK decision cards on the `decResolve` engine that STEER toward the endings.
+      ‹✅ the divergence-log read-back landed in the E4 graded after-action report (D112).››
 - [ ] **E2 S4 education:** multi-axis codex + inline glossary + the full guided tutorial + play-style presets
       (President / General-Commander, + the Historian settings overlay — D39) + difficulty/realism sliders.
 - [ ] **E3 S4 accessibility:** the dedicated FULL WCAG 2.2 AA pass + the 4 a11y modes (high-contrast, CVD-safe,
