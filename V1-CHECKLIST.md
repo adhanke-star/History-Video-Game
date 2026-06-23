@@ -85,8 +85,16 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       ‹LOCKED: sits here, after tactical depth, so it duplicates onto a mature engine.›
 
 ### Phase E — STRATEGIC ARC COMPLETION  (S3–S5)  ‹▶ NEXT after C breadth — D91 (pulled ahead of the hex engine; the biggest content-thin pillar)›
-- [ ] **E1 S3 alt-history:** tiered divergence + hinge forks + emergent toggle + the player-driven "your war
+- [~] **E1 S3 alt-history:** tiered divergence + hinge forks + emergent toggle + the player-driven "your war
       vs history" tracker + divergence log (no thumb on the scale — D54).
+      ‹✅ increment 1 (D111): the flagship **"Your War vs History"** desk tab — a tiered (minor/major/radical),
+      dated DIVERGENCE LEDGER with the historical counterfactual per entry + a 0..100 divergence INDEX + the
+      EMERGENT-ONLY toggle (withholds the wild-card gambits). Pure read-out over the S1e `C.strategy` seeds
+      (`src/81-divergence.js`; no tactical file touched → combat byte-identical). Detects emancipation timing
+      [declined/early/1862/late], CS arm-the-enslaved, foreign recognition, the 1864 election (US) / CS
+      home-front break, the CS trajectory, each wild card. probe-divergence 14/14; bug-hunt invariantsHold=TRUE.
+      **Remaining:** deeper INTERACTIVE hinge-point forks (build on the decisions deck) + curated alt-history
+      scenarios; the divergence-log read-back lands in the E4 graded after-action report.›
 - [ ] **E2 S4 education:** multi-axis codex + inline glossary + the full guided tutorial + play-style presets
       (President / General-Commander, + the Historian settings overlay — D39) + difficulty/realism sliders.
 - [ ] **E3 S4 accessibility:** the dedicated FULL WCAG 2.2 AA pass + the 4 a11y modes (high-contrast, CVD-safe,

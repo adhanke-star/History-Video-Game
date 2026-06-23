@@ -21,6 +21,7 @@
     "60-blockade.js",
     "70-manpower.js",
     "80-victory.js",
+    "81-divergence.js",
     "85-battle-bridge.js",
     "86-battle-conditioning.js",
     "87-auto-resolve.js",

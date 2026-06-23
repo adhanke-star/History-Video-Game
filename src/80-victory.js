@@ -209,6 +209,13 @@ function _vicApplyWild(C, id) {
 
 /* Render the side's available wild cards, grouped by plausibility tier. */
 function _vicWildSection(C) {
+  // E1 (D111): the emergent-only toggle withholds the engineered wild-card gambits,
+  // so the war can diverge ONLY through play. Default OFF -> the full body below
+  // renders exactly as before (byte-identical). See 81-divergence.js.
+  if (typeof divEmergentOnly === "function" && divEmergentOnly()) {
+    return '<hr class="rule"><div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#9c3b2e;margin:2px 0 2px">Wild Cards &mdash; Alternate History</div>'
+      + '<div style="font-size:11px;opacity:.7">Alternate-history gambits are turned off &mdash; your war diverges only through the choices and battles of the campaign. Re-enable them under <b>Your War vs History</b>.</div>';
+  }
   var side = (C.side === "CS") ? "CS" : "US";
   var S = C.strategy, played = S.wildsPlayed || [];
   var year = (C.clock && C.clock.year) || (C.president && C.president.date && C.president.date.year) || 1861;
