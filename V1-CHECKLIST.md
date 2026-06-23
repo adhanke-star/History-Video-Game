@@ -102,9 +102,19 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       report via guarded embeds; pure read-out, no tactical file → combat byte-identical. probe-endings 9/9;
       bug-hunt invariantsHold=TRUE (all 8 counterfactuals verified; 2 fixed). The Golden Circle named honestly,
       anti-Lost-Cause.›
-      **Remaining:** the **GROUNDED tier** (the 16 plausible/longshot D114 end-states, authored the same way in
-      `_END_CATALOG`) + interactive HINGE-FORK decision cards on the `decResolve` engine that STEER toward the
-      endings. ‹✅ the divergence-log read-back landed in the E4 graded after-action report (D112).››
+      ‹✅ increment 3 (D116): **the GROUNDED tier — CS-half** (8 plausible/long-shot Confederate end-states, the
+      D114 catalog: Recognized independence · Negotiated peace · Emancipated Confederacy [slavery named plainly] ·
+      Stalemate/two-Americas · Fabian survival · Trans-Miss redoubt · King Cotton coerces Europe · Northwest
+      secedes), authored the same way in `_END_CATALOG` + the new `_endEnemyWill`/`_endYear`/`_endLever` accessors;
+      `endRenderSection` rewritten into a CVD-safe LABELED SPECTRUM (Plausible → Long shot → Fantastical bands).
+      Pure read-out → battles byte-identical. probe-endings 16/16; bug-hunt invariantsHold=TRUE (4 confirmed + 2
+      critic-LOW fixed: the trans-miss passage-of-time open, the US teaser over-promise, the Fabian fortify-ports
+      opener, the negotiated-peace hint, + reachability/coverage). US-half staged (scratchpad design).›
+      **Remaining:** the **GROUNDED tier — US-half** (the 8 Union end-states: Reconstruction-that-holds · Early
+      abolition · Hard-war collapse · Reunion-without-emancipation · 1862 knockout · Forty-acres · Compensated-
+      bloodless · the general strike — staged, D117 next) + interactive HINGE-FORK decision cards on the
+      `decResolve` engine that STEER toward the endings. ‹✅ the divergence-log read-back landed in the E4 graded
+      after-action report (D112).››
 - [ ] **E2 S4 education:** multi-axis codex + inline glossary + the full guided tutorial + play-style presets
       (President / General-Commander, + the Historian settings overlay — D39) + difficulty/realism sliders.
 - [ ] **E3 S4 accessibility:** the dedicated FULL WCAG 2.2 AA pass + the 4 a11y modes (high-contrast, CVD-safe,

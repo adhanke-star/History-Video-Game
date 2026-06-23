@@ -131,9 +131,99 @@ const SETUP = `(() => {
       var Ues=endRenderSection(mkC('US',1863,6));   // empty state, US
       if(Ues.indexOf('Maximilian')>=0||Ues.indexOf('British war')>=0) throw new Error('a US empty-state teaser must NOT promise CS-only endings');
       if(Ues.indexOf('Lincoln')<0&&Ues.indexOf('Tsar')<0&&Ues.indexOf('repeaters')<0) throw new Error('a US empty-state teaser should name US-side examples');
+      // bug-hunt D116-LOW: the US side has ONLY fantastical endings until the US grounded tier ships —
+      // its teaser must NOT advertise the plausible/long-shot spectrum or name unbuilt US grounded outcomes.
+      if(Ues.indexOf('plausible, long shot')>=0) throw new Error('the US empty-state must not advertise the plausible/long-shot spectrum (US has only fantastical endings until the US grounded tier ships)');
+      if(Ues.indexOf('Reconstruction that holds')>=0||Ues.indexOf('compensated end')>=0) throw new Error('the US empty-state must not name unbuilt US grounded endings');
+      if(Ues.indexOf('fantastical')<0) throw new Error('the US empty-state must still name the fantastical tier');
+      // the CS side, which DOES ship grounded endings, keeps the full spectrum framing
+      var Ccs=endRenderSection(mkC('CS',1863,6));
+      if(Ccs.indexOf('plausible, long shot')<0) throw new Error('the CS empty-state should advertise the full plausible/long-shot/fantastical spectrum (the CS grounded tier shipped)');
       var Ces=endRenderSection(mkC('CS',1863,6));   // empty state, CS
       if(Ces.indexOf('Lincoln living')>=0||Ces.indexOf('Tsar')>=0) throw new Error('a CS empty-state teaser must NOT promise US-only endings');
       return { cleanCitation:true, sideFiltered:true }; });
+
+    // ---- D116: the GROUNDED tier (CS-half) — 8 plausible/long-shot end-states. ----
+    step('D116 fresh-CS: a fresh Confederate campaign (no levers/wilds, recog 0, 1862) opens NO grounded ending', function(){
+      var C=mkC('CS',1862,2); setMom(C,1,2,30,40);   // early, light play, nothing chosen
+      var sc=endScan(C);
+      if(sc.reached.length!==0||sc.near.length!==0) throw new Error('a fresh CS campaign must open no ending, got '+JSON.stringify({r:sc.reached.map(function(e){return e.id;}),n:sc.near.map(function(e){return e.id;})}));
+      return { reached:0, near:0 }; });
+
+    step('D116 recognized-independence: courting Europe (recog 30) OPENS it; recog 60 SECURES it', function(){
+      var Cn=mkC('CS',1862,9); Cn.blockade.recognition=30; Cn.blockade.recognitionForeclosed=false; setMom(Cn,4,8,30,60);
+      var n=endScan(Cn); if(!has(n.near,'cs-recognized-independence')) throw new Error('recognition 30 (courted, not foreclosed) must put recognized-independence within reach');
+      if(has(n.reached,'cs-recognized-independence')) throw new Error('recognition 30 must NOT secure recognized-independence (needs >=60)');
+      var Cr=mkC('CS',1862,9); Cr.blockade.recognition=62; Cr.blockade.recognitionForeclosed=false; setMom(Cr,6,8,25,80);
+      if(!has(endScan(Cr).reached,'cs-recognized-independence')) throw new Error('recognition 62 must REACH recognized-independence');
+      var Cf=mkC('CS',1863,6); Cf.blockade.recognition=40; Cf.blockade.recognitionForeclosed=true; setMom(Cf,6,8,25,80);
+      if(has(endScan(Cf).near,'cs-recognized-independence')||has(endScan(Cf).reached,'cs-recognized-independence')) throw new Error('a FORECLOSED recognition window must not open recognized-independence');
+      return { ok:true }; });
+
+    step('D116 negotiated-peace: cracking Northern will (enemyWill 50) OPENS it; a reachable peace SECURES it', function(){
+      var Cn=mkC('CS',1864,8); Cn.strategy.enemyWill=50; Cn.strategy.victoryReady=null; setMom(Cn,5,9,40,60);
+      var n=endScan(Cn); if(!has(n.near,'cs-negotiated-peace')) throw new Error('enemyWill 50 must put negotiated-peace within reach');
+      if(has(n.reached,'cs-negotiated-peace')) throw new Error('enemyWill 50 alone (no reachable peace) must not secure negotiated-peace');
+      var Cr=mkC('CS',1864,11); Cr.strategy.enemyWill=28; Cr.strategy.victoryReady='will'; setMom(Cr,7,9,30,80);
+      if(!has(endScan(Cr).reached,'cs-negotiated-peace')) throw new Error('a reachable peace (victoryReady=will) must REACH negotiated-peace');
+      if(endScan(Cr).reached.filter(function(e){return e.id==='cs-negotiated-peace';})[0].hist.indexOf('Atlanta')<0) throw new Error('the negotiated-peace counterfactual must name the fall of Atlanta');
+      return { ok:true }; });
+
+    step('D116 emancipated-Confederacy: arming the enslaved OPENS it; victory+momentum SECURES it; counterfactual names slavery (anti-Lost-Cause)', function(){
+      var Cn=mkC('CS',1864,6); Cn.strategy.armEnslaved=true; Cn.strategy.victoryReady=null; setMom(Cn,4,9,45,40);
+      if(!has(endScan(Cn).near,'cs-emancipated-confederacy')) throw new Error('armEnslaved must open emancipated-Confederacy (within reach)');
+      var Cr=mkC('CS',1865,2); Cr.strategy.armEnslaved=true; Cr.strategy.victoryReady='will'; setMom(Cr,8,10,20,100);
+      var r=endScan(Cr); if(!has(r.reached,'cs-emancipated-confederacy')) throw new Error('armEnslaved + a reachable victory + momentum must REACH emancipated-Confederacy');
+      var h=r.reached.filter(function(e){return e.id==='cs-emancipated-confederacy';})[0].hist;
+      if(h.indexOf('slavery')<0) throw new Error('the emancipated-Confederacy counterfactual must name slavery plainly (anti-Lost-Cause)');
+      if(h.indexOf('Cleburne')<0) throw new Error('the emancipated-Confederacy counterfactual must cite the historical Cleburne proposal');
+      return { ok:true }; });
+
+    step('D116 wild-card grounded openers: King Cotton needs cs-cotton-inferno; the Northwest needs cs-copperhead', function(){
+      var Cc=mkC('CS',1863,6); Cc.strategy.wildsPlayed=['cs-cotton-inferno']; Cc.blockade.recognition=20; setMom(Cc,5,9,35,60);
+      if(!has(endScan(Cc).near,'cs-king-cotton')) throw new Error('cs-cotton-inferno with low recognition must put King Cotton within reach');
+      var Cc2=mkC('CS',1863,6); Cc2.strategy.wildsPlayed=['cs-cotton-inferno']; Cc2.blockade.recognition=50; setMom(Cc2,6,9,30,80);
+      if(!has(endScan(Cc2).reached,'cs-king-cotton')) throw new Error('cs-cotton-inferno + recognition>=45 + momentum must REACH King Cotton');
+      var Cw=mkC('CS',1864,3); Cw.strategy.wildsPlayed=['cs-copperhead']; Cw.strategy.enemyWill=35; setMom(Cw,7,9,25,90);
+      if(!has(endScan(Cw).reached,'cs-northwest-secedes')) throw new Error('cs-copperhead + broken Northern will + momentum must REACH the Northwest secedes');
+      var Cn0=mkC('CS',1864,3); setMom(Cn0,7,9,25,90);   // no copperhead played
+      if(has(endScan(Cn0).near,'cs-northwest-secedes')||has(endScan(Cn0).reached,'cs-northwest-secedes')) throw new Error('the Northwest secedes must NOT open without the Copperhead gambit');
+      return { ok:true }; });
+
+    step('D116 late-war endings: stalemate (even deadlock), Fabian (defensive lever), Trans-Miss (1865 survival)', function(){
+      // stalemate — 1864+, >=3 wins, even momentum band, Northern will worn
+      var Cs=mkC('CS',1864,9); Cs.strategy.enemyWill=45; setMom(Cs,4,8,45,40);   // momentum mid-band ~0.5
+      if(!has(endScan(Cs).reached,'cs-stalemate')&&!has(endScan(Cs).near,'cs-stalemate')) throw new Error('a long even war must open stalemate');
+      // Fabian — needs the husbanding amnesty lever + 1864+
+      var Cf=mkC('CS',1864,9); Cf.strategy.amnesty=true; Cf.strategy.enemyWill=40; setMom(Cf,5,9,35,60);
+      if(!has(endScan(Cf).reached,'cs-fabian-survival')) throw new Error('the husbanding amnesty lever + worn Northern will must REACH Fabian survival');
+      var Cf0=mkC('CS',1864,9); Cf0.strategy.enemyWill=40; setMom(Cf0,5,9,35,60);   // no lever
+      if(has(endScan(Cf0).near,'cs-fabian-survival')||has(endScan(Cf0).reached,'cs-fabian-survival')) throw new Error('Fabian survival must NOT open without the amnesty lever');
+      // bug-hunt D116-LOW: fortifyPorts (HOLD the ports) is the conceptual OPPOSITE of Fabian trade-space-for-time — it must NOT open Fabian
+      var Cf2=mkC('CS',1864,9); Cf2.strategy.fortifyPorts=true; Cf2.strategy.enemyWill=40; setMom(Cf2,5,9,35,60);
+      if(has(endScan(Cf2).near,'cs-fabian-survival')||has(endScan(Cf2).reached,'cs-fabian-survival')) throw new Error('fortifyPorts must NOT open Fabian survival (only the husbanding amnesty lever does)');
+      // Trans-Mississippi — survive into 1865 with an EARNED record (won>=3), no outright victory
+      var Ct=mkC('CS',1865,4); Ct.strategy.victoryReady=null; setMom(Ct,4,7,30,70);
+      if(!has(endScan(Ct).reached,'cs-trans-mississippi')&&!has(endScan(Ct).near,'cs-trans-mississippi')) throw new Error('surviving into 1865 with won>=3 and no outright win must open the Trans-Mississippi redoubt');
+      var Ct2=mkC('CS',1863,4); setMom(Ct2,4,7,30,70);   // too early
+      if(has(endScan(Ct2).near,'cs-trans-mississippi')||has(endScan(Ct2).reached,'cs-trans-mississippi')) throw new Error('the Trans-Mississippi redoubt must not open before 1865');
+      // bug-hunt D116-MED: a LOST war that merely crawls to 1865 (won=0, no levers/wilds) must NOT open it (the precond needs an earned signal, not passage of time)
+      var Ct3=mkC('CS',1865,4); Ct3.strategy.victoryReady=null; setMom(Ct3,0,8,70,10);
+      if(has(endScan(Ct3).near,'cs-trans-mississippi')||has(endScan(Ct3).reached,'cs-trans-mississippi')) throw new Error('a losing 1865 campaign (won=0) must NOT open the Trans-Mississippi redoubt — passage of time is not an earned path');
+      return { ok:true }; });
+
+    step('D116 side-gate: a US campaign never surfaces a CS grounded ending; the labeled spectrum renders banded', function(){
+      var U=mkC('US',1864,9); U.blockade.recognition=80; U.strategy.armEnslaved=true; U.strategy.enemyWill=20; U.strategy.wildsPlayed=['cs-cotton-inferno','cs-copperhead']; setMom(U,8,10,20,100);
+      var us=endScan(U);
+      var leak=['cs-recognized-independence','cs-negotiated-peace','cs-emancipated-confederacy','cs-stalemate','cs-fabian-survival','cs-trans-mississippi','cs-king-cotton','cs-northwest-secedes'];
+      for(var i=0;i<leak.length;i++) if(has(us.reached,leak[i])||has(us.near,leak[i])) throw new Error('a US campaign must not surface the CS grounded ending '+leak[i]);
+      // banded render — a CS war with a grounded reached + a fantastical reached shows both band labels
+      var C=mkC('CS',1862,9); C.blockade.recognition=62; C.strategy.wildsPlayed=['cs-trent']; setMom(C,7,9,20,100);
+      var html=endRenderSection(C);
+      if(html.indexOf('Plausible')<0) throw new Error('the grounded recognized-independence must render under the Plausible band');
+      if(html.indexOf('Fantastical')<0) throw new Error('the fantastical British-war must render under the Fantastical band');
+      if(html.indexOf('NaN')>=0||html.indexOf('>undefined')>=0) throw new Error('the banded render leaked NaN/undefined');
+      return { noLeak:true, banded:true }; });
 
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
