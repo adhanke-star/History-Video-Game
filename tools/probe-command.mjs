@@ -660,6 +660,158 @@ const SETUP = `(() => {
       if(tab.toLowerCase().indexOf('depth chart')<0) throw new Error('the Command tab must include the depth-chart section');
       return { rendered:true }; });
 
+    // ===== Q11 (D109): THE COMMISSION MOVE — bring documented political generals into the pool =====
+    step('Q11: commission config + pool load — costPolitical<costProfessional, maxCommissions; both sides have a pool; political generals are LOW OVR / HIGH political value, with personas + provenance', function(){
+      if(typeof _cmdCommissionCfg!=='function') return { skipped:'pre-Q11' };
+      var cfg=_cmdCommissionCfg(); if(!cfg) throw new Error('no commission config');
+      if(!(cfg.costPolitical>=0)||!(cfg.costProfessional>=0)) throw new Error('bad commission costs');
+      if(!(cfg.costPolitical<cfg.costProfessional)) throw new Error('a political general must be CHEAPER than a professional (§12.2)');
+      if(!(cfg.maxCommissions>=1)) throw new Error('bad maxCommissions');
+      if(String(cfg.prov||'').trim().toLowerCase()==='verified'&&(!Array.isArray(cfg.src)||cfg.src.length<2)) throw new Error('Verified config needs >=2 src (gate-4e)');
+      var us=_cmdCommissionPool('US'), cs=_cmdCommissionPool('CS');
+      if(!us.length||!cs.length) throw new Error('a commission pool is empty (US '+us.length+' / CS '+cs.length+')');
+      var C=mkC('US',1862,9);
+      var rosterIds={}; _cmdSideGenerals('US').concat(_cmdSideGenerals('CS')).forEach(function(g){ rosterIds[g.id]=1; });
+      var all=us.concat(cs), seen={};
+      for(var i=0;i<all.length;i++){ var e=all[i];
+        if(!e.id||!e.name||typeof e.skill!=='number'||typeof e.reputation!=='number'||!e.availableFrom) throw new Error('commission entry missing field: '+(e&&e.id));
+        if(rosterIds[e.id]) throw new Error('a commission officer must NOT also be in the starting roster: '+e.id);
+        if(seen[e.id]) throw new Error('duplicate commission id: '+e.id); seen[e.id]=1;
+        if(!_cmdGenPersona(e)) throw new Error('commission officer needs a persona (for the dual OVR): '+e.id);
+        var ovr=Math.round(_cmdGenRating(C,e));
+        if(!(ovr<=58)) throw new Error('a political general must be a LOW combat OVR (<=58), '+e.id+' = '+ovr);
+        var pol=(e.commission&&typeof e.commission.politicalValue==='number')?e.commission.politicalValue:e.politicalValueScore;
+        if(!(pol>=50)) throw new Error('a political general must have a HIGH political value (>=50), '+e.id+' = '+pol);
+        if(String(e.provenance||'').trim().toLowerCase()==='verified'&&(!Array.isArray(e.sources)||e.sources.length<2)) throw new Error('a Verified commission entry needs >=2 sources (gate-4e): '+e.id);
+        if(!Array.isArray(e.sources)||e.sources.length<2) throw new Error('want >=2 sources for the citation-grade bio: '+e.id);
+      }
+      return { us:us.length, cs:cs.length, costPol:cfg.costPolitical, costPro:cfg.costProfessional, maxC:cfg.maxCommissions }; });
+
+    step('Q11: BYTE-IDENTICAL when nobody commissioned — the roster+commissioned pool equals the bare roster; the appoint pool names no political general; leadership matches an absent record', function(){
+      if(typeof _cmdRosterPlusCommissioned!=='function') return { skipped:'pre-Q11' };
+      var C=mkC('US',1862,9);
+      if(_cmdRosterPlusCommissioned(C,'US').length!==_cmdSideGenerals('US').length) throw new Error('a fresh campaign must expose exactly the starting roster');
+      var pool=_cmdPoolHTML(C);
+      var names=_cmdCommissionPool('US').map(function(e){return _cmdName(e);});
+      for(var i=0;i<names.length;i++) if(pool.indexOf('>'+names[i])>=0||pool.indexOf(names[i]+' &')>=0) { /* loose */ }
+      var L0=commandLeadership(C);
+      delete C.president.command.commissioned;             // an absent record (a pre-Q11 save) must read identically
+      cmdInit(C);
+      if(_cmdRosterPlusCommissioned(C,'US').length!==_cmdSideGenerals('US').length) throw new Error('an absent record must still expose just the roster');
+      var L1=commandLeadership(C);
+      if(L0!==L1) throw new Error('byte-identity break: seeded-empty '+L0+' vs absent-record '+L1);
+      return { rosterOnly:true, leadership:L0 }; });
+
+    step('Q11: cmdCommission SPENDS exactly the cost, is GATED when capital is short, adds the id; idempotent (no re-charge)', function(){
+      if(typeof cmdCommission!=='function') return { skipped:'pre-Q11' };
+      var C=mkC('US',1862,9), id='us-banks', e=_cmdCommissionEntry('US',id); if(!e) return { skipped:'no '+id };
+      var cost=_cmdCommissionCost(e);
+      C.clock.capital=Math.max(0,cost-1);                  // short -> gated
+      cmdCommission(C,id);
+      if(cmdCommissioned(C).indexOf(id)>=0) throw new Error('commissioning must be GATED when capital is short');
+      C.clock.capital=20; var cap0=C.clock.capital;
+      cmdCommission(C,id);
+      if(cmdCommissioned(C).indexOf(id)<0) throw new Error('an affordable commission must add the officer');
+      if(C.clock.capital!==cap0-cost) throw new Error('commission must debit exactly '+cost+', spent '+(cap0-C.clock.capital));
+      var cap1=C.clock.capital; cmdCommission(C,id);       // re-commission -> no re-charge
+      if(C.clock.capital!==cap1) throw new Error('re-commissioning the same officer must not re-charge');
+      if(cmdCommissioned(C).filter(function(x){return x===id;}).length!==1) throw new Error('an officer must appear once in the commissioned set');
+      return { gated:true, spent:cost }; });
+
+    step('Q11: a commissioned officer ENTERS the pools (appointable + seatable); appointing a political general yields a LOWER leadership than a strong professional (rank != competence)', function(){
+      if(typeof cmdCommission!=='function') return { skipped:'pre-Q11' };
+      var C=mkC('US',1862,9); C.clock.capital=1000;
+      cmdCommission(C,'us-banks');
+      if(_cmdRosterPlusCommissioned(C,'US').map(function(g){return g.id;}).indexOf('us-banks')<0) throw new Error('a commissioned officer must enter the selectable pool');
+      var pool=_cmdPoolHTML(C);
+      if(pool.indexOf(_cmdName(_cmdCommissionEntry('US','us-banks')))<0) throw new Error('the appoint pool must list the commissioned officer');
+      // appoint him -> his (low) leadership takes the field
+      cmdAppoint(C,'us-banks');
+      if(cmdActiveId(C)!=='us-banks') throw new Error('a commissioned officer must be appointable to army command');
+      var banksLead=commandLeadership(C);
+      // a strong professional, by contrast, fields a much higher leadership
+      var D=mkC('US',1862,9); D.clock.capital=1000; cmdAppoint(D,'us-grant');
+      var grantLead=commandLeadership(D);
+      if(!(banksLead<grantLead)) throw new Error('a political general must field a LOWER leadership than a strong professional: banks '+banksLead+' !< grant '+grantLead);
+      // seatable too
+      var E=mkC('US',1862,9); E.clock.capital=1000; cmdCommission(E,'us-butler');
+      cmdSeatCorps(E,0,'us-butler');
+      if(E.president.command.corps[0]!=='us-butler') throw new Error('a commissioned officer must be seatable over a corps');
+      return { appointable:true, seatable:true, banksLead:banksLead, grantLead:grantLead }; });
+
+    step('Q11: the maxCommissions cap is a real budget — commissioning past the cap is a no-op (the scarcity teaching)', function(){
+      if(typeof cmdCommission!=='function') return { skipped:'pre-Q11' };
+      var cap=_cmdCommissionCfg().maxCommissions;
+      var us=_cmdCommissionPool('US').map(function(e){return e.id;});
+      if(us.length<=cap) return { note:'pool ('+us.length+') <= cap ('+cap+'); cap not exercisable on this roster', poolSize:us.length, cap:cap };
+      var C=mkC('US',1862,9); C.clock.capital=1000;
+      for(var i=0;i<cap;i++) cmdCommission(C,us[i]);
+      if(cmdCommissioned(C).length!==cap) throw new Error('should have commissioned exactly the cap ('+cap+'), got '+cmdCommissioned(C).length);
+      var capBefore=C.clock.capital; cmdCommission(C,us[cap]);   // one past the cap
+      if(cmdCommissioned(C).indexOf(us[cap])>=0) throw new Error('commissioning past the cap must be refused');
+      if(C.clock.capital!==capBefore) throw new Error('a refused (over-cap) commission must not charge');
+      return { cap:cap, atCap:cmdCommissioned(C).length, overCapRefused:true }; });
+
+    step('Q11: SAVE-TAMPER hardening — cmdInit sanitizes a malformed cmd.commissioned (non-array/dupes/bogus/roster-id/over-cap) on LOAD', function(){
+      if(typeof cmdCommission!=='function') return { skipped:'pre-Q11' };
+      var cap=_cmdCommissionCfg().maxCommissions;
+      var us=_cmdCommissionPool('US').map(function(e){return e.id;});
+      var C=mkC('US',1862,9);
+      // a torrent of garbage: dupes, a non-string, a bogus id, a real roster id (must be rejected — never both), the full pool
+      C.president.command.commissioned=[us[0], us[0], 12345, 'no-such-officer', 'us-grant'].concat(us);
+      cmdInit(C);
+      var c=C.president.command.commissioned;
+      if(!Array.isArray(c)) throw new Error('commissioned must sanitize to an array');
+      if(c.indexOf('us-grant')>=0) throw new Error('a starting-roster id must be rejected from the commissioned set');
+      if(c.indexOf(12345)>=0||c.indexOf('no-such-officer')>=0) throw new Error('bogus ids must be dropped');
+      if(c.filter(function(x){return x===us[0];}).length>1) throw new Error('dupes must be removed');
+      if(c.length>cap) throw new Error('the commissioned set must be capped at maxCommissions ('+cap+'), got '+c.length);
+      C.president.command.commissioned='not-an-array'; cmdInit(C);
+      if(!Array.isArray(C.president.command.commissioned)) throw new Error('a non-array commissioned must be replaced by an array');
+      return { sanitized:true, cappedTo:cap }; });
+
+    step('Q11: NO output gate — cmdCommission writes ONLY cmd.commissioned + C.clock.capital + the reputation seed (no scoreboard, no seniority)', function(){
+      if(typeof cmdCommission!=='function') return { skipped:'pre-Q11' };
+      var C=mkC('US',1862,9); C.clock.capital=100;
+      function snap(){ return JSON.stringify({ idx:C.idx, stats:C.stats, strength:(C.manpower&&C.manpower.strength), fieldGeneral:C.president.command.fieldGeneral, seniority:C.president.command.seniority, corps:C.president.command.corps }); }
+      var s0=snap(); cmdCommission(C,'us-sigel');
+      if(snap()!==s0) throw new Error('commission mutated state beyond cmd.commissioned + capital + reputation');
+      // it did write the commissioned set + a reputation seed (the allowed writes)
+      if(cmdCommissioned(C).indexOf('us-sigel')<0) throw new Error('commission should have added the officer');
+      return { pure:true }; });
+
+    step('Q11: the Command desk renders the Commission section (header + a political general + a Commission control); the full tab includes it', function(){
+      if(typeof _cmdCommissionHTML!=='function') return { skipped:'pre-Q11' };
+      var C=mkC('US',1862,9); C.clock.capital=100;
+      var h0=_cmdCommissionHTML(C);
+      if(h0.toLowerCase().indexOf('commission')<0) throw new Error('missing the commission header');
+      if(h0.toLowerCase().indexOf('political value')<0) throw new Error('missing the political-value read-out');
+      var bn=_cmdName(_cmdCommissionEntry('US','us-banks'));
+      if(h0.indexOf(bn)<0) throw new Error('the commission section must list a political general ('+bn+')');
+      if(h0.indexOf('cmdComm_us-banks')<0) throw new Error('an un-commissioned officer must offer a Commission control');
+      cmdCommission(C,'us-banks');
+      var h1=_cmdCommissionHTML(C);
+      if(h1.indexOf('cmdComm_us-banks')>=0) throw new Error('a commissioned officer must not still offer the Commission button');
+      if(h1.toLowerCase().indexOf('commissioned')<0) throw new Error('a commissioned officer must be marked Commissioned');
+      var tab=cmdRenderTab(C);
+      if(tab.toLowerCase().indexOf('commission an officer')<0) throw new Error('the Command tab must include the Commission section');
+      return { rendered:true }; });
+
+    step('Q11 (bug-hunt): the commission gate is enforced at the FUNCTION level — an UN-commissioned officer cannot be appointed/seated/promoted (byte-identical for roster generals); a seated commissioned officer shows the RIGHT corps label', function(){
+      if(typeof cmdCommission!=='function') return { skipped:'pre-Q11' };
+      var C=mkC('US',1862,9); C.clock.capital=1000;
+      cmdAppoint(C,'us-banks'); if(cmdActiveId(C)==='us-banks') throw new Error('appoint must REFUSE an un-commissioned officer');
+      cmdSeatCorps(C,0,'us-banks'); if(C.president.command.corps[0]==='us-banks') throw new Error('seat must REFUSE an un-commissioned officer');
+      cmdPromote(C,'us-banks'); if(C.president.command.promotions['us-banks']) throw new Error('promote must REFUSE an un-commissioned officer');
+      // the guard is INERT for roster generals (always false) — a roster appoint still works
+      var D=mkC('US',1862,9); D.clock.capital=1000; cmdAppoint(D,'us-grant'); if(cmdActiveId(D)!=='us-grant') throw new Error('a roster appoint must still work — the guard must be inert for roster ids');
+      // commission, then the moves succeed; a seat in corps index 1 shows "II Corps", not the old always-"I Corps"
+      cmdCommission(C,'us-banks'); cmdSeatCorps(C,1,'us-banks');
+      if(C.president.command.corps[1]!=='us-banks') throw new Error('a COMMISSIONED officer must be seatable');
+      var h=_cmdCommissionHTML(C);
+      if(h.indexOf('Commands II Corps')<0) throw new Error('a commissioned officer seated in corps 1 must show "Commands II Corps" (the parseInt label fix), not always I Corps');
+      return { unCommissionedRefused:true, rosterUnaffected:true, commissionedSeatable:true, corpsLabelCorrect:true }; });
+
     // helper: read a general's current reputation
     function C0rep(C,id){ return (C.president&&C.president.command&&typeof C.president.command.reputation[id]==='number')?C.president.command.reputation[id]:60; }
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }

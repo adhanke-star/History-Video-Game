@@ -179,6 +179,14 @@
     "prov": "Inferred",
     "src": ["Stephen W. Sears, George B. McClellan: The Young Napoleon (1988)", "Joseph T. Glatthaar, General Lee's Army: From Victory to Collapse (2008)"]
   },
+  "commission": {
+    "_note": "Q11 (D109): THE COMMISSION MOVE — the GM depth-chart move that brings a new officer into the pool (RATING-SYSTEM-DESIGN §12.2/§12.3). The President COMMISSIONS the documented POLITICAL GENERALS (data/generals.json -> sides[side].commissionPool: US Banks/Butler/Sigel/McClernand, CS Floyd/Pillow) for political capital (C.clock.capital, the existing GM currency — no new resource, §12). A political general is CHEAP (costPolitical) but WEAK in the field — Lincoln and Davis took these men for the factions, votes, and immigrant regiments they delivered, not their generalship — so once you appoint or seat him, his LOW OVR drags the army's leadership through the very same _cmdGenRating -> commandLeadership pipe every appointment uses (an INPUT, never the scoreboard; build-gate 4d scans 35-command.js). A proven PROFESSIONAL would cost costProfessional (the field exists for a future expansion; the shipped pool is all political). maxCommissions caps the slate (a scarce budget — you cannot commission everyone). BYTE-IDENTICAL until the player commissions: cmdCommission writes ONLY cmd.commissioned + capital + a reputation seed; with nobody commissioned the appoint/promote/corps pools are exactly the starting roster, so commandLeadership and the 9 battles are identical. DEFERRED + LOGGED (the next GM increment, needs the 1864-election state): the §12.3 ELECTION-SUPPORT bind — a political general delivers faction/election support while he serves, and relieving him before the election costs that support (not just capital); here the relief cost is already taught via his `relief` class (_cmdReliefCost). Inferred designer calibration; the command-politics history is sourced.",
+    "costPolitical": 2,
+    "costProfessional": 8,
+    "maxCommissions": 3,
+    "prov": "Inferred",
+    "src": ["T. Harry Williams, Lincoln and His Generals (1952)", "James M. McPherson, Battle Cry of Freedom (1988)"]
+  },
   "devTraits": {
     "_note": "D105 (RATING SYSTEM, the LIVE DEV-TRAITS milestone) — the Madden development arc, completing RATING-SYSTEM-DESIGN §9-R-6's last open item ('reputation level-up -> OVR still TODO') + the D94-fork-#5 lock ('Reputation->OVR dev-traits = LIVE in-campaign'). cmdOnResolve already evolves a general's reputation by battle outcome (decisive win +6 / win +3 / draw -1 / loss -4 / decisive loss -8) and _cmdGenRating (0.55*skill+0.45*reputation) -> commandLeadership already reads it, so winning a campaign already nudges his OVR. This block adds the Madden DEV-TRAIT that SHAPES that arc: a hidden potential CEILING (how high he can climb), a FLOOR (how far he can fall), a development RATE (how fast wins/losses move him), and an attritionDrag (the §15-R3 'decline with heavy attrition'). ACCURATE INPUTS, never an output gate (D74/D92): a dev-trait only shapes the general's REPUTATION — an input the existing _cmdGenRating/commandLeadership pipe already consumes — it NEVER writes a casualty/winner. BYTE-IDENTICAL by construction: a general with NO entry in `assign` (or absent devTraits data) takes the literal pre-D105 path (clamp [5,98], rate 1, no drag); the deliberate, citation-grade, historically-directed change is the AUTHORED `assign` map (mirrors how R-6's rosterBadges deliberately changed combat). The ceiling/floor are RELATIVE to the general's SEEDED starting reputation (devTrack.start, fixed) so every assigned general keeps headroom to rise and room to fall (ceilingAbove>=5, floorBelow>=5) — the existing 'a winning general gains reputation / a losing one loses it' invariant holds for all. ANTI-LOST-CAUSE balance: the Union's elite are RISERS (Grant/Sherman/Sheridan/Thomas develop to the summit — the honest thesis that the Union found and elevated its best command) rated AS HIGH as the Confederacy's born legends (Lee/Jackson); the command failures are named plainly on BOTH sides (US McClellan plateau, Burnside/Hooker overpromoted; CS Bragg quarrelsome, Hood volatile-disaster).",
     "tuning": {
@@ -1426,6 +1434,67 @@
         "American Battlefield Trust: Meade"
       ],
       "bio": "The irascible 'Old Snapping Turtle' and engineer — a steady, defensive-minded professional who won the defensive masterpiece at Gettysburg, then drew Lincoln's frustration for a cautious pursuit."
+    },
+    "_commissionPersonaNote": "Q11 (D109): the COMMISSION-POOL personas (keyed to data/generals.json sides[side].commissionPool ids). Same persona shape as the army-commander cast above, but for the POLITICAL GENERALS — command/tactical are LOW (the documented weakness) while `political` is HIGH (the constituency they delivered). command/tactical/discipline are calibrated so round(fldOfficerSkillSeed) === the entry's skill EXACTLY (the same oracle the strategic cast uses), so _cmdEffectiveSkill -> _cmdGenRating yields a LOW OVR and seating/appointing one teaches that rank and constituency are not competence. prov 'Inferred' — the rating VECTOR is a calibrated reading of a documented career; the biography is sourced (>=2 real works) in the commissionPool entry.",
+    "us-banks": {
+      "pid": "us-banks", "name": "Nathaniel P. Banks", "side": "US", "rank": "Major General", "branch": "inf", "skill": 32, "fate": 3.4,
+      "persona": { "tactical": 28, "command": 28, "initiative": 40, "resolve": 58, "discipline": 48, "marksmanship": 50, "vigor": 56, "charisma": 72, "aggression": 45, "grit": 54, "logistics": 38, "engineering": 38, "cavalry": 40, "artillery": 40, "political": 88 },
+      "flaws": ["political-general", "no-military-training"],
+      "badges": [],
+      "personaTags": ["political_appointee", "administrator"],
+      "provenance": "Inferred",
+      "sources": ["James G. Hollandsworth Jr., Pretense of Glory: The Life of General Nathaniel P. Banks (1998)", "Gary D. Joiner, One Damn Blunder from Beginning to End: The Red River Campaign of 1864 (2003)"],
+      "bio": "The 'Bobbin Boy' — ex-Speaker and governor commissioned for the antislavery votes he brought; a poor field commander (the Valley, Port Hudson, Red River) who nonetheless built Black regiments and steered Louisiana toward emancipation. A POLITICAL GENERAL (commission pool)."
+    },
+    "us-butler": {
+      "pid": "us-butler", "name": "Benjamin F. Butler", "side": "US", "rank": "Major General", "branch": "inf", "skill": 28, "fate": 3.4,
+      "persona": { "tactical": 22, "command": 24, "initiative": 62, "resolve": 66, "discipline": 46, "marksmanship": 46, "vigor": 58, "charisma": 58, "aggression": 55, "grit": 64, "logistics": 50, "engineering": 40, "cavalry": 36, "artillery": 38, "political": 92 },
+      "flaws": ["political-general", "poor-tactician"],
+      "badges": [],
+      "personaTags": ["political_appointee", "war_democrat"],
+      "provenance": "Inferred",
+      "sources": ["Elizabeth D. Leonard, Benjamin Franklin Butler: A Noisy, Fearless Life (2022)", "Chester G. Hearn, When the Devil Came Down to Dixie: Ben Butler in New Orleans (1997)"],
+      "bio": "'Beast' Butler — the War Democrat the Union could not afford to fire and could not trust with a battle; his lasting mark was the 1861 'contraband' decision, not generalship. A POLITICAL GENERAL (commission pool)."
+    },
+    "us-sigel": {
+      "pid": "us-sigel", "name": "Franz Sigel", "side": "US", "rank": "Major General", "branch": "inf", "skill": 35, "fate": 3.4,
+      "persona": { "tactical": 28, "command": 30, "initiative": 30, "resolve": 48, "discipline": 58, "marksmanship": 58, "vigor": 52, "charisma": 70, "aggression": 38, "grit": 50, "logistics": 42, "engineering": 50, "cavalry": 44, "artillery": 64, "political": 85 },
+      "flaws": ["political-general", "timid-in-high-command"],
+      "badges": [],
+      "personaTags": ["political_appointee", "immigrant_recruiter"],
+      "provenance": "Inferred",
+      "sources": ["Stephen D. Engle, Yankee Dutchman: The Life of Franz Sigel (1993)", "William Shea and Earl Hess, Pea Ridge: Civil War Campaign in the West (1992)"],
+      "bio": "The 'Yankee Dutchman' — kept for the German-American vote ('I fights mit Sigel'); a trained gunner out of his depth at army command, beaten at Wilson's Creek and routed at New Market. A POLITICAL GENERAL (commission pool)."
+    },
+    "us-mcclernand": {
+      "pid": "us-mcclernand", "name": "John A. McClernand", "side": "US", "rank": "Major General", "branch": "inf", "skill": 37, "fate": 3.4,
+      "persona": { "tactical": 40, "command": 38, "initiative": 70, "resolve": 70, "discipline": 28, "marksmanship": 56, "vigor": 64, "charisma": 66, "aggression": 72, "grit": 66, "logistics": 40, "engineering": 36, "cavalry": 42, "artillery": 44, "political": 90 },
+      "flaws": ["political-general", "insubordinate"],
+      "badges": [],
+      "personaTags": ["political_appointee", "self_promoter"],
+      "provenance": "Inferred",
+      "sources": ["Richard L. Kiper, Major General John Alexander McClernand: Politician in Uniform (1999)", "Edwin C. Bearss, The Campaign for Vicksburg (1985-86)"],
+      "bio": "Lincoln's fellow Illinoisan and a War Democrat kept for his coalition value — brave under fire but chronically insubordinate and self-promoting; relieved by Grant at Vicksburg. A POLITICAL GENERAL (commission pool)."
+    },
+    "cs-floyd": {
+      "pid": "cs-floyd", "name": "John B. Floyd", "side": "CS", "rank": "Brigadier General", "branch": "inf", "skill": 26, "fate": 3.4,
+      "persona": { "tactical": 26, "command": 24, "initiative": 35, "resolve": 22, "discipline": 30, "marksmanship": 44, "vigor": 44, "charisma": 52, "aggression": 38, "grit": 30, "logistics": 35, "engineering": 34, "cavalry": 36, "artillery": 36, "political": 85 },
+      "flaws": ["political-general", "abandons-command"],
+      "badges": [],
+      "personaTags": ["political_appointee", "patronage_grandee"],
+      "provenance": "Inferred",
+      "sources": ["Benjamin Franklin Cooling, Forts Henry and Donelson: The Key to the Confederate Heartland (1987)", "Ezra J. Warner, Generals in Gray: Lives of the Confederate Commanders (1959)"],
+      "bio": "Ex-Governor of Virginia and U.S. War Secretary, commissioned for political weight; lost the western Virginia campaign, then fled Fort Donelson before its surrender — conduct Davis found disgraceful. A POLITICAL GENERAL (commission pool)."
+    },
+    "cs-pillow": {
+      "pid": "cs-pillow", "name": "Gideon J. Pillow", "side": "CS", "rank": "Brigadier General", "branch": "inf", "skill": 26, "fate": 3.4,
+      "persona": { "tactical": 25, "command": 24, "initiative": 38, "resolve": 30, "discipline": 30, "marksmanship": 46, "vigor": 48, "charisma": 52, "aggression": 55, "grit": 38, "logistics": 30, "engineering": 32, "cavalry": 38, "artillery": 40, "political": 85 },
+      "flaws": ["political-general", "blunderer"],
+      "badges": [],
+      "personaTags": ["political_appointee", "polk_crony"],
+      "provenance": "Inferred",
+      "sources": ["Nathaniel Cheairs Hughes Jr. and Roy P. Stonesifer Jr., The Life and Wars of Gideon J. Pillow (1993)", "Benjamin Franklin Cooling, Forts Henry and Donelson: The Key to the Confederate Heartland (1987)"],
+      "bio": "A Polk law-partner whose every star came from politics; at Fort Donelson he squandered a won breakout and fled the surrender he helped make inevitable. His CSA rank was brigadier general (the 'major general' was a Mexican War / state-militia title). A POLITICAL GENERAL (commission pool)."
     }
   }
 }

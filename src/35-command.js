@@ -56,10 +56,23 @@ function _cmdSideGenerals(side) {
   return [];
 }
 
-function _cmdById(side, id) {
+/* roster-ONLY resolution (the pre-Q11 _cmdById body) — the starting army roster, never the commission pool.
+   Used where the distinction matters (the byte-identity-critical seeds + the commission "not-a-roster-id" guard). */
+function _cmdByIdRoster(side, id) {
   var r = _cmdSideGenerals(side);
   for (var i = 0; i < r.length; i++) if (r[i] && r[i].id === id) return r[i];
   return null;
+}
+
+/* Resolve a general by id: the starting roster FIRST, then the Q11 (D109) commission pool (so a commissioned-
+   then-appointed/seated officer resolves everywhere — cmdActiveGeneral, _cmdReputation, the corps billets — and
+   a save that references him survives a reload). BYTE-IDENTICAL pre-Commission: a commission-pool id is never
+   stored in any field until the player commissions him (a player action), so every pre-existing input resolves
+   exactly as before (and _cmdHistoricalDefault reads the roster directly, never this). */
+function _cmdById(side, id) {
+  var g = _cmdByIdRoster(side, id);
+  if (g) return g;
+  return (typeof _cmdCommissionEntry === "function") ? _cmdCommissionEntry(side, id) : null;
 }
 
 var _cmdEsc = htmlEsc;
@@ -197,7 +210,7 @@ function cmdScout(C) {
   var cmd = C.president.command;
   if (cmd.scout && cmd.scout.battleId === bd.id) return;        // already reconnoitred this engagement (no re-charge)
   var cfg = _cmdScoutCfg(), cost = Math.max(0, Math.round(_cmdNum(cfg.cost, 3)));
-  var clk = C.clock, cap = (clk && typeof clk.capital === "number") ? Math.round(clk.capital) : 0;   // round to the displayed capital (the cmdAppoint idiom)
+  var clk = C.clock, cap = (clk && typeof clk.capital === "number" && isFinite(clk.capital)) ? Math.round(clk.capital) : 0;   // round to the displayed capital (the cmdAppoint idiom)
   if (cap < cost) return;                                       // can't afford the reconnaissance (the gate)
   if (clk && typeof clk.capital === "number") clk.capital = Math.max(0, cap - cost);   // Q8b bug-hunt (LOW): debit the SAME rounded value the gate compared (the hardened cmdPromote idiom), so a fractional balance can't pass the rounded gate yet be floor-absorbed on the raw spend — byte-identical under every current integer-only capital path
   var cav = _cmdScoutCavalry(C), tier = _cmdScoutTierForCavalry(cav);
@@ -232,7 +245,7 @@ function cmdScoutControlHtml(C) {
       + '<span style="opacity:.66">Fresh intelligence awaits the next engagement.</span></span>'
     );
   }
-  var clk = C.clock, cap = (clk && typeof clk.capital === "number") ? Math.round(clk.capital) : 0;
+  var clk = C.clock, cap = (clk && typeof clk.capital === "number" && isFinite(clk.capital)) ? Math.round(clk.capital) : 0;
   var ctrl = (cap >= cost)
     ? '<button id="cmdScout" type="button" class="upg" style="flex:0 0 auto" title="Order a cavalry reconnaissance of ' + _cmdEsc(bd.name || "the next engagement") + ' &mdash; ' + cost + ' political capital. How much it reveals scales with your army&rsquo;s cavalry leadership.">Order a reconnaissance <span style="opacity:.8">(&minus;' + cost + ' cap)</span></button>'
     : '<span style="font-size:11px;color:#e86840;flex:0 0 auto" title="A reconnaissance needs ' + cost + ' political capital">Needs ' + cost + ' capital to scout</span>';/* wcag-auditor: contrast fix from #d66040 to #e86840 for AA compliance — #d66040 yields 3.92:1 on #2e2816 (sheet lightest) and 4.33:1 on the effective rendered bg; #e86840 yields ≥4.53:1 on all rendered backgrounds (same hue, L 0.545→0.580) */
@@ -264,6 +277,11 @@ function cmdInit(C) {
   if (typeof cmd.seniority !== "number" || !(cmd.seniority >= 0)) { var _pc = _cmdPromoCfg(); cmd.seniority = (_pc && typeof _pc.seniorityStart === "number") ? _pc.seniorityStart : 18; }
   else { var _pc2 = _cmdPromoCfg(); cmd.seniority = Math.max(0, Math.min((_pc2 && typeof _pc2.seniorityCap === "number") ? _pc2.seniorityCap : 60, cmd.seniority)); }   // Q9 bug-hunt (LOW): re-clamp a valid-but-out-of-band stored value (a tampered/stale save) to the cap on LOAD, not only on the next resolve — normal play (accrual already capped) is byte-identical
   if (Array.isArray(cmd.promotions) || !cmd.promotions || typeof cmd.promotions !== "object") cmd.promotions = {};
+  // Q11 (D109): the COMMISSION record — the ids of the political generals the President has brought into the
+  // service (cmd.commissioned). Seeded to [] once + SANITIZED on LOAD (drop dupes / bogus ids / starting-roster
+  // ids / over-cap; the Q9/Q8b/Q10 load-sanitize idiom). Empty -> the pools are the bare roster -> byte-identical.
+  if (!Array.isArray(cmd.commissioned)) cmd.commissioned = [];
+  if (typeof _cmdCommissionedClean === "function") _cmdCommissionedClean(C, true);
   // Q8b (D107): the cavalry-reconnaissance record — the revealed enemy-OOB tier, keyed to the next-battle id so
   // intel is fresh per engagement. Absent/null -> no reveal (the board shows the light/passive estimate) ->
   // byte-identical until the player scouts. SANITIZE a stale/tampered/imported record on LOAD (the Q9 re-clamp
@@ -279,8 +297,10 @@ function cmdInit(C) {
       _sc.cavalry = (typeof _sc.cavalry === "number" && isFinite(_sc.cavalry)) ? Math.max(0, Math.min(100, _sc.cavalry)) : 0;
     }
   }
-  // seed reputation for every general on this side, once (idempotent: only if absent).
-  var roster = _cmdSideGenerals(side);
+  // seed reputation for every general on this side, once (idempotent: only if absent). Q11 (D109): include any
+  // COMMISSIONED officers so _cmdGenRating reads them once they are in the service — byte-identical when none
+  // are commissioned (the commissioned set is empty -> the seed list is exactly the starting roster).
+  var roster = (typeof _cmdRosterPlusCommissioned === "function") ? _cmdRosterPlusCommissioned(C, side) : _cmdSideGenerals(side);
   for (var i = 0; i < roster.length; i++) {
     var g = roster[i]; if (!g || !g.id) continue;
     var r = cmd.reputation[g.id];
@@ -493,9 +513,10 @@ function cmdPromote(C, id) {
   var side = (C.side === "CS") ? "CS" : "US", cmd = C.president.command;
   var g = _cmdById(side, id);
   if (!g || !_cmdAlive(g, C.president.date)) return;
+  if (!_cmdByIdRoster(side, id) && cmdCommissioned(C).indexOf(id) < 0) return;   // Q11 (D109) bug-hunt MED: a commission-pool officer must be COMMISSIONED before he can be promoted (byte-identical for roster ids)
   var info = _cmdPromoteInfo(C, g);
   if (!info) return;                                   // at the top grade / no config
-  var clk = C.clock, cap = (clk && typeof clk.capital === "number") ? Math.round(clk.capital) : 0;
+  var clk = C.clock, cap = (clk && typeof clk.capital === "number" && isFinite(clk.capital)) ? Math.round(clk.capital) : 0;
   var sen = _cmdNum(cmd.seniority, 0);
   if (cap < info.capital || sen < info.seniority) return;   // gated on BOTH currencies (the scarce budget)
   // Q9 bug-hunt (LOW): debit the SAME rounded value the gate compared (cap), not the raw clk.capital, so the
@@ -634,7 +655,7 @@ function cmdCorpsCommanderFor(C, idx) {
 /* the pool of generals free to take corps `idx`: alive same-side men who are neither the army commander nor
    already seated in ANOTHER corps (the one currently here is allowed, for a re-render). */
 function _cmdCorpsPoolFor(C, idx) {
-  var side = (C.side === "CS") ? "CS" : "US", roster = _cmdSideGenerals(side);
+  var side = (C.side === "CS") ? "CS" : "US", roster = _cmdRosterPlusCommissioned(C, side);   // Q11 (D109): commissioned officers are seatable too
   var seated = cmdCorpsSeated(C), activeId = cmdActiveId(C), pool = [];
   for (var i = 0; i < roster.length; i++) {
     var g = roster[i]; if (!g || !g.id) continue;
@@ -660,11 +681,12 @@ function cmdSeatCorps(C, idx, id) {
   var side = (C.side === "CS") ? "CS" : "US", cmd = C.president.command;
   var g = _cmdById(side, id);
   if (!g || !_cmdAlive(g, C.president.date)) return;             // invalid / unavailable general
+  if (!_cmdByIdRoster(side, id) && cmdCommissioned(C).indexOf(id) < 0) return;   // Q11 (D109) bug-hunt MED: a commission-pool officer must be COMMISSIONED before he can be seated over a corps (byte-identical for roster ids)
   if (id === cmdActiveId(C)) return;                             // the army commander can't double-hold
   if (Array.isArray(cmd.corps) || !cmd.corps || typeof cmd.corps !== "object") cmd.corps = {};
   if (cmd.corps[idx] === id) return;                             // already seated here (no re-charge)
   var cost = Math.max(0, Math.round(_cmdNum(cfg.seatCost, 3)));
-  var clk = C.clock, cap = (clk && typeof clk.capital === "number") ? Math.round(clk.capital) : 0;
+  var clk = C.clock, cap = (clk && typeof clk.capital === "number" && isFinite(clk.capital)) ? Math.round(clk.capital) : 0;
   if (cap < cost) return;                                        // can't afford the seating (the gate)
   if (clk && typeof clk.capital === "number") clk.capital = Math.max(0, cap - cost);   // debit the SAME rounded value the gate compared (the Q9/Q8b hardened idiom)
   for (var k in cmd.corps) { if (cmd.corps.hasOwnProperty(k) && cmd.corps[k] === id) delete cmd.corps[k]; }   // reassign: one corps per general
@@ -688,6 +710,129 @@ function cmdVacateCorps(C, idx) {
   if (typeof _pdLog === "function") {
     var g = _cmdById((C.side === "CS") ? "CS" : "US", id);
     _pdLog(C, "You return " + (g ? "General " + _cmdName(g) : "the corps commander") + " to the reserve; " + _cmdCorpsLabel(idx) + " stands without a commander.");
+  }
+}
+
+/* ===========================================================================
+   Q11 (D109) · THE COMMISSION MOVE (RATING-SYSTEM-DESIGN §12.2/§12.3 — the GM depth-chart move that brings a
+   new officer into the pool). Beyond appointing/promoting/seating the generals the war hands you, the President
+   may COMMISSION the documented POLITICAL GENERALS — Banks, Butler, Sigel, McClernand; Floyd, Pillow — for
+   political capital (C.clock.capital, the existing GM currency; no new resource, §12). These men were CHEAP to
+   commission (a political general cost little capital — Lincoln and Davis took them for the factions, votes,
+   and immigrant constituencies they delivered, not their generalship) and WEAK in the field (a low OVR feeding
+   a low leadership through the very same _cmdGenRating -> commandLeadership pipe every other appointment uses —
+   so seating a political general teaches, concretely, that rank and constituency are NOT competence). The real
+   bind Lincoln lived: you can fill a billet cheaply, but the man you fill it with squanders the army.
+     ARCHITECTURE — byte-identical until the player commissions: the commissionable officers live in a SEPARATE
+   data array (data/generals.json -> sides[side].commissionPool), so _cmdSideGenerals (the starting roster) and
+   every byte-identity-critical path are UNTOUCHED. cmdCommission writes ONLY cmd.commissioned (an id list) +
+   C.clock.capital + a reputation seed — NEVER the scoreboard (build-gate 4d scans 35-command.js). With nobody
+   commissioned, the appoint/promote/corps pools are EXACTLY the starting roster (concat of the empty set), so
+   commandLeadership and the 9 battles are identical to the pre-Q11 build. A commissioned officer then reaches
+   the fight ONLY by being appointed or seated like any general — no new combat read.
+     DEFERRED + LOGGED (the next GM increment, needs the 1864-election state): the §12.3 ELECTION-SUPPORT bind —
+   a political general delivers faction/election support while he serves, and relieving him before the election
+   costs that support (not just capital). Here the relief COST is already taught via his `relief` class
+   (_cmdReliefCost); the election-support economy is the follow-on. No new fork; no contradiction.
+   =========================================================================== */
+function _cmdCommissionCfg() { var d = gameData("ratings"); return (d && d.commission) ? d.commission : null; }
+
+/* the side's COMMISSION POOL — the documented political generals available to bring into the service. A
+   SEPARATE array from the starting roster (sides[side].generals) so the byte-identity-critical roster paths
+   never see them. Empty if the data is absent. */
+function _cmdCommissionPool(side) {
+  var s = (side === "CS") ? "CS" : "US", d = _cmdData();
+  if (d && d.sides && d.sides[s] && Array.isArray(d.sides[s].commissionPool)) return d.sides[s].commissionPool;
+  return [];
+}
+
+/* resolve a commission-pool entry by id within a side (null if absent). */
+function _cmdCommissionEntry(side, id) {
+  var pool = _cmdCommissionPool(side);
+  for (var i = 0; i < pool.length; i++) if (pool[i] && pool[i].id === id) return pool[i];
+  return null;
+}
+
+/* the cost (political capital) to commission a given officer — a per-officer cost if authored, else the config
+   default by kind (a political general is CHEAP; a proven professional is DEAR — §12.2). Bounded >=0, rounded. */
+function _cmdCommissionCost(entry) {
+  var cfg = _cmdCommissionCfg(); if (!cfg || !entry) return 0;
+  var kind = (entry.commission && entry.commission.kind === "professional") ? "professional" : "political";
+  var per = (entry.commission && typeof entry.commission.cost === "number" && isFinite(entry.commission.cost)) ? entry.commission.cost : null;
+  var base = (kind === "professional") ? _cmdNum(cfg.costProfessional, 8) : _cmdNum(cfg.costPolitical, 2);
+  return Math.max(0, Math.round(per != null ? per : base));
+}
+
+/* THE SANITIZED set of commissioned officer ids (cmd.commissioned). Keeps only ids that are (a) real
+   commission-pool officers for THIS side and (b) NOT in the starting roster (defensive — an officer can never
+   be both), deduped, capped at maxCommissions. persist=true writes the cleaned array back (the load-sanitize,
+   the Q9/Q8b/Q10 idiom); persist=false is a pure read. Empty by default -> byte-identical. */
+function _cmdCommissionedClean(C, persist) {
+  if (!C || !C.president) return [];
+  var cmd = C.president.command; if (!cmd) return [];
+  var side = (C.side === "CS") ? "CS" : "US";
+  var cfg = _cmdCommissionCfg();
+  var maxC = cfg ? Math.max(0, Math.floor(_cmdNum(cfg.maxCommissions, 3))) : 3;   // Q11 bug-hunt LOW: the no-config fallback matches the shipped cap (3), not the corps-slot 4
+  var raw = Array.isArray(cmd.commissioned) ? cmd.commissioned : [];
+  var out = [], seen = {};
+  for (var i = 0; i < raw.length; i++) {
+    var id = raw[i];
+    if (typeof id !== "string" || !id || seen[id]) continue;        // valid string, no dupes
+    if (!_cmdCommissionEntry(side, id)) continue;                   // must be a real commission-pool officer for this side
+    if (_cmdByIdRoster(side, id)) continue;                         // never a starting-roster id (defensive)
+    seen[id] = true; out.push(id);
+    if (out.length >= maxC) break;                                  // cap
+  }
+  if (persist) cmd.commissioned = out;
+  return out;
+}
+function cmdCommissioned(C) { return _cmdCommissionedClean(C, false); }
+
+/* the commission-pool ENTRIES the player has commissioned (resolved objects, in pool order). */
+function _cmdCommissionedEntries(C) {
+  var side = (C.side === "CS") ? "CS" : "US", ids = cmdCommissioned(C), out = [];
+  for (var i = 0; i < ids.length; i++) { var e = _cmdCommissionEntry(side, ids[i]); if (e) out.push(e); }
+  return out;
+}
+
+/* THE SELECTABLE pool the GM moves draw from: the starting roster PLUS the commissioned officers. The appoint
+   pool, the promotions list, the corps pool, and the wire loops all use this so a commissioned officer becomes
+   appointable / promotable / seatable. BYTE-IDENTICAL when nobody is commissioned (roster.concat([]) === roster). */
+function _cmdRosterPlusCommissioned(C, side) {
+  var roster = _cmdSideGenerals(side);
+  var extra = _cmdCommissionedEntries(C);
+  return extra.length ? roster.concat(extra) : roster;
+}
+
+/* THE MOVE — commission officer `id` into the service, spending the commission cost in political capital. No-op
+   when the officer is invalid / outside his service window / already commissioned (no re-charge) / the
+   commission slate is full / capital is short. Writes ONLY cmd.commissioned + C.clock.capital + a reputation
+   seed. Bounded, logged. */
+function cmdCommission(C, id) {
+  if (!C || !C.president) return;
+  cmdInit(C);
+  var cfg = _cmdCommissionCfg(); if (!cfg) return;
+  var side = (C.side === "CS") ? "CS" : "US";
+  var entry = _cmdCommissionEntry(side, id); if (!entry) return;    // not a commissionable officer
+  if (!_cmdAlive(entry, C.president.date)) return;                  // outside his service window
+  var cmd = C.president.command;
+  var have = _cmdCommissionedClean(C, true);                        // the sanitized current set
+  if (have.indexOf(id) >= 0) return;                               // already commissioned (no re-charge)
+  var maxC = Math.max(0, Math.floor(_cmdNum(cfg.maxCommissions, 3)));
+  if (have.length >= maxC) return;                                 // the commission slate is full
+  var cost = _cmdCommissionCost(entry);
+  var clk = C.clock, cap = (clk && typeof clk.capital === "number" && isFinite(clk.capital)) ? Math.round(clk.capital) : 0;
+  if (cap < cost) return;                                          // can't afford it (the gate)
+  if (clk && typeof clk.capital === "number") clk.capital = Math.max(0, cap - cost);   // debit the SAME rounded value the gate compared (the Q9/Q8b/Q10 hardened idiom)
+  cmd.commissioned = have.concat([id]);
+  // seed his reputation so _cmdGenRating reads it the moment he is appointed (mirrors the cmdInit roster seed).
+  if (cmd.reputation && typeof cmd.reputation === "object" && !Array.isArray(cmd.reputation) && typeof cmd.reputation[id] !== "number") {
+    cmd.reputation[id] = (typeof entry.reputation === "number") ? Math.max(0, Math.min(100, entry.reputation)) : 48;
+  }
+  if (typeof _pdLog === "function") {
+    var kindPro = entry.commission && entry.commission.kind === "professional";
+    _pdLog(C, "You commission " + _cmdName(entry) + " into the service" + (cost ? " (−" + cost + " capital)" : "")
+      + (kindPro ? " — a proven officer." : " — a political general: weak in the field, but he brings " + (entry.constituency || "powerful political friends") + "."));
   }
 }
 
@@ -968,7 +1113,7 @@ function _cmdActiveCard(C) {
 /* The available-generals pool — appoint / promote (relieve the incumbent). */
 function _cmdPoolHTML(C) {
   var side = (C.side === "CS") ? "CS" : "US", P = C.president;
-  var roster = _cmdSideGenerals(side);
+  var roster = _cmdRosterPlusCommissioned(C, side);   // Q11 (D109): commissioned political generals appear in the appoint pool
   if (!roster.length) return "";
   var activeId = cmdActiveId(C);
   var incumbent = cmdActiveGeneral(C);
@@ -1023,6 +1168,81 @@ function _cmdPoolHTML(C) {
     + '</div>';
 }
 
+/* ---- Q11 (D109): the "Commission an Officer — the political generals" section. Lists the documented political
+   generals available to bring into the service: each shows his LOW combat OVR beside his HIGH political value,
+   his constituency, an honest one-line record, and a Commission control (gated on capital + the commission cap).
+   Once commissioned he joins the appoint/promote/corps pools above. Returns "" with no config / no pool for the
+   side (byte-identical). Triple-encoded (number + word + grade letter; colour decorative), CVD-safe, wcag-AA. ---- */
+function _cmdCommissionRow(C, e, side, cap, count, maxC, committedIds) {
+  var id = e.id, isComm = committedIds.indexOf(id) >= 0;
+  var alive = _cmdAlive(e, C.president.date);
+  var ovr = Math.round(_cmdGenRating(C, e));
+  var gr = (typeof fldRatingGrade === "function") ? fldRatingGrade(ovr) : { letter: "", word: _cmdLeadWord(ovr)[0], color: _cmdLeadWord(ovr)[1] };
+  var polVal = Math.max(0, Math.min(100, Math.round(_cmdNum(e.commission && e.commission.politicalValue, e.politicalValueScore))));
+  var polWord = polVal >= 78 ? "Immense" : polVal >= 64 ? "High" : polVal >= 50 ? "Real" : "Some";
+  var cost = _cmdCommissionCost(e), kindPro = e.commission && e.commission.kind === "professional";
+  var img = _cmdPortrait(e, side, 44);
+  var ctrl;
+  if (isComm && !alive) {
+    // Q11 bug-hunt LOW: commissioned, but his service window has closed (or not yet opened) — the appoint/promote/
+    // corps pools (which gate on _cmdAlive) drop him, so the row must say so plainly rather than a green "in your pool".
+    var leftAfter = e.availableUntil && _cmdDateNum(C.president.date) > _cmdYM(e.availableUntil);
+    ctrl = '<span style="font-size:11px;opacity:.6"><span aria-hidden="true">&#10003;</span> Commissioned &middot; ' + (leftAfter ? 'no longer in service' : 'not yet in service') + '</span>';
+  } else if (isComm) {
+    // where is he now? — active commander, a seated corps, or simply in the pool.
+    var where = "In your pool";
+    if (id === cmdActiveId(C)) where = "In field command";
+    else {
+      var seated = (typeof cmdCorpsSeated === "function") ? cmdCorpsSeated(C) : {};
+      for (var kk in seated) { if (seated.hasOwnProperty(kk) && seated[kk] === id) { where = "Commands " + _cmdCorpsLabel(parseInt(kk, 10) || 0); break; } }   // Q11 bug-hunt MED: parse the string for-in key (was _cmdNum(kk,0) -> always 0 -> always "I Corps")
+    }
+    ctrl = '<span style="font-size:11px;color:#6f9e5a" title="Already commissioned"><span aria-hidden="true">&#10003;</span> Commissioned</span>'
+      + '<div style="font-size:10px;opacity:.7;margin-top:2px">' + _cmdEsc(where) + '</div>';
+  } else if (!alive) {
+    var after = e.availableUntil && _cmdDateNum(C.president.date) > _cmdYM(e.availableUntil);
+    ctrl = '<span style="font-size:11px;opacity:.6">' + (after ? 'No longer in service' : 'Not yet in service') + '</span>';
+  } else if (count >= maxC) {
+    ctrl = '<span style="font-size:11px;color:#d0853a" title="You may keep ' + maxC + ' commissioned officers at a time; relieve or leave one before commissioning another">Slate full (' + maxC + ')</span>';/* a11y: #d0853a >=4.5:1 on the desk grounds; meaning also in the words */
+  } else if (cap >= cost) {
+    ctrl = '<button id="cmdComm_' + _cmdEsc(id) + '" type="button" class="upg" style="flex:0 0 auto;font-size:11px;padding:2px 8px" title="Commission ' + _cmdEsc(_cmdName(e)) + ' into the service for ' + cost + ' political capital">Commission <span style="opacity:.8">(&minus;' + cost + ' cap)</span></button>';
+  } else {
+    ctrl = '<span style="font-size:11px;color:#e86840" title="Commissioning him costs ' + cost + ' political capital; you hold ' + cap + '">Needs ' + cost + ' cap</span>';/* a11y: #e86840 >=4.5:1 on the desk grounds (the Q8b-measured value); meaning also in the words */
+  }
+  var record = e.bio || e.strength || "";
+  return '<div style="display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px dotted var(--rule)' + ((isComm || alive) ? '' : ';opacity:.55') + '">'
+    + img
+    + '<div style="flex:1 1 auto;min-width:0">'
+    +   '<div style="font-weight:bold;font-size:13px">' + _cmdEsc(_cmdName(e)) + (e.epithet ? ' <span style="font-weight:normal;opacity:.6;font-size:11px">&ldquo;' + _cmdEsc(e.epithet) + '&rdquo;</span>' : '') + '</div>'
+    +   '<div style="font-size:11px;opacity:.78">' + _cmdEsc(e.rank || "Maj. Gen.")
+    +     ' &middot; <span aria-hidden="true" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:' + gr.color + ';margin-right:3px"></span><b>' + _cmdEsc(gr.letter) + '</b> ' + _cmdEsc(gr.word) + ' (' + ovr + ' OVR)</div>'
+    +   '<div style="display:flex;gap:6px;flex-wrap:wrap;margin:3px 0">'
+    +     '<span title="Political value — the faction, votes, or constituency he delivers" style="font-size:10px;background:rgba(120,99,74,.22);border:1px solid var(--rule);border-radius:3px;padding:1px 6px">Political value: <b>' + polWord + '</b> ' + polVal + '</span>'
+    +     (e.constituency ? '<span style="font-size:10px;opacity:.72;padding:1px 2px">' + _cmdEsc(e.constituency) + '</span>' : '')
+    +   '</div>'
+    +   (record ? '<div style="font-size:11px;opacity:.82;line-height:1.4">' + _cmdEsc(record) + '</div>' : '')
+    +   (e.provenance ? '<div style="font-size:10px;opacity:.55;margin-top:3px">' + _cmdEsc(e.provenance) + (e.sources && e.sources.length ? ' &middot; ' + _cmdEsc(e.sources.join("; ")) : '') + '</div>' : '')
+    + '</div>'
+    + '<div style="flex:0 0 auto;text-align:right">' + ctrl + '</div>'
+    + '</div>';
+}
+function _cmdCommissionHTML(C) {
+  var cfg = _cmdCommissionCfg(); if (!cfg) return "";
+  var side = (C.side === "CS") ? "CS" : "US";
+  var pool = _cmdCommissionPool(side); if (!pool.length) return "";
+  var cap = (C.clock && typeof C.clock.capital === "number") ? Math.round(C.clock.capital) : 0;
+  var committed = cmdCommissioned(C), count = committed.length;
+  var maxC = Math.max(0, Math.floor(_cmdNum(cfg.maxCommissions, 3)));
+  var rows = "";
+  for (var i = 0; i < pool.length; i++) rows += _cmdCommissionRow(C, pool[i], side, cap, count, maxC, committed);
+  return '<div style="margin-top:16px">'
+    + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#b3925e;margin-bottom:2px">Commission an officer &mdash; the political generals</div>'/* a11y: #b3925e 5.0:1 -> AA */
+    + '<div style="font-size:11px;opacity:.8;margin-bottom:6px;line-height:1.45">The war was fought by a coalition, and its rifles needed the men a coalition is made of. Lincoln and Davis alike commissioned generals for the factions, the votes, and the immigrant regiments they brought &mdash; not their generalship. You may do the same: a political general is <b>cheap</b> to commission, but he is <b>weak in the field</b>, and his low rating will drag whatever command you give him. The lesson the war taught at a fearful price &mdash; that a star on the shoulder is not the same as the skill to use it.</div>'
+    + '<div style="font-size:11px;opacity:.78;margin-bottom:6px">Commissioned: <b>' + count + '</b> of ' + maxC + ' &middot; once commissioned, he joins the generals at your call above &mdash; to appoint, promote, or seat over a corps.</div>'
+    + rows
+    + '<div style="font-size:10.5px;opacity:.62;margin-top:6px;line-height:1.4">These men were costly to <i>relieve</i> as well as cheap to commission &mdash; dismissing a political general before an election could cost the very support he was kept for. (That bind on his removal is read in the relief cost; the election-support economy is a coming addition.)</div>'
+    + '</div>';
+}
+
 /* ---- Q9: the "Officer Corps — Promotions" section (the depth-chart MOVE surface). Each available general's
    current grade + OVR + a Promote control (next grade + the multi-currency cost), gated on capital + seniority,
    merit-annotated. Pure display; the Wire fn binds the buttons. Returns "" with no config (byte-identical). ---- */
@@ -1054,7 +1274,7 @@ function _cmdPromoRow(C, g, cap, sen, activeId) {
 function _cmdPromotionsHTML(C) {
   var cfg = _cmdPromoCfg(); if (!cfg) return "";
   var side = (C.side === "CS") ? "CS" : "US", P = C.president, cmd = P.command;
-  var roster = _cmdSideGenerals(side); if (!roster.length) return "";
+  var roster = _cmdRosterPlusCommissioned(C, side); if (!roster.length) return "";   // Q11 (D109): a commissioned officer can be promoted too
   var cap = (C.clock && typeof C.clock.capital === "number") ? Math.round(C.clock.capital) : 0;
   var sen = Math.round(_cmdNum(cmd.seniority, 0));
   var activeId = cmdActiveId(C), rows = "";
@@ -1243,6 +1463,7 @@ function cmdRenderTab(C) {
     + _cmdCareerArcHTML(C)
     + ((typeof fldCampaignOOBHtml === "function") ? fldCampaignOOBHtml(C, { reveal: cmdScoutTier(C), reconHtml: cmdScoutControlHtml(C) }) : '')   /* D106 board + Q8b (D107): the recon tier earned by scouting + the "Order a reconnaissance" control embedded in the board (the WRITE lives in cmdScout; T15 stays pure-read) */
     + _cmdPoolHTML(C)
+    + _cmdCommissionHTML(C)
     + _cmdPromotionsHTML(C)
     + _cmdCorpsDepthHTML(C)
     + _cmdCardHTML(C);
@@ -1259,12 +1480,13 @@ function cmdAppoint(C, id) {
   var side = (C.side === "CS") ? "CS" : "US", P = C.president, cmd = P.command;
   var g = _cmdById(side, id);
   if (!g || !_cmdAlive(g, P.date)) return;
+  if (!_cmdByIdRoster(side, id) && cmdCommissioned(C).indexOf(id) < 0) return;   // Q11 (D109) bug-hunt MED: a commission-pool officer must be COMMISSIONED before he can be appointed (matches the gated UI + the invariant; byte-identical for roster ids — _cmdByIdRoster is truthy for them, so the clause is always false)
   if (id === cmdActiveId(C)) return;                 // already in command
   var incumbent = cmdActiveGeneral(C);
   var cost = incumbent ? _cmdReliefCost(C, incumbent) : 0;
-  var clk = C.clock, cap = (clk && typeof clk.capital === "number") ? Math.round(clk.capital) : 0;   // round to match the pool's displayed capital (no soft-lock, D53.7)
+  var clk = C.clock, cap = (clk && typeof clk.capital === "number" && isFinite(clk.capital)) ? Math.round(clk.capital) : 0;   // round to match the pool's displayed capital (no soft-lock, D53.7)
   if (cap < cost) return;                            // not enough political capital (the gate)
-  if (clk && typeof clk.capital === "number") clk.capital = Math.max(0, clk.capital - cost);
+  if (clk && typeof clk.capital === "number") clk.capital = Math.max(0, cap - cost);   // debit the rounded (finite-guarded) cap — uniform with the other GM moves; closes a NaN-capital debit (Q11 bug-hunt LOW)
   cmd.fieldGeneral = id;
   // Q10 (D108): the new army commander cannot also hold a corps billet — vacate it immediately (cmdInit also
   // re-cleans on the next load, but keep the live state consistent).
@@ -1292,7 +1514,7 @@ function cmdWireTab(C) {
   if (!C || !C.president) return;
   cmdInit(C);
   var side = (C.side === "CS") ? "CS" : "US";
-  var roster = _cmdSideGenerals(side);
+  var roster = _cmdRosterPlusCommissioned(C, side);   // Q11 (D109): wire appoint/promote for commissioned officers too (the render lists them)
   for (var i = 0; i < roster.length; i++) {
     (function (g) {
       if (!g || !g.id) return;
@@ -1350,6 +1572,19 @@ function cmdWireTab(C) {
         if (typeof _wdRefresh === "function") _wdRefresh();
       });
     })(s);
+  }
+  // Q11 (D109): wire the Commission buttons (one per commission-pool officer; ids mirror the render, escaped — D43.4).
+  var commPool = _cmdCommissionPool(side);
+  for (var cm = 0; cm < commPool.length; cm++) {
+    (function (e) {
+      if (!e || !e.id) return;
+      var cb = document.getElementById("cmdComm_" + _cmdEsc(e.id));
+      if (cb) cb.addEventListener("click", function () {
+        cmdCommission(C, e.id);
+        if (typeof saveLocal === "function") saveLocal();
+        if (typeof _wdRefresh === "function") _wdRefresh();
+      });
+    })(commPool[cm]);
   }
   var d = _cmdData();
   if (d && d.teachingCards) for (var c = 0; c < d.teachingCards.length; c++) {

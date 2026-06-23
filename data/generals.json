@@ -417,6 +417,124 @@
             "McPherson, Battle Cry of Freedom"
           ]
         }
+      ],
+      "_commissionPoolNote": "Q11 (D109): THE COMMISSION POOL — documented POLITICAL GENERALS the President may bring into the service for political capital (RATING-SYSTEM-DESIGN §12.2/§12.3). A SEPARATE array from `generals` (the starting roster) so the byte-identity-critical roster paths never see them; cmdCommission moves an id into cmd.commissioned, which makes him appointable/promotable/seatable like any general. These men were CHEAP to commission and WEAK in the field — kept for the factions, votes, and immigrant regiments they delivered, not their generalship (the real command-politics bind Lincoln and Davis lived). The combat ratings (skill/reputation) are Inferred designer calibration; the biography + failures are sourced (>=2 real published works; anti-Lost-Cause, failures named on BOTH sides). Dossiers via the commission-political-generals research+verify workflow (6 Opus historians + adversarial source-check + a completeness critic). prov 'Inferred' because the rating numbers are a calibrated reading; the biographical claims are Verified-grade and carry their sources.",
+      "commissionPool": [
+        {
+          "id": "us-banks",
+          "name": "Banks",
+          "fullName": "Nathaniel P. Banks",
+          "side": "US",
+          "rank": "Maj. Gen.",
+          "epithet": "The Bobbin Boy",
+          "availableFrom": { "y": 1861, "m": 5 },
+          "availableUntil": { "y": 1864, "m": 5 },
+          "skill": 32,
+          "aggression": 45,
+          "caution": 50,
+          "ambition": 60,
+          "reputation": 38,
+          "relief": "very-costly",
+          "constituency": "Free-labor / antislavery Republicans & Massachusetts",
+          "commission": { "kind": "political", "cost": 2, "politicalValue": 82 },
+          "traits": ["Political general (ex-Speaker & Governor)", "Routed by Jackson in the Valley", "The Red River disaster", "Built Black regiments in Louisiana"],
+          "voice": "A polished orator and party man, ever confident of high command and ill-suited to it — the Valley and the Red River taught the army what the ballot box could not.",
+          "strength": "A capable administrator of occupied Louisiana: he raised regiments of Black soldiers and helped steer the state to a free-state constitution abolishing slavery.",
+          "weakness": "No military training and a chain of field defeats — Winchester, Cedar Mountain, the bloody repulses at Port Hudson, the Red River collapse.",
+          "bio": "A self-made Massachusetts mill hand turned Speaker of the U.S. House and governor, commissioned major general in 1861 for the antislavery votes and party prestige he brought, not for any soldiering ability. He was kept in high command through repeated disasters — routed by Jackson in the Valley, repulsed at Port Hudson, wrecked on the Red River — yet did genuine work building Black regiments and steering occupied Louisiana toward emancipation under a coercive free-labor regime (he later purged the Native Guard's Black line officers, a documented black mark).",
+          "provenance": "Inferred",
+          "sources": [
+            "James G. Hollandsworth Jr., Pretense of Glory: The Life of General Nathaniel P. Banks (1998)",
+            "Gary D. Joiner, One Damn Blunder from Beginning to End: The Red River Campaign of 1864 (2003)",
+            "James M. McPherson, Battle Cry of Freedom (1988)"
+          ]
+        },
+        {
+          "id": "us-butler",
+          "name": "Butler",
+          "fullName": "Benjamin F. Butler",
+          "side": "US",
+          "rank": "Maj. Gen.",
+          "epithet": "Beast",
+          "availableFrom": { "y": 1861, "m": 5 },
+          "availableUntil": { "y": 1865, "m": 1 },
+          "skill": 28,
+          "aggression": 55,
+          "caution": 40,
+          "ambition": 75,
+          "reputation": 40,
+          "relief": "very-costly",
+          "constituency": "War Democrats kept inside the Union coalition",
+          "commission": { "kind": "political", "cost": 2, "politicalValue": 82 },
+          "traits": ["Political general (War Democrat)", "The 'contraband' decision (1861)", "Bottled up at Bermuda Hundred", "Relieved after Fort Fisher"],
+          "voice": "A shrewd, combative lawyer-politician who could govern a hostile city but never win a battle — the Union could not afford to fire him, nor afford to trust him with a fight.",
+          "strength": "The 1861 'contraband of war' ruling at Fort Monroe — a lawyer's improvisation that cracked Union policy open toward emancipation; he also raised Black troops and ran New Orleans with real administrative energy.",
+          "weakness": "A near-unbroken string of field failures from Big Bethel to the bungled first Fort Fisher expedition, for which Grant relieved him.",
+          "bio": "The political general the Union could not afford to fire and could not afford to trust with a battle: a prominent War Democrat whose loyalty held Northern Democrats to the war effort, kept in high command despite a near-unbroken string of field failures from Big Bethel to Fort Fisher. His one genuine, lasting contribution came not from generalship but from a lawyer's improvisation — the 1861 'contraband' decision at Fort Monroe that helped turn Union policy against slavery.",
+          "provenance": "Inferred",
+          "sources": [
+            "Elizabeth D. Leonard, Benjamin Franklin Butler: A Noisy, Fearless Life (2022)",
+            "Chester G. Hearn, When the Devil Came Down to Dixie: Ben Butler in New Orleans (1997)",
+            "James M. McPherson, Battle Cry of Freedom (1988)"
+          ]
+        },
+        {
+          "id": "us-sigel",
+          "name": "Sigel",
+          "fullName": "Franz Sigel",
+          "side": "US",
+          "rank": "Maj. Gen.",
+          "epithet": "The Yankee Dutchman",
+          "availableFrom": { "y": 1861, "m": 5 },
+          "availableUntil": { "y": 1864, "m": 5 },
+          "skill": 35,
+          "aggression": 38,
+          "caution": 50,
+          "ambition": 45,
+          "reputation": 40,
+          "relief": "very-costly",
+          "constituency": "German-American immigrant voters & recruits",
+          "commission": { "kind": "political", "cost": 2, "politicalValue": 82 },
+          "traits": ["Political general (German-American vote)", "'I fights mit Sigel'", "Routed at New Market", "Trained gunner, poor in high command"],
+          "voice": "A '48er emigre whose name on a recruiting poster was worth a brigade of German enlistments — a fine artillerist out of his depth at the head of an army.",
+          "strength": "His name rallied German-American immigrants to the colors ('I fights mit Sigel'); a trained artillery officer whose value was political and organizational, not in field command.",
+          "weakness": "Beaten at Carthage and Wilson's Creek, his Pea Ridge credit overstated, and routed at New Market in 1864 by Breckinridge's force, the VMI cadets at its head.",
+          "bio": "The famous German 'Forty-Eighter,' kept in high command for the immigrant votes and enlistments behind 'I fights mit Sigel' — not for skill. He was beaten at Wilson's Creek and Carthage, claimed more Pea Ridge credit than he earned, and was routed at New Market in 1864.",
+          "provenance": "Inferred",
+          "sources": [
+            "Stephen D. Engle, Yankee Dutchman: The Life of Franz Sigel (1993)",
+            "William Shea and Earl Hess, Pea Ridge: Civil War Campaign in the West (1992)",
+            "Encyclopedia Virginia, 'Franz Sigel (1824-1902)'"
+          ]
+        },
+        {
+          "id": "us-mcclernand",
+          "name": "McClernand",
+          "fullName": "John A. McClernand",
+          "side": "US",
+          "rank": "Maj. Gen.",
+          "epithet": "",
+          "availableFrom": { "y": 1861, "m": 8 },
+          "availableUntil": { "y": 1864, "m": 11 },
+          "skill": 37,
+          "aggression": 72,
+          "caution": 30,
+          "ambition": 80,
+          "reputation": 40,
+          "relief": "very-costly",
+          "constituency": "Illinois War Democrats — Lincoln's coalition leverage",
+          "commission": { "kind": "political", "cost": 2, "politicalValue": 82 },
+          "traits": ["Political general (Illinois War Democrat)", "Brave but insubordinate", "Self-promoting", "Relieved by Grant at Vicksburg"],
+          "voice": "Brave under fire and forever certain he deserved the top command — he lobbied past his chief and printed his own praises until Grant had had enough.",
+          "strength": "Personally brave and an effective recruiter of Illinois volunteers, with genuine political weight in the lower Mississippi valley.",
+          "weakness": "Chronically insubordinate and self-promoting; his self-glorifying General Orders No. 72, leaked to the press, gave Grant the pretext to relieve him during the Vicksburg Campaign.",
+          "bio": "A leading Illinois War Democrat and Lincoln's fellow Illinoisan, McClernand was kept in high command because relieving him risked the loyalty of Democratic voters Lincoln needed — not because he could handle a corps, which he could not. Brave under fire but chronically insubordinate and self-promoting, he lobbied behind Grant's back for his own command and was finally relieved during the Vicksburg Campaign for publishing a self-glorifying order in the press.",
+          "provenance": "Inferred",
+          "sources": [
+            "Richard L. Kiper, Major General John Alexander McClernand: Politician in Uniform (1999)",
+            "Edwin C. Bearss, The Campaign for Vicksburg (1985-86)"
+          ]
+        }
       ]
     },
     "CS": {
@@ -827,6 +945,66 @@
             "American Battlefield Trust — Nathan Bedford Forrest",
             "American History Central — Nathan Bedford Forrest",
             "McPherson, Battle Cry of Freedom"
+          ]
+        }
+      ],
+      "commissionPool": [
+        {
+          "id": "cs-floyd",
+          "name": "Floyd",
+          "fullName": "John B. Floyd",
+          "side": "CS",
+          "rank": "Brig. Gen.",
+          "epithet": "",
+          "availableFrom": { "y": 1861, "m": 5 },
+          "availableUntil": { "y": 1862, "m": 3 },
+          "skill": 26,
+          "aggression": 38,
+          "caution": 35,
+          "ambition": 45,
+          "reputation": 22,
+          "relief": "costly",
+          "constituency": "Virginia Democratic establishment (ex-Governor & U.S. War Secretary)",
+          "commission": { "kind": "political", "cost": 2, "politicalValue": 78 },
+          "traits": ["Political general (ex-Governor & U.S. War Secretary)", "Lost at Carnifex Ferry", "Abandoned his command at Fort Donelson", "Removed by Davis"],
+          "voice": "A grandee of Virginia politics with a brigadier's star and no soldier's nerve — at the crisis he handed off the command and slipped away.",
+          "strength": "Immense political weight — a former Governor of Virginia and Buchanan-era Secretary of War whose name rewarded Old Dominion patronage.",
+          "weakness": "No soldiering ability; he lost the western Virginia campaign amid a feud with Henry Wise, then fled Fort Donelson before its surrender — conduct Davis found disgraceful.",
+          "bio": "A former Governor of Virginia and Buchanan-era U.S. Secretary of War, Floyd was commissioned a Confederate brigadier for his immense political weight, not any soldiering ability — he lost the western Virginia campaign at Carnifex Ferry amid a feud with Henry Wise, then abandoned his command and escaped Fort Donelson before its surrender, conduct so disgraceful that even Jefferson Davis removed him.",
+          "provenance": "Inferred",
+          "sources": [
+            "Benjamin Franklin Cooling, Forts Henry and Donelson: The Key to the Confederate Heartland (1987)",
+            "Ezra J. Warner, Generals in Gray: Lives of the Confederate Commanders (1959)",
+            "Encyclopedia Virginia, 'John B. Floyd (1806-1863)'"
+          ]
+        },
+        {
+          "id": "cs-pillow",
+          "name": "Pillow",
+          "fullName": "Gideon J. Pillow",
+          "side": "CS",
+          "rank": "Brig. Gen.",
+          "epithet": "Polk's Crony",
+          "availableFrom": { "y": 1861, "m": 7 },
+          "availableUntil": { "y": 1862, "m": 2 },
+          "skill": 26,
+          "aggression": 55,
+          "caution": 35,
+          "ambition": 65,
+          "reputation": 35,
+          "relief": "costly",
+          "constituency": "Tennessee Democratic machine & Polk's patronage network",
+          "commission": { "kind": "political", "cost": 2, "politicalValue": 78 },
+          "traits": ["Political general (Polk crony)", "Mexican War blunderer", "Fled the Fort Donelson surrender", "Suspended by Davis"],
+          "voice": "A patronage soldier whose every star came from politics — at Fort Donelson he threw away a won escape, then fled the surrender he had helped make inevitable.",
+          "strength": "Delivered the Tennessee Democracy and a president's personal favor — pure political weight, never military skill.",
+          "weakness": "A Mexican War record synonymous with the wrong-side-of-the-ditch blunder, capped at Fort Donelson by squandering the breakout and fleeing the surrender.",
+          "bio": "A Tennessee lawyer and Polk law partner whose every star came from politics, not soldiering: he delivered the Tennessee Democracy and a president's personal favor, and was kept on despite a Mexican War record already synonymous with the wrong-side-of-the-ditch blunder. At Fort Donelson he proved the cost of patronage rank — squandering a won escape and then fleeing the surrender he had helped make inevitable. (His 'major general' title was a Mexican War U.S. volunteer rank and a Tennessee state-militia rank; in Confederate service he rose only to brigadier general.)",
+          "provenance": "Inferred",
+          "sources": [
+            "Nathaniel Cheairs Hughes Jr. and Roy P. Stonesifer Jr., The Life and Wars of Gideon J. Pillow (1993)",
+            "Benjamin Franklin Cooling, Forts Henry and Donelson: The Key to the Confederate Heartland (1987)",
+            "Ezra J. Warner, Generals in Gray: Lives of the Confederate Commanders (1959)"
           ]
         }
       ]

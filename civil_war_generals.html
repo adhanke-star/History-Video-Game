@@ -20062,6 +20062,124 @@ var GAME_DATA = {
             "McPherson, Battle Cry of Freedom"
           ]
         }
+      ],
+      "_commissionPoolNote": "Q11 (D109): THE COMMISSION POOL — documented POLITICAL GENERALS the President may bring into the service for political capital (RATING-SYSTEM-DESIGN §12.2/§12.3). A SEPARATE array from `generals` (the starting roster) so the byte-identity-critical roster paths never see them; cmdCommission moves an id into cmd.commissioned, which makes him appointable/promotable/seatable like any general. These men were CHEAP to commission and WEAK in the field — kept for the factions, votes, and immigrant regiments they delivered, not their generalship (the real command-politics bind Lincoln and Davis lived). The combat ratings (skill/reputation) are Inferred designer calibration; the biography + failures are sourced (>=2 real published works; anti-Lost-Cause, failures named on BOTH sides). Dossiers via the commission-political-generals research+verify workflow (6 Opus historians + adversarial source-check + a completeness critic). prov 'Inferred' because the rating numbers are a calibrated reading; the biographical claims are Verified-grade and carry their sources.",
+      "commissionPool": [
+        {
+          "id": "us-banks",
+          "name": "Banks",
+          "fullName": "Nathaniel P. Banks",
+          "side": "US",
+          "rank": "Maj. Gen.",
+          "epithet": "The Bobbin Boy",
+          "availableFrom": { "y": 1861, "m": 5 },
+          "availableUntil": { "y": 1864, "m": 5 },
+          "skill": 32,
+          "aggression": 45,
+          "caution": 50,
+          "ambition": 60,
+          "reputation": 38,
+          "relief": "very-costly",
+          "constituency": "Free-labor / antislavery Republicans & Massachusetts",
+          "commission": { "kind": "political", "cost": 2, "politicalValue": 82 },
+          "traits": ["Political general (ex-Speaker & Governor)", "Routed by Jackson in the Valley", "The Red River disaster", "Built Black regiments in Louisiana"],
+          "voice": "A polished orator and party man, ever confident of high command and ill-suited to it — the Valley and the Red River taught the army what the ballot box could not.",
+          "strength": "A capable administrator of occupied Louisiana: he raised regiments of Black soldiers and helped steer the state to a free-state constitution abolishing slavery.",
+          "weakness": "No military training and a chain of field defeats — Winchester, Cedar Mountain, the bloody repulses at Port Hudson, the Red River collapse.",
+          "bio": "A self-made Massachusetts mill hand turned Speaker of the U.S. House and governor, commissioned major general in 1861 for the antislavery votes and party prestige he brought, not for any soldiering ability. He was kept in high command through repeated disasters — routed by Jackson in the Valley, repulsed at Port Hudson, wrecked on the Red River — yet did genuine work building Black regiments and steering occupied Louisiana toward emancipation under a coercive free-labor regime (he later purged the Native Guard's Black line officers, a documented black mark).",
+          "provenance": "Inferred",
+          "sources": [
+            "James G. Hollandsworth Jr., Pretense of Glory: The Life of General Nathaniel P. Banks (1998)",
+            "Gary D. Joiner, One Damn Blunder from Beginning to End: The Red River Campaign of 1864 (2003)",
+            "James M. McPherson, Battle Cry of Freedom (1988)"
+          ]
+        },
+        {
+          "id": "us-butler",
+          "name": "Butler",
+          "fullName": "Benjamin F. Butler",
+          "side": "US",
+          "rank": "Maj. Gen.",
+          "epithet": "Beast",
+          "availableFrom": { "y": 1861, "m": 5 },
+          "availableUntil": { "y": 1865, "m": 1 },
+          "skill": 28,
+          "aggression": 55,
+          "caution": 40,
+          "ambition": 75,
+          "reputation": 40,
+          "relief": "very-costly",
+          "constituency": "War Democrats kept inside the Union coalition",
+          "commission": { "kind": "political", "cost": 2, "politicalValue": 82 },
+          "traits": ["Political general (War Democrat)", "The 'contraband' decision (1861)", "Bottled up at Bermuda Hundred", "Relieved after Fort Fisher"],
+          "voice": "A shrewd, combative lawyer-politician who could govern a hostile city but never win a battle — the Union could not afford to fire him, nor afford to trust him with a fight.",
+          "strength": "The 1861 'contraband of war' ruling at Fort Monroe — a lawyer's improvisation that cracked Union policy open toward emancipation; he also raised Black troops and ran New Orleans with real administrative energy.",
+          "weakness": "A near-unbroken string of field failures from Big Bethel to the bungled first Fort Fisher expedition, for which Grant relieved him.",
+          "bio": "The political general the Union could not afford to fire and could not afford to trust with a battle: a prominent War Democrat whose loyalty held Northern Democrats to the war effort, kept in high command despite a near-unbroken string of field failures from Big Bethel to Fort Fisher. His one genuine, lasting contribution came not from generalship but from a lawyer's improvisation — the 1861 'contraband' decision at Fort Monroe that helped turn Union policy against slavery.",
+          "provenance": "Inferred",
+          "sources": [
+            "Elizabeth D. Leonard, Benjamin Franklin Butler: A Noisy, Fearless Life (2022)",
+            "Chester G. Hearn, When the Devil Came Down to Dixie: Ben Butler in New Orleans (1997)",
+            "James M. McPherson, Battle Cry of Freedom (1988)"
+          ]
+        },
+        {
+          "id": "us-sigel",
+          "name": "Sigel",
+          "fullName": "Franz Sigel",
+          "side": "US",
+          "rank": "Maj. Gen.",
+          "epithet": "The Yankee Dutchman",
+          "availableFrom": { "y": 1861, "m": 5 },
+          "availableUntil": { "y": 1864, "m": 5 },
+          "skill": 35,
+          "aggression": 38,
+          "caution": 50,
+          "ambition": 45,
+          "reputation": 40,
+          "relief": "very-costly",
+          "constituency": "German-American immigrant voters & recruits",
+          "commission": { "kind": "political", "cost": 2, "politicalValue": 82 },
+          "traits": ["Political general (German-American vote)", "'I fights mit Sigel'", "Routed at New Market", "Trained gunner, poor in high command"],
+          "voice": "A '48er emigre whose name on a recruiting poster was worth a brigade of German enlistments — a fine artillerist out of his depth at the head of an army.",
+          "strength": "His name rallied German-American immigrants to the colors ('I fights mit Sigel'); a trained artillery officer whose value was political and organizational, not in field command.",
+          "weakness": "Beaten at Carthage and Wilson's Creek, his Pea Ridge credit overstated, and routed at New Market in 1864 by Breckinridge's force, the VMI cadets at its head.",
+          "bio": "The famous German 'Forty-Eighter,' kept in high command for the immigrant votes and enlistments behind 'I fights mit Sigel' — not for skill. He was beaten at Wilson's Creek and Carthage, claimed more Pea Ridge credit than he earned, and was routed at New Market in 1864.",
+          "provenance": "Inferred",
+          "sources": [
+            "Stephen D. Engle, Yankee Dutchman: The Life of Franz Sigel (1993)",
+            "William Shea and Earl Hess, Pea Ridge: Civil War Campaign in the West (1992)",
+            "Encyclopedia Virginia, 'Franz Sigel (1824-1902)'"
+          ]
+        },
+        {
+          "id": "us-mcclernand",
+          "name": "McClernand",
+          "fullName": "John A. McClernand",
+          "side": "US",
+          "rank": "Maj. Gen.",
+          "epithet": "",
+          "availableFrom": { "y": 1861, "m": 8 },
+          "availableUntil": { "y": 1864, "m": 11 },
+          "skill": 37,
+          "aggression": 72,
+          "caution": 30,
+          "ambition": 80,
+          "reputation": 40,
+          "relief": "very-costly",
+          "constituency": "Illinois War Democrats — Lincoln's coalition leverage",
+          "commission": { "kind": "political", "cost": 2, "politicalValue": 82 },
+          "traits": ["Political general (Illinois War Democrat)", "Brave but insubordinate", "Self-promoting", "Relieved by Grant at Vicksburg"],
+          "voice": "Brave under fire and forever certain he deserved the top command — he lobbied past his chief and printed his own praises until Grant had had enough.",
+          "strength": "Personally brave and an effective recruiter of Illinois volunteers, with genuine political weight in the lower Mississippi valley.",
+          "weakness": "Chronically insubordinate and self-promoting; his self-glorifying General Orders No. 72, leaked to the press, gave Grant the pretext to relieve him during the Vicksburg Campaign.",
+          "bio": "A leading Illinois War Democrat and Lincoln's fellow Illinoisan, McClernand was kept in high command because relieving him risked the loyalty of Democratic voters Lincoln needed — not because he could handle a corps, which he could not. Brave under fire but chronically insubordinate and self-promoting, he lobbied behind Grant's back for his own command and was finally relieved during the Vicksburg Campaign for publishing a self-glorifying order in the press.",
+          "provenance": "Inferred",
+          "sources": [
+            "Richard L. Kiper, Major General John Alexander McClernand: Politician in Uniform (1999)",
+            "Edwin C. Bearss, The Campaign for Vicksburg (1985-86)"
+          ]
+        }
       ]
     },
     "CS": {
@@ -20472,6 +20590,66 @@ var GAME_DATA = {
             "American Battlefield Trust — Nathan Bedford Forrest",
             "American History Central — Nathan Bedford Forrest",
             "McPherson, Battle Cry of Freedom"
+          ]
+        }
+      ],
+      "commissionPool": [
+        {
+          "id": "cs-floyd",
+          "name": "Floyd",
+          "fullName": "John B. Floyd",
+          "side": "CS",
+          "rank": "Brig. Gen.",
+          "epithet": "",
+          "availableFrom": { "y": 1861, "m": 5 },
+          "availableUntil": { "y": 1862, "m": 3 },
+          "skill": 26,
+          "aggression": 38,
+          "caution": 35,
+          "ambition": 45,
+          "reputation": 22,
+          "relief": "costly",
+          "constituency": "Virginia Democratic establishment (ex-Governor & U.S. War Secretary)",
+          "commission": { "kind": "political", "cost": 2, "politicalValue": 78 },
+          "traits": ["Political general (ex-Governor & U.S. War Secretary)", "Lost at Carnifex Ferry", "Abandoned his command at Fort Donelson", "Removed by Davis"],
+          "voice": "A grandee of Virginia politics with a brigadier's star and no soldier's nerve — at the crisis he handed off the command and slipped away.",
+          "strength": "Immense political weight — a former Governor of Virginia and Buchanan-era Secretary of War whose name rewarded Old Dominion patronage.",
+          "weakness": "No soldiering ability; he lost the western Virginia campaign amid a feud with Henry Wise, then fled Fort Donelson before its surrender — conduct Davis found disgraceful.",
+          "bio": "A former Governor of Virginia and Buchanan-era U.S. Secretary of War, Floyd was commissioned a Confederate brigadier for his immense political weight, not any soldiering ability — he lost the western Virginia campaign at Carnifex Ferry amid a feud with Henry Wise, then abandoned his command and escaped Fort Donelson before its surrender, conduct so disgraceful that even Jefferson Davis removed him.",
+          "provenance": "Inferred",
+          "sources": [
+            "Benjamin Franklin Cooling, Forts Henry and Donelson: The Key to the Confederate Heartland (1987)",
+            "Ezra J. Warner, Generals in Gray: Lives of the Confederate Commanders (1959)",
+            "Encyclopedia Virginia, 'John B. Floyd (1806-1863)'"
+          ]
+        },
+        {
+          "id": "cs-pillow",
+          "name": "Pillow",
+          "fullName": "Gideon J. Pillow",
+          "side": "CS",
+          "rank": "Brig. Gen.",
+          "epithet": "Polk's Crony",
+          "availableFrom": { "y": 1861, "m": 7 },
+          "availableUntil": { "y": 1862, "m": 2 },
+          "skill": 26,
+          "aggression": 55,
+          "caution": 35,
+          "ambition": 65,
+          "reputation": 35,
+          "relief": "costly",
+          "constituency": "Tennessee Democratic machine & Polk's patronage network",
+          "commission": { "kind": "political", "cost": 2, "politicalValue": 78 },
+          "traits": ["Political general (Polk crony)", "Mexican War blunderer", "Fled the Fort Donelson surrender", "Suspended by Davis"],
+          "voice": "A patronage soldier whose every star came from politics — at Fort Donelson he threw away a won escape, then fled the surrender he had helped make inevitable.",
+          "strength": "Delivered the Tennessee Democracy and a president's personal favor — pure political weight, never military skill.",
+          "weakness": "A Mexican War record synonymous with the wrong-side-of-the-ditch blunder, capped at Fort Donelson by squandering the breakout and fleeing the surrender.",
+          "bio": "A Tennessee lawyer and Polk law partner whose every star came from politics, not soldiering: he delivered the Tennessee Democracy and a president's personal favor, and was kept on despite a Mexican War record already synonymous with the wrong-side-of-the-ditch blunder. At Fort Donelson he proved the cost of patronage rank — squandering a won escape and then fleeing the surrender he had helped make inevitable. (His 'major general' title was a Mexican War U.S. volunteer rank and a Tennessee state-militia rank; in Confederate service he rose only to brigadier general.)",
+          "provenance": "Inferred",
+          "sources": [
+            "Nathaniel Cheairs Hughes Jr. and Roy P. Stonesifer Jr., The Life and Wars of Gideon J. Pillow (1993)",
+            "Benjamin Franklin Cooling, Forts Henry and Donelson: The Key to the Confederate Heartland (1987)",
+            "Ezra J. Warner, Generals in Gray: Lives of the Confederate Commanders (1959)"
           ]
         }
       ]
@@ -21831,6 +22009,14 @@ var GAME_DATA = {
     "prov": "Inferred",
     "src": ["Stephen W. Sears, George B. McClellan: The Young Napoleon (1988)", "Joseph T. Glatthaar, General Lee's Army: From Victory to Collapse (2008)"]
   },
+  "commission": {
+    "_note": "Q11 (D109): THE COMMISSION MOVE — the GM depth-chart move that brings a new officer into the pool (RATING-SYSTEM-DESIGN §12.2/§12.3). The President COMMISSIONS the documented POLITICAL GENERALS (data/generals.json -> sides[side].commissionPool: US Banks/Butler/Sigel/McClernand, CS Floyd/Pillow) for political capital (C.clock.capital, the existing GM currency — no new resource, §12). A political general is CHEAP (costPolitical) but WEAK in the field — Lincoln and Davis took these men for the factions, votes, and immigrant regiments they delivered, not their generalship — so once you appoint or seat him, his LOW OVR drags the army's leadership through the very same _cmdGenRating -> commandLeadership pipe every appointment uses (an INPUT, never the scoreboard; build-gate 4d scans 35-command.js). A proven PROFESSIONAL would cost costProfessional (the field exists for a future expansion; the shipped pool is all political). maxCommissions caps the slate (a scarce budget — you cannot commission everyone). BYTE-IDENTICAL until the player commissions: cmdCommission writes ONLY cmd.commissioned + capital + a reputation seed; with nobody commissioned the appoint/promote/corps pools are exactly the starting roster, so commandLeadership and the 9 battles are identical. DEFERRED + LOGGED (the next GM increment, needs the 1864-election state): the §12.3 ELECTION-SUPPORT bind — a political general delivers faction/election support while he serves, and relieving him before the election costs that support (not just capital); here the relief cost is already taught via his `relief` class (_cmdReliefCost). Inferred designer calibration; the command-politics history is sourced.",
+    "costPolitical": 2,
+    "costProfessional": 8,
+    "maxCommissions": 3,
+    "prov": "Inferred",
+    "src": ["T. Harry Williams, Lincoln and His Generals (1952)", "James M. McPherson, Battle Cry of Freedom (1988)"]
+  },
   "devTraits": {
     "_note": "D105 (RATING SYSTEM, the LIVE DEV-TRAITS milestone) — the Madden development arc, completing RATING-SYSTEM-DESIGN §9-R-6's last open item ('reputation level-up -> OVR still TODO') + the D94-fork-#5 lock ('Reputation->OVR dev-traits = LIVE in-campaign'). cmdOnResolve already evolves a general's reputation by battle outcome (decisive win +6 / win +3 / draw -1 / loss -4 / decisive loss -8) and _cmdGenRating (0.55*skill+0.45*reputation) -> commandLeadership already reads it, so winning a campaign already nudges his OVR. This block adds the Madden DEV-TRAIT that SHAPES that arc: a hidden potential CEILING (how high he can climb), a FLOOR (how far he can fall), a development RATE (how fast wins/losses move him), and an attritionDrag (the §15-R3 'decline with heavy attrition'). ACCURATE INPUTS, never an output gate (D74/D92): a dev-trait only shapes the general's REPUTATION — an input the existing _cmdGenRating/commandLeadership pipe already consumes — it NEVER writes a casualty/winner. BYTE-IDENTICAL by construction: a general with NO entry in `assign` (or absent devTraits data) takes the literal pre-D105 path (clamp [5,98], rate 1, no drag); the deliberate, citation-grade, historically-directed change is the AUTHORED `assign` map (mirrors how R-6's rosterBadges deliberately changed combat). The ceiling/floor are RELATIVE to the general's SEEDED starting reputation (devTrack.start, fixed) so every assigned general keeps headroom to rise and room to fall (ceilingAbove>=5, floorBelow>=5) — the existing 'a winning general gains reputation / a losing one loses it' invariant holds for all. ANTI-LOST-CAUSE balance: the Union's elite are RISERS (Grant/Sherman/Sheridan/Thomas develop to the summit — the honest thesis that the Union found and elevated its best command) rated AS HIGH as the Confederacy's born legends (Lee/Jackson); the command failures are named plainly on BOTH sides (US McClellan plateau, Burnside/Hooker overpromoted; CS Bragg quarrelsome, Hood volatile-disaster).",
     "tuning": {
@@ -23078,6 +23264,67 @@ var GAME_DATA = {
         "American Battlefield Trust: Meade"
       ],
       "bio": "The irascible 'Old Snapping Turtle' and engineer — a steady, defensive-minded professional who won the defensive masterpiece at Gettysburg, then drew Lincoln's frustration for a cautious pursuit."
+    },
+    "_commissionPersonaNote": "Q11 (D109): the COMMISSION-POOL personas (keyed to data/generals.json sides[side].commissionPool ids). Same persona shape as the army-commander cast above, but for the POLITICAL GENERALS — command/tactical are LOW (the documented weakness) while `political` is HIGH (the constituency they delivered). command/tactical/discipline are calibrated so round(fldOfficerSkillSeed) === the entry's skill EXACTLY (the same oracle the strategic cast uses), so _cmdEffectiveSkill -> _cmdGenRating yields a LOW OVR and seating/appointing one teaches that rank and constituency are not competence. prov 'Inferred' — the rating VECTOR is a calibrated reading of a documented career; the biography is sourced (>=2 real works) in the commissionPool entry.",
+    "us-banks": {
+      "pid": "us-banks", "name": "Nathaniel P. Banks", "side": "US", "rank": "Major General", "branch": "inf", "skill": 32, "fate": 3.4,
+      "persona": { "tactical": 28, "command": 28, "initiative": 40, "resolve": 58, "discipline": 48, "marksmanship": 50, "vigor": 56, "charisma": 72, "aggression": 45, "grit": 54, "logistics": 38, "engineering": 38, "cavalry": 40, "artillery": 40, "political": 88 },
+      "flaws": ["political-general", "no-military-training"],
+      "badges": [],
+      "personaTags": ["political_appointee", "administrator"],
+      "provenance": "Inferred",
+      "sources": ["James G. Hollandsworth Jr., Pretense of Glory: The Life of General Nathaniel P. Banks (1998)", "Gary D. Joiner, One Damn Blunder from Beginning to End: The Red River Campaign of 1864 (2003)"],
+      "bio": "The 'Bobbin Boy' — ex-Speaker and governor commissioned for the antislavery votes he brought; a poor field commander (the Valley, Port Hudson, Red River) who nonetheless built Black regiments and steered Louisiana toward emancipation. A POLITICAL GENERAL (commission pool)."
+    },
+    "us-butler": {
+      "pid": "us-butler", "name": "Benjamin F. Butler", "side": "US", "rank": "Major General", "branch": "inf", "skill": 28, "fate": 3.4,
+      "persona": { "tactical": 22, "command": 24, "initiative": 62, "resolve": 66, "discipline": 46, "marksmanship": 46, "vigor": 58, "charisma": 58, "aggression": 55, "grit": 64, "logistics": 50, "engineering": 40, "cavalry": 36, "artillery": 38, "political": 92 },
+      "flaws": ["political-general", "poor-tactician"],
+      "badges": [],
+      "personaTags": ["political_appointee", "war_democrat"],
+      "provenance": "Inferred",
+      "sources": ["Elizabeth D. Leonard, Benjamin Franklin Butler: A Noisy, Fearless Life (2022)", "Chester G. Hearn, When the Devil Came Down to Dixie: Ben Butler in New Orleans (1997)"],
+      "bio": "'Beast' Butler — the War Democrat the Union could not afford to fire and could not trust with a battle; his lasting mark was the 1861 'contraband' decision, not generalship. A POLITICAL GENERAL (commission pool)."
+    },
+    "us-sigel": {
+      "pid": "us-sigel", "name": "Franz Sigel", "side": "US", "rank": "Major General", "branch": "inf", "skill": 35, "fate": 3.4,
+      "persona": { "tactical": 28, "command": 30, "initiative": 30, "resolve": 48, "discipline": 58, "marksmanship": 58, "vigor": 52, "charisma": 70, "aggression": 38, "grit": 50, "logistics": 42, "engineering": 50, "cavalry": 44, "artillery": 64, "political": 85 },
+      "flaws": ["political-general", "timid-in-high-command"],
+      "badges": [],
+      "personaTags": ["political_appointee", "immigrant_recruiter"],
+      "provenance": "Inferred",
+      "sources": ["Stephen D. Engle, Yankee Dutchman: The Life of Franz Sigel (1993)", "William Shea and Earl Hess, Pea Ridge: Civil War Campaign in the West (1992)"],
+      "bio": "The 'Yankee Dutchman' — kept for the German-American vote ('I fights mit Sigel'); a trained gunner out of his depth at army command, beaten at Wilson's Creek and routed at New Market. A POLITICAL GENERAL (commission pool)."
+    },
+    "us-mcclernand": {
+      "pid": "us-mcclernand", "name": "John A. McClernand", "side": "US", "rank": "Major General", "branch": "inf", "skill": 37, "fate": 3.4,
+      "persona": { "tactical": 40, "command": 38, "initiative": 70, "resolve": 70, "discipline": 28, "marksmanship": 56, "vigor": 64, "charisma": 66, "aggression": 72, "grit": 66, "logistics": 40, "engineering": 36, "cavalry": 42, "artillery": 44, "political": 90 },
+      "flaws": ["political-general", "insubordinate"],
+      "badges": [],
+      "personaTags": ["political_appointee", "self_promoter"],
+      "provenance": "Inferred",
+      "sources": ["Richard L. Kiper, Major General John Alexander McClernand: Politician in Uniform (1999)", "Edwin C. Bearss, The Campaign for Vicksburg (1985-86)"],
+      "bio": "Lincoln's fellow Illinoisan and a War Democrat kept for his coalition value — brave under fire but chronically insubordinate and self-promoting; relieved by Grant at Vicksburg. A POLITICAL GENERAL (commission pool)."
+    },
+    "cs-floyd": {
+      "pid": "cs-floyd", "name": "John B. Floyd", "side": "CS", "rank": "Brigadier General", "branch": "inf", "skill": 26, "fate": 3.4,
+      "persona": { "tactical": 26, "command": 24, "initiative": 35, "resolve": 22, "discipline": 30, "marksmanship": 44, "vigor": 44, "charisma": 52, "aggression": 38, "grit": 30, "logistics": 35, "engineering": 34, "cavalry": 36, "artillery": 36, "political": 85 },
+      "flaws": ["political-general", "abandons-command"],
+      "badges": [],
+      "personaTags": ["political_appointee", "patronage_grandee"],
+      "provenance": "Inferred",
+      "sources": ["Benjamin Franklin Cooling, Forts Henry and Donelson: The Key to the Confederate Heartland (1987)", "Ezra J. Warner, Generals in Gray: Lives of the Confederate Commanders (1959)"],
+      "bio": "Ex-Governor of Virginia and U.S. War Secretary, commissioned for political weight; lost the western Virginia campaign, then fled Fort Donelson before its surrender — conduct Davis found disgraceful. A POLITICAL GENERAL (commission pool)."
+    },
+    "cs-pillow": {
+      "pid": "cs-pillow", "name": "Gideon J. Pillow", "side": "CS", "rank": "Brigadier General", "branch": "inf", "skill": 26, "fate": 3.4,
+      "persona": { "tactical": 25, "command": 24, "initiative": 38, "resolve": 30, "discipline": 30, "marksmanship": 46, "vigor": 48, "charisma": 52, "aggression": 55, "grit": 38, "logistics": 30, "engineering": 32, "cavalry": 38, "artillery": 40, "political": 85 },
+      "flaws": ["political-general", "blunderer"],
+      "badges": [],
+      "personaTags": ["political_appointee", "polk_crony"],
+      "provenance": "Inferred",
+      "sources": ["Nathaniel Cheairs Hughes Jr. and Roy P. Stonesifer Jr., The Life and Wars of Gideon J. Pillow (1993)", "Benjamin Franklin Cooling, Forts Henry and Donelson: The Key to the Confederate Heartland (1987)"],
+      "bio": "A Polk law-partner whose every star came from politics; at Fort Donelson he squandered a won breakout and fled the surrender he helped make inevitable. His CSA rank was brigadier general (the 'major general' was a Mexican War / state-militia title). A POLITICAL GENERAL (commission pool)."
     }
   }
 },
@@ -25519,10 +25766,23 @@ function _cmdSideGenerals(side) {
   return [];
 }
 
-function _cmdById(side, id) {
+/* roster-ONLY resolution (the pre-Q11 _cmdById body) — the starting army roster, never the commission pool.
+   Used where the distinction matters (the byte-identity-critical seeds + the commission "not-a-roster-id" guard). */
+function _cmdByIdRoster(side, id) {
   var r = _cmdSideGenerals(side);
   for (var i = 0; i < r.length; i++) if (r[i] && r[i].id === id) return r[i];
   return null;
+}
+
+/* Resolve a general by id: the starting roster FIRST, then the Q11 (D109) commission pool (so a commissioned-
+   then-appointed/seated officer resolves everywhere — cmdActiveGeneral, _cmdReputation, the corps billets — and
+   a save that references him survives a reload). BYTE-IDENTICAL pre-Commission: a commission-pool id is never
+   stored in any field until the player commissions him (a player action), so every pre-existing input resolves
+   exactly as before (and _cmdHistoricalDefault reads the roster directly, never this). */
+function _cmdById(side, id) {
+  var g = _cmdByIdRoster(side, id);
+  if (g) return g;
+  return (typeof _cmdCommissionEntry === "function") ? _cmdCommissionEntry(side, id) : null;
 }
 
 var _cmdEsc = htmlEsc;
@@ -25660,7 +25920,7 @@ function cmdScout(C) {
   var cmd = C.president.command;
   if (cmd.scout && cmd.scout.battleId === bd.id) return;        // already reconnoitred this engagement (no re-charge)
   var cfg = _cmdScoutCfg(), cost = Math.max(0, Math.round(_cmdNum(cfg.cost, 3)));
-  var clk = C.clock, cap = (clk && typeof clk.capital === "number") ? Math.round(clk.capital) : 0;   // round to the displayed capital (the cmdAppoint idiom)
+  var clk = C.clock, cap = (clk && typeof clk.capital === "number" && isFinite(clk.capital)) ? Math.round(clk.capital) : 0;   // round to the displayed capital (the cmdAppoint idiom)
   if (cap < cost) return;                                       // can't afford the reconnaissance (the gate)
   if (clk && typeof clk.capital === "number") clk.capital = Math.max(0, cap - cost);   // Q8b bug-hunt (LOW): debit the SAME rounded value the gate compared (the hardened cmdPromote idiom), so a fractional balance can't pass the rounded gate yet be floor-absorbed on the raw spend — byte-identical under every current integer-only capital path
   var cav = _cmdScoutCavalry(C), tier = _cmdScoutTierForCavalry(cav);
@@ -25695,7 +25955,7 @@ function cmdScoutControlHtml(C) {
       + '<span style="opacity:.66">Fresh intelligence awaits the next engagement.</span></span>'
     );
   }
-  var clk = C.clock, cap = (clk && typeof clk.capital === "number") ? Math.round(clk.capital) : 0;
+  var clk = C.clock, cap = (clk && typeof clk.capital === "number" && isFinite(clk.capital)) ? Math.round(clk.capital) : 0;
   var ctrl = (cap >= cost)
     ? '<button id="cmdScout" type="button" class="upg" style="flex:0 0 auto" title="Order a cavalry reconnaissance of ' + _cmdEsc(bd.name || "the next engagement") + ' &mdash; ' + cost + ' political capital. How much it reveals scales with your army&rsquo;s cavalry leadership.">Order a reconnaissance <span style="opacity:.8">(&minus;' + cost + ' cap)</span></button>'
     : '<span style="font-size:11px;color:#e86840;flex:0 0 auto" title="A reconnaissance needs ' + cost + ' political capital">Needs ' + cost + ' capital to scout</span>';/* wcag-auditor: contrast fix from #d66040 to #e86840 for AA compliance — #d66040 yields 3.92:1 on #2e2816 (sheet lightest) and 4.33:1 on the effective rendered bg; #e86840 yields ≥4.53:1 on all rendered backgrounds (same hue, L 0.545→0.580) */
@@ -25727,6 +25987,11 @@ function cmdInit(C) {
   if (typeof cmd.seniority !== "number" || !(cmd.seniority >= 0)) { var _pc = _cmdPromoCfg(); cmd.seniority = (_pc && typeof _pc.seniorityStart === "number") ? _pc.seniorityStart : 18; }
   else { var _pc2 = _cmdPromoCfg(); cmd.seniority = Math.max(0, Math.min((_pc2 && typeof _pc2.seniorityCap === "number") ? _pc2.seniorityCap : 60, cmd.seniority)); }   // Q9 bug-hunt (LOW): re-clamp a valid-but-out-of-band stored value (a tampered/stale save) to the cap on LOAD, not only on the next resolve — normal play (accrual already capped) is byte-identical
   if (Array.isArray(cmd.promotions) || !cmd.promotions || typeof cmd.promotions !== "object") cmd.promotions = {};
+  // Q11 (D109): the COMMISSION record — the ids of the political generals the President has brought into the
+  // service (cmd.commissioned). Seeded to [] once + SANITIZED on LOAD (drop dupes / bogus ids / starting-roster
+  // ids / over-cap; the Q9/Q8b/Q10 load-sanitize idiom). Empty -> the pools are the bare roster -> byte-identical.
+  if (!Array.isArray(cmd.commissioned)) cmd.commissioned = [];
+  if (typeof _cmdCommissionedClean === "function") _cmdCommissionedClean(C, true);
   // Q8b (D107): the cavalry-reconnaissance record — the revealed enemy-OOB tier, keyed to the next-battle id so
   // intel is fresh per engagement. Absent/null -> no reveal (the board shows the light/passive estimate) ->
   // byte-identical until the player scouts. SANITIZE a stale/tampered/imported record on LOAD (the Q9 re-clamp
@@ -25742,8 +26007,10 @@ function cmdInit(C) {
       _sc.cavalry = (typeof _sc.cavalry === "number" && isFinite(_sc.cavalry)) ? Math.max(0, Math.min(100, _sc.cavalry)) : 0;
     }
   }
-  // seed reputation for every general on this side, once (idempotent: only if absent).
-  var roster = _cmdSideGenerals(side);
+  // seed reputation for every general on this side, once (idempotent: only if absent). Q11 (D109): include any
+  // COMMISSIONED officers so _cmdGenRating reads them once they are in the service — byte-identical when none
+  // are commissioned (the commissioned set is empty -> the seed list is exactly the starting roster).
+  var roster = (typeof _cmdRosterPlusCommissioned === "function") ? _cmdRosterPlusCommissioned(C, side) : _cmdSideGenerals(side);
   for (var i = 0; i < roster.length; i++) {
     var g = roster[i]; if (!g || !g.id) continue;
     var r = cmd.reputation[g.id];
@@ -25956,9 +26223,10 @@ function cmdPromote(C, id) {
   var side = (C.side === "CS") ? "CS" : "US", cmd = C.president.command;
   var g = _cmdById(side, id);
   if (!g || !_cmdAlive(g, C.president.date)) return;
+  if (!_cmdByIdRoster(side, id) && cmdCommissioned(C).indexOf(id) < 0) return;   // Q11 (D109) bug-hunt MED: a commission-pool officer must be COMMISSIONED before he can be promoted (byte-identical for roster ids)
   var info = _cmdPromoteInfo(C, g);
   if (!info) return;                                   // at the top grade / no config
-  var clk = C.clock, cap = (clk && typeof clk.capital === "number") ? Math.round(clk.capital) : 0;
+  var clk = C.clock, cap = (clk && typeof clk.capital === "number" && isFinite(clk.capital)) ? Math.round(clk.capital) : 0;
   var sen = _cmdNum(cmd.seniority, 0);
   if (cap < info.capital || sen < info.seniority) return;   // gated on BOTH currencies (the scarce budget)
   // Q9 bug-hunt (LOW): debit the SAME rounded value the gate compared (cap), not the raw clk.capital, so the
@@ -26097,7 +26365,7 @@ function cmdCorpsCommanderFor(C, idx) {
 /* the pool of generals free to take corps `idx`: alive same-side men who are neither the army commander nor
    already seated in ANOTHER corps (the one currently here is allowed, for a re-render). */
 function _cmdCorpsPoolFor(C, idx) {
-  var side = (C.side === "CS") ? "CS" : "US", roster = _cmdSideGenerals(side);
+  var side = (C.side === "CS") ? "CS" : "US", roster = _cmdRosterPlusCommissioned(C, side);   // Q11 (D109): commissioned officers are seatable too
   var seated = cmdCorpsSeated(C), activeId = cmdActiveId(C), pool = [];
   for (var i = 0; i < roster.length; i++) {
     var g = roster[i]; if (!g || !g.id) continue;
@@ -26123,11 +26391,12 @@ function cmdSeatCorps(C, idx, id) {
   var side = (C.side === "CS") ? "CS" : "US", cmd = C.president.command;
   var g = _cmdById(side, id);
   if (!g || !_cmdAlive(g, C.president.date)) return;             // invalid / unavailable general
+  if (!_cmdByIdRoster(side, id) && cmdCommissioned(C).indexOf(id) < 0) return;   // Q11 (D109) bug-hunt MED: a commission-pool officer must be COMMISSIONED before he can be seated over a corps (byte-identical for roster ids)
   if (id === cmdActiveId(C)) return;                             // the army commander can't double-hold
   if (Array.isArray(cmd.corps) || !cmd.corps || typeof cmd.corps !== "object") cmd.corps = {};
   if (cmd.corps[idx] === id) return;                             // already seated here (no re-charge)
   var cost = Math.max(0, Math.round(_cmdNum(cfg.seatCost, 3)));
-  var clk = C.clock, cap = (clk && typeof clk.capital === "number") ? Math.round(clk.capital) : 0;
+  var clk = C.clock, cap = (clk && typeof clk.capital === "number" && isFinite(clk.capital)) ? Math.round(clk.capital) : 0;
   if (cap < cost) return;                                        // can't afford the seating (the gate)
   if (clk && typeof clk.capital === "number") clk.capital = Math.max(0, cap - cost);   // debit the SAME rounded value the gate compared (the Q9/Q8b hardened idiom)
   for (var k in cmd.corps) { if (cmd.corps.hasOwnProperty(k) && cmd.corps[k] === id) delete cmd.corps[k]; }   // reassign: one corps per general
@@ -26151,6 +26420,129 @@ function cmdVacateCorps(C, idx) {
   if (typeof _pdLog === "function") {
     var g = _cmdById((C.side === "CS") ? "CS" : "US", id);
     _pdLog(C, "You return " + (g ? "General " + _cmdName(g) : "the corps commander") + " to the reserve; " + _cmdCorpsLabel(idx) + " stands without a commander.");
+  }
+}
+
+/* ===========================================================================
+   Q11 (D109) · THE COMMISSION MOVE (RATING-SYSTEM-DESIGN §12.2/§12.3 — the GM depth-chart move that brings a
+   new officer into the pool). Beyond appointing/promoting/seating the generals the war hands you, the President
+   may COMMISSION the documented POLITICAL GENERALS — Banks, Butler, Sigel, McClernand; Floyd, Pillow — for
+   political capital (C.clock.capital, the existing GM currency; no new resource, §12). These men were CHEAP to
+   commission (a political general cost little capital — Lincoln and Davis took them for the factions, votes,
+   and immigrant constituencies they delivered, not their generalship) and WEAK in the field (a low OVR feeding
+   a low leadership through the very same _cmdGenRating -> commandLeadership pipe every other appointment uses —
+   so seating a political general teaches, concretely, that rank and constituency are NOT competence). The real
+   bind Lincoln lived: you can fill a billet cheaply, but the man you fill it with squanders the army.
+     ARCHITECTURE — byte-identical until the player commissions: the commissionable officers live in a SEPARATE
+   data array (data/generals.json -> sides[side].commissionPool), so _cmdSideGenerals (the starting roster) and
+   every byte-identity-critical path are UNTOUCHED. cmdCommission writes ONLY cmd.commissioned (an id list) +
+   C.clock.capital + a reputation seed — NEVER the scoreboard (build-gate 4d scans 35-command.js). With nobody
+   commissioned, the appoint/promote/corps pools are EXACTLY the starting roster (concat of the empty set), so
+   commandLeadership and the 9 battles are identical to the pre-Q11 build. A commissioned officer then reaches
+   the fight ONLY by being appointed or seated like any general — no new combat read.
+     DEFERRED + LOGGED (the next GM increment, needs the 1864-election state): the §12.3 ELECTION-SUPPORT bind —
+   a political general delivers faction/election support while he serves, and relieving him before the election
+   costs that support (not just capital). Here the relief COST is already taught via his `relief` class
+   (_cmdReliefCost); the election-support economy is the follow-on. No new fork; no contradiction.
+   =========================================================================== */
+function _cmdCommissionCfg() { var d = gameData("ratings"); return (d && d.commission) ? d.commission : null; }
+
+/* the side's COMMISSION POOL — the documented political generals available to bring into the service. A
+   SEPARATE array from the starting roster (sides[side].generals) so the byte-identity-critical roster paths
+   never see them. Empty if the data is absent. */
+function _cmdCommissionPool(side) {
+  var s = (side === "CS") ? "CS" : "US", d = _cmdData();
+  if (d && d.sides && d.sides[s] && Array.isArray(d.sides[s].commissionPool)) return d.sides[s].commissionPool;
+  return [];
+}
+
+/* resolve a commission-pool entry by id within a side (null if absent). */
+function _cmdCommissionEntry(side, id) {
+  var pool = _cmdCommissionPool(side);
+  for (var i = 0; i < pool.length; i++) if (pool[i] && pool[i].id === id) return pool[i];
+  return null;
+}
+
+/* the cost (political capital) to commission a given officer — a per-officer cost if authored, else the config
+   default by kind (a political general is CHEAP; a proven professional is DEAR — §12.2). Bounded >=0, rounded. */
+function _cmdCommissionCost(entry) {
+  var cfg = _cmdCommissionCfg(); if (!cfg || !entry) return 0;
+  var kind = (entry.commission && entry.commission.kind === "professional") ? "professional" : "political";
+  var per = (entry.commission && typeof entry.commission.cost === "number" && isFinite(entry.commission.cost)) ? entry.commission.cost : null;
+  var base = (kind === "professional") ? _cmdNum(cfg.costProfessional, 8) : _cmdNum(cfg.costPolitical, 2);
+  return Math.max(0, Math.round(per != null ? per : base));
+}
+
+/* THE SANITIZED set of commissioned officer ids (cmd.commissioned). Keeps only ids that are (a) real
+   commission-pool officers for THIS side and (b) NOT in the starting roster (defensive — an officer can never
+   be both), deduped, capped at maxCommissions. persist=true writes the cleaned array back (the load-sanitize,
+   the Q9/Q8b/Q10 idiom); persist=false is a pure read. Empty by default -> byte-identical. */
+function _cmdCommissionedClean(C, persist) {
+  if (!C || !C.president) return [];
+  var cmd = C.president.command; if (!cmd) return [];
+  var side = (C.side === "CS") ? "CS" : "US";
+  var cfg = _cmdCommissionCfg();
+  var maxC = cfg ? Math.max(0, Math.floor(_cmdNum(cfg.maxCommissions, 3))) : 3;   // Q11 bug-hunt LOW: the no-config fallback matches the shipped cap (3), not the corps-slot 4
+  var raw = Array.isArray(cmd.commissioned) ? cmd.commissioned : [];
+  var out = [], seen = {};
+  for (var i = 0; i < raw.length; i++) {
+    var id = raw[i];
+    if (typeof id !== "string" || !id || seen[id]) continue;        // valid string, no dupes
+    if (!_cmdCommissionEntry(side, id)) continue;                   // must be a real commission-pool officer for this side
+    if (_cmdByIdRoster(side, id)) continue;                         // never a starting-roster id (defensive)
+    seen[id] = true; out.push(id);
+    if (out.length >= maxC) break;                                  // cap
+  }
+  if (persist) cmd.commissioned = out;
+  return out;
+}
+function cmdCommissioned(C) { return _cmdCommissionedClean(C, false); }
+
+/* the commission-pool ENTRIES the player has commissioned (resolved objects, in pool order). */
+function _cmdCommissionedEntries(C) {
+  var side = (C.side === "CS") ? "CS" : "US", ids = cmdCommissioned(C), out = [];
+  for (var i = 0; i < ids.length; i++) { var e = _cmdCommissionEntry(side, ids[i]); if (e) out.push(e); }
+  return out;
+}
+
+/* THE SELECTABLE pool the GM moves draw from: the starting roster PLUS the commissioned officers. The appoint
+   pool, the promotions list, the corps pool, and the wire loops all use this so a commissioned officer becomes
+   appointable / promotable / seatable. BYTE-IDENTICAL when nobody is commissioned (roster.concat([]) === roster). */
+function _cmdRosterPlusCommissioned(C, side) {
+  var roster = _cmdSideGenerals(side);
+  var extra = _cmdCommissionedEntries(C);
+  return extra.length ? roster.concat(extra) : roster;
+}
+
+/* THE MOVE — commission officer `id` into the service, spending the commission cost in political capital. No-op
+   when the officer is invalid / outside his service window / already commissioned (no re-charge) / the
+   commission slate is full / capital is short. Writes ONLY cmd.commissioned + C.clock.capital + a reputation
+   seed. Bounded, logged. */
+function cmdCommission(C, id) {
+  if (!C || !C.president) return;
+  cmdInit(C);
+  var cfg = _cmdCommissionCfg(); if (!cfg) return;
+  var side = (C.side === "CS") ? "CS" : "US";
+  var entry = _cmdCommissionEntry(side, id); if (!entry) return;    // not a commissionable officer
+  if (!_cmdAlive(entry, C.president.date)) return;                  // outside his service window
+  var cmd = C.president.command;
+  var have = _cmdCommissionedClean(C, true);                        // the sanitized current set
+  if (have.indexOf(id) >= 0) return;                               // already commissioned (no re-charge)
+  var maxC = Math.max(0, Math.floor(_cmdNum(cfg.maxCommissions, 3)));
+  if (have.length >= maxC) return;                                 // the commission slate is full
+  var cost = _cmdCommissionCost(entry);
+  var clk = C.clock, cap = (clk && typeof clk.capital === "number" && isFinite(clk.capital)) ? Math.round(clk.capital) : 0;
+  if (cap < cost) return;                                          // can't afford it (the gate)
+  if (clk && typeof clk.capital === "number") clk.capital = Math.max(0, cap - cost);   // debit the SAME rounded value the gate compared (the Q9/Q8b/Q10 hardened idiom)
+  cmd.commissioned = have.concat([id]);
+  // seed his reputation so _cmdGenRating reads it the moment he is appointed (mirrors the cmdInit roster seed).
+  if (cmd.reputation && typeof cmd.reputation === "object" && !Array.isArray(cmd.reputation) && typeof cmd.reputation[id] !== "number") {
+    cmd.reputation[id] = (typeof entry.reputation === "number") ? Math.max(0, Math.min(100, entry.reputation)) : 48;
+  }
+  if (typeof _pdLog === "function") {
+    var kindPro = entry.commission && entry.commission.kind === "professional";
+    _pdLog(C, "You commission " + _cmdName(entry) + " into the service" + (cost ? " (−" + cost + " capital)" : "")
+      + (kindPro ? " — a proven officer." : " — a political general: weak in the field, but he brings " + (entry.constituency || "powerful political friends") + "."));
   }
 }
 
@@ -26431,7 +26823,7 @@ function _cmdActiveCard(C) {
 /* The available-generals pool — appoint / promote (relieve the incumbent). */
 function _cmdPoolHTML(C) {
   var side = (C.side === "CS") ? "CS" : "US", P = C.president;
-  var roster = _cmdSideGenerals(side);
+  var roster = _cmdRosterPlusCommissioned(C, side);   // Q11 (D109): commissioned political generals appear in the appoint pool
   if (!roster.length) return "";
   var activeId = cmdActiveId(C);
   var incumbent = cmdActiveGeneral(C);
@@ -26486,6 +26878,81 @@ function _cmdPoolHTML(C) {
     + '</div>';
 }
 
+/* ---- Q11 (D109): the "Commission an Officer — the political generals" section. Lists the documented political
+   generals available to bring into the service: each shows his LOW combat OVR beside his HIGH political value,
+   his constituency, an honest one-line record, and a Commission control (gated on capital + the commission cap).
+   Once commissioned he joins the appoint/promote/corps pools above. Returns "" with no config / no pool for the
+   side (byte-identical). Triple-encoded (number + word + grade letter; colour decorative), CVD-safe, wcag-AA. ---- */
+function _cmdCommissionRow(C, e, side, cap, count, maxC, committedIds) {
+  var id = e.id, isComm = committedIds.indexOf(id) >= 0;
+  var alive = _cmdAlive(e, C.president.date);
+  var ovr = Math.round(_cmdGenRating(C, e));
+  var gr = (typeof fldRatingGrade === "function") ? fldRatingGrade(ovr) : { letter: "", word: _cmdLeadWord(ovr)[0], color: _cmdLeadWord(ovr)[1] };
+  var polVal = Math.max(0, Math.min(100, Math.round(_cmdNum(e.commission && e.commission.politicalValue, e.politicalValueScore))));
+  var polWord = polVal >= 78 ? "Immense" : polVal >= 64 ? "High" : polVal >= 50 ? "Real" : "Some";
+  var cost = _cmdCommissionCost(e), kindPro = e.commission && e.commission.kind === "professional";
+  var img = _cmdPortrait(e, side, 44);
+  var ctrl;
+  if (isComm && !alive) {
+    // Q11 bug-hunt LOW: commissioned, but his service window has closed (or not yet opened) — the appoint/promote/
+    // corps pools (which gate on _cmdAlive) drop him, so the row must say so plainly rather than a green "in your pool".
+    var leftAfter = e.availableUntil && _cmdDateNum(C.president.date) > _cmdYM(e.availableUntil);
+    ctrl = '<span style="font-size:11px;opacity:.6"><span aria-hidden="true">&#10003;</span> Commissioned &middot; ' + (leftAfter ? 'no longer in service' : 'not yet in service') + '</span>';
+  } else if (isComm) {
+    // where is he now? — active commander, a seated corps, or simply in the pool.
+    var where = "In your pool";
+    if (id === cmdActiveId(C)) where = "In field command";
+    else {
+      var seated = (typeof cmdCorpsSeated === "function") ? cmdCorpsSeated(C) : {};
+      for (var kk in seated) { if (seated.hasOwnProperty(kk) && seated[kk] === id) { where = "Commands " + _cmdCorpsLabel(parseInt(kk, 10) || 0); break; } }   // Q11 bug-hunt MED: parse the string for-in key (was _cmdNum(kk,0) -> always 0 -> always "I Corps")
+    }
+    ctrl = '<span style="font-size:11px;color:#6f9e5a" title="Already commissioned"><span aria-hidden="true">&#10003;</span> Commissioned</span>'
+      + '<div style="font-size:10px;opacity:.7;margin-top:2px">' + _cmdEsc(where) + '</div>';
+  } else if (!alive) {
+    var after = e.availableUntil && _cmdDateNum(C.president.date) > _cmdYM(e.availableUntil);
+    ctrl = '<span style="font-size:11px;opacity:.6">' + (after ? 'No longer in service' : 'Not yet in service') + '</span>';
+  } else if (count >= maxC) {
+    ctrl = '<span style="font-size:11px;color:#d0853a" title="You may keep ' + maxC + ' commissioned officers at a time; relieve or leave one before commissioning another">Slate full (' + maxC + ')</span>';/* a11y: #d0853a >=4.5:1 on the desk grounds; meaning also in the words */
+  } else if (cap >= cost) {
+    ctrl = '<button id="cmdComm_' + _cmdEsc(id) + '" type="button" class="upg" style="flex:0 0 auto;font-size:11px;padding:2px 8px" title="Commission ' + _cmdEsc(_cmdName(e)) + ' into the service for ' + cost + ' political capital">Commission <span style="opacity:.8">(&minus;' + cost + ' cap)</span></button>';
+  } else {
+    ctrl = '<span style="font-size:11px;color:#e86840" title="Commissioning him costs ' + cost + ' political capital; you hold ' + cap + '">Needs ' + cost + ' cap</span>';/* a11y: #e86840 >=4.5:1 on the desk grounds (the Q8b-measured value); meaning also in the words */
+  }
+  var record = e.bio || e.strength || "";
+  return '<div style="display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px dotted var(--rule)' + ((isComm || alive) ? '' : ';opacity:.55') + '">'
+    + img
+    + '<div style="flex:1 1 auto;min-width:0">'
+    +   '<div style="font-weight:bold;font-size:13px">' + _cmdEsc(_cmdName(e)) + (e.epithet ? ' <span style="font-weight:normal;opacity:.6;font-size:11px">&ldquo;' + _cmdEsc(e.epithet) + '&rdquo;</span>' : '') + '</div>'
+    +   '<div style="font-size:11px;opacity:.78">' + _cmdEsc(e.rank || "Maj. Gen.")
+    +     ' &middot; <span aria-hidden="true" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:' + gr.color + ';margin-right:3px"></span><b>' + _cmdEsc(gr.letter) + '</b> ' + _cmdEsc(gr.word) + ' (' + ovr + ' OVR)</div>'
+    +   '<div style="display:flex;gap:6px;flex-wrap:wrap;margin:3px 0">'
+    +     '<span title="Political value — the faction, votes, or constituency he delivers" style="font-size:10px;background:rgba(120,99,74,.22);border:1px solid var(--rule);border-radius:3px;padding:1px 6px">Political value: <b>' + polWord + '</b> ' + polVal + '</span>'
+    +     (e.constituency ? '<span style="font-size:10px;opacity:.72;padding:1px 2px">' + _cmdEsc(e.constituency) + '</span>' : '')
+    +   '</div>'
+    +   (record ? '<div style="font-size:11px;opacity:.82;line-height:1.4">' + _cmdEsc(record) + '</div>' : '')
+    +   (e.provenance ? '<div style="font-size:10px;opacity:.55;margin-top:3px">' + _cmdEsc(e.provenance) + (e.sources && e.sources.length ? ' &middot; ' + _cmdEsc(e.sources.join("; ")) : '') + '</div>' : '')
+    + '</div>'
+    + '<div style="flex:0 0 auto;text-align:right">' + ctrl + '</div>'
+    + '</div>';
+}
+function _cmdCommissionHTML(C) {
+  var cfg = _cmdCommissionCfg(); if (!cfg) return "";
+  var side = (C.side === "CS") ? "CS" : "US";
+  var pool = _cmdCommissionPool(side); if (!pool.length) return "";
+  var cap = (C.clock && typeof C.clock.capital === "number") ? Math.round(C.clock.capital) : 0;
+  var committed = cmdCommissioned(C), count = committed.length;
+  var maxC = Math.max(0, Math.floor(_cmdNum(cfg.maxCommissions, 3)));
+  var rows = "";
+  for (var i = 0; i < pool.length; i++) rows += _cmdCommissionRow(C, pool[i], side, cap, count, maxC, committed);
+  return '<div style="margin-top:16px">'
+    + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#b3925e;margin-bottom:2px">Commission an officer &mdash; the political generals</div>'/* a11y: #b3925e 5.0:1 -> AA */
+    + '<div style="font-size:11px;opacity:.8;margin-bottom:6px;line-height:1.45">The war was fought by a coalition, and its rifles needed the men a coalition is made of. Lincoln and Davis alike commissioned generals for the factions, the votes, and the immigrant regiments they brought &mdash; not their generalship. You may do the same: a political general is <b>cheap</b> to commission, but he is <b>weak in the field</b>, and his low rating will drag whatever command you give him. The lesson the war taught at a fearful price &mdash; that a star on the shoulder is not the same as the skill to use it.</div>'
+    + '<div style="font-size:11px;opacity:.78;margin-bottom:6px">Commissioned: <b>' + count + '</b> of ' + maxC + ' &middot; once commissioned, he joins the generals at your call above &mdash; to appoint, promote, or seat over a corps.</div>'
+    + rows
+    + '<div style="font-size:10.5px;opacity:.62;margin-top:6px;line-height:1.4">These men were costly to <i>relieve</i> as well as cheap to commission &mdash; dismissing a political general before an election could cost the very support he was kept for. (That bind on his removal is read in the relief cost; the election-support economy is a coming addition.)</div>'
+    + '</div>';
+}
+
 /* ---- Q9: the "Officer Corps — Promotions" section (the depth-chart MOVE surface). Each available general's
    current grade + OVR + a Promote control (next grade + the multi-currency cost), gated on capital + seniority,
    merit-annotated. Pure display; the Wire fn binds the buttons. Returns "" with no config (byte-identical). ---- */
@@ -26517,7 +26984,7 @@ function _cmdPromoRow(C, g, cap, sen, activeId) {
 function _cmdPromotionsHTML(C) {
   var cfg = _cmdPromoCfg(); if (!cfg) return "";
   var side = (C.side === "CS") ? "CS" : "US", P = C.president, cmd = P.command;
-  var roster = _cmdSideGenerals(side); if (!roster.length) return "";
+  var roster = _cmdRosterPlusCommissioned(C, side); if (!roster.length) return "";   // Q11 (D109): a commissioned officer can be promoted too
   var cap = (C.clock && typeof C.clock.capital === "number") ? Math.round(C.clock.capital) : 0;
   var sen = Math.round(_cmdNum(cmd.seniority, 0));
   var activeId = cmdActiveId(C), rows = "";
@@ -26706,6 +27173,7 @@ function cmdRenderTab(C) {
     + _cmdCareerArcHTML(C)
     + ((typeof fldCampaignOOBHtml === "function") ? fldCampaignOOBHtml(C, { reveal: cmdScoutTier(C), reconHtml: cmdScoutControlHtml(C) }) : '')   /* D106 board + Q8b (D107): the recon tier earned by scouting + the "Order a reconnaissance" control embedded in the board (the WRITE lives in cmdScout; T15 stays pure-read) */
     + _cmdPoolHTML(C)
+    + _cmdCommissionHTML(C)
     + _cmdPromotionsHTML(C)
     + _cmdCorpsDepthHTML(C)
     + _cmdCardHTML(C);
@@ -26722,12 +27190,13 @@ function cmdAppoint(C, id) {
   var side = (C.side === "CS") ? "CS" : "US", P = C.president, cmd = P.command;
   var g = _cmdById(side, id);
   if (!g || !_cmdAlive(g, P.date)) return;
+  if (!_cmdByIdRoster(side, id) && cmdCommissioned(C).indexOf(id) < 0) return;   // Q11 (D109) bug-hunt MED: a commission-pool officer must be COMMISSIONED before he can be appointed (matches the gated UI + the invariant; byte-identical for roster ids — _cmdByIdRoster is truthy for them, so the clause is always false)
   if (id === cmdActiveId(C)) return;                 // already in command
   var incumbent = cmdActiveGeneral(C);
   var cost = incumbent ? _cmdReliefCost(C, incumbent) : 0;
-  var clk = C.clock, cap = (clk && typeof clk.capital === "number") ? Math.round(clk.capital) : 0;   // round to match the pool's displayed capital (no soft-lock, D53.7)
+  var clk = C.clock, cap = (clk && typeof clk.capital === "number" && isFinite(clk.capital)) ? Math.round(clk.capital) : 0;   // round to match the pool's displayed capital (no soft-lock, D53.7)
   if (cap < cost) return;                            // not enough political capital (the gate)
-  if (clk && typeof clk.capital === "number") clk.capital = Math.max(0, clk.capital - cost);
+  if (clk && typeof clk.capital === "number") clk.capital = Math.max(0, cap - cost);   // debit the rounded (finite-guarded) cap — uniform with the other GM moves; closes a NaN-capital debit (Q11 bug-hunt LOW)
   cmd.fieldGeneral = id;
   // Q10 (D108): the new army commander cannot also hold a corps billet — vacate it immediately (cmdInit also
   // re-cleans on the next load, but keep the live state consistent).
@@ -26755,7 +27224,7 @@ function cmdWireTab(C) {
   if (!C || !C.president) return;
   cmdInit(C);
   var side = (C.side === "CS") ? "CS" : "US";
-  var roster = _cmdSideGenerals(side);
+  var roster = _cmdRosterPlusCommissioned(C, side);   // Q11 (D109): wire appoint/promote for commissioned officers too (the render lists them)
   for (var i = 0; i < roster.length; i++) {
     (function (g) {
       if (!g || !g.id) return;
@@ -26813,6 +27282,19 @@ function cmdWireTab(C) {
         if (typeof _wdRefresh === "function") _wdRefresh();
       });
     })(s);
+  }
+  // Q11 (D109): wire the Commission buttons (one per commission-pool officer; ids mirror the render, escaped — D43.4).
+  var commPool = _cmdCommissionPool(side);
+  for (var cm = 0; cm < commPool.length; cm++) {
+    (function (e) {
+      if (!e || !e.id) return;
+      var cb = document.getElementById("cmdComm_" + _cmdEsc(e.id));
+      if (cb) cb.addEventListener("click", function () {
+        cmdCommission(C, e.id);
+        if (typeof saveLocal === "function") saveLocal();
+        if (typeof _wdRefresh === "function") _wdRefresh();
+      });
+    })(commPool[cm]);
   }
   var d = _cmdData();
   if (d && d.teachingCards) for (var c = 0; c < d.teachingCards.length; c++) {
