@@ -345,6 +345,8 @@ The original surfaced forks (for the record):
 ### 12.1 The depth chart (billets)
 A campaign army is a tree of **billets**: `Army → Corps → Division → Brigade`. Each billet holds one officer (a `person`, §8) or is **vacant** (vacancy = a competence penalty: a leaderless corps fights at a reduced effective OVR — the historical cost of the command-vacuum). Every billet shows its holder's **OVR + grade + badges** and the **roll-up OVR** of everything under it. This is the "roster screen."
 
+> **[SUBSTRATE SHIPPED — D106]** the read-only **OOB-mapping substrate** is built — `src/tactical/T15-oob.js` (`fldCampaignOOB`/`fldOOBForSide`) maps the strategic next-battle (`_brgNextBattle`) to a STRUCTURED **commander → corps → brigade** tree for BOTH sides, each billet carrying its OVR/grade/strength/provenance (the T14 spine). Where a hand-built tactical scenario exists it reads the REAL brigade OOB (real commanders + authored provenance); else it DERIVES a deterministic Inferred tree (formation-labeled, **no fabricated officers** — D92/#4). Surfaced as a read-only **"Order of Battle — the Next Engagement"** board on the Command desk (`fldCampaignOOBHtml`) — the player EXACT, the enemy FUZZY (§15, scouting deepens it via the `reveal` tier). **Byte-identical (pure read, called only from `cmdRenderTab`; build-gate 4d scans T15).** This is the shared plumbing: the **MOVES** below (12.2) extend `cmdAppoint`/`cmdPromote` over this tree; **Q8b scouting** (15) tier-reveals the enemy via the board's `reveal` param; a **symmetric AI-GM** drafts over the same roster.
+
 ### 12.2 The moves (each spends/earns political capital)
 | Move | Effect | Cost (political capital) | Historical constraint |
 |---|---|---|---|

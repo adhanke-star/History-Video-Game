@@ -129,7 +129,7 @@ for (const name of overrides) {
 // cmdOnResolve / _cmdDevTrait / _cmdAttritionDrag), which also only seeds an INPUT (reputation) and must never
 // write the scoreboard. It writes solely command state (reputation/seniority/capital/devTrack), none of which
 // match the forbidden set, so scoping the same wall over it closes the no-fudge coverage gap.
-const RATING_MODULES = ['tactical/T14-ratings.js', '35-command.js'];
+const RATING_MODULES = ['tactical/T14-ratings.js', '35-command.js', 'tactical/T15-oob.js'];   // D106: T15-oob = the OOB-mapping read-out (pure read; scanned so a future edit can't add a scoreboard write unseen)
 const NO_FUDGE_FORBIDDEN = [
   { re: /\b(cas|aCas|bCas)\s*(\+=|-=|=)(?!=)/, what: 'a casualty count (cas/aCas/bCas)' },
   { re: /\.victory\s*=(?!=)/, what: 'the victory result (.victory)' },

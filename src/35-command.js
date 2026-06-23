@@ -876,6 +876,7 @@ function cmdRenderTab(C) {
     + '<p class="lede" style="font-size:13px;margin-bottom:10px">You appoint the men who command your armies &mdash; and you relieve them. A great general lifts the army your war puts in the field; a cautious or discredited one squanders it. But a popular general is dangerous to dismiss: it costs you political capital, and the country is watching.</p>'
     + _cmdActiveCard(C)
     + _cmdCareerArcHTML(C)
+    + ((typeof fldCampaignOOBHtml === "function") ? fldCampaignOOBHtml(C) : '')   /* D106: the read-only Order-of-Battle board (the §12.1 roster screen — substrate the GM moves + scouting query) */
     + _cmdPoolHTML(C)
     + _cmdPromotionsHTML(C)
     + _cmdCardHTML(C);
