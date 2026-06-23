@@ -812,6 +812,207 @@ const SETUP = `(() => {
       if(h.indexOf('Commands II Corps')<0) throw new Error('a commissioned officer seated in corps 1 must show "Commands II Corps" (the parseInt label fix), not always I Corps');
       return { unCommissionedRefused:true, rosterUnaffected:true, commissionedSeatable:true, corpsLabelCorrect:true }; });
 
+    // ===== Q12 (D110): THE DIVISION SUB-TIER — seat generals into division billets nested UNDER a seated corps =====
+    // helper: a US general id who is neither the army commander nor any already-seated corps/division holder.
+    function freeGen(C, prefer){ var army=cmdActiveId(C); var cand=(prefer||['us-thomas','us-sherman','us-sheridan','us-meade']);
+      var corps=cmdCorpsSeated(C), div=cmdDivSeated(C), taken={}; for(var k in corps) taken[corps[k]]=1;
+      for(var e in div){ var inn=div[e]; for(var f in inn) taken[inn[f]]=1; }
+      for(var i=0;i<cand.length;i++){ if(cand[i]!==army && !taken[cand[i]]) return cand[i]; } return null; }
+
+    step('Q12: divisionCommand config loads — perCorps/labels/seatCost/preferredGrade(Maj. Gen. both)/perSlotWeight/liftCap; the division liftCap is SMALLER than the corps liftCap (army>corps>division); >=2 src', function(){
+      if(typeof _cmdDivCfg!=='function') return { skipped:'pre-Q12' };
+      var cfg=_cmdDivCfg(); if(!cfg) throw new Error('no divisionCommand config');
+      if(!(cfg.perCorps>=1)) throw new Error('bad perCorps');
+      if(!Array.isArray(cfg.labels)||cfg.labels.length<cfg.perCorps) throw new Error('labels must cover perCorps');
+      if(!(cfg.seatCost>=0)) throw new Error('bad seatCost');
+      if(!cfg.preferredGrade||cfg.preferredGrade.US!=='Maj. Gen.'||cfg.preferredGrade.CS!=='Maj. Gen.') throw new Error('a division is a Maj. Gen. billet in both armies');
+      if(!(cfg.perSlotWeight>0)) throw new Error('bad perSlotWeight');
+      var corpsCap=_cmdCorpsCfg().liftCap;
+      if(!(cfg.liftCap>0 && cfg.liftCap<corpsCap)) throw new Error('division liftCap ('+cfg.liftCap+') must be > 0 and < the corps liftCap ('+corpsCap+') so the influence hierarchy army>corps>division holds');
+      if(!Array.isArray(cfg.src)||cfg.src.length<2) throw new Error('want >=2 sources for the division-org teaching');
+      return { perCorps:cfg.perCorps, cost:cfg.seatCost, w:cfg.perSlotWeight, divCap:cfg.liftCap, corpsCap:corpsCap, src:cfg.src.length }; });
+
+    step('Q12: BYTE-IDENTICAL when no division seated — _cmdDivLift is 0 and commandLeadership matches an ABSENT record (a pre-Q12 save), even with a corps seated', function(){
+      if(typeof _cmdDivLift!=='function') return { skipped:'pre-Q12' };
+      var C=mkC('US',1864,5); C.clock.capital=100;
+      if(_cmdDivLift(C)!==0) throw new Error('a fresh campaign must have 0 division lift, got '+_cmdDivLift(C));
+      // seat a corps (no divisions) — the division lift must STILL be 0 (corps alone is byte-identical to pre-Q12 corps-only)
+      var g=freeGen(C); cmdSeatCorps(C,0,g);
+      var L0=commandLeadership(C);
+      if(_cmdDivLift(C)!==0) throw new Error('a corps with no divisions must give 0 division lift');
+      delete C.president.command.divisions;                // an absent record (a pre-Q12 save) must read identically
+      if(_cmdDivLift(C)!==0) throw new Error('an absent divisions record must also give 0 lift');
+      if(commandLeadership(C)!==L0) throw new Error('commandLeadership must be identical with an absent divisions record ('+commandLeadership(C)+' != '+L0+')');
+      return { lift0:true, absentOk:true, corpsOnlyIdentical:true }; });
+
+    step('Q12: the HIERARCHY GATE — a division can be seated ONLY under a SEATED corps; seating with a vacant parent corps is a no-op (no charge); seat the corps, then the division takes', function(){
+      if(typeof cmdSeatDivision!=='function') return { skipped:'pre-Q12' };
+      var C=mkC('US',1864,5); C.clock.capital=100;
+      var b=freeGen(C,['us-thomas','us-meade']);
+      var cap0=C.clock.capital;
+      cmdSeatDivision(C,0,0,b);                            // corps 0 is VACANT -> the hierarchy gate refuses
+      if(C.president.command.divisions&&C.president.command.divisions[0]&&C.president.command.divisions[0][0]) throw new Error('a division under a VACANT corps must be refused');
+      if(C.clock.capital!==cap0) throw new Error('a refused (no parent corps) division seat must not charge');
+      var a=freeGen(C,['us-sherman','us-sheridan']); cmdSeatCorps(C,0,a);   // seat the parent corps
+      var capC=C.clock.capital; cmdSeatDivision(C,0,0,b);  // now it takes
+      if(!(C.president.command.divisions[0]&&C.president.command.divisions[0][0]===b)) throw new Error('a division under a SEATED corps must be seatable');
+      if(C.clock.capital!==capC-_cmdDivCfg().seatCost) throw new Error('the division seat must debit exactly seatCost');
+      return { gateHeld:true, seatsUnderCorps:true }; });
+
+    step('Q12: seating SPENDS exactly seatCost, is GATED when capital is short, stores the slot; re-seat no-op; vacate is free', function(){
+      if(typeof cmdSeatDivision!=='function') return { skipped:'pre-Q12' };
+      var C=mkC('US',1864,5); C.clock.capital=100; var a=freeGen(C,['us-sherman']); cmdSeatCorps(C,0,a);
+      var b=freeGen(C,['us-thomas','us-meade']), cost=_cmdDivCfg().seatCost;
+      C.clock.capital=cost-1;                              // too poor
+      cmdSeatDivision(C,0,0,b);
+      if(C.president.command.divisions[0]&&C.president.command.divisions[0][0]===b) throw new Error('seating must be GATED when capital is short');
+      C.clock.capital=cost+5; var cap0=C.clock.capital;
+      cmdSeatDivision(C,0,0,b);
+      if(C.president.command.divisions[0][0]!==b) throw new Error('an affordable seat must store the slot');
+      if(C.clock.capital!==cap0-cost) throw new Error('seat must debit exactly '+cost+', spent '+(cap0-C.clock.capital));
+      var cap1=C.clock.capital; cmdSeatDivision(C,0,0,b);  // re-seat same -> no re-charge
+      if(C.clock.capital!==cap1) throw new Error('re-seating the same general must not re-charge');
+      var cap2=C.clock.capital; cmdVacateDivision(C,0,0);
+      if(C.president.command.divisions[0][0]!=null) throw new Error('vacate must empty the slot');
+      if(C.clock.capital!==cap2) throw new Error('vacate must be free');
+      return { gated:true, spent:cost, reSeatNoop:true, vacateFree:true }; });
+
+    step('Q12: a seated able division commander LIFTS the army; the lift is bounded by the division liftCap (< the corps cap); more strong commanders never reduce it', function(){
+      if(typeof _cmdDivLift!=='function') return { skipped:'pre-Q12' };
+      var C=mkC('US',1864,5); C.clock.capital=400;
+      var per=_cmdDivPerCorps(), cap=_cmdDivCfg().liftCap;
+      // seat ONE corps (a weaker man, so the able generals stay free for the divisions), then fill its divisions
+      // with the strongest generals — the division lift must rise and stay bounded by liftCap.
+      var corpsMan=freeGen(C,['us-meade','us-hooker','us-burnside','us-halleck']); cmdSeatCorps(C,0,corpsMan);
+      if(_cmdDivLift(C)!==0) throw new Error('baseline division lift must be 0');
+      var able=['us-grant','us-sherman','us-thomas','us-sheridan'];
+      var seated=0;
+      for(var di=0;di<per;di++){ var dg=freeGen(C,able); if(dg){ cmdSeatDivision(C,0,di,dg); seated++; } }
+      if(seated===0) throw new Error('the test could not free an able division commander');
+      var l1=_cmdDivLift(C);
+      if(!(l1>0)) throw new Error('seating able division commanders must LIFT the army, got '+l1+' (seated '+seated+')');
+      if(l1>cap+1e-9) throw new Error('the division lift must be bounded by liftCap '+cap+', got '+l1);
+      return { lift:Math.round(l1*100)/100, cap:cap, seated:seated, bounded:true }; });
+
+    step('Q12: the below-grade penalty bites on a commissioned Brig. Gen. seated over a division; promoting him to Maj. Gen. removes it (the Q9 synergy); a Maj. Gen. meets the division floor', function(){
+      if(typeof _cmdDivBelowGrade!=='function') return { skipped:'pre-Q12' };
+      // CS Floyd is a Brig. Gen. (a political general) — below the division Maj. Gen. grade. His service window is
+      // 1861-5..1862-3 (Davis removed him after Fort Donelson), so test within it (Jan 1862).
+      var C=mkC('CS',1862,1); C.clock.capital=400;
+      if(_cmdDivPreferredGrade(C)!=='Maj. Gen.') throw new Error('a division preferred grade must be Maj. Gen.');
+      // seat the parent corps with ANY available CS roster general (!= the army commander) — the gate just needs a seated corps
+      var army=cmdActiveId(C), corpsGen=null, csr=_cmdSideGenerals('CS');
+      for(var i=0;i<csr.length;i++){ if(csr[i].id!==army && _cmdAlive(csr[i],C.president.date)){ corpsGen=csr[i].id; break; } }
+      if(!corpsGen) throw new Error('no available CS roster general to seat the parent corps');
+      cmdSeatCorps(C,0,corpsGen);
+      cmdCommission(C,'cs-floyd');
+      if(cmdCommissioned(C).indexOf('cs-floyd')<0) throw new Error('Floyd must be commissionable within his service window');
+      var floyd=_cmdById('CS','cs-floyd'); if(!floyd) throw new Error('Floyd not resolvable after commission');
+      if(_cmdDivBelowGrade(C,floyd)!==true) throw new Error('a Brig. Gen. (Floyd) must be BELOW grade for a division');
+      var effBefore=_cmdDivEffRating(C,floyd);
+      // promote Floyd up to Maj. Gen. (Q9) — removes the penalty (fund both currencies so the gate is not the variable under test)
+      C.clock.capital=1000; C.president.command.seniority=100;
+      cmdPromote(C,'cs-floyd');
+      if(_cmdDivBelowGrade(C,floyd)!==false) throw new Error('a promoted (Maj. Gen.) Floyd must FIT the division billet');
+      var effAfter=_cmdDivEffRating(C,floyd);
+      if(!(effAfter>effBefore)) throw new Error('promoting to grade must raise the division contribution: '+effAfter+' !> '+effBefore);
+      // a Maj. Gen. roster general (Stuart) by contrast already MEETS the division floor
+      var D=mkC('CS',1863,7); var stuart=_cmdById('CS','cs-stuart');
+      if(stuart&&_cmdDivBelowGrade(D,stuart)!==false) throw new Error('a Maj. Gen. must MEET the division floor');
+      return { brigBelow:true, promoteFits:true, effRose:true }; });
+
+    step('Q12: ONE BILLET PER MAN — appointing a division commander to ARMY clears his division; seating him in a CORPS clears it; reassign between divisions; a corps-holder is excluded from the division pool; the army commander cannot be seated', function(){
+      if(typeof cmdSeatDivision!=='function') return { skipped:'pre-Q12' };
+      var C=mkC('US',1864,5); C.clock.capital=400;
+      var a=freeGen(C,['us-sherman']); cmdSeatCorps(C,0,a);
+      var b=freeGen(C,['us-thomas','us-meade']); cmdSeatDivision(C,0,0,b);
+      if(C.president.command.divisions[0][0]!==b) throw new Error('seat div (0,0) failed');
+      // reassign b to a different division under the same corps
+      cmdSeatDivision(C,0,1,b);
+      if(C.president.command.divisions[0][0]===b) throw new Error('reassign must clear the old division');
+      if(C.president.command.divisions[0][1]!==b) throw new Error('reassign must set the new division');
+      // appoint b to ARMY command -> his division clears
+      cmdAppoint(C,b);
+      if(cmdActiveId(C)!==b) throw new Error('appoint failed (capital/availability?)');
+      var dv=C.president.command.divisions; for(var k in dv){ for(var f in dv[k]) if(dv[k][f]===b) throw new Error('the army commander must not also hold a division'); }
+      // seat a fresh division commander, then promote him into a CORPS -> his division clears
+      var c=freeGen(C,['us-thomas','us-meade','us-sheridan']); cmdSeatDivision(C,0,0,c);
+      cmdSeatCorps(C,1,c);
+      if(C.president.command.corps[1]!==c) throw new Error('seat corps for c failed');
+      var dv2=C.president.command.divisions; for(var k2 in dv2){ for(var f2 in dv2[k2]) if(dv2[k2][f2]===c) throw new Error('a man promoted to a corps must vacate his division'); }
+      // a corps-holder (a, commanding corps 0) is excluded from the division pool AND cmdSeatDivision refuses him
+      var pool=_cmdDivPoolFor(C,0,0); for(var p=0;p<pool.length;p++) if(pool[p].id===a) throw new Error('a corps-holder must not appear in the division pool');
+      var capX=C.clock.capital; cmdSeatDivision(C,1,0,a);    // a commands corps 1 (after c? no — a commands corps 0) -> still a corps-holder, refused
+      var dv3=C.president.command.divisions; for(var k3 in dv3){ for(var f3 in dv3[k3]) if(dv3[k3][f3]===a) throw new Error('a corps-holder must not be seatable in a division'); }
+      if(C.clock.capital!==capX) throw new Error('a refused (corps-holder) division seat must not charge');
+      // the army commander (b) cannot be seated in a division
+      var capY=C.clock.capital; cmdSeatDivision(C,0,2,b);
+      var dv4=C.president.command.divisions; for(var k4 in dv4){ for(var f4 in dv4[k4]) if(dv4[k4][f4]===b) throw new Error('the army commander cannot be seated in a division'); }
+      if(C.clock.capital!==capY) throw new Error('a refused (army commander) division seat must not charge');
+      return { appointClears:true, corpsPromoteClears:true, reassign:true, corpsHolderExcluded:true, armyCmdNotSeatable:true }; });
+
+    step('Q12: the CASCADE — vacating a corps drops its divisions (cmdInit sanitizes on load); the orphaned division contributes 0 lift', function(){
+      if(typeof cmdVacateCorps!=='function') return { skipped:'pre-Q12' };
+      var C=mkC('US',1864,5); C.clock.capital=400;
+      var a=freeGen(C,['us-sherman']); cmdSeatCorps(C,0,a);
+      var b=freeGen(C,['us-thomas','us-meade']); cmdSeatDivision(C,0,0,b);
+      if(_cmdDivLift(C)===0) throw new Error('a seated division should lift before the cascade');
+      cmdVacateCorps(C,0);                                  // orphan the division
+      cmdInit(C);                                           // the load-sanitize drops the orphaned branch
+      var dv=C.president.command.divisions;
+      if(dv&&dv[0]&&dv[0][0]) throw new Error('vacating the parent corps must drop its divisions (cascade)');
+      if(_cmdDivLift(C)!==0) throw new Error('an orphaned division must contribute 0 lift');
+      return { cascadeDrops:true, zeroLift:true }; });
+
+    step('Q12: SAVE-TAMPER hardening — cmdInit sanitizes a malformed cmd.divisions (array/parent-not-seated/bad slot/non-string/bogus/dup/the army commander/a corps-holder) on LOAD', function(){
+      if(typeof cmdSeatDivision!=='function') return { skipped:'pre-Q12' };
+      var C=mkC('US',1864,5); C.clock.capital=400; var army=cmdActiveId(C);
+      var a=freeGen(C,['us-sherman']); cmdSeatCorps(C,0,a);          // corps 0 seated; corps 1 vacant
+      var good=freeGen(C,['us-thomas','us-meade']);
+      // tamper: a valid placement, a dup, an out-of-range div slot, a non-string, a bogus id, the army commander,
+      // a corps-holder (a), and a whole branch under a VACANT corps (1)
+      C.president.command.divisions={ '0':{ '0':good, '1':good, '7':good, '2':12345, '3':'no-such-general', '4':army, '5':a }, '1':{ '0':good } };
+      cmdInit(C);
+      var dv=C.president.command.divisions;
+      if(Array.isArray(dv)||typeof dv!=='object') throw new Error('divisions must sanitize to a clean object');
+      if(!(dv[0]&&dv[0][0]===good)) throw new Error('the first valid placement must survive');
+      if(dv[0]&&dv[0][1]===good) throw new Error('a duplicate (one division per general) must be dropped');
+      if(dv[0]&&dv[0][7]!==undefined) throw new Error('an out-of-range division slot must be dropped');
+      if(dv[0]&&dv[0][2]!==undefined) throw new Error('a non-string id must be dropped');
+      if(dv[0]&&dv[0][3]!==undefined) throw new Error('a bogus id must be dropped');
+      if(dv[0]&&dv[0][4]!==undefined) throw new Error('the army commander must be dropped from a division');
+      if(dv[0]&&dv[0][5]!==undefined) throw new Error('a corps-holder must be dropped from a division');
+      if(dv[1]!==undefined) throw new Error('a branch under a VACANT corps must be dropped (the cascade)');
+      C.president.command.divisions=[{'0':good}]; cmdInit(C);
+      if(Array.isArray(C.president.command.divisions)) throw new Error('an array divisions must be replaced by an object');
+      return { sanitized:true }; });
+
+    step('Q12: NO output gate — cmdSeatDivision/cmdVacateDivision write ONLY cmd.divisions + C.clock.capital (no scoreboard, no reputation/seniority)', function(){
+      if(typeof cmdSeatDivision!=='function') return { skipped:'pre-Q12' };
+      var C=mkC('US',1864,5); C.clock.capital=100; var a=freeGen(C,['us-sherman']); cmdSeatCorps(C,0,a);
+      var b=freeGen(C,['us-thomas','us-meade']);
+      function snap(){ return JSON.stringify({ idx:C.idx, stats:C.stats, strength:(C.manpower&&C.manpower.strength), fieldGeneral:C.president.command.fieldGeneral, seniority:C.president.command.seniority, rep:C.president.command.reputation[b] }); }
+      var s0=snap(); cmdSeatDivision(C,0,0,b); cmdVacateDivision(C,0,0);
+      if(snap()!==s0) throw new Error('seat/vacate mutated state beyond cmd.divisions + capital');
+      return { pure:true }; });
+
+    step('Q12: the Command desk renders the division sub-rows nested under a SEATED corps (the "Divisions of I Corps" label + a Seat/Vacate control); a vacant corps renders none; the full tab includes it', function(){
+      if(typeof _cmdCorpsDepthHTML!=='function') return { skipped:'pre-Q12' };
+      var C=mkC('US',1864,5); C.clock.capital=100;
+      var h0=_cmdCorpsDepthHTML(C);
+      if(h0.indexOf('Divisions of')>=0) throw new Error('with no corps seated, no division sub-rows must render');
+      var a=freeGen(C,['us-sherman']); cmdSeatCorps(C,0,a);
+      var h1=_cmdCorpsDepthHTML(C);
+      if(h1.indexOf('Divisions of I Corps')<0) throw new Error('a seated corps must render its "Divisions of I Corps" sub-section');
+      if(h1.indexOf('cmdDivSeat_0_0')<0&&h1.indexOf('cmdDivSel_0_0')<0) throw new Error('a vacant division must offer a seat control');
+      var b=freeGen(C,['us-thomas','us-meade']); cmdSeatDivision(C,0,0,b);
+      var h2=_cmdCorpsDepthHTML(C);
+      if(h2.indexOf('cmdDivVac_0_0')<0) throw new Error('a seated division must offer a Vacate control');
+      if(h2.indexOf(_cmdName(_cmdById('US',b)))<0) throw new Error('a seated division must name its commander');
+      var tab=cmdRenderTab(C);
+      if(tab.indexOf('Divisions of I Corps')<0) throw new Error('the Command tab must include the division sub-rows');
+      return { gatedRender:true, nestsUnderCorps:true, namesCommander:true }; });
+
     // helper: read a general's current reputation
     function C0rep(C,id){ return (C.president&&C.president.command&&typeof C.president.command.reputation[id]==='number')?C.president.command.reputation[id]:60; }
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }

@@ -339,6 +339,11 @@ function cmdInit(C) {
   // commander; one corps per general — the Q9/Q8b sanitize-on-load idiom). Placed AFTER fieldGeneral is
   // finalized so cmdActiveId (which _cmdCorpsClean excludes from the corps) is stable. Plain data, rides the save.
   if (typeof _cmdCorpsClean === "function") _cmdCorpsClean(C, true);
+  // Q12 (D110): the DIVISION sub-tier — seed/sanitize cmd.divisions AFTER the corps chart is finalized (it
+  // requires the seated-corps set: a division whose parent corps is no longer seated is orphaned and dropped —
+  // the cascade). Drops invalid slots/ids/dead generals/the army commander/anyone holding a corps; one billet
+  // per general across the tree. Empty -> zero division lift -> byte-identical. The Q9/Q10 sanitize-on-load idiom.
+  if (typeof _cmdDivClean === "function") _cmdDivClean(C, true);
   // the cached handover-detection id rides the save too; clear it if it is stale (a removed/
   // wrong-side general after a roster/data change) so handover logging starts clean. A
   // just-died-but-still-in-roster id is KEPT — the next tick needs it to log the succession. (D53.6.)
@@ -657,10 +662,18 @@ function cmdCorpsCommanderFor(C, idx) {
 function _cmdCorpsPoolFor(C, idx) {
   var side = (C.side === "CS") ? "CS" : "US", roster = _cmdRosterPlusCommissioned(C, side);   // Q11 (D109): commissioned officers are seatable too
   var seated = cmdCorpsSeated(C), activeId = cmdActiveId(C), pool = [];
+  // Q12 (D110): a general already holding a DIVISION is not a free corps candidate (one billet per man; the pool
+  // shows only unbilleted men — to move a division commander up to a corps, vacate his division first).
+  var divTaken = {};
+  if (typeof cmdDivSeated === "function") {
+    var sd = cmdDivSeated(C);
+    for (var ek in sd) { var inn = sd[ek]; for (var fk in inn) { if (inn.hasOwnProperty(fk)) divTaken[inn[fk]] = 1; } }
+  }
   for (var i = 0; i < roster.length; i++) {
     var g = roster[i]; if (!g || !g.id) continue;
     if (!_cmdAlive(g, C.president.date)) continue;
     if (g.id === activeId) continue;
+    if (divTaken[g.id]) continue;                               // holds a division
     var elsewhere = false;
     for (var kk in seated) { if (seated.hasOwnProperty(kk) && seated[kk] === g.id && String(kk) !== String(idx)) { elsewhere = true; break; } }
     if (elsewhere) continue;
@@ -690,6 +703,8 @@ function cmdSeatCorps(C, idx, id) {
   if (cap < cost) return;                                        // can't afford the seating (the gate)
   if (clk && typeof clk.capital === "number") clk.capital = Math.max(0, cap - cost);   // debit the SAME rounded value the gate compared (the Q9/Q8b hardened idiom)
   for (var k in cmd.corps) { if (cmd.corps.hasOwnProperty(k) && cmd.corps[k] === id) delete cmd.corps[k]; }   // reassign: one corps per general
+  // Q12 (D110): one billet per man — a general promoted from a division into a corps vacates his division too.
+  if (typeof _cmdDivClearGeneral === "function") _cmdDivClearGeneral(cmd, id);
   cmd.corps[idx] = id;
   if (typeof _pdLog === "function") {
     _pdLog(C, "You give General " + _cmdName(g) + " command of " + _cmdCorpsLabel(idx)
@@ -710,6 +725,240 @@ function cmdVacateCorps(C, idx) {
   if (typeof _pdLog === "function") {
     var g = _cmdById((C.side === "CS") ? "CS" : "US", id);
     _pdLog(C, "You return " + (g ? "General " + _cmdName(g) : "the corps commander") + " to the reserve; " + _cmdCorpsLabel(idx) + " stands without a commander.");
+  }
+}
+
+/* ===========================================================================
+   Q12 (D110) · THE DIVISION SUB-TIER — the next rung of the depth chart (RATING-SYSTEM-DESIGN §12.1's billet
+   tree: Army -> Corps -> DIVISION -> Brigade), built HIERARCHICALLY on the Q10 corps chart (D108).
+
+   A division could be staffed only UNDER a SEATED corps (the real chain of command — a division belonged to a
+   corps), so the depth chart becomes a tree the President builds top-down. Seating a division spends seatCost
+   political capital (the existing GM currency — no new resource, §12). HOW IT REACHES THE FIGHT (no new combat
+   path; honors D74/D94 no-fudge): seated division commanders only shape the army's LEADERSHIP facet — an INPUT
+   the bridge already reads — via a small BOUNDED lift folded into commandLeadership, summed exactly like the
+   corps lift: lift = clamp( SUM over seated divisions of (effectiveDivRating - 64) * perSlotWeight, ±liftCap ).
+   effectiveDivRating = the general's GM OVR (_cmdGenRating, carries the Q9 promotion lift) minus belowGradePenalty
+   when his current grade is below `preferredGrade` (a division is a Maj. Gen.'s billet in BOTH armies). The lift
+   is DELIBERATELY SMALLER than the corps lift (cap 2 vs 4, weight 0.03 vs 0.05) so the influence hierarchy holds
+   — army (~±17) > corps (±4) > divisions (±2): a lower tier is a smaller modifier, never dominant (§27).
+
+   BYTE-IDENTICAL until the player seats a division: no division seated -> the SUM is over zero slots -> lift 0 ->
+   commandLeadership unchanged -> the sandbox + all 9 battles identical (a vacant division contributes 0, NOT a
+   baseline penalty — that would break byte-identity). ONE BILLET PER MAN: a general holds at most one of {army
+   command, a corps, a division}; seating him in a division clears any corps/other division he held, and
+   appointing/seating him HIGHER clears his division. Vacating a corps CASCADES — its orphaned divisions are
+   dropped (cmdInit sanitizes on load; _cmdDivClean requires the parent corps to be seated). cmd.divisions rides
+   the save (no _SAVE_VER bump). Writes ONLY cmd.divisions + C.clock.capital — never the scoreboard (build-gate
+   4d scans this file). Data: data/ratings.json `divisionCommand`. NO RNG.
+
+   The data shape: cmd.divisions = { "<corpsIdx>": { "<divIdx>": "<generalId>" } } (nested, keyed by corps then
+   division index — mirrors cmd.corps's {idx:id} one rung deeper). _cmdDivClean walks both levels.
+   =========================================================================== */
+function _cmdDivCfg() { var d = gameData("ratings"); return (d && d.divisionCommand) ? d.divisionCommand : null; }
+function _cmdDivPerCorps() { var cfg = _cmdDivCfg(); var n = cfg ? Math.floor(_cmdNum(cfg.perCorps, 3)) : 3; return Math.max(1, Math.min(6, n)); }
+function _cmdDivLabel(idx) {
+  var cfg = _cmdDivCfg(), labels = cfg && cfg.labels;
+  if (labels && labels[idx] != null) return String(labels[idx]);
+  var O = ["1st", "2nd", "3rd", "4th", "5th", "6th"];
+  return (O[idx] || String(idx + 1) + "th") + " Division";
+}
+/* the division preferred grade for a side (a division was a Maj. Gen.'s command in BOTH armies; the {US,CS} map
+   form is kept for symmetry with corpsCommand). Accepts the config as a {US,CS} map or a bare string. */
+function _cmdDivPreferredGrade(C) {
+  var cfg = _cmdDivCfg(); var pg = cfg && cfg.preferredGrade;
+  var side = (C && C.side === "CS") ? "CS" : "US";
+  if (pg && typeof pg === "object") return String(pg[side] || pg.US || "Maj. Gen.");
+  return pg ? String(pg) : "Maj. Gen.";
+}
+
+/* the SANITIZED division depth chart as { corpsIdx: { divIdx: generalId } }: only divisions whose PARENT CORPS
+   is currently seated (the hierarchy/cascade rule), valid slots, alive same-side generals who are NOT the army
+   commander and NOT seated in ANY corps, one billet per general across the whole tree (first wins). persist=true
+   writes the clean map back (the cmdInit load-sanitize, the Q9/Q10 idiom); persist=false is a PURE read. Must run
+   AFTER _cmdCorpsClean so the seated-corps set is finalized. */
+function _cmdDivClean(C, persist) {
+  var out = {};
+  var cmd = C && C.president && C.president.command;
+  if (!cmd) return out;
+  var raw = cmd.divisions;
+  if (Array.isArray(raw) || !raw || typeof raw !== "object") { if (persist) cmd.divisions = {}; return out; }
+  var per = _cmdDivPerCorps(), side = (C.side === "CS") ? "CS" : "US";
+  var seatedCorps = (typeof cmdCorpsSeated === "function") ? cmdCorpsSeated(C) : {};
+  var corpsTaken = {};                                          // generalIds already holding a corps (excluded from divisions)
+  for (var cc in seatedCorps) { if (seatedCorps.hasOwnProperty(cc)) corpsTaken[seatedCorps[cc]] = 1; }
+  var activeId = (typeof cmdActiveId === "function") ? cmdActiveId(C) : null;
+  var used = {};                                                // dedupe across the whole division tree
+  for (var ck in raw) {
+    if (!raw.hasOwnProperty(ck)) continue;
+    var cidx = Math.floor(_cmdNum(parseInt(ck, 10), -1));
+    if (!(seatedCorps[cidx] != null)) continue;                 // parent corps not seated -> drop the whole branch (cascade)
+    var inner = raw[ck];
+    if (Array.isArray(inner) || !inner || typeof inner !== "object") continue;
+    for (var dk in inner) {
+      if (!inner.hasOwnProperty(dk)) continue;
+      var didx = Math.floor(_cmdNum(parseInt(dk, 10), -1));
+      if (!(didx >= 0 && didx < per)) continue;                 // invalid / out-of-range division slot
+      var id = inner[dk];
+      if (typeof id !== "string" || !id) continue;
+      if (id === activeId) continue;                            // the army commander can't hold a division
+      if (corpsTaken[id]) continue;                             // already holds a corps (one billet per man)
+      if (used[id]) continue;                                   // already placed in an earlier division (dedupe)
+      var g = _cmdById(side, id);
+      if (!g || !_cmdAlive(g, C.president.date)) continue;      // gone / dead / not in the war
+      used[id] = 1;
+      if (!out[cidx]) out[cidx] = {};
+      out[cidx][didx] = id;
+    }
+  }
+  if (persist) cmd.divisions = out;
+  return out;
+}
+function cmdDivSeated(C) { return _cmdDivClean(C, false); }
+
+/* is `gen`'s CURRENT grade below the division preferred grade? (a division is a Maj. Gen.'s billet — a junior man
+   leads stretched). Q9-aware: a promotion to/above the grade removes the penalty. */
+function _cmdDivBelowGrade(C, gen) {
+  var cfg = _cmdDivCfg(); if (!cfg || !gen) return false;
+  var prefIdx = _cmdGradeIdx(_cmdDivPreferredGrade(C));
+  if (prefIdx < 0) return false;
+  return _cmdGradeIdx(_cmdCurrentGrade(C, gen)) < prefIdx;
+}
+/* the effective division-command rating a seated general contributes: his GM OVR minus the below-grade penalty
+   when his rank does not fit the billet. Clamped [0,100]. Pure read. */
+function _cmdDivEffRating(C, gen) {
+  var r = _cmdGenRating(C, gen);
+  if (_cmdDivBelowGrade(C, gen)) r -= Math.max(0, _cmdNum((_cmdDivCfg() || {}).belowGradePenalty, 4));
+  return Math.max(0, Math.min(100, r));
+}
+
+/* THE LIFT — the bounded leadership the staffed divisions add to commandLeadership. 0 when NO divisions are
+   seated (the byte-identity keystone) or there is no config. SUM over seated divisions of (effRating-64)*weight,
+   clamped to ±liftCap. Pure read. */
+function _cmdDivLift(C) {
+  var cfg = _cmdDivCfg(); if (!cfg) return 0;
+  // fast path (the byte-identity hot path): no division branch -> 0 WITHOUT walking corps / roster.
+  var cmd0 = C && C.president && C.president.command;
+  if (!cmd0 || !cmd0.divisions || typeof cmd0.divisions !== "object" || Array.isArray(cmd0.divisions)) return 0;
+  var hasAny = false; for (var kk0 in cmd0.divisions) { if (cmd0.divisions.hasOwnProperty(kk0)) { hasAny = true; break; } }
+  if (!hasAny) return 0;
+  var seated = cmdDivSeated(C), side = (C.side === "CS") ? "CS" : "US";
+  var w = _cmdNum(cfg.perSlotWeight, 0.03), cap = Math.max(0, _cmdNum(cfg.liftCap, 2));
+  var sum = 0, any = false;
+  for (var ck in seated) {
+    if (!seated.hasOwnProperty(ck)) continue;
+    var inner = seated[ck];
+    for (var dk in inner) {
+      if (!inner.hasOwnProperty(dk)) continue;
+      var g = _cmdById(side, inner[dk]); if (!g) continue;
+      sum += (_cmdDivEffRating(C, g) - 64); any = true;
+    }
+  }
+  if (!any) return 0;
+  var lift = sum * w;
+  return lift > cap ? cap : (lift < -cap ? -cap : lift);
+}
+
+/* the seated commander of corps `cidx` division `didx` — {id,name,ovr,grade,belowGrade} or null. */
+function cmdDivCommanderFor(C, cidx, didx) {
+  if (!C) return null;
+  var seated = cmdDivSeated(C), branch = seated[cidx]; if (!branch) return null;
+  var id = branch[didx];
+  if (id == null) return null;
+  var g = _cmdById((C.side === "CS") ? "CS" : "US", id);
+  if (!g) return null;
+  return { id: id, name: _cmdName(g), ovr: Math.round(_cmdGenRating(C, g)), grade: _cmdCurrentGrade(C, g), belowGrade: _cmdDivBelowGrade(C, g) };
+}
+
+/* the pool of generals free to take corps `cidx` division `didx`: alive same-side men who are NOT the army
+   commander, NOT seated in any corps, and NOT seated in ANOTHER division (the one currently here is allowed,
+   for a re-render). */
+function _cmdDivPoolFor(C, cidx, didx) {
+  var side = (C.side === "CS") ? "CS" : "US", roster = _cmdRosterPlusCommissioned(C, side);
+  var seatedCorps = cmdCorpsSeated(C), seatedDiv = cmdDivSeated(C), activeId = cmdActiveId(C);
+  var corpsTaken = {};
+  for (var cc in seatedCorps) { if (seatedCorps.hasOwnProperty(cc)) corpsTaken[seatedCorps[cc]] = 1; }
+  var here = (seatedDiv[cidx] && seatedDiv[cidx][didx]) || null, pool = [];
+  for (var i = 0; i < roster.length; i++) {
+    var g = roster[i]; if (!g || !g.id) continue;
+    if (!_cmdAlive(g, C.president.date)) continue;
+    if (g.id === activeId) continue;
+    if (corpsTaken[g.id]) continue;                             // holds a corps
+    var elsewhere = false;
+    for (var ek in seatedDiv) {
+      var inner = seatedDiv[ek];
+      for (var fk in inner) {
+        if (inner.hasOwnProperty(fk) && inner[fk] === g.id && !(String(ek) === String(cidx) && String(fk) === String(didx))) { elsewhere = true; break; }
+      }
+      if (elsewhere) break;
+    }
+    if (elsewhere && g.id !== here) continue;
+    pool.push(g);
+  }
+  return pool;
+}
+
+/* remove `id` from every division billet he holds (the one-billet-per-man helper used by the higher moves). */
+function _cmdDivClearGeneral(cmd, id) {
+  if (!cmd || !cmd.divisions || typeof cmd.divisions !== "object" || Array.isArray(cmd.divisions)) return;
+  for (var ck in cmd.divisions) {
+    if (!cmd.divisions.hasOwnProperty(ck)) continue;
+    var inner = cmd.divisions[ck]; if (!inner || typeof inner !== "object") continue;
+    for (var dk in inner) { if (inner.hasOwnProperty(dk) && inner[dk] === id) delete inner[dk]; }
+  }
+}
+
+/* THE MOVE — seat general `id` in corps `cidx` division `didx`, spending seatCost political capital. The parent
+   corps MUST be seated (the hierarchy gate). Reassigns (clears him from any corps/other division); no-op when
+   the slot/general is invalid, the parent corps is vacant, he is the army commander, he already holds the slot,
+   or capital is short. Writes ONLY cmd.divisions + C.clock.capital. Bounded, logged. */
+function cmdSeatDivision(C, cidx, didx, id) {
+  if (!C || !C.president) return;
+  cmdInit(C);
+  var cfg = _cmdDivCfg(); if (!cfg) return;
+  cidx = Math.floor(_cmdNum(cidx, -1)); didx = Math.floor(_cmdNum(didx, -1));
+  if (!(cidx >= 0 && cidx < _cmdCorpsSlots())) return;          // invalid corps
+  if (!(didx >= 0 && didx < _cmdDivPerCorps())) return;         // invalid division slot
+  var side = (C.side === "CS") ? "CS" : "US", cmd = C.president.command;
+  var seatedCorps = cmdCorpsSeated(C);
+  if (seatedCorps[cidx] == null) return;                        // the hierarchy gate: no corps commander -> no division billet
+  // one billet per man: a man who holds ANY corps must be vacated from it first (symmetric with the division
+  // pool, which excludes corps-holders) — refuse rather than silently demote him out of his corps.
+  for (var cck in seatedCorps) { if (seatedCorps.hasOwnProperty(cck) && seatedCorps[cck] === id) return; }
+  var g = _cmdById(side, id);
+  if (!g || !_cmdAlive(g, C.president.date)) return;            // invalid / unavailable general
+  if (!_cmdByIdRoster(side, id) && cmdCommissioned(C).indexOf(id) < 0) return;   // a commission-pool officer must be COMMISSIONED first (byte-identical for roster ids)
+  if (id === cmdActiveId(C)) return;                            // the army commander can't hold a division
+  if (Array.isArray(cmd.divisions) || !cmd.divisions || typeof cmd.divisions !== "object") cmd.divisions = {};
+  if (cmd.divisions[cidx] && cmd.divisions[cidx][didx] === id) return;   // already seated here (no re-charge)
+  var cost = Math.max(0, Math.round(_cmdNum(cfg.seatCost, 2)));
+  var clk = C.clock, cap = (clk && typeof clk.capital === "number" && isFinite(clk.capital)) ? Math.round(clk.capital) : 0;
+  if (cap < cost) return;                                       // can't afford the seating (the gate)
+  if (clk && typeof clk.capital === "number") clk.capital = Math.max(0, cap - cost);   // debit the SAME rounded value the gate compared
+  _cmdDivClearGeneral(cmd, id);                                 // reassign within divisions: clear any other division he held
+  if (!cmd.divisions[cidx] || typeof cmd.divisions[cidx] !== "object" || Array.isArray(cmd.divisions[cidx])) cmd.divisions[cidx] = {};
+  cmd.divisions[cidx][didx] = id;
+  if (typeof _pdLog === "function") {
+    _pdLog(C, "You give General " + _cmdName(g) + " command of the " + _cmdDivLabel(didx) + " of " + _cmdCorpsLabel(cidx)
+      + (cost ? " (−" + cost + " capital)" : "") + (_cmdDivBelowGrade(C, g) ? " — he leads below his grade; promote him to steady the division." : "") + ".");
+  }
+}
+
+/* THE MOVE — vacate corps `cidx` division `didx` (return its commander to the reserve). Free, like cmdVacateCorps. */
+function cmdVacateDivision(C, cidx, didx) {
+  if (!C || !C.president) return;
+  cmdInit(C);
+  var cmd = C.president.command;
+  cidx = Math.floor(_cmdNum(cidx, -1)); didx = Math.floor(_cmdNum(didx, -1));
+  if (!cmd.divisions || typeof cmd.divisions !== "object" || Array.isArray(cmd.divisions)) return;
+  var branch = cmd.divisions[cidx];
+  if (!branch || typeof branch !== "object") return;
+  var id = branch[didx];
+  if (id == null) return;
+  delete branch[didx];
+  if (typeof _pdLog === "function") {
+    var g = _cmdById((C.side === "CS") ? "CS" : "US", id);
+    _pdLog(C, "You return " + (g ? "General " + _cmdName(g) : "the division commander") + " to the reserve; the " + _cmdDivLabel(didx) + " of " + _cmdCorpsLabel(cidx) + " stands without a commander.");
   }
 }
 
@@ -932,7 +1181,10 @@ function commandLeadership(C) {
   // Q10 (D108): the staffed corps add a small BOUNDED leadership lift through this SAME facet the bridge already
   // reads (never the scoreboard, D74/D94). 0 when no corps are seated -> byte-identical to the pre-Q10 build.
   var corps = (typeof _cmdCorpsLift === "function") ? _cmdCorpsLift(C) : 0;
-  var lead = 64 + (rating - 64) * 0.7 + (cab - 64) * 0.3 + corps;
+  // Q12 (D110): the staffed DIVISIONS add a further small BOUNDED lift (±2, < the corps' ±4 — the influence
+  // hierarchy army>corps>division, §27), through the SAME facet. 0 when no division is seated -> byte-identical.
+  var div = (typeof _cmdDivLift === "function") ? _cmdDivLift(C) : 0;
+  var lead = 64 + (rating - 64) * 0.7 + (cab - 64) * 0.3 + corps + div;
   return Math.max(42, Math.min(88, Math.round(lead)));
 }
 
@@ -1334,6 +1586,56 @@ function _cmdCorpsSlotRow(C, idx, cap, cost) {
   }
   return '<div style="display:flex;gap:10px;align-items:center;padding:6px 0;border-bottom:1px dotted var(--rule)">' + head + body + ctrl + '</div>';
 }
+/* ---- Q12 (D110): the DIVISION sub-rows, nested under a SEATED corps. Each division billet shows its seated
+   commander (name + grade + OVR + a below-grade tell) with a Vacate control, or "Vacant" + a pool select + a
+   Seat control (gated on capital). Returns "" when there is no config or the parent corps is not seated (the
+   hierarchy gate). Pure display; cmdSeatDivision/cmdVacateDivision do the writes. ---- */
+function _cmdDivSelect(C, cidx, didx, pool) {
+  var opts = '<option value="">&mdash; choose a general &mdash;</option>';
+  for (var i = 0; i < pool.length; i++) {
+    var g = pool[i], rating = Math.round(_cmdGenRating(C, g)), grade = _cmdCurrentGrade(C, g);
+    opts += '<option value="' + _cmdEsc(g.id) + '">' + _cmdEsc(_cmdName(g)) + ' &middot; ' + _cmdEsc(grade) + ' &middot; ' + rating + ' OVR</option>';
+  }
+  return '<select id="cmdDivSel_' + cidx + '_' + didx + '" aria-label="Choose a general for the ' + _cmdEsc(_cmdDivLabel(didx)) + ' of ' + _cmdEsc(_cmdCorpsLabel(cidx)) + '" style="font-size:11px;max-width:210px;padding:2px 5px;background:#241c10;color:#efe6d2;border:1px solid var(--rule);border-radius:4px">' + opts + '</select>';
+}
+function _cmdDivSubrow(C, cidx, didx, cap, cost) {
+  var dc = cmdDivCommanderFor(C, cidx, didx), label = _cmdDivLabel(didx);
+  var head = '<div style="font-size:11px;font-weight:bold;color:#a98a55;flex:0 0 92px;min-width:80px">' + _cmdEsc(label) + '</div>';/* a11y: #a98a55 4.6:1 on the .sheet ground -> AA */
+  var body, ctrl;
+  if (dc) {
+    var gr = (typeof fldRatingGrade === "function") ? fldRatingGrade(dc.ovr) : { letter: "", color: "#b8863b" };
+    var bg = dc.belowGrade ? ' <span title="He commands below grade — a division is properly a ' + _cmdEsc(_cmdDivPreferredGrade(C)) + '&rsquo;s billet. Promote him to lead it without strain." style="color:#d17936;font-size:10px">&#9650; below grade</span>' : '';/* a11y: #d17936 4.54:1 on #2e2816 -> AA; meaning also in the words + glyph */
+    body = '<div style="flex:1 1 auto;min-width:0;font-size:11px">'
+      + '<b>' + _cmdEsc(dc.name) + '</b> <span style="opacity:.74">' + _cmdEsc(dc.grade) + '</span>'
+      + ' <span aria-hidden="true" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:' + gr.color + ';margin:0 2px"></span><b>' + _cmdEsc(gr.letter) + '</b> ' + dc.ovr + ' OVR' + bg + '</div>';
+    ctrl = '<button id="cmdDivVac_' + cidx + '_' + didx + '" type="button" class="upg" style="flex:0 0 auto;font-size:10px;padding:2px 7px">Vacate</button>';
+  } else {
+    var pool = _cmdDivPoolFor(C, cidx, didx);
+    if (!pool.length) {
+      body = '<div style="flex:1 1 auto;font-size:10.5px;opacity:.6">Vacant &mdash; no generals are free to command this division.</div>'; ctrl = '';
+    } else if (cap < cost) {
+      body = '<div style="flex:1 1 auto;font-size:10.5px;opacity:.7">Vacant.</div>';
+      ctrl = '<span style="font-size:10.5px;color:#e86840" title="Seating a division commander costs ' + cost + ' political capital">Needs ' + cost + ' cap</span>';/* a11y: #e86840 >=4.5:1 -> AA; meaning also in the words */
+    } else {
+      body = '<div style="flex:1 1 auto;display:flex;gap:6px;align-items:center;flex-wrap:wrap"><span style="font-size:10.5px;opacity:.7">Vacant</span>' + _cmdDivSelect(C, cidx, didx, pool) + '</div>';
+      ctrl = '<button id="cmdDivSeat_' + cidx + '_' + didx + '" type="button" class="upg" style="flex:0 0 auto;font-size:10px;padding:2px 7px" title="Seat the chosen general in the ' + _cmdEsc(label) + ' of ' + _cmdEsc(_cmdCorpsLabel(cidx)) + ' &mdash; ' + cost + ' political capital">Seat <span style="opacity:.8">(&minus;' + cost + ' cap)</span></button>';
+    }
+  }
+  return '<div style="display:flex;gap:8px;align-items:center;padding:4px 0">' + head + body + ctrl + '</div>';
+}
+function _cmdDivSubrowsForCorps(C, cidx, cap) {
+  var cfg = _cmdDivCfg(); if (!cfg) return "";
+  var seatedCorps = cmdCorpsSeated(C);
+  if (seatedCorps[cidx] == null) return "";                     // the hierarchy gate: divisions only under a seated corps
+  var per = _cmdDivPerCorps();
+  var cost = Math.max(0, Math.round(_cmdNum(cfg.seatCost, 2)));
+  var sub = "";
+  for (var d = 0; d < per; d++) sub += _cmdDivSubrow(C, cidx, d, cap, cost);
+  return '<div style="margin:2px 0 8px 18px;padding-left:12px;border-left:2px solid rgba(179,146,94,.34)">'
+    + '<div style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#a98a55;opacity:.92;margin:2px 0 1px">Divisions of ' + _cmdEsc(_cmdCorpsLabel(cidx)) + '</div>'/* a11y: #a98a55 4.6:1 -> AA */
+    + sub
+    + '</div>';
+}
 function _cmdCorpsDepthHTML(C) {
   var cfg = _cmdCorpsCfg(); if (!cfg) return "";
   var side = (C.side === "CS") ? "CS" : "US";
@@ -1341,18 +1643,26 @@ function _cmdCorpsDepthHTML(C) {
   var slots = _cmdCorpsSlots();
   var cap = (C.clock && typeof C.clock.capital === "number") ? Math.round(C.clock.capital) : 0;
   var cost = Math.max(0, Math.round(_cmdNum(cfg.seatCost, 3)));
+  var divCfg = _cmdDivCfg(), hasDiv = !!divCfg;
   var rows = "";
-  for (var i = 0; i < slots; i++) rows += _cmdCorpsSlotRow(C, i, cap, cost);
-  var lift = Math.round(_cmdCorpsLift(C)), eff;
-  if (lift > 0) eff = '<span aria-hidden="true" style="color:#6f9e5a">&#9650;</span> <b>+' + lift + '</b> to the army&rsquo;s command in the field &mdash; a sound corps staff';
-  else if (lift < 0) eff = '<span aria-hidden="true" style="color:#c9712e">&#9660;</span> <b>&minus;' + Math.abs(lift) + '</b> to the army&rsquo;s command &mdash; weak or stretched corps leadership drags it';
-  else eff = 'No net effect yet &mdash; seat able generals to lift the army, or leave the corps to the course of the war';
+  for (var i = 0; i < slots; i++) {
+    rows += _cmdCorpsSlotRow(C, i, cap, cost);
+    if (hasDiv && typeof _cmdDivSubrowsForCorps === "function") rows += _cmdDivSubrowsForCorps(C, i, cap);   // Q12 (D110): nest the division billets under each seated corps (the tree)
+  }
+  // Q12 (D110): the readout is the COMBINED corps + division lift — both feed the army's command facet, so the
+  // player sees the true total impact of the staff he has built. "Corps staff" kept contiguous (probe-locked).
+  var lift = Math.round(_cmdCorpsLift(C) + (typeof _cmdDivLift === "function" ? _cmdDivLift(C) : 0)), eff;
+  if (lift > 0) eff = '<span aria-hidden="true" style="color:#6f9e5a">&#9650;</span> <b>+' + lift + '</b> to the army&rsquo;s command in the field &mdash; a sound command staff';
+  else if (lift < 0) eff = '<span aria-hidden="true" style="color:#c9712e">&#9660;</span> <b>&minus;' + Math.abs(lift) + '</b> to the army&rsquo;s command &mdash; weak or stretched leadership drags it';
+  else eff = 'No net effect yet &mdash; seat able generals to lift the army, or leave the command to the course of the war';
+  var divIntro = hasDiv ? ' A corps was built of <b>divisions</b>: seat a corps commander, then staff the divisions beneath him &mdash; a corps was only as good as its divisions.' : '';
+  var divFoot = hasDiv ? ' Below each seated corps you may staff its divisions (a division is properly a ' + _cmdEsc(_cmdDivPreferredGrade(C)) + '&rsquo;s billet) &mdash; the cutting edge of a corps, like A.&thinsp;P. Hill&rsquo;s Light Division under Jackson.' : '';
   return '<div style="margin-top:16px">'
     + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#b3925e;margin-bottom:2px">The corps command &mdash; depth chart</div>'/* a11y: #b3925e 5.0:1 -> AA */
-    + '<div style="font-size:11px;opacity:.8;margin-bottom:6px">An army fought as corps. Seat your generals at the head of each &mdash; who you place, and whether his rank fits the billet, shapes how well the whole army fights. It costs <b>' + cost + '</b> political capital to seat a commander, the same clout you spend to appoint and promote.</div>'
+    + '<div style="font-size:11px;opacity:.8;margin-bottom:6px">An army fought as corps. Seat your generals at the head of each &mdash; who you place, and whether his rank fits the billet, shapes how well the whole army fights. It costs <b>' + cost + '</b> political capital to seat a commander, the same clout you spend to appoint and promote.' + divIntro + '</div>'
     + '<div style="font-size:11px;opacity:.92;margin-bottom:6px;padding:6px 9px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.08)">Corps staff: ' + eff + '.</div>'
     + rows
-    + '<div style="font-size:10.5px;opacity:.62;margin-top:6px;line-height:1.4">Your corps commanders shape the army&rsquo;s leadership in every battle; where the historical order of battle is known above, your appointees take their places in it. A corps is properly a ' + _cmdEsc(_cmdCorpsPreferredGrade(C)) + '&rsquo;s billet &mdash; seat a junior general and he leads stretched until you promote him.</div>'
+    + '<div style="font-size:10.5px;opacity:.62;margin-top:6px;line-height:1.4">Your corps commanders shape the army&rsquo;s leadership in every battle; where the historical order of battle is known above, your appointees take their places in it. A corps is properly a ' + _cmdEsc(_cmdCorpsPreferredGrade(C)) + '&rsquo;s billet &mdash; seat a junior general and he leads stretched until you promote him.' + divFoot + '</div>'
     + '</div>';
 }
 
@@ -1493,6 +1803,8 @@ function cmdAppoint(C, id) {
   if (cmd.corps && typeof cmd.corps === "object" && !Array.isArray(cmd.corps)) {
     for (var ck in cmd.corps) { if (cmd.corps.hasOwnProperty(ck) && cmd.corps[ck] === id) delete cmd.corps[ck]; }
   }
+  // Q12 (D110): nor a division (one billet per man) — clear any division he held when he takes the army command.
+  if (typeof _cmdDivClearGeneral === "function") _cmdDivClearGeneral(cmd, id);
   cmd.appointedTurn = (P.turn || 0);
   cmd.history.unshift({ turn: (P.turn || 0), id: id });
   if (cmd.history.length > 8) cmd.history.length = 8;
@@ -1572,6 +1884,33 @@ function cmdWireTab(C) {
         if (typeof _wdRefresh === "function") _wdRefresh();
       });
     })(s);
+  }
+  // Q12 (D110): wire the DIVISION sub-billet controls — a Seat button (reads its slot's select) + a Vacate button
+  // per (corps, division) slot (ids mirror the render; both indices are integers, so no escaping is needed). The
+  // absent controls (a vacant parent corps renders none) simply resolve to null and are skipped.
+  if (typeof _cmdDivPerCorps === "function") {
+    var dPer = _cmdDivPerCorps();
+    for (var cs = 0; cs < corpsSlots; cs++) {
+      for (var ds = 0; ds < dPer; ds++) {
+        (function (ci, di) {
+          var dSeat = document.getElementById("cmdDivSeat_" + ci + "_" + di);
+          if (dSeat) dSeat.addEventListener("click", function () {
+            var sel = document.getElementById("cmdDivSel_" + ci + "_" + di);
+            var gid = sel ? sel.value : "";
+            if (!gid) return;                                  // no general chosen — no-op
+            cmdSeatDivision(C, ci, di, gid);
+            if (typeof saveLocal === "function") saveLocal();
+            if (typeof _wdRefresh === "function") _wdRefresh();
+          });
+          var dVac = document.getElementById("cmdDivVac_" + ci + "_" + di);
+          if (dVac) dVac.addEventListener("click", function () {
+            cmdVacateDivision(C, ci, di);
+            if (typeof saveLocal === "function") saveLocal();
+            if (typeof _wdRefresh === "function") _wdRefresh();
+          });
+        })(cs, ds);
+      }
+    }
   }
   // Q11 (D109): wire the Commission buttons (one per commission-pool officer; ids mirror the render, escaped — D43.4).
   var commPool = _cmdCommissionPool(side);
