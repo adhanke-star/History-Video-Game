@@ -76,18 +76,18 @@ function _slOpenManager() {
           '<div style="font-size:11px;opacity:.7">Saved: ' + m.when + '</div>' +
         '</div>' +
         '<div style="display:flex;gap:6px;flex-shrink:0">' +
-          '<button class="gn-btn" id="slLoad' + i + '" style="padding:4px 10px;font-size:12px" aria-label="Load slot ' + (i+1) + '">Load</button>' +
-          '<button class="gn-btn" id="slDel' + i + '" style="padding:4px 10px;font-size:12px;opacity:.7" aria-label="Delete slot ' + (i+1) + '">Del</button>' +
+          '<button class="gn-btn" id="slLoad' + i + '" style="padding:6px 10px;font-size:12px" aria-label="Load slot ' + (i+1) + '">Load</button>' +
+          '<button class="gn-btn" id="slDel' + i + '" style="padding:6px 10px;font-size:12px;opacity:.7" aria-label="Delete slot ' + (i+1) + '">Del</button>' +
         '</div>';
     } else {
       content =
-        '<div style="flex:1;opacity:.5;font-style:italic;font-size:13px">— Empty —</div>';
+        '<div style="flex:1;opacity:.6;font-style:italic;font-size:13px">— Empty —</div>';
     }
     rows +=
       '<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--rule);border-radius:4px;margin-bottom:8px;background:rgba(0,0,0,.15)">' +
-        '<div style="font-size:18px;font-weight:bold;opacity:.4;width:22px;text-align:center">' + (i+1) + '</div>' +
+        '<div style="font-size:18px;font-weight:bold;color:#a89066;width:22px;text-align:center">' + (i+1) + '</div>' +
         content +
-        '<button class="gn-btn" id="slSave' + i + '" style="padding:4px 10px;font-size:12px" aria-label="Save to slot ' + (i+1) + '">Save</button>' +
+        '<button class="gn-btn" id="slSave' + i + '" style="padding:6px 10px;font-size:12px" aria-label="Save to slot ' + (i+1) + '">Save</button>' +
       '</div>';
   }
 

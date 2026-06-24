@@ -118,10 +118,10 @@ function prodOnResolve(winnerSide, type, B, C, win) {
 
 /* Status word for the equip index. */
 function _prEquipStatus(v) {
-  if (v >= 85) return ["Well-found", "#4a6b3a"];
+  if (v >= 85) return ["Well-found", "#65974f"];
   if (v >= 60) return ["Adequate", "#b8863b"];
   if (v >= 35) return ["Strained", "#c9712e"];
-  return ["Ragged", "#9c3b2e"];
+  return ["Ragged", "#d56760"];
 }
 
 /* Overview fragment for the War Effort tab (called by presRenderEconomy). */
@@ -137,8 +137,8 @@ function presProdBlock(C) {
   var out = '<hr class="rule"><div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:2px 0 4px">War Production &amp; Logistics</div>'
     + '<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:13px">Army equipment</span>'
     + '<span style="font-weight:bold;color:' + es[1] + '">' + P.equipIndex + ' &middot; ' + es[0] + '</span></div>'
-    + bar('Railroad integrity', P.railIntegrity, P.railIntegrity > 60 ? '#4a6b3a' : P.railIntegrity > 30 ? '#b8863b' : '#9c3b2e')
-    + bar('Food reaching the front', P.foodDist * 100, P.foodDist > 0.6 ? '#4a6b3a' : '#b8863b');
+    + bar('Railroad integrity', P.railIntegrity, P.railIntegrity > 60 ? '#4f7040' : P.railIntegrity > 30 ? '#b8863b' : '#b84038')
+    + bar('Food reaching the front', P.foodDist * 100, P.foodDist > 0.6 ? '#4f7040' : '#b8863b');
   if (lt) out += '<div style="font-size:12px;opacity:.8;margin-top:4px">Last quarter: <b>' + lt.arms + '</b>k shoulder arms, <b>' + lt.arty + '</b> guns produced.</div>';
   return out;
 }

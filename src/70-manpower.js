@@ -196,10 +196,10 @@ function manpowerOnResolve(winnerSide, type, B, C, win) {
 
 /* Status word for the army-strength index. */
 function _mpStrengthStatus(v) {
-  if (v >= 85) return ["At full strength", "#4a6b3a"];
+  if (v >= 85) return ["At full strength", "#639452"];
   if (v >= 60) return ["Holding", "#b8863b"];
   if (v >= 35) return ["Thinning", "#c9712e"];
-  return ["Melting away", "#9c3b2e"];
+  return ["Melting away", "#d07060"];
 }
 
 /* Pull a teaching card from GAME_DATA["manpower-teaching"] when present. */
@@ -237,7 +237,7 @@ function presManpowerBlock(C) {
   var out = '<hr class="rule"><div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:2px 0 4px">The Ranks &mdash; Manpower &amp; Conscription</div>'
     + '<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:13px">Army strength</span>'
     + '<span style="font-weight:bold;color:' + ss[1] + '">' + Math.round(P.strength) + ' &middot; ' + ss[0] + '</span></div>'
-    + bar('Casualty replacement', ratioPct, ratioPct > 70 ? '#4a6b3a' : ratioPct > 35 ? '#b8863b' : '#9c3b2e')
+    + bar('Casualty replacement', ratioPct, ratioPct > 70 ? '#639452' : ratioPct > 35 ? '#b8863b' : '#d07060')
     + '<div style="display:flex;gap:10px;flex-wrap:wrap;font-size:12px;opacity:.85;margin-top:3px">'
     +   '<span>Manpool: <b>' + Math.round(P.pool) + 'k</b></span><span style="opacity:.5">&middot;</span>'
     +   '<span>Enlisted: <b>' + Math.round(P.enlisted) + 'k</b></span><span style="opacity:.5">&middot;</span>'
@@ -245,7 +245,7 @@ function presManpowerBlock(C) {
     +   (side === "US" ? ('<span style="opacity:.5">&middot;</span><span>USCT: <b>' + (P.usctUnlocked ? 'Organized' : 'Not yet') + '</b></span>')
                        : ('<span style="opacity:.5">&middot;</span><span>Desertion: <b>' + Math.round(P.desertionTotal) + 'k</b></span>'))
     + '</div>';
-  if (lt) out += '<div style="font-size:12px;opacity:.8;margin-top:3px">Last quarter: <b>' + lt.recruits + 'k</b> recruited; ' + (P.replacementRatio < 0.5 ? '<span style="color:#9c3b2e">losses outrun replacements.</span>' : 'the ranks hold.') + '</div>';
+  if (lt) out += '<div style="font-size:12px;opacity:.8;margin-top:3px">Last quarter: <b>' + lt.recruits + 'k</b> recruited; ' + (P.replacementRatio < 0.5 ? '<span style="color:#d07060">losses outrun replacements.</span>' : 'the ranks hold.') + '</div>';
   out += '<div style="font-size:11px;opacity:.62;margin-top:4px;font-style:italic">' + _mpWhyText(C) + '</div>';
   return out;
 }

@@ -259,6 +259,106 @@ const SETUP = `(() => {
       if(!d.querySelector('[role="group"][aria-label]')) throw new Error('no labelled modes group');
       return { n:btns.length }; });
 
+    // ===== E3-i2 (D126): per-surface WCAG 2.2 AA assertions =====
+    var _hx=function(h){h=String(h).replace('#','');if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];};
+    var _lin=function(c){c/=255;return c<=0.03928?c/12.92:Math.pow((c+0.055)/1.055,2.4);};
+    var _lum=function(rgb){return 0.2126*_lin(rgb[0])+0.7152*_lin(rgb[1])+0.0722*_lin(rgb[2]);};
+    var _ratio=function(fg,bg){var a=_lum(_hx(fg)),b=_lum(_hx(bg)),hi=Math.max(a,b),lo=Math.min(a,b);return (hi+0.05)/(lo+0.05);};
+    var _ratioRgb=function(rgb,bg){var a=_lum(rgb),b=_lum(_hx(bg)),hi=Math.max(a,b),lo=Math.min(a,b);return (hi+0.05)/(lo+0.05);};
+    var _composite=function(fg,bg,al){var f=_hx(fg),b=_hx(bg);return [Math.round(f[0]*al+b[0]*(1-al)),Math.round(f[1]*al+b[1]*(1-al)),Math.round(f[2]*al+b[2]*(1-al))];};
+    var _parseRgb=function(s){var m=String(s).match(/rgba?\\((\\d+)[, ]+(\\d+)[, ]+(\\d+)/);return m?[+m[1],+m[2],+m[3]]:null;};
+    var _effOpacity=function(el){var o=1,n=el;while(n&&n.nodeType===1){var c=getComputedStyle(n).opacity;if(c!=='')o*=parseFloat(c);n=n.parentElement;}return o;};
+
+    step('AA cascade: --rule -> #a89066 and --blood-lt -> #d8745c on <html> (always-on, mode-independent)', function(){
+      reset();
+      var cs=getComputedStyle(document.documentElement);
+      var rule=String(cs.getPropertyValue('--rule')).trim().toLowerCase(), blood=String(cs.getPropertyValue('--blood-lt')).trim().toLowerCase();
+      if(rule!=='#a89066') throw new Error('--rule not redefined: "'+rule+'"');
+      if(blood!=='#d8745c') throw new Error('--blood-lt not redefined: "'+blood+'"');
+      return { rule:rule, blood:blood }; });
+
+    step('AA cascade reaches FROZEN base classes: .title-sub computes #a89066, .tagn computes #d8745c', function(){
+      reset();
+      var t=document.createElement('div'); t.className='title-sub'; document.body.appendChild(t);
+      var g=document.createElement('span'); g.className='tagn'; document.body.appendChild(g);
+      var tc=_parseRgb(getComputedStyle(t).color), gc=_parseRgb(getComputedStyle(g).color);
+      document.body.removeChild(t); document.body.removeChild(g);
+      if(!tc||tc[0]!==168||tc[1]!==144||tc[2]!==102) throw new Error('.title-sub color not #a89066: '+JSON.stringify(tc));
+      if(!gc||gc[0]!==216||gc[1]!==116||gc[2]!==92) throw new Error('.tagn (--blood-lt) color not #d8745c: '+JSON.stringify(gc));
+      return { titleSub:tc, tagn:gc }; });
+
+    step('the always-on AA + HC-extension rules are present in the injected stylesheet', function(){
+      var css=(document.getElementById('a11yModeStyles')||{}).textContent||'';
+      var need=[':root{--rule:#a89066;--blood-lt:#d8745c;}',':focus-visible{','.upg[aria-pressed="true"]:focus-visible',
+        '#wdContent','[id^="wdTab_"][aria-pressed="true"]','#fldHud','.sheet [style*="color:var(--rule)"]','#fldAudioPanel button'];
+      for(var i=0;i<need.length;i++) if(css.indexOf(need[i])<0) throw new Error('stylesheet missing: '+need[i]);
+      return { rules:need.length }; });
+
+    step('toast is an assistive-tech status region (WCAG 4.1.3)', function(){
+      reset();
+      var t=document.getElementById('toast'); if(!t) throw new Error('no #toast element');
+      if(t.getAttribute('aria-live')!=='polite') throw new Error('toast not aria-live=polite');
+      return { ok:true }; });
+
+    step('the canonical fixed palette clears AA on its grounds (text 4.5 / fill 3 / composited)', function(){
+      var fails=[];
+      var text=[['#a89066','#26200f'],['#a89066','#2c2014'],['#d8745c','#241a10'],['#d8745c','#161009'],['#d07060','#26200f'],
+        ['#639452','#26200f'],['#739850','#26200f'],['#da6a5a','#26200f'],['#6a9a58','#211c0d'],['#d06862','#211c0d'],
+        ['#65974f','#26200f'],['#d56760','#26200f'],['#6f9e5a','#26200f'],['#699952','#26200f'],['#d88878','#2b1e10'],['#e8784a','#2b1e10']];
+      for(var i=0;i<text.length;i++){var r=_ratio(text[i][0],text[i][1]);if(r<4.5)fails.push('TEXT '+text[i][0]+'/'+text[i][1]+'='+r.toFixed(2));}
+      var fill=[['#ad4133','#1c180b'],['#4d703c','#1c180b'],['#4f7040','#1c180b'],['#b84038','#1c180b'],['#639452','#1c180b'],['#d07060','#1c180b'],['#8a7258','#161b22'],['#9c7a3c','#26200f']];
+      for(var j=0;j<fill.length;j++){var rf=_ratio(fill[j][0],fill[j][1]);if(rf<3)fails.push('FILL '+fill[j][0]+'/'+fill[j][1]+'='+rf.toFixed(2));}
+      var dead=_ratioRgb(_composite('#d49898','#111517',0.8),'#111517'); if(dead<4.5)fails.push('officer-dead@.8='+dead.toFixed(2));
+      var ammo=_ratioRgb(_composite('#d49888','#111517',0.8),'#111517'); if(ammo<4.5)fails.push('ammo@.8='+ammo.toFixed(2));
+      if(fails.length) throw new Error(fails.join(' ; '));
+      return { textPairs:text.length, fillPairs:fill.length }; });
+
+    step('RENDER-SAMPLE: meter status words render at FULL opacity & clear 4.5 (the .85-row-group compositing fix: _brgBar + _morMeter)', function(){
+      // exercises the REAL DOM cascade, not the bare palette: a .85 row-opacity composites onto a
+      // child even if the child sets opacity:1, so the fix moves the dimming to the LABEL span only.
+      // _morMeter + _brgBar are global; the blockade meter() closure uses the identical structure.
+      var html='', n=0;
+      if(typeof _brgBar==='function'){ html+=_brgBar('Morale',90)+_brgBar('Supply',20); n+=2; }
+      if(typeof _morMeter==='function'){ html+=_morMeter('National will',80)+_morMeter('Casualties',20); n+=2; }
+      if(!n) return { skipped:'no meter fns' };
+      var host=document.createElement('div'); host.style.cssText='position:absolute;left:-9999px;background:#26200f;padding:8px';
+      host.innerHTML=html; document.body.appendChild(host);
+      try {
+        var spans=host.querySelectorAll('span'), vals=[];
+        for(var i=0;i<spans.length;i++){ var st=spans[i].getAttribute('style')||''; if(/color:/.test(st)) vals.push(spans[i]); }
+        if(vals.length<n) throw new Error('expected '+n+' colored value spans, found '+vals.length);
+        for(var k=0;k<vals.length;k++){
+          var sp=vals[k], eff=_effOpacity(sp);
+          if(eff<0.999) throw new Error('value span effective opacity '+eff.toFixed(2)+' (<1 -> still dimmed by an ancestor .85 row group)');
+          var rgb=_parseRgb(getComputedStyle(sp).color), r=_ratioRgb(rgb,'#26200f');
+          if(r<4.5) throw new Error('meter status value '+JSON.stringify(rgb)+' ratio '+r.toFixed(2)+' < 4.5');
+        }
+      } finally { document.body.removeChild(host); }
+      return { sampled:vals.length }; });
+
+    step('HIGH-CONTRAST lifts the desk tab body + the tactical HUD to a black ground', function(){
+      reset();
+      G.settings.a11yContrast=true; a11yApply();
+      var wd=document.createElement('div'); wd.id='wdContent'; wd.innerHTML='<span>x</span>'; document.body.appendChild(wd);
+      var hud=document.createElement('div'); hud.id='fldHud'; document.body.appendChild(hud);
+      var wdbg=_parseRgb(getComputedStyle(wd).backgroundColor), hudbg=_parseRgb(getComputedStyle(hud).backgroundColor);
+      document.body.removeChild(wd); document.body.removeChild(hud); reset();
+      if(!wdbg||wdbg[0]>8||wdbg[1]>8||wdbg[2]>8) throw new Error('#wdContent not blackened under HC: '+JSON.stringify(wdbg));
+      if(!hudbg||hudbg[0]>8||hudbg[1]>8||hudbg[2]>8) throw new Error('#fldHud not blackened under HC: '+JSON.stringify(hudbg));
+      return { ok:true }; });
+
+    step('HIGH-CONTRAST must NOT touch the LIGHT main-menu broadsheet (.gn-paper)', function(){
+      reset();
+      var css=(document.getElementById('a11yModeStyles')||{}).textContent||'';
+      if(/\\.gn-/.test(css)) throw new Error('an injected a11y rule targets a .gn-* menu node');
+      var gp=document.createElement('div'); gp.className='gn-paper'; document.body.appendChild(gp);
+      var bgNorm=_parseRgb(getComputedStyle(gp).backgroundColor);
+      G.settings.a11yContrast=true; a11yApply();
+      var bgHC=_parseRgb(getComputedStyle(gp).backgroundColor);
+      document.body.removeChild(gp); reset();
+      if(bgNorm && bgNorm[0]>200){ if(!bgHC||bgHC[0]<200) throw new Error('HC darkened the light .gn-paper: '+JSON.stringify(bgHC)); }
+      return { gnPaperBg:bgNorm }; });
+
     // restore the player's real settings
     ['a11yContrast','a11yDyslexia','a11yCvd','a11yNarrate','reduceMotion','cbAids'].forEach(function(k){
       if(SAVE[k]==null){ try{ delete G.settings[k]; }catch(e){} } else G.settings[k]=SAVE[k];

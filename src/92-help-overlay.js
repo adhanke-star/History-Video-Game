@@ -49,7 +49,7 @@ function _hpShowWelcome() {
     '<p style="font-size:13px;opacity:.8;margin-bottom:10px"><strong>Quick start:</strong> ' +
       'Click <em>"Federal Armies Muster for War"</em> for a Union campaign, or use the tactical battle buttons for ' +
       'First Bull Run, Malvern Hill, Antietam, Fredericksburg, Chancellorsville, Gettysburg, Shiloh, Vicksburg, or Chickamauga. The Skirmish button opens a custom real-time fight.</p>' +
-    '<p style="font-size:12px;opacity:.65;margin-bottom:14px">Press <kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;font-size:11px">?</kbd> anytime for controls help.</p>' +
+    '<p style="font-size:12px;opacity:.65;margin-bottom:14px">Press <kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;font-size:11px">?</kbd> anytime for controls help.</p>' +
     '<div class="btn-row" style="gap:10px;flex-wrap:wrap;justify-content:center">' +
       '<button class="bigbtn" id="hpWelcomeTour" aria-label="Take the guided tour of the game">&#9733; Take the Guided Tour</button>' +
       '<button class="bigbtn" id="hpWelcomeOk" aria-label="Skip the tour and proceed to the main menu">To the Field</button>' +
@@ -100,23 +100,23 @@ function _hpShowHelp() {
 
     '<h2 style="font-size:15px;margin:12px 0 6px">Keyboard Shortcuts</h2>' +
     '<div style="display:grid;grid-template-columns:auto 1fr;gap:2px 14px;font-size:12px;opacity:.85">' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">Space</kbd><span>Pause / Resume</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">1 2 3</kbd><span>Speed 1x / 2x / 4x</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">L</kbd><span>Line formation</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">C</kbd><span>Column formation</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">H</kbd><span>Hold position</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">E</kbd><span>Entrench (dig in for cover)</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">B</kbd><span>Abatis (timber obstacle belt)</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">X</kbd><span>Clear nearest obstacle</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">N</kbd><span>Lay pontoon bridge (river)</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">F / Enter</kbd><span>Charge nearest enemy</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">A</kbd><span>Select all friendly brigades</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">Tab</kbd><span>Next unit</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">V</kbd><span>Fog of war on/off</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">P</kbd><span>Auto-pause on/off</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">G</kbd><span>Battle settings drawer</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">Esc</kbd><span>Exit battle or close an open tactical dialog</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">?</kbd><span>This help panel</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">Space</kbd><span>Pause / Resume</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">1 2 3</kbd><span>Speed 1x / 2x / 4x</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">L</kbd><span>Line formation</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">C</kbd><span>Column formation</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">H</kbd><span>Hold position</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">E</kbd><span>Entrench (dig in for cover)</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">B</kbd><span>Abatis (timber obstacle belt)</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">X</kbd><span>Clear nearest obstacle</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">N</kbd><span>Lay pontoon bridge (river)</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">F / Enter</kbd><span>Charge nearest enemy</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">A</kbd><span>Select all friendly brigades</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">Tab</kbd><span>Next unit</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">V</kbd><span>Fog of war on/off</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">P</kbd><span>Auto-pause on/off</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">G</kbd><span>Battle settings drawer</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">Esc</kbd><span>Exit battle or close an open tactical dialog</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">?</kbd><span>This help panel</span>' +
     '</div>' +
     '<hr class="rule">' +
 
@@ -148,16 +148,56 @@ function _hpShowHelp() {
 }
 
 /* ============ (3) IN-BATTLE TACTICAL HELP OVERLAY ============ */
+// E3-i2 (D126): the tactical-help modal now (a) aria-hides the rest of #fldRoot while it is up
+// (belt-and-braces with aria-modal=true), and (b) returns focus to the control that opened it
+// (the "?" button / hotkey origin) on every close path — not the non-interactive #fldRoot (2.4.3).
+var _hpTacTrigger = null;
+var _hpTacHidden = [];
+function _hpTacSetBgInert(on, overlay) {
+  var parent = (overlay && overlay.parentNode) || document.getElementById("fldRoot") || document.body;
+  if (!parent) return;
+  if (on) {
+    _hpTacHidden = [];
+    var kids = parent.children;
+    for (var i = 0; i < kids.length; i++) {
+      var el = kids[i];
+      if (el.id === "hpTacOverlay" || el.id === "fldLive" || el.id === "a11yLive") continue;   // never hide the live regions
+      if (el.tagName === "SCRIPT" || el.tagName === "STYLE") continue;
+      if (el.getAttribute("aria-hidden") === "true") continue;   // already hidden — leave it
+      el.setAttribute("aria-hidden", "true");
+      _hpTacHidden.push(el);
+    }
+  } else {
+    for (var j = 0; j < _hpTacHidden.length; j++) { try { _hpTacHidden[j].removeAttribute("aria-hidden"); } catch (e) {} }
+    _hpTacHidden = [];
+  }
+}
+function _hpTacCloseOverlay(overlay) {
+  if (!overlay) return;
+  overlay.style.display = "none";
+  _hpTacSetBgInert(false, overlay);
+  try {
+    if (_hpTacTrigger && typeof _hpTacTrigger.focus === "function" && document.contains(_hpTacTrigger)) _hpTacTrigger.focus();
+    else { var rr = document.getElementById("fldRoot"); if (rr) rr.focus(); }
+  } catch (e) {}
+}
 function _hpShowTacticalHelp() {
   var overlay = document.getElementById("hpTacOverlay");
   if (overlay) {
-    overlay.style.display = (overlay.style.display === "none") ? "flex" : "none";
-    if (overlay.style.display !== "none") {
+    if (overlay.style.display === "none") {
+      _hpTacTrigger = document.activeElement;
+      overlay.style.display = "flex";
+      // move focus into the dialog BEFORE inerting the background, so the still-focused trigger
+      // (the "?" button, which lives inside #fldBar) is never under an aria-hidden subtree (4.1.2).
       try { var cb0 = document.getElementById("hpTacClose"); if (cb0) cb0.focus(); } catch (e0) {}
+      _hpTacSetBgInert(true, overlay);
+    } else {
+      _hpTacCloseOverlay(overlay);
     }
     return;
   }
 
+  _hpTacTrigger = document.activeElement;
   overlay = document.createElement("div");
   overlay.id = "hpTacOverlay";
   overlay.setAttribute("role", "dialog");
@@ -200,14 +240,17 @@ function _hpShowTacticalHelp() {
 
   var root = document.getElementById("fldRoot") || document.body;
   root.appendChild(overlay);
-  overlay.addEventListener("click", function (e) { if (e.target === overlay) overlay.style.display = "none"; });
+  overlay.addEventListener("click", function (e) { if (e.target === overlay) _hpTacCloseOverlay(overlay); });
   overlay.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); overlay.style.display = "none"; try { var rr = document.getElementById("fldRoot"); if (rr) rr.focus(); } catch (e2) {} }
+    if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); _hpTacCloseOverlay(overlay); }
     else if (e.key === "Tab") { e.preventDefault(); var cb = document.getElementById("hpTacClose"); if (cb) cb.focus(); }
   });
   var closeBtn = document.getElementById("hpTacClose");
-  if (closeBtn) closeBtn.addEventListener("click", function () { overlay.style.display = "none"; });
+  if (closeBtn) closeBtn.addEventListener("click", function () { _hpTacCloseOverlay(overlay); });
+  // focus into the dialog FIRST, then inert the background — so the trigger (in #fldBar) is not
+  // a focused element inside an aria-hidden subtree (WCAG 4.1.2).
   try { if (closeBtn) closeBtn.focus(); } catch (e3) {}
+  _hpTacSetBgInert(true, overlay);
 }
 
 /* ============ (4) ENHANCED PAUSE INDICATOR ============ */
@@ -345,6 +388,7 @@ function _hpUpdatePause() {
         var helpBtn = document.createElement("button");
         helpBtn.textContent = "?";
         helpBtn.title = "Controls & Hotkeys";
+        helpBtn.setAttribute("aria-label", "Controls and Hotkeys — toggle help overlay");   // E3-i2 (D126): icon-only button needs a name (WCAG 4.1.2)
         helpBtn.style.cssText = "width:32px;height:32px;border-radius:50%;border:1px solid #8b7a56;background:rgba(26,22,16,.85);color:#cdb87f;font-size:16px;font-weight:bold;cursor:pointer;margin-left:6px;font-family:Georgia,serif";
         helpBtn.addEventListener("click", function (e) { e.stopPropagation(); _hpShowTacticalHelp(); });
         bar.appendChild(helpBtn);

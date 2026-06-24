@@ -99,14 +99,14 @@ function armoryBuy(C, weaponId, mode) {
 }
 
 function _armRarityCol(r) {
-  return r === "legendary" ? "#b8863b" : r === "rare" ? "#7a5cff" : r === "uncommon" ? "#4a6b3a" : "#8a8276";
+  return r === "legendary" ? "#b8863b" : r === "rare" ? "#9a86f0" : r === "uncommon" ? "#6f9e5a" : "#9a9184";
 }
 function _armScoreWord(v) {
-  if (v >= 80) return ["Devastating", "#4a6b3a"];
+  if (v >= 80) return ["Devastating", "#6f9e5a"];
   if (v >= 62) return ["Modern", "#6f9e5a"];
   if (v >= 45) return ["Rifled line", "#b8863b"];
   if (v >= 32) return ["Mixed arms", "#c9712e"];
-  return ["Antiquated", "#9c3b2e"];
+  return ["Antiquated", "#d8745c"];
 }
 
 /* ---- armoryRenderArmory: The Armory desk tab. ---- */
@@ -134,12 +134,16 @@ function armoryRenderArmory(C) {
     var batchCost = Math.round(w.cost * (av.mult || 1));
     var allCost = Math.round(w.cost * (1 / _armBatch()) * (av.mult || 1));
     var disabled = !av.ok;
-    cards += '<div style="padding:9px;border:1px solid ' + col + ';border-radius:5px;background:rgba(0,0,0,.12);opacity:' + (disabled ? '.5' : '1') + '">'
+    // E3-i2 (D126): an unavailable card is muted, but its REASON text is informational and must
+    // stay legible. Group opacity composites onto descendants, so dim only the descriptive block
+    // (an inner wrapper) and render the reason as a FULL-opacity sibling, outside the dimmed group.
+    cards += '<div style="padding:9px;border:1px solid ' + col + ';border-radius:5px;background:rgba(0,0,0,.12)">'
+      + '<div' + (disabled ? ' style="opacity:.6"' : '') + '>'
       + '<div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font-size:13px">' + w.name + '</b>'
       + '<span style="font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:' + col + '">' + w.rarity + '</span></div>'
       + '<div style="font-size:11px;opacity:.6">' + w.caliber + ' &middot; ' + w.rangeYds + ' yds &middot; acc ' + w.accuracy + ' &middot; ' + w.rateOfFire + '/min &middot; quality ' + w.quality + '</div>'
-      + '<div style="font-size:11px;opacity:.78;margin:4px 0">' + w.flavor + '</div>';
-    if (disabled) cards += '<div style="font-size:11px;color:#9c3b2e">' + av.reason + '</div>';
+      + '<div style="font-size:11px;opacity:.78;margin:4px 0">' + w.flavor + '</div></div>';
+    if (disabled) cards += '<div style="font-size:11px;color:#d8745c;margin-top:2px">' + av.reason + '</div>';
     else cards += '<div class="btn-row" style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap">'
       + '<button class="upg" data-armbuy="' + w.id + '" data-armmode="batch" style="padding:2px 8px;font-size:11px">Arm 10% &middot; $' + batchCost + '</button>'
       + '<button class="upg" data-armbuy="' + w.id + '" data-armmode="all" style="padding:2px 8px;font-size:11px">Arm the line &middot; $' + allCost + '</button></div>';

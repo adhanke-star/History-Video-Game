@@ -315,7 +315,7 @@ function fldOfficerHudRoster() {
   for (var j = 0; j < mine.length; j++) {
     var l = mine[j];
     var tag = !l.alive ? ' &#10013;' : (l.wounded ? " (wounded)" : "");
-    var col = !l.alive ? "#b06a5a" : (l.wounded ? "#c0a05a" : "#8fb47a");
+    var col = !l.alive ? "#d49898" : (l.wounded ? "#c0a05a" : "#8fb47a");
     parts.push('<span style="color:' + col + ';">' + _fldEscO(l.short || l.name) + tag + '</span>');
   }
   return '<div style="opacity:.8;margin-top:6px;font-size:12px;border-top:1px solid #795c3e;padding-top:5px;">Field officers: ' + parts.join(", ") + '</div>';/* wcag-auditor: contrast fix #4a3c28->#795c3e border on #0c0f14/#10141a (was 1.80:1, now 3.12/3.00:1) WCAG 1.4.11 */

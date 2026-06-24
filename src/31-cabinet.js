@@ -286,13 +286,13 @@ function _cabPrincipalCard(C, domain) {
 
   var recBlock = "";
   if (stance) {
-    var ambTag = ambActive ? ' <span style="font-size:10px;color:#9c3b2e;border:1px solid #9c3b2e;border-radius:3px;padding:0 4px" title="This advisor is pressing his own interest">&#9873; ambition</span>' : '';
+    var ambTag = ambActive ? ' <span style="font-size:10px;color:#d06862;border:1px solid #d06862;border-radius:3px;padding:0 4px" title="This advisor is pressing his own interest">&#9873; ambition</span>' : '';
     var actions = "";
     if (delegated) {
       actions = '<span style="font-size:11px;opacity:.7;align-self:center">Running it in your stead.</span>'
         + '<button id="cabDel_' + domain + '" type="button" class="upg" style="flex:0 0 auto">Reclaim</button>';
     } else if (heeded) {
-      actions = '<span style="font-size:11px;color:#4a6b3a;align-self:center">Counsel heeded &check;</span>'
+      actions = '<span style="font-size:11px;color:#6a9a58;align-self:center">Counsel heeded &check;</span>'
         + '<button id="cabDel_' + domain + '" type="button" class="upg" style="flex:0 0 auto">Delegate</button>';
     } else {
       actions = '<button id="cabAcc_' + domain + '" type="button" class="upg" style="flex:0 0 auto">Heed</button>'
@@ -304,7 +304,7 @@ function _cabPrincipalCard(C, domain) {
       +     '<div style="flex:1 1 260px;font-size:13px">&ldquo;' + _cabEsc(stance.oneLine) + '&rdquo;' + ambTag + '</div>'
       +     '<div style="display:flex;gap:6px;flex:0 0 auto">' + actions + '</div>'
       +   '</div>'
-      +   '<button id="cabWhy_' + domain + '" type="button" class="upg" style="margin-top:6px;font-size:11px;padding:1px 8px">Why &#9656;</button>'
+      +   '<button id="cabWhy_' + domain + '" type="button" class="upg" style="margin-top:6px;font-size:11px;padding:1px 8px" aria-expanded="false" aria-controls="cabWhyBox_' + domain + '">Why &#9656;</button>'
       +   '<div id="cabWhyBox_' + domain + '" style="display:none;margin-top:6px;font-size:12px;opacity:.85;background:rgba(0,0,0,.12);border:1px solid var(--rule);border-radius:4px;padding:8px">'
       +     _cabEsc(stance.why)
       +     '<div style="margin-top:5px;font-size:10px;opacity:.6">' + _cabEsc((stance.provenance || "Inferred")) + (stance.sources && stance.sources.length ? ' &middot; ' + _cabEsc(stance.sources.join("; ")) : '') + '</div>'
@@ -313,7 +313,7 @@ function _cabPrincipalCard(C, domain) {
   }
 
   var ambBlock = (ambActive && a.ambitionTell)
-    ? '<div style="margin-top:8px;font-size:11px;color:#9c3b2e;background:rgba(156,59,46,.08);border:1px solid rgba(156,59,46,.4);border-radius:4px;padding:7px">&#9873; <b>Ambition.</b> ' + _cabEsc(a.ambitionTell) + '</div>'
+    ? '<div style="margin-top:8px;font-size:11px;color:#d88878;background:rgba(156,59,46,.08);border:1px solid rgba(156,59,46,.4);border-radius:4px;padding:7px">&#9873; <b>Ambition.</b> ' + _cabEsc(a.ambitionTell) + '</div>'
     : '';
 
   return '<div style="padding:11px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.12)">'
@@ -344,7 +344,7 @@ function _cabFullRosterHTML(C) {
     if (any) rows += '<div style="margin:7px 0 4px"><div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--rule)">' + _cabEsc(_cabDOMAIN_LABEL[dom] || dom) + '</div>' + line + '</div>';
   }
   return ''
-    + '<button id="cabFullToggle" type="button" class="upg" style="font-size:11px;padding:2px 8px;margin-top:4px">The full cabinet &#9656;</button>'
+    + '<button id="cabFullToggle" type="button" class="upg" style="font-size:11px;padding:2px 8px;margin-top:4px" aria-expanded="false" aria-controls="cabFullBox">The full cabinet &#9656;</button>'
     + '<div id="cabFullBox" style="display:none;margin-top:6px;padding:8px;border:1px solid var(--rule);border-radius:4px;background:rgba(0,0,0,.1)">'
     +   '<p style="font-size:11px;opacity:.65;margin:0 0 4px">Offices change hands as the war goes on. ' + (side === "CS" ? 'Davis ran through six War Secretaries in four years; Benjamin alone rotated through three posts.' : 'Lincoln governed a cabinet of former rivals.') + '</p>'
     +   rows
@@ -366,7 +366,7 @@ function _cabCrossCardHTML(C) {
     html += '<div style="margin-top:10px;padding:10px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.1)">'
       + '<div style="font-weight:bold;font-size:13px">' + _cabEsc(c.title) + '</div>'
       + '<div style="font-size:12px;opacity:.85;margin:3px 0 2px">' + _cabEsc(c.claim) + '</div>'
-      + '<button id="cabCC_' + i + '" type="button" class="upg" style="font-size:11px;padding:1px 8px;margin-top:3px">The historians &#9656;</button>'
+      + '<button id="cabCC_' + i + '" type="button" class="upg" style="font-size:11px;padding:1px 8px;margin-top:3px" aria-expanded="false" aria-controls="cabCCBox_' + i + '">The historians &#9656;</button>'
       + '<div id="cabCCBox_' + i + '" style="display:none;margin-top:4px">' + persp
       + '<div style="margin-top:4px;font-size:10px;opacity:.6">' + _cabEsc(c.provenance || "Inferred") + (c.sources && c.sources.length ? ' &middot; ' + _cabEsc(c.sources.join("; ")) : '') + '</div></div>'
       + '</div>';
@@ -450,14 +450,14 @@ function presWireCabinet(C) {
       var why = document.getElementById("cabWhy_" + domain);
       if (why) why.addEventListener("click", function () {
         var box = document.getElementById("cabWhyBox_" + domain);
-        if (box) box.style.display = (box.style.display === "none") ? "block" : "none";
+        if (box) { box.style.display = (box.style.display === "none") ? "block" : "none"; why.setAttribute("aria-expanded", box.style.display !== "none" ? "true" : "false"); }
       });
     })(_cabPRINCIPALS[i]);
   }
   var ft = document.getElementById("cabFullToggle");
   if (ft) ft.addEventListener("click", function () {
     var box = document.getElementById("cabFullBox");
-    if (box) box.style.display = (box.style.display === "none") ? "block" : "none";
+    if (box) { box.style.display = (box.style.display === "none") ? "block" : "none"; ft.setAttribute("aria-expanded", box.style.display !== "none" ? "true" : "false"); }
   });
   var d = _cabData();
   if (d && d.crossCards) for (var c = 0; c < d.crossCards.length; c++) {
@@ -465,7 +465,7 @@ function presWireCabinet(C) {
       var b = document.getElementById("cabCC_" + idx);
       if (b) b.addEventListener("click", function () {
         var box = document.getElementById("cabCCBox_" + idx);
-        if (box) box.style.display = (box.style.display === "none") ? "block" : "none";
+        if (box) { box.style.display = (box.style.display === "none") ? "block" : "none"; b.setAttribute("aria-expanded", box.style.display !== "none" ? "true" : "false"); }
       });
     })(c);
   }

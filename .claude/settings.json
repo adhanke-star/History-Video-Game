@@ -14,7 +14,11 @@
       "WebFetch",
       "Bash",
       "Bash(mkdir -p \"/Users/aaronhanke/.claude/projects/-Users-aaronhanke-Desktop-Video-Game/memory/\" && echo created)",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(rm -f .git/COMMIT_E3I2.txt)",
+      "Bash(git push *)"
     ],
     "additionalDirectories": [
       "/Users/aaronhanke/.claude/projects/-Users-aaronhanke-Desktop-Video-Game"

@@ -155,9 +155,20 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       the How-to-Play panel, and a main-menu "GUIDED TOUR" button (3 guarded hooks in `src/92-help-overlay.js`). Pure
       UI/help layer → battles byte-identical. probe-tutorial 15/15 (+static-scan); 14-agent bug-hunt invariantsHold
       =FALSE→fixed (a real forward-Tab focus-trap defect + the "?"-behind-modal leak + 4 more), all probe-locked; wcag AA.›
-- [ ] **E3 S4 accessibility:** the dedicated FULL WCAG 2.2 AA pass + the 4 a11y modes (high-contrast, CVD-safe,
-      SR turn/battle narration, dyslexia font) — your professional bar.
-      ‹⏳ in progress — built in TWO increments. ✅ **i1 (D125): THE 4 A11Y MODES + the hub** — new guarded
+- [x] **E3 S4 accessibility:** the dedicated FULL WCAG 2.2 AA pass + the 4 a11y modes (high-contrast, CVD-safe,
+      SR turn/battle narration, dyslexia font) — your professional bar. ‹✅ COMPLETE (i1+i2).›
+      ‹✅ **i2 (D126): THE FULL WCAG 2.2 AA AUDIT SWEEP** — exhaustive per-surface contrast/ARIA/focus/keyboard
+      audit + root fixes across every shipped surface. Keystone: always-on `:root{--rule:#a89066;--blood-lt:#d8745c}`
+      (both TEXT-ONLY tokens failed AA on dark; the redefine fixes ~40 frozen-base-class + module-inline text uses
+      at once, light-menu-safe) + a universal focus-ring fallback + a pressed-toggle focus override + a `#toast`
+      status region + HC per-surface extensions (desk/HUD/dialogs/control borders). ~50 inline-colour fixes
+      (canonical green/red status palette + rarity) + ~16 ARIA/focus/keyboard fixes (aria-pressed/expanded, the
+      help modal inert+focus-return, the T0 2D glyph dark-halo, save-slot target-size). Fixed a CSS group-opacity
+      compositing bug (the `.85` row dimmed the status word) in `_brgBar`/`_morMeter`/blockade-meter + the disabled
+      arms cards. Verified by a 28-agent audit Workflow (127 findings) → an 11-agent bug-hunt (3 + a HIGH critic gap)
+      → a wcag-auditor confirm + two whole-`src/` scans (7 more misses), all fixed. probe-accessibility 17→25/25;
+      probe-presets 26/26 byte-identity; bootprobe/diag-classic/t1probe + ~30 UI/tactical probes GREEN; 0 pe.›
+      ‹✅ **i1 (D125): THE 4 A11Y MODES + the hub** — new guarded
       `src/97-accessibility.js`: high-contrast (`:root` token override + universal focus ring), colour-blind-safe
       (drives base `cbAids`), SR narration (a NEW strategic `aria-live` region `#a11yLive` + per-turn summary;
       battles already narrated via `fldAnnounce`), dyslexia text (sans stack + relaxed spacing, no external font),

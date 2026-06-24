@@ -217,18 +217,18 @@ function blockadeOnResolve(winnerSide, type, B, C, win) {
 
 /* Status word + colour for the recognition meter. */
 function _blkRecogStatus(BL) {
-  if (BL.recognitionForeclosed) return ["Foreclosed", "#7a241b"];
-  if (BL.recognition >= 45) return ["Courted", "#4a6b3a"];
+  if (BL.recognitionForeclosed) return ["Foreclosed", "#d07060"];
+  if (BL.recognition >= 45) return ["Courted", "#639452"];
   if (BL.recognition >= 20) return ["Wavering", "#b8863b"];
-  return ["Distant", "#9c3b2e"];
+  return ["Distant", "#d07060"];
 }
 
 /* Status word for the blockade tightness (capture %). */
 function _blkTightStatus(pct) {
-  if (pct <= 0) return ["Open seas", "#4a6b3a"];
+  if (pct <= 0) return ["Open seas", "#639452"];
   if (pct < 18) return ["Porous", "#b8863b"];
   if (pct < 30) return ["Tightening", "#c9712e"];
-  return ["Strangling", "#9c3b2e"];
+  return ["Strangling", "#d07060"];
 }
 
 /* Pull a teaching card (multi-voice) from GAME_DATA.diplomacy when present. */
@@ -287,7 +287,7 @@ function blockadeRenderDiplomacy(C) {
 
   var meter = function (label, v, status) {
     v = Math.max(0, Math.min(100, Math.round(v || 0)));
-    return '<div style="margin:5px 0"><div style="display:flex;justify-content:space-between;font-size:12px;opacity:.85"><span>' + label
+    return '<div style="margin:5px 0"><div style="display:flex;justify-content:space-between;font-size:12px"><span style="opacity:.85">' + label
       + '</span><span style="color:' + status[1] + ';font-weight:bold">' + status[0] + '</span></div>'
       + '<div style="height:8px;background:rgba(0,0,0,.25);border:1px solid var(--rule);border-radius:3px;overflow:hidden">'
       + '<div style="height:100%;width:' + v + '%;background:' + status[1] + '"></div></div></div>';
@@ -313,7 +313,7 @@ function blockadeRenderDiplomacy(C) {
       + '<div style="margin:8px 0;padding:9px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.12)">'
       +   '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px">'
       +     '<div><b>The 1861 Cotton Embargo</b><div style="font-size:11px;opacity:.7">Withhold cotton to coerce European recognition.</div></div>'
-      +     '<button id="blkEmbargo" type="button" class="upg">' + ((BL.selfEmbargo && !BL.embargoLifted) ? 'Embargo ON' : 'Embargo lifted') + '</button>'
+      +     '<button id="blkEmbargo" type="button" class="upg" aria-pressed="'+(BL.selfEmbargo&&!BL.embargoLifted?'true':'false')+'">' + ((BL.selfEmbargo && !BL.embargoLifted) ? 'Embargo ON' : 'Embargo lifted') + '</button>'
       +   '</div>'
       +   '<div style="font-size:11px;opacity:.7;margin-top:5px;color:' + ((BL.selfEmbargo && !BL.embargoLifted) ? '#c9712e' : 'inherit') + '">'
       +     ((BL.selfEmbargo && !BL.embargoLifted)
@@ -346,8 +346,8 @@ function blockadeRenderDiplomacy(C) {
 
   var btns = ''
     + '<div class="btn-row" style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">'
-    +   '<button id="blkDelegate" type="button" class="upg">' + (BL.delegated ? 'Take personal control' : 'Delegate to Sec. ' + sec) + '</button>'
-    +   '<button id="blkWhy" type="button" class="upg">Why it mattered</button>'
+    +   '<button id="blkDelegate" type="button" class="upg" aria-pressed="'+(BL.delegated?'true':'false')+'">' + (BL.delegated ? 'Take personal control' : 'Delegate to Sec. ' + sec) + '</button>'
+    +   '<button id="blkWhy" type="button" class="upg" aria-expanded="false" aria-controls="blkWhyBox">Why it mattered</button>'
     + '</div>'
     + '<div id="blkWhyBox" style="display:none;margin-top:10px;padding:10px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.12);font-size:12px;line-height:1.5"></div>';
 
@@ -383,5 +383,6 @@ function blockadeWireDiplomacy(C) {
     if (!box) return;
     if (box.style.display === "none") { box.innerHTML = _blkWhyText(C); box.style.display = "block"; }
     else box.style.display = "none";
+    why.setAttribute("aria-expanded", box.style.display !== "none" ? "true" : "false");
   });
 }

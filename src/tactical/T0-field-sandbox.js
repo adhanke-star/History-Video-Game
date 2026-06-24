@@ -1085,7 +1085,7 @@ function fldBuildDom() {
   if (!document.getElementById("fldFocusStyle")) {
     var st = document.createElement("style");
     st.id = "fldFocusStyle";
-    st.textContent = "#fldBar button:focus-visible,#fldEnd button:focus-visible,#fldBrief button:focus-visible{outline:2px solid #e8c84a;outline-offset:2px;}";
+    st.textContent = "#fldBar button:focus-visible,#fldEnd button:focus-visible,#fldBrief button:focus-visible,#fldAudioPanel button:focus-visible{outline:2px solid #e8c84a;outline-offset:2px;}";
     document.head.appendChild(st);
   }
   var r = document.createElement("div");
@@ -1111,7 +1111,7 @@ function fldBuildDom() {
   var bar = document.getElementById("fldBar");
   var btns = [
     ["fldBtnPlay", "&#9654; Begin", "Begin / pause the battle (Space)"],
-    ["fldBtnSpd", "1&times;", "Cycle speed 1x / 2x / 4x (1 2 3)"],
+    ["fldBtnSpd", "1&times;", "Speed 1x — cycle to change (1 2 3)"],
     ["fldBtnLine", "Line", "Form line — max fire (L)"],
     ["fldBtnCol", "Column", "Form column — fast march (C)"],
     ["fldBtnCharge", "Charge", "Charge nearest enemy (F)"],
@@ -1305,7 +1305,7 @@ function fldTogglePlay() {
   if (!__FIELD.paused) __FIELD._apReason = null;   // clear any auto-pause reason once the player resumes
   var b = document.getElementById("fldBtnPlay"); if (b) { b.innerHTML = __FIELD.paused ? "&#9654; Resume" : "&#10074;&#10074; Pause"; b.setAttribute("aria-label", __FIELD.paused ? "Resume the battle (Space)" : "Begin / pause the battle (Space)"); }
 }
-function fldCycleSpeed() { __FIELD.speed = __FIELD.speed === 1 ? 2 : (__FIELD.speed === 2 ? 4 : 1); var b = document.getElementById("fldBtnSpd"); if (b) b.innerHTML = __FIELD.speed + "&times;"; }
+function fldCycleSpeed() { __FIELD.speed = __FIELD.speed === 1 ? 2 : (__FIELD.speed === 2 ? 4 : 1); var b = document.getElementById("fldBtnSpd"); if (b) { b.innerHTML = __FIELD.speed + "&times;"; b.setAttribute("aria-label", "Speed " + __FIELD.speed + "x — cycle to change (1 2 3)"); } }
 // B-6 (command either side): the player's selectable brigades are HIS side's non-AI units — fldPlayerSide()
 // resolves "US" by default (byte-identical) and "CS" when the player took the Confederate command.
 function fldPlayerSel() { var ps = fldPlayerSide(), out = []; for (var i = 0; i < __FIELD.sel.length; i++) { var u = fldById(__FIELD.sel[i]); if (u && u.alive && u.side === ps && !u.ai) out.push(u); } return out; }
@@ -1349,7 +1349,7 @@ function fldKey(e) {
   else if (k === "g" || k === "G") { if (typeof fldOpenSettingsDrawer === "function") fldOpenSettingsDrawer(); }   // B-5: the in-battle settings drawer
   else if (k === "a" || k === "A") { var _psa = fldPlayerSide(); __FIELD.sel = []; for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side === _psa && u.alive && !u.ai) __FIELD.sel.push(u.id); } fldRenderHud(); }
   else if (k === "Tab") { if (__FIELD.phase === "battle") { e.preventDefault(); fldCycleSel(); } } // only steal Tab mid-battle
-  var b = document.getElementById("fldBtnSpd"); if (b) b.innerHTML = __FIELD.speed + "&times;";
+  var b = document.getElementById("fldBtnSpd"); if (b) { b.innerHTML = __FIELD.speed + "&times;"; b.setAttribute("aria-label", "Speed " + __FIELD.speed + "x — cycle to change (1 2 3)"); }
 }
 function fldCycleSel() {
   var _psc = fldPlayerSide(), us = []; for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side === _psc && u.alive && !u.ai) us.push(u.id); }
@@ -1560,9 +1560,13 @@ function fld2dDraw() {
     ctx.fillStyle = "#1a1a1a"; ctx.fillRect(-frontW / 2, -depth / 2 - 3 * v.s, frontW, 3 * v.s); // facing edge (front)
     if (sel) { ctx.strokeStyle = "#ffe9a8"; ctx.lineWidth = 2; ctx.strokeRect(-frontW / 2 - 2, -depth / 2 - 2, frontW + 4, depth + 4); }
     ctx.restore();
-    // non-color side cue (CVD-safe): U for Union, C for Confederate, centered on the block
-    ctx.fillStyle = "#f7efdd"; ctx.font = "bold 12px Georgia"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    ctx.fillText(u.side === "US" ? "U" : "C", cx, cz);
+    // non-color side cue (CVD-safe): U for Union, C for Confederate, centered on the block.
+    // E3-i2 (D126): the cream glyph alone was 3.8-4.5:1 on the block fills; a dark halo stroke
+    // first lifts it to ~15.7:1 on every state (the established _m3dText / on-canvas halo pattern).
+    ctx.font = "bold 12px Georgia"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    var _sideGly = (u.side === "US") ? "U" : "C";
+    ctx.lineWidth = 3; ctx.strokeStyle = "rgba(13,10,7,0.88)"; ctx.strokeText(_sideGly, cx, cz);
+    ctx.fillStyle = "#f7efdd"; ctx.fillText(_sideGly, cx, cz);
     ctx.textAlign = "start"; ctx.textBaseline = "alphabetic";
     // morale pip
     ctx.fillStyle = u.morale > 35 ? "#7faf6a" : "#c98a3a"; ctx.fillRect(cx - 12, cz - depth / 2 - 9, 24 * (u.morale / u.maxMor), 3);

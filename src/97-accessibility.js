@@ -19,8 +19,15 @@
          stack + relaxed letter/word spacing + line-height (no external font; $0 / one
          file — a research-backed spacing approach, not a special typeface download).
    Plus a one-stop mirror of Reduced Motion so the whole accessibility surface is in one
-   place. The dedicated FULL WCAG 2.2 AA audit sweep across every shipped surface is the
-   companion increment E3-i2.
+   place.
+
+   E3-i2 (D126) — the dedicated FULL WCAG 2.2 AA audit sweep also lands here: _a11yCss() now
+   emits an ALWAYS-ON correction block (NOT gated on any mode) that redefines the two TEXT-ONLY
+   tokens which failed AA on the dark grounds (--rule -> #a89066, --blood-lt -> #d8745c), adds a
+   universal :focus-visible fallback ring, and a pressed-toggle focus override; a11yApply makes
+   the base #toast a polite status region; and the high-contrast block gained per-surface
+   extensions (desk tabs, the tactical HUD, sheet dialogs, control borders). The matching
+   per-site inline-hex/aria fixes live in the individual src/ modules; see DECISIONS D126.
 
    ARCHITECTURE — PURE SETTINGS / PRESENTATION LAYER; byte-identical combat BY
    CONSTRUCTION (D74): this module writes ONLY non-combat a11y flags on G.settings
@@ -94,6 +101,24 @@ function _a11yCss() {
   // base text on the broadsheet containers, and add strong, universal focus rings. Opacity
   // is intentionally left untouched (some elements hide via opacity:0). reduce-motion-safe
   // (no transitions introduced).
+  // ALWAYS-ON WCAG 2.2 AA CORRECTION (E3-i2, D126) — not gated on any mode; ships for EVERY
+  // player at boot. (1) Redefine the two TEXT-ONLY design tokens that failed AA as small text on
+  // the dark grounds: --rule #8a7350 (3.5-4.4:1 secondary labels everywhere) -> #a89066 (>=5.17,
+  // the exact tone base.html ALREADY uses for the same fix in its loot/readability cards), and
+  // --blood-lt #a83d33 (2.5-3.0:1 — the FIRE order button, #log .e.hit, .tagn, .verdict.lose) ->
+  // #d8745c (>=4.96). --blood-lt is text-only in base.html (color: only; adjacent borders use
+  // --blood). --rule is text-only EXCEPT a handful of DECORATIVE dark-surface uses (~17 panel
+  // borders, the scrollbar-thumb hover, and the .rule divider gradient), which the redefine merely
+  // recolors a touch lighter (#8a7350 -> #a89066) — contrast-SAFE (it only raises border contrast,
+  // and decorative borders carry no WCAG requirement). The LIGHT main-menu broadsheet (.gn-paper)
+  // references NEITHER token, so the redefine cannot touch it. The high-contrast block below re-redefines
+  // both at higher specificity, so HC still wins. (2) A universal :focus-visible fallback ring for
+  // any bare/custom control the base class rings miss (class rings keep winning by specificity).
+  // (3) The pressed-toggle focus override — the inline pressed outline (specificity 1000) hid the
+  // focus delta, so !important is required to show a distinct ring when Tabbing onto an On toggle.
+  var aa = ':root{--rule:#a89066;--blood-lt:#d8745c;}'
+    + ':focus-visible{outline:2px solid var(--brass-lt,#c9a85f);outline-offset:2px;}'
+    + '.upg[aria-pressed="true"]:focus-visible{outline:3px solid #ffe27a !important;outline-offset:2px !important;}';
   var hc = 'html[data-a11y-contrast="high"]{'
     + '--ink:#000;--ink-soft:#0a0a0a;--parch:#ffffff;--parch-dk:#f2ead4;--parch-edge:#ffe27a;'
     + '--rule:#e8c860;--brass:#ffd24a;--brass-lt:#ffe27a;--blood:#ff6b5e;--blood-lt:#ff8a7e;--gold:#ffd24a;}'
@@ -119,7 +144,24 @@ function _a11yCss() {
     + 'letter-spacing:.02em !important;}'
     + 'html[data-a11y-text="dyslexia"] .pad,html[data-a11y-text="dyslexia"] .pad p,'
     + 'html[data-a11y-text="dyslexia"] .pad div,html[data-a11y-text="dyslexia"] .pad span,html[data-a11y-text="dyslexia"] .pad li{line-height:1.62 !important;word-spacing:.04em !important;}';
-  return hc + "\n" + dx;
+  // HIGH-CONTRAST PER-SURFACE EXTENSIONS (E3-i2, D126) — i1's hc block reached the broadsheet
+  // containers + the var-driven label classes, but NOT the President's-Desk tab body (#wdContent/
+  // #wdTabs), the tactical HUD chrome (#fldHud/#fldBar/#fldRoot), the sheet-dialog headings, or the
+  // audio/custom-battle control borders. Blacken those grounds and lift text. The broad text rules
+  // deliberately OMIT !important so inline semantic status colours (the now-AA greens/reds) survive
+  // on the black ground (they clear 4.5 on #000) while uncoloured text inherits the cream. Every
+  // selector is dark-surface-scoped (#wdContent/#wdTabs/[id^=wdTab_]/#fldHud/#fldBar/#fldRoot/.sheet
+  // /#fldAudioPanel/.fld-cb) so NONE can match a .gn-* light-menu node. #fldRoot's bg only paints
+  // the DOM chrome — the battlefield canvas is drawn over it in JS, unaffected.
+  var hcx = 'html[data-a11y-contrast="high"] #wdContent,html[data-a11y-contrast="high"] #wdTabs{background:#000 !important;}'
+    + 'html[data-a11y-contrast="high"] #wdContent{color:#f2e6c8;}'
+    + 'html[data-a11y-contrast="high"] [id^="wdTab_"]{color:#ffe27a !important;border-color:#ffe27a !important;}'
+    + 'html[data-a11y-contrast="high"] [id^="wdTab_"][aria-pressed="true"]{background:#3a2f12 !important;outline:2px solid #ffe27a !important;}'
+    + 'html[data-a11y-contrast="high"] #fldHud,html[data-a11y-contrast="high"] #fldBar,html[data-a11y-contrast="high"] #fldRoot{background:#000 !important;}'
+    + 'html[data-a11y-contrast="high"] #fldHud{color:#f2e6c8;}'
+    + 'html[data-a11y-contrast="high"] .sheet [style*="color:var(--rule)"]{color:#ffe27a !important;}'
+    + 'html[data-a11y-contrast="high"] #fldAudioPanel button,html[data-a11y-contrast="high"] #fldBtnAudio,html[data-a11y-contrast="high"] .fld-cb input,html[data-a11y-contrast="high"] .fld-cb select,html[data-a11y-contrast="high"] .fld-cb textarea{border-color:#ffe27a !important;}';
+  return aa + "\n" + hc + "\n" + hcx + "\n" + dx;
 }
 function a11yApply() {
   try {
@@ -133,6 +175,17 @@ function a11yApply() {
     // CVD == cbAids (the base-owned source of truth) — a11yApply does NOT force cbAids on or off,
     // so an out-of-band base "Colour-blind Aids: Off" stays authoritative (no D123-class resurrection).
     _a11yEnsureLive();
+    _a11yEnsureStatusRegions();
+  } catch (e) {}
+}
+/* E3-i2 (D126): make the base toast container a polite assistive-tech STATUS region so transient
+   confirmations + errors (save success, "Needs N capital", etc.) are announced (WCAG 4.1.3). The
+   #toast element is base-owned, so we only set the missing ARIA, idempotently. */
+function _a11yEnsureStatusRegions() {
+  try {
+    if (typeof document === "undefined") return;
+    var t = document.getElementById("toast");
+    if (t && !t.getAttribute("aria-live")) { t.setAttribute("aria-live", "polite"); t.setAttribute("role", "status"); t.setAttribute("aria-atomic", "true"); }
   } catch (e) {}
 }
 
@@ -395,6 +448,10 @@ function a11yInjectMenuButton() {
 })();
 (function a11yBoot() {
   try {
+    // E3-i2 (D126): inject the always-on AA-correction stylesheet synchronously at module load
+    // (before first paint) so the token redefine + universal focus ring apply immediately, not
+    // only after DOMContentLoaded boot-load.
+    try { _a11yEnsureStyleEl(); } catch (eS) {}
     if (typeof document === "undefined") { a11yBootLoad(); return; }
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", a11yBootLoad);
     else a11yBootLoad();

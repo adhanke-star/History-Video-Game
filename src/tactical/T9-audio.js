@@ -247,7 +247,7 @@ function _fldAudioPanelRows() {
       var on = (opts[i][0] === cur);
       h += '<button data-acb="' + cb + '" data-acv="' + opts[i][0] + '" aria-pressed="' + on + '" ' +
            'style="cursor:pointer;font:inherit;font-size:12px;padding:5px 11px;border-radius:5px;border:1px solid ' +
-           (on ? "#e8c84a" : "#745e3f") + ';background:' + (on ? "#3a2f17" : "#161b22") + ';color:#f2e8d5;">' +
+           (on ? "#e8c84a" : "#8a7258") + ';background:' + (on ? "#3a2f17" : "#161b22") + ';color:#f2e8d5;">' +
            opts[i][1] + '</button>';
     }
     h += '</div><div style="font-size:11px;opacity:.7;margin-top:4px;">' + hint + '</div></div>';
@@ -344,7 +344,7 @@ function _fldAudioInjectButton() {
     b.title = "Audio settings — sound, music, loudness, captions";
     b.setAttribute("aria-label", "Open audio settings");
     // match the existing tactical control-bar button styling
-    b.style.cssText = "cursor:pointer;font:inherit;font-size:13px;padding:6px 10px;border-radius:5px;border:1px solid #745e3f;background:#161b22;color:#f2e8d5;";
+    b.style.cssText = "cursor:pointer;font:inherit;font-size:13px;padding:6px 10px;border-radius:5px;border:1px solid #8a7258;background:#161b22;color:#f2e8d5;";
     b.addEventListener("click", function () { _fldAudioOpenPanel(); });
     // place it just before the Exit button if present, else append
     var exit = document.getElementById("fldBtnExit");

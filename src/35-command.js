@@ -1276,11 +1276,11 @@ function _cmdPortrait(gen, side, size) {
 }
 
 function _cmdLeadWord(v) {
-  if (v >= 82) return ["Masterful", "#4a6b3a"];
+  if (v >= 82) return ["Masterful", "#639452"];
   if (v >= 70) return ["Able", "#6f9e5a"];
   if (v >= 58) return ["Steady", "#b8863b"];
   if (v >= 48) return ["Uneven", "#c9712e"];
-  return ["Faltering", "#9c3b2e"];
+  return ["Faltering", "#d07060"];
 }
 
 function _cmdTraitBar(label, v, hint) {
@@ -1288,7 +1288,7 @@ function _cmdTraitBar(label, v, hint) {
   return '<div style="margin:3px 0"><div style="display:flex;justify-content:space-between;font-size:11px;opacity:.8"><span>' + _cmdEsc(label)
     + '</span><span>' + v + '</span></div>'
     + '<div style="height:6px;background:rgba(0,0,0,.25);border:1px solid var(--rule);border-radius:3px;overflow:hidden"><div style="height:100%;width:' + v + '%;background:#7d6b4a"></div></div>'
-    + (hint ? '<div style="font-size:10px;opacity:.5">' + _cmdEsc(hint) + '</div>' : '') + '</div>';
+    + (hint ? '<div style="font-size:10px;opacity:.6">' + _cmdEsc(hint) + '</div>' : '') + '</div>';
 }
 
 /* ---- §12.3 (D113) THE ELECTION-SUPPORT BIND — the command-politics keystone the
@@ -1380,7 +1380,7 @@ function _cmdActiveCard(C) {
   var traits = (gen.traits && gen.traits.length) ? gen.traits.join(" &middot; ") : "";
   var amb = (typeof gen.ambition === "number") ? gen.ambition : 0;
   var ambTell = (amb >= 70)
-    ? '<div style="margin-top:7px;font-size:11px;color:#9c3b2e;background:rgba(156,59,46,.08);border:1px solid rgba(156,59,46,.4);border-radius:4px;padding:7px">&#9873; <b>Ambition.</b> '
+    ? '<div style="margin-top:7px;font-size:11px;color:#e8784a;background:rgba(156,59,46,.08);border:1px solid rgba(156,59,46,.4);border-radius:4px;padding:7px">&#9873; <b>Ambition.</b> '
         + _cmdEsc(gen.weakness || "He courts the newspapers and the politicians; removing him will cost you dearly.") + '</div>'
     : '';
   // §12.3 (D113): the election-support bind — a commissioned political general in command before the 1864 vote.
@@ -1462,7 +1462,7 @@ function _cmdPoolHTML(C) {
     } else if (canAfford) {
       note = '<button id="cmdApp_' + _cmdEsc(g.id) + '" type="button" class="upg" style="flex:0 0 auto">Appoint</button>';
     } else {
-      note = '<span style="font-size:11px;color:#9c3b2e" title="Relieving ' + _cmdEsc(_cmdName(incumbent)) + ' would cost ' + cost + ' political capital; you have ' + cap + '.">Needs ' + cost + ' capital</span>';
+      note = '<span style="font-size:11px;color:#e8784a" title="Relieving ' + _cmdEsc(_cmdName(incumbent)) + ' would cost ' + cost + ' political capital; you have ' + cap + '.">Needs ' + cost + ' capital</span>';
     }
     return '<div style="display:flex;gap:10px;align-items:center;padding:7px 0;border-bottom:1px dotted var(--rule)' + (ok ? '' : ';opacity:.5') + '">'
       + img
@@ -1575,11 +1575,11 @@ function _cmdPromoRow(C, g, cap, sen, activeId) {
   if (!info) {
     ctrl = '<span style="font-size:11px;opacity:.65">At the top grade</span>';
   } else if (cap >= info.capital && sen >= info.seniority) {
-    var meritTag = info.earned ? '' : ' <span title="Above his merit — it costs more and his standing will suffer" style="color:#d66040">(above merit)</span>';/* a11y: #d66040 4.51:1 on lightest .sheet ground (#2e2816) -> AA (wcag-auditor: contrast fix from #c2502e to #d66040; #c2502e measured 3.74:1, below 4.5:1 required for 11px normal text); meaning also carried by the word "(above merit)" */
+    var meritTag = info.earned ? '' : ' <span title="Above his merit — it costs more and his standing will suffer" style="color:#e86840">(above merit)</span>';/* a11y: #e86840 >=4.53:1 on the lightest command-card ground #2e2816 -> AA (E3-i2: prior #d66040 measured 3.92:1 there, fixed to match L251) (wcag-auditor: contrast fix from #c2502e to #d66040; #c2502e measured 3.74:1, below 4.5:1 required for 11px normal text); meaning also carried by the word "(above merit)" */
     ctrl = '<button id="cmdProm_' + _cmdEsc(g.id) + '" type="button" class="upg" style="flex:0 0 auto" title="Promote to ' + _cmdEsc(info.next) + ' — ' + info.capital + ' political capital + ' + info.seniority + ' seniority' + (info.leapfrog ? '; he leapfrogs more senior men (+seniority)' : '') + '">Promote to ' + _cmdEsc(info.next) + '</button>'
       + '<div style="font-size:10px;opacity:.7;margin-top:2px">&minus;' + info.capital + ' cap &middot; &minus;' + info.seniority + ' sen' + meritTag + '</div>';
   } else {
-    ctrl = '<span style="font-size:11px;color:#d66040" title="Promotion to ' + _cmdEsc(info.next) + ' needs ' + info.capital + ' political capital + ' + info.seniority + ' seniority">Needs ' + info.capital + ' cap / ' + info.seniority + ' sen</span>';/* a11y: #d66040 4.51:1 on lightest .sheet ground (#2e2816) -> AA (wcag-auditor: contrast fix from #c2502e to #d66040; #c2502e measured 3.74:1, below 4.5:1 required for 11px normal text) */
+    ctrl = '<span style="font-size:11px;color:#e86840" title="Promotion to ' + _cmdEsc(info.next) + ' needs ' + info.capital + ' political capital + ' + info.seniority + ' seniority">Needs ' + info.capital + ' cap / ' + info.seniority + ' sen</span>';/* a11y: #e86840 >=4.53:1 on the lightest command-card ground #2e2816 -> AA (E3-i2: prior #d66040 measured 3.92:1 there, fixed to match L251) (wcag-auditor: contrast fix from #c2502e to #d66040; #c2502e measured 3.74:1, below 4.5:1 required for 11px normal text) */
   }
   var isActive = (g.id === activeId);
   return '<div style="display:flex;gap:10px;align-items:center;padding:6px 0;border-bottom:1px dotted var(--rule)">'
@@ -1721,7 +1721,7 @@ function _cmdCorpsDepthHTML(C) {
   // player sees the true total impact of the staff he has built. "Corps staff" kept contiguous (probe-locked).
   var lift = Math.round(_cmdCorpsLift(C) + (typeof _cmdDivLift === "function" ? _cmdDivLift(C) : 0)), eff;
   if (lift > 0) eff = '<span aria-hidden="true" style="color:#6f9e5a">&#9650;</span> <b>+' + lift + '</b> to the army&rsquo;s command in the field &mdash; a sound command staff';
-  else if (lift < 0) eff = '<span aria-hidden="true" style="color:#c9712e">&#9660;</span> <b>&minus;' + Math.abs(lift) + '</b> to the army&rsquo;s command &mdash; weak or stretched leadership drags it';
+  else if (lift < 0) eff = '<span aria-hidden="true" style="color:#d17936">&#9660;</span> <b>&minus;' + Math.abs(lift) + '</b> to the army&rsquo;s command &mdash; weak or stretched leadership drags it';
   else eff = 'No net effect yet &mdash; seat able generals to lift the army, or leave the command to the course of the war';
   var divIntro = hasDiv ? ' A corps was built of <b>divisions</b>: seat a corps commander, then staff the divisions beneath him &mdash; a corps was only as good as its divisions.' : '';
   var divFoot = hasDiv ? ' Below each seated corps you may staff its divisions (a division is properly a ' + _cmdEsc(_cmdDivPreferredGrade(C)) + '&rsquo;s billet) &mdash; the cutting edge of a corps, like A.&thinsp;P. Hill&rsquo;s Light Division under Jackson or the Union&rsquo;s hard-fighting divisions in Hancock&rsquo;s II Corps.' : '';
@@ -1746,7 +1746,7 @@ function _cmdCardHTML(C) {
     html += '<div style="margin-top:10px;padding:9px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.1)">'
       + '<div style="font-weight:bold;font-size:13px">' + _cmdEsc(c.title) + '</div>'
       + '<div style="font-size:12px;opacity:.85;margin:2px 0">' + _cmdEsc(c.claim) + '</div>'
-      + '<button id="cmdCard_' + i + '" type="button" class="upg" style="font-size:11px;padding:1px 8px;margin-top:3px">The historians &#9656;</button>'
+      + '<button id="cmdCard_' + i + '" type="button" class="upg" aria-expanded="false" aria-controls="cmdCardBox_' + i + '" style="font-size:11px;padding:1px 8px;margin-top:3px">The historians &#9656;</button>'
       + '<div id="cmdCardBox_' + i + '" style="display:none;margin-top:4px">' + persp
       + '<div style="margin-top:4px;font-size:10px;opacity:.6">' + _cmdEsc(c.provenance || "Inferred") + (c.sources && c.sources.length ? ' &middot; ' + _cmdEsc(c.sources.join("; ")) : '') + '</div></div>'
       + '</div>';
@@ -1999,7 +1999,7 @@ function cmdWireTab(C) {
       var btn = document.getElementById("cmdCard_" + idx);
       if (btn) btn.addEventListener("click", function () {
         var box = document.getElementById("cmdCardBox_" + idx);
-        if (box) box.style.display = (box.style.display === "none") ? "block" : "none";
+        if (box) { box.style.display = (box.style.display === "none") ? "block" : "none"; btn.setAttribute("aria-expanded", box.style.display !== "none" ? "true" : "false"); }
       });
     })(c);
   }

@@ -137,9 +137,9 @@ function moraleOnResolve(winnerSide, type, B, C, win) {
 
 function _morMeter(label, v, hint) {
   v = Math.max(0, Math.min(100, Math.round(v || 0)));
-  var col = v > 66 ? '#4a6b3a' : v > 38 ? '#b8863b' : '#9c3b2e';
+  var col = v > 66 ? '#6a9a58' : v > 38 ? '#b8863b' : '#d06862';
   return '<div style="margin:5px 0">'
-    + '<div style="display:flex;justify-content:space-between;font-size:12px;opacity:.85"><span>' + label + '</span><span style="color:' + col + '">' + v + '</span></div>'
+    + '<div style="display:flex;justify-content:space-between;font-size:12px"><span style="opacity:.85">' + label + '</span><span style="color:' + col + '">' + v + '</span></div>'
     + '<div style="height:7px;background:rgba(0,0,0,.25);border:1px solid var(--rule);border-radius:3px;overflow:hidden"><div style="height:100%;width:' + v + '%;background:' + col + '"></div></div>'
     + (hint ? '<div style="font-size:10px;opacity:.55;margin-top:1px">' + hint + '</div>' : '') + '</div>';
 }
@@ -150,8 +150,8 @@ function presMoraleBlock(C) {
   var m = moraleCompute(C), f = _morElectionForecast(C);
   var clk = C.clock || {};
   var electionLine;
-  if (f.resolved) electionLine = f.elected ? '<span style="color:#4a6b3a">Sustained at the polls — the war goes on.</span>' : '<span style="color:#9c3b2e">Repudiated — the peace platform prevailed.</span>';
-  else if ((clk.year || 1861) >= 1864) electionLine = '<span style="color:' + (f.sustained ? '#b8863b' : '#9c3b2e') + '">November 1864 is at hand — the verdict looks <b>' + (f.sustained ? 'favorable' : 'doubtful') + '</b> (support ' + f.support + ').</span>';
+  if (f.resolved) electionLine = f.elected ? '<span style="color:#6a9a58">Sustained at the polls — the war goes on.</span>' : '<span style="color:#d06862">Repudiated — the peace platform prevailed.</span>';
+  else if ((clk.year || 1861) >= 1864) electionLine = '<span style="color:' + (f.sustained ? '#b8863b' : '#d06862') + '">November 1864 is at hand — the verdict looks <b>' + (f.sustained ? 'favorable' : 'doubtful') + '</b> (support ' + f.support + ').</span>';
   else electionLine = '<span style="opacity:.75">If the war reaches November 1864, the people will render their verdict (support now ' + f.support + ', need 60).</span>';
 
   // a restrained line on the human cost (D35.6 — gravity, not spectacle)

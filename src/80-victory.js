@@ -143,10 +143,10 @@ function vicOnResolve(winnerSide, type, B, C, win) {
 
 /* Status word for a 0..1 momentum. */
 function _vicMomWord(m) {
-  if (m >= 0.66) return ["Winning the war", "#4a6b3a"];
+  if (m >= 0.66) return ["Winning the war", "#639452"];
   if (m >= 0.45) return ["Holding on", "#b8863b"];
   if (m >= 0.28) return ["Losing ground", "#c9712e"];
-  return ["On the brink", "#9c3b2e"];
+  return ["On the brink", "#d07060"];
 }
 
 /* ---- The WILD-CARD CATALOG (R32/§5 alternate history) — ahistorical gambits for
@@ -219,14 +219,14 @@ function _vicWildSection(C) {
   // so the war can diverge ONLY through play. Default OFF -> the full body below
   // renders exactly as before (byte-identical). See 81-divergence.js.
   if (typeof divEmergentOnly === "function" && divEmergentOnly()) {
-    return '<hr class="rule"><div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#9c3b2e;margin:2px 0 2px">Wild Cards &mdash; Alternate History</div>'
+    return '<hr class="rule"><div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#d07060;margin:2px 0 2px">Wild Cards &mdash; Alternate History</div>'
       + '<div style="font-size:11px;opacity:.7">Alternate-history gambits are turned off &mdash; your war diverges only through the choices and battles of the campaign. Re-enable them under <b>Your War vs History</b>.</div>';
   }
   var side = (C.side === "CS") ? "CS" : "US";
   var S = C.strategy, played = S.wildsPlayed || [];
   var year = (C.clock && C.clock.year) || (C.president && C.president.date && C.president.date.year) || 1861;
-  var tiers = [["plausible", "Plausible — actively debated", "#4a6b3a"], ["longshot", "Long shot — documented but improbable", "#b8863b"], ["fantastical", "Fantastical — video-game wild", "#9c3b2e"]];
-  var out = '<hr class="rule"><div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#9c3b2e;margin:2px 0 2px">Wild Cards &mdash; Alternate History</div>'
+  var tiers = [["plausible", "Plausible — actively debated", "#639452"], ["longshot", "Long shot — documented but improbable", "#b8863b"], ["fantastical", "Fantastical — video-game wild", "#d07060"]];
+  var out = '<hr class="rule"><div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#d07060;margin:2px 0 2px">Wild Cards &mdash; Alternate History</div>'
     + '<div style="font-size:11px;opacity:.65;margin-bottom:2px">Ahistorical gambits. Some plausible, some preposterous &mdash; the war is yours to bend.</div>';
   for (var ti = 0; ti < tiers.length; ti++) {
     var tier = tiers[ti][0], rows = "";
@@ -237,9 +237,9 @@ function _vicWildSection(C) {
       if (w.yearMax && year > w.yearMax) continue;
       var done = played.indexOf(w.id) >= 0;
       rows += '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 0;border-bottom:1px dotted var(--rule)">'
-        + '<div style="flex:1 1 auto"><b style="font-size:12px">' + w.title + '</b> <span style="font-size:10px;opacity:.5">' + w.cost + '</span>'
+        + '<div style="flex:1 1 auto"><b style="font-size:12px">' + w.title + '</b> <span style="font-size:10px;opacity:.65">' + w.cost + '</span>'
         + '<div style="font-size:11px;opacity:.7">' + w.desc + '</div></div>'
-        + '<button id="wild_' + w.id + '" type="button" class="upg" style="flex:0 0 auto"' + (done ? ' disabled' : '') + '>' + (done ? 'Engaged &check;' : 'Engage') + '</button></div>';
+        + '<button id="wild_' + w.id + '" type="button" class="upg" aria-label="' + w.title.replace(/&amp;/g, "&") + '" style="flex:0 0 auto"' + (done ? ' disabled' : '') + '>' + (done ? 'Engaged &check;' : 'Engage') + '</button></div>';
     }
     if (rows) out += '<div style="margin-top:4px"><div style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:' + tiers[ti][2] + '">' + tiers[ti][1] + '</div>' + rows + '</div>';
   }
@@ -272,7 +272,7 @@ function vicRenderPaths(C) {
     return '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 0;border-bottom:1px dotted var(--rule)">'
       + '<div style="flex:1 1 auto"><b style="font-size:12px">' + label + '</b> <span style="font-size:10px;opacity:.6">' + cost + '</span>'
       + '<div style="font-size:11px;opacity:.7">' + desc + '</div></div>'
-      + '<button id="' + id + '" type="button" class="upg" style="flex:0 0 auto">' + (on ? 'Active &check;' : 'Engage') + '</button></div>';
+      + '<button id="' + id + '" type="button" class="upg" aria-label="' + label.replace(/&amp;/g, "&") + '" aria-pressed="' + (on ? "true" : "false") + '" style="flex:0 0 auto">' + (on ? 'Active &check;' : 'Engage') + '</button></div>';
   };
 
   var head = '<div style="font-size:17px;font-weight:bold">Paths to Victory</div>'
@@ -280,8 +280,8 @@ function vicRenderPaths(C) {
     + '(momentum ' + Math.round(mom * 100) + '%). History is only what befalls a Confederacy that loses; win, and your war is your own.</div><hr class="rule">';
 
   if (side === "CS") {
-    var willStatus = (S.enemyWill <= 30) ? ["The North will treat", "#4a6b3a"] : (S.enemyWill <= 55) ? ["Northern resolve cracking", "#b8863b"] : ["The North fights on", "#9c3b2e"];
-    var recogStatus = recogForeclosed ? ["Foreclosed", "#7a241b"] : (recog >= 45) ? ["Courted", "#4a6b3a"] : (recog >= 20) ? ["Possible", "#b8863b"] : ["Distant", "#c9712e"];
+    var willStatus = (S.enemyWill <= 30) ? ["The North will treat", "#639452"] : (S.enemyWill <= 55) ? ["Northern resolve cracking", "#b8863b"] : ["The North fights on", "#d07060"];
+    var recogStatus = recogForeclosed ? ["Foreclosed", "#d07060"] : (recog >= 45) ? ["Courted", "#639452"] : (recog >= 20) ? ["Possible", "#b8863b"] : ["Distant", "#c9712e"];
     var paths = ''
       + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:2px 0 2px">How the South wins</div>'
       + pathCard('Break Northern Will &rarr; Negotiated Peace', 100 - S.enemyWill, willStatus[0], willStatus[1],
@@ -305,7 +305,7 @@ function vicRenderPaths(C) {
     var wild = _vicWildSection(C);
 
     var teach = '<div id="vicWhyBox" style="display:none;margin-top:10px;padding:10px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.12);font-size:12px;line-height:1.5"></div>'
-      + '<div class="btn-row" style="margin-top:10px"><button id="vicWhy" type="button" class="upg">Can the South really win?</button></div>';
+      + '<div class="btn-row" style="margin-top:10px"><button id="vicWhy" type="button" class="upg" aria-expanded="false" aria-controls="vicWhyBox">Can the South really win?</button></div>';
 
     return head + paths + levers + wild + teach;
   }
@@ -313,15 +313,15 @@ function vicRenderPaths(C) {
   // US (the mirror — lighter; Aaron's focus is the Southern counter-game).
   var usPaths = ''
     + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:2px 0 2px">How the Union wins</div>'
-    + pathCard('Conquer the Confederacy', Math.min(100, ((C.stats && C.stats.won) || 0) * 8), ((C.stats && C.stats.won) || 0) + ' victories', '#4a6b3a',
+    + pathCard('Conquer the Confederacy', Math.min(100, ((C.stats && C.stats.won) || 0) * 8), ((C.stats && C.stats.won) || 0) + ' victories', '#639452',
         'Destroy the rebel armies and take Richmond &mdash; the decisive military road.')
-    + pathCard('Hold the Political Will', 100 - ((C.clock && C.clock.weariness) || 0), (C.clock && C.clock.weariness >= 60) ? 'Eroding' : 'Holding', (C.clock && C.clock.weariness >= 60) ? '#c9712e' : '#4a6b3a',
+    + pathCard('Hold the Political Will', 100 - ((C.clock && C.clock.weariness) || 0), (C.clock && C.clock.weariness >= 60) ? 'Eroding' : 'Holding', (C.clock && C.clock.weariness >= 60) ? '#c9712e' : '#639452',
         'Sustain Northern resolve to November 1864 &mdash; lose the election and the peace party may concede the South.')
     + pathCard('Strangle by Blockade', 100 - Math.round(((C.blockade && C.blockade.importFactor) || 1) * 90), 'The Anaconda', '#b8863b',
         'Tighten the blockade, take the rebel ports, and choke the cotton economy until the South cannot fight.');
   return head + usPaths + _vicWildSection(C)
     + '<div id="vicWhyBox" style="display:none;margin-top:10px;padding:10px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.12);font-size:12px;line-height:1.5"></div>'
-    + '<div class="btn-row" style="margin-top:10px"><button id="vicWhy" type="button" class="upg">The Union\'s harder problem</button></div>';
+    + '<div class="btn-row" style="margin-top:10px"><button id="vicWhy" type="button" class="upg" aria-expanded="false" aria-controls="vicWhyBox">The Union\'s harder problem</button></div>';
 }
 
 function _vicWhyText(C) {
@@ -377,5 +377,6 @@ function vicWirePaths(C) {
     if (!box) return;
     if (box.style.display === "none") { box.innerHTML = _vicWhyText(C); box.style.display = "block"; }
     else box.style.display = "none";
+    why.setAttribute("aria-expanded", box.style.display !== "none" ? "true" : "false");
   });
 }

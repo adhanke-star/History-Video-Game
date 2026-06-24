@@ -222,7 +222,7 @@ function fldLogisticsHudReserve() {
   var src = fldSupplyFor(ps); if (!src) return "";
   var pct = Math.round(fldClamp(src.reserve / Math.max(1, src.reserveMax), 0, 1) * 100);
   var word = pct > 60 ? "ample" : (pct > 25 ? "running low" : (pct > 0 ? "nearly out" : "exhausted"));
-  var col = pct > 60 ? "#8fb47a" : (pct > 25 ? "#d2a85f" : /* wcag-auditor: contrast fix from #cf7a5a to #d28466 for AA compliance (opacity:.8 parent reduces effective contrast; blended ratio was 4.23:1, now 4.59:1) */ "#d28466");
+  var col = pct > 60 ? "#8fb47a" : (pct > 25 ? "#d2a85f" : "#d49888");
   return '<div style="opacity:.8;margin-top:5px;font-size:12px;">Ammunition train: <span style="color:' + col + ';">' + word + '</span> (' + pct + '%)</div>';
 }
 

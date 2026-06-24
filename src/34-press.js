@@ -130,11 +130,11 @@ function pressSentiment(C) {
 /* ===== render: "The Press" desk tab — the period broadsheet ===== */
 
 function _prsFavorWord(v) {
-  if (v >= 70) return ["Solidly behind the war", "#4a6b3a"];
+  if (v >= 70) return ["Solidly behind the war", "#6a9a58"];
   if (v >= 55) return ["Supportive", "#6f9e5a"];
   if (v >= 45) return ["Wavering", "#b8863b"];
   if (v >= 30) return ["Critical", "#c9712e"];
-  return ["In open opposition", "#9c3b2e"];
+  return ["In open opposition", "#d06862"];
 }
 
 function pressRenderTab(C) {
@@ -193,7 +193,7 @@ function _prsCardHTML(C) {
     html += '<div style="margin-top:10px;padding:9px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.1)">'
       + '<div style="font-weight:bold;font-size:13px">' + _prsEsc(c.title) + '</div>'
       + '<div style="font-size:12px;opacity:.85;margin:2px 0">' + _prsEsc(c.claim) + '</div>'
-      + '<button id="prsCard_' + i + '" type="button" class="upg" style="font-size:11px;padding:1px 8px;margin-top:3px">The historians &#9656;</button>'
+      + '<button id="prsCard_' + i + '" type="button" class="upg" style="font-size:11px;padding:1px 8px;margin-top:3px" aria-expanded="false" aria-controls="prsCardBox_' + i + '">The historians &#9656;</button>'
       + '<div id="prsCardBox_' + i + '" style="display:none;margin-top:4px">' + persp
       + '<div style="margin-top:4px;font-size:10px;opacity:.6">' + _prsEsc(c.provenance || "Inferred") + (c.sources && c.sources.length ? ' &middot; ' + _prsEsc(c.sources.join("; ")) : '') + '</div></div>'
       + '</div>';
@@ -208,7 +208,7 @@ function pressWireTab(C) {
       var b = document.getElementById("prsCard_" + idx);
       if (b) b.addEventListener("click", function () {
         var box = document.getElementById("prsCardBox_" + idx);
-        if (box) box.style.display = (box.style.display === "none") ? "block" : "none";
+        if (box) { box.style.display = (box.style.display === "none") ? "block" : "none"; b.setAttribute("aria-expanded", box.style.display !== "none" ? "true" : "false"); }
       });
     })(i);
   }

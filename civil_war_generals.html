@@ -26135,8 +26135,8 @@ function _pdStat(label, value, accent) {
 /* A meter (0-100) drawn as a thin period bar. */
 function _pdMeter(label, v, hi) {
   v = Math.max(0, Math.min(100, Math.round(v || 0)));
-  var col = hi ? (v > 66 ? '#9c3b2e' : v > 33 ? '#b8863b' : '#4a6b3a')   // higher = worse (weariness/intervention)
-               : (v > 66 ? '#4a6b3a' : v > 33 ? '#b8863b' : '#9c3b2e');  // higher = better (supply/capital)
+  var col = hi ? (v > 66 ? '#ad4133' : v > 33 ? '#b8863b' : '#4d703c')   // higher = worse (weariness/intervention)
+               : (v > 66 ? '#4d703c' : v > 33 ? '#b8863b' : '#ad4133');  // higher = better (supply/capital)
   return '<div style="margin:5px 0">'
     + '<div style="display:flex;justify-content:space-between;font-size:12px;opacity:.8"><span>' + label + '</span><span>' + v + '</span></div>'
     + '<div style="height:7px;background:rgba(0,0,0,.25);border:1px solid var(--rule);border-radius:3px;overflow:hidden">'
@@ -26192,7 +26192,7 @@ function presRenderEconomy(C) {
     +     _pdStat('Treasury', '$' + (C.funds || 0))
     +     _pdStat('War-Department nodes built', nodeLevels + ' / 25')
     +     _pdStat('Battles fought', (C.stats ? C.stats.battles : 0))
-    +     _pdStat('Victories', (C.stats ? C.stats.won : 0), '#4a6b3a')
+    +     _pdStat('Victories', (C.stats ? C.stats.won : 0), '#699952')
     +     _pdStat('The year', clk.year || P.date.year)
     +     _pdStat('1864 election', electionLine)
     +   '</div>'
@@ -26240,7 +26240,7 @@ function presRenderCabinet(C) {
       +   '<div style="opacity:.75;font-size:12px">' + a.role + '</div>'
       +   '<div style="opacity:.6;font-size:11px;margin-top:3px">' + (on ? 'Running the department in your stead.' : 'Awaiting your direction.') + '</div>'
       + '</div>'
-      + '<button id="pdDel_' + a.domain + '" type="button" class="upg" style="flex:0 0 auto">'
+      + '<button id="pdDel_' + a.domain + '" type="button" class="upg" style="flex:0 0 auto" aria-pressed="'+(on?'true':'false')+'">'
       +   (on ? 'Delegated &check;' : 'Delegate')
       + '</button>'
       + '</div>';
@@ -26432,7 +26432,14 @@ function _wdRefresh() {
   var tabs = ["economy", "treasury", "diplomacy", "victory", "warvshistory", "afteraction", "codex", "playstyle", "armory", "warroom", "clock", "muster", "cabinet", "command", "camp", "decisions", "press", "map"];
   for (var i = 0; i < tabs.length; i++) {
     var b = document.getElementById("wdTab_" + tabs[i]);
-    if (b) b.style.opacity = (tabs[i] === _wdTab) ? "1" : "0.55";
+    if (b) {
+      b.style.opacity = (tabs[i] === _wdTab) ? "1" : "0.55";
+      // E3-i2 (D126): the active tab was conveyed by opacity ALONE (WCAG 1.4.1) with no
+      // programmatic state (4.1.2). Mirror it as aria-pressed (a toolbar-toggle pattern; chosen
+      // over a full role=tablist because these 18 buttons have no roving-tabindex/arrow-key nav,
+      // which a tablist would imply). The high-contrast block also gives the pressed tab a ring.
+      b.setAttribute("aria-pressed", (tabs[i] === _wdTab) ? "true" : "false");
+    }
   }
   if (wire) { try { wire(C); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_wdRefresh wire (" + _wdTab + "):", e); } }
   // E2-i2 (D120): the INLINE GLOSSARY — decorate the read-only teaching prose with
@@ -26465,7 +26472,7 @@ function openWarDept() {
     '<p class="title-sub" style="text-align:center">' + (head.title || '')
       + (head.seat ? ' &mdash; ' + head.seat : '') + '</p>' +
     '<hr class="rule">' +
-    '<div id="wdTabs" style="display:flex;gap:6px;justify-content:center;margin-bottom:12px;flex-wrap:wrap">' +
+    '<div id="wdTabs" role="group" aria-label="President\'s Desk sections" style="display:flex;gap:6px;justify-content:center;margin-bottom:12px;flex-wrap:wrap">' +
       _wdTabBtn("economy", "The War Effort") +
       _wdTabBtn("treasury", "The Treasury") +
       _wdTabBtn("diplomacy", "Diplomacy") +
@@ -26849,13 +26856,13 @@ function _cabPrincipalCard(C, domain) {
 
   var recBlock = "";
   if (stance) {
-    var ambTag = ambActive ? ' <span style="font-size:10px;color:#9c3b2e;border:1px solid #9c3b2e;border-radius:3px;padding:0 4px" title="This advisor is pressing his own interest">&#9873; ambition</span>' : '';
+    var ambTag = ambActive ? ' <span style="font-size:10px;color:#d06862;border:1px solid #d06862;border-radius:3px;padding:0 4px" title="This advisor is pressing his own interest">&#9873; ambition</span>' : '';
     var actions = "";
     if (delegated) {
       actions = '<span style="font-size:11px;opacity:.7;align-self:center">Running it in your stead.</span>'
         + '<button id="cabDel_' + domain + '" type="button" class="upg" style="flex:0 0 auto">Reclaim</button>';
     } else if (heeded) {
-      actions = '<span style="font-size:11px;color:#4a6b3a;align-self:center">Counsel heeded &check;</span>'
+      actions = '<span style="font-size:11px;color:#6a9a58;align-self:center">Counsel heeded &check;</span>'
         + '<button id="cabDel_' + domain + '" type="button" class="upg" style="flex:0 0 auto">Delegate</button>';
     } else {
       actions = '<button id="cabAcc_' + domain + '" type="button" class="upg" style="flex:0 0 auto">Heed</button>'
@@ -26867,7 +26874,7 @@ function _cabPrincipalCard(C, domain) {
       +     '<div style="flex:1 1 260px;font-size:13px">&ldquo;' + _cabEsc(stance.oneLine) + '&rdquo;' + ambTag + '</div>'
       +     '<div style="display:flex;gap:6px;flex:0 0 auto">' + actions + '</div>'
       +   '</div>'
-      +   '<button id="cabWhy_' + domain + '" type="button" class="upg" style="margin-top:6px;font-size:11px;padding:1px 8px">Why &#9656;</button>'
+      +   '<button id="cabWhy_' + domain + '" type="button" class="upg" style="margin-top:6px;font-size:11px;padding:1px 8px" aria-expanded="false" aria-controls="cabWhyBox_' + domain + '">Why &#9656;</button>'
       +   '<div id="cabWhyBox_' + domain + '" style="display:none;margin-top:6px;font-size:12px;opacity:.85;background:rgba(0,0,0,.12);border:1px solid var(--rule);border-radius:4px;padding:8px">'
       +     _cabEsc(stance.why)
       +     '<div style="margin-top:5px;font-size:10px;opacity:.6">' + _cabEsc((stance.provenance || "Inferred")) + (stance.sources && stance.sources.length ? ' &middot; ' + _cabEsc(stance.sources.join("; ")) : '') + '</div>'
@@ -26876,7 +26883,7 @@ function _cabPrincipalCard(C, domain) {
   }
 
   var ambBlock = (ambActive && a.ambitionTell)
-    ? '<div style="margin-top:8px;font-size:11px;color:#9c3b2e;background:rgba(156,59,46,.08);border:1px solid rgba(156,59,46,.4);border-radius:4px;padding:7px">&#9873; <b>Ambition.</b> ' + _cabEsc(a.ambitionTell) + '</div>'
+    ? '<div style="margin-top:8px;font-size:11px;color:#d88878;background:rgba(156,59,46,.08);border:1px solid rgba(156,59,46,.4);border-radius:4px;padding:7px">&#9873; <b>Ambition.</b> ' + _cabEsc(a.ambitionTell) + '</div>'
     : '';
 
   return '<div style="padding:11px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.12)">'
@@ -26907,7 +26914,7 @@ function _cabFullRosterHTML(C) {
     if (any) rows += '<div style="margin:7px 0 4px"><div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--rule)">' + _cabEsc(_cabDOMAIN_LABEL[dom] || dom) + '</div>' + line + '</div>';
   }
   return ''
-    + '<button id="cabFullToggle" type="button" class="upg" style="font-size:11px;padding:2px 8px;margin-top:4px">The full cabinet &#9656;</button>'
+    + '<button id="cabFullToggle" type="button" class="upg" style="font-size:11px;padding:2px 8px;margin-top:4px" aria-expanded="false" aria-controls="cabFullBox">The full cabinet &#9656;</button>'
     + '<div id="cabFullBox" style="display:none;margin-top:6px;padding:8px;border:1px solid var(--rule);border-radius:4px;background:rgba(0,0,0,.1)">'
     +   '<p style="font-size:11px;opacity:.65;margin:0 0 4px">Offices change hands as the war goes on. ' + (side === "CS" ? 'Davis ran through six War Secretaries in four years; Benjamin alone rotated through three posts.' : 'Lincoln governed a cabinet of former rivals.') + '</p>'
     +   rows
@@ -26929,7 +26936,7 @@ function _cabCrossCardHTML(C) {
     html += '<div style="margin-top:10px;padding:10px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.1)">'
       + '<div style="font-weight:bold;font-size:13px">' + _cabEsc(c.title) + '</div>'
       + '<div style="font-size:12px;opacity:.85;margin:3px 0 2px">' + _cabEsc(c.claim) + '</div>'
-      + '<button id="cabCC_' + i + '" type="button" class="upg" style="font-size:11px;padding:1px 8px;margin-top:3px">The historians &#9656;</button>'
+      + '<button id="cabCC_' + i + '" type="button" class="upg" style="font-size:11px;padding:1px 8px;margin-top:3px" aria-expanded="false" aria-controls="cabCCBox_' + i + '">The historians &#9656;</button>'
       + '<div id="cabCCBox_' + i + '" style="display:none;margin-top:4px">' + persp
       + '<div style="margin-top:4px;font-size:10px;opacity:.6">' + _cabEsc(c.provenance || "Inferred") + (c.sources && c.sources.length ? ' &middot; ' + _cabEsc(c.sources.join("; ")) : '') + '</div></div>'
       + '</div>';
@@ -27013,14 +27020,14 @@ function presWireCabinet(C) {
       var why = document.getElementById("cabWhy_" + domain);
       if (why) why.addEventListener("click", function () {
         var box = document.getElementById("cabWhyBox_" + domain);
-        if (box) box.style.display = (box.style.display === "none") ? "block" : "none";
+        if (box) { box.style.display = (box.style.display === "none") ? "block" : "none"; why.setAttribute("aria-expanded", box.style.display !== "none" ? "true" : "false"); }
       });
     })(_cabPRINCIPALS[i]);
   }
   var ft = document.getElementById("cabFullToggle");
   if (ft) ft.addEventListener("click", function () {
     var box = document.getElementById("cabFullBox");
-    if (box) box.style.display = (box.style.display === "none") ? "block" : "none";
+    if (box) { box.style.display = (box.style.display === "none") ? "block" : "none"; ft.setAttribute("aria-expanded", box.style.display !== "none" ? "true" : "false"); }
   });
   var d = _cabData();
   if (d && d.crossCards) for (var c = 0; c < d.crossCards.length; c++) {
@@ -27028,7 +27035,7 @@ function presWireCabinet(C) {
       var b = document.getElementById("cabCC_" + idx);
       if (b) b.addEventListener("click", function () {
         var box = document.getElementById("cabCCBox_" + idx);
-        if (box) box.style.display = (box.style.display === "none") ? "block" : "none";
+        if (box) { box.style.display = (box.style.display === "none") ? "block" : "none"; b.setAttribute("aria-expanded", box.style.display !== "none" ? "true" : "false"); }
       });
     })(c);
   }
@@ -27189,7 +27196,7 @@ function _decOptionHTML(card, opt, ns) {
     +     '<button id="decChoose_' + oid + '" type="button" class="bigbtn" style="flex:0 0 auto;font-size:12px;padding:3px 12px">Decide</button>'
     +   '</div>'
     +   (opt.historicalNote ? '<div style="font-size:11px;opacity:.7;margin-top:3px">' + _decEsc(opt.historicalNote) + '</div>' : '')
-    +   '<button id="decWhy_' + oid + '" type="button" class="upg" style="font-size:11px;padding:1px 8px;margin-top:4px">Why &#9656;</button>'
+    +   '<button id="decWhy_' + oid + '" type="button" class="upg" style="font-size:11px;padding:1px 8px;margin-top:4px" aria-expanded="false" aria-controls="decWhyBox_' + oid + '">Why &#9656;</button>'
     +   '<div id="decWhyBox_' + oid + '" style="display:none;margin-top:4px;font-size:12px;opacity:.85">'
     +     _decEsc(opt.teaching || '')
     +     '<div style="margin-top:3px;font-size:10px;opacity:.6">' + _decEsc(opt.provenance || "Inferred") + (opt.sources && opt.sources.length ? ' &middot; ' + _decEsc(opt.sources.join("; ")) : '') + '</div>'
@@ -27203,10 +27210,10 @@ function _decCardHTML(C, card, ns) {
   var opts = "";
   for (var i = 0; i < card.options.length; i++) opts += _decOptionHTML(card, card.options[i], ns);
   var cat = _decCAT_LABEL[card.category] || card.category || "";
-  var hinge = (card.trigger && card.trigger.hinge) ? '<span style="font-size:10px;color:#cc5f50;border:1px solid #cc5f50;border-radius:3px;padding:0 4px;margin-left:6px">&#9873; a hinge of the war</span>' : '';  /* wcag-auditor: contrast fix from #9c3b2e to #cc5f50 for AA compliance (was 2.75:1; now 4.51:1 text + 4.51:1 border against card bg, both WCAG 2.2 AA) */
+  var hinge = (card.trigger && card.trigger.hinge) ? '<span style="font-size:10px;color:#d88878;border:1px solid #d88878;border-radius:3px;padding:0 4px;margin-left:6px">&#9873; a hinge of the war</span>' : '';
   return ''
     + '<div style="margin:10px 0;padding:11px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.14)">'
-    +   '<div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#957d57">' + _decEsc(cat) + hinge + '</div>'  /* wcag-auditor: contrast fix from var(--rule)=#8a7350 to #957d57 for AA compliance (was 4.15:1; now 4.54:1 against card bg) */
+    +   '<div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#a89066">' + _decEsc(cat) + hinge + '</div>'
     +   '<div style="font-size:15px;font-weight:bold;margin:2px 0">' + _decEsc(card.title) + '</div>'
     +   '<div style="font-size:13px;opacity:.9;margin-bottom:4px">' + _decEsc(card.situation) + '</div>'
     +   opts
@@ -27238,7 +27245,7 @@ function decRenderTab(C) {
       for (var o = 0; o < rc.options.length; o++) if (rc.options[o].id === oid) chosen = rc.options[o];
       rows += '<div style="font-size:12px;padding:3px 0;border-bottom:1px dotted var(--rule)"><b>' + _decEsc(rc.title) + '</b> &mdash; ' + _decEsc(chosen ? chosen.label : oid) + '</div>';
     }
-    body += '<button id="decHistToggle" type="button" class="upg" style="font-size:11px;padding:2px 8px;margin-top:8px">Decisions you have made &#9656;</button>'
+    body += '<button id="decHistToggle" type="button" class="upg" style="font-size:11px;padding:2px 8px;margin-top:8px" aria-expanded="false" aria-controls="decHistBox">Decisions you have made &#9656;</button>'
       + '<div id="decHistBox" style="display:none;margin-top:6px;padding:8px;border:1px solid var(--rule);border-radius:4px;background:rgba(0,0,0,.1)">' + rows + '</div>';
   }
   return body;
@@ -27260,7 +27267,7 @@ function _decWireCards(C, ns, cardIds, afterChoose) {
         var why = document.getElementById("decWhy_" + oid);
         if (why) why.addEventListener("click", function () {
           var box = document.getElementById("decWhyBox_" + oid);
-          if (box) box.style.display = (box.style.display === "none") ? "block" : "none";
+          if (box) { box.style.display = (box.style.display === "none") ? "block" : "none"; why.setAttribute("aria-expanded", box.style.display !== "none" ? "true" : "false"); }
         });
       })(c, c.options[j]);
     }
@@ -27274,7 +27281,7 @@ function decWireTab(C) {
   var ht = document.getElementById("decHistToggle");
   if (ht) ht.addEventListener("click", function () {
     var box = document.getElementById("decHistBox");
-    if (box) box.style.display = (box.style.display === "none") ? "block" : "none";
+    if (box) { box.style.display = (box.style.display === "none") ? "block" : "none"; ht.setAttribute("aria-expanded", box.style.display !== "none" ? "true" : "false"); }
   });
 }
 
@@ -27440,9 +27447,9 @@ function moraleOnResolve(winnerSide, type, B, C, win) {
 
 function _morMeter(label, v, hint) {
   v = Math.max(0, Math.min(100, Math.round(v || 0)));
-  var col = v > 66 ? '#4a6b3a' : v > 38 ? '#b8863b' : '#9c3b2e';
+  var col = v > 66 ? '#6a9a58' : v > 38 ? '#b8863b' : '#d06862';
   return '<div style="margin:5px 0">'
-    + '<div style="display:flex;justify-content:space-between;font-size:12px;opacity:.85"><span>' + label + '</span><span style="color:' + col + '">' + v + '</span></div>'
+    + '<div style="display:flex;justify-content:space-between;font-size:12px"><span style="opacity:.85">' + label + '</span><span style="color:' + col + '">' + v + '</span></div>'
     + '<div style="height:7px;background:rgba(0,0,0,.25);border:1px solid var(--rule);border-radius:3px;overflow:hidden"><div style="height:100%;width:' + v + '%;background:' + col + '"></div></div>'
     + (hint ? '<div style="font-size:10px;opacity:.55;margin-top:1px">' + hint + '</div>' : '') + '</div>';
 }
@@ -27453,8 +27460,8 @@ function presMoraleBlock(C) {
   var m = moraleCompute(C), f = _morElectionForecast(C);
   var clk = C.clock || {};
   var electionLine;
-  if (f.resolved) electionLine = f.elected ? '<span style="color:#4a6b3a">Sustained at the polls — the war goes on.</span>' : '<span style="color:#9c3b2e">Repudiated — the peace platform prevailed.</span>';
-  else if ((clk.year || 1861) >= 1864) electionLine = '<span style="color:' + (f.sustained ? '#b8863b' : '#9c3b2e') + '">November 1864 is at hand — the verdict looks <b>' + (f.sustained ? 'favorable' : 'doubtful') + '</b> (support ' + f.support + ').</span>';
+  if (f.resolved) electionLine = f.elected ? '<span style="color:#6a9a58">Sustained at the polls — the war goes on.</span>' : '<span style="color:#d06862">Repudiated — the peace platform prevailed.</span>';
+  else if ((clk.year || 1861) >= 1864) electionLine = '<span style="color:' + (f.sustained ? '#b8863b' : '#d06862') + '">November 1864 is at hand — the verdict looks <b>' + (f.sustained ? 'favorable' : 'doubtful') + '</b> (support ' + f.support + ').</span>';
   else electionLine = '<span style="opacity:.75">If the war reaches November 1864, the people will render their verdict (support now ' + f.support + ', need 60).</span>';
 
   // a restrained line on the human cost (D35.6 — gravity, not spectacle)
@@ -27614,11 +27621,11 @@ function pressSentiment(C) {
 /* ===== render: "The Press" desk tab — the period broadsheet ===== */
 
 function _prsFavorWord(v) {
-  if (v >= 70) return ["Solidly behind the war", "#4a6b3a"];
+  if (v >= 70) return ["Solidly behind the war", "#6a9a58"];
   if (v >= 55) return ["Supportive", "#6f9e5a"];
   if (v >= 45) return ["Wavering", "#b8863b"];
   if (v >= 30) return ["Critical", "#c9712e"];
-  return ["In open opposition", "#9c3b2e"];
+  return ["In open opposition", "#d06862"];
 }
 
 function pressRenderTab(C) {
@@ -27677,7 +27684,7 @@ function _prsCardHTML(C) {
     html += '<div style="margin-top:10px;padding:9px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.1)">'
       + '<div style="font-weight:bold;font-size:13px">' + _prsEsc(c.title) + '</div>'
       + '<div style="font-size:12px;opacity:.85;margin:2px 0">' + _prsEsc(c.claim) + '</div>'
-      + '<button id="prsCard_' + i + '" type="button" class="upg" style="font-size:11px;padding:1px 8px;margin-top:3px">The historians &#9656;</button>'
+      + '<button id="prsCard_' + i + '" type="button" class="upg" style="font-size:11px;padding:1px 8px;margin-top:3px" aria-expanded="false" aria-controls="prsCardBox_' + i + '">The historians &#9656;</button>'
       + '<div id="prsCardBox_' + i + '" style="display:none;margin-top:4px">' + persp
       + '<div style="margin-top:4px;font-size:10px;opacity:.6">' + _prsEsc(c.provenance || "Inferred") + (c.sources && c.sources.length ? ' &middot; ' + _prsEsc(c.sources.join("; ")) : '') + '</div></div>'
       + '</div>';
@@ -27692,7 +27699,7 @@ function pressWireTab(C) {
       var b = document.getElementById("prsCard_" + idx);
       if (b) b.addEventListener("click", function () {
         var box = document.getElementById("prsCardBox_" + idx);
-        if (box) box.style.display = (box.style.display === "none") ? "block" : "none";
+        if (box) { box.style.display = (box.style.display === "none") ? "block" : "none"; b.setAttribute("aria-expanded", box.style.display !== "none" ? "true" : "false"); }
       });
     })(i);
   }
@@ -28978,11 +28985,11 @@ function _cmdPortrait(gen, side, size) {
 }
 
 function _cmdLeadWord(v) {
-  if (v >= 82) return ["Masterful", "#4a6b3a"];
+  if (v >= 82) return ["Masterful", "#639452"];
   if (v >= 70) return ["Able", "#6f9e5a"];
   if (v >= 58) return ["Steady", "#b8863b"];
   if (v >= 48) return ["Uneven", "#c9712e"];
-  return ["Faltering", "#9c3b2e"];
+  return ["Faltering", "#d07060"];
 }
 
 function _cmdTraitBar(label, v, hint) {
@@ -28990,7 +28997,7 @@ function _cmdTraitBar(label, v, hint) {
   return '<div style="margin:3px 0"><div style="display:flex;justify-content:space-between;font-size:11px;opacity:.8"><span>' + _cmdEsc(label)
     + '</span><span>' + v + '</span></div>'
     + '<div style="height:6px;background:rgba(0,0,0,.25);border:1px solid var(--rule);border-radius:3px;overflow:hidden"><div style="height:100%;width:' + v + '%;background:#7d6b4a"></div></div>'
-    + (hint ? '<div style="font-size:10px;opacity:.5">' + _cmdEsc(hint) + '</div>' : '') + '</div>';
+    + (hint ? '<div style="font-size:10px;opacity:.6">' + _cmdEsc(hint) + '</div>' : '') + '</div>';
 }
 
 /* ---- §12.3 (D113) THE ELECTION-SUPPORT BIND — the command-politics keystone the
@@ -29082,7 +29089,7 @@ function _cmdActiveCard(C) {
   var traits = (gen.traits && gen.traits.length) ? gen.traits.join(" &middot; ") : "";
   var amb = (typeof gen.ambition === "number") ? gen.ambition : 0;
   var ambTell = (amb >= 70)
-    ? '<div style="margin-top:7px;font-size:11px;color:#9c3b2e;background:rgba(156,59,46,.08);border:1px solid rgba(156,59,46,.4);border-radius:4px;padding:7px">&#9873; <b>Ambition.</b> '
+    ? '<div style="margin-top:7px;font-size:11px;color:#e8784a;background:rgba(156,59,46,.08);border:1px solid rgba(156,59,46,.4);border-radius:4px;padding:7px">&#9873; <b>Ambition.</b> '
         + _cmdEsc(gen.weakness || "He courts the newspapers and the politicians; removing him will cost you dearly.") + '</div>'
     : '';
   // §12.3 (D113): the election-support bind — a commissioned political general in command before the 1864 vote.
@@ -29164,7 +29171,7 @@ function _cmdPoolHTML(C) {
     } else if (canAfford) {
       note = '<button id="cmdApp_' + _cmdEsc(g.id) + '" type="button" class="upg" style="flex:0 0 auto">Appoint</button>';
     } else {
-      note = '<span style="font-size:11px;color:#9c3b2e" title="Relieving ' + _cmdEsc(_cmdName(incumbent)) + ' would cost ' + cost + ' political capital; you have ' + cap + '.">Needs ' + cost + ' capital</span>';
+      note = '<span style="font-size:11px;color:#e8784a" title="Relieving ' + _cmdEsc(_cmdName(incumbent)) + ' would cost ' + cost + ' political capital; you have ' + cap + '.">Needs ' + cost + ' capital</span>';
     }
     return '<div style="display:flex;gap:10px;align-items:center;padding:7px 0;border-bottom:1px dotted var(--rule)' + (ok ? '' : ';opacity:.5') + '">'
       + img
@@ -29277,11 +29284,11 @@ function _cmdPromoRow(C, g, cap, sen, activeId) {
   if (!info) {
     ctrl = '<span style="font-size:11px;opacity:.65">At the top grade</span>';
   } else if (cap >= info.capital && sen >= info.seniority) {
-    var meritTag = info.earned ? '' : ' <span title="Above his merit — it costs more and his standing will suffer" style="color:#d66040">(above merit)</span>';/* a11y: #d66040 4.51:1 on lightest .sheet ground (#2e2816) -> AA (wcag-auditor: contrast fix from #c2502e to #d66040; #c2502e measured 3.74:1, below 4.5:1 required for 11px normal text); meaning also carried by the word "(above merit)" */
+    var meritTag = info.earned ? '' : ' <span title="Above his merit — it costs more and his standing will suffer" style="color:#e86840">(above merit)</span>';/* a11y: #e86840 >=4.53:1 on the lightest command-card ground #2e2816 -> AA (E3-i2: prior #d66040 measured 3.92:1 there, fixed to match L251) (wcag-auditor: contrast fix from #c2502e to #d66040; #c2502e measured 3.74:1, below 4.5:1 required for 11px normal text); meaning also carried by the word "(above merit)" */
     ctrl = '<button id="cmdProm_' + _cmdEsc(g.id) + '" type="button" class="upg" style="flex:0 0 auto" title="Promote to ' + _cmdEsc(info.next) + ' — ' + info.capital + ' political capital + ' + info.seniority + ' seniority' + (info.leapfrog ? '; he leapfrogs more senior men (+seniority)' : '') + '">Promote to ' + _cmdEsc(info.next) + '</button>'
       + '<div style="font-size:10px;opacity:.7;margin-top:2px">&minus;' + info.capital + ' cap &middot; &minus;' + info.seniority + ' sen' + meritTag + '</div>';
   } else {
-    ctrl = '<span style="font-size:11px;color:#d66040" title="Promotion to ' + _cmdEsc(info.next) + ' needs ' + info.capital + ' political capital + ' + info.seniority + ' seniority">Needs ' + info.capital + ' cap / ' + info.seniority + ' sen</span>';/* a11y: #d66040 4.51:1 on lightest .sheet ground (#2e2816) -> AA (wcag-auditor: contrast fix from #c2502e to #d66040; #c2502e measured 3.74:1, below 4.5:1 required for 11px normal text) */
+    ctrl = '<span style="font-size:11px;color:#e86840" title="Promotion to ' + _cmdEsc(info.next) + ' needs ' + info.capital + ' political capital + ' + info.seniority + ' seniority">Needs ' + info.capital + ' cap / ' + info.seniority + ' sen</span>';/* a11y: #e86840 >=4.53:1 on the lightest command-card ground #2e2816 -> AA (E3-i2: prior #d66040 measured 3.92:1 there, fixed to match L251) (wcag-auditor: contrast fix from #c2502e to #d66040; #c2502e measured 3.74:1, below 4.5:1 required for 11px normal text) */
   }
   var isActive = (g.id === activeId);
   return '<div style="display:flex;gap:10px;align-items:center;padding:6px 0;border-bottom:1px dotted var(--rule)">'
@@ -29423,7 +29430,7 @@ function _cmdCorpsDepthHTML(C) {
   // player sees the true total impact of the staff he has built. "Corps staff" kept contiguous (probe-locked).
   var lift = Math.round(_cmdCorpsLift(C) + (typeof _cmdDivLift === "function" ? _cmdDivLift(C) : 0)), eff;
   if (lift > 0) eff = '<span aria-hidden="true" style="color:#6f9e5a">&#9650;</span> <b>+' + lift + '</b> to the army&rsquo;s command in the field &mdash; a sound command staff';
-  else if (lift < 0) eff = '<span aria-hidden="true" style="color:#c9712e">&#9660;</span> <b>&minus;' + Math.abs(lift) + '</b> to the army&rsquo;s command &mdash; weak or stretched leadership drags it';
+  else if (lift < 0) eff = '<span aria-hidden="true" style="color:#d17936">&#9660;</span> <b>&minus;' + Math.abs(lift) + '</b> to the army&rsquo;s command &mdash; weak or stretched leadership drags it';
   else eff = 'No net effect yet &mdash; seat able generals to lift the army, or leave the command to the course of the war';
   var divIntro = hasDiv ? ' A corps was built of <b>divisions</b>: seat a corps commander, then staff the divisions beneath him &mdash; a corps was only as good as its divisions.' : '';
   var divFoot = hasDiv ? ' Below each seated corps you may staff its divisions (a division is properly a ' + _cmdEsc(_cmdDivPreferredGrade(C)) + '&rsquo;s billet) &mdash; the cutting edge of a corps, like A.&thinsp;P. Hill&rsquo;s Light Division under Jackson or the Union&rsquo;s hard-fighting divisions in Hancock&rsquo;s II Corps.' : '';
@@ -29448,7 +29455,7 @@ function _cmdCardHTML(C) {
     html += '<div style="margin-top:10px;padding:9px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.1)">'
       + '<div style="font-weight:bold;font-size:13px">' + _cmdEsc(c.title) + '</div>'
       + '<div style="font-size:12px;opacity:.85;margin:2px 0">' + _cmdEsc(c.claim) + '</div>'
-      + '<button id="cmdCard_' + i + '" type="button" class="upg" style="font-size:11px;padding:1px 8px;margin-top:3px">The historians &#9656;</button>'
+      + '<button id="cmdCard_' + i + '" type="button" class="upg" aria-expanded="false" aria-controls="cmdCardBox_' + i + '" style="font-size:11px;padding:1px 8px;margin-top:3px">The historians &#9656;</button>'
       + '<div id="cmdCardBox_' + i + '" style="display:none;margin-top:4px">' + persp
       + '<div style="margin-top:4px;font-size:10px;opacity:.6">' + _cmdEsc(c.provenance || "Inferred") + (c.sources && c.sources.length ? ' &middot; ' + _cmdEsc(c.sources.join("; ")) : '') + '</div></div>'
       + '</div>';
@@ -29701,7 +29708,7 @@ function cmdWireTab(C) {
       var btn = document.getElementById("cmdCard_" + idx);
       if (btn) btn.addEventListener("click", function () {
         var box = document.getElementById("cmdCardBox_" + idx);
-        if (box) box.style.display = (box.style.display === "none") ? "block" : "none";
+        if (box) { box.style.display = (box.style.display === "none") ? "block" : "none"; btn.setAttribute("aria-expanded", box.style.display !== "none" ? "true" : "false"); }
       });
     })(c);
   }
@@ -30085,11 +30092,11 @@ function econOnResolve(winnerSide, type, B, C, win) {
 
 /* Status word for an inflation multiplier. */
 function _ecInflStatus(m) {
-  if (m < 1.5) return ["Stable", "#4a6b3a"];
+  if (m < 1.5) return ["Stable", "#65974f"];
   if (m < 3)   return ["Rising", "#b8863b"];
   if (m < 10)  return ["Severe", "#c9712e"];
-  if (m < 30)  return ["Critical", "#9c3b2e"];
-  return ["Collapsing", "#7a241b"];
+  if (m < 30)  return ["Critical", "#d56760"];
+  return ["Collapsing", "#d8706b"];
 }
 
 /* ---- econRenderFinance: the Treasury tab. ---- */
@@ -30102,8 +30109,8 @@ function econRenderFinance(C) {
     var pct = Math.round((frac || 0) * 100);
     var ctrl = E.delegated ? '' :
       '<span style="margin-left:8px">'
-      + '<button class="upg" data-eclever="' + key + '" data-ecdir="-1" style="padding:1px 7px">&minus;</button> '
-      + '<button class="upg" data-eclever="' + key + '" data-ecdir="1" style="padding:1px 7px">+</button></span>';
+      + '<button class="upg" data-eclever="' + key + '" data-ecdir="-1" aria-label="Decrease ' + label + '" style="padding:1px 7px">&minus;</button> '
+      + '<button class="upg" data-eclever="' + key + '" data-ecdir="1" aria-label="Increase ' + label + '" style="padding:1px 7px">+</button></span>';
     return '<div style="margin:6px 0">'
       + '<div style="display:flex;justify-content:space-between;font-size:13px"><span>' + label + ctrl + '</span><span style="font-weight:bold">' + pct + '%</span></div>'
       + '<div style="height:8px;background:rgba(0,0,0,.25);border:1px solid var(--rule);border-radius:3px;overflow:hidden"><div style="height:100%;width:' + pct + '%;background:#8a6d2f"></div></div>'
@@ -30133,7 +30140,7 @@ function econRenderFinance(C) {
     + ltHtml
     + '<div class="btn-row" style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">'
     +   '<button id="ecDelegate" type="button" class="upg">' + (E.delegated ? 'Take personal control' : 'Delegate to Sec. ' + sec) + '</button>'
-    +   '<button id="ecWhy" type="button" class="upg">Why it mattered</button>'
+    +   '<button id="ecWhy" type="button" class="upg" aria-expanded="false" aria-controls="ecWhyBox">Why it mattered</button>'
     + '</div>'
     + '<div id="ecWhyBox" style="display:none;margin-top:10px;padding:10px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.12);font-size:12px"></div>';
 }
@@ -30169,6 +30176,7 @@ function econWireFinance(C) {
     if (!box) return;
     if (box.style.display === "none") { box.innerHTML = _ecWhyText(C); box.style.display = "block"; }
     else box.style.display = "none";
+    why.setAttribute("aria-expanded", box.style.display !== "none" ? "true" : "false");
   });
   if (!E.delegated) {
     var btns = document.querySelectorAll('[data-eclever]');
@@ -30312,10 +30320,10 @@ function prodOnResolve(winnerSide, type, B, C, win) {
 
 /* Status word for the equip index. */
 function _prEquipStatus(v) {
-  if (v >= 85) return ["Well-found", "#4a6b3a"];
+  if (v >= 85) return ["Well-found", "#65974f"];
   if (v >= 60) return ["Adequate", "#b8863b"];
   if (v >= 35) return ["Strained", "#c9712e"];
-  return ["Ragged", "#9c3b2e"];
+  return ["Ragged", "#d56760"];
 }
 
 /* Overview fragment for the War Effort tab (called by presRenderEconomy). */
@@ -30331,8 +30339,8 @@ function presProdBlock(C) {
   var out = '<hr class="rule"><div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:2px 0 4px">War Production &amp; Logistics</div>'
     + '<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:13px">Army equipment</span>'
     + '<span style="font-weight:bold;color:' + es[1] + '">' + P.equipIndex + ' &middot; ' + es[0] + '</span></div>'
-    + bar('Railroad integrity', P.railIntegrity, P.railIntegrity > 60 ? '#4a6b3a' : P.railIntegrity > 30 ? '#b8863b' : '#9c3b2e')
-    + bar('Food reaching the front', P.foodDist * 100, P.foodDist > 0.6 ? '#4a6b3a' : '#b8863b');
+    + bar('Railroad integrity', P.railIntegrity, P.railIntegrity > 60 ? '#4f7040' : P.railIntegrity > 30 ? '#b8863b' : '#b84038')
+    + bar('Food reaching the front', P.foodDist * 100, P.foodDist > 0.6 ? '#4f7040' : '#b8863b');
   if (lt) out += '<div style="font-size:12px;opacity:.8;margin-top:4px">Last quarter: <b>' + lt.arms + '</b>k shoulder arms, <b>' + lt.arty + '</b> guns produced.</div>';
   return out;
 }
@@ -30440,14 +30448,14 @@ function armoryBuy(C, weaponId, mode) {
 }
 
 function _armRarityCol(r) {
-  return r === "legendary" ? "#b8863b" : r === "rare" ? "#7a5cff" : r === "uncommon" ? "#4a6b3a" : "#8a8276";
+  return r === "legendary" ? "#b8863b" : r === "rare" ? "#9a86f0" : r === "uncommon" ? "#6f9e5a" : "#9a9184";
 }
 function _armScoreWord(v) {
-  if (v >= 80) return ["Devastating", "#4a6b3a"];
+  if (v >= 80) return ["Devastating", "#6f9e5a"];
   if (v >= 62) return ["Modern", "#6f9e5a"];
   if (v >= 45) return ["Rifled line", "#b8863b"];
   if (v >= 32) return ["Mixed arms", "#c9712e"];
-  return ["Antiquated", "#9c3b2e"];
+  return ["Antiquated", "#d8745c"];
 }
 
 /* ---- armoryRenderArmory: The Armory desk tab. ---- */
@@ -30475,12 +30483,16 @@ function armoryRenderArmory(C) {
     var batchCost = Math.round(w.cost * (av.mult || 1));
     var allCost = Math.round(w.cost * (1 / _armBatch()) * (av.mult || 1));
     var disabled = !av.ok;
-    cards += '<div style="padding:9px;border:1px solid ' + col + ';border-radius:5px;background:rgba(0,0,0,.12);opacity:' + (disabled ? '.5' : '1') + '">'
+    // E3-i2 (D126): an unavailable card is muted, but its REASON text is informational and must
+    // stay legible. Group opacity composites onto descendants, so dim only the descriptive block
+    // (an inner wrapper) and render the reason as a FULL-opacity sibling, outside the dimmed group.
+    cards += '<div style="padding:9px;border:1px solid ' + col + ';border-radius:5px;background:rgba(0,0,0,.12)">'
+      + '<div' + (disabled ? ' style="opacity:.6"' : '') + '>'
       + '<div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font-size:13px">' + w.name + '</b>'
       + '<span style="font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:' + col + '">' + w.rarity + '</span></div>'
       + '<div style="font-size:11px;opacity:.6">' + w.caliber + ' &middot; ' + w.rangeYds + ' yds &middot; acc ' + w.accuracy + ' &middot; ' + w.rateOfFire + '/min &middot; quality ' + w.quality + '</div>'
-      + '<div style="font-size:11px;opacity:.78;margin:4px 0">' + w.flavor + '</div>';
-    if (disabled) cards += '<div style="font-size:11px;color:#9c3b2e">' + av.reason + '</div>';
+      + '<div style="font-size:11px;opacity:.78;margin:4px 0">' + w.flavor + '</div></div>';
+    if (disabled) cards += '<div style="font-size:11px;color:#d8745c;margin-top:2px">' + av.reason + '</div>';
     else cards += '<div class="btn-row" style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap">'
       + '<button class="upg" data-armbuy="' + w.id + '" data-armmode="batch" style="padding:2px 8px;font-size:11px">Arm 10% &middot; $' + batchCost + '</button>'
       + '<button class="upg" data-armbuy="' + w.id + '" data-armmode="all" style="padding:2px 8px;font-size:11px">Arm the line &middot; $' + allCost + '</button></div>';
@@ -30666,17 +30678,17 @@ function artBuy(C, gunId, n) {
 }
 
 function _artScoreWord(v) {
-  if (v >= 80) return ["A grand battery", "#4a6b3a"];
+  if (v >= 80) return ["A grand battery", "#6f9e5a"];
   if (v >= 62) return ["A strong park", "#6f9e5a"];
   if (v >= 45) return ["A serviceable arm", "#b8863b"];
   if (v >= 25) return ["A few guns", "#c9712e"];
-  return ["Almost no guns", "#9c3b2e"];
+  return ["Almost no guns", "#d8745c"];
 }
 
 /* Rarity colour: reuse The Armory's palette so the two tiers read as one catalog. */
 function _artRar(r) {
   return (typeof _armRarityCol === "function") ? _armRarityCol(r)
-    : (r === "legendary" ? "#b8863b" : r === "rare" ? "#7a5cff" : r === "uncommon" ? "#4a6b3a" : "#8a8276");
+    : (r === "legendary" ? "#b8863b" : r === "rare" ? "#9a86f0" : r === "uncommon" ? "#6f9e5a" : "#9a9184");
 }
 
 /* ---- artRenderSection: the Cannon Corps block, appended below The Armory. ---- */
@@ -30705,14 +30717,18 @@ function artRenderSection(C) {
     var owned = bat[g.id] || 0;
     var disabled = !av.ok;
     var proj = (g.projectiles && g.projectiles.length) ? g.projectiles.join(', ') : '';
-    cards += '<div style="padding:9px;border:1px solid ' + col + ';border-radius:5px;background:rgba(0,0,0,.12);opacity:' + (disabled ? '.5' : '1') + '">'
+    // E3-i2 (D126): dim only the descriptive block of an unavailable card; keep the informational
+    // REASON at full opacity (group opacity composites onto descendants, so it must sit outside).
+    cards += '<div style="padding:9px;border:1px solid ' + col + ';border-radius:5px;background:rgba(0,0,0,.12)">'
+      + '<div' + (disabled ? ' style="opacity:.6"' : '') + '>'
       + '<div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font-size:13px">' + _artEsc(g.name) + '</b>'
       + '<span style="font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:' + col + '">' + _artEsc(g.rarity) + '</span></div>'
       + '<div style="font-size:11px;opacity:.6">' + _artEsc(g.caliber) + ' &middot; ' + g.rangeYds + ' yds &middot; ' + g.rateOfFire + '/min &middot; crew ' + g.crew + ' &middot; quality ' + g.quality + '</div>'
       + (proj ? '<div style="font-size:10px;opacity:.5">' + _artEsc(proj) + '</div>' : '')
       + '<div style="font-size:11px;opacity:.78;margin:4px 0">' + _artEsc(g.flavor) + '</div>'
-      + (owned ? '<div style="font-size:11px;color:' + col + '">In the park: ' + owned + ' ' + (owned > 1 ? 'batteries' : 'battery') + '</div>' : '');
-    if (disabled) cards += '<div style="font-size:11px;color:#9c3b2e">' + av.reason + '</div>';
+      + (owned ? '<div style="font-size:11px;color:' + col + '">In the park: ' + owned + ' ' + (owned > 1 ? 'batteries' : 'battery') + '</div>' : '')
+      + '</div>';
+    if (disabled) cards += '<div style="font-size:11px;color:#d8745c;margin-top:2px">' + av.reason + '</div>';
     else cards += '<div class="btn-row" style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap">'
       + '<button class="upg" data-artbuy="' + _artEsc(g.id) + '" data-artn="1" style="padding:2px 8px;font-size:11px">Raise a battery &middot; $' + batCost + '</button>'
       + '<button class="upg" data-artbuy="' + _artEsc(g.id) + '" data-artn="3" style="padding:2px 8px;font-size:11px">Raise a battalion (3) &middot; $' + btnCost + '</button></div>';
@@ -30913,11 +30929,11 @@ function engOnResolve(winnerSide, type, B, C, win) {
 }
 
 function _engScoreWord(v) {
-  if (v >= 80) return ["A first-class engineer arm", "#4a6b3a"];
+  if (v >= 80) return ["A first-class engineer arm", "#6f9e5a"];
   if (v >= 60) return ["A strong engineer corps", "#6f9e5a"];
   if (v >= 40) return ["A working pioneer force", "#b8863b"];
   if (v >= 22) return ["A few engineer companies", "#c9712e"];
-  return ["Almost no engineers", "#9c3b2e"];
+  return ["Almost no engineers", "#d8745c"];
 }
 
 /* ---- engRenderSection: the Engineering Works block, appended below the Cannon Corps. ---- */
@@ -30943,7 +30959,7 @@ function engRenderSection(C) {
       + '<div style="height:6px;background:rgba(0,0,0,.25);border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin:5px 0"><div style="height:100%;width:' + pct + '%;background:#6f9e5a"></div></div>'
       + '<div style="font-size:11px;opacity:.85">Now: <b>' + _engEsc(curName) + '</b></div>'
       + '<div style="font-size:11px;opacity:.78;margin:4px 0">' + _engEsc(b.flavor || '') + '</div>';
-    if (atMax) cards += '<div style="font-size:11px;color:#4a6b3a">At full capability.</div>';
+    if (atMax) cards += '<div style="font-size:11px;color:#6f9e5a">At full capability.</div>';
     else cards += '<div class="btn-row" style="margin-top:4px"><button class="upg" data-engbuy="' + _engEsc(b.id) + '" style="padding:2px 8px;font-size:11px">Raise to ' + _engEsc(names[cur + 1] != null ? names[cur + 1] : ('level ' + (cur + 1))) + ' &middot; $' + nextCost + '</button></div>';
     cards += '</div>';
   }
@@ -31462,18 +31478,18 @@ function blockadeOnResolve(winnerSide, type, B, C, win) {
 
 /* Status word + colour for the recognition meter. */
 function _blkRecogStatus(BL) {
-  if (BL.recognitionForeclosed) return ["Foreclosed", "#7a241b"];
-  if (BL.recognition >= 45) return ["Courted", "#4a6b3a"];
+  if (BL.recognitionForeclosed) return ["Foreclosed", "#d07060"];
+  if (BL.recognition >= 45) return ["Courted", "#639452"];
   if (BL.recognition >= 20) return ["Wavering", "#b8863b"];
-  return ["Distant", "#9c3b2e"];
+  return ["Distant", "#d07060"];
 }
 
 /* Status word for the blockade tightness (capture %). */
 function _blkTightStatus(pct) {
-  if (pct <= 0) return ["Open seas", "#4a6b3a"];
+  if (pct <= 0) return ["Open seas", "#639452"];
   if (pct < 18) return ["Porous", "#b8863b"];
   if (pct < 30) return ["Tightening", "#c9712e"];
-  return ["Strangling", "#9c3b2e"];
+  return ["Strangling", "#d07060"];
 }
 
 /* Pull a teaching card (multi-voice) from GAME_DATA.diplomacy when present. */
@@ -31532,7 +31548,7 @@ function blockadeRenderDiplomacy(C) {
 
   var meter = function (label, v, status) {
     v = Math.max(0, Math.min(100, Math.round(v || 0)));
-    return '<div style="margin:5px 0"><div style="display:flex;justify-content:space-between;font-size:12px;opacity:.85"><span>' + label
+    return '<div style="margin:5px 0"><div style="display:flex;justify-content:space-between;font-size:12px"><span style="opacity:.85">' + label
       + '</span><span style="color:' + status[1] + ';font-weight:bold">' + status[0] + '</span></div>'
       + '<div style="height:8px;background:rgba(0,0,0,.25);border:1px solid var(--rule);border-radius:3px;overflow:hidden">'
       + '<div style="height:100%;width:' + v + '%;background:' + status[1] + '"></div></div></div>';
@@ -31558,7 +31574,7 @@ function blockadeRenderDiplomacy(C) {
       + '<div style="margin:8px 0;padding:9px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.12)">'
       +   '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px">'
       +     '<div><b>The 1861 Cotton Embargo</b><div style="font-size:11px;opacity:.7">Withhold cotton to coerce European recognition.</div></div>'
-      +     '<button id="blkEmbargo" type="button" class="upg">' + ((BL.selfEmbargo && !BL.embargoLifted) ? 'Embargo ON' : 'Embargo lifted') + '</button>'
+      +     '<button id="blkEmbargo" type="button" class="upg" aria-pressed="'+(BL.selfEmbargo&&!BL.embargoLifted?'true':'false')+'">' + ((BL.selfEmbargo && !BL.embargoLifted) ? 'Embargo ON' : 'Embargo lifted') + '</button>'
       +   '</div>'
       +   '<div style="font-size:11px;opacity:.7;margin-top:5px;color:' + ((BL.selfEmbargo && !BL.embargoLifted) ? '#c9712e' : 'inherit') + '">'
       +     ((BL.selfEmbargo && !BL.embargoLifted)
@@ -31591,8 +31607,8 @@ function blockadeRenderDiplomacy(C) {
 
   var btns = ''
     + '<div class="btn-row" style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">'
-    +   '<button id="blkDelegate" type="button" class="upg">' + (BL.delegated ? 'Take personal control' : 'Delegate to Sec. ' + sec) + '</button>'
-    +   '<button id="blkWhy" type="button" class="upg">Why it mattered</button>'
+    +   '<button id="blkDelegate" type="button" class="upg" aria-pressed="'+(BL.delegated?'true':'false')+'">' + (BL.delegated ? 'Take personal control' : 'Delegate to Sec. ' + sec) + '</button>'
+    +   '<button id="blkWhy" type="button" class="upg" aria-expanded="false" aria-controls="blkWhyBox">Why it mattered</button>'
     + '</div>'
     + '<div id="blkWhyBox" style="display:none;margin-top:10px;padding:10px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.12);font-size:12px;line-height:1.5"></div>';
 
@@ -31628,6 +31644,7 @@ function blockadeWireDiplomacy(C) {
     if (!box) return;
     if (box.style.display === "none") { box.innerHTML = _blkWhyText(C); box.style.display = "block"; }
     else box.style.display = "none";
+    why.setAttribute("aria-expanded", box.style.display !== "none" ? "true" : "false");
   });
 }
 
@@ -31831,10 +31848,10 @@ function manpowerOnResolve(winnerSide, type, B, C, win) {
 
 /* Status word for the army-strength index. */
 function _mpStrengthStatus(v) {
-  if (v >= 85) return ["At full strength", "#4a6b3a"];
+  if (v >= 85) return ["At full strength", "#639452"];
   if (v >= 60) return ["Holding", "#b8863b"];
   if (v >= 35) return ["Thinning", "#c9712e"];
-  return ["Melting away", "#9c3b2e"];
+  return ["Melting away", "#d07060"];
 }
 
 /* Pull a teaching card from GAME_DATA["manpower-teaching"] when present. */
@@ -31872,7 +31889,7 @@ function presManpowerBlock(C) {
   var out = '<hr class="rule"><div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:2px 0 4px">The Ranks &mdash; Manpower &amp; Conscription</div>'
     + '<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:13px">Army strength</span>'
     + '<span style="font-weight:bold;color:' + ss[1] + '">' + Math.round(P.strength) + ' &middot; ' + ss[0] + '</span></div>'
-    + bar('Casualty replacement', ratioPct, ratioPct > 70 ? '#4a6b3a' : ratioPct > 35 ? '#b8863b' : '#9c3b2e')
+    + bar('Casualty replacement', ratioPct, ratioPct > 70 ? '#639452' : ratioPct > 35 ? '#b8863b' : '#d07060')
     + '<div style="display:flex;gap:10px;flex-wrap:wrap;font-size:12px;opacity:.85;margin-top:3px">'
     +   '<span>Manpool: <b>' + Math.round(P.pool) + 'k</b></span><span style="opacity:.5">&middot;</span>'
     +   '<span>Enlisted: <b>' + Math.round(P.enlisted) + 'k</b></span><span style="opacity:.5">&middot;</span>'
@@ -31880,7 +31897,7 @@ function presManpowerBlock(C) {
     +   (side === "US" ? ('<span style="opacity:.5">&middot;</span><span>USCT: <b>' + (P.usctUnlocked ? 'Organized' : 'Not yet') + '</b></span>')
                        : ('<span style="opacity:.5">&middot;</span><span>Desertion: <b>' + Math.round(P.desertionTotal) + 'k</b></span>'))
     + '</div>';
-  if (lt) out += '<div style="font-size:12px;opacity:.8;margin-top:3px">Last quarter: <b>' + lt.recruits + 'k</b> recruited; ' + (P.replacementRatio < 0.5 ? '<span style="color:#9c3b2e">losses outrun replacements.</span>' : 'the ranks hold.') + '</div>';
+  if (lt) out += '<div style="font-size:12px;opacity:.8;margin-top:3px">Last quarter: <b>' + lt.recruits + 'k</b> recruited; ' + (P.replacementRatio < 0.5 ? '<span style="color:#d07060">losses outrun replacements.</span>' : 'the ranks hold.') + '</div>';
   out += '<div style="font-size:11px;opacity:.62;margin-top:4px;font-style:italic">' + _mpWhyText(C) + '</div>';
   return out;
 }
@@ -32032,10 +32049,10 @@ function vicOnResolve(winnerSide, type, B, C, win) {
 
 /* Status word for a 0..1 momentum. */
 function _vicMomWord(m) {
-  if (m >= 0.66) return ["Winning the war", "#4a6b3a"];
+  if (m >= 0.66) return ["Winning the war", "#639452"];
   if (m >= 0.45) return ["Holding on", "#b8863b"];
   if (m >= 0.28) return ["Losing ground", "#c9712e"];
-  return ["On the brink", "#9c3b2e"];
+  return ["On the brink", "#d07060"];
 }
 
 /* ---- The WILD-CARD CATALOG (R32/§5 alternate history) — ahistorical gambits for
@@ -32108,14 +32125,14 @@ function _vicWildSection(C) {
   // so the war can diverge ONLY through play. Default OFF -> the full body below
   // renders exactly as before (byte-identical). See 81-divergence.js.
   if (typeof divEmergentOnly === "function" && divEmergentOnly()) {
-    return '<hr class="rule"><div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#9c3b2e;margin:2px 0 2px">Wild Cards &mdash; Alternate History</div>'
+    return '<hr class="rule"><div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#d07060;margin:2px 0 2px">Wild Cards &mdash; Alternate History</div>'
       + '<div style="font-size:11px;opacity:.7">Alternate-history gambits are turned off &mdash; your war diverges only through the choices and battles of the campaign. Re-enable them under <b>Your War vs History</b>.</div>';
   }
   var side = (C.side === "CS") ? "CS" : "US";
   var S = C.strategy, played = S.wildsPlayed || [];
   var year = (C.clock && C.clock.year) || (C.president && C.president.date && C.president.date.year) || 1861;
-  var tiers = [["plausible", "Plausible — actively debated", "#4a6b3a"], ["longshot", "Long shot — documented but improbable", "#b8863b"], ["fantastical", "Fantastical — video-game wild", "#9c3b2e"]];
-  var out = '<hr class="rule"><div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#9c3b2e;margin:2px 0 2px">Wild Cards &mdash; Alternate History</div>'
+  var tiers = [["plausible", "Plausible — actively debated", "#639452"], ["longshot", "Long shot — documented but improbable", "#b8863b"], ["fantastical", "Fantastical — video-game wild", "#d07060"]];
+  var out = '<hr class="rule"><div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#d07060;margin:2px 0 2px">Wild Cards &mdash; Alternate History</div>'
     + '<div style="font-size:11px;opacity:.65;margin-bottom:2px">Ahistorical gambits. Some plausible, some preposterous &mdash; the war is yours to bend.</div>';
   for (var ti = 0; ti < tiers.length; ti++) {
     var tier = tiers[ti][0], rows = "";
@@ -32126,9 +32143,9 @@ function _vicWildSection(C) {
       if (w.yearMax && year > w.yearMax) continue;
       var done = played.indexOf(w.id) >= 0;
       rows += '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 0;border-bottom:1px dotted var(--rule)">'
-        + '<div style="flex:1 1 auto"><b style="font-size:12px">' + w.title + '</b> <span style="font-size:10px;opacity:.5">' + w.cost + '</span>'
+        + '<div style="flex:1 1 auto"><b style="font-size:12px">' + w.title + '</b> <span style="font-size:10px;opacity:.65">' + w.cost + '</span>'
         + '<div style="font-size:11px;opacity:.7">' + w.desc + '</div></div>'
-        + '<button id="wild_' + w.id + '" type="button" class="upg" style="flex:0 0 auto"' + (done ? ' disabled' : '') + '>' + (done ? 'Engaged &check;' : 'Engage') + '</button></div>';
+        + '<button id="wild_' + w.id + '" type="button" class="upg" aria-label="' + w.title.replace(/&amp;/g, "&") + '" style="flex:0 0 auto"' + (done ? ' disabled' : '') + '>' + (done ? 'Engaged &check;' : 'Engage') + '</button></div>';
     }
     if (rows) out += '<div style="margin-top:4px"><div style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:' + tiers[ti][2] + '">' + tiers[ti][1] + '</div>' + rows + '</div>';
   }
@@ -32161,7 +32178,7 @@ function vicRenderPaths(C) {
     return '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 0;border-bottom:1px dotted var(--rule)">'
       + '<div style="flex:1 1 auto"><b style="font-size:12px">' + label + '</b> <span style="font-size:10px;opacity:.6">' + cost + '</span>'
       + '<div style="font-size:11px;opacity:.7">' + desc + '</div></div>'
-      + '<button id="' + id + '" type="button" class="upg" style="flex:0 0 auto">' + (on ? 'Active &check;' : 'Engage') + '</button></div>';
+      + '<button id="' + id + '" type="button" class="upg" aria-label="' + label.replace(/&amp;/g, "&") + '" aria-pressed="' + (on ? "true" : "false") + '" style="flex:0 0 auto">' + (on ? 'Active &check;' : 'Engage') + '</button></div>';
   };
 
   var head = '<div style="font-size:17px;font-weight:bold">Paths to Victory</div>'
@@ -32169,8 +32186,8 @@ function vicRenderPaths(C) {
     + '(momentum ' + Math.round(mom * 100) + '%). History is only what befalls a Confederacy that loses; win, and your war is your own.</div><hr class="rule">';
 
   if (side === "CS") {
-    var willStatus = (S.enemyWill <= 30) ? ["The North will treat", "#4a6b3a"] : (S.enemyWill <= 55) ? ["Northern resolve cracking", "#b8863b"] : ["The North fights on", "#9c3b2e"];
-    var recogStatus = recogForeclosed ? ["Foreclosed", "#7a241b"] : (recog >= 45) ? ["Courted", "#4a6b3a"] : (recog >= 20) ? ["Possible", "#b8863b"] : ["Distant", "#c9712e"];
+    var willStatus = (S.enemyWill <= 30) ? ["The North will treat", "#639452"] : (S.enemyWill <= 55) ? ["Northern resolve cracking", "#b8863b"] : ["The North fights on", "#d07060"];
+    var recogStatus = recogForeclosed ? ["Foreclosed", "#d07060"] : (recog >= 45) ? ["Courted", "#639452"] : (recog >= 20) ? ["Possible", "#b8863b"] : ["Distant", "#c9712e"];
     var paths = ''
       + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:2px 0 2px">How the South wins</div>'
       + pathCard('Break Northern Will &rarr; Negotiated Peace', 100 - S.enemyWill, willStatus[0], willStatus[1],
@@ -32194,7 +32211,7 @@ function vicRenderPaths(C) {
     var wild = _vicWildSection(C);
 
     var teach = '<div id="vicWhyBox" style="display:none;margin-top:10px;padding:10px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.12);font-size:12px;line-height:1.5"></div>'
-      + '<div class="btn-row" style="margin-top:10px"><button id="vicWhy" type="button" class="upg">Can the South really win?</button></div>';
+      + '<div class="btn-row" style="margin-top:10px"><button id="vicWhy" type="button" class="upg" aria-expanded="false" aria-controls="vicWhyBox">Can the South really win?</button></div>';
 
     return head + paths + levers + wild + teach;
   }
@@ -32202,15 +32219,15 @@ function vicRenderPaths(C) {
   // US (the mirror — lighter; Aaron's focus is the Southern counter-game).
   var usPaths = ''
     + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:2px 0 2px">How the Union wins</div>'
-    + pathCard('Conquer the Confederacy', Math.min(100, ((C.stats && C.stats.won) || 0) * 8), ((C.stats && C.stats.won) || 0) + ' victories', '#4a6b3a',
+    + pathCard('Conquer the Confederacy', Math.min(100, ((C.stats && C.stats.won) || 0) * 8), ((C.stats && C.stats.won) || 0) + ' victories', '#639452',
         'Destroy the rebel armies and take Richmond &mdash; the decisive military road.')
-    + pathCard('Hold the Political Will', 100 - ((C.clock && C.clock.weariness) || 0), (C.clock && C.clock.weariness >= 60) ? 'Eroding' : 'Holding', (C.clock && C.clock.weariness >= 60) ? '#c9712e' : '#4a6b3a',
+    + pathCard('Hold the Political Will', 100 - ((C.clock && C.clock.weariness) || 0), (C.clock && C.clock.weariness >= 60) ? 'Eroding' : 'Holding', (C.clock && C.clock.weariness >= 60) ? '#c9712e' : '#639452',
         'Sustain Northern resolve to November 1864 &mdash; lose the election and the peace party may concede the South.')
     + pathCard('Strangle by Blockade', 100 - Math.round(((C.blockade && C.blockade.importFactor) || 1) * 90), 'The Anaconda', '#b8863b',
         'Tighten the blockade, take the rebel ports, and choke the cotton economy until the South cannot fight.');
   return head + usPaths + _vicWildSection(C)
     + '<div id="vicWhyBox" style="display:none;margin-top:10px;padding:10px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.12);font-size:12px;line-height:1.5"></div>'
-    + '<div class="btn-row" style="margin-top:10px"><button id="vicWhy" type="button" class="upg">The Union\'s harder problem</button></div>';
+    + '<div class="btn-row" style="margin-top:10px"><button id="vicWhy" type="button" class="upg" aria-expanded="false" aria-controls="vicWhyBox">The Union\'s harder problem</button></div>';
 }
 
 function _vicWhyText(C) {
@@ -32266,6 +32283,7 @@ function vicWirePaths(C) {
     if (!box) return;
     if (box.style.display === "none") { box.innerHTML = _vicWhyText(C); box.style.display = "block"; }
     else box.style.display = "none";
+    why.setAttribute("aria-expanded", box.style.display !== "none" ? "true" : "false");
   });
 }
 
@@ -32529,7 +32547,7 @@ function divRenderTab(C) {
     + '<div style="font-size:11px;opacity:.7">' + (emergent
         ? "Off — the wild cards are withheld; your war diverges only through the choices and battles of the campaign."
         : "On — the wild-card gambits are available on the Paths to Victory tab. Turn them off to let history bend only through play.") + '</div></div>'
-    + '<button id="divEmergentToggle" type="button" class="upg" style="flex:0 0 auto" aria-label="Emergent-only mode" aria-pressed="' + (emergent ? "true" : "false") + '">'
+    + '<button id="divEmergentToggle" type="button" class="upg" style="flex:0 0 auto" aria-pressed="' + (emergent ? "true" : "false") + '">'
         + (emergent ? "Enable gambits" : "Emergent only") + '</button></div>';
 
   // The ledger, grouped by category.
@@ -32543,7 +32561,7 @@ function divRenderTab(C) {
       var rows = entries.filter(function (e) { return e.cat === catKey; });
       if (!rows.length) continue;
       rows.sort(function (a, b) { return _divTier(b.tier).weight - _divTier(a.tier).weight; });   // radical first
-      ledger += '<div style="margin-top:8px"><div style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#937b55;margin-bottom:2px">' + catLabel + '</div>'; /* wcag-auditor: contrast fix from var(--rule)=#8a7350 to #937b55 for AA compliance (4.04:1 -> 4.52:1) */
+      ledger += '<div style="margin-top:8px"><div style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#a89066;margin-bottom:2px">' + catLabel + '</div>';
       for (var ri = 0; ri < rows.length; ri++) {
         var e = rows[ri];
         ledger += '<div style="padding:7px 0;border-bottom:1px dotted var(--rule)">'
@@ -33855,17 +33873,20 @@ function bridgeArmy(C) {
 }
 
 function _brgWord(v) {
-  if (v >= 85) return ["Superb", "#4a6b3a"];
+  if (v >= 85) return ["Superb", "#739850"];
   if (v >= 68) return ["Strong", "#6f9e5a"];
   if (v >= 50) return ["Fair", "#b8863b"];
   if (v >= 32) return ["Strained", "#c9712e"];
-  return ["Brittle", "#9c3b2e"];
+  return ["Brittle", "#da6a5a"];
 }
 
 function _brgBar(label, v) {
   v = Math.max(0, Math.min(100, Math.round(v)));
   var w = _brgWord(v);
-  return '<div style="margin:4px 0"><div style="display:flex;justify-content:space-between;font-size:12px;opacity:.85"><span>' + label
+  // E3-i2 (D126): the .85 opacity was on the ROW, which composites onto the value text too
+  // (a child opacity:1 cannot escape an ancestor's group opacity) — dragging the status word
+  // below 4.5:1. Move the dimming to the secondary LABEL only; the value word renders at full.
+  return '<div style="margin:4px 0"><div style="display:flex;justify-content:space-between;font-size:12px"><span style="opacity:.85">' + label
     + '</span><span style="color:' + w[1] + '">' + v + ' &middot; ' + w[0] + '</span></div>'
     + '<div style="height:7px;background:rgba(0,0,0,.25);border:1px solid var(--rule);border-radius:3px;overflow:hidden"><div style="height:100%;width:' + v + '%;background:' + w[1] + '"></div></div></div>';
 }
@@ -33902,7 +33923,7 @@ function bridgeBriefingHTML(C) {
     var p = _brgPREP[i], on = !!bp[p.key];
     prep += '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 0;border-bottom:1px dotted var(--rule)">'
       + '<div style="flex:1 1 auto"><b style="font-size:12px">' + p.label + '</b><div style="font-size:11px;opacity:.7">' + p.hint + '</div></div>'
-      + '<button id="brg_' + p.key + '" type="button" class="upg" style="flex:0 0 auto">' + (on ? 'Ordered &check;' : 'Order') + '</button></div>';
+      + '<button id="brg_' + p.key + '" type="button" class="upg" aria-pressed="' + (on ? "true" : "false") + '" style="flex:0 0 auto">' + (on ? 'Ordered &check;' : 'Order') + '</button></div>';
   }
 
   return ''
@@ -34215,7 +34236,7 @@ function bridgeAutoResolve(C) {
 
 function _arShowResult(C, B, o) {
   var verdict = o.draw ? "Drawn Battle" : (o.win ? (o.type === "decisive" ? "Decisive Victory" : "Victory") : (o.type === "decisive" ? "Decisive Defeat" : "Defeat"));
-  var col = o.draw ? "#b8863b" : (o.win ? "#4a6b3a" : "#9c3b2e");
+  var col = o.draw ? "#b8863b" : (o.win ? "#739850" : "#da6a5a");
   var bd = B.bd || {};
   function adv() { if (typeof campaignAdvance === "function") campaignAdvance(o.winnerSide, o.type); }
   if (typeof openSheet !== "function") { adv(); return; }   // headless fallback: advance directly
@@ -35322,7 +35343,7 @@ function fldBuildDom() {
   if (!document.getElementById("fldFocusStyle")) {
     var st = document.createElement("style");
     st.id = "fldFocusStyle";
-    st.textContent = "#fldBar button:focus-visible,#fldEnd button:focus-visible,#fldBrief button:focus-visible{outline:2px solid #e8c84a;outline-offset:2px;}";
+    st.textContent = "#fldBar button:focus-visible,#fldEnd button:focus-visible,#fldBrief button:focus-visible,#fldAudioPanel button:focus-visible{outline:2px solid #e8c84a;outline-offset:2px;}";
     document.head.appendChild(st);
   }
   var r = document.createElement("div");
@@ -35348,7 +35369,7 @@ function fldBuildDom() {
   var bar = document.getElementById("fldBar");
   var btns = [
     ["fldBtnPlay", "&#9654; Begin", "Begin / pause the battle (Space)"],
-    ["fldBtnSpd", "1&times;", "Cycle speed 1x / 2x / 4x (1 2 3)"],
+    ["fldBtnSpd", "1&times;", "Speed 1x — cycle to change (1 2 3)"],
     ["fldBtnLine", "Line", "Form line — max fire (L)"],
     ["fldBtnCol", "Column", "Form column — fast march (C)"],
     ["fldBtnCharge", "Charge", "Charge nearest enemy (F)"],
@@ -35542,7 +35563,7 @@ function fldTogglePlay() {
   if (!__FIELD.paused) __FIELD._apReason = null;   // clear any auto-pause reason once the player resumes
   var b = document.getElementById("fldBtnPlay"); if (b) { b.innerHTML = __FIELD.paused ? "&#9654; Resume" : "&#10074;&#10074; Pause"; b.setAttribute("aria-label", __FIELD.paused ? "Resume the battle (Space)" : "Begin / pause the battle (Space)"); }
 }
-function fldCycleSpeed() { __FIELD.speed = __FIELD.speed === 1 ? 2 : (__FIELD.speed === 2 ? 4 : 1); var b = document.getElementById("fldBtnSpd"); if (b) b.innerHTML = __FIELD.speed + "&times;"; }
+function fldCycleSpeed() { __FIELD.speed = __FIELD.speed === 1 ? 2 : (__FIELD.speed === 2 ? 4 : 1); var b = document.getElementById("fldBtnSpd"); if (b) { b.innerHTML = __FIELD.speed + "&times;"; b.setAttribute("aria-label", "Speed " + __FIELD.speed + "x — cycle to change (1 2 3)"); } }
 // B-6 (command either side): the player's selectable brigades are HIS side's non-AI units — fldPlayerSide()
 // resolves "US" by default (byte-identical) and "CS" when the player took the Confederate command.
 function fldPlayerSel() { var ps = fldPlayerSide(), out = []; for (var i = 0; i < __FIELD.sel.length; i++) { var u = fldById(__FIELD.sel[i]); if (u && u.alive && u.side === ps && !u.ai) out.push(u); } return out; }
@@ -35586,7 +35607,7 @@ function fldKey(e) {
   else if (k === "g" || k === "G") { if (typeof fldOpenSettingsDrawer === "function") fldOpenSettingsDrawer(); }   // B-5: the in-battle settings drawer
   else if (k === "a" || k === "A") { var _psa = fldPlayerSide(); __FIELD.sel = []; for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side === _psa && u.alive && !u.ai) __FIELD.sel.push(u.id); } fldRenderHud(); }
   else if (k === "Tab") { if (__FIELD.phase === "battle") { e.preventDefault(); fldCycleSel(); } } // only steal Tab mid-battle
-  var b = document.getElementById("fldBtnSpd"); if (b) b.innerHTML = __FIELD.speed + "&times;";
+  var b = document.getElementById("fldBtnSpd"); if (b) { b.innerHTML = __FIELD.speed + "&times;"; b.setAttribute("aria-label", "Speed " + __FIELD.speed + "x — cycle to change (1 2 3)"); }
 }
 function fldCycleSel() {
   var _psc = fldPlayerSide(), us = []; for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side === _psc && u.alive && !u.ai) us.push(u.id); }
@@ -35797,9 +35818,13 @@ function fld2dDraw() {
     ctx.fillStyle = "#1a1a1a"; ctx.fillRect(-frontW / 2, -depth / 2 - 3 * v.s, frontW, 3 * v.s); // facing edge (front)
     if (sel) { ctx.strokeStyle = "#ffe9a8"; ctx.lineWidth = 2; ctx.strokeRect(-frontW / 2 - 2, -depth / 2 - 2, frontW + 4, depth + 4); }
     ctx.restore();
-    // non-color side cue (CVD-safe): U for Union, C for Confederate, centered on the block
-    ctx.fillStyle = "#f7efdd"; ctx.font = "bold 12px Georgia"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    ctx.fillText(u.side === "US" ? "U" : "C", cx, cz);
+    // non-color side cue (CVD-safe): U for Union, C for Confederate, centered on the block.
+    // E3-i2 (D126): the cream glyph alone was 3.8-4.5:1 on the block fills; a dark halo stroke
+    // first lifts it to ~15.7:1 on every state (the established _m3dText / on-canvas halo pattern).
+    ctx.font = "bold 12px Georgia"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    var _sideGly = (u.side === "US") ? "U" : "C";
+    ctx.lineWidth = 3; ctx.strokeStyle = "rgba(13,10,7,0.88)"; ctx.strokeText(_sideGly, cx, cz);
+    ctx.fillStyle = "#f7efdd"; ctx.fillText(_sideGly, cx, cz);
     ctx.textAlign = "start"; ctx.textBaseline = "alphabetic";
     // morale pip
     ctx.fillStyle = u.morale > 35 ? "#7faf6a" : "#c98a3a"; ctx.fillRect(cx - 12, cz - depth / 2 - 9, 24 * (u.morale / u.maxMor), 3);
@@ -37388,7 +37413,7 @@ function fldOfficerHudRoster() {
   for (var j = 0; j < mine.length; j++) {
     var l = mine[j];
     var tag = !l.alive ? ' &#10013;' : (l.wounded ? " (wounded)" : "");
-    var col = !l.alive ? "#b06a5a" : (l.wounded ? "#c0a05a" : "#8fb47a");
+    var col = !l.alive ? "#d49898" : (l.wounded ? "#c0a05a" : "#8fb47a");
     parts.push('<span style="color:' + col + ';">' + _fldEscO(l.short || l.name) + tag + '</span>');
   }
   return '<div style="opacity:.8;margin-top:6px;font-size:12px;border-top:1px solid #795c3e;padding-top:5px;">Field officers: ' + parts.join(", ") + '</div>';/* wcag-auditor: contrast fix #4a3c28->#795c3e border on #0c0f14/#10141a (was 1.80:1, now 3.12/3.00:1) WCAG 1.4.11 */
@@ -37737,7 +37762,7 @@ function fldLogisticsHudReserve() {
   var src = fldSupplyFor(ps); if (!src) return "";
   var pct = Math.round(fldClamp(src.reserve / Math.max(1, src.reserveMax), 0, 1) * 100);
   var word = pct > 60 ? "ample" : (pct > 25 ? "running low" : (pct > 0 ? "nearly out" : "exhausted"));
-  var col = pct > 60 ? "#8fb47a" : (pct > 25 ? "#d2a85f" : /* wcag-auditor: contrast fix from #cf7a5a to #d28466 for AA compliance (opacity:.8 parent reduces effective contrast; blended ratio was 4.23:1, now 4.59:1) */ "#d28466");
+  var col = pct > 60 ? "#8fb47a" : (pct > 25 ? "#d2a85f" : "#d49888");
   return '<div style="opacity:.8;margin-top:5px;font-size:12px;">Ammunition train: <span style="color:' + col + ';">' + word + '</span> (' + pct + '%)</div>';
 }
 
@@ -38740,7 +38765,7 @@ function _fldDrawerHTML() {
     + tog("fldDrawerFog", "Fog of war", !!__FIELD.fog, "line-of-sight scouting (V)")
     + tog("fldDrawerAuto", "Active auto-pause", !!__FIELD.autoPause, "pause at key moments (P)")
     + '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin:7px 0"><span style="font-size:13px">Speed</span>'
-    +   '<button id="fldDrawerSpd" type="button" class="upg" aria-label="Cycle battle speed" style="min-width:64px">' + (__FIELD.speed || 1) + '&times;</button></div>'
+    +   '<button id="fldDrawerSpd" type="button" class="upg" aria-label="Battle speed ' + (__FIELD.speed || 1) + 'x — click to cycle (1x 2x 4x)" style="min-width:64px">' + (__FIELD.speed || 1) + '&times;</button></div>'
     + '<div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end"><button id="fldDrawerDone" type="button" class="bigbtn" style="padding:7px 16px">Resume</button></div>'
     + '</div>';
 }
@@ -39427,7 +39452,7 @@ function _fldAudioPanelRows() {
       var on = (opts[i][0] === cur);
       h += '<button data-acb="' + cb + '" data-acv="' + opts[i][0] + '" aria-pressed="' + on + '" ' +
            'style="cursor:pointer;font:inherit;font-size:12px;padding:5px 11px;border-radius:5px;border:1px solid ' +
-           (on ? "#e8c84a" : "#745e3f") + ';background:' + (on ? "#3a2f17" : "#161b22") + ';color:#f2e8d5;">' +
+           (on ? "#e8c84a" : "#8a7258") + ';background:' + (on ? "#3a2f17" : "#161b22") + ';color:#f2e8d5;">' +
            opts[i][1] + '</button>';
     }
     h += '</div><div style="font-size:11px;opacity:.7;margin-top:4px;">' + hint + '</div></div>';
@@ -39524,7 +39549,7 @@ function _fldAudioInjectButton() {
     b.title = "Audio settings — sound, music, loudness, captions";
     b.setAttribute("aria-label", "Open audio settings");
     // match the existing tactical control-bar button styling
-    b.style.cssText = "cursor:pointer;font:inherit;font-size:13px;padding:6px 10px;border-radius:5px;border:1px solid #745e3f;background:#161b22;color:#f2e8d5;";
+    b.style.cssText = "cursor:pointer;font:inherit;font-size:13px;padding:6px 10px;border-radius:5px;border:1px solid #8a7258;background:#161b22;color:#f2e8d5;";
     b.addEventListener("click", function () { _fldAudioOpenPanel(); });
     // place it just before the Exit button if present, else append
     var exit = document.getElementById("fldBtnExit");
@@ -40620,7 +40645,7 @@ function _fldCbSlotsHtml() {
 function _fldCbHtml() {
   _fldCbEnsureState();
   var o = _fldCbState.objective || {}, us = (_fldCbState.sideCopy && _fldCbState.sideCopy.US) || {}, cs = (_fldCbState.sideCopy && _fldCbState.sideCopy.CS) || {}, br = _fldCbState.brief || {}, sp = _fldCbState.supply || {};
-  return '<style>.fld-cb{max-width:1180px}.fld-cb h1{margin:0 0 8px}.fld-cb h2{font-size:18px;margin:16px 0 8px}.fld-cb-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.fld-cb label{display:grid;gap:4px;font-size:12px;color:#d8c8aa}.fld-cb input,.fld-cb select,.fld-cb textarea{box-sizing:border-box;width:100%;background:#17120d;color:#f5ead6;border:1px solid #765f3e;border-radius:4px;padding:6px}.fld-cb textarea{min-height:190px;font:12px ui-monospace,Menlo,monospace}.fld-cb-table{overflow:auto;border:1px solid #4c3b25;border-radius:6px}.fld-cb table{width:100%;border-collapse:collapse;min-width:760px}.fld-cb th,.fld-cb td{border-bottom:1px solid #3b2d1e;padding:4px;text-align:left}.fld-cb th{font-size:11px;color:#c9b58e}.fld-cb td input,.fld-cb td select{min-width:74px;padding:4px}.fld-cb-actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.fld-cb .mini{padding:5px 8px;border-radius:4px}.fld-cb-status{padding:8px;border-radius:6px;border:1px solid #665136;background:#20170f}.fld-cb-status.ok{border-color:#5e8d58}.fld-cb-status.bad{border-color:#9b534b}.fld-cb-status ul{margin:6px 0 0 18px}.fld-cb-status .warn{color:#e4c677}.fld-cb .muted{color:#a99778}.fld-cb-slot{display:grid;grid-template-columns:70px 1fr auto auto auto;gap:6px;align-items:center;border-bottom:1px solid #3b2d1e;padding:5px 0}.fld-cb-slot small{display:block;color:#9e8a68}.fld-cb-wide{grid-column:span 2}@media(max-width:850px){.fld-cb-grid{grid-template-columns:1fr}.fld-cb-wide{grid-column:span 1}.fld-cb-slot{grid-template-columns:1fr 1fr}.fld-cb-slot span{grid-column:1/-1}}</style>'
+  return '<style>.fld-cb{max-width:1180px}.fld-cb h1{margin:0 0 8px}.fld-cb h2{font-size:18px;margin:16px 0 8px}.fld-cb-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.fld-cb label{display:grid;gap:4px;font-size:12px;color:#d8c8aa}.fld-cb input,.fld-cb select,.fld-cb textarea{box-sizing:border-box;width:100%;background:#17120d;color:#f5ead6;border:1px solid #9c7a3c;border-radius:4px;padding:6px}.fld-cb textarea{min-height:190px;font:12px ui-monospace,Menlo,monospace}.fld-cb-table{overflow:auto;border:1px solid #4c3b25;border-radius:6px}.fld-cb table{width:100%;border-collapse:collapse;min-width:760px}.fld-cb th,.fld-cb td{border-bottom:1px solid #3b2d1e;padding:4px;text-align:left}.fld-cb th{font-size:11px;color:#c9b58e}.fld-cb td input,.fld-cb td select{min-width:74px;padding:4px}.fld-cb-actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.fld-cb .mini{padding:5px 8px;border-radius:4px}.fld-cb-status{padding:8px;border-radius:6px;border:1px solid #665136;background:#20170f}.fld-cb-status.ok{border-color:#5e8d58}.fld-cb-status.bad{border-color:#cf6a5e}.fld-cb-status ul{margin:6px 0 0 18px}.fld-cb-status .warn{color:#e4c677}.fld-cb .muted{color:#a99778}.fld-cb-slot{display:grid;grid-template-columns:70px 1fr auto auto auto;gap:6px;align-items:center;border-bottom:1px solid #3b2d1e;padding:5px 0}.fld-cb-slot small{display:block;color:#9e8a68}.fld-cb-wide{grid-column:span 2}@media(max-width:850px){.fld-cb-grid{grid-template-columns:1fr}.fld-cb-wide{grid-column:span 1}.fld-cb-slot{grid-template-columns:1fr 1fr}.fld-cb-slot span{grid-column:1/-1}}</style>'
     + '<div class="fld-cb upg"><h1>Custom Battle Builder</h1>' + _fldCbStatusHtml()
     + '<div class="fld-cb-actions"><button data-cb-act="validate">Validate</button><button data-cb-act="launch">Launch</button><button data-cb-act="export">Export / Share JSON</button><button data-cb-act="import">Import JSON</button><button data-cb-act="reset">New Draft</button><button onclick="openMainMenu()">Main Menu</button></div>'
     + '<h2>Scenario</h2><div class="fld-cb-grid"><label>Name<input data-cb-field="name" value="' + _fldCbVal("name") + '"></label><label>ID<input data-cb-field="id" value="' + _fldCbVal("id") + '"></label><label>Date<input data-cb-field="date" value="' + _fldCbVal("date") + '"></label><label>Place<input data-cb-field="place" value="' + _fldCbVal("place") + '"></label><label>Attacker' + _fldCbSelect(_fldCbState.attacker || "US", ["US", "CS"], 'data-cb-field="attacker"') + '</label><label>Defender' + _fldCbSelect(_fldCbState.defender || "CS", ["CS", "US"], 'data-cb-field="defender"') + '</label><label>Fog' + _fldCbSelect(_fldCbState.defaultFog ? "yes" : "no", [["no", "Off"], ["yes", "On"]], 'data-cb-field="defaultFog"') + '</label><label>Doctrine' + _fldCbSelect(_fldCbState.assaultDoctrine || "standard", [["standard", "Standard"], ["cautious", "Cautious"]], 'data-cb-field="assaultDoctrine"') + '</label><label>Field W' + _fldCbNumInput("fieldW", _fldCbState.fieldW, 700, 1800) + '</label><label>Field H' + _fldCbNumInput("fieldH", _fldCbState.fieldH, 550, 1400) + '</label><label>Time limit' + _fldCbNumInput("timeLimitSec", _fldCbState.timeLimitSec, 180, 1800) + '</label><label>Hold to win' + _fldCbNumInput("holdToWinSec", _fldCbState.holdToWinSec, 20, 600) + '</label></div>'
@@ -43236,18 +43261,18 @@ function _slOpenManager() {
           '<div style="font-size:11px;opacity:.7">Saved: ' + m.when + '</div>' +
         '</div>' +
         '<div style="display:flex;gap:6px;flex-shrink:0">' +
-          '<button class="gn-btn" id="slLoad' + i + '" style="padding:4px 10px;font-size:12px" aria-label="Load slot ' + (i+1) + '">Load</button>' +
-          '<button class="gn-btn" id="slDel' + i + '" style="padding:4px 10px;font-size:12px;opacity:.7" aria-label="Delete slot ' + (i+1) + '">Del</button>' +
+          '<button class="gn-btn" id="slLoad' + i + '" style="padding:6px 10px;font-size:12px" aria-label="Load slot ' + (i+1) + '">Load</button>' +
+          '<button class="gn-btn" id="slDel' + i + '" style="padding:6px 10px;font-size:12px;opacity:.7" aria-label="Delete slot ' + (i+1) + '">Del</button>' +
         '</div>';
     } else {
       content =
-        '<div style="flex:1;opacity:.5;font-style:italic;font-size:13px">— Empty —</div>';
+        '<div style="flex:1;opacity:.6;font-style:italic;font-size:13px">— Empty —</div>';
     }
     rows +=
       '<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--rule);border-radius:4px;margin-bottom:8px;background:rgba(0,0,0,.15)">' +
-        '<div style="font-size:18px;font-weight:bold;opacity:.4;width:22px;text-align:center">' + (i+1) + '</div>' +
+        '<div style="font-size:18px;font-weight:bold;color:#a89066;width:22px;text-align:center">' + (i+1) + '</div>' +
         content +
-        '<button class="gn-btn" id="slSave' + i + '" style="padding:4px 10px;font-size:12px" aria-label="Save to slot ' + (i+1) + '">Save</button>' +
+        '<button class="gn-btn" id="slSave' + i + '" style="padding:6px 10px;font-size:12px" aria-label="Save to slot ' + (i+1) + '">Save</button>' +
       '</div>';
   }
 
@@ -43464,7 +43489,7 @@ function _hpShowWelcome() {
     '<p style="font-size:13px;opacity:.8;margin-bottom:10px"><strong>Quick start:</strong> ' +
       'Click <em>"Federal Armies Muster for War"</em> for a Union campaign, or use the tactical battle buttons for ' +
       'First Bull Run, Malvern Hill, Antietam, Fredericksburg, Chancellorsville, Gettysburg, Shiloh, Vicksburg, or Chickamauga. The Skirmish button opens a custom real-time fight.</p>' +
-    '<p style="font-size:12px;opacity:.65;margin-bottom:14px">Press <kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;font-size:11px">?</kbd> anytime for controls help.</p>' +
+    '<p style="font-size:12px;opacity:.65;margin-bottom:14px">Press <kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;font-size:11px">?</kbd> anytime for controls help.</p>' +
     '<div class="btn-row" style="gap:10px;flex-wrap:wrap;justify-content:center">' +
       '<button class="bigbtn" id="hpWelcomeTour" aria-label="Take the guided tour of the game">&#9733; Take the Guided Tour</button>' +
       '<button class="bigbtn" id="hpWelcomeOk" aria-label="Skip the tour and proceed to the main menu">To the Field</button>' +
@@ -43515,23 +43540,23 @@ function _hpShowHelp() {
 
     '<h2 style="font-size:15px;margin:12px 0 6px">Keyboard Shortcuts</h2>' +
     '<div style="display:grid;grid-template-columns:auto 1fr;gap:2px 14px;font-size:12px;opacity:.85">' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">Space</kbd><span>Pause / Resume</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">1 2 3</kbd><span>Speed 1x / 2x / 4x</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">L</kbd><span>Line formation</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">C</kbd><span>Column formation</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">H</kbd><span>Hold position</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">E</kbd><span>Entrench (dig in for cover)</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">B</kbd><span>Abatis (timber obstacle belt)</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">X</kbd><span>Clear nearest obstacle</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">N</kbd><span>Lay pontoon bridge (river)</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">F / Enter</kbd><span>Charge nearest enemy</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">A</kbd><span>Select all friendly brigades</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">Tab</kbd><span>Next unit</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">V</kbd><span>Fog of war on/off</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">P</kbd><span>Auto-pause on/off</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">G</kbd><span>Battle settings drawer</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">Esc</kbd><span>Exit battle or close an open tactical dialog</span>' +
-      '<kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;text-align:center">?</kbd><span>This help panel</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">Space</kbd><span>Pause / Resume</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">1 2 3</kbd><span>Speed 1x / 2x / 4x</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">L</kbd><span>Line formation</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">C</kbd><span>Column formation</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">H</kbd><span>Hold position</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">E</kbd><span>Entrench (dig in for cover)</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">B</kbd><span>Abatis (timber obstacle belt)</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">X</kbd><span>Clear nearest obstacle</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">N</kbd><span>Lay pontoon bridge (river)</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">F / Enter</kbd><span>Charge nearest enemy</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">A</kbd><span>Select all friendly brigades</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">Tab</kbd><span>Next unit</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">V</kbd><span>Fog of war on/off</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">P</kbd><span>Auto-pause on/off</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">G</kbd><span>Battle settings drawer</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">Esc</kbd><span>Exit battle or close an open tactical dialog</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">?</kbd><span>This help panel</span>' +
     '</div>' +
     '<hr class="rule">' +
 
@@ -43563,16 +43588,56 @@ function _hpShowHelp() {
 }
 
 /* ============ (3) IN-BATTLE TACTICAL HELP OVERLAY ============ */
+// E3-i2 (D126): the tactical-help modal now (a) aria-hides the rest of #fldRoot while it is up
+// (belt-and-braces with aria-modal=true), and (b) returns focus to the control that opened it
+// (the "?" button / hotkey origin) on every close path — not the non-interactive #fldRoot (2.4.3).
+var _hpTacTrigger = null;
+var _hpTacHidden = [];
+function _hpTacSetBgInert(on, overlay) {
+  var parent = (overlay && overlay.parentNode) || document.getElementById("fldRoot") || document.body;
+  if (!parent) return;
+  if (on) {
+    _hpTacHidden = [];
+    var kids = parent.children;
+    for (var i = 0; i < kids.length; i++) {
+      var el = kids[i];
+      if (el.id === "hpTacOverlay" || el.id === "fldLive" || el.id === "a11yLive") continue;   // never hide the live regions
+      if (el.tagName === "SCRIPT" || el.tagName === "STYLE") continue;
+      if (el.getAttribute("aria-hidden") === "true") continue;   // already hidden — leave it
+      el.setAttribute("aria-hidden", "true");
+      _hpTacHidden.push(el);
+    }
+  } else {
+    for (var j = 0; j < _hpTacHidden.length; j++) { try { _hpTacHidden[j].removeAttribute("aria-hidden"); } catch (e) {} }
+    _hpTacHidden = [];
+  }
+}
+function _hpTacCloseOverlay(overlay) {
+  if (!overlay) return;
+  overlay.style.display = "none";
+  _hpTacSetBgInert(false, overlay);
+  try {
+    if (_hpTacTrigger && typeof _hpTacTrigger.focus === "function" && document.contains(_hpTacTrigger)) _hpTacTrigger.focus();
+    else { var rr = document.getElementById("fldRoot"); if (rr) rr.focus(); }
+  } catch (e) {}
+}
 function _hpShowTacticalHelp() {
   var overlay = document.getElementById("hpTacOverlay");
   if (overlay) {
-    overlay.style.display = (overlay.style.display === "none") ? "flex" : "none";
-    if (overlay.style.display !== "none") {
+    if (overlay.style.display === "none") {
+      _hpTacTrigger = document.activeElement;
+      overlay.style.display = "flex";
+      // move focus into the dialog BEFORE inerting the background, so the still-focused trigger
+      // (the "?" button, which lives inside #fldBar) is never under an aria-hidden subtree (4.1.2).
       try { var cb0 = document.getElementById("hpTacClose"); if (cb0) cb0.focus(); } catch (e0) {}
+      _hpTacSetBgInert(true, overlay);
+    } else {
+      _hpTacCloseOverlay(overlay);
     }
     return;
   }
 
+  _hpTacTrigger = document.activeElement;
   overlay = document.createElement("div");
   overlay.id = "hpTacOverlay";
   overlay.setAttribute("role", "dialog");
@@ -43615,14 +43680,17 @@ function _hpShowTacticalHelp() {
 
   var root = document.getElementById("fldRoot") || document.body;
   root.appendChild(overlay);
-  overlay.addEventListener("click", function (e) { if (e.target === overlay) overlay.style.display = "none"; });
+  overlay.addEventListener("click", function (e) { if (e.target === overlay) _hpTacCloseOverlay(overlay); });
   overlay.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); overlay.style.display = "none"; try { var rr = document.getElementById("fldRoot"); if (rr) rr.focus(); } catch (e2) {} }
+    if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); _hpTacCloseOverlay(overlay); }
     else if (e.key === "Tab") { e.preventDefault(); var cb = document.getElementById("hpTacClose"); if (cb) cb.focus(); }
   });
   var closeBtn = document.getElementById("hpTacClose");
-  if (closeBtn) closeBtn.addEventListener("click", function () { overlay.style.display = "none"; });
+  if (closeBtn) closeBtn.addEventListener("click", function () { _hpTacCloseOverlay(overlay); });
+  // focus into the dialog FIRST, then inert the background — so the trigger (in #fldBar) is not
+  // a focused element inside an aria-hidden subtree (WCAG 4.1.2).
   try { if (closeBtn) closeBtn.focus(); } catch (e3) {}
+  _hpTacSetBgInert(true, overlay);
 }
 
 /* ============ (4) ENHANCED PAUSE INDICATOR ============ */
@@ -43760,6 +43828,7 @@ function _hpUpdatePause() {
         var helpBtn = document.createElement("button");
         helpBtn.textContent = "?";
         helpBtn.title = "Controls & Hotkeys";
+        helpBtn.setAttribute("aria-label", "Controls and Hotkeys — toggle help overlay");   // E3-i2 (D126): icon-only button needs a name (WCAG 4.1.2)
         helpBtn.style.cssText = "width:32px;height:32px;border-radius:50%;border:1px solid #8b7a56;background:rgba(26,22,16,.85);color:#cdb87f;font-size:16px;font-weight:bold;cursor:pointer;margin-left:6px;font-family:Georgia,serif";
         helpBtn.addEventListener("click", function (e) { e.stopPropagation(); _hpShowTacticalHelp(); });
         bar.appendChild(helpBtn);
@@ -44200,14 +44269,18 @@ function tutStart() {
        panel. Matches the established brass-outline pattern used for every other button class
        (bigbtn, tbtn, obtn, etc.) in base.html lines 7748-7771. #c9a85f on #1a1610 = 7.93:1
        (AA ✓ for 3:1 non-text / focus indicator). */
-    '<style>#tutSkip:focus-visible{outline:2px solid var(--brass-lt,#c9a85f);outline-offset:2px;border-radius:2px}</style>' +
+    '<style>#tutSkip:focus-visible{outline:2px solid var(--brass-lt,#c9a85f);outline-offset:2px;border-radius:2px}'
+      // E3-i2 (D126): the step heading is focused programmatically each step but had inline
+      // outline:none -> no visible focus indicator (WCAG 2.4.7). Give it a real ring (the inline
+      // outline:none is also dropped below so this rule can take effect).
+      + '#tutTitle:focus-visible{outline:2px solid var(--brass-lt,#c9a85f);outline-offset:3px;border-radius:2px}</style>' +
     '<div style="background:#1a1610;border:2px solid #8b7a56;border-radius:8px;max-width:540px;width:100%;max-height:86vh;overflow-y:auto;color:#e8dcc0;padding:22px 26px;box-shadow:0 8px 30px rgba(0,0,0,.6)">' +
       '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">' +
         '<div id="tutStepInd" style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--brass-lt,#c9a85f)"></div>' +
         '<button id="tutSkip" type="button" style="background:none;border:none;color:#cdb87f;font-size:12px;cursor:pointer;text-decoration:underline;font-family:inherit" aria-label="Skip the tour">Skip</button>' +
       '</div>' +
       '<div id="tutGlyph" aria-hidden="true" style="font-size:30px;text-align:center;color:var(--brass-lt,#c9a85f);margin:4px 0 2px"></div>' +
-      '<h2 id="tutTitle" tabindex="-1" style="font-size:20px;text-align:center;margin:0 0 10px;color:var(--brass-lt,#c9a85f);outline:none"></h2>' +
+      '<h2 id="tutTitle" tabindex="-1" style="font-size:20px;text-align:center;margin:0 0 10px;color:var(--brass-lt,#c9a85f)"></h2>' +
       '<div id="tutBody" style="font-size:14px;line-height:1.65;min-height:96px"></div>' +
       '<div id="tutDots" style="text-align:center;margin:14px 0 12px"></div>' +
       '<div style="display:flex;justify-content:space-between;gap:10px">' +
@@ -44791,8 +44864,15 @@ function rtmHubReadout(cfg) {
          stack + relaxed letter/word spacing + line-height (no external font; $0 / one
          file — a research-backed spacing approach, not a special typeface download).
    Plus a one-stop mirror of Reduced Motion so the whole accessibility surface is in one
-   place. The dedicated FULL WCAG 2.2 AA audit sweep across every shipped surface is the
-   companion increment E3-i2.
+   place.
+
+   E3-i2 (D126) — the dedicated FULL WCAG 2.2 AA audit sweep also lands here: _a11yCss() now
+   emits an ALWAYS-ON correction block (NOT gated on any mode) that redefines the two TEXT-ONLY
+   tokens which failed AA on the dark grounds (--rule -> #a89066, --blood-lt -> #d8745c), adds a
+   universal :focus-visible fallback ring, and a pressed-toggle focus override; a11yApply makes
+   the base #toast a polite status region; and the high-contrast block gained per-surface
+   extensions (desk tabs, the tactical HUD, sheet dialogs, control borders). The matching
+   per-site inline-hex/aria fixes live in the individual src/ modules; see DECISIONS D126.
 
    ARCHITECTURE — PURE SETTINGS / PRESENTATION LAYER; byte-identical combat BY
    CONSTRUCTION (D74): this module writes ONLY non-combat a11y flags on G.settings
@@ -44866,6 +44946,24 @@ function _a11yCss() {
   // base text on the broadsheet containers, and add strong, universal focus rings. Opacity
   // is intentionally left untouched (some elements hide via opacity:0). reduce-motion-safe
   // (no transitions introduced).
+  // ALWAYS-ON WCAG 2.2 AA CORRECTION (E3-i2, D126) — not gated on any mode; ships for EVERY
+  // player at boot. (1) Redefine the two TEXT-ONLY design tokens that failed AA as small text on
+  // the dark grounds: --rule #8a7350 (3.5-4.4:1 secondary labels everywhere) -> #a89066 (>=5.17,
+  // the exact tone base.html ALREADY uses for the same fix in its loot/readability cards), and
+  // --blood-lt #a83d33 (2.5-3.0:1 — the FIRE order button, #log .e.hit, .tagn, .verdict.lose) ->
+  // #d8745c (>=4.96). --blood-lt is text-only in base.html (color: only; adjacent borders use
+  // --blood). --rule is text-only EXCEPT a handful of DECORATIVE dark-surface uses (~17 panel
+  // borders, the scrollbar-thumb hover, and the .rule divider gradient), which the redefine merely
+  // recolors a touch lighter (#8a7350 -> #a89066) — contrast-SAFE (it only raises border contrast,
+  // and decorative borders carry no WCAG requirement). The LIGHT main-menu broadsheet (.gn-paper)
+  // references NEITHER token, so the redefine cannot touch it. The high-contrast block below re-redefines
+  // both at higher specificity, so HC still wins. (2) A universal :focus-visible fallback ring for
+  // any bare/custom control the base class rings miss (class rings keep winning by specificity).
+  // (3) The pressed-toggle focus override — the inline pressed outline (specificity 1000) hid the
+  // focus delta, so !important is required to show a distinct ring when Tabbing onto an On toggle.
+  var aa = ':root{--rule:#a89066;--blood-lt:#d8745c;}'
+    + ':focus-visible{outline:2px solid var(--brass-lt,#c9a85f);outline-offset:2px;}'
+    + '.upg[aria-pressed="true"]:focus-visible{outline:3px solid #ffe27a !important;outline-offset:2px !important;}';
   var hc = 'html[data-a11y-contrast="high"]{'
     + '--ink:#000;--ink-soft:#0a0a0a;--parch:#ffffff;--parch-dk:#f2ead4;--parch-edge:#ffe27a;'
     + '--rule:#e8c860;--brass:#ffd24a;--brass-lt:#ffe27a;--blood:#ff6b5e;--blood-lt:#ff8a7e;--gold:#ffd24a;}'
@@ -44891,7 +44989,24 @@ function _a11yCss() {
     + 'letter-spacing:.02em !important;}'
     + 'html[data-a11y-text="dyslexia"] .pad,html[data-a11y-text="dyslexia"] .pad p,'
     + 'html[data-a11y-text="dyslexia"] .pad div,html[data-a11y-text="dyslexia"] .pad span,html[data-a11y-text="dyslexia"] .pad li{line-height:1.62 !important;word-spacing:.04em !important;}';
-  return hc + "\n" + dx;
+  // HIGH-CONTRAST PER-SURFACE EXTENSIONS (E3-i2, D126) — i1's hc block reached the broadsheet
+  // containers + the var-driven label classes, but NOT the President's-Desk tab body (#wdContent/
+  // #wdTabs), the tactical HUD chrome (#fldHud/#fldBar/#fldRoot), the sheet-dialog headings, or the
+  // audio/custom-battle control borders. Blacken those grounds and lift text. The broad text rules
+  // deliberately OMIT !important so inline semantic status colours (the now-AA greens/reds) survive
+  // on the black ground (they clear 4.5 on #000) while uncoloured text inherits the cream. Every
+  // selector is dark-surface-scoped (#wdContent/#wdTabs/[id^=wdTab_]/#fldHud/#fldBar/#fldRoot/.sheet
+  // /#fldAudioPanel/.fld-cb) so NONE can match a .gn-* light-menu node. #fldRoot's bg only paints
+  // the DOM chrome — the battlefield canvas is drawn over it in JS, unaffected.
+  var hcx = 'html[data-a11y-contrast="high"] #wdContent,html[data-a11y-contrast="high"] #wdTabs{background:#000 !important;}'
+    + 'html[data-a11y-contrast="high"] #wdContent{color:#f2e6c8;}'
+    + 'html[data-a11y-contrast="high"] [id^="wdTab_"]{color:#ffe27a !important;border-color:#ffe27a !important;}'
+    + 'html[data-a11y-contrast="high"] [id^="wdTab_"][aria-pressed="true"]{background:#3a2f12 !important;outline:2px solid #ffe27a !important;}'
+    + 'html[data-a11y-contrast="high"] #fldHud,html[data-a11y-contrast="high"] #fldBar,html[data-a11y-contrast="high"] #fldRoot{background:#000 !important;}'
+    + 'html[data-a11y-contrast="high"] #fldHud{color:#f2e6c8;}'
+    + 'html[data-a11y-contrast="high"] .sheet [style*="color:var(--rule)"]{color:#ffe27a !important;}'
+    + 'html[data-a11y-contrast="high"] #fldAudioPanel button,html[data-a11y-contrast="high"] #fldBtnAudio,html[data-a11y-contrast="high"] .fld-cb input,html[data-a11y-contrast="high"] .fld-cb select,html[data-a11y-contrast="high"] .fld-cb textarea{border-color:#ffe27a !important;}';
+  return aa + "\n" + hc + "\n" + hcx + "\n" + dx;
 }
 function a11yApply() {
   try {
@@ -44905,6 +45020,17 @@ function a11yApply() {
     // CVD == cbAids (the base-owned source of truth) — a11yApply does NOT force cbAids on or off,
     // so an out-of-band base "Colour-blind Aids: Off" stays authoritative (no D123-class resurrection).
     _a11yEnsureLive();
+    _a11yEnsureStatusRegions();
+  } catch (e) {}
+}
+/* E3-i2 (D126): make the base toast container a polite assistive-tech STATUS region so transient
+   confirmations + errors (save success, "Needs N capital", etc.) are announced (WCAG 4.1.3). The
+   #toast element is base-owned, so we only set the missing ARIA, idempotently. */
+function _a11yEnsureStatusRegions() {
+  try {
+    if (typeof document === "undefined") return;
+    var t = document.getElementById("toast");
+    if (t && !t.getAttribute("aria-live")) { t.setAttribute("aria-live", "polite"); t.setAttribute("role", "status"); t.setAttribute("aria-atomic", "true"); }
   } catch (e) {}
 }
 
@@ -45167,6 +45293,10 @@ function a11yInjectMenuButton() {
 })();
 (function a11yBoot() {
   try {
+    // E3-i2 (D126): inject the always-on AA-correction stylesheet synchronously at module load
+    // (before first paint) so the token redefine + universal focus ring apply immediately, not
+    // only after DOMContentLoaded boot-load.
+    try { _a11yEnsureStyleEl(); } catch (eS) {}
     if (typeof document === "undefined") { a11yBootLoad(); return; }
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", a11yBootLoad);
     else a11yBootLoad();

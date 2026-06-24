@@ -165,14 +165,18 @@ function tutStart() {
        panel. Matches the established brass-outline pattern used for every other button class
        (bigbtn, tbtn, obtn, etc.) in base.html lines 7748-7771. #c9a85f on #1a1610 = 7.93:1
        (AA ✓ for 3:1 non-text / focus indicator). */
-    '<style>#tutSkip:focus-visible{outline:2px solid var(--brass-lt,#c9a85f);outline-offset:2px;border-radius:2px}</style>' +
+    '<style>#tutSkip:focus-visible{outline:2px solid var(--brass-lt,#c9a85f);outline-offset:2px;border-radius:2px}'
+      // E3-i2 (D126): the step heading is focused programmatically each step but had inline
+      // outline:none -> no visible focus indicator (WCAG 2.4.7). Give it a real ring (the inline
+      // outline:none is also dropped below so this rule can take effect).
+      + '#tutTitle:focus-visible{outline:2px solid var(--brass-lt,#c9a85f);outline-offset:3px;border-radius:2px}</style>' +
     '<div style="background:#1a1610;border:2px solid #8b7a56;border-radius:8px;max-width:540px;width:100%;max-height:86vh;overflow-y:auto;color:#e8dcc0;padding:22px 26px;box-shadow:0 8px 30px rgba(0,0,0,.6)">' +
       '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">' +
         '<div id="tutStepInd" style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--brass-lt,#c9a85f)"></div>' +
         '<button id="tutSkip" type="button" style="background:none;border:none;color:#cdb87f;font-size:12px;cursor:pointer;text-decoration:underline;font-family:inherit" aria-label="Skip the tour">Skip</button>' +
       '</div>' +
       '<div id="tutGlyph" aria-hidden="true" style="font-size:30px;text-align:center;color:var(--brass-lt,#c9a85f);margin:4px 0 2px"></div>' +
-      '<h2 id="tutTitle" tabindex="-1" style="font-size:20px;text-align:center;margin:0 0 10px;color:var(--brass-lt,#c9a85f);outline:none"></h2>' +
+      '<h2 id="tutTitle" tabindex="-1" style="font-size:20px;text-align:center;margin:0 0 10px;color:var(--brass-lt,#c9a85f)"></h2>' +
       '<div id="tutBody" style="font-size:14px;line-height:1.65;min-height:96px"></div>' +
       '<div id="tutDots" style="text-align:center;margin:14px 0 12px"></div>' +
       '<div style="display:flex;justify-content:space-between;gap:10px">' +

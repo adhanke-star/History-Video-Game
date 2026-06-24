@@ -133,17 +133,20 @@ function bridgeArmy(C) {
 }
 
 function _brgWord(v) {
-  if (v >= 85) return ["Superb", "#4a6b3a"];
+  if (v >= 85) return ["Superb", "#739850"];
   if (v >= 68) return ["Strong", "#6f9e5a"];
   if (v >= 50) return ["Fair", "#b8863b"];
   if (v >= 32) return ["Strained", "#c9712e"];
-  return ["Brittle", "#9c3b2e"];
+  return ["Brittle", "#da6a5a"];
 }
 
 function _brgBar(label, v) {
   v = Math.max(0, Math.min(100, Math.round(v)));
   var w = _brgWord(v);
-  return '<div style="margin:4px 0"><div style="display:flex;justify-content:space-between;font-size:12px;opacity:.85"><span>' + label
+  // E3-i2 (D126): the .85 opacity was on the ROW, which composites onto the value text too
+  // (a child opacity:1 cannot escape an ancestor's group opacity) — dragging the status word
+  // below 4.5:1. Move the dimming to the secondary LABEL only; the value word renders at full.
+  return '<div style="margin:4px 0"><div style="display:flex;justify-content:space-between;font-size:12px"><span style="opacity:.85">' + label
     + '</span><span style="color:' + w[1] + '">' + v + ' &middot; ' + w[0] + '</span></div>'
     + '<div style="height:7px;background:rgba(0,0,0,.25);border:1px solid var(--rule);border-radius:3px;overflow:hidden"><div style="height:100%;width:' + v + '%;background:' + w[1] + '"></div></div></div>';
 }
@@ -180,7 +183,7 @@ function bridgeBriefingHTML(C) {
     var p = _brgPREP[i], on = !!bp[p.key];
     prep += '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 0;border-bottom:1px dotted var(--rule)">'
       + '<div style="flex:1 1 auto"><b style="font-size:12px">' + p.label + '</b><div style="font-size:11px;opacity:.7">' + p.hint + '</div></div>'
-      + '<button id="brg_' + p.key + '" type="button" class="upg" style="flex:0 0 auto">' + (on ? 'Ordered &check;' : 'Order') + '</button></div>';
+      + '<button id="brg_' + p.key + '" type="button" class="upg" aria-pressed="' + (on ? "true" : "false") + '" style="flex:0 0 auto">' + (on ? 'Ordered &check;' : 'Order') + '</button></div>';
   }
 
   return ''

@@ -126,7 +126,7 @@ function bridgeAutoResolve(C) {
 
 function _arShowResult(C, B, o) {
   var verdict = o.draw ? "Drawn Battle" : (o.win ? (o.type === "decisive" ? "Decisive Victory" : "Victory") : (o.type === "decisive" ? "Decisive Defeat" : "Defeat"));
-  var col = o.draw ? "#b8863b" : (o.win ? "#4a6b3a" : "#9c3b2e");
+  var col = o.draw ? "#b8863b" : (o.win ? "#739850" : "#da6a5a");
   var bd = B.bd || {};
   function adv() { if (typeof campaignAdvance === "function") campaignAdvance(o.winnerSide, o.type); }
   if (typeof openSheet !== "function") { adv(); return; }   // headless fallback: advance directly

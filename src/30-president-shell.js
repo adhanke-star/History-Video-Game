@@ -118,7 +118,14 @@ function _wdRefresh() {
   var tabs = ["economy", "treasury", "diplomacy", "victory", "warvshistory", "afteraction", "codex", "playstyle", "armory", "warroom", "clock", "muster", "cabinet", "command", "camp", "decisions", "press", "map"];
   for (var i = 0; i < tabs.length; i++) {
     var b = document.getElementById("wdTab_" + tabs[i]);
-    if (b) b.style.opacity = (tabs[i] === _wdTab) ? "1" : "0.55";
+    if (b) {
+      b.style.opacity = (tabs[i] === _wdTab) ? "1" : "0.55";
+      // E3-i2 (D126): the active tab was conveyed by opacity ALONE (WCAG 1.4.1) with no
+      // programmatic state (4.1.2). Mirror it as aria-pressed (a toolbar-toggle pattern; chosen
+      // over a full role=tablist because these 18 buttons have no roving-tabindex/arrow-key nav,
+      // which a tablist would imply). The high-contrast block also gives the pressed tab a ring.
+      b.setAttribute("aria-pressed", (tabs[i] === _wdTab) ? "true" : "false");
+    }
   }
   if (wire) { try { wire(C); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_wdRefresh wire (" + _wdTab + "):", e); } }
   // E2-i2 (D120): the INLINE GLOSSARY — decorate the read-only teaching prose with
@@ -151,7 +158,7 @@ function openWarDept() {
     '<p class="title-sub" style="text-align:center">' + (head.title || '')
       + (head.seat ? ' &mdash; ' + head.seat : '') + '</p>' +
     '<hr class="rule">' +
-    '<div id="wdTabs" style="display:flex;gap:6px;justify-content:center;margin-bottom:12px;flex-wrap:wrap">' +
+    '<div id="wdTabs" role="group" aria-label="President\'s Desk sections" style="display:flex;gap:6px;justify-content:center;margin-bottom:12px;flex-wrap:wrap">' +
       _wdTabBtn("economy", "The War Effort") +
       _wdTabBtn("treasury", "The Treasury") +
       _wdTabBtn("diplomacy", "Diplomacy") +

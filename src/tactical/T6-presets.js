@@ -400,7 +400,7 @@ function _fldDrawerHTML() {
     + tog("fldDrawerFog", "Fog of war", !!__FIELD.fog, "line-of-sight scouting (V)")
     + tog("fldDrawerAuto", "Active auto-pause", !!__FIELD.autoPause, "pause at key moments (P)")
     + '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin:7px 0"><span style="font-size:13px">Speed</span>'
-    +   '<button id="fldDrawerSpd" type="button" class="upg" aria-label="Cycle battle speed" style="min-width:64px">' + (__FIELD.speed || 1) + '&times;</button></div>'
+    +   '<button id="fldDrawerSpd" type="button" class="upg" aria-label="Battle speed ' + (__FIELD.speed || 1) + 'x — click to cycle (1x 2x 4x)" style="min-width:64px">' + (__FIELD.speed || 1) + '&times;</button></div>'
     + '<div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end"><button id="fldDrawerDone" type="button" class="bigbtn" style="padding:7px 16px">Resume</button></div>'
     + '</div>';
 }

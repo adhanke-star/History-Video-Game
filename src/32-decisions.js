@@ -151,7 +151,7 @@ function _decOptionHTML(card, opt, ns) {
     +     '<button id="decChoose_' + oid + '" type="button" class="bigbtn" style="flex:0 0 auto;font-size:12px;padding:3px 12px">Decide</button>'
     +   '</div>'
     +   (opt.historicalNote ? '<div style="font-size:11px;opacity:.7;margin-top:3px">' + _decEsc(opt.historicalNote) + '</div>' : '')
-    +   '<button id="decWhy_' + oid + '" type="button" class="upg" style="font-size:11px;padding:1px 8px;margin-top:4px">Why &#9656;</button>'
+    +   '<button id="decWhy_' + oid + '" type="button" class="upg" style="font-size:11px;padding:1px 8px;margin-top:4px" aria-expanded="false" aria-controls="decWhyBox_' + oid + '">Why &#9656;</button>'
     +   '<div id="decWhyBox_' + oid + '" style="display:none;margin-top:4px;font-size:12px;opacity:.85">'
     +     _decEsc(opt.teaching || '')
     +     '<div style="margin-top:3px;font-size:10px;opacity:.6">' + _decEsc(opt.provenance || "Inferred") + (opt.sources && opt.sources.length ? ' &middot; ' + _decEsc(opt.sources.join("; ")) : '') + '</div>'
@@ -165,10 +165,10 @@ function _decCardHTML(C, card, ns) {
   var opts = "";
   for (var i = 0; i < card.options.length; i++) opts += _decOptionHTML(card, card.options[i], ns);
   var cat = _decCAT_LABEL[card.category] || card.category || "";
-  var hinge = (card.trigger && card.trigger.hinge) ? '<span style="font-size:10px;color:#cc5f50;border:1px solid #cc5f50;border-radius:3px;padding:0 4px;margin-left:6px">&#9873; a hinge of the war</span>' : '';  /* wcag-auditor: contrast fix from #9c3b2e to #cc5f50 for AA compliance (was 2.75:1; now 4.51:1 text + 4.51:1 border against card bg, both WCAG 2.2 AA) */
+  var hinge = (card.trigger && card.trigger.hinge) ? '<span style="font-size:10px;color:#d88878;border:1px solid #d88878;border-radius:3px;padding:0 4px;margin-left:6px">&#9873; a hinge of the war</span>' : '';
   return ''
     + '<div style="margin:10px 0;padding:11px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.14)">'
-    +   '<div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#957d57">' + _decEsc(cat) + hinge + '</div>'  /* wcag-auditor: contrast fix from var(--rule)=#8a7350 to #957d57 for AA compliance (was 4.15:1; now 4.54:1 against card bg) */
+    +   '<div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#a89066">' + _decEsc(cat) + hinge + '</div>'
     +   '<div style="font-size:15px;font-weight:bold;margin:2px 0">' + _decEsc(card.title) + '</div>'
     +   '<div style="font-size:13px;opacity:.9;margin-bottom:4px">' + _decEsc(card.situation) + '</div>'
     +   opts
@@ -200,7 +200,7 @@ function decRenderTab(C) {
       for (var o = 0; o < rc.options.length; o++) if (rc.options[o].id === oid) chosen = rc.options[o];
       rows += '<div style="font-size:12px;padding:3px 0;border-bottom:1px dotted var(--rule)"><b>' + _decEsc(rc.title) + '</b> &mdash; ' + _decEsc(chosen ? chosen.label : oid) + '</div>';
     }
-    body += '<button id="decHistToggle" type="button" class="upg" style="font-size:11px;padding:2px 8px;margin-top:8px">Decisions you have made &#9656;</button>'
+    body += '<button id="decHistToggle" type="button" class="upg" style="font-size:11px;padding:2px 8px;margin-top:8px" aria-expanded="false" aria-controls="decHistBox">Decisions you have made &#9656;</button>'
       + '<div id="decHistBox" style="display:none;margin-top:6px;padding:8px;border:1px solid var(--rule);border-radius:4px;background:rgba(0,0,0,.1)">' + rows + '</div>';
   }
   return body;
@@ -222,7 +222,7 @@ function _decWireCards(C, ns, cardIds, afterChoose) {
         var why = document.getElementById("decWhy_" + oid);
         if (why) why.addEventListener("click", function () {
           var box = document.getElementById("decWhyBox_" + oid);
-          if (box) box.style.display = (box.style.display === "none") ? "block" : "none";
+          if (box) { box.style.display = (box.style.display === "none") ? "block" : "none"; why.setAttribute("aria-expanded", box.style.display !== "none" ? "true" : "false"); }
         });
       })(c, c.options[j]);
     }
@@ -236,7 +236,7 @@ function decWireTab(C) {
   var ht = document.getElementById("decHistToggle");
   if (ht) ht.addEventListener("click", function () {
     var box = document.getElementById("decHistBox");
-    if (box) box.style.display = (box.style.display === "none") ? "block" : "none";
+    if (box) { box.style.display = (box.style.display === "none") ? "block" : "none"; ht.setAttribute("aria-expanded", box.style.display !== "none" ? "true" : "false"); }
   });
 }
 

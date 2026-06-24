@@ -137,17 +137,17 @@ function artBuy(C, gunId, n) {
 }
 
 function _artScoreWord(v) {
-  if (v >= 80) return ["A grand battery", "#4a6b3a"];
+  if (v >= 80) return ["A grand battery", "#6f9e5a"];
   if (v >= 62) return ["A strong park", "#6f9e5a"];
   if (v >= 45) return ["A serviceable arm", "#b8863b"];
   if (v >= 25) return ["A few guns", "#c9712e"];
-  return ["Almost no guns", "#9c3b2e"];
+  return ["Almost no guns", "#d8745c"];
 }
 
 /* Rarity colour: reuse The Armory's palette so the two tiers read as one catalog. */
 function _artRar(r) {
   return (typeof _armRarityCol === "function") ? _armRarityCol(r)
-    : (r === "legendary" ? "#b8863b" : r === "rare" ? "#7a5cff" : r === "uncommon" ? "#4a6b3a" : "#8a8276");
+    : (r === "legendary" ? "#b8863b" : r === "rare" ? "#9a86f0" : r === "uncommon" ? "#6f9e5a" : "#9a9184");
 }
 
 /* ---- artRenderSection: the Cannon Corps block, appended below The Armory. ---- */
@@ -176,14 +176,18 @@ function artRenderSection(C) {
     var owned = bat[g.id] || 0;
     var disabled = !av.ok;
     var proj = (g.projectiles && g.projectiles.length) ? g.projectiles.join(', ') : '';
-    cards += '<div style="padding:9px;border:1px solid ' + col + ';border-radius:5px;background:rgba(0,0,0,.12);opacity:' + (disabled ? '.5' : '1') + '">'
+    // E3-i2 (D126): dim only the descriptive block of an unavailable card; keep the informational
+    // REASON at full opacity (group opacity composites onto descendants, so it must sit outside).
+    cards += '<div style="padding:9px;border:1px solid ' + col + ';border-radius:5px;background:rgba(0,0,0,.12)">'
+      + '<div' + (disabled ? ' style="opacity:.6"' : '') + '>'
       + '<div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font-size:13px">' + _artEsc(g.name) + '</b>'
       + '<span style="font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:' + col + '">' + _artEsc(g.rarity) + '</span></div>'
       + '<div style="font-size:11px;opacity:.6">' + _artEsc(g.caliber) + ' &middot; ' + g.rangeYds + ' yds &middot; ' + g.rateOfFire + '/min &middot; crew ' + g.crew + ' &middot; quality ' + g.quality + '</div>'
       + (proj ? '<div style="font-size:10px;opacity:.5">' + _artEsc(proj) + '</div>' : '')
       + '<div style="font-size:11px;opacity:.78;margin:4px 0">' + _artEsc(g.flavor) + '</div>'
-      + (owned ? '<div style="font-size:11px;color:' + col + '">In the park: ' + owned + ' ' + (owned > 1 ? 'batteries' : 'battery') + '</div>' : '');
-    if (disabled) cards += '<div style="font-size:11px;color:#9c3b2e">' + av.reason + '</div>';
+      + (owned ? '<div style="font-size:11px;color:' + col + '">In the park: ' + owned + ' ' + (owned > 1 ? 'batteries' : 'battery') + '</div>' : '')
+      + '</div>';
+    if (disabled) cards += '<div style="font-size:11px;color:#d8745c;margin-top:2px">' + av.reason + '</div>';
     else cards += '<div class="btn-row" style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap">'
       + '<button class="upg" data-artbuy="' + _artEsc(g.id) + '" data-artn="1" style="padding:2px 8px;font-size:11px">Raise a battery &middot; $' + batCost + '</button>'
       + '<button class="upg" data-artbuy="' + _artEsc(g.id) + '" data-artn="3" style="padding:2px 8px;font-size:11px">Raise a battalion (3) &middot; $' + btnCost + '</button></div>';

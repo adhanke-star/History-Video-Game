@@ -31,8 +31,8 @@ function _pdStat(label, value, accent) {
 /* A meter (0-100) drawn as a thin period bar. */
 function _pdMeter(label, v, hi) {
   v = Math.max(0, Math.min(100, Math.round(v || 0)));
-  var col = hi ? (v > 66 ? '#9c3b2e' : v > 33 ? '#b8863b' : '#4a6b3a')   // higher = worse (weariness/intervention)
-               : (v > 66 ? '#4a6b3a' : v > 33 ? '#b8863b' : '#9c3b2e');  // higher = better (supply/capital)
+  var col = hi ? (v > 66 ? '#ad4133' : v > 33 ? '#b8863b' : '#4d703c')   // higher = worse (weariness/intervention)
+               : (v > 66 ? '#4d703c' : v > 33 ? '#b8863b' : '#ad4133');  // higher = better (supply/capital)
   return '<div style="margin:5px 0">'
     + '<div style="display:flex;justify-content:space-between;font-size:12px;opacity:.8"><span>' + label + '</span><span>' + v + '</span></div>'
     + '<div style="height:7px;background:rgba(0,0,0,.25);border:1px solid var(--rule);border-radius:3px;overflow:hidden">'
@@ -88,7 +88,7 @@ function presRenderEconomy(C) {
     +     _pdStat('Treasury', '$' + (C.funds || 0))
     +     _pdStat('War-Department nodes built', nodeLevels + ' / 25')
     +     _pdStat('Battles fought', (C.stats ? C.stats.battles : 0))
-    +     _pdStat('Victories', (C.stats ? C.stats.won : 0), '#4a6b3a')
+    +     _pdStat('Victories', (C.stats ? C.stats.won : 0), '#699952')
     +     _pdStat('The year', clk.year || P.date.year)
     +     _pdStat('1864 election', electionLine)
     +   '</div>'
@@ -136,7 +136,7 @@ function presRenderCabinet(C) {
       +   '<div style="opacity:.75;font-size:12px">' + a.role + '</div>'
       +   '<div style="opacity:.6;font-size:11px;margin-top:3px">' + (on ? 'Running the department in your stead.' : 'Awaiting your direction.') + '</div>'
       + '</div>'
-      + '<button id="pdDel_' + a.domain + '" type="button" class="upg" style="flex:0 0 auto">'
+      + '<button id="pdDel_' + a.domain + '" type="button" class="upg" style="flex:0 0 auto" aria-pressed="'+(on?'true':'false')+'">'
       +   (on ? 'Delegated &check;' : 'Delegate')
       + '</button>'
       + '</div>';

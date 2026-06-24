@@ -256,7 +256,7 @@ function divRenderTab(C) {
     + '<div style="font-size:11px;opacity:.7">' + (emergent
         ? "Off — the wild cards are withheld; your war diverges only through the choices and battles of the campaign."
         : "On — the wild-card gambits are available on the Paths to Victory tab. Turn them off to let history bend only through play.") + '</div></div>'
-    + '<button id="divEmergentToggle" type="button" class="upg" style="flex:0 0 auto" aria-label="Emergent-only mode" aria-pressed="' + (emergent ? "true" : "false") + '">'
+    + '<button id="divEmergentToggle" type="button" class="upg" style="flex:0 0 auto" aria-pressed="' + (emergent ? "true" : "false") + '">'
         + (emergent ? "Enable gambits" : "Emergent only") + '</button></div>';
 
   // The ledger, grouped by category.
@@ -270,7 +270,7 @@ function divRenderTab(C) {
       var rows = entries.filter(function (e) { return e.cat === catKey; });
       if (!rows.length) continue;
       rows.sort(function (a, b) { return _divTier(b.tier).weight - _divTier(a.tier).weight; });   // radical first
-      ledger += '<div style="margin-top:8px"><div style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#937b55;margin-bottom:2px">' + catLabel + '</div>'; /* wcag-auditor: contrast fix from var(--rule)=#8a7350 to #937b55 for AA compliance (4.04:1 -> 4.52:1) */
+      ledger += '<div style="margin-top:8px"><div style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#a89066;margin-bottom:2px">' + catLabel + '</div>';
       for (var ri = 0; ri < rows.length; ri++) {
         var e = rows[ri];
         ledger += '<div style="padding:7px 0;border-bottom:1px dotted var(--rule)">'

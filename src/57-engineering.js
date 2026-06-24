@@ -152,11 +152,11 @@ function engOnResolve(winnerSide, type, B, C, win) {
 }
 
 function _engScoreWord(v) {
-  if (v >= 80) return ["A first-class engineer arm", "#4a6b3a"];
+  if (v >= 80) return ["A first-class engineer arm", "#6f9e5a"];
   if (v >= 60) return ["A strong engineer corps", "#6f9e5a"];
   if (v >= 40) return ["A working pioneer force", "#b8863b"];
   if (v >= 22) return ["A few engineer companies", "#c9712e"];
-  return ["Almost no engineers", "#9c3b2e"];
+  return ["Almost no engineers", "#d8745c"];
 }
 
 /* ---- engRenderSection: the Engineering Works block, appended below the Cannon Corps. ---- */
@@ -182,7 +182,7 @@ function engRenderSection(C) {
       + '<div style="height:6px;background:rgba(0,0,0,.25);border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin:5px 0"><div style="height:100%;width:' + pct + '%;background:#6f9e5a"></div></div>'
       + '<div style="font-size:11px;opacity:.85">Now: <b>' + _engEsc(curName) + '</b></div>'
       + '<div style="font-size:11px;opacity:.78;margin:4px 0">' + _engEsc(b.flavor || '') + '</div>';
-    if (atMax) cards += '<div style="font-size:11px;color:#4a6b3a">At full capability.</div>';
+    if (atMax) cards += '<div style="font-size:11px;color:#6f9e5a">At full capability.</div>';
     else cards += '<div class="btn-row" style="margin-top:4px"><button class="upg" data-engbuy="' + _engEsc(b.id) + '" style="padding:2px 8px;font-size:11px">Raise to ' + _engEsc(names[cur + 1] != null ? names[cur + 1] : ('level ' + (cur + 1))) + ' &middot; $' + nextCost + '</button></div>';
     cards += '</div>';
   }

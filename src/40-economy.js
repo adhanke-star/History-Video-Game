@@ -144,11 +144,11 @@ function econOnResolve(winnerSide, type, B, C, win) {
 
 /* Status word for an inflation multiplier. */
 function _ecInflStatus(m) {
-  if (m < 1.5) return ["Stable", "#4a6b3a"];
+  if (m < 1.5) return ["Stable", "#65974f"];
   if (m < 3)   return ["Rising", "#b8863b"];
   if (m < 10)  return ["Severe", "#c9712e"];
-  if (m < 30)  return ["Critical", "#9c3b2e"];
-  return ["Collapsing", "#7a241b"];
+  if (m < 30)  return ["Critical", "#d56760"];
+  return ["Collapsing", "#d8706b"];
 }
 
 /* ---- econRenderFinance: the Treasury tab. ---- */
@@ -161,8 +161,8 @@ function econRenderFinance(C) {
     var pct = Math.round((frac || 0) * 100);
     var ctrl = E.delegated ? '' :
       '<span style="margin-left:8px">'
-      + '<button class="upg" data-eclever="' + key + '" data-ecdir="-1" style="padding:1px 7px">&minus;</button> '
-      + '<button class="upg" data-eclever="' + key + '" data-ecdir="1" style="padding:1px 7px">+</button></span>';
+      + '<button class="upg" data-eclever="' + key + '" data-ecdir="-1" aria-label="Decrease ' + label + '" style="padding:1px 7px">&minus;</button> '
+      + '<button class="upg" data-eclever="' + key + '" data-ecdir="1" aria-label="Increase ' + label + '" style="padding:1px 7px">+</button></span>';
     return '<div style="margin:6px 0">'
       + '<div style="display:flex;justify-content:space-between;font-size:13px"><span>' + label + ctrl + '</span><span style="font-weight:bold">' + pct + '%</span></div>'
       + '<div style="height:8px;background:rgba(0,0,0,.25);border:1px solid var(--rule);border-radius:3px;overflow:hidden"><div style="height:100%;width:' + pct + '%;background:#8a6d2f"></div></div>'
@@ -192,7 +192,7 @@ function econRenderFinance(C) {
     + ltHtml
     + '<div class="btn-row" style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">'
     +   '<button id="ecDelegate" type="button" class="upg">' + (E.delegated ? 'Take personal control' : 'Delegate to Sec. ' + sec) + '</button>'
-    +   '<button id="ecWhy" type="button" class="upg">Why it mattered</button>'
+    +   '<button id="ecWhy" type="button" class="upg" aria-expanded="false" aria-controls="ecWhyBox">Why it mattered</button>'
     + '</div>'
     + '<div id="ecWhyBox" style="display:none;margin-top:10px;padding:10px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.12);font-size:12px"></div>';
 }
@@ -228,6 +228,7 @@ function econWireFinance(C) {
     if (!box) return;
     if (box.style.display === "none") { box.innerHTML = _ecWhyText(C); box.style.display = "block"; }
     else box.style.display = "none";
+    why.setAttribute("aria-expanded", box.style.display !== "none" ? "true" : "false");
   });
   if (!E.delegated) {
     var btns = document.querySelectorAll('[data-eclever]');
