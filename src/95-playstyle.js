@@ -198,6 +198,15 @@ function _psPanelHTML(ctx) {
         (ctx === "menu"
           ? '<button id="psDisplay" type="button" class="upg" aria-label="Open display, motion and sound settings" style="min-width:70px">Open&hellip;</button>'
           : '<span style="font-size:11px;opacity:.7;color:#e9dcc0">main menu &middot; Settings</span>'));
+  // E3-i1 (D125): a guarded hand-off to the dedicated Accessibility hub (97-accessibility);
+  // "" when the module is absent -> byte-identical row set.
+  if (typeof a11yOpenMenu === "function") {
+    sec2 += _psRow("Accessibility",
+      "high contrast, dyslexia-friendly text, colour-blind safe cues &amp; screen-reader narration",
+      (ctx === "menu"
+        ? '<button id="psA11y" type="button" class="upg" aria-label="Open the Accessibility settings hub" style="min-width:70px">Open&hellip;</button>'
+        : '<span style="font-size:11px;opacity:.7;color:#e9dcc0">main menu &middot; &#9855; Accessibility</span>'));
+  }
   if (ctx === "menu" && tac) {
     sec2 += '<div style="font-size:11px;opacity:.7;margin-top:2px;color:#e9dcc0">Battlefield now: <b>' + tac + '</b>.</div>';
   }
@@ -242,6 +251,8 @@ function _psWire(ctx) {
     if (bf) bf.addEventListener("click", function () { if (typeof fldPresetMenu === "function") fldPresetMenu("menu"); });
     var dp = document.getElementById("psDisplay");
     if (dp) dp.addEventListener("click", function () { if (typeof openSettings === "function") openSettings(); });
+    var a11 = document.getElementById("psA11y");
+    if (a11) a11.addEventListener("click", function () { if (typeof a11yOpenMenu === "function") a11yOpenMenu(); });
     var bk = document.getElementById("psBack");
     if (bk) bk.addEventListener("click", function () { if (typeof openMainMenu === "function") openMainMenu(); });
   }

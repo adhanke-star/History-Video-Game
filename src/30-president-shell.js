@@ -194,6 +194,9 @@ function _pdShowTurnInterstitial() {
   if (typeof presInit === "function") presInit(C);
   if (typeof openSheet !== "function") { _pdTurnAck = false; if (typeof openUpgrade === "function") openUpgrade(); return; }
   openSheet(_pdInterstitialHTML(C));
+  // E3-i1 (D125): announce the strategic turn to assistive tech via the accessibility
+  // live region (typeof-guarded; no-op when 97-accessibility is absent or narration is off).
+  if (typeof a11yAnnounceTurn === "function") a11yAnnounceTurn(C);
   // E4-i2 (D119): the strategic war-END offer — conclude the war by a negotiated peace /
   // a recognized independence (the graded final report via the warWonScreen override).
   var conclude = document.getElementById("pdConcludeWar");
