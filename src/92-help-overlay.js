@@ -50,11 +50,18 @@ function _hpShowWelcome() {
       'Click <em>"Federal Armies Muster for War"</em> for a Union campaign, or use the tactical battle buttons for ' +
       'First Bull Run, Malvern Hill, Antietam, Fredericksburg, Chancellorsville, Gettysburg, Shiloh, Vicksburg, or Chickamauga. The Skirmish button opens a custom real-time fight.</p>' +
     '<p style="font-size:12px;opacity:.65;margin-bottom:14px">Press <kbd style="padding:1px 5px;border:1px solid var(--rule);border-radius:3px;font-size:11px">?</kbd> anytime for controls help.</p>' +
-    '<div class="btn-row">' +
-      '<button class="bigbtn" id="hpWelcomeOk" aria-label="Got it — proceed to the main menu">To the Field</button>' +
+    '<div class="btn-row" style="gap:10px;flex-wrap:wrap;justify-content:center">' +
+      '<button class="bigbtn" id="hpWelcomeTour" aria-label="Take the guided tour of the game">&#9733; Take the Guided Tour</button>' +
+      '<button class="bigbtn" id="hpWelcomeOk" aria-label="Skip the tour and proceed to the main menu">To the Field</button>' +
     '</div>';
 
   openSheet(html);
+  var tour = document.getElementById("hpWelcomeTour");
+  if (tour) tour.addEventListener("click", function () {
+    try { localStorage.setItem(_HP_WELCOMED_KEY, "1"); } catch (e) {}
+    if (typeof openMainMenu === "function") openMainMenu();
+    if (typeof tutStart === "function") tutStart();   // the z100001 modal covers the menu immediately — no interactive gap (TUT-DOM-03)
+  });
   var btn = document.getElementById("hpWelcomeOk");
   if (btn) btn.addEventListener("click", function () {
     try { localStorage.setItem(_HP_WELCOMED_KEY, "1"); } catch (e) {}
@@ -123,11 +130,17 @@ function _hpShowHelp() {
       '<div style="margin-bottom:4px">&bull; <strong>Save slots</strong> (main menu) let two players keep separate campaigns.</div>' +
     '</div>' +
 
-    '<div class="btn-row" style="margin-top:14px">' +
+    '<div class="btn-row" style="margin-top:14px;gap:10px;flex-wrap:wrap">' +
+      '<button class="bigbtn" id="hpHelpTour" aria-label="Start the guided tour">&#9733; Guided Tour</button>' +
       '<button class="bigbtn" id="hpHelpBack" aria-label="Return to menu">Back</button>' +
     '</div>';
 
   openSheet(html);
+  var tourBtn = document.getElementById("hpHelpTour");
+  if (tourBtn) tourBtn.addEventListener("click", function () {
+    if (typeof openMainMenu === "function") openMainMenu();
+    if (typeof tutStart === "function") tutStart();   // (TUT-DOM-03) no interactive pre-mount gap
+  });
   var btn = document.getElementById("hpHelpBack");
   if (btn) btn.addEventListener("click", function () {
     if (typeof openMainMenu === "function") openMainMenu();
@@ -229,6 +242,8 @@ function _hpUpdatePause() {
 (function () {
   document.addEventListener("keydown", function (e) {
     if (e.key === "?" || (e.key === "/" && e.shiftKey)) {
+      /* The guided tour is a modal — don't stack the How-to-Play sheet behind it (TUT-DOM-01). */
+      if (typeof document !== "undefined" && document.getElementById("tutOverlay")) return;
       /* In tactical battle → show tactical overlay */
       if (__FIELD && __FIELD.launched && __FIELD.phase !== "idle") {
         _hpShowTacticalHelp();
@@ -266,6 +281,17 @@ function _hpUpdatePause() {
         btn.style.marginTop = "10px";
         col3.parentNode.appendChild(btn);
         btn.addEventListener("click", function () { _hpShowHelp(); });
+        // E2-i3 (D121): the guided tour, alongside How-to-Play
+        var tbtn = document.createElement("button");
+        tbtn.className = "gn-btn";
+        tbtn.id = "gnTour";
+        tbtn.setAttribute("aria-label", "Guided Tour — a one-minute orientation to all three layers");
+        tbtn.innerHTML =
+          '<span class="gn-hl">&#9733; GUIDED TOUR</span>' +
+          '<span class="gn-deck">A one-minute orientation: the President\'s Desk, the battles, and the Codex.</span>';
+        tbtn.style.marginTop = "8px";
+        col3.parentNode.appendChild(tbtn);
+        tbtn.addEventListener("click", function () { if (typeof tutStart === "function") tutStart(); });
         installed = true;
         return;
       }

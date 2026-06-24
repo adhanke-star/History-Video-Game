@@ -148,8 +148,13 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       DERIVED SURFACES (strip "The"/"(...)", extract acronyms like USCT, + 3 bare-form aliases) so prose forms match; the
       def rides each trigger's aria-label (SR on focus; tooltip aria-hidden). Pure read-out, guarded `_wdRefresh` hook →
       battles byte-identical. probe-glossary 12/12 (+static-scan); OFFLINE 26-agent bug-hunt fixed a real word-boundary bug
-      (parenthetical terms were dead matchers) + 15 more, all probe-locked; wcag AA. ⚠ committed LOCALLY, push HELD
-      (Aaron paused internet mid-run).›
+      (parenthetical terms were dead matchers) + 15 more, all probe-locked; wcag AA.›
+      ‹✅ increment 3 (D122): the **GUIDED TUTORIAL** — `src/94-tutorial.js`, a self-contained 7-step modal tour
+      (the three layers · the Desk · Decisions · Battles · the Codex & glossary · Winning · Play Your Way) with
+      Back/Next/Skip, a focus trap, ARIA dialog semantics, reduce-motion-safe fade; launched from the welcome card,
+      the How-to-Play panel, and a main-menu "GUIDED TOUR" button (3 guarded hooks in `src/92-help-overlay.js`). Pure
+      UI/help layer → battles byte-identical. probe-tutorial 15/15 (+static-scan); 14-agent bug-hunt invariantsHold
+      =FALSE→fixed (a real forward-Tab focus-trap defect + the "?"-behind-modal leak + 4 more), all probe-locked; wcag AA.›
 - [ ] **E3 S4 accessibility:** the dedicated FULL WCAG 2.2 AA pass + the 4 a11y modes (high-contrast, CVD-safe,
       SR turn/battle narration, dyslexia font) — your professional bar.
 - [x] **E4 S5 victory:** multiple honest paths incl. negotiated peace + the rich graded after-action report +

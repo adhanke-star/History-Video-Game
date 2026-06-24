@@ -47,7 +47,8 @@
     "90-president-register.js",
     "91-save-slots.js",
     "92-help-overlay.js",
-    "93-glossary.js"
+    "93-glossary.js",
+    "94-tutorial.js"
   ],
   "overrides": [
     "_t1InitAll",
