@@ -142,6 +142,14 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       verify pass caught + fixed a fabricated artillery cite and the Forrest-founded-the-Klan error → "first Grand Wizard").
       probe-codex 18/18 (incl. a static-scan that no combat path reads the codex); 26-agent bug-hunt invariantsHold=TRUE,
       16 LOW/MED findings all fixed + probe-locked; wcag-auditor AA (2 contrast spans fixed).›
+      ‹✅ increment 2 (D121): the **INLINE GLOSSARY** — `src/93-glossary.js` DOM-decorates the teaching prose of the
+      After-Action + Your-War-vs-History tabs, wrapping codex terms in accessible inline `<button>` triggers (dotted brass
+      underline) + a shared tooltip; reads the SAME codex data (`cxGlossaryIndex`/`cxLookupShort`). Matchers built from
+      DERIVED SURFACES (strip "The"/"(...)", extract acronyms like USCT, + 3 bare-form aliases) so prose forms match; the
+      def rides each trigger's aria-label (SR on focus; tooltip aria-hidden). Pure read-out, guarded `_wdRefresh` hook →
+      battles byte-identical. probe-glossary 12/12 (+static-scan); OFFLINE 26-agent bug-hunt fixed a real word-boundary bug
+      (parenthetical terms were dead matchers) + 15 more, all probe-locked; wcag AA. ⚠ committed LOCALLY, push HELD
+      (Aaron paused internet mid-run).›
 - [ ] **E3 S4 accessibility:** the dedicated FULL WCAG 2.2 AA pass + the 4 a11y modes (high-contrast, CVD-safe,
       SR turn/battle narration, dyslexia font) — your professional bar.
 - [x] **E4 S5 victory:** multiple honest paths incl. negotiated peace + the rich graded after-action report +

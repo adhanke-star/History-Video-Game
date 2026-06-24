@@ -876,6 +876,10 @@
       "sources": [
         "James M. McPherson, Battle Cry of Freedom: The Civil War Era (Oxford University Press, 1988)",
         "American Battlefield Trust, \"The Enrollment Act / Civil War Conscription,\" https://www.battlefields.org/learn/articles/civil-war-conscription-and-draft"
+      ],
+      "aliases": [
+        "conscription",
+        "the draft"
       ]
     },
     {
@@ -1185,6 +1189,11 @@
         "Encyclopedia Virginia, 'Anaconda Plan' (encyclopediavirginia.org/entries/anaconda-plan/)",
         "James M. McPherson, Battle Cry of Freedom: The Civil War Era (Oxford University Press, 1988)",
         "U.S. Naval Institute, 'Economic Warfare: The Union Blockade in the Civil War,' Naval History Magazine, Oct. 2021 (usni.org)"
+      ],
+      "aliases": [
+        "blockade",
+        "Union blockade",
+        "Anaconda Plan"
       ]
     },
     {
@@ -1233,6 +1242,9 @@
         "National Archives, \"The Emancipation Proclamation,\" https://www.archives.gov/exhibits/featured-documents/emancipation-proclamation",
         "Eric Foner, The Fiery Trial: Abraham Lincoln and American Slavery (W. W. Norton, 2010)",
         "American Battlefield Trust, \"Emancipation Proclamation,\" https://www.battlefields.org/learn/primary-sources/emancipation-proclamation"
+      ],
+      "aliases": [
+        "emancipation"
       ]
     },
     {

@@ -118,6 +118,12 @@ function _wdRefresh() {
     if (b) b.style.opacity = (tabs[i] === _wdTab) ? "1" : "0.55";
   }
   if (wire) { try { wire(C); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_wdRefresh wire (" + _wdTab + "):", e); } }
+  // E2-i2 (D120): the INLINE GLOSSARY — decorate the read-only teaching prose with
+  // hover/tap codex definitions. Guarded + scoped to the pure-readout teaching tabs
+  // (no interactive controls to interfere with); byte-identical when glDecorate is absent.
+  if (typeof glDecorate === "function" && (_wdTab === "afteraction" || _wdTab === "warvshistory")) {
+    try { if (cont.removeAttribute) cont.removeAttribute("data-gl-done"); glDecorate(cont); } catch (e) {}   // cont is reused across refreshes with fresh innerHTML — clear the once-guard so each render re-decorates
+  }
 }
 
 /* ---- openWarDept OVERRIDE: the President's Desk (expand-in-place). ---- */
