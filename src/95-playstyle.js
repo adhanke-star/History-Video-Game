@@ -201,6 +201,13 @@ function _psPanelHTML(ctx) {
   if (ctx === "menu" && tac) {
     sec2 += '<div style="font-size:11px;opacity:.7;margin-top:2px;color:#e9dcc0">Battlefield now: <b>' + tac + '</b>.</div>';
   }
+  // E2-i5 (D124): a guarded historical teaching read-out of the current realism level
+  // (pure read-out, owned by 96-realism-teaching; "" when unavailable -> no change).
+  if (typeof rtmHubReadout === "function") {
+    var _rtmCfg = (typeof fldPresetResolve === "function" ? fldPresetResolve() : null) || (typeof fldPresetNeutral === "function" ? fldPresetNeutral() : null);
+    var _rtmRO = _rtmCfg ? rtmHubReadout(_rtmCfg) : "";
+    if (_rtmRO) sec2 += _rtmRO;
+  }
   sec2 += '</div>';
 
   var footer = "";

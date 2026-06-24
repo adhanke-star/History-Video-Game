@@ -176,7 +176,7 @@ var _fldPresetState = null;   // { ai, realism, lv:{...}, advanced, returnTo }
 function _fldPresetInitState(returnTo) {
   var c = fldPresetResolve() || fldPresetNeutral();
   _fldPresetState = {
-    ai: c.ai || "veteran", realism: c.realism || "balanced", advanced: false, returnTo: returnTo || "menu",
+    ai: c.ai || "veteran", realism: c.realism || "balanced", advanced: false, teach: false, returnTo: returnTo || "menu",
     lv: { attrition: c.attrition, canister: c.canister, supply: c.supply, cmdShock: c.cmdShock, sight: c.sight,
       veteran: c.veteran, aiSkill: c.aiSkill, aiResolve: c.aiResolve, aiCushion: c.aiCushion,
       fog: c.fog || "scenario", autoPause: c.autoPause },
@@ -244,6 +244,16 @@ function _fldPresetHTML() {
     }
     adv += '</div></div></div>';
   }
+  // E2-i5 (D124): the "what this costs in real life" historical teaching expander, rendered by the
+  // pure-readout 96-realism-teaching module. typeof-guarded so the picker is byte-identical without it.
+  var teach = "";
+  if (s.teach && typeof rtmRealismExpanderHTML === "function") {
+    teach = rtmRealismExpanderHTML({ realism: s.realism, attrition: s.lv.attrition, canister: s.lv.canister,
+      supply: s.lv.supply, cmdShock: s.lv.cmdShock, sight: s.lv.sight, veteran: s.lv.veteran, aiSkill: s.lv.aiSkill, fog: s.lv.fog });
+  }
+  var teachBtn = (typeof rtmRealismExpanderHTML === "function")
+    ? '<button id="pvTeach" type="button" class="upg" aria-expanded="' + (s.teach ? "true" : "false") + '" aria-controls="rtmTeach">' + (s.teach ? "&#9662; Hide the real cost" : "&#9656; What this costs in real life") + '</button>'
+    : "";
   return ''
     + '<h1 class="title-xl" style="text-align:center">Command &amp; Realism</h1>'
     + '<p class="title-sub" style="text-align:center">Set the opponent’s skill and how unforgiving the field is. The AI never cheats &mdash; harder means it decides sharper, not that it is handed an advantage. New to the field? <b>Recruit &times; Arcade</b>.</p>'
@@ -252,9 +262,11 @@ function _fldPresetHTML() {
     + '<div style="display:flex;gap:18px;flex-wrap:wrap">' + aiCol + rmCol + '</div>'
     + '<div style="margin-top:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">'
     +   '<button id="pvAdv" type="button" class="upg" aria-expanded="' + (s.advanced ? "true" : "false") + '">' + (s.advanced ? "&#9662; Hide advanced levers" : "&#9656; Advanced levers") + '</button>'
+    +   teachBtn
     +   '<span style="font-size:12px;opacity:.85">Selected: <b id="pvSummary">' + _fldPresetSummaryLine() + '</b></span>'
     + '</div>'
     + adv
+    + teach
     + '<div class="btn-row" style="margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">'
     +   '<button id="pvBack" type="button" class="upg">Back</button>'
     +   '<button id="pvReset" type="button" class="upg">Reset to shipped (Veteran &times; Balanced)</button>'
@@ -290,6 +302,8 @@ function _fldPresetWire() {
   }
   var adv = document.getElementById("pvAdv");
   if (adv) adv.addEventListener("click", function () { _fldPresetState.advanced = !_fldPresetState.advanced; _fldPresetRerender("#pvAdv"); });
+  var teach = document.getElementById("pvTeach");
+  if (teach) teach.addEventListener("click", function () { _fldPresetState.teach = !_fldPresetState.teach; _fldPresetRerender("#pvTeach"); });
   var back = document.getElementById("pvBack");
   if (back) back.addEventListener("click", function () { _fldPresetReturn(); });
   var reset = document.getElementById("pvReset");
