@@ -140,14 +140,20 @@ const SETUP = `(() => {
       var btn=document.getElementById('pvTeach');
       if(!btn) throw new Error('no #pvTeach button in the picker');
       if(btn.getAttribute('aria-expanded')!=='false') throw new Error('pvTeach should start collapsed');
-      if(btn.getAttribute('aria-controls')!=='rtmTeach') throw new Error('pvTeach missing aria-controls=rtmTeach');
       if(document.getElementById('rtmTeach')) throw new Error('#rtmTeach present before opening');
+      // bug-hunt I5-1 (D124 follow-up): while collapsed, #rtmTeach is NOT in the DOM, so #pvTeach must
+      // NOT advertise aria-controls=rtmTeach (a dangling IDREF — WCAG 4.1.2/1.3.1). It may only carry it
+      // once the target exists (open state). aria-expanded carries collapsed/expanded in both states.
+      if(btn.getAttribute('aria-controls')) throw new Error('pvTeach has a dangling aria-controls while collapsed (#rtmTeach absent)');
       btn.click();
       if(!document.getElementById('rtmTeach')) throw new Error('#rtmTeach not shown after click');
       var btn2=document.getElementById('pvTeach');
       if(!btn2||btn2.getAttribute('aria-expanded')!=='true') throw new Error('pvTeach aria-expanded not true after open');
+      if(btn2.getAttribute('aria-controls')!=='rtmTeach') throw new Error('pvTeach must carry aria-controls=rtmTeach once #rtmTeach is in the DOM (open)');
       btn2.click();
       if(document.getElementById('rtmTeach')) throw new Error('#rtmTeach not hidden after second click');
+      var btn3=document.getElementById('pvTeach');
+      if(btn3&&btn3.getAttribute('aria-controls')) throw new Error('pvTeach aria-controls should be dropped again after re-collapse');
       return { ok:true }; });
 
     step('PURITY (spy): render never calls Math.random nor writes G/combat knob/localStorage', function(){

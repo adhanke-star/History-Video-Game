@@ -251,8 +251,12 @@ function _fldPresetHTML() {
     teach = rtmRealismExpanderHTML({ realism: s.realism, attrition: s.lv.attrition, canister: s.lv.canister,
       supply: s.lv.supply, cmdShock: s.lv.cmdShock, sight: s.lv.sight, veteran: s.lv.veteran, aiSkill: s.lv.aiSkill, fog: s.lv.fog });
   }
+  // bug-hunt I5-1 (D124 follow-up): aria-controls is emitted ONLY when the expander is open, because
+  // #rtmTeach (its IDREF target, produced solely by rtmRealismExpanderHTML) is absent from the rebuilt
+  // DOM in the default collapsed state — a dangling IDREF otherwise (WCAG 4.1.2 / 1.3.1). aria-expanded
+  // still announces collapsed/expanded in both states. Mirrors the sibling #pvAdv (no aria-controls).
   var teachBtn = (typeof rtmRealismExpanderHTML === "function")
-    ? '<button id="pvTeach" type="button" class="upg" aria-expanded="' + (s.teach ? "true" : "false") + '" aria-controls="rtmTeach">' + (s.teach ? "&#9662; Hide the real cost" : "&#9656; What this costs in real life") + '</button>'
+    ? '<button id="pvTeach" type="button" class="upg" aria-expanded="' + (s.teach ? "true" : "false") + '"' + (s.teach ? ' aria-controls="rtmTeach"' : '') + '>' + (s.teach ? "&#9662; Hide the real cost" : "&#9656; What this costs in real life") + '</button>'
     : "";
   return ''
     + '<h1 class="title-xl" style="text-align:center">Command &amp; Realism</h1>'
