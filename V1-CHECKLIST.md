@@ -134,7 +134,7 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       ‹✅ the divergence-log read-back landed in the E4 graded after-action report (D112).››
 - [ ] **E2 S4 education:** multi-axis codex + inline glossary + the full guided tutorial + play-style presets
       (President / General-Commander, + the Historian settings overlay — D39) + difficulty/realism sliders.
-      ‹build order (D120): i1 codex DATA+tab → i2 inline glossary → i3 tutorial → i4 presets+Historian overlay → i5 sliders.›
+      ‹build order (D120): i1 codex DATA+tab ✅ → i2 inline glossary ✅ → i3 tutorial ✅ → i4 presets+Historian overlay ✅ (D123) → **i5 sliders ‹▶ NEXT›**.›
       ‹✅ increment 1 (D120): the multi-axis **CODEX/glossary** — `data/codex.json` (60 citation-grade, anti-Lost-Cause
       entries across 4 axes: people 24 · units 11 · terms 19 · systems 6; all Verified, ≥2 real sources) + a searchable,
       axis-filterable, cross-linked **Codex** President's-Desk tab (`src/84-codex.js`, pure read-out → battles byte-identical)

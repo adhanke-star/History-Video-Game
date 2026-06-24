@@ -48,7 +48,8 @@
     "91-save-slots.js",
     "92-help-overlay.js",
     "93-glossary.js",
-    "94-tutorial.js"
+    "94-tutorial.js",
+    "95-playstyle.js"
   ],
   "overrides": [
     "_t1InitAll",

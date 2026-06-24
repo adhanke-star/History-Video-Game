@@ -262,9 +262,12 @@ function _hpUpdatePause() {
 /* ============ MAIN-MENU INJECTION (MutationObserver) ============ */
 (function () {
   if (typeof MutationObserver === "undefined") return;
-  var installed = false;
+  // bug-hunt (E2-i4): drop the one-shot `installed` latch — the main menu is REBUILT on every
+  // openMainMenu, so a latched observer never re-injects and How-to-Play + Guided Tour vanish
+  // after the first menu render. Dedupe by LIVE DOM (#gnHelp) + re-inject on every qualifying
+  // mutation (the canonical fldInjectMenuButton pattern), so the buttons survive menu rebuilds.
   var obs = new MutationObserver(function (muts) {
-    if (installed) return;
+    if (document.getElementById("gnHelp")) return;   // already present — dedupe by live DOM
     for (var i = 0; i < muts.length; i++) {
       for (var j = 0; j < muts[i].addedNodes.length; j++) {
         var node = muts[i].addedNodes[j];
@@ -292,7 +295,6 @@ function _hpUpdatePause() {
         tbtn.style.marginTop = "8px";
         col3.parentNode.appendChild(tbtn);
         tbtn.addEventListener("click", function () { if (typeof tutStart === "function") tutStart(); });
-        installed = true;
         return;
       }
     }

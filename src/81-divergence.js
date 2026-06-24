@@ -295,7 +295,11 @@ function divRenderTab(C) {
   return head + idxPanel + togPanel + ledger + endings + foot;
 }
 
-/* ---- divWireTab(C): the emergent-only toggle handler (the ONLY writer). ---- */
+/* ---- divWireTab(C): the divergence-tab emergent-only toggle handler. One of TWO surfaces
+   for G.settings.altHistoryEmergentOnly — the play-style hub (src/95-playstyle.js) is the
+   other. Keep the play-style hub's pre-campaign localStorage bundle in sync here too, so a
+   toggle from either surface agrees on the pre-campaign default (typeof-guarded -> independent
+   of 95-playstyle's presence/load order; _psPersist is null-safe). ---- */
 function divWireTab(C) {
   var b = (typeof document !== "undefined") ? document.getElementById("divEmergentToggle") : null;
   if (!b) return;
@@ -303,6 +307,7 @@ function divWireTab(C) {
     if (!G.settings || typeof G.settings !== "object") G.settings = {};
     G.settings.altHistoryEmergentOnly = !G.settings.altHistoryEmergentOnly;
     if (typeof saveLocal === "function") saveLocal();
+    if (typeof _psPersist === "function") _psPersist();   // keep the play-style hub's cw_playstyle pre-campaign default in sync
     if (typeof _wdRefresh === "function") _wdRefresh();
   });
 }

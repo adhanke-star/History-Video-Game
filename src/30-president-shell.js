@@ -80,6 +80,9 @@ function _wdRefresh() {
   } else if (_wdTab === "codex") {
     html = (typeof codexRenderTab === "function") ? codexRenderTab(C) : "";
     wire = (typeof codexWireTab === "function") ? codexWireTab : null;
+  } else if (_wdTab === "playstyle") {
+    html = (typeof psRenderTab === "function") ? psRenderTab(C) : "";
+    wire = (typeof psWireTab === "function") ? psWireTab : null;
   } else if (_wdTab === "armory") {
     html = (typeof armoryRenderArmory === "function") ? armoryRenderArmory(C) : "";
     if (typeof artRenderSection === "function") html += artRenderSection(C);   // A1: Cannon Corps appended below the small arms
@@ -112,7 +115,7 @@ function _wdRefresh() {
     wire = null;
   }
   cont.innerHTML = html || '<p class="lede" style="text-align:center;opacity:0.7">This office is not yet staffed.</p>';
-  var tabs = ["economy", "treasury", "diplomacy", "victory", "warvshistory", "afteraction", "codex", "armory", "warroom", "clock", "muster", "cabinet", "command", "camp", "decisions", "press", "map"];
+  var tabs = ["economy", "treasury", "diplomacy", "victory", "warvshistory", "afteraction", "codex", "playstyle", "armory", "warroom", "clock", "muster", "cabinet", "command", "camp", "decisions", "press", "map"];
   for (var i = 0; i < tabs.length; i++) {
     var b = document.getElementById("wdTab_" + tabs[i]);
     if (b) b.style.opacity = (tabs[i] === _wdTab) ? "1" : "0.55";
@@ -139,7 +142,9 @@ function openWarDept() {
   if (typeof _t1InitAll === "function") _t1InitAll(C);   // inits clock/muster/warroom AND president
   if (typeof presInit === "function") presInit(C);
   C.president.onboarded = true;                          // layered-onboarding flag (§10/§23)
-  _wdTab = "economy";                                    // land on the President's overview
+  // E2-i4 (D123): the play-style preset chooses the desk's default landing tab (a PURE-UI
+  // consumer); unset / module-absent -> "economy" (the shipped overview) -> byte-identical.
+  _wdTab = (typeof psDefaultDeskTab === "function") ? psDefaultDeskTab() : "economy";
   var head = C.president.head || {};
   var html =
     '<h1 class="title-xl" style="text-align:center">The President\'s Desk</h1>' +
@@ -154,6 +159,7 @@ function openWarDept() {
       _wdTabBtn("warvshistory", "Your War vs History") +
       _wdTabBtn("afteraction", "After-Action") +
       _wdTabBtn("codex", "Codex") +
+      _wdTabBtn("playstyle", "Play Style") +
       _wdTabBtn("armory", "The Armory") +
       _wdTabBtn("warroom", "War Room") +
       _wdTabBtn("clock", "1864 Clock") +
@@ -174,7 +180,7 @@ function openWarDept() {
     if (_pdAfterDeskClose) { var cb = _pdAfterDeskClose; _pdAfterDeskClose = null; cb(); }
     else if (typeof closeSheet === "function") closeSheet();
   });
-  ["economy", "treasury", "diplomacy", "victory", "warvshistory", "afteraction", "codex", "armory", "warroom", "clock", "muster", "cabinet", "command", "camp", "decisions", "press", "map"].forEach(function (k) {
+  ["economy", "treasury", "diplomacy", "victory", "warvshistory", "afteraction", "codex", "playstyle", "armory", "warroom", "clock", "muster", "cabinet", "command", "camp", "decisions", "press", "map"].forEach(function (k) {
     var b = document.getElementById("wdTab_" + k);
     if (b) b.addEventListener("click", function () { _wdTab = k; _wdRefresh(); });
   });
