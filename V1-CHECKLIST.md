@@ -134,6 +134,14 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       ‹✅ the divergence-log read-back landed in the E4 graded after-action report (D112).››
 - [ ] **E2 S4 education:** multi-axis codex + inline glossary + the full guided tutorial + play-style presets
       (President / General-Commander, + the Historian settings overlay — D39) + difficulty/realism sliders.
+      ‹build order (D120): i1 codex DATA+tab → i2 inline glossary → i3 tutorial → i4 presets+Historian overlay → i5 sliders.›
+      ‹✅ increment 1 (D120): the multi-axis **CODEX/glossary** — `data/codex.json` (60 citation-grade, anti-Lost-Cause
+      entries across 4 axes: people 24 · units 11 · terms 19 · systems 6; all Verified, ≥2 real sources) + a searchable,
+      axis-filterable, cross-linked **Codex** President's-Desk tab (`src/84-codex.js`, pure read-out → battles byte-identical)
+      + `cxLookupShort`/`cxGlossaryIndex` for the i2 inline glossary. Content via a 14-agent research+verify Workflow (the
+      verify pass caught + fixed a fabricated artillery cite and the Forrest-founded-the-Klan error → "first Grand Wizard").
+      probe-codex 18/18 (incl. a static-scan that no combat path reads the codex); 26-agent bug-hunt invariantsHold=TRUE,
+      16 LOW/MED findings all fixed + probe-locked; wcag-auditor AA (2 contrast spans fixed).›
 - [ ] **E3 S4 accessibility:** the dedicated FULL WCAG 2.2 AA pass + the 4 a11y modes (high-contrast, CVD-safe,
       SR turn/battle narration, dyslexia font) — your professional bar.
 - [x] **E4 S5 victory:** multiple honest paths incl. negotiated peace + the rich graded after-action report +

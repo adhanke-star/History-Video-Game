@@ -1,0 +1,1459 @@
+{
+  "_meta": {
+    "version": 1,
+    "system": "E2 S4 education — the multi-axis CODEX / glossary (DECISIONS D120). Pure-data reference; read by src/84-codex.js (the desk tab) and cxLookupShort (the E2-i2 inline glossary). Mirrors data/decisions.json's pattern: citation-grade, anti-Lost-Cause, >=2 sources = Verified else Inferred/Disputed. The >=2-source-for-Verified rule is enforced structurally by tools/build.mjs over every data/*.json.",
+    "note": "Entries authored + adversarially verified by the codex-content-research workflow (Opus historians + adversarial fact-checkers, WebSearch-grounded). axis in {people, units, terms, systems}. 'short' is the <=140-char inline-glossary tooltip; 'body' is the teaching prose; 'related' are cross-link entry ids (only resolvable ids render). A living reference designed to grow over later passes.",
+    "fields": "id | axis | term | short | body | tags[] | related[] | provenance | sources[]"
+  },
+  "axes": [
+    {
+      "id": "people",
+      "label": "People",
+      "col": "#cbb27a",
+      "blurb": "The commanders, statesmen, and reformers who shaped the war."
+    },
+    {
+      "id": "units",
+      "label": "Units & Formations",
+      "col": "#b9a4c9",
+      "blurb": "The armies, corps, and storied brigades that fought it."
+    },
+    {
+      "id": "terms",
+      "label": "Terms & Concepts",
+      "col": "#9fc3b0",
+      "blurb": "The vocabulary of the war — political, strategic, and tactical."
+    },
+    {
+      "id": "systems",
+      "label": "Systems of the War",
+      "col": "#d8b48a",
+      "blurb": "The systems this office commands, and the real history each models."
+    }
+  ],
+  "entries": [
+    {
+      "id": "abraham-lincoln",
+      "axis": "people",
+      "term": "Abraham Lincoln",
+      "short": "16th U.S. president; led the Union through the Civil War and issued the Emancipation Proclamation.",
+      "body": "Elected in 1860 as the first Republican president on a platform of halting slavery's expansion, Lincoln rejected the secession that eleven slaveholding states launched to protect human bondage. As commander in chief he defined the war's purpose, signing the Emancipation Proclamation effective January 1, 1863, and pressing for the Thirteenth Amendment that abolished slavery. He framed the conflict's stakes at Gettysburg and in his Second Inaugural, and was assassinated by John Wilkes Booth on April 14, 1865, days after Lee's surrender.",
+      "tags": [
+        "union",
+        "president",
+        "emancipation",
+        "leadership"
+      ],
+      "related": [
+        "ulysses-s-grant",
+        "edwin-m-stanton",
+        "william-h-seward"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Eric Foner, The Fiery Trial: Abraham Lincoln and American Slavery (W. W. Norton, 2010)",
+        "David Herbert Donald, Lincoln (Simon & Schuster, 1995)",
+        "Abraham Lincoln Papers, Library of Congress, https://www.loc.gov/collections/abraham-lincoln-papers/"
+      ]
+    },
+    {
+      "id": "alexander-h-stephens",
+      "axis": "people",
+      "term": "Alexander H. Stephens",
+      "short": "Confederate Vice President whose 1861 'Cornerstone Speech' declared slavery and Black inferiority the new nation's foundation.",
+      "body": "Alexander H. Stephens of Georgia served as vice president of the Confederacy and is best remembered for his extemporaneous 'Cornerstone Speech,' delivered in Savannah on March 21, 1861. In it he declared that the Confederacy's 'foundations are laid, its cornerstone rests, upon the great truth that the negro is not equal to the white man; that slavery, subordination to the superior race, is his natural and normal condition.' This speech is among the clearest primary-source refutations of the later 'Lost Cause' myth that the war was about tariffs or states' rights: the Confederacy's own vice president named slavery and white supremacy as the cause. Stephens spent his postwar career minimizing those words, but the documentary record stands.",
+      "tags": [
+        "confederate",
+        "politics",
+        "slavery",
+        "white-supremacy",
+        "lost-cause"
+      ],
+      "related": [
+        "jefferson-davis"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "American Battlefield Trust, 'Cornerstone Speech,' https://www.battlefields.org/learn/primary-sources/cornerstone-speech",
+        "Teaching American History, 'Corner Stone Speech,' https://teachingamericanhistory.org/document/the-corner-stone-speech/",
+        "Southern Poverty Law Center / Learning for Justice, '\"Cornerstone\" Speech,' https://www.learningforjustice.org/classroom-resources/texts/hard-history/cornerstone-speech"
+      ]
+    },
+    {
+      "id": "braxton-bragg",
+      "axis": "people",
+      "term": "Braxton Bragg",
+      "short": "Confederate commander of the Army of Tennessee, known for quarrels with subordinates and costly defeats at Chattanooga.",
+      "body": "Braxton Bragg, a Louisiana sugar planter who enslaved more than a hundred people, commanded the Confederacy's main western army, the Army of Tennessee, for much of 1862–63. He was a divisive, unpopular leader whose feuds with subordinates undermined his campaigns; his tactical near-win at Chickamauga in September 1863 was squandered, and his army was routed at Chattanooga that November. Removed from field command, he became a military adviser to his friend Jefferson Davis, and historians generally rank him among the Confederacy's least effective army commanders.",
+      "tags": [
+        "confederate",
+        "military",
+        "leadership",
+        "slavery",
+        "western-theater"
+      ],
+      "related": [
+        "jefferson-davis",
+        "patrick-cleburne",
+        "nathan-bedford-forrest"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Earl J. Hess, Braxton Bragg: The Most Hated Man of the Confederacy (University of North Carolina Press, 2016)",
+        "American Battlefield Trust, 'Braxton Bragg,' https://www.battlefields.org/learn/biographies/braxton-bragg",
+        "Encyclopedia Britannica, 'Braxton Bragg,' https://www.britannica.com/biography/Braxton-Bragg"
+      ]
+    },
+    {
+      "id": "clara-barton",
+      "axis": "people",
+      "term": "Clara Barton",
+      "short": "Civil War nurse called the \"Angel of the Battlefield\"; later founded the American Red Cross in 1881.",
+      "body": "Clara Barton, a former teacher and U.S. Patent Office clerk, organized and personally delivered medical supplies to the front, tending the wounded at Antietam, Fredericksburg, and other battles, which earned her the name \"Angel of the Battlefield.\" After the war she ran the Office of Missing Soldiers, identifying thousands of the dead, including Union graves at the Andersonville prison camp. In 1881 she founded the American Red Cross and led it for over two decades, helping secure U.S. ratification of the Geneva Conventions.",
+      "tags": [
+        "union",
+        "home-front",
+        "medicine",
+        "women",
+        "humanitarian"
+      ],
+      "related": [
+        "dorothea-dix",
+        "mary-edwards-walker",
+        "harriet-tubman"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "American Red Cross, \"About Clara Barton,\" https://www.redcross.org/about-us/who-we-are/history/clara-barton.html",
+        "National Park Service, \"Clara Barton,\" https://www.nps.gov/people/clara-barton.htm",
+        "Stephen B. Oates, A Woman of Valor: Clara Barton and the Civil War (Free Press, 1994)"
+      ]
+    },
+    {
+      "id": "david-farragut",
+      "axis": "people",
+      "term": "David Farragut",
+      "short": "Union admiral who captured New Orleans and won Mobile Bay; first U.S. Navy admiral.",
+      "body": "Farragut captured New Orleans, the Confederacy's largest city, in April 1862, and won the Battle of Mobile Bay on August 5, 1864, closing one of the last major Gulf ports to blockade runners. The famous order 'Damn the torpedoes, full speed ahead' is attributed to him at Mobile Bay, though it appeared in print only years later and some historians question its exact wording. He became the U.S. Navy's first rear admiral, vice admiral, and full admiral, ranks created for him during and after the war.",
+      "tags": [
+        "union",
+        "navy",
+        "blockade",
+        "admiral"
+      ],
+      "related": [
+        "ulysses-s-grant"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Naval History and Heritage Command, https://www.history.navy.mil/browse-by-topic/people/historical-figures/david-glasgow-farragut.html",
+        "Craig L. Symonds, The Civil War at Sea (Praeger, 2009)",
+        "American Battlefield Trust, https://www.battlefields.org/learn/biographies/david-g-farragut"
+      ]
+    },
+    {
+      "id": "dorothea-dix",
+      "axis": "people",
+      "term": "Dorothea Dix",
+      "short": "Mental-health reformer appointed Union Superintendent of Army Nurses in June 1861, organizing thousands of women nurses.",
+      "body": "Dorothea Dix was a leading antebellum reformer for the humane treatment of the mentally ill before the war. In June 1861 the Union War Department appointed her Superintendent of Army Nurses, making her the first woman to hold so high a federally authorized post; she recruited and organized thousands of women to serve in army hospitals. Her strict, sometimes rigid standards, requiring nurses to be over thirty-five and \"plain-looking,\" drew friction, but she helped legitimize women's professional nursing in the United States.",
+      "tags": [
+        "union",
+        "medicine",
+        "women",
+        "home-front",
+        "reform"
+      ],
+      "related": [
+        "clara-barton",
+        "mary-edwards-walker"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "American Battlefield Trust, \"Dorothea Lynde Dix,\" https://www.battlefields.org/learn/biographies/dorothea-lynde-dix",
+        "National Museum of Civil War Medicine, \"Dorothea Dix,\" https://www.civilwarmed.org/dorothea-dix/",
+        "Smithsonian Institution Archives, \"Dorothea Dix: Mental Health Reformer and Civil War Nurse,\" https://siarchives.si.edu/blog/dorothea-dix-mental-health-reformer-and-civil-war-nurse"
+      ]
+    },
+    {
+      "id": "mary-edwards-walker",
+      "axis": "people",
+      "term": "Dr. Mary Edwards Walker",
+      "short": "Union surgeon and the only woman ever awarded the Medal of Honor; captured and held as a Confederate prisoner of war.",
+      "body": "Mary Edwards Walker earned a medical degree in 1855 and, after being refused a commission, served the Union as a volunteer and then contract surgeon, becoming effectively the first female surgeon in the U.S. Army. She was captured by Confederate forces in 1864 and held as a prisoner of war in Richmond before a prisoner exchange. In 1865 President Andrew Johnson awarded her the Medal of Honor; an Army review rescinded it in 1917, but she refused to return it, and President Jimmy Carter restored it in 1977 — she remains the only woman to receive it.",
+      "tags": [
+        "union",
+        "medicine",
+        "women",
+        "home-front"
+      ],
+      "related": [
+        "clara-barton",
+        "dorothea-dix"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "National Park Service, \"Dr. Mary Edwards Walker,\" https://www.nps.gov/people/mary-walker.htm",
+        "Congressional Medal of Honor Society, \"Mary E. Walker,\" https://www.cmohs.org/recipients/mary-e-walker",
+        "National Women's History Museum, \"Mary Edwards Walker,\" https://www.womenshistory.org/education-resources/biographies/mary-edwards-walker"
+      ]
+    },
+    {
+      "id": "edwin-m-stanton",
+      "axis": "people",
+      "term": "Edwin M. Stanton",
+      "short": "Lincoln's Secretary of War from 1862; organized Union mobilization and the hunt for Booth.",
+      "body": "Appointed Secretary of War in January 1862, Stanton brought ferocious energy and administrative rigor to mobilizing the Union's vast manpower, supply, and railroad systems. After Lincoln's assassination he directed the manhunt for John Wilkes Booth and is credited with the words 'Now he belongs to the ages.' He stayed on under Andrew Johnson and became a flashpoint of Reconstruction politics when Johnson's attempt to remove him triggered the 1868 impeachment crisis under the Tenure of Office Act.",
+      "tags": [
+        "union",
+        "cabinet",
+        "war-department",
+        "reconstruction"
+      ],
+      "related": [
+        "abraham-lincoln",
+        "william-h-seward",
+        "ulysses-s-grant"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Walter Stahr, Stanton: Lincoln's War Secretary (Simon & Schuster, 2017)",
+        "Miller Center, University of Virginia, https://millercenter.org/president/lincoln/essays/stanton-1862-secretary-of-war",
+        "Edwin McMasters Stanton Papers, Library of Congress, https://www.loc.gov/collections/edwin-mcmasters-stanton-papers/about-this-collection/"
+      ]
+    },
+    {
+      "id": "frederick-douglass",
+      "axis": "people",
+      "term": "Frederick Douglass",
+      "short": "Formerly enslaved abolitionist and orator who recruited Black men for the Union Army with his 1863 call \"Men of Color, To Arms!\"",
+      "body": "Frederick Douglass escaped slavery in Maryland in 1838 and became the most influential Black abolitionist of the era, arguing that slavery was the war's root cause and that emancipation must be its purpose. After the Emancipation Proclamation he issued his March 1863 broadside \"Men of Color, To Arms!\" and recruited for the 54th Massachusetts; his own sons Lewis and Charles enlisted, and Lewis fought at Fort Wagner. He pressed Lincoln directly on equal pay and protection for Black soldiers, and roughly 180,000 Black men ultimately served the Union.",
+      "tags": [
+        "union",
+        "abolition",
+        "usct",
+        "emancipation",
+        "home-front"
+      ],
+      "related": [
+        "robert-gould-shaw",
+        "harriet-tubman",
+        "abraham-lincoln"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "David W. Blight, Frederick Douglass: Prophet of Freedom (Simon & Schuster, 2018)",
+        "Library Company of Philadelphia, \"Men of Color To Arms,\" https://www.librarycompany.org/mcallisterexhibition/section3.htm",
+        "National Museum of African American History and Culture, \"Broadside for 'Men of Color' Recruitment,\" https://nmaahc.si.edu/object/nmaahc_2012.133"
+      ]
+    },
+    {
+      "id": "george-b-mcclellan",
+      "axis": "people",
+      "term": "George B. McClellan",
+      "short": "Union general who built the Army of the Potomac but was faulted for caution; lost to Lincoln in 1864.",
+      "body": "McClellan ably organized and trained the Army of the Potomac early in the war, but his chronic overcaution and overestimation of enemy strength stalled the 1862 Peninsula Campaign and, after the bloody but tactically indecisive Antietam, prompted Lincoln to remove him from command. Running as the Democratic nominee in 1864 on a platform that called the war a failure, he was decisively defeated by Lincoln. His career illustrates how operational timidity could squander Union advantages in men and material.",
+      "tags": [
+        "union",
+        "general",
+        "leadership",
+        "1864-election"
+      ],
+      "related": [
+        "abraham-lincoln",
+        "george-g-meade"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Stephen W. Sears, George B. McClellan: The Young Napoleon (Ticknor & Fields, 1988)",
+        "James M. McPherson, Battle Cry of Freedom: The Civil War Era (Oxford University Press, 1988)",
+        "American Battlefield Trust, https://www.battlefields.org/learn/biographies/george-b-mcclellan"
+      ]
+    },
+    {
+      "id": "george-g-meade",
+      "axis": "people",
+      "term": "George G. Meade",
+      "short": "Union general who commanded the Army of the Potomac to victory at Gettysburg in July 1863.",
+      "body": "Meade took command of the Army of the Potomac just days before defeating Lee at the Battle of Gettysburg, July 1-3, 1863, the largest battle ever fought in North America and a turning point of the war. He was criticized by Lincoln for not pursuing Lee's retreating army aggressively enough afterward. When Grant became general-in-chief in 1864, Meade retained command of the army under Grant's direct supervision through the Overland Campaign and the fall of Petersburg.",
+      "tags": [
+        "union",
+        "general",
+        "gettysburg",
+        "army-of-the-potomac"
+      ],
+      "related": [
+        "ulysses-s-grant",
+        "george-b-mcclellan"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "James M. McPherson, Battle Cry of Freedom: The Civil War Era (Oxford University Press, 1988)",
+        "American Battlefield Trust, https://www.battlefields.org/learn/biographies/george-g-meade",
+        "National Park Service, Gettysburg, https://www.nps.gov/people/george-g-meade.htm"
+      ]
+    },
+    {
+      "id": "george-h-thomas",
+      "axis": "people",
+      "term": "George H. Thomas",
+      "short": "Virginia-born Union general, the 'Rock of Chickamauga,' who shattered Hood's army at Nashville.",
+      "body": "A Virginian who chose the Union over his home state and was disowned by his family, Thomas earned the nickname 'Rock of Chickamauga' for a stubborn rearguard stand in September 1863 that saved the Union army from rout. At the Battle of Nashville, December 15-16, 1864, he effectively destroyed John Bell Hood's Army of Tennessee. A meticulous commander rarely beaten in battle, Thomas had himself been a slaveholder before the war, and later in life supported protecting freedpeople's rights during Reconstruction.",
+      "tags": [
+        "union",
+        "general",
+        "chickamauga",
+        "nashville"
+      ],
+      "related": [
+        "ulysses-s-grant",
+        "william-tecumseh-sherman"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "National Park Service, https://www.nps.gov/people/george-thomas.htm",
+        "Encyclopedia Virginia, https://encyclopediavirginia.org/entries/thomas-george-h-1816-1870/",
+        "Brian Steel Wills, George Henry Thomas: As True as Steel (University Press of Kansas, 2012)"
+      ]
+    },
+    {
+      "id": "harriet-tubman",
+      "axis": "people",
+      "term": "Harriet Tubman (Combahee River Raid, 1863)",
+      "short": "Underground Railroad conductor and Union scout; her June 1863 Combahee River Raid freed more than 700 enslaved people.",
+      "body": "Harriet Tubman, who had escaped slavery and guided dozens to freedom on the Underground Railroad, served the Union in South Carolina as a scout, spy, and nurse. On June 2, 1863, working with Colonel James Montgomery's 2nd South Carolina Volunteers, she helped guide gunboats up the Combahee River, becoming the first woman to lead an armed military operation in the war and liberating more than 700 enslaved people while destroying rice plantations. Many freed men enlisted in the Union Army on the spot; Tubman fought for decades afterward to win the military pension she had earned.",
+      "tags": [
+        "union",
+        "abolition",
+        "usct",
+        "emancipation",
+        "women"
+      ],
+      "related": [
+        "frederick-douglass",
+        "robert-gould-shaw",
+        "clara-barton"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "National Park Service, \"We Called Ourselves Combee: Freeing the Enslaved Along the Combahee River,\" https://www.nps.gov/articles/000/we-called-ourselves-combee.htm",
+        "National Museum of African American History and Culture, \"The Combahee Ferry Raid,\" https://nmaahc.si.edu/explore/stories/combahee-ferry-raid",
+        "Catherine Clinton, Harriet Tubman: The Road to Freedom (Little, Brown, 2004)"
+      ]
+    },
+    {
+      "id": "james-longstreet",
+      "axis": "people",
+      "term": "James Longstreet",
+      "short": "Lee's senior corps commander ('Old War Horse'); later a Republican who was vilified by Lost Cause writers.",
+      "body": "James Longstreet was Lee's most trusted corps commander, leading the First Corps at Antietam, Fredericksburg, and Gettysburg, where his reluctance over Pickett's Charge later made him a scapegoat. After the war he broke sharply with former Confederates by joining the Republican Party, supporting Reconstruction, and commanding Black and integrated New Orleans police against white-supremacist insurgents at the 1874 Battle of Liberty Place. For this, 'Lost Cause' authors—especially Jubal Early and others defending Lee's reputation—falsely blamed Longstreet for losing Gettysburg, a distortion modern historians have largely overturned.",
+      "tags": [
+        "confederate",
+        "military",
+        "leadership",
+        "reconstruction",
+        "lost-cause"
+      ],
+      "related": [
+        "robert-e-lee",
+        "thomas-stonewall-jackson"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Jeffry D. Wert, General James Longstreet: The Confederacy's Most Controversial Soldier (Simon & Schuster, 1993)",
+        "American Battlefield Trust, 'James Longstreet,' https://www.battlefields.org/learn/biographies/james-longstreet",
+        "Encyclopedia Britannica, 'James Longstreet,' https://www.britannica.com/biography/James-Longstreet"
+      ]
+    },
+    {
+      "id": "jefferson-davis",
+      "axis": "people",
+      "term": "Jefferson Davis",
+      "short": "President of the Confederate States, 1861–65; former U.S. senator and secretary of war who led a slaveholders' rebellion.",
+      "body": "Jefferson Davis was the only president of the Confederate States of America, serving from his February 1861 inauguration until his capture near Irwinville, Georgia, on May 10, 1865. A wealthy Mississippi cotton planter who enslaved over a hundred people at his Brierfield plantation, he had been U.S. secretary of war (1853–57) and a U.S. senator before leading a government founded explicitly to protect and expand slavery. He clashed constantly with his generals and governors, was imprisoned for two years at Fort Monroe without ever being tried, and spent his remaining decades promoting the 'Lost Cause' myth that the war was about states' rights rather than slavery—a claim refuted by the Confederacy's own secession declarations.",
+      "tags": [
+        "confederate",
+        "leadership",
+        "politics",
+        "slavery",
+        "lost-cause"
+      ],
+      "related": [
+        "robert-e-lee",
+        "alexander-h-stephens",
+        "braxton-bragg"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "William J. Cooper, Jefferson Davis, American (Alfred A. Knopf, 2000)",
+        "American Battlefield Trust, 'Jefferson Davis,' https://www.battlefields.org/learn/biographies/jefferson-davis",
+        "Encyclopedia Britannica, 'Jefferson Davis,' https://www.britannica.com/biography/Jefferson-Davis"
+      ]
+    },
+    {
+      "id": "nathan-bedford-forrest",
+      "axis": "people",
+      "term": "Nathan Bedford Forrest",
+      "short": "Confederate cavalry general and prewar slave trader; oversaw the Fort Pillow massacre and was the KKK's first Grand Wizard.",
+      "body": "Nathan Bedford Forrest was a wealthy Memphis slave trader before the war and became a skilled, ruthless Confederate cavalry commander. At Fort Pillow, Tennessee, on April 12, 1864, troops under his command massacred surrendering Union soldiers—the Black defenders, who made up roughly 262 of the garrison, were killed at far higher rates than the white defenders, with only about a third surviving. After the war he became the first Grand Wizard of the Ku Klux Klan in 1867, lending his prestige to a campaign of racial terror against Black political participation before issuing an 1869 order to disband it; attempts to launder his reputation cannot erase Fort Pillow or the Klan.",
+      "tags": [
+        "confederate",
+        "military",
+        "atrocity",
+        "slavery",
+        "kkk",
+        "white-supremacy"
+      ],
+      "related": [
+        "braxton-bragg",
+        "robert-e-lee"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "American Battlefield Trust, '\"The Most Terrible Ordeal of My Life\": The Battle of Fort Pillow,' https://www.battlefields.org/learn/articles/most-terrible-ordeal-my-life-battle-fort-pillow",
+        "Encyclopedia Britannica, 'Nathan Bedford Forrest: Postwar life and the Ku Klux Klan,' https://www.britannica.com/biography/Nathan-Bedford-Forrest/Postwar-life-and-the-Ku-Klux-Klan",
+        "Library of Congress, 'Nathan Bedford Forrest: Topics in Chronicling America,' https://guides.loc.gov/chronicling-america-nathan-bedford-forrest"
+      ]
+    },
+    {
+      "id": "patrick-cleburne",
+      "axis": "people",
+      "term": "Patrick Cleburne",
+      "short": "Irish-born Confederate general who in 1864 proposed arming and freeing the enslaved—a plan Davis ordered suppressed.",
+      "body": "Patrick Cleburne was an Irish-born division commander in the Army of Tennessee, nicknamed the 'Stonewall of the West' for his hard fighting. On January 2, 1864, at Dalton, Georgia, he circulated a proposal urging the Confederacy to emancipate and arm enslaved men as soldiers, calling slavery the South's 'most vulnerable point'—a recognition that the cause and the institution were inseparable. Fellow generals denounced it as a violation of the Confederacy's founding principles, and Jefferson Davis ordered the document suppressed; Cleburne was passed over for promotion and killed at the Battle of Franklin on November 30, 1864. His proposal exposes how central slavery was to the Confederacy: arming the enslaved was seen as betraying the very purpose of the war.",
+      "tags": [
+        "confederate",
+        "military",
+        "leadership",
+        "slavery",
+        "emancipation"
+      ],
+      "related": [
+        "braxton-bragg",
+        "jefferson-davis"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "American Battlefield Trust, 'Patrick Cleburne's Proposal to Arm Slaves,' https://www.battlefields.org/learn/primary-sources/patrick-cleburnes-proposal-arm-slaves",
+        "National Park Service, '\"A Monstrous Proposal\" — Cleburne's Proposal to Arm Slaves,' https://www.nps.gov/chch/learn/news/monstrousproposal.htm",
+        "Craig L. Symonds, Stonewall of the West: Patrick Cleburne and the Civil War (University Press of Kansas, 1997)"
+      ]
+    },
+    {
+      "id": "philip-sheridan",
+      "axis": "people",
+      "term": "Philip Sheridan",
+      "short": "Aggressive Union cavalry commander who devastated the Shenandoah Valley in 1864.",
+      "body": "Sheridan commanded the Army of the Shenandoah in 1864, defeating Jubal Early at Opequon and Fisher's Hill and rallying his men to victory at Cedar Creek on October 19. Under Grant's orders he conducted 'The Burning,' systematically destroying barns, mills, crops, and livestock to deny the Valley to Confederate armies, a leading example of Union hard war against the economic base of the rebellion. His victories helped secure Lincoln's reelection, and he later cut off Lee's retreat at Appomattox.",
+      "tags": [
+        "union",
+        "general",
+        "cavalry",
+        "hard-war"
+      ],
+      "related": [
+        "ulysses-s-grant",
+        "william-tecumseh-sherman"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "American Battlefield Trust, https://www.battlefields.org/learn/biographies/philip-sheridan",
+        "National Park Service, 'The Burning,' https://www.nps.gov/articles/000/the-burning-shenandoah-valley-in-flames.htm",
+        "Shenandoah Valley Battlefields Foundation, https://www.shenandoahatwar.org/sheridans-1864-valley-camp"
+      ]
+    },
+    {
+      "id": "robert-e-lee",
+      "axis": "people",
+      "term": "Robert E. Lee",
+      "short": "Commander of the Confederate Army of Northern Virginia; a slaveholder whose surrender at Appomattox effectively ended the war.",
+      "body": "Robert E. Lee resigned his U.S. Army commission in 1861 and from June 1862 commanded the Confederacy's principal army, the Army of Northern Virginia, winning battles such as Chancellorsville but losing decisively at Gettysburg before surrendering to Grant at Appomattox on April 9, 1865. A Virginia aristocrat who enslaved people on the Arlington estate, he opposed Black enlistment and equal rights, and his army seized free Black Pennsylvanians into slavery during the 1863 invasion. Postwar mythmakers turned him into a flawless, reluctant warrior fighting only for his home state, but the documentary record shows he fought to defend a slaveholding republic, and that romanticized image is a 'Lost Cause' construction rather than history.",
+      "tags": [
+        "confederate",
+        "leadership",
+        "military",
+        "slavery",
+        "lost-cause"
+      ],
+      "related": [
+        "jefferson-davis",
+        "thomas-stonewall-jackson",
+        "james-longstreet"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Elizabeth Brown Pryor, Reading the Man: A Portrait of Robert E. Lee Through His Private Letters (Viking, 2007)",
+        "American Battlefield Trust, 'Robert E. Lee,' https://www.battlefields.org/learn/biographies/robert-e-lee",
+        "Encyclopedia Britannica, 'Robert E. Lee,' https://www.britannica.com/biography/Robert-E-Lee"
+      ]
+    },
+    {
+      "id": "robert-gould-shaw",
+      "axis": "people",
+      "term": "Robert Gould Shaw (54th Massachusetts)",
+      "short": "Abolitionist-born Union colonel who led the Black 54th Massachusetts in the 1863 Fort Wagner assault, where he was killed.",
+      "body": "Robert Gould Shaw, born to a wealthy Boston abolitionist family, accepted command of the 54th Massachusetts Infantry, one of the first Black regiments raised in the North. On July 18, 1863, he led the 54th in the costly assault on Fort Wagner near Charleston, where he was killed on the parapet alongside many of his men. Confederate troops buried him in a mass grave with his Black soldiers intending it as an insult, but his abolitionist father asked that he be left there in honor; the regiment's valor helped win wider acceptance of Black soldiers in the Union Army.",
+      "tags": [
+        "union",
+        "usct",
+        "abolition",
+        "officers"
+      ],
+      "related": [
+        "frederick-douglass",
+        "harriet-tubman"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "National Park Service, \"Robert Gould Shaw,\" https://www.nps.gov/people/robert-g-shaw.htm",
+        "Russell Duncan, ed., Blue-Eyed Child of Fortune: The Civil War Letters of Colonel Robert Gould Shaw (University of Georgia Press, 1992)",
+        "Encyclopaedia Britannica, \"Robert Gould Shaw,\" https://www.britannica.com/biography/Robert-Gould-Shaw"
+      ]
+    },
+    {
+      "id": "thomas-stonewall-jackson",
+      "axis": "people",
+      "term": "Thomas \"Stonewall\" Jackson",
+      "short": "Confederate general famed for the 1862 Shenandoah Valley campaign; died after being shot by his own men at Chancellorsville.",
+      "body": "Thomas J. Jackson earned the nickname 'Stonewall' at First Bull Run (Manassas) in July 1861 and became Lee's most aggressive corps commander, celebrated for his rapid 1862 Shenandoah Valley campaign and his flank attack at Chancellorsville in May 1863. He was accidentally shot by his own pickets at Chancellorsville and died of pneumonia eight days later, a loss often romanticized as the turning point that doomed the Confederacy. A devout Presbyterian, Jackson enslaved several people in Lexington, Virginia, a fact frequently softened in 'Lost Cause' accounts that emphasize his piety while obscuring that he fought to preserve slavery.",
+      "tags": [
+        "confederate",
+        "military",
+        "leadership",
+        "slavery"
+      ],
+      "related": [
+        "robert-e-lee",
+        "james-longstreet"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "James I. Robertson Jr., Stonewall Jackson: The Man, the Soldier, the Legend (Macmillan, 1997)",
+        "American Battlefield Trust, 'Thomas J. \"Stonewall\" Jackson,' https://www.battlefields.org/learn/biographies/thomas-j-stonewall-jackson",
+        "Encyclopedia Britannica, 'Stonewall Jackson,' https://www.britannica.com/biography/Stonewall-Jackson"
+      ]
+    },
+    {
+      "id": "ulysses-s-grant",
+      "axis": "people",
+      "term": "Ulysses S. Grant",
+      "short": "Union general-in-chief from 1864; won at Vicksburg and forced Lee's surrender at Appomattox.",
+      "body": "Grant rose to prominence with victories at Forts Henry and Donelson and the capture of Vicksburg on July 4, 1863, which split the Confederacy along the Mississippi. Appointed general-in-chief in March 1864, he waged a relentless coordinated campaign that pinned Lee in the Overland and Petersburg fighting and ended in Lee's surrender at Appomattox Court House on April 9, 1865. He later served two terms as president (1869-1877), backing Reconstruction and prosecuting the Ku Klux Klan, and his memoirs remain a classic military account.",
+      "tags": [
+        "union",
+        "general",
+        "strategy",
+        "president"
+      ],
+      "related": [
+        "abraham-lincoln",
+        "william-tecumseh-sherman",
+        "george-g-meade",
+        "philip-sheridan"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Ron Chernow, Grant (Penguin Press, 2017)",
+        "Ulysses S. Grant, Personal Memoirs of U. S. Grant (Charles L. Webster & Co., 1885)",
+        "American Battlefield Trust, https://www.battlefields.org/learn/biographies/ulysses-s-grant"
+      ]
+    },
+    {
+      "id": "william-h-seward",
+      "axis": "people",
+      "term": "William H. Seward",
+      "short": "Lincoln's Secretary of State; managed Union diplomacy and blocked European recognition of the Confederacy.",
+      "body": "A former New York senator and Lincoln's chief rival for the 1860 nomination, Seward became Secretary of State and the administration's leading diplomat. He worked to keep Britain and France from recognizing or aiding the Confederacy, defusing crises such as the 1861 Trent Affair. He was severely wounded in the same conspiracy that killed Lincoln, survived, and later negotiated the 1867 purchase of Alaska.",
+      "tags": [
+        "union",
+        "cabinet",
+        "diplomacy",
+        "state-department"
+      ],
+      "related": [
+        "abraham-lincoln",
+        "edwin-m-stanton"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Walter Stahr, Seward: Lincoln's Indispensable Man (Simon & Schuster, 2012)",
+        "Doris Kearns Goodwin, Team of Rivals: The Political Genius of Abraham Lincoln (Simon & Schuster, 2005)",
+        "U.S. Department of State, Office of the Historian, https://history.state.gov/departmenthistory/people/seward-william-henry"
+      ]
+    },
+    {
+      "id": "william-tecumseh-sherman",
+      "axis": "people",
+      "term": "William Tecumseh Sherman",
+      "short": "Union general who captured Atlanta and led the destructive March to the Sea through Georgia.",
+      "body": "Sherman's capture of Atlanta in September 1864 boosted Northern morale and aided Lincoln's reelection. His subsequent March to the Sea and march through the Carolinas embodied 'hard war,' deliberately destroying railroads, crops, and property to break the Confederacy's capacity and will to fight; the destruction fell heavily on civilian property, though Sherman's troops generally did not target civilian lives. A close partner of Grant, he understood the war as a contest of resources and morale and pursued it to a swift, punishing conclusion.",
+      "tags": [
+        "union",
+        "general",
+        "hard-war",
+        "strategy"
+      ],
+      "related": [
+        "ulysses-s-grant",
+        "philip-sheridan",
+        "george-h-thomas"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "James M. McPherson, Battle Cry of Freedom: The Civil War Era (Oxford University Press, 1988)",
+        "American Battlefield Trust, https://www.battlefields.org/learn/biographies/william-t-sherman",
+        "National Park Service, Vicksburg, https://www.nps.gov/vick/learn/historyculture/william-tecumseh-sherman.htm"
+      ]
+    },
+    {
+      "id": "54th-massachusetts-infantry",
+      "axis": "units",
+      "term": "54th Massachusetts Infantry",
+      "short": "Famed Black Union regiment led by Col. Robert Gould Shaw; led the July 18, 1863 assault on Battery (Fort) Wagner.",
+      "body": "The 54th Massachusetts Infantry was one of the first Black regiments raised in the North, mustered in early 1863 and commanded by Colonel Robert Gould Shaw. On July 18, 1863, it led the doomed Union assault on Battery Wagner near Charleston, where Shaw was killed and the regiment suffered devastating casualties; Sergeant William H. Carney's defense of the colors later earned him the Medal of Honor, making him the first Black recipient of the award. The regiment also refused its pay for eighteen months in protest of the Army's unequal wages for Black soldiers, and its valor at Wagner became powerful public evidence that Black men would and could fight.",
+      "tags": [
+        "union",
+        "infantry",
+        "usct",
+        "emancipation"
+      ],
+      "related": [
+        "united-states-colored-troops",
+        "corps-division-brigade-regiment"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "National Park Service, \"The 54th Massachusetts and the Second Battle of Fort Wagner,\" https://www.nps.gov/articles/the-54th-massachusetts-and-the-second-battle-of-fort-wagner.htm",
+        "National Archives, \"Exhibit: 54th Massachusetts Casualty List,\" https://www.archives.gov/exhibits/american_originals/54thmass.html"
+      ]
+    },
+    {
+      "id": "army-of-northern-virginia",
+      "axis": "units",
+      "term": "Army of Northern Virginia",
+      "short": "The Confederacy's main Eastern army, led by Robert E. Lee; surrendered at Appomattox in April 1865.",
+      "body": "The Army of Northern Virginia was the principal Confederate field army in the East, commanded by Robert E. Lee from June 1862 until its surrender. It won battlefield victories at places like Fredericksburg and Chancellorsville but was checked at Antietam and defeated at Gettysburg, and it fought to defend a government founded explicitly to preserve and expand slavery. Worn down in the 1864 Overland Campaign and besieged at Petersburg, Lee surrendered roughly 28,000 men to Grant at Appomattox Court House on April 9, 1865. Postwar \"Lost Cause\" writing romanticized this army and recast the war as a fight over \"states' rights,\" but the Confederate states' own secession declarations and Alexander Stephens's \"Cornerstone Speech\" name slavery as the cause plainly.",
+      "tags": [
+        "confederate",
+        "army",
+        "eastern-theater",
+        "lost-cause",
+        "command"
+      ],
+      "related": [
+        "army-of-the-potomac",
+        "stonewall-brigade",
+        "corps-division-brigade-regiment"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "American Battlefield Trust, \"Army of Northern Virginia,\" https://www.battlefields.org/learn/articles/army-northern-virginia",
+        "James M. McPherson, Battle Cry of Freedom (Oxford University Press, 1988)"
+      ]
+    },
+    {
+      "id": "army-of-tennessee-cs",
+      "axis": "units",
+      "term": "Army of Tennessee (CS)",
+      "short": "The Confederacy's main Western army; fought Shiloh, Chickamauga, Chattanooga, and the Atlanta and Franklin–Nashville campaigns.",
+      "body": "The Army of Tennessee was the principal Confederate field army in the Western Theater, formed in late 1862 and led successively by Braxton Bragg, Joseph E. Johnston, and John Bell Hood. It won a costly victory at Chickamauga but was driven from Chattanooga, lost the Atlanta Campaign to Sherman in 1864, and was wrecked in Hood's disastrous Franklin–Nashville Campaign that winter. Its repeated defeats in the West, where the Union split the Confederacy along the Mississippi and through Georgia, were decisive to the Confederacy's collapse.",
+      "tags": [
+        "confederate",
+        "army",
+        "western-theater",
+        "command"
+      ],
+      "related": [
+        "army-of-northern-virginia",
+        "corps-division-brigade-regiment"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Thomas L. Connelly, Autumn of Glory: The Army of Tennessee, 1862–1865 (Louisiana State University Press, 1971)",
+        "American Battlefield Trust, \"Army of Tennessee,\" https://www.battlefields.org/learn/articles/army-tennessee"
+      ]
+    },
+    {
+      "id": "army-of-the-potomac",
+      "axis": "units",
+      "term": "Army of the Potomac",
+      "short": "The Union's principal army in the Eastern Theater, defending Washington and opposing Lee's Army of Northern Virginia.",
+      "body": "The Army of the Potomac was the chief Union field army in the East, organized in 1861 to defend Washington and destroy the Confederate army in Virginia. It cycled through a series of commanders — McClellan, Burnside, Hooker, and finally George Meade, who led it at Gettysburg in July 1863 — and from 1864 operated under the direct supervision of General-in-Chief Ulysses S. Grant. It fought the war's bloodiest Eastern campaigns, from the Peninsula and Antietam through the Overland Campaign and the siege of Petersburg, and received Lee's surrender at Appomattox.",
+      "tags": [
+        "union",
+        "army",
+        "eastern-theater",
+        "command"
+      ],
+      "related": [
+        "army-of-northern-virginia",
+        "corps-division-brigade-regiment",
+        "iron-brigade",
+        "irish-brigade"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "American Battlefield Trust, \"Army of the Potomac,\" https://www.battlefields.org/learn/articles/army-potomac",
+        "Bruce Catton, Mr. Lincoln's Army (Doubleday, 1951)"
+      ]
+    },
+    {
+      "id": "cavalry-division",
+      "axis": "units",
+      "term": "Cavalry Division",
+      "short": "A mounted division of several cavalry brigades; used for reconnaissance, screening, raids, and, increasingly, dismounted combat.",
+      "body": "A cavalry division grouped several brigades of mounted regiments and served as an army's eyes — scouting, screening movements, raiding supply lines, and pursuing in retreat. Early in the war Confederate horsemen under J.E.B. Stuart held the advantage, but the Union cavalry caught up, and by 1863–64 large consolidated corps and divisions under leaders like Sheridan and Buford fought major actions in their own right, as at Brandy Station. Increasingly armed with repeating carbines, troopers often fought dismounted, using horses for mobility and then fighting on foot.",
+      "tags": [
+        "both",
+        "cavalry",
+        "organization",
+        "reconnaissance"
+      ],
+      "related": [
+        "corps-division-brigade-regiment",
+        "field-artillery-battery"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "American Battlefield Trust, \"Civil War Cavalry,\" https://www.battlefields.org/learn/articles/cavalry-civil-war",
+        "Edward G. Longacre, Lincoln's Cavalrymen: A History of the Mounted Forces of the Army of the Potomac (Stackpole Books, 2000)"
+      ]
+    },
+    {
+      "id": "corps-division-brigade-regiment",
+      "axis": "units",
+      "term": "Corps / Division / Brigade / Regiment Command Structure",
+      "short": "The nested chain of command: armies held corps, corps held divisions, divisions held brigades, brigades held regiments.",
+      "body": "Civil War armies were organized into a nested hierarchy: the regiment (about 1,000 men at full strength, led by a colonel) was the basic building block, several regiments formed a brigade (brigadier general), several brigades a division (major general), and two or more divisions a corps. Corps combined into the field army under its commanding general. In practice regiments shrank fast from combat, disease, and desertion, so a veteran regiment in 1864 might field only a few hundred men, and brigades and divisions were repeatedly reorganized to compensate.",
+      "tags": [
+        "both",
+        "organization",
+        "command",
+        "structure"
+      ],
+      "related": [
+        "army-of-the-potomac",
+        "army-of-northern-virginia",
+        "field-artillery-battery",
+        "cavalry-division"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "American Battlefield Trust, \"Civil War Army Organization,\" https://www.battlefields.org/learn/articles/civil-war-army-organization",
+        "Earl J. Hess, Civil War Infantry Tactics: Training, Combat, and Small-Unit Effectiveness (Louisiana State University Press, 2015)"
+      ]
+    },
+    {
+      "id": "field-artillery-battery",
+      "axis": "units",
+      "term": "Field Artillery Battery",
+      "short": "The basic artillery unit: typically 4–6 cannon with crews, limbers, caissons, and horse teams, led by a captain.",
+      "body": "The battery was the fundamental artillery unit of the Civil War, normally fielding four to six guns (Union batteries usually six, Confederate often four) under a captain. Each gun was served by a crew with a limber and caisson and pulled by horse teams, and common pieces included the smoothbore 12-pounder Napoleon and rifled guns like the 3-inch Ordnance Rifle and the Parrott. Firing solid shot, shell, and — at close range against infantry — deadly canister, massed batteries proved decisive in repelling assaults such as Pickett's Charge at Gettysburg.",
+      "tags": [
+        "both",
+        "artillery",
+        "organization"
+      ],
+      "related": [
+        "corps-division-brigade-regiment",
+        "iron-brigade"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "American Battlefield Trust, \"Civil War Artillery,\" https://www.battlefields.org/learn/articles/civil-war-artillery",
+        "Earl J. Hess, Civil War Field Artillery: Promise and Performance on the Battlefield (Louisiana State University Press, 2022)"
+      ]
+    },
+    {
+      "id": "irish-brigade",
+      "axis": "units",
+      "term": "Irish Brigade",
+      "short": "Union brigade of Irish-immigrant regiments under Thomas Francis Meagher; bloodied at Antietam and Fredericksburg.",
+      "body": "The Irish Brigade was a Union brigade built around Irish-immigrant regiments — notably the 69th, 63rd, and 88th New York — led by Brigadier General Thomas Francis Meagher and known for its green regimental colors bearing a gold harp. It suffered devastating losses charging the Sunken Road at Antietam in September 1862 and again attacking Marye's Heights at Fredericksburg that December, where roughly 540 of about 1,200 men fell. Its sacrifices made it one of the most celebrated and most depleted brigades in the Army of the Potomac.",
+      "tags": [
+        "union",
+        "infantry",
+        "brigade",
+        "immigrant-soldiers"
+      ],
+      "related": [
+        "army-of-the-potomac",
+        "corps-division-brigade-regiment"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "American Battlefield Trust, \"Thomas Francis Meagher,\" https://www.battlefields.org/learn/biographies/thomas-francis-meagher",
+        "Susannah J. Ural, The Harp and the Eagle: Irish-American Volunteers and the Union Army, 1861–1865 (NYU Press, 2006)"
+      ]
+    },
+    {
+      "id": "iron-brigade",
+      "axis": "units",
+      "term": "Iron Brigade",
+      "short": "Elite Western Union brigade (\"the Black Hats\"); shattered on the first day at Gettysburg holding McPherson's Ridge.",
+      "body": "The Iron Brigade was a Union brigade of Western regiments — the 2nd, 6th, and 7th Wisconsin, the 19th Indiana, and later the 24th Michigan — distinctive for the black 1858 Hardee hats that earned it the nickname \"the Black Hats.\" It reportedly won the name \"Iron Brigade\" at South Mountain in September 1862 and built a reputation as one of the hardest-fighting Union commands. On July 1, 1863, it held McPherson's Ridge against superior numbers on the opening day at Gettysburg and was effectively destroyed, losing roughly 1,150 of about 1,885 men.",
+      "tags": [
+        "union",
+        "infantry",
+        "brigade",
+        "western-regiments"
+      ],
+      "related": [
+        "army-of-the-potomac",
+        "corps-division-brigade-regiment",
+        "stonewall-brigade"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Alan T. Nolan, The Iron Brigade: A Military History (Macmillan, 1961)",
+        "Lance J. Herdegen, The Iron Brigade in Civil War and Memory (Savas Beatie, 2012)"
+      ]
+    },
+    {
+      "id": "stonewall-brigade",
+      "axis": "units",
+      "term": "Stonewall Brigade",
+      "short": "Confederate Virginia brigade under Thomas J. Jackson; named for his stand at First Manassas, July 1861.",
+      "body": "The Stonewall Brigade was a Confederate brigade of Virginia regiments — the 2nd, 4th, 5th, 27th, and 33rd Virginia Infantry — first commanded by Thomas J. Jackson. Both the brigade and Jackson took the name \"Stonewall\" at First Manassas on July 21, 1861, when General Barnard Bee reportedly cried that Jackson stood \"like a stone wall.\" It fought through Jackson's Shenandoah Valley Campaign and the army's major Eastern battles, and was all but annihilated in the hand-to-hand fighting at the \"Bloody Angle\" of Spotsylvania's Mule Shoe in May 1864, after which it ceased to exist as a separate brigade.",
+      "tags": [
+        "confederate",
+        "infantry",
+        "brigade",
+        "eastern-theater"
+      ],
+      "related": [
+        "army-of-northern-virginia",
+        "corps-division-brigade-regiment",
+        "iron-brigade"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Encyclopedia Virginia, \"Stonewall Brigade,\" https://encyclopediavirginia.org/entries/stonewall-brigade/",
+        "James I. Robertson Jr., The Stonewall Brigade (Louisiana State University Press, 1963)"
+      ]
+    },
+    {
+      "id": "united-states-colored-troops",
+      "axis": "units",
+      "term": "United States Colored Troops (USCT)",
+      "short": "Federally organized regiments of Black soldiers (est. 1863); roughly 180,000 Black men served, about 10% of the Union Army.",
+      "body": "The United States Colored Troops were federally organized regiments of Black soldiers, established under the War Department's Bureau of Colored Troops (General Order No. 143) on May 22, 1863, after the Emancipation Proclamation opened enlistment. Roughly 180,000 Black men served in about 175 USCT regiments — close to a tenth of the Union Army — most led by white officers, and they fought at engagements such as Port Hudson, Battery Wagner, the Crater, and New Market Heights. They faced unequal pay until 1864 and the threat of enslavement or murder if captured, made horrifically real when Forrest's Confederates massacred surrendering Black troops at Fort Pillow on April 12, 1864.",
+      "tags": [
+        "union",
+        "infantry",
+        "emancipation",
+        "atrocity"
+      ],
+      "related": [
+        "54th-massachusetts-infantry",
+        "corps-division-brigade-regiment"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "National Archives, \"Black Soldiers in the U.S. Military During the Civil War,\" https://www.archives.gov/education/lessons/blacks-civil-war",
+        "James M. McPherson, Battle Cry of Freedom (Oxford University Press, 1988)"
+      ]
+    },
+    {
+      "id": "conscription-the-draft",
+      "axis": "terms",
+      "term": "Conscription / The Draft (substitution & commutation)",
+      "short": "Both sides drafted men; loopholes like a $300 commutation and substitution let the wealthy avoid service, fueling resentment.",
+      "body": "The Confederacy enacted the first national conscription in April 1862 and the Union followed with the Enrollment Act of March 1863. Both systems let a draftee hire a substitute, and the Union also allowed a $300 commutation fee to buy out of a given draft call, while the Confederacy's \"twenty-slave law\" exempted one white man on each plantation with twenty or more enslaved people, breeding the bitter complaint of \"a rich man's war and a poor man's fight.\" Resentment over the draft and emancipation exploded in the New York City Draft Riots of July 1863, in which white mobs killed and brutalized Black residents over several days. Most soldiers on both sides were volunteers, but the draft's inequities shaped the war's politics.",
+      "tags": [
+        "both",
+        "union",
+        "confederate",
+        "politics",
+        "manpower"
+      ],
+      "related": [
+        "election-of-1864",
+        "copperheads",
+        "hard-war"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "James M. McPherson, Battle Cry of Freedom: The Civil War Era (Oxford University Press, 1988)",
+        "American Battlefield Trust, \"The Enrollment Act / Civil War Conscription,\" https://www.battlefields.org/learn/articles/civil-war-conscription-and-draft"
+      ]
+    },
+    {
+      "id": "contraband-of-war",
+      "axis": "terms",
+      "term": "Contraband (of War)",
+      "short": "Enslaved people who escaped to Union lines, whom Gen. Butler refused to return in 1861 by calling them \"contraband of war.\"",
+      "body": "In May 1861, when three enslaved men escaped to Union-held Fort Monroe in Virginia, General Benjamin Butler refused to return them under the Fugitive Slave Act, reasoning that because they had been used for Confederate labor they were \"contraband of war.\" The term stuck, and thousands of enslaved people self-emancipated by fleeing to Union lines; Congress ratified the policy in the First Confiscation Act of August 1861. \"Contraband\" was a legal expedient that treated people as seized enemy property, an awkward stepping-stone rather than a grant of freedom, but it undermined slavery in practice and pointed toward the Emancipation Proclamation. It is best understood alongside the agency of the enslaved themselves, who forced the issue by escaping.",
+      "tags": [
+        "union",
+        "both",
+        "slavery",
+        "politics",
+        "abolition"
+      ],
+      "related": [
+        "emancipation-proclamation",
+        "secession",
+        "hard-war"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "National Park Service, \"Fort Monroe and the 'Contrabands of War,'\" https://www.nps.gov/articles/fort-monroe-and-the-contrabands-of-war.htm",
+        "Adam Goodheart, 1861: The Civil War Awakening (Alfred A. Knopf, 2011)"
+      ]
+    },
+    {
+      "id": "copperheads",
+      "axis": "terms",
+      "term": "Copperheads (Peace Democrats)",
+      "short": "Northern Democrats who opposed the war and demanded a negotiated peace with the Confederacy.",
+      "body": "\"Copperheads\" was a label (originally an insult, after the venomous snake) for the Peace Democrats, a Northern faction that opposed the Civil War, criticized emancipation and the draft, and called for a negotiated settlement with the Confederacy. Their best-known figure, Ohio politician Clement Vallandigham, was arrested by the military in 1863 for a speech attacking the war and was banished to the Confederacy by Lincoln. Their cause peaked in 1864, when the Democratic platform branded the war a failure, but Union battlefield victories and the soldier vote helped doom it in that year's election. They are distinct from openly disloyal conspiracies, though wartime opponents often blurred the line.",
+      "tags": [
+        "union",
+        "both",
+        "politics",
+        "dissent"
+      ],
+      "related": [
+        "election-of-1864",
+        "suspension-of-habeas-corpus",
+        "conscription-the-draft"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Jennifer L. Weber, Copperheads: The Rise and Fall of Lincoln's Opponents in the North (Oxford University Press, 2006)",
+        "American Battlefield Trust, \"Clement Vallandigham,\" https://www.battlefields.org/learn/biographies/clement-vallandigham"
+      ]
+    },
+    {
+      "id": "enfilade-flanking-fire",
+      "axis": "terms",
+      "term": "Enfilade & Flanking Fire",
+      "short": "Firing along the long axis of an enemy line (from the flank), so each shot can rake many men; devastating vs. linear formations.",
+      "body": "A formation is 'in enfilade' when fire can be directed down its longest axis — typically from the flank — so a single shot or shell can strike multiple soldiers strung out in line. Because lateral aim is more forgiving of range error than fire aimed head-on, enfilade (flanking) fire was far more destructive than frontal fire and was prized by both armies. The tight linear formations of the era were acutely vulnerable to it: in Pickett's Charge at Gettysburg, for example, Confederate brigades were raked by Union artillery firing into their flanks from Little Round Top and the Cemetery Ridge line. Maneuvering to deliver enfilade fire, and entrenching to avoid receiving it, shaped much Civil War battlefield tactics.",
+      "tags": [
+        "both",
+        "tactics",
+        "artillery",
+        "infantry"
+      ],
+      "related": [
+        "rifled-musket-minie-ball",
+        "field-entrenchment-earthworks",
+        "picket-skirmish-line"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Paddy Griffith, Battle Tactics of the Civil War (Yale University Press, 1989)",
+        "Brent Nosworthy, The Bloody Crucible of Courage: Fighting Methods and Combat Experience of the Civil War (Carroll & Graf, 2003)"
+      ]
+    },
+    {
+      "id": "field-entrenchment-earthworks",
+      "axis": "terms",
+      "term": "Field Entrenchment / Earthworks",
+      "short": "Dug-in trenches and dirt-and-log fieldworks that let defenders survive rifle and artillery fire; a war-long shift.",
+      "body": "As rifled-musket and artillery firepower made standing assaults murderous, soldiers increasingly dug trenches and threw up earth-and-log breastworks for protection, transforming open-field battle into siege-like fighting. By the 1864 Overland Campaign, troops under Grant and Lee entrenched almost every time they halted; one Union officer noted, 'We have never before used the Spade as we have this summer.' Works at Spotsylvania's 'Bloody Angle' and the long lines around Petersburg foreshadowed the trench warfare of World War I a half-century early. These fieldworks magnified the defender's advantage and helped produce the war's grinding, attritional final year.",
+      "tags": [
+        "both",
+        "tactics",
+        "engineering",
+        "fortification"
+      ],
+      "related": [
+        "rifled-musket-minie-ball",
+        "enfilade-flanking-fire",
+        "anaconda-plan-union-blockade"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Earl J. Hess, Trench Warfare under Grant and Lee: Field Fortifications in the Overland Campaign (University of North Carolina Press, 2007)",
+        "American Battlefield Trust, 'Something New in the Art of War: Civil War Earthworks and Trenches' (battlefields.org/learn/articles/something-new-art-war-civil-war-earthworks-and-trenches)"
+      ]
+    },
+    {
+      "id": "foreign-recognition-intervention",
+      "axis": "terms",
+      "term": "Foreign Recognition & Intervention (Britain/France)",
+      "short": "The Confederacy's drive for British/French recognition; it won belligerent status but never sovereignty, and the bid collapsed after 1862.",
+      "body": "Confederate survival hinged on persuading Britain and France to recognize its independence and break the Union blockade, but both powers granted only belligerent status (1861) and never formal recognition or alliance. The 1861 Trent Affair — a U.S. warship seizing Confederate envoys James Mason and John Slidell from a British mail steamer — briefly threatened war until Lincoln's government released them. The Emancipation Proclamation (effective January 1, 1863) reframed the war around ending slavery, making it ever harder for Britain, whose public was strongly antislavery, to side with a slaveholding republic. The serious British debate over mediation peaked in the autumn of 1862 and was rejected; after that, and the Union battlefield gains that followed, the chance of intervention faded for good.",
+      "tags": [
+        "both",
+        "diplomacy",
+        "slavery",
+        "international"
+      ],
+      "related": [
+        "king-cotton-diplomacy",
+        "anaconda-plan-union-blockade",
+        "confederate-greenbacks-inflation"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "U.S. Department of State, Office of the Historian, 'The Trent Affair, 1861' (history.state.gov/milestones/1861-1865/trent-affair)",
+        "Howard Jones, Blue and Gray Diplomacy: A History of Union and Confederate Foreign Relations (University of North Carolina Press, 2010)",
+        "National Park Service, 'The Trent Affair' (nps.gov/articles/000/the-trent-affair.htm)"
+      ]
+    },
+    {
+      "id": "confederate-greenbacks-inflation",
+      "axis": "terms",
+      "term": "Greenbacks & Wartime Inflation",
+      "short": "Union greenbacks (legal-tender paper, 1862) held inflation near 80%; the un-backed Confederate currency suffered roughly 9,000% inflation.",
+      "body": "To finance the war, the Union passed the Legal Tender Act (February 25, 1862) and issued 'greenbacks' — paper dollars not backed by gold but declared legal tender, which funded a portion of the war effort while Northern inflation rose to roughly 80% over four years. The Confederacy, by contrast, printed mountains of treasury notes that were never made legal tender and were backed only by a faltering war effort, producing catastrophic inflation estimated near 9,000%. As the blockade tightened and military fortunes sank, Confederate money became nearly worthless, gutting civilian purchasing power and morale. The contrast shows how the Union's stronger financial system underwrote its war-making, while Confederate monetary collapse hastened the South's defeat.",
+      "tags": [
+        "both",
+        "economy",
+        "finance",
+        "currency"
+      ],
+      "related": [
+        "king-cotton-diplomacy",
+        "anaconda-plan-union-blockade",
+        "foreign-recognition-intervention"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Federal Reserve History, 'National Banking Acts of 1863 and 1864' (federalreservehistory.org/essays/national-banking-acts)",
+        "Roger L. Ransom, 'The Economics of the Civil War,' EH.Net Encyclopedia (Economic History Association, eh.net)",
+        "James M. McPherson, Battle Cry of Freedom: The Civil War Era (Oxford University Press, 1988)"
+      ]
+    },
+    {
+      "id": "hard-war",
+      "axis": "terms",
+      "term": "Hard War / Total War",
+      "short": "Union strategy from 1864 targeting the South's economy and civilian war-supporting resources, not just its armies.",
+      "body": "By 1864 Union commanders, notably Grant and Sherman, adopted a \"hard war\" strategy aimed at destroying the Confederacy's capacity and will to fight, striking railroads, farms, mills, and food stores that sustained its armies. Sherman's March to the Sea and Sheridan's Shenandoah Valley campaign deliberately laid waste to civilian property, though Union orders generally distinguished property from persons and did not sanction mass killing of civilians. This destruction was real and severe, and historians debate whether \"total war\" overstates it, since it stopped short of the systematic slaughter of noncombatants. It is named here on the Union side as the counterpart to Confederate atrocities such as the Fort Pillow massacre.",
+      "tags": [
+        "union",
+        "both",
+        "strategy",
+        "logistics",
+        "atrocity"
+      ],
+      "related": [
+        "election-of-1864",
+        "contraband-of-war",
+        "conscription-the-draft"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Mark Grimsley, The Hard Hand of War: Union Military Policy toward Southern Civilians, 1861-1865 (Cambridge University Press, 1995)",
+        "American Battlefield Trust, \"Sherman's March to the Sea,\" https://www.battlefields.org/learn/articles/shermans-march-sea"
+      ]
+    },
+    {
+      "id": "king-cotton-diplomacy",
+      "axis": "terms",
+      "term": "King Cotton (Cotton Diplomacy)",
+      "short": "The Confederacy's failed bet that Europe's need for Southern cotton would force Britain and France to intervene.",
+      "body": "Confederate leaders believed that 'Cotton is King' — that Europe's textile mills were so dependent on Southern cotton that Britain and France would break the Union blockade and grant recognition to keep it flowing. Planters and Southern authorities withheld and burned cotton to manufacture a 'Cotton Famine' and force the issue. The strategy failed: Europe held large prewar surpluses, then turned to India and Egypt, and no European power ever recognized the Confederacy. The gambit also exposed the regime's foundation, since this 'King Cotton' wealth rested on enslaved labor — the institution the Confederacy was founded to protect, as Vice President Alexander Stephens declared in his March 1861 'Cornerstone Speech' that slavery and white supremacy were the new government's 'cornerstone.'",
+      "tags": [
+        "confederate",
+        "diplomacy",
+        "economy",
+        "cotton",
+        "slavery"
+      ],
+      "related": [
+        "foreign-recognition-intervention",
+        "anaconda-plan-union-blockade",
+        "confederate-greenbacks-inflation"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Frank L. Owsley, King Cotton Diplomacy: Foreign Relations of the Confederate States of America (University of Chicago Press, 1931; rev. 1959)",
+        "American Battlefield Trust, 'Cotton is King' (battlefields.org/learn/articles/cotton-king)",
+        "Mississippi History Now, 'Cotton and the Civil War' (Mississippi Department of Archives and History, mshistorynow.mdah.ms.gov)"
+      ]
+    },
+    {
+      "id": "prisoner-of-war-camps",
+      "axis": "terms",
+      "term": "Prisoner-of-War Camps",
+      "short": "Overcrowded, deadly Civil War prisons; Andersonville (CS) and Elmira (US) were the most lethal.",
+      "body": "When the prisoner-exchange cartel broke down in 1863 — partly over the Confederacy's refusal to treat captured U.S. Colored Troops as legitimate prisoners — camp populations on both sides swelled into lethal overcrowding. The Confederate stockade at Andersonville, Georgia, was the deadliest: of some 45,000 Union prisoners held there, roughly 13,000 died of disease, exposure, and starvation, and its commandant Henry Wirz was tried and hanged after the war. The Union's Elmira camp in New York, nicknamed 'Hellmira,' killed nearly a quarter of its Confederate inmates. Both governments bear responsibility for the suffering, though Andersonville's scale made it the war's most infamous prison.",
+      "tags": [
+        "both",
+        "atrocity",
+        "prisoners",
+        "home-front"
+      ],
+      "related": [
+        "united-states-colored-troops",
+        "hard-war"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "National Park Service, Andersonville National Historic Site, https://www.nps.gov/ande/learn/historyculture/index.htm",
+        "James M. McPherson, Battle Cry of Freedom: The Civil War Era (Oxford University Press, 1988)"
+      ]
+    },
+    {
+      "id": "reconstruction",
+      "axis": "terms",
+      "term": "Reconstruction",
+      "short": "The 1865-1877 era of rebuilding the South, with the 13th-15th Amendments, before white-supremacist redemption rolled it back.",
+      "body": "Reconstruction (roughly 1865-1877) was the contested effort to reunite the nation and define the status of four million freedpeople, producing the Thirteenth, Fourteenth, and Fifteenth Amendments, which abolished slavery, guaranteed birthright citizenship and equal protection, and barred denial of the vote on the basis of race. Black men voted and held office, and the Freedmen's Bureau aided the formerly enslaved, but white-supremacist violence by groups like the Ku Klux Klan, founded by Confederate veterans in Pulaski, Tennessee, in 1866 and soon led by ex-Confederate general Nathan Bedford Forrest as its first Grand Wizard, sought to overturn these gains. The Compromise of 1877 ended federal enforcement, and \"Redeemer\" governments imposed Jim Crow segregation and disenfranchisement that lasted into the twentieth century. The old characterization of Reconstruction as a corrupt failure was itself part of the Lost Cause myth and has been overturned by modern scholarship.",
+      "tags": [
+        "both",
+        "politics",
+        "slavery",
+        "race"
+      ],
+      "related": [
+        "the-lost-cause",
+        "emancipation-proclamation",
+        "secession"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Eric Foner, Reconstruction: America's Unfinished Revolution, 1863-1877 (Harper & Row, 1988)",
+        "National Park Service, \"Reconstruction,\" https://www.nps.gov/subjects/reconstruction/index.htm"
+      ]
+    },
+    {
+      "id": "secession",
+      "axis": "terms",
+      "term": "Secession",
+      "short": "The 1860-61 withdrawal of eleven slaveholding states from the Union to form the Confederacy, to protect slavery.",
+      "body": "After Lincoln's 1860 election, eleven Southern states declared they were leaving the Union, beginning with South Carolina in December 1860, and formed the Confederate States of America. The states' own secession declarations make the cause plain: Mississippi's Declaration of Causes stated, \"Our position is thoroughly identified with the institution of slavery--the greatest material interest of the world.\" The later Lost Cause claim that secession was about abstract \"states' rights\" is contradicted by these primary documents, which name the protection of slavery as the controlling grievance. The U.S. government held secession to be constitutionally void and refused to recognize the Confederacy.",
+      "tags": [
+        "confederate",
+        "both",
+        "slavery",
+        "politics",
+        "causes"
+      ],
+      "related": [
+        "the-lost-cause",
+        "emancipation-proclamation",
+        "election-of-1864"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Mississippi, A Declaration of the Immediate Causes Which Induce and Justify the Secession of the State of Mississippi from the Federal Union (1861), Avalon Project, Yale Law School, https://avalon.law.yale.edu/19th_century/csa_missec.asp",
+        "American Battlefield Trust, \"The Declaration of Causes of Seceding States,\" https://www.battlefields.org/learn/primary-sources/declaration-causes-seceding-states",
+        "James M. McPherson, Battle Cry of Freedom: The Civil War Era (Oxford University Press, 1988)"
+      ]
+    },
+    {
+      "id": "suspension-of-habeas-corpus",
+      "axis": "terms",
+      "term": "Suspension of Habeas Corpus",
+      "short": "Lincoln's wartime suspension of the writ, allowing detention without trial; challenged in Ex parte Merryman and Milligan.",
+      "body": "The writ of habeas corpus protects against detention without judicial review; Lincoln suspended it beginning in 1861 to allow the military to hold suspected secessionists and saboteurs without trial, and Congress authorized suspension in the 1863 Habeas Corpus Suspension Act. In Ex parte Merryman (1861), Chief Justice Roger Taney held that only Congress, not the president, could suspend the writ, but Lincoln declined to comply. After the war, the Supreme Court in Ex parte Milligan (1866) ruled that civilians could not be tried by military commissions where civilian courts were open. The episode remains a touchstone in debates over civil liberties during wartime emergency.",
+      "tags": [
+        "union",
+        "both",
+        "politics",
+        "civil-liberties",
+        "law"
+      ],
+      "related": [
+        "copperheads",
+        "conscription-the-draft",
+        "election-of-1864"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Mark E. Neely Jr., The Fate of Liberty: Abraham Lincoln and Civil Liberties (Oxford University Press, 1991)",
+        "National Constitution Center, \"Lincoln and Taney's great writ showdown,\" https://constitutioncenter.org/blog/lincoln-and-taneys-great-writ-showdown"
+      ]
+    },
+    {
+      "id": "anaconda-plan-union-blockade",
+      "axis": "terms",
+      "term": "The Anaconda Plan & the Union Blockade",
+      "short": "Winfield Scott's 1861 strategy to strangle the Confederacy by blockading its coast and seizing the Mississippi.",
+      "body": "Proposed by General-in-Chief Winfield Scott in a May 3, 1861 letter to George McClellan, the plan aimed to 'envelop' the Confederacy by a naval blockade of its ports and a thrust down the Mississippi River to split the South in two, choking off cotton exports and arms imports. Critics mocked the slow, constricting strategy by likening it to an anaconda, and Lincoln initially preferred a quick offensive, but the war ultimately followed its logic. The blockade grew from a paper threat into a force that sharply reduced the South's total seaborne trade by 1864-65, while Union victories at Vicksburg (1863) completed the river's seizure. Economic strangulation, not a single decisive battle, was central to Union success.",
+      "tags": [
+        "union",
+        "strategy",
+        "blockade",
+        "economy",
+        "navy"
+      ],
+      "related": [
+        "king-cotton-diplomacy",
+        "foreign-recognition-intervention",
+        "confederate-greenbacks-inflation"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Encyclopedia Virginia, 'Anaconda Plan' (encyclopediavirginia.org/entries/anaconda-plan/)",
+        "James M. McPherson, Battle Cry of Freedom: The Civil War Era (Oxford University Press, 1988)",
+        "U.S. Naval Institute, 'Economic Warfare: The Union Blockade in the Civil War,' Naval History Magazine, Oct. 2021 (usni.org)"
+      ]
+    },
+    {
+      "id": "election-of-1864",
+      "axis": "terms",
+      "term": "The Election of 1864",
+      "short": "Lincoln defeated McClellan 212-21 in the Electoral College; Union victories and the soldier vote made it a war referendum.",
+      "body": "The 1864 presidential election pitted incumbent Republican Abraham Lincoln, running on a National Union ticket with Andrew Johnson, against Democrat George B. McClellan, whose party's platform called the war a failure and sought a negotiated peace. With the war's outcome uncertain in the summer, Sherman's capture of Atlanta in September and other Union successes turned the tide, and Lincoln won decisively, taking about 55 percent of the popular vote and the Electoral College 212 to 21. Soldiers voted overwhelmingly for Lincoln, treating the contest as a referendum on finishing the war and abolishing slavery. The peaceful holding of a national election during a civil war was itself historically remarkable.",
+      "tags": [
+        "union",
+        "both",
+        "politics",
+        "elections"
+      ],
+      "related": [
+        "copperheads",
+        "hard-war",
+        "emancipation-proclamation"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "National Archives, \"1864 Electoral College Results,\" https://www.archives.gov/electoral-college/1864",
+        "American Battlefield Trust, \"The Election of 1864 and the Soldiers' Vote,\" https://www.battlefields.org/learn/articles/election-1864-and-soldiers-vote"
+      ]
+    },
+    {
+      "id": "emancipation-proclamation",
+      "axis": "terms",
+      "term": "The Emancipation Proclamation",
+      "short": "Lincoln's Jan. 1, 1863 order freeing the enslaved in rebel-held areas and opening Black enlistment in the U.S. Army.",
+      "body": "Issued by President Lincoln as a war measure under his commander-in-chief power, the final Proclamation took effect January 1, 1863, declaring free all enslaved people in areas still in rebellion. It did not reach the loyal border states or Union-occupied regions, and its force depended on advancing U.S. armies, but it transformed the war's purpose into one for freedom and authorized the enlistment of Black men, of whom roughly 180,000 served in the U.S. Army. Universal abolition came only with the Thirteenth Amendment, ratified in December 1865. The order followed and built upon the wartime \"contraband\" policy and the Confiscation Acts.",
+      "tags": [
+        "union",
+        "both",
+        "slavery",
+        "politics",
+        "abolition"
+      ],
+      "related": [
+        "contraband-of-war",
+        "election-of-1864",
+        "reconstruction"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "National Archives, \"The Emancipation Proclamation,\" https://www.archives.gov/exhibits/featured-documents/emancipation-proclamation",
+        "Eric Foner, The Fiery Trial: Abraham Lincoln and American Slavery (W. W. Norton, 2010)",
+        "American Battlefield Trust, \"Emancipation Proclamation,\" https://www.battlefields.org/learn/primary-sources/emancipation-proclamation"
+      ]
+    },
+    {
+      "id": "the-lost-cause",
+      "axis": "terms",
+      "term": "The Lost Cause (Myth)",
+      "short": "A postwar myth recasting the Confederacy as a noble states'-rights struggle; the primary record shows it was a war for slavery.",
+      "body": "The \"Lost Cause\" is a postwar mythology, promoted by figures like Jubal Early and groups such as the United Daughters of the Confederacy, that portrayed secession as a principled defense of \"states' rights,\" minimized slavery's centrality, and romanticized Confederate leaders. The documentary record refutes it: Confederate Vice President Alexander Stephens's 1861 \"Cornerstone Speech\" declared the new government's \"corner-stone rests upon the great truth that the negro is not equal to the white man; that slavery, subordination to the superior race, is his natural and normal condition.\" The states' secession declarations likewise named the protection of slavery as their cause. The myth is identified here as propaganda and countered with these primary sources; the Confederacy is not valorized.",
+      "tags": [
+        "confederate",
+        "both",
+        "myth",
+        "slavery",
+        "memory"
+      ],
+      "related": [
+        "secession",
+        "reconstruction",
+        "emancipation-proclamation"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Alexander H. Stephens, \"Cornerstone Speech\" (March 21, 1861), American Battlefield Trust, https://www.battlefields.org/learn/primary-sources/cornerstone-speech",
+        "David W. Blight, Race and Reunion: The Civil War in American Memory (Harvard University Press, 2001)",
+        "Karen L. Cox, Dixie's Daughters: The United Daughters of the Confederacy and the Preservation of Confederate Culture (University Press of Florida, 2003)"
+      ]
+    },
+    {
+      "id": "picket-skirmish-line",
+      "axis": "terms",
+      "term": "The Picket / Skirmish Line",
+      "short": "Soldiers spread in loose open order ahead of the main body to screen, scout, and harass; pickets watch, skirmishers fight.",
+      "body": "Ahead of the dense battle line, armies deployed men in extended open order — spaced several paces apart rather than shoulder to shoulder — to screen the main force, scout the enemy, and open or delay an engagement. Pickets were the more stationary, defensive sentries who guarded a position and gave warning, while skirmishers advanced more aggressively, fanning out and using cover as they fought. Both sides drew this drill chiefly from Hardee's Rifle and Light Infantry Tactics (1855), a standard prewar manual. As rifled muskets made massed lines costlier, looser skirmish-style fighting grew steadily more important over the course of the war.",
+      "tags": [
+        "both",
+        "tactics",
+        "infantry",
+        "doctrine"
+      ],
+      "related": [
+        "rifled-musket-minie-ball",
+        "enfilade-flanking-fire",
+        "field-entrenchment-earthworks"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "American Battlefield Trust, 'Scouting, Patrolling, Picketing, and Skirmishing: Civil War Fighting Words' (battlefields.org/learn/articles/scouting-patrolling-picketing-and-skirmishing-civil-war-fighting-words)",
+        "Essential Civil War Curriculum, 'Picketing, Skirmishing, and Sharpshooting' (Fred Ray; Virginia Center for Civil War Studies, essentialcivilwarcurriculum.com)"
+      ]
+    },
+    {
+      "id": "rifled-musket-minie-ball",
+      "axis": "terms",
+      "term": "The Rifled Musket & the Minie Ball",
+      "short": "The expanding Minie ball let muzzle-loading rifled muskets be loaded fast yet shoot far — though most fighting still happened at close…",
+      "body": "The Minie ball, a hollow-based soft-lead conical bullet, expanded into the barrel's rifling when fired, giving the muzzle-loading rifled musket a rifle's long potential range with a smoothbore's loading speed — a theoretical effective range of 300 yards or more, versus roughly 100 for old smoothbores. In practice, as Earl J. Hess argues, poor marksmanship, the bullet's looping trajectory, broken terrain, and slow tactical change meant most Civil War infantry combat still occurred at well under 200 yards. Even so, the soft lead shattered bone, driving the era's high amputation rates, and the lethality of rifle fire — combined with inherited close-order tactics that adapted only unevenly — is a major reason casualties were so severe.",
+      "tags": [
+        "both",
+        "weapons",
+        "tactics",
+        "technology"
+      ],
+      "related": [
+        "enfilade-flanking-fire",
+        "field-entrenchment-earthworks",
+        "picket-skirmish-line"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Earl J. Hess, The Rifle Musket in Civil War Combat: Reality and Myth (University Press of Kansas, 2008)",
+        "American Battlefield Trust, 'Civil War Weapons' (battlefields.org)"
+      ]
+    },
+    {
+      "id": "system-foreign-intervention-pressure",
+      "axis": "systems",
+      "term": "Foreign-Intervention Pressure (The Recognition Crisis of 1862)",
+      "short": "The Confederate bid for British/French recognition, peaking in 1862; modeled as diplomatic pressure that battlefield and policy events…",
+      "body": "The Confederacy's best hope of independence was European recognition and aid, and that danger peaked in 1862. The November 1861 Trent Affair, when a U.S. warship seized Confederate envoys James Mason and John Slidell from a British mail steamer, nearly brought war with Britain until Lincoln and Secretary Seward released them. Through the summer of 1862 Lee's victories had Britain weighing recognition, but the bloody Union check at Antietam (September 17) let Lincoln issue the preliminary Emancipation Proclamation, recasting the war as a fight against slavery, which neither Britain nor France could be seen to oppose. In the game this system models intervention as a pressure gauge: Confederate offensive success raises it, while Union resolve and the moral redefinition of the war's aims close the door on the recognition the South needed.",
+      "tags": [
+        "confederate",
+        "union",
+        "both",
+        "diplomacy",
+        "foreign-policy",
+        "emancipation"
+      ],
+      "related": [
+        "system-naval-blockade-economy",
+        "system-political-capital-home-front"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "U.S. Department of State, Office of the Historian, 'The Trent Affair, 1861', https://history.state.gov/milestones/1861-1865/trent-affair",
+        "National Park Service, Antietam, 'Freedom at Antietam', https://www.nps.gov/anti/learn/historyculture/freedom-at-antietam.htm"
+      ]
+    },
+    {
+      "id": "system-grand-strategy-to-battlefield",
+      "axis": "systems",
+      "term": "Grand Strategy to the Battlefield",
+      "short": "The chain from national policy to combat: raising, equipping, and supplying armies that then fight the battles you command.",
+      "body": "Battles were the visible end of a long chain that began with policy: each side had to raise armies through enlistment and conscription, equip them from its industrial and import base, and move them by rail and river before a shot was fired. The Union's larger population, dominant manufacturing, and intact navy let it field, arm, and replace armies on a scale the agrarian, blockade-strangled Confederacy could not sustain. This is why the war's outcome reflected systems as much as generalship: the South could win individual battles yet still lose the capacity to keep fighting. In the game this system links the strategic layer to the tactical one, so that the manpower you mobilize, the supplies you secure past the blockade, and the commanders you appoint determine the army that actually deploys on the field.",
+      "tags": [
+        "union",
+        "confederate",
+        "both",
+        "strategy",
+        "logistics",
+        "mobilization"
+      ],
+      "related": [
+        "system-manpower-pool-usct",
+        "system-naval-blockade-economy",
+        "system-high-command-leadership"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "James M. McPherson, Battle Cry of Freedom: The Civil War Era (Oxford University Press, 1988)",
+        "American Battlefield Trust, 'Civil War Facts', https://www.battlefields.org/learn/articles/civil-war-facts"
+      ]
+    },
+    {
+      "id": "system-high-command-leadership",
+      "axis": "systems",
+      "term": "High-Command Leadership & the Relief of Generals",
+      "short": "The civilian power to hire, fire, and promote commanders; modeled as leadership that magnifies or wastes the same armies.",
+      "body": "An army's fate turned on who led it, and Lincoln cycled through commanders of the Army of the Potomac, removing George McClellan for caution, then Ambrose Burnside after Fredericksburg and Joseph Hooker after Chancellorsville, before elevating Ulysses S. Grant to general-in-chief in March 1864. Grant brought a coordinated, all-fronts strategy and paired with Sherman in the West, applying relentless pressure the Confederacy could not answer. Confederate command had its own failures and atrocities to answer for, including Forrest's conduct at Fort Pillow, so leadership is presented critically rather than romantically. In the game this system models command as a multiplier on identical troops: the relief of failing generals and the promotion of effective ones changes what the same brigades, terrain, and supplies can achieve.",
+      "tags": [
+        "union",
+        "confederate",
+        "both",
+        "command",
+        "leadership",
+        "strategy"
+      ],
+      "related": [
+        "system-grand-strategy-to-battlefield",
+        "system-political-capital-home-front"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "National Park Service, Lincoln Home, 'Lincoln, Grant, and the 1864 Election', https://www.nps.gov/liho/learn/historyculture/lincolngrant.htm",
+        "James M. McPherson, Battle Cry of Freedom: The Civil War Era (Oxford University Press, 1988)"
+      ]
+    },
+    {
+      "id": "system-political-capital-home-front",
+      "axis": "systems",
+      "term": "Political Capital & War-Weariness",
+      "short": "The finite home-front will that sustains a war; modeled as a morale resource battlefield results spend or replenish.",
+      "body": "Neither government could fight beyond what its civilians would tolerate, so battlefield events translated directly into political survival. By August 1864 Lincoln privately judged it 'exceedingly probable' that he would not be reelected, and the Democratic platform demanded a negotiated peace, a path that would have left the Confederacy and slavery intact. Sherman's capture of Atlanta in early September reversed Northern despair and secured Lincoln's reelection, 212 electoral votes to McClellan's 21, with strong support from soldiers voting in the field. In the game this system models morale as spendable capital: defeats and stalemates drain the will to continue, while decisive victories restore it, which is why a flagging army could lose a war its soldiers had not yet been beaten in.",
+      "tags": [
+        "union",
+        "confederate",
+        "both",
+        "morale",
+        "politics",
+        "home-front",
+        "elections"
+      ],
+      "related": [
+        "system-manpower-pool-usct",
+        "system-foreign-intervention-pressure",
+        "system-high-command-leadership"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "American Battlefield Trust, 'The Election of 1864', https://www.battlefields.org/learn/articles/election-1864",
+        "National Park Service, Lincoln Home, 'Lincoln, Grant, and the 1864 Election', https://www.nps.gov/liho/learn/historyculture/lincolngrant.htm"
+      ]
+    },
+    {
+      "id": "system-manpower-pool-usct",
+      "axis": "systems",
+      "term": "The Manpower Pool & USCT Enlistment",
+      "short": "The reserve of men each side could raise; emancipation opened ~180,000 Black soldiers to the Union, a decisive demographic advantage.",
+      "body": "The Civil War was won and lost partly as an arithmetic of manpower, and the Union held the larger free population. After the Emancipation Proclamation took effect January 1, 1863, the War Department's General Order 143 (May 22, 1863) created the Bureau of Colored Troops, and roughly 180,000 Black men, most of them formerly enslaved, served in the United States Colored Troops, about one-tenth of the Union army. These soldiers faced the Confederacy's policy of refusing them quarter, exemplified by the April 1864 Fort Pillow massacre of surrendered Black troops under Nathan Bedford Forrest, who would later become an early leader of the Ku Klux Klan. In the game this system shows that arming the enslaved was both a moral turn and a strategic one: it widened the Union manpower pool the Confederacy could never match, because the South's own labor force was the people it fought to keep enslaved.",
+      "tags": [
+        "union",
+        "confederate",
+        "both",
+        "manpower",
+        "usct",
+        "emancipation",
+        "atrocity"
+      ],
+      "related": [
+        "system-political-capital-home-front",
+        "system-grand-strategy-to-battlefield"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "National Archives, 'Black Soldiers in the U.S. Military During the Civil War', https://www.archives.gov/education/lessons/blacks-civil-war/article.html",
+        "American Battlefield Trust, 'The United States Colored Troops', https://www.battlefields.org/learn/articles/united-states-colored-troops"
+      ]
+    },
+    {
+      "id": "system-naval-blockade-economy",
+      "axis": "systems",
+      "term": "The Naval Blockade (Economic Strangulation)",
+      "short": "The Union blockade of Southern ports that throttled cotton exports and imports; modeled as escalating Confederate scarcity over time.",
+      "body": "Beginning April 1861, the Union proclaimed a blockade of Confederate coastlines, the naval leg of Winfield Scott's so-called Anaconda Plan, choking the export of cotton and the import of arms, salt, medicine, and machinery. Confederate cotton exports collapsed to roughly five percent of prewar levels, wrecking the Southern economy and the value of its currency; the South's gamble that 'King Cotton' would force British and French intervention failed, as those powers found new cotton in Egypt and India. Fast, low-cargo blockade runners out of British yards in Liverpool and Glasgow attempted an estimated 2,500 or more runs with a high success rate, but they could not replace ordinary commercial shipping, so scarcity deepened year by year. In the game this system models the Confederacy as a closing vise: a war the South had to win quickly, because attrition of supply, not just of soldiers, ground it down.",
+      "tags": [
+        "confederate",
+        "union",
+        "both",
+        "blockade",
+        "economy",
+        "navy",
+        "logistics"
+      ],
+      "related": [
+        "system-foreign-intervention-pressure",
+        "system-grand-strategy-to-battlefield"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "U.S. Department of State, Office of the Historian, 'The Blockade of Confederate Ports, 1861-1865', https://history.state.gov/milestones/1861-1865/blockade",
+        "James M. McPherson, Battle Cry of Freedom: The Civil War Era (Oxford University Press, 1988)"
+      ]
+    }
+  ]
+}
