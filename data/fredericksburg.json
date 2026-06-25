@@ -2,6 +2,17 @@
   "_comment": "PHASE C-1 — Fredericksburg (the Marye's Heights assault), Dec 13, 1862, for the __FIELD real-time engine. Second data-driven scenario (the bullrun1 pattern, GAME_DATA.fredericksburg.fredericksburg, registered in src/tactical/T1 fldScenarioRegistry). Models the ICONIC FRONTAL ASSAULT only: Burnside's army storms WEST/uphill from the town across the open glacis toward the SUNKEN TELEGRAPH ROAD, where Longstreet's men crouch behind a 4-foot stone wall at the foot of Marye's Heights, with pre-sighted artillery on the crest. The Union fed seven divisions in piecemeal — some fourteen charges, none reaching the wall (closest ~25-40 yd) — and lost ~8,000 men before it. Modeled as Union assault WAVES vs a walled defense that THICKENS as CS reinforcements crowd up. The southern front (Franklin vs Jackson at Prospect Hill / Meade's breakthrough) is teaching context only, not the playable field. COORDINATE NOTE: the engine field is 1200x900 yards; per engine convention the ATTACKER (US) sits at HIGH z facing -z (facing 0) and the DEFENDER (CS) at LOW z facing +z (facing PI). In THIS field: high z = the town + the Rappahannock (the Union start/rear); a canal/millrace crosses the plain ~z 640 (3 narrow bridges); the open killing glacis is ~z 420-600; the STONE WALL + sunken road front the objective ~z 400; the defenders hold just behind it ~z 355; Marye's Heights + its crest artillery rise at low z ~235. defaultFog is FALSE (the morning fog had lifted by the main assault — the slaughter happened in clear fields of fire: 'a chicken could not live on that field'). Per-brigade strengths are Inferred approximations; the Verified, teaching-bearing facts are the wave order/commanders, the walled-defense geometry, and the futility/casualty ratio. ARTILLERY (D74 universal-combat principle): the crest batteries are modeled on the UNIVERSAL GUN MODEL — each carries a real GUN COUNT (guns) + realistic crew (men), and its fire derives from guns * FLDA.GUN_FIRE_WEIGHT, the SAME per-gun weight in every battle (no per-battle 'volume-of-fire proxy men' fudge, which the C-1/D73 build used and D74 removed). The Confederate defensive advantage EMERGES from scenario DESIGN — the stone wall's cover, the massed historical gun count crowning the heights, and the cautious-attacker posture dying exposed on the open glacis — re-tuned via geometry/OOB, not by inflating strength.",
   "fredericksburg": {
     "id": "fredericksburg",
+    "weather": {
+      "sky": "clear",
+      "time": "afternoon",
+      "provenance": "Verified",
+      "note": "Cold, clear day; the morning river-valley fog over the Rappahannock and the town lifted in mid-morning (~10 a.m.), before the noon-to-dark assaults on Marye's Heights.",
+      "sources": [
+        "Frank A. O'Reilly, The Fredericksburg Campaign: Winter War on the Rappahannock (LSU Press, 2003)",
+        "Fredericksburg & Spotsylvania National Military Park (NPS), 'Battle of Fredericksburg History: Marye's Heights' (nps.gov/frsp; Sumner's first assault began near noon, attacks continued until dark)",
+        "American Battlefield Trust, 'Battle of Fredericksburg' battle page (battlefields.org)"
+      ]
+    },
     "name": "Fredericksburg — the Assault on Marye's Heights",
     "date": "December 13, 1862",
     "place": "Marye's Heights, Fredericksburg, Spotsylvania County, Virginia",

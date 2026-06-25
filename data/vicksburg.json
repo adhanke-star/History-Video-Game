@@ -2,6 +2,17 @@
   "_comment": "PHASE C WESTERN BREADTH - VICKSBURG, May-July 1863. A three-phase siege battle for the __FIELD real-time engine: May 19 Stockade Redan, May 22 Forlorn Hope / Great Redoubt, and the June siege approaches / mine against the 3rd Louisiana Redan. The teaching point is architectural: Vicksburg was not a single field battle but a fortress system of loess ravines, ridge roads, redans, lunettes, artillery batteries, covered approaches, mines, and collapsing logistics. Strengths are Inferred brigade-scale approximations; the phase sequence, principal ground, siege works, failed assaults, and Union engineering pressure are the teaching-bearing facts.",
   "vicksburg": {
     "id": "vicksburg",
+    "weather": {
+      "sky": "clear",
+      "time": "midday",
+      "provenance": "Inferred",
+      "note": "Mississippi's hot, dry season — searing heat and scarce water drove Grant's May assaults; dust and powder-smoke hung over the lines.",
+      "sources": [
+        "Ulysses S. Grant, Personal Memoirs of U. S. Grant, Vol. II, Ch. 55: 'We were in a Southern climate, at the beginning of the hot season... under a tropical sun' — heat and scarce water among his stated reasons to assault May 22, 1863",
+        "National Park Service, Vicksburg National Military Park — 'Vicksburg Siege' history page (May 22 simultaneous assault at 10 a.m.; June 25 Third Louisiana Redan mine ~3:30 p.m.)",
+        "American Battlefield Trust — 'Vicksburg' battle page and 'Vicksburg, May 22, 1863' map (10 a.m. attack on a three-mile front)"
+      ]
+    },
     "name": "Vicksburg - Siege of the River Fortress",
     "date": "May 19-July 4, 1863",
     "place": "Vicksburg, Warren County, Mississippi - the bluffs above the Mississippi River",

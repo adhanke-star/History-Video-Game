@@ -14409,6 +14409,17 @@ var GAME_DATA = {
   "_comment": "PHASE C-2 — ANTIETAM / SHARPSBURG, September 17 1862 — the FIRST MULTI-PHASE epic for the __FIELD real-time engine (DECISIONS D74/D76). Three sequential phases fought in one scenario via the gated T8 phases[] engine: PHASE 1 the CORNFIELD (dawn, the Confederate left — Hooker's I Corps + Mansfield's XII Corps vs Jackson's wing + Hood's counterattack, 'Artillery Hell'); PHASE 2 the SUNKEN ROAD / 'Bloody Lane' (mid-morning, the center — Sumner's II Corps vs D.H. Hill in a worn farm-lane trench, carried by Barlow's enfilade + a misheard Confederate order); PHASE 3 BURNSIDE'S BRIDGE (afternoon, the Confederate right — the IX Corps bottleneck across the Lower/Rohrbach Bridge, held for hours by Toombs's few Georgians, the breakthrough toward Sharpsburg halted by A.P. Hill's Light Division force-marching from Harpers Ferry). Each phase is its own sector/OOB/objective; the running casualty tally + the per-phase sector results carry forward; the overall battle is scored as a weighted aggregate with a draw band (the historical TACTICAL DRAW / marginal-Union-strategic-check emerges). COORDINATE NOTE: each phase field is 1200x900 yards; per engine convention the ATTACKER (US, every phase) sits at HIGH z facing -z (facing 0) and the DEFENDER (CS) at LOW z facing +z (facing PI); the objective sits at low-center z. ARTILLERY uses the D75 UNIVERSAL GUN MODEL (real gun counts + realistic crew; fire = guns * the universal weight). ANTI-LOST-CAUSE: the lessons are command failure on BOTH sides, terrain + contingency over martial 'genius', the appalling cost (the bloodiest single day), McClellan's wasted ~2:1 advantage + withheld reserves, and ABOVE ALL the Emancipation Proclamation five days later that turned the war against slavery. Strengths are Inferred division/brigade-scale approximations (Carman/Sears/OR differ); the Verified, teaching-bearing facts are the phase sequence, the commanders + their fate, the terrain, and the casualty weight. Sources: NPS Antietam, American Battlefield Trust, the Official Records (via aotw.org), Sears 'Landscape Turned Red', McPherson 'Crossroads of Freedom'.",
   "antietam": {
     "id": "antietam",
+    "weather": {
+      "sky": "fog",
+      "time": "dawn",
+      "provenance": "Verified",
+      "note": "Dawn in the Cornfield opened in ground fog and mist that pooled in the hollows after overnight rain; it thinned as the sun rose over South Mountain.",
+      "sources": [
+        "Stephen W. Sears, \"Landscape Turned Red: The Battle of Antietam\" (1983) — documents the overnight rain",
+        "American Battlefield Trust — Antietam Cornfield map narrative (\"rain had stopped, leaving a thin ground fog\"; hollows filled with mist)",
+        "Ted Ballard, \"Staff Ride Guide: Battle of Antietam\" (U.S. Army Center of Military History)"
+      ]
+    },
     "name": "Antietam — the Bloodiest Day",
     "date": "September 17, 1862",
     "place": "Sharpsburg, Washington County, Maryland — along Antietam Creek",
@@ -14998,6 +15009,17 @@ var GAME_DATA = {
   "_comment": "TACTICAL P1a — First Bull Run (First Manassas) scenario data for the __FIELD real-time engine. Distilled from HISTORICAL-DATA.md (the citation-grade Bull Run dossier). Brigade-scale, the ENGAGED main-field force only (Matthews Hill -> Henry House Hill -> Chinn Ridge); rear-area/unengaged brigades are omitted by design. The battle is modeled as ARRIVAL WAVES, matching the real engagement: at T=0 only the lead Union brigades (Burnside, Porter) are in contact with the Confederate delaying force (Evans, then Bee/Bartow) on Matthews Hill; both sides then FEED brigades onto the field over the morning, the Confederates rallying on Henry House Hill and — the teaching mechanic — receiving rail-borne reinforcements (Jackson, then Early + Elzey on Chinn Ridge) that historically turned the Union right and won the day. COORDINATE NOTE: the engine field is 1200x900 yards. Per the engine convention US sits at HIGH z and faces -z (facing 0); CS sits at LOW z and faces +z (facing PI). In THIS field's coordinates: high z = the Union approach (Sudley Ford / Matthews Hill); center = Henry House Hill (the decisive crest = the objective); low z = the Confederate rear (Manassas Junction); low x (west) = the Union RIGHT flank = Chinn Ridge, where the rail-borne reinforcements turned the day. Strength figures are brigade-scale approximations from after-action reports (Inferred/medium per the dossier); the engaged-force asymmetry and the reinforcement TIMELINE are the Verified, teaching-bearing facts.",
   "bullrun1": {
     "id": "bullrun1",
+    "weather": {
+      "sky": "clear",
+      "time": "afternoon",
+      "provenance": "Verified",
+      "note": "A fair, hot summer Sunday; weeks of dry weather left Bull Run low and easily forded.",
+      "sources": [
+        "American Battlefield Trust, 'Bull Run' battle page (battlefields.org/learn/articles/bull-run)",
+        "Smithsonian Institution Archives, 'How Hot Was It At Bull Run?' (siarchives.si.edu/blog/how-hot-was-it-bull-run)",
+        "NPS Manassas National Battlefield Park, 'The Battle of First Manassas (First Bull Run)' (nps.gov/mana/learn/historyculture/first-manassas.htm)"
+      ]
+    },
     "name": "First Bull Run (First Manassas)",
     "date": "July 21, 1861",
     "place": "Bull Run, near Manassas Junction, Prince William County, Virginia",
@@ -16957,6 +16979,17 @@ var GAME_DATA = {
   "_comment": "PHASE C-1 — CHANCELLORSVILLE, April 30-May 6, 1863 — the THIRD EASTERN MARQUEE battle for the __FIELD real-time engine (single-phase, the Fredericksburg/Shiloh pattern). Lee's greatest victory and his costliest: the Army of Northern Virginia, outnumbered ~2:1 (133,000 US vs 60,000 CS), splits its army in the face of the enemy — Jackson's legendary flank march on May 2 that crushed Hooker's XI Corps, the desperate fighting around the Chancellor House, Hazel Grove, and Fairview, and the mortal wounding of Stonewall Jackson by his own men at dusk on May 2. The battle is modeled as a SINGLE-PHASE engagement focused on the decisive action: Jackson's flank attack on the Union right (the XI Corps rout near Dowdall's Tavern / Wilderness Church), with the Confederate assault pressing toward the Chancellor House and the Union defense trying to rally and hold the crossroads. COORDINATE NOTE: the engine field is 1200x900 yards; per engine convention the ATTACKER (CS, the flank march) sits at HIGH z facing -z (facing 0) and the DEFENDER (US) forms nearer LOW/mid z facing +z (facing PI). The Chancellor House / crossroads is the defender's key hold line at mid-field. ARTILLERY uses the D75 UNIVERSAL GUN MODEL (real gun counts + realistic crew; fire = guns * the universal weight). ANTI-LOST-CAUSE: the lessons are command failure on BOTH sides — Hooker's loss of nerve (despite a ~2:1 advantage and a sound plan), Jackson's fatal wounding by friendly fire, the piecemeal Confederate attacks after Jackson fell, and the appalling cost (~30,000 total casualties; Lee lost roughly a fifth of his army, a rate he could not sustain). The 'flank march' is a monument to audacity AND to the cost of audacity: Jackson's death was the war's greatest single loss to the Confederate command. Sources: NPS Fredericksburg & Spotsylvania National Military Park (Chancellorsville Battlefield), American Battlefield Trust, the Official Records, Sears 'Chancellorsville', Gallagher 'The Battle of Chancellorsville', Krick 'Chancellorsville — Lee's Greatest Victory'.",
   "chancellorsville": {
     "id": "chancellorsville",
+    "weather": {
+      "sky": "clear",
+      "time": "morning",
+      "provenance": "Verified",
+      "note": "Fair May morning (a period account recalled \"not a cloud in the sky\" at sunrise); the real murk was powder-smoke and the burning Chancellor house, not weather.",
+      "sources": [
+        "American Battlefield Trust, 'Chancellorsville: Fight for the Intersection, May 3, 1863' (battle map) — title and the by-9:30am Hooker-wounded timing verified",
+        "NPS Fredericksburg & Spotsylvania National Military Park, 'The Battle of Chancellorsville' (nps.gov/frsp) — verified; gives the 6:30-9:30am crossroads fight",
+        "Stephen W. Sears, Chancellorsville (Houghton Mifflin, 1996; ISBN 9780395634172) — verified real"
+      ]
+    },
     "name": "Chancellorsville — Lee's Greatest Victory",
     "date": "May 1-3, 1863",
     "place": "Chancellorsville, Spotsylvania County, Virginia — the Wilderness",
@@ -17140,6 +17173,17 @@ var GAME_DATA = {
   "_comment": "PHASE C WESTERN BREADTH - CHICKAMAUGA, September 19-20, 1863. A three-phase epic on the __FIELD real-time multi-phase (T8) engine: P0 The Battle in the Woods (Sep 19 meeting engagement in dense timber; the woods themselves blind both armies, fog-of-war off by default but heavy woods terrain - the Union line holds the road Sep 19, which is historical: the breakthrough came the next day), P1 Longstreet's Breakthrough (Sep 20 late morning, the Wood gap at the Brotherton farm - the decisive, scoreWeight-3 phase), P2 The Rock of Chickamauga (Sep 20 afternoon, Thomas holds Snodgrass Hill / Horseshoe Ridge - a Union defensive success in which the cautious CS assault pays the failed-assault price). The teaching is CONTINGENCY OVER GENIUS: a Confederate victory handed to Longstreet by a Union staff error, then squandered by Bragg's failure to pursue. Outcomes EMERGE from OOB / terrain / timing / doctrine under the ONE universal combat model (D74) - NO per-battle damage fudge. BALANCE (AI-vs-AI, 32 seeds, deterministic): P0 US-holds 32/32 (mutual bloodbath), P1 CS-breakthrough 32/32, P2 US-holds 32/32 with the CS attacker paying ~3:1; aggregate CS 32/32 (CS 3 / US 2 via the weight-3 breakthrough), with the alt-history path that a human US player who closes the gap in P1 overturns the battle. Top-level attacker=CS / defender=US across all three phases: the Army of the Cumberland fought on the defensive throughout, so the CS player takes the offensive (Bragg) and the US player holds (Thomas). Strengths are Inferred brigade-scale abstractions (a division per marker); the sequence, ground, command facts, and leader fates are Verified (and were run through an adversarial fact-check that corrected Hood's wounding to Sep 20 / Maj. Gen., Helm to Breckinridge's division, restored Cheatham, removed Loring, and left the gap-reporter's identity flagged as disputed).",
   "chickamauga": {
     "id": "chickamauga",
+    "weather": {
+      "sky": "clear",
+      "time": "afternoon",
+      "provenance": "Verified",
+      "note": "Clear cold-snap sky; weeks of drought, so dust and trapped powder-smoke gathered into a blinding haze in the dense woods.",
+      "sources": [
+        "Readex Report, 'Fields of Fire and Frost: The Battle of Chickamauga and Weather in Early American Newspapers' (vol. 13, no. 2) — cites Smithsonian Institution weather-observation station data: afternoon highs fell from 80F (Sep 17) to 54F, frosty mornings, a 'cold, clear sky,' and weeks of drought",
+        "Wikipedia, 'Battle of Chickamauga' — 5 a.m. Sep 20 'cold and foggy battlefield' (dawn, before the modeled window) and Day-1 'limited visibility of twilight and smoke from burning underbrush'",
+        "Period soldier/newspaper accounts (per the Readex corpus and standard battle narratives): dry ground raised stifling dust, and black-powder smoke plus dust combined with thick undergrowth to nearly blind commanders and men in the woods"
+      ]
+    },
     "name": "Chickamauga - The River of Death",
     "date": "September 19-20, 1863",
     "place": "West Chickamauga Creek, Catoosa & Walker Counties, Georgia - twelve miles south of Chattanooga",
@@ -21393,6 +21437,17 @@ var GAME_DATA = {
   "_comment": "PHASE C-1 — Fredericksburg (the Marye's Heights assault), Dec 13, 1862, for the __FIELD real-time engine. Second data-driven scenario (the bullrun1 pattern, GAME_DATA.fredericksburg.fredericksburg, registered in src/tactical/T1 fldScenarioRegistry). Models the ICONIC FRONTAL ASSAULT only: Burnside's army storms WEST/uphill from the town across the open glacis toward the SUNKEN TELEGRAPH ROAD, where Longstreet's men crouch behind a 4-foot stone wall at the foot of Marye's Heights, with pre-sighted artillery on the crest. The Union fed seven divisions in piecemeal — some fourteen charges, none reaching the wall (closest ~25-40 yd) — and lost ~8,000 men before it. Modeled as Union assault WAVES vs a walled defense that THICKENS as CS reinforcements crowd up. The southern front (Franklin vs Jackson at Prospect Hill / Meade's breakthrough) is teaching context only, not the playable field. COORDINATE NOTE: the engine field is 1200x900 yards; per engine convention the ATTACKER (US) sits at HIGH z facing -z (facing 0) and the DEFENDER (CS) at LOW z facing +z (facing PI). In THIS field: high z = the town + the Rappahannock (the Union start/rear); a canal/millrace crosses the plain ~z 640 (3 narrow bridges); the open killing glacis is ~z 420-600; the STONE WALL + sunken road front the objective ~z 400; the defenders hold just behind it ~z 355; Marye's Heights + its crest artillery rise at low z ~235. defaultFog is FALSE (the morning fog had lifted by the main assault — the slaughter happened in clear fields of fire: 'a chicken could not live on that field'). Per-brigade strengths are Inferred approximations; the Verified, teaching-bearing facts are the wave order/commanders, the walled-defense geometry, and the futility/casualty ratio. ARTILLERY (D74 universal-combat principle): the crest batteries are modeled on the UNIVERSAL GUN MODEL — each carries a real GUN COUNT (guns) + realistic crew (men), and its fire derives from guns * FLDA.GUN_FIRE_WEIGHT, the SAME per-gun weight in every battle (no per-battle 'volume-of-fire proxy men' fudge, which the C-1/D73 build used and D74 removed). The Confederate defensive advantage EMERGES from scenario DESIGN — the stone wall's cover, the massed historical gun count crowning the heights, and the cautious-attacker posture dying exposed on the open glacis — re-tuned via geometry/OOB, not by inflating strength.",
   "fredericksburg": {
     "id": "fredericksburg",
+    "weather": {
+      "sky": "clear",
+      "time": "afternoon",
+      "provenance": "Verified",
+      "note": "Cold, clear day; the morning river-valley fog over the Rappahannock and the town lifted in mid-morning (~10 a.m.), before the noon-to-dark assaults on Marye's Heights.",
+      "sources": [
+        "Frank A. O'Reilly, The Fredericksburg Campaign: Winter War on the Rappahannock (LSU Press, 2003)",
+        "Fredericksburg & Spotsylvania National Military Park (NPS), 'Battle of Fredericksburg History: Marye's Heights' (nps.gov/frsp; Sumner's first assault began near noon, attacks continued until dark)",
+        "American Battlefield Trust, 'Battle of Fredericksburg' battle page (battlefields.org)"
+      ]
+    },
     "name": "Fredericksburg — the Assault on Marye's Heights",
     "date": "December 13, 1862",
     "place": "Marye's Heights, Fredericksburg, Spotsylvania County, Virginia",
@@ -22693,6 +22748,17 @@ var GAME_DATA = {
   "_comment": "PHASE C-1 — GETTYSBURG, July 1-3, 1863 — the SECOND MULTI-PHASE epic for the __FIELD real-time engine (following the Antietam pattern via the gated T8 phases[] engine). THREE sequential phases fought in one scenario: PHASE 1 DAY 1 — McPherson Ridge / Oak Hill (the meeting engagement west of town: Buford's cavalry delaying action, Reynolds's I Corps arriving on the double-quick, the Confederate II Corps under Ewell sweeping down from the north — Reynolds killed, the Union pushed through town to Cemetery Hill); PHASE 2 DAY 2 — Little Round Top / Devil's Den / the Wheatfield (Longstreet's assault on the Union left: Hood's division storming the Round Tops, McLaws's division into the Wheatfield and the Peach Orchard, Sickles's III Corps shattered in the salient — Little Round Top saved by Chamberlain's 20th Maine bayonet charge, Devil's Den lost, the Wheatfield a bloody see-saw); PHASE 3 DAY 3 — Pickett's Charge (the grand Confederate assault on the Union center at Cemetery Ridge: the mile-long cannonade, the 12,500-man advance across open ground under enfilading fire, the repulse at the Angle and the Copse of Trees — the 'high-water mark of the Confederacy'). Each phase is its own sector/OOB/objective; the running casualty tally + the per-phase sector results carry forward; the overall battle is scored as a weighted aggregate with a draw band. COORDINATE NOTE: each phase field is 1200x900 yards; per engine convention the ATTACKER sits at HIGH z facing -z (facing 0) and the DEFENDER at LOW z facing +z (facing PI); the objective sits at low-center z. Day 1: US defends (Buford/Reynolds holding the ridges west of town), CS attacks (Heth's division advancing on the Chambersburg Pike). Day 2: US defends (the Round Tops and the ridge line), CS attacks (Longstreet's flank march). Day 3: US defends (Cemetery Ridge), CS attacks (Pickett's/Pettigrew's/Trimble's divisions). ARTILLERY uses the D75 UNIVERSAL GUN MODEL (real gun counts + realistic crew; fire = guns * the universal weight). ANTI-LOST-CAUSE: the lessons are command failure on BOTH sides — Lee's overconfidence in his 'invincible' veterans, Ewell's failure to take Cemetery Hill on Day 1, Longstreet's delay and reluctance on Day 2, the suicidal frontal assault on Day 3; Meade's failure to counterattack; the cost of the war's largest battle (~51,000 casualties) and the turning point that ended Confederate hopes of foreign recognition and offensive war. Strengths are Inferred division/brigade-scale approximations; the Verified, teaching-bearing facts are the phase sequence, the commanders + their fate, the terrain, and the casualty weight. Sources: NPS Gettysburg, American Battlefield Trust, the Official Records, Sears 'Gettysburg', Coddington 'The Gettysburg Campaign', Pfanz 'Gettysburg — The First Day' / 'The Second Day' / 'Culp's Hill and Cemetery Hill'.",
   "gettysburg": {
     "id": "gettysburg",
+    "weather": {
+      "sky": "clear",
+      "time": "afternoon",
+      "provenance": "Verified",
+      "note": "Hot, humid early-July afternoon (~87F at 2pm July 3); bright skies with scattered cumulus, and drifting powder-smoke over Pickett's Charge. No rain on the battle days.",
+      "sources": [
+        "Rev. Michael Jacobs, contemporaneous meteorological observations, Pennsylvania College (now Gettysburg College): July 3 readings 73F (7am) / 87F (2pm) / 76F (9pm); sky 4/10 cumulus at 2pm, bright by 11am, no battle-day rain",
+        "American Battlefield Trust, Gettysburg battlefield-weather/heat articles",
+        "National Park Service, Gettysburg National Military Park"
+      ]
+    },
     "name": "Gettysburg — the Turning Point",
     "date": "July 1-3, 1863",
     "place": "Gettysburg, Adams County, Pennsylvania — the town and the ridges south and west",
@@ -23035,6 +23101,17 @@ var GAME_DATA = {
   "_comment": "PHASE C-1 - MALVERN HILL, July 1, 1862 - the remaining Eastern marquee battle for the __FIELD real-time engine (single-phase, the Fredericksburg/Shiloh pattern). The Seven Days ended on a modest open plateau north of the James River, where Fitz John Porter and artillery chief Henry J. Hunt turned Malvern Hill into a killing ground. Lee attempted to silence the Union guns with badly coordinated Confederate grand batteries, then sent piecemeal infantry attacks across open slopes. The battle is modeled as a SINGLE-PHASE Confederate assault against a Union gun line: CS attacks from the high-z woods and roads; US defends the Crew house ridge / Malvern plateau at low-mid z. ARTILLERY uses the D75 UNIVERSAL GUN MODEL (guns * the universal weight, crew-scaled) with no battle-specific damage constants. ANTI-LOST-CAUSE: the lesson is not Confederate valor or Union timidity in isolation; it is command failure, staff confusion, ineffective Confederate artillery concentration, Hunt's professional gun handling, Porter's field command, and McClellan's retreat from a tactical victory to Harrison's Landing. Sources: NPS Richmond National Battlefield Park; NPS History Civil War Series 'The Battles for Richmond, 1862'; American Battlefield Trust Malvern Hill article, battle summary, and map; Encyclopedia Virginia; OR-derived OOB summaries. Strengths and exact arrival minutes are Inferred at brigade/division abstraction scale.",
   "malvernHill": {
     "id": "malvernHill",
+    "weather": {
+      "sky": "clear",
+      "time": "afternoon",
+      "provenance": "Inferred",
+      "note": "Union guns crowned the hill; the day's rain held off until July 2 — the haze here was powder-smoke, not sky.",
+      "sources": [
+        "American Battlefield Trust, 'Malvern Hill' battle page (battlefields.org)",
+        "National Park Service, Richmond National Battlefield Park, 'The Battle of Malvern Hill' (nps.gov/rich)",
+        "Encyclopedia Virginia, 'Malvern Hill, Battle of' (encyclopediavirginia.org)"
+      ]
+    },
     "name": "Malvern Hill - the Seven Days' Artillery Duel",
     "date": "July 1, 1862",
     "place": "Malvern Hill, Henrico County, Virginia - near the James River",
@@ -25277,6 +25354,17 @@ var GAME_DATA = {
   "_comment": "PHASE C-2 — SHILOH / PITTSBURG LANDING, April 6-7, 1862 — the FIRST WESTERN THEATER battle for the __FIELD real-time engine (single-phase, the Fredericksburg pattern). The first major battle of the Western theater: Grant's Army of the Tennessee, encamped at Pittsburg Landing on the Tennessee River, is surprised by Johnston's Army of the Mississippi striking from Corinth, Mississippi. The first day (April 6) is a Confederate near-breakthrough — the 'Hornets' Nest' holds for hours, Johnston is killed at the Peach Orchard, and the Union is pressed into a tight perimeter around Pittsburg Landing. Overnight Buell's Army of the Ohio arrives; the second day (April 7) the reinforced Union drives the Confederates back to Corinth. The battle is modeled as a SINGLE-PHASE engagement (the first day's Confederate assault, with the second day's Union counterattack as the time-limit pressure — the defender must hold until Buell arrives). COORDINATE NOTE: the engine field is 1200x900 yards; per engine convention the ATTACKER (CS, the first day) sits at HIGH z facing -z (facing 0) and the DEFENDER (US) at LOW z facing +z (facing PI). The Confederate approach is from the southwest (high z); the Union camps and the Landing are at low z. The Hornets' Nest (the Sunken Road) is the defender's key hold line at mid-field. ARTILLERY uses the D75 UNIVERSAL GUN MODEL (real gun counts + realistic crew; fire = guns * the universal weight). ANTI-LOST-CAUSE: the lessons are command failure on BOTH sides — Grant's unprepared encampment (no entrenchments, no pickets despite knowing Johnston was at Corinth), Johnston's fatal exposure at the Peach Orchard, the piecemeal Confederate assault that failed to crush the Union before Buell arrived, and the appalling cost (~24,000 total casualties, more than the American Revolution, the War of 1812, and the Mexican-American War combined up to that point). The 'Hornets' Nest' is a monument to the cost of linear defense against massed artillery, not to Southern invincibility. Strengths are Inferred division/brigade-scale approximations (the OOBs differ across Cunningham, Sword, and the Official Records); the Verified, teaching-bearing facts are the commanders + their fate, the terrain, and the casualty weight. Sources: NPS Shiloh National Military Park, American Battlefield Trust, the Official Records (via aotw.org), Cunningham 'Shiloh and the Western Campaign of 1862', Sword 'Shiloh: Bloody April', McDonough 'Shiloh — In Hell before Night'.",
   "shiloh": {
     "id": "shiloh",
+    "weather": {
+      "sky": "clear",
+      "time": "morning",
+      "provenance": "Verified",
+      "note": "April 6 was fair and springlike (fruit trees in blossom days before); the famous torrential cold rain came overnight April 6-7, after the day's fight — outside the modeled daytime window.",
+      "sources": [
+        "Ulysses S. Grant, Personal Memoirs of U.S. Grant (1885): 'During the night rain fell in torrents' (verified verbatim — refers to the night AFTER Day 1)",
+        "William T. Sherman, letter of April 3, 1862: 'The weather is now springlike, apples and peaches in blossom' (fair pre-battle conditions)",
+        "American Battlefield Trust, 'Battle of Shiloh' battle page (battlefields.org) — live; documents the April 3 rain delay and the dawn assault"
+      ]
+    },
     "name": "Shiloh — the Hornets' Nest",
     "date": "April 6-7, 1862",
     "place": "Pittsburg Landing, Hardin County, Tennessee — along the Tennessee River",
@@ -25531,6 +25619,17 @@ var GAME_DATA = {
   "_comment": "PHASE C WESTERN BREADTH - VICKSBURG, May-July 1863. A three-phase siege battle for the __FIELD real-time engine: May 19 Stockade Redan, May 22 Forlorn Hope / Great Redoubt, and the June siege approaches / mine against the 3rd Louisiana Redan. The teaching point is architectural: Vicksburg was not a single field battle but a fortress system of loess ravines, ridge roads, redans, lunettes, artillery batteries, covered approaches, mines, and collapsing logistics. Strengths are Inferred brigade-scale approximations; the phase sequence, principal ground, siege works, failed assaults, and Union engineering pressure are the teaching-bearing facts.",
   "vicksburg": {
     "id": "vicksburg",
+    "weather": {
+      "sky": "clear",
+      "time": "midday",
+      "provenance": "Inferred",
+      "note": "Mississippi's hot, dry season — searing heat and scarce water drove Grant's May assaults; dust and powder-smoke hung over the lines.",
+      "sources": [
+        "Ulysses S. Grant, Personal Memoirs of U. S. Grant, Vol. II, Ch. 55: 'We were in a Southern climate, at the beginning of the hot season... under a tropical sun' — heat and scarce water among his stated reasons to assault May 22, 1863",
+        "National Park Service, Vicksburg National Military Park — 'Vicksburg Siege' history page (May 22 simultaneous assault at 10 a.m.; June 25 Third Louisiana Redan mine ~3:30 p.m.)",
+        "American Battlefield Trust — 'Vicksburg' battle page and 'Vicksburg, May 22, 1863' map (10 a.m. attack on a three-mile front)"
+      ]
+    },
     "name": "Vicksburg - Siege of the River Fortress",
     "date": "May 19-July 4, 1863",
     "place": "Vicksburg, Warren County, Mississippi - the bluffs above the Mississippi River",
@@ -43423,6 +43522,380 @@ function fldAtmoDispose() {
     var _oe = fldExit;
     fldExit = function () { try { fldAtmoDispose(); } catch (e) {} return _oe.apply(this, arguments); };
     fldExit._atmo = true;
+  }
+})();
+
+
+/* ===== module: tactical/T17-weather.js ===== */
+/* ===========================================================================
+   T17 — WEATHER & TIME-OF-DAY ATMOSPHERE  (Phase H · H3-i2 — "make it come to life")
+
+   Gives each battle a sky and light that match its history: Fredericksburg's
+   cold Rappahannock fog, Gettysburg's hot July haze, Antietam's dawn mist, a
+   grey rain-soaked field. Procedural, code-only, offline. Re-tints the 3D
+   scene's background / fog / sun / hemisphere and washes the 2D canvas to the
+   resolved {sky, time}, plus optional procedural rain/snow precipitation (a
+   second THREE.Points cloud reusing the T16 pattern). A short, accessible
+   atmosphere note is announced once at battle start.
+
+   ARCHITECTURE — PURE PRESENTATION; combat byte-identical BY CONSTRUCTION (D74):
+   this module touches NO existing file. It WRAPS fld3dInit / fld3dRender /
+   fld2dDraw / fldExit by ASSIGNMENT (the T9-audio / T16 seam pattern) and reads
+   ONLY the scenario's structured `weather` hint + render state. It never writes a
+   sim field, never calls fldRng (its own private LCG for the precipitation drift),
+   and never bumps _SAVE_VER. So the sim tick and every battle baseline are
+   unchanged — the only diff is pixels.
+
+   THE BYTE-IDENTICAL DEFAULT: a scenario with NO `weather` hint — or a hint that
+   resolves to clear/midday — produces NO change at all (fldWxResolve returns null
+   and every seam early-returns), so every currently-shipped look is preserved
+   exactly until a battle opts in with a citation-grade hint.
+
+   ACCESSIBILITY / PERF (Intel UHD-617 floor): the static sky/light TINT is faithful
+   and motion-free, so it applies under reduceMotion; only the PRECIPITATION (motion)
+   is suppressed under reduceMotion. A G.settings.weather === "off" opt-out disables
+   the whole layer (back to the clear default). The fog far-plane is held >= ~1500 so
+   the objective + units never vanish; precipitation is one THREE.Points cloud (single
+   draw call) with a driver gl_PointSize clamp and a smaller budget on fldLow().
+   The tint is a neutral atmospheric wash (no colour-encoded info → CVD-safe).
+   =========================================================================== */
+
+var FLDWX = {
+  PRECIP_HI: 520, PRECIP_LO: 200,          // falling-particle ceiling per render tier
+  TIME_SET: ["dawn", "morning", "midday", "afternoon", "dusk"],
+  // per-sky base atmosphere. "clear" mirrors the engine default (fld3dInit) and is the no-op
+  // baseline — it is NEVER applied (clear/midday resolves to null). fog near/far are camera
+  // distances; far is kept >= ~1500 so the field-centre objective stays readable.
+  SKY: {
+    clear:    { bg: "#acc2d6", fog: "#acc2d6", near: 700, far: 1900, sun: "#fff2d0", sunI: 1.15, hemiS: "#dceaff", hemiG: "#5a4a32", hemiI: 0.72, wash: null,      washA: 0.00, precip: null },
+    overcast: { bg: "#b8c0c5", fog: "#b8c0c5", near: 640, far: 1800, sun: "#e9e7dd", sunI: 0.80, hemiS: "#cfd3d4", hemiG: "#544a3b", hemiI: 0.66, wash: "#8d99a3", washA: 0.10, precip: null },
+    rain:     { bg: "#8f989d", fog: "#939a9e", near: 480, far: 1550, sun: "#cdd1d0", sunI: 0.55, hemiS: "#b3b8ba", hemiG: "#4c463c", hemiI: 0.56, wash: "#3f4a54", washA: 0.18, precip: "rain" },
+    fog:      { bg: "#ced3d2", fog: "#d4d8d6", near: 340, far: 1550, sun: "#ece8dd", sunI: 0.72, hemiS: "#d9dcd9", hemiG: "#5a5446", hemiI: 0.72, wash: "#ced2cf", washA: 0.20, precip: null },
+    haze:     { bg: "#c2cdd0", fog: "#c8cfcf", near: 600, far: 1800, sun: "#fff0cf", sunI: 1.04, hemiS: "#e3e6e0", hemiG: "#5a4e36", hemiI: 0.74, wash: "#d8d0a8", washA: 0.09, precip: null },
+    snow:     { bg: "#d6dbdd", fog: "#dfe2e1", near: 420, far: 1600, sun: "#eef0ef", sunI: 0.76, hemiS: "#e2e6e6", hemiG: "#6a6660", hemiI: 0.66, wash: "#dce2e4", washA: 0.16, precip: "snow" }
+  }
+};
+
+/* ---- module-level state (precip GPU buffers + the per-launch note flag) ---- */
+var FLDWX_S = { scene: null, points: null, geo: null, mat: null, tex: null,
+                _pos: null, _al: null, _sz: null, parts: null, rs: 0, last: 0,
+                kind: null, launchKey: null, noted: false };
+
+/* ---- private RNG (LCG) — independent of fldRng so combat stays byte-identical ---- */
+function fldWxRnd() {
+  FLDWX_S.rs = (FLDWX_S.rs * 1664525 + 1013904223) % 4294967296;
+  return FLDWX_S.rs / 4294967296;
+}
+
+/* ---- hex helpers (blend two #rrggbb toward t in [0,1]) ---- */
+function _wxHex(h) {
+  h = String(h || "#000000").replace("#", "");
+  if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+  var n = parseInt(h, 16); if (!isFinite(n)) n = 0;
+  return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+}
+function _wxToHex(r, g, b) {
+  function c(v) { v = Math.round(v); if (v < 0) v = 0; if (v > 255) v = 255; var s = v.toString(16); return s.length < 2 ? "0" + s : s; }
+  return "#" + c(r) + c(g) + c(b);
+}
+function _wxBlend(a, b, t) {
+  if (t <= 0) return a; if (t >= 1) return b;
+  var A = _wxHex(a), B = _wxHex(b);
+  return _wxToHex(A.r + (B.r - A.r) * t, A.g + (B.g - A.g) * t, A.b + (B.b - A.b) * t);
+}
+
+/* ---- time-of-day modifier: warm the afternoon/dawn/dusk, cool/soften the morning, drop a low sun.
+   Each non-midday time gives even a CLEAR sky a real (if subtle) shift + a faint matching 2D wash, so
+   a hot-bright afternoon (Gettysburg) reads warm and a spring morning (Shiloh) reads cool. ---- */
+function _wxApplyTime(p, time) {
+  var W = (typeof FLD !== "undefined" && FLD) ? FLD.FIELD_W : 1200;
+  var H = (typeof FLD !== "undefined" && FLD) ? FLD.FIELD_H : 900;
+  if (time === "dawn") {
+    p.sun = _wxBlend(p.sun, "#ffd6a6", 0.60); p.sunI *= 0.85;
+    p.bg = _wxBlend(p.bg, "#e0bd98", 0.20); p.fog = _wxBlend(p.fog, "#e0bd98", 0.16);
+    p.hemiG = _wxBlend(p.hemiG, "#6e5230", 0.35);
+    p.wash = p.wash ? _wxBlend(p.wash, "#ffcf9c", 0.35) : "#ffcf9c"; p.washA = Math.max(p.washA, 0.10);
+    p.sunPos = [W * 0.62, 360, H * 0.50];
+  } else if (time === "dusk") {
+    p.sun = _wxBlend(p.sun, "#ffbe84", 0.60); p.sunI *= 0.80;
+    p.bg = _wxBlend(p.bg, "#caa089", 0.22); p.fog = _wxBlend(p.fog, "#caa089", 0.18);
+    p.hemiG = _wxBlend(p.hemiG, "#5a3c22", 0.30);
+    p.wash = p.wash ? _wxBlend(p.wash, "#ffae7a", 0.30) : "#ffae7a"; p.washA = Math.max(p.washA, 0.12);
+    p.sunPos = [-W * 0.30, 320, -H * 0.20];
+  } else if (time === "morning") {
+    p.sun = _wxBlend(p.sun, "#fdf4e0", 0.20); p.sunI *= 0.92;
+    p.bg = _wxBlend(p.bg, "#c4d6e6", 0.08); p.fog = _wxBlend(p.fog, "#c4d6e6", 0.06);
+    p.wash = p.wash ? _wxBlend(p.wash, "#cfe0ee", 0.25) : "#cfe0ee"; if (!(p.washA > 0)) p.washA = 0.05;
+    p.sunPos = [W * 0.35, 760, H * 0.35];
+  } else if (time === "afternoon") {
+    p.sun = _wxBlend(p.sun, "#ffe2ab", 0.30); p.sunI *= 0.98;
+    p.bg = _wxBlend(p.bg, "#c8cabf", 0.06); p.fog = _wxBlend(p.fog, "#c8cabf", 0.05);
+    p.hemiG = _wxBlend(p.hemiG, "#6a5430", 0.20);
+    p.wash = p.wash ? _wxBlend(p.wash, "#ffdca0", 0.25) : "#ffdca0"; if (!(p.washA > 0)) p.washA = 0.06;
+    p.sunPos = [-W * 0.15, 820, -H * 0.10];
+  }
+  // midday: no further change (clear/midday already resolved to null before this runs)
+  return p;
+}
+
+/* ---- resolve the active weather to a merged palette (or null = byte-identical default) ---- */
+function fldWxResolve() {
+  try {
+    if (typeof G !== "undefined" && G && G.settings && G.settings.weather === "off") return null;
+    if (typeof __FIELD === "undefined" || !__FIELD) return null;
+    var raw = (__FIELD._scenTop && __FIELD._scenTop.weather) || (__FIELD.scenData && __FIELD.scenData.weather) || null;
+    if (!raw || typeof raw !== "object") return null;
+    // hasOwnProperty (not `FLDWX.SKY[sky]`) so an inherited member name ("constructor"/"__proto__"/
+    // "hasOwnProperty") can't masquerade as a valid sky and yield a palette with no .bg.
+    var sky = String(raw.sky || "clear").toLowerCase(); if (!Object.prototype.hasOwnProperty.call(FLDWX.SKY, sky)) sky = "clear";
+    var time = String(raw.time || "midday").toLowerCase(); if (FLDWX.TIME_SET.indexOf(time) < 0) time = "midday";
+    if (sky === "clear" && time === "midday") return null;   // == today's exact look -> no-op (byte-identical)
+    var base = FLDWX.SKY[sky], p = {
+      bg: base.bg, fog: base.fog, near: base.near, far: base.far, sun: base.sun, sunI: base.sunI,
+      hemiS: base.hemiS, hemiG: base.hemiG, hemiI: base.hemiI, wash: base.wash, washA: base.washA,
+      precip: base.precip, sunPos: null
+    };
+    _wxApplyTime(p, time);
+    return { sky: sky, time: time, note: (typeof raw.note === "string" ? raw.note : ""), palette: p };
+  } catch (e) { return null; }
+}
+
+/* ---- the per-launch identity for the once-per-battle note. MUST be a value that is STABLE across the
+   battle: __FIELD.scenario (the scenario id) qualifies; __FIELD.seed does NOT (fldRng mutates it every sim
+   tick, which would reset the note flag every frame → the banner would re-fire continuously). fldExit also
+   resets the flag, so a relaunch of the same scenario shows the note once again. ---- */
+function _wxLaunchKey() {
+  try { return (typeof __FIELD !== "undefined" && __FIELD) ? (__FIELD.scenario || "?") : null; } catch (e) { return null; }
+}
+
+/* ===========================================================================
+   3D — re-tint the scene AFTER fld3dInit set its defaults (idempotent property writes)
+   =========================================================================== */
+function fldWxApply3d() {
+  var wx = fldWxResolve(); if (!wx) return;
+  var T = window.THREE; if (!T) return;
+  if (typeof __FIELD === "undefined" || !__FIELD || !__FIELD.scene) return;
+  var sc = __FIELD.scene, p = wx.palette;
+  try {
+    if (sc.background && sc.background.set) sc.background.set(p.bg); else sc.background = new T.Color(p.bg);
+    if (sc.fog) { sc.fog.color.set(p.fog); sc.fog.near = p.near; sc.fog.far = p.far; }
+    sc.traverse(function (o) {
+      if (!o) return;
+      if (o.isDirectionalLight) { o.color.set(p.sun); o.intensity = p.sunI; if (p.sunPos) o.position.set(p.sunPos[0], p.sunPos[1], p.sunPos[2]); }
+      else if (o.isHemisphereLight) { o.color.set(p.hemiS); if (o.groundColor) o.groundColor.set(p.hemiG); o.intensity = p.hemiI; }
+    });
+  } catch (e) {}
+}
+
+/* ---- precipitation texture: a streak for rain, a soft round flake for snow ---- */
+function fldWxPrecipTexture(T, kind) {
+  var c = document.createElement("canvas"); c.width = 32; c.height = 64;
+  var g = c.getContext("2d");
+  if (kind === "rain") {
+    var grd = g.createLinearGradient(16, 0, 16, 64);
+    grd.addColorStop(0, "rgba(255,255,255,0)"); grd.addColorStop(0.5, "rgba(255,255,255,0.9)"); grd.addColorStop(1, "rgba(255,255,255,0)");
+    g.fillStyle = grd; g.fillRect(13, 0, 6, 64);
+  } else {
+    var rg = g.createRadialGradient(16, 32, 0, 16, 32, 16);
+    rg.addColorStop(0, "rgba(255,255,255,1)"); rg.addColorStop(0.5, "rgba(255,255,255,0.6)"); rg.addColorStop(1, "rgba(255,255,255,0)");
+    g.fillStyle = rg; g.beginPath(); g.arc(16, 32, 16, 0, 7); g.fill();
+  }
+  var tex = new T.CanvasTexture(c); tex.needsUpdate = true;   // draw BEFORE wrap (the T16 texture-warning lesson)
+  if (T.SRGBColorSpace) tex.colorSpace = T.SRGBColorSpace;
+  tex.minFilter = T.LinearFilter; tex.magFilter = T.LinearFilter; tex.generateMipmaps = false;
+  return tex;
+}
+function fldWxDisposePrecip() {
+  try {
+    if (FLDWX_S.points && FLDWX_S.points.parent) FLDWX_S.points.parent.remove(FLDWX_S.points);
+    if (FLDWX_S.geo && FLDWX_S.geo.dispose) FLDWX_S.geo.dispose();
+    if (FLDWX_S.mat && FLDWX_S.mat.dispose) FLDWX_S.mat.dispose();
+    if (FLDWX_S.tex && FLDWX_S.tex.dispose) FLDWX_S.tex.dispose();
+  } catch (e) {}
+  FLDWX_S.points = null; FLDWX_S.geo = null; FLDWX_S.mat = null; FLDWX_S.tex = null;
+  FLDWX_S.scene = null; FLDWX_S._pos = null; FLDWX_S._al = null; FLDWX_S._sz = null; FLDWX_S.parts = null; FLDWX_S.kind = null;
+}
+function fldWxBuildPrecip(kind) {
+  var T = window.THREE; if (!T || !__FIELD.scene) return false;
+  if (FLDWX_S.points && FLDWX_S.scene === __FIELD.scene && FLDWX_S.kind === kind) return true;
+  fldWxDisposePrecip();
+  var W = (typeof FLD !== "undefined" && FLD) ? FLD.FIELD_W : 1200;
+  var H = (typeof FLD !== "undefined" && FLD) ? FLD.FIELD_H : 900;
+  var cap = (typeof fldLow === "function" && fldLow()) ? FLDWX.PRECIP_LO : FLDWX.PRECIP_HI;
+  var rain = (kind === "rain");
+  // seed the drift LCG from the field seed (deterministic per battle, never fldRng)
+  FLDWX_S.rs = (((__FIELD.seed || 0) >>> 0) ^ 0x5bd1e995) >>> 0; if (!FLDWX_S.rs) FLDWX_S.rs = 987654321;
+  var parts = new Array(cap);
+  var marginX = W * 0.55, marginZ = H * 0.55, topY = 1000;
+  for (var i = 0; i < cap; i++) {
+    parts[i] = {
+      x: -marginX + fldWxRnd() * (W + marginX * 2),
+      z: -marginZ + fldWxRnd() * (H + marginZ * 2),
+      y: fldWxRnd() * topY,
+      vy: rain ? -(620 + fldWxRnd() * 220) : -(70 + fldWxRnd() * 55),
+      vx: rain ? (30 + fldWxRnd() * 30) : (fldWxRnd() - 0.5) * 60,
+      vz: rain ? (10 + fldWxRnd() * 20) : (fldWxRnd() - 0.5) * 50,
+      ph: fldWxRnd() * 6.28,
+      sz: rain ? (10 + fldWxRnd() * 8) : (7 + fldWxRnd() * 7)
+    };
+  }
+  var pos = new Float32Array(cap * 3), al = new Float32Array(cap), sz = new Float32Array(cap);
+  var geo = new T.BufferGeometry();
+  geo.setAttribute("position", new T.BufferAttribute(pos, 3));
+  geo.setAttribute("aAlpha", new T.BufferAttribute(al, 1));
+  geo.setAttribute("aSize", new T.BufferAttribute(sz, 1));
+  geo.setDrawRange(0, cap);
+  var maxPt = 256;
+  try {
+    var _gl = __FIELD.renderer && __FIELD.renderer.getContext && __FIELD.renderer.getContext();
+    var _r = _gl && _gl.getParameter && _gl.getParameter(_gl.ALIASED_POINT_SIZE_RANGE);
+    if (_r && _r[1] > 0) maxPt = _r[1];
+  } catch (e) {}
+  var col = rain ? "vec3(0.78,0.82,0.86)" : "vec3(0.96,0.97,0.98)";
+  var mat = new T.ShaderMaterial({
+    uniforms: { uMap: { value: fldWxPrecipTexture(T, kind) }, uMaxPoint: { value: maxPt } },
+    vertexShader: [
+      "attribute float aAlpha;", "attribute float aSize;",
+      "uniform float uMaxPoint;",
+      "varying float vAlpha;",
+      "void main(){",
+      "  vAlpha = aAlpha;",
+      "  vec4 mv = modelViewMatrix * vec4(position, 1.0);",
+      "  gl_PointSize = min(uMaxPoint, aSize * (560.0 / max(40.0, -mv.z)));",
+      "  gl_Position = projectionMatrix * mv;",
+      "}"
+    ].join("\n"),
+    fragmentShader: [
+      "uniform sampler2D uMap;",
+      "varying float vAlpha;",
+      "void main(){",
+      "  if (vAlpha <= 0.001) discard;",
+      "  vec4 tx = texture2D(uMap, gl_PointCoord);",
+      "  float a = tx.a * vAlpha;",
+      "  if (a < 0.004) discard;",
+      "  gl_FragColor = vec4(" + col + ", a);",
+      "}"
+    ].join("\n"),
+    transparent: true, depthWrite: false, depthTest: true, blending: T.NormalBlending
+  });
+  var pts = new T.Points(geo, mat);
+  pts.name = "wxPrecip"; pts.frustumCulled = false;
+  __FIELD.scene.add(pts);
+  FLDWX_S.tex = mat.uniforms.uMap.value; FLDWX_S.geo = geo; FLDWX_S.mat = mat; FLDWX_S.points = pts;
+  FLDWX_S.scene = __FIELD.scene; FLDWX_S._pos = pos; FLDWX_S._al = al; FLDWX_S._sz = sz; FLDWX_S.parts = parts; FLDWX_S.kind = kind;
+  return true;
+}
+/* ---- per-frame wall-clock delta (drift continues even while the sim is paused) ---- */
+function fldWxDt() {
+  var now = (typeof performance !== "undefined" && performance.now) ? performance.now() : 0;
+  var dt = FLDWX_S.last ? (now - FLDWX_S.last) / 1000 : 0;
+  FLDWX_S.last = now; if (!(dt > 0)) dt = 0; if (dt > 0.1) dt = 0.1; return dt;
+}
+function fldWxPre3d() {
+  if (typeof __FIELD === "undefined" || !__FIELD || !__FIELD.launched) return;
+  if (!window.THREE || !__FIELD.scene) return;
+  var wx = fldWxResolve();
+  // precipitation is MOTION: suppressed under reduceMotion (the static tint already conveys "rain"/"snow")
+  var wantPrecip = wx && wx.palette.precip && !(typeof fldReduceMotion === "function" && fldReduceMotion());
+  if (!wantPrecip) { if (FLDWX_S.points) fldWxDisposePrecip(); return; }
+  if (!fldWxBuildPrecip(wx.palette.precip)) return;
+  var dt = fldWxDt(), parts = FLDWX_S.parts, pos = FLDWX_S._pos, al = FLDWX_S._al, sz = FLDWX_S._sz;
+  var W = (typeof FLD !== "undefined" && FLD) ? FLD.FIELD_W : 1200;
+  var H = (typeof FLD !== "undefined" && FLD) ? FLD.FIELD_H : 900;
+  var marginX = W * 0.55, marginZ = H * 0.55, topY = 1000, rain = (FLDWX_S.kind === "rain");
+  for (var i = 0; i < parts.length; i++) {
+    var q = parts[i];
+    q.y += q.vy * dt; q.x += q.vx * dt; q.z += q.vz * dt;
+    if (!rain) { q.ph += dt * 1.6; q.x += Math.sin(q.ph) * 14 * dt; }   // snow sways
+    var yt = (typeof fldTerrainH === "function") ? fldTerrainH(q.x, q.z) : 0;
+    if (q.y <= yt) { q.y += topY; q.x = -marginX + fldWxRnd() * (W + marginX * 2); q.z = -marginZ + fldWxRnd() * (H + marginZ * 2); }
+    pos[3 * i] = q.x; pos[3 * i + 1] = yt + q.y; pos[3 * i + 2] = q.z;
+    al[i] = rain ? 0.5 : 0.8; sz[i] = q.sz;
+  }
+  FLDWX_S.geo.attributes.position.needsUpdate = true;
+  FLDWX_S.geo.attributes.aAlpha.needsUpdate = true;
+  FLDWX_S.geo.attributes.aSize.needsUpdate = true;
+}
+
+/* ===========================================================================
+   2D FALLBACK — an atmospheric wash over the field + a light precip hatch (rm-off)
+   =========================================================================== */
+function fldWxDraw2d(ctx, v) {
+  if (!ctx || !v) return;
+  var wx = fldWxResolve(); if (!wx) return;
+  var p = wx.palette, W = (typeof FLD !== "undefined" && FLD) ? FLD.FIELD_W : 1200, H = (typeof FLD !== "undefined" && FLD) ? FLD.FIELD_H : 900;
+  var fx = v.ox, fz = v.oz, fw = W * v.s, fh = H * v.s;
+  if (!(fw > 0) || !(fh > 0)) return;
+  var prevA = ctx.globalAlpha;
+  if (p.wash && p.washA > 0) { ctx.globalAlpha = p.washA; ctx.fillStyle = p.wash; ctx.fillRect(fx, fz, fw, fh); }
+  // precipitation hatch (MOTION) — suppressed under reduceMotion
+  if (p.precip && !(typeof fldReduceMotion === "function" && fldReduceMotion())) {
+    var rain = (p.precip === "rain");
+    var n = (typeof fldLow === "function" && fldLow()) ? 60 : 130;
+    var t = (typeof __FIELD !== "undefined" && __FIELD) ? __FIELD.t : 0;
+    var scroll = (t * (rain ? 760 : 90)) % (fh + 80);
+    ctx.save();
+    ctx.beginPath(); ctx.rect(fx, fz, fw, fh); ctx.clip();
+    ctx.globalAlpha = rain ? 0.32 : 0.6;
+    ctx.strokeStyle = rain ? "rgba(214,224,230,0.9)" : "rgba(246,248,250,0.95)";
+    ctx.fillStyle = "rgba(248,250,252,0.95)"; ctx.lineWidth = 1;
+    for (var i = 0; i < n; i++) {
+      // a stable pseudo-random column per i, scrolled down by time (deterministic, no LCG state churn in draw)
+      var fr = ((i * 2654435761) % 100000) / 100000;
+      var fr2 = ((i * 40503) % 100000) / 100000;
+      var px = fx + fr * fw;
+      var py = fz + ((fr2 * (fh + 80) + scroll) % (fh + 80)) - 40;
+      if (rain) { ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px + 3, py + 13); ctx.stroke(); }
+      else { ctx.beginPath(); ctx.arc(px + Math.sin((py + i) * 0.05) * 6, py, 1.6, 0, 7); ctx.fill(); }
+    }
+    ctx.restore();
+  }
+  ctx.globalAlpha = prevA;
+}
+
+/* ---- one-time accessible atmosphere note (a transient role=status banner) ---- */
+function fldWxNote() {
+  try {
+    var wx = fldWxResolve(); if (!wx || !wx.note) return;
+    var key = _wxLaunchKey();
+    if (FLDWX_S.launchKey !== key) { FLDWX_S.launchKey = key; FLDWX_S.noted = false; }
+    if (FLDWX_S.noted) return;
+    if (!document.getElementById("fldRoot")) return;
+    if (typeof fldScenarioBanner === "function") fldScenarioBanner(wx.note, null);   // role=status -> SR + visible
+    FLDWX_S.noted = true;
+  } catch (e) {}
+}
+
+/* ---- teardown: drop the precip GPU buffers + reset the note flag on battle exit ---- */
+function fldWxDispose() {
+  try { fldWxDisposePrecip(); FLDWX_S.noted = false; FLDWX_S.launchKey = null; FLDWX_S.last = 0; } catch (e) {}
+}
+
+/* ===========================================================================
+   WIRE-IN — wrap fld3dInit (re-tint), fld3dRender (precip + note), fld2dDraw
+   (wash + note) + fldExit (dispose) by ASSIGNMENT. No combat file is touched;
+   the bare-name bindings resolve the wrapper at call time (T17 loads after T0/T16).
+   =========================================================================== */
+(function () {
+  if (typeof fld3dInit === "function" && !fld3dInit._wx) {
+    var _oi = fld3dInit;
+    fld3dInit = function () { var r = _oi.apply(this, arguments); try { fldWxApply3d(); } catch (e) {} return r; };
+    fld3dInit._wx = true;
+  }
+  if (typeof fld3dRender === "function" && !fld3dRender._wx) {
+    var _or = fld3dRender;
+    fld3dRender = function () { try { fldWxPre3d(); } catch (e) {} var r = _or.apply(this, arguments); try { fldWxNote(); } catch (e) {} return r; };
+    fld3dRender._wx = true; fld3dRender._atmo = _or._atmo;   // keep the T16 marker transitive (the wrapper chain is intact)
+  }
+  if (typeof fld2dDraw === "function" && !fld2dDraw._wx) {
+    var _od = fld2dDraw;
+    fld2dDraw = function () { var r = _od.apply(this, arguments); try { fldWxDraw2d(__FIELD.ctx2d, fld2dView()); } catch (e) {} try { fldWxNote(); } catch (e) {} return r; };
+    fld2dDraw._wx = true; fld2dDraw._atmo = _od._atmo;
+  }
+  if (typeof fldExit === "function" && !fldExit._wx) {
+    var _oe = fldExit;
+    fldExit = function () { try { fldWxDispose(); } catch (e) {} return _oe.apply(this, arguments); };
+    fldExit._wx = true; fldExit._atmo = _oe._atmo;
   }
 })();
 

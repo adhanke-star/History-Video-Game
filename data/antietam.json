@@ -2,6 +2,17 @@
   "_comment": "PHASE C-2 — ANTIETAM / SHARPSBURG, September 17 1862 — the FIRST MULTI-PHASE epic for the __FIELD real-time engine (DECISIONS D74/D76). Three sequential phases fought in one scenario via the gated T8 phases[] engine: PHASE 1 the CORNFIELD (dawn, the Confederate left — Hooker's I Corps + Mansfield's XII Corps vs Jackson's wing + Hood's counterattack, 'Artillery Hell'); PHASE 2 the SUNKEN ROAD / 'Bloody Lane' (mid-morning, the center — Sumner's II Corps vs D.H. Hill in a worn farm-lane trench, carried by Barlow's enfilade + a misheard Confederate order); PHASE 3 BURNSIDE'S BRIDGE (afternoon, the Confederate right — the IX Corps bottleneck across the Lower/Rohrbach Bridge, held for hours by Toombs's few Georgians, the breakthrough toward Sharpsburg halted by A.P. Hill's Light Division force-marching from Harpers Ferry). Each phase is its own sector/OOB/objective; the running casualty tally + the per-phase sector results carry forward; the overall battle is scored as a weighted aggregate with a draw band (the historical TACTICAL DRAW / marginal-Union-strategic-check emerges). COORDINATE NOTE: each phase field is 1200x900 yards; per engine convention the ATTACKER (US, every phase) sits at HIGH z facing -z (facing 0) and the DEFENDER (CS) at LOW z facing +z (facing PI); the objective sits at low-center z. ARTILLERY uses the D75 UNIVERSAL GUN MODEL (real gun counts + realistic crew; fire = guns * the universal weight). ANTI-LOST-CAUSE: the lessons are command failure on BOTH sides, terrain + contingency over martial 'genius', the appalling cost (the bloodiest single day), McClellan's wasted ~2:1 advantage + withheld reserves, and ABOVE ALL the Emancipation Proclamation five days later that turned the war against slavery. Strengths are Inferred division/brigade-scale approximations (Carman/Sears/OR differ); the Verified, teaching-bearing facts are the phase sequence, the commanders + their fate, the terrain, and the casualty weight. Sources: NPS Antietam, American Battlefield Trust, the Official Records (via aotw.org), Sears 'Landscape Turned Red', McPherson 'Crossroads of Freedom'.",
   "antietam": {
     "id": "antietam",
+    "weather": {
+      "sky": "fog",
+      "time": "dawn",
+      "provenance": "Verified",
+      "note": "Dawn in the Cornfield opened in ground fog and mist that pooled in the hollows after overnight rain; it thinned as the sun rose over South Mountain.",
+      "sources": [
+        "Stephen W. Sears, \"Landscape Turned Red: The Battle of Antietam\" (1983) — documents the overnight rain",
+        "American Battlefield Trust — Antietam Cornfield map narrative (\"rain had stopped, leaving a thin ground fog\"; hollows filled with mist)",
+        "Ted Ballard, \"Staff Ride Guide: Battle of Antietam\" (U.S. Army Center of Military History)"
+      ]
+    },
     "name": "Antietam — the Bloodiest Day",
     "date": "September 17, 1862",
     "place": "Sharpsburg, Washington County, Maryland — along Antietam Creek",

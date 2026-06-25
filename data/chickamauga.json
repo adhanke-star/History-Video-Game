@@ -2,6 +2,17 @@
   "_comment": "PHASE C WESTERN BREADTH - CHICKAMAUGA, September 19-20, 1863. A three-phase epic on the __FIELD real-time multi-phase (T8) engine: P0 The Battle in the Woods (Sep 19 meeting engagement in dense timber; the woods themselves blind both armies, fog-of-war off by default but heavy woods terrain - the Union line holds the road Sep 19, which is historical: the breakthrough came the next day), P1 Longstreet's Breakthrough (Sep 20 late morning, the Wood gap at the Brotherton farm - the decisive, scoreWeight-3 phase), P2 The Rock of Chickamauga (Sep 20 afternoon, Thomas holds Snodgrass Hill / Horseshoe Ridge - a Union defensive success in which the cautious CS assault pays the failed-assault price). The teaching is CONTINGENCY OVER GENIUS: a Confederate victory handed to Longstreet by a Union staff error, then squandered by Bragg's failure to pursue. Outcomes EMERGE from OOB / terrain / timing / doctrine under the ONE universal combat model (D74) - NO per-battle damage fudge. BALANCE (AI-vs-AI, 32 seeds, deterministic): P0 US-holds 32/32 (mutual bloodbath), P1 CS-breakthrough 32/32, P2 US-holds 32/32 with the CS attacker paying ~3:1; aggregate CS 32/32 (CS 3 / US 2 via the weight-3 breakthrough), with the alt-history path that a human US player who closes the gap in P1 overturns the battle. Top-level attacker=CS / defender=US across all three phases: the Army of the Cumberland fought on the defensive throughout, so the CS player takes the offensive (Bragg) and the US player holds (Thomas). Strengths are Inferred brigade-scale abstractions (a division per marker); the sequence, ground, command facts, and leader fates are Verified (and were run through an adversarial fact-check that corrected Hood's wounding to Sep 20 / Maj. Gen., Helm to Breckinridge's division, restored Cheatham, removed Loring, and left the gap-reporter's identity flagged as disputed).",
   "chickamauga": {
     "id": "chickamauga",
+    "weather": {
+      "sky": "clear",
+      "time": "afternoon",
+      "provenance": "Verified",
+      "note": "Clear cold-snap sky; weeks of drought, so dust and trapped powder-smoke gathered into a blinding haze in the dense woods.",
+      "sources": [
+        "Readex Report, 'Fields of Fire and Frost: The Battle of Chickamauga and Weather in Early American Newspapers' (vol. 13, no. 2) — cites Smithsonian Institution weather-observation station data: afternoon highs fell from 80F (Sep 17) to 54F, frosty mornings, a 'cold, clear sky,' and weeks of drought",
+        "Wikipedia, 'Battle of Chickamauga' — 5 a.m. Sep 20 'cold and foggy battlefield' (dawn, before the modeled window) and Day-1 'limited visibility of twilight and smoke from burning underbrush'",
+        "Period soldier/newspaper accounts (per the Readex corpus and standard battle narratives): dry ground raised stifling dust, and black-powder smoke plus dust combined with thick undergrowth to nearly blind commanders and men in the woods"
+      ]
+    },
     "name": "Chickamauga - The River of Death",
     "date": "September 19-20, 1863",
     "place": "West Chickamauga Creek, Catoosa & Walker Counties, Georgia - twelve miles south of Chattanooga",

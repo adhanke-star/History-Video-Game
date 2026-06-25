@@ -2,6 +2,17 @@
   "_comment": "PHASE C-1 - MALVERN HILL, July 1, 1862 - the remaining Eastern marquee battle for the __FIELD real-time engine (single-phase, the Fredericksburg/Shiloh pattern). The Seven Days ended on a modest open plateau north of the James River, where Fitz John Porter and artillery chief Henry J. Hunt turned Malvern Hill into a killing ground. Lee attempted to silence the Union guns with badly coordinated Confederate grand batteries, then sent piecemeal infantry attacks across open slopes. The battle is modeled as a SINGLE-PHASE Confederate assault against a Union gun line: CS attacks from the high-z woods and roads; US defends the Crew house ridge / Malvern plateau at low-mid z. ARTILLERY uses the D75 UNIVERSAL GUN MODEL (guns * the universal weight, crew-scaled) with no battle-specific damage constants. ANTI-LOST-CAUSE: the lesson is not Confederate valor or Union timidity in isolation; it is command failure, staff confusion, ineffective Confederate artillery concentration, Hunt's professional gun handling, Porter's field command, and McClellan's retreat from a tactical victory to Harrison's Landing. Sources: NPS Richmond National Battlefield Park; NPS History Civil War Series 'The Battles for Richmond, 1862'; American Battlefield Trust Malvern Hill article, battle summary, and map; Encyclopedia Virginia; OR-derived OOB summaries. Strengths and exact arrival minutes are Inferred at brigade/division abstraction scale.",
   "malvernHill": {
     "id": "malvernHill",
+    "weather": {
+      "sky": "clear",
+      "time": "afternoon",
+      "provenance": "Inferred",
+      "note": "Union guns crowned the hill; the day's rain held off until July 2 — the haze here was powder-smoke, not sky.",
+      "sources": [
+        "American Battlefield Trust, 'Malvern Hill' battle page (battlefields.org)",
+        "National Park Service, Richmond National Battlefield Park, 'The Battle of Malvern Hill' (nps.gov/rich)",
+        "Encyclopedia Virginia, 'Malvern Hill, Battle of' (encyclopediavirginia.org)"
+      ]
+    },
     "name": "Malvern Hill - the Seven Days' Artillery Duel",
     "date": "July 1, 1862",
     "place": "Malvern Hill, Henrico County, Virginia - near the James River",
