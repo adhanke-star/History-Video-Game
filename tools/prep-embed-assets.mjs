@@ -43,6 +43,9 @@ const CATEGORIES = [
   { name: 'weapons', maxPx: 384, quality: 80, ext: ['.png', '.jpg', '.jpeg'], format: 'keep', perFileWarn: 110 * 1024 },
   // artillery: PD period photos + an Edwin Forbes sketch (all opaque) -> re-encode to JPEG.
   { name: 'artillery', maxPx: 384, quality: 74, ext: ['.jpg', '.jpeg'], format: 'jpeg', perFileWarn: 120 * 1024 },
+  // usct: famous LoC/NARA/Harper's-Weekly PD USCT photographs + engravings (all opaque) -> JPEG. A touch
+  // larger/higher-q than the small-arms cards since these are INFORMATIVE teaching images, shown bigger.
+  { name: 'usct', maxPx: 420, quality: 78, ext: ['.jpg', '.jpeg'], format: 'jpeg', perFileWarn: 70 * 1024 },
   // future H1 categories plug in here once their PD sources are reviewed:
   //   { name: 'scenes',  maxPx: 420, quality: 72, ext: ['.jpg'], format: 'jpeg' },
 ];

@@ -135,6 +135,7 @@ function _cxEntryHTML(en) {
     +   '</button>'
     +   '<div style="font-size:12px;opacity:.88;margin-top:3px">' + _cxEsc(en.short || "") + '</div>'
     +   '<div id="cxBody_' + sid + '" class="cx-body" style="display:none;margin-top:7px;border-top:1px dotted var(--rule);padding-top:7px">'
+    +     (typeof usctImageHtml === "function" ? usctImageHtml(en.id) : "")   /* H1/D135: PD USCT photo at the head of the expanded card, when one is embedded for this entry (else "") */
     +     '<div style="font-size:13px;line-height:1.6">' + _cxEsc(en.body || "") + '</div>'
     +     (relHTML ? '<div style="margin-top:6px"><span style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;opacity:.6;margin-right:4px">See also</span>' + relHTML + '</div>' : "")
     +     srcHTML

@@ -246,6 +246,8 @@ function presManpowerBlock(C) {
                        : ('<span style="opacity:.5">&middot;</span><span>Desertion: <b>' + Math.round(P.desertionTotal) + 'k</b></span>'))
     + '</div>';
   if (lt) out += '<div style="font-size:12px;opacity:.8;margin-top:3px">Last quarter: <b>' + lt.recruits + 'k</b> recruited; ' + (P.replacementRatio < 0.5 ? '<span style="color:#d07060">losses outrun replacements.</span>' : 'the ranks hold.') + '</div>';
+  // H1/D135: once the USCT is organized, show a PD photograph of USCT soldiers in the field (else "").
+  if (side === "US" && P.usctUnlocked && typeof usctImageHtml === "function") out += '<div style="margin-top:7px">' + usctImageHtml("united-states-colored-troops") + '</div>';
   out += '<div style="font-size:11px;opacity:.62;margin-top:4px;font-style:italic">' + _mpWhyText(C) + '</div>';
   return out;
 }

@@ -271,7 +271,24 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       ordnance3in). Combat byte-identical (helper reads only __ASSETS, never fldRng; probe-presets 26/26 + weapons
       8/8 + cannon 9/9). Bug-hunt ANACHRONISM lens caught + fixed a wrong-class siege Parrott + a modern monument
       photo (→ imageless) + a henry opaque-box (→ cutout) + a prep footgun + alt-redundancy; critic SAFE TO COMMIT;
-      wcag AA. probe-arms-imagery 17/17. **NEXT H1 = another NEW-asset category (USCT / scenes) or H2 footage.**›
+      wcag AA. probe-arms-imagery 17/17.›
+      ‹increment 3 ✅ (D135, 2026-06-25): **PD USCT IMAGERY on the Codex cards + "The Ranks" manpower block.** Same
+      "fully hands-off, edge-cases only" mode. `tools/source-usct-imagery.mjs` (Commons API → PD-only rasters +
+      provenance, keyed by codex entry id) + `tools/prep-embed-assets.mjs` `usct` category (maxPx 420/q78/JPEG) +
+      `src/53-usct-imagery.js` (`usctImageHtml(id)` → a period-framed **captioned `<figure>`** [img + figcaption =
+      caption + holding-institution credit] or `""`) called from `84-codex.js` (`_cxEntryHTML`, by `en.id`) +
+      `70-manpower.js` (`presManpowerBlock`, US side when usctUnlocked) — 1 guarded line each. **7 images, all PD +
+      VIEW-verified period-accurate:** Company E/4th USCI, Sgt. Carney, Col. Shaw, Frederick Douglass, Harriet Tubman,
+      the 1864 Harper's Weekly Fort Pillow-massacre engraving (the dignity/anti-Lost-Cause choice on the Forrest
+      entry — centers the USCT victims, not a Forrest portrait), the 1863 "Come and Join Us Brothers" broadside.
+      **INFORMATIVE not decorative** (the inverse of D134's arms cutouts): real descriptive alt + a visible figcaption
+      (these photos ARE the teaching). The VIEW discipline caught a wrong "Robert Gould Shaw 2d" namesake during
+      sourcing → re-sourced before embed. Combat byte-identical (probe-presets 26/26). Bug-hunt 6 Opus finders
+      (PD-licence-re-verify [live] + anachronism-VIEW + caption/credit + D74-purity + render + a11y/dignity, ×3-skeptic +
+      critic → SAFE TO COMMIT, 0 blocking): 3 fixed — a MED credit-line WCAG contrast (opacity .72 → solid #5a4a2c,
+      5.31:1) + 2 LOW Tubman provenance accuracy nits (postwar CDV date, seated-not-standing). probe-usct-imagery
+      17/17; photo-embed 22/22 + arms-imagery 17/17 coexist; wcag AA. __ASSETS=172; file 4.6MB→5.0MB. **NEXT H1 =
+      battle-scenes/leaders (Brady/Gardner) or flags-as-surviving-colours, or H2 footage — same hands-off mode.**›
 - [x] **H1b Brigade BADGES & INSIGNIA — the battle flags (Aaron, run-k idea, 2026-06-15).** Render each brigade's
       identity with its **battle flag / colors** on the unit badge: the various Confederate battle flags (ANV
       Southern Cross, Hardee/Polk Western patterns, the national flags), the U.S. national & regimental colors,
