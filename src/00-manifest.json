@@ -4,6 +4,7 @@
     "01-utils.js",
     "10-president-state.js",
     "20-president-render.js",
+    "21-photo-embed.js",
     "30-president-shell.js",
     "31-cabinet.js",
     "32-decisions.js",

@@ -78,6 +78,52 @@ if (existsSync(DATA)) {
   if (parts.length) inject += '\n/* ===== data (build-injected from data/*.json) ===== */\nvar GAME_DATA = {\n' + parts.join(',\n') + '\n};\n';
 }
 
+// ---- 2b. inject assets/embed/** as a single __ASSETS global (D71 H1 ingestion pipeline) ----
+// The OFFLINE tier: every file under assets/embed/<category>/ (the small, compressed,
+// licence-vetted PD media produced by tools/prep-embed-assets.mjs) is Base64-inlined as a
+// data: URL keyed "<category>/<basename-no-ext>". This is what makes the single-file deliverable
+// portable: the in-game photo layer prefers __ASSETS (always present, offline) and upgrades to the
+// relative-path hi-res (assets/<category>/) only when the file is served beside the assets folder.
+// A HARD budget cap fails the build if the embed blob ever runs away (e.g. an un-compressed category)
+// so the single file can never balloon unseen; SOFT warns earlier. Bump deliberately + log when a new
+// (Aaron-approved) media category lands.
+const EMBED = join(ROOT, 'assets', 'embed');
+const EMBED_SOFT = 1.5 * 1024 * 1024;     // warn beyond ~1.5MB raw
+const EMBED_HARD = 3.0 * 1024 * 1024;     // FAIL beyond ~3.0MB raw (runaway guard; raise + log when footage/scenes land)
+const MIME = { '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp',
+               '.gif': 'image/gif', '.svg': 'image/svg+xml', '.mp4': 'video/mp4', '.webm': 'video/webm' };
+let embedBytes = 0, embedCount = 0;
+const embedCats = {};
+if (existsSync(EMBED)) {
+  const aparts = [];
+  const seenKeys = new Map();   // __ASSETS key -> source file (dup-key collision gate)
+  for (const cat of readdirSync(EMBED, { withFileTypes: true }).filter(d => d.isDirectory()).sort((a, b) => a.name < b.name ? -1 : 1)) {
+    const cdir = join(EMBED, cat.name);
+    // withFileTypes so a stray sub-DIRECTORY named like an asset (e.g. foo.jpg/) is skipped, not
+    // readFileSync'd into an uncaught EISDIR crash (bug-hunt FINDER#2).
+    for (const ent of readdirSync(cdir, { withFileTypes: true }).filter(e => e.isFile() && e.name[0] !== '.').sort((a, b) => a.name < b.name ? -1 : 1)) {
+      const f = ent.name;
+      const ext = (f.match(/\.[^.]+$/) || [''])[0].toLowerCase();
+      const mime = MIME[ext];
+      if (!mime) die(5, 'embed: unsupported asset type ' + cat.name + '/' + f + ' (extend MIME[] in build.mjs to allow it)');
+      const key = cat.name + '/' + f.replace(/\.[^.]+$/, '');
+      // two sources differing only by extension (lee.jpg + lee.png) would collide to one key; the
+      // last would silently win. Fail loudly instead (bug-hunt FINDER#2).
+      if (seenKeys.has(key)) die(5, 'embed: duplicate __ASSETS key "' + key + '" from ' + cat.name + '/' + f + ' (collides with ' + seenKeys.get(key) + ') — two source files differ only by extension; rename or remove one.');
+      seenKeys.set(key, cat.name + '/' + f);
+      const buf = readFileSync(join(cdir, f));
+      embedBytes += buf.length; embedCount++;
+      embedCats[cat.name] = (embedCats[cat.name] || 0) + 1;
+      aparts.push(JSON.stringify(key) + ':"data:' + mime + ';base64,' + buf.toString('base64') + '"');
+    }
+  }
+  if (embedBytes > EMBED_HARD) die(5, 'embed BUDGET: assets/embed/ is ' + (embedBytes / 1048576).toFixed(2) + 'MB raw, over the ' + (EMBED_HARD / 1048576).toFixed(1) + 'MB hard cap — compress harder (tools/prep-embed-assets.mjs) or raise EMBED_HARD deliberately (and log why).');
+  if (embedBytes > EMBED_SOFT) console.warn('  [embed] WARNING: ' + (embedBytes / 1048576).toFixed(2) + 'MB raw embed tier, over the ' + (EMBED_SOFT / 1048576).toFixed(1) + 'MB soft budget — consider compressing the tier (tools/prep-embed-assets.mjs).');
+  if (aparts.length) inject += '\n/* ===== embedded assets (build-injected from assets/embed/**; offline tier) ===== */\nvar __ASSETS = {\n' + aparts.join(',\n') + '\n};\n';
+}
+// guarantee the bare-name global always exists so modules can read it unconditionally (no embed dir → {})
+if (embedCount === 0) inject += '\n/* ===== embedded assets: none on disk; declare the empty global ===== */\nvar __ASSETS = {};\n';
+
 for (const f of modules) {
   const p = join(SRC, f);
   if (!existsSync(p)) die(5, 'manifest lists missing module: ' + f);
@@ -103,8 +149,15 @@ writeFileSync(tmp, body);
 const chk = spawnSync(process.execPath, ['--check', tmp], { encoding: 'utf8' });
 if (chk.status !== 0) die(2, 'node --check failed:\n' + (chk.stderr || chk.stdout || '').trim());
 
-// 4b. invalid-hex gate (whole script body)
-if (HEX_BOMB.test(body)) die(3, 'invalid-hex literal in assembled <script>');
+// 4b. invalid-hex gate (whole script body). The HEX_BOMB heuristic catches an invalid hex LITERAL
+// (e.g. 0x1g) in CODE — which can never appear inside a "data:...;base64,..." string literal. The
+// embedded-asset blob (__ASSETS, H1/D71) is megabytes of base64 string content that textually trips
+// the naive pattern (a "0x"+hex+[g-z] run is near-certain in any large base64), so mask data: URL
+// string literals before this scan. Parseability of the WHOLE body is already proven by 4a
+// (node --check), so masking string CONTENT here loses no real coverage. (Also covers future video
+// data: URLs for H2 footage.)
+const hexScan = body.replace(/"data:[^"]*"/g, '""');
+if (HEX_BOMB.test(hexScan)) die(3, 'invalid-hex literal in assembled <script>');
 
 // 4c. collision gate — new functions must appear exactly once; overrides exactly twice
 const countFn = (name) => {
@@ -194,6 +247,7 @@ for (const rm of RATING_MODULES) {
 const KB = (s) => (s.length / 1024).toFixed(1) + 'KB';
 console.log('GATE OK · parse ✓ · hex ✓ · collision ✓ · no-fudge ✓ · citations ✓');
 console.log('  data:      GAME_DATA = {' + (dataKeys.join(', ') || '(none)') + '}');
+console.log('  assets:    __ASSETS = ' + embedCount + ' embedded (' + (embedBytes / 1024).toFixed(0) + 'KB raw' + (embedCount ? '; ' + Object.keys(embedCats).map(c => c + ':' + embedCats[c]).join(', ') : '') + ')');
 console.log('  modules:   ' + modules.join(', '));
 console.log('  new fns:   ' + (newFns.map(x => x.name).join(', ') || '(none)'));
 console.log('  overrides: ' + ([...overrides].join(', ') || '(none)') + ' (2x each ✓)');

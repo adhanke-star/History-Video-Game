@@ -243,11 +243,25 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
 - [ ] Eastern (largely done) → **Western** (same mechanics, new content — D40/D54). Naval/riverine/trans-Miss DEFERRED.
 
 ### Phase H — "MAKE IT COME TO LIFE"  (graphics/footage — LOCKED: AFTER gameplay-complete)
-- [ ] **H1 PD images:** weapons / flags / USCT / scenes (have 131 portraits) via LoC + Internet Archive +
+- [~] **H1 PD images:** weapons / flags / USCT / scenes (have 131 portraits) via LoC + Internet Archive +
       Wikimedia, linked-assets + offline fallback. **Asset-ingestion (D71):** extend `tools/build.mjs` (Node, not a
       separate script) to Base64-embed + TIER/COMPRESS media w/ offline fallback so the single file stays portable as
       it grows (D68 #7). **Guardrail (D71):** no Phase-H media lib may require `SharedArrayBuffer` (COOP/COEP headers
       can't be set on GitHub Pages; `coi-serviceworker` is the shim if ever needed). PD imagery > AI art (aesthetic / IP / anachronism).
+      ‹increment 1 ✅ (D133, 2026-06-25): **THE OFFLINE PORTRAIT TIER + THE D71 INGESTION PIPELINE** — Aaron chose
+      "Go on H1/H2 now" (AskUserQuestion). The pipeline built + proven on the ALREADY-PD-vetted in-repo portraits (no
+      NEW external fetch this increment): `tools/prep-embed-assets.mjs` (sips ≤128px/q64 → `assets/embed/portraits/`,
+      155 files/953KB) + `tools/build.mjs` Base64-inlines `assets/embed/**` into a bare-name `__ASSETS` global (HARD/SOFT
+      byte budget + dup-key gate + non-file skip + a data:-URL mask before the HEX_BOMB scan) + `src/21-photo-embed.js`
+      overrides `window.portraitFor` so a real PD photo shows even with NO `assets/` folder beside the file (base hi-res
+      → embedded 128px tier → engraving; LAZY framing, eager-warm only when an offline probe-image 404s; + a lead-badge
+      upgrade). File 3.1MB→4.3MB. Combat byte-identical by construction (touches no combat/data/save; never `fldRng`) —
+      `probe-photo-embed` 22/22 (offline portability proven by route-blocking `assets/portraits/`) + `probe-presets` 26/26
+      + `probe-phased-ab` 20/20-0diff + the full atmospherics/weather/render-richness/audio/flags/tactical-visuals suite
+      coexist. Bug-hunt 6 Opus finders (D74-purity 0 findings): fixed a hi-res-DOWNGRADE on late-built lead badges + the
+      eager-warm waste + 3 build-robustness LOWs; critic SAFE TO COMMIT. **REMAINING H1: weapons / flags / USCT / scenes
+      imagery + H2 footage (each a NEW external-asset fetch → surface for per-asset licence + anachronism sign-off); the
+      3D terrain/HDRI/GLB are separate relative-path categories — "offline-portable" currently means PORTRAITS.**›
 - [x] **H1b Brigade BADGES & INSIGNIA — the battle flags (Aaron, run-k idea, 2026-06-15).** Render each brigade's
       identity with its **battle flag / colors** on the unit badge: the various Confederate battle flags (ANV
       Southern Cross, Hardee/Polk Western patterns, the national flags), the U.S. national & regimental colors,

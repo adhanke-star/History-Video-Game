@@ -15,6 +15,7 @@ secrets.local.json
 # visual-regression + probe output — regenerable; kept out of source control so the
 # pending-changes view stays quiet (keep only the milestone before/after record)
 tools/shots/*.png
+tools/shots/*.jpg
 tools/shots/*.json
 tools/shots/*.log
 !tools/shots/milestone-*.png
