@@ -629,7 +629,12 @@ function fldEngDraw2d(ctx, v) {
 function fld3dBuildEng() {
   if (typeof __FIELD === "undefined" || !window.THREE || !__FIELD.scene) return;
   var T = window.THREE;
-  if (__FIELD._engGroup && __FIELD._engGroup.parent) __FIELD._engGroup.parent.remove(__FIELD._engGroup);
+  // D132: SELF-DISPOSE the prior phase's works group (its berm/abatis/pontoon geometries+materials are
+  // children of _engGroup) before replacing it — so a 3D phase advance (fld3dRebuildPhaseScene re-calls
+  // this) does not orphan their GPU buffers. Matches the self-disposing pattern of fld3dBuildUnits /
+  // fld3dBuildOfficers / fld3dBuildSupply / fld3dBuildArms. Does NOT touch the water group (its own
+  // dispose lives in fld3dBuildWater). Empty/null at battle start (init) -> byte-identical first call.
+  if (__FIELD._engGroup) { _fld3dDisposeGroup(__FIELD._engGroup); if (__FIELD._engGroup.parent) __FIELD._engGroup.parent.remove(__FIELD._engGroup); }
   __FIELD._engGroup = new T.Group();
   __FIELD._engGroup.name = "engWorks";
   __FIELD._engMeshes = {};   // unitId -> { mesh, geo, mat, lvl }
@@ -641,9 +646,13 @@ function fld3dBuildEng() {
 /* ---- 3D static river water + fords (built once per 3D init, like walls/woods; no-op when no river) ---- */
 function fld3dBuildWater() {
   if (typeof __FIELD === "undefined" || !window.THREE || !__FIELD.scene) return;
+  // D132: dispose any PRIOR phase's river group FIRST — BEFORE the no-river early-return — so a 3D phase
+  // advance into a sector with NO river (fld3dRebuildPhaseScene -> fld3dBuildTerrain re-calls this) clears
+  // the old river instead of leaving it stale + leaked. (The dispose used to sit below the early-return,
+  // so a river->no-river advance orphaned it.) Empty/null at init -> byte-identical first call.
+  if (__FIELD._waterGroup) { _fld3dDisposeGroup(__FIELD._waterGroup); if (__FIELD._waterGroup.parent) __FIELD._waterGroup.parent.remove(__FIELD._waterGroup); __FIELD._waterGroup = null; }
   var t = __FIELD.terrain, rv = t && t.rivers; if (!rv || !rv.length) return;
   var T = window.THREE;
-  if (__FIELD._waterGroup) { _fld3dDisposeGroup(__FIELD._waterGroup); if (__FIELD._waterGroup.parent) __FIELD._waterGroup.parent.remove(__FIELD._waterGroup); }
   __FIELD._waterGroup = new T.Group(); __FIELD._waterGroup.name = "rivers";
   var waterMat = new T.MeshLambertMaterial({ color: new T.Color("#3a566d"), transparent: true, opacity: 0.82 });
   for (var r = 0; r < rv.length; r++) {

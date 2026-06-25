@@ -1694,8 +1694,29 @@ function fld3dInit() {
   if (typeof fld3dBuildEng === "function") { try { fld3dBuildEng(); } catch (e) {} }
 }
 function fldLow() { try { var q = G && G.settings && G.settings.gfxQuality; if (q === "low") return true; if (q === "high") return false; return Math.min(window.innerWidth, window.innerHeight) <= 720; } catch (e) { return false; } }
+/* PHASE C (multi-phase 3D rebuild, D132): the scene-level terrain meshes that DEPEND on the current
+   phase's sector/objective (ground · objective ring+beacon · walls · woods · road/creek markers) are
+   added through this tracker so a phase advance can dispose exactly them and rebuild the fresh sector,
+   with no orphaned meshes and no GPU leak. The unit groups, officer/supply/arms groups, the eng + water
+   groups, and the precip/smoke clouds are NOT tracked here — they own their own dispose paths. */
+function _fld3dTrackPhase(m) { __FIELD.scene.add(m); (__FIELD._phaseScene || (__FIELD._phaseScene = [])).push(m); return m; }
+function _fld3dDisposePhaseScene() {
+  var ps = __FIELD._phaseScene; if (!ps) return;
+  for (var i = 0; i < ps.length; i++) {
+    var m = ps[i];
+    if (m.traverse) m.traverse(function (o) {
+      if (o.geometry && o.geometry.dispose) o.geometry.dispose();
+      if (o.material) { var mm = o.material; if (Array.isArray(mm)) { for (var j = 0; j < mm.length; j++) mm[j] && mm[j].dispose && mm[j].dispose(); } else if (mm.dispose) mm.dispose(); }
+    });
+    if (m.parent) m.parent.remove(m);
+  }
+}
 function fld3dBuildTerrain() {
   var T = window.THREE, seg = fldLow() ? 40 : 80;
+  // dispose the PRIOR phase's tracked terrain meshes before rebuilding (D132). Empty on the first
+  // call (battle start) -> byte-identical init; non-empty only on a multi-phase 3D phase advance.
+  _fld3dDisposePhaseScene();
+  __FIELD._phaseScene = [];
   var geo = new T.PlaneGeometry(FLD.FIELD_W, FLD.FIELD_H, seg, seg);
   geo.rotateX(-Math.PI / 2);
   var pos = geo.attributes.position, colors = [];
@@ -1708,11 +1729,11 @@ function fld3dBuildTerrain() {
   geo.setAttribute("color", new T.Float32BufferAttribute(colors, 3)); geo.computeVertexNormals();
   var mesh = new T.Mesh(geo, new T.MeshLambertMaterial({ vertexColors: true }));
   mesh.position.set(FLD.FIELD_W / 2, 0, FLD.FIELD_H / 2);
-  __FIELD.scene.add(mesh); __FIELD.ground = mesh;
+  _fld3dTrackPhase(mesh); __FIELD.ground = mesh;
   // objective marker
   var o = __FIELD.objective;
   var ring = new T.Mesh(new T.RingGeometry(o.r - 6, o.r, 40), new T.MeshBasicMaterial({ color: "#d8c87a", side: T.DoubleSide, transparent: true, opacity: 0.7 }));
-  ring.rotation.x = -Math.PI / 2; ring.position.set(o.x, fldTerrainH(o.x, o.z) + 1.5, o.z); __FIELD.scene.add(ring);
+  ring.rotation.x = -Math.PI / 2; ring.position.set(o.x, fldTerrainH(o.x, o.z) + 1.5, o.z); _fld3dTrackPhase(ring);
   fld3dBuildObjectiveBeacon(T, o);
   // walls (one for the sandbox; several for a scenario)
   var t = __FIELD.terrain, _ws = fldWalls();
@@ -1720,7 +1741,7 @@ function fld3dBuildTerrain() {
     var wl = _ws[wq], wdx = wl.x2 - wl.x1, wdz = wl.z2 - wl.z1, wlen = Math.hypot(wdx, wdz);
     var wall = new T.Mesh(new T.BoxGeometry(wlen, 14, 8), new T.MeshLambertMaterial({ color: "#8a8070" }));
     wall.position.set((wl.x1 + wl.x2) / 2, fldTerrainH(wl.x1, wl.z1) + 7, (wl.z1 + wl.z2) / 2);
-    wall.rotation.y = -Math.atan2(wdz, wdx); __FIELD.scene.add(wall);
+    wall.rotation.y = -Math.atan2(wdz, wdx); _fld3dTrackPhase(wall);
   }
   // scenario markers (roads/creeks as low ribbons; ford/bridge as small markers) — Bull Run only
   fld3dBuildMarkers();
@@ -1736,7 +1757,7 @@ function fld3dBuildTerrain() {
       var tx = wd.x + Math.cos(ang) * rr, tz = wd.z + Math.sin(ang) * rr;
       dummy.position.set(tx, fldTerrainH(tx, tz) + 23, tz); dummy.updateMatrix(); im.setMatrixAt(k, dummy.matrix);
     }
-    __FIELD.scene.add(im);
+    _fld3dTrackPhase(im);
   }
 }
 function fld3dBuildObjectiveBeacon(T, o) {
@@ -1755,7 +1776,7 @@ function fld3dBuildObjectiveBeacon(T, o) {
   crown.name = "objectiveBeaconCrown"; crown.rotation.x = Math.PI / 2; crown.position.y = 82; g.add(crown);
   var core = new T.Mesh(new T.OctahedronGeometry(8, 0), gold);
   core.name = "objectiveBeaconCore"; core.position.y = 82; g.add(core);
-  __FIELD.scene.add(g);
+  _fld3dTrackPhase(g);
 }
 function fld3dBuildMarkers() {
   var t = __FIELD.terrain; if (!t || !t.markers || !window.THREE) return;
@@ -1771,11 +1792,11 @@ function fld3dBuildMarkers() {
         var seg = new T.Mesh(new T.BoxGeometry(len, hgt, wgt), new T.MeshLambertMaterial({ color: col }));
         var mx = (a[0] + b[0]) / 2, mz = (a[1] + b[1]) / 2;
         seg.position.set(mx, fldTerrainH(mx, mz) + hgt, mz); seg.rotation.y = -Math.atan2(dz, dx);
-        __FIELD.scene.add(seg);
+        _fld3dTrackPhase(seg);
       }
     } else if (typeof mk.x === "number" && (mk.kind === "ford" || mk.kind === "bridge")) {
       var m2 = new T.Mesh(new T.BoxGeometry(22, mk.kind === "bridge" ? 7 : 2, 22), new T.MeshLambertMaterial({ color: col }));
-      m2.position.set(mk.x, fldTerrainH(mk.x, mk.z) + 3, mk.z); __FIELD.scene.add(m2);
+      m2.position.set(mk.x, fldTerrainH(mk.x, mk.z) + 3, mk.z); _fld3dTrackPhase(m2);
     }
   }
 }
@@ -1859,10 +1880,39 @@ function fld3dDispose() {
     if (__FIELD.renderer) { try { if (__FIELD.renderer.forceContextLoss) __FIELD.renderer.forceContextLoss(); } catch (e3) {} if (__FIELD.renderer.dispose) __FIELD.renderer.dispose(); }
   } catch (e) {}
   __FIELD.scene = null; __FIELD.camera = null; __FIELD.controls = null; __FIELD.renderer = null; __FIELD.groups = null; __FIELD._u3d = null; __FIELD.ground = null;
+  __FIELD._phaseScene = null;   // D132: the tracked terrain meshes were disposed in the scene traverse above; drop the ref
   __FIELD._ld3dGroup = null; __FIELD._ld3d = null;   // B-2: the officer group's geometries were disposed in the scene traverse above; drop the refs
   __FIELD._sup3dGroup = null; __FIELD._sup3d = null; // B-3: same for the ammunition-train wagons
   __FIELD._engGroup = null; __FIELD._engMeshes = null; __FIELD._engAbatisMeshes = null; // T13: fieldworks/obstacles were disposed in the traverse above; drop refs
   __FIELD._engPontoonMeshes = null; __FIELD._waterGroup = null;   // T13 (increment 3): pontoon meshes + the river water group were disposed in the traverse above; drop refs
+}
+/* PHASE C (D132): rebuild the live 3D scene for a FRESH phase. A multi-phase battle's phase advance
+   (_fldAdvancePhase, T8) replaces __FIELD.units (a new cast with new ids), __FIELD.terrain (a new
+   sector), and __FIELD.objective — but the renderer/camera/lights/scene/groups persist. Before this
+   fix the new cast got NO 3D groups (invisible brigades), the prior phase's groups orphaned, and the
+   woods/walls/objective-beacon stayed at the OLD sector. This re-runs the same per-phase build sequence
+   as fld3dInit (terrain + every unit-scoped group), each of which self-disposes its prior set, then
+   re-frames the survey camera onto the new sector. PURE presentation — no sim field is read/written;
+   the headless stepper (mode3d false) never enters here, so combat stays byte-identical. */
+function fld3dRebuildPhaseScene() {
+  if (!__FIELD.mode3d || !__FIELD.scene || typeof window === "undefined" || !window.THREE) return;
+  fld3dBuildTerrain();   // self-disposes the prior phase terrain (D132) -> fresh ground/objective ring+beacon/walls/markers/woods/water; T18 re-enriches + re-captures via its wrapper
+  fld3dBuildUnits();     // self-disposes the prior unit groups -> the fresh phase cast (the T10 wrapper re-skins flags after)
+  if (typeof fld3dBuildOfficers === "function") { try { fld3dBuildOfficers(); } catch (e) {} }   // B-2 (self-disposes)
+  if (typeof fld3dBuildSupply === "function") { try { fld3dBuildSupply(); } catch (e) {} }       // B-3 (self-disposes)
+  if (typeof fld3dBuildArms === "function") { try { fld3dBuildArms(); } catch (e) {} }           // B-4 (self-disposes)
+  if (typeof fld3dBuildFlags === "function") { try { fld3dBuildFlags(); } catch (e) {} }         // H1b (idempotent, mirrors fld3dInit's explicit pass)
+  if (typeof fld3dBuildEng === "function") { try { fld3dBuildEng(); } catch (e) {} }             // T13 (self-disposes the prior phase's works meshes [D132 fix] + starts the new phase's empty works group)
+  _fld3dReaimPhase();
+}
+/* re-seat the survey camera onto the new phase's objective so the player faces the fresh sector (the
+   same framing fld3dInit uses; B-6 side-aware). Only the camera/target move — no renderer rebuild. */
+function _fld3dReaimPhase() {
+  if (!__FIELD.camera || !__FIELD.controls || !__FIELD.objective) return;
+  var ctr = __FIELD.objective, ps = (typeof fldPlayerSide === "function") ? fldPlayerSide() : "US";
+  __FIELD.camera.position.set(ctr.x, 620, (ps === "CS") ? -380 : (FLD.FIELD_H + 380));
+  if (__FIELD.controls.target && __FIELD.controls.target.set) __FIELD.controls.target.set(ctr.x, 0, ctr.z);
+  if (__FIELD.controls.update) { try { __FIELD.controls.update(); } catch (e) {} }
 }
 
 /* ===========================================================================

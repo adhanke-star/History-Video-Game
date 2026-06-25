@@ -131,6 +131,15 @@ function _fldAdvancePhase() {
   _fldBuildPhase(__FIELD.phaseIdx);   // fldResetRun set phase=deploy, paused=true
   __FIELD.phase = "battle";
   __FIELD.paused = _fldPhasesHasUI();   // headless false (run on), UI true (survey then play)
+  // D132: rebuild the 3D scene for the fresh phase (new unit cast + new sector terrain + new objective).
+  // Without this the new brigades render no 3D figures, the prior phase's meshes orphan, and the woods/
+  // objective beacon stay at the old sector. No-op when headless (mode3d false) -> combat byte-identical.
+  if (__FIELD.mode3d && typeof fld3dRebuildPhaseScene === "function") {
+    // D132 (bug-hunt LOW): don't FULLY swallow — a throw here would silently reproduce the very
+    // invisible-brigade symptom this fixes. Catch so the phase still advances, but surface it so it's
+    // diagnosable (and a probe's console-error gate catches it). It must never fire in normal play.
+    try { fld3dRebuildPhaseScene(); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fld3dRebuildPhaseScene failed on phase advance:", e); }
+  }
   if (_fldPhasesHasUI() && __FIELD.fog && __FIELD.units && __FIELD.units.length && typeof fldComputeVisibility === "function") fldComputeVisibility();
 }
 
