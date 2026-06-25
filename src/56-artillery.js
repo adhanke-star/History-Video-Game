@@ -180,6 +180,7 @@ function artRenderSection(C) {
     // REASON at full opacity (group opacity composites onto descendants, so it must sit outside).
     cards += '<div style="padding:9px;border:1px solid ' + col + ';border-radius:5px;background:rgba(0,0,0,.12)">'
       + '<div' + (disabled ? ' style="opacity:.6"' : '') + '>'
+      + (typeof armsImageHtml === "function" ? armsImageHtml("artillery", g.id, g.name) : "")
       + '<div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font-size:13px">' + _artEsc(g.name) + '</b>'
       + '<span style="font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:' + col + '">' + _artEsc(g.rarity) + '</span></div>'
       + '<div style="font-size:11px;opacity:.6">' + _artEsc(g.caliber) + ' &middot; ' + g.rangeYds + ' yds &middot; ' + g.rateOfFire + '/min &middot; crew ' + g.crew + ' &middot; quality ' + g.quality + '</div>'

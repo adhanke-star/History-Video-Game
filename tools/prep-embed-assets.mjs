@@ -37,11 +37,14 @@ const EMBED = join(ASSETS, 'embed');
    pixel ceiling (longest side via `sips -Z`), the JPEG quality, and the
    extensions to ingest. Add a category here (then re-run) to embed it offline. */
 const CATEGORIES = [
-  { name: 'portraits', maxPx: 128, quality: 64, ext: ['.jpg', '.jpeg'], perFileWarn: 40 * 1024 },
-  // future H1 categories plug in here once their PD sources are Aaron-approved:
-  //   { name: 'flags',   maxPx: 192, quality: 72, ext: ['.png','.jpg'] },
-  //   { name: 'weapons', maxPx: 256, quality: 74, ext: ['.jpg','.png'] },
-  //   { name: 'scenes',  maxPx: 384, quality: 72, ext: ['.jpg'] },
+  { name: 'portraits', maxPx: 128, quality: 64, ext: ['.jpg', '.jpeg'], format: 'jpeg', perFileWarn: 40 * 1024 },
+  // weapons: Smithsonian transparent-PNG cutouts + a couple of studio JPGs. format:'keep' so the PNG
+  // ALPHA is preserved (the gun sits transparent on the card, no solid box) and a JPG stays a JPG.
+  { name: 'weapons', maxPx: 384, quality: 80, ext: ['.png', '.jpg', '.jpeg'], format: 'keep', perFileWarn: 110 * 1024 },
+  // artillery: PD period photos + an Edwin Forbes sketch (all opaque) -> re-encode to JPEG.
+  { name: 'artillery', maxPx: 384, quality: 74, ext: ['.jpg', '.jpeg'], format: 'jpeg', perFileWarn: 120 * 1024 },
+  // future H1 categories plug in here once their PD sources are reviewed:
+  //   { name: 'scenes',  maxPx: 420, quality: 72, ext: ['.jpg'], format: 'jpeg' },
 ];
 
 function hasSips() {
@@ -63,14 +66,27 @@ function prepCategory(cat) {
     .sort();
   let total = 0, n = 0, biggest = { f: '', b: 0 };
   for (const f of files) {
-    const sp = join(srcDir, f), op = join(outDir, f);
+    const fmt = cat.format || 'jpeg';
+    const isPng = /\.png$/i.test(f);
+    // Output extension: 'keep' preserves the source ext; 'jpeg' ALWAYS writes .jpg so a .png source can
+    // never yield a .png file holding JPEG bytes (the extension/MIME mismatch — bug-hunt FINDER#4). The
+    // build keys by stem + MIME-maps by extension, so the renamed .jpg is mapped correctly.
+    const outName = (fmt === 'jpeg') ? f.replace(/\.[^.]+$/i, '.jpg') : f;
+    const sp = join(srcDir, f), op = join(outDir, outName);
     copyFileSync(sp, op);
-    try {
-      execFileSync('sips', ['-Z', String(cat.maxPx), '-s', 'format', 'jpeg',
-                            '-s', 'formatOptions', String(cat.quality), op], { stdio: 'ignore' });
-    } catch (e) {
-      console.error('  [warn] sips failed on ' + cat.name + '/' + f + ' — copied uncompressed: ' + e.message);
+    let args;
+    if (fmt === 'keep') {
+      // resize only; keep the source format (preserves PNG alpha). recompress a JPG via quality.
+      args = isPng ? ['-Z', String(cat.maxPx), op]
+                   : ['-Z', String(cat.maxPx), '-s', 'formatOptions', String(cat.quality), op];
+    } else {
+      // force JPEG (no alpha). NOTE: only use format:'jpeg' on categories whose sources are .jpg, else
+      // the file keeps its .png name but holds JPEG bytes (an extension/MIME mismatch). The categories
+      // above honor this (portraits/artillery = jpg sources; weapons = 'keep').
+      args = ['-Z', String(cat.maxPx), '-s', 'format', 'jpeg', '-s', 'formatOptions', String(cat.quality), op];
     }
+    try { execFileSync('sips', args, { stdio: 'ignore' }); }
+    catch (e) { console.error('  [warn] sips failed on ' + cat.name + '/' + f + ' — copied uncompressed: ' + e.message); }
     const b = statSync(op).size; total += b; n++;
     if (b > biggest.b) biggest = { f, b };
     // per-file sanity cap: a tier image should be a few KB. A large one means sips failed (full-res

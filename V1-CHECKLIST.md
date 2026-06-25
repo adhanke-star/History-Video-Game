@@ -262,6 +262,16 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       eager-warm waste + 3 build-robustness LOWs; critic SAFE TO COMMIT. **REMAINING H1: weapons / flags / USCT / scenes
       imagery + H2 footage (each a NEW external-asset fetch → surface for per-asset licence + anachronism sign-off); the
       3D terrain/HDRI/GLB are separate relative-path categories — "offline-portable" currently means PORTRAITS.**›
+      ‹increment 2 ✅ (D134, 2026-06-25): **PD ARMS IMAGERY on the Armory/Cannon-Corps cards.** Aaron set
+      asset review to "fully hands-off, edge-cases only" (AskUserQuestion). `tools/source-arms-imagery.mjs`
+      (Commons API → PD-only rasters + provenance) + `tools/prep-embed-assets.mjs` weapons(`format:'keep'` for
+      PNG alpha)/artillery categories + `src/54-arms-imagery.js` (`armsImageHtml` → parchment-framed `<img>` or
+      `""`) called from 55/56 card renders (1 line each). **10 of 14 imaged** (8 weapon Smithsonian cutouts +
+      napoleon[Forbes sketch] + whitworth[period photo]); 4 IMAGELESS+documented (richmond, howitzer12, parrott10,
+      ordnance3in). Combat byte-identical (helper reads only __ASSETS, never fldRng; probe-presets 26/26 + weapons
+      8/8 + cannon 9/9). Bug-hunt ANACHRONISM lens caught + fixed a wrong-class siege Parrott + a modern monument
+      photo (→ imageless) + a henry opaque-box (→ cutout) + a prep footgun + alt-redundancy; critic SAFE TO COMMIT;
+      wcag AA. probe-arms-imagery 17/17. **NEXT H1 = another NEW-asset category (USCT / scenes) or H2 footage.**›
 - [x] **H1b Brigade BADGES & INSIGNIA — the battle flags (Aaron, run-k idea, 2026-06-15).** Render each brigade's
       identity with its **battle flag / colors** on the unit badge: the various Confederate battle flags (ANV
       Southern Cross, Hardee/Polk Western patterns, the national flags), the U.S. national & regimental colors,

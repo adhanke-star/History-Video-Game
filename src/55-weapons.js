@@ -139,6 +139,7 @@ function armoryRenderArmory(C) {
     // (an inner wrapper) and render the reason as a FULL-opacity sibling, outside the dimmed group.
     cards += '<div style="padding:9px;border:1px solid ' + col + ';border-radius:5px;background:rgba(0,0,0,.12)">'
       + '<div' + (disabled ? ' style="opacity:.6"' : '') + '>'
+      + (typeof armsImageHtml === "function" ? armsImageHtml("weapons", w.id, w.name) : "")
       + '<div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font-size:13px">' + w.name + '</b>'
       + '<span style="font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:' + col + '">' + w.rarity + '</span></div>'
       + '<div style="font-size:11px;opacity:.6">' + w.caliber + ' &middot; ' + w.rangeYds + ' yds &middot; acc ' + w.accuracy + ' &middot; ' + w.rateOfFire + '/min &middot; quality ' + w.quality + '</div>'

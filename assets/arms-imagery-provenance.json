@@ -1,0 +1,202 @@
+{
+  "springfield": {
+    "id": "springfield",
+    "cat": "weapons",
+    "note": "The standard U.S. infantry rifle-musket, .58 cal; most-produced Union long arm.",
+    "file": "File:Springfield Model 1861 Rifle Musket transparent.png",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File%3ASpringfield%20Model%201861%20Rifle%20Musket%20transparent.png",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Springfield_Model_1861_Rifle_Musket_transparent.png",
+    "license": "Public domain",
+    "artist": "The Smithsonian Institution",
+    "credit": "This file was derived from: Springfield Model 1861-1862 Rifle Musket-NMAH-AHB2015q037208.jpg:",
+    "mime": "image/png",
+    "w": 2000,
+    "h": 650,
+    "bytes": 217882,
+    "savedAs": "assets/weapons/springfield.png",
+    "altCandidates": [
+      "File:Springfield Model 1861 Rifle Musket-NMAH-AHB2015q028583.jpg",
+      "File:Springfield Model 1861 Rifle Musket-NMAH-AHB2015q028556.jpg",
+      "File:Springfield Model 1861 Rifle Musket-NMAH-AHB2015q028582.jpg"
+    ]
+  },
+  "enfield": {
+    "id": "enfield",
+    "cat": "weapons",
+    "note": "The .577 British import, the second-most-common infantry arm on BOTH sides.",
+    "file": "File:British Pattern 1853 Rifle transparent.png",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File%3ABritish%20Pattern%201853%20Rifle%20transparent.png",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/77/British_Pattern_1853_Rifle_transparent.png",
+    "license": "Public domain",
+    "artist": "The Smithsonian Institution",
+    "credit": "This file was derived from: British Pattern 1853 Rifle-NMAH-ET2012-13936.jpg:",
+    "mime": "image/png",
+    "w": 2000,
+    "h": 650,
+    "bytes": 225790,
+    "savedAs": "assets/weapons/enfield.png",
+    "altCandidates": [
+      "File:NMAH-ET2012-13936 White.jpg",
+      "File:British Pattern 1853 Rifle-NMAH-AHB2015q027969.jpg",
+      "File:British Pattern 1853 Rifle-NMAH-AHB2015q027987.jpg"
+    ]
+  },
+  "sharps": {
+    "id": "sharps",
+    "cat": "weapons",
+    "note": "The breech-loading Sharps, issued to U.S. Sharpshooters and cavalry.",
+    "file": "File:United States Sharps rifle Model 1859, .52 caliber.png",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File%3AUnited%20States%20Sharps%20rifle%20Model%201859%2C%20.52%20caliber.png",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/55/United_States_Sharps_rifle_Model_1859%2C_.52_caliber.png",
+    "license": "Public domain",
+    "artist": "Division of the History of Technology, Armed Forces History, National Museum of American History, Smithsonian Institutio",
+    "credit": "http://ids.si.edu/ids/dynamic?container.fullpage&amp;id=NMAH-2004-26284-09 Gallery: https://americanhistory.si.edu/colle",
+    "mime": "image/png",
+    "w": 1033,
+    "h": 262,
+    "bytes": 165240,
+    "savedAs": "assets/weapons/sharps.png",
+    "altCandidates": [
+      "File:Contract Carbines from case 10 of the Springfield Armory Museum.jpg"
+    ]
+  },
+  "spencer": {
+    "id": "spencer",
+    "cat": "weapons",
+    "note": "The 7-shot lever repeater, a Union late-war advantage.",
+    "file": "File:NMAH-ET2012-13926-White.png",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File%3ANMAH-ET2012-13926-White.png",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/28/NMAH-ET2012-13926-White.png",
+    "license": "Public domain",
+    "artist": "National Museum of American History",
+    "credit": "File:NMAH-ET2012-13926.jpg",
+    "mime": "image/png",
+    "w": 1776,
+    "h": 370,
+    "bytes": 224402,
+    "savedAs": "assets/weapons/spencer.png",
+    "altCandidates": [
+      "File:NMAH-ET2012-13926.jpg",
+      "File:NMAH-ET2012-13927.jpg",
+      "File:Spencer Carbine 2.JPG"
+    ]
+  },
+  "henry": {
+    "id": "henry",
+    "cat": "weapons",
+    "note": "The 16-shot Henry repeater (\"that damned Yankee rifle\"), privately bought.",
+    "file": "File:NMAH-2004-26295-12 transparent.png",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File%3ANMAH-2004-26295-12%20transparent.png",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b8/NMAH-2004-26295-12_transparent.png",
+    "license": "Public domain",
+    "artist": "National Museum of American History",
+    "credit": "File:NMAH-2004-26295-12.jpg",
+    "mime": "image/png",
+    "w": 980,
+    "h": 260,
+    "bytes": 127001,
+    "savedAs": "assets/weapons/henry.png",
+    "altCandidates": []
+  },
+  "colt": {
+    "id": "colt",
+    "cat": "weapons",
+    "note": "The Colt revolving rifle, issued in limited numbers (e.g. Berdan's).",
+    "file": "File:Colt Model 1855 Revolving Rifle transparent.png",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File%3AColt%20Model%201855%20Revolving%20Rifle%20transparent.png",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8e/Colt_Model_1855_Revolving_Rifle_transparent.png",
+    "license": "Public domain",
+    "artist": "The Smithsonian Institution",
+    "credit": "This file was derived from: Colt Model 1855 Revolving Rifle-NMAH-AHB2015q026777.jpg:",
+    "mime": "image/png",
+    "w": 2000,
+    "h": 650,
+    "bytes": 254880,
+    "savedAs": "assets/weapons/colt.png",
+    "altCandidates": [
+      "File:Colt Model 1855 Revolving Rifle-NMAH-AHB2015q026778.jpg",
+      "File:Colt Model 1855 Revolving Rifle-NMAH-AHB2015q026764.jpg",
+      "File:Colt Model 1855 Revolving Rifle-NMAH-AHB2015q026777.jpg"
+    ]
+  },
+  "lorenz": {
+    "id": "lorenz",
+    "cat": "weapons",
+    "note": "The Austrian .54 Lorenz, imported in huge numbers by both sides.",
+    "file": "File:Lorenz Smithsonian.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File%3ALorenz%20Smithsonian.jpg",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/39/Lorenz_Smithsonian.jpg",
+    "license": "Public domain",
+    "artist": "The Smithsonian Institution",
+    "credit": "https://americanhistory.si.edu/collections/search/object/nmah_417326",
+    "mime": "image/jpeg",
+    "w": 1790,
+    "h": 300,
+    "bytes": 94614,
+    "savedAs": "assets/weapons/lorenz.jpg",
+    "altCandidates": [
+      "File:Romuald Wilusz (1840-1922) powstaniec styczniowy 1863 z karabinem Lorenz M1854.jpg"
+    ]
+  },
+  "smoothbore": {
+    "id": "smoothbore",
+    "cat": "weapons",
+    "note": "The .69 smoothbore Model 1842, the obsolescent arm of early-war second-line troops.",
+    "file": "File:Springfield Model 1842 Percussion Musket transparent.png",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File%3ASpringfield%20Model%201842%20Percussion%20Musket%20transparent.png",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/39/Springfield_Model_1842_Percussion_Musket_transparent.png",
+    "license": "Public domain",
+    "artist": "The Smithsonian Institution",
+    "credit": "This file was derived from: Springfield PP Model 1842 Percussion Musket-NMAH-AHB2015q027911.jpg:",
+    "mime": "image/png",
+    "w": 2000,
+    "h": 650,
+    "bytes": 220750,
+    "savedAs": "assets/weapons/smoothbore.png",
+    "altCandidates": [
+      "File:Springfield Model 1842 Percussion Musket-NMAH-AHB2015q027121.jpg",
+      "File:Springfield Model 1842 Percussion Musket-NMAH-AHB2015q027142.jpg",
+      "File:Springfield Model 1842 Percussion Musket-NMAH-AHB2015q027141.jpg"
+    ]
+  },
+  "napoleon": {
+    "id": "napoleon",
+    "cat": "artillery",
+    "note": "The bronze 12-pdr Napoleon smoothbore, the war's dominant field gun.",
+    "file": "File:Light 12-pounder Napoleon gun, brass, Rappahannock.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File%3ALight%2012-pounder%20Napoleon%20gun%2C%20brass%2C%20Rappahannock.jpg",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e9/Light_12-pounder_Napoleon_gun%2C_brass%2C_Rappahannock.jpg",
+    "license": "Public domain",
+    "artist": "Edwin Forbes",
+    "credit": "https://www.loc.gov/pictures/resource/ppmsca.20579/",
+    "mime": "image/jpeg",
+    "w": 1024,
+    "h": 670,
+    "bytes": 105524,
+    "savedAs": "assets/artillery/napoleon.jpg",
+    "altCandidates": []
+  },
+  "whitworth": {
+    "id": "whitworth",
+    "cat": "artillery",
+    "note": "The British Whitworth hexagonal-bore rifle, a long-range Confederate import.",
+    "file": "File:12inchWhitworthRifle.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File%3A12inchWhitworthRifle.jpg",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/ce/12inchWhitworthRifle.jpg",
+    "license": "Public domain",
+    "artist": "Unknown authorUnknown author",
+    "credit": "The Photographic History of The Civil War in Ten Volumes: Volume Five, Forts and Artillery. The Review of Reviews Co., N",
+    "mime": "image/jpeg",
+    "w": 1350,
+    "h": 715,
+    "bytes": 568700,
+    "savedAs": "assets/artillery/whitworth.jpg",
+    "altCandidates": []
+  },
+  "_imageless": {
+    "richmond": "No clean full-gun PD image found (only a lock-detail close-up or a mixed museum display case); the Fayetteville Smithsonian cutout is a different weapon so was NOT substituted. Card renders without a photo (guarded fallback).",
+    "howitzer12": "No clean PD period image of the Model 1841 12-pdr field howitzer found (only CC-BY park photos / a wrong-model mountain howitzer). Card renders without a photo.",
+    "parrott10": "No clean PD image of the 10-pdr FIELD Parrott found — Commons PD candidates were 100/200-pdr SIEGE Parrotts (wrong gun class). Card renders without a photo (bug-hunt FINDER#1/#3/#6).",
+    "ordnance3in": "The only PD candidate was a MODERN (2011) color monument photo (cars/snow/storefronts) that breaks the period aesthetic; no clean period image found. Card renders without a photo (bug-hunt FINDER#1/#3/#6)."
+  }
+}
