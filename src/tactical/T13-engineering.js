@@ -63,7 +63,10 @@ function fldEngRealism() {
 }
 
 var FLDE = {
-  DIG_TIME_BASE: 70,   // sim-seconds to a full parapet at Balanced realism (scaled by realism below)
+  DIG_TIME_BASE: 42,   // H5-i1 (D139): faster/cheaper digging for UG:G feel — full parapet in ~42s @ Balanced (was 70;
+                       // Arcade ~29s / Historian ~55s after realism scaling). Byte-identical for headless AI-vs-AI:
+                       // no AI/scenario unit ever digs (T13 header invariant), so the rate is never multiplied into a
+                       // live entrench headlessly. Player-facing dig-timing deltas are logged in probe-engineering-corps.
   MAX_BONUS_BASE: 0.62, // full-entrench cover bonus at Balanced: cover x1.62 (rifle pits -> low parapet)
   WORKS_R: 26,         // yd: march beyond this from the dig site and the works are abandoned
   DECAY_T: 28,         // sim-seconds for abandoned works to fade fully

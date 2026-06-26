@@ -560,7 +560,10 @@ function fldStepMovement(u, dt) {
     if (u.state !== "routing") {
       u.facing += fldClamp(fldAngDiff(desiredFace, u.facing), -FLD.TURN_RATE * dt, FLD.TURN_RATE * dt);
       u.fatigue = Math.max(0, u.fatigue - FLD.FATIGUE_REST * dt);
-      if (u.order.type === "move") u.order.type = "hold";
+      // H5-i1 (D139): on arrival, advance the player's planned route (shift-queue) to the next waypoint;
+      // fldOrderQueueAdvance returns false for any unit without a non-empty .queue (every AI/scenario unit
+      // -> u.order.type becomes "hold" exactly as before -> headless AI-vs-AI byte-identical).
+      if (u.order.type === "move") { if (!(typeof fldOrderQueueAdvance === "function" && fldOrderQueueAdvance(u))) u.order.type = "hold"; }
     }
   }
 }
@@ -568,10 +571,16 @@ function fldOrderMove(u, tx, tz, tface) {
   if (!u.alive || u.state === "routing") return;
   u.order = { type: "move", tx: tx, tz: tz, tface: (typeof tface === "number") ? tface : u.facing };
 }
-function fldOrderCharge(u) {
+// H5-i1 (D139): an optional explicit target (the player's drag-onto-enemy charge). With target null/undefined
+// the body is the VERBATIM nearest-enemy scan — and the only caller without a target is fldSelCharge (player)
+// + the AI sets charge orders inline (never calls this) -> headless AI-vs-AI is byte-identical.
+function fldOrderCharge(u, target) {
   if (!u.alive || u.state === "routing") return;
-  var best = null, bd = 1e9;
-  for (var i = 0; i < __FIELD.units.length; i++) { var e = __FIELD.units[i]; if (e.side === u.side || !e.alive) continue; var d = fldDist(u, e); if (d < bd) { bd = d; best = e; } }
+  var best = (target && target.alive && target.side !== u.side) ? target : null;
+  if (!best) {
+    var bd = 1e9;
+    for (var i = 0; i < __FIELD.units.length; i++) { var e = __FIELD.units[i]; if (e.side === u.side || !e.alive) continue; var d = fldDist(u, e); if (d < bd) { bd = d; best = e; } }
+  }
   if (best) { var face = Math.atan2(best.x - u.x, -(best.z - u.z)); u.order = { type: "charge", tx: best.x, tz: best.z, tface: face }; }
 }
 
@@ -1366,8 +1375,11 @@ function fldPointerDown(e) {
   var best = null, bd = 70, _psd = fldPlayerSide();
   for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side !== _psd || !u.alive || u.ai) continue; var d = Math.hypot(u.x - wp.x, u.z - wp.z); if (d < bd) { bd = d; best = u; } }
   if (best) { if (e.shiftKey && __FIELD.sel.indexOf(best.id) < 0) __FIELD.sel.push(best.id); else __FIELD.sel = [best.id]; fldRenderHud(); __FIELD.drag = null; return; }
-  // empty ground with a selection -> begin a move/face drag
-  if (fldPlayerSel().length) __FIELD.drag = { x0: wp.x, z0: wp.z, x: wp.x, z: wp.z };
+  // H5-i1 (D139): press near a selected brigade's facing HANDLE -> re-aim its facing (point + facing handle).
+  var hu = (typeof fldHandleHit === "function") ? fldHandleHit(wp) : null;
+  if (hu) { __FIELD.drag = { x0: wp.x, z0: wp.z, x: wp.x, z: wp.z, aimUid: hu.id, shift: !!e.shiftKey }; return; }
+  // empty ground with a selection -> begin a place (move / drag-to-charge) gesture; shift = queue a waypoint.
+  if (fldPlayerSel().length) __FIELD.drag = { x0: wp.x, z0: wp.z, x: wp.x, z: wp.z, shift: !!e.shiftKey };
   else __FIELD.sel = [];
 }
 function fldPointerMove(e) {
@@ -1377,10 +1389,14 @@ function fldPointerMove(e) {
 function fldPointerUp() {
   if (!__FIELD.drag) return;
   var dr = __FIELD.drag; __FIELD.drag = null;
-  var sel = fldPlayerSel(); if (!sel.length) return;
+  var sel = fldPlayerSel();
+  // H5-i1 (D139): the rich gesture (point + facing handle · drag-onto-enemy charge · shift-queue · re-aim)
+  // lives in T20; the resolver is the testable core (tools/probe-order-feel.mjs drives it). A re-aim gesture
+  // needs no selection. Falls back to the legacy march if T20 is somehow absent.
+  if (typeof fldResolveOrderGesture === "function") { fldResolveOrderGesture(sel, dr); return; }
+  if (!sel.length) return;
   var face = Math.atan2(dr.x - dr.x0, -(dr.z - dr.z0));
   var dragged = Math.hypot(dr.x - dr.x0, dr.z - dr.z0) > 18;
-  // multi-select: spread around the drop point along the facing's perpendicular
   var perp = face + Math.PI / 2, spread = 80;
   for (var i = 0; i < sel.length; i++) {
     var off = (i - (sel.length - 1) / 2) * spread;
@@ -1410,7 +1426,7 @@ function fldRenderHud() {
     var ps = fldPlayerSide(), es = fldEnemy(ps), foeLine;
     if (__FIELD.fog) { var seen = 0; for (var fi = 0; fi < __FIELD.units.length; fi++) { var fu = __FIELD.units[fi]; if (fu.side === es && fu.alive && fldVisible(ps, fu)) seen++; } foeLine = seen + ' ' + _fldSideName(es) + ' brigades sighted'; }
     else foeLine = fldArmyLive(es) + ' ' + _fldSideName(es) + ' brigades afield';
-    el.innerHTML = '<div style="opacity:.7;">Click a brigade to select. Drag from open ground to march &amp; face. (' + fldArmyLive(ps) + ' ' + _fldSideNameFull(ps) + ' vs ' + foeLine + '.)</div>'
+    el.innerHTML = '<div style="opacity:.7;">Click a brigade to select. Drag open ground to march &amp; face; drag onto a foe to charge; the handle re-aims facing; Shift-drag queues a route. (' + fldArmyLive(ps) + ' ' + _fldSideNameFull(ps) + ' vs ' + foeLine + '.)</div>'
       + (typeof fldOfficerHudRoster === "function" ? fldOfficerHudRoster() : "")   // B-2: a field-officer status line
       + (typeof fldLogisticsHudReserve === "function" ? fldLogisticsHudReserve() : "");   // B-3: the ammunition-reserve line
     return;
@@ -1604,8 +1620,10 @@ function fld2dDraw() {
   if (typeof fldDrawOfficers === "function") fldDrawOfficers(ctx, v);
   // battle flags & insignia (H1b): brigade colors + corps badges on the 2D markers (no-op when off / module absent)
   if (typeof fldDrawFlags === "function") fldDrawFlags(ctx, v);
-  // drag arrow
-  if (__FIELD.drag) { var dr = __FIELD.drag; ctx.strokeStyle = "#ffe9a8"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(v.ox + dr.x0 * v.s, v.oz + dr.z0 * v.s); ctx.lineTo(v.ox + dr.x * v.s, v.oz + dr.z * v.s); ctx.stroke(); }
+  // H5-i1 (D139): the live order GHOST — destination footprint + swinging facing handle + spread line, with
+  // drag-onto-enemy charge arrows + queued-route dots (T20). Falls back to the bare drag line if T20 is absent.
+  if (typeof fldOrderGhost2d === "function") fldOrderGhost2d(ctx, v);
+  else if (__FIELD.drag) { var dr = __FIELD.drag; ctx.strokeStyle = "#ffe9a8"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(v.ox + dr.x0 * v.s, v.oz + dr.z0 * v.s); ctx.lineTo(v.ox + dr.x * v.s, v.oz + dr.z * v.s); ctx.stroke(); }
 }
 // scenario terrain markers (Bull Run: Bull Run creek, Young's Branch, the Warrenton Turnpike,
 // Sudley Ford, the Stone Bridge, place-labels). The sandbox has no markers -> a no-op.
@@ -1692,6 +1710,8 @@ function fld3dInit() {
   if (typeof fld3dBuildFlags === "function") { try { fld3dBuildFlags(); } catch (e) {} }
   // Engineering Corps (T13): the entrenchment group (berms are added/synced per entrenched unit; empty here)
   if (typeof fld3dBuildEng === "function") { try { fld3dBuildEng(); } catch (e) {} }
+  // H5-i1 (D139): the persistent 3D order-ghost group (hidden until the player gives an order)
+  if (typeof fld3dEnsureGhost === "function") { try { fld3dEnsureGhost(); } catch (e) {} }
 }
 function fldLow() { try { var q = G && G.settings && G.settings.gfxQuality; if (q === "low") return true; if (q === "high") return false; return Math.min(window.innerWidth, window.innerHeight) <= 720; } catch (e) { return false; } }
 /* PHASE C (multi-phase 3D rebuild, D132): the scene-level terrain meshes that DEPEND on the current
@@ -1858,6 +1878,7 @@ function fld3dRender() {
   if (typeof fld3dSyncSupply === "function") fld3dSyncSupply();       // B-3: ammunition-train wagons
   if (typeof fld3dSyncArms === "function") fld3dSyncArms();           // B-4: gun + trooper markers + muzzle flash
   if (typeof fld3dSyncEng === "function") fld3dSyncEng();             // T13: entrenchment berms (no-op when none dug in)
+  if (typeof fld3dSyncDrag === "function") fld3dSyncDrag();           // H5-i1: the live order ghost (hidden when no drag)
   __FIELD.renderer.render(__FIELD.scene, __FIELD.camera);
 }
 function fld3dPick(clientX, clientY) {
@@ -1885,6 +1906,7 @@ function fld3dDispose() {
   __FIELD._sup3dGroup = null; __FIELD._sup3d = null; // B-3: same for the ammunition-train wagons
   __FIELD._engGroup = null; __FIELD._engMeshes = null; __FIELD._engAbatisMeshes = null; // T13: fieldworks/obstacles were disposed in the traverse above; drop refs
   __FIELD._engPontoonMeshes = null; __FIELD._waterGroup = null;   // T13 (increment 3): pontoon meshes + the river water group were disposed in the traverse above; drop refs
+  __FIELD._ghost3d = null;   // H5-i1: the order-ghost group's geometries were disposed in the traverse above; drop the ref
 }
 /* PHASE C (D132): rebuild the live 3D scene for a FRESH phase. A multi-phase battle's phase advance
    (_fldAdvancePhase, T8) replaces __FIELD.units (a new cast with new ids), __FIELD.terrain (a new
