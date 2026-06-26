@@ -173,9 +173,15 @@ const SETUP = `(() => {
       try {
         var html=codexRenderTab(null); mount(html);
         if(window.__cxXss!==0) throw new Error('XSS payload executed (__cxXss='+window.__cxXss+')');
-        if(html.indexOf('<img')>=0) throw new Error('raw <img tag present in HTML (angle-bracket unescaped)');
+        // The codex LEGITIMATELY embeds build-controlled PD teaching photos as <img src="data:..."> on the
+        // People cards (D135 USCT + D136 leaders), so the property to verify is that the ENTRY-DATA payload is
+        // NEUTRALIZED (escaped, never a live handler) — not the incidental absence of any <img>.
         if(html.indexOf('&lt;img')<0) throw new Error('escaped &lt;img not found — term/body not escaped');
-        if(document.querySelector('#cxList img')) throw new Error('a live <img> made it into the DOM');
+        if(/onerror\s*=\s*"window\.__cxXss/.test(html)) throw new Error('a live onerror handler from the payload is present (term/body not escaped)');
+        if(document.querySelector('#cxList img[onerror]')) throw new Error('an <img> carrying an onerror handler made it into the DOM');
+        if(document.querySelector('#cxList img[src="x"], #cxList img[src="y"]')) throw new Error('a payload <img> (src=x/y) made it into the DOM');
+        var liveImgs=document.querySelectorAll('#cxList img');   // any live imgs MUST be the controlled data: photos, never the payload
+        for(var li=0;li<liveImgs.length;li++){ var s=liveImgs[li].getAttribute('src')||''; if(s.indexOf('data:image/')!==0) throw new Error('a non-data: <img> reached the DOM (src='+s.slice(0,24)+')'); }
       } finally { d.entries.pop(); }
       return { escaped:true }; });
 

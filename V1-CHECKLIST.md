@@ -289,6 +289,27 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       5.31:1) + 2 LOW Tubman provenance accuracy nits (postwar CDV date, seated-not-standing). probe-usct-imagery
       17/17; photo-embed 22/22 + arms-imagery 17/17 coexist; wcag AA. __ASSETS=172; file 4.6MB→5.0MB. **NEXT H1 =
       battle-scenes/leaders (Brady/Gardner) or flags-as-surviving-colours, or H2 footage — same hands-off mode.**›
+      ‹increment 4 ✅ (D136, 2026-06-25): **PD LEADERS-IN-THE-FIELD IMAGERY on the Codex People cards.** Same
+      "fully hands-off, edge-cases only" mode. The 24 Codex People entries had no image but the 4 USCT ones (D135);
+      this gives the other **20 leaders** a famous Brady/Gardner/LoC/NARA/NPG WARTIME / in-the-field photograph
+      (Lincoln@Antietam, Grant@Cold Harbor, Lee, Davis, Sherman, Jackson, Longstreet, McClellan, Meade, Thomas,
+      Sheridan, Bragg, Cleburne, Farragut, Stanton, Seward, Stephens, Barton, Dix, Walker). `tools/source-leaders-imagery.mjs`
+      + `tools/recon-commons.mjs` (NEW) + `tools/prep-embed-assets.mjs` `leaders` category (maxPx 400/q74/JPEG) +
+      `src/52-leaders-imagery.js` (`leaderImageHtml(id)` → a captioned `<figure class="leader-img">` or `""`) wired
+      into `84-codex.js` `_cxEntryHTML` as `usctImageHtml(en.id) || leaderImageHtml(en.id)` (USCT wins; at-most-one
+      figure; "" when neither → byte-identical). DELIBERATELY COMPLEMENTARY to the 128px badge `portraits` tier (this
+      is a 400px codex-resolution tier keyed by codex id). INFORMATIVE (descriptive alt + figcaption); captions
+      citation-grade + anti-Lost-Cause (Stephens' Cornerstone Speech, Cleburne's emancipation proposal, Longstreet's
+      vilification, Thomas the loyal Virginian, slavery named). **The VIEW discipline corrected 11 of 20 wrong pulls**
+      (a "Jefferson Davis" = the UNION Gen. Jefferson C. Davis; a Stanton = a USCT family; a Seward = his daughter
+      Fanny; group/montage photos; engravings). Combat byte-identical (probe-presets 26/26 + phased-ab 20/0-diff; no
+      tactical/combat file touched per git-diff). A latent D135 probe-brittleness fixed (probe-codex XSS test asserted
+      no `<img>` anywhere → corrected to assert the payload is neutralized; 18/18). Bug-hunt (env-throttled Workflow →
+      salvaged PD-licence [all 20 PD] + anachronism-VIEW [all identities cleared] lenses + a standalone completeness
+      critic → SAFE TO COMMIT, 0 must-fix). probe-leaders-imagery 15/15; flags 36/36 + weather 30/30 + render-richness
+      30/30 + audio 22/22 prove 3D health; wcag AA (caption 6.86:1 / credit 5.35:1). __ASSETS=192; file 5.0MB→5.9MB.
+      **NEXT H1 = battle-scene photographs on the pre-battle briefings (`bridgeBriefingHTML`, the dignity-sensitive
+      Gardner/Brady field photos), or flags-as-surviving-colours, or H2 footage — same hands-off mode.**›
 - [x] **H1b Brigade BADGES & INSIGNIA — the battle flags (Aaron, run-k idea, 2026-06-15).** Render each brigade's
       identity with its **battle flag / colors** on the unit badge: the various Confederate battle flags (ANV
       Southern Cross, Hardee/Polk Western patterns, the national flags), the U.S. national & regimental colors,

@@ -46,6 +46,10 @@ const CATEGORIES = [
   // usct: famous LoC/NARA/Harper's-Weekly PD USCT photographs + engravings (all opaque) -> JPEG. A touch
   // larger/higher-q than the small-arms cards since these are INFORMATIVE teaching images, shown bigger.
   { name: 'usct', maxPx: 420, quality: 78, ext: ['.jpg', '.jpeg'], format: 'jpeg', perFileWarn: 70 * 1024 },
+  // leaders: famous Brady/Gardner/LoC PD WARTIME / in-the-field photographs of the war's leaders &
+  // figures (D136), keyed by CODEX ENTRY ID and rendered on the codex People cards. Portrait busts ->
+  // 400px is plenty for the card (max-height 230px); q74 keeps the 20-image tier under budget.
+  { name: 'leaders', maxPx: 400, quality: 74, ext: ['.jpg', '.jpeg'], format: 'jpeg', perFileWarn: 60 * 1024 },
   // future H1 categories plug in here once their PD sources are reviewed:
   //   { name: 'scenes',  maxPx: 420, quality: 72, ext: ['.jpg'], format: 'jpeg' },
 ];
