@@ -399,6 +399,9 @@ function _fldDrawerHTML() {
     + '<div style="font-size:12px;opacity:.85;margin-bottom:8px;border-bottom:1px solid #5a4a2e;padding-bottom:8px">Difficulty: <b>' + presetLine + '</b><br><span style="opacity:.65;font-size:11px">Set from the main menu (&#9881; Command &amp; Realism); the toggles below change live.</span></div>'
     + tog("fldDrawerFog", "Fog of war", !!__FIELD.fog, "line-of-sight scouting (V)")
     + tog("fldDrawerAuto", "Active auto-pause", !!__FIELD.autoPause, "pause at key moments (P)")
+    // H5-i3 (D141): elevation display lever (hillshade / contours / color-by-height) — a settings lever like the realism sliders
+    + '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin:7px 0"><span style="font-size:13px">Elevation display<span style="opacity:.6;font-size:11px"> &mdash; high/low ground (R)</span></span>'
+    +   '<button id="fldDrawerElev" type="button" class="upg" aria-label="Elevation display: ' + ((typeof fldElevModeLabel === "function") ? fldElevModeLabel() : "Hillshade") + ' — click to cycle (Hillshade, Contours, Color-by-height)" style="min-width:118px">' + ((typeof fldElevModeLabel === "function") ? fldElevModeLabel() : "Hillshade") + '</button></div>'
     + '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin:7px 0"><span style="font-size:13px">Speed</span>'
     +   '<button id="fldDrawerSpd" type="button" class="upg" aria-label="Battle speed ' + (__FIELD.speed || 1) + 'x — click to cycle (1x 2x 4x)" style="min-width:64px">' + (__FIELD.speed || 1) + '&times;</button></div>'
     + '<div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end"><button id="fldDrawerDone" type="button" class="bigbtn" style="padding:7px 16px">Resume</button></div>'
@@ -412,6 +415,7 @@ function _fldDrawerWire() {
   var refresh = function (focusId) { var d = document.getElementById("fldDrawer"); if (!d) return; if (__FIELD) __FIELD.paused = true; d.innerHTML = _fldDrawerHTML(); _fldDrawerWire(); var f = document.getElementById(focusId || "fldDrawerFog"); if (f) try { f.focus(); } catch (e) {} };
   w("fldDrawerFog", function () { if (typeof fldToggleFog === "function") fldToggleFog(); refresh("fldDrawerFog"); });
   w("fldDrawerAuto", function () { if (typeof fldToggleAutoPause === "function") fldToggleAutoPause(); refresh("fldDrawerAuto"); });
+  w("fldDrawerElev", function () { if (typeof fldCycleElevMode === "function") fldCycleElevMode(); refresh("fldDrawerElev"); });
   w("fldDrawerSpd", function () { if (typeof fldCycleSpeed === "function") fldCycleSpeed(); refresh("fldDrawerSpd"); });
   w("fldDrawerClose", function () { _fldCloseDrawer(false); });
   w("fldDrawerDone", function () { _fldCloseDrawer(false); });

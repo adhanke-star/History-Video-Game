@@ -25,7 +25,13 @@ async function up(u){ try{ const r=await fetch(u,{method:'HEAD'}); return r.ok||
 
 // The frozen golden snapshot of the P0 sandbox terrain (derived from fldBuildTerrain at the
 // 1200x900 field, OBJ_R=130). If a future edit silently changes the sandbox geometry, this fails.
-const GOLD_TERRAIN = '{"hill":{"x":600,"z":450,"h":26,"s":220},"woods":[{"x":310,"z":480,"r":170},{"x":920,"z":360,"r":130}],"wall":{"x1":490,"z1":380,"x2":720,"z2":380}}';
+// D141 (H5-i3) DELIBERATELY added swamps/towns/forts — VISUAL-ONLY decoration rendered by T22 and read
+// by NO sim function (no cover/move hook this increment). GOLD_TERRAIN is updated to the new intended
+// value (full drift guard), and GOLD_COMBAT_TERRAIN separately re-asserts the COMBAT-relevant keys
+// (hill/woods/wall) are byte-identical to the original frozen geometry — so combat terrain can never
+// silently drift even as decoration is added (defence-in-depth; strengthened, not weakened).
+const GOLD_TERRAIN = '{"hill":{"x":600,"z":450,"h":26,"s":220},"woods":[{"x":310,"z":480,"r":170},{"x":920,"z":360,"r":130}],"wall":{"x1":490,"z1":380,"x2":720,"z2":380},"swamps":[{"x":250,"z":150,"r":95}],"towns":[{"x":960,"z":700,"r":82}],"forts":[{"x":600,"z":200,"r":68}]}';
+const GOLD_COMBAT_TERRAIN = '{"hill":{"x":600,"z":450,"h":26,"s":220},"woods":[{"x":310,"z":480,"r":170},{"x":920,"z":360,"r":130}],"wall":{"x1":490,"z1":380,"x2":720,"z2":380}}';
 const GOLD_OBJ = '{"x":600,"z":450,"r":130}';
 
 const SETUP = `(() => {
@@ -172,6 +178,10 @@ const SETUP = `(() => {
       if(__FIELD.attacker) throw new Error('stale attacker leaked into the sandbox');
       var gt=JSON.stringify(__FIELD.terrain), go=JSON.stringify(__FIELD.objective);
       if(gt!==${JSON.stringify(GOLD_TERRAIN)}) throw new Error('sandbox terrain drifted: '+gt);
+      // D141: the COMBAT-relevant terrain (hill/woods/wall) must stay byte-identical even though
+      // visual-only swamps/towns/forts were added — proves the new decoration is combat-inert.
+      var gc=JSON.stringify({hill:__FIELD.terrain.hill, woods:__FIELD.terrain.woods, wall:__FIELD.terrain.wall});
+      if(gc!==${JSON.stringify(GOLD_COMBAT_TERRAIN)}) throw new Error('sandbox COMBAT terrain drifted: '+gc);
       if(go!==${JSON.stringify(GOLD_OBJ)}) throw new Error('sandbox objective drifted: '+go);
       fldStepN(20,0.05); runToEnd(12000);
       if(__FIELD.phase!=='over') throw new Error('sandbox did not finish');

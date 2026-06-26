@@ -135,6 +135,13 @@ function fldBuildTerrain() {
     hill: { x: ox, z: oz, h: 26, s: 220 },                 // gentle rise crowning the objective
     woods: [{ x: ox - 290, z: oz + 30, r: 170 }, { x: ox + 320, z: oz - 90, r: 130 }],
     wall: { x1: ox - 110, z1: oz - 70, x2: ox + 120, z2: oz - 70 }, // a stone wall north of the crest
+    // H5-i3 (D141): VISUAL-ONLY topography showcase — swamp / town / fort, rendered distinctly by
+    // T22 but read by NO sim function (no cover/move hook this increment, per Aaron's "visual now,
+    // sim wiring later" fork), so combat is byte-identical. Edge-placed to keep the 2-brigade fight
+    // in the centre clear. The golden-terrain drift guard (probe-bullrun) is updated to match.
+    swamps: [{ x: ox - 350, z: oz - 300, r: 95 }],         // low wet ground, NW
+    towns: [{ x: ox + 360, z: oz + 250, r: 82 }],          // a hamlet to the SE
+    forts: [{ x: ox, z: oz - 250, r: 68 }],                // an earthwork redoubt covering the north approach
   };
 }
 // terrain accessors (P1a scenario seam): scenarios supply MULTIPLE hills/walls
@@ -1356,6 +1363,7 @@ function fldKey(e) {
   else if (k === "v" || k === "V") fldToggleFog();
   else if (k === "p" || k === "P") fldToggleAutoPause();
   else if (k === "g" || k === "G") { if (typeof fldOpenSettingsDrawer === "function") fldOpenSettingsDrawer(); }   // B-5: the in-battle settings drawer
+  else if (k === "r" || k === "R") { if (typeof fldCycleElevMode === "function") fldCycleElevMode(); }              // H5-i3: cycle the elevation display (hillshade / contours / color-by-height)
   else if (k === "a" || k === "A") { var _psa = fldPlayerSide(); __FIELD.sel = []; for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side === _psa && u.alive && !u.ai) __FIELD.sel.push(u.id); } fldRenderHud(); }
   else if (k === "Tab") { if (__FIELD.phase === "battle") { e.preventDefault(); fldCycleSel(); } } // only steal Tab mid-battle
   var b = document.getElementById("fldBtnSpd"); if (b) { b.innerHTML = __FIELD.speed + "&times;"; b.setAttribute("aria-label", "Speed " + __FIELD.speed + "x — cycle to change (1 2 3)"); }
@@ -1542,6 +1550,9 @@ function fld2dDraw() {
   var v = fld2dView(), W = window.innerWidth, H = window.innerHeight;
   ctx.clearRect(0, 0, W, H);
   ctx.fillStyle = "#3f4a32"; ctx.fillRect(v.ox, v.oz, FLD.FIELD_W * v.s, FLD.FIELD_H * v.s);
+  // H5-i3 (D141): elevation render (hillshade / contour / hypsometric) + swamp/town/fort markers,
+  // drawn UNDER the woods+units (presentation-only; no-op when T22 absent -> byte-identical).
+  if (typeof fldTrDrawGround2d === "function") fldTrDrawGround2d(ctx, v);
   var t = __FIELD.terrain;
   // woods
   ctx.fillStyle = "#2c3a22";
