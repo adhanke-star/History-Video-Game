@@ -50,8 +50,10 @@ const CATEGORIES = [
   // figures (D136), keyed by CODEX ENTRY ID and rendered on the codex People cards. Portrait busts ->
   // 400px is plenty for the card (max-height 230px); q74 keeps the 20-image tier under budget.
   { name: 'leaders', maxPx: 400, quality: 74, ext: ['.jpg', '.jpeg'], format: 'jpeg', perFileWarn: 60 * 1024 },
-  // future H1 categories plug in here once their PD sources are reviewed:
-  //   { name: 'scenes',  maxPx: 420, quality: 72, ext: ['.jpg'], format: 'jpeg' },
+  // scenes: famous Gardner/O'Sullivan/Barnard/Russell PD WARTIME field photographs (D137), keyed by
+  // campaign BATTLE id, rendered as a banner at the head of the pre-battle briefing. LANDSCAPE plates ->
+  // 480px wide keeps the field legible in the banner; q72 holds the 6-image tier within budget.
+  { name: 'scenes', maxPx: 480, quality: 72, ext: ['.jpg', '.jpeg'], format: 'jpeg', perFileWarn: 80 * 1024 },
 ];
 
 function hasSips() {

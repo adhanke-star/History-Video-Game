@@ -189,6 +189,7 @@ function bridgeBriefingHTML(C) {
   return ''
     + '<h1 class="title-xl" style="text-align:center">Pre-Battle Briefing</h1>'
     + '<p class="title-sub" style="text-align:center">' + when + (role ? ' &middot; ' + role : '') + '</p>'
+    + (typeof sceneImageHtml === "function" ? sceneImageHtml(bd && bd.id) : "")   /* H1 (D137): a PD photograph of the actual field at the head of the briefing — "" when the battle has no embedded scene (malvern/shiloh/chickamauga) or none is on disk -> the briefing is byte-identical */
     + '<hr class="rule">'
     + '<div style="display:flex;gap:16px;flex-wrap:wrap">'
     +   '<div style="flex:1 1 240px;min-width:220px">'
