@@ -54,6 +54,7 @@
     "tactical/T18-render-richness.js",
     "tactical/T19-battle-ambience.js",
     "tactical/T20-order-feel.js",
+    "tactical/T21-visual-fidelity.js",
     "90-president-register.js",
     "91-save-slots.js",
     "92-help-overlay.js",

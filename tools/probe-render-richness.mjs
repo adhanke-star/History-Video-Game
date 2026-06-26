@@ -41,7 +41,11 @@ function check(name, cond, detail) { steps.push({ name, ok: !!cond, detail: deta
 /* ---------- 1) STATIC SCAN: combat purity ---------- */
 function staticScan() {
   const tacDir = join(ROOT, 'src', 'tactical');
-  const files = readdirSync(tacDir).filter(f => /\.js$/.test(f) && f !== 'T18-render-richness.js');
+  // T18 owns the layer; T21-visual-fidelity (H5-i2) is a sibling PRESENTATION module that deliberately rides
+  // T18's single public opt-out (fldRrOff()) so one renderRich="off" toggle reverts the whole visual stack — that
+  // is the intended seam, not a combat leak. The scan still proves no COMBAT/SIM file references the rr layer.
+  const SCAN_SKIP = ['T18-render-richness.js', 'T21-visual-fidelity.js'];
+  const files = readdirSync(tacDir).filter(f => /\.js$/.test(f) && SCAN_SKIP.indexOf(f) < 0);
   const combatExtra = ['85-battle-bridge.js', '86-battle-conditioning.js', '87-auto-resolve.js'].map(f => join(ROOT, 'src', f));
   const all = files.map(f => join(tacDir, f)).concat(combatExtra);
   const leaks = [];
