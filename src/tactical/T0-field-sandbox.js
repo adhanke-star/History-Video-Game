@@ -135,10 +135,9 @@ function fldBuildTerrain() {
     hill: { x: ox, z: oz, h: 26, s: 220 },                 // gentle rise crowning the objective
     woods: [{ x: ox - 290, z: oz + 30, r: 170 }, { x: ox + 320, z: oz - 90, r: 130 }],
     wall: { x1: ox - 110, z1: oz - 70, x2: ox + 120, z2: oz - 70 }, // a stone wall north of the crest
-    // H5-i3 (D141): VISUAL-ONLY topography showcase — swamp / town / fort, rendered distinctly by
-    // T22 but read by NO sim function (no cover/move hook this increment, per Aaron's "visual now,
-    // sim wiring later" fork), so combat is byte-identical. Edge-placed to keep the 2-brigade fight
-    // in the centre clear. The golden-terrain drift guard (probe-bullrun) is updated to match.
+    // H5-i3 introduced these as distinct visual topography; H5-i4 wires them through the UNIVERSAL
+    // cover/move hooks below (no battle-specific fudge). Edge-placed so the 2-brigade sandbox's center
+    // fight still starts on the old ground unless the player deliberately uses the new terrain.
     swamps: [{ x: ox - 350, z: oz - 300, r: 95 }],         // low wet ground, NW
     towns: [{ x: ox + 360, z: oz + 250, r: 82 }],          // a hamlet to the SE
     forts: [{ x: ox, z: oz - 250, r: 68 }],                // an earthwork redoubt covering the north approach
@@ -164,6 +163,17 @@ function fldInWoods(x, z) {
   for (var i = 0; i < t.woods.length; i++) { var w = t.woods[i]; var dx = x - w.x, dz = z - w.z; if (dx * dx + dz * dz < w.r * w.r) return true; }
   return false;
 }
+function fldInCircleList(arr, x, z) {
+  if (!arr || !arr.length) return false;
+  for (var i = 0; i < arr.length; i++) {
+    var a = arr[i], r = a.r || 60, dx = x - a.x, dz = z - a.z;
+    if (dx * dx + dz * dz < r * r) return true;
+  }
+  return false;
+}
+function fldInSwamp(x, z) { var t = __FIELD.terrain; return !!(t && fldInCircleList(t.swamps, x, z)); }
+function fldInTown(x, z) { var t = __FIELD.terrain; return !!(t && fldInCircleList(t.towns, x, z)); }
+function fldInFort(x, z) { var t = __FIELD.terrain; return !!(t && fldInCircleList(t.forts, x, z)); }
 function fldNearWall(x, z) {
   var ws = fldWalls();
   for (var i = 0; i < ws.length; i++) {
@@ -177,14 +187,24 @@ function fldNearWall(x, z) {
 // cover def multiplier (higher = safer); mirrors the base TERRAIN .def ladder spirit.
 function fldCoverAt(x, z) {
   var d = 1.0;
-  if (fldNearWall(x, z)) d = 1.7;
-  else if (fldInWoods(x, z)) d = 1.4;
+  if (fldInFort(x, z)) d = Math.max(d, 1.85);       // prepared earthwork / redoubt ground
+  if (fldNearWall(x, z)) d = Math.max(d, 1.7);
+  if (fldInTown(x, z)) d = Math.max(d, 1.58);       // houses, lanes, and hard cover
+  if (fldInWoods(x, z)) d = Math.max(d, 1.4);
+  if (fldInSwamp(x, z)) d = Math.max(d, 1.16);      // soft concealment, not a hard wall
   var hs = fldHills();
   for (var i = 0; i < hs.length; i++) { var hh = hs[i], dx = x - hh.x, dz = z - hh.z; if (dx * dx + dz * dz < (hh.s * 0.7) * (hh.s * 0.7)) { d *= 1.12; break; } }
   return d;
 }
 function fldMoveFactor(x, z, u) {
-  var f = fldInWoods(x, z) ? 0.62 : 1.0;
+  var f = 1.0;
+  if (fldInWoods(x, z)) f *= 0.62;
+  if (fldInSwamp(x, z)) f *= 0.42;                  // mud, brush, uncertain footing
+  if (fldInTown(x, z)) f *= 0.72;                   // streets, fences, buildings
+  if (fldInFort(x, z)) {
+    var atk = (typeof __FIELD !== "undefined") ? __FIELD.attacker : null;
+    f *= (u && atk && u.side === atk) ? 0.58 : 0.82; // attacker crosses ditch/parapet; defender shifts inside
+  }
   // T13: an active obstacle belt may slow an enemy moving through it. The hook returns
   // exactly 1 when no applicable belt exists, preserving every pre-engineering baseline.
   if (typeof fldEngMoveFactor === "function") f *= fldEngMoveFactor(x, z, u);
@@ -534,6 +554,7 @@ function fldStepMovement(u, dt) {
     desiredFace = Math.atan2(0, -(tz - u.z));
   } else {
     var o = u.order;
+    if (o && o.type === "charge" && typeof fldChargeStep === "function") { fldChargeStep(u); o = u.order; }
     tx = o.tx; tz = o.tz;
     var col = u.formation === "column";
     spd = (col ? FLD.SPD_COL : FLD.SPD_LINE) * (1 - (u.fatigue / 100) * 0.4) * fldMoveFactor(u.x, u.z, u);
@@ -576,19 +597,26 @@ function fldStepMovement(u, dt) {
 }
 function fldOrderMove(u, tx, tz, tface) {
   if (!u.alive || u.state === "routing") return;
+  if (typeof fldChargeLocked === "function" && fldChargeLocked(u)) { if (typeof fldChargeBlocked === "function") fldChargeBlocked(u); return; }
   u.order = { type: "move", tx: tx, tz: tz, tface: (typeof tface === "number") ? tface : u.facing };
 }
 // H5-i1 (D139): an optional explicit target (the player's drag-onto-enemy charge). With target null/undefined
 // the body is the VERBATIM nearest-enemy scan — and the only caller without a target is fldSelCharge (player)
 // + the AI sets charge orders inline (never calls this) -> headless AI-vs-AI is byte-identical.
-function fldOrderCharge(u, target) {
+function fldOrderCharge(u, target, opts) {
   if (!u.alive || u.state === "routing") return;
+  if (opts && opts.player && typeof fldChargeLocked === "function" && fldChargeLocked(u)) { if (typeof fldChargeBlocked === "function") fldChargeBlocked(u); return; }
   var best = (target && target.alive && target.side !== u.side) ? target : null;
   if (!best) {
     var bd = 1e9;
     for (var i = 0; i < __FIELD.units.length; i++) { var e = __FIELD.units[i]; if (e.side === u.side || !e.alive) continue; var d = fldDist(u, e); if (d < bd) { bd = d; best = e; } }
   }
-  if (best) { var face = Math.atan2(best.x - u.x, -(best.z - u.z)); u.order = { type: "charge", tx: best.x, tz: best.z, tface: face }; }
+  if (best) {
+    var face = Math.atan2(best.x - u.x, -(best.z - u.z));
+    var ord = { type: "charge", tx: best.x, tz: best.z, tface: face };
+    if (opts && opts.player && typeof fldChargePrime === "function") fldChargePrime(u, ord, best);
+    u.order = ord;
+  }
 }
 
 /* ===========================================================================
@@ -933,7 +961,11 @@ function fldSimStep(dt) {
         var t2 = __FIELD.units[d2]; if (t2.side === u.side || !t2.alive) continue;
         if (fldDist(u, t2) <= FLD.CONTACT_R) {
           var pk = u.id < t2.id ? u.id + "_" + t2.id : t2.id + "_" + u.id;
-          if (!_meleeDone[pk]) { _meleeDone[pk] = 1; fldResolveMelee(u, t2, dt); }
+          if (!_meleeDone[pk]) {
+            _meleeDone[pk] = 1;
+            if (typeof fldChargeContact === "function") { fldChargeContact(u, t2); fldChargeContact(t2, u); }
+            fldResolveMelee(u, t2, dt);
+          }
           if (!t2.alive || t2.state === "routing") u.order = { type: "hold", tx: u.x, tz: u.z, tface: u.facing };
         }
       }
@@ -1326,8 +1358,17 @@ function fldCycleSpeed() { __FIELD.speed = __FIELD.speed === 1 ? 2 : (__FIELD.sp
 // resolves "US" by default (byte-identical) and "CS" when the player took the Confederate command.
 function fldPlayerSel() { var ps = fldPlayerSide(), out = []; for (var i = 0; i < __FIELD.sel.length; i++) { var u = fldById(__FIELD.sel[i]); if (u && u.alive && u.side === ps && !u.ai) out.push(u); } return out; }
 function fldSetFormation(f) { var s = fldPlayerSel(); for (var i = 0; i < s.length; i++) s[i].formation = f; fldRenderHud(); }
-function fldSelCharge() { var s = fldPlayerSel(); for (var i = 0; i < s.length; i++) fldOrderCharge(s[i]); fldAnnounce("Charge ordered."); }
-function fldSelHold() { var s = fldPlayerSel(); for (var i = 0; i < s.length; i++) { var u = s[i]; u.order = { type: "hold", tx: u.x, tz: u.z, tface: u.facing }; } fldAnnounce("Hold ordered."); }
+function fldSelCharge() { var s = fldPlayerSel(); for (var i = 0; i < s.length; i++) fldOrderCharge(s[i], null, { player: true }); fldAnnounce("Charge ordered."); }
+function fldSelHold() {
+  var s = fldPlayerSel(), held = 0, locked = 0, lockedU = null;
+  for (var i = 0; i < s.length; i++) {
+    var u = s[i];
+    if (typeof fldChargeLocked === "function" && fldChargeLocked(u)) { locked++; if (!lockedU) lockedU = u; continue; }
+    u.order = { type: "hold", tx: u.x, tz: u.z, tface: u.facing }; held++;
+  }
+  if (locked && typeof fldChargeBlocked === "function") fldChargeBlocked(lockedU || s[0]);
+  else if (held) fldAnnounce("Hold ordered.");
+}
 function fldKey(e) {
   // B-5: while the in-battle settings drawer (an aria-modal dialog) is open, NO battlefield hotkey fires — the
   // drawer owns the keyboard (its own handler does stopPropagation + handles Escape/Tab). This guard is the
@@ -1454,6 +1495,7 @@ function fldRenderHud() {
     (typeof fldOfficerHudSelected === "function" ? fldOfficerHudSelected(u) : "") +   // B-2: brigade leader + in-command status
     (typeof fldFlagHudSelected === "function" ? fldFlagHudSelected(u) : "") +   // H1b: battle flag + corps badge in the HUD
     (typeof fldEngHudSelected === "function" ? fldEngHudSelected(u) : "") +   // T13: entrenchment status (empty unless digging)
+    (typeof fldChargeHudSelected === "function" ? fldChargeHudSelected(u) : "") +   // H5-i4: charge impetus / commit status
     (typeof fldRatingHudSelected === "function" ? fldRatingHudSelected(u) : "") +   // R-2: brigade OVR + A-F grade (pure display)
     (typeof fldMusterHudLine === "function" ? fldMusterHudLine(u) : "") +   // R-5: the men's-mean OVR + provenance-hatched accent (lazy materialization; pure display)
     (typeof fldRatingBadgesHtml === "function" ? fldRatingBadgesHtml(u) : "");   // R-6: the brigade's documented trait/ability chips (pure display; "" when no badge -> byte-identical)
@@ -1550,8 +1592,8 @@ function fld2dDraw() {
   var v = fld2dView(), W = window.innerWidth, H = window.innerHeight;
   ctx.clearRect(0, 0, W, H);
   ctx.fillStyle = "#3f4a32"; ctx.fillRect(v.ox, v.oz, FLD.FIELD_W * v.s, FLD.FIELD_H * v.s);
-  // H5-i3 (D141): elevation render (hillshade / contour / hypsometric) + swamp/town/fort markers,
-  // drawn UNDER the woods+units (presentation-only; no-op when T22 absent -> byte-identical).
+  // H5-i3/H5-i4: elevation render (hillshade / contour / hypsometric) + swamp/town/fort markers,
+  // drawn UNDER the woods+units; their universal cover/move effects live in fldCoverAt/fldMoveFactor.
   if (typeof fldTrDrawGround2d === "function") fldTrDrawGround2d(ctx, v);
   var t = __FIELD.terrain;
   // woods

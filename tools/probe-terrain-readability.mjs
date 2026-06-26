@@ -15,8 +15,8 @@ import "./guard-probe-browser.mjs";
 //    key lists field/hill/woods/wall/swamp/town/fort; the new types are present in fldTrPresentTypes();
 //  - CVD-safe: the viridis ramp is MONOTONIC in luminance low->high (information by luminance, never hue alone);
 //  - BYTE-IDENTITY: the sim seed + a unit's mutable sim fields are INVARIANT across a render burst WITH mode
-//    toggles (T22 never calls fldRng), FLDTR_S.errN===0, and a static scan proves NO sim/combat file reads the
-//    swamp/town/fort arrays or the readability layer (only T0 [data/render/hotkey] + T6 [drawer] + T22 own it);
+//    toggles (T22 never calls fldRng), FLDTR_S.errN===0, and a static scan proves the readability layer is still
+//    render-only while swamp/town/fort sim effects stay confined to T0's universal cover/move hooks;
 //  - 2D PARITY: the 2D top-down path runs the elevation render (errN===0) + shows the legend + hover;
 //  - low tier trims the 3D labels; zero pageerrors; a screenshot is captured.
 // (The 26-outcome + 20-AB seed-for-seed byte-identity gate stays owned by probe-presets / probe-phased-ab.)
@@ -39,7 +39,7 @@ async function up(u) { try { const r = await fetch(u, { method: 'HEAD' }); retur
 const steps = [];
 function check(name, cond, detail) { steps.push({ name, ok: !!cond, detail: detail === undefined ? '' : String(detail) }); }
 
-/* ---------- STATIC SCAN: combat purity + combat-inert decoration ---------- */
+/* ---------- STATIC SCAN: presentation purity + universal terrain hooks ---------- */
 function staticScan() {
   const tacDir = join(ROOT, 'src', 'tactical');
   const tacFiles = readdirSync(tacDir).filter(f => /\.js$/.test(f));
@@ -53,7 +53,7 @@ function staticScan() {
   }
   for (const f of combatFiles) { let txt = ''; try { txt = readFileSync(f, 'utf8'); } catch (e) { continue; } if (/fldTr[A-Z]|FLDTR|fldElevMode/.test(txt)) layerLeaks.push(f.replace(ROOT + '/', '')); }
   check('static-scan: no module beyond T22 + its UI seams (T0/T6) references the readability layer', layerLeaks.length === 0, layerLeaks.join(', '));
-  // 2. swamp/town/fort arrays are read by NO sim/combat file — only T0 (the data) + T22 (the render) mention them.
+  // 2. swamp/town/fort arrays may be read only by T0's universal terrain hooks and T22's renderer.
   const decorLeaks = [];
   for (const f of tacFiles.concat(['58-terrain-cover.js'])) {
     const p = f.includes('/') || f.startsWith('5') ? join(ROOT, 'src', f) : join(tacDir, f);
@@ -61,7 +61,13 @@ function staticScan() {
     let txt = ''; try { txt = readFileSync(p, 'utf8'); } catch (e) { continue; }
     if (/\.swamps\b|\.towns\b|\.forts\b/.test(txt)) decorLeaks.push(f);
   }
-  check('static-scan: the swamp/town/fort arrays are combat-INERT (read by no file beyond T0+T22)', decorLeaks.length === 0, decorLeaks.join(', '));
+  check('static-scan: swamp/town/fort sim reads are confined to T0 universal hooks; render reads stay in T22', decorLeaks.length === 0, decorLeaks.join(', '));
+  let t0 = ''; try { t0 = readFileSync(join(tacDir, 'T0-field-sandbox.js'), 'utf8'); } catch (e) {}
+  check('static-scan: T0 wires swamp/town/fort into universal cover + move hooks',
+    /function\s+fldInSwamp\b/.test(t0) && /function\s+fldInTown\b/.test(t0) && /function\s+fldInFort\b/.test(t0) &&
+    /function\s+fldCoverAt[\s\S]*fldInFort[\s\S]*fldInTown[\s\S]*fldInSwamp/.test(t0) &&
+    /function\s+fldMoveFactor[\s\S]*fldInSwamp[\s\S]*fldInTown[\s\S]*fldInFort/.test(t0),
+    'T0 terrain hook scan');
   // 3. T22 never calls fldRng + never bumps _SAVE_VER (presentation-only, no sim perturbation).
   let t22 = ''; try { t22 = readFileSync(join(tacDir, 'T22-terrain-readability.js'), 'utf8'); } catch (e) {}
   check('static-scan: T22 never calls fldRng + never writes _SAVE_VER', t22.length > 0 && !/fldRng\(/.test(t22) && !/_SAVE_VER\s*=/.test(t22));
@@ -123,6 +129,22 @@ function sceneScript(seed, opts) {
       // hover readout: the sandbox hill (600,450) high; swamp (250,150); town (960,700); fort (600,200)
       function readHover(x,z){ __FIELD.hover = { x:x, z:z }; if (typeof fldTrUpdateHover==='function') fldTrUpdateHover(); var el=document.getElementById('fldElevHover'); return el ? el.textContent.replace(/\\s+/g,' ').trim() : ''; }
       out.hover = { hill: readHover(600,450), swamp: readHover(250,150), town: readHover(960,700), fort: readHover(600,200), off: (function(){ __FIELD.hover=null; if (typeof fldTrUpdateHover==='function') fldTrUpdateHover(); var el=document.getElementById('fldElevHover'); return el?el.textContent.trim():''; })() };
+
+      var su = (__FIELD.units && __FIELD.units[0]) ? __FIELD.units[0] : { side:'US' };
+      out.simTerrain = {
+        cover: {
+          clear: fldCoverAt(80, 80),
+          swamp: fldCoverAt(250, 150),
+          town: fldCoverAt(960, 700),
+          fort: fldCoverAt(600, 200)
+        },
+        move: {
+          clear: fldMoveFactor(80, 80, su),
+          swamp: fldMoveFactor(250, 150, su),
+          town: fldMoveFactor(960, 700, su),
+          fort: fldMoveFactor(600, 200, su)
+        }
+      };
 
       if (kind === '3d') {
         var T = window.THREE;
@@ -254,6 +276,12 @@ async function runScene(page, label, seed, opts, shared) {
   check('all topography distinct: the swamp/town/fort decor group is built (children > 0)', R.ok && R.hillshade.decor > 0, 'decorChildren=' + (R.hillshade && R.hillshade.decor));
   check('all topography distinct: the legend key lists field+hill+woods+wall+swamp+town+fort for this battle',
     R.ok && R.present.field && R.present.hill && R.present.woods && R.present.wall && R.present.swamp && R.present.town && R.present.fort, JSON.stringify(R.present || {}));
+  check('H5-i4 sim hook: cover ladder now treats fort > town > swamp > clear through the universal fldCoverAt hook',
+    R.ok && R.simTerrain && R.simTerrain.cover.clear === 1 && R.simTerrain.cover.swamp > R.simTerrain.cover.clear && R.simTerrain.cover.town > R.simTerrain.cover.swamp && R.simTerrain.cover.fort > R.simTerrain.cover.town,
+    JSON.stringify(R.simTerrain && R.simTerrain.cover || {}));
+  check('H5-i4 sim hook: movement now slows swamp, town, and fort through the universal fldMoveFactor hook',
+    R.ok && R.simTerrain && R.simTerrain.move.clear === 1 && R.simTerrain.move.swamp < R.simTerrain.move.town && R.simTerrain.move.town < R.simTerrain.move.clear && R.simTerrain.move.fort < R.simTerrain.move.clear,
+    JSON.stringify(R.simTerrain && R.simTerrain.move || {}));
 
   // CVD-safe
   check('CVD-safe: the viridis ramp is MONOTONIC in luminance low->high (read by luminance, not hue alone)', R.ok && R.viridisMono === true, JSON.stringify(R.viridisLums || []));

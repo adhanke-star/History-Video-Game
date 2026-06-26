@@ -6,13 +6,12 @@
    B-5 difficulty/realism sliders. This module hosts the whole corps; it ships in
    vetted increments.
 
-   INCREMENT 1 — FIELD ENTRENCHMENTS (the spade):
+   INCREMENT 1 — FIELD ENTRENCHMENTS (the spade), deepened in H5-i4:
      A player brigade ordered to ENTRENCH (key E) digs in where it stands and,
-     over time, earns COVER that rises toward a parapet-grade multiplier — the war's
-     defining drift toward trench warfare (Cold Harbor, Petersburg). Marching off the
-     works abandons them (the cover fades). The dig SPEED and the COVER it yields read
-     the B-5 realism slider: Arcade digs fast for modest cover, Historian digs slow
-     for strong cover.
+     over time, earns staged works: hasty rifle-pit cover -> a full parapet -> a
+     redoubt/earthwork. Marching off the works abandons them (the cover fades).
+     The dig SPEED and the COVER it yields read the B-5 realism slider: Arcade digs
+     fast for modest cover, Historian digs slow for strong cover.
 
    GUARDED + BYTE-IDENTICAL: every seam in T0 is a `typeof fldEng* === "function"`
    call, and each engineering fn is a NO-OP for a unit that never entrenched
@@ -63,11 +62,19 @@ function fldEngRealism() {
 }
 
 var FLDE = {
-  DIG_TIME_BASE: 42,   // H5-i1 (D139): faster/cheaper digging for UG:G feel — full parapet in ~42s @ Balanced (was 70;
-                       // Arcade ~29s / Historian ~55s after realism scaling). Byte-identical for headless AI-vs-AI:
+  DIG_TIME_BASE: 42,   // H5-i1 made digging UG:G-fast; H5-i4 keeps ~42s @ Balanced to the top stage
+                       // (Arcade ~29s / Historian ~55s) and now exposes hasty/parapet/redoubt thresholds along the way. Byte-identical for headless AI-vs-AI:
                        // no AI/scenario unit ever digs (T13 header invariant), so the rate is never multiplied into a
                        // live entrench headlessly. Player-facing dig-timing deltas are logged in probe-engineering-corps.
-  MAX_BONUS_BASE: 0.62, // full-entrench cover bonus at Balanced: cover x1.62 (rifle pits -> low parapet)
+  // H5-i4: the saved/probed progress meter is still u.entrench (0..1), but the combat/readout
+  // now interprets it as stages: hasty rifle pits -> parapet -> redoubt/earthwork.
+  STAGE_HASTY: 0.22,
+  STAGE_PARAPET: 0.58,
+  STAGE_REDOUBT: 0.92,
+  HASTY_BONUS_BASE: 0.18,
+  PARAPET_BONUS_BASE: 0.48,
+  REDOUBT_BONUS_BASE: 0.76,
+  MAX_BONUS_BASE: 0.76, // legacy alias for probes/readers: full redoubt cover at Balanced is cover x1.76
   WORKS_R: 26,         // yd: march beyond this from the dig site and the works are abandoned
   DECAY_T: 28,         // sim-seconds for abandoned works to fade fully
   ABATIS_BUILD_T: 48,  // balanced sim-seconds for a pioneer detail to finish one belt
@@ -77,6 +84,7 @@ var FLDE = {
   ABATIS_FRONT: 52,    // belt center offset in front of its builder
   ABATIS_WORK_R: 82,   // builder/clearer must stay near the work
   ABATIS_MAX_SIDE: 4,  // anti-spam / anti-stalemate cap
+  ABATIS_PREP_BITE: 1.35,  // H5-i4: abatis tied into prepared works bites harder and clears slower
   // ---- INCREMENT 3: river / pontoon ----
   RIVER_HALF: 34,        // yd: default half-width of a river's impassable water band
   CROSS_W: 80,           // yd: radius of a crossing corridor (ford/bridge/pontoon); > RIVER_HALF so a straight march through it clears the band
@@ -122,6 +130,37 @@ function _fldEngCross(ax, az, bx, bz, cx, cz, dx, dz) {
   var c = _fldEngOrient(cx, cz, dx, dz, ax, az), d = _fldEngOrient(cx, cz, dx, dz, bx, bz);
   return ((a <= 0 && b >= 0) || (a >= 0 && b <= 0)) && ((c <= 0 && d >= 0) || (c >= 0 && d <= 0));
 }
+function fldEngProgress(u) {
+  var e = (typeof u === "number") ? u : (u && typeof u.entrench === "number" ? u.entrench : 0);
+  return Math.max(0, Math.min(1, e || 0));
+}
+function fldEngStage(u) {
+  var e = fldEngProgress(u);
+  if (e >= FLDE.STAGE_REDOUBT) return 3;
+  if (e >= FLDE.STAGE_PARAPET) return 2;
+  if (e >= FLDE.STAGE_HASTY) return 1;
+  return e > 0 ? 0 : -1;
+}
+function fldEngStageName(u) {
+  var st = fldEngStage(u);
+  return st >= 3 ? "Redoubt / earthwork" : (st >= 2 ? "Full parapet" : (st >= 1 ? "Hasty cover" : (st === 0 ? "Rifle pits" : "Open ground")));
+}
+function _fldEngLerp(a, b, t) { return a + (b - a) * Math.max(0, Math.min(1, t)); }
+function _fldEngBonusBase(e) {
+  e = fldEngProgress(e);
+  if (e <= 0) return 0;
+  if (e < FLDE.STAGE_HASTY) return _fldEngLerp(0, FLDE.HASTY_BONUS_BASE, e / FLDE.STAGE_HASTY);
+  if (e < FLDE.STAGE_PARAPET) return _fldEngLerp(FLDE.HASTY_BONUS_BASE, FLDE.PARAPET_BONUS_BASE, (e - FLDE.STAGE_HASTY) / (FLDE.STAGE_PARAPET - FLDE.STAGE_HASTY));
+  if (e < FLDE.STAGE_REDOUBT) return _fldEngLerp(FLDE.PARAPET_BONUS_BASE, FLDE.REDOUBT_BONUS_BASE, (e - FLDE.STAGE_PARAPET) / (FLDE.STAGE_REDOUBT - FLDE.STAGE_PARAPET));
+  return FLDE.REDOUBT_BONUS_BASE;
+}
+function fldEngInOwnWorks(u) {
+  if (!u || u.digX == null || u.digZ == null) return false;
+  var r = FLDE.WORKS_R + 8, dx = u.x - u.digX, dz = u.z - u.digZ;
+  return dx * dx + dz * dz <= r * r;
+}
+function _fldEngObsPrepared(a) { return !!(a && (a.prepared || a.worksStage >= 2)); }
+function _fldEngUnitPreparedForAbatis(u) { return !!(u && fldEngStage(u) >= 2 && fldEngInOwnWorks(u)); }
 
 function fldSelAbatis() {
   var sel = (typeof fldPlayerSel === "function") ? fldPlayerSel() : [];
@@ -136,8 +175,9 @@ function fldSelAbatis() {
     var fx = Math.sin(u.facing), fz = -Math.cos(u.facing), rx = Math.cos(u.facing), rz = Math.sin(u.facing);
     var cx = u.x + fx * FLDE.ABATIS_FRONT, cz = u.z + fz * FLDE.ABATIS_FRONT;
     var id = "abatis_" + u.side + "_" + (__FIELD._engObsSeq = (__FIELD._engObsSeq || 0) + 1);   // monotonic counter -> globally unique (no same-tick collisions)
+    var st = fldEngStage(u), prep = _fldEngUnitPreparedForAbatis(u);
     obs.push({ id: id, side: u.side, builderId: u.id, x1: cx - rx * FLDE.ABATIS_HALF_W, z1: cz - rz * FLDE.ABATIS_HALF_W,
-      x2: cx + rx * FLDE.ABATIS_HALF_W, z2: cz + rz * FLDE.ABATIS_HALF_W, strength: 0.02, building: true });
+      x2: cx + rx * FLDE.ABATIS_HALF_W, z2: cz + rz * FLDE.ABATIS_HALF_W, strength: prep ? 0.04 : 0.02, building: true, prepared: prep, worksStage: prep ? st : 0 });
     u.order = { type: "hold", tx: u.x, tz: u.z, tface: u.facing };
     u.engBuildId = id; u.digging = false; made++;
   }
@@ -180,7 +220,7 @@ function fldEngMoveFactor(x, z, u) {
     for (var i = 0; i < obs.length; i++) {
       var a = obs[i]; if (!(a.strength > 0.02) || a.side === u.side) continue;
       if (_fldEngPointSeg(x, z, a).d2 <= FLDE.ABATIS_DEPTH * FLDE.ABATIS_DEPTH) {
-        var minF = Math.max(0.24, 0.80 - 0.40 * fldEngRealism());
+        var prep = _fldEngObsPrepared(a), minF = Math.max(prep ? 0.18 : 0.24, 0.80 - 0.40 * fldEngRealism() - (prep ? 0.12 : 0));
         f *= 1 - (1 - minF) * a.strength;
         break;
       }
@@ -202,9 +242,10 @@ function fldEngMoveGate(u, x0, z0, x1, z1, dt) {
     }
     if (touched && u._engObsTouch !== touched.id) {
       u._engObsTouch = touched.id;
-      u.engDisorder = Math.max(u.engDisorder || 0, 12 * fldEngRealism() * touched.strength);
-      u.morale = Math.max(0, u.morale - (4 + 4 * fldEngRealism()) * touched.strength);
-      u.fatigue = Math.min(100, u.fatigue + 5 * touched.strength);
+      var bite = _fldEngObsPrepared(touched) ? FLDE.ABATIS_PREP_BITE : 1;
+      u.engDisorder = Math.max(u.engDisorder || 0, 12 * fldEngRealism() * touched.strength * bite);
+      u.morale = Math.max(0, u.morale - (4 + 4 * fldEngRealism()) * touched.strength * bite);
+      u.fatigue = Math.min(100, u.fatigue + 5 * touched.strength * bite);
     } else if (!touched) u._engObsTouch = null;
   }
   // ---- INCREMENT 3: river water gate. Terrain blocks ALL states (a routed mob is stopped by deep water too).
@@ -377,20 +418,23 @@ function fldEngInstallRiver(opts) {
 
 /* the earned-cover multiplier for a unit (>=1). Returns EXACTLY 1 for any unit that
    is not entrenched -> the fire/melee cover seams are byte-identical for every baseline.
-   FACING-AWARE: a parapet shelters the direction it FACES. Pass the shooter/attacker
-   world position (fromX,fromZ) and the EARNED bonus is full in the front arc, half on the
-   flank, and zero in the rear — so a flank/rear maneuver still counters fixed works (and
-   matches the one-sided berm we render). With no bearing (the HUD call) it reads the
-   nominal front-facing strength. */
+   FACING-AWARE: hasty works, parapets, and redoubts shelter the direction they FACE.
+   Pass the shooter/attacker world position (fromX,fromZ) and the earned bonus is full
+   in the front arc, partial on the flank, and zero in the rear — so flank/rear maneuver
+   still counters fixed works. With no bearing (the HUD call) it reads nominal strength. */
 function fldEngCover(u, fromX, fromZ) {
   if (!u || !u.entrench || u.entrench <= 0) return 1;
-  var arc = 1;
+  // If a live unit has recorded works and has marched off them, the works no longer shelter it;
+  // fldEngStep then handles the visible fade. Synthetic probe objects without digX keep nominal cover.
+  if (u.digX != null && !fldEngInOwnWorks(u)) return 1;
+  var arc = 1, st = fldEngStage(u);
   if (fromX != null && fromZ != null && typeof u.facing === "number" && typeof fldAngDiff === "function") {
     var bearing = Math.atan2(fromX - u.x, -(fromZ - u.z));   // world bearing from the unit toward the shooter
     var rel = Math.abs(fldAngDiff(bearing, u.facing));
-    arc = rel > Math.PI * 0.72 ? 0 : (rel > Math.PI * 0.28 ? 0.5 : 1);   // front full / flank half / rear none
+    if (st >= 3) arc = rel > Math.PI * 0.68 ? 0 : (rel > Math.PI * 0.34 ? 0.42 : 1);
+    else arc = rel > Math.PI * 0.72 ? 0 : (rel > Math.PI * 0.28 ? 0.5 : 1);
   }
-  return 1 + u.entrench * (FLDE.MAX_BONUS_BASE * fldEngRealism()) * arc;
+  return 1 + _fldEngBonusBase(u.entrench) * fldEngRealism() * arc;
 }
 
 /* advance entrenchment each sim tick. NO-OP for any clean unit (the loop body never
@@ -437,7 +481,8 @@ function fldEngStep(dt) {
       var q = _fldEngPointSeg(c.x, c.z, a);
       if (!c.order || c.order.type !== "hold" || q.d2 > FLDE.ABATIS_WORK_R * FLDE.ABATIS_WORK_R) { c.engClearId = null; continue; }
       a.building = false;
-      a.strength = Math.max(0, a.strength - dt / (FLDE.ABATIS_CLEAR_T * fldEngRealism()));
+      var clearScale = _fldEngObsPrepared(a) ? FLDE.ABATIS_PREP_BITE : 1;
+      a.strength = Math.max(0, a.strength - dt / (FLDE.ABATIS_CLEAR_T * fldEngRealism() * clearScale));
       if (a.strength <= 0) { c.engClearId = null; obs.splice(j, 1); break; }
     }
   }
@@ -473,6 +518,7 @@ function fldSelEntrench() {
     u.digging = true; u.digX = u.x; u.digZ = u.z;
     n++;
   }
+  if (n) { __FIELD._engUsed = __FIELD._engUsed || {}; __FIELD._engUsed.entrench = true; }
   if (n && typeof fldAnnounce === "function") fldAnnounce("Entrench ordered — the men take up the spade.");
   if (typeof fldRenderHud === "function") fldRenderHud();
 }
@@ -484,16 +530,16 @@ function fldEngHudSelected(u) {
   var out = "";
   if (dig || e > 0) {
     var pct = Math.round(e * 100);
-    var label = e >= 0.98 ? "Entrenched" : (dig ? "Digging in" : "Works (fading)");
+    var label = dig ? fldEngStageName(u) : "Works (fading)";
     var cov = fldEngCover(u);
-    var col = e >= 0.66 ? "#9cc66f" : e >= 0.33 ? "#d6b15a" : "#cda06a";
+    var st = fldEngStage(u), col = st >= 3 ? "#a7d27a" : (st >= 2 ? "#d8c06f" : (st >= 1 ? "#d6a35f" : "#cda06a"));
     out += '<div style="margin-top:4px;color:' + col + ';font-size:12px;">⛏ ' + label +
-      ' — ' + pct + '% · cover ×' + cov.toFixed(2) + '</div>';
+      ' — ' + pct + '% · front cover ×' + cov.toFixed(2) + '</div>';
   }
   var obs = __FIELD.engObstacles || [], a = null;
   for (var i = 0; i < obs.length; i++) if (obs[i].id === u.engBuildId || obs[i].id === u.engClearId) { a = obs[i]; break; }
-  if (a && u.engBuildId) out += '<div style="margin-top:4px;color:#e1bd76;font-size:12px;">▲ Building abatis — ' + Math.round(a.strength * 100) + '%</div>';
-  if (a && u.engClearId) out += '<div style="margin-top:4px;color:#d9c9a5;font-size:12px;">✕ Clearing obstacle — ' + Math.round((1 - a.strength) * 100) + '%</div>';
+  if (a && u.engBuildId) out += '<div style="margin-top:4px;color:#e1bd76;font-size:12px;">▲ Building ' + (_fldEngObsPrepared(a) ? 'covered abatis' : 'abatis') + ' — ' + Math.round(a.strength * 100) + '%</div>';
+  if (a && u.engClearId) out += '<div style="margin-top:4px;color:#d9c9a5;font-size:12px;">✕ Clearing ' + (_fldEngObsPrepared(a) ? 'covered obstacle' : 'obstacle') + ' — ' + Math.round((1 - a.strength) * 100) + '%</div>';
   if (u.engDisorder > 0) out += '<div style="margin-top:4px;color:#f0a07d;font-size:12px;">⚠ Obstacle disorder — ragged fire (' + Math.ceil(u.engDisorder) + 's)</div>';
   // INCREMENT 3: pontoon-laying + fording status (no markup unless this unit is bridging or in the water)
   if (u.engPontoonId) {
@@ -583,10 +629,14 @@ function fldEngDraw2d(ctx, v) {
     var x1 = v.ox + a.x1 * v.s, z1 = v.oz + a.z1 * v.s, x2 = v.ox + a.x2 * v.s, z2 = v.oz + a.z2 * v.s;
     var dx = x2 - x1, dz = z2 - z1, len = Math.max(1, Math.sqrt(dx * dx + dz * dz)), nx = -dz / len, nz = dx / len;
     ctx.save();
-    ctx.strokeStyle = "rgba(46,31,18," + (0.45 + 0.5 * a.strength) + ")"; ctx.lineWidth = Math.max(2, 5 * v.s);
+    if (_fldEngObsPrepared(a)) {
+      ctx.strokeStyle = "rgba(92,70,38," + (0.40 + 0.35 * a.strength) + ")"; ctx.lineWidth = Math.max(3, 8 * v.s);
+      ctx.beginPath(); ctx.moveTo(x1 - nx * 5 * v.s, z1 - nz * 5 * v.s); ctx.lineTo(x2 - nx * 5 * v.s, z2 - nz * 5 * v.s); ctx.stroke();
+    }
+    ctx.strokeStyle = "rgba(46,31,18," + (0.45 + 0.5 * a.strength) + ")"; ctx.lineWidth = Math.max(2, (_fldEngObsPrepared(a) ? 6 : 5) * v.s);
     ctx.beginPath(); ctx.moveTo(x1, z1); ctx.lineTo(x2, z2); ctx.stroke();
-    ctx.strokeStyle = "rgba(189,155,101,0.95)"; ctx.lineWidth = Math.max(1, 1.5 * v.s);
-    var stakes = 4 + Math.round(6 * a.strength);
+    ctx.strokeStyle = _fldEngObsPrepared(a) ? "rgba(225,190,118,0.98)" : "rgba(189,155,101,0.95)"; ctx.lineWidth = Math.max(1, 1.5 * v.s);
+    var stakes = 4 + Math.round((_fldEngObsPrepared(a) ? 9 : 6) * a.strength);
     for (var si = 0; si <= stakes; si++) {
       var p = si / stakes, sx = x1 + dx * p, sz = z1 + dz * p, off = (si % 2 ? 8 : -8) * v.s * a.strength;
       ctx.beginPath(); ctx.moveTo(sx - nx * off, sz - nz * off); ctx.lineTo(sx + nx * off, sz + nz * off); ctx.stroke();
@@ -599,25 +649,34 @@ function fldEngDraw2d(ctx, v) {
     if (__FIELD.fog && u.side !== fldPlayerSide() && !fldVisible(fldPlayerSide(), u)) continue;   // hidden enemy works
     var cx = v.ox + u.x * v.s, cz = v.oz + u.z * v.s;
     var frontW = (u.formation === "column" ? 36 : 96) * v.s * (0.5 + 0.5 * u.men / u.maxMen);
-    var e = u.entrench;
+    var e = fldEngProgress(u), st = fldEngStage(u);
     ctx.save(); ctx.translate(cx, cz); ctx.rotate(u.facing);
-    // the parapet sits just in front of the block (front = -depth/2 side); height grows with progress
     var depth = (u.formation === "column" ? 60 : 26) * v.s;
     var y = -depth / 2 - 2 * v.s;
-    var berm = (2 + 4 * e) * v.s;
-    // earth body
-    ctx.fillStyle = "rgba(74,56,33," + (0.55 + 0.35 * e) + ")";
-    ctx.beginPath();
-    ctx.moveTo(-frontW / 2, y);
-    ctx.lineTo(frontW / 2, y);
-    ctx.lineTo(frontW / 2, y - berm);
-    ctx.lineTo(-frontW / 2, y - berm);
-    ctx.closePath(); ctx.fill();
-    // crest highlight (CVD-safe: shape + value, not color-only)
-    ctx.strokeStyle = "rgba(150,124,82,0.9)"; ctx.lineWidth = Math.max(1, 1.4 * v.s);
+    var berm = (st >= 3 ? 8 + 5 * e : (st >= 2 ? 5 + 3 * e : 2 + 3 * e)) * v.s;
+    ctx.fillStyle = "rgba(74,56,33," + (0.45 + 0.45 * e) + ")";
+    if (st >= 3) {
+      var wing = 26 * v.s, cap = 10 * v.s;
+      ctx.beginPath();
+      ctx.moveTo(-frontW / 2, y - berm); ctx.lineTo(frontW / 2, y - berm); ctx.lineTo(frontW / 2, y); ctx.lineTo(-frontW / 2, y);
+      ctx.closePath(); ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(-frontW / 2, y - berm); ctx.lineTo(-frontW / 2 - cap, y + wing); ctx.lineTo(-frontW / 2 + cap, y + wing * 0.75); ctx.lineTo(-frontW / 2 + cap, y - berm * 0.35);
+      ctx.closePath(); ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(frontW / 2, y - berm); ctx.lineTo(frontW / 2 + cap, y + wing); ctx.lineTo(frontW / 2 - cap, y + wing * 0.75); ctx.lineTo(frontW / 2 - cap, y - berm * 0.35);
+      ctx.closePath(); ctx.fill();
+    } else if (st >= 1) {
+      ctx.beginPath();
+      ctx.moveTo(-frontW / 2, y); ctx.lineTo(frontW / 2, y); ctx.lineTo(frontW / 2, y - berm); ctx.lineTo(-frontW / 2, y - berm);
+      ctx.closePath(); ctx.fill();
+    } else {
+      ctx.strokeStyle = "rgba(96,70,38,0.75)"; ctx.lineWidth = Math.max(1, 2 * v.s);
+      ctx.beginPath(); ctx.moveTo(-frontW / 2, y); ctx.lineTo(frontW / 2, y); ctx.stroke();
+    }
+    ctx.strokeStyle = st >= 3 ? "rgba(196,160,95,0.98)" : "rgba(150,124,82,0.9)"; ctx.lineWidth = Math.max(1, (st >= 3 ? 1.9 : 1.4) * v.s);
     ctx.beginPath(); ctx.moveTo(-frontW / 2, y - berm); ctx.lineTo(frontW / 2, y - berm); ctx.stroke();
-    // gabion/stake ticks along the crest grow in as the works mature
-    var ticks = Math.round(3 + 5 * e);
+    var ticks = Math.max(2, Math.round((st >= 3 ? 10 : (st >= 2 ? 7 : 4)) * Math.max(0.25, e)));
     ctx.strokeStyle = "rgba(40,30,18,0.8)";
     for (var t = 0; t <= ticks; t++) {
       var tx = -frontW / 2 + (frontW * t / ticks);
@@ -695,6 +754,7 @@ function _fld3dEngDisposeOne(rec) {
   try {
     if (!rec) return;
     if (rec.mesh && __FIELD._engGroup) __FIELD._engGroup.remove(rec.mesh);
+    if (rec.mesh && typeof _fld3dDisposeGroup === "function") _fld3dDisposeGroup(rec.mesh);
     if (rec.geo && rec.geo.dispose) rec.geo.dispose();
     if (rec.mat && rec.mat.dispose) rec.mat.dispose();
   } catch (e) {}
@@ -728,26 +788,37 @@ function fld3dSyncEng() {
     var u = __FIELD.units[i];
     if (!u.alive || !(u.entrench > 0.02)) continue;
     keep[u.id] = 1;
-    var lvl = Math.round(u.entrench * 20) / 20;   // quantize so we only rebuild geometry on a real change
-    var frontW = (u.formation === "column" ? 40 : 100);   // match the unit slab frontage (BoxGeometry 96 wide)
-    var hgt = 4 + 10 * u.entrench;                          // parapet height: 4 -> 14 (the slab is 8 tall)
-    var depthB = 6 + 8 * u.entrench;                        // earthwork thickness
+    var st = fldEngStage(u), e = fldEngProgress(u);
+    var lvl = st + "/" + (Math.round(e * 20) / 20);   // quantize so we only rebuild geometry on a real change
+    var frontW = (u.formation === "column" ? 40 : 100);
+    var hgt = st >= 3 ? 16 : (st >= 2 ? 10 : 4 + 5 * e);
+    var depthB = st >= 3 ? 20 : (st >= 2 ? 13 : 5 + 6 * e);
     var rec = meshes[u.id];
     if (!rec || rec.lvl !== lvl) {
       _fld3dEngDisposeOne(rec);
+      var grp = new T.Group();
+      var mat = new T.MeshStandardMaterial({ color: new T.Color(st >= 3 ? "#654b2b" : "#5a4326"), roughness: 0.97, metalness: 0.0, flatShading: true });
       var geo = new T.BoxGeometry(frontW, hgt, depthB);
-      var mat = new T.MeshStandardMaterial({ color: new T.Color("#5a4326"), roughness: 0.97, metalness: 0.0, flatShading: true });
-      var mesh = new T.Mesh(geo, mat);
-      mesh.castShadow = false; mesh.receiveShadow = true;
-      __FIELD._engGroup.add(mesh);
-      rec = meshes[u.id] = { mesh: mesh, geo: geo, mat: mat, lvl: lvl };
+      var mesh = new T.Mesh(geo, mat); mesh.position.y = hgt / 2; mesh.castShadow = false; mesh.receiveShadow = true; grp.add(mesh);
+      if (st >= 2) {
+        var capGeo = new T.BoxGeometry(frontW * 1.02, 1.4, 2.6), cap = new T.Mesh(capGeo, mat);
+        cap.position.set(0, hgt + 0.5, -depthB * 0.45); cap.receiveShadow = true; grp.add(cap);
+      }
+      if (st >= 3) {
+        var rgeo = new T.BoxGeometry(26, hgt * 0.82, depthB * 0.82);
+        var l = new T.Mesh(rgeo, mat), r = new T.Mesh(rgeo, mat);
+        l.position.set(-frontW / 2 + 8, hgt * 0.41, depthB * 0.55); l.rotation.y = 0.62;
+        r.position.set(frontW / 2 - 8, hgt * 0.41, depthB * 0.55); r.rotation.y = -0.62;
+        l.receiveShadow = true; r.receiveShadow = true; grp.add(l); grp.add(r);
+      }
+      __FIELD._engGroup.add(grp);
+      rec = meshes[u.id] = { mesh: grp, lvl: lvl };
     }
-    // place the berm just in front of the unit, along its facing (forward world = (sin f, -cos f))
     var slabHalf = (u.formation === "column" ? 29 : 13);
     var fwd = slabHalf + depthB * 0.5 + 3;
     var px = u.x + Math.sin(u.facing) * fwd, pz = u.z - Math.cos(u.facing) * fwd;
     var gy = (typeof fldTerrainH === "function") ? fldTerrainH(px, pz) : 0;
-    rec.mesh.position.set(px, gy + hgt / 2, pz);
+    rec.mesh.position.set(px, gy, pz);
     rec.mesh.rotation.y = -u.facing;
     var hidden = (__FIELD.fog && u.side !== fldPlayerSide() && !fldVisible(fldPlayerSide(), u));   // hidden enemy works
     rec.mesh.visible = !hidden;
@@ -765,9 +836,9 @@ function fld3dSyncEng() {
     var alvl = Math.round(a.strength * 10) / 10, ar = am[a.id];
     if (!ar || ar.lvl !== alvl) {
       _fld3dEngDisposeAbatis(ar);
-      var ag = new T.Group(), ageo = new T.BoxGeometry(20, 3.2, 3.2);
-      var amat = new T.MeshStandardMaterial({ color: new T.Color("#4d321c"), roughness: 1, metalness: 0, flatShading: true });
-      var count = (typeof fldLow === "function" && fldLow()) ? 6 : 11;
+      var ag = new T.Group(), ageo = new T.BoxGeometry(_fldEngObsPrepared(a) ? 24 : 20, _fldEngObsPrepared(a) ? 4.2 : 3.2, _fldEngObsPrepared(a) ? 4.0 : 3.2);
+      var amat = new T.MeshStandardMaterial({ color: new T.Color(_fldEngObsPrepared(a) ? "#5a3b20" : "#4d321c"), roughness: 1, metalness: 0, flatShading: true });
+      var count = (typeof fldLow === "function" && fldLow()) ? (_fldEngObsPrepared(a) ? 8 : 6) : (_fldEngObsPrepared(a) ? 15 : 11);
       for (var s = 0; s < count; s++) {
         var branch = new T.Mesh(ageo, amat), p = count === 1 ? 0.5 : s / (count - 1);
         branch.position.set((p - 0.5) * 124, 3 + (s % 3), (s % 2 ? 5 : -5) * a.strength);
@@ -833,8 +904,12 @@ function fld3dDisposeEng() {
 
 function fldEngEndHtml() {
   var used = __FIELD._engUsed;
-  if (!used || (!used.abatis && !used.pontoon)) return "";
+  if (!used || (!used.entrench && !used.abatis && !used.pontoon)) return "";
   var out = "";
+  if (used.entrench) out += _fldEngCard(
+    "The spade hardens the line",
+    "Civil War fieldworks rarely appeared all at once. Men first scratched hasty rifle pits, then raised a firing parapet, and only with time tied the position into stronger earthworks and redoubts. The game models that growth in stages: the front arc hardens, but a flank or rear approach still bypasses the work.",
+    "Verified (high): Earl J. Hess, field fortifications studies; Dennis Hart Mahan, <i>A Treatise on Field Fortification</i> (1861).");
   if (used.abatis) out += _fldEngCard(
     "The axe beside the spade",
     "An abatis was not a magical wall: felled trees were laid with sharpened branches toward the attacker, breaking formation and holding troops under fire. Axemen could open a lane, but clearing took time and exposed the working party. The game models that friction as slow movement, temporary disorder, and deliberate clearance—not extra casualties from the timber itself.",

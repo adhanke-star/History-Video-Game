@@ -1,5 +1,5 @@
 /* ===========================================================================
-   T22 — MODERN-ENGINE TERRAIN READABILITY  (Phase H · H5-i3 — the locked D138 arc)
+   T22 — MODERN-ENGINE TERRAIN READABILITY  (Phase H · H5-i3, carried forward by H5-i4)
 
    Aaron's directive (memory civilwar-terrain-readability + D138): the modern
    (non-hex) engine must make terrain EXPLICIT and READABLE — high/low ground at a
@@ -26,20 +26,20 @@
 
      3. ALL TOPOGRAPHY DISTINCT — the modern engine already renders field / woods /
         hill-ridge / wall / water-ford-pontoon / road-creek distinctly; this adds the
-        three Aaron asked for — SWAMP / TOWN / FORT — as new render types read from
-        __FIELD.terrain.swamps[] / .towns[] / .forts[] (each {x,z,r}). They are PURE
-        DECORATION this increment (no sim cover/move hook — that sim wiring is a later
-        gameplay increment, per Aaron's fork), so combat stays byte-identical: no sim
-        function reads those arrays. A demo set is placed in the sandbox showcase.
+        three Aaron asked for — SWAMP / TOWN / FORT — as render types read from
+        __FIELD.terrain.swamps[] / .towns[] / .forts[] (each {x,z,r}). In H5-i3 they
+        were visual-only; H5-i4 wires those same arrays into the UNIVERSAL T0
+        cover/move hooks, while this module remains presentation-only. A demo set is
+        placed in the sandbox showcase.
 
-   ARCHITECTURE — PURE PRESENTATION; combat byte-identical BY CONSTRUCTION (D74):
+   ARCHITECTURE — THIS MODULE IS PURE PRESENTATION (D74 discipline):
    like T16/T17/T18/T21 this module WRAPS the render seams by ASSIGNMENT
    (fld3dInit / fld3dBuildTerrain / fld2dInit / fldPointerMove / fldExit), reads ONLY
    read-only render + terrain fields (fldTerrainH, __FIELD.terrain.*, __FIELD.hover,
    __FIELD.ground.geometry), NEVER writes a sim field, NEVER calls fldRng, NEVER bumps
    _SAVE_VER. The elevation mode is a NEW G.settings key the sim never reads (additive,
-   like renderRich / tacticalPreset). So the headless AI-vs-AI sim is unchanged —
-   probe-presets 26/26 + probe-phased-ab 20/0-diff hold in every mode.
+   like renderRich / tacticalPreset). H5-i4 gameplay effects for swamp/town/fort are
+   confined to T0's universal terrain hooks, not this readability layer.
 
    ACCESSIBILITY / PERF (Intel UHD-617 floor): every layer is STATIC (no per-frame
    animation) → no reduceMotion concern (the T17/T18/T21 convention). VIRIDIS is the

@@ -47,7 +47,7 @@ const SETUP = `(() => {
     try { delete G.settings.tacticalPreset; } catch (e) {}
 
     step('WIRING: the engineering seams exist and fldEngCover is the byte-identical identity for a clean unit', function() {
-      ['fldEngCover', 'fldEngStep', 'fldSelEntrench', 'fldSelAbatis', 'fldSelClearObstacle', 'fldEngMoveFactor', 'fldEngMoveGate', 'fldEngFireFactor', 'fldEngRealism', 'fldEngHudSelected', 'fldEngDraw2d', 'fld3dBuildEng', 'fld3dSyncEng', 'fldEngEndHtml',
+      ['fldEngCover', 'fldEngStep', 'fldSelEntrench', 'fldSelAbatis', 'fldSelClearObstacle', 'fldEngMoveFactor', 'fldEngMoveGate', 'fldEngFireFactor', 'fldEngRealism', 'fldEngProgress', 'fldEngStage', 'fldEngStageName', 'fldEngInOwnWorks', 'fldEngHudSelected', 'fldEngDraw2d', 'fld3dBuildEng', 'fld3dSyncEng', 'fldEngEndHtml',
        'fldSelPontoon', 'fldEngCrossAt', 'fldEngInstallRiver', 'fldEngDrawWater2d', 'fld3dBuildWater'].forEach(function(fn) {
         if (typeof window[fn] !== 'function') throw new Error('missing engineering fn ' + fn);
       });
@@ -61,7 +61,7 @@ const SETUP = `(() => {
       return { engCoverClean: fldEngCover({}), crossNoRiver: fldEngCrossAt(100, 100) };
     });
 
-    step('DIG: an ordered brigade entrenches over time and its earned cover rises toward a parapet', function() {
+    step('DIG: an ordered brigade progresses through hasty cover, full parapet, then redoubt', function() {
       freshSandbox();
       var u = usInf(); if (!u) throw new Error('no US unit');
       __FIELD.sev = null; // neutral / Balanced realism
@@ -70,13 +70,19 @@ const SETUP = `(() => {
       if (!u.digging) throw new Error('fldSelEntrench did not set digging');
       if (u.entrench && u.entrench > 0.001) throw new Error('entrench should start at 0');
       var cover0 = fldEngCover(u);
-      // ~80 sim-seconds of digging (dig time at Balanced is 70s)
-      for (var t = 0; t < 800; t++) fldEngStep(0.1);
-      var cover1 = fldEngCover(u);
-      if (!(u.entrench > 0.9)) throw new Error('entrench should approach full after 80s: ' + u.entrench);
-      if (!(cover1 > 1.5)) throw new Error('full entrench cover should exceed 1.5x: ' + cover1);
+      for (var h = 0; h < 100; h++) fldEngStep(0.1);   // ~10s -> hasty cover
+      var hastyStage = fldEngStage(u), hastyName = fldEngStageName(u), coverH = fldEngCover(u);
+      for (var p = 0; p < 160; p++) fldEngStep(0.1);   // ~26s total -> parapet
+      var paraStage = fldEngStage(u), paraName = fldEngStageName(u), coverP = fldEngCover(u);
+      for (var r = 0; r < 160; r++) fldEngStep(0.1);   // ~42s total -> redoubt/top stage
+      var redStage = fldEngStage(u), redName = fldEngStageName(u), coverR = fldEngCover(u);
+      if (hastyStage !== 1 || hastyName.indexOf('Hasty') < 0) throw new Error('expected hasty stage after 10s: stage=' + hastyStage + ' name=' + hastyName + ' e=' + u.entrench);
+      if (paraStage !== 2 || paraName.indexOf('parapet') < 0) throw new Error('expected parapet stage after 26s: stage=' + paraStage + ' name=' + paraName + ' e=' + u.entrench);
+      if (redStage !== 3 || redName.indexOf('Redoubt') < 0) throw new Error('expected redoubt stage after 42s: stage=' + redStage + ' name=' + redName + ' e=' + u.entrench);
+      if (!(cover0 === 1 && coverH > cover0 && coverP > coverH && coverR > coverP)) throw new Error('cover should rise monotonically: ' + [cover0, coverH, coverP, coverR].join(','));
+      if (!(u.entrench > 0.98)) throw new Error('entrench should reach full after ~42s: ' + u.entrench);
       if (cover0 !== 1) throw new Error('cover before digging should be 1');
-      return { cover0: cover0, entrench: Number(u.entrench.toFixed(3)), coverFull: Number(cover1.toFixed(3)) };
+      return { stages: [hastyName, paraName, redName], entrench: Number(u.entrench.toFixed(3)), cover: [Number(coverH.toFixed(3)), Number(coverP.toFixed(3)), Number(coverR.toFixed(3))] };
     });
 
     step('REALISM SLIDER (B-5): Arcade digs faster for modest cover; Historian digs slower for stronger cover', function() {
@@ -140,9 +146,11 @@ const SETUP = `(() => {
       var peak = u.entrench;
       fldOrderMove(u, u.x + 220, u.z, u.facing);
       for (var t = 0; t < 120; t++) { fldStepMovement(u, 0.1); fldEngStep(0.1); }
+      var coverAfterMove = fldEngCover(u);
       if (u.digging) throw new Error('digging should cancel after marching off the works');
       if (!(u.entrench < peak)) throw new Error('abandoned works should fade: ' + u.entrench);
-      return { movedTo: Math.round(u.x), digging: u.digging, entrenchAfter: Number(u.entrench.toFixed(3)) };
+      if (coverAfterMove !== 1) throw new Error('abandoned works must no longer shelter the live unit: cover=' + coverAfterMove);
+      return { movedTo: Math.round(u.x), digging: u.digging, entrenchAfter: Number(u.entrench.toFixed(3)), coverAfterMove: coverAfterMove };
     });
 
     step('ABATIS: pioneer order builds a capped front belt; enemies slow while friends retain lanes', function() {
@@ -158,6 +166,36 @@ const SETUP = `(() => {
       if (!(slow < 0.5)) throw new Error('full balanced belt should slow enemy below half speed: ' + slow);
       if (friendly !== 1) throw new Error('friendly lanes must retain exact factor 1: ' + friendly);
       return { belts: obs.length, strength: Number(a.strength.toFixed(3)), enemyFactor: Number(slow.toFixed(3)), friendlyFactor: friendly };
+    });
+
+    step('PREPARED ABATIS: tying the belt to full works makes it bite harder and clear slower', function() {
+      function builtBelt(prepared) {
+        freshSandbox(); __FIELD.sev = { attrition: 1 };
+        var u = usInf(); u.facing = 0; u.arm = 'inf'; u.order = { type: 'hold', tx: u.x, tz: u.z, tface: u.facing };
+        if (prepared) { u.entrench = 1; u.digging = true; u.digX = u.x; u.digZ = u.z; }
+        __FIELD.sel = [u.id]; fldSelAbatis();
+        var a = (__FIELD.engObstacles || [])[0]; if (!a) throw new Error('no belt built');
+        a.strength = 1; a.building = false;
+        var enemy = null; for (var i = 0; i < __FIELD.units.length; i++) if (__FIELD.units[i].side === 'CS') { enemy = __FIELD.units[i]; break; }
+        var cx = (a.x1 + a.x2) / 2, cz = (a.z1 + a.z2) / 2;
+        var slow = fldEngMoveFactor(cx, cz, enemy);
+        var m0 = enemy.morale; enemy._engObsTouch = null; enemy.engDisorder = 0;
+        fldEngMoveGate(enemy, cx, cz + 30, cx, cz - 30, 0.1);
+        return { u: u, a: a, cx: cx, cz: cz, slow: slow, moraleDrop: m0 - enemy.morale, disorder: enemy.engDisorder, prepared: !!a.prepared, worksStage: a.worksStage || 0 };
+      }
+      var base = builtBelt(false), prep = builtBelt(true);
+      if (!prep.prepared || prep.worksStage < 2) throw new Error('covered belt should stamp prepared works metadata: ' + JSON.stringify({ prepared: prep.prepared, worksStage: prep.worksStage }));
+      if (!(prep.slow < base.slow)) throw new Error('prepared abatis should slow more strongly: prep ' + prep.slow + ' vs base ' + base.slow);
+      if (!(prep.moraleDrop > base.moraleDrop && prep.disorder > base.disorder)) throw new Error('prepared abatis should disorder more: prep ' + prep.moraleDrop + '/' + prep.disorder + ' vs base ' + base.moraleDrop + '/' + base.disorder);
+      function clearTen(prepared) {
+        var b = builtBelt(prepared), u = b.u, a = b.a;
+        u.x = b.cx; u.z = b.cz; u.order = { type: 'hold', tx: u.x, tz: u.z, tface: u.facing }; __FIELD.sel = [u.id];
+        fldSelClearObstacle(); for (var t = 0; t < 100; t++) fldEngStep(0.1);
+        return a.strength;
+      }
+      var baseLeft = clearTen(false), prepLeft = clearTen(true);
+      if (!(prepLeft > baseLeft)) throw new Error('prepared abatis should clear slower: prepLeft ' + prepLeft + ' vs baseLeft ' + baseLeft);
+      return { baseSlow: Number(base.slow.toFixed(3)), prepSlow: Number(prep.slow.toFixed(3)), baseClearLeft: Number(baseLeft.toFixed(3)), prepClearLeft: Number(prepLeft.toFixed(3)) };
     });
 
     step('ABATIS CONTACT: crossing disorders morale/fire once, then cohesion recovers', function() {
@@ -213,9 +251,9 @@ const SETUP = `(() => {
       return { units: __FIELD.units.length, entrenched: anyEnt, obstacles: (__FIELD.engObstacles || []).length, nonIdentityCover: anyCover, rivers: !!(__FIELD.terrain && __FIELD.terrain.rivers), pontoons: (__FIELD.engPontoons || []).length };
     });
 
-    step('RENDER + HUD: the 2D parapet draws without error and the HUD reports the works', function() {
+    step('RENDER + HUD: the 2D redoubt draws without error and the HUD reports the staged works', function() {
       freshSandbox();
-      var u = usInf(); u.entrench = 0.8; u.digging = true; u.digX = u.x; u.digZ = u.z;
+      var u = usInf(); u.entrench = 1; u.digging = true; u.digX = u.x; u.digZ = u.z;
       var calls = 0;
       var stub = { save: function(){}, restore: function(){}, translate: function(){}, rotate: function(){},
         beginPath: function(){}, moveTo: function(){}, lineTo: function(){}, closePath: function(){},
@@ -223,11 +261,11 @@ const SETUP = `(() => {
       fldEngDraw2d(stub, { ox: 0, oz: 0, s: 1 });
       if (calls < 2) throw new Error('the 2D parapet should issue draw calls: ' + calls);
       var hud = fldEngHudSelected(u);
-      if (hud.indexOf('%') < 0 || (hud.indexOf('cover') < 0 && hud.indexOf('×') < 0)) throw new Error('HUD should report entrench % + cover: ' + hud);
+      if (hud.indexOf('Redoubt') < 0 || hud.indexOf('%') < 0 || (hud.indexOf('cover') < 0 && hud.indexOf('×') < 0)) throw new Error('HUD should report redoubt stage + cover: ' + hud);
       if (fldEngHudSelected({}) !== '') throw new Error('HUD must be empty for a non-entrenching unit');
-      __FIELD._engUsed = { abatis: true };
-      var card = fldEngEndHtml(); if (card.indexOf('Mahan') < 0 || card.indexOf('abatis') < 0) throw new Error('abatis teaching card/provenance missing');
-      return { drawCalls: calls, hudHasPct: hud.indexOf('%') >= 0, teaching: card.indexOf('Mahan') >= 0 };
+      __FIELD._engUsed = { entrench: true, abatis: true };
+      var card = fldEngEndHtml(); if (card.indexOf('Hess') < 0 || card.indexOf('Mahan') < 0 || card.indexOf('abatis') < 0) throw new Error('staged works / abatis teaching card provenance missing');
+      return { drawCalls: calls, hudHasRedoubt: hud.indexOf('Redoubt') >= 0, teaching: card.indexOf('Hess') >= 0 && card.indexOf('Mahan') >= 0 };
     });
 
     step('ART/ROUTING SANITY: a routed unit does not progress; the order seam survives an empty selection', function() {

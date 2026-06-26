@@ -77,6 +77,42 @@ const SETUP = `(() => {
       if(!near(u.order.tx, nearest.x, 1)||!near(u.order.tz, nearest.z, 1)) throw new Error('default charge not nearest');
       return { nearestX:Math.round(nearest.x) }; });
 
+    step('CHARGE LOCK: player charge has a grace window, then blocks move/hold/queue/re-aim until contact or target loss', function(){
+      fldLaunchSandbox({renderer:'none', seed:22});
+      var u=playerUnit(), e=enemies()[0]; if(!u||!e) throw new Error('need player unit and enemy');
+      __FIELD.sel=[u.id]; __FIELD.t=10;
+      fldOrderCharge(u, e, { player:true });
+      if(!u.order.playerCharge || u.order.tid!==e.id) throw new Error('player charge was not primed');
+      if(fldChargeLocked(u)) throw new Error('charge locked during grace window');
+      fldApplyOrder(u, { type:'move', tx:u.x+80, tz:u.z, tface:u.facing });
+      if(u.order.type!=='move') throw new Error('grace window should allow a correction move');
+      fldOrderCharge(u, e, { player:true });
+      __FIELD.t += FLD_CHARGE_GRACE + 0.1;
+      fldChargeStep(u);
+      if(!fldChargeLocked(u) || !u.order.committed) throw new Error('charge did not commit after grace');
+      var oldTx=u.order.tx, oldFace=u.order.tface, oldQ=u.queue?u.queue.length:0;
+      fldApplyOrder(u, { type:'move', tx:u.x+220, tz:u.z+20, tface:1.1 });
+      if(u.order.type!=='charge' || !near(u.order.tx, oldTx, 0.01)) throw new Error('committed charge accepted an immediate move');
+      if(fldEnqueueOrder(u, { type:'move', tx:u.x+300, tz:u.z, tface:0 }) !== false) throw new Error('committed charge accepted a queued order');
+      if((u.queue?u.queue.length:0)!==oldQ) throw new Error('queue length changed under committed charge');
+      fldResolveOrderGesture([u], { aimUid:u.id, x0:u.x, z0:u.z, x:u.x+90, z:u.z });
+      if(!near(u.order.tface, oldFace, 0.001)) throw new Error('committed charge accepted a re-aim gesture');
+      fldSelHold();
+      if(u.order.type!=='charge') throw new Error('committed charge accepted hold');
+      u.state='routing';
+      if(fldChargeLocked(u)) throw new Error('own rout should release the charge lock');
+      u.state='steady';
+      if(!fldChargeLocked(u)) throw new Error('lock should resume after restoring steady pre-contact');
+      u.alive=false;
+      if(fldChargeLocked(u)) throw new Error('own death should release the charge lock');
+      u.alive=true;
+      if(!fldChargeLocked(u)) throw new Error('lock should resume after restoring alive pre-contact');
+      e.state='routing';
+      if(fldChargeLocked(u)) throw new Error('target loss should release the lock');
+      fldApplyOrder(u, { type:'move', tx:u.x+120, tz:u.z, tface:0.4 });
+      if(u.order.type!=='move') throw new Error('target-loss release did not allow a fresh move');
+      return { grace:'correction allowed', committed:true, queueBlocked:true, releasedOnOwnRoutDeath:true, releasedOnTargetLoss:true }; });
+
     step('SHIFT-QUEUE: a shift-drag appends a waypoint without disturbing the active order', function(){
       var u=playerUnit(); u.facing=0; __FIELD.sel=[u.id]; u.queue=null;
       // immediate move first

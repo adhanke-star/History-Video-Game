@@ -41,6 +41,7 @@ var FLD_CHARGE_GRAB = 58;    // drop within this of an enemy brigade -> charge i
 var FLD_HANDLE_GRAB = 46;    // press within this of a facing-handle tip -> re-aim it
 var FLD_HANDLE_LEN = 70;     // length of the facing-handle arrow ahead of the destination
 var FLD_ORDER_SPREAD = 80;   // per-unit lateral spread of a multi-brigade order (mirrors the legacy fldPointerUp spread)
+var FLD_CHARGE_GRACE = 1.2;  // sim-seconds: brief correction window before a player charge commits
 
 /* the nearest VISIBLE alive enemy brigade within r of a world point, or null.
    Fog-gated: you cannot drag-to-charge a foe you have not scouted (and the cursor
@@ -58,14 +59,78 @@ function fldEnemyAt(x, z, side, r) {
   return best;
 }
 
+/* H5-i4: player-issued charges get impetus. During a short grace window the player can
+   correct the order; after commit, casual move/hold/re-aim orders are refused until the
+   brigade reaches contact, loses the target, routs, or dies. AI charges remain plain
+   inline {type:"charge"} orders unless a future AI path explicitly opts into this API. */
+function fldChargePrime(u, ord, target) {
+  if (!u || !ord || !target) return;
+  ord.tid = target.id;
+  ord.playerCharge = true;
+  ord.commitT = ((typeof __FIELD !== "undefined" && __FIELD) ? __FIELD.t : 0) + FLD_CHARGE_GRACE;
+  ord.committed = false;
+  ord.contact = false;
+}
+function fldChargeGraceLeft(u) {
+  var o = u && u.order;
+  if (!o || o.type !== "charge" || !o.playerCharge || typeof o.commitT !== "number") return 0;
+  var now = (typeof __FIELD !== "undefined" && __FIELD) ? __FIELD.t : 0;
+  return Math.max(0, o.commitT - now);
+}
+function fldChargeTargetLost(u) {
+  var o = u && u.order;
+  if (!o || !o.tid || typeof fldById !== "function") return true;
+  var t = fldById(o.tid);
+  if (!t || !t.alive || t.side === u.side || t.state === "routing") return true;
+  if (typeof __FIELD !== "undefined" && __FIELD && __FIELD.fog && typeof fldVisible === "function" && !fldVisible(u.side, t)) return true;
+  return false;
+}
+function fldChargeLocked(u) {
+  var o = u && u.order;
+  return !!(u && u.alive && u.state !== "routing" && o && o.type === "charge" && o.playerCharge && o.tid && !o.contact && fldChargeGraceLeft(u) <= 0 && !fldChargeTargetLost(u));
+}
+function fldChargeBlocked(u) {
+  if (typeof fldAnnounce !== "function") return;
+  var name = "the chosen enemy", o = u && u.order, t = o && o.tid && typeof fldById === "function" ? fldById(o.tid) : null;
+  if (t && t.name) name = t.name;
+  fldAnnounce("Charge committed — " + name + " must be reached or lost before new orders take hold.");
+}
+function fldChargeStep(u) {
+  var o = u && u.order;
+  if (!o || o.type !== "charge" || !o.playerCharge || !o.tid || o.contact) return;
+  if (!u.alive || u.state === "routing") return;
+  var t = (typeof fldById === "function") ? fldById(o.tid) : null;
+  if (fldChargeTargetLost(u)) { u.order = { type: "hold", tx: u.x, tz: u.z, tface: u.facing }; return; }
+  o.tx = t.x; o.tz = t.z; o.tface = Math.atan2(t.x - u.x, -(t.z - u.z));
+  if (fldChargeGraceLeft(u) <= 0) o.committed = true;
+}
+function fldChargeContact(u, target) {
+  var o = u && u.order;
+  if (!o || o.type !== "charge" || !o.playerCharge || !target || o.tid !== target.id) return;
+  o.contact = true;
+  o.playerCharge = false;
+}
+function fldChargeHudSelected(u) {
+  var o = u && u.order;
+  if (!u || !u.alive || u.state === "routing" || !o || o.type !== "charge" || (!o.playerCharge && !o.tid)) return "";
+  var t = o.tid && typeof fldById === "function" ? fldById(o.tid) : null;
+  var nm = t && t.name ? t.name : "target";
+  if (o.playerCharge) {
+    var left = fldChargeGraceLeft(u);
+    var txt = left > 0 ? ("correcting " + left.toFixed(1) + "s") : "committed";
+    return '<div style="margin-top:4px;color:#f0b37a;font-size:12px;">&#9876; Charge ' + txt + ' — tracking ' + nm + '</div>';
+  }
+  return '<div style="margin-top:4px;color:#d9c9a5;font-size:12px;">&#9876; Charge in contact — ' + nm + '</div>';
+}
+
 /* a unit has a grabbable facing handle only when it is marching to a MOVE
    destination. A unit holding at its own position (e.g. fresh at spawn) has NO
    handle — so its handle (which would sit ~70yd ahead, right where you press to
    drag it forward) never hijacks a fresh move order. A CHARGE is deliberately
    excluded: a charge's facing is just the settle-on-arrival angle (the men keep
-   marching at the locked target), so re-aiming it would be a no-effect gesture —
-   charges stay un-re-aimable until the planned charge commit-lock increment.
-   Re-aiming a stationary line is left to a fresh tap+drag. */
+   marching at the tracked target), so re-aiming it would be a no-effect gesture.
+   Once the H5-i4 charge lock commits, re-aim/move/queue orders are refused until
+   contact, target loss, rout, or death. Re-aiming a stationary line is left to a fresh tap+drag. */
 function fldOrderHasHandle(u) {
   return !!(u && u.order && u.order.type === "move" && u.order.tx != null);
 }
@@ -88,16 +153,20 @@ function fldHandleHit(wp) {
    --------------------------------------------------------------------------- */
 /* immediate: set the unit's order NOW and drop any planned route. */
 function fldApplyOrder(u, ord) {
-  if (!u || !u.alive || u.state === "routing") return;
+  if (!u || !u.alive || u.state === "routing") return false;
+  if (typeof fldChargeLocked === "function" && fldChargeLocked(u)) { if (typeof fldChargeBlocked === "function") fldChargeBlocked(u); return false; }
   u.queue = null;   // immediate cancels the planned route (kept falsy -> the queue guard stays a no-op for clean units)
-  if (ord.type === "charge") fldOrderCharge(u, ord.tid ? fldById(ord.tid) : null);
+  if (ord.type === "charge") fldOrderCharge(u, ord.tid ? fldById(ord.tid) : null, { player: true });
   else u.order = { type: "move", tx: ord.tx, tz: ord.tz, tface: (typeof ord.tface === "number") ? ord.tface : u.facing };
+  return true;
 }
 /* queue: append a waypoint to the planned route; start it immediately if idle. */
 function fldEnqueueOrder(u, ord) {
-  if (!u || !u.alive || u.state === "routing") return;
+  if (!u || !u.alive || u.state === "routing") return false;
+  if (typeof fldChargeLocked === "function" && fldChargeLocked(u)) { if (typeof fldChargeBlocked === "function") fldChargeBlocked(u); return false; }
   (u.queue || (u.queue = [])).push(ord);
   if (!u.order || u.order.type === "hold") fldOrderQueueAdvance(u);
+  return true;
 }
 /* pop the next queued waypoint into u.order — called from fldStepMovement when a
    move completes. Returns true iff it set a fresh order. BYTE-IDENTICAL no-op for
@@ -108,7 +177,7 @@ function fldOrderQueueAdvance(u) {
   if (!nx) return false;
   if (nx.type === "charge") {
     var tgt = nx.tid ? fldById(nx.tid) : null;
-    fldOrderCharge(u, (tgt && tgt.alive && tgt.side !== u.side) ? tgt : null);
+    fldOrderCharge(u, (tgt && tgt.alive && tgt.side !== u.side) ? tgt : null, { player: true });
   } else {
     u.order = { type: "move", tx: nx.tx, tz: nx.tz, tface: (typeof nx.tface === "number") ? nx.tface : u.facing };
   }
@@ -128,7 +197,8 @@ function fldResolveOrderGesture(sel, gst) {
   var ps = (typeof fldPlayerSide === "function") ? fldPlayerSide() : "US";
   if (gst.aimUid) {
     var au = fldById(gst.aimUid);
-    if (au && au.alive && au.order && au.order.tx != null) {
+    if (au && typeof fldChargeLocked === "function" && fldChargeLocked(au)) { if (typeof fldChargeBlocked === "function") fldChargeBlocked(au); return; }
+    if (au && au.alive && au.order && au.order.type === "move" && au.order.tx != null) {
       au.order.tface = Math.atan2(gst.x - au.order.tx, -(gst.z - au.order.tz));
       if (typeof fldAnnounce === "function") fldAnnounce("Facing set.");
       if (typeof fldRenderHud === "function") fldRenderHud();
@@ -138,12 +208,14 @@ function fldResolveOrderGesture(sel, gst) {
   if (!sel || !sel.length) return;
   var n = sel.length, i, u;
   var dropFoe = fldEnemyAt(gst.x, gst.z, ps, FLD_CHARGE_GRAB);
+  var applied = 0;
   if (dropFoe) {
     for (i = 0; i < n; i++) {
       var ord = { type: "charge", tid: dropFoe.id };
-      if (gst.shift) fldEnqueueOrder(sel[i], ord); else fldApplyOrder(sel[i], ord);
+      if (gst.shift) { if (fldEnqueueOrder(sel[i], ord)) applied++; }
+      else if (fldApplyOrder(sel[i], ord)) applied++;
     }
-    if (typeof fldAnnounce === "function") fldAnnounce((gst.shift ? "Charge queued — " : "Charge ordered — ") + dropFoe.name + (gst.shift ? "." : "!"));
+    if (applied && typeof fldAnnounce === "function") fldAnnounce((gst.shift ? "Charge queued — " : "Charge ordered — ") + dropFoe.name + (gst.shift ? "." : "!"));
   } else {
     var dragged = Math.hypot(gst.x - gst.x0, gst.z - gst.z0) > FLD_DRAG_MIN;
     var face = Math.atan2(gst.x - gst.x0, -(gst.z - gst.z0));
@@ -153,9 +225,10 @@ function fldResolveOrderGesture(sel, gst) {
       var off = (i - (n - 1) / 2) * FLD_ORDER_SPREAD;
       var tx = gst.x0 + Math.sin(perp) * off, tz = gst.z0 - Math.cos(perp) * off;
       var ord2 = { type: "move", tx: tx, tz: tz, tface: dragged ? face : u.facing };
-      if (gst.shift) fldEnqueueOrder(u, ord2); else fldApplyOrder(u, ord2);
+      if (gst.shift) { if (fldEnqueueOrder(u, ord2)) applied++; }
+      else if (fldApplyOrder(u, ord2)) applied++;
     }
-    if (typeof fldAnnounce === "function") fldAnnounce(gst.shift ? "Waypoint queued." : "March ordered.");
+    if (applied && typeof fldAnnounce === "function") fldAnnounce(gst.shift ? "Waypoint queued." : "March ordered.");
   }
   if (typeof fldRenderHud === "function") fldRenderHud();
 }
