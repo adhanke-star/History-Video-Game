@@ -7,6 +7,7 @@
 
 var FLDCB_STORE = "cw_custom_battles_v1";
 var FLDCB_SCHEMA = "cw_custom_battle_v1";
+var FLDCB_PACK_SCHEMA = "cw_custom_battle_pack_v1";
 var FLDCB_SLOTS = 6;
 var _fldCbState = null;
 var _fldCbLast = null;
@@ -378,6 +379,44 @@ function fldCustomExportScenario(scenario) {
   var r = fldCustomValidate(scenario || _fldCbState || fldCustomDefaultDraft());
   return r.ok ? r.json : "";
 }
+function fldCustomTemplateJson() {
+  return JSON.stringify({
+    schema: FLDCB_SCHEMA,
+    note: "Single-phase custom battle scenario. IDs must start with custom_. Phased battle authoring is deliberately deferred.",
+    scenario: fldCustomDefaultDraft()
+  }, null, 2);
+}
+function _fldCbPackSources(list) {
+  var out = [], i, slots;
+  if (Array.isArray(list)) {
+    for (i = 0; i < list.length; i++) out.push(list[i]);
+    return out;
+  }
+  if (_fldCbState) out.push(_fldCbState);
+  slots = fldCustomListSlots();
+  for (i = 0; i < slots.length; i++) if (slots[i] && slots[i].scenario) out.push(slots[i].scenario);
+  return out;
+}
+function fldCustomExportPack(list, meta) {
+  var sources = _fldCbPackSources(list), scenarios = [], seen = {}, warnings = [], errors = [];
+  for (var i = 0; i < sources.length; i++) {
+    var r = fldCustomValidate(sources[i]);
+    if (!r.ok) { warnings.push("Skipped invalid scenario " + (i + 1) + ": " + r.errors.join("; ")); continue; }
+    if (seen[r.scenario.id]) { warnings.push("Skipped duplicate scenario id " + r.scenario.id + "."); continue; }
+    seen[r.scenario.id] = true;
+    scenarios.push(r.scenario);
+  }
+  if (!scenarios.length) errors.push("Pack needs at least one valid custom scenario.");
+  if (scenarios.length > FLDCB_SLOTS) errors.push("Pack is limited to " + FLDCB_SLOTS + " scenarios so it can install into local slots.");
+  var pack = {
+    schema: FLDCB_PACK_SCHEMA,
+    format: FLDCB_SCHEMA,
+    title: String((meta && meta.title) || "The Civil War custom battle pack").slice(0, 90),
+    createdAt: new Date().toISOString(),
+    scenarios: scenarios
+  };
+  return { ok: !errors.length, errors: errors, warnings: warnings, pack: pack, scenarios: scenarios, json: errors.length ? "" : JSON.stringify(pack, null, 2) };
+}
 function fldCustomImportJson(text) {
   var raw;
   try { raw = JSON.parse(String(text || "")); }
@@ -386,6 +425,73 @@ function fldCustomImportJson(text) {
   var r = fldCustomValidate(raw);
   if (r.ok) r.draft = _fldCbDraftFromScenario(r.scenario);
   return r;
+}
+function _fldCbPackPayload(raw) {
+  if (raw && raw.customBattlePack) raw = raw.customBattlePack;
+  if (raw && raw.schema === FLDCB_PACK_SCHEMA) return raw;
+  if (raw && Array.isArray(raw.scenarios)) return raw;
+  return null;
+}
+function fldCustomInstallPack(scenarios) {
+  var errors = [], saved = [], st = fldCustomLoadStore(), i, r, existing = {}, incoming = {}, empty = [];
+  while (st.slots.length < FLDCB_SLOTS) st.slots.push(null);
+  for (i = 0; i < st.slots.length; i++) {
+    if (st.slots[i] && st.slots[i].id) existing[st.slots[i].id] = true;
+    else empty.push(i);
+  }
+  if (!Array.isArray(scenarios) || !scenarios.length) errors.push("Pack contains no scenarios to install.");
+  if (scenarios && scenarios.length > empty.length) errors.push("Need " + scenarios.length + " empty custom slots; only " + empty.length + " available.");
+  if (scenarios) for (i = 0; i < scenarios.length; i++) {
+    r = fldCustomValidate(scenarios[i]);
+    if (!r.ok) errors.push("Scenario " + (i + 1) + " invalid: " + r.errors.join("; "));
+    else {
+      if (incoming[r.scenario.id]) errors.push("Duplicate scenario id in pack: " + r.scenario.id);
+      else incoming[r.scenario.id] = true;
+      if (existing[r.scenario.id]) errors.push("Scenario id already saved: " + r.scenario.id);
+    }
+  }
+  if (errors.length) return { ok: false, errors: errors, warnings: [], saved: 0, slots: [] };
+  for (i = 0; i < scenarios.length; i++) {
+    r = fldCustomValidate(scenarios[i]);
+    var slot = empty[i];
+    st.slots[slot] = { id: r.scenario.id, name: r.scenario.name, updatedAt: new Date().toISOString(), scenario: r.scenario };
+    existing[r.scenario.id] = true;
+    saved.push(slot);
+  }
+  if (!fldCustomWriteStore(st)) return { ok: false, errors: ["Could not write custom battle pack to local slots."], warnings: [], saved: 0, slots: [] };
+  return { ok: true, errors: [], warnings: [], saved: saved.length, slots: saved };
+}
+function fldCustomImportPackJson(text, opts) {
+  var raw, payload, candidates, scenarios = [], errors = [], warnings = [], seen = {}, install;
+  try { raw = JSON.parse(String(text || "")); }
+  catch (e) { return { ok: false, errors: ["Malformed JSON: " + (e && e.message ? e.message : e)], warnings: [], scenarios: [], drafts: [], saved: 0 }; }
+  raw = _fldCbScrub(raw);
+  payload = _fldCbPackPayload(raw);
+  candidates = payload ? payload.scenarios : [_fldCbSource(raw)];
+  if (!Array.isArray(candidates) || !candidates.length) errors.push("Pack needs a scenarios[] array.");
+  if (candidates && candidates.length > FLDCB_SLOTS) errors.push("Pack is limited to " + FLDCB_SLOTS + " scenarios.");
+  for (var i = 0; candidates && i < candidates.length; i++) {
+    var r = fldCustomValidate(candidates[i]);
+    if (!r.ok) { errors.push("Scenario " + (i + 1) + " invalid: " + r.errors.join("; ")); continue; }
+    if (seen[r.scenario.id]) { errors.push("Duplicate scenario id in pack: " + r.scenario.id); continue; }
+    seen[r.scenario.id] = true;
+    scenarios.push(r.scenario);
+    if (r.warnings && r.warnings.length) warnings = warnings.concat(r.warnings);
+  }
+  install = null;
+  if (!errors.length && opts && opts.install) {
+    install = fldCustomInstallPack(scenarios);
+    if (!install.ok) errors = errors.concat(install.errors || []);
+  }
+  return {
+    ok: !errors.length,
+    errors: errors,
+    warnings: warnings,
+    scenarios: scenarios,
+    drafts: scenarios.map(function (s) { return _fldCbDraftFromScenario(s); }),
+    saved: install ? install.saved : 0,
+    slots: install ? install.slots : []
+  };
 }
 function fldCustomLoadStore() {
   try {
@@ -545,14 +651,14 @@ function _fldCbHtml() {
   var o = _fldCbState.objective || {}, us = (_fldCbState.sideCopy && _fldCbState.sideCopy.US) || {}, cs = (_fldCbState.sideCopy && _fldCbState.sideCopy.CS) || {}, br = _fldCbState.brief || {}, sp = _fldCbState.supply || {};
   return '<style>.fld-cb{max-width:1180px}.fld-cb h1{margin:0 0 8px}.fld-cb h2{font-size:18px;margin:16px 0 8px}.fld-cb-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.fld-cb label{display:grid;gap:4px;font-size:12px;color:#d8c8aa}.fld-cb input,.fld-cb select,.fld-cb textarea{box-sizing:border-box;width:100%;background:#17120d;color:#f5ead6;border:1px solid #9c7a3c;border-radius:4px;padding:6px}.fld-cb textarea{min-height:190px;font:12px ui-monospace,Menlo,monospace}.fld-cb-table{overflow:auto;border:1px solid #4c3b25;border-radius:6px}.fld-cb table{width:100%;border-collapse:collapse;min-width:760px}.fld-cb th,.fld-cb td{border-bottom:1px solid #3b2d1e;padding:4px;text-align:left}.fld-cb th{font-size:11px;color:#c9b58e}.fld-cb td input,.fld-cb td select{min-width:74px;padding:4px}.fld-cb-actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.fld-cb .mini{padding:5px 8px;border-radius:4px}.fld-cb-status{padding:8px;border-radius:6px;border:1px solid #665136;background:#20170f}.fld-cb-status.ok{border-color:#5e8d58}.fld-cb-status.bad{border-color:#cf6a5e}.fld-cb-status ul{margin:6px 0 0 18px}.fld-cb-status .warn{color:#e4c677}.fld-cb .muted{color:#a99778}.fld-cb-slot{display:grid;grid-template-columns:70px 1fr auto auto auto;gap:6px;align-items:center;border-bottom:1px solid #3b2d1e;padding:5px 0}.fld-cb-slot small{display:block;color:#9e8a68}.fld-cb-wide{grid-column:span 2}@media(max-width:850px){.fld-cb-grid{grid-template-columns:1fr}.fld-cb-wide{grid-column:span 1}.fld-cb-slot{grid-template-columns:1fr 1fr}.fld-cb-slot span{grid-column:1/-1}}</style>'
     + '<div class="fld-cb upg"><h1>Custom Battle Builder</h1>' + _fldCbStatusHtml()
-    + '<div class="fld-cb-actions"><button data-cb-act="validate">Validate</button><button data-cb-act="launch">Launch</button><button data-cb-act="export">Export / Share JSON</button><button data-cb-act="import">Import JSON</button><button data-cb-act="reset">New Draft</button><button onclick="openMainMenu()">Main Menu</button></div>'
+    + '<div class="fld-cb-actions"><button data-cb-act="validate">Validate</button><button data-cb-act="launch">Launch</button><button data-cb-act="export">Export Scenario</button><button data-cb-act="import">Import Scenario</button><button data-cb-act="export-pack">Export Pack</button><button data-cb-act="import-pack">Import Pack to Slots</button><button data-cb-act="template">Template</button><button data-cb-act="reset">New Draft</button><button onclick="openMainMenu()">Main Menu</button></div>'
     + '<h2>Scenario</h2><div class="fld-cb-grid"><label>Name<input data-cb-field="name" value="' + _fldCbVal("name") + '"></label><label>ID<input data-cb-field="id" value="' + _fldCbVal("id") + '"></label><label>Date<input data-cb-field="date" value="' + _fldCbVal("date") + '"></label><label>Place<input data-cb-field="place" value="' + _fldCbVal("place") + '"></label><label>Attacker' + _fldCbSelect(_fldCbState.attacker || "US", ["US", "CS"], 'data-cb-field="attacker"') + '</label><label>Defender' + _fldCbSelect(_fldCbState.defender || "CS", ["CS", "US"], 'data-cb-field="defender"') + '</label><label>Fog' + _fldCbSelect(_fldCbState.defaultFog ? "yes" : "no", [["no", "Off"], ["yes", "On"]], 'data-cb-field="defaultFog"') + '</label><label>Doctrine' + _fldCbSelect(_fldCbState.assaultDoctrine || "standard", [["standard", "Standard"], ["cautious", "Cautious"]], 'data-cb-field="assaultDoctrine"') + '</label><label>Field W' + _fldCbNumInput("fieldW", _fldCbState.fieldW, 700, 1800) + '</label><label>Field H' + _fldCbNumInput("fieldH", _fldCbState.fieldH, 550, 1400) + '</label><label>Time limit' + _fldCbNumInput("timeLimitSec", _fldCbState.timeLimitSec, 180, 1800) + '</label><label>Hold to win' + _fldCbNumInput("holdToWinSec", _fldCbState.holdToWinSec, 20, 600) + '</label></div>'
     + '<h2>Objective</h2><div class="fld-cb-grid"><label>Name<input data-cb-obj="objective" data-cb-key="name" value="' + _fldCbObjVal(o, "name") + '"></label><label>X<input data-cb-obj="objective" data-cb-key="x" value="' + _fldCbObjVal(o, "x") + '"></label><label>Z<input data-cb-obj="objective" data-cb-key="z" value="' + _fldCbObjVal(o, "z") + '"></label><label>Radius<input data-cb-obj="objective" data-cb-key="r" value="' + _fldCbObjVal(o, "r") + '"></label></div>'
     + '<h2>Sides</h2><div class="fld-cb-grid"><label class="fld-cb-wide">Union title<input data-cb-obj="sideCopy.US" data-cb-key="title" value="' + _fldCbObjVal(us, "title") + '"></label><label class="fld-cb-wide">Union deck<input data-cb-obj="sideCopy.US" data-cb-key="deck" value="' + _fldCbObjVal(us, "deck") + '"></label><label class="fld-cb-wide">Confederate title<input data-cb-obj="sideCopy.CS" data-cb-key="title" value="' + _fldCbObjVal(cs, "title") + '"></label><label class="fld-cb-wide">Confederate deck<input data-cb-obj="sideCopy.CS" data-cb-key="deck" value="' + _fldCbObjVal(cs, "deck") + '"></label><label class="fld-cb-wide">Attack brief<input data-cb-obj="brief" data-cb-key="attack" value="' + _fldCbObjVal(br, "attack") + '"></label><label class="fld-cb-wide">Defense brief<input data-cb-obj="brief" data-cb-key="defend" value="' + _fldCbObjVal(br, "defend") + '"></label></div>'
     + '<h2>Terrain</h2><div class="fld-cb-actions"><button class="mini" data-cb-act="add-hills">Add Hill</button><button class="mini" data-cb-act="add-woods">Add Woods</button><button class="mini" data-cb-act="add-walls">Add Wall</button><button class="mini" data-cb-act="add-marker">Add Marker</button></div><div class="fld-cb-table"><table><thead><tr><th colspan="5">Hills x z height spread</th></tr></thead><tbody>' + _fldCbTerrainRows("hills") + '</tbody></table><table><thead><tr><th colspan="4">Woods x z radius</th></tr></thead><tbody>' + _fldCbTerrainRows("woods") + '</tbody></table><table><thead><tr><th colspan="5">Walls x1 z1 x2 z2</th></tr></thead><tbody>' + _fldCbTerrainRows("walls") + '</tbody></table><table><thead><tr><th>Kind</th><th>Name</th><th>X</th><th>Z</th><th>Path</th><th></th></tr></thead><tbody>' + _fldCbMarkerRows() + '</tbody></table></div>'
     + '<h2>Order of Battle</h2><div class="fld-cb-actions"><button class="mini" data-cb-act="add-unit">Add Unit</button></div><div class="fld-cb-table"><table><thead><tr><th>Side</th><th>ID</th><th>Name</th><th>Commander</th><th>Arm</th><th>Weapon</th><th>Men</th><th>Guns</th><th>X</th><th>Z</th><th>Facing</th><th>XP</th><th>At sec</th><th></th></tr></thead><tbody>' + _fldCbUnitRows() + '</tbody></table></div>'
     + '<h2>Leaders, Supply, Teaching</h2><div class="fld-cb-actions"><button class="mini" data-cb-act="add-leader">Add Leader</button><button class="mini" data-cb-act="add-card">Add Teaching Card</button></div><div class="fld-cb-table"><table><thead><tr><th>Side</th><th>ID</th><th>Name</th><th>Quality</th><th>Radius</th><th>X</th><th>Z</th><th>Attach</th><th></th></tr></thead><tbody>' + _fldCbLeaderRows() + '</tbody></table><table><thead><tr><th>ID</th><th>Head</th><th>Body</th><th>Provenance</th><th></th></tr></thead><tbody>' + _fldCbCardRows() + '</tbody></table></div><div class="fld-cb-grid"><label>Union supply name<input data-cb-obj="supply.US" data-cb-key="name" value="' + _fldCbObjVal(sp.US, "name") + '"></label><label>Union supply X<input data-cb-obj="supply.US" data-cb-key="x" value="' + _fldCbObjVal(sp.US, "x") + '"></label><label>Union supply Z<input data-cb-obj="supply.US" data-cb-key="z" value="' + _fldCbObjVal(sp.US, "z") + '"></label><label>Provenance<input data-cb-field="provenance" value="' + _fldCbVal("provenance") + '"></label><label>Confed supply name<input data-cb-obj="supply.CS" data-cb-key="name" value="' + _fldCbObjVal(sp.CS, "name") + '"></label><label>Confed supply X<input data-cb-obj="supply.CS" data-cb-key="x" value="' + _fldCbObjVal(sp.CS, "x") + '"></label><label>Confed supply Z<input data-cb-obj="supply.CS" data-cb-key="z" value="' + _fldCbObjVal(sp.CS, "z") + '"></label></div>'
-    + '<h2>Persistence</h2><div>' + _fldCbSlotsHtml() + '</div><h2>Import / Export</h2><textarea id="fldCbJson" spellcheck="false" aria-label="Custom battle JSON"></textarea></div>';
+    + '<h2>Persistence</h2><div>' + _fldCbSlotsHtml() + '</div><h2>Import / Export</h2><textarea id="fldCbJson" spellcheck="false" aria-label="Custom battle scenario or pack JSON"></textarea></div>';
 }
 function _fldCbSetPath(path, key, val) {
   var parts = path.split("."), obj = _fldCbState;
@@ -614,6 +720,9 @@ function _fldCbWire() {
     if (act === "validate") { _fldCbReadForm(); _fldCbLast = fldCustomValidate(_fldCbState); _fldCbRefresh(); return; }
     if (act === "export") { _fldCbReadForm(); _fldCbLast = fldCustomValidate(_fldCbState); _fldCbRefresh(); var ta = document.getElementById("fldCbJson"); if (ta && _fldCbLast.ok) ta.value = _fldCbLast.json; return; }
     if (act === "import") { var ta2 = document.getElementById("fldCbJson"); _fldCbLast = fldCustomImportJson(ta2 ? ta2.value : ""); if (_fldCbLast.ok) _fldCbState = _fldCbLast.draft; _fldCbRefresh(); return; }
+    if (act === "export-pack") { _fldCbReadForm(); var pk = fldCustomExportPack(); _fldCbLast = { ok: pk.ok, errors: pk.errors, warnings: pk.warnings, scenario: pk.scenarios[0] || null }; _fldCbRefresh(); var ta3 = document.getElementById("fldCbJson"); if (ta3 && pk.ok) ta3.value = pk.json; return; }
+    if (act === "import-pack") { var ta4 = document.getElementById("fldCbJson"); var pr = fldCustomImportPackJson(ta4 ? ta4.value : "", { install: true }); _fldCbLast = { ok: pr.ok, errors: pr.errors, warnings: pr.warnings.concat(pr.ok ? ["Installed " + pr.saved + " scenario(s) into empty local slots."] : []), scenario: pr.scenarios[0] || null }; if (pr.ok && pr.drafts[0]) _fldCbState = pr.drafts[0]; _fldCbRefresh(); return; }
+    if (act === "template") { _fldCbRefresh(); var ta5 = document.getElementById("fldCbJson"); if (ta5) ta5.value = fldCustomTemplateJson(); return; }
     if (act === "launch") { _fldCbReadForm(); _fldCbLast = fldCustomValidate(_fldCbState); if (_fldCbLast.ok) { _fldCbActiveScenario = _fldCbLast.scenario; if (typeof fldScenarioSideChoice === "function") fldScenarioSideChoice(_fldCbActiveScenario.id, function (side) { fldLaunchBattle(_fldCbActiveScenario.id, side); }); else if (typeof fldLaunchSandbox === "function") fldLaunchSandbox({ scenario: _fldCbActiveScenario.id, playerSide: "US" }); } else _fldCbRefresh(); return; }
     if (act === "reset") { _fldCbState = fldCustomDefaultDraft(); _fldCbLast = null; _fldCbRefresh(); return; }
     if (act.indexOf("add-") === 0) { _fldCbAdd(act.replace("add-", "")); return; }

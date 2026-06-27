@@ -1,3 +1,17 @@
+# ☀ WAKE-UP — 2026-06-27: **PHASE J CUSTOM SCENARIO PACKS ARE SHIPPED. Custom battles now have a documented share format, starter templates, multi-scenario packs, and guarded import-to-slot behavior.**
+
+**Newest (D147, 2026-06-27):** This completes the save/mod/share hardening lane without touching canonical battle data, tactical combat rules, `build/base.html`, or hand-editing the generated game file. `civil_war_generals.html` was rebuilt from `src/` by the build gate.
+
+**What changed:** the Custom Battle Builder now exports a pasteable template, exports a pack containing the current valid draft plus saved scenarios, imports either one scenario or a pack, and installs packs only into empty local custom-battle slots. New `CUSTOM-SCENARIO-FORMAT.md` documents the `cw_custom_battle_v1` and `cw_custom_battle_pack_v1` shapes.
+
+**Guardrails:** custom scenario ids must stay `custom_...`; custom battles remain single-phase; custom ids never enter the historical battle registry; prototype-pollution keys are scrubbed; per-battle combat tuning keys like `fireScale` and `gunFireWeight` are rejected; artillery still uses the universal gun/crew model.
+
+**Bug-hunt fix:** the importer already rejected duplicate ids, but the public installer helper could be called directly with duplicate scenario ids. `fldCustomInstallPack` now rejects duplicates inside the batch before any write, and the focused probe locks that direct-helper path.
+
+**Verified:** build GATE OK; focused `probe-custom-battle-builder` 10/10 with 0 pageerrors; full `npm run vet:noreg` green before the bug-hunt fix; post-fix `vet-no-regression --from="custom battle builder"` green across 12 commands; `probe-full-campaign` 4/4 with 0 pageerrors; `diag-classic` `nonBlank:346`, `m3dActive:false`; JSON readback clean; `git diff --check` clean. **Next:** Phase I loot/survival spine plus first playable loot/inventory/survival MVP. Chattanooga and the USCT playable battles still stay saved for last.
+
+---
+
 # ☀ WAKE-UP — 2026-06-27: **PHASE J SAVE HARDENING IS SHIPPED. Saves now reject bad payloads, named slots are probed, file and text import share the same validator, and accessible campaigns have a guarded one-turn undo.**
 
 **Newest (D146, 2026-06-27):** This hardens the existing save/load/share layer without touching tactical combat, battle data, `build/base.html`, or hand-editing the generated game file. `civil_war_generals.html` was rebuilt from `src/` by the build gate.

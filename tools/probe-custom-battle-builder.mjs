@@ -65,6 +65,28 @@ const SETUP = `(() => {
     d.supply.CS.z = 70;
     return d;
   }
+  function secondDraft() {
+    var d = validDraft();
+    d.id = 'custom_probe_creek';
+    d.name = 'Probe Creek';
+    d.place = 'Probe Creek, Tennessee';
+    d.objective.name = 'Creek Crossing';
+    d.objective.x = 680;
+    d.objective.z = 500;
+    d.units[0].id = 'us_creek_1';
+    d.units[1].id = 'us_creek_2';
+    d.units[2].id = 'us_creek_guns';
+    d.units[3].id = 'us_creek_reserve';
+    d.units[4].id = 'cs_creek_1';
+    d.units[5].id = 'cs_creek_2';
+    d.units[6].id = 'cs_creek_guns';
+    d.units[7].id = 'cs_creek_reserve';
+    d.leaders[0].id = 'us_creek_cmd';
+    d.leaders[0].attach = 'us_creek_1';
+    d.leaders[1].id = 'cs_creek_cmd';
+    d.leaders[1].attach = 'cs_creek_1';
+    return d;
+  }
   try {
     cleanStore();
     if (typeof fldCustomDefaultDraft !== 'function' || typeof fldCustomValidate !== 'function' || typeof fldCustomScenarioData !== 'function')
@@ -77,6 +99,9 @@ const SETUP = `(() => {
       var want = EXPECTED.slice().sort();
       if (!eq(ids(), want)) throw new Error('historical registry changed: ' + ids().join(','));
       if (typeof fldCustomImportJson !== 'function' || typeof fldCustomSaveScenario !== 'function' || typeof fldLaunchSandbox !== 'function') throw new Error('missing import/save/launch helpers');
+      ['fldCustomTemplateJson','fldCustomExportPack','fldCustomImportPackJson','fldCustomInstallPack'].forEach(function(n) {
+        if (typeof globalThis[n] !== 'function') throw new Error('missing pack helper ' + n);
+      });
       return { registry:ids() };
     });
 
@@ -92,6 +117,9 @@ const SETUP = `(() => {
       if (!root) throw new Error('builder root missing');
       var required = ['name','date','place','fieldW','fieldH','timeLimitSec','holdToWinSec'];
       for (var i = 0; i < required.length; i++) if (!root.querySelector('[data-cb-field="' + required[i] + '"]')) throw new Error('missing field ' + required[i]);
+      ['template','export-pack','import-pack'].forEach(function(act) {
+        if (!root.querySelector('[data-cb-act="' + act + '"]')) throw new Error('missing action ' + act);
+      });
       if (!root.querySelector('[data-cb-list="units"]')) throw new Error('unit OOB rows missing');
       if (!document.getElementById('fldCbJson')) throw new Error('import/export textarea missing');
       return { button:true, rows:document.querySelectorAll('[data-cb-list="units"]').length };
@@ -143,12 +171,50 @@ const SETUP = `(() => {
       return { bytes:r.json.length, id:imported.scenario.id };
     });
 
-    step('UI: export button fills JSON and import button rejects malformed text without page errors', function() {
+    step('PACK: template, export, import-to-empty-slots, duplicate rejection, and forbidden-key rejection are locked', function() {
+      cleanStore();
+      var tmpl = JSON.parse(fldCustomTemplateJson());
+      if (tmpl.schema !== 'cw_custom_battle_v1' || !tmpl.scenario || tmpl.scenario.id.indexOf('custom_') !== 0) throw new Error('template malformed');
+      var a = fldCustomValidate(validDraft());
+      var b = fldCustomValidate(secondDraft());
+      if (!a.ok || !b.ok) throw new Error('valid pack drafts failed validation');
+      var directDup = fldCustomInstallPack([a.scenario, a.scenario]);
+      if (directDup.ok || directDup.errors.join(' ').indexOf('Duplicate scenario id') < 0) throw new Error('direct installer duplicate ids accepted');
+      cleanStore();
+      var pk = fldCustomExportPack([a.scenario, b.scenario], { title:'Probe Pack' });
+      if (!pk.ok) throw new Error(pk.errors.join(' | '));
+      var raw = JSON.parse(pk.json);
+      if (raw.schema !== 'cw_custom_battle_pack_v1' || raw.format !== 'cw_custom_battle_v1') throw new Error('pack schema wrong');
+      if (!raw.scenarios || raw.scenarios.length !== 2) throw new Error('pack scenario count wrong');
+      var imp = fldCustomImportPackJson(pk.json, { install:true });
+      if (!imp.ok) throw new Error(imp.errors.join(' | '));
+      if (imp.saved !== 2) throw new Error('pack did not install 2 scenarios: ' + imp.saved);
+      var slots = fldCustomListSlots();
+      if (!slots[0] || slots[0].id !== a.scenario.id || !slots[1] || slots[1].id !== b.scenario.id) throw new Error('pack slots not installed in order');
+      if (!fldCustomScenarioData(b.scenario.id) || fldCustomScenarioData(b.scenario.id).name !== b.scenario.name) throw new Error('pack scenario lookup failed');
+      if (Object.keys(fldScenarioRegistry()).indexOf(b.scenario.id) >= 0) throw new Error('pack scenario leaked into historical registry');
+      var dup = JSON.parse(pk.json);
+      dup.scenarios[1].id = dup.scenarios[0].id;
+      if (fldCustomImportPackJson(JSON.stringify(dup)).ok) throw new Error('duplicate pack ids accepted');
+      var bad = JSON.parse(pk.json);
+      bad.scenarios[0].fireScale = 2;
+      if (fldCustomImportPackJson(JSON.stringify(bad)).ok) throw new Error('forbidden combat key in pack accepted');
+      if (fldCustomImportPackJson(pk.json, { install:true }).ok) throw new Error('installing duplicate saved ids should fail');
+      return { scenarios:raw.scenarios.length, slots:imp.slots };
+    });
+
+    step('UI: export/template/pack buttons fill JSON and import button rejects malformed text without page errors', function() {
       _fldCbState = validDraft();
       fldCustomBattleBuilderMenu();
       document.querySelector('[data-cb-act="export"]').click();
       var ta = document.getElementById('fldCbJson');
       if (!ta || ta.value.indexOf('"custom_probe_ridge"') < 0) throw new Error('export textarea not filled');
+      document.querySelector('[data-cb-act="template"]').click();
+      ta = document.getElementById('fldCbJson');
+      if (ta.value.indexOf('"schema": "cw_custom_battle_v1"') < 0) throw new Error('template textarea not filled');
+      document.querySelector('[data-cb-act="export-pack"]').click();
+      ta = document.getElementById('fldCbJson');
+      if (ta.value.indexOf('"schema": "cw_custom_battle_pack_v1"') < 0) throw new Error('pack textarea not filled');
       ta.value = '{ broken json';
       document.querySelector('[data-cb-act="import"]').click();
       var status = document.querySelector('.fld-cb-status.bad');

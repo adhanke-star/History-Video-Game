@@ -20,6 +20,7 @@ The game: a teaching wargame in three layers — **owner-mode grand strategy** (
 - **`MODERN-UGG-PLAN.md`** — the real-time tactical battle engine spec (the UG:G layer, built LAST, phases P0–P5).
 - **`RUN-LOG.md`** — chronological build log (newest run at top).
 - **`HANDOFF.md`** — the new-chat handoff (the ⚡ CONTINUE-HERE block mirrors `AUTONOMOUS-RUN.md` §2).
+- **`CUSTOM-SCENARIO-FORMAT.md`** — the current versioned custom-battle/scenario-pack share format for the C4 builder.
 - **`HISTORICAL-DATA.md`** (211KB — OOBs, weapons, USCT, historiography), **`HISTORICAL-DATA-ECONOMY.md`**, **`HISTORICAL-DATA-DIPLOMACY.md`** — citation-grade content. Grep per system; never bulk-read.
 - **`REVIEW-QUEUE.md`** — priorities + locks.
 - **`DEPLOY.md`** — how the single-file deliverable ships.
@@ -75,7 +76,7 @@ When Aaron asks a new chat to choose from a priority list, use this list (cross-
 - **Comprehensive WCAG 2.2 AA audit plan + first pass:** broad UI judgment and remediation sequencing.
 - **Phase H asset-ingestion pipeline:** extend `tools/build.mjs` for tiered/compressed PD media with offline fallback while preserving the single-file deliverable.
 
-**Recently completed:** D143 added the Phase J full-campaign playthrough probe, and D145 made it part of the normal no-regression command (`npm run vet:noreg`) while refreshing model-routing and UI-redesign law. H5's UG:G-fidelity push is complete through D142: movement/orders, visual fidelity, terrain readability, and fortifications depth.
+**Recently completed:** D146 hardened save/load/share slots, and D147 completed the custom-scenario share lane with a documented template/pack format plus guarded pack import/export. D143 added the Phase J full-campaign playthrough probe, and D145 made it part of the normal no-regression command (`npm run vet:noreg`) while refreshing model-routing and UI-redesign law. H5's UG:G-fidelity push is complete through D142: movement/orders, visual fidelity, terrain readability, and fortifications depth.
 - **Western theater roster/order/probe framework:** lock Shiloh → Vicksburg → Chickamauga/Chattanooga → Atlanta/March → Franklin/Nashville ordering and guardrails.
 
 **Token-efficient helper models suitable only when packeted and verified by 5.5**
@@ -93,7 +94,7 @@ When Aaron asks a new chat to choose from a priority list, use this list (cross-
 
 ## ▶ PASTE THIS INTO A NEW CHAT (zero-context, looping v1 build run — top-model 5.5 / ultracode / high effort)
 
-**Live head as of this edit (2026-06-27): D145 refreshed the agent/model-routing contract, locked the research-backed UI/UX redesign direction beyond broadsheet, added `npm run vet:noreg` as the normal no-regression command, and made the D143 full-campaign probe part of that gate. The full-campaign Chrome guard drives Union 31/31 and Confederate 28/28 campaign chains from `sumter` to `appomattox`, verifies recovery/rematch and negotiated-peace branches, and reaches the final graded report with 0 pageerrors. Phase H's H5 UG:G-fidelity modern-engine push remains complete through D142: movement/orders (D139), visual fidelity (D140), terrain readability (D141), and fortifications depth (D142). Blender is closed and does NOT need reopening for current code/browser/Three.js work; reopen only for an explicit future Phase-H asset job. Next priority = Phase J save/mod/share hardening, then Phase I loot/survival; Q5 Chattanooga + Q6 USCT playable battles remain LAST.** The block below is self-updating — it points at `HANDOFF.md`'s top block + `git log` for live state, so it stays correct as milestones ship.
+**Live head as of this edit (2026-06-27): D147 completed the Phase J custom scenario pack/share pass: versioned `cw_custom_battle_v1` templates, `cw_custom_battle_pack_v1` packs, empty-slot import, duplicate/tamper/per-battle-fudge rejection, and `CUSTOM-SCENARIO-FORMAT.md`. D146 hardened save/load/share slots. D145 refreshed the agent/model-routing contract, locked the research-backed UI/UX redesign direction beyond broadsheet, added `npm run vet:noreg` as the normal no-regression command, and made the D143 full-campaign probe part of that gate. Phase H's H5 UG:G-fidelity modern-engine push remains complete through D142. Blender is closed and does NOT need reopening for current code/browser/Three.js work; reopen only for an explicit future Phase-H asset job. Next priority = Phase I loot/survival spine + first playable loot/inventory/survival MVP; Q5 Chattanooga + Q6 USCT playable battles remain LAST.** The block below is self-updating — it points at `HANDOFF.md`'s top block + `git log` for live state, so it stays correct as milestones ship.
 
 ## ▶ PASTE THIS INTO A NEW CHAT (remaining-work map + model-routing plan — Codex / Cline / DeepSeek friendly)
 
