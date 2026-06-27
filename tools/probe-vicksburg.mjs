@@ -415,7 +415,9 @@ const M3D_ASSERT = `(() => {
   page.on('pageerror', e => pageerrors.push(String(e.message)));
   let result = { ok: false };
   try {
-    await page.goto(probe, { waitUntil: 'load', timeout: 60000 });
+    // The embedded-photo tier can keep the window "load" event open while
+    // local assets stream; the probe only needs inline scripts ready.
+    await page.goto(probe, { waitUntil: 'domcontentloaded', timeout: 60000 });
     await sleep(500);
     result = JSON.parse(await page.evaluate(SETUP));
     const dom = JSON.parse(await page.evaluate(DOM));

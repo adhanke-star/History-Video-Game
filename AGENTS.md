@@ -19,10 +19,13 @@
 4. **Citation-grade, anti-Lost-Cause history:** ≥2 sources = Verified, else Inferred/Disputed; no fabricated citations/units/ranks. (Recurring trap: a commander's rank/sector AT THE BATTLE — verify it; bug-hunts have caught "Brig. Gen." for an officer who was a Colonel that day, and a general placed at the wrong redan.)
 5. **Record lessons in the repo** (`DECISIONS.md`/`RUN-LOG.md`/`HANDOFF.md`/`WAKE-UP.md`/`V1-CHECKLIST.md`) — never hidden memory. **Surface (don't silently guess)** only a NEW fork that contradicts a shipped decision, is irreversible/costs money, or would waste a milestone.
 
-## Codex sandbox note (IMPORTANT — read before vetting)
-You run in the **Seatbelt sandbox**. `tools/guard-probe-browser.mjs` deliberately **blocks every browser probe** when `CODEX_SANDBOX=seatbelt` (the Chrome-crash guard, commit `679ee7d`). So:
-- `node tools/build.mjs` runs fine sandboxed (pure Node, no browser) → you can reach `GATE OK` in-sandbox.
-- **The browser-probe vetting gate (every `probe-*.mjs`, `diag-classic`, `bootprobe`, `t1probe`, `tactical-visuals`, the sweeps) must be run with the sandbox DISABLED** (your full-access mode / a normal terminal), or have Aaron run them and paste the results. **Do NOT weaken or bypass the guard file itself.** Probes print two summary formats (`probe-X ok=true …` and `probe-X: N/M steps ok`) — check exit codes, not one grep. Run probes foreground with `2>/dev/null` + `export TMPDIR="$PWD/.tmp"`; start one shared `python3 -m http.server 8765`; READ `tools/shots/*.json`.
+## Codex Cloud / full-access probe policy (updated 2026-06-27)
+Aaron has granted dangerous/full-access permissions for this repo. Prefer **Codex Cloud or another full-access, non-Seatbelt session** for most real implementation work and for the full browser-probe gate. The required probe gate is still mandatory, but it should run where Chrome/Playwright are allowed instead of asking Aaron to babysit an 8 GB local Mac.
+
+- Before browser vetting, confirm the environment is full-access: `CODEX_SANDBOX` must be unset or not equal to `seatbelt`. If it is `seatbelt`, restart/reconfigure the session with sandboxing disabled; do **not** weaken `tools/guard-probe-browser.mjs`.
+- Browser probes are allowed and expected in full-access sessions: `probe-*.mjs`, `diag-classic`, `bootprobe`, `t1probe`, tactical visuals, sweeps, and screenshot/canvas artifact checks. Run them foreground with `2>/dev/null` + `export TMPDIR="$PWD/.tmp"`; start one shared `python3 -m http.server 8765`; READ `tools/shots/*.json`; trust exit codes plus the printed/JSON `ok` and `pageerrors` summaries.
+- Keep heavy probe batches serialized unless the cloud runner is explicitly sized for parallel Chrome. Fix harness/resource flakes at the root; never mark a red probe green.
+- After a cloud milestone is committed and pushed, the local Mac copy must be fast-forwarded before any local work continues: on the Mac run `git fetch origin && git status --short --branch && git pull --ff-only origin main` from `~/Desktop/Video Game`. If the Mac has local dirty edits, stop, inspect/stash/commit them first, and never overwrite unreviewed local work.
 
 ## Recurring gotcha
 Adding a new historical battle? You MUST add its id to the `EXPECTED` baseline in BOTH `tools/probe-tactical-roster.mjs` AND `tools/probe-custom-battle-builder.mjs` (the latter goes RED otherwise — it asserts the historical registry is unchanged). This has bitten D86/D88/D90.

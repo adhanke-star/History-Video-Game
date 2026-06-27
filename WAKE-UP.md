@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-06-26: **THE WHOLE OWNER-MODE CAMPAIGN NOW HAS A SAFETY RAIL — a new probe plays the war through the actual bridge path from Sumter to Appomattox, for both sides, and proves the final graded report still appears at the end.**
+
+**Newest (D143, 2026-06-26):** This is a probe-only milestone. It does not change how the game plays; it changes what we can trust before future edits. The new full-campaign probe drives the generated game in Chrome, auto-resolves every campaign battle through the real battle bridge, steps through the President's between-battle screen, and keeps going until the final report renders.
+
+**What it proves:** the Union chain resolves all 31 battles from `sumter` to `appomattox`, and the Confederate chain resolves all 28. Each step has to advance the campaign cleanly, record the completed battle, clear recovery state, and show the interstitial. The probe also checks two fragile branches: losing a battle and replaying it in recovery mode, and accepting an early negotiated peace when the war can be concluded. Both still land on the graded final report instead of leaving the campaign half-alive.
+
+**Verified so far:** build GATE OK; the new full-campaign probe passes 4/4 with 0 pageerrors; its JSON confirms both full chains, the recovery branch, and the negotiated-peace branch; syntax and whitespace checks are clean. Full no-regression still runs before the D143 commit.
+
+**Next:** H2 reenactment-footage decision or remaining Phase I/J polish. Chattanooga and the USCT playable battles still stay saved for last.
+
+---
+
 # ☀ WAKE-UP — 2026-06-26: **THE MODERN BATTLEFIELD NOW HAS REAL FIELDWORKS — brigades no longer just "dig in" as a flat bonus. They scrape rifle pits, build hasty cover, raise full parapets, and finally stand behind redoubts and earthworks that protect the front, help less on the flank, and can be bypassed from the rear. Abatis is nastier when tied to prepared works. And when you order a charge, the men now get a short correction window, then commit until contact or the target is lost.**
 
 **Newest (D142, 2026-06-26):** This closes the Ultimate-General-fidelity push you set for the modern engine. The fortification system is deeper now: the HUD tells you what stage your works are in and how much front cover they give; the top-down and 3D views draw the earthworks as they grow; and the cover actually cares which direction the fire comes from. A frontal attack into a redoubt is ugly. A flank or rear approach still matters. Abatis built out in the open is still useful, but abatis tied to a prepared parapet/redoubt is visibly heavier, slows more, shocks the men harder, and takes longer to clear.

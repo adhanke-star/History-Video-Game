@@ -397,7 +397,9 @@ const DOM = `(() => {
   page.on('pageerror', e => pageerrors.push(String(e.message)));
   let result = { ok: false };
   try {
-    await page.goto(probe, { waitUntil: 'load', timeout: 60000 });
+    // The embedded-photo tier can keep the window "load" event open while
+    // local assets stream; the probe only needs inline scripts ready.
+    await page.goto(probe, { waitUntil: 'domcontentloaded', timeout: 60000 });
     await sleep(500);
     result = JSON.parse(await page.evaluate(SETUP));
     const dom = JSON.parse(await page.evaluate(DOM));
@@ -411,12 +413,16 @@ const DOM = `(() => {
         __FIELD.phase = 'battle'; __FIELD.paused = true;
         fldStepN(1200, 0.05);
         fld2dDraw(); fldRenderTop(); fldRenderHud();
-        return { simT: Math.round(__FIELD.t), phaseIdx: __FIELD.phaseIdx, units: __FIELD.units.length, objective: __FIELD.objective.name };
+        var cv = document.getElementById('fldGl');
+        if (!cv || typeof cv.toDataURL !== 'function') throw new Error('no tactical canvas export');
+        var dataUrl = cv.toDataURL('image/png');
+        if (!dataUrl || dataUrl.indexOf('data:image/png;base64,') !== 0 || dataUrl.length < 1024) throw new Error('canvas PNG export too small');
+        return { simT: Math.round(__FIELD.t), phaseIdx: __FIELD.phaseIdx, units: __FIELD.units.length, objective: __FIELD.objective.name, dataUrl };
       } catch (e) { return { err: String(e && e.message || e) }; }
     })()`);
-    result.screenshot = shot;
-    await sleep(250);
-    await page.screenshot({ path: join(OUT, 'probe-chickamauga.png'), fullPage: false });
+    if (shot && shot.err) throw new Error('Chickamauga capture failed: ' + shot.err);
+    result.screenshot = { simT: shot.simT, phaseIdx: shot.phaseIdx, units: shot.units, objective: shot.objective };
+    writeFileSync(join(OUT, 'probe-chickamauga.png'), Buffer.from(String(shot.dataUrl || '').split(',')[1] || '', 'base64'));
     await page.evaluate(`(function() { try { fldExit(true); } catch (e) {} })()`);
     result.pageerrors = pageerrors;
   } catch (e) {

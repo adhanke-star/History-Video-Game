@@ -228,21 +228,28 @@ const SETUP = `(() => {
   const pageerrors = []; page.on('pageerror', e => pageerrors.push(String(e.message)));
   let result = { ok:false };
   try {
-    await page.goto(probe, { waitUntil:'load', timeout:60000 });
+    // The embedded-photo tier can keep the window "load" event open while
+    // local assets stream; the probe only needs inline scripts ready.
+    await page.goto(probe, { waitUntil:'domcontentloaded', timeout:60000 });
     await sleep(500);
     result = JSON.parse(await page.evaluate(SETUP));
     result.pageerrors = pageerrors;
     // a 2D ghost screenshot for the eye
     try {
-      await page.evaluate(`(function(){
+      const cap = await page.evaluate(`(function(){
         fldLaunchSandbox({renderer:'2d', seed:42});
         var u=null; for(var i=0;i<__FIELD.units.length;i++){ if(__FIELD.units[i].side==='US'&&!__FIELD.units[i].ai){u=__FIELD.units[i];break;} }
         __FIELD.sel=[u.id]; __FIELD.phase='battle'; __FIELD.paused=true;
         __FIELD.drag={ x0:u.x+30, z0:u.z-30, x:u.x+140, z:u.z-90, shift:false };
         fld2dDraw(); fldRenderTop(); fldRenderHud();
+        var cv = document.getElementById('fldGl');
+        if (!cv || typeof cv.toDataURL !== 'function') return { ok:false, err:'no tactical canvas export' };
+        var dataUrl = cv.toDataURL('image/png');
+        if (!dataUrl || dataUrl.indexOf('data:image/png;base64,') !== 0 || dataUrl.length < 1024) return { ok:false, err:'canvas PNG export too small' };
+        return { ok:true, dataUrl:dataUrl };
       })()`);
-      await sleep(200);
-      await page.screenshot({ path: join(OUT,'probe-order-feel.png') });
+      if (!cap || !cap.ok) throw new Error(cap && cap.err ? cap.err : 'capture failed');
+      writeFileSync(join(OUT,'probe-order-feel.png'), Buffer.from(String(cap.dataUrl || '').split(',')[1] || '', 'base64'));
       await page.evaluate(`(function(){ try{ fldExit(true); }catch(e){} })()`);
     } catch(e){ result.shotErr = String(e&&e.message||e); }
   } catch(e){ result = { ok:false, fatal:String(e&&e.message||e), pageerrors }; }
@@ -254,4 +261,5 @@ const SETUP = `(() => {
   if (result.fatal) console.log('  FATAL ' + result.fatal);
   if (result.logs) console.log('  logs ' + JSON.stringify(result.logs));
   if (result.steps) for (const s of result.steps) { if (!s.ok) console.log('  FAIL ' + s.name + ' :: ' + s.err); else console.log('  ok   ' + s.name + ' :: ' + JSON.stringify(s.v)); }
+  if (!result.ok || result.fatal || (result.pageerrors && result.pageerrors.length)) process.exit(1);
 })();

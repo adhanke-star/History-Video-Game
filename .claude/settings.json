@@ -1,27 +1,20 @@
 {
   "permissions": {
     "allow": [
-      "Bash(node tools/shot.mjs classic-antietam)",
-      "Bash(curl -LsSf https://astral.sh/uv/install.sh)",
-      "Bash(sh)",
-      "Read(//Users/aaronhanke/.local/bin/**)",
-      "Read(//Users/aaronhanke/.cargo/**)",
-      "Bash(/Users/aaronhanke/.local/bin/uvx --version)",
-      "Read(//Applications/**)",
-      "Bash(mdfind -name 'Blender.app')",
-      "Bash(curl -L -s https://raw.githubusercontent.com/ahujasid/blender-mcp/main/addon.py -o tools/blender_mcp_addon.py)",
+      "Bash(*)",
+      "Read(/**)",
+      "Write(/**)",
+      "Edit(/**)",
+      "MultiEdit(/**)",
       "WebSearch",
-      "WebFetch",
-      "Bash",
-      "Bash(mkdir -p \"/Users/aaronhanke/.claude/projects/-Users-aaronhanke-Desktop-Video-Game/memory/\" && echo created)",
-      "Read(//tmp/**)",
-      "Bash(git add *)",
-      "Bash(git commit *)",
-      "Bash(rm -f .git/COMMIT_E3I2.txt)",
-      "Bash(git push *)"
+      "WebFetch"
     ],
+    "deny": [],
     "additionalDirectories": [
-      "/Users/aaronhanke/.claude/projects/-Users-aaronhanke-Desktop-Video-Game"
+      "/Users/aaronhanke/Desktop/Video Game",
+      "/Users/aaronhanke/.claude/projects/-Users-aaronhanke-Desktop-Video-Game",
+      "/tmp",
+      "/Applications"
     ]
   }
 }

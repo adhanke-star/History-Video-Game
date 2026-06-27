@@ -377,7 +377,7 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       **Publish options when wanted (D71):** GitHub Pages (simplest for one file) OR itch.io + Butler (best indie
       discovery + in-browser play + auto-deploy); Vercel unnecessary. **$0 nuance:** Pages on a PRIVATE repo needs
       GitHub Pro — for true $0 use a public deploy repo or itch.io; rename `civil_war_generals.html`→`index.html` at publish.
-- [ ] **Full-campaign playthrough probe** added to the no-regression suite (D54).
+- [x] **Full-campaign playthrough probe** added as a dedicated no-regression gate (D54/D143): `tools/probe-full-campaign.mjs` drives Union 31/31 and Confederate 28/28 campaign chains through bridge auto-resolve to the final graded report, plus recovery/rematch and negotiated-peace branches, with 0 pageerrors.
 
 ---
 

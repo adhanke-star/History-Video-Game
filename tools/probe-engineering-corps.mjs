@@ -482,7 +482,9 @@ const SETUP = `(() => {
     const page = await browser.newPage({ viewport: cfg.viewport });
     await page.addInitScript(() => { try { localStorage.setItem('gor_welcomed', '1'); } catch (e) {} });
     page.on('pageerror', e => pageerrors.push(String(e.message)));
-    await page.goto(probe, { waitUntil: 'load', timeout: 60000 });
+    // The embedded-photo tier can keep the window "load" event open while
+    // local assets stream; the probe only needs inline scripts ready.
+    await page.goto(probe, { waitUntil: 'domcontentloaded', timeout: 60000 });
     await sleep(400);
     result = JSON.parse(await page.evaluate(SETUP));
     result.pageerrors = pageerrors;

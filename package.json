@@ -3,5 +3,9 @@
     "jsdom": "^29.1.1",
     "playwright": "^1.61.0",
     "playwright-core": "^1.60.0"
+  },
+  "scripts": {
+    "sync:local-after-cloud": "git fetch origin && git status --short --branch && git pull --ff-only origin main && git status --short --branch",
+    "vet:build": "node tools/build.mjs"
   }
 }

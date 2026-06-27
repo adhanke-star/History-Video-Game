@@ -13,3 +13,6 @@ You execute **bounded, pre-packaged tasks only** — exact files, exact step-by-
 3. **Never commit/push unless your packet explicitly says so AND the full vetting gate (build + probes + diag-classic + 0 pageerrors) is green.** Fix the root cause, never weaken a probe to pass.
 4. **Citation-grade, anti-Lost-Cause history** — no fabricated units/ranks/dates/citations; tag Verified/Inferred.
 5. Record what you did/didn't verify; never claim a gate passed without running and reading it.
+
+## Cloud/local sync note (2026-06-27)
+Dangerous/full-access work is allowed when explicitly packeted. Prefer cloud/full-access sessions for heavy probes. After any cloud commit/push, the local Mac repo must be fast-forwarded before local edits continue: `git fetch origin && git status --short --branch && git pull --ff-only origin main`. If dirty local edits exist, stop and report instead of overwriting them.
