@@ -9,7 +9,7 @@ import "./guard-probe-browser.mjs";
 // + a click flips the flag + aria-pressed; a11yTurnSummary builds a sensible string;
 // persistence writes/reads the cw_a11y bundle (boot seeds DEFAULTS-ONLY); the menu button
 // injects/dedupes/re-injects (no latch); PURITY — render/toggle never call Math.random nor
-// write a combat-path knob; and a STATIC SCAN proves no tactical/combat/bridge/resolve file
+// write a combat-path knob; and a STATIC SCAN proves no tactical/combat/bridge/resolve code
 // references the a11y-family symbols. Writes shots/probe-accessibility.json.
 import { chromium } from 'playwright-core';
 import { spawn } from 'node:child_process';
@@ -29,8 +29,29 @@ function staticA11yLeakScan() {
   try { const TACT = join(ROOT, 'src', 'tactical'); for (const f of readdirSync(TACT)) if (f.endsWith('.js')) files.push(join(TACT, f)); } catch (e) {}
   for (const f of ['85-battle-bridge.js', '86-battle-conditioning.js', '87-auto-resolve.js', '80-victory.js']) files.push(join(ROOT, 'src', f));
   const leaks = [];
-  for (const f of files) { try { if (A11Y_RE.test(readFileSync(f, 'utf8'))) leaks.push(f.split('/').pop()); } catch (e) {} }
+  for (const f of files) { try { if (A11Y_RE.test(stripForSymbolScan(readFileSync(f, 'utf8')))) leaks.push(f.split('/').pop()); } catch (e) {} }
   return { scanned: files.length, leaks };
+}
+
+function stripForSymbolScan(src) {
+  let out = '', q = '', esc = false, line = false, block = false;
+  for (let i = 0; i < src.length; i++) {
+    const c = src[i], n = src[i + 1] || '';
+    if (line) { if (c === '\n') { line = false; out += '\n'; } else out += ' '; continue; }
+    if (block) { if (c === '*' && n === '/') { block = false; out += '  '; i++; } else out += (c === '\n' ? '\n' : ' '); continue; }
+    if (q) {
+      if (esc) esc = false;
+      else if (c === '\\') esc = true;
+      else if (c === q) q = '';
+      out += (c === '\n' ? '\n' : ' ');
+      continue;
+    }
+    if (c === '/' && n === '/') { line = true; out += '  '; i++; continue; }
+    if (c === '/' && n === '*') { block = true; out += '  '; i++; continue; }
+    if (c === '"' || c === "'" || c === '`') { q = c; out += ' '; continue; }
+    out += c;
+  }
+  return out;
 }
 const OUT = join(__dirname, 'shots');
 mkdirSync(OUT, { recursive: true });

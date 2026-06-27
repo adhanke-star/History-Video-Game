@@ -1,10 +1,24 @@
+# ☀ WAKE-UP — 2026-06-27: **MODEL ROUTING, UI-REDESIGN LAW, AND THE NORMAL NO-REGRESSION GATE ARE SHIPPED. The next clean work is Phase J save/share hardening, then Phase I loot/survival.**
+
+**Newest (D145, 2026-06-27):** This is a blocker-clearing docs/tooling milestone before new gameplay. It does not change how the game plays. It changes what future agents are allowed to assume and how they verify work.
+
+**What changed:** the repo now says the main reasoning/integration loop stays on **5.5** for architecture, important code, user-facing text, historical judgment, UI/UX decisions, accessibility judgment, bug hunts, final review, and irreversible or quality-critical work. Smaller/token-efficient helpers are only for bounded packets like search summaries, inventories, probe-log summaries, mechanical doc syncs, exact-schema cleanup, first-pass gathering, and repetitive fixture/probe scaffolding; every helper call must explicitly set model and effort.
+
+**The UI direction is now real roadmap work:** D145 supersedes "broadsheet everywhere." The future shell should feel more like a historical command game: brighter, rounder, more dramatic, icon-led, and centered on public-domain photos/illustrations where they clarify people, places, or stakes. Broadsheet stays for press/editorial/dispatch/provenance surfaces. The constraints stay strict: Civil War gravity, anti-Lost-Cause framing, WCAG 2.2 AA, keyboard support, reduced motion, CVD-safe cues, no unclear-license assets, and the Intel UHD-617 performance floor. Research notes are in `.tmp/ui-redesign-research.md`; `V1-CHECKLIST.md` now has a concrete H0 redesign task.
+
+**The gate is now real:** `npm run vet:noreg` runs the normal no-regression suite through `tools/vet-no-regression.mjs`, including the D143 full-campaign probe and `diag-classic`. The runner serializes probes, checks JSON `ok`/pageerror summaries, writes a timestamped log under `.tmp/`, and kills timed-out child process groups so a wedged Chrome probe fails cleanly. The audit found useful failures: an accessibility static-scan false-red, a `bootprobe` browser-close hang, a `probe-phased-3d` hang, and render-richness/weather/tactical-visuals needing honest heavy-probe budgets or scene isolation. Those are fixed or budgeted.
+
+**Verified:** build GATE OK; focused accessibility 25/25; phased-3D 64/64; render-richness 30/30; weather 30/30; final no-regression segment from weather through full-campaign and Classic green; `probe-full-campaign` 4/4 with 0 pageerrors; `diag-classic` `nonBlank:346`, `m3dActive:false`; no pageerrors in the completed gate. **Next:** Phase J save/mod/share hardening, then Phase I loot/survival. Chattanooga and the USCT playable battles still stay saved for last.
+
+---
+
 # ☀ WAKE-UP — 2026-06-26: **THE WHOLE OWNER-MODE CAMPAIGN NOW HAS A SAFETY RAIL — a new probe plays the war through the actual bridge path from Sumter to Appomattox, for both sides, and proves the final graded report still appears at the end.**
 
 **Newest (D143, 2026-06-26):** This is a probe-only milestone. It does not change how the game plays; it changes what we can trust before future edits. The new full-campaign probe drives the generated game in Chrome, auto-resolves every campaign battle through the real battle bridge, steps through the President's between-battle screen, and keeps going until the final report renders.
 
 **What it proves:** the Union chain resolves all 31 battles from `sumter` to `appomattox`, and the Confederate chain resolves all 28. Each step has to advance the campaign cleanly, record the completed battle, clear recovery state, and show the interstitial. The probe also checks two fragile branches: losing a battle and replaying it in recovery mode, and accepting an early negotiated peace when the war can be concluded. Both still land on the graded final report instead of leaving the campaign half-alive.
 
-**Verified so far:** build GATE OK; the new full-campaign probe passes 4/4 with 0 pageerrors; its JSON confirms both full chains, the recovery branch, and the negotiated-peace branch; syntax and whitespace checks are clean. Full no-regression still runs before the D143 commit.
+**Verified:** build GATE OK; the new full-campaign probe passes 4/4 with 0 pageerrors; its JSON confirms both full chains, the recovery branch, and the negotiated-peace branch; syntax and whitespace checks are clean. D145 wires this probe into `npm run vet:noreg`.
 
 **Next:** H2 reenactment-footage decision or remaining Phase I/J polish. Chattanooga and the USCT playable battles still stay saved for last.
 
@@ -675,7 +689,7 @@ Aaron locked the full corps ("**all of the above**" — entrench + abatis + pont
 
 **Next chat priority:** Eastern marquee C1 is complete. Continue Phase C breadth with Western theater work (likely Vicksburg), or choose C4 custom-battle builder if Aaron wants tooling before more authored battles.
 
-**Priority picker saved:** `START-HERE.md` and `MASTER-TASK-LIST.md` contain the Codex-vs-DeepSeek/Cline priority list for future "pick from the list" instructions. Loot/survival is not complete; only Armory/Cannon loot-style rarity tiers exist so far.
+**Historical note:** this older block pointed to `MASTER-TASK-LIST.md` and the D63 Codex-vs-DeepSeek/Cline priority split. D145 supersedes it: `START-HERE.md` + `V1-CHECKLIST.md` are live, 5.5 owns quality-critical work, and helpers only receive explicit model+effort bounded packets. Loot/survival is not complete; only Armory/Cannon loot-style rarity tiers exist so far.
 
 ---
 
@@ -695,7 +709,7 @@ Aaron locked the full corps ("**all of the above**" — entrench + abatis + pont
 
 **Blender status:** Blender is closed and does **not** need reopening for current code/browser/Three.js tactical work. Reopen it only for an explicit future Phase-H asset pipeline job; no current probe or implementation depends on it.
 
-**AI implementer standards:** any model working through VS Code now follows the same project contract in `START-HERE.md` and `AUTONOMOUS-RUN.md` §1A: repo-ground first, work in small reversible edits, self-audit diffs and outputs, run/read the proper gates, record lessons back into repo docs/probes, and report truthfully. Codex owns reasoning-heavy architecture/sim/balance/probe/integration work; Cline/DeepSeek/lower models only get bounded packets and must stop on ambiguity or red gates.
+**AI implementer standards:** any model working through VS Code follows the same project contract in `START-HERE.md` and `AUTONOMOUS-RUN.md` §1A: repo-ground first, work in small reversible edits, self-audit diffs and outputs, run/read the proper gates, record lessons back into repo docs/probes, and report truthfully. D145 supersedes this older routing wording: 5.5 owns quality-critical work; helpers only get explicit model+effort bounded packets and must stop on ambiguity or red gates.
 
 **Historical snapshot:** this Chancellorsville-era priority is superseded by the Malvern Hill completion block above. Cline/DeepSeek remain packet-only for bounded mechanical work.
 
@@ -766,7 +780,7 @@ Aaron locked the full corps ("**all of the above**" — entrench + abatis + pont
 
 **Quality (the full vetting gate):** adversarial bug-hunt **46 agents → 7 root-cause defects, ALL FIXED** — the important ones: pressing **Esc on the victory screen used to silently throw the result away** (now it resolves the battle); the campaign end dialog **trapped no keyboard focus** (fixed); a **recovery role-flip was lost if you backed out and re-attempted** (now preserved until the battle truly resolves); and **reinforcements weren't getting your bought weapons** (fixed). WCAG-AA clean (the period palette carried over; 2 trivial fixes). **probe-campaign-link 16/16**; the **entire no-regression suite GREEN** (5 tactical suites + 22 strategy probes + boot/t1 + Classic still paints, 0 page errors throughout). Single file ≈**1.55 MB**. Committed + pushed (DECISIONS **D62**).
 
-**Also this firing — a standing-instruction you set:** **HYBRID subagent model routing (D63)** — the main session stays on highest Opus; subagents use Opus on reasoning-critical legs (bug-hunts, design, research-verify) and Sonnet on mechanical legs (wcag, code-search, summarizing). Efficiency only where it can't move the standard.
+**Also this firing — historical standing instruction:** **HYBRID subagent model routing (D63)** is superseded by D145. The current rule is 5.5 for quality-critical work; helpers only get explicit model+effort bounded packets. Efficiency only where it cannot move the standard.
 
 ---
 

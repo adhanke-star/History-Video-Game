@@ -18,6 +18,14 @@ const BASE = 'http://localhost:8765', FILE = 'civil_war_generals.html', PORT = 8
 const GL = ['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist','--enable-webgl','--disable-dev-shm-usage'];
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const up = async u => { try { const r = await fetch(u, {method:'HEAD'}); return r.ok||r.status===200; } catch { return false; } };
+async function closeBounded(label, fn, ms = 3000) {
+  let timedOut = false;
+  await Promise.race([
+    Promise.resolve().then(fn).catch(() => {}),
+    sleep(ms).then(() => { timedOut = true; })
+  ]);
+  return { label, timedOut };
+}
 
 (async () => {
   const probe = `${BASE}/${FILE}`;
@@ -51,7 +59,14 @@ const up = async u => { try { const r = await fetch(u, {method:'HEAD'}); return 
   } catch (e) { out.fatal = e.message; out.ok = false; }
   finally {
     writeFileSync(join(OUT,'bootprobe.json'), JSON.stringify(out, null, 2));
-    await ctx.close(); await browser.close(); if (srv) srv.kill();
+    if (ctx) await closeBounded('context', () => ctx.close());
+    if (browser) {
+      const closed = await closeBounded('browser', () => browser.close());
+      if (closed.timedOut) {
+        try { const proc = browser.process && browser.process(); if (proc && !proc.killed) proc.kill('SIGKILL'); } catch {}
+      }
+    }
+    if (srv) srv.kill();
   }
   console.log('bootprobe ok=' + out.ok + ' errors=' + out.errors.length);
 })().catch(e => { console.error(e); process.exit(1); });

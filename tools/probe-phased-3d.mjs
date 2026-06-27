@@ -168,7 +168,8 @@ async function launchBrowser() {
   catch (e) { return await chromium.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true, args: GL }); }
 }
 
-async function runBattle(page, b) {
+async function runBattle(ctx, b) {
+  const page = await ctx.newPage();
   const pageerrors = []; const consoleLines = [];
   const onErr = e => pageerrors.push(String(e.message));
   const onConsole = m => { if (m.type() === 'error' || m.type() === 'warning') consoleLines.push('[' + m.type() + '] ' + m.text()); };
@@ -178,7 +179,9 @@ async function runBattle(page, b) {
   try {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
     await sleep(450);
-    detail = await page.evaluate(battleScript(b));
+    const evalPromise = page.evaluate(battleScript(b)).catch(e => ({ ok: false, error: String(e && e.message || e), scenario: b.scenario }));
+    const timeoutPromise = sleep(90000).then(() => ({ ok: false, error: 'timed out after 90s during phased-3d evaluation', scenario: b.scenario, timedOut: true }));
+    detail = await Promise.race([evalPromise, timeoutPromise]);
     if (detail && detail.ok && detail.dataUrl) {
       const raw = detail.dataUrl.split(',')[1] || '';
       if (raw.length > 512) { writeFileSync(join(OUT, 'phased-3d-' + b.scenario + '.png'), Buffer.from(raw, 'base64')); detail.shot = 'tools/shots/phased-3d-' + b.scenario + '.png'; }
@@ -187,12 +190,13 @@ async function runBattle(page, b) {
   } catch (e) {
     detail = { ok: false, error: String(e && e.message || e), scenario: b.scenario };
   } finally {
-    try { await page.evaluate(`(() => { try { if (typeof fldExit === 'function') fldExit(true); } catch(e) {} })()`); } catch (e) {}
+    if (!detail.timedOut) try { await page.evaluate(`(() => { try { if (typeof fldExit === 'function') fldExit(true); } catch(e) {} })()`); } catch (e) {}
     const textureWarnings = consoleLines.filter(l => THREE_TEXTURE_WARNING.test(l));
     detail.textureWarnings = textureWarnings;
     detail.pageerrors = pageerrors;
     detail.console = consoleLines.slice(-12);
     try { page.off('pageerror', onErr); page.off('console', onConsole); } catch (e) {}
+    try { await Promise.race([page.close().catch(() => {}), sleep(2500)]); } catch (e) {}
   }
   const checks = evaluateBattle(detail);
   const ok = checks.every(c => c.ok) && !pageerrors.length && !detail.textureWarnings.length;
@@ -205,10 +209,9 @@ async function runBattle(page, b) {
   const browser = await launchBrowser();
   const ctx = await browser.newContext({ viewport: cfg.viewport, deviceScaleFactor: 1 });
   ctx.setDefaultTimeout(30000);
-  const page = await ctx.newPage();
   try {
     for (const b of battles) {
-      const r = await runBattle(page, b);
+      const r = await runBattle(ctx, b);
       results.push(r);
       writeFileSync(join(OUT, 'probe-phased-3d.json'), JSON.stringify({ ok: false, partial: true, generatedAt: new Date().toISOString(), results }, null, 2));
     }

@@ -34,6 +34,14 @@ const GL = ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swifts
 const THREE_TEXTURE_WARNING = /THREE\.WebGLRenderer:\s*Texture marked for update but image is undefined/;
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 async function up(u) { try { const r = await fetch(u, { method: 'HEAD' }); return r.ok || r.status === 200; } catch { return false; } }
+async function closeBounded(fn, ms = 2500) {
+  let timedOut = false;
+  await Promise.race([
+    Promise.resolve().then(fn).catch(() => {}),
+    sleep(ms).then(() => { timedOut = true; })
+  ]);
+  return timedOut;
+}
 
 const steps = [];
 function check(name, cond, detail) { steps.push({ name, ok: !!cond, detail: detail === undefined ? '' : String(detail) }); }
@@ -64,6 +72,11 @@ async function ensureServer() {
   const srv = spawn('python3', ['-m', 'http.server', String(cfg.port)], { cwd: ROOT, stdio: 'ignore' });
   for (let i = 0; i < 70; i++) { if (await up(probe)) return srv; await sleep(150); }
   srv.kill(); throw new Error('Could not start static server on :' + cfg.port);
+}
+
+async function launchBrowser() {
+  return await chromium.launch({ channel: 'chrome', headless: true, args: GL }).catch(() =>
+    chromium.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true, args: GL }));
 }
 
 // opts: { rm, off, r2d, selectTest, fadeTest }
@@ -237,25 +250,40 @@ async function runScene(page, label, scenario, seed, opts, shared) {
   return { label, detail: d, pageerrors, texWarn, console: consoleLines.slice(-10) };
 }
 
-(async () => {
-  staticScan();
-  const server = await ensureServer();
-  const browser = await chromium.launch({ channel: 'chrome', headless: true, args: GL }).catch(() =>
-    chromium.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true, args: GL }));
-  const ctx = await browser.newContext({ viewport: cfg.viewport, deviceScaleFactor: 1 });
+async function runSceneFresh(label, scenario, seed, opts) {
+  let browser = null, ctx = null, page = null;
+  browser = await launchBrowser();
+  ctx = await browser.newContext({ viewport: cfg.viewport, deviceScaleFactor: 1 });
   ctx.setDefaultTimeout(45000);
-  const page = await ctx.newPage();
+  page = await ctx.newPage();
   const shared = { pe: [], con: [] };
   page.on('pageerror', e => shared.pe.push(String(e.message)));
   page.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') shared.con.push('[' + m.type() + '] ' + m.text()); });
-  const scenes = [];
   try {
     await page.goto(cfg.baseUrl + '/' + cfg.file, { waitUntil: 'domcontentloaded', timeout: 45000 });
     await sleep(500);
-    scenes.push(await runScene(page, 'rich-3d', 'shiloh', 21, { selectTest: true, fadeTest: true }, shared));
-    scenes.push(await runScene(page, 'off-3d', 'shiloh', 21, { off: true }, shared));
-    scenes.push(await runScene(page, 'rm-3d', 'shiloh', 21, { rm: true }, shared));
-    scenes.push(await runScene(page, 'rich-2d', 'shiloh', 21, { r2d: true }, shared));
+    return await runScene(page, label, scenario, seed, opts, shared);
+  } finally {
+    if (page) await closeBounded(() => page.close());
+    if (ctx) await closeBounded(() => ctx.close());
+    if (browser) {
+      const timedOut = await closeBounded(() => browser.close());
+      if (timedOut) {
+        try { const proc = browser.process && browser.process(); if (proc && !proc.killed) proc.kill('SIGKILL'); } catch {}
+      }
+    }
+  }
+}
+
+(async () => {
+  staticScan();
+  const server = await ensureServer();
+  const scenes = [];
+  try {
+    scenes.push(await runSceneFresh('rich-3d', 'shiloh', 21, { selectTest: true, fadeTest: true }));
+    scenes.push(await runSceneFresh('off-3d', 'shiloh', 21, { off: true }));
+    scenes.push(await runSceneFresh('rm-3d', 'shiloh', 21, { rm: true }));
+    scenes.push(await runSceneFresh('rich-2d', 'shiloh', 21, { r2d: true }));
   } finally { if (server) server.kill(); }
 
   const byLabel = {};
@@ -344,7 +372,5 @@ async function runScene(page, label, scenario, seed, opts, shared) {
   writeFileSync(join(OUT, 'probe-render-richness.json'), JSON.stringify(out, null, 2));
   console.log('probe-render-richness ok=' + ok + ' (' + out.passed + '/' + out.total + ')');
   for (const s of steps) console.log((s.ok ? '  ok   ' : '  FAIL ') + s.name + (s.detail ? ' :: ' + s.detail : ''));
-  try { await Promise.race([ctx.close().catch(() => {}), sleep(2500)]); } catch (e) {}
-  try { await Promise.race([browser.close().catch(() => {}), sleep(2500)]); } catch (e) {}
   process.exit(ok ? 0 : 1);
 })().catch(e => { console.error('FATAL:', e); process.exit(1); });
