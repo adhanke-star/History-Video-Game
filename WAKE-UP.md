@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-06-27: **PHASE J SAVE HARDENING IS SHIPPED. Saves now reject bad payloads, named slots are probed, file and text import share the same validator, and accessible campaigns have a guarded one-turn undo.**
+
+**Newest (D146, 2026-06-27):** This hardens the existing save/load/share layer without touching tactical combat, battle data, `build/base.html`, or hand-editing the generated game file. `civil_war_generals.html` was rebuilt from `src/` by the build gate.
+
+**What changed:** named slot save/load/rename/delete now runs behind stricter validation and cloning; corrupt, stale, malformed, and tampered saves are rejected before base `applySave`; pasted JSON and file import now use the same hardened path; the Save Manager menu entry dedupes and comes back after menu rebuilds; and the accessible non-Ironman campaign path captures a D35-style one-turn undo before advancing.
+
+**Bug-hunt fix:** the file-import button still called the old base importer while pasted JSON used the hardened validator. That mattered because base apply logic calls `sv.settings.hasOwnProperty(k)`. D146 adds `_slImportFile`, installs a hardened `importSave` wrapper, and probes both the wrapper marker and a malicious `settings.hasOwnProperty` shadow.
+
+**Verified:** build GATE OK; `probe-save-slots` 9/9 with 0 pageerrors; post-fix `vet-no-regression --from="save slots"` green across 51 commands; `probe-full-campaign` 4/4 with 0 pageerrors; `diag-classic` `nonBlank:346`, `m3dActive:false`; probe JSON readback clean; `git diff --check` clean. **Next:** Phase I loot/survival spine. Chattanooga and the USCT playable battles still stay saved for last.
+
+---
+
 # ☀ WAKE-UP — 2026-06-27: **MODEL ROUTING, UI-REDESIGN LAW, AND THE NORMAL NO-REGRESSION GATE ARE SHIPPED. The next clean work is Phase J save/share hardening, then Phase I loot/survival.**
 
 **Newest (D145, 2026-06-27):** This is a blocker-clearing docs/tooling milestone before new gameplay. It does not change how the game plays. It changes what future agents are allowed to assume and how they verify work.

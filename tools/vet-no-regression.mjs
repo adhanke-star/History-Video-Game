@@ -38,6 +38,7 @@ const SUITE = [
   ['playstyle', 'tools/probe-playstyle.mjs'],
   ['realism teaching', 'tools/probe-realism-teaching.mjs'],
   ['accessibility', 'tools/probe-accessibility.mjs'],
+  ['save slots', 'tools/probe-save-slots.mjs'],
   ['divergence', 'tools/probe-divergence.mjs'],
   ['alternate endings', 'tools/probe-endings.mjs'],
   ['after action', 'tools/probe-afteraction.mjs'],
