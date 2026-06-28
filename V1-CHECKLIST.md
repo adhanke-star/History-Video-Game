@@ -387,11 +387,13 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
          `tools/probe-loot-survival.mjs`, targeted save-slot assertions. Gate: focused probe + save-slots + bridge +
          full-campaign/Classic slice.~~ ✅ **Shipped 2026-06-28:** hardened restored Campaign Kit state, strict active
          gates, stack/overflow/restart guards, screenshot/UI assertions, and full `npm run vet:noreg` 79-command gate.
-      2. **D150 — Army Register / person-unit axis:** turn the 603-person current registry into a searchable/filterable
+      2. ~~**D150 — Army Register / person-unit axis:** turn the 603-person current registry into a searchable/filterable
          register with person detail cards, side/rank/provenance/unit filters, generated-vs-Verified display, team
          hierarchy, and journey start from card. Likely file: `src/37-loot-survival.js` unless size/ownership argues for
          a new adjacent module. Gate: focused UI probe with full-registry, search/filter, detail-card, provenance, and
-         journey-start assertions.
+         journey-start assertions.~~ ✅ **Shipped 2026-06-28:** full 603-person Army Register cards, live search/filter,
+         detail cards, generated/Authored + Inferred/Verified display, full team hierarchy preservation, card journey
+         start, and locked active-journey restart UI; focused probe + full `npm run vet:noreg` 79-command gate.
       3. **D151 — Soldier's Story journey persistence:** selected-person career log, battle association, status changes
          (wounded/captured/alive where low-risk), promotion hook through `fldPromotePerson`, survival consequences,
          save/load safety, and a small after-action/end-report tie-in if it stays bounded. No tactical/combat effect

@@ -645,7 +645,15 @@ function fldMenMeanOVR(u, year) {
    career starts from. From an authored record's team{} when present, else a minimal {side}. */
 function fldPersonTeam(rec) {
   if (!rec) return null;
-  if (rec.team && typeof rec.team === "object") return { side: rec.side || rec.team.side || null, army: rec.team.army || null, corps: rec.team.corps || null };
+  if (rec.team && typeof rec.team === "object") return {
+    side: rec.side || rec.team.side || null,
+    army: rec.team.army || null,
+    corps: rec.team.corps || null,
+    division: rec.team.division || null,
+    brigade: rec.team.brigade || null,
+    regiment: rec.team.regiment || null,
+    company: rec.team.company || null
+  };
   return { side: rec.side || null, army: null, corps: null };
 }
 

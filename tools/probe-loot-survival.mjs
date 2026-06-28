@@ -26,8 +26,24 @@ const SETUP = `(() => {
     recoveryLossCount:0, recoveryMode:false, flipAtk:false, captured:[] }; }
   function facets(a){ return { overall:a.overall, morale:a.morale, firepower:a.firepower, supply:a.supply, fatigue:a.fatigue }; }
   function clone(o){ return JSON.parse(JSON.stringify(o)); }
+  function fire(el,type){ el.dispatchEvent(new Event(type,{bubbles:true})); }
+  function visibleCards(root){
+    var all=root.querySelectorAll('[data-ss-card]'), out=[];
+    for(var i=0;i<all.length;i++) if(all[i].style.display!=='none') out.push(all[i]);
+    return out;
+  }
+  function cardByPid(root,pid){
+    var all=root.querySelectorAll('[data-ss-card]');
+    for(var i=0;i<all.length;i++) if(all[i].getAttribute('data-ss-pid')===pid) return all[i];
+    return null;
+  }
+  function findPerson(reg,fn){
+    for(var i=0;i<reg.people.length;i++) if(fn(reg.people[i])) return reg.people[i];
+    return null;
+  }
+  function setCtl(el,val,type){ el.value=val; fire(el,type||'change'); }
   try {
-    var fns=['lootInit','lootAddItem','lootUseItem','lootEquipItem','lootSetSurvival','lootForage','lootSurvivalTick','lootOnResolve','lootSurvivalBridgeBonus','lootRenderTab','lootWireTab','ssPersonRegistry','ssFindPerson','ssStartJourney','bridgeArmy','_t1InitAll','_t1Resolve'];
+    var fns=['lootInit','lootAddItem','lootUseItem','lootEquipItem','lootSetSurvival','lootForage','lootSurvivalTick','lootOnResolve','lootSurvivalBridgeBonus','lootRenderTab','lootWireTab','ssPersonRegistry','ssFindPerson','ssStartJourney','ssPersonDetailHTML','bridgeArmy','_t1InitAll','_t1Resolve'];
     for(var i=0;i<fns.length;i++) if(typeof window[fns[i]]!=='function') return JSON.stringify({ok:false, fatal:'missing fn '+fns[i]});
     if(!GAME_DATA || !GAME_DATA['loot-survival']) return JSON.stringify({ok:false, fatal:'missing loot-survival data'});
 
@@ -204,10 +220,15 @@ const SETUP = `(() => {
       return { imported:true, q:q, survival:G.campaign.loot.survival.enabled };
     });
 
-    step('UI: President desk exposes Campaign Kit tab and renders inventory/survival/Soldier sections', function(){
+    step('UI D150: Army Register is searchable, filterable, detailed, provenance-marked, and journey-start locked', function(){
       var C=mkC('US'); G.campaign=C; _t1InitAll(C);
       lootAddItem(C,'commissary_rations',1,'probe');
       var reg=ssPersonRegistry(C);
+      if(reg.people.length!==603) throw new Error('expected current 603-person registry, got '+reg.people.length);
+      var generated=findPerson(reg,function(p){ return p.generated && p.team && p.team.brigade && p.team.company; });
+      var authored=findPerson(reg,function(p){ return !p.generated && p.provenance==='Verified'; });
+      if(!generated) throw new Error('no generated person with brigade/company team hierarchy');
+      if(!authored) throw new Error('no authored Verified person for provenance display');
       openWarDept();
       var tab=document.getElementById('wdTab_loot');
       if(!tab) throw new Error('missing Campaign Kit tab button');
@@ -217,17 +238,65 @@ const SETUP = `(() => {
       if(txt.indexOf('Campaign Kit')<0 || txt.indexOf('Inventory')<0 || txt.indexOf('Survival')<0 || txt.indexOf("The Soldier's Story")<0) throw new Error('missing loot tab sections: '+txt.slice(0,200));
       var sel=cont.querySelector('#ssPersonSelect');
       if(!sel || sel.options.length!==reg.people.length) throw new Error('full play-as selector missing people: '+(sel&&sel.options.length)+' vs '+reg.people.length);
-      var last=reg.people[reg.people.length-1];
-      sel.value=last.pid;
-      var begin=cont.querySelector('#ssBeginSelected');
-      if(!begin) throw new Error('missing begin selected control');
-      if(begin.disabled) throw new Error('begin should be enabled before a journey starts');
-      begin.click();
-      if(!C.loot || !C.loot.journey || C.loot.journey.personId!==last.pid) throw new Error('UI did not start selected journey: '+(C.loot&&C.loot.journey&&C.loot.journey.personId)+' vs '+last.pid);
+      var root=cont.querySelector('#ssArmyRegister');
+      if(!root) throw new Error('missing Army Register root');
+      var cards=root.querySelectorAll('[data-ss-card]');
+      if(cards.length!==reg.people.length) throw new Error('register card count mismatch '+cards.length+' vs '+reg.people.length);
+      var count=root.querySelector('#ssRegCount');
+      if(!count || count.textContent.indexOf('603 of 603')<0) throw new Error('full registry count missing: '+(count&&count.textContent));
+      var gCard=cardByPid(root,generated.pid), aCard=cardByPid(root,authored.pid);
+      if(!gCard || !aCard) throw new Error('target cards missing');
+      if(gCard.textContent.indexOf('Generated')<0 || gCard.textContent.indexOf('Inferred')<0) throw new Error('generated/Inferred card display missing: '+gCard.textContent);
+      if(aCard.textContent.indexOf('Authored')<0 || aCard.textContent.indexOf('Verified')<0) throw new Error('authored/Verified card display missing: '+aCard.textContent);
+
+      var search=root.querySelector('#ssRegSearch'), side=root.querySelector('#ssRegSide'), rank=root.querySelector('#ssRegRank'), prov=root.querySelector('#ssRegProv'), unit=root.querySelector('#ssRegUnit');
+      if(!search || !side || !rank || !prov || !unit) throw new Error('missing register controls');
+      setCtl(search, generated.name, 'input');
+      var vis=visibleCards(root);
+      if(!vis.length || !cardByPid(root,generated.pid) || cardByPid(root,generated.pid).style.display==='none') throw new Error('search did not reveal target '+generated.name);
+      if(!(vis.length<cards.length)) throw new Error('search did not narrow registry');
+      setCtl(search,'','input');
+      setCtl(side,'CS');
+      vis=visibleCards(root);
+      if(!vis.length) throw new Error('side filter empty');
+      for(var si=0;si<vis.length;si++) if(vis[si].getAttribute('data-ss-side')!=='CS') throw new Error('side filter leaked '+vis[si].getAttribute('data-ss-side'));
+      setCtl(side,'');
+      setCtl(rank,generated.rank);
+      vis=visibleCards(root);
+      if(!vis.length) throw new Error('rank filter empty for '+generated.rank);
+      for(var ri=0;ri<vis.length;ri++) if(vis[ri].getAttribute('data-ss-rank')!==generated.rank) throw new Error('rank filter leaked '+vis[ri].getAttribute('data-ss-rank'));
+      setCtl(rank,'');
+      setCtl(prov,'Verified');
+      vis=visibleCards(root);
+      if(!vis.length) throw new Error('provenance filter empty');
+      for(var pi=0;pi<vis.length;pi++) if(vis[pi].getAttribute('data-ss-prov')!=='Verified') throw new Error('provenance filter leaked '+vis[pi].getAttribute('data-ss-prov'));
+      setCtl(prov,'');
+      setCtl(unit,generated.team.brigade);
+      vis=visibleCards(root);
+      if(!vis.length) throw new Error('unit filter empty for '+generated.team.brigade);
+      for(var ui=0;ui<vis.length;ui++) if(vis[ui].getAttribute('data-ss-unit')!==generated.team.brigade) throw new Error('unit filter leaked '+vis[ui].getAttribute('data-ss-unit'));
+
+      gCard=cardByPid(root,generated.pid);
+      var details=gCard.querySelector('[data-ss-pick]');
+      if(!details) throw new Error('missing card detail button');
+      details.click();
+      var detail=root.querySelector('#ssPersonDetailCard');
+      if(!detail || detail.getAttribute('data-ss-detail-pid')!==generated.pid) throw new Error('detail card did not select generated target');
+      var dt=detail.textContent;
+      if(dt.indexOf(generated.name)<0 || dt.indexOf('Team Hierarchy')<0 || dt.indexOf('Brigade')<0 || dt.indexOf('Company')<0) throw new Error('detail hierarchy missing: '+dt);
+      if(dt.indexOf('Generated')<0 || dt.indexOf('Inferred')<0) throw new Error('detail provenance/source missing: '+dt);
+
+      var start=gCard.querySelector('[data-ss-start]');
+      if(!start || start.disabled) throw new Error('missing enabled card journey start');
+      start.click();
+      if(!C.loot || !C.loot.journey || C.loot.journey.personId!==generated.pid) throw new Error('card did not start selected journey: '+(C.loot&&C.loot.journey&&C.loot.journey.personId)+' vs '+generated.pid);
+      if(!lootSurvivalActive(C)) throw new Error('card journey should activate survival');
       cont=document.getElementById('wdContent');
       var disabled=cont && cont.querySelector('#ssBeginSelected');
       if(!disabled || !disabled.disabled || disabled.textContent.indexOf('Journey Active')<0) throw new Error('active journey UI should block restart');
-      return { text:txt.slice(0,120), buttons:cont.querySelectorAll('button').length, options:sel.options.length, started:last.pid, restartDisabled:disabled.disabled };
+      var disabledCard=cont && cont.querySelector('[data-ss-start]');
+      if(!disabledCard || !disabledCard.disabled || disabledCard.textContent.indexOf('Journey Active')<0) throw new Error('active journey card starts should be disabled');
+      return { text:txt.slice(0,120), cards:cards.length, search:generated.name, unit:generated.team.brigade, started:generated.pid, restartDisabled:disabled.disabled };
     });
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);

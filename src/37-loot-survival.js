@@ -17,6 +17,7 @@ function _lootItems() { var d = _lootData(); return (d && d.items && d.items.len
 function _lootSurvCfg() { var d = _lootData(); return (d && d.survival) ? d.survival : {}; }
 function _lootDropsCfg() { var d = _lootData(); return (d && d.drops) ? d.drops : {}; }
 function _lootEsc(s) { return (typeof htmlEsc === "function") ? htmlEsc(s) : String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+function _lootAttr(s) { return _lootEsc(s).replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
 function _lootOwn(o, k) { return !!o && Object.prototype.hasOwnProperty.call(o, k); }
 function _lootPlain(o) { return !!o && typeof o === "object" && !Array.isArray(o); }
 function _lootBadKey(k) { return k === "__proto__" || k === "constructor" || k === "prototype" || k === "hasOwnProperty"; }
@@ -391,7 +392,7 @@ function _ssUnitSpecs(id, label, side, unit, year) {
   var uid = unit && (unit.id || unit.name) ? (unit.id || unit.name) : "unit";
   var cname = unit && unit.commander ? unit.commander : null;
   var arm = unit && unit.arm ? unit.arm : "inf";
-  var team = { side: side, army: label || id, corps: unit && unit.name ? unit.name : uid };
+  var team = { side: side, army: label || id, corps: null, division: null, brigade: unit && unit.name ? unit.name : uid, regiment: null, company: arm === "art" ? "Battery" : "Representative company" };
   var base = "ss:" + id + ":" + side + ":" + uid;
   return [
     { pid: base + ":cmd", name: cname || null, rank: "Captain", branch: arm, side: side, role: "company officer", team: team, year: year },
@@ -498,12 +499,59 @@ function _lootPill(label, value, color) {
     + '<div style="font-size:18px;font-weight:bold;color:' + (color || "inherit") + '">' + _lootEsc(value) + '</div></div>';
 }
 
-function _ssTeamLabel(p) {
+function _ssRankLabel(p) { return _lootCleanText(p && p.rank ? p.rank : "Soldier", 80); }
+function _ssProvLabel(p) { return _lootCleanText(p && p.provenance ? p.provenance : (p && p.generated ? "Inferred" : "Unstated"), 40); }
+function _ssSourceLabel(p) { return (p && p.generated) ? "Generated" : "Authored"; }
+function _ssTeamParts(p) {
   var t = p && p.team ? p.team : {};
+  return [
+    ["Army", t.army],
+    ["Corps", t.corps],
+    ["Division", t.division],
+    ["Brigade", t.brigade],
+    ["Regiment", t.regiment],
+    ["Company", t.company]
+  ];
+}
+function _ssPrimaryUnit(p) {
+  var t = p && p.team ? p.team : {};
+  return _lootCleanText(t.brigade || t.regiment || t.division || t.corps || t.army || "", 120);
+}
+function _ssTeamLabel(p) {
   var bits = [];
-  if (t.army) bits.push(t.army);
-  if (t.corps) bits.push(t.corps);
+  var parts = _ssTeamParts(p);
+  for (var i = 0; i < parts.length; i++) if (parts[i][1]) bits.push(parts[i][1]);
   return bits.join(" / ");
+}
+function _ssTeamHierarchyHTML(p) {
+  var parts = _ssTeamParts(p), rows = "";
+  for (var i = 0; i < parts.length; i++) {
+    if (!parts[i][1]) continue;
+    rows += '<div style="display:grid;grid-template-columns:72px minmax(0,1fr);gap:8px;padding:3px 0;border-top:1px solid rgba(120,92,62,.32)">'
+      + '<span style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--rule)">' + _lootEsc(parts[i][0]) + '</span>'
+      + '<span style="font-size:12px;min-width:0;overflow-wrap:anywhere">' + _lootEsc(parts[i][1]) + '</span></div>';
+  }
+  return rows || '<div style="font-size:12px;opacity:.72">No unit assignment recorded.</div>';
+}
+function _ssFacetValues(people, keyFn) {
+  var seen = {}, vals = [];
+  for (var i = 0; i < people.length; i++) {
+    var v = _lootCleanText(keyFn(people[i]), 120);
+    if (!v || seen[v]) continue;
+    seen[v] = 1; vals.push(v);
+  }
+  vals.sort(function (a, b) { return String(a).localeCompare(String(b)); });
+  return vals;
+}
+function _ssOptionHTML(values, allLabel) {
+  var h = '<option value="">' + _lootEsc(allLabel) + '</option>';
+  for (var i = 0; i < values.length; i++) h += '<option value="' + _lootAttr(values[i]) + '">' + _lootEsc(values[i]) + '</option>';
+  return h;
+}
+function _ssRegisterText(p) {
+  return [
+    p && p.name, _ssRankLabel(p), p && p.side, p && p.role, _ssProvLabel(p), _ssSourceLabel(p), _ssPrimaryUnit(p), _ssTeamLabel(p)
+  ].join(" ").toLowerCase();
 }
 
 function _lootInventoryHTML(C) {
@@ -557,7 +605,7 @@ function _ssPeopleHTML(C) {
   for (var oi = 0; oi < people.length; oi++) {
     var op = people[oi], team = _ssTeamLabel(op);
     var label = (op.side || "?") + " · " + op.name + " · " + (op.rank || "Soldier") + " · OVR " + op.ovr + (team ? " · " + team : "");
-    html += '<option value="' + _lootEsc(op.pid) + '"' + (op.pid === activeId ? " selected" : "") + '>' + _lootEsc(label) + '</option>';
+    html += '<option value="' + _lootAttr(op.pid) + '"' + (op.pid === activeId ? " selected" : "") + '>' + _lootEsc(label) + '</option>';
   }
   html += '</select><button id="ssBeginSelected" type="button" class="bigbtn"' + (locked ? ' disabled aria-disabled="true"' : '') + '>' + (locked ? "Journey Active" : "Begin Journey") + '</button></div></div>';
   if (active) {
@@ -565,17 +613,82 @@ function _ssPeopleHTML(C) {
       + '<b>' + _lootEsc(active.name) + '</b><div style="font-size:11px;opacity:.78">'
       + _lootEsc(active.rank || "Soldier") + ' &middot; ' + _lootEsc(active.side || "") + ' &middot; OVR ' + active.ovr + ' ' + _lootEsc(active.grade && active.grade.letter || "") + '</div></div>';
   }
-  html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px">';
-  var limit = Math.min(12, people.length);
-  for (var i = 0; i < limit; i++) {
-    var p = people[i], col = p.generated ? "#6f9e5a" : "#9a86f0";
-    html += '<div style="border:1px solid var(--rule);border-left:4px solid ' + col + ';border-radius:6px;padding:9px;background:rgba(0,0,0,.14)">'
-      + '<div style="display:flex;justify-content:space-between;gap:8px"><b>' + _lootEsc(p.name) + '</b><span style="font-size:12px;color:' + col + '">' + _lootEsc(p.provenance || "Inferred") + '</span></div>'
-      + '<div style="font-size:11px;opacity:.76">' + _lootEsc(p.rank || "Soldier") + ' &middot; ' + _lootEsc(p.side || "") + ' &middot; OVR ' + p.ovr + ' ' + _lootEsc(p.grade && p.grade.letter || "") + '</div>'
-      + '<button type="button" class="upg" style="margin-top:7px" data-ss-start="' + _lootEsc(p.pid) + '"' + (locked ? ' disabled aria-disabled="true"' : '') + '>' + (locked ? "Journey Active" : "Begin Journey") + '</button>'
-      + '</div>';
+  var selected = activeId || (people[0] && people[0].pid) || "";
+  html += '<div id="ssArmyRegister" style="margin-top:10px">'
+    + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:6px 0">Army Register</div>'
+    + _ssRegisterControlsHTML(people)
+    + '<div id="ssPersonDetail" style="margin:8px 0">' + ssPersonDetailHTML(C, selected) + '</div>'
+    + '<div id="ssRegCount" style="font-size:11px;opacity:.74;margin:6px 0">' + people.length + ' people</div>'
+    + '<div id="ssRegResults" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px;max-height:460px;overflow:auto;padding-right:2px">';
+  for (var i = 0; i < people.length; i++) html += _ssRegisterCardHTML(people[i], locked, activeId);
+  return html + '</div></div>';
+}
+
+function ssPersonDetailHTML(C, pid) {
+  var L = lootInit(C), reg = ssPersonRegistry(C), p = pid ? ssFindPerson(C, pid) : null;
+  if (!p && L.journey && L.journey.personId) p = ssFindPerson(C, L.journey.personId) || L.journey.person;
+  if (!p && reg.people.length) p = reg.people[0];
+  if (!p) return '<div id="ssPersonDetailCard" style="border:1px solid var(--rule);border-radius:6px;padding:10px;background:rgba(0,0,0,.12)">No person selected.</div>';
+  var locked = L.journey && L.journey.enabled, activeSame = locked && L.journey.personId === p.pid;
+  var grade = p.grade || { letter: "", word: "", color: "#b8863b" };
+  var ps = (typeof fldProvenanceStyle === "function") ? fldProvenanceStyle(_ssProvLabel(p), grade.color) : { fill: "background:#8a7350", glyph: "", label: _ssProvLabel(p), title: _ssProvLabel(p) };
+  var dual = p.dual || {};
+  return '<div id="ssPersonDetailCard" data-ss-detail-pid="' + _lootAttr(p.pid) + '" style="border:1px solid var(--rule);border-left:5px solid ' + (grade.color || "#b8863b") + ';border-radius:6px;padding:10px;background:rgba(0,0,0,.14)">'
+    + '<div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:start">'
+    + '<div style="min-width:0"><div style="display:flex;align-items:center;gap:8px;min-width:0"><span aria-hidden="true" title="' + _lootAttr(ps.title) + '" style="flex:none;display:inline-block;width:6px;height:30px;border-radius:2px;' + ps.fill + '"></span><div style="min-width:0"><b style="font-size:18px;overflow-wrap:anywhere">' + _lootEsc(p.name) + '</b><div style="font-size:12px;opacity:.78">' + _lootEsc(_ssRankLabel(p)) + ' &middot; ' + _lootEsc(p.side || "") + (p.role ? ' &middot; ' + _lootEsc(p.role) : '') + '</div></div></div></div>'
+    + '<button type="button" class="bigbtn" data-ss-start="' + _lootAttr(p.pid) + '"' + (locked ? ' disabled aria-disabled="true"' : '') + '>' + (activeSame ? "Journey Active" : (locked ? "Journey Active" : "Begin Journey")) + '</button></div>'
+    + '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:7px;margin-top:9px">'
+    + _lootPill("OVR", p.ovr, grade.color || "#b8863b")
+    + _lootPill("Grade", (grade.letter || "") + " " + (grade.word || ""), grade.color || "#b8863b")
+    + _lootPill("Attack", dual.attack != null ? dual.attack : "-", "#8aa0c8")
+    + _lootPill("Defend", dual.defend != null ? dual.defend : "-", "#8aa0c8")
+    + _lootPill("Source", _ssSourceLabel(p), p.generated ? "#6f9e5a" : "#9a86f0")
+    + _lootPill("Provenance", _ssProvLabel(p), grade.color || "#b8863b")
+    + '</div>'
+    + '<div class="gn-col-head" style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:10px 0 3px">Team Hierarchy</div>'
+    + _ssTeamHierarchyHTML(p)
+    + '<div style="font-size:11px;opacity:.72;margin-top:7px">Latent command ' + _lootEsc(p.latentCommand != null ? p.latentCommand : "-") + ' &middot; Sources ' + _lootEsc(p.sources && p.sources.length ? p.sources.length : 0) + ' &middot; ' + _lootEsc(ps.glyph + " " + ps.label) + '</div>'
+    + '</div>';
+}
+
+function _ssRegisterControlsHTML(people) {
+  var ranks = _ssFacetValues(people, _ssRankLabel);
+  var provs = _ssFacetValues(people, _ssProvLabel);
+  var units = _ssFacetValues(people, _ssPrimaryUnit);
+  var lab = 'display:block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin-bottom:3px';
+  var ctl = 'width:100%;min-width:0;padding:8px;border-radius:6px;border:1px solid var(--rule);background:#21190f;color:var(--ink)';
+  return '<div id="ssRegControls" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:8px;align-items:end">'
+    + '<label style="min-width:0"><span style="' + lab + '">Search</span><input id="ssRegSearch" type="search" autocomplete="off" style="' + ctl + '" aria-label="Search Army Register"></label>'
+    + '<label style="min-width:0"><span style="' + lab + '">Side</span><select id="ssRegSide" style="' + ctl + '" aria-label="Filter by side"><option value="">All sides</option><option value="US">US</option><option value="CS">CS</option></select></label>'
+    + '<label style="min-width:0"><span style="' + lab + '">Rank</span><select id="ssRegRank" style="' + ctl + '" aria-label="Filter by rank">' + _ssOptionHTML(ranks, "All ranks") + '</select></label>'
+    + '<label style="min-width:0"><span style="' + lab + '">Provenance</span><select id="ssRegProv" style="' + ctl + '" aria-label="Filter by provenance">' + _ssOptionHTML(provs, "All provenance") + '</select></label>'
+    + '<label style="min-width:0"><span style="' + lab + '">Unit</span><select id="ssRegUnit" style="' + ctl + '" aria-label="Filter by unit">' + _ssOptionHTML(units, "All units") + '</select></label>'
+    + '</div>';
+}
+
+function _ssRegisterCardHTML(p, locked, activeId) {
+  var grade = p.grade || { letter: "", word: "", color: "#b8863b" };
+  var prov = _ssProvLabel(p), unit = _ssPrimaryUnit(p), source = _ssSourceLabel(p);
+  var ps = (typeof fldProvenanceStyle === "function") ? fldProvenanceStyle(prov, grade.color) : { fill: "background:#8a7350", glyph: "", label: prov, title: prov };
+  var team = _ssTeamLabel(p);
+  var text = _ssRegisterText(p);
+  return '<div data-ss-card="1" data-ss-pid="' + _lootAttr(p.pid) + '" data-ss-side="' + _lootAttr(p.side || "") + '" data-ss-rank="' + _lootAttr(_ssRankLabel(p)) + '" data-ss-prov="' + _lootAttr(prov) + '" data-ss-unit="' + _lootAttr(unit) + '" data-ss-text="' + _lootAttr(text) + '" style="border:1px solid var(--rule);border-left:4px solid ' + (grade.color || "#b8863b") + ';border-radius:6px;padding:9px;background:rgba(0,0,0,.13);min-width:0">'
+    + '<div style="display:flex;align-items:start;gap:7px;min-width:0"><span aria-hidden="true" title="' + _lootAttr(ps.title) + '" style="flex:none;display:inline-block;width:5px;height:28px;border-radius:2px;' + ps.fill + '"></span>'
+    + '<div style="min-width:0;flex:1 1 auto"><div style="display:flex;justify-content:space-between;gap:8px"><b style="overflow-wrap:anywhere">' + _lootEsc(p.name) + '</b><span style="font-size:12px;color:' + (grade.color || "#b8863b") + '">' + _lootEsc(grade.letter || "") + '</span></div>'
+    + '<div style="font-size:11px;opacity:.76">' + _lootEsc(_ssRankLabel(p)) + ' &middot; ' + _lootEsc(p.side || "") + ' &middot; OVR ' + _lootEsc(p.ovr) + '</div>'
+    + '<div style="font-size:11px;opacity:.72;overflow-wrap:anywhere">' + _lootEsc(unit || team || "No unit assignment") + '</div>'
+    + '<div style="font-size:10px;opacity:.7;margin-top:3px">' + _lootEsc(source) + ' &middot; ' + _lootEsc(prov) + '</div></div></div>'
+    + '<div class="btn-row" style="margin-top:7px;justify-content:flex-start;gap:6px"><button type="button" class="upg" data-ss-pick="' + _lootAttr(p.pid) + '">Details</button><button type="button" class="upg" data-ss-start="' + _lootAttr(p.pid) + '"' + (locked ? ' disabled aria-disabled="true"' : '') + '>' + ((activeId && activeId === p.pid) ? "Journey Active" : (locked ? "Journey Active" : "Begin Journey")) + '</button></div>'
+    + '</div>';
+}
+
+function _ssClosestAttr(el, attr, stop) {
+  while (el && el !== stop && el.nodeType === 1) {
+    if (el.getAttribute && el.getAttribute(attr) != null) return el;
+    el = el.parentNode;
   }
-  return html + '</div>';
+  if (el === stop && el.getAttribute && el.getAttribute(attr) != null) return el;
+  return null;
 }
 
 function lootRenderTab(C) {
@@ -609,6 +722,77 @@ function lootWireTab(C) {
   var pick = document.getElementById("ssPersonSelect");
   var begin = document.getElementById("ssBeginSelected");
   if (pick && begin) begin.addEventListener("click", function () { if (pick.value) ssStartJourney(C, pick.value); refresh(); });
-  var starts = document.querySelectorAll("[data-ss-start]");
-  for (var k = 0; k < starts.length; k++) starts[k].addEventListener("click", function () { ssStartJourney(C, this.getAttribute("data-ss-start")); refresh(); });
+  var regRoot = document.getElementById("ssArmyRegister");
+  if (!regRoot) return;
+  var detail = document.getElementById("ssPersonDetail");
+  var count = document.getElementById("ssRegCount");
+  var search = document.getElementById("ssRegSearch");
+  var side = document.getElementById("ssRegSide");
+  var rank = document.getElementById("ssRegRank");
+  var prov = document.getElementById("ssRegProv");
+  var unit = document.getElementById("ssRegUnit");
+  var selectedPid = (pick && pick.value) || "";
+  function filterVal(el) { return el ? String(el.value || "") : ""; }
+  function showDetail(pid) {
+    if (!pid || !detail) return;
+    selectedPid = pid;
+    detail.innerHTML = ssPersonDetailHTML(C, pid);
+    if (pick) pick.value = pid;
+  }
+  function currentDetailPid() {
+    if (!detail) return selectedPid;
+    var card = detail.querySelector("#ssPersonDetailCard");
+    return (card && card.getAttribute("data-ss-detail-pid")) || selectedPid;
+  }
+  function cardMatches(card, q, s, r, p, u) {
+    var txt = String(card.getAttribute("data-ss-text") || "").toLowerCase();
+    if (q && txt.indexOf(q) < 0) return false;
+    if (s && card.getAttribute("data-ss-side") !== s) return false;
+    if (r && card.getAttribute("data-ss-rank") !== r) return false;
+    if (p && card.getAttribute("data-ss-prov") !== p) return false;
+    if (u && card.getAttribute("data-ss-unit") !== u) return false;
+    return true;
+  }
+  function applyRegisterFilters() {
+    var cards = regRoot.querySelectorAll("[data-ss-card]");
+    var q = filterVal(search).toLowerCase();
+    var s = filterVal(side), r = filterVal(rank), p = filterVal(prov), u = filterVal(unit);
+    var shown = 0, firstPid = "", cur = currentDetailPid(), curVisible = false;
+    for (var i = 0; i < cards.length; i++) {
+      var card = cards[i], ok = cardMatches(card, q, s, r, p, u), pid = card.getAttribute("data-ss-pid") || "";
+      card.style.display = ok ? "" : "none";
+      if (ok) {
+        shown++;
+        if (!firstPid) firstPid = pid;
+        if (pid === cur) curVisible = true;
+      }
+    }
+    if (count) count.textContent = shown + " of " + cards.length + " people";
+    if (!shown && detail) {
+      detail.innerHTML = '<div id="ssPersonDetailCard" style="border:1px solid var(--rule);border-radius:6px;padding:10px;background:rgba(0,0,0,.12)">No people match the current register filters.</div>';
+    } else if (shown && !curVisible) {
+      showDetail(firstPid);
+    }
+  }
+  if (pick) pick.addEventListener("change", function () { if (pick.value) showDetail(pick.value); });
+  var filterEls = [search, side, rank, prov, unit];
+  for (var ri = 0; ri < filterEls.length; ri++) if (filterEls[ri]) {
+    filterEls[ri].addEventListener(filterEls[ri] === search ? "input" : "change", applyRegisterFilters);
+  }
+  regRoot.addEventListener("click", function (ev) {
+    var start = _ssClosestAttr(ev.target, "data-ss-start", regRoot);
+    if (start && start.getAttribute("disabled") == null) {
+      ev.preventDefault();
+      ssStartJourney(C, start.getAttribute("data-ss-start"));
+      refresh();
+      return;
+    }
+    var picked = _ssClosestAttr(ev.target, "data-ss-pick", regRoot);
+    if (picked) {
+      ev.preventDefault();
+      showDetail(picked.getAttribute("data-ss-pick"));
+      applyRegisterFilters();
+    }
+  });
+  applyRegisterFilters();
 }

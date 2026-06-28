@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-06-28: **PHASE I ARMY REGISTER IS SHIPPED. The Campaign Kit now has a searchable 603-person Soldier's Story register with detail cards and card-level journey start.**
+
+**Newest (D150, 2026-06-28):** This completes the Army Register / person-unit axis milestone over the D148/D149 Campaign Kit. It does not change canonical battle data, tactical combat rules, item balance data, `build/base.html`, or the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.
+
+**What changed:** `src/37-loot-survival.js` now renders all 603 current registry people as searchable/filterable Army Register cards. The player can search, filter by side/rank/provenance/unit, open a person detail card, see generated-vs-authored and Verified/Inferred status, inspect the team hierarchy, and begin a Soldier's Story journey from a card.
+
+**Person-unit axis:** `src/tactical/T14-ratings.js` now preserves the full `army -> corps -> division -> brigade -> regiment -> company` team shape. Generated representative rows remain marked `Generated` / `Inferred`; this is not a hidden claim that every generated row is a sourced named person.
+
+**Verified:** build GATE OK; focused `probe-loot-survival` 9/9 with 0 pageerrors and D150 assertions for count, search/filter, details, provenance/source labels, hierarchy, card start, and restart lock; `probe-save-slots` 9/9; `probe-bridge` 6/6; `probe-full-campaign` 4/4; `diag-classic` `nonBlank:346`; full `npm run vet:noreg` passed 79 commands. **Next:** D151 Soldier's Story journey persistence, then D152 citation-grade replacement tooling. Chattanooga and the USCT playable battles still stay saved for last.
+
+---
+
 # ☀ WAKE-UP — 2026-06-28: **PHASE I LOOT/SURVIVAL HARDENING IS SHIPPED. The Campaign Kit now resists bad saves, stack exploits, inactive bridge leakage, and Soldier journey restart abuse.**
 
 **Newest (D149, 2026-06-28):** This hardens the D148 Campaign Kit. It does not change canonical battle data, tactical combat rules, item balance data, `build/base.html`, or the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.
