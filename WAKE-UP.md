@@ -10,7 +10,7 @@
 
 **Bug-hunt fixes:** registry creation no longer mutates canonical `GAME_DATA.ratings`; stack-full inventory adds fail cleanly with `stack-full`; explicit zero survival meters survive init/load; the UI now exposes the whole registry instead of only sample cards.
 
-**Verified:** build GATE OK; focused `probe-loot-survival` 8/8 with 0 pageerrors; full no-regression green in resumed segments; after the final full-registry UI fix, `npm run vet:noreg -- --from="loot survival"` passed 60 commands; `probe-full-campaign` 4/4 with 0 pageerrors; `diag-classic` `nonBlank:346`, `m3dActive:false`; JSON readback clean; `git diff --check` clean. **Next:** deepen Soldier's Story with citation-grade person/unit cards and richer career starts. Chattanooga and the USCT playable battles still stay saved for last.
+**Verified:** build GATE OK; focused `probe-loot-survival` 8/8 with 0 pageerrors; full no-regression green in resumed segments; after the final full-registry UI fix, `npm run vet:noreg -- --from="loot survival"` passed 60 commands; `probe-full-campaign` 4/4 with 0 pageerrors; `diag-classic` `nonBlank:346`, `m3dActive:false`; JSON readback clean; `git diff --check` clean. **Next:** execute the `V1-CHECKLIST.md` consolidated Phase I continuation queue: D149 loot/survival hardening, D150 Army Register/person-unit axis, D151 Soldier's Story journey persistence, D152 citation-grade replacement tooling. Chattanooga and the USCT playable battles still stay saved for last.
 
 ---
 
