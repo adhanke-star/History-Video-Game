@@ -243,6 +243,86 @@ for (const rm of RATING_MODULES) {
   if (offenders.length) die(5, 'citation-provenance: ' + offenders.length + ' record(s) stamped "Verified" with <2 sources (the >=2-source non-negotiable, D92/D103) — add a second independent REAL source or downgrade prov to "Inferred"/"Disputed":\n  ' + offenders.join('\n  '));
 }
 
+// 4f. SOLDIER'S STORY REPLACEMENT GATE (D152) — generated representative rows may be
+// replaced later only by explicit citation-grade person records. The canonical data file
+// is empty today; this gate makes future edits fail fast for malformed, prototype-polluted,
+// under-cited, duplicate, or generated-mislabelled records before the playable HTML is written.
+{
+  const p = join(DATA, 'soldier-replacements.json');
+  if (existsSync(p)) {
+    const BAD = new Set(['__proto__', 'constructor', 'prototype', 'hasOwnProperty']);
+    const ATTRS = ['tactical', 'command', 'initiative', 'resolve', 'discipline', 'marksmanship', 'vigor', 'charisma', 'aggression', 'grit', 'logistics', 'engineering', 'cavalry', 'artillery', 'political'];
+    const errors = [];
+    const plain = (o) => !!o && typeof o === 'object' && !Array.isArray(o);
+    const cleanText = (v, max = 240) => String(v == null ? '' : v).replace(/\s+/g, ' ').trim().slice(0, max);
+    const safePid = (v) => /^[A-Za-z0-9][A-Za-z0-9_.:-]{2,159}$/.test(cleanText(v, 160));
+    const scanBadKeys = (node, trail = 'pack', depth = 0) => {
+      if (depth > 12) { errors.push(trail + ' exceeds max nesting depth'); return; }
+      if (Array.isArray(node)) { node.forEach((v, i) => scanBadKeys(v, trail + '[' + i + ']', depth + 1)); return; }
+      if (!plain(node)) return;
+      for (const k of Object.keys(node)) {
+        if (BAD.has(k)) { errors.push(trail + '.' + k + ' uses a forbidden key'); continue; }
+        scanBadKeys(node[k], trail ? trail + '.' + k : k, depth + 1);
+      }
+    };
+    const sourceKey = (s) => cleanText((s.title || '') + '|' + (s.repository || '') + '|' + (s.locator || '') + '|' + (s.url || ''), 500).toLowerCase();
+    const validateSources = (sources, label) => {
+      const seen = new Set();
+      if (!Array.isArray(sources)) { errors.push(label + '.sources must be an array'); return 0; }
+      let count = 0;
+      for (let i = 0; i < sources.length && count < 12; i++) {
+        const src = sources[i];
+        if (!plain(src)) { errors.push(label + '.sources[' + i + '] must be an object'); continue; }
+        if (!(cleanText(src.title, 160) || cleanText(src.repository, 140))) errors.push(label + '.sources[' + i + '] needs title or repository');
+        if (!(cleanText(src.locator, 140) || cleanText(src.url, 240))) errors.push(label + '.sources[' + i + '] needs locator or URL');
+        const key = sourceKey(src);
+        if (key && seen.has(key)) errors.push(label + '.sources[' + i + '] duplicates another source');
+        if (key) seen.add(key);
+        count++;
+      }
+      if (count < 2) errors.push(label + ' needs at least two independent sources');
+      return count;
+    };
+    const validateRecord = (r, label, seenPid, seenReplace) => {
+      if (!plain(r)) { errors.push(label + ' must be an object'); return; }
+      const pid = cleanText(r.pid, 160), replacePid = cleanText(r.replacePid, 220);
+      if (!safePid(pid)) errors.push(label + '.pid must be a stable safe id');
+      if (pid.startsWith('ss:')) errors.push(label + '.pid must not use the generated ss: namespace');
+      if (!replacePid.startsWith('ss:')) errors.push(label + '.replacePid must target a generated ss: slot');
+      if (pid && seenPid.has(pid)) errors.push(label + '.pid duplicates ' + pid);
+      if (replacePid && seenReplace.has(replacePid)) errors.push(label + '.replacePid duplicates ' + replacePid);
+      if (pid) seenPid.add(pid);
+      if (replacePid) seenReplace.add(replacePid);
+      if (r.generated === true || r.source === 'Generated') errors.push(label + ' cannot mark a sourced replacement as generated');
+      if (r.side !== 'US' && r.side !== 'CS') errors.push(label + '.side must be US or CS');
+      if (!cleanText(r.name, 120) || /[<>]/.test(String(r.name || ''))) errors.push(label + '.name is required and must be plain text');
+      if (!cleanText(r.rank, 80)) errors.push(label + '.rank is required');
+      if (!['inf', 'art', 'cav'].includes(cleanText(r.branch || 'inf', 20))) errors.push(label + '.branch must be inf, art, or cav');
+      if (typeof r.year !== 'number' || !Number.isFinite(r.year) || r.year < 1861 || r.year > 1865) errors.push(label + '.year must be 1861-1865');
+      if (r.provenance !== 'Verified' && r.provenance !== 'Disputed') errors.push(label + '.provenance must be Verified or Disputed');
+      if (r.provenance === 'Disputed' && !cleanText(r.disputeNote, 360)) errors.push(label + '.disputeNote is required for Disputed records');
+      validateSources(r.sources, label);
+      if (!plain(r.persona)) errors.push(label + '.persona must be an object with all rating attributes');
+      else for (const a of ATTRS) if (typeof r.persona[a] !== 'number' || !Number.isFinite(r.persona[a]) || r.persona[a] < 0 || r.persona[a] > 100) errors.push(label + '.persona.' + a + ' must be a number from 0 to 100');
+      if (!plain(r.team)) errors.push(label + '.team must be an object');
+      else {
+        const teamSide = r.team.side === 'US' || r.team.side === 'CS' ? r.team.side : r.side;
+        if (teamSide !== r.side) errors.push(label + '.team.side must match record side');
+        if (!cleanText(r.team.army, 120)) errors.push(label + '.team.army is required');
+        if (!(cleanText(r.team.brigade, 120) || cleanText(r.team.regiment, 120) || cleanText(r.team.company, 40))) errors.push(label + '.team needs brigade, regiment, or company');
+      }
+    };
+    const pack = JSON.parse(readFileSync(p, 'utf8'));
+    scanBadKeys(pack);
+    if (!plain(pack)) errors.push('pack must be a JSON object');
+    if (pack.schema !== 'cw_soldier_replacements_v1') errors.push('schema must be cw_soldier_replacements_v1');
+    if (!Array.isArray(pack.records)) errors.push('records must be an array');
+    const seenPid = new Set(), seenReplace = new Set();
+    if (Array.isArray(pack.records)) pack.records.forEach((r, i) => validateRecord(r, 'records[' + i + ']', seenPid, seenReplace));
+    if (errors.length) die(5, 'soldier-replacements: ' + errors.length + ' schema error(s) in data/soldier-replacements.json:\n  ' + errors.join('\n  '));
+  }
+}
+
 // ---- 5. report + write ----
 const KB = (s) => (s.length / 1024).toFixed(1) + 'KB';
 console.log('GATE OK · parse ✓ · hex ✓ · collision ✓ · no-fudge ✓ · citations ✓');

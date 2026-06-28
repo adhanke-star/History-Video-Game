@@ -12,6 +12,7 @@ mkdirSync(TMP, { recursive: true });
 
 const SUITE = [
   ['build gate', 'tools/build.mjs'],
+  ['soldier replacements import gate', 'tools/import-soldier-replacements.mjs'],
   ['boot default renderer', 'tools/bootprobe.mjs'],
   ['turn-one smoke', 'tools/t1probe.mjs'],
   ['main menu', 'tools/menuprobe.mjs'],

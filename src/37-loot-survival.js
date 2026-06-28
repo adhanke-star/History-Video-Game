@@ -525,6 +525,193 @@ function _ssUnitSpecs(id, label, side, unit, year) {
   ];
 }
 
+var _SS_REPLACEMENT_SCHEMA = "cw_soldier_replacements_v1";
+var _SS_REPLACEMENT_ATTRS = ["tactical", "command", "initiative", "resolve", "discipline", "marksmanship", "vigor", "charisma", "aggression", "grit", "logistics", "engineering", "cavalry", "artillery", "political"];
+
+function _ssReplacementData() { return (typeof gameData === "function") ? gameData("soldier-replacements") : null; }
+function _ssReplacementAttrList() {
+  var rat = (typeof gameData === "function") ? gameData("ratings") : null;
+  return (rat && Array.isArray(rat.attributes) && rat.attributes.length) ? rat.attributes : _SS_REPLACEMENT_ATTRS;
+}
+function _ssReplacementErr(errors, msg) { errors.push(String(msg || "invalid replacement record")); }
+function _ssReplacementBadKeyScan(node, errors, path, depth) {
+  if (depth > 12) { _ssReplacementErr(errors, path + " exceeds the allowed nesting depth"); return; }
+  if (Array.isArray(node)) {
+    for (var i = 0; i < node.length; i++) _ssReplacementBadKeyScan(node[i], errors, path + "[" + i + "]", depth + 1);
+    return;
+  }
+  if (!_lootPlain(node)) return;
+  for (var k in node) {
+    if (!_lootOwn(node, k)) continue;
+    if (_lootBadKey(k)) { _ssReplacementErr(errors, path + "." + k + " uses a forbidden key"); continue; }
+    _ssReplacementBadKeyScan(node[k], errors, path ? path + "." + k : k, depth + 1);
+  }
+}
+function _ssReplacementPid(s) {
+  s = _lootCleanText(s, 160);
+  return /^[A-Za-z0-9][A-Za-z0-9_.:-]{2,159}$/.test(s) ? s : "";
+}
+function _ssReplacementSourceKey(src) {
+  return _lootCleanText((src.title || "") + "|" + (src.repository || "") + "|" + (src.locator || "") + "|" + (src.url || ""), 420).toLowerCase();
+}
+function _ssCleanReplacementSources(src, errors, label) {
+  var out = [], seen = {};
+  if (!Array.isArray(src)) { _ssReplacementErr(errors, label + ".sources must be an array"); return out; }
+  for (var i = 0; i < src.length && out.length < 12; i++) {
+    var s = src[i];
+    if (!_lootPlain(s)) { _ssReplacementErr(errors, label + ".sources[" + i + "] must be an object"); continue; }
+    var row = {
+      title: _lootCleanText(s.title || "", 160),
+      author: _lootCleanText(s.author || "", 120),
+      repository: _lootCleanText(s.repository || "", 140),
+      locator: _lootCleanText(s.locator || "", 140),
+      url: _lootCleanText(s.url || "", 240),
+      type: _lootCleanText(s.type || "", 40),
+      note: _lootCleanText(s.note || "", 220)
+    };
+    if (!(row.title || row.repository)) _ssReplacementErr(errors, label + ".sources[" + i + "] needs title or repository");
+    if (!(row.locator || row.url)) _ssReplacementErr(errors, label + ".sources[" + i + "] needs locator or URL");
+    var key = _ssReplacementSourceKey(row);
+    if (key && seen[key]) _ssReplacementErr(errors, label + ".sources[" + i + "] duplicates another source");
+    if (key) seen[key] = 1;
+    out.push(row);
+  }
+  if (out.length < 2) _ssReplacementErr(errors, label + " needs at least two independent sources");
+  return out;
+}
+function _ssCleanReplacementPersona(src, errors, label) {
+  var attrs = _ssReplacementAttrList(), out = {};
+  if (!_lootPlain(src)) { _ssReplacementErr(errors, label + ".persona must include the full rating attribute set"); return out; }
+  for (var i = 0; i < attrs.length; i++) {
+    var k = attrs[i], v = src[k];
+    if (typeof v !== "number" || !isFinite(v)) {
+      _ssReplacementErr(errors, label + ".persona." + k + " must be a number");
+      continue;
+    }
+    out[k] = _lootClamp(Math.round(v), 0, 100);
+  }
+  return out;
+}
+function _ssCleanReplacementTeam(src, side, errors, label) {
+  if (!_lootPlain(src)) { _ssReplacementErr(errors, label + ".team must be an object"); return null; }
+  var t = {
+    side: src.side === "CS" ? "CS" : (src.side === "US" ? "US" : side),
+    army: _lootCleanText(src.army || "", 120),
+    corps: _lootCleanText(src.corps || "", 120),
+    division: _lootCleanText(src.division || "", 120),
+    brigade: _lootCleanText(src.brigade || "", 120),
+    regiment: _lootCleanText(src.regiment || "", 120),
+    company: _lootCleanText(src.company || "", 40)
+  };
+  if (t.side !== side) _ssReplacementErr(errors, label + ".team.side must match record side");
+  if (!t.army) _ssReplacementErr(errors, label + ".team.army is required");
+  if (!(t.brigade || t.regiment || t.company)) _ssReplacementErr(errors, label + ".team needs brigade, regiment, or company");
+  return t;
+}
+function _ssReplacementBaseContext(basePeople) {
+  var byPid = {}, generated = {};
+  if (Array.isArray(basePeople)) {
+    for (var i = 0; i < basePeople.length; i++) {
+      var p = basePeople[i]; if (!p || !p.pid) continue;
+      byPid[p.pid] = p;
+      if (p.generated) generated[p.pid] = p;
+    }
+  }
+  return { byPid: byPid, generated: generated };
+}
+function ssValidateSoldierReplacementPack(pack, opts) {
+  opts = opts || {};
+  var errors = [], clean = [], seenPid = {}, seenReplace = {};
+  if (!pack) pack = { schema: _SS_REPLACEMENT_SCHEMA, records: [] };
+  _ssReplacementBadKeyScan(pack, errors, "pack", 0);
+  if (!pack || !_lootPlain(pack)) _ssReplacementErr(errors, "pack must be a plain object");
+  if (_lootPlain(pack) && pack.schema !== _SS_REPLACEMENT_SCHEMA) _ssReplacementErr(errors, "schema must be " + _SS_REPLACEMENT_SCHEMA);
+  var records = _lootPlain(pack) && Array.isArray(pack.records) ? pack.records : [];
+  if (_lootPlain(pack) && !Array.isArray(pack.records)) _ssReplacementErr(errors, "records must be an array");
+  var ctx = _ssReplacementBaseContext(opts.basePeople);
+  for (var i = 0; i < records.length; i++) {
+    var r = records[i], label = "records[" + i + "]";
+    if (!_lootPlain(r)) { _ssReplacementErr(errors, label + " must be an object"); continue; }
+    var pid = _ssReplacementPid(r.pid);
+    if (!pid) _ssReplacementErr(errors, label + ".pid must be a stable safe id");
+    if (pid.indexOf("ss:") === 0) _ssReplacementErr(errors, label + ".pid must not use the generated ss: namespace");
+    var replacePid = _lootCleanText(r.replacePid || "", 220);
+    if (replacePid.indexOf("ss:") !== 0) _ssReplacementErr(errors, label + ".replacePid must target a generated ss: slot");
+    if (pid && seenPid[pid]) _ssReplacementErr(errors, label + ".pid duplicates " + pid);
+    if (replacePid && seenReplace[replacePid]) _ssReplacementErr(errors, label + ".replacePid duplicates " + replacePid);
+    if (pid) seenPid[pid] = 1;
+    if (replacePid) seenReplace[replacePid] = 1;
+    if (ctx.byPid[pid]) _ssReplacementErr(errors, label + ".pid collides with an existing registry person");
+    if (opts.basePeople && (!ctx.generated[replacePid])) _ssReplacementErr(errors, label + ".replacePid does not target a current generated row");
+    if (r.generated === true || r.source === "Generated") _ssReplacementErr(errors, label + " cannot mark a sourced replacement as generated");
+    var prov = _lootCleanText(r.provenance || "", 40);
+    if (prov !== "Verified" && prov !== "Disputed") _ssReplacementErr(errors, label + ".provenance must be Verified or Disputed");
+    if (prov === "Disputed" && !_lootCleanText(r.disputeNote || "", 300)) _ssReplacementErr(errors, label + ".disputeNote is required for Disputed records");
+    var side = r.side === "CS" ? "CS" : (r.side === "US" ? "US" : "");
+    if (!side) _ssReplacementErr(errors, label + ".side must be US or CS");
+    var name = _lootCleanText(r.name || "", 120);
+    if (name.length < 3 || /[<>]/.test(name)) _ssReplacementErr(errors, label + ".name is required and must be plain text");
+    var rank = _lootCleanText(r.rank || "", 80);
+    if (!rank) _ssReplacementErr(errors, label + ".rank is required");
+    var branch = _lootCleanText(r.branch || "inf", 20);
+    if (branch !== "inf" && branch !== "art" && branch !== "cav") _ssReplacementErr(errors, label + ".branch must be inf, art, or cav");
+    var year = Math.round(_lootNum(r.year, NaN));
+    if (typeof r.year !== "number" || !isFinite(r.year) || year < 1861 || year > 1865) _ssReplacementErr(errors, label + ".year must be 1861-1865");
+    var sources = _ssCleanReplacementSources(r.sources, errors, label);
+    var persona = _ssCleanReplacementPersona(r.persona, errors, label);
+    var team = _ssCleanReplacementTeam(r.team, side, errors, label);
+    clean.push({
+      pid: pid,
+      id: pid,
+      replacePid: replacePid,
+      name: name,
+      rank: rank,
+      branch: branch,
+      side: side,
+      role: _lootCleanText(r.role || "", 80),
+      year: year,
+      persona: persona,
+      provenance: prov,
+      generated: false,
+      sources: sources,
+      sourceNote: _lootCleanText(r.sourceNote || "", 360),
+      disputeNote: _lootCleanText(r.disputeNote || "", 360),
+      bio: _lootCleanText(r.bio || "", 800),
+      team: team
+    });
+  }
+  return { ok: errors.length === 0, schema: _SS_REPLACEMENT_SCHEMA, records: errors.length ? [] : clean, errors: errors };
+}
+function _ssApplySoldierReplacements(C, reg, year) {
+  var pack = _ssReplacementData();
+  var validation = ssValidateSoldierReplacementPack(pack || { schema: _SS_REPLACEMENT_SCHEMA, records: [] }, { basePeople: reg.people });
+  reg.replacements = { applied: 0, rejected: validation.errors.length, errors: validation.errors.slice(0, 10) };
+  if (!validation.ok || !validation.records.length) return reg;
+  var index = {};
+  for (var i = 0; i < reg.people.length; i++) if (reg.people[i] && reg.people[i].pid) index[reg.people[i].pid] = i;
+  for (var ri = 0; ri < validation.records.length; ri++) {
+    var r = validation.records[ri], idx = index[r.replacePid];
+    if (idx == null || !reg.people[idx] || !reg.people[idx].generated) continue;
+    var p = (typeof fldMaterializePerson === "function") ? fldMaterializePerson(r, r.year || year) : null;
+    if (!p || p.generated || p.provenance !== r.provenance) continue;
+    p.replacement = true;
+    p.replaces = r.replacePid;
+    p.source = "soldier-replacements";
+    p.sourceNote = r.sourceNote;
+    p.disputeNote = r.disputeNote;
+    p.bio = r.bio;
+    reg.people[idx] = p;
+    reg.replacements.applied++;
+  }
+  reg.people.sort(function (a, b) {
+    if (a.side !== b.side) return a.side === "US" ? -1 : 1;
+    return String(a.name).localeCompare(String(b.name));
+  });
+  reg.authored = 0; reg.generated = 0;
+  for (var ci = 0; ci < reg.people.length; ci++) { if (reg.people[ci].generated) reg.generated++; else reg.authored++; }
+  return reg;
+}
+
 function _ssCollectScenarioUnits(out, seenBrigades, sid, sd) {
   if (!sd) return;
   function addArr(arr, side, phaseName) {
@@ -588,12 +775,12 @@ function ssPersonRegistry(C) {
   });
   var authored = 0, generated = 0;
   for (var ci = 0; ci < people.length; ci++) { if (people[ci].generated) generated++; else authored++; }
-  return { people: people, authored: authored, generated: generated, brigades: brigades.length };
+  return _ssApplySoldierReplacements(C, { people: people, authored: authored, generated: generated, brigades: brigades.length }, year);
 }
 
 function ssFindPerson(C, pid) {
   var reg = ssPersonRegistry(C), list = reg.people;
-  for (var i = 0; i < list.length; i++) if (list[i].pid === pid) return list[i];
+  for (var i = 0; i < list.length; i++) if (list[i].pid === pid || list[i].replaces === pid) return list[i];
   return null;
 }
 
@@ -758,7 +945,7 @@ function _lootPill(label, value, color) {
 
 function _ssRankLabel(p) { return _lootCleanText(p && p.rank ? p.rank : "Soldier", 80); }
 function _ssProvLabel(p) { return _lootCleanText(p && p.provenance ? p.provenance : (p && p.generated ? "Inferred" : "Unstated"), 40); }
-function _ssSourceLabel(p) { return (p && p.generated) ? "Generated" : "Authored"; }
+function _ssSourceLabel(p) { return (p && p.replacement) ? "Sourced" : ((p && p.generated) ? "Generated" : "Authored"); }
 function _ssTeamParts(p) {
   var t = p && p.team ? p.team : {};
   return [

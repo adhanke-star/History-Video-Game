@@ -2,6 +2,14 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## PHASE I — CITATION-GRADE SOLDIER REPLACEMENT TOOLING — 2026-06-28 (D152)
+**Schema/tooling milestone over the D148-D151 Soldier's Story spine.** No sourced historical people were added; the canonical replacement pack ships empty. No canonical battle data, tactical combat rules, `build/base.html`, item balance data, or save version changed; `civil_war_generals.html` was rebuilt from source.
+- **Shipped:** new `data/soldier-replacements.json` with schema `cw_soldier_replacements_v1`, new `SOLDIER-REPLACEMENT-FORMAT.md`, and new `tools/import-soldier-replacements.mjs` for checking/importing future candidate packs.
+- **Runtime seam:** `src/37-loot-survival.js` now validates the replacement pack and can overlay a sourced record onto exactly one current generated `ss:` row while preserving registry length and old-id lookup. Empty or invalid packs leave the current 603-person registry unchanged.
+- **Gates:** `tools/build.mjs` now rejects malformed, prototype-polluted, under-cited, duplicate, generated-mislabelled, `Inferred`, bad-team, bad-year, bad-branch, and incomplete-persona replacement records before writing the playable HTML. `tools/vet-no-regression.mjs` runs the importer in the normal suite.
+- **Probe/audit:** `tools/probe-loot-survival.mjs` now asserts canonical-empty behavior, hostile-pack rejection, and a valid sourced fixture overlay. Direct main-loop audit also exercised the CLI negative cases: under-cited, `Inferred`, generated-mislabelled, duplicate-target, and prototype-key packs rejected.
+- **Vet:** `node --check` clean for the edited/new JS files; importer canonical check passed with `records=0`; build **GATE OK**; focused `probe-loot-survival` **11/11, 0 pageerrors**; D152 slice gates `probe-save-slots` **9/9**, `probe-bridge` **6/6**, `probe-full-campaign` **4/4**, `diag-classic` `nonBlank:346`; full `npm run vet:noreg` **VET NO-REGRESSION OK — 80 commands**. `git diff --check` clean. Q5 Chattanooga and Q6 USCT playable battles remain LAST.
+
 ## PHASE I — SOLDIER'S STORY JOURNEY PERSISTENCE — 2026-06-28 (D151)
 **Persistence/state milestone over the D150 Army Register and D149 restart lock.** No canonical battle data, tactical combat rules, `build/base.html`, item balance data, or save version changed; `civil_war_generals.html` was rebuilt from source.
 - **Shipped:** `src/37-loot-survival.js` now records a bounded selected-person career log with start entry, battle id/name association, outcome, turn, status, rank-before/rank-after, casualty context, and a saved `L.people[personId]` journey summary.

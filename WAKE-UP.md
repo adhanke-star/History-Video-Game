@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-06-28: **PHASE I CITATION-GRADE SOLDIER TOOLING IS SHIPPED. The Soldier's Story lane can now accept sourced replacements later without laundering generated rows.**
+
+**Newest (D152, 2026-06-28):** This completes the citation-grade replacement tooling milestone over the D148-D151 Soldier's Story spine. It does not add any sourced historical person, change canonical battle data, tactical combat rules, item balance data, `build/base.html`, or the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.
+
+**What changed:** new `data/soldier-replacements.json` ships as an empty `cw_soldier_replacements_v1` pack, `SOLDIER-REPLACEMENT-FORMAT.md` documents the required candidate shape, and `tools/import-soldier-replacements.mjs` validates or dry-runs future replacement packs.
+
+**Gate behavior:** `src/37-loot-survival.js` can overlay a valid future sourced record onto one generated `ss:` row while preserving registry length and old-id lookup. `tools/build.mjs` and the importer reject malformed, prototype-polluted, under-cited, duplicate, generated-mislabelled, `Inferred`, bad-team, bad-year, bad-branch, and incomplete-persona records. Empty canonical data leaves the current 603-person registry unchanged.
+
+**Verified:** build GATE OK; importer canonical check `records=0`; focused `probe-loot-survival` 11/11 with 0 pageerrors and D152 assertions for canonical-empty behavior, hostile-pack rejection, and valid sourced-fixture overlay; `probe-save-slots` 9/9; `probe-bridge` 6/6; `probe-full-campaign` 4/4; `diag-classic` `nonBlank:346`; full `npm run vet:noreg` passed 80 commands; `git diff --check` clean. Chattanooga and the USCT playable battles still stay saved for last.
+
+---
+
 # ☀ WAKE-UP — 2026-06-28: **PHASE I SOLDIER'S STORY JOURNEY PERSISTENCE IS SHIPPED. The Campaign Kit now preserves a selected person's career across battles, saves, and reports.**
 
 **Newest (D151, 2026-06-28):** This completes the Soldier's Story journey persistence milestone over the D150 Army Register and D149 restart lock. It does not change canonical battle data, tactical combat rules, item balance data, `build/base.html`, or the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.

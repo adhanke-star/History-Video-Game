@@ -41,9 +41,36 @@ const SETUP = `(() => {
     for(var i=0;i<reg.people.length;i++) if(fn(reg.people[i])) return reg.people[i];
     return null;
   }
+  function neutralPersona(){
+    var attrs=['tactical','command','initiative','resolve','discipline','marksmanship','vigor','charisma','aggression','grit','logistics','engineering','cavalry','artillery','political'];
+    var p={}; for(var i=0;i<attrs.length;i++) p[attrs[i]]=64;
+    return p;
+  }
+  function replacementPack(target, extra){
+    var rec={
+      pid:'person_d152_probe_replacement',
+      replacePid:target.pid,
+      name:'D152 Probe Replacement',
+      side:target.side,
+      rank:target.rank || 'Private',
+      branch:target.branch || 'inf',
+      role:target.role || 'private soldier',
+      year:1861,
+      provenance:'Verified',
+      team:target.team,
+      persona:neutralPersona(),
+      sources:[
+        {title:'D152 probe source A',repository:'Probe fixture',locator:'A',type:'primary',note:'Probe-only validation fixture'},
+        {title:'D152 probe source B',repository:'Probe fixture',locator:'B',type:'secondary',note:'Probe-only validation fixture'}
+      ],
+      sourceNote:'Probe-only fixture; not canonical content.'
+    };
+    if(extra) for(var k in extra) rec[k]=extra[k];
+    return {schema:'cw_soldier_replacements_v1',records:[rec]};
+  }
   function setCtl(el,val,type){ el.value=val; fire(el,type||'change'); }
   try {
-    var fns=['lootInit','lootAddItem','lootUseItem','lootEquipItem','lootSetSurvival','lootForage','lootSurvivalTick','lootOnResolve','lootSurvivalBridgeBonus','lootRenderTab','lootWireTab','ssPersonRegistry','ssFindPerson','ssStartJourney','ssJourneyOnResolve','ssPersonDetailHTML','ssJourneyReportHTML','aarRenderReport','bridgeArmy','_t1InitAll','_t1Resolve'];
+    var fns=['lootInit','lootAddItem','lootUseItem','lootEquipItem','lootSetSurvival','lootForage','lootSurvivalTick','lootOnResolve','lootSurvivalBridgeBonus','lootRenderTab','lootWireTab','ssPersonRegistry','ssFindPerson','ssStartJourney','ssJourneyOnResolve','ssPersonDetailHTML','ssJourneyReportHTML','ssValidateSoldierReplacementPack','aarRenderReport','bridgeArmy','_t1InitAll','_t1Resolve'];
     for(var i=0;i<fns.length;i++) if(typeof window[fns[i]]!=='function') return JSON.stringify({ok:false, fatal:'missing fn '+fns[i]});
     if(!GAME_DATA || !GAME_DATA['loot-survival']) return JSON.stringify({ok:false, fatal:'missing loot-survival data'});
 
@@ -168,6 +195,54 @@ const SETUP = `(() => {
       var p=ssFindPerson(C,sample.pid);
       if(!p || p.pid!==sample.pid) throw new Error('ssFindPerson failed');
       return { people:reg.people.length, brigades:reg.brigades, authored:reg.authored, generated:reg.generated, first:sample.name };
+    });
+
+    step('D152 REPLACEMENTS: canonical pack is empty, hostile packs reject, and a valid sourced fixture overlays only its generated slot', function(){
+      var C=mkC('US'); _t1InitAll(C);
+      var original=GAME_DATA['soldier-replacements'];
+      if(!original || original.schema!=='cw_soldier_replacements_v1' || !Array.isArray(original.records)) throw new Error('missing D152 canonical pack');
+      if(original.records.length!==0) throw new Error('canonical D152 pack should ship empty, got '+original.records.length);
+      var base=ssPersonRegistry(C);
+      if(base.replacements.applied!==0 || base.replacements.rejected!==0) throw new Error('empty canonical pack should apply/reject nothing: '+JSON.stringify(base.replacements));
+      var empty=ssValidateSoldierReplacementPack(original,{basePeople:base.people});
+      if(!empty.ok || empty.records.length!==0) throw new Error('empty canonical pack should validate: '+JSON.stringify(empty));
+      var target=findPerson(base,function(p){ return p.generated && p.side==='US' && p.pid.indexOf(':pvt')>0 && p.team && p.team.army; });
+      var authored=findPerson(base,function(p){ return !p.generated && p.provenance==='Verified'; });
+      if(!target) throw new Error('no generated replacement target found');
+      if(!authored) throw new Error('no authored row found for invalid target guard');
+      var good=replacementPack(target);
+      var valid=ssValidateSoldierReplacementPack(good,{basePeople:base.people});
+      if(!valid.ok || valid.records.length!==1) throw new Error('valid replacement fixture rejected: '+JSON.stringify(valid));
+      var under=replacementPack(target,{sources:good.records[0].sources.slice(0,1)});
+      if(ssValidateSoldierReplacementPack(under,{basePeople:base.people}).ok) throw new Error('under-cited replacement should reject');
+      var dup=replacementPack(target);
+      dup.records.push(JSON.parse(JSON.stringify(dup.records[0])));
+      dup.records[1].pid='person_d152_probe_replacement_2';
+      if(ssValidateSoldierReplacementPack(dup,{basePeople:base.people}).ok) throw new Error('duplicate replacePid should reject');
+      var generatedBad=replacementPack(target,{generated:true});
+      if(ssValidateSoldierReplacementPack(generatedBad,{basePeople:base.people}).ok) throw new Error('generated-mislabelled replacement should reject');
+      var inferredBad=replacementPack(target,{provenance:'Inferred'});
+      if(ssValidateSoldierReplacementPack(inferredBad,{basePeople:base.people}).ok) throw new Error('Inferred replacement should reject');
+      var badTarget=replacementPack(target,{replacePid:authored.pid,pid:'person_d152_bad_authored_target'});
+      if(ssValidateSoldierReplacementPack(badTarget,{basePeople:base.people}).ok) throw new Error('replacement targeting authored row should reject');
+      var polluted=JSON.parse('{"schema":"cw_soldier_replacements_v1","records":[{"__proto__":{"polluted":true}}]}');
+      var poll=ssValidateSoldierReplacementPack(polluted,{basePeople:base.people});
+      if(poll.ok || poll.errors.join('|').indexOf('forbidden key')<0) throw new Error('prototype-polluted pack should reject with forbidden-key error: '+JSON.stringify(poll));
+      try {
+        GAME_DATA['soldier-replacements']=good;
+        var over=ssPersonRegistry(C);
+        if(over.people.length!==base.people.length) throw new Error('replacement should preserve registry length');
+        if(over.generated!==base.generated-1 || over.authored!==base.authored+1) throw new Error('replacement should move one row generated->authored: '+JSON.stringify({base:{a:base.authored,g:base.generated},over:{a:over.authored,g:over.generated}}));
+        if(!over.replacements || over.replacements.applied!==1 || over.replacements.rejected!==0) throw new Error('replacement apply summary wrong: '+JSON.stringify(over.replacements));
+        var byOld=ssFindPerson(C,target.pid), byNew=ssFindPerson(C,'person_d152_probe_replacement');
+        if(!byOld || !byNew || byOld.pid!==byNew.pid) throw new Error('replacement alias lookup failed');
+        if(byNew.generated || !byNew.replacement || byNew.replaces!==target.pid || byNew.provenance!=='Verified' || byNew.sources.length!==2) throw new Error('replacement row not sourced/verified: '+JSON.stringify(byNew));
+      } finally {
+        GAME_DATA['soldier-replacements']=original;
+      }
+      var restored=ssPersonRegistry(C);
+      if(restored.generated!==base.generated || restored.authored!==base.authored) throw new Error('canonical pack restore changed registry');
+      return { canonicalRecords:original.records.length, target:target.pid, applied:1, hostileRejected:true };
     });
 
     step('JOURNEY: play-as-anyone start enables survival and stores a saveable selected person without mutating canonical data', function(){

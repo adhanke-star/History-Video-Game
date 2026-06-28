@@ -1,0 +1,62 @@
+{
+  "_meta": {
+    "decision": "D152",
+    "schema": "cw_soldier_replacements_v1",
+    "scope": "Citation-grade future replacements for generated Soldier's Story representative rows.",
+    "provenance": "Inferred",
+    "note": "No sourced named soldiers are imported yet. The records array must stay empty until a candidate pack passes tools/import-soldier-replacements.mjs and the browser probe. Template values below are documentation only and are ignored by the validator."
+  },
+  "schema": "cw_soldier_replacements_v1",
+  "records": [],
+  "_template": {
+    "pid": "person_<battle>_<unit>_<surname>",
+    "replacePid": "ss:<battleId>:<side>:<unitId>:<slot>",
+    "name": "<full sourced name>",
+    "side": "US or CS",
+    "rank": "<rank at the battle>",
+    "branch": "inf",
+    "role": "<role at the battle>",
+    "year": 1861,
+    "provenance": "<Verified or Disputed>",
+    "team": {
+      "side": "US or CS",
+      "army": "<army>",
+      "corps": "<corps>",
+      "division": "<division>",
+      "brigade": "<brigade>",
+      "regiment": "<regiment>",
+      "company": "<company or battery>"
+    },
+    "persona": {
+      "tactical": 64,
+      "command": 64,
+      "initiative": 64,
+      "resolve": 64,
+      "discipline": 64,
+      "marksmanship": 64,
+      "vigor": 64,
+      "charisma": 64,
+      "aggression": 64,
+      "grit": 64,
+      "logistics": 64,
+      "engineering": 64,
+      "cavalry": 64,
+      "artillery": 64,
+      "political": 64
+    },
+    "sources": [
+      {
+        "title": "<source title>",
+        "author": "<author>",
+        "repository": "<archive or publisher>",
+        "locator": "<page, roster line, OR volume, card number, or URL locator>",
+        "url": "<optional URL>",
+        "type": "primary or secondary",
+        "note": "<what this source supports>"
+      }
+    ],
+    "sourceNote": "<short rationale tying sources to identity, rank, unit, and ratings>",
+    "disputeNote": "<required only when provenance is Disputed>",
+    "bio": "<optional short sourced note>"
+  }
+}
