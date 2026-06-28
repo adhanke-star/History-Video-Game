@@ -30,6 +30,7 @@ const SUITE = [
   ['press', 'tools/probe-press.mjs'],
   ['command', 'tools/probe-command.mjs'],
   ['camp', 'tools/probe-camp.mjs'],
+  ['loot survival', 'tools/probe-loot-survival.mjs'],
   ['ratings', 'tools/probe-ratings.mjs'],
   ['order of battle', 'tools/probe-oob.mjs'],
   ['codex', 'tools/probe-codex.mjs'],

@@ -1,0 +1,176 @@
+{
+  "_meta": {
+    "decision": "D148",
+    "scope": "Phase I loot/survival MVP plus Soldier's Story registry spine",
+    "provenance": "Inferred",
+    "note": "Gameplay calibration data. Item classes are historically plausible but not citation-grade claims about a specific battle capture."
+  },
+  "rarities": {
+    "common": {
+      "label": "Common",
+      "color": "#9a9184",
+      "weight": 60
+    },
+    "uncommon": {
+      "label": "Uncommon",
+      "color": "#6f9e5a",
+      "weight": 28
+    },
+    "rare": {
+      "label": "Rare",
+      "color": "#9a86f0",
+      "weight": 10
+    },
+    "legendary": {
+      "label": "Legendary",
+      "color": "#b8863b",
+      "weight": 2
+    }
+  },
+  "survival": {
+    "enabledByDefault": false,
+    "maxInventorySlots": 18,
+    "baselineRations": 62,
+    "baselineExposure": 18,
+    "baselineDisease": 12,
+    "baselineFatigue": 10,
+    "forageRations": 14,
+    "tick": {
+      "rationUse": 8,
+      "battleFatigue": 6,
+      "winterExposure": 8,
+      "lowRationDisease": 5,
+      "lowRationMorale": -2
+    },
+    "bridge": {
+      "maxFacetShift": 8,
+      "fatigueReliefFromBlankets": 5,
+      "diseaseReliefFromMedicine": 4
+    }
+  },
+  "drops": {
+    "winBonus": 2,
+    "drawBonus": 1,
+    "lossBonus": 0
+  },
+  "items": [
+    {
+      "id": "commissary_rations",
+      "name": "Commissary Rations",
+      "rarity": "common",
+      "category": "Supply",
+      "stack": 12,
+      "use": {
+        "rations": 22,
+        "morale": 1
+      },
+      "blurb": "Hard bread, salt pork, coffee, and field staples for the next march.",
+      "provenance": "Inferred"
+    },
+    {
+      "id": "forage_bundle",
+      "name": "Forage Bundle",
+      "rarity": "common",
+      "category": "Supply",
+      "stack": 10,
+      "use": {
+        "rations": 14,
+        "forage": 8
+      },
+      "blurb": "Local fodder and gathered food. Useful, never free of cost.",
+      "provenance": "Inferred"
+    },
+    {
+      "id": "wool_blankets",
+      "name": "Wool Blankets",
+      "rarity": "uncommon",
+      "category": "Kit",
+      "slot": "kit",
+      "effect": {
+        "exposure": -8,
+        "fatigueRelief": 5
+      },
+      "blurb": "A compact camp comfort that lowers exposure on hard weather turns.",
+      "provenance": "Inferred"
+    },
+    {
+      "id": "quinine_chest",
+      "name": "Quinine Chest",
+      "rarity": "uncommon",
+      "category": "Medicine",
+      "stack": 4,
+      "use": {
+        "disease": -18,
+        "morale": 1
+      },
+      "blurb": "Medical stores for fevers and camp sickness.",
+      "provenance": "Inferred"
+    },
+    {
+      "id": "captured_enfield_crate",
+      "name": "Captured Enfield Crate",
+      "rarity": "uncommon",
+      "category": "Arms",
+      "slot": "weapon",
+      "effect": {
+        "firepower": 2,
+        "supply": 1
+      },
+      "blurb": "A modest rifle crate. It helps only in the explicit loot-survival path.",
+      "provenance": "Inferred"
+    },
+    {
+      "id": "field_glass",
+      "name": "Field Glass",
+      "rarity": "rare",
+      "category": "Command Kit",
+      "slot": "kit",
+      "effect": {
+        "supply": 2,
+        "morale": 1
+      },
+      "blurb": "Better scouting and staff awareness for the campaign trail.",
+      "provenance": "Inferred"
+    },
+    {
+      "id": "surgeon_kit",
+      "name": "Surgeon's Kit",
+      "rarity": "rare",
+      "category": "Medicine",
+      "slot": "medicine",
+      "effect": {
+        "disease": -10,
+        "morale": 1
+      },
+      "blurb": "A portable medical chest for the march and bivouac.",
+      "provenance": "Inferred"
+    },
+    {
+      "id": "company_ledger",
+      "name": "Company Ledger",
+      "rarity": "rare",
+      "category": "Story",
+      "slot": "keepsake",
+      "unique": true,
+      "effect": {
+        "morale": 1
+      },
+      "blurb": "Names, debts, letters, and the record of a company that fought.",
+      "provenance": "Inferred"
+    },
+    {
+      "id": "battle_flag_fragment",
+      "name": "Battle Flag Fragment",
+      "rarity": "legendary",
+      "category": "Story",
+      "slot": "keepsake",
+      "unique": true,
+      "effect": {
+        "morale": 2,
+        "overall": 1
+      },
+      "blurb": "A hard-won relic. It belongs to memory more than logistics.",
+      "provenance": "Inferred"
+    }
+  ]
+}

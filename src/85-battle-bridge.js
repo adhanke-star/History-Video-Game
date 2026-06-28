@@ -116,6 +116,15 @@ function bridgeArmy(C) {
     supply = Math.min(100, supply + _camp.supply);
     fatigue = Math.max(0, fatigue - _camp.fatigueRelief);
   }
+  // D148: loot/survival is an explicit path. The bonus function returns exact zeros unless
+  // survival or a Soldier's Story journey is active, so default bridge baselines stay unchanged.
+  var _loot = (typeof lootSurvivalBridgeBonus === "function") ? lootSurvivalBridgeBonus(C) : null;
+  if (_loot) {
+    firepower = Math.max(0, Math.min(100, firepower + Math.round(_loot.firepower || 0)));
+    morale = Math.max(0, Math.min(100, morale + Math.round(_loot.morale || 0)));
+    supply = Math.max(0, Math.min(100, supply + Math.round(_loot.supply || 0)));
+    fatigue = Math.max(0, Math.min(100, fatigue + Math.round(_loot.fatigue || 0)));
+  }
   var overall = Math.round(0.22 * strength + 0.18 * equip + 0.18 * morale + 0.14 * firepower + 0.12 * arms + 0.10 * supply + 0.06 * leadership);
   overall = Math.max(0, Math.min(100, overall - Math.round(fatigue * 0.1)));
   // The Cannon Corps + Engineer Corps are ADDITIVE arms — absent, the infantry math is intact (baseline); present, they add punch.
@@ -128,6 +137,7 @@ function bridgeArmy(C) {
   // anchor (leadership 64) this is exactly 0, so a fresh/default command stays Classic-equivalent.
   overall = Math.max(0, Math.min(100, overall + Math.round((leadership - 64) * 0.18)));
   if (_camp && _camp.overall) overall = Math.min(100, overall + _camp.overall);   // Q8: a small drill "sharpness" on top of the facet lifts (0 when undrilled -> byte-identical)
+  if (_loot && _loot.overall) overall = Math.max(0, Math.min(100, overall + Math.round(_loot.overall)));
   return { side: side, strength: Math.round(strength), equip: Math.round(equip), arms: arms,
     morale: morale, supply: supply, fatigue: fatigue, leadership: leadership, firepower: firepower, artillery: artillery, engineering: engineering, overall: overall };
 }

@@ -1,3 +1,19 @@
+# ☀ WAKE-UP — 2026-06-27: **PHASE I LOOT/SURVIVAL + SOLDIER'S STORY PLAY-AS-ANYONE MVP IS SHIPPED. The Campaign Kit now gives the player loot, inventory, default-off survival pressure, and a full-current-registry Soldier journey picker.**
+
+**Newest (D148, 2026-06-27):** This is an additive Phase I gameplay spine. It does not change canonical battle data, tactical combat rules, `build/base.html`, or hand-edit the generated game file. `civil_war_generals.html` was rebuilt from `src/` by the build gate.
+
+**What changed:** new `data/loot-survival.json`, `src/37-loot-survival.js`, and a `Campaign Kit` desk tab. Battle/campaign resolution recovers deterministic rarity-tiered loot; the player can inspect inventory, use rations/medicine, equip useful kit, toggle survival, forage, and begin a Soldier's Story journey.
+
+**Survival guardrail:** survival is off by default. When it is off, the bridge bonus is exact zero even if items are in inventory. When the player enables survival or starts a journey, rations, exposure, disease, fatigue, forage, and morale create bounded input deltas only.
+
+**Soldier's Story:** the current build exposes 603 selectable people: authored rating personas, generals and commission figures, plus representative company officer/NCO/private rows for every current modeled tactical brigade token. The full selector can start a journey from any current registry entry. Generated rows stay marked `Inferred`; replacing them with citation-grade named bios/portraits/unit detail is the next content-depth lane, not an implied claim that every historical individual is already sourced.
+
+**Bug-hunt fixes:** registry creation no longer mutates canonical `GAME_DATA.ratings`; stack-full inventory adds fail cleanly with `stack-full`; explicit zero survival meters survive init/load; the UI now exposes the whole registry instead of only sample cards.
+
+**Verified:** build GATE OK; focused `probe-loot-survival` 8/8 with 0 pageerrors; full no-regression green in resumed segments; after the final full-registry UI fix, `npm run vet:noreg -- --from="loot survival"` passed 60 commands; `probe-full-campaign` 4/4 with 0 pageerrors; `diag-classic` `nonBlank:346`, `m3dActive:false`; JSON readback clean; `git diff --check` clean. **Next:** deepen Soldier's Story with citation-grade person/unit cards and richer career starts. Chattanooga and the USCT playable battles still stay saved for last.
+
+---
+
 # ☀ WAKE-UP — 2026-06-27: **PHASE J CUSTOM SCENARIO PACKS ARE SHIPPED. Custom battles now have a documented share format, starter templates, multi-scenario packs, and guarded import-to-slot behavior.**
 
 **Newest (D147, 2026-06-27):** This completes the save/mod/share hardening lane without touching canonical battle data, tactical combat rules, `build/base.html`, or hand-editing the generated game file. `civil_war_generals.html` was rebuilt from `src/` by the build gate.
