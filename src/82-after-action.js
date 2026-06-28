@@ -333,6 +333,13 @@ function aarRenderReport(C, opts) {
     } catch (e) { divPanel = ''; }
   }
 
+  // D151: a read-only Soldier's Story tie-in. The journey state already rides the save;
+  // this panel only echoes its bounded career log in the live/final report.
+  var soldierPanel = '';
+  if (typeof ssJourneyReportHTML === "function") {
+    try { soldierPanel = ssJourneyReportHTML(C, { compact: final }); } catch (e) { soldierPanel = ''; }
+  }
+
   // The human cost, set beside the war's true historical toll.
   var st = C.stats || {};
   var ownToll = _aarNum(st.suff, 0);
@@ -347,7 +354,7 @@ function aarRenderReport(C, opts) {
   var foot = '<div style="margin-top:12px;font-size:10.5px;opacity:.6;line-height:1.5">'
     + 'Sources: McPherson, <i>Battle Cry of Freedom</i>; Foner, <i>Reconstruction</i> &amp; <i>The Fiery Trial</i>; Howard Jones, <i>Blue &amp; Gray Diplomacy</i>; Dew, <i>Apostles of Disunion</i>; Hacker (2011). A grade reads your war; it never wrote it.</div>';
 
-  return head + overallPanel + card + divPanel + costPanel + coda + foot;
+  return head + overallPanel + card + divPanel + soldierPanel + costPanel + coda + foot;
 }
 
 /* ---- aarRenderTab(C): the live "After-Action" desk tab (the war so far). ---- */

@@ -43,7 +43,7 @@ const SETUP = `(() => {
   }
   function setCtl(el,val,type){ el.value=val; fire(el,type||'change'); }
   try {
-    var fns=['lootInit','lootAddItem','lootUseItem','lootEquipItem','lootSetSurvival','lootForage','lootSurvivalTick','lootOnResolve','lootSurvivalBridgeBonus','lootRenderTab','lootWireTab','ssPersonRegistry','ssFindPerson','ssStartJourney','ssPersonDetailHTML','bridgeArmy','_t1InitAll','_t1Resolve'];
+    var fns=['lootInit','lootAddItem','lootUseItem','lootEquipItem','lootSetSurvival','lootForage','lootSurvivalTick','lootOnResolve','lootSurvivalBridgeBonus','lootRenderTab','lootWireTab','ssPersonRegistry','ssFindPerson','ssStartJourney','ssJourneyOnResolve','ssPersonDetailHTML','ssJourneyReportHTML','aarRenderReport','bridgeArmy','_t1InitAll','_t1Resolve'];
     for(var i=0;i<fns.length;i++) if(typeof window[fns[i]]!=='function') return JSON.stringify({ok:false, fatal:'missing fn '+fns[i]});
     if(!GAME_DATA || !GAME_DATA['loot-survival']) return JSON.stringify({ok:false, fatal:'missing loot-survival data'});
 
@@ -184,12 +184,68 @@ const SETUP = `(() => {
       if(before!==after) throw new Error('journey mutated canonical ratings data');
       var sv=JSON.parse(JSON.stringify(C.loot.journey));
       if(!sv.person || sv.person.pid!==target.pid) throw new Error('journey snapshot not saveable');
+      if(sv.status!=='alive' || !Array.isArray(sv.career) || sv.career.length!==1 || sv.career[0].outcome!=='start') throw new Error('D151 journey start career/status missing: '+JSON.stringify(sv));
+      if(!C.loot.people || !C.loot.people[target.pid] || C.loot.people[target.pid].status!=='alive') throw new Error('selected-person career summary missing from loot.people');
       if(other){
         var blocked=ssStartJourney(C,other.pid,'antietam');
         if(blocked.ok || blocked.reason!=='journey-active') throw new Error('journey restart should be blocked, got '+JSON.stringify(blocked));
         if(C.loot.journey.personId!==target.pid || C.loot.journey.battleId!=='bullrun1') throw new Error('blocked restart changed active journey');
       }
-      return { person:target.name, pid:target.pid, battle:C.loot.journey.battleId };
+      return { person:target.name, pid:target.pid, battle:C.loot.journey.battleId, career:C.loot.journey.career.length, restartLocked:!!other };
+    });
+
+    step('JOURNEY D151: battle career persists, status/survival consequences apply, promotion hook is pure, report tie-in renders, and restart stays locked after load', function(){
+      var C=mkC('US'); G.campaign=C; _t1InitAll(C);
+      var reg=ssPersonRegistry(C);
+      var target=findPerson(reg,function(p){ return p.side==='US' && p.generated && p.rank==='Private' && p.persona; });
+      var other=findPerson(reg,function(p){ return p.side==='US' && p.pid!==target.pid; });
+      if(!target) throw new Error('no generated US private with persona');
+      var beforeRatings=JSON.stringify(GAME_DATA.ratings);
+      var start=ssStartJourney(C,target.pid,'bullrun1');
+      if(!start.ok) throw new Error('journey start failed: '+JSON.stringify(start));
+      C.loot.survival.rations=90; C.loot.survival.exposure=10; C.loot.survival.disease=8; C.loot.survival.fatigue=10; C.loot.survival.morale=55;
+      var first={ id:'bullrun1', name:'First Bull Run', playerSide:'US', enemySide:'CS', casualties:{US:500,CS:2200}, infl:{US:2200,CS:500}, bd:{id:'bullrun1',name:'First Bull Run'} };
+      var r1=lootOnResolve('US','decisive',first,C,true);
+      var J=C.loot.journey;
+      if(!J.enabled || J.personId!==target.pid) throw new Error('journey lost after resolve');
+      if(J.battles!==1 || J.lastBattleId!=='bullrun1' || J.lastOutcome!=='victory') throw new Error('battle association missing after win: '+JSON.stringify(J));
+      if(J.status!=='alive') throw new Error('low-risk victory should leave soldier alive, got '+J.status);
+      if(J.person.rank!=='Sergeant' || J.promotionCount!==1) throw new Error('decisive win should promote Private to Sergeant through fldPromotePerson: '+JSON.stringify({rank:J.person.rank,promos:J.promotionCount}));
+      if(!J.person.persona || J.person.persona.command < target.persona.command) throw new Error('promoted journey person should retain lifted persona copy');
+      if(!J.career || J.career.length<2 || !J.career[J.career.length-1].promoted) throw new Error('promoted career entry missing: '+JSON.stringify(J.career));
+      if(JSON.stringify(GAME_DATA.ratings)!==beforeRatings) throw new Error('D151 promotion mutated canonical ratings');
+      var afterWinBridge=lootSurvivalBridgeBonus(C);
+      C.president.turn=1;
+      var beforeLoss=clone(C.loot.survival);
+      var second={ id:'antietam', name:'Antietam', playerSide:'US', enemySide:'CS', casualties:{US:2500,CS:300}, infl:{US:300,CS:2500}, bd:{id:'antietam',name:'Antietam'} };
+      lootOnResolve('CS','decisive',second,C,false);
+      J=C.loot.journey;
+      if(J.battles!==2 || J.lastBattleId!=='antietam' || J.lastOutcome!=='defeat') throw new Error('battle association missing after defeat: '+JSON.stringify(J));
+      if(J.status!=='captured') throw new Error('decisive high-casualty defeat should mark captured, got '+J.status);
+      if(!(C.loot.survival.fatigue > beforeLoss.fatigue) || !(C.loot.survival.morale < beforeLoss.morale) || !(C.loot.survival.rations < beforeLoss.rations)) throw new Error('captured status did not apply bounded survival consequences: '+JSON.stringify({before:beforeLoss,after:C.loot.survival}));
+      var capturedBridge=lootSurvivalBridgeBonus(C);
+      if(!(capturedBridge.morale < afterWinBridge.morale || capturedBridge.fatigue > afterWinBridge.fatigue)) throw new Error('captured status should affect active bridge facets: '+JSON.stringify({afterWinBridge:afterWinBridge,capturedBridge:capturedBridge}));
+      if(!C.loot.people[target.pid] || C.loot.people[target.pid].status!=='captured' || C.loot.people[target.pid].career.length<2) throw new Error('loot.people selected career summary did not persist latest status');
+      var report=ssJourneyReportHTML(C,{compact:true});
+      if(report.indexOf("The Soldier&apos;s Story")<0 || report.indexOf('Antietam')<0 || report.indexOf('Captured')<0 || report.indexOf('Sergeant')<0) throw new Error('journey report tie-in missing details: '+report);
+      var aar=aarRenderReport(C,{final:false});
+      if(aar.indexOf("The Soldier&apos;s Story")<0 || aar.indexOf('Antietam')<0) throw new Error('after-action report missing Soldier Story tie-in');
+      var sv=serializeSave();
+      applySave(JSON.parse(JSON.stringify(sv)));
+      lootInit(G.campaign);
+      if(G.campaign.loot.journey.personId!==target.pid || G.campaign.loot.journey.status!=='captured' || G.campaign.loot.journey.career.length<3) throw new Error('save/load lost D151 journey state');
+      var blocked=ssStartJourney(G.campaign,other.pid,'gettysburg');
+      if(blocked.ok || blocked.reason!=='journey-active' || G.campaign.loot.journey.personId!==target.pid) throw new Error('D149/D150 restart lock failed after D151 save/load');
+      var bad=serializeSave();
+      bad.campaign.loot.journey.career=new Array(50).fill({turn:999,battleId:'x'.repeat(300),battleName:'y'.repeat(300),outcome:'bogus',status:'ghost',note:'z'.repeat(500),casualties:{suffered:9999999,inflicted:9999999}});
+      bad.campaign.loot.journey.status='ghost';
+      bad.campaign.loot.journey.person.persona={command:999,tactical:-5,constructor:77};
+      applySave(JSON.parse(JSON.stringify(bad)));
+      lootInit(G.campaign);
+      if(G.campaign.loot.journey.career.length!==18) throw new Error('tampered career should cap at 18');
+      if(G.campaign.loot.journey.status!=='alive') throw new Error('tampered status should sanitize to alive');
+      if(G.campaign.loot.journey.person.persona.command!==100 || G.campaign.loot.journey.person.persona.tactical!==0 || Object.prototype.hasOwnProperty.call(G.campaign.loot.journey.person.persona,'constructor')) throw new Error('tampered persona should clamp and scrub bad keys: '+JSON.stringify(G.campaign.loot.journey.person.persona));
+      return { pid:target.pid, rank:J.person.rank, status:'captured', career:J.career.length, report:true };
     });
 
     step('SAVE/LOAD TAMPERING: save-slot import rejects bad settings and restored loot is sanitized before use', function(){

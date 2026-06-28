@@ -1,3 +1,17 @@
+# ☀ WAKE-UP — 2026-06-28: **PHASE I SOLDIER'S STORY JOURNEY PERSISTENCE IS SHIPPED. The Campaign Kit now preserves a selected person's career across battles, saves, and reports.**
+
+**Newest (D151, 2026-06-28):** This completes the Soldier's Story journey persistence milestone over the D150 Army Register and D149 restart lock. It does not change canonical battle data, tactical combat rules, item balance data, `build/base.html`, or the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.
+
+**What changed:** `src/37-loot-survival.js` now records the active selected person's career log with start entry, battle id/name, outcome, status, rank-before/rank-after, casualty context, and a saved person summary. The active-journey panel shows status, last battle, battle count, promotions, and recent career entries.
+
+**Status and consequences:** resolved battles can mark the selected person alive, wounded, or captured under deterministic low-risk rules. Wounded/captured states apply bounded survival consequences and tiny active-only bridge deltas. Generated low-rank rows can promote through `fldPromotePerson` into the saved person snapshot without mutating canonical ratings data.
+
+**Report tie-in:** `src/82-after-action.js` now includes a small display-only Soldier's Story section when a journey is active. Generated rows remain `Generated` / `Inferred`; D152 is still the citation-grade replacement tooling lane.
+
+**Verified:** build GATE OK; focused `probe-loot-survival` 10/10 with 0 pageerrors and D151 assertions for career persistence, save/load safety, status/survival effects, promotion hook, after-action tie-in, tamper sanitation, and restart lock; `probe-save-slots` 9/9; `probe-bridge` 6/6; `probe-full-campaign` 4/4; `diag-classic` `nonBlank:346`; full `npm run vet:noreg` passed 79 commands. **Next:** D152 citation-grade replacement tooling. Chattanooga and the USCT playable battles still stay saved for last.
+
+---
+
 # ☀ WAKE-UP — 2026-06-28: **PHASE I ARMY REGISTER IS SHIPPED. The Campaign Kit now has a searchable 603-person Soldier's Story register with detail cards and card-level journey start.**
 
 **Newest (D150, 2026-06-28):** This completes the Army Register / person-unit axis milestone over the D148/D149 Campaign Kit. It does not change canonical battle data, tactical combat rules, item balance data, `build/base.html`, or the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.

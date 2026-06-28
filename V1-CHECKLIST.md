@@ -375,9 +375,11 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       hardening is its first roster data.** **D148 shipped the playable spine:** `ssPersonRegistry` enumerates the
       current modeled roster (authored personas + generals/commission pool + representative rows for every current
       tactical brigade token), the Campaign Kit exposes all current registry people for play-as-anyone journey starts
-      (603 selectable people in the current build), and generated rows remain `Inferred`. **Still open:** citation-grade
-      named bios/portraits/unit detail for every identifiable person, richer start-anywhere career trajectory, and later
-      interpersonal hooks. (Memory `civilwar-soldiers-story-pillar`; DECISIONS D93/D148.)
+      (603 selectable people in the current build), and generated rows remain `Inferred`. **D150/D151 shipped the first
+      player-facing depth pass:** searchable Army Register cards, detail/provenance/team display, selected-person career
+      persistence, battle association, status history, promotion count, and after-action report tie-in. **Still open:**
+      citation-grade named bios/portraits/unit detail for every identifiable person, richer start-anywhere career
+      trajectory, and later interpersonal hooks. (Memory `civilwar-soldiers-story-pillar`; DECISIONS D93/D148/D150/D151.)
 - [~] **CONSOLIDATED PHASE-I CONTINUATION QUEUE — execute in this order; Codex/Claude should treat this as the
       next task queue, not split it into disconnected tasks.** Stop only at a clean committed/pushed milestone if
       context is nearing compaction; keep Q5 Chattanooga + Q6 USCT playable battles LAST.
@@ -394,10 +396,14 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
          journey-start assertions.~~ ✅ **Shipped 2026-06-28:** full 603-person Army Register cards, live search/filter,
          detail cards, generated/Authored + Inferred/Verified display, full team hierarchy preservation, card journey
          start, and locked active-journey restart UI; focused probe + full `npm run vet:noreg` 79-command gate.
-      3. **D151 — Soldier's Story journey persistence:** selected-person career log, battle association, status changes
+      3. ~~**D151 — Soldier's Story journey persistence:** selected-person career log, battle association, status changes
          (wounded/captured/alive where low-risk), promotion hook through `fldPromotePerson`, survival consequences,
          save/load safety, and a small after-action/end-report tie-in if it stays bounded. No tactical/combat effect
-         unless explicitly active and gated. Gate: focused journey probe + campaign-link/save-slots/full-campaign slice.
+         unless explicitly active and gated. Gate: focused journey probe + campaign-link/save-slots/full-campaign slice.~~
+         ✅ **Shipped 2026-06-28:** bounded selected-person career log, battle association, alive/wounded/captured status
+         persistence, survival consequences, generated-row promotion through `fldPromotePerson`, active-only bridge
+         deltas, after-action/final-report tie-in, save/load/tamper sanitation, and full `npm run vet:noreg` 79-command
+         gate.
       4. **D152 — Citation-grade replacement tooling:** schema/probe/import tooling for replacing generated representative
          rows with sourced named people later. Do not fabricate historical people; build validation/provenance gates and
          templates, not bulk unsourced content.

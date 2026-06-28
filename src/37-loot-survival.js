@@ -67,6 +67,58 @@ function _lootCleanTurn(v) {
   v = Math.floor(_lootNum(v, -1));
   return v < -1 ? -1 : v;
 }
+function _ssCleanPersona(src) {
+  if (!_lootPlain(src)) return null;
+  var out = {}, n = 0;
+  for (var k in src) {
+    if (!_lootOwn(src, k) || _lootBadKey(k)) continue;
+    if (typeof src[k] === "number" && isFinite(src[k])) { out[k] = _lootClamp(Math.round(src[k]), 0, 100); n++; }
+  }
+  return n ? out : null;
+}
+function _ssCleanDual(src) {
+  if (!_lootPlain(src)) return null;
+  return {
+    headline: _lootClamp(Math.round(_lootNum(src.headline, 64)), 0, 100),
+    attack: _lootClamp(Math.round(_lootNum(src.attack, 64)), 0, 100),
+    defend: _lootClamp(Math.round(_lootNum(src.defend, 64)), 0, 100)
+  };
+}
+function _ssStatus(s) {
+  s = _lootCleanText(s || "", 24).toLowerCase();
+  if (s === "wounded" || s === "captured" || s === "alive") return s;
+  return "alive";
+}
+function _ssOutcome(s) {
+  s = _lootCleanText(s || "", 24).toLowerCase();
+  if (s === "victory" || s === "defeat" || s === "draw" || s === "start") return s;
+  return "";
+}
+function _ssCleanCasualties(c) {
+  if (!_lootPlain(c)) return null;
+  return {
+    suffered: Math.round(_lootClamp(c.suffered, 0, 1000000)),
+    inflicted: Math.round(_lootClamp(c.inflicted, 0, 1000000))
+  };
+}
+function _ssCareerEntry(e) {
+  if (!_lootPlain(e)) return null;
+  var out = {
+    turn: Math.max(0, _lootCleanTurn(e.turn)),
+    battleId: e.battleId == null ? null : _lootCleanText(e.battleId, 120),
+    battleName: _lootCleanText(e.battleName || "", 120),
+    outcome: _ssOutcome(e.outcome),
+    type: _lootCleanText(e.type || "", 32),
+    status: _ssStatus(e.status),
+    rankBefore: _lootCleanText(e.rankBefore || "", 80),
+    rankAfter: _lootCleanText(e.rankAfter || "", 80),
+    note: _lootCleanText(e.note || "", 240),
+    promoted: e.promoted === true
+  };
+  var cas = _ssCleanCasualties(e.casualties);
+  if (cas) out.casualties = cas;
+  return (out.battleId || out.battleName || out.note || out.outcome) ? out : null;
+}
 function _ssJourneySnapshot(p) {
   if (!_lootPlain(p)) return null;
   var snap = {
@@ -79,6 +131,13 @@ function _ssJourneySnapshot(p) {
     generated: !!p.generated,
     ovr: _lootClamp(Math.round(_lootNum(p.ovr, 64)), 0, 100)
   };
+  var dual = _ssCleanDual(p.dual);
+  var persona = _ssCleanPersona(p.persona);
+  if (dual) snap.dual = dual;
+  if (persona) snap.persona = persona;
+  if (p.status) snap.status = _ssStatus(p.status);
+  if (p.officerTier === true) snap.officerTier = true;
+  if (p.promotedFrom) snap.promotedFrom = _lootCleanText(p.promotedFrom, 80);
   if (_lootPlain(p.grade)) snap.grade = { letter: _lootCleanText(p.grade.letter || "", 4), word: _lootCleanText(p.grade.word || "", 40) };
   if (_lootPlain(p.team)) {
     snap.team = {
@@ -93,23 +152,82 @@ function _ssJourneySnapshot(p) {
   }
   return snap.pid && snap.name ? snap : null;
 }
+function _ssCleanPeopleState(L) {
+  var src = _lootPlain(L.people) ? L.people : {}, out = {}, n = 0;
+  for (var pid in src) {
+    if (!_lootOwn(src, pid) || _lootBadKey(pid) || n >= 24 || !_lootPlain(src[pid])) continue;
+    var row = src[pid], clean = {
+      pid: _lootCleanText(row.pid || pid, 180),
+      name: _lootCleanText(row.name || "", 120),
+      rank: _lootCleanText(row.rank || "", 80),
+      status: _ssStatus(row.status),
+      battles: Math.round(_lootClamp(row.battles, 0, 999)),
+      lastBattleId: row.lastBattleId == null ? null : _lootCleanText(row.lastBattleId, 120),
+      lastBattleName: _lootCleanText(row.lastBattleName || "", 120)
+    };
+    clean.career = [];
+    if (Array.isArray(row.career)) {
+      for (var i = 0; i < row.career.length && clean.career.length < 12; i++) {
+        var ce = _ssCareerEntry(row.career[i]);
+        if (ce) clean.career.push(ce);
+      }
+    }
+    if (clean.pid) { out[clean.pid] = clean; n++; }
+  }
+  L.people = out;
+}
+function _ssSyncPersonCareer(L) {
+  var J = L && L.journey;
+  if (!J || !J.personId) return;
+  var p = J.person || {};
+  L.people[J.personId] = {
+    pid: J.personId,
+    name: _lootCleanText(p.name || "", 120),
+    rank: _lootCleanText(p.rank || "", 80),
+    status: _ssStatus(J.status),
+    battles: Math.round(_lootClamp(J.battles, 0, 999)),
+    lastBattleId: J.lastBattleId || null,
+    lastBattleName: J.lastBattleName || "",
+    career: (J.career || []).slice(-12)
+  };
+}
 function _ssCleanJourney(C, L) {
   var J = _lootPlain(L.journey) ? L.journey : {};
   var clean = {
     enabled: J.enabled === true,
     personId: _lootCleanText(J.personId || "", 180),
     battleId: J.battleId == null ? null : _lootCleanText(J.battleId, 120),
-    startedTurn: _lootCleanTurn(J.startedTurn)
+    startBattleId: J.startBattleId == null ? null : _lootCleanText(J.startBattleId, 120),
+    currentBattleId: J.currentBattleId == null ? null : _lootCleanText(J.currentBattleId, 120),
+    lastBattleId: J.lastBattleId == null ? null : _lootCleanText(J.lastBattleId, 120),
+    lastBattleName: _lootCleanText(J.lastBattleName || "", 120),
+    lastOutcome: _ssOutcome(J.lastOutcome),
+    lastTurn: _lootCleanTurn(J.lastTurn),
+    startedTurn: _lootCleanTurn(J.startedTurn),
+    status: _ssStatus(J.status),
+    battles: Math.round(_lootClamp(J.battles, 0, 999)),
+    promotionCount: Math.round(_lootClamp(J.promotionCount, 0, 24))
   };
   if (clean.startedTurn < 0) clean.startedTurn = _lootTurn(C);
+  if (clean.lastTurn < 0) clean.lastTurn = clean.startedTurn;
+  if (!clean.startBattleId) clean.startBattleId = clean.battleId;
+  if (!clean.currentBattleId) clean.currentBattleId = clean.lastBattleId || clean.battleId;
   clean.person = _ssJourneySnapshot(J.person);
   if (!clean.personId && clean.person) clean.personId = clean.person.pid;
   if (!clean.personId) clean.enabled = false;
+  if (!clean.enabled) clean.status = "alive";
   clean.log = [];
   if (Array.isArray(J.log)) {
     for (var i = 0; i < J.log.length && clean.log.length < 20; i++) {
       var line = _lootCleanText(J.log[i], 240);
       if (line) clean.log.push(line);
+    }
+  }
+  clean.career = [];
+  if (Array.isArray(J.career)) {
+    for (var ci = 0; ci < J.career.length && clean.career.length < 18; ci++) {
+      var row = _ssCareerEntry(J.career[ci]);
+      if (row) clean.career.push(row);
     }
   }
   L.journey = clean;
@@ -160,6 +278,8 @@ function lootInit(C) {
   }
   L.inventory = clean;
   _ssCleanJourney(C, L);
+  _ssCleanPeopleState(L);
+  _ssSyncPersonCareer(L);
   for (var slot in L.equipped) {
     if (!_lootOwn(L.equipped, slot) || _lootBadKey(slot)) continue;
     var eq = _lootItem(L.equipped[slot]);
@@ -335,6 +455,7 @@ function lootOnResolve(winnerSide, type, B, C, win) {
     if (res.ok && res.item) got.push(res.item.name);
   }
   lootSurvivalTick(C, B, win);
+  if (typeof ssJourneyOnResolve === "function") ssJourneyOnResolve(winnerSide, type, B, C, win);
   if (got.length && typeof _pdLog === "function") _pdLog(C, "Recovered from " + _lootBattleLabel(B) + ": " + got.join(", ") + ".");
 }
 
@@ -349,6 +470,9 @@ function lootSurvivalBridgeBonus(C) {
   var fatigue = Math.round(S.fatigue / 12) + Math.round(S.exposure / 35) - Math.round(_lootEquippedEffect(C, "fatigueRelief"));
   var firepower = _lootEquippedEffect(C, "firepower");
   var overall = _lootEquippedEffect(C, "overall") + Math.round((supply + morale - fatigue) / 4);
+  var st = L.journey && L.journey.enabled ? L.journey.status : "";
+  if (st === "wounded") { morale -= 1; fatigue += 2; overall -= 1; }
+  if (st === "captured") { supply -= 2; morale -= 3; fatigue += 3; overall -= 2; }
   return {
     supply: _lootClamp(supply, -cap, cap),
     morale: _lootClamp(morale, -cap, cap),
@@ -473,24 +597,157 @@ function ssFindPerson(C, pid) {
   return null;
 }
 
+function _ssBattleById(id) {
+  if (!id || typeof BATTLES === "undefined" || !BATTLES) return null;
+  for (var i = 0; i < BATTLES.length; i++) if (BATTLES[i] && BATTLES[i].id === id) return BATTLES[i];
+  return null;
+}
+function _ssBattleId(B) {
+  return (B && (B.id || (B.bd && B.bd.id))) ? (B.id || B.bd.id) : null;
+}
+function _ssBattleName(B, id) {
+  var bd = B && B.bd ? B.bd : null;
+  return _lootCleanText((B && (B.name || B.label)) || (bd && bd.name) || (_ssBattleById(id) && _ssBattleById(id).name) || id || "the field", 120);
+}
+function _ssPlayerSide(C, B) {
+  if (B && (B.playerSide === "US" || B.playerSide === "CS")) return B.playerSide;
+  return C && C.side === "CS" ? "CS" : "US";
+}
+function _ssSideCas(B, side) {
+  return Math.round(_lootClamp(B && B.casualties ? B.casualties[side] : 0, 0, 1000000));
+}
+function _ssCareerWins(J) {
+  var n = 0, arr = J && J.career ? J.career : [];
+  for (var i = 0; i < arr.length; i++) if (arr[i] && arr[i].outcome === "victory") n++;
+  return n;
+}
+function _ssPromotionRank(J, outcome, type, status) {
+  if (!J || outcome !== "victory" || status !== "alive") return null;
+  var p = J.person || {}, rank = _lootCleanText(p.rank || "", 80).toLowerCase();
+  var wins = _ssCareerWins(J) + 1;
+  if (rank === "private" && (type === "decisive" || wins >= 2)) return "Sergeant";
+  if (rank === "sergeant" && wins >= 3) return "Captain";
+  return null;
+}
+function _ssHydrateJourneyPerson(C, J) {
+  if (!J) return null;
+  if (J.person && J.person.persona) return J.person;
+  var p = ssFindPerson(C, J.personId);
+  if (p) J.person = _ssJourneySnapshot(p) || p;
+  return J.person || null;
+}
+function _ssMaybePromoteJourney(C, J, outcome, type, status) {
+  var next = _ssPromotionRank(J, outcome, type, status);
+  if (!next || typeof fldPromotePerson !== "function") return null;
+  var cur = _ssHydrateJourneyPerson(C, J);
+  var before = cur && cur.rank;
+  var promoted = fldPromotePerson(cur, next);
+  if (!promoted || promoted.rank !== next || promoted.rank === before) return null;
+  J.person = _ssJourneySnapshot(promoted) || promoted;
+  J.promotionCount = Math.round(_lootClamp((J.promotionCount || 0) + 1, 0, 24));
+  return next;
+}
+function _ssJourneyStatusFor(J, C, B, win, type, suffered, inflicted) {
+  var S = C && C.loot && C.loot.survival ? C.loot.survival : {};
+  if (J && J.status === "captured") return "captured";
+  if (!win && type === "decisive" && suffered >= 1200 && suffered >= inflicted) return "captured";
+  if (!win && suffered >= 650) return "wounded";
+  if (_lootNum(S.disease, 0) >= 82 || _lootNum(S.exposure, 0) >= 86 || _lootNum(S.fatigue, 0) >= 94) return "wounded";
+  return "alive";
+}
+function _ssApplyStatusSurvival(C, status, win) {
+  var S = C && C.loot && C.loot.survival;
+  if (!S) return;
+  if (status === "captured") {
+    S.rations = _lootClamp(S.rations - 6, 0, 100);
+    S.fatigue = _lootClamp(S.fatigue + 12, 0, 100);
+    S.morale = _lootClamp(S.morale - 8, 0, 100);
+  } else if (status === "wounded") {
+    S.fatigue = _lootClamp(S.fatigue + 8, 0, 100);
+    S.disease = _lootClamp(S.disease + 3, 0, 100);
+    S.morale = _lootClamp(S.morale - 3, 0, 100);
+  } else if (win) {
+    S.fatigue = _lootClamp(S.fatigue - 1, 0, 100);
+    S.morale = _lootClamp(S.morale + 1, 0, 100);
+  }
+}
+function _ssPushCareer(J, entry) {
+  if (!J) return;
+  if (!Array.isArray(J.career)) J.career = [];
+  var row = _ssCareerEntry(entry);
+  if (!row) return;
+  J.career.push(row);
+  while (J.career.length > 18) J.career.shift();
+  if (!Array.isArray(J.log)) J.log = [];
+  if (row.note) J.log.push(row.note);
+  while (J.log.length > 20) J.log.shift();
+}
+
 function ssStartJourney(C, pid, battleId, opts) {
   var L = lootInit(C); if (!L) return { ok: false };
   opts = opts || {};
   if (L.journey && L.journey.enabled && !opts.force) return { ok: false, reason: "journey-active", journey: L.journey };
   var p = ssFindPerson(C, pid);
   if (!p) return { ok: false, reason: "unknown-person" };
-  var bd = battleId ? null : ((typeof _brgNextBattle === "function") ? _brgNextBattle(C) : null);
+  var bd = battleId ? _ssBattleById(battleId) : ((typeof _brgNextBattle === "function") ? _brgNextBattle(C) : null);
+  var bid = battleId || (bd && bd.id) || null;
+  var bname = _ssBattleName(bd, bid);
   L.journey = {
     enabled: true,
     personId: p.pid,
-    battleId: battleId || (bd && bd.id) || null,
+    battleId: bid,
+    startBattleId: bid,
+    currentBattleId: bid,
     startedTurn: _lootTurn(C),
+    lastTurn: _lootTurn(C),
+    status: "alive",
+    battles: 0,
+    promotionCount: 0,
     person: _ssJourneySnapshot(p) || p,
-    log: ["Journey begins with " + p.name + "."]
+    log: ["Journey begins with " + p.name + "."],
+    career: []
   };
+  _ssPushCareer(L.journey, {
+    turn: _lootTurn(C), battleId: bid, battleName: bname, outcome: "start", status: "alive",
+    rankAfter: p.rank || "Soldier", note: "Journey begins with " + p.name + (bname ? " before " + bname : "") + "."
+  });
+  _ssSyncPersonCareer(L);
   lootSetSurvival(C, true);
   if (typeof _pdLog === "function") _pdLog(C, "The Soldier's Story begins: " + p.name + ".");
   return { ok: true, person: p, journey: L.journey };
+}
+
+function ssJourneyOnResolve(winnerSide, type, B, C, win) {
+  var L = lootInit(C); if (!L || !L.journey || !L.journey.enabled) return { ok: false, reason: "inactive" };
+  var J = L.journey, bid = _ssBattleId(B) || J.currentBattleId || J.battleId;
+  var bname = _ssBattleName(B, bid), side = _ssPlayerSide(C, B), enemy = side === "CS" ? "US" : "CS";
+  var suffered = _ssSideCas(B, side), inflicted = _ssSideCas(B, enemy);
+  var outcome = (type === "draw" || winnerSide === null) ? "draw" : (win ? "victory" : "defeat");
+  var before = _ssHydrateJourneyPerson(C, J) || J.person || {};
+  var rankBefore = _lootCleanText(before.rank || "Soldier", 80);
+  var status = _ssJourneyStatusFor(J, C, B, win, type, suffered, inflicted);
+  _ssApplyStatusSurvival(C, status, win);
+  J.status = status;
+  var promoted = _ssMaybePromoteJourney(C, J, outcome, type, status);
+  var after = J.person || before || {};
+  var rankAfter = _lootCleanText(after.rank || rankBefore, 80);
+  J.currentBattleId = bid || null;
+  J.lastBattleId = bid || null;
+  J.lastBattleName = bname;
+  J.lastOutcome = outcome;
+  J.lastTurn = _lootTurn(C);
+  J.battles = Math.round(_lootClamp((J.battles || 0) + 1, 0, 999));
+  var name = _lootCleanText(after.name || before.name || "The selected soldier", 120);
+  var note = name + " marked " + (outcome || "the result") + " at " + bname + "; status " + status + ".";
+  if (promoted) note += " Field promotion to " + promoted + ".";
+  _ssPushCareer(J, {
+    turn: _lootTurn(C), battleId: bid, battleName: bname, outcome: outcome, type: type || "",
+    status: status, rankBefore: rankBefore, rankAfter: rankAfter, promoted: !!promoted,
+    casualties: { suffered: suffered, inflicted: inflicted }, note: note
+  });
+  _ssSyncPersonCareer(L);
+  if (typeof _pdLog === "function") _pdLog(C, "Soldier's Story: " + note);
+  return { ok: true, status: status, promoted: promoted || null, battleId: bid, outcome: outcome, battles: J.battles };
 }
 
 function _lootPill(label, value, color) {
@@ -522,6 +779,74 @@ function _ssTeamLabel(p) {
   var parts = _ssTeamParts(p);
   for (var i = 0; i < parts.length; i++) if (parts[i][1]) bits.push(parts[i][1]);
   return bits.join(" / ");
+}
+function _ssCap(s) {
+  s = _ssStatus(s);
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+function _ssStatusColor(s) {
+  s = _ssStatus(s);
+  if (s === "captured") return "#da6a5a";
+  if (s === "wounded") return "#c9712e";
+  return "#6f9e5a";
+}
+function _ssOutcomeWord(s) {
+  s = _ssOutcome(s);
+  if (s === "victory") return "Victory";
+  if (s === "defeat") return "Defeat";
+  if (s === "draw") return "Draw";
+  return "Start";
+}
+function _ssCareerHTML(J, maxRows) {
+  var arr = J && Array.isArray(J.career) ? J.career.slice(-Math.max(1, maxRows || 5)) : [];
+  if (!arr.length) return '<div style="font-size:11px;opacity:.7">No career entries yet.</div>';
+  var h = '<div style="display:grid;gap:5px;margin-top:6px">';
+  for (var i = arr.length - 1; i >= 0; i--) {
+    var e = arr[i] || {}, cas = e.casualties || null;
+    var sub = [];
+    if (e.rankAfter) sub.push(e.rankAfter);
+    sub.push(_ssCap(e.status));
+    if (cas) sub.push("cas. " + cas.suffered + " / " + cas.inflicted);
+    h += '<div style="border-top:1px solid rgba(120,92,62,.32);padding-top:5px">'
+      + '<div style="display:flex;justify-content:space-between;gap:8px"><b style="font-size:11.5px">' + _lootEsc(e.battleName || e.battleId || "Journey") + '</b>'
+      + '<span style="font-size:10px;color:' + _ssStatusColor(e.status) + ';font-weight:bold">' + _lootEsc(_ssOutcomeWord(e.outcome)) + '</span></div>'
+      + '<div style="font-size:10.5px;opacity:.73">' + _lootEsc(sub.join(" · ")) + (e.promoted ? ' · <b>Promoted</b>' : '') + '</div>'
+      + (e.note ? '<div style="font-size:10.5px;opacity:.62">' + _lootEsc(e.note) + '</div>' : '')
+      + '</div>';
+  }
+  return h + '</div>';
+}
+function _ssJourneyActiveHTML(C) {
+  var L = lootInit(C), J = L.journey;
+  if (!J || !J.enabled || !J.person) return "";
+  var p = J.person, status = _ssStatus(J.status), last = J.lastBattleName || J.lastBattleId || J.currentBattleId || J.battleId || "Not yet blooded";
+  return '<div id="ssJourneyPanel" style="border:1px solid #b8863b;border-radius:6px;padding:10px;background:rgba(184,134,59,.10);margin:8px 0">'
+    + '<div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:start">'
+    + '<div style="min-width:0"><b style="overflow-wrap:anywhere">' + _lootEsc(p.name) + '</b><div style="font-size:11px;opacity:.78">'
+    + _lootEsc(p.rank || "Soldier") + ' · ' + _lootEsc(p.side || "") + ' · OVR ' + _lootEsc(p.ovr) + ' ' + _lootEsc(p.grade && p.grade.letter || "") + '</div></div>'
+    + '<span style="font-size:11px;font-weight:bold;color:' + _ssStatusColor(status) + ';border:1px solid ' + _ssStatusColor(status) + ';border-radius:4px;padding:2px 7px">' + _lootEsc(_ssCap(status)) + '</span></div>'
+    + '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:7px;margin-top:8px">'
+    + _lootPill("Battles", J.battles || 0, "#b8863b")
+    + _lootPill("Last field", last, "#9a9184")
+    + _lootPill("Promotions", J.promotionCount || 0, "#6f9e5a")
+    + '</div>'
+    + '<div class="gn-col-head" style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:9px 0 2px">Career Log</div>'
+    + _ssCareerHTML(J, 5)
+    + '</div>';
+}
+function ssJourneyReportHTML(C, opts) {
+  opts = opts || {};
+  var J = C && C.loot && _lootPlain(C.loot.journey) ? C.loot.journey : null;
+  if (!J || !J.personId || !J.person) return "";
+  var p = J.person, status = _ssStatus(J.status), max = opts.compact ? 3 : 5;
+  var last = J.lastBattleName || J.lastBattleId || J.currentBattleId || J.battleId || "Not yet blooded";
+  return '<div style="margin-top:10px;padding:10px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.10)">'
+    + '<div style="display:flex;justify-content:space-between;gap:10px;align-items:baseline"><b style="font-size:12.5px">The Soldier&apos;s Story</b>'
+    + '<span style="font-size:11px;font-weight:bold;color:' + _ssStatusColor(status) + '">' + _lootEsc(_ssCap(status)) + '</span></div>'
+    + '<div style="font-size:11px;opacity:.74;margin-top:2px">' + _lootEsc(p.name || "Selected soldier") + ' · ' + _lootEsc(p.rank || "Soldier")
+    + ' · ' + _lootEsc((J.battles || 0) + " battle" + (J.battles === 1 ? "" : "s")) + ' · last field: ' + _lootEsc(last) + '.</div>'
+    + _ssCareerHTML(J, max)
+    + '</div>';
 }
 function _ssTeamHierarchyHTML(p) {
   var parts = _ssTeamParts(p), rows = "";
@@ -608,11 +933,7 @@ function _ssPeopleHTML(C) {
     html += '<option value="' + _lootAttr(op.pid) + '"' + (op.pid === activeId ? " selected" : "") + '>' + _lootEsc(label) + '</option>';
   }
   html += '</select><button id="ssBeginSelected" type="button" class="bigbtn"' + (locked ? ' disabled aria-disabled="true"' : '') + '>' + (locked ? "Journey Active" : "Begin Journey") + '</button></div></div>';
-  if (active) {
-    html += '<div style="border:1px solid #b8863b;border-radius:6px;padding:9px;background:rgba(184,134,59,.10);margin:8px 0">'
-      + '<b>' + _lootEsc(active.name) + '</b><div style="font-size:11px;opacity:.78">'
-      + _lootEsc(active.rank || "Soldier") + ' &middot; ' + _lootEsc(active.side || "") + ' &middot; OVR ' + active.ovr + ' ' + _lootEsc(active.grade && active.grade.letter || "") + '</div></div>';
-  }
+  if (active) html += _ssJourneyActiveHTML(C);
   var selected = activeId || (people[0] && people[0].pid) || "";
   html += '<div id="ssArmyRegister" style="margin-top:10px">'
     + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:6px 0">Army Register</div>'
