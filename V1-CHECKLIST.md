@@ -378,14 +378,15 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       (603 selectable people in the current build), and generated rows remain `Inferred`. **Still open:** citation-grade
       named bios/portraits/unit detail for every identifiable person, richer start-anywhere career trajectory, and later
       interpersonal hooks. (Memory `civilwar-soldiers-story-pillar`; DECISIONS D93/D148.)
-- [ ] **CONSOLIDATED PHASE-I CONTINUATION QUEUE — execute in this order; Codex/Claude should treat this as the
+- [~] **CONSOLIDATED PHASE-I CONTINUATION QUEUE — execute in this order; Codex/Claude should treat this as the
       next task queue, not split it into disconnected tasks.** Stop only at a clean committed/pushed milestone if
       context is nearing compaction; keep Q5 Chattanooga + Q6 USCT playable battles LAST.
-      1. **D149 — Loot/survival hardening + gate expansion:** adversarially probe save/load tampering, duplicate and
+      1. ~~**D149 — Loot/survival hardening + gate expansion:** adversarially probe save/load tampering, duplicate and
          stack exploits, inventory overflow, journey restart abuse, survival tick timing, inactive bridge leakage, and
          Campaign Kit screenshot/UI assertions. Likely files: `src/37-loot-survival.js`,
          `tools/probe-loot-survival.mjs`, targeted save-slot assertions. Gate: focused probe + save-slots + bridge +
-         full-campaign/Classic slice.
+         full-campaign/Classic slice.~~ ✅ **Shipped 2026-06-28:** hardened restored Campaign Kit state, strict active
+         gates, stack/overflow/restart guards, screenshot/UI assertions, and full `npm run vet:noreg` 79-command gate.
       2. **D150 — Army Register / person-unit axis:** turn the 603-person current registry into a searchable/filterable
          register with person detail cards, side/rank/provenance/unit filters, generated-vs-Verified display, team
          hierarchy, and journey start from card. Likely file: `src/37-loot-survival.js` unless size/ownership argues for

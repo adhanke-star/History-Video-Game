@@ -5,7 +5,7 @@ import { chromium } from 'playwright-core';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, statSync } from 'node:fs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -41,24 +41,41 @@ const SETUP = `(() => {
         {id:'battle_flag_fragment',qty:4},
         {id:'commissary_rations',qty:99}
       ];
-      C.loot.equipped = { keepsake:'bad_item', kit:'field_glass' };
+      C.loot.equipped = JSON.parse('{"hasOwnProperty":"shadowed","keepsake":"bad_item","kit":"field_glass","__proto__":"pollute"}');
+      C.loot.survival = { enabled:'yes', rations:999, exposure:-100, disease:'bad', fatigue:10, lastTurn:'0', forageTurn:null };
+      C.loot.journey = { enabled:'true', personId:'probe', person:{name:'<bad>'}, log:new Array(40).fill('x'.repeat(400)) };
       lootInit(C);
       var flag=0, bad=0, ration=0;
       for(var i=0;i<C.loot.inventory.length;i++){ if(C.loot.inventory[i].id==='battle_flag_fragment') flag++; if(C.loot.inventory[i].id==='bad_item') bad++; if(C.loot.inventory[i].id==='commissary_rations') ration=C.loot.inventory[i].qty; }
       if(flag!==1 || bad!==0) throw new Error('sanitize failed: '+JSON.stringify(C.loot.inventory));
       if(ration!==12) throw new Error('stack cap should clamp rations to 12, got '+ration);
       if(C.loot.equipped.kit || C.loot.equipped.keepsake) throw new Error('invalid equipped slots should be cleared');
+      if(C.loot.survival.enabled !== false || C.loot.survival.rations!==100 || C.loot.survival.exposure!==0 || C.loot.survival.disease!==12) throw new Error('survival tamper not sanitized: '+JSON.stringify(C.loot.survival));
+      if(C.loot.journey.enabled !== false || C.loot.journey.log.length>20) throw new Error('journey tamper not sanitized: '+JSON.stringify(C.loot.journey));
       var sv = JSON.parse(JSON.stringify(C));
       if(!sv.loot || typeof sv.loot.survival.rations !== 'number') throw new Error('loot not JSON-saveable');
       return { inv:C.loot.inventory, survival:C.loot.survival.enabled };
     });
 
-    step('INVENTORY: add/use/equip is bounded, unique-safe, and stack-safe', function(){
+    step('INVENTORY: add/use/equip is bounded, unique-safe, overflow-safe, and stack-safe', function(){
       var C=mkC('US'); _t1InitAll(C);
+      C.loot.inventory = [];
+      var ids = GAME_DATA['loot-survival'].items.map(function(it){ return it.id; });
+      for(var oi=0; oi<96; oi++) C.loot.inventory.push({ id:ids[oi%ids.length], qty:999, found:'x'.repeat(300) });
+      lootInit(C);
+      if(C.loot.inventory.length > 18) throw new Error('overflow inventory survived: '+C.loot.inventory.length);
+      for(var ci=0; ci<C.loot.inventory.length; ci++) {
+        var row=C.loot.inventory[ci], item=GAME_DATA['loot-survival'].items.filter(function(it){return it.id===row.id;})[0];
+        var max=item.unique ? 1 : (item.stack || 1);
+        if(row.qty > max) throw new Error('stack overflow survived for '+row.id+': '+row.qty+' > '+max);
+        if(row.found && row.found.length > 120) throw new Error('found note not capped');
+      }
+      C=mkC('US'); _t1InitAll(C);
       var a=lootAddItem(C,'commissary_rations',2,'probe');
       var b=lootAddItem(C,'commissary_rations',20,'probe');
       var q=C.loot.inventory.filter(function(x){return x.id==='commissary_rations';})[0].qty;
       if(!a.ok || !b.ok || q!==12) throw new Error('rations should stack to cap 12, got '+q);
+      if(b.qty!==10) throw new Error('stack add should report actual added qty 10, got '+b.qty);
       var full=lootAddItem(C,'commissary_rations',1,'probe');
       if(full.ok || full.reason!=='stack-full') throw new Error('adding past stack cap should fail cleanly');
       C.loot.survival.rations=10;
@@ -73,7 +90,7 @@ const SETUP = `(() => {
       return { rations:C.loot.survival.rations, equipped:C.loot.equipped };
     });
 
-    step('DEFAULT-OFF BRIDGE: disabled loot/survival changes no bridge facets', function(){
+    step('DEFAULT-OFF BRIDGE: disabled and tampered loot/survival changes no bridge facets', function(){
       var C=mkC('CS'); _t1InitAll(C);
       lootAddItem(C,'captured_enfield_crate',1,'probe');
       lootEquipItem(C,'captured_enfield_crate');
@@ -84,13 +101,18 @@ const SETUP = `(() => {
       var bonus=lootSurvivalBridgeBonus(C);
       if(JSON.stringify(withDisabled)!==JSON.stringify(withoutLoot)) throw new Error('disabled loot changed bridge: '+JSON.stringify(withDisabled)+' vs '+JSON.stringify(withoutLoot));
       if(JSON.stringify(bonus)!==JSON.stringify({supply:0,morale:0,fatigue:0,firepower:0,overall:0})) throw new Error('disabled bridge bonus not zero: '+JSON.stringify(bonus));
-      return { bridge:withDisabled };
+      C.loot = { inventory:[{id:'captured_enfield_crate',qty:1}], equipped:{weapon:'captured_enfield_crate'}, survival:{enabled:'true',rations:100,morale:100,fatigue:0,exposure:0,disease:0}, journey:{enabled:'true',personId:'tamper'} };
+      var tampered=lootSurvivalBridgeBonus(C);
+      if(JSON.stringify(tampered)!==JSON.stringify({supply:0,morale:0,fatigue:0,firepower:0,overall:0})) throw new Error('tampered string flags leaked bridge bonus: '+JSON.stringify(tampered));
+      return { bridge:withDisabled, tampered:tampered };
     });
 
     step('SURVIVAL ACTIVE: tick is once per strategic turn; forage is once per turn; active bridge effect is bounded', function(){
       var C=mkC('US'); _t1InitAll(C);
       lootAddItem(C,'wool_blankets',1,'probe'); lootEquipItem(C,'wool_blankets');
       lootSetSurvival(C,true);
+      C.loot.survival.lastTurn=999;
+      C.loot.survival.forageTurn=999;
       var before=clone(C.loot.survival);
       var t1=lootSurvivalTick(C,{id:'probe',name:'Probe Field'},true);
       var mid=clone(C.loot.survival);
@@ -135,8 +157,8 @@ const SETUP = `(() => {
     step('JOURNEY: play-as-anyone start enables survival and stores a saveable selected person without mutating canonical data', function(){
       var C=mkC('US'); _t1InitAll(C);
       var reg=ssPersonRegistry(C);
-      var target=null;
-      for(var i=0;i<reg.people.length;i++){ if(reg.people[i].side==='US'){ target=reg.people[i]; break; } }
+      var target=null, other=null;
+      for(var i=0;i<reg.people.length;i++){ if(reg.people[i].side==='US' && !target){ target=reg.people[i]; } else if(reg.people[i].side==='US' && target && !other) { other=reg.people[i]; break; } }
       if(!target) throw new Error('no US person');
       var before=JSON.stringify(GAME_DATA.ratings);
       var res=ssStartJourney(C,target.pid,'bullrun1');
@@ -146,7 +168,40 @@ const SETUP = `(() => {
       if(before!==after) throw new Error('journey mutated canonical ratings data');
       var sv=JSON.parse(JSON.stringify(C.loot.journey));
       if(!sv.person || sv.person.pid!==target.pid) throw new Error('journey snapshot not saveable');
+      if(other){
+        var blocked=ssStartJourney(C,other.pid,'antietam');
+        if(blocked.ok || blocked.reason!=='journey-active') throw new Error('journey restart should be blocked, got '+JSON.stringify(blocked));
+        if(C.loot.journey.personId!==target.pid || C.loot.journey.battleId!=='bullrun1') throw new Error('blocked restart changed active journey');
+      }
       return { person:target.name, pid:target.pid, battle:C.loot.journey.battleId };
+    });
+
+    step('SAVE/LOAD TAMPERING: save-slot import rejects bad settings and restored loot is sanitized before use', function(){
+      if(typeof serializeSave!=='function' || typeof applySave!=='function' || typeof _slImportText!=='function') throw new Error('save-slot helpers missing');
+      var C=mkC('US'); G.campaign=C; _t1InitAll(C);
+      lootAddItem(C,'captured_enfield_crate',1,'probe');
+      var sv=serializeSave();
+      var bad=clone(sv);
+      bad.settings = JSON.parse('{"hasOwnProperty":"shadow"}');
+      var badRes=_slImportText(JSON.stringify(bad));
+      if(badRes.ok) throw new Error('bad settings import should be rejected');
+      sv.campaign.loot = {
+        inventory:[{id:'captured_enfield_crate',qty:99},{id:'captured_enfield_crate',qty:99},{id:'battle_flag_fragment',qty:50}],
+        equipped:JSON.parse('{"weapon":"captured_enfield_crate","hasOwnProperty":"shadow"}'),
+        survival:{enabled:'true',rations:100,morale:100,fatigue:0,exposure:0,disease:0,lastTurn:999,forageTurn:999},
+        journey:{enabled:'true',personId:'ghost',person:{pid:'ghost',name:'Ghost',side:'US',rank:'Private',ovr:999},log:['tampered']}
+      };
+      var ok=_slImportText(JSON.stringify(sv));
+      if(!ok.ok) throw new Error('valid save import failed: '+JSON.stringify(ok));
+      var leak=lootSurvivalBridgeBonus(G.campaign);
+      if(JSON.stringify(leak)!==JSON.stringify({supply:0,morale:0,fatigue:0,firepower:0,overall:0})) throw new Error('pre-init restored tamper leaked: '+JSON.stringify(leak));
+      openWarDept();
+      lootInit(G.campaign);
+      var q=G.campaign.loot.inventory.filter(function(x){return x.id==='captured_enfield_crate';})[0].qty;
+      if(q!==1) throw new Error('restored equip stack should clamp to 1, got '+q);
+      if(G.campaign.loot.survival.enabled!==false) throw new Error('restored string enabled should sanitize false');
+      if(G.campaign.loot.journey.enabled!==false) throw new Error('restored string journey should sanitize false');
+      return { imported:true, q:q, survival:G.campaign.loot.survival.enabled };
     });
 
     step('UI: President desk exposes Campaign Kit tab and renders inventory/survival/Soldier sections', function(){
@@ -166,9 +221,13 @@ const SETUP = `(() => {
       sel.value=last.pid;
       var begin=cont.querySelector('#ssBeginSelected');
       if(!begin) throw new Error('missing begin selected control');
+      if(begin.disabled) throw new Error('begin should be enabled before a journey starts');
       begin.click();
       if(!C.loot || !C.loot.journey || C.loot.journey.personId!==last.pid) throw new Error('UI did not start selected journey: '+(C.loot&&C.loot.journey&&C.loot.journey.personId)+' vs '+last.pid);
-      return { text:txt.slice(0,120), buttons:cont.querySelectorAll('button').length, options:sel.options.length, started:last.pid };
+      cont=document.getElementById('wdContent');
+      var disabled=cont && cont.querySelector('#ssBeginSelected');
+      if(!disabled || !disabled.disabled || disabled.textContent.indexOf('Journey Active')<0) throw new Error('active journey UI should block restart');
+      return { text:txt.slice(0,120), buttons:cont.querySelectorAll('button').length, options:sel.options.length, started:last.pid, restartDisabled:disabled.disabled };
     });
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
@@ -191,6 +250,11 @@ const SETUP = `(() => {
     await page.goto(probe, { waitUntil:'domcontentloaded', timeout:60000 });
     await sleep(500);
     result = JSON.parse(await page.evaluate(SETUP));
+    const shotPath = join(OUT, 'probe-loot-survival.png');
+    await page.screenshot({ path: shotPath, fullPage:false });
+    const shot = statSync(shotPath);
+    result.screenshot = { path: shotPath, bytes: shot.size };
+    if (!shot.size) result.ok = false;
     result.pageerrors = pageerrors;
     if (pageerrors.length) result.ok = false;
   } catch(e){ result = { ok:false, fatal:String(e&&e.message||e), pageerrors }; }
@@ -199,6 +263,7 @@ const SETUP = `(() => {
     await browser.close(); if (srv) srv.kill();
   }
   console.log('probe-loot-survival ok=' + result.ok + ' steps=' + (result.steps?result.steps.length:0) + ' pageerrors=' + (result.pageerrors?result.pageerrors.length:0));
+  if (result.screenshot) console.log('  screenshot ' + result.screenshot.path + ' bytes=' + result.screenshot.bytes);
   if (result.fatal) console.log('  FATAL ' + result.fatal);
   if (result.steps) for (const s of result.steps) { if (!s.ok) console.log('  FAIL ' + s.name + ' :: ' + s.err); else console.log('  ok   ' + s.name + ' :: ' + JSON.stringify(s.v)); }
   if (!result.ok || (result.pageerrors && result.pageerrors.length)) process.exit(1);

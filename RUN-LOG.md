@@ -2,6 +2,13 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## PHASE I — LOOT/SURVIVAL HARDENING + GATE EXPANSION — 2026-06-28 (D149)
+**Hardening milestone over the D148 Campaign Kit.** No canonical battle data, tactical combat rules, `build/base.html`, item balance data, or save version changed; `civil_war_generals.html` was rebuilt from source.
+- **Shipped:** `src/37-loot-survival.js` now sanitizes restored Campaign Kit state more defensively: safe own-property checks, prototype/meta-key rejection in `equipped`, capped item-found notes, bounded journey snapshots/logs, strict boolean survival/journey activation, future-turn tick guard normalization, and a journey restart guard.
+- **UI:** once a Soldier's Story journey is active, Begin Journey controls render disabled as `Journey Active` instead of silently overwriting the active journey. D151 can add an intentional retire/restart path later.
+- **Probe/gate:** `tools/probe-loot-survival.mjs` now covers tampered save shapes, duplicate/overflow/stack exploits, inactive and tampered bridge leakage, survival tick timing, save-slot import rejection, restored-save sanitation, full-registry UI assertions, restart blocking, and a Campaign Kit screenshot artifact.
+- **Vet:** `node --check` clean for source/probe; build **GATE OK**; focused `probe-loot-survival` **9/9, 0 pageerrors** with screenshot `tools/shots/probe-loot-survival.png`; D149 slice gates `probe-save-slots` **9/9**, `probe-bridge` **6/6**, `probe-full-campaign` **4/4**, `diag-classic` `nonBlank:346`; full `npm run vet:noreg` **VET NO-REGRESSION OK — 79 commands**. `git diff --check` clean. **Next:** D150 Army Register / person-unit axis. Q5 Chattanooga and Q6 USCT playable battles remain LAST.
+
 ## PHASE I — LOOT/SURVIVAL + SOLDIER'S STORY PLAY-AS-ANYONE MVP — 2026-06-27 (D148)
 **Additive Campaign Kit milestone.** No canonical battle data, tactical combat rules, `build/base.html`, or hand-edited generated HTML changed; `civil_war_generals.html` was rebuilt from source.
 - **Shipped:** new `data/loot-survival.json`, `src/37-loot-survival.js`, a `Campaign Kit` President-desk tab, and a focused browser probe wired into `tools/vet-no-regression.mjs`. Battle/campaign resolution now recovers deterministic rarity-tiered loot; inventory supports stack caps, unique items, use/equip, and bounded slots.

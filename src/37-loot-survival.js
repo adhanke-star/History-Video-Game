@@ -17,6 +17,13 @@ function _lootItems() { var d = _lootData(); return (d && d.items && d.items.len
 function _lootSurvCfg() { var d = _lootData(); return (d && d.survival) ? d.survival : {}; }
 function _lootDropsCfg() { var d = _lootData(); return (d && d.drops) ? d.drops : {}; }
 function _lootEsc(s) { return (typeof htmlEsc === "function") ? htmlEsc(s) : String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+function _lootOwn(o, k) { return !!o && Object.prototype.hasOwnProperty.call(o, k); }
+function _lootPlain(o) { return !!o && typeof o === "object" && !Array.isArray(o); }
+function _lootBadKey(k) { return k === "__proto__" || k === "constructor" || k === "prototype" || k === "hasOwnProperty"; }
+function _lootCleanText(s, max) {
+  s = String(s == null ? "" : s).replace(/\s+/g, " ").trim();
+  return max && s.length > max ? s.slice(0, max) : s;
+}
 function _lootNum(v, d) { return (typeof v === "number" && isFinite(v)) ? v : d; }
 function _lootClamp(v, lo, hi) { v = _lootNum(v, lo); return v < lo ? lo : (v > hi ? hi : v); }
 function _lootHash(s) {
@@ -55,16 +62,73 @@ function _lootInitMeter(obj, key, dflt) {
   if (typeof obj[key] !== "number" || !isFinite(obj[key])) obj[key] = dflt;
   obj[key] = _lootClamp(obj[key], 0, 100);
 }
+function _lootCleanTurn(v) {
+  v = Math.floor(_lootNum(v, -1));
+  return v < -1 ? -1 : v;
+}
+function _ssJourneySnapshot(p) {
+  if (!_lootPlain(p)) return null;
+  var snap = {
+    pid: _lootCleanText(p.pid || p.id, 180),
+    name: _lootCleanText(p.name, 120),
+    rank: _lootCleanText(p.rank || "Soldier", 80),
+    side: p.side === "CS" ? "CS" : (p.side === "US" ? "US" : ""),
+    role: _lootCleanText(p.role || "", 80),
+    provenance: _lootCleanText(p.provenance || (p.generated ? "Inferred" : ""), 40),
+    generated: !!p.generated,
+    ovr: _lootClamp(Math.round(_lootNum(p.ovr, 64)), 0, 100)
+  };
+  if (_lootPlain(p.grade)) snap.grade = { letter: _lootCleanText(p.grade.letter || "", 4), word: _lootCleanText(p.grade.word || "", 40) };
+  if (_lootPlain(p.team)) {
+    snap.team = {
+      side: p.team.side === "CS" ? "CS" : (p.team.side === "US" ? "US" : ""),
+      army: _lootCleanText(p.team.army || "", 120),
+      corps: _lootCleanText(p.team.corps || "", 120),
+      division: _lootCleanText(p.team.division || "", 120),
+      brigade: _lootCleanText(p.team.brigade || "", 120),
+      regiment: _lootCleanText(p.team.regiment || "", 120),
+      company: _lootCleanText(p.team.company || "", 40)
+    };
+  }
+  return snap.pid && snap.name ? snap : null;
+}
+function _ssCleanJourney(C, L) {
+  var J = _lootPlain(L.journey) ? L.journey : {};
+  var clean = {
+    enabled: J.enabled === true,
+    personId: _lootCleanText(J.personId || "", 180),
+    battleId: J.battleId == null ? null : _lootCleanText(J.battleId, 120),
+    startedTurn: _lootCleanTurn(J.startedTurn)
+  };
+  if (clean.startedTurn < 0) clean.startedTurn = _lootTurn(C);
+  clean.person = _ssJourneySnapshot(J.person);
+  if (!clean.personId && clean.person) clean.personId = clean.person.pid;
+  if (!clean.personId) clean.enabled = false;
+  clean.log = [];
+  if (Array.isArray(J.log)) {
+    for (var i = 0; i < J.log.length && clean.log.length < 20; i++) {
+      var line = _lootCleanText(J.log[i], 240);
+      if (line) clean.log.push(line);
+    }
+  }
+  L.journey = clean;
+}
 
 function lootInit(C) {
   if (!C) return null;
   if (!C.loot || typeof C.loot !== "object" || Array.isArray(C.loot)) C.loot = {};
   var L = C.loot, cfg = _lootSurvCfg();
   if (!Array.isArray(L.inventory)) L.inventory = [];
-  if (!L.equipped || typeof L.equipped !== "object" || Array.isArray(L.equipped)) L.equipped = {};
+  if (!_lootPlain(L.equipped)) L.equipped = {};
   if (!L.survival || typeof L.survival !== "object" || Array.isArray(L.survival)) L.survival = {};
-  if (!L.journey || typeof L.journey !== "object" || Array.isArray(L.journey)) L.journey = {};
-  if (!L.people || typeof L.people !== "object" || Array.isArray(L.people)) L.people = {};
+  if (!_lootPlain(L.journey)) L.journey = {};
+  if (!_lootPlain(L.people)) L.people = {};
+  var eqClean = {};
+  for (var es in L.equipped) {
+    if (!_lootOwn(L.equipped, es) || _lootBadKey(es)) continue;
+    if (typeof L.equipped[es] === "string") eqClean[es] = _lootCleanText(L.equipped[es], 80);
+  }
+  L.equipped = eqClean;
 
   var S = L.survival;
   if (typeof S.enabled !== "boolean") S.enabled = !!cfg.enabledByDefault;
@@ -75,8 +139,8 @@ function lootInit(C) {
   _lootInitMeter(S, "forage", 18);
   _lootInitMeter(S, "morale", 55);
   S._touched = true;
-  if (typeof S.lastTurn !== "number") S.lastTurn = -1;
-  if (typeof S.forageTurn !== "number") S.forageTurn = -1;
+  S.lastTurn = _lootCleanTurn(S.lastTurn);
+  S.forageTurn = _lootCleanTurn(S.forageTurn);
 
   var clean = [], seen = {};
   for (var i = 0; i < L.inventory.length; i++) {
@@ -90,12 +154,13 @@ function lootInit(C) {
       clean[seen[id]].qty = Math.min(max, clean[seen[id]].qty + qty);
     } else if (clean.length < _lootSlotLimit()) {
       seen[id] = clean.length;
-      clean.push({ id: id, qty: qty, found: row.found || null });
+      clean.push({ id: id, qty: qty, found: row.found ? _lootCleanText(row.found, 120) : null });
     }
   }
   L.inventory = clean;
+  _ssCleanJourney(C, L);
   for (var slot in L.equipped) {
-    if (!L.equipped.hasOwnProperty(slot)) continue;
+    if (!_lootOwn(L.equipped, slot) || _lootBadKey(slot)) continue;
     var eq = _lootItem(L.equipped[slot]);
     if (!eq || eq.slot !== slot || !_lootHasItem(C, eq.id)) delete L.equipped[slot];
   }
@@ -104,7 +169,7 @@ function lootInit(C) {
 
 function lootSurvivalActive(C) {
   var L = C && C.loot;
-  return !!(L && ((L.survival && L.survival.enabled) || (L.journey && L.journey.enabled)));
+  return !!(L && ((L.survival && L.survival.enabled === true) || (L.journey && L.journey.enabled === true)));
 }
 
 function lootSetSurvival(C, on) {
@@ -126,16 +191,17 @@ function lootAddItem(C, id, qty, note) {
   for (var i = 0; i < L.inventory.length; i++) {
     var row = L.inventory[i];
     if (row.id === it.id) {
-      var before = row.qty;
-      row.qty = Math.min(max, row.qty + qty);
-      if (row.qty === before) return { ok: false, reason: "stack-full", item: it };
-      if (note) row.found = note;
-      return { ok: true, item: it, qty: qty, stacked: true };
+      var add = Math.min(max - row.qty, qty);
+      if (add <= 0) return { ok: false, reason: "stack-full", item: it };
+      row.qty = Math.min(max, row.qty + add);
+      if (note) row.found = _lootCleanText(note, 120);
+      return { ok: true, item: it, qty: add, stacked: true };
     }
   }
   if (L.inventory.length >= _lootSlotLimit()) return { ok: false, reason: "inventory-full", item: it };
-  L.inventory.push({ id: it.id, qty: Math.min(max, qty), found: note || null });
-  return { ok: true, item: it, qty: Math.min(max, qty), stacked: false };
+  var added = Math.min(max, qty);
+  L.inventory.push({ id: it.id, qty: added, found: note ? _lootCleanText(note, 120) : null });
+  return { ok: true, item: it, qty: added, stacked: false };
 }
 
 function lootRemoveItem(C, id, qty) {
@@ -146,7 +212,7 @@ function lootRemoveItem(C, id, qty) {
     L.inventory[i].qty -= qty;
     if (L.inventory[i].qty <= 0) {
       L.inventory.splice(i, 1);
-      for (var slot in L.equipped) if (L.equipped.hasOwnProperty(slot) && L.equipped[slot] === id) delete L.equipped[slot];
+      for (var slot in L.equipped) if (_lootOwn(L.equipped, slot) && L.equipped[slot] === id) delete L.equipped[slot];
     }
     return true;
   }
@@ -185,7 +251,7 @@ function _lootEquippedEffect(C, key) {
   if (!L || !L.equipped) return 0;
   var sum = 0;
   for (var slot in L.equipped) {
-    if (!L.equipped.hasOwnProperty(slot)) continue;
+    if (!_lootOwn(L.equipped, slot) || _lootBadKey(slot)) continue;
     var it = _lootItem(L.equipped[slot]);
     if (it && it.effect && typeof it.effect[key] === "number") sum += it.effect[key];
   }
@@ -196,6 +262,7 @@ function lootForage(C) {
   var L = lootInit(C); if (!L) return { ok: false };
   if (!lootSurvivalActive(C)) return { ok: false, reason: "inactive" };
   var turn = _lootTurn(C), S = L.survival;
+  if (S.forageTurn > turn) S.forageTurn = turn - 1;
   if (S.forageTurn === turn) return { ok: false, reason: "already-foraged" };
   var gain = _lootNum(_lootSurvCfg().forageRations, 14);
   S.forageTurn = turn;
@@ -216,6 +283,7 @@ function lootSurvivalTick(C, B, win) {
   var L = lootInit(C); if (!L) return { ok: false };
   if (!lootSurvivalActive(C)) return { ok: false, reason: "inactive" };
   var S = L.survival, turn = _lootTurn(C);
+  if (S.lastTurn > turn) S.lastTurn = turn - 1;
   if (S.lastTurn === turn) return { ok: false, reason: "already-ticked" };
   var cfg = _lootSurvCfg(), tick = cfg.tick || {};
   S.lastTurn = turn;
@@ -404,8 +472,10 @@ function ssFindPerson(C, pid) {
   return null;
 }
 
-function ssStartJourney(C, pid, battleId) {
+function ssStartJourney(C, pid, battleId, opts) {
   var L = lootInit(C); if (!L) return { ok: false };
+  opts = opts || {};
+  if (L.journey && L.journey.enabled && !opts.force) return { ok: false, reason: "journey-active", journey: L.journey };
   var p = ssFindPerson(C, pid);
   if (!p) return { ok: false, reason: "unknown-person" };
   var bd = battleId ? null : ((typeof _brgNextBattle === "function") ? _brgNextBattle(C) : null);
@@ -414,7 +484,7 @@ function ssStartJourney(C, pid, battleId) {
     personId: p.pid,
     battleId: battleId || (bd && bd.id) || null,
     startedTurn: _lootTurn(C),
-    person: p,
+    person: _ssJourneySnapshot(p) || p,
     log: ["Journey begins with " + p.name + "."]
   };
   lootSetSurvival(C, true);
@@ -474,6 +544,7 @@ function _lootSurvivalHTML(C) {
 function _ssPeopleHTML(C) {
   var L = lootInit(C), reg = ssPersonRegistry(C), people = reg.people, active = L.journey && L.journey.enabled ? L.journey.person : null;
   var activeId = L.journey && L.journey.personId ? L.journey.personId : "";
+  var locked = L.journey && L.journey.enabled;
   var html = '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:8px 0">'
     + _lootPill("People", people.length, "#b8863b")
     + _lootPill("Authored", reg.authored, "#9a86f0")
@@ -488,7 +559,7 @@ function _ssPeopleHTML(C) {
     var label = (op.side || "?") + " · " + op.name + " · " + (op.rank || "Soldier") + " · OVR " + op.ovr + (team ? " · " + team : "");
     html += '<option value="' + _lootEsc(op.pid) + '"' + (op.pid === activeId ? " selected" : "") + '>' + _lootEsc(label) + '</option>';
   }
-  html += '</select><button id="ssBeginSelected" type="button" class="bigbtn">Begin Journey</button></div></div>';
+  html += '</select><button id="ssBeginSelected" type="button" class="bigbtn"' + (locked ? ' disabled aria-disabled="true"' : '') + '>' + (locked ? "Journey Active" : "Begin Journey") + '</button></div></div>';
   if (active) {
     html += '<div style="border:1px solid #b8863b;border-radius:6px;padding:9px;background:rgba(184,134,59,.10);margin:8px 0">'
       + '<b>' + _lootEsc(active.name) + '</b><div style="font-size:11px;opacity:.78">'
@@ -501,7 +572,7 @@ function _ssPeopleHTML(C) {
     html += '<div style="border:1px solid var(--rule);border-left:4px solid ' + col + ';border-radius:6px;padding:9px;background:rgba(0,0,0,.14)">'
       + '<div style="display:flex;justify-content:space-between;gap:8px"><b>' + _lootEsc(p.name) + '</b><span style="font-size:12px;color:' + col + '">' + _lootEsc(p.provenance || "Inferred") + '</span></div>'
       + '<div style="font-size:11px;opacity:.76">' + _lootEsc(p.rank || "Soldier") + ' &middot; ' + _lootEsc(p.side || "") + ' &middot; OVR ' + p.ovr + ' ' + _lootEsc(p.grade && p.grade.letter || "") + '</div>'
-      + '<button type="button" class="upg" style="margin-top:7px" data-ss-start="' + _lootEsc(p.pid) + '">Begin Journey</button>'
+      + '<button type="button" class="upg" style="margin-top:7px" data-ss-start="' + _lootEsc(p.pid) + '"' + (locked ? ' disabled aria-disabled="true"' : '') + '>' + (locked ? "Journey Active" : "Begin Journey") + '</button>'
       + '</div>';
   }
   return html + '</div>';

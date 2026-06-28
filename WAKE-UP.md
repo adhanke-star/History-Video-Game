@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-06-28: **PHASE I LOOT/SURVIVAL HARDENING IS SHIPPED. The Campaign Kit now resists bad saves, stack exploits, inactive bridge leakage, and Soldier journey restart abuse.**
+
+**Newest (D149, 2026-06-28):** This hardens the D148 Campaign Kit. It does not change canonical battle data, tactical combat rules, item balance data, `build/base.html`, or the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.
+
+**What changed:** `src/37-loot-survival.js` now sanitizes restored loot/survival/journey state more defensively, rejects prototype/meta keys in equipped items, caps saved notes/logs, requires literal boolean activation before survival can touch the battle bridge, normalizes future-tampered survival tick sentinels, and blocks active Soldier's Story restarts.
+
+**Player-facing effect:** once a Soldier's Story journey begins, the Campaign Kit's Begin Journey controls show `Journey Active` and stay disabled instead of overwriting the selected person. Inventory, survival, forage, and journey start behavior otherwise stay the D148 design.
+
+**Verified:** build GATE OK; focused `probe-loot-survival` 9/9 with 0 pageerrors and a Campaign Kit screenshot; `probe-save-slots` 9/9; `probe-bridge` 6/6; `probe-full-campaign` 4/4; `diag-classic` `nonBlank:346`; full `npm run vet:noreg` passed 79 commands. **Next:** D150 Army Register / person-unit axis, then D151 journey persistence, then D152 citation-grade replacement tooling. Chattanooga and the USCT playable battles still stay saved for last.
+
+---
+
 # ☀ WAKE-UP — 2026-06-27: **PHASE I LOOT/SURVIVAL + SOLDIER'S STORY PLAY-AS-ANYONE MVP IS SHIPPED. The Campaign Kit now gives the player loot, inventory, default-off survival pressure, and a full-current-registry Soldier journey picker.**
 
 **Newest (D148, 2026-06-27):** This is an additive Phase I gameplay spine. It does not change canonical battle data, tactical combat rules, `build/base.html`, or hand-edit the generated game file. `civil_war_generals.html` was rebuilt from `src/` by the build gate.
