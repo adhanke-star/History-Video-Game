@@ -207,14 +207,17 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
 - [ ] Logistics/rail network · POW exchange-collapse · disease/medical · hard war · irregular war · the four
       under-told-perspective threads · flagship named units · CS finance toolkit · war-finance civics · a real
       diplomacy system · the human-cost-with-gravity treatment. (All from §8 D31–D41.)
-- [ ] **Women in the war — soldier & relief threads (Aaron, run-k idea, 2026-06-15).** Add **female leads in the
+- [x] **Women in the war — soldier & relief threads (Aaron, run-k idea, 2026-06-15).** Add **female leads in the
       soldier-story rotation**, not only male: the women who enlisted **disguised as men** (est. several hundred —
       e.g. Sarah Rosetta Wakeman / "Pvt. Lyons Wakeman", Jennie Hodgers / "Albert Cashier" [served the whole war,
       drew a pension], Loreta Janeta Velázquez / "Harry T. Buford" on the CS side — frame the contested memoir as
       contested), and a **Clara Barton arc** (the "Angel of the Battlefield" → the Missing Soldiers Office → the
       American Red Cross). Neighbors: **Dr. Mary Edwards Walker** (the only woman awarded the Medal of Honor) and
       **Harriet Tubman** (scout/spy; the Combahee River Raid, 1863). Verified/anti-Lost-Cause; ties USCT (C3) +
-      the human-cost treatment. ‹idea — implement when soldier-stories / the codex land; not B-4 scope›
+      the human-cost treatment. ‹✅ COMPLETE through D153 as a citation-grade Campaign Kit card lane beside Soldier's
+      Story: 7 records, 6 Verified + 1 Disputed Velazquez, no `replacePid`, no `ss:` ids, no Soldier's Story registry
+      leakage, `data/soldier-replacements.json` still empty, codex portraits reused only where already sourced, and no
+      Wakeman wartime portrait asserted.›
 - [x] **Tactical Engineering Corps — units, features & effects tied to the effectiveness/realism sliders (Aaron,
       run-k directive, 2026-06-15; "all of the above" locked 2026-06-20, D87) — ✅ COMPLETE (all 3 increments, D87–D89).** Built as `src/tactical/T13-engineering.js`
       in vetted increments. ~~Field entrenchments~~ ✅ (key E; dig-in → facing-aware parapet cover; reads the B-5

@@ -1,0 +1,536 @@
+{
+  "_meta": {
+    "decision": "D153",
+    "schema": "cw_women_in_war_v1",
+    "scope": "Additive women-in-war presentation cards for Soldier's Story, Army Register, and codex-adjacent play.",
+    "provenance": "Inferred",
+    "note": "This lane renders cards only. It never carries replacePid, never targets the ss: namespace, and never overrides a registry combatant row."
+  },
+  "schema": "cw_women_in_war_v1",
+  "records": [
+    {
+      "id": "wakeman-sarah-rosetta",
+      "canonicalName": "Sarah Rosetta Wakeman",
+      "wartimeAlias": "Pvt. Lyons Wakeman",
+      "roleCategory": "disguised-soldier",
+      "side": "US",
+      "wartimeRole": "Private, Co. H, 153rd New York Volunteer Infantry; served under male alias from enlistment Aug 30, 1862 until death Jun 19, 1864.",
+      "unitClaimed": "153rd NY Inf., Co. H",
+      "battleClaimed": "Pleasant Hill, Apr 9 1864 (Red River)",
+      "provenance": "Verified",
+      "registryMappable": {
+        "canMap": false,
+        "reason": "No — 153rd NY not in OOB; records[] empty"
+      },
+      "recommendedLane": "women-thread-card",
+      "sources": [
+        {
+          "title": "An Uncommon Soldier: The Civil War Letters of Sarah Rosetta Wakeman…",
+          "author": "Lauren Cook Burgess, ed.; foreword James M. McPherson",
+          "repository": "Minerva Center 1994 / Oxford UP",
+          "locator": "ISBN 9780195102437; Internet Archive archive.org/details/uncommonsoldierc00wake",
+          "url": "https://archive.org/details/uncommonsoldierc00wake",
+          "type": "primary",
+          "supports": "identity, alias, unit, enlistment date, Red River service, death, burial under male name",
+          "independent": true
+        },
+        {
+          "title": "Sarah Rosetta Wakeman",
+          "author": "American Battlefield Trust",
+          "repository": "American Battlefield Trust",
+          "locator": "battlefields.org/learn/biographies/sarah-rosetta-wakeman",
+          "url": "https://www.battlefields.org/learn/biographies/sarah-rosetta-wakeman",
+          "type": "secondary",
+          "supports": "birth Jan 16 1843 Bainbridge NY; Pleasant Hill Apr 9 1864; chronic diarrhea; death Jun 19 1864; burial Chalmette Nat'l Cemetery as Lyons Wakeman; sex never discovered",
+          "independent": true
+        },
+        {
+          "title": "All the Daring of the Soldier",
+          "author": "Elizabeth D. Leonard",
+          "repository": "W.W. Norton",
+          "locator": "1999; ISBN 978-0-393-04712-7",
+          "url": "",
+          "type": "secondary",
+          "supports": "service corroborated from military/pension records and period newspapers",
+          "independent": true
+        },
+        {
+          "title": "Chalmette National Cemetery / Jean Lafitte NHP",
+          "author": "National Park Service",
+          "repository": "National Park Service",
+          "locator": "nps.gov/jela",
+          "url": "https://www.nps.gov/jela",
+          "type": "secondary",
+          "supports": "burial site under the male identity. Specific section/grave number deliberately not asserted — not independently corroborated.",
+          "independent": true
+        }
+      ],
+      "sourcesRaw": [
+        "*An Uncommon Soldier: The Civil War Letters of Sarah Rosetta Wakeman…* ed. Lauren Cook Burgess, foreword James M. McPherson — Minerva Center 1994 / Oxford UP (ISBN 9780195102437); Internet Archive `archive.org/details/uncommonsoldierc00wake` **[primary]** — identity, alias, unit, enlistment date, Red River service, death, burial under male name.",
+        "American Battlefield Trust biography — `battlefields.org/learn/biographies/sarah-rosetta-wakeman` **[secondary]** — birth Jan 16 1843 Bainbridge NY; Pleasant Hill Apr 9 1864; chronic diarrhea; death Jun 19 1864; burial Chalmette Nat'l Cemetery as Lyons Wakeman; sex never discovered.",
+        "Elizabeth D. Leonard, *All the Daring of the Soldier* — W.W. Norton 1999 (ISBN 978-0-393-04712-7) **[secondary, independent of the letters]** — service corroborated from military/pension records and period newspapers.",
+        "NPS Chalmette National Cemetery / Jean Lafitte NHP — `nps.gov/jela` **[secondary]** — burial site under the male identity. *(Specific section/grave number deliberately not asserted — not independently corroborated.)*"
+      ],
+      "playerCopy": "Sarah Rosetta Wakeman was born January 16, 1843, in Bainbridge, New York. On August 30, 1862, she enlisted as Private Lyons Wakeman in Company H, 153rd New York Volunteer Infantry; her female identity was never officially detected. After provost and garrison duty around Washington, the regiment deployed to Louisiana in 1864 for Maj. Gen. Nathaniel Banks's Red River Campaign. Wakeman stood in the line at the Battle of Pleasant Hill on April 9, 1864. She fell ill with chronic diarrhea, died June 19, 1864, in a New Orleans hospital, and was buried with military honors at Chalmette National Cemetery under the name Lyons Wakeman. Her letters home, published in 1994, are the only known first-person correspondence of a woman who served disguised as a Union infantryman.",
+      "integrityNote": "A working-class woman enlisted for wages, served faithfully in a real Union regiment, and was buried with honors under her alias because her sex was never discovered — attested by her own letters and independent military records; no Lost-Cause myth required.",
+      "warningFlags": [
+        "No modeled unit (153rd NY absent, records[] empty) → not a D152 replacement now",
+        "Co. H standard, faint Co. G redesignation note (non-load-bearing)",
+        "Monett's Bluff Apr 23 1864 rests on secondary sources — cite Pleasant Hill as the firm battle",
+        "letters unpublished until 1994 (no identity dispute)",
+        "no confirmed wartime photograph — do not assert one."
+      ]
+    },
+    {
+      "id": "cashier-albert-d-j",
+      "canonicalName": "Albert D. J. Cashier",
+      "wartimeAlias": "Jennie Hodgers",
+      "roleCategory": "disguised-soldier",
+      "side": "US",
+      "wartimeRole": "Private, Co. G, 95th Illinois Volunteer Infantry; full three-year enlistment incl. Siege of Vicksburg; mustered out Aug 17, 1865.",
+      "unitClaimed": "95th Illinois Inf., Co. G",
+      "battleClaimed": "Siege of Vicksburg 1863 (~40 engagements)",
+      "provenance": "Verified",
+      "registryMappable": {
+        "canMap": false,
+        "reason": "No — 95th Ill. not in OOB; records[] empty"
+      },
+      "recommendedLane": "women-thread-card",
+      "sources": [
+        {
+          "title": "Women Soldiers of the Civil War (Pt. 1)",
+          "author": "DeAnne Blanton",
+          "repository": "NARA Prologue",
+          "locator": "Vol. 25 No. 1, Spring 1993",
+          "url": "https://www.archives.gov/publications/prologue/1993/spring/women-in-the-civil-war-1.html",
+          "type": "secondary",
+          "supports": "NARA primaries: CMSR RG 94; pension C 2573248 RG 15",
+          "independent": true
+        },
+        {
+          "title": "Albert Cashier aka Jennie Hodgers",
+          "author": "American Battlefield Trust",
+          "repository": "American Battlefield Trust",
+          "locator": "battlefields.org/learn/biographies/albert-cashier",
+          "url": "https://www.battlefields.org/learn/biographies/albert-cashier",
+          "type": "secondary",
+          "supports": "Clogherhead, Co. Louth, Ireland; Vicksburg + 40 engagements; postwar pension & voting; death Oct 10 1915, buried in uniform",
+          "independent": true
+        },
+        {
+          "title": "The Little Soldier of the 95th",
+          "author": "Gerhard P. Clausius",
+          "repository": "Journal of the Illinois State Historical Society",
+          "locator": "Vol. 51 No. 4 (Winter 1958), pp. 380–387",
+          "url": "",
+          "type": "secondary",
+          "supports": "peer-reviewed secondary",
+          "independent": true
+        },
+        {
+          "title": "They Fought Like Demons",
+          "author": "DeAnne Blanton and Lauren Cook",
+          "repository": "LSU Press",
+          "locator": "2002, pp. 174–175",
+          "url": "",
+          "type": "secondary",
+          "supports": "secondary; not independent of Blanton 1993",
+          "independent": false
+        }
+      ],
+      "sourcesRaw": [
+        "DeAnne Blanton, \"Women Soldiers of the Civil War (Pt. 1),\" **NARA Prologue** Vol. 25 No. 1, Spring 1993 — `archives.gov/publications/prologue/1993/spring/women-in-the-civil-war-1.html` **[secondary on NARA primaries: CMSR RG 94; pension C 2573248 RG 15]**.",
+        "American Battlefield Trust, \"Albert Cashier aka Jennie Hodgers\" — `battlefields.org/learn/biographies/albert-cashier` **[secondary]** — Clogherhead, Co. Louth, Ireland; Vicksburg + 40 engagements; postwar pension & voting; death Oct 10 1915, buried in uniform.",
+        "Gerhard P. Clausius, \"The Little Soldier of the 95th,\" *Journal of the Illinois State Historical Society* Vol. 51 No. 4 (Winter 1958), pp. 380–387 **[peer-reviewed secondary]**.",
+        "Blanton & Cook, *They Fought Like Demons* — LSU Press 2002, pp. 174–175 **[secondary; not independent of Blanton 1993]**."
+      ],
+      "playerCopy": "Born Jennie Irene Hodgers in County Louth, Ireland, Albert D. J. Cashier enlisted in Company G, 95th Illinois Infantry in August 1862 and served every day of a full three-year term, mustering out August 17, 1865. Cashier fought in roughly forty engagements, among them the Siege of Vicksburg, the Red River Campaign, and the Franklin-Nashville Campaign, and was never wounded or captured. After the war Cashier voted, worked, and drew a veteran's pension in Illinois, living as Albert Cashier for more than fifty years. When the identity was discovered in 1913, former Company G comrades affirmed Cashier's service before the pension board. Cashier died October 10, 1915, and was buried in full Union uniform.",
+      "integrityNote": "The NARA service record and pension file are uncontested; the regiment, the Army, and postwar comrades all affirmed the service — present the lifelong male identity with dignity, not as fraud or scandal.",
+      "warningFlags": [
+        "No modeled unit (95th Ill. absent, records[] empty) → not a D152 replacement now",
+        "enlistment date varies (NARA Aug 3 vs ABT Aug 6 1862) → copy says \"August 1862\"",
+        "death-date: NARA's \"Oct 11 1914\" is an outlier; consensus Oct 10 1915",
+        "postwar identity genuinely contested by modern scholars (woman disguised for opportunity vs. transgender man) — copy uses male pronouns per lifelong self-identification; the interpretive debate is live",
+        "Vicksburg rifle-capture anecdote uncited → omitted",
+        "primary CMSR/pension not directly read (via Blanton 1993 / Clausius 1958)."
+      ]
+    },
+    {
+      "id": "velazquez-loreta-janeta",
+      "canonicalName": "Loreta Janeta Velazquez",
+      "wartimeAlias": "Lt. Harry T. Buford",
+      "roleCategory": "contested",
+      "side": "CS",
+      "wartimeRole": "Self-described Confederate officer/spy under the alias \"Lieutenant Harry T. Buford.\" Combat-service claims unverified and widely disputed.",
+      "unitClaimed": "none documented (claims uncorroborated)",
+      "battleClaimed": "First Bull Run, Ft. Donelson, Shiloh (all claimed, none corroborated)",
+      "provenance": "Disputed",
+      "disputeNote": "The sole primary source is Velazquez's own 1876 memoir, The Woman in Battle. Confederate Gen. Jubal Early denounced it as fiction on publication; modern archival scholarship by William C. Davis (Inventing Loreta Velasquez, Southern Illinois UP, 2016) found no compiled service record for \"Harry T. Buford,\" identified errors in claimed unit assignments, and concluded she never saw combat. NARA's DeAnne Blanton records only that she published the memoir and operated as a self-financed soldier not officially attached to any regiment, with no standard enlistment documentation. The central dispute is whether she served in combat at all.",
+      "registryMappable": {
+        "canMap": false,
+        "reason": "No — no unit; claim contested"
+      },
+      "recommendedLane": "women-thread-card",
+      "sources": [
+        {
+          "title": "The Woman in Battle",
+          "author": "Loreta Janeta Velazquez",
+          "repository": "UNC DocSouth",
+          "locator": "1876; docsouth.unc.edu/fpn/velazquez/velazquez.html",
+          "url": "https://docsouth.unc.edu/fpn/velazquez/velazquez.html",
+          "type": "primary",
+          "supports": "the sole self-account",
+          "independent": true
+        },
+        {
+          "title": "Inventing Loreta Velasquez",
+          "author": "William C. Davis",
+          "repository": "Southern Illinois UP",
+          "locator": "2016; ISBN 9780809335220; Project MUSE muse.jhu.edu/book/48035",
+          "url": "https://muse.jhu.edu/book/48035",
+          "type": "secondary",
+          "supports": "secondary refutation",
+          "independent": true
+        },
+        {
+          "title": "Women Soldiers of the Civil War (Pt. 1)",
+          "author": "DeAnne Blanton",
+          "repository": "NARA Prologue",
+          "locator": "Spring 1993",
+          "url": "https://www.archives.gov/publications/prologue/1993/spring/women-in-the-civil-war-1.html",
+          "type": "secondary",
+          "supports": "no standard enlistment documentation",
+          "independent": true
+        },
+        {
+          "title": "Loreta Janeta Velazquez",
+          "author": "American Battlefield Trust",
+          "repository": "American Battlefield Trust",
+          "locator": "biography",
+          "url": "https://www.battlefields.org/learn/biographies/loreta-janeta-velazquez",
+          "type": "tertiary",
+          "supports": "notes nearly all knowledge derives from her own book",
+          "independent": true
+        }
+      ],
+      "sourcesRaw": [
+        "*The Woman in Battle* (1876) — UNC DocSouth, `docsouth.unc.edu/fpn/velazquez/velazquez.html` **[primary, the sole self-account]**.",
+        "William C. Davis, *Inventing Loreta Velasquez* — Southern Illinois UP 2016 (ISBN 9780809335220); Project MUSE `muse.jhu.edu/book/48035` **[secondary refutation]**.",
+        "DeAnne Blanton, NARA Prologue, Spring 1993 **[secondary]** — no standard enlistment documentation.",
+        "American Battlefield Trust biography **[tertiary]** — notes nearly all knowledge derives from her own book."
+      ],
+      "playerCopy": "Born in Cuba around 1842, Loreta Janeta Velazquez claimed to have disguised herself as Confederate Lieutenant Harry T. Buford, raising a volunteer company and fighting at Bull Run, Fort Donelson, and Shiloh before turning to espionage. Her 1876 memoir, The Woman in Battle, made her famous and controversial at once. Confederate General Jubal Early denounced it as fiction. Modern archival research by historian William C. Davis (2016) found no military service record for \"Harry T. Buford\" and identified errors in her claimed unit assignments; NARA records note no standard enlistment documentation. Historians disagree over how much, if any, of her combat service was real. Verified or invented, her account exposed the Confederacy's anxieties about its own gender order and remains one of the war's most disputed personal narratives.",
+      "integrityNote": "Early's attack was driven partly by Lost-Cause anxieties about Confederate respectability and gender, but independent modern scholarship (Davis 2016; NARA) finds the combat claims uncorroborated — the skepticism rests on evidence, not on Early's apologetics.",
+      "warningFlags": [
+        "sole source is a self-published memoir",
+        "no CMSR for \"Harry T. Buford\"",
+        "Davis concludes she never saw combat / memoir substantially invented",
+        "claimed unit assignments contain errors",
+        "Cuban origin & 1842 birth disputed",
+        "espionage claims unverified",
+        "postwar confidence schemes undercut reliability",
+        "no modeled OOB unit",
+        "Buford name-collision is nominal only",
+        "roleCategory reflects her claim, which is Disputed. Must display as Disputed, never Verified."
+      ]
+    },
+    {
+      "id": "barton-clara",
+      "canonicalName": "Clara Barton",
+      "wartimeAlias": "",
+      "roleCategory": "relief",
+      "side": "US",
+      "wartimeRole": "Civilian battlefield relief organizer / supply distributor (not a formally trained nurse, by her own account); 1862 military passes to drive her own supply wagons to the front; named head nurse for a unit of Gen. Butler's command in 1864.",
+      "unitClaimed": "",
+      "battleClaimed": "Cedar Mtn, Antietam, Fredericksburg, Morris I.",
+      "provenance": "Verified",
+      "codexRef": "clara-barton",
+      "registryMappable": {
+        "canMap": false,
+        "reason": "No — civilian, no soldier slot; in codex"
+      },
+      "recommendedLane": "women-thread-card",
+      "sources": [
+        {
+          "title": "Clara Barton",
+          "author": "National Park Service",
+          "repository": "National Park Service",
+          "locator": "nps.gov/people/clara-barton.htm",
+          "url": "https://www.nps.gov/people/clara-barton.htm",
+          "type": "secondary",
+          "supports": "NPS People profile",
+          "independent": true
+        },
+        {
+          "title": "Clara Barton",
+          "author": "National Park Service",
+          "repository": "Antietam National Battlefield",
+          "locator": "nps.gov/anti/learn/historyculture/clarabarton.htm",
+          "url": "https://www.nps.gov/anti/learn/historyculture/clarabarton.htm",
+          "type": "secondary",
+          "supports": "NPS Antietam battlefield",
+          "independent": true
+        },
+        {
+          "title": "Clara Barton",
+          "author": "Debra Michals, PhD",
+          "repository": "National Women's History Museum",
+          "locator": "2015",
+          "url": "https://www.womenshistory.org/education-resources/biographies/clara-barton",
+          "type": "secondary",
+          "supports": "National Women's History Museum",
+          "independent": true
+        },
+        {
+          "title": "Clara Barton",
+          "author": "Marian Moser Jones, PhD",
+          "repository": "Essential Civil War Curriculum / Virginia Tech",
+          "locator": "grounded in Pryor 1987 & Oates 1994",
+          "url": "https://www.essentialcivilwarcurriculum.com/clara-barton.html",
+          "type": "secondary",
+          "supports": "Essential Civil War Curriculum / Virginia Tech",
+          "independent": true
+        }
+      ],
+      "sourcesRaw": [
+        "NPS People profile `nps.gov/people/clara-barton.htm`",
+        "NPS Antietam battlefield `nps.gov/anti/learn/historyculture/clarabarton.htm`",
+        "National Women's History Museum (Debra Michals, PhD, 2015)",
+        "Essential Civil War Curriculum / Virginia Tech (Marian Moser Jones, PhD; grounded in Pryor 1987 & Oates 1994)"
+      ],
+      "playerCopy": "Clara Barton (1821–1912) was a 40-year-old former teacher and U.S. Patent Office clerk when the war began. She rejected the title of nurse, describing her mission plainly: \"to get timely supplies to those needing.\" Granted military passes in 1862, she loaded her own wagons and drove them to the front at Cedar Mountain, Antietam, Fredericksburg, and Morris Island ahead of or alongside the armies. At Antietam on September 17, 1862, she reached a field hospital before the army's supplies arrived; as she gave a wounded man a drink, a bullet tore through her sleeve and killed him. She worked roughly twenty-four hours there, then collapsed back in Washington with typhoid fever, recovering over a month. After the war she ran the Office of Missing Soldiers and, in 1881, founded the American Red Cross.",
+      "integrityNote": "A self-funded civilian logistics organizer — not a soldier, officer, or trained nurse; her significance is the supply gap she filled in a chaotic Union medical system, not a romanticized \"angel\" stereotype.",
+      "warningFlags": [
+        "already in codex.json (`clara-barton`) with portrait — anchor on existing record, no duplicate",
+        "not mappable to any soldier slot",
+        "lead role label with supply/logistics (formal \"head nurse\" only in 1864)",
+        "verifier corrected two over-claimed draft details: removed invented \"three days of unbroken field service\" (actual ~24 hrs at Antietam) and the implication she collapsed with typhoid on the field (she collapsed in Washington after Antietam)",
+        "NPS People page does not mention Fredericksburg — that presence is retained on independent support (Essential Civil War Curriculum / Pryor & Oates)."
+      ]
+    },
+    {
+      "id": "walker-mary-edwards",
+      "canonicalName": "Dr. Mary Edwards Walker",
+      "wartimeAlias": "",
+      "roleCategory": "medical",
+      "side": "US",
+      "wartimeRole": "Contract Acting Assistant Surgeon (civilian), Army of the Cumberland; later attached to the 52nd Ohio Infantry as assistant to the regimental surgeon. Captured Apr 1864, held ~4 months as a POW at Castle Thunder, Richmond, until a summer-1864 exchange. Only woman ever awarded the Medal of Honor (Nov 11 1865; rescinded 1917; restored 1977).",
+      "unitClaimed": "52nd Ohio Inf. (contract surgeon) / Army of the Cumberland",
+      "battleClaimed": "field hospitals nr Fredericksburg & Chattanooga (not a combatant)",
+      "provenance": "Verified",
+      "codexRef": "mary-edwards-walker",
+      "registryMappable": {
+        "canMap": false,
+        "reason": "No — civilian contract surgeon; in codex"
+      },
+      "recommendedLane": "women-thread-card",
+      "sources": [
+        {
+          "title": "Mary Walker",
+          "author": "National Park Service",
+          "repository": "National Park Service",
+          "locator": "nps.gov/people/mary-walker.htm",
+          "url": "https://www.nps.gov/people/mary-walker.htm",
+          "type": "secondary",
+          "supports": "NPS",
+          "independent": true
+        },
+        {
+          "title": "Mary E. Walker",
+          "author": "American Battlefield Trust",
+          "repository": "American Battlefield Trust",
+          "locator": "battlefields.org/learn/biographies/mary-e-walker",
+          "url": "https://www.battlefields.org/learn/biographies/mary-e-walker",
+          "type": "secondary",
+          "supports": "American Battlefield Trust",
+          "independent": true
+        },
+        {
+          "title": "Changing the Face of Medicine",
+          "author": "National Library of Medicine",
+          "repository": "National Library of Medicine / NIH",
+          "locator": "Dr. Mary Edwards Walker",
+          "url": "https://cfmedicine.nlm.nih.gov/physicians/biography_325.html",
+          "type": "secondary",
+          "supports": "National Library of Medicine / NIH",
+          "independent": true
+        },
+        {
+          "title": "Annual Legacies: Dr. Mary Edwards Walker",
+          "author": "American Civil War Museum",
+          "repository": "American Civil War Museum",
+          "locator": "acwm.org/blog/annual-legacies-dr-mary-edwards-walker/",
+          "url": "https://acwm.org/blog/annual-legacies-dr-mary-edwards-walker/",
+          "type": "secondary",
+          "supports": "American Civil War Museum",
+          "independent": true
+        }
+      ],
+      "sourcesRaw": [
+        "NPS `nps.gov/people/mary-walker.htm`",
+        "American Battlefield Trust `battlefields.org/learn/biographies/mary-e-walker`",
+        "National Library of Medicine / NIH \"Changing the Face of Medicine\"",
+        "American Civil War Museum `acwm.org/blog/annual-legacies-dr-mary-edwards-walker/`"
+      ],
+      "playerCopy": "Dr. Mary Edwards Walker (1832–1919) earned her medical degree at Syracuse Medical College in 1855, among the first American women to do so. When the war came she served without pay in Washington and field hospitals near Fredericksburg and Chattanooga before the Army of the Cumberland contracted her in September 1863 as an Acting Assistant Surgeon — effectively the first female surgeon in the U.S. Army — later attaching her to the 52nd Ohio Infantry. She treated soldiers and civilians on both sides, often crossing the lines to reach the wounded. In April 1864 Confederate troops arrested her as a spy and held her about four months at Castle Thunder prison in Richmond. Exchanged that summer, she resumed service. On November 11, 1865, she received the Medal of Honor — still the only woman ever to hold it.",
+      "integrityNote": "Her status as the sole female Medal of Honor recipient rests on documented Union medical service and a real Confederate imprisonment; the popular \"self-sacrificing spy\" embellishment is flagged as unsupported (per NLM), not repeated.",
+      "warningFlags": [
+        "already in codex.json — no duplicate",
+        "never a soldier-replacement (civilian contract surgeon; no 52nd Ohio / Army-of-the-Cumberland infantry slot in OOB)",
+        "her title was civilian, not a commission — the 1917 rescission turned on exactly this; do not render her with military rank",
+        "sources disagree on when the 52nd Ohio assignment began (NPS Sept 1863 vs ABT/NLM ~1864 release) → copy avoids a hard date",
+        "espionage \"allowed herself to be captured\" claim explicitly undocumented (NLM) — kept out",
+        "`battleClaimed` cleared (field-hospital service near battles, not a combatant)."
+      ]
+    },
+    {
+      "id": "tubman-harriet",
+      "canonicalName": "Harriet Tubman",
+      "wartimeAlias": "",
+      "roleCategory": "scout-spy",
+      "side": "US",
+      "wartimeRole": "Union scout, spy, and nurse; directed an intelligence ring for the Department of the South and guided the Jun 2, 1863 Combahee River Raid that freed 700+ enslaved people — the only Civil War combat operation planned/led with a woman's direction.",
+      "unitClaimed": "operated with 2nd SC Volunteers (Montgomery)",
+      "battleClaimed": "Combahee River Raid, Jun 2 1863",
+      "provenance": "Verified",
+      "codexRef": "harriet-tubman",
+      "registryMappable": {
+        "canMap": false,
+        "reason": "No — scout/nurse, no ss: row; 2nd SC not in OOB; in codex"
+      },
+      "recommendedLane": "women-thread-card",
+      "sources": [
+        {
+          "title": "Harriet Tubman and the 54th Massachusetts",
+          "author": "National Park Service",
+          "repository": "National Park Service",
+          "locator": "NPS",
+          "url": "https://www.nps.gov/articles/harriet-tubman-and-the-54th-massachusetts.htm",
+          "type": "secondary",
+          "supports": "NPS",
+          "independent": true
+        },
+        {
+          "title": "Combahee River Ferry and Harriet Tubman Bridge",
+          "author": "National Park Service",
+          "repository": "National Park Service",
+          "locator": "NPS",
+          "url": "https://www.nps.gov/places/combahee-river-ferry-and-harriet-tubman-bridge.htm",
+          "type": "secondary",
+          "supports": "NPS",
+          "independent": true
+        },
+        {
+          "title": "Claim of Harriet Tubman",
+          "author": "Harriet Tubman",
+          "repository": "NARA RG 233",
+          "locator": "Tubman's own General Affidavit / H.R. 4982 (1899)",
+          "url": "https://www.archives.gov/legislative/features/claim-of-harriet-tubman",
+          "type": "primary",
+          "supports": "Tubman's own General Affidavit / H.R. 4982 (1899)",
+          "independent": true
+        },
+        {
+          "title": "COMBEE",
+          "author": "Edda L. Fields-Black",
+          "repository": "Oxford UP",
+          "locator": "2025 Pulitzer Prize for History & Lincoln Prize",
+          "url": "",
+          "type": "secondary",
+          "supports": "Pulitzer scholarship",
+          "independent": true
+        }
+      ],
+      "sourcesRaw": [
+        "NPS \"Harriet Tubman and the 54th Massachusetts\"",
+        "NPS \"Combahee River Ferry and Harriet Tubman Bridge\"",
+        "NARA RG 233 — Tubman's own General Affidavit / H.R. 4982 (1899) `archives.gov/legislative/features/claim-of-harriet-tubman` **[primary]**",
+        "Edda L. Fields-Black, *COMBEE* — Oxford UP, **2025 Pulitzer Prize for History** & Lincoln Prize"
+      ],
+      "playerCopy": "Harriet Tubman escaped slavery, then led dozens to freedom on the Underground Railroad before the war. In 1862 she went to South Carolina, nursing Black soldiers and the newly freed at Port Royal. By early 1863 she directed a ring of scouts and pilots for the Union's Department of the South, gathering intelligence on Confederate torpedo placements and plantation defenses. On June 2, 1863, her intelligence guided gunboats carrying Colonel James Montgomery's 2nd South Carolina Volunteers up the Combahee River, freeing more than 700 enslaved men, women, and children — the largest single emancipation action of the war, and the only one led with a woman's planning. For decades Congress denied her the soldier's pension her service had earned, paying her only as a nurse.",
+      "integrityNote": "Her military leadership — attested by her own sworn pension affidavit, NPS, NARA, and Fields-Black's 2025 Pulitzer-winning scholarship — was suppressed for over a century by a Congress that paid her only as a nurse; the \"helpless refugee\"/sanitized \"Mother Tubman\" framing is a distortion.",
+      "warningFlags": [
+        "scout/spy/nurse — not disguised-soldier; do not launder into a combatant slot",
+        "no ss: row; not a D152 replacement",
+        "2nd SC Volunteers not modeled",
+        "number freed varies (700+ floor; 750–756) → copy uses \"more than 700\"",
+        "affidavit 1897 (NPS) vs c.1898 (NARA); H.R. 4982 (1899) acknowledged only nursing — do not reproduce that erasure",
+        "raid spanned night of Jun 1 into Jun 2 — use Jun 2",
+        "codex.json already has a verified Tubman entry — augment, do not replace."
+      ]
+    },
+    {
+      "id": "dix-dorothea-lynde",
+      "canonicalName": "Dorothea Lynde Dix",
+      "wartimeAlias": "",
+      "roleCategory": "nursing-administration",
+      "side": "US",
+      "wartimeRole": "Superintendent of Army Nurses, Union Army, Jun 1861–Sep 1865 — the first federal executive position held by a woman in U.S. history.",
+      "unitClaimed": "",
+      "battleClaimed": "",
+      "provenance": "Verified",
+      "codexRef": "dorothea-dix",
+      "registryMappable": {
+        "canMap": false,
+        "reason": "No — civilian federal appointee; in codex"
+      },
+      "recommendedLane": "women-thread-card",
+      "sources": [
+        {
+          "title": "Dorothea Dix",
+          "author": "National Park Service",
+          "repository": "National Park Service",
+          "locator": "nps.gov/people/dorothea-dix.htm",
+          "url": "https://www.nps.gov/people/dorothea-dix.htm",
+          "type": "secondary",
+          "supports": "NPS",
+          "independent": true
+        },
+        {
+          "title": "Dorothea Lynde Dix",
+          "author": "American Battlefield Trust",
+          "repository": "American Battlefield Trust",
+          "locator": "battlefields.org/learn/biographies/dorothea-lynde-dix",
+          "url": "https://www.battlefields.org/learn/biographies/dorothea-lynde-dix",
+          "type": "secondary",
+          "supports": "American Battlefield Trust",
+          "independent": true
+        },
+        {
+          "title": "Dorothea Dix and Cornelia Hancock",
+          "author": "National Women's History Museum",
+          "repository": "National Women's History Museum",
+          "locator": "Dorothea Dix and Cornelia Hancock",
+          "url": "https://www.womenshistory.org/articles/dorothea-dix-and-cornelia-hancock",
+          "type": "secondary",
+          "supports": "National Women's History Museum",
+          "independent": true
+        },
+        {
+          "title": "Liljenquist Collection portrait, item 2021640301",
+          "author": "G.K. Warren",
+          "repository": "Library of Congress",
+          "locator": "PPMSCA 72110",
+          "url": "https://www.loc.gov/item/2021640301/",
+          "type": "primary",
+          "supports": "Library of Congress portrait",
+          "independent": true
+        }
+      ],
+      "sourcesRaw": [
+        "NPS `nps.gov/people/dorothea-dix.htm`",
+        "American Battlefield Trust `battlefields.org/learn/biographies/dorothea-lynde-dix`",
+        "National Women's History Museum \"Dorothea Dix and Cornelia Hancock\"",
+        "Library of Congress Liljenquist Collection portrait, item `2021640301` (PPMSCA 72110; G.K. Warren) **[primary]**."
+      ],
+      "playerCopy": "Dorothea Lynde Dix, already a noted antebellum reformer for the humane care of the mentally ill, arrived in Washington in April 1861 and offered her services to the Union. On June 10, 1861, Secretary of War Simon Cameron appointed her Superintendent of Army Nurses — the first federal executive position held by a woman in U.S. history. She recruited, vetted, and assigned thousands of women to Union hospitals, codifying standards in Circular No. 8 (July 24, 1862). Her authority was deliberately curtailed by General Order No. 351 in October 1863, which let surgeons bypass her, leaving her a superintendent largely in name. She and her nurses were discharged September 11, 1865.",
+      "integrityNote": "Present without softening that a male medical establishment progressively stripped her authority (General Order No. 351, 1863); her legacy is institution-building under hostile oversight, not unchallenged command.",
+      "warningFlags": [
+        "departure date varies (Aug vs Sep 1865) → uses precise \"September 11, 1865\"",
+        "GO No. 351 left her \"superintendent in name only\" for the war's final two years — do not overstate her authority",
+        "no unit/rank/battle — civilian administrative role only",
+        "already in codex.json with three sources — reconcile, do not duplicate."
+      ]
+    }
+  ]
+}

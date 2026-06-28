@@ -1211,7 +1211,8 @@ function lootRenderTab(C) {
     + _lootSurvivalHTML(C)
     + '<hr class="rule">'
     + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin-bottom:5px">The Soldier\'s Story</div>'
-    + _ssPeopleHTML(C);
+    + _ssPeopleHTML(C)
+    + (typeof wiwThreadHTML === "function" ? wiwThreadHTML(C) : "");
 }
 
 function lootWireTab(C) {
@@ -1303,4 +1304,5 @@ function lootWireTab(C) {
     }
   });
   applyRegisterFilters();
+  if (typeof wiwWireThread === "function") wiwWireThread(C, refresh);
 }

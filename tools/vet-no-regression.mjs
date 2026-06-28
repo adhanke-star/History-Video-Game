@@ -13,6 +13,7 @@ mkdirSync(TMP, { recursive: true });
 const SUITE = [
   ['build gate', 'tools/build.mjs'],
   ['soldier replacements import gate', 'tools/import-soldier-replacements.mjs'],
+  ['women in war import gate', 'tools/import-women-in-war.mjs'],
   ['boot default renderer', 'tools/bootprobe.mjs'],
   ['turn-one smoke', 'tools/t1probe.mjs'],
   ['main menu', 'tools/menuprobe.mjs'],
@@ -32,6 +33,7 @@ const SUITE = [
   ['command', 'tools/probe-command.mjs'],
   ['camp', 'tools/probe-camp.mjs'],
   ['loot survival', 'tools/probe-loot-survival.mjs'],
+  ['women in war', 'tools/probe-women-in-war.mjs'],
   ['ratings', 'tools/probe-ratings.mjs'],
   ['order of battle', 'tools/probe-oob.mjs'],
   ['codex', 'tools/probe-codex.mjs'],

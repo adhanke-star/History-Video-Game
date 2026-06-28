@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-06-28: **WOMEN IN THE WAR IS SHIPPED. The Campaign Kit now has a citation-grade women-in-war card lane without laundering generated soldier rows.**
+
+**Newest (D153, 2026-06-28):** This completes the Phase-F Women in the War queue item as a presentation-only Campaign Kit lane beside Soldier's Story and the Army Register. It does not add sourced people to `data/soldier-replacements.json`, change canonical battle data, tactical combat rules, item balance data, `build/base.html`, or the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.
+
+**What changed:** new `data/women-in-war.json` (`cw_women_in_war_v1`) ships 7 sourced card records: 6 `Verified` and 1 `Disputed` Velazquez record. New `src/38-women-in-war.js` renders the section with search, role/provenance filters, source/details disclosure, integrity warnings, and a visible dispute note. New importer/probe files validate and lock the lane.
+
+**Guardrails:** every record has `registryMappable.canMap:false`; no record carries `replacePid` or an `ss:` id; `data/soldier-replacements.json` remains empty. Velazquez remains `Disputed`, has no modeled CS unit, and is not upgraded to a sourced soldier row. Barton, Walker, Tubman, and Dix reuse existing codex portraits; Wakeman does not assert a wartime portrait.
+
+**Verified:** women importer `records=7 verified=6 disputed=1`; empty-pack `--write` path preserved 7 women records and `soldier-replacements.records:0`; build GATE OK with `women-in-war ✓`; focused `probe-women-in-war` 8/8 with 0 pageerrors, 0 static leaks across 14 files, and a 490,400-byte screenshot; full no-regression coverage green in split segments after a `probe-ai` cleanup timeout was cleared by standalone `probe-ai` 15/15 and `vet:noreg -- --from="attacker ai"` ending **VET NO-REGRESSION OK — 34 commands**. Chattanooga and the USCT playable battles still stay saved for last.
+
+---
+
 # ☀ WAKE-UP — 2026-06-28: **PHASE I CITATION-GRADE SOLDIER TOOLING IS SHIPPED. The Soldier's Story lane can now accept sourced replacements later without laundering generated rows.**
 
 **Newest (D152, 2026-06-28):** This completes the citation-grade replacement tooling milestone over the D148-D151 Soldier's Story spine. It does not add any sourced historical person, change canonical battle data, tactical combat rules, item balance data, `build/base.html`, or the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.

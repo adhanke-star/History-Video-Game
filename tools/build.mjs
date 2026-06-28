@@ -323,9 +323,23 @@ for (const rm of RATING_MODULES) {
   }
 }
 
+// 4g. WOMEN-IN-WAR PRESENTATION GATE (D153) — this additive card lane must never
+// masquerade as a Soldier's Story replacement. Delegate to the canonical importer
+// so the build and CLI enforce the same schema: no replacePid, no ss: ids, resolved
+// codexRef links, and citation/dispute rules before the playable HTML is written.
+{
+  const p = join(ROOT, 'tools', 'import-women-in-war.mjs');
+  if (existsSync(p)) {
+    const chkWomen = spawnSync(process.execPath, [p], { cwd: ROOT, encoding: 'utf8' });
+    if (chkWomen.status !== 0) {
+      die(5, 'women-in-war: canonical validation failed:\n' + ((chkWomen.stderr || '') + (chkWomen.stdout || '')).trim());
+    }
+  }
+}
+
 // ---- 5. report + write ----
 const KB = (s) => (s.length / 1024).toFixed(1) + 'KB';
-console.log('GATE OK · parse ✓ · hex ✓ · collision ✓ · no-fudge ✓ · citations ✓');
+console.log('GATE OK · parse ✓ · hex ✓ · collision ✓ · no-fudge ✓ · citations ✓ · women-in-war ✓');
 console.log('  data:      GAME_DATA = {' + (dataKeys.join(', ') || '(none)') + '}');
 console.log('  assets:    __ASSETS = ' + embedCount + ' embedded (' + (embedBytes / 1024).toFixed(0) + 'KB raw' + (embedCount ? '; ' + Object.keys(embedCats).map(c => c + ':' + embedCats[c]).join(', ') : '') + ')');
 console.log('  modules:   ' + modules.join(', '));
