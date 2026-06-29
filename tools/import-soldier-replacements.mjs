@@ -117,6 +117,20 @@ function validateTeam(team, side, errors, label) {
     errors.push(label + '.team needs brigade, regiment, or company');
   }
 }
+function validatePortrait(portrait, errors, label) {
+  if (portrait == null) return;
+  if (!plain(portrait)) {
+    errors.push(label + '.portrait must be an object');
+    return;
+  }
+  const assetKey = cleanText(portrait.assetKey, 120);
+  if (!/^portraits\/[A-Za-z0-9_.-]{3,80}$/.test(assetKey)) errors.push(label + '.portrait.assetKey must be an embedded portraits/<key>');
+  if (!cleanText(portrait.alt, 180)) errors.push(label + '.portrait.alt is required');
+  if (!cleanText(portrait.caption, 220)) errors.push(label + '.portrait.caption is required');
+  if (!cleanText(portrait.credit, 120)) errors.push(label + '.portrait.credit is required');
+  const url = cleanText(portrait.url, 240);
+  if (url && !/^https?:\/\//.test(url)) errors.push(label + '.portrait.url must be http(s)');
+}
 function safePid(pid) {
   const s = cleanText(pid, 160);
   return /^[A-Za-z0-9][A-Za-z0-9_.:-]{2,159}$/.test(s) ? s : '';
@@ -164,6 +178,7 @@ function validatePack(pack) {
     validateSources(r.sources, errors, label);
     validatePersona(r.persona, errors, label);
     validateTeam(r.team, r.side, errors, label);
+    validatePortrait(r.portrait, errors, label);
   }
   return { ok: errors.length === 0, errors, records: records.length, verified, disputed };
 }

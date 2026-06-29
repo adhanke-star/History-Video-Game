@@ -1,6 +1,6 @@
 # Soldier Replacement Format
 
-**Status:** D152 tooling. This is the import lane for replacing generated Soldier's Story representative rows with sourced named people later. It does not add any named historical person by itself.
+**Status:** D154. This is the import lane for replacing generated Soldier's Story representative rows with sourced named people. D152 shipped the empty tooling lane; D154 adds the first narrow sourced replacement slice.
 
 Canonical file: `data/soldier-replacements.json`
 
@@ -84,6 +84,14 @@ Each record replaces exactly one generated slot:
     }
   ],
   "sourceNote": "Short rationale tying the sources to identity, rank, unit, and ratings.",
+  "portrait": {
+    "assetKey": "portraits/<embedded-key-without-extension>",
+    "alt": "Descriptive alt text.",
+    "caption": "Visible caption, including any rank/date caveat.",
+    "credit": "Holding institution.",
+    "rights": "Rights statement.",
+    "url": "https://example.org/source"
+  },
   "bio": "Optional short sourced note."
 }
 ```
@@ -96,5 +104,6 @@ The example above is a placeholder shape only. Do not import it as content.
 - `replacePid` is the current generated representative row to replace. It must start with `ss:` and must target a generated row in the live registry.
 - `provenance` must be `Verified` or `Disputed`. `Verified` requires at least two independent sources. `Disputed` also requires at least two sources plus `disputeNote`.
 - `persona` must include every rating attribute. Missing attributes are rejected so a neutral default cannot be mistaken for sourced ratings.
+- `portrait` is optional. If present, `assetKey` must point to an embedded `portraits/<key>` asset, and `alt`, `caption`, and `credit` are required. Caption any rank/date caveat honestly; a later officer portrait must not be implied to show the soldier at the replacement rank.
 - `generated: true`, `source: "Generated"`, prototype keys, duplicate `pid`, duplicate `replacePid`, malformed teams, and under-cited records are rejected.
-- The canonical `records` array stays empty until a real sourced candidate pack passes the CLI, build gate, focused browser probe, and no-regression gate.
+- A canonical record should be added only after the source trail, CLI, build gate, focused browser probe, and no-regression gate pass.

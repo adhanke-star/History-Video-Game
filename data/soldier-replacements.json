@@ -1,13 +1,99 @@
 {
   "_meta": {
-    "decision": "D152",
+    "decision": "D154",
     "schema": "cw_soldier_replacements_v1",
-    "scope": "Citation-grade future replacements for generated Soldier's Story representative rows.",
+    "scope": "Citation-grade replacements for generated Soldier's Story representative rows.",
     "provenance": "Inferred",
-    "note": "No sourced named soldiers are imported yet. The records array must stay empty until a candidate pack passes tools/import-soldier-replacements.mjs and the browser probe. Template values below are documentation only and are ignored by the validator."
+    "note": "D154 adds the first narrow sourced replacement slice. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the full no-regression gate. Template values below are documentation only and are ignored by the validator."
   },
   "schema": "cw_soldier_replacements_v1",
-  "records": [],
+  "records": [
+    {
+      "pid": "person_bullrun_us_2ri_rhodes",
+      "replacePid": "ss:bullrun1:US:us_burnside:pvt",
+      "name": "Elisha Hunt Rhodes",
+      "side": "US",
+      "rank": "Private",
+      "branch": "inf",
+      "role": "private soldier",
+      "year": 1861,
+      "provenance": "Verified",
+      "team": {
+        "side": "US",
+        "army": "Army of Northeastern Virginia",
+        "corps": "",
+        "division": "Hunter's Division",
+        "brigade": "Burnside's Brigade",
+        "regiment": "2nd Rhode Island Infantry",
+        "company": "Company D"
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Elisha Hunt Rhodes Papers, 1858-1904",
+          "author": "Rhode Island Historical Society",
+          "repository": "Rhode Island Historical Society",
+          "locator": "MSS 1089 finding aid",
+          "url": "https://www.rihs.org/mssinv/Mss1089.htm",
+          "type": "primary",
+          "note": "Finding aid for Rhodes's papers; states he enlisted as a private in the 2nd Rhode Island Infantry on June 5, 1861 and served at First Bull Run."
+        },
+        {
+          "title": "Elisha H. Rhodes",
+          "author": "Rhode Island Heritage Hall of Fame",
+          "repository": "Rhode Island Heritage Hall of Fame",
+          "locator": "Biography",
+          "url": "https://riheritagehalloffame.com/Elisha-Rhodes/",
+          "type": "secondary",
+          "note": "States Rhodes enlisted as a private in Company D, 2nd Rhode Island, and fought at Bull Run before later promotion."
+        },
+        {
+          "title": "2nd Regiment, Rhode Island Infantry",
+          "author": "National Park Service",
+          "repository": "Civil War Soldiers and Sailors System",
+          "locator": "Battle Unit Details URI0002RI",
+          "url": "https://www.nps.gov/civilwar/search-battle-units-detail.htm?battleUnitCode=URI0002RI",
+          "type": "secondary",
+          "note": "Places the 2nd Rhode Island in Burnside's Brigade, Hunter's Division, McDowell's Army, with Bull Run service on July 21, 1861."
+        },
+        {
+          "title": "Elisha Hunt Rhodes",
+          "author": "H. C. Foster",
+          "repository": "Library of Congress Prints and Photographs Division",
+          "locator": "LC-DIG-ppmsca-59878 / item 2019635483",
+          "url": "https://www.loc.gov/pictures/item/2019635483/",
+          "type": "primary",
+          "note": "Wartime portrait source; metadata has no known restrictions but depicts Rhodes as a later officer, not as a Bull Run private."
+        }
+      ],
+      "sourceNote": "RIHS verifies Rhodes enlisted as a private in the 2nd Rhode Island and served Bull Run; RI Heritage adds Company D; NPS places the regiment in Burnside's Brigade/Hunter's Division at Bull Run. Ratings stay neutral Inferred game calibration.",
+      "bio": "Elisha Hunt Rhodes was nineteen when he enlisted in Company D, 2nd Rhode Island Infantry, in June 1861. He fought at First Bull Run as a private in Burnside's Brigade, part of Hunter's Division. Rhodes kept wartime journals and letters and later rose through the regiment's ranks, eventually commanding it as colonel. This replacement uses only the verified 1861 claim: a private of the 2nd Rhode Island on the Bull Run field.",
+      "portrait": {
+        "assetKey": "portraits/elisharhodes",
+        "alt": "Wartime portrait of Elisha Hunt Rhodes in Union officer uniform, photographed after his Bull Run private service.",
+        "caption": "Elisha Hunt Rhodes in a later wartime officer portrait; he served at First Bull Run as a private.",
+        "credit": "Library of Congress Prints and Photographs Division",
+        "rights": "No known restrictions on publication",
+        "url": "https://www.loc.gov/pictures/item/2019635483/"
+      }
+    }
+  ],
   "_template": {
     "pid": "person_<battle>_<unit>_<surname>",
     "replacePid": "ss:<battleId>:<side>:<unitId>:<slot>",
@@ -56,6 +142,14 @@
       }
     ],
     "sourceNote": "<short rationale tying sources to identity, rank, unit, and ratings>",
+    "portrait": {
+      "assetKey": "portraits/<embedded-key-without-extension>",
+      "alt": "<descriptive alt text>",
+      "caption": "<visible caption, including any rank/date caveat>",
+      "credit": "<holding institution>",
+      "rights": "<rights statement>",
+      "url": "<source URL>"
+    },
     "disputeNote": "<required only when provenance is Disputed>",
     "bio": "<optional short sourced note>"
   }

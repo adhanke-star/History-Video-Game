@@ -311,6 +311,18 @@ for (const rm of RATING_MODULES) {
         if (!cleanText(r.team.army, 120)) errors.push(label + '.team.army is required');
         if (!(cleanText(r.team.brigade, 120) || cleanText(r.team.regiment, 120) || cleanText(r.team.company, 40))) errors.push(label + '.team needs brigade, regiment, or company');
       }
+      if (r.portrait != null) {
+        if (!plain(r.portrait)) errors.push(label + '.portrait must be an object');
+        else {
+          const assetKey = cleanText(r.portrait.assetKey, 120);
+          if (!/^portraits\/[A-Za-z0-9_.-]{3,80}$/.test(assetKey)) errors.push(label + '.portrait.assetKey must be an embedded portraits/<key>');
+          if (!cleanText(r.portrait.alt, 180)) errors.push(label + '.portrait.alt is required');
+          if (!cleanText(r.portrait.caption, 220)) errors.push(label + '.portrait.caption is required');
+          if (!cleanText(r.portrait.credit, 120)) errors.push(label + '.portrait.credit is required');
+          const url = cleanText(r.portrait.url, 240);
+          if (url && !/^https?:\/\//.test(url)) errors.push(label + '.portrait.url must be http(s)');
+        }
+      }
     };
     const pack = JSON.parse(readFileSync(p, 'utf8'));
     scanBadKeys(pack);

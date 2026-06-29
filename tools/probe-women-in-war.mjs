@@ -88,7 +88,14 @@ const SETUP = `(() => {
       if (!d || d.schema !== 'cw_women_in_war_v1') throw new Error('missing women schema');
       if (!Array.isArray(d.records) || d.records.length !== 7) throw new Error('expected 7 women records');
       var repl = GAME_DATA['soldier-replacements'];
-      if (!repl || !Array.isArray(repl.records) || repl.records.length !== 0) throw new Error('soldier replacements should remain empty');
+      if (!repl || !Array.isArray(repl.records)) throw new Error('missing soldier replacements records array');
+      var replacementWomenLeaks = [];
+      for (var j = 0; j < repl.records.length; j++) {
+        var rr = repl.records[j] || {};
+        if (rr.id && d.records.some(function(w){ return w.id === rr.id; })) replacementWomenLeaks.push(rr.id);
+        if (rr.replacePid && String(rr.replacePid).indexOf('ss:') !== 0) replacementWomenLeaks.push(String(rr.id || j) + ':badReplacePid');
+      }
+      if (replacementWomenLeaks.length) throw new Error('women/replacement cross-lane leaks: ' + replacementWomenLeaks.join(','));
       var verified = 0, disputed = 0, bad = [];
       for (var i = 0; i < d.records.length; i++) {
         var r = d.records[i];
@@ -100,7 +107,7 @@ const SETUP = `(() => {
       }
       if (bad.length) throw new Error('separation violations: ' + bad.join(','));
       if (verified !== 6 || disputed !== 1) throw new Error('expected 6 Verified / 1 Disputed, got ' + verified + '/' + disputed);
-      return { records:d.records.length, verified:verified, disputed:disputed };
+      return { records:d.records.length, verified:verified, disputed:disputed, replacementRecords:repl.records.length };
     });
 
     step('REGISTRY: the seven women cards do not enter ssPersonRegistry', function() {

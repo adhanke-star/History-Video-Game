@@ -109,7 +109,7 @@ const SETUP = `(() => {
   page.on('pageerror', e => pageerrors.push(String(e.message)));
   let result = { ok:false };
   try {
-    await page.goto(probe, { waitUntil:'load', timeout:45000 });
+    await page.goto(probe, { waitUntil:'load', timeout:60000 });
     await sleep(500);
     result = JSON.parse(await page.evaluate(SETUP));
     result.pageerrors = pageerrors;

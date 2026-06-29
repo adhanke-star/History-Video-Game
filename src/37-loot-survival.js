@@ -84,6 +84,20 @@ function _ssCleanDual(src) {
     defend: _lootClamp(Math.round(_lootNum(src.defend, 64)), 0, 100)
   };
 }
+function _ssCleanPortraitMeta(src) {
+  if (!_lootPlain(src)) return null;
+  var key = _lootCleanText(src.assetKey || "", 120);
+  if (!/^portraits\/[A-Za-z0-9_.-]{3,80}$/.test(key)) return null;
+  var out = {
+    assetKey: key,
+    alt: _lootCleanText(src.alt || "", 180),
+    caption: _lootCleanText(src.caption || "", 220),
+    credit: _lootCleanText(src.credit || "", 120),
+    rights: _lootCleanText(src.rights || "", 120),
+    url: _lootCleanText(src.url || "", 240)
+  };
+  return out.alt && out.caption && out.credit ? out : null;
+}
 function _ssStatus(s) {
   s = _lootCleanText(s || "", 24).toLowerCase();
   if (s === "wounded" || s === "captured" || s === "alive") return s;
@@ -137,7 +151,31 @@ function _ssJourneySnapshot(p) {
   if (persona) snap.persona = persona;
   if (p.status) snap.status = _ssStatus(p.status);
   if (p.officerTier === true) snap.officerTier = true;
+  if (p.replacement === true) snap.replacement = true;
   if (p.promotedFrom) snap.promotedFrom = _lootCleanText(p.promotedFrom, 80);
+  if (p.sourceNote) snap.sourceNote = _lootCleanText(p.sourceNote, 360);
+  if (p.bio) snap.bio = _lootCleanText(p.bio, 800);
+  if (Array.isArray(p.sources)) {
+    snap.sources = [];
+    for (var si = 0; si < p.sources.length && snap.sources.length < 12; si++) {
+      var src = p.sources[si];
+      if (_lootPlain(src)) snap.sources.push({
+        title: _lootCleanText(src.title || "", 160),
+        author: _lootCleanText(src.author || "", 120),
+        repository: _lootCleanText(src.repository || "", 140),
+        locator: _lootCleanText(src.locator || "", 140),
+        url: _lootCleanText(src.url || "", 240),
+        type: _lootCleanText(src.type || "", 40),
+        note: _lootCleanText(src.note || "", 220)
+      });
+      else {
+        var line = _lootCleanText(src, 240);
+        if (line) snap.sources.push(line);
+      }
+    }
+  }
+  var portrait = _ssCleanPortraitMeta(p.portrait);
+  if (portrait) snap.portrait = portrait;
   if (_lootPlain(p.grade)) snap.grade = { letter: _lootCleanText(p.grade.letter || "", 4), word: _lootCleanText(p.grade.word || "", 40) };
   if (_lootPlain(p.team)) {
     snap.team = {
@@ -608,6 +646,24 @@ function _ssCleanReplacementTeam(src, side, errors, label) {
   if (!(t.brigade || t.regiment || t.company)) _ssReplacementErr(errors, label + ".team needs brigade, regiment, or company");
   return t;
 }
+function _ssCleanReplacementPortrait(src, errors, label) {
+  if (src == null) return null;
+  if (!_lootPlain(src)) { _ssReplacementErr(errors, label + ".portrait must be an object"); return null; }
+  var p = {
+    assetKey: _lootCleanText(src.assetKey || "", 120),
+    alt: _lootCleanText(src.alt || "", 180),
+    caption: _lootCleanText(src.caption || "", 220),
+    credit: _lootCleanText(src.credit || "", 120),
+    rights: _lootCleanText(src.rights || "", 120),
+    url: _lootCleanText(src.url || "", 240)
+  };
+  if (!/^portraits\/[A-Za-z0-9_.-]{3,80}$/.test(p.assetKey)) _ssReplacementErr(errors, label + ".portrait.assetKey must be an embedded portraits/<key>");
+  if (!p.alt) _ssReplacementErr(errors, label + ".portrait.alt is required");
+  if (!p.caption) _ssReplacementErr(errors, label + ".portrait.caption is required");
+  if (!p.credit) _ssReplacementErr(errors, label + ".portrait.credit is required");
+  if (p.url && !/^https?:\/\//.test(p.url)) _ssReplacementErr(errors, label + ".portrait.url must be http(s)");
+  return p.assetKey ? p : null;
+}
 function _ssReplacementBaseContext(basePeople) {
   var byPid = {}, generated = {};
   if (Array.isArray(basePeople)) {
@@ -660,6 +716,7 @@ function ssValidateSoldierReplacementPack(pack, opts) {
     var sources = _ssCleanReplacementSources(r.sources, errors, label);
     var persona = _ssCleanReplacementPersona(r.persona, errors, label);
     var team = _ssCleanReplacementTeam(r.team, side, errors, label);
+    var portrait = _ssCleanReplacementPortrait(r.portrait, errors, label);
     clean.push({
       pid: pid,
       id: pid,
@@ -677,6 +734,7 @@ function ssValidateSoldierReplacementPack(pack, opts) {
       sourceNote: _lootCleanText(r.sourceNote || "", 360),
       disputeNote: _lootCleanText(r.disputeNote || "", 360),
       bio: _lootCleanText(r.bio || "", 800),
+      portrait: portrait,
       team: team
     });
   }
@@ -700,6 +758,7 @@ function _ssApplySoldierReplacements(C, reg, year) {
     p.sourceNote = r.sourceNote;
     p.disputeNote = r.disputeNote;
     p.bio = r.bio;
+    if (r.portrait) p.portrait = r.portrait;
     reg.people[idx] = p;
     reg.replacements.applied++;
   }
@@ -1045,6 +1104,43 @@ function _ssTeamHierarchyHTML(p) {
   }
   return rows || '<div style="font-size:12px;opacity:.72">No unit assignment recorded.</div>';
 }
+function _ssPortraitHTML(p) {
+  var ph = _ssCleanPortraitMeta(p && p.portrait);
+  if (!ph) return "";
+  var src = (typeof __ASSETS !== "undefined" && __ASSETS && __ASSETS[ph.assetKey]) || "";
+  if (!src) return "";
+  return '<figure class="ss-person-portrait" style="margin:9px 0 0;display:grid;grid-template-columns:96px minmax(0,1fr);gap:10px;align-items:start;border:1px solid rgba(201,168,95,.42);border-radius:6px;padding:8px;background:rgba(0,0,0,.10)">'
+    + '<img src="' + _lootAttr(src) + '" alt="' + _lootAttr(ph.alt) + '" style="width:96px;height:120px;object-fit:cover;border:1px solid #8a7350;border-radius:4px;background:#1f170e">'
+    + '<figcaption style="font-size:11px;line-height:1.4;opacity:.82;min-width:0"><b>' + _lootEsc(ph.caption) + '</b>'
+    + '<div style="margin-top:3px;color:#d7c392">' + _lootEsc(ph.credit) + (ph.rights ? ' · ' + _lootEsc(ph.rights) : '') + '</div>'
+    + '</figcaption></figure>';
+}
+function _ssSourcesHTML(p) {
+  var srcs = Array.isArray(p && p.sources) ? p.sources : [];
+  if (!srcs.length && !(p && (p.sourceNote || p.bio))) return "";
+  var h = '';
+  if (p && p.bio) h += '<p data-ss-bio="1" style="font-size:12px;line-height:1.48;margin:9px 0 0">' + _lootEsc(p.bio) + '</p>';
+  if (p && p.sourceNote) h += '<div data-ss-source-note="1" style="font-size:11.5px;line-height:1.45;margin-top:7px;border-left:3px solid #c9a85f;padding-left:8px;opacity:.82"><b>Source note:</b> ' + _lootEsc(p.sourceNote) + '</div>';
+  if (!srcs.length) return h;
+  h += '<details data-ss-sources="1" style="margin-top:7px"><summary style="cursor:pointer;font-size:11px;color:#d7c392">Sources (' + srcs.length + ')</summary><ol style="margin:6px 0 0;padding-left:18px;font-size:10.5px;line-height:1.45;opacity:.82">';
+  for (var i = 0; i < srcs.length; i++) {
+    var s = srcs[i];
+    if (_lootPlain(s)) {
+      var bits = [];
+      if (s.author) bits.push(s.author);
+      if (s.repository) bits.push(s.repository);
+      if (s.locator) bits.push(s.locator);
+      if (s.type) bits.push(s.type);
+      h += '<li style="margin-bottom:4px"><b>' + _lootEsc(s.title || s.repository || "Source") + '</b>'
+        + (bits.length ? '<span style="opacity:.82"> — ' + _lootEsc(bits.join(" · ")) + '</span>' : "")
+        + (s.note ? '<div style="opacity:.74">' + _lootEsc(s.note) + '</div>' : "")
+        + '</li>';
+    } else {
+      h += '<li style="margin-bottom:4px">' + _lootEsc(s) + '</li>';
+    }
+  }
+  return h + '</ol></details>';
+}
 function _ssFacetValues(people, keyFn) {
   var seen = {}, vals = [];
   for (var i = 0; i < people.length; i++) {
@@ -1156,6 +1252,8 @@ function ssPersonDetailHTML(C, pid) {
     + '<div class="gn-col-head" style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:10px 0 3px">Team Hierarchy</div>'
     + _ssTeamHierarchyHTML(p)
     + '<div style="font-size:11px;opacity:.72;margin-top:7px">Latent command ' + _lootEsc(p.latentCommand != null ? p.latentCommand : "-") + ' &middot; Sources ' + _lootEsc(p.sources && p.sources.length ? p.sources.length : 0) + ' &middot; ' + _lootEsc(ps.glyph + " " + ps.label) + '</div>'
+    + _ssPortraitHTML(p)
+    + _ssSourcesHTML(p)
     + '</div>';
 }
 

@@ -3,7 +3,7 @@ import "./guard-probe-browser.mjs";
 // tools/probe-photo-embed.mjs
 // Focused probe for H1 / D71 — the OFFLINE PORTRAIT TIER (src/21-photo-embed.js + the build.mjs
 // __ASSETS embed stage + tools/prep-embed-assets.mjs). Verifies:
-//  - the build INLINES a portrait tier: __ASSETS carries the 155 "portraits/<stem>" keys as data: URLs;
+//  - the build INLINES a portrait tier: __ASSETS carries the 156 "portraits/<stem>" keys as data: URLs;
 //  - the override is installed once: window.portraitFor._phe === true;
 //  - SERVED-FROM-ROOT (assets/ reachable): a known portrait resolves to a JPEG photo (hi-res or embedded);
 //  - OFFLINE PORTABILITY (assets/portraits/ blocked, simulating the single file moved away from assets/):
@@ -14,7 +14,7 @@ import "./guard-probe-browser.mjs";
 //    embedded photo by the module's own observer (the base MutationObserver uses the closure portraitFor, not window);
 //  - COMBAT BYTE-IDENTICAL purity (D74): a static scan proves 21-photo-embed.js never calls fldRng / writes the
 //    sim / bumps _SAVE_VER, no combat/tactical file references the _phe* internals, and build.mjs keeps the
-//    embed stage + the budget guard + the data-URL hex mask; the disk tier exists (assets/embed/portraits/, 155);
+//    embed stage + the budget guard + the data-URL hex mask; the disk tier exists (assets/embed/portraits/, 156);
 //  - 0 pageerrors throughout.
 // (The 9-baseline seed-for-seed byte-identity gate stays owned by probe-presets.)
 
@@ -30,6 +30,7 @@ const OUT = join(__dirname, 'shots');
 mkdirSync(OUT, { recursive: true });
 const cfg = JSON.parse(readFileSync(join(__dirname, 'shots.json'), 'utf8'));
 const GL = ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--enable-webgl', '--disable-dev-shm-usage'];
+const EXPECTED_PORTRAIT_COUNT = 156;
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 async function up(u) { try { const r = await fetch(u, { method: 'HEAD' }); return r.ok || r.status === 200; } catch { return false; } }
 
@@ -64,7 +65,8 @@ function staticScan() {
   // 4. the prep tool + the disk tier exist.
   check('static: tools/prep-embed-assets.mjs exists', existsSync(join(ROOT, 'tools', 'prep-embed-assets.mjs')));
   let tier = []; try { tier = readdirSync(join(ROOT, 'assets', 'embed', 'portraits')).filter(f => /\.jpe?g$/i.test(f)); } catch (e) {}
-  check('static: assets/embed/portraits/ tier present (155 files)', tier.length === 155, 'count=' + tier.length);
+  check('static: assets/embed/portraits/ tier present (156 files)', tier.length === EXPECTED_PORTRAIT_COUNT, 'count=' + tier.length);
+  check('static: D154 Elisha Hunt Rhodes portrait is embedded on disk', tier.includes('elisharhodes.jpg'));
 }
 
 async function ensureServer() {
@@ -130,6 +132,7 @@ function probeScript(offline) {
       } catch(e) { noDowngrade = { error: String(e && e.message || e) }; }
 
       return { ok:true, offline:${JSON.stringify(!!offline)}, portraitCount: portraitKeys.length, totalKeys: keys.length,
+        hasRhodes: portraitKeys.indexOf('portraits/elisharhodes') >= 0,
         installed: installed, leeFmt: fmt(lee), leeLen: (lee||'').length, warmTries: tries,
         samples: samples,
         sideSplit: { andCS: fmt(andCS), andUS: fmt(andUS), andDistinct: andCS !== andUS, grCS: fmt(grCS), grUS: fmt(grUS), grDistinct: grCS !== grUS },
@@ -175,7 +178,8 @@ function probeScript(offline) {
   } finally { if (server) server.kill(); await browser.close(); }
 
   /* ---------- assertions ---------- */
-  check('__ASSETS carries the 155-portrait embed tier', rootRes.ok && rootRes.portraitCount === 155, rootRes.ok ? ('count=' + rootRes.portraitCount) : ('err=' + rootRes.error));
+  check('__ASSETS carries the 156-portrait embed tier', rootRes.ok && rootRes.portraitCount === EXPECTED_PORTRAIT_COUNT, rootRes.ok ? ('count=' + rootRes.portraitCount) : ('err=' + rootRes.error));
+  check('__ASSETS carries the D154 Rhodes portrait key', rootRes.ok && rootRes.hasRhodes === true);
   check('override installed (window.portraitFor._phe)', rootRes.ok && rootRes.installed === true);
   check('served-from-root: Lee resolves to a JPEG photo', rootRes.ok && rootRes.leeFmt === 'jpeg', 'fmt=' + (rootRes.leeFmt) + ' len=' + (rootRes.leeLen));
 

@@ -1,10 +1,22 @@
+# ☀ WAKE-UP — 2026-06-28: **THE FIRST CITATION-GRADE SOLDIER REPLACEMENT IS SHIPPED. Elisha Hunt Rhodes now replaces one generated Bull Run private honestly, with sources and a portrait.**
+
+**Newest (D154, 2026-06-28):** This starts the bounded named-person replacement lane after D152 tooling and D153 women/support-thread separation. `data/soldier-replacements.json` now has 1 `Verified` record for Elisha Hunt Rhodes replacing `ss:bullrun1:US:us_burnside:pvt`. It does not change canonical battle data, tactical combat rules, item balance data, `build/base.html`, or the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.
+
+**What changed:** Rhodes appears as a sourced Soldier's Story record for the 2nd Rhode Island / Company D in Burnside's Brigade at Bull Run. Soldier detail cards can now show sourced replacement bio, source note, sources, and portrait metadata. The replacement overlay preserves 603 registry rows and shifts the registry from 22 authored / 581 generated to 23 authored / 580 generated.
+
+**Source correction:** the supplied RIHS `Mss312` lead was stale/wrong for Rhodes. Correct RIHS source is `Mss1089`, verifying private, 2nd Rhode Island, and First Bull Run. Rhode Island Heritage verifies Company D / private / Bull Run. NPS places the 2nd Rhode Island in Burnside's Brigade at Bull Run. LoC supplies the portrait with no known restrictions; the caption says it is a later officer-period portrait.
+
+**Verified:** soldier importer `records=1 verified=1 disputed=0`; women importer still `records=7 verified=6 disputed=1`; build GATE OK; focused `probe-loot-survival` 11/11 with 0 pageerrors; focused `probe-women-in-war` 8/8 with 0 pageerrors and `replacementRecords:1`; focused `probe-photo-embed` 24/24. Full no-regression coverage completed locally in resumed segments after stale-baseline fixes; final segment from `photo embed` ended **VET NO-REGRESSION OK — 44 commands**, with `probe-full-campaign` 4/4, 0 pageerrors and `diag-classic` `nonBlank:346`, `m3dActive:false`. Chattanooga and the USCT playable battles still stay saved for last.
+
+---
+
 # ☀ WAKE-UP — 2026-06-28: **WOMEN IN THE WAR IS SHIPPED. The Campaign Kit now has a citation-grade women-in-war card lane without laundering generated soldier rows.**
 
 **Newest (D153, 2026-06-28):** This completes the Phase-F Women in the War queue item as a presentation-only Campaign Kit lane beside Soldier's Story and the Army Register. It does not add sourced people to `data/soldier-replacements.json`, change canonical battle data, tactical combat rules, item balance data, `build/base.html`, or the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.
 
 **What changed:** new `data/women-in-war.json` (`cw_women_in_war_v1`) ships 7 sourced card records: 6 `Verified` and 1 `Disputed` Velazquez record. New `src/38-women-in-war.js` renders the section with search, role/provenance filters, source/details disclosure, integrity warnings, and a visible dispute note. New importer/probe files validate and lock the lane.
 
-**Guardrails:** every record has `registryMappable.canMap:false`; no record carries `replacePid` or an `ss:` id; `data/soldier-replacements.json` remains empty. Velazquez remains `Disputed`, has no modeled CS unit, and is not upgraded to a sourced soldier row. Barton, Walker, Tubman, and Dix reuse existing codex portraits; Wakeman does not assert a wartime portrait.
+**Guardrails:** every record has `registryMappable.canMap:false`; no record carries `replacePid` or an `ss:` id; `data/soldier-replacements.json` remained empty at the D153 checkpoint. Velazquez remains `Disputed`, has no modeled CS unit, and is not upgraded to a sourced soldier row. Barton, Walker, Tubman, and Dix reuse existing codex portraits; Wakeman does not assert a wartime portrait.
 
 **Verified:** women importer `records=7 verified=6 disputed=1`; empty-pack `--write` path preserved 7 women records and `soldier-replacements.records:0`; build GATE OK with `women-in-war ✓`; focused `probe-women-in-war` 8/8 with 0 pageerrors, 0 static leaks across 14 files, and a 490,400-byte screenshot; full no-regression coverage green in split segments after a `probe-ai` cleanup timeout was cleared by standalone `probe-ai` 15/15 and `vet:noreg -- --from="attacker ai"` ending **VET NO-REGRESSION OK — 34 commands**. Chattanooga and the USCT playable battles still stay saved for last.
 

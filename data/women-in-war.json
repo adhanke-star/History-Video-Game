@@ -20,7 +20,7 @@
       "provenance": "Verified",
       "registryMappable": {
         "canMap": false,
-        "reason": "No — 153rd NY not in OOB; records[] empty"
+        "reason": "No — 153rd NY not in OOB; not mapped to a Soldier's Story replacement"
       },
       "recommendedLane": "women-thread-card",
       "sources": [
@@ -74,7 +74,7 @@
       "playerCopy": "Sarah Rosetta Wakeman was born January 16, 1843, in Bainbridge, New York. On August 30, 1862, she enlisted as Private Lyons Wakeman in Company H, 153rd New York Volunteer Infantry; her female identity was never officially detected. After provost and garrison duty around Washington, the regiment deployed to Louisiana in 1864 for Maj. Gen. Nathaniel Banks's Red River Campaign. Wakeman stood in the line at the Battle of Pleasant Hill on April 9, 1864. She fell ill with chronic diarrhea, died June 19, 1864, in a New Orleans hospital, and was buried with military honors at Chalmette National Cemetery under the name Lyons Wakeman. Her letters home, published in 1994, are the only known first-person correspondence of a woman who served disguised as a Union infantryman.",
       "integrityNote": "A working-class woman enlisted for wages, served faithfully in a real Union regiment, and was buried with honors under her alias because her sex was never discovered — attested by her own letters and independent military records; no Lost-Cause myth required.",
       "warningFlags": [
-        "No modeled unit (153rd NY absent, records[] empty) → not a D152 replacement now",
+        "No modeled unit (153rd NY absent) → not a Soldier's Story replacement now",
         "Co. H standard, faint Co. G redesignation note (non-load-bearing)",
         "Monett's Bluff Apr 23 1864 rests on secondary sources — cite Pleasant Hill as the firm battle",
         "letters unpublished until 1994 (no identity dispute)",
@@ -93,7 +93,7 @@
       "provenance": "Verified",
       "registryMappable": {
         "canMap": false,
-        "reason": "No — 95th Ill. not in OOB; records[] empty"
+        "reason": "No — 95th Ill. not in OOB; not mapped to a Soldier's Story replacement"
       },
       "recommendedLane": "women-thread-card",
       "sources": [
@@ -147,7 +147,7 @@
       "playerCopy": "Born Jennie Irene Hodgers in County Louth, Ireland, Albert D. J. Cashier enlisted in Company G, 95th Illinois Infantry in August 1862 and served every day of a full three-year term, mustering out August 17, 1865. Cashier fought in roughly forty engagements, among them the Siege of Vicksburg, the Red River Campaign, and the Franklin-Nashville Campaign, and was never wounded or captured. After the war Cashier voted, worked, and drew a veteran's pension in Illinois, living as Albert Cashier for more than fifty years. When the identity was discovered in 1913, former Company G comrades affirmed Cashier's service before the pension board. Cashier died October 10, 1915, and was buried in full Union uniform.",
       "integrityNote": "The NARA service record and pension file are uncontested; the regiment, the Army, and postwar comrades all affirmed the service — present the lifelong male identity with dignity, not as fraud or scandal.",
       "warningFlags": [
-        "No modeled unit (95th Ill. absent, records[] empty) → not a D152 replacement now",
+        "No modeled unit (95th Ill. absent) → not a Soldier's Story replacement now",
         "enlistment date varies (NARA Aug 3 vs ABT Aug 6 1862) → copy says \"August 1862\"",
         "death-date: NARA's \"Oct 11 1914\" is an outlier; consensus Oct 10 1915",
         "postwar identity genuinely contested by modern scholars (woman disguised for opportunity vs. transgender man) — copy uses male pronouns per lifelong self-identification; the interpretive debate is live",

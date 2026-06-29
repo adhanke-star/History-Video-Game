@@ -197,42 +197,57 @@ const SETUP = `(() => {
       return { people:reg.people.length, brigades:reg.brigades, authored:reg.authored, generated:reg.generated, first:sample.name };
     });
 
-    step('D152 REPLACEMENTS: canonical pack is empty, hostile packs reject, and a valid sourced fixture overlays only its generated slot', function(){
+    step('D154 REPLACEMENTS: canonical Rhodes record overlays one generated Bull Run slot and hostile packs still reject', function(){
       var C=mkC('US'); _t1InitAll(C);
       var original=GAME_DATA['soldier-replacements'];
       if(!original || original.schema!=='cw_soldier_replacements_v1' || !Array.isArray(original.records)) throw new Error('missing D152 canonical pack');
-      if(original.records.length!==0) throw new Error('canonical D152 pack should ship empty, got '+original.records.length);
+      if(original.records.length!==1) throw new Error('canonical D154 pack should ship exactly one record, got '+original.records.length);
+      if(original.records[0].pid!=='person_bullrun_us_2ri_rhodes' || original.records[0].replacePid!=='ss:bullrun1:US:us_burnside:pvt') throw new Error('unexpected D154 canonical record: '+JSON.stringify(original.records[0]));
+      GAME_DATA['soldier-replacements']={schema:'cw_soldier_replacements_v1',records:[]};
+      var rawBase=ssPersonRegistry(C);
+      GAME_DATA['soldier-replacements']=original;
+      var canonical=ssValidateSoldierReplacementPack(original,{basePeople:rawBase.people});
+      if(!canonical.ok || canonical.records.length!==1) throw new Error('canonical D154 pack should validate against raw generated registry: '+JSON.stringify(canonical));
       var base=ssPersonRegistry(C);
-      if(base.replacements.applied!==0 || base.replacements.rejected!==0) throw new Error('empty canonical pack should apply/reject nothing: '+JSON.stringify(base.replacements));
-      var empty=ssValidateSoldierReplacementPack(original,{basePeople:base.people});
-      if(!empty.ok || empty.records.length!==0) throw new Error('empty canonical pack should validate: '+JSON.stringify(empty));
-      var target=findPerson(base,function(p){ return p.generated && p.side==='US' && p.pid.indexOf(':pvt')>0 && p.team && p.team.army; });
-      var authored=findPerson(base,function(p){ return !p.generated && p.provenance==='Verified'; });
+      if(base.people.length!==rawBase.people.length) throw new Error('canonical replacement should preserve registry length');
+      if(base.replacements.applied!==1 || base.replacements.rejected!==0) throw new Error('canonical replacement should apply one row cleanly: '+JSON.stringify(base.replacements));
+      if(base.generated!==rawBase.generated-1 || base.authored!==rawBase.authored+1) throw new Error('canonical replacement should move one row generated->authored: '+JSON.stringify({raw:{a:rawBase.authored,g:rawBase.generated},base:{a:base.authored,g:base.generated}}));
+      var rhodesOld=ssFindPerson(C,'ss:bullrun1:US:us_burnside:pvt');
+      var rhodes=ssFindPerson(C,'person_bullrun_us_2ri_rhodes');
+      if(!rhodes || !rhodesOld || rhodesOld.pid!==rhodes.pid) throw new Error('Rhodes alias lookup failed');
+      if(rhodes.generated || !rhodes.replacement || rhodes.provenance!=='Verified' || rhodes.name!=='Elisha Hunt Rhodes') throw new Error('Rhodes row not sourced/verified: '+JSON.stringify(rhodes));
+      if(rhodes.rank!=='Private' || rhodes.team.regiment!=='2nd Rhode Island Infantry' || rhodes.team.company!=='Company D') throw new Error('Rhodes rank/unit mismatch: '+JSON.stringify(rhodes.team));
+      if(!rhodes.bio || rhodes.bio.indexOf('First Bull Run')<0 || !rhodes.sourceNote || rhodes.sources.length<4) throw new Error('Rhodes source/bio payload missing');
+      if(!rhodes.portrait || rhodes.portrait.assetKey!=='portraits/elisharhodes') throw new Error('Rhodes portrait metadata missing: '+JSON.stringify(rhodes.portrait));
+      var target=findPerson(rawBase,function(p){ return p.generated && p.side==='US' && p.pid.indexOf(':pvt')>0 && p.pid!==original.records[0].replacePid && p.team && p.team.army; });
+      var authored=findPerson(rawBase,function(p){ return !p.generated && p.provenance==='Verified'; });
       if(!target) throw new Error('no generated replacement target found');
       if(!authored) throw new Error('no authored row found for invalid target guard');
       var good=replacementPack(target);
-      var valid=ssValidateSoldierReplacementPack(good,{basePeople:base.people});
+      var valid=ssValidateSoldierReplacementPack(good,{basePeople:rawBase.people});
       if(!valid.ok || valid.records.length!==1) throw new Error('valid replacement fixture rejected: '+JSON.stringify(valid));
       var under=replacementPack(target,{sources:good.records[0].sources.slice(0,1)});
-      if(ssValidateSoldierReplacementPack(under,{basePeople:base.people}).ok) throw new Error('under-cited replacement should reject');
+      if(ssValidateSoldierReplacementPack(under,{basePeople:rawBase.people}).ok) throw new Error('under-cited replacement should reject');
       var dup=replacementPack(target);
       dup.records.push(JSON.parse(JSON.stringify(dup.records[0])));
       dup.records[1].pid='person_d152_probe_replacement_2';
-      if(ssValidateSoldierReplacementPack(dup,{basePeople:base.people}).ok) throw new Error('duplicate replacePid should reject');
+      if(ssValidateSoldierReplacementPack(dup,{basePeople:rawBase.people}).ok) throw new Error('duplicate replacePid should reject');
       var generatedBad=replacementPack(target,{generated:true});
-      if(ssValidateSoldierReplacementPack(generatedBad,{basePeople:base.people}).ok) throw new Error('generated-mislabelled replacement should reject');
+      if(ssValidateSoldierReplacementPack(generatedBad,{basePeople:rawBase.people}).ok) throw new Error('generated-mislabelled replacement should reject');
       var inferredBad=replacementPack(target,{provenance:'Inferred'});
-      if(ssValidateSoldierReplacementPack(inferredBad,{basePeople:base.people}).ok) throw new Error('Inferred replacement should reject');
+      if(ssValidateSoldierReplacementPack(inferredBad,{basePeople:rawBase.people}).ok) throw new Error('Inferred replacement should reject');
       var badTarget=replacementPack(target,{replacePid:authored.pid,pid:'person_d152_bad_authored_target'});
-      if(ssValidateSoldierReplacementPack(badTarget,{basePeople:base.people}).ok) throw new Error('replacement targeting authored row should reject');
+      if(ssValidateSoldierReplacementPack(badTarget,{basePeople:rawBase.people}).ok) throw new Error('replacement targeting authored row should reject');
+      var badPortrait=replacementPack(target,{portrait:{assetKey:'../bad',alt:'x',caption:'x',credit:'x'}});
+      if(ssValidateSoldierReplacementPack(badPortrait,{basePeople:rawBase.people}).ok) throw new Error('bad portrait assetKey should reject');
       var polluted=JSON.parse('{"schema":"cw_soldier_replacements_v1","records":[{"__proto__":{"polluted":true}}]}');
-      var poll=ssValidateSoldierReplacementPack(polluted,{basePeople:base.people});
+      var poll=ssValidateSoldierReplacementPack(polluted,{basePeople:rawBase.people});
       if(poll.ok || poll.errors.join('|').indexOf('forbidden key')<0) throw new Error('prototype-polluted pack should reject with forbidden-key error: '+JSON.stringify(poll));
       try {
         GAME_DATA['soldier-replacements']=good;
         var over=ssPersonRegistry(C);
-        if(over.people.length!==base.people.length) throw new Error('replacement should preserve registry length');
-        if(over.generated!==base.generated-1 || over.authored!==base.authored+1) throw new Error('replacement should move one row generated->authored: '+JSON.stringify({base:{a:base.authored,g:base.generated},over:{a:over.authored,g:over.generated}}));
+        if(over.people.length!==rawBase.people.length) throw new Error('replacement should preserve registry length');
+        if(over.generated!==rawBase.generated-1 || over.authored!==rawBase.authored+1) throw new Error('replacement should move one row generated->authored: '+JSON.stringify({base:{a:rawBase.authored,g:rawBase.generated},over:{a:over.authored,g:over.generated}}));
         if(!over.replacements || over.replacements.applied!==1 || over.replacements.rejected!==0) throw new Error('replacement apply summary wrong: '+JSON.stringify(over.replacements));
         var byOld=ssFindPerson(C,target.pid), byNew=ssFindPerson(C,'person_d152_probe_replacement');
         if(!byOld || !byNew || byOld.pid!==byNew.pid) throw new Error('replacement alias lookup failed');
@@ -242,7 +257,7 @@ const SETUP = `(() => {
       }
       var restored=ssPersonRegistry(C);
       if(restored.generated!==base.generated || restored.authored!==base.authored) throw new Error('canonical pack restore changed registry');
-      return { canonicalRecords:original.records.length, target:target.pid, applied:1, hostileRejected:true };
+      return { canonicalRecords:original.records.length, rhodes:rhodes.pid, target:target.pid, applied:base.replacements.applied, hostileRejected:true };
     });
 
     step('JOURNEY: play-as-anyone start enables survival and stores a saveable selected person without mutating canonical data', function(){
@@ -379,6 +394,16 @@ const SETUP = `(() => {
       if(!gCard || !aCard) throw new Error('target cards missing');
       if(gCard.textContent.indexOf('Generated')<0 || gCard.textContent.indexOf('Inferred')<0) throw new Error('generated/Inferred card display missing: '+gCard.textContent);
       if(aCard.textContent.indexOf('Authored')<0 || aCard.textContent.indexOf('Verified')<0) throw new Error('authored/Verified card display missing: '+aCard.textContent);
+      var rhodesCard=cardByPid(root,'person_bullrun_us_2ri_rhodes');
+      if(!rhodesCard) throw new Error('Rhodes sourced replacement card missing');
+      if(rhodesCard.textContent.indexOf('Elisha Hunt Rhodes')<0 || rhodesCard.textContent.indexOf('Sourced')<0 || rhodesCard.textContent.indexOf('Verified')<0) throw new Error('Rhodes card source/provenance missing: '+rhodesCard.textContent);
+      rhodesCard.querySelector('[data-ss-pick]').click();
+      var rhodesDetail=root.querySelector('#ssPersonDetailCard');
+      if(!rhodesDetail || rhodesDetail.getAttribute('data-ss-detail-pid')!=='person_bullrun_us_2ri_rhodes') throw new Error('Rhodes detail did not select');
+      var rtxt=rhodesDetail.textContent;
+      if(rtxt.indexOf('2nd Rhode Island Infantry')<0 || rtxt.indexOf('Company D')<0 || rtxt.indexOf('First Bull Run')<0 || rtxt.indexOf('Source note:')<0 || rtxt.indexOf('Sources (4)')<0) throw new Error('Rhodes detail source/bio/unit payload missing: '+rtxt);
+      var rimg=rhodesDetail.querySelector('.ss-person-portrait img');
+      if(!rimg || (rimg.getAttribute('src')||'').indexOf('data:image/jpeg')!==0 || (rimg.getAttribute('alt')||'').indexOf('officer uniform')<0) throw new Error('Rhodes portrait did not render from embedded JPEG');
 
       var search=root.querySelector('#ssRegSearch'), side=root.querySelector('#ssRegSide'), rank=root.querySelector('#ssRegRank'), prov=root.querySelector('#ssRegProv'), unit=root.querySelector('#ssRegUnit');
       if(!search || !side || !rank || !prov || !unit) throw new Error('missing register controls');
