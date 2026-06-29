@@ -13,9 +13,12 @@ content-complete v1 (still a perpetual project after — D54). Built from `MODER
    "decide & ship" — that applied to the all-night charter; you've now opted for design oversight.)
 2. **Clear-then-continuous.** I clear a SCOPE's designs with you upfront, then execute the whole scope
    continuously (all-night style), pausing only at scope-end or when a NEW unforeseen fork appears.
-3. **Per-milestone vetting + push** stays the same: GATE OK → focused probe + `npm run vet:noreg` (full no-regression
-   incl. `probe-full-campaign` + diag-classic) + 0 pageerrors → adversarial bug-hunt (all fixed) → commit → `git push origin main`.
-   Balance auto-tuned + logged.
+3. **Per-milestone vetting + push** uses the D160 tiered gate: always GATE OK, relevant importer/schema gate,
+   focused probe, output/JSON readback, 0 pageerrors, and `git diff --check`; JS/runtime changes also require
+   `node --check` on touched JS/probe files plus 1-3 adjacent probes. Full `npm run vet:noreg` is mandatory for
+   shared lifecycle/manifest/build/save/bridge/tactical/render/accessibility, suite-probe changes, or large
+   milestone/release-batch pushes. Repeated narrow content slices use focused + importer/schema gates, with a full
+   suite every 3-5 slices or before the release batch. Balance auto-tuned + logged.
 4. **Content standard:** ≥2-source Verified (else Inferred), anti-Lost-Cause, period-but-tight voice.
 
 ---

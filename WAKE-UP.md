@@ -1,3 +1,9 @@
+# ☀ WAKE-UP — 2026-06-29: **OPERATING GATE UPDATED TO TIERED VETTING, NOT NO GATES.**
+
+**Newest operating rule (D160, 2026-06-29):** every commit still needs source/doc read order, source-only edits, `node tools/build.mjs` GATE OK, relevant importer/schema checks, focused probe(s), JSON/pageerror readback, `git diff --check`, and clean commit/push. JS/runtime changes add `node --check` plus 1-3 adjacent probes. Full `npm run vet:noreg` is required for shared lifecycle/manifest/build/save/bridge/tactical/render/accessibility, suite-probe changes, and large milestone/release-batch pushes. Repeated sourced-person/content slices use focused + importer/schema gates, with full suite every 3-5 slices or before a release batch. Never push red, weaken probes, edit `build/base.html`, hand-edit `civil_war_generals.html`, add per-battle combat fudge, or fake citation/history gates.
+
+---
+
 # ☀ WAKE-UP — 2026-06-29: **THE FIFTH CITATION-GRADE SOLDIER REPLACEMENT IS SHIPPED. Alonzo H. Cushing now replaces one generated Gettysburg Battery A command slot honestly, with sources and no unsupported portrait claim.**
 
 **Newest (D158, 2026-06-29):** This continues the bounded named-person replacement lane after D154-D157. `data/soldier-replacements.json` now has 5 `Verified` records: Elisha Hunt Rhodes, William McCarter, Sam R. Watkins, Joshua L. Chamberlain, and Alonzo H. Cushing. Cushing replaces `ss:gettysburg:US:us_cushing_battery:cmd`. It does not change canonical battle data, tactical combat rules, item balance data, `build/base.html`, or the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.
