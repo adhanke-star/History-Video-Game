@@ -1,6 +1,6 @@
 # Soldier Replacement Format
 
-**Status:** D157. This is the import lane for replacing generated Soldier's Story representative rows with sourced named people. D152 shipped the empty tooling lane; D154 added the first narrow sourced replacement slice, D155 added the second, D156 added the third, and D157 adds the fourth.
+**Status:** D158. This is the import lane for replacing generated Soldier's Story representative rows with sourced named people. D152 shipped the empty tooling lane; D154 added the first narrow sourced replacement slice, D155 added the second, D156 added the third, D157 added the fourth, and D158 adds the fifth.
 
 Canonical file: `data/soldier-replacements.json`
 

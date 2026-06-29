@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "decision": "D157",
+    "decision": "D158",
     "schema": "cw_soldier_replacements_v1",
     "scope": "Citation-grade replacements for generated Soldier's Story representative rows.",
     "provenance": "Inferred",
-    "note": "D157 adds the fourth narrow sourced replacement slice. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the full no-regression gate. Template values below are documentation only and are ignored by the validator."
+    "note": "D158 adds the fifth narrow sourced replacement slice. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the full no-regression gate. Template values below are documentation only and are ignored by the validator."
   },
   "schema": "cw_soldier_replacements_v1",
   "records": [
@@ -312,6 +312,74 @@
       ],
       "sourceNote": "NPS order-of-battle data places Col. Joshua L. Chamberlain and the 20th Maine in Vincent's Third Brigade, First Division, V Corps at Gettysburg. NPS Little Round Top material and the American Battlefield Trust corroborate the regiment's extreme-left position, low-ammunition crisis, and bayonet charge. The record asserts no company and no portrait; ratings stay neutral Inferred calibration.",
       "bio": "Joshua L. Chamberlain commanded the 20th Maine on Little Round Top during the second day at Gettysburg. The regiment held the extreme left of the Union line in Vincent's Brigade, ran low on ammunition, and counterattacked with the famous bayonet charge. This replacement presents Chamberlain as a sourced regimental commander while preserving the scenario's broader caution that Little Round Top was held by a chain of decisions and costs, not by one man alone."
+    },
+    {
+      "pid": "person_gettysburg_us_battery_a_cushing",
+      "replacePid": "ss:gettysburg:US:us_cushing_battery:cmd",
+      "name": "Alonzo H. Cushing",
+      "side": "US",
+      "rank": "1st Lt.",
+      "branch": "art",
+      "role": "battery commander",
+      "year": 1863,
+      "provenance": "Verified",
+      "team": {
+        "side": "US",
+        "army": "Army of the Potomac",
+        "corps": "II Corps",
+        "division": "Artillery Brigade",
+        "brigade": "Battery A, 4th U.S. Artillery",
+        "regiment": "4th U.S. Artillery",
+        "company": "Battery A"
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Alonzo Cushing at Gettysburg",
+          "author": "National Park Service",
+          "repository": "Gettysburg National Military Park",
+          "locator": "NPS article",
+          "url": "https://www.nps.gov/articles/000/alonzo-cushing-gettysburg.htm",
+          "type": "secondary",
+          "note": "Places six 3-inch Ordnance Rifles of Battery A, 4th United States Artillery at the Angle on Cemetery Ridge and identifies 1st Lt. Alonzo Cushing as the battery commander."
+        },
+        {
+          "title": "First Lieutenant Alonzo H. Cushing",
+          "author": "U.S. Army",
+          "repository": "Army.mil Medal of Honor",
+          "locator": "Biography and official narrative",
+          "url": "https://www.army.mil/medalofhonor/cushing/",
+          "type": "secondary",
+          "note": "Identifies Cushing as a first lieutenant, artillery branch, commander of Battery A, 4th U.S. Artillery, II Corps, Army of the Potomac, and states he was killed in action on July 3, 1863."
+        },
+        {
+          "title": "Alonzo H Cushing",
+          "author": "Congressional Medal of Honor Society",
+          "repository": "Congressional Medal of Honor Society",
+          "locator": "Recipient profile and citation",
+          "url": "https://www.cmohs.org/recipients/alonzo-h-cushing",
+          "type": "secondary",
+          "note": "Gives Cushing's rank as first lieutenant, unit as Battery A, 4th U.S. Artillery, action date July 3, 1863, action place Gettysburg, and Medal of Honor citation for his battery command."
+        }
+      ],
+      "sourceNote": "NPS places Battery A, 4th U.S. Artillery at the Angle on Cemetery Ridge and identifies 1st Lt. Alonzo Cushing as its commander. Army.mil and the Congressional Medal of Honor Society corroborate his rank, Battery A / 4th U.S. Artillery / II Corps context, July 3 Gettysburg action, and death while directing the guns. The record asserts no portrait; ratings stay neutral Inferred calibration.",
+      "bio": "Alonzo H. Cushing commanded Battery A, 4th U.S. Artillery at the Angle on Cemetery Ridge during Pickett's Charge. On July 3, 1863, his battery was battered by the Confederate cannonade; Cushing was wounded more than once, refused evacuation, and kept directing his remaining guns until he was killed. This replacement ties the Gettysburg artillery slot to a sourced battery commander without changing the battle's shared credit for the Union defense."
     }
   ],
   "_template": {

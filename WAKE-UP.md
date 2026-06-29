@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-06-29: **THE FIFTH CITATION-GRADE SOLDIER REPLACEMENT IS SHIPPED. Alonzo H. Cushing now replaces one generated Gettysburg Battery A command slot honestly, with sources and no unsupported portrait claim.**
+
+**Newest (D158, 2026-06-29):** This continues the bounded named-person replacement lane after D154-D157. `data/soldier-replacements.json` now has 5 `Verified` records: Elisha Hunt Rhodes, William McCarter, Sam R. Watkins, Joshua L. Chamberlain, and Alonzo H. Cushing. Cushing replaces `ss:gettysburg:US:us_cushing_battery:cmd`. It does not change canonical battle data, tactical combat rules, item balance data, `build/base.html`, or the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.
+
+**What changed:** Cushing appears as a sourced Soldier's Story record for the Army of the Potomac / II Corps / Artillery Brigade / Battery A, 4th U.S. Artillery at Gettysburg. Soldier detail cards show his sourced bio, source note, sources, Pickett's Charge / the Angle context, and no portrait block. The replacement overlay preserves 603 registry rows and shifts the registry from 22 authored / 581 generated to 27 authored / 576 generated.
+
+**Source guardrail:** NPS places Battery A, 4th U.S. Artillery at the Angle on Cemetery Ridge during Pickett's Charge and names 1st Lt. Alonzo Cushing as its commander. Army.mil identifies him as first lieutenant and commander of Battery A, 4th U.S. Artillery, II Corps, Army of the Potomac, killed July 3, 1863. The Congressional Medal of Honor Society corroborates rank, unit, action date/place, and the Medal of Honor citation trail. No portrait/license is asserted, and the bio avoids reducing the Angle to one man.
+
+**Verified:** soldier importer `records=5 verified=5 disputed=0`; women importer still `records=7 verified=6 disputed=1`; build GATE OK; focused `probe-loot-survival` 11/11 with 0 pageerrors. Full `npm run vet:noreg` completed **VET NO-REGRESSION OK — 82 commands**, with `probe-loot-survival`, `probe-women-in-war`, all battle probes, `sweep-all-battles`, `probe-full-campaign` 4/4, 0 pageerrors and `diag-classic` `nonBlank:346`, `m3dActive:false`. Chattanooga and the USCT playable battles still stay saved for last.
+
+---
+
 # ☀ WAKE-UP — 2026-06-29: **THE FOURTH CITATION-GRADE SOLDIER REPLACEMENT IS SHIPPED. Joshua L. Chamberlain now replaces one generated Gettysburg 20th Maine command slot honestly, with sources and no unsupported portrait/company claim.**
 
 **Newest (D157, 2026-06-29):** This continues the bounded named-person replacement lane after D154-D156. `data/soldier-replacements.json` now has 4 `Verified` records: Elisha Hunt Rhodes, William McCarter, Sam R. Watkins, and Joshua L. Chamberlain. Chamberlain replaces `ss:gettysburg:US:us_20th_maine:cmd`. It does not change canonical battle data, tactical combat rules, item balance data, `build/base.html`, or the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.
