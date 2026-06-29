@@ -197,25 +197,26 @@ const SETUP = `(() => {
       return { people:reg.people.length, brigades:reg.brigades, authored:reg.authored, generated:reg.generated, first:sample.name };
     });
 
-    step('D156 REPLACEMENTS: canonical Rhodes, McCarter, and Watkins records overlay generated slots and hostile packs still reject', function(){
+    step('D157 REPLACEMENTS: canonical Rhodes, McCarter, Watkins, and Chamberlain records overlay generated slots and hostile packs still reject', function(){
       var C=mkC('US'); _t1InitAll(C);
       var original=GAME_DATA['soldier-replacements'];
       if(!original || original.schema!=='cw_soldier_replacements_v1' || !Array.isArray(original.records)) throw new Error('missing D152 canonical pack');
-      if(original.records.length!==3) throw new Error('canonical D156 pack should ship exactly three records, got '+original.records.length);
+      if(original.records.length!==4) throw new Error('canonical D157 pack should ship exactly four records, got '+original.records.length);
       var canonByPid={}, canonReplace={};
       for(var cr=0;cr<original.records.length;cr++){ canonByPid[original.records[cr].pid]=original.records[cr]; canonReplace[original.records[cr].replacePid]=1; }
       if(!canonByPid.person_bullrun_us_2ri_rhodes || canonByPid.person_bullrun_us_2ri_rhodes.replacePid!=='ss:bullrun1:US:us_burnside:pvt') throw new Error('missing D154 Rhodes canonical record: '+JSON.stringify(original.records));
       if(!canonByPid.person_fredericksburg_us_116pa_mccarter || canonByPid.person_fredericksburg_us_116pa_mccarter.replacePid!=='ss:fredericksburg:US:us_irish:pvt') throw new Error('missing D155 McCarter canonical record: '+JSON.stringify(original.records));
       if(!canonByPid.person_chickamauga_cs_1tn_watkins || canonByPid.person_chickamauga_cs_1tn_watkins.replacePid!=='ss:chickamauga:CS:cs_cheatham_woods:pvt') throw new Error('missing D156 Watkins canonical record: '+JSON.stringify(original.records));
+      if(!canonByPid.person_gettysburg_us_20me_chamberlain || canonByPid.person_gettysburg_us_20me_chamberlain.replacePid!=='ss:gettysburg:US:us_20th_maine:cmd') throw new Error('missing D157 Chamberlain canonical record: '+JSON.stringify(original.records));
       GAME_DATA['soldier-replacements']={schema:'cw_soldier_replacements_v1',records:[]};
       var rawBase=ssPersonRegistry(C);
       GAME_DATA['soldier-replacements']=original;
       var canonical=ssValidateSoldierReplacementPack(original,{basePeople:rawBase.people});
-      if(!canonical.ok || canonical.records.length!==3) throw new Error('canonical D156 pack should validate against raw generated registry: '+JSON.stringify(canonical));
+      if(!canonical.ok || canonical.records.length!==4) throw new Error('canonical D157 pack should validate against raw generated registry: '+JSON.stringify(canonical));
       var base=ssPersonRegistry(C);
       if(base.people.length!==rawBase.people.length) throw new Error('canonical replacement should preserve registry length');
-      if(base.replacements.applied!==3 || base.replacements.rejected!==0) throw new Error('canonical replacement should apply three rows cleanly: '+JSON.stringify(base.replacements));
-      if(base.generated!==rawBase.generated-3 || base.authored!==rawBase.authored+3) throw new Error('canonical replacement should move three rows generated->authored: '+JSON.stringify({raw:{a:rawBase.authored,g:rawBase.generated},base:{a:base.authored,g:base.generated}}));
+      if(base.replacements.applied!==4 || base.replacements.rejected!==0) throw new Error('canonical replacement should apply four rows cleanly: '+JSON.stringify(base.replacements));
+      if(base.generated!==rawBase.generated-4 || base.authored!==rawBase.authored+4) throw new Error('canonical replacement should move four rows generated->authored: '+JSON.stringify({raw:{a:rawBase.authored,g:rawBase.generated},base:{a:base.authored,g:base.generated}}));
       var rhodesOld=ssFindPerson(C,'ss:bullrun1:US:us_burnside:pvt');
       var rhodes=ssFindPerson(C,'person_bullrun_us_2ri_rhodes');
       if(!rhodes || !rhodesOld || rhodesOld.pid!==rhodes.pid) throw new Error('Rhodes alias lookup failed');
@@ -237,6 +238,13 @@ const SETUP = `(() => {
       if(watkins.rank!=='Private' || watkins.side!=='CS' || watkins.team.regiment!=='1st/27th Tennessee Infantry' || watkins.team.company!=='Company H, 1st Tennessee Infantry' || watkins.team.brigade!=='Maney\\'s Brigade' || watkins.team.division!=='Cheatham\\'s Division') throw new Error('Watkins rank/unit mismatch: '+JSON.stringify(watkins.team));
       if(!watkins.bio || watkins.bio.indexOf('Chickamauga')<0 || watkins.bio.indexOf('Co. Aytch')<0 || watkins.bio.indexOf('slavery')<0 || !watkins.sourceNote || watkins.sources.length<3) throw new Error('Watkins source/bio payload missing');
       if(watkins.portrait) throw new Error('Watkins should not assert an unverified portrait: '+JSON.stringify(watkins.portrait));
+      var chamberlainOld=ssFindPerson(C,'ss:gettysburg:US:us_20th_maine:cmd');
+      var chamberlain=ssFindPerson(C,'person_gettysburg_us_20me_chamberlain');
+      if(!chamberlain || !chamberlainOld || chamberlainOld.pid!==chamberlain.pid) throw new Error('Chamberlain alias lookup failed');
+      if(chamberlain.generated || !chamberlain.replacement || chamberlain.provenance!=='Verified' || chamberlain.name!=='Joshua L. Chamberlain') throw new Error('Chamberlain row not sourced/verified: '+JSON.stringify(chamberlain));
+      if(chamberlain.rank!=='Col.' || chamberlain.side!=='US' || chamberlain.team.regiment!=='20th Maine Infantry' || chamberlain.team.brigade!=='Vincent\\'s Brigade' || chamberlain.team.corps!=='V Corps' || chamberlain.team.company) throw new Error('Chamberlain rank/unit mismatch: '+JSON.stringify(chamberlain.team));
+      if(!chamberlain.bio || chamberlain.bio.indexOf('Little Round Top')<0 || chamberlain.bio.indexOf('bayonet')<0 || chamberlain.bio.indexOf('one man')<0 || !chamberlain.sourceNote || chamberlain.sources.length<4) throw new Error('Chamberlain source/bio payload missing');
+      if(chamberlain.portrait) throw new Error('Chamberlain should not assert an unverified portrait: '+JSON.stringify(chamberlain.portrait));
       var target=findPerson(rawBase,function(p){ return p.generated && p.side==='US' && p.pid.indexOf(':pvt')>0 && !canonReplace[p.pid] && p.team && p.team.army; });
       var authored=findPerson(rawBase,function(p){ return !p.generated && p.provenance==='Verified'; });
       if(!target) throw new Error('no generated replacement target found');
@@ -275,7 +283,7 @@ const SETUP = `(() => {
       }
       var restored=ssPersonRegistry(C);
       if(restored.generated!==base.generated || restored.authored!==base.authored) throw new Error('canonical pack restore changed registry');
-      return { canonicalRecords:original.records.length, rhodes:rhodes.pid, mccarter:mccarter.pid, watkins:watkins.pid, target:target.pid, applied:base.replacements.applied, hostileRejected:true };
+      return { canonicalRecords:original.records.length, rhodes:rhodes.pid, mccarter:mccarter.pid, watkins:watkins.pid, chamberlain:chamberlain.pid, target:target.pid, applied:base.replacements.applied, hostileRejected:true };
     });
 
     step('JOURNEY: play-as-anyone start enables survival and stores a saveable selected person without mutating canonical data', function(){
@@ -440,6 +448,15 @@ const SETUP = `(() => {
       var wtxt=watkinsDetail.textContent;
       if(wtxt.indexOf('1st/27th Tennessee Infantry')<0 || wtxt.indexOf('Company H, 1st Tennessee Infantry')<0 || wtxt.indexOf('Maney')<0 || wtxt.indexOf('Cheatham')<0 || wtxt.indexOf('Chickamauga')<0 || wtxt.indexOf('Co. Aytch')<0 || wtxt.indexOf('Source note:')<0 || wtxt.indexOf('Sources (3)')<0) throw new Error('Watkins detail source/bio/unit payload missing: '+wtxt);
       if(watkinsDetail.querySelector('.ss-person-portrait')) throw new Error('Watkins should not render an unverified portrait');
+      var chamberlainCard=cardByPid(root,'person_gettysburg_us_20me_chamberlain');
+      if(!chamberlainCard) throw new Error('Chamberlain sourced replacement card missing');
+      if(chamberlainCard.textContent.indexOf('Joshua L. Chamberlain')<0 || chamberlainCard.textContent.indexOf('Sourced')<0 || chamberlainCard.textContent.indexOf('Verified')<0) throw new Error('Chamberlain card source/provenance missing: '+chamberlainCard.textContent);
+      chamberlainCard.querySelector('[data-ss-pick]').click();
+      var chamberlainDetail=root.querySelector('#ssPersonDetailCard');
+      if(!chamberlainDetail || chamberlainDetail.getAttribute('data-ss-detail-pid')!=='person_gettysburg_us_20me_chamberlain') throw new Error('Chamberlain detail did not select');
+      var ctxt=chamberlainDetail.textContent;
+      if(ctxt.indexOf('20th Maine Infantry')<0 || ctxt.indexOf('Vincent')<0 || ctxt.indexOf('V Corps')<0 || ctxt.indexOf('Little Round Top')<0 || ctxt.indexOf('bayonet')<0 || ctxt.indexOf('Source note:')<0 || ctxt.indexOf('Sources (4)')<0) throw new Error('Chamberlain detail source/bio/unit payload missing: '+ctxt);
+      if(chamberlainDetail.querySelector('.ss-person-portrait')) throw new Error('Chamberlain should not render an unverified portrait');
 
       var search=root.querySelector('#ssRegSearch'), side=root.querySelector('#ssRegSide'), rank=root.querySelector('#ssRegRank'), prov=root.querySelector('#ssRegProv'), unit=root.querySelector('#ssRegUnit');
       if(!search || !side || !rank || !prov || !unit) throw new Error('missing register controls');

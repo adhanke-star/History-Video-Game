@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-06-29: **THE FOURTH CITATION-GRADE SOLDIER REPLACEMENT IS SHIPPED. Joshua L. Chamberlain now replaces one generated Gettysburg 20th Maine command slot honestly, with sources and no unsupported portrait/company claim.**
+
+**Newest (D157, 2026-06-29):** This continues the bounded named-person replacement lane after D154-D156. `data/soldier-replacements.json` now has 4 `Verified` records: Elisha Hunt Rhodes, William McCarter, Sam R. Watkins, and Joshua L. Chamberlain. Chamberlain replaces `ss:gettysburg:US:us_20th_maine:cmd`. It does not change canonical battle data, tactical combat rules, item balance data, `build/base.html`, or the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.
+
+**What changed:** Chamberlain appears as a sourced Soldier's Story record for the Army of the Potomac / V Corps / First Division / Vincent's Brigade / 20th Maine Infantry at Gettysburg. Soldier detail cards show his sourced bio, source note, sources, Little Round Top / bayonet-charge context, and no portrait block. The replacement overlay preserves 603 registry rows and shifts the registry from 22 authored / 581 generated to 26 authored / 577 generated.
+
+**Source guardrail:** NPS order-of-battle data places the 20th Maine under Col. Joshua L. Chamberlain in Strong Vincent's Third Brigade, First Division, V Corps. NPS Little Round Top material identifies the regiment on the extreme left, low on ammunition, and charging downhill with bayonets. NPS unit details place the 20th Maine in the Gettysburg campaign and battle. American Battlefield Trust corroborates the broader Little Round Top defense. No company or portrait/license is asserted, and the bio avoids reducing Little Round Top to one man.
+
+**Verified:** soldier importer `records=4 verified=4 disputed=0`; women importer still `records=7 verified=6 disputed=1`; build GATE OK; focused `probe-loot-survival` 11/11 with 0 pageerrors. Full `npm run vet:noreg` completed **VET NO-REGRESSION OK — 82 commands**, with `probe-loot-survival`, `probe-women-in-war`, all battle probes, `sweep-all-battles`, `probe-full-campaign` 4/4, 0 pageerrors and `diag-classic` `nonBlank:346`, `m3dActive:false`. Chattanooga and the USCT playable battles still stay saved for last.
+
+---
+
 # ☀ WAKE-UP — 2026-06-29: **THE THIRD CITATION-GRADE SOLDIER REPLACEMENT IS SHIPPED. Sam R. Watkins now replaces one generated Chickamauga Confederate private honestly, with sources and no unsupported portrait claim.**
 
 **Newest (D156, 2026-06-29):** This continues the bounded named-person replacement lane after D154/D155. `data/soldier-replacements.json` now has 3 `Verified` records: Elisha Hunt Rhodes, William McCarter, and Sam R. Watkins. Watkins replaces `ss:chickamauga:CS:cs_cheatham_woods:pvt`. It does not change canonical battle data, tactical combat rules, item balance data, `build/base.html`, or the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.

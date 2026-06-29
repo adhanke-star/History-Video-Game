@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "decision": "D156",
+    "decision": "D157",
     "schema": "cw_soldier_replacements_v1",
     "scope": "Citation-grade replacements for generated Soldier's Story representative rows.",
     "provenance": "Inferred",
-    "note": "D156 adds the third narrow sourced replacement slice. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the full no-regression gate. Template values below are documentation only and are ignored by the validator."
+    "note": "D157 adds the fourth narrow sourced replacement slice. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the full no-regression gate. Template values below are documentation only and are ignored by the validator."
   },
   "schema": "cw_soldier_replacements_v1",
   "records": [
@@ -235,6 +235,83 @@
       ],
       "sourceNote": "NPS identifies Watkins as a private in Company H, First Tennessee Infantry, and places him and the First Tennessee at Chickamauga. Project Gutenberg provides Watkins's memoir trail. NPS unit details place the consolidated 1st/27th Tennessee in Maney's Brigade, Army of Tennessee, for the battlefield context. The modeled game slot is Cheatham's Division, Polk's Wing; no portrait is asserted. Ratings stay neutral Inferred calibration.",
       "bio": "Sam R. Watkins served as a private in Company H, First Tennessee Infantry, and fought at Chickamauga with the Army of Tennessee. By the 1863 battle the 1st Tennessee had been consolidated with the 27th and served in Maney's Brigade, fitting the modeled Cheatham's Division private slot. Watkins later wrote Co. Aytch, a vivid participant memoir that the NPS also flags for its omission of slavery and enslaved labor from the war story."
+    },
+    {
+      "pid": "person_gettysburg_us_20me_chamberlain",
+      "replacePid": "ss:gettysburg:US:us_20th_maine:cmd",
+      "name": "Joshua L. Chamberlain",
+      "side": "US",
+      "rank": "Col.",
+      "branch": "inf",
+      "role": "regimental commander",
+      "year": 1863,
+      "provenance": "Verified",
+      "team": {
+        "side": "US",
+        "army": "Army of the Potomac",
+        "corps": "V Corps",
+        "division": "First Division",
+        "brigade": "Vincent's Brigade",
+        "regiment": "20th Maine Infantry",
+        "company": ""
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "The Army of the Potomac at Gettysburg",
+          "author": "National Park Service",
+          "repository": "Gettysburg National Military Park",
+          "locator": "V Corps / First Division / Third Brigade order of battle",
+          "url": "https://www.nps.gov/gett/learn/historyculture/aop-orderofbattle.htm",
+          "type": "secondary",
+          "note": "Places the 20th Maine Infantry under Col. Joshua L. Chamberlain in Strong Vincent's Third Brigade, First Division, V Corps at Gettysburg."
+        },
+        {
+          "title": "20th Maine Infantry Regiment Monument",
+          "author": "National Park Service",
+          "repository": "Gettysburg National Military Park",
+          "locator": "Little Round Top monument place page",
+          "url": "https://www.nps.gov/places/20th-maine-monument.htm",
+          "type": "secondary",
+          "note": "States the 20th Maine was commanded by Col. Joshua L. Chamberlain, ordered to the extreme left of the Union line on Little Round Top on July 2, 1863, and charged downhill with bayonets after running low on ammunition."
+        },
+        {
+          "title": "The Civil War - 20th Regiment, Maine Infantry",
+          "author": "National Park Service",
+          "repository": "Civil War Soldiers and Sailors System",
+          "locator": "Battle Unit Details UME0020RI",
+          "url": "https://www.nps.gov/civilwar/search-battle-units-detail.htm?battleUnitCode=UME0020RI",
+          "type": "secondary",
+          "note": "Places the 20th Maine Infantry in the Gettysburg campaign and Battle of Gettysburg, July 1-3, 1863."
+        },
+        {
+          "title": "Defense of Little Round Top",
+          "author": "American Battlefield Trust",
+          "repository": "American Battlefield Trust",
+          "locator": "Battle article",
+          "url": "https://www.battlefields.org/learn/articles/defense-little-round-top",
+          "type": "secondary",
+          "note": "Corroborates Chamberlain leading the 20th Maine at Little Round Top and the famous counterattack in the broader defense of the hill."
+        }
+      ],
+      "sourceNote": "NPS order-of-battle data places Col. Joshua L. Chamberlain and the 20th Maine in Vincent's Third Brigade, First Division, V Corps at Gettysburg. NPS Little Round Top material and the American Battlefield Trust corroborate the regiment's extreme-left position, low-ammunition crisis, and bayonet charge. The record asserts no company and no portrait; ratings stay neutral Inferred calibration.",
+      "bio": "Joshua L. Chamberlain commanded the 20th Maine on Little Round Top during the second day at Gettysburg. The regiment held the extreme left of the Union line in Vincent's Brigade, ran low on ammunition, and counterattacked with the famous bayonet charge. This replacement presents Chamberlain as a sourced regimental commander while preserving the scenario's broader caution that Little Round Top was held by a chain of decisions and costs, not by one man alone."
     }
   ],
   "_template": {
