@@ -197,21 +197,24 @@ const SETUP = `(() => {
       return { people:reg.people.length, brigades:reg.brigades, authored:reg.authored, generated:reg.generated, first:sample.name };
     });
 
-    step('D154 REPLACEMENTS: canonical Rhodes record overlays one generated Bull Run slot and hostile packs still reject', function(){
+    step('D155 REPLACEMENTS: canonical Rhodes and McCarter records overlay generated slots and hostile packs still reject', function(){
       var C=mkC('US'); _t1InitAll(C);
       var original=GAME_DATA['soldier-replacements'];
       if(!original || original.schema!=='cw_soldier_replacements_v1' || !Array.isArray(original.records)) throw new Error('missing D152 canonical pack');
-      if(original.records.length!==1) throw new Error('canonical D154 pack should ship exactly one record, got '+original.records.length);
-      if(original.records[0].pid!=='person_bullrun_us_2ri_rhodes' || original.records[0].replacePid!=='ss:bullrun1:US:us_burnside:pvt') throw new Error('unexpected D154 canonical record: '+JSON.stringify(original.records[0]));
+      if(original.records.length!==2) throw new Error('canonical D155 pack should ship exactly two records, got '+original.records.length);
+      var canonByPid={}, canonReplace={};
+      for(var cr=0;cr<original.records.length;cr++){ canonByPid[original.records[cr].pid]=original.records[cr]; canonReplace[original.records[cr].replacePid]=1; }
+      if(!canonByPid.person_bullrun_us_2ri_rhodes || canonByPid.person_bullrun_us_2ri_rhodes.replacePid!=='ss:bullrun1:US:us_burnside:pvt') throw new Error('missing D154 Rhodes canonical record: '+JSON.stringify(original.records));
+      if(!canonByPid.person_fredericksburg_us_116pa_mccarter || canonByPid.person_fredericksburg_us_116pa_mccarter.replacePid!=='ss:fredericksburg:US:us_irish:pvt') throw new Error('missing D155 McCarter canonical record: '+JSON.stringify(original.records));
       GAME_DATA['soldier-replacements']={schema:'cw_soldier_replacements_v1',records:[]};
       var rawBase=ssPersonRegistry(C);
       GAME_DATA['soldier-replacements']=original;
       var canonical=ssValidateSoldierReplacementPack(original,{basePeople:rawBase.people});
-      if(!canonical.ok || canonical.records.length!==1) throw new Error('canonical D154 pack should validate against raw generated registry: '+JSON.stringify(canonical));
+      if(!canonical.ok || canonical.records.length!==2) throw new Error('canonical D155 pack should validate against raw generated registry: '+JSON.stringify(canonical));
       var base=ssPersonRegistry(C);
       if(base.people.length!==rawBase.people.length) throw new Error('canonical replacement should preserve registry length');
-      if(base.replacements.applied!==1 || base.replacements.rejected!==0) throw new Error('canonical replacement should apply one row cleanly: '+JSON.stringify(base.replacements));
-      if(base.generated!==rawBase.generated-1 || base.authored!==rawBase.authored+1) throw new Error('canonical replacement should move one row generated->authored: '+JSON.stringify({raw:{a:rawBase.authored,g:rawBase.generated},base:{a:base.authored,g:base.generated}}));
+      if(base.replacements.applied!==2 || base.replacements.rejected!==0) throw new Error('canonical replacement should apply two rows cleanly: '+JSON.stringify(base.replacements));
+      if(base.generated!==rawBase.generated-2 || base.authored!==rawBase.authored+2) throw new Error('canonical replacement should move two rows generated->authored: '+JSON.stringify({raw:{a:rawBase.authored,g:rawBase.generated},base:{a:base.authored,g:base.generated}}));
       var rhodesOld=ssFindPerson(C,'ss:bullrun1:US:us_burnside:pvt');
       var rhodes=ssFindPerson(C,'person_bullrun_us_2ri_rhodes');
       if(!rhodes || !rhodesOld || rhodesOld.pid!==rhodes.pid) throw new Error('Rhodes alias lookup failed');
@@ -219,7 +222,14 @@ const SETUP = `(() => {
       if(rhodes.rank!=='Private' || rhodes.team.regiment!=='2nd Rhode Island Infantry' || rhodes.team.company!=='Company D') throw new Error('Rhodes rank/unit mismatch: '+JSON.stringify(rhodes.team));
       if(!rhodes.bio || rhodes.bio.indexOf('First Bull Run')<0 || !rhodes.sourceNote || rhodes.sources.length<4) throw new Error('Rhodes source/bio payload missing');
       if(!rhodes.portrait || rhodes.portrait.assetKey!=='portraits/elisharhodes') throw new Error('Rhodes portrait metadata missing: '+JSON.stringify(rhodes.portrait));
-      var target=findPerson(rawBase,function(p){ return p.generated && p.side==='US' && p.pid.indexOf(':pvt')>0 && p.pid!==original.records[0].replacePid && p.team && p.team.army; });
+      var mccarterOld=ssFindPerson(C,'ss:fredericksburg:US:us_irish:pvt');
+      var mccarter=ssFindPerson(C,'person_fredericksburg_us_116pa_mccarter');
+      if(!mccarter || !mccarterOld || mccarterOld.pid!==mccarter.pid) throw new Error('McCarter alias lookup failed');
+      if(mccarter.generated || !mccarter.replacement || mccarter.provenance!=='Verified' || mccarter.name!=='William McCarter') throw new Error('McCarter row not sourced/verified: '+JSON.stringify(mccarter));
+      if(mccarter.rank!=='Private' || mccarter.team.regiment!=='116th Pennsylvania Infantry' || mccarter.team.brigade.indexOf('Irish Brigade')<0 || mccarter.team.company) throw new Error('McCarter rank/unit mismatch: '+JSON.stringify(mccarter.team));
+      if(!mccarter.bio || mccarter.bio.indexOf('Fredericksburg')<0 || mccarter.bio.indexOf('Marye')<0 || !mccarter.sourceNote || mccarter.sources.length<4) throw new Error('McCarter source/bio payload missing');
+      if(mccarter.portrait) throw new Error('McCarter should not assert an unverified portrait: '+JSON.stringify(mccarter.portrait));
+      var target=findPerson(rawBase,function(p){ return p.generated && p.side==='US' && p.pid.indexOf(':pvt')>0 && !canonReplace[p.pid] && p.team && p.team.army; });
       var authored=findPerson(rawBase,function(p){ return !p.generated && p.provenance==='Verified'; });
       if(!target) throw new Error('no generated replacement target found');
       if(!authored) throw new Error('no authored row found for invalid target guard');
@@ -257,7 +267,7 @@ const SETUP = `(() => {
       }
       var restored=ssPersonRegistry(C);
       if(restored.generated!==base.generated || restored.authored!==base.authored) throw new Error('canonical pack restore changed registry');
-      return { canonicalRecords:original.records.length, rhodes:rhodes.pid, target:target.pid, applied:base.replacements.applied, hostileRejected:true };
+      return { canonicalRecords:original.records.length, rhodes:rhodes.pid, mccarter:mccarter.pid, target:target.pid, applied:base.replacements.applied, hostileRejected:true };
     });
 
     step('JOURNEY: play-as-anyone start enables survival and stores a saveable selected person without mutating canonical data', function(){
@@ -404,6 +414,15 @@ const SETUP = `(() => {
       if(rtxt.indexOf('2nd Rhode Island Infantry')<0 || rtxt.indexOf('Company D')<0 || rtxt.indexOf('First Bull Run')<0 || rtxt.indexOf('Source note:')<0 || rtxt.indexOf('Sources (4)')<0) throw new Error('Rhodes detail source/bio/unit payload missing: '+rtxt);
       var rimg=rhodesDetail.querySelector('.ss-person-portrait img');
       if(!rimg || (rimg.getAttribute('src')||'').indexOf('data:image/jpeg')!==0 || (rimg.getAttribute('alt')||'').indexOf('officer uniform')<0) throw new Error('Rhodes portrait did not render from embedded JPEG');
+      var mccarterCard=cardByPid(root,'person_fredericksburg_us_116pa_mccarter');
+      if(!mccarterCard) throw new Error('McCarter sourced replacement card missing');
+      if(mccarterCard.textContent.indexOf('William McCarter')<0 || mccarterCard.textContent.indexOf('Sourced')<0 || mccarterCard.textContent.indexOf('Verified')<0) throw new Error('McCarter card source/provenance missing: '+mccarterCard.textContent);
+      mccarterCard.querySelector('[data-ss-pick]').click();
+      var mccarterDetail=root.querySelector('#ssPersonDetailCard');
+      if(!mccarterDetail || mccarterDetail.getAttribute('data-ss-detail-pid')!=='person_fredericksburg_us_116pa_mccarter') throw new Error('McCarter detail did not select');
+      var mtxt=mccarterDetail.textContent;
+      if(mtxt.indexOf('116th Pennsylvania Infantry')<0 || mtxt.indexOf('Irish Brigade')<0 || mtxt.indexOf('Fredericksburg')<0 || mtxt.indexOf('Source note:')<0 || mtxt.indexOf('Sources (4)')<0) throw new Error('McCarter detail source/bio/unit payload missing: '+mtxt);
+      if(mccarterDetail.querySelector('.ss-person-portrait')) throw new Error('McCarter should not render an unverified portrait');
 
       var search=root.querySelector('#ssRegSearch'), side=root.querySelector('#ssRegSide'), rank=root.querySelector('#ssRegRank'), prov=root.querySelector('#ssRegProv'), unit=root.querySelector('#ssRegUnit');
       if(!search || !side || !rank || !prov || !unit) throw new Error('missing register controls');

@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "decision": "D154",
+    "decision": "D155",
     "schema": "cw_soldier_replacements_v1",
     "scope": "Citation-grade replacements for generated Soldier's Story representative rows.",
     "provenance": "Inferred",
-    "note": "D154 adds the first narrow sourced replacement slice. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the full no-regression gate. Template values below are documentation only and are ignored by the validator."
+    "note": "D155 adds the second narrow sourced replacement slice. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the full no-regression gate. Template values below are documentation only and are ignored by the validator."
   },
   "schema": "cw_soldier_replacements_v1",
   "records": [
@@ -92,6 +92,81 @@
         "rights": "No known restrictions on publication",
         "url": "https://www.loc.gov/pictures/item/2019635483/"
       }
+    },
+    {
+      "pid": "person_fredericksburg_us_116pa_mccarter",
+      "replacePid": "ss:fredericksburg:US:us_irish:pvt",
+      "name": "William McCarter",
+      "side": "US",
+      "rank": "Private",
+      "branch": "inf",
+      "role": "private soldier",
+      "year": 1862,
+      "provenance": "Verified",
+      "team": {
+        "side": "US",
+        "army": "Army of the Potomac",
+        "corps": "II Corps",
+        "division": "First Division",
+        "brigade": "Irish Brigade (Meagher's)",
+        "regiment": "116th Pennsylvania Infantry",
+        "company": ""
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "My Life in the Irish Brigade: The Civil War Memoirs of Private William McCarter, 116th Pennsylvania Infantry",
+          "author": "William McCarter",
+          "repository": "Historical Society of Pennsylvania",
+          "locator": "Published Materials catalog; 1996 Da Capo edition",
+          "type": "primary",
+          "note": "Cataloged memoir title identifies McCarter as a private in the 116th Pennsylvania Infantry."
+        },
+        {
+          "title": "Philadelphia William McCarter documented his military service with the 116th Pennsylvania Infantry Regiment during the Civil War",
+          "author": "Cary Hutto",
+          "repository": "Historical Society of Pennsylvania",
+          "locator": "Question of the Week, 13 March 2011",
+          "type": "secondary",
+          "note": "States McCarter joined the 116th Pennsylvania in August 1862 and fought at Fredericksburg."
+        },
+        {
+          "title": "The Medical Treatment of Private William McCarter",
+          "author": "Catherine Bateson",
+          "repository": "National Museum of Civil War Medicine",
+          "locator": "Blog article, 14 September 2017",
+          "url": "https://www.civilwarmed.org/mccarter/",
+          "type": "secondary",
+          "note": "Identifies McCarter as Private William McCarter, enlisted in the 116th Pennsylvania, wounded at Fredericksburg, and tied to the Irish Brigade."
+        },
+        {
+          "title": "Order of Battle Fredericksburg Union Right Grand Division",
+          "author": "National Park Service",
+          "repository": "Fredericksburg and Spotsylvania National Military Park",
+          "locator": "Second Army Corps / First Division / Second Brigade (Irish Brigade)",
+          "url": "https://www.nps.gov/frsp/learn/historyculture/order-of-battle-fredericksburg-union-right-grand-division.htm",
+          "type": "secondary",
+          "note": "Places the 116th Pennsylvania in Thomas Meagher's Irish Brigade, First Division, II Corps at Fredericksburg."
+        }
+      ],
+      "sourceNote": "HSP and NMCWM identify McCarter as a private of the 116th Pennsylvania and place his Fredericksburg service/wounding in the Irish Brigade; NPS places the 116th Pennsylvania in Meagher's brigade, First Division, II Corps. No company or portrait is asserted. Ratings stay neutral Inferred calibration.",
+      "bio": "William McCarter, an Irish immigrant living in Philadelphia, joined the 116th Pennsylvania Infantry in August 1862. At Fredericksburg he served as a private connected to Meagher's Irish Brigade and was badly wounded during the assault near Marye's Heights. His later memoir, My Life in the Irish Brigade, makes this replacement a narrow sourced fit for the generated Fredericksburg Irish Brigade private slot; the record does not assert a company or portrait."
     }
   ],
   "_template": {

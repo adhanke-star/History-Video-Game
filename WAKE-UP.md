@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-06-29: **THE SECOND CITATION-GRADE SOLDIER REPLACEMENT IS SHIPPED. William McCarter now replaces one generated Fredericksburg Irish Brigade private honestly, with sources and no unsupported portrait/company claim.**
+
+**Newest (D155, 2026-06-29):** This continues the bounded named-person replacement lane after D154. `data/soldier-replacements.json` now has 2 `Verified` records: Elisha Hunt Rhodes and William McCarter. McCarter replaces `ss:fredericksburg:US:us_irish:pvt`. It does not change canonical battle data, tactical combat rules, item balance data, `build/base.html`, or the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.
+
+**What changed:** McCarter appears as a sourced Soldier's Story record for the 116th Pennsylvania Infantry in Meagher's Irish Brigade at Fredericksburg. Soldier detail cards show his sourced bio, source note, sources, 116th Pennsylvania / Irish Brigade context, and no portrait block. The replacement overlay preserves 603 registry rows and shifts the registry from 22 authored / 581 generated to 24 authored / 579 generated.
+
+**Source guardrail:** HSP catalog/title evidence identifies McCarter's memoir as *My Life in the Irish Brigade: The Civil War Memoirs of Private William McCarter, 116th Pennsylvania Infantry*. HSP's Question of the Week and the National Museum of Civil War Medicine identify him as an Irish immigrant/private in the 116th Pennsylvania who fought at Fredericksburg and was wounded near Marye's Heights. NPS places the 116th Pennsylvania in Meagher's Irish Brigade, First Division, II Corps. No company or portrait/license is asserted.
+
+**Verified:** soldier importer `records=2 verified=2 disputed=0`; women importer still `records=7 verified=6 disputed=1`; build GATE OK; focused `probe-loot-survival` 11/11 with 0 pageerrors. After cleanup-only browser-probe hardening, the literal full `npm run vet:noreg` completed **VET NO-REGRESSION OK — 82 commands**, with `tactical roster`, `custom battle builder`, all battle probes, `sweep-all-battles`, `probe-full-campaign` 4/4, 0 pageerrors and `diag-classic` `nonBlank:346`, `m3dActive:false`. Chattanooga and the USCT playable battles still stay saved for last.
+
+---
+
 # ☀ WAKE-UP — 2026-06-28: **THE FIRST CITATION-GRADE SOLDIER REPLACEMENT IS SHIPPED. Elisha Hunt Rhodes now replaces one generated Bull Run private honestly, with sources and a portrait.**
 
 **Newest (D154, 2026-06-28):** This starts the bounded named-person replacement lane after D152 tooling and D153 women/support-thread separation. `data/soldier-replacements.json` now has 1 `Verified` record for Elisha Hunt Rhodes replacing `ss:bullrun1:US:us_burnside:pvt`. It does not change canonical battle data, tactical combat rules, item balance data, `build/base.html`, or the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.

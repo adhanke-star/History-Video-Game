@@ -20,6 +20,24 @@ const cfg = JSON.parse(readFileSync(join(__dirname, 'shots.json'), 'utf8'));
 const GL = ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--enable-webgl', '--disable-dev-shm-usage'];
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 async function up(u) { try { const r = await fetch(u, { method: 'HEAD' }); return r.ok || r.status === 200; } catch { return false; } }
+async function closeBrowserHard(browser) {
+  if (!browser) return;
+  const proc = typeof browser.process === 'function' ? browser.process() : null;
+  let closed = false;
+  try {
+    await Promise.race([
+      browser.close().then(() => { closed = true; }, () => { closed = true; }),
+      sleep(2500)
+    ]);
+  } catch(e) {}
+  if (!closed && proc && !proc.killed) {
+    try { proc.kill('SIGKILL'); } catch(e) {}
+  }
+}
+function killChild(child) {
+  if (!child) return;
+  try { child.kill(); } catch(e) {}
+}
 
 const SETUP = `(() => {
   var R = { ok:true, steps:[], errors:[] };
@@ -363,8 +381,8 @@ async function main() {
     }
     console.log('ALL OK');
   } finally {
-    if (browser) try { await Promise.race([browser.close(), sleep(2500)]); } catch(e) {}
-    if (server) server.kill();
+    await closeBrowserHard(browser);
+    killChild(server);
   }
 }
 
