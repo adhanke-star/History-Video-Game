@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "decision": "D155",
+    "decision": "D156",
     "schema": "cw_soldier_replacements_v1",
     "scope": "Citation-grade replacements for generated Soldier's Story representative rows.",
     "provenance": "Inferred",
-    "note": "D155 adds the second narrow sourced replacement slice. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the full no-regression gate. Template values below are documentation only and are ignored by the validator."
+    "note": "D156 adds the third narrow sourced replacement slice. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the full no-regression gate. Template values below are documentation only and are ignored by the validator."
   },
   "schema": "cw_soldier_replacements_v1",
   "records": [
@@ -167,6 +167,74 @@
       ],
       "sourceNote": "HSP and NMCWM identify McCarter as a private of the 116th Pennsylvania and place his Fredericksburg service/wounding in the Irish Brigade; NPS places the 116th Pennsylvania in Meagher's brigade, First Division, II Corps. No company or portrait is asserted. Ratings stay neutral Inferred calibration.",
       "bio": "William McCarter, an Irish immigrant living in Philadelphia, joined the 116th Pennsylvania Infantry in August 1862. At Fredericksburg he served as a private connected to Meagher's Irish Brigade and was badly wounded during the assault near Marye's Heights. His later memoir, My Life in the Irish Brigade, makes this replacement a narrow sourced fit for the generated Fredericksburg Irish Brigade private slot; the record does not assert a company or portrait."
+    },
+    {
+      "pid": "person_chickamauga_cs_1tn_watkins",
+      "replacePid": "ss:chickamauga:CS:cs_cheatham_woods:pvt",
+      "name": "Sam R. Watkins",
+      "side": "CS",
+      "rank": "Private",
+      "branch": "inf",
+      "role": "private soldier",
+      "year": 1863,
+      "provenance": "Verified",
+      "team": {
+        "side": "CS",
+        "army": "Army of Tennessee",
+        "corps": "Polk's Wing",
+        "division": "Cheatham's Division",
+        "brigade": "Maney's Brigade",
+        "regiment": "1st/27th Tennessee Infantry",
+        "company": "Company H, 1st Tennessee Infantry"
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Sam Watkins",
+          "author": "National Park Service",
+          "repository": "Chickamauga and Chattanooga National Military Park",
+          "locator": "People biography",
+          "url": "https://www.nps.gov/people/sam-watkins.htm",
+          "type": "secondary",
+          "note": "Identifies Watkins as a private in Company H, First Tennessee Infantry, states the First Tennessee fought both days at Chickamauga, and cautions that his memoir omits slavery from the war narrative."
+        },
+        {
+          "title": "\"Co. Aytch,\" Maury Grays, First Tennessee Regiment; Or, A Side Show of the Big Show",
+          "author": "Samuel R. Watkins",
+          "repository": "Project Gutenberg",
+          "locator": "EBook #13202",
+          "url": "https://www.gutenberg.org/ebooks/13202",
+          "type": "primary",
+          "note": "Watkins's memoir/title identifies the First Tennessee Regiment and records his Company H and Chickamauga experience from a participant's perspective."
+        },
+        {
+          "title": "1st/27th Consolidated Regiment, Tennessee Infantry",
+          "author": "National Park Service",
+          "repository": "Civil War Soldiers and Sailors System",
+          "locator": "Battle Unit Details CTN0001RI03",
+          "url": "https://www.nps.gov/civilwar/search-battle-units-detail.htm?battleUnitCode=CTN0001RI03",
+          "type": "secondary",
+          "note": "States the 1st Tennessee was consolidated with the 27th after December 1862, assigned to Maney's Brigade, Army of Tennessee, and participated at Chickamauga."
+        }
+      ],
+      "sourceNote": "NPS identifies Watkins as a private in Company H, First Tennessee Infantry, and places him and the First Tennessee at Chickamauga. Project Gutenberg provides Watkins's memoir trail. NPS unit details place the consolidated 1st/27th Tennessee in Maney's Brigade, Army of Tennessee, for the battlefield context. The modeled game slot is Cheatham's Division, Polk's Wing; no portrait is asserted. Ratings stay neutral Inferred calibration.",
+      "bio": "Sam R. Watkins served as a private in Company H, First Tennessee Infantry, and fought at Chickamauga with the Army of Tennessee. By the 1863 battle the 1st Tennessee had been consolidated with the 27th and served in Maney's Brigade, fitting the modeled Cheatham's Division private slot. Watkins later wrote Co. Aytch, a vivid participant memoir that the NPS also flags for its omission of slavery and enslaved labor from the war story."
     }
   ],
   "_template": {

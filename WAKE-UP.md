@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-06-29: **THE THIRD CITATION-GRADE SOLDIER REPLACEMENT IS SHIPPED. Sam R. Watkins now replaces one generated Chickamauga Confederate private honestly, with sources and no unsupported portrait claim.**
+
+**Newest (D156, 2026-06-29):** This continues the bounded named-person replacement lane after D154/D155. `data/soldier-replacements.json` now has 3 `Verified` records: Elisha Hunt Rhodes, William McCarter, and Sam R. Watkins. Watkins replaces `ss:chickamauga:CS:cs_cheatham_woods:pvt`. It does not change canonical battle data, tactical combat rules, item balance data, `build/base.html`, or the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.
+
+**What changed:** Watkins appears as a sourced Soldier's Story record for the Army of Tennessee / Polk's Wing / Cheatham's Division / Maney's Brigade / 1st/27th Tennessee Infantry at Chickamauga, with Company H tied specifically to his First Tennessee identity. Soldier detail cards show his sourced bio, source note, sources, unit context, and no portrait block. The replacement overlay preserves 603 registry rows and shifts the registry from 22 authored / 581 generated to 25 authored / 578 generated.
+
+**Source guardrail:** NPS identifies Watkins as a private in Company H, First Tennessee Infantry and places him and the regiment at Chickamauga, while also warning that *Co. Aytch* omits slavery from the war narrative. Project Gutenberg supplies the memoir/title trail. NPS Civil War unit details identify the battlefield regiment as the consolidated 1st/27th Tennessee, assigned to Maney's Brigade, Army of Tennessee, and participating at Chickamauga. No portrait/license is asserted.
+
+**Verified:** soldier importer `records=3 verified=3 disputed=0`; women importer still `records=7 verified=6 disputed=1`; build GATE OK; focused `probe-loot-survival` 11/11 with 0 pageerrors. Full `npm run vet:noreg` completed **VET NO-REGRESSION OK — 82 commands**, with `probe-loot-survival`, `probe-women-in-war`, all battle probes, `sweep-all-battles`, `probe-full-campaign` 4/4, 0 pageerrors and `diag-classic` `nonBlank:346`, `m3dActive:false`. Chattanooga and the USCT playable battles still stay saved for last.
+
+---
+
 # ☀ WAKE-UP — 2026-06-29: **THE SECOND CITATION-GRADE SOLDIER REPLACEMENT IS SHIPPED. William McCarter now replaces one generated Fredericksburg Irish Brigade private honestly, with sources and no unsupported portrait/company claim.**
 
 **Newest (D155, 2026-06-29):** This continues the bounded named-person replacement lane after D154. `data/soldier-replacements.json` now has 2 `Verified` records: Elisha Hunt Rhodes and William McCarter. McCarter replaces `ss:fredericksburg:US:us_irish:pvt`. It does not change canonical battle data, tactical combat rules, item balance data, `build/base.html`, or the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.
