@@ -1,0 +1,169 @@
+{
+  "_comment": "D159 Phase F bounded strategic logistics/rail network. These values teach the rail asymmetry and feed a capped, opt-in bridge priority. They do not create a campaign map and do not add or author any new playable battle.",
+  "schema": "cw_logistics_rail_v1",
+  "schemaVersion": "1.0",
+  "config": {
+    "priorityKey": "railheads",
+    "bridgeCaps": { "supply": 7, "fatigueRelief": 5, "overall": 2 },
+    "networkWeights": { "rail": 0.30, "supply": 0.18, "food": 0.14, "imports": 0.12, "nodes": 0.14, "engineering": 0.12 },
+    "statusBands": [
+      { "min": 80, "label": "Open arteries" },
+      { "min": 62, "label": "Working network" },
+      { "min": 44, "label": "Strained corridors" },
+      { "min": 0, "label": "Starved railheads" }
+    ]
+  },
+  "profiles": {
+    "US": {
+      "name": "Union rail system",
+      "railMiles": 22000,
+      "trackSharePct": 70,
+      "equipmentSharePct": 96,
+      "startingRailIndex": 96,
+      "gaugeBreakPenalty": 2,
+      "fragmentationPenalty": 2,
+      "locomotiveStockIndex": 100,
+      "repairCapacity": "USMRR and Haupt's Construction Corps made rail operation and repair a renewable military asset.",
+      "teaching": "The Union did not merely have more track. It had rolling stock, shops, mechanics, a national army railroad bureau, and the state capacity to turn rails into strategic mobility.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA-ECONOMY.md railroads dossier, citing Battlefield Trust, Essential Civil War Curriculum, NARA Prologue, and McPherson.",
+        "HISTORICAL-DATA-ECONOMY.md macro snapshot, citing 1860 US Census, McPherson, NPS, and EH.net."
+      ]
+    },
+    "CS": {
+      "name": "Confederate rail system",
+      "railMiles": 9250,
+      "trackSharePct": 30,
+      "equipmentSharePct": 20,
+      "startingRailIndex": 52,
+      "gaugeBreakPenalty": 9,
+      "fragmentationPenalty": 10,
+      "locomotiveStockIndex": 20,
+      "repairCapacity": "About 100 separate companies, gauge breaks, worn rail, and near-zero wartime rail-iron production turned local victories into a shrinking supply system.",
+      "teaching": "The Confederate economy could field dangerous armies, but slavery-backed wealth was not convertible into rail iron, locomotives, repair shops, or food delivery at national-war scale.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA-ECONOMY.md railroads dossier, citing Battlefield Trust, Essential Civil War Curriculum, Trains Magazine, Black, and Turner.",
+        "HISTORICAL-DATA-ECONOMY.md agriculture and macro dossiers, citing Hurt, Gates, Black, 1860 US Census, and McPherson."
+      ]
+    }
+  },
+  "theaters": {
+    "E": {
+      "name": "Eastern Theater",
+      "routeFriction": { "US": 8, "CS": 12 },
+      "note": "Dense rail corridors around Washington, Richmond, the Valley, and Petersburg made depots decisive but still left armies marching from railhead to field.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA-ECONOMY.md railroads dossier, citing Battlefield Trust and Trains Magazine.",
+        "GRAND-STRATEGY-PLAN.md strategic-map/logistics sections."
+      ]
+    },
+    "W": {
+      "name": "Western Theater",
+      "routeFriction": { "US": 12, "CS": 19 },
+      "note": "Long distances, river-rail junctions, and vulnerable corridors made Western armies depend on repair, depots, and rolling-stock throughput.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA-ECONOMY.md railroads dossier, citing Emerging Civil War and Essential Civil War Curriculum.",
+        "HISTORICAL-DATA-ECONOMY.md agriculture dossier, citing Hurt, Black, and Gates."
+      ]
+    },
+    "TM": {
+      "name": "Trans-Mississippi",
+      "routeFriction": { "US": 20, "CS": 24 },
+      "note": "Sparse rails and great distances keep this theater dependent on wagon roads, rivers, local supply, and short operational pulses.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA-ECONOMY.md railroads dossier, citing Battlefield Trust and ECWC.",
+        "GRAND-STRATEGY-PLAN.md theater-map and logistics sections."
+      ]
+    },
+    "N": {
+      "name": "Naval and river operations",
+      "routeFriction": { "US": 7, "CS": 16 },
+      "note": "Water transport could bypass weak rail corridors, especially for the Union, but ports and rivers still had to connect to depots ashore.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA-ECONOMY.md cotton-blockade and railroads dossiers.",
+        "GRAND-STRATEGY-PLAN.md logistics, naval, and blockade sections."
+      ]
+    }
+  },
+  "routes": {
+    "bullrun1": { "label": "Washington to Manassas railheads", "theater": "E", "friction": { "US": 7, "CS": 8 }, "provenance": "Inferred", "sources": ["BATTLES roster theater tag plus railroads dossier."] },
+    "bullrun2": { "label": "Northern Virginia rail concentration", "theater": "E", "friction": { "US": 8, "CS": 10 }, "provenance": "Inferred", "sources": ["BATTLES roster theater tag plus railroads dossier."] },
+    "antietam": { "label": "Potomac and Valley railheads", "theater": "E", "friction": { "US": 8, "CS": 12 }, "provenance": "Inferred", "sources": ["BATTLES roster theater tag plus railroads dossier."] },
+    "fredericksburg": { "label": "Aquia Creek to Rappahannock depots", "theater": "E", "friction": { "US": 7, "CS": 11 }, "provenance": "Inferred", "sources": ["BATTLES roster theater tag plus railroads dossier."] },
+    "chancellorsville": { "label": "Rappahannock depots and road marches", "theater": "E", "friction": { "US": 9, "CS": 12 }, "provenance": "Inferred", "sources": ["BATTLES roster theater tag plus railroads dossier."] },
+    "gettysburg": { "label": "Northern invasion railhead gap", "theater": "E", "friction": { "US": 8, "CS": 15 }, "provenance": "Inferred", "sources": ["BATTLES roster theater tag plus railroads dossier."] },
+    "wilderness": { "label": "Orange and Alexandria corridor to the front", "theater": "E", "friction": { "US": 10, "CS": 14 }, "provenance": "Inferred", "sources": ["BATTLES roster theater tag plus railroads dossier."] },
+    "spotsylvania": { "label": "Overland railhead and wagon extension", "theater": "E", "friction": { "US": 11, "CS": 14 }, "provenance": "Inferred", "sources": ["BATTLES roster theater tag plus railroads dossier."] },
+    "coldharbor": { "label": "Richmond-Petersburg rail corridors", "theater": "E", "friction": { "US": 10, "CS": 15 }, "provenance": "Inferred", "sources": ["BATTLES roster theater tag plus railroads dossier."] },
+    "fiveforks": { "label": "South Side Railroad pressure", "theater": "E", "friction": { "US": 8, "CS": 18 }, "provenance": "Inferred", "sources": ["BATTLES roster theater tag plus railroads dossier."] },
+    "petersburg-break": { "label": "Petersburg rail lifelines", "theater": "E", "friction": { "US": 7, "CS": 20 }, "provenance": "Inferred", "sources": ["BATTLES roster theater tag plus railroads dossier."] },
+    "appomattox": { "label": "Railroad cutoff and retreat supply", "theater": "E", "friction": { "US": 9, "CS": 23 }, "provenance": "Inferred", "sources": ["BATTLES roster theater tag plus railroads dossier."] },
+    "ftdonelson": { "label": "Cumberland-Tennessee river-rail junctions", "theater": "W", "friction": { "US": 10, "CS": 15 }, "provenance": "Inferred", "sources": ["BATTLES roster theater tag plus logistics sections."] },
+    "shiloh": { "label": "Tennessee River landing and inland rail junctions", "theater": "W", "friction": { "US": 11, "CS": 15 }, "provenance": "Inferred", "sources": ["BATTLES roster theater tag plus logistics sections."] },
+    "stonesriver": { "label": "Nashville-Murfreesboro rail corridor", "theater": "W", "friction": { "US": 9, "CS": 17 }, "provenance": "Inferred", "sources": ["BATTLES roster theater tag plus logistics sections."] },
+    "championhill": { "label": "Vicksburg campaign inland thrust", "theater": "W", "friction": { "US": 13, "CS": 20 }, "provenance": "Inferred", "sources": ["BATTLES roster theater tag plus logistics sections."] },
+    "vicksburg": { "label": "Mississippi River and Vicksburg depots", "theater": "W", "friction": { "US": 10, "CS": 22 }, "provenance": "Inferred", "sources": ["BATTLES roster theater tag plus logistics sections."] },
+    "chickamauga": { "label": "Chattanooga-Atlanta rail transfer strain", "theater": "W", "friction": { "US": 13, "CS": 24 }, "provenance": "Inferred", "sources": ["HISTORICAL-DATA-ECONOMY.md Longstreet-to-Chickamauga benchmark."] },
+    "kennesaw": { "label": "Western and Atlantic supply line", "theater": "W", "friction": { "US": 11, "CS": 22 }, "provenance": "Inferred", "sources": ["HISTORICAL-DATA-ECONOMY.md Atlanta-campaign rail note."] },
+    "atlanta": { "label": "Atlanta rail hub and single-line pressure", "theater": "W", "friction": { "US": 10, "CS": 25 }, "provenance": "Inferred", "sources": ["HISTORICAL-DATA-ECONOMY.md Atlanta-campaign rail note."] },
+    "franklin": { "label": "Tennessee retreat rail and depot pressure", "theater": "W", "friction": { "US": 10, "CS": 21 }, "provenance": "Inferred", "sources": ["BATTLES roster theater tag plus railroads dossier."] },
+    "nashville": { "label": "Nashville rail-and-river depot system", "theater": "W", "friction": { "US": 8, "CS": 23 }, "provenance": "Inferred", "sources": ["BATTLES roster theater tag plus railroads dossier."] },
+    "bentonville": { "label": "Carolinas march beyond stable railheads", "theater": "W", "friction": { "US": 15, "CS": 26 }, "provenance": "Inferred", "sources": ["BATTLES roster theater tag plus railroads dossier."] }
+  },
+  "benchmarks": [
+    {
+      "id": "union-chattanooga-transfer",
+      "label": "Union XI and XII Corps transfer to relieve Chattanooga",
+      "men": "about 22,000-25,000",
+      "distanceMiles": 1200,
+      "days": "about 11-12",
+      "lesson": "The Union could shift corps across multiple states quickly because it combined rail capacity, management, rolling stock, and repair organization.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA-ECONOMY.md railroads dossier, citing Emerging Civil War.",
+        "HISTORICAL-DATA-ECONOMY.md railroads dossier, citing Essential Civil War Curriculum."
+      ]
+    },
+    {
+      "id": "longstreet-chickamauga-transfer",
+      "label": "Longstreet's corps to Chickamauga",
+      "men": "about 13,000",
+      "distanceMiles": 950,
+      "days": "about 16",
+      "lesson": "The Confederate transfer was operationally impressive but exposed the cost of transfers, gauge breaks, thin rolling stock, and piecemeal arrival.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA-ECONOMY.md railroads dossier, citing Emerging Civil War.",
+        "HISTORICAL-DATA-ECONOMY.md railroads dossier, citing Essential Civil War Curriculum."
+      ]
+    }
+  ],
+  "debates": [
+    {
+      "id": "rail-inevitability-vs-organization",
+      "title": "Material inevitability vs organization",
+      "summary": "The South lacked iron, shops, and rolling stock, but political fragmentation and late national coordination made the material problem worse.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA-ECONOMY.md debate card citing Robert C. Black, The Railroads of the Confederacy.",
+        "HISTORICAL-DATA-ECONOMY.md debate card citing George E. Turner and Battlefield Trust."
+      ]
+    },
+    {
+      "id": "rail-decide-vs-shape",
+      "title": "Did railroads decide the war?",
+      "summary": "Rails did not fight battles by themselves. They shaped concentration, supply, repair, and strategic tempo, which is why this model feeds the existing bridge instead of forcing outcomes.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA-ECONOMY.md debate card citing James M. McPherson.",
+        "HISTORICAL-DATA-ECONOMY.md debate card citing Weber and Clark on USMRR/Haupt management."
+      ]
+    }
+  ]
+}

@@ -93,6 +93,13 @@ function bridgeArmy(C) {
     supply = Math.min(100, supply + Math.round(engBranchBoost(C, "construction")));
     fatigue = Math.max(0, fatigue - Math.round(engBranchBoost(C, "pontoons")));
   }
+  // D159: rail/logistics is an explicit War Effort priority. logisticsBridgeBonus returns
+  // exact zeros unless the player activates railheads, so default bridge baselines stay intact.
+  var _logRail = (typeof logisticsBridgeBonus === "function") ? logisticsBridgeBonus(C) : null;
+  if (_logRail) {
+    supply = Math.max(0, Math.min(100, supply + Math.round(_logRail.supply || 0)));
+    fatigue = Math.max(0, Math.min(100, fatigue + Math.round(_logRail.fatigue || 0)));
+  }
   // S2 m5: the sitting field general + the cabinet now drive leadership (anchored at 64 so a
   // default/historical command plays ≈ Classic; the A6a/D47.1 anchor lesson). The _brgLeadGuard
   // breaks the bridgeArmy->commandLeadership->cabinet->_cabReading->bridgeArmy cycle (D53.4).
@@ -138,8 +145,10 @@ function bridgeArmy(C) {
   overall = Math.max(0, Math.min(100, overall + Math.round((leadership - 64) * 0.18)));
   if (_camp && _camp.overall) overall = Math.min(100, overall + _camp.overall);   // Q8: a small drill "sharpness" on top of the facet lifts (0 when undrilled -> byte-identical)
   if (_loot && _loot.overall) overall = Math.max(0, Math.min(100, overall + Math.round(_loot.overall)));
+  if (_logRail && _logRail.overall) overall = Math.max(0, Math.min(100, overall + Math.round(_logRail.overall)));
   return { side: side, strength: Math.round(strength), equip: Math.round(equip), arms: arms,
-    morale: morale, supply: supply, fatigue: fatigue, leadership: leadership, firepower: firepower, artillery: artillery, engineering: engineering, overall: overall };
+    morale: morale, supply: supply, fatigue: fatigue, leadership: leadership, firepower: firepower, artillery: artillery, engineering: engineering,
+    logistics: _logRail ? Math.round(_logRail.index || 0) : 0, overall: overall };
 }
 
 function _brgWord(v) {
@@ -206,7 +215,7 @@ function bridgeBriefingHTML(C) {
     +     '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin-bottom:2px">The army you field</div>'
     +     '<div style="text-align:right;font-size:20px;font-weight:bold;color:' + ow[1] + ';margin:-18px 0 2px">' + a.overall + ' &middot; ' + ow[0] + '</div>'
     +     _brgBar('Strength', a.strength) + _brgBar('Firepower (small arms)', a.firepower) + _brgBar('Artillery (Cannon Corps)', a.artillery) + _brgBar('Engineering (Works Corps)', a.engineering) + _brgBar('Equipment', a.equip)
-    +     _brgBar('Small arms', a.arms) + _brgBar('Morale', a.morale) + _brgBar('Supply', a.supply) + _brgBar('Fatigue (lower is better)', 100 - a.fatigue)
+    +     _brgBar('Small arms', a.arms) + _brgBar('Morale', a.morale) + _brgBar('Supply', a.supply) + _brgBar('Rail logistics', a.logistics) + _brgBar('Fatigue (lower is better)', 100 - a.fatigue)
     +   '</div>'
     +   '<div style="flex:1 1 240px;min-width:220px">'
     +     '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin-bottom:2px">Your orders for the day</div>'

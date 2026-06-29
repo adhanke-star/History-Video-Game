@@ -207,7 +207,7 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       all fixed+probe-locked); wcag AA. The honest multi-path victory framing is the graded report (D112).›
 
 ### Phase F — CONTENT SYSTEMS  (folded into the phase each best fits)
-- [ ] Logistics/rail network · POW exchange-collapse · disease/medical · hard war · irregular war · the four
+- [~] **Logistics/rail network ✅ D159** (War Effort rail/supply readout + bounded opt-in railhead bridge) · POW exchange-collapse · disease/medical · hard war · irregular war · the four
       under-told-perspective threads · flagship named units · CS finance toolkit · war-finance civics · a real
       diplomacy system · the human-cost-with-gravity treatment. (All from §8 D31–D41.)
 - [x] **Women in the war — soldier & relief threads (Aaron, run-k idea, 2026-06-15).** Add **female leads in the

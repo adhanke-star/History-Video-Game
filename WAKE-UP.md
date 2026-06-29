@@ -4,6 +4,18 @@
 
 ---
 
+# ☀ WAKE-UP — 2026-06-29: **PHASE F LOGISTICS / RAIL NETWORK IS SHIPPED. Rail and supply now read as strategic arteries in War Effort, with a bounded opt-in railhead bridge and no parallel campaign map.**
+
+**Newest (D159, 2026-06-29):** This completes the first bounded logistics/rail slice of Phase F. New `data/logistics-rail.json` and `src/61-logistics-rail.js` add a War Effort rail/supply network surface tied to production, engineering, blockade, War Room supply, and next-battle route friction. It does not start Chattanooga, does not start USCT playable battles, does not hand-edit `build/base.html`, and does not change the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.
+
+**What changed:** War Effort now shows **Rail & Supply Network**: rail strength, repair tempo, depot reach, bottlenecks, route notes, source/debate cards, and a **Prioritize railheads** toggle. The toggle is the only bridge activator. Default/inactive logistics returns exact zero; active effects are capped at supply +7, fatigue relief 5, and overall +2.
+
+**Source guardrail:** the existing economy/history source trail was sufficient, so no web fetch was needed. The module teaches U.S. railroad/equipment/repair capacity and the USMRR/Haupt repair model against Confederate fragmented companies, gauge breaks, equipment scarcity, iron-replacement collapse, and decaying service. The framing is anti-Lost-Cause: logistics failure is political economy and material constraint, not noble deprivation.
+
+**Verified:** build GATE OK; focused `probe-logistics-rail` 8/8 with 0 pageerrors; adjacent probes passed for production, engineering, bridge, blockade, manpower, desk, and Classic. Full no-regression completed in resumed segments for this manifest/lifecycle/render/bridge milestone, ending with `probe-full-campaign` 4/4, 0 pageerrors and `diag-classic` `nonBlank:346`, `m3dActive:false`. The tactical-visuals wrapper cap was raised from 420s to 600s after a green 420.5s run crossed the old cap; Gettysburg's one transient load timeout passed on standalone and resumed vet retry. Chattanooga and the USCT playable battles still stay saved for last.
+
+---
+
 # ☀ WAKE-UP — 2026-06-29: **THE FIFTH CITATION-GRADE SOLDIER REPLACEMENT IS SHIPPED. Alonzo H. Cushing now replaces one generated Gettysburg Battery A command slot honestly, with sources and no unsupported portrait claim.**
 
 **Newest (D158, 2026-06-29):** This continues the bounded named-person replacement lane after D154-D157. `data/soldier-replacements.json` now has 5 `Verified` records: Elisha Hunt Rhodes, William McCarter, Sam R. Watkins, Joshua L. Chamberlain, and Alonzo H. Cushing. Cushing replaces `ss:gettysburg:US:us_cushing_battery:cmd`. It does not change canonical battle data, tactical combat rules, item balance data, `build/base.html`, or the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.

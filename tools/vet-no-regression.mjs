@@ -23,6 +23,7 @@ const SUITE = [
   ['campaign link', 'tools/probe-campaign-link.mjs'],
   ['economy', 'tools/probe-economy.mjs'],
   ['production', 'tools/probe-production.mjs'],
+  ['logistics rail', 'tools/probe-logistics-rail.mjs'],
   ['blockade', 'tools/probe-blockade.mjs'],
   ['manpower', 'tools/probe-manpower.mjs'],
   ['victory', 'tools/probe-victory.mjs'],
@@ -163,7 +164,7 @@ function timeoutFor(label, file) {
   if (file.endsWith('probe-phased-3d.mjs')) return 360000;
   if (file.endsWith('probe-render-richness.mjs')) return 900000;
   if (file.endsWith('probe-weather.mjs')) return 900000;
-  if (file.endsWith('probe-tactical-visuals.mjs')) return 420000;
+  if (file.endsWith('probe-tactical-visuals.mjs')) return 600000;
   if (file.endsWith('sweep-all-battles.mjs')) return 360000;
   if (file.endsWith('probe-full-campaign.mjs')) return 360000;
   if (file.endsWith('build.mjs')) return 240000;

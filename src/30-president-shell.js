@@ -115,7 +115,7 @@ function _wdRefresh() {
     wire = null;
   } else { // "economy" — the President's overview (default landing)
     html = (typeof presRenderEconomy === "function") ? presRenderEconomy(C) : "";
-    wire = null;
+    wire = (typeof logisticsWireOverview === "function") ? logisticsWireOverview : null;
   }
   cont.innerHTML = html || '<p class="lede" style="text-align:center;opacity:0.7">This office is not yet staffed.</p>';
   var tabs = ["economy", "treasury", "diplomacy", "victory", "warvshistory", "afteraction", "codex", "playstyle", "armory", "warroom", "clock", "muster", "cabinet", "command", "camp", "loot", "decisions", "press", "map"];
