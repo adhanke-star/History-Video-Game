@@ -238,7 +238,8 @@ function fldOOBForSide(bd, side, opts) {
 /* fldCampaignOOB(C): resolve the campaign's NEXT battle and return BOTH sides' full OOB + the
    predicted edge. THE query layer the GM moves + scouting consume. null when there is no campaign
    or no next battle (graceful). The PLAYER side names his appointed general (+ his GM OVR); the
-   ENEMY names the historical commander. */
+   ENEMY names the AI-GM shadow commander when the command layer is present, else the historical
+   commander. */
 function fldCampaignOOB(C) {
   if (!C) return null;
   var bd = (typeof _brgNextBattle === "function") ? _brgNextBattle(C) : null;
@@ -266,8 +267,15 @@ function fldCampaignOOB(C) {
       pOpts.commander = { name: nm, prov: "Verified", ovr: (typeof rating === "number") ? rating : null };
     }
   } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldCampaignOOB commander:", e); }
+  var eOpts = { forceDerive: forceDerive };
+  try {
+    var esh = (typeof cmdEnemyShadow === "function") ? cmdEnemyShadow(C) : null;
+    if (esh && esh.commander && esh.commander.name) {
+      eOpts.commander = { name: esh.commander.name, prov: esh.prov || "Inferred", ovr: (typeof esh.commander.headline === "number") ? esh.commander.headline : esh.commander.ovr };
+    }
+  } catch (e2) { if (typeof console !== "undefined" && console.warn) console.warn("fldCampaignOOB enemy commander:", e2); }
   var player = fldOOBForSide(bd, playerSide, pOpts);
-  var enemy = fldOOBForSide(bd, enemySide, { forceDerive: forceDerive });
+  var enemy = fldOOBForSide(bd, enemySide, eOpts);
   if (!player || !enemy) return null;
   // Q10 (D108): NAME the player's DERIVED corps with the commanders he has SEATED in his depth chart (a PURE
   // display join — the seated staff's combat effect lives in commandLeadership, never here, so the predicted
@@ -287,6 +295,18 @@ function fldCampaignOOB(C) {
       }
     }
   } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldCampaignOOB corps staff:", e); }
+  // Group 2 / D173: name the ENEMY'S DERIVED corps with the AI-GM shadow staff. This is a pure
+  // display join from cmdEnemyShadow; it does not read the player's depth chart and it does not
+  // alter the force edge below.
+  try {
+    if (enemy.source === "derived" && typeof cmdEnemyCorpsCommanderFor === "function") {
+      for (var ei = 0; ei < enemy.corps.length; ei++) {
+        if (!enemy.corps[ei] || !/ Corps$/.test(String(enemy.corps[ei].label || ""))) continue;
+        var ec = cmdEnemyCorpsCommanderFor(C, ei);
+        if (ec && ec.name) enemy.corps[ei].commander = ec;   // {id,name,ovr,grade,belowGrade}
+      }
+    }
+  } catch (e3) { if (typeof console !== "undefined" && console.warn) console.warn("fldCampaignOOB enemy corps staff:", e3); }
   // the predicted edge: force-power (quality x quantity), expressed from the PLAYER's vantage.
   function _fldOOBPow(s) { return Math.max(1, s.forceOVR) * Math.max(1, s.men); }
   var pP = _fldOOBPow(player), eP = _fldOOBPow(enemy), tot = pP + eP;
@@ -422,8 +442,12 @@ function _fldOOBSideScouted(o, accent, bd, enemySide) {
   var body = '<div style="margin-top:7px">';
   for (var c = 0; c < o.corps.length; c++) {
     var co = o.corps[c], cg = _fldOOBGrade(co.ovr);
+    var coCmdr = (co.commander && co.commander.name)
+      ? ' <span style="opacity:.86;text-transform:none">&middot; ' + _fldOOBEsc(co.commander.name)
+        + (co.commander.belowGrade ? '<span title="commands below grade" aria-label="commands below grade" style="opacity:.9"> &#9650;</span>' : '') + '</span>'
+      : '';
     body += '<div style="display:flex;justify-content:space-between;align-items:baseline;font-size:11px;padding:3px 0;border-top:1px solid rgba(120,92,62,.32)">'
-      + '<span style="color:#b3925e">' + _fldOOBEsc(co.label) + '</span>'
+      + '<span style="color:#b3925e">' + _fldOOBEsc(co.label) + coCmdr + '</span>'
       + '<span style="opacity:.92"><b>' + co.ovr + '</b> &middot; <b>' + _fldOOBEsc(cg.letter) + '</b> ' + _fldOOBEsc(cg.word) + '</span>'
       + '</div>';
   }

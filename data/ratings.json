@@ -208,6 +208,23 @@
     "prov": "Inferred",
     "src": ["James M. McPherson, Battle Cry of Freedom (1988)", "T. Harry Williams, Lincoln and His Generals (1952)"]
   },
+  "aiGm": {
+    "_note": "Group 2 / D173: THE SYMMETRIC AI-GM SHADOW. The opponent now evaluates its same-side starting roster over the current date, chooses an army commander for the next battle's attack/defend role, and fills a small corps/division staff shadow using the same grade-fit and OVR concepts as the player's GM depth chart. This first slice is pure input/readout substrate: it writes no save state, commissions no hidden officers, invents no theater fields, and never touches casualties, victory, men, or any scoreboard output. Transfer remains blocked until data/generals.json carries honest theater fields. Designer-calibrated difficulty sharpness (Inferred); the command-organization history is sourced in corpsCommand/divisionCommand.",
+    "enabled": true,
+    "defaultTier": "veteran",
+    "leadershipCap": 4,
+    "corpsWeight": 0.04,
+    "divisionWeight": 0.02,
+    "corpsLiftCap": 3,
+    "divisionLiftCap": 1,
+    "styleByAiTier": {
+      "recruit": { "label": "Conservative staff", "commanderMode": "historical", "corpsSlots": 0, "divisionSlots": 0 },
+      "regular": { "label": "Regular staff", "commanderMode": "role", "corpsSlots": 1, "divisionSlots": 1 },
+      "veteran": { "label": "Veteran staff", "commanderMode": "role", "corpsSlots": 2, "divisionSlots": 2 },
+      "hardee": { "label": "Hardee staff", "commanderMode": "role", "corpsSlots": 3, "divisionSlots": 3 }
+    },
+    "prov": "Inferred"
+  },
   "devTraits": {
     "_note": "D105 (RATING SYSTEM, the LIVE DEV-TRAITS milestone) — the Madden development arc, completing RATING-SYSTEM-DESIGN §9-R-6's last open item ('reputation level-up -> OVR still TODO') + the D94-fork-#5 lock ('Reputation->OVR dev-traits = LIVE in-campaign'). cmdOnResolve already evolves a general's reputation by battle outcome (decisive win +6 / win +3 / draw -1 / loss -4 / decisive loss -8) and _cmdGenRating (0.55*skill+0.45*reputation) -> commandLeadership already reads it, so winning a campaign already nudges his OVR. This block adds the Madden DEV-TRAIT that SHAPES that arc: a hidden potential CEILING (how high he can climb), a FLOOR (how far he can fall), a development RATE (how fast wins/losses move him), and an attritionDrag (the §15-R3 'decline with heavy attrition'). ACCURATE INPUTS, never an output gate (D74/D92): a dev-trait only shapes the general's REPUTATION — an input the existing _cmdGenRating/commandLeadership pipe already consumes — it NEVER writes a casualty/winner. BYTE-IDENTICAL by construction: a general with NO entry in `assign` (or absent devTraits data) takes the literal pre-D105 path (clamp [5,98], rate 1, no drag); the deliberate, citation-grade, historically-directed change is the AUTHORED `assign` map (mirrors how R-6's rosterBadges deliberately changed combat). The ceiling/floor are RELATIVE to the general's SEEDED starting reputation (devTrack.start, fixed) so every assigned general keeps headroom to rise and room to fall (ceilingAbove>=5, floorBelow>=5) — the existing 'a winning general gains reputation / a losing one loses it' invariant holds for all. ANTI-LOST-CAUSE balance: the Union's elite are RISERS (Grant/Sherman/Sheridan/Thomas develop to the summit — the honest thesis that the Union found and elevated its best command) rated AS HIGH as the Confederacy's born legends (Lee/Jackson); the command failures are named plainly on BOTH sides (US McClellan plateau, Burnside/Hooker overpromoted; CS Bragg quarrelsome, Hood volatile-disaster).",
     "tuning": {

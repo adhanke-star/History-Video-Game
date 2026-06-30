@@ -424,6 +424,247 @@ function _cmdGenDualOVR(C, gen) {
 }
 
 /* ===========================================================================
+   Group 2 / D173 · SYMMETRIC AI-GM SHADOW (RATING-SYSTEM-DESIGN §12/§15).
+
+   The opponent now runs the same kind of command evaluation the player does: it
+   reads the current enemy roster, chooses an army commander for the next battle's
+   attack/defend role, and seats a small staff shadow for corps/division quality.
+   This first slice is deliberately PURE: no C.president.command enemy state, no
+   hidden commissions, no Transfer, no theater invention, and no battle-result
+   writes. It produces bounded inputs/readouts that later resolve code can consume
+   without adding a separate combat model or scoreboard fudge.
+   =========================================================================== */
+function _cmdAiGmCfg() { var d = gameData("ratings"); return (d && d.aiGm) ? d.aiGm : {}; }
+function _cmdEnemySide(C) { return ((C && C.side) === "CS") ? "US" : "CS"; }
+function _cmdAiGmTier(C) {
+  var cfg = _cmdAiGmCfg(), styles = (cfg && cfg.styleByAiTier) || {};
+  var tier = null;
+  try { if (typeof G !== "undefined" && G.settings && G.settings.tacticalPreset) tier = G.settings.tacticalPreset.ai; } catch (e) {}
+  if (!tier && C && C.settings && C.settings.tacticalPreset) tier = C.settings.tacticalPreset.ai;
+  var def = cfg && cfg.defaultTier ? String(cfg.defaultTier) : "veteran";
+  tier = tier ? String(tier) : def;
+  return styles[tier] ? tier : (styles[def] ? def : "veteran");
+}
+function _cmdAiGmStyle(C) {
+  var cfg = _cmdAiGmCfg(), styles = (cfg && cfg.styleByAiTier) || {};
+  var tier = _cmdAiGmTier(C);
+  var st = styles[tier] || styles.veteran || {};
+  return {
+    tier: tier,
+    label: st.label ? String(st.label) : tier,
+    commanderMode: st.commanderMode === "historical" ? "historical" : "role",
+    corpsSlots: Math.max(0, Math.min(8, Math.floor(_cmdNum(st.corpsSlots, 2)))),
+    divisionSlots: Math.max(0, Math.min(24, Math.floor(_cmdNum(st.divisionSlots, 2))))
+  };
+}
+function _cmdAiGmBaseRating(gen) {
+  if (!gen) return 64;
+  var skill = _cmdEffectiveSkill(gen, null);
+  var rep = (typeof gen.reputation === "number" && isFinite(gen.reputation)) ? gen.reputation : 60;
+  return 0.55 * skill + 0.45 * Math.max(0, Math.min(100, rep));
+}
+function _cmdAiGmDualOVR(gen) {
+  var ovr = Math.round(_cmdAiGmBaseRating(gen));
+  var rec = (typeof _cmdGenPersona === "function") ? _cmdGenPersona(gen) : null;
+  var atkT, defT;
+  if (rec && rec.persona && typeof fldDualTilt === "function") {
+    var t = fldDualTilt(rec.persona); atkT = t.attack; defT = t.defend;
+  } else {
+    var agg = (gen && typeof gen.aggression === "number") ? gen.aggression : 50;
+    var cau = (gen && typeof gen.caution === "number") ? gen.caution : 50;
+    atkT = Math.round((agg - 50) * 0.18); defT = Math.round((cau - 50) * 0.18);
+  }
+  function _clAi(v) { return v < 0 ? 0 : (v > 100 ? 100 : v); }
+  return { headline: ovr, attack: _clAi(ovr + atkT), defend: _clAi(ovr + defT) };
+}
+function _cmdAiGmRoleScore(gen, role) {
+  var d = _cmdAiGmDualOVR(gen);
+  return role === "attack" ? d.attack : d.defend;
+}
+function _cmdAiGmSort(C, side, role, roleOnly) {
+  return function (a, b) {
+    var ar = roleOnly ? _cmdAiGmRoleScore(a, role) : _cmdAiGmBaseRating(a);
+    var br = roleOnly ? _cmdAiGmRoleScore(b, role) : _cmdAiGmBaseRating(b);
+    if (br !== ar) return br - ar;
+    var ah = _cmdAiGmBaseRating(a), bh = _cmdAiGmBaseRating(b);
+    if (bh !== ah) return bh - ah;
+    var an = _cmdName(a), bn = _cmdName(b);
+    return an < bn ? -1 : (an > bn ? 1 : 0);
+  };
+}
+function _cmdAiGmSnapshot(gen, side, kind) {
+  if (!gen) return null;
+  var d = _cmdAiGmDualOVR(gen);
+  var below = (kind === "division") ? _cmdAiGmDivBelowGrade(side, gen)
+    : (kind === "corps") ? _cmdAiGmCorpsBelowGrade(side, gen) : false;
+  var eff = (kind === "division") ? _cmdAiGmDivEffRating(side, gen)
+    : (kind === "corps") ? _cmdAiGmCorpsEffRating(side, gen) : d.headline;
+  return {
+    id: gen.id,
+    name: _cmdName(gen),
+    ovr: Math.round(eff),
+    headline: d.headline,
+    attack: d.attack,
+    defend: d.defend,
+    grade: _cmdBaseGrade(gen),
+    belowGrade: !!below,
+    aggression: (typeof gen.aggression === "number") ? gen.aggression : 50,
+    caution: (typeof gen.caution === "number") ? gen.caution : 50
+  };
+}
+function _cmdAiGmCorpsBelowGrade(side, gen) {
+  var cfg = _cmdCorpsCfg(); if (!cfg || !gen) return false;
+  var prefIdx = _cmdGradeIdx(_cmdCorpsPreferredGrade({ side: side }));
+  if (prefIdx < 0) return false;
+  return _cmdGradeIdx(_cmdBaseGrade(gen)) < prefIdx;
+}
+function _cmdAiGmCorpsEffRating(side, gen) {
+  var r = _cmdAiGmBaseRating(gen);
+  if (_cmdAiGmCorpsBelowGrade(side, gen)) r -= Math.max(0, _cmdNum((_cmdCorpsCfg() || {}).belowGradePenalty, 6));
+  return Math.max(0, Math.min(100, r));
+}
+function _cmdAiGmDivBelowGrade(side, gen) {
+  var cfg = _cmdDivCfg(); if (!cfg || !gen) return false;
+  var prefIdx = _cmdGradeIdx(_cmdDivPreferredGrade({ side: side }));
+  if (prefIdx < 0) return false;
+  return _cmdGradeIdx(_cmdBaseGrade(gen)) < prefIdx;
+}
+function _cmdAiGmDivEffRating(side, gen) {
+  var r = _cmdAiGmBaseRating(gen);
+  if (_cmdAiGmDivBelowGrade(side, gen)) r -= Math.max(0, _cmdNum((_cmdDivCfg() || {}).belowGradePenalty, 4));
+  return Math.max(0, Math.min(100, r));
+}
+function _cmdAiGmStaffLift(corps, divisions) {
+  var cfg = _cmdAiGmCfg();
+  var cw = _cmdNum(cfg.corpsWeight, 0.04), dw = _cmdNum(cfg.divisionWeight, 0.02);
+  var ccap = Math.max(0, _cmdNum(cfg.corpsLiftCap, 3)), dcap = Math.max(0, _cmdNum(cfg.divisionLiftCap, 1));
+  var csum = 0, dsum = 0;
+  for (var i = 0; i < corps.length; i++) csum += ((_cmdNum(corps[i].commander && corps[i].commander.ovr, 64) - 64) * cw);
+  for (var j = 0; j < divisions.length; j++) dsum += ((_cmdNum(divisions[j].commander && divisions[j].commander.ovr, 64) - 64) * dw);
+  var clift = csum > ccap ? ccap : (csum < -ccap ? -ccap : csum);
+  var dlift = dsum > dcap ? dcap : (dsum < -dcap ? -dcap : dsum);
+  var cap = Math.max(0, _cmdNum(cfg.leadershipCap, 4));
+  var total = clift + dlift;
+  return {
+    corps: clift,
+    divisions: dlift,
+    total: total > cap ? cap : (total < -cap ? -cap : total)
+  };
+}
+
+/* PURE: the opponent's GM shadow for the next engagement. It uses only existing,
+   date-available enemy roster rows; it does not write an enemy command save object. */
+function cmdEnemyShadow(C) {
+  if (!C || !C.president) return null;
+  var cfg = _cmdAiGmCfg(); if (cfg && cfg.enabled === false) return null;
+  var bd = (typeof _brgNextBattle === "function") ? _brgNextBattle(C) : null;
+  if (!bd) return null;
+  var side = _cmdEnemySide(C), date = C.president.date;
+  var roster0 = _cmdSideGenerals(side), roster = [];
+  for (var i = 0; i < roster0.length; i++) if (roster0[i] && _cmdAlive(roster0[i], date)) roster.push(roster0[i]);
+  if (!roster.length) return null;
+  var atk = bd.atk;
+  if (C.flipAtk && (atk === "US" || atk === "CS")) atk = (atk === "US") ? "CS" : "US";
+  var role = (atk === side) ? "attack" : "defend";
+  var style = _cmdAiGmStyle(C);
+  var sorted = roster.slice().sort(_cmdAiGmSort(C, side, role, true));
+  var commander = sorted[0];
+  if (style.commanderMode === "historical") {
+    var hist = _cmdHistoricalDefault(side, date);
+    if (hist && _cmdAlive(hist, date)) commander = hist;
+  }
+  var used = {}; if (commander && commander.id) used[commander.id] = 1;
+  var corps = [], divisions = [], avail;
+  avail = roster.slice().filter(function (g) { return !used[g.id]; });
+  avail.sort(function (a, b) {
+    var br = _cmdAiGmCorpsEffRating(side, b), ar = _cmdAiGmCorpsEffRating(side, a);
+    if (br !== ar) return br - ar;
+    return _cmdAiGmSort(C, side, role, true)(a, b);
+  });
+  var cSlots = Math.min(style.corpsSlots, _cmdCorpsSlots(), avail.length);
+  for (var c = 0; c < cSlots; c++) {
+    var cg = avail[c]; used[cg.id] = 1;
+    corps.push({ slot: c, label: _cmdCorpsLabel(c), commander: _cmdAiGmSnapshot(cg, side, "corps") });
+  }
+  avail = roster.slice().filter(function (g) { return !used[g.id]; });
+  avail.sort(function (a, b) {
+    var br = _cmdAiGmDivEffRating(side, b), ar = _cmdAiGmDivEffRating(side, a);
+    if (br !== ar) return br - ar;
+    return _cmdAiGmSort(C, side, role, true)(a, b);
+  });
+  var maxDiv = Math.min(style.divisionSlots, Math.max(0, cSlots * _cmdDivPerCorps()), avail.length);
+  for (var d = 0; d < maxDiv; d++) {
+    var dg = avail[d]; used[dg.id] = 1;
+    var parent = cSlots ? (d % cSlots) : 0;
+    var divIdx = cSlots ? Math.floor(d / cSlots) : d;
+    divisions.push({ corpsSlot: parent, divisionSlot: divIdx, label: _cmdCorpsLabel(parent) + " / " + _cmdDivLabel(divIdx), commander: _cmdAiGmSnapshot(dg, side, "division") });
+  }
+  var cmdr = _cmdAiGmSnapshot(commander, side, "army");
+  var lifts = _cmdAiGmStaffLift(corps, divisions);
+  var base = 64 + (_cmdNum(cmdr && cmdr.headline, 64) - 64) * 0.7 + lifts.total;
+  var leadership = Math.max(42, Math.min(88, Math.round(base)));
+  return {
+    side: side,
+    battleId: bd.id || null,
+    battleName: bd.name || "",
+    role: role,
+    aiTier: style.tier,
+    label: style.label,
+    commander: cmdr,
+    corps: corps,
+    divisions: divisions,
+    lift: lifts,
+    leadership: leadership,
+    prov: "Inferred"
+  };
+}
+function cmdEnemyLeadership(C) {
+  var sh = cmdEnemyShadow(C);
+  return sh ? sh.leadership : 64;
+}
+function cmdEnemyMarginEdge(C, enemyAttacks) {
+  var sh = cmdEnemyShadow(C), t = sh && sh.commander;
+  if (!t) return 0;
+  return enemyAttacks ? (_cmdNum(t.aggression, 50) - 50) * 0.04 : (_cmdNum(t.caution, 50) - 50) * 0.04;
+}
+function cmdEnemyCorpsCommanderFor(C, idx) {
+  var sh = cmdEnemyShadow(C);
+  if (!sh || !sh.corps) return null;
+  for (var i = 0; i < sh.corps.length; i++) if (sh.corps[i] && sh.corps[i].slot === idx) return sh.corps[i].commander || null;
+  return null;
+}
+function cmdEnemyShadowHTML(C) {
+  var sh = cmdEnemyShadow(C);
+  if (!sh || !sh.commander) return "";
+  var role = sh.role === "attack" ? "Attacking command" : "Defensive command";
+  var corps = "";
+  for (var i = 0; i < sh.corps.length; i++) {
+    var co = sh.corps[i], cg = co && co.commander;
+    if (!cg) continue;
+    corps += '<span style="display:inline-flex;gap:5px;align-items:baseline;border:1px solid var(--rule);border-radius:4px;padding:2px 6px;background:rgba(0,0,0,.08)">'
+      + '<b style="font-size:10px;color:#b3925e">' + _cmdEsc(co.label) + '</b>'
+      + '<span style="font-size:11px">' + _cmdEsc(cg.name) + ' <span style="opacity:.68">OVR ' + cg.ovr + '</span></span>'
+      + (cg.belowGrade ? '<span title="commands below grade" aria-label="commands below grade" style="opacity:.82">&#9650;</span>' : '')
+      + '</span>';
+  }
+  if (!corps) corps = '<span style="font-size:11px;opacity:.68">No staffed corps shadow at this AI level.</span>';
+  return ''
+    + '<div style="margin:12px 0 14px;padding:11px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.12)">'
+    +   '<div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px">'
+    +     '<div><span style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#b3925e">Enemy command shadow</span>'
+    +       '<span style="font-size:11px;opacity:.72"> &mdash; ' + _cmdEsc(sh.label) + ' / ' + _cmdEsc(role) + '</span></div>'
+    +     '<div style="display:inline-flex;align-items:baseline;gap:8px"><b style="font-size:19px;line-height:1">' + sh.leadership + '</b><span style="font-size:9px;opacity:.62;letter-spacing:.05em">ENEMY LEADERSHIP</span></div>'
+    +   '</div>'
+    +   '<div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap">'
+    +     '<span style="font-weight:bold;font-size:14px">' + _cmdEsc(sh.commander.name) + '</span>'
+    +     '<span style="font-size:11px;opacity:.75">Army OVR ' + sh.commander.headline + ' &middot; ATK ' + sh.commander.attack + ' / DEF ' + sh.commander.defend + '</span>'
+    +     '<span style="font-size:10px;opacity:.58">Pure AI-GM readout; no hidden Transfer.</span>'
+    +   '</div>'
+    +   '<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:8px">' + corps + '</div>'
+    + '</div>';
+}
+
+/* ===========================================================================
    Q9 (D102) · THE GM PROMOTION ECONOMY — the first depth-chart MOVE (RATING-SYSTEM-DESIGN §12.2/§14.3/§15).
 
    The President promotes a general one grade up the strategic ladder (Brig. Gen. -> Maj. Gen. -> Lt. Gen. ->
@@ -1840,6 +2081,7 @@ function cmdRenderTab(C) {
     + _cmdActiveCard(C)
     + _cmdCareerArcHTML(C)
     + ((typeof fldCampaignOOBHtml === "function") ? fldCampaignOOBHtml(C, { reveal: cmdScoutTier(C), reconHtml: cmdScoutControlHtml(C) }) : '')   /* D106 board + Q8b (D107): the recon tier earned by scouting + the "Order a reconnaissance" control embedded in the board (the WRITE lives in cmdScout; T15 stays pure-read) */
+    + cmdEnemyShadowHTML(C)
     + _cmdPoolHTML(C)
     + _cmdCommissionHTML(C)
     + _cmdPromotionsHTML(C)

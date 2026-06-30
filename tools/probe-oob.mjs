@@ -35,7 +35,7 @@ const SETUP = `(() => {
   // every brigade across a side's corps tree (flatten).
   function allBrigs(sideOOB){ var out=[]; for(var c=0;c<sideOOB.corps.length;c++){ var co=sideOOB.corps[c]; for(var b=0;b<co.brigades.length;b++) out.push(co.brigades[b]); } return out; }
   try {
-    var fns=['fldOOBForSide','fldCampaignOOB','fldCampaignOOBHtml','_fldOOBDerive','_fldOOBAuthored','_fldOOBProvFromNote','_fldScoutPosture','_fldOOBSideScouted'];
+    var fns=['fldOOBForSide','fldCampaignOOB','fldCampaignOOBHtml','_fldOOBDerive','_fldOOBAuthored','_fldOOBProvFromNote','_fldScoutPosture','_fldOOBSideScouted','cmdEnemyShadow','cmdEnemyCorpsCommanderFor'];
     for(var i=0;i<fns.length;i++) if(typeof window[fns[i]]!=='function') return JSON.stringify({ok:false, fatal:'missing OOB fn '+fns[i]});
     if(typeof BATTLES==='undefined') return JSON.stringify({ok:false, fatal:'no BATTLES'});
     G.settings=G.settings||{}; G.settings.gfx='classic'; G.mode='menu';
@@ -203,9 +203,11 @@ const SETUP = `(() => {
       if(light.indexOf('not yet known')<0) throw new Error('light should carry the scouting CTA');
       if(better.indexOf('not yet known')>=0) throw new Error('better should drop the unscouted CTA');
       if(better.indexOf('SCOUTED')<0) throw new Error('better should carry the SCOUTED framing');
-      // the enemy commander surfaces in "better" (the historical cmdCS of the ACTUAL next battle), + a posture advisory
+      // the enemy commander surfaces in "better" (the AI-GM shadow commander in campaign OOB), + a posture advisory
       var nbd=_brgNextBattle(C);
-      if(nbd && nbd.cmdCS && better.indexOf(nbd.cmdCS)<0) throw new Error('better recon must name the enemy commander ('+nbd.cmdCS+')');
+      var sh=(typeof cmdEnemyShadow==='function')?cmdEnemyShadow(C):null;
+      var expectedEnemy=(sh&&sh.commander&&sh.commander.name)||((nbd&&nbd.cmdCS)||'');
+      if(expectedEnemy && better.indexOf(expectedEnemy)<0) throw new Error('better recon must name the enemy commander ('+expectedEnemy+')');
       if(!/defensive|attack|initiative/.test(better)) throw new Error('better recon must show a posture advisory');
       // NO-LEAK: count brigade men rows — "better" must add NO enemy per-brigade rows over light (per-corps only);
       // only "full" lays the enemy's brigades bare.
@@ -265,6 +267,29 @@ const SETUP = `(() => {
         if(fldCampaignOOB(Cg).player.corps[0].commander!=null) throw new Error('a derived non-corps (Garrison) node must NOT be named from the depth chart: '+dg.player.corps[0].label);
         garrison=true; break; } }
       return { foundIdx:found, named:name, edgeUnchanged:true, garrisonGuardTested:garrison }; });
+
+    step('D173: enemy AI-GM shadow names the enemy army commander and derived corps without using the player depth chart', function(){
+      if(typeof cmdEnemyShadow!=='function'||typeof cmdEnemyCorpsCommanderFor!=='function') throw new Error('enemy AI-GM helpers missing');
+      function isCorps(lbl){ return String(lbl||'').indexOf('Corps')>=0; }
+      var C=mkC('US',1862,9), found=-1, d=null;
+      for(var k=0;k<60;k++){ C.idx=k; d=fldCampaignOOB(C); if(!d) break; if(d.enemy.source==='derived' && d.enemy.corps[0] && isCorps(d.enemy.corps[0].label)){ found=k; break; } }
+      if(found<0) return { note:'no derived enemy corps next-battle in range; AI-GM commander still covered by command probe' };
+      var sh=cmdEnemyShadow(C);
+      if(!sh||!sh.commander) throw new Error('no enemy shadow at derived enemy OOB idx '+found);
+      if(!d.enemy.commander||d.enemy.commander.name!==sh.commander.name) throw new Error('enemy OOB commander must come from AI-GM shadow: '+(d.enemy.commander&&d.enemy.commander.name)+' vs '+sh.commander.name);
+      if(sh.corps.length && (!d.enemy.corps[0].commander||d.enemy.corps[0].commander.name!==sh.corps[0].commander.name)) throw new Error('enemy derived corps must carry the AI-GM corps commander');
+      var better=fldCampaignOOBHtml(C,{ reveal:'better' }), full=fldCampaignOOBHtml(C,{ reveal:'full' });
+      if(better.indexOf(sh.commander.name)<0||full.indexOf(sh.commander.name)<0) throw new Error('enemy commander must render in better/full OOB');
+      if(sh.corps.length && better.indexOf(sh.corps[0].commander.name)<0) throw new Error('better recon must show AI-GM enemy corps commander names');
+      C.clock.capital=1000;
+      var army=cmdActiveId(C), playerPick=['us-thomas','us-sherman','us-sheridan','us-grant'].filter(function(x){return x!==army;})[0];
+      cmdSeatCorps(C,0,playerPick);
+      var playerName=_cmdName(_cmdById('US',playerPick));
+      var d2=fldCampaignOOB(C);
+      if(d2.enemy.corps.some&&d2.enemy.corps.some(function(co){ return co.commander&&co.commander.name===playerName; })) throw new Error('player depth-chart name leaked into enemy AI-GM OOB: '+playerName);
+      var edge0=JSON.stringify(d.edge)+'|'+d.fracPlayer, edge1=JSON.stringify(d2.edge)+'|'+d2.fracPlayer;
+      if(edge0!==edge1) throw new Error('AI-GM/OOB commander naming must not alter the predicted force edge');
+      return { foundIdx:found, enemyCommander:sh.commander.name, enemyCorps:sh.corps.length, noPlayerLeak:true }; });
 
     step('GRACEFUL: null inputs + a campaign with no next battle return null / "" (no crash)', function(){
       if(fldCampaignOOB(null)!==null) throw new Error('null C should -> null');

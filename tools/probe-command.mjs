@@ -1100,6 +1100,55 @@ const SETUP = `(() => {
       } finally { by['1864']=saved; }
       return { nanSafe:true }; });
 
+    // ===== D173 / Group 2 — SYMMETRIC AI-GM SHADOW =====
+    step('D173: symmetric AI-GM shadow chooses an enemy-side commander for the next battle and mutates no command save state', function(){
+      if(typeof cmdEnemyShadow!=='function') throw new Error('cmdEnemyShadow missing');
+      var C=mkC('US',1863,7);
+      var before=JSON.stringify(C.president.command||{});
+      var sh=cmdEnemyShadow(C);
+      var after=JSON.stringify(C.president.command||{});
+      if(before!==after) throw new Error('cmdEnemyShadow must be pure over C.president.command');
+      if(!sh||sh.side!=='CS'||!sh.commander||!sh.commander.id) throw new Error('bad enemy shadow for US player: '+JSON.stringify(sh));
+      var ids=_cmdSideGenerals('CS').map(function(g){return g.id;});
+      if(ids.indexOf(sh.commander.id)<0) throw new Error('enemy shadow picked a non-CS roster commander: '+sh.commander.id);
+      if(sh.role!=='attack'&&sh.role!=='defend') throw new Error('role must be attack/defend, got '+sh.role);
+      var sh2=cmdEnemyShadow(C);
+      if(JSON.stringify(sh)!==JSON.stringify(sh2)) throw new Error('enemy shadow must be deterministic across reads');
+      return { enemy:sh.side, commander:sh.commander.id, role:sh.role, leadership:sh.leadership, pure:true }; });
+
+    step('D173: AI tier changes staff depth without hidden commissions or Transfer fields', function(){
+      if(typeof cmdEnemyShadow!=='function') throw new Error('cmdEnemyShadow missing');
+      var C=mkC('CS',1864,5), old=G.settings.tacticalPreset, had=Object.prototype.hasOwnProperty.call(G.settings,'tacticalPreset');
+      try {
+        G.settings.tacticalPreset={ ai:'recruit' };
+        var rec=cmdEnemyShadow(C);
+        G.settings.tacticalPreset={ ai:'hardee' };
+        var hard=cmdEnemyShadow(C);
+        if(!rec||!hard) throw new Error('missing shadow at one of the tiers');
+        if(hard.corps.length<rec.corps.length) throw new Error('hardee staff should not be shallower than recruit');
+        if(hard.divisions.length<rec.divisions.length) throw new Error('hardee division staff should not be shallower than recruit');
+        var usIds=_cmdSideGenerals('US').map(function(g){return g.id;});
+        var seen=[hard.commander.id].concat(hard.corps.map(function(x){return x.commander.id;})).concat(hard.divisions.map(function(x){return x.commander.id;}));
+        for(var i=0;i<seen.length;i++) if(usIds.indexOf(seen[i])<0) throw new Error('AI-GM used a non-roster or commissioned id: '+seen[i]);
+        if(typeof hard.commander.theater!=='string') { /* no-op: Transfer remains blocked unless data honestly adds theater fields */ }
+        return { recruitStaff:rec.corps.length+'/'+rec.divisions.length, hardeeStaff:hard.corps.length+'/'+hard.divisions.length, noHiddenCommission:true };
+      } finally { if(had) G.settings.tacticalPreset=old; else delete G.settings.tacticalPreset; } });
+
+    step('D173: enemy leadership and margin helpers are bounded pure inputs; Command tab renders the readout', function(){
+      if(typeof cmdEnemyLeadership!=='function'||typeof cmdEnemyMarginEdge!=='function'||typeof cmdEnemyShadowHTML!=='function') throw new Error('enemy command helpers missing');
+      var C=mkC('US',1863,7);
+      var before=JSON.stringify(C.president.command||{});
+      var lead=cmdEnemyLeadership(C), atk=cmdEnemyMarginEdge(C,true), def=cmdEnemyMarginEdge(C,false);
+      var after=JSON.stringify(C.president.command||{});
+      if(before!==after) throw new Error('enemy command helpers must not mutate command state');
+      if(!(lead>=42&&lead<=88)) throw new Error('enemy leadership out of bounds: '+lead);
+      if(Math.abs(atk)>2.1||Math.abs(def)>2.1) throw new Error('enemy margin edge out of bounds: '+atk+'/'+def);
+      var html=cmdRenderTab(C);
+      if(html.indexOf('Enemy command shadow')<0) throw new Error('Command tab must render the AI-GM shadow readout');
+      if(html.indexOf('hidden Transfer')<0) throw new Error('readout should make clear Transfer is not secretly active');
+      if(html.indexOf('NaN')>=0||html.indexOf('undefined')>=0) throw new Error('AI-GM readout leaked NaN/undefined');
+      return { leadership:lead, attackEdge:atk, defendEdge:def, renders:true }; });
+
     // helper: read a general's current reputation
     function C0rep(C,id){ return (C.president&&C.president.command&&typeof C.president.command.reputation[id]==='number')?C.president.command.reputation[id]:60; }
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }

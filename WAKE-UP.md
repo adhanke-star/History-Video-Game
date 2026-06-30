@@ -1,8 +1,22 @@
+# ☀ WAKE-UP — 2026-06-30: **GROUP 2 AI-GM SHADOW IS FOCUSED-GATED.**
+
+**Newest (D173, 2026-06-30):** Group 2's first bounded GM leftover shipped. The opponent now has a deterministic AI-GM command shadow over the current enemy roster, with Command/OOB readouts and bounded helper values. This is input/readout substrate only.
+
+**What changed:** `data/ratings.json` adds `aiGm` tier calibration; `src/35-command.js` adds pure enemy-side command helpers and the **Enemy command shadow** readout; `src/tactical/T15-oob.js` names enemy army/corps commanders from that shadow on the existing OOB board when derived.
+
+**Guards:** D113 already shipped the political-general/election-support relief bind, so no new election-support path was needed. `data/generals.json` still has no honest `theater` fields, so Transfer remains blocked. D173 writes no enemy command save state, commissions no hidden officers, does not wire into `87-auto-resolve.js`, and never writes winners, casualties, OOB totals, or scoreboard outputs.
+
+**Verified:** JSON parse ratings/generals; build GATE OK with `no-fudge ✓`; `node --check` for touched JS/probes; focused `probe-command` 79 steps / 0 pageerrors and `probe-oob` 17 steps / 0 pageerrors after one cold-load timeout before evaluation; adjacent `probe-ratings` 21 steps / 0 pageerrors, `probe-bridge` 6 steps / 0 pageerrors, and `probe-desk` 13 steps / 0 pageerrors. JSON artifact inspection clean. Full battery remains deferred to the H0 batch/release gate.
+
+**Next recommended run:** Group 3 — H0 batch/release gate. Q5 Chattanooga, Atlanta/March, Franklin/Nashville, and Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-06-30: **FRESH-CHAT BOUNDARY IS NOW PROJECT LAW.**
 
 **Newest operating rule (D171, 2026-06-30):** auto-condense is only a safety net for finishing one bounded milestone. After every clean committed+pushed milestone, and before starting a new execution group/phase or browser-heavy batch gate, stop and return a paste-ready next-chat prompt unless Aaron explicitly orders same-chat continuation.
 
-**Current grouped order:** Group 1's first Soldier's Story scale-out slice shipped as D172; next is Group 2 GM leftovers; then the H0 batch/release gate; remaining Phase F/G non-battle content systems; Phase H polish/media/perf; meta/deferred tooling; last battle-build queue. Q5 Chattanooga + Q6 USCT playable battles remain LAST unless Aaron explicitly reorders.
+**Current grouped order:** Group 1's first Soldier's Story scale-out slice shipped as D172; Group 2's first GM leftover shipped as D173; next is Group 3 H0 batch/release gate; then remaining Phase F/G non-battle content systems; Phase H polish/media/perf; meta/deferred tooling; last battle-build queue. Q5 Chattanooga + Q6 USCT playable battles remain LAST unless Aaron explicitly reorders.
 
 **Prompt contents required:** `cd`, fetch/status/pull, current HEAD, exact next item, read order, locks, gate sequence, and clean-stop rule.
 
@@ -18,7 +32,7 @@
 
 **Verified:** soldier importer `records=6 verified=6 disputed=0`; women importer `records=7 verified=6 disputed=1`; build GATE OK; focused `probe-loot-survival` 11/11 with 0 pageerrors; adjacent `probe-women-in-war` 8/8 with static leaks 0/14, `probe-photo-embed` 24/24, and `probe-save-slots` 9/9. Full battery remains deferred per the batch/release gate policy.
 
-**Next recommended run:** Group 2 — GM follow-up leftovers; then H0 batch/release. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+**Later status:** D173 completed Group 2's first GM follow-up slice. Next recommended run is Group 3 — H0 batch/release gate. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
 
 ---
 
@@ -44,7 +58,7 @@
 
 **Verified:** syntax checks passed; schema smoke printed `cw_h2_cutaways_v1 9`; build GATE OK; focused `probe-h2-cutaways` 5 steps / 0 pageerrors with clean JSON readback and visible overlay/card/frame metrics. Adjacent probes passed: scenes imagery, bridge, H0 battle briefing, and accessibility, all 0 pageerrors where browser-based. Full battery remains deferred per the batch/release gate policy.
 
-**Next recommended run:** Phase I Soldier's Story scale-out; then GM leftovers; then the H0 batch/release gate. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+**Later status:** D172 completed the first Phase I Soldier's Story scale-out slice, and D173 completed Group 2's first GM follow-up slice. Next recommended run is Group 3 — H0 batch/release gate. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
 
 ---
 
@@ -58,7 +72,7 @@
 
 **Verified:** syntax checks passed; schema smoke printed `cw_disease_medical_v1 4 2`; build GATE OK; focused `probe-disease-medical` 8 steps / 0 pageerrors with clean JSON readback. Adjacent probes passed: prisoner exchange, logistics rail, manpower, bridge, H0 President's Desk, and desk, all 0 pageerrors. Full battery remains deferred per the batch/release gate policy.
 
-**Later status:** D170 completed the H2 cutaway fallback shell and D172 completed the first Soldier's Story scale-out slice. The next recommended run is Group 2 GM leftovers; then H0 batch/release. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+**Later status:** D170 completed the H2 cutaway fallback shell, D172 completed the first Soldier's Story scale-out slice, and D173 completed Group 2's first GM follow-up slice. The next recommended run is Group 3 — H0 batch/release gate. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
 
 ---
 
