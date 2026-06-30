@@ -74,7 +74,8 @@
     "99-h0-president-desk.js",
     "100-h0-battle-briefing.js",
     "101-h0-between-battle.js",
-    "102-h0-tactical-hud.js"
+    "102-h0-tactical-hud.js",
+    "103-h0-after-action.js"
   ],
   "overrides": [
     "_t1InitAll",
