@@ -10,9 +10,25 @@
 
 ---
 
+# ☀ WAKE-UP — 2026-06-30: **H0 BETWEEN-BATTLE INTERSTITIAL COMMAND SHELL IS FOCUSED-GATED.**
+
+**Newest (D166, 2026-06-30):** The H0 UI/UX redesign now covers the strategic-turn interstitial between battles in addition to the main menu, President's Desk, and battle briefing / side choice. The next H0 surface is tactical HUD/settings.
+
+**What changed:** new `src/101-h0-between-battle.js` overrides `_pdInterstitialHTML` after the battle-briefing pass. It preserves `pdGoDesk`, `pdGoBrief`, `pdGoOn`, `pdConcludeWar`, decision cards, `_brgArmySummaryHTML`, the D119 strategic-end offer, and existing `_pdShowTurnInterstitial` wiring. The interstitial now uses a dark Strategic Turn command shell with next-field imagery, turn/side/next chips, treasury/battle/year metrics, latest dispatches, army-condition summary, strategic-end offer panel, responsive desktop/tablet/phone stacking, visible focus, and high-contrast compatibility.
+
+**Fixes:** screenshot review caught literal `&mdash;` text in the strategic-end offer; D166 preserves that existing author-controlled entity after escaping and the focused probe asserts `noLiteralEntity`. `tools/probe-desk.mjs` and `tools/probe-afteraction.mjs` now wait for `domcontentloaded`; desk screenshots have explicit 90s timeouts. Assertions stayed intact.
+
+**Guardrails:** `build/base.html` was untouched; generated `civil_war_generals.html` was rebuilt from source. No combat model, scenario data, OOB, save version, or outcome path changed.
+
+**Verified:** syntax checks passed; build GATE OK; focused `probe-h0-between-battle` 3/3 with 0 pageerrors, desktop/tablet/phone screenshots, interstitial wiring checks, strategic-offer checks, and `noLiteralEntity:true`. Adjacent probes passed: `probe-desk`, `probe-afteraction`, `probe-bridge`, `probe-accessibility`, `probe-h0-battle-briefing`, `probe-h0-president-desk`, `probe-h0-main-menu`, `bootprobe` with `realErrors:[]`, `t1probe`, and `diag-classic` `nonBlank:346`, `m3dActive:false`. Full battery deferred per the batch/release gate policy.
+
+**Next recommended run:** continue H0 with tactical HUD/settings, then after-action/final report. Run full `npm run vet:noreg` at the H0 batch/release checkpoint or on explicit request.
+
+---
+
 # ☀ WAKE-UP — 2026-06-30: **H0 BATTLE BRIEFING / SIDE CHOICE COMMAND SHELL IS FOCUSED-GATED.**
 
-**Newest (D165, 2026-06-30):** The H0 UI/UX redesign now covers the campaign bridge briefing and tactical side-choice card in addition to the main menu and President's Desk. The next H0 surface is the between-battle interstitial.
+**Earlier (D165, 2026-06-30):** The H0 UI/UX redesign now covers the campaign bridge briefing and tactical side-choice card in addition to the main menu and President's Desk. D166 later completed the between-battle interstitial.
 
 **What changed:** new `src/100-h0-battle-briefing.js` overrides `bridgeBriefingHTML` and `fldScenarioSideChoice` after the Desk pass. It preserves the bridge ids and wires (`brgBack`, `brgAuto`, `brgRealTime`, `brgToField`, `brg_*` prep toggles), `bridgeWireBriefing`, `data-brside` callbacks, `scene-img` field-photo integration, `fldMatchupHtml`, and existing launch/return behavior. The bridge briefing now uses a dark command layout with field photo, visible launch controls, army meters, prep orders, responsive desktop/tablet/phone stacking, and visible focus. Side choice now uses matching command cards with objective/attacker chips and clean role badges.
 
@@ -22,7 +38,7 @@
 
 **Verified:** syntax checks passed; build GATE OK; focused `probe-h0-battle-briefing` 3/3 with 0 pageerrors and screenshot inspection. Adjacent probes passed: `probe-bridge`, `probe-campaign-link`, `probe-tactical-roster`, `probe-scenes-imagery`, `probe-accessibility`, `probe-h0-main-menu`, `probe-h0-president-desk`, `probe-auto-resolve`, `bootprobe` with `realErrors:[]`, `t1probe`, and `diag-classic` `nonBlank:346`, `m3dActive:false`. Full battery deferred per the batch/release gate policy.
 
-**Next recommended run:** continue H0 with the between-battle interstitial command-shell pass, then tactical HUD/settings and after-action/final report. Run full `npm run vet:noreg` at the H0 batch/release checkpoint or on explicit request.
+**Later status:** D166 completed the between-battle interstitial. Current H0 next is tactical HUD/settings, followed by after-action/final report. Run full `npm run vet:noreg` at the H0 batch/release checkpoint or on explicit request.
 
 ---
 
@@ -38,7 +54,7 @@
 
 **Verified:** syntax checks passed; build GATE OK; focused `probe-h0-president-desk` 3/3 with 0 pageerrors and desktop/tablet/phone screenshots; JSON readback confirmed no broadsheet shell, dark command texture, visible focus, preserved deep War Effort blocks, and Cabinet/Map tab wiring. Adjacent probes passed: `probe-desk` 13 steps / 0 pageerrors, `probe-h0-main-menu` 4/4 / 0 pageerrors, `probe-accessibility` 25 steps / 0 pageerrors, `bootprobe` ok with `realErrors:[]`, `t1probe` ok, and `diag-classic` `nonBlank:346`, `m3dActive:false`. Full battery deferred per the batch/release gate policy.
 
-**Later status:** D165 completed battle briefing/side choice. Current H0 next is the between-battle interstitial, followed by tactical HUD/settings and after-action/final report.
+**Later status:** D165 completed battle briefing/side choice and D166 completed the between-battle interstitial. Current H0 next is tactical HUD/settings, followed by after-action/final report.
 
 ---
 
@@ -52,7 +68,7 @@
 
 **Verified:** syntax checks passed; build GATE OK; focused `probe-h0-main-menu` 4/4 with 0 pageerrors and desktop/tablet/phone screenshots; JSON readback confirmed no broadsheet class/font stack, polished injected labels, modern focus title, no overlap/overflow, Union/Confederate muster actions, free-battle picker action, and saved-campaign President's Desk path. Adjacent probes passed: `menuprobe`, `probe-accessibility` 25 steps / 0 pageerrors, `bootprobe` ok with `realErrors:[]`, and `diag-classic` `nonBlank:346`. Full battery deferred per the batch/release gate policy.
 
-**Later status:** D164 completed the President's Desk overview and D165 completed battle briefing/side choice. Current H0 next is the between-battle interstitial, followed by tactical HUD/settings and after-action/final report.
+**Later status:** D164 completed the President's Desk overview, D165 completed battle briefing/side choice, and D166 completed the between-battle interstitial. Current H0 next is tactical HUD/settings, followed by after-action/final report.
 
 ---
 

@@ -109,7 +109,7 @@ const SETUP = `(() => {
   page.on('pageerror', e => pageerrors.push(String(e.message)));
   let result = { ok:false };
   try {
-    await page.goto(probe, { waitUntil:'load', timeout:60000 });
+    await page.goto(probe, { waitUntil:'domcontentloaded', timeout:60000 });
     await sleep(500);
     result = JSON.parse(await page.evaluate(SETUP));
     result.pageerrors = pageerrors;
@@ -118,11 +118,11 @@ const SETUP = `(() => {
     for (const tab of ['economy','cabinet','map','warroom']) {
       await page.evaluate(t => { window._wdTab = t; if (typeof _wdRefresh==='function') _wdRefresh(); }, tab);
       await sleep(250);
-      await page.screenshot({ path: join(OUT, `desk-${tab}.png`), fullPage:false });
+      await page.screenshot({ path: join(OUT, `desk-${tab}.png`), fullPage:false, timeout:90000 });
     }
     await page.evaluate(`(function(){ window._pdTurnAck=false; if(typeof closeSheet==='function')closeSheet(); openUpgrade(); })()`);
     await sleep(250);
-    await page.screenshot({ path: join(OUT, 'desk-interstitial.png'), fullPage:false });
+    await page.screenshot({ path: join(OUT, 'desk-interstitial.png'), fullPage:false, timeout:90000 });
   } catch(e){ result = { ok:false, fatal:String(e&&e.message||e), pageerrors }; }
   finally {
     writeFileSync(join(OUT,'probe-desk.json'), JSON.stringify(result, null, 2));
