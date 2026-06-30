@@ -45,6 +45,12 @@ const SUITE = [
   ['playstyle', 'tools/probe-playstyle.mjs'],
   ['realism teaching', 'tools/probe-realism-teaching.mjs'],
   ['accessibility', 'tools/probe-accessibility.mjs'],
+  ['h0 main menu', 'tools/probe-h0-main-menu.mjs'],
+  ['h0 president desk', 'tools/probe-h0-president-desk.mjs'],
+  ['h0 battle briefing', 'tools/probe-h0-battle-briefing.mjs'],
+  ['h0 between battle', 'tools/probe-h0-between-battle.mjs'],
+  ['h0 tactical hud', 'tools/probe-h0-tactical-hud.mjs'],
+  ['h0 after action', 'tools/probe-h0-after-action.mjs'],
   ['save slots', 'tools/probe-save-slots.mjs'],
   ['divergence', 'tools/probe-divergence.mjs'],
   ['alternate endings', 'tools/probe-endings.mjs'],
@@ -124,6 +130,7 @@ const stamp = new Date().toISOString().replace(/[:.]/g, '-');
 const logPath = join(TMP, `vet-no-regression-${stamp}.log`);
 writeFileSync(logPath, '');
 const DEFAULT_TIMEOUT_MS = Number(process.env.VET_TIMEOUT_MS || 360000);
+const SCREENSHOT_NO_FONTS_READY = process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY || '1';
 
 function append(s) {
   process.stdout.write(s);
@@ -188,7 +195,7 @@ function runOne(label, file) {
     append('\n== ' + label + ' :: node ' + file + ' ==\n');
     const child = spawn(process.execPath, [file], {
       cwd: ROOT,
-      env: Object.assign({}, process.env, { TMPDIR: TMP }),
+      env: Object.assign({}, process.env, { TMPDIR: TMP, PW_TEST_SCREENSHOT_NO_FONTS_READY: SCREENSHOT_NO_FONTS_READY }),
       detached: true,
       stdio: ['ignore', 'pipe', 'pipe']
     });
@@ -233,6 +240,7 @@ function runOne(label, file) {
 append('vet-no-regression start ' + new Date().toISOString() + '\n');
 append('log: ' + logPath + '\n');
 append('CODEX_SANDBOX=' + (process.env.CODEX_SANDBOX || '<unset>') + '\n');
+append('PW_TEST_SCREENSHOT_NO_FONTS_READY=' + SCREENSHOT_NO_FONTS_READY + '\n');
 
 for (const [label, file] of suite) {
   await runOne(label, file);

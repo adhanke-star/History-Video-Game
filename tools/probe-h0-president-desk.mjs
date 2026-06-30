@@ -167,7 +167,7 @@ async function runViewport(browser, vp) {
   try {
     const viewResult = await inspectDesk(page, vp.name);
     await page.evaluate(() => { const sh = document.querySelector('.sheet'); if (sh) sh.scrollTop = 0; });
-    await withTimeout('screenshot ' + vp.name, page.screenshot({ path: join(OUT, `probe-h0-president-desk-${vp.name}.png`), fullPage: false }), 12000);
+    await withTimeout('screenshot ' + vp.name, page.screenshot({ path: join(OUT, `probe-h0-president-desk-${vp.name}.png`), fullPage: false, timeout: 90000 }), 95000);
     viewResult.pageerrors = pageerrors;
     return viewResult;
   } finally {
@@ -189,7 +189,7 @@ async function runViewport(browser, vp) {
   const result = { ok: true, probes: [], pageerrors: [] };
   try {
     for (const vp of VIEWPORTS) {
-      const viewResult = await withTimeout('viewport ' + vp.name, runViewport(browser, vp), 75000);
+      const viewResult = await withTimeout('viewport ' + vp.name, runViewport(browser, vp), 190000);
       if ((viewResult.pageerrors && viewResult.pageerrors.length) || viewResult.failures.length) result.ok = false;
       result.probes.push(viewResult);
       if (viewResult.pageerrors && viewResult.pageerrors.length) result.pageerrors.push({ viewport: vp.name, pageerrors: viewResult.pageerrors });

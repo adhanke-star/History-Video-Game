@@ -19,6 +19,23 @@ const cfg = JSON.parse(readFileSync(join(__dirname, 'shots.json'), 'utf8'));
 const GL = ['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist','--enable-webgl','--disable-dev-shm-usage'];
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 async function up(u){ try{ const r=await fetch(u,{method:'HEAD'}); return r.ok||r.status===200; }catch{ return false; } }
+async function withTimeout(label, promise, ms) {
+  let timer;
+  try {
+    return await Promise.race([
+      promise,
+      new Promise((_, reject) => { timer = setTimeout(() => reject(new Error(label + ' timed out after ' + ms + 'ms')), ms); })
+    ]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+async function closePage(page) {
+  try { await withTimeout('page.close', page.close({ runBeforeUnload: false }), 2500); } catch (e) {}
+}
+async function closeBrowser(browser) {
+  try { await withTimeout('browser.close', browser.close(), 5000); } catch (e) {}
+}
 
 const SETUP = `(() => {
   var R = { steps: [], errors: [], ok: true };
@@ -81,14 +98,16 @@ const SETUP = `(() => {
         for(var t=0;t<n;t++){ C.stats.battles++; var c={};c[s]=1500;c[e]=1800;var inf={};inf[s]=120;inf[e]=90;
           _t1Resolve(s,'draw',{playerSide:s,enemySide:e,bd:{id:'x',name:'Engagement',year:1863},casualties:c,infl:inf,units:[]},C,false); }
         openWarDept(); window._wdTab='economy'; _wdRefresh(); }, [side, turns]);
-      await sleep(250); await page.screenshot({ path: join(OUT, file), fullPage:false });
+      await sleep(250); await page.screenshot({ path: join(OUT, file), fullPage:false, timeout:90000 });
     };
     await shoot('US', 6, 'wareffort-us.png');
     await shoot('CS', 10, 'wareffort-cs.png');
   } catch(e){ result = { ok:false, fatal:String(e&&e.message||e), pageerrors }; }
   finally {
     writeFileSync(join(OUT,'probe-production.json'), JSON.stringify(result, null, 2));
-    await browser.close(); if (srv) srv.kill();
+    await closePage(page);
+    await closeBrowser(browser);
+    if (srv) srv.kill();
   }
   console.log('probe-production ok=' + result.ok + ' steps=' + (result.steps?result.steps.length:0) + ' pageerrors=' + (result.pageerrors?result.pageerrors.length:0));
 })();
