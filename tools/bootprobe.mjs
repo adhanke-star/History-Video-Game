@@ -40,7 +40,7 @@ async function closeBounded(label, fn, ms = 3000) {
   page.on('pageerror', e => out.errors.push('[pageerror] ' + e.message));
   page.on('console', m => { if (m.type()==='error') out.errors.push('[console.error] ' + m.text()); });
   try {
-    await page.goto(probe, { waitUntil:'load', timeout:60000 }); // headless-swiftshader 3D boot is slow; was 30s (too tight, flaky false-reds)
+    await page.goto(probe, { waitUntil:'domcontentloaded', timeout:60000 }); // headless-swiftshader 3D boot is slow; full load can wait on optional assets
     await sleep(600); // boot + the two setTimeout(0) boot hooks fire
     // (1) default took? (2) menu booted with no throw?
     // NB: the game declares G as a lexical global (let/const), so it is NOT on window —
@@ -51,7 +51,7 @@ async function closeBounded(label, fn, ms = 3000) {
     try { await page.waitForFunction('window.__M3D && (window.__M3D.ready || window.__M3D.failed)', { timeout:20000 }); } catch {}
     await sleep(1400);
     out.steps.battle = await page.evaluate(`(()=>({gfx:G.settings.gfx, m3dReady:!!(window.__M3D&&__M3D.ready), m3dFailed:!!(window.__M3D&&__M3D.failed), units:(G.battle&&G.battle.units&&G.battle.units.length)||0}))()`);
-    await page.screenshot({ path: join(OUT,'bootprobe-battle.png'), fullPage:false });
+    await page.screenshot({ path: join(OUT,'bootprobe-battle.png'), fullPage:false, timeout:90000 });
     // The ~7 asset 404s (absent .glb/HDRI under assets/3d/) are the EXPECTED one-time probe,
     // not real errors — exclude them from the gate; only genuine errors/pageerrors count.
     out.realErrors = out.errors.filter(e => !/Failed to load resource.*404/.test(e));

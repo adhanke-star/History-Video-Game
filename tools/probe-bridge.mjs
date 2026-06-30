@@ -81,7 +81,7 @@ const SETUP = `(() => {
   const pageerrors = []; page.on('pageerror', e => pageerrors.push(String(e.message)));
   let result = { ok:false };
   try {
-    await page.goto(probe, { waitUntil:'load', timeout:60000 });
+    await page.goto(probe, { waitUntil:'domcontentloaded', timeout:60000 });
     await sleep(500);
     result = JSON.parse(await page.evaluate(SETUP));
     result.pageerrors = pageerrors;
@@ -89,7 +89,7 @@ const SETUP = `(() => {
       var C=G.campaign; _t1InitAll(C); for(var t=0;t<5;t++){ C.stats.battles++; C.stats.won++; var c={CS:900,US:2400};
         _t1Resolve('CS','win',{playerSide:'CS',enemySide:'US',bd:{name:'x',year:1862},casualties:c,infl:{},units:[]},C,true); }
       if (typeof openSheet==='function') openSheet(bridgeBriefingHTML(C)); });
-    await sleep(250); await page.screenshot({ path: join(OUT,'briefing.png'), fullPage:false });
+    await sleep(250); await page.screenshot({ path: join(OUT,'briefing.png'), fullPage:false, timeout:90000 });
   } catch(e){ result = { ok:false, fatal:String(e&&e.message||e), pageerrors }; }
   finally {
     writeFileSync(join(OUT,'probe-bridge.json'), JSON.stringify(result, null, 2));

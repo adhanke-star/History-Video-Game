@@ -71,7 +71,8 @@
     "96-realism-teaching.js",
     "97-accessibility.js",
     "98-h0-main-menu.js",
-    "99-h0-president-desk.js"
+    "99-h0-president-desk.js",
+    "100-h0-battle-briefing.js"
   ],
   "overrides": [
     "_t1InitAll",
