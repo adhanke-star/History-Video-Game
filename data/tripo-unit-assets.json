@@ -1,0 +1,258 @@
+{
+  "schema": "cw_tripo_unit_assets_v1",
+  "version": 1,
+  "updated": "2026-06-29",
+  "purpose": "Optional local Tripo/GLB tactical unit model slots. The game never calls Tripo at runtime; it only consumes vetted local GLB/GLTF files when they exist.",
+  "policy": {
+    "runtimeMode": "local-files-only",
+    "freePlanCaveat": "Use Tripo Ultra Mesh / detailed geometry when the current Tripo UI makes it available on the free plan. Verify the UI before spending credits and never bypass a paywall.",
+    "ultraQualityRequired": "Canonical Tripo source slots must declare geometryQuality=detailed, textureQuality=detailed, pbr=true, smartLowPoly=true, and an ultraSourcePath. Runtime assets remain optimized GLB/GLTF files.",
+    "sourceMeshUse": "Detailed/Ultra source meshes are source art only. Runtime assets must be optimized low-poly GLB/GLTF files.",
+    "maxRuntimeBytes": 1500000,
+    "maxRuntimeVertices": 20000,
+    "maxRuntimeTriangles": 12000,
+    "defaultRuntimeEnabled": false
+  },
+  "records": [
+    {
+      "id": "tripo_unit_infantry_us",
+      "label": "Union infantry runtime model slot",
+      "enabled": false,
+      "side": "US",
+      "arm": "inf",
+      "runtimePath": "assets/3d/models/units/tripo_infantry_us.glb",
+      "ultraSourcePath": "assets/3d/source/tripo/tripo_infantry_us_ultra.glb",
+      "targetHeight": 42,
+      "rotationY": 3.14159,
+      "hideBaseMarker": true,
+      "generation": {
+        "provider": "tripo",
+        "productLine": "H3",
+        "modelVersion": "v3.1-20260211",
+        "geometryQuality": "detailed",
+        "textureQuality": "detailed",
+        "pbr": true,
+        "smartLowPoly": true,
+        "runtimeFaceLimit": 12000
+      },
+      "license": {
+        "status": "pending",
+        "name": "",
+        "attribution": "",
+        "requiresAttribution": true,
+        "commercialUse": "unknown"
+      },
+      "notes": "Disabled until a local optimized runtime GLB and license/provenance proof are present."
+    },
+    {
+      "id": "tripo_unit_infantry_cs",
+      "label": "Confederate infantry runtime model slot",
+      "enabled": false,
+      "side": "CS",
+      "arm": "inf",
+      "runtimePath": "assets/3d/models/units/tripo_infantry_cs.glb",
+      "ultraSourcePath": "assets/3d/source/tripo/tripo_infantry_cs_ultra.glb",
+      "targetHeight": 42,
+      "rotationY": 3.14159,
+      "hideBaseMarker": true,
+      "generation": {
+        "provider": "tripo",
+        "productLine": "H3",
+        "modelVersion": "v3.1-20260211",
+        "geometryQuality": "detailed",
+        "textureQuality": "detailed",
+        "pbr": true,
+        "smartLowPoly": true,
+        "runtimeFaceLimit": 12000
+      },
+      "license": {
+        "status": "pending",
+        "name": "",
+        "attribution": "",
+        "requiresAttribution": true,
+        "commercialUse": "unknown"
+      },
+      "notes": "Disabled until a local optimized runtime GLB and license/provenance proof are present."
+    },
+    {
+      "id": "tripo_unit_artillery_us",
+      "label": "Union artillery runtime model slot",
+      "enabled": false,
+      "side": "US",
+      "arm": "art",
+      "runtimePath": "assets/3d/models/units/tripo_artillery_us.glb",
+      "ultraSourcePath": "assets/3d/source/tripo/tripo_artillery_us_ultra.glb",
+      "targetHeight": 32,
+      "rotationY": 3.14159,
+      "hideBaseMarker": false,
+      "generation": {
+        "provider": "tripo",
+        "productLine": "H3",
+        "modelVersion": "v3.1-20260211",
+        "geometryQuality": "detailed",
+        "textureQuality": "detailed",
+        "pbr": true,
+        "smartLowPoly": true,
+        "runtimeFaceLimit": 12000
+      },
+      "license": {
+        "status": "pending",
+        "name": "",
+        "attribution": "",
+        "requiresAttribution": true,
+        "commercialUse": "unknown"
+      },
+      "notes": "Disabled until a local optimized runtime GLB and license/provenance proof are present."
+    },
+    {
+      "id": "tripo_unit_artillery_cs",
+      "label": "Confederate artillery runtime model slot",
+      "enabled": false,
+      "side": "CS",
+      "arm": "art",
+      "runtimePath": "assets/3d/models/units/tripo_artillery_cs.glb",
+      "ultraSourcePath": "assets/3d/source/tripo/tripo_artillery_cs_ultra.glb",
+      "targetHeight": 32,
+      "rotationY": 3.14159,
+      "hideBaseMarker": false,
+      "generation": {
+        "provider": "tripo",
+        "productLine": "H3",
+        "modelVersion": "v3.1-20260211",
+        "geometryQuality": "detailed",
+        "textureQuality": "detailed",
+        "pbr": true,
+        "smartLowPoly": true,
+        "runtimeFaceLimit": 12000
+      },
+      "license": {
+        "status": "pending",
+        "name": "",
+        "attribution": "",
+        "requiresAttribution": true,
+        "commercialUse": "unknown"
+      },
+      "notes": "Disabled until a local optimized runtime GLB and license/provenance proof are present."
+    },
+    {
+      "id": "tripo_unit_cavalry_us",
+      "label": "Union cavalry runtime model slot",
+      "enabled": false,
+      "side": "US",
+      "arm": "cav",
+      "runtimePath": "assets/3d/models/units/tripo_cavalry_us.glb",
+      "ultraSourcePath": "assets/3d/source/tripo/tripo_cavalry_us_ultra.glb",
+      "targetHeight": 46,
+      "rotationY": 3.14159,
+      "hideBaseMarker": true,
+      "generation": {
+        "provider": "tripo",
+        "productLine": "H3",
+        "modelVersion": "v3.1-20260211",
+        "geometryQuality": "detailed",
+        "textureQuality": "detailed",
+        "pbr": true,
+        "smartLowPoly": true,
+        "runtimeFaceLimit": 12000
+      },
+      "license": {
+        "status": "pending",
+        "name": "",
+        "attribution": "",
+        "requiresAttribution": true,
+        "commercialUse": "unknown"
+      },
+      "notes": "Disabled until a local optimized runtime GLB and license/provenance proof are present."
+    },
+    {
+      "id": "tripo_unit_cavalry_cs",
+      "label": "Confederate cavalry runtime model slot",
+      "enabled": false,
+      "side": "CS",
+      "arm": "cav",
+      "runtimePath": "assets/3d/models/units/tripo_cavalry_cs.glb",
+      "ultraSourcePath": "assets/3d/source/tripo/tripo_cavalry_cs_ultra.glb",
+      "targetHeight": 46,
+      "rotationY": 3.14159,
+      "hideBaseMarker": true,
+      "generation": {
+        "provider": "tripo",
+        "productLine": "H3",
+        "modelVersion": "v3.1-20260211",
+        "geometryQuality": "detailed",
+        "textureQuality": "detailed",
+        "pbr": true,
+        "smartLowPoly": true,
+        "runtimeFaceLimit": 12000
+      },
+      "license": {
+        "status": "pending",
+        "name": "",
+        "attribution": "",
+        "requiresAttribution": true,
+        "commercialUse": "unknown"
+      },
+      "notes": "Disabled until a local optimized runtime GLB and license/provenance proof are present."
+    },
+    {
+      "id": "tripo_unit_hq_us",
+      "label": "Union headquarters/runtime leader slot",
+      "enabled": false,
+      "side": "US",
+      "arm": "hq",
+      "runtimePath": "assets/3d/models/units/tripo_hq_us.glb",
+      "ultraSourcePath": "assets/3d/source/tripo/tripo_hq_us_ultra.glb",
+      "targetHeight": 48,
+      "rotationY": 3.14159,
+      "hideBaseMarker": false,
+      "generation": {
+        "provider": "tripo",
+        "productLine": "H3",
+        "modelVersion": "v3.1-20260211",
+        "geometryQuality": "detailed",
+        "textureQuality": "detailed",
+        "pbr": true,
+        "smartLowPoly": true,
+        "runtimeFaceLimit": 12000
+      },
+      "license": {
+        "status": "pending",
+        "name": "",
+        "attribution": "",
+        "requiresAttribution": true,
+        "commercialUse": "unknown"
+      },
+      "notes": "Disabled until a local optimized runtime GLB and license/provenance proof are present."
+    },
+    {
+      "id": "tripo_unit_hq_cs",
+      "label": "Confederate headquarters/runtime leader slot",
+      "enabled": false,
+      "side": "CS",
+      "arm": "hq",
+      "runtimePath": "assets/3d/models/units/tripo_hq_cs.glb",
+      "ultraSourcePath": "assets/3d/source/tripo/tripo_hq_cs_ultra.glb",
+      "targetHeight": 48,
+      "rotationY": 3.14159,
+      "hideBaseMarker": false,
+      "generation": {
+        "provider": "tripo",
+        "productLine": "H3",
+        "modelVersion": "v3.1-20260211",
+        "geometryQuality": "detailed",
+        "textureQuality": "detailed",
+        "pbr": true,
+        "smartLowPoly": true,
+        "runtimeFaceLimit": 12000
+      },
+      "license": {
+        "status": "pending",
+        "name": "",
+        "attribution": "",
+        "requiresAttribution": true,
+        "commercialUse": "unknown"
+      },
+      "notes": "Disabled until a local optimized runtime GLB and license/provenance proof are present."
+    }
+  ]
+}

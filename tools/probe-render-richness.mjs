@@ -42,6 +42,15 @@ async function closeBounded(fn, ms = 2500) {
   ]);
   return timedOut;
 }
+async function withTimeout(promise, ms, label) {
+  let timer = null;
+  const timeout = new Promise(resolve => {
+    timer = setTimeout(() => resolve({ __timeout: true, label }), ms);
+  });
+  const out = await Promise.race([promise, timeout]);
+  if (timer) clearTimeout(timer);
+  return out;
+}
 
 const steps = [];
 function check(name, cond, detail) { steps.push({ name, ok: !!cond, detail: detail === undefined ? '' : String(detail) }); }
@@ -262,7 +271,10 @@ async function runSceneFresh(label, scenario, seed, opts) {
   try {
     await page.goto(cfg.baseUrl + '/' + cfg.file, { waitUntil: 'domcontentloaded', timeout: 45000 });
     await sleep(500);
-    return await runScene(page, label, scenario, seed, opts, shared);
+    const sceneTimeoutMs = 900000;
+    const out = await withTimeout(runScene(page, label, scenario, seed, opts, shared), sceneTimeoutMs, label);
+    if (out && out.__timeout) return { label, detail: { ok: false, error: 'scene timed out after ' + sceneTimeoutMs + 'ms' }, pageerrors: shared.pe, texWarn: [], console: shared.con.slice(-10) };
+    return out;
   } finally {
     if (page) await closeBounded(() => page.close());
     if (ctx) await closeBounded(() => ctx.close());

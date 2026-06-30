@@ -10,6 +10,16 @@
 
 ---
 
+# ☀ WAKE-UP — 2026-06-29: **MODERN UG:G UNIT-ASSET SLOTS + FORMATION FIGURES ARE FOCUSED-GATED.**
+
+**Newest (D162, 2026-06-29):** The modern battlefield now has a local-only Tripo-compatible unit asset bridge and a procedural formation-figures layer. The game does not call Tripo at runtime and does not depend on an account, API key, credit balance, live browser generation, upload, or Generate click. Canonical Tripo slots are disabled until optimized local files, detailed/Ultra source metadata, and clear license/provenance proof land.
+
+**What changed:** new `data/tripo-unit-assets.json`, `src/tactical/T23-tripo-unit-assets.js`, `src/tactical/T24-formation-figures.js`, importer/probes, and updated `assets/3d/README.txt`. Formation figures give infantry ranks/files, line/column read, firing/charge poses, and bayonets on rich/high tiers while low tier and `renderRich="off"` restore existing markers. T23 can attach vetted local GLB/GLTF models later; the canonical pack currently has 8 disabled slots.
+
+**Verified:** syntax checks passed; importer passed with `records=8 enabled=0 detailedSlots=8 filesPresent=0 pendingLicense=8`; build GATE OK; focused `probe-formation-figures` 16/16 and `probe-tripo-unit-assets` 15/15, both 0 pageerrors with JSON readback and screenshots. Full battery deferred to the planned-work batch/release gate.
+
+---
+
 # ☀ WAKE-UP — 2026-06-29: **PHASE F POW EXCHANGE CARTEL COLLAPSE IS FOCUSED-GATED. Prisoner exchange, camp pressure, and relief priority are live with exact-zero default bridge behavior.**
 
 **Current (D161, 2026-06-29):** This is the bounded POW exchange-collapse slice after D159 rail logistics. New `data/prisoner-exchange.json` and `src/62-prisoner-exchange.js` add a War Effort prisoner/camp surface tied to resolved-battle capture estimates, year/stage pressure, and an explicit relief priority. It does not start Chattanooga, does not start USCT playable battles, does not hand-edit `build/base.html`, and does not change the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.
