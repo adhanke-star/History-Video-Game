@@ -73,7 +73,8 @@
     "98-h0-main-menu.js",
     "99-h0-president-desk.js",
     "100-h0-battle-briefing.js",
-    "101-h0-between-battle.js"
+    "101-h0-between-battle.js",
+    "102-h0-tactical-hud.js"
   ],
   "overrides": [
     "_t1InitAll",
