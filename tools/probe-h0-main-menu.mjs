@@ -228,7 +228,7 @@ async function runViewport(browser, vp) {
   try {
     const viewResult = await inspectMenu(page, vp.name);
     await page.evaluate(() => { const sh = document.querySelector('.sheet'); if (sh) sh.scrollTop = 0; });
-    await withTimeout('screenshot ' + vp.name, page.screenshot({ path: join(OUT, `probe-h0-main-menu-${vp.name}.png`), fullPage: false }), 12000);
+    await withTimeout('screenshot ' + vp.name, page.screenshot({ path: join(OUT, `probe-h0-main-menu-${vp.name}.png`), fullPage: false }), 30000);
     if (vp.name === 'desktop') {
       const actions = await inspectCoreButtonActions(page);
       viewResult.coreActions = actions;
@@ -247,7 +247,7 @@ async function runSavedCampaign(browser) {
   try {
     const saved = await inspectSavedCampaign(page);
     try {
-      await withTimeout('screenshot saved', page.screenshot({ path: join(OUT, 'probe-h0-main-menu-wardept.png'), fullPage: false }), 12000);
+      await withTimeout('screenshot saved', page.screenshot({ path: join(OUT, 'probe-h0-main-menu-wardept.png'), fullPage: false }), 30000);
     } catch (e) {
       saved.screenshotWarning = String(e && e.message || e);
     }

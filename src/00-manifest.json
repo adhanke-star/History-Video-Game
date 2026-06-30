@@ -70,7 +70,8 @@
     "95-playstyle.js",
     "96-realism-teaching.js",
     "97-accessibility.js",
-    "98-h0-main-menu.js"
+    "98-h0-main-menu.js",
+    "99-h0-president-desk.js"
   ],
   "overrides": [
     "_t1InitAll",

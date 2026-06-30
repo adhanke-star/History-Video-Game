@@ -10,6 +10,22 @@
 
 ---
 
+# ☀ WAKE-UP — 2026-06-30: **H0 PRESIDENT'S DESK OVERVIEW COMMAND SHELL IS FOCUSED-GATED. The interrupted CPU-death WIP is finished.**
+
+**Newest (D164, 2026-06-30):** The H0 UI/UX redesign now covers the President's Desk overview, not just the main menu. The dirty-tree WIP left by the interrupted session was preserved, vetted, repaired where the local Chrome harness was false-red, documented, committed, and pushed.
+
+**What changed:** new `src/99-h0-president-desk.js` overrides `openWarDept` and `presRenderEconomy` after the H0 main menu. It preserves existing Desk ids, tabs, `_wdTab`/`_wdRefresh`, close behavior, and existing tab renderers while replacing the War Effort overview with a dark command-center layout: executive status, next-field imagery, status meters, resource cards, dispatches, responsive desktop/tablet/phone stacking, visible focus rings, high-contrast compatibility, and the existing War Effort deep blocks below the overview.
+
+**Recovery fixes:** `tools/probe-h0-main-menu.mjs` keeps screenshots mandatory but gives slow local Chrome 30s instead of 12s. `tools/probe-accessibility.mjs` waits for `domcontentloaded`, matching the repo's offline/Three probe discipline. These were harness false-red fixes; assertions stayed intact.
+
+**Guardrails:** `build/base.html` was untouched; generated `civil_war_generals.html` was rebuilt from source. The H0 desk shell avoids `.gn-paper` and broadsheet shell typography. Broadsheet remains valid for press/editorial/dispatch/provenance surfaces.
+
+**Verified:** syntax checks passed; build GATE OK; focused `probe-h0-president-desk` 3/3 with 0 pageerrors and desktop/tablet/phone screenshots; JSON readback confirmed no broadsheet shell, dark command texture, visible focus, preserved deep War Effort blocks, and Cabinet/Map tab wiring. Adjacent probes passed: `probe-desk` 13 steps / 0 pageerrors, `probe-h0-main-menu` 4/4 / 0 pageerrors, `probe-accessibility` 25 steps / 0 pageerrors, `bootprobe` ok with `realErrors:[]`, `t1probe` ok, and `diag-classic` `nonBlank:346`, `m3dActive:false`. Full battery deferred per the batch/release gate policy.
+
+**Next recommended run:** continue H0 with the battle briefing/side-choice command-shell pass, then between-battle interstitial, tactical HUD/settings, and after-action/final report. Run full `npm run vet:noreg` at the H0 batch/release checkpoint or on explicit request.
+
+---
+
 # ☀ WAKE-UP — 2026-06-29: **H0 MAIN MENU COMMAND SHELL IS FOCUSED-GATED. Broadsheet fidelity is gone from the app-shell prototype.**
 
 **Newest (D163, 2026-06-29):** The first H0 UI/UX redesign slice is live on the main menu. Aaron selected main menu first, focused redesign, prototype scope, and clarified that the app shell should stop preserving broadsheet-look fidelity in favor of a more assertive modern war-video-game layout.
@@ -20,7 +36,7 @@
 
 **Verified:** syntax checks passed; build GATE OK; focused `probe-h0-main-menu` 4/4 with 0 pageerrors and desktop/tablet/phone screenshots; JSON readback confirmed no broadsheet class/font stack, polished injected labels, modern focus title, no overlap/overflow, Union/Confederate muster actions, free-battle picker action, and saved-campaign President's Desk path. Adjacent probes passed: `menuprobe`, `probe-accessibility` 25 steps / 0 pageerrors, `bootprobe` ok with `realErrors:[]`, and `diag-classic` `nonBlank:346`. Full battery deferred per the batch/release gate policy.
 
-**Next recommended run:** continue H0 with the President's Desk overview command-shell pass, then battle briefing/side choice; the remaining H0 set still includes the between-battle interstitial, tactical HUD/settings, and after-action/final report.
+**Later status:** D164 completed the President's Desk overview. Current H0 next is battle briefing/side choice, followed by the between-battle interstitial, tactical HUD/settings, and after-action/final report.
 
 ---
 
