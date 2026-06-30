@@ -197,11 +197,11 @@ const SETUP = `(() => {
       return { people:reg.people.length, brigades:reg.brigades, authored:reg.authored, generated:reg.generated, first:sample.name };
     });
 
-    step('D158 REPLACEMENTS: canonical Rhodes, McCarter, Watkins, Chamberlain, and Cushing records overlay generated slots and hostile packs still reject', function(){
+    step('D172 REPLACEMENTS: six canonical sourced records overlay generated slots and hostile packs still reject', function(){
       var C=mkC('US'); _t1InitAll(C);
       var original=GAME_DATA['soldier-replacements'];
       if(!original || original.schema!=='cw_soldier_replacements_v1' || !Array.isArray(original.records)) throw new Error('missing D152 canonical pack');
-      if(original.records.length!==5) throw new Error('canonical D158 pack should ship exactly five records, got '+original.records.length);
+      if(original.records.length!==6) throw new Error('canonical D172 pack should ship exactly six records, got '+original.records.length);
       var canonByPid={}, canonReplace={};
       for(var cr=0;cr<original.records.length;cr++){ canonByPid[original.records[cr].pid]=original.records[cr]; canonReplace[original.records[cr].replacePid]=1; }
       if(!canonByPid.person_bullrun_us_2ri_rhodes || canonByPid.person_bullrun_us_2ri_rhodes.replacePid!=='ss:bullrun1:US:us_burnside:pvt') throw new Error('missing D154 Rhodes canonical record: '+JSON.stringify(original.records));
@@ -209,15 +209,16 @@ const SETUP = `(() => {
       if(!canonByPid.person_chickamauga_cs_1tn_watkins || canonByPid.person_chickamauga_cs_1tn_watkins.replacePid!=='ss:chickamauga:CS:cs_cheatham_woods:pvt') throw new Error('missing D156 Watkins canonical record: '+JSON.stringify(original.records));
       if(!canonByPid.person_gettysburg_us_20me_chamberlain || canonByPid.person_gettysburg_us_20me_chamberlain.replacePid!=='ss:gettysburg:US:us_20th_maine:cmd') throw new Error('missing D157 Chamberlain canonical record: '+JSON.stringify(original.records));
       if(!canonByPid.person_gettysburg_us_battery_a_cushing || canonByPid.person_gettysburg_us_battery_a_cushing.replacePid!=='ss:gettysburg:US:us_cushing_battery:cmd') throw new Error('missing D158 Cushing canonical record: '+JSON.stringify(original.records));
+      if(!canonByPid.person_gettysburg_us_vincent_bde || canonByPid.person_gettysburg_us_vincent_bde.replacePid!=='ss:gettysburg:US:us_vincent_bde:cmd') throw new Error('missing D172 Vincent canonical record: '+JSON.stringify(original.records));
       GAME_DATA['soldier-replacements']={schema:'cw_soldier_replacements_v1',records:[]};
       var rawBase=ssPersonRegistry(C);
       GAME_DATA['soldier-replacements']=original;
       var canonical=ssValidateSoldierReplacementPack(original,{basePeople:rawBase.people});
-      if(!canonical.ok || canonical.records.length!==5) throw new Error('canonical D158 pack should validate against raw generated registry: '+JSON.stringify(canonical));
+      if(!canonical.ok || canonical.records.length!==6) throw new Error('canonical D172 pack should validate against raw generated registry: '+JSON.stringify(canonical));
       var base=ssPersonRegistry(C);
       if(base.people.length!==rawBase.people.length) throw new Error('canonical replacement should preserve registry length');
-      if(base.replacements.applied!==5 || base.replacements.rejected!==0) throw new Error('canonical replacement should apply five rows cleanly: '+JSON.stringify(base.replacements));
-      if(base.generated!==rawBase.generated-5 || base.authored!==rawBase.authored+5) throw new Error('canonical replacement should move five rows generated->authored: '+JSON.stringify({raw:{a:rawBase.authored,g:rawBase.generated},base:{a:base.authored,g:base.generated}}));
+      if(base.replacements.applied!==6 || base.replacements.rejected!==0) throw new Error('canonical replacement should apply six rows cleanly: '+JSON.stringify(base.replacements));
+      if(base.generated!==rawBase.generated-6 || base.authored!==rawBase.authored+6) throw new Error('canonical replacement should move six rows generated->authored: '+JSON.stringify({raw:{a:rawBase.authored,g:rawBase.generated},base:{a:base.authored,g:base.generated}}));
       var rhodesOld=ssFindPerson(C,'ss:bullrun1:US:us_burnside:pvt');
       var rhodes=ssFindPerson(C,'person_bullrun_us_2ri_rhodes');
       if(!rhodes || !rhodesOld || rhodesOld.pid!==rhodes.pid) throw new Error('Rhodes alias lookup failed');
@@ -253,6 +254,14 @@ const SETUP = `(() => {
       if(cushing.rank!=='1st Lt.' || cushing.side!=='US' || cushing.branch!=='art' || cushing.team.regiment!=='4th U.S. Artillery' || cushing.team.company!=='Battery A' || cushing.team.corps!=='II Corps') throw new Error('Cushing rank/unit mismatch: '+JSON.stringify(cushing.team));
       if(!cushing.bio || cushing.bio.indexOf('Battery A')<0 || cushing.bio.indexOf('Pickett')<0 || cushing.bio.indexOf('killed')<0 || !cushing.sourceNote || cushing.sources.length<3) throw new Error('Cushing source/bio payload missing');
       if(cushing.portrait) throw new Error('Cushing should not assert an unverified portrait: '+JSON.stringify(cushing.portrait));
+      var vincentOld=ssFindPerson(C,'ss:gettysburg:US:us_vincent_bde:cmd');
+      var vincent=ssFindPerson(C,'person_gettysburg_us_vincent_bde');
+      if(!vincent || !vincentOld || vincentOld.pid!==vincent.pid) throw new Error('Vincent alias lookup failed');
+      if(vincent.generated || !vincent.replacement || vincent.provenance!=='Verified' || vincent.name!=='Strong Vincent') throw new Error('Vincent row not sourced/verified: '+JSON.stringify(vincent));
+      if(vincent.rank!=='Col.' || vincent.side!=='US' || vincent.branch!=='inf' || vincent.team.brigade!=='Vincent\\'s Brigade' || vincent.team.division!=='First Division' || vincent.team.corps!=='V Corps' || vincent.team.company || vincent.team.regiment) throw new Error('Vincent rank/unit mismatch: '+JSON.stringify(vincent.team));
+      if(!vincent.bio || vincent.bio.indexOf('Little Round Top')<0 || vincent.bio.indexOf('20th Maine')<0 || vincent.bio.indexOf('died on July 7')<0 || !vincent.sourceNote || vincent.sources.length<3) throw new Error('Vincent source/bio payload missing');
+      if(vincent.sourceNote.indexOf('no company')<0 || vincent.sourceNote.indexOf('no portrait')<0 || vincent.sourceNote.indexOf('brigadier-rank-at-battle')<0) throw new Error('Vincent honesty caveats missing: '+vincent.sourceNote);
+      if(vincent.portrait) throw new Error('Vincent should not assert an unverified portrait: '+JSON.stringify(vincent.portrait));
       var target=findPerson(rawBase,function(p){ return p.generated && p.side==='US' && p.pid.indexOf(':pvt')>0 && !canonReplace[p.pid] && p.team && p.team.army; });
       var authored=findPerson(rawBase,function(p){ return !p.generated && p.provenance==='Verified'; });
       if(!target) throw new Error('no generated replacement target found');
@@ -291,7 +300,7 @@ const SETUP = `(() => {
       }
       var restored=ssPersonRegistry(C);
       if(restored.generated!==base.generated || restored.authored!==base.authored) throw new Error('canonical pack restore changed registry');
-      return { canonicalRecords:original.records.length, rhodes:rhodes.pid, mccarter:mccarter.pid, watkins:watkins.pid, chamberlain:chamberlain.pid, cushing:cushing.pid, target:target.pid, applied:base.replacements.applied, hostileRejected:true };
+      return { canonicalRecords:original.records.length, rhodes:rhodes.pid, mccarter:mccarter.pid, watkins:watkins.pid, chamberlain:chamberlain.pid, cushing:cushing.pid, vincent:vincent.pid, target:target.pid, applied:base.replacements.applied, hostileRejected:true };
     });
 
     step('JOURNEY: play-as-anyone start enables survival and stores a saveable selected person without mutating canonical data', function(){
@@ -474,6 +483,16 @@ const SETUP = `(() => {
       var cutxt=cushingDetail.textContent;
       if(cutxt.indexOf('Battery A')<0 || cutxt.indexOf('4th U.S. Artillery')<0 || cutxt.indexOf('II Corps')<0 || cutxt.indexOf('Pickett')<0 || cutxt.indexOf('Source note:')<0 || cutxt.indexOf('Sources (3)')<0) throw new Error('Cushing detail source/bio/unit payload missing: '+cutxt);
       if(cushingDetail.querySelector('.ss-person-portrait')) throw new Error('Cushing should not render an unverified portrait');
+      var vincentCard=cardByPid(root,'person_gettysburg_us_vincent_bde');
+      if(!vincentCard) throw new Error('Vincent sourced replacement card missing');
+      if(vincentCard.textContent.indexOf('Strong Vincent')<0 || vincentCard.textContent.indexOf('Sourced')<0 || vincentCard.textContent.indexOf('Verified')<0) throw new Error('Vincent card source/provenance missing: '+vincentCard.textContent);
+      vincentCard.querySelector('[data-ss-pick]').click();
+      var vincentDetail=root.querySelector('#ssPersonDetailCard');
+      if(!vincentDetail || vincentDetail.getAttribute('data-ss-detail-pid')!=='person_gettysburg_us_vincent_bde') throw new Error('Vincent detail did not select');
+      var vtxt=vincentDetail.textContent;
+      if(vtxt.indexOf('Vincent\\'s Brigade')<0 || vtxt.indexOf('First Division')<0 || vtxt.indexOf('V Corps')<0 || vtxt.indexOf('Little Round Top')<0 || vtxt.indexOf('20th Maine')<0 || vtxt.indexOf('Source note:')<0 || vtxt.indexOf('Sources (3)')<0) throw new Error('Vincent detail source/bio/unit payload missing: '+vtxt);
+      if(vtxt.indexOf('no company')<0 || vtxt.indexOf('no portrait')<0) throw new Error('Vincent honesty caveats missing from detail: '+vtxt);
+      if(vincentDetail.querySelector('.ss-person-portrait')) throw new Error('Vincent should not render an unverified portrait');
 
       var search=root.querySelector('#ssRegSearch'), side=root.querySelector('#ssRegSide'), rank=root.querySelector('#ssRegRank'), prov=root.querySelector('#ssRegProv'), unit=root.querySelector('#ssRegUnit');
       if(!search || !side || !rank || !prov || !unit) throw new Error('missing register controls');
@@ -546,7 +565,7 @@ const SETUP = `(() => {
     await sleep(500);
     result = JSON.parse(await page.evaluate(SETUP));
     const shotPath = join(OUT, 'probe-loot-survival.png');
-    await page.screenshot({ path: shotPath, fullPage:false });
+    await page.screenshot({ path: shotPath, fullPage:false, timeout:90000 });
     const shot = statSync(shotPath);
     result.screenshot = { path: shotPath, bytes: shot.size };
     if (!shot.size) result.ok = false;
@@ -555,7 +574,8 @@ const SETUP = `(() => {
   } catch(e){ result = { ok:false, fatal:String(e&&e.message||e), pageerrors }; }
   finally {
     writeFileSync(join(OUT,'probe-loot-survival.json'), JSON.stringify(result, null, 2));
-    await browser.close(); if (srv) srv.kill();
+    if (srv) srv.kill();
+    await Promise.race([browser.close(), sleep(5000)]).catch(() => {});
   }
   console.log('probe-loot-survival ok=' + result.ok + ' steps=' + (result.steps?result.steps.length:0) + ' pageerrors=' + (result.pageerrors?result.pageerrors.length:0));
   if (result.screenshot) console.log('  screenshot ' + result.screenshot.path + ' bytes=' + result.screenshot.bytes);

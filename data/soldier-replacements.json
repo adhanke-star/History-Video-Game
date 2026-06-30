@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "decision": "D158",
+    "decision": "D172",
     "schema": "cw_soldier_replacements_v1",
     "scope": "Citation-grade replacements for generated Soldier's Story representative rows.",
     "provenance": "Inferred",
-    "note": "D158 adds the fifth narrow sourced replacement slice. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the full no-regression gate. Template values below are documentation only and are ignored by the validator."
+    "note": "D172 adds the sixth narrow sourced replacement slice. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the full no-regression gate. Template values below are documentation only and are ignored by the validator."
   },
   "schema": "cw_soldier_replacements_v1",
   "records": [
@@ -380,6 +380,74 @@
       ],
       "sourceNote": "NPS places Battery A, 4th U.S. Artillery at the Angle on Cemetery Ridge and identifies 1st Lt. Alonzo Cushing as its commander. Army.mil and the Congressional Medal of Honor Society corroborate his rank, Battery A / 4th U.S. Artillery / II Corps context, July 3 Gettysburg action, and death while directing the guns. The record asserts no portrait; ratings stay neutral Inferred calibration.",
       "bio": "Alonzo H. Cushing commanded Battery A, 4th U.S. Artillery at the Angle on Cemetery Ridge during Pickett's Charge. On July 3, 1863, his battery was battered by the Confederate cannonade; Cushing was wounded more than once, refused evacuation, and kept directing his remaining guns until he was killed. This replacement ties the Gettysburg artillery slot to a sourced battery commander without changing the battle's shared credit for the Union defense."
+    },
+    {
+      "pid": "person_gettysburg_us_vincent_bde",
+      "replacePid": "ss:gettysburg:US:us_vincent_bde:cmd",
+      "name": "Strong Vincent",
+      "side": "US",
+      "rank": "Col.",
+      "branch": "inf",
+      "role": "brigade commander",
+      "year": 1863,
+      "provenance": "Verified",
+      "team": {
+        "side": "US",
+        "army": "Army of the Potomac",
+        "corps": "V Corps",
+        "division": "First Division",
+        "brigade": "Vincent's Brigade",
+        "regiment": "",
+        "company": ""
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "The Army of the Potomac at Gettysburg",
+          "author": "National Park Service",
+          "repository": "Gettysburg National Military Park",
+          "locator": "V Corps / First Division / Third Brigade order of battle",
+          "url": "https://www.nps.gov/gett/learn/historyculture/aop-orderofbattle.htm",
+          "type": "secondary",
+          "note": "Places Col. Strong Vincent as wounded commander of the Third Brigade, First Division, V Corps at Gettysburg, with the 20th Maine, 83rd Pennsylvania, 44th New York, and 16th Michigan under that brigade."
+        },
+        {
+          "title": "The Memory of Strong Vincent",
+          "author": "National Park Service",
+          "repository": "Gettysburg National Military Park",
+          "locator": "NPS article",
+          "url": "https://www.nps.gov/articles/000/memory-of-strong-vincent.htm",
+          "type": "secondary",
+          "note": "Identifies Vincent's Little Round Top action, mortal wounding on July 2, 1863, and death on July 7, 1863."
+        },
+        {
+          "title": "Defense of Little Round Top",
+          "author": "American Battlefield Trust",
+          "repository": "American Battlefield Trust",
+          "locator": "Battle article",
+          "url": "https://www.battlefields.org/learn/articles/defense-little-round-top",
+          "type": "secondary",
+          "note": "Corroborates Vincent's brigade arriving on Little Round Top and frames Chamberlain's 20th Maine within the broader brigade defense."
+        }
+      ],
+      "sourceNote": "NPS OOB places Col. Strong Vincent as commander of the Third Brigade, First Division, V Corps at Gettysburg; NPS/ABT corroborate his Little Round Top action, mortal wound, and July 7 death. This record asserts no company, no regiment command, no brigadier-rank-at-battle, and no portrait. Ratings stay neutral Inferred calibration.",
+      "bio": "Strong Vincent commanded the brigade that hurried onto Little Round Top on July 2, 1863, just before Hood's division struck the Union left. His line included the 16th Michigan, 44th New York, 83rd Pennsylvania, and the 20th Maine. Vincent was mortally wounded while directing the brigade and died on July 7. This replacement makes the brigade-level decision visible while keeping Chamberlain's 20th Maine inside a larger chain of command and cost."
     }
   ],
   "_template": {

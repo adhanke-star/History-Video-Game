@@ -2,9 +2,23 @@
 
 **Newest operating rule (D171, 2026-06-30):** auto-condense is only a safety net for finishing one bounded milestone. After every clean committed+pushed milestone, and before starting a new execution group/phase or browser-heavy batch gate, stop and return a paste-ready next-chat prompt unless Aaron explicitly orders same-chat continuation.
 
-**Current grouped order:** Phase I Soldier's Story scale-out first; GM leftovers; H0 batch/release gate; remaining Phase F/G non-battle content systems; Phase H polish/media/perf; meta/deferred tooling; last battle-build queue. Q5 Chattanooga + Q6 USCT playable battles remain LAST unless Aaron explicitly reorders.
+**Current grouped order:** Group 1's first Soldier's Story scale-out slice shipped as D172; next is Group 2 GM leftovers; then the H0 batch/release gate; remaining Phase F/G non-battle content systems; Phase H polish/media/perf; meta/deferred tooling; last battle-build queue. Q5 Chattanooga + Q6 USCT playable battles remain LAST unless Aaron explicitly reorders.
 
 **Prompt contents required:** `cd`, fetch/status/pull, current HEAD, exact next item, read order, locks, gate sequence, and clean-stop rule.
+
+---
+
+# ☀ WAKE-UP — 2026-06-30: **SIXTH SOLDIER'S STORY REPLACEMENT IS FOCUSED-GATED.**
+
+**Newest (D172, 2026-06-30):** Soldier's Story now has 6 `Verified` named-person replacements. Strong Vincent replaces generated Gettysburg brigade-command slot `ss:gettysburg:US:us_vincent_bde:cmd`. This does not create a new battle, change combat, touch `build/base.html`, change save version, or merge Women in the War into Soldier's Story.
+
+**What changed:** `data/soldier-replacements.json` adds `person_gettysburg_us_vincent_bde` as Col. Strong Vincent, Army of the Potomac / V Corps / First Division / Vincent's Brigade at Gettysburg. The source note keeps the caveats visible: no company, no regiment-command claim, no brigadier-rank-at-battle upgrade, and no portrait.
+
+**Source guardrail:** NPS order-of-battle data places Vincent as Third Brigade commander in First Division, V Corps. NPS Gettysburg and American Battlefield Trust corroborate his Little Round Top action, mortal wound on July 2, and death on July 7. The bio frames Chamberlain's 20th Maine within the larger brigade decision and cost.
+
+**Verified:** soldier importer `records=6 verified=6 disputed=0`; women importer `records=7 verified=6 disputed=1`; build GATE OK; focused `probe-loot-survival` 11/11 with 0 pageerrors; adjacent `probe-women-in-war` 8/8 with static leaks 0/14, `probe-photo-embed` 24/24, and `probe-save-slots` 9/9. Full battery remains deferred per the batch/release gate policy.
+
+**Next recommended run:** Group 2 — GM follow-up leftovers; then H0 batch/release. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
 
 ---
 
@@ -44,7 +58,7 @@
 
 **Verified:** syntax checks passed; schema smoke printed `cw_disease_medical_v1 4 2`; build GATE OK; focused `probe-disease-medical` 8 steps / 0 pageerrors with clean JSON readback. Adjacent probes passed: prisoner exchange, logistics rail, manpower, bridge, H0 President's Desk, and desk, all 0 pageerrors. Full battery remains deferred per the batch/release gate policy.
 
-**Later status:** D170 completed the H2 cutaway fallback shell. The next recommended run is Phase I Soldier's Story scale-out; then GM leftovers; then H0 batch/release. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+**Later status:** D170 completed the H2 cutaway fallback shell and D172 completed the first Soldier's Story scale-out slice. The next recommended run is Group 2 GM leftovers; then H0 batch/release. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
 
 ---
 

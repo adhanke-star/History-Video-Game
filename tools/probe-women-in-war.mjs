@@ -263,7 +263,7 @@ const SETUP = `(() => {
     result.staticScan = staticScan;
     if (staticScan.leaks.length) result.ok = false;
     const shotPath = join(OUT, 'probe-women-in-war.png');
-    await page.screenshot({ path: shotPath, fullPage: false });
+    await page.screenshot({ path: shotPath, fullPage: false, timeout: 90000 });
     const shot = statSync(shotPath);
     result.screenshot = { path: shotPath, bytes: shot.size };
     if (!shot.size) result.ok = false;
@@ -273,8 +273,8 @@ const SETUP = `(() => {
     result = { ok: false, fatal: String(e && e.message || e), pageerrors, staticScan };
   } finally {
     writeFileSync(join(OUT, 'probe-women-in-war.json'), JSON.stringify(result, null, 2));
-    await browser.close();
     if (srv) srv.kill();
+    await Promise.race([browser.close(), sleep(5000)]).catch(() => {});
   }
   console.log('probe-women-in-war ok=' + result.ok + ' steps=' + (result.steps ? result.steps.length : 0) + ' pageerrors=' + (result.pageerrors ? result.pageerrors.length : 0));
   if (result.staticScan) console.log('  staticScan leaks=' + result.staticScan.leaks.length + ' scanned=' + result.staticScan.scanned);
