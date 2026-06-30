@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-06-30: **GROUP 4 HARD WAR IS FOCUSED-GATED; LONG AUDIT DEFERRED (D175/D176).**
+
+**Newest (D175/D176, 2026-06-30):** Group 4's first non-battle system shipped. Hard war now has a War Effort teaching/system surface with exact-zero default bridge behavior and an explicit capped civilian/freedpeople protection priority. Aaron also clarified that the long `npm run vet:noreg` audit must not run after every queued item; focused gates ship each item, and the long audit waits for the end-of-queue release gate or an explicit request.
+
+**What changed:** new `data/hard-war.json`, `src/64-hard-war.js`, manifest registration, War Effort/H0 President's Desk rendering and wiring, bridge/lifecycle hooks, focused `tools/probe-hard-war.mjs`, and future-batch suite enrollment. `civil_war_generals.html` was rebuilt from source.
+
+**Verified:** JSON parse passed for `data/hard-war.json`; `node --check` passed for touched source/probe/suite files; build GATE OK; focused `probe-hard-war` 8 steps / 0 pageerrors after catching/fixing the missing H0 shell insertion. Adjacent probes passed: disease/medical, logistics rail, bridge, and H0 President's Desk, all 0 pageerrors. A partial `vet:noreg` run was stopped under D176; it had no red output through render-richness but is not the D175 gate.
+
+**Next recommended run:** continue Group 4 with irregular war unless live docs identify a smaller remaining Phase F/G non-battle item. Do not start Q5 Chattanooga, Atlanta/March, Franklin/Nashville, or Q6 USCT playable battles.
+
+---
+
 # ☀ WAKE-UP — 2026-06-30: **GROUP 3 H0 BATCH/RELEASE GATE PASSED.**
 
 **Newest (D174, 2026-06-30):** Group 3 is complete. The completed H0 surface set is now in `npm run vet:noreg`, and the H0 batch/release checkpoint passed with long-grace local browser settings.

@@ -1,0 +1,115 @@
+{
+  "_comment": "D175 Group 4 bounded hard-war system. This is a War Effort teaching/system slice, not a new playable battle and not an output gate. Default bridge input is exact zero; the optional civilian/freedpeople protection priority is capped and costly.",
+  "schema": "cw_hard_war_v1",
+  "schemaVersion": "1.0",
+  "config": {
+    "priorityKey": "civilianProtection",
+    "bridgeCaps": {
+      "morale": 1,
+      "supplyCost": 2,
+      "fatigueCost": 1,
+      "overall": 0
+    },
+    "mitigation": {
+      "propertyReduction": 0.30,
+      "displacementReduction": 0.25,
+      "freedpeopleRiskReduction": 0.22,
+      "wearinessRelief": 1,
+      "capitalCost": 1
+    },
+    "pressureWeights": {
+      "year": 0.26,
+      "momentum": 0.22,
+      "logistics": 0.18,
+      "enemyWill": 0.14,
+      "emancipation": 0.12,
+      "weariness": 0.08
+    }
+  },
+  "profiles": {
+    "US": {
+      "name": "Union hard-war policy",
+      "summary": "By 1864 Union strategy increasingly targeted the Confederate economy, transport, food stores, and civilian war-supporting resources as well as armies.",
+      "teaching": "Hard war is not a clean triumph. It shortened the rebellion by striking slavery's war economy, railroads, mills, crops, barns, and morale, while also inflicting real civilian property loss and displacement. The game names both facts together.",
+      "provenance": "Verified",
+      "sources": [
+        "data/codex.json hard-war entry, citing Mark Grimsley, The Hard Hand of War (1995).",
+        "data/codex.json William T. Sherman and Philip Sheridan entries, citing McPherson, American Battlefield Trust, NPS, and Shenandoah Valley Battlefields Foundation."
+      ]
+    },
+    "CS": {
+      "name": "Confederate home-front pressure",
+      "summary": "Confederate civilians experienced hard-war raids, destroyed railroads, requisitioned food, refugee movement, and the collapse of slavery's labor regime as Union armies advanced.",
+      "teaching": "The Lost Cause often turns civilian suffering into an alibi for the Confederacy. This system does not. It treats suffering as real while keeping the cause of the war, slavery, and Confederate state-capacity failure in view.",
+      "provenance": "Verified",
+      "sources": [
+        "data/codex.json hard-war entry, citing Mark Grimsley and American Battlefield Trust.",
+        "data/codex.json contraband-of-war and emancipation-proclamation entries, citing NPS, National Archives, Adam Goodheart, Eric Foner, and American Battlefield Trust."
+      ]
+    }
+  },
+  "policies": [
+    {
+      "id": "sherman-march",
+      "label": "Sherman's March to the Sea",
+      "summary": "Sherman's armies captured Atlanta, then marched through Georgia destroying railroads, crops, mills, and property that supported Confederate armies.",
+      "provenance": "Verified",
+      "sources": [
+        "data/codex.json William Tecumseh Sherman entry, citing McPherson and American Battlefield Trust.",
+        "data/codex.json hard-war entry, citing Mark Grimsley and American Battlefield Trust."
+      ]
+    },
+    {
+      "id": "sheridan-burning",
+      "label": "Sheridan's Burning in the Shenandoah",
+      "summary": "Sheridan's 1864 Valley campaign destroyed barns, mills, crops, and livestock to deny the Shenandoah as a Confederate granary and invasion corridor.",
+      "provenance": "Verified",
+      "sources": [
+        "data/codex.json Philip Sheridan entry, citing NPS, American Battlefield Trust, and Shenandoah Valley Battlefields Foundation.",
+        "data/codex.json hard-war entry, citing Mark Grimsley."
+      ]
+    },
+    {
+      "id": "property-not-persons",
+      "label": "Property destruction was not civilian massacre",
+      "summary": "Union hard-war orders generally targeted property, transport, food, and military support rather than authorizing systematic killing of civilians, which is why 'total war' is debated.",
+      "provenance": "Verified",
+      "sources": [
+        "data/codex.json hard-war entry, citing Mark Grimsley.",
+        "American Battlefield Trust, Sherman's March to the Sea, as cited by data/codex.json hard-war entry."
+      ]
+    },
+    {
+      "id": "freedpeople-protection",
+      "label": "Freedpeople and refugees were part of the operational reality",
+      "summary": "As Union armies moved, enslaved people self-emancipated toward Federal lines; protection, labor policy, food, and movement became military and moral questions, not side notes.",
+      "provenance": "Verified",
+      "sources": [
+        "data/codex.json contraband-of-war entry, citing NPS and Adam Goodheart.",
+        "data/codex.json emancipation-proclamation entry, citing National Archives, Eric Foner, and American Battlefield Trust."
+      ]
+    }
+  ],
+  "debates": [
+    {
+      "id": "hard-war-vs-total-war",
+      "title": "Hard war or total war?",
+      "summary": "Historians debate the label. 'Total war' can overstate the case because Union policy did not seek mass killing of civilians; 'hard war' better captures deliberate destruction of the war-supporting economy.",
+      "provenance": "Verified",
+      "sources": [
+        "data/codex.json hard-war entry, citing Mark Grimsley.",
+        "data/codex.json William T. Sherman entry, citing McPherson and American Battlefield Trust."
+      ]
+    },
+    {
+      "id": "lost-cause-inversion",
+      "title": "The Lost Cause inversion",
+      "summary": "Postwar apologetics often made Union property destruction the moral center while pushing slavery and Confederate policy to the margin. This model keeps civilian suffering visible without laundering the rebellion's cause.",
+      "provenance": "Verified",
+      "sources": [
+        "data/codex.json hard-war entry.",
+        "data/codex.json emancipation-proclamation and contraband-of-war entries."
+      ]
+    }
+  ]
+}

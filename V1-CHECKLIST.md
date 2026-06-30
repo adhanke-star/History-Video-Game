@@ -14,12 +14,12 @@ content-complete v1 (still a perpetual project after — D54). Built from `MODER
 2. **Clear-then-continuous inside the current group.** I clear a scope's designs with you upfront, then execute the
    bounded slice continuously, stopping at the clean committed+pushed boundary before a new execution group unless
    Aaron explicitly orders same-chat continuation.
-3. **Per-milestone vetting + push** uses the D160 tiered gate: always GATE OK, relevant importer/schema gate,
+3. **Per-milestone vetting + push** uses the D160/D176 tiered gate: always GATE OK, relevant importer/schema gate,
    focused probe, output/JSON readback, 0 pageerrors, and `git diff --check`; JS/runtime changes also require
-   `node --check` on touched JS/probe files plus 1-3 adjacent probes. Full `npm run vet:noreg` is mandatory for
-   shared lifecycle/manifest/build/save/bridge/tactical/render/accessibility, suite-probe changes, or large
-   milestone/release-batch pushes. Repeated narrow content slices use focused + importer/schema gates, with a full
-   suite every 3-5 slices or before the release batch. Balance auto-tuned + logged.
+   `node --check` on touched JS/probe files plus 1-3 adjacent probes. During an explicit same-chat queue loop,
+   full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit
+   Aaron request, even when a slice touches shared lifecycle/manifest/build/save/bridge/tactical/render/accessibility
+   or suite enrollment. Balance auto-tuned + logged.
 4. **Content standard:** ≥2-source Verified (else Inferred), anti-Lost-Cause, period-but-tight voice.
 
 ## FRESH-CHAT EXECUTION GROUPS (LOCKED 2026-06-30 — D171)
@@ -219,7 +219,7 @@ tactical depth COMPLETE** (B1 attacker AI · B2 officers/command · B3 in-battle
       all fixed+probe-locked); wcag AA. The honest multi-path victory framing is the graded report (D112).›
 
 ### Phase F — CONTENT SYSTEMS  (folded into the phase each best fits)
-- [~] **Logistics/rail network ✅ D159** (War Effort rail/supply readout + bounded opt-in railhead bridge) · **POW exchange-collapse ✅ D161 focused-gated** (War Effort prisoner/camp pressure + bounded opt-in relief bridge; full suite deferred to planned-work batch/release gate) · **disease/medical ✅ D169 focused-gated** (War Effort disease/army-medicine pressure + bounded opt-in medical relief bridge) · hard war · irregular war · the four
+- [~] **Logistics/rail network ✅ D159** (War Effort rail/supply readout + bounded opt-in railhead bridge) · **POW exchange-collapse ✅ D161 focused-gated** (War Effort prisoner/camp pressure + bounded opt-in relief bridge; full suite deferred to planned-work batch/release gate) · **disease/medical ✅ D169 focused-gated** (War Effort disease/army-medicine pressure + bounded opt-in medical relief bridge) · **hard war ✅ D175 focused-gated** (hard-war/civilian-protection pressure + exact-zero default bridge, full audit deferred under D176) · irregular war · the four
       under-told-perspective threads · flagship named units · CS finance toolkit · war-finance civics · a real
       diplomacy system · the human-cost-with-gravity treatment. (All from §8 D31–D41.)
 - [x] **Women in the war — soldier & relief threads (Aaron, run-k idea, 2026-06-15).** Add **female leads in the
