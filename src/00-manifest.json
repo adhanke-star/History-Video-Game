@@ -27,6 +27,7 @@
     "59-armory-field.js",
     "60-blockade.js",
     "61-logistics-rail.js",
+    "62-prisoner-exchange.js",
     "70-manpower.js",
     "80-victory.js",
     "81-divergence.js",

@@ -115,7 +115,10 @@ function _wdRefresh() {
     wire = null;
   } else { // "economy" — the President's overview (default landing)
     html = (typeof presRenderEconomy === "function") ? presRenderEconomy(C) : "";
-    wire = (typeof logisticsWireOverview === "function") ? logisticsWireOverview : null;
+    wire = function (cc) {
+      if (typeof logisticsWireOverview === "function") logisticsWireOverview(cc);
+      if (typeof prisonerExchangeWireOverview === "function") prisonerExchangeWireOverview(cc);
+    };
   }
   cont.innerHTML = html || '<p class="lede" style="text-align:center;opacity:0.7">This office is not yet staffed.</p>';
   var tabs = ["economy", "treasury", "diplomacy", "victory", "warvshistory", "afteraction", "codex", "playstyle", "armory", "warroom", "clock", "muster", "cabinet", "command", "camp", "loot", "decisions", "press", "map"];

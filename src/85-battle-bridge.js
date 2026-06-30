@@ -100,6 +100,15 @@ function bridgeArmy(C) {
     supply = Math.max(0, Math.min(100, supply + Math.round(_logRail.supply || 0)));
     fatigue = Math.max(0, Math.min(100, fatigue + Math.round(_logRail.fatigue || 0)));
   }
+  // D161: prisoner-exchange relief is an explicit War Effort priority. The bonus
+  // function returns exact zeros unless the player activates relief, so default
+  // bridge baselines stay intact.
+  var _pow = (typeof prisonerExchangeBridgeBonus === "function") ? prisonerExchangeBridgeBonus(C) : null;
+  if (_pow) {
+    morale = Math.max(0, Math.min(100, morale + Math.round(_pow.morale || 0)));
+    supply = Math.max(0, Math.min(100, supply + Math.round(_pow.supply || 0)));
+    fatigue = Math.max(0, Math.min(100, fatigue + Math.round(_pow.fatigue || 0)));
+  }
   // S2 m5: the sitting field general + the cabinet now drive leadership (anchored at 64 so a
   // default/historical command plays ≈ Classic; the A6a/D47.1 anchor lesson). The _brgLeadGuard
   // breaks the bridgeArmy->commandLeadership->cabinet->_cabReading->bridgeArmy cycle (D53.4).
@@ -146,6 +155,7 @@ function bridgeArmy(C) {
   if (_camp && _camp.overall) overall = Math.min(100, overall + _camp.overall);   // Q8: a small drill "sharpness" on top of the facet lifts (0 when undrilled -> byte-identical)
   if (_loot && _loot.overall) overall = Math.max(0, Math.min(100, overall + Math.round(_loot.overall)));
   if (_logRail && _logRail.overall) overall = Math.max(0, Math.min(100, overall + Math.round(_logRail.overall)));
+  if (_pow && _pow.overall) overall = Math.max(0, Math.min(100, overall + Math.round(_pow.overall)));
   return { side: side, strength: Math.round(strength), equip: Math.round(equip), arms: arms,
     morale: morale, supply: supply, fatigue: fatigue, leadership: leadership, firepower: firepower, artillery: artillery, engineering: engineering,
     logistics: _logRail ? Math.round(_logRail.index || 0) : 0, overall: overall };

@@ -4,6 +4,24 @@
 
 ---
 
+# ☀ WAKE-UP — 2026-06-29: **FULL-SUITE BATTERY IS DEFERRED TO PLANNED-WORK BATCH/RELEASE GATES.**
+
+**Current gate rule:** Aaron stopped the D161 full no-regression battery and directed that the big suite not run after every step. Keep probes intact, but use focused per-slice gates: syntax/import/schema checks, build, focused probe, adjacent probes, JSON/pageerror readback, and `git diff --check`. Run the full battery when the planned work is built out, at a release/batch checkpoint, or when Aaron explicitly asks for it.
+
+---
+
+# ☀ WAKE-UP — 2026-06-29: **PHASE F POW EXCHANGE CARTEL COLLAPSE IS FOCUSED-GATED. Prisoner exchange, camp pressure, and relief priority are live with exact-zero default bridge behavior.**
+
+**Current (D161, 2026-06-29):** This is the bounded POW exchange-collapse slice after D159 rail logistics. New `data/prisoner-exchange.json` and `src/62-prisoner-exchange.js` add a War Effort prisoner/camp surface tied to resolved-battle capture estimates, year/stage pressure, and an explicit relief priority. It does not start Chattanooga, does not start USCT playable battles, does not hand-edit `build/base.html`, and does not change the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.
+
+**What changed:** War Effort now shows **Prisoner Exchange & Camps**: pressure, exchange function, detained burden, camp mortality risk, side policy, timeline, camp notes, source/debate cards, and a **Prioritize relief** toggle. The toggle is the only bridge activator. Default/inactive POW relief returns exact zero; active effects are capped at morale +2, fatigue relief 2, supply cost 2, and overall +1. Relief can mitigate deaths/returns and a small returned-prisoner manpower boost, but it never reopens the cartel.
+
+**Source guardrail:** the existing history/codex source trail was sufficient, so no web fetch was needed. The module teaches the Dix-Hill cartel, Confederate threats against captured Black soldiers, Lincoln's retaliation order, Andersonville, Elmira, and camp overcrowding. It names suffering on both sides without treating cartel collapse as neutral or erasing slavery and USCT status.
+
+**Verified:** syntax checks passed; build GATE OK; importer/schema checks passed; focused `probe-prisoner-exchange` 8/8 with 0 pageerrors; adjacent probes passed for logistics rail, manpower, bridge, and desk; corrected screenshot readback showed the active POW block without overlap. A full no-regression run was started and passed through `probe-divergence` with all completed probes green and 0 pageerrors, then Aaron stopped it and deferred the rest to the planned-work batch/release gate.
+
+---
+
 # ☀ WAKE-UP — 2026-06-29: **PHASE F LOGISTICS / RAIL NETWORK IS SHIPPED. Rail and supply now read as strategic arteries in War Effort, with a bounded opt-in railhead bridge and no parallel campaign map.**
 
 **Newest (D159, 2026-06-29):** This completes the first bounded logistics/rail slice of Phase F. New `data/logistics-rail.json` and `src/61-logistics-rail.js` add a War Effort rail/supply network surface tied to production, engineering, blockade, War Room supply, and next-battle route friction. It does not start Chattanooga, does not start USCT playable battles, does not hand-edit `build/base.html`, and does not change the save version. `civil_war_generals.html` was rebuilt from `src/` by the build gate.

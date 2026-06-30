@@ -6,11 +6,11 @@
 A single self-contained HTML teaching wargame. Source lives in `src/*.js` (concatenated by `tools/build.mjs`) + `data/*.json` (injected as `GAME_DATA`). The shipped file `civil_war_generals.html` is GENERATED — never the source of truth.
 
 ## Suggest edits that obey these (non-negotiable)
-1. **Edit `src/` and `data/` only. NEVER `build/base.html` (frozen) and never the generated `civil_war_generals.html`.** A change is real only after the D160 tiered gate is green: build GATE OK, relevant importer/schema gate, focused probe, `git diff --check`, and higher-tier probes/full `npm run vet:noreg` when shared surfaces or release batches require it.
+1. **Edit `src/` and `data/` only. NEVER `build/base.html` (frozen) and never the generated `civil_war_generals.html`.** A change is real only after the D160/D161 batched gate is green: build GATE OK, relevant importer/schema gate, focused probe, `git diff --check`, and adjacent probes for JS/runtime work. The full `npm run vet:noreg` battery is for planned-work batch/release checkpoints or explicit Aaron requests, not every playable feature/graphics slice.
 2. **No per-battle damage/firepower fudge (D74)** — battle outcomes come from data (OOB/terrain/timing/scoreWeight), one shared combat model. Don't introduce battle-specific damage knobs.
 3. **Bare-name globals** (`G`, `GAME_DATA`, `__FIELD`, `FLD`) — not `window.*`. New tactical work = guarded, no-op-when-inactive seams in `src/tactical/`. Never put a literal comment-closer inside a block comment (it parse-bombs the concatenated build).
 4. **History is citation-grade + anti-Lost-Cause** — never invent units, ranks, dates, or citations; tag claims Verified/Inferred.
 5. **Match surrounding code** — comment density, naming, idiom; keep edits scoped and reversible.
 
 ## Do NOT
-Generate large refactors, new build steps, new "task list"/"roadmap" docs (the roadmap is `V1-CHECKLIST.md`), own architecture/history/combat balance/UX/accessibility decisions, or commit/push. Flag anything that needs the human to run `node tools/build.mjs`, relevant importer/schema checks, focused probe, `git diff --check`, and whichever D160 higher-tier probes apply before `git push origin main`.
+Generate large refactors, new build steps, new "task list"/"roadmap" docs (the roadmap is `V1-CHECKLIST.md`), own architecture/history/combat balance/UX/accessibility decisions, or commit/push. Flag anything that needs the human to run `node tools/build.mjs`, relevant importer/schema checks, focused probe, adjacent probes, `git diff --check`, and the later batch/release battery before broad release.

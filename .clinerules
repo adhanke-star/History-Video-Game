@@ -10,7 +10,7 @@ You execute **bounded, pre-packaged helper tasks only** — exact files, exact s
 ## Non-negotiables (same for every tool)
 1. **Edit `src/` + `data/` only. NEVER `build/base.html` and never the generated `civil_war_generals.html`.** Rebuild with `node tools/build.mjs` (must print `GATE OK`).
 2. **No per-battle damage/firepower fudge (D74).** Bare-name globals (`G`/`GAME_DATA`/`__FIELD`/`FLD`). No literal comment-closer inside a block comment.
-3. **Never commit/push unless your packet explicitly says so AND the D160 tier selected by 5.5 is green.** At minimum that means build + relevant importer/schema gate + focused probe + 0 pageerrors + `git diff --check`; JS/runtime packets also need `node --check` on touched JS/probe files and 1-3 adjacent probes; full `npm run vet:noreg` is required for shared lifecycle/manifest/build/save/bridge/tactical/render/accessibility, suite-probe changes, or release batches. Fix the root cause, never weaken a probe to pass.
+3. **Never commit/push unless your packet explicitly says so AND the D160/D161 focused tier selected by 5.5 is green.** At minimum that means build + relevant importer/schema gate + focused probe + 0 pageerrors + `git diff --check`; JS/runtime packets also need `node --check` on touched JS/probe files and 1-3 adjacent probes. Do not run the full `npm run vet:noreg` battery unless the packet says this is a planned-work batch/release checkpoint or Aaron explicitly asks. Fix the root cause, never weaken a probe to pass.
 4. **Citation-grade, anti-Lost-Cause history** — no fabricated units/ranks/dates/citations; tag Verified/Inferred.
 5. Record what you did/didn't verify; never claim a gate passed without running and reading it.
 

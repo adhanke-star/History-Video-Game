@@ -1,0 +1,161 @@
+{
+  "_comment": "D161 Phase F bounded prisoner-exchange collapse thread. This is a War Effort teaching/system slice, not a campaign map or new battle. Default bridge input is exact zero; the optional relief priority is capped and cannot reopen the cartel or erase the USCT policy fault line.",
+  "schema": "cw_prisoner_exchange_v1",
+  "schemaVersion": "1.0",
+  "config": {
+    "priorityKey": "cartelRelief",
+    "estimatedCaptureRatePct": {
+      "win": 3,
+      "draw": 5,
+      "loss": 8,
+      "decisive": 12
+    },
+    "exchangeRates": {
+      "open": 0.45,
+      "strained": 0.18,
+      "collapsed": 0.035,
+      "reliefBonus": 0.055
+    },
+    "mortalityRates": {
+      "open": 0.004,
+      "strained": 0.012,
+      "collapsed": 0.028,
+      "reliefReduction": 0.008
+    },
+    "bridgeCaps": {
+      "morale": 2,
+      "fatigueRelief": 2,
+      "supplyCost": 2,
+      "overall": 1
+    },
+    "pressureWeights": {
+      "detained": 0.34,
+      "year": 0.16,
+      "usct": 0.24,
+      "mortality": 0.16,
+      "enemyWill": 0.10
+    }
+  },
+  "profiles": {
+    "US": {
+      "name": "Federal prisoner policy",
+      "summary": "The United States insisted that Black soldiers be treated as lawful prisoners of war. Lincoln's 1863 retaliation order answered Confederate threats against USCT men and their white officers, but the standoff helped freeze general exchange.",
+      "teaching": "The moral center is not administrative failure alone. The exchange cartel broke in part because the Confederacy refused to recognize Black U.S. soldiers as soldiers. A humane policy can mitigate camp pressure, but it cannot honestly trade away equal protection for USCT prisoners.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA.md, Confederate Policy and Federal Retaliation section, citing Confederate General Order No. 60 and Lincoln General Order No. 252.",
+        "data/codex.json prisoner-of-war-camps entry, citing National Park Service Andersonville and McPherson, Battle Cry of Freedom."
+      ]
+    },
+    "CS": {
+      "name": "Confederate prisoner policy",
+      "summary": "The Confederacy demanded exchange while refusing equal prisoner status to captured Black Union soldiers, a position tied directly to its slavery war aim. The result was a moral and logistical deadlock.",
+      "teaching": "This is not a neutral paperwork dispute. Confederate policy against USCT prisoners made exchange a test of the war's central cause. The camps that followed were overcrowded on both sides, but the cause of the breakdown must be named plainly.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA.md, Confederate Policy and Federal Retaliation section, citing Confederate General Order No. 60 and later Confederate Congress resolutions.",
+        "data/codex.json United States Colored Troops and prisoner-of-war-camps entries, citing NPS Andersonville, McPherson, and Fort Pillow source trails."
+      ]
+    }
+  },
+  "policyTimeline": [
+    {
+      "id": "dix-hill-cartel",
+      "year": 1862,
+      "label": "Dix-Hill cartel opens mass exchange",
+      "stage": "open",
+      "summary": "The cartel briefly makes prisoner exchange a regular military process, returning many captured men before the system hardens into political and racial deadlock.",
+      "provenance": "Verified",
+      "sources": [
+        "data/codex.json prisoner-of-war-camps entry, citing McPherson, Battle Cry of Freedom.",
+        "HISTORICAL-DATA.md Confederate Policy and Federal Retaliation section."
+      ]
+    },
+    {
+      "id": "confederate-usct-policy",
+      "year": 1862,
+      "label": "Confederate threats against Black soldiers",
+      "stage": "strained",
+      "summary": "Confederate policy threatened captured Black soldiers and their white officers with enslavement, execution, or unequal treatment, making ordinary exchange morally impossible to treat as a neutral ledger.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA.md, Confederate Policy and Federal Retaliation section.",
+        "data/codex.json United States Colored Troops entry."
+      ]
+    },
+    {
+      "id": "lincoln-retaliation-order",
+      "year": 1863,
+      "label": "Lincoln's retaliation order",
+      "stage": "collapsed",
+      "summary": "General Order No. 252 pledged retaliation for murdered or enslaved Black U.S. soldiers. The order defended equal soldier status while deepening the exchange deadlock.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA.md, Confederate Policy and Federal Retaliation section, identifying General Order No. 252, July 30, 1863.",
+        "data/codex.json prisoner-of-war-camps entry, citing NPS Andersonville and McPherson."
+      ]
+    },
+    {
+      "id": "camp-overcrowding",
+      "year": 1864,
+      "label": "Overcrowded camps become a war cost",
+      "stage": "collapsed",
+      "summary": "With exchange stalled, prison populations swelled. Andersonville became the deadliest Confederate stockade; Elmira became the deadliest Union camp.",
+      "provenance": "Verified",
+      "sources": [
+        "data/codex.json prisoner-of-war-camps entry.",
+        "National Park Service, Andersonville National Historic Site source trail recorded in data/codex.json."
+      ]
+    }
+  ],
+  "camps": [
+    {
+      "id": "andersonville",
+      "side": "CS",
+      "name": "Andersonville",
+      "held": "about 45,000 Union prisoners",
+      "dead": "about 13,000",
+      "lesson": "Andersonville's death toll came from overcrowding, exposure, starvation, polluted water, and disease after exchange failed. Its scale made it the war's most infamous prison.",
+      "provenance": "Verified",
+      "sources": [
+        "National Park Service, Andersonville National Historic Site history pages.",
+        "data/codex.json prisoner-of-war-camps entry, citing NPS Andersonville and McPherson."
+      ]
+    },
+    {
+      "id": "elmira",
+      "side": "US",
+      "name": "Elmira",
+      "held": "Confederate prisoners in a converted camp in New York",
+      "dead": "nearly one-quarter of inmates",
+      "lesson": "Elmira's death rate prevents the player from reading prisoner suffering as one-sided. Union policy could be morally stronger on USCT status and still fail badly in camp administration.",
+      "provenance": "Verified",
+      "sources": [
+        "data/codex.json prisoner-of-war-camps entry.",
+        "James M. McPherson, Battle Cry of Freedom source trail recorded in data/codex.json."
+      ]
+    }
+  ],
+  "debates": [
+    {
+      "id": "equal-status-vs-exchange",
+      "title": "Exchange speed vs equal soldier status",
+      "summary": "The tempting administrative answer is to reopen exchange at any price. The historical fault line is that the price demanded by Confederate policy was unequal treatment of Black soldiers. The game treats that as non-negotiable.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA.md, Confederate Policy and Federal Retaliation section.",
+        "data/codex.json United States Colored Troops entry."
+      ]
+    },
+    {
+      "id": "shared-suffering-as-false-equivalence",
+      "title": "Shared suffering is not false equivalence",
+      "summary": "Both governments presided over lethal camps, and both get named. That does not erase why the exchange cartel collapsed: the Confederacy's refusal to treat USCT prisoners as legitimate soldiers.",
+      "provenance": "Verified",
+      "sources": [
+        "data/codex.json prisoner-of-war-camps entry.",
+        "data/codex.json United States Colored Troops entry."
+      ]
+    }
+  ]
+}
