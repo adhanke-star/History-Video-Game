@@ -1,3 +1,13 @@
+# ☀ WAKE-UP — 2026-06-30: **FRESH-CHAT BOUNDARY IS NOW PROJECT LAW.**
+
+**Newest operating rule (D171, 2026-06-30):** auto-condense is only a safety net for finishing one bounded milestone. After every clean committed+pushed milestone, and before starting a new execution group/phase or browser-heavy batch gate, stop and return a paste-ready next-chat prompt unless Aaron explicitly orders same-chat continuation.
+
+**Current grouped order:** Phase I Soldier's Story scale-out first; GM leftovers; H0 batch/release gate; remaining Phase F/G non-battle content systems; Phase H polish/media/perf; meta/deferred tooling; last battle-build queue. Q5 Chattanooga + Q6 USCT playable battles remain LAST unless Aaron explicitly reorders.
+
+**Prompt contents required:** `cd`, fetch/status/pull, current HEAD, exact next item, read order, locks, gate sequence, and clean-stop rule.
+
+---
+
 # ☀ WAKE-UP — 2026-06-29: **OPERATING GATE UPDATED TO TIERED VETTING, NOT NO GATES.**
 
 **Newest operating rule (D160, 2026-06-29):** every commit still needs source/doc read order, source-only edits, `node tools/build.mjs` GATE OK, relevant importer/schema checks, focused probe(s), JSON/pageerror readback, `git diff --check`, and clean commit/push. JS/runtime changes add `node --check` plus 1-3 adjacent probes. Full `npm run vet:noreg` is required for shared lifecycle/manifest/build/save/bridge/tactical/render/accessibility, suite-probe changes, and large milestone/release-batch pushes. Repeated sourced-person/content slices use focused + importer/schema gates, with full suite every 3-5 slices or before a release batch. Never push red, weaken probes, edit `build/base.html`, hand-edit `civil_war_generals.html`, add per-battle combat fudge, or fake citation/history gates.

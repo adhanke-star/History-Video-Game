@@ -11,8 +11,9 @@ content-complete v1 (still a perpetual project after — D54). Built from `MODER
 1. **Surface judgment calls.** Design/balance forks are surfaced for your approval BEFORE building; only
    mechanical/obvious continuations + the build-and-vet itself run autonomously. (Refines charter §8.3
    "decide & ship" — that applied to the all-night charter; you've now opted for design oversight.)
-2. **Clear-then-continuous.** I clear a SCOPE's designs with you upfront, then execute the whole scope
-   continuously (all-night style), pausing only at scope-end or when a NEW unforeseen fork appears.
+2. **Clear-then-continuous inside the current group.** I clear a scope's designs with you upfront, then execute the
+   bounded slice continuously, stopping at the clean committed+pushed boundary before a new execution group unless
+   Aaron explicitly orders same-chat continuation.
 3. **Per-milestone vetting + push** uses the D160 tiered gate: always GATE OK, relevant importer/schema gate,
    focused probe, output/JSON readback, 0 pageerrors, and `git diff --check`; JS/runtime changes also require
    `node --check` on touched JS/probe files plus 1-3 adjacent probes. Full `npm run vet:noreg` is mandatory for
@@ -20,6 +21,17 @@ content-complete v1 (still a perpetual project after — D54). Built from `MODER
    milestone/release-batch pushes. Repeated narrow content slices use focused + importer/schema gates, with a full
    suite every 3-5 slices or before the release batch. Balance auto-tuned + logged.
 4. **Content standard:** ≥2-source Verified (else Inferred), anti-Lost-Cause, period-but-tight voice.
+
+## FRESH-CHAT EXECUTION GROUPS (LOCKED 2026-06-30 — D171)
+Use this grouping to avoid carrying new work across auto-condense. A single chat may finish one bounded milestone and its red/green repair loop, but after a clean committed+pushed milestone the agent should stop and return a paste-ready next-chat prompt unless Aaron explicitly orders same-chat continuation.
+
+1. **Group 1 — Phase I Soldier's Story scale-out (NEXT):** citation-grade named bios, portrait/provenance where already public-domain and verified, unit detail at scale, richer start-anywhere career trajectory, then later interpersonal hooks. Preserve D152-D158 replacement honesty: no fabricated people/ranks/units, no unsourced portrait/license claim, no women-in-war lane collapse into `ss:` replacements, and no save/journey/report contract break. First slice: add the next small Verified replacement/unit-detail scale-out, with importer/schema/focused Soldier's Story probes.
+2. **Group 2 — GM follow-up leftovers:** symmetric AI-GM, cross-theater Transfer only after `theater` fields are honest, and any remaining political-general/election relief/readout gap only if current code/docs prove it is not already shipped. These are inputs/readouts only; never force scoreboard outputs or break the no-fudge wall.
+3. **Group 3 — H0 batch/release gate:** run the completed-H0 batch/release verification checkpoint as its own long-grace browser-gate chat. Do not weaken probes. Inspect JSON/stdout for `ok=false`, `FATAL`, `pageerrors`, filtered errors, and real errors.
+4. **Group 4 — remaining Phase F/G non-battle content systems:** hard war, irregular war, under-told perspectives still not covered by the D153 women lane, flagship named units, CS finance toolkit, war-finance civics, real diplomacy, human-cost-with-gravity, and Western-theater strategic readouts that do not create playable battles. Keep War Effort/bridge/save contracts bounded and anti-Lost-Cause.
+5. **Group 5 — Phase H polish/media/perf:** surviving-colours/PD asset polish, H2 real footage only after per-asset PD provenance and anachronism review, render/readability polish, audio polish, Intel UHD-617 profiling, and heavy embedded-media budget planning. No unclear-license assets, accounts/trials/download dependencies, runtime web dependencies, or Tripo actions without explicit approval.
+6. **Group 6 — meta/deferred tooling:** reusable historical-data layer, source organization, hotpath profiling, and embedded-media budget tooling. No broad refactor unless the slice has a clear gate and small blast radius.
+7. **Group 7 — last battle-build queue:** Chattanooga and USCT playable battles remain last, with Atlanta/March and Franklin/Nashville still blocked unless Aaron explicitly reorders. Phase D full hex remains v2/deferred.
 
 ---
 

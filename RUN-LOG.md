@@ -5,6 +5,13 @@
 ## GATE BATCHING UPDATE — 2026-06-29
 Aaron stopped the D161 full no-regression battery and directed that the big suite stay deferred until the planned work is built out. The probes stay intact, but the per-slice commit gate is now focused: source/doc read order, syntax checks, importer/schema checks, build, focused probe, adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is reserved for the planned-work batch/release gate or explicit Aaron request.
 
+## OPERATING POLICY — FRESH-CHAT EXECUTION GROUPS — 2026-06-30 (D171, DOCS-ONLY)
+**The project now treats clean pushed milestones as fresh-chat boundaries.** Auto-condense can finish one bounded milestone or a red/green repair loop, but it should not carry the run into a new execution group unless Aaron explicitly orders same-chat continuation.
+- **Docs updated:** `AGENTS.md`, `START-HERE.md`, `AUTONOMOUS-RUN.md`, `V1-CHECKLIST.md`, `HANDOFF.md`, `WAKE-UP.md`, `DECISIONS.md`, and this log.
+- **Grouped queue:** Phase I Soldier's Story scale-out first; GM follow-up leftovers; H0 batch/release gate; remaining Phase F/G non-battle systems; Phase H polish/media/perf; meta/deferred tooling; last battle-build queue. Chattanooga and USCT playable battles remain last unless Aaron explicitly reorders.
+- **Prompt requirement:** every clean stop should hand back `cd`, fetch/status/pull, current HEAD, exact next item, read order, queue locks, gate sequence, and the clean-stop rule.
+- **Verification:** docs-only change. `node tools/build.mjs` printed **GATE OK** (with the existing raw-embed soft-budget warning), and `git diff --check` passed. No JS/importer/schema/probe files changed, so no focused browser probe was applicable.
+
 ## PHASE H2 — SKIPPABLE FIELD CUTAWAY FALLBACK SHELL — 2026-06-30 (D170, FOCUSED-GATED)
 **H2 now has a provenance-gated cutaway shell without adding new footage, new battles, or any runtime web dependency.** The slice proves the player-facing UX and offline fallback contract: existing embedded PD scene stills appear where already vetted, and imageless battles use local procedural map art until a real public-domain moving-image asset is reviewed.
 - **Shipped:** new `data/footage-cutaways.json` (`cw_h2_cutaways_v1`), new `src/104-h2-cutaways.js`, manifest registration after the H0 surface modules, focused `tools/probe-h2-cutaways.mjs`, and no-regression-suite inclusion. `civil_war_generals.html` was rebuilt from source.
