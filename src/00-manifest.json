@@ -69,7 +69,8 @@
     "94-tutorial.js",
     "95-playstyle.js",
     "96-realism-teaching.js",
-    "97-accessibility.js"
+    "97-accessibility.js",
+    "98-h0-main-menu.js"
   ],
   "overrides": [
     "_t1InitAll",

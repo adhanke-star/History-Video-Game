@@ -10,9 +10,23 @@
 
 ---
 
+# ☀ WAKE-UP — 2026-06-29: **H0 MAIN MENU COMMAND SHELL IS FOCUSED-GATED. Broadsheet fidelity is gone from the app-shell prototype.**
+
+**Newest (D163, 2026-06-29):** The first H0 UI/UX redesign slice is live on the main menu. Aaron selected main menu first, focused redesign, prototype scope, and clarified that the app shell should stop preserving broadsheet-look fidelity in favor of a more assertive modern war-video-game layout.
+
+**What changed:** new `src/98-h0-main-menu.js` overrides `openMainMenu` by assignment after accessibility. It preserves existing ids, click paths, and injection anchors while rendering a dark command interface with status chips, embedded battlefield imagery, compact badge controls, responsive desktop/tablet/phone layout, visible focus rings, high-contrast compatibility, and reduce-motion-safe transitions. Injected save/help/playstyle/accessibility/tactical buttons keep working and are visually normalized inside the H0 shell.
+
+**Guardrails:** `build/base.html` and `civil_war_generals.html` were not hand-edited; generated HTML was rebuilt from source. The main menu no longer uses `.gn-paper`, the broadsheet serif stack, or old visible sword-glyph treatment. Broadsheet remains valid for press/editorial/dispatch/provenance surfaces.
+
+**Verified:** syntax checks passed; build GATE OK; focused `probe-h0-main-menu` 4/4 with 0 pageerrors and desktop/tablet/phone screenshots; JSON readback confirmed no broadsheet class/font stack, polished injected labels, modern focus title, no overlap/overflow, Union/Confederate muster actions, free-battle picker action, and saved-campaign President's Desk path. Adjacent probes passed: `menuprobe`, `probe-accessibility` 25 steps / 0 pageerrors, `bootprobe` ok with `realErrors:[]`, and `diag-classic` `nonBlank:346`. Full battery deferred per the batch/release gate policy.
+
+**Next recommended run:** continue H0 with the President's Desk overview command-shell pass, then battle briefing/side choice; the remaining H0 set still includes the between-battle interstitial, tactical HUD/settings, and after-action/final report.
+
+---
+
 # ☀ WAKE-UP — 2026-06-29: **MODERN UG:G UNIT-ASSET SLOTS + FORMATION FIGURES ARE FOCUSED-GATED.**
 
-**Newest (D162, 2026-06-29):** The modern battlefield now has a local-only Tripo-compatible unit asset bridge and a procedural formation-figures layer. The game does not call Tripo at runtime and does not depend on an account, API key, credit balance, live browser generation, upload, or Generate click. Canonical Tripo slots are disabled until optimized local files, detailed/Ultra source metadata, and clear license/provenance proof land.
+**Earlier (D162, 2026-06-29):** The modern battlefield now has a local-only Tripo-compatible unit asset bridge and a procedural formation-figures layer. The game does not call Tripo at runtime and does not depend on an account, API key, credit balance, live browser generation, upload, or Generate click. Canonical Tripo slots are disabled until optimized local files, detailed/Ultra source metadata, and clear license/provenance proof land.
 
 **What changed:** new `data/tripo-unit-assets.json`, `src/tactical/T23-tripo-unit-assets.js`, `src/tactical/T24-formation-figures.js`, importer/probes, and updated `assets/3d/README.txt`. Formation figures give infantry ranks/files, line/column read, firing/charge poses, and bayonets on rich/high tiers while low tier and `renderRich="off"` restore existing markers. T23 can attach vetted local GLB/GLTF models later; the canonical pack currently has 8 disabled slots.
 
