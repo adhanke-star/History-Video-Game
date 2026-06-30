@@ -1,0 +1,116 @@
+{
+  "_comment": "D169 Phase F bounded disease/medical thread. This is a War Effort teaching/system slice, not a hospital minigame. Default bridge input is exact zero; the optional medical-relief priority is capped and mitigates sickness/wound pressure without erasing disease as a central Civil War killer.",
+  "schema": "cw_disease_medical_v1",
+  "schemaVersion": "1.0",
+  "config": {
+    "priorityKey": "medicalRelief",
+    "bridgeCaps": {
+      "morale": 2,
+      "fatigueRelief": 3,
+      "supplyCost": 2,
+      "overall": 1
+    },
+    "relief": {
+      "treatedShare": 0.18,
+      "inactiveTreatedShare": 0.045,
+      "diseaseDeathRate": 0.018,
+      "reliefDeathReduction": 0.007,
+      "survivalDiseaseRelief": 4,
+      "survivalFatigueRelief": 1
+    },
+    "pressureWeights": {
+      "sick": 0.26,
+      "wounded": 0.20,
+      "diseaseMeter": 0.18,
+      "supply": 0.16,
+      "weariness": 0.12,
+      "prisoners": 0.08
+    }
+  },
+  "profiles": {
+    "US": {
+      "name": "Union medical system",
+      "summary": "Federal medical capacity was uneven and often overwhelmed, but by 1862-63 the Union could draw on the Letterman evacuation system, the U.S. Sanitary Commission, women relief organizers, nurses, and deep supply capacity.",
+      "teaching": "The point is not that modern medicine had arrived. Disease still killed more soldiers than bullets. The Union advantage is organization: evacuation, sanitation, supply, and hospital scale could mitigate suffering without making war clean.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA.md, Medicine and the Scale of Death section, citing American Battlefield Trust Civil War Medicine and OSU eHistory.",
+        "data/codex.json Clara Barton, Dorothea Dix, and Mary Edwards Walker entries, citing NPS, Red Cross, National Museum of Civil War Medicine, Smithsonian, and National Women's History Museum."
+      ]
+    },
+    "CS": {
+      "name": "Confederate medical system",
+      "summary": "Confederate surgeons treated the same kinds of wounds and disease under weaker supply, transport, and state-capacity conditions. Medical skill existed on both sides; national logistics decided how much could reach a sick army.",
+      "teaching": "This is not a tale of courage substituting for quinine, food, ambulances, disease prevention, or hospital stores. Confederate medical practice could be capable at the bedside while the wider war economy starved it of reliable support.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA.md, Medicine and the Scale of Death section, citing American Battlefield Trust Civil War Medicine and OSU eHistory.",
+        "HISTORICAL-DATA-ECONOMY.md logistics, blockade, agriculture, and railroads dossiers describing Confederate supply scarcity and transport limits."
+      ]
+    }
+  },
+  "practices": [
+    {
+      "id": "disease-death",
+      "label": "Disease killed more soldiers than battle",
+      "summary": "Roughly two-thirds of Civil War deaths came from disease such as dysentery, diarrhea, typhoid, measles, malaria, and pneumonia. The romantic battlefield-death image is historically wrong.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA.md, Medicine and the Scale of Death section.",
+        "HISTORICAL-DATA.md key facts table, Civil War death toll revision row citing Hacker 2011 and disease share."
+      ]
+    },
+    {
+      "id": "letterman-system",
+      "label": "Letterman's evacuation chain",
+      "summary": "Jonathan Letterman systematized battlefield evacuation and triage for the Army of the Potomac in 1862: aid stations, field hospitals, general hospitals, and an ambulance corps.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA.md, Medicine and the Scale of Death section.",
+        "HISTORICAL-DATA.md key facts table, Civil War medicine row citing American Battlefield Trust and OSU eHistory."
+      ]
+    },
+    {
+      "id": "amputation-anesthesia",
+      "label": "Amputation and anesthesia",
+      "summary": "About 60,000 amputations were performed, and anesthesia was used in about 95 percent of major operations. The 'biting a bullet' myth is bad history.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA.md, Medicine and the Scale of Death section.",
+        "HISTORICAL-DATA.md key facts table, Civil War medicine row citing American Battlefield Trust and OSU eHistory."
+      ]
+    },
+    {
+      "id": "women-relief",
+      "label": "Relief work was institution-building",
+      "summary": "Clara Barton, Dorothea Dix, Mary Edwards Walker, and many less-famous women belonged to the medical and relief story. Their work exposed gaps in military supply, nursing authority, and field-hospital practice.",
+      "provenance": "Verified",
+      "sources": [
+        "data/women-in-war.json records for Clara Barton, Dorothea Dix, and Dr. Mary Edwards Walker.",
+        "data/codex.json entries for Clara Barton, Dorothea Dix, and Dr. Mary Edwards Walker."
+      ]
+    }
+  ],
+  "debates": [
+    {
+      "id": "relief-vs-clean-war",
+      "title": "Relief is not a clean-war fantasy",
+      "summary": "Better medical organization could reduce suffering and return some men to duty, but it could not make rifled-musket wounds, infection, crowd disease, and hard marching humane.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA.md, Medicine and the Scale of Death section.",
+        "data/codex.json Minie ball and prisoner-of-war-camps entries, both describing wound and disease consequences."
+      ]
+    },
+    {
+      "id": "medical-skill-vs-state-capacity",
+      "title": "Bedside skill vs state capacity",
+      "summary": "Both armies had skilled surgeons and exhausted caregivers. The strategic difference was whether a government could move food, medicines, ambulances, nurses, and hospital stores at scale.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA.md, Medicine and the Scale of Death section.",
+        "HISTORICAL-DATA-ECONOMY.md logistics and railroads dossiers."
+      ]
+    }
+  ]
+}

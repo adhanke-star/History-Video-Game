@@ -118,6 +118,7 @@ function _wdRefresh() {
     wire = function (cc) {
       if (typeof logisticsWireOverview === "function") logisticsWireOverview(cc);
       if (typeof prisonerExchangeWireOverview === "function") prisonerExchangeWireOverview(cc);
+      if (typeof medicalWireOverview === "function") medicalWireOverview(cc);
     };
   }
   cont.innerHTML = html || '<p class="lede" style="text-align:center;opacity:0.7">This office is not yet staffed.</p>';

@@ -165,7 +165,7 @@ const SETUP = `(() => {
       openWarDept(); window._wdTab='economy'; _wdRefresh();
       var b=document.getElementById('pxToggleRelief'); if(b && b.scrollIntoView) b.scrollIntoView({block:'center'});
     });
-    await sleep(250); await page.screenshot({ path: join(OUT,'prisoner-exchange.png'), fullPage:false });
+    await sleep(250); await page.screenshot({ path: join(OUT,'prisoner-exchange.png'), fullPage:false, timeout:90000 });
   } catch(e){ result = { ok:false, fatal:String(e&&e.message||e), pageerrors }; }
   finally {
     writeFileSync(join(OUT,'probe-prisoner-exchange.json'), JSON.stringify(result, null, 2));

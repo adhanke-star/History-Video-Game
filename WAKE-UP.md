@@ -10,9 +10,23 @@
 
 ---
 
+# ☀ WAKE-UP — 2026-06-30: **PHASE F DISEASE / ARMY MEDICINE IS FOCUSED-GATED.**
+
+**Newest (D169, 2026-06-30):** Disease and army medicine are live as a bounded War Effort system after the completed H0 surface pass. It does not create a new battle, does not hand-edit `build/base.html`, does not change the save version, and does not force battle outcomes.
+
+**What changed:** new `data/disease-medical.json` and `src/63-disease-medical.js` add a **Disease & Army Medicine** block to War Effort with sickness, wounds, treated men, disease deaths, pressure, side profile, practice/debate cards, and a **Prioritize medical relief** toggle. Manifest, President's Desk/War Effort rendering, bridge, and init/resolve hooks are wired from source; `civil_war_generals.html` was rebuilt by `node tools/build.mjs`.
+
+**Runtime guards:** default inactive medical relief returns exact zero. Active relief is explicit and capped at morale +2, fatigue relief 3, supply cost 2, and overall +1. It can mitigate sickness/wounds and active Campaign Kit disease/fatigue, but it cannot write battle winners, casualty outputs, OOB, scenario data, or a scoreboard path. `C.medical` is additive/sanitized.
+
+**Verified:** syntax checks passed; schema smoke printed `cw_disease_medical_v1 4 2`; build GATE OK; focused `probe-disease-medical` 8 steps / 0 pageerrors with clean JSON readback. Adjacent probes passed: prisoner exchange, logistics rail, manpower, bridge, H0 President's Desk, and desk, all 0 pageerrors. Full battery remains deferred per the batch/release gate policy.
+
+**Next recommended run:** Phase H polish that does not create a new scenario; then Phase I Soldier's Story scale-out; then GM leftovers; then H0 batch/release. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-06-30: **H0 AFTER-ACTION / FINAL REPORT COMMAND SHELL IS FOCUSED-GATED.**
 
-**Newest (D168, 2026-06-30):** The H0 UI/UX redesign now covers all ordered surfaces: main menu, President's Desk, battle briefing / side choice, between-battle interstitial, tactical HUD/settings, and after-action/final report.
+**Earlier (D168, 2026-06-30):** The H0 UI/UX redesign now covers all ordered surfaces: main menu, President's Desk, battle briefing / side choice, between-battle interstitial, tactical HUD/settings, and after-action/final report.
 
 **What changed:** new `src/103-h0-after-action.js` wraps `aarRenderReport(C, opts)` after the tactical HUD pass. It adds a dark command report shell, summary chips, an overall-grade badge, casualty/history metrics, desktop/tablet/phone responsiveness, visible focus, and high-contrast compatibility around the existing report body.
 

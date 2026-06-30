@@ -103,6 +103,7 @@ function presRenderEconomy(C) {
     + (typeof presProdBlock === "function" ? presProdBlock(C) : '')
     + (typeof presLogisticsBlock === "function" ? presLogisticsBlock(C) : '')
     + (typeof presPrisonerExchangeBlock === "function" ? presPrisonerExchangeBlock(C) : '')
+    + (typeof presMedicalBlock === "function" ? presMedicalBlock(C) : '')
     + (typeof presManpowerBlock === "function" ? presManpowerBlock(C) : '')
     + (typeof presMoraleBlock === "function" ? presMoraleBlock(C) : '')
     + dispatches
