@@ -76,7 +76,8 @@
     "100-h0-battle-briefing.js",
     "101-h0-between-battle.js",
     "102-h0-tactical-hud.js",
-    "103-h0-after-action.js"
+    "103-h0-after-action.js",
+    "104-h2-cutaways.js"
   ],
   "overrides": [
     "_t1InitAll",

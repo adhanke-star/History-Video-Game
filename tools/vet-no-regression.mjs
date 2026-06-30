@@ -58,6 +58,7 @@ const SUITE = [
   ['usct imagery', 'tools/probe-usct-imagery.mjs'],
   ['leaders imagery', 'tools/probe-leaders-imagery.mjs'],
   ['scenes imagery', 'tools/probe-scenes-imagery.mjs'],
+  ['h2 cutaways', 'tools/probe-h2-cutaways.mjs'],
   ['field sandbox', 'tools/probe-field.mjs'],
   ['bull run', 'tools/probe-bullrun.mjs'],
   ['fog', 'tools/probe-fog.mjs'],

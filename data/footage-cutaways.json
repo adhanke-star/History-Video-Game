@@ -1,0 +1,176 @@
+{
+  "_comment": "D170 H2 cutaway feasibility layer. Actual reenactment/video footage is disabled until a public-domain or otherwise clear-license asset is verified. Runtime uses only existing embedded PD scene stills or procedural fallback art; no web/runtime fetch.",
+  "schema": "cw_h2_cutaways_v1",
+  "schemaVersion": "1.0",
+  "policy": {
+    "runtimeWebDependency": false,
+    "videoEnabledByDefault": false,
+    "requiresProvenanceBeforeVideo": true,
+    "fallbackRequired": true,
+    "skipRequired": true
+  },
+  "records": [
+    {
+      "id": "cutaway_bullrun1_sudley",
+      "battleId": "bullrun1",
+      "title": "Sudley Ford Crossing",
+      "beat": "The road to Manassas",
+      "fallback": "embedded-scene-still",
+      "provenance": "Verified",
+      "sources": [
+        "assets/scenes-imagery-provenance.json bullrun1 scene record.",
+        "src/51-scenes-imagery.js SCENE_IMG bullrun1 caption and credit."
+      ],
+      "video": {
+        "enabled": false,
+        "sourcePath": null,
+        "externalUrl": null,
+        "licenseStatus": "pending-pd-provenance"
+      }
+    },
+    {
+      "id": "cutaway_antietam_bloody_lane",
+      "battleId": "antietam",
+      "title": "The Sunken Road",
+      "beat": "A field before the order",
+      "fallback": "embedded-scene-still",
+      "provenance": "Verified",
+      "sources": [
+        "assets/scenes-imagery-provenance.json antietam scene record.",
+        "src/51-scenes-imagery.js SCENE_IMG antietam caption and credit."
+      ],
+      "video": {
+        "enabled": false,
+        "sourcePath": null,
+        "externalUrl": null,
+        "licenseStatus": "pending-pd-provenance"
+      }
+    },
+    {
+      "id": "cutaway_fredericksburg_pontoons",
+      "battleId": "fredericksburg",
+      "title": "The Rappahannock Crossing",
+      "beat": "Crossing into the killing ground",
+      "fallback": "embedded-scene-still",
+      "provenance": "Verified",
+      "sources": [
+        "assets/scenes-imagery-provenance.json fredericksburg scene record.",
+        "src/51-scenes-imagery.js SCENE_IMG fredericksburg caption and credit."
+      ],
+      "video": {
+        "enabled": false,
+        "sourcePath": null,
+        "externalUrl": null,
+        "licenseStatus": "pending-pd-provenance"
+      }
+    },
+    {
+      "id": "cutaway_chancellorsville_maryes",
+      "battleId": "chancellorsville",
+      "title": "Second Fredericksburg",
+      "beat": "The wall changes hands",
+      "fallback": "embedded-scene-still",
+      "provenance": "Verified",
+      "sources": [
+        "assets/scenes-imagery-provenance.json chancellorsville scene record.",
+        "src/51-scenes-imagery.js SCENE_IMG chancellorsville caption and credit."
+      ],
+      "video": {
+        "enabled": false,
+        "sourcePath": null,
+        "externalUrl": null,
+        "licenseStatus": "pending-pd-provenance"
+      }
+    },
+    {
+      "id": "cutaway_vicksburg_siege",
+      "battleId": "vicksburg",
+      "title": "Siege Lines at Vicksburg",
+      "beat": "The war closes around the city",
+      "fallback": "embedded-scene-still",
+      "provenance": "Verified",
+      "sources": [
+        "assets/scenes-imagery-provenance.json vicksburg scene record.",
+        "src/51-scenes-imagery.js SCENE_IMG vicksburg caption and credit."
+      ],
+      "video": {
+        "enabled": false,
+        "sourcePath": null,
+        "externalUrl": null,
+        "licenseStatus": "pending-pd-provenance"
+      }
+    },
+    {
+      "id": "cutaway_gettysburg_harvest",
+      "battleId": "gettysburg",
+      "title": "A Harvest of Death",
+      "beat": "The cost before the charge",
+      "fallback": "embedded-scene-still",
+      "provenance": "Verified",
+      "sources": [
+        "assets/scenes-imagery-provenance.json gettysburg scene record.",
+        "src/51-scenes-imagery.js SCENE_IMG gettysburg caption and credit."
+      ],
+      "video": {
+        "enabled": false,
+        "sourcePath": null,
+        "externalUrl": null,
+        "licenseStatus": "pending-pd-provenance"
+      }
+    },
+    {
+      "id": "cutaway_shiloh_procedural",
+      "battleId": "shiloh",
+      "title": "Shiloh Field Sketch",
+      "beat": "A procedural stand-in until clear moving-image provenance exists",
+      "fallback": "procedural-map",
+      "provenance": "Inferred",
+      "sources": [
+        "V1-CHECKLIST.md H2 fallback requirement.",
+        "src/51-scenes-imagery.js documented imageless battle behavior."
+      ],
+      "video": {
+        "enabled": false,
+        "sourcePath": null,
+        "externalUrl": null,
+        "licenseStatus": "pending-pd-provenance"
+      }
+    },
+    {
+      "id": "cutaway_malvern_procedural",
+      "battleId": "malvern",
+      "title": "Malvern Hill Field Sketch",
+      "beat": "A procedural stand-in until clear moving-image provenance exists",
+      "fallback": "procedural-map",
+      "provenance": "Inferred",
+      "sources": [
+        "V1-CHECKLIST.md H2 fallback requirement.",
+        "src/51-scenes-imagery.js documented imageless battle behavior."
+      ],
+      "video": {
+        "enabled": false,
+        "sourcePath": null,
+        "externalUrl": null,
+        "licenseStatus": "pending-pd-provenance"
+      }
+    },
+    {
+      "id": "cutaway_chickamauga_procedural",
+      "battleId": "chickamauga",
+      "title": "Chickamauga Field Sketch",
+      "beat": "A procedural stand-in until clear moving-image provenance exists",
+      "fallback": "procedural-map",
+      "provenance": "Inferred",
+      "sources": [
+        "V1-CHECKLIST.md H2 fallback requirement.",
+        "src/51-scenes-imagery.js documented imageless battle behavior."
+      ],
+      "video": {
+        "enabled": false,
+        "sourcePath": null,
+        "externalUrl": null,
+        "licenseStatus": "pending-pd-provenance"
+      }
+    }
+  ]
+}

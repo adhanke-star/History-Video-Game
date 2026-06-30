@@ -10,9 +10,23 @@
 
 ---
 
+# ☀ WAKE-UP — 2026-06-30: **H2 SKIPPABLE FIELD CUTAWAY FALLBACK SHELL IS FOCUSED-GATED.**
+
+**Newest (D170, 2026-06-30):** H2 now has a provenance-gated pre-battle cutaway shell that does not create a new scenario, fetch new footage, enable video, or require any runtime web dependency.
+
+**What changed:** new `data/footage-cutaways.json` and `src/104-h2-cutaways.js` add a **Field cutaway** action to the H0 battle briefing. Existing embedded PD scene stills back Bull Run, Antietam, Fredericksburg, Chancellorsville, Vicksburg, and Gettysburg; Shiloh, Malvern Hill, and Chickamauga use local procedural map art until a verified public-domain moving-image asset exists.
+
+**Guards:** every video slot is disabled (`sourcePath:null`, `externalUrl:null`, pending PD provenance). The cutaway is optional/skippable and cannot launch a battle, mutate `battlePrep`, write battle outcomes/casualties/OOB, change save version, or touch the combat model.
+
+**Verified:** syntax checks passed; schema smoke printed `cw_h2_cutaways_v1 9`; build GATE OK; focused `probe-h2-cutaways` 5 steps / 0 pageerrors with clean JSON readback and visible overlay/card/frame metrics. Adjacent probes passed: scenes imagery, bridge, H0 battle briefing, and accessibility, all 0 pageerrors where browser-based. Full battery remains deferred per the batch/release gate policy.
+
+**Next recommended run:** Phase I Soldier's Story scale-out; then GM leftovers; then the H0 batch/release gate. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-06-30: **PHASE F DISEASE / ARMY MEDICINE IS FOCUSED-GATED.**
 
-**Newest (D169, 2026-06-30):** Disease and army medicine are live as a bounded War Effort system after the completed H0 surface pass. It does not create a new battle, does not hand-edit `build/base.html`, does not change the save version, and does not force battle outcomes.
+**Earlier (D169, 2026-06-30):** Disease and army medicine are live as a bounded War Effort system after the completed H0 surface pass. It does not create a new battle, does not hand-edit `build/base.html`, does not change the save version, and does not force battle outcomes.
 
 **What changed:** new `data/disease-medical.json` and `src/63-disease-medical.js` add a **Disease & Army Medicine** block to War Effort with sickness, wounds, treated men, disease deaths, pressure, side profile, practice/debate cards, and a **Prioritize medical relief** toggle. Manifest, President's Desk/War Effort rendering, bridge, and init/resolve hooks are wired from source; `civil_war_generals.html` was rebuilt by `node tools/build.mjs`.
 
@@ -20,7 +34,7 @@
 
 **Verified:** syntax checks passed; schema smoke printed `cw_disease_medical_v1 4 2`; build GATE OK; focused `probe-disease-medical` 8 steps / 0 pageerrors with clean JSON readback. Adjacent probes passed: prisoner exchange, logistics rail, manpower, bridge, H0 President's Desk, and desk, all 0 pageerrors. Full battery remains deferred per the batch/release gate policy.
 
-**Next recommended run:** Phase H polish that does not create a new scenario; then Phase I Soldier's Story scale-out; then GM leftovers; then H0 batch/release. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+**Later status:** D170 completed the H2 cutaway fallback shell. The next recommended run is Phase I Soldier's Story scale-out; then GM leftovers; then H0 batch/release. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
 
 ---
 
