@@ -1,0 +1,187 @@
+{
+  "_comment": "D188 Group 4 bounded Confederate finance toolkit. War Effort teaching/system only: no new playable battle, no tactical OOB rewrite, and no battle-result gate. Default bridge input is exact zero; optional finance priorities are capped, costly, and Confederate-side only.",
+  "schema": "cw_cs_finance_v1",
+  "schemaVersion": "1.0",
+  "config": {
+    "priorityKey": "financePriority",
+    "bridgeCaps": { "supply": 3, "moraleCost": 2, "fatigueCost": 2, "overall": 0 },
+    "stressWeights": { "printing": 0.22, "inflation": 0.24, "blockade": 0.18, "credit": 0.16, "debt": 0.12, "impressment": 0.08 },
+    "ledgerCaps": { "cashRaised": 99999, "debtBurden": 100, "cottonPledged": 100, "impressmentPressure": 100, "civilianPressure": 100, "creditIndex": 100 }
+  },
+  "profile": {
+    "id": "confederate-finance-toolkit",
+    "name": "Confederate finance under stress",
+    "summary": "The toolkit turns the Confederacy's war-finance choices into visible levers: foreign cotton credit, cotton bonds, the produce loan, impressment, and the printing spiral.",
+    "teaching": "Confederate finance was not a missing magic key. It was a weak fiscal state trying to turn cotton, slave-capital wealth, coercive procurement, and paper promises into armies while blockade, battlefield losses, and civilian distrust ate the collateral.",
+    "provenance": "Verified",
+    "sources": [
+      "HISTORICAL-DATA-ECONOMY.md csa-finance subsystem, citing Douglas B. Ball, Financial Failure and Confederate Defeat, and Roger L. Ransom, EH.Net, The Economics of the Civil War.",
+      "data/economy.json finance.levers for Confederate bonds, taxation, foreignLoan, printing, and agriculture.impressmentLever.",
+      "data/diplomacy.json cotton-erlanger debate card and quantitative audit."
+    ]
+  },
+  "instruments": [
+    {
+      "id": "erlanger-loan",
+      "label": "Erlanger cotton loan",
+      "shortLabel": "Erlanger",
+      "unlockYear": 1863,
+      "oneShot": true,
+      "summary": "A one-time European cotton-backed loan: cash now, punitive terms, and a bond price tied to battlefield credibility and blockade-running cotton.",
+      "mechanism": "The £3M face loan was taken by Erlanger at 77, offered publicly at 90, carried a 7% coupon, and ultimately realized only about 45% of face after price collapse and Confederate repurchases.",
+      "playerTradeoff": "Immediate foreign cash and a small supply lift; later debt burden, pledged cotton, and credit damage.",
+      "fundsGain": 160,
+      "debtPressure": 14,
+      "inflationPressure": 2,
+      "cottonPledged": 18,
+      "impressmentPressure": 0,
+      "civilianPressure": 2,
+      "creditDamage": 16,
+      "supplyBridge": 2,
+      "moraleBridge": 0,
+      "fatigueBridge": 0,
+      "capitalCost": 0,
+      "provenance": "Verified",
+      "sources": [
+        "data/economy.json finance.levers.foreignLoan.CS, corrected netProceedsPct 0.45 and Erlanger buy/public offer prices.",
+        "data/diplomacy.json cotton-erlanger, citing Judith Fenner Gentry, The Erlanger Loan, Weidenmier, Britannica, and the 19 March 1863 prospectus."
+      ]
+    },
+    {
+      "id": "cotton-bonds",
+      "label": "Cotton bonds",
+      "shortLabel": "Cotton bonds",
+      "unlockYear": 1861,
+      "oneShot": false,
+      "summary": "Borrow against cotton collateral and future export hopes, even as blockade and self-embargo make the collateral harder to deliver.",
+      "mechanism": "Cotton-backed paper could attract buyers only while Europe believed cotton could move and Confederate independence remained plausible.",
+      "playerTradeoff": "Some purchasing power and a modest supply lift; more pledged cotton and weaker credit as losses mount.",
+      "fundsGain": 70,
+      "debtPressure": 8,
+      "inflationPressure": 1,
+      "cottonPledged": 12,
+      "impressmentPressure": 0,
+      "civilianPressure": 1,
+      "creditDamage": 7,
+      "supplyBridge": 1,
+      "moraleBridge": 0,
+      "fatigueBridge": 1,
+      "capitalCost": 0,
+      "provenance": "Verified",
+      "sources": [
+        "data/economy.json finance.levers.bonds.CS produceLoanAuthorizedUSD_millions and cotton-collateral notes.",
+        "HISTORICAL-DATA-ECONOMY.md csa-fin-king-cotton-collateral and cotton-erlanger debate cards."
+      ]
+    },
+    {
+      "id": "produce-loan",
+      "label": "Produce loan",
+      "shortLabel": "Produce loan",
+      "unlockYear": 1861,
+      "oneShot": false,
+      "summary": "Ask planters to subscribe cotton and produce to government credit instead of collecting hard taxes at the start of the war.",
+      "mechanism": "The 1861 Produce Loan pledged agricultural wealth to Confederate bonds, raising some funds but avoiding the harder state-capacity work of taxation.",
+      "playerTradeoff": "Moderate funds and less immediate inflation than printing; more debt and planter-compliance strain.",
+      "fundsGain": 52,
+      "debtPressure": 6,
+      "inflationPressure": 1,
+      "cottonPledged": 8,
+      "impressmentPressure": 1,
+      "civilianPressure": 1,
+      "creditDamage": 4,
+      "supplyBridge": 1,
+      "moraleBridge": 0,
+      "fatigueBridge": 1,
+      "capitalCost": 0,
+      "provenance": "Verified",
+      "sources": [
+        "data/economy.json finance.levers.bonds.CS, Produce Loan authorization and thin bond-market notes.",
+        "HISTORICAL-DATA-ECONOMY.md csa-finance summary and macro-csa-finance-doomed debate card."
+      ]
+    },
+    {
+      "id": "impressment",
+      "label": "Impressment and tithe",
+      "shortLabel": "Impressment",
+      "unlockYear": 1863,
+      "oneShot": false,
+      "summary": "Seize food, animals, and supplies at government prices far below market rates to keep armies moving when money fails.",
+      "mechanism": "The 1863 Impressment Act and tax-in-kind could feed armies short-term while alienating farmers, encouraging hoarding, and worsening urban scarcity.",
+      "playerTradeoff": "The strongest immediate supply lift; morale, fatigue, civilian pressure, and political-capital costs.",
+      "fundsGain": 34,
+      "debtPressure": 2,
+      "inflationPressure": 2,
+      "cottonPledged": 0,
+      "impressmentPressure": 14,
+      "civilianPressure": 10,
+      "creditDamage": 3,
+      "supplyBridge": 3,
+      "moraleBridge": -1,
+      "fatigueBridge": 2,
+      "capitalCost": 1,
+      "provenance": "Verified",
+      "sources": [
+        "data/economy.json agriculture.impressmentLever and tax-in-kind notes.",
+        "HISTORICAL-DATA-ECONOMY.md ag-impressment-tithe debate card, citing Stephanie McCurry and Douglas B. Ball."
+      ]
+    },
+    {
+      "id": "printing-spiral",
+      "label": "Printing spiral",
+      "shortLabel": "Printing",
+      "unlockYear": 1861,
+      "oneShot": false,
+      "summary": "Cover the residue with Treasury notes: quick war funds now, compounding price collapse later.",
+      "mechanism": "The Confederacy financed roughly 60% of real revenue by printing, driving money-supply growth, confidence loss, and catastrophic inflation.",
+      "playerTradeoff": "Emergency funds and a small supply lift; the harshest inflation, morale, and civilian-price costs.",
+      "fundsGain": 92,
+      "debtPressure": 3,
+      "inflationPressure": 9,
+      "cottonPledged": 0,
+      "impressmentPressure": 2,
+      "civilianPressure": 12,
+      "creditDamage": 10,
+      "supplyBridge": 2,
+      "moraleBridge": -2,
+      "fatigueBridge": 1,
+      "capitalCost": 0,
+      "provenance": "Verified",
+      "sources": [
+        "data/economy.json finance.levers.printing.CS and finance.revenueMix.CS.",
+        "HISTORICAL-DATA-ECONOMY.md csa-finance summary, citing Ball 1991, Lerner 1955, and EH.Net."
+      ]
+    }
+  ],
+  "debates": [
+    {
+      "id": "finance-choice-not-magic-key",
+      "title": "Policy failure, not a magic escape",
+      "summary": "Ball argues Confederate financial policy was a real cause of defeat: too little taxation, too much printing, and coercive procurement. Other historians stress blockade and material weakness. The game gives real levers, but no lever makes low state capacity disappear.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA-ECONOMY.md csa-fin-cause-vs-symptom and macro-csa-finance-doomed debate cards.",
+        "Douglas B. Ball, Financial Failure and Confederate Defeat; Roger L. Ransom, EH.Net, The Economics of the Civil War."
+      ]
+    },
+    {
+      "id": "cotton-collateral-trap",
+      "title": "Cotton collateral was fragile",
+      "summary": "Cotton made foreign credit plausible only while buyers believed the Confederacy could deliver bales and survive. The same collateral collapsed as blockade and battlefield defeats made delivery and independence doubtful.",
+      "provenance": "Verified",
+      "sources": [
+        "data/diplomacy.json cotton-erlanger source and audit notes.",
+        "HISTORICAL-DATA-ECONOMY.md cotton-erlanger and csa-fin-king-cotton-collateral debate cards."
+      ]
+    },
+    {
+      "id": "anti-scapegoat-note",
+      "title": "No banker scapegoat",
+      "summary": "The Erlanger loan should not become a conspiracy story or an antisemitic Benjamin/Erlanger scapegoat. The deeper lesson is Confederate collateral, credit, and state-capacity failure.",
+      "provenance": "Verified",
+      "sources": [
+        "data/diplomacy.json cotton-erlanger Lost Cause and antisemitic-conspiracy warning.",
+        "HISTORICAL-DATA-DIPLOMACY.md Erlanger audit correction and source notes."
+      ]
+    }
+  ]
+}

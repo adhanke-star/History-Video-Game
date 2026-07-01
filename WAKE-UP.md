@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-07-01: **GROUP 4 CS FINANCE TOOLKIT SHIPPED (D188).**
+
+**Newest (D188, 2026-07-01):** The CS finance toolkit is complete as a bounded Group 4 non-battle system. It adds a Confederate-side-only War Effort surface for the Erlanger loan, cotton bonds, produce loan, impressment, and the printing spiral.
+
+**What changed:** `data/cs-finance.json` and `src/69-cs-finance.js` add sourced finance instruments, debate framing, state ledgers, a one-shot Erlanger path, and capped/costly finance priorities. The inactive default remains exact zero; active priorities can trade morale/fatigue/civilian pressure for limited supply/funds effects but never write direct overall, tactical/OOB, winner, casualty, or battle-output state. The Erlanger reference page now holds the corrected ~45% net-proceeds guardrail instead of the stale 72% shortcut.
+
+**Verified:** JSON parse for `data/cs-finance.json`, `data/economy.json`, and manifest; `node --check` for touched source/probe/suite files; build **GATE OK** (no-fudge ✓, citations ✓, women-in-war ✓); focused `probe-cs-finance` 8/0; adjacent `probe-economy` 8/0, `probe-bridge` 6/0, and `probe-h0-president-desk` 3/3; JSON readback clean; `git diff --check` clean. Full `npm run vet:noreg` deferred under D176.
+
+**Next recommended run:** **real diplomacy system** as a bounded Group 4 non-battle system. After that, continue human-cost-with-gravity -> Western-theater strategic readouts -> planned batch/release gate. M8 battle-build track still needs an Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-01: **GRADUATE-HISTORY PASS M7 SHIPPED — LIVED-SLAVERY + BLACK COMBAT AGENCY (D187).**
 
 **Newest (D187, 2026-07-01):** M7 of the authorized graduate-history build-out is complete as a pure teaching/readout milestone. The Documents reader now has a **Lived slavery & resistance** lane with exact-excerpt cards for Harriet Jacobs and Fountain Hughes.

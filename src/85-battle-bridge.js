@@ -154,6 +154,15 @@ function bridgeArmy(C) {
     supply = Math.max(0, Math.min(100, supply + Math.round(_fgu.supply || 0)));
     fatigue = Math.max(0, Math.min(100, fatigue + Math.round(_fgu.fatigue || 0)));
   }
+  // D188: Confederate finance priorities are explicit War Effort tradeoffs.
+  // Default returns exact zeros; active finance can buy supply at morale/fatigue
+  // cost, with no direct overall bonus and no battle-output writes.
+  var _csf = (typeof csFinanceBridgeBonus === "function") ? csFinanceBridgeBonus(C) : null;
+  if (_csf) {
+    morale = Math.max(0, Math.min(100, morale + Math.round(_csf.morale || 0)));
+    supply = Math.max(0, Math.min(100, supply + Math.round(_csf.supply || 0)));
+    fatigue = Math.max(0, Math.min(100, fatigue + Math.round(_csf.fatigue || 0)));
+  }
   // S2 m5: the sitting field general + the cabinet now drive leadership (anchored at 64 so a
   // default/historical command plays ≈ Classic; the A6a/D47.1 anchor lesson). The _brgLeadGuard
   // breaks the bridgeArmy->commandLeadership->cabinet->_cabReading->bridgeArmy cycle (D53.4).

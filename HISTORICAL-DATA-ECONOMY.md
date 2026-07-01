@@ -72,7 +72,7 @@
 - Cumulative inflation ~9,000% (Lerner index 100 → 9,000+, Jan 1861 → Apr 1865); ~10%/month Oct 1861–Mar 1864; cost of living ~92× prewar. `[Verified]` — EH.net (Lerner); InflationData.com; Encyclopedia.com.
 - CS revenue mix: printing ~60%, bonds ~32%, taxes ~8.2%. `[Verified]` — Ball (1991) via EH.net.
 - Total Treasury notes issued ~$1.7B (some est. ~$1.5B); money supply ×11.5 (Jan 1861–Oct 1864) yet prices ×90 → velocity/confidence collapse. `[Verified]` — Encyclopedia.com; EH.net.
-- Erlanger cotton loan: £3M / ~$15M face, 7% coupon, 20-year; oversubscribed ~$80M; Erlanger took bonds at 77, sold ~90, +5% commission. `[Verified]` — Britannica; Tontine Coffee-House.
+- Erlanger cotton loan: £3M / ~$15M face, 7% coupon, 20-year; oversubscribed ~$80M; Erlanger took bonds at 77, sold ~90, +5% commission; after discounts, market slide, and price-support repurchases, net realized was roughly £1.4M, about 45% of face. `[Verified]` — Britannica; Tontine Coffee-House; Gentry/Weidenmier audit in `data/diplomacy.json`.
 - Tax-in-kind ("the tithe," Apr 24, 1863): 10% of farm produce; raised only ~$62M (1863–65). `[Verified]` — DocSouth UNC.
 - Currency Reform Act (Feb 17, 1864): repudiated ~1/3 of money stock; notes >$5 to 4% bonds or 2-for-3 exchange. `[Verified]` — Internet Archive; Pecquet et al.
 - Gold premium (paper $ per $1 gold): $1.25 (Feb 1862) → $3 (Feb 1863) → $26 (Mar 1864) → $70–100 (Apr 1864) → $1,200 (May 1865). `[Verified]` — InflationData.com.
@@ -220,7 +220,7 @@
 - Cotton arbitrage: ~3¢/lb in South vs 45¢–$1.00/lb Europe; ~$500–600/bale delivered; Banshee returned ~700% on 8 trips. `[Verified]` — Battlefield Trust; USNI.
 - British stockpile entering war ~1M+ bales (~1 yr+ buffer); Indian output +~70% over the 1860s. `[Verified]` — King Cotton synthesis; Battlefield Trust.
 - Lancashire Cotton Famine peak ~500,000 on relief; ~60% of cotton-town labor idle by Nov 1862. `[Verified]` — Lancashire scholarship.
-- Erlanger loan: £3M face (~$15M), 7% coupon, 20-yr, cotton-backed; net to CS ~£2.16M (~72%); defaulted/worthless at war's end. `[Verified]` — Britannica; Tontine; Ball; Weidenmier (NBER).
+- Erlanger loan: £3M face (~$15M), 7% coupon, 20-yr, cotton-backed; Erlanger buy price 77 and public offer around 90 did not equal Confederate net proceeds. After market slide and price-support repurchases, net to CS was roughly £1.4M (~45% of face), then the bonds defaulted/were worthless at war's end. `[Verified]` — Britannica; Tontine; Ball; Weidenmier (NBER); Gentry.
 
 ### Timeline
 - **Apr 1861** — Lincoln proclaims blockade ("Anaconda Plan"). *Legal basis for naval strangulation; initially porous.*
@@ -229,7 +229,7 @@
 - **1862** — European stocks drawn down; Lancashire famine sets in; India/Egypt/Brazil substitution begins.
 - **Sep 1862** — Antietam + preliminary Emancipation Proclamation. *British cabinet shelves recognition — decisive diplomatic turning point.*
 - **Winter 1862–63** — Famine peak (~500,000 on relief). *Yet pro-Union working-class sentiment + substitution prevent intervention.*
-- **Mar 1863** — Erlanger loan floated. *CS nets ~£2.16M at 7%; props exchange briefly.*
+- **Mar 1863** — Erlanger loan floated. *Cotton-backed foreign credit props exchange briefly, but net proceeds are heavily discounted to roughly £1.4M of £3M face.*
 - **1863** — India/Egypt/Brazil output ramps. *Permanently erodes King Cotton leverage.*
 - **1864** — Blockade tightens (capture ~1-in-3); ports closing. *Exports near ~1/9 of peacetime.*
 - **Jan 1865** — Fort Fisher falls, closing Wilmington (last major runner port). *Severs the ocean lifeline; Erlanger bonds collapse.*
@@ -238,7 +238,7 @@
 - **`cotton-king-chance` — Did King Cotton diplomacy ever have a chance?** *Consensus:* it failed (prewar surplus + substitution + slavery politics); the 1861 self-embargo made it worse. *Debate:* Owsley saw recognition as near-run; Jones/Blackett argue British non-intervention was overdetermined by domestic politics + anti-slavery opinion — cotton never could override it. *Sources:* Owsley (1931); Jones, *Blue & Gray Diplomacy*; Blackett.
 - **`cotton-blockade-decisive` — How decisive was the blockade?** *Consensus:* it throttled aggregate exports (~1/9 of peacetime) + starved CS of foreign exchange. *Debate:* Owsley's "leaky sieve" (high per-voyage success); Surdam counters the right metric is aggregate economic effect (strategically decisive); Wise credits runners as a lifeline of inadequate volume. *Sources:* Surdam (2001); Wise; Owsley.
 - **`cotton-runner-help-hurt` — Did blockade running help or hurt?** *Consensus:* supplied essential munitions, kept the CS in the fight, but volume too small + incentives distorted. *Debate:* arbitrage drew runners to luxury cargo + drained specie; defenders cite late-war cargo-quota regulation + Wilmington as a true lifeline. *Sources:* Battlefield Trust; Wise; Ball.
-- **`cotton-erlanger` — The Erlanger loan: lifeline or fleecing?** *Consensus:* the principal CS foreign credit; cotton-backing attractive while CS arms looked viable. *Debate:* Ball stresses ruinous terms (~72% of face, 7%); others note the structure was innovative and the collapse merely tracked battlefield defeat; Weidenmier uses bond prices as a real-time survival barometer. *Sources:* Ball; Britannica; Weidenmier (NBER).
+- **`cotton-erlanger` — The Erlanger loan: lifeline or fleecing?** *Consensus:* the principal CS foreign credit; cotton-backing attractive while CS arms looked viable. *Debate:* Ball stresses ruinous terms and late-war price collapse; the corrected model separates Erlanger's 77 buy price / 90 public offer from Confederate net proceeds, now held near ~45% of face after discounts and price support; Weidenmier uses bond prices as a real-time survival barometer. *Sources:* Ball; Britannica; Weidenmier (NBER); Gentry.
 
 ---
 
