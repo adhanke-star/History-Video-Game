@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import "./guard-probe-browser.mjs";
-// tools/probe-primary-sources.mjs - M2 primary-source apparatus gate.
+// tools/probe-primary-sources.mjs - M2/M3 primary-source apparatus gate.
 // Verifies schema/quote/provenance invariants; the President's Desk "Documents"
 // tab render/wire path; client-side filters/search; and the pure-readout wall.
 import { chromium } from 'playwright-core';
@@ -25,10 +25,10 @@ function validatePrimarySourcesData() {
   const data = JSON.parse(readFileSync(join(ROOT, 'data', 'primary-sources.json'), 'utf8'));
   const errors = [];
   if (data.schema !== 'cw_primary_sources_v1') errors.push('schema must be cw_primary_sources_v1');
-  if (!Array.isArray(data.records) || data.records.length < 8) errors.push('expected at least 8 records');
+  if (!Array.isArray(data.records) || data.records.length < 11) errors.push('expected at least 11 records');
   const ids = new Set();
   const cats = new Set((data.categories || []).map(c => c && c.id).filter(Boolean));
-  let confed = 0, verified = 0;
+  let confed = 0, verified = 0, reconstruction = 0;
   for (const rec of data.records || []) {
     const id = rec && rec.id;
     if (!id) { errors.push('record missing id'); continue; }
@@ -55,9 +55,14 @@ function validatePrimarySourcesData() {
       if (!rec.catalystFrame || !String(rec.catalystFrame).trim()) errors.push(id + ' Confederate self-justification missing catalystFrame');
       if (!/slaver|enslav|white|negro|slave/i.test((rec.verbatimExcerpt || '') + ' ' + (rec.indictment || '') + ' ' + (rec.catalystFrame || ''))) errors.push(id + ' Confederate card does not name slavery/race in excerpt/frame');
     }
+    if (rec.category === 'reconstruction-memory') reconstruction++;
   }
   if (confed < 5) errors.push('expected at least 5 Confederate self-justification records, got ' + confed);
-  return { ok: errors.length === 0, errors, records: (data.records || []).length, verified, confed };
+  for (const rid of ['ps-mississippi-black-code-apprentice','ps-elias-hill-kkk-hearings','ps-douglass-black-man-wants']) {
+    if (!ids.has(rid)) errors.push('missing M3 Reconstruction/memory record: ' + rid);
+  }
+  if (reconstruction < 3) errors.push('expected at least 3 Reconstruction/memory records, got ' + reconstruction);
+  return { ok: errors.length === 0, errors, records: (data.records || []).length, verified, confed, reconstruction };
 }
 
 function staticPrimarySourceLeakScan() {
@@ -134,6 +139,18 @@ const SETUP = `(() => {
       if(visible('.ps-card')!==total) throw new Error('reset did not restore all cards');
       return { total:total, black: black }; });
 
+    step('M3 Reconstruction/memory lane filters to Black Codes, Klan testimony, and Douglass suffrage', function(){
+      mount(primarySourcesRenderTab(null)); primarySourcesWireTab(null);
+      _psApplyFilter('', 'reconstruction-memory');
+      var shown=visible('.ps-card');
+      if(shown<3) throw new Error('reconstruction-memory filter showed '+shown+' expected at least 3');
+      var text=(document.getElementById('psList')||{}).textContent||'';
+      ['Black Code','Elias Hill','What the Black Man Wants'].forEach(function(token){ if(text.indexOf(token)<0) throw new Error('missing M3 visible token: '+token); });
+      _psApplyFilter('enfranchisement', 'all');
+      var suffrage=visible('.ps-card');
+      if(suffrage!==1) throw new Error('enfranchisement search should show 1 card, got '+suffrage);
+      return { shown:shown, suffrage:suffrage }; });
+
     step('Desk dispatch: _wdTab=sources renders Documents and another tab clears it', function(){
       if(typeof _wdRefresh!=='function') throw new Error('_wdRefresh missing');
       var C=mkC();
@@ -200,7 +217,7 @@ const SETUP = `(() => {
     result.staticData = staticData;
     result.staticScan = staticScan;
     if (!staticData.ok) { result.ok = false; for (const err of staticData.errors) result.steps.push({ name:'STATIC DATA: primary-sources schema', ok:false, err }); }
-    else { result.steps.push({ name:'STATIC DATA: primary-sources schema', ok:true, v:{ records: staticData.records, verified: staticData.verified, confed: staticData.confed } }); }
+    else { result.steps.push({ name:'STATIC DATA: primary-sources schema', ok:true, v:{ records: staticData.records, verified: staticData.verified, confed: staticData.confed, reconstruction: staticData.reconstruction } }); }
     if (staticScan.leaks.length) { result.ok = false; result.steps.push({ name:'STATIC SCAN: no combat/bridge/save path reads primary sources', ok:false, err:'primary-source read by: '+staticScan.leaks.join(', ') }); }
     else { result.steps.push({ name:'STATIC SCAN: no combat/bridge/save path reads primary sources', ok:true, v:{ scanned: staticScan.scanned } }); }
     await page.evaluate(() => { if (typeof _wdRefresh === 'function') { _wdTab = 'sources'; _wdRefresh(); } });

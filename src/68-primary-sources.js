@@ -1,5 +1,5 @@
 /* ===========================================================================
-   M2 · 68-primary-sources.js — "Read the Document" primary-source apparatus.
+   M2/M3 · 68-primary-sources.js — "Read the Document" primary-source apparatus.
 
    Data: data/primary-sources.json -> GAME_DATA["primary-sources"]. Renders short,
    citation-grade document cards in the President's Desk. Confederate
@@ -22,7 +22,8 @@ function _psWordCount(s) { var n = _psNorm(s); return n ? n.split(" ").length : 
 var _PS_CAT_FALLBACK = [
   { id: "confederate-self-justification", label: "Confederacy in its own words", col: "#d8b48a", blurb: "Documents that name slavery, white supremacy, or the Black-soldier contradiction from inside Confederate politics." },
   { id: "union-war-power", label: "Union war power", col: "#9fb8d4", blurb: "Federal documents that made emancipation and Black service a war power." },
-  { id: "black-soldier-agency", label: "Black freedom struggle", col: "#9fc3b0", blurb: "Black soldiers and recruiters arguing for freedom, service, pay, and dignity." }
+  { id: "black-soldier-agency", label: "Black freedom struggle", col: "#9fc3b0", blurb: "Black soldiers and recruiters arguing for freedom, service, pay, and dignity." },
+  { id: "reconstruction-memory", label: "Reconstruction & memory", col: "#cbb27a", blurb: "Black citizenship claims, Black Codes, Klan terror, and the making of Civil War memory." }
 ];
 
 function _psCatMeta(id) {

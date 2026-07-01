@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-07-01: **GRADUATE-HISTORY PASS M3 SHIPPED — RECONSTRUCTION/MEMORY (D182).**
+
+**Newest (D182, 2026-07-01):** M3 of the authorized graduate-history build-out is complete. The pure-readout **Documents / Read the Document** surface now has a **Reconstruction & memory** lane with 3 new `Verified` records: Mississippi Black Code apprenticeship law, Elias Hill's 1871 KKK testimony, and Douglass's "What the Black Man Wants."
+
+**What changed:** `data/primary-sources.json` now carries the Reconstruction/memory category and 3 ≥2-source, ≤60-word-excerpt records. `data/codex.json` now surfaces the 13th/14th/15th amendment dates, Black Codes, 1871 Klan testimony, and Pollard-vs-Stephens memory manufacture. `src/82-after-action.js` now carries the amendment-date/Black Codes/Klan-terror coda without touching battle logic. The Fifteenth Amendment is shown as certified/adopted on March 30, 1870 while also noting the Feb. 3 state-ratification threshold.
+
+**Verified:** JSON parse for primary sources/codex/manifest; `node --check` for touched JS/probes; build **GATE OK** (no-fudge ✓, citations ✓); focused `probe-primary-sources` 11/0; adjacent `probe-codex` 19/0, `probe-afteraction` 15/0, `probe-h0-after-action` 3/3; all 0 pageerrors; JSON readback clean; `git diff --check` clean. Full `npm run vet:noreg` deferred under D176.
+
+**Next recommended run:** **M4 — source-criticism + under-told voices + Native rewrite** from `.tmp/civil-war-phd-execution-brief.md`, `.tmp/civil-war-history-audit-and-phd-plan.md`, and `.tmp/native-nations-under-told-dossier.md`; update `tools/probe-under-told-perspectives.mjs` in the same commit. M8 battle-build track still needs an Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-01: **GRADUATE-HISTORY PASS M2 SHIPPED — READ THE DOCUMENT APPARATUS (D181).**
 
 **Newest (D181, 2026-07-01):** M2 of the authorized graduate-history build-out is complete. The game now has a pure-readout **Documents / Read the Document** President's Desk surface backed by `data/primary-sources.json` (`cw_primary_sources_v1`) and `src/68-primary-sources.js`, registered in the manifest and wired into both the base and H0 desk tab lists.

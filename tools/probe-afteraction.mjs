@@ -130,6 +130,8 @@ const SETUP = `(() => {
       var hi=aarRenderReport(Ci,{final:true});
       if(hi.indexOf('Reconstruction')<0||hi.indexOf('Foner')<0) throw new Error('the issued-emancipation coda must reach Reconstruction + cite Foner');
       if(hi.indexOf('Redemption')<0&&hi.indexOf('Jim Crow')<0) throw new Error('the coda must name the betrayal of Reconstruction (Redemption / Jim Crow)');
+      ['Dec. 6, 1865','July 9, 1868','March 30, 1870'].forEach(function(token){ if(hi.indexOf(token)<0) throw new Error('the coda must surface amendment date: '+token); });
+      if(hi.indexOf('Black Codes')<0||hi.indexOf('Klan terror')<0) throw new Error('the coda must name Black Codes and Klan terror');
       // a CS reachable peace names the moral cost of an independent slaveholding republic
       var Cp=mkC('CS',1865,2); Cp.strategy.victoryReady='will';
       var hp=aarRenderReport(Cp,{final:true});

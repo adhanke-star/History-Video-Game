@@ -147,6 +147,20 @@ const SETUP = `(() => {
       if(!/slaver|enslav/i.test(sec.body+' '+sec.short)) throw new Error('secession entry does not name slavery as the cause');
       return { lostCause:lc.id, secession:sec.id }; });
 
+    step('M3 Reconstruction/memory locks: amendment dates, Black Codes/Klan, Pollard vs Stephens', function(){
+      var recon=_cxById('reconstruction'), lc=_cxById('the-lost-cause');
+      if(!recon) throw new Error('no Reconstruction entry found');
+      var rb=(recon.short||'')+' '+(recon.body||'');
+      ['Dec. 6, 1865','July 9, 1868','March 30, 1870'].forEach(function(token){ if(rb.indexOf(token)<0) throw new Error('Reconstruction entry missing date token: '+token); });
+      if(!/Black Codes?|Mississippi Black Code/i.test(rb)) throw new Error('Reconstruction entry must name Black Codes');
+      if(!/(Ku Klux|Klan|1871 Joint Select)/i.test(rb)) throw new Error('Reconstruction entry must name Klan terror / 1871 testimony');
+      if(!lc) throw new Error('no Lost Cause entry found for memory lock');
+      var lb=(lc.short||'')+' '+(lc.body||'');
+      if(!/Pollard/i.test(lb)||!/1866/i.test(lb)) throw new Error('Lost Cause entry must name Pollard and 1866');
+      if(!/Stephens/i.test(lb)||!(/1868-1870|Constitutional View|recast/i.test(lb))) throw new Error('Lost Cause entry must name Stephens postwar recast');
+      if(!/manufacture of memory|memory project|postwar manufacture/i.test(lb)) throw new Error('Lost Cause entry must identify memory manufacture');
+      return { reconstruction:recon.id, lostCause:lc.id }; });
+
     step('render is a PURE read-out (no campaign mutation, no save)', function(){
       // codex render/wire must not require or mutate a campaign — they run with G.campaign null
       var before=G.campaign;
@@ -264,7 +278,7 @@ const SETUP = `(() => {
   const pageerrors = []; page.on('pageerror', e => pageerrors.push(String(e.message)));
   let result = { ok:false };
   try {
-    await page.goto(probe, { waitUntil:'load', timeout:60000 });
+    await page.goto(probe, { waitUntil:'load', timeout:90000 });
     await sleep(500);
     result = JSON.parse(await page.evaluate(SETUP));
     result.pageerrors = pageerrors;

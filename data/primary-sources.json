@@ -2,7 +2,7 @@
   "_meta": {
     "schema": "cw_primary_sources_v1",
     "purpose": "Short primary-source document cards for the President's Desk Read the Document surface. Excerpts are capped for classroom use; sourceCritique records transcription and locator caveats.",
-    "compiled": "D181 M2 primary-source apparatus"
+    "compiled": "D182 M3 Reconstruction/memory primary-source apparatus"
   },
   "schema": "cw_primary_sources_v1",
   "categories": [
@@ -20,6 +20,11 @@
       "id": "black-soldier-agency",
       "label": "Black freedom struggle",
       "blurb": "Black soldiers and recruiters arguing for freedom, service, pay, and dignity in their own words."
+    },
+    {
+      "id": "reconstruction-memory",
+      "label": "Reconstruction & memory",
+      "blurb": "Postwar documents that show Black citizenship claims, Black Codes, Klan terror, and the making of Civil War memory."
     }
   ],
   "records": [
@@ -262,6 +267,90 @@
           "repository": "DocsTeach / National Archives",
           "locator": "Record Group 94, Records of the Adjutant General's Office",
           "url": "https://www.docsteach.org/documents/document/gooding-lincoln-equal-pay"
+        }
+      ]
+    },
+    {
+      "id": "ps-mississippi-black-code-apprentice",
+      "category": "reconstruction-memory",
+      "title": "Mississippi Apprentice Law (Black Code)",
+      "author": "Mississippi legislature",
+      "date": "November 22, 1865",
+      "place": "Jackson, Mississippi",
+      "provenance": "Verified",
+      "verbatimExcerpt": "the former owner of said minors shall have the preference, when in the opinion of the court, he or she shall be a suitable person for that purpose.",
+      "attribution": "Repository: University of Nebraska Teaching Legal History and Tennessee State Library & Archives. Locator: Mississippi Black Codes, Chapter V, apprenticeship law, section 1, approved November 22, 1865.",
+      "sourceCritique": "The excerpt follows the University of Nebraska transcription; the Tennessee State Library PDF independently carries the same former-owner preference clause. The law called the relationship apprenticeship, but it handed courts power to bind Black children to former enslavers.",
+      "indictment": "Mississippi's Black Code tried to restore planter control over Black children immediately after formal emancipation.",
+      "catalystFrame": "",
+      "sources": [
+        {
+          "title": "Mississippi Black Codes (1865)",
+          "repository": "University of Nebraska Teaching Legal History",
+          "locator": "Chapter V, apprenticeship law, section 1",
+          "url": "https://teachinglegalhistory.unl.edu/s/oer/item/2089"
+        },
+        {
+          "title": "Mississippi's Black Codes",
+          "repository": "Tennessee State Library & Archives",
+          "locator": "Teaching PDF, Chapter V apprenticeship excerpt",
+          "url": "https://sharetngov.tnsosfiles.com/tsla/exhibits/aale/pdfs2/1865%20Mississippi%27s%20Black%20Codes.pdf"
+        }
+      ]
+    },
+    {
+      "id": "ps-elias-hill-kkk-hearings",
+      "category": "reconstruction-memory",
+      "title": "Elias Hill before the Joint Select Committee",
+      "author": "Elias Hill",
+      "date": "July 25, 1871",
+      "place": "York County, South Carolina",
+      "provenance": "Verified",
+      "verbatimExcerpt": "They pointed pistols at me all around my head once or twice, as if they were going to shoot me, telling me they were going to kill me",
+      "attribution": "Repository: Digital History and U.S. Congress/Internet Archive. Locator: Report of the Joint Select Committee to Inquire into the Condition of Affairs in the Late Insurrectionary States, South Carolina testimony, Elias Hill, July 25, 1871, p. 1408.",
+      "sourceCritique": "Digital History supplies a readable excerpt; the congressional report page images/OCR locate Hill's sworn testimony in the 1872 South Carolina volume. Ellipses in classroom excerpts mark omitted testimony, not a different witness.",
+      "indictment": "Hill's sworn testimony shows Reconstruction terror as political violence aimed at Black citizenship, schools, preaching, and Republican organizing.",
+      "catalystFrame": "",
+      "sources": [
+        {
+          "title": "Elias Hill Testimony",
+          "repository": "Digital History",
+          "locator": "Excerpt from Joint Select Committee report, South Carolina testimony",
+          "url": "https://www.digitalhistory.uh.edu/disp_textbook.cfm?psid=513&smtID=3"
+        },
+        {
+          "title": "Ku Klux Klan Congressional Testimony",
+          "repository": "Internet Archive",
+          "locator": "South Carolina Volume 1, Elias Hill testimony, p. 1408",
+          "url": "https://archive.org/details/KKK1871CongressionalTestimony"
+        }
+      ]
+    },
+    {
+      "id": "ps-douglass-black-man-wants",
+      "category": "reconstruction-memory",
+      "title": "What the Black Man Wants",
+      "author": "Frederick Douglass",
+      "date": "January 26, 1865",
+      "place": "Boston, Massachusetts",
+      "provenance": "Verified",
+      "verbatimExcerpt": "I am for the “immediate, unconditional, and universal” enfranchisement of the black man, in every state in the Union.",
+      "attribution": "Repository: Teaching American History and Library of Congress. Locator: Frederick Douglass, What the Black Man Wants, January 26, 1865; The Equality of All Men before the Law, LOC item mfd.22014.",
+      "sourceCritique": "Teaching American History dates the address January 26, 1865 and points to the Library of Congress pamphlet. Some NPS teaching media excerpt the same Reconstruction suffrage argument separately, so this card follows the TAH/LOC dating and locator.",
+      "indictment": "Douglass argued before Appomattox that emancipation without Black suffrage would leave freedom vulnerable to mob rule and political betrayal.",
+      "catalystFrame": "",
+      "sources": [
+        {
+          "title": "What the Black Man Wants",
+          "repository": "Teaching American History",
+          "locator": "Primary-source transcript, January 26, 1865",
+          "url": "https://teachingamericanhistory.org/document/what-the-black-man-wants-2/"
+        },
+        {
+          "title": "The Equality of All Men before the Law",
+          "repository": "Library of Congress",
+          "locator": "Pamphlet item mfd.22014",
+          "url": "https://www.loc.gov/item/mfd.22014/"
         }
       ]
     }

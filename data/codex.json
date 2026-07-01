@@ -1098,8 +1098,8 @@
       "id": "reconstruction",
       "axis": "terms",
       "term": "Reconstruction",
-      "short": "The 1865-1877 era of rebuilding the South, with the 13th-15th Amendments, before white-supremacist redemption rolled it back.",
-      "body": "Reconstruction (roughly 1865-1877) was the contested effort to reunite the nation and define the status of four million freedpeople, producing the Thirteenth, Fourteenth, and Fifteenth Amendments, which abolished slavery, guaranteed birthright citizenship and equal protection, and barred denial of the vote on the basis of race. Black men voted and held office, and the Freedmen's Bureau aided the formerly enslaved, but white-supremacist violence by groups like the Ku Klux Klan, founded by Confederate veterans in Pulaski, Tennessee, in 1866 and soon led by ex-Confederate general Nathan Bedford Forrest as its first Grand Wizard, sought to overturn these gains. The Compromise of 1877 ended federal enforcement, and \"Redeemer\" governments imposed Jim Crow segregation and disenfranchisement that lasted into the twentieth century. The old characterization of Reconstruction as a corrupt failure was itself part of the Lost Cause myth and has been overturned by modern scholarship.",
+      "short": "The 1865-1877 fight over freedom: 13th (Dec. 6, 1865), 14th (July 9, 1868), 15th (certified March 30, 1870).",
+      "body": "Reconstruction (roughly 1865-1877) was the contested effort to reunite the nation and define the status of four million freedpeople. The dates matter: the Thirteenth Amendment was ratified Dec. 6, 1865; the Fourteenth on July 9, 1868; and the Fifteenth reached the state-ratification threshold on Feb. 3, 1870, then was certified by Secretary of State Hamilton Fish on March 30, 1870. Black men voted and held office, and the Freedmen's Bureau aided the formerly enslaved, but the Mississippi Black Code of 1865, the 1871 Joint Select Committee testimony about Ku Klux Klan terror, and later Jim Crow disfranchisement show why constitutional text still required federal enforcement. The Compromise of 1877 ended sustained federal protection, and \"Redeemer\" governments imposed segregation and disfranchisement into the twentieth century. The old characterization of Reconstruction as a corrupt failure was itself part of the Lost Cause myth and has been overturned by modern scholarship.",
       "tags": [
         "both",
         "politics",
@@ -1114,7 +1114,12 @@
       "provenance": "Verified",
       "sources": [
         "Eric Foner, Reconstruction: America's Unfinished Revolution, 1863-1877 (Harper & Row, 1988)",
-        "National Park Service, \"Reconstruction,\" https://www.nps.gov/subjects/reconstruction/index.htm"
+        "National Park Service, \"Reconstruction,\" https://www.nps.gov/subjects/reconstruction/index.htm",
+        "National Archives, \"13th Amendment to the U.S. Constitution: Abolition of Slavery (1865),\" https://www.archives.gov/milestone-documents/13th-amendment",
+        "National Archives, \"14th Amendment to the U.S. Constitution: Civil Rights (1868),\" https://www.archives.gov/milestone-documents/14th-amendment",
+        "Library of Congress, \"15th Amendment to the U.S. Constitution,\" https://guides.loc.gov/15th-amendment/digital-collections",
+        "University of Nebraska Teaching Legal History, \"Mississippi Black Codes (1865),\" https://teachinglegalhistory.unl.edu/s/oer/item/2089",
+        "Digital History, \"Elias Hill Testimony,\" https://www.digitalhistory.uh.edu/disp_textbook.cfm?psid=513&smtID=3"
       ]
     },
     {
@@ -1252,7 +1257,7 @@
       "axis": "terms",
       "term": "The Lost Cause (Myth)",
       "short": "A postwar myth recasting the Confederacy as a noble states'-rights struggle; the primary record shows it was a war for slavery.",
-      "body": "The \"Lost Cause\" is a postwar mythology, promoted by figures like Jubal Early and groups such as the United Daughters of the Confederacy, that portrayed secession as a principled defense of \"states' rights,\" minimized slavery's centrality, and romanticized Confederate leaders. The documentary record refutes it: Confederate Vice President Alexander Stephens's 1861 \"Cornerstone Speech\" declared the new government's \"corner-stone rests upon the great truth that the negro is not equal to the white man; that slavery, subordination to the superior race, is his natural and normal condition.\" The states' secession declarations likewise named the protection of slavery as their cause. The myth is identified here as propaganda and countered with these primary sources; the Confederacy is not valorized.",
+      "body": "The \"Lost Cause\" is a postwar mythology, promoted by figures like Jubal Early and groups such as the United Daughters of the Confederacy, that portrayed secession as a principled defense of \"states' rights,\" minimized slavery's centrality, and romanticized Confederate leaders. Edward A. Pollard's 1866 The Lost Cause gave the memory project its name while defending secession and urging renewed resistance to Reconstruction. Alexander Stephens's 1861 \"Cornerstone Speech\" had declared slavery and Black inequality the Confederacy's foundation; in his 1868-1870 Constitutional View, he recast the conflict as constitutional principle. That pairing is the classroom warning: wartime confession became postwar manufacture of memory. The states' secession declarations likewise named the protection of slavery as their cause. The myth is identified here as propaganda and countered with these primary sources; the Confederacy is not valorized.",
       "tags": [
         "confederate",
         "both",
@@ -1269,7 +1274,10 @@
       "sources": [
         "Alexander H. Stephens, \"Cornerstone Speech\" (March 21, 1861), American Battlefield Trust, https://www.battlefields.org/learn/primary-sources/cornerstone-speech",
         "David W. Blight, Race and Reunion: The Civil War in American Memory (Harvard University Press, 2001)",
-        "Karen L. Cox, Dixie's Daughters: The United Daughters of the Confederacy and the Preservation of Confederate Culture (University Press of Florida, 2003)"
+        "Karen L. Cox, Dixie's Daughters: The United Daughters of the Confederacy and the Preservation of Confederate Culture (University Press of Florida, 2003)",
+        "National Park Service, \"Edward Alfred Pollard,\" https://www.nps.gov/people/edward-alfred-pollard.htm",
+        "Encyclopedia Virginia, \"Lost Cause, The,\" https://encyclopediavirginia.org/entries/lost-cause-the/",
+        "Alexander H. Stephens, A Constitutional View of the Late War Between the States, 1868-1870, https://onlinebooks.library.upenn.edu/webbin/book/lookupid?key=olbp29189"
       ]
     },
     {

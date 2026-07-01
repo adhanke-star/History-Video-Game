@@ -233,7 +233,7 @@ function _aarReconstruction(C, final) {
     } else if (em.issued) {
       var ey = _aarNum(em.year, 1863);
       lede = "Emancipation, then the long and unfinished struggle for its meaning.";
-      body = "Emancipation opened onto the Thirteenth, Fourteenth, and Fifteenth Amendments and a decade of Reconstruction in which Black Americans voted, held office, and built schools and churches — before white “Redemption,” terror, and the bargain of 1877 tore most of it down, and Jim Crow rose in its place. The war ended slavery; the fight over what freedom would mean outlived it by a century."
+      body = "Emancipation opened onto the Thirteenth Amendment (ratified Dec. 6, 1865), the Fourteenth (ratified July 9, 1868), and the Fifteenth (certified March 30, 1870), then a decade of Reconstruction in which Black Americans voted, held office, and built schools and churches. Mississippi Black Codes, Klan terror, white “Redemption,” and the bargain of 1877 tore most of it down, and Jim Crow rose in its place. The war ended slavery; the fight over what freedom would mean outlived it by a century."
         + (ey >= 1864 ? " That you came to emancipation late only lengthened the road." : "")
         + " (Foner, Reconstruction: America’s Unfinished Revolution.)";
     } else {
@@ -248,7 +248,7 @@ function _aarReconstruction(C, final) {
         + " This is the cost the alternate history asks you to weigh. (Levine, Confederate Emancipation; Foner.)";
     } else {
       lede = "The Confederacy collapses — and slavery dies with it.";
-      body = "In history the Confederate bid for a slaveholding nation ended in unconditional defeat in the spring of 1865, and with it slavery itself; what followed was the long, contested, and ultimately betrayed struggle of Reconstruction. (Foner, Reconstruction.)";
+      body = "In history the Confederate bid for a slaveholding nation ended in unconditional defeat in the spring of 1865, and with it slavery itself; what followed was the long, contested, and ultimately betrayed struggle of Reconstruction, from the 1865-1870 amendments through Black Codes, Klan terror, and the Lost Cause's manufacture of memory. (Foner, Reconstruction; Blight, Race and Reunion.)";
     }
   }
   var head = final ? "The Reconstruction to Come" : "The Reckoning Ahead";
