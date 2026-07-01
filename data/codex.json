@@ -1009,7 +1009,7 @@
       "axis": "terms",
       "term": "Greenbacks & Wartime Inflation",
       "short": "Union greenbacks (legal-tender paper, 1862) held inflation near 80%; the un-backed Confederate currency suffered roughly 9,000% inflation.",
-      "body": "To finance the war, the Union passed the Legal Tender Act (February 25, 1862) and issued 'greenbacks' — paper dollars not backed by gold but declared legal tender, which funded a portion of the war effort while Northern inflation rose to roughly 80% over four years. The Confederacy, by contrast, printed mountains of treasury notes that were never made legal tender and were backed only by a faltering war effort, producing catastrophic inflation estimated near 9,000%. As the blockade tightened and military fortunes sank, Confederate money became nearly worthless, gutting civilian purchasing power and morale. The contrast shows how the Union's stronger financial system underwrote its war-making, while Confederate monetary collapse hastened the South's defeat.",
+      "body": "To finance the war, the Union passed the Legal Tender Act (February 25, 1862) and issued 'greenbacks' - paper dollars not backed by gold but declared legal tender for most public and private debts, with customs duties and federal bond interest kept in coin. Greenbacks funded part of the war while Northern inflation rose to roughly 80% over four years. The National Banking Acts then tied banks to federal bond purchases and a uniform national currency through the new Office of the Comptroller of the Currency. The Confederacy, by contrast, printed mountains of treasury notes that were never made legal tender and were backed only by a faltering war effort, producing catastrophic inflation estimated near 9,000%. As the blockade tightened and military fortunes sank, Confederate money became nearly worthless, gutting civilian purchasing power and morale. The contrast shows war finance as civics: bonds, taxes, legal tender, and public trust were weapons of state capacity.",
       "tags": [
         "both",
         "economy",
@@ -1019,13 +1019,101 @@
       "related": [
         "king-cotton-diplomacy",
         "anaconda-plan-union-blockade",
-        "foreign-recognition-intervention"
+        "foreign-recognition-intervention",
+        "war-finance-civics",
+        "emancipation-economic-revolution"
       ],
       "provenance": "Verified",
       "sources": [
+        "U.S. Statutes at Large, 12 Stat. 345, Legal Tender Act of February 25, 1862, govinfo, https://www.govinfo.gov/link/statute/12/345",
         "Federal Reserve History, 'National Banking Acts of 1863 and 1864' (federalreservehistory.org/essays/national-banking-acts)",
+        "U.S. Senate, 'National Bank Acts,' https://www.senate.gov/artandhistory/history/common/civil_war/NationalBankActs.htm",
         "Roger L. Ransom, 'The Economics of the Civil War,' EH.Net Encyclopedia (Economic History Association, eh.net)",
         "James M. McPherson, Battle Cry of Freedom: The Civil War Era (Oxford University Press, 1988)"
+      ]
+    },
+    {
+      "id": "war-finance-civics",
+      "axis": "systems",
+      "term": "War-Finance Civics",
+      "short": "Bonds, taxes, and printing teach state capacity: who pays, who lends, who absorbs inflation, and whose money survives.",
+      "body": "War finance is civics under fire. The Union mixed bonds, taxes, and printing: the Legal Tender Act made greenbacks lawful money for most debts, the Internal Revenue system created national tax capacity, and the National Banking Acts made banks hold federal bonds while the Office of the Comptroller of the Currency supervised a uniform bank-note currency. That was not neutral accounting; it asked civilians to lend, pay, and trust national paper. The Confederacy's mirror choice exposed the weakness of a slaveholding republic built against central capacity: weak taxes, thin bond markets, impressment, and heavy printing pushed the costs onto civilians through inflation. The 1864 Confederate Currency Reform Act repudiated part of the note stock and could not restore trust. In play, finance readouts should teach who bears the war bill, not merely whether the treasury slider is high or low.",
+      "tags": [
+        "both",
+        "economy",
+        "finance",
+        "civics",
+        "home-front"
+      ],
+      "related": [
+        "greenbacks-and-wartime-inflation",
+        "king-cotton-diplomacy",
+        "system-political-capital-home-front",
+        "second-founding"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Federal Reserve History, 'National Banking Acts of 1863 and 1864,' https://www.federalreservehistory.org/essays/national-banking-acts",
+        "U.S. Senate, 'National Bank Acts,' https://www.senate.gov/artandhistory/history/common/civil_war/NationalBankActs.htm",
+        "Roger L. Ransom, 'The Economics of the Civil War,' EH.Net Encyclopedia, https://eh.net/encyclopedia/the-economics-of-the-civil-war/",
+        "Douglas B. Ball, Financial Failure and Confederate Defeat (University of Illinois Press, 1991)"
+      ]
+    },
+    {
+      "id": "womens-home-front-labor",
+      "axis": "systems",
+      "term": "Women's Home-Front Labor",
+      "short": "Women counted greenbacks, packed cartridges, nursed, taught, farmed, and rioted over prices; the home front was labor, not backdrop.",
+      "body": "Women's home-front labor connected the battlefield to the treasury, arsenal, hospital, schoolhouse, farm, and market. In Washington, Francis E. Spinner hired Jennie Douglas as the first female Treasury clerk in 1862, and dozens of women soon cut, counted, and processed greenbacks; the wartime 'Government Girls' proved federal offices could depend on women's paid labor even while paying them far less than men. In Richmond, women and girls made ammunition at Brown's Island, where the 1863 explosion killed about fifty workers, many of them women and girls. The 1864 Washington Arsenal explosion killed twenty-one women, many young immigrant workers, while they filled cartridges. Women's labor also became political: Richmond Bread Riot crowds included workers and soldiers' wives protesting hunger and runaway prices. This is not a decorative social-history card; it is the labor layer of war finance, supply, and morale.",
+      "tags": [
+        "both",
+        "home-front",
+        "labor",
+        "women",
+        "economy"
+      ],
+      "related": [
+        "dorothea-dix",
+        "clara-barton",
+        "greenbacks-and-wartime-inflation",
+        "hard-war",
+        "source-criticism"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "U.S. Department of the Treasury, 'Treasury's West Wing, 1857-1865,' https://home.treasury.gov/about/history/collection/architectural-fragments/treasurys-west-wing-1857-1865",
+        "WETA Boundary Stones, 'The First Treasury Girls,' https://boundarystones.weta.org/2016/03/01/first-treasury-girls",
+        "National Park Service, 'Mary Ryan,' https://www.nps.gov/rich/learn/historyculture/mary-ryan.htm",
+        "Library of Congress, 'An Almost Inexcusable Catastrophe: Explosion at the Washington Arsenal,' https://blogs.loc.gov/inside_adams/2015/06/an-almost-inexcusable-catastrophe-explosion-at-the-washington-arsenal/",
+        "Encyclopedia Virginia, 'Bread Riot, Richmond,' https://encyclopediavirginia.org/entries/bread-riot-richmond/"
+      ]
+    },
+    {
+      "id": "emancipation-economic-revolution",
+      "axis": "systems",
+      "term": "Emancipation as Economic Revolution",
+      "short": "Emancipation destroyed the South's largest capital asset and moved labor, enlistment, and bargaining power toward freedom.",
+      "body": "Emancipation was an economic revolution as well as a moral and military one. On the eve of the war, the market value of enslaved people exceeded the invested value of the nation's railroads, factories, and banks combined; the game economy data carries that slave-capital shock at about $3.0 billion. The Emancipation Proclamation, self-emancipation, contraband camps, Black enlistment, and USCT service attacked that capital base while moving labor and bargaining power toward freedom. Du Bois called the mass withdrawal of enslaved labor from the Confederate war effort a general strike, a frame that keeps Black agency visible instead of reducing emancipation to a Lincoln-only decree. The result was a double transformation: the Confederacy lost coerced labor and capital, while the Union gained workers, soldiers, intelligence, and a new constitutional claim on national freedom.",
+      "tags": [
+        "both",
+        "emancipation",
+        "economy",
+        "labor",
+        "slavery"
+      ],
+      "related": [
+        "emancipation-proclamation",
+        "contraband-of-war",
+        "age-of-emancipation",
+        "second-founding",
+        "greenbacks-and-wartime-inflation"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "National Park Service, 'Industry and Economy during the Civil War,' https://www.nps.gov/articles/industry-and-economy-during-the-civil-war.htm",
+        "MeasuringWorth, 'Measuring Slavery in 2020 dollars,' https://www.measuringworth.com/slavery.php",
+        "W. E. B. Du Bois, Black Reconstruction in America, 1860-1880 (1935)",
+        "Eric Foner, The Fiery Trial: Abraham Lincoln and American Slavery (W. W. Norton, 2010)"
       ]
     },
     {
@@ -1313,12 +1401,42 @@
       "related": [
         "copperheads",
         "conscription-the-draft",
-        "election-of-1864"
+        "election-of-1864",
+        "ex-parte-milligan"
       ],
       "provenance": "Verified",
       "sources": [
         "Mark E. Neely Jr., The Fate of Liberty: Abraham Lincoln and Civil Liberties (Oxford University Press, 1991)",
-        "National Constitution Center, \"Lincoln and Taney's great writ showdown,\" https://constitutioncenter.org/blog/lincoln-and-taneys-great-writ-showdown"
+        "National Constitution Center, \"Lincoln and Taney's great writ showdown,\" https://constitutioncenter.org/blog/lincoln-and-taneys-great-writ-showdown",
+        "Justia, \"Ex parte Milligan, 71 U.S. 2 (1866),\" https://supreme.justia.com/cases/federal/us/71/2/",
+        "Oyez, \"Ex parte Milligan,\" https://www.oyez.org/cases/1850-1900/71us2"
+      ]
+    },
+    {
+      "id": "ex-parte-milligan",
+      "axis": "terms",
+      "term": "Ex parte Milligan",
+      "short": "The 1866 Supreme Court limit on military trials of civilians where civil courts were open.",
+      "body": "Ex parte Milligan is the civil-liberties coda to the 1864 election and wartime emergency power. Lambdin P. Milligan, an Indiana civilian accused of disloyal conspiracy, was tried by a military commission in 1864 even though the civil courts in Indiana were open. In 1866 the Supreme Court held that a civilian could not be tried by military commission where civil courts were open and unobstructed. Justice David Davis's majority opinion made that limit broad; Chief Justice Salmon P. Chase's concurrence agreed Milligan should be released but left more room for Congress to authorize wartime military commissions. The card should therefore avoid a simple 'Lincoln was tyrant' or 'emergency means anything' reading: Milligan marks a constitutional boundary after the crisis, while the wartime arrest-and-detention problem remained politically contested.",
+      "tags": [
+        "union",
+        "both",
+        "politics",
+        "civil-liberties",
+        "law"
+      ],
+      "related": [
+        "suspension-of-habeas-corpus",
+        "copperheads",
+        "election-of-1864",
+        "reconstruction"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Justia, \"Ex parte Milligan, 71 U.S. 2 (1866),\" https://supreme.justia.com/cases/federal/us/71/2/",
+        "Oyez, \"Ex parte Milligan,\" https://www.oyez.org/cases/1850-1900/71us2",
+        "Teaching American History, \"Ex parte Milligan,\" https://teachingamericanhistory.org/document/ex-parte-milligan/",
+        "Mark E. Neely Jr., The Fate of Liberty: Abraham Lincoln and Civil Liberties (Oxford University Press, 1991)"
       ]
     },
     {
@@ -1356,7 +1474,7 @@
       "axis": "terms",
       "term": "The Election of 1864",
       "short": "Lincoln defeated McClellan 212-21 in the Electoral College; Union victories and the soldier vote made it a war referendum.",
-      "body": "The 1864 presidential election pitted incumbent Republican Abraham Lincoln, running on a National Union ticket with Andrew Johnson, against Democrat George B. McClellan, whose party's platform called the war a failure and sought a negotiated peace. With the war's outcome uncertain in the summer, Sherman's capture of Atlanta in September and other Union successes turned the tide, and Lincoln won decisively, taking about 55 percent of the popular vote and the Electoral College 212 to 21. Soldiers voted overwhelmingly for Lincoln, treating the contest as a referendum on finishing the war and abolishing slavery. The peaceful holding of a national election during a civil war was itself historically remarkable.",
+      "body": "The 1864 presidential election was a home-front hinge, not just a campaign result. Lincoln ran on a National Union ticket with War Democrat Andrew Johnson while Radical Republicans pressed a harder Reconstruction line after the Wade-Davis Bill; McClellan accepted the Democratic nomination even though the party platform called the war a failure and sought peace. In August, Lincoln's blind memorandum judged defeat 'exceedingly probable' and prepared him to cooperate with a President elect before inauguration to save the Union. Atlanta, Mobile Bay, Cedar Creek, and the soldier vote reversed that danger: Lincoln won about 55 percent of the popular vote, carried the Electoral College 212-21, and received roughly three-quarters of counted Union soldier ballots. The National Union platform explicitly endorsed emancipation, Black soldiers, and a constitutional amendment abolishing slavery, so the election ratified military perseverance and the war's antislavery turn at the ballot box.",
       "tags": [
         "union",
         "both",
@@ -1366,12 +1484,16 @@
       "related": [
         "copperheads",
         "hard-war",
-        "emancipation-proclamation"
+        "emancipation-proclamation",
+        "war-finance-civics",
+        "ex-parte-milligan"
       ],
       "provenance": "Verified",
       "sources": [
         "National Archives, \"1864 Electoral College Results,\" https://www.archives.gov/electoral-college/1864",
-        "American Battlefield Trust, \"The Election of 1864 and the Soldiers' Vote,\" https://www.battlefields.org/learn/articles/election-1864-and-soldiers-vote"
+        "American Battlefield Trust, \"The Election of 1864 and the Soldiers' Vote,\" https://www.battlefields.org/learn/articles/election-1864-and-soldiers-vote",
+        "American Presidency Project, \"Republican Party Platform of 1864,\" https://www.presidency.ucsb.edu/documents/republican-party-platform-1864",
+        "Library of Congress, \"Abraham Lincoln Papers: Blind Memorandum,\" https://www.loc.gov/resource/mal.4359700/?sp=1&st=text"
       ]
     },
     {
@@ -1379,7 +1501,7 @@
       "axis": "terms",
       "term": "The Emancipation Proclamation",
       "short": "Lincoln's Jan. 1, 1863 order freeing the enslaved in rebel-held areas and opening Black enlistment in the U.S. Army.",
-      "body": "Issued by President Lincoln as a war measure under his commander-in-chief power, the final Proclamation took effect January 1, 1863, declaring free all enslaved people in areas still in rebellion. It did not reach the loyal border states or Union-occupied regions, and its force depended on advancing U.S. armies, but it transformed the war's purpose into one for freedom and authorized the enlistment of Black men, of whom roughly 180,000 served in the U.S. Army. Universal abolition came only with the Thirteenth Amendment, ratified in December 1865. The order followed and built upon the wartime \"contraband\" policy and the Confiscation Acts.",
+      "body": "Issued by President Lincoln as a war measure under his commander-in-chief power, the final Proclamation took effect January 1, 1863, declaring free all enslaved people in areas still in rebellion. It did not reach the loyal border states or Union-occupied regions, and its force depended on advancing U.S. armies, but it transformed the war's purpose into one for freedom and authorized the enlistment of Black men, of whom roughly 180,000 served in the U.S. Army. Universal abolition came only with the Thirteenth Amendment, ratified in December 1865. The order followed and built upon the wartime \"contraband\" policy and the Confiscation Acts. It also struck at slave capital and coerced labor, making emancipation an economic revolution as well as a military and constitutional one.",
       "tags": [
         "union",
         "both",
@@ -1390,7 +1512,10 @@
       "related": [
         "contraband-of-war",
         "election-of-1864",
-        "reconstruction"
+        "reconstruction",
+        "emancipation-economic-revolution",
+        "age-of-emancipation",
+        "second-founding"
       ],
       "provenance": "Verified",
       "sources": [

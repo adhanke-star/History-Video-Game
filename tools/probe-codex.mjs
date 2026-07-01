@@ -200,6 +200,34 @@ const SETUP = `(() => {
       if(/50 million/.test(ab)) throw new Error('Age of Emancipation must not repeat the corrected Russia ~50M error');
       return { secondFounding:sf.id, ageOfEmancipation:ae.id }; });
 
+    step('M6 home-front/politics/economy codex locks: election, finance, women labor, emancipation economics, Milligan', function(){
+      var el=_cxById('election-of-1864'), wf=_cxById('war-finance-civics'), wl=_cxById('womens-home-front-labor'), er=_cxById('emancipation-economic-revolution'), mil=_cxById('ex-parte-milligan'), gb=_cxById('greenbacks-and-wartime-inflation'), hab=_cxById('suspension-of-habeas-corpus'), ep=_cxById('emancipation-proclamation');
+      if(!el || !wf || !wl || !er || !mil || !gb || !hab || !ep) throw new Error('missing one or more M6 codex entries');
+      var eb=(el.short||'')+' '+(el.body||'');
+      ['National Union','Andrew Johnson','Wade-Davis','blind memorandum','Atlanta','soldier vote','212-21','emancipation','Black soldiers'].forEach(function(token){
+        if(eb.indexOf(token)<0) throw new Error('Election of 1864 entry missing token: '+token);
+      });
+      var wb=(wf.short||'')+' '+(wf.body||'');
+      ['bonds','taxes','printing','Legal Tender Act','National Banking Acts','Office of the Comptroller','Confederacy','Currency Reform Act'].forEach(function(token){
+        if(wb.indexOf(token)<0) throw new Error('War-Finance Civics entry missing token: '+token);
+      });
+      var lb=(wl.short||'')+' '+(wl.body||'');
+      ['Treasury','Jennie Douglas','Government Girls',"Brown's Island",'Washington Arsenal','Richmond Bread Riot',"soldiers' wives"].forEach(function(token){
+        if(lb.indexOf(token)<0) throw new Error('Women home-front labor entry missing token: '+token);
+      });
+      var rb=(er.short||'')+' '+(er.body||'');
+      ['slave-capital','3.0','railroads, factories, and banks','contraband','self-emancipation','USCT','general strike'].forEach(function(token){
+        if(rb.indexOf(token)<0) throw new Error('Emancipation economic revolution entry missing token: '+token);
+      });
+      var mb=(mil.short||'')+' '+(mil.body||'');
+      ['1866','civilian','military commission','civil courts','Chase','concurrence'].forEach(function(token){
+        if(mb.indexOf(token)<0) throw new Error('Ex parte Milligan entry missing token: '+token);
+      });
+      if(!gb.related || gb.related.indexOf('war-finance-civics')<0 || gb.related.indexOf('emancipation-economic-revolution')<0) throw new Error('Greenbacks entry missing M6 related links');
+      if(!hab.related || hab.related.indexOf('ex-parte-milligan')<0) throw new Error('Habeas entry missing Milligan related link');
+      if(!ep.related || ep.related.indexOf('emancipation-economic-revolution')<0) throw new Error('Emancipation Proclamation entry missing economic-revolution related link');
+      return { election:el.id, finance:wf.id, women:wl.id, emancipationEconomics:er.id, milligan:mil.id }; });
+
     step('render is a PURE read-out (no campaign mutation, no save)', function(){
       // codex render/wire must not require or mutate a campaign — they run with G.campaign null
       var before=G.campaign;

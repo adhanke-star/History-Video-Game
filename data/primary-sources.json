@@ -2,7 +2,7 @@
   "_meta": {
     "schema": "cw_primary_sources_v1",
     "purpose": "Short primary-source document cards for the President's Desk Read the Document surface. Excerpts are capped for classroom use; sourceCritique records transcription and locator caveats.",
-    "compiled": "D183 M4 source-criticism and under-told voices primary-source apparatus"
+    "compiled": "D185 M6 home-front politics/economy primary-source lane"
   },
   "schema": "cw_primary_sources_v1",
   "categories": [
@@ -30,6 +30,11 @@
       "id": "source-criticism-voices",
       "label": "Source criticism & under-told voices",
       "blurb": "Documents that teach how historians read editions, manuscripts, interview conditions, memory, and viewpoint."
+    },
+    {
+      "id": "home-front-politics-economy",
+      "label": "Home front, politics & economy",
+      "blurb": "Election, money, labor, and wartime state-building documents that show the home front as a battlefield."
     }
   ],
   "records": [
@@ -514,6 +519,62 @@
           "repository": "National Park Service",
           "locator": "Context for Irish enlistment, remittances, and Irish Brigade leadership",
           "url": "https://www.nps.gov/articles/irish-soldiers-in-the-union-army.htm"
+        }
+      ]
+    },
+    {
+      "id": "ps-lincoln-blind-memorandum-1864",
+      "category": "home-front-politics-economy",
+      "title": "Blind Memorandum",
+      "author": "Abraham Lincoln",
+      "date": "August 23, 1864",
+      "place": "Executive Mansion, Washington, D.C.",
+      "provenance": "Verified",
+      "verbatimExcerpt": "This morning, as for some days past, it seems exceedingly probable that this Administration will not be re-elected. Then it will be my duty to so co-operate with the President elect, as to save the Union between the election and the inauguration;",
+      "attribution": "Repository: Library of Congress and House Divided / Dickinson College. Locator: LOC Abraham Lincoln Papers item mal4359700; House Divided Blind Memorandum transcript, August 23, 1864.",
+      "sourceCritique": "The LOC item supplies the public-domain manuscript and House Divided gives a classroom transcription; the excerpt preserves the shared wording, including \"co-operate\" and \"President elect.\" It stops before Lincoln's final can-not-save-it clause to stay under the card cap; later teaching pages often modernize these forms.",
+      "indictment": "The 1864 election was not a decorative clock event; Lincoln privately prepared to cooperate with a peace-platform victor to save the Union before inauguration.",
+      "catalystFrame": "",
+      "sources": [
+        {
+          "title": "Abraham Lincoln Papers: Blind Memorandum",
+          "repository": "Library of Congress",
+          "locator": "Manuscript item mal4359700, August 23, 1864",
+          "url": "https://www.loc.gov/resource/mal.4359700/?sp=1&st=text"
+        },
+        {
+          "title": "Abraham Lincoln, Blind Memorandum",
+          "repository": "House Divided Project, Dickinson College",
+          "locator": "Primary-source transcription, August 23, 1864",
+          "url": "https://housedivided.dickinson.edu/sites/teagle/texts/abraham-lincoln-blind-memorandum-1864/"
+        }
+      ]
+    },
+    {
+      "id": "ps-legal-tender-act-1862",
+      "category": "home-front-politics-economy",
+      "title": "First Legal Tender Act",
+      "author": "Thirty-Seventh Congress",
+      "date": "February 25, 1862",
+      "place": "Washington, D.C.",
+      "provenance": "Verified",
+      "verbatimExcerpt": "shall also be lawful money and a legal tender in payment of all debts, public and private, within the United States",
+      "attribution": "Repository: U.S. Statutes at Large / govinfo and FRASER. Locator: 12 Stat. 345, ch. 33, February 25, 1862, legal-tender clause; Spaulding, History of the Legal Tender Paper Money, reprinted statutory text.",
+      "sourceCritique": "The excerpt isolates the shared legal-tender clause. The statute immediately excepted duties on imports and interest on federal bonds/notes, which stayed payable in coin; the card names that limit rather than turning greenbacks into unrestricted hard money.",
+      "indictment": "Congress made wartime paper money a legal instrument of national power, while preserving gold channels for tariff and bond credibility.",
+      "catalystFrame": "",
+      "sources": [
+        {
+          "title": "An Act to authorize the Issue of United States Notes",
+          "repository": "GovInfo / U.S. Statutes at Large",
+          "locator": "12 Stat. 345, ch. 33, February 25, 1862",
+          "url": "https://www.govinfo.gov/link/statute/12/345"
+        },
+        {
+          "title": "History of the Legal Tender Paper Money issued during the Great Rebellion",
+          "repository": "FRASER, Federal Reserve Bank of St. Louis",
+          "locator": "Reprinted statutory text of the Legal Tender Act",
+          "url": "https://fraser.stlouisfed.org/title/history-legal-tender-paper-money-issued-great-rebellion-113/fulltext"
         }
       ]
     }

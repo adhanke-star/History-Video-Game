@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-07-01: **GRADUATE-HISTORY PASS M6 SHIPPED — HOME-FRONT POLITICS/ECONOMY (D185).**
+
+**Newest (D185, 2026-07-01):** M6 of the authorized graduate-history build-out is complete as a pure teaching/readout milestone. The Documents reader now has a **Home front, politics & economy** lane with exact-excerpt cards for Lincoln's 1864 blind memorandum and the 1862 Legal Tender Act.
+
+**What changed:** `data/codex.json` adds **War-Finance Civics**, **Women's Home-Front Labor**, **Emancipation as Economic Revolution**, and **Ex parte Milligan**. Existing 1864 election, greenbacks, habeas, and Emancipation Proclamation cards now cross-link and carry sharper home-front/economic framing. `src/40-economy.js` updates the Treasury why-it-mattered readout so bonds, taxes, printing, legal tender, National Banking, and Confederate currency collapse read as civics under fire.
+
+**Verified:** JSON parse/word-cap/related-link smoke; `node --check` for touched source/probe files; build **GATE OK** (no-fudge ✓, citations ✓, women-in-war ✓); focused `probe-primary-sources` 13/0, `probe-codex` 22/0, and `probe-economy` 8/0; adjacent `probe-h0-president-desk` 3/3; JSON readback clean; `git diff --check` clean. Full `npm run vet:noreg` deferred under D176.
+
+**Next recommended run:** **M7 — lived-slavery + Black combat-agency** from `.tmp/civil-war-phd-execution-brief.md` and `.tmp/civil-war-history-audit-and-phd-plan.md`. M8 battle-build track still needs an Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-01: **GRADUATE-HISTORY PASS M5 SHIPPED — KEYSTONE CARDS (D184).**
 
 **Newest (D184, 2026-07-01):** M5 of the authorized graduate-history build-out is complete as a pure teaching/readout milestone. The codex now carries **Second Founding** and **Age of Emancipation** keystone cards, and the War Effort medical/irregular-war details now surface the new graduate historiography debate cards instead of leaving them dark.

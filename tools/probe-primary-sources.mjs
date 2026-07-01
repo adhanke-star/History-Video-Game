@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import "./guard-probe-browser.mjs";
-// tools/probe-primary-sources.mjs - M2/M3/M4 primary-source apparatus gate.
+// tools/probe-primary-sources.mjs - M2/M3/M4/M6 primary-source apparatus gate.
 // Verifies schema/quote/provenance invariants; the President's Desk "Documents"
 // tab render/wire path; client-side filters/search; and the pure-readout wall.
 import { chromium } from 'playwright-core';
@@ -25,10 +25,10 @@ function validatePrimarySourcesData() {
   const data = JSON.parse(readFileSync(join(ROOT, 'data', 'primary-sources.json'), 'utf8'));
   const errors = [];
   if (data.schema !== 'cw_primary_sources_v1') errors.push('schema must be cw_primary_sources_v1');
-  if (!Array.isArray(data.records) || data.records.length < 16) errors.push('expected at least 16 records');
+  if (!Array.isArray(data.records) || data.records.length < 18) errors.push('expected at least 18 records');
   const ids = new Set();
   const cats = new Set((data.categories || []).map(c => c && c.id).filter(Boolean));
-  let confed = 0, verified = 0, reconstruction = 0, sourceCriticism = 0;
+  let confed = 0, verified = 0, reconstruction = 0, sourceCriticism = 0, homeFront = 0;
   for (const rec of data.records || []) {
     const id = rec && rec.id;
     if (!id) { errors.push('record missing id'); continue; }
@@ -57,6 +57,7 @@ function validatePrimarySourcesData() {
     }
     if (rec.category === 'reconstruction-memory') reconstruction++;
     if (rec.category === 'source-criticism-voices') sourceCriticism++;
+    if (rec.category === 'home-front-politics-economy') homeFront++;
   }
   if (confed < 5) errors.push('expected at least 5 Confederate self-justification records, got ' + confed);
   for (const rid of ['ps-mississippi-black-code-apprentice','ps-elias-hill-kkk-hearings','ps-douglass-black-man-wants']) {
@@ -67,7 +68,11 @@ function validatePrimarySourcesData() {
     if (!ids.has(rid)) errors.push('missing M4 source-criticism / under-told voice record: ' + rid);
   }
   if (sourceCriticism < 5) errors.push('expected at least 5 source-criticism records, got ' + sourceCriticism);
-  return { ok: errors.length === 0, errors, records: (data.records || []).length, verified, confed, reconstruction, sourceCriticism };
+  for (const rid of ['ps-lincoln-blind-memorandum-1864','ps-legal-tender-act-1862']) {
+    if (!ids.has(rid)) errors.push('missing M6 home-front/politics/economy record: ' + rid);
+  }
+  if (homeFront < 2) errors.push('expected at least 2 home-front/politics/economy records, got ' + homeFront);
+  return { ok: errors.length === 0, errors, records: (data.records || []).length, verified, confed, reconstruction, sourceCriticism, homeFront };
 }
 
 function staticPrimarySourceLeakScan() {
@@ -174,6 +179,21 @@ const SETUP = `(() => {
       if(dwyer!==1) throw new Error('Dwyer search should show 1 card, got '+dwyer);
       return { shown:shown, bliss:bliss, mccarter:mccarter, dwyer:dwyer }; });
 
+    step('M6 home-front/politics/economy lane filters to election and wartime-finance records', function(){
+      mount(primarySourcesRenderTab(null)); primarySourcesWireTab(null);
+      _psApplyFilter('', 'home-front-politics-economy');
+      var shown=visible('.ps-card');
+      if(shown<2) throw new Error('home-front/politics/economy filter showed '+shown+' expected at least 2');
+      var text=(document.getElementById('psList')||{}).textContent||'';
+      ['Blind Memorandum','Administration will not be re-elected','First Legal Tender Act','legal tender in payment of all debts'].forEach(function(token){ if(text.indexOf(token)<0) throw new Error('missing M6 visible token: '+token); });
+      _psApplyFilter('co-operate', 'home-front-politics-economy');
+      var lincoln=visible('.ps-card');
+      if(lincoln!==1) throw new Error('co-operate search should show 1 card, got '+lincoln);
+      _psApplyFilter('legal tender', 'home-front-politics-economy');
+      var tender=visible('.ps-card');
+      if(tender!==1) throw new Error('legal tender search should show 1 card, got '+tender);
+      return { shown:shown, lincoln:lincoln, legalTender:tender }; });
+
     step('Desk dispatch: _wdTab=sources renders Documents and another tab clears it', function(){
       if(typeof _wdRefresh!=='function') throw new Error('_wdRefresh missing');
       var C=mkC();
@@ -240,7 +260,7 @@ const SETUP = `(() => {
     result.staticData = staticData;
     result.staticScan = staticScan;
     if (!staticData.ok) { result.ok = false; for (const err of staticData.errors) result.steps.push({ name:'STATIC DATA: primary-sources schema', ok:false, err }); }
-    else { result.steps.push({ name:'STATIC DATA: primary-sources schema', ok:true, v:{ records: staticData.records, verified: staticData.verified, confed: staticData.confed, reconstruction: staticData.reconstruction, sourceCriticism: staticData.sourceCriticism } }); }
+    else { result.steps.push({ name:'STATIC DATA: primary-sources schema', ok:true, v:{ records: staticData.records, verified: staticData.verified, confed: staticData.confed, reconstruction: staticData.reconstruction, sourceCriticism: staticData.sourceCriticism, homeFront: staticData.homeFront } }); }
     if (staticScan.leaks.length) { result.ok = false; result.steps.push({ name:'STATIC SCAN: no combat/bridge/save path reads primary sources', ok:false, err:'primary-source read by: '+staticScan.leaks.join(', ') }); }
     else { result.steps.push({ name:'STATIC SCAN: no combat/bridge/save path reads primary sources', ok:true, v:{ scanned: staticScan.scanned } }); }
     await page.evaluate(() => { if (typeof _wdRefresh === 'function') { _wdTab = 'sources'; _wdRefresh(); } });

@@ -112,7 +112,7 @@ async function inspectDesk(page, viewportName) {
     R.checks.darkShell = /linear-gradient|rgb/.test(bg) && !/246, 235, 215/.test(bg);
     if (!R.checks.darkShell) fail('desk shell appears parchment/light');
 
-    ['#wdTabs', '#wdContent', '#wdClose', '#wdTab_economy', '#wdTab_cabinet', '#wdTab_decisions', '#wdTab_map'].forEach(id => {
+    ['#wdTabs', '#wdContent', '#wdClose', '#wdTab_economy', '#wdTab_cabinet', '#wdTab_decisions', '#wdTab_map', '#wdTab_treasury', '#wdTab_codex', '#wdTab_sources'].forEach(id => {
       if (!sel(id)) fail('missing desk contract node ' + id);
     });
     R.checks.overviewCards = all('.h0-desk-panel').length >= 4 && !!sel('.h0-desk-statusline') && !!sel('.h0-desk-meter-grid');
@@ -160,6 +160,40 @@ async function inspectDesk(page, viewportName) {
       const h = (sel('#wdContent') || {}).textContent || '';
       R.checks.mapStillWires = h.indexOf('Eastern Theater') >= 0;
       if (!R.checks.mapStillWires) fail('map tab did not render after H0 shell');
+    }
+    const sources = sel('#wdTab_sources');
+    if (sources) {
+      sources.click();
+      const h = (sel('#wdContent') || {}).textContent || '';
+      R.checks.documentsHomeFrontReadouts = h.indexOf('Home front, politics & economy') >= 0
+        && h.indexOf('Blind Memorandum') >= 0
+        && h.indexOf('Administration will not be re-elected') >= 0
+        && h.indexOf('First Legal Tender Act') >= 0
+        && h.indexOf('legal tender in payment of all debts') >= 0;
+      if (!R.checks.documentsHomeFrontReadouts) fail('Documents tab missing M6 home-front/politics/economy readouts');
+    }
+    const codex = sel('#wdTab_codex');
+    if (codex) {
+      codex.click();
+      const h = (sel('#wdContent') || {}).textContent || '';
+      R.checks.codexHomeFrontReadouts = h.indexOf('War-Finance Civics') >= 0
+        && h.indexOf("Women's Home-Front Labor") >= 0
+        && h.indexOf('Emancipation as Economic Revolution') >= 0
+        && h.indexOf('Ex parte Milligan') >= 0
+        && h.indexOf('The Election of 1864') >= 0;
+      if (!R.checks.codexHomeFrontReadouts) fail('Codex tab missing M6 home-front/politics/economy cards');
+    }
+    const treasury = sel('#wdTab_treasury');
+    if (treasury) {
+      treasury.click();
+      const why = sel('#ecWhy');
+      if (why) why.click();
+      const h = (sel('#wdContent') || {}).textContent || '';
+      R.checks.treasuryFinanceCivicsReadout = h.indexOf('War finance is civics') >= 0
+        && h.indexOf('Legal Tender Act') >= 0
+        && h.indexOf('National Banking Acts') >= 0
+        && h.indexOf('Office of the Comptroller') >= 0;
+      if (!R.checks.treasuryFinanceCivicsReadout) fail('Treasury tab missing M6 war-finance civics readout');
     }
     const economy = sel('#wdTab_economy');
     if (economy) {

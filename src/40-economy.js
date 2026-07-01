@@ -203,12 +203,15 @@ function _ecWhyText(C) {
   if (side === "CS") {
     return '<b>The Confederacy printed itself to death.</b> With almost no banking system, a population that resisted taxation, '
       + 'and a cotton economy strangled by the blockade, the Richmond government covered ~60% of its spending by printing paper money. '
-      + 'Prices rose roughly <b>9,000%</b> by 1865 — flour reached hundreds of dollars a barrel. Historians (Douglas Ball; Roger Ransom) '
+      + 'The 1864 Currency Reform Act repudiated roughly a third of the note stock and still could not rebuild public trust. '
+      + 'Prices rose roughly <b>9,000%</b> by 1865 — flour reached hundreds of dollars a barrel. The civics lesson is blunt: refusing taxes '
+      + 'and national capacity did not preserve liberty; it shifted the bill to civilians paid in collapsing paper. Historians (Douglas Ball; Roger Ransom) '
       + 'argue the financial collapse was as fatal as any battlefield defeat. <span style="opacity:.7">Verified.</span>';
   }
-  return '<b>The Union invented modern war finance.</b> Salmon Chase and Jay Cooke sold war bonds to ordinary citizens through ~2,500 agents, '
-    + 'the 1862 Legal Tender Act made "greenbacks" national currency, and the National Banking Acts tied banks to federal debt. '
-    + 'Borrowing and taxing — not just printing — held cumulative inflation to ~<b>80%</b> (McPherson). Sound finance was a Northern war-winning weapon. '
+  return '<b>War finance is civics under fire.</b> Salmon Chase and Jay Cooke sold war bonds to ordinary citizens through ~2,500 agents, '
+    + 'the 1862 Legal Tender Act made greenbacks "lawful money" and legal tender for most debts, and the Revenue Acts built federal tax machinery. '
+    + 'The National Banking Acts and the Office of the Comptroller made banks hold federal bonds and issue a uniform currency. '
+    + 'Borrowing and taxing — not just printing — held cumulative inflation to ~<b>80%</b> (McPherson). Sound finance was a Northern war-winning weapon because civilians trusted the state enough to lend, pay, and spend its paper. '
     + '<span style="opacity:.7">Verified.</span>';
 }
 

@@ -62,8 +62,20 @@ const SETUP = `(() => {
       var btn=document.querySelector('[data-eclever="printing"][data-ecdir="1"]'); if(!btn) throw new Error('no printing+ button'); btn.click();
       if (C.economy.mix.printing <= before) throw new Error('printing mix did not increase');
       return { printingBefore:Math.round(before*100)/100, printingAfter:Math.round(C.economy.mix.printing*100)/100 }; });
-    step('Why-it-mattered expander', function(){ window._wdTab='treasury'; _wdRefresh(); var w=document.getElementById('ecWhy'); w.click();
-      var box=document.getElementById('ecWhyBox'); return { shown:box&&box.style.display==='block', hasText:box&&box.innerHTML.length>50 }; });
+    step('war-finance civics readout names Union bonds/taxes/printing and Confederate currency collapse', function(){
+      window._wdTab='treasury'; _wdRefresh();
+      var w=document.getElementById('ecWhy'); if(!w) throw new Error('missing US why button'); w.click();
+      var box=document.getElementById('ecWhyBox'); var usText=(box&&box.textContent)||'';
+      ['War finance is civics','war bonds','Legal Tender Act','legal tender','Revenue Acts','National Banking Acts','Office of the Comptroller','Borrowing and taxing','printing'].forEach(function(token){
+        if(usText.indexOf(token)<0) throw new Error('US finance readout missing token: '+token);
+      });
+      G.campaign=mkCampaign('CS'); _t1InitAll(G.campaign); openWarDept(); window._wdTab='treasury'; _wdRefresh();
+      var cw=document.getElementById('ecWhy'); if(!cw) throw new Error('missing CS why button'); cw.click();
+      var cbox=document.getElementById('ecWhyBox'); var csText=(cbox&&cbox.textContent)||'';
+      ['printing paper money','~60%','Currency Reform Act','repudiated','collapsing paper','civilians'].forEach(function(token){
+        if(csText.indexOf(token)<0) throw new Error('CS finance readout missing token: '+token);
+      });
+      return { usLen:usText.length, csLen:csText.length }; });
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
 })()`;
@@ -96,4 +108,6 @@ const SETUP = `(() => {
     await browser.close(); if (srv) srv.kill();
   }
   console.log('probe-economy ok=' + result.ok + ' steps=' + (result.steps?result.steps.length:0) + ' pageerrors=' + (result.pageerrors?result.pageerrors.length:0));
+  if (result.steps) for (const s of result.steps) if (!s.ok) console.log('  FAIL ' + s.name + ' :: ' + s.err);
+  if (!result.ok || (result.pageerrors && result.pageerrors.length)) process.exit(1);
 })();
