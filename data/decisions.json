@@ -917,24 +917,24 @@
         "claim": "The Confederate Conscription Act of April 16, 1862 — the first national draft in American history — was followed on October 11, 1862 by an exemption of one white man for every twenty enslaved people (the 'twenty-Negro law'), justified as insurrection control but branded by non-slaveholders as proof of 'a rich man's war and a poor man's fight,' fueling class resentment and desertion that the partial 1863 reform never cured.",
         "perspectives": [
           {
-            "voice": "Confederate planter / Congress",
+            "voice": "Confederate planter / Congress [composite illustration — not a verbatim quotation]",
             "text": "An overseer must remain where twenty bondsmen labor, lest the plantations — left to women and children — become the seedbed of servile insurrection. The exemption secures the police of the country and the food that feeds the army."
           },
           {
-            "voice": "Yeoman soldier (Sam Watkins and his like)",
-            "text": "The law gave us the blues; we wanted twenty Negroes too. Let the man with slaves do his own fighting. This is a rich man's war and a poor man's fight, and I'll not die for the master's cotton."
+            "voice": "Pvt. Sam R. Watkins, 1st Tennessee, \"Co. Aytch\" (1882) — verbatim",
+            "text": "It gave us the blues; we wanted twenty negroes."
           },
           {
-            "voice": "Confederate soldier's wife (per McCurry)",
+            "voice": "Confederate soldier's wife [composite illustration drawn from McCurry, Confederate Reckoning — not a verbatim quotation]",
             "text": "My husband is sent to the front while the slaveholder keeps his man at home by act of Congress. I am a soldier's wife; I have given my share, and I will petition, riot, and demand bread of a state that protects the rich and starves the poor."
           },
           {
-            "voice": "The enslaved (whose freedom the law fought)",
-            "text": "The masters keep an overseer over us by act of their Congress because they know what we want. When the Union army nears we leave the rows for its lines; the war they call ours to fear is our chance to be free, and we take it."
+            "voice": "The people the law fought to keep enslaved, in verified words — Cpl. James Henry Gooding (born enslaved, 1838), 54th Massachusetts, to President Lincoln, Sept. 28, 1863",
+            "text": "Now Your Excellency, We have done a Soldiers Duty. Why cant we have a Soldiers pay?"
           },
           {
             "voice": "Modern scholarship (anti-Lost-Cause)",
-            "text": "The exemption made the Confederacy's purpose explicit — it shielded slave property while conscripting the non-slaveholder. The 'insurrection' the law guarded against was the enslaved people's own demonstrated will to freedom. Slavery was both the war's cause and the fault line that cracked white Southern unity. The myth of a united, classless Confederacy cannot survive the twenty-slave law."
+            "text": "The exemption made the Confederacy's purpose explicit — it shielded slave property while conscripting the non-slaveholder. The 'insurrection' the law guarded against was the enslaved people's own demonstrated will to freedom, and men like Gooding — born enslaved, now soldiers — were the living refutation of the 'natural subordination' the Confederacy was founded on. Slavery was both the war's cause and the fault line that cracked white Southern unity. The myth of a united, classless Confederacy cannot survive the twenty-slave law."
           }
         ],
         "sources": [
@@ -942,7 +942,9 @@
           "Paul D. Escott, After Secession: Jefferson Davis and the Failure of Confederate Nationalism (LSU Press, 1978)",
           "Albert Burton Moore, Conscription and Conflict in the Confederacy (Macmillan, 1924) — https://catalog.hathitrust.org/Record/000454349",
           "Twenty-Slave Law, Encyclopedia Virginia — https://encyclopediavirginia.org/entries/twenty-slave-law/",
-          "The Twenty Negro Law, American Battlefield Trust — https://www.battlefields.org/learn/articles/twenty-negro-law"
+          "The Twenty Negro Law, American Battlefield Trust — https://www.battlefields.org/learn/articles/twenty-negro-law",
+          "Sam R. Watkins, \"Co. Aytch: A Side Show of the Big Show\" (1882), on the twenty-Negro law — verbatim clause \"It gave us the blues; we wanted twenty negroes\" (original spelling); DocSouth (UNC) digital edition, docsouth.unc.edu/fpn/watkins/",
+          "Cpl. James Henry Gooding to President Abraham Lincoln, Morris Island, S.C., Sept. 28, 1863 — Freedmen and Southern Society Project, Univ. of Maryland (freedmen.umd.edu/gooding.htm); original spelling preserved; corroborated against the Abraham Lincoln Papers (Library of Congress) transcription"
         ],
         "provenance": "Verified"
       }

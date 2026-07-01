@@ -481,7 +481,7 @@
     { "year": "Jan 1 1863", "event": "Emancipation Proclamation takes effect; USCT organized", "side": "US", "effect": "unlocks ~180k-man pool from the South's labor base", "eventId": "emancipationProclamation1863" },
     { "year": "Feb 25 1863", "event": "National Banking Act of 1863", "side": "US", "effect": "captive bond demand + uniform currency", "eventId": "nationalBankingAct1863" },
     { "year": "Mar 3 1863", "event": "Union Enrollment Act ($300 commutation + substitution)", "side": "US", "effect": "draft as coercive stimulus to volunteering" },
-    { "year": "Mar 1863", "event": "Erlanger cotton loan floated (£3M; net ~72%)", "side": "CS", "effect": "one-time foreign cash at punitive cost", "eventId": "erlangerLoan1863" },
+    { "year": "Mar 1863", "event": "Erlanger cotton loan floated (£3M; net ~45% of face)", "side": "CS", "effect": "one-time foreign cash at punitive cost", "eventId": "erlangerLoan1863" },
     { "year": "Mar 26 1863", "event": "CS Impressment Act (~50% below market)", "side": "CS", "effect": "hoarding/evasion; city food supply falls", "eventId": "impressment1863" },
     { "year": "Apr 2 1863", "event": "Richmond Bread Riot", "side": "CS", "effect": "urban food access collapses amid rural plenty" },
     { "year": "Apr 24 1863", "event": "CS Tax-in-Kind (tithe, 10%)", "side": "CS", "effect": "adds collection (~$62M) but alienates farmers", "eventId": "tithe1863" },

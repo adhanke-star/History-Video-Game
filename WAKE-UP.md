@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-06-30: **GRADUATE-HISTORY PASS M1 SHIPPED — CORRECTIONS & FABRICATION FIX (D180).**
+
+**Newest (D180, 2026-06-30):** a new authorized multi-milestone build-out (brief `.tmp/civil-war-phd-execution-brief.md`; audit `.tmp/civil-war-history-audit-and-phd-plan.md`; Native dossier `.tmp/native-nations-under-told-dossier.md`) raises the game's history toward a graduate-seminar bar. **M1** ships the audit's Phase-1 corrections on a clean base and fixes the one integrity defect: the twenty-slave-law teaching card in `data/decisions.json` shipped dramatized composite voices in verbatim-quote style (untagged) — including a padded Sam Watkins line and an invented first-person "enslaved" voice — all under `provenance:"Verified"`. Now every composite is tagged `[composite illustration — not a verbatim quotation]`, Watkins is trimmed to the exact 1882 *Co. Aytch* clause, and the invented enslaved voice is replaced with a real, verbatim, ≥2-source-verified Cpl. James Henry Gooding 1863 excerpt (the first real Black voice in verified words on a player-facing card).
+
+**What else changed:** Erlanger "72%"→"~45% of face" (economy.json), Vicksburg date standardized to May 18 + clause, the manpower CS replacement-ratio fallback reframed as a model parameter, the `confederate-greenbacks-inflation` codex id renamed to `greenbacks-and-wartime-inflation` (4 refs lockstep), the Mississippi Declaration date fixed to Jan. 9 1861 (HISTORICAL-DATA.md), and the Cornerstone quote hyphenated to "corner-stone" (commas kept). Pure teaching read-out, **D74 byte-identical**, anti-Lost-Cause.
+
+**Verified:** build **GATE OK** (no-fudge ✓, citations ✓); focused `probe-decisions` 19/0, `probe-economy` 8/0, `probe-codex` 18/0; adjacent `probe-manpower` 9/0, `probe-vicksburg` 18/0; all 0 pageerrors; `git diff --check` clean. Full `npm run vet:noreg` deferred under D176.
+
+**Next recommended run:** **M2 — the "Read the Document" primary-source apparatus** (`data/primary-sources.json` + `src/NN-primary-sources.js` + `tools/probe-primary-sources.mjs`; seed verified Confederate self-justifications + Union/enslaved counter-docs; each Confederate doc = verbatim → catalyst frame → attribution) + wire the dark `manpower-teaching.json` debate cards through `src/70-manpower.js`. Full milestone list = `.tmp/civil-war-phd-execution-brief.md` §5. M8 battle-build track needs an Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST. Prior commit `52fb716` = D179 flagship named units (Codex).
+
+---
+
 # ☀ WAKE-UP — 2026-06-30: **GROUP 4 FLAGSHIP NAMED UNITS IS FOCUSED-GATED; LONG AUDIT DEFERRED (D179/D176).**
 
 **Newest (D179, 2026-06-30):** Group 4's fourth non-battle system shipped. Flagship named units now have a War Effort teaching/system surface with exact-zero default bridge behavior and an explicit capped unit-stewardship priority (morale +1, supply cost 1, fatigue cost 1, no overall). This does not create a playable battle, does not rewrite tactical OOB, does not make super-units, and does not collapse D153 Women in the War or Soldier's Story replacement lanes.

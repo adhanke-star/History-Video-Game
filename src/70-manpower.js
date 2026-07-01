@@ -218,7 +218,7 @@ function _mpWhyText(C) {
   var side = (C && C.side === "CS") ? "CS" : "US";
   var card = _mpCard(side === "CS" ? "mp-arm-the-enslaved" : "mp-demographic-superiority");
   if (card && card.takeaway) return card.takeaway;
-  if (side === "CS") return "The South could not replace its dead. With no immigration and 3.5M enslaved it would not arm, every casualty was permanent — the replacement ratio fell toward 0.1 by 1865.";
+  if (side === "CS") return "The South could not replace its dead. With no immigration and 3.5M enslaved it would not arm, every casualty was permanent — in this model the CS replacement ratio is calibrated to collapse toward roughly 0.1 by 1865.";
   return "The Union out-manned the South ~4:1 in free population, refilled its armies from immigration and the ~180,000 USCT, and replaced casualties the Confederacy never could.";
 }
 

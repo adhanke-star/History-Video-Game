@@ -61,7 +61,7 @@
       "axis": "people",
       "term": "Alexander H. Stephens",
       "short": "Confederate Vice President whose 1861 'Cornerstone Speech' declared slavery and Black inferiority the new nation's foundation.",
-      "body": "Alexander H. Stephens of Georgia served as vice president of the Confederacy and is best remembered for his extemporaneous 'Cornerstone Speech,' delivered in Savannah on March 21, 1861. In it he declared that the Confederacy's 'foundations are laid, its cornerstone rests, upon the great truth that the negro is not equal to the white man; that slavery, subordination to the superior race, is his natural and normal condition.' This speech is among the clearest primary-source refutations of the later 'Lost Cause' myth that the war was about tariffs or states' rights: the Confederacy's own vice president named slavery and white supremacy as the cause. Stephens spent his postwar career minimizing those words, but the documentary record stands.",
+      "body": "Alexander H. Stephens of Georgia served as vice president of the Confederacy and is best remembered for his extemporaneous 'Cornerstone Speech,' delivered in Savannah on March 21, 1861. In it he declared that the Confederacy's 'foundations are laid, its corner-stone rests, upon the great truth that the negro is not equal to the white man; that slavery, subordination to the superior race, is his natural and normal condition.' This speech is among the clearest primary-source refutations of the later 'Lost Cause' myth that the war was about tariffs or states' rights: the Confederacy's own vice president named slavery and white supremacy as the cause. Stephens spent his postwar career minimizing those words, but the documentary record stands.",
       "tags": [
         "confederate",
         "politics",
@@ -990,7 +990,7 @@
       "related": [
         "king-cotton-diplomacy",
         "anaconda-plan-union-blockade",
-        "confederate-greenbacks-inflation"
+        "greenbacks-and-wartime-inflation"
       ],
       "provenance": "Verified",
       "sources": [
@@ -1000,7 +1000,7 @@
       ]
     },
     {
-      "id": "confederate-greenbacks-inflation",
+      "id": "greenbacks-and-wartime-inflation",
       "axis": "terms",
       "term": "Greenbacks & Wartime Inflation",
       "short": "Union greenbacks (legal-tender paper, 1862) held inflation near 80%; the un-backed Confederate currency suffered roughly 9,000% inflation.",
@@ -1063,7 +1063,7 @@
       "related": [
         "foreign-recognition-intervention",
         "anaconda-plan-union-blockade",
-        "confederate-greenbacks-inflation"
+        "greenbacks-and-wartime-inflation"
       ],
       "provenance": "Verified",
       "sources": [
@@ -1182,7 +1182,7 @@
       "related": [
         "king-cotton-diplomacy",
         "foreign-recognition-intervention",
-        "confederate-greenbacks-inflation"
+        "greenbacks-and-wartime-inflation"
       ],
       "provenance": "Verified",
       "sources": [
