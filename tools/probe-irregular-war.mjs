@@ -10,6 +10,8 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 
+process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY = process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY || '1';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 const OUT = join(__dirname, 'shots');
@@ -18,6 +20,14 @@ const cfg = JSON.parse(readFileSync(join(__dirname, 'shots.json'), 'utf8'));
 const GL = ['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist','--enable-webgl','--disable-dev-shm-usage'];
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 async function up(u){ try{ const r=await fetch(u,{method:'HEAD'}); return r.ok||r.status===200; }catch{ return false; } }
+const SLOW_MAC = {
+  serverTries: 180,
+  serverDelay: 250,
+  nav: 150000,
+  settle: 1400,
+  screenshot: 300000,
+  browserClose: 15000
+};
 
 const sourceText = readFileSync(join(ROOT, 'src', '65-irregular-war.js'), 'utf8');
 
@@ -146,16 +156,17 @@ const SETUP = `(() => {
 (async () => {
   const probe = `${cfg.baseUrl}/${cfg.file}`;
   let srv = null;
-  if (!(await up(probe))) { srv = spawn('python3',['-m','http.server',String(cfg.port)],{cwd:ROOT,stdio:'ignore'}); for(let i=0;i<80;i++){ if(await up(probe))break; await sleep(150); } }
+  if (!(await up(probe))) { srv = spawn('python3',['-m','http.server',String(cfg.port)],{cwd:ROOT,stdio:'ignore'}); for(let i=0;i<SLOW_MAC.serverTries;i++){ if(await up(probe))break; await sleep(SLOW_MAC.serverDelay); } }
   let browser;
   try { browser = await chromium.launch({ channel:'chrome', headless:true, args:GL }); }
   catch(e){ browser = await chromium.launch({ executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless:true, args:GL }); }
   const page = await browser.newPage({ viewport: cfg.viewport });
+  page.setDefaultTimeout(SLOW_MAC.nav);
   const pageerrors = []; page.on('pageerror', e => pageerrors.push(String(e.message)));
   let result = { ok:false };
   try {
-    await page.goto(probe, { waitUntil:'domcontentloaded', timeout:90000 });
-    await sleep(700);
+    await page.goto(probe, { waitUntil:'domcontentloaded', timeout:SLOW_MAC.nav });
+    await sleep(SLOW_MAC.settle);
     result = JSON.parse(await page.evaluate(SETUP));
     result.pageerrors = pageerrors;
     await page.evaluate(() => {
@@ -165,11 +176,12 @@ const SETUP = `(() => {
       openWarDept(); window._wdTab='economy'; _wdRefresh();
       var b=document.getElementById('iwToggleSecurity'); if(b && b.scrollIntoView) b.scrollIntoView({block:'center'});
     });
-    await sleep(300); await page.screenshot({ path: join(OUT,'irregular-war.png'), fullPage:false, timeout:90000 });
+    await sleep(600); await page.screenshot({ path: join(OUT,'irregular-war.png'), fullPage:false, timeout:SLOW_MAC.screenshot });
   } catch(e){ result = { ok:false, fatal:String(e&&e.message||e), pageerrors }; }
   finally {
     writeFileSync(join(OUT,'probe-irregular-war.json'), JSON.stringify(result, null, 2));
-    await browser.close(); if (srv) srv.kill();
+    await Promise.race([browser.close(), sleep(SLOW_MAC.browserClose)]).catch(() => {});
+    if (srv) srv.kill();
   }
   console.log('probe-irregular-war ok=' + result.ok + ' steps=' + (result.steps?result.steps.length:0) + ' pageerrors=' + (result.pageerrors?result.pageerrors.length:0));
   if (result.steps) for (const s of result.steps) if (!s.ok) console.log('  FAIL ' + s.name + ' :: ' + s.err);

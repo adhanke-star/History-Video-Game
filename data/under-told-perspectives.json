@@ -1,0 +1,145 @@
+{
+  "_comment": "D178 Group 4 bounded under-told-perspectives system. This is a War Effort teaching/system slice, not a Soldier's Story replacement lane, not a new playable battle, and not a tokenized identity bonus. Women in the war remains the separate D153 lane. Default bridge input is exact zero; the optional perspective-liaison priority is capped, costly, and cannot write battle outputs.",
+  "schema": "cw_under_told_perspectives_v1",
+  "schemaVersion": "1.0",
+  "config": {
+    "priorityKey": "perspectiveLiaison",
+    "bridgeCaps": {
+      "morale": 1,
+      "supplyCost": 1,
+      "fatigueCost": 1,
+      "overall": 0
+    },
+    "mitigation": {
+      "omissionReduction": 0.26,
+      "coverageBoost": 14,
+      "liaisonFactor": 9,
+      "capitalCost": 1
+    },
+    "pressureWeights": {
+      "year": 0.18,
+      "emancipation": 0.18,
+      "manpower": 0.14,
+      "warWeariness": 0.12,
+      "west": 0.12,
+      "press": 0.10,
+      "irregularWar": 0.10,
+      "womenLane": -0.08
+    }
+  },
+  "profiles": {
+    "US": {
+      "name": "Union armies of many peoples",
+      "summary": "The Union war depended on enslaved people's self-emancipation, Black enlistment, immigrant regiments, German-American political mobilization, and Native and borderland service as well as the familiar generals.",
+      "teaching": "The point is agency, not a diversity checklist: people forced policy, filled ranks, guided armies, carried news, and then fought over how their service would be remembered.",
+      "provenance": "Verified",
+      "sources": [
+        "data/manpower-teaching.json mp-immigrants-usct card, citing Lonn, McPherson, Glatthaar, Manning, Cornish, and official USCT records.",
+        "data/codex.json entries for Contraband of War, United States Colored Troops, Harriet Tubman, and Irish Brigade."
+      ]
+    },
+    "CS": {
+      "name": "Confederate contradictions and borderlands",
+      "summary": "The Confederate project relied on enslaved labor while fearing enslaved resistance, drew on Native and borderland alliances, and then fought memory battles that often erased coerced labor and divided loyalties.",
+      "teaching": "This surface does not treat Confederate diversity as exoneration. It names coerced labor, sovereignty pressures, elite policy, and divided communities without turning them into Lost Cause cover.",
+      "provenance": "Verified",
+      "sources": [
+        "data/decisions.json emancipation and twenty-slave-law cards, citing Du Bois, Foner, Oakes, McCurry, National Archives, and American Battlefield Trust.",
+        "HISTORICAL-DATA.md anti-Lost-Cause guardrails and Chickamauga note on Cherokee-origin place memory."
+      ]
+    }
+  },
+  "threads": [
+    {
+      "id": "enslaved-agency",
+      "label": "Enslaved people's agency",
+      "status": "active-thread",
+      "summary": "Self-emancipation, contraband camps, labor withdrawal, Black scouting and guiding, and USCT enlistment made freedom a military fact before it became settled law.",
+      "gameHook": "Shows why emancipation, USCT enlistment, hard war, manpower, and prisoner policy are connected instead of separate moral sidebars.",
+      "provenance": "Verified",
+      "sources": [
+        "data/decisions.json emancipation-proclamation card, citing Du Bois, Black Reconstruction; National Archives; Library of Congress; American Battlefield Trust; Foner; and Oakes.",
+        "data/codex.json contraband-of-war and united-states-colored-troops entries, citing NPS, National Archives, Goodheart, and McPherson."
+      ]
+    },
+    {
+      "id": "immigrant-ethnic-units",
+      "label": "Immigrant and ethnic units",
+      "status": "active-thread",
+      "summary": "Irish, German, and other immigrant soldiers were not a footnote: roughly a quarter of Union soldiers were foreign-born, and units such as the Irish Brigade and German-American XI Corps carried both service and scapegoating.",
+      "gameHook": "Connects manpower, command politics, named units, Chancellorsville's XI Corps blame, the Irish Brigade, and the German-American vote behind Sigel.",
+      "provenance": "Verified",
+      "sources": [
+        "data/manpower-teaching.json mp-immigrants-usct card and audit, citing Ella Lonn's foreign-born estimates and later manpower scholarship.",
+        "data/codex.json Irish Brigade entry and data/chancellorsville.json XI Corps teaching card, citing American Battlefield Trust, Susannah Ural, NPS, Sears, and Keller."
+      ]
+    },
+    {
+      "id": "native-nations",
+      "label": "Native nations and borderlands",
+      "status": "narrow-thread",
+      "summary": "Native nations and Native individuals faced a war inside older sovereignty crises: divided loyalties, Indian Territory fighting, Union service, Confederate alliances, and postwar memory that usually pushed them to the edge.",
+      "gameHook": "Keeps Native nations visible now without building a Trans-Mississippi playable battle or inventing unsupported OOB claims.",
+      "provenance": "Inferred",
+      "sources": [
+        "Local source scan found Chickamauga Cherokee-place-name caution, D40/D54 Trans-Mississippi deferral, and general anti-Lost-Cause guardrails but no full Native-nations dossier yet.",
+        "Pending source pass should verify Ely S. Parker, Stand Watie, Cherokee division, Indian Territory fighting, and Honey Springs / Trans-Mississippi context before upgrading."
+      ],
+      "sourceNote": "Native-nations detail is intentionally narrow in this slice because the local repo had thinner Native source trails than the other threads. It is enough to keep the thread visible; it is not enough to create a playable Trans-Mississippi battle."
+    },
+    {
+      "id": "women-d153-lane",
+      "label": "Women in the war",
+      "status": "covered-separate-lane",
+      "summary": "D153 already built the women-in-war presentation lane for soldiers in disguise, relief, nursing, scouting, and disputed claims. This system cross-references that lane instead of copying it into Soldier's Story replacements.",
+      "gameHook": "Preserves D153 separation: no replacePid, no ss: ids, no registry combatant row, no unsupported portrait claim.",
+      "provenance": "Verified",
+      "sources": [
+        "data/women-in-war.json cw_women_in_war_v1 records: 7 records, 6 Verified and 1 Disputed, with D153 lane constraints.",
+        "tools/import-women-in-war.mjs and tools/probe-women-in-war.mjs gate the separate presentation lane."
+      ]
+    }
+  ],
+  "debates": [
+    {
+      "id": "agency-not-token",
+      "title": "Agency, not tokenization",
+      "summary": "A perspective thread is not a collectible bonus. The game should show people acting in history, with costs and contradictions, rather than awarding identity-flavored buffs.",
+      "provenance": "Verified",
+      "sources": [
+        "AUTONOMOUS-RUN.md D34.1: all four under-told perspective threads, woven in and sourced, not tokenized.",
+        "V1-CHECKLIST.md Group 4 contract for bounded, anti-Lost-Cause War Effort systems."
+      ]
+    },
+    {
+      "id": "black-agency-vs-great-men",
+      "title": "Black agency vs great-men-only history",
+      "summary": "Lincoln's policy mattered, but enslaved people forced the policy field by fleeing, laboring, guiding armies, and enlisting; a president-only story is incomplete.",
+      "provenance": "Verified",
+      "sources": [
+        "data/decisions.json emancipation-proclamation card, including Du Bois, Foner, Oakes, National Archives, and Library of Congress source trail.",
+        "data/codex.json contraband-of-war and Harriet Tubman entries."
+      ]
+    },
+    {
+      "id": "immigrant-scapegoating",
+      "title": "Service and scapegoating",
+      "summary": "Immigrant soldiers filled regiments and voting blocs, yet defeats could be blamed on them as outsiders, as with the German-American XI Corps after Chancellorsville.",
+      "provenance": "Verified",
+      "sources": [
+        "data/chancellorsville.json cv_xi_corps teaching card.",
+        "data/manpower-teaching.json mp-immigrants-usct card and data/codex.json Irish Brigade entry."
+      ]
+    },
+    {
+      "id": "native-thread-scope",
+      "title": "Native nations need a later full pass",
+      "summary": "A narrow Native-nations thread is honest now; a full Trans-Mississippi / Indian Territory system needs its own sourced pass and should not be improvised inside this small War Effort slice.",
+      "provenance": "Inferred",
+      "sources": [
+        "V1-CHECKLIST.md Group 7 keeps later battle-build work last and Phase G Trans-Mississippi deferred.",
+        "Current local source scan showed limited Native-nations coverage compared with women, USCT, immigrant, and hard-war trails."
+      ]
+    }
+  ]
+}

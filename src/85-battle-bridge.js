@@ -136,6 +136,15 @@ function bridgeArmy(C) {
     supply = Math.max(0, Math.min(100, supply + Math.round(_iw.supply || 0)));
     fatigue = Math.max(0, Math.min(100, fatigue + Math.round(_iw.fatigue || 0)));
   }
+  // D178: under-told-perspective liaison is an explicit War Effort priority.
+  // Default returns exact zeros; active liaison is a capped cost, not a
+  // battle-result gate or identity bonus.
+  var _utp = (typeof underToldBridgeBonus === "function") ? underToldBridgeBonus(C) : null;
+  if (_utp) {
+    morale = Math.max(0, Math.min(100, morale + Math.round(_utp.morale || 0)));
+    supply = Math.max(0, Math.min(100, supply + Math.round(_utp.supply || 0)));
+    fatigue = Math.max(0, Math.min(100, fatigue + Math.round(_utp.fatigue || 0)));
+  }
   // S2 m5: the sitting field general + the cabinet now drive leadership (anchored at 64 so a
   // default/historical command plays ≈ Classic; the A6a/D47.1 anchor lesson). The _brgLeadGuard
   // breaks the bridgeArmy->commandLeadership->cabinet->_cabReading->bridgeArmy cycle (D53.4).
@@ -186,6 +195,7 @@ function bridgeArmy(C) {
   if (_med && _med.overall) overall = Math.max(0, Math.min(100, overall + Math.round(_med.overall)));
   if (_hw && _hw.overall) overall = Math.max(0, Math.min(100, overall + Math.round(_hw.overall)));
   if (_iw && _iw.overall) overall = Math.max(0, Math.min(100, overall + Math.round(_iw.overall)));
+  if (_utp && _utp.overall) overall = Math.max(0, Math.min(100, overall + Math.round(_utp.overall)));
   return { side: side, strength: Math.round(strength), equip: Math.round(equip), arms: arms,
     morale: morale, supply: supply, fatigue: fatigue, leadership: leadership, firepower: firepower, artillery: artillery, engineering: engineering,
     logistics: _logRail ? Math.round(_logRail.index || 0) : 0, overall: overall };

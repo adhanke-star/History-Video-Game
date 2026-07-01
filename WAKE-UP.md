@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-06-30: **GROUP 4 UNDER-TOLD PERSPECTIVES IS FOCUSED-GATED; LONG AUDIT DEFERRED (D178/D176).**
+
+**Newest (D178, 2026-06-30):** Group 4's third non-battle system shipped. The remaining D34.1 under-told perspective threads — enslaved agency, immigrant/ethnic units, and a deliberately narrow Native-nations thread — now have a War Effort teaching/system surface with exact-zero default bridge behavior and an explicit capped perspective-liaison priority (morale +1, supply cost 1, fatigue cost 1, no overall). The D153 women lane stays separate and cross-referenced, not collapsed. The long `npm run vet:noreg` audit remains deferred under D176 until the end-of-queue release gate or an explicit request.
+
+**What changed:** new `data/under-told-perspectives.json`, `src/66-under-told-perspectives.js`, manifest registration, War Effort/H0 President's Desk rendering and wiring, bridge/lifecycle hooks, focused `tools/probe-under-told-perspectives.mjs`, and future-batch suite enrollment. `civil_war_generals.html` was rebuilt from source. (Slice was authored in a prior session and left uncommitted; this run closed its focused vetting + doc trail and pushed it.)
+
+**Verified:** JSON parse passed for `data/under-told-perspectives.json`; `node --check` passed for touched source/probe/suite files; build GATE OK with idempotent HTML rebuild; focused `probe-under-told-perspectives` 8 steps / 0 pageerrors with clean JSON readback. Adjacent probes passed: bridge (6/0) and H0 President's Desk (3/3, 0 pageerrors). `git diff --check` clean. Enslaved-agency, immigrant/ethnic, and D153-women threads are Verified; Native nations is intentionally Inferred/narrow pending a later Trans-Mississippi pass.
+
+**Next recommended run:** continue Group 4 with flagship named units, or the next smaller Phase F/G non-battle item the live checklist identifies (CS finance toolkit, war-finance civics, real diplomacy, human-cost-with-gravity, Western-theater strategic readouts). Do not start Q5 Chattanooga, Atlanta/March, Franklin/Nashville, or Q6 USCT playable battles.
+
+---
+
 # ☀ WAKE-UP — 2026-06-30: **GROUP 4 IRREGULAR WAR IS FOCUSED-GATED; LONG AUDIT DEFERRED (D177/D176).**
 
 **Newest (D177, 2026-06-30):** Group 4's second non-battle system shipped. Irregular war now has a War Effort teaching/system surface with exact-zero default bridge behavior and an explicit capped civilian-security priority. The long `npm run vet:noreg` audit remains deferred under D176 until the end-of-queue release gate or an explicit request.

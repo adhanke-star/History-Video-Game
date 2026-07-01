@@ -11,6 +11,8 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import { readFileSync, writeFileSync, mkdirSync, statSync } from 'node:fs';
 
+process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY = process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY || '1';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 const OUT = join(__dirname, 'shots');
@@ -19,6 +21,14 @@ const cfg = JSON.parse(readFileSync(join(__dirname, 'shots.json'), 'utf8'));
 const GL = ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--enable-webgl', '--disable-dev-shm-usage'];
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 async function up(u) { try { const r = await fetch(u, { method: 'HEAD' }); return r.ok || r.status === 200; } catch { return false; } }
+const SLOW_MAC = {
+  serverTries: 180,
+  serverDelay: 250,
+  nav: 150000,
+  settle: 1400,
+  screenshot: 300000,
+  browserClose: 15000
+};
 
 function staticWomenSeparationScan() {
   const files = [
@@ -247,23 +257,24 @@ const SETUP = `(() => {
   let srv = null;
   if (!(await up(probe))) {
     srv = spawn('python3', ['-m', 'http.server', String(cfg.port)], { cwd: ROOT, stdio: 'ignore' });
-    for (let i = 0; i < 80; i++) { if (await up(probe)) break; await sleep(150); }
+    for (let i = 0; i < SLOW_MAC.serverTries; i++) { if (await up(probe)) break; await sleep(SLOW_MAC.serverDelay); }
   }
   let browser;
   try { browser = await chromium.launch({ channel: 'chrome', headless: true, args: GL }); }
   catch { browser = await chromium.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true, args: GL }); }
   const page = await browser.newPage({ viewport: cfg.viewport });
+  page.setDefaultTimeout(SLOW_MAC.nav);
   const pageerrors = [];
   page.on('pageerror', e => pageerrors.push(String(e.message)));
   let result = { ok: false };
   try {
-    await page.goto(probe, { waitUntil: 'domcontentloaded', timeout: 60000 });
-    await sleep(500);
+    await page.goto(probe, { waitUntil: 'domcontentloaded', timeout: SLOW_MAC.nav });
+    await sleep(SLOW_MAC.settle);
     result = JSON.parse(await page.evaluate(SETUP));
     result.staticScan = staticScan;
     if (staticScan.leaks.length) result.ok = false;
     const shotPath = join(OUT, 'probe-women-in-war.png');
-    await page.screenshot({ path: shotPath, fullPage: false, timeout: 90000 });
+    await page.screenshot({ path: shotPath, fullPage: false, timeout: SLOW_MAC.screenshot });
     const shot = statSync(shotPath);
     result.screenshot = { path: shotPath, bytes: shot.size };
     if (!shot.size) result.ok = false;
@@ -274,7 +285,7 @@ const SETUP = `(() => {
   } finally {
     writeFileSync(join(OUT, 'probe-women-in-war.json'), JSON.stringify(result, null, 2));
     if (srv) srv.kill();
-    await Promise.race([browser.close(), sleep(5000)]).catch(() => {});
+    await Promise.race([browser.close(), sleep(SLOW_MAC.browserClose)]).catch(() => {});
   }
   console.log('probe-women-in-war ok=' + result.ok + ' steps=' + (result.steps ? result.steps.length : 0) + ' pageerrors=' + (result.pageerrors ? result.pageerrors.length : 0));
   if (result.staticScan) console.log('  staticScan leaks=' + result.staticScan.leaks.length + ' scanned=' + result.staticScan.scanned);

@@ -121,6 +121,7 @@ function _wdRefresh() {
       if (typeof medicalWireOverview === "function") medicalWireOverview(cc);
       if (typeof hardWarWireOverview === "function") hardWarWireOverview(cc);
       if (typeof irregularWarWireOverview === "function") irregularWarWireOverview(cc);
+      if (typeof underToldWireOverview === "function") underToldWireOverview(cc);
     };
   }
   cont.innerHTML = html || '<p class="lede" style="text-align:center;opacity:0.7">This office is not yet staffed.</p>';

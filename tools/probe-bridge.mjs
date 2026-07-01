@@ -11,6 +11,8 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 
+process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY = process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY || '1';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 const OUT = join(__dirname, 'shots');
@@ -19,6 +21,14 @@ const cfg = JSON.parse(readFileSync(join(__dirname, 'shots.json'), 'utf8'));
 const GL = ['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist','--enable-webgl','--disable-dev-shm-usage'];
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 async function up(u){ try{ const r=await fetch(u,{method:'HEAD'}); return r.ok||r.status===200; }catch{ return false; } }
+const SLOW_MAC = {
+  serverTries: 180,
+  serverDelay: 250,
+  nav: 150000,
+  settle: 1400,
+  screenshot: 300000,
+  browserClose: 15000
+};
 
 const SETUP = `(() => {
   var R = { steps: [], errors: [], ok: true };
@@ -73,27 +83,29 @@ const SETUP = `(() => {
 (async () => {
   const probe = `${cfg.baseUrl}/${cfg.file}`;
   let srv = null;
-  if (!(await up(probe))) { srv = spawn('python3',['-m','http.server',String(cfg.port)],{cwd:ROOT,stdio:'ignore'}); for(let i=0;i<60;i++){ if(await up(probe))break; await sleep(150); } }
+  if (!(await up(probe))) { srv = spawn('python3',['-m','http.server',String(cfg.port)],{cwd:ROOT,stdio:'ignore'}); for(let i=0;i<SLOW_MAC.serverTries;i++){ if(await up(probe))break; await sleep(SLOW_MAC.serverDelay); } }
   let browser;
   try { browser = await chromium.launch({ channel:'chrome', headless:true, args:GL }); }
   catch(e){ browser = await chromium.launch({ executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless:true, args:GL }); }
   const page = await browser.newPage({ viewport: cfg.viewport });
+  page.setDefaultTimeout(SLOW_MAC.nav);
   const pageerrors = []; page.on('pageerror', e => pageerrors.push(String(e.message)));
   let result = { ok:false };
   try {
-    await page.goto(probe, { waitUntil:'domcontentloaded', timeout:60000 });
-    await sleep(500);
+    await page.goto(probe, { waitUntil:'domcontentloaded', timeout:SLOW_MAC.nav });
+    await sleep(SLOW_MAC.settle);
     result = JSON.parse(await page.evaluate(SETUP));
     result.pageerrors = pageerrors;
     await page.evaluate(() => { G.campaign={side:'CS',iron:false,idx:0,funds:3000,recovery:false,completed:[],roster:[{id:'R1',type:'inf',weapon:null,xp:0,name:null}],nextId:2,stats:{battles:0,won:0,infl:0,suff:0},recoveryLossCount:0,recoveryMode:false,flipAtk:false,captured:[]};
       var C=G.campaign; _t1InitAll(C); for(var t=0;t<5;t++){ C.stats.battles++; C.stats.won++; var c={CS:900,US:2400};
         _t1Resolve('CS','win',{playerSide:'CS',enemySide:'US',bd:{name:'x',year:1862},casualties:c,infl:{},units:[]},C,true); }
       if (typeof openSheet==='function') openSheet(bridgeBriefingHTML(C)); });
-    await sleep(250); await page.screenshot({ path: join(OUT,'briefing.png'), fullPage:false, timeout:90000 });
+    await sleep(600); await page.screenshot({ path: join(OUT,'briefing.png'), fullPage:false, timeout:SLOW_MAC.screenshot });
   } catch(e){ result = { ok:false, fatal:String(e&&e.message||e), pageerrors }; }
   finally {
     writeFileSync(join(OUT,'probe-bridge.json'), JSON.stringify(result, null, 2));
-    await browser.close(); if (srv) srv.kill();
+    await Promise.race([browser.close(), sleep(SLOW_MAC.browserClose)]).catch(() => {});
+    if (srv) srv.kill();
   }
   console.log('probe-bridge ok=' + result.ok + ' steps=' + (result.steps?result.steps.length:0) + ' pageerrors=' + (result.pageerrors?result.pageerrors.length:0));
   if (result.steps) for (const s of result.steps) if (!s.ok) console.log('  FAIL ' + s.name + ' :: ' + s.err);

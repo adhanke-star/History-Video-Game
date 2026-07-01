@@ -16,6 +16,16 @@ const cfg = JSON.parse(readFileSync(join(__dirname, 'shots.json'), 'utf8'));
 const GL = ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--enable-webgl', '--disable-dev-shm-usage'];
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 async function up(u) { try { const r = await fetch(u, { method: 'HEAD' }); return r.ok || r.status === 200; } catch { return false; } }
+const SLOW_MAC = {
+  pageClose: 10000,
+  newPage: 30000,
+  nav: 150000,
+  settle: 1400,
+  screenshot: 300000,
+  screenshotBound: 320000,
+  viewportBound: 420000,
+  browserClose: 15000
+};
 async function withTimeout(label, promise, ms) {
   let timer;
   try {
@@ -28,7 +38,7 @@ async function withTimeout(label, promise, ms) {
   }
 }
 async function closePage(page) {
-  try { await withTimeout('page.close', page.close({ runBeforeUnload: false }), 2500); } catch (e) {}
+  try { await withTimeout('page.close', page.close({ runBeforeUnload: false }), SLOW_MAC.pageClose); } catch (e) {}
 }
 
 const VIEWPORTS = [
@@ -38,7 +48,8 @@ const VIEWPORTS = [
 ];
 
 async function bootDesk(browser, viewport, pageerrors) {
-  const page = await withTimeout('browser.newPage', browser.newPage({ viewport }), 8000);
+  const page = await withTimeout('browser.newPage', browser.newPage({ viewport }), SLOW_MAC.newPage);
+  page.setDefaultTimeout(SLOW_MAC.nav);
   page.on('pageerror', e => pageerrors.push(String(e.message || e)));
   page.on('console', msg => {
     if (msg.type() === 'error' && !/Failed to load resource.*404/.test(msg.text())) pageerrors.push('console:' + msg.text());
@@ -50,8 +61,8 @@ async function bootDesk(browser, viewport, pageerrors) {
       localStorage.removeItem('gor_save');
     } catch (e) {}
   });
-  await page.goto(`${cfg.baseUrl}/${cfg.file}`, { waitUntil: 'domcontentloaded', timeout: 60000 });
-  await page.waitForTimeout(500);
+  await page.goto(`${cfg.baseUrl}/${cfg.file}`, { waitUntil: 'domcontentloaded', timeout: SLOW_MAC.nav });
+  await page.waitForTimeout(SLOW_MAC.settle);
   await page.evaluate(() => {
     G.campaign = { side: 'US', iron: false, idx: 1, funds: 640, recovery: false, completed: ['sumter'],
       roster: [{ id: 'R1', type: 'inf', weapon: 'springfield', xp: 2, name: null }], nextId: 2,
@@ -66,7 +77,7 @@ async function bootDesk(browser, viewport, pageerrors) {
     if (typeof decOnResolve === 'function') decOnResolve('US', 'win', { bd: { year: 1861 } }, C, true);
     openWarDept();
   });
-  await page.waitForTimeout(500);
+  await page.waitForTimeout(SLOW_MAC.settle);
   return page;
 }
 
@@ -167,7 +178,7 @@ async function runViewport(browser, vp) {
   try {
     const viewResult = await inspectDesk(page, vp.name);
     await page.evaluate(() => { const sh = document.querySelector('.sheet'); if (sh) sh.scrollTop = 0; });
-    await withTimeout('screenshot ' + vp.name, page.screenshot({ path: join(OUT, `probe-h0-president-desk-${vp.name}.png`), fullPage: false, timeout: 90000 }), 95000);
+    await withTimeout('screenshot ' + vp.name, page.screenshot({ path: join(OUT, `probe-h0-president-desk-${vp.name}.png`), fullPage: false, timeout: SLOW_MAC.screenshot }), SLOW_MAC.screenshotBound);
     viewResult.pageerrors = pageerrors;
     return viewResult;
   } finally {
@@ -189,7 +200,7 @@ async function runViewport(browser, vp) {
   const result = { ok: true, probes: [], pageerrors: [] };
   try {
     for (const vp of VIEWPORTS) {
-      const viewResult = await withTimeout('viewport ' + vp.name, runViewport(browser, vp), 190000);
+      const viewResult = await withTimeout('viewport ' + vp.name, runViewport(browser, vp), SLOW_MAC.viewportBound);
       if ((viewResult.pageerrors && viewResult.pageerrors.length) || viewResult.failures.length) result.ok = false;
       result.probes.push(viewResult);
       if (viewResult.pageerrors && viewResult.pageerrors.length) result.pageerrors.push({ viewport: vp.name, pageerrors: viewResult.pageerrors });
@@ -198,7 +209,7 @@ async function runViewport(browser, vp) {
     result.ok = false;
     result.fatal = String(e && e.message || e);
   } finally {
-    try { await withTimeout('browser.close', browser.close(), 5000); } catch (e) {}
+    try { await withTimeout('browser.close', browser.close(), SLOW_MAC.browserClose); } catch (e) {}
     if (srv) srv.kill();
     writeFileSync(join(OUT, 'probe-h0-president-desk.json'), JSON.stringify(result, null, 2));
   }

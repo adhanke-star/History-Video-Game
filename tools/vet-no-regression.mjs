@@ -28,6 +28,7 @@ const SUITE = [
   ['disease medical', 'tools/probe-disease-medical.mjs'],
   ['hard war', 'tools/probe-hard-war.mjs'],
   ['irregular war', 'tools/probe-irregular-war.mjs'],
+  ['under-told perspectives', 'tools/probe-under-told-perspectives.mjs'],
   ['blockade', 'tools/probe-blockade.mjs'],
   ['manpower', 'tools/probe-manpower.mjs'],
   ['victory', 'tools/probe-victory.mjs'],
