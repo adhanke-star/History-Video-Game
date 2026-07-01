@@ -17,6 +17,21 @@ mkdirSync(OUT, { recursive: true });
 const cfg = JSON.parse(readFileSync(join(__dirname, 'shots.json'), 'utf8'));
 const GL = ['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist','--enable-webgl','--disable-dev-shm-usage'];
 const sleep = ms => new Promise(r => setTimeout(r, ms));
+const SLOW_MAC = { screenshot: 120000, browserClose: 30000 };
+async function withTimeout(label, promise, ms) {
+  let t;
+  try {
+    return await Promise.race([
+      promise,
+      new Promise((_, rej) => { t = setTimeout(() => rej(new Error(label + ' timeout after ' + ms + 'ms')), ms); })
+    ]);
+  } finally {
+    if (t) clearTimeout(t);
+  }
+}
+async function closeBrowser(browser) {
+  try { await withTimeout('browser.close', browser.close(), SLOW_MAC.browserClose); } catch {}
+}
 async function up(u){ try{ const r=await fetch(u,{method:'HEAD'}); return r.ok||r.status===200; }catch{ return false; } }
 
 const SETUP = `(() => {
@@ -144,12 +159,14 @@ const SETUP = `(() => {
     await page.evaluate(() => { G.campaign={side:'US',iron:false,idx:14,funds:400000,recovery:false,completed:[],roster:[{id:'R1',type:'inf',weapon:null,xp:0,name:null}],nextId:2,stats:{battles:0,won:0,infl:0,suff:0},recoveryLossCount:0,recoveryMode:false,flipAtk:false,captured:[]};
       var C=G.campaign; _t1InitAll(C); C.warroom.nodes.rail=4; C.warroom.nodes.depot=4; C.warroom.nodes.provisions=3; C.warroom.supply=72; logisticsSetPriority(C,'railheads');
       openWarDept(); window._wdTab='economy'; _wdRefresh(); });
-    await sleep(250); await page.screenshot({ path: join(OUT,'logistics-rail.png'), fullPage:false });
+    await sleep(250);
+    await page.screenshot({ path: join(OUT,'logistics-rail.png'), fullPage:false, timeout:SLOW_MAC.screenshot });
   } catch(e){ result = { ok:false, fatal:String(e&&e.message||e), pageerrors }; }
   finally {
     writeFileSync(join(OUT,'probe-logistics-rail.json'), JSON.stringify(result, null, 2));
-    await browser.close(); if (srv) srv.kill();
+    await closeBrowser(browser); if (srv) srv.kill();
   }
   console.log('probe-logistics-rail ok=' + result.ok + ' steps=' + (result.steps?result.steps.length:0) + ' pageerrors=' + (result.pageerrors?result.pageerrors.length:0));
   if (result.steps) for (const s of result.steps) if (!s.ok) console.log('  FAIL ' + s.name + ' :: ' + s.err);
+  if (!result.ok || (result.pageerrors && result.pageerrors.length)) process.exit(1);
 })();

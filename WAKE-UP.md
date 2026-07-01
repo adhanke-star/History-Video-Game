@@ -1,12 +1,24 @@
+# ☀ WAKE-UP — 2026-07-01: **GROUP 4 BATCH/RELEASE GATE PASSED (D192).**
+
+**Newest (D192, 2026-07-01):** The planned Group 4 no-regression checkpoint is complete. This was a verification/harness milestone only: no game source, data, generated HTML, battle roster, combat model, save schema, or historical content changed.
+
+**What changed:** `tools/probe-logistics-rail.mjs` now uses a 120s screenshot timeout, bounded browser-close cleanup, and explicit nonzero exit when its JSON is red. The change fixes the slow-Mac screenshot-timeout failure that surfaced during the batch gate without weakening probe assertions.
+
+**Verified:** first `npm run vet:noreg` segment passed build/import/boot/strategic probes through production, then stopped only at `probe-logistics-rail` after Playwright's default screenshot timeout. `node --check tools/probe-logistics-rail.mjs` passed; focused `probe-logistics-rail` passed 8/0; resumed `npm run vet:noreg -- --from="logistics rail"` completed **VET NO-REGRESSION OK - 92 commands**. Combined coverage was 104 commands. A 104-file `tools/shots/*.json` scan found `bad=0`: no `ok=false`, `FATAL`, pageerrors, or realErrors. Classic diag ended `nonBlank:346`, `m3dActive:false`, with only known filtered 404 lines.
+
+**Next recommended run:** D171 fresh-chat decision boundary: surface M8 battle-build go/no-go or proceed to Group 5 Phase H polish/media/perf. Do not start M8 battle-build without Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-01: **GROUP 4 WESTERN-THEATER STRATEGIC READOUTS SHIPPED (D191).**
 
 **Newest (D191, 2026-07-01):** Western-theater strategic readouts are complete as bounded Group 4 non-battle readouts. The War Effort/H0 Desk and Theater Map now make the Western arc legible without starting a new playable battle: Shiloh, Vicksburg, Chickamauga, river/rail leverage, Chattanooga reversal pressure, Atlanta/election pressure, and Franklin/Nashville Army-of-Tennessee strain.
 
 **What changed:** `data/western-theater.json` and `src/73-western-theater.js` add citation-guarded current-arc cards, strategic hinge cards, locked future battle labels, a readout-only snapshot, exact-zero bridge sentinel, capped resolve log, and War Effort/Map rendering. It wires through the manifest, lifecycle, H0 Desk, focused probe, and future batch suite. It adds no priority lever and writes no bridge/direct-overall, tactical/OOB, winner, casualty, scoreboard, or battle-output state.
 
-**Verified:** JSON parse for western-theater and manifest; `node --check` for touched source/probe/suite files; build **GATE OK** (no-fudge ✓, citations ✓, women-in-war ✓) with the existing raw-embed soft warning; focused `probe-western-theater` 8/0; adjacent `probe-human-cost` 7/0, `probe-bridge` 6/0, and `probe-h0-president-desk` 3/3; JSON readback clean; `git diff --check` clean. Full `npm run vet:noreg` is now the planned Group 4 batch/release gate under D176.
+**Verified:** JSON parse for western-theater and manifest; `node --check` for touched source/probe/suite files; build **GATE OK** (no-fudge ✓, citations ✓, women-in-war ✓) with the existing raw-embed soft warning; focused `probe-western-theater` 8/0; adjacent `probe-human-cost` 7/0, `probe-bridge` 6/0, and `probe-h0-president-desk` 3/3; JSON readback clean; `git diff --check` clean. Full `npm run vet:noreg` then became the planned Group 4 batch/release gate, completed as D192.
 
-**Next recommended run:** **planned Group 4 batch/release gate** unless Aaron explicitly redirects. M8 battle-build track still needs an Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+**Then-next, now completed as D192:** planned Group 4 batch/release gate. M8 battle-build track still needs an Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
 
 ---
 
