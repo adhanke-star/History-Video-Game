@@ -64,6 +64,8 @@ Never push an unvetted / red / regressed / pageerror build. `tools/shots/*` and 
 ## Priority picker + model routing — use when Aaron says "pick from the list"
 When Aaron asks a new chat to choose from a priority list, use this list (cross-check `V1-CHECKLIST.md` for the ordered roadmap). *(`MASTER-TASK-LIST.md` was retired 2026-06-21 — it duplicated this picker + the roadmap + the live head; it is now a pointer stub.)* These are the work items Codex is expected to handle better than DeepSeek/Cline because they require architecture, balance judgment, cross-module repo reasoning, probe design, or high-risk regression control.
 
+**Latest live head (2026-07-01):** D181 shipped M2 of the graduate-history pass: the pure-readout Documents / Read the Document primary-source apparatus plus visible manpower debate-card scholarship. D180 shipped M1 corrections/fabrication fixes. Next locked item is M3 Reconstruction/memory; M8 battle-build still needs Aaron go/no-go. Read `HANDOFF.md` and `WAKE-UP.md` top blocks for the exact current state before choosing work.
+
 **Codex / top-model 5.5 preferred**
 - **Vicksburg / siege campaign architecture:** decide single-phase vs multi-phase vs siege-shaped pattern; design data/OOB/terrain/timing/probes without combat fudges.
 - **Chickamauga / Chattanooga design pass:** decide whether this is one battle, linked battles, or phases; solve theater framing, terrain lessons, balance, and roster placement.

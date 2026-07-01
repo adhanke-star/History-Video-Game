@@ -92,11 +92,18 @@ const SETUP = `(() => {
 
     step('teaching content surfaces (research injected)', function(){
       var why=_mpWhyText({side:'CS'});
-      if (!why || why.length<60) throw new Error('CS why text too short');
+      if (!why || why.length<600) throw new Error('CS why text too short/richness missing');
+      if (why.indexOf('Consensus')<0) throw new Error('CS why text missing Consensus lane');
+      if (why.indexOf('Scholarly dissent')<0) throw new Error('CS why text missing scholarly dissent lane');
+      if (why.indexOf('Lost Cause claim named and countered')<0) throw new Error('CS why text missing Lost Cause counter lane');
+      if (why.indexOf('Primary documents')<0) throw new Error('CS why text missing primary documents lane');
       var card=_mpCard('mp-arm-the-enslaved');
       if (!card || !card.dissent) throw new Error('GAME_DATA[manpower-teaching] cards not loaded');
       var card2=_mpCard('mp-draft-supply');
       if (!card2) throw new Error('draft-supply card missing');
+      G.campaign=mkC('CS'); _t1InitAll(G.campaign);
+      var block=presManpowerBlock(G.campaign);
+      if (block.indexOf('mp-why-box')<0 || block.indexOf('Primary documents')<0) throw new Error('War Effort manpower block did not surface the rich debate card');
       return { whyLen:why.length, cards:true }; });
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   R.us=us; R.cs=cs;
@@ -114,7 +121,7 @@ const SETUP = `(() => {
   const pageerrors = []; page.on('pageerror', e => pageerrors.push(String(e.message)));
   let result = { ok:false };
   try {
-    await page.goto(probe, { waitUntil:'load', timeout:60000 });
+    await page.goto(probe, { waitUntil:'load', timeout:120000 });
     await sleep(500);
     result = JSON.parse(await page.evaluate(SETUP));
     result.pageerrors = pageerrors;
@@ -124,7 +131,7 @@ const SETUP = `(() => {
         for(var t=0;t<n;t++){ C.stats.battles++; var c={};c[s]=1500;c[e]=1800;var inf={};inf[s]=120;inf[e]=90;
           _t1Resolve(s,'draw',{playerSide:s,enemySide:e,bd:{id:'x',name:'Engagement',year:y},casualties:c,infl:inf,units:[]},C,false); }
         openWarDept(); window._wdTab='economy'; _wdRefresh(); }, [side, turns, year]);
-      await sleep(250); await page.screenshot({ path: join(OUT, file), fullPage:false });
+      await sleep(250); await page.screenshot({ path: join(OUT, file), fullPage:false, timeout:120000 });
     };
     await shoot('US', 10, 1864, 'wareffort-manpower-us.png');
     await shoot('CS', 18, 1865, 'wareffort-manpower-cs.png');

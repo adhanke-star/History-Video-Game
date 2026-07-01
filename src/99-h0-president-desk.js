@@ -14,6 +14,7 @@
     ["warvshistory", "War vs History"],
     ["afteraction", "After-Action"],
     ["codex", "Codex"],
+    ["sources", "Documents"],
     ["playstyle", "Play Style"],
     ["armory", "Armory"],
     ["warroom", "War Room"],

@@ -213,13 +213,60 @@ function _mpCard(id) {
   return null;
 }
 
-/* Ambient one-line teaching note (R26), card-aware when research is on disk. */
+function _mpEsc(s) {
+  return (typeof htmlEsc === "function") ? htmlEsc(s)
+    : String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+function _mpClip(s, max) {
+  s = String(s == null ? "" : s).replace(/\s+/g, " ").trim();
+  if (!max || s.length <= max) return s;
+  var cut = s.slice(0, max);
+  var sp = cut.lastIndexOf(" ");
+  return (sp > 80 ? cut.slice(0, sp) : cut).replace(/[ ,;:.]+$/, "") + "...";
+}
+
+function _mpVoiceHtml(label, obj, tone) {
+  if (!obj || !obj.claim) return "";
+  var out = '<div style="margin-top:6px;padding-top:6px;border-top:1px dotted var(--rule)">'
+    + '<b style="display:block;font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:' + tone + '">' + _mpEsc(label) + '</b>'
+    + '<span>' + _mpEsc(_mpClip(obj.claim, 330)) + '</span>';
+  if (Array.isArray(obj.scholars) && obj.scholars.length) {
+    var names = [];
+    for (var i = 0; i < Math.min(3, obj.scholars.length); i++) names.push(_mpClip(obj.scholars[i], 86));
+    out += '<div style="margin-top:3px;font-size:10px;opacity:.72"><b>Scholars:</b> ' + _mpEsc(names.join("; ")) + (obj.scholars.length > 3 ? _mpEsc("; +" + (obj.scholars.length - 3) + " more") : "") + '</div>';
+  }
+  if (obj.label) out += '<div style="margin-top:3px;font-size:10px;opacity:.72"><b>Counter:</b> ' + _mpEsc(_mpClip(obj.label, 160)) + '</div>';
+  return out + '</div>';
+}
+
+function _mpPrimarySourcesHtml(card) {
+  var ps = card && Array.isArray(card.primarySources) ? card.primarySources : [];
+  if (!ps.length) return "";
+  var lis = "";
+  for (var i = 0; i < Math.min(4, ps.length); i++) lis += '<li>' + _mpEsc(_mpClip(ps[i], 120)) + '</li>';
+  return '<div style="margin-top:6px;padding-top:6px;border-top:1px dotted var(--rule);font-size:10px;opacity:.78">'
+    + '<b style="text-transform:uppercase;letter-spacing:.07em">Primary documents</b>'
+    + '<ul style="margin:3px 0 0;padding-left:15px;line-height:1.35">' + lis + '</ul>'
+    + '</div>';
+}
+
+/* Rich teaching note (R26/M2), card-aware when research is on disk. */
 function _mpWhyText(C) {
   var side = (C && C.side === "CS") ? "CS" : "US";
   var card = _mpCard(side === "CS" ? "mp-arm-the-enslaved" : "mp-demographic-superiority");
-  if (card && card.takeaway) return card.takeaway;
-  if (side === "CS") return "The South could not replace its dead. With no immigration and 3.5M enslaved it would not arm, every casualty was permanent — in this model the CS replacement ratio is calibrated to collapse toward roughly 0.1 by 1865.";
-  return "The Union out-manned the South ~4:1 in free population, refilled its armies from immigration and the ~180,000 USCT, and replaced casualties the Confederacy never could.";
+  if (card) {
+    return '<div><b style="display:block;font-size:11px">' + _mpEsc(card.title || "Manpower debate") + '</b>'
+      + (card.question ? '<div style="font-size:10px;opacity:.74;margin-top:2px">' + _mpEsc(card.question) + '</div>' : "")
+      + _mpVoiceHtml("Consensus", card.consensus, "#9fc3b0")
+      + _mpVoiceHtml("Scholarly dissent", card.dissent, "#d8b48a")
+      + _mpVoiceHtml("Lost Cause claim named and countered", card.fringe, "#d07060")
+      + _mpPrimarySourcesHtml(card)
+      + (card.takeaway ? '<div style="margin-top:6px;font-size:11px;line-height:1.45"><b>Takeaway:</b> ' + _mpEsc(card.takeaway) + '</div>' : "")
+      + '</div>';
+  }
+  if (side === "CS") return _mpEsc("The South could not replace its dead. With no immigration and 3.5M enslaved it would not arm, every casualty was permanent - in this model the CS replacement ratio is calibrated to collapse toward roughly 0.1 by 1865.");
+  return _mpEsc("The Union out-manned the South ~4:1 in free population, refilled its armies from immigration and the ~180,000 USCT, and replaced casualties the Confederacy never could.");
 }
 
 /* ---- presManpowerBlock: "The Ranks" — overview fragment for the War Effort tab. ---- */
@@ -248,6 +295,6 @@ function presManpowerBlock(C) {
   if (lt) out += '<div style="font-size:12px;opacity:.8;margin-top:3px">Last quarter: <b>' + lt.recruits + 'k</b> recruited; ' + (P.replacementRatio < 0.5 ? '<span style="color:#d07060">losses outrun replacements.</span>' : 'the ranks hold.') + '</div>';
   // H1/D135: once the USCT is organized, show a PD photograph of USCT soldiers in the field (else "").
   if (side === "US" && P.usctUnlocked && typeof usctImageHtml === "function") out += '<div style="margin-top:7px">' + usctImageHtml("united-states-colored-troops") + '</div>';
-  out += '<div style="font-size:11px;opacity:.62;margin-top:4px;font-style:italic">' + _mpWhyText(C) + '</div>';
+  out += '<div class="mp-why-box" style="font-size:11px;margin-top:7px;line-height:1.48;padding:8px 9px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.12)">' + _mpWhyText(C) + '</div>';
   return out;
 }

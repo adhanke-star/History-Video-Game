@@ -44,6 +44,7 @@ const SUITE = [
   ['ratings', 'tools/probe-ratings.mjs'],
   ['order of battle', 'tools/probe-oob.mjs'],
   ['codex', 'tools/probe-codex.mjs'],
+  ['primary sources', 'tools/probe-primary-sources.mjs'],
   ['glossary', 'tools/probe-glossary.mjs'],
   ['tutorial', 'tools/probe-tutorial.mjs'],
   ['playstyle', 'tools/probe-playstyle.mjs'],

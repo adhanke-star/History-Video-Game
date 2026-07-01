@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-07-01: **GRADUATE-HISTORY PASS M2 SHIPPED — READ THE DOCUMENT APPARATUS (D181).**
+
+**Newest (D181, 2026-07-01):** M2 of the authorized graduate-history build-out is complete. The game now has a pure-readout **Documents / Read the Document** President's Desk surface backed by `data/primary-sources.json` (`cw_primary_sources_v1`) and `src/68-primary-sources.js`, registered in the manifest and wired into both the base and H0 desk tab lists.
+
+**What changed:** the first source deck has 8 `Verified` records with ≥2 sources each: Stephens Cornerstone, Mississippi secession declaration, Confederate Constitution, Hale to Magoffin, Cobb to Seddon, Emancipation Proclamation service clause, Douglass "Men of Color, To Arms!", and Gooding's equal-pay letter. Confederate cards render verbatim excerpt → catalyst frame → attribution, with source critique and locators visible. The previously dark `manpower-teaching.json` scholarship now appears in **The Ranks** as a compact consensus / scholarly dissent / Lost Cause counter / primary documents block. Manpower math did not change.
+
+**Verified:** JSON parse for primary sources + manifest; `node --check` for touched JS/probe/suite files; build **GATE OK** (no-fudge ✓, citations ✓); focused `probe-primary-sources` 10/0; adjacent `probe-manpower` 9/0, `probe-codex` 18/0, `probe-h0-president-desk` 3/3; all 0 pageerrors; `git diff --check` clean. Full `npm run vet:noreg` deferred under D176.
+
+**Next recommended run:** **M3 — Reconstruction/memory** from `.tmp/civil-war-phd-execution-brief.md` and `.tmp/civil-war-history-audit-and-phd-plan.md`. M4 source-criticism + under-told voices + Native rewrite follows; M8 battle-build track still needs an Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-06-30: **GRADUATE-HISTORY PASS M1 SHIPPED — CORRECTIONS & FABRICATION FIX (D180).**
 
 **Newest (D180, 2026-06-30):** a new authorized multi-milestone build-out (brief `.tmp/civil-war-phd-execution-brief.md`; audit `.tmp/civil-war-history-audit-and-phd-plan.md`; Native dossier `.tmp/native-nations-under-told-dossier.md`) raises the game's history toward a graduate-seminar bar. **M1** ships the audit's Phase-1 corrections on a clean base and fixes the one integrity defect: the twenty-slave-law teaching card in `data/decisions.json` shipped dramatized composite voices in verbatim-quote style (untagged) — including a padded Sam Watkins line and an invented first-person "enslaved" voice — all under `provenance:"Verified"`. Now every composite is tagged `[composite illustration — not a verbatim quotation]`, Watkins is trimmed to the exact 1882 *Co. Aytch* clause, and the invented enslaved voice is replaced with a real, verbatim, ≥2-source-verified Cpl. James Henry Gooding 1863 excerpt (the first real Black voice in verified words on a player-facing card).

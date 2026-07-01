@@ -1,0 +1,269 @@
+{
+  "_meta": {
+    "schema": "cw_primary_sources_v1",
+    "purpose": "Short primary-source document cards for the President's Desk Read the Document surface. Excerpts are capped for classroom use; sourceCritique records transcription and locator caveats.",
+    "compiled": "D181 M2 primary-source apparatus"
+  },
+  "schema": "cw_primary_sources_v1",
+  "categories": [
+    {
+      "id": "confederate-self-justification",
+      "label": "Confederacy in its own words",
+      "blurb": "Secession, constitutional, and late-war Confederate documents that openly name slavery, white supremacy, or the contradiction of Black Confederate enlistment."
+    },
+    {
+      "id": "union-war-power",
+      "label": "Union war power",
+      "blurb": "Federal documents that turned emancipation and Black military service into war policy."
+    },
+    {
+      "id": "black-soldier-agency",
+      "label": "Black freedom struggle",
+      "blurb": "Black soldiers and recruiters arguing for freedom, service, pay, and dignity in their own words."
+    }
+  ],
+  "records": [
+    {
+      "id": "ps-cornerstone-speech",
+      "category": "confederate-self-justification",
+      "title": "Cornerstone Speech",
+      "author": "Alexander H. Stephens",
+      "date": "March 21, 1861",
+      "place": "Savannah, Georgia",
+      "provenance": "Verified",
+      "verbatimExcerpt": "the negro is not equal to the white man; that slavery subordination to the superior race is his natural and normal condition.",
+      "attribution": "Repository: American Battlefield Trust and Teaching American History. Locator: ABT Cornerstone Speech transcript; Teaching American History Corner Stone Speech transcript.",
+      "sourceCritique": "Excerpt uses the shared wording in the two web transcriptions. Teaching American History hyphenates the speech title as Corner Stone; that title variation is outside the quoted excerpt.",
+      "indictment": "The Confederacy's vice president described the new government as founded on Black inequality and slavery.",
+      "catalystFrame": "Before a shot was fired, Stephens told a Savannah audience that slavery and white supremacy were the Confederacy's foundation.",
+      "sources": [
+        {
+          "title": "Alexander H. Stephens, Cornerstone Speech",
+          "repository": "American Battlefield Trust",
+          "locator": "Primary-source transcript, March 21, 1861",
+          "url": "https://www.battlefields.org/learn/primary-sources/cornerstone-speech"
+        },
+        {
+          "title": "Corner Stone Speech",
+          "repository": "Teaching American History",
+          "locator": "Primary-source transcript, March 21, 1861",
+          "url": "https://teachingamericanhistory.org/document/corner-stone-speech/"
+        }
+      ]
+    },
+    {
+      "id": "ps-mississippi-secession",
+      "category": "confederate-self-justification",
+      "title": "Mississippi Declaration of Secession",
+      "author": "Mississippi secession convention",
+      "date": "January 9, 1861",
+      "place": "Jackson, Mississippi",
+      "provenance": "Verified",
+      "verbatimExcerpt": "Our position is thoroughly identified with the institution of slavery-- the greatest material interest of the world.",
+      "attribution": "Repository: Yale Avalon Project and American Battlefield Trust. Locator: Mississippi declaration, opening paragraph.",
+      "sourceCritique": "The double hyphen and spacing are preserved from the online transcriptions. The document is a public secession declaration, not a later memoir.",
+      "indictment": "Mississippi's own declaration identified slavery as the core interest behind secession.",
+      "catalystFrame": "This is not an outside accusation; it is the state's public explanation for leaving the Union.",
+      "sources": [
+        {
+          "title": "A Declaration of the Immediate Causes which Induce and Justify the Secession of the State of Mississippi from the Federal Union",
+          "repository": "Yale Avalon Project",
+          "locator": "Secession declaration transcript, January 9, 1861",
+          "url": "https://avalon.law.yale.edu/19th_century/csa_missec.asp"
+        },
+        {
+          "title": "Declaration of the Immediate Causes Which Induce and Justify the Secession of South Carolina, Mississippi, Georgia, and Texas",
+          "repository": "American Battlefield Trust",
+          "locator": "Primary-source collection, Mississippi declaration",
+          "url": "https://www.battlefields.org/learn/primary-sources/declaration-causes-seceding-states"
+        }
+      ]
+    },
+    {
+      "id": "ps-confederate-constitution-slavery",
+      "category": "confederate-self-justification",
+      "title": "Confederate Constitution",
+      "author": "Confederate States constitutional convention",
+      "date": "March 11, 1861",
+      "place": "Montgomery, Alabama",
+      "provenance": "Verified",
+      "verbatimExcerpt": "No bill of attainder, ex post facto law, or law denying or impairing the right of property in negro slaves shall be passed.",
+      "attribution": "Repository: Yale Avalon Project and National Park Service. Locator: Confederate Constitution, Article I, Section 9, clause 4.",
+      "sourceCritique": "The excerpt follows the constitutional clause as transcribed by Avalon and quoted in the NPS Union Dissolved teaching PDF.",
+      "indictment": "The Confederate national charter protected slave property explicitly.",
+      "catalystFrame": "Confederate leaders did not merely tolerate slavery; they wrote protection for property in enslaved people into their constitution.",
+      "sources": [
+        {
+          "title": "Constitution of the Confederate States; March 11, 1861",
+          "repository": "Yale Avalon Project",
+          "locator": "Article I, Section 9, clause 4",
+          "url": "https://avalon.law.yale.edu/19th_century/csa_csa.asp"
+        },
+        {
+          "title": "Union Dissolved",
+          "repository": "National Park Service, Appomattox Court House National Historical Park",
+          "locator": "Teaching PDF, Confederate Constitution excerpts",
+          "url": "https://www.nps.gov/apco/planyourvisit/upload/Union-is-Disolved-Final.pdf"
+        }
+      ]
+    },
+    {
+      "id": "ps-hale-to-magoffin",
+      "category": "confederate-self-justification",
+      "title": "Stephen F. Hale to Governor Beriah Magoffin",
+      "author": "Stephen F. Hale",
+      "date": "December 27, 1860",
+      "place": "Montgomery, Alabama",
+      "provenance": "Verified",
+      "verbatimExcerpt": "all be degraded to a position of equality with free negroes, stand side by side with them at the polls, and fraternize in all the social relations of life",
+      "attribution": "Repository: Teaching American History, CivilWarCauses.org, and UNC DocSouth. Locator: Hale letter to Kentucky governor Beriah Magoffin, December 27, 1860; OR Series IV, Vol. 1, pp. 4-15.",
+      "sourceCritique": "The excerpt starts after Hale's dash so the quoted fragment stays within the word cap while preserving his racial-equality panic language.",
+      "indictment": "A secession commissioner tried to move Kentucky by warning that abolition would produce racial equality.",
+      "catalystFrame": "The argument was not abstract federal theory; Hale appealed directly to white fear of Black citizenship and social equality.",
+      "sources": [
+        {
+          "title": "Stephen F. Hale to Governor Beriah Magoffin",
+          "repository": "Teaching American History",
+          "locator": "Primary-source transcript, December 27, 1860",
+          "url": "https://teachingamericanhistory.org/document/stephen-f-hale-to-governor-beriah-magoffin/"
+        },
+        {
+          "title": "Stephen F. Hale, Commissioner from Alabama to Kentucky",
+          "repository": "CivilWarCauses.org",
+          "locator": "Transcription from Official Records, Series IV, Vol. 1, pp. 4-15",
+          "url": "https://civilwarcauses.org/hale.htm"
+        },
+        {
+          "title": "The History and Debates of the Convention of the People of Alabama",
+          "repository": "UNC Documenting the American South",
+          "locator": "William Russell Smith volume, Hale letter transcription",
+          "url": "https://docsouth.unc.edu/imls/smithwr/smith.html"
+        }
+      ]
+    },
+    {
+      "id": "ps-cobb-to-seddon",
+      "category": "confederate-self-justification",
+      "title": "Howell Cobb to James A. Seddon",
+      "author": "Howell Cobb",
+      "date": "January 8, 1865",
+      "place": "Macon, Georgia",
+      "provenance": "Verified",
+      "verbatimExcerpt": "If slaves will make good soldiers our whole theory of slavery is wrong",
+      "attribution": "Repository: Encyclopedia Virginia and Official Records. Locator: Cobb letter to Secretary of War James A. Seddon, January 8, 1865; OR Series IV, Vol. 3, pp. 1009-1010.",
+      "sourceCritique": "Encyclopedia Virginia provides the online transcription; the Official Records locator identifies the wartime printed source. The excerpt omits the following hostile prediction to keep the focus on the ideological admission.",
+      "indictment": "Cobb admitted that arming enslaved men would contradict the Confederacy's own theory of slavery.",
+      "catalystFrame": "The late-war manpower crisis exposed the central contradiction: the Confederacy needed soldiers but rested its cause on enslaved people being unfit for citizenship and arms.",
+      "sources": [
+        {
+          "title": "Letter from Howell Cobb to James A. Seddon",
+          "repository": "Encyclopedia Virginia",
+          "locator": "Primary-document transcription, January 8, 1865",
+          "url": "https://encyclopediavirginia.org/primary-documents/letter-from-howell-cobb-to-james-a-seddon-january-8-1865/"
+        },
+        {
+          "title": "The War of the Rebellion: Official Records",
+          "repository": "U.S. War Department",
+          "locator": "Series IV, Vol. 3, pp. 1009-1010",
+          "url": "https://babel.hathitrust.org/cgi/pt?id=coo.31924079609552"
+        }
+      ]
+    },
+    {
+      "id": "ps-emancipation-proclamation-service",
+      "category": "union-war-power",
+      "title": "Emancipation Proclamation",
+      "author": "Abraham Lincoln",
+      "date": "January 1, 1863",
+      "place": "Washington, D.C.",
+      "provenance": "Verified",
+      "verbatimExcerpt": "such persons of suitable condition, will be received into the armed service of the United States",
+      "attribution": "Repository: National Archives and Yale Avalon Project. Locator: final Emancipation Proclamation, military-service clause.",
+      "sourceCritique": "The excerpt is the short military-service clause; the surrounding sentence names forts, positions, stations, vessels, and other service.",
+      "indictment": "The proclamation tied emancipation to Union military power and opened federal service to Black men.",
+      "catalystFrame": "",
+      "sources": [
+        {
+          "title": "Transcript of the Proclamation",
+          "repository": "National Archives",
+          "locator": "Final Emancipation Proclamation transcript, January 1, 1863",
+          "url": "https://www.archives.gov/exhibits/featured-documents/emancipation-proclamation/transcript.html"
+        },
+        {
+          "title": "The Emancipation Proclamation",
+          "repository": "Yale Avalon Project",
+          "locator": "Transcript, January 1, 1863",
+          "url": "https://avalon.law.yale.edu/19th_century/emancipa.asp"
+        }
+      ]
+    },
+    {
+      "id": "ps-douglass-men-of-color",
+      "category": "black-soldier-agency",
+      "title": "Men of Color, To Arms!",
+      "author": "Frederick Douglass",
+      "date": "March 21, 1863",
+      "place": "Rochester, New York",
+      "provenance": "Verified",
+      "verbatimExcerpt": "A war undertaken and brazenly carried on for the perpetual enslavement of colored men, calls logically and loudly for colored men to help suppress it.",
+      "attribution": "Repository: House Divided Project and Teaching American History. Locator: Frederick Douglass, Men of Color, To Arms!, March 21, 1863.",
+      "sourceCritique": "The National Park Service classroom PDF hyphenates 'perpetual' across a line; this card follows continuous web transcriptions from House Divided and Teaching American History.",
+      "indictment": "Douglass framed Black enlistment as a logical answer to a war fought to perpetuate Black enslavement.",
+      "catalystFrame": "",
+      "sources": [
+        {
+          "title": "Frederick Douglass, Men of Color, To Arms!",
+          "repository": "House Divided Project, Dickinson College",
+          "locator": "Primary-source transcription, March 21, 1863",
+          "url": "https://housedivided.dickinson.edu/sites/teagle/texts/frederick-douglass-men-of-color-to-arms-1863/"
+        },
+        {
+          "title": "Men of Color, To Arms!",
+          "repository": "Teaching American History",
+          "locator": "Primary-source transcript, March 21, 1863",
+          "url": "https://teachingamericanhistory.org/document/men-of-color-to-arms/"
+        },
+        {
+          "title": "Colored Men to Arms",
+          "repository": "National Park Service",
+          "locator": "Classroom PDF excerpt, March 21, 1863",
+          "url": "https://www.nps.gov/common/uploads/teachers/lessonplans/Document3%28Coloredmentoarms%29.pdf"
+        }
+      ]
+    },
+    {
+      "id": "ps-gooding-equal-pay",
+      "category": "black-soldier-agency",
+      "title": "James Henry Gooding's equal-pay letter",
+      "author": "James Henry Gooding",
+      "date": "September 28, 1863",
+      "place": "Morris Island, South Carolina",
+      "provenance": "Verified",
+      "verbatimExcerpt": "We have done a Soldiers Duty. Why cant we have a Soldiers pay?",
+      "attribution": "Repository: University of Maryland Freedmen and Southern Society Project, National Park Service, and DocsTeach/National Archives. Locator: Corporal James Henry Gooding to Abraham Lincoln, September 28, 1863; NARA Record Group 94.",
+      "sourceCritique": "Spelling and punctuation follow the University of Maryland transcription. NPS quotes normalized snippets; DocsTeach supplies the National Archives locator for the original letter.",
+      "indictment": "Gooding demanded equal pay by grounding Black soldiers' claim in their actual service and sacrifice.",
+      "catalystFrame": "",
+      "sources": [
+        {
+          "title": "Massachusetts Black Corporal to the President",
+          "repository": "University of Maryland, Freedmen and Southern Society Project",
+          "locator": "James Henry Gooding to Abraham Lincoln, September 28, 1863",
+          "url": "https://www.freedmen.umd.edu/gooding.htm"
+        },
+        {
+          "title": "Corporal James H. Gooding",
+          "repository": "National Park Service",
+          "locator": "Biographical page with equal-pay letter excerpts",
+          "url": "https://www.nps.gov/people/j-h-gooding.htm"
+        },
+        {
+          "title": "James Henry Gooding, Black Soldier's Appeal to Lincoln for Equal Pay",
+          "repository": "DocsTeach / National Archives",
+          "locator": "Record Group 94, Records of the Adjutant General's Office",
+          "url": "https://www.docsteach.org/documents/document/gooding-lincoln-equal-pay"
+        }
+      ]
+    }
+  ]
+}

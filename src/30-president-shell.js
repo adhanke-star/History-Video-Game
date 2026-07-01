@@ -80,6 +80,9 @@ function _wdRefresh() {
   } else if (_wdTab === "codex") {
     html = (typeof codexRenderTab === "function") ? codexRenderTab(C) : "";
     wire = (typeof codexWireTab === "function") ? codexWireTab : null;
+  } else if (_wdTab === "sources") {
+    html = (typeof primarySourcesRenderTab === "function") ? primarySourcesRenderTab(C) : "";
+    wire = (typeof primarySourcesWireTab === "function") ? primarySourcesWireTab : null;
   } else if (_wdTab === "playstyle") {
     html = (typeof psRenderTab === "function") ? psRenderTab(C) : "";
     wire = (typeof psWireTab === "function") ? psWireTab : null;
@@ -126,7 +129,7 @@ function _wdRefresh() {
     };
   }
   cont.innerHTML = html || '<p class="lede" style="text-align:center;opacity:0.7">This office is not yet staffed.</p>';
-  var tabs = ["economy", "treasury", "diplomacy", "victory", "warvshistory", "afteraction", "codex", "playstyle", "armory", "warroom", "clock", "muster", "cabinet", "command", "camp", "loot", "decisions", "press", "map"];
+  var tabs = ["economy", "treasury", "diplomacy", "victory", "warvshistory", "afteraction", "codex", "sources", "playstyle", "armory", "warroom", "clock", "muster", "cabinet", "command", "camp", "loot", "decisions", "press", "map"];
   for (var i = 0; i < tabs.length; i++) {
     var b = document.getElementById("wdTab_" + tabs[i]);
     if (b) {
@@ -177,6 +180,7 @@ function openWarDept() {
       _wdTabBtn("warvshistory", "Your War vs History") +
       _wdTabBtn("afteraction", "After-Action") +
       _wdTabBtn("codex", "Codex") +
+      _wdTabBtn("sources", "Documents") +
       _wdTabBtn("playstyle", "Play Style") +
       _wdTabBtn("armory", "The Armory") +
       _wdTabBtn("warroom", "War Room") +
@@ -199,7 +203,7 @@ function openWarDept() {
     if (_pdAfterDeskClose) { var cb = _pdAfterDeskClose; _pdAfterDeskClose = null; cb(); }
     else if (typeof closeSheet === "function") closeSheet();
   });
-  ["economy", "treasury", "diplomacy", "victory", "warvshistory", "afteraction", "codex", "playstyle", "armory", "warroom", "clock", "muster", "cabinet", "command", "camp", "loot", "decisions", "press", "map"].forEach(function (k) {
+  ["economy", "treasury", "diplomacy", "victory", "warvshistory", "afteraction", "codex", "sources", "playstyle", "armory", "warroom", "clock", "muster", "cabinet", "command", "camp", "loot", "decisions", "press", "map"].forEach(function (k) {
     var b = document.getElementById("wdTab_" + k);
     if (b) b.addEventListener("click", function () { _wdTab = k; _wdRefresh(); });
   });
