@@ -27,6 +27,7 @@ const SUITE = [
   ['prisoner exchange', 'tools/probe-prisoner-exchange.mjs'],
   ['disease medical', 'tools/probe-disease-medical.mjs'],
   ['hard war', 'tools/probe-hard-war.mjs'],
+  ['irregular war', 'tools/probe-irregular-war.mjs'],
   ['blockade', 'tools/probe-blockade.mjs'],
   ['manpower', 'tools/probe-manpower.mjs'],
   ['victory', 'tools/probe-victory.mjs'],

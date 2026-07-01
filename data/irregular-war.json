@@ -1,0 +1,136 @@
+{
+  "_comment": "D177 Group 4 bounded irregular-war system. This is a War Effort teaching/system slice, not a new playable battle and not a guerrilla minigame. Default bridge input is exact zero; the optional civilian-security priority is capped, costly, and cannot romanticize guerrilla violence.",
+  "schema": "cw_irregular_war_v1",
+  "schemaVersion": "1.0",
+  "config": {
+    "priorityKey": "civilianSecurity",
+    "bridgeCaps": {
+      "morale": 1,
+      "supplyCost": 2,
+      "fatigueCost": 2,
+      "overall": 0
+    },
+    "mitigation": {
+      "incidentReduction": 0.18,
+      "reprisalReduction": 0.30,
+      "civilianHarmReduction": 0.28,
+      "protectedCivilianFactor": 10,
+      "capitalCost": 1
+    },
+    "pressureWeights": {
+      "year": 0.20,
+      "momentum": 0.16,
+      "logistics": 0.14,
+      "enemyWill": 0.10,
+      "hardWar": 0.15,
+      "weariness": 0.12,
+      "border": 0.13
+    }
+  },
+  "profiles": {
+    "US": {
+      "name": "Federal counter-guerrilla policy",
+      "summary": "Union armies faced raids on railroads, couriers, isolated posts, and civilians, while federal commanders struggled to separate lawful partisan warfare from murder, retaliation, and forced removal.",
+      "teaching": "The disciplined answer is not romantic vengeance. Federal counter-guerrilla policy could protect people and supply lines, but it could also become collective punishment, as in General Order No. 11 on the Missouri-Kansas border.",
+      "provenance": "Verified",
+      "sources": [
+        "National Park Service, Mosby's Rangers in the Shenandoah Valley, describing Mosby's partisan operations and Union attempts to catch him.",
+        "Civil War on the Western Border / Kansas City Public Library, General Order No. 11 and the Missouri-Kansas guerrilla war."
+      ]
+    },
+    "CS": {
+      "name": "Confederate partisan and guerrilla war",
+      "summary": "The Confederacy authorized some partisan ranger units, including Mosby's 43rd Battalion Virginia Cavalry, while the border war also produced bushwhacking, massacre, revenge raids, and local violence far outside clean battlefield categories.",
+      "teaching": "This surface keeps the distinction visible: Mosby's commissioned partisan command is not the same thing as Quantrill's massacre at Lawrence. The game does not let Lost Cause romance launder guerrilla violence.",
+      "provenance": "Verified",
+      "sources": [
+        "National Park Service, 43rd Battalion Virginia Cavalry / Mosby's Rangers unit detail and NPS Mosby's Rangers in the Shenandoah Valley.",
+        "National Park Service, Lawrence battle detail / Lawrence Massacre (KS001), and Civil War on the Western Border / Kansas City Public Library, Quantrill and the border war."
+      ]
+    }
+  },
+  "threads": [
+    {
+      "id": "mosby-partisan-rangers",
+      "label": "Mosby's partisan rangers",
+      "summary": "John S. Mosby's 43rd Battalion Virginia Cavalry operated as a commissioned partisan ranger unit in Northern Virginia, raiding, scouting, capturing supplies, and tying down Federal troops.",
+      "provenance": "Verified",
+      "sources": [
+        "National Park Service, Mosby's Rangers in the Shenandoah Valley.",
+        "National Park Service, 43rd Battalion Virginia Cavalry / Mosby's Rangers unit detail."
+      ]
+    },
+    {
+      "id": "lawrence-massacre",
+      "label": "Quantrill and Lawrence",
+      "summary": "Quantrill's raid on Lawrence, Kansas in August 1863 killed about 150 men and boys and marked the border war as massacre, not battlefield glory.",
+      "provenance": "Verified",
+      "sources": [
+        "National Park Service, Lawrence battle detail / Lawrence Massacre (KS001).",
+        "Civil War on the Western Border / Kansas City Public Library, Lawrence Massacre and Quantrill source trail."
+      ]
+    },
+    {
+      "id": "general-order-11",
+      "label": "General Order No. 11",
+      "summary": "After the Lawrence massacre, Union General Thomas Ewing's General Order No. 11 forced depopulation in several Missouri border counties, showing how counter-guerrilla policy could punish whole communities.",
+      "provenance": "Verified",
+      "sources": [
+        "Civil War on the Western Border / Kansas City Public Library, General Order No. 11.",
+        "The Civil War in Missouri, Thomas Ewing Jr.'s General Order No. 11 info sheet, and Civil War on the Western Border timeline materials."
+      ]
+    },
+    {
+      "id": "lieber-code",
+      "label": "The Lieber Code's line",
+      "summary": "General Orders No. 100 tried to distinguish lawful soldiers and partisans from armed prowlers, robbers, and war rebels; the point was to restrain war, not to give every raid a heroic label.",
+      "provenance": "Verified",
+      "sources": [
+        "The Avalon Project, Instructions for the Government of Armies of the United States in the Field, General Orders No. 100 (Lieber Code), 1863.",
+        "Library of Congress Law Library, The Lieber Code - the First Modern Codification of the Laws of War."
+      ]
+    },
+    {
+      "id": "no-guerrilla-last-stand",
+      "label": "No endless guerrilla last stand",
+      "summary": "In 1865 some Confederates imagined dispersing into partisan warfare, but orderly surrender avoided a longer, uglier insurgency.",
+      "provenance": "Verified",
+      "sources": [
+        "data/cabinet.json John C. Breckinridge War Department profile, citing William C. Davis, Breckinridge: Statesman, Soldier, Symbol.",
+        "data/cabinet.json Breckinridge and an honorable end card."
+      ]
+    }
+  ],
+  "debates": [
+    {
+      "id": "partisan-vs-guerrilla",
+      "title": "Partisan ranger or guerrilla?",
+      "summary": "The categories mattered. A commissioned partisan command could still be destructive, but it was not identical to anonymous bushwhacking, murder, and revenge raids on civilians.",
+      "provenance": "Verified",
+      "sources": [
+        "National Park Service, 43rd Battalion Virginia Cavalry / Mosby's Rangers unit detail.",
+        "The Avalon Project, Lieber Code General Orders No. 100."
+      ]
+    },
+    {
+      "id": "security-vs-collective-punishment",
+      "title": "Security vs collective punishment",
+      "summary": "Protecting railroads, civilians, and supply lines was real military work. Burning out whole districts or treating communities as suspect by default could deepen civilian harm and revenge cycles.",
+      "provenance": "Verified",
+      "sources": [
+        "Civil War on the Western Border / Kansas City Public Library, General Order No. 11.",
+        "National Park Service, Lawrence battle detail / Lawrence Massacre (KS001)."
+      ]
+    },
+    {
+      "id": "lost-cause-romance",
+      "title": "The romance trap",
+      "summary": "Irregular war is often sold as daring riders and local color. The real story also includes racial slavery, civilian terror, retaliation, and a state losing control of violence.",
+      "provenance": "Verified",
+      "sources": [
+        "National Park Service and Civil War on the Western Border source trails on Mosby, Quantrill, Lawrence, and Order No. 11.",
+        "data/cabinet.json Breckinridge profile on rejecting an endless guerrilla war in 1865."
+      ]
+    }
+  ]
+}

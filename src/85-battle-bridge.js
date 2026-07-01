@@ -127,6 +127,15 @@ function bridgeArmy(C) {
     supply = Math.max(0, Math.min(100, supply + Math.round(_hw.supply || 0)));
     fatigue = Math.max(0, Math.min(100, fatigue + Math.round(_hw.fatigue || 0)));
   }
+  // D177: irregular-war civilian security is an explicit War Effort priority.
+  // Default returns exact zeros; active security is a capped cost, not a
+  // battle-result gate.
+  var _iw = (typeof irregularWarBridgeBonus === "function") ? irregularWarBridgeBonus(C) : null;
+  if (_iw) {
+    morale = Math.max(0, Math.min(100, morale + Math.round(_iw.morale || 0)));
+    supply = Math.max(0, Math.min(100, supply + Math.round(_iw.supply || 0)));
+    fatigue = Math.max(0, Math.min(100, fatigue + Math.round(_iw.fatigue || 0)));
+  }
   // S2 m5: the sitting field general + the cabinet now drive leadership (anchored at 64 so a
   // default/historical command plays ≈ Classic; the A6a/D47.1 anchor lesson). The _brgLeadGuard
   // breaks the bridgeArmy->commandLeadership->cabinet->_cabReading->bridgeArmy cycle (D53.4).
@@ -176,6 +185,7 @@ function bridgeArmy(C) {
   if (_pow && _pow.overall) overall = Math.max(0, Math.min(100, overall + Math.round(_pow.overall)));
   if (_med && _med.overall) overall = Math.max(0, Math.min(100, overall + Math.round(_med.overall)));
   if (_hw && _hw.overall) overall = Math.max(0, Math.min(100, overall + Math.round(_hw.overall)));
+  if (_iw && _iw.overall) overall = Math.max(0, Math.min(100, overall + Math.round(_iw.overall)));
   return { side: side, strength: Math.round(strength), equip: Math.round(equip), arms: arms,
     morale: morale, supply: supply, fatigue: fatigue, leadership: leadership, firepower: firepower, artillery: artillery, engineering: engineering,
     logistics: _logRail ? Math.round(_logRail.index || 0) : 0, overall: overall };

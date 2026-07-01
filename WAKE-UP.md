@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-06-30: **GROUP 4 IRREGULAR WAR IS FOCUSED-GATED; LONG AUDIT DEFERRED (D177/D176).**
+
+**Newest (D177, 2026-06-30):** Group 4's second non-battle system shipped. Irregular war now has a War Effort teaching/system surface with exact-zero default bridge behavior and an explicit capped civilian-security priority. The long `npm run vet:noreg` audit remains deferred under D176 until the end-of-queue release gate or an explicit request.
+
+**What changed:** new `data/irregular-war.json`, `src/65-irregular-war.js`, manifest registration, War Effort/H0 President's Desk rendering and wiring, bridge/lifecycle hooks, focused `tools/probe-irregular-war.mjs`, and future-batch suite enrollment. `civil_war_generals.html` was rebuilt from source.
+
+**Verified:** JSON parse passed for `data/irregular-war.json`; `node --check` passed for touched source/probe/suite files; build GATE OK; focused `probe-irregular-war` 8 steps / 0 pageerrors with clean JSON readback. Adjacent probes passed: hard war, bridge, and H0 President's Desk, all 0 pageerrors.
+
+**Next recommended run:** continue Group 4 with under-told perspectives not already covered by the D153 women lane, unless live docs identify a smaller remaining Phase F/G non-battle item. Do not start Q5 Chattanooga, Atlanta/March, Franklin/Nashville, or Q6 USCT playable battles.
+
+---
+
 # ☀ WAKE-UP — 2026-06-30: **GROUP 4 HARD WAR IS FOCUSED-GATED; LONG AUDIT DEFERRED (D175/D176).**
 
 **Newest (D175/D176, 2026-06-30):** Group 4's first non-battle system shipped. Hard war now has a War Effort teaching/system surface with exact-zero default bridge behavior and an explicit capped civilian/freedpeople protection priority. Aaron also clarified that the long `npm run vet:noreg` audit must not run after every queued item; focused gates ship each item, and the long audit waits for the end-of-queue release gate or an explicit request.

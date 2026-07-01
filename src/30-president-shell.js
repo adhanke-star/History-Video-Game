@@ -120,6 +120,7 @@ function _wdRefresh() {
       if (typeof prisonerExchangeWireOverview === "function") prisonerExchangeWireOverview(cc);
       if (typeof medicalWireOverview === "function") medicalWireOverview(cc);
       if (typeof hardWarWireOverview === "function") hardWarWireOverview(cc);
+      if (typeof irregularWarWireOverview === "function") irregularWarWireOverview(cc);
     };
   }
   cont.innerHTML = html || '<p class="lede" style="text-align:center;opacity:0.7">This office is not yet staffed.</p>';
