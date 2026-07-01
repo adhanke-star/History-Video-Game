@@ -163,6 +163,15 @@ function bridgeArmy(C) {
     supply = Math.max(0, Math.min(100, supply + Math.round(_csf.supply || 0)));
     fatigue = Math.max(0, Math.min(100, fatigue + Math.round(_csf.fatigue || 0)));
   }
+  // D189: real diplomacy priorities are explicit War Effort tradeoffs.
+  // Default returns exact zeros; active diplomacy can move tiny morale/supply/fatigue
+  // inputs while recognition/intervention remain strategic, not battle-output gates.
+  var _rd = (typeof realDiplomacyBridgeBonus === "function") ? realDiplomacyBridgeBonus(C) : null;
+  if (_rd) {
+    morale = Math.max(0, Math.min(100, morale + Math.round(_rd.morale || 0)));
+    supply = Math.max(0, Math.min(100, supply + Math.round(_rd.supply || 0)));
+    fatigue = Math.max(0, Math.min(100, fatigue + Math.round(_rd.fatigue || 0)));
+  }
   // S2 m5: the sitting field general + the cabinet now drive leadership (anchored at 64 so a
   // default/historical command plays ≈ Classic; the A6a/D47.1 anchor lesson). The _brgLeadGuard
   // breaks the bridgeArmy->commandLeadership->cabinet->_cabReading->bridgeArmy cycle (D53.4).
@@ -214,6 +223,7 @@ function bridgeArmy(C) {
   if (_hw && _hw.overall) overall = Math.max(0, Math.min(100, overall + Math.round(_hw.overall)));
   if (_iw && _iw.overall) overall = Math.max(0, Math.min(100, overall + Math.round(_iw.overall)));
   if (_utp && _utp.overall) overall = Math.max(0, Math.min(100, overall + Math.round(_utp.overall)));
+  if (_rd && _rd.overall) overall = Math.max(0, Math.min(100, overall + Math.round(_rd.overall)));
   return { side: side, strength: Math.round(strength), equip: Math.round(equip), arms: arms,
     morale: morale, supply: supply, fatigue: fatigue, leadership: leadership, firepower: firepower, artillery: artillery, engineering: engineering,
     logistics: _logRail ? Math.round(_logRail.index || 0) : 0, overall: overall };

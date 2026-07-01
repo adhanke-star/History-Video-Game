@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-07-01: **GROUP 4 REAL DIPLOMACY SYSTEM SHIPPED (D189).**
+
+**Newest (D189, 2026-07-01):** The real diplomacy system is complete as a bounded Group 4 non-battle system. It adds War Effort and Diplomacy-tab levers for Mason/Slidell recognition work, the Trent Affair, 1862 mediation pressure, Laird rams, the Russian fleet, and King Wheat vs cotton diplomacy.
+
+**What changed:** `data/diplomacy.json` now carries `realDiplomacy`; `src/71-real-diplomacy.js` adds side-aware state, priority toggles, diplomatic crisis/readout cards, capped bridge inputs, and strategic resolve hooks. It wires through the manifest, War Effort/H0 Desk, the existing blockade diplomacy tab, lifecycle, battle bridge, focused probe, and future batch suite. Inactive bridge behavior remains exact zero; active priorities never write direct `overall`, tactical/OOB, winner, casualty, or battle-output state.
+
+**Verified:** JSON parse for diplomacy and manifest; `node --check` for touched source/probe/suite files; build **GATE OK** (no-fudge ✓, citations ✓, women-in-war ✓); focused `probe-real-diplomacy` 8/0; adjacent `probe-blockade` 11/0, `probe-bridge` 6/0, and `probe-h0-president-desk` 3/3; JSON readback clean; `git diff --check` clean. Full `npm run vet:noreg` deferred under D176.
+
+**Next recommended run:** **human-cost-with-gravity treatment** as the next Group 4 non-battle system. After that, continue Western-theater strategic readouts -> planned batch/release gate. M8 battle-build track still needs an Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-01: **GROUP 4 CS FINANCE TOOLKIT SHIPPED (D188).**
 
 **Newest (D188, 2026-07-01):** The CS finance toolkit is complete as a bounded Group 4 non-battle system. It adds a Confederate-side-only War Effort surface for the Erlanger loan, cotton bonds, produce loan, impressment, and the printing spiral.
@@ -6,7 +18,7 @@
 
 **Verified:** JSON parse for `data/cs-finance.json`, `data/economy.json`, and manifest; `node --check` for touched source/probe/suite files; build **GATE OK** (no-fudge ✓, citations ✓, women-in-war ✓); focused `probe-cs-finance` 8/0; adjacent `probe-economy` 8/0, `probe-bridge` 6/0, and `probe-h0-president-desk` 3/3; JSON readback clean; `git diff --check` clean. Full `npm run vet:noreg` deferred under D176.
 
-**Next recommended run:** **real diplomacy system** as a bounded Group 4 non-battle system. After that, continue human-cost-with-gravity -> Western-theater strategic readouts -> planned batch/release gate. M8 battle-build track still needs an Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+**Then-next, now shipped as D189:** **real diplomacy system** as a bounded Group 4 non-battle system. After D189, continue human-cost-with-gravity -> Western-theater strategic readouts -> planned batch/release gate. M8 battle-build track still needs an Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
 
 ---
 

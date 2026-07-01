@@ -223,6 +223,7 @@
       + (typeof presUnderToldBlock === "function" ? presUnderToldBlock(C) : "")
       + (typeof presFlagshipUnitsBlock === "function" ? presFlagshipUnitsBlock(C) : "")
       + (typeof presCsFinanceBlock === "function" ? presCsFinanceBlock(C) : "")
+      + (typeof presRealDiplomacyBlock === "function" ? presRealDiplomacyBlock(C) : "")
       + (typeof presManpowerBlock === "function" ? presManpowerBlock(C) : "")
       + (typeof presMoraleBlock === "function" ? presMoraleBlock(C) : "")
       + '</section>';

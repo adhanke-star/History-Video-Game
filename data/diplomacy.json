@@ -185,6 +185,264 @@
       "provenance": "Verified. Core terms (£3M / ~$15M, taken at 77, resold at 90, 7% coupon, 6d/lb cotton conversion, oversubscribed, post-Vicksburg/Gettysburg slide into the mid-60s, Confederate repurchase of over half the issue, worthless at surrender) confirmed against Gentry, Lester, Weidenmier, and the 19 March 1863 prospectus. Net-proceeds figure varies by source (~£1.4-2.5M), reflecting genuine scholarly disagreement, so stated as a range. Corrections to the draft: removed a fabricated co-author (\"Weidenmier & Brown\") — the relevant paper is single-authored by Weidenmier; and removed Marc Egnal's Clash of Extremes from the dissent, as that book concerns the economic ORIGINS of the war (1820-1861), not the Erlanger loan or wartime cotton collateral, making the attribution unsupported."
     }
   ],
+  "realDiplomacy": {
+    "schema": "cw_real_diplomacy_v1",
+    "profile": {
+      "name": "The World Stage",
+      "summary": "Diplomacy is no longer only King Cotton and the blockade. It is a contested international system: legal neutrality, Mason and Slidell, British cabinet mediation, Liverpool-built warships, Russian naval friendship, and Northern grain all pressure foreign recognition.",
+      "teaching": "The Confederacy gained belligerent status but never sovereign recognition. The Union's diplomatic win was not automatic: it depended on Seward and Adams keeping Britain from recognition, Lincoln defusing Trent, Union armies denying a decisive Confederate victory in 1862, emancipation making support for a slaveholding republic toxic, and material leverage such as King Wheat and the blockade.",
+      "provenance": "Verified",
+      "sources": [
+        "U.S. Department of State, Office of the Historian, 'Preventing Diplomatic Recognition of the Confederacy, 1861-1865', https://history.state.gov/milestones/1861-1865/confederacy",
+        "U.S. Department of State, Office of the Historian, 'The Trent Affair, 1861', https://history.state.gov/milestones/1861-1865/trent-affair",
+        "Howard Jones, Blue & Gray Diplomacy: A History of Union and Confederate Foreign Relations (2010)",
+        "Amanda Foreman, A World on Fire: Britain's Crucial Role in the American Civil War (2010)"
+      ]
+    },
+    "config": {
+      "bridgeCaps": { "morale": 1, "supply": 1, "fatigueCost": 1, "overall": 0 },
+      "ledgerCaps": { "recognitionInfluence": 100, "crisisRisk": 100, "neutralGoodwill": 100, "commercePressure": 100 },
+      "pressureWeights": { "recognition": 0.34, "intervention": 0.28, "crisis": 0.22, "goodwill": 0.16 }
+    },
+    "crises": [
+      {
+        "id": "trent-affair",
+        "label": "Trent Affair",
+        "year": 1861,
+        "summary": "Wilkes's seizure of Mason and Slidell from RMS Trent nearly turned a Confederate diplomatic mission into war with Britain. Lincoln and Seward released the envoys rather than risk a second war.",
+        "gameMeaning": "A crisis can raise intervention pressure even when recognition remains unearned. Defusing it lowers war risk but costs political pride.",
+        "provenance": "Verified",
+        "sources": [
+          "U.S. Department of State, Office of the Historian, 'The Trent Affair, 1861', https://history.state.gov/milestones/1861-1865/trent-affair",
+          "National Park Service, 'The Trent Affair', https://www.nps.gov/articles/000/the-trent-affair.htm",
+          "Howard Jones, Blue & Gray Diplomacy (2010)"
+        ]
+      },
+      {
+        "id": "autumn-1862-mediation",
+        "label": "Autumn 1862 Mediation Window",
+        "year": 1862,
+        "summary": "British mediation debate was most dangerous after the 1862 campaigns, but Antietam denied the decisive Confederate victory and emancipation changed the moral politics of recognition.",
+        "gameMeaning": "Recognition pressure can surge if the Confederacy is winning, but the window narrows after 1862 unless battlefield performance keeps it open.",
+        "provenance": "Verified",
+        "sources": [
+          "Howard Jones, Union in Peril: The Crisis over British Intervention in the Civil War (1992)",
+          "Amanda Foreman, A World on Fire (2010)",
+          "James M. McPherson, Battle Cry of Freedom (1988)"
+        ]
+      },
+      {
+        "id": "laird-rams",
+        "label": "Laird Rams",
+        "year": 1863,
+        "summary": "Confederate agents arranged for ironclad rams in British yards. U.S. protest and British seizure kept them from becoming a blockade-breaking escalation.",
+        "gameMeaning": "Naval procurement is real diplomatic leverage, but it invites legal and war-risk pressure rather than a clean battlefield bonus.",
+        "provenance": "Verified",
+        "sources": [
+          "U.S. Department of State, Office of the Historian, 'The Alabama Claims, 1862-1872', https://history.state.gov/milestones/1861-1865/alabama",
+          "Papers Relating to Foreign Affairs, 1864, correspondence on the Laird steam rams, https://history.state.gov/historicaldocuments/frus1864p1/d88",
+          "Frank J. Merli, Great Britain and the Confederate Navy, 1861-1865 (1971)"
+        ]
+      },
+      {
+        "id": "russian-fleet",
+        "label": "Russian Fleet Visit",
+        "year": 1863,
+        "summary": "Russian squadrons arrived at New York and San Francisco in 1863. They did not fight for the Union, but their friendly presence mattered in a wider European crisis around Poland, Britain, France, and Russia.",
+        "gameMeaning": "Foreign sympathy can steady the diplomatic board without becoming an alliance or a hidden combat lever.",
+        "provenance": "Verified",
+        "sources": [
+          "U.S. Naval Institute Proceedings, Patrick Laurentz, 'Visit of Russian Squadrons in 1863' (1935), https://www.usni.org/magazines/proceedings/1935/may/visit-russian-squadrons-1863",
+          "Naval History and Heritage Command, 'The Russian Navy Visits the United States', https://www.history.navy.mil/research/library/online-reading-room/title-list-alphabetically/r/the-russian-navy-visits-theunited-states.html",
+          "Papers Relating to Foreign Affairs, 1866, Clay to Seward material on Russian-American naval courtesies, https://history.state.gov/historicaldocuments/frus1866p1/d366"
+        ]
+      },
+      {
+        "id": "king-wheat",
+        "label": "King Wheat",
+        "year": 1862,
+        "summary": "Northern food exports and commercial ties weakened King Cotton's coercion. Britain had cotton pain, but it also had grain and war-order interests that neutrality protected.",
+        "gameMeaning": "The Union can fight recognition diplomatically by making neutrality useful, not just by threatening war.",
+        "provenance": "Verified",
+        "sources": [
+          "HISTORICAL-DATA-ECONOMY.md, agriculture and cotton diplomacy sections",
+          "Sven Beckert, Empire of Cotton (2014)",
+          "Howard Jones, Blue & Gray Diplomacy (2010)",
+          "David G. Surdam, Northern Naval Superiority and the Economics of the American Civil War (2001)"
+        ]
+      }
+    ],
+    "priorities": [
+      {
+        "id": "seward-neutrality-line",
+        "side": "US",
+        "label": "Seward neutrality line",
+        "shortLabel": "Neutrality line",
+        "unlockYear": 1861,
+        "summary": "Warn London and Paris away from recognition while respecting the legal posture that keeps the blockade accepted.",
+        "playerTradeoff": "Costs political capital and yields no instant battlefield reward, but it lowers recognition and crisis risk.",
+        "recognitionDelta": -6,
+        "interventionDelta": -5,
+        "crisisDelta": -8,
+        "goodwillDelta": 6,
+        "commerceDelta": 0,
+        "capitalCost": 2,
+        "moraleBridge": 0,
+        "supplyBridge": 0,
+        "fatigueBridge": 0,
+        "provenance": "Verified",
+        "sources": [
+          "U.S. Department of State, 'Preventing Diplomatic Recognition of the Confederacy, 1861-1865'",
+          "U.S. Department of State, 'The Trent Affair, 1861'",
+          "Howard Jones, Blue & Gray Diplomacy (2010)"
+        ]
+      },
+      {
+        "id": "king-wheat-neutrality",
+        "side": "US",
+        "label": "King Wheat neutrality",
+        "shortLabel": "King Wheat",
+        "unlockYear": 1862,
+        "summary": "Use grain, commerce, and relief diplomacy to make British neutrality more valuable than breaking the blockade.",
+        "playerTradeoff": "Strengthens neutral goodwill and lowers intervention risk; it spends capital instead of buying armies.",
+        "recognitionDelta": -4,
+        "interventionDelta": -4,
+        "crisisDelta": -4,
+        "goodwillDelta": 9,
+        "commerceDelta": 3,
+        "capitalCost": 2,
+        "moraleBridge": 1,
+        "supplyBridge": -1,
+        "fatigueBridge": 0,
+        "provenance": "Verified",
+        "sources": [
+          "HISTORICAL-DATA-ECONOMY.md, King Wheat and cotton diplomacy sections",
+          "Sven Beckert, Empire of Cotton (2014)",
+          "David G. Surdam, Northern Naval Superiority and the Economics of the American Civil War (2001)"
+        ]
+      },
+      {
+        "id": "watch-laird-rams",
+        "side": "US",
+        "label": "Watch the Laird rams",
+        "shortLabel": "Laird watch",
+        "unlockYear": 1863,
+        "summary": "Press British neutrality law against Confederate ironclads and commerce raiders before they sail.",
+        "playerTradeoff": "Protects commerce and reduces escalation risk, but naval patrols and legal pressure consume tempo.",
+        "recognitionDelta": -7,
+        "interventionDelta": -3,
+        "crisisDelta": -6,
+        "goodwillDelta": 4,
+        "commerceDelta": 10,
+        "capitalCost": 3,
+        "moraleBridge": 0,
+        "supplyBridge": 1,
+        "fatigueBridge": 1,
+        "provenance": "Verified",
+        "sources": [
+          "U.S. Department of State, 'The Alabama Claims, 1862-1872'",
+          "Papers Relating to Foreign Affairs, 1864, correspondence on the Laird steam rams",
+          "Frank J. Merli, Great Britain and the Confederate Navy, 1861-1865 (1971)"
+        ]
+      },
+      {
+        "id": "recognition-mission",
+        "side": "CS",
+        "label": "Recognition mission",
+        "shortLabel": "Recognition",
+        "unlockYear": 1861,
+        "summary": "Send Mason, Slidell, and the Confederate case back into London and Paris.",
+        "playerTradeoff": "Can raise recognition pressure if the armies are credible, but cotton and slavery still limit the case.",
+        "recognitionDelta": 6,
+        "interventionDelta": 3,
+        "crisisDelta": 4,
+        "goodwillDelta": -2,
+        "commerceDelta": 0,
+        "capitalCost": 2,
+        "moraleBridge": 1,
+        "supplyBridge": 0,
+        "fatigueBridge": 0,
+        "provenance": "Verified",
+        "sources": [
+          "U.S. Department of State, 'The Trent Affair, 1861'",
+          "U.S. Department of State, 'Preventing Diplomatic Recognition of the Confederacy, 1861-1865'",
+          "Howard Jones, Blue & Gray Diplomacy (2010)"
+        ]
+      },
+      {
+        "id": "trent-hardline",
+        "side": "CS",
+        "label": "Exploit the Trent crisis",
+        "shortLabel": "Trent pressure",
+        "unlockYear": 1861,
+        "summary": "Turn outrage over Mason and Slidell into a war scare that might force Britain closer.",
+        "playerTradeoff": "Raises intervention pressure sharply but also raises crisis risk and neutral resentment.",
+        "recognitionDelta": 3,
+        "interventionDelta": 8,
+        "crisisDelta": 16,
+        "goodwillDelta": -8,
+        "commerceDelta": 0,
+        "capitalCost": 3,
+        "moraleBridge": 1,
+        "supplyBridge": -1,
+        "fatigueBridge": 0,
+        "provenance": "Verified",
+        "sources": [
+          "U.S. Department of State, 'The Trent Affair, 1861'",
+          "National Park Service, 'The Trent Affair'",
+          "Amanda Foreman, A World on Fire (2010)"
+        ]
+      },
+      {
+        "id": "laird-rams-procurement",
+        "side": "CS",
+        "label": "Laird rams procurement",
+        "shortLabel": "Laird rams",
+        "unlockYear": 1863,
+        "summary": "Press British yards and agents for ironclad leverage against the blockade.",
+        "playerTradeoff": "Can raise commerce pressure and recognition hopes, but it risks diplomatic backlash and costs capital.",
+        "recognitionDelta": 5,
+        "interventionDelta": 4,
+        "crisisDelta": 12,
+        "goodwillDelta": -6,
+        "commerceDelta": 12,
+        "capitalCost": 4,
+        "moraleBridge": 1,
+        "supplyBridge": 1,
+        "fatigueBridge": 1,
+        "provenance": "Verified",
+        "sources": [
+          "U.S. Department of State, 'The Alabama Claims, 1862-1872'",
+          "Papers Relating to Foreign Affairs, 1864, correspondence on the Laird steam rams",
+          "Frank J. Merli, Great Britain and the Confederate Navy, 1861-1865 (1971)"
+        ]
+      }
+    ],
+    "debates": [
+      {
+        "id": "recognition-not-automatic",
+        "title": "Recognition was not automatic",
+        "summary": "Cotton mattered, but Britain and France weighed law, trade, slavery, war risk, European crises, and Confederate battlefield credibility. The system treats recognition as a pressure window, not a scripted prize.",
+        "provenance": "Verified",
+        "sources": [
+          "U.S. Department of State, 'Preventing Diplomatic Recognition of the Confederacy, 1861-1865'",
+          "Howard Jones, Union in Peril (1992)",
+          "Amanda Foreman, A World on Fire (2010)"
+        ]
+      },
+      {
+        "id": "no-great-power-savior",
+        "title": "No great-power savior",
+        "summary": "The Russian fleet strengthened Union morale and diplomacy but was not a secret alliance; the Laird rams were dangerous but not a clean route to victory. Great-power politics create pressure, not magic outcomes.",
+        "provenance": "Verified",
+        "sources": [
+          "U.S. Naval Institute Proceedings, 'Visit of Russian Squadrons in 1863'",
+          "U.S. Department of State, 'The Alabama Claims, 1862-1872'",
+          "Naval History and Heritage Command, 'The Russian Navy Visits the United States'"
+        ]
+      }
+    ]
+  },
   "numbersAudit": {
     "checks": [
       {

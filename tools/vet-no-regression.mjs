@@ -31,6 +31,7 @@ const SUITE = [
   ['under-told perspectives', 'tools/probe-under-told-perspectives.mjs'],
   ['flagship units', 'tools/probe-flagship-units.mjs'],
   ['cs finance', 'tools/probe-cs-finance.mjs'],
+  ['real diplomacy', 'tools/probe-real-diplomacy.mjs'],
   ['blockade', 'tools/probe-blockade.mjs'],
   ['manpower', 'tools/probe-manpower.mjs'],
   ['victory', 'tools/probe-victory.mjs'],

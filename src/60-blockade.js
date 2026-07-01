@@ -351,7 +351,7 @@ function blockadeRenderDiplomacy(C) {
     + '</div>'
     + '<div id="blkWhyBox" style="display:none;margin-top:10px;padding:10px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.12);font-size:12px;line-height:1.5"></div>';
 
-  return head + body + depthRow + btns;
+  return head + body + (typeof realDiplomacyTabBlock === "function" ? realDiplomacyTabBlock(C) : "") + depthRow + btns;
 }
 
 /* ---- blockadeWireDiplomacy: embargo toggle, depth cycle, delegate, teaching. ---- */
@@ -385,4 +385,5 @@ function blockadeWireDiplomacy(C) {
     else box.style.display = "none";
     why.setAttribute("aria-expanded", box.style.display !== "none" ? "true" : "false");
   });
+  if (typeof realDiplomacyWireDiplomacyTab === "function") realDiplomacyWireDiplomacyTab(C);
 }
