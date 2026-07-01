@@ -228,6 +228,27 @@ const SETUP = `(() => {
       if(!ep.related || ep.related.indexOf('emancipation-economic-revolution')<0) throw new Error('Emancipation Proclamation entry missing economic-revolution related link');
       return { election:el.id, finance:wf.id, women:wl.id, emancipationEconomics:er.id, milligan:mil.id }; });
 
+    step('M7 lived-slavery and Black combat-agency codex locks stay source-critical and readout-only', function(){
+      var ls=_cxById('slavery-as-lived-institution'), ba=_cxById('black-combat-agency'), usct=_cxById('united-states-colored-troops'), sec=_cxById('secession'), er=_cxById('emancipation-economic-revolution'), mp=_cxById('system-manpower-pool-usct');
+      if(!ls || !ba || !usct || !sec || !er || !mp) throw new Error('missing one or more M7 codex entries/links');
+      var lb=(ls.short||'')+' '+(ls.body||'');
+      ['Harriet Jacobs','Fountain Hughes','domestic slave trade','family separation','enslaved women','gendered violence','WPA','interviewer','pass','auction','Mississippi'].forEach(function(token){
+        if(lb.indexOf(token)<0) throw new Error('Slavery-as-lived-institution entry missing token: '+token);
+      });
+      if(!ls.related || ls.related.indexOf('secession')<0 || ls.related.indexOf('source-criticism')<0 || ls.related.indexOf('emancipation-economic-revolution')<0) throw new Error('Slavery-as-lived-institution missing M7 related links');
+      var bb=(ba.short||'')+' '+(ba.body||'');
+      ['Port Hudson','Battery Wagner','New Market Heights','Poison Spring','Crater','1st Kansas Colored','54th Massachusetts','Louisiana Native Guards','Medals of Honor','playable battle','separate queued milestone'].forEach(function(token){
+        if(bb.indexOf(token)<0) throw new Error('Black Combat Agency entry missing token: '+token);
+      });
+      if(!ba.related || ba.related.indexOf('united-states-colored-troops')<0 || ba.related.indexOf('54th-massachusetts-infantry')<0 || ba.related.indexOf('slavery-as-lived-institution')<0) throw new Error('Black Combat Agency missing M7 related links');
+      var ub=(usct.short||'')+' '+(usct.body||'');
+      ['Poison Spring','New Market Heights','Port Hudson','Battery Wagner'].forEach(function(token){ if(ub.indexOf(token)<0) throw new Error('USCT entry missing M7 token: '+token); });
+      if(!usct.related || usct.related.indexOf('black-combat-agency')<0 || usct.related.indexOf('slavery-as-lived-institution')<0 || usct.related.indexOf('emancipation-economic-revolution')<0) throw new Error('USCT entry missing M7 related links');
+      if(!sec.related || sec.related.indexOf('slavery-as-lived-institution')<0) throw new Error('Secession entry missing lived-slavery related link');
+      if(!er.related || er.related.indexOf('black-combat-agency')<0 || er.related.indexOf('slavery-as-lived-institution')<0) throw new Error('Emancipation economic revolution missing M7 links');
+      if(!mp.related || mp.related.indexOf('black-combat-agency')<0 || mp.related.indexOf('united-states-colored-troops')<0) throw new Error('Manpower USCT system missing M7 links');
+      return { livedSlavery:ls.id, combatAgency:ba.id }; });
+
     step('render is a PURE read-out (no campaign mutation, no save)', function(){
       // codex render/wire must not require or mutate a campaign — they run with G.campaign null
       var before=G.campaign;

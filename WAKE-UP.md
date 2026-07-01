@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-07-01: **GRADUATE-HISTORY PASS M7 SHIPPED — LIVED-SLAVERY + BLACK COMBAT AGENCY (D187).**
+
+**Newest (D187, 2026-07-01):** M7 of the authorized graduate-history build-out is complete as a pure teaching/readout milestone. The Documents reader now has a **Lived slavery & resistance** lane with exact-excerpt cards for Harriet Jacobs and Fountain Hughes.
+
+**What changed:** `data/codex.json` adds **Slavery as a Lived Institution** and **Black Combat Agency**. Existing USCT, 54th Massachusetts, contraband, secession, emancipation-economics, and USCT manpower cards now cross-link the lived institution, slave-capital economics, self-emancipation, Black enlistment, Port Hudson, Battery Wagner, 1st Kansas / Poison Spring, the Crater, and New Market Heights. This is source/readout work only; playable USCT battles remain later.
+
+**Verified:** JSON parse for primary sources/codex; `node --check` for touched source/probe files; build **GATE OK** (no-fudge ✓, citations ✓, women-in-war ✓); focused `probe-primary-sources` 14/0 and `probe-codex` 23/0; adjacent `probe-h0-president-desk` 3/3; JSON readback clean; `git diff --check` clean. Full `npm run vet:noreg` deferred under D176.
+
+**Next recommended run:** **CS finance toolkit** (Erlanger loan, cotton bonds, impressment, produce loan, printing spiral). After that, continue real diplomacy system -> human-cost-with-gravity -> Western-theater strategic readouts -> planned batch/release gate. M8 battle-build track still needs an Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-01: **GRADUATE-HISTORY PASS M6 SHIPPED — HOME-FRONT POLITICS/ECONOMY (D185).**
 
 **Newest (D185, 2026-07-01):** M6 of the authorized graduate-history build-out is complete as a pure teaching/readout milestone. The Documents reader now has a **Home front, politics & economy** lane with exact-excerpt cards for Lincoln's 1864 blind memorandum and the 1862 Legal Tender Act.
@@ -6,7 +18,7 @@
 
 **Verified:** JSON parse/word-cap/related-link smoke; `node --check` for touched source/probe files; build **GATE OK** (no-fudge ✓, citations ✓, women-in-war ✓); focused `probe-primary-sources` 13/0, `probe-codex` 22/0, and `probe-economy` 8/0; adjacent `probe-h0-president-desk` 3/3; JSON readback clean; `git diff --check` clean. Full `npm run vet:noreg` deferred under D176.
 
-**Next recommended run:** **M7 — lived-slavery + Black combat-agency** from `.tmp/civil-war-phd-execution-brief.md` and `.tmp/civil-war-history-audit-and-phd-plan.md`. After M7, continue CS finance toolkit -> real diplomacy system -> human-cost-with-gravity -> Western-theater strategic readouts -> planned batch/release gate. M8 battle-build track still needs an Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+**Then-next, now shipped as D187:** **M7 — lived-slavery + Black combat-agency** from `.tmp/civil-war-phd-execution-brief.md` and `.tmp/civil-war-history-audit-and-phd-plan.md`. After D187, continue CS finance toolkit -> real diplomacy system -> human-cost-with-gravity -> Western-theater strategic readouts -> planned batch/release gate. M8 battle-build track still needs an Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
 
 ---
 

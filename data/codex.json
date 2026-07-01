@@ -619,7 +619,8 @@
       ],
       "related": [
         "united-states-colored-troops",
-        "corps-division-brigade-regiment"
+        "corps-division-brigade-regiment",
+        "black-combat-agency"
       ],
       "provenance": "Verified",
       "sources": [
@@ -842,7 +843,7 @@
       "axis": "units",
       "term": "United States Colored Troops (USCT)",
       "short": "Federally organized regiments of Black soldiers (est. 1863); roughly 180,000 Black men served, about 10% of the Union Army.",
-      "body": "The United States Colored Troops were federally organized regiments of Black soldiers, established under the War Department's Bureau of Colored Troops (General Order No. 143) on May 22, 1863, after the Emancipation Proclamation opened enlistment. Roughly 180,000 Black men served in about 175 USCT regiments — close to a tenth of the Union Army — most led by white officers, and they fought at engagements such as Port Hudson, Battery Wagner, the Crater, and New Market Heights. They faced unequal pay until 1864 and the threat of enslavement or murder if captured, made horrifically real when Forrest's Confederates massacred surrendering Black troops at Fort Pillow on April 12, 1864.",
+      "body": "The United States Colored Troops were federally organized regiments of Black soldiers, established under the War Department's Bureau of Colored Troops (General Order No. 143) on May 22, 1863, after the Emancipation Proclamation opened enlistment. Roughly 180,000 Black men served in about 175 USCT regiments — close to a tenth of the Union Army — most led by white officers. Black combat agency reached beyond a single famous regiment: Louisiana Native Guards fought at Port Hudson, the 54th Massachusetts led the Battery Wagner assault, the 1st Kansas Colored fought at Island Mound and Poison Spring before later USCT reorganization, USCT regiments suffered at the Crater, and USCT brigades won honors at New Market Heights. They faced unequal pay until 1864 and the threat of enslavement or murder if captured, made horrifically real when Forrest's Confederates massacred surrendering Black troops at Fort Pillow on April 12, 1864.",
       "tags": [
         "union",
         "infantry",
@@ -851,11 +852,18 @@
       ],
       "related": [
         "54th-massachusetts-infantry",
-        "corps-division-brigade-regiment"
+        "corps-division-brigade-regiment",
+        "black-combat-agency",
+        "slavery-as-lived-institution",
+        "emancipation-economic-revolution",
+        "system-manpower-pool-usct"
       ],
       "provenance": "Verified",
       "sources": [
         "National Archives, \"Black Soldiers in the U.S. Military During the Civil War,\" https://www.archives.gov/education/lessons/blacks-civil-war",
+        "National Park Service, \"The 54th Massachusetts and the Second Battle of Fort Wagner,\" https://www.nps.gov/articles/the-54th-massachusetts-and-the-second-battle-of-fort-wagner.htm",
+        "National Park Service, \"First to Serve: 1st Kansas Colored Volunteer Infantry Regiment,\" https://www.nps.gov/fosc/learn/historyculture/firsttoserve.htm",
+        "National Park Service, \"African-Americans at the Siege,\" Petersburg National Battlefield, https://www.nps.gov/pete/learn/historyculture/african-americans-at-the-siege.htm",
         "James M. McPherson, Battle Cry of Freedom (Oxford University Press, 1988)"
       ]
     },
@@ -903,12 +911,72 @@
       "related": [
         "emancipation-proclamation",
         "secession",
-        "hard-war"
+        "hard-war",
+        "slavery-as-lived-institution"
       ],
       "provenance": "Verified",
       "sources": [
         "National Park Service, \"Fort Monroe and the 'Contrabands of War,'\" https://www.nps.gov/articles/fort-monroe-and-the-contrabands-of-war.htm",
         "Adam Goodheart, 1861: The Civil War Awakening (Alfred A. Knopf, 2011)"
+      ]
+    },
+    {
+      "id": "slavery-as-lived-institution",
+      "axis": "terms",
+      "term": "Slavery as a Lived Institution",
+      "short": "The everyday regime behind secession: ownership, sale, pass control, family rupture, gendered violence, labor coercion, and resistance.",
+      "body": "Secession documents explain why Confederate leaders left the Union; first-person accounts explain what the protected institution did to people. Slavery was not an abstraction or only plantation labor. It was law-backed ownership, the domestic slave trade, auction sale, pass and patrol control of movement, family separation, sexual vulnerability and gendered violence against enslaved women, punishment, coerced labor, and everyday resistance. Harriet Jacobs made enslaved women's danger central to the record, while Fountain Hughes remembered passes, auction sale, and belonging to another person. The teaching guardrail is to connect Mississippi's Declaration of Causes to lived experience: the Confederacy fought to protect a slave-capital and labor system made of human beings under force. WPA and other oral-history interviews still need source criticism; age, memory, interviewer power, transcription, and publication setting shape what survives.",
+      "tags": [
+        "both",
+        "slavery",
+        "memory",
+        "source-criticism",
+        "causes"
+      ],
+      "related": [
+        "secession",
+        "contraband-of-war",
+        "emancipation-economic-revolution",
+        "source-criticism",
+        "united-states-colored-troops"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Harriet Jacobs, Incidents in the Life of a Slave Girl, UNC Documenting the American South, https://docsouth.unc.edu/fpn/jacobs/jacobs.html",
+        "Harriet Jacobs, Incidents in the Life of a Slave Girl, Project Gutenberg, https://www.gutenberg.org/files/11030/11030-h/11030-h.htm",
+        "Library of Congress, \"Interview with Fountain Hughes, Baltimore, Maryland, June 11, 1949,\" https://www.loc.gov/item/afc1950037_afs09990a/",
+        "Encyclopedia Virginia, \"An interview with Fountain Hughes (1949),\" https://encyclopediavirginia.org/primary-documents/an-interview-with-fountain-hughes-1949/",
+        "Stephanie M. H. Camp, Closer to Freedom: Enslaved Women and Everyday Resistance in the Plantation South (University of North Carolina Press, 2004)"
+      ]
+    },
+    {
+      "id": "black-combat-agency",
+      "axis": "terms",
+      "term": "Black Combat Agency",
+      "short": "Black soldiers were strategic actors who fought, recruited, resisted unequal treatment, and forced the war for Union toward freedom.",
+      "body": "Black combat agency means Black soldiers were not just evidence in white debates about race; they chose, demanded, organized, fought, and made military facts that changed the war. The Louisiana Native Guards at Port Hudson gave Black soldiers one of the first major Civil War combat tests. The 54th Massachusetts at Battery Wagner turned sacrifice into national recruitment momentum. The 1st Kansas Colored fought at Island Mound and later at Poison Spring, where capture by Confederates carried the risk of execution or reenslavement. At the Crater, USCT troops had trained to lead the assault, were replaced for political reasons, entered as reserves, advanced farther than other Federal units, and suffered massacre and heavy casualties. At New Market Heights, USCT brigades fought through abatis and fire; fourteen Black soldiers received Medals of Honor. This is a teaching/readout lock now, not a new playable battle: the later USCT playable-battle lane remains a separate queued milestone.",
+      "tags": [
+        "union",
+        "usct",
+        "emancipation",
+        "battlefield",
+        "agency"
+      ],
+      "related": [
+        "united-states-colored-troops",
+        "54th-massachusetts-infantry",
+        "system-manpower-pool-usct",
+        "emancipation-economic-revolution",
+        "slavery-as-lived-institution"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "National Park Service, \"The Siege of Port Hudson: Forty Days and Nights in the Wilderness of Death,\" https://www.nps.gov/articles/the-siege-of-port-hudson-forty-days-and-nights-in-the-wilderness-of-death-teaching-with-historic-places.htm",
+        "National Park Service, \"The 54th Massachusetts and the Second Battle of Fort Wagner,\" https://www.nps.gov/articles/the-54th-massachusetts-and-the-second-battle-of-fort-wagner.htm",
+        "National Park Service, \"First to Serve: 1st Kansas Colored Volunteer Infantry Regiment,\" https://www.nps.gov/fosc/learn/historyculture/firsttoserve.htm",
+        "National Park Service, \"African-Americans at the Siege,\" Petersburg National Battlefield, https://www.nps.gov/pete/learn/historyculture/african-americans-at-the-siege.htm",
+        "National Park Civil War Series, The Civil War's Black Soldiers, \"On the Battlefield,\" https://www.npshistory.com/publications/civil_war_series/2/sec18.htm",
+        "American Battlefield Trust, \"The United States Colored Troops at the Battle of New Market Heights,\" https://www.battlefields.org/learn/articles/united-states-colored-troops-battle-new-market-heights"
       ]
     },
     {
@@ -1093,7 +1161,7 @@
       "axis": "systems",
       "term": "Emancipation as Economic Revolution",
       "short": "Emancipation destroyed the South's largest capital asset and moved labor, enlistment, and bargaining power toward freedom.",
-      "body": "Emancipation was an economic revolution as well as a moral and military one. On the eve of the war, the market value of enslaved people exceeded the invested value of the nation's railroads, factories, and banks combined; the game economy data carries that slave-capital shock at about $3.0 billion. The Emancipation Proclamation, self-emancipation, contraband camps, Black enlistment, and USCT service attacked that capital base while moving labor and bargaining power toward freedom. Du Bois called the mass withdrawal of enslaved labor from the Confederate war effort a general strike, a frame that keeps Black agency visible instead of reducing emancipation to a Lincoln-only decree. The result was a double transformation: the Confederacy lost coerced labor and capital, while the Union gained workers, soldiers, intelligence, and a new constitutional claim on national freedom.",
+      "body": "Emancipation was an economic revolution as well as a moral and military one. On the eve of the war, the market value of enslaved people exceeded the invested value of the nation's railroads, factories, and banks combined; the game economy data carries that slave-capital shock at about $3.0 billion. The Emancipation Proclamation, self-emancipation, contraband camps, Black enlistment, and USCT service attacked that capital base while moving labor and bargaining power toward freedom. Du Bois called the mass withdrawal of enslaved labor from the Confederate war effort a general strike, a frame that keeps Black agency visible instead of reducing emancipation to a Lincoln-only decree. Lived-slavery sources keep the economics honest: slave capital was not just a balance-sheet asset but people held by pass control, auction sale, family rupture, sexual vulnerability, and coercive labor. The result was a double transformation: the Confederacy lost coerced labor and capital, while the Union gained workers, soldiers, intelligence, and a new constitutional claim on national freedom.",
       "tags": [
         "both",
         "emancipation",
@@ -1106,7 +1174,9 @@
         "contraband-of-war",
         "age-of-emancipation",
         "second-founding",
-        "greenbacks-and-wartime-inflation"
+        "greenbacks-and-wartime-inflation",
+        "slavery-as-lived-institution",
+        "black-combat-agency"
       ],
       "provenance": "Verified",
       "sources": [
@@ -1376,7 +1446,8 @@
       "related": [
         "the-lost-cause",
         "emancipation-proclamation",
-        "election-of-1864"
+        "election-of-1864",
+        "slavery-as-lived-institution"
       ],
       "provenance": "Verified",
       "sources": [
@@ -1705,7 +1776,7 @@
       "axis": "systems",
       "term": "The Manpower Pool & USCT Enlistment",
       "short": "The reserve of men each side could raise; emancipation opened ~180,000 Black soldiers to the Union, a decisive demographic advantage.",
-      "body": "The Civil War was won and lost partly as an arithmetic of manpower, and the Union held the larger free population. After the Emancipation Proclamation took effect January 1, 1863, the War Department's General Order 143 (May 22, 1863) created the Bureau of Colored Troops, and roughly 180,000 Black men, most of them formerly enslaved, served in the United States Colored Troops, about one-tenth of the Union army. These soldiers faced the Confederacy's policy of refusing them quarter, exemplified by the April 1864 Fort Pillow massacre of surrendered Black troops under Nathan Bedford Forrest, who would later become an early leader of the Ku Klux Klan. In the game this system shows that arming the enslaved was both a moral turn and a strategic one: it widened the Union manpower pool the Confederacy could never match, because the South's own labor force was the people it fought to keep enslaved.",
+      "body": "The Civil War was won and lost partly as an arithmetic of manpower, and the Union held the larger free population. After the Emancipation Proclamation took effect January 1, 1863, the War Department's General Order 143 (May 22, 1863) created the Bureau of Colored Troops, and roughly 180,000 Black men, most of them formerly enslaved, served in the United States Colored Troops, about one-tenth of the Union army. This was not only a headcount. Black combat agency turned manpower into battlefield leverage at Port Hudson, Battery Wagner, the Crater, New Market Heights, and in state-raised units such as the 1st Kansas Colored before its later USCT reorganization. These soldiers faced the Confederacy's policy of refusing them quarter, exemplified by the April 1864 Fort Pillow massacre of surrendered Black troops under Nathan Bedford Forrest, who would later become an early leader of the Ku Klux Klan. In the game this system shows that arming the enslaved was both a moral turn and a strategic one: it widened the Union manpower pool the Confederacy could never match, because the South's own labor force was the people it fought to keep enslaved.",
       "tags": [
         "union",
         "confederate",
@@ -1717,12 +1788,16 @@
       ],
       "related": [
         "system-political-capital-home-front",
-        "system-grand-strategy-to-battlefield"
+        "system-grand-strategy-to-battlefield",
+        "united-states-colored-troops",
+        "black-combat-agency",
+        "emancipation-economic-revolution"
       ],
       "provenance": "Verified",
       "sources": [
         "National Archives, 'Black Soldiers in the U.S. Military During the Civil War', https://www.archives.gov/education/lessons/blacks-civil-war/article.html",
-        "American Battlefield Trust, 'The United States Colored Troops', https://www.battlefields.org/learn/articles/united-states-colored-troops"
+        "American Battlefield Trust, 'The United States Colored Troops', https://www.battlefields.org/learn/articles/united-states-colored-troops",
+        "National Park Service, 'African-Americans at the Siege,' Petersburg National Battlefield, https://www.nps.gov/pete/learn/historyculture/african-americans-at-the-siege.htm"
       ]
     },
     {

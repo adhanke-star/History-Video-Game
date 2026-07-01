@@ -2,7 +2,7 @@
   "_meta": {
     "schema": "cw_primary_sources_v1",
     "purpose": "Short primary-source document cards for the President's Desk Read the Document surface. Excerpts are capped for classroom use; sourceCritique records transcription and locator caveats.",
-    "compiled": "D185 M6 home-front politics/economy primary-source lane"
+    "compiled": "D187 M7 lived-slavery and Black combat-agency primary-source lane"
   },
   "schema": "cw_primary_sources_v1",
   "categories": [
@@ -20,6 +20,11 @@
       "id": "black-soldier-agency",
       "label": "Black freedom struggle",
       "blurb": "Black soldiers and recruiters arguing for freedom, service, pay, and dignity in their own words."
+    },
+    {
+      "id": "lived-slavery-agency",
+      "label": "Lived slavery & resistance",
+      "blurb": "First-person accounts that show slavery as lived control, gendered violence, family separation, sale, movement restriction, and remembered resistance."
     },
     {
       "id": "reconstruction-memory",
@@ -277,6 +282,62 @@
           "repository": "DocsTeach / National Archives",
           "locator": "Record Group 94, Records of the Adjutant General's Office",
           "url": "https://www.docsteach.org/documents/document/gooding-lincoln-equal-pay"
+        }
+      ]
+    },
+    {
+      "id": "ps-jacobs-enslaved-women",
+      "category": "lived-slavery-agency",
+      "title": "Harriet Jacobs on enslaved women",
+      "author": "Harriet Jacobs",
+      "date": "1861",
+      "place": "Boston, Massachusetts",
+      "provenance": "Verified",
+      "verbatimExcerpt": "Slavery is terrible for men; but it is far more terrible for women. Superadded to the burden common to all, they have wrongs, and sufferings, and mortifications peculiarly their own.",
+      "attribution": "Repository: UNC Documenting the American South and Project Gutenberg. Locator: Incidents in the Life of a Slave Girl, Chapter XIV, Another Link To Life.",
+      "sourceCritique": "Published under Jacobs's pseudonym Linda Brent and edited by L. Maria Child. The excerpt follows the Gutenberg text; DocSouth carries the same wording with minor spacing differences.",
+      "indictment": "Jacobs made enslaved women's sexual vulnerability, family claims, and bodily danger central to what slavery meant in daily life.",
+      "catalystFrame": "",
+      "sources": [
+        {
+          "title": "Incidents in the Life of a Slave Girl",
+          "repository": "UNC Documenting the American South",
+          "locator": "Chapter XIV, Another Link To Life",
+          "url": "https://docsouth.unc.edu/fpn/jacobs/jacobs.html"
+        },
+        {
+          "title": "Incidents in the Life of a Slave Girl",
+          "repository": "Project Gutenberg",
+          "locator": "Chapter XIV, Another Link To Life",
+          "url": "https://www.gutenberg.org/files/11030/11030-h/11030-h.htm"
+        }
+      ]
+    },
+    {
+      "id": "ps-fountain-hughes-auction-pass",
+      "category": "lived-slavery-agency",
+      "title": "Fountain Hughes on passes and sale",
+      "author": "Fountain Hughes",
+      "date": "June 11, 1949 interview",
+      "place": "Baltimore, Maryland",
+      "provenance": "Verified",
+      "verbatimExcerpt": "We belonged to people. They'd sell us like they sell horses and cows and hogs and all like that.",
+      "attribution": "Repository: Library of Congress and Encyclopedia Virginia. Locator: Interview with Fountain Hughes, Baltimore, Maryland, June 11, 1949; auction and pass-control passage.",
+      "sourceCritique": "This is an elderly formerly enslaved person's recorded 1949 oral-history interview, not a wartime document. The card follows the LOC PDF wording; Encyclopedia Virginia normalizes some apostrophes and line breaks.",
+      "indictment": "Hughes remembered slavery as ownership, movement control through passes, auction sale, and the threat of forced labor after emancipation.",
+      "catalystFrame": "",
+      "sources": [
+        {
+          "title": "Interview with Fountain Hughes, Baltimore, Maryland, June 11, 1949",
+          "repository": "Library of Congress, American Folklife Center",
+          "locator": "Voices from the Days of Slavery transcript",
+          "url": "https://www.loc.gov/item/afc1950037_afs09990a/"
+        },
+        {
+          "title": "An interview with Fountain Hughes (1949)",
+          "repository": "Encyclopedia Virginia",
+          "locator": "Primary-document transcript, auction passage",
+          "url": "https://encyclopediavirginia.org/primary-documents/an-interview-with-fountain-hughes-1949/"
         }
       ]
     },

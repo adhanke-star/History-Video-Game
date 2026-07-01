@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import "./guard-probe-browser.mjs";
-// tools/probe-primary-sources.mjs - M2/M3/M4/M6 primary-source apparatus gate.
+// tools/probe-primary-sources.mjs - M2/M3/M4/M6/M7 primary-source apparatus gate.
 // Verifies schema/quote/provenance invariants; the President's Desk "Documents"
 // tab render/wire path; client-side filters/search; and the pure-readout wall.
 import { chromium } from 'playwright-core';
@@ -25,10 +25,10 @@ function validatePrimarySourcesData() {
   const data = JSON.parse(readFileSync(join(ROOT, 'data', 'primary-sources.json'), 'utf8'));
   const errors = [];
   if (data.schema !== 'cw_primary_sources_v1') errors.push('schema must be cw_primary_sources_v1');
-  if (!Array.isArray(data.records) || data.records.length < 18) errors.push('expected at least 18 records');
+  if (!Array.isArray(data.records) || data.records.length < 20) errors.push('expected at least 20 records');
   const ids = new Set();
   const cats = new Set((data.categories || []).map(c => c && c.id).filter(Boolean));
-  let confed = 0, verified = 0, reconstruction = 0, sourceCriticism = 0, homeFront = 0;
+  let confed = 0, verified = 0, reconstruction = 0, sourceCriticism = 0, homeFront = 0, livedSlavery = 0;
   for (const rec of data.records || []) {
     const id = rec && rec.id;
     if (!id) { errors.push('record missing id'); continue; }
@@ -58,6 +58,7 @@ function validatePrimarySourcesData() {
     if (rec.category === 'reconstruction-memory') reconstruction++;
     if (rec.category === 'source-criticism-voices') sourceCriticism++;
     if (rec.category === 'home-front-politics-economy') homeFront++;
+    if (rec.category === 'lived-slavery-agency') livedSlavery++;
   }
   if (confed < 5) errors.push('expected at least 5 Confederate self-justification records, got ' + confed);
   for (const rid of ['ps-mississippi-black-code-apprentice','ps-elias-hill-kkk-hearings','ps-douglass-black-man-wants']) {
@@ -72,7 +73,11 @@ function validatePrimarySourcesData() {
     if (!ids.has(rid)) errors.push('missing M6 home-front/politics/economy record: ' + rid);
   }
   if (homeFront < 2) errors.push('expected at least 2 home-front/politics/economy records, got ' + homeFront);
-  return { ok: errors.length === 0, errors, records: (data.records || []).length, verified, confed, reconstruction, sourceCriticism, homeFront };
+  for (const rid of ['ps-jacobs-enslaved-women','ps-fountain-hughes-auction-pass']) {
+    if (!ids.has(rid)) errors.push('missing M7 lived-slavery record: ' + rid);
+  }
+  if (livedSlavery < 2) errors.push('expected at least 2 lived-slavery records, got ' + livedSlavery);
+  return { ok: errors.length === 0, errors, records: (data.records || []).length, verified, confed, reconstruction, sourceCriticism, homeFront, livedSlavery };
 }
 
 function staticPrimarySourceLeakScan() {
@@ -194,6 +199,21 @@ const SETUP = `(() => {
       if(tender!==1) throw new Error('legal tender search should show 1 card, got '+tender);
       return { shown:shown, lincoln:lincoln, legalTender:tender }; });
 
+    step('M7 lived-slavery lane filters to Jacobs and Hughes records with source-critique anchors', function(){
+      mount(primarySourcesRenderTab(null)); primarySourcesWireTab(null);
+      _psApplyFilter('', 'lived-slavery-agency');
+      var shown=visible('.ps-card');
+      if(shown<2) throw new Error('lived-slavery filter showed '+shown+' expected at least 2');
+      var text=(document.getElementById('psList')||{}).textContent||'';
+      ['Harriet Jacobs','Fountain Hughes','far more terrible for women','sell us like they sell horses','oral-history interview'].forEach(function(token){ if(text.indexOf(token)<0) throw new Error('missing M7 visible token: '+token); });
+      _psApplyFilter('auction', 'lived-slavery-agency');
+      var auction=visible('.ps-card');
+      if(auction!==1) throw new Error('auction search should show 1 card, got '+auction);
+      _psApplyFilter('enslaved women', 'lived-slavery-agency');
+      var women=visible('.ps-card');
+      if(women!==1) throw new Error('enslaved women search should show 1 card, got '+women);
+      return { shown:shown, auction:auction, women:women }; });
+
     step('Desk dispatch: _wdTab=sources renders Documents and another tab clears it', function(){
       if(typeof _wdRefresh!=='function') throw new Error('_wdRefresh missing');
       var C=mkC();
@@ -260,7 +280,7 @@ const SETUP = `(() => {
     result.staticData = staticData;
     result.staticScan = staticScan;
     if (!staticData.ok) { result.ok = false; for (const err of staticData.errors) result.steps.push({ name:'STATIC DATA: primary-sources schema', ok:false, err }); }
-    else { result.steps.push({ name:'STATIC DATA: primary-sources schema', ok:true, v:{ records: staticData.records, verified: staticData.verified, confed: staticData.confed, reconstruction: staticData.reconstruction, sourceCriticism: staticData.sourceCriticism, homeFront: staticData.homeFront } }); }
+    else { result.steps.push({ name:'STATIC DATA: primary-sources schema', ok:true, v:{ records: staticData.records, verified: staticData.verified, confed: staticData.confed, reconstruction: staticData.reconstruction, sourceCriticism: staticData.sourceCriticism, homeFront: staticData.homeFront, livedSlavery: staticData.livedSlavery } }); }
     if (staticScan.leaks.length) { result.ok = false; result.steps.push({ name:'STATIC SCAN: no combat/bridge/save path reads primary sources', ok:false, err:'primary-source read by: '+staticScan.leaks.join(', ') }); }
     else { result.steps.push({ name:'STATIC SCAN: no combat/bridge/save path reads primary sources', ok:true, v:{ scanned: staticScan.scanned } }); }
     await page.evaluate(() => { if (typeof _wdRefresh === 'function') { _wdTab = 'sources'; _wdRefresh(); } });

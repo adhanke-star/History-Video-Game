@@ -1,5 +1,5 @@
 /* ===========================================================================
-   M2/M3/M4/M6 · 68-primary-sources.js — "Read the Document" primary-source apparatus.
+   M2/M3/M4/M6/M7 · 68-primary-sources.js — "Read the Document" primary-source apparatus.
 
    Data: data/primary-sources.json -> GAME_DATA["primary-sources"]. Renders short,
    citation-grade document cards in the President's Desk. Confederate
@@ -23,6 +23,7 @@ var _PS_CAT_FALLBACK = [
   { id: "confederate-self-justification", label: "Confederacy in its own words", col: "#d8b48a", blurb: "Documents that name slavery, white supremacy, or the Black-soldier contradiction from inside Confederate politics." },
   { id: "union-war-power", label: "Union war power", col: "#9fb8d4", blurb: "Federal documents that made emancipation and Black service a war power." },
   { id: "black-soldier-agency", label: "Black freedom struggle", col: "#9fc3b0", blurb: "Black soldiers and recruiters arguing for freedom, service, pay, and dignity." },
+  { id: "lived-slavery-agency", label: "Lived slavery & resistance", col: "#c99386", blurb: "First-person accounts of lived control, gendered violence, family separation, sale, movement restriction, and resistance." },
   { id: "reconstruction-memory", label: "Reconstruction & memory", col: "#cbb27a", blurb: "Black citizenship claims, Black Codes, Klan terror, and the making of Civil War memory." },
   { id: "source-criticism-voices", label: "Source criticism & under-told voices", col: "#b6a4cf", blurb: "Documents that teach edition, manuscript, interview, memory, and viewpoint limits." },
   { id: "home-front-politics-economy", label: "Home front, politics & economy", col: "#b8c07a", blurb: "Election, money, labor, and wartime state-building documents that show the home front as a battlefield." }
