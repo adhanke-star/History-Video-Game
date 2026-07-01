@@ -1,0 +1,95 @@
+{
+  "_comment": "D190 Group 4 bounded human-cost treatment. This is a War Effort teaching/readout slice, not a battle system, not a morale exploit, and not a death-as-resource lever. It aggregates the campaign's existing casualty, disease, prisoner, displacement, and public-will ledgers beside sourced historical scale anchors.",
+  "schema": "cw_human_cost_v1",
+  "schemaVersion": "1.0",
+  "historicalScale": {
+    "traditionalDeaths": 620000,
+    "revisedDeaths": 750000,
+    "rangeLow": 650000,
+    "rangeHigh": 850000,
+    "diseaseSharePct": 66,
+    "label": "Estimated Civil War military deaths",
+    "provenance": "Verified",
+    "sources": [
+      "HISTORICAL-DATA.md, Medicine and the Scale of Death section, citing J. David Hacker's 2011 census-based estimate and the 650,000-850,000 range.",
+      "data/disease-medical.json, Faust and the work of death debate card, citing J. David Hacker, Civil War History 57, no. 4 (2011), and Drew Gilpin Faust, This Republic of Suffering (2008)."
+    ]
+  },
+  "profile": {
+    "name": "Human Cost Ledger",
+    "summary": "A live, restrained War Effort readout that keeps the war's scale visible: battlefield losses, sickness, disease deaths, prisoner deaths, displacement, and public will appear together without turning suffering into spectacle.",
+    "teaching": "Civil War cost cannot be reduced to a scoreboard. The campaign ledger is a model output; the historical death toll is an estimate with a range; both should push the player toward scale, uncertainty, and named human consequence rather than triumphal arithmetic.",
+    "provenance": "Verified",
+    "sources": [
+      "HISTORICAL-DATA.md, Medicine and the Scale of Death and Confidence-tiered fact economy sections.",
+      "src/82-after-action.js, historical human-cost anchor citing Hacker 2011 and McPherson.",
+      "data/disease-medical.json, Faust and the work of death debate card."
+    ]
+  },
+  "anchors": [
+    {
+      "id": "estimated-not-counted",
+      "label": "Estimated, not counted cleanly",
+      "summary": "The old classroom figure of about 620,000 deaths is now often set beside Hacker's census-based estimate near 750,000, with a plausible range of 650,000-850,000. The range matters as much as the headline.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA.md, Medicine and the Scale of Death section.",
+        "data/codex.json source-criticism entry, citing J. David Hacker's census-based Civil War death estimate."
+      ]
+    },
+    {
+      "id": "disease-before-romance",
+      "label": "Disease before battlefield romance",
+      "summary": "Roughly two-thirds of Civil War soldier deaths came from disease rather than battlefield wounds. Dysentery, typhoid, malaria, measles, pneumonia, camp crowding, and supply failure belong in any honest war ledger.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA.md, Medicine and the Scale of Death section.",
+        "data/disease-medical.json disease-death practice card."
+      ]
+    },
+    {
+      "id": "work-of-death",
+      "label": "The work of death",
+      "summary": "Faust's work shows mass death as labor: identifying bodies, notifying families, embalming, burying, reburying, mourning, and creating national cemeteries. The number is only the start of the history.",
+      "provenance": "Verified",
+      "sources": [
+        "data/disease-medical.json Faust and the work of death debate card.",
+        "Drew Gilpin Faust, This Republic of Suffering: Death and the American Civil War (Alfred A. Knopf, 2008).",
+        "National Park Service, Civil War National Cemeteries source trail recorded in data/disease-medical.json."
+      ]
+    },
+    {
+      "id": "home-front-names",
+      "label": "Families felt the ledger",
+      "summary": "Letters, pension files, hospitals, burial grounds, and veteran memory carried the cost home. Treating casualties as anonymous exchange ratios is useful for a battle model, but incomplete as history.",
+      "provenance": "Verified",
+      "sources": [
+        "data/primary-sources.json William Dwyer letter record, preserved through a dependent mother's pension-file transcript.",
+        "data/disease-medical.json Faust and the work of death debate card.",
+        "src/82-after-action.js Soldier's Story and human-cost report panels."
+      ]
+    }
+  ],
+  "debates": [
+    {
+      "id": "numbers-and-names",
+      "title": "Numbers and names",
+      "summary": "A strategy game needs counts, ratios, and trend lines. The history needs the player to remember that each count stands for bodies, families, graves, and communities. This readout keeps both truths visible.",
+      "provenance": "Verified",
+      "sources": [
+        "HISTORICAL-DATA.md, recommended in-game pedagogical structure on confidence-tiered fact economy.",
+        "data/disease-medical.json Faust and the work of death debate card."
+      ]
+    },
+    {
+      "id": "gravity-not-spectacle",
+      "title": "Gravity, not spectacle",
+      "summary": "The module deliberately adds no victory points, no battle buffs, no death animations, and no collectible reward. It records cost already produced by the war and places it beside sourced historical scale.",
+      "provenance": "Verified",
+      "sources": [
+        "START-HERE.md Universal AI implementer standards requiring Civil War gravity and no glamorizing death or the Confederacy.",
+        "V1-CHECKLIST.md Group 4 non-battle system guardrails and D74/D176 no-fudge focused-gate requirements."
+      ]
+    }
+  ]
+}

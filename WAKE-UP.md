@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-07-01: **GROUP 4 HUMAN COST WITH GRAVITY TREATMENT SHIPPED (D190).**
+
+**Newest (D190, 2026-07-01):** The human-cost-with-gravity treatment is complete as a bounded Group 4 non-battle readout. It makes the war's death scale legible through sourced anchors: the old 620,000 figure, Hacker's roughly 750,000 revision, an uncertainty range, disease deaths, mourning/cemeteries/pensions, names, and Faust work-of-death framing.
+
+**What changed:** `data/human-cost.json` now carries `humanCost`; `src/72-human-cost.js` adds readout-only state sanitation, a snapshot over existing ledgers, an exact-zero bridge sentinel, a capped resolve log, and War Effort/H0 Desk blocks. It wires through the manifest, lifecycle, H0 Desk, focused probe, and future batch suite. It adds no priority lever and writes no bridge/direct-overall, tactical/OOB, winner, casualty, scoreboard, or battle-output state.
+
+**Verified:** JSON parse for human-cost and manifest; `node --check` for touched source/probe/suite files; build **GATE OK** (no-fudge ✓, citations ✓, women-in-war ✓) with the existing raw-embed soft warning; focused `probe-human-cost` 7/0; adjacent `probe-disease-medical` green artifact 8/0 despite a post-artifact wrapper hang that was manually stopped, `probe-bridge` 6/0, and `probe-h0-president-desk` 3/3; JSON readback clean; `git diff --check` clean. Full `npm run vet:noreg` deferred under D176.
+
+**Next recommended run:** **Western-theater strategic readouts** as bounded Group 4 non-battle readouts, then the planned batch/release gate. M8 battle-build track still needs an Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-01: **GROUP 4 REAL DIPLOMACY SYSTEM SHIPPED (D189).**
 
 **Newest (D189, 2026-07-01):** The real diplomacy system is complete as a bounded Group 4 non-battle system. It adds War Effort and Diplomacy-tab levers for Mason/Slidell recognition work, the Trent Affair, 1862 mediation pressure, Laird rams, the Russian fleet, and King Wheat vs cotton diplomacy.
