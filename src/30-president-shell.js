@@ -128,6 +128,7 @@ function _wdRefresh() {
       if (typeof flagshipUnitsWireOverview === "function") flagshipUnitsWireOverview(cc);
       if (typeof csFinanceWireOverview === "function") csFinanceWireOverview(cc);
       if (typeof realDiplomacyWireOverview === "function") realDiplomacyWireOverview(cc);
+      if (typeof westernTheaterWireOverview === "function") westernTheaterWireOverview(cc);
     };
   }
   cont.innerHTML = html || '<p class="lede" style="text-align:center;opacity:0.7">This office is not yet staffed.</p>';

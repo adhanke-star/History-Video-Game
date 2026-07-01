@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-07-01: **GROUP 4 WESTERN-THEATER STRATEGIC READOUTS SHIPPED (D191).**
+
+**Newest (D191, 2026-07-01):** Western-theater strategic readouts are complete as bounded Group 4 non-battle readouts. The War Effort/H0 Desk and Theater Map now make the Western arc legible without starting a new playable battle: Shiloh, Vicksburg, Chickamauga, river/rail leverage, Chattanooga reversal pressure, Atlanta/election pressure, and Franklin/Nashville Army-of-Tennessee strain.
+
+**What changed:** `data/western-theater.json` and `src/73-western-theater.js` add citation-guarded current-arc cards, strategic hinge cards, locked future battle labels, a readout-only snapshot, exact-zero bridge sentinel, capped resolve log, and War Effort/Map rendering. It wires through the manifest, lifecycle, H0 Desk, focused probe, and future batch suite. It adds no priority lever and writes no bridge/direct-overall, tactical/OOB, winner, casualty, scoreboard, or battle-output state.
+
+**Verified:** JSON parse for western-theater and manifest; `node --check` for touched source/probe/suite files; build **GATE OK** (no-fudge ✓, citations ✓, women-in-war ✓) with the existing raw-embed soft warning; focused `probe-western-theater` 8/0; adjacent `probe-human-cost` 7/0, `probe-bridge` 6/0, and `probe-h0-president-desk` 3/3; JSON readback clean; `git diff --check` clean. Full `npm run vet:noreg` is now the planned Group 4 batch/release gate under D176.
+
+**Next recommended run:** **planned Group 4 batch/release gate** unless Aaron explicitly redirects. M8 battle-build track still needs an Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-01: **GROUP 4 HUMAN COST WITH GRAVITY TREATMENT SHIPPED (D190).**
 
 **Newest (D190, 2026-07-01):** The human-cost-with-gravity treatment is complete as a bounded Group 4 non-battle readout. It makes the war's death scale legible through sourced anchors: the old 620,000 figure, Hacker's roughly 750,000 revision, an uncertainty range, disease deaths, mourning/cemeteries/pensions, names, and Faust work-of-death framing.

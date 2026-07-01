@@ -33,6 +33,7 @@ const SUITE = [
   ['cs finance', 'tools/probe-cs-finance.mjs'],
   ['real diplomacy', 'tools/probe-real-diplomacy.mjs'],
   ['human cost', 'tools/probe-human-cost.mjs'],
+  ['western theater', 'tools/probe-western-theater.mjs'],
   ['blockade', 'tools/probe-blockade.mjs'],
   ['manpower', 'tools/probe-manpower.mjs'],
   ['victory', 'tools/probe-victory.mjs'],

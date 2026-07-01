@@ -110,6 +110,8 @@ function presRenderEconomy(C) {
     + (typeof presFlagshipUnitsBlock === "function" ? presFlagshipUnitsBlock(C) : '')
     + (typeof presCsFinanceBlock === "function" ? presCsFinanceBlock(C) : '')
     + (typeof presRealDiplomacyBlock === "function" ? presRealDiplomacyBlock(C) : '')
+    + (typeof presHumanCostBlock === "function" ? presHumanCostBlock(C) : '')
+    + (typeof presWesternTheaterBlock === "function" ? presWesternTheaterBlock(C) : '')
     + (typeof presManpowerBlock === "function" ? presManpowerBlock(C) : '')
     + (typeof presMoraleBlock === "function" ? presMoraleBlock(C) : '')
     + dispatches
@@ -175,6 +177,7 @@ function presRenderMap(C) {
   return ''
     + '<p class="lede" style="font-size:13px;margin-bottom:6px">The seat of war spans three great theaters.</p>'
     + '<div>' + rows + '</div>'
+    + (typeof presWesternTheaterMapBlock === "function" ? presWesternTheaterMapBlock(C) : '')
     + '<hr class="rule">'
     + '<p class="lede" style="font-size:12px;opacity:.7">The living strategic map — armies maneuvering over railroads and rivers, '
     + 'cities and supply lines changing hands, battles emerging from the campaign — is being drawn. '

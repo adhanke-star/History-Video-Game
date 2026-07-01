@@ -1,0 +1,173 @@
+{
+  "_comment": "D191 Group 4 bounded Western Theater strategic readout. This is a War Effort and Theater Map teaching/readout slice, not a battle-build, not a tactical registry change, not an OOB rewrite, and not a bridge lever.",
+  "schema": "cw_western_theater_v1",
+  "schemaVersion": "1.0",
+  "profile": {
+    "name": "Western Theater Strategic Readout",
+    "summary": "A bounded readout that makes the Western Theater legible as a war-winning river, rail, army, emancipation, and election story while keeping future playable battles locked.",
+    "teaching": "The Western Theater was not a side stage. Shiloh, Vicksburg, Chickamauga, Chattanooga, Atlanta, Franklin, Nashville, and USCT service belong in one strategic arc, but this slice only reads and teaches that arc; it does not create new fields.",
+    "provenance": "Verified",
+    "sources": [
+      "data/shiloh.json, data/vicksburg.json, and data/chickamauga.json current playable Western battle data.",
+      "National Park Service, Campaign for Vicksburg, https://www.nps.gov/vick/learn/historyculture/campaign-for-vicksburg.htm",
+      "American Battlefield Trust, Battle of Chattanooga, https://www.battlefields.org/learn/civil-war/battles/chattanooga",
+      "American Battlefield Trust, Atlanta Campaign Maps, https://www.battlefields.org/learn/maps/atlanta-campaign"
+    ]
+  },
+  "currentArc": [
+    {
+      "id": "shiloh-current",
+      "label": "Shiloh",
+      "year": 1862,
+      "status": "playable-now",
+      "summary": "The first enormous Western bloodletting teaches surprise, command friction, Johnston's death, Grant's recovery, and the scale shock that followed the Tennessee River campaign.",
+      "provenance": "Verified",
+      "sources": [
+        "data/shiloh.json current playable battle data and teaching cards.",
+        "American Battlefield Trust, Battle of Shiloh, source trail recorded in data/shiloh.json."
+      ]
+    },
+    {
+      "id": "vicksburg-current",
+      "label": "Vicksburg",
+      "year": 1863,
+      "status": "playable-now",
+      "summary": "The river fortress teaches the Mississippi as a strategic artery: campaign maneuver, siege, severed supply, and a Confederacy split along the river.",
+      "provenance": "Verified",
+      "sources": [
+        "data/vicksburg.json current playable battle data and siege teaching cards.",
+        "National Park Service, Campaign for Vicksburg, https://www.nps.gov/vick/learn/historyculture/campaign-for-vicksburg.htm"
+      ]
+    },
+    {
+      "id": "chickamauga-current",
+      "label": "Chickamauga",
+      "year": 1863,
+      "status": "playable-now",
+      "summary": "The bloodiest Western battle teaches wooded confusion, Longstreet's breakthrough, Thomas's stand, and a Confederate field victory squandered into Chattanooga.",
+      "provenance": "Verified",
+      "sources": [
+        "data/chickamauga.json current playable battle data and teaching cards.",
+        "American Battlefield Trust, Battle of Chickamauga source trail recorded in data/chickamauga.json."
+      ]
+    }
+  ],
+  "strategicHinges": [
+    {
+      "id": "river-rail-war",
+      "label": "River and rail war",
+      "summary": "The Western war turns on waterways, railheads, depots, and the ability to move armies through deep logistical space rather than on a single capital corridor.",
+      "readoutMetric": "riverRailIndex",
+      "provenance": "Verified",
+      "sources": [
+        "data/logistics-rail.json Western routes and rail-corridor teaching data.",
+        "National Park Service, Campaign for Vicksburg, https://www.nps.gov/vick/learn/historyculture/campaign-for-vicksburg.htm"
+      ]
+    },
+    {
+      "id": "chickamauga-to-chattanooga",
+      "label": "From Chickamauga to Chattanooga",
+      "summary": "Chickamauga's Confederate victory only mattered strategically if converted. Chattanooga reversed the pressure by reopening supply, breaking Missionary Ridge, and reopening the road into Georgia.",
+      "readoutMetric": "chattanoogaPressure",
+      "provenance": "Verified",
+      "sources": [
+        "data/chickamauga.json teaching cards on Bragg failing to exploit the victory and the Chattanooga sequel.",
+        "National Park Service, Missionary Ridge, https://www.nps.gov/chch/learn/historyculture/missionary-ridge.htm",
+        "American Battlefield Trust, Battle of Chattanooga, https://www.battlefields.org/learn/civil-war/battles/chattanooga"
+      ]
+    },
+    {
+      "id": "atlanta-election",
+      "label": "Atlanta and the 1864 election",
+      "summary": "Atlanta was an industrial, administrative, and rail center. Its fall raised Northern morale, struck Confederate capacity, and helped make Lincoln's reelection far more likely.",
+      "readoutMetric": "georgiaPressure",
+      "provenance": "Verified",
+      "sources": [
+        "data/decisions.json Atlanta and 1864 election teaching cards.",
+        "American Battlefield Trust, Battle of Atlanta, https://www.battlefields.org/learn/civil-war/battles/atlanta",
+        "American Battlefield Trust, Atlanta Campaign Maps, https://www.battlefields.org/learn/maps/atlanta-campaign"
+      ]
+    },
+    {
+      "id": "franklin-nashville-collapse",
+      "label": "Franklin and Nashville collapse",
+      "summary": "Hood's Tennessee campaign shows the Army of Tennessee's late-war strain: Franklin's frontal assault bled it badly, and Nashville shattered it as an effective threat.",
+      "readoutMetric": "armyTennesseeStrain",
+      "provenance": "Verified",
+      "sources": [
+        "American Battlefield Trust, Battle of Franklin, https://www.battlefields.org/learn/civil-war/battles/franklin",
+        "American Battlefield Trust, Battle of Nashville, https://www.battlefields.org/learn/civil-war/battles/nashville",
+        "data/generals.json Hood and Thomas biography/source trails."
+      ]
+    }
+  ],
+  "futureLocks": [
+    {
+      "id": "wt-chattanooga-readout",
+      "label": "Chattanooga",
+      "status": "locked-future-battle",
+      "summary": "Future battle-build candidate only: Cracker Line, Lookout Mountain, Missionary Ridge, Tunnel Hill, and Ringgold Gap are kept out of this slice.",
+      "provenance": "Verified",
+      "sources": [
+        "American Battlefield Trust, Battle of Chattanooga, https://www.battlefields.org/learn/civil-war/battles/chattanooga",
+        "National Park Service, Missionary Ridge, https://www.nps.gov/chch/learn/historyculture/missionary-ridge.htm"
+      ]
+    },
+    {
+      "id": "wt-atlanta-march-readout",
+      "label": "Atlanta / March to the Sea",
+      "status": "locked-future-battle",
+      "summary": "Future battle-build and campaign-treatment candidate only: Atlanta's rail and industrial role, election effect, and the later March remain last-queue work.",
+      "provenance": "Verified",
+      "sources": [
+        "American Battlefield Trust, Battle of Atlanta, https://www.battlefields.org/learn/civil-war/battles/atlanta",
+        "data/hard-war.json Sherman's March teaching card and source trail."
+      ]
+    },
+    {
+      "id": "wt-franklin-nashville-readout",
+      "label": "Franklin / Nashville",
+      "status": "locked-future-battle",
+      "summary": "Future battle-build candidate only: Hood's Tennessee campaign, Franklin's casualties, Thomas's Nashville victory, and Army of Tennessee collapse remain locked.",
+      "provenance": "Verified",
+      "sources": [
+        "American Battlefield Trust, Battle of Franklin, https://www.battlefields.org/learn/civil-war/battles/franklin",
+        "American Battlefield Trust, Battle of Nashville, https://www.battlefields.org/learn/civil-war/battles/nashville"
+      ]
+    },
+    {
+      "id": "wt-usct-nashville-readout",
+      "label": "USCT at Nashville",
+      "status": "locked-future-battle",
+      "summary": "Future USCT playable-battle lane only: Black combat agency at Nashville stays visible as a lock without being pulled into this implementation.",
+      "provenance": "Verified",
+      "sources": [
+        "data/codex.json United States Colored Troops and Black combat-agency entries.",
+        "data/primary-sources.json Lived slavery and Black combat-agency source lanes.",
+        "American Battlefield Trust, Battle of Nashville, https://www.battlefields.org/learn/civil-war/battles/nashville"
+      ]
+    }
+  ],
+  "guardrails": [
+    {
+      "id": "readout-not-registry",
+      "title": "Readout, not registry",
+      "summary": "This slice adds no battle JSON, no tactical module, no expected-roster baseline, no OOB, no casualty table, and no side-choice card.",
+      "provenance": "Verified",
+      "sources": [
+        "START-HERE.md D190 live-head override assigning Western-theater strategic readouts as non-battle readouts.",
+        "V1-CHECKLIST.md Group 4 status and last-battle queue lock."
+      ]
+    },
+    {
+      "id": "zero-bridge-contract",
+      "title": "Zero bridge contract",
+      "summary": "The Western Theater readout can summarize logistics, morale pressure, and campaign arc, but it cannot buy combat strength or modify the universal battle model.",
+      "provenance": "Verified",
+      "sources": [
+        "DECISIONS.md D74 universal combat model.",
+        "DECISIONS.md D176 focused-gate and no-fudge requirements."
+      ]
+    }
+  ]
+}
