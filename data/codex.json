@@ -1133,6 +1133,71 @@
       ]
     },
     {
+      "id": "second-founding",
+      "axis": "terms",
+      "term": "The Second Founding",
+      "short": "A historian's frame for the Civil War and Reconstruction as a remaking of citizenship, federal power, and freedom.",
+      "body": "The Civil War did not simply restore the old Union. James M. McPherson's Second American Revolution frame and Eric Foner's Second Founding frame point to the same transformation: emancipation, Black military service, greenbacks and national paper money, conscription, federal taxation, wartime citizenship claims, and the Reconstruction amendments remade what the United States could be. The hinge was not abstract nationalism alone. The contraband policy, self-emancipation, the Emancipation Proclamation, USCT service, and the Thirteenth, Fourteenth, and Fifteenth Amendments forced the republic to define freedom and citizenship at national scale. Douglass's July 6, 1863 Philadelphia enlistment speech made that claim concrete through the image of the Black soldier wearing the \"brass letters U.S.\"; that phrase belongs to this July speech, not to the March 1863 \"Men of Color, To Arms!\" broadside.",
+      "tags": [
+        "union",
+        "both",
+        "emancipation",
+        "reconstruction",
+        "citizenship",
+        "finance",
+        "conscription"
+      ],
+      "related": [
+        "greenbacks-and-wartime-inflation",
+        "conscription-the-draft",
+        "emancipation-proclamation",
+        "reconstruction",
+        "contraband-of-war"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "James M. McPherson, Abraham Lincoln and the Second American Revolution (Oxford University Press, 1991)",
+        "Eric Foner, The Second Founding: How the Civil War and Reconstruction Remade the Constitution (W. W. Norton, 2019)",
+        "Frederick Douglass Papers Project digital edition, \"Negroes and the National War Effort: An Address Delivered in Philadelphia, Pennsylvania, on 6 July 1863,\" https://frederickdouglasspapersproject.com/s/digitaledition/item/9183",
+        "Chicago History Museum, A New Birth of Freedom: Black Soldiers in the Union Army, selected Douglass excerpts, https://www.chicagohistory.org/app/uploads/2016/10/CHM-Lincoln-NewBirthofFreedom.pdf"
+      ],
+      "aliases": [
+        "Second American Revolution",
+        "second founding"
+      ]
+    },
+    {
+      "id": "age-of-emancipation",
+      "axis": "terms",
+      "term": "The Age of Emancipation",
+      "short": "The wider nineteenth-century abolition wave: Britain compensated enslavers, Russia freed serfs, and U.S. slavery fell through war and Black agency.",
+      "body": "The U.S. Civil War was part of a broader nineteenth-century age of emancipation, but its route was distinct. Britain abolished slavery in most of its empire in the 1830s through a compensated emancipation scheme that paid slaveholders, not the enslaved. Russia's 1861 emancipation freed roughly 23 million privately owned serfs, binding many to redemption payments and village obligations. In the United States, slavery's destruction came through war, federal policy, self-emancipation, USCT service, and constitutional change; it was uncompensated to former enslavers at the national level. The comparison matters because it keeps emancipation from sounding inevitable, clean, or purely top-down. It was an international age, but the American case was bloodier, more politically revolutionary, and inseparable from Black agency.",
+      "tags": [
+        "both",
+        "emancipation",
+        "slavery",
+        "international",
+        "comparative-history"
+      ],
+      "related": [
+        "emancipation-proclamation",
+        "reconstruction",
+        "secession",
+        "united-states-colored-troops"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Eric Foner, Nothing But Freedom: Emancipation and Its Legacy (Louisiana State University Press, 1983)",
+        "David Brion Davis, The Problem of Slavery in the Age of Emancipation (Alfred A. Knopf, 2014)",
+        "Seymour Drescher, Abolition: A History of Slavery and Antislavery (Cambridge University Press, 2009)",
+        "Peter Kolchin, Unfree Labor: American Slavery and Russian Serfdom (Harvard University Press, 1987)"
+      ],
+      "aliases": [
+        "comparative emancipation",
+        "Atlantic emancipation"
+      ]
+    },
+    {
       "id": "king-cotton-diplomacy",
       "axis": "terms",
       "term": "King Cotton (Cotton Diplomacy)",

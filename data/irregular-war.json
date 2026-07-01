@@ -131,6 +131,17 @@
         "National Park Service and Civil War on the Western Border source trails on Mosby, Quantrill, Lawrence, and Order No. 11.",
         "data/cabinet.json Breckinridge profile on rejecting an endless guerrilla war in 1865."
       ]
+    },
+    {
+      "id": "irregular-war-historiography",
+      "title": "Fellman and Sutherland: no clean border war",
+      "summary": "Michael Fellman's Inside War treats Missouri guerrilla violence as a social war of neighbor killing, revenge, and state collapse. Daniel E. Sutherland's A Savage Conflict widens the frame, arguing that guerrilla violence shaped the war across multiple theaters. Together they move irregular war out of romance and into civilian danger, coercion, and political violence.",
+      "provenance": "Verified",
+      "sources": [
+        "Michael Fellman, Inside War: The Guerrilla Conflict in Missouri During the American Civil War (Oxford University Press, 1989)",
+        "Daniel E. Sutherland, A Savage Conflict: The Decisive Role of Guerrillas in the American Civil War (University of North Carolina Press, 2009)",
+        "Clay Mountcastle, Punitive War: Confederate Guerrillas and Union Reprisals (University Press of Kansas, 2009)"
+      ]
     }
   ]
 }

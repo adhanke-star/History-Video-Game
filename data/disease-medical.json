@@ -111,6 +111,18 @@
         "HISTORICAL-DATA.md, Medicine and the Scale of Death section.",
         "HISTORICAL-DATA-ECONOMY.md logistics and railroads dossiers."
       ]
+    },
+    {
+      "id": "faust-work-of-death",
+      "title": "Faust and the work of death",
+      "summary": "The war's death toll was not only a number. Hacker's census-based work pushes the scale toward roughly 750,000 dead, while Drew Gilpin Faust shows how mourning, the Good Death, embalming, reburial, and national cemeteries remade American culture around mass death.",
+      "provenance": "Verified",
+      "sources": [
+        "Drew Gilpin Faust, This Republic of Suffering: Death and the American Civil War (Alfred A. Knopf, 2008)",
+        "J. David Hacker, \"A Census-Based Count of the Civil War Dead,\" Civil War History 57, no. 4 (2011), https://journals.publishing.umich.edu/jala/article/id/2299/",
+        "National Park Service, \"Civil War National Cemeteries,\" https://www.nps.gov/subjects/nationalcemeteries/civil-war-national-cemeteries.htm",
+        "Gary Laderman, The Sacred Remains: American Attitudes Toward Death, 1799-1883 (Yale University Press, 1996)"
+      ]
     }
   ]
 }

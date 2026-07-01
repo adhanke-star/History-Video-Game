@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-07-01: **GRADUATE-HISTORY PASS M5 SHIPPED — KEYSTONE CARDS (D184).**
+
+**Newest (D184, 2026-07-01):** M5 of the authorized graduate-history build-out is complete as a pure teaching/readout milestone. The codex now carries **Second Founding** and **Age of Emancipation** keystone cards, and the War Effort medical/irregular-war details now surface the new graduate historiography debate cards instead of leaving them dark.
+
+**What changed:** `data/codex.json` adds `second-founding` (McPherson/Foner, greenbacks, conscription, contraband, emancipation, Reconstruction, and Douglass's July 6, 1863 enlistment-speech attribution) and `age-of-emancipation` (Britain compensated emancipation, Russia 1861 / roughly 23 million privately owned serfs, and U.S. uncompensated wartime emancipation with Black agency). `data/disease-medical.json` adds Faust/Hacker death-and-mourning framing. `data/irregular-war.json` adds Fellman/Sutherland irregular-war historiography. `src/63-disease-medical.js` and `src/65-irregular-war.js` render all debate cards in their existing details sections.
+
+**Verified:** JSON parse for codex/disease/irregular/manifest; `node --check` for touched source/probe files; build **GATE OK** (no-fudge ✓, citations ✓, women-in-war ✓); focused `probe-codex` 21/0, `probe-disease-medical` 8/0, and `probe-irregular-war` 8/0; adjacent `probe-primary-sources` 12/0, `probe-bridge` 6/0, and `probe-h0-president-desk` 3/3; JSON readback clean; `git diff --check` clean. Full `npm run vet:noreg` deferred under D176.
+
+**Next recommended run:** **M6 — home-front/politics/economy** from `.tmp/civil-war-phd-execution-brief.md` and `.tmp/civil-war-history-audit-and-phd-plan.md`. M8 battle-build track still needs an Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-01: **GRADUATE-HISTORY PASS M4 SHIPPED — SOURCE-CRITICISM / UNDER-TOLD VOICES / NATIVE REWRITE (D183).**
 
 **Newest (D183, 2026-07-01):** M4 of the authorized graduate-history build-out is complete. The pure-readout **Documents / Read the Document** surface now has a **Source criticism & under-told voices** lane with 5 `Verified` records: Gettysburg Address Bliss copy, Susie King Taylor, Dolly Lunt Burge, William McCarter, and William Dwyer.

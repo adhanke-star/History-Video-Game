@@ -182,6 +182,24 @@ const SETUP = `(() => {
       if(!/William Dwyer/.test(ib) || !/in account of we being Irish/.test(ib) || !/contemporary soldier-family letter/.test(ib)) throw new Error('Irish Brigade entry must carry Dwyer contemporary immigrant-letter source lock');
       return { sourceCriticism:sc.id, eastTennessee:et.id, westVirginia:wv.id, irishBrigade:ir.id }; });
 
+    step('M5 graduate keystone codex locks: Second Founding and comparative emancipation', function(){
+      var sf=_cxById('second-founding'), ae=_cxById('age-of-emancipation');
+      if(!sf || !ae) throw new Error('missing one or more M5 codex entries');
+      var sb=(sf.short||'')+' '+(sf.body||'');
+      ['McPherson','Foner','Second Founding','greenbacks','conscription','emancipation','Reconstruction','contraband','July 6, 1863','brass letters U.S.'].forEach(function(token){
+        if(sb.indexOf(token)<0) throw new Error('Second Founding entry missing token: '+token);
+      });
+      if(/Men of Color, To Arms!.*brass letters|brass letters.*Men of Color, To Arms!/i.test(sb) && sb.indexOf('not to the March 1863')<0) throw new Error('Second Founding must not misattribute the brass-letters line to Men of Color');
+      ['greenbacks-and-wartime-inflation','conscription-the-draft','emancipation-proclamation','reconstruction','contraband-of-war'].forEach(function(id){
+        if(!sf.related || sf.related.indexOf(id)<0) throw new Error('Second Founding missing related id: '+id);
+      });
+      var ab=(ae.short||'')+' '+(ae.body||'');
+      ['Britain','1830s','compensated','Russia','1861','23 million','United States','uncompensated','self-emancipation','Black agency'].forEach(function(token){
+        if(ab.indexOf(token)<0) throw new Error('Age of Emancipation entry missing token: '+token);
+      });
+      if(/50 million/.test(ab)) throw new Error('Age of Emancipation must not repeat the corrected Russia ~50M error');
+      return { secondFounding:sf.id, ageOfEmancipation:ae.id }; });
+
     step('render is a PURE read-out (no campaign mutation, no save)', function(){
       // codex render/wire must not require or mutate a campaign — they run with G.campaign null
       var before=G.campaign;

@@ -258,7 +258,10 @@ function presIrregularWarBlock(C) {
   var profile = _iwProfile(snap.side), on = !!(I && I.active && I.priority === "civilianSecurity");
   var threads = D.threads || [], debates = D.debates || [];
   var mosby = threads[0] || null, lawrence = threads[1] || null, order11 = threads[2] || null, lieber = threads[3] || null;
-  var debate = debates[0] || null, romance = debates[2] || null;
+  var debateHTML = "";
+  for (var d = 0; d < debates.length; d++) {
+    if (debates[d]) debateHTML += '<div style="margin-top:4px"><b>' + htmlEsc(debates[d].title) + ':</b> ' + htmlEsc(debates[d].summary) + '</div>';
+  }
   var log = "";
   if (I.log && I.log.length) {
     for (var i = 0; i < I.log.length && i < 3; i++) log += '<div style="font-size:11px;opacity:.72;padding:1px 0">&bull; ' + htmlEsc(I.log[i]) + '</div>';
@@ -304,8 +307,7 @@ function presIrregularWarBlock(C) {
     + (lawrence ? '<div style="margin-top:4px"><b>' + htmlEsc(lawrence.label) + ':</b> ' + htmlEsc(lawrence.summary) + '</div>' : '')
     + (order11 ? '<div style="margin-top:4px"><b>' + htmlEsc(order11.label) + ':</b> ' + htmlEsc(order11.summary) + '</div>' : '')
     + (lieber ? '<div style="margin-top:4px"><b>' + htmlEsc(lieber.label) + ':</b> ' + htmlEsc(lieber.summary) + '</div>' : '')
-    + (debate ? '<div style="margin-top:4px"><b>' + htmlEsc(debate.title) + ':</b> ' + htmlEsc(debate.summary) + '</div>' : '')
-    + (romance ? '<div style="margin-top:4px"><b>' + htmlEsc(romance.title) + ':</b> ' + htmlEsc(romance.summary) + '</div>' : '')
+    + debateHTML
     + '<div style="margin-top:4px">Evidence is consolidated from NPS, Civil War on the Western Border, the Lieber Code source trail, and existing Breckinridge data. Mosby, Lawrence, General Order No. 11, and the law-of-war distinction all stay visible.</div>'
     + '</details>'
     + '</div>';

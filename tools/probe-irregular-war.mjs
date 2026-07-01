@@ -60,6 +60,13 @@ const SETUP = `(() => {
       D.threads.concat(D.debates).forEach(function(x){ if(x.provenance==='Verified' && (!Array.isArray(x.sources)||x.sources.length<2)) throw new Error('under-sourced '+x.id); });
       var labels=D.threads.map(function(p){return p.id;}).join(',');
       ['mosby-partisan-rangers','lawrence-massacre','general-order-11','lieber-code'].forEach(function(id){ if(labels.indexOf(id)<0) throw new Error('missing required teaching beat '+id); });
+      var debateIds=D.debates.map(function(p){return p.id;}).join(',');
+      if(debateIds.indexOf('irregular-war-historiography')<0) throw new Error('missing M5 irregular-war historiography card: '+debateIds);
+      var hist=D.debates.filter(function(p){return p.id==='irregular-war-historiography';})[0] || {};
+      var hb=(hist.title||'')+' '+(hist.summary||'')+' '+(hist.sources||[]).join(' ');
+      ['Michael Fellman','Inside War','Daniel E. Sutherland','A Savage Conflict','romance','civilian danger'].forEach(function(token){
+        if(hb.indexOf(token)<0) throw new Error('irregular-war historiography missing token: '+token);
+      });
       return { schema:D.schema, threads:D.threads.length, debates:D.debates.length };
     });
 
@@ -137,6 +144,7 @@ const SETUP = `(() => {
       var h=document.getElementById('wdContent').innerHTML;
       if(h.indexOf('Irregular War &amp; Civilian Security')<0) throw new Error('irregular-war block missing');
       if(h.indexOf('Mosby')<0 || h.indexOf('Quantrill')<0 || h.indexOf('Lawrence')<0 || h.indexOf('Lost Cause')<0) throw new Error('irregular-war teaching copy missing');
+      if(h.indexOf('Fellman')<0 || h.indexOf('Sutherland')<0 || h.indexOf('A Savage Conflict')<0 || h.indexOf('civilian danger')<0) throw new Error('M5 irregular-war historiography card not rendered');
       var b=document.getElementById('iwToggleSecurity'); if(!b) throw new Error('civilian-security button absent');
       b.click();
       if(!C.irregularWar || C.irregularWar.active!==true || C.irregularWar.priority!=='civilianSecurity') throw new Error('toggle did not activate');

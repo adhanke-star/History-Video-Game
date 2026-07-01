@@ -49,6 +49,13 @@ const SETUP = `(() => {
       D.practices.concat(D.debates).forEach(function(x){ if(x.provenance==='Verified' && (!Array.isArray(x.sources)||x.sources.length<2)) throw new Error('under-sourced '+x.id); });
       var labels=D.practices.map(function(p){return p.id;}).join(',');
       if(labels.indexOf('disease-death')<0 || labels.indexOf('letterman-system')<0 || labels.indexOf('amputation-anesthesia')<0) throw new Error('missing required medical teaching beats: '+labels);
+      var debateIds=D.debates.map(function(p){return p.id;}).join(',');
+      if(debateIds.indexOf('faust-work-of-death')<0) throw new Error('missing M5 Faust work-of-death debate card: '+debateIds);
+      var faust=D.debates.filter(function(p){return p.id==='faust-work-of-death';})[0] || {};
+      var fb=(faust.title||'')+' '+(faust.summary||'')+' '+(faust.sources||[]).join(' ');
+      ['Hacker','750,000','Drew Gilpin Faust','Good Death','embalming','national cemeteries'].forEach(function(token){
+        if(fb.indexOf(token)<0) throw new Error('Faust debate missing death/mourning token: '+token);
+      });
       return { schema:D.schema, practices:D.practices.length, debates:D.debates.length };
     });
 
@@ -125,6 +132,7 @@ const SETUP = `(() => {
       var h=document.getElementById('wdContent').innerHTML;
       if(h.indexOf('Disease &amp; Army Medicine')<0) throw new Error('medical block missing');
       if(h.indexOf('Letterman')<0 || h.indexOf('Sanitary Commission')<0) throw new Error('medical teaching copy missing');
+      if(h.indexOf('Faust')<0 || h.indexOf('Good Death')<0 || h.indexOf('national cemeteries')<0 || h.indexOf('750,000')<0) throw new Error('M5 death-and-mourning debate card not rendered');
       var b=document.getElementById('medToggleRelief'); if(!b) throw new Error('medical relief button absent');
       b.click();
       if(!C.medical || C.medical.active!==true || C.medical.priority!=='medicalRelief') throw new Error('toggle did not activate');

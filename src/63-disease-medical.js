@@ -224,8 +224,12 @@ function presMedicalBlock(C) {
   var profile = _medProfile(snap.side);
   var on = !!(M && M.active && M.priority === "medicalRelief");
   var practices = D.practices || [];
+  var debates = D.debates || [];
   var disease = practices[0] || null, letterman = practices[1] || null, anesthesia = practices[2] || null, women = practices[3] || null;
-  var debate = (D.debates && D.debates.length) ? D.debates[0] : null;
+  var debateHTML = "";
+  for (var d = 0; d < debates.length; d++) {
+    if (debates[d]) debateHTML += '<div style="margin-top:4px"><b>' + htmlEsc(debates[d].title) + ':</b> ' + htmlEsc(debates[d].summary) + '</div>';
+  }
   var log = "";
   if (M.log && M.log.length) {
     for (var i = 0; i < M.log.length && i < 3; i++) log += '<div style="font-size:11px;opacity:.72;padding:1px 0">&bull; ' + htmlEsc(M.log[i]) + '</div>';
@@ -270,7 +274,7 @@ function presMedicalBlock(C) {
     + (letterman ? '<div style="margin-top:4px"><b>' + htmlEsc(letterman.label) + ':</b> ' + htmlEsc(letterman.summary) + '</div>' : '')
     + (anesthesia ? '<div style="margin-top:4px"><b>' + htmlEsc(anesthesia.label) + ':</b> ' + htmlEsc(anesthesia.summary) + '</div>' : '')
     + (women ? '<div style="margin-top:4px"><b>' + htmlEsc(women.label) + ':</b> ' + htmlEsc(women.summary) + '</div>' : '')
-    + (debate ? '<div style="margin-top:4px"><b>' + htmlEsc(debate.title) + ':</b> ' + htmlEsc(debate.summary) + '</div>' : '')
+    + debateHTML
     + '<div style="margin-top:4px">Evidence is consolidated in HISTORICAL-DATA.md, data/codex.json, and data/women-in-war.json: disease-death share, amputation/anesthesia, Letterman, the Sanitary Commission, Barton, Dix, and Walker.</div>'
     + '</details>'
     + '</div>';
