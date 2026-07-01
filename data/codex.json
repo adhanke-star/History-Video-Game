@@ -769,7 +769,7 @@
       "axis": "units",
       "term": "Irish Brigade",
       "short": "Union brigade of Irish-immigrant regiments under Thomas Francis Meagher; bloodied at Antietam and Fredericksburg.",
-      "body": "The Irish Brigade was a Union brigade built around Irish-immigrant regiments — notably the 69th, 63rd, and 88th New York — led by Brigadier General Thomas Francis Meagher and known for its green regimental colors bearing a gold harp. It suffered devastating losses charging the Sunken Road at Antietam in September 1862 and again attacking Marye's Heights at Fredericksburg that December, where roughly 540 of about 1,200 men fell. Its sacrifices made it one of the most celebrated and most depleted brigades in the Army of the Potomac.",
+      "body": "The Irish Brigade was a Union brigade built around Irish-immigrant regiments — notably the 69th, 63rd, and 88th New York — led by Brigadier General Thomas Francis Meagher and known for its green regimental colors bearing a gold harp. It suffered devastating losses charging the Sunken Road at Antietam in September 1862 and again attacking Marye's Heights at Fredericksburg that December, where roughly 540 of about 1,200 men fell. Private William McCarter of the 116th Pennsylvania left a postwar immigrant-soldier memoir of the brigade's Fredericksburg ordeal, a valuable but retrospective enlisted voice. William Dwyer of Co. H, 63rd New York, wrote home from Falmouth on January 23, 1863 that the brigade was kept back \"in account of we being Irish,\" a contemporary soldier-family letter that turns sacrifice into an ethnic-mistreatment claim. Its sacrifices made it one of the most celebrated and most depleted brigades in the Army of the Potomac.",
       "tags": [
         "union",
         "infantry",
@@ -778,12 +778,17 @@
       ],
       "related": [
         "army-of-the-potomac",
-        "corps-division-brigade-regiment"
+        "corps-division-brigade-regiment",
+        "source-criticism"
       ],
       "provenance": "Verified",
       "sources": [
         "American Battlefield Trust, \"Thomas Francis Meagher,\" https://www.battlefields.org/learn/biographies/thomas-francis-meagher",
-        "Susannah J. Ural, The Harp and the Eagle: Irish-American Volunteers and the Union Army, 1861–1865 (NYU Press, 2006)"
+        "Susannah J. Ural, The Harp and the Eagle: Irish-American Volunteers and the Union Army, 1861–1865 (NYU Press, 2006)",
+        "National Museum of Civil War Medicine, \"The Medical Treatment of Private William McCarter,\" https://www.civilwarmed.org/mccarter/",
+        "University of Alabama Libraries, McCarter memoir bibliography and index, https://ir.ua.edu/bitstreams/726d3254-9741-4926-8019-6de0e9067aa7/download",
+        "Irish in the American Civil War, \"In Account of We Being Irish: A New Irish Brigade Letter After Fredericksburg,\" https://irishamericancivilwar.com/2014/12/13/in-account-of-we-being-irish-a-new-irish-brigade-letter-after-fredericksburg/",
+        "National Park Service, \"Irish Soldiers in the Union Army,\" https://www.nps.gov/articles/irish-soldiers-in-the-union-army.htm"
       ]
     },
     {
@@ -1045,6 +1050,86 @@
       "sources": [
         "Mark Grimsley, The Hard Hand of War: Union Military Policy toward Southern Civilians, 1861-1865 (Cambridge University Press, 1995)",
         "American Battlefield Trust, \"Sherman's March to the Sea,\" https://www.battlefields.org/learn/articles/shermans-march-sea"
+      ]
+    },
+    {
+      "id": "source-criticism",
+      "axis": "terms",
+      "term": "Source Criticism",
+      "short": "The habit of asking who made a source, when, for whom, from what manuscript or edition, and with what limits.",
+      "body": "Source criticism keeps the game from treating every printed or digital text as equally direct. WPA formerly enslaved people's interviews are indispensable, but the Library of Congress warns that interviewer race, amateur technique, editing, dialect transcription, and Depression-era conditions shaped many answers. The Gettysburg Address survives in five known manuscript copies; the Bliss copy became the standard Lincoln Memorial text, but it is not the only manuscript. Mary Chesnut's A Diary from Dixie was published in 1905 after heavy reconstruction, while C. Vann Woodward's later edition exposed layers of editing and doctoring. J. David Hacker's census-based Civil War death estimate moved the classroom number toward about 750,000, but even that is contested by method, race coverage, and later full-count work. A source card should therefore cite the edition and name its limits.",
+      "tags": [
+        "both",
+        "history",
+        "sources",
+        "memory",
+        "teaching"
+      ],
+      "related": [
+        "the-lost-cause",
+        "reconstruction",
+        "irish-brigade"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Library of Congress, \"The Limitations of the Slave Narrative Collection,\" https://www.loc.gov/collections/slave-narratives-from-the-federal-writers-project-1936-to-1938/articles-and-essays/introduction-to-the-wpa-slave-narratives/limitations-of-the-slave-narrative-collection/",
+        "Library of Congress, \"Gettysburg Address\" exhibition, https://www.loc.gov/exhibits/gettysburg-address/",
+        "National Park Service, \"Gettysburg Address,\" Lincoln Memorial, https://www.nps.gov/linc/learn/historyculture/gettysburgaddress.htm",
+        "UNC Documenting the American South, Mary Boykin Chesnut, A Diary from Dixie, https://docsouth.unc.edu/southlit/chesnut/maryches.html",
+        "C. Vann Woodward, Mary Chesnut's Civil War (Yale University Press, 1981)",
+        "J. David Hacker, \"A Census-Based Count of the Civil War Dead,\" Civil War History 57, no. 4 (2011), https://journals.publishing.umich.edu/jala/article/id/2299/",
+        "IPUMS, \"Counting—and Redefining—the Cost of War,\" https://blog.popdata.org/counting-and-redefining-the-cost-of-war/"
+      ]
+    },
+    {
+      "id": "east-tennessee-unionism",
+      "axis": "terms",
+      "term": "East Tennessee Unionism",
+      "short": "A strong mountain Unionist movement that rejected secession while often remaining racially conservative or pro-slavery.",
+      "body": "East Tennessee shows why Unionism and abolitionism cannot be treated as the same thing. Many residents opposed secession because they distrusted planter rule, wanted the old Union preserved, or feared Confederate coercion; William G. \"Parson\" Brownlow used his Knoxville Whig to attack secession, was jailed and expelled by Confederate authorities, and later became Tennessee's Reconstruction governor. The guardrail is equally important: Brownlow had publicly defended American slavery in his 1858 debate with Abram Pryne. His wartime Unionism was anti-Confederate and anti-secession, not a clean antislavery creed. Teaching Southern Unionism this way preserves divided white southern politics without laundering slavery.",
+      "tags": [
+        "union",
+        "confederate",
+        "home-front",
+        "secession",
+        "slavery"
+      ],
+      "related": [
+        "secession",
+        "west-virginia-statehood",
+        "the-lost-cause"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Tennessee Department of Tourist Development, \"William G. \\\"Parson\\\" Brownlow,\" https://classic.tnvacation.com/civil-war/person/35/william-g-parson-brownlow/",
+        "William G. Brownlow and Abram Pryne, Ought American Slavery to Be Perpetuated? (Philadelphia: J.B. Lippincott, 1858), Internet Archive / Library of Congress scan, https://archive.org/details/oughtamerican00brow",
+        "Wikimedia Commons file record for Ought American Slavery to Be Perpetuated? public-domain scan, https://commons.wikimedia.org/wiki/File:Ought_American_slavery_to_be_perpetuated%3F_A_debate_between_Rev._W.G._Brownlow_and_Rev._A._Pryne._Held_at_Philadelphia,_September,_1858_(IA_oughtamerican00brow).pdf",
+        "Noel C. Fisher, War at Every Door: Partisan Politics and Guerrilla Violence in East Tennessee, 1860-1869 (University of North Carolina Press, 1997)"
+      ]
+    },
+    {
+      "id": "west-virginia-statehood",
+      "axis": "terms",
+      "term": "West Virginia Statehood",
+      "short": "The Union-backed creation of West Virginia on June 20, 1863, conditioned on gradual emancipation.",
+      "body": "West Virginia's creation was a wartime Unionist break from Virginia, not a simple antislavery revolt. Northwestern Virginians had long fought eastern planter power and underrepresentation, and many rejected Virginia's 1861 secession. The Restored Government of Virginia approved a new state; Congress admitted it only after the Willey Amendment required gradual emancipation. Lincoln signed the admission bill on December 31, 1862, West Virginia ratified the revised constitution on March 26, 1863, and the state was recognized on June 20, 1863. The story belongs beside East Tennessee Unionism because it shows borderland Union loyalty, slavery compromise, legal improvisation, and internal civil war in the mountains.",
+      "tags": [
+        "union",
+        "home-front",
+        "secession",
+        "slavery",
+        "reconstruction"
+      ],
+      "related": [
+        "secession",
+        "east-tennessee-unionism",
+        "emancipation-proclamation"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "National Archives, \"West Virginia Statehood, June 20, 1863,\" https://www.archives.gov/legislative/features/west-virginia",
+        "Encyclopedia Virginia, \"The Creation of West Virginia,\" https://encyclopediavirginia.org/entries/west-virginia-creation-of/",
+        "Richard Orr Curry, A House Divided: A Study of Statehood Politics and the Copperhead Movement in West Virginia (University of Pittsburgh Press, 1964)"
       ]
     },
     {

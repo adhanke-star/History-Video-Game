@@ -531,6 +531,130 @@
         "no unit/rank/battle — civilian administrative role only",
         "already in codex.json with three sources — reconcile, do not duplicate."
       ]
+    },
+    {
+      "id": "chesnut-mary-boykin",
+      "canonicalName": "Mary Boykin Chesnut",
+      "wartimeAlias": "",
+      "roleCategory": "diarist",
+      "side": "CS",
+      "wartimeRole": "Elite Confederate diarist and slaveholding insider whose wartime notes were heavily revised into the 1905 A Diary from Dixie.",
+      "unitClaimed": "",
+      "battleClaimed": "Confederate home-front and leadership circles (not a combatant)",
+      "provenance": "Verified",
+      "registryMappable": {
+        "canMap": false,
+        "reason": "No — civilian diarist; source-criticism card only"
+      },
+      "recommendedLane": "women-thread-card",
+      "sources": [
+        {
+          "title": "A Diary from Dixie",
+          "author": "Mary Boykin Chesnut",
+          "repository": "UNC Documenting the American South",
+          "locator": "1905 published edition, electronic text",
+          "url": "https://docsouth.unc.edu/southlit/chesnut/maryches.html",
+          "type": "primary",
+          "supports": "published diary text and Confederate insider viewpoint",
+          "independent": true
+        },
+        {
+          "title": "Mary Chesnut's Civil War",
+          "author": "C. Vann Woodward, ed.",
+          "repository": "Yale University Press",
+          "locator": "1981 critical edition; Pulitzer Prize in History",
+          "url": "",
+          "type": "secondary",
+          "supports": "critical reconstruction of diary layers and editorial problems",
+          "independent": true
+        },
+        {
+          "title": "Mary Boykin Chesnut: A Biography",
+          "author": "Elisabeth Muhlenfeld",
+          "repository": "Louisiana State University Press",
+          "locator": "1981 biography",
+          "url": "",
+          "type": "secondary",
+          "supports": "biographical and textual context",
+          "independent": true
+        }
+      ],
+      "sourcesRaw": [
+        "Mary Boykin Chesnut, *A Diary from Dixie* — UNC DocSouth, `docsouth.unc.edu/southlit/chesnut/maryches.html` **[primary, 1905 published text]**.",
+        "C. Vann Woodward, ed., *Mary Chesnut's Civil War* — Yale University Press, 1981 **[critical edition]**.",
+        "Elisabeth Muhlenfeld, *Mary Boykin Chesnut: A Biography* — LSU Press, 1981 **[secondary]**."
+      ],
+      "playerCopy": "Mary Boykin Chesnut moved inside Confederate leadership circles as the wife of James Chesnut Jr., a former U.S. senator and aide to Jefferson Davis. Her diary is one of the war's richest elite Confederate voices, but it cannot be read as a raw daily transcript. The familiar A Diary from Dixie appeared in 1905 after Chesnut had rewritten, rearranged, and polished wartime material into a literary account; C. Vann Woodward's later critical edition exposed the layers between wartime notes, later revisions, and publication. Use her to show slaveholding Confederate society speaking about itself, including its contradictions over slavery and defeat. Do not use her as a combatant, a neutral witness, or a Lost-Cause alibi.",
+      "integrityNote": "Chesnut is valuable because she was close to Confederate power and because the source is editorially complicated; every use must name the 1905-vs-Woodward source problem.",
+      "warningFlags": [
+        "civilian diarist, not a soldier or battlefield actor",
+        "slaveholding elite perspective — not neutral Confederate society",
+        "1905 published text is revised and polished; do not call it an untouched wartime diary",
+        "Woodward critical edition must be named when using it for source criticism",
+        "canMap false; no ss: replacement and no registry row"
+      ]
+    },
+    {
+      "id": "taylor-susie-king",
+      "canonicalName": "Susie King Taylor",
+      "wartimeAlias": "",
+      "roleCategory": "teacher-nurse",
+      "side": "US",
+      "wartimeRole": "Teacher, nurse, laundress, and memoirist connected to the 1st South Carolina Volunteers / 33rd United States Colored Troops.",
+      "unitClaimed": "1st S.C. Volunteers / 33rd U.S.C.T. support community",
+      "battleClaimed": "Port Royal and Department of the South service (not a combatant)",
+      "provenance": "Verified",
+      "registryMappable": {
+        "canMap": false,
+        "reason": "No — Black woman teacher/nurse/support worker and memoirist; not a modeled combatant"
+      },
+      "recommendedLane": "women-thread-card",
+      "sources": [
+        {
+          "title": "Reminiscences of My Life in Camp",
+          "author": "Susie King Taylor",
+          "repository": "UNC Documenting the American South",
+          "locator": "1902 memoir, full electronic text",
+          "url": "https://docsouth.unc.edu/neh/taylorsu/taylorsu.html",
+          "type": "primary",
+          "supports": "Taylor's own memoir and Reconstruction-era reflection",
+          "independent": true
+        },
+        {
+          "title": "Reminiscences of My Life in Camp",
+          "author": "Susie King Taylor",
+          "repository": "Internet Archive",
+          "locator": "1902 Boston edition page images",
+          "url": "https://archive.org/details/reminiscencesofm00tayl",
+          "type": "primary",
+          "supports": "page-image witness for the memoir",
+          "independent": true
+        },
+        {
+          "title": "Susie King Taylor",
+          "author": "Karen Chittenden and Micah Messenheimer",
+          "repository": "Library of Congress",
+          "locator": "Story Map, Geography and Map Division",
+          "url": "https://www.loc.gov/ghe/cascade/index.html?appid=5be2377c246c4b5483e32ddd51d32dc0",
+          "type": "secondary",
+          "supports": "biographical context and teacher/nurse framing",
+          "independent": true
+        }
+      ],
+      "sourcesRaw": [
+        "Susie King Taylor, *Reminiscences of My Life in Camp* — UNC DocSouth, `docsouth.unc.edu/neh/taylorsu/taylorsu.html` **[primary]**.",
+        "Susie King Taylor, *Reminiscences of My Life in Camp* — Internet Archive, `archive.org/details/reminiscencesofm00tayl` **[primary page images]**.",
+        "Library of Congress, \"Susie King Taylor\" Story Map — `loc.gov/ghe/cascade/...` **[secondary context]**."
+      ],
+      "playerCopy": "Susie King Taylor was born enslaved in Georgia, reached Union lines as a teenager, and became one of the war's clearest Black woman witnesses. She taught formerly enslaved children at Port Royal and served around the 1st South Carolina Volunteers, later the 33rd U.S.C.T., as teacher, nurse, laundress, and community worker while her husband served in the regiment. Her 1902 memoir, Reminiscences of My Life in Camp, recalls wartime labor and then turns sharply to Reconstruction's broken promises: lynching, unequal justice, and the question whether the war had brought freedom in the full sense. She belongs in the support-figure lane, not as a disguised soldier or generated combatant.",
+      "integrityNote": "Taylor gives a Black woman participant's memory of USCT service and postwar betrayal; the memoir is retrospective, but the voice is hers and must not be reduced to generic nursing color.",
+      "warningFlags": [
+        "support/community role, not a combatant",
+        "memoir published in 1902 — cite as retrospective participant memory",
+        "unit tie is to the 1st S.C. Volunteers / 33rd U.S.C.T. community, not a modeled OOB row",
+        "canMap false; no ss: replacement and no registry row",
+        "do not detach the wartime service from her postwar critique of incomplete freedom"
+      ]
     }
   ]
 }

@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-07-01: **GRADUATE-HISTORY PASS M4 SHIPPED — SOURCE-CRITICISM / UNDER-TOLD VOICES / NATIVE REWRITE (D183).**
+
+**Newest (D183, 2026-07-01):** M4 of the authorized graduate-history build-out is complete. The pure-readout **Documents / Read the Document** surface now has a **Source criticism & under-told voices** lane with 5 `Verified` records: Gettysburg Address Bliss copy, Susie King Taylor, Dolly Lunt Burge, William McCarter, and William Dwyer.
+
+**What changed:** `data/codex.json` now has Source Criticism, East Tennessee Unionism, and West Virginia Statehood entries, plus Irish Brigade McCarter memoir and Dwyer letter source locks. `data/women-in-war.json` now has Mary Boykin Chesnut and Susie King Taylor cards, keeping `canMap:false` and the D153 separation. `data/under-told-perspectives.json` upgrades the Native-nations thread to `Verified` from the M4 dossier while still blocking playable Trans-Mississippi battle/OOB work and Confederate-diversity laundering. The under-told runtime bridge remains the existing exact-zero/capped teaching seam.
+
+**Verified:** JSON parse for primary sources/codex/women/under-told; women importer 9 records / 8 Verified / 1 Disputed; `node --check` for touched JS/probes; build **GATE OK** (no-fudge ✓, citations ✓, women-in-war ✓); focused `probe-primary-sources` 12/0 and `probe-under-told-perspectives` 8/0; adjacent `probe-codex` 20/0, `probe-women-in-war` 8/0, `probe-h0-president-desk` 3/3; JSON readback clean; `git diff --check` clean. Full `npm run vet:noreg` deferred under D176.
+
+**Next recommended run:** **M5 — keystone cards** from `.tmp/civil-war-phd-execution-brief.md` and `.tmp/civil-war-history-audit-and-phd-plan.md`. M8 battle-build track still needs an Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-01: **GRADUATE-HISTORY PASS M3 SHIPPED — RECONSTRUCTION/MEMORY (D182).**
 
 **Newest (D182, 2026-07-01):** M3 of the authorized graduate-history build-out is complete. The pure-readout **Documents / Read the Document** surface now has a **Reconstruction & memory** lane with 3 new `Verified` records: Mississippi Black Code apprenticeship law, Elias Hill's 1871 KKK testimony, and Douglass's "What the Black Man Wants."

@@ -96,7 +96,7 @@ const SETUP = `(() => {
     step('DATA: canonical women-in-war pack is separate from soldier replacements', function() {
       var d = GAME_DATA && GAME_DATA['women-in-war'];
       if (!d || d.schema !== 'cw_women_in_war_v1') throw new Error('missing women schema');
-      if (!Array.isArray(d.records) || d.records.length !== 7) throw new Error('expected 7 women records');
+      if (!Array.isArray(d.records) || d.records.length !== 9) throw new Error('expected 9 women records');
       var repl = GAME_DATA['soldier-replacements'];
       if (!repl || !Array.isArray(repl.records)) throw new Error('missing soldier replacements records array');
       var replacementWomenLeaks = [];
@@ -116,26 +116,26 @@ const SETUP = `(() => {
         if (r.provenance === 'Disputed') disputed++;
       }
       if (bad.length) throw new Error('separation violations: ' + bad.join(','));
-      if (verified !== 6 || disputed !== 1) throw new Error('expected 6 Verified / 1 Disputed, got ' + verified + '/' + disputed);
+      if (verified !== 8 || disputed !== 1) throw new Error('expected 8 Verified / 1 Disputed, got ' + verified + '/' + disputed);
       return { records:d.records.length, verified:verified, disputed:disputed, replacementRecords:repl.records.length };
     });
 
-    step('REGISTRY: the seven women cards do not enter ssPersonRegistry', function() {
+    step('REGISTRY: the nine women cards do not enter ssPersonRegistry', function() {
       var reg = ssPersonRegistry(C), txt = reg.people.map(function(p){ return p.name; }).join('\\n').toLowerCase();
-      ['wakeman','cashier','velazquez','clara barton','harriet tubman','mary edwards walker','dorothea'].forEach(function(name) {
+      ['wakeman','cashier','velazquez','clara barton','harriet tubman','mary edwards walker','dorothea','mary boykin chesnut','susie king taylor'].forEach(function(name) {
         if (txt.indexOf(name) >= 0) throw new Error('women-thread name leaked into registry: ' + name);
       });
       return { registryPeople:reg.people.length };
     });
 
-    step('UI: Campaign Kit renders seven Women in the War cards with required names', function() {
+    step('UI: Campaign Kit renders nine Women in the War cards with required names', function() {
       mountLoot(C);
       var root = document.getElementById('wiwThread');
       if (!root) throw new Error('missing wiwThread section');
       var cards = document.querySelectorAll('[data-wiw-card]');
-      if (cards.length !== 7) throw new Error('expected 7 cards, got ' + cards.length);
+      if (cards.length !== 9) throw new Error('expected 9 cards, got ' + cards.length);
       var text = root.textContent;
-      ['Sarah Rosetta Wakeman','Albert D. J. Cashier','Loreta Janeta Velazquez','Clara Barton','Dr. Mary Edwards Walker','Harriet Tubman','Dorothea Lynde Dix'].forEach(function(name) {
+      ['Sarah Rosetta Wakeman','Albert D. J. Cashier','Loreta Janeta Velazquez','Clara Barton','Dr. Mary Edwards Walker','Harriet Tubman','Dorothea Lynde Dix','Mary Boykin Chesnut','Susie King Taylor'].forEach(function(name) {
         if (text.indexOf(name) < 0) throw new Error('missing visible name: ' + name);
       });
       if (!document.getElementById('wiwSearch') || !document.getElementById('wiwRole') || !document.getElementById('wiwProv')) throw new Error('missing search/filter controls');

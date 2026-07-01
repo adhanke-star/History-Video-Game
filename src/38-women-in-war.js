@@ -22,6 +22,8 @@ function _wiwRoleLabel(role) {
     "medical": "Medical",
     "scout-spy": "Scout and spy",
     "nursing-administration": "Nursing administration",
+    "diarist": "Diarist",
+    "teacher-nurse": "Teacher and nurse",
     "contested": "Contested"
   };
   return map[role] || role || "Role";
@@ -31,6 +33,8 @@ function _wiwRoleColor(role) {
   if (role === "medical") return "#9fc3b0";
   if (role === "scout-spy") return "#a9bedf";
   if (role === "nursing-administration") return "#d8b48a";
+  if (role === "diarist") return "#d7c392";
+  if (role === "teacher-nurse") return "#8bbbc5";
   if (role === "contested") return "#e8b46a";
   return "#b9a4c9";
 }

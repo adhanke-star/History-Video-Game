@@ -113,7 +113,7 @@ function underToldSnapshot(C) {
   var womenLane = 0;
   try {
     var W = gameData("women-in-war");
-    womenLane = W && Array.isArray(W.records) && W.records.length >= 7 ? 100 : 0;
+    womenLane = W && Array.isArray(W.records) && W.records.length >= 9 ? 100 : 0;
   } catch (e3) { womenLane = 0; }
   var yearScore = year >= 1864 ? 74 : (year >= 1863 ? 64 : 32);
   var westScore = _utpIsWestern(bd) ? 62 : 28;
@@ -294,7 +294,7 @@ function presUnderToldBlock(C) {
     + (women ? '<div style="margin-top:4px"><b>' + htmlEsc(women.label) + ':</b> ' + htmlEsc(women.summary) + '</div>' : '')
     + (agencyDebate ? '<div style="margin-top:4px"><b>' + htmlEsc(agencyDebate.title) + ':</b> ' + htmlEsc(agencyDebate.summary) + '</div>' : '')
     + (nativeDebate ? '<div style="margin-top:4px"><b>' + htmlEsc(nativeDebate.title) + ':</b> ' + htmlEsc(nativeDebate.summary) + '</div>' : '')
-    + '<div style="margin-top:4px">Evidence is consolidated from the existing manpower, codex, women-in-war, Chancellorsville, and decision-card source trails. Native nations are kept narrow here pending a later Trans-Mississippi pass.</div>'
+    + '<div style="margin-top:4px">Evidence is consolidated from the existing manpower, codex, women-in-war, Chancellorsville, decision-card, and M4 Native dossier source trails. Native nations are now source-anchored but still narrow; this is not a playable Trans-Mississippi battle or OOB pass.</div>'
     + '</details>'
     + '</div>';
 }

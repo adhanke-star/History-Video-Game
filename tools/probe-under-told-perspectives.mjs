@@ -80,14 +80,22 @@ const SETUP = `(() => {
       var ids=D.threads.map(function(t){ return t.id; }).join(',');
       ['enslaved-agency','immigrant-ethnic-units','native-nations','women-d153-lane'].forEach(function(id){ if(ids.indexOf(id)<0) throw new Error('missing '+id); });
       var nativeThread=D.threads.filter(function(t){ return t.id==='native-nations'; })[0];
-      if(!nativeThread || nativeThread.provenance!=='Inferred') throw new Error('Native-nations thread must stay Inferred until a dedicated dossier exists');
-      if(!/not enough to create a playable Trans-Mississippi battle/i.test(nativeThread.sourceNote||'')) throw new Error('Native-nations narrow-scope note missing');
+      if(!nativeThread || nativeThread.provenance!=='Verified') throw new Error('Native-nations thread must be Verified after the M4 dossier pass');
+      if(!Array.isArray(nativeThread.sources)||nativeThread.sources.length<4) throw new Error('Native-nations Verified thread needs source-backed dossier trails');
+      if(!/not a license to create a playable Trans-Mississippi battle/i.test(nativeThread.sourceNote||'')) throw new Error('Native-nations narrow-scope playable-battle note missing');
+      var nativeBlob=(nativeThread.summary||'')+' '+(nativeThread.sourceNote||'')+' '+(nativeThread.sources||[]).join(' ');
+      ['Worcester v. Georgia','Trail of Tears','Albert Pike','Stand Watie','Honey Springs','Sand Creek','Dakota 38','Ely Parker','Appomattox'].forEach(function(token){
+        if(nativeBlob.indexOf(token)<0) throw new Error('Native-nations M4 thread missing token: '+token);
+      });
+      if(!/This does not make the Confederacy "diverse\.?"/.test(nativeBlob)) throw new Error('Native-nations anti-diverse-Confederacy guardrail missing');
       D.threads.concat(D.debates||[]).forEach(function(x){
         if(x.id && String(x.id).indexOf('ss:')===0) throw new Error('ss namespace leak '+x.id);
         if(Object.prototype.hasOwnProperty.call(x,'replacePid')) throw new Error('replacePid leak '+x.id);
         if(x.provenance==='Verified' && (!Array.isArray(x.sources)||x.sources.length<2)) throw new Error('under-sourced '+x.id);
       });
-      if(!/D153/.test(JSON.stringify(D.threads.filter(function(t){return t.id==='women-d153-lane';})[0]||{}))) throw new Error('women lane does not name D153 separation');
+      var womenLane=JSON.stringify(D.threads.filter(function(t){return t.id==='women-d153-lane';})[0]||{});
+      if(!/D153/.test(womenLane)) throw new Error('women lane does not name D153 separation');
+      if(!/9 records, 8 Verified and 1 Disputed/.test(womenLane)) throw new Error('women lane does not reflect M4 9-card source count');
       return { schema:D.schema, threads:D.threads.length, debates:(D.debates||[]).length };
     });
 
@@ -163,6 +171,7 @@ const SETUP = `(() => {
       var h=document.getElementById('wdContent').innerHTML;
       if(h.indexOf('Under-Told Perspectives')<0) throw new Error('under-told block missing');
       if(h.indexOf('Enslaved agency')<0 || h.indexOf('Immigrant')<0 || h.indexOf('Native nations')<0 || h.indexOf('D153')<0) throw new Error('under-told teaching copy missing');
+      if(h.indexOf('source-anchored')<0 || h.indexOf('not a playable Trans-Mississippi battle')<0) throw new Error('M4 Native bounded-source note missing from UI');
       var b=document.getElementById('utpToggleLiaison'); if(!b) throw new Error('liaison button absent');
       b.click();
       if(!C.underTold || C.underTold.active!==true || C.underTold.priority!=='perspectiveLiaison') throw new Error('toggle did not activate');

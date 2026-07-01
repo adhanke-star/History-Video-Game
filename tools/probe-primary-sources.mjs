@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import "./guard-probe-browser.mjs";
-// tools/probe-primary-sources.mjs - M2/M3 primary-source apparatus gate.
+// tools/probe-primary-sources.mjs - M2/M3/M4 primary-source apparatus gate.
 // Verifies schema/quote/provenance invariants; the President's Desk "Documents"
 // tab render/wire path; client-side filters/search; and the pure-readout wall.
 import { chromium } from 'playwright-core';
@@ -25,10 +25,10 @@ function validatePrimarySourcesData() {
   const data = JSON.parse(readFileSync(join(ROOT, 'data', 'primary-sources.json'), 'utf8'));
   const errors = [];
   if (data.schema !== 'cw_primary_sources_v1') errors.push('schema must be cw_primary_sources_v1');
-  if (!Array.isArray(data.records) || data.records.length < 11) errors.push('expected at least 11 records');
+  if (!Array.isArray(data.records) || data.records.length < 16) errors.push('expected at least 16 records');
   const ids = new Set();
   const cats = new Set((data.categories || []).map(c => c && c.id).filter(Boolean));
-  let confed = 0, verified = 0, reconstruction = 0;
+  let confed = 0, verified = 0, reconstruction = 0, sourceCriticism = 0;
   for (const rec of data.records || []) {
     const id = rec && rec.id;
     if (!id) { errors.push('record missing id'); continue; }
@@ -56,13 +56,18 @@ function validatePrimarySourcesData() {
       if (!/slaver|enslav|white|negro|slave/i.test((rec.verbatimExcerpt || '') + ' ' + (rec.indictment || '') + ' ' + (rec.catalystFrame || ''))) errors.push(id + ' Confederate card does not name slavery/race in excerpt/frame');
     }
     if (rec.category === 'reconstruction-memory') reconstruction++;
+    if (rec.category === 'source-criticism-voices') sourceCriticism++;
   }
   if (confed < 5) errors.push('expected at least 5 Confederate self-justification records, got ' + confed);
   for (const rid of ['ps-mississippi-black-code-apprentice','ps-elias-hill-kkk-hearings','ps-douglass-black-man-wants']) {
     if (!ids.has(rid)) errors.push('missing M3 Reconstruction/memory record: ' + rid);
   }
   if (reconstruction < 3) errors.push('expected at least 3 Reconstruction/memory records, got ' + reconstruction);
-  return { ok: errors.length === 0, errors, records: (data.records || []).length, verified, confed, reconstruction };
+  for (const rid of ['ps-gettysburg-address-bliss','ps-susie-king-taylor-after-war','ps-dolly-lunt-hard-war','ps-mccarter-irish-brigade','ps-dwyer-irish-brigade-letter']) {
+    if (!ids.has(rid)) errors.push('missing M4 source-criticism / under-told voice record: ' + rid);
+  }
+  if (sourceCriticism < 5) errors.push('expected at least 5 source-criticism records, got ' + sourceCriticism);
+  return { ok: errors.length === 0, errors, records: (data.records || []).length, verified, confed, reconstruction, sourceCriticism };
 }
 
 function staticPrimarySourceLeakScan() {
@@ -151,6 +156,24 @@ const SETUP = `(() => {
       if(suffrage!==1) throw new Error('enfranchisement search should show 1 card, got '+suffrage);
       return { shown:shown, suffrage:suffrage }; });
 
+    step('M4 source-criticism lane filters to Gettysburg, Taylor, Lunt, McCarter, and Dwyer records', function(){
+      mount(primarySourcesRenderTab(null)); primarySourcesWireTab(null);
+      _psApplyFilter('', 'source-criticism-voices');
+      var shown=visible('.ps-card');
+      if(shown<5) throw new Error('source-criticism filter showed '+shown+' expected at least 5');
+      var text=(document.getElementById('psList')||{}).textContent||'';
+      ['Gettysburg Address','Susie King Taylor','Dolly Lunt','William McCarter','William Dwyer'].forEach(function(token){ if(text.indexOf(token)<0) throw new Error('missing M4 visible token: '+token); });
+      _psApplyFilter('Bliss copy', 'all');
+      var bliss=visible('.ps-card');
+      if(bliss!==1) throw new Error('Bliss copy search should show 1 card, got '+bliss);
+      _psApplyFilter('McCarter', 'source-criticism-voices');
+      var mccarter=visible('.ps-card');
+      if(mccarter!==1) throw new Error('McCarter search should show 1 card, got '+mccarter);
+      _psApplyFilter('Dwyer', 'source-criticism-voices');
+      var dwyer=visible('.ps-card');
+      if(dwyer!==1) throw new Error('Dwyer search should show 1 card, got '+dwyer);
+      return { shown:shown, bliss:bliss, mccarter:mccarter, dwyer:dwyer }; });
+
     step('Desk dispatch: _wdTab=sources renders Documents and another tab clears it', function(){
       if(typeof _wdRefresh!=='function') throw new Error('_wdRefresh missing');
       var C=mkC();
@@ -217,7 +240,7 @@ const SETUP = `(() => {
     result.staticData = staticData;
     result.staticScan = staticScan;
     if (!staticData.ok) { result.ok = false; for (const err of staticData.errors) result.steps.push({ name:'STATIC DATA: primary-sources schema', ok:false, err }); }
-    else { result.steps.push({ name:'STATIC DATA: primary-sources schema', ok:true, v:{ records: staticData.records, verified: staticData.verified, confed: staticData.confed, reconstruction: staticData.reconstruction } }); }
+    else { result.steps.push({ name:'STATIC DATA: primary-sources schema', ok:true, v:{ records: staticData.records, verified: staticData.verified, confed: staticData.confed, reconstruction: staticData.reconstruction, sourceCriticism: staticData.sourceCriticism } }); }
     if (staticScan.leaks.length) { result.ok = false; result.steps.push({ name:'STATIC SCAN: no combat/bridge/save path reads primary sources', ok:false, err:'primary-source read by: '+staticScan.leaks.join(', ') }); }
     else { result.steps.push({ name:'STATIC SCAN: no combat/bridge/save path reads primary sources', ok:true, v:{ scanned: staticScan.scanned } }); }
     await page.evaluate(() => { if (typeof _wdRefresh === 'function') { _wdTab = 'sources'; _wdRefresh(); } });
@@ -230,4 +253,5 @@ const SETUP = `(() => {
   }
   console.log('probe-primary-sources ok=' + result.ok + ' steps=' + (result.steps?result.steps.length:0) + ' pageerrors=' + (result.pageerrors?result.pageerrors.length:0));
   if (result.steps) for (const s of result.steps) if (!s.ok) console.log('  FAIL ' + s.name + ' :: ' + s.err);
+  if (!result.ok || (result.pageerrors && result.pageerrors.length)) process.exit(1);
 })();

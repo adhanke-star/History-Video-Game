@@ -2,7 +2,7 @@
   "_meta": {
     "schema": "cw_primary_sources_v1",
     "purpose": "Short primary-source document cards for the President's Desk Read the Document surface. Excerpts are capped for classroom use; sourceCritique records transcription and locator caveats.",
-    "compiled": "D182 M3 Reconstruction/memory primary-source apparatus"
+    "compiled": "D183 M4 source-criticism and under-told voices primary-source apparatus"
   },
   "schema": "cw_primary_sources_v1",
   "categories": [
@@ -25,6 +25,11 @@
       "id": "reconstruction-memory",
       "label": "Reconstruction & memory",
       "blurb": "Postwar documents that show Black citizenship claims, Black Codes, Klan terror, and the making of Civil War memory."
+    },
+    {
+      "id": "source-criticism-voices",
+      "label": "Source criticism & under-told voices",
+      "blurb": "Documents that teach how historians read editions, manuscripts, interview conditions, memory, and viewpoint."
     }
   ],
   "records": [
@@ -351,6 +356,164 @@
           "repository": "Library of Congress",
           "locator": "Pamphlet item mfd.22014",
           "url": "https://www.loc.gov/item/mfd.22014/"
+        }
+      ]
+    },
+    {
+      "id": "ps-gettysburg-address-bliss",
+      "category": "source-criticism-voices",
+      "title": "Gettysburg Address, Bliss copy",
+      "author": "Abraham Lincoln",
+      "date": "November 19, 1863; later copy for Alexander Bliss",
+      "place": "Gettysburg, Pennsylvania / Washington, D.C.",
+      "provenance": "Verified",
+      "verbatimExcerpt": "government of the people, by the people, for the people, shall not perish from the earth.",
+      "attribution": "Repository: Library of Congress and National Park Service. Locator: LOC Gettysburg Address exhibition; NPS Lincoln Memorial Gettysburg Address / Bliss-copy note.",
+      "sourceCritique": "There are five known manuscript copies, with small wording and punctuation differences. The Bliss copy became the standard inscription text, so a citation must name which copy is being quoted.",
+      "indictment": "Even iconic wartime language has a manuscript history; classroom quotation should not pretend there is only one undifferentiated text.",
+      "catalystFrame": "",
+      "sources": [
+        {
+          "title": "Gettysburg Address Exhibition",
+          "repository": "Library of Congress",
+          "locator": "Exhibition overview naming the five manuscript copies and repositories",
+          "url": "https://www.loc.gov/exhibits/gettysburg-address/"
+        },
+        {
+          "title": "Gettysburg Address",
+          "repository": "National Park Service, Lincoln Memorial",
+          "locator": "Bliss copy / south-wall inscription note",
+          "url": "https://www.nps.gov/linc/learn/historyculture/gettysburgaddress.htm"
+        }
+      ]
+    },
+    {
+      "id": "ps-susie-king-taylor-after-war",
+      "category": "source-criticism-voices",
+      "title": "Susie King Taylor, Thoughts on Present Conditions",
+      "author": "Susie King Taylor",
+      "date": "1902",
+      "place": "Boston, Massachusetts",
+      "provenance": "Verified",
+      "verbatimExcerpt": "Was the war in vain? Has it brought freedom, in the full sense of the word, or has it not made our condition more hopeless?",
+      "attribution": "Repository: UNC Documenting the American South and Internet Archive. Locator: Reminiscences of My Life in Camp, chapter XIII, Thoughts on Present Conditions, p. 61.",
+      "sourceCritique": "Taylor wrote decades after wartime service, but as a participant. DocSouth records its transcription normalizations, so the card treats the memoir as a remembered first-person source, not a stenographic wartime diary.",
+      "indictment": "Taylor connected Union victory to the unfinished fight against lynching, racial terror, and unequal citizenship.",
+      "catalystFrame": "",
+      "sources": [
+        {
+          "title": "Reminiscences of My Life in Camp",
+          "repository": "UNC Documenting the American South",
+          "locator": "Chapter XIII, Thoughts on Present Conditions, p. 61",
+          "url": "https://docsouth.unc.edu/neh/taylorsu/taylorsu.html"
+        },
+        {
+          "title": "Reminiscences of My Life in Camp",
+          "repository": "Internet Archive",
+          "locator": "1902 Boston edition page images",
+          "url": "https://archive.org/details/reminiscencesofm00tayl"
+        },
+        {
+          "title": "After the War",
+          "repository": "National Constitution Center",
+          "locator": "Historic Document Library excerpt from Taylor, chapter XIII",
+          "url": "https://constitutioncenter.org/the-constitution/historic-document-library/detail/susie-king-taylor-after-the-war-reminiscences-of-my-life-in-camp-with-the-33rd-united-states-colored-troops-late-1st-s.c-volunteers-1902"
+        }
+      ]
+    },
+    {
+      "id": "ps-dolly-lunt-hard-war",
+      "category": "source-criticism-voices",
+      "title": "Dolly Lunt Burge on Sherman's March",
+      "author": "Dolly Sumner Lunt Burge",
+      "date": "November 19, 1864; published 1918",
+      "place": "Burge plantation near Covington, Georgia",
+      "provenance": "Verified",
+      "verbatimExcerpt": "There go my mules, my sheep, and, worse than all, my boys [slaves]!",
+      "attribution": "Repository: UNC Documenting the American South and Digital Library of Georgia. Locator: A Woman's Wartime Journal, November 19, 1864, p. 24.",
+      "sourceCritique": "The diary was published in 1918 with an introduction and notes. The bracketed [slaves] gloss is part of the edited text; the source preserves an enslaver's viewpoint and must be framed as such.",
+      "indictment": "The hard-war eyewitness record shows real civilian fear while also exposing enslaver language that treated people as property.",
+      "catalystFrame": "",
+      "sources": [
+        {
+          "title": "A Woman's Wartime Journal",
+          "repository": "UNC Documenting the American South",
+          "locator": "November 19, 1864 entry, p. 24",
+          "url": "https://docsouth.unc.edu/fpn/burge/lunt.html"
+        },
+        {
+          "title": "A Woman's Wartime Journal",
+          "repository": "Digital Library of Georgia",
+          "locator": "North American Slave Narratives metadata record",
+          "url": "https://dlg.usg.edu/record/noa_fpn_86"
+        }
+      ]
+    },
+    {
+      "id": "ps-mccarter-irish-brigade",
+      "category": "source-criticism-voices",
+      "title": "William McCarter's Irish Brigade memoir",
+      "author": "William McCarter",
+      "date": "Postwar memoir; Fredericksburg memory of December 13, 1862",
+      "place": "Fredericksburg, Virginia",
+      "provenance": "Verified",
+      "verbatimExcerpt": "death, havoc, and carnage was visible at every step on the ground fronting Marye's Heights.",
+      "attribution": "Repository: National Museum of Civil War Medicine, University of Alabama bibliography, and National Park Service. Locator: McCarter, My Life in the Irish Brigade, p. 181; NPS Fredericksburg Union OOB.",
+      "sourceCritique": "McCarter was an Irish immigrant private in the 116th Pennsylvania, but this is a postwar memoir edited for publication, not a letter written on the field. The card uses it as veteran memory with source limits.",
+      "indictment": "Immigrant soldier testimony belongs in the war story without turning the Irish Brigade into a simple romance of ethnic valor.",
+      "catalystFrame": "",
+      "sources": [
+        {
+          "title": "The Medical Treatment of Private William McCarter",
+          "repository": "National Museum of Civil War Medicine",
+          "locator": "Quotes My Life in the Irish Brigade, p. 181, and identifies McCarter's 116th Pennsylvania service",
+          "url": "https://www.civilwarmed.org/mccarter/"
+        },
+        {
+          "title": "McCarter, William. My Life in the Irish Brigade",
+          "repository": "University of Alabama Libraries",
+          "locator": "Published memoir bibliography and index, Savas Publishing 1996",
+          "url": "https://ir.ua.edu/bitstreams/726d3254-9741-4926-8019-6de0e9067aa7/download"
+        },
+        {
+          "title": "Order of Battle Fredericksburg Union Right Grand Division",
+          "repository": "National Park Service",
+          "locator": "Second Corps / First Division / Second Brigade, Irish Brigade",
+          "url": "https://www.nps.gov/frsp/learn/historyculture/order-of-battle-fredericksburg-union-right-grand-division.htm"
+        }
+      ]
+    },
+    {
+      "id": "ps-dwyer-irish-brigade-letter",
+      "category": "source-criticism-voices",
+      "title": "William Dwyer's Irish Brigade letter",
+      "author": "William Dwyer",
+      "date": "January 23, 1863",
+      "place": "Camp near Falmouth, Virginia",
+      "provenance": "Verified",
+      "verbatimExcerpt": "we were kept back and would not be let go in account of we being Irish.",
+      "attribution": "Repository: Irish in the American Civil War / National Archives pension-file transcript. Locator: William Dwyer Dependent Mother's Pension File WC103233; letter of January 23, 1863.",
+      "sourceCritique": "The public transcript identifies Dwyer as a Tipperary native in Co. H, 63rd New York, Irish Brigade, and notes that punctuation was added for modern reading. The letter is a soldier-family source preserved in a dependent mother's pension file, not an official report.",
+      "indictment": "Dwyer turned the Irish Brigade's Fredericksburg losses into a charge of ethnic mistreatment, showing immigrant service and resentment in the same voice.",
+      "catalystFrame": "",
+      "sources": [
+        {
+          "title": "In Account Of We Being Irish: A New Irish Brigade Letter After Fredericksburg",
+          "repository": "Irish in the American Civil War",
+          "locator": "William Dwyer Dependent Mother's Pension File WC103233, January 23, 1863 letter",
+          "url": "https://irishamericancivilwar.com/2014/12/13/in-account-of-we-being-irish-a-new-irish-brigade-letter-after-fredericksburg/"
+        },
+        {
+          "title": "Archived transcript: In Account Of We Being Irish",
+          "repository": "RSSing mirror of Irish in the American Civil War",
+          "locator": "Lines for William Dwyer's January 23, 1863 letter",
+          "url": "https://irish645.rssing.com/chan-6453330/all_p3.html"
+        },
+        {
+          "title": "Irish Soldiers in the Union Army",
+          "repository": "National Park Service",
+          "locator": "Context for Irish enlistment, remittances, and Irish Brigade leadership",
+          "url": "https://www.nps.gov/articles/irish-soldiers-in-the-union-army.htm"
         }
       ]
     }

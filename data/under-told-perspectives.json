@@ -78,14 +78,20 @@
       "id": "native-nations",
       "label": "Native nations and borderlands",
       "status": "narrow-thread",
-      "summary": "Native nations and Native individuals faced a war inside older sovereignty crises: divided loyalties, Indian Territory fighting, Union service, Confederate alliances, and postwar memory that usually pushed them to the edge.",
+      "summary": "Native nations entered the Civil War already inside a U.S. betrayal — the 1830s removal and Trail of Tears, with Worcester v. Georgia (1832) left unenforced. When war came the U.S. Army abandoned Indian Territory's forts (May 1861), stranding Union-loyal Native people; Confederate agent Albert Pike then won 1861 alliances by exploiting sovereignty fears — and because Five Tribes elites, including Stand Watie's planter faction, were themselves slaveholders protecting human property. This does not make the Confederacy \"diverse.\" Loyalties split violently: Cherokee and Creek fought on both sides at Honey Springs (1863), and the slaveholder Opothleyahola led Unionist refugees to Kansas. The Union also broke faith — Sand Creek (1864), the Dakota 38 (1862), and the 1866 treaties that took land from even loyal tribes while forcing them to free their enslaved Freedmen. Ely Parker (Seneca) drafted Grant's Appomattox terms; Watie surrendered his command last, June 1865.",
       "gameHook": "Keeps Native nations visible now without building a Trans-Mississippi playable battle or inventing unsupported OOB claims.",
-      "provenance": "Inferred",
+      "provenance": "Verified",
       "sources": [
-        "Local source scan found Chickamauga Cherokee-place-name caution, D40/D54 Trans-Mississippi deferral, and general anti-Lost-Cause guardrails but no full Native-nations dossier yet.",
-        "Pending source pass should verify Ely S. Parker, Stand Watie, Cherokee division, Indian Territory fighting, and Honey Springs / Trans-Mississippi context before upgrading."
+        ".tmp/native-nations-under-told-dossier.md M4 vetted narrow-source brief.",
+        "National Park Service, Trail of Tears, https://www.nps.gov/trte/index.htm",
+        "National Park Service, Ely S. Parker, https://www.nps.gov/people/ely-parker.htm",
+        "Oklahoma Historical Society, Stand Watie, https://www.okhistory.org/publications/enc/entry.php?entry=WA016",
+        "Oklahoma Historical Society, Civil War Era, https://www.okhistory.org/publications/enc/entry.php?entry=CI011",
+        "National Park Service, Honey Springs Battlefield, https://www.nps.gov/articles/000/honey-springs-battlefield.htm",
+        "Oklahoma Historical Society, Reconstruction Treaties, https://www.okhistory.org/publications/enc/entry.php?entry=RE001",
+        "American Battlefield Trust, Sand Creek Massacre, https://www.battlefields.org/learn/articles/sand-creek-massacre"
       ],
-      "sourceNote": "Native-nations detail is intentionally narrow in this slice because the local repo had thinner Native source trails than the other threads. It is enough to keep the thread visible; it is not enough to create a playable Trans-Mississippi battle."
+      "sourceNote": "Native-nations detail is now source-anchored by the M4 dossier, but it remains a narrow teaching thread. It is not a license to create a playable Trans-Mississippi battle, OOB, unit roster, or Confederate-diversity claim."
     },
     {
       "id": "women-d153-lane",
@@ -95,7 +101,7 @@
       "gameHook": "Preserves D153 separation: no replacePid, no ss: ids, no registry combatant row, no unsupported portrait claim.",
       "provenance": "Verified",
       "sources": [
-        "data/women-in-war.json cw_women_in_war_v1 records: 7 records, 6 Verified and 1 Disputed, with D153 lane constraints.",
+        "data/women-in-war.json cw_women_in_war_v1 records: 9 records, 8 Verified and 1 Disputed, with D153 lane constraints.",
         "tools/import-women-in-war.mjs and tools/probe-women-in-war.mjs gate the separate presentation lane."
       ]
     }
@@ -133,12 +139,13 @@
     },
     {
       "id": "native-thread-scope",
-      "title": "Native nations need a later full pass",
-      "summary": "A narrow Native-nations thread is honest now; a full Trans-Mississippi / Indian Territory system needs its own sourced pass and should not be improvised inside this small War Effort slice.",
-      "provenance": "Inferred",
+      "title": "Native nations are sourced but still bounded",
+      "summary": "The M4 dossier makes the Native-nations thread source-anchored for teaching, but a playable Trans-Mississippi / Indian Territory system still needs Aaron's M8 go/no-go and its own battle/OOB pass.",
+      "provenance": "Verified",
       "sources": [
+        ".tmp/native-nations-under-told-dossier.md M4 vetted narrow-source brief.",
         "V1-CHECKLIST.md Group 7 keeps later battle-build work last and Phase G Trans-Mississippi deferred.",
-        "Current local source scan showed limited Native-nations coverage compared with women, USCT, immigrant, and hard-war trails."
+        ".tmp/civil-war-phd-execution-brief.md M8 battle-build track requires Aaron go/no-go."
       ]
     }
   ]

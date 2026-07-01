@@ -9,7 +9,7 @@ const DATA_PATH = join(ROOT, 'data', 'women-in-war.json');
 const CODEX_PATH = join(ROOT, 'data', 'codex.json');
 const SCHEMA = 'cw_women_in_war_v1';
 const BAD_KEYS = new Set(['__proto__', 'constructor', 'prototype', 'hasOwnProperty']);
-const ROLE_CATEGORIES = new Set(['disguised-soldier', 'relief', 'medical', 'scout-spy', 'nursing-administration', 'contested']);
+const ROLE_CATEGORIES = new Set(['disguised-soldier', 'relief', 'medical', 'scout-spy', 'nursing-administration', 'diarist', 'teacher-nurse', 'contested']);
 const SIDES = new Set(['US', 'CS', 'Both', 'Unclear']);
 const PROVENANCE = new Set(['Verified', 'Disputed', 'Inferred']);
 

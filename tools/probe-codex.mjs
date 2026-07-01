@@ -161,6 +161,27 @@ const SETUP = `(() => {
       if(!/manufacture of memory|memory project|postwar manufacture/i.test(lb)) throw new Error('Lost Cause entry must identify memory manufacture');
       return { reconstruction:recon.id, lostCause:lc.id }; });
 
+    step('M4 source-criticism and Southern-Unionism locks: editions, Brownlow, West Virginia, Irish Brigade letters', function(){
+      var sc=_cxById('source-criticism'), et=_cxById('east-tennessee-unionism'), wv=_cxById('west-virginia-statehood'), ir=_cxById('irish-brigade');
+      if(!sc || !et || !wv || !ir) throw new Error('missing one or more M4 codex entries');
+      var sb=(sc.short||'')+' '+(sc.body||'');
+      ['WPA','interviewer race','Gettysburg Address','five known manuscript copies','Bliss copy','Mary Chesnut','Woodward','Hacker','750,000'].forEach(function(token){
+        if(sb.indexOf(token)<0) throw new Error('Source Criticism entry missing token: '+token);
+      });
+      var eb=(et.short||'')+' '+(et.body||'');
+      ['East Tennessee','Brownlow','Unionism','pro-slavery','1858','anti-secession'].forEach(function(token){
+        if(eb.indexOf(token)<0) throw new Error('East Tennessee Unionism entry missing token: '+token);
+      });
+      if(!/Unionism and abolitionism cannot be treated as the same thing/i.test(eb)) throw new Error('East Tennessee guardrail must separate Unionism from abolitionism');
+      var wb=(wv.short||'')+' '+(wv.body||'');
+      ['June 20, 1863','Willey Amendment','gradual emancipation','December 31, 1862','March 26, 1863'].forEach(function(token){
+        if(wb.indexOf(token)<0) throw new Error('West Virginia Statehood entry missing token: '+token);
+      });
+      var ib=(ir.short||'')+' '+(ir.body||'');
+      if(!/William McCarter/.test(ib) || !/postwar immigrant-soldier memoir/.test(ib)) throw new Error('Irish Brigade entry must carry McCarter immigrant-soldier source lock');
+      if(!/William Dwyer/.test(ib) || !/in account of we being Irish/.test(ib) || !/contemporary soldier-family letter/.test(ib)) throw new Error('Irish Brigade entry must carry Dwyer contemporary immigrant-letter source lock');
+      return { sourceCriticism:sc.id, eastTennessee:et.id, westVirginia:wv.id, irishBrigade:ir.id }; });
+
     step('render is a PURE read-out (no campaign mutation, no save)', function(){
       // codex render/wire must not require or mutate a campaign — they run with G.campaign null
       var before=G.campaign;
@@ -292,4 +313,5 @@ const SETUP = `(() => {
   }
   console.log('probe-codex ok=' + result.ok + ' steps=' + (result.steps?result.steps.length:0) + ' pageerrors=' + (result.pageerrors?result.pageerrors.length:0));
   if (result.steps) for (const s of result.steps) if (!s.ok) console.log('  FAIL ' + s.name + ' :: ' + s.err);
+  if (!result.ok || (result.pageerrors && result.pageerrors.length)) process.exit(1);
 })();
