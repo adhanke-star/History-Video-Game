@@ -8,6 +8,12 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## DOCS PRIORITY REFRESH — 2026-07-01 (D186, DOCS-ONLY)
+**D186 aligns the live routing docs after D185.** The immediate next task is M7 lived-slavery + Black combat-agency. After M7, the proper priority order is CS finance toolkit, real diplomacy system, human-cost-with-gravity treatment, Western-theater strategic readouts, then the planned batch/release gate. M8 remains blocked pending Aaron go/no-go because it would pull battle-build work forward; Q5 Chattanooga, Atlanta/March, Franklin/Nashville, and Q6 USCT playable battles remain last.
+- **Updated docs:** `START-HERE.md`, `AUTONOMOUS-RUN.md`, `HANDOFF.md`, `WAKE-UP.md`, `V1-CHECKLIST.md`, `DECISIONS.md`, `RUN-LOG.md`, `CLAUDE.md`, and `.clinerules`.
+- **Contract:** docs-only. No source/data/generated HTML changes, no gameplay/simulation/save/bridge/tactical/OOB/economy math changes, and no full `npm run vet:noreg` tax for a documentation refresh.
+- **Verification:** `node tools/build.mjs` GATE OK; `git diff --check` clean.
+
 ## GRADUATE-HISTORY PASS — M6 HOME-FRONT POLITICS/ECONOMY — 2026-07-01 (D185, FOCUSED-GATED)
 **M6 of the authorized graduate-seminar history build-out** ships home-front politics/economy readouts as pure teaching/readout content. No combat model, OOB, save, bridge behavior, resolve, victory, economy math, or battle-output path changed.
 - **Primary-source lane:** `data/primary-sources.json` gains a **Home front, politics & economy** category and 2 `Verified` records with ≥2 sources each and ≤60-word exact excerpts: Lincoln's August 23, 1864 blind memorandum and the February 25, 1862 Legal Tender Act. The source notes preserve transcription/locator limits and name the Legal Tender exceptions rather than overstating greenbacks as unrestricted hard money.

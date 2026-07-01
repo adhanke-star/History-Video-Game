@@ -6,7 +6,7 @@
 
 **Verified:** JSON parse/word-cap/related-link smoke; `node --check` for touched source/probe files; build **GATE OK** (no-fudge ✓, citations ✓, women-in-war ✓); focused `probe-primary-sources` 13/0, `probe-codex` 22/0, and `probe-economy` 8/0; adjacent `probe-h0-president-desk` 3/3; JSON readback clean; `git diff --check` clean. Full `npm run vet:noreg` deferred under D176.
 
-**Next recommended run:** **M7 — lived-slavery + Black combat-agency** from `.tmp/civil-war-phd-execution-brief.md` and `.tmp/civil-war-history-audit-and-phd-plan.md`. M8 battle-build track still needs an Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+**Next recommended run:** **M7 — lived-slavery + Black combat-agency** from `.tmp/civil-war-phd-execution-brief.md` and `.tmp/civil-war-history-audit-and-phd-plan.md`. After M7, continue CS finance toolkit -> real diplomacy system -> human-cost-with-gravity -> Western-theater strategic readouts -> planned batch/release gate. M8 battle-build track still needs an Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
 
 ---
 
@@ -18,7 +18,7 @@
 
 **Verified:** JSON parse for codex/disease/irregular/manifest; `node --check` for touched source/probe files; build **GATE OK** (no-fudge ✓, citations ✓, women-in-war ✓); focused `probe-codex` 21/0, `probe-disease-medical` 8/0, and `probe-irregular-war` 8/0; adjacent `probe-primary-sources` 12/0, `probe-bridge` 6/0, and `probe-h0-president-desk` 3/3; JSON readback clean; `git diff --check` clean. Full `npm run vet:noreg` deferred under D176.
 
-**Next recommended run:** **M6 — home-front/politics/economy** from `.tmp/civil-war-phd-execution-brief.md` and `.tmp/civil-war-history-audit-and-phd-plan.md`. M8 battle-build track still needs an Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+**Then-next, now shipped as D185:** **M6 — home-front/politics/economy** from `.tmp/civil-war-phd-execution-brief.md` and `.tmp/civil-war-history-audit-and-phd-plan.md`. M8 battle-build track still needs an Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
 
 ---
 
@@ -78,7 +78,7 @@
 
 **Verified:** JSON smoke passed for `data/flagship-units.json`; `node --check` passed for touched source/probe/suite files; build GATE OK with idempotent HTML rebuild; focused `probe-flagship-units` 8 steps / 0 pageerrors with clean JSON readback and screenshot. Adjacent probes passed: under-told perspectives (8/0), bridge (6/0), and H0 President's Desk (3/3, 0 pageerrors). `git diff --check` clean. Focused probing caught and fixed a recursive readout bug: flagship snapshots now read stored morale instead of calling `moraleCompute()` from the bridge path. Full `npm run vet:noreg` remains deferred under D176.
 
-**Next recommended run:** continue Group 4 with CS finance toolkit or the next smaller Phase F/G non-battle item the live checklist identifies (war-finance civics, real diplomacy, human-cost-with-gravity, Western-theater strategic readouts). Do not start Q5 Chattanooga, Atlanta/March, Franklin/Nashville, or Q6 USCT playable battles.
+**Historical then-next marker:** the June 30 CS-finance/Group-4 marker was superseded by D180-D185. Use the D185/D186 top block for the live next item and order. Do not start Q5 Chattanooga, Atlanta/March, Franklin/Nashville, or Q6 USCT playable battles.
 
 ---
 
@@ -90,7 +90,7 @@
 
 **Verified:** JSON parse passed for `data/under-told-perspectives.json`; `node --check` passed for touched source/probe/suite files; build GATE OK with idempotent HTML rebuild; focused `probe-under-told-perspectives` 8 steps / 0 pageerrors with clean JSON readback. Adjacent probes passed: irregular war (8/0), women in war (8/0), bridge (6/0), and H0 President's Desk (3/3, 0 pageerrors). `git diff --check` clean. Enslaved-agency, immigrant/ethnic, and D153-women threads are Verified; Native nations is intentionally Inferred/narrow pending a later Trans-Mississippi pass.
 
-**Next recommended run:** continue Group 4 with flagship named units, or the next smaller Phase F/G non-battle item the live checklist identifies (CS finance toolkit, war-finance civics, real diplomacy, human-cost-with-gravity, Western-theater strategic readouts). Do not start Q5 Chattanooga, Atlanta/March, Franklin/Nashville, or Q6 USCT playable battles.
+**Historical then-next marker:** flagship named units shipped as D179, then the graduate-history D180-D185 run superseded this queue marker. Use the D185/D186 top block for the live next item and order. Do not start Q5 Chattanooga, Atlanta/March, Franklin/Nashville, or Q6 USCT playable battles.
 
 ---
 
