@@ -1,0 +1,193 @@
+{
+  "_comment": "D179 Group 4 bounded flagship-named-units system. War Effort teaching/system only: no new playable battle, no tactical OOB rewrite, no Soldier's Story replacement, no super-unit bonus. Default bridge input is exact zero; optional unit stewardship is capped and costly.",
+  "schema": "cw_flagship_units_v1",
+  "schemaVersion": "1.0",
+  "config": {
+    "priorityKey": "unitStewardship",
+    "bridgeCaps": { "morale": 1, "supplyCost": 1, "fatigueCost": 1, "overall": 0 },
+    "mitigation": { "memoryReduction": 0.22, "readinessBoost": 12, "stewardshipFactor": 8, "capitalCost": 1 },
+    "pressureWeights": { "year": 0.16, "casualties": 0.24, "underTold": 0.12, "morale": 0.12, "battleFame": 0.18, "womenLane": -0.04 }
+  },
+  "profiles": {
+    "US": {
+      "name": "Union colors and public memory",
+      "summary": "The Union's flagship units include Black regiments, immigrant brigades, Western veterans in the Army of the Potomac, and small commands whose losses made the army's story personal.",
+      "teaching": "This system makes famous formations visible without pretending they won battles alone. It ties identity, morale, pay, colors, casualties, and memory to the army the player fields.",
+      "provenance": "Verified",
+      "sources": [
+        "data/codex.json entries for 54th Massachusetts Infantry, Iron Brigade, Irish Brigade, United States Colored Troops, and Army of the Potomac.",
+        "data/soldier-replacements.json records for Chamberlain, Vincent, and Cushing, plus data/gettysburg.json OOB notes."
+      ]
+    },
+    "CS": {
+      "name": "Confederate unit memory without romance",
+      "summary": "Confederate unit identity is shown as real soldier memory and battlefield continuity while slavery, the Confederate cause, and Lost Cause mythmaking stay named and rejected.",
+      "teaching": "A famous Confederate brigade can be disciplined and costly without becoming moral cover. The system shows military identity and attrition while refusing heroic-exonerating memory.",
+      "provenance": "Verified",
+      "sources": [
+        "data/codex.json Stonewall Brigade and Army of Northern Virginia entries.",
+        "HISTORICAL-DATA.md First Bull Run OOB and Stonewall Brigade notes, plus data/chancellorsville.json Stonewall Brigade correction."
+      ]
+    }
+  },
+  "units": [
+    {
+      "id": "54th-massachusetts-infantry",
+      "side": "US",
+      "formation": "regiment",
+      "label": "54th Massachusetts Infantry",
+      "shortLabel": "54th Mass.",
+      "theater": "Coastal / USCT",
+      "battleIds": [],
+      "status": "visible-now-playable-later",
+      "summary": "One of the first Black regiments raised in the North, led by Col. Robert Gould Shaw and bloodied at Battery Wagner on July 18, 1863.",
+      "humanCost": "Battery Wagner made the regiment's courage public, but unequal pay and capture policy made service a fight for citizenship as well as a fight under fire.",
+      "gameHook": "Keeps the 54th visible as a flagship named unit without starting the later USCT playable battle arc early.",
+      "sourceNote": "The local codex verifies the 54th Massachusetts with NPS and National Archives sources. No Battery Wagner playable battle is created here.",
+      "tags": ["usct", "black-agency", "pay-equality", "coastal"],
+      "provenance": "Verified",
+      "sources": [
+        "data/codex.json 54th-massachusetts-infantry, citing National Park Service, The 54th Massachusetts and the Second Battle of Fort Wagner.",
+        "data/codex.json 54th-massachusetts-infantry, citing National Archives, 54th Massachusetts Casualty List.",
+        "data/codex.json robert-gould-shaw and united-states-colored-troops entries."
+      ]
+    },
+    {
+      "id": "iron-brigade",
+      "side": "US",
+      "formation": "brigade",
+      "label": "Iron Brigade",
+      "shortLabel": "Iron Brigade",
+      "theater": "Eastern, Western regiments",
+      "battleIds": ["antietam", "gettysburg"],
+      "status": "fielded-in-current-roster",
+      "summary": "Western Union regiments in black Hardee hats, remembered for South Mountain and for holding McPherson's Ridge on July 1 at Gettysburg.",
+      "humanCost": "The brigade's reputation came at the price of depletion: Gettysburg shattered it as an effective formation.",
+      "gameHook": "Connects Gettysburg and Antietam OOBs to a visible unit-memory ledger rather than a hidden badge only.",
+      "sourceNote": "The local codex verifies the Iron Brigade with Nolan and Herdegen; Gettysburg and Antietam data already name the unit.",
+      "tags": ["veteran", "western-regiments", "gettysburg", "antietam"],
+      "provenance": "Verified",
+      "sources": [
+        "data/codex.json iron-brigade, citing Alan T. Nolan, The Iron Brigade: A Military History.",
+        "data/codex.json iron-brigade, citing Lance J. Herdegen, The Iron Brigade in Civil War and Memory.",
+        "data/gettysburg.json and data/antietam.json current OOB notes."
+      ]
+    },
+    {
+      "id": "irish-brigade",
+      "side": "US",
+      "formation": "brigade",
+      "label": "Irish Brigade",
+      "shortLabel": "Irish Brigade",
+      "theater": "Army of the Potomac",
+      "battleIds": ["antietam", "fredericksburg"],
+      "status": "fielded-in-current-roster",
+      "summary": "Irish-immigrant Union brigade associated with Thomas Francis Meagher, green colors, Antietam's Sunken Road, and Fredericksburg's Marye's Heights.",
+      "humanCost": "Its celebrated identity was inseparable from heavy losses and immigrant sacrifice, not decorative ethnic flavor.",
+      "gameHook": "Links manpower, immigrant service, Antietam, Fredericksburg, and the sourced McCarter Soldier's Story record.",
+      "sourceNote": "The local codex verifies the Irish Brigade with ABT and Susannah Ural; McCarter supplies a verified human-scale tie.",
+      "tags": ["immigrant", "antietam", "fredericksburg", "human-cost"],
+      "provenance": "Verified",
+      "sources": [
+        "data/codex.json irish-brigade, citing American Battlefield Trust, Thomas Francis Meagher.",
+        "data/codex.json irish-brigade, citing Susannah J. Ural, The Harp and the Eagle.",
+        "data/soldier-replacements.json William McCarter record."
+      ]
+    },
+    {
+      "id": "stonewall-brigade",
+      "side": "CS",
+      "formation": "brigade",
+      "label": "Stonewall Brigade",
+      "shortLabel": "Stonewall Brigade",
+      "theater": "Army of Northern Virginia",
+      "battleIds": ["bullrun1", "chancellorsville"],
+      "status": "fielded-in-current-roster",
+      "summary": "Virginia brigade first commanded by Thomas J. Jackson, named at First Manassas and later nearly destroyed at Spotsylvania.",
+      "humanCost": "The brigade's military reputation belongs beside its attrition and the Confederate cause it served, not inside Lost Cause romance.",
+      "gameHook": "Makes the Bull Run and Chancellorsville Stonewall thread visible while preserving the disputed wording of Bee's quote.",
+      "sourceNote": "The local codex verifies the unit with Encyclopedia Virginia and Robertson; HISTORICAL-DATA.md marks the exact quote as contested.",
+      "tags": ["confederate", "first-manassas", "chancellorsville", "lost-cause-guard"],
+      "provenance": "Verified",
+      "sources": [
+        "data/codex.json stonewall-brigade, citing Encyclopedia Virginia, Stonewall Brigade.",
+        "data/codex.json stonewall-brigade, citing James I. Robertson Jr., The Stonewall Brigade.",
+        "HISTORICAL-DATA.md First Bull Run Stonewall Brigade and contested quote notes."
+      ]
+    },
+    {
+      "id": "twentieth-maine-vincent",
+      "side": "US",
+      "formation": "regiment-in-brigade",
+      "label": "20th Maine / Vincent's Brigade",
+      "shortLabel": "20th Maine",
+      "theater": "Gettysburg",
+      "battleIds": ["gettysburg"],
+      "status": "fielded-in-current-roster",
+      "summary": "The 20th Maine held the extreme Union left on Little Round Top inside Strong Vincent's brigade on July 2, 1863.",
+      "humanCost": "The bayonet charge matters, but the game keeps it inside a brigade decision and casualty chain rather than a one-man legend.",
+      "gameHook": "Reuses the verified Chamberlain and Vincent Soldier's Story records as a unit-memory surface, with no new replacement row.",
+      "sourceNote": "NPS OOB, NPS Little Round Top, and ABT sources already support the Chamberlain/Vincent records in data/soldier-replacements.json.",
+      "tags": ["gettysburg", "little-round-top", "soldier-story", "brigade-context"],
+      "provenance": "Verified",
+      "sources": [
+        "data/soldier-replacements.json Joshua L. Chamberlain record, citing NPS Army of the Potomac OOB and NPS 20th Maine monument.",
+        "data/soldier-replacements.json Strong Vincent record, citing NPS Memory of Strong Vincent and American Battlefield Trust, Defense of Little Round Top.",
+        "data/gettysburg.json current OOB notes for the 20th Maine and Vincent's Brigade."
+      ]
+    },
+    {
+      "id": "battery-a-fourth-us-cushing",
+      "side": "US",
+      "formation": "artillery battery",
+      "label": "Battery A, 4th U.S. Artillery",
+      "shortLabel": "Battery A",
+      "theater": "Gettysburg",
+      "battleIds": ["gettysburg"],
+      "status": "fielded-in-current-roster",
+      "summary": "Alonzo Cushing's Battery A fought at the Angle on Cemetery Ridge during Pickett's Charge on July 3, 1863.",
+      "humanCost": "The battery's stand is a sourced command-and-crew story, not an artillery damage bonus or a one-man victory explanation.",
+      "gameHook": "Links the Gettysburg artillery slot, the universal gun model, and Cushing's verified Soldier's Story replacement.",
+      "sourceNote": "NPS, Army.mil, and Congressional Medal of Honor Society sources already support the Cushing record in data/soldier-replacements.json.",
+      "tags": ["gettysburg", "artillery", "the-angle", "soldier-story"],
+      "provenance": "Verified",
+      "sources": [
+        "data/soldier-replacements.json Alonzo H. Cushing record, citing National Park Service, Alonzo Cushing at Gettysburg.",
+        "data/soldier-replacements.json Alonzo H. Cushing record, citing U.S. Army Medal of Honor narrative.",
+        "data/soldier-replacements.json Alonzo H. Cushing record, citing Congressional Medal of Honor Society recipient profile."
+      ]
+    }
+  ],
+  "debates": [
+    {
+      "id": "unit-memory-not-super-unit",
+      "title": "Named units are not super-units",
+      "summary": "A famous formation can steady public memory and morale, but it cannot receive a hidden output gate or per-battle combat fudge.",
+      "provenance": "Verified",
+      "sources": [
+        "V1-CHECKLIST.md Group 4 contract for bounded non-battle systems and D74 universal combat guard.",
+        "DECISIONS.md D178 bridge contract for exact-zero default, capped explicit War Effort inputs."
+      ]
+    },
+    {
+      "id": "human-cost-through-units",
+      "title": "Human cost through formations",
+      "summary": "Losses become legible through regiments, brigades, batteries, colors, and letters rather than only aggregate casualty totals.",
+      "provenance": "Verified",
+      "sources": [
+        "AUTONOMOUS-RUN.md D35.6 human-cost-with-gravity directive.",
+        "V1-CHECKLIST.md D38.3 flagship named units tie human cost and perspectives."
+      ]
+    },
+    {
+      "id": "usct-boundary",
+      "title": "54th visible now, USCT battles later",
+      "summary": "The 54th Massachusetts can be visible as a flagship unit now, but this slice does not start any USCT playable battle.",
+      "provenance": "Verified",
+      "sources": [
+        "V1-CHECKLIST.md Group 7 keeps USCT playable battles last unless Aaron explicitly reorders.",
+        "data/codex.json 54th-massachusetts-infantry and united-states-colored-troops entries."
+      ]
+    }
+  ]
+}

@@ -145,6 +145,15 @@ function bridgeArmy(C) {
     supply = Math.max(0, Math.min(100, supply + Math.round(_utp.supply || 0)));
     fatigue = Math.max(0, Math.min(100, fatigue + Math.round(_utp.fatigue || 0)));
   }
+  // D179: flagship-unit stewardship is an explicit War Effort priority.
+  // Default returns exact zeros; active stewardship is capped and costly,
+  // never a hidden named-unit output gate.
+  var _fgu = (typeof flagshipUnitsBridgeBonus === "function") ? flagshipUnitsBridgeBonus(C) : null;
+  if (_fgu) {
+    morale = Math.max(0, Math.min(100, morale + Math.round(_fgu.morale || 0)));
+    supply = Math.max(0, Math.min(100, supply + Math.round(_fgu.supply || 0)));
+    fatigue = Math.max(0, Math.min(100, fatigue + Math.round(_fgu.fatigue || 0)));
+  }
   // S2 m5: the sitting field general + the cabinet now drive leadership (anchored at 64 so a
   // default/historical command plays ≈ Classic; the A6a/D47.1 anchor lesson). The _brgLeadGuard
   // breaks the bridgeArmy->commandLeadership->cabinet->_cabReading->bridgeArmy cycle (D53.4).

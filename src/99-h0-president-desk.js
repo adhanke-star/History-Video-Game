@@ -220,6 +220,7 @@
       + (typeof presHardWarBlock === "function" ? presHardWarBlock(C) : "")
       + (typeof presIrregularWarBlock === "function" ? presIrregularWarBlock(C) : "")
       + (typeof presUnderToldBlock === "function" ? presUnderToldBlock(C) : "")
+      + (typeof presFlagshipUnitsBlock === "function" ? presFlagshipUnitsBlock(C) : "")
       + (typeof presManpowerBlock === "function" ? presManpowerBlock(C) : "")
       + (typeof presMoraleBlock === "function" ? presMoraleBlock(C) : "")
       + '</section>';

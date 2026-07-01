@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-06-30: **GROUP 4 FLAGSHIP NAMED UNITS IS FOCUSED-GATED; LONG AUDIT DEFERRED (D179/D176).**
+
+**Newest (D179, 2026-06-30):** Group 4's fourth non-battle system shipped. Flagship named units now have a War Effort teaching/system surface with exact-zero default bridge behavior and an explicit capped unit-stewardship priority (morale +1, supply cost 1, fatigue cost 1, no overall). This does not create a playable battle, does not rewrite tactical OOB, does not make super-units, and does not collapse D153 Women in the War or Soldier's Story replacement lanes.
+
+**What changed:** new `data/flagship-units.json`, `src/67-flagship-units.js`, manifest registration, War Effort/H0 President's Desk rendering and wiring, bridge/lifecycle hooks, focused `tools/probe-flagship-units.mjs`, and future-batch suite enrollment. `civil_war_generals.html` was rebuilt from source.
+
+**Verified:** JSON smoke passed for `data/flagship-units.json`; `node --check` passed for touched source/probe/suite files; build GATE OK with idempotent HTML rebuild; focused `probe-flagship-units` 8 steps / 0 pageerrors with clean JSON readback and screenshot. Adjacent probes passed: under-told perspectives (8/0), bridge (6/0), and H0 President's Desk (3/3, 0 pageerrors). `git diff --check` clean. Focused probing caught and fixed a recursive readout bug: flagship snapshots now read stored morale instead of calling `moraleCompute()` from the bridge path. Full `npm run vet:noreg` remains deferred under D176.
+
+**Next recommended run:** continue Group 4 with CS finance toolkit or the next smaller Phase F/G non-battle item the live checklist identifies (war-finance civics, real diplomacy, human-cost-with-gravity, Western-theater strategic readouts). Do not start Q5 Chattanooga, Atlanta/March, Franklin/Nashville, or Q6 USCT playable battles.
+
+---
+
 # ☀ WAKE-UP — 2026-06-30: **GROUP 4 UNDER-TOLD PERSPECTIVES IS FOCUSED-GATED; LONG AUDIT DEFERRED (D178/D176).**
 
 **Newest (D178, 2026-06-30):** Group 4's third non-battle system shipped. The remaining D34.1 under-told perspective threads — enslaved agency, immigrant/ethnic units, and a deliberately narrow Native-nations thread — now have a War Effort teaching/system surface with exact-zero default bridge behavior and an explicit capped perspective-liaison priority (morale +1, supply cost 1, fatigue cost 1, no overall). The D153 women lane stays separate and cross-referenced, not collapsed. The long `npm run vet:noreg` audit remains deferred under D176 until the end-of-queue release gate or an explicit request.
