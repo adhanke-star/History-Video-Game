@@ -229,6 +229,9 @@ function fldUnitGlbNormalized(template, slot) {
 
 function fldUnitGlbSetBaseVisible(g, visible) {
   if (!g || !g.children) return;
+  if (visible === false && typeof fld3dEnsureSelectionRing === "function") {
+    try { fld3dEnsureSelectionRing(window.THREE, g); } catch (e) { FLDGLB_S.errN++; }
+  }
   for (var i = 0; i < g.children.length; i++) {
     var ch = g.children[i];
     if (!ch || ch.name === "unitGlbModel" || ch.name === "flag" || ch.name === "ring" || ch.name === "vfShadow") continue;

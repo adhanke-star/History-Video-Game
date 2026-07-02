@@ -1882,12 +1882,21 @@ function fld3dUnitMarkerResources(T) {
       slab: new T.BoxGeometry(96, 8, 26),
       front: new T.BoxGeometry(96, 10, 5),
       flag: new T.PlaneGeometry(22, 14),
-      pole: new T.CylinderGeometry(1, 1, 40, 5),
-      ring: new T.RingGeometry(54, 62, 24)
+      pole: new T.CylinderGeometry(1, 1, 40, 5)
     }
   };
   __FIELD._unit3dMarkerResources = r;
   return r;
+}
+function fld3dEnsureSelectionRing(T, g, res) {
+  if (!T || !g) return null;
+  var ring = g.getObjectByName && g.getObjectByName("ring");
+  if (ring) return ring;
+  res = res || fld3dUnitMarkerResources(T);
+  if (!res.geo.ring) res.geo.ring = new T.RingGeometry(54, 62, 24);
+  ring = new T.Mesh(res.geo.ring, new T.MeshBasicMaterial({ color: "#ffe9a8", side: T.DoubleSide, transparent: true, opacity: 0 }));
+  ring.rotation.x = -Math.PI / 2; ring.position.y = 1; ring.name = "ring"; ring.visible = false; g.add(ring);
+  return ring;
 }
 function fld3dAddMarkerTopper(T, g, u, res) {
   if (!T || !g || !u || !res || !res.geo) return null;
@@ -1935,8 +1944,6 @@ function fld3dBuildUnits() {
     var pole = new T.Mesh(res.geo.pole, new T.MeshLambertMaterial({ color: "#2a2018" })); pole.position.y = 20; pole.name = "pole"; g.add(pole);
     // non-color side cue (CVD-safe): a cube finial for the Union, a pyramid for the Confederacy
     if (fld3dNeedsMarkerTopper(u, g)) fld3dAddMarkerTopper(T, g, u, res);
-    var ring = new T.Mesh(res.geo.ring, new T.MeshBasicMaterial({ color: "#ffe9a8", side: T.DoubleSide, transparent: true, opacity: 0 }));
-    ring.rotation.x = -Math.PI / 2; ring.position.y = 1; ring.name = "ring"; g.add(ring);
     __FIELD.groups.add(g); __FIELD._u3d[u.id] = g;
   }
 }
@@ -1960,7 +1967,9 @@ function fld3dSyncUnit(u, g) {
     if (!topper) topper = fld3dAddMarkerTopper(T, g, u, fld3dUnitMarkerResources(T));
     if (topper) topper.visible = true;
   }
-  if (ring) ring.material.opacity = (__FIELD.sel.indexOf(u.id) >= 0) ? 0.85 : 0;
+  var selected = __FIELD.sel.indexOf(u.id) >= 0;
+  if (selected && !ring) ring = fld3dEnsureSelectionRing(T, g, fld3dUnitMarkerResources(T));
+  if (ring) { ring.visible = selected; ring.material.opacity = selected ? 0.85 : 0; }
 }
 function fld3dRender() {
   if (!__FIELD.renderer) return;

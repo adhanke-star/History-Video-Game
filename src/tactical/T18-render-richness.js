@@ -214,6 +214,7 @@ function fldRrSyncUnit(u, g) {
   // 3D ground vertex tint is build-time and reverts on the next battle launch, the T16/T17 apply-time pattern).
   var rec = g.userData._t18 || (g.userData._t18 = { prevAlive: u.alive, wasVis: u.alive });
   if (!rec.refd) { rec.flag = g.getObjectByName("flag"); rec.ring = g.getObjectByName("ring"); rec.refd = true; }
+  else if (!rec.ring) { rec.ring = g.getObjectByName("ring"); }
   var motion = fldRrMotion(), dt = FLDRR_S.dt3d;   // motion === false when reduceMotion OR renderRich="off"
 
   // CASUALTY FADE: catch the alive -> dead transition; keep the group visible and fade it out. Guarded on

@@ -176,7 +176,7 @@ function sceneScript(scenario, seed, opts) {
       } catch(e) { flag.err = String(e&&e.message||e); }
 
       /* ---- RING CULL: idle selection rings should not consume draw calls; selected rings still show ---- */
-      var ringIdle = { visible:null, opacity:null };
+      var ringIdle = { exists:false, visible:null, opacity:null };
       try {
         var ru = null; for (var ri=0; ri<__FIELD.units.length; ri++){ if (__FIELD.units[ri].alive){ ru = __FIELD.units[ri]; break; } }
         if (ru) {
@@ -184,6 +184,7 @@ function sceneScript(scenario, seed, opts) {
           fldRender(); await wait(70);
           var rg = __FIELD._u3d[ru.id], idleRing = rg && rg.getObjectByName('ring');
           if (idleRing) {
+            ringIdle.exists = true;
             ringIdle.visible = idleRing.visible !== false;
             ringIdle.opacity = idleRing.material ? idleRing.material.opacity : null;
           }
@@ -352,8 +353,8 @@ async function runSceneFresh(label, scenario, seed, opts) {
   check('flag: banner RIPPLES with motion (rotation magnitude > 0)', R.ok && R.flag.found && R.flag.maxRot > 1e-3, 'maxRot=' + (R.flag && R.flag.maxRot));
 
   // SELECTION
-  check('selection: idle unit rings are visibility-culled when no unit is selected',
-    R.ok && R.ringIdle.visible === false && R.ringIdle.opacity === 0,
+  check('selection: idle unit rings are not resident or visibility-culled when no unit is selected',
+    R.ok && (R.ringIdle.exists === false || (R.ringIdle.visible === false && R.ringIdle.opacity === 0)),
     JSON.stringify(R.ringIdle || {}));
   check('selection: a selected unit ring is visible and opacity lifts above 0',
     R.ok && R.sel.ringVisible === true && R.sel.ringOpacity > 0.3,

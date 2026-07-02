@@ -233,16 +233,25 @@ function profileScript(label, quality) {
           bySide[u.side].push(ref);
         }
         if (refs.length < 2) return out;
+        var ringCount = 0;
+        var ringPair = [];
         var topperCount = 0;
         var topperPair = [];
+        for (var rc = 0; rc < refs.length; rc++) if (refs[rc].ring) ringCount++;
         for (var tc = 0; tc < refs.length; tc++) if (refs[tc].topper) topperCount++;
         for (var side in bySide) {
           if (!Object.prototype.hasOwnProperty.call(bySide, side)) continue;
+          var sideRings = [];
           var sideToppers = [];
-          for (var ts = 0; ts < bySide[side].length; ts++) if (bySide[side][ts].topper) sideToppers.push(bySide[side][ts]);
+          for (var ts = 0; ts < bySide[side].length; ts++) {
+            if (bySide[side][ts].ring) sideRings.push(bySide[side][ts]);
+            if (bySide[side][ts].topper) sideToppers.push(bySide[side][ts]);
+          }
+          if (ringPair.length < 2 && sideRings.length >= 2) ringPair = sideRings;
           if (sideToppers.length >= 2) { topperPair = sideToppers; break; }
         }
         function pairFor(name) {
+          if (name === 'ring') return ringPair;
           return name === 'topper' ? topperPair : refs;
         }
         function sameGeo(name) {
@@ -256,10 +265,11 @@ function profileScript(label, quality) {
         out = {
           found: true,
           cache: !!__FIELD._unit3dMarkerResources,
+          ringCount: ringCount,
           topperCount: topperCount,
           slabGeoShared: sameGeo('slab'),
           frontGeoShared: sameGeo('front'),
-          ringGeoShared: sameGeo('ring'),
+          ringGeoShared: ringPair.length >= 2 ? sameGeo('ring') : null,
           poleGeoShared: sameGeo('pole'),
           topperGeoShared: topperPair.length >= 2 ? sameGeo('topper') : null,
           frontMatShared: sameMat('front'),
@@ -460,17 +470,19 @@ check('default hillshade profile does not prebuild optional terrain overlays',
   high.detail.terrainOverlay.hypExists === false && high.detail.terrainOverlay.contourExists === false &&
   low.detail.terrainOverlay.hypExists === false && low.detail.terrainOverlay.contourExists === false,
   JSON.stringify({ high: high.detail.terrainOverlay, low: low.detail.terrainOverlay }));
-check('idle selection rings are visibility-culled in high and low profile scenes',
+check('default idle selection rings are not resident in high and low profile scenes',
   high.detail.unitRender && low.detail.unitRender &&
-  high.detail.unitRender.selectionRing === true && low.detail.unitRender.selectionRing === true &&
-  high.detail.unitRender.selectionRingVisible === false && low.detail.unitRender.selectionRingVisible === false,
-  JSON.stringify({ high: high.detail.unitRender, low: low.detail.unitRender }));
+  high.detail.unitRender.selectionRing !== true && low.detail.unitRender.selectionRing !== true &&
+  high.detail.markerResources && low.detail.markerResources &&
+  high.detail.markerResources.ringCount === 0 && low.detail.markerResources.ringCount === 0,
+  JSON.stringify({ high: high.detail.unitRender, low: low.detail.unitRender, markerResources: { high: high.detail.markerResources, low: low.detail.markerResources } }));
 check('base 3D unit markers share immutable geometry while keeping per-unit materials in high and low profile scenes',
   high.detail.markerResources && low.detail.markerResources &&
   high.detail.markerResources.cache === true && low.detail.markerResources.cache === true &&
   high.detail.markerResources.slabGeoShared === true && low.detail.markerResources.slabGeoShared === true &&
   high.detail.markerResources.frontGeoShared === true && low.detail.markerResources.frontGeoShared === true &&
-  high.detail.markerResources.ringGeoShared === true && low.detail.markerResources.ringGeoShared === true &&
+  high.detail.markerResources.ringCount === 0 && low.detail.markerResources.ringCount === 0 &&
+  high.detail.markerResources.ringGeoShared === null && low.detail.markerResources.ringGeoShared === null &&
   high.detail.markerResources.poleGeoShared === true && low.detail.markerResources.poleGeoShared === true &&
   low.detail.markerResources.topperCount === 0 && low.detail.markerResources.topperGeoShared === null &&
   high.detail.markerResources.frontMatShared === false && low.detail.markerResources.frontMatShared === false &&
