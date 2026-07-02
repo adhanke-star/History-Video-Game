@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "decision": "D172",
+    "decision": "D214",
     "schema": "cw_soldier_replacements_v1",
     "scope": "Citation-grade replacements for generated Soldier's Story representative rows.",
     "provenance": "Inferred",
-    "note": "D172 adds the sixth narrow sourced replacement slice. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the full no-regression gate. Template values below are documentation only and are ignored by the validator."
+    "note": "D214 adds the seventh narrow sourced replacement slice after the D193-D213 Phase H closeout audit parked Group 5. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
   },
   "schema": "cw_soldier_replacements_v1",
   "records": [
@@ -448,6 +448,83 @@
       ],
       "sourceNote": "NPS OOB places Col. Strong Vincent as commander of the Third Brigade, First Division, V Corps at Gettysburg; NPS/ABT corroborate his Little Round Top action, mortal wound, and July 7 death. This record asserts no company, no regiment command, no brigadier-rank-at-battle, and no portrait. Ratings stay neutral Inferred calibration.",
       "bio": "Strong Vincent commanded the brigade that hurried onto Little Round Top on July 2, 1863, just before Hood's division struck the Union left. His line included the 16th Michigan, 44th New York, 83rd Pennsylvania, and the 20th Maine. Vincent was mortally wounded while directing the brigade and died on July 7. This replacement makes the brigade-level decision visible while keeping Chamberlain's 20th Maine inside a larger chain of command and cost."
+    },
+    {
+      "pid": "person_shiloh_us_61il_stillwell",
+      "replacePid": "ss:shiloh:US:us_prentiss:nco",
+      "name": "Leander Stillwell",
+      "side": "US",
+      "rank": "Corporal",
+      "branch": "inf",
+      "role": "noncommissioned officer",
+      "year": 1862,
+      "provenance": "Verified",
+      "team": {
+        "side": "US",
+        "army": "Army of the Tennessee",
+        "corps": "",
+        "division": "Sixth Division (Prentiss's)",
+        "brigade": "Second Brigade (Madison Miller's)",
+        "regiment": "61st Illinois Infantry",
+        "company": "Company D"
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "The Story of a Common Soldier of Army Life in the Civil War, 1861-1865",
+          "author": "Leander Stillwell",
+          "repository": "Project Gutenberg",
+          "locator": "EBook #26561, In the Ranks at Shiloh",
+          "url": "https://www.gutenberg.org/ebooks/26561",
+          "type": "primary",
+          "note": "Stillwell's memoir identifies the 61st Illinois and gives his first-person Shiloh account from Prentiss's line."
+        },
+        {
+          "title": "61st Regiment, Illinois Infantry",
+          "author": "National Park Service",
+          "repository": "Civil War Soldiers and Sailors System",
+          "locator": "Battle Unit Details UIL0061RI",
+          "url": "https://www.nps.gov/civilwar/search-battle-units-detail.htm?battleUnitCode=UIL0061RI",
+          "type": "secondary",
+          "note": "Places the 61st Illinois at the Battle of Shiloh, April 6-7, 1862, and later Vicksburg service."
+        },
+        {
+          "title": "Roster of Company D, 61st Illinois Infantry",
+          "author": "Illinois GenWeb Project",
+          "repository": "ILGenWeb Civil War Rosters",
+          "locator": "Company D roster, Stillwell lines",
+          "url": "https://illinoisgenweb.org/civilwar/r100/061-d-in.html",
+          "type": "secondary",
+          "note": "Lists Leander Stillwell as a private in Company D, 61st Illinois, mustered February 5, 1862, with later promotions."
+        },
+        {
+          "title": "Leander Stillwell",
+          "author": "History of Allen and Woodson Counties, Kansas",
+          "repository": "KSGenWeb Archives",
+          "locator": "1901 county history biography",
+          "url": "https://www.ksgenweb.org/archives/allen/history/1901/s/stillwell_leander.html",
+          "type": "secondary",
+          "note": "States Stillwell enlisted as a private in Company D, 61st Illinois, and participated in Shiloh and Vicksburg."
+        }
+      ],
+      "sourceNote": "Stillwell's memoir places his 61st Illinois regiment on Prentiss's Shiloh line; NPS corroborates the regiment's Shiloh service. ILGenWeb and the Kansas biography verify Company D/private muster and later promotions. Stillwell's own text supports the corporal/NCO story, while no higher rank and no portrait are asserted. Ratings stay neutral Inferred calibration.",
+      "bio": "Leander Stillwell was an eighteen-year-old from Jersey County, Illinois, when he entered Company D, 61st Illinois Infantry. At Shiloh his regiment stood on the left of Prentiss's line, then was shifted out of the Hornets' Nest fight before the division was surrounded. His later memoir, The Story of a Common Soldier, makes this replacement a deliberately ground-level Shiloh story: the battle as an enlisted man saw it, not a generals-only account."
     }
   ],
   "_template": {

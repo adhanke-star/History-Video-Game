@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-07-02: **PHASE H PARKED; SOLDIER'S STORY STILLWELL SLICE SHIPPED (D214).**
+
+**Newest (D214, 2026-07-02):** Phase H is good enough to park after D193-D213. The media budget guard, optional-pack/H2 locks, Intel UHD-617 profile, H0/H2/audio/flags/readability probes, and D198-D213 terrain/marker/atmospheric 3D resource polish stack are enough for now. Do not run another automatic Phase H zero-byte polish loop. Reopen Phase H media only after an explicit media-budget/profile decision.
+
+**What changed:** Leander Stillwell is now the seventh citation-grade Soldier's Story replacement. He replaces the generated Shiloh / Prentiss's Division NCO slot (`ss:shiloh:US:us_prentiss:nco`) with a Verified 61st Illinois / Company D enlisted-man record grounded in Stillwell's memoir, NPS unit participation, ILGenWeb roster evidence, and a Kansas biographical sketch. The record asserts no portrait, no higher rank, and neutral inferred ratings.
+
+**Verified:** `node tools/import-soldier-replacements.mjs` passed with 7 Verified records; `node --check tools/probe-loot-survival.mjs` passed; build **GATE OK** with the known raw-embed soft warning; focused `probe-loot-survival` 11/11 and 0 pageerrors; adjacent `probe-women-in-war` 8/8, `probe-save-slots` 9/9, and `probe-bridge` 6/6, all with zero pageerrors. Full `npm run vet:noreg` was not run under D176 focused-slice batching.
+
+**Next recommended run:** start Priority 1, another bounded Phase I Soldier's Story named-person/story slice. Keep D152-D158/D172/D214 source honesty, no fabricated people/ranks/units, no unsupported portrait claims, and keep women-in-war separate. Media-budget locks persist. M8 battle-build still needs Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-02: **GROUP 5 PHASE H LOW-TIER MARKER BODY LAYER PERF POLISH SHIPPED (D213).**
 
 **Newest (D213, 2026-07-02):** Group 5 Phase H now has another zero-new-media render/resource polish slice after the media-budget guard, Intel UHD-617 profile, audio/readability pass, H2 cutaway polish, battle-colours HUD polish, terrain-overlay perf polish, visual-fidelity contact-shadow perf polish, formation-figures perf polish, render-richness selection-ring draw polish, base marker geometry polish, hidden peg-fallback resource polish, atmospheric smoke draw-range polish, low-tier marker-topper trim/resource polish, D207 priority refresh, high-tier marker-topper resource polish, idle selection-ring resource polish, high-tier marker-pole resource polish, low-tier marker-pole layer polish, and high-tier marker-body resource polish. M8 battle-build was not approved or started.

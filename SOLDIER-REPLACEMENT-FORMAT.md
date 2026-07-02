@@ -1,6 +1,6 @@
 # Soldier Replacement Format
 
-**Status:** D158. This is the import lane for replacing generated Soldier's Story representative rows with sourced named people. D152 shipped the empty tooling lane; D154 added the first narrow sourced replacement slice, D155 added the second, D156 added the third, D157 added the fourth, and D158 adds the fifth.
+**Status:** D214. This is the import lane for replacing generated Soldier's Story representative rows with sourced named people. D152 shipped the empty tooling lane; D154-D158 added the first five narrow sourced replacement slices, D172 added Strong Vincent as the sixth, and D214 added Leander Stillwell as the seventh.
 
 Canonical file: `data/soldier-replacements.json`
 
@@ -106,4 +106,4 @@ The example above is a placeholder shape only. Do not import it as content.
 - `persona` must include every rating attribute. Missing attributes are rejected so a neutral default cannot be mistaken for sourced ratings.
 - `portrait` is optional. If present, `assetKey` must point to an embedded `portraits/<key>` asset, and `alt`, `caption`, and `credit` are required. Caption any rank/date caveat honestly; a later officer portrait must not be implied to show the soldier at the replacement rank.
 - `generated: true`, `source: "Generated"`, prototype keys, duplicate `pid`, duplicate `replacePid`, malformed teams, and under-cited records are rejected.
-- A canonical record should be added only after the source trail, CLI, build gate, focused browser probe, and no-regression gate pass.
+- A canonical record should be added only after the source trail, CLI, build gate, focused browser probe, relevant adjacent probes, JSON/pageerror readback, and `git diff --check` pass. Full no-regression remains a batch/release or explicit-request gate under D176.
