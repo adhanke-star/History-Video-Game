@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "decision": "D215",
+    "decision": "D216",
     "schema": "cw_soldier_replacements_v1",
     "scope": "Citation-grade replacements for generated Soldier's Story representative rows.",
     "provenance": "Inferred",
-    "note": "D215 adds the eighth narrow sourced replacement slice after D214 parked Group 5 and resumed Phase I. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
+    "note": "D216 adds the ninth narrow sourced replacement slice after D214 parked Group 5 and resumed Phase I. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
   },
   "schema": "cw_soldier_replacements_v1",
   "records": [
@@ -602,6 +602,92 @@
       ],
       "sourceNote": "CMOHS verifies Cook's Bugler rank, Battery B / 4th U.S. Artillery unit, and Antietam action date/place. The Department of War account and NPS artillery brochure support the bugler-to-cannoneer story and Battery B's fight after Campbell was wounded; CMH places Battery B in I Corps / First Division. The record asserts no higher rank and no portrait asset. Ratings stay neutral Inferred calibration.",
       "bio": "John Cook was a teenage bugler in Battery B, 4th U.S. Artillery. At Antietam, after Capt. Joseph B. Campbell was wounded and cannoneers fell around the battery, Cook carried messages and then served a gun as an acting cannoneer. This replacement keeps him as a Battery B artilleryman and adds a documented youth/bugler-to-gunner perspective to the Soldier's Story lane without changing the battle model."
+    },
+    {
+      "pid": "person_vicksburg_us_55il_howe",
+      "replacePid": "ss:vicksburg:US:us_blair_stockade:pvt",
+      "name": "Orion P. Howe",
+      "side": "US",
+      "rank": "Musician",
+      "branch": "inf",
+      "role": "drummer and ammunition runner",
+      "year": 1863,
+      "provenance": "Verified",
+      "team": {
+        "side": "US",
+        "army": "Army of the Tennessee",
+        "corps": "XV Corps",
+        "division": "Blair's Second Division",
+        "brigade": "Second Brigade (Col. Thomas Kilby Smith)",
+        "regiment": "55th Illinois Infantry",
+        "company": "Company C"
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Orion P Howe",
+          "author": "Congressional Medal of Honor Society",
+          "repository": "Congressional Medal of Honor Society",
+          "locator": "Recipient profile, Civil War / U.S. Army",
+          "url": "https://www.cmohs.org/recipients/orion-p-howe",
+          "type": "secondary",
+          "note": "Gives Howe's rank as Musician, Company C / 55th Illinois Infantry unit, May 19, 1863 Vicksburg action date/place, and Medal of Honor citation."
+        },
+        {
+          "title": "Letter from General William T. Sherman concerning Orion Howe of Waukegan (1863)",
+          "author": "William T. Sherman",
+          "repository": "Illinois State Archives",
+          "locator": "Military and Naval Department Record Series 301.018; online exhibit document 39",
+          "url": "https://www.ilsos.gov/departments/archives/online-exhibits/100-documents/1863-sherman-howe-waukegan.html",
+          "type": "primary",
+          "note": "Sherman's letter trail and archive background identify the 14-year-old Howe, his wound, and his cartridge message to Sherman during the Vicksburg fighting."
+        },
+        {
+          "title": "55th Illinois Infantry",
+          "author": "National Park Service",
+          "repository": "Vicksburg National Military Park",
+          "locator": "Unit monument and markers page",
+          "url": "https://www.nps.gov/vick/learn/historyculture/55th-illinois-infantry.htm",
+          "type": "secondary",
+          "note": "Places the 55th Illinois at the May 19 assault near the Stockade Redan and identifies its attachment to Blair's Second Division, Sherman's XV Corps, under Col. Oscar Malmborg."
+        },
+        {
+          "title": "55th Regiment, Illinois Infantry",
+          "author": "National Park Service",
+          "repository": "Civil War Soldiers and Sailors System",
+          "locator": "Battle Unit Details UIL0055RI",
+          "url": "https://www.nps.gov/civilwar/search-battle-units-detail.htm?battleUnitCode=UIL0055RI",
+          "type": "secondary",
+          "note": "Confirms the 55th Illinois served in the Vicksburg siege and the May 19 and May 22 assaults."
+        },
+        {
+          "title": "The Campaign for Vicksburg",
+          "author": "National Park Service",
+          "repository": "National Park Service History eLibrary",
+          "locator": "Vicksburg May 19, 1863 Assault",
+          "url": "https://npshistory.com/publications/civil_war_series/24/sec8.htm",
+          "type": "secondary",
+          "note": "Places Blair's division in Sherman's May 19 assault against the Stockade Redan and describes the failed Graveyard Road attack."
+        }
+      ],
+      "sourceNote": "CMOHS verifies Howe's Musician rank, Company C / 55th Illinois, and May 19 Vicksburg action. Illinois State Archives supports the wounded drummer/cartridge-message story; NPS places the 55th Illinois in Blair's Second Division, XV Corps, at the Stockade Redan assault. This record asserts no higher rank at Vicksburg and no portrait asset. Ratings stay neutral",
+      "bio": "Orion P. Howe was a fourteen-year-old musician in Company C, 55th Illinois Infantry. During the May 19, 1863 assault at Vicksburg, he was wounded while carrying a cartridge message to William T. Sherman for Col. Oscar Malmborg's men. This replacement ties the Blair's Division generated row to a documented drummer/ammunition-runner story and keeps the Vicksburg lesson on courage inside a failed assault, not a romantic breakthrough."
     }
   ],
   "_template": {

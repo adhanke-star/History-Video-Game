@@ -197,11 +197,11 @@ const SETUP = `(() => {
       return { people:reg.people.length, brigades:reg.brigades, authored:reg.authored, generated:reg.generated, first:sample.name };
     });
 
-    step('D215 REPLACEMENTS: eight canonical sourced records overlay generated slots and hostile packs still reject', function(){
+    step('D216 REPLACEMENTS: nine canonical sourced records overlay generated slots and hostile packs still reject', function(){
       var C=mkC('US'); _t1InitAll(C);
       var original=GAME_DATA['soldier-replacements'];
       if(!original || original.schema!=='cw_soldier_replacements_v1' || !Array.isArray(original.records)) throw new Error('missing D152 canonical pack');
-      if(original.records.length!==8) throw new Error('canonical D215 pack should ship exactly eight records, got '+original.records.length);
+      if(original.records.length!==9) throw new Error('canonical D216 pack should ship exactly nine records, got '+original.records.length);
       var canonByPid={}, canonReplace={};
       for(var cr=0;cr<original.records.length;cr++){ canonByPid[original.records[cr].pid]=original.records[cr]; canonReplace[original.records[cr].replacePid]=1; }
       if(!canonByPid.person_bullrun_us_2ri_rhodes || canonByPid.person_bullrun_us_2ri_rhodes.replacePid!=='ss:bullrun1:US:us_burnside:pvt') throw new Error('missing D154 Rhodes canonical record: '+JSON.stringify(original.records));
@@ -212,15 +212,16 @@ const SETUP = `(() => {
       if(!canonByPid.person_gettysburg_us_vincent_bde || canonByPid.person_gettysburg_us_vincent_bde.replacePid!=='ss:gettysburg:US:us_vincent_bde:cmd') throw new Error('missing D172 Vincent canonical record: '+JSON.stringify(original.records));
       if(!canonByPid.person_shiloh_us_61il_stillwell || canonByPid.person_shiloh_us_61il_stillwell.replacePid!=='ss:shiloh:US:us_prentiss:nco') throw new Error('missing D214 Stillwell canonical record: '+JSON.stringify(original.records));
       if(!canonByPid.person_antietam_us_battery_b_cook || canonByPid.person_antietam_us_battery_b_cook.replacePid!=='ss:antietam:US:us_battery_b:nco') throw new Error('missing D215 Cook canonical record: '+JSON.stringify(original.records));
+      if(!canonByPid.person_vicksburg_us_55il_howe || canonByPid.person_vicksburg_us_55il_howe.replacePid!=='ss:vicksburg:US:us_blair_stockade:pvt') throw new Error('missing D216 Howe canonical record: '+JSON.stringify(original.records));
       GAME_DATA['soldier-replacements']={schema:'cw_soldier_replacements_v1',records:[]};
       var rawBase=ssPersonRegistry(C);
       GAME_DATA['soldier-replacements']=original;
       var canonical=ssValidateSoldierReplacementPack(original,{basePeople:rawBase.people});
-      if(!canonical.ok || canonical.records.length!==8) throw new Error('canonical D215 pack should validate against raw generated registry: '+JSON.stringify(canonical));
+      if(!canonical.ok || canonical.records.length!==9) throw new Error('canonical D216 pack should validate against raw generated registry: '+JSON.stringify(canonical));
       var base=ssPersonRegistry(C);
       if(base.people.length!==rawBase.people.length) throw new Error('canonical replacement should preserve registry length');
-      if(base.replacements.applied!==8 || base.replacements.rejected!==0) throw new Error('canonical replacement should apply eight rows cleanly: '+JSON.stringify(base.replacements));
-      if(base.generated!==rawBase.generated-8 || base.authored!==rawBase.authored+8) throw new Error('canonical replacement should move eight rows generated->authored: '+JSON.stringify({raw:{a:rawBase.authored,g:rawBase.generated},base:{a:base.authored,g:base.generated}}));
+      if(base.replacements.applied!==9 || base.replacements.rejected!==0) throw new Error('canonical replacement should apply nine rows cleanly: '+JSON.stringify(base.replacements));
+      if(base.generated!==rawBase.generated-9 || base.authored!==rawBase.authored+9) throw new Error('canonical replacement should move nine rows generated->authored: '+JSON.stringify({raw:{a:rawBase.authored,g:rawBase.generated},base:{a:base.authored,g:base.generated}}));
       var rhodesOld=ssFindPerson(C,'ss:bullrun1:US:us_burnside:pvt');
       var rhodes=ssFindPerson(C,'person_bullrun_us_2ri_rhodes');
       if(!rhodes || !rhodesOld || rhodesOld.pid!==rhodes.pid) throw new Error('Rhodes alias lookup failed');
@@ -280,6 +281,14 @@ const SETUP = `(() => {
       if(!cook.bio || cook.bio.indexOf('Antietam')<0 || cook.bio.indexOf('acting cannoneer')<0 || !cook.sourceNote || cook.sources.length<4) throw new Error('Cook source/bio payload missing');
       if(cook.sourceNote.indexOf('no higher rank')<0 || cook.sourceNote.indexOf('no portrait')<0) throw new Error('Cook honesty caveats missing: '+cook.sourceNote);
       if(cook.portrait) throw new Error('Cook should not assert an unverified portrait: '+JSON.stringify(cook.portrait));
+      var howeOld=ssFindPerson(C,'ss:vicksburg:US:us_blair_stockade:pvt');
+      var howe=ssFindPerson(C,'person_vicksburg_us_55il_howe');
+      if(!howe || !howeOld || howeOld.pid!==howe.pid) throw new Error('Howe alias lookup failed');
+      if(howe.generated || !howe.replacement || howe.provenance!=='Verified' || howe.name!=='Orion P. Howe') throw new Error('Howe row not sourced/verified: '+JSON.stringify(howe));
+      if(howe.rank!=='Musician' || howe.side!=='US' || howe.branch!=='inf' || howe.team.regiment!=='55th Illinois Infantry' || howe.team.company!=='Company C' || howe.team.corps!=='XV Corps' || howe.team.division!=='Blair\\'s Second Division') throw new Error('Howe rank/unit mismatch: '+JSON.stringify(howe.team));
+      if(!howe.bio || howe.bio.indexOf('Vicksburg')<0 || howe.bio.indexOf('cartridge')<0 || howe.bio.indexOf('Blair')<0 || !howe.sourceNote || howe.sources.length<5) throw new Error('Howe source/bio payload missing');
+      if(howe.sourceNote.indexOf('no higher rank')<0 || howe.sourceNote.indexOf('no portrait')<0) throw new Error('Howe honesty caveats missing: '+howe.sourceNote);
+      if(howe.portrait) throw new Error('Howe should not assert an unverified portrait: '+JSON.stringify(howe.portrait));
       var target=findPerson(rawBase,function(p){ return p.generated && p.side==='US' && p.pid.indexOf(':pvt')>0 && !canonReplace[p.pid] && p.team && p.team.army; });
       var authored=findPerson(rawBase,function(p){ return !p.generated && p.provenance==='Verified'; });
       if(!target) throw new Error('no generated replacement target found');
@@ -318,7 +327,7 @@ const SETUP = `(() => {
       }
       var restored=ssPersonRegistry(C);
       if(restored.generated!==base.generated || restored.authored!==base.authored) throw new Error('canonical pack restore changed registry');
-      return { canonicalRecords:original.records.length, rhodes:rhodes.pid, mccarter:mccarter.pid, watkins:watkins.pid, chamberlain:chamberlain.pid, cushing:cushing.pid, vincent:vincent.pid, stillwell:stillwell.pid, cook:cook.pid, target:target.pid, applied:base.replacements.applied, hostileRejected:true };
+      return { canonicalRecords:original.records.length, rhodes:rhodes.pid, mccarter:mccarter.pid, watkins:watkins.pid, chamberlain:chamberlain.pid, cushing:cushing.pid, vincent:vincent.pid, stillwell:stillwell.pid, cook:cook.pid, howe:howe.pid, target:target.pid, applied:base.replacements.applied, hostileRejected:true };
     });
 
     step('JOURNEY: play-as-anyone start enables survival and stores a saveable selected person without mutating canonical data', function(){
@@ -511,6 +520,16 @@ const SETUP = `(() => {
       if(cookTxt.indexOf('Battery B')<0 || cookTxt.indexOf('4th U.S. Artillery')<0 || cookTxt.indexOf('I Corps')<0 || cookTxt.indexOf('Antietam')<0 || cookTxt.indexOf('acting cannoneer')<0 || cookTxt.indexOf('Source note:')<0 || cookTxt.indexOf('Sources (4)')<0) throw new Error('Cook detail source/bio/unit payload missing: '+cookTxt);
       if(cookTxt.indexOf('no higher rank')<0 || cookTxt.indexOf('no portrait')<0) throw new Error('Cook honesty caveats missing from detail: '+cookTxt);
       if(cookDetail.querySelector('.ss-person-portrait')) throw new Error('Cook should not render an unverified portrait');
+      var howeCard=cardByPid(root,'person_vicksburg_us_55il_howe');
+      if(!howeCard) throw new Error('Howe sourced replacement card missing');
+      if(howeCard.textContent.indexOf('Orion P. Howe')<0 || howeCard.textContent.indexOf('Sourced')<0 || howeCard.textContent.indexOf('Verified')<0) throw new Error('Howe card source/provenance missing: '+howeCard.textContent);
+      howeCard.querySelector('[data-ss-pick]').click();
+      var howeDetail=root.querySelector('#ssPersonDetailCard');
+      if(!howeDetail || howeDetail.getAttribute('data-ss-detail-pid')!=='person_vicksburg_us_55il_howe') throw new Error('Howe detail did not select');
+      var howeTxt=howeDetail.textContent;
+      if(howeTxt.indexOf('55th Illinois Infantry')<0 || howeTxt.indexOf('Company C')<0 || howeTxt.indexOf('XV Corps')<0 || howeTxt.indexOf('Vicksburg')<0 || howeTxt.indexOf('cartridge')<0 || howeTxt.indexOf('Blair')<0 || howeTxt.indexOf('Source note:')<0 || howeTxt.indexOf('Sources (5)')<0) throw new Error('Howe detail source/bio/unit payload missing: '+howeTxt);
+      if(howeTxt.indexOf('no higher rank')<0 || howeTxt.indexOf('no portrait')<0) throw new Error('Howe honesty caveats missing from detail: '+howeTxt);
+      if(howeDetail.querySelector('.ss-person-portrait')) throw new Error('Howe should not render an unverified portrait');
       var vincentCard=cardByPid(root,'person_gettysburg_us_vincent_bde');
       if(!vincentCard) throw new Error('Vincent sourced replacement card missing');
       if(vincentCard.textContent.indexOf('Strong Vincent')<0 || vincentCard.textContent.indexOf('Sourced')<0 || vincentCard.textContent.indexOf('Verified')<0) throw new Error('Vincent card source/provenance missing: '+vincentCard.textContent);
