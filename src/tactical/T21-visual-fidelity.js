@@ -23,10 +23,11 @@
         frame (so T17 stays authoritative), framed by a free CSS radial vignette.
      4. RANK TEXTURE — each brigade slab carries a stylized painted rank-stripe /
         file-tick pattern so it reads as MASSED INFANTRY, not a flat block.
-     5. PEG RANKS (Max tier, !fldLow only) — a stylized instanced peg-rank atop the
-        slab for extra presence on capable hardware (deliberately pegs, NOT the
-        "tiny 3D men" Aaron rejected); one InstancedMesh per brigade, laid out once
-        and only x-scaled per frame (no per-peg matrix churn).
+     5. PEG RANKS (Max tier, !fldLow only, fallback path) — a stylized instanced
+        peg-rank atop the slab when T24 formation figures are unavailable or
+        explicitly off. When T24 will replace the slab with richer figures, skip
+        the hidden peg fallback instead of keeping one invisible InstancedMesh per
+        brigade resident.
 
    ARCHITECTURE — PURE PRESENTATION; combat byte-identical BY CONSTRUCTION (D74):
    like T16/T17/T18 this module touches NO sim. It WRAPS the render seams by
@@ -43,9 +44,9 @@
    G.settings.renderRich==="off" opt-out (fldVfOff) → off reverts to the
    byte-identical default look. Every effect is STATIC (no per-frame animation), so
    nothing needs reduceMotion suppression (the T17/T18 static-tint convention). The
-   heavy peg-ranks hard-gate on !fldLow(); the sky dome drops segment count on
-   fldLow(); the vignette is browser-composited (zero GPU/2D-path contact). No
-   colour-encoded information anywhere → CVD-safe. New Shaderless materials write
+   heavy peg-ranks hard-gate on !fldLow() and on the T24 fallback need; the sky
+   dome drops segment count on fldLow(); the vignette is browser-composited (zero
+   GPU/2D-path contact). No colour-encoded information anywhere → CVD-safe. New Shaderless materials write
    through THREE's built-in path; CanvasTextures are LEFT at default (linear)
    encoding (r128 has no SRGBColorSpace; setting sRGB would double-gamma).
    =========================================================================== */
@@ -73,6 +74,20 @@ function fldVfOff() {
   try { if (typeof fldRrOff === "function") return fldRrOff(); } catch (e) {}
   try { if (typeof G !== "undefined" && G && G.settings && G.settings.renderRich === "off") return true; } catch (e2) {}
   return false;
+}
+
+function fldVfFormationFiguresWillReplace(u, g) {
+  try {
+    if (typeof fldFfOff === "function" && typeof fldFfShowFor === "function") {
+      return !fldFfOff() && fldFfShowFor(u, g);
+    }
+  } catch (e) {}
+  return false;
+}
+
+function fldVfShouldBuildPegs(u, g) {
+  try { if (typeof fldLow === "function" && fldLow()) return false; } catch (e) {}
+  return !fldVfFormationFiguresWillReplace(u, g);
 }
 
 /* ===========================================================================
@@ -258,7 +273,6 @@ function fldVfDecorateUnits() {
   var T = window.THREE;
   if (!T || typeof __FIELD === "undefined" || !__FIELD || !__FIELD._u3d || !__FIELD.units) return;
   fldVfEnsureTex(T);
-  var pegs = (typeof fldLow === "function") ? !fldLow() : true;     // Max tier: pegs only on capable hardware
   var shadowLayer = fldVfEnsureShadowLayer(T);
   fldVfClearShadowLayer();
   for (var i = 0; i < __FIELD.units.length; i++) {
@@ -269,8 +283,8 @@ function fldVfDecorateUnits() {
     // (4) rank map on the slab (white-based ⇒ multiplies the side colour; CVD-safe luminance pattern)
     var slab = g.getObjectByName("slab");
     if (slab && slab.material && FLDVF_S.rankTex) { try { slab.material.map = FLDVF_S.rankTex; slab.material.needsUpdate = true; } catch (e) { FLDVF_S.errN++; } }
-    // (5) peg ranks (Max tier)
-    if (pegs) { try { fldVfAddPegs(T, u, g); } catch (e3) { FLDVF_S.errN++; } }
+    // (5) peg ranks (Max tier fallback): keep them when slabs remain visible, skip hidden residents when T24 figures replace the slab.
+    if (fldVfShouldBuildPegs(u, g)) { try { fldVfAddPegs(T, u, g); } catch (e3) { FLDVF_S.errN++; } }
   }
 }
 function fldVfSyncUnit(u, g) {

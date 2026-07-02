@@ -10,7 +10,8 @@ import "./guard-probe-browser.mjs";
 //    material colour matches the live fog (weather) colour so dome + ground-fog stay seamless;
 //  - VIGNETTE: a pointer-events:none #fldVignette div is injected (above the canvas, below the HUD);
 //  - PER-BRIGADE DECOR: one shared "vfShadowLayer" InstancedMesh glues a soft contact shadow under every
-//    brigade + each slab gets a rank MAP; on the capable (high) tier a "vfPegs" InstancedMesh (count>0);
+//    brigade + each slab gets a rank MAP; when T24 formation figures replace the slab, high tier does not keep
+//    hidden resident "vfPegs"; when formation figures are explicitly off, the capable-tier peg fallback returns;
 //    on fldLow() the pegs are GATED OUT;
 //  - BYTE-IDENTITY: the sim seed + mutable sim fields are INVARIANT across a synchronous render burst (T21 never
 //    calls fldRng), FLDVF_S.errN === 0, and a static scan proves no combat/tactical file references the vf layer;
@@ -62,7 +63,7 @@ async function ensureServer() {
   srv.kill(); throw new Error('Could not start static server on :' + cfg.port);
 }
 
-// opts: { off, low }
+// opts: { off, low, noFigures }
 function sceneScript(scenario, seed, opts) {
   opts = opts || {};
   return `(async () => {
@@ -77,6 +78,7 @@ function sceneScript(scenario, seed, opts) {
       delete G.settings.tacticalFog;
       G.settings.reduceMotion = false;
       if (${JSON.stringify(!!opts.off)}) G.settings.renderRich = 'off'; else { try { delete G.settings.renderRich; } catch(e){} }
+      if (${JSON.stringify(!!opts.noFigures)}) G.settings.formationFigures = 'off'; else { try { delete G.settings.formationFigures; } catch(e){} }
 
       out.wrappers = {
         init: typeof fld3dInit === 'function' && !!fld3dInit._vf,
@@ -88,7 +90,7 @@ function sceneScript(scenario, seed, opts) {
         ex: typeof fldExit === 'function' && !!fldExit._vf,
         // prior markers must survive T21's outer re-wrap
         chain: !!(fld3dRender._wx && fld3dRender._atmo && fld3dRender._rr && fld2dDraw._rr && fldExit._rr),
-        fns: ['fldVfOff','fldVfEnrichGroundAO','fldVfDecorateUnits','fldVfSyncUnit','fldVfEnsureShadowLayer','fldVfSetShadow','fldVfBuildSky','fldVfDispose'].every(function(n){ return eval('typeof '+n) === 'function'; })
+        fns: ['fldVfOff','fldVfEnrichGroundAO','fldVfDecorateUnits','fldVfSyncUnit','fldVfEnsureShadowLayer','fldVfSetShadow','fldVfBuildSky','fldVfDispose','fldVfShouldBuildPegs'].every(function(n){ return eval('typeof '+n) === 'function'; })
       };
 
       fldLaunchSandbox({ renderer:'3d', scenario:${JSON.stringify(scenario)}, autoBoth:true, playerSide:'US', seed:${seed} });
@@ -156,6 +158,7 @@ function sceneScript(scenario, seed, opts) {
         out.unit.shadowGroundGap = sh ? Math.abs((ug.position.y + sh.position.y) - fldTerrainH(uu.x, uu.z)) : shGroundGap;
         out.unit.shadowScaleX = shScaleX; out.unit.shadowScaleY = shScaleY;
         out.unit.pegs = !!pegs; out.unit.pegCount = pegs ? pegs.count : 0;
+        out.unit.pegsVisible = !!(pegs && pegs.visible !== false);
         out.unit.pegSphere = !!(pegs && pegs.geometry && pegs.geometry.boundingSphere);
         out.unit.rankMap = !!(slab && slab.material && slab.material.map);
       }
@@ -206,6 +209,7 @@ async function runScene(page, label, scenario, seed, opts, shared) {
     await page.goto(cfg.baseUrl + '/' + cfg.file, { waitUntil: 'domcontentloaded', timeout: 45000 });
     await sleep(500);
     scenes.push(await runScene(page, '3d', 'shiloh', 21, {}, shared));
+    scenes.push(await runScene(page, 'pegs-fallback', 'shiloh', 21, { noFigures: true }, shared));
     scenes.push(await runScene(page, 'off', 'shiloh', 21, { off: true }, shared));
     scenes.push(await runScene(page, 'low', 'shiloh', 21, { low: true }, shared));
   } finally { if (server) server.kill(); }
@@ -213,7 +217,7 @@ async function runScene(page, label, scenario, seed, opts, shared) {
   const byLabel = {}; for (const s of scenes) byLabel[s.label] = s;
   const allPe = scenes.reduce((a, s) => a + s.pageerrors.length, 0);
   const allTex = scenes.reduce((a, s) => a + s.texWarn.length, 0);
-  const R = byLabel['3d'].detail, OFF = byLabel['off'].detail, LOW = byLabel['low'].detail;
+  const R = byLabel['3d'].detail, PEG = byLabel['pegs-fallback'].detail, OFF = byLabel['off'].detail, LOW = byLabel['low'].detail;
 
   // wrappers + chain
   check('module + 7 by-assignment wrappers installed (prior ._wx/._atmo/._rr markers carried forward)',
@@ -239,7 +243,12 @@ async function runScene(page, label, scenario, seed, opts, shared) {
     R.ok && R.unit.shadow && R.unit.shadowInstanced === true && R.unit.shadowIndex >= 0 && R.unit.shadowGroundGap !== null && R.unit.shadowGroundGap < 2 && R.unit.shadowScaleX > 8 && R.unit.shadowScaleY > 8,
     JSON.stringify({ instanced:R.unit && R.unit.shadowInstanced, index:R.unit && R.unit.shadowIndex, count:R.unit && R.unit.shadowCount, gap:R.unit && R.unit.shadowGroundGap, sx:R.unit && R.unit.shadowScaleX, sy:R.unit && R.unit.shadowScaleY }));
   check('decor: the slab carries a stylized rank MAP (massed-infantry read)', R.ok && R.unit.rankMap === true, 'rankMap=' + (R.unit && R.unit.rankMap));
-  check('decor (Max tier, high): a "vfPegs" InstancedMesh with count>0 + a bounding sphere (r128 can frustum-cull; group still fog-gates)', R.ok && R.unit.pegs === true && R.unit.pegCount > 0 && R.unit.pegSphere === true, 'pegs=' + (R.unit && R.unit.pegs) + ' count=' + (R.unit && R.unit.pegCount) + ' sphere=' + (R.unit && R.unit.pegSphere));
+  check('decor (Max tier, default high): T24 formation figures replace the slab without hidden resident vfPegs',
+    R.ok && R.unit.pegs === false,
+    'pegs=' + (R.unit && R.unit.pegs) + ' visible=' + (R.unit && R.unit.pegsVisible));
+  check('decor (Max tier fallback): formationFigures="off" restores a visible "vfPegs" InstancedMesh with count>0 + bounding sphere',
+    PEG.ok && PEG.unit && PEG.unit.pegs === true && PEG.unit.pegsVisible === true && PEG.unit.pegCount > 0 && PEG.unit.pegSphere === true,
+    'pegs=' + (PEG.unit && PEG.unit.pegs) + ' visible=' + (PEG.unit && PEG.unit.pegsVisible) + ' count=' + (PEG.unit && PEG.unit.pegCount) + ' sphere=' + (PEG.unit && PEG.unit.pegSphere));
 
   // peg tier gate
   check('peg tier gate: on fldLow() the peg ranks are GATED OUT (rank map + instanced shadow still present)',

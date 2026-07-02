@@ -407,6 +407,12 @@ check('high tier formation figures use one shared instanced layer',
   high.detail.unitRender.formationFiguresVisible === true &&
   high.detail.unitRender.formationFigureLayerMeshes === 5,
   JSON.stringify(high.detail.unitRender || {}));
+check('high tier formation figures do not keep hidden resident peg ranks',
+  high.detail.unitRender &&
+  high.detail.unitRender.formationFiguresMode === 'shared-instanced' &&
+  high.detail.unitRender.pegs === false &&
+  high.detail.unitRender.pegsVisible !== true,
+  JSON.stringify(high.detail.unitRender || {}));
 check('contact shadows use one shared instanced layer in high and low tiers',
   high.detail.unitRender && low.detail.unitRender &&
   high.detail.unitRender.shadowMode === 'instanced' && low.detail.unitRender.shadowMode === 'instanced' &&

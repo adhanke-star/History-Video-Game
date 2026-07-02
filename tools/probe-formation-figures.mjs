@@ -32,13 +32,16 @@ function staticScan() {
   check('static: T24 never calls fldRng and never writes _SAVE_VER', !/fldRng\s*\(/.test(mod) && !/_SAVE_VER\s*=/.test(mod));
 
   const tacDir = join(ROOT, 'src', 'tactical');
-  const files = readdirSync(tacDir).filter(f => /\.js$/.test(f) && f !== 'T24-formation-figures.js');
+  // T21 is an adjacent presentation layer: it may ask T24 whether formation figures will replace the slab so it
+  // can skip hidden peg fallback meshes. The scan still forbids combat/sim sibling leakage.
+  const SCAN_SKIP = ['T24-formation-figures.js', 'T21-visual-fidelity.js'];
+  const files = readdirSync(tacDir).filter(f => /\.js$/.test(f) && SCAN_SKIP.indexOf(f) < 0);
   const leaks = [];
   for (const f of files) {
     const txt = readFileSync(join(tacDir, f), 'utf8');
     if (/fldFf|FLDFF/.test(txt)) leaks.push('src/tactical/' + f);
   }
-  check('static: no sibling tactical file references the formation-figures layer', leaks.length === 0, leaks.join(', '));
+  check('static: no combat/sim sibling tactical file references the formation-figures layer', leaks.length === 0, leaks.join(', '));
 }
 
 async function ensureServer() {
@@ -109,6 +112,7 @@ function sceneScript(label, opts) {
         slabVisible:slab ? slab.visible !== false : null,
         frontVisible:front ? front.visible !== false : null,
         flagVisible:flag ? flag.visible !== false : null,
+        pegsResident:!!pegs,
         pegsVisible:pegs ? pegs.visible !== false : null
       };
     }
@@ -213,9 +217,9 @@ async function runScene(browser, label, opts) {
   check('high tier: figures replace the slab/front while preserving flag cue',
     H.ok && H.initial && H.initial.slabVisible === false && H.initial.frontVisible === false && H.initial.flagVisible === true,
     JSON.stringify(H.initial || {}));
-  check('high tier: T21 peg ranks are suppressed when richer figures are visible',
-    H.ok && H.initial && H.initial.pegsVisible === false,
-    'pegsVisible=' + (H.initial && H.initial.pegsVisible));
+  check('high tier: T21 peg ranks are not resident when richer figures replace the slab',
+    H.ok && H.initial && H.initial.pegsResident === false && H.initial.pegsVisible !== true,
+    'pegsResident=' + (H.initial && H.initial.pegsResident) + ' pegsVisible=' + (H.initial && H.initial.pegsVisible));
   check('line formation reads wide; column formation reads deep',
     H.ok && H.initial && H.column && H.initial.width > H.initial.depth * 1.8 && H.column.depth > H.column.width * 1.35,
     'line=' + JSON.stringify({ w:H.initial && H.initial.width, d:H.initial && H.initial.depth }) + ' column=' + JSON.stringify({ w:H.column && H.column.width, d:H.column && H.column.depth }));
