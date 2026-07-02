@@ -32,9 +32,9 @@ function staticScan() {
   check('static: T24 never calls fldRng and never writes _SAVE_VER', !/fldRng\s*\(/.test(mod) && !/_SAVE_VER\s*=/.test(mod));
 
   const tacDir = join(ROOT, 'src', 'tactical');
-  // T21 is an adjacent presentation layer: it may ask T24 whether formation figures will replace the slab so it
-  // can skip hidden peg fallback meshes. The scan still forbids combat/sim sibling leakage.
-  const SCAN_SKIP = ['T24-formation-figures.js', 'T21-visual-fidelity.js'];
+  // T0/T21 are adjacent presentation layers: they may ask T24 whether formation figures will replace the slab so
+  // they can skip hidden fallback marker/peg meshes. The scan still forbids combat/sim sibling leakage.
+  const SCAN_SKIP = ['T24-formation-figures.js', 'T21-visual-fidelity.js', 'T0-field-sandbox.js'];
   const files = readdirSync(tacDir).filter(f => /\.js$/.test(f) && SCAN_SKIP.indexOf(f) < 0);
   const leaks = [];
   for (const f of files) {
@@ -84,6 +84,7 @@ function sceneScript(label, opts) {
       var slab = g.getObjectByName("slab");
       var front = g.getObjectByName("front");
       var flag = g.getObjectByName("flag");
+      var topper = g.getObjectByName("topper");
       var pegs = g.getObjectByName("vfPegs");
       return {
         found:true,
@@ -112,6 +113,8 @@ function sceneScript(label, opts) {
         slabVisible:slab ? slab.visible !== false : null,
         frontVisible:front ? front.visible !== false : null,
         flagVisible:flag ? flag.visible !== false : null,
+        topper:!!topper,
+        topperVisible:topper ? topper.visible !== false : null,
         pegsResident:!!pegs,
         pegsVisible:pegs ? pegs.visible !== false : null
       };
@@ -214,8 +217,8 @@ async function runScene(browser, label, opts) {
   check('high tier: infantry group gains visible procedural formation figures',
     H.ok && H.initial && H.initial.ffVisible && H.initial.active >= 10 && H.initial.bodies && H.initial.heads && H.initial.rifles && H.initial.bayonets,
     JSON.stringify(H.initial || {}));
-  check('high tier: figures replace the slab/front while preserving flag cue',
-    H.ok && H.initial && H.initial.slabVisible === false && H.initial.frontVisible === false && H.initial.flagVisible === true,
+  check('high tier: figures replace the slab/front/topper while preserving flag cue',
+    H.ok && H.initial && H.initial.slabVisible === false && H.initial.frontVisible === false && H.initial.topper === false && H.initial.flagVisible === true,
     JSON.stringify(H.initial || {}));
   check('high tier: T21 peg ranks are not resident when richer figures replace the slab',
     H.ok && H.initial && H.initial.pegsResident === false && H.initial.pegsVisible !== true,
@@ -233,10 +236,10 @@ async function runScene(browser, label, opts) {
     H.ok && H.seedStable === true && H.simStable === true && H.errN === 0,
     JSON.stringify({ seedStable:H.seedStable, simStable:H.simStable, errN:H.errN }));
   check('renderRich="off": formation figures are gated out and the slab fallback remains',
-    OFF.ok && OFF.off === true && OFF.initial && OFF.initial.ff !== true && OFF.initial.slabVisible === true,
+    OFF.ok && OFF.off === true && OFF.initial && OFF.initial.ff !== true && OFF.initial.slabVisible === true && OFF.initial.topper === true && OFF.initial.topperVisible === true,
     JSON.stringify(OFF.initial || {}));
   check('low tier: formation figures are gated out and the slab fallback remains',
-    LOW.ok && LOW.off === true && LOW.initial && LOW.initial.ff !== true && LOW.initial.slabVisible === true,
+    LOW.ok && LOW.off === true && LOW.initial && LOW.initial.ff !== true && LOW.initial.slabVisible === true && LOW.initial.topper === false,
     JSON.stringify(LOW.initial || {}));
   check('a screenshot was captured for visual confirmation', !!(H && H.shot), H && H.shot);
   check('zero pageerrors across all scenes', allPe === 0, 'pageerrors=' + allPe + (allPe ? ' :: ' + scenes.flatMap(s => s.pageerrors).slice(0, 3).join(' | ') : ''));

@@ -1900,6 +1900,13 @@ function fld3dAddMarkerTopper(T, g, u, res) {
   topper.position.set(0, 47, 0); topper.name = "topper"; g.add(topper);
   return topper;
 }
+function fld3dNeedsMarkerTopper(u, g) {
+  if (typeof fldLow === "function" && fldLow()) return false;
+  try {
+    if (typeof fldFfShowFor === "function" && fldFfShowFor(u, g)) return false;
+  } catch (e) {}
+  return true;
+}
 function fld3dBuildUnits() {
   var T = window.THREE;
   // dispose each child's geometry/material BEFORE detaching — this runs on every reinforcement
@@ -1927,7 +1934,7 @@ function fld3dBuildUnits() {
     flag.position.set(0, 34, 0); flag.name = "flag"; g.add(flag);
     var pole = new T.Mesh(res.geo.pole, new T.MeshLambertMaterial({ color: "#2a2018" })); pole.position.y = 20; pole.name = "pole"; g.add(pole);
     // non-color side cue (CVD-safe): a cube finial for the Union, a pyramid for the Confederacy
-    if (!(typeof fldLow === "function" && fldLow())) fld3dAddMarkerTopper(T, g, u, res);
+    if (fld3dNeedsMarkerTopper(u, g)) fld3dAddMarkerTopper(T, g, u, res);
     var ring = new T.Mesh(res.geo.ring, new T.MeshBasicMaterial({ color: "#ffe9a8", side: T.DoubleSide, transparent: true, opacity: 0 }));
     ring.rotation.x = -Math.PI / 2; ring.position.y = 1; ring.name = "ring"; g.add(ring);
     __FIELD.groups.add(g); __FIELD._u3d[u.id] = g;
@@ -1947,7 +1954,7 @@ function fld3dSyncUnit(u, g) {
   if (slab) { slab.scale.set(w / 96, 1, d / 26); slab.material.color.copy(u.side === "US" ? __FIELD._colUS : __FIELD._colCS); if (u.state === "routing") slab.material.color.multiplyScalar(0.55); }
   if (front) { front.scale.x = w / 96; front.position.z = -d / 2 - 3; }
   if (flag) flag.position.y = u.state === "routing" ? 14 : 34;
-  if (typeof fldLow === "function" && fldLow()) {
+  if (!fld3dNeedsMarkerTopper(u, g)) {
     if (topper) topper.visible = false;
   } else {
     if (!topper) topper = fld3dAddMarkerTopper(T, g, u, fld3dUnitMarkerResources(T));

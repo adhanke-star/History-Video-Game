@@ -234,10 +234,16 @@ function profileScript(label, quality) {
         }
         if (refs.length < 2) return out;
         var topperCount = 0;
+        var topperPair = [];
         for (var tc = 0; tc < refs.length; tc++) if (refs[tc].topper) topperCount++;
-        var topperRefs = (bySide.US && bySide.US.length >= 2) ? bySide.US : ((bySide.CS && bySide.CS.length >= 2) ? bySide.CS : refs);
+        for (var side in bySide) {
+          if (!Object.prototype.hasOwnProperty.call(bySide, side)) continue;
+          var sideToppers = [];
+          for (var ts = 0; ts < bySide[side].length; ts++) if (bySide[side][ts].topper) sideToppers.push(bySide[side][ts]);
+          if (sideToppers.length >= 2) { topperPair = sideToppers; break; }
+        }
         function pairFor(name) {
-          return name === 'topper' ? topperRefs : refs;
+          return name === 'topper' ? topperPair : refs;
         }
         function sameGeo(name) {
           var pair = pairFor(name);
@@ -255,10 +261,10 @@ function profileScript(label, quality) {
           frontGeoShared: sameGeo('front'),
           ringGeoShared: sameGeo('ring'),
           poleGeoShared: sameGeo('pole'),
-          topperGeoShared: topperCount >= 2 ? sameGeo('topper') : null,
+          topperGeoShared: topperPair.length >= 2 ? sameGeo('topper') : null,
           frontMatShared: sameMat('front'),
           poleMatShared: sameMat('pole'),
-          topperMatShared: topperCount >= 2 ? sameMat('topper') : null,
+          topperMatShared: topperPair.length >= 2 ? sameMat('topper') : null,
           slabMatShared: sameMat('slab')
         };
       } catch(e) { out.error = String(e && e.message || e); }
@@ -466,17 +472,18 @@ check('base 3D unit markers share immutable geometry while keeping per-unit mate
   high.detail.markerResources.frontGeoShared === true && low.detail.markerResources.frontGeoShared === true &&
   high.detail.markerResources.ringGeoShared === true && low.detail.markerResources.ringGeoShared === true &&
   high.detail.markerResources.poleGeoShared === true && low.detail.markerResources.poleGeoShared === true &&
-  high.detail.markerResources.topperCount >= 2 && high.detail.markerResources.topperGeoShared === true &&
   low.detail.markerResources.topperCount === 0 && low.detail.markerResources.topperGeoShared === null &&
   high.detail.markerResources.frontMatShared === false && low.detail.markerResources.frontMatShared === false &&
   high.detail.markerResources.poleMatShared === false && low.detail.markerResources.poleMatShared === false &&
-  high.detail.markerResources.topperMatShared === false && low.detail.markerResources.topperMatShared === null &&
+  low.detail.markerResources.topperMatShared === null &&
   high.detail.markerResources.slabMatShared === false && low.detail.markerResources.slabMatShared === false,
   JSON.stringify({ high: high.detail.markerResources, low: low.detail.markerResources }));
-check('low tier omits decorative marker topper allocation while preserving the flag/pole side read',
+check('default high-tier formation figures omit hidden infantry toppers and low tier omits decorative marker topper allocation',
   high.detail.unitRender && low.detail.unitRender &&
   high.detail.unitRender.formationFiguresMode === 'shared-instanced' &&
-  high.detail.unitRender.topper === true &&
+  high.detail.unitRender.topper === false &&
+  high.detail.unitRender.flagVisible === true &&
+  high.detail.markerResources && high.detail.markerResources.topperCount < high.detail.units &&
   low.detail.unitRender.topper === false &&
   low.detail.unitRender.topperVisible === null &&
   low.detail.unitRender.flagVisible === true &&
