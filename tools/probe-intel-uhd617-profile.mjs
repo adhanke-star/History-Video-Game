@@ -202,6 +202,56 @@ function profileScript(label, quality) {
       } catch(e) { out.error = String(e && e.message || e); }
       return out;
     }
+    function markerResourceStats() {
+      var out = { found: false };
+      try {
+        var refs = [];
+        var bySide = {};
+        for (var i = 0; i < __FIELD.units.length; i++) {
+          var u = __FIELD.units[i];
+          var g = u && __FIELD._u3d && __FIELD._u3d[u.id];
+          if (!u || !g) continue;
+          var ref = {
+            side: u.side,
+            slab: g.getObjectByName('slab'),
+            front: g.getObjectByName('front'),
+            ring: g.getObjectByName('ring'),
+            pole: g.getObjectByName('pole'),
+            topper: g.getObjectByName('topper')
+          };
+          refs.push(ref);
+          bySide[u.side] = bySide[u.side] || [];
+          bySide[u.side].push(ref);
+        }
+        if (refs.length < 2) return out;
+        var topperRefs = (bySide.US && bySide.US.length >= 2) ? bySide.US : ((bySide.CS && bySide.CS.length >= 2) ? bySide.CS : refs);
+        function pairFor(name) {
+          return name === 'topper' ? topperRefs : refs;
+        }
+        function sameGeo(name) {
+          var pair = pairFor(name);
+          return !!(pair[0][name] && pair[1][name] && pair[0][name].geometry && pair[0][name].geometry === pair[1][name].geometry);
+        }
+        function sameMat(name) {
+          var pair = pairFor(name);
+          return !!(pair[0][name] && pair[1][name] && pair[0][name].material && pair[0][name].material === pair[1][name].material);
+        }
+        out = {
+          found: true,
+          cache: !!__FIELD._unit3dMarkerResources,
+          slabGeoShared: sameGeo('slab'),
+          frontGeoShared: sameGeo('front'),
+          ringGeoShared: sameGeo('ring'),
+          poleGeoShared: sameGeo('pole'),
+          topperGeoShared: sameGeo('topper'),
+          frontMatShared: sameMat('front'),
+          poleMatShared: sameMat('pole'),
+          topperMatShared: sameMat('topper'),
+          slabMatShared: sameMat('slab')
+        };
+      } catch(e) { out.error = String(e && e.message || e); }
+      return out;
+    }
     function terrainOverlayResidency() {
       var out = { available: false, hypExists: null, contourExists: null, decorExists: null };
       try {
@@ -256,6 +306,7 @@ function profileScript(label, quality) {
       out.units = __FIELD.units ? __FIELD.units.length : 0;
       out.sceneCounts = countScene(__FIELD.scene);
       out.unitRender = firstUnitRender();
+      out.markerResources = markerResourceStats();
       out.terrainOverlay = terrainOverlayResidency();
       out.ffOff = typeof fldFfOff === 'function' ? !!fldFfOff() : null;
       out.rrOff = typeof fldRrOff === 'function' ? !!fldRrOff() : null;
@@ -372,6 +423,19 @@ check('idle selection rings are visibility-culled in high and low profile scenes
   high.detail.unitRender.selectionRing === true && low.detail.unitRender.selectionRing === true &&
   high.detail.unitRender.selectionRingVisible === false && low.detail.unitRender.selectionRingVisible === false,
   JSON.stringify({ high: high.detail.unitRender, low: low.detail.unitRender }));
+check('base 3D unit markers share immutable geometry while keeping per-unit materials in high and low profile scenes',
+  high.detail.markerResources && low.detail.markerResources &&
+  high.detail.markerResources.cache === true && low.detail.markerResources.cache === true &&
+  high.detail.markerResources.slabGeoShared === true && low.detail.markerResources.slabGeoShared === true &&
+  high.detail.markerResources.frontGeoShared === true && low.detail.markerResources.frontGeoShared === true &&
+  high.detail.markerResources.ringGeoShared === true && low.detail.markerResources.ringGeoShared === true &&
+  high.detail.markerResources.poleGeoShared === true && low.detail.markerResources.poleGeoShared === true &&
+  high.detail.markerResources.topperGeoShared === true && low.detail.markerResources.topperGeoShared === true &&
+  high.detail.markerResources.frontMatShared === false && low.detail.markerResources.frontMatShared === false &&
+  high.detail.markerResources.poleMatShared === false && low.detail.markerResources.poleMatShared === false &&
+  high.detail.markerResources.topperMatShared === false && low.detail.markerResources.topperMatShared === false &&
+  high.detail.markerResources.slabMatShared === false && low.detail.markerResources.slabMatShared === false,
+  JSON.stringify({ high: high.detail.markerResources, low: low.detail.markerResources }));
 check('low tier stays below hard render-call cap', Number(low.detail.renderInfo && low.detail.renderInfo.calls || 0) <= Number(budgets.lowTierRenderCallHardCap || 360), 'calls=' + (low.detail.renderInfo && low.detail.renderInfo.calls));
 check('low tier stays below hard scene-object cap', Number(low.detail.sceneCounts && low.detail.sceneCounts.objects || 0) <= Number(budgets.lowTierObjectHardCap || 1400), 'objects=' + (low.detail.sceneCounts && low.detail.sceneCounts.objects));
 check('zero pageerrors across profile scenes', allPageErrors.length === 0, allPageErrors.slice(0, 3).join(' | '));

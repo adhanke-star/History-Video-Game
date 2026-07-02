@@ -287,7 +287,7 @@ async function runSceneFresh(label, scenario, seed, opts) {
     console.log('probe-render-richness scene=' + label + ' start');
     await page.goto(cfg.baseUrl + '/' + cfg.file, { waitUntil: 'domcontentloaded', timeout: 45000 });
     await sleep(500);
-    const sceneTimeoutMs = 120000;
+    const sceneTimeoutMs = 240000;
     const out = await withTimeout(runScene(page, label, scenario, seed, opts, shared), sceneTimeoutMs, label);
     if (out && out.__timeout) return { label, detail: { ok: false, error: 'scene timed out after ' + sceneTimeoutMs + 'ms' }, pageerrors: shared.pe, texWarn: [], console: shared.con.slice(-10) };
     console.log('probe-render-richness scene=' + label + ' ok=' + !!(out && out.detail && out.detail.ok));

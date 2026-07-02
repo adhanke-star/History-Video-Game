@@ -1873,6 +1873,24 @@ function fld3dBuildMarkers() {
     }
   }
 }
+function fld3dUnitMarkerResources(T) {
+  var r = __FIELD._unit3dMarkerResources;
+  if (r && r.T === T) return r;
+  r = {
+    T: T,
+    geo: {
+      slab: new T.BoxGeometry(96, 8, 26),
+      front: new T.BoxGeometry(96, 10, 5),
+      flag: new T.PlaneGeometry(22, 14),
+      pole: new T.CylinderGeometry(1, 1, 40, 5),
+      topperUS: new T.BoxGeometry(11, 11, 11),
+      topperCS: new T.ConeGeometry(8, 14, 4),
+      ring: new T.RingGeometry(54, 62, 24)
+    }
+  };
+  __FIELD._unit3dMarkerResources = r;
+  return r;
+}
 function fld3dBuildUnits() {
   var T = window.THREE;
   // dispose each child's geometry/material BEFORE detaching — this runs on every reinforcement
@@ -1885,24 +1903,26 @@ function fld3dBuildUnits() {
     });
     __FIELD.groups.remove(ch);
   }
+  __FIELD._unit3dMarkerResources = null;
+  var res = fld3dUnitMarkerResources(T);
   __FIELD._u3d = {};
   for (var i = 0; i < __FIELD.units.length; i++) {
     var u = __FIELD.units[i];
     var g = new T.Group();
     var col = u.side === "US" ? "#3a5a9a" : "#9a4a3a";
-    var slab = new T.Mesh(new T.BoxGeometry(96, 8, 26), new T.MeshLambertMaterial({ color: col }));
+    var slab = new T.Mesh(res.geo.slab, new T.MeshLambertMaterial({ color: col }));
     slab.name = "slab"; g.add(slab);
-    var front = new T.Mesh(new T.BoxGeometry(96, 10, 5), new T.MeshLambertMaterial({ color: "#15110b" }));
+    var front = new T.Mesh(res.geo.front, new T.MeshLambertMaterial({ color: "#15110b" }));
     front.position.z = -14; front.name = "front"; g.add(front);
-    var flag = new T.Mesh(new T.PlaneGeometry(22, 14), new T.MeshBasicMaterial({ color: col, side: T.DoubleSide }));
+    var flag = new T.Mesh(res.geo.flag, new T.MeshBasicMaterial({ color: col, side: T.DoubleSide }));
     flag.position.set(0, 34, 0); flag.name = "flag"; g.add(flag);
-    var pole = new T.Mesh(new T.CylinderGeometry(1, 1, 40, 5), new T.MeshLambertMaterial({ color: "#2a2018" })); pole.position.y = 20; g.add(pole);
+    var pole = new T.Mesh(res.geo.pole, new T.MeshLambertMaterial({ color: "#2a2018" })); pole.position.y = 20; pole.name = "pole"; g.add(pole);
     // non-color side cue (CVD-safe): a cube finial for the Union, a pyramid for the Confederacy
     var topper = u.side === "US"
-      ? new T.Mesh(new T.BoxGeometry(11, 11, 11), new T.MeshLambertMaterial({ color: "#ece4d0" }))
-      : new T.Mesh(new T.ConeGeometry(8, 14, 4), new T.MeshLambertMaterial({ color: "#ece4d0" }));
-    topper.position.set(0, 47, 0); g.add(topper);
-    var ring = new T.Mesh(new T.RingGeometry(54, 62, 24), new T.MeshBasicMaterial({ color: "#ffe9a8", side: T.DoubleSide, transparent: true, opacity: 0 }));
+      ? new T.Mesh(res.geo.topperUS, new T.MeshLambertMaterial({ color: "#ece4d0" }))
+      : new T.Mesh(res.geo.topperCS, new T.MeshLambertMaterial({ color: "#ece4d0" }));
+    topper.position.set(0, 47, 0); topper.name = "topper"; g.add(topper);
+    var ring = new T.Mesh(res.geo.ring, new T.MeshBasicMaterial({ color: "#ffe9a8", side: T.DoubleSide, transparent: true, opacity: 0 }));
     ring.rotation.x = -Math.PI / 2; ring.position.y = 1; ring.name = "ring"; g.add(ring);
     __FIELD.groups.add(g); __FIELD._u3d[u.id] = g;
   }
@@ -1954,6 +1974,7 @@ function fld3dDispose() {
     if (__FIELD.renderer) { try { if (__FIELD.renderer.forceContextLoss) __FIELD.renderer.forceContextLoss(); } catch (e3) {} if (__FIELD.renderer.dispose) __FIELD.renderer.dispose(); }
   } catch (e) {}
   __FIELD.scene = null; __FIELD.camera = null; __FIELD.controls = null; __FIELD.renderer = null; __FIELD.groups = null; __FIELD._u3d = null; __FIELD.ground = null;
+  __FIELD._unit3dMarkerResources = null;   // D202: shared immutable marker geometries were disposed by the scene traverse above
   __FIELD._phaseScene = null;   // D132: the tracked terrain meshes were disposed in the scene traverse above; drop the ref
   __FIELD._ld3dGroup = null; __FIELD._ld3d = null;   // B-2: the officer group's geometries were disposed in the scene traverse above; drop the refs
   __FIELD._sup3dGroup = null; __FIELD._sup3d = null; // B-3: same for the ammunition-train wagons
