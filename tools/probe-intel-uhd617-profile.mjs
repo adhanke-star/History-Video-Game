@@ -181,6 +181,18 @@ function profileScript(label, quality) {
         var flag = g.getObjectByName('flag');
         var pole = g.getObjectByName('pole');
         var topper = g.getObjectByName('topper');
+        var poleLayer = null;
+        try { if (typeof __FIELD !== 'undefined' && __FIELD && __FIELD.scene) __FIELD.scene.traverse(function(o){ if (o && o.name === 'markerPoleLayer') poleLayer = o; }); } catch(e){}
+        var poleLayerSlot = (g.userData && g.userData._markerPoleSlot != null) ? g.userData._markerPoleSlot : -1;
+        var poleLayerSlotActive = false;
+        try {
+          if (poleLayer && poleLayerSlot >= 0 && window.THREE) {
+            var poleMat = new window.THREE.Matrix4();
+            poleLayer.getMatrixAt(poleLayerSlot, poleMat);
+            var poleEl = poleMat.elements || [];
+            poleLayerSlotActive = Math.abs(Number(poleEl[0] || 0)) > 0.01 && Number(poleEl[13] || -9999) > -1000;
+          }
+        } catch(e) {}
         out = {
           found: true,
           unitId: u.id,
@@ -204,6 +216,11 @@ function profileScript(label, quality) {
           flagVisible: flag ? flag.visible !== false : null,
           pole: !!pole,
           poleVisible: pole ? pole.visible !== false : null,
+          poleLayer: !!poleLayer,
+          poleLayerVisible: poleLayer ? poleLayer.visible !== false : null,
+          poleLayerCount: poleLayer ? poleLayer.count : 0,
+          poleLayerSlot: poleLayerSlot,
+          poleLayerSlotActive: poleLayerSlotActive,
           topper: !!topper,
           topperVisible: topper ? topper.visible !== false : null,
           slabVisible: slab ? slab.visible !== false : null
@@ -239,6 +256,8 @@ function profileScript(label, quality) {
         var polePair = [];
         var topperCount = 0;
         var topperPair = [];
+        var poleLayer = null;
+        try { if (typeof __FIELD !== 'undefined' && __FIELD && __FIELD.scene) __FIELD.scene.traverse(function(o){ if (o && o.name === 'markerPoleLayer') poleLayer = o; }); } catch(e){}
         for (var rc = 0; rc < refs.length; rc++) if (refs[rc].ring) ringCount++;
         for (var pc = 0; pc < refs.length; pc++) if (refs[pc].pole) poleCount++;
         for (var tc = 0; tc < refs.length; tc++) if (refs[tc].topper) topperCount++;
@@ -274,6 +293,9 @@ function profileScript(label, quality) {
           cache: !!__FIELD._unit3dMarkerResources,
           ringCount: ringCount,
           poleCount: poleCount,
+          poleLayer: !!poleLayer,
+          poleLayerVisible: poleLayer ? poleLayer.visible !== false : null,
+          poleLayerCount: poleLayer ? poleLayer.count : 0,
           topperCount: topperCount,
           slabGeoShared: sameGeo('slab'),
           frontGeoShared: sameGeo('front'),
@@ -492,14 +514,18 @@ check('base 3D unit markers share immutable geometry while keeping per-unit mate
   high.detail.markerResources.ringCount === 0 && low.detail.markerResources.ringCount === 0 &&
   high.detail.markerResources.ringGeoShared === null && low.detail.markerResources.ringGeoShared === null &&
   high.detail.markerResources.poleCount < high.detail.units && (high.detail.markerResources.poleGeoShared === true || high.detail.markerResources.poleGeoShared === null) &&
-  low.detail.markerResources.poleCount === low.detail.units && low.detail.markerResources.poleGeoShared === true &&
+  low.detail.markerResources.poleCount === 0 &&
+  low.detail.markerResources.poleLayer === true &&
+  low.detail.markerResources.poleLayerVisible === true &&
+  low.detail.markerResources.poleLayerCount >= low.detail.units &&
+  low.detail.markerResources.poleGeoShared === null &&
   low.detail.markerResources.topperCount === 0 && low.detail.markerResources.topperGeoShared === null &&
   high.detail.markerResources.frontMatShared === false && low.detail.markerResources.frontMatShared === false &&
-  (high.detail.markerResources.poleMatShared === false || high.detail.markerResources.poleMatShared === null) && low.detail.markerResources.poleMatShared === false &&
+  (high.detail.markerResources.poleMatShared === false || high.detail.markerResources.poleMatShared === null) && low.detail.markerResources.poleMatShared === null &&
   low.detail.markerResources.topperMatShared === null &&
   high.detail.markerResources.slabMatShared === false && low.detail.markerResources.slabMatShared === false,
   JSON.stringify({ high: high.detail.markerResources, low: low.detail.markerResources }));
-check('default high-tier formation figures omit hidden marker poles/toppers and low tier keeps pole readability',
+check('default high-tier formation figures omit hidden marker poles/toppers and low tier keeps shared pole readability',
   high.detail.unitRender && low.detail.unitRender &&
   high.detail.unitRender.formationFiguresMode === 'shared-instanced' &&
   high.detail.unitRender.pole === false &&
@@ -507,12 +533,18 @@ check('default high-tier formation figures omit hidden marker poles/toppers and 
   high.detail.unitRender.flagVisible === true &&
   high.detail.markerResources && high.detail.markerResources.poleCount < high.detail.units &&
   high.detail.markerResources && high.detail.markerResources.topperCount < high.detail.units &&
-  low.detail.unitRender.pole === true &&
-  low.detail.unitRender.poleVisible === true &&
+  low.detail.unitRender.pole === false &&
+  low.detail.unitRender.poleLayer === true &&
+  low.detail.unitRender.poleLayerVisible === true &&
+  low.detail.unitRender.poleLayerSlotActive === true &&
   low.detail.unitRender.topper === false &&
   low.detail.unitRender.topperVisible === null &&
   low.detail.unitRender.flagVisible === true &&
-  low.detail.markerResources && low.detail.markerResources.poleCount === low.detail.units,
+  low.detail.markerResources &&
+  low.detail.markerResources.poleCount === 0 &&
+  low.detail.markerResources.poleLayer === true &&
+  low.detail.markerResources.poleLayerVisible === true &&
+  low.detail.markerResources.poleLayerCount >= low.detail.units,
   JSON.stringify({ high: high.detail.unitRender, low: low.detail.unitRender }));
 function smokeDrawRangeOk(profile) {
   const d = profile.detail || {};

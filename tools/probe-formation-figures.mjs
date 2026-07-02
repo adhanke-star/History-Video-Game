@@ -87,6 +87,18 @@ function sceneScript(label, opts) {
       var pole = g.getObjectByName("pole");
       var topper = g.getObjectByName("topper");
       var pegs = g.getObjectByName("vfPegs");
+      var poleLayer = null;
+      try { if (typeof __FIELD !== "undefined" && __FIELD && __FIELD.scene) __FIELD.scene.traverse(function(o){ if (o && o.name === "markerPoleLayer") poleLayer = o; }); } catch(e){}
+      var poleLayerSlot = (g.userData && g.userData._markerPoleSlot != null) ? g.userData._markerPoleSlot : -1;
+      var poleLayerSlotActive = false;
+      try {
+        if (poleLayer && poleLayerSlot >= 0 && window.THREE) {
+          var poleMat = new window.THREE.Matrix4();
+          poleLayer.getMatrixAt(poleLayerSlot, poleMat);
+          var poleEl = poleMat.elements || [];
+          poleLayerSlotActive = Math.abs(Number(poleEl[0] || 0)) > 0.01 && Number(poleEl[13] || -9999) > -1000;
+        }
+      } catch(e) {}
       return {
         found:true,
         unitId:u.id,
@@ -116,6 +128,11 @@ function sceneScript(label, opts) {
         flagVisible:flag ? flag.visible !== false : null,
         pole:!!pole,
         poleVisible:pole ? pole.visible !== false : null,
+        poleLayer:!!poleLayer,
+        poleLayerVisible:poleLayer ? poleLayer.visible !== false : null,
+        poleLayerCount:poleLayer ? poleLayer.count : 0,
+        poleLayerSlot:poleLayerSlot,
+        poleLayerSlotActive:poleLayerSlotActive,
         topper:!!topper,
         topperVisible:topper ? topper.visible !== false : null,
         pegsResident:!!pegs,
@@ -241,8 +258,8 @@ async function runScene(browser, label, opts) {
   check('renderRich="off": formation figures are gated out and the slab fallback remains',
     OFF.ok && OFF.off === true && OFF.initial && OFF.initial.ff !== true && OFF.initial.slabVisible === true && OFF.initial.pole === true && OFF.initial.poleVisible === true && OFF.initial.topper === true && OFF.initial.topperVisible === true,
     JSON.stringify(OFF.initial || {}));
-  check('low tier: formation figures are gated out and the slab fallback remains',
-    LOW.ok && LOW.off === true && LOW.initial && LOW.initial.ff !== true && LOW.initial.slabVisible === true && LOW.initial.pole === true && LOW.initial.poleVisible === true && LOW.initial.topper === false,
+  check('low tier: formation figures are gated out and the slab fallback keeps a shared pole cue',
+    LOW.ok && LOW.off === true && LOW.initial && LOW.initial.ff !== true && LOW.initial.slabVisible === true && LOW.initial.pole === false && LOW.initial.poleLayer === true && LOW.initial.poleLayerVisible === true && LOW.initial.poleLayerSlotActive === true && LOW.initial.topper === false,
     JSON.stringify(LOW.initial || {}));
   check('a screenshot was captured for visual confirmation', !!(H && H.shot), H && H.shot);
   check('zero pageerrors across all scenes', allPe === 0, 'pageerrors=' + allPe + (allPe ? ' :: ' + scenes.flatMap(s => s.pageerrors).slice(0, 3).join(' | ') : ''));

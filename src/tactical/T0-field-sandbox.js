@@ -1917,6 +1917,67 @@ function fld3dAddMarkerPole(T, g, res) {
   pole.position.y = 20; pole.name = "pole"; g.add(pole);
   return pole;
 }
+function fld3dUseSharedMarkerPoleLayer() {
+  try { return (typeof fldLow === "function" && fldLow()); } catch (e) { return false; }
+}
+function fld3dClearMarkerPoleLayer() {
+  var L = __FIELD && __FIELD._markerPoleLayer;
+  if (!L) return;
+  try { if (L.mesh && L.mesh.parent) L.mesh.parent.remove(L.mesh); } catch (e) {}
+  try { if (L.mesh && L.mesh.material && L.mesh.material.dispose) L.mesh.material.dispose(); } catch (e) {}
+  __FIELD._markerPoleLayer = null;
+}
+function fld3dMarkerPoleLayer(T) {
+  if (!T || !__FIELD || !__FIELD.scene || !fld3dUseSharedMarkerPoleLayer()) return null;
+  var L = __FIELD._markerPoleLayer;
+  if (L && L.mesh && L.mesh.parent === __FIELD.scene) return L;
+  var res = fld3dUnitMarkerResources(T);
+  var cap = Math.max(1, (__FIELD.units && __FIELD.units.length) || 1);
+  var mesh = new T.InstancedMesh(res.geo.pole, new T.MeshLambertMaterial({ color: "#2a2018" }), cap);
+  mesh.name = "markerPoleLayer";
+  mesh.frustumCulled = false;
+  if (mesh.instanceMatrix && T.DynamicDrawUsage) mesh.instanceMatrix.setUsage(T.DynamicDrawUsage);
+  __FIELD.scene.add(mesh);
+  var zero = new T.Matrix4();
+  zero.makeScale(0.0001, 0.0001, 0.0001);
+  zero.setPosition(0, -9999, 0);
+  L = { mesh: mesh, cap: cap, zero: zero, dummy: new T.Object3D(), active: 0 };
+  __FIELD._markerPoleLayer = L;
+  for (var i = 0; i < cap; i++) mesh.setMatrixAt(i, zero);
+  mesh.instanceMatrix.needsUpdate = true;
+  mesh.visible = false;
+  return L;
+}
+function fld3dSyncMarkerPoleLayer(u, g, visible) {
+  var T = window.THREE;
+  var L = __FIELD && __FIELD._markerPoleLayer;
+  if (fld3dUseSharedMarkerPoleLayer()) L = fld3dMarkerPoleLayer(T);
+  if (!L || !L.mesh || !g || !g.userData) return;
+  var idx = g.userData._markerPoleSlot | 0;
+  if (idx < 0 || idx >= L.cap) return;
+  if (!visible || !fld3dUseSharedMarkerPoleLayer()) {
+    L.mesh.setMatrixAt(idx, L.zero);
+    L.mesh.instanceMatrix.needsUpdate = true;
+    return;
+  }
+  var y = fldTerrainH(u.x, u.z);
+  L.dummy.position.set(u.x, y + 24, u.z);
+  L.dummy.rotation.set(0, 0, 0);
+  L.dummy.scale.set(1, 1, 1);
+  L.dummy.updateMatrix();
+  L.mesh.setMatrixAt(idx, L.dummy.matrix);
+  L.mesh.instanceMatrix.needsUpdate = true;
+  L.mesh.visible = true;
+  L.active = (L.active || 0) + 1;
+}
+function fld3dResetMarkerPoleLayerFrame() {
+  var L = __FIELD && __FIELD._markerPoleLayer;
+  if (L) L.active = 0;
+}
+function fld3dFinishMarkerPoleLayerFrame() {
+  var L = __FIELD && __FIELD._markerPoleLayer;
+  if (L && L.mesh) L.mesh.visible = (L.active || 0) > 0;
+}
 function fld3dNeedsMarkerPole(u, g) {
   try {
     if (typeof fldFfShowFor === "function" && fldFfShowFor(u, g)) return false;
@@ -1932,6 +1993,7 @@ function fld3dNeedsMarkerTopper(u, g) {
 }
 function fld3dBuildUnits() {
   var T = window.THREE;
+  fld3dClearMarkerPoleLayer();
   // dispose each child's geometry/material BEFORE detaching — this runs on every reinforcement
   // arrival (a full rebuild), so skipping disposal would leak GPU buffers wave after wave.
   while (__FIELD.groups.children.length) {
@@ -1948,6 +2010,7 @@ function fld3dBuildUnits() {
   for (var i = 0; i < __FIELD.units.length; i++) {
     var u = __FIELD.units[i];
     var g = new T.Group();
+    g.userData._markerPoleSlot = i;
     var col = u.side === "US" ? "#3a5a9a" : "#9a4a3a";
     var slab = new T.Mesh(res.geo.slab, new T.MeshLambertMaterial({ color: col }));
     slab.name = "slab"; g.add(slab);
@@ -1955,7 +2018,7 @@ function fld3dBuildUnits() {
     front.position.z = -14; front.name = "front"; g.add(front);
     var flag = new T.Mesh(res.geo.flag, new T.MeshBasicMaterial({ color: col, side: T.DoubleSide }));
     flag.position.set(0, 34, 0); flag.name = "flag"; g.add(flag);
-    if (fld3dNeedsMarkerPole(u, g)) fld3dAddMarkerPole(T, g, res);
+    if (fld3dNeedsMarkerPole(u, g) && !fld3dUseSharedMarkerPoleLayer()) fld3dAddMarkerPole(T, g, res);
     // non-color side cue (CVD-safe): a cube finial for the Union, a pyramid for the Confederacy
     if (fld3dNeedsMarkerTopper(u, g)) fld3dAddMarkerTopper(T, g, u, res);
     __FIELD.groups.add(g); __FIELD._u3d[u.id] = g;
@@ -1966,7 +2029,7 @@ function fld3dSyncUnit(u, g) {
   // fog: a hidden enemy (not currently scouted) is not drawn (no-op when fog OFF).
   var _vPs = fldPlayerSide();   // B-6: fog hides ENEMY meshes from the player's side (US default -> byte-identical)
   g.visible = u.alive && !(__FIELD.fog && u.side !== _vPs && !fldVisible(_vPs, u));
-  if (!u.alive) return;
+  if (!u.alive) { fld3dSyncMarkerPoleLayer(u, g, false); return; }
   var y = fldTerrainH(u.x, u.z);
   g.position.set(u.x, y + 4, u.z); g.rotation.y = -u.facing; // align the block front (local -z) to sim forward
   var slab = g.getObjectByName("slab"), front = g.getObjectByName("front"), ring = g.getObjectByName("ring"), flag = g.getObjectByName("flag"), pole = g.getObjectByName("pole"), topper = g.getObjectByName("topper");
@@ -1977,7 +2040,12 @@ function fld3dSyncUnit(u, g) {
   if (flag) flag.position.y = u.state === "routing" ? 14 : 34;
   if (!fld3dNeedsMarkerPole(u, g)) {
     if (pole) pole.visible = false;
+    fld3dSyncMarkerPoleLayer(u, g, false);
+  } else if (fld3dUseSharedMarkerPoleLayer()) {
+    if (pole) pole.visible = false;
+    fld3dSyncMarkerPoleLayer(u, g, g.visible !== false);
   } else {
+    fld3dSyncMarkerPoleLayer(u, g, false);
     if (!pole) pole = fld3dAddMarkerPole(T, g, fld3dUnitMarkerResources(T));
     if (pole) pole.visible = true;
   }
@@ -1994,7 +2062,9 @@ function fld3dSyncUnit(u, g) {
 function fld3dRender() {
   if (!__FIELD.renderer) return;
   if (__FIELD.controls) __FIELD.controls.update();
+  fld3dResetMarkerPoleLayerFrame();
   for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; var g = __FIELD._u3d[u.id]; if (g) fld3dSyncUnit(u, g); }
+  fld3dFinishMarkerPoleLayerFrame();
   if (typeof fld3dSyncOfficers === "function") fld3dSyncOfficers();   // B-2: officer figures + auras
   if (typeof fld3dSyncSupply === "function") fld3dSyncSupply();       // B-3: ammunition-train wagons
   if (typeof fld3dSyncArms === "function") fld3dSyncArms();           // B-4: gun + trooper markers + muzzle flash
@@ -2023,6 +2093,7 @@ function fld3dDispose() {
   } catch (e) {}
   __FIELD.scene = null; __FIELD.camera = null; __FIELD.controls = null; __FIELD.renderer = null; __FIELD.groups = null; __FIELD._u3d = null; __FIELD.ground = null;
   __FIELD._unit3dMarkerResources = null;   // D202: shared immutable marker geometries were disposed by the scene traverse above
+  __FIELD._markerPoleLayer = null;         // D211: shared low-tier pole layer was disposed by the scene traverse above
   __FIELD._phaseScene = null;   // D132: the tracked terrain meshes were disposed in the scene traverse above; drop the ref
   __FIELD._ld3dGroup = null; __FIELD._ld3d = null;   // B-2: the officer group's geometries were disposed in the scene traverse above; drop the refs
   __FIELD._sup3dGroup = null; __FIELD._sup3d = null; // B-3: same for the ammunition-train wagons
