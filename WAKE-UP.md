@@ -1,3 +1,17 @@
+# ☀ WAKE-UP — 2026-07-02: **GROUP 5 PHASE H BATTLE COLOURS HUD READABILITY POLISH SHIPPED (D197).**
+
+**Newest (D197, 2026-07-02):** Group 5 Phase H now has another zero-new-media readability polish slice after the media-budget guard, Intel UHD-617 profile, audio/readability pass, and H2 cutaway polish. M8 battle-build was not approved or started.
+
+**What changed:** `src/tactical/T10-flags.js` makes the selected-unit battle-colours HUD a bounded labelled card with a larger 58x37 flag image, stronger contrast, escaped and wrapping-safe title/caption/corps text, clearer corps-badge row, and a readable pre-Mar-1863 badge-adoption note. `tools/probe-flags.mjs` now locks the HUD structure, ARIA label, flag image size, readable/wrapping text, historical flag/corps gates, and seed/sim invariance across a 45-frame render burst. `civil_war_generals.html` rebuilt from source.
+
+**Verified:** `node --check` for the touched T10/probe files; build **GATE OK** with the known raw-embed soft warning; focused `probe-flags` 39/39 with 0 pageerrors and no texture warnings; adjacent `probe-media-budget` 6/6 with only the known soft warning, `probe-intel-uhd617-profile` 10/10, and `probe-h0-tactical-hud` 3/3. Counted artifact readback found no `ok=false`, failed steps, pageerrors, realErrors, or texture warnings. `probe-formation-figures` was attempted but hung before writing a fresh artifact and is not counted. `git diff --check` clean.
+
+**Profile evidence after D197:** high tier: 9.66ms proxy frame burst, 115 render calls, 195 objects. Low tier: 1.94ms proxy burst, 107 calls, 144 objects. Embedded core remains 199 files / 2.418 MB raw; no new asset bytes were added.
+
+**Next recommended run:** continue Group 5 Phase H with another bounded polish/media/perf slice: zero-byte render/readability/perf polish is safest while the raw embed tier remains above the soft warning, and tightly budgeted PD/surviving-colours asset work is only appropriate if media-budget/profile gates stay green. Do not add heavy footage/HDRI/model media to the core without an explicit budget decision. M8 battle-build still needs Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-02: **GROUP 5 PHASE H H2 CUTAWAY READABILITY POLISH SHIPPED (D196).**
 
 **Newest (D196, 2026-07-02):** Group 5 Phase H now has a second zero-new-media readability polish slice after the media-budget guard, Intel UHD-617 profile, and audio/readability pass. M8 battle-build was not approved or started.

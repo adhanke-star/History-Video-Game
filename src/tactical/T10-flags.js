@@ -369,6 +369,12 @@ function _fldFillStar(ctx, cx, cy, r, fill) {
 }
 
 var _FLD_FLAG_CANVAS_CACHE = {}, _FLD_FLAG_URI_CACHE = {};
+function _fldFlagEsc(v) {
+  return (typeof htmlEsc === "function") ? htmlEsc(v)
+    : String(v == null ? "" : v).replace(/[&<>"']/g, function (ch) {
+      return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch];
+    });
+}
 function _fldFlagKey(flag, w, h) {
   var c = (flag && flag.colors) ? flag.colors.join("|") : "";
   return (flag && flag.pattern || "solid") + "|" + c + "|" + (w || 0) + "x" + (h || 0);
@@ -609,19 +615,20 @@ function fldFlagHudSelected(u) {
     var corps = _fldCorpsBadge(u);
     var meta = _fldBattleMeta();
     var flagUri = _fldFlagDataUri(flag, 66, 42);
-    var html = '<div style="display:flex;align-items:flex-start;gap:9px;margin-top:6px;padding-top:7px;border-top:1px solid #6b5638;">';
-    if (flagUri) html += '<img src="' + flagUri + '" alt="' + flag.label + '" style="width:46px;height:29px;border:1px solid #8a6f49;border-radius:2px;flex:0 0 auto;">';
-    html += '<div style="font-size:11.5px;line-height:1.45;color:#e9dcc0;">';
-    html += '<div style="color:#f2e6c8;">' + flag.label + '</div>';
-    if (flag.caption) html += '<div style="color:#cbb98f;font-size:10.5px;margin-top:1px;">' + flag.caption + '</div>';
+    var html = '<div data-fld-flag-hud="1" role="group" aria-label="Battle colours" style="display:grid;grid-template-columns:62px minmax(0,1fr);align-items:start;gap:9px;margin-top:8px;padding:8px 9px;border:1px solid rgba(216,180,88,.34);border-radius:6px;background:rgba(5,7,10,.46);box-sizing:border-box;max-width:100%;overflow:hidden;">';
+    if (flagUri) html += '<img src="' + flagUri + '" alt="' + _fldFlagEsc(flag.label) + '" data-flag-role="image" style="width:58px;height:37px;border:1px solid #b69863;border-radius:3px;flex:0 0 auto;box-shadow:0 0 0 1px rgba(0,0,0,.45),0 2px 5px rgba(0,0,0,.38);object-fit:cover;">';
+    else html += '<span aria-hidden="true" style="width:58px;height:37px;border:1px solid #b69863;border-radius:3px;background:#201910;display:block;"></span>';
+    html += '<div style="min-width:0;font-size:12px;line-height:1.42;color:#e9dcc0;">';
+    html += '<div data-flag-role="title" style="color:#f7e9c9;font-weight:800;font-size:12.5px;line-height:1.25;overflow-wrap:anywhere;">' + _fldFlagEsc(flag.label) + '</div>';
+    if (flag.caption) html += '<div data-flag-role="caption" style="color:#d8c79e;font-size:11.5px;line-height:1.35;margin-top:3px;overflow-wrap:anywhere;">' + _fldFlagEsc(flag.caption) + '</div>';
     if (corps) {
       var badgeUri = _fldBadgeDataUri(corps, 34);
-      html += '<div style="display:flex;align-items:center;gap:6px;margin-top:5px;">';
-      if (badgeUri) html += '<img src="' + badgeUri + '" alt="' + corps.label + ' badge" style="width:18px;height:18px;flex:0 0 auto;">';
-      html += '<span style="color:#e9dcc0;">' + corps.label + (corps.divLabel ? ' &middot; ' + corps.divLabel : '') + '</span></div>';
+      html += '<div data-flag-role="corps" style="display:flex;align-items:center;gap:7px;margin-top:7px;padding-top:6px;border-top:1px solid rgba(216,180,88,.22);min-width:0;">';
+      if (badgeUri) html += '<img src="' + badgeUri + '" alt="' + _fldFlagEsc(corps.label) + ' badge" style="width:22px;height:22px;flex:0 0 auto;">';
+      html += '<span style="color:#f0dfbd;font-size:11.5px;line-height:1.3;overflow-wrap:anywhere;">' + _fldFlagEsc(corps.label) + (corps.divLabel ? ' &middot; ' + _fldFlagEsc(corps.divLabel) : '') + '</span></div>';
     } else if (u.side === "US" && !meta.badges && /\bcorps\b/i.test(u.name || "")) {
       // the corps existed here, but no badge was worn yet — name the date (a teaching beat).
-      html += '<div style="color:#cbb98f;font-size:10.5px;margin-top:4px;">Corps badges adopted Mar 1863 — not yet worn here.</div>';
+      html += '<div data-flag-role="corps-note" style="color:#d8c79e;font-size:11.5px;line-height:1.35;margin-top:6px;padding-top:6px;border-top:1px solid rgba(216,180,88,.18);overflow-wrap:anywhere;">Corps badges adopted Mar 1863 — not yet worn here.</div>';
     }
     html += '</div></div>';
     return html;

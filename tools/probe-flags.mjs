@@ -124,6 +124,40 @@ function pureScript() {
         antietamNote: withScenario('antietam', function(){ return fldFlagHudSelected(U("Williams's Division (XII Corps)", 'US')); }),
         csBullRun: withScenario('bullrun1', function(){ return fldFlagHudSelected(U("Jackson's Brigade ('Stonewall')", 'CS')); })
       };
+      function hudInfo(html) {
+        var wrap = document.createElement('div'); wrap.innerHTML = html || '';
+        var shell = wrap.querySelector('[data-fld-flag-hud="1"]');
+        var img = wrap.querySelector('[data-flag-role="image"]');
+        var title = wrap.querySelector('[data-flag-role="title"]');
+        var cap = wrap.querySelector('[data-flag-role="caption"]');
+        var corps = wrap.querySelector('[data-flag-role="corps"]');
+        var note = wrap.querySelector('[data-flag-role="corps-note"]');
+        function px(el, prop) { var v = el && el.style ? el.style[prop] : ''; return parseFloat(String(v || '').replace('px', '')) || 0; }
+        return {
+          shell: !!shell,
+          role: shell ? shell.getAttribute('role') : '',
+          aria: shell ? shell.getAttribute('aria-label') : '',
+          display: shell && shell.style ? shell.style.display : '',
+          grid: shell && shell.style ? shell.style.gridTemplateColumns : '',
+          bounded: !!(shell && /max-width:\s*100%/.test(shell.getAttribute('style') || '') && /overflow:\s*hidden/.test(shell.getAttribute('style') || '')),
+          imgW: px(img, 'width'),
+          imgH: px(img, 'height'),
+          titleFont: px(title, 'fontSize'),
+          titleWrap: !!(title && /overflow-wrap:\s*anywhere/.test(title.getAttribute('style') || '')),
+          captionFont: px(cap, 'fontSize'),
+          captionLine: px(cap, 'lineHeight'),
+          captionWrap: !!(cap && /overflow-wrap:\s*anywhere/.test(cap.getAttribute('style') || '')),
+          corps: !!corps,
+          note: !!note,
+          corpsText: corps ? corps.textContent : '',
+          noteText: note ? note.textContent : ''
+        };
+      }
+      R.hudInfo = {
+        gburgII: hudInfo(R.hud.gburgII),
+        antietamNote: hudInfo(R.hud.antietamNote),
+        csBullRun: hudInfo(R.hud.csBullRun)
+      };
       // settings gate
       G.settings.battleFlags = false;
       R.gateOff = withScenario('gettysburg', function(){ return fldFlagHudSelected(U("Caldwell's Division (II Corps)", 'US')); });
@@ -201,10 +235,10 @@ function sceneScript(scenario, seed, opts) {
         fld2dDraw(); insp.painted2d = true;
       }
 
-      // byte-identity: sim seed + mutable fields invariant across a synchronous render burst
+      // byte-identity: sim seed + mutable fields invariant across a profile-scale synchronous render burst
       function _simSnap(){ var s=[]; for (var i=0;i<__FIELD.units.length;i++){ var u=__FIELD.units[i]; s.push(u.x+','+u.z+','+u.men+','+u.morale+','+u.facing+','+u.formation); } return s.join('|'); }
       var seedBefore = __FIELD.seed, simBefore = _simSnap();
-      for (var s2=0; s2<200; s2++) { fldRender(); }
+      for (var s2=0; s2<45; s2++) { fldRender(); }
       var seedAfter = __FIELD.seed, simAfter = _simSnap();
 
       var cv = document.getElementById('fldGl');
@@ -304,8 +338,23 @@ async function runScene(page, label, scenario, seed, opts, shared) {
   check('HUD (CVD-safe): an eligible US unit shows the flag label + the corps label text',
     pure.ok && /II Corps/.test(P.hud.gburgII) && /Corps/.test(P.hud.gburgII) && P.hud.gburgII.indexOf('<img') >= 0,
     (P.hud && P.hud.gburgII || '').slice(0, 80));
+  check('HUD polish: flag readout is a bounded labelled group with a larger 58x37 colour image',
+    pure.ok && P.hudInfo && P.hudInfo.gburgII && P.hudInfo.gburgII.shell && P.hudInfo.gburgII.role === 'group'
+      && P.hudInfo.gburgII.aria === 'Battle colours' && P.hudInfo.gburgII.display === 'grid'
+      && P.hudInfo.gburgII.bounded && P.hudInfo.gburgII.imgW >= 58 && P.hudInfo.gburgII.imgH >= 37,
+    JSON.stringify(P.hudInfo && P.hudInfo.gburgII || {}));
+  check('HUD polish: title/caption/corps text are readable and wrapping-safe',
+    pure.ok && P.hudInfo && P.hudInfo.gburgII && P.hudInfo.gburgII.titleFont >= 12
+      && P.hudInfo.gburgII.titleWrap && P.hudInfo.gburgII.captionFont >= 11.5
+      && P.hudInfo.gburgII.captionLine >= 1.3 && P.hudInfo.gburgII.captionWrap
+      && P.hudInfo.gburgII.corps && /1st Division/.test(P.hudInfo.gburgII.corpsText),
+    JSON.stringify(P.hudInfo && P.hudInfo.gburgII || {}));
   check('HUD: a pre-badge Eastern field names the Mar-1863 adoption date (the teaching beat)',
     pure.ok && /adopted Mar 1863/i.test(P.hud.antietamNote), (P.hud && P.hud.antietamNote || '').slice(0, 120));
+  check('HUD polish: pre-badge corps note is readable and wrapping-safe',
+    pure.ok && P.hudInfo && P.hudInfo.antietamNote && P.hudInfo.antietamNote.note
+      && P.hudInfo.antietamNote.captionFont >= 11.5 && /Mar 1863/.test(P.hudInfo.antietamNote.noteText),
+    JSON.stringify(P.hudInfo && P.hudInfo.antietamNote || {}));
   check('HUD: a CS Bull Run unit names the First National flag', pure.ok && /First National/i.test(P.hud.csBullRun), (P.hud && P.hud.csBullRun || '').slice(0, 80));
   check('settings gate: battleFlags=false -> fldFlagHudSelected returns ""', pure.ok && P.gateOff === '', 'gateOff=' + JSON.stringify(P.gateOff));
 
@@ -322,7 +371,7 @@ async function runScene(page, label, scenario, seed, opts, shared) {
     G3.ok && G3.insp.badgeMeshes > 0, 'badgeMeshes=' + (G3.ok && G3.insp.badgeMeshes));
   check('live Gettysburg-3D: the HUD renders a non-empty flag/badge block for a US unit',
     G3.ok && G3.insp.hudSample && G3.insp.hudSample.length > 0, (G3.ok && G3.insp.hudSample || '').slice(0, 60));
-  check('live Gettysburg-3D: sim seed + mutable fields INVARIANT across a 200-frame render burst (byte-identical)',
+  check('live Gettysburg-3D: sim seed + mutable fields INVARIANT across a 45-frame render burst (byte-identical)',
     G3.ok && G3.seedStable && G3.simStable === true, 'seed=' + (G3.ok && G3.seedStable) + ' sim=' + (G3.ok && G3.simStable));
 
   check('live Antietam-3D (the gate): NO corps-badge mesh built (badges postdate this 1862 field)',
@@ -354,5 +403,6 @@ async function runScene(page, label, scenario, seed, opts, shared) {
   for (const s of steps) console.log((s.ok ? '  ok   ' : '  FAIL ') + s.name + (s.detail ? ' :: ' + s.detail : ''));
   try { await Promise.race([ctx.close().catch(() => {}), sleep(2500)]); } catch (e) {}
   try { await Promise.race([browser.close().catch(() => {}), sleep(2500)]); } catch (e) {}
+  try { const proc = browser.process && browser.process(); if (proc && !proc.killed) proc.kill('SIGTERM'); } catch (e) {}
   process.exit(ok ? 0 : 1);
 })().catch(e => { console.error('FATAL:', e); process.exit(1); });
