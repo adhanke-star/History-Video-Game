@@ -264,6 +264,22 @@ function profileScript(label, quality) {
       } catch(e) { out.error = String(e && e.message || e); }
       return out;
     }
+    function atmoSmokeStats() {
+      var out = { available: false, pointsExists: false, visible: null, activeParticles: 0, bufferCount: 0, drawRangeCount: 0 };
+      try {
+        out.available = (typeof fldAtmoState === 'function');
+        var A = (typeof __FIELD !== 'undefined' && __FIELD) ? __FIELD._atmo : null;
+        if (A && A.parts) out.activeParticles = A.parts.length;
+        var pts = null;
+        if (typeof __FIELD !== 'undefined' && __FIELD && __FIELD.scene && __FIELD.scene.getObjectByName) pts = __FIELD.scene.getObjectByName('atmoSmoke');
+        out.pointsExists = !!pts;
+        if (!pts) return out;
+        out.visible = pts.visible !== false;
+        if (pts.geometry && pts.geometry.attributes && pts.geometry.attributes.aAlpha) out.bufferCount = pts.geometry.attributes.aAlpha.count;
+        if (pts.geometry && pts.geometry.drawRange) out.drawRangeCount = pts.geometry.drawRange.count;
+      } catch(e) { out.error = String(e && e.message || e); }
+      return out;
+    }
     function glInfo(gl) {
       var info = { maxTextureSize: 0, maxRenderbufferSize: 0, pointSizeRange: [] };
       try {
@@ -308,6 +324,7 @@ function profileScript(label, quality) {
       out.unitRender = firstUnitRender();
       out.markerResources = markerResourceStats();
       out.terrainOverlay = terrainOverlayResidency();
+      out.atmoSmokeBeforeBurst = atmoSmokeStats();
       out.ffOff = typeof fldFfOff === 'function' ? !!fldFfOff() : null;
       out.rrOff = typeof fldRrOff === 'function' ? !!fldRrOff() : null;
       out.vfOff = typeof fldVfOff === 'function' ? !!fldVfOff() : null;
@@ -329,6 +346,7 @@ function profileScript(label, quality) {
         geometries: Number(mi.geometries || 0),
         textures: Number(mi.textures || 0)
       };
+      out.atmoSmokeAfterBurst = atmoSmokeStats();
       var cv = document.getElementById('fldGl');
       out.pixelStats = summarizePixels(gl, cv);
       if (out.pixelStats.error) throw new Error(out.pixelStats.error);
@@ -442,6 +460,25 @@ check('base 3D unit markers share immutable geometry while keeping per-unit mate
   high.detail.markerResources.topperMatShared === false && low.detail.markerResources.topperMatShared === false &&
   high.detail.markerResources.slabMatShared === false && low.detail.markerResources.slabMatShared === false,
   JSON.stringify({ high: high.detail.markerResources, low: low.detail.markerResources }));
+function smokeDrawRangeOk(profile) {
+  const d = profile.detail || {};
+  const s = d.atmoSmokeAfterBurst || {};
+  const ri = d.renderInfo || {};
+  if (s.available !== true || s.pointsExists !== true) return false;
+  const active = Number(s.activeParticles || 0);
+  const buffer = Number(s.bufferCount || 0);
+  const draw = Number(s.drawRangeCount || 0);
+  return buffer > 0 &&
+    draw === Math.min(active, buffer) &&
+    (s.visible === (draw > 0)) &&
+    Number(ri.points || 0) === draw;
+}
+check('T16 atmoSmoke draw range tracks active smoke particles in high and low profile scenes',
+  smokeDrawRangeOk(high) && smokeDrawRangeOk(low),
+  JSON.stringify({ high: high.detail.atmoSmokeAfterBurst || {}, low: low.detail.atmoSmokeAfterBurst || {}, renderPoints: { high: high.detail.renderInfo && high.detail.renderInfo.points, low: low.detail.renderInfo && low.detail.renderInfo.points } }));
+check('low tier atmoSmoke renders no more than the low particle budget',
+  low.detail.atmoSmokeAfterBurst && Number(low.detail.atmoSmokeAfterBurst.drawRangeCount || 0) <= 84,
+  JSON.stringify(low.detail.atmoSmokeAfterBurst || {}));
 check('low tier stays below hard render-call cap', Number(low.detail.renderInfo && low.detail.renderInfo.calls || 0) <= Number(budgets.lowTierRenderCallHardCap || 360), 'calls=' + (low.detail.renderInfo && low.detail.renderInfo.calls));
 check('low tier stays below hard scene-object cap', Number(low.detail.sceneCounts && low.detail.sceneCounts.objects || 0) <= Number(budgets.lowTierObjectHardCap || 1400), 'objects=' + (low.detail.sceneCounts && low.detail.sceneCounts.objects));
 check('zero pageerrors across profile scenes', allPageErrors.length === 0, allPageErrors.slice(0, 3).join(' | '));

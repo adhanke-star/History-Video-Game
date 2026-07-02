@@ -128,18 +128,20 @@ function sceneScript(renderer, scenario, seed, mode) {
       try { if (A && A.mat && A.mat.uniforms && A.mat.uniforms.uMaxPoint) maxPtUniform = A.mat.uniforms.uMaxPoint.value; } catch (e) {}
       try { var glx = __FIELD.renderer.getContext(); var rr = glx.getParameter(glx.ALIASED_POINT_SIZE_RANGE); glCap = rr && rr[1]; } catch (e) {}
       var cap = 200;
-      var points3d = null, ptsCount = -1;
+      var points3d = null, ptsCount = -1, ptsDrawCount = -1, ptsVisible = null;
       if (__FIELD.mode3d && __FIELD.scene && __FIELD.scene.getObjectByName) {
         var pts = __FIELD.scene.getObjectByName('atmoSmoke');
         points3d = !!pts;
         if (pts && pts.geometry && pts.geometry.attributes && pts.geometry.attributes.aAlpha) ptsCount = pts.geometry.attributes.aAlpha.count;
+        if (pts && pts.geometry && pts.geometry.drawRange) ptsDrawCount = pts.geometry.drawRange.count;
+        if (pts) ptsVisible = pts.visible !== false;
       }
       var cv = document.getElementById('fldGl');
       var dataUrl = (cv && typeof cv.toDataURL === 'function') ? cv.toDataURL('image/png') : '';
       return { ok:true, renderer:${JSON.stringify(renderer)}, mode:${JSON.stringify(mode)},
         wrappers:wrappers, parts:parts, cap:cap, seedBefore:seedBefore, seedAfter:seedAfter,
         seedStable:(seedBefore === seedAfter), mode3d:!!__FIELD.mode3d, points3d:points3d, ptsCount:ptsCount,
-        fogA:fogA, maxPtUniform:maxPtUniform, glCap:glCap,
+        ptsDrawCount:ptsDrawCount, ptsVisible:ptsVisible, fogA:fogA, maxPtUniform:maxPtUniform, glCap:glCap,
         phase:__FIELD.phase, units:__FIELD.units.length, dataUrl:dataUrl };
     } catch(e) {
       return { ok:false, error:String(e && e.message || e), renderer:${JSON.stringify(renderer)}, mode:${JSON.stringify(mode)} };
@@ -219,12 +221,18 @@ async function runScene(page, label, renderer, scenario, seed, mode) {
   check('3D: live renderer active', t3.ok && t3.mode3d, 'mode3d=' + (t3 && t3.mode3d));
   check('3D: named "atmoSmoke" Points cloud built', t3.ok && t3.points3d === true, 'points3d=' + (t3 && t3.points3d) + ' count=' + (t3 && t3.ptsCount));
   check('3D: gunsmoke spawns during the fight', t3.ok && t3.parts > 0, 'parts=' + (t3 && t3.parts));
+  check('3D: atmoSmoke draw range tracks active particles instead of the full buffer',
+    t3.ok && t3.points3d === true && t3.ptsVisible === true && t3.ptsDrawCount > 0 && t3.ptsDrawCount === Math.min(t3.parts, t3.ptsCount),
+    'draw=' + (t3 && t3.ptsDrawCount) + ' parts=' + (t3 && t3.parts) + ' buffer=' + (t3 && t3.ptsCount) + ' visible=' + (t3 && t3.ptsVisible));
   check('3D: sim seed UNCHANGED across pure renders', t3.ok && t3.seedStable, (t3 && t3.seedBefore) + ' -> ' + (t3 && t3.seedAfter));
   check('3D: gl_PointSize clamp wired (uMaxPoint uniform = driver ALIASED_POINT_SIZE_RANGE max)',
     t3.ok && t3.maxPtUniform > 0 && t3.glCap > 0 && t3.maxPtUniform === t3.glCap,
     'uMaxPoint=' + (t3 && t3.maxPtUniform) + ' glCap=' + (t3 && t3.glCap));
   const g3 = byLabel['gettysburg-3d-normal'].detail;
   check('3D (Gettysburg): atmoSmoke built + spawns', g3.ok && g3.points3d === true && g3.parts > 0, 'points=' + (g3 && g3.points3d) + ' parts=' + (g3 && g3.parts));
+  check('3D (Gettysburg): atmoSmoke draw range stays active-particle bounded',
+    g3.ok && g3.points3d === true && g3.ptsDrawCount > 0 && g3.ptsDrawCount === Math.min(g3.parts, g3.ptsCount),
+    'draw=' + (g3 && g3.ptsDrawCount) + ' parts=' + (g3 && g3.parts) + ' buffer=' + (g3 && g3.ptsCount));
   // no warnings / no errors
   check('no Three.js texture warning across all scenes', allTex === 0, 'texWarnings=' + allTex);
   check('zero pageerrors across all scenes', allPe === 0, 'pageerrors=' + allPe);

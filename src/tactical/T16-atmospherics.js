@@ -244,6 +244,8 @@ function fldAtmoBuild3d() {
   });
   var pts = new T.Points(geo, mat);
   pts.name = "atmoSmoke"; pts.frustumCulled = false;   // positions are dynamic — skip the auto bounding-sphere
+  pts.visible = false;
+  geo.setDrawRange(0, 0);
   __FIELD.scene.add(pts);
   A.tex = mat.uniforms.uMap.value; A.geo = geo; A.mat = mat; A.points = pts; A.scene = __FIELD.scene;
   A._pos = pos; A._al = al; A._sz = sz; A._col = col; A._cap = cap;
@@ -255,6 +257,8 @@ function fldAtmoPre3d() {
   var A = fldAtmoBuild3d(); if (!A || !A.points) return;
   fldAtmoStep(A, fldAtmoTick(A));
   var cap = A._cap, n = fldAtmoOff() ? 0 : Math.min(A.parts.length, cap);
+  A.geo.setDrawRange(0, n);
+  A.points.visible = n > 0;
   var p = A.parts, pos = A._pos, al = A._al, sz = A._sz, col = A._col;
   for (var i = 0; i < n; i++) {
     var q = p[i], a = fldAtmoAlpha(q);

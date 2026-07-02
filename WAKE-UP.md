@@ -1,3 +1,17 @@
+# ☀ WAKE-UP — 2026-07-02: **GROUP 5 PHASE H ATMOSPHERIC SMOKE DRAW-RANGE PERF POLISH SHIPPED (D204).**
+
+**Newest (D204, 2026-07-02):** Group 5 Phase H now has another zero-new-media performance polish slice after the media-budget guard, Intel UHD-617 profile, audio/readability pass, H2 cutaway polish, battle-colours HUD polish, terrain-overlay perf polish, visual-fidelity contact-shadow perf polish, formation-figures perf polish, render-richness selection-ring perf polish, base marker geometry polish, and hidden peg-fallback resource polish. M8 battle-build was not approved or started.
+
+**What changed:** `src/tactical/T16-atmospherics.js` no longer renders the full 200-slot smoke point buffer every 3D frame. The `atmoSmoke` point cloud starts hidden with draw range 0, then tracks the live active particle count. Active smoke still spawns, reduce-motion/off still suppress it, fog-hidden enemies still emit no revealing smoke, and the sim seed remains unchanged by render frames. `tools/probe-atmospherics.mjs` and `tools/probe-intel-uhd617-profile.mjs` now lock the draw-range contract.
+
+**Verified:** `node --check` for the touched T16/profile/atmospherics files; build **GATE OK** with the known raw-embed soft warning; focused `probe-atmospherics` 20/20 with 0 pageerrors and 0 texture warnings, `probe-intel-uhd617-profile` 18/18, `probe-weather` 30/30, `probe-media-budget` 6/6 with only the known soft warning, and `probe-visual-fidelity` 27/27. Counted artifact readback found no `ok=false`, failed steps, `FATAL`, pageerrors, realErrors, or texture warnings.
+
+**Profile evidence after D204:** high tier: 8.93ms proxy frame burst, 75 render calls, 148 objects, 111 rendered smoke points. Low tier: 1.34ms proxy burst, 92 calls, 134 objects, 43 rendered smoke points. Embedded core remains 199 files / 2.418 MB raw; no new asset bytes were added.
+
+**Next recommended run:** continue Group 5 Phase H with another bounded zero-byte render/readability/perf slice, or surface a tighter media-budget decision before any PD/surviving-colours asset work. Do not add heavy footage/HDRI/model media to the core without explicit budget approval. M8 battle-build still needs Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-02: **GROUP 5 PHASE H HIDDEN PEG-FALLBACK RESOURCE POLISH SHIPPED (D203).**
 
 **Newest (D203, 2026-07-02):** Group 5 Phase H now has another zero-new-media resource/performance polish slice after the media-budget guard, Intel UHD-617 profile, audio/readability pass, H2 cutaway polish, battle-colours HUD polish, terrain-overlay perf polish, visual-fidelity contact-shadow perf polish, formation-figures perf polish, render-richness selection-ring perf polish, and base marker geometry polish. M8 battle-build was not approved or started.
