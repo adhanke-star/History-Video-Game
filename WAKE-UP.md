@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-07-02: **SOLDIER'S STORY JOHN COOK SLICE SHIPPED (D215).**
+
+**Newest (D215, 2026-07-02):** Priority 1 Phase I Soldier's Story scale-out continues. Phase H remains parked from D214; do not restart the automatic zero-byte polish loop. Reopen Phase H media only after an explicit media-budget/profile decision.
+
+**What changed:** John Cook is now the eighth citation-grade Soldier's Story replacement. He replaces the generated Antietam / Battery B, 4th U.S. Artillery NCO slot (`ss:antietam:US:us_battery_b:nco`) with a Verified bugler / acting-cannoneer story grounded in the Congressional Medal of Honor Society, Department of War/DOD News, the NPS Antietam artillery brochure, and the U.S. Army Center of Military History Antietam order of battle. The record asserts no higher rank, no portrait asset, and neutral inferred ratings.
+
+**Verified:** `node tools/import-soldier-replacements.mjs` passed with 8 Verified records; `node --check tools/probe-loot-survival.mjs` passed; build **GATE OK** with the known raw-embed soft warning; focused `probe-loot-survival` 11/11 and 0 pageerrors; adjacent `probe-women-in-war` 8/8, `probe-save-slots` 9/9, and `probe-bridge` 6/6, all with zero pageerrors. JSON readback found all four artifacts `ok=true` with no failed steps or page errors. Full `npm run vet:noreg` was not run under D176 focused-slice batching.
+
+**Next recommended run:** start Priority 1, another bounded Phase I Soldier's Story named-person/story slice. Keep D152-D158/D172/D214/D215 source honesty, no fabricated people/ranks/units, no unsupported portrait claims, and keep women-in-war separate. Media-budget locks persist. M8 battle-build still needs Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-02: **PHASE H PARKED; SOLDIER'S STORY STILLWELL SLICE SHIPPED (D214).**
 
 **Newest (D214, 2026-07-02):** Phase H is good enough to park after D193-D213. The media budget guard, optional-pack/H2 locks, Intel UHD-617 profile, H0/H2/audio/flags/readability probes, and D198-D213 terrain/marker/atmospheric 3D resource polish stack are enough for now. Do not run another automatic Phase H zero-byte polish loop. Reopen Phase H media only after an explicit media-budget/profile decision.
