@@ -12,7 +12,7 @@ import "./guard-probe-browser.mjs";
 //  - PER-BRIGADE DECOR: one shared "vfShadowLayer" InstancedMesh glues a soft contact shadow under every
 //    brigade + each slab gets a rank MAP; when T24 formation figures replace the slab, high tier does not keep
 //    hidden resident "vfPegs"; when formation figures are explicitly off, the capable-tier peg fallback returns;
-//    on fldLow() the pegs are GATED OUT;
+//    on fldLow() the pegs are GATED OUT and the shared slab/front body layer remains the low-tier fallback;
 //  - BYTE-IDENTITY: the sim seed + mutable sim fields are INVARIANT across a synchronous render burst (T21 never
 //    calls fldRng), FLDVF_S.errN === 0, and a static scan proves no combat/tactical file references the vf layer;
 //  - the OFF switch (renderRich="off") reverts to the byte-identical default: no dome, no vignette, no shadow/
@@ -141,8 +141,20 @@ function sceneScript(scenario, seed, opts) {
       out.unit = { found: !!ug };
       if (ug && uu) {
         var sh = ug.getObjectByName('vfShadow'), shLayer = null, pegs = ug.getObjectByName('vfPegs'), slab = ug.getObjectByName('slab');
+        var bodySlabLayer = null, bodyFrontLayer = null;
         try { __FIELD.scene.traverse(function(o){ if (o && o.name === 'vfShadowLayer') shLayer = o; }); } catch(e){}
+        try { __FIELD.scene.traverse(function(o){ if (o && o.name === 'markerBodySlabLayer') bodySlabLayer = o; if (o && o.name === 'markerBodyFrontLayer') bodyFrontLayer = o; }); } catch(e){}
         var shIndex = ug.userData && ug.userData._vf ? ug.userData._vf.shIndex : -1;
+        var bodyLayerSlot = (ug.userData && ug.userData._markerBodySlot != null) ? ug.userData._markerBodySlot : -1;
+        var bodyLayerSlotActive = false;
+        try {
+          if (bodySlabLayer && bodyLayerSlot >= 0 && window.THREE) {
+            var bodyMat = new window.THREE.Matrix4();
+            bodySlabLayer.getMatrixAt(bodyLayerSlot, bodyMat);
+            var bodyEl = bodyMat.elements || [];
+            bodyLayerSlotActive = Math.abs(Number(bodyEl[0] || 0)) > 0.01 && Number(bodyEl[13] || -9999) > -1000;
+          }
+        } catch(e) {}
         var shGroundGap = null, shScaleX = null, shScaleY = null;
         if (shLayer && shIndex >= 0 && shIndex < shLayer.count) {
           var mx = new T.Matrix4(), pos = new T.Vector3(), quat = new T.Quaternion(), scl = new T.Vector3();
@@ -163,6 +175,9 @@ function sceneScript(scenario, seed, opts) {
         out.unit.slab = !!slab;
         out.unit.slabVisible = slab ? slab.visible !== false : null;
         out.unit.rankMap = !!(slab && slab.material && slab.material.map);
+        out.unit.bodyLayer = !!(bodySlabLayer && bodyFrontLayer);
+        out.unit.bodyLayerVisible = bodySlabLayer && bodyFrontLayer ? (bodySlabLayer.visible !== false && bodyFrontLayer.visible !== false) : null;
+        out.unit.bodyLayerSlotActive = bodyLayerSlotActive;
       }
 
       /* ---- BYTE-IDENTITY: synchronous render burst (no sim step, no fldRng) ---- */
@@ -255,9 +270,9 @@ async function runScene(page, label, scenario, seed, opts, shared) {
     'slab=' + (PEG.unit && PEG.unit.slab) + ' visible=' + (PEG.unit && PEG.unit.slabVisible) + ' rankMap=' + (PEG.unit && PEG.unit.rankMap));
 
   // peg tier gate
-  check('peg tier gate: on fldLow() the peg ranks are GATED OUT (rank map + instanced shadow still present)',
-    LOW.ok && LOW.unit.found && LOW.unit.pegs === false && LOW.unit.shadowInstanced === true && LOW.unit.rankMap === true,
-    'lowPegs=' + (LOW.unit && LOW.unit.pegs) + ' lowShadowInstanced=' + (LOW.unit && LOW.unit.shadowInstanced));
+  check('peg tier gate: on fldLow() the peg ranks are GATED OUT while shared body fallback + instanced shadow remain',
+    LOW.ok && LOW.unit.found && LOW.unit.pegs === false && LOW.unit.shadowInstanced === true && LOW.unit.slab === false && LOW.unit.rankMap !== true && LOW.unit.bodyLayer === true && LOW.unit.bodyLayerVisible === true && LOW.unit.bodyLayerSlotActive === true,
+    'lowPegs=' + (LOW.unit && LOW.unit.pegs) + ' lowShadowInstanced=' + (LOW.unit && LOW.unit.shadowInstanced) + ' lowBodyLayer=' + (LOW.unit && LOW.unit.bodyLayer) + ' lowBodyLayerActive=' + (LOW.unit && LOW.unit.bodyLayerSlotActive));
 
   // byte-identity
   check('byte-identity: sim seed UNCHANGED across a synchronous render burst (T21 never calls fldRng)', R.ok && R.seedStable === true, R.seedBefore + ' -> ' + R.seedAfter);

@@ -183,13 +183,21 @@ function fldFfEnsure(u, g) {
   return fldFfCreate(u, g);
 }
 
-function fldFfMarkerVisible(g, visible) {
+function fldFfMarkerVisible(g, visible, u) {
   if (!g || !g.children) return;
+  var useBodyLayer = false;
+  if (visible !== false && u && typeof fldLow === "function" && typeof fld3dSyncMarkerBodyLayer === "function") {
+    try { useBodyLayer = !!fldLow(); } catch (e) {}
+  }
   for (var i = 0; i < g.children.length; i++) {
     var ch = g.children[i];
     if (!ch) continue;
     var nm = ch.name || "";
     if (nm === "ffFormation" || nm === "flag" || nm === "corpsbadge" || nm === "ring" || nm === "vfShadow" || nm === "unitGlbModel") continue;
+    if (useBodyLayer && (nm === "slab" || nm === "front")) {
+      ch.visible = false;
+      continue;
+    }
     ch.visible = visible;
   }
 }
@@ -277,7 +285,7 @@ function fldFfSyncUnit(u, g) {
     }
     var glb = g.getObjectByName && g.getObjectByName("unitGlbModel");
     if (glb && glb.visible) return;                                // T23 owns base-marker visibility while a GLB hero mesh is active.
-    fldFfMarkerVisible(g, true);
+    fldFfMarkerVisible(g, true, u);
     fldFfApplyLowMarkerTrim(g);
     return;
   }
@@ -338,7 +346,7 @@ function fldFfSyncUnit(u, g) {
   if (ff.layer.kepi.instanceColor) ff.layer.kepi.instanceColor.needsUpdate = true;
   ff.grp.visible = true;
   ff.grp.userData.ff = { active: n, pose: pose, formation: u.formation, width: maxX - minX, depth: maxZ - minZ, mode: "shared-instanced", slot: ff.slot, layerCount: ff.layer.nextSlot };
-  fldFfMarkerVisible(g, false);
+  fldFfMarkerVisible(g, false, u);
   var pegs = g.getObjectByName && g.getObjectByName("vfPegs");
   if (pegs) pegs.visible = false;
 }

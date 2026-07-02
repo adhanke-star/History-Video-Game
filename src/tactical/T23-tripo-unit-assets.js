@@ -227,14 +227,25 @@ function fldUnitGlbNormalized(template, slot) {
   return holder;
 }
 
-function fldUnitGlbSetBaseVisible(g, visible) {
+function fldUnitGlbSetBaseVisible(g, visible, u) {
   if (!g || !g.children) return;
+  var useBodyLayer = false;
+  if (visible !== false && u && typeof fldLow === "function" && typeof fld3dSyncMarkerBodyLayer === "function") {
+    try { useBodyLayer = !!fldLow(); } catch (e0) { FLDGLB_S.errN++; }
+  }
   if (visible === false && typeof fld3dEnsureSelectionRing === "function") {
     try { fld3dEnsureSelectionRing(window.THREE, g); } catch (e) { FLDGLB_S.errN++; }
+  }
+  if (visible === false && u && typeof fld3dSyncMarkerBodyLayer === "function") {
+    try { fld3dSyncMarkerBodyLayer(u, g, false); } catch (e2) { FLDGLB_S.errN++; }
   }
   for (var i = 0; i < g.children.length; i++) {
     var ch = g.children[i];
     if (!ch || ch.name === "unitGlbModel" || ch.name === "flag" || ch.name === "ring" || ch.name === "vfShadow") continue;
+    if (useBodyLayer && (ch.name === "slab" || ch.name === "front")) {
+      ch.visible = false;
+      continue;
+    }
     ch.visible = visible;
   }
 }
@@ -273,13 +284,13 @@ function fldUnitGlbSyncUnit(u, g) {
   var m = g.getObjectByName("unitGlbModel");
   if (!attached || !m) {
     if (m) m.visible = false;
-    fldUnitGlbSetBaseVisible(g, true);
+    fldUnitGlbSetBaseVisible(g, true, u);
     return;
   }
   var show = !!(u.alive && g.visible);
   m.visible = show;
-  if (slot.hideBaseMarker === true) fldUnitGlbSetBaseVisible(g, !show);
-  else fldUnitGlbSetBaseVisible(g, true);
+  if (slot.hideBaseMarker === true) fldUnitGlbSetBaseVisible(g, !show, u);
+  else fldUnitGlbSetBaseVisible(g, true, u);
 }
 
 function fldUnitGlbApplyAll() {

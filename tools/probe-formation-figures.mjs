@@ -52,6 +52,11 @@ async function ensureServer() {
   srv.kill(); throw new Error('Could not start static server on :' + cfg.port);
 }
 
+async function launchProbeBrowser() {
+  return chromium.launch({ channel: 'chrome', headless: true, args: GL }).catch(() =>
+    chromium.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true, args: GL }));
+}
+
 function sceneScript(label, opts) {
   opts = opts || {};
   return `(async () => {
@@ -87,6 +92,19 @@ function sceneScript(label, opts) {
       var pole = g.getObjectByName("pole");
       var topper = g.getObjectByName("topper");
       var pegs = g.getObjectByName("vfPegs");
+      var bodySlabLayer = null;
+      var bodyFrontLayer = null;
+      try { if (typeof __FIELD !== "undefined" && __FIELD && __FIELD.scene) __FIELD.scene.traverse(function(o){ if (o && o.name === "markerBodySlabLayer") bodySlabLayer = o; if (o && o.name === "markerBodyFrontLayer") bodyFrontLayer = o; }); } catch(e){}
+      var bodyLayerSlot = (g.userData && g.userData._markerBodySlot != null) ? g.userData._markerBodySlot : -1;
+      var bodyLayerSlotActive = false;
+      try {
+        if (bodySlabLayer && bodyLayerSlot >= 0 && window.THREE) {
+          var bodyMat = new window.THREE.Matrix4();
+          bodySlabLayer.getMatrixAt(bodyLayerSlot, bodyMat);
+          var bodyEl = bodyMat.elements || [];
+          bodyLayerSlotActive = Math.abs(Number(bodyEl[0] || 0)) > 0.01 && Number(bodyEl[13] || -9999) > -1000;
+        }
+      } catch(e) {}
       var poleLayer = null;
       try { if (typeof __FIELD !== "undefined" && __FIELD && __FIELD.scene) __FIELD.scene.traverse(function(o){ if (o && o.name === "markerPoleLayer") poleLayer = o; }); } catch(e){}
       var poleLayerSlot = (g.userData && g.userData._markerPoleSlot != null) ? g.userData._markerPoleSlot : -1;
@@ -128,6 +146,11 @@ function sceneScript(label, opts) {
         front:!!front,
         frontVisible:front ? front.visible !== false : null,
         flagVisible:flag ? flag.visible !== false : null,
+        bodyLayer:!!(bodySlabLayer && bodyFrontLayer),
+        bodyLayerVisible:bodySlabLayer && bodyFrontLayer ? (bodySlabLayer.visible !== false && bodyFrontLayer.visible !== false) : null,
+        bodyLayerCount:bodySlabLayer ? bodySlabLayer.count : 0,
+        bodyLayerSlot:bodyLayerSlot,
+        bodyLayerSlotActive:bodyLayerSlotActive,
         pole:!!pole,
         poleVisible:pole ? pole.visible !== false : null,
         poleLayer:!!poleLayer,
@@ -195,7 +218,8 @@ function sceneScript(label, opts) {
   })();`;
 }
 
-async function runScene(browser, label, opts) {
+async function runScene(label, opts) {
+  const browser = await launchProbeBrowser();
   const ctx = await browser.newContext({ viewport: cfg.viewport, deviceScaleFactor: 1 });
   ctx.setDefaultTimeout(60000);
   const page = await ctx.newPage();
@@ -207,26 +231,24 @@ async function runScene(browser, label, opts) {
     await page.goto(cfg.baseUrl + '/' + cfg.file, { waitUntil: 'domcontentloaded', timeout: 60000 });
     await sleep(400);
     d = await page.evaluate(sceneScript(label, opts));
-    try { await page.screenshot({ path: join(OUT, 'formation-figures-' + label + '.png') }); d.shot = 'tools/shots/formation-figures-' + label + '.png'; } catch {}
+    try { await page.screenshot({ path: join(OUT, 'formation-figures-' + label + '.png'), timeout: 120000 }); d.shot = 'tools/shots/formation-figures-' + label + '.png'; } catch {}
   } catch (e) { d = { ok: false, error: String(e && e.message || e) }; }
   try { await Promise.race([ctx.close().catch(() => {}), sleep(3000)]); } catch {}
+  try { await Promise.race([browser.close().catch(() => {}), sleep(3000)]); } catch {}
   return { label, detail: d, pageerrors: shared.pe, console: shared.con };
 }
 
 (async () => {
   staticScan();
   const server = await ensureServer();
-  const browser = await chromium.launch({ channel: 'chrome', headless: true, args: GL }).catch(() =>
-    chromium.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true, args: GL }));
   const scenes = [];
   try {
-    scenes.push(await runScene(browser, 'high', {}));
-    scenes.push(await runScene(browser, 'off', { off: true }));
-    scenes.push(await runScene(browser, 'low', { low: true }));
+    scenes.push(await runScene('high', {}));
+    scenes.push(await runScene('off', { off: true }));
+    scenes.push(await runScene('low', { low: true }));
   } finally {
     if (server) server.kill();
   }
-  try { await Promise.race([browser.close().catch(() => {}), sleep(3000)]); } catch {}
 
   const by = {}; for (const s of scenes) by[s.label] = s.detail;
   const allPe = scenes.reduce((n, s) => n + s.pageerrors.length, 0);
@@ -260,8 +282,8 @@ async function runScene(browser, label, opts) {
   check('renderRich="off": formation figures are gated out and the slab fallback remains',
     OFF.ok && OFF.off === true && OFF.initial && OFF.initial.ff !== true && OFF.initial.slabVisible === true && OFF.initial.pole === true && OFF.initial.poleVisible === true && OFF.initial.topper === true && OFF.initial.topperVisible === true,
     JSON.stringify(OFF.initial || {}));
-  check('low tier: formation figures are gated out and the slab fallback keeps a shared pole cue',
-    LOW.ok && LOW.off === true && LOW.initial && LOW.initial.ff !== true && LOW.initial.slabVisible === true && LOW.initial.pole === false && LOW.initial.poleLayer === true && LOW.initial.poleLayerVisible === true && LOW.initial.poleLayerSlotActive === true && LOW.initial.topper === false,
+  check('low tier: formation figures are gated out and the shared slab/front fallback keeps a shared pole cue',
+    LOW.ok && LOW.off === true && LOW.initial && LOW.initial.ff !== true && LOW.initial.slab === false && LOW.initial.front === false && LOW.initial.bodyLayer === true && LOW.initial.bodyLayerVisible === true && LOW.initial.bodyLayerSlotActive === true && LOW.initial.pole === false && LOW.initial.poleLayer === true && LOW.initial.poleLayerVisible === true && LOW.initial.poleLayerSlotActive === true && LOW.initial.topper === false,
     JSON.stringify(LOW.initial || {}));
   check('a screenshot was captured for visual confirmation', !!(H && H.shot), H && H.shot);
   check('zero pageerrors across all scenes', allPe === 0, 'pageerrors=' + allPe + (allPe ? ' :: ' + scenes.flatMap(s => s.pageerrors).slice(0, 3).join(' | ') : ''));

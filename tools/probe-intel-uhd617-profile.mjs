@@ -182,6 +182,19 @@ function profileScript(label, quality) {
         var front = g.getObjectByName('front');
         var pole = g.getObjectByName('pole');
         var topper = g.getObjectByName('topper');
+        var bodySlabLayer = null;
+        var bodyFrontLayer = null;
+        try { if (typeof __FIELD !== 'undefined' && __FIELD && __FIELD.scene) __FIELD.scene.traverse(function(o){ if (o && o.name === 'markerBodySlabLayer') bodySlabLayer = o; if (o && o.name === 'markerBodyFrontLayer') bodyFrontLayer = o; }); } catch(e){}
+        var bodyLayerSlot = (g.userData && g.userData._markerBodySlot != null) ? g.userData._markerBodySlot : -1;
+        var bodyLayerSlotActive = false;
+        try {
+          if (bodySlabLayer && bodyLayerSlot >= 0 && window.THREE) {
+            var bodyMat = new window.THREE.Matrix4();
+            bodySlabLayer.getMatrixAt(bodyLayerSlot, bodyMat);
+            var bodyEl = bodyMat.elements || [];
+            bodyLayerSlotActive = Math.abs(Number(bodyEl[0] || 0)) > 0.01 && Number(bodyEl[13] || -9999) > -1000;
+          }
+        } catch(e) {}
         var poleLayer = null;
         try { if (typeof __FIELD !== 'undefined' && __FIELD && __FIELD.scene) __FIELD.scene.traverse(function(o){ if (o && o.name === 'markerPoleLayer') poleLayer = o; }); } catch(e){}
         var poleLayerSlot = (g.userData && g.userData._markerPoleSlot != null) ? g.userData._markerPoleSlot : -1;
@@ -215,6 +228,11 @@ function profileScript(label, quality) {
           selectionRingOpacity: ring && ring.material ? ring.material.opacity : null,
           flag: !!flag,
           flagVisible: flag ? flag.visible !== false : null,
+          bodyLayer: !!(bodySlabLayer && bodyFrontLayer),
+          bodyLayerVisible: bodySlabLayer && bodyFrontLayer ? (bodySlabLayer.visible !== false && bodyFrontLayer.visible !== false) : null,
+          bodyLayerCount: bodySlabLayer ? bodySlabLayer.count : 0,
+          bodyLayerSlot: bodyLayerSlot,
+          bodyLayerSlotActive: bodyLayerSlotActive,
           pole: !!pole,
           poleVisible: pole ? pole.visible !== false : null,
           poleLayer: !!poleLayer,
@@ -265,7 +283,10 @@ function profileScript(label, quality) {
         var topperCount = 0;
         var topperPair = [];
         var poleLayer = null;
+        var bodySlabLayer = null;
+        var bodyFrontLayer = null;
         try { if (typeof __FIELD !== 'undefined' && __FIELD && __FIELD.scene) __FIELD.scene.traverse(function(o){ if (o && o.name === 'markerPoleLayer') poleLayer = o; }); } catch(e){}
+        try { if (typeof __FIELD !== 'undefined' && __FIELD && __FIELD.scene) __FIELD.scene.traverse(function(o){ if (o && o.name === 'markerBodySlabLayer') bodySlabLayer = o; if (o && o.name === 'markerBodyFrontLayer') bodyFrontLayer = o; }); } catch(e){}
         for (var rc = 0; rc < refs.length; rc++) if (refs[rc].ring) ringCount++;
         for (var pc = 0; pc < refs.length; pc++) if (refs[pc].pole) poleCount++;
         for (var tc = 0; tc < refs.length; tc++) if (refs[tc].topper) topperCount++;
@@ -311,6 +332,9 @@ function profileScript(label, quality) {
           cache: !!__FIELD._unit3dMarkerResources,
           slabCount: slabCount,
           frontCount: frontCount,
+          bodyLayer: !!(bodySlabLayer && bodyFrontLayer),
+          bodyLayerVisible: bodySlabLayer && bodyFrontLayer ? (bodySlabLayer.visible !== false && bodyFrontLayer.visible !== false) : null,
+          bodyLayerCount: bodySlabLayer ? bodySlabLayer.count : 0,
           ringCount: ringCount,
           poleCount: poleCount,
           poleLayer: !!poleLayer,
@@ -526,13 +550,16 @@ check('default idle selection rings are not resident in high and low profile sce
   high.detail.markerResources && low.detail.markerResources &&
   high.detail.markerResources.ringCount === 0 && low.detail.markerResources.ringCount === 0,
   JSON.stringify({ high: high.detail.unitRender, low: low.detail.unitRender, markerResources: { high: high.detail.markerResources, low: low.detail.markerResources } }));
-check('base 3D unit markers share immutable geometry while keeping per-unit materials in high and low profile scenes',
+check('base 3D unit markers share immutable geometry while low tier uses one shared body layer',
   high.detail.markerResources && low.detail.markerResources &&
   high.detail.markerResources.cache === true && low.detail.markerResources.cache === true &&
   high.detail.markerResources.slabCount < high.detail.units && high.detail.markerResources.frontCount < high.detail.units &&
-  low.detail.markerResources.slabCount === low.detail.units && low.detail.markerResources.frontCount === low.detail.units &&
-  (high.detail.markerResources.slabGeoShared === true || high.detail.markerResources.slabGeoShared === null) && low.detail.markerResources.slabGeoShared === true &&
-  (high.detail.markerResources.frontGeoShared === true || high.detail.markerResources.frontGeoShared === null) && low.detail.markerResources.frontGeoShared === true &&
+  low.detail.markerResources.slabCount === 0 && low.detail.markerResources.frontCount === 0 &&
+  low.detail.markerResources.bodyLayer === true &&
+  low.detail.markerResources.bodyLayerVisible === true &&
+  low.detail.markerResources.bodyLayerCount >= low.detail.units &&
+  (high.detail.markerResources.slabGeoShared === true || high.detail.markerResources.slabGeoShared === null) && low.detail.markerResources.slabGeoShared === null &&
+  (high.detail.markerResources.frontGeoShared === true || high.detail.markerResources.frontGeoShared === null) && low.detail.markerResources.frontGeoShared === null &&
   high.detail.markerResources.ringCount === 0 && low.detail.markerResources.ringCount === 0 &&
   high.detail.markerResources.ringGeoShared === null && low.detail.markerResources.ringGeoShared === null &&
   high.detail.markerResources.poleCount < high.detail.units && (high.detail.markerResources.poleGeoShared === true || high.detail.markerResources.poleGeoShared === null) &&
@@ -542,12 +569,12 @@ check('base 3D unit markers share immutable geometry while keeping per-unit mate
   low.detail.markerResources.poleLayerCount >= low.detail.units &&
   low.detail.markerResources.poleGeoShared === null &&
   low.detail.markerResources.topperCount === 0 && low.detail.markerResources.topperGeoShared === null &&
-  (high.detail.markerResources.frontMatShared === false || high.detail.markerResources.frontMatShared === null) && low.detail.markerResources.frontMatShared === false &&
+  (high.detail.markerResources.frontMatShared === false || high.detail.markerResources.frontMatShared === null) && low.detail.markerResources.frontMatShared === null &&
   (high.detail.markerResources.poleMatShared === false || high.detail.markerResources.poleMatShared === null) && low.detail.markerResources.poleMatShared === null &&
   low.detail.markerResources.topperMatShared === null &&
-  (high.detail.markerResources.slabMatShared === false || high.detail.markerResources.slabMatShared === null) && low.detail.markerResources.slabMatShared === false,
+  (high.detail.markerResources.slabMatShared === false || high.detail.markerResources.slabMatShared === null) && low.detail.markerResources.slabMatShared === null,
   JSON.stringify({ high: high.detail.markerResources, low: low.detail.markerResources }));
-check('default high-tier formation figures omit hidden marker body/poles/toppers and low tier keeps fallback marker readability',
+check('default high-tier formation figures omit hidden marker body/poles/toppers and low tier keeps shared fallback marker readability',
   high.detail.unitRender && low.detail.unitRender &&
   high.detail.unitRender.formationFiguresMode === 'shared-instanced' &&
   high.detail.unitRender.slab === false &&
@@ -559,10 +586,11 @@ check('default high-tier formation figures omit hidden marker body/poles/toppers
   high.detail.markerResources && high.detail.markerResources.frontCount < high.detail.units &&
   high.detail.markerResources && high.detail.markerResources.poleCount < high.detail.units &&
   high.detail.markerResources && high.detail.markerResources.topperCount < high.detail.units &&
-  low.detail.unitRender.slab === true &&
-  low.detail.unitRender.front === true &&
-  low.detail.unitRender.slabVisible === true &&
-  low.detail.unitRender.frontVisible === true &&
+  low.detail.unitRender.slab === false &&
+  low.detail.unitRender.front === false &&
+  low.detail.unitRender.bodyLayer === true &&
+  low.detail.unitRender.bodyLayerVisible === true &&
+  low.detail.unitRender.bodyLayerSlotActive === true &&
   low.detail.unitRender.pole === false &&
   low.detail.unitRender.poleLayer === true &&
   low.detail.unitRender.poleLayerVisible === true &&
@@ -613,7 +641,9 @@ const expectedHighSharedFigures =
   high.detail.unitRender.formationFiguresMode === 'shared-instanced' &&
   (high.detail.unitRender.slabVisible === false || high.detail.unitRender.slab === false) &&
   low.detail.unitRender &&
-  low.detail.unitRender.slabVisible === true;
+  low.detail.unitRender.bodyLayer === true &&
+  low.detail.unitRender.bodyLayerVisible === true &&
+  low.detail.unitRender.bodyLayerSlotActive === true;
 if (low.detail.renderInfo && high.detail.renderInfo && low.detail.renderInfo.calls > high.detail.renderInfo.calls && !expectedHighSharedFigures) {
   warn('low tier render calls exceeded high tier; inspect before adding more visual layers', 'low=' + low.detail.renderInfo.calls + ' high=' + high.detail.renderInfo.calls);
 }

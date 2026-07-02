@@ -116,6 +116,19 @@ function sceneScript(label, opts) {
       var flag = g.getObjectByName("flag");
       var ring = g.getObjectByName("ring");
       var ff = g.getObjectByName("ffFormation");
+      var bodySlabLayer = null;
+      var bodyFrontLayer = null;
+      try { if (typeof __FIELD !== "undefined" && __FIELD && __FIELD.scene) __FIELD.scene.traverse(function(o){ if (o && o.name === "markerBodySlabLayer") bodySlabLayer = o; if (o && o.name === "markerBodyFrontLayer") bodyFrontLayer = o; }); } catch(e){}
+      var bodyLayerSlot = (g.userData && g.userData._markerBodySlot != null) ? g.userData._markerBodySlot : -1;
+      var bodyLayerSlotActive = false;
+      try {
+        if (bodySlabLayer && bodyLayerSlot >= 0 && window.THREE) {
+          var bodyMat = new window.THREE.Matrix4();
+          bodySlabLayer.getMatrixAt(bodyLayerSlot, bodyMat);
+          var bodyEl = bodyMat.elements || [];
+          bodyLayerSlotActive = Math.abs(Number(bodyEl[0] || 0)) > 0.01 && Number(bodyEl[13] || -9999) > -1000;
+        }
+      } catch(e) {}
       return {
         found:true,
         unitId:u.id,
@@ -125,6 +138,9 @@ function sceneScript(label, opts) {
         formationFiguresVisible:!!(ff && ff.visible),
         slabVisible:slab ? slab.visible !== false : null,
         frontVisible:front ? front.visible !== false : null,
+        bodyLayer:!!(bodySlabLayer && bodyFrontLayer),
+        bodyLayerVisible:bodySlabLayer && bodyFrontLayer ? (bodySlabLayer.visible !== false && bodyFrontLayer.visible !== false) : null,
+        bodyLayerSlotActive:bodyLayerSlotActive,
         flagVisible:flag ? flag.visible !== false : null,
         ringExists:!!ring,
         stats:(m && m.userData && m.userData.unitGlb && m.userData.unitGlb.stats) || null
@@ -220,7 +236,7 @@ async function runScene(browser, label, opts) {
 
   check('runtime: wrappers and helper functions are installed', F.ok && F.wrappers && F.wrappers.build && F.wrappers.sync && F.wrappers.fns, JSON.stringify(F.wrappers || {}));
   check('canonical pack: disabled slots make no request and preserve the local fallback marker/formation',
-    C.ok && C.unit && C.unit.found && C.unit.model === false && (C.unit.slabVisible === true || C.unit.formationFiguresVisible === true) && C.state.stats.requested === 0,
+    C.ok && C.unit && C.unit.found && C.unit.model === false && (C.unit.slabVisible === true || C.unit.bodyLayerSlotActive === true || C.unit.formationFiguresVisible === true) && C.state.stats.requested === 0,
     JSON.stringify({ unit: C.unit, stats: C.state && C.state.stats }));
   check('fixture pack: a local glTF model attaches to the infantry group',
     F.ok && F.unit && F.unit.model === true && F.unit.modelVisible === true && F.unit.stats && F.unit.stats.vertices === 3,
@@ -232,7 +248,7 @@ async function runScene(browser, label, opts) {
     F.ok && F.offCheck && F.offCheck.off === true && F.offCheck.unit && F.offCheck.unit.modelVisible !== true && F.offCheck.unit.formationFiguresVisible !== true && F.offCheck.unit.slabVisible === true,
     JSON.stringify(F.offCheck || {}));
   check('low tier: GLB layer is disabled by default and base marker is restored',
-    F.ok && F.lowCheck && F.lowCheck.off === true && F.lowCheck.unit && F.lowCheck.unit.modelVisible !== true && F.lowCheck.unit.formationFiguresVisible !== true && F.lowCheck.unit.slabVisible === true,
+    F.ok && F.lowCheck && F.lowCheck.off === true && F.lowCheck.unit && F.lowCheck.unit.modelVisible !== true && F.lowCheck.unit.formationFiguresVisible !== true && F.lowCheck.unit.slabVisible !== true && F.lowCheck.unit.bodyLayer === true && F.lowCheck.unit.bodyLayerVisible === true && F.lowCheck.unit.bodyLayerSlotActive === true,
     JSON.stringify(F.lowCheck || {}));
   check('runtime: no swallowed GLB-layer exceptions', F.ok && F.state.errN === 0, 'err=' + (F.state && F.state.errN));
   check('runtime: screenshots captured for canonical + fixture scenes',
