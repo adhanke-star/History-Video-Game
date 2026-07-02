@@ -1,3 +1,17 @@
+# ☀ WAKE-UP — 2026-07-02: **GROUP 5 PHASE H HIGH-TIER MARKER POLE RESOURCE POLISH SHIPPED (D210).**
+
+**Newest (D210, 2026-07-02):** Group 5 Phase H now has another zero-new-media resource/performance polish slice after the media-budget guard, Intel UHD-617 profile, audio/readability pass, H2 cutaway polish, battle-colours HUD polish, terrain-overlay perf polish, visual-fidelity contact-shadow perf polish, formation-figures perf polish, render-richness selection-ring draw polish, base marker geometry polish, hidden peg-fallback resource polish, atmospheric smoke draw-range polish, low-tier marker-topper trim/resource polish, D207 priority refresh, high-tier marker-topper resource polish, and idle selection-ring resource polish. M8 battle-build was not approved or started.
+
+**What changed:** default high-tier infantry formation figures no longer allocate hidden base-marker pole meshes/materials after T24 replaces the slab/front/pole/topper with the shared formation-figure layer. The fallback marker path still restores pole/topper readability when formation figures are off, and low tier still keeps slab/front/flag/pole while omitting decorative toppers.
+
+**Verified:** `node --check` for touched T0 plus the touched formation/profile probes; build **GATE OK** with the known raw-embed soft warning; focused `probe-formation-figures` 17/17 and `probe-intel-uhd617-profile` 19/19; adjacent `probe-tripo-unit-assets` 15/15, `probe-render-richness` 31/31, `probe-visual-fidelity` 27/27, and `probe-media-budget` 6/6. Counted artifact readback found no `ok=false`, failed steps, `FATAL`, pageerrors, realErrors, or texture warnings; formation and GLB fixture screenshots were spot-checked. `git diff --check` passed.
+
+**Profile evidence after D210:** high tier: 8.88ms proxy frame burst, 75 render calls, 128 objects. Low tier: 2.41ms proxy burst, 84 calls, 118 objects. Embedded core remains 199 files / 2.418 MB raw; no new asset bytes were added.
+
+**Next recommended run:** continue Group 5 Phase H with another bounded zero-byte render/readability/perf slice from the Intel UHD-617 profile artifact, or surface the explicit media-budget/profile decision before any PD/surviving-colours asset work. Do not add heavy footage/HDRI/model media to the core without explicit budget approval. M8 battle-build still needs Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-02: **GROUP 5 PHASE H IDLE SELECTION-RING RESOURCE POLISH SHIPPED (D209).**
 
 **Newest (D209, 2026-07-02):** Group 5 Phase H now has another zero-new-media resource/performance polish slice after the media-budget guard, Intel UHD-617 profile, audio/readability pass, H2 cutaway polish, battle-colours HUD polish, terrain-overlay perf polish, visual-fidelity contact-shadow perf polish, formation-figures perf polish, render-richness selection-ring draw polish, base marker geometry polish, hidden peg-fallback resource polish, atmospheric smoke draw-range polish, low-tier marker-topper trim/resource polish, D207 priority refresh, and high-tier marker-topper resource polish. M8 battle-build was not approved or started.

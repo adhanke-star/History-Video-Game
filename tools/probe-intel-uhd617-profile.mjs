@@ -235,23 +235,30 @@ function profileScript(label, quality) {
         if (refs.length < 2) return out;
         var ringCount = 0;
         var ringPair = [];
+        var poleCount = 0;
+        var polePair = [];
         var topperCount = 0;
         var topperPair = [];
         for (var rc = 0; rc < refs.length; rc++) if (refs[rc].ring) ringCount++;
+        for (var pc = 0; pc < refs.length; pc++) if (refs[pc].pole) poleCount++;
         for (var tc = 0; tc < refs.length; tc++) if (refs[tc].topper) topperCount++;
         for (var side in bySide) {
           if (!Object.prototype.hasOwnProperty.call(bySide, side)) continue;
           var sideRings = [];
+          var sidePoles = [];
           var sideToppers = [];
           for (var ts = 0; ts < bySide[side].length; ts++) {
             if (bySide[side][ts].ring) sideRings.push(bySide[side][ts]);
+            if (bySide[side][ts].pole) sidePoles.push(bySide[side][ts]);
             if (bySide[side][ts].topper) sideToppers.push(bySide[side][ts]);
           }
           if (ringPair.length < 2 && sideRings.length >= 2) ringPair = sideRings;
+          if (polePair.length < 2 && sidePoles.length >= 2) polePair = sidePoles;
           if (sideToppers.length >= 2) { topperPair = sideToppers; break; }
         }
         function pairFor(name) {
           if (name === 'ring') return ringPair;
+          if (name === 'pole') return polePair;
           return name === 'topper' ? topperPair : refs;
         }
         function sameGeo(name) {
@@ -266,14 +273,15 @@ function profileScript(label, quality) {
           found: true,
           cache: !!__FIELD._unit3dMarkerResources,
           ringCount: ringCount,
+          poleCount: poleCount,
           topperCount: topperCount,
           slabGeoShared: sameGeo('slab'),
           frontGeoShared: sameGeo('front'),
           ringGeoShared: ringPair.length >= 2 ? sameGeo('ring') : null,
-          poleGeoShared: sameGeo('pole'),
+          poleGeoShared: polePair.length >= 2 ? sameGeo('pole') : null,
           topperGeoShared: topperPair.length >= 2 ? sameGeo('topper') : null,
           frontMatShared: sameMat('front'),
-          poleMatShared: sameMat('pole'),
+          poleMatShared: polePair.length >= 2 ? sameMat('pole') : null,
           topperMatShared: topperPair.length >= 2 ? sameMat('topper') : null,
           slabMatShared: sameMat('slab')
         };
@@ -483,23 +491,28 @@ check('base 3D unit markers share immutable geometry while keeping per-unit mate
   high.detail.markerResources.frontGeoShared === true && low.detail.markerResources.frontGeoShared === true &&
   high.detail.markerResources.ringCount === 0 && low.detail.markerResources.ringCount === 0 &&
   high.detail.markerResources.ringGeoShared === null && low.detail.markerResources.ringGeoShared === null &&
-  high.detail.markerResources.poleGeoShared === true && low.detail.markerResources.poleGeoShared === true &&
+  high.detail.markerResources.poleCount < high.detail.units && (high.detail.markerResources.poleGeoShared === true || high.detail.markerResources.poleGeoShared === null) &&
+  low.detail.markerResources.poleCount === low.detail.units && low.detail.markerResources.poleGeoShared === true &&
   low.detail.markerResources.topperCount === 0 && low.detail.markerResources.topperGeoShared === null &&
   high.detail.markerResources.frontMatShared === false && low.detail.markerResources.frontMatShared === false &&
-  high.detail.markerResources.poleMatShared === false && low.detail.markerResources.poleMatShared === false &&
+  (high.detail.markerResources.poleMatShared === false || high.detail.markerResources.poleMatShared === null) && low.detail.markerResources.poleMatShared === false &&
   low.detail.markerResources.topperMatShared === null &&
   high.detail.markerResources.slabMatShared === false && low.detail.markerResources.slabMatShared === false,
   JSON.stringify({ high: high.detail.markerResources, low: low.detail.markerResources }));
-check('default high-tier formation figures omit hidden infantry toppers and low tier omits decorative marker topper allocation',
+check('default high-tier formation figures omit hidden marker poles/toppers and low tier keeps pole readability',
   high.detail.unitRender && low.detail.unitRender &&
   high.detail.unitRender.formationFiguresMode === 'shared-instanced' &&
+  high.detail.unitRender.pole === false &&
   high.detail.unitRender.topper === false &&
   high.detail.unitRender.flagVisible === true &&
+  high.detail.markerResources && high.detail.markerResources.poleCount < high.detail.units &&
   high.detail.markerResources && high.detail.markerResources.topperCount < high.detail.units &&
+  low.detail.unitRender.pole === true &&
+  low.detail.unitRender.poleVisible === true &&
   low.detail.unitRender.topper === false &&
   low.detail.unitRender.topperVisible === null &&
   low.detail.unitRender.flagVisible === true &&
-  low.detail.unitRender.poleVisible === true,
+  low.detail.markerResources && low.detail.markerResources.poleCount === low.detail.units,
   JSON.stringify({ high: high.detail.unitRender, low: low.detail.unitRender }));
 function smokeDrawRangeOk(profile) {
   const d = profile.detail || {};

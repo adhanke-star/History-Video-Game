@@ -1909,6 +1909,20 @@ function fld3dAddMarkerTopper(T, g, u, res) {
   topper.position.set(0, 47, 0); topper.name = "topper"; g.add(topper);
   return topper;
 }
+function fld3dAddMarkerPole(T, g, res) {
+  if (!T || !g || !res || !res.geo) return null;
+  var pole = g.getObjectByName && g.getObjectByName("pole");
+  if (pole) return pole;
+  pole = new T.Mesh(res.geo.pole, new T.MeshLambertMaterial({ color: "#2a2018" }));
+  pole.position.y = 20; pole.name = "pole"; g.add(pole);
+  return pole;
+}
+function fld3dNeedsMarkerPole(u, g) {
+  try {
+    if (typeof fldFfShowFor === "function" && fldFfShowFor(u, g)) return false;
+  } catch (e) {}
+  return true;
+}
 function fld3dNeedsMarkerTopper(u, g) {
   if (typeof fldLow === "function" && fldLow()) return false;
   try {
@@ -1941,7 +1955,7 @@ function fld3dBuildUnits() {
     front.position.z = -14; front.name = "front"; g.add(front);
     var flag = new T.Mesh(res.geo.flag, new T.MeshBasicMaterial({ color: col, side: T.DoubleSide }));
     flag.position.set(0, 34, 0); flag.name = "flag"; g.add(flag);
-    var pole = new T.Mesh(res.geo.pole, new T.MeshLambertMaterial({ color: "#2a2018" })); pole.position.y = 20; pole.name = "pole"; g.add(pole);
+    if (fld3dNeedsMarkerPole(u, g)) fld3dAddMarkerPole(T, g, res);
     // non-color side cue (CVD-safe): a cube finial for the Union, a pyramid for the Confederacy
     if (fld3dNeedsMarkerTopper(u, g)) fld3dAddMarkerTopper(T, g, u, res);
     __FIELD.groups.add(g); __FIELD._u3d[u.id] = g;
@@ -1955,12 +1969,18 @@ function fld3dSyncUnit(u, g) {
   if (!u.alive) return;
   var y = fldTerrainH(u.x, u.z);
   g.position.set(u.x, y + 4, u.z); g.rotation.y = -u.facing; // align the block front (local -z) to sim forward
-  var slab = g.getObjectByName("slab"), front = g.getObjectByName("front"), ring = g.getObjectByName("ring"), flag = g.getObjectByName("flag"), topper = g.getObjectByName("topper");
+  var slab = g.getObjectByName("slab"), front = g.getObjectByName("front"), ring = g.getObjectByName("ring"), flag = g.getObjectByName("flag"), pole = g.getObjectByName("pole"), topper = g.getObjectByName("topper");
   var w = (u.formation === "column" ? 34 : 96) * (0.5 + 0.5 * u.men / u.maxMen);
   var d = (u.formation === "column" ? 58 : 26);
   if (slab) { slab.scale.set(w / 96, 1, d / 26); slab.material.color.copy(u.side === "US" ? __FIELD._colUS : __FIELD._colCS); if (u.state === "routing") slab.material.color.multiplyScalar(0.55); }
   if (front) { front.scale.x = w / 96; front.position.z = -d / 2 - 3; }
   if (flag) flag.position.y = u.state === "routing" ? 14 : 34;
+  if (!fld3dNeedsMarkerPole(u, g)) {
+    if (pole) pole.visible = false;
+  } else {
+    if (!pole) pole = fld3dAddMarkerPole(T, g, fld3dUnitMarkerResources(T));
+    if (pole) pole.visible = true;
+  }
   if (!fld3dNeedsMarkerTopper(u, g)) {
     if (topper) topper.visible = false;
   } else {
