@@ -11,6 +11,8 @@ import "./guard-probe-browser.mjs";
 //  - battleLoud="off" drives the master to silence (loud scale 0) while still "on";
 //  - the sim RNG (__FIELD.seed) is UNCHANGED across the audio decision loop (T19 never calls fldRng);
 //  - fldExit disposes the layer (beds stopped, pool emptied, ctx released);
+//  - audio panel readability stays phone-safe after the ambience row makes the dialog taller;
+//  - audio captions stay inside the viewport with readable sizing;
 //  - a static source scan proves NO combat-execution file references the ambience layer.
 // (The 9-baseline seed-for-seed byte-identity gate stays owned by probe-presets.)
 
@@ -199,6 +201,99 @@ async function runScene(page, label, fn) {
   return { label, detail: d, pageerrors };
 }
 
+function audioReadabilityScript() {
+  return `(async () => {
+    function wait(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+    function rectObj(el) {
+      if (!el) return null;
+      var r = el.getBoundingClientRect();
+      return { left:r.left, top:r.top, right:r.right, bottom:r.bottom, width:r.width, height:r.height };
+    }
+    function inViewport(r) {
+      if (!r) return false;
+      var w = window.innerWidth || 0, h = window.innerHeight || 0;
+      return r.left >= -1 && r.top >= -1 && r.right <= w + 1 && r.bottom <= h + 1;
+    }
+    function numPx(v) {
+      var n = parseFloat(String(v || '').replace('px',''));
+      return isFinite(n) ? n : 0;
+    }
+    try {
+      G.settings = G.settings || {};
+      G.settings.sound = true; G.settings.music = false; G.settings.battleSfx = true;
+      G.settings.audioCaptions = true; G.settings.battleAmbience = true;
+      G.settings.battleLoud = 'soft'; G.settings.reduceMotion = false; G.settings.gfxQuality = 'low';
+      fldLaunchSandbox({ renderer:'2d', scenario:'shiloh', autoBoth:true, playerSide:'US', seed:27 });
+      if (__FIELD.phase === 'deploy') { __FIELD.phase = 'battle'; __FIELD.paused = false; }
+      if (typeof _fldAudioInjectButton === 'function') _fldAudioInjectButton();
+      var audioBtn = document.getElementById('fldBtnAudio');
+      if (typeof _fldAudioOpenPanel === 'function') _fldAudioOpenPanel();
+      await wait(70);
+      var panel = document.getElementById('fldAudioPanel');
+      var card = document.getElementById('fldAudioPanelCard');
+      var cs = card ? getComputedStyle(card) : null;
+      var buttons = card ? Array.from(card.querySelectorAll('button')) : [];
+      var rowCount = card ? card.querySelectorAll('div[role="group"]').length : 0;
+      var minButtonHeight = buttons.length ? Math.min.apply(null, buttons.map(function(b){ return b.getBoundingClientRect().height; })) : 0;
+      var cardRect = rectObj(card);
+      var panelMetrics = {
+        exists: !!(panel && card),
+        rowCount: rowCount,
+        buttonCount: buttons.length,
+        minButtonHeight: +minButtonHeight.toFixed(1),
+        cardRect: cardRect,
+        cardInside: inViewport(cardRect),
+        overflowY: cs ? cs.overflowY : '',
+        maxHeight: cs ? cs.maxHeight : '',
+        scrollHeight: card ? card.scrollHeight : 0,
+        clientHeight: card ? card.clientHeight : 0,
+        focusInside: panel ? panel.contains(document.activeElement) : false
+      };
+
+      if (typeof _fldAudioClosePanel === 'function') _fldAudioClosePanel();
+      var focusReturned = !!(audioBtn && document.activeElement === audioBtn);
+      if (typeof _fldAudioCaption === 'function') {
+        _fldAudioCaption('Probe caption: cannon and musketry remain readable above the field controls.');
+      }
+      var cap = document.getElementById('fldAudioCap');
+      var capStyle = cap ? getComputedStyle(cap) : null;
+      var capRect = rectObj(cap);
+      var captionMetrics = {
+        exists: !!cap,
+        rect: capRect,
+        inside: inViewport(capRect),
+        fontSize: capStyle ? numPx(capStyle.fontSize) : 0,
+        lineHeight: capStyle ? numPx(capStyle.lineHeight) : 0,
+        boxSizing: capStyle ? capStyle.boxSizing : '',
+        maxWidth: capStyle ? capStyle.maxWidth : '',
+        minWidth: capStyle ? capStyle.minWidth : '',
+        opacity: capStyle ? capStyle.opacity : ''
+      };
+      return { ok:true, viewport:{ width:window.innerWidth, height:window.innerHeight }, panel:panelMetrics, focusReturned:focusReturned, caption:captionMetrics };
+    } catch(e) {
+      return { ok:false, error:String(e && e.message || e) };
+    }
+  })()`;
+}
+
+async function runReadabilityScene(page, label, viewport) {
+  const pageerrors = [];
+  const onErr = e => pageerrors.push(String(e.message));
+  page.on('pageerror', onErr);
+  let d = { ok: false, error: 'not run' };
+  try {
+    await page.setViewportSize(viewport);
+    await page.goto(cfg.baseUrl + '/' + cfg.file, { waitUntil: 'domcontentloaded', timeout: 45000 });
+    await sleep(450);
+    d = await page.evaluate(audioReadabilityScript());
+  } catch (e) { d = { ok: false, error: String(e && e.message || e) }; }
+  finally {
+    try { await page.evaluate(`(() => { try { if (typeof fldExit === 'function') fldExit(true); } catch(e){} })()`); } catch (e) {}
+    try { page.off('pageerror', onErr); } catch (e) {}
+  }
+  return { label, viewport, detail: d, pageerrors };
+}
+
 (async () => {
   staticScan();
   const server = await ensureServer();
@@ -214,10 +309,13 @@ async function runScene(page, label, fn) {
     scenes.rm = await runScene(page, 'reduceMotion', driveScript('shiloh', 21, 'reduceMotion'));
     scenes.loud = await runScene(page, 'loud-off', driveScript('shiloh', 21, 'loud-off'));
     scenes.fog = await runScene(page, 'fog+dispose', fogAndDisposeScript('shiloh', 21));
+    scenes.panelDesktop = await runReadabilityScene(page, 'panel-desktop', { width: 960, height: 640 });
+    scenes.panelPhone = await runReadabilityScene(page, 'panel-phone', { width: 390, height: 520 });
   } finally { if (server) server.kill(); }
 
   const allPe = Object.values(scenes).reduce((a, s) => a + s.pageerrors.length, 0);
   const n = scenes.normal.detail, off = scenes.off.detail, rm = scenes.rm.detail, loud = scenes.loud.detail, fog = scenes.fog.detail;
+  const pd = scenes.panelDesktop.detail, pp = scenes.panelPhone.detail;
 
   // wrappers + module present
   check('module + 4 by-assignment wrappers installed', n.ok && n.wrappers && n.wrappers.d3 && n.wrappers.d2 && n.wrappers.ex && n.wrappers.pr && n.wrappers.fns, JSON.stringify(n.wrappers || {}));
@@ -249,6 +347,22 @@ async function runScene(page, label, fn) {
   check('fldExit disposes the layer (beds stopped, pool emptied, ref released)',
     fog.ok && fog.disposed && fog.disposed.fieldRef === null && fog.disposed.washBuilt === false && fog.disposed.rumBuilt === false && fog.disposed.bagLen === 0 && fog.disposed.pansLen === 0,
     fog.ok ? JSON.stringify(fog.disposed) : 'no dispose data');
+  // audio readability polish: the taller ambience-enabled panel must fit/scroll on phone, and captions must stay legible.
+  check('audio panel readability: desktop exposes all audio rows and 32px+ controls',
+    pd.ok && pd.panel && pd.panel.exists && pd.panel.rowCount >= 6 && pd.panel.buttonCount >= 14 && pd.panel.minButtonHeight >= 32 && pd.panel.cardInside && pd.panel.focusInside,
+    pd.ok ? JSON.stringify(pd.panel) : 'no desktop panel data');
+  check('audio panel readability: phone card stays in viewport with an overflow guard',
+    pp.ok && pp.panel && pp.panel.exists && pp.panel.rowCount >= 6 && pp.panel.buttonCount >= 14 && pp.panel.cardInside && pp.panel.overflowY === 'auto' && pp.panel.maxHeight !== 'none',
+    pp.ok ? JSON.stringify(pp.panel) : 'no phone panel data');
+  check('audio panel readability: close returns focus to the toolbar button',
+    pd.ok && pp.ok && pd.focusReturned === true && pp.focusReturned === true,
+    'desktop=' + (pd && pd.focusReturned) + ' phone=' + (pp && pp.focusReturned));
+  check('audio caption readability: desktop and phone captions stay inside viewport',
+    pd.ok && pp.ok && pd.caption && pp.caption && pd.caption.inside && pp.caption.inside,
+    'desktop=' + JSON.stringify(pd && pd.caption) + ' phone=' + JSON.stringify(pp && pp.caption));
+  check('audio caption readability: caption uses readable sizing and border-box wrapping',
+    pd.ok && pp.ok && pd.caption && pp.caption && pd.caption.fontSize >= 13 && pp.caption.fontSize >= 13 && pd.caption.lineHeight >= 17 && pp.caption.lineHeight >= 17 && pd.caption.boxSizing === 'border-box' && pp.caption.boxSizing === 'border-box',
+    'desktop=' + JSON.stringify(pd && pd.caption) + ' phone=' + JSON.stringify(pp && pp.caption));
   // no pageerrors
   check('zero pageerrors across all scenes', allPe === 0, 'pageerrors=' + allPe);
 

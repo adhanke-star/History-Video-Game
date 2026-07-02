@@ -113,9 +113,10 @@ function _fldAudioCaption(txt) {
       el.setAttribute("aria-live", "polite");
       el.setAttribute("role", "status");
       var anim = (typeof fldReduceMotion === "function" && fldReduceMotion()) ? "" : "transition:opacity .3s;";
-      el.style.cssText = "position:absolute;left:50%;bottom:66px;transform:translateX(-50%);" +
-        "background:#0c0f14ee;border:1px solid #745e3f;border-radius:5px;padding:5px 14px;" +
-        "font-size:13px;color:#f2e8d5;max-width:80%;text-align:center;pointer-events:none;z-index:40;opacity:0;" + anim;
+      el.style.cssText = "position:absolute;left:50%;bottom:76px;transform:translateX(-50%);" +
+        "box-sizing:border-box;background:rgba(12,15,20,.94);border:1px solid #b9975f;border-radius:6px;padding:7px 14px;" +
+        "font-size:13px;line-height:1.35;color:#f8ecd8;max-width:min(86vw,720px);min-width:min(280px,82vw);" +
+        "text-align:center;box-shadow:0 6px 22px #000a;pointer-events:none;z-index:40;opacity:0;" + anim;
       root.appendChild(el);
     }
     el.textContent = txt;
@@ -246,7 +247,7 @@ function _fldAudioPanelRows() {
     for (var i = 0; i < opts.length; i++) {
       var on = (opts[i][0] === cur);
       h += '<button data-acb="' + cb + '" data-acv="' + opts[i][0] + '" aria-pressed="' + on + '" ' +
-           'style="cursor:pointer;font:inherit;font-size:12px;padding:5px 11px;border-radius:5px;border:1px solid ' +
+           'style="cursor:pointer;font:inherit;font-size:12px;min-height:32px;padding:5px 11px;border-radius:5px;border:1px solid ' +
            (on ? "#e8c84a" : "#8a7258") + ';background:' + (on ? "#3a2f17" : "#161b22") + ';color:#f2e8d5;">' +
            opts[i][1] + '</button>';
     }
@@ -282,13 +283,13 @@ function _fldAudioOpenPanel() {
     ov.setAttribute("role", "dialog");
     ov.setAttribute("aria-modal", "true");
     ov.setAttribute("aria-label", "Audio settings");
-    ov.style.cssText = "position:absolute;inset:0;z-index:6000;display:flex;align-items:center;justify-content:center;background:#000b;";
+    ov.style.cssText = "position:absolute;inset:0;z-index:6000;display:flex;align-items:center;justify-content:center;background:#000b;padding:14px;box-sizing:border-box;";
     ov.innerHTML =
-      '<div style="background:#10141a;border:1px solid #745e3f;border-radius:8px;padding:18px 20px;max-width:380px;width:88%;box-shadow:0 8px 40px #000c;">' +
+      '<div id="fldAudioPanelCard" style="background:#10141a;border:1px solid #745e3f;border-radius:8px;padding:18px 20px;max-width:420px;width:100%;max-height:calc(100% - 28px);overflow:auto;box-sizing:border-box;box-shadow:0 8px 40px #000c;">' +
         '<h2 style="margin:0 0 4px;font-size:19px;letter-spacing:1px;color:#e8c84a;">♪ Audio</h2>' +
         '<p style="margin:0 0 14px;font-size:12px;opacity:.75;">Sound, music & captions for the field.</p>' +
         _fldAudioPanelRows() +
-        '<div style="text-align:right;margin-top:6px;"><button id="fldAudioDone" style="cursor:pointer;font:inherit;font-size:13px;padding:6px 16px;border-radius:5px;border:1px solid #e8c84a;background:#3a2f17;color:#f2e8d5;">Done</button></div>' +
+        '<div style="text-align:right;margin-top:6px;"><button id="fldAudioDone" style="cursor:pointer;font:inherit;font-size:13px;min-height:34px;padding:6px 16px;border-radius:5px;border:1px solid #e8c84a;background:#3a2f17;color:#f2e8d5;">Done</button></div>' +
       '</div>';
     root.appendChild(ov);
     _T9.panelOpen = true;

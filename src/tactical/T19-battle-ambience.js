@@ -417,7 +417,7 @@ function fldAmbPanelRow() {
     for (var i = 0; i < opts.length; i++) {
       var sel = (opts[i][0] === on);
       h += '<button data-acb="battleAmbience" data-acv="' + opts[i][0] + '" aria-pressed="' + sel + '" ' +
-           'style="cursor:pointer;font:inherit;font-size:12px;padding:5px 11px;border-radius:5px;border:1px solid ' +
+           'style="cursor:pointer;font:inherit;font-size:12px;min-height:32px;padding:5px 11px;border-radius:5px;border:1px solid ' +
            (sel ? "#e8c84a" : "#8a7258") + ';background:' + (sel ? "#3a2f17" : "#161b22") + ';color:#f2e8d5;">' +
            opts[i][1] + '</button>';
     }

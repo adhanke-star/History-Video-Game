@@ -1,3 +1,17 @@
+# ☀ WAKE-UP — 2026-07-02: **GROUP 5 PHASE H AUDIO/READABILITY POLISH SHIPPED (D195).**
+
+**Newest (D195, 2026-07-02):** Group 5 Phase H now has a zero-new-media audio/readability polish slice after the D193 media-budget guard and D194 Intel UHD-617 profile. M8 battle-build was not approved or started.
+
+**What changed:** `src/tactical/T9-audio.js` makes the field Audio dialog phone-safe with a bounded scrollable card, larger segmented controls, focus return, and a more readable caption box. `src/tactical/T19-battle-ambience.js` gives the opt-in Battle ambience row the same 32px+ controls. `tools/probe-audio-ambience.mjs` now locks desktop/phone panel containment, row/button count, focus handoff/return, caption viewport fit, readable caption sizing, and zero pageerrors. `civil_war_generals.html` rebuilt from source.
+
+**Verified:** `node --check` for the touched audio source/probe files; build **GATE OK** with the known raw-embed soft warning; focused `probe-audio-ambience` 27/27; adjacent `probe-media-budget` 6/6 with only the known soft warning, `probe-intel-uhd617-profile` 10/10, `probe-h0-tactical-hud` 3/3, `probe-accessibility` 25/0, and `probe-presets` 26/0. Artifact readback found no `ok=false`, `FATAL`, pageerrors, realErrors, or texture warnings. `git diff --check` clean.
+
+**Profile evidence after D195:** high tier: 9.37ms proxy frame burst, 115 render calls, 195 objects. Low tier: 2.09ms proxy burst, 107 calls, 144 objects. Embedded core remains 199 files / 2.418 MB raw; no new asset bytes were added.
+
+**Next recommended run:** continue Group 5 Phase H with another bounded polish/media/perf slice: tightly budgeted surviving-colours/PD asset polish only if the media budget/profile stays green, or another zero-byte render/readability polish. Do not add heavy footage/HDRI/model media to the core without an explicit budget decision. M8 battle-build still needs Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-01: **GROUP 5 PHASE H INTEL UHD-617 PROFILE SHIPPED (D194).**
 
 **Newest (D194, 2026-07-01):** Group 5 Phase H now has a real local performance/readout guard after D193's media-budget guard. M8 battle-build was not approved or started.
