@@ -25,7 +25,7 @@ var FLDFF = {
   RANK_SP: 7.4
 };
 
-var FLDFF_S = { errN: 0 };
+var FLDFF_S = { errN: 0, layer: null };
 
 function fldFfOff() {
   try {
@@ -73,7 +73,9 @@ function fldFfShowFor(u, g) {
 
 function fldFfMakeMat(T, color, opts) {
   opts = opts || {};
-  var m = new T.MeshLambertMaterial({ color: color });
+  var cfg = { color: color };
+  if (opts.vertexColors) cfg.vertexColors = true;
+  var m = new T.MeshLambertMaterial(cfg);
   if (opts.transparent) { m.transparent = true; m.opacity = opts.opacity == null ? 1 : opts.opacity; }
   return m;
 }
@@ -86,43 +88,98 @@ function fldFfInstanced(T, geo, mat, cap, name) {
   return im;
 }
 
+function fldFfLayer() {
+  var T = window.THREE;
+  if (!T || typeof __FIELD === "undefined" || !__FIELD || !__FIELD.scene) return null;
+  var old = __FIELD._ffLayer;
+  if (old && old.grp && old.grp.parent === __FIELD.scene) return old;
+  var units = (__FIELD.units && __FIELD.units.length) ? __FIELD.units.length : 1;
+  var cap = Math.max(FLDFF.INF_CAP, units * FLDFF.INF_CAP);
+  var grp = new T.Group();
+  grp.name = "ffFormationLayer";
+
+  var body = fldFfInstanced(T, new T.CylinderGeometry(FLDFF.BODY_R, FLDFF.BODY_R * 1.08, FLDFF.BODY_H, 5),
+    fldFfMakeMat(T, "#ffffff", { vertexColors: true }), cap, "ffBodiesLayer");
+  var head = fldFfInstanced(T, new T.SphereGeometry(FLDFF.HEAD_R, 6, 4),
+    fldFfMakeMat(T, "#d7b18b"), cap, "ffHeadsLayer");
+  var kepi = fldFfInstanced(T, new T.CylinderGeometry(2.7, 2.45, 1.4, 6),
+    fldFfMakeMat(T, "#ffffff", { vertexColors: true }), cap, "ffKepisLayer");
+  var rifle = fldFfInstanced(T, new T.BoxGeometry(0.85, 0.85, 16),
+    fldFfMakeMat(T, "#3a2618"), cap, "ffRiflesLayer");
+  var bayonet = fldFfInstanced(T, new T.BoxGeometry(0.45, 0.45, 5.5),
+    fldFfMakeMat(T, "#d9d4c6"), cap, "ffBayonetsLayer");
+
+  grp.add(body); grp.add(head); grp.add(kepi); grp.add(rifle); grp.add(bayonet);
+  __FIELD.scene.add(grp);
+  var zero = new T.Matrix4();
+  zero.makeScale(0.0001, 0.0001, 0.0001);
+  zero.setPosition(0, -9999, 0);
+  var layer = {
+    grp: grp, body: body, head: head, kepi: kepi, rifle: rifle, bayonet: bayonet,
+    cap: cap, nextSlot: 0, zero: zero, dummy: new T.Object3D(), world: new T.Matrix4(), composed: new T.Matrix4(),
+    bodyColor: new T.Color(), kepiColor: new T.Color()
+  };
+  __FIELD._ffLayer = layer;
+  FLDFF_S.layer = layer;
+  return layer;
+}
+
+function fldFfLayerMeshes(layer) {
+  return layer ? [layer.body, layer.head, layer.kepi, layer.rifle, layer.bayonet] : [];
+}
+
+function fldFfSetLayerCount(layer, n) {
+  var meshes = fldFfLayerMeshes(layer);
+  for (var i = 0; i < meshes.length; i++) if (meshes[i]) meshes[i].count = n;
+}
+
+function fldFfClearSlot(ff) {
+  if (!ff || !ff.layer) return;
+  var layer = ff.layer, start = ff.slot | 0, end = Math.min(layer.cap, start + ff.cap);
+  for (var i = start; i < end; i++) {
+    layer.body.setMatrixAt(i, layer.zero);
+    layer.head.setMatrixAt(i, layer.zero);
+    layer.kepi.setMatrixAt(i, layer.zero);
+    layer.rifle.setMatrixAt(i, layer.zero);
+    layer.bayonet.setMatrixAt(i, layer.zero);
+  }
+  layer.body.instanceMatrix.needsUpdate = true;
+  layer.head.instanceMatrix.needsUpdate = true;
+  layer.kepi.instanceMatrix.needsUpdate = true;
+  layer.rifle.instanceMatrix.needsUpdate = true;
+  layer.bayonet.instanceMatrix.needsUpdate = true;
+  if (ff.grp) {
+    ff.grp.visible = false;
+    ff.grp.userData.ff = { mode: "shared-instanced", active: 0, slot: ff.slot, width: 0, depth: 0 };
+  }
+}
+
 function fldFfCreate(u, g) {
   var T = window.THREE;
   if (!T || !u || !g || !g.add) return null;
-  var old = g.getObjectByName && g.getObjectByName("ffFormation");
-  if (old && old.parent) old.parent.remove(old);
-
-  var sideCol = u.side === "US" ? "#334f86" : "#8f4538";
-  var capCol = u.side === "US" ? "#1b2744" : "#5a2a24";
-  var grp = new T.Group();
-  grp.name = "ffFormation";
-  grp.position.y = -4;
-
-  var cap = FLDFF.INF_CAP;
-  var body = fldFfInstanced(T, new T.CylinderGeometry(FLDFF.BODY_R, FLDFF.BODY_R * 1.08, FLDFF.BODY_H, 5),
-    fldFfMakeMat(T, sideCol), cap, "ffBodies");
-  var head = fldFfInstanced(T, new T.SphereGeometry(FLDFF.HEAD_R, 6, 4),
-    fldFfMakeMat(T, "#d7b18b"), cap, "ffHeads");
-  var kepi = fldFfInstanced(T, new T.CylinderGeometry(2.7, 2.45, 1.4, 6),
-    fldFfMakeMat(T, capCol), cap, "ffKepis");
-  var rifle = fldFfInstanced(T, new T.BoxGeometry(0.85, 0.85, 16),
-    fldFfMakeMat(T, "#3a2618"), cap, "ffRifles");
-  var bayonet = fldFfInstanced(T, new T.BoxGeometry(0.45, 0.45, 5.5),
-    fldFfMakeMat(T, "#d9d4c6"), cap, "ffBayonets");
-
-  grp.add(body); grp.add(head); grp.add(kepi); grp.add(rifle); grp.add(bayonet);
-  g.add(grp);
-  g.userData._ff = {
-    grp: grp, body: body, head: head, kepi: kepi, rifle: rifle, bayonet: bayonet,
-    dummy: new T.Object3D(), cap: cap, markerHidden: false
+  var layer = fldFfLayer();
+  if (!layer || layer.nextSlot + FLDFF.INF_CAP > layer.cap) return null;
+  var marker = g.getObjectByName && g.getObjectByName("ffFormation");
+  if (!marker) {
+    marker = new T.Group();
+    marker.name = "ffFormation";
+    g.add(marker);
+  }
+  var ff = {
+    grp: marker, layer: layer, slot: layer.nextSlot, cap: FLDFF.INF_CAP,
+    mode: "shared-instanced", markerHidden: false, world: new T.Matrix4()
   };
-  return g.userData._ff;
+  layer.nextSlot += FLDFF.INF_CAP;
+  fldFfSetLayerCount(layer, layer.nextSlot);
+  g.userData._ff = ff;
+  fldFfClearSlot(ff);
+  return ff;
 }
 
 function fldFfEnsure(u, g) {
   if (!g || !g.userData) return null;
   var ff = g.userData._ff;
-  if (ff && ff.grp && ff.grp.parent) return ff;
+  if (ff && ff.grp && ff.grp.parent && ff.layer && ff.layer.grp && ff.layer.grp.parent) return ff;
   return fldFfCreate(u, g);
 }
 
@@ -178,19 +235,40 @@ function fldFfLayout(u, i, n) {
 }
 
 function fldFfSetMatrix(ff, mesh, idx, x, y, z, rx, ry, rz, sx, sy, sz) {
-  var d = ff.dummy;
-  d.position.set(x, y, z);
+  var d = ff.layer.dummy;
+  d.position.set(x, y - 4, z);
   d.rotation.set(rx || 0, ry || 0, rz || 0);
   d.scale.set(sx || 1, sy || 1, sz || 1);
   d.updateMatrix();
-  mesh.setMatrixAt(idx, d.matrix);
+  ff.layer.composed.multiplyMatrices(ff.world, d.matrix);
+  mesh.setMatrixAt(idx, ff.layer.composed);
+}
+
+function fldFfSetColor(ff, mesh, idx, color) {
+  if (mesh && typeof mesh.setColorAt === "function") mesh.setColorAt(idx, color);
+}
+
+function fldFfApplyColors(ff, u, idx) {
+  var body = u.side === "US" ? "#334f86" : "#8f4538";
+  var kepi = u.side === "US" ? "#1b2744" : "#5a2a24";
+  ff.layer.bodyColor.set(body);
+  ff.layer.kepiColor.set(kepi);
+  if (u.state === "routing") {
+    ff.layer.bodyColor.multiplyScalar(0.62);
+    ff.layer.kepiColor.multiplyScalar(0.62);
+  }
+  fldFfSetColor(ff, ff.layer.body, idx, ff.layer.bodyColor);
+  fldFfSetColor(ff, ff.layer.kepi, idx, ff.layer.kepiColor);
 }
 
 function fldFfSyncUnit(u, g) {
   if (!u || !g || !window.THREE) return;
   var show = fldFfShowFor(u, g);
   if (!show) {
-    if (g.userData && g.userData._ff && g.userData._ff.grp) g.userData._ff.grp.visible = false;
+    if (g.userData && g.userData._ff) {
+      fldFfClearSlot(g.userData._ff);
+      if (fldFfOff() && g.userData._ff.layer && g.userData._ff.layer.grp) g.userData._ff.layer.grp.visible = false;
+    }
     var glb = g.getObjectByName && g.getObjectByName("unitGlbModel");
     if (glb && glb.visible) return;                                // T23 owns base-marker visibility while a GLB hero mesh is active.
     fldFfMarkerVisible(g, true);
@@ -198,6 +276,7 @@ function fldFfSyncUnit(u, g) {
   }
   var ff = fldFfEnsure(u, g);
   if (!ff) return;
+  if (ff.layer && ff.layer.grp) ff.layer.grp.visible = true;
 
   var n = fldFfActiveCount(u, ff.cap);
   var pose = fldFfPose(u);
@@ -205,8 +284,11 @@ function fldFfSyncUnit(u, g) {
   var motion = fldFfMotion();
   var t = ((typeof __FIELD !== "undefined" && __FIELD) ? __FIELD.t : 0) + fldFfPhase(u.id);
   var minX = 9999, maxX = -9999, minZ = 9999, maxZ = -9999;
+  if (g.updateMatrixWorld) g.updateMatrixWorld(true);
+  ff.world.copy(g.matrixWorld);
 
   for (var i = 0; i < n; i++) {
+    var idx = ff.slot + i;
     var p = fldFfLayout(u, i, n);
     var bob = (motion && moving) ? Math.sin(t * (pose === "charge" ? 8.5 : 6.4) + i * 0.72) * (pose === "charge" ? 1.0 : 0.65) : 0;
     var frontRank = p.row === 0;
@@ -218,32 +300,37 @@ function fldFfSyncUnit(u, g) {
 
     var bodyY = (kneel ? 5.2 : 6.5) + bob;
     var bodyScaleY = kneel ? 0.78 : 1;
-    fldFfSetMatrix(ff, ff.body, i, p.x, bodyY, p.z, lean, p.yaw, 0, 1, bodyScaleY, 1);
-    fldFfSetMatrix(ff, ff.head, i, p.x, (kneel ? 11.2 : 15.2) + bob, p.z - (charge ? 0.8 : 0), lean * 0.35, p.yaw, 0, 1, 1, 1);
-    fldFfSetMatrix(ff, ff.kepi, i, p.x, (kneel ? 13.5 : 17.5) + bob, p.z - (charge ? 1.0 : 0), lean * 0.35, p.yaw, 0, 1, 1, 1);
+    fldFfApplyColors(ff, u, idx);
+    fldFfSetMatrix(ff, ff.layer.body, idx, p.x, bodyY, p.z, lean, p.yaw, 0, 1, bodyScaleY, 1);
+    fldFfSetMatrix(ff, ff.layer.head, idx, p.x, (kneel ? 11.2 : 15.2) + bob, p.z - (charge ? 0.8 : 0), lean * 0.35, p.yaw, 0, 1, 1, 1);
+    fldFfSetMatrix(ff, ff.layer.kepi, idx, p.x, (kneel ? 13.5 : 17.5) + bob, p.z - (charge ? 1.0 : 0), lean * 0.35, p.yaw, 0, 1, 1, 1);
 
     if (firing || charge) {
       var ry = p.yaw + (charge ? 0 : (frontRank ? 0 : 0.04));
-      fldFfSetMatrix(ff, ff.rifle, i, p.x + 1.7, kneel ? 9.4 : 10.4, p.z - (charge ? 11.4 : 9.2), charge ? -0.08 : 0, ry, 0, 1, 1, 1);
-      fldFfSetMatrix(ff, ff.bayonet, i, p.x + 1.7, kneel ? 9.4 : 10.4, p.z - (charge ? 21.8 : 18.0), charge ? -0.08 : 0, ry, 0, 1, 1, 1);
+      fldFfSetMatrix(ff, ff.layer.rifle, idx, p.x + 1.7, kneel ? 9.4 : 10.4, p.z - (charge ? 11.4 : 9.2), charge ? -0.08 : 0, ry, 0, 1, 1, 1);
+      fldFfSetMatrix(ff, ff.layer.bayonet, idx, p.x + 1.7, kneel ? 9.4 : 10.4, p.z - (charge ? 21.8 : 18.0), charge ? -0.08 : 0, ry, 0, 1, 1, 1);
     } else {
-      fldFfSetMatrix(ff, ff.rifle, i, p.x + 2.9, 12.0 + bob * 0.35, p.z + 1.4, Math.PI / 2, p.yaw + 0.12, 0, 1, 1, 1);
-      fldFfSetMatrix(ff, ff.bayonet, i, p.x + 2.9, -60, p.z, 0, 0, 0, 0.01, 0.01, 0.01);
+      fldFfSetMatrix(ff, ff.layer.rifle, idx, p.x + 2.9, 12.0 + bob * 0.35, p.z + 1.4, Math.PI / 2, p.yaw + 0.12, 0, 1, 1, 1);
+      fldFfSetMatrix(ff, ff.layer.bayonet, idx, p.x + 2.9, -60, p.z, 0, 0, 0, 0.01, 0.01, 0.01);
     }
     if (p.x < minX) minX = p.x; if (p.x > maxX) maxX = p.x;
     if (p.z < minZ) minZ = p.z; if (p.z > maxZ) maxZ = p.z;
   }
 
-  ff.body.count = n; ff.head.count = n; ff.kepi.count = n; ff.rifle.count = n; ff.bayonet.count = n;
-  ff.body.instanceMatrix.needsUpdate = true; ff.head.instanceMatrix.needsUpdate = true; ff.kepi.instanceMatrix.needsUpdate = true;
-  ff.rifle.instanceMatrix.needsUpdate = true; ff.bayonet.instanceMatrix.needsUpdate = true;
-  ff.grp.visible = true;
-  ff.grp.userData.ff = { active: n, pose: pose, formation: u.formation, width: maxX - minX, depth: maxZ - minZ };
-
-  if (ff.body.material && ff.body.material.color) {
-    ff.body.material.color.set(u.side === "US" ? "#334f86" : "#8f4538");
-    if (u.state === "routing") ff.body.material.color.multiplyScalar(0.62);
+  for (var j = n; j < ff.cap; j++) {
+    var offIdx = ff.slot + j;
+    ff.layer.body.setMatrixAt(offIdx, ff.layer.zero);
+    ff.layer.head.setMatrixAt(offIdx, ff.layer.zero);
+    ff.layer.kepi.setMatrixAt(offIdx, ff.layer.zero);
+    ff.layer.rifle.setMatrixAt(offIdx, ff.layer.zero);
+    ff.layer.bayonet.setMatrixAt(offIdx, ff.layer.zero);
   }
+  ff.layer.body.instanceMatrix.needsUpdate = true; ff.layer.head.instanceMatrix.needsUpdate = true; ff.layer.kepi.instanceMatrix.needsUpdate = true;
+  ff.layer.rifle.instanceMatrix.needsUpdate = true; ff.layer.bayonet.instanceMatrix.needsUpdate = true;
+  if (ff.layer.body.instanceColor) ff.layer.body.instanceColor.needsUpdate = true;
+  if (ff.layer.kepi.instanceColor) ff.layer.kepi.instanceColor.needsUpdate = true;
+  ff.grp.visible = true;
+  ff.grp.userData.ff = { active: n, pose: pose, formation: u.formation, width: maxX - minX, depth: maxZ - minZ, mode: "shared-instanced", slot: ff.slot, layerCount: ff.layer.nextSlot };
   fldFfMarkerVisible(g, false);
   var pegs = g.getObjectByName && g.getObjectByName("vfPegs");
   if (pegs) pegs.visible = false;
@@ -268,5 +355,11 @@ function fldFfSyncUnit(u, g) {
     var _osu = fld3dSyncUnit;
     fld3dSyncUnit = function (u, g) { var r = _osu.apply(this, arguments); try { fldFfSyncUnit(u, g); } catch (e) { _ffErr(e); } return r; };
     _ffCarry(fld3dSyncUnit, _osu); fld3dSyncUnit._ff = true;
+  }
+
+  if (typeof fldExit === "function" && !fldExit._ff) {
+    var _oex = fldExit;
+    fldExit = function () { try { FLDFF_S.layer = null; if (typeof __FIELD !== "undefined" && __FIELD) __FIELD._ffLayer = null; } catch (e) {} return _oex.apply(this, arguments); };
+    _ffCarry(fldExit, _oex); fldExit._ff = true;
   }
 })();

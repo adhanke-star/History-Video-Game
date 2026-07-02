@@ -1,3 +1,17 @@
+# ☀ WAKE-UP — 2026-07-02: **GROUP 5 PHASE H FORMATION-FIGURES PERF POLISH SHIPPED (D200).**
+
+**Newest (D200, 2026-07-02):** Group 5 Phase H now has a zero-new-media formation-figures performance polish slice after the media-budget guard, Intel UHD-617 profile, audio/readability pass, H2 cutaway polish, battle-colours HUD polish, terrain-overlay perf polish, and visual-fidelity contact-shadow perf polish. M8 battle-build was not approved or started.
+
+**What changed:** `src/tactical/T24-formation-figures.js` now keeps high-tier miniature infantry formations through one shared scene-level `ffFormationLayer` with five instanced layers instead of five instanced meshes per brigade. Unit groups keep lightweight marker/slot metadata; off/low/GLB-hidden units clear their slots and restore the correct slab/GLB fallback. `tools/probe-formation-figures.mjs` locks the shared-layer contract, and `tools/probe-intel-uhd617-profile.mjs` records/asserts shared formation-figure mode.
+
+**Verified:** `node --check` for the touched T24/profile/probe files; build **GATE OK** with the known raw-embed soft warning; focused `probe-formation-figures` 17/17 with 0 pageerrors and a visually checked high-tier screenshot; adjacent `probe-media-budget` 6/6 with only the known soft warning, `probe-intel-uhd617-profile` 13/13, `probe-tripo-unit-assets` 15/15, `probe-visual-fidelity` 26/26, and `probe-presets` 26/26. Counted artifact readback found no `ok=false`, failed steps, `FATAL`, pageerrors, realErrors, or texture warnings. `git diff --check` clean.
+
+**Profile evidence after D200:** high tier: 7.36ms proxy frame burst, 83 render calls, 154 objects. Low tier: 2.32ms proxy burst, 100 calls, 134 objects. Embedded core remains 199 files / 2.418 MB raw; no new asset bytes were added.
+
+**Next recommended run:** continue Group 5 Phase H with another bounded zero-byte render/readability/perf slice, or surface a tighter media-budget decision before any PD/surviving-colours asset work. Do not add heavy footage/HDRI/model media to the core without explicit budget approval. M8 battle-build still needs Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-02: **GROUP 5 PHASE H VISUAL-FIDELITY CONTACT-SHADOW PERF POLISH SHIPPED (D199).**
 
 **Newest (D199, 2026-07-02):** Group 5 Phase H now has a zero-new-media visual-fidelity performance polish slice after the media-budget guard, Intel UHD-617 profile, audio/readability pass, H2 cutaway polish, battle-colours HUD polish, and terrain-overlay perf polish. M8 battle-build was not approved or started.

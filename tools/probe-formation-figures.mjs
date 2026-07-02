@@ -72,10 +72,12 @@ function sceneScript(label, opts) {
       var g = u && __FIELD._u3d && __FIELD._u3d[u.id];
       if (!u || !g) return { found:false };
       var ff = g.getObjectByName("ffFormation");
-      var bodies = ff && ff.getObjectByName("ffBodies");
-      var heads = ff && ff.getObjectByName("ffHeads");
-      var rifles = ff && ff.getObjectByName("ffRifles");
-      var bay = ff && ff.getObjectByName("ffBayonets");
+      var meta = (ff && ff.userData && ff.userData.ff) || {};
+      var layer = (typeof __FIELD !== "undefined" && __FIELD && __FIELD._ffLayer) || null;
+      var bodies = layer && layer.body;
+      var heads = layer && layer.head;
+      var rifles = layer && layer.rifle;
+      var bay = layer && layer.bayonet;
       var slab = g.getObjectByName("slab");
       var front = g.getObjectByName("front");
       var flag = g.getObjectByName("flag");
@@ -85,19 +87,25 @@ function sceneScript(label, opts) {
         unitId:u.id,
         formation:u.formation,
         pose:ff && ff.userData && ff.userData.ff ? ff.userData.ff.pose : null,
+        mode:meta.mode || null,
+        slot:meta.slot == null ? -1 : meta.slot,
+        layer:!!layer,
+        layerMeshCount:layer && layer.grp && layer.grp.children ? layer.grp.children.length : 0,
+        layerCount:layer ? layer.nextSlot : 0,
         ff:!!ff,
         ffVisible:!!(ff && ff.visible),
-        active:ff && ff.userData && ff.userData.ff ? ff.userData.ff.active : 0,
-        width:ff && ff.userData && ff.userData.ff ? ff.userData.ff.width : 0,
-        depth:ff && ff.userData && ff.userData.ff ? ff.userData.ff.depth : 0,
+        active:meta.active || 0,
+        width:meta.width || 0,
+        depth:meta.depth || 0,
         bodies:!!bodies,
         heads:!!heads,
         rifles:!!rifles,
         bayonets:!!bay,
-        bodyCount:bodies ? bodies.count : 0,
-        headCount:heads ? heads.count : 0,
-        rifleCount:rifles ? rifles.count : 0,
-        bayonetCount:bay ? bay.count : 0,
+        bodyCount:bodies ? (meta.active || 0) : 0,
+        headCount:heads ? (meta.active || 0) : 0,
+        rifleCount:rifles ? (meta.active || 0) : 0,
+        bayonetCount:bay ? (meta.active || 0) : 0,
+        layerDrawCount:bodies ? bodies.count : 0,
         slabVisible:slab ? slab.visible !== false : null,
         frontVisible:front ? front.visible !== false : null,
         flagVisible:flag ? flag.visible !== false : null,
@@ -122,7 +130,8 @@ function sceneScript(label, opts) {
       out.wrappers = {
         build: typeof fld3dBuildUnits === 'function' && !!fld3dBuildUnits._ff,
         sync: typeof fld3dSyncUnit === 'function' && !!fld3dSyncUnit._ff,
-        fns: ['fldFfOff','fldFfShowFor','fldFfEnsure','fldFfSyncUnit'].every(function(n){ return eval('typeof '+n) === 'function'; })
+        exit: typeof fldExit === 'function' && !!fldExit._ff,
+        fns: ['fldFfOff','fldFfShowFor','fldFfEnsure','fldFfSyncUnit','fldFfLayer'].every(function(n){ return eval('typeof '+n) === 'function'; })
       };
 
       fldLaunchSandbox({ renderer:'3d', scenario:'shiloh', autoBoth:true, playerSide:'US', seed:39 });
@@ -194,7 +203,10 @@ async function runScene(browser, label, opts) {
   const allPe = scenes.reduce((n, s) => n + s.pageerrors.length, 0);
   const H = by.high, OFF = by.off, LOW = by.low;
 
-  check('runtime: wrappers and helper functions are installed', H.ok && H.wrappers && H.wrappers.build && H.wrappers.sync && H.wrappers.fns, JSON.stringify(H.wrappers || {}));
+  check('runtime: wrappers and helper functions are installed', H.ok && H.wrappers && H.wrappers.build && H.wrappers.sync && H.wrappers.exit && H.wrappers.fns, JSON.stringify(H.wrappers || {}));
+  check('high tier: formation figures use one shared scene-level instanced layer',
+    H.ok && H.initial && H.initial.mode === 'shared-instanced' && H.initial.layer === true && H.initial.layerMeshCount === 5 && H.initial.slot >= 0,
+    JSON.stringify(H.initial || {}));
   check('high tier: infantry group gains visible procedural formation figures',
     H.ok && H.initial && H.initial.ffVisible && H.initial.active >= 10 && H.initial.bodies && H.initial.heads && H.initial.rifles && H.initial.bayonets,
     JSON.stringify(H.initial || {}));

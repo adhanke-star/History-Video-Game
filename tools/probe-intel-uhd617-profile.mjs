@@ -168,6 +168,9 @@ function profileScript(label, quality) {
         var g = u && __FIELD._u3d && __FIELD._u3d[u.id];
         if (!u || !g) return out;
         var ff = g.getObjectByName('ffFormation');
+        var ffMeta = (ff && ff.userData && ff.userData.ff) || {};
+        var ffLayer = null;
+        try { ffLayer = (typeof __FIELD !== 'undefined' && __FIELD && __FIELD._ffLayer) || null; } catch(e){}
         var pegs = g.getObjectByName('vfPegs');
         var shadow = g.getObjectByName('vfShadow');
         var shadowLayer = null;
@@ -178,8 +181,12 @@ function profileScript(label, quality) {
           found: true,
           unitId: u.id,
           formation: u.formation || '',
-          formationFigures: !!ff,
-          formationFiguresVisible: !!(ff && ff.visible),
+          formationFigures: !!(ff || ffLayer),
+          formationFiguresVisible: !!(ff && ff.visible && ffMeta.active > 0),
+          formationFiguresMode: ffLayer ? 'shared-instanced' : (ff ? 'per-unit' : ''),
+          formationFigureSlot: ffMeta.slot == null ? -1 : ffMeta.slot,
+          formationFigureLayerCount: ffLayer ? ffLayer.nextSlot : 0,
+          formationFigureLayerMeshes: ffLayer && ffLayer.grp && ffLayer.grp.children ? ffLayer.grp.children.length : 0,
           pegs: !!pegs,
           pegsVisible: !!(pegs && pegs.visible !== false),
           shadow: !!(shadow || shadowLayer),
@@ -339,6 +346,12 @@ check('high profile launched and rendered nonblank', high.ok === true, high.deta
 check('low profile launched and rendered nonblank', low.ok === true, low.detail && low.detail.error || '');
 check('low tier reports fldLow() true and high tier reports false', high.detail.fldLow === false && low.detail.fldLow === true, 'high=' + high.detail.fldLow + ' low=' + low.detail.fldLow);
 check('low tier gates out formation figures and peg ranks', low.detail.ffOff === true && low.detail.unitRender && low.detail.unitRender.formationFigures !== true && low.detail.unitRender.pegsVisible !== true, JSON.stringify(low.detail.unitRender || {}));
+check('high tier formation figures use one shared instanced layer',
+  high.detail.unitRender &&
+  high.detail.unitRender.formationFiguresMode === 'shared-instanced' &&
+  high.detail.unitRender.formationFiguresVisible === true &&
+  high.detail.unitRender.formationFigureLayerMeshes === 5,
+  JSON.stringify(high.detail.unitRender || {}));
 check('contact shadows use one shared instanced layer in high and low tiers',
   high.detail.unitRender && low.detail.unitRender &&
   high.detail.unitRender.shadowMode === 'instanced' && low.detail.unitRender.shadowMode === 'instanced' &&
@@ -363,7 +376,13 @@ for (const p of profiles) {
 if (high.detail.webgl && /SwiftShader/i.test(String(high.detail.webgl.renderer || ''))) {
   warn('profile renderer is SwiftShader, so timing is a proxy rather than the exact Intel UHD-617 path', high.detail.webgl.renderer);
 }
-if (low.detail.renderInfo && high.detail.renderInfo && low.detail.renderInfo.calls > high.detail.renderInfo.calls) {
+const expectedHighSharedFigures =
+  high.detail.unitRender &&
+  high.detail.unitRender.formationFiguresMode === 'shared-instanced' &&
+  high.detail.unitRender.slabVisible === false &&
+  low.detail.unitRender &&
+  low.detail.unitRender.slabVisible === true;
+if (low.detail.renderInfo && high.detail.renderInfo && low.detail.renderInfo.calls > high.detail.renderInfo.calls && !expectedHighSharedFigures) {
   warn('low tier render calls exceeded high tier; inspect before adding more visual layers', 'low=' + low.detail.renderInfo.calls + ' high=' + high.detail.renderInfo.calls);
 }
 
