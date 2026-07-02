@@ -16,8 +16,8 @@
         legend/contour/hover layer that H5-i3 terrain-readability adds on top.)
      2. CONTACT SHADOWS — a soft round shadow under every brigade so the markers
         sit IN the field instead of floating above it (the single biggest UG:G
-        grounding cue; a cheap decal, NOT real shadow maps — those are an r128
-        InstancedMesh-depth-pass bug + a UHD-617 perf sink).
+        grounding cue; one shared instanced decal layer, NOT real shadow maps —
+        those are an r128 InstancedMesh-depth-pass bug + a UHD-617 perf sink).
      3. SKY DOME + VIGNETTE — the flat clear-colour sky deepens horizon→zenith via
         a gradient dome that re-tints itself from the live weather fog colour each
         frame (so T17 stays authoritative), framed by a free CSS radial vignette.
@@ -66,7 +66,7 @@ var FLDVF = {
 };
 
 /* module-level GPU/DOM refs + a swallowed-exception counter (probe asserts errN===0) */
-var FLDVF_S = { dome: null, vig: null, shadowTex: null, rankTex: null, errN: 0 };
+var FLDVF_S = { dome: null, vig: null, shadowTex: null, rankTex: null, shadowMesh: null, shadowDummy: null, errN: 0 };
 
 /* ---- master gate: ride T18's single renderRich opt-out (off ⇒ byte-identical default look) ---- */
 function fldVfOff() {
@@ -166,13 +166,69 @@ function fldVfEnsureTex(T) {
   if (!FLDVF_S.rankTex) FLDVF_S.rankTex = fldVfRankTexture(T);
 }
 
+function fldVfDisposeShadowLayer(keepTexture) {
+  var m = FLDVF_S.shadowMesh;
+  if (m) {
+    try { if (m.parent) m.parent.remove(m); } catch (e) {}
+    try { if (m.geometry && m.geometry.dispose) m.geometry.dispose(); } catch (e2) {}
+    try { if (m.material && m.material.dispose) m.material.dispose(); } catch (e3) {}
+  }
+  FLDVF_S.shadowMesh = null;
+  if (!keepTexture && FLDVF_S.shadowTex && FLDVF_S.shadowTex.dispose) { try { FLDVF_S.shadowTex.dispose(); } catch (e4) {} FLDVF_S.shadowTex = null; }
+}
+
+function fldVfEnsureShadowLayer(T) {
+  if (!T || typeof __FIELD === "undefined" || !__FIELD || !__FIELD.scene || !__FIELD.units) return null;
+  fldVfEnsureTex(T);
+  var cap = Math.max(1, __FIELD.units.length || 1);
+  if (FLDVF_S.shadowMesh && FLDVF_S.shadowMesh.parent && FLDVF_S.shadowMesh.userData && FLDVF_S.shadowMesh.userData.cap >= cap) return FLDVF_S.shadowMesh;
+  fldVfDisposeShadowLayer(true);
+  var mat = new T.MeshBasicMaterial({ map: FLDVF_S.shadowTex, color: 0x000000, transparent: true, opacity: FLDVF.SHADOW_OP, depthWrite: false });
+  mat.polygonOffset = true; mat.polygonOffsetFactor = -1; mat.polygonOffsetUnits = -1;
+  var im = new T.InstancedMesh(new T.PlaneGeometry(1, 1), mat, cap);
+  im.name = "vfShadowLayer"; im.frustumCulled = false; im.renderOrder = -0.5; im.userData.cap = cap;
+  FLDVF_S.shadowDummy = FLDVF_S.shadowDummy || new T.Object3D();
+  for (var i = 0; i < cap; i++) { FLDVF_S.shadowDummy.position.set(0, -9999, 0); FLDVF_S.shadowDummy.scale.set(0.001, 0.001, 0.001); FLDVF_S.shadowDummy.updateMatrix(); im.setMatrixAt(i, FLDVF_S.shadowDummy.matrix); }
+  im.instanceMatrix.needsUpdate = true;
+  __FIELD.scene.add(im);
+  FLDVF_S.shadowMesh = im;
+  return im;
+}
+
+function fldVfSetShadow(vf, u, g, visible) {
+  var mesh = FLDVF_S.shadowMesh, d = FLDVF_S.shadowDummy;
+  if (!vf || !mesh || !d || vf.shIndex == null || vf.shIndex < 0 || vf.shIndex >= mesh.userData.cap) return;
+  if (!visible || !u || !g) {
+    d.position.set(0, -9999, 0); d.rotation.set(0, 0, 0); d.scale.set(0.001, 0.001, 0.001);
+  } else {
+    var lineW = (u.formation === "column" ? 34 : 96) * (0.5 + 0.5 * u.men / u.maxMen);
+    var lineD = (u.formation === "column" ? 60 : 26);
+    d.position.set(u.x, ((typeof fldTerrainH === "function") ? fldTerrainH(u.x, u.z) : 0) + 0.5, u.z);
+    d.rotation.set(-Math.PI / 2, -u.facing, 0);
+    d.scale.set(lineW * FLDVF.SHADOW_W, lineD * FLDVF.SHADOW_D, 1);
+  }
+  d.updateMatrix();
+  mesh.setMatrixAt(vf.shIndex, d.matrix);
+  mesh.instanceMatrix.needsUpdate = true;
+}
+
+function fldVfClearShadowLayer() {
+  var mesh = FLDVF_S.shadowMesh, d = FLDVF_S.shadowDummy;
+  if (!mesh || !d || !mesh.userData) return;
+  for (var i = 0; i < mesh.userData.cap; i++) {
+    d.position.set(0, -9999, 0); d.rotation.set(0, 0, 0); d.scale.set(0.001, 0.001, 0.001);
+    d.updateMatrix(); mesh.setMatrixAt(i, d.matrix);
+  }
+  mesh.instanceMatrix.needsUpdate = true;
+}
+
 /* ===========================================================================
-   2/4/5. PER-BRIGADE DECORATION — rank map + contact shadow + (Max) peg ranks,
-   added after the base (re)builds the unit groups. The decorations are CHILDREN of
-   each unit Group, so the base's own rebuild/dispose loop (T0 ~1827) and
-   fld3dDispose's scene traverse clean them up; only the SHARED textures + dome +
-   vignette are owned here. A fresh group from the base carries no g.userData._vf →
-   it gets decorated exactly once per (re)build.
+   2/4/5. PER-BRIGADE DECORATION — rank map + instanced contact shadow + (Max) peg ranks,
+   added after the base (re)builds the unit groups. Rank maps and Max-tier pegs are
+   attached to each unit Group; contact shadows share one scene-level InstancedMesh
+   so the UHD-617 floor pays one draw call instead of one per brigade. A fresh group
+   from the base carries no g.userData._vf → it gets decorated exactly once per
+   (re)build, and the shared shadow layer is cleared before each fresh unit set.
    =========================================================================== */
 function fldVfAddPegs(T, u, g) {
   var rows = FLDVF.PEG_ROWS, cols = FLDVF.PEG_COLS, nfig = rows * cols;
@@ -203,22 +259,16 @@ function fldVfDecorateUnits() {
   if (!T || typeof __FIELD === "undefined" || !__FIELD || !__FIELD._u3d || !__FIELD.units) return;
   fldVfEnsureTex(T);
   var pegs = (typeof fldLow === "function") ? !fldLow() : true;     // Max tier: pegs only on capable hardware
+  var shadowLayer = fldVfEnsureShadowLayer(T);
+  fldVfClearShadowLayer();
   for (var i = 0; i < __FIELD.units.length; i++) {
     var u = __FIELD.units[i], g = __FIELD._u3d[u.id];
     if (!g || !g.userData) continue;
     if (g.userData._vf) continue;                                   // already decorated this (re)build
-    g.userData._vf = {};
+    g.userData._vf = { shIndex: shadowLayer ? i : -1 };
     // (4) rank map on the slab (white-based ⇒ multiplies the side colour; CVD-safe luminance pattern)
     var slab = g.getObjectByName("slab");
     if (slab && slab.material && FLDVF_S.rankTex) { try { slab.material.map = FLDVF_S.rankTex; slab.material.needsUpdate = true; } catch (e) { FLDVF_S.errN++; } }
-    // (2) soft round contact shadow under the group
-    try {
-      var smat = new T.MeshBasicMaterial({ map: FLDVF_S.shadowTex, color: 0x000000, transparent: true, opacity: FLDVF.SHADOW_OP, depthWrite: false });
-      smat.polygonOffset = true; smat.polygonOffsetFactor = -1; smat.polygonOffsetUnits = -1;
-      var sh = new T.Mesh(new T.PlaneGeometry(1, 1), smat); sh.name = "vfShadow";
-      sh.rotation.x = -Math.PI / 2; sh.position.y = -3.5; sh.renderOrder = -0.5;   // flat on the ground, drawn under the figures
-      g.add(sh); g.userData._vf.sh = sh;
-    } catch (e2) { FLDVF_S.errN++; }
     // (5) peg ranks (Max tier)
     if (pegs) { try { fldVfAddPegs(T, u, g); } catch (e3) { FLDVF_S.errN++; } }
   }
@@ -226,16 +276,10 @@ function fldVfDecorateUnits() {
 function fldVfSyncUnit(u, g) {
   if (!u || !g || !g.userData || !g.userData._vf) return;
   var vf = g.userData._vf;
-  if (!u.alive) return;                                            // dying/dead: let T18's casualty fade + the base group-hide own it
+  if (!u.alive || !g.visible || fldVfOff()) { fldVfSetShadow(vf, null, null, false); return; }   // dying/dead/fog/off: no global shadow leak
   var lineW = (u.formation === "column" ? 34 : 96) * (0.5 + 0.5 * u.men / u.maxMen);
-  // contact shadow: glue to the ground (compensating the base's seat + T18's march-bob), width-match the block
-  if (vf.sh) {
-    vf.sh.position.y = ((typeof fldTerrainH === "function") ? fldTerrainH(u.x, u.z) : 0) - g.position.y + 0.5;
-    vf.sh.scale.set(lineW * FLDVF.SHADOW_W, (u.formation === "column" ? 60 : 26) * FLDVF.SHADOW_D, 1);
-    vf.sh.visible = true;
-    // (opacity is set once at decorate time; for a LIVING unit nothing else changes it — only T18's casualty
-    //  fade touches it, and this sync early-returns on !u.alive, so no per-frame re-pin is needed.)
-  }
+  // contact shadow: one shared instanced layer, glued to the ground and width-matched to the live block
+  fldVfSetShadow(vf, u, g, true);
   // peg ranks: scale the whole instanced block to the current front width (no per-peg matrix writes); drop when routing
   if (vf.pegs) {
     vf.pegs.scale.x = lineW / 96;
@@ -337,9 +381,10 @@ function fldVfDispose() {
     }
     FLDVF_S.dome = null;
     fldVfRemoveVignette();
+    fldVfDisposeShadowLayer(true);
     if (FLDVF_S.shadowTex && FLDVF_S.shadowTex.dispose) FLDVF_S.shadowTex.dispose();
     if (FLDVF_S.rankTex && FLDVF_S.rankTex.dispose) FLDVF_S.rankTex.dispose();
-    FLDVF_S.shadowTex = null; FLDVF_S.rankTex = null;
+    FLDVF_S.shadowTex = null; FLDVF_S.rankTex = null; FLDVF_S.shadowDummy = null;
   } catch (e) {}
 }
 

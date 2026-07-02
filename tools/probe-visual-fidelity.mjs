@@ -9,8 +9,9 @@ import "./guard-probe-browser.mjs";
 //  - SKY DOME: a BackSide "vfSky" mesh with renderOrder -1 exists, scene.background is nulled, and the dome's
 //    material colour matches the live fog (weather) colour so dome + ground-fog stay seamless;
 //  - VIGNETTE: a pointer-events:none #fldVignette div is injected (above the canvas, below the HUD);
-//  - PER-BRIGADE DECOR: each unit group gains a flat "vfShadow" plane glued to the ground + a rank MAP on the
-//    slab; on the capable (high) tier a "vfPegs" InstancedMesh (count>0); on fldLow() the pegs are GATED OUT;
+//  - PER-BRIGADE DECOR: one shared "vfShadowLayer" InstancedMesh glues a soft contact shadow under every
+//    brigade + each slab gets a rank MAP; on the capable (high) tier a "vfPegs" InstancedMesh (count>0);
+//    on fldLow() the pegs are GATED OUT;
 //  - BYTE-IDENTITY: the sim seed + mutable sim fields are INVARIANT across a synchronous render burst (T21 never
 //    calls fldRng), FLDVF_S.errN === 0, and a static scan proves no combat/tactical file references the vf layer;
 //  - the OFF switch (renderRich="off") reverts to the byte-identical default: no dome, no vignette, no shadow/
@@ -87,7 +88,7 @@ function sceneScript(scenario, seed, opts) {
         ex: typeof fldExit === 'function' && !!fldExit._vf,
         // prior markers must survive T21's outer re-wrap
         chain: !!(fld3dRender._wx && fld3dRender._atmo && fld3dRender._rr && fld2dDraw._rr && fldExit._rr),
-        fns: ['fldVfOff','fldVfEnrichGroundAO','fldVfDecorateUnits','fldVfSyncUnit','fldVfBuildSky','fldVfDispose'].every(function(n){ return eval('typeof '+n) === 'function'; })
+        fns: ['fldVfOff','fldVfEnrichGroundAO','fldVfDecorateUnits','fldVfSyncUnit','fldVfEnsureShadowLayer','fldVfSetShadow','fldVfBuildSky','fldVfDispose'].every(function(n){ return eval('typeof '+n) === 'function'; })
       };
 
       fldLaunchSandbox({ renderer:'3d', scenario:${JSON.stringify(scenario)}, autoBoth:true, playerSide:'US', seed:${seed} });
@@ -137,10 +138,23 @@ function sceneScript(scenario, seed, opts) {
       for (var k = 0; k < __FIELD.units.length; k++) { var u0 = __FIELD.units[k], g0 = __FIELD._u3d[u0.id]; if (g0 && u0.alive) { ug = g0; uu = u0; break; } }
       out.unit = { found: !!ug };
       if (ug && uu) {
-        var sh = ug.getObjectByName('vfShadow'), pegs = ug.getObjectByName('vfPegs'), slab = ug.getObjectByName('slab');
-        out.unit.shadow = !!sh;
+        var sh = ug.getObjectByName('vfShadow'), shLayer = null, pegs = ug.getObjectByName('vfPegs'), slab = ug.getObjectByName('slab');
+        try { __FIELD.scene.traverse(function(o){ if (o && o.name === 'vfShadowLayer') shLayer = o; }); } catch(e){}
+        var shIndex = ug.userData && ug.userData._vf ? ug.userData._vf.shIndex : -1;
+        var shGroundGap = null, shScaleX = null, shScaleY = null;
+        if (shLayer && shIndex >= 0 && shIndex < shLayer.count) {
+          var mx = new T.Matrix4(), pos = new T.Vector3(), quat = new T.Quaternion(), scl = new T.Vector3();
+          shLayer.getMatrixAt(shIndex, mx); mx.decompose(pos, quat, scl);
+          shGroundGap = Math.abs(pos.y - fldTerrainH(uu.x, uu.z));
+          shScaleX = scl.x; shScaleY = scl.y;
+        }
+        out.unit.shadow = !!(sh || shLayer);
+        out.unit.shadowInstanced = !!(shLayer && shLayer.isInstancedMesh);
+        out.unit.shadowIndex = shIndex;
+        out.unit.shadowCount = shLayer ? shLayer.count : 0;
         out.unit.shadowFlat = sh ? (Math.abs(Math.abs(sh.rotation.x) - Math.PI / 2) < 0.01) : null;
-        out.unit.shadowGroundGap = (sh) ? Math.abs((ug.position.y + sh.position.y) - fldTerrainH(uu.x, uu.z)) : null;
+        out.unit.shadowGroundGap = sh ? Math.abs((ug.position.y + sh.position.y) - fldTerrainH(uu.x, uu.z)) : shGroundGap;
+        out.unit.shadowScaleX = shScaleX; out.unit.shadowScaleY = shScaleY;
         out.unit.pegs = !!pegs; out.unit.pegCount = pegs ? pegs.count : 0;
         out.unit.pegSphere = !!(pegs && pegs.geometry && pegs.geometry.boundingSphere);
         out.unit.rankMap = !!(slab && slab.material && slab.material.map);
@@ -221,14 +235,16 @@ async function runScene(page, label, scenario, seed, opts, shared) {
 
   // per-brigade decor
   check('decor: a unit group was found', R.ok && R.unit.found, 'found=' + (R.unit && R.unit.found));
-  check('decor: each brigade gains a FLAT "vfShadow" plane glued to the ground (gap ~0.5yd)', R.ok && R.unit.shadow && R.unit.shadowFlat === true && R.unit.shadowGroundGap !== null && R.unit.shadowGroundGap < 2, 'flat=' + (R.unit && R.unit.shadowFlat) + ' gap=' + (R.unit && R.unit.shadowGroundGap));
+  check('decor: one shared "vfShadowLayer" InstancedMesh grounds each brigade (gap ~0.5yd, positive width/depth)',
+    R.ok && R.unit.shadow && R.unit.shadowInstanced === true && R.unit.shadowIndex >= 0 && R.unit.shadowGroundGap !== null && R.unit.shadowGroundGap < 2 && R.unit.shadowScaleX > 8 && R.unit.shadowScaleY > 8,
+    JSON.stringify({ instanced:R.unit && R.unit.shadowInstanced, index:R.unit && R.unit.shadowIndex, count:R.unit && R.unit.shadowCount, gap:R.unit && R.unit.shadowGroundGap, sx:R.unit && R.unit.shadowScaleX, sy:R.unit && R.unit.shadowScaleY }));
   check('decor: the slab carries a stylized rank MAP (massed-infantry read)', R.ok && R.unit.rankMap === true, 'rankMap=' + (R.unit && R.unit.rankMap));
   check('decor (Max tier, high): a "vfPegs" InstancedMesh with count>0 + a bounding sphere (r128 can frustum-cull; group still fog-gates)', R.ok && R.unit.pegs === true && R.unit.pegCount > 0 && R.unit.pegSphere === true, 'pegs=' + (R.unit && R.unit.pegs) + ' count=' + (R.unit && R.unit.pegCount) + ' sphere=' + (R.unit && R.unit.pegSphere));
 
   // peg tier gate
-  check('peg tier gate: on fldLow() the peg ranks are GATED OUT (rank map + shadow still present)',
-    LOW.ok && LOW.unit.found && LOW.unit.pegs === false && LOW.unit.shadow === true && LOW.unit.rankMap === true,
-    'lowPegs=' + (LOW.unit && LOW.unit.pegs) + ' lowShadow=' + (LOW.unit && LOW.unit.shadow));
+  check('peg tier gate: on fldLow() the peg ranks are GATED OUT (rank map + instanced shadow still present)',
+    LOW.ok && LOW.unit.found && LOW.unit.pegs === false && LOW.unit.shadowInstanced === true && LOW.unit.rankMap === true,
+    'lowPegs=' + (LOW.unit && LOW.unit.pegs) + ' lowShadowInstanced=' + (LOW.unit && LOW.unit.shadowInstanced));
 
   // byte-identity
   check('byte-identity: sim seed UNCHANGED across a synchronous render burst (T21 never calls fldRng)', R.ok && R.seedStable === true, R.seedBefore + ' -> ' + R.seedAfter);

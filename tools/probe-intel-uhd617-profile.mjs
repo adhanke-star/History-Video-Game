@@ -170,6 +170,9 @@ function profileScript(label, quality) {
         var ff = g.getObjectByName('ffFormation');
         var pegs = g.getObjectByName('vfPegs');
         var shadow = g.getObjectByName('vfShadow');
+        var shadowLayer = null;
+        try { if (typeof __FIELD !== 'undefined' && __FIELD && __FIELD.scene) __FIELD.scene.traverse(function(o){ if (o && o.name === 'vfShadowLayer') shadowLayer = o; }); } catch(e){}
+        var shIndex = g.userData && g.userData._vf ? g.userData._vf.shIndex : -1;
         var slab = g.getObjectByName('slab');
         out = {
           found: true,
@@ -179,7 +182,10 @@ function profileScript(label, quality) {
           formationFiguresVisible: !!(ff && ff.visible),
           pegs: !!pegs,
           pegsVisible: !!(pegs && pegs.visible !== false),
-          shadow: !!shadow,
+          shadow: !!(shadow || shadowLayer),
+          shadowMode: shadow ? 'per-unit' : (shadowLayer ? 'instanced' : ''),
+          shadowIndex: shIndex,
+          shadowLayerCount: shadowLayer ? shadowLayer.count : 0,
           slabVisible: slab ? slab.visible !== false : null
         };
       } catch(e) { out.error = String(e && e.message || e); }
@@ -333,6 +339,11 @@ check('high profile launched and rendered nonblank', high.ok === true, high.deta
 check('low profile launched and rendered nonblank', low.ok === true, low.detail && low.detail.error || '');
 check('low tier reports fldLow() true and high tier reports false', high.detail.fldLow === false && low.detail.fldLow === true, 'high=' + high.detail.fldLow + ' low=' + low.detail.fldLow);
 check('low tier gates out formation figures and peg ranks', low.detail.ffOff === true && low.detail.unitRender && low.detail.unitRender.formationFigures !== true && low.detail.unitRender.pegsVisible !== true, JSON.stringify(low.detail.unitRender || {}));
+check('contact shadows use one shared instanced layer in high and low tiers',
+  high.detail.unitRender && low.detail.unitRender &&
+  high.detail.unitRender.shadowMode === 'instanced' && low.detail.unitRender.shadowMode === 'instanced' &&
+  high.detail.unitRender.shadowIndex >= 0 && low.detail.unitRender.shadowIndex >= 0,
+  JSON.stringify({ high: high.detail.unitRender, low: low.detail.unitRender }));
 check('default hillshade profile does not prebuild optional terrain overlays',
   high.detail.terrainOverlay && low.detail.terrainOverlay &&
   high.detail.terrainOverlay.available === true && low.detail.terrainOverlay.available === true &&
