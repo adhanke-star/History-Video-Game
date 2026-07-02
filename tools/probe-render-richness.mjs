@@ -175,8 +175,23 @@ function sceneScript(scenario, seed, opts) {
         }
       } catch(e) { flag.err = String(e&&e.message||e); }
 
+      /* ---- RING CULL: idle selection rings should not consume draw calls; selected rings still show ---- */
+      var ringIdle = { visible:null, opacity:null };
+      try {
+        var ru = null; for (var ri=0; ri<__FIELD.units.length; ri++){ if (__FIELD.units[ri].alive){ ru = __FIELD.units[ri]; break; } }
+        if (ru) {
+          __FIELD.sel = [];
+          fldRender(); await wait(70);
+          var rg = __FIELD._u3d[ru.id], idleRing = rg && rg.getObjectByName('ring');
+          if (idleRing) {
+            ringIdle.visible = idleRing.visible !== false;
+            ringIdle.opacity = idleRing.material ? idleRing.material.opacity : null;
+          }
+        }
+      } catch(e) { ringIdle.err = String(e&&e.message||e); }
+
       /* ---- SELECTION: selected ring opacity ---- */
-      var sel = { ringOpacity:-1 };
+      var sel = { ringOpacity:-1, ringVisible:null };
       if (${JSON.stringify(!!opts.selectTest)}) {
         try {
           var su = null; for (var si=0; si<__FIELD.units.length; si++){ if (__FIELD.units[si].alive){ su = __FIELD.units[si]; break; } }
@@ -184,7 +199,7 @@ function sceneScript(scenario, seed, opts) {
             __FIELD.sel = [su.id];
             for (var sf=0; sf<4; sf++){ fldRender(); await wait(70); }
             var sg = __FIELD._u3d[su.id], ring = sg && sg.getObjectByName('ring');
-            if (ring && ring.material) sel.ringOpacity = ring.material.opacity;
+            if (ring && ring.material) { sel.ringOpacity = ring.material.opacity; sel.ringVisible = ring.visible !== false; }
             __FIELD.sel = [];
           }
         } catch(e) { sel.err = String(e&&e.message||e); }
@@ -233,7 +248,7 @@ function sceneScript(scenario, seed, opts) {
 
       var cv = document.getElementById('fldGl');
       var dataUrl = (cv && typeof cv.toDataURL === 'function') ? cv.toDataURL('image/png') : '';
-      return { ok:true, scenario:${JSON.stringify(scenario)}, wrappers:wrappers, ground:ground, woods:woods, flag:flag, sel:sel, fade:fade,
+      return { ok:true, scenario:${JSON.stringify(scenario)}, wrappers:wrappers, ground:ground, woods:woods, flag:flag, ringIdle:ringIdle, sel:sel, fade:fade,
         seedBefore:seedBefore, seedAfter:seedAfter, seedStable:(seedBefore===seedAfter),
         simStable:(simBefore===simAfter), errN:errN,
         mode3d:!!__FIELD.mode3d, phase:__FIELD.phase, dataUrl:dataUrl };
@@ -269,11 +284,13 @@ async function runSceneFresh(label, scenario, seed, opts) {
   page.on('pageerror', e => shared.pe.push(String(e.message)));
   page.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') shared.con.push('[' + m.type() + '] ' + m.text()); });
   try {
+    console.log('probe-render-richness scene=' + label + ' start');
     await page.goto(cfg.baseUrl + '/' + cfg.file, { waitUntil: 'domcontentloaded', timeout: 45000 });
     await sleep(500);
-    const sceneTimeoutMs = 900000;
+    const sceneTimeoutMs = 120000;
     const out = await withTimeout(runScene(page, label, scenario, seed, opts, shared), sceneTimeoutMs, label);
     if (out && out.__timeout) return { label, detail: { ok: false, error: 'scene timed out after ' + sceneTimeoutMs + 'ms' }, pageerrors: shared.pe, texWarn: [], console: shared.con.slice(-10) };
+    console.log('probe-render-richness scene=' + label + ' ok=' + !!(out && out.detail && out.detail.ok));
     return out;
   } finally {
     if (page) await closeBounded(() => page.close());
@@ -335,7 +352,12 @@ async function runSceneFresh(label, scenario, seed, opts) {
   check('flag: banner RIPPLES with motion (rotation magnitude > 0)', R.ok && R.flag.found && R.flag.maxRot > 1e-3, 'maxRot=' + (R.flag && R.flag.maxRot));
 
   // SELECTION
-  check('selection: a selected unit ring opacity lifts above 0', R.ok && R.sel.ringOpacity > 0.3, 'ringOpacity=' + (R.sel && R.sel.ringOpacity));
+  check('selection: idle unit rings are visibility-culled when no unit is selected',
+    R.ok && R.ringIdle.visible === false && R.ringIdle.opacity === 0,
+    JSON.stringify(R.ringIdle || {}));
+  check('selection: a selected unit ring is visible and opacity lifts above 0',
+    R.ok && R.sel.ringVisible === true && R.sel.ringOpacity > 0.3,
+    JSON.stringify(R.sel || {}));
 
   // CASUALTY FADE
   check('casualty fade: a fallen unit stays VISIBLE with material opacity in (0,1) mid-fade',

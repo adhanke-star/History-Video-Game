@@ -177,6 +177,7 @@ function profileScript(label, quality) {
         try { if (typeof __FIELD !== 'undefined' && __FIELD && __FIELD.scene) __FIELD.scene.traverse(function(o){ if (o && o.name === 'vfShadowLayer') shadowLayer = o; }); } catch(e){}
         var shIndex = g.userData && g.userData._vf ? g.userData._vf.shIndex : -1;
         var slab = g.getObjectByName('slab');
+        var ring = g.getObjectByName('ring');
         out = {
           found: true,
           unitId: u.id,
@@ -193,6 +194,9 @@ function profileScript(label, quality) {
           shadowMode: shadow ? 'per-unit' : (shadowLayer ? 'instanced' : ''),
           shadowIndex: shIndex,
           shadowLayerCount: shadowLayer ? shadowLayer.count : 0,
+          selectionRing: !!ring,
+          selectionRingVisible: ring ? ring.visible !== false : null,
+          selectionRingOpacity: ring && ring.material ? ring.material.opacity : null,
           slabVisible: slab ? slab.visible !== false : null
         };
       } catch(e) { out.error = String(e && e.message || e); }
@@ -363,6 +367,11 @@ check('default hillshade profile does not prebuild optional terrain overlays',
   high.detail.terrainOverlay.hypExists === false && high.detail.terrainOverlay.contourExists === false &&
   low.detail.terrainOverlay.hypExists === false && low.detail.terrainOverlay.contourExists === false,
   JSON.stringify({ high: high.detail.terrainOverlay, low: low.detail.terrainOverlay }));
+check('idle selection rings are visibility-culled in high and low profile scenes',
+  high.detail.unitRender && low.detail.unitRender &&
+  high.detail.unitRender.selectionRing === true && low.detail.unitRender.selectionRing === true &&
+  high.detail.unitRender.selectionRingVisible === false && low.detail.unitRender.selectionRingVisible === false,
+  JSON.stringify({ high: high.detail.unitRender, low: low.detail.unitRender }));
 check('low tier stays below hard render-call cap', Number(low.detail.renderInfo && low.detail.renderInfo.calls || 0) <= Number(budgets.lowTierRenderCallHardCap || 360), 'calls=' + (low.detail.renderInfo && low.detail.renderInfo.calls));
 check('low tier stays below hard scene-object cap', Number(low.detail.sceneCounts && low.detail.sceneCounts.objects || 0) <= Number(budgets.lowTierObjectHardCap || 1400), 'objects=' + (low.detail.sceneCounts && low.detail.sceneCounts.objects));
 check('zero pageerrors across profile scenes', allPageErrors.length === 0, allPageErrors.slice(0, 3).join(' | '));

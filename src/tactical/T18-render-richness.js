@@ -222,9 +222,9 @@ function fldRrSyncUnit(u, g) {
   if (rec.prevAlive && !u.alive && rec.wasVis && motion && !rec.fading && !rec.faded) { rec.fading = true; rec.fade = 1; }
   rec.prevAlive = u.alive;
   if (rec.fading) {
-    if (!motion) { rec.fading = false; rec.faded = true; _rrSetGroupOpacity(g, 1, false); g.visible = false; return; }
+    if (!motion) { rec.fading = false; rec.faded = true; _rrSetGroupOpacity(g, 1, false); if (rec.ring) rec.ring.visible = false; g.visible = false; return; }
     rec.fade -= dt / FLDRR.FADE_SECS;
-    if (rec.fade <= 0) { rec.fading = false; rec.faded = true; _rrSetGroupOpacity(g, 1, false); g.visible = false; return; }
+    if (rec.fade <= 0) { rec.fading = false; rec.faded = true; _rrSetGroupOpacity(g, 1, false); if (rec.ring) rec.ring.visible = false; g.visible = false; return; }
     var f = rec.fade < 0 ? 0 : rec.fade;
     g.visible = true;                                    // override the base's instant hide
     // Settle ABSOLUTELY toward the ground each frame. The base fld3dSyncUnit early-returns for a dead unit and
@@ -233,10 +233,13 @@ function fldRrSyncUnit(u, g) {
     var seatY = ((typeof fldTerrainH === "function") ? fldTerrainH(u.x, u.z) : 0) + 4;
     g.position.set(u.x, seatY - (1 - f) * 5, u.z);
     _rrSetGroupOpacity(g, f, true);
-    if (rec.ring && rec.ring.material) rec.ring.material.opacity = f * 0.85;   // a SELECTED unit's ring fades with the corpse
+    if (rec.ring) {
+      rec.ring.visible = true;
+      if (rec.ring.material) rec.ring.material.opacity = f * 0.85;   // a SELECTED unit's ring fades with the corpse
+    }
     return;
   }
-  if (!u.alive) { rec.wasVis = false; return; }   // base already hid it (dead-at-start or fog-hidden)
+  if (!u.alive) { if (rec.ring) rec.ring.visible = false; rec.wasVis = false; return; }   // base already hid it (dead-at-start or fog-hidden)
 
   rec.wasVis = g.visible;   // remember the base's visibility this living frame (drives the fade-ghost guard)
 
@@ -253,9 +256,14 @@ function fldRrSyncUnit(u, g) {
   if (rec.ring && rec.ring.material) {
     var selected = __FIELD.sel && __FIELD.sel.indexOf(u.id) >= 0;
     if (selected) {
+      rec.ring.visible = true;
       if (motion) { var p = 0.5 + 0.5 * Math.abs(Math.sin(fldRrTime() * 3.2)); rec.ring.material.opacity = 0.5 + 0.4 * p; var s = 1 + 0.06 * p; rec.ring.scale.set(s, 1, s); }
       else { rec.ring.material.opacity = 0.85; rec.ring.scale.set(1, 1, 1); }
-    } else if (rec.ring.scale.x !== 1) { rec.ring.scale.set(1, 1, 1); }
+    } else {
+      rec.ring.visible = false;
+      rec.ring.material.opacity = 0;
+      if (rec.ring.scale.x !== 1) rec.ring.scale.set(1, 1, 1);
+    }
   }
 
   // MARCH BOB — a gentle stride for a brigade actually moving (not routing)

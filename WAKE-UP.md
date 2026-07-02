@@ -1,3 +1,17 @@
+# ☀ WAKE-UP — 2026-07-02: **GROUP 5 PHASE H RENDER-RICHNESS SELECTION-RING PERF POLISH SHIPPED (D201).**
+
+**Newest (D201, 2026-07-02):** Group 5 Phase H now has a zero-new-media render-richness selection-ring performance polish slice after the media-budget guard, Intel UHD-617 profile, audio/readability pass, H2 cutaway polish, battle-colours HUD polish, terrain-overlay perf polish, visual-fidelity contact-shadow perf polish, and formation-figures perf polish. M8 battle-build was not approved or started.
+
+**What changed:** `src/tactical/T18-render-richness.js` now visibility-culls idle/dead/final-faded 3D selection rings instead of leaving opacity-zero rings visible to the renderer. Selected rings and active casualty-fade rings still render. `tools/probe-render-richness.mjs` locks idle-ring culling, selected-ring visibility, fade behavior, sim invariance, and bounded scene progress/timeout behavior. `tools/probe-intel-uhd617-profile.mjs` records/asserts high/low idle selection-ring culling.
+
+**Verified:** `node --check` for the touched T18/profile/probe files; build **GATE OK** with the known raw-embed soft warning; focused `probe-render-richness` 31/31 with 0 pageerrors and 0 texture warnings plus a visually checked 3D screenshot; adjacent `probe-media-budget` 6/6 with only the known soft warning, `probe-intel-uhd617-profile` 14/14, `probe-visual-fidelity` 26/26, `probe-formation-figures` 17/17, and `probe-presets` 26/26. Counted artifact readback found no `ok=false`, failed steps, `FATAL`, pageerrors, realErrors, or texture warnings. `git diff --check` clean.
+
+**Profile evidence after D201:** high tier: 10.14ms proxy frame burst, 75 render calls, 154 objects. Low tier: 1.74ms proxy burst, 92 calls, 134 objects. Embedded core remains 199 files / 2.418 MB raw; no new asset bytes were added.
+
+**Next recommended run:** continue Group 5 Phase H with another bounded zero-byte render/readability/perf slice, or surface a tighter media-budget decision before any PD/surviving-colours asset work. Do not add heavy footage/HDRI/model media to the core without explicit budget approval. M8 battle-build still needs Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-02: **GROUP 5 PHASE H FORMATION-FIGURES PERF POLISH SHIPPED (D200).**
 
 **Newest (D200, 2026-07-02):** Group 5 Phase H now has a zero-new-media formation-figures performance polish slice after the media-budget guard, Intel UHD-617 profile, audio/readability pass, H2 cutaway polish, battle-colours HUD polish, terrain-overlay perf polish, and visual-fidelity contact-shadow perf polish. M8 battle-build was not approved or started.
