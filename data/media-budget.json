@@ -1,0 +1,109 @@
+{
+  "schema": "cw_media_budget_v1",
+  "schemaVersion": "1.0",
+  "policy": {
+    "singleFileCore": true,
+    "optionalHdPackForHeavyMedia": true,
+    "runtimeWebDependency": false,
+    "sharedArrayBufferRequired": false,
+    "videoEnabledByDefault": false,
+    "requiresProvenanceBeforeVideo": true,
+    "softWarningIsNonFatal": true,
+    "rawEmbedSoftBytes": 1572864,
+    "rawEmbedHardBytes": 3145728,
+    "currentReviewWarnBytes": 2883584,
+    "maxCoreFiles": 260
+  },
+  "categories": [
+    {
+      "id": "portraits",
+      "status": "core-embedded",
+      "sourceDir": "assets/portraits",
+      "embedDir": "assets/embed/portraits",
+      "role": "Small officer and person badge photos for offline play.",
+      "allowedInSingleFile": true,
+      "hdPackCandidate": false
+    },
+    {
+      "id": "weapons",
+      "status": "core-embedded",
+      "sourceDir": "assets/weapons",
+      "embedDir": "assets/embed/weapons",
+      "role": "Armory card weapon cutouts.",
+      "allowedInSingleFile": true,
+      "hdPackCandidate": false
+    },
+    {
+      "id": "artillery",
+      "status": "core-embedded",
+      "sourceDir": "assets/artillery",
+      "embedDir": "assets/embed/artillery",
+      "role": "Cannon Corps card images.",
+      "allowedInSingleFile": true,
+      "hdPackCandidate": false
+    },
+    {
+      "id": "usct",
+      "status": "core-embedded",
+      "sourceDir": "assets/usct",
+      "embedDir": "assets/embed/usct",
+      "role": "USCT teaching-card photographs and engravings.",
+      "allowedInSingleFile": true,
+      "hdPackCandidate": false
+    },
+    {
+      "id": "leaders",
+      "status": "core-embedded",
+      "sourceDir": "assets/leaders",
+      "embedDir": "assets/embed/leaders",
+      "role": "Codex People card leader photographs.",
+      "allowedInSingleFile": true,
+      "hdPackCandidate": false
+    },
+    {
+      "id": "scenes",
+      "status": "core-embedded",
+      "sourceDir": "assets/scenes",
+      "embedDir": "assets/embed/scenes",
+      "role": "Pre-battle briefing scene photographs and H2 still fallback imagery.",
+      "allowedInSingleFile": true,
+      "hdPackCandidate": false
+    },
+    {
+      "id": "h2-footage",
+      "status": "locked-pending-provenance",
+      "sourceDir": null,
+      "embedDir": null,
+      "role": "Skippable moving-image cutaways.",
+      "allowedInSingleFile": false,
+      "hdPackCandidate": true,
+      "requiredBeforeEnable": [
+        "per-asset public-domain or clear-license proof",
+        "anachronism and dignity review",
+        "caption and credit text",
+        "explicit budget decision before embedding video bytes",
+        "focused probe update"
+      ]
+    },
+    {
+      "id": "hd-terrain-models",
+      "status": "optional-pack-only",
+      "sourceDir": "assets/3d",
+      "embedDir": null,
+      "role": "Higher-fidelity terrain textures, HDRI, and model files.",
+      "allowedInSingleFile": false,
+      "hdPackCandidate": true,
+      "requiredBeforeEnable": [
+        "local file provenance and license proof",
+        "optimized runtime file separate from source art",
+        "fallback in the self-contained core",
+        "no SharedArrayBuffer requirement"
+      ]
+    }
+  ],
+  "locks": {
+    "battleBuild": "This policy slice does not authorize a new battle, tactical scenario, OOB rewrite, playable USCT battle, Chattanooga, Atlanta/March, Franklin/Nashville, naval, or 1864-65 battle-build track.",
+    "tripo": "Tripo-related assets remain local-files-only and disabled unless Aaron explicitly approves generation, upload, or credit use in that chat.",
+    "h2Video": "H2 moving-image slots remain disabled until a later per-asset provenance and budget decision."
+  }
+}

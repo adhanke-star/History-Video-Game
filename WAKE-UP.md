@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-07-01: **GROUP 5 PHASE H MEDIA BUDGET GUARD SHIPPED (D193).**
+
+**Newest (D193, 2026-07-01):** Group 5 Phase H has started without approving M8 battle-build. The first slice makes the media budget executable before any heavier footage or asset work.
+
+**What changed:** `data/media-budget.json` records the self-contained core, optional-HD-pack boundary, raw embed caps, H2-video lock, Tripo lock, and no-battle-build lock. `tools/probe-media-budget.mjs` measures `assets/embed/**`, checks drift against `tools/build.mjs`, rejects undeclared/video embeds, verifies H2 video remains disabled, and writes a JSON artifact. `tools/vet-no-regression.mjs` now includes the probe. `civil_war_generals.html` rebuilt from source because the new data file enters `GAME_DATA`.
+
+**Verified:** JSON parse for media-budget/footage-cutaways/manifest; `node --check` for the new probe and suite file; build **GATE OK** with the known raw-embed soft warning; focused `probe-media-budget` 6/6; adjacent `probe-h2-cutaways` 5/0 and `probe-scenes-imagery` 16/0. Artifact readback found no `ok=false`, `FATAL`, pageerrors, realErrors, or failed steps. `git diff --check` clean.
+
+**Next recommended run:** continue Group 5 Phase H with a bounded polish/media/perf slice: surviving-colours/PD asset polish, audio polish, or Intel UHD-617 profiling. M8 battle-build still needs Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-01: **GROUP 4 BATCH/RELEASE GATE PASSED (D192).**
 
 **Newest (D192, 2026-07-01):** The planned Group 4 no-regression checkpoint is complete. This was a verification/harness milestone only: no game source, data, generated HTML, battle roster, combat model, save schema, or historical content changed.
