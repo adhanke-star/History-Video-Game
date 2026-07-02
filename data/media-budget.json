@@ -14,6 +14,20 @@
     "currentReviewWarnBytes": 2883584,
     "maxCoreFiles": 260
   },
+  "performanceProfile": {
+    "targetHardware": "Intel UHD Graphics 617 / 8 GB RAM floor",
+    "probe": "tools/probe-intel-uhd617-profile.mjs",
+    "representativeScenario": "chickamauga",
+    "method": "Browser WebGL profile over the built single-file game. Timing values are warning-only because headless Chrome may report SwiftShader or host GPU rather than the exact player GPU.",
+    "budgets": {
+      "lowTierRenderCallHardCap": 360,
+      "lowTierObjectHardCap": 1400,
+      "proxyFrameWarningMs": 33.4,
+      "launchWarningMs": 8000,
+      "timingWarningsAreNonFatal": true
+    },
+    "mediaRule": "While raw embeds are above the soft warning budget, run this profile before adding new core media or upgrading asset tiers; route heavier footage, HDRI, and model work to an optional HD pack unless Aaron explicitly approves a core-budget exception."
+  },
   "categories": [
     {
       "id": "portraits",

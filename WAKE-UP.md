@@ -1,3 +1,17 @@
+# ☀ WAKE-UP — 2026-07-01: **GROUP 5 PHASE H INTEL UHD-617 PROFILE SHIPPED (D194).**
+
+**Newest (D194, 2026-07-01):** Group 5 Phase H now has a real local performance/readout guard after D193's media-budget guard. M8 battle-build was not approved or started.
+
+**What changed:** `data/media-budget.json` now carries the Intel UHD Graphics 617 / 8 GB RAM `performanceProfile` policy. New `tools/probe-intel-uhd617-profile.mjs` records the core asset footprint, WebGL renderer, high/low 3D launch and render-burst timings, render calls, scene object counts, nonblank pixel checks, low-tier formation/peg gating, pageerrors, and texture warnings. `tools/vet-no-regression.mjs` enrolls the probe. `civil_war_generals.html` rebuilt from source because the media-budget data changed.
+
+**Profile evidence:** local Chrome used `ANGLE (Intel, ANGLE Metal Renderer: Intel(R) UHD Graphics 617, Unspecified Version)`. High tier on Chickamauga: 3407.9ms launch, 9.92ms proxy frame burst, 115 render calls, 195 scene objects. Low tier: 343ms launch, 2.48ms proxy burst, 107 calls, 144 objects, and formation figures gated out. Embedded core remains 199 files / 2.418 MB raw; generated HTML is about 7.023 MB.
+
+**Verified:** media-budget JSON parse; `node --check` for the new profile probe and suite file; build **GATE OK** with the known raw-embed soft warning; focused `probe-intel-uhd617-profile` 10/10 with only the expected soft warning; adjacent `probe-media-budget` 6/6, `probe-h2-cutaways` 5/0, and `probe-formation-figures` 16/0. Artifact readback found no `ok=false`, `FATAL`, pageerrors, realErrors, texture warnings, or failed steps. `git diff --check` clean.
+
+**Next recommended run:** continue Group 5 Phase H with a bounded polish/media/perf slice guided by `tools/shots/probe-intel-uhd617-profile.json`: audio/readability polish or tightly budgeted surviving-colours/PD asset polish. Do not add heavy footage/HDRI/model media to the core without an explicit budget decision. M8 battle-build still needs Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-01: **GROUP 5 PHASE H MEDIA BUDGET GUARD SHIPPED (D193).**
 
 **Newest (D193, 2026-07-01):** Group 5 Phase H has started without approving M8 battle-build. The first slice makes the media budget executable before any heavier footage or asset work.

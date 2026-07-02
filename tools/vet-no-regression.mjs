@@ -74,6 +74,7 @@ const SUITE = [
   ['leaders imagery', 'tools/probe-leaders-imagery.mjs'],
   ['scenes imagery', 'tools/probe-scenes-imagery.mjs'],
   ['media budget', 'tools/probe-media-budget.mjs'],
+  ['intel uhd617 profile', 'tools/probe-intel-uhd617-profile.mjs'],
   ['h2 cutaways', 'tools/probe-h2-cutaways.mjs'],
   ['field sandbox', 'tools/probe-field.mjs'],
   ['bull run', 'tools/probe-bullrun.mjs'],
