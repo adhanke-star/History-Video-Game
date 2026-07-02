@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-07-02: **SOLDIER'S STORY FRANCIS A. WALLER SLICE SHIPPED (D217).**
+
+**Newest (D217, 2026-07-02):** Priority 1 Phase I Soldier's Story scale-out continues. Phase H remains parked from D214; do not restart the automatic zero-byte polish loop. Reopen Phase H media only after an explicit media-budget/profile decision.
+
+**What changed:** Francis A. Waller is now the tenth citation-grade Soldier's Story replacement. He replaces the generated Gettysburg / Iron Brigade NCO slot (`ss:gettysburg:US:us_iron_bde:nco`) with a Verified Corporal, Company I / 6th Wisconsin Infantry, Railroad Cut / 2nd Mississippi flag-capture story. Army.mil verifies the rank/unit/date/citation, the NPS Gettysburg article supplies the Wallar spelling and memory caveat, and the NPS Gettysburg OOB places the 6th Wisconsin in the Iron Brigade / First Division / I Corps. The record asserts no higher rank at Gettysburg, no portrait asset, and neutral inferred ratings.
+
+**Verified:** `node tools/import-soldier-replacements.mjs --check data/soldier-replacements.json` passed with 10 Verified records; `node --check` passed for touched JS/probe files; build **GATE OK** with the known raw-embed soft warning; focused `probe-loot-survival` wrote an `ok=true` artifact with 11/11 and 0 pageerrors; adjacent `probe-women-in-war` 8/8, `probe-save-slots` 9/9, and `probe-bridge` 6/6, all with zero pageerrors. JSON readback found all four artifacts `ok=true` with no failed steps or page errors. Full `npm run vet:noreg` was not run under D176 focused-slice batching.
+
+**Next recommended run:** start Priority 1, another bounded Phase I Soldier's Story named-person/story slice. Keep D152-D158/D172/D214/D215/D216/D217 source honesty, no fabricated people/ranks/units, no unsupported portrait claims, and keep women-in-war separate. Media-budget locks persist. M8 battle-build still needs Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-02: **SOLDIER'S STORY ORION P. HOWE SLICE SHIPPED (D216).**
 
 **Newest (D216, 2026-07-02):** Priority 1 Phase I Soldier's Story scale-out continues. Phase H remains parked from D214; do not restart the automatic zero-byte polish loop. Reopen Phase H media only after an explicit media-budget/profile decision.

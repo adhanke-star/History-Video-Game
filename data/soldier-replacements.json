@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "decision": "D216",
+    "decision": "D217",
     "schema": "cw_soldier_replacements_v1",
     "scope": "Citation-grade replacements for generated Soldier's Story representative rows.",
     "provenance": "Inferred",
-    "note": "D216 adds the ninth narrow sourced replacement slice after D214 parked Group 5 and resumed Phase I. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
+    "note": "D217 adds the tenth narrow sourced replacement slice after D214 parked Group 5 and resumed Phase I. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
   },
   "schema": "cw_soldier_replacements_v1",
   "records": [
@@ -688,6 +688,74 @@
       ],
       "sourceNote": "CMOHS verifies Howe's Musician rank, Company C / 55th Illinois, and May 19 Vicksburg action. Illinois State Archives supports the wounded drummer/cartridge-message story; NPS places the 55th Illinois in Blair's Second Division, XV Corps, at the Stockade Redan assault. This record asserts no higher rank at Vicksburg and no portrait asset. Ratings stay neutral",
       "bio": "Orion P. Howe was a fourteen-year-old musician in Company C, 55th Illinois Infantry. During the May 19, 1863 assault at Vicksburg, he was wounded while carrying a cartridge message to William T. Sherman for Col. Oscar Malmborg's men. This replacement ties the Blair's Division generated row to a documented drummer/ammunition-runner story and keeps the Vicksburg lesson on courage inside a failed assault, not a romantic breakthrough."
+    },
+    {
+      "pid": "person_gettysburg_us_6wi_waller",
+      "replacePid": "ss:gettysburg:US:us_iron_bde:nco",
+      "name": "Francis A. Waller",
+      "side": "US",
+      "rank": "Corporal",
+      "branch": "inf",
+      "role": "noncommissioned officer",
+      "year": 1863,
+      "provenance": "Verified",
+      "team": {
+        "side": "US",
+        "army": "Army of the Potomac",
+        "corps": "I Corps",
+        "division": "First Division",
+        "brigade": "First Brigade (Iron Brigade)",
+        "regiment": "6th Wisconsin Infantry",
+        "company": "Company I"
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Civil War (M - Z Index) Medal of Honor recipients",
+          "author": "The United States Army",
+          "repository": "Army.mil",
+          "locator": "WALLER, FRANCIS A. citation",
+          "url": "https://www.army.mil/medalofhonor/citations2.html",
+          "type": "secondary",
+          "note": "Verifies Waller's Corporal rank, Company I / 6th Wisconsin unit, Gettysburg July 1 action, and citation for capturing the 2d Mississippi flag."
+        },
+        {
+          "title": "Faces of Gettysburg - Francis Ashbury Wallar - Medal of Honor Winner",
+          "author": "D. Scott Hartwig",
+          "repository": "Gettysburg National Military Park",
+          "locator": "Blog article, February 2, 2012",
+          "url": "https://npsgnmp.wordpress.com/2012/02/02/faces-of-gettysburg-francis-ashbury-wallar-medal-of-honor-winner/",
+          "type": "secondary",
+          "note": "Uses the Wallar spelling; describes the Railroad Cut charge, flag capture, promotion from corporal to sergeant, and later memory dispute."
+        },
+        {
+          "title": "The Army of the Potomac at Gettysburg",
+          "author": "National Park Service",
+          "repository": "Gettysburg National Military Park",
+          "locator": "First Corps / First Division / First Brigade (Iron Brigade)",
+          "url": "https://www.nps.gov/gett/learn/historyculture/aop-orderofbattle.htm",
+          "type": "secondary",
+          "note": "Places the 6th Wisconsin Infantry under Lt. Col. Rufus R. Dawes in the First Brigade (Iron Brigade), First Division, I Corps."
+        }
+      ],
+      "sourceNote": "Army.mil verifies Francis A. Waller's Corporal rank, Company I / 6th Wisconsin unit, and Gettysburg July 1 citation. NPS Gettysburg, using the Wallar spelling, supports the Railroad Cut flag-capture story and memory caveat; NPS OOB places the regiment in the Iron Brigade. The record asserts no higher rank at Gettysburg and no portrait asset.",
+      "bio": "Francis A. Waller, spelled Wallar by Gettysburg National Military Park, was a corporal in Company I, 6th Wisconsin Infantry. On July 1, 1863, during the Railroad Cut fighting at Gettysburg, he was credited with capturing the 2nd Mississippi Infantry flag and was promoted to sergeant for conspicuous bravery. This replacement keeps the story in the Iron Brigade NCO row while noting that later veterans disputed parts of the memory trail."
     }
   ],
   "_template": {

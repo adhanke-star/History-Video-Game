@@ -197,11 +197,11 @@ const SETUP = `(() => {
       return { people:reg.people.length, brigades:reg.brigades, authored:reg.authored, generated:reg.generated, first:sample.name };
     });
 
-    step('D216 REPLACEMENTS: nine canonical sourced records overlay generated slots and hostile packs still reject', function(){
+    step('D217 REPLACEMENTS: ten canonical sourced records overlay generated slots and hostile packs still reject', function(){
       var C=mkC('US'); _t1InitAll(C);
       var original=GAME_DATA['soldier-replacements'];
       if(!original || original.schema!=='cw_soldier_replacements_v1' || !Array.isArray(original.records)) throw new Error('missing D152 canonical pack');
-      if(original.records.length!==9) throw new Error('canonical D216 pack should ship exactly nine records, got '+original.records.length);
+      if(original.records.length!==10) throw new Error('canonical D217 pack should ship exactly ten records, got '+original.records.length);
       var canonByPid={}, canonReplace={};
       for(var cr=0;cr<original.records.length;cr++){ canonByPid[original.records[cr].pid]=original.records[cr]; canonReplace[original.records[cr].replacePid]=1; }
       if(!canonByPid.person_bullrun_us_2ri_rhodes || canonByPid.person_bullrun_us_2ri_rhodes.replacePid!=='ss:bullrun1:US:us_burnside:pvt') throw new Error('missing D154 Rhodes canonical record: '+JSON.stringify(original.records));
@@ -213,15 +213,16 @@ const SETUP = `(() => {
       if(!canonByPid.person_shiloh_us_61il_stillwell || canonByPid.person_shiloh_us_61il_stillwell.replacePid!=='ss:shiloh:US:us_prentiss:nco') throw new Error('missing D214 Stillwell canonical record: '+JSON.stringify(original.records));
       if(!canonByPid.person_antietam_us_battery_b_cook || canonByPid.person_antietam_us_battery_b_cook.replacePid!=='ss:antietam:US:us_battery_b:nco') throw new Error('missing D215 Cook canonical record: '+JSON.stringify(original.records));
       if(!canonByPid.person_vicksburg_us_55il_howe || canonByPid.person_vicksburg_us_55il_howe.replacePid!=='ss:vicksburg:US:us_blair_stockade:pvt') throw new Error('missing D216 Howe canonical record: '+JSON.stringify(original.records));
+      if(!canonByPid.person_gettysburg_us_6wi_waller || canonByPid.person_gettysburg_us_6wi_waller.replacePid!=='ss:gettysburg:US:us_iron_bde:nco') throw new Error('missing D217 Waller canonical record: '+JSON.stringify(original.records));
       GAME_DATA['soldier-replacements']={schema:'cw_soldier_replacements_v1',records:[]};
       var rawBase=ssPersonRegistry(C);
       GAME_DATA['soldier-replacements']=original;
       var canonical=ssValidateSoldierReplacementPack(original,{basePeople:rawBase.people});
-      if(!canonical.ok || canonical.records.length!==9) throw new Error('canonical D216 pack should validate against raw generated registry: '+JSON.stringify(canonical));
+      if(!canonical.ok || canonical.records.length!==10) throw new Error('canonical D217 pack should validate against raw generated registry: '+JSON.stringify(canonical));
       var base=ssPersonRegistry(C);
       if(base.people.length!==rawBase.people.length) throw new Error('canonical replacement should preserve registry length');
-      if(base.replacements.applied!==9 || base.replacements.rejected!==0) throw new Error('canonical replacement should apply nine rows cleanly: '+JSON.stringify(base.replacements));
-      if(base.generated!==rawBase.generated-9 || base.authored!==rawBase.authored+9) throw new Error('canonical replacement should move nine rows generated->authored: '+JSON.stringify({raw:{a:rawBase.authored,g:rawBase.generated},base:{a:base.authored,g:base.generated}}));
+      if(base.replacements.applied!==10 || base.replacements.rejected!==0) throw new Error('canonical replacement should apply ten rows cleanly: '+JSON.stringify(base.replacements));
+      if(base.generated!==rawBase.generated-10 || base.authored!==rawBase.authored+10) throw new Error('canonical replacement should move ten rows generated->authored: '+JSON.stringify({raw:{a:rawBase.authored,g:rawBase.generated},base:{a:base.authored,g:base.generated}}));
       var rhodesOld=ssFindPerson(C,'ss:bullrun1:US:us_burnside:pvt');
       var rhodes=ssFindPerson(C,'person_bullrun_us_2ri_rhodes');
       if(!rhodes || !rhodesOld || rhodesOld.pid!==rhodes.pid) throw new Error('Rhodes alias lookup failed');
@@ -289,6 +290,14 @@ const SETUP = `(() => {
       if(!howe.bio || howe.bio.indexOf('Vicksburg')<0 || howe.bio.indexOf('cartridge')<0 || howe.bio.indexOf('Blair')<0 || !howe.sourceNote || howe.sources.length<5) throw new Error('Howe source/bio payload missing');
       if(howe.sourceNote.indexOf('no higher rank')<0 || howe.sourceNote.indexOf('no portrait')<0) throw new Error('Howe honesty caveats missing: '+howe.sourceNote);
       if(howe.portrait) throw new Error('Howe should not assert an unverified portrait: '+JSON.stringify(howe.portrait));
+      var wallerOld=ssFindPerson(C,'ss:gettysburg:US:us_iron_bde:nco');
+      var waller=ssFindPerson(C,'person_gettysburg_us_6wi_waller');
+      if(!waller || !wallerOld || wallerOld.pid!==waller.pid) throw new Error('Waller alias lookup failed');
+      if(waller.generated || !waller.replacement || waller.provenance!=='Verified' || waller.name!=='Francis A. Waller') throw new Error('Waller row not sourced/verified: '+JSON.stringify(waller));
+      if(waller.rank!=='Corporal' || waller.side!=='US' || waller.branch!=='inf' || waller.team.regiment!=='6th Wisconsin Infantry' || waller.team.company!=='Company I' || waller.team.corps!=='I Corps' || waller.team.division!=='First Division' || waller.team.brigade.indexOf('Iron Brigade')<0) throw new Error('Waller rank/unit mismatch: '+JSON.stringify(waller.team));
+      if(!waller.bio || waller.bio.indexOf('Gettysburg')<0 || waller.bio.indexOf('Railroad Cut')<0 || waller.bio.indexOf('2nd Mississippi')<0 || waller.bio.indexOf('memory')<0 || !waller.sourceNote || waller.sources.length<3) throw new Error('Waller source/bio payload missing');
+      if(waller.sourceNote.indexOf('Wallar')<0 || waller.sourceNote.indexOf('no higher rank')<0 || waller.sourceNote.indexOf('no portrait')<0) throw new Error('Waller honesty caveats missing: '+waller.sourceNote);
+      if(waller.portrait) throw new Error('Waller should not assert an unverified portrait: '+JSON.stringify(waller.portrait));
       var target=findPerson(rawBase,function(p){ return p.generated && p.side==='US' && p.pid.indexOf(':pvt')>0 && !canonReplace[p.pid] && p.team && p.team.army; });
       var authored=findPerson(rawBase,function(p){ return !p.generated && p.provenance==='Verified'; });
       if(!target) throw new Error('no generated replacement target found');
@@ -327,7 +336,7 @@ const SETUP = `(() => {
       }
       var restored=ssPersonRegistry(C);
       if(restored.generated!==base.generated || restored.authored!==base.authored) throw new Error('canonical pack restore changed registry');
-      return { canonicalRecords:original.records.length, rhodes:rhodes.pid, mccarter:mccarter.pid, watkins:watkins.pid, chamberlain:chamberlain.pid, cushing:cushing.pid, vincent:vincent.pid, stillwell:stillwell.pid, cook:cook.pid, howe:howe.pid, target:target.pid, applied:base.replacements.applied, hostileRejected:true };
+      return { canonicalRecords:original.records.length, rhodes:rhodes.pid, mccarter:mccarter.pid, watkins:watkins.pid, chamberlain:chamberlain.pid, cushing:cushing.pid, vincent:vincent.pid, stillwell:stillwell.pid, cook:cook.pid, howe:howe.pid, waller:waller.pid, target:target.pid, applied:base.replacements.applied, hostileRejected:true };
     });
 
     step('JOURNEY: play-as-anyone start enables survival and stores a saveable selected person without mutating canonical data', function(){
@@ -530,6 +539,16 @@ const SETUP = `(() => {
       if(howeTxt.indexOf('55th Illinois Infantry')<0 || howeTxt.indexOf('Company C')<0 || howeTxt.indexOf('XV Corps')<0 || howeTxt.indexOf('Vicksburg')<0 || howeTxt.indexOf('cartridge')<0 || howeTxt.indexOf('Blair')<0 || howeTxt.indexOf('Source note:')<0 || howeTxt.indexOf('Sources (5)')<0) throw new Error('Howe detail source/bio/unit payload missing: '+howeTxt);
       if(howeTxt.indexOf('no higher rank')<0 || howeTxt.indexOf('no portrait')<0) throw new Error('Howe honesty caveats missing from detail: '+howeTxt);
       if(howeDetail.querySelector('.ss-person-portrait')) throw new Error('Howe should not render an unverified portrait');
+      var wallerCard=cardByPid(root,'person_gettysburg_us_6wi_waller');
+      if(!wallerCard) throw new Error('Waller sourced replacement card missing');
+      if(wallerCard.textContent.indexOf('Francis A. Waller')<0 || wallerCard.textContent.indexOf('Sourced')<0 || wallerCard.textContent.indexOf('Verified')<0) throw new Error('Waller card source/provenance missing: '+wallerCard.textContent);
+      wallerCard.querySelector('[data-ss-pick]').click();
+      var wallerDetail=root.querySelector('#ssPersonDetailCard');
+      if(!wallerDetail || wallerDetail.getAttribute('data-ss-detail-pid')!=='person_gettysburg_us_6wi_waller') throw new Error('Waller detail did not select');
+      var wallerTxt=wallerDetail.textContent;
+      if(wallerTxt.indexOf('6th Wisconsin Infantry')<0 || wallerTxt.indexOf('Company I')<0 || wallerTxt.indexOf('Iron Brigade')<0 || wallerTxt.indexOf('Gettysburg')<0 || wallerTxt.indexOf('Railroad Cut')<0 || wallerTxt.indexOf('2nd Mississippi')<0 || wallerTxt.indexOf('Source note:')<0 || wallerTxt.indexOf('Sources (3)')<0) throw new Error('Waller detail source/bio/unit payload missing: '+wallerTxt);
+      if(wallerTxt.indexOf('Wallar')<0 || wallerTxt.indexOf('no higher rank')<0 || wallerTxt.indexOf('no portrait')<0 || wallerTxt.indexOf('memory')<0) throw new Error('Waller honesty caveats missing from detail: '+wallerTxt);
+      if(wallerDetail.querySelector('.ss-person-portrait')) throw new Error('Waller should not render an unverified portrait');
       var vincentCard=cardByPid(root,'person_gettysburg_us_vincent_bde');
       if(!vincentCard) throw new Error('Vincent sourced replacement card missing');
       if(vincentCard.textContent.indexOf('Strong Vincent')<0 || vincentCard.textContent.indexOf('Sourced')<0 || vincentCard.textContent.indexOf('Verified')<0) throw new Error('Vincent card source/provenance missing: '+vincentCard.textContent);
