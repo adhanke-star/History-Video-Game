@@ -1883,13 +1883,22 @@ function fld3dUnitMarkerResources(T) {
       front: new T.BoxGeometry(96, 10, 5),
       flag: new T.PlaneGeometry(22, 14),
       pole: new T.CylinderGeometry(1, 1, 40, 5),
-      topperUS: new T.BoxGeometry(11, 11, 11),
-      topperCS: new T.ConeGeometry(8, 14, 4),
       ring: new T.RingGeometry(54, 62, 24)
     }
   };
   __FIELD._unit3dMarkerResources = r;
   return r;
+}
+function fld3dAddMarkerTopper(T, g, u, res) {
+  if (!T || !g || !u || !res || !res.geo) return null;
+  var topper = g.getObjectByName && g.getObjectByName("topper");
+  if (topper) return topper;
+  var geo = u.side === "US"
+    ? (res.geo.topperUS || (res.geo.topperUS = new T.BoxGeometry(11, 11, 11)))
+    : (res.geo.topperCS || (res.geo.topperCS = new T.ConeGeometry(8, 14, 4)));
+  topper = new T.Mesh(geo, new T.MeshLambertMaterial({ color: "#ece4d0" }));
+  topper.position.set(0, 47, 0); topper.name = "topper"; g.add(topper);
+  return topper;
 }
 function fld3dBuildUnits() {
   var T = window.THREE;
@@ -1918,10 +1927,7 @@ function fld3dBuildUnits() {
     flag.position.set(0, 34, 0); flag.name = "flag"; g.add(flag);
     var pole = new T.Mesh(res.geo.pole, new T.MeshLambertMaterial({ color: "#2a2018" })); pole.position.y = 20; pole.name = "pole"; g.add(pole);
     // non-color side cue (CVD-safe): a cube finial for the Union, a pyramid for the Confederacy
-    var topper = u.side === "US"
-      ? new T.Mesh(res.geo.topperUS, new T.MeshLambertMaterial({ color: "#ece4d0" }))
-      : new T.Mesh(res.geo.topperCS, new T.MeshLambertMaterial({ color: "#ece4d0" }));
-    topper.position.set(0, 47, 0); topper.name = "topper"; g.add(topper);
+    if (!(typeof fldLow === "function" && fldLow())) fld3dAddMarkerTopper(T, g, u, res);
     var ring = new T.Mesh(res.geo.ring, new T.MeshBasicMaterial({ color: "#ffe9a8", side: T.DoubleSide, transparent: true, opacity: 0 }));
     ring.rotation.x = -Math.PI / 2; ring.position.y = 1; ring.name = "ring"; g.add(ring);
     __FIELD.groups.add(g); __FIELD._u3d[u.id] = g;
@@ -1941,7 +1947,12 @@ function fld3dSyncUnit(u, g) {
   if (slab) { slab.scale.set(w / 96, 1, d / 26); slab.material.color.copy(u.side === "US" ? __FIELD._colUS : __FIELD._colCS); if (u.state === "routing") slab.material.color.multiplyScalar(0.55); }
   if (front) { front.scale.x = w / 96; front.position.z = -d / 2 - 3; }
   if (flag) flag.position.y = u.state === "routing" ? 14 : 34;
-  if (topper) topper.visible = !(typeof fldLow === "function" && fldLow());
+  if (typeof fldLow === "function" && fldLow()) {
+    if (topper) topper.visible = false;
+  } else {
+    if (!topper) topper = fld3dAddMarkerTopper(T, g, u, fld3dUnitMarkerResources(T));
+    if (topper) topper.visible = true;
+  }
   if (ring) ring.material.opacity = (__FIELD.sel.indexOf(u.id) >= 0) ? 0.85 : 0;
 }
 function fld3dRender() {

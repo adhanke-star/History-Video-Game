@@ -233,6 +233,8 @@ function profileScript(label, quality) {
           bySide[u.side].push(ref);
         }
         if (refs.length < 2) return out;
+        var topperCount = 0;
+        for (var tc = 0; tc < refs.length; tc++) if (refs[tc].topper) topperCount++;
         var topperRefs = (bySide.US && bySide.US.length >= 2) ? bySide.US : ((bySide.CS && bySide.CS.length >= 2) ? bySide.CS : refs);
         function pairFor(name) {
           return name === 'topper' ? topperRefs : refs;
@@ -248,14 +250,15 @@ function profileScript(label, quality) {
         out = {
           found: true,
           cache: !!__FIELD._unit3dMarkerResources,
+          topperCount: topperCount,
           slabGeoShared: sameGeo('slab'),
           frontGeoShared: sameGeo('front'),
           ringGeoShared: sameGeo('ring'),
           poleGeoShared: sameGeo('pole'),
-          topperGeoShared: sameGeo('topper'),
+          topperGeoShared: topperCount >= 2 ? sameGeo('topper') : null,
           frontMatShared: sameMat('front'),
           poleMatShared: sameMat('pole'),
-          topperMatShared: sameMat('topper'),
+          topperMatShared: topperCount >= 2 ? sameMat('topper') : null,
           slabMatShared: sameMat('slab')
         };
       } catch(e) { out.error = String(e && e.message || e); }
@@ -463,17 +466,19 @@ check('base 3D unit markers share immutable geometry while keeping per-unit mate
   high.detail.markerResources.frontGeoShared === true && low.detail.markerResources.frontGeoShared === true &&
   high.detail.markerResources.ringGeoShared === true && low.detail.markerResources.ringGeoShared === true &&
   high.detail.markerResources.poleGeoShared === true && low.detail.markerResources.poleGeoShared === true &&
-  high.detail.markerResources.topperGeoShared === true && low.detail.markerResources.topperGeoShared === true &&
+  high.detail.markerResources.topperCount >= 2 && high.detail.markerResources.topperGeoShared === true &&
+  low.detail.markerResources.topperCount === 0 && low.detail.markerResources.topperGeoShared === null &&
   high.detail.markerResources.frontMatShared === false && low.detail.markerResources.frontMatShared === false &&
   high.detail.markerResources.poleMatShared === false && low.detail.markerResources.poleMatShared === false &&
-  high.detail.markerResources.topperMatShared === false && low.detail.markerResources.topperMatShared === false &&
+  high.detail.markerResources.topperMatShared === false && low.detail.markerResources.topperMatShared === null &&
   high.detail.markerResources.slabMatShared === false && low.detail.markerResources.slabMatShared === false,
   JSON.stringify({ high: high.detail.markerResources, low: low.detail.markerResources }));
-check('low tier trims decorative marker toppers while preserving the flag/pole side read',
+check('low tier omits decorative marker topper allocation while preserving the flag/pole side read',
   high.detail.unitRender && low.detail.unitRender &&
   high.detail.unitRender.formationFiguresMode === 'shared-instanced' &&
-  low.detail.unitRender.topper === true &&
-  low.detail.unitRender.topperVisible === false &&
+  high.detail.unitRender.topper === true &&
+  low.detail.unitRender.topper === false &&
+  low.detail.unitRender.topperVisible === null &&
   low.detail.unitRender.flagVisible === true &&
   low.detail.unitRender.poleVisible === true,
   JSON.stringify({ high: high.detail.unitRender, low: low.detail.unitRender }));
