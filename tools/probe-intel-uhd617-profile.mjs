@@ -178,6 +178,9 @@ function profileScript(label, quality) {
         var shIndex = g.userData && g.userData._vf ? g.userData._vf.shIndex : -1;
         var slab = g.getObjectByName('slab');
         var ring = g.getObjectByName('ring');
+        var flag = g.getObjectByName('flag');
+        var pole = g.getObjectByName('pole');
+        var topper = g.getObjectByName('topper');
         out = {
           found: true,
           unitId: u.id,
@@ -197,6 +200,12 @@ function profileScript(label, quality) {
           selectionRing: !!ring,
           selectionRingVisible: ring ? ring.visible !== false : null,
           selectionRingOpacity: ring && ring.material ? ring.material.opacity : null,
+          flag: !!flag,
+          flagVisible: flag ? flag.visible !== false : null,
+          pole: !!pole,
+          poleVisible: pole ? pole.visible !== false : null,
+          topper: !!topper,
+          topperVisible: topper ? topper.visible !== false : null,
           slabVisible: slab ? slab.visible !== false : null
         };
       } catch(e) { out.error = String(e && e.message || e); }
@@ -460,6 +469,14 @@ check('base 3D unit markers share immutable geometry while keeping per-unit mate
   high.detail.markerResources.topperMatShared === false && low.detail.markerResources.topperMatShared === false &&
   high.detail.markerResources.slabMatShared === false && low.detail.markerResources.slabMatShared === false,
   JSON.stringify({ high: high.detail.markerResources, low: low.detail.markerResources }));
+check('low tier trims decorative marker toppers while preserving the flag/pole side read',
+  high.detail.unitRender && low.detail.unitRender &&
+  high.detail.unitRender.formationFiguresMode === 'shared-instanced' &&
+  low.detail.unitRender.topper === true &&
+  low.detail.unitRender.topperVisible === false &&
+  low.detail.unitRender.flagVisible === true &&
+  low.detail.unitRender.poleVisible === true,
+  JSON.stringify({ high: high.detail.unitRender, low: low.detail.unitRender }));
 function smokeDrawRangeOk(profile) {
   const d = profile.detail || {};
   const s = d.atmoSmokeAfterBurst || {};

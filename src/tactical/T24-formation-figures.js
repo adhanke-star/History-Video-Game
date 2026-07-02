@@ -194,6 +194,12 @@ function fldFfMarkerVisible(g, visible) {
   }
 }
 
+function fldFfApplyLowMarkerTrim(g) {
+  if (!g || !g.getObjectByName) return;
+  var topper = g.getObjectByName("topper");
+  if (topper) topper.visible = !(typeof fldLow === "function" && fldLow());
+}
+
 function fldFfPose(u) {
   if (!u || u.state === "routing") return "routing";
   if (u.order && u.order.type === "charge") return "charge";
@@ -272,6 +278,7 @@ function fldFfSyncUnit(u, g) {
     var glb = g.getObjectByName && g.getObjectByName("unitGlbModel");
     if (glb && glb.visible) return;                                // T23 owns base-marker visibility while a GLB hero mesh is active.
     fldFfMarkerVisible(g, true);
+    fldFfApplyLowMarkerTrim(g);
     return;
   }
   var ff = fldFfEnsure(u, g);

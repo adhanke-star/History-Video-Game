@@ -1935,12 +1935,13 @@ function fld3dSyncUnit(u, g) {
   if (!u.alive) return;
   var y = fldTerrainH(u.x, u.z);
   g.position.set(u.x, y + 4, u.z); g.rotation.y = -u.facing; // align the block front (local -z) to sim forward
-  var slab = g.getObjectByName("slab"), front = g.getObjectByName("front"), ring = g.getObjectByName("ring"), flag = g.getObjectByName("flag");
+  var slab = g.getObjectByName("slab"), front = g.getObjectByName("front"), ring = g.getObjectByName("ring"), flag = g.getObjectByName("flag"), topper = g.getObjectByName("topper");
   var w = (u.formation === "column" ? 34 : 96) * (0.5 + 0.5 * u.men / u.maxMen);
   var d = (u.formation === "column" ? 58 : 26);
   if (slab) { slab.scale.set(w / 96, 1, d / 26); slab.material.color.copy(u.side === "US" ? __FIELD._colUS : __FIELD._colCS); if (u.state === "routing") slab.material.color.multiplyScalar(0.55); }
   if (front) { front.scale.x = w / 96; front.position.z = -d / 2 - 3; }
   if (flag) flag.position.y = u.state === "routing" ? 14 : 34;
+  if (topper) topper.visible = !(typeof fldLow === "function" && fldLow());
   if (ring) ring.material.opacity = (__FIELD.sel.indexOf(u.id) >= 0) ? 0.85 : 0;
 }
 function fld3dRender() {
