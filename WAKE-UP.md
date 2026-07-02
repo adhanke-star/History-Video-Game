@@ -1,3 +1,17 @@
+# ☀ WAKE-UP — 2026-07-02: **GROUP 5 PHASE H TERRAIN OVERLAY PERF POLISH SHIPPED (D198).**
+
+**Newest (D198, 2026-07-02):** Group 5 Phase H now has a zero-new-media terrain-readability performance polish slice after the media-budget guard, Intel UHD-617 profile, audio/readability pass, H2 cutaway polish, and battle-colours HUD polish. M8 battle-build was not approved or started.
+
+**What changed:** `src/tactical/T22-terrain-readability.js` now keeps default 3D Hillshade as the lean path: optional contour and color-by-height overlay geometry is lazy-built only when the player selects that mode, then hidden/shown afterward. The visual default stays the same, selected Contours/Color-by-height still work, and the source rebuild refreshed `civil_war_generals.html`. `tools/probe-terrain-readability.mjs` locks the no-resident-overlay default, and `tools/probe-intel-uhd617-profile.mjs` now records terrain-overlay residency in the Intel profile artifact.
+
+**Verified:** `node --check` for the touched T22/profile/probe files; build **GATE OK** with the known raw-embed soft warning; focused `probe-terrain-readability` 29/29 with 0 pageerrors; adjacent `probe-media-budget` 6/6 with only the known soft warning, `probe-intel-uhd617-profile` 11/11, `probe-visual-fidelity` 26/26, and `probe-h0-tactical-hud` 3/3. Counted artifact readback found no `ok=false`, failed steps, `FATAL`, pageerrors, realErrors, or texture warnings. `git diff --check` clean.
+
+**Profile evidence after D198:** high tier: 10.16ms proxy frame burst, 115 render calls, 185 objects. Low tier: 2.77ms proxy burst, 107 calls, 141 objects. Embedded core remains 199 files / 2.418 MB raw; no new asset bytes were added.
+
+**Next recommended run:** continue Group 5 Phase H with another bounded zero-byte render/readability/perf slice, or surface a tighter media-budget decision before any PD/surviving-colours asset work. Do not add heavy footage/HDRI/model media to the core without explicit budget approval. M8 battle-build still needs Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-02: **GROUP 5 PHASE H BATTLE COLOURS HUD READABILITY POLISH SHIPPED (D197).**
 
 **Newest (D197, 2026-07-02):** Group 5 Phase H now has another zero-new-media readability polish slice after the media-budget guard, Intel UHD-617 profile, audio/readability pass, and H2 cutaway polish. M8 battle-build was not approved or started.

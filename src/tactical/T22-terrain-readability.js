@@ -16,8 +16,9 @@
           · COLOR-BY-HEIGHT — a CVD-safe VIRIDIS hypsometric tint (Aaron's pick),
             low→high, layered over the relief shading (shaded-relief + tint, the
             classic topo combo).
-        The 3D hypsometric + contour layers are built ONCE as overlay objects and
-        just .visible-toggled on a mode change (snappy, no rebuild, no camera jerk).
+        The 3D hypsometric + contour layers are lazy-built the first time a
+        player selects that mode, then .visible-toggled afterward. Default
+        hillshade carries no hidden optional overlay geometry.
 
      2. AN ELEVATION LEGEND + ON-HOVER READOUT — a compact always-on panel (Aaron's
         pick): the live mode, a low→high gradient bar, a per-pointer elevation+type
@@ -45,9 +46,10 @@
    animation) → no reduceMotion concern (the T17/T18/T21 convention). VIRIDIS is the
    reference CVD-safe ramp; the relief/contours/key encode by luminance + shape +
    labels, never hue alone. The 2D relief/tint are cached canvases (one blit/frame);
-   3D adds one overlay mesh + one LineSegments. fldLow() trims contour density + label
-   count + the 2D grid. New CanvasTextures are drawn BEFORE wrap and left at default
-   (linear) encoding (r128 has no SRGBColorSpace — the T21 lesson).
+   3D adds optional overlay geometry only after the player asks for contours or
+   color-by-height. fldLow() trims contour density + label count + the 2D grid.
+   New CanvasTextures are drawn BEFORE wrap and left at default (linear) encoding
+   (r128 has no SRGBColorSpace — the T21 lesson).
    =========================================================================== */
 
 var FLDTR = {
@@ -93,7 +95,9 @@ function fldCycleElevMode() {
 function fldSetElevMode(m) {
   if (FLDTR.MODES.indexOf(m) < 0) m = "hillshade";
   _fldTrPersist(m);
-  // 3D: flip the prebuilt overlays (no rebuild). 2D: the cached canvases re-key + redraw next frame.
+  // 3D: build optional overlays only when selected, then flip visibility.
+  // 2D: the cached canvases re-key + redraw next frame.
+  fldTrEnsure3dMode(m);
   fldTrApply3dVisibility();
   fldTrRefreshLegend();
   try { if (typeof fldAnnounce === "function") fldAnnounce("Elevation: " + fldElevModeLabel(m) + "."); } catch (e) {}
@@ -186,9 +190,9 @@ function fldTrPresentTypes() {
 }
 
 /* ===========================================================================
-   3D — HYPSOMETRIC OVERLAY + CONTOURS + SWAMP/TOWN/FORT DECOR. Built once after
-   fld3dBuildTerrain (so we read T18+T21's final vertex colours + the heights),
-   tracked + disposed here, .visible-toggled per mode.
+   3D — HYPSOMETRIC OVERLAY + CONTOURS + SWAMP/TOWN/FORT DECOR. Optional elevation
+   overlays are lazy-built after fld3dBuildTerrain (so we read T18+T21's final
+   vertex colours + the heights), then tracked + disposed here.
    =========================================================================== */
 function fldTrDispose3d() {
   var objs = [FLDTR_S.hyp3d, FLDTR_S.contour3d, FLDTR_S.decor3d];
@@ -213,7 +217,17 @@ function fldTrBuild3d() {
   FLDTR_S.hr = null;                                  // fresh terrain -> recompute the range
   fldTrDispose3d();
   var grd = __FIELD.ground; if (!grd || !grd.geometry) return;
-  // 1. HYPSOMETRIC OVERLAY — clone the ground geometry, recolour by viridis-of-height, lay it just above.
+  // 1/2. OPTIONAL ELEVATION OVERLAYS — build only the current non-default mode.
+  // Hidden contour/hypsometric geometry is not created for default hillshade, which
+  // keeps the Intel UHD-617 profile lean until the player asks for those overlays.
+  try { fldTrEnsure3dMode(fldElevMode()); } catch (e0) { FLDTR_S.errN++; }
+  // 3. SWAMP / TOWN / FORT decoration (always shown when present; not an elevation mode)
+  try { fldTrBuildDecor3d(T); } catch (e3) { FLDTR_S.errN++; }
+  fldTrApply3dVisibility();
+  fldTrSyncLegendKey();                                // a phase advance changes the sector -> refresh the legend key
+}
+function fldTrBuildHyp3d(T, grd) {
+  if (!T || !grd || !grd.geometry || FLDTR_S.hyp3d) return;
   try {
     var geo = grd.geometry.clone();
     var posA = geo.attributes.position, cnt = posA.count, cols = new Float32Array(cnt * 3);
@@ -229,12 +243,14 @@ function fldTrBuild3d() {
     hmesh.position.copy(grd.position); hmesh.position.y += 0.6; hmesh.renderOrder = -0.4;
     __FIELD.scene.add(hmesh); FLDTR_S.hyp3d = hmesh;
   } catch (e) { FLDTR_S.errN++; }
-  // 2. CONTOUR LINES + ELEVATION LABELS
-  try { fldTrBuildContours3d(T, grd); } catch (e2) { FLDTR_S.errN++; }
-  // 3. SWAMP / TOWN / FORT decoration (always shown when present; not an elevation mode)
-  try { fldTrBuildDecor3d(T); } catch (e3) { FLDTR_S.errN++; }
-  fldTrApply3dVisibility();
-  fldTrSyncLegendKey();                                // a phase advance changes the sector -> refresh the legend key
+}
+function fldTrEnsure3dMode(m) {
+  var T = window.THREE;
+  if (!T || typeof __FIELD === "undefined" || !__FIELD || !__FIELD.scene || !__FIELD.ground || !__FIELD.ground.geometry) return;
+  if (m === "hypsometric" && !FLDTR_S.hyp3d) fldTrBuildHyp3d(T, __FIELD.ground);
+  if (m === "contours" && !FLDTR_S.contour3d) {
+    try { fldTrBuildContours3d(T, __FIELD.ground); } catch (e) { FLDTR_S.errN++; }
+  }
 }
 function fldTrApply3dVisibility() {
   var m = fldElevMode();

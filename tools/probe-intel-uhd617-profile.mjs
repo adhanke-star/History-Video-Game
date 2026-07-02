@@ -185,6 +185,18 @@ function profileScript(label, quality) {
       } catch(e) { out.error = String(e && e.message || e); }
       return out;
     }
+    function terrainOverlayResidency() {
+      var out = { available: false, hypExists: null, contourExists: null, decorExists: null };
+      try {
+        if (typeof FLDTR_S === 'undefined' || !FLDTR_S) return out;
+        out.available = true;
+        out.hypExists = !!FLDTR_S.hyp3d;
+        out.contourExists = !!FLDTR_S.contour3d;
+        out.decorExists = !!FLDTR_S.decor3d;
+        out.mode = (typeof fldElevMode === 'function') ? fldElevMode() : '';
+      } catch(e) { out.error = String(e && e.message || e); }
+      return out;
+    }
     function glInfo(gl) {
       var info = { maxTextureSize: 0, maxRenderbufferSize: 0, pointSizeRange: [] };
       try {
@@ -227,6 +239,7 @@ function profileScript(label, quality) {
       out.units = __FIELD.units ? __FIELD.units.length : 0;
       out.sceneCounts = countScene(__FIELD.scene);
       out.unitRender = firstUnitRender();
+      out.terrainOverlay = terrainOverlayResidency();
       out.ffOff = typeof fldFfOff === 'function' ? !!fldFfOff() : null;
       out.rrOff = typeof fldRrOff === 'function' ? !!fldRrOff() : null;
       out.vfOff = typeof fldVfOff === 'function' ? !!fldVfOff() : null;
@@ -320,6 +333,12 @@ check('high profile launched and rendered nonblank', high.ok === true, high.deta
 check('low profile launched and rendered nonblank', low.ok === true, low.detail && low.detail.error || '');
 check('low tier reports fldLow() true and high tier reports false', high.detail.fldLow === false && low.detail.fldLow === true, 'high=' + high.detail.fldLow + ' low=' + low.detail.fldLow);
 check('low tier gates out formation figures and peg ranks', low.detail.ffOff === true && low.detail.unitRender && low.detail.unitRender.formationFigures !== true && low.detail.unitRender.pegsVisible !== true, JSON.stringify(low.detail.unitRender || {}));
+check('default hillshade profile does not prebuild optional terrain overlays',
+  high.detail.terrainOverlay && low.detail.terrainOverlay &&
+  high.detail.terrainOverlay.available === true && low.detail.terrainOverlay.available === true &&
+  high.detail.terrainOverlay.hypExists === false && high.detail.terrainOverlay.contourExists === false &&
+  low.detail.terrainOverlay.hypExists === false && low.detail.terrainOverlay.contourExists === false,
+  JSON.stringify({ high: high.detail.terrainOverlay, low: low.detail.terrainOverlay }));
 check('low tier stays below hard render-call cap', Number(low.detail.renderInfo && low.detail.renderInfo.calls || 0) <= Number(budgets.lowTierRenderCallHardCap || 360), 'calls=' + (low.detail.renderInfo && low.detail.renderInfo.calls));
 check('low tier stays below hard scene-object cap', Number(low.detail.sceneCounts && low.detail.sceneCounts.objects || 0) <= Number(budgets.lowTierObjectHardCap || 1400), 'objects=' + (low.detail.sceneCounts && low.detail.sceneCounts.objects));
 check('zero pageerrors across profile scenes', allPageErrors.length === 0, allPageErrors.slice(0, 3).join(' | '));

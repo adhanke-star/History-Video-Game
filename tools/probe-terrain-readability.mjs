@@ -5,10 +5,10 @@ import "./guard-probe-browser.mjs";
 //  - the module + its 5 by-assignment wrappers (fld3dInit/fld3dBuildTerrain/fld2dInit/fldPointerMove/fldExit)
 //    are installed AND every prior marker (._wx/._atmo/._rr/._vf) is carried forward (the chain stays intact);
 //  - THE 3 MODES render + the toggle reverts:
-//      hillshade (default) -> 3D hyp + contour overlays BOTH hidden (only T21 relief; no double-count);
+//      hillshade (default) -> 3D hyp + contour overlays NOT resident (only T21 relief; no double-count);
 //      contours            -> a "vfTrContourLines" LineSegments (count>0) + elevation-label sprites are SHOWN;
 //      color-by-height     -> a viridis "vfTrHyp" overlay SHOWN whose LOW vertex is darker than its HIGH vertex;
-//      back to hillshade   -> both overlays hidden again (the toggle reverts to the default look);
+//      back to hillshade   -> any built overlays hidden again (the toggle reverts to the default look);
 //  - LEGEND + HOVER: a #fldElevLegend panel with the mode chip + gradient + key; the #fldElevHover readout
 //    reports the right elevation + terrain TYPE for the hill / swamp / town / fort the sandbox carries;
 //  - ALL TOPOGRAPHY DISTINCT: the swamp/town/fort decor group is built (decor3d children > 0) and the legend
@@ -151,7 +151,7 @@ function sceneScript(seed, opts) {
         function lineCount(grp){ var n=0; if(grp) grp.traverse(function(o){ if(o.name==='vfTrContourLines' && o.geometry && o.geometry.attributes.position) n=o.geometry.attributes.position.count; }); return n; }
         function labelCount(grp){ var n=0; if(grp) grp.traverse(function(o){ if(o.name==='vfTrLabel') n++; }); return n; }
         function decorCount(){ var g=FLDTR_S.decor3d, n=0; if(g) g.traverse(function(o){ if(o!==g) n++; }); return n; }
-        // DEFAULT (hillshade): both overlays hidden
+        // DEFAULT (hillshade): optional overlays are not resident until selected.
         out.hillshade = { hyp: !!(FLDTR_S.hyp3d && FLDTR_S.hyp3d.visible), con: !!(FLDTR_S.contour3d && FLDTR_S.contour3d.visible), hypExists: !!FLDTR_S.hyp3d, conExists: !!FLDTR_S.contour3d, decor: decorCount() };
         // CONTOURS
         fldSetElevMode('contours');
@@ -253,8 +253,8 @@ async function runScene(page, label, seed, opts, shared) {
     R.ok && R.wrappers && R.wrappers.init && R.wrappers.bt && R.wrappers.i2 && R.wrappers.pm && R.wrappers.ex && R.wrappers.chain && R.wrappers.fns, JSON.stringify(R.wrappers || {}));
 
   // 3 modes
-  check('mode HILLSHADE (default): the hyp + contour overlays both EXIST but are HIDDEN (only T21 relief — no double-count)',
-    R.ok && R.hillshade.hypExists && R.hillshade.conExists && R.hillshade.hyp === false && R.hillshade.con === false, JSON.stringify(R.hillshade || {}));
+  check('mode HILLSHADE (default): optional hyp + contour overlays are NOT resident until selected (only T21 relief — no double-count)',
+    R.ok && R.hillshade.hypExists === false && R.hillshade.conExists === false && R.hillshade.hyp === false && R.hillshade.con === false, JSON.stringify(R.hillshade || {}));
   check('mode CONTOURS: a "vfTrContourLines" LineSegments is SHOWN with vertices > 0 + elevation-label sprites',
     R.ok && R.contours.conVisible === true && R.contours.hypVisible === false && R.contours.lines > 0 && R.contours.labels > 0, JSON.stringify(R.contours || {}));
   check('mode COLOR-BY-HEIGHT: a viridis "vfTrHyp" overlay is SHOWN whose LOW vertex reads darker than its HIGH vertex',
