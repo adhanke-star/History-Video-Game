@@ -281,14 +281,20 @@ function fldVfDecorateUnits() {
     if (g.userData._vf) continue;                                   // already decorated this (re)build
     g.userData._vf = { shIndex: shadowLayer ? i : -1 };
     // (4) rank map on the slab (white-based ⇒ multiplies the side colour; CVD-safe luminance pattern)
-    var slab = g.getObjectByName("slab");
-    if (slab && slab.material && FLDVF_S.rankTex) { try { slab.material.map = FLDVF_S.rankTex; slab.material.needsUpdate = true; } catch (e) { FLDVF_S.errN++; } }
+    fldVfApplyRankMap(g);
     // (5) peg ranks (Max tier fallback): keep them when slabs remain visible, skip hidden residents when T24 figures replace the slab.
     if (fldVfShouldBuildPegs(u, g)) { try { fldVfAddPegs(T, u, g); } catch (e3) { FLDVF_S.errN++; } }
   }
 }
+function fldVfApplyRankMap(g) {
+  var slab = g && g.getObjectByName && g.getObjectByName("slab");
+  if (slab && slab.material && FLDVF_S.rankTex && slab.material.map !== FLDVF_S.rankTex) {
+    try { slab.material.map = FLDVF_S.rankTex; slab.material.needsUpdate = true; } catch (e) { FLDVF_S.errN++; }
+  }
+}
 function fldVfSyncUnit(u, g) {
   if (!u || !g || !g.userData || !g.userData._vf) return;
+  fldVfApplyRankMap(g);
   var vf = g.userData._vf;
   if (!u.alive || !g.visible || fldVfOff()) { fldVfSetShadow(vf, null, null, false); return; }   // dying/dead/fog/off: no global shadow leak
   var lineW = (u.formation === "column" ? 34 : 96) * (0.5 + 0.5 * u.men / u.maxMen);

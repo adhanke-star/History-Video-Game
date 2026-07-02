@@ -207,6 +207,15 @@ function _rrSetGroupOpacity(g, op, transparent) {
     }
   });
 }
+function fldRrEnsureFadeBody(u, g) {
+  if (!u || !g || !window.THREE) return;
+  if (g.getObjectByName && g.getObjectByName("slab")) return;
+  try {
+    if (typeof fld3dAddMarkerBody === "function" && typeof fld3dUnitMarkerResources === "function") {
+      fld3dAddMarkerBody(window.THREE, g, u, fld3dUnitMarkerResources(window.THREE));
+    }
+  } catch (e) { FLDRR_S.errN++; }
+}
 function fldRrSyncUnit(u, g) {
   if (!u || !g) return;
   // NOTE: no early-return on renderRich="off" — fldRrMotion() returns false when off, which drives the
@@ -233,6 +242,7 @@ function fldRrSyncUnit(u, g) {
     // dependent) — re-base off the analytic terrain so the dip is bounded to the intended ~5 yards.
     var seatY = ((typeof fldTerrainH === "function") ? fldTerrainH(u.x, u.z) : 0) + 4;
     g.position.set(u.x, seatY - (1 - f) * 5, u.z);
+    fldRrEnsureFadeBody(u, g);
     _rrSetGroupOpacity(g, f, true);
     if (rec.ring) {
       rec.ring.visible = true;

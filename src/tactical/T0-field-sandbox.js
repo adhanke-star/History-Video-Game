@@ -1888,6 +1888,23 @@ function fld3dUnitMarkerResources(T) {
   __FIELD._unit3dMarkerResources = r;
   return r;
 }
+function fld3dAddMarkerBody(T, g, u, res) {
+  if (!T || !g || !u || !res || !res.geo) return { slab: null, front: null };
+  var col = u.side === "US" ? "#3a5a9a" : "#9a4a3a";
+  var slab = g.getObjectByName && g.getObjectByName("slab");
+  if (!slab) {
+    slab = new T.Mesh(res.geo.slab, new T.MeshLambertMaterial({ color: col }));
+    slab.name = "slab"; g.add(slab);
+  }
+  slab.visible = true;
+  var front = g.getObjectByName && g.getObjectByName("front");
+  if (!front) {
+    front = new T.Mesh(res.geo.front, new T.MeshLambertMaterial({ color: "#15110b" }));
+    front.position.z = -14; front.name = "front"; g.add(front);
+  }
+  front.visible = true;
+  return { slab: slab, front: front };
+}
 function fld3dEnsureSelectionRing(T, g, res) {
   if (!T || !g) return null;
   var ring = g.getObjectByName && g.getObjectByName("ring");
@@ -1978,6 +1995,12 @@ function fld3dFinishMarkerPoleLayerFrame() {
   var L = __FIELD && __FIELD._markerPoleLayer;
   if (L && L.mesh) L.mesh.visible = (L.active || 0) > 0;
 }
+function fld3dNeedsMarkerBody(u, g) {
+  try {
+    if (typeof fldFfShowFor === "function" && fldFfShowFor(u, g)) return false;
+  } catch (e) {}
+  return true;
+}
 function fld3dNeedsMarkerPole(u, g) {
   try {
     if (typeof fldFfShowFor === "function" && fldFfShowFor(u, g)) return false;
@@ -2011,11 +2034,8 @@ function fld3dBuildUnits() {
     var u = __FIELD.units[i];
     var g = new T.Group();
     g.userData._markerPoleSlot = i;
+    if (fld3dNeedsMarkerBody(u, g)) fld3dAddMarkerBody(T, g, u, res);
     var col = u.side === "US" ? "#3a5a9a" : "#9a4a3a";
-    var slab = new T.Mesh(res.geo.slab, new T.MeshLambertMaterial({ color: col }));
-    slab.name = "slab"; g.add(slab);
-    var front = new T.Mesh(res.geo.front, new T.MeshLambertMaterial({ color: "#15110b" }));
-    front.position.z = -14; front.name = "front"; g.add(front);
     var flag = new T.Mesh(res.geo.flag, new T.MeshBasicMaterial({ color: col, side: T.DoubleSide }));
     flag.position.set(0, 34, 0); flag.name = "flag"; g.add(flag);
     if (fld3dNeedsMarkerPole(u, g) && !fld3dUseSharedMarkerPoleLayer()) fld3dAddMarkerPole(T, g, res);
@@ -2033,6 +2053,13 @@ function fld3dSyncUnit(u, g) {
   var y = fldTerrainH(u.x, u.z);
   g.position.set(u.x, y + 4, u.z); g.rotation.y = -u.facing; // align the block front (local -z) to sim forward
   var slab = g.getObjectByName("slab"), front = g.getObjectByName("front"), ring = g.getObjectByName("ring"), flag = g.getObjectByName("flag"), pole = g.getObjectByName("pole"), topper = g.getObjectByName("topper");
+  if (fld3dNeedsMarkerBody(u, g)) {
+    var body = fld3dAddMarkerBody(T, g, u, fld3dUnitMarkerResources(T));
+    slab = body.slab || slab; front = body.front || front;
+  } else {
+    if (slab) slab.visible = false;
+    if (front) front.visible = false;
+  }
   var w = (u.formation === "column" ? 34 : 96) * (0.5 + 0.5 * u.men / u.maxMen);
   var d = (u.formation === "column" ? 58 : 26);
   if (slab) { slab.scale.set(w / 96, 1, d / 26); slab.material.color.copy(u.side === "US" ? __FIELD._colUS : __FIELD._colCS); if (u.state === "routing") slab.material.color.multiplyScalar(0.55); }

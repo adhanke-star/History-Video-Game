@@ -160,6 +160,8 @@ function sceneScript(scenario, seed, opts) {
         out.unit.pegs = !!pegs; out.unit.pegCount = pegs ? pegs.count : 0;
         out.unit.pegsVisible = !!(pegs && pegs.visible !== false);
         out.unit.pegSphere = !!(pegs && pegs.geometry && pegs.geometry.boundingSphere);
+        out.unit.slab = !!slab;
+        out.unit.slabVisible = slab ? slab.visible !== false : null;
         out.unit.rankMap = !!(slab && slab.material && slab.material.map);
       }
 
@@ -242,13 +244,15 @@ async function runScene(page, label, scenario, seed, opts, shared) {
   check('decor: one shared "vfShadowLayer" InstancedMesh grounds each brigade (gap ~0.5yd, positive width/depth)',
     R.ok && R.unit.shadow && R.unit.shadowInstanced === true && R.unit.shadowIndex >= 0 && R.unit.shadowGroundGap !== null && R.unit.shadowGroundGap < 2 && R.unit.shadowScaleX > 8 && R.unit.shadowScaleY > 8,
     JSON.stringify({ instanced:R.unit && R.unit.shadowInstanced, index:R.unit && R.unit.shadowIndex, count:R.unit && R.unit.shadowCount, gap:R.unit && R.unit.shadowGroundGap, sx:R.unit && R.unit.shadowScaleX, sy:R.unit && R.unit.shadowScaleY }));
-  check('decor: the slab carries a stylized rank MAP (massed-infantry read)', R.ok && R.unit.rankMap === true, 'rankMap=' + (R.unit && R.unit.rankMap));
-  check('decor (Max tier, default high): T24 formation figures replace the slab without hidden resident vfPegs',
-    R.ok && R.unit.pegs === false,
-    'pegs=' + (R.unit && R.unit.pegs) + ' visible=' + (R.unit && R.unit.pegsVisible));
+  check('decor (Max tier, default high): T24 formation figures replace the slab body without hidden resident vfPegs',
+    R.ok && R.unit.slab === false && R.unit.rankMap !== true && R.unit.pegs === false,
+    'slab=' + (R.unit && R.unit.slab) + ' rankMap=' + (R.unit && R.unit.rankMap) + ' pegs=' + (R.unit && R.unit.pegs) + ' visible=' + (R.unit && R.unit.pegsVisible));
   check('decor (Max tier fallback): formationFigures="off" restores a visible "vfPegs" InstancedMesh with count>0 + bounding sphere',
-    PEG.ok && PEG.unit && PEG.unit.pegs === true && PEG.unit.pegsVisible === true && PEG.unit.pegCount > 0 && PEG.unit.pegSphere === true,
-    'pegs=' + (PEG.unit && PEG.unit.pegs) + ' visible=' + (PEG.unit && PEG.unit.pegsVisible) + ' count=' + (PEG.unit && PEG.unit.pegCount) + ' sphere=' + (PEG.unit && PEG.unit.pegSphere));
+    PEG.ok && PEG.unit && PEG.unit.slab === true && PEG.unit.rankMap === true && PEG.unit.pegs === true && PEG.unit.pegsVisible === true && PEG.unit.pegCount > 0 && PEG.unit.pegSphere === true,
+    'slab=' + (PEG.unit && PEG.unit.slab) + ' rankMap=' + (PEG.unit && PEG.unit.rankMap) + ' pegs=' + (PEG.unit && PEG.unit.pegs) + ' visible=' + (PEG.unit && PEG.unit.pegsVisible) + ' count=' + (PEG.unit && PEG.unit.pegCount) + ' sphere=' + (PEG.unit && PEG.unit.pegSphere));
+  check('decor (Max tier fallback): restored slab carries the stylized rank MAP (massed-infantry read)',
+    PEG.ok && PEG.unit && PEG.unit.slab === true && PEG.unit.slabVisible === true && PEG.unit.rankMap === true,
+    'slab=' + (PEG.unit && PEG.unit.slab) + ' visible=' + (PEG.unit && PEG.unit.slabVisible) + ' rankMap=' + (PEG.unit && PEG.unit.rankMap));
 
   // peg tier gate
   check('peg tier gate: on fldLow() the peg ranks are GATED OUT (rank map + instanced shadow still present)',

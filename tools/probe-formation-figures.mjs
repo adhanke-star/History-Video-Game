@@ -123,7 +123,9 @@ function sceneScript(label, opts) {
         rifleCount:rifles ? (meta.active || 0) : 0,
         bayonetCount:bay ? (meta.active || 0) : 0,
         layerDrawCount:bodies ? bodies.count : 0,
+        slab:!!slab,
         slabVisible:slab ? slab.visible !== false : null,
+        front:!!front,
         frontVisible:front ? front.visible !== false : null,
         flagVisible:flag ? flag.visible !== false : null,
         pole:!!pole,
@@ -237,8 +239,8 @@ async function runScene(browser, label, opts) {
   check('high tier: infantry group gains visible procedural formation figures',
     H.ok && H.initial && H.initial.ffVisible && H.initial.active >= 10 && H.initial.bodies && H.initial.heads && H.initial.rifles && H.initial.bayonets,
     JSON.stringify(H.initial || {}));
-  check('high tier: figures replace the slab/front/pole/topper while preserving flag cue',
-    H.ok && H.initial && H.initial.slabVisible === false && H.initial.frontVisible === false && H.initial.pole === false && H.initial.topper === false && H.initial.flagVisible === true,
+  check('high tier: figures replace the slab/front/pole/topper without hidden resident marker body while preserving flag cue',
+    H.ok && H.initial && H.initial.slab === false && H.initial.front === false && H.initial.slabVisible === null && H.initial.frontVisible === null && H.initial.pole === false && H.initial.topper === false && H.initial.flagVisible === true,
     JSON.stringify(H.initial || {}));
   check('high tier: T21 peg ranks are not resident when richer figures replace the slab',
     H.ok && H.initial && H.initial.pegsResident === false && H.initial.pegsVisible !== true,
