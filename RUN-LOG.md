@@ -8,6 +8,18 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## REMAINING-WORK PRIORITY LADDER REFRESH — 2026-07-02 (D207, DOCS-ONLY)
+**D207 is a routing/docs/memory refresh, not a gameplay milestone.** It prioritizes all remaining queued work after D206 and updates the startup documents so future sessions begin from the same order.
+- **Priority 1:** continue Group 5 Phase H with one more bounded zero-byte render/readability/perf polish slice guided by `tools/shots/probe-intel-uhd617-profile.json`.
+- **Priority 2:** make an explicit media-budget/profile decision before any real surviving-colours/PD asset work, H2 footage, HDRI/model media, or optional-pack work.
+- **Priority 3:** Group 6 meta/deferred tooling: reusable historical-data layer, source organization, hotpath profiling, embedded-media budget tooling.
+- **Priority 4:** later Phase I Soldier's Story scale-out: citation-grade named bios/portraits/unit detail and richer career trajectory.
+- **Priority 5:** GM/Transfer leftovers: Transfer only after honest `theater` fields; AI-GM-to-outcome wiring requires a separate no-fudge decision.
+- **Priority 6:** battle-build last: M8 requires Aaron go/no-go; Chattanooga, Atlanta/March, Franklin/Nashville, and USCT playable battles remain last unless Aaron explicitly reorders.
+- **Deferred/v2:** Phase D full hex tactical mode and custom-battle phase authoring/editor.
+- **Contracts:** no code/data/generated HTML/media changed; no probes weakened; no battle-build approval granted; no media-budget approval granted.
+- **Verification:** docs-only gate: `node tools/build.mjs`, `git diff --check`, and stale-routing scans after edit. No browser probe was needed because no runtime source/data changed.
+
 ## GROUP 5 · PHASE H LOW-TIER MARKER TOPPER RESOURCE POLISH — 2026-07-02 (D206, FOCUSED-GATED)
 **The fourteenth Group 5 Phase H slice is complete.** D206 does not approve or start M8 battle-build work. It uses the D205 Intel profile to take a zero-new-media low-tier resource step: the low-quality 3D marker path no longer allocates the hidden decorative topper mesh/geometry that D205 already removed from the visible low-tier read.
 - **What changed:** `src/tactical/T0-field-sandbox.js` adds `fld3dAddMarkerTopper()` and lazy-creates topper geometry only when a high-quality marker needs the non-color cube/cone fallback. Low-quality rebuilds now create no `topper` child; flag, pole, slab, and front strip remain visible. `tools/probe-intel-uhd617-profile.mjs` records `topperCount` and asserts high tier keeps shared topper fallback resources while low tier has no resident topper allocation.

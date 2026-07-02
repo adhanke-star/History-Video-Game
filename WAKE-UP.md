@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-07-02: **D207 PRIORITY LADDER REFRESHED; NEXT RUN IS GROUP 5 ZERO-BYTE PHASE H POLISH.**
+
+**Newest (D207, 2026-07-02):** D207 is a docs/memory routing refresh on top of D206. It did not change game code, data, generated HTML, media, battle rosters, combat, saves, or probes.
+
+**What changed:** the remaining-work queue is now explicitly prioritized across the startup docs. Priority 1 is another bounded Group 5 zero-byte Phase H render/readability/perf slice guided by `tools/shots/probe-intel-uhd617-profile.json`. Priority 2 is an explicit media-budget/profile decision before any real surviving-colours/PD assets, H2 footage, HDRI/model media, or optional-pack work. Priority 3 is Group 6 meta/deferred tooling. Priority 4 is later Soldier's Story scale-out. Priority 5 is narrow GM/Transfer leftovers only after honest `theater` fields. Priority 6 is battle-build work last and only after Aaron go/no-go.
+
+**Verified:** docs-only gate: `node tools/build.mjs`, `git diff --check`, and stale-routing scans were run after the edit. No browser probe was needed because no runtime source/data changed.
+
+**Next recommended run:** start Priority 1 in a fresh session. Confirm full-access/non-seatbelt, set `TMPDIR="$PWD/.tmp"`, choose a bounded zero-byte Group 5 Phase H polish slice from the Intel UHD-617 profile artifact, run focused gates, inspect stdout and `tools/shots/*.json`, sync docs, commit, push, then stop with the next prompt.
+
+---
+
 # ☀ WAKE-UP — 2026-07-02: **GROUP 5 PHASE H LOW-TIER MARKER TOPPER RESOURCE POLISH SHIPPED (D206).**
 
 **Newest (D206, 2026-07-02):** Group 5 Phase H now has another zero-new-media resource/performance polish slice after the media-budget guard, Intel UHD-617 profile, audio/readability pass, H2 cutaway polish, battle-colours HUD polish, terrain-overlay perf polish, visual-fidelity contact-shadow perf polish, formation-figures perf polish, render-richness selection-ring perf polish, base marker geometry polish, hidden peg-fallback resource polish, atmospheric smoke draw-range polish, and low-tier marker-topper trim. M8 battle-build was not approved or started.
@@ -406,7 +418,7 @@
 
 **Verified:** JSON parse ratings/generals; build GATE OK with `no-fudge ✓`; `node --check` for touched JS/probes; focused `probe-command` 79 steps / 0 pageerrors and `probe-oob` 17 steps / 0 pageerrors after one cold-load timeout before evaluation; adjacent `probe-ratings` 21 steps / 0 pageerrors, `probe-bridge` 6 steps / 0 pageerrors, and `probe-desk` 13 steps / 0 pageerrors. JSON artifact inspection clean. Full battery remains deferred to the H0 batch/release gate.
 
-**Later status:** D174 completed the Group 3 H0 batch/release gate. Next recommended run is Group 4 — remaining Phase F/G non-battle content systems. Q5 Chattanooga, Atlanta/March, Franklin/Nashville, and Q6 USCT playable battles remain LAST.
+**Later status:** D174 completed the Group 3 H0 batch/release gate; D192 later completed Group 4; D207 top block supersedes this older "next" marker. Q5 Chattanooga, Atlanta/March, Franklin/Nashville, and Q6 USCT playable battles remain LAST.
 
 ---
 
@@ -414,7 +426,7 @@
 
 **Newest operating rule (D171, 2026-06-30):** auto-condense is only a safety net for finishing one bounded milestone. After every clean committed+pushed milestone, and before starting a new execution group/phase or browser-heavy batch gate, stop and return a paste-ready next-chat prompt unless Aaron explicitly orders same-chat continuation.
 
-**Current grouped order:** Group 1's first Soldier's Story scale-out slice shipped as D172; Group 2's first GM leftover shipped as D173; Group 3 H0 batch/release gate shipped as D174; next is Group 4 remaining Phase F/G non-battle content systems; then Phase H polish/media/perf; meta/deferred tooling; last battle-build queue. Q5 Chattanooga + Q6 USCT playable battles remain LAST unless Aaron explicitly reorders.
+**Historical grouped order at D171; superseded by the D207 top block for current next work:** Group 1's first Soldier's Story scale-out slice shipped as D172; Group 2's first GM leftover shipped as D173; Group 3 H0 batch/release gate shipped as D174; Group 4 later completed as D192; Group 5 Phase H is active; Group 6 meta/deferred tooling follows; last battle-build queue remains locked. Q5 Chattanooga + Q6 USCT playable battles remain LAST unless Aaron explicitly reorders.
 
 **Prompt contents required:** `cd`, fetch/status/pull, current HEAD, exact next item, read order, locks, gate sequence, and clean-stop rule.
 

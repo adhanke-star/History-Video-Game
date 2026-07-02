@@ -26,39 +26,41 @@ These rules apply to Codex, Claude, Cline, DeepSeek, and any other model impleme
 
 ## 2 · STATE AS OF THIS HANDOFF (run i — verified + committed)
 
-> **LIVE CLOSE-OUT REFRESH (2026-07-02 D206): read `HANDOFF.md` top block first.** D206 continued Group 5 Phase H without approving M8 battle-build. It shipped a zero-new-media low-tier marker-topper resource polish slice after D193-D205's media-budget/profile/readability/perf guards: low-quality 3D unit markers now skip allocation of the decorative white cube/cone topper mesh/geometry that D205 already hid, while preserving slab/front/flag/pole side readability. High tier still lazy-creates the non-color topper cue for the fallback marker path. `probe-intel-uhd617-profile` records/asserts high-tier topper fallback resources plus low-tier `topperCount:0` and flag/pole preservation. Post-D206 Intel profile stayed green: high tier 7.92ms proxy frame burst / 75 render calls / 148 scene objects, and low tier 2.46ms / 84 calls / 126 objects. Current embedded core remains 199 files / 2.418 MB raw, above the existing soft warning but below hard/review caps. Next locked item is another bounded Group 5 Phase H polish/media/perf slice guided by `tools/shots/probe-intel-uhd617-profile.json`, preferably zero-byte render/readability/perf polish while raw embeds remain above the soft warning. Tightly budgeted PD/surviving-colours asset work should happen only after an explicit media-budget decision. M8 battle-build still needs Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain last.
+> **LIVE CLOSE-OUT REFRESH (2026-07-02 D207): read `HANDOFF.md` top block first.** D207 is a docs/memory routing refresh on top of D206, not a gameplay milestone. It locks the remaining-work ladder for future sessions: Priority 1 = another bounded Group 5 zero-byte Phase H render/readability/perf polish slice guided by `tools/shots/probe-intel-uhd617-profile.json`; Priority 2 = explicit media-budget/profile decision before any surviving-colours/PD asset, H2 footage, HDRI/model, or optional-pack work; Priority 3 = Group 6 meta/deferred tooling; Priority 4 = later Soldier's Story scale-out; Priority 5 = GM/Transfer leftovers only after honest `theater` data; Priority 6 = battle-build last and only after Aaron go/no-go. D206 remains the latest implementation milestone: low-quality 3D unit markers skip allocation of the decorative topper mesh/geometry; post-D206 Intel profile stayed green, and embedded core remains 199 files / 2.418 MB raw, above the existing soft warning but below hard/review caps. M8 battle-build still needs Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain last.
 
-> **SUPERSEDED PRIOR REFRESH (2026-07-02):** D205 added the low-tier marker-topper trim after D193-D204's media-budget/profile/readability/perf guards. Kept only as historical context; use the D206 refresh above for the live state and next task.
+> **SUPERSEDED PRIOR REFRESH (2026-07-02):** D206 continued Group 5 Phase H without approving M8 battle-build. It shipped a zero-new-media low-tier marker-topper resource polish slice after D193-D205's media-budget/profile/readability/perf guards. Kept only as historical context; use the D207 refresh above for the live priority ladder and next task.
 
-> **SUPERSEDED PRIOR REFRESH (2026-07-02):** D204 added the atmospheric smoke draw-range polish pass after D193-D203's media-budget/profile/readability/perf guards. Kept only as historical context; use the D206 refresh above for the live state and next task.
+> **SUPERSEDED PRIOR REFRESH (2026-07-02):** D205 added the low-tier marker-topper trim after D193-D204's media-budget/profile/readability/perf guards. Kept only as historical context; use the D207 refresh above for the live state and next task.
 
-> **SUPERSEDED PRIOR REFRESH (2026-07-02):** D203 added the hidden peg-fallback resource polish pass after D193-D202's media-budget/profile/readability/perf guards. Kept only as historical context; use the D206 refresh above for the live state and next task.
+> **SUPERSEDED PRIOR REFRESH (2026-07-02):** D204 added the atmospheric smoke draw-range polish pass after D193-D203's media-budget/profile/readability/perf guards. Kept only as historical context; use the D207 refresh above for the live state and next task.
 
-> **SUPERSEDED PRIOR REFRESH (2026-07-02):** D202 added the base marker geometry performance polish pass after D193-D201's media-budget/profile/readability/perf guards. Kept only as historical context; use the D206 refresh above for the live state and next task.
+> **SUPERSEDED PRIOR REFRESH (2026-07-02):** D203 added the hidden peg-fallback resource polish pass after D193-D202's media-budget/profile/readability/perf guards. Kept only as historical context; use the D207 refresh above for the live state and next task.
 
-> **SUPERSEDED PRIOR REFRESH (2026-07-02):** D201 added the render-richness selection-ring performance polish pass after D193-D200's media-budget/profile/readability/perf guards. Kept only as historical context; use the D206 refresh above for the live state and next task.
+> **SUPERSEDED PRIOR REFRESH (2026-07-02):** D202 added the base marker geometry performance polish pass after D193-D201's media-budget/profile/readability/perf guards. Kept only as historical context; use the D207 refresh above for the live state and next task.
 
-> **SUPERSEDED PRIOR REFRESH (2026-07-02):** D200 added the formation-figures performance polish pass after D193-D199's media-budget/profile/readability/perf guards. Kept only as historical context; use the D206 refresh above for the live state and next task.
+> **SUPERSEDED PRIOR REFRESH (2026-07-02):** D201 added the render-richness selection-ring performance polish pass after D193-D200's media-budget/profile/readability/perf guards. Kept only as historical context; use the D207 refresh above for the live state and next task.
 
-> **SUPERSEDED PRIOR REFRESH (2026-07-02):** D199 added the visual-fidelity contact-shadow performance polish pass after D193-D198's media-budget/profile/readability guards. Kept only as historical context; use the D206 refresh above for the live state and next task.
+> **SUPERSEDED PRIOR REFRESH (2026-07-02):** D200 added the formation-figures performance polish pass after D193-D199's media-budget/profile/readability/perf guards. Kept only as historical context; use the D207 refresh above for the live state and next task.
 
-> **SUPERSEDED PRIOR REFRESH (2026-07-02):** D198 added the terrain-overlay performance polish pass after D193-D197's media-budget/profile/readability guards. Kept only as historical context; use the D206 refresh above for the live state and next task.
+> **SUPERSEDED PRIOR REFRESH (2026-07-02):** D199 added the visual-fidelity contact-shadow performance polish pass after D193-D198's media-budget/profile/readability guards. Kept only as historical context; use the D207 refresh above for the live state and next task.
 
-> **SUPERSEDED PRIOR REFRESH (2026-07-02):** D197 added the battle-colours HUD readability polish pass after D193-D196's media, performance, audio/readability, and H2 guards. Kept only as historical context; use the D206 refresh above for the live state and next task.
+> **SUPERSEDED PRIOR REFRESH (2026-07-02):** D198 added the terrain-overlay performance polish pass after D193-D197's media-budget/profile/readability guards. Kept only as historical context; use the D207 refresh above for the live state and next task.
 
-> **SUPERSEDED PRIOR REFRESH (2026-07-02):** D196 added the H2 cutaway readability polish pass after D193-D195's media, performance, and audio/readability guards. Kept only as historical context; use the D206 refresh above for the live state and next task.
+> **SUPERSEDED PRIOR REFRESH (2026-07-02):** D197 added the battle-colours HUD readability polish pass after D193-D196's media, performance, audio/readability, and H2 guards. Kept only as historical context; use the D207 refresh above for the live state and next task.
 
-> **SUPERSEDED PRIOR REFRESH (2026-07-02):** D195 added the audio/readability polish pass after D193/D194's media and performance guards. Kept only as historical context; use the D206 refresh above for the live state and next task.
+> **SUPERSEDED PRIOR REFRESH (2026-07-02):** D196 added the H2 cutaway readability polish pass after D193-D195's media, performance, and audio/readability guards. Kept only as historical context; use the D207 refresh above for the live state and next task.
 
-> **SUPERSEDED PRIOR REFRESH (2026-07-01):** D192 completed the planned Group 4 batch/release no-regression gate after D191. The 104-command battery was covered in split segments with 104 clean JSON artifacts. Kept only as historical context; use the D206 refresh above for the live state and next task.
+> **SUPERSEDED PRIOR REFRESH (2026-07-02):** D195 added the audio/readability polish pass after D193/D194's media and performance guards. Kept only as historical context; use the D207 refresh above for the live state and next task.
 
-> **SUPERSEDED PRIOR REFRESH (2026-07-01):** D191 completed Western-theater strategic readouts and pointed to the planned Group 4 batch/release gate; D192 completed that gate. Kept only as historical context; use the D206 refresh above for the live state and next task.
+> **SUPERSEDED PRIOR REFRESH (2026-07-01):** D192 completed the planned Group 4 batch/release no-regression gate after D191. The 104-command battery was covered in split segments with 104 clean JSON artifacts. Kept only as historical context; use the D207 refresh above for the live state and next task.
 
-> **SUPERSEDED PRIOR REFRESH (2026-07-01):** D189 completed real diplomacy and pointed to human-cost next; D190 shipped human-cost. Kept only as historical context; use the D206 refresh above for the live state and next task.
+> **SUPERSEDED PRIOR REFRESH (2026-07-01):** D191 completed Western-theater strategic readouts and pointed to the planned Group 4 batch/release gate; D192 completed that gate. Kept only as historical context; use the D207 refresh above for the live state and next task.
 
-> **SUPERSEDED PRIOR REFRESH (2026-07-01):** D188 completed CS finance and pointed to real diplomacy next; D189 shipped diplomacy. Kept only as historical context; use the D206 refresh above for the live state and next task.
+> **SUPERSEDED PRIOR REFRESH (2026-07-01):** D189 completed real diplomacy and pointed to human-cost next; D190 shipped human-cost. Kept only as historical context; use the D207 refresh above for the live state and next task.
 
-> **SUPERSEDED PRIOR REFRESH (2026-07-01):** D184 completed M5 and was followed by D185/M6, D187/M7, D188 CS finance, D189 real diplomacy, and D190 human-cost. Kept only as historical context; use the D206 refresh above for the live state and next task.
+> **SUPERSEDED PRIOR REFRESH (2026-07-01):** D188 completed CS finance and pointed to real diplomacy next; D189 shipped diplomacy. Kept only as historical context; use the D207 refresh above for the live state and next task.
+
+> **SUPERSEDED PRIOR REFRESH (2026-07-01):** D184 completed M5 and was followed by D185/M6, D187/M7, D188 CS finance, D189 real diplomacy, and D190 human-cost. Kept only as historical context; use the D207 refresh above for the live state and next task.
 
 > **SUPERSEDED PRIOR REFRESH (2026-06-30):** D179 completed flagship named units after D175/D177/D178. Kept only as historical context; the then-live CS-finance/Group-4 marker was superseded by D180-D185 and the D186 refresh above. D171 fresh-chat boundaries, Tripo guardrails, and the last-battle lock remain live.
 
