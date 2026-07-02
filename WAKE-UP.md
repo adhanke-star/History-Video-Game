@@ -1,3 +1,17 @@
+# ☀ WAKE-UP — 2026-07-02: **GROUP 5 PHASE H H2 CUTAWAY READABILITY POLISH SHIPPED (D196).**
+
+**Newest (D196, 2026-07-02):** Group 5 Phase H now has a second zero-new-media readability polish slice after the media-budget guard, Intel UHD-617 profile, and audio/readability pass. M8 battle-build was not approved or started.
+
+**What changed:** `src/104-h2-cutaways.js` makes the skippable H2 field-cutaway shell phone-safe with viewport-clamped card bounds, contained scrolling, readable still/procedural fallback captions, 42px controls, ARIA title/subtitle labelling, focus return, and Escape-listener cleanup. `tools/probe-h2-cutaways.mjs` now locks desktop and 390px phone containment, caption sizing, touch targets, horizontal-overflow absence, focus return, disabled-video/offline-fallback policy, and zero pageerrors. `civil_war_generals.html` rebuilt from source.
+
+**Verified:** `node --check` for the touched H2 source/probe files; build **GATE OK** with the known raw-embed soft warning; focused `probe-h2-cutaways` 9/9; adjacent `probe-media-budget` 6/6 with only the known soft warning, `probe-intel-uhd617-profile` 10/10, and `probe-h0-battle-briefing` 3/3. Key-aware artifact readback found no `ok=false`, no actual `FATAL`, pageerrors, realErrors, or texture warnings. `git diff --check` clean.
+
+**Profile evidence after D196:** high tier: 12.24ms proxy frame burst, 115 render calls, 195 objects. Low tier: 2.00ms proxy burst, 107 calls, 144 objects. Embedded core remains 199 files / 2.418 MB raw; no new asset bytes were added.
+
+**Next recommended run:** continue Group 5 Phase H with another bounded polish/media/perf slice: tightly budgeted surviving-colours/PD asset polish only if the media budget/profile stays green, or another zero-byte render/readability polish. Do not add heavy footage/HDRI/model media to the core without an explicit budget decision. M8 battle-build still needs Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-02: **GROUP 5 PHASE H AUDIO/READABILITY POLISH SHIPPED (D195).**
 
 **Newest (D195, 2026-07-02):** Group 5 Phase H now has a zero-new-media audio/readability polish slice after the D193 media-budget guard and D194 Intel UHD-617 profile. M8 battle-build was not approved or started.
