@@ -55,6 +55,17 @@ function _slWrite(i, sv) {
   } catch (e) { return false; }
 }
 function _slDelete(i) { try { localStorage.removeItem(_slKey(i)); } catch (e) {} }
+/* S34 (D234): a slot whose RAW data exists but fails validation (older _SAVE_VER / damaged JSON) must not
+   masquerade as "Empty" — the raw string is still in localStorage and an enabled Save would clobber it. */
+function _slRawPresent(i) { try { return localStorage.getItem(_slKey(i)) != null; } catch (e) { return false; } }
+/* S32 (D234): loading/importing replaces the LIVE campaign and immediately overwrites the base autosave
+   (saveLocal) — confirm first whenever a campaign is actually in progress. */
+function _slConfirmReplaceLive(what) {
+  var hasLive = false;
+  try { hasLive = !!(typeof G !== "undefined" && G && G.campaign); } catch (e) {}
+  if (!hasLive) return true;
+  try { return window.confirm(what + " will replace your current campaign — unsaved progress is lost. Continue?"); } catch (e2) { return true; }
+}
 function _slSetSlotName(i, name) {
   var sv = _slRead(i);
   if (!sv) return false;
@@ -209,7 +220,13 @@ function _slRestoreUndo() {
 
 (function () {
   if (typeof importSave !== "function" || importSave._slHardened) return;
-  var hardened = function (onDone) { _slImportFile(onDone); };
+  var hardened = function (onDone) {
+    // S32 (D234, review-caught): the base menu's "Load from File" buttons route through THIS wrapper —
+    // they replace the live campaign + autosave just like the slot manager's import lanes, so the same
+    // confirm guards them all. A decline simply leaves the menu untouched (no picker, no callback).
+    if (!_slConfirmReplaceLive("Loading a save file")) return;
+    _slImportFile(onDone);
+  };
   hardened._slHardened = true;
   importSave = hardened;
 })();
@@ -217,8 +234,11 @@ function _slRestoreUndo() {
 /* ---- Slot Manager UI ---- */
 function _slRowHTML(i) {
   var m = _slMeta(i);
-  var title = "Empty";
-  var sub = "No saved campaign in this slot.";
+  var stale = !m && _slRawPresent(i);   // S34 (D234): raw data present but unreadable (old version / damaged)
+  var title = stale ? "Incompatible save" : "Empty";
+  var sub = stale
+    ? "This slot holds data from an older or damaged save format. Save and Load are disabled to protect it; Delete clears it."
+    : "No saved campaign in this slot.";
   var value = "";
   if (m) {
     title = m.label || (m.side + " - Turn " + m.turn);
@@ -237,10 +257,10 @@ function _slRowHTML(i) {
     +       ' style="box-sizing:border-box;width:100%;margin-top:2px;padding:6px 8px;border:1px solid #8c724e;border-radius:4px;background:#161009;color:#f2e8d5">'
     +   '</div>'
     +   '<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">'
-    +     '<button class="upg" id="slSave' + i + '" style="padding:6px 10px;font-size:12px" aria-label="Save current campaign to slot ' + (i + 1) + '">Save</button>'
+    +     '<button class="upg" id="slSave' + i + '" style="padding:6px 10px;font-size:12px" aria-label="Save current campaign to slot ' + (i + 1) + '"' + (stale ? " disabled" : "") + '>Save</button>'
     +     '<button class="upg" id="slRename' + i + '" style="padding:6px 10px;font-size:12px" aria-label="Rename save slot ' + (i + 1) + '"' + (m ? "" : " disabled") + '>Rename</button>'
     +     '<button class="upg" id="slLoad' + i + '" style="padding:6px 10px;font-size:12px" aria-label="Load save slot ' + (i + 1) + '"' + (m ? "" : " disabled") + '>Load</button>'
-    +     '<button class="upg" id="slDel' + i + '" style="padding:6px 10px;font-size:12px;opacity:.75" aria-label="Delete save slot ' + (i + 1) + '"' + (m ? "" : " disabled") + '>Delete</button>'
+    +     '<button class="upg" id="slDel' + i + '" style="padding:6px 10px;font-size:12px;opacity:.75" aria-label="Delete save slot ' + (i + 1) + '"' + ((m || stale) ? "" : " disabled") + '>Delete</button>'
     +   '</div>'
     + '</div>';
 }
@@ -291,6 +311,7 @@ function _slWire() {
       if (loadBtn) loadBtn.addEventListener("click", function () {
         var sv = _slRead(idx);
         if (!sv) { if (typeof toast === "function") toast("Slot is empty."); return; }
+        if (!_slConfirmReplaceLive("Loading slot " + (idx + 1))) return;   // S32 (D234)
         applySave(_slClone(sv));
         _slClearUndo();
         if (typeof saveLocal === "function") saveLocal();
@@ -298,6 +319,14 @@ function _slWire() {
         if (typeof openMainMenu === "function") openMainMenu();
       });
       if (saveBtn) saveBtn.addEventListener("click", function () {
+        // S31 (D234): overwriting a FILLED slot loses that save permanently (no undo lane covers it) — confirm.
+        var existing = _slMeta(idx);
+        if (existing) {
+          var exLabel = existing.label || (existing.side + " - Turn " + existing.turn);
+          var okOw = true;
+          try { okOw = window.confirm('Overwrite "' + exLabel + '" in slot ' + (idx + 1) + "? The existing save will be lost."); } catch (e) {}
+          if (!okOw) return;
+        }
         var sv = serializeSave();
         sv.slotName = _slCleanLabel(nameEl && nameEl.value ? nameEl.value : "") || _slDefaultSlotName();
         if (_slWrite(idx, sv)) { if (typeof toast === "function") toast("Saved to slot " + (idx + 1) + "."); }
@@ -310,6 +339,12 @@ function _slWire() {
         _slOpenManager();
       });
       if (delBtn) delBtn.addEventListener("click", function () {
+        // S33 (D234): a single mis-tap beside Load must not permanently destroy a save — confirm first.
+        var dm = _slMeta(idx);
+        var dLabel = dm ? (dm.label || (dm.side + " - Turn " + dm.turn)) : ("the incompatible data in slot " + (idx + 1));
+        var okDel = true;
+        try { okDel = window.confirm('Delete "' + dLabel + '"? This cannot be undone.'); } catch (e) {}
+        if (!okDel) return;
         _slDelete(idx);
         if (typeof toast === "function") toast("Slot " + (idx + 1) + " cleared.");
         _slOpenManager();
@@ -320,6 +355,7 @@ function _slWire() {
   if (expBtn) expBtn.addEventListener("click", _slExportEnhanced);
   var impBtn = document.getElementById("slImport");
   if (impBtn) impBtn.addEventListener("click", function () {
+    if (!_slConfirmReplaceLive("Importing a save file")) return;   // S32 (D234)
     _slImportFile(function (ok) {
       if (ok) { _slClearUndo(); if (typeof toast === "function") toast("Save loaded."); }
       else if (typeof toast === "function") toast("Import failed.");
@@ -328,6 +364,7 @@ function _slWire() {
   });
   var pasteBtn = document.getElementById("slImportPaste");
   if (pasteBtn) pasteBtn.addEventListener("click", function () {
+    if (!_slConfirmReplaceLive("Importing pasted save JSON")) return;   // S32 (D234)
     var ta = document.getElementById("slImportJson");
     var r = _slImportText(ta ? ta.value : "");
     if (typeof toast === "function") toast(r.ok ? "Save loaded." : (r.reason || "Import failed."));

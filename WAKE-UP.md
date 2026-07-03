@@ -1,4 +1,12 @@
-# ☀ WAKE-UP — 2026-07-03: **FABLE AUDIT M8 SHIPPED (D233) — a11y + discoverability + teaching-UI staleness (18 items).**
+# ☀ WAKE-UP — 2026-07-03: **FABLE AUDIT M9 SHIPPED (D234) — save-manager guards (4 items).**
+
+**Newest (D234):** a mis-click can no longer destroy a campaign: overwriting a filled save slot, loading over a live campaign, importing a save file (including the base menu's Load-from-File — a bypass the pre-commit review caught), and deleting a slot all confirm first, with declines leaving everything untouched; and a slot holding old/damaged save data now says "Incompatible save" with Save disabled instead of masquerading as "Empty" and inviting a clobber — a future save-format bump will explain itself instead of silently emptying every slot. probe-save-slots 10/10 with new both-paths teeth; adjacent probe-full-campaign green.
+
+**Audit progress: 122 of 143 FIX-NOW ledger items closed across D225-D234 (M1-M9); 9 proposals await Aaron; M10-M11 remain.** The standing ledger is `REVIEW-QUEUE.md` §"FABLE AUDIT — 2026-07-03 (run 1)". **Next: M10 — sim-affecting accurate-inputs corrections (C05-scale C11 C28 C30 C33 C43 C44 C47 — each needs A/B seeds + battle-probe re-vet + logged numbers, D92/D74), then M11 docs coherence + the run's full `npm run vet:noreg` batch checkpoint.** All locks stand (Phase H parked D214; M8-battle-build/Q5/Q6 locked; Phase D deferred).
+
+---
+
+# ☀ WAKE-UP — 2026-07-03 (previous): **FABLE AUDIT M8 SHIPPED (D233) — a11y + discoverability + teaching-UI staleness (18 items).**
 
 **Newest (D233):** the game's biggest a11y debts are paid — every Custom Battle Builder table control now has an accessible name (S21 HIGH: a unit row was 13 fields a screen reader read as "edit text, blank"), keyboard focus survives every builder rebuild, validation results are announced (a blocked Launch is no longer a silent no-op), destructive builder actions confirm before discarding unsaved work, and mobile keypads match the field type (numeric vs decimal — a review-workflow catch). The H2 cutaway dialog gained a real focus trap, honors the in-game reduceMotion toggle, and the dyslexia text mode now reaches it. The '?' overlay and How-to-Play finally teach drag-onto-enemy charge, Shift-drag waypoint queueing, and the R elevation hotkey; the welcome quick-start names the shipped menu buttons. The inline glossary now decorates 16 teaching desk tabs (was 2), the Codex gains Verified rail-logistics and medicine/disease systems entries (2 scholarly sources each), and the tour stops advertising a nonexistent Manpower tab. Three more probes were taken off the stalling `'load'` navigation wait (the documented slow-Mac gotcha). Gates: node --check ×17, GATE OK, 9 probes ok=true 0 pe, diff clean.
 

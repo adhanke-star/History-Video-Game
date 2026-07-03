@@ -92,24 +92,79 @@ const SETUP = `(() => {
     });
 
     step('SLOTS: save, rename, load, and delete use validated payloads', function() {
-      G.campaign = mkC('US', 0);
-      _slOpenManager();
-      input('slName0', 'Probe Slot');
-      document.getElementById('slSave0').click();
-      var m0 = _slMeta(0);
-      if (!m0 || m0.label !== 'Probe Slot' || m0.side !== 'Union') throw new Error('slot save/meta failed: ' + JSON.stringify(m0));
-      _slOpenManager();
-      input('slName0', 'Renamed Probe');
-      document.getElementById('slRename0').click();
-      if ((_slMeta(0) || {}).label !== 'Renamed Probe') throw new Error('rename failed: ' + JSON.stringify(_slMeta(0)));
-      G.campaign = mkC('CS', 2);
-      _slOpenManager();
-      document.getElementById('slLoad0').click();
-      if (!G.campaign || G.campaign.side !== 'US' || G.campaign.idx !== 0) throw new Error('load did not restore slot campaign: ' + JSON.stringify(G.campaign && { side:G.campaign.side, idx:G.campaign.idx }));
-      _slOpenManager();
-      document.getElementById('slDel0').click();
-      if (_slRead(0)) throw new Error('delete left a readable slot');
+      // D234: load/delete/overwrite now confirm — accept the dialogs for this happy-path flow
+      var origConfirm = window.confirm; window.confirm = function() { return true; };
+      try {
+        G.campaign = mkC('US', 0);
+        _slOpenManager();
+        input('slName0', 'Probe Slot');
+        document.getElementById('slSave0').click();
+        var m0 = _slMeta(0);
+        if (!m0 || m0.label !== 'Probe Slot' || m0.side !== 'Union') throw new Error('slot save/meta failed: ' + JSON.stringify(m0));
+        _slOpenManager();
+        input('slName0', 'Renamed Probe');
+        document.getElementById('slRename0').click();
+        if ((_slMeta(0) || {}).label !== 'Renamed Probe') throw new Error('rename failed: ' + JSON.stringify(_slMeta(0)));
+        G.campaign = mkC('CS', 2);
+        _slOpenManager();
+        document.getElementById('slLoad0').click();
+        if (!G.campaign || G.campaign.side !== 'US' || G.campaign.idx !== 0) throw new Error('load did not restore slot campaign: ' + JSON.stringify(G.campaign && { side:G.campaign.side, idx:G.campaign.idx }));
+        _slOpenManager();
+        document.getElementById('slDel0').click();
+        if (_slRead(0)) throw new Error('delete left a readable slot');
+      } finally { window.confirm = origConfirm; }
       return { ok:true };
+    });
+
+    step('S31-S34 (D234): destructive save-manager actions confirm; declines block; incompatible slots are protected', function() {
+      cleanStore();
+      var orig = window.confirm, calls = [], allow = false;
+      window.confirm = function(m) { calls.push(String(m)); return allow; };
+      try {
+        // S31: saving to an EMPTY slot never prompts; overwriting a FILLED slot confirms + a decline keeps it
+        G.campaign = mkC('US', 0); _slOpenManager();
+        input('slName0', 'Keep Me');
+        document.getElementById('slSave0').click();
+        if (calls.length) throw new Error('saving to an EMPTY slot prompted a confirm');
+        if ((_slMeta(0) || {}).label !== 'Keep Me') throw new Error('setup save failed');
+        G.campaign = mkC('CS', 2); _slOpenManager();
+        document.getElementById('slSave0').click();
+        if (!calls.length) throw new Error('overwriting a filled slot did not confirm (S31)');
+        if ((_slMeta(0) || {}).label !== 'Keep Me') throw new Error('a DECLINED overwrite still replaced the save');
+        // S32: loading over a live campaign confirms + a decline keeps the live campaign
+        calls.length = 0;
+        document.getElementById('slLoad0').click();
+        if (!calls.length) throw new Error('loading over a live campaign did not confirm (S32)');
+        if (!G.campaign || G.campaign.side !== 'CS') throw new Error('a DECLINED load still replaced the live campaign');
+        // S33: delete confirms + a decline keeps the save; an accept clears it
+        calls.length = 0;
+        document.getElementById('slDel0').click();
+        if (!calls.length) throw new Error('delete did not confirm (S33)');
+        if (!_slRead(0)) throw new Error('a DECLINED delete still erased the slot');
+        allow = true;
+        document.getElementById('slDel0').click();
+        if (_slRead(0)) throw new Error('an ACCEPTED delete left the slot readable');
+        // S34: raw-present-but-invalid renders as Incompatible (Save disabled, Delete enabled, labeled)
+        localStorage.setItem('gor_slot_1', '{ damaged');
+        _slOpenManager();
+        var sv1 = document.getElementById('slSave1');
+        if (!sv1 || !sv1.disabled) throw new Error('incompatible slot leaves Save enabled (clobber risk, S34)');
+        var del1 = document.getElementById('slDel1');
+        if (!del1 || del1.disabled) throw new Error('incompatible slot should keep Delete enabled (S34)');
+        var sheetTxt = (document.body.textContent || '');
+        if (sheetTxt.indexOf('Incompatible save') < 0) throw new Error('incompatible slot not labeled distinctly (S34)');
+        del1.click();   // allow still true
+        if (localStorage.getItem('gor_slot_1') != null) throw new Error('delete did not clear the incompatible raw');
+        // S32 (review-caught): the BASE MENU Load-from-File lane (the hardened global importSave) must
+        // confirm too — a decline leaves the live campaign untouched and opens no picker.
+        allow = false; calls.length = 0;
+        G.campaign = mkC('CS', 2);
+        importSave(function () { throw new Error('declined importSave still invoked its callback'); });
+        if (!calls.length) throw new Error('menu Load-from-File did not confirm over a live campaign (S32)');
+        if (!G.campaign || G.campaign.side !== 'CS') throw new Error('declined menu import disturbed the live campaign');
+        cleanStore();
+      } finally { window.confirm = orig; }
+      return { guarded: true };
     });
 
     step('IMPORT/EXPORT: JSON round trip restores campaign and rejects malformed/invalid payloads', function() {
