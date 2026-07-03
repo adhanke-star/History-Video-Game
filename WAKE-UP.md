@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-07-03: **SOLDIER'S STORY SULLIVAN BALLOU SLICE SHIPPED (D221).**
+
+**Newest (D221, 2026-07-03):** Priority 1 Phase I Soldier's Story scale-out continues. Phase H remains parked from D214; do not restart the automatic zero-byte polish loop. Reopen Phase H media only after an explicit media-budget/profile decision.
+
+**What changed:** Sullivan Ballou is now the fourteenth citation-grade Soldier's Story replacement. He replaces the generated First Bull Run / Burnside's Brigade command slot (`ss:bullrun1:US:us_burnside:cmd`) with a Verified Major, 2nd Rhode Island Infantry, Burnside's Brigade / Hunter's Second Division / Army of Northeastern Virginia, Sarah-letter / Matthews Hill wounding story. NPS identifies Ballou as elected major in the 2nd Rhode Island and killed as the Rhode Islanders advanced from Matthews Hill; Rhode Island Historical Society verifies Major, Second Rhode Island, Manassas/Bull Run wound/death, and the July 14 letter-copy caveat; NPS places the 2nd Rhode Island in Burnside's Brigade. The record asserts no company command, no autograph-original claim, no portrait asset, and neutral inferred ratings.
+
+**Verified:** `node tools/import-soldier-replacements.mjs --check data/soldier-replacements.json` passed with 14 Verified records; `node --check` passed for touched JS/probe/importer files; build **GATE OK** with the known raw-embed soft warning; focused `probe-loot-survival` wrote an `ok=true` artifact with 11/11 and 0 pageerrors and its wrapper was stopped after the green artifact; adjacent `probe-women-in-war` 8/8, `probe-save-slots` 9/9, and `probe-bridge` 6/6, all with zero pageerrors. JSON readback found all four artifacts `ok=true` with no failed steps, realErrors, or page errors. Full `npm run vet:noreg` was not run under D176 focused-slice batching.
+
+**Next recommended run:** start Priority 1, another bounded Phase I Soldier's Story named-person/story slice. Keep D152-D158/D172/D214/D215/D216/D217/D218/D219/D220/D221 source honesty, no fabricated people/ranks/units, no unsupported portrait claims, and keep women-in-war separate. Media-budget locks persist. M8 battle-build still needs Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-03: **SOLDIER'S STORY JOHN H. WORSHAM SLICE SHIPPED (D220).**
 
 **Newest (D220, 2026-07-03):** Priority 1 Phase I Soldier's Story scale-out continues. Phase H remains parked from D214; do not restart the automatic zero-byte polish loop. Reopen Phase H media only after an explicit media-budget/profile decision.

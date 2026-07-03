@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "decision": "D220",
+    "decision": "D221",
     "schema": "cw_soldier_replacements_v1",
     "scope": "Citation-grade replacements for generated Soldier's Story representative rows.",
     "provenance": "Inferred",
-    "note": "D220 adds the thirteenth narrow sourced replacement slice after D214 parked Group 5 and resumed Phase I. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
+    "note": "D221 adds the fourteenth narrow sourced replacement slice after D214 parked Group 5 and resumed Phase I. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
   },
   "schema": "cw_soldier_replacements_v1",
   "records": [
@@ -996,6 +996,74 @@
       ],
       "sourceNote": "NPS identifies Worsham as a Confederate soldier in the 21st Virginia and says he fought at Antietam; Antietam on the Web verifies Private, Company F, and the Maryland Campaign. AotW/CMH place the 21st Virginia in Jones' Brigade, Jackson's Division. The record asserts no later sergeant/adjutant rank, no First Manassas claim, and no portrait asset.",
       "bio": "John H. Worsham served as a Confederate private in Company F, 21st Virginia Infantry. During the Maryland Campaign he was one of the few Company F men present, and the regiment belonged to Jones' Brigade in Jackson's Division at Antietam. His later memoir is useful as a soldier-life source, but this replacement keeps the claim narrow: an Antietam private in the 21st Virginia, not a later sergeant/adjutant rank or portrait claim."
+    },
+    {
+      "pid": "person_bullrun_us_2ri_ballou",
+      "replacePid": "ss:bullrun1:US:us_burnside:cmd",
+      "name": "Sullivan Ballou",
+      "side": "US",
+      "rank": "Major",
+      "branch": "inf",
+      "role": "field officer",
+      "year": 1861,
+      "provenance": "Verified",
+      "team": {
+        "side": "US",
+        "army": "Army of Northeastern Virginia",
+        "corps": "",
+        "division": "Hunter's Second Division",
+        "brigade": "Burnside's Brigade",
+        "regiment": "2nd Rhode Island Infantry",
+        "company": ""
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "\"My Very Dear Wife\" - The Last Letter of Major Sullivan Ballou",
+          "author": "National Park Service",
+          "repository": "Manassas National Battlefield Park",
+          "locator": "Historical article and letter transcription",
+          "url": "https://www.nps.gov/articles/-my-very-dear-wife-the-last-letter-of-major-sullivan-ballou.htm",
+          "type": "secondary",
+          "note": "Identifies Ballou as elected major in the 2nd Rhode Island Infantry, gives the July 14 letter context, and states he was killed as the Rhode Islanders advanced from Matthews Hill."
+        },
+        {
+          "title": "Sullivan Ballou Papers",
+          "author": "Rhode Island Historical Society",
+          "repository": "Rhode Island Historical Society Manuscripts Division",
+          "locator": "MSS 277 historical note and inventory",
+          "url": "https://www.rihs.org/mssinv/Mss277.htm",
+          "type": "archival",
+          "note": "Verifies Ballou volunteered as Major in the Second Rhode Island, was wounded at Manassas/Bull Run, and documents the July 14 letters to Sarah, including copy-status caveat."
+        },
+        {
+          "title": "Union Order of Battle - First Manassas",
+          "author": "National Park Service",
+          "repository": "Manassas National Battlefield Park",
+          "locator": "Second Division / Second Brigade",
+          "url": "https://www.nps.gov/mana/learn/historyculture/union-order-of-battle-first-manassas.htm",
+          "type": "secondary",
+          "note": "Places the 2nd Rhode Island in Burnside's Second Brigade under Hunter's Second Division, Army of Northeastern Virginia."
+        }
+      ],
+      "sourceNote": "NPS identifies Ballou as elected major in the 2nd Rhode Island and killed as the Rhode Islanders advanced from Matthews Hill; RIHS confirms Major, Second Rhode Island, Bull Run wound/death, and the letter-copy caveat. NPS OOB places the regiment in Burnside's Brigade. The record asserts no company command, no autograph-original claim, and no portrait.",
+      "bio": "Sullivan Ballou, a Providence lawyer and former Rhode Island House speaker, served as major in the 2nd Rhode Island Infantry at First Bull Run. Days before the battle he wrote Sarah a famous farewell letter from Camp Clark; the surviving archival trail includes copies rather than an unquestioned autograph original. At Manassas he was mortally wounded as the Rhode Islanders advanced from Matthews Hill. This replacement keeps the story narrow: a field officer of the 2nd Rhode Island in Burnside's Brigade, not a company officer or portrait claim."
     }
   ],
   "_template": {

@@ -197,11 +197,11 @@ const SETUP = `(() => {
       return { people:reg.people.length, brigades:reg.brigades, authored:reg.authored, generated:reg.generated, first:sample.name };
     });
 
-    step('D220 REPLACEMENTS: thirteen canonical sourced records overlay generated slots and hostile packs still reject', function(){
+    step('D221 REPLACEMENTS: fourteen canonical sourced records overlay generated slots and hostile packs still reject', function(){
       var C=mkC('US'); _t1InitAll(C);
       var original=GAME_DATA['soldier-replacements'];
       if(!original || original.schema!=='cw_soldier_replacements_v1' || !Array.isArray(original.records)) throw new Error('missing D152 canonical pack');
-      if(original.records.length!==13) throw new Error('canonical D220 pack should ship exactly thirteen records, got '+original.records.length);
+      if(original.records.length!==14) throw new Error('canonical D221 pack should ship exactly fourteen records, got '+original.records.length);
       var canonByPid={}, canonReplace={};
       for(var cr=0;cr<original.records.length;cr++){ canonByPid[original.records[cr].pid]=original.records[cr]; canonReplace[original.records[cr].replacePid]=1; }
       if(!canonByPid.person_bullrun_us_2ri_rhodes || canonByPid.person_bullrun_us_2ri_rhodes.replacePid!=='ss:bullrun1:US:us_burnside:pvt') throw new Error('missing D154 Rhodes canonical record: '+JSON.stringify(original.records));
@@ -217,15 +217,16 @@ const SETUP = `(() => {
       if(!canonByPid.person_antietam_us_battery_e_benjamin || canonByPid.person_antietam_us_battery_e_benjamin.replacePid!=='ss:antietam:US:us_benjamin:cmd') throw new Error('missing D218 Benjamin canonical record: '+JSON.stringify(original.records));
       if(!canonByPid.person_antietam_us_61ny_barlow || canonByPid.person_antietam_us_61ny_barlow.replacePid!=='ss:antietam:US:us_barlow:cmd') throw new Error('missing D219 Barlow canonical record: '+JSON.stringify(original.records));
       if(!canonByPid.person_antietam_cs_21va_worsham || canonByPid.person_antietam_cs_21va_worsham.replacePid!=='ss:antietam:CS:cs_jr_jones:pvt') throw new Error('missing D220 Worsham canonical record: '+JSON.stringify(original.records));
+      if(!canonByPid.person_bullrun_us_2ri_ballou || canonByPid.person_bullrun_us_2ri_ballou.replacePid!=='ss:bullrun1:US:us_burnside:cmd') throw new Error('missing D221 Ballou canonical record: '+JSON.stringify(original.records));
       GAME_DATA['soldier-replacements']={schema:'cw_soldier_replacements_v1',records:[]};
       var rawBase=ssPersonRegistry(C);
       GAME_DATA['soldier-replacements']=original;
       var canonical=ssValidateSoldierReplacementPack(original,{basePeople:rawBase.people});
-      if(!canonical.ok || canonical.records.length!==13) throw new Error('canonical D220 pack should validate against raw generated registry: '+JSON.stringify(canonical));
+      if(!canonical.ok || canonical.records.length!==14) throw new Error('canonical D221 pack should validate against raw generated registry: '+JSON.stringify(canonical));
       var base=ssPersonRegistry(C);
       if(base.people.length!==rawBase.people.length) throw new Error('canonical replacement should preserve registry length');
-      if(base.replacements.applied!==13 || base.replacements.rejected!==0) throw new Error('canonical replacement should apply thirteen rows cleanly: '+JSON.stringify(base.replacements));
-      if(base.generated!==rawBase.generated-13 || base.authored!==rawBase.authored+13) throw new Error('canonical replacement should move thirteen rows generated->authored: '+JSON.stringify({raw:{a:rawBase.authored,g:rawBase.generated},base:{a:base.authored,g:base.generated}}));
+      if(base.replacements.applied!==14 || base.replacements.rejected!==0) throw new Error('canonical replacement should apply fourteen rows cleanly: '+JSON.stringify(base.replacements));
+      if(base.generated!==rawBase.generated-14 || base.authored!==rawBase.authored+14) throw new Error('canonical replacement should move fourteen rows generated->authored: '+JSON.stringify({raw:{a:rawBase.authored,g:rawBase.generated},base:{a:base.authored,g:base.generated}}));
       var rhodesOld=ssFindPerson(C,'ss:bullrun1:US:us_burnside:pvt');
       var rhodes=ssFindPerson(C,'person_bullrun_us_2ri_rhodes');
       if(!rhodes || !rhodesOld || rhodesOld.pid!==rhodes.pid) throw new Error('Rhodes alias lookup failed');
@@ -325,6 +326,14 @@ const SETUP = `(() => {
       if(!worsham.bio || worsham.bio.indexOf('Antietam')<0 || worsham.bio.indexOf('Maryland Campaign')<0 || worsham.bio.indexOf('soldier-life')<0 || !worsham.sourceNote || worsham.sources.length<5) throw new Error('Worsham source/bio payload missing');
       if(worsham.sourceNote.indexOf('no later sergeant/adjutant rank')<0 || worsham.sourceNote.indexOf('no First Manassas claim')<0 || worsham.sourceNote.indexOf('no portrait')<0) throw new Error('Worsham honesty caveats missing: '+worsham.sourceNote);
       if(worsham.portrait) throw new Error('Worsham should not assert an unverified portrait: '+JSON.stringify(worsham.portrait));
+      var ballouOld=ssFindPerson(C,'ss:bullrun1:US:us_burnside:cmd');
+      var ballou=ssFindPerson(C,'person_bullrun_us_2ri_ballou');
+      if(!ballou || !ballouOld || ballouOld.pid!==ballou.pid) throw new Error('Ballou alias lookup failed');
+      if(ballou.generated || !ballou.replacement || ballou.provenance!=='Verified' || ballou.name!=='Sullivan Ballou') throw new Error('Ballou row not sourced/verified: '+JSON.stringify(ballou));
+      if(ballou.rank!=='Major' || ballou.side!=='US' || ballou.branch!=='inf' || ballou.team.regiment!=='2nd Rhode Island Infantry' || ballou.team.brigade!=="Burnside's Brigade" || ballou.team.division!=="Hunter's Second Division" || ballou.team.company) throw new Error('Ballou rank/unit mismatch: '+JSON.stringify(ballou.team));
+      if(!ballou.bio || ballou.bio.indexOf('First Bull Run')<0 || ballou.bio.indexOf('Sarah')<0 || ballou.bio.indexOf('Matthews Hill')<0 || !ballou.sourceNote || ballou.sources.length<3) throw new Error('Ballou source/bio payload missing');
+      if(ballou.sourceNote.indexOf('no company command')<0 || ballou.sourceNote.indexOf('no autograph-original claim')<0 || ballou.sourceNote.indexOf('no portrait')<0) throw new Error('Ballou honesty caveats missing: '+ballou.sourceNote);
+      if(ballou.portrait) throw new Error('Ballou should not assert an unverified portrait: '+JSON.stringify(ballou.portrait));
       var target=findPerson(rawBase,function(p){ return p.generated && p.side==='US' && p.pid.indexOf(':pvt')>0 && !canonReplace[p.pid] && p.team && p.team.army; });
       var authored=findPerson(rawBase,function(p){ return !p.generated && p.provenance==='Verified'; });
       if(!target) throw new Error('no generated replacement target found');
@@ -363,7 +372,7 @@ const SETUP = `(() => {
       }
       var restored=ssPersonRegistry(C);
       if(restored.generated!==base.generated || restored.authored!==base.authored) throw new Error('canonical pack restore changed registry');
-      return { canonicalRecords:original.records.length, rhodes:rhodes.pid, mccarter:mccarter.pid, watkins:watkins.pid, chamberlain:chamberlain.pid, cushing:cushing.pid, vincent:vincent.pid, stillwell:stillwell.pid, cook:cook.pid, howe:howe.pid, waller:waller.pid, benjamin:benjamin.pid, barlow:barlow.pid, worsham:worsham.pid, target:target.pid, applied:base.replacements.applied, hostileRejected:true };
+      return { canonicalRecords:original.records.length, rhodes:rhodes.pid, mccarter:mccarter.pid, watkins:watkins.pid, chamberlain:chamberlain.pid, cushing:cushing.pid, vincent:vincent.pid, stillwell:stillwell.pid, cook:cook.pid, howe:howe.pid, waller:waller.pid, benjamin:benjamin.pid, barlow:barlow.pid, worsham:worsham.pid, ballou:ballou.pid, target:target.pid, applied:base.replacements.applied, hostileRejected:true };
     });
 
     step('JOURNEY: play-as-anyone start enables survival and stores a saveable selected person without mutating canonical data', function(){
@@ -606,6 +615,16 @@ const SETUP = `(() => {
       if(worshamTxt.indexOf('21st Virginia Infantry')<0 || worshamTxt.indexOf('Company F')<0 || worshamTxt.indexOf("Jones' Brigade")<0 || worshamTxt.indexOf("Jackson's Division")<0 || worshamTxt.indexOf("Jackson's Command")<0 || worshamTxt.indexOf('Antietam')<0 || worshamTxt.indexOf('Maryland Campaign')<0 || worshamTxt.indexOf('Source note:')<0 || worshamTxt.indexOf('Sources (5)')<0) throw new Error('Worsham detail source/bio/unit payload missing: '+worshamTxt);
       if(worshamTxt.indexOf('no later sergeant/adjutant rank')<0 || worshamTxt.indexOf('no First Manassas claim')<0 || worshamTxt.indexOf('no portrait')<0) throw new Error('Worsham honesty caveats missing from detail: '+worshamTxt);
       if(worshamDetail.querySelector('.ss-person-portrait')) throw new Error('Worsham should not render an unverified portrait');
+      var ballouCard=cardByPid(root,'person_bullrun_us_2ri_ballou');
+      if(!ballouCard) throw new Error('Ballou sourced replacement card missing');
+      if(ballouCard.textContent.indexOf('Sullivan Ballou')<0 || ballouCard.textContent.indexOf('Sourced')<0 || ballouCard.textContent.indexOf('Verified')<0) throw new Error('Ballou card source/provenance missing: '+ballouCard.textContent);
+      ballouCard.querySelector('[data-ss-pick]').click();
+      var ballouDetail=root.querySelector('#ssPersonDetailCard');
+      if(!ballouDetail || ballouDetail.getAttribute('data-ss-detail-pid')!=='person_bullrun_us_2ri_ballou') throw new Error('Ballou detail did not select');
+      var ballouTxt=ballouDetail.textContent;
+      if(ballouTxt.indexOf('2nd Rhode Island Infantry')<0 || ballouTxt.indexOf("Burnside's Brigade")<0 || ballouTxt.indexOf("Hunter's Second Division")<0 || ballouTxt.indexOf('First Bull Run')<0 || ballouTxt.indexOf('Sarah')<0 || ballouTxt.indexOf('Matthews Hill')<0 || ballouTxt.indexOf('Source note:')<0 || ballouTxt.indexOf('Sources (3)')<0) throw new Error('Ballou detail source/bio/unit payload missing: '+ballouTxt);
+      if(ballouTxt.indexOf('no company command')<0 || ballouTxt.indexOf('no autograph-original claim')<0 || ballouTxt.indexOf('no portrait')<0) throw new Error('Ballou honesty caveats missing from detail: '+ballouTxt);
+      if(ballouDetail.querySelector('.ss-person-portrait')) throw new Error('Ballou should not render an unverified portrait');
       var vincentCard=cardByPid(root,'person_gettysburg_us_vincent_bde');
       if(!vincentCard) throw new Error('Vincent sourced replacement card missing');
       if(vincentCard.textContent.indexOf('Strong Vincent')<0 || vincentCard.textContent.indexOf('Sourced')<0 || vincentCard.textContent.indexOf('Verified')<0) throw new Error('Vincent card source/provenance missing: '+vincentCard.textContent);
