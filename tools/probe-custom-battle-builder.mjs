@@ -223,6 +223,7 @@ const SETUP = `(() => {
 
     step('UI: export/template/pack buttons fill JSON and import button rejects malformed text without page errors', function() {
       _fldCbState = validDraft();
+      _fldCbCleanJson = null;   // S24 (D233): the harness swapped the draft out-of-band — re-baseline so the dirty-confirm (tested in its own step) stays out of this flow
       fldCustomBattleBuilderMenu();
       document.querySelector('[data-cb-act="export"]').click();
       var ta = document.getElementById('fldCbJson');
@@ -238,6 +239,78 @@ const SETUP = `(() => {
       var status = document.querySelector('.fld-cb-status.bad');
       if (!status || status.textContent.indexOf('Malformed JSON') < 0) throw new Error('malformed import was not shown as blocked');
       return { exported:true };
+    });
+
+    step('S27 (D233): a Hold-to-win above the time-limit ceiling WARNS instead of silently clamping', function() {
+      var d = validDraft(); d.timeLimitSec = 180; d.holdToWinSec = 600;
+      var r = fldCustomValidate(d);
+      if (!r.ok) throw new Error('clamp case should still validate: ' + r.errors.join(' | '));
+      if (r.scenario.holdToWinSec !== 170) throw new Error('expected clamp to 170 (timeLimit-10), got ' + r.scenario.holdToWinSec);
+      var warned = (r.warnings || []).some(function(w) { return String(w).indexOf('Hold-to-win') === 0; });
+      if (!warned) throw new Error('no clamp warning pushed: ' + JSON.stringify(r.warnings));
+      return { clampedTo: r.scenario.holdToWinSec, warned: true };
+    });
+
+    step('S21/S26 (D233): every editor-table control carries an accessible name; numeric cells are inputmode=numeric', function() {
+      _fldCbState = validDraft(); _fldCbCleanJson = null;
+      fldCustomBattleBuilderMenu();
+      var ctls = document.querySelectorAll('.fld-cb-table input, .fld-cb-table select, .fld-cb-table button');
+      if (!ctls.length) throw new Error('no table controls rendered');
+      var unnamed = 0;
+      for (var i = 0; i < ctls.length; i++) {
+        var el = ctls[i];
+        var name = el.getAttribute('aria-label') || (el.tagName === 'BUTTON' ? (el.textContent || '').trim() : '');
+        if (!name) unnamed++;
+      }
+      if (unnamed) throw new Error(unnamed + ' of ' + ctls.length + ' table controls have no accessible name');
+      var menInp = document.querySelector('[data-cb-list="units"][data-cb-key="men"]');
+      if (!menInp || menInp.getAttribute('inputmode') !== 'numeric') throw new Error('units men cell missing inputmode=numeric');
+      var nameInp = document.querySelector('[data-cb-list="units"][data-cb-key="name"]');
+      if (nameInp && nameInp.getAttribute('inputmode')) throw new Error('text cell should not carry inputmode=numeric');
+      var qInp = document.querySelector('[data-cb-list="leaders"][data-cb-key="quality"]');
+      if (!qInp || qInp.getAttribute('inputmode') !== 'decimal') throw new Error('fractional quality cell must be inputmode=decimal (a numeric keypad has no decimal key)');
+      return { controls: ctls.length, unnamed: 0 };
+    });
+
+    step('S22/S23 (D233): edits restore keyboard focus; validation + a blocked Launch announce via the focused status region', function() {
+      _fldCbState = validDraft(); _fldCbCleanJson = null;
+      fldCustomBattleBuilderMenu();
+      document.querySelector('[data-cb-act="validate"]').click();
+      var st = document.querySelector('.fld-cb-status');
+      if (!st) throw new Error('no status region after validate');
+      if (document.activeElement !== st) throw new Error('validate did not move focus to the status region (active=' + (document.activeElement && (document.activeElement.id || document.activeElement.tagName)) + ')');
+      if (st.getAttribute('role') !== 'status') throw new Error('valid result should be role=status, got ' + st.getAttribute('role'));
+      document.querySelector('[data-cb-act="add-unit"]').click();
+      var ae = document.activeElement;
+      if (!ae || ae.getAttribute('data-cb-act') !== 'add-unit') throw new Error('Add Unit did not restore focus to the acted-on control');
+      var nm = document.querySelector('[data-cb-field="name"]'); nm.value = '';
+      document.querySelector('[data-cb-act="launch"]').click();
+      st = document.querySelector('.fld-cb-status');
+      if (!st || st.getAttribute('role') !== 'alert') throw new Error('blocked launch did not render a role=alert status');
+      if (document.activeElement !== st) throw new Error('blocked launch did not move focus onto the alert');
+      return { announced: true };
+    });
+
+    step('S24 (D233): destructive actions confirm before discarding an unsaved draft; clean drafts never prompt', function() {
+      _fldCbState = validDraft(); _fldCbCleanJson = null;
+      fldCustomBattleBuilderMenu();   // snapshots the clean baseline
+      var nameEl = document.querySelector('[data-cb-field="name"]'); nameEl.value = 'Edited Ridge';
+      var calls = [], origConfirm = window.confirm, allow = false;
+      window.confirm = function(msg) { calls.push(String(msg)); return allow; };
+      try {
+        document.querySelector('[data-cb-act="reset"]').click();
+        if (!calls.length) throw new Error('New Draft did not confirm on a dirty draft');
+        var nm2 = document.querySelector('[data-cb-field="name"]');
+        if (!nm2 || nm2.value !== 'Edited Ridge') throw new Error('a DECLINED confirm still discarded the draft');
+        allow = true;
+        document.querySelector('[data-cb-act="reset"]').click();
+        nm2 = document.querySelector('[data-cb-field="name"]');
+        if (nm2 && nm2.value === 'Edited Ridge') throw new Error('an ACCEPTED confirm did not reset the draft');
+        calls.length = 0;
+        document.querySelector('[data-cb-act="reset"]').click();
+        if (calls.length) throw new Error('a CLEAN draft still prompted a confirm');
+      } finally { window.confirm = origConfirm; }
+      return { guarded: true };
     });
 
     step('PERSISTENCE: local slots save, list, reload, delete, and feed fldCustomScenarioData by explicit custom ID', function() {
@@ -317,7 +390,7 @@ async function main() {
       try { if (typeof fldCustomBattleBuilderMenu === 'function') fldCustomBattleBuilderMenu(); } catch(e) {}
     })()`);
     await sleep(250);
-    await page.screenshot({ path: join(OUT, 'probe-custom-battle-builder.png'), fullPage:false });
+    await page.screenshot({ path: join(OUT, 'probe-custom-battle-builder.png'), fullPage:false, timeout: 120000 });   // slow-Mac budget (the D232 SLOW_MAC precedent) — the default 30s flaked under load
     const actionableConsoleErrors = consoleLines.filter(line => line.startsWith('[error]') && !/Failed to load resource:.*404/i.test(line));
     data.pageerrors = pageerrors;
     data.console = consoleLines.slice(-20);

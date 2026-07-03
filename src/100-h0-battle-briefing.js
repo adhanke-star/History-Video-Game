@@ -110,7 +110,7 @@
       ".h0-brief-panel,.h0-side-card{background:linear-gradient(180deg,rgba(23,35,31,.97),rgba(10,15,17,.97));border:1px solid var(--h0b-line);border-radius:8px;box-shadow:0 14px 28px rgba(0,0,0,.34);min-width:0;}",
       ".h0-brief-panel-head{display:flex;align-items:center;gap:9px;padding:12px 12px 0;}",
       ".h0-brief-icon{width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;background:#44514d;color:#fff;font-size:11px;font-weight:950;border:1px solid rgba(255,255,255,.16);}",
-      ".h0-brief-panel-head h2,.h0-side-card h2{margin:0;color:#fff3d1;font-size:16px;line-height:1.15;font-weight:950;}",
+      ".h0-brief-panel-head h2,.h0-side-card .h0-side-title{display:block;margin:0;color:#fff3d1;font-size:16px;line-height:1.15;font-weight:950;}",
       ".h0-brief-panel-body{padding:11px 12px 12px;}",
       ".h0-brief-scene-wrap{margin:11px 12px 0;border-radius:8px;overflow:hidden;border:1px solid rgba(216,180,88,.32);background:#050607;}",
       ".h0-brief-shell .scene-img{margin:0!important;padding:0!important;background:#050607!important;border:0!important;border-radius:0!important;box-shadow:none!important;}",
@@ -218,9 +218,12 @@
       var cleanDeck = String(deck).replace(/<[^>]+>/g, "");
       var cleanBadge = String(badge).replace(/<[^>]+>/g, "").replace(/&#[0-9]+;/g, "").replace(/&[a-z]+;/g, "").replace(/\s+/g, " ").trim();
       if (!cleanBadge) cleanBadge = attacking ? "ATTACK" : "DEFEND";
+      /* S13 (D233): no heading inside a button — the HTML content model permits only phrasing content, and
+         some AT trees drop/reinterpret the nested <h2>. The aria-label already carries the accessible name;
+         the title renders identically via the styled span. */
       return '<button type="button" data-brside="' + h0bEsc(side) + '" class="h0-side-card" aria-label="' + h0bEsc(title + " -- " + (attacking ? "attack" : "defend") + ". " + cleanDeck) + '">'
         + '<span class="h0-side-badge">' + h0bEsc(cleanBadge) + '</span>'
-        + '<h2>' + h0bEsc(title) + '</h2>'
+        + '<span class="h0-side-title">' + h0bEsc(title) + '</span>'
         + '<p>' + deck + '</p>'
         + '<div class="h0-side-role" aria-hidden="true">'
           + '<span>Command<b>' + h0bEsc(h0bShortSide(side)) + '</b></span>'

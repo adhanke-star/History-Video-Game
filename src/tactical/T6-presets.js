@@ -270,7 +270,9 @@ function _fldPresetHTML() {
     + '<div style="margin-top:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">'
     +   '<button id="pvAdv" type="button" class="upg" aria-expanded="' + (s.advanced ? "true" : "false") + '">' + (s.advanced ? "&#9662; Hide advanced levers" : "&#9656; Advanced levers") + '</button>'
     +   teachBtn
-    +   '<span style="font-size:12px;opacity:.85">Selected: <b id="pvSummary">' + _fldPresetSummaryLine() + '</b></span>'
+    /* S28 (D233): the summary is a polite live region — an advanced-lever tweak flips the bundle to
+       "Custom", and a screen-reader user otherwise only hears the pressed chip's own state. */
+    +   '<span style="font-size:12px;opacity:.85" aria-live="polite">Selected: <b id="pvSummary">' + _fldPresetSummaryLine() + '</b></span>'
     + '</div>'
     + adv
     + teach

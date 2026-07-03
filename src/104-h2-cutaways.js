@@ -53,7 +53,15 @@ var h2CutawayKeyHandler = null;
       ".h2-cutaway-proc span{position:absolute;left:22px;bottom:20px;right:22px;color:#fff0c8;font-size:13px;line-height:1.45;text-shadow:0 2px 8px #000;}",
       ".h2-cutaway-notes{padding:14px;}.h2-cutaway-note{border:1px solid rgba(216,180,88,.22);border-radius:8px;padding:10px;margin-bottom:9px;background:rgba(255,255,255,.055);}.h2-cutaway-note b{display:block;color:#fff1c8;font-size:12px;text-transform:uppercase;margin-bottom:3px;}.h2-cutaway-note span{display:block;color:#cbd5c9;font-size:13px;line-height:1.44;}",
       ".h2-cutaway-foot{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:12px 16px;border-top:1px solid rgba(216,180,88,.28);background:rgba(0,0,0,.24);}.h2-cutaway-foot p{margin:0;color:#cbd5c9;font-size:12px;line-height:1.4;}.h2-cutaway-foot button{min-height:42px;border-radius:8px!important;}",
+      /* S14 (D233): the pan/zoom honors the APP reduceMotion toggle (the .h2-reduced-motion class stamped at
+         open time from G.settings.reduceMotion — the 98-h0-main-menu convention) in addition to the OS query. */
       ".h2-cutaway-overlay button:focus-visible{outline:3px solid #ffe27a!important;outline-offset:3px!important;}@media (prefers-reduced-motion:no-preference){.h2-cutaway-frame .scene-img img{animation:h2StillPan 16s ease-in-out infinite alternate;}@keyframes h2StillPan{from{transform:scale(1.01) translateX(-1%);}to{transform:scale(1.07) translateX(1%);}}}",
+      ".h2-cutaway-overlay.h2-reduced-motion .scene-img img{animation:none!important;}",
+      /* S15 (D233): the overlay mounts directly on <body> (never inside openSheet's .pad), so the dyslexia
+         text mode's .pad-scoped override never reached the story text — mirror 97-accessibility's exact
+         values here (same font stack, letter-spacing, line-height, word-spacing). */
+      "html[data-a11y-text='dyslexia'] .h2-cutaway-overlay,html[data-a11y-text='dyslexia'] .h2-cutaway-overlay *{font-family:'Atkinson Hyperlegible','Trebuchet MS',Verdana,system-ui,-apple-system,'Segoe UI',sans-serif!important;letter-spacing:.02em!important;}",
+      "html[data-a11y-text='dyslexia'] .h2-cutaway-overlay p,html[data-a11y-text='dyslexia'] .h2-cutaway-overlay div,html[data-a11y-text='dyslexia'] .h2-cutaway-overlay span,html[data-a11y-text='dyslexia'] .h2-cutaway-overlay figcaption{line-height:1.62!important;word-spacing:.04em!important;}",
       "@media (max-width:840px){.h0-brief-actions.h2-cutaway-ready{grid-template-columns:repeat(2,minmax(0,1fr));}.h2-cutaway-body{grid-template-columns:1fr;}.h2-cutaway-frame .scene-img img,.h2-cutaway-proc{height:300px!important;}}@media (max-width:540px){.h0-brief-actions.h2-cutaway-ready{grid-template-columns:1fr;}.h2-cutaway-overlay{align-items:flex-start;}.h2-cutaway-card{width:calc(100vw - 16px);max-height:calc(100vh - 16px);}.h2-cutaway-head,.h2-cutaway-foot{display:block;padding:12px;}.h2-cutaway-body{padding:10px;gap:10px;}.h2-cutaway-close,.h2-cutaway-foot button{width:100%;margin-top:8px;}.h2-cutaway-head h1{font-size:24px;}.h2-cutaway-frame .scene-img img,.h2-cutaway-proc{height:210px!important;}.h2-cutaway-proc span{left:14px;right:14px;bottom:14px;font-size:12px;}}",
       "html[data-a11y-contrast='high'] .h2-cutaway-card,html[data-a11y-contrast='high'] .h2-cutaway-frame,html[data-a11y-contrast='high'] .h2-cutaway-notes,html[data-a11y-contrast='high'] .h2-cutaway-note{background:#000!important;color:#fff!important;border-color:#ffe27a!important;}html[data-a11y-contrast='high'] .h2-cutaway-sub,html[data-a11y-contrast='high'] .h2-cutaway-note span,html[data-a11y-contrast='high'] .h2-cutaway-foot p{color:#f2e6c8!important;}"
     ].join("");
@@ -110,13 +118,28 @@ var h2CutawayKeyHandler = null;
     wrap.id = "h2CutawayOverlay";
     wrap.innerHTML = h2CutawayHTML(C);
     document.body.appendChild(wrap);
+    // S14 (D233): honor the in-game reduceMotion toggle (not only the OS media query) — the 98 convention.
+    try { if (typeof G !== "undefined" && G && G.settings && G.settings.reduceMotion) { var ov0 = wrap.querySelector(".h2-cutaway-overlay"); if (ov0) ov0.classList.add("h2-reduced-motion"); } } catch (e0) {}
     var close = document.getElementById("h2CutawayClose");
     var done = document.getElementById("h2CutawayDone");
     if (close) close.addEventListener("click", h2CloseCutaway);
     if (done) done.addEventListener("click", h2CloseCutaway);
     wrap.addEventListener("click", function (ev) { if (ev.target && ev.target.className === "h2-cutaway-overlay") h2CloseCutaway(); });
+    // S12 (D233): make the aria-modal contract REAL — a Tab/Shift+Tab trap cycles the dialog's focusables
+    // (Skip + Return at minimum), so keyboard/SR users cannot tab into the live briefing behind the dialog.
     h2CutawayKeyHandler = function h2Key(ev) {
-      if (ev && ev.key === "Escape") { h2CloseCutaway(); document.removeEventListener("keydown", h2Key); }
+      if (!ev) return;
+      if (ev.key === "Escape") { h2CloseCutaway(); document.removeEventListener("keydown", h2Key); return; }
+      if (ev.key === "Tab") {
+        var o = document.getElementById("h2CutawayOverlay");
+        if (!o) return;
+        var f = o.querySelectorAll("button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])");
+        if (!f.length) return;
+        var first = f[0], last = f[f.length - 1], a = document.activeElement;
+        var inside = o.contains(a);
+        if (ev.shiftKey) { if (!inside || a === first) { ev.preventDefault(); try { last.focus(); } catch (e1) {} } }
+        else { if (!inside || a === last) { ev.preventDefault(); try { first.focus(); } catch (e2) {} } }
+      }
     };
     document.addEventListener("keydown", h2CutawayKeyHandler);
     try { if (close) close.focus(); } catch (e) {}

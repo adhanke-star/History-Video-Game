@@ -169,7 +169,7 @@ const SETUP = `(() => {
       if(calls.length) throw new Error('glDecorate touched: '+calls.join(','));
       return { clean:true }; });
 
-    step('HOOK: _wdRefresh decorates the teaching tabs (afteraction/warvshistory) but NOT others', function(){
+    step('HOOK: _wdRefresh decorates the teaching-prose tabs (C18/D233 widened set) and skips the Codex itself', function(){
       if(typeof _wdRefresh!=='function') throw new Error('_wdRefresh missing');
       var C=mkC();
       var w=document.getElementById('wdContent'); if(!w){ w=document.createElement('div'); w.id='wdContent'; document.body.appendChild(w); }
@@ -177,9 +177,16 @@ const SETUP = `(() => {
       if(w.getAttribute('data-gl-done')!=='1') throw new Error('afteraction tab not glossified (glDecorate did not run)');
       var afterTerms1=w.querySelectorAll('.gl-term').length;
       if(afterTerms1<1) throw new Error('afteraction prose should wrap at least one codex term (got '+afterTerms1+')');
+      // C18 (D233): the audit found the tutorial promised the glossary across "the teaching panels" while
+      // only 2 of ~20 tabs decorated — the teaching-prose tabs (economy/press/decisions/...) now decorate
+      // too (glDecorate skips interactive zones by construction, so wired controls are untouched).
+      w.removeAttribute('data-gl-done');
       _wdTab='economy'; _wdRefresh();
-      // the REAL invariant: a non-teaching tab's rendered content carries no inline glossary triggers
-      if(w.querySelectorAll('.gl-term').length!==0) throw new Error('economy tab should NOT carry .gl-term triggers');
+      if(w.getAttribute('data-gl-done')!=='1') throw new Error('economy (War Effort) tab not glossified (C18 widening missing)');
+      // the Codex tab itself is EXCLUDED (it IS the glossary source)
+      w.removeAttribute('data-gl-done');
+      _wdTab='codex'; _wdRefresh();
+      if(w.getAttribute('data-gl-done')==='1') throw new Error('codex tab must not be glossary-decorated');
       // DISCRIMINATING re-decorate test (the container-reuse guard fix): switching BACK to a
       // teaching tab must RE-decorate fresh content. Without the removeAttribute fix the stale
       // data-gl-done='1' would make glDecorate skip -> 0 terms on the second view.

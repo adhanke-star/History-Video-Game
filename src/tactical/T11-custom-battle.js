@@ -234,6 +234,10 @@ function fldCustomValidate(raw) {
   if (objective.x - objective.r < 0 || objective.x + objective.r > field.w || objective.z - objective.r < 0 || objective.z + objective.r > field.h) errors.push("Objective radius must fit inside the field.");
   var timeLimitSec = _fldCbInt(src.timeLimitSec, 540, 180, 1800);
   var holdToWinSec = _fldCbInt(src.holdToWinSec, 100, 20, Math.max(25, Math.min(600, timeLimitSec - 10)));
+  // S27 (D233): the Hold-to-win field advertises max 600, but the real ceiling is timeLimit-10 — surface the
+  // clamp instead of silently launching a different win condition than the field shows.
+  var _cbHoldTyped = Math.round(Number(src.holdToWinSec));
+  if (isFinite(_cbHoldTyped) && _cbHoldTyped > holdToWinSec) warnings.push("Hold-to-win " + _cbHoldTyped + "s exceeds the time limit's ceiling — clamped to " + holdToWinSec + "s (time limit minus 10s).");
   var terrainSrc = src.terrain || {};
   var terrain = { hills: [], woods: [], walls: [], markers: [] }, i, d, p;
   var hills = terrainSrc.hills || (terrainSrc.hill ? [terrainSrc.hill] : []);
@@ -559,10 +563,13 @@ function _fldCbObjVal(obj, k) { return _fldCbEsc((obj && obj[k]) == null ? "" : 
 function _fldCbNumInput(name, value, min, max, step) {
   return '<input type="number" data-cb-field="' + name + '" value="' + _fldCbEsc(value) + '" min="' + min + '" max="' + max + '" step="' + (step || 1) + '">';
 }
+/* S23 (D233): the status block is the announcement surface — role="alert" on a blocked result (announced on
+   insertion) / role="status" otherwise, and tabindex="-1" so _fldCbRefresh can MOVE FOCUS onto it after
+   Validate / a blocked Launch / an Import, making the outcome audible instead of a silent re-render. */
 function _fldCbStatusHtml() {
-  if (!_fldCbLast) return '<div class="fld-cb-status muted">Single-phase V1. Phase authoring is intentionally deferred until its editor can be probed as safely as authored phase data.</div>';
+  if (!_fldCbLast) return '<div class="fld-cb-status muted" role="status" tabindex="-1">Single-phase V1. Phase authoring is intentionally deferred until its editor can be probed as safely as authored phase data.</div>';
   var cls = _fldCbLast.ok ? "ok" : "bad";
-  var html = '<div class="fld-cb-status ' + cls + '"><b>' + (_fldCbLast.ok ? "Valid scenario" : "Validation blocked") + '</b>';
+  var html = '<div class="fld-cb-status ' + cls + '" role="' + (_fldCbLast.ok ? "status" : "alert") + '" tabindex="-1"><b>' + (_fldCbLast.ok ? "Valid scenario" : "Validation blocked") + '</b>';
   if (_fldCbLast.errors && _fldCbLast.errors.length) html += '<ul>' + _fldCbLast.errors.map(function (e) { return '<li>' + _fldCbEsc(e) + '</li>'; }).join("") + '</ul>';
   if (_fldCbLast.warnings && _fldCbLast.warnings.length) html += '<ul class="warn">' + _fldCbLast.warnings.slice(0, 8).map(function (e) { return '<li>' + _fldCbEsc(e) + '</li>'; }).join("") + '</ul>';
   html += '</div>';
@@ -576,15 +583,24 @@ function _fldCbSelect(val, list, attr) {
   }
   return h + '</select>';
 }
+/* S21 (D233): every editor-table control carries an accessible name (row identity + column — WCAG 4.1.2 /
+   3.3.2; a unit row was 13 fields a screen reader announced as "edit text, blank"). S26: numeric cells add
+   inputmode so mobile pops the right keypad — pass "decimal" for FRACTIONAL fields (leader quality 0.7-1.35,
+   facing radians, hill height): a plain "numeric" keypad has no decimal separator on iOS/Android. */
+function _fldCbCell(list, idx, key, val, label, numeric) {
+  var im = numeric ? (numeric === "decimal" ? ' inputmode="decimal"' : ' inputmode="numeric"') : "";
+  return '<td><input data-cb-list="' + list + '" data-cb-idx="' + idx + '" data-cb-key="' + key + '" aria-label="' + _fldCbEsc(label) + '"' + im + ' value="' + val + '"></td>';
+}
+function _fldCbRowName(d, fallback) { return (d && d.name ? String(d.name) : fallback); }
 function _fldCbTerrainRows(kind) {
   var arr = (_fldCbState.terrain && _fldCbState.terrain[kind]) || [], h = "";
   for (var i = 0; i < arr.length; i++) {
-    var d = arr[i];
+    var d = arr[i], rn = kind.replace(/s$/, "") + " " + (i + 1);
     h += '<tr>';
-    if (kind === "hills") h += '<td><input data-cb-list="terrain.hills" data-cb-idx="' + i + '" data-cb-key="x" value="' + _fldCbObjVal(d, "x") + '"></td><td><input data-cb-list="terrain.hills" data-cb-idx="' + i + '" data-cb-key="z" value="' + _fldCbObjVal(d, "z") + '"></td><td><input data-cb-list="terrain.hills" data-cb-idx="' + i + '" data-cb-key="h" value="' + _fldCbObjVal(d, "h") + '"></td><td><input data-cb-list="terrain.hills" data-cb-idx="' + i + '" data-cb-key="s" value="' + _fldCbObjVal(d, "s") + '"></td>';
-    if (kind === "woods") h += '<td><input data-cb-list="terrain.woods" data-cb-idx="' + i + '" data-cb-key="x" value="' + _fldCbObjVal(d, "x") + '"></td><td><input data-cb-list="terrain.woods" data-cb-idx="' + i + '" data-cb-key="z" value="' + _fldCbObjVal(d, "z") + '"></td><td><input data-cb-list="terrain.woods" data-cb-idx="' + i + '" data-cb-key="r" value="' + _fldCbObjVal(d, "r") + '"></td>';
-    if (kind === "walls") h += '<td><input data-cb-list="terrain.walls" data-cb-idx="' + i + '" data-cb-key="x1" value="' + _fldCbObjVal(d, "x1") + '"></td><td><input data-cb-list="terrain.walls" data-cb-idx="' + i + '" data-cb-key="z1" value="' + _fldCbObjVal(d, "z1") + '"></td><td><input data-cb-list="terrain.walls" data-cb-idx="' + i + '" data-cb-key="x2" value="' + _fldCbObjVal(d, "x2") + '"></td><td><input data-cb-list="terrain.walls" data-cb-idx="' + i + '" data-cb-key="z2" value="' + _fldCbObjVal(d, "z2") + '"></td>';
-    h += '<td><button class="mini" data-cb-act="del-' + kind + '" data-idx="' + i + '">Remove</button></td></tr>';
+    if (kind === "hills") h += _fldCbCell("terrain.hills", i, "x", _fldCbObjVal(d, "x"), rn + " — x", true) + _fldCbCell("terrain.hills", i, "z", _fldCbObjVal(d, "z"), rn + " — z", true) + _fldCbCell("terrain.hills", i, "h", _fldCbObjVal(d, "h"), rn + " — height", "decimal") + _fldCbCell("terrain.hills", i, "s", _fldCbObjVal(d, "s"), rn + " — spread", true);
+    if (kind === "woods") h += _fldCbCell("terrain.woods", i, "x", _fldCbObjVal(d, "x"), rn + " — x", true) + _fldCbCell("terrain.woods", i, "z", _fldCbObjVal(d, "z"), rn + " — z", true) + _fldCbCell("terrain.woods", i, "r", _fldCbObjVal(d, "r"), rn + " — radius", true);
+    if (kind === "walls") h += _fldCbCell("terrain.walls", i, "x1", _fldCbObjVal(d, "x1"), rn + " — x1", true) + _fldCbCell("terrain.walls", i, "z1", _fldCbObjVal(d, "z1"), rn + " — z1", true) + _fldCbCell("terrain.walls", i, "x2", _fldCbObjVal(d, "x2"), rn + " — x2", true) + _fldCbCell("terrain.walls", i, "z2", _fldCbObjVal(d, "z2"), rn + " — z2", true);
+    h += '<td><button class="mini" data-cb-act="del-' + kind + '" data-idx="' + i + '" aria-label="Remove ' + _fldCbEsc(rn) + '">Remove</button></td></tr>';
   }
   return h || '<tr><td colspan="5" class="muted">None</td></tr>';
 }
@@ -592,12 +608,13 @@ function _fldCbMarkerRows() {
   var arr = (_fldCbState.terrain && _fldCbState.terrain.markers) || [], h = "";
   for (var i = 0; i < arr.length; i++) {
     var d = arr[i];
-    h += '<tr><td>' + _fldCbSelect(d.kind || "label", [["label", "Label"], ["road", "Road"], ["creek", "Creek"], ["bridge", "Bridge"], ["ford", "Ford"]], 'data-cb-list="terrain.markers" data-cb-idx="' + i + '" data-cb-key="kind"') + '</td>'
-      + '<td><input data-cb-list="terrain.markers" data-cb-idx="' + i + '" data-cb-key="name" value="' + _fldCbObjVal(d, "name") + '"></td>'
-      + '<td><input data-cb-list="terrain.markers" data-cb-idx="' + i + '" data-cb-key="x" value="' + _fldCbObjVal(d, "x") + '"></td>'
-      + '<td><input data-cb-list="terrain.markers" data-cb-idx="' + i + '" data-cb-key="z" value="' + _fldCbObjVal(d, "z") + '"></td>'
-      + '<td><input data-cb-list="terrain.markers" data-cb-idx="' + i + '" data-cb-key="path" value="' + _fldCbObjVal(d, "path") + '" placeholder="x,z;x,z"></td>'
-      + '<td><button class="mini" data-cb-act="del-markers" data-idx="' + i + '">Remove</button></td></tr>';
+    var mn = _fldCbRowName(d, "marker " + (i + 1));
+    h += '<tr><td>' + _fldCbSelect(d.kind || "label", [["label", "Label"], ["road", "Road"], ["creek", "Creek"], ["bridge", "Bridge"], ["ford", "Ford"]], 'data-cb-list="terrain.markers" data-cb-idx="' + i + '" data-cb-key="kind" aria-label="' + _fldCbEsc(mn + " — kind") + '"') + '</td>'
+      + _fldCbCell("terrain.markers", i, "name", _fldCbObjVal(d, "name"), mn + " — name")
+      + _fldCbCell("terrain.markers", i, "x", _fldCbObjVal(d, "x"), mn + " — x", true)
+      + _fldCbCell("terrain.markers", i, "z", _fldCbObjVal(d, "z"), mn + " — z", true)
+      + '<td><input data-cb-list="terrain.markers" data-cb-idx="' + i + '" data-cb-key="path" aria-label="' + _fldCbEsc(mn + " — path points") + '" value="' + _fldCbObjVal(d, "path") + '" placeholder="x,z;x,z"></td>'
+      + '<td><button class="mini" data-cb-act="del-markers" data-idx="' + i + '" aria-label="Remove ' + _fldCbEsc(mn) + '">Remove</button></td></tr>';
   }
   return h || '<tr><td colspan="6" class="muted">None</td></tr>';
 }
@@ -605,20 +622,21 @@ function _fldCbUnitRows() {
   var arr = _fldCbState.units || [], h = "";
   for (var i = 0; i < arr.length; i++) {
     var d = arr[i];
-    h += '<tr><td>' + _fldCbSelect(d.side || "US", ["US", "CS"], 'data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="side"') + '</td>'
-      + '<td><input data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="id" value="' + _fldCbObjVal(d, "id") + '"></td>'
-      + '<td><input data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="name" value="' + _fldCbObjVal(d, "name") + '"></td>'
-      + '<td><input data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="commander" value="' + _fldCbObjVal(d, "commander") + '"></td>'
-      + '<td>' + _fldCbSelect(d.arm || "inf", [["inf", "Inf"], ["art", "Art"], ["cav", "Cav"]], 'data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="arm"') + '</td>'
-      + '<td>' + _fldCbSelect(d.weapon || "rifled", ["rifled", "smooth", "carbine"], 'data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="weapon"') + '</td>'
-      + '<td><input data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="men" value="' + _fldCbObjVal(d, "men") + '"></td>'
-      + '<td><input data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="guns" value="' + _fldCbObjVal(d, "guns") + '"></td>'
-      + '<td><input data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="x" value="' + _fldCbObjVal(d, "x") + '"></td>'
-      + '<td><input data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="z" value="' + _fldCbObjVal(d, "z") + '"></td>'
-      + '<td><input data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="facing" value="' + _fldCbObjVal(d, "facing") + '"></td>'
-      + '<td><input data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="xp" value="' + _fldCbObjVal(d, "xp") + '"></td>'
-      + '<td><input data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="atSec" value="' + _fldCbObjVal(d, "atSec") + '"></td>'
-      + '<td><button class="mini" data-cb-act="del-unit" data-idx="' + i + '">Remove</button></td></tr>';
+    var un = _fldCbRowName(d, "unit " + (i + 1));
+    h += '<tr><td>' + _fldCbSelect(d.side || "US", ["US", "CS"], 'data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="side" aria-label="' + _fldCbEsc(un + " — side") + '"') + '</td>'
+      + _fldCbCell("units", i, "id", _fldCbObjVal(d, "id"), un + " — id")
+      + _fldCbCell("units", i, "name", _fldCbObjVal(d, "name"), un + " — name")
+      + _fldCbCell("units", i, "commander", _fldCbObjVal(d, "commander"), un + " — commander")
+      + '<td>' + _fldCbSelect(d.arm || "inf", [["inf", "Inf"], ["art", "Art"], ["cav", "Cav"]], 'data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="arm" aria-label="' + _fldCbEsc(un + " — arm") + '"') + '</td>'
+      + '<td>' + _fldCbSelect(d.weapon || "rifled", ["rifled", "smooth", "carbine"], 'data-cb-list="units" data-cb-idx="' + i + '" data-cb-key="weapon" aria-label="' + _fldCbEsc(un + " — weapon") + '"') + '</td>'
+      + _fldCbCell("units", i, "men", _fldCbObjVal(d, "men"), un + " — men", true)
+      + _fldCbCell("units", i, "guns", _fldCbObjVal(d, "guns"), un + " — guns", true)
+      + _fldCbCell("units", i, "x", _fldCbObjVal(d, "x"), un + " — x", true)
+      + _fldCbCell("units", i, "z", _fldCbObjVal(d, "z"), un + " — z", true)
+      + _fldCbCell("units", i, "facing", _fldCbObjVal(d, "facing"), un + " — facing", "decimal")
+      + _fldCbCell("units", i, "xp", _fldCbObjVal(d, "xp"), un + " — experience", true)
+      + _fldCbCell("units", i, "atSec", _fldCbObjVal(d, "atSec"), un + " — arrival second", true)
+      + '<td><button class="mini" data-cb-act="del-unit" data-idx="' + i + '" aria-label="Remove ' + _fldCbEsc(un) + '">Remove</button></td></tr>';
   }
   return h || '<tr><td colspan="14" class="muted">No units</td></tr>';
 }
@@ -626,15 +644,16 @@ function _fldCbLeaderRows() {
   var arr = _fldCbState.leaders || [], h = "";
   for (var i = 0; i < arr.length; i++) {
     var d = arr[i];
-    h += '<tr><td>' + _fldCbSelect(d.side || "US", ["US", "CS"], 'data-cb-list="leaders" data-cb-idx="' + i + '" data-cb-key="side"') + '</td>'
-      + '<td><input data-cb-list="leaders" data-cb-idx="' + i + '" data-cb-key="id" value="' + _fldCbObjVal(d, "id") + '"></td>'
-      + '<td><input data-cb-list="leaders" data-cb-idx="' + i + '" data-cb-key="name" value="' + _fldCbObjVal(d, "name") + '"></td>'
-      + '<td><input data-cb-list="leaders" data-cb-idx="' + i + '" data-cb-key="quality" value="' + _fldCbObjVal(d, "quality") + '"></td>'
-      + '<td><input data-cb-list="leaders" data-cb-idx="' + i + '" data-cb-key="radius" value="' + _fldCbObjVal(d, "radius") + '"></td>'
-      + '<td><input data-cb-list="leaders" data-cb-idx="' + i + '" data-cb-key="x" value="' + _fldCbObjVal(d, "x") + '"></td>'
-      + '<td><input data-cb-list="leaders" data-cb-idx="' + i + '" data-cb-key="z" value="' + _fldCbObjVal(d, "z") + '"></td>'
-      + '<td><input data-cb-list="leaders" data-cb-idx="' + i + '" data-cb-key="attach" value="' + _fldCbObjVal(d, "attach") + '"></td>'
-      + '<td><button class="mini" data-cb-act="del-leader" data-idx="' + i + '">Remove</button></td></tr>';
+    var ln = _fldCbRowName(d, "leader " + (i + 1));
+    h += '<tr><td>' + _fldCbSelect(d.side || "US", ["US", "CS"], 'data-cb-list="leaders" data-cb-idx="' + i + '" data-cb-key="side" aria-label="' + _fldCbEsc(ln + " — side") + '"') + '</td>'
+      + _fldCbCell("leaders", i, "id", _fldCbObjVal(d, "id"), ln + " — id")
+      + _fldCbCell("leaders", i, "name", _fldCbObjVal(d, "name"), ln + " — name")
+      + _fldCbCell("leaders", i, "quality", _fldCbObjVal(d, "quality"), ln + " — quality", "decimal")
+      + _fldCbCell("leaders", i, "radius", _fldCbObjVal(d, "radius"), ln + " — command radius", true)
+      + _fldCbCell("leaders", i, "x", _fldCbObjVal(d, "x"), ln + " — x", true)
+      + _fldCbCell("leaders", i, "z", _fldCbObjVal(d, "z"), ln + " — z", true)
+      + _fldCbCell("leaders", i, "attach", _fldCbObjVal(d, "attach"), ln + " — attached unit id")
+      + '<td><button class="mini" data-cb-act="del-leader" data-idx="' + i + '" aria-label="Remove ' + _fldCbEsc(ln) + '">Remove</button></td></tr>';
   }
   return h || '<tr><td colspan="9" class="muted">No leaders</td></tr>';
 }
@@ -642,11 +661,12 @@ function _fldCbCardRows() {
   var arr = _fldCbState.teachingCards || [], h = "";
   for (var i = 0; i < arr.length; i++) {
     var d = arr[i];
-    h += '<tr><td><input data-cb-list="teachingCards" data-cb-idx="' + i + '" data-cb-key="id" value="' + _fldCbObjVal(d, "id") + '"></td>'
-      + '<td><input data-cb-list="teachingCards" data-cb-idx="' + i + '" data-cb-key="head" value="' + _fldCbObjVal(d, "head") + '"></td>'
-      + '<td><input data-cb-list="teachingCards" data-cb-idx="' + i + '" data-cb-key="body" value="' + _fldCbObjVal(d, "body") + '"></td>'
-      + '<td><input data-cb-list="teachingCards" data-cb-idx="' + i + '" data-cb-key="provenance" value="' + _fldCbObjVal(d, "provenance") + '"></td>'
-      + '<td><button class="mini" data-cb-act="del-card" data-idx="' + i + '">Remove</button></td></tr>';
+    var cn = (d && d.head) ? String(d.head) : ("teaching card " + (i + 1));
+    h += '<tr>' + _fldCbCell("teachingCards", i, "id", _fldCbObjVal(d, "id"), cn + " — id")
+      + _fldCbCell("teachingCards", i, "head", _fldCbObjVal(d, "head"), cn + " — heading")
+      + _fldCbCell("teachingCards", i, "body", _fldCbObjVal(d, "body"), cn + " — body")
+      + _fldCbCell("teachingCards", i, "provenance", _fldCbObjVal(d, "provenance"), cn + " — provenance")
+      + '<td><button class="mini" data-cb-act="del-card" data-idx="' + i + '" aria-label="Remove ' + _fldCbEsc(cn) + '">Remove</button></td></tr>';
   }
   return h || '<tr><td colspan="5" class="muted">No teaching cards</td></tr>';
 }
@@ -701,7 +721,35 @@ function _fldCbReadForm() {
     if (arr && arr[idx]) arr[idx][key] = n.value;
   }
 }
-function _fldCbRefresh() { if (typeof openSheet === "function") { openSheet(_fldCbHtml()); _fldCbWire(); } }
+/* S22 (D233): openSheet rebuilds the whole sheet and dropped focus to <body> on EVERY edit action; restore
+   it to the acted-on control (the T6 _fldPresetRerender convention) so keyboard users keep their place. */
+function _fldCbRefresh(focusSel) {
+  if (typeof openSheet === "function") {
+    openSheet(_fldCbHtml()); _fldCbWire();
+    if (focusSel) { try { var el = document.querySelector(focusSel); if (el) el.focus(); } catch (e) {} }
+  }
+}
+/* S24 (D233): destructive actions (New Draft / Import / Import Pack / Load slot) confirm before discarding
+   an UNSAVED in-progress draft. The clean baseline refreshes on first open, save, load, import, and reset —
+   builder state was only ever persisted on an explicit Save-slot, so a misclick was unrecoverable. */
+var _fldCbCleanJson = null;
+/* the canonical compare stringifies every primitive — _fldCbReadForm coerces numbers to input-value STRINGS
+   (1500 -> "1500"), so a raw JSON.stringify compare would false-dirty a draft the player never touched. The
+   snapshot also runs a readForm pass first (when the form is mounted) so the baseline carries the same
+   form-round-trip shape (readForm materializes empty supply/brief sub-objects) as every later compare —
+   which is why call sites snapshot AFTER _fldCbRefresh renders the state they are baselining. */
+function _fldCbCanon(o) { return JSON.stringify(o, function (k, v) { return (v == null || typeof v === "object") ? v : String(v); }); }
+function _fldCbSnapshot() {
+  try { if (document.querySelector(".fld-cb")) _fldCbReadForm(); } catch (e0) {}
+  try { _fldCbCleanJson = _fldCbCanon(_fldCbState); } catch (e) { _fldCbCleanJson = null; }
+}
+function _fldCbConfirmDiscard(what) {
+  _fldCbReadForm();
+  var dirty = false;
+  try { dirty = (_fldCbCleanJson != null && _fldCbCanon(_fldCbState) !== _fldCbCleanJson); } catch (e) {}
+  if (!dirty) return true;
+  try { return window.confirm(what + " will replace your unsaved draft. Continue?"); } catch (e2) { return true; }
+}
 function _fldCbAdd(kind) {
   _fldCbReadForm();
   if (kind === "hills") _fldCbState.terrain.hills.push({ x: 600, z: 450, h: 14, s: 150 });
@@ -711,7 +759,7 @@ function _fldCbAdd(kind) {
   if (kind === "unit") _fldCbState.units.push({ side: "US", id: "us_new", name: "New Brigade", commander: "", arm: "inf", weapon: "rifled", men: 1500, guns: 0, xp: 2, x: 500, z: 720, facing: 0, formation: "line", atSec: 0 });
   if (kind === "leader") _fldCbState.leaders.push({ side: "US", id: "us_leader_new", name: "New Leader", quality: 1.05, radius: 180, x: 520, z: 700, attach: "" });
   if (kind === "card") _fldCbState.teachingCards.push({ id: "custom_note_new", head: "Custom note", body: "", provenance: _fldCbState.provenance || "Player-authored." });
-  _fldCbRefresh();
+  _fldCbRefresh('[data-cb-act="add-' + (kind === "marker" ? "marker" : kind) + '"]');
 }
 function _fldCbDel(kind, idx) {
   _fldCbReadForm();
@@ -721,7 +769,8 @@ function _fldCbDel(kind, idx) {
   if (kind === "card") arr = _fldCbState.teachingCards;
   if (kind === "hills" || kind === "woods" || kind === "walls" || kind === "markers") arr = _fldCbState.terrain[kind];
   if (arr) arr.splice(+idx, 1);
-  _fldCbRefresh();
+  var addAct = { unit: "add-unit", leader: "add-leader", card: "add-card", hills: "add-hills", woods: "add-woods", walls: "add-walls", markers: "add-marker" }[kind];
+  _fldCbRefresh(addAct ? '[data-cb-act="' + addAct + '"]' : null);
 }
 function _fldCbWire() {
   var root = document.querySelector(".fld-cb"); if (!root) return;
@@ -729,19 +778,21 @@ function _fldCbWire() {
     var b = ev.target.closest && ev.target.closest("[data-cb-act]"); if (!b) return;
     ev.preventDefault();
     var act = b.getAttribute("data-cb-act");
-    if (act === "validate") { _fldCbReadForm(); _fldCbLast = fldCustomValidate(_fldCbState); _fldCbRefresh(); return; }
-    if (act === "export") { _fldCbReadForm(); _fldCbLast = fldCustomValidate(_fldCbState); _fldCbRefresh(); var ta = document.getElementById("fldCbJson"); if (ta && _fldCbLast.ok) ta.value = _fldCbLast.json; return; }
-    if (act === "import") { var ta2 = document.getElementById("fldCbJson"); _fldCbLast = fldCustomImportJson(ta2 ? ta2.value : ""); if (_fldCbLast.ok) _fldCbState = _fldCbLast.draft; _fldCbRefresh(); return; }
-    if (act === "export-pack") { _fldCbReadForm(); var pk = fldCustomExportPack(); _fldCbLast = { ok: pk.ok, errors: pk.errors, warnings: pk.warnings, scenario: pk.scenarios[0] || null }; _fldCbRefresh(); var ta3 = document.getElementById("fldCbJson"); if (ta3 && pk.ok) ta3.value = pk.json; return; }
-    if (act === "import-pack") { var ta4 = document.getElementById("fldCbJson"); var pr = fldCustomImportPackJson(ta4 ? ta4.value : "", { install: true }); _fldCbLast = { ok: pr.ok, errors: pr.errors, warnings: pr.warnings.concat(pr.ok ? ["Installed " + pr.saved + " scenario(s) into empty local slots."] : []), scenario: pr.scenarios[0] || null }; if (pr.ok && pr.drafts[0]) _fldCbState = pr.drafts[0]; _fldCbRefresh(); return; }
-    if (act === "template") { _fldCbRefresh(); var ta5 = document.getElementById("fldCbJson"); if (ta5) ta5.value = fldCustomTemplateJson(); return; }
-    if (act === "launch") { _fldCbReadForm(); _fldCbLast = fldCustomValidate(_fldCbState); if (_fldCbLast.ok) { _fldCbActiveScenario = _fldCbLast.scenario; if (typeof fldScenarioSideChoice === "function") fldScenarioSideChoice(_fldCbActiveScenario.id, function (side) { fldLaunchBattle(_fldCbActiveScenario.id, side); }); else if (typeof fldLaunchSandbox === "function") fldLaunchSandbox({ scenario: _fldCbActiveScenario.id, playerSide: "US" }); } else _fldCbRefresh(); return; }
-    if (act === "reset") { _fldCbState = fldCustomDefaultDraft(); _fldCbLast = null; _fldCbRefresh(); return; }
+    if (act === "validate") { _fldCbReadForm(); _fldCbLast = fldCustomValidate(_fldCbState); _fldCbRefresh(".fld-cb-status"); return; }
+    if (act === "export") { _fldCbReadForm(); _fldCbLast = fldCustomValidate(_fldCbState); _fldCbRefresh(_fldCbLast.ok ? "#fldCbJson" : ".fld-cb-status"); var ta = document.getElementById("fldCbJson"); if (ta && _fldCbLast.ok) ta.value = _fldCbLast.json; return; }
+    if (act === "import") { if (!_fldCbConfirmDiscard("Import")) return; var ta2 = document.getElementById("fldCbJson"); _fldCbLast = fldCustomImportJson(ta2 ? ta2.value : ""); var impOk = _fldCbLast.ok; if (impOk) _fldCbState = _fldCbLast.draft; _fldCbRefresh(".fld-cb-status"); if (impOk) _fldCbSnapshot(); return; }
+    if (act === "export-pack") { _fldCbReadForm(); var pk = fldCustomExportPack(); _fldCbLast = { ok: pk.ok, errors: pk.errors, warnings: pk.warnings, scenario: pk.scenarios[0] || null }; _fldCbRefresh(pk.ok ? "#fldCbJson" : ".fld-cb-status"); var ta3 = document.getElementById("fldCbJson"); if (ta3 && pk.ok) ta3.value = pk.json; return; }
+    if (act === "import-pack") { if (!_fldCbConfirmDiscard("Import Pack")) return; var ta4 = document.getElementById("fldCbJson"); var pr = fldCustomImportPackJson(ta4 ? ta4.value : "", { install: true }); _fldCbLast = { ok: pr.ok, errors: pr.errors, warnings: pr.warnings.concat(pr.ok ? ["Installed " + pr.saved + " scenario(s) into empty local slots."] : []), scenario: pr.scenarios[0] || null }; var pkOk = pr.ok && pr.drafts[0]; if (pkOk) _fldCbState = pr.drafts[0]; _fldCbRefresh(".fld-cb-status"); if (pkOk) _fldCbSnapshot(); return; }
+    if (act === "template") { _fldCbRefresh("#fldCbJson"); var ta5 = document.getElementById("fldCbJson"); if (ta5) ta5.value = fldCustomTemplateJson(); return; }
+    // S23 (D233): a BLOCKED launch re-renders with focus moved onto the role="alert" status region, so a
+    // non-sighted player hears why nothing launched instead of a silent no-op.
+    if (act === "launch") { _fldCbReadForm(); _fldCbLast = fldCustomValidate(_fldCbState); if (_fldCbLast.ok) { _fldCbActiveScenario = _fldCbLast.scenario; if (typeof fldScenarioSideChoice === "function") fldScenarioSideChoice(_fldCbActiveScenario.id, function (side) { fldLaunchBattle(_fldCbActiveScenario.id, side); }); else if (typeof fldLaunchSandbox === "function") fldLaunchSandbox({ scenario: _fldCbActiveScenario.id, playerSide: "US" }); } else _fldCbRefresh(".fld-cb-status"); return; }
+    if (act === "reset") { if (!_fldCbConfirmDiscard("New Draft")) return; _fldCbState = fldCustomDefaultDraft(); _fldCbLast = null; _fldCbRefresh('[data-cb-act="reset"]'); _fldCbSnapshot(); return; }
     if (act.indexOf("add-") === 0) { _fldCbAdd(act.replace("add-", "")); return; }
     if (act.indexOf("del-") === 0) { _fldCbDel(act.replace("del-", ""), b.getAttribute("data-idx")); return; }
-    if (act === "save-slot") { _fldCbReadForm(); _fldCbLast = fldCustomSaveScenario(+b.getAttribute("data-slot"), _fldCbState); _fldCbRefresh(); return; }
-    if (act === "load-slot") { var slots = fldCustomListSlots(), s = slots[+b.getAttribute("data-slot")]; if (s && s.scenario) { _fldCbState = _fldCbDraftFromScenario(s.scenario); _fldCbLast = fldCustomValidate(_fldCbState); } _fldCbRefresh(); return; }
-    if (act === "delete-slot") { fldCustomDeleteSlot(+b.getAttribute("data-slot")); _fldCbRefresh(); return; }
+    if (act === "save-slot") { _fldCbReadForm(); _fldCbLast = fldCustomSaveScenario(+b.getAttribute("data-slot"), _fldCbState); var svOk = _fldCbLast && _fldCbLast.ok; _fldCbRefresh('[data-cb-act="save-slot"][data-slot="' + b.getAttribute("data-slot") + '"]'); if (svOk) _fldCbSnapshot(); return; }
+    if (act === "load-slot") { if (!_fldCbConfirmDiscard("Load slot")) return; var slots = fldCustomListSlots(), s = slots[+b.getAttribute("data-slot")]; var ldOk = !!(s && s.scenario); if (ldOk) { _fldCbState = _fldCbDraftFromScenario(s.scenario); _fldCbLast = fldCustomValidate(_fldCbState); } _fldCbRefresh('[data-cb-act="load-slot"][data-slot="' + b.getAttribute("data-slot") + '"]'); if (ldOk) _fldCbSnapshot(); return; }
+    if (act === "delete-slot") { fldCustomDeleteSlot(+b.getAttribute("data-slot")); _fldCbRefresh('[data-cb-act="save-slot"][data-slot="' + b.getAttribute("data-slot") + '"]'); return; }   // focus the slot's SAVE button — the emptied slot's Delete/Load re-render disabled (focus() would no-op to body)
   });
 }
 function fldCustomBattleBuilderMenu() {
@@ -749,6 +800,7 @@ function fldCustomBattleBuilderMenu() {
   if (typeof openSheet !== "function") return;
   openSheet(_fldCbHtml());
   _fldCbWire();
+  if (_fldCbCleanJson == null) _fldCbSnapshot();   // S24: baseline on FIRST open only (post-render, so it carries the form round-trip shape) — reopening must not launder unsaved edits
 }
 function fldCustomInjectBuilderButton() {
   try {

@@ -49,6 +49,11 @@ const SETUP = `(() => {
     step('module loads + multi-step deck schema', function(){
       if(!Array.isArray(_TUT_STEPS)||_TUT_STEPS.length<5) throw new Error('expected >=5 tour steps, got '+(_TUT_STEPS?_TUT_STEPS.length:'none'));
       for(var i=0;i<_TUT_STEPS.length;i++){ var s=_TUT_STEPS[i]; if(!s.title||!s.body) throw new Error('step '+i+' missing title/body'); }
+      // C21 (D233): the Desk step names only REAL tabs (no "Manpower" tab exists; it lives in The War Effort)
+      var desk=null; for(var j=0;j<_TUT_STEPS.length;j++){ if(_TUT_STEPS[j].title.indexOf("President")>=0) desk=_TUT_STEPS[j]; }
+      if(!desk) throw new Error("no President's Desk tour step");
+      if(desk.body.indexOf("<strong>Manpower</strong>")>=0) throw new Error("tour still advertises a nonexistent Manpower tab");
+      if(desk.body.indexOf("War Effort")<0) throw new Error("tour Desk step should route manpower to the War Effort tab");
       return { steps:_TUT_STEPS.length }; });
 
     step('tutStart opens an ARIA dialog at step 1 (Back hidden)', function(){
@@ -195,7 +200,7 @@ const SETUP = `(() => {
   const pageerrors = []; page.on('pageerror', e => pageerrors.push(String(e.message)));
   let result = { ok:false };
   try {
-    await page.goto(probe, { waitUntil:'load', timeout:60000 });
+    await page.goto(probe, { waitUntil:'domcontentloaded', timeout:120000 });   // slow-Mac: the 'load' wait stalls while embedded assets stream (the documented gotcha)
     await sleep(500);
     result = JSON.parse(await page.evaluate(SETUP));
     result.pageerrors = pageerrors;

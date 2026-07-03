@@ -1824,6 +1824,54 @@
         "U.S. Department of State, Office of the Historian, 'The Blockade of Confederate Ports, 1861-1865', https://history.state.gov/milestones/1861-1865/blockade",
         "James M. McPherson, Battle Cry of Freedom: The Civil War Era (Oxford University Press, 1988)"
       ]
+    },
+    {
+      "id": "system-rail-logistics-quartermaster",
+      "axis": "systems",
+      "term": "Rail Logistics & the Quartermaster's War (Railroads)",
+      "short": "The North's ~22,000 rail miles against the South's ~9,000 — organized by the U.S. Military Railroad — made supply itself a weapon.",
+      "body": "Railroads were the war's decisive logistical asymmetry. The North began with roughly 22,000 track-miles to the South's roughly 9,000, plus most of the locomotives, rolling stock, rail mills, and mechanics. The Union then institutionalized military railroading: the U.S. Military Railroad under Daniel McCallum, with Herman Haupt's Construction Corps and its prefabricated bridge trusses, ran military lines as a professional system. The Confederacy's roughly one hundred small companies, incompatible gauges, and unconnected lines decayed steadily — with rail iron irreplaceable once imports were cut, Southern speeds fell from about 25 to about 10 miles per hour by 1863. The contrast showed in the fall of 1863: the Union moved the XI and XII Corps — over 20,000 men — some 1,200 miles to relieve Chattanooga in about eleven days, while Longstreet's corps of about 13,000 needed roughly sixteen days and eight transfers over about 950 roundabout miles to reach Chickamauga, arriving piecemeal. In the game, the Rail Logistics system in the War Effort teaches this asymmetry and lets you invest in railheads for capped supply and fatigue relief — organization, not magic, is the lesson.",
+      "tags": [
+        "union",
+        "confederate",
+        "both",
+        "logistics",
+        "railroads",
+        "economy"
+      ],
+      "related": [
+        "system-naval-blockade-economy",
+        "system-grand-strategy-to-battlefield"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "Christopher R. Gabel, Railroad Generalship: Foundations of Civil War Strategy (U.S. Army Command and General Staff College, Combat Studies Institute, 1997)",
+        "John E. Clark Jr., Railroads in the Civil War: The Impact of Management on Victory and Defeat (Louisiana State University Press, 2001)"
+      ]
+    },
+    {
+      "id": "system-medicine-disease",
+      "axis": "systems",
+      "term": "Medicine, Disease & the Camps (The Two-to-One Killer)",
+      "short": "Disease killed roughly two soldiers for every one who fell in battle — the war's deadliest enemy was the camp, not the field.",
+      "body": "By the traditional accounting, disease killed roughly two Union and Confederate soldiers for every one who died in combat — typhoid, dysentery, malaria, and measles swept the crowded camps of farm boys who had never been exposed to city diseases. Modern demographic work (Hacker, 2011) raised the war's total dead toward 750,000, and while the exact disease share of that revised total is uncertain, no one disputes that the camps out-killed the battlefield. The response was organizational: the U.S. Sanitary Commission pressed camp hygiene and diet reform; Jonathan Letterman built the ambulance corps, forward dressing stations, and triage system proven at Antietam and Fredericksburg; and hospitals such as Richmond's Chimborazo grew into some of the largest the world had seen. In the game, the Medicine & Disease system in the War Effort makes sanitation and medical organization command decisions — capped, opt-in investments that condition camp health, teaching that the war's biggest killer answered to policy, not luck.",
+      "tags": [
+        "union",
+        "confederate",
+        "both",
+        "medicine",
+        "disease",
+        "home-front"
+      ],
+      "related": [
+        "system-manpower-pool-usct",
+        "system-political-capital-home-front"
+      ],
+      "provenance": "Verified",
+      "sources": [
+        "J. David Hacker, 'A Census-Based Count of the Civil War Dead', Civil War History 57, no. 4 (December 2011)",
+        "Drew Gilpin Faust, This Republic of Suffering: Death and the American Civil War (Alfred A. Knopf, 2008)"
+      ]
     }
   ]
 }

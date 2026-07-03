@@ -145,10 +145,14 @@ function _wdRefresh() {
     }
   }
   if (wire) { try { wire(C); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_wdRefresh wire (" + _wdTab + "):", e); } }
-  // E2-i2 (D120): the INLINE GLOSSARY — decorate the read-only teaching prose with
-  // hover/tap codex definitions. Guarded + scoped to the pure-readout teaching tabs
-  // (no interactive controls to interfere with); byte-identical when glDecorate is absent.
-  if (typeof glDecorate === "function" && (_wdTab === "afteraction" || _wdTab === "warvshistory")) {
+  // E2-i2 (D120) + C18 (D233): the INLINE GLOSSARY — decorate the teaching prose with hover/tap codex
+  // definitions. Originally scoped to just afteraction/warvshistory out of caution, but glDecorate SKIPS
+  // interactive zones by construction (_GL_SKIP_TAGS: BUTTON/A/INPUT/SELECT/TEXTAREA/LABEL/KBD/CODE), so the
+  // tutorial's promise — "in the teaching panels, key terms carry a faint dotted underline" — now holds
+  // across the teaching-prose desk tabs, not 2 of ~20. Codex itself is excluded (it IS the glossary source);
+  // byte-identical when glDecorate is absent.
+  var _glTabs = { afteraction: 1, warvshistory: 1, economy: 1, treasury: 1, diplomacy: 1, victory: 1, cabinet: 1, decisions: 1, press: 1, sources: 1, warroom: 1, clock: 1, muster: 1, command: 1, camp: 1, map: 1 };
+  if (typeof glDecorate === "function" && _glTabs[_wdTab]) {
     try { if (cont.removeAttribute) cont.removeAttribute("data-gl-done"); glDecorate(cont); } catch (e) {}   // cont is reused across refreshes with fresh innerHTML — clear the once-guard so each render re-decorates
   }
 }

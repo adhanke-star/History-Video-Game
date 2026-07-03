@@ -79,6 +79,19 @@ const SETUP = `(() => {
       for(var w=0;w<want.length;w++){ if(!counts[want[w]]) throw new Error('axis '+want[w]+' has no entries'); }
       return counts; });
 
+    step('C20 (D233): the shipped rail-logistics + medicine/disease systems have codex entries (Verified, >=2 sources)', function(){
+      var es=_cxEntries(), byId={};
+      for(var i=0;i<es.length;i++) byId[es[i].id]=es[i];
+      ['system-rail-logistics-quartermaster','system-medicine-disease'].forEach(function(id){
+        var e=byId[id];
+        if(!e) throw new Error('missing codex entry '+id);
+        if(e.axis!=='systems') throw new Error(id+' not on the systems axis');
+        if(e.provenance!=='Verified') throw new Error(id+' not Verified');
+        if(!Array.isArray(e.sources)||e.sources.length<2) throw new Error(id+' lacks >=2 sources');
+        if(!e.short||e.short.length>140) throw new Error(id+' short missing or over 140 chars');
+      });
+      return { railAndMedicine:true }; });
+
     step('codexRenderTab renders a search box + axis pills + entry cards', function(){
       var html=codexRenderTab(G.campaign||null);
       if(html.indexOf('id="cxSearch"')<0) throw new Error('no search box');
@@ -366,7 +379,7 @@ const SETUP = `(() => {
   const pageerrors = []; page.on('pageerror', e => pageerrors.push(String(e.message)));
   let result = { ok:false };
   try {
-    await page.goto(probe, { waitUntil:'load', timeout:90000 });
+    await page.goto(probe, { waitUntil:'domcontentloaded', timeout:120000 });   // slow-Mac: the 'load' wait stalls while embedded assets stream (the documented gotcha)
     await sleep(500);
     result = JSON.parse(await page.evaluate(SETUP));
     result.pageerrors = pageerrors;

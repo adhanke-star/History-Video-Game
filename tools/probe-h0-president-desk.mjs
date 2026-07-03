@@ -205,6 +205,20 @@ async function inspectDesk(page, viewportName) {
     const chipLabels = all('.h0-desk-chip b').map(b => (b.textContent || '').trim());
     R.checks.singleDateSurface = chipLabels.indexOf('Date') >= 0 && chipLabels.indexOf('Year') < 0;
     if (!R.checks.singleDateSurface) fail('desk header chips duplicate the year: ' + chipLabels.join(','));
+    // S30 (D233): one label for the tab landmark — the nav carries it; the inner group must not repeat it.
+    const tabsNav = sel('.h0-desk-tabs-wrap'), tabsGroup = sel('#wdTabs');
+    R.checks.singleTabsLabel = !!(tabsNav && tabsNav.getAttribute('aria-label')) && !(tabsGroup && tabsGroup.getAttribute('aria-label'));
+    if (!R.checks.singleTabsLabel) fail('desk tab wrappers double-announce their label');
+    // C18 (D233): the inline glossary decorates the teaching-prose tabs (not just afteraction/warvshistory) —
+    // the decorator stamps data-gl-done="1" on #wdContent after a decorated render.
+    const pressTab = sel('#wdTab_press');
+    if (pressTab) {
+      pressTab.click();
+      const wc = sel('#wdContent');
+      R.checks.glossaryOnTeachingTabs = !!(wc && wc.getAttribute('data-gl-done') === '1');
+      if (!R.checks.glossaryOnTeachingTabs) fail('press tab not glossary-decorated (data-gl-done missing)');
+      const back = sel('#wdTab_economy'); if (back) back.click();
+    } else fail('missing #wdTab_press for the C18 check');
     R.checks.core = true;
     return R;
   }, viewportName);

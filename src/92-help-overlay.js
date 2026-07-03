@@ -46,9 +46,11 @@ function _hpShowWelcome() {
       '</div>' +
     '</div>' +
     '<hr class="rule">' +
+    /* C19 (D233): quick-start names the SHIPPED H0 command-shell buttons — the old copy pointed a brand-new
+       player at "Federal Armies Muster for War" + per-battle buttons that no longer exist on the dark menu. */
     '<p style="font-size:13px;opacity:.8;margin-bottom:10px"><strong>Quick start:</strong> ' +
-      'Click <em>"Federal Armies Muster for War"</em> for a Union campaign, or use the tactical battle buttons for ' +
-      'First Bull Run, Malvern Hill, Antietam, Fredericksburg, Chancellorsville, Gettysburg, Shiloh, Vicksburg, or Chickamauga. The Skirmish button opens a custom real-time fight.</p>' +
+      'Click <em>"Muster the Union"</em> or <em>"Command the Confederacy"</em> to begin a campaign. ' +
+      '<em>"Choose a Battle"</em> opens the standalone battles — First Bull Run, Malvern Hill, Antietam, Fredericksburg, Chancellorsville, Gettysburg, Shiloh, Vicksburg, Chickamauga — plus the real-time Skirmish sandbox and the Custom Battle builder.</p>' +
     '<p style="font-size:12px;opacity:.65;margin-bottom:14px">Press <kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;font-size:11px">?</kbd> anytime for controls help.</p>' +
     '<div class="btn-row" style="gap:10px;flex-wrap:wrap;justify-content:center">' +
       '<button class="bigbtn" id="hpWelcomeTour" aria-label="Take the guided tour of the game">&#9733; Take the Guided Tour</button>' +
@@ -90,6 +92,9 @@ function _hpShowHelp() {
     '<div style="font-size:12px;line-height:1.7;opacity:.9">' +
       '<div style="margin-bottom:4px"><strong>Select:</strong> Click a friendly brigade. Shift+click adds another brigade; <kbd>A</kbd> selects all of your live brigades.</div>' +
       '<div style="margin-bottom:4px"><strong>Move:</strong> With a selection, drag from open ground to place the line. Facing follows the drag direction.</div>' +
+      /* S07 (D233): the two marquee UG:G order gestures were undocumented outside a transient HUD hint. */
+      '<div style="margin-bottom:4px"><strong>Charge a chosen foe:</strong> Drag ONTO an enemy brigade to charge that brigade (not just the nearest).</div>' +
+      '<div style="margin-bottom:4px"><strong>Queue a route:</strong> <kbd>Shift</kbd>+drag appends a waypoint — chain them into a multi-leg march.</div>' +
       '<div style="margin-bottom:4px"><strong>Orders:</strong> <kbd>L</kbd>=Line &middot; <kbd>C</kbd>=Column &middot; <kbd>H</kbd>=Hold &middot; <kbd>F</kbd>/<kbd>Enter</kbd>=Charge.</div>' +
       '<div style="margin-bottom:4px"><strong>Engineering Corps:</strong> <kbd>E</kbd>=Entrench (dig in for cover) &middot; <kbd>B</kbd>=Abatis (timber belt) &middot; <kbd>X</kbd>=Clear obstacle &middot; <kbd>N</kbd>=Lay pontoon bridge (in a river skirmish). Each reads the realism slider.</div>' +
       '<div style="margin-bottom:4px"><strong>Speed:</strong> <kbd>1</kbd>/<kbd>2</kbd>/<kbd>3</kbd> set 1x / 2x / 4x. <kbd>Space</kbd> begins, pauses, or resumes.</div>' +
@@ -115,6 +120,7 @@ function _hpShowHelp() {
       '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">V</kbd><span>Fog of war on/off</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">P</kbd><span>Auto-pause on/off</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">G</kbd><span>Battle settings drawer</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">R</kbd><span>Cycle elevation display (hillshade / contours / color-by-height)</span>' +   /* S08 (D233) */
       '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">Esc</kbd><span>Exit battle or close an open tactical dialog</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">?</kbd><span>This help panel</span>' +
     '</div>' +
@@ -214,6 +220,9 @@ function _hpShowTacticalHelp() {
         '<div><strong>Select all:</strong> A</div>' +
         '<div><strong>Facing:</strong> Drag direction</div>' +
         '<div><strong>Move:</strong> Drag open ground</div>' +
+        /* S07 (D233): the drag-onto-enemy charge + shift-queue gestures belong in the complete reference. */
+        '<div><strong>Charge a foe:</strong> Drag onto it</div>' +
+        '<div><strong>Queue route:</strong> Shift+drag</div>' +
         '<div><strong>Space:</strong> Pause/Resume</div>' +
         '<div><strong>1/2/3:</strong> 1x / 2x / 4x</div>' +
         '<div><strong>L:</strong> Line formation</div>' +
@@ -227,6 +236,7 @@ function _hpShowTacticalHelp() {
         '<div><strong>V:</strong> Fog on/off</div>' +
         '<div><strong>P:</strong> Auto-pause</div>' +
         '<div><strong>G:</strong> Settings</div>' +
+        '<div><strong>R:</strong> Elevation display</div>' +   /* S08 (D233) */
         '<div><strong>Tab:</strong> Next unit</div>' +
         '<div><strong>Esc:</strong> Close dialog</div>' +
         '<div><strong>?:</strong> Toggle help</div>' +

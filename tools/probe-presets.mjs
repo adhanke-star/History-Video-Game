@@ -267,6 +267,11 @@ const SETUP = `(() => {
       // advanced expander renders the lever chips
       _fldPresetState.advanced=true; var adv=_fldPresetHTML();
       ['Casualty severity','Canister lethality','Supply','Scouting range','AI sharpness','aria-pressed'].forEach(function(t){ if(adv.indexOf(t)<0) throw new Error('advanced HTML missing: '+t); });
+      // S28 (D233): the "Selected: ..." summary sits in an aria-live=polite region so the Custom/named
+      // bundle flip is announced to screen-reader users when an advanced lever diverges the preset.
+      var sumAt=html.indexOf('id="pvSummary"');
+      if(sumAt<0) throw new Error('picker missing #pvSummary');
+      if(html.lastIndexOf('aria-live="polite"', sumAt)<0 || sumAt-html.lastIndexOf('aria-live="polite"', sumAt)>200) throw new Error('#pvSummary is not inside an aria-live=polite region');
       return { len:html.length, advLen:adv.length }; });
 
     step('CUSHION via the APPLY path (bug-hunt): launching with each AI tier sets aiCushion/aiResolve correctly — cushion>0 & resolve<1 ONLY at Recruit', function(){

@@ -350,7 +350,9 @@
           + '<span class="h0-desk-chip"><b>Date</b>' + h0DeskEsc(dateLine) + '</span>'
         + '</div>'
       + '</header>'
-      + '<nav class="h0-desk-tabs-wrap" aria-label="President\'s Desk sections"><div id="wdTabs" role="group" aria-label="President\'s Desk sections">' + h0DeskTabsHtml() + '</div></nav>'
+      /* S30 (D233): label the <nav> landmark only — the inner group carried the identical aria-label, so a
+         screen reader announced "President's Desk sections" twice for nested wrappers around the same buttons. */
+      + '<nav class="h0-desk-tabs-wrap" aria-label="President\'s Desk sections"><div id="wdTabs" role="group">' + h0DeskTabsHtml() + '</div></nav>'
       + '<main class="h0-desk-body"><div id="wdContent"></div></main>'
       + '<footer class="h0-desk-footer"><button id="wdClose" type="button" class="bigbtn">Close</button></footer>'
       + '</section>';

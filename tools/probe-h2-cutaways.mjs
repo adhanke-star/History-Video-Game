@@ -93,6 +93,37 @@ const SETUP = `(() => {
       return { button:true, launched:launched };
     });
 
+    step('S12/S14/S15 (D233): focus trap honors aria-modal; app reduceMotion stills the pan; dyslexia mode reaches the overlay', function(){
+      var C=mkC('US','antietam');
+      renderBrief(C);
+      // S14: the in-game toggle (not only the OS media query) must stamp the reduced-motion class
+      G.settings = G.settings || {}; G.settings.reduceMotion = true;
+      document.getElementById('h2CutawayBtn').click();
+      var ov=document.querySelector('.h2-cutaway-overlay');
+      if(!ov) throw new Error('overlay did not open');
+      if(!ov.classList.contains('h2-reduced-motion')) throw new Error('app reduceMotion did not stamp h2-reduced-motion');
+      // S12: Tab on the LAST focusable cycles back INSIDE the dialog (and Shift+Tab from the first wraps)
+      var f=ov.querySelectorAll("button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])");
+      if(f.length<2) throw new Error('expected >=2 focusables in the dialog');
+      f[f.length-1].focus();
+      document.dispatchEvent(new KeyboardEvent('keydown',{key:'Tab',bubbles:true}));
+      if(!ov.contains(document.activeElement) || document.activeElement!==f[0]) throw new Error('Tab from the last focusable escaped the dialog (active='+(document.activeElement&&(document.activeElement.id||document.activeElement.tagName))+')');
+      f[0].focus();
+      document.dispatchEvent(new KeyboardEvent('keydown',{key:'Tab',bubbles:true,shiftKey:true}));
+      if(!ov.contains(document.activeElement) || document.activeElement!==f[f.length-1]) throw new Error('Shift+Tab from the first focusable escaped the dialog');
+      // S15: the module CSS carries the explicit dyslexia override (the overlay never sits in .pad)
+      var css=(document.getElementById('h2CutawayCss')||{}).textContent||'';
+      if(css.indexOf("data-a11y-text='dyslexia'")<0 || css.indexOf('h2-cutaway-overlay')<0) throw new Error('dyslexia override rule missing from the cutaway stylesheet (#h2CutawayCss len='+css.length+')');
+      document.getElementById('h2CutawayClose').click();
+      G.settings.reduceMotion = false;
+      // and with reduceMotion OFF the class must not be stamped
+      document.getElementById('h2CutawayBtn').click();
+      var ov2=document.querySelector('.h2-cutaway-overlay');
+      if(ov2 && ov2.classList.contains('h2-reduced-motion')) throw new Error('h2-reduced-motion stamped with the toggle off');
+      document.getElementById('h2CutawayClose').click();
+      return { trapped:true, reducedMotion:true, dyslexiaCss:true };
+    });
+
     step('imageless battle uses procedural fallback and remains skippable', function(){
       var C=mkC('US','shiloh');
       renderBrief(C);

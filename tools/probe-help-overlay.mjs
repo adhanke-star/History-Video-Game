@@ -65,8 +65,34 @@ const SETUP = `(() => {
       var back=document.getElementById('hpHelpBack'), tour=document.getElementById('hpHelpTour');
       if(!back||!tour) throw new Error('missing Back/Tour buttons');
       if(!back.getAttribute('aria-label')||!tour.getAttribute('aria-label')) throw new Error('help buttons missing aria-label (4.1.2)');
+      // S07/S08 (D233): the complete reference documents the two marquee UG:G gestures + the R hotkey
+      if(html.indexOf('Charge a chosen foe')<0 || html.indexOf('Drag ONTO an enemy')<0) throw new Error('How-to-Play missing the drag-onto-enemy charge gesture');
+      if(html.indexOf('Queue a route')<0) throw new Error('How-to-Play missing the shift-queue gesture');
+      if(html.indexOf('Cycle elevation display')<0) throw new Error('How-to-Play missing the R elevation hotkey');
       closeSheetSafe();
       return { htmlLen:html.length }; });
+
+    step('C19 (D233): the welcome quick-start names the SHIPPED menu buttons, not the retired pre-H0 layout', function(){
+      _hpShowWelcome();
+      var html=pad();
+      if(html.indexOf('Muster the Union')<0 || html.indexOf('Command the Confederacy')<0) throw new Error('quick-start missing the shipped campaign buttons');
+      if(html.indexOf('Choose a Battle')<0) throw new Error('quick-start missing the Choose a Battle path');
+      if(html.indexOf('Federal Armies Muster for War')>=0) throw new Error('quick-start still names the retired pre-H0 button');
+      closeSheetSafe();
+      return { ok:true }; });
+
+    step('S07/S08 (D233): the tactical "?" overlay lists drag-onto-enemy, shift-queue, and R', function(){
+      G.mode='battle'; __FIELD.launched=true; __FIELD.phase='battle';
+      document.dispatchEvent(new KeyboardEvent('keydown',{key:'?',bubbles:true}));
+      var ov=document.getElementById('hpTacOverlay');
+      if(!ov) throw new Error('tactical overlay did not open');
+      var t=ov.textContent||'';
+      if(t.indexOf('Charge a foe')<0 || t.indexOf('Drag onto it')<0) throw new Error('tactical overlay missing drag-onto-enemy');
+      if(t.indexOf('Queue route')<0 || t.indexOf('Shift+drag')<0) throw new Error('tactical overlay missing shift-queue');
+      if(t.indexOf('Elevation display')<0) throw new Error('tactical overlay missing the R elevation row');
+      ov.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true}));
+      G.mode='menu'; __FIELD.launched=false; __FIELD.phase='idle';
+      return { ok:true }; });
 
     step('global "?" opens How-to-Play in menu mode', function(){
       G.mode='menu'; __FIELD.launched=false; __FIELD.phase='idle'; closeSheetSafe();
@@ -159,7 +185,7 @@ const SETUP = `(() => {
   const pageerrors = []; page.on('pageerror', e => pageerrors.push(String(e.message)));
   let result = { ok:false };
   try {
-    await page.goto(probe, { waitUntil:'load', timeout:60000 });
+    await page.goto(probe, { waitUntil:'domcontentloaded', timeout:120000 });   // slow-Mac: the 'load' wait stalls while embedded assets stream (the documented gotcha); inline scripts are all the probe needs
     await sleep(500);
     result = JSON.parse(await page.evaluate(SETUP));
     result.pageerrors = pageerrors;
