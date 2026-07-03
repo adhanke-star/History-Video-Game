@@ -1,3 +1,9 @@
+# ☀ WAKE-UP — 2026-07-03: **FABLE AUDIT M1 SHIPPED (D225) — 5 HIGH historical corrections.**
+
+**Newest (D225):** the five text-level HIGH ledger items are fixed: Vicksburg's May 22 phase is now "The Grand Assault" with the 150-volunteer forlorn hope taught at its real front (Stockade Redan, Graveyard Road) and Logan's XVII Corps column on the Jackson Road field; Paxton's false "only Stonewall Brigade commander killed" claim corrected; Pegram is a Major at Gettysburg; the unverifiable Grant-praises-Thomas quote removed; the rejected ~11% cotton figure replaced with the audit-approved ~3-4%/~95% framing in both Welles surfaces. All D74-inert; focused gates green (vicksburg 18/18 · chancellorsville 24/24 · gettysburg/chickamauga/cabinet ok · 0 pageerrors). C28 (Gettysburg defender-seating inversion) verified positional → queued in M10 with A/B re-vet. **Next:** M2 content text corrections (~50 items), then M3 XSS/tamper hardening (E38 HIGH). Ledger: `REVIEW-QUEUE.md` §FABLE AUDIT.
+
+---
+
 # ☀ WAKE-UP — 2026-07-03: **FABLE AUDIT RUN 1 LEDGER SHIPPED (D224, docs-only) · D222 WEBB REMAINS THE LATEST PLAYABLE CHANGE.**
 
 **Newest (D224, 2026-07-03):** the first full-spectrum Fable audit (`FABLE-AUDIT-PROMPT.md`) ran at HEAD `6d8b098`: 3 workflows / 304 agents / adversarial default-refute verify → **150 confirmed findings (10 HIGH / 71 MED / 69 LOW), 43 refuted**. The complete ledger (stable IDs, FIX-NOW vs PROPOSAL split, ranked M1–M11 milestone plan) is in **`REVIEW-QUEUE.md` §"FABLE AUDIT — 2026-07-03 (run 1)"**. Nothing playable changed in D224 itself. Notable: 1 stored-XSS HIGH via shared custom-battle packs (E38), 4 wrong-fact-under-Verified battle-data HIGHs (D92 class), 43 enrolled probes with no failing exit path (E37), build-gate 4d/4e blind spots (E00/E14). Checked clean: committed deliverable is byte-identical to a fresh rebuild; no secrets tracked.

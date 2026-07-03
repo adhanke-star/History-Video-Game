@@ -8,6 +8,9 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## FABLE AUDIT M1 — HIGH HISTORICAL CORRECTIONS — 2026-07-03 (D225, FOCUSED-GATED)
+Five HIGH wrong-fact-under-Verified items fixed (C32 Vicksburg forlorn-hope front, C41 Paxton, C42 Pegram rank, C46 unverifiable Grant quote, C48 rejected cotton figure ×2). Text-only / D74-inert; probe-vicksburg assertions track corrected names. C28 Gettysburg geometry verified positional → M10. Gate: build GATE OK; vicksburg 18/18, chancellorsville 24/24, gettysburg/chickamauga/cabinet ok, 0 pageerrors; diff-check clean.
+
 ## FABLE AUDIT RUN 1 — LEDGER SHIPPED — 2026-07-03 (D224, docs-only)
 **Full-spectrum audit at HEAD `6d8b098`.** 3 read-only Workflows (content/engine/surface), 304 agents, loop-until-dry on dims 1/2/7, default-refute verify, completeness critics. **150 confirmed (10 HIGH / 71 MED / 69 LOW) / 43 refuted.** Ledger + ranked M1–M11 FIX-NOW plan appended to `REVIEW-QUEUE.md`; fixes ship as D225+.
 - Foreground checks: fresh rebuild is byte-identical to the committed deliverable (GATE OK all gates) ✓; git hygiene ✓ (no secrets/.bak tracked; `.tmp/ui-redesign-research.md` tracked-vs-gitignore inconsistency logged as X01).

@@ -2,7 +2,7 @@
 import "./guard-probe-browser.mjs";
 // tools/probe-vicksburg.mjs - Phase C Western breadth.
 // Verifies the Vicksburg real-time tactical scenario as a 3-phase siege
-// (Stockade Redan -> Forlorn Hope -> saps/mine), plus the Modern 3D
+// (Stockade Redan -> Grand Assault -> saps/mine), plus the Modern 3D
 // unit-label/selection readability follow-up.
 // Writes tools/shots/probe-vicksburg.{json,png} and probe-vicksburg-3d.png.
 import { chromium } from 'playwright-core';
@@ -79,7 +79,7 @@ const SETUP = `(() => {
       if (!DATA) throw new Error('GAME_DATA.vicksburg.vicksburg missing');
       if (!DATA.phases || DATA.phases.length !== 3) throw new Error('want 3 phases, got ' + (DATA.phases && DATA.phases.length));
       var names = DATA.phases.map(function(p) { return p.name; }).join(' | ');
-      if (names.indexOf('Stockade') < 0 || names.indexOf('Forlorn') < 0 || (names.indexOf('Saps') < 0 && names.indexOf('Mine') < 0)) throw new Error('phase names wrong: ' + names);
+      if (names.indexOf('Stockade') < 0 || names.indexOf('Grand') < 0 || (names.indexOf('Saps') < 0 && names.indexOf('Mine') < 0)) throw new Error('phase names wrong: ' + names);
       for (var i = 0; i < DATA.phases.length; i++) {
         var p = DATA.phases[i];
         if (!p.objective || !isNum(p.objective.x)) throw new Error('phase ' + i + ' has no objective');
@@ -150,7 +150,7 @@ const SETUP = `(() => {
       if (r.phasesPlayed !== 3) throw new Error('not all 3 phases resolved: ' + r.phasesPlayed);
       if (r.w !== 'US') throw new Error('Vicksburg aggregate should be Union after the siege phase, got ' + r.w);
       if (r.by !== 'phases') throw new Error('winBy not phases: ' + r.by);
-      if (r.log[0].name.indexOf('Stockade') < 0 || r.log[1].name.indexOf('Forlorn') < 0 || (r.log[2].name.indexOf('Saps') < 0 && r.log[2].name.indexOf('Mine') < 0)) throw new Error('phase order wrong: ' + r.log.map(function(e) { return e.name; }).join('/'));
+      if (r.log[0].name.indexOf('Stockade') < 0 || r.log[1].name.indexOf('Grand') < 0 || (r.log[2].name.indexOf('Saps') < 0 && r.log[2].name.indexOf('Mine') < 0)) throw new Error('phase order wrong: ' + r.log.map(function(e) { return e.name; }).join('/'));
       var bad = nanScan(); if (bad) throw new Error('NaN in ' + bad);
       return { winner: r.w, winBy: r.by, phases: r.phasesPlayed, steps: r.steps, log: r.log.map(function(e) { return e.name.split(' ')[0] + ':' + e.w; }) };
     });
@@ -179,7 +179,7 @@ const SETUP = `(() => {
         samples.push(r.log.map(function(e) { return e.w; }).join('') + '=' + r.w);
       }
       if (stockadeCS < 6) throw new Error('Stockade Redan should hold in the majority: ' + stockadeCS + '/8');
-      if (forlornCS < 6) throw new Error('Forlorn Hope / May 22 should fail in the majority: ' + forlornCS + '/8');
+      if (forlornCS < 6) throw new Error('May 22 grand assault should fail in the majority: ' + forlornCS + '/8');
       if (mineUS < 6) throw new Error('mine/sap siege phase should succeed in the majority: ' + mineUS + '/8');
       if (usAgg < 6) throw new Error('aggregate Vicksburg should fall to the Union in the majority: ' + usAgg + '/8');
       // TEACHING DIRECTION (the Fredericksburg lesson, mirrored): the FAILED May assaults must cost the
@@ -187,7 +187,7 @@ const SETUP = `(() => {
       // dug-in defender bleeds more than the exposed attacker, teaching the literal opposite of the cards.
       var p0ratio = p0cs > 0 ? p0us / p0cs : 99, p1ratio = p1cs > 0 ? p1us / p1cs : 99;
       if (p0ratio < 1.2) throw new Error('May 19 Stockade assault must cost the ATTACKER more than the defender (US:CS ' + p0ratio.toFixed(2) + ', want >=1.2)');
-      if (p1ratio < 1.2) throw new Error('May 22 Forlorn Hope assault must cost the ATTACKER more than the defender (US:CS ' + p1ratio.toFixed(2) + ', want >=1.2)');
+      if (p1ratio < 1.2) throw new Error('May 22 grand assault must cost the ATTACKER more than the defender (US:CS ' + p1ratio.toFixed(2) + ', want >=1.2)');
       return { stockadeCS: stockadeCS + '/8', forlornCS: forlornCS + '/8', mineUS: mineUS + '/8', usAggregate: usAgg + '/8',
         assaultCostUStoCS: { stockade: Number(p0ratio.toFixed(2)), forlorn: Number(p1ratio.toFixed(2)) }, sample: samples.slice(0, 3) };
     });
@@ -270,7 +270,7 @@ const DOM = `(() => {
       return { cards: cards.length, picked: picked };
     });
 
-    step('INTER-PHASE CARD: Stockade Redan resolution opens a modal naming The Forlorn Hope; Continue advances to phase 1', function() {
+    step('INTER-PHASE CARD: Stockade Redan resolution opens a modal naming The Grand Assault; Continue advances to phase 1', function() {
       fldLaunchSandbox({ renderer: '2d', scenario: 'vicksburg', autoBoth: true, seed: 7 });
       __FIELD.phase = 'battle'; __FIELD.paused = false;
       var n = 0; while (__FIELD.phase === 'battle' && n < 30000) { fldSimStep(0.05); n++; }
@@ -279,7 +279,7 @@ const DOM = `(() => {
       if (!card) throw new Error('interphase card not created');
       if (card.getAttribute('role') !== 'dialog' || card.getAttribute('aria-modal') !== 'true') throw new Error('interphase card not modal');
       var txt = card.textContent || '';
-      if (txt.indexOf('Stockade Redan') < 0 || txt.indexOf('Forlorn Hope') < 0) throw new Error('card missing phase names: ' + txt.slice(0, 160));
+      if (txt.indexOf('Stockade Redan') < 0 || txt.indexOf('Grand Assault') < 0) throw new Error('card missing phase names: ' + txt.slice(0, 160));
       if (txt.indexOf('SECTORS') < 0 && txt.indexOf('Sectors') < 0) throw new Error('card missing running tally');
       var go = document.getElementById('fldPhaseGo'); if (!go) throw new Error('no Continue button');
       var idxBefore = __FIELD.phaseIdx;
@@ -315,7 +315,7 @@ const DOM = `(() => {
       var aggWinner = __FIELD.winner;
       var html = _fldPhasesEndHtml();
       if (!html || html.indexOf('phase by phase') < 0) throw new Error('aggregate end html missing phase table');
-      if (html.indexOf('Stockade') < 0 || html.indexOf('Forlorn') < 0 || (html.indexOf('Saps') < 0 && html.indexOf('Mine') < 0)) throw new Error('end table missing a Vicksburg phase');
+      if (html.indexOf('Stockade') < 0 || html.indexOf('Grand') < 0 || (html.indexOf('Saps') < 0 && html.indexOf('Mine') < 0)) throw new Error('end table missing a Vicksburg phase');
       var note = fldScenarioEndHtml(aggWinner);
       var low = String(note || '').toLowerCase();
       if (low.indexOf('mississippi') < 0 || (low.indexOf('spade') < 0 && low.indexOf('siege') < 0 && low.indexOf('batteries') < 0)) throw new Error('endNote/teaching did not surface Mississippi + siege framing');

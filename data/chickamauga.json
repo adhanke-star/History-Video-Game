@@ -245,7 +245,7 @@
         "leaders": {
           "_note": "The defensive success that limited the catastrophe. Thomas holds the high ground that covers the only road out; Granger and Steedman arrive unordered to secure the right. The Confederate assaults are costly and repulsed - the failed-assault lesson, mirrored from Fredericksburg.",
           "US": [
-            { "id": "ld_thomas_rock", "name": "Maj. Gen. George H. Thomas", "short": "Thomas", "quality": 0.86, "radius": 290, "x": 600, "z": 250, "fate": 3.6, "note": "The Rock of Chickamauga: rallied broken troops, absorbed fugitives, built a coherent defense, held five hours, then withdrew in order. Grant later called it one of the finest tactical performances of the war. The army itself gave him the name. (Verified)" },
+            { "id": "ld_thomas_rock", "name": "Maj. Gen. George H. Thomas", "short": "Thomas", "quality": 0.86, "radius": 290, "x": 600, "z": 250, "fate": 3.6, "note": "The Rock of Chickamauga: rallied broken troops, absorbed fugitives, built a coherent defense, held five hours, then withdrew in order. The army itself gave him the name. (Verified)" },
             { "id": "ld_granger_rock", "name": "Maj. Gen. Gordon Granger", "short": "Granger", "quality": 0.74, "radius": 240, "attach": "us_steedman_rock", "fate": 2.7, "note": "Without orders, on his own initiative, marched the Reserve Corps to the sound of the guns and reinforced Thomas's right. A MAJOR general at the battle - corrected from a common Brigadier error. (Verified)" }
           ],
           "CS": [

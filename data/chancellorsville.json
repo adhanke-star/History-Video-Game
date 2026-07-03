@@ -83,7 +83,7 @@
           "note": "Commanded the Light Division, the rear division of Jackson's column. After Jackson was wounded, Hill briefly took command before he too was wounded, passing the corps to Stuart. He survived Chancellorsville (killed at Petersburg, April 1865). (Verified)",
           "teach": "Gen. A.P. Hill is wounded as command passes down the line — Jackson's corps keeps attacking while its senior leaders fall." },
         { "id": "ld_paxton", "name": "Brig. Gen. Elisha F. Paxton", "short": "Paxton", "quality": 0.54, "radius": 180, "attach": "cs_colston_div", "fate": 0.3,
-          "note": "Commanded the Stonewall Brigade — Jackson's old brigade — the 1st Brigade of COLSTON'S Division (Trimble's division, Colston commanding at the battle), NOT A.P. Hill's Light Division. Killed on May 3 while leading his brigade in the dawn assault. He was the only Stonewall Brigade commander killed in the war. (Verified - division corrected: the Stonewall Brigade was Colston's, not Hill's.)",
+          "note": "Commanded the Stonewall Brigade — Jackson's old brigade — the 1st Brigade of COLSTON'S Division (Trimble's division, Colston commanding at the battle), NOT A.P. Hill's Light Division. Killed on May 3 while leading his brigade in the dawn assault. He was not the brigade's first commander to fall: Col. William Baylor had been killed leading it at Second Manassas in August 1862, and its former commander Charles Winder at Cedar Mountain that same month. (Verified - division corrected: the Stonewall Brigade was Colston's, not Hill's.)",
           "teach": "Gen. Paxton falls at the head of the Stonewall Brigade — Jackson's old command loses its leader in the dawn attack." }
       ]
     },

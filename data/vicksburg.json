@@ -1,5 +1,5 @@
 {
-  "_comment": "PHASE C WESTERN BREADTH - VICKSBURG, May-July 1863. A three-phase siege battle for the __FIELD real-time engine: May 19 Stockade Redan, May 22 Forlorn Hope / Great Redoubt, and the June siege approaches / mine against the 3rd Louisiana Redan. The teaching point is architectural: Vicksburg was not a single field battle but a fortress system of loess ravines, ridge roads, redans, lunettes, artillery batteries, covered approaches, mines, and collapsing logistics. Strengths are Inferred brigade-scale approximations; the phase sequence, principal ground, siege works, failed assaults, and Union engineering pressure are the teaching-bearing facts.",
+  "_comment": "PHASE C WESTERN BREADTH - VICKSBURG, May-July 1863. A three-phase siege battle for the __FIELD real-time engine: May 19 Stockade Redan, May 22 grand assault (Jackson Road front), and the June siege approaches / mine against the 3rd Louisiana Redan. The teaching point is architectural: Vicksburg was not a single field battle but a fortress system of loess ravines, ridge roads, redans, lunettes, artillery batteries, covered approaches, mines, and collapsing logistics. Strengths are Inferred brigade-scale approximations; the phase sequence, principal ground, siege works, failed assaults, and Union engineering pressure are the teaching-bearing facts.",
   "vicksburg": {
     "id": "vicksburg",
     "weather": {
@@ -27,7 +27,7 @@
     "menu": {
       "title": "VICKSBURG (1863)",
       "deck": "The river fortress - a three-phase Western siege. Test the May assaults against the redans, then drive the saps, batteries, and mine that make the city untenable.",
-      "aria": "Vicksburg, May to July 1863 - a multi-phase Western Theater siege battle: Stockade Redan, the Forlorn Hope against the Great Redoubt, and the siege approaches and mine."
+      "aria": "Vicksburg, May to July 1863 - a multi-phase Western Theater siege battle: Stockade Redan, the May 22 grand assault against the Great Redoubt, and the siege approaches and mine."
     },
     "sides": {
       "heading": "Vicksburg - Take Which Command?",
@@ -127,7 +127,7 @@
       },
       {
         "id": "forlorn-hope",
-        "name": "May 22 - The Forlorn Hope",
+        "name": "May 22 - The Grand Assault",
         "sector": "the Jackson Road sector - 3rd Louisiana Redan, Great Redoubt, and Railroad Redoubt",
         "timing": "May 22, 1863 - the general assault",
         "attacker": "US",
@@ -139,8 +139,8 @@
         "scoreWeight": 1,
         "objective": { "x": 600, "z": 360, "r": 140, "name": "3rd Louisiana Redan and Great Redoubt" },
         "transition": {
-          "title": "The Forlorn Hope",
-          "lead": "May 22. Grant orders a general assault. Volunteers carrying boards and ladders - the Forlorn Hope - rush first, trying to bridge the ditch and open the way into the 3rd Louisiana Redan and Great Redoubt sector. They reach the works in places, but the line does not break."
+          "title": "The Grand Assault",
+          "lead": "May 22. Grant orders a general assault along the whole line. On Graveyard Road to the north, Sherman's 150 unmarried volunteers - the 'forlorn hope' - carry boards and ladders against the Stockade Redan. Here on the Jackson Road front, Logan's division of McPherson's XVII Corps storms the 3rd Louisiana Redan and Great Redoubt, while McClernand's men briefly plant colors on the Railroad Redoubt to the south. The works are reached in places, but the line does not break."
         },
         "terrain": {
           "hills": [
@@ -154,12 +154,12 @@
           ],
           "walls": [
             { "x1": 360, "z1": 397, "x2": 835, "z2": 386, "note": "MAIN CONFEDERATE EARTHWORK LINE - 3rd Louisiana Redan, Great Redoubt, and adjoining rifle pits. (Verified)" },
-            { "x1": 485, "z1": 430, "x2": 705, "z2": 430, "note": "DITCH AND OBSTACLE LINE - the Forlorn Hope boards and ladders were meant to cross this killing strip. (Verified concept; inferred placement)" }
+            { "x1": 485, "z1": 430, "x2": 705, "z2": 430, "note": "DITCH AND OBSTACLE LINE - every assault column had to cross this killing strip; on Graveyard Road the forlorn hope carried boards and ladders for the same problem. (Verified concept; inferred placement)" }
           ],
           "markers": [
             { "kind": "road", "name": "Jackson Road", "path": [[650, 850], [650, 610], [635, 360], [620, 190]], "note": "The approach toward the 3rd Louisiana Redan and Great Redoubt, past the Shirley House. (Verified)" },
             { "kind": "rail", "name": "Southern Railroad cut", "path": [[350, 840], [420, 610], [455, 390], [520, 180]], "note": "The railroad gap and nearby redoubt were among the most important openings in the line. (Verified)" },
-            { "kind": "label", "name": "Forlorn Hope boards and ladders", "x": 600, "z": 455, "note": "The first assault party carried materials to bridge the ditch and scale the parapet. (Verified)" },
+            { "kind": "label", "name": "The ditch - the killing strip", "x": 600, "z": 455, "note": "Attackers had to bridge the ditch and scale the parapet under fire. The famous 150-volunteer forlorn hope did this on Graveyard Road against the Stockade Redan, farther north on Sherman's front. (Verified)" },
             { "kind": "label", "name": "Shirley House", "x": 710, "z": 420, "note": "A landmark near the Jackson Road siege approaches and batteries. (Verified)" },
             { "kind": "label", "name": "Battery DeGolyer", "x": 730, "z": 610, "note": "Union siege battery near the Jackson Road sector. (Verified)" }
           ]
@@ -183,7 +183,7 @@
         },
         "oob": {
           "US": [
-            { "id": "us_forlorn_hope", "name": "The Forlorn Hope", "commander": "Volunteer storming party", "arm": "inf", "weapon": "rifled", "men": 900, "xp": 3, "x": 600, "z": 760, "facing": 0, "formation": "column", "note": "The ~150 volunteers who led the May 22 assault carrying boards and ladders to bridge the ditch, abstracted here as a small storming brigade. (Verified role; Inferred strength)" },
+            { "id": "us_forlorn_hope", "name": "Logan's Assault Column", "commander": "Maj. Gen. John A. Logan", "arm": "inf", "weapon": "rifled", "men": 900, "xp": 3, "x": 600, "z": 760, "facing": 0, "formation": "column", "note": "Logan's division of McPherson's XVII Corps led the May 22 assault on this front, astride the Jackson Road against the Great Redoubt and 3rd Louisiana Redan, abstracted as a lead assault brigade. The 150-volunteer 'forlorn hope' storming party led Sherman's Stockade Redan assault farther north on Graveyard Road. (Verified role; Inferred strength)" },
             { "id": "us_logan_jackson", "name": "Logan's Division", "commander": "Maj. Gen. John A. Logan", "arm": "inf", "weapon": "rifled", "men": 3400, "xp": 2, "x": 690, "z": 815, "facing": 0, "formation": "line", "note": "XVII Corps pressure in the Jackson Road sector, advancing across the open ground before the redans. (Verified role; Inferred strength)" },
             { "id": "us_mcclernand_xiii", "name": "McClernand's XIII Corps Column", "commander": "Maj. Gen. John A. McClernand", "arm": "inf", "weapon": "rifled", "men": 3300, "xp": 2, "x": 500, "z": 820, "facing": 0, "formation": "line", "note": "Part of the general assault of May 22, exposed on the approach to the Railroad Redoubt. (Verified role; Inferred strength)" },
             { "id": "us_deg_battery", "name": "Battery DeGolyer", "commander": "Capt. Samuel De Golyer", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 6, "men": 150, "xp": 3, "x": 730, "z": 700, "facing": 0, "formation": "line", "note": "Field-battery support for the May 22 assault; the heavy siege park came later. Universal gun model: 6 guns. (Verified landmark; Inferred battery grouping)" }
@@ -196,7 +196,7 @@
           ]
         },
         "reinforcements": [
-          { "id": "us_siege_ladders", "side": "US", "atSec": 55, "name": "Second Wave with Ladders", "commander": "Army of the Tennessee", "arm": "inf", "weapon": "rifled", "men": 2000, "xp": 2, "x": 610, "z": 850, "facing": 0, "formation": "column", "entry": "following the Forlorn Hope into the ditch", "note": "The assault wave meant to exploit any breach opened by the lead volunteers - and to die in the same ditch. (Inferred)" },
+          { "id": "us_siege_ladders", "side": "US", "atSec": 55, "name": "Second Wave with Ladders", "commander": "Army of the Tennessee", "arm": "inf", "weapon": "rifled", "men": 2000, "xp": 2, "x": 610, "z": 850, "facing": 0, "formation": "column", "entry": "following the lead column into the ditch", "note": "The assault wave meant to exploit any breach opened by the lead volunteers - and to die in the same ditch. (Inferred)" },
           { "id": "cs_jackson_reserve", "side": "CS", "atSec": 95, "name": "Counterattack Reserve", "commander": "Vicksburg garrison", "arm": "inf", "weapon": "rifled", "men": 1500, "xp": 2, "x": 600, "z": 245, "facing": 3.14159, "formation": "line", "entry": "moving along the interior road", "note": "Short interior movement lets the defense seal a threatened point. (Inferred)" }
         ],
         "teaching": {
