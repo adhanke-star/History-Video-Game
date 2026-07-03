@@ -130,6 +130,8 @@ const SAMPLE = `(() => { try {
   } catch (e) { out.fatal = e.message; }
   finally {
     await ctx.close(); await browser.close(); if (srv) srv.kill();
+    try { const { writeFileSync: _w, mkdirSync: _mk } = await import('node:fs'); _mk(new URL('./shots/', import.meta.url), { recursive: true }); _w(new URL('./shots/probe-motion.json', import.meta.url), JSON.stringify({ ok: out.PASS === true, pageerrors: out.pageerrors || [], checks: out.checks, battle: out.battle }, null, 2)); } catch {}
     console.log(JSON.stringify(out, null, 2));
   }
+  process.exit(out.PASS === true ? 0 : 1);
 })().catch(e => { console.error(e); process.exit(1); });

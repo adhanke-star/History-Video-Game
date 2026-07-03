@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { spawn } from 'node:child_process';
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync, statSync } from 'node:fs';
 import { basename, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { dirname } from 'node:path';
@@ -20,6 +20,7 @@ const SUITE = [
   ['president desk', 'tools/probe-desk.mjs'],
   ['strategy bridge', 'tools/probe-bridge.mjs'],
   ['auto resolve', 'tools/probe-auto-resolve.mjs'],
+  ['battle conditioning', 'tools/probe-conditioning.mjs'],
   ['campaign link', 'tools/probe-campaign-link.mjs'],
   ['economy', 'tools/probe-economy.mjs'],
   ['production', 'tools/probe-production.mjs'],
@@ -38,6 +39,7 @@ const SUITE = [
   ['manpower', 'tools/probe-manpower.mjs'],
   ['victory', 'tools/probe-victory.mjs'],
   ['cabinet', 'tools/probe-cabinet.mjs'],
+  ['cabinet heed exploit', 'tools/probe-cab-exploit.mjs'],
   ['decisions', 'tools/probe-decisions.mjs'],
   ['morale', 'tools/probe-morale.mjs'],
   ['press', 'tools/probe-press.mjs'],
@@ -51,6 +53,7 @@ const SUITE = [
   ['primary sources', 'tools/probe-primary-sources.mjs'],
   ['glossary', 'tools/probe-glossary.mjs'],
   ['tutorial', 'tools/probe-tutorial.mjs'],
+  ['help overlay', 'tools/probe-help-overlay.mjs'],
   ['playstyle', 'tools/probe-playstyle.mjs'],
   ['realism teaching', 'tools/probe-realism-teaching.mjs'],
   ['accessibility', 'tools/probe-accessibility.mjs'],
@@ -157,18 +160,25 @@ function jsonPathFor(file) {
 function readJsonSummary(file) {
   const p = jsonPathFor(file);
   if (!p) return null;
+  let mtimeMs = 0;
+  try { mtimeMs = statSync(p).mtimeMs; } catch { return { path: p, missing: true }; }
   try {
     const j = JSON.parse(readFileSync(p, 'utf8'));
     const pe = Array.isArray(j.pageerrors) ? j.pageerrors.length : 0;
     const re = Array.isArray(j.realErrors) ? j.realErrors.length : null;
-    return { path: p, json: j, pageerrors: pe, realErrors: re };
+    return { path: p, json: j, pageerrors: pe, realErrors: re, mtimeMs };
   } catch {
-    return null;
+    return { path: p, unparseable: true, mtimeMs };
   }
 }
 
-function enforceJson(label, file, summary) {
+function enforceJson(label, file, summary, startedMs) {
   if (!summary) return;
+  // D230/E15: a probe with an expected artifact must have (re)written it THIS run; a missing or
+  // stale JSON is a hard fail, not a silent pass on the exit code alone (closes the stale-green hole).
+  if (summary.missing) throw new Error(label + ' wrote no artifact at ' + summary.path + ' (expected this run)');
+  if (summary.unparseable) throw new Error(label + ' wrote an unparseable artifact at ' + summary.path);
+  if (typeof summary.mtimeMs === 'number' && summary.mtimeMs < startedMs - 2000) throw new Error(label + ' artifact is stale (not rewritten this run): ' + summary.path);
   const { json, pageerrors, realErrors } = summary;
   if (json.ok === false) throw new Error(label + ' wrote ok=false in ' + summary.path);
   if (pageerrors > 0) throw new Error(label + ' wrote pageerrors=' + pageerrors + ' in ' + summary.path);
@@ -235,7 +245,7 @@ function runOne(label, file) {
         if (code !== 0) throw new Error(label + ' exited ' + code);
         if (file.endsWith('diag-classic.mjs')) enforceDiagClassic(output);
         const summary = readJsonSummary(file);
-        enforceJson(label, file, summary);
+        enforceJson(label, file, summary, started);
         if (summary) {
           const ok = Object.prototype.hasOwnProperty.call(summary.json, 'ok') ? summary.json.ok : 'n/a';
           append('json ' + basename(summary.path) + ' ok=' + ok + ' pageerrors=' + summary.pageerrors + '\n');

@@ -132,3 +132,22 @@ const SETUP = `(() => {
   console.log('probe-auto-resolve ok=' + result.ok + ' steps=' + (result.steps?result.steps.length:0) + ' pageerrors=' + (result.pageerrors?result.pageerrors.length:0));
   if (result.steps) for (const s of result.steps) if (!s.ok) console.log('  FAIL ' + s.name + ' :: ' + s.err);
 })();
+
+
+/* ==== D230/E37 probe teeth (appended) ==== a standalone run must FAIL LOUDLY: exit nonzero
+   unless the artifact this probe wrote THIS RUN reports ok with no failed steps and no
+   pageerrors. Closes the bare `node tools/probe-auto-resolve.mjs; echo $?` false-green; the vet suite
+   additionally enforces artifact freshness (E15). */
+import { readFileSync as __teethRead, statSync as __teethStat } from 'node:fs';
+const __TEETH_T0 = Date.now();
+process.on('beforeExit', (code) => {
+  if (code !== 0) return;
+  const art = new URL('./shots/probe-auto-resolve.json', import.meta.url);
+  try {
+    if (__teethStat(art).mtimeMs < __TEETH_T0 - 2000) { console.error('probe-auto-resolve: TEETH FAIL - artifact not rewritten this run'); process.exit(1); }
+    const j = JSON.parse(__teethRead(art, 'utf8'));
+    const pe = Array.isArray(j.pageerrors) ? j.pageerrors.length : 0;
+    const failedSteps = Array.isArray(j.steps) ? j.steps.filter(s => s && s.ok === false).length : 0;
+    if (j.ok === false || pe > 0 || failedSteps > 0) { console.error('probe-auto-resolve: TEETH FAIL - ok=' + j.ok + ' failedSteps=' + failedSteps + ' pageerrors=' + pe); process.exit(1); }
+  } catch (e) { console.error('probe-auto-resolve: TEETH FAIL - no readable artifact (' + (e && e.message) + ')'); process.exit(1); }
+});

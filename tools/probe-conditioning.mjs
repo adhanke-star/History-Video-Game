@@ -130,4 +130,6 @@ const SETUP = `(() => {
   }
   console.log('probe-conditioning ok=' + result.ok + ' steps=' + (result.steps?result.steps.length:0) + ' pageerrors=' + (result.pageerrors?result.pageerrors.length:0));
   if (result.steps) for (const s of result.steps) if (!s.ok) console.log('  FAIL ' + s.name + ' :: ' + s.err);
+  const _pe = Array.isArray(result.pageerrors) ? result.pageerrors.length : 0;
+  process.exit((result.ok && _pe === 0) ? 0 : 1);
 })();

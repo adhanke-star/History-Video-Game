@@ -1,3 +1,13 @@
+# ☀ WAKE-UP — 2026-07-03: **FABLE AUDIT M5 SHIPPED (D230) — probe teeth. RUN PAUSED at a clean boundary (Aaron: "find stopping point").**
+
+**Newest (D230):** 43 exit-less enrolled probes now fail loudly (a `beforeExit` teeth epilogue exits nonzero unless a fresh artifact reports ok/0-fail/0-pe); `vet-no-regression` enforces artifact existence + freshness (no more stale-green); `probe-cab-exploit` asserts its exploit invariants (and caught a stale navy-heed claim); `probe-conditioning` is enrolled with an exit code; a new `probe-help-overlay` gives the untested help/onboarding subsystem teeth. Gates: node --check, build GATE OK, probes cab-exploit/conditioning/help-overlay/tutorial ok=true 0 pe.
+
+**Audit progress: 77 of 143 FIX-NOW ledger items closed across D225-D230 (M1-M5); 9 proposals await Aaron; M6-M11 remain.** The standing ledger is `REVIEW-QUEUE.md` §"FABLE AUDIT — 2026-07-03 (run 1)" — every remaining FIX-NOW line still reads PENDING with its M# milestone.
+
+**PAUSED CLEAN.** The next chat resumes at **M6** (tactical control / perf / small code fixes). Two paste-ready prompts are in `HANDOFF.md`'s top block: (A) the **Fable continuation** (default — assumes the main loop is still Claude Fable 5) and (B) a **sectioned-off Opus 4.8 fallback** to use ONLY if Fable has left the subscription. All locks stand (Phase H parked D214; M8/Q5/Q6 locked; Phase D deferred).
+
+---
+
 # ☀ WAKE-UP — 2026-07-03: **FABLE AUDIT M4 SHIPPED (D229) — 10 build-gate blind spots closed.**
 
 **Newest (D229):** the no-fudge wall now guards both engines' combat-power fields (.strength/.maxStr/.morale/.maxMor/.ammo) with an alias-resistant lever guard; gate 4e counts only distinct real sources; new manifest-completeness and script-terminator gates; async/generator collision coverage; hex/tmp/mask hardening. The hardened gate runs GREEN on the live tree. **Audit progress: 71 of 143 FIX-NOW closed (D225-D229).** **Next:** M5 probe teeth — E37 (43 enrolled probes gain failing exit codes), E08 cab-exploit assertions, E09 enroll probe-conditioning, E10 probe-motion artifact+exit, E15 vet-no-regression artifact freshness, E24 new probe-help-overlay. Ledger: `REVIEW-QUEUE.md` §FABLE AUDIT.

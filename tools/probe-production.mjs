@@ -111,3 +111,22 @@ const SETUP = `(() => {
   }
   console.log('probe-production ok=' + result.ok + ' steps=' + (result.steps?result.steps.length:0) + ' pageerrors=' + (result.pageerrors?result.pageerrors.length:0));
 })();
+
+
+/* ==== D230/E37 probe teeth (appended) ==== a standalone run must FAIL LOUDLY: exit nonzero
+   unless the artifact this probe wrote THIS RUN reports ok with no failed steps and no
+   pageerrors. Closes the bare `node tools/probe-production.mjs; echo $?` false-green; the vet suite
+   additionally enforces artifact freshness (E15). */
+import { readFileSync as __teethRead, statSync as __teethStat } from 'node:fs';
+const __TEETH_T0 = Date.now();
+process.on('beforeExit', (code) => {
+  if (code !== 0) return;
+  const art = new URL('./shots/probe-production.json', import.meta.url);
+  try {
+    if (__teethStat(art).mtimeMs < __TEETH_T0 - 2000) { console.error('probe-production: TEETH FAIL - artifact not rewritten this run'); process.exit(1); }
+    const j = JSON.parse(__teethRead(art, 'utf8'));
+    const pe = Array.isArray(j.pageerrors) ? j.pageerrors.length : 0;
+    const failedSteps = Array.isArray(j.steps) ? j.steps.filter(s => s && s.ok === false).length : 0;
+    if (j.ok === false || pe > 0 || failedSteps > 0) { console.error('probe-production: TEETH FAIL - ok=' + j.ok + ' failedSteps=' + failedSteps + ' pageerrors=' + pe); process.exit(1); }
+  } catch (e) { console.error('probe-production: TEETH FAIL - no readable artifact (' + (e && e.message) + ')'); process.exit(1); }
+});
