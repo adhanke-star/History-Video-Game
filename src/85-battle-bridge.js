@@ -28,7 +28,7 @@ var _brgPREP = [
   { key: "entrench",   label: "Entrench",        hint: "Dig in. A strong defensive bonus on the day — but you cede the initiative." },
   { key: "forcedMarch",label: "Forced march",    hint: "Seize the ground first. An edge in position, paid for in fatigue and morale." },
   { key: "concentrate",label: "Concentrate force", hint: "Mass your brigades at the point of decision — heavier punch, less flexibility." },
-  { key: "feint",      label: "Feint &amp; flank", hint: "Demonstrate on one wing, strike the other. Rewards good intelligence." },
+  { key: "feint",      label: "Feint & flank", hint: "Demonstrate on one wing, strike the other. Rewards good intelligence." },   /* S00 (D232): plain text — sinks escape; the pre-escaped '&amp;' double-escaped on the H0 briefing */
   { key: "raidSupply", label: "Raid enemy supply", hint: "Cavalry against the depots — the enemy fights hungry and short of ammunition." }
 ];
 

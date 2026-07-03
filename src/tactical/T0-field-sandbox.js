@@ -1597,7 +1597,23 @@ function fld2dView() {
   var w = window.innerWidth, h = window.innerHeight;
   var pad = 40, sx = (w - pad * 2) / FLD.FIELD_W, sz = (h - pad * 2 - 60) / FLD.FIELD_H;
   var s = Math.max(0.05, Math.min(sx, sz));   // clamp — a tiny viewport must not yield a negative draw scale
-  return { s: s, ox: (w - FLD.FIELD_W * s) / 2, oz: (h - FLD.FIELD_H * s) / 2 + 8 };
+  var oz = (h - FLD.FIELD_H * s) / 2 + 8;
+  // S04 (D232): on a narrow PORTRAIT viewport the width-limited field band is short, and the bottom chrome
+  // (unit HUD + button bar) covers the lower half of the screen — a full-window vertical center strands the
+  // field behind that chrome with a black void above it. Center the band in the strip between the top bar
+  // and the highest visible bottom-docked chrome instead. Presentation/pick geometry only (fld2dPick shares
+  // this view, so pointer picking stays consistent); desktop/landscape keeps the original centering.
+  if (h > w && w <= 760 && typeof document !== "undefined") {
+    try {
+      var _tEl = document.getElementById("fldTop"), _hEl = document.getElementById("fldHud"), _bEl = document.getElementById("fldBar");
+      var yTop = _tEl ? (_tEl.getBoundingClientRect().bottom + 8) : 60;
+      var yBot = h - 8;
+      if (_hEl && _hEl.offsetParent) yBot = Math.min(yBot, _hEl.getBoundingClientRect().top - 8);
+      if (_bEl && _bEl.offsetParent) yBot = Math.min(yBot, _bEl.getBoundingClientRect().top - 8);
+      if (yBot - yTop > 120) oz = yTop + Math.max(0, (yBot - yTop - FLD.FIELD_H * s) / 2);
+    } catch (e) {}
+  }
+  return { s: s, ox: (w - FLD.FIELD_W * s) / 2, oz: oz };
 }
 function fld2dPick(clientX, clientY) {
   var v = fld2dView(); var rect = __FIELD.cv2d.getBoundingClientRect();

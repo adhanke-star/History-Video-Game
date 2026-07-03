@@ -84,7 +84,10 @@
       ".h0a-chip b,.h0a-metric span{color:var(--h0a-brass);font-size:10px;text-transform:uppercase;font-weight:950;}",
       ".h0a-overall{display:grid;grid-template-columns:auto minmax(78px,1fr);align-items:center;gap:10px;min-width:178px;padding:9px 11px;border:1px solid rgba(216,180,88,.34);border-radius:8px;background:rgba(0,0,0,.22);}",
       ".h0a-grade-letter{width:56px;height:56px;display:inline-flex;align-items:center;justify-content:center;border:2px solid currentColor;border-radius:8px;font-size:24px;font-weight:950;line-height:1;}",
-      ".h0a-overall span{display:block;font-size:10px;text-transform:uppercase;color:var(--h0a-brass);font-weight:950;}.h0a-overall b{display:block;color:#fff3d1;font-size:14px;line-height:1.15;}.h0a-overall em{display:block;color:var(--h0a-muted);font-size:11px;font-style:normal;margin-top:1px;}",
+      /* S01 (D232): scope the small-label rule to the inner div's span — bare '.h0a-overall span' also matched
+         the .h0a-grade-letter span (and out-specified its rule), forcing display:block + font-size:10px so the
+         headline grade rendered tiny/top-pinned in a nearly-empty 56px box. */
+      ".h0a-overall div>span{display:block;font-size:10px;text-transform:uppercase;color:var(--h0a-brass);font-weight:950;}.h0a-overall b{display:block;color:#fff3d1;font-size:14px;line-height:1.15;}.h0a-overall em{display:block;color:var(--h0a-muted);font-size:11px;font-style:normal;margin-top:1px;}",
       ".h0a-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;padding:12px;border-bottom:1px solid var(--h0a-line);background:rgba(0,0,0,.18);}",
       ".h0a-metric{min-width:0;padding:10px;border:1px solid rgba(216,180,88,.24);border-radius:8px;background:rgba(255,255,255,.055);}.h0a-metric b{display:block;color:#fff3d1;font-size:18px;line-height:1.1;overflow-wrap:anywhere;}.h0a-metric em{display:block;color:var(--h0a-muted);font-size:11px;font-style:normal;margin-top:3px;line-height:1.3;}",
       ".h0a-good{border-color:rgba(95,146,115,.48)!important;background:rgba(95,146,115,.12)!important;}.h0a-field{border-color:rgba(93,134,183,.50)!important;background:rgba(93,134,183,.12)!important;}.h0a-warn{border-color:rgba(179,90,80,.48)!important;background:rgba(179,90,80,.12)!important;}",

@@ -201,6 +201,10 @@ async function inspectDesk(page, viewportName) {
       R.checks.economyReturns = !!sel('.h0-desk-overview-grid');
       if (!R.checks.economyReturns) fail('economy tab did not restore H0 overview');
     }
+    // S29 (D232): one date surface in the header — the Date chip carries the year; no redundant Year chip.
+    const chipLabels = all('.h0-desk-chip b').map(b => (b.textContent || '').trim());
+    R.checks.singleDateSurface = chipLabels.indexOf('Date') >= 0 && chipLabels.indexOf('Year') < 0;
+    if (!R.checks.singleDateSurface) fail('desk header chips duplicate the year: ' + chipLabels.join(','));
     R.checks.core = true;
     return R;
   }, viewportName);

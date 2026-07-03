@@ -238,7 +238,7 @@
     s.textContent = [
       "#overlay .sheet:has(.h0-desk-shell){width:min(1220px,96vw);background:#080c0e;border-color:#667c70;border-radius:8px;}",
       "#overlay .sheet:has(.h0-desk-shell)::before{border-color:rgba(216,180,88,.30);}",
-      ".h0-desk-shell{--h0d-bg:#080c0e;--h0d-panel:#111918;--h0d-panel2:#17231f;--h0d-ink:#f3efe4;--h0d-muted:#bac5bd;--h0d-brass:#d8b458;--h0d-blue:#5d86b7;--h0d-red:#b35a50;--h0d-green:#5f9273;--h0d-warn:#d0a047;--h0d-line:rgba(216,180,88,.27);--h0d-focus:#ffe27a;color:var(--h0d-ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:linear-gradient(135deg,#070a0b 0%,#13201d 44%,#090e11 100%);border:1px solid rgba(216,180,88,.42);border-radius:8px;overflow:hidden;position:relative;box-shadow:0 24px 70px rgba(0,0,0,.58),inset 0 0 0 1px rgba(255,255,255,.05);}",
+      ".h0-desk-shell{--h0d-bg:#080c0e;--h0d-panel:#111918;--h0d-panel2:#17231f;--h0d-ink:#f3efe4;--h0d-muted:#c5cdc3;--h0d-brass:#d8b458;--h0d-blue:#5d86b7;--h0d-red:#b35a50;--h0d-green:#5f9273;--h0d-warn:#d0a047;--h0d-line:rgba(216,180,88,.27);--h0d-focus:#ffe27a;color:var(--h0d-ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:linear-gradient(135deg,#070a0b 0%,#13201d 44%,#090e11 100%);border:1px solid rgba(216,180,88,.42);border-radius:8px;overflow:hidden;position:relative;box-shadow:0 24px 70px rgba(0,0,0,.58),inset 0 0 0 1px rgba(255,255,255,.05);}",
       ".h0-desk-shell *{box-sizing:border-box;letter-spacing:0;}",
       ".h0-desk-shell::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.03) 0,rgba(255,255,255,.03) 1px,transparent 1px,transparent 26px),repeating-linear-gradient(90deg,rgba(216,180,88,.05) 0,rgba(216,180,88,.05) 1px,transparent 1px,transparent 30px);opacity:.48;pointer-events:none;}",
       ".h0-desk-header,.h0-desk-tabs-wrap,.h0-desk-body,.h0-desk-footer{position:relative;z-index:1;}",
@@ -345,8 +345,9 @@
         + '<p class="h0-desk-sub">' + h0DeskEsc(head.title || "The President") + (head.seat ? ' · ' + h0DeskEsc(head.seat) : '') + '</p></div>'
         + '<div class="h0-desk-header-actions">'
           + '<span class="h0-desk-chip"><b>Side</b>' + h0DeskEsc(h0DeskSideName(C.side)) + '</span>'
+          /* S29 (D232): one date surface — the Date chip already carries the year ("July 1861"), so the
+             redundant Year chip ("Year 1861") is dropped from the always-visible header row. */
           + '<span class="h0-desk-chip"><b>Date</b>' + h0DeskEsc(dateLine) + '</span>'
-          + '<span class="h0-desk-chip"><b>Year</b>' + h0DeskEsc(h0DeskCampaignYear(C)) + '</span>'
         + '</div>'
       + '</header>'
       + '<nav class="h0-desk-tabs-wrap" aria-label="President\'s Desk sections"><div id="wdTabs" role="group" aria-label="President\'s Desk sections">' + h0DeskTabsHtml() + '</div></nav>'

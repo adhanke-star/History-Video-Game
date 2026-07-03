@@ -27,8 +27,21 @@ async function withTimeout(label, promise, ms) {
     if (timer) clearTimeout(timer);
   }
 }
+/* Slow-Mac budget profile (D232) — the probe-h0-president-desk SLOW_MAC pattern. The multi-MB single-file
+   page can take far longer than the old 8s/75s budgets to boot on the 8 GB Intel Mac under load; the probe
+   was failing on DIFFERENT scenes run-to-run (a resource flake, pre-existing at D231), never on content.
+   Assertions are unchanged — only the harness budgets are raised to the profile the desk probe already uses. */
+const SLOW_MAC = {
+  pageClose: 10000,
+  newPage: 30000,
+  nav: 150000,
+  settle: 1400,
+  screenshot: 300000,
+  sceneBound: 420000,
+  browserClose: 15000
+};
 async function closePage(page) {
-  try { await withTimeout('page.close', page.close({ runBeforeUnload: false }), 2500); } catch (e) {}
+  try { await withTimeout('page.close', page.close({ runBeforeUnload: false }), SLOW_MAC.pageClose); } catch (e) {}
 }
 
 const VIEWPORTS = [
@@ -38,7 +51,8 @@ const VIEWPORTS = [
 ];
 
 async function bootPage(browser, viewport, pageerrors) {
-  const page = await withTimeout('browser.newPage', browser.newPage({ viewport }), 8000);
+  const page = await withTimeout('browser.newPage', browser.newPage({ viewport }), SLOW_MAC.newPage);
+  page.setDefaultTimeout(SLOW_MAC.nav);
   page.on('pageerror', e => pageerrors.push(String(e.message || e)));
   page.on('console', msg => {
     if (msg.type() === 'error' && !/Failed to load resource.*404/.test(msg.text())) pageerrors.push('console:' + msg.text());
@@ -50,10 +64,10 @@ async function bootPage(browser, viewport, pageerrors) {
       localStorage.removeItem('gor_save');
     } catch (e) {}
   });
-  await page.goto(`${cfg.baseUrl}/${cfg.file}`, { waitUntil: 'domcontentloaded', timeout: 60000 });
-  await page.waitForTimeout(500);
+  await page.goto(`${cfg.baseUrl}/${cfg.file}`, { waitUntil: 'domcontentloaded', timeout: SLOW_MAC.nav });
+  await page.waitForTimeout(SLOW_MAC.settle);
   await page.evaluate(() => { try { G.campaign = null; localStorage.removeItem('gor_save'); openMainMenu(); } catch (e) { throw e; } });
-  await page.waitForTimeout(500);
+  await page.waitForTimeout(SLOW_MAC.settle);
   return page;
 }
 
@@ -101,6 +115,19 @@ async function inspectMenu(page, viewportName) {
       R.checks.darkCommandPanel = /rgb|linear-gradient/.test(bg) && !/246, 235, 215/.test(bg) && !/245, 237, 214/.test(bg);
       if (!R.checks.darkCommandPanel) fail('panel appears parchment/light instead of command-dark');
     }
+
+    // S03+S11 (D232): the menu shares the six-shell accent system — green/red/muted match the values the
+    // other five H0 shells standardized on (the old #4f8064/#aa5148 pair visibly drifted on the first screen).
+    const mcs = getComputedStyle(menu);
+    const tok = p => (mcs.getPropertyValue(p) || '').trim().toLowerCase();
+    R.checks.sharedAccentTokens = tok('--h0-green') === '#5f9273' && tok('--h0-red') === '#b35a50' && tok('--h0-muted') === '#c5cdc3';
+    if (!R.checks.sharedAccentTokens) fail('menu accent tokens drift from the shared H0 palette: green=' + tok('--h0-green') + ' red=' + tok('--h0-red') + ' muted=' + tok('--h0-muted'));
+    // S05 (D232): the action grid absorbs the leftover column height (no stranded void in the no-save state).
+    const actions = sel('.h0-command .h0-actions');
+    if (actions) {
+      R.checks.actionsFillColumn = getComputedStyle(actions).flexGrow === '1';
+      if (!R.checks.actionsFillColumn) fail('command action grid does not absorb the column height (flexGrow=' + getComputedStyle(actions).flexGrow + ')');
+    } else fail('missing .h0-command .h0-actions');
 
     const mr = rect(menu);
     const important = all('.h0-panel,.h0-menu .gn-btn,.h0-chip,.h0-hero-figure');
@@ -228,7 +255,7 @@ async function runViewport(browser, vp) {
   try {
     const viewResult = await inspectMenu(page, vp.name);
     await page.evaluate(() => { const sh = document.querySelector('.sheet'); if (sh) sh.scrollTop = 0; });
-    await withTimeout('screenshot ' + vp.name, page.screenshot({ path: join(OUT, `probe-h0-main-menu-${vp.name}.png`), fullPage: false }), 30000);
+    await withTimeout('screenshot ' + vp.name, page.screenshot({ path: join(OUT, `probe-h0-main-menu-${vp.name}.png`), fullPage: false }), SLOW_MAC.screenshot);
     if (vp.name === 'desktop') {
       const actions = await inspectCoreButtonActions(page);
       viewResult.coreActions = actions;
@@ -247,7 +274,7 @@ async function runSavedCampaign(browser) {
   try {
     const saved = await inspectSavedCampaign(page);
     try {
-      await withTimeout('screenshot saved', page.screenshot({ path: join(OUT, 'probe-h0-main-menu-wardept.png'), fullPage: false }), 30000);
+      await withTimeout('screenshot saved', page.screenshot({ path: join(OUT, 'probe-h0-main-menu-wardept.png'), fullPage: false }), SLOW_MAC.screenshot);
     } catch (e) {
       saved.screenshotWarning = String(e && e.message || e);
     }
@@ -272,13 +299,13 @@ async function runSavedCampaign(browser) {
   const result = { ok: true, probes: [], pageerrors: [] };
   try {
     for (const vp of VIEWPORTS) {
-      const viewResult = await withTimeout('viewport ' + vp.name, runViewport(browser, vp), 75000);
+      const viewResult = await withTimeout('viewport ' + vp.name, runViewport(browser, vp), SLOW_MAC.sceneBound);
       if ((viewResult.pageerrors && viewResult.pageerrors.length) || viewResult.failures.length) result.ok = false;
       result.probes.push(viewResult);
       if (viewResult.pageerrors && viewResult.pageerrors.length) result.pageerrors.push({ viewport: vp.name, pageerrors: viewResult.pageerrors });
     }
 
-    const saved = await withTimeout('saved campaign', runSavedCampaign(browser), 75000);
+    const saved = await withTimeout('saved campaign', runSavedCampaign(browser), SLOW_MAC.sceneBound);
     if ((saved.pageerrors && saved.pageerrors.length) || saved.failures.length) result.ok = false;
     result.savedCampaign = saved;
     if (saved.pageerrors && saved.pageerrors.length) result.pageerrors.push({ viewport: 'saved', pageerrors: saved.pageerrors });
@@ -286,7 +313,7 @@ async function runSavedCampaign(browser) {
     result.ok = false;
     result.fatal = String(e && e.message || e);
   } finally {
-    try { await withTimeout('browser.close', browser.close(), 5000); } catch (e) {}
+    try { await withTimeout('browser.close', browser.close(), SLOW_MAC.browserClose); } catch (e) {}
     if (srv) srv.kill();
     writeFileSync(join(OUT, 'probe-h0-main-menu.json'), JSON.stringify(result, null, 2));
   }

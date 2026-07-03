@@ -181,6 +181,15 @@ async function inspectLiveReport(page, viewportName) {
     });
     R.checks.metrics = all('.h0a-metric').length >= 4 && all('.h0a-chip').length >= 3;
     if (!R.checks.metrics) fail('summary metrics/chips missing');
+    // S01 (D232): the headline grade letter keeps its own large centered treatment — the bare
+    // '.h0a-overall span' rule used to out-specify it (display:block + font-size:10px = tiny/top-pinned).
+    const gl = sel('.h0a-grade-letter');
+    if (!gl) fail('missing .h0a-grade-letter');
+    else {
+      const gcs = getComputedStyle(gl);
+      R.checks.gradeLetterCentered = /flex/.test(gcs.display) && parseFloat(gcs.fontSize) >= 20;
+      if (!R.checks.gradeLetterCentered) fail('grade letter lost its centered treatment (display=' + gcs.display + ' fontSize=' + gcs.fontSize + ')');
+    }
     R.checks.glossary = all('#wdContent .gl-term').length > 0;
     if (!R.checks.glossary) fail('after-action tab was not glossary-decorated');
     R.checks.endingsCompact = text.indexOf('Alternate endings') >= 0;

@@ -120,6 +120,14 @@ async function inspectInterstitial(page, viewportName) {
     });
     const panels = all('.h0i-grid > .h0i-panel');
     for (let i = 0; i < panels.length; i++) for (let j = i + 1; j < panels.length; j++) if (overlaps(panels[i], panels[j])) fail('interstitial panels overlap at ' + vp);
+    // S02 (D232): the army panel spans the full grid row — the default no-decision state must not strand it
+    // in one column with the right half of the frame empty.
+    const army = sel('.h0i-army'), grid = sel('.h0i-grid');
+    if (army && grid) {
+      const aw = rect(army).w, gw = rect(grid).w;
+      R.checks.armySpansGrid = aw >= gw - 30;
+      if (!R.checks.armySpansGrid) fail('army panel does not span the interstitial grid (army=' + Math.round(aw) + ' grid=' + Math.round(gw) + ')');
+    } else fail('missing .h0i-army/.h0i-grid for the span check');
     const cont = sel('#pdGoOn');
     if (cont) {
       cont.focus();

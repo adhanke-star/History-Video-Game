@@ -147,6 +147,31 @@ async function inspectShell(page, viewportName) {
       R.checks.selectedMeters = all('#fldHud .h0f-meter').length >= 4 && /Men|Morale|Fatigue|Ammo/.test(sel('#fldHud').textContent || '');
       if (!R.checks.selectedMeters) fail('selected HUD missing H0 meters');
     } else fail('no selectable player unit for HUD check');
+
+    // S04/S09 (D232) phone: the HUD-minimize toggle exists + works, and the 2D field band is centered in
+    // the visible strip below the top bar instead of stranded behind the bottom chrome with a void on top.
+    if (vp === 'phone') {
+      const mb = sel('#h0fHudMin');
+      if (!mb) fail('phone: missing #h0fHudMin toggle');
+      else if (getComputedStyle(mb).display === 'none') fail('phone: #h0fHudMin toggle not visible');
+      else {
+        const v0 = (typeof fld2dView === 'function') ? fld2dView() : null;
+        if (v0 && top && hud) {
+          const topBot = rect(top).bottom, hudTop = rect(hud).y;
+          R.checks.fieldBandBelowTop = v0.oz >= topBot - 2;
+          if (!R.checks.fieldBandBelowTop) fail('phone: 2D field band behind/above the top bar (oz=' + v0.oz.toFixed(1) + ' topBottom=' + topBot.toFixed(1) + ')');
+          const bandBottom = v0.oz + FLD.FIELD_H * v0.s;
+          R.checks.fieldBandClearOfHud = bandBottom <= hudTop + 2;
+          if (!R.checks.fieldBandClearOfHud) fail('phone: 2D field band runs under the unit HUD (bandBottom=' + bandBottom.toFixed(1) + ' hudTop=' + hudTop.toFixed(1) + ')');
+        }
+        mb.click();
+        R.checks.hudMinHides = root.classList.contains('h0f-hudmin') && getComputedStyle(hud).display === 'none' && mb.getAttribute('aria-pressed') === 'true';
+        if (!R.checks.hudMinHides) fail('phone: HUD-minimize did not hide the unit panel');
+        mb.click();
+        R.checks.hudMinRestores = !root.classList.contains('h0f-hudmin') && getComputedStyle(hud).display !== 'none' && mb.getAttribute('aria-pressed') === 'false';
+        if (!R.checks.hudMinRestores) fail('phone: HUD-minimize did not restore the unit panel');
+      }
+    }
     R.checks.core = true;
     return R;
   }, viewportName);

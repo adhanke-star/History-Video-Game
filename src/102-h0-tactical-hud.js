@@ -37,6 +37,12 @@
       "#fldRoot.h0f-root #fldElevLegend{font-family:inherit!important;background:rgba(5,8,10,.90)!important;border-color:rgba(216,180,88,.38)!important;border-radius:8px!important;color:#f4efe2!important;box-shadow:0 18px 42px rgba(0,0,0,.48)!important;}",
       "#fldRoot.h0f-root #fldElevLegend button{font-family:inherit!important;border-radius:7px!important;}",
       "#fldRoot.h0f-root #fldDrawer{font-family:inherit!important;background:rgba(0,0,0,.70)!important;backdrop-filter:blur(2px);}",
+      /* S09 (D232): phone-only minimize toggle for the selected-unit HUD — the panel + top bar left only a
+         narrow strip for the core drag-to-order gestures. Mirrors the terrain legend's collapse affordance;
+         hiding #fldHud also lets the S04 strip math recenter the 2D field over the reclaimed space. */
+      "#h0fHudMin{display:none;position:absolute;right:10px;bottom:44px;z-index:8;min-height:32px;align-items:center;gap:4px;padding:5px 9px;font-family:inherit;font-size:11px;font-weight:800;color:#f4efe2;background:rgba(5,8,10,.88);border:1px solid rgba(216,180,88,.36);border-radius:8px;cursor:pointer;}",
+      "#fldRoot.h0f-root.h0f-hudmin #fldHud{display:none!important;}",
+      "@media (max-width:760px){#fldRoot.h0f-root #h0fHudMin{display:inline-flex;}}",
       ".h0f-drawer-card{width:min(460px,92vw);color:#f4efe2;background:linear-gradient(180deg,#141f21,#070b0d);border:1px solid rgba(216,180,88,.42);border-radius:8px;padding:16px;box-shadow:0 28px 70px rgba(0,0,0,.62),inset 0 0 0 1px rgba(255,255,255,.05);}",
       ".h0f-drawer-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px;}.h0f-drawer-kicker{margin:0 0 3px;color:#d8b458;font-size:11px;text-transform:uppercase;font-weight:950;}.h0f-drawer-head h2{margin:0;color:#fff4d2;font-size:22px;line-height:1;font-weight:950;}.h0f-drawer-sub{margin:6px 0 0;color:#c6d1ca;font-size:12px;line-height:1.35;}",
       ".h0f-setting{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0;padding:10px;border:1px solid rgba(216,180,88,.22);border-radius:8px;background:rgba(255,255,255,.045);}.h0f-setting span{display:block;}.h0f-setting b{font-size:13px;color:#fff4d2;}.h0f-setting em{display:block;margin-top:2px;color:#c6d1ca;font-style:normal;font-size:11px;line-height:1.3;}.h0f-preset{border:1px solid rgba(93,134,183,.34);border-radius:8px;background:rgba(93,134,183,.10);padding:10px;margin-bottom:10px;font-size:12px;color:#d5e3f4;}.h0f-drawer-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px;}",
@@ -59,6 +65,23 @@
     if (bar) bar.setAttribute("aria-label", "Tactical command controls");
     var hud = document.getElementById("fldHud");
     if (hud) hud.setAttribute("aria-label", "Tactical unit status");
+    // S09 (D232): inject the phone HUD-minimize toggle once (a #fldRoot sibling of #fldHud — the HUD's own
+    // innerHTML is rebuilt every fldRenderHud, so the control must live outside it).
+    if (root && !document.getElementById("h0fHudMin")) {
+      var mb = document.createElement("button");
+      mb.id = "h0fHudMin"; mb.type = "button";
+      mb.setAttribute("aria-pressed", "false");
+      mb.setAttribute("aria-label", "Minimize the unit status panel to enlarge the battlefield");
+      mb.innerHTML = "&#9660; Unit";
+      mb.addEventListener("click", function () {
+        var min = root.classList.toggle("h0f-hudmin");
+        mb.setAttribute("aria-pressed", String(min));
+        mb.innerHTML = min ? "&#9650; Unit" : "&#9660; Unit";
+        mb.setAttribute("aria-label", (min ? "Show" : "Minimize") + " the unit status panel");
+        if (typeof fldResizeCanvas === "function") fldResizeCanvas();   // recenter the 2D field band (S04)
+      });
+      root.appendChild(mb);
+    }
     if (typeof window !== "undefined" && window.innerWidth <= 760 && typeof FLDTR_S !== "undefined"
       && FLDTR_S && FLDTR_S.collapsed !== true && document.getElementById("fldElevLegend")
       && typeof fldTrRefreshLegend === "function") {

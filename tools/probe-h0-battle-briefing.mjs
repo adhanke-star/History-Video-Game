@@ -118,6 +118,10 @@ async function inspectBridge(page, viewportName) {
     if (!R.checks.sceneContract) fail('scene-img contract missing or not before army columns');
     R.checks.panels = all('.h0-brief-panel').length === 2 && all('.h0-brief-meter').length >= 6 && all('.h0-prep-row').length >= 5;
     if (!R.checks.panels) fail('briefing panels/meters/prep rows incomplete');
+    // S00 (D232): the prep list renders the feint order as literal text, never a garbled '&amp;'.
+    const prepTxt = all('.h0-prep-row').map(el => el.textContent || '').join(' | ');
+    R.checks.noDoubleEscape = prepTxt.indexOf('Feint & flank') >= 0 && prepTxt.indexOf('&amp;') < 0;
+    if (!R.checks.noDoubleEscape) fail('prep list double-escapes the feint label: ' + prepTxt.slice(0, 120));
 
     const sr = rect(shell);
     all('.h0-brief-panel,.h0-brief-stat,.h0-brief-meter,.h0-prep-row,.h0-brief-actions button,.h0-brief-scene-wrap').forEach((el, i) => {

@@ -164,9 +164,12 @@
       "#overlay .sheet:has(.h0-menu){width:min(1180px,96vw);background:#090d0e;border-color:#6d7f67;border-radius:8px;}",
       "#overlay .sheet:has(.h0-menu)::before{border-color:rgba(216,180,88,.28);}",
       ".h0-menu{",
-      "  --h0-bg:#090d0e;--h0-panel:#131a19;--h0-panel2:#18231f;--h0-ink:#f2eee3;--h0-muted:#b8c3bc;",
-      "  --h0-brass:#d8b458;--h0-amber:#c7863a;--h0-green:#4f8064;--h0-blue:#5d86b7;",
-      "  --h0-red:#aa5148;--h0-line:rgba(216,180,88,.28);--h0-focus:#ffe27a;",
+      /* S03+S11 (D232): the accent tokens are aligned to the values the other five H0 shells share —
+         green #5f9273 / red #b35a50 (was #4f8064/#aa5148, a visibly different pair on the first screen),
+         amber to the shared warn tone #d0a047 (99/100), muted to the shared #c5cdc3 — one accent system. */
+      "  --h0-bg:#090d0e;--h0-panel:#131a19;--h0-panel2:#18231f;--h0-ink:#f2eee3;--h0-muted:#c5cdc3;",
+      "  --h0-brass:#d8b458;--h0-amber:#d0a047;--h0-green:#5f9273;--h0-blue:#5d86b7;",
+      "  --h0-red:#b35a50;--h0-line:rgba(216,180,88,.28);--h0-focus:#ffe27a;",
       "  color:var(--h0-ink);background:linear-gradient(135deg,#080b0c 0%,#14201d 46%,#0c1112 100%);",
       "  border:1px solid rgba(216,180,88,.42);border-radius:8px;overflow:hidden;position:relative;",
       "  box-shadow:0 24px 70px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.05);",
@@ -174,7 +177,7 @@
       "}",
       ".h0-menu *{box-sizing:border-box;letter-spacing:0;}",
       ".h0-menu::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0,rgba(255,255,255,.035) 1px,transparent 1px,transparent 24px),repeating-linear-gradient(90deg,rgba(216,180,88,.055) 0,rgba(216,180,88,.055) 1px,transparent 1px,transparent 28px);opacity:.45;pointer-events:none;}",
-      ".h0-menu::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(216,180,88,.12),transparent 28%,rgba(93,134,183,.12) 64%,rgba(170,81,72,.12));pointer-events:none;}",
+      ".h0-menu::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(216,180,88,.12),transparent 28%,rgba(93,134,183,.12) 64%,rgba(179,90,80,.12));pointer-events:none;}",
       ".h0-top{position:relative;z-index:1;display:grid;grid-template-columns:minmax(245px,.9fr) minmax(330px,1.45fr) minmax(245px,.9fr);gap:12px;padding:12px;}",
       ".h0-panel{background:linear-gradient(180deg,rgba(24,35,31,.96),rgba(12,17,18,.96));border:1px solid var(--h0-line);border-radius:8px;box-shadow:0 16px 34px rgba(0,0,0,.36);}",
       ".h0-command{padding:16px;display:flex;flex-direction:column;gap:12px;border-left:4px solid var(--h0-green);}",
@@ -185,8 +188,11 @@
       ".h0-chip{min-height:46px;display:flex;flex-direction:column;justify-content:center;border:1px solid rgba(216,180,88,.22);border-radius:8px;padding:7px 9px;background:rgba(255,255,255,.055);color:var(--h0-ink);}",
       ".h0-chip b{font-size:10px;text-transform:uppercase;color:var(--h0-muted);font-weight:800;}",
       ".h0-chip span{font-size:13px;font-weight:850;white-space:normal;}",
-      ".h0-chip.h0-alert{background:rgba(170,81,72,.18);border-color:rgba(170,81,72,.5);}",
-      ".h0-actions{display:grid;gap:9px;margin-top:2px;}",
+      ".h0-chip.h0-alert{background:rgba(179,90,80,.18);border-color:rgba(179,90,80,.5);}",
+      /* S05 (D232): the action grid absorbs the column's leftover height and distributes its cards, so the
+         no-save state (2 cards instead of 4) no longer strands a ~200px void under the campaign cards
+         against the 514px center stage. */
+      ".h0-actions{display:grid;gap:9px;margin-top:2px;flex:1 1 auto;min-height:0;align-content:space-evenly;}",
       ".h0-stage{padding:0;display:flex;flex-direction:column;min-height:514px;background:#080a0a;color:#f7eddc;border-color:rgba(93,134,183,.36);}",
       ".h0-stage-head{padding:13px 14px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}",
       ".h0-stage-head h2{font-size:17px;margin:0;color:#fff4d4;line-height:1.2;font-weight:900;}",
@@ -215,7 +221,7 @@
       ".h0-menu .h0-injected-icon{font-size:11px;letter-spacing:0;color:#fff;background:#46524f;}",
       ".h0-menu .h0-inj-field .h0-injected-icon{background:var(--h0-amber);}",
       ".h0-menu .h0-inj-neutral .h0-injected-icon{background:#59615d;}",
-      ".h0-stage .h0-field{background:linear-gradient(180deg,rgba(199,134,58,.28),rgba(216,180,88,.1));color:#fff7df;border-color:rgba(216,180,88,.58);}",
+      ".h0-stage .h0-field{background:linear-gradient(180deg,rgba(208,160,71,.28),rgba(216,180,88,.1));color:#fff7df;border-color:rgba(216,180,88,.58);}",
       ".h0-stage .h0-field .gn-deck{color:#e6d6b7;}",
       ".h0-footer{position:relative;z-index:1;border-top:1px solid rgba(216,180,88,.24);padding:10px 14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;color:#d6ded5;background:rgba(0,0,0,.28);font-size:11px;line-height:1.35;}",
       ".h0-footer b{color:#ffe2a0;}",
