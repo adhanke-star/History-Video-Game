@@ -1,3 +1,11 @@
+# ☀ WAKE-UP — 2026-07-03: **FABLE AUDIT RUN 1 LEDGER SHIPPED (D224, docs-only) · D222 WEBB REMAINS THE LATEST PLAYABLE CHANGE.**
+
+**Newest (D224, 2026-07-03):** the first full-spectrum Fable audit (`FABLE-AUDIT-PROMPT.md`) ran at HEAD `6d8b098`: 3 workflows / 304 agents / adversarial default-refute verify → **150 confirmed findings (10 HIGH / 71 MED / 69 LOW), 43 refuted**. The complete ledger (stable IDs, FIX-NOW vs PROPOSAL split, ranked M1–M11 milestone plan) is in **`REVIEW-QUEUE.md` §"FABLE AUDIT — 2026-07-03 (run 1)"**. Nothing playable changed in D224 itself. Notable: 1 stored-XSS HIGH via shared custom-battle packs (E38), 4 wrong-fact-under-Verified battle-data HIGHs (D92 class), 43 enrolled probes with no failing exit path (E37), build-gate 4d/4e blind spots (E00/E14). Checked clean: committed deliverable is byte-identical to a fresh rebuild; no secrets tracked.
+
+**Next:** work the FIX-NOW plan in order — M1 HIGH historical corrections (D225) → M2 text corrections → M3 XSS/tamper hardening → M4 build gates → M5 probe teeth → M6–M11. Proposals (E13/E33/E41/E42/E43/E45/E46/S25/X02) await Aaron. All locks stand: Phase H parked (D214), M8/Q5/Q6 locked, Phase D deferred.
+
+---
+
 # ☀ WAKE-UP — 2026-07-03: **FABLE 5 MIGRATION SHIPPED (D223, docs+settings) · D222 WEBB SLICE IS THE LATEST PLAYABLE CHANGE.**
 
 **Newest (D223, 2026-07-03):** the Claude Code main loop is now **Claude Fable 5** (`claude-fable-5[1m]`) + xhigh. Docs/settings only — nothing playable changed. Read **`FABLE-5-PLAYBOOK.md`** before any long Fable run (its §3 snippets are mandatory in kickoff prompts); **`FABLE-AUDIT-PROMPT.md`** is the standing full-spectrum audit+improve kickoff. Routing law unchanged except: **no helper is ever Fable** — explicit model+effort on every helper call. Rollback (when Fable leaves the subscription): `backups/pre-fable-2026-07-03/RESTORE.md` (local-only) or `/model claude-opus-4-8`.
