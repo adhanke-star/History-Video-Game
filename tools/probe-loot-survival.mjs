@@ -197,11 +197,11 @@ const SETUP = `(() => {
       return { people:reg.people.length, brigades:reg.brigades, authored:reg.authored, generated:reg.generated, first:sample.name };
     });
 
-    step('D218 REPLACEMENTS: eleven canonical sourced records overlay generated slots and hostile packs still reject', function(){
+    step('D219 REPLACEMENTS: twelve canonical sourced records overlay generated slots and hostile packs still reject', function(){
       var C=mkC('US'); _t1InitAll(C);
       var original=GAME_DATA['soldier-replacements'];
       if(!original || original.schema!=='cw_soldier_replacements_v1' || !Array.isArray(original.records)) throw new Error('missing D152 canonical pack');
-      if(original.records.length!==11) throw new Error('canonical D218 pack should ship exactly eleven records, got '+original.records.length);
+      if(original.records.length!==12) throw new Error('canonical D219 pack should ship exactly twelve records, got '+original.records.length);
       var canonByPid={}, canonReplace={};
       for(var cr=0;cr<original.records.length;cr++){ canonByPid[original.records[cr].pid]=original.records[cr]; canonReplace[original.records[cr].replacePid]=1; }
       if(!canonByPid.person_bullrun_us_2ri_rhodes || canonByPid.person_bullrun_us_2ri_rhodes.replacePid!=='ss:bullrun1:US:us_burnside:pvt') throw new Error('missing D154 Rhodes canonical record: '+JSON.stringify(original.records));
@@ -215,15 +215,16 @@ const SETUP = `(() => {
       if(!canonByPid.person_vicksburg_us_55il_howe || canonByPid.person_vicksburg_us_55il_howe.replacePid!=='ss:vicksburg:US:us_blair_stockade:pvt') throw new Error('missing D216 Howe canonical record: '+JSON.stringify(original.records));
       if(!canonByPid.person_gettysburg_us_6wi_waller || canonByPid.person_gettysburg_us_6wi_waller.replacePid!=='ss:gettysburg:US:us_iron_bde:nco') throw new Error('missing D217 Waller canonical record: '+JSON.stringify(original.records));
       if(!canonByPid.person_antietam_us_battery_e_benjamin || canonByPid.person_antietam_us_battery_e_benjamin.replacePid!=='ss:antietam:US:us_benjamin:cmd') throw new Error('missing D218 Benjamin canonical record: '+JSON.stringify(original.records));
+      if(!canonByPid.person_antietam_us_61ny_barlow || canonByPid.person_antietam_us_61ny_barlow.replacePid!=='ss:antietam:US:us_barlow:cmd') throw new Error('missing D219 Barlow canonical record: '+JSON.stringify(original.records));
       GAME_DATA['soldier-replacements']={schema:'cw_soldier_replacements_v1',records:[]};
       var rawBase=ssPersonRegistry(C);
       GAME_DATA['soldier-replacements']=original;
       var canonical=ssValidateSoldierReplacementPack(original,{basePeople:rawBase.people});
-      if(!canonical.ok || canonical.records.length!==11) throw new Error('canonical D218 pack should validate against raw generated registry: '+JSON.stringify(canonical));
+      if(!canonical.ok || canonical.records.length!==12) throw new Error('canonical D219 pack should validate against raw generated registry: '+JSON.stringify(canonical));
       var base=ssPersonRegistry(C);
       if(base.people.length!==rawBase.people.length) throw new Error('canonical replacement should preserve registry length');
-      if(base.replacements.applied!==11 || base.replacements.rejected!==0) throw new Error('canonical replacement should apply eleven rows cleanly: '+JSON.stringify(base.replacements));
-      if(base.generated!==rawBase.generated-11 || base.authored!==rawBase.authored+11) throw new Error('canonical replacement should move eleven rows generated->authored: '+JSON.stringify({raw:{a:rawBase.authored,g:rawBase.generated},base:{a:base.authored,g:base.generated}}));
+      if(base.replacements.applied!==12 || base.replacements.rejected!==0) throw new Error('canonical replacement should apply twelve rows cleanly: '+JSON.stringify(base.replacements));
+      if(base.generated!==rawBase.generated-12 || base.authored!==rawBase.authored+12) throw new Error('canonical replacement should move twelve rows generated->authored: '+JSON.stringify({raw:{a:rawBase.authored,g:rawBase.generated},base:{a:base.authored,g:base.generated}}));
       var rhodesOld=ssFindPerson(C,'ss:bullrun1:US:us_burnside:pvt');
       var rhodes=ssFindPerson(C,'person_bullrun_us_2ri_rhodes');
       if(!rhodes || !rhodesOld || rhodesOld.pid!==rhodes.pid) throw new Error('Rhodes alias lookup failed');
@@ -307,6 +308,14 @@ const SETUP = `(() => {
       if(!benjamin.bio || benjamin.bio.indexOf('Antietam')<0 || benjamin.bio.indexOf('Stone Bridge')<0 || benjamin.bio.indexOf('last six rounds')<0 || !benjamin.sourceNote || benjamin.sources.length<4) throw new Error('Benjamin source/bio payload missing');
       if(benjamin.sourceNote.indexOf('no captain-rank-at-Antietam')<0 || benjamin.sourceNote.indexOf('no portrait')<0) throw new Error('Benjamin honesty caveats missing: '+benjamin.sourceNote);
       if(benjamin.portrait) throw new Error('Benjamin should not assert an unverified portrait: '+JSON.stringify(benjamin.portrait));
+      var barlowOld=ssFindPerson(C,'ss:antietam:US:us_barlow:cmd');
+      var barlow=ssFindPerson(C,'person_antietam_us_61ny_barlow');
+      if(!barlow || !barlowOld || barlowOld.pid!==barlow.pid) throw new Error('Barlow alias lookup failed');
+      if(barlow.generated || !barlow.replacement || barlow.provenance!=='Verified' || barlow.name!=='Francis C. Barlow') throw new Error('Barlow row not sourced/verified: '+JSON.stringify(barlow));
+      if(barlow.rank!=='Col.' || barlow.side!=='US' || barlow.branch!=='inf' || barlow.team.regiment!=='61st and 64th New York Infantry' || barlow.team.brigade!=='Caldwell\\'s Brigade' || barlow.team.corps!=='II Corps' || barlow.team.division!=='First Division' || barlow.team.company) throw new Error('Barlow rank/unit mismatch: '+JSON.stringify(barlow.team));
+      if(!barlow.bio || barlow.bio.indexOf('Antietam')<0 || barlow.bio.indexOf('Sunken Road')<0 || barlow.bio.indexOf('one-man event')<0 || !barlow.sourceNote || barlow.sources.length<4) throw new Error('Barlow source/bio payload missing');
+      if(barlow.sourceNote.indexOf('no brigadier-rank-at-Antietam')<0 || barlow.sourceNote.indexOf('no single-company')<0 || barlow.sourceNote.indexOf('no portrait')<0) throw new Error('Barlow honesty caveats missing: '+barlow.sourceNote);
+      if(barlow.portrait) throw new Error('Barlow should not assert an unverified portrait: '+JSON.stringify(barlow.portrait));
       var target=findPerson(rawBase,function(p){ return p.generated && p.side==='US' && p.pid.indexOf(':pvt')>0 && !canonReplace[p.pid] && p.team && p.team.army; });
       var authored=findPerson(rawBase,function(p){ return !p.generated && p.provenance==='Verified'; });
       if(!target) throw new Error('no generated replacement target found');
@@ -345,7 +354,7 @@ const SETUP = `(() => {
       }
       var restored=ssPersonRegistry(C);
       if(restored.generated!==base.generated || restored.authored!==base.authored) throw new Error('canonical pack restore changed registry');
-      return { canonicalRecords:original.records.length, rhodes:rhodes.pid, mccarter:mccarter.pid, watkins:watkins.pid, chamberlain:chamberlain.pid, cushing:cushing.pid, vincent:vincent.pid, stillwell:stillwell.pid, cook:cook.pid, howe:howe.pid, waller:waller.pid, benjamin:benjamin.pid, target:target.pid, applied:base.replacements.applied, hostileRejected:true };
+      return { canonicalRecords:original.records.length, rhodes:rhodes.pid, mccarter:mccarter.pid, watkins:watkins.pid, chamberlain:chamberlain.pid, cushing:cushing.pid, vincent:vincent.pid, stillwell:stillwell.pid, cook:cook.pid, howe:howe.pid, waller:waller.pid, benjamin:benjamin.pid, barlow:barlow.pid, target:target.pid, applied:base.replacements.applied, hostileRejected:true };
     });
 
     step('JOURNEY: play-as-anyone start enables survival and stores a saveable selected person without mutating canonical data', function(){
@@ -568,6 +577,16 @@ const SETUP = `(() => {
       if(btxt.indexOf('2nd U.S. Artillery')<0 || btxt.indexOf('Battery E')<0 || btxt.indexOf('IX Corps')<0 || btxt.indexOf('Antietam')<0 || btxt.indexOf('Stone Bridge')<0 || btxt.indexOf('last six rounds')<0 || btxt.indexOf('Source note:')<0 || btxt.indexOf('Sources (4)')<0) throw new Error('Benjamin detail source/bio/unit payload missing: '+btxt);
       if(btxt.indexOf('no captain-rank-at-Antietam')<0 || btxt.indexOf('no portrait')<0) throw new Error('Benjamin honesty caveats missing from detail: '+btxt);
       if(benjaminDetail.querySelector('.ss-person-portrait')) throw new Error('Benjamin should not render an unverified portrait');
+      var barlowCard=cardByPid(root,'person_antietam_us_61ny_barlow');
+      if(!barlowCard) throw new Error('Barlow sourced replacement card missing');
+      if(barlowCard.textContent.indexOf('Francis C. Barlow')<0 || barlowCard.textContent.indexOf('Sourced')<0 || barlowCard.textContent.indexOf('Verified')<0) throw new Error('Barlow card source/provenance missing: '+barlowCard.textContent);
+      barlowCard.querySelector('[data-ss-pick]').click();
+      var barlowDetail=root.querySelector('#ssPersonDetailCard');
+      if(!barlowDetail || barlowDetail.getAttribute('data-ss-detail-pid')!=='person_antietam_us_61ny_barlow') throw new Error('Barlow detail did not select');
+      var barlowTxt=barlowDetail.textContent;
+      if(barlowTxt.indexOf('61st and 64th New York Infantry')<0 || barlowTxt.indexOf('Caldwell')<0 || barlowTxt.indexOf('II Corps')<0 || barlowTxt.indexOf('Antietam')<0 || barlowTxt.indexOf('Sunken Road')<0 || barlowTxt.indexOf('one-man event')<0 || barlowTxt.indexOf('Source note:')<0 || barlowTxt.indexOf('Sources (4)')<0) throw new Error('Barlow detail source/bio/unit payload missing: '+barlowTxt);
+      if(barlowTxt.indexOf('no brigadier-rank-at-Antietam')<0 || barlowTxt.indexOf('no single-company')<0 || barlowTxt.indexOf('no portrait')<0) throw new Error('Barlow honesty caveats missing from detail: '+barlowTxt);
+      if(barlowDetail.querySelector('.ss-person-portrait')) throw new Error('Barlow should not render an unverified portrait');
       var vincentCard=cardByPid(root,'person_gettysburg_us_vincent_bde');
       if(!vincentCard) throw new Error('Vincent sourced replacement card missing');
       if(vincentCard.textContent.indexOf('Strong Vincent')<0 || vincentCard.textContent.indexOf('Sourced')<0 || vincentCard.textContent.indexOf('Verified')<0) throw new Error('Vincent card source/provenance missing: '+vincentCard.textContent);

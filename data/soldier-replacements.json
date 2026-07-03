@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "decision": "D217",
+    "decision": "D219",
     "schema": "cw_soldier_replacements_v1",
     "scope": "Citation-grade replacements for generated Soldier's Story representative rows.",
     "provenance": "Inferred",
-    "note": "D217 adds the tenth narrow sourced replacement slice after D214 parked Group 5 and resumed Phase I. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
+    "note": "D219 adds the twelfth narrow sourced replacement slice after D214 parked Group 5 and resumed Phase I. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
   },
   "schema": "cw_soldier_replacements_v1",
   "records": [
@@ -833,6 +833,83 @@
       ],
       "sourceNote": "Army.mil and CMOHS verify Samuel N. Benjamin's First Lieutenant rank, 2d U.S. Artillery unit, and long-service Medal of Honor citation. NPS Antietam places Battery E, 2nd U.S., under Lt. Benjamin in IX Corps; his transcribed report anchors the Sept. 16-17 battery story. The record asserts no captain-rank-at-Antietam and no portrait asset.",
       "bio": "Samuel N. Benjamin commanded Battery E, 2nd U.S. Artillery in the Maryland Campaign as a first lieutenant. At Antietam, his report described the battery shifting near the Stone Bridge, firing on Confederate batteries around Sharpsburg, and using its last six rounds late in the day. This replacement turns the generated Antietam Benjamin artillery slot into a sourced IX Corps battery-commander story without asserting his later captaincy or any portrait."
+    },
+    {
+      "pid": "person_antietam_us_61ny_barlow",
+      "replacePid": "ss:antietam:US:us_barlow:cmd",
+      "name": "Francis C. Barlow",
+      "side": "US",
+      "rank": "Col.",
+      "branch": "inf",
+      "role": "regimental commander",
+      "year": 1862,
+      "provenance": "Verified",
+      "team": {
+        "side": "US",
+        "army": "Army of the Potomac",
+        "corps": "II Corps",
+        "division": "First Division",
+        "brigade": "Caldwell's Brigade",
+        "regiment": "61st and 64th New York Infantry",
+        "company": ""
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Francis Barlow: Rising Through the Ranks",
+          "author": "National Park Service",
+          "repository": "Fredericksburg and Spotsylvania National Military Park",
+          "locator": "NPS article, last updated October 14, 2020",
+          "url": "https://www.nps.gov/articles/000/francis-barlow-rising-through-the-ranks.htm",
+          "type": "secondary",
+          "note": "Identifies Barlow as Col. Barlow at Antietam, places him at Bloody Lane, and notes his severe wound before later general-officer service."
+        },
+        {
+          "title": "Army of the Potomac - Second Corps",
+          "author": "National Park Service",
+          "repository": "Antietam National Battlefield",
+          "locator": "First Division / Caldwell's First Brigade order of battle",
+          "url": "https://www.nps.gov/anti/learn/historyculture/org-cht-2-corps.htm",
+          "type": "secondary",
+          "note": "Places the 61st and 64th New York under Col. Francis C. Barlow in Caldwell's Brigade, First Division, II Corps."
+        },
+        {
+          "title": "Col Francis C Barlow's Official Report",
+          "author": "Francis C. Barlow",
+          "repository": "Antietam on the Web / Official Records transcription",
+          "locator": "Official Records, Series 1, Vol. 19, Part 1, pages 289-290",
+          "url": "https://antietam.aotw.org/exhibit.php?exhibit_id=276",
+          "type": "primary",
+          "note": "Barlow reports commanding the 61st and 64th New York, gaining enfilading fire on the Sunken Road, taking prisoners, and being wounded."
+        },
+        {
+          "title": "Col Francis Channing Barlow",
+          "author": "Antietam on the Web",
+          "repository": "Antietam on the Web",
+          "locator": "Officer profile",
+          "url": "https://antietam.aotw.org/officers.php?officer_id=7",
+          "type": "secondary",
+          "note": "Summarizes Barlow's 61st/64th New York command, Caldwell brigade context, Sunken Road flank attack, prisoner capture, and wound."
+        }
+      ],
+      "sourceNote": "NPS verifies Francis C. Barlow as Colonel at Antietam and places the 61st/64th New York under him in Caldwell's Brigade, First Division, II Corps. Barlow's Official Records report anchors the enfilading-fire and prisoner-capture story. The record asserts no brigadier-rank-at-Antietam, no single-company claim, and no portrait asset.",
+      "bio": "Francis C. Barlow commanded the 61st and 64th New York at Antietam as a colonel in Caldwell's Brigade. In his report he described using the regiments' position to fire into the flank of Confederate troops in the Sunken Road, helping break the Bloody Lane position before he was wounded later in the fight. This replacement keeps the story on the Antietam Barlow command row without turning the lane's collapse into a one-man event or asserting his later brigadier rank."
     }
   ],
   "_template": {
