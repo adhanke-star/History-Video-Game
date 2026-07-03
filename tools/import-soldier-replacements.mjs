@@ -251,7 +251,20 @@ try {
   } else {
     printResult('canonical soldier replacements', validatePack(canonical));
   }
+  _writeGateArtifact(true, null);
 } catch (e) {
-  console.error('SOLDIER REPLACEMENTS FAIL: ' + (e && e.message ? e.message : String(e)));
+  const _msg = (e && e.message ? e.message : String(e));
+  console.error('SOLDIER REPLACEMENTS FAIL: ' + _msg);
+  try { _writeGateArtifact(false, _msg); } catch {}
   process.exit(1);
+}
+
+/* D237 (E15 follow-through): vet-no-regression requires every enrolled gate to (re)write a FRESH
+   tools/shots artifact each run — this import gate predated that law and wrote none, so the first
+   full battery after D230 failed on the missing artifact. ok mirrors the gate's exit semantics. */
+function _writeGateArtifact(ok, error) {
+  const dir = join(__dirname, 'shots');
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(join(dir, 'import-soldier-replacements.json'),
+    JSON.stringify({ ok: ok, error: error || undefined, pageerrors: [], generatedAt: new Date().toISOString() }, null, 1));
 }

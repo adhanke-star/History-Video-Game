@@ -494,7 +494,7 @@ const SETUP = `(() => {
       var C=mkC('US'); G.campaign=C; _t1InitAll(C);
       lootAddItem(C,'commissary_rations',1,'probe');
       var reg=ssPersonRegistry(C);
-      if(reg.people.length!==603) throw new Error('expected current 603-person registry, got '+reg.people.length);
+      if(reg.people.length!==627) throw new Error('expected current 627-person registry, got '+reg.people.length);   // D237: 603 -> 627 — the D235 M10 accurate-input additions (9 documented formations: Birney/Bigelow/Benning-Anderson Day 2, Hazard/McGilvery/Hays/Hall-Harrow Day 3, Ruggles at Shiloh) legitimately generate 24 new prosopography slots
       var generated=findPerson(reg,function(p){ return p.generated && p.team && p.team.brigade && p.team.company; });
       var authored=findPerson(reg,function(p){ return !p.generated && !p.replacement && p.provenance==='Verified'; });
       if(!generated) throw new Error('no generated person with brigade/company team hierarchy');
@@ -513,7 +513,7 @@ const SETUP = `(() => {
       var cards=root.querySelectorAll('[data-ss-card]');
       if(cards.length!==reg.people.length) throw new Error('register card count mismatch '+cards.length+' vs '+reg.people.length);
       var count=root.querySelector('#ssRegCount');
-      if(!count || count.textContent.indexOf('603 of 603')<0) throw new Error('full registry count missing: '+(count&&count.textContent));
+      if(!count || count.textContent.indexOf('627 of 627')<0) throw new Error('full registry count missing: '+(count&&count.textContent));   // D237: tracks the 627-person registry (see the count assertion above)
       var gCard=cardByPid(root,generated.pid), aCard=cardByPid(root,authored.pid);
       if(!gCard || !aCard) throw new Error('target cards missing');
       if(gCard.textContent.indexOf('Generated')<0 || gCard.textContent.indexOf('Inferred')<0) throw new Error('generated/Inferred card display missing: '+gCard.textContent);

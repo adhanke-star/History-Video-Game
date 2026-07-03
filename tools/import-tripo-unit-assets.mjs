@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Validate optional Tripo/GLB tactical unit assets. This does not call Tripo.
-import { existsSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -152,11 +152,23 @@ for (const rec of Array.isArray(pack.records) ? pack.records : []) {
   if (num(rec.maxRuntimeTriangles) && rec.maxRuntimeTriangles > maxTris) err(rec.id + ': maxRuntimeTriangles exceeds policy max');
 }
 
+/* D237 (E15 follow-through): vet-no-regression requires every enrolled gate to (re)write a FRESH
+   tools/shots artifact each run — this import gate predated that law and wrote none. ok mirrors
+   the gate's exit semantics. */
+function _writeGateArtifact(ok, errCount) {
+  const dir = join(__dirname, 'shots');
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(join(dir, 'import-tripo-unit-assets.json'),
+    JSON.stringify({ ok: ok, errors: errCount, pageerrors: [], generatedAt: new Date().toISOString() }, null, 1));
+}
+
 if (errors.length) {
   console.error('TRIPO UNIT ASSETS FAIL errors=' + errors.length);
   for (const e of errors) console.error('  - ' + e);
+  try { _writeGateArtifact(false, errors.length); } catch {}
   process.exit(1);
 }
 
 console.log('TRIPO UNIT ASSETS OK records=' + ids.size + ' enabled=' + enabled + ' detailedSlots=' + detailedSlots + ' filesPresent=' + filesPresent + ' pendingLicense=' + pendingLicense + ' strict=' + STRICT);
 for (const w of warnings.slice(0, 12)) console.log('  warn ' + w);
+_writeGateArtifact(true, 0);

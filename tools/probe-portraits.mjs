@@ -8,7 +8,7 @@ import { chromium } from 'playwright-core';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
-import { readFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -87,5 +87,14 @@ const buildMontage = (names) => `(() => { try {
     out.photoCount = Object.values(out.classify || {}).filter(v => String(v).indexOf('image/jpeg') > 0).length;
     out.pageerrors = errs;
   } catch (e) { out.fatal = e.message; }
-  finally { await ctx.close(); await browser.close(); if (srv) srv.kill(); console.log(JSON.stringify(out, null, 1)); }
+  finally {
+    await ctx.close(); await browser.close(); if (srv) srv.kill();
+    // D237 (E15 follow-through): write the shots artifact the vet-no-regression freshness gate
+    // requires of every enrolled probe. ok = no fatal, no pageerrors, and the montage actually
+    // classified at least one PD photo (a photoCount of 0 previously passed silently on exit code).
+    out.ok = !out.fatal && (!out.pageerrors || out.pageerrors.length === 0) && (out.photoCount > 0);
+    try { writeFileSync(join(OUT, 'probe-portraits.json'), JSON.stringify(out, null, 1)); } catch {}
+    console.log(JSON.stringify(out, null, 1));
+    if (!out.ok) process.exitCode = 1;
+  }
 })().catch(e => { console.error(e); process.exit(1); });

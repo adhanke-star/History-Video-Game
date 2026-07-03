@@ -5,7 +5,7 @@ import { chromium } from 'playwright-core';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
-import { readFileSync } from 'node:fs';
+import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 const cfg = JSON.parse(readFileSync(join(__dirname, 'shots.json'), 'utf8'));
@@ -45,4 +45,14 @@ const diag = await page.evaluate(`(()=>{ try {
 console.log('setup:', setup);
 console.log('diag:', JSON.stringify(diag));
 console.log('errors:', errs.slice(0, 8));
+// D237 (E15 follow-through): write the shots artifact the vet-no-regression freshness gate requires.
+// ok mirrors enforceDiagClassic's EXACT contract (no diag.err, nonBlank >= 300, m3dActive === false);
+// the raw error sample rides under a non-enforced key so the artifact adds no new failure axis beyond
+// the long-standing printed-diag contract.
+try {
+  const _ok = !diag.err && Number(diag.nonBlank || 0) >= 300 && diag.m3dActive === false;
+  mkdirSync(join(__dirname, 'shots'), { recursive: true });
+  writeFileSync(join(__dirname, 'shots', 'diag-classic.json'),
+    JSON.stringify({ ok: _ok, diag: diag, errorSample: errs.slice(0, 8), generatedAt: new Date().toISOString() }, null, 1));
+} catch {}
 await browser.close(); if (srv) srv.kill();

@@ -119,8 +119,11 @@ const SETUP = `(() => {
     step('Diplomacy tab includes real diplomacy block and wires', function(){
       var U=mkC('US',1863);
       openWarDept(); window._wdTab='diplomacy'; _wdRefresh();
-      var h=document.getElementById('wdContent').innerHTML;
-      ['Diplomacy &amp; the Blockade','Real Diplomacy System','Seward neutrality line','Watch the Laird rams'].forEach(function(s){ if(h.indexOf(s)<0) throw new Error('missing diplomacy tab text '+s); });
+      // D237: assert on textContent, not innerHTML — the C18 glossary decoration (D233) legitimately
+      // wraps teaching terms (e.g. "Blockade") in tip spans, which broke the old contiguous-innerHTML
+      // match. textContent keeps the SAME required strings while tolerating the shipped decoration.
+      var h=document.getElementById('wdContent').textContent;
+      ['Diplomacy & the Blockade','Real Diplomacy System','Seward neutrality line','Watch the Laird rams'].forEach(function(s){ if(h.indexOf(s)<0) throw new Error('missing diplomacy tab text '+s); });
       var b=document.querySelector('[data-rdpriority="watch-laird-rams"]'); if(!b) throw new Error('US diplomacy priority absent');
       b.click(); if(!U.realDiplomacy.active||U.realDiplomacy.priority!=='watch-laird-rams') throw new Error('Diplomacy tab toggle failed');
       return { priority:U.realDiplomacy.priority, len:h.length };

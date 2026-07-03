@@ -241,7 +241,20 @@ try {
   } else {
     printResult('canonical women in war', validatePack(canonical));
   }
+  _writeGateArtifact(true, null);
 } catch (e) {
-  console.error('WOMEN IN WAR FAIL: ' + (e && e.message ? e.message : String(e)));
+  const _msg = (e && e.message ? e.message : String(e));
+  console.error('WOMEN IN WAR FAIL: ' + _msg);
+  try { _writeGateArtifact(false, _msg); } catch {}
   process.exit(1);
+}
+
+/* D237 (E15 follow-through): vet-no-regression requires every enrolled gate to (re)write a FRESH
+   tools/shots artifact each run — this import gate predated that law and wrote none. ok mirrors
+   the gate's exit semantics. */
+function _writeGateArtifact(ok, error) {
+  const dir = join(__dirname, 'shots');
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(join(dir, 'import-women-in-war.json'),
+    JSON.stringify({ ok: ok, error: error || undefined, pageerrors: [], generatedAt: new Date().toISOString() }, null, 1));
 }
