@@ -1175,8 +1175,8 @@ function _lootInventoryHTML(C) {
       + '<div style="font-size:11px;opacity:.74">' + _lootEsc(it.category || "Item") + ' x' + row.qty + equipped + '</div>'
       + '<div style="font-size:11px;margin-top:5px;min-height:28px">' + _lootEsc(it.blurb || "") + '</div>'
       + '<div class="btn-row" style="margin-top:7px;justify-content:flex-start;gap:6px">'
-      + (it.use ? '<button type="button" class="upg" data-loot-use="' + _lootEsc(it.id) + '">Use</button>' : '')
-      + (it.slot ? '<button type="button" class="upg" data-loot-equip="' + _lootEsc(it.id) + '">' + (L.equipped[it.slot] === it.id ? "Stow" : "Equip") + '</button>' : '')
+      + (it.use ? '<button type="button" class="upg" data-loot-use="' + _lootAttr(it.id) + '">Use</button>' : '')
+      + (it.slot ? '<button type="button" class="upg" data-loot-equip="' + _lootAttr(it.id) + '">' + (L.equipped[it.slot] === it.id ? "Stow" : "Equip") + '</button>' : '')
       + '</div></div>';
   }
   return html + '</div>';

@@ -1484,7 +1484,7 @@ function fldRenderHud() {
   var sideCol = u.side === "US" ? "#6c8ebf" : "#b06a5a";
   var wn = (typeof WEAPONS !== "undefined" && WEAPONS[u.weapon]) ? WEAPONS[u.weapon].name : u.weapon;
   el.innerHTML =
-    '<div style="font-weight:bold;color:' + sideCol + ';">' + u.name + (sel.length > 1 ? " (+" + (sel.length - 1) + ")" : "") + '</div>' +
+    '<div style="font-weight:bold;color:' + sideCol + ';">' + (typeof htmlEsc === "function" ? htmlEsc(u.name) : u.name) + (sel.length > 1 ? " (+" + (sel.length - 1) + ")" : "") + '</div>' +
     '<div style="opacity:.8;font-size:12px;margin-bottom:4px;">' + wn + ' &middot; ' + u.formation + ' &middot; <b>' + fldStateLabel(u) + '</b></div>' +
     fldBar("Men", u.men, u.maxMen, "#cdbb88") +
     fldBar("Morale", u.morale, u.maxMor, u.morale > 35 ? "#7faf6a" : "#c98a3a") +

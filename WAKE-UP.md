@@ -1,3 +1,9 @@
+# ☀ WAKE-UP — 2026-07-03: **FABLE AUDIT M3 SHIPPED (D228) — the stored-XSS HIGH is closed + 8 tamper hardenings.**
+
+**Newest (D228):** shared custom-battle packs can no longer inject script through unit/leader/teaching text (stripped at validation AND escaped at the HUD sink). Preset tampering can't ride a player cushion at non-Recruit tiers; slot names are attribute-safe; import lanes share one hostile-key surface; import sizes are capped. Gates: node --check ×7, build GATE OK, probes custom-battle-builder/save-slots/presets/loot-survival/camp/field/tripo ok=true 0 pe. **Audit progress: 61 of 143 FIX-NOW closed (D225-D228).** **Next:** M4 build-gate hardening (E00 gate-4d fields · E14 4e dedup · E16 hex case · E17 tmp path · E28 collision async/gen · E29 manifest completeness · E30 sev alias · E31 data hex mask · E40 script-terminator scan · E07 manifest comment). Ledger: `REVIEW-QUEUE.md` §FABLE AUDIT.
+
+---
+
 # ☀ WAKE-UP — 2026-07-03: **FABLE AUDIT M2b SHIPPED (D227) — 10 src-side caption/teaching corrections.**
 
 **Newest (D227):** imagery captions and teaching strings corrected across 51/52/53-imagery, T1-bull-run (Early was not rail-borne), and 83-endings (the Democrats' peace plank, which McClellan repudiated). All presentation-only. Gates: node --check, build GATE OK, probes bullrun/endings/scenes/leaders/usct ok=true 0 pe. **Audit progress: 52 of 143 FIX-NOW items closed (D225-D227).** **Next:** M3 tamper/XSS hardening — E38 HIGH (shared custom-battle pack name → innerHTML sink) + E11/E12/E22/E25/E26/E27/E36/E39. Ledger: `REVIEW-QUEUE.md` §FABLE AUDIT.

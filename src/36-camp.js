@@ -87,7 +87,7 @@ function campTrainingBonus(C) {
   var c = C.president.camp, d = c.drill || {};
   var musk = _campNum(d.musketry, 0), man = _campNum(d.maneuver, 0), ent = _campNum(d.entrenching, 0), end = _campNum(d.endurance, 0);
   if (musk <= 0 && man <= 0 && ent <= 0 && end <= 0) return z;   // never drilled -> exact identity
-  var fat = _campNum(c.fatigue, 0);
+  var fat = Math.max(0, Math.min(100, _campNum(c.fatigue, 0)));   // defense-in-depth vs tampered saves: negative fatigue must never push drag above 1 and amplify the capped lifts
   var drag = 1 - Math.min(CAMP.FATIGUE_DRAG, (fat / 100) * CAMP.FATIGUE_DRAG);   // over-drill fatigue saps the gains
   var cap = CAMP.SEASON_CEIL;
   z.firepower = Math.round((musk / cap) * CAMP.LIFT.firepower * drag);

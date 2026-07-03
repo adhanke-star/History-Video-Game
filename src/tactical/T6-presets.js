@@ -115,7 +115,10 @@ function _fldClampNum(v, lo, hi) { var n = _fldNum(v, 1); return (typeof fldClam
 function _fldClampCfg(c) {
   c.attrition = _fldClampNum(c.attrition, 0.1, 3); c.canister = _fldClampNum(c.canister, 0.1, 3); c.supply = _fldClampNum(c.supply, 0.1, 3);
   c.cmdShock = _fldClampNum(c.cmdShock, 0.1, 3); c.sight = _fldClampNum(c.sight, 0.2, 3); c.veteran = _fldClampNum(c.veteran, 0.1, 3);
-  c.aiSkill = _fldClampNum(c.aiSkill, 0.5, 1.5); c.aiResolve = Math.min(1, _fldClampNum(c.aiResolve, 0.1, 1)); c.aiCushion = Math.max(0, _fldNum(c.aiCushion, 0));
+  c.aiSkill = _fldClampNum(c.aiSkill, 0.5, 1.5); c.aiResolve = Math.min(1, _fldClampNum(c.aiResolve, 0.1, 1));
+  c.aiCushion = Math.max(0, Math.min(1, _fldNum(c.aiCushion, 0)));
+  // D69 cushion law enforced on EVERY path (incl. persisted/tampered presets clamped at launch): only a GENUINE Recruit tier carries a player cushion, and it is capped at 1.
+  if (c.aiCushion > 0 && !(c.ai === "recruit" && FLDP.ai && FLDP.ai.recruit && c.aiSkill === FLDP.ai.recruit.skill)) c.aiCushion = 0;
   return c;
 }
 /* the configured preset, or null when nothing is set (-> neutral / byte-identical). */

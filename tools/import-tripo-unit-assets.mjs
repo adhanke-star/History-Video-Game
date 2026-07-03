@@ -17,6 +17,15 @@ function err(msg) { errors.push(msg); }
 function warn(msg) { warnings.push(msg); }
 function text(v, max = 400) { return String(v == null ? '' : v).replace(/\s+/g, ' ').trim().slice(0, max); }
 function plain(o) { return !!o && typeof o === 'object' && !Array.isArray(o); }
+const BAD_KEYS = new Set(['__proto__', 'constructor', 'prototype', 'hasOwnProperty']);
+function scanBadKeys(o, path) {
+  if (!o || typeof o !== 'object') return;
+  if (Array.isArray(o)) { for (let i = 0; i < o.length; i++) scanBadKeys(o[i], path + '[' + i + ']'); return; }
+  for (const k of Object.keys(o)) {
+    if (BAD_KEYS.has(k)) err('unsafe key "' + k + '" at ' + (path || 'pack'));
+    scanBadKeys(o[k], path ? path + '.' + k : k);
+  }
+}
 function num(v) { return typeof v === 'number' && Number.isFinite(v); }
 function cleanRel(p) {
   const s = text(p, 300);
@@ -66,6 +75,7 @@ const maxBytes = plain(pack.policy) && num(pack.policy.maxRuntimeBytes) ? pack.p
 const maxVerts = plain(pack.policy) && num(pack.policy.maxRuntimeVertices) ? pack.policy.maxRuntimeVertices : 20000;
 const maxTris = plain(pack.policy) && num(pack.policy.maxRuntimeTriangles) ? pack.policy.maxRuntimeTriangles : 12000;
 if (!Array.isArray(pack.records)) err('records array is required');
+scanBadKeys(pack, '');
 
 let enabled = 0;
 let filesPresent = 0;

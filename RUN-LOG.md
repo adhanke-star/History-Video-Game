@@ -8,6 +8,9 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## FABLE AUDIT M3 — TAMPER/INJECTION HARDENING — 2026-07-03 (D228, FOCUSED-GATED)
+E38 HIGH stored-XSS closed at both layers (T11 strips [<>] on free text; T0 HUD sink escapes u.name). Plus E11/E12/E22/E25/E26/E27/E36/E39: quote-safe escapes, hasOwnProperty keys, cushion law on the apply path, import size caps, marker-path clamps, camp fatigue clamp, tripo BAD_KEYS. Gate: node --check x7, build GATE OK, 7 probes ok=true 0 pe (incl. presets byte-identity + field baselines), diff-check clean.
+
 ## FABLE AUDIT M2b — SRC CAPTION/TEACHING FIXES — 2026-07-03 (D227, FOCUSED-GATED)
 10 ledger items: Jackson/Sherman/Tubman/Sudley/Antietam-credit caption accuracy, Chancellorsville plate honesty, Fredericksburg provenance reconciliation, Early not-rail-borne (T1), McClellan peace-plank repudiation (83). Gate: node --check x5, build GATE OK, 5 probes ok=true 0 pe, diff-check clean.
 

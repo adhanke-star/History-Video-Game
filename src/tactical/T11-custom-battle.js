@@ -51,7 +51,7 @@ function _fldCbForbiddenRe() { return /^(damage|dmg|fireScale|killScale|combatSc
 function _fldCbWalk(o, path, errors) {
   if (!o || typeof o !== "object") return;
   for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) {
-    if (k === "__proto__" || k === "constructor" || k === "prototype") { errors.push("Unsafe JSON key: " + (path ? path + "." : "") + k); continue; }
+    if (k === "__proto__" || k === "constructor" || k === "prototype" || k === "hasOwnProperty") { errors.push("Unsafe JSON key: " + (path ? path + "." : "") + k); continue; }
     if (_fldCbForbiddenRe().test(k)) errors.push("Forbidden battle-specific combat key: " + (path ? path + "." : "") + k);
     _fldCbWalk(o[k], path ? path + "." + k : k, errors);
   }
@@ -65,13 +65,21 @@ function _fldCbScrub(o) {
   if (!o || typeof o !== "object") return o;
   var out = {};
   for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) {
-    if (k === "__proto__" || k === "constructor" || k === "prototype") continue;
+    if (k === "__proto__" || k === "constructor" || k === "prototype" || k === "hasOwnProperty") continue;
     out[k] = _fldCbScrub(o[k]);
   }
   return out;
 }
 function _fldCbMarkerPath(v, field) {
-  if (Array.isArray(v)) return v;
+  if (Array.isArray(v)) {
+    var av = [];
+    for (var vi = 0; vi < v.length && av.length < 64; vi++) {
+      var q = v[vi];
+      if (!Array.isArray(q) || q.length < 2) continue;
+      av.push([_fldCbInt(q[0], 0, 0, field.w), _fldCbInt(q[1], 0, 0, field.h)]);
+    }
+    return av.length > 1 ? av : null;
+  }
   var s = String(v || "").trim();
   if (!s) return null;
   var pts = [], chunks = s.split(";");
@@ -229,21 +237,23 @@ function fldCustomValidate(raw) {
   var terrainSrc = src.terrain || {};
   var terrain = { hills: [], woods: [], walls: [], markers: [] }, i, d, p;
   var hills = terrainSrc.hills || (terrainSrc.hill ? [terrainSrc.hill] : []);
+  var _cbCapArr = function (arr, label) { if (Array.isArray(arr) && arr.length > 48) { errors.push("Too many " + label + " (" + arr.length + "); max 48."); return arr.slice(0, 48); } return arr; };
+  hills = _cbCapArr(hills, "hills");
   for (i = 0; i < hills.length; i++) {
     d = hills[i] || {};
     terrain.hills.push({ x: _fldCbInt(d.x, field.w / 2, 0, field.w), z: _fldCbInt(d.z, field.h / 2, 0, field.h), h: _fldCbNum(d.h, 16, 0, 60), s: _fldCbInt(d.s || d.r, 180, 45, 420) });
   }
-  var woods = terrainSrc.woods || [];
+  var woods = _cbCapArr(terrainSrc.woods || [], "woods");
   for (i = 0; i < woods.length; i++) {
     d = woods[i] || {};
     terrain.woods.push({ x: _fldCbInt(d.x, field.w / 2, 0, field.w), z: _fldCbInt(d.z, field.h / 2, 0, field.h), r: _fldCbInt(d.r, 120, 25, 280) });
   }
-  var walls = terrainSrc.walls || (terrainSrc.wall ? [terrainSrc.wall] : []);
+  var walls = _cbCapArr(terrainSrc.walls || (terrainSrc.wall ? [terrainSrc.wall] : []), "walls");
   for (i = 0; i < walls.length; i++) {
     d = walls[i] || {};
     terrain.walls.push({ x1: _fldCbInt(d.x1, field.w / 2 - 80, 0, field.w), z1: _fldCbInt(d.z1, field.h / 2, 0, field.h), x2: _fldCbInt(d.x2, field.w / 2 + 80, 0, field.w), z2: _fldCbInt(d.z2, field.h / 2, 0, field.h) });
   }
-  var markers = terrainSrc.markers || [];
+  var markers = _cbCapArr(terrainSrc.markers || [], "markers");
   for (i = 0; i < markers.length; i++) {
     d = markers[i] || {};
     var mk = { kind: String(d.kind || "label").replace(/[^A-Za-z0-9_-]/g, "").slice(0, 18) || "label", name: String(d.name || "").trim().slice(0, 80) };
@@ -254,6 +264,7 @@ function fldCustomValidate(raw) {
   }
   var unitIds = {}, bySide = { US: [], CS: [] }, reinforcements = [], units = _fldCbFlatUnits(src);
   if (!units.length) errors.push("At least one unit per side is required.");
+  if (units.length > 40) { errors.push("Too many units (" + units.length + "); max 40."); units = units.slice(0, 40); }
   for (i = 0; i < units.length; i++) {
     d = units[i] || {};
     var side = d.side === "CS" ? "CS" : "US";
@@ -272,8 +283,8 @@ function fldCustomValidate(raw) {
     var u = {
       id: uid,
       side: side,
-      name: String(d.name || uid).trim().slice(0, 90),
-      commander: String(d.commander || "").trim().slice(0, 80),
+      name: String(d.name || uid).replace(/[<>]/g, "").trim().slice(0, 90),
+      commander: String(d.commander || "").replace(/[<>]/g, "").trim().slice(0, 80),
       arm: arm,
       weapon: String(d.weapon || (arm === "cav" ? "carbine" : "rifled")).replace(/[^A-Za-z0-9_-]/g, "").slice(0, 24) || "rifled",
       men: men,
@@ -296,6 +307,7 @@ function fldCustomValidate(raw) {
   else if (src.leaders) {
     ["US", "CS"].forEach(function (s) { var list = src.leaders[s] || []; for (var li = 0; li < list.length; li++) { var q = _fldCbCopy(list[li]); q.side = s; leaderSrc.push(q); } });
   }
+  if (leaderSrc.length > 16) { errors.push("Too many leaders (" + leaderSrc.length + "); max 16."); leaderSrc = leaderSrc.slice(0, 16); }
   for (i = 0; i < leaderSrc.length; i++) {
     d = leaderSrc[i] || {};
     side = d.side === "CS" ? "CS" : "US";
@@ -307,7 +319,7 @@ function fldCustomValidate(raw) {
     if (attach && !unitIds[attach]) warnings.push(uid + " attach target is not a known unit.");
     leaders[side].push({
       id: uid,
-      name: String(d.name || uid).trim().slice(0, 80),
+      name: String(d.name || uid).replace(/[<>]/g, "").trim().slice(0, 80),
       quality: _fldCbNum(d.quality, 1.05, 0.7, 1.35),
       radius: _fldCbInt(d.radius, 180, 80, 340),
       x: _fldCbInt(d.x, side === "US" ? field.w * 0.48 : field.w * 0.52, 0, field.w),
@@ -344,7 +356,7 @@ function fldCustomValidate(raw) {
   for (i = 0; i < cards.length; i++) {
     d = cards[i] || {};
     if (!d.head && !d.body) continue;
-    teaching.cards.push({ id: _fldCbSafeId(d.id || ("custom_note_" + (i + 1)), "custom_note"), head: String(d.head || "Custom note").trim().slice(0, 80), body: String(d.body || "").trim().slice(0, 520), provenance: String(d.provenance || src.provenance || "Player-authored.").trim().slice(0, 220) });
+    teaching.cards.push({ id: _fldCbSafeId(d.id || ("custom_note_" + (i + 1)), "custom_note"), head: String(d.head || "Custom note").replace(/[<>]/g, "").trim().slice(0, 80), body: String(d.body || "").replace(/[<>]/g, "").trim().slice(0, 520), provenance: String(d.provenance || src.provenance || "Player-authored.").replace(/[<>]/g, "").trim().slice(0, 220) });
   }
   var scenario = {
     id: id,

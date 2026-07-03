@@ -23,7 +23,7 @@ function _slKey(i) { return _SL_PREFIX + i; }
 function _slClone(v) { try { return JSON.parse(JSON.stringify(v)); } catch (e) { return null; } }
 function _slEsc(s) {
   if (typeof _cabEsc === "function") return _cabEsc(s);
-  return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/\x27/g, "&#39;");
 }
 function _slCleanLabel(s) {
   s = String(s == null ? "" : s).replace(/\s+/g, " ").trim();
