@@ -137,6 +137,17 @@ const SETUP = `(() => {
       return { csOob:names };
     });
 
+    step('C44 (D235) ACCURATE ARMS: every CS infantry formation (Rodes/Colston/A.P. Hill + Anderson\\'s reinforcement) is rifle-armed — the spring-1863 ANV, matching Gettysburg Day 1\\'s tagging of the same divisions', function() {
+      var all = (DATA.oob.CS || []).concat((DATA.reinforcements || []).filter(function(r){ return r.side === 'CS'; }));
+      var checked = [];
+      for (var i = 0; i < all.length; i++) { var u = all[i];
+        if (u.arm !== 'inf') continue;
+        if (u.weapon !== 'rifled') throw new Error(u.id + ' tagged "' + u.weapon + '" — the C44 smoothbore understatement is back');
+        checked.push(u.id); }
+      if (checked.length < 4) throw new Error('expected >=4 CS infantry formations, got ' + checked.length);
+      return { rifled: checked.join(',') };
+    });
+
     step('DATA: terrain teaches the Wilderness, Dowdall\\'s Tavern, Hazel Grove, Fairview, and the Chancellor breastworks', function() {
       var markers = DATA.terrain.markers || [], hills = DATA.terrain.hills || [], walls = DATA.terrain.walls || [];
       var txt = JSON.stringify({ markers:markers, hills:hills, walls:walls });

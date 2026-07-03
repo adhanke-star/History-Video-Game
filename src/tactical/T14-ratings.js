@@ -176,6 +176,24 @@ function fldBadgeDef(key) {
   return null;
 }
 
+/* C11 (D235): the per-scenario DISPLAY alias for a shared badge label — data/ratings.json
+   `badgeLabelAliases[scenarioId][badgeKey]`. Display-only: the mechanical lever (trigger/lever/mag,
+   stamped by fldBrSpec) is untouched; only the player-facing word changes where the shared archetype's
+   historical NAME would be an anachronism on an earlier battle (Shiloh's Hornets' Nest stand shows
+   "Hold the Line", not the Sept-1863-named "Rock of Chickamauga"). No alias entry, no live scenario,
+   or any error -> def.label exactly as before (byte-identical everywhere else). */
+function fldBadgeLabel(def) {
+  if (!def) return "";
+  var raw = String(def.label || def.key);
+  try {
+    var d = _ratData(), A = d && d.badgeLabelAliases;
+    var sid = (typeof __FIELD !== "undefined" && __FIELD && __FIELD.scenData && __FIELD.scenData.id) || null;
+    var m = sid && A && A[sid];
+    if (m && m[def.key]) return String(m[def.key]);
+  } catch (e) {}
+  return raw;
+}
+
 /* R-6 · THE ROSTER-BADGE ASSIGNMENT lookup. The 9 shipped battles' documented commander/unit traits live in
    ONE reviewable place — data/ratings.json `rosterBadges[scenarioId][unitId]` — not scattered across the pure
    historical OOB JSONs. fldBrSpec (T1) calls this per scenario unit; returns a FRESH array (never the shared
@@ -316,7 +334,7 @@ function fldRatingBadgesHtml(u) {
     var sign = neg ? "−" : "+";                          // − (minus) / + : the polarity, a TEXT glyph (never colour-alone)
     var glyph = _FLD_RUNG_GLYPH[def.rung] || "•";
     var col = neg ? "#c98a5e" : "#86b06a";                    // decorative left-tint only (meaning is the glyph+sign+word)
-    var label = String(def.label || def.key);
+    var label = fldBadgeLabel(def);
     var kind = neg ? "a documented flaw" : "a documented strength";
     var aria = label + ", " + kind + (def.prov ? " (" + def.prov + ")" : "");
     chips += '<span role="listitem" aria-label="' + _fldRatEsc(aria) + '" title="' + _fldRatEsc(aria) + '"'
@@ -437,7 +455,7 @@ function fldXFactorStep(dt) {
       u._xfGlow = pos ? 1 : 0;                           // glow the heroic surge; the named-flaw drag does not glow
       if (u._xfOn !== active.key) {                      // one-shot on the rising edge (re-arms after leaving the zone)
         u._xfOn = active.key;
-        var line = (pos ? "⚡ " : "") + (u.name || "A brigade") + " — " + (active.label || active.key) + (pos ? "!" : ".");
+        var line = (pos ? "⚡ " : "") + (u.name || "A brigade") + " — " + fldBadgeLabel(active) + (pos ? "!" : ".");
         if (typeof fldAnnounce === "function") fldAnnounce(line);
         if (pos && typeof fldScenarioBanner === "function") { try { fldScenarioBanner(line, u.side); } catch (e) {} }
       }

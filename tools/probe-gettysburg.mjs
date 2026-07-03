@@ -80,6 +80,20 @@ const SETUP = `(() => {
         if(!(a.guns>0)) throw new Error(a.id+' has no gun count'); if(!(a.men>0 && a.men<=a.guns*40)) throw new Error(a.id+' crew not realistic: '+a.men+' for '+a.guns+' guns'); totalGuns+=a.guns; }
       return { batteries:arts.length, totalGuns:totalGuns }; });
 
+    step('C28/C30/C43 (D235) ACCURATE SEATING + SCALE + ARMS: every phase seats the US DEFENDER nearer the objective than the CS attacker (mean deploy distance), all CS infantry across all 3 days are rifle-armed, and Heth\\'s two-brigade force carries the corrected ~3,400', function(){
+      var out=[];
+      for(var i=0;i<DATA.phases.length;i++){ var p=DATA.phases[i];
+        var meanD=function(list){ var s=0,n=0; for(var j=0;j<list.length;j++){ var u=list[j], dx=u.x-p.objective.x, dz=u.z-p.objective.z; s+=Math.sqrt(dx*dx+dz*dz); n++; } return n?s/n:1e9; };
+        var dUS=meanD(p.oob.US), dCS=meanD(p.oob.CS);
+        if(!(dUS<dCS)) throw new Error('phase '+i+': US defender (mean '+Math.round(dUS)+') is NOT seated nearer the objective than the CS attacker (mean '+Math.round(dCS)+') — the C28 inversion is back');
+        var csAll=(p.oob.CS||[]).concat((p.reinforcements||[]).filter(function(r){return r.side==='CS';}));
+        for(var k=0;k<csAll.length;k++){ var u=csAll[k]; if(u.arm==='inf' && u.weapon!=='rifled') throw new Error('phase '+i+' CS infantry '+u.id+' tagged '+u.weapon+' — the C43 smooth/rifled contradiction is back'); }
+        out.push('p'+i+':'+Math.round(dUS)+'<'+Math.round(dCS)); }
+      var heth=null, l0=DATA.phases[0].oob.CS; for(var m=0;m<l0.length;m++) if(l0[m].id==='cs_heth_division') heth=l0[m];
+      if(!heth) throw new Error('cs_heth_division missing');
+      if(!(heth.men>=3000 && heth.men<=3800)) throw new Error('cs_heth_division men='+heth.men+' outside the corrected ~3,400 two-brigade band (C30)');
+      return { seating:out.join(' | '), hethMen:heth.men }; });
+
     step('MULTI-PHASE LAUNCH: phase state initializes, phase 0 (Day 1 McPherson Ridge) builds its OOB + objective + running tally', function(){
       fldLaunchSandbox({renderer:'none', scenario:'gettysburg', autoBoth:true, seed:12345});
       if(__FIELD.scenario!=='gettysburg') throw new Error('scenario not set: '+__FIELD.scenario);

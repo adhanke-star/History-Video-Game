@@ -99,6 +99,21 @@ const SETUP = `(() => {
       for(var i=0;i<csArt.length;i++){ if(!csArt[i].guns) throw new Error('CS battery '+csArt[i].id+' missing guns field'); }
     });
 
+    step('C33/C47/C05-scale (D235) ACCURATE INPUTS: every leader attach resolves to a real OOB unit id (Wallace binds to us_wallace_div), BOTH sides\\' infantry are smoothbore (April 1862 near-parity), and Ruggles\\'s ~53-gun grand battery masses BEFORE the dusk assault', function(){
+      var ids={}, all=(DATA.oob.US||[]).concat(DATA.oob.CS||[]).concat(DATA.reinforcements||[]);
+      for(var i=0;i<all.length;i++) ids[all[i].id]=true;
+      var Ls=(DATA.leaders.US||[]).concat(DATA.leaders.CS||[]);
+      for(var j=0;j<Ls.length;j++){ var ld=Ls[j]; if(ld.attach && !ids[ld.attach]) throw new Error('leader '+ld.id+' attach "'+ld.attach+'" matches no OOB unit (C33 silent-linker class)'); }
+      var wal=null; for(var w=0;w<Ls.length;w++) if(Ls[w].id==='ld_wallace') wal=Ls[w];
+      if(!wal || wal.attach!=='us_wallace_div') throw new Error('ld_wallace attach not us_wallace_div: '+(wal&&wal.attach));
+      for(var k=0;k<all.length;k++){ var u=all[k]; if(u.arm==='inf' && u.weapon!=='smooth') throw new Error(u.id+' infantry tagged '+u.weapon+' — the C47 false rifled/smooth divide is back'); }
+      var rug=null, chal=null, rf=DATA.reinforcements||[];
+      for(var r=0;r<rf.length;r++){ if(rf[r].id==='cs_ruggles_battery') rug=rf[r]; if(rf[r].id==='cs_wood_reserve') chal=rf[r]; }
+      if(!rug) throw new Error('cs_ruggles_battery missing (C05-scale)');
+      if(!(rug.arm==='art' && rug.guns>=50)) throw new Error('Ruggles grand battery not ~53 guns: '+rug.guns);
+      if(chal && !(rug.atSec<chal.atSec)) throw new Error('Ruggles ('+rug.atSec+') must mass BEFORE the dusk Chalmers assault ('+chal.atSec+') — real event order');
+      return { leadersChecked:Ls.length, wallaceAttach:wal.attach, rugglesGuns:rug.guns, rugglesAt:rug.atSec }; });
+
     step('DATA: teaching cards present (the cost, the surprise, Johnston\\'s death, the piecemeal assault, the Hornets\\' Nest)', function(){
       var cards=DATA.teaching&&DATA.teaching.cards||[];
       if(cards.length<5) throw new Error('want >=5 teaching cards, got '+cards.length);
@@ -182,6 +197,19 @@ const SETUP = `(() => {
       if(r1.atk!=='CS') throw new Error('attacker should be CS: '+r1.atk);
       return { attacker:r1.atk, winner:r1.w, winBy:r1.winBy };
     });
+
+    step('C11 (D235) BADGE DISPLAY ALIAS: with Shiloh live the Hornets\\' Nest stand archetype DISPLAYS as "Hold the Line", while the badgeDef label + mechanics stay "Rock of Chickamauga" (display-only, sim untouched)', function(){
+      fldLaunchSandbox({renderer:'none', scenario:'shiloh', autoBoth:true, seed:1});
+      var def=fldBadgeDef('rock_of_chickamauga'); if(!def) throw new Error('badgeDef rock_of_chickamauga missing');
+      if(def.label!=='Rock of Chickamauga') throw new Error('def.label mutated to "'+def.label+'" — the alias must never touch the def');
+      if(String(__FIELD.scenData&&__FIELD.scenData.id)!=='shiloh') throw new Error('scenData.id not shiloh: '+(__FIELD.scenData&&__FIELD.scenData.id));
+      var shown=fldBadgeLabel(def); if(shown!=='Hold the Line') throw new Error('Shiloh badge label not aliased: "'+shown+'"');
+      var pr=null; for(var i=0;i<__FIELD.units.length;i++) if(__FIELD.units[i].id==='us_prentiss') pr=__FIELD.units[i];
+      if(!pr || !pr.badges || pr.badges.indexOf('rock_of_chickamauga')<0) throw new Error('us_prentiss rock_of_chickamauga assignment missing (the D104 lever must stay)');
+      var html=fldRatingBadgesHtml(pr);
+      if(html.indexOf('Hold the Line')<0) throw new Error('roster chip does not show the alias');
+      if(html.indexOf('Chickamauga')>=0) throw new Error('roster chip still shows the anachronistic Sept-1863 name');
+      return { defLabel:def.label, shiloShows:shown }; });
 
     // ---- DETERMINISM: same seed -> same winner ----
     var r2 = runSH({ scenario:'shiloh', renderer:'none', autoBoth:true, playerSide:'US', seed:101 });
