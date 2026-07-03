@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "decision": "D219",
+    "decision": "D220",
     "schema": "cw_soldier_replacements_v1",
     "scope": "Citation-grade replacements for generated Soldier's Story representative rows.",
     "provenance": "Inferred",
-    "note": "D219 adds the twelfth narrow sourced replacement slice after D214 parked Group 5 and resumed Phase I. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
+    "note": "D220 adds the thirteenth narrow sourced replacement slice after D214 parked Group 5 and resumed Phase I. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
   },
   "schema": "cw_soldier_replacements_v1",
   "records": [
@@ -910,6 +910,92 @@
       ],
       "sourceNote": "NPS verifies Francis C. Barlow as Colonel at Antietam and places the 61st/64th New York under him in Caldwell's Brigade, First Division, II Corps. Barlow's Official Records report anchors the enfilading-fire and prisoner-capture story. The record asserts no brigadier-rank-at-Antietam, no single-company claim, and no portrait asset.",
       "bio": "Francis C. Barlow commanded the 61st and 64th New York at Antietam as a colonel in Caldwell's Brigade. In his report he described using the regiments' position to fire into the flank of Confederate troops in the Sunken Road, helping break the Bloody Lane position before he was wounded later in the fight. This replacement keeps the story on the Antietam Barlow command row without turning the lane's collapse into a one-man event or asserting his later brigadier rank."
+    },
+    {
+      "pid": "person_antietam_cs_21va_worsham",
+      "replacePid": "ss:antietam:CS:cs_jr_jones:pvt",
+      "name": "John H. Worsham",
+      "side": "CS",
+      "rank": "Private",
+      "branch": "inf",
+      "role": "private soldier",
+      "year": 1862,
+      "provenance": "Verified",
+      "team": {
+        "side": "CS",
+        "army": "Army of Northern Virginia",
+        "corps": "Jackson's Command",
+        "division": "Jackson's Division",
+        "brigade": "Jones' Brigade",
+        "regiment": "21st Virginia Infantry",
+        "company": "Company F"
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "John H. Worsham",
+          "author": "National Park Service",
+          "repository": "Cedar Creek and Belle Grove National Historical Park",
+          "locator": "NPS people profile, updated 2026",
+          "url": "https://www.nps.gov/people/john-h-worsham.htm",
+          "type": "secondary",
+          "note": "Identifies Worsham as a Confederate soldier, says he enlisted in the 21st Virginia Infantry, fought at Antietam, and flags the later Cedar Creek looting/fatal-halt narrative."
+        },
+        {
+          "title": "Pvt John H. Worsham",
+          "author": "Antietam on the Web",
+          "repository": "Antietam on the Web",
+          "locator": "Officer profile 8194",
+          "url": "https://antietam.aotw.org/officers.php?officer_id=8194",
+          "type": "secondary",
+          "note": "Lists Worsham as a Confederate Private in the 21st Virginia Infantry, says he enlisted in Company F, and notes he was one of three Company F men on the Maryland Campaign."
+        },
+        {
+          "title": "One of Jackson's Foot Cavalry",
+          "author": "John H. Worsham",
+          "repository": "Documenting the American South, University of North Carolina",
+          "locator": "Electronic edition title and contents",
+          "url": "https://docsouth.unc.edu/fpn/worsham/worsham.html",
+          "type": "primary",
+          "note": "Participant memoir whose title identifies Worsham with Company F, 21st Regiment Virginia Infantry, Jackson's Division; used as a soldier-life source, not as a Lost Cause frame."
+        },
+        {
+          "title": "Jones' Brigade",
+          "author": "Antietam on the Web",
+          "repository": "Antietam on the Web",
+          "locator": "Unit profile 65",
+          "url": "https://antietam.aotw.org/officers.php?unit_id=65",
+          "type": "secondary",
+          "note": "Places the 21st Virginia Infantry in Jones' Brigade, Jackson's Division, Jackson's Command for the Sharpsburg Campaign."
+        },
+        {
+          "title": "Antietam",
+          "author": "U.S. Army Center of Military History",
+          "repository": "U.S. Army Center of Military History",
+          "locator": "Order of battle, Jackson's Command / Jackson's Division / Jones' Brigade",
+          "url": "https://history.army.mil/portals/143/Images/Publications/catalog/35-3-1.pdf",
+          "type": "secondary",
+          "note": "Official Army history order of battle places the 21st Virginia Infantry in Jones' Brigade under Jackson's Division at Antietam."
+        }
+      ],
+      "sourceNote": "NPS identifies Worsham as a Confederate soldier in the 21st Virginia and says he fought at Antietam; Antietam on the Web verifies Private, Company F, and the Maryland Campaign. AotW/CMH place the 21st Virginia in Jones' Brigade, Jackson's Division. The record asserts no later sergeant/adjutant rank, no First Manassas claim, and no portrait asset.",
+      "bio": "John H. Worsham served as a Confederate private in Company F, 21st Virginia Infantry. During the Maryland Campaign he was one of the few Company F men present, and the regiment belonged to Jones' Brigade in Jackson's Division at Antietam. His later memoir is useful as a soldier-life source, but this replacement keeps the claim narrow: an Antietam private in the 21st Virginia, not a later sergeant/adjutant rank or portrait claim."
     }
   ],
   "_template": {
