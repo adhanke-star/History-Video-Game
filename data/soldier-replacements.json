@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "decision": "D221",
+    "decision": "D222",
     "schema": "cw_soldier_replacements_v1",
     "scope": "Citation-grade replacements for generated Soldier's Story representative rows.",
     "provenance": "Inferred",
-    "note": "D221 adds the fourteenth narrow sourced replacement slice after D214 parked Group 5 and resumed Phase I. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
+    "note": "D222 adds the fifteenth narrow sourced replacement slice after D214 parked Group 5 and resumed Phase I. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
   },
   "schema": "cw_soldier_replacements_v1",
   "records": [
@@ -1064,6 +1064,74 @@
       ],
       "sourceNote": "NPS identifies Ballou as elected major in the 2nd Rhode Island and killed as the Rhode Islanders advanced from Matthews Hill; RIHS confirms Major, Second Rhode Island, Bull Run wound/death, and the letter-copy caveat. NPS OOB places the regiment in Burnside's Brigade. The record asserts no company command, no autograph-original claim, and no portrait.",
       "bio": "Sullivan Ballou, a Providence lawyer and former Rhode Island House speaker, served as major in the 2nd Rhode Island Infantry at First Bull Run. Days before the battle he wrote Sarah a famous farewell letter from Camp Clark; the surviving archival trail includes copies rather than an unquestioned autograph original. At Manassas he was mortally wounded as the Rhode Islanders advanced from Matthews Hill. This replacement keeps the story narrow: a field officer of the 2nd Rhode Island in Burnside's Brigade, not a company officer or portrait claim."
+    },
+    {
+      "pid": "person_gettysburg_us_webb_phila_bde",
+      "replacePid": "ss:gettysburg:US:us_phila_bde:cmd",
+      "name": "Alexander S. Webb",
+      "side": "US",
+      "rank": "Brig. Gen.",
+      "branch": "inf",
+      "role": "brigade commander",
+      "year": 1863,
+      "provenance": "Verified",
+      "team": {
+        "side": "US",
+        "army": "Army of the Potomac",
+        "corps": "II Corps",
+        "division": "Second Division",
+        "brigade": "Philadelphia Brigade",
+        "regiment": "",
+        "company": ""
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Union Commanders at Gettysburg",
+          "author": "National Park Service",
+          "repository": "Gettysburg National Military Park",
+          "locator": "Alexander S. Webb commander profile",
+          "url": "https://www.nps.gov/gett/learn/historyculture/union-commanders-at-gettysburg.htm",
+          "type": "secondary",
+          "note": "Identifies Webb as a newly appointed brigadier general placed in command of the Philadelphia Brigade and ties his troops to the Angle during Pickett's Charge."
+        },
+        {
+          "title": "The Army of the Potomac at Gettysburg",
+          "author": "National Park Service",
+          "repository": "Gettysburg National Military Park",
+          "locator": "Second Corps / Second Division / Second Brigade (Philadelphia Brigade)",
+          "url": "https://www.nps.gov/gett/learn/historyculture/aop-orderofbattle.htm",
+          "type": "secondary",
+          "note": "Places Brig. Gen. Alexander S. Webb over the Philadelphia Brigade in Second Division, II Corps, with its 69th, 71st, 72nd, and 106th Pennsylvania regiments."
+        },
+        {
+          "title": "Alexander Stewart Webb",
+          "author": "Congressional Medal of Honor Society",
+          "repository": "Congressional Medal of Honor Society",
+          "locator": "Recipient profile, Civil War, Gettysburg, July 3, 1863",
+          "url": "https://www.cmohs.org/recipients/alexander-s-webb",
+          "type": "secondary",
+          "note": "Verifies Webb's Brigadier General rank for the Medal of Honor action at Gettysburg on July 3, 1863 and the citation for leading his men at a critical period."
+        }
+      ],
+      "sourceNote": "NPS identifies Webb as newly appointed brigadier general commanding the Philadelphia Brigade at Gettysburg and its troops throwing back the Angle breakthrough; NPS OOB places the brigade in Second Division, II Corps. CMOHS supports the July 3 action. No company command, no major-general-at-Gettysburg rank, no portrait.",
+      "bio": "Alexander S. Webb commanded the Philadelphia Brigade at Gettysburg as a newly appointed brigadier general. On July 3, during Pickett's Charge, his brigade held the Union center near the Angle as Confederate troops reached the stone wall. The Medal of Honor citation later credited his personal gallantry in leading his men at a critical period. This replacement keeps the claim narrow: Webb as Philadelphia Brigade commander in II Corps, not a company officer, major general at Gettysburg, or portrait claim."
     }
   ],
   "_template": {
