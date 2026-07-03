@@ -44,14 +44,14 @@
    and simply have no entry -> the helper returns "" for them. */
 var SCENE_IMG = {
   "bullrun1": {
-    alt: "A wartime photograph of Sudley Ford on Bull Run near Manassas, Virginia, with a stone ford crossing, a soldier, a wagon, and a house on the hill beyond.",
+    alt: "A wartime photograph of Sudley Ford on Bull Run near Manassas, Virginia, with a stone ford crossing, a soldier, a wagon, and Sudley Church on the hill beyond.",
     caption: "Sudley Ford on Bull Run, where McDowell’s flanking column crossed to open the first great battle of the war in July 1861 — a Union rout that taught the North the war would be long.",
     credit: "Library of Congress"
   },
   "antietam": {
     alt: "A wartime photograph of Confederate soldiers lying dead along the Sunken Road (“Bloody Lane”) at the Antietam battlefield.",
     caption: "Confederate dead along the Sunken Road (“Bloody Lane”) at Antietam, September 1862 — the bloodiest single day in American history, and among the first photographs of the American dead ever shown to the public.",
-    credit: "Library of Congress (Alexander Gardner)"
+    credit: "Alexander Gardner (plate reproduced in The Photographic History of the Civil War, 1911)"
   },
   "fredericksburg": {
     alt: "A wartime photograph of Union pontoon bridges spanning the Rappahannock River at Fredericksburg, Virginia.",
@@ -60,7 +60,7 @@ var SCENE_IMG = {
   },
   "chancellorsville": {
     alt: "A wartime photograph of Confederate dead lying behind the stone wall at the foot of Marye’s Heights, Fredericksburg, in May 1863.",
-    caption: "Confederate dead behind the stone wall at Marye’s Heights, May 3, 1863 — Sedgwick’s corps stormed the heights at Second Fredericksburg during the Chancellorsville campaign, taking ground that had been a slaughter-pen five months before.",
+    caption: "Confederate dead behind the stone wall at Marye’s Heights, May 3, 1863 — Sedgwick’s corps stormed the heights at Second Fredericksburg during the Chancellorsville campaign, taking ground that had been a slaughter-pen five months before. No wartime photograph of the Chancellorsville crossroads itself survives; this plate shows the campaign's eastern front, ten miles east of the field you fight.",
     credit: "Library of Congress (Andrew J. Russell)"
   },
   "vicksburg": {

@@ -273,7 +273,7 @@ function _fldInjectBullRunButton(afterBtn) {
     b.className = "gn-btn"; b.id = "fldBullRunBtn";
     b.setAttribute("aria-label", "First Bull Run, 1861 — the real-time historical battle. Command either army: lead the Union assault to seize Henry House Hill, or hold the hill for the Confederacy against the attack.");
     b.innerHTML = '<span class="gn-hl">&#9876; BATTLE &mdash; FIRST BULL RUN (1861)</span>' +
-      '<span class="gn-deck">The real First Manassas, brigade scale &mdash; command either side: storm Henry House Hill as the Union, or hold it for the Confederacy as the trains bring Jackson, Early, and Elzey to the field.</span>';
+      '<span class="gn-deck">The real First Manassas, brigade scale &mdash; command either side: storm Henry House Hill as the Union, or hold it for the Confederacy as the trains bring Jackson and Elzey to the field and Early\'s brigade swings onto the flank.</span>';
     // B-6: the menu button opens the side-choice card first (command the Union assault OR the Confederate defense),
     // then launches with the chosen side. The side must be picked BEFORE launch (it sets the units' AI flags).
     b.addEventListener("click", function () {
@@ -356,8 +356,8 @@ function fldScenarioEndHtml(winner) {
       ? "History diverges. You took Henry House Hill — the ground that historically broke the Union assault. In 1861 McDowell's army lost it and streamed back to Washington in the 'Great Skedaddle'."
       : "History diverges. The Union carried Henry House Hill — the ground your army held in 1861. The historical stand here broke McDowell's assault; under your command, this time it gave way.";
     else if (winner === "CS") hist = (ps === "US")
-      ? "History holds. As in 1861, the stand on Henry House Hill and the rail-borne brigades on Chinn Ridge carried the day for the Confederacy."
-      : "History holds. As in 1861, your stand on Henry House Hill and the rail-borne brigades on Chinn Ridge carried the day for the Confederacy — McDowell's army lost the hill and streamed back to Washington in the 'Great Skedaddle'.";
+      ? "History holds. As in 1861, the stand on Henry House Hill, the rail-borne brigades, and Early's flank attack on Chinn Ridge carried the day for the Confederacy."
+      : "History holds. As in 1861, your stand on Henry House Hill, the rail-borne brigades, and Early's flank attack on Chinn Ridge carried the day for the Confederacy — McDowell's army lost the hill and streamed back to Washington in the 'Great Skedaddle'.";
     else hist = "A bloodier stalemate than history's clear Confederate victory — but the rebellion was not broken here.";
     return _fldScenarioEndBox(hist, cards);
   }

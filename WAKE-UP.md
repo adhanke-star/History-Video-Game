@@ -1,3 +1,9 @@
+# ☀ WAKE-UP — 2026-07-03: **FABLE AUDIT M2b SHIPPED (D227) — 10 src-side caption/teaching corrections.**
+
+**Newest (D227):** imagery captions and teaching strings corrected across 51/52/53-imagery, T1-bull-run (Early was not rail-borne), and 83-endings (the Democrats' peace plank, which McClellan repudiated). All presentation-only. Gates: node --check, build GATE OK, probes bullrun/endings/scenes/leaders/usct ok=true 0 pe. **Audit progress: 52 of 143 FIX-NOW items closed (D225-D227).** **Next:** M3 tamper/XSS hardening — E38 HIGH (shared custom-battle pack name → innerHTML sink) + E11/E12/E22/E25/E26/E27/E36/E39. Ledger: `REVIEW-QUEUE.md` §FABLE AUDIT.
+
+---
+
 # ☀ WAKE-UP — 2026-07-03: **FABLE AUDIT M2a SHIPPED (D226) — 37 content corrections across 15 data files.**
 
 **Newest (D226):** codex, six battle files, cabinet (the CS Attorney-General timeline is now continuous: Benjamin first AG + Keyes ad interim + Watts to Oct 1863), generals, artillery, weapons, human-cost, decisions, economy, logistics-rail, engineering, under-told-perspectives, and the Howe replacement record all corrected per the D224 audit ledger — dates, ranks, sectors, provenance honesty (two Verified→Inferred downgrades), and the Shiloh Hornets' Nest card now teaches Ruggles's massed guns. All D74-inert text. Gates: build GATE OK; importer 15/15; probes codex/cabinet/shiloh/gettysburg/vicksburg/loot-survival/economy/weapons ok=true, 0 pageerrors. **Next:** M2b (src caption/teaching-string fixes: C16/C17/C22/C38/C39/C49/C54-C57), then M3 tamper/XSS hardening (E38 HIGH). Ledger: `REVIEW-QUEUE.md` §FABLE AUDIT.

@@ -51,7 +51,7 @@ var USCT_IMG = {
   },
   "harriet-tubman": {
     alt: "A carte-de-visite portrait of Harriet Tubman, seated with one arm resting on a chair back.",
-    caption: "Harriet Tubman, who guided the 1863 Combahee River Raid that freed some 750 enslaved people.",
+    caption: "Harriet Tubman, who guided the 1863 Combahee River Raid that freed more than 700 enslaved people.",
     credit: "Public domain (1860s)"
   },
   "nathan-bedford-forrest": {

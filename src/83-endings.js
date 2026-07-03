@@ -109,7 +109,7 @@ var _END_CATALOG = [
     precond: function (C) { return _endEnemyWill(C) <= 55; },
     gate: function (C) { return _endVictoryReady(C) === "will" || _endEnemyWill(C) <= 30; },
     secureHint: "Bleed Northern patience — at its worst around the November 1864 election — until the will to keep fighting breaks and Washington will treat.",
-    hist: "In history the Confederacy came closest here: McClellan ran in 1864 on a peace platform and Lincoln expected to lose, until the fall of Atlanta on September 2 transformed Northern morale and carried his re-election. No negotiated independence ever came. (McPherson, Battle Cry of Freedom.)"
+    hist: "In history the Confederacy came closest here: the Democrats ran McClellan in 1864 on a peace platform - a plank McClellan himself repudiated - and Lincoln expected to lose, until the fall of Atlanta on September 2 transformed Northern morale and carried his re-election. No negotiated independence ever came. (McPherson, Battle Cry of Freedom.)"
   },
   {
     id: "cs-emancipated-confederacy", side: "CS", tier: "longshot",

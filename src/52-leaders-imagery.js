@@ -13,7 +13,7 @@
    Antietam, Grant at Cold Harbor, Lee, Davis, Sherman, Jackson, Meade, Thomas,
    Sheridan, Cleburne, Farragut, Barton, Dix, Walker, ...). Sources + licence +
    period-accuracy recorded in assets/leaders-imagery-provenance.json; every item is a
-   PD/CC0 wartime-era work, each VIEWed before embed (the discipline caught 11 wrong
+   PD/CC0 period likeness of a wartime figure (mostly wartime plates; Dix is a c.1850s daguerreotype, Walker an 1872 studio portrait), each VIEWed before embed (the discipline caught 11 wrong
    pulls this milestone — a Stanton that was a USCT family, a "Jefferson Davis" that was
    the UNION general Jefferson C. Davis, group photos, and engravings).
 
@@ -63,12 +63,12 @@ var LEADER_IMG = {
   },
   "william-tecumseh-sherman": {
     alt: "A wartime portrait photograph of Maj. Gen. William T. Sherman in uniform.",
-    caption: "Maj. Gen. William T. Sherman, whose 1864 campaigns through Georgia and the Carolinas broke the Confederacy’s war-making capacity.",
+    caption: "Maj. Gen. William T. Sherman, whose 1864–65 campaigns through Georgia and the Carolinas broke the Confederacy’s war-making capacity.",
     credit: "National Archives"
   },
   "thomas-stonewall-jackson": {
     alt: "A wartime portrait photograph of Lt. Gen. Thomas “Stonewall” Jackson in a Confederate uniform coat.",
-    caption: "Lt. Gen. Thomas “Stonewall” Jackson, photographed in 1863, weeks before he was mortally wounded by his own men at Chancellorsville.",
+    caption: "Lt. Gen. Thomas “Stonewall” Jackson, photographed on April 26, 1863, a week before he was mortally wounded by his own men at Chancellorsville.",
     credit: "Public domain (1863)"
   },
   "james-longstreet": {
