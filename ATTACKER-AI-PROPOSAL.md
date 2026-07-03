@@ -1,7 +1,9 @@
 # PROPOSAL / FINDING — Tactical "smarter ATTACKER AI" (P1b-iv) — NEEDS A BALANCE-TARGET DECISION
 
 **Status:** prototyped + measured, **NOT committed** (main stays at the vetted P1b-iii, commit `fb2da49`). The
-full prototype is in `.tmp/attacker-ai-prototype.patch` and in the chat transcript that produced this file.
+full prototype is in `.tmp/attacker-ai-prototype.patch` and in the chat transcript that produced this file
+(*`.tmp/` is gitignored local scratch — the patch may be absent in a fresh clone; if so, the prototype would
+need re-deriving from §"What I built" below — S18, D236*).
 Surfacing to Aaron because the result raises a **design/balance decision** that touches a prior shipped
 milestone (D58 fog), and I won't unilaterally ship a balance I'm uncertain about.
 

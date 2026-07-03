@@ -60,7 +60,7 @@ var FLDP = {
   // --- Advanced expander lever ladders (discrete chips, accessible + deterministic). Each maps a stored numeric
   //     value to a label. The realism cards set the sev levers; the AI cards set aiSkill/resolve/cushion. ---
   levers: {
-    attrition: { label: "Casualty severity",      key: "attrition", opts: [{ v: 0.7, l: "Light" }, { v: 1.0, l: "Normal" }, { v: 1.3, l: "Heavy" }] },
+    attrition: { label: "Casualty severity (also drives engineering realism — dig speed, entrenchment cover, abatis, deep fords; T13)", key: "attrition", opts: [{ v: 0.7, l: "Light" }, { v: 1.0, l: "Normal" }, { v: 1.3, l: "Heavy" }] },
     canister:  { label: "Canister lethality (B-4)", key: "canister", opts: [{ v: 0.7, l: "Light" }, { v: 1.0, l: "Normal" }, { v: 1.3, l: "Murderous" }] },
     supply:    { label: "Supply (B-3)",            key: "supply",   opts: [{ v: 1.4, l: "Generous" }, { v: 1.0, l: "Normal" }, { v: 0.72, l: "Strict" }] },
     cmdShock:  { label: "Command shock (B-2)",     key: "cmdShock", opts: [{ v: 0.6, l: "Muted" }, { v: 1.0, l: "Normal" }, { v: 1.4, l: "Severe" }] },

@@ -1,8 +1,8 @@
 # DEPLOY — put the game on the web (Mac + iPad/phone + a shareable URL)
 
-**Status (2026-06-14):** scaffold DONE, **nothing published**. Local git repo initialized + all files staged (node_modules ignored). `index.html` redirects to `civil_war_generals.html`. `gh` CLI is installed (v2.91.0). Helper: `tools/deploy.sh`.
+**Status (updated 2026-07-03, D236 — supersedes the 2026-06-14 scaffold framing):** the repo is **LIVE on GitHub** — `origin` → **github.com/adhanke-star/History-Video-Game** (**PRIVATE**), branch `main`, with every vetted milestone committed AND pushed since mid-June (see `START-HERE.md` §Git). `index.html` redirects to `civil_war_generals.html`; `gh` CLI installed; helper: `tools/deploy.sh`.
 
-> ⚠ **HALT — your call (account-level / outward-facing).** Creating a public GitHub repo and turning on Pages publishes the game to the open web. I did **not** do that. The two steps below are yours to run. See `PHASE4_HALT.md`.
+> ⚠ **The one OPEN Aaron decision is PUBLIC WEB PUBLISHING, not repo creation.** GitHub Pages on a **private** repo needs a paid plan (see "Private instead of public?" below), so publishing a playable URL means either (a) flipping the repo public, (b) paying for Pages-on-private, or (c) another static host. None of that has been done — the game is played locally by opening `civil_war_generals.html`. The steps below remain the how-to **for whenever Aaron makes that call**; the repo-creation parts they describe are already done. *(This block replaced the stale 2026-06-14 "nothing published / create the repo" HALT framing — ledger item S19; `PHASE4_HALT.md` lives in `legacy/`.)*
 
 ## Why GitHub Pages fits
 The game is a static HTML file + relative assets + Three.js from a CDN — exactly what Pages serves for free over HTTPS, and HTTPS is what makes `.glb`/HDRI load everywhere (incl. iPad/iPhone Safari), not just localhost. Asset paths are **relative** (`assets/3d/...`, `assets/terrain/...`) and Three is an absolute CDN URL, so it works at the Pages subpath `https://<user>.github.io/<repo>/` with no rewrites.

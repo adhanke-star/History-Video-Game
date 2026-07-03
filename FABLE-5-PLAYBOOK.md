@@ -1,6 +1,6 @@
 # FABLE-5-PLAYBOOK — operating Claude Fable 5 on this project (D223, 2026-07-03)
 
-Distilled from Anthropic's "Prompting Claude Fable 5" guidance (2026) down to what this repo actually needs. Canonical alongside the D145 routing law; `START-HERE.md`, `CLAUDE.md`, `AGENTS.md`, `AUTONOMOUS-RUN.md`, and `OVERNIGHT-RUN-PROMPT.md` all point here. The ready-made full-spectrum audit kickoff that applies all of this is **`FABLE-AUDIT-PROMPT.md`**.
+Distilled from Anthropic's "Prompting Claude Fable 5" guidance (2026) down to what this repo actually needs. Canonical alongside the D145 routing law; `START-HERE.md`, `CLAUDE.md`, `AGENTS.md`, `AUTONOMOUS-RUN.md`, and `legacy/OVERNIGHT-RUN-PROMPT.md` (retired to legacy in D236) all point here. The ready-made full-spectrum audit kickoff that applies all of this is **`FABLE-AUDIT-PROMPT.md`**.
 
 ## 1 · What changed (and how to undo it)
 - The Claude Code main loop now runs **Claude Fable 5** (`claude-fable-5[1m]` — the 1M-context variant), set via `/model` and persisted in `~/.claude/settings.json`. Fable is the Mythos-class tier above Opus; it is included in Aaron's subscription **as of 2026-07-03** — that inclusion may end.

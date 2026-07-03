@@ -7,6 +7,15 @@
    The priority mitigates pressure; it does not reopen the cartel, force exchange,
    or trade away equal protection for Black U.S. soldiers. Default bridge input is
    exact zero.
+
+   E35 (D236): besides the capped bridge bonus, an ACTIVE exchange also returns men —
+   a SECOND, real combat-input channel (C.manpower.pool + C.manpower.strength; the
+   strength facet feeds bridgeArmy at 0.22 weight and 70-manpower's replenish carries
+   it forward). Historically intended (returned POWs are manpower), so it is kept —
+   but BOUNDED like every other War Effort system: per-battle strength lift <= 1.2
+   AND the cumulative campaign contribution <= _PX_STRENGTH_LIFT_CAP (6.0), tracked
+   in P.strengthLiftUsed (additive save field, lazy default 0 — no _SAVE_VER bump).
+   The pool write stays (it is the literal returned men, already bounded by captures).
    =========================================================================== */
 
 function _pxNum(v, d) {
@@ -226,9 +235,18 @@ function prisonerExchangeOnResolve(winnerSide, type, B, C, win) {
 
   var side = (C && C.side === "CS") ? "CS" : "US";
   if (P.active && C.manpower && returned[side] > 0) {
-    var lift = Math.min(1.2, (returned[side] / 1000) * 0.35);
+    // E35 (D236): the returned-POW strength lift is a real second combat-input channel — bounded
+    // per-battle (<=1.2) AND cumulatively (<=_PX_STRENGTH_LIFT_CAP over the whole campaign) so the
+    // total exchange effect is capped like the other War Effort systems. Pool = literal men, uncapped
+    // beyond its clamp (physically bounded by captures).
+    var _PX_STRENGTH_LIFT_CAP = 6;
+    var used = _pxClamp(_pxNum(P.strengthLiftUsed, 0), 0, _PX_STRENGTH_LIFT_CAP);
+    var lift = Math.min(1.2, (returned[side] / 1000) * 0.35, _PX_STRENGTH_LIFT_CAP - used);
     C.manpower.pool = _pxClamp(_pxNum(C.manpower.pool, 0) + returned[side] / 1000, 0, 10000);
-    C.manpower.strength = _pxClamp(_pxNum(C.manpower.strength, 100) + lift, 5, 100);
+    if (lift > 0) {
+      C.manpower.strength = _pxClamp(_pxNum(C.manpower.strength, 100) + lift, 5, 100);
+      P.strengthLiftUsed = _pxClamp(used + lift, 0, _PX_STRENGTH_LIFT_CAP);
+    }
   }
 
   var snap = prisonerExchangeSnapshot(C);

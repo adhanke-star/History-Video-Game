@@ -107,6 +107,34 @@ const SETUP = `(() => {
       return { inactive:inactive, active:active };
     });
 
+    step('E35 (D236): the returned-POW strength lift is bounded per-battle (<=1.2) AND cumulatively (<=6.0 for the campaign, tracked in P.strengthLiftUsed); the pool keeps receiving the literal returned men after the cap', function(){
+      var C=mkC('US',1864); prisonerExchangeSetPriority(C,'cartelRelief');
+      C.manpower.strength=50;   // below the 100 ceiling so every lift is MEASURABLE (not clamped away)
+      var start=C.manpower.strength, totalLift=0, poolGrewAfterCap=false;
+      for(var i=0;i<12;i++){
+        C.prisoners.detained.US=200000; C.prisoners.detained.CS=200000;   // huge exchange every battle
+        var s0=C.manpower.strength;
+        prisonerExchangeOnResolve('CS','loss',fakeB('US','coldharbor',1864,'loss'),C,false);
+        var d=C.manpower.strength-s0;
+        if(d>1.2000001) throw new Error('per-battle strength lift exceeded 1.2: '+d);
+        totalLift+=Math.max(0,d);
+        if(Number(C.prisoners.strengthLiftUsed)>=5.999){
+          C.prisoners.detained.US=200000; C.prisoners.detained.CS=200000;
+          var p0=Number(C.manpower.pool)||0, st0=C.manpower.strength;
+          prisonerExchangeOnResolve('CS','loss',fakeB('US','coldharbor',1864,'loss'),C,false);
+          if(C.manpower.strength-st0>0.0000001) throw new Error('strength still lifting after the 6.0 cumulative cap');
+          if(!(Number(C.manpower.pool)>p0)) throw new Error('pool must keep receiving literal returned men after the strength cap');
+          poolGrewAfterCap=true; break;
+        }
+      }
+      var used=Number(C.prisoners.strengthLiftUsed);
+      if(!(used>0)) throw new Error('cumulative tracker never accumulated (cap not exercised)');
+      if(!(used<=6.0000001)) throw new Error('cumulative tracker exceeded the 6.0 cap: '+used);
+      if(!(totalLift<=6.0000001)) throw new Error('cumulative strength lift exceeded the 6.0 cap: '+totalLift);
+      if(!poolGrewAfterCap) throw new Error('the cap was never reached in 12 max-size exchanges — fixture no longer exercises the bound');
+      return { used:used, totalLift:Math.round(totalLift*100)/100, startStrength:start, endStrength:C.manpower.strength };
+    });
+
     step('state sanitizer handles malformed saves', function(){
       var C=mkC('CS',1864);
       C.prisoners={active:'yes', priority:'bad', detained:{US:-4,CS:'12'}, returned:'bad', deaths:[], log:'oops', lastTurn:'bad', lastBridge:[]};
