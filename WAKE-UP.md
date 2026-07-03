@@ -1,3 +1,9 @@
+# ☀ WAKE-UP — 2026-07-03: **FABLE AUDIT M4 SHIPPED (D229) — 10 build-gate blind spots closed.**
+
+**Newest (D229):** the no-fudge wall now guards both engines' combat-power fields (.strength/.maxStr/.morale/.maxMor/.ammo) with an alias-resistant lever guard; gate 4e counts only distinct real sources; new manifest-completeness and script-terminator gates; async/generator collision coverage; hex/tmp/mask hardening. The hardened gate runs GREEN on the live tree. **Audit progress: 71 of 143 FIX-NOW closed (D225-D229).** **Next:** M5 probe teeth — E37 (43 enrolled probes gain failing exit codes), E08 cab-exploit assertions, E09 enroll probe-conditioning, E10 probe-motion artifact+exit, E15 vet-no-regression artifact freshness, E24 new probe-help-overlay. Ledger: `REVIEW-QUEUE.md` §FABLE AUDIT.
+
+---
+
 # ☀ WAKE-UP — 2026-07-03: **FABLE AUDIT M3 SHIPPED (D228) — the stored-XSS HIGH is closed + 8 tamper hardenings.**
 
 **Newest (D228):** shared custom-battle packs can no longer inject script through unit/leader/teaching text (stripped at validation AND escaped at the HUD sink). Preset tampering can't ride a player cushion at non-Recruit tiers; slot names are attribute-safe; import lanes share one hostile-key surface; import sizes are capped. Gates: node --check ×7, build GATE OK, probes custom-battle-builder/save-slots/presets/loot-survival/camp/field/tripo ok=true 0 pe. **Audit progress: 61 of 143 FIX-NOW closed (D225-D228).** **Next:** M4 build-gate hardening (E00 gate-4d fields · E14 4e dedup · E16 hex case · E17 tmp path · E28 collision async/gen · E29 manifest completeness · E30 sev alias · E31 data hex mask · E40 script-terminator scan · E07 manifest comment). Ledger: `REVIEW-QUEUE.md` §FABLE AUDIT.

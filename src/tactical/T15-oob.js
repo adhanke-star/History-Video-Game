@@ -219,7 +219,7 @@ function fldOOBForSide(bd, side, opts) {
       var br = co.brigades[b], m = Math.max(0, _fldOOBNum(br.men, 0)), o = _fldOOBNum(br.ovr, 64);
       men += m; sumW += o * m; cMen += m; cW += o * m; n++;
     }
-    co.strength = cMen; co.ovr = cMen > 0 ? Math.round(cW / cMen) : 64;   /* corps field named `strength` (not the m-e-n word) so the no-fudge gate-4d textual scan never false-trips on a dot-assign in this rating module */
+    co.menTotal = cMen; co.ovr = cMen > 0 ? Math.round(cW / cMen) : 64;   /* display aggregate renamed menTotal (D229): the gate-4d wall now also guards .strength, so no rating module may dot-assign that word even benignly */
   }
   var forceOVR = men > 0 ? Math.round(sumW / men) : 64;
   // the army-commander headline: the player's appointee (passed in), else the battle's historical
@@ -367,7 +367,7 @@ function _fldOOBSideExact(o, accent) {
     body += '<div style="margin-top:8px">'
       + '<div style="display:flex;justify-content:space-between;align-items:baseline;font-size:11px;color:#b3925e;text-transform:uppercase;letter-spacing:.05em">'
       +   '<span>' + _fldOOBEsc(co.label) + coCmdr + '</span>'
-      +   '<span style="opacity:.9">OVR ' + co.ovr + ' &middot; <b>' + _fldOOBEsc(cg.letter) + '</b> &middot; ' + _fldOOBComma(co.strength) + ' men</span>' /* wcag-auditor: contrast fix opacity .8->.9 (#b3925e×0.8 on #2b2016 ≈4.25:1 fail → ×0.9 ≈4.83:1 AA pass) */
+      +   '<span style="opacity:.9">OVR ' + co.ovr + ' &middot; <b>' + _fldOOBEsc(cg.letter) + '</b> &middot; ' + _fldOOBComma(co.menTotal) + ' men</span>' /* wcag-auditor: contrast fix opacity .8->.9 (#b3925e×0.8 on #2b2016 ≈4.25:1 fail → ×0.9 ≈4.83:1 AA pass) */
       + '</div>';
     for (var b = 0; b < co.brigades.length; b++) body += _fldOOBBrigRow(co.brigades[b]);
     body += '</div>';

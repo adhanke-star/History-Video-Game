@@ -38,7 +38,7 @@ const OUT = join(ROOT, 'civil_war_generals.html');
 const MANIFEST = join(SRC, '00-manifest.json');
 // Build the anchor token at runtime so this source never contains a second copy.
 const MARKER = '/*__ENGINE' + '_END__*/';
-const HEX_BOMB = /0x[0-9a-fA-F]*[g-z]/;            // invalid hex literal -> parse bomb
+const HEX_BOMB = /0x[0-9a-fA-F]*[g-zG-Z]/;         // invalid hex literal -> parse bomb (case-complete, D229)
 const checkOnly = process.argv.includes('--check');
 
 function die(code, msg) { console.error('BUILD FAIL [' + code + '] ' + msg); process.exit(code); }
@@ -70,7 +70,9 @@ if (existsSync(DATA)) {
   for (const f of dfiles) {
     const raw = readFileSync(join(DATA, f), 'utf8');
     try { JSON.parse(raw); } catch (e) { die(5, 'invalid JSON in data/' + f + ': ' + e.message); }
-    if (HEX_BOMB.test(raw)) die(3, 'invalid-hex literal in data/' + f);
+    // mask data:-URL string content first (parity with the 4b assembled-body scan): base64 blobs
+    // legitimately contain 0x..[g-z] runs, and JSON parseability is already proven above (D229/E31).
+    if (HEX_BOMB.test(raw.replace(/"data:[^"]*"/g, '""'))) die(3, 'invalid-hex literal in data/' + f);
     const key = f.replace(/\.json$/, '');
     parts.push(JSON.stringify(key) + ': ' + raw.trim());
     dataKeys.push(key);
@@ -130,9 +132,33 @@ for (const f of modules) {
   const txt = readFileSync(p, 'utf8');
   if (HEX_BOMB.test(txt)) die(3, 'invalid-hex literal in module ' + f);
   // collect top-level `function NAME(` declarations this module introduces
-  const re = /(^|\n)\s*function\s+([A-Za-z_$][\w$]*)\s*\(/g;
+  const re = /(^|\n)\s*(?:async\s+)?function\s*(?:\*\s*)?([A-Za-z_$][\w$]*)\s*\(/g;   // also match async/generator declarations (D229/E28)
   let m; while ((m = re.exec(txt))) { if (!overrides.has(m[2])) newFns.push({ name: m[2], file: f }); }
   inject += '\n/* ===== module: ' + f + ' ===== */\n' + txt + '\n';
+}
+
+// ---- 2c. manifest-completeness gate (D229/E29): every src/**/*.js on disk must be enrolled ----
+{
+  const onDisk = [];
+  const walkSrc = (dir, prefix) => {
+    for (const ent of readdirSync(dir, { withFileTypes: true })) {
+      if (ent.isDirectory()) { walkSrc(join(dir, ent.name), prefix + ent.name + '/'); continue; }
+      if (ent.isFile() && ent.name.endsWith('.js')) onDisk.push(prefix + ent.name);
+    }
+  };
+  walkSrc(SRC, '');
+  const listed = new Set(modules);
+  const orphans = onDisk.filter(f => !listed.has(f));
+  if (orphans.length) die(5, 'manifest-completeness: src file(s) on disk but not enrolled in 00-manifest.json (they would silently ship NOWHERE and be scanned by NO gate): ' + orphans.join(', '));
+}
+
+// ---- 2d. script-terminator gate (D229/E40): injected content must never contain an HTML script
+// terminator/opener — out.indexOf('</script>') would otherwise resolve INSIDE the inject, truncating
+// the parse gate's view and shipping a broken page. Fail fast instead of trusting luck. ----
+{
+  const SCRIPT_BOMB = /<\/script|<script|<!--/i;
+  const sb = inject.match(SCRIPT_BOMB);
+  if (sb) die(5, 'script-terminator: injected data/module content contains "' + sb[0] + '" — an inline <script> body may not contain a literal script terminator/opener or HTML comment-open; escape it (e.g. <\\/script) or remove it.');
 }
 
 // ---- 3. assemble in memory (marker stays terminal) ----
@@ -144,7 +170,7 @@ if (so < 0 || sc < 0 || sc < so) die(5, 'could not locate a single <script>..</s
 const body = out.slice(so + '<script>'.length, sc);
 
 // 4a. parse gate
-const tmp = join(tmpdir(), 'gor_build_check.js');
+const tmp = join(tmpdir(), 'gor_build_check_' + process.pid + '_' + Date.now().toString(36) + '.js');
 writeFileSync(tmp, body);
 const chk = spawnSync(process.execPath, ['--check', tmp], { encoding: 'utf8' });
 if (chk.status !== 0) die(2, 'node --check failed:\n' + (chk.stderr || chk.stdout || '').trim());
@@ -161,7 +187,7 @@ if (HEX_BOMB.test(hexScan)) die(3, 'invalid-hex literal in assembled <script>');
 
 // 4c. collision gate — new functions must appear exactly once; overrides exactly twice
 const countFn = (name) => {
-  const r = new RegExp('(^|\\n)\\s*function\\s+' + name.replace(/[$]/g, '\\$') + '\\s*\\(', 'g');
+  const r = new RegExp('(^|\\n)\\s*(?:async\\s+)?function\\s*(?:\\*\\s*)?' + name.replace(/[$]/g, '\\$') + '\\s*\\(', 'g');
   return (body.match(r) || []).length;
 };
 for (const { name, file } of newFns) {
@@ -187,7 +213,16 @@ const NO_FUDGE_FORBIDDEN = [
   { re: /\b(cas|aCas|bCas)\s*(\+=|-=|=)(?!=)/, what: 'a casualty count (cas/aCas/bCas)' },
   { re: /\.victory\s*=(?!=)/, what: 'the victory result (.victory)' },
   { re: /\.men\s*(\+=|-=|=)(?!=)/, what: 'unit strength (.men)' },
+  // D229/E00: the wall now also covers the CLASSIC engine's strength fields and the modern engine's
+  // other live combat-power levers (morale is a ~40% melee multiplier; ammo gates fire) so a scanned
+  // rating module can never force a result through an unguarded field name on either engine.
+  { re: /\.(strength|maxStr)\s*(\+=|-=|=)(?!=)/, what: "Classic unit strength (.strength/.maxStr)" },
+  { re: /\.(morale|maxMor)\s*(\+=|-=|=)(?!=)/, what: 'unit morale (.morale/.maxMor)' },
+  { re: /\.ammo\s*(\+=|-=|=)(?!=)/, what: 'unit ammunition (.ammo)' },
   { re: /\bsev\.[A-Za-z_$][\w$]*\s*=(?!=)/, what: 'a severity lever (sev.*) out of band' },
+  // D229/E30: receiver-agnostic lever guard — a one-line alias (var s=__FIELD.sev; s.attrition=…)
+  // defeated the sev.-prefixed pattern; guard direct writes to the six lever NAMES on any receiver.
+  { re: /\.(attrition|canister|supply|cmdShock|sight|veteran)\s*=(?!=)/, what: 'a severity lever by name on any receiver (aliasing)' },
   // bracket-notation variants — close the computed-member bypass (u["men"]=0 etc.) so the wall cannot be
   // eroded by a later increment writing the scoreboard via brackets (R-3 bug-hunt hardening). A full AST scan
   // would also catch aliasing; this fast textual pass covers the direct bracket forms.
@@ -225,7 +260,18 @@ for (const rm of RATING_MODULES) {
       const isVerified = norm(node.prov) === 'verified' || norm(node.provenance) === 'verified';
       if (isVerified) {
         let sc = 0;
-        for (const k of SRC_KEYS) { if (Array.isArray(node[k])) { sc = node[k].length; break; } }
+        // D229/E14: count only DISTINCT, non-empty source entries (a Verified stamp resting on
+        // ["McPherson","McPherson"] or ["",""] is 1 or 0 real citations, not 2) — matching gate 4f's rigor.
+        for (const k of SRC_KEYS) {
+          if (Array.isArray(node[k])) {
+            const seenSrc = new Set();
+            for (const s of node[k]) {
+              const skey = (typeof s === 'string' ? s : JSON.stringify(s)).replace(/\s+/g, ' ').trim().toLowerCase();
+              if (skey && skey !== '{}' && skey !== 'null') seenSrc.add(skey);
+            }
+            sc = seenSrc.size; break;
+          }
+        }
         if (sc < 2) {
           const id = node.key || node.name || node.id || node.label || trail || '(record)';
           offenders.push(file + ' :: ' + id + ' (Verified, ' + sc + ' source' + (sc === 1 ? '' : 's') + ')');
