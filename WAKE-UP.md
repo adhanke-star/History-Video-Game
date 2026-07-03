@@ -1,6 +1,8 @@
-# ☀ WAKE-UP — 2026-07-03: **SOLDIER'S STORY ALEXANDER S. WEBB SLICE SHIPPED (D222).**
+# ☀ WAKE-UP — 2026-07-03: **FABLE 5 MIGRATION SHIPPED (D223, docs+settings) · D222 WEBB SLICE IS THE LATEST PLAYABLE CHANGE.**
 
-**Newest (D222, 2026-07-03):** Priority 1 Phase I Soldier's Story scale-out continues. Phase H remains parked from D214; do not restart the automatic zero-byte polish loop. Reopen Phase H media only after an explicit media-budget/profile decision.
+**Newest (D223, 2026-07-03):** the Claude Code main loop is now **Claude Fable 5** (`claude-fable-5[1m]`) + xhigh. Docs/settings only — nothing playable changed. Read **`FABLE-5-PLAYBOOK.md`** before any long Fable run (its §3 snippets are mandatory in kickoff prompts); **`FABLE-AUDIT-PROMPT.md`** is the standing full-spectrum audit+improve kickoff. Routing law unchanged except: **no helper is ever Fable** — explicit model+effort on every helper call. Rollback (when Fable leaves the subscription): `backups/pre-fable-2026-07-03/RESTORE.md` (local-only) or `/model claude-opus-4-8`.
+
+**Previous (D222, 2026-07-03):** Priority 1 Phase I Soldier's Story scale-out continues. Phase H remains parked from D214; do not restart the automatic zero-byte polish loop. Reopen Phase H media only after an explicit media-budget/profile decision.
 
 **What changed:** Alexander S. Webb is now the fifteenth citation-grade Soldier's Story replacement. He replaces the generated Gettysburg / Philadelphia Brigade command slot (`ss:gettysburg:US:us_phila_bde:cmd`) with a Verified Brig. Gen., Philadelphia Brigade / Second Division / II Corps / Army of the Potomac, Angle / Pickett's Charge command story. NPS identifies Webb as a newly appointed brigadier general placed in command of the Philadelphia Brigade and ties his troops to the Angle during Pickett's Charge; NPS OOB places the brigade in Second Division, II Corps; CMOHS supports Webb's July 3, 1863 Gettysburg action. The record asserts no company command, no major-general-at-Gettysburg rank, no portrait asset, and neutral inferred ratings.
 

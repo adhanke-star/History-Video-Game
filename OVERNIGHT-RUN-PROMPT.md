@@ -85,12 +85,13 @@ Otherwise: **decide-&-log and keep going.** Note incidental bugs; do not silentl
 
 ## 5. MODEL ROUTING (token discipline — set model + effort EXPLICITLY on EVERY Agent / Workflow `agent()` call)
 
-- **Main loop:** Opus + xhigh (the deliberate ultracode trigger — never downgrade it).
-- **Helpers inherit xhigh+Opus unless you set otherwise — that inheritance is the budget burn.** So set `model` AND `effort` on every subagent / Workflow `agent()` call:
+- **Main loop:** Claude Fable 5 (`claude-fable-5[1m]`) + xhigh (D223; the deliberate ultracode trigger — never downgrade it; if Fable is unavailable, Opus + xhigh).
+- **Helpers inherit xhigh + the main-loop model (now Fable — the most expensive possible inheritance) unless you set otherwise — that inheritance is the budget burn.** So set `model` AND `effort` on every subagent / Workflow `agent()` call, and **never set a helper to Fable**:
   - **Sonnet, low/medium** — the helper default: Explore/search, file & log summarization, spec'd mechanical transforms, data-file authoring, WCAG sweeps, first-pass gathering, probe runs.
   - **Haiku** — purely mechanical reads / greps / sizing / log-scraping.
   - **Opus + high/xhigh** — ONLY synthesis / design / adversarial judgment / final quality-critical verify: bug-hunt finders + verifiers + critic, design/judge panels, citation-grade research-verify, the no-fudge correctness audits.
 - Sonnet drains a separate, underused weekly bucket at ~1/5 the cost — route mechanical legs there. Efficiency only where it can't move the standard.
+- Fable 5 behavioral deltas (longer turns, refusal handling, D171 interplay) + the run-prompt snippets to embed: `FABLE-5-PLAYBOOK.md` (D223).
 
 ## 6. ULTRACODE ON — use Workflows
 

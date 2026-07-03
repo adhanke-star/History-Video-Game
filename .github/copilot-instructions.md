@@ -1,6 +1,6 @@
 # GitHub Copilot instructions — "The Civil War" (personal teaching wargame, single-file, $0)
 
-**Single source of truth: [`START-HERE.md`](../START-HERE.md) — and `CLAUDE.md` / `AGENTS.md` carry the full read-order + standards.** Read them before suggesting nontrivial changes. You assist *inline*; you do not run the build/probe gate, so your job is to propose edits that fit the architecture and to flag what a human must verify. D145 model routing applies: Copilot/helper output is bounded assistance; 5.5 owns architecture, important code, historical judgment, UX/accessibility direction, bug hunts, and final integration.
+**Single source of truth: [`START-HERE.md`](../START-HERE.md) — and `CLAUDE.md` / `AGENTS.md` carry the full read-order + standards.** Read them before suggesting nontrivial changes. You assist *inline*; you do not run the build/probe gate, so your job is to propose edits that fit the architecture and to flag what a human must verify. D145/D223 model routing applies: Copilot/helper output is bounded assistance; the top model (Claude Fable 5 in Claude Code, 5.5 in Codex) owns architecture, important code, historical judgment, UX/accessibility direction, bug hunts, and final integration.
 
 ## What this project is
 A single self-contained HTML teaching wargame. Source lives in `src/*.js` (concatenated by `tools/build.mjs`) + `data/*.json` (injected as `GAME_DATA`). The shipped file `civil_war_generals.html` is GENERATED — never the source of truth.
