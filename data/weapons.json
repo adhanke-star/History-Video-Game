@@ -1,5 +1,5 @@
 {
-  "_comment": "S? Weapons & Armory catalog — real Civil War small arms with loot-game-style rarity tiers (common -> legendary) so procurement feels like Borderlands: spend funds, arm part or all of your army with better guns, raise battlefield firepower/accuracy. Specs grounded in the period record (calibers, effective ranges, rates of fire); `quality` is a 0-100 composite (accuracy + rate-of-fire + range) used by the armory weapon-score. CS-import arms carry a blockade premium (csCostMult) and the repeaters unlock in 1863. Build-injected as GAME_DATA.weapons; consumed by src/55-weapons.js (The Armory tab) and the battle bridge.",
+  "_comment": "S? Weapons & Armory catalog — real Civil War small arms with loot-game-style rarity tiers (common -> legendary) so procurement feels like Borderlands: spend funds, arm part or all of your army with better guns, raise battlefield firepower/accuracy. Specs grounded in the period record (calibers, effective ranges, rates of fire); `quality` is a 0-100 composite (accuracy + rate-of-fire + range) used by the armory weapon-score. CS-premium arms (csCostMult) cover blockade imports (Enfield, Lorenz) and Northern-made arms the Confederacy could get only by capture or trickle purchase (Colt, Sharps); the repeaters unlock in 1863. Build-injected as GAME_DATA.weapons; consumed by src/55-weapons.js (The Armory tab) and the battle bridge.",
   "provenance": "Verified specs (Earl J. Hess, The Rifle Musket in Civil War Combat; American Rifleman; National Park Service weapons references; HISTORICAL-DATA.md weapons tables). Rarity/cost are designer calibration (inferred), tunable.",
   "schemaVersion": "1.0",
   "baselineQuality": 30,
@@ -33,5 +33,5 @@
       "cost": 240, "rangeYds": 250, "accuracy": 74, "rateOfFire": 16, "quality": 94, "year": 1863,
       "flavor": "'That damned Yankee rifle you load on Sunday and shoot all week.' Sixteen rounds — often bought by soldiers out of their own pockets.", "provenance": "Verified", "sources": ["Edwards 1962","Coggins 1962"] }
   ],
-  "_designNote": "Money matters: arming a whole army with Spencers is ruinous; you mix — repeaters for your best brigades, rifle-muskets for the line, muskets for the green. CS pays a blockade premium on imports and cannot buy Springfields (captured only). Artillery (Napoleon, 3-inch Ordnance, Parrott) is a planned second tier."
+  "_designNote": "Money matters: arming a whole army with Spencers is ruinous; you mix — repeaters for your best brigades, rifle-muskets for the line, muskets for the green. CS pays a scarcity premium on imports and on Northern-made arms (capture/trickle), and cannot buy Springfields (captured only). Artillery (Napoleon, 3-inch Ordnance, Parrott) is a planned second tier."
 }

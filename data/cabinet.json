@@ -1555,6 +1555,57 @@
           }
         },
         {
+          "id": "cs-benjamin-ag",
+          "name": "Benjamin",
+          "role": "Attorney General",
+          "domain": "justice",
+          "primary": false,
+          "tenure": {
+            "start": {
+              "y": 1861,
+              "m": 2
+            },
+            "end": {
+              "y": 1861,
+              "m": 11
+            }
+          },
+          "traits": [
+            "Louisianan",
+            "first of three portfolios"
+          ],
+          "voice": "Judah Benjamin: 'A new republic must be armored in law, sir, before it is tested in arms.'",
+          "ambition": 55,
+          "ambitionTell": "",
+          "stances": [
+            {
+              "condition": "always",
+              "oneLine": "Build the legal machinery of the new government while the armies form.",
+              "why": "Benjamin was the Confederacy's FIRST Attorney General (confirmed late February 1861), before Davis moved him to War in November 1861 and then State - the first stop in the cabinet's most durable career.",
+              "provenance": "Verified",
+              "sources": [
+                "Evans, Judah P. Benjamin: The Jewish Confederate (1988)",
+                "Rable, The Confederate Republic (1994)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "The first Attorney General",
+            "claim": "Benjamin held the law office first, then rotated through War and State.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "Benjamin's three-post rotation is the signature example of Davis's cabinet churn - and of the small circle Davis actually trusted."
+              }
+            ],
+            "sources": [
+              "Evans, Judah P. Benjamin: The Jewish Confederate (1988)",
+              "Rable, The Confederate Republic (1994)"
+            ],
+            "provenance": "Verified"
+          }
+        },
+        {
           "id": "cs-bragg-ag",
           "name": "Bragg",
           "role": "Attorney General",
@@ -1615,8 +1666,8 @@
               "m": 3
             },
             "end": {
-              "y": 1864,
-              "m": 1
+              "y": 1863,
+              "m": 10
             }
           },
           "traits": [
@@ -1648,6 +1699,55 @@
             ],
             "sources": [
               "Rable, The Confederate Republic (1994)"
+            ],
+            "provenance": "Inferred"
+          }
+        },
+        {
+          "id": "cs-keyes-ag",
+          "name": "Keyes",
+          "role": "Attorney General",
+          "domain": "justice",
+          "primary": false,
+          "tenure": {
+            "start": {
+              "y": 1863,
+              "m": 10
+            },
+            "end": {
+              "y": 1864,
+              "m": 1
+            }
+          },
+          "traits": [
+            "Alabamian",
+            "ad interim caretaker"
+          ],
+          "voice": "Wade Keyes: 'The office is held in trust, sir; the work of the law goes on.'",
+          "ambition": 15,
+          "ambitionTell": "",
+          "stances": [
+            {
+              "condition": "always",
+              "oneLine": "Keep the department running between appointed chiefs.",
+              "why": "Assistant Attorney General Wade Keyes twice ran the office ad interim - including after Watts left to be inaugurated Governor of Alabama in late 1863 - the quiet continuity beneath the churn.",
+              "provenance": "Inferred",
+              "sources": [
+                "Patrick, Jefferson Davis and His Cabinet (1944)"
+              ]
+            }
+          ],
+          "card": {
+            "title": "The caretaker of the law office",
+            "claim": "Between appointed Attorneys General, the assistant ran the office ad interim.",
+            "perspectives": [
+              {
+                "voice": "Consensus",
+                "text": "The Confederate law office turned over five times; its continuity was the career assistant, not the chiefs."
+              }
+            ],
+            "sources": [
+              "Patrick, Jefferson Davis and His Cabinet (1944)"
             ],
             "provenance": "Inferred"
           }

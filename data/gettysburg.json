@@ -87,7 +87,7 @@
         "leaders": {
           "_note": "fate = a per-leader durability multiplier weighting the casualty model to HISTORY (>1 endures, <1 is fall-prone). At McPherson Ridge, Reynolds was killed (the highest-ranking Union general to die at Gettysburg); Buford survived; Heth was wounded in the head (survived); on the CS side, none of the senior commanders were killed on Day 1.",
           "US": [
-            { "id": "ld_reyolds", "name": "Maj. Gen. John F. Reynolds", "short": "Reynolds", "quality": 0.78, "radius": 260, "x": 600, "z": 820, "fate": 0.15,
+            { "id": "ld_reynolds", "name": "Maj. Gen. John F. Reynolds", "short": "Reynolds", "quality": 0.78, "radius": 260, "x": 600, "z": 820, "fate": 0.15,
               "note": "I Corps commander; the highest-ranking officer in the army after Meade. Rode forward to direct the Iron Brigade's deployment and was shot through the neck by a Confederate skirmisher — killed instantly. His loss was a devastating blow to Union command. (Verified)",
               "teach": "Gen. Reynolds is shot dead directing the Iron Brigade — the best corps commander in the army, gone in the first hour." },
             { "id": "ld_buford", "name": "Brig. Gen. John Buford", "short": "Buford", "quality": 0.72, "radius": 230, "x": 600, "z": 830, "fate": 2.6,
@@ -271,8 +271,8 @@
               "note": "Led his brigade to the Angle — the deepest Confederate penetration. Mortally wounded at the stone wall, his hand on a Union cannon. His friend Union Maj. Gen. Winfield Hancock was wounded in the same fight. (Verified)",
               "teach": "Gen. Armistead falls at the Angle, his hand on a Union gun — the 'high-water mark of the Confederacy,' and it is a grave." },
             { "id": "ld_pettigrew", "name": "Brig. Gen. J. Johnston Pettigrew", "short": "Pettigrew", "quality": 0.66, "radius": 220, "x": 600, "z": 220, "fate": 0.4,
-              "note": "Led his North Carolina brigade (Heth's old division) on the left of the charge. Wounded in the hand and arm during the assault; died during the retreat to Virginia (July 17, 1863). (Verified)",
-              "teach": "Gen. Pettigrew's North Carolinians charge on the left — and he dies of his wounds in the retreat." }
+              "note": "Led his North Carolina brigade (Heth's old division) on the left of the charge. Wounded in the hand during the assault - not mortally; shot at Falling Waters on July 14 covering the retreat, he died on July 17. (Verified)",
+              "teach": "Gen. Pettigrew's North Carolinians charge on the left — he survives the charge, only to be mortally wounded at Falling Waters covering the retreat." }
           ]
         },
         "supply": {

@@ -58,7 +58,7 @@
         "Sited field works",
         "Engineered lines"
       ],
-      "flavor": "By 1864 every halt ended with the men digging. A trained engineer arm sites works that multiply a defender — the sunken road at Fredericksburg, the lines at Cold Harbor where an attack died in minutes. Spades win sieges; by Petersburg the armies lived underground.",
+      "flavor": "By 1864 every halt ended with the men digging. A trained engineer arm sites works that multiply a defender — the sunken road at Fredericksburg, the lines at Cold Harbor where a frontal assault was bloodily repulsed within the hour. Spades win sieges; by Petersburg the armies lived underground.",
       "provenance": "Verified",
       "sources": [
         "Mahan 1836",
@@ -87,7 +87,7 @@
         "An engineer pontoon train",
         "A full bridge equipage"
       ],
-      "flavor": "An army moves at the speed of its rivers. When the pontoons came late to Fredericksburg the assault stalled and bled; when Grant's engineers threw a 2,200-foot bridge across the James in 1864 a whole army crossed unseen. A ready bridge train turns a barrier into a road and spares the men a forced march.",
+      "flavor": "An army moves at the speed of its rivers. When the pontoons came late to Fredericksburg the assault stalled and bled; when Grant's engineers threw a 2,100-foot bridge across the James in 1864 a whole army crossed unseen. A ready bridge train turns a barrier into a road and spares the men a forced march.",
       "provenance": "Verified",
       "sources": [
         "O'Reilly 2003",
@@ -159,7 +159,7 @@
     {
       "id": "eng-spade-fieldworks",
       "title": "By 1864 the men dug in at every halt — did the rifle really make the spade \"as important as the rifle\"?",
-      "consensus": "By the 1864 Overland Campaign, infantry on both sides entrenched reflexively — a hasty scratch of rifle pits at every halt that, given days, hardened into engineered lines with head-logs, traverses, and abatis; at Petersburg this became 9-1/2 months of continuous trench warfare (June 15, 1864–April 2, 1865), the longest siege in U.S. military history, along a front whose works ultimately ran past 30 miles, a foreshadowing of 1914-18. The textbook explanation — that the rifle-musket's longer range made frontal assault on entrenched troops suicidal — is real in its effects but contested in its cause. Set-pieces show the lethality: at Fredericksburg (Dec 13, 1862) Confederates packed the sunken road behind a stone wall stretching 500+ yards and shredded wave after wave of Burnside's men, none reaching closer than ~50 yards; at Cold Harbor (June 3, 1864) a Union dawn assault broke against Lee's fieldworks at fearful cost. But revisionist scholarship (Griffith, Hess) argues the rifle-musket's battlefield impact was overstated — soldiers fired at short range, were poorly trained, and engagement distances changed little from Napoleonic norms — and Hess instead credits the rise of trench warfare to Grant's strategy of *continuous contact* with Lee's army, which kept the two forces always within striking distance and made digging in a survival reflex. So entrenchment's dominance is settled fact; attributing it primarily to rifle range is the part historians fight over.",
+      "consensus": "By the 1864 Overland Campaign, infantry on both sides entrenched reflexively — a hasty scratch of rifle pits at every halt that, given days, hardened into engineered lines with head-logs, traverses, and abatis; at Petersburg this became 9-1/2 months of continuous trench warfare (June 15, 1864–April 2, 1865), the longest siege in U.S. military history, along a front whose works ultimately ran past 30 miles, a foreshadowing of 1914-18. The textbook explanation — that the rifle-musket's longer range made frontal assault on entrenched troops suicidal — is real in its effects but contested in its cause. Set-pieces show the lethality: at Fredericksburg (Dec 13, 1862) Confederates packed the sunken road behind a stone wall stretching 500+ yards and shredded wave after wave of Burnside's men, none reaching closer than roughly 25-40 yards; at Cold Harbor (June 3, 1864) a Union dawn assault broke against Lee's fieldworks at fearful cost. But revisionist scholarship (Griffith, Hess) argues the rifle-musket's battlefield impact was overstated — soldiers fired at short range, were poorly trained, and engagement distances changed little from Napoleonic norms — and Hess instead credits the rise of trench warfare to Grant's strategy of *continuous contact* with Lee's army, which kept the two forces always within striking distance and made digging in a survival reflex. So entrenchment's dominance is settled fact; attributing it primarily to rifle range is the part historians fight over.",
       "voices": [
         {
           "scholar": "Earl J. Hess, Field Armies and Fortifications in the Civil War; Trench Warfare under Grant and Lee; In the Trenches at Petersburg; The Rifle Musket in Civil War Combat: Reality and Myth",
@@ -175,7 +175,7 @@
         },
         {
           "scholar": "Primary record / NPS & American Battlefield Trust (Fredericksburg, Petersburg)",
-          "view": "At Fredericksburg the sunken road and 500+-yard stone wall below Marye's Heights made the position 'almost impregnable, and a deathtrap'; Federal waves died on open, rising ground, none nearer than ~50 yards. At Petersburg, after frontal assaults failed in June 1864, the war settled into roughly 292 days of siege along trenches that ultimately ran for tens of miles — the longest siege in U.S. military history."
+          "view": "At Fredericksburg the sunken road and 500+-yard stone wall below Marye's Heights made the position 'almost impregnable, and a deathtrap'; Federal waves died on open, rising ground, none nearer than roughly 25-40 yards. At Petersburg, after frontal assaults failed in June 1864, the war settled into roughly 292 days of siege along trenches that ultimately ran for tens of miles — the longest siege in U.S. military history."
         }
       ],
       "takeaway": "Model entrenchment as the dominant fact of 1864, not a free defensive bonus that scales with rifle range: make digging a per-halt action that hardens by stages (rifle pit → sited works → engineered line) the longer a force holds ground, and let CONTINUOUS CONTACT (the attacker refusing to disengage, à la Grant) be what forces both sides to dig — so a frontal assault on a hardened line is catastrophic for the attacker, but the designer should resist the lazy \"longer-range rifle = auto-lethal\" causal chain that Griffith and Hess dispute. For Cold Harbor, render a costly, demoralizing repulse without baking in the discredited \"7,000 in a few minutes\" number; cite Rhea's ~6,000-Union-for-the-day instead.",

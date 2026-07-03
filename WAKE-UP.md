@@ -1,3 +1,9 @@
+# ☀ WAKE-UP — 2026-07-03: **FABLE AUDIT M2a SHIPPED (D226) — 37 content corrections across 15 data files.**
+
+**Newest (D226):** codex, six battle files, cabinet (the CS Attorney-General timeline is now continuous: Benjamin first AG + Keyes ad interim + Watts to Oct 1863), generals, artillery, weapons, human-cost, decisions, economy, logistics-rail, engineering, under-told-perspectives, and the Howe replacement record all corrected per the D224 audit ledger — dates, ranks, sectors, provenance honesty (two Verified→Inferred downgrades), and the Shiloh Hornets' Nest card now teaches Ruggles's massed guns. All D74-inert text. Gates: build GATE OK; importer 15/15; probes codex/cabinet/shiloh/gettysburg/vicksburg/loot-survival/economy/weapons ok=true, 0 pageerrors. **Next:** M2b (src caption/teaching-string fixes: C16/C17/C22/C38/C39/C49/C54-C57), then M3 tamper/XSS hardening (E38 HIGH). Ledger: `REVIEW-QUEUE.md` §FABLE AUDIT.
+
+---
+
 # ☀ WAKE-UP — 2026-07-03: **FABLE AUDIT M1 SHIPPED (D225) — 5 HIGH historical corrections.**
 
 **Newest (D225):** the five text-level HIGH ledger items are fixed: Vicksburg's May 22 phase is now "The Grand Assault" with the 150-volunteer forlorn hope taught at its real front (Stockade Redan, Graveyard Road) and Logan's XVII Corps column on the Jackson Road field; Paxton's false "only Stonewall Brigade commander killed" claim corrected; Pegram is a Major at Gettysburg; the unverifiable Grant-praises-Thomas quote removed; the rejected ~11% cotton figure replaced with the audit-approved ~3-4%/~95% framing in both Welles surfaces. All D74-inert; focused gates green (vicksburg 18/18 · chancellorsville 24/24 · gettysburg/chickamauga/cabinet ok · 0 pageerrors). C28 (Gettysburg defender-seating inversion) verified positional → queued in M10 with A/B re-vet. **Next:** M2 content text corrections (~50 items), then M3 XSS/tamper hardening (E38 HIGH). Ledger: `REVIEW-QUEUE.md` §FABLE AUDIT.

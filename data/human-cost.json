@@ -11,7 +11,7 @@
     "label": "Estimated Civil War military deaths",
     "provenance": "Verified",
     "sources": [
-      "HISTORICAL-DATA.md, Medicine and the Scale of Death section, citing J. David Hacker's 2011 census-based estimate and the 650,000-850,000 range.",
+      "HISTORICAL-DATA.md, Medicine and the Scale of Death section, citing J. David Hacker's 2011 census-based estimate and the 650,000-850,000 range. The ~two-thirds disease share derives from the traditional ~620k accounting; Hacker's added deaths are not disaggregated by cause, so 66 is a rough teaching share, not an exact fraction of 750k.",
       "data/disease-medical.json, Faust and the work of death debate card, citing J. David Hacker, Civil War History 57, no. 4 (2011), and Drew Gilpin Faust, This Republic of Suffering (2008)."
     ]
   },

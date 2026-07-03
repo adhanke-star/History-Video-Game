@@ -33,9 +33,10 @@
     },
     "CS": {
       "name": "Confederate rail system",
-      "railMiles": 9250,
+      "railMiles": 9000,
       "trackSharePct": 30,
-      "equipmentSharePct": 20,
+      "equipmentSharePct": 4,
+      "locomotiveSharePct": 20,
       "startingRailIndex": 52,
       "gaugeBreakPenalty": 9,
       "fragmentationPenalty": 10,

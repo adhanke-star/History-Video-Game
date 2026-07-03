@@ -8,6 +8,9 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## FABLE AUDIT M2a — CONTENT TEXT CORRECTIONS — 2026-07-03 (D226, FOCUSED-GATED)
+37 ledger items fixed across 15 data files (codex/battles/cabinet/generals/artillery/weapons/human-cost/decisions/economy/logistics-rail/engineering/under-told/soldier-replacements). Cabinet gains Benjamin (first CS AG) + Keyes (ad interim); Watts ends 1863/10. All D74-inert. Gate: build GATE OK; importer 15/15; 8 probes ok=true 0 pe; diff-check clean. Sim-affecting siblings (C05-scale/C11/C28/C30/C33/C43/C44/C47) deferred to M10.
+
 ## FABLE AUDIT M1 — HIGH HISTORICAL CORRECTIONS — 2026-07-03 (D225, FOCUSED-GATED)
 Five HIGH wrong-fact-under-Verified items fixed (C32 Vicksburg forlorn-hope front, C41 Paxton, C42 Pegram rank, C46 unverifiable Grant quote, C48 rejected cotton figure ×2). Text-only / D74-inert; probe-vicksburg assertions track corrected names. C28 Gettysburg geometry verified positional → M10. Gate: build GATE OK; vicksburg 18/18, chancellorsville 24/24, gettysburg/chickamauga/cabinet ok, 0 pageerrors; diff-check clean.
 

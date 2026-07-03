@@ -116,7 +116,7 @@
     },
     "oob": {
       "US": [
-        { "id": "us_kimball", "name": "Kimball's Brigade", "commander": "Brig. Gen. Nathan Kimball", "arm": "inf", "weapon": "rifled", "men": 1500, "xp": 2, "x": 600, "z": 800, "facing": 0, "formation": "column", "note": "1st Bde, French's 3rd Div, II Corps — the very first charge (~noon). Crossed the millrace on the narrow bridges, formed behind the swale, and was cut down ~125 yd from the wall (~25% loss, ~520 casualties per Mason's OR report); Kimball severely wounded. (Verified order; Inferred strength)" },
+        { "id": "us_kimball", "name": "Kimball's Brigade", "commander": "Brig. Gen. Nathan Kimball", "arm": "inf", "weapon": "rifled", "men": 1500, "xp": 2, "x": 600, "z": 800, "facing": 0, "formation": "column", "note": "1st Bde, French's 3rd Div, II Corps — the very first charge (~noon). Crossed the millrace on the narrow bridges, formed behind the swale, and was cut down ~125 yd from the wall (~520 casualties, ~25% of its real ~2,100 engaged, per Mason's OR report; modeled here at reduced scale); Kimball severely wounded. (Verified order; Inferred strength)" },
         { "id": "us_french2", "name": "Andrews's Brigade", "commander": "Col. John W. Andrews", "arm": "inf", "weapon": "rifled", "men": 1250, "xp": 1, "x": 470, "z": 822, "facing": 0, "formation": "column", "note": "3rd Bde, French's 3rd Div — followed Kimball up the glacis with Palmer's brigade and was broken on the same ground (~50% loss). Trailing-brigade order Inferred. (Verified that French's div opened the assault)" }
       ],
       "CS": [

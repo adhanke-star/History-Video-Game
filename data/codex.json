@@ -37,7 +37,7 @@
       "axis": "people",
       "term": "Abraham Lincoln",
       "short": "16th U.S. president; led the Union through the Civil War and issued the Emancipation Proclamation.",
-      "body": "Elected in 1860 as the first Republican president on a platform of halting slavery's expansion, Lincoln rejected the secession that eleven slaveholding states launched to protect human bondage. As commander in chief he defined the war's purpose, signing the Emancipation Proclamation effective January 1, 1863, and pressing for the Thirteenth Amendment that abolished slavery. He framed the conflict's stakes at Gettysburg and in his Second Inaugural, and was assassinated by John Wilkes Booth on April 14, 1865, days after Lee's surrender.",
+      "body": "Elected in 1860 as the first Republican president on a platform of halting slavery's expansion, Lincoln rejected the secession that eleven slaveholding states launched to protect human bondage. As commander in chief he defined the war's purpose, signing the Emancipation Proclamation effective January 1, 1863, and pressing for the Thirteenth Amendment that abolished slavery. He framed the conflict's stakes at Gettysburg and in his Second Inaugural, and was shot by John Wilkes Booth on April 14, 1865, days after Lee's surrender, and died the next morning.",
       "tags": [
         "union",
         "president",
@@ -84,7 +84,7 @@
       "axis": "people",
       "term": "Braxton Bragg",
       "short": "Confederate commander of the Army of Tennessee, known for quarrels with subordinates and costly defeats at Chattanooga.",
-      "body": "Braxton Bragg, a Louisiana sugar planter who enslaved more than a hundred people, commanded the Confederacy's main western army, the Army of Tennessee, for much of 1862–63. He was a divisive, unpopular leader whose feuds with subordinates undermined his campaigns; his tactical near-win at Chickamauga in September 1863 was squandered, and his army was routed at Chattanooga that November. Removed from field command, he became a military adviser to his friend Jefferson Davis, and historians generally rank him among the Confederacy's least effective army commanders.",
+      "body": "Braxton Bragg, a Louisiana sugar planter who enslaved more than a hundred people, commanded the Confederacy's main western army, the Army of Tennessee, for much of 1862–63. He was a divisive, unpopular leader whose feuds with subordinates undermined his campaigns; his costly tactical victory at Chickamauga in September 1863 went unexploited, and his army was routed at Chattanooga that November. Removed from field command, he became a military adviser to his friend Jefferson Davis, and historians generally rank him among the Confederacy's least effective army commanders.",
       "tags": [
         "confederate",
         "military",
@@ -346,7 +346,7 @@
       "axis": "people",
       "term": "James Longstreet",
       "short": "Lee's senior corps commander ('Old War Horse'); later a Republican who was vilified by Lost Cause writers.",
-      "body": "James Longstreet was Lee's most trusted corps commander, leading the First Corps at Antietam, Fredericksburg, and Gettysburg, where his reluctance over Pickett's Charge later made him a scapegoat. After the war he broke sharply with former Confederates by joining the Republican Party, supporting Reconstruction, and commanding Black and integrated New Orleans police against white-supremacist insurgents at the 1874 Battle of Liberty Place. For this, 'Lost Cause' authors—especially Jubal Early and others defending Lee's reputation—falsely blamed Longstreet for losing Gettysburg, a distortion modern historians have largely overturned.",
+      "body": "James Longstreet was Lee's most trusted corps commander, leading his wing - from November 1862 the First Corps - at Antietam, Fredericksburg, and Gettysburg, where his reluctance over Pickett's Charge later made him a scapegoat. After the war he broke sharply with former Confederates by joining the Republican Party, supporting Reconstruction, and commanding Black and integrated New Orleans police against white-supremacist insurgents at the 1874 Battle of Liberty Place. For this, 'Lost Cause' authors—especially Jubal Early and others defending Lee's reputation—falsely blamed Longstreet for losing Gettysburg, a distortion modern historians have largely overturned.",
       "tags": [
         "confederate",
         "military",
@@ -610,7 +610,7 @@
       "axis": "units",
       "term": "54th Massachusetts Infantry",
       "short": "Famed Black Union regiment led by Col. Robert Gould Shaw; led the July 18, 1863 assault on Battery (Fort) Wagner.",
-      "body": "The 54th Massachusetts Infantry was one of the first Black regiments raised in the North, mustered in early 1863 and commanded by Colonel Robert Gould Shaw. On July 18, 1863, it led the doomed Union assault on Battery Wagner near Charleston, where Shaw was killed and the regiment suffered devastating casualties; Sergeant William H. Carney's defense of the colors later earned him the Medal of Honor, making him the first Black recipient of the award. The regiment also refused its pay for eighteen months in protest of the Army's unequal wages for Black soldiers, and its valor at Wagner became powerful public evidence that Black men would and could fight.",
+      "body": "The 54th Massachusetts Infantry was one of the first Black regiments raised in the North, mustered in early 1863 and commanded by Colonel Robert Gould Shaw. On July 18, 1863, it led the doomed Union assault on Battery Wagner near Charleston, where Shaw was killed and the regiment suffered devastating casualties; Sergeant William H. Carney's defense of the colors was the first Medal of Honor action by a Black soldier - though the medal itself came only in 1900, after more than twenty other Black servicemen had received theirs. The regiment also refused its pay for eighteen months in protest of the Army's unequal wages for Black soldiers, and its valor at Wagner became powerful public evidence that Black men would and could fight.",
       "tags": [
         "union",
         "infantry",
@@ -703,7 +703,7 @@
       "axis": "units",
       "term": "Cavalry Division",
       "short": "A mounted division of several cavalry brigades; used for reconnaissance, screening, raids, and, increasingly, dismounted combat.",
-      "body": "A cavalry division grouped several brigades of mounted regiments and served as an army's eyes — scouting, screening movements, raiding supply lines, and pursuing in retreat. Early in the war Confederate horsemen under J.E.B. Stuart held the advantage, but the Union cavalry caught up, and by 1863–64 large consolidated corps and divisions under leaders like Sheridan and Buford fought major actions in their own right, as at Brandy Station. Increasingly armed with repeating carbines, troopers often fought dismounted, using horses for mobility and then fighting on foot.",
+      "body": "A cavalry division grouped several brigades of mounted regiments and served as an army's eyes — scouting, screening movements, raiding supply lines, and pursuing in retreat. Early in the war Confederate horsemen under J.E.B. Stuart held the advantage, but the Union cavalry caught up, and by 1863–64 large consolidated corps and divisions under leaders like Buford and Gregg fought major actions in their own right, as at Brandy Station in 1863, and Sheridan led the consolidated Cavalry Corps from 1864. Increasingly armed with repeating carbines, troopers often fought dismounted, using horses for mobility and then fighting on foot.",
       "tags": [
         "both",
         "cavalry",
@@ -1653,7 +1653,7 @@
       "id": "rifled-musket-minie-ball",
       "axis": "terms",
       "term": "The Rifled Musket & the Minie Ball",
-      "short": "The expanding Minie ball let muzzle-loading rifled muskets be loaded fast yet shoot far — though most fighting still happened at close…",
+      "short": "The expanding Minie ball let muzzle-loading rifled muskets load fast yet shoot far — though most firefights stayed at close range.",
       "body": "The Minie ball, a hollow-based soft-lead conical bullet, expanded into the barrel's rifling when fired, giving the muzzle-loading rifled musket a rifle's long potential range with a smoothbore's loading speed — a theoretical effective range of 300 yards or more, versus roughly 100 for old smoothbores. In practice, as Earl J. Hess argues, poor marksmanship, the bullet's looping trajectory, broken terrain, and slow tactical change meant most Civil War infantry combat still occurred at well under 200 yards. Even so, the soft lead shattered bone, driving the era's high amputation rates, and the lethality of rifle fire — combined with inherited close-order tactics that adapted only unevenly — is a major reason casualties were so severe.",
       "tags": [
         "both",
@@ -1676,7 +1676,7 @@
       "id": "system-foreign-intervention-pressure",
       "axis": "systems",
       "term": "Foreign-Intervention Pressure (The Recognition Crisis of 1862)",
-      "short": "The Confederate bid for British/French recognition, peaking in 1862; modeled as diplomatic pressure that battlefield and policy events…",
+      "short": "The Confederate bid for British/French recognition, peaking in 1862 — pressure that battle results and policy could raise or shut down.",
       "body": "The Confederacy's best hope of independence was European recognition and aid, and that danger peaked in 1862. The November 1861 Trent Affair, when a U.S. warship seized Confederate envoys James Mason and John Slidell from a British mail steamer, nearly brought war with Britain until Lincoln and Secretary Seward released them. Through the summer of 1862 Lee's victories had Britain weighing recognition, but the bloody Union check at Antietam (September 17) let Lincoln issue the preliminary Emancipation Proclamation, recasting the war as a fight against slavery, which neither Britain nor France could be seen to oppose. In the game this system models intervention as a pressure gauge: Confederate offensive success raises it, while Union resolve and the moral redefinition of the war's aims close the door on the recognition the South needed.",
       "tags": [
         "confederate",

@@ -88,8 +88,8 @@
               "note": "I Corps; opened the assault down the pike. Wounded in the foot mid-morning and carried from the field, which cost the Union attack its driving hand. He survived. (Verified)",
               "teach": "Gen. Hooker is hit in the foot and carried off — the dawn assault loses its momentum at the worst moment." },
             { "id": "ld_mansfield", "name": "Maj. Gen. Joseph K. F. Mansfield", "short": "Mansfield", "quality": 0.58, "radius": 220, "attach": "us_xii_williams", "fate": 0.32,
-              "note": "XII Corps; the oldest general on the field (59), in command only two days. Mortally wounded near the East Woods riding forward to steady his green regiments; died the next day. Williams succeeded him. (Verified)",
-              "teach": "Gen. Mansfield is mortally struck near the East Woods — fifty-nine years old, two days in command, and gone." }
+              "note": "XII Corps; one of the oldest generals on the field (58), in command only two days. Mortally wounded near the East Woods riding forward to steady his green regiments; died the next day. Williams succeeded him. (Verified)",
+              "teach": "Gen. Mansfield is mortally struck near the East Woods — fifty-eight years old, two days in command, and gone." }
           ],
           "CS": [
             { "id": "ld_jackson", "name": "Maj. Gen. Thomas J. 'Stonewall' Jackson", "short": "Jackson", "quality": 0.78, "radius": 270, "x": 600, "z": 230, "fate": 2.8,
