@@ -253,7 +253,12 @@ function _hpShowTacticalHelp() {
   _hpTacSetBgInert(true, overlay);
 }
 
-/* ============ (4) ENHANCED PAUSE INDICATOR ============ */
+/* ============ (4) PAUSE ANNOUNCEMENT — the screen-reader lane ============
+   S06 (D231): the pause STATE is already shown visually by the top-bar #fldPhase chip ("Paused" /
+   "Paused: <reason>", T0 fldRenderTop) — a second stacked "PAUSED" badge directly beneath it was pure
+   duplication. This element is now a visually-hidden aria-live region (the standard sr-only clip pattern),
+   so screen-reader users still hear the pause + the auto-pause reason while sighted players see ONE
+   indicator, the chip. The display none/block toggle is kept — it is what gates the live-region announcement. */
 function _hpInjectPauseIndicator() {
   if (!__FIELD || !__FIELD.launched) return;
   var root = document.getElementById("fldRoot");
@@ -263,7 +268,7 @@ function _hpInjectPauseIndicator() {
 
   var ind = document.createElement("div");
   ind.id = "hpPauseInd";
-  ind.style.cssText = "position:absolute;top:42px;right:14px;max-width:min(360px,56vw);font-size:12px;font-weight:bold;letter-spacing:.08em;color:#f2e8d5;background:#0c0f14d9;border:1px solid #8b7a56;border-radius:4px;padding:5px 9px;pointer-events:none;z-index:9990;display:none;font-family:Georgia,serif;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;";
+  ind.style.cssText = "position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;display:none;";
   ind.textContent = "Paused";
   ind.setAttribute("aria-live", "polite");
   root.appendChild(ind);
@@ -285,6 +290,11 @@ function _hpUpdatePause() {
 (function () {
   document.addEventListener("keydown", function (e) {
     if (e.key === "?" || (e.key === "/" && e.shiftKey)) {
+      /* E44 (D231): never hijack a '?' typed into an editable field — openSheet keeps G.mode==="menu", so this
+         global handler otherwise fires from the slot-rename input and every codex/register/loot search box,
+         opening How-to-Play and swallowing the character. */
+      var t = e.target;
+      if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.tagName === "SELECT" || t.isContentEditable)) return;
       /* The guided tour is a modal — don't stack the How-to-Play sheet behind it (TUT-DOM-01). */
       if (typeof document !== "undefined" && document.getElementById("tutOverlay")) return;
       /* In tactical battle → show tactical overlay */

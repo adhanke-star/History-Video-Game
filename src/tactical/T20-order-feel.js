@@ -104,9 +104,14 @@ function fldChargeStep(u) {
   o.tx = t.x; o.tz = t.z; o.tface = Math.atan2(t.x - u.x, -(t.z - u.z));
   if (fldChargeGraceLeft(u) <= 0) o.committed = true;
 }
+/* E23 (D231): a committed charge is released by melee contact with ANY enemy, not only the charged target.
+   The melee loop (T0 fldSimStep) resolves combat against every enemy inside CONTACT_R, so an interposing
+   brigade that pins the charge must also return it to player control — otherwise the brigade is decisively
+   engaged in a fight the lock refuses to let the player manage. playerCharge is player-only, so the early
+   return keeps every AI charge byte-identical. */
 function fldChargeContact(u, target) {
   var o = u && u.order;
-  if (!o || o.type !== "charge" || !o.playerCharge || !target || o.tid !== target.id) return;
+  if (!o || o.type !== "charge" || !o.playerCharge || !target || !target.alive || target.side === u.side) return;
   o.contact = true;
   o.playerCharge = false;
 }
@@ -123,16 +128,22 @@ function fldChargeHudSelected(u) {
   return '<div style="margin-top:4px;color:#d9c9a5;font-size:12px;">&#9876; Charge in contact — ' + nm + '</div>';
 }
 
-/* a unit has a grabbable facing handle only when it is marching to a MOVE
-   destination. A unit holding at its own position (e.g. fresh at spawn) has NO
-   handle — so its handle (which would sit ~70yd ahead, right where you press to
-   drag it forward) never hijacks a fresh move order. A CHARGE is deliberately
-   excluded: a charge's facing is just the settle-on-arrival angle (the men keep
-   marching at the tracked target), so re-aiming it would be a no-effect gesture.
-   Once the H5-i4 charge lock commits, re-aim/move/queue orders are refused until
-   contact, target loss, rout, or death. Re-aiming a stationary line is left to a fresh tap+drag. */
+/* a unit has a grabbable facing handle when it is marching to a MOVE destination
+   OR standing on a HOLD order (S10, D231: a stationary line — including a fresh
+   spawn — can now be re-faced IN PLACE, pivoting as UG:G allows, instead of
+   needing a displacing move order to swing its facing). The handle cannot hijack
+   unit selection (fldPointerDown checks the ~70yd body-select radius BEFORE the
+   handle hit-test), and it cannot hijack a short forward NUDGE either: the hold
+   handle pivots only on a real DRAG — a TAP on it falls through to the normal
+   move gesture in fldResolveOrderGesture, so pressing ~70-116yd dead ahead still
+   marches the men exactly as it did pre-S10. A CHARGE is deliberately excluded:
+   a charge's facing is just the settle-on-arrival angle (the men keep marching
+   at the tracked target), so re-aiming it would be a no-effect gesture. Once the
+   H5-i4 charge lock commits, re-aim/move/queue orders are refused until contact,
+   target loss, rout, or death. */
 function fldOrderHasHandle(u) {
-  return !!(u && u.order && u.order.type === "move" && u.order.tx != null);
+  var o = u && u.order;
+  return !!(o && (o.type === "move" || o.type === "hold") && o.tx != null);
 }
 /* the player's selected unit whose facing-handle tip is within grab of a world
    point (so a press there re-aims that unit's facing), or null. */
@@ -198,12 +209,19 @@ function fldResolveOrderGesture(sel, gst) {
   if (gst.aimUid) {
     var au = fldById(gst.aimUid);
     if (au && typeof fldChargeLocked === "function" && fldChargeLocked(au)) { if (typeof fldChargeBlocked === "function") fldChargeBlocked(au); return; }
-    if (au && au.alive && au.order && au.order.type === "move" && au.order.tx != null) {
-      au.order.tface = Math.atan2(gst.x - au.order.tx, -(gst.z - au.order.tz));
-      if (typeof fldAnnounce === "function") fldAnnounce("Facing set.");
-      if (typeof fldRenderHud === "function") fldRenderHud();
+    // S10 (D231): the HOLD handle pivots only on a real DRAG. A TAP on it (press+release under FLD_DRAG_MIN)
+    // falls through to the normal place gesture below, so the pre-S10 "tap just ahead to nudge the line
+    // forward" still marches the men — the handle-grab band ~70-116yd ahead of a standing line never
+    // becomes a move dead-zone. (A MOVE-order handle keeps the original always-re-aim semantics.)
+    var aimTap = !(Math.hypot(gst.x - gst.x0, gst.z - gst.z0) > FLD_DRAG_MIN);
+    if (!(au && au.alive && au.order && au.order.type === "hold" && aimTap)) {
+      if (au && au.alive && au.order && (au.order.type === "move" || au.order.type === "hold") && au.order.tx != null) {
+        au.order.tface = Math.atan2(gst.x - au.order.tx, -(gst.z - au.order.tz));
+        if (typeof fldAnnounce === "function") fldAnnounce("Facing set.");
+        if (typeof fldRenderHud === "function") fldRenderHud();
+      }
+      return;
     }
-    return;
   }
   if (!sel || !sel.length) return;
   var n = sel.length, i, u;

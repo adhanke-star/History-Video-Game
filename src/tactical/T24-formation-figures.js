@@ -128,6 +128,29 @@ function fldFfLayerMeshes(layer) {
   return layer ? [layer.body, layer.head, layer.kepi, layer.rifle, layer.bayonet] : [];
 }
 
+/* E19 (D231): dispose + release the shared instanced layer so the NEXT fldFfLayer() call rebuilds it sized to
+   the CURRENT cast with a fresh slot allocator. Called on every base fld3dBuildUnits rebuild (reinforcement
+   arrivals, phase advances): the base disposes the unit GROUPS but this layer is a direct scene child, so the
+   old reuse guard kept it alive with nextSlot already == cap — every post-rebuild fldFfCreate returned null,
+   all brigades lost their figures, and the pre-rebuild instances stayed frozen in an oversized buffer. */
+function fldFfResetLayer() {
+  var layer = (typeof __FIELD !== "undefined" && __FIELD) ? __FIELD._ffLayer : null;
+  if (layer) {
+    try {
+      if (layer.grp && layer.grp.parent) layer.grp.parent.remove(layer.grp);
+      var meshes = fldFfLayerMeshes(layer);
+      for (var i = 0; i < meshes.length; i++) {
+        var m = meshes[i]; if (!m) continue;
+        if (m.geometry && m.geometry.dispose) m.geometry.dispose();
+        if (m.material && m.material.dispose) m.material.dispose();
+        if (m.dispose) m.dispose();   // InstancedMesh.dispose() frees the instance buffers
+      }
+    } catch (e) {}
+    __FIELD._ffLayer = null;
+  }
+  FLDFF_S.layer = null;
+}
+
 function fldFfSetLayerCount(layer, n) {
   var meshes = fldFfLayerMeshes(layer);
   for (var i = 0; i < meshes.length; i++) if (meshes[i]) meshes[i].count = n;
@@ -301,6 +324,11 @@ function fldFfSyncUnit(u, g) {
   var minX = 9999, maxX = -9999, minZ = 9999, maxZ = -9999;
   if (g.updateMatrixWorld) g.updateMatrixWorld(true);
   ff.world.copy(g.matrixWorld);
+  // E20 (D231): figure colors depend only on side (fixed) + routing state (rare toggle) + the active count.
+  // Re-write them (and pay the whole-layer instanceColor GPU re-upload) ONLY when that state changes — the
+  // per-frame path stays matrices-only, instead of a THREE.Color string-parse per figure per frame.
+  var colKey = u.side + (u.state === "routing" ? "|rout" : "");
+  var recolor = (ff.colorKey !== colKey || ff.colorN !== n);
 
   for (var i = 0; i < n; i++) {
     var idx = ff.slot + i;
@@ -315,7 +343,7 @@ function fldFfSyncUnit(u, g) {
 
     var bodyY = (kneel ? 5.2 : 6.5) + bob;
     var bodyScaleY = kneel ? 0.78 : 1;
-    fldFfApplyColors(ff, u, idx);
+    if (recolor) fldFfApplyColors(ff, u, idx);
     fldFfSetMatrix(ff, ff.layer.body, idx, p.x, bodyY, p.z, lean, p.yaw, 0, 1, bodyScaleY, 1);
     fldFfSetMatrix(ff, ff.layer.head, idx, p.x, (kneel ? 11.2 : 15.2) + bob, p.z - (charge ? 0.8 : 0), lean * 0.35, p.yaw, 0, 1, 1, 1);
     fldFfSetMatrix(ff, ff.layer.kepi, idx, p.x, (kneel ? 13.5 : 17.5) + bob, p.z - (charge ? 1.0 : 0), lean * 0.35, p.yaw, 0, 1, 1, 1);
@@ -342,8 +370,11 @@ function fldFfSyncUnit(u, g) {
   }
   ff.layer.body.instanceMatrix.needsUpdate = true; ff.layer.head.instanceMatrix.needsUpdate = true; ff.layer.kepi.instanceMatrix.needsUpdate = true;
   ff.layer.rifle.instanceMatrix.needsUpdate = true; ff.layer.bayonet.instanceMatrix.needsUpdate = true;
-  if (ff.layer.body.instanceColor) ff.layer.body.instanceColor.needsUpdate = true;
-  if (ff.layer.kepi.instanceColor) ff.layer.kepi.instanceColor.needsUpdate = true;
+  if (recolor) {
+    ff.colorKey = colKey; ff.colorN = n;
+    if (ff.layer.body.instanceColor) ff.layer.body.instanceColor.needsUpdate = true;
+    if (ff.layer.kepi.instanceColor) ff.layer.kepi.instanceColor.needsUpdate = true;
+  }
   ff.grp.visible = true;
   ff.grp.userData.ff = { active: n, pose: pose, formation: u.formation, width: maxX - minX, depth: maxZ - minZ, mode: "shared-instanced", slot: ff.slot, layerCount: ff.layer.nextSlot };
   fldFfMarkerVisible(g, false, u);
@@ -360,6 +391,7 @@ function fldFfSyncUnit(u, g) {
     var _obu = fld3dBuildUnits;
     fld3dBuildUnits = function () { var r = _obu.apply(this, arguments); try {
       if (__FIELD && __FIELD._u3d && __FIELD.units) {
+        fldFfResetLayer();   // E19 (D231): reclaim slots + re-size the cap on every unit rebuild (reinforcements/phases)
         for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i], g = __FIELD._u3d[u.id]; if (g && fldFfShowFor(u, g)) fldFfEnsure(u, g); }
       }
     } catch (e) { _ffErr(e); } return r; };

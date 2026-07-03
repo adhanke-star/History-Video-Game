@@ -76,6 +76,19 @@ const SETUP = `(() => {
       closeSheetSafe();
       return { ok:true }; });
 
+    step('E44: "?" typed INTO an editable field never hijacks the keystroke (input/textarea/select guard)', function(){
+      G.mode='menu'; __FIELD.launched=false; __FIELD.phase='idle'; closeSheetSafe();
+      var inp=document.createElement('input'); inp.type='text'; inp.id='hpProbeInput'; document.body.appendChild(inp); inp.focus();
+      inp.dispatchEvent(new KeyboardEvent('keydown',{key:'?',bubbles:true}));   // bubbles to document with e.target=input
+      var opened=sheetOpen();
+      document.body.removeChild(inp);
+      if(opened){ closeSheetSafe(); throw new Error('"?" from a focused text input opened the help sheet'); }
+      // and the handler still works from a non-editable target afterwards
+      document.dispatchEvent(new KeyboardEvent('keydown',{key:'?',bubbles:true}));
+      if(!sheetOpen()) throw new Error('"?" from the document stopped working after the guard');
+      closeSheetSafe();
+      return { inputGuarded:true }; });
+
     step('tactical overlay: "?" in battle builds an aria-modal dialog; Escape closes + focus returns', function(){
       G.mode='battle'; __FIELD.launched=true; __FIELD.phase='battle';
       var trigger=document.createElement('button'); trigger.id='hpProbeTrigger'; document.body.appendChild(trigger); trigger.focus();
@@ -111,6 +124,9 @@ const SETUP = `(() => {
       _hpUpdatePause();
       if(ind.style.display!=='block') throw new Error('pause indicator should show when paused');
       if(ind.textContent.indexOf('a brigade broke')<0) throw new Error('pause reason not shown: '+ind.textContent);
+      // S06 (D231): the aria-live lane is VISUALLY hidden (sr-only clip pattern) — the visible pause state
+      // lives in the top-bar #fldPhase chip alone, so no second stacked "PAUSED" badge duplicates it.
+      if(ind.style.width!=='1px'||ind.style.height!=='1px'||ind.style.overflow!=='hidden') throw new Error('S06: pause indicator must be a visually-hidden SR lane (1px clip), got w='+ind.style.width+' h='+ind.style.height);
       __FIELD.paused=false; _hpUpdatePause();
       if(ind.style.display!=='none') throw new Error('pause indicator should hide again on resume');
       if(ind.parentNode) ind.parentNode.removeChild(ind);

@@ -65,8 +65,14 @@ function _a6Condition() {
   var a = bridgeArmy(C), ps = B.playerSide, bp = C.battlePrep || {};
   // Anchor 1.0 at the FRESH-campaign baseline (overall ~74 US 76 / CS 69), NOT 50 — a no-investment
   // army must play ≈ Classic (§27). Band ±12%: a well-run war earns a buff, a failing one a real penalty.
-  var strengthMul = Math.max(0.88, Math.min(1.12, 1.0 + ((a.overall || 74) - 74) * 0.0045));
-  var moraleAdd = Math.round(((a.morale || 60) - 60) * 0.3);   // morale facet is ~60 at fresh → ~0 (neutral)
+  // E05 (D231): typeof+isFinite guards, NOT `|| default` — bridgeArmy clamps to [0,100], so overall/morale 0
+  // (a fully collapsed war) is a LEGITIMATE value that must keep the full floor penalty, not be swapped for
+  // the neutral anchor (the `0 || 74` bug). isFinite also keeps a NaN facet from corrupting unit strengths
+  // (the old || idiom absorbed NaN; a bare typeof check would let it through to Math.round).
+  var _ov = (typeof a.overall === "number" && isFinite(a.overall)) ? a.overall : 74;
+  var _mo = (typeof a.morale === "number" && isFinite(a.morale)) ? a.morale : 60;
+  var strengthMul = Math.max(0.88, Math.min(1.12, 1.0 + (_ov - 74) * 0.0045));
+  var moraleAdd = Math.round((_mo - 60) * 0.3);   // morale facet is ~60 at fresh → ~0 (neutral)
   var touched = 0;
   for (var i = 0; i < B.units.length; i++) {
     var u = B.units[i]; if (!u || u.side !== ps) continue;
@@ -113,7 +119,10 @@ function startBattleRuntime(bd, playerSide, fromCampaign){
     log:[], over:false, casualties:{US:0,CS:0}, infl:{US:0,CS:0}, started:Date.now(),
     fromCampaign:!!fromCampaign, phase:"player" };
   // A6a: the strategic war conditions the army that takes the field (campaign battles only).
-  if (typeof _a6Condition==="function"){ try { _a6Condition(); } catch(e){} }
+  // E06 (D231): never swallow a conditioning failure silently — the battle still degrades fail-safe to the
+  // unconditioned Classic baseline, but the warn (the 87-auto-resolve catch pattern) makes a broken bridge
+  // visible during vetting instead of hiding indefinitely behind an empty catch.
+  if (typeof _a6Condition==="function"){ try { _a6Condition(); } catch(e){ if (typeof console!=="undefined" && console.warn) console.warn("a6 conditioning failed — battle proceeds unconditioned:", e); } }
   fitCamera();
   updateObjOwners();
   beginTurn("player",true);

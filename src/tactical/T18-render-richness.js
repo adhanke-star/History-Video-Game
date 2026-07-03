@@ -31,13 +31,14 @@
 
 var FLDRR = {
   SWAY_HI: 0.055, SWAY_LO: 0.032,   // woods tilt amplitude (radians) per render tier
+  SWAY_DT: 1 / 24,                  // E21 (D231): recompute the sway at ~24 Hz, not every RAF frame
   FLAG_Y: 0.17, FLAG_Z: 0.075,      // banner twist / dip amplitude (radians)
   FADE_SECS: 0.85,      // casualty fade-out duration
   MOVE_YDPS: 8          // sim speed (yards/sec) above which a unit "marches" (bob)
 };
 
 /* ---- module-level state (woods buffers, per-frame dt, 2D casualty bookkeeping) ---- */
-var FLDRR_S = { woods: [], swayed: false, dt3d: 0, last3d: 0,
+var FLDRR_S = { woods: [], swayed: false, swayAcc: 0, dt3d: 0, last3d: 0,
                 dt2d: 0, last2d: 0, prev2d: null, snap2d: null, dead2d: null,
                 grainCanvas: null, grainKey: null, errN: 0,
                 _Tbase: null, _Rx: null, _Rz: null, _Tup: null, _m: null };
@@ -162,6 +163,12 @@ function fldRrSwayWoods() {
     }
     return;
   }
+  // E21 (D231): the frame-to-frame sway delta (amplitude 0.055 rad) is imperceptible, but the pass rebuilds
+  // EVERY cone transform and re-uploads each clump's full instanceMatrix buffer. Throttle the recompute to
+  // ~24 Hz — on a 60 Hz RAF that cuts the fixed per-frame cost ~2.5x on the UHD-617 floor, visually identical.
+  FLDRR_S.swayAcc += FLDRR_S.dt3d;
+  if (FLDRR_S.swayed && FLDRR_S.swayAcc < FLDRR.SWAY_DT) return;
+  FLDRR_S.swayAcc = 0;
   var t = fldRrTime();
   var amp = (typeof fldLow === "function" && fldLow()) ? FLDRR.SWAY_LO : FLDRR.SWAY_HI;
   for (var wi = 0; wi < FLDRR_S.woods.length; wi++) {
@@ -192,20 +199,26 @@ function fldRrFrame3d() {
    3D UNITS — flag ripple, selection pulse, march bob, casualty fade (per unit,
    wrapped onto fld3dSyncUnit so it runs right after the base seats each group).
    =========================================================================== */
+/* E18 (D231): the traverse callback is HOISTED (parameters passed via module state) — _rrSetGroupOpacity runs
+   once per frame per fading unit, and an inline callback allocated a fresh closure on every call in an
+   otherwise allocation-free per-unit sync path. */
+var _rrOpVal = 1, _rrOpTrans = false;
+function _rrOpApplyNode(o) {
+  if (!o.material) return;
+  var isFlag = o.name === "flag", isRing = o.name === "ring";
+  var mats = Array.isArray(o.material) ? o.material : [o.material];
+  for (var k = 0; k < mats.length; k++) {
+    var mm = mats[k]; if (!mm) continue;
+    // the flag + ring are created transparent:true ON PURPOSE (the flag's canvas texture needs alpha; the
+    // ring is a faded halo) — NEVER flip their transparent flag (flipping it false would render the flag
+    // texture opaquely + force a needless shader recompile). Only the opaque body meshes toggle transparent.
+    if (!isFlag && !isRing && mm.transparent !== _rrOpTrans) { mm.transparent = _rrOpTrans; mm.needsUpdate = true; }
+    mm.opacity = isRing ? mm.opacity : _rrOpVal;   // the ring's opacity is owned by the selection/fade logic
+  }
+}
 function _rrSetGroupOpacity(g, op, transparent) {
-  g.traverse(function (o) {
-    if (!o.material) return;
-    var isFlag = o.name === "flag", isRing = o.name === "ring";
-    var mats = Array.isArray(o.material) ? o.material : [o.material];
-    for (var k = 0; k < mats.length; k++) {
-      var mm = mats[k]; if (!mm) continue;
-      // the flag + ring are created transparent:true ON PURPOSE (the flag's canvas texture needs alpha; the
-      // ring is a faded halo) — NEVER flip their transparent flag (flipping it false would render the flag
-      // texture opaquely + force a needless shader recompile). Only the opaque body meshes toggle transparent.
-      if (!isFlag && !isRing && mm.transparent !== transparent) { mm.transparent = transparent; mm.needsUpdate = true; }
-      mm.opacity = isRing ? mm.opacity : op;   // the ring's opacity is owned by the selection/fade logic
-    }
-  });
+  _rrOpVal = op; _rrOpTrans = transparent;
+  g.traverse(_rrOpApplyNode);
 }
 function fldRrEnsureFadeBody(u, g) {
   if (!u || !g || !window.THREE) return;

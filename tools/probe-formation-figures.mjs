@@ -127,6 +127,7 @@ function sceneScript(label, opts) {
         layer:!!layer,
         layerMeshCount:layer && layer.grp && layer.grp.children ? layer.grp.children.length : 0,
         layerCount:layer ? layer.nextSlot : 0,
+        layerCap:layer ? layer.cap : 0,
         ff:!!ff,
         ffVisible:!!(ff && ff.visible),
         active:meta.active || 0,
@@ -203,6 +204,26 @@ function sceneScript(label, opts) {
         fld3dSyncUnit(u, g); out.charge = snap();
         u.order = { type:'hold', tx:u.x, tz:u.z, tface:u.facing }; u.targetId = null;
         fld3dSyncUnit(u, g);
+
+        // E20 (D231): steady-state syncs must NOT force a whole-layer instanceColor re-upload every frame —
+        // the color version only bumps when side/routing state (or the active count) changes.
+        var L = __FIELD._ffLayer;
+        if (L && L.body && L.body.instanceColor) {
+          fld3dSyncUnit(u, g);
+          var v0 = L.body.instanceColor.version;
+          fld3dSyncUnit(u, g); fld3dSyncUnit(u, g);
+          out.colorVerStable = (L.body.instanceColor.version === v0);
+          var prevState = u.state;
+          u.state = 'routing'; fld3dSyncUnit(u, g);
+          out.colorVerRoutBump = (L.body.instanceColor.version > v0);
+          u.state = prevState; fld3dSyncUnit(u, g);
+        }
+
+        // E19 (D231): a base unit REBUILD (reinforcement arrival / phase advance) must reclaim the shared
+        // layer — figures re-seat on the fresh groups with the slot allocator reset to fit the cast.
+        fld3dBuildUnits();
+        for (var f2=0; f2<4; f2++) { fldRender(); await wait(60); }
+        out.rebuild = snap();
       }
 
       __FIELD.paused = true;
@@ -276,6 +297,13 @@ async function runScene(label, opts) {
   check('pose state: charge order switches to charge pose with bayonets active',
     H.ok && H.charge && H.charge.pose === 'charge' && H.charge.bayonetCount === H.charge.active,
     JSON.stringify(H.charge || {}));
+  check('E20: steady-state syncs do not re-upload instanceColor (version stable; rout transition bumps it)',
+    H.ok && H.colorVerStable === true && H.colorVerRoutBump === true,
+    'stable=' + (H && H.colorVerStable) + ' routBump=' + (H && H.colorVerRoutBump));
+  check('E19: a unit rebuild reclaims the shared layer (figures re-seat; slot allocator fits the cap)',
+    H.ok && H.rebuild && H.rebuild.found === true && H.rebuild.ff === true && H.rebuild.active > 0 &&
+    H.rebuild.mode === 'shared-instanced' && H.rebuild.layerCount > 0 && H.rebuild.layerCount <= H.rebuild.layerCap,
+    JSON.stringify(H.rebuild ? { ff: H.rebuild.ff, active: H.rebuild.active, layerCount: H.rebuild.layerCount, layerCap: H.rebuild.layerCap } : {}));
   check('byte-identity: synchronous render burst leaves seed and mutable unit fields unchanged',
     H.ok && H.seedStable === true && H.simStable === true && H.errN === 0,
     JSON.stringify({ seedStable:H.seedStable, simStable:H.simStable, errN:H.errN }));

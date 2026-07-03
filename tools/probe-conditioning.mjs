@@ -90,6 +90,23 @@ const SETUP = `(() => {
       if (!(ratio>=0.95 && ratio<=1.08)) throw new Error('fresh campaign should ~match Classic, ratio='+ratio.toFixed(3)+' (overall '+aFresh.overall+')');
       return { freshOverall:aFresh.overall, campTotal:camp, freeTotal:free, ratio:Math.round(ratio*1000)/1000 }; });
 
+    step('E05 edge: a fully COLLAPSED war (overall 0, a legitimate clamped value) keeps the FULL floor penalty', function(){
+      var C=mkC('US'); setWar(C,true);
+      var _bA=bridgeArmy, neutral, ruined;
+      try {
+        bridgeArmy=function(){ return { overall:74, morale:60 }; };   // the exact neutral anchor -> mul 1.0
+        startBattleRuntime(bd,'US',true); neutral=playerStats(G.battle.playerSide);
+        bridgeArmy=function(){ return { overall:0, morale:0 }; };     // collapsed war -> mul floor 0.88, morale -18
+        startBattleRuntime(bd,'US',true); ruined=playerStats(G.battle.playerSide);
+      } finally { bridgeArmy=_bA; }
+      if (neutral.count!==ruined.count) throw new Error('non-deterministic unit count: '+neutral.count+' vs '+ruined.count);
+      var ratio=neutral.total?ruined.total/neutral.total:1;
+      // the old (a.overall || 74) bug swapped 0 for the neutral anchor -> ratio 1.0 and NO penalty
+      if (!(ratio<=0.92)) throw new Error('collapsed war took no real strength penalty: ratio='+ratio.toFixed(3)+' (the 0||74 bug)');
+      if (!(ratio>=0.85)) throw new Error('collapsed-war penalty overshot the 0.88 floor: ratio='+ratio.toFixed(3));
+      if (!(ruined.avgMor <= neutral.avgMor-10)) throw new Error('collapsed war morale not penalized: '+ruined.avgMor+' vs '+neutral.avgMor);
+      return { neutralTotal:neutral.total, ruinedTotal:ruined.total, ratio:Math.round(ratio*1000)/1000, neutralMor:neutral.avgMor, ruinedMor:ruined.avgMor }; });
+
     step('Field Fortifications (A2) stamps trench cover when the player ENTRENCHES', function(){
       if (typeof engBuy!=='function') return { skipped:'no engineering module' };
       var C=mkC('US'); setWar(C,true); C.battlePrep={entrench:true};   // trench auto-stamp is gated on the entrench order now

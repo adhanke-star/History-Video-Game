@@ -254,7 +254,7 @@ function fldResetRun() {
   __FIELD._apReason = null;                     // active auto-pause: the current decision-point reason (if paused by it)
   __FIELD.routEverCount = 0; __FIELD.sel = []; __FIELD.drag = null;
   __FIELD.phase = "deploy"; __FIELD.paused = true; __FIELD.speed = 1; __FIELD.acc = 0;
-  _fldAiClock = 0; _fldAiIdx = 0;   // reset the AI cadence so every launch is deterministic
+  _fldAiClock = 0;   // reset the AI cadence so every launch is deterministic
   // Phase A (A1): condition the army the strategic war fielded (bridgeArmy) onto the player's units —
   // the single chokepoint shared by the sandbox / scenario / skirmish paths. No-op when campaignCtx is
   // null (every standalone launch), so the conditioning never perturbs the sandbox/Bull-Run probes.
@@ -340,10 +340,12 @@ function fldInitSim(opts) {
   // u.role/_canisterScale stay inert -> those baselines (INCLUDING bullrun1, which FIELDS Griffin/Ricketts as art
   // and Stuart as cav) remain BYTE-IDENTICAL. The gate is exactly what protects them. Coverage = probe-arms.mjs.
   __FIELD.arms = __FIELD._armsOff ? false : ((opts.arms != null) ? !!opts.arms : true);
-  // R-3 the RATING BADGE engine: the per-launch gate (same sticky _badgesOff test hook). Default ON, but the
-  // badge SEAMS (fldBadgeFactor + the cohesion rally term) are IDENTITY for any unit that carries no badges and
-  // no authored cohesion -> since NO shipped scenario assigns badges/cohesion yet (that arrives with the R-6 sweep),
-  // every AI-vs-AI baseline stays BYTE-IDENTICAL whether this is on or off. _badgesOff lets a probe force it off.
+  // R-3 the RATING BADGE engine: the per-launch gate (same sticky _badgesOff test hook). Default ON. The badge
+  // SEAMS (fldBadgeFactor + the cohesion rally term) are IDENTITY only for a unit that carries no badges and no
+  // authored cohesion. Since the R-6 assignment sweep (D104), data/ratings.json rosterBadges populates ALL NINE
+  // shipped scenarios (T1 fldBrSpec attaches them at build), so badges DO shift those AI-vs-AI outcomes — e.g.
+  // bullrun1 CS 5/8 -> 8/8 vs badges-off. Byte-identity claims hold only against the _badgesOff isolation path
+  // (which probes use to force the engine off), NOT against a units-carry-no-badges premise. (E32, D231.)
   __FIELD.badges = __FIELD._badgesOff ? false : ((opts.badges != null) ? !!opts.badges : true);
   __FIELD._aiGenericAll = false; __FIELD._aiGenericAtk = false;   // role-aware AI test hooks: reset per launch (bug-hunt #4); probe-ai sets them AFTER launch (A/B the defender + attacker doctrines)
   __FIELD._atkCautious = false;   // Phase C: the AI-attacker "doomed frontal assault" posture (Fredericksburg). Reset per launch; fldScenarioInit sets it true ONLY for a scenario whose data declares assaultDoctrine:"cautious" -> Bull Run/sandbox/skirmish stay byte-identical.
@@ -528,7 +530,17 @@ function fldMoraleStep(u, dt) {
       if (en.side === u.side || !en.alive) continue;
       if (fldDist(en, u) < FLD.RALLY_R) { danger = true; break; }
     }
-    if (!danger) { u.rallyT += dt; var _need = FLD.RALLY_SECS / (1 + 0.4 * (u.cmdBonus || 0)); if (u.rallyT >= _need) { u.state = "wavering"; u.morale = Math.max(u.morale, 30); u.rallyT = 0; fldAnnounce(u.name + " rallies."); } }   /* B-2: a leader near a routed unit rallies it sooner */
+    if (!danger) {
+      u.rallyT += dt; var _need = FLD.RALLY_SECS / (1 + 0.4 * (u.cmdBonus || 0));   /* B-2: a leader near a routed unit rallies it sooner */
+      if (u.rallyT >= _need) {
+        u.state = "wavering"; u.morale = Math.max(u.morale, 30); u.rallyT = 0;
+        // E34 (D231): a rout PERMANENTLY releases a committed player charge — the brigade rallies under player
+        // control at the rally point instead of re-locking into the same charge that just broke it (the documented
+        // "own rout" release was only transient). playerCharge is player-only -> AI-vs-AI baselines byte-identical.
+        if (u.order && u.order.type === "charge" && u.order.playerCharge) u.order = { type: "hold", tx: u.x, tz: u.z, tface: u.facing };
+        fldAnnounce(u.name + " rallies.");
+      }
+    }
     else u.rallyT = 0;
     return;
   }
@@ -576,8 +588,11 @@ function fldStepMovement(u, dt) {
     // T13: a river clamp that yields ~no forward progress means the ordered path runs into impassable water with no
     // crossing — settle to HOLD at the bank instead of marching in place and bleeding fatigue to 100 forever (a soft
     // deadlock). eg is null on every no-river/no-obstacle baseline (the gate returns null), so this is byte-identical.
+    // E03 (D231): a stalled PLAYER charge converts too — otherwise the H5-i4 lock never releases (a live target
+    // beyond weapon range across impassable water means no contact/loss/rout ever fires) and the brigade is
+    // soft-locked forever. AI charges never carry playerCharge, so AI-vs-AI baselines stay byte-identical.
     var stalled = !!eg && ((nx - u.x) * (nx - u.x) + (nz - u.z) * (nz - u.z) < 0.25) && u.state !== "routing";
-    if (stalled && u.order && u.order.type === "move") u.order = { type: "hold", tx: u.x, tz: u.z, tface: u.facing };
+    if (stalled && u.order && (u.order.type === "move" || (u.order.type === "charge" && u.order.playerCharge))) u.order = { type: "hold", tx: u.x, tz: u.z, tface: u.facing };
     u.x = fldClamp(nx, 10, FLD.FIELD_W - 10);
     u.z = fldClamp(nz, -80, FLD.FIELD_H + 80);
     // face along travel while marching
@@ -927,7 +942,7 @@ function fldAiDefender(u) {
 /* ===========================================================================
    THE SIM STEP  (one fixed tick)
    =========================================================================== */
-var _fldAiClock = 0, _fldAiIdx = 0;
+var _fldAiClock = 0;
 function fldSimStep(dt) {
   if (__FIELD.phase !== "battle") return;
   __FIELD.t += dt;
@@ -939,7 +954,8 @@ function fldSimStep(dt) {
   // in-battle logistics (B-3): refill cartridge boxes from the trains + flag low-ammo / spent BEFORE the AI
   // (so the resupply doctrine sees the fresh flags) and BEFORE fire (so a refilled brigade can volley this tick).
   if (__FIELD.logistics && typeof fldLogisticsStep === "function") fldLogisticsStep(dt);
-  // AI: throttle — step a slice of units per tick toward AI_HZ
+  // AI: run the full doctrine pass for EVERY AI unit at AI_HZ cadence (deterministic array order; all units
+  // step in the same AI tick — there is no per-tick slicing). (E04, D231: comment + dead _fldAiIdx corrected.)
   _fldAiClock += dt;
   if (_fldAiClock >= 1 / FLD.AI_HZ) {
     _fldAiClock = 0;

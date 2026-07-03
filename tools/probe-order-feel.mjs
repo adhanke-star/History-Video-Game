@@ -113,6 +113,81 @@ const SETUP = `(() => {
       if(u.order.type!=='move') throw new Error('target-loss release did not allow a fresh move');
       return { grace:'correction allowed', committed:true, queueBlocked:true, releasedOnOwnRoutDeath:true, releasedOnTargetLoss:true }; });
 
+    step('E23 LOCK RELEASE: melee contact with a NON-target (interposing) enemy returns the brigade to control', function(){
+      fldLaunchSandbox({renderer:'none', seed:31});
+      var u=playerUnit(); var es=enemies(); if(!u||es.length<2) throw new Error('need player + 2 enemies');
+      var A=es[0], B=es[1];
+      __FIELD.sel=[u.id]; __FIELD.t=10;
+      fldOrderCharge(u, A, { player:true });
+      __FIELD.t += FLD_CHARGE_GRACE + 0.1; fldChargeStep(u);
+      if(!fldChargeLocked(u)) throw new Error('charge did not commit');
+      fldChargeContact(u, B);   // the T0 melee-loop seam: contact with interposer B, NOT the charged target A
+      if(u.order.playerCharge) throw new Error('interposer contact did not clear playerCharge');
+      if(!u.order.contact) throw new Error('interposer contact did not set the contact flag');
+      if(fldChargeLocked(u)) throw new Error('lock survived melee contact with a non-target enemy');
+      if(!fldApplyOrder(u, { type:'move', tx:u.x+50, tz:u.z, tface:0 })) throw new Error('release did not allow a fresh move');
+      return { releasedOnInterposer:true }; });
+
+    step('E03 LOCK RELEASE: a charge stalled at impassable water settles to HOLD at the bank (no soft-lock)', function(){
+      fldLaunchSandbox({renderer:'none', seed:32});
+      var u=playerUnit(), e=enemies()[0]; if(!u||!e) throw new Error('need player unit and enemy');
+      if(typeof fldEngMoveGate!=='function') throw new Error('T13 move gate missing');
+      __FIELD.sel=[u.id]; __FIELD.t=10;
+      fldOrderCharge(u, e, { player:true });
+      __FIELD.t += FLD_CHARGE_GRACE + 0.1; fldChargeStep(u);
+      if(!fldChargeLocked(u)) throw new Error('charge did not commit');
+      var _gate=fldEngMoveGate;
+      try {   // stage the T13 river-bank clamp: the gate returns the start point -> ~zero forward progress
+        fldEngMoveGate=function(uu,x0,z0){ return { x:x0, z:z0 }; };
+        fldStepMovement(u, 0.1);
+      } finally { fldEngMoveGate=_gate; }
+      if(u.order.type!=='hold') throw new Error('stalled charge did not settle to hold: '+u.order.type);
+      if(fldChargeLocked(u)) throw new Error('lock survived the stall at the bank');
+      if(!fldApplyOrder(u, { type:'move', tx:u.x+50, tz:u.z, tface:0 })) throw new Error('stall release did not allow a fresh move');
+      return { releasedAtBank:true }; });
+
+    step('E34 LOCK RELEASE is PERMANENT through rout->rally (no re-lock into the broken charge)', function(){
+      fldLaunchSandbox({renderer:'none', seed:33});
+      var u=playerUnit(), e=enemies()[0]; if(!u||!e) throw new Error('need player unit and enemy');
+      __FIELD.sel=[u.id]; __FIELD.t=10;
+      fldOrderCharge(u, e, { player:true });
+      __FIELD.t += FLD_CHARGE_GRACE + 0.1; fldChargeStep(u);
+      if(!fldChargeLocked(u)) throw new Error('charge did not commit');
+      // break the brigade, then rally it far from danger via the REAL state machine (fldMoraleStep)
+      u.state='routing'; u.rallyT=0; u.x=40; u.z=40;
+      for(var i=0;i<__FIELD.units.length;i++){ var en=__FIELD.units[i]; if(en.side!==u.side){ en.x=FLD.FIELD_W-20; en.z=FLD.FIELD_H-20; } }
+      var guard=0; while(u.state==='routing' && guard<4000){ fldMoraleStep(u, 0.25); guard++; }
+      if(u.state==='routing') throw new Error('unit never rallied (guard exhausted)');
+      if(u.order.type!=='hold') throw new Error('rally did not settle to hold under player control: '+u.order.type+' playerCharge='+!!(u.order&&u.order.playerCharge));
+      if(fldChargeLocked(u)) throw new Error('lock re-engaged after rally');
+      if(!fldApplyOrder(u, { type:'move', tx:u.x+50, tz:u.z, tface:0 })) throw new Error('rallied unit refused a fresh order');
+      return { ralliedUnderControl:true, rallySteps:guard }; });
+
+    step('S10 PIVOT-IN-PLACE: a HOLDING line has a grabbable handle and re-faces without moving the men', function(){
+      fldLaunchSandbox({renderer:'none', seed:34});
+      var u=playerUnit(); __FIELD.sel=[u.id];
+      u.order={type:'hold', tx:u.x, tz:u.z, tface:0}; u.facing=0; u.state='steady';
+      if(!fldOrderHasHandle(u)) throw new Error('holding unit has no facing handle');
+      var hit=fldHandleHit({ x:u.order.tx, z:u.order.tz-70 });   // tface 0 -> tip at (tx, tz-70)
+      if(!hit || hit.id!==u.id) throw new Error('hold handle not found at its tip');
+      var px=u.x, pz=u.z;
+      fldResolveOrderGesture([u], { aimUid:u.id, x0:u.x, z0:u.z, x:u.x+120, z:u.z });   // pointer at +x -> tface pi/2
+      if(u.order.type!=='hold') throw new Error('re-aim changed the order type: '+u.order.type);
+      if(!near(u.order.tx,px)||!near(u.order.tz,pz)) throw new Error('re-aim displaced the held position');
+      if(!near(u.order.tface, Math.PI/2, 0.01)) throw new Error('pivot facing wrong: '+u.order.tface);
+      fldStepMovement(u, 0.5);   // the arrival branch turns toward tface without moving
+      if(!near(u.x,px,0.001)||!near(u.z,pz,0.001)) throw new Error('pivot moved the men');
+      if(!(Math.abs(u.facing)>0.001)) throw new Error('facing did not begin turning toward the pivot');
+      // NO DEAD-ZONE: a TAP on the hold handle (no real drag) falls through to a plain forward MOVE,
+      // so the ~70-116yd band ahead of a standing line still nudges the men exactly as pre-S10
+      u.order={type:'hold', tx:u.x, tz:u.z, tface:0}; u.facing=0;
+      var mx=u.x, mz=u.z-90;   // press ~90yd dead ahead, inside the handle-grab band
+      fldResolveOrderGesture([u], { aimUid:u.id, x0:mx, z0:mz, x:mx+3, z:mz+2 });
+      if(u.order.type!=='move') throw new Error('hold-handle TAP did not fall through to a move: '+u.order.type);
+      if(!near(u.order.tx,mx)||!near(u.order.tz,mz)) throw new Error('tap-nudge went to the wrong point: '+u.order.tx+','+u.order.tz);
+      if(!near(u.order.tface,0,0.001)) throw new Error('tap-nudge changed facing: '+u.order.tface);
+      return { pivotedTface:Math.round(Math.PI/2*1000)/1000, turned:'yes', tapNudge:'move' }; });
+
     step('SHIFT-QUEUE: a shift-drag appends a waypoint without disturbing the active order', function(){
       var u=playerUnit(); u.facing=0; __FIELD.sel=[u.id]; u.queue=null;
       // immediate move first

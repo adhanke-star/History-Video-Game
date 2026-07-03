@@ -1,4 +1,12 @@
-# ☀ WAKE-UP — 2026-07-03: **FABLE AUDIT M5 SHIPPED (D230) — probe teeth. RUN PAUSED at a clean boundary (Aaron: "find stopping point").**
+# ☀ WAKE-UP — 2026-07-03: **FABLE AUDIT M6 SHIPPED (D231) — tactical control / perf / small-code (14 items).**
+
+**Newest (D231):** the H5-i4 charge lock gains its three missing releases — a charge stalled at a river settles to hold (E03), melee contact with an interposing enemy releases control (E23), and a rout now releases the charge permanently through rally (E34); a holding line pivots in place via a drag-only facing handle while a tap still nudges it forward (S10 — the dead-zone the pre-commit Opus review caught was fixed, not documented); a collapsed war (overall 0) keeps its full 0.88 conditioning penalty and conditioning failures warn instead of vanishing (E05/E06); the formation-figure layer is reclaimed on every rebuild so brigades keep their figures after reinforcements/phases, its color uploads are state-gated, the woods sway is throttled to ~24 Hz, and the fade path stops allocating (E19/E20/E21/E18); '?' typed in a search/rename box no longer hijacks the keystroke (E44); ONE pause indicator (the chip; the aria-live lane is now sr-only, E44-adjacent S06); the AI-throttle and badge byte-identity comments now tell the truth (E04/E32). All player-only-gated; AI-vs-AI byte-identity proven by presets/phased-ab/order-feel. Gates: node --check ×10, GATE OK, 10 probes ok=true 0 pe, diff clean.
+
+**Audit progress: 91 of 143 FIX-NOW ledger items closed across D225-D231 (M1-M6); 9 proposals await Aaron; M7-M11 remain.** The standing ledger is `REVIEW-QUEUE.md` §"FABLE AUDIT — 2026-07-03 (run 1)". **Next: M7 — H0/UI visual polish (S00 S01 S02 S03+S11 S04 S05 S09 S29).** All locks stand (Phase H parked D214; M8/Q5/Q6 locked; Phase D deferred).
+
+---
+
+# ☀ WAKE-UP — 2026-07-03 (previous): **FABLE AUDIT M5 SHIPPED (D230) — probe teeth. RUN PAUSED at a clean boundary (Aaron: "find stopping point").**
 
 **Newest (D230):** 43 exit-less enrolled probes now fail loudly (a `beforeExit` teeth epilogue exits nonzero unless a fresh artifact reports ok/0-fail/0-pe); `vet-no-regression` enforces artifact existence + freshness (no more stale-green); `probe-cab-exploit` asserts its exploit invariants (and caught a stale navy-heed claim); `probe-conditioning` is enrolled with an exit code; a new `probe-help-overlay` gives the untested help/onboarding subsystem teeth. Gates: node --check, build GATE OK, probes cab-exploit/conditioning/help-overlay/tutorial ok=true 0 pe.
 
