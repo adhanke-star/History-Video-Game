@@ -1,6 +1,6 @@
 # Soldier Replacement Format
 
-**Status:** D217. This is the import lane for replacing generated Soldier's Story representative rows with sourced named people. D152 shipped the empty tooling lane; D154-D158 added the first five narrow sourced replacement slices, D172 added Strong Vincent as the sixth, D214 added Leander Stillwell as the seventh, D215 added John Cook as the eighth, D216 added Orion P. Howe as the ninth, and D217 added Francis A. Waller as the tenth.
+**Status:** D218. This is the import lane for replacing generated Soldier's Story representative rows with sourced named people. D152 shipped the empty tooling lane; D154-D158 added the first five narrow sourced replacement slices, D172 added Strong Vincent as the sixth, D214 added Leander Stillwell as the seventh, D215 added John Cook as the eighth, D216 added Orion P. Howe as the ninth, D217 added Francis A. Waller as the tenth, and D218 added Samuel N. Benjamin as the eleventh.
 
 Canonical file: `data/soldier-replacements.json`
 

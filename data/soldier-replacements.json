@@ -756,6 +756,83 @@
       ],
       "sourceNote": "Army.mil verifies Francis A. Waller's Corporal rank, Company I / 6th Wisconsin unit, and Gettysburg July 1 citation. NPS Gettysburg, using the Wallar spelling, supports the Railroad Cut flag-capture story and memory caveat; NPS OOB places the regiment in the Iron Brigade. The record asserts no higher rank at Gettysburg and no portrait asset.",
       "bio": "Francis A. Waller, spelled Wallar by Gettysburg National Military Park, was a corporal in Company I, 6th Wisconsin Infantry. On July 1, 1863, during the Railroad Cut fighting at Gettysburg, he was credited with capturing the 2nd Mississippi Infantry flag and was promoted to sergeant for conspicuous bravery. This replacement keeps the story in the Iron Brigade NCO row while noting that later veterans disputed parts of the memory trail."
+    },
+    {
+      "pid": "person_antietam_us_battery_e_benjamin",
+      "replacePid": "ss:antietam:US:us_benjamin:cmd",
+      "name": "Samuel N. Benjamin",
+      "side": "US",
+      "rank": "1st Lt.",
+      "branch": "art",
+      "role": "battery commander",
+      "year": 1862,
+      "provenance": "Verified",
+      "team": {
+        "side": "US",
+        "army": "Army of the Potomac",
+        "corps": "IX Corps",
+        "division": "First Division",
+        "brigade": "First Division Artillery",
+        "regiment": "2nd U.S. Artillery",
+        "company": "Battery E"
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Civil War (A - L Index) Medal of Honor recipients",
+          "author": "The United States Army",
+          "repository": "Army.mil",
+          "locator": "BENJAMIN, SAMUEL N. citation",
+          "url": "https://www.army.mil/medalofhonor/citations1.html",
+          "type": "secondary",
+          "note": "Verifies Benjamin's First Lieutenant rank, 2d U.S. Artillery organization, and Medal of Honor citation for distinguished artillery service."
+        },
+        {
+          "title": "Samuel Nicholl Benjamin",
+          "author": "Congressional Medal of Honor Society",
+          "repository": "Congressional Medal of Honor Society",
+          "locator": "Recipient profile",
+          "url": "https://www.cmohs.org/recipients/samuel-n-benjamin",
+          "type": "secondary",
+          "note": "Identifies Benjamin as a U.S. Army First Lieutenant in the 2d U.S. Artillery and gives the long-service citation and later brevet rank caveat."
+        },
+        {
+          "title": "Army of the Potomac - Ninth Corps",
+          "author": "National Park Service",
+          "repository": "Antietam National Battlefield",
+          "locator": "First Division / Artillery order of battle",
+          "url": "https://www.nps.gov/anti/learn/historyculture/org-cht-9-corps.htm",
+          "type": "secondary",
+          "note": "Places Battery E, 2nd U.S. Artillery under Lt. Samuel N. Benjamin in the IX Corps order of battle."
+        },
+        {
+          "title": "Lt Samuel N Benjamin's Official Reports",
+          "author": "Samuel N. Benjamin",
+          "repository": "Antietam on the Web / Official Records transcription",
+          "locator": "Report dated September 20, 1862, Antietam section",
+          "url": "https://antietam.aotw.org/exhibit.php?exhibit_id=305",
+          "type": "primary",
+          "note": "Transcribes Benjamin's report for Battery E, Second Artillery operations near Sharpsburg on September 16-17, 1862."
+        }
+      ],
+      "sourceNote": "Army.mil and CMOHS verify Samuel N. Benjamin's First Lieutenant rank, 2d U.S. Artillery unit, and long-service Medal of Honor citation. NPS Antietam places Battery E, 2nd U.S., under Lt. Benjamin in IX Corps; his transcribed report anchors the Sept. 16-17 battery story. The record asserts no captain-rank-at-Antietam and no portrait asset.",
+      "bio": "Samuel N. Benjamin commanded Battery E, 2nd U.S. Artillery in the Maryland Campaign as a first lieutenant. At Antietam, his report described the battery shifting near the Stone Bridge, firing on Confederate batteries around Sharpsburg, and using its last six rounds late in the day. This replacement turns the generated Antietam Benjamin artillery slot into a sourced IX Corps battery-commander story without asserting his later captaincy or any portrait."
     }
   ],
   "_template": {

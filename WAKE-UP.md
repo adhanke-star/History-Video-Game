@@ -1,3 +1,15 @@
+# ☀ WAKE-UP — 2026-07-02: **SOLDIER'S STORY SAMUEL N. BENJAMIN SLICE SHIPPED (D218).**
+
+**Newest (D218, 2026-07-02):** Priority 1 Phase I Soldier's Story scale-out continues. Phase H remains parked from D214; do not restart the automatic zero-byte polish loop. Reopen Phase H media only after an explicit media-budget/profile decision.
+
+**What changed:** Samuel N. Benjamin is now the eleventh citation-grade Soldier's Story replacement. He replaces the generated Antietam / IX Corps artillery command slot (`ss:antietam:US:us_benjamin:cmd`) with a Verified First Lieutenant, Battery E / 2nd U.S. Artillery, Stone Bridge / Sharpsburg battery-report story. Army.mil and CMOHS verify Benjamin's rank, unit, and Medal of Honor citation; NPS Antietam places Battery E under Lt. Benjamin in IX Corps; Benjamin's transcribed report anchors the Antietam battery story. The record asserts no captain-rank-at-Antietam, no portrait asset, and neutral inferred ratings.
+
+**Verified:** `node tools/import-soldier-replacements.mjs --check data/soldier-replacements.json` passed with 11 Verified records; `node --check` passed for touched JS/probe files; build **GATE OK** with the known raw-embed soft warning; focused `probe-loot-survival` wrote an `ok=true` artifact with 11/11 and 0 pageerrors; adjacent `probe-women-in-war` 8/8, `probe-save-slots` 9/9, and `probe-bridge` 6/6, all with zero pageerrors. JSON readback found all four artifacts `ok=true` with no failed steps, realErrors, or page errors. Full `npm run vet:noreg` was not run under D176 focused-slice batching.
+
+**Next recommended run:** start Priority 1, another bounded Phase I Soldier's Story named-person/story slice. Keep D152-D158/D172/D214/D215/D216/D217/D218 source honesty, no fabricated people/ranks/units, no unsupported portrait claims, and keep women-in-war separate. Media-budget locks persist. M8 battle-build still needs Aaron go/no-go. Q5 Chattanooga + Q6 USCT playable battles remain LAST.
+
+---
+
 # ☀ WAKE-UP — 2026-07-02: **SOLDIER'S STORY FRANCIS A. WALLER SLICE SHIPPED (D217).**
 
 **Newest (D217, 2026-07-02):** Priority 1 Phase I Soldier's Story scale-out continues. Phase H remains parked from D214; do not restart the automatic zero-byte polish loop. Reopen Phase H media only after an explicit media-budget/profile decision.
