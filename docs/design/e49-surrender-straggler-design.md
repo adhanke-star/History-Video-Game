@@ -2,6 +2,8 @@
 
 **Status: DESIGN LAW.** Aaron drove the E49 design session 2026-07-04 and locked all eight decisions below (every one the recommended option — D255 records the popup answers verbatim). Input evidence: `docs/design/e49-design-evidence.md` (committed with this law) + a 3-lens default-refute Opus panel run in-session over the candidate shapes (the D246 design-session pattern; its material corrections are §4 and are baked into §2). The build milestone honors §2 verbatim and ships behind §3; nothing here is built yet — the build session assigns its own D###.
 
+**Build status (D256→D258):** the combined build went honestly RED on this law's own §3.3 gate — attributed 100% to SL-1 by the isolated legs (D256) — and Aaron SPLIT the ledger (D257). **SL-2..SL-10 are SHIPPED as E49a (D258, every §3 gate green); SL-1's locked form below is SUPERSEDED-PENDING-REDESIGN** — the E49b design session redesigns it against the D256 measurements (engine rout frequency is 3–8 breaks/unit in NORMAL battles, so f=0.05 per event sheds 15–30% side-level, 2–3.3× the documented total-loss bands) and will amend §2 SL-1 with a supersession note. The `missing` ledger shipped wired-but-zero in E49a.
+
 ## §1 — The eight locked answers (D255, popup answers 2026-07-04)
 
 1. **Shed fraction:** fixed universal **f = 0.05 per rout event** (over f=0.03 and the morale-tied form).

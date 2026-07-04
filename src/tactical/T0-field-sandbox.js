@@ -237,7 +237,7 @@ function fldMakeUnit(o) {
     men: o.men, maxMen: o.men, morale: o.morale || 78, maxMor: o.morale || 78,
     fatigue: 0, ammo: 100, state: "steady",
     order: { type: "hold", tx: o.x, tz: o.z, tface: o.facing },
-    targetId: null, reload: 0, rallyT: 0, ai: !!o.ai, alive: true,
+    targetId: null, reload: 0, rallyT: 0, surrenderT: 0, ai: !!o.ai, alive: true,   // E49a (D258): surrenderT 0 at every spawn incl. reinforcements (SL-9)
     casTick: 0, underFire: 0, flankHit: 0,
     // R-6: the rating BADGES carried from the OOB data (the documented commander/unit traits). A fresh
     // COPY (never the shared data array) so combat reads never alias canonical GAME_DATA, and null when
@@ -253,6 +253,10 @@ function fldResetRun() {
   __FIELD.vis = null; __FIELD.lastSeen = {};   // fog visibility set + last-known "ghost" positions, recomputed per tick
   __FIELD._apReason = null;                     // active auto-pause: the current decision-point reason (if paused by it)
   __FIELD.routEverCount = 0; __FIELD.sel = []; __FIELD.drag = null;
+  // E49a (D258): the captured/missing SUBSET ledgers + captured guns + prisoner markers — fresh every
+  // run/phase (SL-4/SL-9; labeled subsets of the total-loss tally, NEVER added to battleCas).
+  __FIELD.captured = { US: 0, CS: 0 }; __FIELD.missing = { US: 0, CS: 0 }; __FIELD.capturedGuns = { US: 0, CS: 0 };
+  __FIELD.prisonerMarkers = []; __FIELD.surrenderEverCount = 0;
   __FIELD.phase = "deploy"; __FIELD.paused = true; __FIELD.speed = 1; __FIELD.acc = 0;
   _fldAiClock = 0;   // reset the AI cadence so every launch is deterministic
   // Phase A (A1): condition the army the strategic war fielded (bridgeArmy) onto the player's units —
@@ -524,6 +528,12 @@ function fldMoraleStep(u, dt) {
   // (4) state machine + rout roll
   var routThresh = FLD.ROUT_THRESH - u.xp * 1.5 * _vet; // veterans hold longer (base; B-5 experience weight, 1.0 = neutral)
   if (u.state === "routing") {
+    // E49a SL-2/SL-3 (D258): envelopment-surrender — a router whose corridor home is BLOCKED by steady
+    // enemies (directional, RALLY_R-class band, rescue clause) accrues surrenderT while rallyT is
+    // SUPPRESSED (blocked ≠ safe); at the RALLY_SECS grace it surrenders (fldSurrender). Returns false
+    // with surrenderT reset when the corridor is clear -> the verbatim rally scan below runs unchanged.
+    // Gated on __FIELD.attacker -> the symmetric sandbox is byte-identical (the E48 precedent).
+    if (__FIELD.attacker && typeof fldSurrenderStep === "function" && fldSurrenderStep(u, dt)) return;
     // rally if it reached safety + held for RALLY_SECS
     var danger = false;
     for (var k = 0; k < __FIELD.units.length; k++) {
@@ -1263,13 +1273,18 @@ function fldCountAlive() { var n = 0; for (var i = 0; i < __FIELD.units.length; 
 // active auto-pause: after a live-loop sim advance, pause once on a decision-point event (lives in the RAF
 // loop only, so the headless fldStepN never triggers it). Priority: a break, then a destroyed brigade,
 // then arriving reinforcements. Announces (aria-live) + surfaces the reason in the phase indicator.
-function fldAutoPauseScan(prevRouts, prevAlive, prevN) {
+function fldAutoPauseScan(prevRouts, prevAlive, prevN, prevSurr) {
   if (__FIELD.paused) return;
   // detect EVERY decision-point event this frame (a frame can advance up to 16 ticks). Reinforcements
   // only ever push ALIVE units, so kills-this-frame = prevAlive - (aliveNow - spawned) — robust to a
   // same-frame spawn masking a death in the net headcount. Report all reasons; keep priority for the label.
   var spawned = __FIELD.units.length - prevN, killed = prevAlive - (fldCountAlive() - spawned), reasons = [];
+  // E49a (D258): a surrendered brigade also leaves the alive count — split it out of "destroyed" so the
+  // auto-pause teaches the honest event (prevSurr undefined pre-E49 callers -> surr 0, byte-identical).
+  var surr = (__FIELD.surrenderEverCount || 0) - (prevSurr || 0);
+  if (surr > 0) killed -= surr;
   if (__FIELD.routEverCount > prevRouts) reasons.push("A brigade has broken");
+  if (surr > 0) reasons.push("A brigade has surrendered");
   if (killed > 0) reasons.push("A brigade is destroyed");
   // B-6 fog-leak guard: cue "Reinforcements arrive" only for a PLAYER-VISIBLE arrival — reinforcements are PUSHED
   // to the end of the array, so the last `spawned` entries are this frame's arrivals; fire if one is the player's
@@ -1311,12 +1326,12 @@ function fldStartLoop() {
     if (dt > 0.1) dt = 0.1;                              // clamp tab-switch spikes
     if (__FIELD.phase === "battle" && !__FIELD.paused) {
       // snapshot for active auto-pause (live loop only — never from the headless fldStepN)
-      var apOn = __FIELD.autoPause, apR0 = 0, apA0 = 0, apN0 = 0;
-      if (apOn) { apR0 = __FIELD.routEverCount; apA0 = fldCountAlive(); apN0 = __FIELD.units.length; }
+      var apOn = __FIELD.autoPause, apR0 = 0, apA0 = 0, apN0 = 0, apS0 = 0;
+      if (apOn) { apR0 = __FIELD.routEverCount; apA0 = fldCountAlive(); apN0 = __FIELD.units.length; apS0 = __FIELD.surrenderEverCount || 0; }
       __FIELD.acc += dt * __FIELD.speed;
       var guard = 0;
       while (__FIELD.acc >= FLD.FIXED_DT && guard < 16) { fldSimStep(FLD.FIXED_DT); __FIELD.acc -= FLD.FIXED_DT; guard++; }
-      if (apOn && __FIELD.phase === "battle") fldAutoPauseScan(apR0, apA0, apN0);
+      if (apOn && __FIELD.phase === "battle") fldAutoPauseScan(apR0, apA0, apN0, apS0);
     }
     fldRender();
     fldRenderTop();
@@ -1582,6 +1597,8 @@ function fldOnOver() {
   if (typeof fldArmsEndHtml === "function") { try { scNote += (fldArmsEndHtml() || ""); } catch (eA) {} }
   // T13: engineering teaching cards appear only for effects actually used in this battle.
   if (typeof fldEngEndHtml === "function") { try { scNote += (fldEngEndHtml() || ""); } catch (eE) {} }
+  // E49a seam (D258): the after-action killed/wounded · captured · missing columns (SL-8; "" in the sandbox).
+  if (typeof fldPrisonerEndHtml === "function") { try { scNote += (fldPrisonerEndHtml() || ""); } catch (eS) {} }
   var _inCampaign = !!__FIELD.campaignCtx;
   e.innerHTML =
     '<div style="text-align:center;background:#0c0f14;border:1px solid #745e3f;border-radius:8px;padding:26px 34px;max-width:640px;max-height:88vh;overflow:auto;">' /* wcag-auditor: contrast fix #4a3c28->#745e3f border on #0c0f14 (was 1.80:1, now 3.12:1) WCAG 1.4.11 */ +
@@ -1736,6 +1753,8 @@ function fld2dDraw() {
       ctx.restore();
     }
   }
+  // E49a (D258): prisoner markers — the white flag at each surrender's yield point (no-op when none)
+  if (typeof fld2dDrawPrisoners === "function") fld2dDrawPrisoners(ctx, v);
   // Engineering Corps (T13): dirt parapets along entrenched units' fronts (no-op when no unit is dug in)
   if (typeof fldEngDraw2d === "function") fldEngDraw2d(ctx, v);
   // in-battle logistics (B-3): the ammunition trains + resupply rings (drawn under the officers; no-op when off)
@@ -2274,6 +2293,7 @@ function fld3dRender() {
   if (typeof fld3dSyncSupply === "function") fld3dSyncSupply();       // B-3: ammunition-train wagons
   if (typeof fld3dSyncArms === "function") fld3dSyncArms();           // B-4: gun + trooper markers + muzzle flash
   if (typeof fld3dSyncEng === "function") fld3dSyncEng();             // T13: entrenchment berms (no-op when none dug in)
+  if (typeof fld3dSyncPrisoners === "function") fld3dSyncPrisoners(); // E49a (D258): white-flag prisoner markers (no-op when none)
   if (typeof fld3dSyncDrag === "function") fld3dSyncDrag();           // H5-i1: the live order ghost (hidden when no drag)
   __FIELD.renderer.render(__FIELD.scene, __FIELD.camera);
 }
@@ -2306,6 +2326,7 @@ function fld3dDispose() {
   __FIELD._engGroup = null; __FIELD._engMeshes = null; __FIELD._engAbatisMeshes = null; // T13: fieldworks/obstacles were disposed in the traverse above; drop refs
   __FIELD._engPontoonMeshes = null; __FIELD._waterGroup = null;   // T13 (increment 3): pontoon meshes + the river water group were disposed in the traverse above; drop refs
   __FIELD._ghost3d = null;   // H5-i1: the order-ghost group's geometries were disposed in the traverse above; drop the ref
+  __FIELD._pris3dGroup = null;   // E49a (D258): the prisoner-marker group's geometries were disposed in the traverse above; drop the ref
 }
 /* PHASE C (D132): rebuild the live 3D scene for a FRESH phase. A multi-phase battle's phase advance
    (_fldAdvancePhase, T8) replaces __FIELD.units (a new cast with new ids), __FIELD.terrain (a new

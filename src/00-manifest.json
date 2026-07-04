@@ -72,6 +72,7 @@
     "tactical/T22-terrain-readability.js",
     "tactical/T23-tripo-unit-assets.js",
     "tactical/T24-formation-figures.js",
+    "tactical/T25-surrender.js",
     "90-president-register.js",
     "91-save-slots.js",
     "92-help-overlay.js",

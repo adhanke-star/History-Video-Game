@@ -143,6 +143,113 @@ const SETUP = `(() => {
       if(!(__FIELD.t<=__FIELD.timeLimit+2)) throw new Error('(c) the timeout must fire AT the clock, t='+__FIELD.t);
       return { overtimeSecs:Math.round(ot*10)/10, holdToWin:__FIELD.holdToWin, contestedEndsAtClock:true, unattendedEndsAtClock:true }; });
 
+    // ==== E49a (D258) fixtures — the SL-2 surrender mechanic + the SL-4 ledgers (design law
+    // docs/design/e49-surrender-straggler-design.md §3.2; SL-1 shedding = E49b, NOT landed — its
+    // missing ledger must stay wired-but-ZERO, asserted below). Shared asymmetric launcher: a 3v3
+    // open-field skirmish (attacker US -> the mechanic ARMED), every unit parked out of contact.
+    function e49Launch(seed){
+      fldLaunchSandbox({renderer:'none', autoBoth:true, seed:seed, skirmish:{ playerSide:'US', attacker:'US', year:1862,
+        countPlayer:3, countEnemy:3, menPlayer:1500, menEnemy:1500, weaponPlayer:'rifled', weaponEnemy:'rifled', terrain:'open', holdToWin:40 }});
+      __FIELD.phase='battle'; __FIELD.paused=false;
+      var us=[], cs=[];
+      for(var i=0;i<__FIELD.units.length;i++){ var q=__FIELD.units[i]; q.ai=false; (q.side==='US'?us:cs).push(q); }
+      function park(q,x,z){ q.x=x; q.z=z; q.order={type:'hold',tx:x,tz:z,tface:0}; }
+      // default parking: everyone far from everyone (no combat, no blockers, no rally danger)
+      park(us[0],1140,60); park(us[1],1100,60); park(us[2],1060,60);
+      park(cs[0],60,860);  park(cs[1],100,860); park(cs[2],140,860);
+      return { us:us, cs:cs, park:park };
+    }
+
+    step('E49a SL-1-ABSENT: a forced rout EVENT sheds NOTHING — men unchanged through the break, missing ledger stays zero (shedding is E49b, not landed)', function(){
+      var F=e49Launch(31), u=F.us[0];
+      u.men=1000; u.maxMen=1000; u.xp=1;
+      u.state='steady'; u.morale=0; u.rallyT=0;
+      var n=0;
+      while(u.state!=='routing' && n<400){ u.morale=0; fldMoraleStep(u,0.05); n++; }
+      if(u.state!=='routing') throw new Error('the forced break never fired after '+n+' ticks');
+      if(u.men!==1000) throw new Error('the rout event changed men: '+u.men+' != 1000 (shedding must NOT be live)');
+      if(__FIELD.missing.US!==0 || __FIELD.missing.CS!==0) throw new Error('missing ledger fed on a rout: '+JSON.stringify(__FIELD.missing));
+      if(__FIELD.routEverCount<1) throw new Error('routEverCount '+__FIELD.routEverCount+' < 1');
+      return { menAfterBreak:u.men, missingZero:true }; });
+
+    step('E49a SL-2: a BLOCKED corridor (steady enemy beyond RALLY_R, directional, in-band) SUPPRESSES rally and surrenders at the RALLY_SECS grace — captured/tallied/marked; T2 counts the loss (OR convention)', function(){
+      var F=e49Launch(32), r=F.cs[0], b=F.us[0];
+      // router at (600,500) fleeing to the CS home edge (low z); blocker STEADY at (600,200):
+      // dist 300 > RALLY_R 240 (pre-E49 this router would RALLY), dx 0 inside the band, z strictly
+      // between router and edge. Nearest friendly steady is ~616yd away -> no rescue.
+      F.park(r,600,500); r.men=1400; r.maxMen=1400; r.state='routing'; r.rallyT=0; r.surrenderT=0; r.morale=0;
+      F.park(b,600,200); b.state='steady';
+      for(var i=0;i<60;i++) fldMoraleStep(r,0.05);   // 3.0s blocked
+      if(r.rallyT!==0) throw new Error('rallyT accrued while blocked: '+r.rallyT+' (blocked must suppress rally)');
+      if(!(r.surrenderT>2.9)) throw new Error('surrenderT not accruing while blocked: '+r.surrenderT);
+      if(!r.alive) throw new Error('surrendered before the grace elapsed');
+      for(var j=0;j<70;j++) fldMoraleStep(r,0.05);   // past 6.0s
+      if(r.alive || r.state!=='captured') throw new Error('unit did not surrender: alive='+r.alive+' state='+r.state);
+      if(__FIELD.captured.CS!==1400) throw new Error('captured ledger '+__FIELD.captured.CS+' != 1400');
+      if(__FIELD.surrenderEverCount!==1) throw new Error('surrenderEverCount '+__FIELD.surrenderEverCount+' != 1');
+      if(__FIELD.prisonerMarkers.length!==1 || __FIELD.prisonerMarkers[0].men!==1400) throw new Error('prisoner marker missing/wrong');
+      // T2 leg: the campaign fraction counts the captured men as total loss (SL-4, the OR convention),
+      // and the tally identity holds EXACTLY: the entire CS loss IS the captured ledger (kw = 0, missing = 0).
+      var savedCamp=(typeof G!=='undefined')?G.campaign:null; G.campaign={side:'US'}; __FIELD.campaignCtx={bd:{id:'e49fixture'}};
+      var fCS=0, sCS=0; for(var k=0;k<__FIELD.units.length;k++){ var q=__FIELD.units[k]; if(q.side!=='CS') continue; fCS+=q.maxMen; if(q.alive) sCS+=q.men; }
+      var o=fldCampaignComputeOutcome();
+      G.campaign=savedCamp; __FIELD.campaignCtx=null;
+      if(!o) throw new Error('no T2 outcome');
+      var expE=Math.max(0,Math.min(0.92,(fCS-sCS)/Math.max(1,fCS)));
+      if(Math.abs(o.eFrac-expE)>1e-9) throw new Error('T2 eFrac '+o.eFrac+' != total-loss '+expE);
+      var cas=Math.round(fCS-sCS), kw=cas-__FIELD.captured.CS-__FIELD.missing.CS;
+      if(kw!==0) throw new Error('identity: kw '+kw+' != 0 (cas '+cas+' cap '+__FIELD.captured.CS+' mis '+__FIELD.missing.CS+')');
+      if(fCS!==sCS+kw+__FIELD.captured.CS+__FIELD.missing.CS) throw new Error('identity: fielded != survivors+kw+captured+missing');
+      return { surrenderT:Math.round(r.surrenderT*10)/10, capturedCS:__FIELD.captured.CS, eFrac:Math.round(o.eFrac*1000)/1000, identityExact:true }; });
+
+    step('E49a SL-2 controls: a pursuer BEHIND never blocks (rallies as today); a nearer steady FRIENDLY reopens the corridor (rescue); an out-of-band blocker does not trigger', function(){
+      function ctl(setup){
+        var F=e49Launch(33), r=F.cs[0];
+        F.park(r,600,500); r.men=1400; r.maxMen=1400; r.state='routing'; r.rallyT=0; r.surrenderT=0; r.morale=0;
+        setup(F,r);
+        for(var i=0;i<125;i++) fldMoraleStep(r,0.05);   // 6.25s — past both the grace and the rally clock
+        return r;
+      }
+      // (a) DIRECTIONAL: steady pursuer BEHIND the router (z 800, dist 300) — must rally, never surrender
+      var r1=ctl(function(F,r){ F.park(F.us[0],600,800); F.us[0].state='steady'; });
+      if(!r1.alive || r1.state==='captured' || __FIELD.captured.CS!==0) throw new Error('(a) pursuer-behind falsely triggered surrender: state='+r1.state);
+      if(r1.state!=='wavering' && r1.state!=='steady' && r1.state!=='shaken') throw new Error('(a) router did not rally: '+r1.state);
+      // (b) RESCUE: valid blocker at 300 but a steady friendly at 100 — corridor reopenable, must rally
+      var r2=ctl(function(F,r){ F.park(F.us[0],600,200); F.us[0].state='steady'; F.park(F.cs[1],700,500); F.cs[1].state='steady'; });
+      if(!r2.alive || __FIELD.captured.CS!==0) throw new Error('(b) rescue clause failed — surrendered despite a nearer steady friendly');
+      // (c) BAND: steady enemy ahead but 300yd OFF the flight lane (dx > RALLY_R) — must rally
+      var r3=ctl(function(F,r){ F.park(F.us[0],900,200); F.us[0].state='steady'; });
+      if(!r3.alive || __FIELD.captured.CS!==0) throw new Error('(c) out-of-band enemy falsely triggered surrender');
+      return { pursuerBehindRallies:true, rescueRallies:true, outOfBandRallies:true }; });
+
+    step('E49a SL-4: the T8 phased ledgers — antietam full run keeps captured/missing CONSISTENT subsets of battleCas (never added; phaseLog sums == cumulative; missing stays ZERO until E49b)', function(){
+      G.campaign=null;
+      fldLaunchSandbox({renderer:'none', autoBoth:true, seed:7, scenario:'antietam'});
+      if(!__FIELD.phases) throw new Error('precondition: antietam should be phased');
+      __FIELD.phase='battle'; __FIELD.paused=false;
+      var n=0; while(__FIELD.phase!=='over' && n<120000){ fldSimStep(0.05); n++; }
+      if(__FIELD.phase!=='over') throw new Error('phased battle did not finish');
+      var bc=__FIELD.battleCas, cap=__FIELD.battleCaptured, mis=__FIELD.battleMissing, pl=__FIELD.phaseLog;
+      var sum={usCap:0,csCap:0,usMis:0,csMis:0};
+      for(var i=0;i<pl.length;i++){ sum.usCap+=pl[i].usCap||0; sum.csCap+=pl[i].csCap||0; sum.usMis+=pl[i].usMis||0; sum.csMis+=pl[i].csMis||0; }
+      if(sum.usCap!==cap.US || sum.csCap!==cap.CS) throw new Error('phaseLog captured sums != cumulative: '+JSON.stringify(sum)+' vs '+JSON.stringify(cap));
+      if(sum.usMis!==mis.US || sum.csMis!==mis.CS) throw new Error('phaseLog missing sums != cumulative');
+      // subsets never exceed the total-loss tally (±1/phase rounding headroom, 3 phases)
+      if(cap.US+mis.US > bc.US+3 || cap.CS+mis.CS > bc.CS+3) throw new Error('subset ledgers exceed battleCas: cap '+JSON.stringify(cap)+' mis '+JSON.stringify(mis)+' cas '+JSON.stringify(bc));
+      // E49a: shedding is NOT landed (E49b) — the missing ledger must be wired-but-ZERO across a full
+      // phased run. Captured MAY legitimately be zero at Antietam (consistency asserted above, never >0).
+      if(mis.US!==0 || mis.CS!==0) throw new Error('missing ledger nonzero with shedding not landed: '+JSON.stringify(mis));
+      return { cas:{US:Math.round(bc.US),CS:Math.round(bc.CS)}, captured:cap, missing:mis, phases:pl.length }; });
+
+    step('E49a SL-3: the symmetric SANDBOX is inert — attacker null -> zero ledgers, no surrender state, no markers after a full battle', function(){
+      fldLaunchSandbox({renderer:'none', autoBoth:true, seed:777}); fldStepN(20,0.05); runToEnd(12000);
+      if(__FIELD.attacker!==null) throw new Error('sandbox has an attacker: '+__FIELD.attacker);
+      if(__FIELD.captured.US!==0 || __FIELD.captured.CS!==0) throw new Error('sandbox captured ledger nonzero');
+      if(__FIELD.missing.US!==0 || __FIELD.missing.CS!==0) throw new Error('sandbox missing ledger nonzero');
+      if(__FIELD.surrenderEverCount!==0 || __FIELD.prisonerMarkers.length!==0) throw new Error('sandbox surrender fired');
+      for(var i=0;i<__FIELD.units.length;i++) if(__FIELD.units[i].state==='captured') throw new Error('sandbox unit captured');
+      return { winner:__FIELD.winner, inert:true }; });
+
     step('RE-LAUNCH is clean (exit removes DOM + state; relaunch fresh)', function(){
       fldLaunchSandbox({renderer:'none', seed:1}); fldExit(true);
       if(__FIELD.launched!==false) throw new Error('exit left launched=true');

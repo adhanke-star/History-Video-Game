@@ -54,6 +54,9 @@ function _fldScenarioInitPhased(opts, data) {
   __FIELD.phaseLog = [];                   // [{idx,name,winner,winBy,usCas,csCas}]
   __FIELD.battleCas = { US: 0, CS: 0 };    // cumulative casualties across phases
   __FIELD.battleFielded = { US: 0, CS: 0 };// E45 (D247): cumulative committed force across phases
+  // E49a (D258): cumulative captured/missing SUBSET ledgers beside battleCas — labeled subsets of the
+  // total-loss tally, NEVER added to it (SL-4 double-count guard; killed/wounded is derived at display).
+  __FIELD.battleCaptured = { US: 0, CS: 0 }; __FIELD.battleMissing = { US: 0, CS: 0 }; __FIELD.battleCapturedGuns = { US: 0, CS: 0 };
   // top-level fog default (like the single-objective path) — only fills an UNSET fog
   if (!__FIELD._fogSpecified && data.defaultFog) __FIELD.fog = true;
   _fldBuildPhase(0);                       // sets terrain/objective/oob/reinforce/doctrine + fldResetRun
@@ -129,10 +132,17 @@ function _fldPhaseResolved(w, by) {
   var usCas = usT.cas, csCas = csT.cas;
   __FIELD.battleCas.US += usCas; __FIELD.battleCas.CS += csCas;
   if (__FIELD.battleFielded) { __FIELD.battleFielded.US += usT.fielded; __FIELD.battleFielded.CS += csT.fielded; }
+  // E49a (D258): bank the phase's captured/missing SUBSET ledgers (fldResetRun re-zeroes them per phase).
+  // These are labeled subsets of the usCas/csCas already accumulated above — never added to battleCas (SL-4).
+  var usCap = Math.round((__FIELD.captured && __FIELD.captured.US) || 0), csCap = Math.round((__FIELD.captured && __FIELD.captured.CS) || 0);
+  var usMis = Math.round((__FIELD.missing && __FIELD.missing.US) || 0), csMis = Math.round((__FIELD.missing && __FIELD.missing.CS) || 0);
+  if (__FIELD.battleCaptured) { __FIELD.battleCaptured.US += usCap; __FIELD.battleCaptured.CS += csCap; }
+  if (__FIELD.battleMissing) { __FIELD.battleMissing.US += usMis; __FIELD.battleMissing.CS += csMis; }
+  if (__FIELD.battleCapturedGuns && __FIELD.capturedGuns) { __FIELD.battleCapturedGuns.US += Math.round(__FIELD.capturedGuns.US || 0); __FIELD.battleCapturedGuns.CS += Math.round(__FIELD.capturedGuns.CS || 0); }
   var pts = (typeof p.scoreWeight === "number") ? p.scoreWeight : 1;
   if (w === "draw") { __FIELD.phaseScore.US += pts / 2; __FIELD.phaseScore.CS += pts / 2; }
   else if (w === "US" || w === "CS") __FIELD.phaseScore[w] += pts;
-  __FIELD.phaseLog.push({ idx: idx, name: p.name, winner: w, winBy: by, usCas: usCas, csCas: csCas });
+  __FIELD.phaseLog.push({ idx: idx, name: p.name, winner: w, winBy: by, usCas: usCas, csCas: csCas, usCap: usCap, csCap: csCap, usMis: usMis, csMis: csMis });
   if (idx >= top.phases.length - 1) {
     __FIELD.winner = _fldBattleWinner(); __FIELD.winBy = "phases"; __FIELD.phase = "over";
     fldOnOver();
@@ -214,13 +224,13 @@ function _fldInterphaseCard(prevIdx, w, by) {
     '<div style="max-width:560px;max-height:88vh;overflow:auto;background:#0c0f14;border:1px solid #8a6f49;border-radius:8px;padding:22px 26px;box-shadow:0 6px 30px #000b;">' +
       '<div style="font-size:11px;letter-spacing:3px;opacity:.65;text-transform:uppercase;">Phase ' + (prevIdx + 1) + ' of ' + top.phases.length + ' complete</div>' +
       '<div style="font-size:21px;color:#e9dcc0;margin:3px 0 4px;">' + _fldEscPh(prev.name) + '</div>' +
-      '<div style="font-size:13.5px;line-height:1.5;color:#d8c87a;margin-bottom:10px;">' + held + '. <span style="opacity:.8;color:#cdbb88;">' + _fldSideFull("US") + ' ' + _fldComma(_logEntry.usCas) + ' &middot; ' + _fldSideFull("CS") + ' ' + _fldComma(_logEntry.csCas) + ' fell here.</span></div>' +
+      '<div style="font-size:13.5px;line-height:1.5;color:#d8c87a;margin-bottom:10px;">' + held + '. <span style="opacity:.8;color:#cdbb88;">' + _fldSideFull("US") + ' ' + _fldComma(_logEntry.usCas) + ' &middot; ' + _fldSideFull("CS") + ' ' + _fldComma(_logEntry.csCas) + ' fell here.' + _fldPhaseCapMisNote(_logEntry) + '</span></div>' +
       '<div style="display:flex;gap:10px;justify-content:center;margin:12px 0;padding:9px 0;border-top:1px solid #4a3c28;border-bottom:1px solid #4a3c28;">' +
         '<div style="text-align:center;"><div style="font-size:11px;opacity:.6;letter-spacing:1px;">SECTORS</div><div style="font-size:17px;color:#9fb6d8;">Union ' + _fldScFmt(sc.US) + '</div></div>' +
         '<div style="align-self:center;color:#8c8478;">vs</div>' + /* wcag-auditor: contrast fix from inherited-color@.5 (eff #7b766a, ratio 4.24) to #8c8478 (ratio 5.20) for AA compliance */
         '<div style="text-align:center;"><div style="font-size:11px;opacity:.6;letter-spacing:1px;">SECTORS</div><div style="font-size:17px;color:#d8a79f;">Confederate ' + _fldScFmt(sc.CS) + '</div></div>' +
       '</div>' +
-      '<div style="font-size:11px;opacity:.6;text-align:center;margin-bottom:14px;">Cumulative cost — Union ' + _fldComma(cas.US) + ' &middot; Confederate ' + _fldComma(cas.CS) + '</div>' +
+      '<div style="font-size:11px;opacity:.6;text-align:center;margin-bottom:14px;">Cumulative cost — Union ' + _fldComma(cas.US) + ' &middot; Confederate ' + _fldComma(cas.CS) + _fldBattleCapMisNote() + '</div>' +
       '<div style="font-size:11px;letter-spacing:2px;opacity:.65;text-transform:uppercase;">Next &mdash; Phase ' + (__FIELD.phaseIdx + 1) + '</div>' +
       '<div style="font-size:19px;color:#e9dcc0;margin:2px 0 4px;">' + _fldEscPh(next.name) + '</div>' +
       (trans.lead ? '<div style="font-size:13.5px;opacity:.9;line-height:1.5;margin-bottom:8px;">' + trans.lead + '</div>' : '') +
@@ -253,7 +263,7 @@ function _fldPhasesEndHtml() {
     var casCol = e.winner === "US" ? "#738196" : (e.winner === "CS" ? "#9c7871" : "#8d805c");
     rows += '<div style="display:flex;justify-content:space-between;gap:10px;padding:4px 0;border-top:1px solid #4a3c28;font-size:12.5px;">' +
       '<span style="opacity:.9;">' + (e.idx + 1) + '. ' + _fldEscPh(p.name) + '</span>' +
-      '<span style="color:' + col + ';white-space:nowrap;">' + outcome + ' <span style="color:' + casCol + ';">(' + _fldComma(e.usCas + e.csCas) + ' fell)</span></span></div>';
+      '<span style="color:' + col + ';white-space:nowrap;">' + outcome + ' <span style="color:' + casCol + ';">(' + _fldComma(e.usCas + e.csCas) + ' fell' + (((e.usCap || 0) + (e.csCap || 0)) > 0 ? ', ' + _fldComma((e.usCap || 0) + (e.csCap || 0)) + ' captured' : '') + ')</span></span></div>';   /* E49a (D258): the phase's mass capture, when one happened */
   }
   var sc = __FIELD.phaseScore, cas = __FIELD.battleCas;
   var verdict = (__FIELD.winner === "draw")
@@ -264,6 +274,27 @@ function _fldPhasesEndHtml() {
     rows +
     '<div style="margin-top:8px;padding-top:7px;border-top:1px solid #6f5f3f;font-size:12.5px;opacity:.9;">' + verdict +
     ' <span style="opacity:.75;">Sectors: Union ' + _fldScFmt(sc.US) + ' &middot; Confederate ' + _fldScFmt(sc.CS) + '. Cost: Union ' + _fldComma(cas.US) + ' &middot; Confederate ' + _fldComma(cas.CS) + '.</span></div></div>';
+}
+
+/* E49a (D258, SL-8): the captured/missing rider for a PHASE's cost line ("" when the phase took no
+   prisoners and lost no stragglers -> pre-E49 markup byte-identical). */
+function _fldPhaseCapMisNote(e) {
+  if (!e) return "";
+  var cap = (e.usCap || 0) + (e.csCap || 0), mis = (e.usMis || 0) + (e.csMis || 0);
+  if (!cap && !mis) return "";
+  var out = "";
+  if (cap) out += " Captured — Union " + _fldComma(e.usCap || 0) + " &middot; Confederate " + _fldComma(e.csCap || 0) + ".";
+  if (mis) out += " Missing — Union " + _fldComma(e.usMis || 0) + " &middot; Confederate " + _fldComma(e.csMis || 0) + ".";
+  return out;
+}
+/* E49a (D258, SL-8): the same rider for the CUMULATIVE battle ledgers ("" when both are zero). */
+function _fldBattleCapMisNote() {
+  var cap = __FIELD.battleCaptured || { US: 0, CS: 0 }, mis = __FIELD.battleMissing || { US: 0, CS: 0 };
+  if (!(cap.US || cap.CS || mis.US || mis.CS)) return "";
+  var out = "";
+  if (cap.US || cap.CS) out += " &middot; captured Union " + _fldComma(cap.US) + " / Confederate " + _fldComma(cap.CS);
+  if (mis.US || mis.CS) out += " &middot; missing Union " + _fldComma(mis.US) + " / Confederate " + _fldComma(mis.CS);
+  return out;
 }
 
 /* small shared helpers (uniquely prefixed). */
