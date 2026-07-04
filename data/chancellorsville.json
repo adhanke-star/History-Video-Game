@@ -21,6 +21,8 @@
     "field": { "w": 1200, "h": 900 },
     "attacker": "CS",
     "defender": "US",
+    "homeEdge": { "US": "low", "CS": "high" },
+    "_homeEdgeNote": "E47 (D241): role-aware home edges. This battle seats the US defender toward LOW z (the Chancellor crossroads line; US reinforcements enter z 140-280) and the CS attacker at HIGH z (Rodes/Colston/A.P. Hill's flank-attack echelons at z 780-840; CS reinforcement z 860), the inverse of the engine's default side-keyed edges — so before this field a routing unit fled THROUGH the enemy line, inflating defender casualties (the D235-panel E47 artifact). Rout, fallback, officer-ride, and supply-train direction all follow this declaration.",
     "defaultFog": false,
     "timeLimitSec": 480,
     "holdToWinSec": 140,
@@ -140,8 +142,8 @@
     },
     "endNote": {
       "US": {
-        "US": "History is overturned. Your army held the Chancellor crossroads against Jackson's flank attack — the ground that historically was lost when the XI Corps was routed. In May 1863 Hooker's army was driven from the field in Lee's greatest victory; under your command the line held and the Army of the Potomac did not retreat across the Rappahannock.",
-        "CS": "History is overturned. The Union held the Chancellor crossroads — the ground your army historically carried in the flank attack. In May 1863 Jackson's march crushed the Union right and drove Hooker from the field; under your defense the Confederate assault broke against the rallied Union line and never reached the crossroads."
+        "US": "History is overturned. Your army denied Jackson's flank attack a consolidated hold on the Chancellor crossroads — the ground that historically was lost when the XI Corps was routed. In May 1863 Hooker's army was driven from the field in Lee's greatest victory; under your command the rallied line held out until the attack's momentum was spent, and the Army of the Potomac did not retreat across the Rappahannock.",
+        "CS": "History is overturned. The Union denied your army a consolidated hold on the Chancellor crossroads — the ground it historically carried in the flank attack. In May 1863 Jackson's march crushed the Union right and drove Hooker from the field; here the rallied Union line held out until your assault's momentum was spent, and the decisive collapse history records never came."
       },
       "CS": {
         "US": "History holds. As in May 1863, Jackson's flank march crushed the Union right wing and drove Hooker's army from the field — the Chancellor crossroads fell, the XI Corps was shattered, and the Army of the Potomac retreated across the Rappahannock. But Jackson was mortally wounded by his own men in the twilight, a loss that cost the Confederacy its greatest combat commander on the eve of Gettysburg.",

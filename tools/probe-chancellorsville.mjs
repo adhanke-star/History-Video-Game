@@ -123,6 +123,23 @@ const SETUP = `(() => {
       return { attacker:DATA.attacker, defender:DATA.defender, objective:DATA.objective.name, defaultFog:DATA.defaultFog };
     });
 
+    step('E47 (D241): DATA declares role-aware home edges (US low / CS high) and a routing unit flees toward ITS OWN army rear', function() {
+      if (!DATA.homeEdge || DATA.homeEdge.US !== 'low' || DATA.homeEdge.CS !== 'high') throw new Error('homeEdge must be {US:"low",CS:"high"}: ' + JSON.stringify(DATA.homeEdge));
+      fldLaunchSandbox({ renderer:'none', scenario:'chancellorsville', autoBoth:true, seed:11 });
+      if (!__FIELD.homeEdgeZ) throw new Error('__FIELD.homeEdgeZ not set from data.homeEdge');
+      if (fldHomeEdgeZ('US') !== -60 || fldHomeEdgeZ('CS') !== FLD.FIELD_H + 60) throw new Error('edges not resolved role-aware: US ' + fldHomeEdgeZ('US') + ' CS ' + fldHomeEdgeZ('CS'));
+      var cs = null, us = null;
+      for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side === 'CS' && !cs) cs = u; if (u.side === 'US' && !us) us = u; }
+      __FIELD.phase = 'battle'; __FIELD.paused = false;
+      cs.state = 'routing'; cs.morale = 0; cs.rallyT = 0;
+      us.state = 'routing'; us.morale = 0; us.rallyT = 0;
+      var csZ0 = cs.z, usZ0 = us.z;
+      for (var n = 0; n < 20; n++) fldSimStep(0.05);
+      if (!(cs.z > csZ0 + 20)) throw new Error('routing CS unit did not flee toward its own high-z rear: ' + csZ0 + ' -> ' + cs.z);
+      if (!(us.z < usZ0 - 20)) throw new Error('routing US unit did not flee toward its own low-z rear: ' + usZ0 + ' -> ' + us.z);
+      return { csRout:Math.round(csZ0) + '->' + Math.round(cs.z), usRout:Math.round(usZ0) + '->' + Math.round(us.z) };
+    });
+
     step('DATA: leaders include Hooker, Howard, Jackson, Stuart, Rodes, A.P. Hill, and Paxton', function() {
       var us = ids(DATA.leaders && DATA.leaders.US), cs = ids(DATA.leaders && DATA.leaders.CS);
       ['ld_hooker', 'ld_howard'].forEach(function(id){ if (us.indexOf(id) < 0) throw new Error('US leader missing ' + id + ': ' + us); });
