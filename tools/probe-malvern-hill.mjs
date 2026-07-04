@@ -140,6 +140,42 @@ const SETUP = `(() => {
       return { attacker:DATA.attacker, defender:DATA.defender, objective:DATA.objective.name, timeLimit:DATA.timeLimitSec, holdToWin:DATA.holdToWinSec };
     });
 
+    step('E47: DATA declares role-aware home edges (US low / CS high — the armies sit inverse of the engine default)', function() {
+      if (!DATA.homeEdge || typeof DATA.homeEdge !== 'object') throw new Error('homeEdge field missing');
+      if (DATA.homeEdge.US !== 'low') throw new Error('US home edge must be "low": ' + DATA.homeEdge.US);
+      if (DATA.homeEdge.CS !== 'high') throw new Error('CS home edge must be "high": ' + DATA.homeEdge.CS);
+      return DATA.homeEdge;
+    });
+
+    step('E47: a routing unit flees toward ITS OWN army rear, not through the enemy line', function() {
+      fldLaunchSandbox({ renderer:'none', scenario:'malvernHill', autoBoth:true, seed:11 });
+      if (!__FIELD.homeEdgeZ) throw new Error('__FIELD.homeEdgeZ not set from data.homeEdge');
+      var usEdge = fldHomeEdgeZ('US'), csEdge = fldHomeEdgeZ('CS');
+      if (usEdge !== -60) throw new Error('US home edge should resolve to -60 (its own low-z rear): ' + usEdge);
+      if (csEdge !== FLD.FIELD_H + 60) throw new Error('CS home edge should resolve to FIELD_H+60: ' + csEdge);
+      // behavioral: force one CS brigade to rout and step the sim — it must move toward HIGH z (its rear),
+      // the exact inverse of the pre-E47 flight THROUGH the Union gun line toward low z.
+      var cs = null, us = null;
+      for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side === 'CS' && !cs) cs = u; if (u.side === 'US' && !us) us = u; }
+      if (!cs || !us) throw new Error('units missing');
+      __FIELD.phase = 'battle'; __FIELD.paused = false;
+      cs.state = 'routing'; cs.morale = 0; cs.rallyT = 0;
+      us.state = 'routing'; us.morale = 0; us.rallyT = 0;
+      var csZ0 = cs.z, usZ0 = us.z;
+      for (var n = 0; n < 20; n++) fldSimStep(0.05);
+      if (!(cs.z > csZ0 + 20)) throw new Error('routing CS unit did not flee toward its own high-z rear: ' + csZ0 + ' -> ' + cs.z);
+      if (!(us.z < usZ0 - 20)) throw new Error('routing US unit did not flee toward its own low-z rear: ' + usZ0 + ' -> ' + us.z);
+      return { usEdge:usEdge, csEdge:csEdge, csRout:Math.round(csZ0) + '->' + Math.round(cs.z), usRout:Math.round(usZ0) + '->' + Math.round(us.z) };
+    });
+
+    step('E47: the override does NOT leak — a sandbox launch reverts to the default side-keyed edges', function() {
+      fldLaunchSandbox({ renderer:'none', scenario:'sandbox', autoBoth:true, seed:11 });
+      if (__FIELD.homeEdgeZ !== null) throw new Error('homeEdgeZ leaked into the sandbox: ' + JSON.stringify(__FIELD.homeEdgeZ));
+      if (fldHomeEdgeZ('US') !== FLD.FIELD_H + 60) throw new Error('sandbox US edge not default: ' + fldHomeEdgeZ('US'));
+      if (fldHomeEdgeZ('CS') !== -60) throw new Error('sandbox CS edge not default: ' + fldHomeEdgeZ('CS'));
+      return { US:fldHomeEdgeZ('US'), CS:fldHomeEdgeZ('CS') };
+    });
+
     step('DATA: leaders include Porter, Hunt, Lee, Magruder, D.H. Hill, Armistead, and Jackson', function() {
       var us = ids(DATA.leaders && DATA.leaders.US), cs = ids(DATA.leaders && DATA.leaders.CS);
       ['ld_porter_malvern', 'ld_hunt_malvern'].forEach(function(id){ if (us.indexOf(id) < 0) throw new Error('US leader missing ' + id + ': ' + us); });

@@ -110,6 +110,9 @@ function fldScenarioInit(opts) {
   __FIELD.timeLimit = data.timeLimitSec || FLD.TIME_LIMIT;
   __FIELD.attacker = data.attacker || "US";   // asymmetric: the Union must SEIZE the hill; the CS denies it
   __FIELD.defender = data.defender || "CS";
+  // E47 (D240): role-aware home edges (rout/fallback/ride/supply direction key off fldHomeEdgeZ) —
+  // null whenever the data declares no homeEdge field -> the default side-keyed edges, byte-identical.
+  __FIELD.homeEdgeZ = (typeof fldHomeEdgeSpec === "function") ? fldHomeEdgeSpec(data.homeEdge) : null;
   // Phase C: a scenario may declare its AI attacker's posture (data.assaultDoctrine). "cautious" = the doomed
   // frontal assault (Fredericksburg): the AI attacker advances in line and trades but never column-rushes the
   // killing ground or presses the mass bayonet on a covered line, so the stone-wall defense is never carried by

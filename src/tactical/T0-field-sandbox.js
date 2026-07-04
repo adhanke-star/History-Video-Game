@@ -289,6 +289,7 @@ function fldInitSim(opts) {
   var sc = opts.scenario || "sandbox"; __FIELD.scenario = sc;
   __FIELD.reinforce = null; __FIELD.holdToWin = FLD.HOLD_TO_WIN; __FIELD.timeLimit = FLD.TIME_LIMIT; __FIELD.attacker = null;
   __FIELD.scenData = null; __FIELD.defender = null; __FIELD.winBy = null;   // cleared every launch (scenario init re-sets); no stale leak into the sandbox
+  __FIELD.homeEdgeZ = null;   // E47 (D240): the role-aware home-edge override — cleared every launch so a flipped battle never leaks its edges into the next launch (the sweep runs scenarios back-to-back in one page)
   // Phase C (D74): the MULTI-PHASE state (T8). Cleared every launch -> only a data.phases[] scenario sets it (via
   // _fldScenarioInitPhased), so the single-objective path (sandbox/bullrun/fredericksburg/skirmish) is byte-identical
   // (the fldCheckVictory intercept, the fldRenderTop label, and the fldOnOver seam are all no-ops when phases is null).
@@ -557,7 +558,30 @@ function fldMoraleStep(u, dt) {
 /* ===========================================================================
    MOVEMENT + ORDERS
    =========================================================================== */
-function fldHomeEdgeZ(side) { return side === "US" ? FLD.FIELD_H + 60 : -60; }
+/* E47 (D240): the home edge is SIDE-keyed by default — US = the high-z edge, CS = the low-z edge, the Bull Run
+   seating every legacy scenario inherited. A scenario whose armies sit the OTHER way (all four CS-attacker
+   battles seat the US defender at LOW z) declares role-aware edges in its data — "homeEdge": {"US":"low","CS":"high"}
+   — so a routing unit flees toward ITS OWN army's rear instead of THROUGH the enemy line (the D235-panel
+   defender-casualty inflation and its anti-Lost-Cause teaching liability). __FIELD.homeEdgeZ stays null on every
+   launch whose data carries no such field (sandbox / legacy scenarios / custom battles) -> the original
+   expression, byte-identical. Rout, fallback, officer-ride, supply-train, and cavalry/battery direction all
+   read this one function, so the override flips them coherently. */
+function fldHomeEdgeZ(side) {
+  var o = (typeof __FIELD !== "undefined") ? __FIELD.homeEdgeZ : null;
+  if (o) { var v = o[side]; if (v === "low") return -60; if (v === "high") return FLD.FIELD_H + 60; }
+  return side === "US" ? FLD.FIELD_H + 60 : -60;
+}
+/* the scenario-data homeEdge field -> the runtime override. Returns null unless BOTH sides carry a valid
+   "low"/"high" (panel hardening: a one-sided declaration is always an authoring error — the omitted side's
+   default can silently collapse both armies onto the SAME edge — so junk shapes, junk values, and partial
+   specs all fall back whole to the default side-keyed edges); a fresh object so combat never aliases
+   canonical scenario data. Called by fldScenarioInit (T1) and _fldBuildPhase (T8). */
+function fldHomeEdgeSpec(he) {
+  if (!he || typeof he !== "object") return null;
+  var us = he.US, cs = he.CS;
+  if ((us !== "low" && us !== "high") || (cs !== "low" && cs !== "high")) return null;
+  return { US: us, CS: cs };
+}
 function fldStepMovement(u, dt) {
   if (!u.alive) return;
   var tx, tz, spd, desiredFace;

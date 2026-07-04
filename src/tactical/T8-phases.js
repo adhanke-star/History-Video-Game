@@ -74,6 +74,9 @@ function _fldBuildPhase(i) {
   __FIELD.timeLimit = p.timeLimitSec || top.timeLimitSec || FLD.TIME_LIMIT;
   __FIELD.attacker = p.attacker || top.attacker || "US";
   __FIELD.defender = p.defender || top.defender || "CS";
+  // E47 (D240): role-aware home edges, per-phase override falling back to top-level (the attacker/defender
+  // pattern) — null whenever neither declares homeEdge -> the default side-keyed edges, byte-identical.
+  __FIELD.homeEdgeZ = (typeof fldHomeEdgeSpec === "function") ? fldHomeEdgeSpec(p.homeEdge || top.homeEdge) : null;
   __FIELD._atkCautious = (p.assaultDoctrine === "cautious");
   if (typeof p.defaultFog === "boolean" && !__FIELD._fogSpecified) __FIELD.fog = p.defaultFog;   // a phase may set its own fog (else inherit)
   var units = [], us = (p.oob && p.oob.US) || [], cs = (p.oob && p.oob.CS) || [], k;

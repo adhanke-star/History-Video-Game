@@ -185,6 +185,16 @@ function fldArmsScan(u) {
   return { near: near, nd: nd, weak: weak, wd: wd, foeMen: foeMen, friendMen: friendMen, enemyCav: enemyCav, ed: ed };
 }
 
+/* E47 (D240): the no-visible-enemy fallback facing — face toward the ENEMY's home edge (where the war is).
+   Byte-identical by construction when no homeEdge override is present: the default enemy edges resolve to the
+   original side-keyed constants (US -> 0, CS -> PI). In a flipped battle an idle battery/trooper no longer
+   faces its own rear (facing feeds the flank-fire multiplier and the render). */
+function fldArmsFallbackFace(side) {
+  var o = (typeof __FIELD !== "undefined") ? __FIELD.homeEdgeZ : null;
+  if (o) { var v = o[fldEnemy(side)]; if (v === "low") return 0; if (v === "high") return Math.PI; }
+  return side === "US" ? 0 : Math.PI;
+}
+
 /* the BATTERY doctrine, ASYMMETRIC by role (deterministic; never chases into melee):
    - a DEFENDING battery is sited safely: it stands and fires from good ground OUTSIDE the contested ring on its
      own side, and DISPLACES early when an unscreened enemy closes (Marye's Heights — the guns are not lost).
@@ -202,7 +212,7 @@ function fldAiArtillery(u) {
     if (__FIELD.fog && typeof fldVisible === "function" && !fldVisible(u.side, e)) continue;
     var d = fldDist(u, e); if (d < nd) { nd = d; near = e; }
   }
-  var face = near ? Math.atan2(near.x - u.x, -(near.z - u.z)) : (u.side === "US" ? 0 : Math.PI);
+  var face = near ? Math.atan2(near.x - u.x, -(near.z - u.z)) : fldArmsFallbackFace(u.side);
   var dObj = fldDist(u, obj), hz = fldHomeEdgeZ(u.side), sgn = (hz > obj.z) ? 1 : -1;
   // DISPLACE when an enemy closes on an unscreened battery — a defender bolts early (stays safe); an attacker
   // pushed forward accepts the risk and bolts only at point-blank (so it can be caught and overrun).
@@ -317,7 +327,7 @@ function fldCavScreen(u) {
     return;
   }
   var hz = fldHomeEdgeZ(u.side), sgn = (hz > obj.z) ? 1 : -1;
-  u.formation = "line"; u.order = { type: "move", tx: u.x, tz: fldClamp(obj.z + sgn * (obj.r + 140), 60, FLD.FIELD_H - 60), tface: (u.side === "US" ? 0 : Math.PI) };
+  u.formation = "line"; u.order = { type: "move", tx: u.x, tz: fldClamp(obj.z + sgn * (obj.r + 140), 60, FLD.FIELD_H - 60), tface: fldArmsFallbackFace(u.side) };
 }
 
 /* RAID: make for the enemy AMMUNITION TRAIN (the strategic raid-supply order, realized on the
