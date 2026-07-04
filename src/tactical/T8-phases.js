@@ -16,8 +16,13 @@
    - CARRY-OVER = the running casualty tally + the per-phase score/results. Antietam's
      phases are DIFFERENT troops in DIFFERENT places, so each spawns fresh; the cumulative
      casualties + the score carry (D74 "carrying forward survivors/casualty + running result").
-   - SCORING = a weighted aggregate with a real DRAW band, so Antietam's historical TACTICAL
-     DRAW / marginal-Union-strategic-check EMERGES (win the Cornfield, lose the Bridge).
+   - SCORING = a weighted aggregate with a DRAW band. HONESTY NOTE (E46/D243): with three
+     DECISIVE weight-1 phases the band (|diff| < 0.5) is structurally unreachable — a scenario
+     phase only resolves "draw" on mutual annihilation (T0 fldCheckVictory) — so at Antietam the
+     historical tactical draw is carried by the endNote narration over the historical CS 2-1
+     phase pattern (Cornfield held / lane carried / bridge-advance repulsed), not by the band.
+     The band becomes reachable if the approved E48 buzzer-resolution rule adds a contested
+     phase outcome class; re-A/B Antietam when E48 lands.
    - PER-PHASE scenData VIEW: a phase's leaders/supply/objective are spliced onto a copy of
      the top-level scenario, so the officers (T3) + logistics (T4) layers build the phase's
      cast/trains with ZERO change to those modules (they read __FIELD.scenData.leaders/.supply).
