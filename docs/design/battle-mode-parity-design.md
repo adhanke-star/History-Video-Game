@@ -275,6 +275,15 @@ segment 1 of the vet:noreg battery 93/93 green (the sole "red" was the harness k
 2.4s over its 360s budget — budget raised to 600s, no assertion touched); segment 2 in flight; the main pane owns the
 writer lane through D238/D239.
 
+### §6.1 — AMENDMENT (2026-07-04, Aaron, D250): PM2's CHANNEL IS **STRENGTH**, NOT MORALE/STEADINESS
+The D249 build attempt proved the morale/steadiness channel INVERTS for an attacking player under the pre-E49
+engine (consequence-free rout-rally cycling re-contests the objective; full evidence D249). Aaron resolved the
+fork the same day: **the PL-4 / D2XX-b enemy-conditioning contract keeps every term (ONE shared function, two
+consumer legs, exact-zero at the 72/70 baseline, hard-capped, NaN-safe, §27) but outputs a capped enemy
+STRENGTH multiplier (will-erosion = desertion = fewer men at muster) instead of a morale delta.** Read every
+"morale/steadiness debuff" in §1 D2XX-b and §2 PL-4 through this amendment. The morale/steadiness form may be
+re-examined after E49 lands (with ledger E51 — same mechanism family). PM3 and its gates are unchanged.
+
 ### §6.2a — PATCH BLOCK: V1-CHECKLIST.md queue entry (apply with M1)
 Slot under the approved-proposals group after the S25 line; if no such group exists yet in V1-CHECKLIST.md, insert
 the group header line too:
