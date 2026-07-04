@@ -26,6 +26,7 @@
    =========================================================================== */
 import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
@@ -395,9 +396,106 @@ for (const rm of RATING_MODULES) {
   }
 }
 
+// 4h. SAVE-SHAPE STRUCTURAL GATE (E41/D244) — structural enforcement of the architecture
+// non-negotiable "save changes need a _SAVE_VER bump WITH idempotent lazy migration, or be purely
+// additive". tools/save-shape.json records a whitespace-collapsed sha256/16 of every save-envelope-
+// owning function (what is WRITTEN: serializeSave; what is ACCEPTED: loadLocal / importSave /
+// _slValidSave + the E13 override pair; how it is APPLIED: applySave) plus the _SAVE_VER value. Any
+// drift fails the build until the bump-or-additive decision is made consciously and the manifest is
+// updated in the SAME commit — the diff on save-shape.json IS the audit trail. Purely additive
+// changes (new fields riding INSIDE G.settings / G.campaign with lazy defaults) never touch these
+// functions, so they pass untouched — exactly the additive path the law allows.
+// HONEST COVERAGE LIMITS (D244 Opus panel): the gate watches DECLARED functions + the version mirror.
+// It cannot see a brand-new persist path writing a different localStorage key, and it verifies the
+// bump-vs-manifest half of the law, not that a migration actually shipped — those stay review
+// territory. Assignment-form rebinding of the core envelope fns IS scanned (below). The extractor
+// has no regex-literal state; enrolled functions must not grow regex literals containing braces or
+// quotes (none do — a violation fails closed on the unbalanced-brace die).
+{
+  const SHAPE = join(ROOT, 'tools', 'save-shape.json');
+  if (!existsSync(SHAPE)) die(5, 'save-shape: tools/save-shape.json is missing — the E41 structural gate needs the tracked manifest (see D244).');
+  let shape; try { shape = JSON.parse(readFileSync(SHAPE, 'utf8')); } catch (e) { die(5, 'save-shape: tools/save-shape.json is invalid JSON: ' + e.message); }
+  // extract a top-level `function NAME(...) {...}` body with string/comment-aware brace matching
+  const extractFn = (text, name, where) => {
+    const declRe = new RegExp('(^|\\n)\\s*function\\s+' + name + '\\s*\\(', 'g');
+    const m = declRe.exec(text);
+    if (!m) die(5, 'save-shape: function ' + name + ' not found in ' + where + ' — update tools/save-shape.json if it legitimately moved (a save-shape decision, D244).');
+    // a SECOND same-name declaration in the same file would make the gate hash a dead copy while
+    // the runtime uses the last declaration (D244 panel) — refuse the ambiguity outright
+    if (declRe.exec(text)) die(5, 'save-shape: ' + name + ' is declared more than once in ' + where + ' — the gate cannot know which copy is live; keep one declaration per enrolled file.');
+    const start = m.index + m[1].length;
+    let i = text.indexOf('{', m.index + m[0].length);
+    if (i < 0) die(5, 'save-shape: no body found for ' + name + ' in ' + where);
+    let depth = 0, state = 'code';
+    for (; i < text.length; i++) {
+      const c = text[i], n = text[i + 1];
+      if (state === 'code') {
+        if (c === '/' && n === '/') { state = 'line'; i++; continue; }
+        if (c === '/' && n === '*') { state = 'block'; i++; continue; }
+        if (c === '"') { state = 'dq'; continue; }
+        if (c === "'") { state = 'sq'; continue; }
+        if (c === '`') { state = 'bq'; continue; }
+        if (c === '{') depth++;
+        else if (c === '}') { depth--; if (depth === 0) return text.slice(start, i + 1); }
+      } else if (state === 'line') { if (c === '\n') state = 'code'; }
+      else if (state === 'block') { if (c === '*' && n === '/') { state = 'code'; i++; } }
+      else { // dq / sq / bq strings
+        if (c === '\\') { i++; continue; }
+        if ((state === 'dq' && c === '"') || (state === 'sq' && c === "'") || (state === 'bq' && c === '`')) state = 'code';
+      }
+    }
+    die(5, 'save-shape: unbalanced braces extracting ' + name + ' from ' + where);
+  };
+  const sig = (txt) => createHash('sha256').update(txt.replace(/\s+/g, ' ').trim()).digest('hex').slice(0, 16);
+  // _SAVE_VER value must match the manifest's saveVer (a bump must update the manifest in the same commit)
+  const verMatch = /var\s+_SAVE_VER\s*=\s*(\d+)\s*;/.exec(base);
+  if (!verMatch) die(5, 'save-shape: could not locate `var _SAVE_VER = <n>;` in build/base.html');
+  const liveVer = Number(verMatch[1]);
+  const problems = [];
+  if (shape.saveVer !== liveVer) problems.push('_SAVE_VER is ' + liveVer + ' in build/base.html but tools/save-shape.json records saveVer ' + shape.saveVer + ' — a version bump must ship idempotent lazy migration AND update the manifest in the same commit.');
+  const fileCache = new Map([['build/base.html', base]]);
+  const readShapeFile = (rel) => {
+    if (!fileCache.has(rel)) {
+      const p = join(ROOT, rel);
+      if (!existsSync(p)) die(5, 'save-shape: enrolled file ' + rel + ' is missing from the tree');
+      fileCache.set(rel, readFileSync(p, 'utf8'));
+    }
+    return fileCache.get(rel);
+  };
+  const signatures = shape.signatures || {};
+  // the manifest itself must stay armed: the core envelope owners can be re-pointed by a
+  // conscious manifest edit (diff-visible) but never silently dropped to an empty scan
+  for (const req of ['build/base.html::serializeSave', 'build/base.html::loadLocal', 'build/base.html::applySave']) {
+    if (!(req in signatures)) problems.push('required signature "' + req + '" is missing from tools/save-shape.json — the gate cannot be disarmed by dropping its core entries.');
+  }
+  // assignment-form escape (D244 panel): a module rebinding a core envelope fn by EXPRESSION
+  // (`applySave = function(){...}`) would bypass both the collision gate (no 2nd declaration) and
+  // the hash pins above. Refuse it in src modules — envelope changes go through a declared,
+  // manifest-enrolled override (the 105-save-guard pattern). importSave stays reassignable: the
+  // shipped D234 wrapper in 91-save-slots.js uses exactly that idiom, and its accept SHAPE is
+  // pinned separately via _slValidSave.
+  {
+    const REBIND = /(^|[^.\w'"])(serializeSave|loadLocal|applySave|saveLocal)\s*=(?![=])/;
+    for (const f of modules) {
+      const mline = readFileSync(join(SRC, f), 'utf8').match(REBIND);
+      if (mline) problems.push('src/' + f + ' rebinds a core save-envelope function by assignment ("' + mline[0].trim() + '") — use a declared override enrolled in 00-manifest.json overrides + tools/save-shape.json instead.');
+    }
+  }
+  for (const key of Object.keys(signatures)) {
+    const [rel, fn] = key.split('::');
+    if (!rel || !fn) { problems.push('malformed signature key "' + key + '" (expected <file>::<function>)'); continue; }
+    const got = sig(extractFn(readShapeFile(rel), fn, rel));
+    if (got !== signatures[key]) problems.push(key + ' changed (recorded ' + signatures[key] + ', computed ' + got + ').');
+  }
+  if (problems.length) die(5, 'SAVE-SHAPE GATE (E41/D244): the save envelope drifted from tools/save-shape.json:\n  ' + problems.join('\n  ')
+    + '\n  The law: a save-shape change needs a _SAVE_VER bump WITH idempotent lazy migration, or must be purely additive'
+    + ' (new fields inside settings/campaign with lazy defaults — those never trip this gate).'
+    + ' Make that decision consciously, then update tools/save-shape.json with the computed value(s) above in the SAME commit.');
+}
+
 // ---- 5. report + write ----
 const KB = (s) => (s.length / 1024).toFixed(1) + 'KB';
-console.log('GATE OK · parse ✓ · hex ✓ · collision ✓ · no-fudge ✓ · citations ✓ · women-in-war ✓');
+console.log('GATE OK · parse ✓ · hex ✓ · collision ✓ · no-fudge ✓ · citations ✓ · women-in-war ✓ · save-shape ✓');
 console.log('  data:      GAME_DATA = {' + (dataKeys.join(', ') || '(none)') + '}');
 console.log('  assets:    __ASSETS = ' + embedCount + ' embedded (' + (embedBytes / 1024).toFixed(0) + 'KB raw' + (embedCount ? '; ' + Object.keys(embedCats).map(c => c + ':' + embedCats[c]).join(', ') : '') + ')');
 console.log('  modules:   ' + modules.join(', '));

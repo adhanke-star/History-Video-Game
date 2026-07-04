@@ -1,0 +1,13 @@
+{
+  "comment": "E41 (D244) save-shape manifest — structural enforcement of the architecture law: 'save changes need a _SAVE_VER bump WITH idempotent lazy migration, or be purely additive.' Build gate 4h (tools/build.mjs) extracts each function below from its source file, hashes it (whitespace-collapsed sha256, first 16 hex chars), and FAILS the build on any drift from this file. To change the save shape: make the bump-or-additive decision consciously, then update the hash(es) here in the SAME commit — the diff on this file is the audit trail. saveVer must equal _SAVE_VER in build/base.html. Purely additive fields riding inside settings/campaign never touch these functions and never trip the gate.",
+  "saveVer": 1,
+  "signatures": {
+    "build/base.html::serializeSave": "ad6d26e71ff9372c",
+    "build/base.html::loadLocal": "bd8e5486ad317f25",
+    "build/base.html::applySave": "5b1c6461d484bf4b",
+    "build/base.html::importSave": "34e7e850b56e32a8",
+    "src/91-save-slots.js::_slValidSave": "dd0461ffd81d6e27",
+    "src/105-save-guard.js::loadLocal": "5c845ad61b0e21e3",
+    "src/105-save-guard.js::applySave": "ec4a87a57f4ea869"
+  }
+}

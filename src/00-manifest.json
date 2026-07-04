@@ -86,7 +86,8 @@
     "101-h0-between-battle.js",
     "102-h0-tactical-hud.js",
     "103-h0-after-action.js",
-    "104-h2-cutaways.js"
+    "104-h2-cutaways.js",
+    "105-save-guard.js"
   ],
   "overrides": [
     "_t1InitAll",
@@ -101,6 +102,8 @@
     "presRenderCabinet",
     "presWireCabinet",
     "_m3dBadgeCanvas",
-    "_m3dDecorateUnits"
+    "_m3dDecorateUnits",
+    "loadLocal",
+    "applySave"
   ]
 }

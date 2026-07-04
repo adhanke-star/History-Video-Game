@@ -3,6 +3,10 @@ import "./guard-probe-browser.mjs";
 // tools/probe-save-slots.mjs — Phase J focused gate for save/load/share hardening.
 // Verifies named slots, rename/load/delete, import/export round trip, invalid payload
 // handling, no-latch menu reinjection, and D35 one-turn undo on learner-friendly terms.
+// E13 (D244): also boots the page with a TAMPERED autosave (own hasOwnProperty in
+// settings) seeded in localStorage and asserts the 105-save-guard override pair keeps
+// the boot alive (0 pageerrors), rejects the payload at loadLocal, sanitizes it at
+// applySave, and leaves every legit save byte-identical.
 
 import { chromium } from 'playwright-core';
 import { spawn } from 'node:child_process';
@@ -244,6 +248,66 @@ const SETUP = `(() => {
   }
 })()`;
 
+// E13 (D244) tamper-boot phase — evaluated on a SECOND page load that booted with a
+// tampered gor_save already in localStorage (seeded before reload). Without the
+// 105-save-guard overrides this boot dies in applySave (src.hasOwnProperty is not a
+// function) — the 0-pageerror artifact gate plus these steps are the regression teeth.
+const E13BOOT = `(() => {
+  var R = { ok:true, steps:[] };
+  function step(name, fn) {
+    try { var v = fn(); R.steps.push({ name:name, ok:true, v:v === undefined ? null : v }); }
+    catch(e) { R.ok = false; R.steps.push({ name:name, ok:false, err:String(e && e.message || e) }); }
+  }
+  step('E13 (D244): a tampered autosave (own hasOwnProperty in settings) cannot crash the boot and reads as absent', function() {
+    if (typeof loadLocal !== 'function' || typeof applySave !== 'function' || typeof hasSave !== 'function') throw new Error('save API missing');
+    if (G.mode !== 'menu') throw new Error('boot did not reach the main menu with the tampered autosave present (mode=' + G.mode + ')');
+    if (loadLocal() !== null) throw new Error('tampered autosave was not rejected by loadLocal');
+    if (hasSave()) throw new Error('hasSave() still true on a tampered autosave');
+    if (Object.prototype.hasOwnProperty.call(G.settings, 'hasOwnProperty')) throw new Error('shadow key landed on G.settings');
+    if (Object.prototype.hasOwnProperty.call(G.settings, '__e13Marker')) throw new Error('tampered settings were applied');
+    return { rejected:true, mode:G.mode };
+  });
+  step('E13 (D244): applySave sanitizes a poisoned settings object — skips the shadow key, applies the rest, never throws', function() {
+    var poisoned = JSON.parse('{"ver":0,"settings":{"hasOwnProperty":7,"__e13Direct":"x"},"campaign":null}');
+    poisoned.ver = _SAVE_VER;
+    applySave(poisoned);
+    if (G.settings.__e13Direct !== 'x') throw new Error('legit sibling key was not applied');
+    if (Object.prototype.hasOwnProperty.call(G.settings, 'hasOwnProperty')) throw new Error('shadow key copied onto G.settings');
+    if (typeof G.settings.hasOwnProperty !== 'function') throw new Error('G.settings.hasOwnProperty no longer callable');
+    delete G.settings.__e13Direct;
+    return { sanitized:true };
+  });
+  step('E13 (D244): a legit save round-trips identically through the hardened loadLocal/applySave', function() {
+    G.settings.__e13Legit = 'y';
+    if (typeof saveLocal !== 'function') throw new Error('saveLocal missing');
+    saveLocal();
+    var sv = loadLocal();
+    if (!sv) throw new Error('legit save rejected');
+    if (sv.settings.__e13Legit !== 'y') throw new Error('legit save did not round-trip');
+    delete G.settings.__e13Legit;
+    applySave(sv);
+    if (G.settings.__e13Legit !== 'y') throw new Error('applySave did not apply a legit key');
+    delete G.settings.__e13Legit;
+    localStorage.removeItem('gor_save');
+    return { roundTrip:true };
+  });
+  step('STATIC (D244): 105-save-guard redeclares ONLY loadLocal/applySave and stays out of combat/save-version state', function() {
+    // NOTE (D244 panel): this scans the on-disk MODULE SOURCE (source hygiene), not the served
+    // build — build inclusion is proven behaviorally by the three steps above (a missing override
+    // would crash the tampered boot / fail the rejection asserts) plus the E41 hash pins.
+    var txt = window.__SG_SRC__ || '';
+    if (!txt) throw new Error('module source not injected');
+    var decls = (txt.match(/(^|\\n)\\s*function\\s+[A-Za-z_$][\\w$]*\\s*\\(/g) || []);
+    if (decls.length !== 2) throw new Error('expected exactly 2 function declarations, saw ' + decls.length);
+    if (!/function\\s+loadLocal\\s*\\(/.test(txt) || !/function\\s+applySave\\s*\\(/.test(txt)) throw new Error('loadLocal/applySave redeclarations missing');
+    if (/_SAVE_VER\\s*=/.test(txt)) throw new Error('module writes _SAVE_VER');
+    if (/G\\.battle\\s*=/.test(txt)) throw new Error('module writes G.battle');
+    if (!/Object\\.prototype\\.hasOwnProperty\\.call/.test(txt)) throw new Error('tamper-proof iteration form missing');
+    return { decls:2 };
+  });
+  return JSON.stringify(R);
+})()`;
+
 async function main() {
   let server = null, browser = null;
   const probe = cfg.baseUrl + '/' + cfg.file;
@@ -258,16 +322,32 @@ async function main() {
     const pageerrors = [], consoleLines = [];
     page.on('pageerror', err => pageerrors.push(String(err.message)));
     page.on('console', msg => { if (msg.type() === 'error' || msg.type() === 'warning') consoleLines.push('[' + msg.type() + '] ' + msg.text()); });
-    await page.addInitScript(src => {
-      window.__SL_SRC__ = src;
+    await page.addInitScript(srcs => {
+      window.__SL_SRC__ = srcs.sl;
+      window.__SG_SRC__ = srcs.sg;
       try { localStorage.setItem('gor_welcomed', '1'); } catch(e) {}
-    }, readFileSync(join(ROOT, 'src', '91-save-slots.js'), 'utf8'));
+    }, { sl: readFileSync(join(ROOT, 'src', '91-save-slots.js'), 'utf8'),
+         sg: readFileSync(join(ROOT, 'src', '105-save-guard.js'), 'utf8') });
     await page.goto(probe, { waitUntil:'domcontentloaded', timeout:45000 });
     await sleep(500);
     const data = JSON.parse(await page.evaluate(SETUP));
     await page.evaluate(`(() => { try { if (typeof _slOpenManager === 'function') _slOpenManager(); } catch(e) {} })()`);
     await sleep(250);
-    await page.screenshot({ path: join(OUT, 'probe-save-slots.png'), fullPage:false });
+    // SLOW-MAC budget (D232/D233 class): the default 30s screenshot timeout flakes on the
+    // 8GB Mac under WebGL ReadPixels stalls — grant the same 120s budget, assertions untouched.
+    await page.screenshot({ path: join(OUT, 'probe-save-slots.png'), fullPage:false, timeout: 120000 });
+    // E13 (D244): seed a TAMPERED autosave, reboot the page on top of it, and run the
+    // tamper-boot teeth. The pageerror listener persists across the reload, so a boot
+    // crash (the pre-E13 behavior) fails the artifact's 0-pageerror gate.
+    await page.evaluate(`(() => {
+      localStorage.setItem('gor_save', JSON.stringify({ ver: _SAVE_VER, when: 1,
+        settings: { hasOwnProperty: 7, __e13Marker: 'tampered' }, campaign: null }));
+    })()`);
+    await page.reload({ waitUntil:'domcontentloaded', timeout:45000 });
+    await sleep(500);
+    const e13 = JSON.parse(await page.evaluate(E13BOOT));
+    data.steps = (data.steps || []).concat(e13.steps || []);
+    data.ok = !!data.ok && !!e13.ok;
     const actionableConsoleErrors = consoleLines.filter(line => line.startsWith('[error]') && !/Failed to load resource:.*404/i.test(line));
     data.pageerrors = pageerrors;
     data.console = consoleLines.slice(-20);
