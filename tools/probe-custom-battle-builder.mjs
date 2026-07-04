@@ -17,6 +17,27 @@ const OUT = join(__dirname, 'shots');
 mkdirSync(OUT, { recursive: true });
 const cfg = JSON.parse(readFileSync(join(__dirname, 'shots.json'), 'utf8'));
 const GL = ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--enable-webgl', '--disable-dev-shm-usage'];
+
+// S25 (D245) anti-drift tooth — every --h0d-* token a pre-battle config surface defines must carry
+// EXACTLY the value the H0 desk shell defines (src/99-h0-president-desk.js), so the three surfaces
+// can never quietly diverge from the shared palette again. Runs node-side before the browser.
+{
+  const canon = {};
+  const h0 = readFileSync(join(ROOT, 'src', '99-h0-president-desk.js'), 'utf8');
+  for (const m of h0.matchAll(/--h0d-([a-z0-9]+):([^;"'}]+)/g)) if (!(m[1] in canon)) canon[m[1]] = m[2].trim();
+  if (!canon.brass || !canon.focus) throw new Error('S25 tooth: could not extract --h0d-* canon from 99-h0-president-desk.js');
+  for (const rel of ['src/tactical/T2-campaign-link.js', 'src/tactical/T6-presets.js', 'src/tactical/T11-custom-battle.js']) {
+    const txt = readFileSync(join(ROOT, rel), 'utf8');
+    let defs = 0;
+    for (const m of txt.matchAll(/--h0d-([a-z0-9]+):([^;"'}]+)/g)) {
+      defs++;
+      if (!(m[1] in canon)) throw new Error('S25 tooth: ' + rel + ' defines unknown token --h0d-' + m[1]);
+      if (m[2].trim() !== canon[m[1]]) throw new Error('S25 tooth: ' + rel + ' --h0d-' + m[1] + ' = ' + m[2].trim() + ' but the H0 canon is ' + canon[m[1]]);
+    }
+    if (!defs) throw new Error('S25 tooth: ' + rel + ' defines no --h0d-* tokens (the surface fell off the shared palette)');
+  }
+  console.log('S25 token canon check: 3 surfaces match the H0 --h0d-* values');
+}
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 async function up(u) { try { const r = await fetch(u, { method: 'HEAD' }); return r.ok || r.status === 200; } catch { return false; } }
 async function closeBrowserHard(browser) {
@@ -141,6 +162,23 @@ const SETUP = `(() => {
       if (!root.querySelector('[data-cb-list="units"]')) throw new Error('unit OOB rows missing');
       if (!document.getElementById('fldCbJson')) throw new Error('import/export textarea missing');
       return { button:true, rows:document.querySelectorAll('[data-cb-list="units"]').length };
+    });
+
+    step('S25 (D245): the builder skin consumes the shared H0 --h0d-* tokens; the invented palette is gone', function() {
+      var css = _fldCbHtml();
+      ['--h0d-brass:#d8b458','--h0d-focus:#ffe27a','--h0d-panel:#111918','var(--h0d-muted)','var(--h0d-green)','var(--h0d-red)','var(--h0d-warn)','var(--h0d-line)'].forEach(function(t) {
+        if (css.indexOf(t) < 0) throw new Error('missing token use: ' + t);
+      });
+      ['#9c7a3c','#d8c8aa','#e4c677','#cf6a5e','#5e8d58','#a99778','#c9b58e','#17120d','#f5ead6','#9e8a68','#4c3b25','#3b2d1e','#665136','#20170f'].forEach(function(h) {
+        if (css.indexOf(h) >= 0) throw new Error('retired invented hex still present: ' + h);
+      });
+      // the live DOM resolves the token: an input border computes to the H0 brass
+      var inp = document.querySelector('.fld-cb input');
+      if (inp) {
+        var bc = getComputedStyle(inp).borderColor;
+        if (bc !== 'rgb(216, 180, 88)') throw new Error('input border did not resolve to --h0d-brass: ' + bc);
+      }
+      return { tokens:true, resolved:!!inp };
     });
 
     step('VALIDATION: rejects malformed JSON, missing fields, duplicate IDs, objective overflow, bad artillery, forbidden keys, and phases', function() {

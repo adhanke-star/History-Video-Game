@@ -200,19 +200,20 @@ function _fldPresetCard(group, key, def, on) {
   return '<button type="button" class="upg" aria-pressed="' + (on ? "true" : "false") + '"'
     + ' data-pcg="' + group + '" data-pcv="' + key + '"'
     + ' style="display:block;width:100%;text-align:left;margin:0 0 8px 0;padding:9px 11px;border-radius:6px;'
-    + (on ? "outline:2px solid #e8c84a;outline-offset:1px;background:#241c10;" : "background:#1a150d;") + '">'
-    + '<div style="font-weight:bold;letter-spacing:.04em;color:' + (on ? "#f0d98a" : "#e9dcc0") + ';">' + (on ? "&#9656; " : "") + def.label + '</div>'
-    + '<div style="font-size:11.5px;opacity:.82;line-height:1.45;margin-top:2px;color:#e9dcc0;">' + def.sub + '</div></button>';
+    + (on ? "outline:2px solid var(--h0d-focus);outline-offset:1px;background:var(--h0d-panel2);" : "background:var(--h0d-panel);") + '">'
+    + '<div style="font-weight:bold;letter-spacing:.04em;color:' + (on ? "var(--h0d-focus)" : "var(--h0d-ink)") + ';">' + (on ? "&#9656; " : "") + def.label + '</div>'
+    + '<div style="font-size:11.5px;opacity:.82;line-height:1.45;margin-top:2px;color:var(--h0d-ink);">' + def.sub + '</div></button>';
 }
 function _fldLeverRow(lk, cur) {
   var L = FLDP.levers[lk]; if (!L) return "";
-  /* wcag-auditor: contrast fix — label color was var(--rule,#b9a06a) which renders as #8a7350 (3.59:1 on sheet bg #26200f, fails 1.4.3 4.5:1 for 11px text); fixed to #9f845c (4.58:1) */
-  var h = '<div style="margin:8px 0"><div id="pvlbl_' + lk + '" style="font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#9f845c;margin-bottom:3px">' + L.label + '</div>'
+  /* Label-contrast history: var(--rule) rendered 3.59:1 on the sheet bg (failed 1.4.3 for 11px text);
+     a local brass fix reached 4.58:1; S25 (D245) moves it to the shared var(--h0d-brass) — 8.17:1. */
+  var h = '<div style="margin:8px 0"><div id="pvlbl_' + lk + '" style="font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--h0d-brass);margin-bottom:3px">' + L.label + '</div>'
     + '<div role="group" aria-labelledby="pvlbl_' + lk + '" style="display:flex;gap:6px;flex-wrap:wrap">';
   for (var i = 0; i < L.opts.length; i++) {
     var o = L.opts[i], on = String(o.v) === String(cur);
     h += '<button type="button" class="upg" aria-pressed="' + (on ? "true" : "false") + '" data-plg="' + lk + '" data-plv="' + o.v + '"'
-      + ' style="padding:5px 9px;font-size:12px;' + (on ? "outline:2px solid #e8c84a;outline-offset:1px;font-weight:bold;" : "") + '">' + o.l + '</button>';
+      + ' style="padding:5px 9px;font-size:12px;' + (on ? "outline:2px solid var(--h0d-focus);outline-offset:1px;font-weight:bold;" : "") + '">' + o.l + '</button>';
   }
   return h + '</div></div>';
 }
@@ -227,18 +228,19 @@ function _fldPresetSummaryLine() {
 }
 function _fldPresetHTML() {
   var s = _fldPresetState, i;
-  /* wcag-auditor: contrast fix — column header colors were var(--rule,#b9a06a) which renders as #8a7350 (3.59:1 on sheet bg #26200f, fails 1.4.3 4.5:1 for 12px text); fixed to #9f845c (4.58:1) */
-  var aiCol = '<div style="flex:1;min-width:240px"><div id="pvgrp_ai" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#9f845c;margin-bottom:6px">Opponent &mdash; AI level</div>'
+  /* Header-contrast history: var(--rule) rendered 3.59:1 on the sheet bg (failed 1.4.3 for 12px text);
+     a local brass fix reached 4.58:1; S25 (D245) moves both headers to the shared var(--h0d-brass) — 8.17:1. */
+  var aiCol = '<div style="flex:1;min-width:240px"><div id="pvgrp_ai" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--h0d-brass);margin-bottom:6px">Opponent &mdash; AI level</div>'
     + '<div role="group" aria-labelledby="pvgrp_ai">';
   for (i = 0; i < FLDP.aiOrder.length; i++) { var ak = FLDP.aiOrder[i]; aiCol += _fldPresetCard("ai", ak, FLDP.ai[ak], s.ai === ak); }
   aiCol += '</div></div>';
-  var rmCol = '<div style="flex:1;min-width:240px"><div id="pvgrp_rm" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#9f845c;margin-bottom:6px">Realism</div>'
+  var rmCol = '<div style="flex:1;min-width:240px"><div id="pvgrp_rm" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--h0d-brass);margin-bottom:6px">Realism</div>'
     + '<div role="group" aria-labelledby="pvgrp_rm">';
   for (i = 0; i < FLDP.realismOrder.length; i++) { var rk = FLDP.realismOrder[i]; rmCol += _fldPresetCard("realism", rk, FLDP.realism[rk], s.realism === rk); }
   rmCol += '</div></div>';
   var adv = "";
   if (s.advanced) {
-    adv = '<div style="margin-top:8px;border-top:1px solid #5a4a2e;padding-top:8px"><div style="font-size:11px;opacity:.7;margin-bottom:4px">Tune any single lever &mdash; the cards above jump to <b>Custom</b> when you do. The Engineering Corps (a later milestone) will read these same levers.</div>'
+    adv = '<div style="margin-top:8px;border-top:1px solid var(--h0d-line);padding-top:8px"><div style="font-size:11px;opacity:.7;margin-bottom:4px">Tune any single lever &mdash; the cards above jump to <b>Custom</b> when you do. The Engineering Corps (a later milestone) will read these same levers.</div>'
       + '<div style="display:flex;gap:18px;flex-wrap:wrap"><div style="flex:1;min-width:240px">';
     for (i = 0; i < FLDP.leverOrder.length; i++) {
       var lk = FLDP.leverOrder[i];
@@ -265,7 +267,7 @@ function _fldPresetHTML() {
     + '<h1 class="title-xl" style="text-align:center">Command &amp; Realism</h1>'
     + '<p class="title-sub" style="text-align:center">Set the opponent’s skill and how unforgiving the field is. The AI never cheats &mdash; harder means it decides sharper, not that it is handed an advantage. New to the field? <b>Recruit &times; Arcade</b>.</p>'
     + '<hr class="rule">'
-    + '<div style="max-width:680px;margin:0 auto">'
+    + '<div style="--h0d-panel:#111918;--h0d-panel2:#17231f;--h0d-ink:#f3efe4;--h0d-brass:#d8b458;--h0d-focus:#ffe27a;--h0d-line:rgba(216,180,88,.27);max-width:680px;margin:0 auto">'
     + '<div style="display:flex;gap:18px;flex-wrap:wrap">' + aiCol + rmCol + '</div>'
     + '<div style="margin-top:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">'
     +   '<button id="pvAdv" type="button" class="upg" aria-expanded="' + (s.advanced ? "true" : "false") + '">' + (s.advanced ? "&#9662; Hide advanced levers" : "&#9656; Advanced levers") + '</button>'

@@ -328,13 +328,16 @@ function fldSkirmishMenu() {
 function _fldSkOptRow(label, group, opts, cur) {
   // bug-hunt F4: a toggle-BUTTON group with aria-pressed (NOT role=radio) — the chips are click/Enter/Space
   // operable plain buttons; a radiogroup would promise arrow-key roving navigation this UI doesn't implement.
-  var h = '<div style="margin:9px 0"><div id="sklbl_' + group + '" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin-bottom:4px">' + label + '</div>'
+  // S25 (D245): labels + the selected outline consume the shared H0 --h0d-* tokens (defined on the sheet
+  // wrapper in _fldSkirmishHTML). The old var(--rule) label rendered 3.59:1 on the sheet bg — the same
+  // 1.4.3 failure the preset picker once carried; var(--h0d-brass) lands at 8.17:1.
+  var h = '<div style="margin:9px 0"><div id="sklbl_' + group + '" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--h0d-brass);margin-bottom:4px">' + label + '</div>'
     + '<div role="group" aria-labelledby="sklbl_' + group + '" style="display:flex;gap:7px;flex-wrap:wrap">';
   for (var i = 0; i < opts.length; i++) {
     var on = String(opts[i].v) === String(cur);
     h += '<button type="button" class="upg" aria-pressed="' + (on ? "true" : "false") + '"'
       + ' data-skg="' + group + '" data-skv="' + opts[i].v + '"'
-      + ' style="' + (on ? "outline:2px solid #e8c84a;outline-offset:1px;font-weight:bold;" : "") + '">' + opts[i].label + '</button>';
+      + ' style="' + (on ? "outline:2px solid var(--h0d-focus);outline-offset:1px;font-weight:bold;" : "") + '">' + opts[i].label + '</button>';
   }
   return h + '</div></div>';
 }
@@ -344,7 +347,7 @@ function _fldSkirmishHTML() {
     + '<h1 class="title-xl" style="text-align:center">Skirmish &mdash; Choose Your Battle</h1>'
     + '<p class="title-sub" style="text-align:center">A free real-time engagement on the open field &mdash; no campaign at stake.</p>'
     + '<hr class="rule">'
-    + '<div style="max-width:540px;margin:0 auto">'
+    + '<div style="--h0d-brass:#d8b458;--h0d-focus:#ffe27a;max-width:540px;margin:0 auto">'
     + _fldSkOptRow("Your side", "side", [{ v: "US", label: "Union" }, { v: "CS", label: "Confederate" }], s.side)
     + _fldSkOptRow("Army size", "size", [{ v: 2, label: "2 brigades" }, { v: 3, label: "3 brigades" }, { v: 4, label: "4 brigades" }, { v: 5, label: "5 brigades" }], s.size)
     + _fldSkOptRow("Ground", "terrain", [{ v: "open", label: "Open field" }, { v: "woods", label: "Wooded" }, { v: "ridge", label: "Ridge &amp; crest" }, { v: "river", label: "River crossing" }], s.terrain)
@@ -364,7 +367,7 @@ function _fldSkDifficultyRow() {
     var c = (typeof fldPresetResolve === "function") ? fldPresetResolve() : null;
     if (c && typeof FLDP !== "undefined") { var ai = FLDP.ai[c.ai], rm = FLDP.realism[c.realism]; lbl = (ai ? ai.label : "Custom") + " &times; " + (rm ? rm.label : "Custom"); }
   } catch (e) {}
-  return '<div style="margin:9px 0"><div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin-bottom:4px">Difficulty &amp; realism</div>'
+  return '<div style="margin:9px 0"><div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--h0d-brass);margin-bottom:4px">Difficulty &amp; realism</div>'
     + '<div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap"><span style="font-size:13px">Current: <b id="fldSkDiff">' + lbl + '</b></span>'
     + '<button id="fldSkDiffBtn" type="button" class="upg" style="padding:5px 10px;font-size:12px">Change&hellip;</button></div></div>';
 }

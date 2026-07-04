@@ -374,6 +374,21 @@ const SETUP = `(() => {
       var gv=new KeyboardEvent('keydown',{key:'Escape',bubbles:true}); d2.dispatchEvent(gv);
       try{ fldExit(true); }catch(e){}
       return { opened:true, escapeKeptBattle:true, pauseRestored:true }; });
+
+    step('S25 (D245): preset picker + skirmish menu consume the shared H0 --h0d-* tokens (presentation-only)', function(){
+      var onCard=_fldPresetCard('ai','k',{label:'L',sub:'S'},true), offCard=_fldPresetCard('ai','k',{label:'L',sub:'S'},false);
+      ['var(--h0d-focus)','var(--h0d-panel2)'].forEach(function(t){ if(onCard.indexOf(t)<0) throw new Error('selected card missing '+t); });
+      if(offCard.indexOf('var(--h0d-panel)')<0||offCard.indexOf('var(--h0d-ink)')<0) throw new Error('unselected card missing panel/ink tokens');
+      ['#e8c84a','#241c10','#1a150d','#f0d98a','#e9dcc0'].forEach(function(h){ if((onCard+offCard).indexOf(h)>=0) throw new Error('retired invented hex still in preset cards: '+h); });
+      var lever=_fldLeverRow('attrition',1);
+      if(lever.indexOf('var(--h0d-brass)')<0) throw new Error('lever label not on --h0d-brass');
+      if(lever.indexOf('#9f845c')>=0||lever.indexOf('#e8c84a')>=0) throw new Error('retired invented hex still in lever row');
+      if(typeof _fldSkOptRow==='function'){
+        var sk=_fldSkOptRow('L','probe_g',[{v:1,label:'x'}],1);
+        if(sk.indexOf('var(--h0d-brass)')<0||sk.indexOf('var(--h0d-focus)')<0) throw new Error('skirmish opt row not on the shared tokens');
+        if(sk.indexOf('var(--rule)')>=0||sk.indexOf('#e8c84a')>=0) throw new Error('skirmish opt row still on the old accents');
+      }
+      return { presetCards:true, leverRow:true, skirmishRow:typeof _fldSkOptRow==='function' }; });
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
 })()`;
@@ -389,7 +404,7 @@ const SETUP = `(() => {
   const pageerrors = []; page.on('pageerror', e => pageerrors.push(String(e.message)));
   let result = { ok:false };
   try {
-    await page.goto(probe, { waitUntil:'load', timeout:60000 });
+    await page.goto(probe, { waitUntil:'domcontentloaded', timeout:120000 });   // slow-Mac: the 'load' wait stalls while embedded assets stream (the documented gotcha, D233 class; fixed in D245); inline scripts are all the probe needs
     await sleep(500);
     result = JSON.parse(await page.evaluate(SETUP));
     result.pageerrors = pageerrors;
@@ -406,7 +421,7 @@ const SETUP = `(() => {
     })()`);
     result.screenshot = shot;
     await sleep(250);
-    await page.screenshot({ path: join(OUT,'probe-presets.png') });
+    await page.screenshot({ path: join(OUT,'probe-presets.png'), timeout: 120000 });   // slow-Mac budget (D232 class, fixed in D245): the default 30s flaked under WebGL/asset load
     await page.evaluate(`(function(){ try{ fldExit(true); }catch(e){} })()`);
   } catch(e){ result = { ok:false, fatal:String(e&&e.message||e), pageerrors }; }
   finally {
