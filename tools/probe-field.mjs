@@ -182,7 +182,7 @@ const SETUP = `(() => {
     })()`);
     result.screenshotSimT = rafProbe.simT;
     await sleep(250);
-    await page.screenshot({ path: join(OUT,'probe-field.png') });
+    await page.screenshot({ path: join(OUT,'probe-field.png'), timeout: 120000 });   // slow-Mac WebGL ReadPixels stall: the 30s default flakes (the documented D232 class, repaired in D252)
     await page.evaluate(`(function(){ try{ fldExit(true); }catch(e){} })()`);
   } catch(e){ result = { ok:false, fatal:String(e&&e.message||e), pageerrors }; }
   finally {
