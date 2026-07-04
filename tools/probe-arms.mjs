@@ -373,7 +373,7 @@ const SETUP = `(() => {
   const pageerrors = []; page.on('pageerror', e => pageerrors.push(String(e.message)));
   let result = { ok:false };
   try {
-    await page.goto(probe, { waitUntil:'load', timeout:60000 });
+    await page.goto(probe, { waitUntil:'domcontentloaded', timeout:120000 });   // slow-Mac: the 'load' wait stalls while embedded assets stream (the documented D233 class, repaired in D251; was harness-red at HEAD, steps=0); inline scripts are all the probe needs
     await sleep(500);
     result = JSON.parse(await page.evaluate(SETUP));
     result.pageerrors = pageerrors;
@@ -388,7 +388,7 @@ const SETUP = `(() => {
     })()`);
     result.screenshot = shot;
     await sleep(250);
-    await page.screenshot({ path: join(OUT,'probe-arms.png') });
+    await page.screenshot({ path: join(OUT,'probe-arms.png'), timeout: 120000 });   // slow-Mac WebGL ReadPixels stall: the 30s default flakes (the documented D232 class, repaired in D251)
     await page.evaluate(`(function(){ try{ fldExit(true); }catch(e){} })()`);
   } catch(e){ result = { ok:false, fatal:String(e&&e.message||e), pageerrors }; }
   finally {
