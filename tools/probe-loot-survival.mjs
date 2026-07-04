@@ -197,11 +197,11 @@ const SETUP = `(() => {
       return { people:reg.people.length, brigades:reg.brigades, authored:reg.authored, generated:reg.generated, first:sample.name };
     });
 
-    step('D222 REPLACEMENTS: fifteen canonical sourced records overlay generated slots and hostile packs still reject', function(){
+    step('D239 REPLACEMENTS: sixteen canonical sourced records overlay generated slots and hostile packs still reject', function(){
       var C=mkC('US'); _t1InitAll(C);
       var original=GAME_DATA['soldier-replacements'];
       if(!original || original.schema!=='cw_soldier_replacements_v1' || !Array.isArray(original.records)) throw new Error('missing D152 canonical pack');
-      if(original.records.length!==15) throw new Error('canonical D222 pack should ship exactly fifteen records, got '+original.records.length);
+      if(original.records.length!==16) throw new Error('canonical D239 pack should ship exactly sixteen records, got '+original.records.length);
       var canonByPid={}, canonReplace={};
       for(var cr=0;cr<original.records.length;cr++){ canonByPid[original.records[cr].pid]=original.records[cr]; canonReplace[original.records[cr].replacePid]=1; }
       if(!canonByPid.person_bullrun_us_2ri_rhodes || canonByPid.person_bullrun_us_2ri_rhodes.replacePid!=='ss:bullrun1:US:us_burnside:pvt') throw new Error('missing D154 Rhodes canonical record: '+JSON.stringify(original.records));
@@ -219,15 +219,16 @@ const SETUP = `(() => {
       if(!canonByPid.person_antietam_cs_21va_worsham || canonByPid.person_antietam_cs_21va_worsham.replacePid!=='ss:antietam:CS:cs_jr_jones:pvt') throw new Error('missing D220 Worsham canonical record: '+JSON.stringify(original.records));
       if(!canonByPid.person_bullrun_us_2ri_ballou || canonByPid.person_bullrun_us_2ri_ballou.replacePid!=='ss:bullrun1:US:us_burnside:cmd') throw new Error('missing D221 Ballou canonical record: '+JSON.stringify(original.records));
       if(!canonByPid.person_gettysburg_us_webb_phila_bde || canonByPid.person_gettysburg_us_webb_phila_bde.replacePid!=='ss:gettysburg:US:us_phila_bde:cmd') throw new Error('missing D222 Webb canonical record: '+JSON.stringify(original.records));
+      if(!canonByPid.person_chancellorsville_cs_33va_casler || canonByPid.person_chancellorsville_cs_33va_casler.replacePid!=='ss:chancellorsville:CS:cs_colston_div:pvt') throw new Error('missing D239 Casler canonical record: '+JSON.stringify(original.records));
       GAME_DATA['soldier-replacements']={schema:'cw_soldier_replacements_v1',records:[]};
       var rawBase=ssPersonRegistry(C);
       GAME_DATA['soldier-replacements']=original;
       var canonical=ssValidateSoldierReplacementPack(original,{basePeople:rawBase.people});
-      if(!canonical.ok || canonical.records.length!==15) throw new Error('canonical D222 pack should validate against raw generated registry: '+JSON.stringify(canonical));
+      if(!canonical.ok || canonical.records.length!==16) throw new Error('canonical D239 pack should validate against raw generated registry: '+JSON.stringify(canonical));
       var base=ssPersonRegistry(C);
       if(base.people.length!==rawBase.people.length) throw new Error('canonical replacement should preserve registry length');
-      if(base.replacements.applied!==15 || base.replacements.rejected!==0) throw new Error('canonical replacement should apply fifteen rows cleanly: '+JSON.stringify(base.replacements));
-      if(base.generated!==rawBase.generated-15 || base.authored!==rawBase.authored+15) throw new Error('canonical replacement should move fifteen rows generated->authored: '+JSON.stringify({raw:{a:rawBase.authored,g:rawBase.generated},base:{a:base.authored,g:base.generated}}));
+      if(base.replacements.applied!==16 || base.replacements.rejected!==0) throw new Error('canonical replacement should apply sixteen rows cleanly: '+JSON.stringify(base.replacements));
+      if(base.generated!==rawBase.generated-16 || base.authored!==rawBase.authored+16) throw new Error('canonical replacement should move sixteen rows generated->authored: '+JSON.stringify({raw:{a:rawBase.authored,g:rawBase.generated},base:{a:base.authored,g:base.generated}}));
       var rhodesOld=ssFindPerson(C,'ss:bullrun1:US:us_burnside:pvt');
       var rhodes=ssFindPerson(C,'person_bullrun_us_2ri_rhodes');
       if(!rhodes || !rhodesOld || rhodesOld.pid!==rhodes.pid) throw new Error('Rhodes alias lookup failed');
@@ -343,6 +344,14 @@ const SETUP = `(() => {
       if(!webb.bio || webb.bio.indexOf('Gettysburg')<0 || webb.bio.indexOf('Pickett')<0 || webb.bio.indexOf('Angle')<0 || !webb.sourceNote || webb.sources.length<3) throw new Error('Webb source/bio payload missing');
       if(webb.sourceNote.indexOf('No company command')<0 || webb.sourceNote.indexOf('no major-general-at-Gettysburg rank')<0 || webb.sourceNote.indexOf('no portrait')<0) throw new Error('Webb honesty caveats missing: '+webb.sourceNote);
       if(webb.portrait) throw new Error('Webb should not assert an unverified portrait: '+JSON.stringify(webb.portrait));
+      var caslerOld=ssFindPerson(C,'ss:chancellorsville:CS:cs_colston_div:pvt');
+      var casler=ssFindPerson(C,'person_chancellorsville_cs_33va_casler');
+      if(!casler || !caslerOld || caslerOld.pid!==casler.pid) throw new Error('Casler alias lookup failed');
+      if(casler.generated || !casler.replacement || casler.provenance!=='Verified' || casler.name!=='John O. Casler') throw new Error('Casler row not sourced/verified: '+JSON.stringify(casler));
+      if(casler.rank!=='Private' || casler.side!=='CS' || casler.branch!=='inf' || casler.team.regiment!=='33rd Virginia Infantry' || casler.team.brigade!=="Paxton's Brigade (Stonewall Brigade)" || casler.team.company!=='Company A') throw new Error('Casler rank/unit mismatch: '+JSON.stringify(casler.team));
+      if(!casler.bio || casler.bio.indexOf('Chancellorsville')<0 || casler.bio.indexOf('Pioneer Corps')<0 || casler.bio.indexOf('Stonewall Brigade')<0 || !casler.sourceNote || casler.sources.length<3) throw new Error('Casler source/bio payload missing');
+      if(casler.sourceNote.indexOf('did not witness Paxton')<0 || casler.sourceNote.indexOf('secondhand')<0 || casler.sourceNote.indexOf('No portrait')<0 || casler.sourceNote.indexOf('inferred from the absence')<0) throw new Error('Casler honesty caveats missing: '+casler.sourceNote);
+      if(casler.portrait) throw new Error('Casler should not assert an unverified portrait: '+JSON.stringify(casler.portrait));
       var target=findPerson(rawBase,function(p){ return p.generated && p.side==='US' && p.pid.indexOf(':pvt')>0 && !canonReplace[p.pid] && p.team && p.team.army; });
       var authored=findPerson(rawBase,function(p){ return !p.generated && p.provenance==='Verified'; });
       if(!target) throw new Error('no generated replacement target found');
@@ -381,7 +390,7 @@ const SETUP = `(() => {
       }
       var restored=ssPersonRegistry(C);
       if(restored.generated!==base.generated || restored.authored!==base.authored) throw new Error('canonical pack restore changed registry');
-      return { canonicalRecords:original.records.length, rhodes:rhodes.pid, mccarter:mccarter.pid, watkins:watkins.pid, chamberlain:chamberlain.pid, cushing:cushing.pid, vincent:vincent.pid, stillwell:stillwell.pid, cook:cook.pid, howe:howe.pid, waller:waller.pid, benjamin:benjamin.pid, barlow:barlow.pid, worsham:worsham.pid, ballou:ballou.pid, webb:webb.pid, target:target.pid, applied:base.replacements.applied, hostileRejected:true };
+      return { canonicalRecords:original.records.length, rhodes:rhodes.pid, mccarter:mccarter.pid, watkins:watkins.pid, chamberlain:chamberlain.pid, cushing:cushing.pid, vincent:vincent.pid, stillwell:stillwell.pid, cook:cook.pid, howe:howe.pid, waller:waller.pid, benjamin:benjamin.pid, barlow:barlow.pid, worsham:worsham.pid, ballou:ballou.pid, webb:webb.pid, casler:casler.pid, target:target.pid, applied:base.replacements.applied, hostileRejected:true };
     });
 
     step('JOURNEY: play-as-anyone start enables survival and stores a saveable selected person without mutating canonical data', function(){
@@ -494,7 +503,7 @@ const SETUP = `(() => {
       var C=mkC('US'); G.campaign=C; _t1InitAll(C);
       lootAddItem(C,'commissary_rations',1,'probe');
       var reg=ssPersonRegistry(C);
-      if(reg.people.length!==627) throw new Error('expected current 627-person registry, got '+reg.people.length);   // D237: 603 -> 627 — the D235 M10 accurate-input additions (9 documented formations: Birney/Bigelow/Benning-Anderson Day 2, Hazard/McGilvery/Hays/Hall-Harrow Day 3, Ruggles at Shiloh) legitimately generate 24 new prosopography slots
+      if(reg.people.length!==630) throw new Error('expected current 630-person registry, got '+reg.people.length);   // D239: 627 -> 630 — the C64-exposed us_osborn_hill accurate-input addition (Osborn's Cemetery Hill guns) generates 3 new prosopography slots (D237 history: 603 -> 627 for the D235 M10 formations)
       var generated=findPerson(reg,function(p){ return p.generated && p.team && p.team.brigade && p.team.company; });
       var authored=findPerson(reg,function(p){ return !p.generated && !p.replacement && p.provenance==='Verified'; });
       if(!generated) throw new Error('no generated person with brigade/company team hierarchy');
@@ -513,7 +522,7 @@ const SETUP = `(() => {
       var cards=root.querySelectorAll('[data-ss-card]');
       if(cards.length!==reg.people.length) throw new Error('register card count mismatch '+cards.length+' vs '+reg.people.length);
       var count=root.querySelector('#ssRegCount');
-      if(!count || count.textContent.indexOf('627 of 627')<0) throw new Error('full registry count missing: '+(count&&count.textContent));   // D237: tracks the 627-person registry (see the count assertion above)
+      if(!count || count.textContent.indexOf('630 of 630')<0) throw new Error('full registry count missing: '+(count&&count.textContent));   // D239: tracks the 630-person registry (see the count assertion above)
       var gCard=cardByPid(root,generated.pid), aCard=cardByPid(root,authored.pid);
       if(!gCard || !aCard) throw new Error('target cards missing');
       if(gCard.textContent.indexOf('Generated')<0 || gCard.textContent.indexOf('Inferred')<0) throw new Error('generated/Inferred card display missing: '+gCard.textContent);
@@ -644,6 +653,16 @@ const SETUP = `(() => {
       if(webbTxt.indexOf('Philadelphia Brigade')<0 || webbTxt.indexOf('Second Division')<0 || webbTxt.indexOf('II Corps')<0 || webbTxt.indexOf('Gettysburg')<0 || webbTxt.indexOf('Pickett')<0 || webbTxt.indexOf('Angle')<0 || webbTxt.indexOf('Source note:')<0 || webbTxt.indexOf('Sources (3)')<0) throw new Error('Webb detail source/bio/unit payload missing: '+webbTxt);
       if(webbTxt.indexOf('No company command')<0 || webbTxt.indexOf('no major-general-at-Gettysburg rank')<0 || webbTxt.indexOf('no portrait')<0) throw new Error('Webb honesty caveats missing from detail: '+webbTxt);
       if(webbDetail.querySelector('.ss-person-portrait')) throw new Error('Webb should not render an unverified portrait');
+      var caslerCard=cardByPid(root,'person_chancellorsville_cs_33va_casler');
+      if(!caslerCard) throw new Error('Casler sourced replacement card missing');
+      if(caslerCard.textContent.indexOf('John O. Casler')<0 || caslerCard.textContent.indexOf('Sourced')<0 || caslerCard.textContent.indexOf('Verified')<0) throw new Error('Casler card source/provenance missing: '+caslerCard.textContent);
+      caslerCard.querySelector('[data-ss-pick]').click();
+      var caslerDetail=root.querySelector('#ssPersonDetailCard');
+      if(!caslerDetail || caslerDetail.getAttribute('data-ss-detail-pid')!=='person_chancellorsville_cs_33va_casler') throw new Error('Casler detail did not select');
+      var caslerTxt=caslerDetail.textContent;
+      if(caslerTxt.indexOf('33rd Virginia Infantry')<0 || caslerTxt.indexOf("Paxton's Brigade (Stonewall Brigade)")<0 || caslerTxt.indexOf('Chancellorsville')<0 || caslerTxt.indexOf('Pioneer Corps')<0 || caslerTxt.indexOf('Source note:')<0 || caslerTxt.indexOf('Sources (3)')<0) throw new Error('Casler detail source/bio/unit payload missing: '+caslerTxt);
+      if(caslerTxt.indexOf('did not witness Paxton')<0 || caslerTxt.indexOf('secondhand')<0 || caslerTxt.indexOf('No portrait')<0) throw new Error('Casler honesty caveats missing from detail: '+caslerTxt);
+      if(caslerDetail.querySelector('.ss-person-portrait')) throw new Error('Casler should not render an unverified portrait');
       var vincentCard=cardByPid(root,'person_gettysburg_us_vincent_bde');
       if(!vincentCard) throw new Error('Vincent sourced replacement card missing');
       if(vincentCard.textContent.indexOf('Strong Vincent')<0 || vincentCard.textContent.indexOf('Sourced')<0 || vincentCard.textContent.indexOf('Verified')<0) throw new Error('Vincent card source/provenance missing: '+vincentCard.textContent);

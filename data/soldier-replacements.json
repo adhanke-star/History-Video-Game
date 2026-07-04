@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "decision": "D222",
+    "decision": "D239",
     "schema": "cw_soldier_replacements_v1",
     "scope": "Citation-grade replacements for generated Soldier's Story representative rows.",
     "provenance": "Inferred",
-    "note": "D222 adds the fifteenth narrow sourced replacement slice after D214 parked Group 5 and resumed Phase I. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
+    "note": "D239 adds the sixteenth narrow sourced replacement slice (Casler — the first Chancellorsville record; D222 added the fifteenth, Webb). Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
   },
   "schema": "cw_soldier_replacements_v1",
   "records": [
@@ -1132,6 +1132,74 @@
       ],
       "sourceNote": "NPS identifies Webb as newly appointed brigadier general commanding the Philadelphia Brigade at Gettysburg and its troops throwing back the Angle breakthrough; NPS OOB places the brigade in Second Division, II Corps. CMOHS supports the July 3 action. No company command, no major-general-at-Gettysburg rank, no portrait.",
       "bio": "Alexander S. Webb commanded the Philadelphia Brigade at Gettysburg as a newly appointed brigadier general. On July 3, during Pickett's Charge, his brigade held the Union center near the Angle as Confederate troops reached the stone wall. The Medal of Honor citation later credited his personal gallantry in leading his men at a critical period. This replacement keeps the claim narrow: Webb as Philadelphia Brigade commander in II Corps, not a company officer, major general at Gettysburg, or portrait claim."
+    },
+    {
+      "pid": "person_chancellorsville_cs_33va_casler",
+      "replacePid": "ss:chancellorsville:CS:cs_colston_div:pvt",
+      "name": "John O. Casler",
+      "side": "CS",
+      "rank": "Private",
+      "branch": "inf",
+      "role": "private soldier",
+      "year": 1863,
+      "provenance": "Verified",
+      "team": {
+        "side": "CS",
+        "army": "Army of Northern Virginia",
+        "corps": "Jackson's Second Corps",
+        "division": "Trimble's Division (Colston commanding)",
+        "brigade": "Paxton's Brigade (Stonewall Brigade)",
+        "regiment": "33rd Virginia Infantry",
+        "company": "Company A"
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Four Years in the Stonewall Brigade",
+          "author": "John O. Casler",
+          "repository": "Internet Archive (1906 revised edition, Appeal Publishing Co.)",
+          "locator": "Chapter XV, Chancellorsville",
+          "url": "https://archive.org/details/fouryearsinston00hotcgoog",
+          "type": "primary",
+          "note": "Casler's own memoir places him at Chancellorsville with the 33rd Virginia — by his account detailed to the division Pioneer Corps, clearing felled timber from the Plank Road during the May 2 flank march and burying the dead afterward. First published 1893; revised and expanded 1906."
+        },
+        {
+          "title": "Four Years in the Stonewall Brigade (American Civil War Classics)",
+          "author": "University of South Carolina Press",
+          "repository": "University of South Carolina Press",
+          "locator": "Book page with the Robert K. Krick introduction",
+          "url": "https://uscpress.com/Four-Years-in-the-Stonewall-Brigade",
+          "type": "secondary",
+          "note": "States Casler was a native of Gainesboro, Virginia, enlisted in June 1861 in Company A, 33rd Virginia Infantry, was captured in February 1865, and spent the war's final months imprisoned at Fort McHenry; confirms the 1893 first publication and 1906 revision."
+        },
+        {
+          "title": "Order of Battle — Chancellorsville, Second Army Corps",
+          "author": "National Park Service",
+          "repository": "Fredericksburg & Spotsylvania National Military Park",
+          "locator": "Confederate Second Corps order of battle",
+          "url": "https://www.nps.gov/frsp/learn/historyculture/order-of-battle-chancellorsville-second-army-corps.htm",
+          "type": "secondary",
+          "note": "Places the 33rd Virginia (Col. Abraham Spengler) in Paxton's Brigade (Stonewall Brigade), Trimble's Division under Brig. Gen. Raleigh Colston, Jackson's Second Corps, at Chancellorsville."
+        }
+      ],
+      "sourceNote": "He did not witness Paxton's death; Jackson's wounding is secondhand; the pioneer-corps detail is his own account alone; Private rank is inferred from the absence of any attested promotion. USC Press confirms identity, Company A / 33rd Virginia, June 1861; the NPS OOB anchors the Stonewall Brigade / Colston chain. No portrait. Ratings stay neutral Inferred.",
+      "bio": "John O. Casler served as a private in Company A, 33rd Virginia Infantry, Stonewall Brigade, and was at Chancellorsville with Paxton's Brigade of Trimble's Division, Colston commanding, in Jackson's Second Corps. By his own account he spent the battle detailed to the division Pioneer Corps, clearing felled timber from the Plank Road ahead of Jackson's May 2 flank column and burying the dead when the fighting ended. His memoir Four Years in the Stonewall Brigade (1893, revised 1906) — ranked by its University of South Carolina Press edition among the most sought-after and cited Confederate soldier accounts — is valued for its candor about straggling, foraging, and the unheroic labor of war."
     }
   ],
   "_template": {

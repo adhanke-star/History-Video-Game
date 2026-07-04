@@ -148,6 +148,20 @@ const SETUP = `(() => {
       return { rifled: checked.join(',') };
     });
 
+    step('C65 (D239) ACCURATE LINKAGE: every leader attach resolves to a real OOB/reinforcement unit id (fldById is exact-match, so a dangling attach is a SILENT no-op — the C33 class), and ld_berry binds to us_berry_div', function() {
+      var unitIds = {};
+      (DATA.oob.US || []).concat(DATA.oob.CS || []).concat(DATA.reinforcements || []).forEach(function(u){ if (u && u.id) unitIds[u.id] = 1; });
+      var Ls = (DATA.leaders && (DATA.leaders.US || []).concat(DATA.leaders.CS || [])) || [];
+      var checked = [];
+      for (var i = 0; i < Ls.length; i++) { var ld = Ls[i];
+        if (!ld.attach) continue;
+        if (!unitIds[ld.attach]) throw new Error('leader ' + ld.id + ' attach "' + ld.attach + '" matches no unit id (C33/C65 silent-linker class)');
+        checked.push(ld.id + '->' + ld.attach); }
+      var berry = null; for (var j = 0; j < Ls.length; j++) if (Ls[j].id === 'ld_berry') berry = Ls[j];
+      if (!berry || berry.attach !== 'us_berry_div') throw new Error('ld_berry attach not us_berry_div: ' + (berry && berry.attach));
+      return { attaches: checked.join(' | ') };
+    });
+
     step('DATA: terrain teaches the Wilderness, Dowdall\\'s Tavern, Hazel Grove, Fairview, and the Chancellor breastworks', function() {
       var markers = DATA.terrain.markers || [], hills = DATA.terrain.hills || [], walls = DATA.terrain.walls || [];
       var txt = JSON.stringify({ markers:markers, hills:hills, walls:walls });

@@ -94,6 +94,23 @@ const SETUP = `(() => {
       if(!(heth.men>=3000 && heth.men<=3800)) throw new Error('cs_heth_division men='+heth.men+' outside the corrected ~3,400 two-brigade band (C30)');
       return { seating:out.join(' | '), hethMen:heth.men }; });
 
+    step('C64 (D239) STANNARD NOT DOUBLE-COUNTED: Day 3 keeps BOTH Vermont entries (the line + the famous wheel — the teaching survives) but their combined strength stays in the brigade\\'s real engaged band (~1,790-1,950), not the old ~4,000', function(){
+      var p3=DATA.phases[2];
+      var line=null, us=p3.oob.US; for(var i=0;i<us.length;i++) if(us[i].id==='us_stannard') line=us[i];
+      var flank=null, rf=p3.reinforcements||[]; for(var j=0;j<rf.length;j++) if(rf[j].id==='us_stannard_flank') flank=rf[j];
+      if(!line) throw new Error('us_stannard missing from Day 3 OOB');
+      if(!flank) throw new Error('us_stannard_flank missing from Day 3 reinforcements — the wheel teaching entry was lost');
+      if(!(line.men>0 && line.men<=800)) throw new Error('us_stannard men='+line.men+' — the line entry should carry only the 14th Vermont (~650)');
+      if(!(flank.men>0 && flank.men<=1300)) throw new Error('us_stannard_flank men='+flank.men+' — the flank entry should carry only the 13th+16th (~1,140)');
+      var total=line.men+flank.men;
+      if(!(total>=1700 && total<=2000)) throw new Error('Stannard entries total '+total+' — outside the 1,700-2,000 tolerance around the sourced ~1,790-1,950 engaged band (C64 double-count regression)');
+      var trimble=null, osborn=null;
+      for(var k=0;k<us.length;k++) if(us[k].id==='us_osborn_hill') osborn=us[k];
+      var cs=p3.oob.CS; for(var m=0;m<cs.length;m++) if(cs[m].id==='cs_trimble_div') trimble=cs[m];
+      if(!trimble || !(trimble.men>=1500 && trimble.men<=2200)) throw new Error('cs_trimble_div men='+(trimble&&trimble.men)+' — outside the 1,500-2,200 tolerance around the sourced ~1,724-1,916 two-brigade force (only Lane + Lowrance charged)');
+      if(!osborn || !(osborn.guns>=15 && osborn.guns<=22)) throw new Error('us_osborn_hill missing or guns='+(osborn&&osborn.guns)+' — the documented Cemetery Hill northern enfilade (18 guns) must stay on the board');
+      return { line:line.men, flank:flank.men, total:total, trimble:trimble.men, osbornGuns:osborn.guns }; });
+
     step('MULTI-PHASE LAUNCH: phase state initializes, phase 0 (Day 1 McPherson Ridge) builds its OOB + objective + running tally', function(){
       fldLaunchSandbox({renderer:'none', scenario:'gettysburg', autoBoth:true, seed:12345});
       if(__FIELD.scenario!=='gettysburg') throw new Error('scenario not set: '+__FIELD.scenario);

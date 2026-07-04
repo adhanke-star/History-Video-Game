@@ -62,7 +62,7 @@
         { "id": "ld_howard", "name": "Maj. Gen. Oliver O. Howard", "short": "Howard", "quality": 0.48, "radius": 220, "x": 600, "z": 820, "fate": 2.4,
           "note": "Commanded the XI Corps — the corps that was shattered by Jackson's flank attack. Howard had posted no pickets on his exposed right flank despite warnings; the corps was routed with ~2,400 casualties. He survived to command the Freedmen's Bureau after the war. (Verified)",
           "teach": "Gen. Howard's XI Corps is shattered — the flank was exposed and Jackson's men pour out of the Wilderness onto the unsuspecting line." },
-        { "id": "ld_berry", "name": "Maj. Gen. Hiram G. Berry", "short": "Berry", "quality": 0.58, "radius": 190, "attach": "us_berry", "fate": 0.35,
+        { "id": "ld_berry", "name": "Maj. Gen. Hiram G. Berry", "short": "Berry", "quality": 0.58, "radius": 190, "attach": "us_berry_div", "fate": 0.35,
           "note": "Commanded the 2nd Division of the III Corps (Sickles's old division — Hooker's former command) that counterattacked to stem the rout. Killed on May 3 while rallying his men near the Chancellor House — one of the Union's most promising division commanders. (Verified - corps corrected: III Corps, not II Corps.)",
           "teach": "Gen. Berry falls rallying his division — the counterattack loses its leader at the critical moment." },
         { "id": "ld_sickles", "name": "Maj. Gen. Daniel E. Sickles", "short": "Sickles", "quality": 0.56, "radius": 230, "x": 600, "z": 500, "fate": 2.5,
