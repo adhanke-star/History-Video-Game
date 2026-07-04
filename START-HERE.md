@@ -25,7 +25,7 @@ The game: a teaching wargame in three layers — **owner-mode grand strategy** (
 - **`REVIEW-QUEUE.md`** — the standing **FABLE-AUDIT findings ledger** (the memory between audit runs; every fix flips its line to fixed-in-D###). The run-e/f/g/h priorities/locks it used to carry are archived in `legacy/REVIEW-QUEUE-2026-06-runs-efgh.md`; current priorities + locks live in `V1-CHECKLIST.md` + this file. *(S16/S35, D236)*
 - **`SOLDIER-REPLACEMENT-FORMAT.md`** — the canonical import-lane format for Phase I Soldier's Story citation-grade replacements (live through the current Priority-1 work).
 - **`RATING-SYSTEM-DESIGN.md`** — design law for the D94 OVR/ratings layer (T14).
-- **`ATTACKER-AI-PROPOSAL.md`** — a STANDING OPEN-DECISION doc (an Aaron fork, not yet approved); kept at root deliberately.
+- **`docs/design/battle-mode-parity-design.md`** — the AARON-LOCKED battle-mode parity design law (E42/E43/E45 + the attacker-AI fork, design session 2026-07-03; committed by the arc's M1, D246-D248). *(`ATTACKER-AI-PROPOSAL.md` was RESOLVED as superseded-by-D64 and retired to `legacy/` in D248 — it was never an open fork after D64 productionized it.)*
 - **`docs/design/`** — durable design/research packets that must survive a fresh clone (first resident: `ui-redesign-research.md`, the H0 research packet, moved out of gitignored `.tmp/` in D236).
 - **`FABLE-5-PLAYBOOK.md`** — operating Claude Fable 5 (D223): effort ladder, behavioral deltas, the standard run-prompt snippets, refusal handling, rollback pointer.
 - **`FABLE-AUDIT-PROMPT.md`** — the paste-ready Fable 5 full-spectrum audit + improve kickoff prompt (re-runnable).
@@ -35,7 +35,7 @@ The game: a teaching wargame in three layers — **owner-mode grand strategy** (
 - **`build/base.html`** — the FROZEN run-h foundation (Classic + 3D engine). **NEVER edit.**
 
 ## 🗄️ Legacy (in `legacy/` — superseded run-g/run-h material; reference only, NOT live strategy)
-Old kickoff prompts, the pre-modularization plans, the graphics/3D/Blender/asset notes, and earlier handoffs. They explain *how we got here* but do **not** describe current strategy — `AUTONOMOUS-RUN.md` §7 supersedes all of them. Files: `legacy/{AUTONOMOUS-RUN-PROMPT, NEXT-CHAT-PROMPT, NEXT-RUN-PLAN, CC-KICKOFF, GRAPHICS-RUN-PROMPT, GRAPHICS-RUN-CONTINUE, MODERN-UGG-KICKOFF, DESIGN-BIBLE, BUILD-PLAN, 3D-ASSET-PLAN, ASSET-PROMPTS, BLENDER-MCP-SETUP, BLENDER-CONNECT-STEPS, AUDIT-PROTOCOL, GENERALS_HANDOFF, PHASE4_HALT, PLAYTEST-LOG, OVERNIGHT-RUN-PROMPT, REVIEW-QUEUE-2026-06-runs-efgh}.md` *(the last two moved in D236 — the overnight prompt's queue completed long ago; the run-e/f/g/h review-queue content is superseded)*.
+Old kickoff prompts, the pre-modularization plans, the graphics/3D/Blender/asset notes, and earlier handoffs. They explain *how we got here* but do **not** describe current strategy — `AUTONOMOUS-RUN.md` §7 supersedes all of them. Files: `legacy/{AUTONOMOUS-RUN-PROMPT, NEXT-CHAT-PROMPT, NEXT-RUN-PLAN, CC-KICKOFF, GRAPHICS-RUN-PROMPT, GRAPHICS-RUN-CONTINUE, MODERN-UGG-KICKOFF, DESIGN-BIBLE, BUILD-PLAN, 3D-ASSET-PLAN, ASSET-PROMPTS, BLENDER-MCP-SETUP, BLENDER-CONNECT-STEPS, AUDIT-PROTOCOL, GENERALS_HANDOFF, PHASE4_HALT, PLAYTEST-LOG, OVERNIGHT-RUN-PROMPT, REVIEW-QUEUE-2026-06-runs-efgh, ATTACKER-AI-PROPOSAL}.md` *(the overnight prompt + run-e/f/g/h review-queue moved in D236; ATTACKER-AI-PROPOSAL retired in D248 — resolved as superseded by D64)*.
 
 ---
 

@@ -474,8 +474,21 @@ function fldCampaignComputeOutcome() {
     fielded[u.side] += Math.max(0, u.maxMen || u.men || 0);
     if (u.alive) remain[u.side] += Math.max(0, u.men || 0);
   }
-  var pFrac = fldClamp(1 - remain[ps] / Math.max(1, fielded[ps]), 0, 0.92);
-  var eFrac = fldClamp(1 - remain[es] / Math.max(1, fielded[es]), 0, 0.92);
+  // E45 (D247): PHASE-AWARE — a multi-phase battle's final-sector units are only the LAST phase's
+  // committed force, so the single-phase read above would silently under-count the day. When the
+  // T8 cumulative tallies exist AND have accumulated (>=1 phase resolved), the fractions aggregate
+  // losses/fielded across ALL phases. Unreachable in every shipped path today (no phased battle is
+  // campaign-launchable — _fldCampaignScenarioFor returns only bullrun1/null); load-bearing the day
+  // the epics join the campaign, and the PM3 sim-backed resolve routes through this exact function.
+  var pFrac, eFrac;
+  if (__FIELD.phases && __FIELD.battleFielded && __FIELD.battleCas
+      && ((__FIELD.battleFielded.US || 0) + (__FIELD.battleFielded.CS || 0) > 0)) {
+    pFrac = fldClamp((__FIELD.battleCas[ps] || 0) / Math.max(1, __FIELD.battleFielded[ps] || 0), 0, 0.92);
+    eFrac = fldClamp((__FIELD.battleCas[es] || 0) / Math.max(1, __FIELD.battleFielded[es] || 0), 0, 0.92);
+  } else {
+    pFrac = fldClamp(1 - remain[ps] / Math.max(1, fielded[ps]), 0, 0.92);
+    eFrac = fldClamp(1 - remain[es] / Math.max(1, fielded[es]), 0, 0.92);
+  }
   var winner = __FIELD.winner, winBy = __FIELD.winBy;
   var winnerSide = (winner === "draw" || winner == null) ? null : winner;
   var win = winnerSide === ps;

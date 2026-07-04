@@ -16,6 +16,10 @@
    - CARRY-OVER = the running casualty tally + the per-phase score/results. Antietam's
      phases are DIFFERENT troops in DIFFERENT places, so each spawns fresh; the cumulative
      casualties + the score carry (D74 "carrying forward survivors/casualty + running result").
+     E45 (D247): a cumulative FIELDED tally (battleFielded) accumulates beside battleCas so
+     campaign feedback (T2 fldCampaignComputeOutcome) can aggregate losses/fielded across ALL
+     phases instead of reading only the final sector's units — inert until a phased battle
+     carries a campaignCtx (none does today); load-bearing when the epics join the campaign.
    - SCORING = a weighted aggregate with a DRAW band. HONESTY NOTE (E46/D243): with three
      DECISIVE weight-1 phases the band (|diff| < 0.5) is structurally unreachable — a scenario
      phase only resolves "draw" on mutual annihilation (T0 fldCheckVictory) — so at Antietam the
@@ -49,6 +53,7 @@ function _fldScenarioInitPhased(opts, data) {
   __FIELD.phaseScore = { US: 0, CS: 0 };   // weighted per-phase points
   __FIELD.phaseLog = [];                   // [{idx,name,winner,winBy,usCas,csCas}]
   __FIELD.battleCas = { US: 0, CS: 0 };    // cumulative casualties across phases
+  __FIELD.battleFielded = { US: 0, CS: 0 };// E45 (D247): cumulative committed force across phases
   // top-level fog default (like the single-objective path) — only fills an UNSET fog
   if (!__FIELD._fogSpecified && data.defaultFog) __FIELD.fog = true;
   _fldBuildPhase(0);                       // sets terrain/objective/oob/reinforce/doctrine + fldResetRun
@@ -96,13 +101,16 @@ function _fldBuildPhase(i) {
   if (typeof fldEngPhaseReset === "function") fldEngPhaseReset();   // T13: drop the prior sector's obstacle belts per phase (keeps _engUsed for the aggregate end-card)
 }
 
-/* the per-side casualties of the CURRENT phase (committed force = the units that spawned this
-   phase; their maxMen minus the survivors' men). Pending (un-arrived) reinforcements aren't counted. */
-function _fldSidePhaseCas(side) {
+/* the per-side tallies of the CURRENT phase (committed force = the units that spawned this
+   phase; their maxMen, minus the survivors' men for the casualties). Pending (un-arrived)
+   reinforcements aren't counted. ONE arithmetic feeds both the casualty and the E45 fielded
+   tallies so they can never drift apart. */
+function _fldSidePhaseTally(side) {
   var fielded = 0, surv = 0, i, U = __FIELD.units;
   for (i = 0; i < U.length; i++) { var u = U[i]; if (u.side !== side) continue; fielded += (u.maxMen || 0); if (u.alive) surv += u.men; }
-  return Math.max(0, Math.round(fielded - surv));
+  return { fielded: Math.max(0, Math.round(fielded)), cas: Math.max(0, Math.round(fielded - surv)) };
 }
+function _fldSidePhaseCas(side) { return _fldSidePhaseTally(side).cas; }
 
 /* the aggregate battle winner from the weighted phase score, with a DRAW band (a tight split is
    the historical tactical draw). Called when the LAST phase resolves. */
@@ -117,8 +125,10 @@ function _fldBattleWinner() {
    (headless -> immediately; UI -> the inter-phase card gates it). */
 function _fldPhaseResolved(w, by) {
   var top = __FIELD._scenTop, idx = __FIELD.phaseIdx, p = top.phases[idx];
-  var usCas = _fldSidePhaseCas("US"), csCas = _fldSidePhaseCas("CS");
+  var usT = _fldSidePhaseTally("US"), csT = _fldSidePhaseTally("CS");
+  var usCas = usT.cas, csCas = csT.cas;
   __FIELD.battleCas.US += usCas; __FIELD.battleCas.CS += csCas;
+  if (__FIELD.battleFielded) { __FIELD.battleFielded.US += usT.fielded; __FIELD.battleFielded.CS += csT.fielded; }
   var pts = (typeof p.scoreWeight === "number") ? p.scoreWeight : 1;
   if (w === "draw") { __FIELD.phaseScore.US += pts / 2; __FIELD.phaseScore.CS += pts / 2; }
   else if (w === "US" || w === "CS") __FIELD.phaseScore[w] += pts;

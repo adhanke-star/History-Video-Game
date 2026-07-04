@@ -279,7 +279,7 @@ const DOM = `(() => {
   const pageerrors = []; page.on('pageerror', e => pageerrors.push(String(e.message)));
   let result = { ok:false };
   try {
-    await page.goto(probe, { waitUntil:'load', timeout:60000 });
+    await page.goto(probe, { waitUntil:'domcontentloaded', timeout:120000 });   // slow-Mac: the 'load' wait stalls while embedded assets stream (the documented gotcha, D233 class; fixed in D247); inline scripts are all the probe needs
     await sleep(500);
     result = JSON.parse(await page.evaluate(SETUP));
     const dom = JSON.parse(await page.evaluate(DOM));
@@ -296,7 +296,7 @@ const DOM = `(() => {
     })()`);
     result.screenshot = shot;
     await sleep(250);
-    await page.screenshot({ path: join(OUT,'probe-antietam.png') });
+    await page.screenshot({ path: join(OUT,'probe-antietam.png'), timeout: 120000 });   // slow-Mac budget (D232 class, fixed in D247): the default 30s flaked under WebGL/asset load
     await page.evaluate(`(function(){ try{ fldExit(true); }catch(e){} })()`);
   } catch(e){ result = { ok:false, fatal:String(e&&e.message||e), pageerrors }; }
   finally {

@@ -166,6 +166,30 @@ const SETUP = `(() => {
       if(Math.abs(o1.pFrac-o2.pFrac)>1e-9 || Math.abs(o1.eFrac-o2.eFrac)>1e-9) throw new Error('non-deterministic fractions');
       return { winner:o1.winnerSide, pFrac:Math.round(o1.pFrac*1000)/1000 }; });
 
+    step('E45 (D247): PHASE-AWARE feedback — a synthetic phased+campaign launch aggregates losses/fielded across ALL phases', function(){
+      // Synthetic on purpose: no phased battle is campaign-launchable today (_fldCampaignScenarioFor
+      // returns only bullrun1/null), so this drives the exact seam the epics + the PM3 sim-backed
+      // resolve will hit — a data.phases scenario carrying a campaignCtx.
+      var C=mkC('US'); setWar(C,true);
+      fldLaunchSandbox({ renderer:'none', autoBoth:true, seed:7, scenario:'antietam', campaign:{ bd:bdYear('antietam',1862,'CS'), fromCampaign:true, _conditioned:false } });
+      if(!__FIELD.phases) throw new Error('precondition: antietam should be a phased scenario');
+      if(!__FIELD.campaignCtx || !__FIELD.campaignCtx._conditioned) throw new Error('campaignCtx not set/conditioned on the synthetic phased campaign launch');
+      if(!__FIELD.battleFielded || __FIELD.battleFielded.US!==0 || __FIELD.battleFielded.CS!==0) throw new Error('battleFielded not zeroed at phased init');
+      runToEnd(80000);
+      if(__FIELD.phase!=='over') throw new Error('phased battle did not finish, phase='+__FIELD.phase);
+      if((__FIELD.phaseLog||[]).length!==__FIELD.phases.length) throw new Error('not all phases resolved: '+(__FIELD.phaseLog||[]).length+'/'+__FIELD.phases.length);
+      var bf=__FIELD.battleFielded, bc=__FIELD.battleCas;
+      if(!(bf.US>0 && bf.CS>0)) throw new Error('cumulative fielded not accumulated: US='+bf.US+' CS='+bf.CS);
+      if(bc.US>bf.US || bc.CS>bf.CS) throw new Error('losses exceed committed force: cas US'+bc.US+'/CS'+bc.CS+' vs fielded US'+bf.US+'/CS'+bf.CS);
+      // the final sector alone must UNDER-count the day — cumulative fielded strictly exceeds the last phase's committed force
+      var lastF={US:0,CS:0}; for(var i=0;i<__FIELD.units.length;i++){ var u=__FIELD.units[i]; if(u.side==='US'||u.side==='CS') lastF[u.side]+=Math.max(0,u.maxMen||u.men||0); }
+      if(!(bf.US>lastF.US && bf.CS>lastF.CS)) throw new Error('cumulative fielded should exceed the final phase alone: US '+bf.US+' vs '+lastF.US+', CS '+bf.CS+' vs '+lastF.CS);
+      var o=fldCampaignComputeOutcome(); if(!o) throw new Error('no outcome computed');
+      function cl(v){ return Math.max(0, Math.min(0.92, v)); }
+      var expP=cl(bc.US/Math.max(1,bf.US)), expE=cl(bc.CS/Math.max(1,bf.CS));
+      if(Math.abs(o.pFrac-expP)>1e-12 || Math.abs(o.eFrac-expE)>1e-12) throw new Error('fractions are not the ALL-phase aggregate: p='+o.pFrac+' exp='+expP+' e='+o.eFrac+' exp='+expE);
+      return { phases:__FIELD.phaseLog.length, fielded:bf, cas:bc, lastPhaseFielded:lastF, pFrac:Math.round(o.pFrac*1000)/1000, eFrac:Math.round(o.eFrac*1000)/1000 }; });
+
     step('bug-hunt F5: the re-arm plan spans reinforcements (armPlan >= initial inf + reinforcement specs)', function(){
       var C=mkC('US'); setWar(C,true); C.armory.loadout={ lorenz:1.0 };   // lorenz->rifled (era 1861, passes Bull Run's gate)
       fldLaunchSandbox({ renderer:'none', autoBoth:true, scenario:'bullrun1', campaign:{ bd:bdYear('bullrun1',1861), fromCampaign:true, _conditioned:false } });
@@ -223,7 +247,7 @@ const SETUP = `(() => {
   const pageerrors = []; page.on('pageerror', e => pageerrors.push(String(e.message)));
   let result = { ok:false };
   try {
-    await page.goto(probe, { waitUntil:'load', timeout:60000 });
+    await page.goto(probe, { waitUntil:'domcontentloaded', timeout:120000 });   // slow-Mac: the 'load' wait stalls while embedded assets stream (the documented gotcha, D233 class; fixed in D247); inline scripts are all the probe needs
     await sleep(500);
     result = JSON.parse(await page.evaluate(SETUP));
     result.pageerrors = pageerrors;
