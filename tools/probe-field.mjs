@@ -107,6 +107,42 @@ const SETUP = `(() => {
       if(!(__FIELD.holdSecs.US>before)) throw new Error('objective hold did not accrue: '+__FIELD.holdSecs.US);
       return { holdSecs:Math.round(__FIELD.holdSecs.US*10)/10 }; });
 
+    step('E48 (D252): a position FALLING at the buzzer plays out its fall (overtime -> hold win, bounded); a contested or unattended objective still times out to the defender AT the clock', function(){
+      function launchAsym(seed){
+        fldLaunchSandbox({renderer:'none', autoBoth:true, seed:seed, skirmish:{ playerSide:'US', attacker:'US', year:1862,
+          countPlayer:2, countEnemy:2, menPlayer:1500, menEnemy:1500, weaponPlayer:'rifled', weaponEnemy:'rifled', terrain:'open', holdToWin:40 }});
+        __FIELD.phase='battle'; __FIELD.paused=false;
+        var o=__FIELD.objective, i, u;
+        for(i=0;i<__FIELD.units.length;i++){ u=__FIELD.units[i]; u.ai=false; u.x=60; u.z=60; u.order={type:'hold',tx:60,tz:60,tface:0}; }
+        return o;
+      }
+      function put(side, x, z){ for(var i=0;i<__FIELD.units.length;i++){ var u=__FIELD.units[i];
+        if(u.side===side){ u.x=x; u.z=z; u.order={type:'hold',tx:x,tz:z,tface:0}; return u; } } return null; }
+      function run(maxSteps){ var n=0; while(__FIELD.phase==='battle' && n<maxSteps){ fldSimStep(0.05); n++; } return n; }
+      // (a) MID-HOLD AT THE BUZZER: the US attacker alone on the objective, hold clock 10/40 at the clock.
+      // The pre-E48 rule ended this w=CS by=timeout the tick t crossed the limit; E48 plays the fall out.
+      var o=launchAsym(11); put('US', o.x, o.z);
+      __FIELD.t=__FIELD.timeLimit-1; __FIELD.holdSecs.US=10;
+      run(4000);
+      if(__FIELD.winner!=='US' || __FIELD.winBy!=='hold') throw new Error('(a) mid-hold at the buzzer must complete the fall: w='+__FIELD.winner+' by='+__FIELD.winBy);
+      if(!(__FIELD.t>__FIELD.timeLimit)) throw new Error('(a) the hold win should land PAST the clock (overtime), t='+__FIELD.t);
+      var ot=__FIELD.t-__FIELD.timeLimit;
+      if(!(ot<=__FIELD.holdToWin+1)) throw new Error('(a) overtime must be bounded by holdToWin: '+ot);
+      // (b) CONTESTED at the buzzer: a steady CS unit also stands in the radius -> the hold clock is NOT
+      // accruing -> the containment fires AT the clock exactly as before E48.
+      o=launchAsym(12); put('US', o.x, o.z); put('CS', o.x+10, o.z);
+      __FIELD.t=__FIELD.timeLimit-1; __FIELD.holdSecs.US=10;
+      run(400);
+      if(__FIELD.winner!=='CS' || __FIELD.winBy!=='timeout') throw new Error('(b) a contested objective must still time out to the defender: w='+__FIELD.winner+' by='+__FIELD.winBy);
+      if(!(__FIELD.t<=__FIELD.timeLimit+2)) throw new Error('(b) the contested timeout must fire AT the clock, t='+__FIELD.t);
+      // (c) UNATTENDED objective at the buzzer (attacker not on it): byte-identical pre-E48 behavior.
+      o=launchAsym(13);
+      __FIELD.t=__FIELD.timeLimit-1;
+      run(400);
+      if(__FIELD.winner!=='CS' || __FIELD.winBy!=='timeout') throw new Error('(c) an unattended objective must time out to the defender: w='+__FIELD.winner+' by='+__FIELD.winBy);
+      if(!(__FIELD.t<=__FIELD.timeLimit+2)) throw new Error('(c) the timeout must fire AT the clock, t='+__FIELD.t);
+      return { overtimeSecs:Math.round(ot*10)/10, holdToWin:__FIELD.holdToWin, contestedEndsAtClock:true, unattendedEndsAtClock:true }; });
+
     step('RE-LAUNCH is clean (exit removes DOM + state; relaunch fresh)', function(){
       fldLaunchSandbox({renderer:'none', seed:1}); fldExit(true);
       if(__FIELD.launched!==false) throw new Error('exit left launched=true');

@@ -249,7 +249,7 @@ function fldMakeUnit(o) {
 // the per-launch run reset — shared by the sandbox path and every scenario (T1+) so the
 // deploy/clock/selection state is initialized in exactly ONE place (deterministic launch).
 function fldResetRun() {
-  __FIELD.t = 0; __FIELD.winner = null; __FIELD.holdSecs = { US: 0, CS: 0 };
+  __FIELD.t = 0; __FIELD.winner = null; __FIELD.holdSecs = { US: 0, CS: 0 }; __FIELD.holdLive = false;   // E48: no stale mid-hold state across launches/phases
   __FIELD.vis = null; __FIELD.lastSeen = {};   // fog visibility set + last-known "ghost" positions, recomputed per tick
   __FIELD._apReason = null;                     // active auto-pause: the current decision-point reason (if paused by it)
   __FIELD.routEverCount = 0; __FIELD.sel = []; __FIELD.drag = null;
@@ -1051,6 +1051,13 @@ function fldObjectiveStep(dt) {
     if (near[side] > 0 && near[foe] === 0) __FIELD.holdSecs[side] += dt;
     else if (near[foe] > near[side]) __FIELD.holdSecs[side] = Math.max(0, __FIELD.holdSecs[side] - dt * 0.5);
   }
+  // E48 (D252): record whether the ATTACKER's hold clock is actively accruing THIS tick — the exact
+  // accrual predicate above (attacker men on the objective, zero steady defenders). fldCheckVictory's
+  // asymmetric timeout consults it: a position that is FALLING at the buzzer plays out its fall
+  // (one engine rule, no per-battle constants — Aaron-approved E48 option b). Always false in the
+  // symmetric sandbox (attacker null) -> that branch is untouched.
+  var att = __FIELD.attacker;
+  __FIELD.holdLive = !!(att && near[att] > 0 && near[fldEnemy(att)] === 0);
 }
 function fldArmyLive(side) {
   var n = 0; for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side === side && u.alive && u.state !== "routing") n++; } return n;
@@ -1087,7 +1094,14 @@ function fldCheckVictory() {
     // DEFENDER wins by denying it to the time limit (the historical attacker-must-take-the-hill shape).
     var att = __FIELD.attacker, def = fldEnemy(att);
     if (__FIELD.holdSecs[att] >= __FIELD.holdToWin) { w = att; by = "hold"; }
-    else if (__FIELD.t >= __FIELD.timeLimit) { w = def; by = "timeout"; }
+    // E48 (D252): the universal position-falling-at-the-buzzer rule. The defender's containment win
+    // fires ONLY when the attacker's hold clock is NOT actively accruing at the clock (holdLive,
+    // stamped by fldObjectiveStep). If the attacker stands on the objective unopposed at the buzzer,
+    // the battle plays on until the hold completes (attacker wins by hold, above) or the accrual
+    // breaks — defenders re-enter / the attacker leaves or routs — and the timeout fires THAT tick.
+    // Bounded by construction (overtime < holdToWin: the clock accrues 1:1 with time); zero new
+    // constants; byte-identical whenever no battle reaches its buzzer mid-hold (D74/PL-9).
+    else if (__FIELD.t >= __FIELD.timeLimit && !__FIELD.holdLive) { w = def; by = "timeout"; }
   } else {
     // SYMMETRIC (sandbox): either side can win by holding the crest, else strength at the time limit.
     if (__FIELD.holdSecs.US >= __FIELD.holdToWin) { w = "US"; by = "hold"; }
@@ -1336,6 +1350,9 @@ function fldRenderTop() {
       // asymmetric: only the attacker's hold progresses toward a win; the defender is denying.
       var att = __FIELD.attacker, hA = Math.floor(__FIELD.holdSecs[att]), an = att === "US" ? "Union" : "Confederate";
       lead = hA > 0 ? (an + " holds " + hA + "s/" + __FIELD.holdToWin) : "must be seized";
+      // E48 (D252): a battle past its clock is in OVERTIME — the attacker stood on the objective at the
+      // buzzer, and the fall is playing out (plain text on the existing chip; reachable only mid-hold).
+      if (__FIELD.phase === "battle" && __FIELD.t >= __FIELD.timeLimit) lead += " — OVERTIME: the position is falling";
     } else {
       lead = hU > hC + 0.5 ? "Union holds " + Math.floor(hU) + "s/" + __FIELD.holdToWin : (hC > hU + 0.5 ? "Confederate holds " + Math.floor(hC) + "s/" + __FIELD.holdToWin : "contested");
     }

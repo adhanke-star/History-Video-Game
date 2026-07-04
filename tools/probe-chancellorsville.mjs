@@ -370,7 +370,7 @@ async function main() {
       } catch(e) { return { error:String(e && e.message || e) }; }
     })()`);
     await sleep(250);
-    await page.screenshot({ path: join(OUT, 'probe-chancellorsville.png'), fullPage:false });
+    await page.screenshot({ path: join(OUT, 'probe-chancellorsville.png'), fullPage:false, timeout: 120000 });   // D254: the documented D232-class slow-Mac screenshot budget (30s default flaked this session after all in-page steps; no assertion touched)
 
     const actionableConsoleErrors = consoleLines.filter(line => line.startsWith('[error]') && !/Failed to load resource:.*404/i.test(line));
     data.pageerrors = pageerrors;

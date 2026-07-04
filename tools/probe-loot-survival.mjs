@@ -503,7 +503,7 @@ const SETUP = `(() => {
       var C=mkC('US'); G.campaign=C; _t1InitAll(C);
       lootAddItem(C,'commissary_rations',1,'probe');
       var reg=ssPersonRegistry(C);
-      if(reg.people.length!==639) throw new Error('expected current 639-person registry, got '+reg.people.length);   // D243 (E46): 630 -> 639 — three documented Antietam accurate-input formations (us_meade, cs_stuart_nicodemus, cs_ridge_guns) generate 3 prosopography slots each (D239 history: 627 -> 630 for us_osborn_hill; D237: 603 -> 627 for the D235 M10 formations)
+      if(reg.people.length!==645) throw new Error('expected current 645-person registry, got '+reg.people.length);   // D254 (E52): 639 -> 645 — two documented Malvern Hill accurate-input formations (us_tyler_siege, us_meagher) generate 3 prosopography slots each (D243 history: 630 -> 639 for us_meade/cs_stuart_nicodemus/cs_ridge_guns; D239: 627 -> 630; D237: 603 -> 627)
       var generated=findPerson(reg,function(p){ return p.generated && p.team && p.team.brigade && p.team.company; });
       var authored=findPerson(reg,function(p){ return !p.generated && !p.replacement && p.provenance==='Verified'; });
       if(!generated) throw new Error('no generated person with brigade/company team hierarchy');
@@ -522,7 +522,7 @@ const SETUP = `(() => {
       var cards=root.querySelectorAll('[data-ss-card]');
       if(cards.length!==reg.people.length) throw new Error('register card count mismatch '+cards.length+' vs '+reg.people.length);
       var count=root.querySelector('#ssRegCount');
-      if(!count || count.textContent.indexOf('639 of 639')<0) throw new Error('full registry count missing: '+(count&&count.textContent));   // D243 (E46): tracks the 639-person registry (see the count assertion above)
+      if(!count || count.textContent.indexOf('645 of 645')<0) throw new Error('full registry count missing: '+(count&&count.textContent));   // D254 (E52): tracks the 645-person registry (see the count assertion above)
       var gCard=cardByPid(root,generated.pid), aCard=cardByPid(root,authored.pid);
       if(!gCard || !aCard) throw new Error('target cards missing');
       if(gCard.textContent.indexOf('Generated')<0 || gCard.textContent.indexOf('Inferred')<0) throw new Error('generated/Inferred card display missing: '+gCard.textContent);
