@@ -3,6 +3,14 @@ Updated 2026-07-03 (FABLE AUDIT run 1). **The live content of this file is the F
 
 ## FABLE AUDIT — 2026-07-03 (run 1)
 
+## D270 Carry-Forward Queue — 2026-07-05
+
+- **Q-D270-1** · process · **HIGH** · Resume and rerun the E53-v2 3-lens default-refute panel `wf_f874edce-cf9` after limit reset; current run is wrapper-complete but lens-empty (`agents_done=0`, `agents_error=3`, session-limit on all lenses), so no panel verdict exists yet.
+- **Q-D270-2** · doctrine · **HIGH** · After panel rerun, surface Aaron popup and lock E53-v2 doctrine before any law amendment.
+- **Q-D270-3** · docs · **MED** · Amend law + ledger trail and ship docs-only commit/push with paste-ready build prompt once doctrine is locked.
+- **Q-D270-4** · roadmap · **MED** · Add milestone planning slice for main-menu redesign (Aaron mid-session directive).
+- **Q-D270-5** · roadmap · **MED** · Add milestone planning slice for LLM-opponent feature (Aaron mid-session directive).
+
 **Full-spectrum audit at HEAD `6d8b098` (D223).** Method: 3 Workflows (content/engine/surface), 304 agents — Opus high/xhigh finders+verifiers+critics, Sonnet medium mechanical legs, loop-until-dry on dims 1/2/7, adversarial default-refute verify (HIGH = 3 skeptics majority-kill), completeness critics + supplemental sweeps; Fable main loop final-judged every finding. **150 confirmed (10 HIGH / 71 MED / 69 LOW) · 43 refuted.** Checked clean: build reproduces committed deliverable byte-identically (GATE OK, all content gates); no secrets/backup junk tracked; media budget + Intel-profile artifacts match D213 baselines. Finding detail (evidence + suggested fix per ID) archived in the audit scratchpad; IDs are stable (C=content, E=engine, S=surface, X=main-loop).
 
 ### FIX-NOW (defects within shipped scope — worked as milestones below, ledger updated per fix)
