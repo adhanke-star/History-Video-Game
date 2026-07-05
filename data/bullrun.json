@@ -21,6 +21,8 @@
     "field": { "w": 1200, "h": 900 },
     "attacker": "US",
     "defaultFog": true,
+    "assaultDoctrine": "cautious",
+    "_assaultDoctrineNote": "D272 accurate-input posture: McDowell's green army committed its attacks piecemeal around Henry House Hill, so the AI Union attacker uses the same cautious-doctrine class as other documented disjointed frontal assaults. This changes order selection only; it adds no First Bull Run combat constant.",
     "defender": "CS",
     "timeLimitSec": 480,
     "holdToWinSec": 140,

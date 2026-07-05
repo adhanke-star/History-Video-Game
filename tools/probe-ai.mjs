@@ -36,7 +36,7 @@ const SETUP = `(() => {
     u.state = st || 'steady'; u.morale = (st==='wavering') ? 40 : 78; return u; }
   function casTot(side){ var c=0; for(var i=0;i<__FIELD.units.length;i++){ var u=__FIELD.units[i]; if(u.side===side) c+=((u.maxMen||0)-(u.men||0)); } return Math.round(c); }
   // run a full Bull Run AI-vs-AI battle headless under (seed, fog, mode) and report the verdict.
-  // mode: 'gen' = both sides generic (pre-P1b-iii) · 'def' = defender doctrine only (P1b-iii) · 'both' = + attacker (P1b-iv)
+  // mode: 'gen' = both sides generic (pre-P1b-iii) · 'def' = defender doctrine only (P1b-iii) · 'both' = native attacker posture (D272: Bull Run is cautious)
   function runBR(seed, fog, mode){
     fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:seed});
     __FIELD.fog = !!fog;
@@ -187,9 +187,9 @@ const SETUP = `(() => {
       if(__FIELD.attacker!==null) throw new Error('sandbox attacker should be null');
       return { attackerDoctrine:true, hookInert:true, sandboxSymmetric:true }; });
 
-    step('ATTACKER ASSAULTS a SIGHTED steady defender once CLOSED with local superiority (fog OFF) — presses the bayonet, not a fire trade', function(){
+    step('STANDARD ATTACKER ASSAULTS a SIGHTED steady defender once CLOSED with local superiority (fog OFF) — presses the bayonet, not a fire trade', function(){
       fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:2});
-      __FIELD.fog=false; __FIELD._aiGenericAll=false; __FIELD._aiGenericAtk=false;
+      __FIELD.fog=false; __FIELD._aiGenericAll=false; __FIELD._aiGenericAtk=false; __FIELD._atkCautious=false;
       var o=__FIELD.objective;
       var cs=mk('CSdef','CS', o.x, o.z+20, 1200, 'steady');                 // a steady defender on the hill
       var a1=mk('USa','US', o.x-30, o.z+90, 1500, 'steady'); a1.ai=true;     // closed (nd~76<130, dObj~95<obj.r+70)
@@ -211,17 +211,17 @@ const SETUP = `(() => {
       // contrast: fog OFF with a SIGHTED close defender -> it WOULD assault (proven by the prior step) — so fog changed the behavior
       return { blindOrder:a1.order.type, assaultedBlind:false }; });
 
-    step('BALANCE A/B (P1b-iv both doctrines): Bull Run stays CS-FAVORED fog-OFF, FOG AIDS THE DEFENDER (no inversion), the attacker PRESSES (bloodier)', function(){
+    step('BALANCE A/B (P1b-iv native Bull Run): cautious McDowell input stays CS-FAVORED and FOG AIDS THE DEFENDER (no inversion)', function(){
       var seeds=[101,202,303,404,505,606,707,909];
-      var off=sweep(seeds,false,'both'), on=sweep(seeds,true,'both'), defOff=sweep(seeds,false,'def');
+      fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:2});
+      if(!__FIELD._atkCautious) throw new Error('bullrun1 should now carry assaultDoctrine:cautious');
+      var off=sweep(seeds,false,'both'), on=sweep(seeds,true,'both');
       // (1) defender-FAVORED fog-OFF — a CS majority (historical: the South won First Bull Run) but competitive (US can break through)
       if(!(off.doc.CS >= Math.ceil(seeds.length/2))) throw new Error('both-doctrines fog-OFF not CS-favored: '+off.doc.CS+'/'+seeds.length);
       // (2) FOG AIDS THE DEFENDER (the fork-#2 lock): fog-ON CS win count >= fog-OFF — the prototype INVERTED here; tuned out.
       if(!(on.doc.CS >= off.doc.CS)) throw new Error('fog did NOT aid the defender (inversion not tuned out): fogON CS='+on.doc.CS+' < fogOFF CS='+off.doc.CS);
-      // (3) the attacker doctrine WORKS — it presses real assaults, so the defender bleeds far more than vs the passive (defender-only) attacker
-      if(!(off.doc.csCas > defOff.doc.csCas * 1.5)) throw new Error('the attacker did not press (defender casualties not materially > defender-only): '+off.doc.csCas+' vs '+defOff.doc.csCas);
       return { seeds:seeds.length, fogOff_CS:off.doc.CS, fogOn_CS:on.doc.CS, fogAidsDefender:(on.doc.CS>=off.doc.CS),
-        csCas_both:Math.round(off.doc.csCas/seeds.length), csCas_defOnly:Math.round(defOff.doc.csCas/seeds.length), attackerPresses:true }; });
+        csCas_native:Math.round(off.doc.csCas/seeds.length), cautiousBullRun:true }; });
 
     step('DETERMINISM under the doctrine: same seed -> same winner + same casualties', function(){
       var a=runBR(909, false, 'both'), b=runBR(909, false, 'both');

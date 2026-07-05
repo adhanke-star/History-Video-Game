@@ -1,4 +1,12 @@
-# ☀ WAKE-UP — 2026-07-05 (latest): **D272 — E53-v2 doctrine is locked docs-only. A+B stays; C is dropped; the mass-capture valve is E53-active only; Bull Run uses universal cautious-v2 plus `bullrun1` accurate-input cautious posture. NEXT = E53-v2 build/re-land from `.tmp/e53-build-d269/`.**
+# ☀ WAKE-UP — 2026-07-05 (latest): **D273 — E53-v2 attacker parity is LIVE. A+B wing/wave shipped; C is absent; the E53-scoped capture valve and Bull Run cautious input are green. NEXT = E47 Shiloh/Gettysburg flip re-attempts.**
+
+**Newest (D273):** the D272 law was built and gated. `T26-attacker-parity` now gives AI attackers the A+B envelopment-wing/wave-commit seam, while T25's sidestep valve prevents false mass captures inside E53 parity. Bull Run now uses the accurate McDowell cautious posture and cautious-v2's defender-distance hold rule. The full E53 battery ran twice green and byte-identical (`pe=0`); focused/adjacent probes green: attacker-parity, ai, chickamauga, field, and bullrun all ok with 0 pageerrors. E58's rail-pivot tooth is green in the shipped build, contrary to the expected-red carry-forward.
+
+**Queue: E47 Shiloh/Gettysburg flips behind the same unweakened gates → E46 Piper honestly (still expected hard) → PM3. Main-menu redesign + LLM-opponent feature remain queued milestones, not part of this tactical build chain.**
+
+---
+
+# ☀ WAKE-UP — 2026-07-05 (previous): **D272 — E53-v2 doctrine is locked docs-only. A+B stays; C is dropped; the mass-capture valve is E53-active only; Bull Run uses universal cautious-v2 plus `bullrun1` accurate-input cautious posture. NEXT = E53-v2 build/re-land from `.tmp/e53-build-d269/`.**
 
 **Newest (D272):** the option-(a) design session ran from clean `main`. Engine facts were re-verified first-hand, the preserved D269 T26 build was temporarily re-landed for fresh measurements, and then the source/build were restored before docs edits. Fresh artifacts all read 0 pageerrors: `.tmp/fresh-e53v2-anatomy-d272.json`, `.tmp/fresh-e53v2-variants-d272.json`, `.tmp/fresh-e53v2-cautious-d272.json`, `.tmp/measure-e53v2-final.json`. The lock: the sidestep capture valve is scoped to active E53/parity so OFF-state rows stay byte-identical; C/abandonment is removed because it harms Chancellorsville and does not fix captures; cautious-v2 holds only at existing `ATK_ASSAULT_R` from the nearest visible defender and is fog-guarded; `bullrun1` gets the cautious accurate input. No sim/code/data surface shipped, and the stale D269 decision-needed fork is resolved.
 

@@ -98,7 +98,6 @@ var FLD = {
   ATK_LOCAL_RATIO: 1.1,    // ...and only with LOCAL men >= this * local VISIBLE-foe men (gradual concentration, not a global flip)
   ATK_GLOBAL_FLOOR: 0.85,  // never throw the army onto the bayonet while globally outnumbered below this
   ATK_FLANK_BIAS: 0.5,     // pull the approach this fraction toward the weaker (thinner) flank of the objective
-  ATK_CAUTIOUS_HOLD: 0.85, // Phase C: a "doomed-assault" (cautious) attacker presses in LINE to within OBJ_R*this of the objective before it holds + trades. Tuned so the hold band sits in the OPEN just OUTSIDE the defender's wall-cover radius (the covered line holds the forward face at OBJ_R*DEF_FACE_FRAC=0.55; the wall's cover band is ~26yd, so 0.85 keeps the attacker exposed at cover 1.0 while the defender stays at 1.7) — the attacker dies on the open glacis at close range and never carries the wall (the Fredericksburg slaughter). Default doctrine never reaches this branch.
 };
 
 /* ---- seeded RNG (LCG) ---- */
@@ -352,8 +351,12 @@ function fldInitSim(opts) {
   // bullrun1 CS 5/8 -> 8/8 vs badges-off. Byte-identity claims hold only against the _badgesOff isolation path
   // (which probes use to force the engine off), NOT against a units-carry-no-badges premise. (E32, D231.)
   __FIELD.badges = __FIELD._badgesOff ? false : ((opts.badges != null) ? !!opts.badges : true);
+  // E53-v2 (D272): attacker tactical parity doctrine seam. Default ON; the sticky _parityOff
+  // test hook forces it OFF so OFF-state A/B legs prove the T26 seam and T25 sidestep valve
+  // are inert. The seam itself also requires asymmetric + fog OFF + non-cautious posture.
+  __FIELD.attackerParity = __FIELD._parityOff ? false : ((opts.attackerParity != null) ? !!opts.attackerParity : true);
   __FIELD._aiGenericAll = false; __FIELD._aiGenericAtk = false;   // role-aware AI test hooks: reset per launch (bug-hunt #4); probe-ai sets them AFTER launch (A/B the defender + attacker doctrines)
-  __FIELD._atkCautious = false;   // Phase C: the AI-attacker "doomed frontal assault" posture (Fredericksburg). Reset per launch; fldScenarioInit sets it true ONLY for a scenario whose data declares assaultDoctrine:"cautious" -> Bull Run/sandbox/skirmish stay byte-identical.
+  __FIELD._atkCautious = false;   // AI-attacker "doomed frontal assault" posture. Reset per launch; scenario data stamps it for accurate-input cautious assaults (Fredericksburg, Malvern Hill, Bull Run).
   // T13: clear engineering-owned transient state before any scenario/sandbox build. This touches only
   // T13 fields; all simulation hooks remain exact identities until the player uses an engineering order.
   if (typeof fldEngReset === "function") fldEngReset();
@@ -762,6 +765,10 @@ function fldAiUnit(u) {
   // generic for BOTH; _aiGenericAtk forces generic for the ATTACKER only (to isolate the attacker doctrine).
   if (!__FIELD._aiGenericAll && __FIELD.attacker && __FIELD.objective) {
     if (u.side === fldEnemy(__FIELD.attacker)) { fldAiDefender(u); return; }
+    // E53-v2 (D272): attacker tactical parity (T26) — envelopment wing + wave-commit,
+    // dispatched before D64. Returns false whenever inactive (parity off / fog /
+    // cautious / trigger unarmed), so fldAiAttacker below remains the fallback.
+    if (__FIELD.attackerParity && typeof fldParityAiUnit === "function" && fldParityAiUnit(u)) return;
     if (u.side === __FIELD.attacker && !__FIELD._aiGenericAtk) { fldAiAttacker(u); return; }
   }
   fldAiGeneric(u);
@@ -846,13 +853,12 @@ function fldAiAttacker(u) {
   var effLocal = FLD.ATK_LOCAL_RATIO / (__FIELD.aiSkill || 1) * fldClamp(1 / Math.max(0.5, globRatio), 0.75, 1.4);
   var localSup = foeMen > 0 && friendMen >= foeMen * effLocal;     // must SEE the foe AND locally out-mass it
   var canCommit = globRatio >= FLD.ATK_GLOBAL_FLOOR;
-  // Phase C (Fredericksburg): a scenario may declare its AI attacker's posture "cautious" (scenData.assaultDoctrine,
-  // mirrored to __FIELD._atkCautious in fldScenarioInit) — the DOOMED FRONTAL ASSAULT. Such an attacker advances in
-  // LINE and trades fire but NEVER column-rushes the killing ground and NEVER presses the mass bayonet on a steady
-  // line in cover — Burnside's piecemeal disaster, the opposite of the B-1 doctrine. So the covered defender (the
-  // stone wall + the pre-sighted crest guns) is never carried by the AI. Default off -> aggressive === !fog, so Bull
-  // Run, the sandbox, and skirmishes are byte-identical. (A HUMAN attacker is unbound by this — the alt-history hook:
-  // do what the Army of the Potomac could not.) Disordered-pursuit (chargeWeak) stays allowed for either posture.
+  // Cautious-v2 (D272): a scenario may declare its AI attacker's posture "cautious"
+  // (scenData.assaultDoctrine, mirrored to __FIELD._atkCautious in fldScenarioInit).
+  // The attacker closes in line until it is within the existing ATK_ASSAULT_R of the
+  // nearest visible defender, then holds and trades fire without launching the mass
+  // bayonet. Under fog this defers to the stock fog doctrine; no defender visible
+  // means keep pressing, never park unopposed inside an objective ring.
   var aggressive = !__FIELD.fog && !__FIELD._atkCautious;
 
   // (1) SURVIVAL: wavering + a stronger enemy close -> fall back to rally (an assault can break too).
@@ -874,15 +880,14 @@ function fldAiAttacker(u) {
     }
   }
   // (3) SUPPRESS / HOLD.
-  //   (3a) DOOMED-ASSAULT posture (cautious, Fredericksburg): do NOT stop at long rifle range — press in LINE
-  //        across the open glacis ALL THE WAY into the killing ground, then hold + trade at point-blank against
-  //        the covered line (the assault dies under the wall + the crest guns at close range, but never carries
-  //        it — no mass bayonet). Until close, fall through to (4) to keep advancing under fire.
-  //   (3b) NORMAL posture: in fire range but not assaulting (under fog, or no local superiority yet) -> hold +
-  //        pour fire in LINE while the mass forms. Under fog this is the cautious probe that lets the concealed
-  //        reserves reveal + keeps the fight slow (fog aids the defender). Byte-identical when not cautious.
-  if (__FIELD._atkCautious && near) {
-    if (dObj < obj.r * FLD.ATK_CAUTIOUS_HOLD) {
+  //   (3a) CAUTIOUS-v2: fog OFF + visible defender -> press until ATK_ASSAULT_R
+  //        from that defender, then hold in LINE and trade. This uses the existing
+  //        assault-distance constant, not an objective-radius hold band.
+  //   (3b) NORMAL / FOG posture: in fire range but not assaulting -> hold + pour
+  //        fire while the mass forms. Under fog, even cautious attackers use this
+  //        stock branch because the visible picket must not unblind the hidden line.
+  if (__FIELD._atkCautious && !__FIELD.fog && near) {
+    if (nd <= FLD.ATK_ASSAULT_R) {
       u.formation = "line";
       u.order = { type: "hold", tx: u.x, tz: u.z, tface: face };
       return;

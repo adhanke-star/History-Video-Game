@@ -78,33 +78,44 @@ function fldShedStragglers(u) {
   if (__FIELD.missing) __FIELD.missing[u.side] = (__FIELD.missing[u.side] || 0) + shed;
 }
 
-/* SL-2: is the router's corridor home BLOCKED? The flight lane is the constant-x
-   ray toward fldHomeEdgeZ(u.side) (the T0 rout movement). A blocker is a STEADY
-   enemy (the existing state enum — no new men-floor constant) within a RALLY_R
-   lateral half-band of the lane whose z lies STRICTLY BETWEEN the router and the
-   home edge (the DIRECTIONAL clause — a pursuer behind never blocks). Blocked
-   needs ≥1 blocker AND no steady friendly nearer than the nearest blocker (the
-   rescue clause). Fog-blind ground truth, like the rally/objective scans (SL-9);
-   officers/trains live outside __FIELD.units -> excluded by construction. */
-function fldSurrenderBlocked(u) {
+/* SL-2: is the router's corridor home BLOCKED at a given x-lane? The stock
+   flight lane is the router's real x. E53-v2 can ask the same predicate at
+   virtual sidestep lanes, but only through its parity-gated valve below. */
+function _fldSurrenderLaneBlocked(u, laneX) {
   var homeZ = fldHomeEdgeZ(u.side), dir = (homeZ > u.z) ? 1 : -1;
   var U = __FIELD.units, nearest = -1, i, e, d;
   for (i = 0; i < U.length; i++) {
     e = U[i];
     if (e.side === u.side || !e.alive || e.state !== "steady") continue;
-    if (Math.abs(e.x - u.x) > FLD.RALLY_R) continue;       // outside the lateral band of the flight lane
+    if (Math.abs(e.x - laneX) > FLD.RALLY_R) continue;     // outside the lateral band of the tested lane
     if ((e.z - u.z) * dir <= 0) continue;                  // DIRECTIONAL: behind (or abreast of) the router
     if ((homeZ - e.z) * dir <= 0) continue;                // not strictly short of the home edge
-    d = fldDist(u, e);
+    d = Math.sqrt((e.x - laneX) * (e.x - laneX) + (e.z - u.z) * (e.z - u.z));
     if (nearest < 0 || d < nearest) nearest = d;
   }
   if (nearest < 0) return false;
   for (i = 0; i < U.length; i++) {
     e = U[i];
     if (e === u || e.side !== u.side || !e.alive || e.state !== "steady") continue;
-    if (fldDist(u, e) < nearest) return false;             // a steady friendly is nearer — the corridor can be reopened
+    d = Math.sqrt((e.x - laneX) * (e.x - laneX) + (e.z - u.z) * (e.z - u.z));
+    if (d < nearest) return false;                         // a steady friendly is nearer — the corridor can be reopened
   }
   return true;
+}
+
+/* SL-2 stock predicate: real x-lane only. This is the global E49a behavior and
+   remains the fallback whenever E53 attacker parity is inactive. */
+function fldSurrenderBlocked(u) { return _fldSurrenderLaneBlocked(u, u.x); }
+
+/* E53-v2 (D272): mass-capture sidestep valve. A router is cut off only when the
+   stock lane and both virtual x±RALLY_R sidesteps are blocked, clamped to the
+   existing field-edge safety margin. No new constants and no global rewrite:
+   fldSurrenderStep calls this only when T26 reports active attacker parity. */
+function fldSurrenderBlockedE53(u) {
+  if (!fldSurrenderBlocked(u)) return false;
+  var lx = Math.max(40, u.x - FLD.RALLY_R);
+  var rx = Math.min(FLD.FIELD_W - 40, u.x + FLD.RALLY_R);
+  return _fldSurrenderLaneBlocked(u, lx) && _fldSurrenderLaneBlocked(u, rx);
 }
 
 /* SL-2: the per-tick surrender step for a ROUTING unit (called from the T0 routing
@@ -116,7 +127,10 @@ function fldSurrenderBlocked(u) {
 function fldSurrenderStep(u, dt) {
   if (__FIELD._e49NoSurrender) return false;   // sticky ISOLATION test hook — the §3 A/B's shedding-only leg; never set by any live path
   if (!__FIELD.attacker) return false;
-  if (!fldSurrenderBlocked(u)) { u.surrenderT = 0; return false; }
+  var blocked = (typeof fldParityCaptureValveActive === "function" && fldParityCaptureValveActive())
+    ? fldSurrenderBlockedE53(u)
+    : fldSurrenderBlocked(u);
+  if (!blocked) { u.surrenderT = 0; return false; }
   u.rallyT = 0;                                            // blocked SUPPRESSES rally (the D255 clause)
   u.surrenderT = (u.surrenderT || 0) + dt;
   if (u.surrenderT >= FLD.RALLY_SECS) fldSurrender(u);
