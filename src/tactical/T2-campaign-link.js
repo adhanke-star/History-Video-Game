@@ -85,7 +85,18 @@ function _fldArmPlan(C, year, count) {
 function fldCampaignConditionUnit(u) {
   var ctx = __FIELD.campaignCtx; if (!ctx || !ctx._params || !u) return;
   var p = ctx._params;
-  if (u.side !== p.playerSide) return;
+  if (u.side !== p.playerSide) {
+    // PM2 (E43 · D250/D266): the enemy STRENGTH leg — strategic will-erosion musters a THINNER enemy
+    // (desertion), via the ONE shared bridge contract (bridgeEnemyWillStrengthMul). Exact-1.0 at the
+    // fresh baseline → guarded no-op (byte-identical); covers the initial enemy line AND enemy
+    // reinforcements as they arrive (this same function is the T1 fldReinforceSpawn seam).
+    var em = p.enemyStrengthMul;
+    if (typeof em === "number" && isFinite(em) && em !== 1) {
+      u.men = Math.max(1, Math.round((u.men || 1) * em));
+      u.maxMen = Math.max(u.men, Math.round((u.maxMen || u.men) * em));
+    }
+    return;
+  }
   u.men = Math.max(1, Math.round((u.men || 1) * p.strengthMul));
   u.maxMen = Math.max(u.men, Math.round((u.maxMen || u.men) * p.strengthMul));
   u.morale = fldClamp((u.morale || 78) + p.moraleAdd + (p.entrench ? 3 : 0), 5, 99);
@@ -169,6 +180,9 @@ function fldCampaignCondition() {
     armPlan: _fldArmPlan(C, year, infN),
     _armIdx: 0,
     artProfile: _fldArtProfile(C),   // B-4: the bought Cannon Corps -> the field battery's reach/power/canister (null = nominal)
+    // PM2 (E43 · D250/D266): the shared enemy-conditioning contract — will-erosion thins the enemy
+    // muster (exact-1.0 fresh, debuff-only, floor 0.90; the 85 bridge owns the math).
+    enemyStrengthMul: (typeof bridgeEnemyWillStrengthMul === "function") ? bridgeEnemyWillStrengthMul(C) : 1,
   };
   // T13 (pontoon bridging): the strategic Engineer Works Corps (57-engineering -> bridgeArmy.engineering) lays
   // field bridges faster — the A1 anchor, the same way B-4 wired the Cannon Corps onto the field battery. >1 =

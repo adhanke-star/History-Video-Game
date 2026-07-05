@@ -284,6 +284,16 @@ STRENGTH multiplier (will-erosion = desertion = fewer men at muster) instead of 
 "morale/steadiness debuff" in §1 D2XX-b and §2 PL-4 through this amendment. The morale/steadiness form may be
 re-examined after E49 lands (with ledger E51 — same mechanism family). PM3 and its gates are unchanged.
 
+> **BUILD STATUS (D266, 2026-07-05): SHIPPED.** The strength form landed exactly per this amendment + the D251
+> spec, with E48+E49a+E49b live underneath: `bridgeEnemyWillStrengthMul` (85) + the T2 men/maxMen and
+> `_a6Condition` strength/maxStr consumer legs. The D250 red trigger read GREEN — playerWins 13→17 FOR the
+> player (the D249/D251 inversion measured dead); fresh-state byte-identity 0/20; like-for-like casualty
+> channel UP; 3× SAFE_TO_COMMIT panel. Direction-parity across all three modes at will 30 (T2 ×0.94 men ·
+> 86 ×0.94 strength · 87 −7.0 rating); **magnitude parity is deliberately deferred to PM3** (the 87 rating
+> model keeps its own enemyWill read until the sim-backed resolve replaces it — the PL-3 substitutability
+> nuance is on the record in D266). Residuals riding E53: the s5 rout-cycling seed class; captured=0 under
+> erosion (envelopment geometry). Evidence: DECISIONS **D266**.
+
 ### §6.2a — PATCH BLOCK: V1-CHECKLIST.md queue entry (apply with M1)
 Slot under the approved-proposals group after the S25 line; if no such group exists yet in V1-CHECKLIST.md, insert
 the group header line too:

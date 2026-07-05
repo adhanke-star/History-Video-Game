@@ -232,6 +232,44 @@ const SETUP = `(() => {
       if(typeof G.battle!=='undefined' && G.battle && G.mode==='battle') throw new Error('standalone skirmish leaked a hex battle');
       return { campaign:G.campaign, campaignCtx:__FIELD.campaignCtx }; });
 
+    step('PM2 (D250): the REAL-TIME leg — fresh campaign enemy byte-identical to standalone; eroded will 30 -> every enemy unit exactly round(nominal x0.94); floor 0.90 pinned at will 0; T1 seam thins enemy reinforcements; no leak onto the player line', function(){
+      var bd=bdYear('fredericksburg',1862,'US');
+      var C0=mkC('US'); setWar(C0,true);
+      var sk=_fldCampaignSkirmishParams(bd, C0);
+      function enemySnap(){ var out=[]; for(var i=0;i<__FIELD.units.length;i++){ var u=__FIELD.units[i]; if(u.side==='CS') out.push({men:u.men, maxMen:u.maxMen, mor:u.morale}); } return out; }
+      function playerSnap(){ var out=[]; for(var i=0;i<__FIELD.units.length;i++){ var u=__FIELD.units[i]; if(u.side==='US') out.push({men:u.men, maxMen:u.maxMen}); } return out; }
+      G.campaign=null;   // standalone: the same skirmish params, no campaign -> the nominal enemy
+      fldLaunchSandbox({ renderer:'none', autoBoth:true, seed:13, skirmish:sk });
+      var nominal=enemySnap();
+      var Cf=mkC('US'); setWar(Cf,true);   // fresh campaign: mul EXACTLY 1.0 -> enemy byte-identical
+      fldLaunchSandbox({ renderer:'none', autoBoth:true, seed:13, campaign:{ bd:bd, fromCampaign:true, _conditioned:false }, skirmish:sk });
+      if (__FIELD.campaignCtx._params.enemyStrengthMul!==1) throw new Error('fresh enemyStrengthMul must be EXACT 1, got '+__FIELD.campaignCtx._params.enemyStrengthMul);
+      if (JSON.stringify(enemySnap())!==JSON.stringify(nominal)) throw new Error('a FRESH campaign must field a byte-identical enemy to standalone');
+      var freshP=JSON.stringify(playerSnap());
+      var Ce=mkC('US'); setWar(Ce,true); Ce.strategy.enemyWill=30;   // eroded -> x0.94 exact per unit
+      fldLaunchSandbox({ renderer:'none', autoBoth:true, seed:13, campaign:{ bd:bd, fromCampaign:true, _conditioned:false }, skirmish:sk });
+      var erod=enemySnap();
+      if (erod.length!==nominal.length) throw new Error('enemy unit count changed under erosion');
+      for (var i=0;i<erod.length;i++){
+        var want=Math.max(1, Math.round(nominal[i].men*0.94));
+        if (erod[i].men!==want) throw new Error('enemy unit '+i+' should muster round(nominal*0.94)='+want+', got '+erod[i].men);
+        var wantMax=Math.max(want, Math.round(nominal[i].maxMen*0.94));
+        if (erod[i].maxMen!==wantMax) throw new Error('enemy maxMen '+i+' should be '+wantMax+', got '+erod[i].maxMen);
+        if (erod[i].mor!==nominal[i].mor) throw new Error('enemy MORALE must be untouched (the D249 inversion class)'); }
+      if (JSON.stringify(playerSnap())!==freshP) throw new Error('enemy-will erosion LEAKED onto the player line');
+      var Cz=mkC('US'); setWar(Cz,true); Cz.strategy.enemyWill=0;   // floor: will 0 -> x0.90 pinned
+      fldLaunchSandbox({ renderer:'none', autoBoth:true, seed:13, campaign:{ bd:bd, fromCampaign:true, _conditioned:false }, skirmish:sk });
+      var zero=enemySnap();
+      for (var j=0;j<zero.length;j++){ var w0=Math.max(1, Math.round(nominal[j].men*0.90));
+        if (zero[j].men!==w0) throw new Error('will 0 should pin the 0.90 floor: unit '+j+' want '+w0+' got '+zero[j].men); }
+      // the T1 spawn seam consumes this SAME function for enemy reinforcements: a mock late-arriving
+      // CS unit conditions to exactly round(men x mul) under the live will-0 ctx
+      var mock={ side:'CS', men:1000, maxMen:1200, morale:78 };
+      fldCampaignConditionUnit(mock);
+      if (mock.men!==900 || mock.maxMen!==1080) throw new Error('the T1 seam enemy branch should thin a reinforcement to 900/1080, got '+mock.men+'/'+mock.maxMen);
+      if (mock.morale!==78) throw new Error('reinforcement morale must be untouched');
+      return { enemyUnits:nominal.length, freshIdentical:true, eroded94:true, floor90:true, seamReinf:mock.men }; });
+
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
 })()`;

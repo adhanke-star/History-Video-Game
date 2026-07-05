@@ -22,6 +22,9 @@
      · Field Fortifications (A2) level L → trench cover on ~25%·L of the line — but ONLY when the
        entrench prep is ordered (a deliberate slot, not a free always-on stack); falls back to the
        player's own hexes on procedural maps that carry no deploy band
+     · PM2 (E43 · D250/D266): the ENEMY musters thinner as strategic will-erosion bites — the shared
+       bridgeEnemyWillStrengthMul contract (85; exact-1.0 fresh, debuff-only, floor 0.90) scales
+       enemy strength/maxStr (non-hq); enemy MORALE deliberately untouched (the D249 inversion class)
 
    New fns: _a6Condition / _a6Entrench. Override: startBattleRuntime (manifest).
    Bare-name globals (G, bridgeArmy, engBranchLevel, TERRAIN, + the verbatim base
@@ -93,10 +96,22 @@ function _a6Condition() {
       if (typeof e.ammo === "number") e.ammo = Math.max(1, Math.round(e.ammo * 0.8));
     }
   }
+  // PM2 (E43 · D250/D266): the enemy STRENGTH leg — the SAME shared contract the real-time mode
+  // consumes (bridgeEnemyWillStrengthMul: exact-1.0 fresh → byte-identical, debuff-only, floor 0.90).
+  // Desertion thins the muster: strength/maxStr only, non-hq; enemy MORALE is deliberately untouched
+  // (the D249 morale-channel inversion class). The 87 auto-resolve rating term keeps its own will read.
+  var enemyMul = (typeof bridgeEnemyWillStrengthMul === "function") ? bridgeEnemyWillStrengthMul(C) : 1;
+  if (typeof enemyMul === "number" && isFinite(enemyMul) && enemyMul !== 1) {
+    for (var n = 0; n < B.units.length; n++) {
+      var en = B.units[n]; if (!en || en.side !== B.enemySide || en.type === "hq") continue;
+      en.strength = Math.max(1, Math.round(en.strength * enemyMul));
+      en.maxStr = Math.max(en.strength, Math.round((en.maxStr || en.strength) * enemyMul));
+    }
+  }
   // The Engineer Corps digs the works only when you ORDER the entrench prep — a deliberate tactical
   // choice (one of five prep slots), not a free always-on stack (§27). Fortifications level sets how much.
   var entr = bp.entrench ? _a6Entrench(C, B, ps) : 0;
-  return { strengthMul: strengthMul, moraleAdd: moraleAdd, unitsConditioned: touched, deployEntrenched: entr, overall: a.overall };
+  return { strengthMul: strengthMul, moraleAdd: moraleAdd, unitsConditioned: touched, deployEntrenched: entr, overall: a.overall, enemyStrengthMul: enemyMul };
 }
 
 /* ---- startBattleRuntime OVERRIDE (frozen-engine §8.2): the VERBATIM base body

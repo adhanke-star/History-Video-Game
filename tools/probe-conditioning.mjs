@@ -121,6 +121,47 @@ const SETUP = `(() => {
       if(dz2) dz2.forEach(function(k){ var t=B2.M.map[k]; if(t&&t.t==='trench') noEnt++; });
       if (noEnt!==0) throw new Error('trench should NOT stamp without the entrench order, got '+noEnt);
       return { fortLevel:engBranchLevel(C,'fortifications'), trenchWhenEntrenched:trench, deployTiles:total, trenchWithoutOrder:noEnt }; });
+
+    step('PM2 (D250): bridgeEnemyWillStrengthMul contract — baselines exact-1.0 both sides, debuff-only, 0.0015/pt (US will 30 -> x0.94), floor 0.90 pinned at will 0 both sides, NaN/type/missing-strategy safe', function(){
+      if (typeof bridgeEnemyWillStrengthMul!=='function') throw new Error('bridgeEnemyWillStrengthMul missing');
+      var Cu=mkC('US'), Cc=mkC('CS');
+      if (Cu.strategy.enemyWill!==70) throw new Error('US-player fresh baseline should be 70, got '+Cu.strategy.enemyWill);
+      if (Cc.strategy.enemyWill!==72) throw new Error('CS-player fresh baseline should be 72, got '+Cc.strategy.enemyWill);
+      if (bridgeEnemyWillStrengthMul(Cu)!==1) throw new Error('US fresh must be EXACT 1.0, got '+bridgeEnemyWillStrengthMul(Cu));
+      if (bridgeEnemyWillStrengthMul(Cc)!==1) throw new Error('CS fresh must be EXACT 1.0, got '+bridgeEnemyWillStrengthMul(Cc));
+      Cu.strategy.enemyWill=95; if (bridgeEnemyWillStrengthMul(Cu)!==1) throw new Error('debuff-only: will ABOVE baseline must stay 1.0');
+      Cu.strategy.enemyWill=30; var m30=bridgeEnemyWillStrengthMul(Cu);
+      if (Math.abs(m30-0.94)>1e-12) throw new Error('US will 30 should be x0.94, got '+m30);
+      Cu.strategy.enemyWill=0; if (bridgeEnemyWillStrengthMul(Cu)!==0.90) throw new Error('US will 0 must pin the 0.90 floor, got '+bridgeEnemyWillStrengthMul(Cu));
+      Cc.strategy.enemyWill=0; if (bridgeEnemyWillStrengthMul(Cc)!==0.90) throw new Error('CS will 0 must pin the 0.90 floor, got '+bridgeEnemyWillStrengthMul(Cc));
+      Cu.strategy.enemyWill=NaN; if (bridgeEnemyWillStrengthMul(Cu)!==1) throw new Error('NaN will must read as baseline -> 1.0');
+      Cu.strategy.enemyWill='collapsed'; if (bridgeEnemyWillStrengthMul(Cu)!==1) throw new Error('non-number will must read as baseline -> 1.0');
+      delete Cu.strategy; if (bridgeEnemyWillStrengthMul(Cu)!==1) throw new Error('missing strategy must read as baseline -> 1.0');
+      if (bridgeEnemyWillStrengthMul(null)!==1) throw new Error('null campaign must read 1.0');
+      return { freshUS:1, freshCS:1, us30:m30, floorBothSides:0.90 }; });
+
+    step('PM2 (D250): the CLASSIC leg thins the ENEMY at will 30 — every enemy non-hq unit exactly round(fresh x0.94); hq + player + enemy MORALE untouched', function(){
+      function snap(side){ var B=G.battle, out=[]; for(var i=0;i<B.units.length;i++){ var u=B.units[i]; if(u&&u.side===side) out.push({type:u.type, s:u.strength, ms:u.maxStr, mor:u.morale}); } return out; }
+      var C1=mkC('US'); setWar(C1,true);
+      startBattleRuntime(bd,'US',true); var es=G.battle.enemySide; var freshE=snap(es), freshP=JSON.stringify(snap(G.battle.playerSide));
+      var C2=mkC('US'); setWar(C2,true); C2.strategy.enemyWill=30;
+      startBattleRuntime(bd,'US',true); if(G.battle.enemySide!==es) throw new Error('enemy side changed');
+      var erodE=snap(es), erodP=JSON.stringify(snap(G.battle.playerSide));
+      if (freshE.length!==erodE.length) throw new Error('non-deterministic enemy unit count: '+freshE.length+' vs '+erodE.length);
+      var thinned=0, freshTot=0, erodTot=0;
+      for (var i2=0;i2<freshE.length;i2++){ var f=freshE[i2], e=erodE[i2];
+        if (f.type!==e.type) throw new Error('unit order changed at '+i2);
+        if (e.mor!==f.mor) throw new Error('enemy MORALE must be untouched (the D249 inversion class): '+e.mor+' vs '+f.mor);
+        if (f.type==='hq'){ if (e.s!==f.s) throw new Error('hq strength must be untouched: '+e.s+' vs '+f.s); continue; }
+        freshTot+=f.s; erodTot+=e.s;
+        var want=Math.max(1, Math.round(f.s*0.94));
+        if (e.s!==want) throw new Error('enemy unit '+i2+' should be round(fresh*0.94)='+want+', got '+e.s+' (fresh '+f.s+')');
+        var wantMs=Math.max(want, Math.round(f.ms*0.94));
+        if (e.ms!==wantMs) throw new Error('enemy maxStr '+i2+' should be '+wantMs+', got '+e.ms);
+        thinned++; }
+      if (!(erodTot<freshTot)) throw new Error('erosion should thin the enemy total: '+erodTot+' vs '+freshTot);
+      if (erodP!==freshP) throw new Error('the PLAYER line must be untouched by enemy-will erosion');
+      return { enemyUnits:freshE.length, thinned:thinned, freshTotal:freshTot, erodedTotal:erodTot }; });
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
 })()`;

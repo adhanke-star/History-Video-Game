@@ -17,7 +17,8 @@
    (R24): immersive + teaching now, decisive once wired.
 
    Adds C.battlePrep (sibling). bridgeInit / bridgeOnResolve (resets prep after a
-   battle) / bridgeArmy(C) (the conditioning math) / bridgeBriefingHTML+Wire +
+   battle) / bridgeArmy(C) (the conditioning math) / bridgeEnemyWillStrengthMul(C)
+   (PM2 · the shared enemy-conditioning contract) / bridgeBriefingHTML+Wire +
    _brgArmySummaryHTML (an interstitial fragment).
 
    Bare-name globals (G, CHAINS, BATTLES); brg-prefixed helpers; render never
@@ -227,6 +228,29 @@ function bridgeArmy(C) {
   return { side: side, strength: Math.round(strength), equip: Math.round(equip), arms: arms,
     morale: morale, supply: supply, fatigue: fatigue, leadership: leadership, firepower: firepower, artillery: artillery, engineering: engineering,
     logistics: _logRail ? Math.round(_logRail.index || 0) : 0, overall: overall };
+}
+
+/* ---- PM2 (E43 · D250/D266): THE SHARED ENEMY-CONDITIONING CONTRACT — bridgeEnemyWillStrengthMul.
+   Strategic will-erosion = desertion = fewer enemy men at muster (the 1864-65 desertion-crisis
+   grounding, design law §6.1). ONE function, consumed by BOTH simulated modes: the T2
+   fldCampaignConditionUnit enemy leg (real-time men/maxMen — initial line AND enemy reinforcements
+   via the T1 spawn seam) and the 86 _a6Condition enemy leg (Classic strength/maxStr, non-hq).
+   Returns a MULTIPLIER for enemy men:
+     · exact-1.0 at the side-correct FRESH baseline (72 CS-player / 70 US-player — vicInit), so a
+       fresh campaign fields a byte-identical enemy in every mode (§27)
+     · DEBUFF-ONLY: will above baseline is never a buff (mul stays 1.0)
+     · linear 0.0015 per point of erosion (will 30 as US player → ×0.94)
+     · hard floor 0.90 — pinned at will 0 on BOTH baselines (1−72·.0015 and 1−70·.0015 both floor)
+     · NaN-safe (E05 idiom): NaN / non-number / missing strategy all read as the baseline → 1.0
+   The 87 auto-resolve rating term (_arEnemyRating) is deliberately NOT rerouted — it keeps its own
+   enemyWill read until PM3 replaces the margin model with the sim-backed resolve. */
+function bridgeEnemyWillStrengthMul(C) {
+  var side = (C && C.side === "CS") ? "CS" : "US";
+  var baseline = (side === "CS") ? 72 : 70;
+  var S = C && C.strategy;
+  var ew = (S && typeof S.enemyWill === "number" && isFinite(S.enemyWill)) ? S.enemyWill : baseline;
+  var erosion = Math.max(0, baseline - ew);
+  return Math.max(0.90, 1.0 - erosion * 0.0015);
 }
 
 function _brgWord(v) {
