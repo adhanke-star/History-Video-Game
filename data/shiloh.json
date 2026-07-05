@@ -21,6 +21,8 @@
     "field": { "w": 1200, "h": 900 },
     "attacker": "CS",
     "defender": "US",
+    "homeEdge": { "US": "low", "CS": "high" },
+    "_homeEdgeNote": "E47 (D262/D275): role-aware home edges — the Shiloh flip, re-attempted after E49a envelopment-surrender (D258), E49b straggler-shedding (D261), E53-v2 attacker parity (D273), and E54 pocket-collapse capture (D275) landed the mechanisms whose absence turned earlier attempts red. This battle seats the US defender toward LOW z (Grant's line falls back on Pittsburg Landing at z 120-180; Buell's reinforcements enter z 130-140) and the CS attacker at HIGH z (Johnston's corps waves at z 760-870 striking from Corinth), the inverse of the engine's default side-keyed edges — so before this field a routing US unit fled toward z=960 THROUGH the Confederate assault line, inflating defender casualties into a near-costless CS assault reading (the D235-panel E47 artifact and its anti-Lost-Cause teaching liability). Sherman's division, correctly seated forward at Shiloh Church (z 780), now routs toward its OWN rear. Rout, fallback, officer-ride, and supply-train direction all follow this declaration; with E54, a collapsed attacker-held pocket records broken defenders as captured before the end ledger freezes.",
     "defaultFog": false,
     "timeLimitSec": 480,
     "holdToWinSec": 140,
@@ -180,8 +182,8 @@
         {
           "id": "sh_hornets_nest",
           "head": "The Hornets' Nest — the stand that saved an army",
-          "body": "Prentiss's division — mostly green regiments in their first battle — held a worn farm lane, the Sunken Road, for about six hours against repeated Confederate assaults. The position was strong: a sunken road with a dense thicket in front that slowed and channeled the attackers. But the position held because the Confederate infantry attacks came piecemeal — wave after wave, never one massed assault. It fell only near 4 p.m., when Brig. Gen. Daniel Ruggles massed some 53-62 guns four hundred yards away — the largest concentration of artillery yet assembled on a North American field — and that bombardment, with encirclement and empty cartridge boxes, forced Prentiss's surrender. The stand bought Grant the hours he needed to form his last line at Pittsburg Landing. The lesson is not 'the heroic defense' but 'what ordinary soldiers can do when their enemy attacks in waves instead of mass.'",
-          "provenance": "Verified (high) — NPS Shiloh (the Sunken Road / Hornets' Nest trail); Sword; Cunningham."
+          "body": "Prentiss's division — mostly green regiments in their first battle — held a worn farm lane, the Sunken Road, for about six hours against repeated Confederate assaults. The position was strong: a sunken road with a dense thicket in front that slowed and channeled the attackers. But the position held because the Confederate infantry attacks came piecemeal — wave after wave, never one massed assault. It fell only near 4 p.m., when Brig. Gen. Daniel Ruggles massed some 53-62 guns four hundred yards away — the largest concentration of artillery yet assembled on a North American field — and that bombardment, with encirclement and empty cartridge boxes, forced Prentiss's surrender: some 2,200 Union soldiers, cut off from the Landing, passed into Confederate captivity with him. The stand bought Grant the hours he needed to form his last line at Pittsburg Landing. The lesson is not 'the heroic defense' but 'what ordinary soldiers can do when their enemy attacks in waves instead of mass.'",
+          "provenance": "Verified (high) — NPS Shiloh (the Sunken Road / Hornets' Nest trail; ~2,200 surrendered with Prentiss at ~5:30 p.m.); Sword, 'Shiloh: Bloody April'; Cunningham."
         }
       ],
       "codex": {

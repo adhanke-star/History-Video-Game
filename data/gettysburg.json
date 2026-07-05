@@ -21,6 +21,8 @@
     "field": { "w": 1200, "h": 900 },
     "attacker": "CS",
     "defender": "US",
+    "homeEdge": { "US": "low", "CS": "high" },
+    "_homeEdgeNote": "E47 (D275): role-aware home edges for all Gettysburg phases via the T8 top-level fallback. The corrected D235 seating puts the US defender on the low-z ridges and the CS attacker at high z; the default side-keyed rout edge would send broken US units through the Confederate assault line and broken CS units through the Union line. Rout, fallback, officer-ride, and supply-train direction follow this declaration; E54 records broken defenders as captured only when an attacker-held pocket has already collapsed.",
     "defaultFog": false,
     "timeLimitSec": 220,
     "holdToWinSec": 70,

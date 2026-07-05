@@ -1,8 +1,16 @@
-# ☀ WAKE-UP — 2026-07-05 (latest): **D274 — E47 reattempt ran and red-halted. Direction is now green after D273, but captured stays zero; data reverted. NEXT = E54 captured/pocket semantics before E47 can ship.**
+# ☀ WAKE-UP — 2026-07-05 (latest): **D275 — E54 pocket-collapse capture semantics shipped, and E47 Shiloh/Gettysburg flips are now live. NEXT = E46 Piper guns re-attempt, then PM3.**
 
-**Newest (D274):** the D262 Shiloh/Gettysburg flip edits were reapplied only for acceptance smoke on top of D273 E53-v2, then reverted. Shiloh now passes the direction half (CS 7/8 default, 8/8 probe; flipNoShed 8/8 both sets) but captured stayed 0 on every seed. Gettysburg aggregate stayed US 8/8 both sets and Day 1 improved to CS 7/8 default + 7/8 probe, but captured stayed 0 on every seed; flipNoShed still had captured 0. Both runs had 0 pageerrors.
+**Newest (D275):** E54 adds a universal pocket-collapse capture seam before the T8 phase/end ledger freezes: attacker HOLD win, explicit role-aware `homeEdge`, 2:1 field-collapse ratio, attacker local objective control, and only live routing/wavering defenders captured. It stays inert at sandbox/no-homeEdge and near-parity cases. E47 then lands the Shiloh and Gettysburg home-edge data; Shiloh now records nonzero captured US on CS-hold seeds, and Gettysburg Day 1 records nonzero captured US on CS-hold rows while the aggregate still resolves US. Focused probes and JSON readback are green with 0 pageerrors.
 
-**Queue: E54 scoped captured/pocket semantics session → re-attempt E47 behind the same unweakened gates → E46 Piper honestly → PM3. Main-menu redesign + LLM-opponent feature remain queued milestones, not part of this tactical build chain.**
+**Queue: E46 Piper guns re-attempt behind the same unweakened D264 gate -> PM3 sim-backed resolve. Main-menu redesign + LLM-opponent feature remain queued milestones, not part of this tactical build chain. M8/Q5/Q6 remain locked unless Aaron explicitly unlocks.**
+
+---
+
+# ☀ WAKE-UP — 2026-07-05 (previous): **D274 — E47 reattempt ran and red-halted. Direction is now green after D273, but captured stays zero; data reverted. NEXT = E54 captured/pocket semantics before E47 can ship.**
+
+**Newest (D274):** the D262 Shiloh/Gettysburg flip edits were reapplied only for acceptance smoke on top of D273 E53-v2, then reverted. Shiloh passed the direction half (CS 7/8 default, 8/8 probe; flipNoShed 8/8 both sets) but captured stayed 0 on every seed. Gettysburg aggregate stayed US 8/8 both sets and Day 1 improved to CS 7/8 default + 7/8 probe, but captured stayed 0 on every seed; flipNoShed still had captured 0. Both runs had 0 pageerrors.
+
+**Queue then: E54 scoped captured/pocket semantics session -> re-attempt E47 behind the same unweakened gates -> E46 Piper honestly -> PM3.**
 
 ---
 

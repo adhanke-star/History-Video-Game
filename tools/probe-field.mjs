@@ -292,6 +292,29 @@ const SETUP = `(() => {
       if(!r3.alive || __FIELD.captured.CS!==0) throw new Error('(c) out-of-band enemy falsely triggered surrender');
       return { pursuerBehindRallies:true, rescueRallies:true, outOfBandRallies:true }; });
 
+    step('E54 pocket-collapse capture: an attacker-HOLD win with explicit role-aware homeEdge captures broken defenders only after 2:1 field collapse + local objective control; near-parity and no-homeEdge controls stay inert', function(){
+      if(typeof fldPocketCollapseOnVictory!=='function') throw new Error('fldPocketCollapseOnVictory missing');
+      function setup(seed, usMen, withHomeEdge){
+        var F=e49Launch(seed), o=__FIELD.objective, i;
+        __FIELD.homeEdgeZ = withHomeEdge ? { US:'low', CS:'high' } : null;
+        for(i=0;i<F.us.length;i++){ F.us[i].men=usMen; F.us[i].maxMen=usMen; F.us[i].state='steady'; F.park(F.us[i], o.x-40+i*40, o.z); }
+        F.cs[0].men=950; F.cs[0].maxMen=1000; F.cs[0].state='routing'; F.park(F.cs[0], o.x-30, o.z+70);
+        F.cs[1].men=800; F.cs[1].maxMen=1000; F.cs[1].state='wavering'; F.park(F.cs[1], o.x+30, o.z+75);
+        F.cs[2].men=1000; F.cs[2].maxMen=1000; F.cs[2].state='steady'; F.park(F.cs[2], o.x+75, o.z+75);
+        return F;
+      }
+      var F=setup(37,3000,true), n=fldPocketCollapseOnVictory('US','hold');
+      if(n!==2) throw new Error('wanted exactly two broken defenders captured, got '+n);
+      if(F.cs[0].state!=='captured' || F.cs[1].state!=='captured') throw new Error('broken defenders not captured');
+      if(!F.cs[2].alive || F.cs[2].state!=='steady') throw new Error('steady defender falsely captured');
+      if(__FIELD.captured.CS!==1750) throw new Error('captured.CS '+__FIELD.captured.CS+' != 1750');
+      if(__FIELD.prisonerMarkers.length!==2) throw new Error('wanted two prisoner markers, got '+__FIELD.prisonerMarkers.length);
+      F=setup(38,1200,true); n=fldPocketCollapseOnVictory('US','hold');
+      if(n!==0 || __FIELD.captured.CS!==0) throw new Error('near-parity hold falsely captured: n='+n+' cap='+__FIELD.captured.CS);
+      F=setup(39,3000,false); n=fldPocketCollapseOnVictory('US','hold');
+      if(n!==0 || __FIELD.captured.CS!==0) throw new Error('default/no-homeEdge battle falsely captured: n='+n+' cap='+__FIELD.captured.CS);
+      return { capturedCS:1750, nearParityInert:true, noHomeEdgeInert:true }; });
+
     step('E49b SL-4/§5.4: the T8 phased ledgers — antietam full run keeps captured/missing CONSISTENT subsets of battleCas (never added; phaseLog sums == cumulative; missing ≤ f x battleFielded + 0.5 x unitsShed per side — the structural bound the D256 form broke)', function(){
       G.campaign=null;
       // sim-inert observation wrapper: count the units that actually shed per side (the §5.4 bound's

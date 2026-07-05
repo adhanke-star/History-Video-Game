@@ -26,7 +26,7 @@ These rules apply to Codex, Claude, Cline, DeepSeek, and any other model impleme
 
 ## 2 · STATE AS OF THIS HANDOFF (live head — see the refresh line below; the stale "run i" epoch label was corrected in D236, ledger item S38)
 
-> **LIVE REFRESH (2026-07-05 D273): read `HANDOFF.md` top block first — E53-v2 attacker parity is live and green. A+B wing/wave shipped, C/abandonment is absent, the E53-scoped capture valve is built, Bull Run has the accurate cautious input, and the full E53 battery ran green x2 byte-identical.** The active work is the battle-mode-parity queue: E47 Shiloh/Gettysburg flip re-attempts behind the same unweakened gates -> E46 Piper honestly -> PM3. Phase H media additions, M8, and the last battle queue remain locked behind explicit Aaron decisions.
+> **LIVE REFRESH (2026-07-05 D275): read `HANDOFF.md` top block first — E54 pocket-collapse capture semantics and the remaining E47 Shiloh/Gettysburg flips are live.** E54 captures routing/wavering defenders only on attacker-HOLD pocket-collapse wins with explicit role-aware `homeEdge`, 2:1 field-collapse, and local objective control; Shiloh and Gettysburg now pass their direction/captured gates under focused probes and preserved flip smokes. The active work is the battle-mode-parity queue: E46 Piper guns re-attempt behind the D264 gate -> PM3. Phase H media additions, M8, and the last battle queue remain locked behind explicit Aaron decisions.
 
 > **PRIOR CLOSE-OUT REFRESH (2026-07-03 D236):** the FABLE-AUDIT run-1 IMPROVE loop (D224 ledger → D225-D236 fix milestones; standing ledger in `REVIEW-QUEUE.md`) was the active work, and D222 was the playable-CONTENT head. The D222 paragraph below is the last full prose refresh and stays accurate as historical context.
 

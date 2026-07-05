@@ -1,6 +1,6 @@
 /* ============================================================================
-   src/tactical/T25-surrender.js  —  TACTICAL ENGINE · E49a (D258) + E49b (D261)
-   ENVELOPMENT-SURRENDER + STRAGGLER-SHEDDING (SL-1v2, first-break-only)
+   src/tactical/T25-surrender.js  —  TACTICAL ENGINE · E49a (D258) + E49b (D261) + E54
+   ENVELOPMENT-SURRENDER + STRAGGLER-SHEDDING + POCKET-COLLAPSE CAPTURE
 
    The two D242-approved E49 mechanics, built to the AARON-LOCKED design law
    docs/design/e49-surrender-straggler-design.md. The combined D255 build went
@@ -50,6 +50,16 @@
      static -> reduceMotion-safe) + the after-action killed/wounded · captured ·
      missing columns (fldPrisonerEndHtml, the fldOnOver seam).
 
+   - E54 POCKET-COLLAPSE CAPTURE: correct-direction routing removed the old
+     artifact captures at Shiloh/Gettysburg; those battles now end with the
+     attacker holding the position, the defender broken/wavering, and no active
+     blocked-lane tick left to accrue surrenderT. Before victory/phase ledgers
+     freeze, an attacker-HOLD win with explicit role-aware home edges converts
+     broken defenders to captured only when the whole field shows at least a
+     2:1 attacker collapse and the local objective pocket is attacker-controlled. Near-parity hold
+     wins, defender timeouts, legacy/default-edge scenarios, and the symmetric
+     sandbox are inert.
+
    Bare-name globals (__FIELD, FLD, the fld* T0 helpers, window.THREE inside
    runtime fns only). All helpers uniquely prefixed + defined once. No literal
    comment-closer inside this block.
@@ -59,6 +69,11 @@
    men PRESENT scatter when a formation first breaks — the §5.2 re-anchored
    rationale; never per-battle, never back-solved, never raised — SL-7/D74). */
 FLD.SHED_FRAC = 0.05;
+/* E54: universal collapse-severity threshold for post-hold pocket capture. This
+   is a global semantic threshold, not a per-battle capture constant: the attacker
+   must have at least twice the defender's live strength overall, plus local
+   objective control, before broken defenders surrender at the victory seam. */
+FLD.POCKET_COLLAPSE_RATIO = 2;
 
 /* SL-1v2: the FIRST break sheds stragglers to the missing pool — exactly once per
    unit (sticky shedDone, spawn-initialized false in fldMakeUnit; phased battles
@@ -152,6 +167,54 @@ function fldSurrender(u) {
   var msg = u.name + " surrenders — " + _fldPrisComma(men) + " men captured" + (u.guns ? " with " + u.guns + " guns" : "") + ".";
   fldAnnounce(msg);
   if (typeof fldScenarioBanner === "function") { try { fldScenarioBanner(msg, u.side); } catch (e) {} }
+}
+
+function _fldPocketLiveMen(side) {
+  var n = 0;
+  for (var i = 0; i < __FIELD.units.length; i++) {
+    var u = __FIELD.units[i];
+    if (u.side === side && u.alive !== false && u.men > 0) n += u.men;
+  }
+  return n;
+}
+
+function _fldPocketObjectiveMen(side) {
+  var obj = __FIELD.objective;
+  if (!obj) return 0;
+  var n = 0, rr = (obj.r || 0) + FLD.RALLY_R;
+  for (var i = 0; i < __FIELD.units.length; i++) {
+    var u = __FIELD.units[i];
+    if (u.side !== side || u.alive === false || u.men <= 0 || u.state === "routing") continue;
+    var dx = u.x - obj.x, dz = u.z - obj.z;
+    if (Math.sqrt(dx * dx + dz * dz) <= rr) n += u.men;
+  }
+  return n;
+}
+
+function _fldPocketBrokenDefender(u, def) {
+  return u && u.side === def && u.alive !== false && u.men > 0 &&
+    (u.state === "routing" || u.state === "wavering");
+}
+
+/* E54: final pocket-collapse conversion. Called once from fldCheckVictory after
+   w/by are known and before T8 or fldOnOver freezes ledgers. It is deliberately
+   narrower than SL-2: it needs a completed attacker hold, explicit role-aware
+   home edges, 2:1 collapse overall, and local objective control. */
+function fldPocketCollapseOnVictory(w, by) {
+  if (__FIELD._e54NoPocketCollapse) return 0;     // isolation hook; never set by live code
+  if (!__FIELD.attacker || !__FIELD.homeEdgeZ) return 0;
+  if (by !== "hold" || w !== __FIELD.attacker) return 0;
+  var att = __FIELD.attacker, def = fldEnemy(att), ratio = FLD.POCKET_COLLAPSE_RATIO || 2;
+  var attMen = _fldPocketLiveMen(att), defMen = _fldPocketLiveMen(def);
+  if (attMen < Math.max(1, defMen) * ratio) return 0;
+  var attObj = _fldPocketObjectiveMen(att), defObj = _fldPocketObjectiveMen(def);
+  if (attObj <= defObj) return 0;
+  var n = 0, U = __FIELD.units.slice();
+  for (var i = 0; i < U.length; i++) {
+    if (!_fldPocketBrokenDefender(U[i], def)) continue;
+    fldSurrender(U[i]); n++;
+  }
+  return n;
 }
 
 /* SL-8: the 2D prisoner marker — a static WHITE FLAG at each yield point (the

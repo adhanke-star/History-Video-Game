@@ -1134,6 +1134,9 @@ function fldCheckVictory() {
     }
   }
   if (w) {
+    // E54: convert broken defenders in a resolved attacker-held pocket before
+    // T8 phase logs or the end screen read the captured/missing subset ledgers.
+    if (typeof fldPocketCollapseOnVictory === "function") fldPocketCollapseOnVictory(w, by);
     // Phase C (D74): a MULTI-PHASE scenario records the phase + advances to the next sector instead of ending the
     // battle (the LAST phase ends it with the aggregate winner). No-op when phases is null -> byte-identical.
     if (__FIELD.phases && typeof _fldPhaseResolved === "function") { _fldPhaseResolved(w, by); return; }
