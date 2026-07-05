@@ -5,9 +5,9 @@ Updated 2026-07-03 (FABLE AUDIT run 1). **The live content of this file is the F
 
 ## D270 Carry-Forward Queue — 2026-07-05
 
-- **Q-D270-1** · process · **HIGH** · Resume and rerun the E53-v2 3-lens default-refute panel `wf_f874edce-cf9` after limit reset; current run is wrapper-complete but lens-empty (`agents_done=0`, `agents_error=3`, session-limit on all lenses), so no panel verdict exists yet.
-- **Q-D270-2** · doctrine · **HIGH** · After panel rerun, surface Aaron popup and lock E53-v2 doctrine before any law amendment.
-- **Q-D270-3** · docs · **MED** · Amend law + ledger trail and ship docs-only commit/push with paste-ready build prompt once doctrine is locked.
+- **Q-D270-1** · process · **HIGH** · RESOLVED in D271: reran the 3-lens E53-v2 panel against preserved D269 evidence; mechanism/history/gates converged, validating E53-v2 as the required next design step before any re-land.
+- **Q-D270-2** · doctrine · **HIGH** · RESOLVED in D271: popup surfaced; user unavailable with explicit proceed-autonomously guidance, so recommended path lock applied (option a).
+- **Q-D270-3** · docs · **MED** · RESOLVED in D271: law/ledger/handoff trail updated and docs-only commit/push executed with refreshed next prompt.
 - **Q-D270-4** · roadmap · **MED** · Add milestone planning slice for main-menu redesign (Aaron mid-session directive).
 - **Q-D270-5** · roadmap · **MED** · Add milestone planning slice for LLM-opponent feature (Aaron mid-session directive).
 

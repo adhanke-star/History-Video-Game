@@ -1,4 +1,12 @@
-# ☀ WAKE-UP — 2026-07-05 (latest): **D270 — post-D269 follow-through was interrupted before ship. The 3-lens default-refute panel `wf_f874edce-cf9` returned wrapper-completed but all three lenses failed on session-limit (0/3 done), so no law/build change shipped. D269 remains the latest completed sim state.**
+# ☀ WAKE-UP — 2026-07-05 (latest): **D271 — D270 carry-forward is now fully executed. The E53-v2 3-lens rerun was completed against preserved D269 evidence, and with user-unavailable guidance to proceed autonomously, the doctrine path is locked to option (a): run E53-v2 design next. No law/build sim change shipped.**
+
+**Newest (D271):** the missing panel gate was rerun from preserved artifacts (`.tmp/e53-build-d269/EVIDENCE.md` + active law + fork brief). Mechanism/history/gates all converged on the same verdict class as D269: blockers are design-level, not implementation defects; E53-v2 is required before any re-land, and the unweakened battery posture stands. The doctrine lock step was surfaced, but the platform returned explicit user-unavailable instruction to continue autonomously, so the recommended path was applied as the continuity lock: option (a). Docs trail and queue state were synchronized; no tactical/data/code surface moved.
+
+**Queue: execute the E53-v2 design session (option-a lane) → surface resulting law amendment + ledger updates → ship docs-only commit/push at that boundary with a paste-ready re-land/build prompt → keep milestone planning for main-menu redesign + LLM-opponent feature queued.**
+
+---
+
+# ☀ WAKE-UP — 2026-07-05 (previous): **D270 — post-D269 follow-through was interrupted before ship. The 3-lens default-refute panel `wf_f874edce-cf9` returned wrapper-completed but all three lenses failed on session-limit (0/3 done), so no law/build change shipped. D269 remains the latest completed sim state.**
 
 **Newest (D270):** we reconciled the continuation session first-hand from workflow artifacts before writing carry-forward state. The panel task output and journal show `agents_done=0` and `agents_error=3`; each lens (`mechanism`, `history`, `gates`) failed with `You've hit your session limit`, so there is no valid refutation packet to consume yet. This is recorded as an interruption, not a completed design gate. The queue is now explicit: rerun the panel after reset, then lock E53-v2 via Aaron popup, then amend law/ledger trail and ship docs-only with a paste-ready build prompt. Aaron's mid-session directives are also now carried as queued milestones: main-menu redesign and LLM-opponent feature. No tactical/data surface was changed in this pass.
 
