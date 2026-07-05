@@ -1,21 +1,31 @@
 /* ============================================================================
-   src/tactical/T25-surrender.js  —  TACTICAL ENGINE · E49a (D258)
-   ENVELOPMENT-SURRENDER (straggler-shedding = E49b, NOT landed — see below)
+   src/tactical/T25-surrender.js  —  TACTICAL ENGINE · E49a (D258) + E49b (D261)
+   ENVELOPMENT-SURRENDER + STRAGGLER-SHEDDING (SL-1v2, first-break-only)
 
-   The green half of the two D242-approved E49 mechanics. Both were built verbatim
-   to the AARON-LOCKED design law docs/design/e49-surrender-straggler-design.md
-   (D255, SL-1..SL-10); the combined build went honestly RED on the law's own §3.3
-   acceptance gate — attributed 100% to SL-1 shedding by the isolated A/B legs
-   (D256) — and Aaron SPLIT the ledger (D257). THIS module ships the surrender
-   half only (E49a; its isolated leg passed EVERY gate). SL-1 straggler-shedding
-   (E49b) returns to a bounded design session armed with the D256 measurements
-   (engine rout frequency is 3–8 breaks/unit in NORMAL battles, so ANY per-event
-   shed rate compounds to a 15–30% side-level loss — 2–3.3× the documented bands).
-   The MISSING ledger below is therefore WIRED-BUT-ZERO in E49a: nothing feeds it
-   until the E49b law lands. The gap E49a closes: the universal model had NO way
-   for a broken force to be permanently lost short of death — a router rallied
-   after 6 safe seconds at zero man-loss, forever (the D242 Shiloh/Gettysburg
-   flip REDs and the D249/D251 PM2 inversion class).
+   The two D242-approved E49 mechanics, built to the AARON-LOCKED design law
+   docs/design/e49-surrender-straggler-design.md. The combined D255 build went
+   honestly RED on the law's own §3.3 gate — attributed 100% to the original
+   per-EVENT SL-1 by the isolated A/B legs (D256; engine rout frequency is
+   0.45–16 breaks/unit, so ANY per-event rate compounds uncontrolled, with a
+   feedback amplifier) — Aaron SPLIT the ledger (D257), the surrender half
+   shipped as E49a (D258), and shedding was REDESIGNED as §5 SL-1v2 (D259):
+   FIRST-BREAK-ONLY, landed here as E49b (D261 — the D260 first landing went red
+   on the zero-headroom Chancellorsville gate, which Aaron re-anchored as the
+   gate owner; law §6). The gap E49 closes: the
+   universal model had NO way for a broken force to be permanently lost short
+   of death — a router rallied after 6 safe seconds at zero man-loss, forever
+   (the D242 Shiloh/Gettysburg flip REDs and the D249/D251 PM2 inversion class).
+
+   - SL-1v2 STRAGGLER-SHEDDING (§5, D259): when a formation FIRST breaks — its
+     first transition into state "routing" (the T0 rout roll) — round(men × f),
+     f = SHED_FRAC 0.05, of the men PRESENT scatter to the missing ledger, exactly
+     ONCE per unit per phase (the sticky per-unit shedDone flag, spawn-initialized
+     false; T8 phased battles field fresh rosters -> one collapse per fresh
+     commitment). Re-breaks shed NOTHING (the anti-compounding law — the D256
+     per-event form died on exactly that). Deterministic, no fldRng; f is the
+     one-time collapse fraction and is NEVER raised toward any band/column/gate
+     (SL-7 as extended by §5.2). Silent ledger: no announce, no marker — the
+     after-action MISSING column + teaching sentence carry it (§5.2 answer 4).
 
    - SL-2 ENVELOPMENT-SURRENDER: a router whose corridor to its own home edge is
      blocked by steady enemy formations (DIRECTIONAL — strictly between router and
@@ -45,9 +55,28 @@
    comment-closer inside this block.
    ============================================================================ */
 
-/* SL-1 straggler-shedding is deliberately ABSENT (E49b, D257): its D255 form went
-   red on the law's own §3.3 gate (D256) and returns via a bounded design session.
-   The missing ledger stays wired-but-zero so E49b lands as one function + one hook. */
+/* SL-1v2: f = 0.05 — the ONE universal first-break collapse fraction (5% of the
+   men PRESENT scatter when a formation first breaks — the §5.2 re-anchored
+   rationale; never per-battle, never back-solved, never raised — SL-7/D74). */
+FLD.SHED_FRAC = 0.05;
+
+/* SL-1v2: the FIRST break sheds stragglers to the missing pool — exactly once per
+   unit (sticky shedDone, spawn-initialized false in fldMakeUnit; phased battles
+   re-arm via their fresh per-phase rosters). Called from the T0 rout roll (the
+   __FIELD.routEverCount++ transition), gated on __FIELD.attacker there AND here.
+   Re-breaks shed nothing; round(men × f) ≤ men for all men ≥ 1, so no clamp is
+   needed (a clamp would signal the refuted maxMen-anchored form — §5.1).
+   Deterministic — no fldRng draw (SL-6). */
+function fldShedStragglers(u) {
+  if (__FIELD._e49NoShed) return;   // sticky ISOLATION test hook (the _officersOff class) — the §3 A/B's surrender-only leg; never set by any live path
+  if (!__FIELD.attacker || !u || !u.alive) return;
+  if (u.shedDone) return;
+  u.shedDone = true;                                       // consumed on the FIRST break even if the shed rounds to 0
+  var shed = Math.round(u.men * FLD.SHED_FRAC);
+  if (shed <= 0) return;
+  u.men -= shed;
+  if (__FIELD.missing) __FIELD.missing[u.side] = (__FIELD.missing[u.side] || 0) + shed;
+}
 
 /* SL-2: is the router's corridor home BLOCKED? The flight lane is the constant-x
    ray toward fldHomeEdgeZ(u.side) (the T0 rout movement). A blocker is a STEADY
@@ -224,7 +253,7 @@ function fldPrisonerEndHtml() {
     ((gUS || gCS) ? '<div style="font-size:12px;opacity:.85;margin-top:6px;">Guns captured &mdash; ' +
       (gUS ? "Union lost " + gUS : "") + (gUS && gCS ? " &middot; " : "") + (gCS ? "Confederate lost " + gCS : "") + '.</div>' : '') +
     '<div style="font-size:11px;opacity:.55;margin-top:6px;">Captured and missing men are part of each side\'s total loss &mdash; the Official Records convention.' +
-      ((t.US.mis + t.CS.mis) > 0 ? ' Missing counts the stragglers who scattered when a brigade broke.' : '') + '</div>' +
+      ((t.US.mis + t.CS.mis) > 0 ? ' Missing counts the stragglers who scattered when a brigade first broke.' : '') + '</div>' +
   '</div>';
 }
 

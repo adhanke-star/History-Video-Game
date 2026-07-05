@@ -237,7 +237,7 @@ function fldMakeUnit(o) {
     men: o.men, maxMen: o.men, morale: o.morale || 78, maxMor: o.morale || 78,
     fatigue: 0, ammo: 100, state: "steady",
     order: { type: "hold", tx: o.x, tz: o.z, tface: o.facing },
-    targetId: null, reload: 0, rallyT: 0, surrenderT: 0, ai: !!o.ai, alive: true,   // E49a (D258): surrenderT 0 at every spawn incl. reinforcements (SL-9)
+    targetId: null, reload: 0, rallyT: 0, surrenderT: 0, shedDone: false, ai: !!o.ai, alive: true,   // E49a (D258): surrenderT 0 at every spawn incl. reinforcements (SL-9); E49b (D261): the SL-1v2 first-break flag false at every spawn — phased battles re-arm via their fresh rosters (§5.2)
     casTick: 0, underFire: 0, flankHit: 0,
     // R-6: the rating BADGES carried from the OOB data (the documented commander/unit traits). A fresh
     // COPY (never the shared data array) so combat reads never alias canonical GAME_DATA, and null when
@@ -560,7 +560,14 @@ function fldMoraleStep(u, dt) {
     if (u.ai) { if (_ar !== 1) _saveBase *= _ar; }              // B-5: AI brigades break sooner at the easy tiers (_ar <= 1 -> easier, never a cheat)
     else if (_cu) _saveBase += _cu * 0.3;                       // B-5: the Recruit player cushion vs the rout
     var save = Math.min(0.95, _saveBase);
-    if (fldRng() > save) { u.state = "routing"; u.rallyT = 0; __FIELD.routEverCount++; fldAnnounce(u.name + " breaks and routs!"); return; }
+    if (fldRng() > save) {
+      u.state = "routing"; u.rallyT = 0; __FIELD.routEverCount++;
+      // E49b SL-1v2 (D261): the unit's FIRST break sheds round(men × SHED_FRAC) stragglers to the
+      // missing pool — once per unit (shedDone), re-breaks shed nothing. Asymmetric battles only
+      // (SL-3 -> the sandbox is byte-identical); deterministic, on the rout EVENT, no fldRng (SL-6).
+      if (__FIELD.attacker && typeof fldShedStragglers === "function") fldShedStragglers(u);
+      fldAnnounce(u.name + " breaks and routs!"); return;
+    }
   }
   u.state = u.morale > 55 ? "steady" : (u.morale > 35 ? "shaken" : "wavering");
 }

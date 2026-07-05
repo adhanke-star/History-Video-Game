@@ -143,10 +143,11 @@ const SETUP = `(() => {
       if(!(__FIELD.t<=__FIELD.timeLimit+2)) throw new Error('(c) the timeout must fire AT the clock, t='+__FIELD.t);
       return { overtimeSecs:Math.round(ot*10)/10, holdToWin:__FIELD.holdToWin, contestedEndsAtClock:true, unattendedEndsAtClock:true }; });
 
-    // ==== E49a (D258) fixtures — the SL-2 surrender mechanic + the SL-4 ledgers (design law
-    // docs/design/e49-surrender-straggler-design.md §3.2; SL-1 shedding = E49b, NOT landed — its
-    // missing ledger must stay wired-but-ZERO, asserted below). Shared asymmetric launcher: a 3v3
-    // open-field skirmish (attacker US -> the mechanic ARMED), every unit parked out of contact.
+    // ==== E49 fixtures — E49a (D258) SL-2 surrender + SL-4 ledgers, E49b (D260) SL-1v2
+    // first-break-only straggler-shedding (design law docs/design/e49-surrender-straggler-design.md
+    // §3.2 + §5.4; the two D258 protective teeth re-targeted in the SAME commit as the landing —
+    // never deleted). Shared asymmetric launcher: a 3v3 open-field skirmish (attacker US -> both
+    // mechanics ARMED), every unit parked out of contact.
     function e49Launch(seed){
       fldLaunchSandbox({renderer:'none', autoBoth:true, seed:seed, skirmish:{ playerSide:'US', attacker:'US', year:1862,
         countPlayer:3, countEnemy:3, menPlayer:1500, menEnemy:1500, weaponPlayer:'rifled', weaponEnemy:'rifled', terrain:'open', holdToWin:40 }});
@@ -160,17 +161,86 @@ const SETUP = `(() => {
       return { us:us, cs:cs, park:park };
     }
 
-    step('E49a SL-1-ABSENT: a forced rout EVENT sheds NOTHING — men unchanged through the break, missing ledger stays zero (shedding is E49b, not landed)', function(){
+    step('E49b SL-1v2 FIRST-BREAK EXACT: a forced rout event sheds round(men PRESENT x 0.05) — 600/1000 -> men 570, missing 30 (the refuted maxMen form would read 550/50); sticky shedDone set', function(){
       var F=e49Launch(31), u=F.us[0];
-      u.men=1000; u.maxMen=1000; u.xp=1;
+      u.men=600; u.maxMen=1000; u.xp=1;   // men != maxMen LOAD-BEARING: the shed must anchor on the men PRESENT (§5.2 answer 1)
+      if(u.shedDone!==false) throw new Error('shedDone not spawn-initialized false: '+u.shedDone);
       u.state='steady'; u.morale=0; u.rallyT=0;
       var n=0;
       while(u.state!=='routing' && n<400){ u.morale=0; fldMoraleStep(u,0.05); n++; }
       if(u.state!=='routing') throw new Error('the forced break never fired after '+n+' ticks');
-      if(u.men!==1000) throw new Error('the rout event changed men: '+u.men+' != 1000 (shedding must NOT be live)');
-      if(__FIELD.missing.US!==0 || __FIELD.missing.CS!==0) throw new Error('missing ledger fed on a rout: '+JSON.stringify(__FIELD.missing));
+      if(u.men!==570) throw new Error('first break must shed round(600x0.05)=30 of men PRESENT: men '+u.men+' != 570 (550 would be the refuted maxMen-anchored form)');
+      if(__FIELD.missing.US!==30) throw new Error('missing.US '+__FIELD.missing.US+' != 30');
+      if(__FIELD.missing.CS!==0) throw new Error('missing.CS fed without a CS break: '+__FIELD.missing.CS);
+      if(u.shedDone!==true) throw new Error('shedDone not set by the first break');
       if(__FIELD.routEverCount<1) throw new Error('routEverCount '+__FIELD.routEverCount+' < 1');
-      return { menAfterBreak:u.men, missingZero:true }; });
+      return { menAfterBreak:u.men, missingUS:__FIELD.missing.US, shedDone:u.shedDone }; });
+
+    step('E49b anti-compounding + 5-break guard: break -> shed 50 -> rally restores NO men -> 4 more break/rally cycles shed ZERO (missing stays EXACTLY 50 through routEverCount 5; the dead per-event form read 227)', function(){
+      var F=e49Launch(34), u=F.us[0];
+      u.men=1000; u.maxMen=1000; u.xp=1;
+      function forceBreak(){ var n=0; u.rallyT=0; while(u.state!=='routing' && n<500){ u.morale=0; fldMoraleStep(u,0.05); n++; } if(u.state!=='routing') throw new Error('a forced break never fired'); }
+      function forceRally(){ var n=0; while(u.state==='routing' && n<500){ fldMoraleStep(u,0.05); n++; } if(u.state==='routing') throw new Error('the rally never fired'); }
+      forceBreak();
+      if(u.men!==950 || __FIELD.missing.US!==50) throw new Error('first break: men '+u.men+' missing '+__FIELD.missing.US+' (want 950/50)');
+      forceRally();
+      if(u.men!==950) throw new Error('rally changed men: '+u.men+' != 950 (rally must NEVER restore men — §5.1)');
+      forceBreak();
+      if(__FIELD.routEverCount!==2) throw new Error('non-vacuity: second break did not fire, routEverCount='+__FIELD.routEverCount);
+      if(u.men!==950 || __FIELD.missing.US!==50) throw new Error('the RE-BREAK shed: men '+u.men+' missing '+__FIELD.missing.US+' (a re-break must shed ZERO)');
+      forceRally(); forceBreak(); forceRally(); forceBreak(); forceRally(); forceBreak();
+      if(__FIELD.routEverCount!==5) throw new Error('need exactly 5 break events, routEverCount='+__FIELD.routEverCount);
+      if(u.men!==950) throw new Error('re-breaks shed men: '+u.men+' != 950');
+      if(__FIELD.missing.US!==50) throw new Error('missing after 5 breaks '+__FIELD.missing.US+' != EXACTLY 50 (227 = the dead D256 per-event form)');
+      return { breaks:__FIELD.routEverCount, men:u.men, missing:__FIELD.missing.US }; });
+
+    step('E49b identity + symmetry: shed->rally, shed->kill, shed->surrender (captured banks the POST-shed 950) each keep fielded = survivors + kw + captured + missing EXACT; US and CS both shed in ONE asymmetric launch', function(){
+      var F=e49Launch(35), a=F.us[0], b=F.us[1], r=F.cs[0], i, q;
+      function bk(q){ var n=0; q.rallyT=0; q.state='steady'; while(q.state!=='routing' && n<500){ q.morale=0; fldMoraleStep(q,0.05); n++; } if(q.state!=='routing') throw new Error('a forced break never fired'); }
+      // (a) shed->rally: 1000 men break (shed 50), rally with 950 — the missing men never return
+      a.men=1000; a.maxMen=1000; bk(a);
+      var n=0; while(a.state==='routing' && n<500){ fldMoraleStep(a,0.05); n++; }
+      if(a.state==='routing') throw new Error('(a) the rally never fired');
+      if(a.men!==950 || __FIELD.missing.US!==50) throw new Error('(a) shed->rally: men '+a.men+' missing '+__FIELD.missing.US);
+      // (b) shed->kill: 1000 men break (shed 50 -> missing.US 100), then die — kw carries the post-shed 950
+      b.men=1000; b.maxMen=1000; bk(b);
+      if(b.men!==950 || __FIELD.missing.US!==100) throw new Error('(b) second US shed: men '+b.men+' missing '+__FIELD.missing.US);
+      fldKill(b);
+      if(b.alive || __FIELD.missing.US!==100) throw new Error('(b) the kill disturbed the missing ledger');
+      // (c) SYMMETRY (§27): a CS unit sheds under the same truthy attacker gate, then surrenders blocked —
+      // captured banks the POST-shed 950 (never the pre-shed 1000; no double-count with the missing 50)
+      r.men=1000; r.maxMen=1000; bk(r);
+      if(r.men!==950 || __FIELD.missing.CS!==50) throw new Error('(c) the CS first break did not shed (symmetry): men '+r.men+' missing '+JSON.stringify(__FIELD.missing));
+      F.park(r,600,500); F.park(F.us[2],600,200); F.us[2].state='steady';   // the SL-2 blocked-corridor geometry (blocker past RALLY_R, in-band, directional)
+      for(i=0;i<130;i++) fldMoraleStep(r,0.05);
+      if(r.alive || r.state!=='captured') throw new Error('(c) the blocked post-shed router did not surrender: '+r.state);
+      if(__FIELD.captured.CS!==950) throw new Error('(c) captured must bank the POST-shed men: '+__FIELD.captured.CS+' != 950');
+      if(__FIELD.missing.CS!==50) throw new Error('(c) surrender disturbed the missing ledger: '+__FIELD.missing.CS);
+      // the SL-4 identity, EXACT per side over the live roster: fielded = survivors + kw + captured + missing
+      var f={US:0,CS:0}, s={US:0,CS:0};
+      for(i=0;i<__FIELD.units.length;i++){ q=__FIELD.units[i]; if(q.side!=='US'&&q.side!=='CS') continue; f[q.side]+=q.maxMen; if(q.alive) s[q.side]+=q.men; }
+      var casUS=Math.round(f.US-s.US), kwUS=casUS-__FIELD.captured.US-__FIELD.missing.US;
+      var casCS=Math.round(f.CS-s.CS), kwCS=casCS-__FIELD.captured.CS-__FIELD.missing.CS;
+      if(casUS!==1050 || kwUS!==950) throw new Error('US identity: cas '+casUS+' (want 1050 = shed 50 + killed 1000) kw '+kwUS+' (want 950)');
+      if(casCS!==1000 || kwCS!==0) throw new Error('CS identity: cas '+casCS+' (want 1000) kw '+kwCS+' (want 0 — cap 950 + mis 50 carry the whole loss)');
+      if(f.US!==s.US+kwUS+__FIELD.captured.US+__FIELD.missing.US) throw new Error('US identity: fielded != survivors+kw+captured+missing');
+      if(f.CS!==s.CS+kwCS+__FIELD.captured.CS+__FIELD.missing.CS) throw new Error('CS identity: fielded != survivors+kw+captured+missing');
+      return { shedRallyMen:a.men, kwUS:kwUS, capturedCS:__FIELD.captured.CS, missing:{US:__FIELD.missing.US,CS:__FIELD.missing.CS}, identityExact:true }; });
+
+    step('E49b _e49NoShed isolation hook honored: the break FIRES (routEverCount increments) but the shed is suppressed — men unchanged, missing zero, shedDone NOT consumed', function(){
+      var F=e49Launch(36), u=F.us[0];
+      u.men=1000; u.maxMen=1000;
+      __FIELD._e49NoShed=true;
+      var n=0; u.state='steady'; u.rallyT=0;
+      while(u.state!=='routing' && n<500){ u.morale=0; fldMoraleStep(u,0.05); n++; }
+      var men=u.men, mis=__FIELD.missing.US, rc=__FIELD.routEverCount, sd=u.shedDone, st=u.state;
+      delete __FIELD._e49NoShed;   // never leak the isolation hook into later teeth
+      if(st!=='routing') throw new Error('the forced break never fired');
+      if(men!==1000) throw new Error('shed fired despite _e49NoShed: men '+men);
+      if(mis!==0) throw new Error('missing fed despite _e49NoShed: '+mis);
+      if(rc<1) throw new Error('routEverCount '+rc+' < 1');
+      if(sd!==false) throw new Error('shedDone consumed while suppressed: '+sd);
+      return { men:men, missing:mis, breaks:rc, shedDoneStillFalse:true }; });
 
     step('E49a SL-2: a BLOCKED corridor (steady enemy beyond RALLY_R, directional, in-band) SUPPRESSES rally and surrenders at the RALLY_SECS grace — captured/tallied/marked; T2 counts the loss (OR convention)', function(){
       var F=e49Launch(32), r=F.cs[0], b=F.us[0];
@@ -222,24 +292,34 @@ const SETUP = `(() => {
       if(!r3.alive || __FIELD.captured.CS!==0) throw new Error('(c) out-of-band enemy falsely triggered surrender');
       return { pursuerBehindRallies:true, rescueRallies:true, outOfBandRallies:true }; });
 
-    step('E49a SL-4: the T8 phased ledgers — antietam full run keeps captured/missing CONSISTENT subsets of battleCas (never added; phaseLog sums == cumulative; missing stays ZERO until E49b)', function(){
+    step('E49b SL-4/§5.4: the T8 phased ledgers — antietam full run keeps captured/missing CONSISTENT subsets of battleCas (never added; phaseLog sums == cumulative; missing ≤ f x battleFielded + 0.5 x unitsShed per side — the structural bound the D256 form broke)', function(){
       G.campaign=null;
-      fldLaunchSandbox({renderer:'none', autoBoth:true, seed:7, scenario:'antietam'});
-      if(!__FIELD.phases) throw new Error('precondition: antietam should be phased');
-      __FIELD.phase='battle'; __FIELD.paused=false;
-      var n=0; while(__FIELD.phase!=='over' && n<120000){ fldSimStep(0.05); n++; }
-      if(__FIELD.phase!=='over') throw new Error('phased battle did not finish');
-      var bc=__FIELD.battleCas, cap=__FIELD.battleCaptured, mis=__FIELD.battleMissing, pl=__FIELD.phaseLog;
+      // sim-inert observation wrapper: count the units that actually shed per side (the §5.4 bound's
+      // unitsBroke term). Calls the original exactly once — no RNG, no state beyond the counter.
+      var shedN={US:0,CS:0}, _origShed=fldShedStragglers;
+      fldShedStragglers=function(q){ var b=__FIELD.missing[q.side]; _origShed(q); if(__FIELD.missing[q.side]!==b) shedN[q.side]++; };
+      var bc,cap,mis,pl;
+      try {
+        fldLaunchSandbox({renderer:'none', autoBoth:true, seed:7, scenario:'antietam'});
+        if(!__FIELD.phases) throw new Error('precondition: antietam should be phased');
+        __FIELD.phase='battle'; __FIELD.paused=false;
+        var n=0; while(__FIELD.phase!=='over' && n<120000){ fldSimStep(0.05); n++; }
+        if(__FIELD.phase!=='over') throw new Error('phased battle did not finish');
+        bc=__FIELD.battleCas; cap=__FIELD.battleCaptured; mis=__FIELD.battleMissing; pl=__FIELD.phaseLog;
+      } finally { fldShedStragglers=_origShed; }
       var sum={usCap:0,csCap:0,usMis:0,csMis:0};
       for(var i=0;i<pl.length;i++){ sum.usCap+=pl[i].usCap||0; sum.csCap+=pl[i].csCap||0; sum.usMis+=pl[i].usMis||0; sum.csMis+=pl[i].csMis||0; }
       if(sum.usCap!==cap.US || sum.csCap!==cap.CS) throw new Error('phaseLog captured sums != cumulative: '+JSON.stringify(sum)+' vs '+JSON.stringify(cap));
-      if(sum.usMis!==mis.US || sum.csMis!==mis.CS) throw new Error('phaseLog missing sums != cumulative');
+      if(sum.usMis!==mis.US || sum.csMis!==mis.CS) throw new Error('phaseLog missing sums != cumulative: '+JSON.stringify(sum)+' vs '+JSON.stringify(mis));
       // subsets never exceed the total-loss tally (±1/phase rounding headroom, 3 phases)
       if(cap.US+mis.US > bc.US+3 || cap.CS+mis.CS > bc.CS+3) throw new Error('subset ledgers exceed battleCas: cap '+JSON.stringify(cap)+' mis '+JSON.stringify(mis)+' cas '+JSON.stringify(bc));
-      // E49a: shedding is NOT landed (E49b) — the missing ledger must be wired-but-ZERO across a full
-      // phased run. Captured MAY legitimately be zero at Antietam (consistency asserted above, never >0).
-      if(mis.US!==0 || mis.CS!==0) throw new Error('missing ledger nonzero with shedding not landed: '+JSON.stringify(mis));
-      return { cas:{US:Math.round(bc.US),CS:Math.round(bc.CS)}, captured:cap, missing:mis, phases:pl.length }; });
+      // E49b §5.4: the first-break structural bound — missing can never exceed f x the accumulated
+      // fielded (+0.5/shed-unit rounding headroom). Missing>0 is ALLOWED here (shedding is live);
+      // non-vacuity is gated in the battery at the heavy battles, not pinned to one Antietam seed.
+      var fb=__FIELD.battleFielded;
+      if(mis.US > 0.05*fb.US + 0.5*shedN.US) throw new Error('missing.US '+mis.US+' breaks the first-break bound: f x fielded '+(0.05*fb.US)+' + 0.5 x '+shedN.US+' shed units');
+      if(mis.CS > 0.05*fb.CS + 0.5*shedN.CS) throw new Error('missing.CS '+mis.CS+' breaks the first-break bound: f x fielded '+(0.05*fb.CS)+' + 0.5 x '+shedN.CS+' shed units');
+      return { cas:{US:Math.round(bc.US),CS:Math.round(bc.CS)}, captured:cap, missing:mis, unitsShed:shedN, fielded:{US:fb.US,CS:fb.CS}, phases:pl.length }; });
 
     step('E49a SL-3: the symmetric SANDBOX is inert — attacker null -> zero ledgers, no surrender state, no markers after a full battle', function(){
       fldLaunchSandbox({renderer:'none', autoBoth:true, seed:777}); fldStepN(20,0.05); runToEnd(12000);
