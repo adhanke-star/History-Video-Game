@@ -119,6 +119,7 @@ const SUITE = [
   ['chickamauga', 'tools/probe-chickamauga.mjs'],
   ['all-battles sweep', 'tools/sweep-all-battles.mjs'],
   ['full campaign', 'tools/probe-full-campaign.mjs'],
+  ['player agency diagnostic', 'tools/diag-player-agency.mjs'],
   ['classic paint', 'tools/diag-classic.mjs']
 ];
 
@@ -201,6 +202,7 @@ function timeoutFor(label, file) {
   if (file.endsWith('probe-tactical-visuals.mjs')) return 600000;
   if (file.endsWith('probe-atmospherics.mjs')) return 600000; // slow-Mac budget: 2D+3D+Gettysburg scenes ran green at 362s vs the 360s default (D238)
   if (file.endsWith('sweep-all-battles.mjs')) return 360000;
+  if (file.endsWith('diag-player-agency.mjs')) return 600000; // slow-Mac budget: 5 player-order legs incl. two 3-phase Antietam runs (D265)
   if (file.endsWith('probe-full-campaign.mjs')) return 360000;
   if (file.endsWith('build.mjs')) return 240000;
   return DEFAULT_TIMEOUT_MS;
