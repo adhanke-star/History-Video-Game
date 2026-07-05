@@ -1,4 +1,12 @@
-# ☀ WAKE-UP — 2026-07-05 (latest): **D275 — E54 pocket-collapse capture semantics shipped, and E47 Shiloh/Gettysburg flips are now live. NEXT = E46 Piper guns re-attempt, then PM3.**
+# ☀ WAKE-UP — 2026-07-05 (latest): **D276 — E46 Piper guns re-attempt red-halted and is parked. NEXT = PM3 sim-backed resolve.**
+
+**Newest (D276):** the documented Piper-farm gun row was restored exactly after D275's E53-v2+E54 engine, then reverted because the unchanged D264 gate stayed red. The Sunken Road improved to US 5/8 on both seed sets, but the locked gate is US >=6/8. All non-Antietam rows plus sandbox stayed byte-identical, pageerrors were 0, and captured stayed 0 on every Antietam row. The Antietam `_e46Note` records the D276 evidence; the gun row remains out.
+
+**Queue: PM3 sim-backed resolve. Main-menu redesign + LLM-opponent feature remain queued milestones, not part of this tactical build chain. M8/Q5/Q6 remain locked unless Aaron explicitly unlocks.**
+
+---
+
+# ☀ WAKE-UP — 2026-07-05 (previous): **D275 — E54 pocket-collapse capture semantics shipped, and E47 Shiloh/Gettysburg flips are now live. NEXT = E46 Piper guns re-attempt, then PM3.**
 
 **Newest (D275):** E54 adds a universal pocket-collapse capture seam before the T8 phase/end ledger freezes: attacker HOLD win, explicit role-aware `homeEdge`, 2:1 field-collapse ratio, attacker local objective control, and only live routing/wavering defenders captured. It stays inert at sandbox/no-homeEdge and near-parity cases. E47 then lands the Shiloh and Gettysburg home-edge data; Shiloh now records nonzero captured US on CS-hold seeds, and Gettysburg Day 1 records nonzero captured US on CS-hold rows while the aggregate still resolves US. Focused probes and JSON readback are green with 0 pageerrors.
 
