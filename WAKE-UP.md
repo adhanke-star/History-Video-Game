@@ -1,4 +1,12 @@
-# ☀ WAKE-UP — 2026-07-05 (latest): **D273 — E53-v2 attacker parity is LIVE. A+B wing/wave shipped; C is absent; the E53-scoped capture valve and Bull Run cautious input are green. NEXT = E47 Shiloh/Gettysburg flip re-attempts.**
+# ☀ WAKE-UP — 2026-07-05 (latest): **D274 — E47 reattempt ran and red-halted. Direction is now green after D273, but captured stays zero; data reverted. NEXT = E54 captured/pocket semantics before E47 can ship.**
+
+**Newest (D274):** the D262 Shiloh/Gettysburg flip edits were reapplied only for acceptance smoke on top of D273 E53-v2, then reverted. Shiloh now passes the direction half (CS 7/8 default, 8/8 probe; flipNoShed 8/8 both sets) but captured stayed 0 on every seed. Gettysburg aggregate stayed US 8/8 both sets and Day 1 improved to CS 7/8 default + 7/8 probe, but captured stayed 0 on every seed; flipNoShed still had captured 0. Both runs had 0 pageerrors.
+
+**Queue: E54 scoped captured/pocket semantics session → re-attempt E47 behind the same unweakened gates → E46 Piper honestly → PM3. Main-menu redesign + LLM-opponent feature remain queued milestones, not part of this tactical build chain.**
+
+---
+
+# ☀ WAKE-UP — 2026-07-05 (previous): **D273 — E53-v2 attacker parity is LIVE. A+B wing/wave shipped; C is absent; the E53-scoped capture valve and Bull Run cautious input are green. NEXT = E47 Shiloh/Gettysburg flip re-attempts.**
 
 **Newest (D273):** the D272 law was built and gated. `T26-attacker-parity` now gives AI attackers the A+B envelopment-wing/wave-commit seam, while T25's sidestep valve prevents false mass captures inside E53 parity. Bull Run now uses the accurate McDowell cautious posture and cautious-v2's defender-distance hold rule. The full E53 battery ran twice green and byte-identical (`pe=0`); focused/adjacent probes green: attacker-parity, ai, chickamauga, field, and bullrun all ok with 0 pageerrors. E58's rail-pivot tooth is green in the shipped build, contrary to the expected-red carry-forward.
 

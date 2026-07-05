@@ -8,6 +8,13 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D274 E47 FLIP RE-ATTEMPT RED-HALTED — D273 FIXED DIRECTION, BUT CAPTURED LEDGER STILL FAILS; DATA REVERTED, E54 REQUIRED — 2026-07-05 (D274)
+- Re-attempted the remaining E47 Shiloh + Gettysburg home-edge flips on top of shipped D273 E53-v2 A+B parity, using the D262 preserved data edits and the same unweakened acceptance gates.
+- Shiloh flip result: direction is now green enough (CS 7/8 default, 8/8 probe; flipNoShed 8/8 both sets), but the mass-capture half is still red: `capUS/capCS` stayed 0 on every seed. The Prentiss/Hornets' Nest captured ledger requirement did not fire.
+- Gettysburg flip result: aggregate stayed green (US 8/8 both sets) and Day 1 direction improved to CS 7/8 default + 7/8 probe, but the documented Day-1 capture half is still red: captured stayed 0 on every seed. flipNoShed held aggregate but Day 1 remained marginal (CS 7/8 default, 6/8 probe), still with captured 0.
+- Both smoke runs had `pe=0`; no JS/runtime surface was changed. The attempted `homeEdge` data edits and Shiloh SL-8 narration were reverted before docs commit, then `node tools/build.mjs` restored the generated deliverable.
+- Conclusion: D273 A+B is sufficient to fix the direction half, but it does not create captured semantics in correct-direction Shiloh/Gettysburg geometry. E47 remains blocked; next real unblocker is an E54 scoped captured/pocket semantics session, then the same E47 acceptance tests. E46 Piper remains honestly hard/open behind the same class.
+
 ## D273 E53-v2 BUILD SHIPPED — A+B ATTACKER PARITY LIVE, C ABSENT, SIDESTEP CAPTURE VALVE SCOPED TO E53, BULL RUN CAUTIOUS INPUT GREEN — 2026-07-05 (D273)
 - Re-landed the D272 E53-v2 law from the preserved D269 materials: new `src/tactical/T26-attacker-parity.js`, manifest enrollment, T0 dispatch before D64 attacker AI, default-on `attackerParity` with `_parityOff` isolation, no RNG/no output writes.
 - Shipped A+B only: envelopment wing + wave commit. C/abandonment is absent; no `E53_ABANDON_X` path ships.

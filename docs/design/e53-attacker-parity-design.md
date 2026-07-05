@@ -1,14 +1,15 @@
-# E53 — ATTACKER TACTICAL PARITY: the AARON-LOCKED design law (D267; E53-v2 amendment D272)
+# E53 — ATTACKER TACTICAL PARITY: the AARON-LOCKED design law (D267; E53-v2 amendment D272; shipped D273; D274 E47 postscript)
 
 **Scope lock (Aaron, D265, verbatim): "allow AI attacker like user to concentrate, envelop, and/or
 exploit."** Full attacker tactical parity — concentration + envelopment/flanking + exploitation +
 the long-scoped assault-abandonment (filed D255) — with the two-sided goal on the E53 ledger line:
 the AI **reproduces historical outcomes** AND **provides historical-quality resistance**, so
-alt-history is EARNED. This file is the law the E53 BUILD milestone honors verbatim; **§0 is the
-current D272 build law**, and the D267 sections below are the preserved baseline law/evidence D269
-tested. The original session record is DECISIONS **D267**; the D272 amendment record is
-DECISIONS **D272**. The D267 measurement harnesses and artifacts are `.tmp/measure-attacker-d267*`
-(gitignored — the tables below carry every load-bearing number so this law survives a fresh clone).
+alt-history is EARNED. This file is the law the E53 BUILD milestone honored verbatim; **§0 is the
+current shipped E53-v2 law**, and the D267 sections below are the preserved baseline law/evidence
+D269 tested. The original session record is DECISIONS **D267**; the D272 amendment record is
+DECISIONS **D272**; the D273 build shipped §0; D274 records the first downstream E47 acceptance
+result. The D267 measurement harnesses and artifacts are `.tmp/measure-attacker-d267*` (gitignored —
+the tables below carry every load-bearing number so this law survives a fresh clone).
 
 Session pattern (the D255/D259/D263 discipline): engine facts first-hand → NEW measurements →
 a 3-lens default-refute Opus panel (wf_bd1e6180-aaf) BEFORE Aaron saw candidates → a seam-faithful
@@ -21,9 +22,9 @@ nothing sim-affecting ships with this law; the deliverable was cmp-proven byte-i
 ## §0 — CURRENT BUILD LAW: E53-v2 amendment (D272, 2026-07-05)
 
 **Status:** D272 amends D267 after the D269 build ran the original law verbatim and went red on its
-own a-priori §4 battery. D267 remains the evidence record; this section is the operative law for
-the next E53-v2 build. Where this section conflicts with §1/§3/§4/§6 below, **this D272 amendment
-controls**.
+own a-priori §4 battery. D273 shipped this A+B/no-C law. D267 remains the evidence record; this
+section is the operative shipped law. Where this section conflicts with §1/§3/§4/§6 below, **this
+D272/D273 law controls**.
 
 **Fresh evidence (D272, all fresh foreground runs, 0 pageerrors):** temporary T26 was re-landed
 only for measurement, then removed and rebuilt away. Artifacts:
@@ -112,6 +113,15 @@ The original §4 battery remains a floor; these deltas are mandatory for the v2 
 - **Gate lens:** C is not salvageable by retuning, and Bull Run should be solved by the accurate-input
   cautious row plus the universal defender-anchored cautious rule. Section-4 gates remain intact; E58
   is kept explicitly red until its owner-slice lands.
+
+### §0.6 — Downstream E47 acceptance postscript (D274)
+
+D274 re-applied the D262 Shiloh/Gettysburg flip edits only as a temporary acceptance test on top of
+the shipped D273 E53-v2 build, then reverted them. The direction projection proved correct enough:
+Shiloh flip CS 7/8 default + 8/8 probe, and Gettysburg aggregate US 8/8 with Day 1 CS 7/8 default +
+7/8 probe. The captured projection also proved correct: captured stayed 0 on every seed at both
+targets. Therefore E53-v2 is sufficient for the direction half but does not complete E47; the
+captured/pocket semantics are now explicitly E54's scope, and the E47 gates stay unchanged.
 
 ---
 
