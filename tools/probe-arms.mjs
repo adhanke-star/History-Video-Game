@@ -264,17 +264,31 @@ const SETUP = `(() => {
       __FIELD._armsOff=false;
       return { winner:aOff.w, identical:true, steps:aOff.steps }; });
 
-    step('BYTE-IDENTITY (the art/cav scenario): arms/badges-OFF bullrun1 AI-vs-AI == the committed CS 5/8 baseline (the base.html ARM melee table is honoured, NOT 1.0)', function(){
+    step('BYTE-IDENTITY (the art/cav scenario): arms/badges-OFF bullrun1 AI-vs-AI == the committed CS 7/8 baseline (the base.html ARM melee table is honoured, NOT 1.0)', function(){
       // R-6 (D104): badges is a default-ON optional combat layer that legitimately shifts bullrun1 (its assigned
-      // CS stonewalls -> CS 8/8). This guard isolates the ARMS layer's byte-identity, so badges is OFF here too -> CS 5/8.
+      // CS stonewalls -> CS 8/8). This guard isolates the ARMS layer's byte-identity, so badges is OFF here too -> CS 7/8.
       function run(seed){ __FIELD._officersOff=true; __FIELD._logisticsOff=true; __FIELD._armsOff=true; __FIELD._badgesOff=true; G.settings.tacticalFog=false; fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:seed, fog:false}); __FIELD.phase='battle'; __FIELD.paused=false; var n=0; while(__FIELD.phase==='battle'&&n<20000){ fldSimStep(0.05); n++; } return __FIELD.winner; }
-      var seeds=[1,7,21,42,55,101,303,909], cs=0; for(var i=0;i<seeds.length;i++){ if(run(seeds[i])==='CS') cs++; }
+      // PER-SEED winner vector (D268 panel sharpening): pin WHICH seeds go CS, not just the count, so two
+      // compensating opposite-direction seed flips can never net back to 7 and false-green the tooth.
+      var expect={1:'CS',7:'CS',21:'CS',42:'CS',55:'US',101:'CS',303:'CS',909:'CS'};
+      var seeds=[1,7,21,42,55,101,303,909], cs=0, misses=[];
+      for(var i=0;i<seeds.length;i++){ var w=run(seeds[i]); if(w==='CS') cs++; if(w!==expect[seeds[i]]) misses.push('s'+seeds[i]+'='+w+' (expect '+expect[seeds[i]]+')'); }
       __FIELD._armsOff=false; __FIELD._badgesOff=false;
-      // arms OFF must reproduce the committed bare bullrun balance EXACTLY (CS 5/8). A miss here means the arms-OFF
-      // path is not byte-identical — e.g. the base.html ARM melee table (art 0.40 / cav 1.05) was dropped to 1.0
-      // (the bug the asymmetric melee fallback fixes). bullrun1 FIELDS art+cav, so it is the scenario that exercises it.
-      if(cs!==5) throw new Error('arms-OFF bullrun balance != the committed 5/8 (byte-identity broken): '+cs+'/8');
-      return { armsOffCS:cs+'/8' }; });
+      // arms OFF must reproduce the committed bare bullrun balance EXACTLY (CS 7/8, per-seed vector pinned). A miss
+      // means the arms-OFF path is not byte-identical — e.g. the base.html ARM melee table (art 0.40 / cav 1.05) was
+      // dropped to 1.0 (the bug the asymmetric melee fallback fixes). bullrun1 FIELDS art+cav, so it exercises it.
+      // BASELINE PROVENANCE (E56 -> D268): committed CS 5/8 through D251; E49b first-break straggler-shedding (D261,
+      // universal both sides) moved the bare-path outcome to CS 7/8 — DELIBERATELY re-anchored after the D268
+      // attribution A/B (.tmp/ab-e56.mjs, 11-seed union: E48 zero effect with the suppression wrapper demonstrably
+      // live; E49a zero — surrender never fires here, captured/surrenderEverCount 0 on every row; suppressing E49b
+      // ALONE reproduces the D251 rows byte-identically). The pin now encodes the bare path INCLUDING universal E49b:
+      // a future drop back toward 5/8 signals an E49b regression (SHED_FRAC/first-break behavior), NOT a restoration
+      // of the arm-melee-table bug — and any D74-approved E49b retune will legitimately red this tooth. Either way,
+      // NEVER re-pin silently: a future miss needs its own attribution A/B against the last-green deliverable
+      // (git show <last-green>:civil_war_generals.html).
+      if(misses.length) throw new Error('arms-OFF bullrun per-seed baseline broken (committed CS 7/8, D268 vector): '+misses.join(', '));
+      if(cs!==7) throw new Error('arms-OFF bullrun balance != the committed 7/8 (byte-identity broken): '+cs+'/8');
+      return { armsOffCS:cs+'/8', perSeedVector:'pinned' }; });
 
     step('REDUCE-MOTION honored: the battery/trooper draw helpers emit NO muzzle-flash / canister-cone / charge-trail when reduceMotion', function(){
       __FIELD.arms=true;
