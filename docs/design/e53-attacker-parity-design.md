@@ -1,11 +1,13 @@
-# E53 — ATTACKER TACTICAL PARITY: the AARON-LOCKED design law (design session 2026-07-05, D267)
+# E53 — ATTACKER TACTICAL PARITY: the AARON-LOCKED design law (D267; E53-v2 amendment D272)
 
 **Scope lock (Aaron, D265, verbatim): "allow AI attacker like user to concentrate, envelop, and/or
 exploit."** Full attacker tactical parity — concentration + envelopment/flanking + exploitation +
 the long-scoped assault-abandonment (filed D255) — with the two-sided goal on the E53 ledger line:
 the AI **reproduces historical outcomes** AND **provides historical-quality resistance**, so
-alt-history is EARNED. This file is the law the E53 BUILD milestone honors verbatim. The session
-record is DECISIONS **D267**; the measurement harnesses and artifacts are `.tmp/measure-attacker-d267*`
+alt-history is EARNED. This file is the law the E53 BUILD milestone honors verbatim; **§0 is the
+current D272 build law**, and the D267 sections below are the preserved baseline law/evidence D269
+tested. The original session record is DECISIONS **D267**; the D272 amendment record is
+DECISIONS **D272**. The D267 measurement harnesses and artifacts are `.tmp/measure-attacker-d267*`
 (gitignored — the tables below carry every load-bearing number so this law survives a fresh clone).
 
 Session pattern (the D255/D259/D263 discipline): engine facts first-hand → NEW measurements →
@@ -16,7 +18,107 @@ nothing sim-affecting ships with this law; the deliverable was cmp-proven byte-i
 
 ---
 
+## §0 — CURRENT BUILD LAW: E53-v2 amendment (D272, 2026-07-05)
+
+**Status:** D272 amends D267 after the D269 build ran the original law verbatim and went red on its
+own a-priori §4 battery. D267 remains the evidence record; this section is the operative law for
+the next E53-v2 build. Where this section conflicts with §1/§3/§4/§6 below, **this D272 amendment
+controls**.
+
+**Fresh evidence (D272, all fresh foreground runs, 0 pageerrors):** temporary T26 was re-landed
+only for measurement, then removed and rebuilt away. Artifacts:
+`.tmp/fresh-e53v2-anatomy-d272.json`, `.tmp/fresh-e53v2-variants-d272.json`,
+`.tmp/fresh-e53v2-cautious-d272.json`, and `.tmp/measure-e53v2-final.json`.
+
+### §0.1 — Mass-capture governor (E53-active, zero new constants)
+
+**Rule:** while E53 attacker parity is active, a router is cut off only if the existing T25 lane
+test blocks at the router's real `x` **and** at both virtual sidesteps `x - FLD.RALLY_R` and
+`x + FLD.RALLY_R`, clamped to the existing field edge safety margin. A corridor-width sidestep
+that escapes the blocker means open flank / detour, not capture; the existing rally/danger scan
+continues. This uses `FLD.RALLY_R`, not a new knob, and it does not change casualties, morale,
+victory, or side scoring.
+
+**Scope:** the valve ships as an **E53-active / parity-gated** rule for this build, not as a global
+T25 rewrite. Reason: D272's mechanism lens rejected a global valve for this milestone because the
+session contract requires OFF-state row identity. `govBase` showed the valve would alter parity-off
+base captures at battles such as Gettysburg/Shiloh. Global pocket semantics and capture-where-
+documented work stay on E54.
+
+**Measured basis:** the valve kills the D269 phantom-capture class without weakening the direction
+gates when C is off: `govNoC` reads Chancellorsville CS 8/8 default + 7/8 probe with capCS 0;
+Chickamauga CS 11/11 with capUS 0; Antietam aggCS 11/11 with capUS 0; Gettysburg aggUS 8/8 both
+sets while preserving the documented Day-1 captured band (capCS 3,531).
+
+### §0.2 — Attacker behavior at Bull Run (universal cautious-v2 plus accurate data)
+
+**Rule:** the D64 cautious posture is amended universally: when `_atkCautious` is true and fog is
+off, the attacker presses until it is within the existing `FLD.ATK_ASSAULT_R` of the nearest visible
+defender, then holds in line and trades fire. Under fog it defers to the stock fog doctrine. With no
+visible defender in the band, it keeps pressing; it never parks unopposed inside an objective ring.
+
+**Data row:** `bullrun1` gets `assaultDoctrine:"cautious"` as an accurate-input posture for
+McDowell's piecemeal commitment. This is the same D92 class as Fredericksburg's cautious posture:
+historical input, not per-battle combat math. There are no per-battle constants.
+
+**Measured basis:** the refuted D269 0.85×ring band (`cv1T`) flips the tooth. Cautious-v2 (`cv2T`)
+pins the Bull Run tooth CS 8/8 in the clean fog-off config; fog-on shipping Bull Run is row-identical
+to base (0 diffs / 0 flips). Watch rows from the same run: Fredericksburg keeps its historical
+direction but shifts cost fidelity; Malvern Hill sits at the 6/8 floor; Chickamauga P0 moves
+US→CS under parity while P2 cautious stays unchanged. These are build-battery watch rows, not
+licenses to tune.
+
+### §0.3 — C-v2 abandonment shape (dropped for E53-v2)
+
+**Decision:** E53-v2 ships **A+B plus the mass-capture valve**. It does **not** ship C/abandonment/
+recall in this build.
+
+**Reason:** the abandonment trigger is refuted twice. D269 showed C stands Lee off at
+Chancellorsville (2/8+2/8) and is ineffective on the capture channel it was meant to fix. D272
+confirmed that once the valve lands, C is harmful: `gov` reads Chancellorsville CS 6/8 default +
+5/8 probe, while `govNoC` reads CS 8/8 + 7/8. Wave-only/no-wing is also refuted (`waveValve`
+Chancellorsville 4/8 + 3/8; Gettysburg capCS 0). Therefore A+B are retained jointly, C is removed,
+and any future "failed assault calls off" mechanic becomes a separate design item with new evidence,
+never a retune of `E53_ABANDON_X`.
+
+### §0.4 — E53-v2 build battery deltas
+
+The original §4 battery remains a floor; these deltas are mandatory for the v2 build:
+
+1. **OFF-state byte identity is hard.** `_parityOff` / parity-disabled rows must be row-identical to
+   current HEAD across the full battery. The mass-capture valve must be inactive when E53 is inactive.
+2. **A+B active with C absent.** The build must prove the trigger/wing/wave composite plus the valve,
+   not C. There is no `E53_ABANDON_X` shipping path in v2.
+3. **Valve isolation teeth.** Active parity rows must show the D272 readings that made the doctrine
+   legal: Chancellorsville CS 8/8 + 7/8 with capCS 0; Chickamauga and Antietam false captures 0;
+   Gettysburg aggUS 8/8 with the Day-1 capCS band preserved.
+4. **Bull Run successor tooth.** The old D268 vector remains an attribution baseline, but the v2 build
+   also pins the accurate-input `bullrun1` cautious-v2 row: clean fog-off tooth CS 8/8, fog-on shipping
+   rows byte-identical to base. E58's rail-pivot tooth stays an expected-red owner-slice until resolved.
+5. **Standing gates are not weakened.** Chancellorsville §6, Malvern Hill US >=6/8, Antietam phase
+   directions, Gettysburg aggregate direction, Shiloh, E49 protective teeth, `git diff --check`,
+   `node tools/build.mjs`, and JSON/pageerror readback all still apply.
+6. **Watch rows, not knobs.** Log Malvern Hill's 6/8 floor, Fredericksburg cost ratio, Chickamauga
+   P0 movement, captured undershoots where history has smaller captures, and any E58 interaction.
+
+### §0.5 — 3-lens default-refute review (D272)
+
+- **Mechanism lens:** the valve is sound only as E53-active for this milestone; a global T25 change
+  violates the OFF-state identity contract. A+B remain jointly required; wave-only/no-wing and C-on
+  are both refuted by fresh rows.
+- **History lens:** the valve intentionally prefers under-capture to false five-figure POW columns at
+  battles with no mass surrender. Gettysburg's real Day-1 capture band is preserved; Antietam and
+  Chickamauga small-capture honesty stay on E54.
+- **Gate lens:** C is not salvageable by retuning, and Bull Run should be solved by the accurate-input
+  cautious row plus the universal defender-anchored cautious rule. Section-4 gates remain intact; E58
+  is kept explicitly red until its owner-slice lands.
+
+---
+
 ## §1 — The six locked answers (AARON popups, 2026-07-05)
+
+**D272 note:** §1 records the D267 popup answers as the historical lock that D269 tested. The D272
+amendment in §0 supersedes the D267 "A+B+C" and Bull Run remedy clauses for the next build.
 
 1. **The build ships A+B+C as ONE doctrine** (envelopment wing + wave-commit + abandonment/recall),
    with every panel clause in §3. Measured basis: wing-alone reaches 1/8 at flipped Shiloh (below
@@ -102,6 +204,10 @@ Load-bearing readings:
 
 ## §3 — The doctrine (SL-E53; one universal rule each, ZERO per-battle constants — D74/SL-7)
 
+**D272 note:** §3 preserves the D267 law that was built and refuted in D269. For the next build, use
+the operative D272 law in §0: A+B retained, C dropped, E53-active valve added, cautious-v2 plus
+`bullrun1` accurate-input posture added.
+
 **The seam (SL-E53-0):** a NEW module (`src/tactical/T26-attacker-parity.js` or next free slot)
 dispatched from `fldAiUnit` BEFORE the `fldAiAttacker` branch via the established B-3/B-4 override
 pattern: `if (__FIELD.attackerParity && typeof fldParityAiUnit === "function" && fldParityAiUnit(u)) return;`
@@ -156,6 +262,9 @@ AI-only. The player keeps full agency (E55 stands as the standing diagnostic).
 
 ## §4 — The build battery (the E53 BUILD milestone's gate; red → revert-file-halt)
 
+**D272 note:** the v2 build must satisfy the original protective battery plus the §0.4 deltas. No
+section-4 gate is weakened; C-specific teeth are replaced by "C absent" and valve-isolation teeth.
+
 1. **OFF-state byte-identity, as ASSERTED probe teeth (never prose):** parity flag OFF ⇒ row-for-row
    identical to base across the full A/B; symmetric sandbox byte-identical (attacker null); fog-on
    smoke (the seam never activates); cautious battles (Fredericksburg + Chickamauga P2) byte-identical.
@@ -202,6 +311,8 @@ E57/E54. Both re-attempts run behind their preserved specs and the SAME unweaken
 
 ## §6 — Build status
 
-- **NOT BUILT.** This law ships docs-only (D267). The build is its own milestone AFTER the E56
-  owner-slice, per Aaron lock #6. The build session starts from HANDOFF Prompt A → then this law
-  §3–§4 verbatim.
+- **D267 law built and red-reverted in D269.** The game stayed byte-identical; build evidence and the
+  quick re-land recipe live in `.tmp/e53-build-d269/`.
+- **E53-v2 design locked docs-only in D272.** No sim/data/code surface ships with D272. The next
+  milestone is the E53-v2 build: restore the preserved D269 T26 build, apply §0's v2 deltas, run the
+  full §0.4/§4 battery with ×2 determinism and a fresh commit panel, then commit/push only if green.

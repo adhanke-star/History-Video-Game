@@ -8,6 +8,14 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D272 E53-v2 DESIGN LOCKED — A+B RETAINED, C DROPPED, E53-ACTIVE MASS-CAPTURE VALVE + CAUTIOUS-v2 BULL RUN PATH; DOCS-ONLY COMMIT — 2026-07-05 (D272)
+- Executed the D271 option-(a) E53-v2 design session from synced clean `main`; no sim/code/data surface was left changed.
+- Re-verified engine facts first-hand in `T0-field-sandbox.js` and `T25-surrender.js`, then temporarily re-landed the preserved D269 T26 build only for measurements; the seam was removed and `node tools/build.mjs` restored a clean tree before docs edits.
+- Fresh foreground/serialized measurements, all 0 pageerrors: `.tmp/fresh-e53v2-anatomy-d272.json`, `.tmp/fresh-e53v2-variants-d272.json`, `.tmp/fresh-e53v2-cautious-d272.json`, `.tmp/measure-e53v2-final.json`.
+- Doctrine lock: A+B stays; C/abandonment is dropped for v2; the mass-capture governor is an E53-active sidestep valve using `FLD.RALLY_R` at `x±RALLY_R` (not a global T25 rewrite); Bull Run gets universal cautious-v2 (hold at `ATK_ASSAULT_R` from nearest visible defender, fog-guarded) plus `bullrun1` accurate-input `assaultDoctrine:"cautious"`.
+- 3-lens default-refute review completed locally: mechanism lens rejected the global-valve draft to preserve OFF-state byte identity; history lens accepted under-capture over false five-figure POW columns; gate lens rejected C and wave-only/no-wing, preserving section-4 gates.
+- Docs trail synchronized (`DECISIONS`, law, `RUN-LOG`, `HANDOFF`, `WAKE-UP`, `REVIEW-QUEUE`, `V1-CHECKLIST`); stale `DECISION-NEEDED-e53-build.md` removed as resolved. Next prompt is the E53-v2 build/re-land from `.tmp/e53-build-d269/`, with E58 rail-pivot still expected red until its owner-slice.
+
 ## D271 CARRY-FORWARD EXECUTED — 3-LENS RERUN COMPLETE, AUTONOMOUS OPTION-(a) LOCK APPLIED (USER UNAVAILABLE), DOCS TRAIL UPDATED — 2026-07-05 (D271)
 - Executed the D270 A->E sequence end-to-end from synced clean `main`.
 - Reran the pending 3-lens E53-v2 panel directly from preserved artifacts (`.tmp/e53-build-d269/EVIDENCE.md`, active law, fork brief): mechanism/history/gates all converge on the same class as D269 (design-level blockers; no legal retune path under SL-7; E53-v2 required before any re-land).
