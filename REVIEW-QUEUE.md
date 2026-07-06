@@ -1,5 +1,5 @@
 # REVIEW QUEUE — The Civil War (Vol. I)
-Updated 2026-07-03 (FABLE AUDIT run 1). **The live content of this file is the FABLE AUDIT ledger below** — it is the standing findings memory between audit runs (FABLE-AUDIT-PROMPT.md). Everything beneath the ledger is run-e/f/g/h historical context from 2026-06-13/14, much of it long superseded (the UG:G pivot shipped through D142); use `V1-CHECKLIST.md` + `START-HERE.md` for current priorities and locks. **Canonical folder: ~/Desktop/Video Game.**
+Updated 2026-07-06 (AUDIT ledger; run 1 ran under Claude Fable 5 on 2026-07-03, future audits run under Claude Opus 4.8 / `opus[1m]` + xhigh per `AUDIT-PROMPT.md` — D286). **The live content of this file is the standing AUDIT findings ledger below** — the memory between audit runs; every fix flips its line to fixed-in-D###. Everything beneath the ledger is run-e/f/g/h historical context from 2026-06-13/14, much of it long superseded (the UG:G pivot shipped through D142); use `V1-CHECKLIST.md` + `START-HERE.md` for current priorities and locks. **Canonical folder: ~/Desktop/Video Game.**
 
 ## FABLE AUDIT — 2026-07-03 (run 1)
 
@@ -262,4 +262,4 @@ Updated 2026-07-03 (FABLE AUDIT run 1). **The live content of this file is the F
 ---
 
 ## Historical content (runs e/f/g/h) — moved to legacy/
-The pre-pivot 2026-06-13/14 priorities/locks that used to live below this ledger are archived at `legacy/REVIEW-QUEUE-2026-06-runs-efgh.md` (D236, S16/S35). This file is now solely the standing FABLE AUDIT findings ledger.
+The pre-pivot 2026-06-13/14 priorities/locks that used to live below this ledger are archived at `legacy/REVIEW-QUEUE-2026-06-runs-efgh.md` (D236, S16/S35). This file is now solely the standing AUDIT findings ledger (run 1 was conducted under Claude Fable 5 while it was the main-loop model; subsequent audits run under Claude Opus 4.8 / `opus[1m]` + xhigh — D286).

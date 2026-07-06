@@ -224,14 +224,14 @@ canonical-list line, and flip the REVIEW-QUEUE E42/E43/E45 PROPOSED lines to the
 > approved queue order is D239 → E47 → E46 → E13+E41 → S25 → THIS ARC — starting the arc ahead of E46/E13+E41/S25
 > requires **Aaron's explicit reorder in THIS session** (ask via popup if ambiguous; his call alone).
 >
-> **ultracode — xhigh.** You are Claude Fable 5 building the **battle-mode parity arc** for "The Civil War" (Aaron's
+> **ultracode — xhigh.** You are Claude Opus 4.8 (`claude-opus-4-8` / `opus[1m]`) building the **battle-mode parity arc** for "The Civil War" (Aaron's
 > personal teaching wargame at `~/Desktop/Video Game`; NOT MJI). Zero context — load from disk.
 > ```
 > cd ~/Desktop/Video\ Game
 > git fetch origin && git status --short --branch && git pull --ff-only origin main
 > git log --oneline -6
 > ```
-> **Read order:** `START-HERE.md` → `FABLE-5-PLAYBOOK.md` §3 (its snippets bind this run) → `HANDOFF.md` +
+> **Read order:** `START-HERE.md` → `OPUS-PLAYBOOK.md` §7 (its snippets bind this run) → `HANDOFF.md` +
 > `WAKE-UP.md` top blocks → **`docs/design/battle-mode-parity-design.md` — the AARON-LOCKED design law for this arc;
 > honor §2 verbatim** → `REVIEW-QUEUE.md` E42/E43/E45 lines → DECISIONS newest-first (D237+; D74/D92 for the
 > no-fudge/accurate-inputs law; D48/D64 context) → the code: `src/87-auto-resolve.js`,
@@ -241,8 +241,8 @@ canonical-list line, and flip the REVIEW-QUEUE E42/E43/E45 PROPOSED lines to the
 > **Precondition check:** confirm the D237 batch checkpoint closed green and where the approved queue stands
 > (Soldier's Story+C64 · E47 · E46 · E13/E41 · S25). **E47 should be landed before PM3's pacing A/B**; if the queue
 > hasn't reached this arc and Aaron hasn't explicitly reordered, STOP and surface.
-> **Behavioral law (PLAYBOOK §3):** act when you have enough; audit every progress claim against a tool result from
-> THIS session; helpers always explicit model+effort, never Fable; HALT only for irreversible/money/scope forks.
+> **Behavioral law (PLAYBOOK §7):** act when you have enough; audit every progress claim against a tool result from
+> THIS session; helpers always explicit model+effort (Sonnet/Haiku mechanical, Opus only on reasoning legs); HALT only for irreversible/money/scope forks.
 > **THE WORK — three bounded milestones, in order, each committed+pushed behind its own focused gate (D160/D176),
 > with a D171 clean stop between groups:**
 > **M1 (PM1+docs):** commit `docs/design/battle-mode-parity-design.md`; T8 `battleFielded` tally; phase-aware
