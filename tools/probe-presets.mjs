@@ -68,16 +68,52 @@ const SETUP = `(() => {
       var a=runLive(21), b=runLive(21); if(a.w!==b.w||a.us!==b.us||a.cs!==b.cs||a.steps!==b.steps) throw new Error('neutral non-deterministic');
       return { noPresetCS:csNo+'/8', veteranBalancedCS:csVb+'/8', identicalSeedForSeed:true }; });
 
-    step('BYTE-IDENTITY GUARD: officers/logistics/arms/badges-OFF Bull Run == the committed CS 5/8 even with the presets layer present (no perturbation)', function(){
+    step('BYTE-IDENTITY GUARD: officers/logistics/arms/badges/parity-OFF Bull Run == the re-anchored CS 8/8 with the presets layer present (no perturbation), AND the parity-ON row is byte-identical (T26 stays structurally inert at bullrun1)', function(){
       clearPreset(); G.settings.tacticalFog=false;
       // R-6 (D104): badges is a default-ON optional combat layer that LEGITIMATELY shifts Bull Run (the assigned
       // CS stonewalls + weakened US attackers make it CS 8/8). This guard isolates the PRESETS/arms layer's
-      // byte-identity, so badges must be OFF here alongside officers/logistics/arms -> the pristine committed CS 5/8.
-      function run(seed){ __FIELD._officersOff=true; __FIELD._logisticsOff=true; __FIELD._armsOff=true; __FIELD._badgesOff=true; G.settings.tacticalFog=false; fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:seed, fog:false}); __FIELD.phase='battle'; __FIELD.paused=false; var n=0; while(__FIELD.phase==='battle'&&n<20000){ fldSimStep(0.05); n++; } return __FIELD.winner; }
-      var seeds=[1,7,21,42,55,101,303,909], cs=0; for(var i=0;i<seeds.length;i++){ if(run(seeds[i])==='CS') cs++; }
-      __FIELD._armsOff=false; __FIELD._badgesOff=false; delete G.settings.tacticalFog;
-      if(cs!==5) throw new Error('layers-OFF bullrun != 5/8 with presets present (byte-identity broken): '+cs+'/8');
-      return { layersOffCS:cs+'/8' }; });
+      // byte-identity, so badges must be OFF here alongside officers/logistics/arms.
+      // E60 DELIBERATE RE-ANCHOR (D278) — never a silent re-pin. The old pin (CS 5/8) carried TWO stacked
+      // honest-baseline drifts, decomposed first-hand by .tmp/ab-e60.mjs (7 legs vs the git-extracted pre-D273
+      // deliverable 629f6fa, full-row w/us/cs/steps comparisons, 0 pe):
+      //   5/8 -> 7/8: E49b straggler-shedding (D252-D261 arc) — the SAME drift D268 adjudicated honest and
+      //     re-anchored in probe-arms' twin bullrun1 tooth; the pre-D273 per-seed vector here (US on 55 only)
+      //     matches D268's re-anchored vector exactly.
+      //   7/8 -> 8/8: the D273 accurate-input assaultDoctrine:"cautious" row (data/bullrun.json, Aaron-locked
+      //     D272 law) + the cautious-v2 engine branch (T0 _atkCautious): the US attacker holds at ATK_ASSAULT_R
+      //     and trades fire instead of assaulting, so every seed runs to the full-clock CS timeout (seed 55's
+      //     E49b US win flips back to CS). Forcing _atkCautious off + _parityOff reproduces the pre-D273
+      //     deliverable FULL-ROW byte-identically on all 8 seeds — the D273 arc is 100% of that window's
+      //     movement (E54/E47/PM3 exactly zero on this fixture).
+      //   T26 attackerParity = EXACTLY ZERO here: _parityOff legs are full-row identical to base, because
+      //     bullrun1's cautious posture gates the T26 seam out (T26 fldParityAiUnit rejects _atkCautious).
+      //     This REFUTES the E60 filing's wave-commit hypothesis for this tooth — the cautious arc is the mover.
+      // _parityOff (sticky, set BEFORE launch — fldLaunchSandbox reads it into __FIELD.attackerParity, the
+      // T0 launch line tagged "E53-v2 (D272)") now joins the isolation set: T26 is a default-ON optional
+      // combat layer like badges, so the presets byte-identity claim must isolate it too. The inertness
+      // tripwire rests on ONE structural gate: fldParityAiUnit's first-line _atkCautious reject
+      // (src/tactical/T26-attacker-parity.js).
+      // BOTH rows are pinned (the D268 compensating-drift pattern, per its Opus lenses): the parity-OFF row
+      // is pinned to the EXACT per-seed {winner,us,cs,steps} vector below (every seed a full-clock 9600-step
+      // CS timeout hold — the cautious-hold MECHANISM is locked, not just the outcome count, so a
+      // casualty-only or win-path shift that preserves 8/8 still trips), and the parity-ON row must stay
+      // FULL-ROW IDENTICAL to it. Dual meaning: a parity-OFF mismatch = a cautious-v2/E49b-class regression
+      // signal (or a legitimate D74-approved change that needs its own attribution A/B + re-anchor); a
+      // parity-ON divergence = T26 has become live at bullrun1 (posture/gate change) — re-anchor deliberately.
+      var PIN=[{s:1,w:'CS',us:16263,cs:10673,n:9600},{s:7,w:'CS',us:16231,cs:10689,n:9600},{s:21,w:'CS',us:16511,cs:10951,n:9600},{s:42,w:'CS',us:16475,cs:11148,n:9600},{s:55,w:'CS',us:16375,cs:10682,n:9600},{s:101,w:'CS',us:16029,cs:10323,n:9600},{s:303,w:'CS',us:16515,cs:11215,n:9600},{s:909,w:'CS',us:16256,cs:11092,n:9600}];
+      function run(seed, parityOff){ __FIELD._officersOff=true; __FIELD._logisticsOff=true; __FIELD._armsOff=true; __FIELD._badgesOff=true; __FIELD._parityOff=parityOff; G.settings.tacticalFog=false; fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:seed, fog:false}); __FIELD.phase='battle'; __FIELD.paused=false; var n=0; while(__FIELD.phase==='battle'&&n<20000){ fldSimStep(0.05); n++; } return { w:__FIELD.winner, us:strength('US'), cs:strength('CS'), steps:n }; }
+      var off=[], on=[], cs=0;
+      try {
+        for(var i=0;i<PIN.length;i++){ var r=run(PIN[i].s, true); off.push(r); if(r.w==='CS') cs++; }
+        for(var j=0;j<PIN.length;j++){ on.push(run(PIN[j].s, false)); }
+      } finally {
+        __FIELD._parityOff=false; __FIELD._armsOff=false; __FIELD._badgesOff=false; __FIELD._officersOff=false; __FIELD._logisticsOff=false; delete G.settings.tacticalFog;
+      }
+      if(cs!==8) throw new Error('layers-OFF (incl. parity) bullrun != the D278 re-anchored CS 8/8 (byte-identity broken — attribute before re-pinning): '+cs+'/8');
+      for(var k=0;k<PIN.length;k++){ var p=PIN[k], a=off[k], b=on[k];
+        if(a.w!==p.w||a.us!==p.us||a.cs!==p.cs||a.steps!==p.n) throw new Error('parity-OFF row moved off the D278 pin at seed '+p.s+' (attribute + re-anchor deliberately, never silently): got '+JSON.stringify(a)+' pinned '+JSON.stringify(p));
+        if(a.w!==b.w||a.us!==b.us||a.cs!==b.cs||a.steps!==b.steps) throw new Error('parity-ON row diverged from parity-OFF at seed '+p.s+' (T26 no longer inert at bullrun1 — re-anchor deliberately): '+JSON.stringify(a)+' vs '+JSON.stringify(b)); }
+      return { layersOffCS:cs+'/8', pinnedRows:PIN.length, parityOnIdentical:true }; });
 
     step('AI TIERS resolve as designed: Veteran=neutral; cushion + brittle-enemy ONLY at Recruit; aiResolve NEVER > 1 (smarter-not-cheating)', function(){
       var rows={};
@@ -195,25 +231,47 @@ const SETUP = `(() => {
       if(!(recruitAi<vetAi)) throw new Error('Recruit brittle-enemy handicap did not slow the AI recovery: vet '+vetAi.toFixed(1)+' recruit '+recruitAi.toFixed(1));
       return { vetPlayer:Math.round(vetPlayer*10)/10, recruitPlayer:Math.round(recruitPlayer*10)/10, vetAi:Math.round(vetAi*10)/10, recruitAi:Math.round(recruitAi*10)/10 }; });
 
-    step('AI SHARPNESS seam (ATTACKER): aiSkill moves fldAiAttacker effLocal -> a marginal-odds attacker ASSAULTS at 1.12 but NOT at 0.9 (hard assertion, no vacuous branch)', function(){
-      clearPreset(); fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:1});
-      var obj=__FIELD.objective; __FIELD.attacker='US'; __FIELD.fog=false;
-      function attackOrder(skill){
-        __FIELD.aiSkill=skill;
-        // a US attacker CLOSED on the objective with a slim global edge (1600 vs 1500); localSup flips true only as
-        // aiSkill lowers effLocal (= ATK_LOCAL_RATIO/aiSkill * cf) past ~0.97, so the commit decision MUST move.
-        var atk=mk({id:'A',side:'US',arm:'inf',x:obj.x,z:obj.z+ (fldHomeEdgeZ('US')>obj.z?1:-1)*60,men:1600,st:'steady'});
-        var def=mk({id:'D',side:'CS',arm:'inf',x:obj.x,z:obj.z,men:1500,st:'steady'});
-        __FIELD.units=[atk,def]; fldAiUnit(atk);
-        return atk.order ? atk.order.type : null;
+    step('AI SHARPNESS seam (ATTACKER): aiSkill moves BOTH marginal-commit owners — D64 fldAiAttacker effLocal (parity off, posture lifted) assaults at 1.12 not 0.9, AND the T26 wave-commit ARMS at 1.12 not 0.9 (explicit seam assertion)', function(){
+      // E60 RE-ROUTE (D278): since D273, bullrun1 ships the accurate-input assaultDoctrine:"cautious" row, and
+      // _atkCautious gates BOTH the D64 aggressive-commit branch this tooth pins AND the whole T26 parity seam
+      // (measured: the shipped fixture read hold/hold/hold at EVERY skill — the seam was unreachable, not moved;
+      // _parityOff legs were byte-identical, refuting the E60 filing's T26 hypothesis; .tmp/ab-e60.mjs, D278).
+      // This is a synthetic 2-unit seam rig, not a live-battle outcome pin, so the fixture lifts the posture
+      // IN-FIXTURE ONLY (_atkCautious=false after launch) to reach the pinned D64 seam, and isolates each owner:
+      //   leg 1 (_parityOff pre-launch, sticky): the ORIGINAL D64 effLocal pin, verbatim assertions;
+      //   leg 2 (parity ON): the SAME aiSkill sweep must move T26's wave-commit arming (__FIELD._e53.armed) —
+      //     T26 divides by aiSkill in the same effLocal form, so lo stays un-armed (D64 fallback holds) while
+      //     hi arms and T26 itself issues the assault. _e53 is nulled per call: this rig never advances time,
+      //     and T26 recomputes once per sim-t.
+      clearPreset();
+      function attackOrder(skill, parityOff){
+        try {
+          __FIELD._parityOff=parityOff;
+          fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:1});
+          __FIELD._atkCautious=false;   // lift the D273 accurate-input posture INSIDE the rig only (see above)
+          var obj=__FIELD.objective; __FIELD.attacker='US'; __FIELD.fog=false;
+          __FIELD.aiSkill=skill; __FIELD._e53=null;
+          // a US attacker CLOSED on the objective with a slim global edge (1600 vs 1500); localSup flips true only as
+          // aiSkill lowers effLocal (= ATK_LOCAL_RATIO/aiSkill * cf) past ~0.97, so the commit decision MUST move.
+          var atk=mk({id:'A',side:'US',arm:'inf',x:obj.x,z:obj.z+ (fldHomeEdgeZ('US')>obj.z?1:-1)*60,men:1600,st:'steady'});
+          var def=mk({id:'D',side:'CS',arm:'inf',x:obj.x,z:obj.z,men:1500,st:'steady'});
+          __FIELD.units=[atk,def]; fldAiUnit(atk);
+          var o = atk.order ? atk.order.type : null;
+          var armed = !!(__FIELD._e53 && __FIELD._e53.armed);
+          return { o:o, armed:armed };
+        } finally { __FIELD.aiSkill=1; __FIELD._parityOff=false; }
       }
-      var lo=attackOrder(0.9), mid=attackOrder(1.0), hi=attackOrder(1.12);
-      __FIELD.aiSkill=1;
+      var lo=attackOrder(0.9,true).o, mid=attackOrder(1.0,true).o, hi=attackOrder(1.12,true).o;
       var orders={lo:lo, mid:mid, hi:hi};
-      if(lo===mid && mid===hi) throw new Error('aiSkill did NOT move the attacker commit decision (seam wired out): '+JSON.stringify(orders));
-      if(hi!=='charge') throw new Error('the sharp (1.12) attacker did not assault: '+JSON.stringify(orders));
-      if(lo==='charge') throw new Error('the cautious (0.9) attacker assaulted on the same marginal odds: '+JSON.stringify(orders));
-      return orders; });
+      if(lo===mid && mid===hi) throw new Error('aiSkill did NOT move the D64 attacker commit decision (seam wired out): '+JSON.stringify(orders));
+      if(hi!=='charge') throw new Error('the sharp (1.12) D64 attacker did not assault: '+JSON.stringify(orders));
+      if(lo==='charge') throw new Error('the cautious (0.9) D64 attacker assaulted on the same marginal odds: '+JSON.stringify(orders));
+      var tLo=attackOrder(0.9,false), tHi=attackOrder(1.12,false);
+      if(tLo.armed) throw new Error('T26 wave-commit armed at aiSkill 0.9 on marginal odds (arming bar not moving with skill)');
+      if(tLo.o==='charge') throw new Error('the cautious (0.9) parity-ON attacker assaulted: '+tLo.o);
+      if(!tHi.armed) throw new Error('T26 wave-commit did NOT arm at aiSkill 1.12 (the parity seam lost its aiSkill sensitivity)');
+      if(tHi.o!=='charge') throw new Error('the armed sharp (1.12) T26 attacker did not assault: '+tHi.o);
+      return { d64:orders, t26:{ loArmed:tLo.armed, loOrder:tLo.o, hiArmed:tHi.armed, hiOrder:tHi.o } }; });
 
     step('AI SHARPNESS seam (DEFENDER): aiSkill scales fldAiDefender CTR_LEASH/CTR_RATIO -> a counterattack CHARGE fires at 1.12 but not at 0.9 (the leash bites)', function(){
       clearPreset(); fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:1});
