@@ -347,9 +347,12 @@ function fldInitSim(opts) {
   // R-3 the RATING BADGE engine: the per-launch gate (same sticky _badgesOff test hook). Default ON. The badge
   // SEAMS (fldBadgeFactor + the cohesion rally term) are IDENTITY only for a unit that carries no badges and no
   // authored cohesion. Since the R-6 assignment sweep (D104), data/ratings.json rosterBadges populates ALL NINE
-  // shipped scenarios (T1 fldBrSpec attaches them at build), so badges DO shift those AI-vs-AI outcomes — e.g.
-  // bullrun1 CS 5/8 -> 8/8 vs badges-off. Byte-identity claims hold only against the _badgesOff isolation path
-  // (which probes use to force the engine off), NOT against a units-carry-no-badges premise. (E32, D231.)
+  // shipped scenarios (T1 fldBrSpec attaches them at build), so badges DO shift those AI-vs-AI outcomes — the
+  // D104-era example measured bullrun1 CS 5/8 badges-off -> 8/8 badges-on; the badges-OFF isolated baseline has
+  // since drifted honestly (E49b shedding + the D273 cautious posture; the CURRENT per-seed vector lives in
+  // probe-arms/probe-presets' pinned provenance rows, not in this comment — E32-class numbers go stale here).
+  // Byte-identity claims hold only against the _badgesOff isolation path
+  // (which probes use to force the engine off), NOT against a units-carry-no-badges premise. (E32, D231, D281.)
   __FIELD.badges = __FIELD._badgesOff ? false : ((opts.badges != null) ? !!opts.badges : true);
   // E53-v2 (D272): attacker tactical parity doctrine seam. Default ON; the sticky _parityOff
   // test hook forces it OFF so OFF-state A/B legs prove the T26 seam and T25 sidestep valve

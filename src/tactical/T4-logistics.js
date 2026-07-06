@@ -54,7 +54,16 @@ var FLDL = {
                            // (it has outrun its supply, the culminating point, worse in fog). 0 = fights with what it carries. Restores "fog aids
                            // the defender" (D58/D64): without it the attacker sustained the long fog fire-trade by cycling to its safe rear train, and
                            // a long fire-trade favours numbers (attacker) over cover (defender) — the fog-ON CS 8/8->0/8 flip. The threshold is sharp
-                           // (even 0.15 leaves the inversion; only ~0 restores it). 1.0 = fog-OFF (no choke); the DEFENDER is never choked.
+                           // (even 0.15 leaves the inversion; only ~0 restores it). 1.0 = no choke; the DEFENDER is never choked.
+  ATK_STANDOFF_RESUPPLY: 0,// an AI-LED brigade of a CAUTIOUS-doctrine attacker (fog OFF) resupplies at this fraction of normal — the
+                           // fog choke's fog-OFF analog (E62/D281). The D272 cautious posture holds at ATK_ASSAULT_R and trades fire
+                           // instead of assaulting, which re-opens the same free-sustained-fire hole in CLEAR weather: the AI attacker
+                           // cycles spent brigades to its rear train and grinds the defender past the clock. The choke binds EXACTLY the
+                           // brigades the doctrine commands (u.ai — the posture is an AI-COMMAND input; T0 fldAiAttacker consults it only
+                           // for AI-led units): the piecemeal command the posture models is Inferred to have been no better at keeping
+                           // cartridges moving forward than at coordinating its assaults, so the AI attacker fights with what it carries.
+                           // A HUMAN player's brigades are UNBOUND — orders and resupply both (the alt-history hook: outfight the command
+                           // failure; deliberate rotation to the train stays a legitimate, designed tempo cost). DEFENDER never choked.
 };
 
 /* ===========================================================================
@@ -144,18 +153,31 @@ function fldLogisticsStep(dt) {
     u.resupplying = false;
     if (u.state === "routing") { u.ammoLow = (u.ammo <= FLDL.LOW_AMMO); continue; }
     var src = fldSupplyFor(u.side);
-    // FOG CULMINATION (D66 fog-fix): under fog the ATTACKER cannot run its trains forward — advancing blind it has
-    // outrun its supply (Clausewitz's culminating point) and fights with what it carries (ATK_FOG_RESUPPLY ~ 0).
-    // Without this the attacker sustained the long fog fire-trade by cycling fresh brigades back to its safe rear
-    // train, and a long fire-trade favours numbers (the attacker) over cover (the defender) — INVERTING "fog aids
-    // the defender" (D58/D64): the empirically-measured fog-ON CS 8/8 -> 0/8 flip. The DEFENDER keeps full supply,
-    // so WITH the choke logistics is balance-NEUTRAL in BOTH fog states (Bull Run AI-vs-AI fog-OFF CS 5/8, fog-ON
-    // CS 8/8 — each matching its no-logistics baseline). Fog-OFF (clear sight) is unaffected: the attacker resupplies
-    // normally. The defender on its near train, or any disengaged brigade, is never choked.
-    var fogChoke = (__FIELD.fog && __FIELD.attacker && u.side === __FIELD.attacker) ? FLDL.ATK_FOG_RESUPPLY : 1.0;
+    // ATTACKER RESUPPLY CHOKES — both defend the layer's own NEUTRALITY invariant (the ammo economy is texture +
+    // the strategic-supply payoff; it must never decide a battle the no-logistics engine decides the other way):
+    //  - FOG CULMINATION (D66 fog-fix): under fog the ATTACKER cannot run its trains forward — advancing blind it
+    //    has outrun its supply (Clausewitz's culminating point) and fights with what it carries (ATK_FOG_RESUPPLY
+    //    ~ 0). Without this the attacker sustained the long fog fire-trade by cycling fresh brigades back to its
+    //    safe rear train, and a long fire-trade favours numbers (the attacker) over cover (the defender) —
+    //    INVERTING "fog aids the defender" (D58/D64): the empirically-measured fog-ON CS 8/8 -> 0/8 flip.
+    //  - CAUTIOUS STAND-OFF (E62/D281 — the D66 class, fog-OFF, AI-LED brigades only): the D272 accurate-input
+    //    cautious posture (assaultDoctrine "cautious": Bull Run / Fredericksburg / Malvern Hill + cautious
+    //    phases) holds at ATK_ASSAULT_R and trades fire instead of assaulting — re-opening the same hole in
+    //    clear weather. Measured at the D279 checkpoint (bullrun1, officers/arms/badges OFF, fog OFF): logistics
+    //    OFF = CS 8/8 vs logistics ON = CS 3/8, the US train draining ~300 -> ~0-54 to grind five
+    //    historically-correct defender holds into LATE attacker wins. ATK_STANDOFF_RESUPPLY (~0) closes it for
+    //    the AI-led brigades the doctrine actually commands (u.ai — a HUMAN attacker is unbound, orders and
+    //    resupply both, so the shipped alt-history teaching stands and no hidden nerf touches the player),
+    //    restoring logistics ON == OFF in both postures and both fog states (probe-logistics BALANCE v2 pins the
+    //    fixed vector; probe-arms owns the OFF baseline).
+    // The DEFENDER keeps full supply (it fights on its own depots); a non-cautious fog-OFF attacker resupplies
+    // normally; any disengaged brigade of a non-choked side is never choked.
+    var atkChoke = (__FIELD.attacker && u.side === __FIELD.attacker)
+      ? (__FIELD.fog ? FLDL.ATK_FOG_RESUPPLY : ((__FIELD._atkCautious && u.ai) ? FLDL.ATK_STANDOFF_RESUPPLY : 1.0))
+      : 1.0;
     if (src && src.alive && src.reserve > 0 && u.ammo < 100 && !fldUnitInCloseAction(u)) {
       if (fldDist(u, src) <= src.radius) {
-        var regain = Math.min(FLDL.RESUPPLY_RATE * dt * fogChoke, 100 - u.ammo, src.reserve / FLDL.RESERVE_DRAW);
+        var regain = Math.min(FLDL.RESUPPLY_RATE * dt * atkChoke, 100 - u.ammo, src.reserve / FLDL.RESERVE_DRAW);
         if (regain > 0) { u.ammo += regain; src.reserve -= regain * FLDL.RESERVE_DRAW; u.resupplying = true; }
       }
     }
@@ -181,6 +203,17 @@ function fldUnitInCloseAction(u) {
    =========================================================================== */
 function fldLogisticsAiUnit(u) {
   if (!__FIELD.logistics || !u.alive || u.state === "routing") return false;
+  // E62/D281: an AI-led cautious fog-OFF attacker brigade is CHOKED to nothing (ATK_STANDOFF_RESUPPLY ~ 0) —
+  // there is nothing to be had at the train, so the brigade STANDS with what it carries (fires dry, then the
+  // bayonet — the module's existing last-argument doctrine) instead of abandoning the line for a dry errand.
+  // That matches the no-logistics baseline (no trains -> no rotation), which is exactly what the neutrality
+  // invariant demands. (This seam only ever runs for AI units — fldAiUnit — but u.ai is asserted anyway so the
+  // scope survives any future caller; the LOAD-BEARING human carve-out is the u.ai key on the STEP choke above,
+  // since fldLogisticsStep iterates ALL units including human-led ones.) The FOG path is deliberately left as
+  // shipped: a BLIND army still marches
+  // back to where its trains should be (it cannot know they are empty-handed), and the D66-probed fog baseline
+  // stays byte-identical.
+  if (!__FIELD.fog && __FIELD._atkCautious && u.ai && __FIELD.attacker && u.side === __FIELD.attacker && FLDL.ATK_STANDOFF_RESUPPLY <= 0) return false;
   // only a brigade that is genuinely OUT breaks off to the train (a last resort, not a tempo weapon) — a merely
   // "low" brigade fights on and tops up passively during lulls, so neither side can cycle fresh fire endlessly.
   if (u.ammo > FLDL.CRIT_AMMO) return false;

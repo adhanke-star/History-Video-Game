@@ -22,7 +22,7 @@
     "attacker": "US",
     "defaultFog": true,
     "assaultDoctrine": "cautious",
-    "_assaultDoctrineNote": "D272 accurate-input posture: McDowell's green army committed its attacks piecemeal around Henry House Hill, so the AI Union attacker uses the same cautious-doctrine class as other documented disjointed frontal assaults. This changes order selection only; it adds no First Bull Run combat constant.",
+    "_assaultDoctrineNote": "D272 accurate-input posture: McDowell's green army committed its attacks piecemeal around Henry House Hill (Verified), so the AI Union attacker uses the same cautious-doctrine class as other documented disjointed frontal assaults. The posture binds the AI attacker only: its order selection, and (since E62/D281) its stand-off resupply at the universal T4 seam — the same piecemeal command is Inferred to have been no better at keeping cartridges moving forward under fire than at coordinating its assaults, so the AI attacker fights with what it carries. A HUMAN commanding the Union is unbound — orders and resupply both. It adds no First-Bull-Run-specific combat constant.",
     "defender": "CS",
     "timeLimitSec": 480,
     "holdToWinSec": 140,

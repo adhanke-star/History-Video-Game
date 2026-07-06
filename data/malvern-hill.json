@@ -26,7 +26,7 @@
     "_homeEdgeNote": "E47 (D240): role-aware home edges. This battle seats the US defender at LOW z (the Crew house ridge, US reinforcements entering z 145-300) and the CS attacker at HIGH z (the woods, CS reinforcements z 735-860), the inverse of the engine's default side-keyed edges — so before this field, a routing unit fled THROUGH the enemy line toward the wrong edge, inflating defender casualties. Rout, fallback, officer-ride, and supply-train direction all follow this declaration.",
     "defaultFog": false,
     "assaultDoctrine": "cautious",
-    "_assaultDoctrineNote": "The AI Confederate attacker models Malvern Hill's disjointed frontal assaults: it presses in line across the open ground and trades under the guns, but it does not get the modern B-1 column rush/massed bayonet solution that would erase Lee's command failure. A human Confederate player can still attempt a better-coordinated attack.",
+    "_assaultDoctrineNote": "The AI Confederate attacker models Malvern Hill's disjointed frontal assaults: it presses in line across the open ground and trades under the guns, but it does not get the modern B-1 column rush/massed bayonet solution that would erase Lee's command failure. A human Confederate player can still attempt a better-coordinated attack — orders and resupply both stay unbound for the human. (Since E62/D281 the posture also chokes the AI attacker's stand-off resupply at the universal T4 seam — an Inferred extension of the same disjointed-command failure; the human attacker's resupply is untouched.)",
     "timeLimitSec": 500,
     "holdToWinSec": 135,
     "menu": {

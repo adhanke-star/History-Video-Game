@@ -23,7 +23,7 @@
     "defaultFog": false,
     "defender": "CS",
     "assaultDoctrine": "cautious",
-    "_assaultDoctrineNote": "The AI Union attacker fights the DOOMED FRONTAL ASSAULT — it advances in line across the open glacis and trades fire, but never column-rushes the killing ground or presses the mass bayonet on the covered sunken-road line (Burnside's piecemeal disaster, not the B-1 concentration doctrine). So the AI never carries the wall; the stone wall + pre-sighted crest guns repel it, the historical result. A HUMAN commanding the Union is unbound by this — the alt-history hook: do what the Army of the Potomac could not. Default fog OFF: the slaughter was in clear fields of fire, so 'fog aids the defender' is NOT the lever here — the cautious posture + the wall cover are.",
+    "_assaultDoctrineNote": "The AI Union attacker fights the DOOMED FRONTAL ASSAULT — it advances in line across the open glacis and trades fire, but never column-rushes the killing ground or presses the mass bayonet on the covered sunken-road line (Burnside's piecemeal disaster, not the B-1 concentration doctrine). So the AI never carries the wall; the stone wall + pre-sighted crest guns repel it, the historical result. A HUMAN commanding the Union is unbound by this — the alt-history hook: do what the Army of the Potomac could not. (Since E62/D281 the posture also chokes the AI attacker's stand-off resupply at the universal T4 seam — an Inferred extension of the same piecemeal-command failure; the human attacker's resupply is untouched.) Default fog OFF: the slaughter was in clear fields of fire, so 'fog aids the defender' is NOT the lever here — the cautious posture + the wall cover are.",
     "timeLimitSec": 480,
     "holdToWinSec": 140,
     "menu": {
