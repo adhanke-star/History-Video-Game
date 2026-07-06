@@ -99,7 +99,8 @@ function _a6Condition() {
   // PM2 (E43 · D250/D266): the enemy STRENGTH leg — the SAME shared contract the real-time mode
   // consumes (bridgeEnemyWillStrengthMul: exact-1.0 fresh → byte-identical, debuff-only, floor 0.90).
   // Desertion thins the muster: strength/maxStr only, non-hq; enemy MORALE is deliberately untouched
-  // (the D249 morale-channel inversion class). The 87 auto-resolve rating term keeps its own will read.
+  // (the D249 morale-channel inversion class). PM3 (D277): the sim-backed auto-resolve consumes the
+  // same contract through the T2 enemy leg — the old 87 rating-term will read is gone.
   var enemyMul = (typeof bridgeEnemyWillStrengthMul === "function") ? bridgeEnemyWillStrengthMul(C) : 1;
   if (typeof enemyMul === "number" && isFinite(enemyMul) && enemyMul !== 1) {
     for (var n = 0; n < B.units.length; n++) {

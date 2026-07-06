@@ -270,6 +270,22 @@ const SETUP = `(() => {
       if (mock.morale!==78) throw new Error('reinforcement morale must be untouched');
       return { enemyUnits:nominal.length, freshIdentical:true, eroded94:true, floor90:true, seamReinf:mock.men }; });
 
+    step('PM3 (D277): the sim-backed resolve routes through the SHARED compute path and tears down clean', function(){
+      if (typeof _arRunHeadlessSim!=='function') throw new Error('_arRunHeadlessSim missing');
+      if (typeof bridgeResolveOutcome!=='undefined') throw new Error('the old margin model must be gone (PL-1)');
+      var C=mkC('US'); setWar(C,true); C.idx=9;   // antietam in the US chain
+      var o=_arRunHeadlessSim(C);
+      if(!o) throw new Error('no outcome');
+      // the EXACT fldCampaignComputeOutcome shape the fought path returns — one battle-truth model
+      if(['US','CS',null].indexOf(o.winnerSide)<0) throw new Error('bad winnerSide '+o.winnerSide);
+      if(['win','decisive','draw'].indexOf(o.type)<0) throw new Error('bad type '+o.type);
+      if(!(o.pFrac>=0 && o.pFrac<=0.92 && o.eFrac>=0 && o.eFrac<=0.92)) throw new Error('fractions out of range');
+      if(o.playerSide!=='US' || !o.bd || !o.bd.id) throw new Error('outcome missing playerSide/bd');
+      if(__FIELD.launched!==false || __FIELD.campaignCtx!==null) throw new Error('sim left field state behind');
+      var o2=_arRunHeadlessSim(C);
+      if(JSON.stringify([o.winnerSide,o.type,o.pFrac,o.eFrac])!==JSON.stringify([o2.winnerSide,o2.type,o2.pFrac,o2.eFrac])) throw new Error('sim-backed resolve not deterministic');
+      return { w:o.winnerSide, type:o.type, pFrac:Math.round(o.pFrac*1000)/1000, eFrac:Math.round(o.eFrac*1000)/1000, deterministic:true }; });
+
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
 })()`;

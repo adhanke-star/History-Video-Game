@@ -1,4 +1,12 @@
-# ☀ WAKE-UP — 2026-07-05 (latest): **D276 — E46 Piper guns re-attempt red-halted and is parked. NEXT = PM3 sim-backed resolve.**
+# ☀ WAKE-UP — 2026-07-05 (latest): **D277 — PARITY-M3 sim-backed auto-resolve SHIPPED; the battle-mode-parity arc is COMPLETE. NEXT = the E60 owner re-anchor, then Aaron's queue.**
+
+**Newest (D277):** the Auto-resolve button no longer decides battles by a rating margin — it runs the SAME conditioned battle headless in the real-time engine (both sides AI, neutral preset, war-state-pure seed) and feeds back through the same compute/apply path a fought battle uses. The old margin model, enemy year curve, loser floors, draw band, and general's-margin nudge are deleted; the result card, briefing, and T2 header now say the true contract: the war shapes the inputs, the field decides the outcome. Measured: deterministic replay at 3 war states with zero wall-clock/random reads; bought weapons measurably decide delegated battles (Henrys FLIP the delegated Wilderness); delegated First Bull Run repeats history (faithful scenario; recovery converges in 1); pacing improves in 5 of 6 cells vs the old model (a weak delegating Union now completes the chain — it used to stall at 0 wins in 90), while a pure-delegation Confederacy honestly stalls at Nashville/Bentonville — take command there, or win politically. 3× SAFE_TO_COMMIT Opus panel, zero blocking. New ledgers: E59 (procedural clamp compression), E60 (probe-presets' two PRE-EXISTING E53-v2 stale pins — its vet:noreg entry reds until the owner re-anchors), E61 (no strategic-defeat terminal).
+
+**Queue: E60 owner re-anchor (HANDOFF Prompt A, small tools-only slice) -> batch/release full-suite checkpoint is a live recommendation (arc complete; Aaron's call) -> main-menu redesign + LLM-opponent remain Aaron's queued milestones. M8/Q5/Q6 remain locked unless Aaron explicitly unlocks.**
+
+---
+
+# ☀ WAKE-UP — 2026-07-05 (previous): **D276 — E46 Piper guns re-attempt red-halted and is parked. NEXT = PM3 sim-backed resolve.**
 
 **Newest (D276):** the documented Piper-farm gun row was restored exactly after D275's E53-v2+E54 engine, then reverted because the unchanged D264 gate stayed red. The Sunken Road improved to US 5/8 on both seed sets, but the locked gate is US >=6/8. All non-Antietam rows plus sandbox stayed byte-identical, pageerrors were 0, and captured stayed 0 on every Antietam row. The Antietam `_e46Note` records the D276 evidence; the gun row remains out.
 

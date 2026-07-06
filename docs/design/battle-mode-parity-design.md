@@ -190,6 +190,18 @@ the post-E47 engine, not a moving target.
   byte-identical; the pacing A/B is the arbiter, and a red A/B halts per HALT rules rather than shipping a
   worse-paced campaign.
 
+> **BUILD STATUS (D277, 2026-07-05): SHIPPED.** `_arRunHeadlessSim` + `_arSimSeed` + the honest `_arShowResult`
+> card in 87; the T6 `neutralPreset` seam (PL-10; fog deliberately keeps the fought launch's precedence — a
+> battle-condition input, not a difficulty lever); the margin model, `_arEnemyRating`, the floors, the draw
+> band, AND the `commandMarginEdge` output nudge all deleted (the general reaches every mode as inputs).
+> Bull Run sub-decision: FAITHFUL scenario (A/B'd — delegation repeats history at every posture; the recovery
+> flip converges in 1). PL-6 proven (determinism ×2 at 3 states; 0 Math.random/Date.now in the sim; seed
+> excludes war STRENGTH by design). PL-3 proven (Spencer@Gettysburg eFrac .417→.510; Henry@Wilderness flips
+> CS→US). Pacing A/B vs the old model: 5/6 cells strictly improve; the pure-delegation dominant-CS chain now
+> honestly stalls at Nashville/Bentonville (the old completion rode the E42 defect) with fight-it-yourself +
+> strategic `victoryReady` as the designed CS routes. probe-auto-resolve/campaign-link/full-campaign rewritten;
+> NEW E59 (procedural clamp compression) + E60 (probe-presets pre-existing stale pins) filed. Evidence: **D277**.
+
 ### PM4 — (folded into PM1) docs retirement — listed for completeness; no separate milestone.
 
 ---

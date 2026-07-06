@@ -8,9 +8,10 @@
          war fielded (bridgeArmy(C): strength / equipment / morale / arms / leadership)
          scales the PLAYER side's men + morale + fatigue and RE-ARMS a fraction of the
          line from the weapons you actually bought (C.armory.loadout). Same 74-anchor /
-         +-12% band as the Classic-hex conditioning (86-battle-conditioning _a6Condition)
-         and the auto-resolve edge (87) — so all THREE battle modes are balanced
-         equivalently and a fresh/no-investment army plays ~ the nominal scenario.
+         +-12% band as the Classic-hex conditioning (86-battle-conditioning _a6Condition);
+         since PM3 (D277) the auto-resolve runs THIS same conditioning headless — the
+         strategic war reaches every mode as INPUTS (PL-2), and a fresh/no-investment
+         army plays ~ the nominal scenario.
 
      A2  LAUNCH a tactical battle from the bridge (a "Fight in real time" option beside
          Auto-resolve + the Classic "To the Field") + a custom FREE SKIRMISH menu
@@ -21,11 +22,13 @@
 
      A3  FEED the result back into the campaign. The real-time fight decides the outcome
          and the REAL casualty fractions (men lost / men fielded, per side, counting
-         reinforcements via maxMen); those fractions drive the proven auto-resolve path
+         reinforcements via maxMen); those fractions drive the shared apply path
          (build a conditioned hex roster via startBattleRuntime, _arApplyCasualties, then
          the engine's own campaignAdvance -> _t1Resolve: manpower / clock / strategy /
-         enemyWill / victory). So a real-time win/loss is SUBSTITUTABLE for a Classic /
-         auto-resolved one (MODERN-UGG section 2). Aborting (Esc) before the battle ends
+         enemyWill / victory). Since PM3 (D277) the auto-resolve runs the SAME battle
+         headless and feeds back through THIS same compute/apply path — one battle-truth
+         model (PL-1): fought and delegated battles share the consequence pipeline
+         because they share the field. Aborting (Esc) before the battle ends
          simply returns to the briefing — the battle is re-launchable, nothing advances.
 
    ARCHITECTURE: this module ORCHESTRATES. The combat / morale / objective / victory math
@@ -148,10 +151,11 @@ function _fldArtProfile(C) {
   } catch (e) { return null; }
 }
 /* Condition the whole fielded army from bridgeArmy(C) + the battle-prep orders. Called once
-   per launch from the T0 fldResetRun hook (campaignCtx set only on a campaign launch).
-   Anchored at the fresh-campaign baseline 74 (+-12%), exactly like _a6Condition (86) and the
-   auto-resolve edge (87) -> the real-time, Classic-hex, and auto-resolve modes condition
-   identically; a no-investment army plays ~ the nominal scenario. */
+   per launch from the T0 fldResetRun hook (campaignCtx set only on a campaign launch —
+   including the PM3 headless auto-resolve, which routes through this exact seam).
+   Anchored at the fresh-campaign baseline 74 (+-12%), exactly like _a6Condition (86) ->
+   the real-time, Classic-hex, and delegated modes condition identically; a no-investment
+   army plays ~ the nominal scenario. */
 function fldCampaignCondition() {
   var ctx = __FIELD.campaignCtx; if (!ctx || ctx._conditioned) return;
   var C = _fldCamp(); if (!C) return;
@@ -456,7 +460,7 @@ function fldCampaignBriefing(C, bd) {
     + '<div style="font-size:24px;color:#e9dcc0;margin:2px 0 8px;">' + _fldEsc(bd.name) + '</div>'
     + '<div style="opacity:.9;font-size:14px;line-height:1.5;">' + (bd.res ? _fldEsc(bd.res) : "") + '</div>'
     + '<div style="margin-top:12px;padding:9px 11px;background:#15110b;border:1px solid #715e3e;border-radius:5px;font-size:13px;line-height:1.5;"><b>Your orders:</b> ' + role + (a ? (' Your war fields a <b style="color:' + ow[1] + '">' + ow[0].toLowerCase() + '</b> army (rating ' + a.overall + ') &mdash; its strength, arms, and morale all carry onto this field.') : '') + '</div>'
-    + '<div style="opacity:.6;font-size:11px;margin-top:12px;line-height:1.4;">This real-time battle is substitutable for an auto-resolve or a Classic engagement; the men you lose carry back to the campaign. Drag brigades to maneuver; volley, flank, and break the foe.</div>'
+    + '<div style="opacity:.6;font-size:11px;margin-top:12px;line-height:1.4;">Fought or delegated, this field feeds the same campaign &mdash; the war shapes the army; the battle decides the day; the men you lose carry back. Drag brigades to maneuver; volley, flank, and break the foe.</div>'
     + '<div style="text-align:center;margin-top:16px;"><button id="fldBriefGo" type="button" style="background:#1c1610;color:#e9dcc0;border:1px solid #736241;border-radius:4px;padding:9px 18px;font:14px Georgia,serif;cursor:pointer;">Take command &#9654;</button></div>' /* wcag-auditor: added type=button (WCAG 4.1.2 — prevents accidental form submit; explicit role semantics) */
     + '</div>';
   root.appendChild(ov);

@@ -132,6 +132,12 @@ function fldPresetsApply(opts) {
   __FIELD.sev = { attrition: 1, canister: 1, supply: 1, cmdShock: 1, sight: 1, veteran: 1 };
   __FIELD.aiSkill = 1; __FIELD.aiResolve = 1; __FIELD.aiCushion = 0;
   __FIELD.realismTier = "balanced";   // R-3: the rating badge per-lever cap tier (reset each launch -> no stale). Balanced ~= today's shipped numbers.
+  // PM3 (PL-10, D277): the sim-backed auto-resolve runs at the NEUTRAL preset regardless of the
+  // player's configured difficulty — the Recruit cushion is a human-play affordance, incoherent
+  // applied to an AI fighting on the player's behalf. The seam also skips the preset's global
+  // fog/auto-pause writes (a headless resolve must not mutate settings). Absent the flag (every
+  // player/probe launch today), this line is unreachable -> byte-identical.
+  if (opts && opts.neutralPreset) return;
   var c = fldPresetResolve();
   if (!c) return;   // nothing configured -> NEUTRAL (byte-identical to the pre-B5 engine); do not touch G.settings
   c = _fldClampCfg(Object.assign({}, c));   // clamp a CLONE (don't mutate the stored preset): a hand-edited / older-shape persisted preset is bounded here -> no inverted lever, no zeroed casualties, no AI buff

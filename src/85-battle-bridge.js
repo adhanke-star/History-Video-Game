@@ -242,8 +242,8 @@ function bridgeArmy(C) {
      · linear 0.0015 per point of erosion (will 30 as US player → ×0.94)
      · hard floor 0.90 — pinned at will 0 on BOTH baselines (1−72·.0015 and 1−70·.0015 both floor)
      · NaN-safe (E05 idiom): NaN / non-number / missing strategy all read as the baseline → 1.0
-   The 87 auto-resolve rating term (_arEnemyRating) is deliberately NOT rerouted — it keeps its own
-   enemyWill read until PM3 replaces the margin model with the sim-backed resolve. */
+   PM3 (D277): the old 87 rating term (_arEnemyRating) is GONE — the sim-backed auto-resolve now
+   consumes THIS same contract through the T2 enemy leg, so all three modes share one enemy model. */
 function bridgeEnemyWillStrengthMul(C) {
   var side = (C && C.side === "CS") ? "CS" : "US";
   var baseline = (side === "CS") ? 72 : 70;
@@ -328,7 +328,7 @@ function bridgeBriefingHTML(C) {
     + 'History flavors the day &mdash; it never decides it. The battle is yours to win.</p>'
     + '<div class="btn-row" style="margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">'
     +   '<button id="brgBack" type="button" class="upg">Back</button>'
-    +   '<button id="brgAuto" type="button" class="upg" title="Resolve from the army you fielded, without fighting the battle">Auto-resolve</button>'
+    +   '<button id="brgAuto" type="button" class="upg" title="Delegate the battle: your commander fights it headless in the same real-time engine, on the field your war conditioned">Auto-resolve</button>'
     +   '<button id="brgRealTime" type="button" class="upg" title="Fight this battle in the real-time tactical engine — your conditioned army, drag-to-maneuver">Fight in real time &#9876;</button>'
     +   '<button id="brgToField" type="button" class="bigbtn" title="Fight on the Classic hex map">To the Field (Classic) &#9654;</button>'
     + '</div>';
