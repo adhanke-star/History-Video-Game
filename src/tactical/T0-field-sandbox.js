@@ -349,7 +349,8 @@ function fldInitSim(opts) {
   // authored cohesion. Since the R-6 assignment sweep (D104), data/ratings.json rosterBadges populates ALL NINE
   // shipped scenarios (T1 fldBrSpec attaches them at build), so badges DO shift those AI-vs-AI outcomes — the
   // D104-era example measured bullrun1 CS 5/8 badges-off -> 8/8 badges-on; the badges-OFF isolated baseline has
-  // since drifted honestly (E49b shedding + the D273 cautious posture; the CURRENT per-seed vector lives in
+  // since drifted honestly (the D278 A/B pinned the chain: 5/8 at D104 -> 7/8 on the pre-D273 build under E49b
+  // shedding -> 8/8 once the D273 cautious posture landed; the CURRENT per-seed vector lives in
   // probe-arms/probe-presets' pinned provenance rows, not in this comment — E32-class numbers go stale here).
   // Byte-identity claims hold only against the _badgesOff isolation path
   // (which probes use to force the engine off), NOT against a units-carry-no-badges premise. (E32, D231, D281.)
@@ -767,6 +768,13 @@ function fldAiUnit(u) {
   // hooks (default falsy, reset per launch, set only by probe-ai for A/B isolation): _aiGenericAll forces
   // generic for BOTH; _aiGenericAtk forces generic for the ATTACKER only (to isolate the attacker doctrine).
   if (!__FIELD._aiGenericAll && __FIELD.attacker && __FIELD.objective) {
+    // LLM FIELD COMMANDER (T27, D283 law §3.2): dispatched ABOVE the defender/parity/attacker
+    // doctrines (T4 logistics + T5 arms keep their priority above it). fldLlmAiUnit returns true
+    // only when the armed seam wrote this unit's order from a validated plan; false whenever the
+    // seam is off/unconfigured/refused or the plan carries no legal order for this brigade — so
+    // every doctrine below runs VERBATIM (per-brigade fallback to the real engine, never a stub).
+    // __FIELD.llmCommander is default absent/false (nothing in slice 1 sets it) → byte-identical.
+    if (__FIELD.llmCommander && typeof fldLlmAiUnit === "function" && fldLlmAiUnit(u)) return;
     if (u.side === fldEnemy(__FIELD.attacker)) { fldAiDefender(u); return; }
     // E53-v2 (D272): attacker tactical parity (T26) — envelopment wing + wave-commit,
     // dispatched before D64. Returns false whenever inactive (parity off / fog /

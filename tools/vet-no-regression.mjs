@@ -118,6 +118,7 @@ const SUITE = [
   ['vicksburg', 'tools/probe-vicksburg.mjs'],
   ['chickamauga', 'tools/probe-chickamauga.mjs'],
   ['attacker parity', 'tools/probe-attacker-parity.mjs'],
+  ['llm commander', 'tools/probe-llm-commander.mjs'],
   ['all-battles sweep', 'tools/sweep-all-battles.mjs'],
   ['full campaign', 'tools/probe-full-campaign.mjs'],
   ['player agency diagnostic', 'tools/diag-player-agency.mjs'],
