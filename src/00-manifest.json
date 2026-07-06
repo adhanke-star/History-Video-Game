@@ -75,6 +75,7 @@
     "tactical/T25-surrender.js",
     "tactical/T26-attacker-parity.js",
     "tactical/T27-llm-commander.js",
+    "tactical/T28-llm-connector.js",
     "90-president-register.js",
     "91-save-slots.js",
     "92-help-overlay.js",

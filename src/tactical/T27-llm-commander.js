@@ -1,16 +1,19 @@
 /* ============================================================================
-   src/tactical/T27-llm-commander.js  —  TACTICAL ENGINE · Q-D270-5 (D283)
-   THE LLM FIELD COMMANDER — slice 1: the engine seam (ZERO network)
+   src/tactical/T27-llm-commander.js  —  TACTICAL ENGINE · Q-D270-5 (D283/D284)
+   THE LLM FIELD COMMANDER — the engine seam (this module stays ZERO network)
 
    Design law: docs/design/llm-opponent-design.md (Aaron-locked, D283). A
    player-configured LLM commands the AI-led army at operational cadence
-   through this seam. SLICE 1 ships state + the fog-respecting band-quantized
-   digest + the deterministic validation wall + order application + every
-   inertness gate and test hook. There is NO network code in this module and
-   NO UI: the only plan source is the __FIELD._t27MockPlan test hook, so the
-   shipped game cannot activate this seam at all (fldLlmConfigured() is
-   honestly false until the slice-2 connector exists). Zero network by
-   construction (law §2.4/§7.4).
+   through this seam. THIS module owns the ENGINE half: state + the fog-
+   respecting band-quantized digest + the deterministic validation wall +
+   order application + every inertness gate and test hook. It contains NO
+   network code — the digest→plan NETWORK lives entirely in T28-llm-connector.js
+   (slice 2, D28x), which fldLlmRequestPlan calls via fldLlmDispatchAsync only
+   when no mock hook is present and a connector is live. T27 itself remains
+   network-free by construction (its source-hygiene tooth proves it). The
+   __FIELD._t27MockPlan test hook is the SYNCHRONOUS plan source for probes; a
+   deliverable with no connector configured (fldLlmConfigured() false) still
+   cannot activate the seam and fires zero network (law §2.4/§7.4).
 
    Header discipline (the T26 idiom, law §3.1): this module writes ONLY
    u.order / u.formation and its own diagnostics bag __FIELD._t27 — never
@@ -65,10 +68,12 @@ FLD.LLM_BAND_MEN = 250;       // digest strength band (law §3.4: never an exact
 FLD.LLM_BAND_POS = 25;        // digest position/geometry band (yards)
 FLD.LLM_BAND_CLOCK = 5;       // digest clock band (seconds)
 
-/* Slice-2 seam: is a live connector configured AND enabled? Slice 1 ships no
-   connector, so this is honestly FALSE for every player — the seam can only
-   ever activate through the _t27MockPlan test hook (zero network). */
-function fldLlmConfigured() { return false; }
+/* Is a live connector configured (slice 2, T28)? Delegates to the connector
+   module; FALSE when no connector exists / is unconfigured, so an armed seam
+   with no mock hook and no config still refuses (law §4.1). The digest→plan
+   NETWORK lives entirely in T28 (fldLlmDispatchAsync) — this module stays
+   network-free (the source-hygiene tooth proves it). */
+function fldLlmConfigured() { return (typeof fldLlmConnConfigured === "function") ? !!fldLlmConnConfigured() : false; }
 
 /* The side the LLM commands: the AI-led army, i.e. the side the human does
    not hold. autoBoth (both sides AI) is hard-refused before this is read. */
@@ -86,7 +91,7 @@ function fldLlmState() {
   if (!st || st.gen !== gen) {
     st = __FIELD._t27 = {
       gen: gen, ph: ph, lastT: -1, planT: -1e9,
-      side: fldLlmSide(), plan: null, planN: 0,
+      side: fldLlmSide(), plan: null, planN: 0, pending: false,
       cycles: 0, applied: 0, droppedN: 0, malformed: 0, noResp: 0,
     };
   }
@@ -150,18 +155,25 @@ function fldLlmDigest() {
   };
 }
 
-/* SLICE-1 PLAN SOURCE — the _t27MockPlan test hook is the ONLY source; the
-   slice-2 connector replaces this body with the async adapter dispatch (same
-   wall downstream). A hook function is called with the digest (so probes can
-   pin the digest-input plumbing); a throwing/absent hook yields null/garbage
-   that the wall handles like any failed response. */
-function fldLlmRequestPlan(digest) {
+/* PLAN SOURCE — callback form so the same seam covers the SYNC test hook and
+   the slice-2 ASYNC network dispatch behind one contract. Precedence:
+   (1) the __FIELD._t27MockPlan test hook resolves SYNCHRONOUSLY via cb (a hook
+       function is called with the digest; a throwing/absent hook yields
+       null/garbage the wall handles like any failed response) — probes stay
+       byte-identical; (2) else a live connector dispatches ASYNChronously
+       through T28's fldLlmDispatchAsync (the ONLY network in the feature),
+       calling cb(plan|null) when it settles; (3) else no plan source → cb(null).
+   cb ALWAYS runs exactly once. */
+function fldLlmRequestPlan(digest, cb) {
   var m = __FIELD._t27MockPlan;
-  if (m == null) return null;
-  if (typeof m === "function") {
-    try { return m(digest); } catch (e) { return "__t27_mock_threw__"; }
+  if (m != null) {                                  // sync mock path (probes)
+    var raw;
+    if (typeof m === "function") { try { raw = m(digest); } catch (e) { raw = "__t27_mock_threw__"; } }
+    else raw = m;
+    cb(raw); return;
   }
-  return m;
+  if (typeof fldLlmDispatchAsync === "function") { fldLlmDispatchAsync(digest, cb); return; }   // live connector (T28)
+  cb(null);
 }
 
 /* THE VALIDATION WALL (law §3.4) — deterministic, pure. Returns
@@ -198,16 +210,36 @@ function fldLlmValidatePlan(raw, side) {
   return { ok: true, orders: out, n: n, dropped: dropped };
 }
 
-/* One plan cycle: digest → request → wall → install. The attempt timestamp
-   was already advanced by the caller; a null/malformed response keeps the
-   LAST GOOD plan (per-brigade command continuity, law §3.4). */
-function fldLlmCycle(st) {
-  st.cycles++;
-  var raw = fldLlmRequestPlan(fldLlmDigest());
+/* Install a settled plan into the seam state — the wall's write side. A
+   null/malformed response keeps the LAST GOOD plan (per-brigade command
+   continuity, law §3.4). Pure state write; no RNG, no sim mutation. */
+function fldLlmInstall(st, raw) {
   if (raw == null) { st.noResp++; return; }
   var v = fldLlmValidatePlan(raw, st.side);
   if (!v.ok) { st.malformed++; return; }
   st.plan = v.orders; st.planN = v.n; st.droppedN += v.dropped;
+}
+
+/* One plan cycle: digest → request → (settle) → install. The attempt timestamp
+   was already advanced by the caller. ONE in-flight request max (law §3.3):
+   while st.pending is set no new request is issued; the engine (the last good
+   plan) commands meanwhile. The mock hook resolves cb SYNCHRONOUSLY, so the
+   probe path installs in-cycle and pending ends false (byte-identical to the
+   old sync body). The async network path resolves LATER; a response is DROPPED
+   if the launch (gen) or phase changed, the seam was re-created, or it disarmed
+   — never blocking the sim, never installing a stale plan. */
+function fldLlmCycle(st) {
+  st.cycles++;
+  if (st.pending) return;                     // one in-flight request max
+  var myGen = __FIELD._gen || 0, myPh = st.ph;
+  st.pending = true;
+  fldLlmRequestPlan(fldLlmDigest(), function (raw) {
+    st.pending = false;
+    if ((__FIELD._gen || 0) !== myGen) return;          // launch changed → drop
+    if (__FIELD._t27 !== st || st.ph !== myPh) return;  // relaunch / phase changed → drop
+    if (!__FIELD.llmCommander) return;                  // disarmed → drop
+    fldLlmInstall(st, raw);
+  });
 }
 
 /* T0 dispatches here (inside the asymmetric block, above fldAiDefender —

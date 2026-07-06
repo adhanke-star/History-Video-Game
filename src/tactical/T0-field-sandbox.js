@@ -1173,6 +1173,11 @@ function fldLaunchSandbox(opts) {
   var gen = (__FIELD._gen = (__FIELD._gen || 0) + 1);   // launch generation — stale async callbacks no-op
   __FIELD.rendererKind = opts.renderer || "3d";   // '3d' | '2d' | 'none'
   fldInitSim(opts);
+  // LLM FIELD COMMANDER (T28, D28x): arm T27 from LIVE connector config, AFTER fldInitSim has
+  // stamped __FIELD.playerSide (so fldLlmSide aims at the AI army, not the human) and BEFORE the
+  // battle runs. The arm hook refuses headless/autoBoth (PM3 stays engine-only) and NEVER writes
+  // llmCommander into __FIELD._launchOpts, so the relaunch button (below) cannot silently re-arm.
+  if (typeof fldLlmArmOnLaunch === "function") fldLlmArmOnLaunch();
   try { if (typeof closeSheet === "function") closeSheet(); } catch (e) {}
   try { var ov = document.getElementById("overlay"); if (ov) ov.classList.add("hidden"); } catch (e) {}
   if (__FIELD.rendererKind === "none") return; // headless (probe)

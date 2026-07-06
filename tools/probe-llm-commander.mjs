@@ -45,7 +45,11 @@ const SETUP = `(() => {
     if (window.WebSocket) { var W0 = window.WebSocket; window.WebSocket = function(u){ NET.count++; NET.calls.push('ws:' + String(u).slice(0,80)); return new W0(u); }; }
   })();
 
-  function clean(){ __FIELD._t27MockPlan = null; __FIELD._llmOff = false; __FIELD.llmCommander = false; __FIELD._t27 = null; }
+  function clean(){ __FIELD._t27MockPlan = null; __FIELD._llmOff = false; __FIELD.llmCommander = false; __FIELD._t27 = null;
+    // slice 2: force the connector unconfigured so no leg can reach the network path (armed legs use the mock;
+    // the async branch is only reached when a real connector is live, which the probe never arms).
+    try { if (typeof fldLlmConnClear === 'function') fldLlmConnClear(); } catch(e){}
+    try { localStorage.removeItem('cw_llm_conn'); localStorage.removeItem('cw_llm_key'); } catch(e){} }
   function csUnits(){ var out = []; for (var i=0;i<__FIELD.units.length;i++){ var u=__FIELD.units[i]; if (u.side==='CS' && u.alive && u.ai) out.push(u); } return out; }
   function ordersJSON(side){ var out = []; for (var i=0;i<__FIELD.units.length;i++){ var u=__FIELD.units[i];
     if (u.side!==side) continue; out.push({ id:u.id, alive:u.alive, x:u.x, z:u.z, men:u.men, state:u.state, formation:u.formation, order:u.order }); }
@@ -92,18 +96,20 @@ const SETUP = `(() => {
     if (typeof fldLaunchSandbox !== 'function') return JSON.stringify({ ok:false, fatal:'engine missing' });
     G.settings = G.settings || {}; G.settings.gfx = 'classic';
 
-    step('CONTRACT: T27 seam functions + constants + dispatch placement + source hygiene', function(){
-      var fns = [fldLlmAiUnit, fldLlmDigest, fldLlmValidatePlan, fldLlmState, fldLlmRequestPlan, fldLlmCycle, fldLlmConfigured, fldLlmSide, fldLlmBand, fldLlmCompass];
+    step('CONTRACT: T27 seam functions + constants + dispatch placement + source hygiene (T27 stays network-free)', function(){
+      var fns = [fldLlmAiUnit, fldLlmDigest, fldLlmValidatePlan, fldLlmState, fldLlmRequestPlan, fldLlmCycle, fldLlmInstall, fldLlmConfigured, fldLlmSide, fldLlmBand, fldLlmCompass];
       for (var i=0;i<fns.length;i++) if (typeof fns[i] !== 'function') throw new Error('T27 function ' + i + ' missing');
       if (FLD.LLM_PLAN_INTERVAL !== 25) throw new Error('LLM_PLAN_INTERVAL != 25: ' + FLD.LLM_PLAN_INTERVAL);
       if (FLD.LLM_BAND_MEN !== 250) throw new Error('LLM_BAND_MEN != 250');
-      if (fldLlmConfigured() !== false) throw new Error('slice-1 fldLlmConfigured must be false (no connector exists)');
+      clean();
+      if (fldLlmConfigured() !== false) throw new Error('fldLlmConfigured must be false when the connector is unconfigured (probe clean state)');
       var ai = String(fldAiUnit), iL = ai.indexOf('llmCommander'), iD = ai.indexOf('fldAiDefender');
       if (iL < 0 || iD < 0 || iL > iD) throw new Error('dispatch line not above fldAiDefender (llm@' + iL + ' def@' + iD + ')');
+      // T27 stays network-free by construction: the digest->plan network lives ONLY in T28 (fldLlmDispatchAsync).
       var src = fns.map(String).join('');
       if (/fldRng/.test(src)) throw new Error('T27 touches fldRng');
       if (/playerCharge/.test(src)) throw new Error('T27 references playerCharge');
-      if (/fetch\\(|XMLHttpRequest|WebSocket|sendBeacon|EventSource/.test(src)) throw new Error('network primitive in slice-1 T27 source');
+      if (/fetch\\(|XMLHttpRequest|WebSocket|sendBeacon|EventSource/.test(src)) throw new Error('network primitive in T27 source (must live in T28)');
       return { fns: fns.length, interval: 25, dispatchAboveDefender: true, srcClean: true }; });
 
     step('DIGEST PURITY: pure function of state — identical ×2, creates no _t27, writes nothing', function(){
@@ -315,7 +321,125 @@ const SETUP = `(() => {
       if (!a.t27 || a.t27.applied < 2) throw new Error('armed seam did not command: ' + JSON.stringify(a.t27));
       return { applied: a.t27.applied, cycles: a.t27.cycles }; });
 
-    step('ZERO NETWORK: 0 fetch/XHR/WebSocket/beacon calls across every leg (armed legs included)', function(){
+    // ===================== SLICE 2 — the connector (T28) =====================
+
+    step('T28 CONTRACT: connector functions + adapters + the re-verified preset table', function(){
+      var fns = [fldLlmConn, fldLlmConnConfigured, fldLlmConnSet, fldLlmConnClear, fldLlmConnClearKey, fldLlmConnReload, fldLlmEnabledForBattle, fldLlmDispatchAsync, fldLlmArmOnLaunch, fldLlmConnMenu, fldLlmInjectMenuButton];
+      for (var i=0;i<fns.length;i++) if (typeof fns[i] !== 'function') throw new Error('T28 function ' + i + ' missing');
+      // the six locked providers, adapters, and the $0-verified endpoints (law §2.2)
+      var want = { openrouter:['A','https://openrouter.ai/api/v1'], groq:['A','https://api.groq.com/openai/v1'],
+        ollama:['A','http://localhost:11434/v1'], lmstudio:['A','http://localhost:1234/v1'],
+        anthropic:['B','https://api.anthropic.com'], custom:['A',''] };
+      if (typeof LLM_PRESETS !== 'object') throw new Error('LLM_PRESETS missing');
+      for (var k in want) { var p = LLM_PRESETS[k]; if (!p) throw new Error('preset missing: ' + k);
+        if (p.adapter !== want[k][0]) throw new Error(k + ' adapter ' + p.adapter + ' != ' + want[k][0]);
+        if (p.baseUrl !== want[k][1]) throw new Error(k + ' baseUrl ' + p.baseUrl + ' != ' + want[k][1]); }
+      if (!LLM_PRESETS.anthropic.needsKey || LLM_PRESETS.ollama.needsKey) throw new Error('needsKey wrong (anthropic paid, ollama local)');
+      // the async source references fetch (the ONLY network in the feature) + the Anthropic browser opt-in header
+      var d = String(fldLlmDispatchAsync);
+      if (!/fetch\\(/.test(d)) throw new Error('fldLlmDispatchAsync has no fetch');
+      if (!/anthropic-dangerous-direct-browser-access/.test(String(_llmReqB))) throw new Error('Anthropic browser opt-in header missing');
+      return { fns: fns.length, presets: Object.keys(LLM_PRESETS).length }; });
+
+    step('CONFIG STATE: unconfigured→configured→enabled→cleared drives fldLlmConfigured + never arms/never fetches', function(){
+      clean();
+      if (fldLlmConfigured() !== false || fldLlmEnabledForBattle() !== false) throw new Error('clean state must be unconfigured+disabled');
+      // a key-less OpenAI-compatible custom endpoint = configured once model+baseUrl set (no network)
+      fldLlmConnSet({ provider:'custom', baseUrl:'http://127.0.0.1:9/v1', model:'test-model' });
+      if (fldLlmConfigured() !== true) throw new Error('custom+model+baseUrl should be configured');
+      if (fldLlmEnabledForBattle() !== false) throw new Error('configured but not enabled must not be battle-enabled');
+      fldLlmConnSet({ provider:'custom', baseUrl:'http://127.0.0.1:9/v1', model:'test-model', enabled:true });
+      if (fldLlmEnabledForBattle() !== true) throw new Error('configured+enabled should be battle-enabled');
+      // a paid provider without a key is NOT configured
+      fldLlmConnSet({ provider:'anthropic', model:'claude-haiku-4-5', enabled:true });
+      if (fldLlmConfigured() !== false) throw new Error('anthropic without a key must be unconfigured');
+      fldLlmConnSet({ provider:'anthropic', model:'claude-haiku-4-5', key:'sk-ant-x', enabled:true });
+      if (fldLlmConfigured() !== true) throw new Error('anthropic with a key should be configured');
+      fldLlmConnClearKey();
+      if (fldLlmConfigured() !== false) throw new Error('clear-key must drop configured back to false');
+      fldLlmConnClear();
+      if (fldLlmConn() !== null || fldLlmConfigured() !== false) throw new Error('clear must null the connection');
+      if (NET.count !== 0) throw new Error('config path fired network: ' + JSON.stringify(NET.calls));
+      return { ok:true }; });
+
+    step('KEY LEAK: a device key never enters gor_save / G.settings / a C4 export (law §2.3/§6)', function(){
+      clean();
+      var CANARY = 'sk-LEAKCANARY-abc123';
+      fldLlmConnSet({ provider:'groq', model:'llama-3.1-8b-instant', key:CANARY, enabled:true });
+      // it DID persist device-only (so the feature works)…
+      var kv = ''; try { kv = localStorage.getItem('cw_llm_key') || ''; } catch(e){}
+      if (kv.indexOf(CANARY) < 0) throw new Error('key did not persist to its device-only cw_llm_key');
+      // …but it must NEVER reach G.settings, the save envelope, or a shared scenario
+      if (JSON.stringify(G.settings || {}).indexOf(CANARY) >= 0) throw new Error('key leaked into G.settings');
+      if (JSON.stringify(G.settings || {}).indexOf('cw_llm') >= 0) throw new Error('connector config leaked into G.settings');
+      if (typeof saveLocal === 'function') { try { saveLocal(); } catch(e){} }
+      var gs = ''; try { gs = localStorage.getItem('gor_save') || ''; } catch(e){}
+      if (gs.indexOf(CANARY) >= 0) throw new Error('key leaked into gor_save');
+      if (gs.indexOf('cw_llm') >= 0 || gs.indexOf('llmCommander') >= 0) throw new Error('connector state leaked into gor_save');
+      if (typeof fldCustomTemplateJson === 'function') { var t = ''; try { t = fldCustomTemplateJson().json || ''; } catch(e){}
+        if (t.indexOf(CANARY) >= 0 || t.indexOf('cw_llm') >= 0) throw new Error('key leaked into a C4 export'); }
+      clean();
+      return { canaryPersistedDeviceOnly:true, noLeak:true }; });
+
+    step('ARM HOOK + TRAP 1 (_launchOpts) + TRAP 2 (playerSide-before-arm): live config arms T27 safely, PM3 stays neutral', function(){
+      clean();
+      // configure + enable a key-less local endpoint (no network on launch; the sim is never stepped here)
+      fldLlmConnSet({ provider:'custom', baseUrl:'http://127.0.0.1:9/v1', model:'m', enabled:true });
+      // live US launch → armed, aiming at the AI (CS) army; DEPLOY/paused so nothing steps, zero fetch
+      G.campaign = null; fldLaunchSandbox({ renderer:'2d', scenario:'bullrun1', seed:1, fog:false, playerSide:'US', autoPause:false });
+      if (__FIELD.llmCommander !== true) throw new Error('live enabled config did not arm');
+      if (__FIELD.playerSide !== 'US') throw new Error('playerSide not stamped US at arm time');
+      if (typeof fldLlmSide === 'function' && fldLlmSide() !== 'CS') throw new Error('TRAP 2: LLM aimed at ' + fldLlmSide() + ', not the AI (CS) army');
+      // TRAP 1: llmCommander must NOT be in the replayed launch spec (the relaunch button Object.assigns it)
+      if (JSON.stringify(__FIELD._launchOpts || {}).indexOf('llmCommander') >= 0) throw new Error('TRAP 1: llmCommander persisted into _launchOpts');
+      var lo = __FIELD._launchOpts;
+      // CS launch → LLM aims at US (the AI side) — proves the human side is never targeted
+      fldExit(true); __FIELD.llmCommander = false; __FIELD._t27 = null;
+      G.campaign = null; fldLaunchSandbox({ renderer:'2d', scenario:'bullrun1', seed:1, fog:false, playerSide:'CS', autoPause:false });
+      if (typeof fldLlmSide === 'function' && fldLlmSide() !== 'US') throw new Error('TRAP 2 (CS): LLM aimed at ' + fldLlmSide() + ', not the AI (US) army');
+      // now DISABLE the connector and REPLAY the prior launch spec (the exact relaunch-button shape) → must NOT re-arm
+      fldExit(true); __FIELD.llmCommander = false; __FIELD._t27 = null; fldLlmConnClear();
+      G.campaign = null; fldLaunchSandbox(Object.assign({}, lo, { seed: 8 }));
+      if (__FIELD.llmCommander) throw new Error('TRAP 1: relaunch of the stored opts re-armed after the connector was disabled');
+      // PM3 double lock: an enabled connector must NEVER arm a headless/autoBoth (auto-resolve) launch
+      fldExit(true); fldLlmConnSet({ provider:'custom', baseUrl:'http://127.0.0.1:9/v1', model:'m', enabled:true });
+      G.campaign = null; fldLaunchSandbox({ renderer:'none', scenario:'bullrun1', seed:1, fog:false, autoBoth:true });
+      if (__FIELD.llmCommander) throw new Error('PM3: arm hook armed a headless autoBoth launch');
+      fldExit(true); clean();
+      if (NET.count !== 0) throw new Error('arm-hook legs fired network: ' + JSON.stringify(NET.calls));
+      return { armed:true, trap1:true, trap2:true, pm3Neutral:true }; });
+
+    step('PANEL A11Y + zero-network UI (law §6/§7.4): the settings panel is AA-structured and fires no network', function(){
+      clean();
+      fldLlmConnMenu();
+      var pad = document.getElementById('sheetPad'); if (!pad) throw new Error('sheetPad missing');
+      var provGroup = document.getElementById('llmProvGroup');
+      if (!provGroup || provGroup.getAttribute('role') !== 'group' || !provGroup.getAttribute('aria-labelledby')) throw new Error('provider group not role=group+aria-labelledby');
+      var cards = pad.querySelectorAll('[data-lprov]');
+      if (cards.length !== 6) throw new Error('expected 6 provider cards, got ' + cards.length);
+      for (var i=0;i<cards.length;i++) if (cards[i].getAttribute('aria-pressed') == null) throw new Error('provider card missing aria-pressed');
+      var enable = document.getElementById('llmEnable');
+      if (!enable || enable.getAttribute('role') !== 'switch' || enable.getAttribute('aria-checked') == null) throw new Error('enable not role=switch+aria-checked');
+      var summ = document.getElementById('llmSummary'); if (!summ) throw new Error('aria-live summary missing');
+      var modelInput = document.getElementById('llmModel'); if (!modelInput) throw new Error('model input missing');
+      // every text/password input must have an associated <label for=…>
+      var inputs = pad.querySelectorAll('input'); for (var j=0;j<inputs.length;j++){ var id = inputs[j].id;
+        if (!id || !pad.querySelector('label[for="' + id + '"]')) throw new Error('input ' + id + ' has no <label for>'); }
+      // exercise the UI: switch to Anthropic (adds a key field + browser opt-in), toggle enable, type a key, clear it, save
+      var anthCard = pad.querySelector('[data-lprov="anthropic"]'); if (anthCard) anthCard.click();
+      if (!document.getElementById('llmKey')) throw new Error('anthropic did not surface a key field');
+      if (!document.getElementById('llmBrowserOptIn')) throw new Error('anthropic did not surface the browser opt-in');
+      var en2 = document.getElementById('llmEnable'); if (en2) en2.click();
+      var kf = document.getElementById('llmKey'); if (kf) { kf.value = 'sk-ant-UICANARY'; }
+      var ck = document.getElementById('llmClearKey'); if (ck) ck.click();
+      var sv = document.getElementById('llmSave'); if (sv) sv.click();
+      // saving cleared-key anthropic leaves it unconfigured (no key) — and none of this touched the network
+      if (fldLlmConfigured() !== false) throw new Error('cleared-key anthropic should be unconfigured after save');
+      clean();
+      if (NET.count !== 0) throw new Error('panel UI fired network: ' + JSON.stringify(NET.calls));
+      return { cards:6, aa:true, uiNoNetwork:true }; });
+
+    step('ZERO NETWORK: 0 fetch/XHR/WebSocket/beacon calls across every leg (armed legs, config path, and the UI panel)', function(){
       if (NET.count !== 0) throw new Error('network calls observed: ' + JSON.stringify(NET.calls));
       return { count: 0 }; });
 
