@@ -264,31 +264,42 @@ const SETUP = `(() => {
       __FIELD._armsOff=false;
       return { winner:aOff.w, identical:true, steps:aOff.steps }; });
 
-    step('BYTE-IDENTITY (the art/cav scenario): arms/badges-OFF bullrun1 AI-vs-AI == the committed CS 7/8 baseline (the base.html ARM melee table is honoured, NOT 1.0)', function(){
+    step('BYTE-IDENTITY (the art/cav scenario): arms/badges-OFF bullrun1 AI-vs-AI == the committed CS 8/8 full-row baseline (the base.html ARM melee table is honoured, NOT 1.0)', function(){
       // R-6 (D104): badges is a default-ON optional combat layer that legitimately shifts bullrun1 (its assigned
-      // CS stonewalls -> CS 8/8). This guard isolates the ARMS layer's byte-identity, so badges is OFF here too -> CS 7/8.
-      function run(seed){ __FIELD._officersOff=true; __FIELD._logisticsOff=true; __FIELD._armsOff=true; __FIELD._badgesOff=true; G.settings.tacticalFog=false; fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:seed, fog:false}); __FIELD.phase='battle'; __FIELD.paused=false; var n=0; while(__FIELD.phase==='battle'&&n<20000){ fldSimStep(0.05); n++; } return __FIELD.winner; }
-      // PER-SEED winner vector (D268 panel sharpening): pin WHICH seeds go CS, not just the count, so two
-      // compensating opposite-direction seed flips can never net back to 7 and false-green the tooth.
-      var expect={1:'CS',7:'CS',21:'CS',42:'CS',55:'US',101:'CS',303:'CS',909:'CS'};
+      // CS stonewalls -> CS 8/8). This guard isolates the ARMS layer's byte-identity, so badges is OFF here too.
+      function run(seed){ __FIELD._officersOff=true; __FIELD._logisticsOff=true; __FIELD._armsOff=true; __FIELD._badgesOff=true; G.settings.tacticalFog=false; fldLaunchSandbox({renderer:'none', scenario:'bullrun1', autoBoth:true, seed:seed, fog:false}); __FIELD.phase='battle'; __FIELD.paused=false; var n=0; while(__FIELD.phase==='battle'&&n<20000){ fldSimStep(0.05); n++; } return { w:__FIELD.winner, us:strength('US'), cs:strength('CS'), steps:n }; }
+      // EXACT FULL-ROW pin (winner/us/cs/steps per seed — the D278 probe-presets style). The old 7/8 vector kept
+      // seed 55's US hold as a knife-edge discriminator; with the vector now uniform CS-timeout, winner-only would
+      // lose byte-identity sensitivity to the tooth's target bug (the ARM melee table silently dropping to 1.0
+      // perturbs trajectories -> strengths), so the strengths themselves are pinned.
+      var expect={1:{w:'CS',us:16263,cs:10673,steps:9600},7:{w:'CS',us:16231,cs:10689,steps:9600},21:{w:'CS',us:16511,cs:10951,steps:9600},42:{w:'CS',us:16475,cs:11148,steps:9600},55:{w:'CS',us:16375,cs:10682,steps:9600},101:{w:'CS',us:16029,cs:10323,steps:9600},303:{w:'CS',us:16515,cs:11215,steps:9600},909:{w:'CS',us:16256,cs:11092,steps:9600}};
       var seeds=[1,7,21,42,55,101,303,909], cs=0, misses=[];
-      for(var i=0;i<seeds.length;i++){ var w=run(seeds[i]); if(w==='CS') cs++; if(w!==expect[seeds[i]]) misses.push('s'+seeds[i]+'='+w+' (expect '+expect[seeds[i]]+')'); }
+      for(var i=0;i<seeds.length;i++){ var r=run(seeds[i]), e=expect[seeds[i]];
+        if(r.w==='CS') cs++;
+        if(r.w!==e.w||r.us!==e.us||r.cs!==e.cs||r.steps!==e.steps) misses.push('s'+seeds[i]+'='+r.w+'|'+r.us+'|'+r.cs+'|'+r.steps+' (expect '+e.w+'|'+e.us+'|'+e.cs+'|'+e.steps+')'); }
       __FIELD._armsOff=false; __FIELD._badgesOff=false;
-      // arms OFF must reproduce the committed bare bullrun balance EXACTLY (CS 7/8, per-seed vector pinned). A miss
-      // means the arms-OFF path is not byte-identical — e.g. the base.html ARM melee table (art 0.40 / cav 1.05) was
-      // dropped to 1.0 (the bug the asymmetric melee fallback fixes). bullrun1 FIELDS art+cav, so it exercises it.
-      // BASELINE PROVENANCE (E56 -> D268): committed CS 5/8 through D251; E49b first-break straggler-shedding (D261,
-      // universal both sides) moved the bare-path outcome to CS 7/8 — DELIBERATELY re-anchored after the D268
-      // attribution A/B (.tmp/ab-e56.mjs, 11-seed union: E48 zero effect with the suppression wrapper demonstrably
-      // live; E49a zero — surrender never fires here, captured/surrenderEverCount 0 on every row; suppressing E49b
-      // ALONE reproduces the D251 rows byte-identically). The pin now encodes the bare path INCLUDING universal E49b:
-      // a future drop back toward 5/8 signals an E49b regression (SHED_FRAC/first-break behavior), NOT a restoration
-      // of the arm-melee-table bug — and any D74-approved E49b retune will legitimately red this tooth. Either way,
-      // NEVER re-pin silently: a future miss needs its own attribution A/B against the last-green deliverable
-      // (git show <last-green>:civil_war_generals.html).
-      if(misses.length) throw new Error('arms-OFF bullrun per-seed baseline broken (committed CS 7/8, D268 vector): '+misses.join(', '));
-      if(cs!==7) throw new Error('arms-OFF bullrun balance != the committed 7/8 (byte-identity broken): '+cs+'/8');
-      return { armsOffCS:cs+'/8', perSeedVector:'pinned' }; });
+      // arms OFF must reproduce the committed bare bullrun rows EXACTLY. A miss means the arms-OFF path is not
+      // byte-identical — e.g. the base.html ARM melee table (art 0.40 / cav 1.05) was dropped to 1.0 (the bug the
+      // asymmetric melee fallback fixes). bullrun1 FIELDS art+cav, so it exercises it.
+      // BASELINE PROVENANCE (E56 -> D268 -> the 2026-07-06 batch checkpoint): committed CS 5/8 through D251;
+      // E49b first-break straggler-shedding (D261) moved it to CS 7/8 with US on 55 — deliberately re-anchored in
+      // D268 (.tmp/ab-e56.mjs attribution). The Aaron-locked D272/D273 accurate-input cautious posture (bullrun1
+      // assaultDoctrine:"cautious" + cautious-v2) then flipped seed 55 back -> CS 8/8, ALL full-clock timeout holds —
+      // measured by the D278 attribution A/B (.tmp/ab-e60.mjs: pre-D273 deliverable 629f6fa reads the D268 vector
+      // verbatim, US on 55 @5012 steps; HEAD reads these exact rows; _parityOff full-row identical -> T26 attacker
+      // parity is EXACTLY ZERO here, cautious-gated) and re-anchored at this checkpoint (D279) when the tooth,
+      // not in D273's or D278's focused sets, surfaced red in the full battery. probe-presets' layers-OFF tooth
+      // pins this same config independently (D278). A future drop toward 5/8 still signals an E49b regression;
+      // a strength/step drift with winners intact signals a trajectory-level change (the melee-table class); any
+      // D74-approved retune of E49b or the cautious band legitimately reds this tooth. Either way, NEVER re-pin
+      // silently: a future miss needs its own attribution A/B against the last-green deliverable
+      // (git show <last-green>:civil_war_generals.html). NOTE (panel sharpening, D279): the us/cs strength integers
+      // are engine-FP-trajectory values verified on the documented probe environment (the 8GB Mac) — a CROSS-PLATFORM
+      // strength-only drift with winners+steps intact is triaged as environment (V8/CPU float rounding), not a
+      // melee-table regression.
+      if(misses.length) throw new Error('arms-OFF bullrun full-row baseline broken (committed CS 8/8, D279 rows): '+misses.join(', '));
+      if(cs!==8) throw new Error('arms-OFF bullrun balance != the committed 8/8 (byte-identity broken): '+cs+'/8');
+      return { armsOffCS:cs+'/8', perSeedVector:'full-row pinned' }; });
 
     step('REDUCE-MOTION honored: the battery/trooper draw helpers emit NO muzzle-flash / canister-cone / charge-trail when reduceMotion', function(){
       __FIELD.arms=true;

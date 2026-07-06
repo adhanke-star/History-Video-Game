@@ -104,6 +104,32 @@ function sceneScript(renderer, scenario, seed, mode) {
           var hu = __FIELD.units[hi]; if (!hu.alive) continue;
           if (hu.side !== ps2 && typeof fldVisible === 'function' && !fldVisible(ps2, hu)) hidden.push(hu);
         }
+        // Sim-arc geometry-drift repair (D279 batch checkpoint): after the D273/D275 Shiloh attacker arc the
+        // 200-step sampled moment can legitimately contain NO naturally-hidden enemy (hidden=0 red, both teeth
+        // starved). The gate test below is already geometry-INDEPENDENT by design (it silences every unit and
+        // force-fires only hidden ones on this throwaway page), so manufacture the hidden subject honestly:
+        // relocate the farthest living enemy to the field corner farthest from every player unit and recompute
+        // the vis map. The assertions are UNTOUCHED — if fldVisible still sees a corner-isolated enemy, the fog
+        // LOS itself is broken and the meaningful-scene tooth reds exactly as before.
+        if (!hidden.length) {
+          var own = [], foes = [];
+          for (var qi = 0; qi < __FIELD.units.length; qi++) { var qu = __FIELD.units[qi]; if (!qu.alive) continue; (qu.side === ps2 ? own : foes).push(qu); }
+          if (own.length && foes.length && typeof fldComputeVisibility === 'function') {
+            var corners = [[30,30],[FLD.FIELD_W-30,30],[30,FLD.FIELD_H-30],[FLD.FIELD_W-30,FLD.FIELD_H-30]];
+            var bestC = corners[0], bestD = -1;
+            for (var ci = 0; ci < corners.length; ci++) { var dmin = 1e9;
+              for (var oi = 0; oi < own.length; oi++) { var dx = corners[ci][0]-own[oi].x, dz = corners[ci][1]-own[oi].z; var dd = dx*dx+dz*dz; if (dd < dmin) dmin = dd; }
+              if (dmin > bestD) { bestD = dmin; bestC = corners[ci]; } }
+            var far = foes[0], fd = -1;
+            for (var fi = 0; fi < foes.length; fi++) { var dmin2 = 1e9;
+              for (var oj = 0; oj < own.length; oj++) { var dx2 = foes[fi].x-own[oj].x, dz2 = foes[fi].z-own[oj].z; var dd2 = dx2*dx2+dz2*dz2; if (dd2 < dmin2) dmin2 = dd2; }
+              if (dmin2 > fd) { fd = dmin2; far = foes[fi]; } }
+            far.x = bestC[0]; far.z = bestC[1];
+            fldComputeVisibility();
+            for (var h2 = 0; h2 < __FIELD.units.length; h2++) { var hv = __FIELD.units[h2]; if (!hv.alive) continue;
+              if (hv.side !== ps2 && !fldVisible(ps2, hv)) hidden.push(hv); }
+          }
+        }
         // CONTROLLED GATE TEST (geometry-independent): silence EVERY unit, then force ONLY the hidden
         // enemies to "fire". Under fog the gate must yield ZERO smoke; lifting fog (the very same units,
         // now visible) must yield smoke — so the assertion is not vacuous and a gate regression (a dropped

@@ -239,7 +239,7 @@ const DOM = `(() => {
   const pageerrors = []; page.on('pageerror', e => pageerrors.push(String(e.message)));
   let result = { ok:false };
   try {
-    await page.goto(probe, { waitUntil:'load', timeout:60000 });
+    await page.goto(probe, { waitUntil:'domcontentloaded', timeout:120000 });   // slow-Mac: the 'load' wait stalls while embedded assets stream (the documented gotcha, D233 class; fixed at the D279 batch checkpoint); inline scripts are all the probe needs
     await sleep(500);
     result = JSON.parse(await page.evaluate(SETUP));
     const dom = JSON.parse(await page.evaluate(DOM));
