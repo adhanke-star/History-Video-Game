@@ -1,7 +1,14 @@
 #!/usr/bin/env node
 import "./guard-probe-browser.mjs";
-// Focused H0 main-menu probe: modern command shell, responsive layout,
-// keyboard focus, injected menu tools, saved-campaign War Department path.
+// Focused H0 main-menu probe — D282 re-anchor for the Aaron-locked main-menu
+// redesign (docs/design/main-menu-redesign-design.md §5). Covers: the full-bleed
+// somber-static backdrop + provenance-plate coexistence (lock 3), the
+// campaign-chain tracker two-state (SR summary / overflow rail / no-save
+// suppression), the E61 take-command nudge two-state, the Field Operations
+// group around the #gnFree injection anchor, the extended six-shell token pin
+// (green/red/muted + brass/focus), the D74 no-write tripwire on the generated
+// module region, responsive layout, keyboard focus, injected menu tools, and
+// the saved-campaign War Department path.
 import { chromium } from 'playwright-core';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -93,8 +100,69 @@ async function inspectMenu(page, viewportName) {
     if (!R.checks.noSerifMenuFont) fail('H0 CSS still carries broadsheet serif font stack');
     R.checks.hasGridOverlay = cssText.indexOf('repeating-linear-gradient') >= 0;
     if (!R.checks.hasGridOverlay) fail('modern command-grid texture missing');
-    R.checks.noSwordGlyphCards = all('.h0-menu .h0-card-icon').every(el => (el.textContent || '').trim() !== '\u2694');
+    R.checks.noSwordGlyphCards = all('.h0-menu .h0-card-icon').every(el => (el.textContent || '').trim() !== '⚔');
     if (!R.checks.noSwordGlyphCards) fail('H0 cards still depend on the old sword glyph');
+
+    // D282 lock 3 / §5 tooth 1: the full-bleed decorative backdrop coexists with a
+    // still-rendering INFORMATIVE provenance plate (img[alt] + legible figcaption).
+    const backdrop = sel('.h0-backdrop[aria-hidden="true"]');
+    R.checks.backdropPresent = !!backdrop;
+    if (!backdrop) fail('missing .h0-backdrop[aria-hidden="true"] full-bleed layer');
+    else {
+      const br = rect(backdrop), mr0 = rect(menu);
+      R.checks.backdropFullBleed = Math.abs(br.x - mr0.x) <= 2 && Math.abs(br.right - mr0.right) <= 2 && br.h >= mr0.h - 4;
+      if (!R.checks.backdropFullBleed) fail('backdrop does not cover the menu (inset:0 contract)');
+    }
+    const plateImg = sel('.h0-hero-figure img.h0-hero-img');
+    const plateCap = sel('.h0-hero-figure figcaption');
+    R.checks.provenancePlate = !!(plateImg && (plateImg.getAttribute('alt') || '').trim().length > 10
+      && plateCap && (plateCap.textContent || '').trim().length > 10 && rect(plateCap).h > 8);
+    if (!R.checks.provenancePlate) fail('provenance plate (img[alt] + legible figcaption) missing or empty');
+
+    // §5 tooth 2 (no-save half): tracker suppressed with no campaign save.
+    R.checks.noChainRailNoSave = !sel('.h0-chainrail');
+    if (!R.checks.noChainRailNoSave) fail('chain tracker rendered in the no-save state');
+    // §3 (no-save half): E61 nudge absent with no campaign save.
+    R.checks.noNudgeNoSave = !sel('.h0-nudge');
+    if (!R.checks.noNudgeNoSave) fail('E61 nudge card rendered in the no-save state');
+
+    // Field Operations group: labeled group wraps the #gnFree injection anchor;
+    // internally scrollable so 6+ injected buttons never blow the viewport.
+    const fieldops = sel('.h0-fieldops[role="group"]');
+    const fieldopsList = sel('.h0-fieldops-list');
+    R.checks.fieldOpsGroup = !!(fieldops && fieldops.getAttribute('aria-labelledby') === 'h0FieldOpsTitle'
+      && sel('#h0FieldOpsTitle') && fieldopsList && fieldopsList.contains(sel('#gnFree'))
+      && /auto|scroll/.test(getComputedStyle(fieldopsList).overflowY));
+    if (!R.checks.fieldOpsGroup) fail('Field Operations group missing, unlabeled, missing #gnFree, or not scrollable');
+    // D282 shot-readback regression tooth: a scroll-capped GRID froze Chrome button rows at
+    // min-height so 3-line decks painted over the next button. Every button must fit its content.
+    if (fieldopsList) {
+      const clipped = Array.from(fieldopsList.querySelectorAll('.gn-btn'))
+        .filter(b => b.scrollHeight > b.getBoundingClientRect().height + 3)
+        .map(b => b.id || b.className);
+      R.checks.fieldOpsButtonsFitContent = clipped.length === 0;
+      if (!R.checks.fieldOpsButtonsFitContent) fail('field-ops buttons clip their content: ' + clipped.join(','));
+    }
+
+    // Motion locks: nothing loops anywhere in the menu CSS; the somber
+    // (casualty-photo) suppression rule ships; entrance animation is one-shot <=400ms.
+    R.checks.noLoopingAnimation = cssText.indexOf('infinite') < 0;
+    if (!R.checks.noLoopingAnimation) fail('menu CSS contains a looping animation');
+    R.checks.somberSuppressionRule = cssText.indexOf('.h0-menu.h0-somber') >= 0;
+    if (!R.checks.somberSuppressionRule) fail('missing .h0-somber no-motion-over-the-dead suppression rule');
+    const entrance = cssText.match(/animation:h0Enter ([0-9.]+)s/);
+    R.checks.entranceBudget = !!entrance && parseFloat(entrance[1]) <= 0.4;
+    if (!R.checks.entranceBudget) fail('entrance animation missing or exceeds the 400ms one-shot budget');
+
+    // High-contrast mode force-hides the backdrop entirely (pure CSS, restore after).
+    if (backdrop) {
+      const prevHC = document.documentElement.getAttribute('data-a11y-contrast');
+      document.documentElement.setAttribute('data-a11y-contrast', 'high');
+      R.checks.highContrastHidesBackdrop = getComputedStyle(backdrop).display === 'none';
+      if (prevHC == null) document.documentElement.removeAttribute('data-a11y-contrast');
+      else document.documentElement.setAttribute('data-a11y-contrast', prevHC);
+      if (!R.checks.highContrastHidesBackdrop) fail('high-contrast mode does not hide the backdrop');
+    }
 
     ['#gnNewUS', '#gnNewCS', '#gnFree', '#gnSettings', '#gnLoad'].forEach(id => {
       if (!sel(id)) fail('missing core button ' + id);
@@ -102,10 +170,15 @@ async function inspectMenu(page, viewportName) {
     ['#fldSandboxBtn', '#fldPresetBtn', '#fldCustomBuilderBtn', '#gnPlayStyle', '#gnA11y', '#gnHelp', '#gnTour'].forEach(id => {
       if (!sel(id)) fail('missing injected menu tool ' + id);
     });
+    // The T0->T1->T2->T6->T11 sibling chain must land INSIDE the Field Operations list
+    // (same #gnFree anchor, same parentNode/nextSibling mechanics — §2 contract).
+    const fieldTools = ['#fldSandboxBtn', '#fldPresetBtn', '#fldCustomBuilderBtn'];
+    R.checks.injectedInsideFieldOps = !!fieldopsList && fieldTools.every(id => { const b = sel(id); return b && fieldopsList.contains(b); });
+    if (!R.checks.injectedInsideFieldOps) fail('injected field tools did not cluster inside the Field Operations group');
     const injected = all('.h0-menu .gn-btn:not(.h0-card)');
     const oldGlyphs = injected
       .map(btn => ((btn.querySelector('.gn-hl') || {}).textContent || '').trim())
-      .filter(txt => /^[\u2694\u2699\u2605\u267f]/.test(txt));
+      .filter(txt => /^[⚔⚙★♿]/.test(txt));
     R.checks.injectedLabelsPolished = injected.length > 0 && oldGlyphs.length === 0 && injected.every(btn => !!btn.querySelector('.h0-injected-icon'));
     if (!R.checks.injectedLabelsPolished) fail('injected menu labels still use old visible glyph treatment');
 
@@ -114,14 +187,19 @@ async function inspectMenu(page, viewportName) {
       const bg = getComputedStyle(panel).backgroundImage + '|' + getComputedStyle(panel).backgroundColor;
       R.checks.darkCommandPanel = /rgb|linear-gradient/.test(bg) && !/246, 235, 215/.test(bg) && !/245, 237, 214/.test(bg);
       if (!R.checks.darkCommandPanel) fail('panel appears parchment/light instead of command-dark');
+      // War Room contrast architecture: copy sits on near-opaque (>=.90) dark glass.
+      const alphas = (cssText.match(/\.h0-panel\{background:linear-gradient\(180deg,rgba\(\d+,\d+,\d+,(\.\d+)\),rgba\(\d+,\d+,\d+,(\.\d+)\)/) || []).slice(1).map(parseFloat);
+      R.checks.panelNearOpaque = alphas.length === 2 && alphas.every(a => a >= 0.90);
+      if (!R.checks.panelNearOpaque) fail('panel dark-glass alpha dropped below the .90 contract: ' + JSON.stringify(alphas));
     }
 
-    // S03+S11 (D232): the menu shares the six-shell accent system — green/red/muted match the values the
-    // other five H0 shells standardized on (the old #4f8064/#aa5148 pair visibly drifted on the first screen).
+    // S03+S11 (D232) extended by D282 §5: the menu pins the FULL six-shell accent canon —
+    // green/red/muted plus brass #d8b458 and focus #ffe27a — as LITERAL token values.
     const mcs = getComputedStyle(menu);
     const tok = p => (mcs.getPropertyValue(p) || '').trim().toLowerCase();
-    R.checks.sharedAccentTokens = tok('--h0-green') === '#5f9273' && tok('--h0-red') === '#b35a50' && tok('--h0-muted') === '#c5cdc3';
-    if (!R.checks.sharedAccentTokens) fail('menu accent tokens drift from the shared H0 palette: green=' + tok('--h0-green') + ' red=' + tok('--h0-red') + ' muted=' + tok('--h0-muted'));
+    R.checks.sharedAccentTokens = tok('--h0-green') === '#5f9273' && tok('--h0-red') === '#b35a50' && tok('--h0-muted') === '#c5cdc3'
+      && tok('--h0-brass') === '#d8b458' && tok('--h0-focus') === '#ffe27a';
+    if (!R.checks.sharedAccentTokens) fail('menu accent tokens drift from the shared H0 canon: green=' + tok('--h0-green') + ' red=' + tok('--h0-red') + ' muted=' + tok('--h0-muted') + ' brass=' + tok('--h0-brass') + ' focus=' + tok('--h0-focus'));
     // S05 (D232): the action grid absorbs the leftover column height (no stranded void in the no-save state).
     const actions = sel('.h0-command .h0-actions');
     if (actions) {
@@ -130,7 +208,7 @@ async function inspectMenu(page, viewportName) {
     } else fail('missing .h0-command .h0-actions');
 
     const mr = rect(menu);
-    const important = all('.h0-panel,.h0-menu .gn-btn,.h0-chip,.h0-hero-figure');
+    const important = all('.h0-panel,.h0-menu .gn-btn,.h0-chip,.h0-hero-figure,.h0-fieldops');
     important.forEach((el, i) => {
       const r = rect(el);
       if (r.w < 24 || r.h < 24) fail('too-small element ' + i + ' ' + (el.id || el.className));
@@ -149,7 +227,7 @@ async function inspectMenu(page, viewportName) {
         if (overlaps(topPanels[i], topPanels[j])) fail('top panels overlap at ' + vp);
       }
     }
-    all('.h0-actions,.gn-classifieds').forEach(group => {
+    all('.h0-actions,.gn-classifieds,.h0-fieldops-list').forEach(group => {
       const kids = Array.from(group.children).filter(el => el.matches && el.matches('button'));
       for (let i = 0; i < kids.length; i++) {
         for (let j = i + 1; j < kids.length; j++) {
@@ -174,30 +252,6 @@ async function inspectMenu(page, viewportName) {
     R.checks.core = true;
     return R;
   }, viewportName);
-}
-
-async function inspectSavedCampaign(page) {
-  return await page.evaluate(() => {
-    const R = { checks: {}, failures: [] };
-    const fail = msg => R.failures.push(msg);
-    try {
-      G.campaign = { side: 'US', iron: false, idx: 1, funds: 500, recovery: false, completed: ['sumter'],
-        roster: [{ id: 'R1', type: 'inf', weapon: 'springfield', xp: 2, name: null }], nextId: 2,
-        stats: { battles: 2, won: 1, infl: 300, suff: 1500 }, recoveryLossCount: 0, recoveryMode: false, flipAtk: false, captured: [] };
-      if (typeof _t1InitAll === 'function') _t1InitAll(G.campaign);
-      saveLocal();
-      openMainMenu();
-      R.checks.continuePresent = !!document.getElementById('gnContinue');
-      R.checks.warDeptPresent = !!document.getElementById('gnWarDept');
-      if (!R.checks.continuePresent) fail('missing Continue with saved campaign');
-      if (!R.checks.warDeptPresent) fail('missing War Department with saved campaign');
-      const wd = document.getElementById('gnWarDept');
-      if (wd) wd.click();
-      R.checks.warDeptOpened = !!document.getElementById('wdTabs');
-      if (!R.checks.warDeptOpened) fail('War Department did not open');
-    } catch (e) { fail('fatal saved-campaign check: ' + String(e && e.message || e)); }
-    return R;
-  });
 }
 
 async function inspectCoreButtonActions(page) {
@@ -249,6 +303,133 @@ async function inspectCoreButtonActions(page) {
   });
 }
 
+async function inspectSavedCampaign(page) {
+  return await page.evaluate(() => {
+    const R = { checks: {}, failures: [] };
+    const fail = msg => R.failures.push(msg);
+    const sel = s => document.querySelector(s);
+    try {
+      G.campaign = { side: 'US', iron: false, idx: 1, funds: 500, recovery: false, completed: ['sumter'],
+        roster: [{ id: 'R1', type: 'inf', weapon: 'springfield', xp: 2, name: null }], nextId: 2,
+        stats: { battles: 2, won: 1, infl: 300, suff: 1500 }, recoveryLossCount: 0, recoveryMode: false, flipAtk: false, captured: [] };
+      if (typeof _t1InitAll === 'function') _t1InitAll(G.campaign);
+      saveLocal();
+      openMainMenu();
+      R.checks.continuePresent = !!document.getElementById('gnContinue');
+      R.checks.warDeptPresent = !!document.getElementById('gnWarDept');
+      if (!R.checks.continuePresent) fail('missing Continue with saved campaign');
+      if (!R.checks.warDeptPresent) fail('missing War Department with saved campaign');
+
+      // §5 tooth 2 (saved half): the campaign-chain tracker.
+      const rail = sel('.h0-chainrail');
+      R.checks.chainRailPresent = !!rail;
+      if (!rail) fail('missing chain tracker with saved campaign');
+      else {
+        const chainLen = (typeof CHAINS !== 'undefined' && CHAINS.US) ? CHAINS.US.length : -1;
+        const segs = Array.from(document.querySelectorAll('.h0-seg'));
+        R.checks.chainSegCount = segs.length === chainLen && chainLen > 0;
+        if (!R.checks.chainSegCount) fail('chain segments ' + segs.length + ' != CHAINS.US length ' + chainLen);
+        R.checks.chainCurrentRinged = segs.findIndex(s => s.classList.contains('is-current')) === 1;
+        if (!R.checks.chainCurrentRinged) fail('current-battle segment is not chain index 1');
+        R.checks.chainFoughtFilled = segs.filter(s => s.classList.contains('is-fought')).length === 1;
+        if (!R.checks.chainFoughtFilled) fail('fought segment count != 1 at idx 1');
+        const srText = (sel('.h0-chainrail .h0-sr-only') || {}).textContent || '';
+        R.checks.chainSrSummary = /Battle 2 of \d+: First Bull Run, 1861/.test(srText);
+        if (!R.checks.chainSrSummary) fail('SR chain summary missing/wrong: "' + srText + '"');
+        const scroller = sel('.h0-chain-scroll');
+        R.checks.chainOverflowScroll = !!scroller && /auto|scroll/.test(getComputedStyle(scroller).overflowX);
+        if (!R.checks.chainOverflowScroll) fail('chain rail is not inside an overflow-x:auto container');
+        const ol = sel('ol.h0-chain');
+        R.checks.chainDecorationHidden = !!ol && ol.getAttribute('aria-hidden') === 'true';
+        if (!R.checks.chainDecorationHidden) fail('chain rail decoration is not aria-hidden');
+        const now = (sel('.h0-chainrail-now') || {}).textContent || '';
+        R.checks.chainNowLine = now.indexOf('Battle 2 of') >= 0 && now.indexOf('First Bull Run') >= 0;
+        if (!R.checks.chainNowLine) fail('visible chain now-line missing/wrong: "' + now + '"');
+      }
+      // §3: non-recovery saved campaign shows NO nudge.
+      R.checks.noNudgeHealthy = !sel('.h0-nudge');
+      if (!R.checks.noNudgeHealthy) fail('E61 nudge rendered on a non-recovery campaign');
+    } catch (e) { fail('fatal saved-campaign check: ' + String(e && e.message || e)); }
+    return R;
+  });
+}
+
+async function inspectNudgeState(page) {
+  return await page.evaluate(() => {
+    const R = { checks: {}, failures: [] };
+    const fail = msg => R.failures.push(msg);
+    const sel = s => document.querySelector(s);
+    try {
+      // Walled campaign: two consecutive delegated losses at Fredericksburg (US idx 10).
+      G.campaign.idx = 10;
+      G.campaign.recovery = true;
+      G.campaign.recoveryMode = true;
+      G.campaign.recoveryLossCount = 2;
+      saveLocal();
+      openMainMenu();
+      const card = sel('.h0-nudge');
+      R.checks.nudgePresent = !!card;
+      if (!card) fail('E61 nudge card missing in recoveryMode with 2 losses');
+      else {
+        const h = (sel('#h0NudgeTitle') || {}).textContent || '';
+        R.checks.nudgeNamesBattle = h.indexOf('Fredericksburg') >= 0;
+        if (!R.checks.nudgeNamesBattle) fail('nudge does not name the walled battle: "' + h + '"');
+        const body = (card.textContent || '');
+        R.checks.nudgeHonestCopy = body.indexOf('twice') >= 0 && /field command|political path/.test(body);
+        if (!R.checks.nudgeHonestCopy) fail('nudge copy lost its honest guidance shape');
+        R.checks.nudgeLabeled = card.getAttribute('aria-labelledby') === 'h0NudgeTitle';
+        if (!R.checks.nudgeLabeled) fail('nudge card is not labeled for AT');
+      }
+      // D74 runtime no-write tripwire: re-rendering the menu twice must not move the save.
+      const s1 = localStorage.getItem('gor_save');
+      openMainMenu();
+      openMainMenu();
+      const s2 = localStorage.getItem('gor_save');
+      R.checks.menuWritesNothing = s1 === s2 && !!s1;
+      if (!R.checks.menuWritesNothing) fail('opening the menu mutated the saved campaign (D74 violation)');
+    } catch (e) { fail('fatal nudge-state check: ' + String(e && e.message || e)); }
+    return R;
+  });
+}
+
+async function inspectWarDept(page) {
+  return await page.evaluate(() => {
+    const R = { checks: {}, failures: [] };
+    const fail = msg => R.failures.push(msg);
+    try {
+      if (!document.querySelector('.h0-menu')) openMainMenu();
+      const wd = document.getElementById('gnWarDept');
+      if (wd) wd.click();
+      R.checks.warDeptOpened = !!document.getElementById('wdTabs');
+      if (!R.checks.warDeptOpened) fail('War Department did not open');
+    } catch (e) { fail('fatal war-dept check: ' + String(e && e.message || e)); }
+    return R;
+  });
+}
+
+/* D74 static tripwire (§5 tooth 4): the generated deliverable's 98-h0-main-menu
+   region must contain NO campaign/save writes — no C.<recovery-family> or
+   G.campaign assignment, and no saveLocal() call. */
+function inspectGeneratedRegion() {
+  const R = { checks: {}, failures: [] };
+  try {
+    const html = readFileSync(join(ROOT, 'civil_war_generals.html'), 'utf8');
+    const start = html.indexOf('/* ===== module: 98-h0-main-menu.js ===== */');
+    if (start < 0) { R.failures.push('module marker not found in deliverable'); return R; }
+    const next = html.indexOf('/* ===== module:', start + 10);
+    const region = html.slice(start, next > 0 ? next : undefined);
+    // panel-advisory sharpening: catch ANY C.<field> assignment, not an enumerated list
+    // (comparisons like C.idx >= n or C.side === 'CS' don't match: '=[^=]' rejects '=='
+    // and requires '=' as the first operator char).
+    const writes = region.match(/\bC\.[A-Za-z_$][\w$]*\s*=[^=]/g) || [];
+    const gcw = region.match(/\bG\.campaign\s*=[^=]/g) || [];
+    const slw = region.match(/\bsaveLocal\s*\(/g) || [];
+    R.checks.noCampaignWrites = writes.length === 0 && gcw.length === 0 && slw.length === 0;
+    if (!R.checks.noCampaignWrites) R.failures.push('generated menu region contains campaign/save writes: ' + JSON.stringify({ writes, gcw, slw }));
+  } catch (e) { R.failures.push('fatal generated-region check: ' + String(e && e.message || e)); }
+  return R;
+}
+
 async function runViewport(browser, vp) {
   const pageerrors = [];
   const page = await bootPage(browser, vp, pageerrors);
@@ -273,6 +454,45 @@ async function runSavedCampaign(browser) {
   const page = await bootPage(browser, VIEWPORTS[0], savedErrors);
   try {
     const saved = await inspectSavedCampaign(page);
+    // The Aaron-locked tracker is a first-viewport signature at desktop: measured AFTER the
+    // async T0/T1/T2/T6/T11 injections settle (they grow the Field Operations list), against
+    // the SHEET's visible box (the sheet is the scroll container that clips the menu), in the
+    // default saved state (no nudge). With the sheet scrolled to top the segment row must show.
+    await page.waitForTimeout(700);
+    const fold = await page.evaluate(() => {
+      const sh = document.querySelector('.sheet');
+      const ol = document.querySelector('ol.h0-chain');
+      if (!sh || !ol) return { ok: false, why: 'missing sheet or chain' };
+      sh.scrollTop = 0;
+      const shr = sh.getBoundingClientRect();
+      const olr = ol.getBoundingClientRect();
+      return { ok: olr.bottom <= shr.bottom + 1 && olr.top >= shr.top - 1, olBottom: Math.round(olr.bottom), sheetBottom: Math.round(shr.bottom) };
+    });
+    saved.checks.chainVisibleFirstViewport = fold.ok;
+    if (!fold.ok) saved.failures.push('chain tracker segments hidden below the desktop fold: ' + JSON.stringify(fold));
+    // Two-state screenshots (§5 tooth 5): the saved state at all three widths.
+    for (const vp of VIEWPORTS) {
+      try {
+        await page.setViewportSize({ width: vp.width, height: vp.height });
+        await page.waitForTimeout(400);
+        await page.evaluate(() => { const sh = document.querySelector('.sheet'); if (sh) sh.scrollTop = 0; });
+        await withTimeout('screenshot saved-' + vp.name, page.screenshot({ path: join(OUT, `probe-h0-main-menu-saved-${vp.name}.png`), fullPage: false }), SLOW_MAC.screenshot);
+      } catch (e) { saved.screenshotWarning = String(e && e.message || e); }
+    }
+    await page.setViewportSize({ width: VIEWPORTS[0].width, height: VIEWPORTS[0].height });
+    await page.waitForTimeout(300);
+
+    const nudge = await inspectNudgeState(page);
+    saved.nudgeState = nudge;
+    for (const f of nudge.failures || []) saved.failures.push('nudge: ' + f);
+    try {
+      await page.evaluate(() => { const sh = document.querySelector('.sheet'); if (sh) sh.scrollTop = 0; });
+      await withTimeout('screenshot nudge', page.screenshot({ path: join(OUT, 'probe-h0-main-menu-nudge.png'), fullPage: false }), SLOW_MAC.screenshot);
+    } catch (e) { saved.screenshotWarning = String(e && e.message || e); }
+
+    const wd = await inspectWarDept(page);
+    saved.warDept = wd;
+    for (const f of wd.failures || []) saved.failures.push('wardept: ' + f);
     try {
       await withTimeout('screenshot saved', page.screenshot({ path: join(OUT, 'probe-h0-main-menu-wardept.png'), fullPage: false }), SLOW_MAC.screenshot);
     } catch (e) {
@@ -309,6 +529,10 @@ async function runSavedCampaign(browser) {
     if ((saved.pageerrors && saved.pageerrors.length) || saved.failures.length) result.ok = false;
     result.savedCampaign = saved;
     if (saved.pageerrors && saved.pageerrors.length) result.pageerrors.push({ viewport: 'saved', pageerrors: saved.pageerrors });
+
+    const region = inspectGeneratedRegion();
+    if (region.failures.length) result.ok = false;
+    result.generatedRegion = region;
   } catch (e) {
     result.ok = false;
     result.fatal = String(e && e.message || e);
@@ -321,7 +545,8 @@ async function runSavedCampaign(browser) {
   const failures = [];
   for (const p of result.probes || []) for (const f of p.failures || []) failures.push(p.viewport + ': ' + f);
   for (const f of (result.savedCampaign && result.savedCampaign.failures) || []) failures.push('saved: ' + f);
-  const totalChecks = (result.probes || []).length + (result.savedCampaign ? 1 : 0);
+  for (const f of (result.generatedRegion && result.generatedRegion.failures) || []) failures.push('generated: ' + f);
+  const totalChecks = (result.probes || []).length + (result.savedCampaign ? 1 : 0) + (result.generatedRegion ? 1 : 0);
   if (result.ok) {
     console.log('H0 MAIN MENU OK ' + totalChecks + '/' + totalChecks + ' pageerrors=0');
     process.exit(0);
