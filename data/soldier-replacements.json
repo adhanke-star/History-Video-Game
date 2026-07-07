@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "decision": "D289",
+    "decision": "D290",
     "schema": "cw_soldier_replacements_v1",
     "scope": "Citation-grade replacements for generated Soldier's Story representative rows.",
     "provenance": "Inferred",
-    "note": "D289 adds the seventeenth, eighteenth, and nineteenth narrow sourced replacement slices (Henry M. Stanley — the first Western-CS record, a private of the 6th Arkansas 'Dixie Grays' at Shiloh; John Dooley — the first Confederate Gettysburg record, a lieutenant of the 1st Virginia in Pickett's Charge; and Joseph H. De Castro — the 19th Massachusetts corporal who seized a Confederate color repulsing Pickett's Charge, widely credited as the first Hispanic-American Medal of Honor recipient). D239 added the sixteenth (Casler); D222 added the fifteenth (Webb). Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
+    "note": "D290 adds the twentieth, twenty-first, and twenty-second narrow sourced replacement slices — a CS-weighted, theater-balancing slice (side balance 14US/5CS -> 14US/8CS): Berry Benson (a corporal of the 1st South Carolina in McGowan's Brigade, A. P. Hill's Light Division, wounded at Chancellorsville — the celebrated scout who tunneled out of Elmira); John W. 'Johnny' Green (an enlisted man of the 9th Kentucky 'Orphan Brigade' who rose to regimental sergeant-major, at Chickamauga in Breckinridge's Division of Polk's wing); and William H. Tunnard (a sergeant of the 3rd Louisiana who held the 3rd Louisiana Redan at Vicksburg and wrote its regimental history 'A Southern Record' — the FIRST Vicksburg Confederate record). D289 added the seventeenth-nineteenth (Stanley, Dooley, De Castro); D239 added the sixteenth (Casler); D222 added the fifteenth (Webb). Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
   },
   "schema": "cw_soldier_replacements_v1",
   "records": [
@@ -1431,6 +1431,237 @@
       ],
       "sourceNote": "The 19th Virginia identity rests on later secondary accounts, not Devereux's primary report; the 'first Hispanic-American recipient' framing is widely credited, not settled. No later sergeant rank and no portrait are asserted. Devereux's report names Corpl. De Castro; NPS OOB and the Battlefield Trust anchor the 19th Massachusetts / Hall / II Corps chain. Ratings Inferred.",
       "bio": "Joseph H. De Castro was a corporal and color-bearer in Company I, 19th Massachusetts Infantry, part of Col. Norman J. Hall's brigade at the Angle on July 3, 1863. During the repulse of Pickett's Charge he struck down an oncoming Confederate color-bearer with his own flagstaff, seized the enemy regimental colors -- identified by later accounts as those of the 19th Virginia -- and handed them to his colonel, Arthur F. Devereux. He received the Medal of Honor on December 1, 1864, and is widely credited as the first Hispanic-American recipient. This replacement keeps the deed inside the whole brigade's stand at Gettysburg and asserts his battle-day corporal rank, not his later sergeancy or a portrait."
+    },
+    {
+      "pid": "person_chancellorsville_cs_1sc_benson",
+      "replacePid": "ss:chancellorsville:CS:cs_ap_hill_div:nco",
+      "name": "Berry Benson",
+      "side": "CS",
+      "rank": "Corporal",
+      "branch": "inf",
+      "role": "noncommissioned officer",
+      "year": 1863,
+      "provenance": "Verified",
+      "team": {
+        "side": "CS",
+        "army": "Army of Northern Virginia",
+        "corps": "Jackson's Second Corps",
+        "division": "A. P. Hill's Light Division",
+        "brigade": "McGowan's Brigade",
+        "regiment": "1st South Carolina Infantry",
+        "company": "Company H"
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Berry Benson (1843-1923)",
+          "author": "New Georgia Encyclopedia",
+          "repository": "New Georgia Encyclopedia",
+          "locator": "History & Archaeology biography",
+          "url": "https://www.georgiaencyclopedia.org/articles/history-archaeology/berry-benson-1843-1923/",
+          "type": "secondary",
+          "note": "States Benson was named corporal of Company H, First South Carolina Regiment, campaigned in A. P. Hill's Light Division in 1862, and was crippled by a minie ball at Chancellorsville, causing him to miss Gettysburg."
+        },
+        {
+          "title": "Confederate Sharpshooter Berry Benson and His Enfield",
+          "author": "American Rifleman (National Rifle Association)",
+          "repository": "American Rifleman",
+          "locator": "Feature article",
+          "url": "https://www.americanrifleman.org/content/confederate-sharpshooter-berry-benson-and-his-enfield/",
+          "type": "secondary",
+          "note": "Places Benson in the 1st South Carolina, notes his selection for his brigade's sharpshooter work, states he was wounded at Chancellorsville and missed Gettysburg, and dates his promotion to sergeant to after his late-1864 return from prison."
+        },
+        {
+          "title": "A. P. Hill's Light Division",
+          "author": "Wikipedia contributors",
+          "repository": "Wikipedia",
+          "locator": "South Carolina brigade (Gregg-McGowan) and Chancellorsville sections",
+          "url": "https://en.wikipedia.org/wiki/A._P._Hill's_Light_Division",
+          "type": "secondary",
+          "note": "Names the Gregg-McGowan Brigade (Samuel McGowan commanding after Maxcy Gregg's mortal wounding at Fredericksburg), lists the 1st South Carolina Infantry in that brigade, and places the division at Chancellorsville."
+        },
+        {
+          "title": "Berry Benson's Civil War Book: Memoirs of a Confederate Scout and Sharpshooter",
+          "author": "Berry Benson (ed. Susan Williams Benson)",
+          "repository": "University of Georgia Press",
+          "locator": "Memoir; 1st South Carolina / McGowan's Brigade service",
+          "url": "https://ugapress.org/book/9780820329437/berry-bensons-civil-war-book/",
+          "type": "primary",
+          "note": "Benson's own memoir documents his 1st South Carolina service and his later fame as a Confederate scout and sharpshooter; used as a soldier-life source."
+        }
+      ],
+      "sourceNote": "Rank at Chancellorsville is inferred as Corporal: NGE gives corporal at enlistment; American Rifleman dates his sergeant promotion to his late-1864 return from prison -- so May 1863 = corporal. No sharpshooter-battalion service is claimed at Chancellorsville (McGowan's battalion was organized in 1864); no portrait. NGE and American Rifleman confirm the Chancellorsville leg wound and missed Gettysburg; the Light Division page anchors the 1st South Carolina / McGowan chain (he was captured at Spotsylvania in May 1864). Ratings Inferred.",
+      "bio": "Berry Greenwood Benson enlisted at eighteen as a corporal in Company H, 1st South Carolina Infantry, part of the Gregg-McGowan Brigade in A. P. Hill's Light Division. At Chancellorsville in May 1863 he was hit in the leg and crippled, and missed the Battle of Gettysburg while recovering at Augusta. He later became a celebrated Confederate scout and sharpshooter -- captured at Spotsylvania in May 1864, he famously tunneled out of the Elmira prison camp and was promoted to sergeant only after his late-1864 return. This replacement uses the narrow 1863 claim: a corporal of the 1st South Carolina in McGowan's Brigade, wounded at Chancellorsville, not a portrait or a formal sharpshooter-battalion rank at the battle."
+    },
+    {
+      "pid": "person_chickamauga_cs_9ky_green",
+      "replacePid": "ss:chickamauga:CS:cs_breck_rock:nco",
+      "name": "John W. Green",
+      "side": "CS",
+      "rank": "Sergeant",
+      "branch": "inf",
+      "role": "noncommissioned officer",
+      "year": 1863,
+      "provenance": "Verified",
+      "team": {
+        "side": "CS",
+        "army": "Army of Tennessee",
+        "corps": "D. H. Hill's Corps (Polk's Right Wing)",
+        "division": "Breckinridge's Division",
+        "brigade": "Helm's Kentucky 'Orphan Brigade'",
+        "regiment": "9th Kentucky Infantry",
+        "company": ""
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Johnny Green of the Orphan Brigade: The Journal of a Confederate Soldier",
+          "author": "John Williams Green (ed. Albert D. Kirwan)",
+          "repository": "University Press of Kentucky",
+          "locator": "Publisher page; enlisted-man journal, Shiloh through Atlanta",
+          "url": "https://www.kentuckypress.com/9780813122212/johnny-green-of-the-orphan-brigade/",
+          "type": "primary",
+          "note": "Identifies John W. Green (1841-1920) as an enlisted man of Kentucky's Orphan Brigade who fought at Shiloh, Baton Rouge, Vicksburg, Chickamauga, and Atlanta, and whose journal gives the common soldier's perspective."
+        },
+        {
+          "title": "Kentucky Confederate Veterans and Their War Records",
+          "author": "Genealogy Trails History Group",
+          "repository": "Genealogy Trails",
+          "locator": "John W. Green entry",
+          "url": "https://genealogytrails.com/ken/Ky_Confederate_Veterans.html",
+          "type": "secondary",
+          "note": "States John W. Green, born 8 October 1841 in Henderson County, entered Confederate service 4 October 1861 and served as Sergeant-Major of the 9th Kentucky Infantry (the Orphan Brigade), under Generals Buckner, Breckinridge, Helm, and Lewis."
+        },
+        {
+          "title": "Battle of Chickamauga order of battle: Confederate",
+          "author": "Wikipedia contributors",
+          "repository": "Wikipedia",
+          "locator": "Helm's Brigade, Breckinridge's Division, D. H. Hill's Corps, Polk's Right Wing",
+          "url": "https://en.wikipedia.org/wiki/Battle_of_Chickamauga_order_of_battle:_Confederate",
+          "type": "secondary",
+          "note": "Lists the 9th Kentucky Infantry in Benjamin H. Helm's Brigade, Breckinridge's Division, D. H. Hill's Corps, within Polk's Right Wing at Chickamauga on 20 September 1863."
+        },
+        {
+          "title": "Orphan Brigade",
+          "author": "Wikipedia contributors",
+          "repository": "Wikipedia",
+          "locator": "Regiments and Chickamauga sections",
+          "url": "https://en.wikipedia.org/wiki/Orphan_Brigade",
+          "type": "secondary",
+          "note": "Names the 9th Kentucky among the Orphan Brigade's regiments and records that Brig. Gen. Benjamin H. Helm was mortally wounded leading the brigade at Chickamauga on 20 September 1863."
+        }
+      ],
+      "sourceNote": "His exact grade at Chickamauga is not documented, but he is recorded rising to the regiment's Sergeant-Major (secondary accounts date a promotion at Shiloh, 1862, before Chickamauga), so the NCO slot takes his documented NCO track over a private baseline without asserting Sergeant-Major at the battle; company not identified; no portrait. UPK and Genealogy Trails anchor his 9th Kentucky / Orphan Brigade identity and rank; the Chickamauga OOB places Helm's Brigade in Breckinridge's Division, Polk's Wing. Ratings Inferred.",
+      "bio": "John W. Green -- 'Johnny Green' -- was a Henderson County Kentuckian who entered Confederate service in October 1861 and served through the war as an enlisted man of the 9th Kentucky Infantry, one of the regiments of the Kentucky 'Orphan Brigade,' rising to the regiment's sergeant-major. At Chickamauga on September 20, 1863, his brigade -- under Brig. Gen. Benjamin Hardin Helm, in Breckinridge's Division of Polk's wing -- charged the Union breastworks on the LaFayette Road; Helm was killed in the assault. This replacement keeps the claim narrow: a noncommissioned officer of the 9th Kentucky whose journal, Johnny Green of the Orphan Brigade, is a valued common-soldier account, not a Sergeant-Major-at-the-battle or portrait claim."
+    },
+    {
+      "pid": "person_vicksburg_cs_3la_tunnard",
+      "replacePid": "ss:vicksburg:CS:cs_3rd_louisiana:nco",
+      "name": "William H. Tunnard",
+      "side": "CS",
+      "rank": "Sergeant",
+      "branch": "inf",
+      "role": "noncommissioned officer",
+      "year": 1863,
+      "provenance": "Verified",
+      "team": {
+        "side": "CS",
+        "army": "Army of Vicksburg (Pemberton's garrison)",
+        "corps": "",
+        "division": "Forney's Division",
+        "brigade": "Hebert's Brigade",
+        "regiment": "3rd Louisiana Infantry",
+        "company": "Company K"
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "William H. Tunnard",
+          "author": "Wikipedia contributors",
+          "repository": "Wikipedia",
+          "locator": "Military service and Vicksburg sections",
+          "url": "https://en.wikipedia.org/wiki/William_H._Tunnard",
+          "type": "secondary",
+          "note": "States Tunnard joined the 'Pelican Rifles,' which became a company of the 3rd Louisiana Volunteers; that as part of Company K he rose to sergeant; and that he was captured at Vicksburg on 4 July 1863 and paroled four days later; author of A Southern Record (1866)."
+        },
+        {
+          "title": "A Southern Record: The History of the Third Regiment Louisiana Infantry",
+          "author": "University of Arkansas Press",
+          "repository": "University of Arkansas Press",
+          "locator": "Publisher page (William L. Shea ed., 1997 reprint of the 1866 history)",
+          "url": "https://www.uapress.com/product/a-southern-record/",
+          "type": "secondary",
+          "note": "States Tunnard served in the Third Louisiana Infantry and offers an extensive first-person account of the regiment's capture and parole at the siege of Vicksburg."
+        },
+        {
+          "title": "3rd Louisiana Infantry Regiment",
+          "author": "Wikipedia contributors",
+          "repository": "Wikipedia",
+          "locator": "Siege of Vicksburg section",
+          "url": "https://en.wikipedia.org/wiki/3rd_Louisiana_Infantry_Regiment",
+          "type": "secondary",
+          "note": "Places the 3rd Louisiana in Hebert's Brigade of Forney's Division at Vicksburg, records the Union mines exploded under the 3rd Louisiana Redan on 25 June and 1 July 1863, and cites Sergeant Tunnard's observations; the regiment was captured at the 4 July surrender."
+        },
+        {
+          "title": "A Southern Record. The History of the Third Regiment, Louisiana Infantry. By W. H. Tunnard.",
+          "author": "William H. Tunnard",
+          "repository": "University of Michigan Library, Making of America",
+          "locator": "Digital edition ABJ7391.0001.001, Vicksburg siege chapters",
+          "url": "https://quod.lib.umich.edu/m/moa/ABJ7391.0001.001/",
+          "type": "primary",
+          "note": "Tunnard's own 1866 regimental history and journal of the 3rd Louisiana, including its Vicksburg redan defense and the July 1863 surrender."
+        }
+      ],
+      "sourceNote": "The record does not claim Tunnard was personally in a mine crater; it places him as a sergeant of the 3rd Louisiana, whose regiment held the 3rd Louisiana Redan; his Sergeant rank and Company K / Pelican Rifles origin rest on Wikipedia and his own regimental history; no portrait. The 3rd Louisiana Regiment page anchors the Hebert's Brigade / Forney's Division / redan chain and his 4 July 1863 capture at the surrender. Ratings Inferred.",
+      "bio": "William H. Tunnard joined the Pelican Rifles of Baton Rouge at Louisiana's secession; the company became part of the 3rd Louisiana Infantry, and Tunnard rose to sergeant in Company K. During the siege of Vicksburg his regiment held the sector of the 3rd Louisiana Redan in Hebert's Brigade of Forney's Division -- the salient the Union twice mined and blew up, on June 25 and July 1, 1863 -- until Pemberton's garrison surrendered on July 4 and Tunnard was captured and paroled. He assembled the survivors' letters, diaries, and his own journal into A Southern Record (1866), long valued as a regimental history but read here as a participant/period account, not an uncritical authority. This replacement fills the Vicksburg Confederate soldier's-story slot without claiming Tunnard was personally in a mine crater or asserting a portrait."
     }
   ],
   "_template": {
