@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "decision": "D239",
+    "decision": "D289",
     "schema": "cw_soldier_replacements_v1",
     "scope": "Citation-grade replacements for generated Soldier's Story representative rows.",
     "provenance": "Inferred",
-    "note": "D239 adds the sixteenth narrow sourced replacement slice (Casler — the first Chancellorsville record; D222 added the fifteenth, Webb). Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
+    "note": "D289 adds the seventeenth, eighteenth, and nineteenth narrow sourced replacement slices (Henry M. Stanley — the first Western-CS record, a private of the 6th Arkansas 'Dixie Grays' at Shiloh; John Dooley — the first Confederate Gettysburg record, a lieutenant of the 1st Virginia in Pickett's Charge; and Joseph H. De Castro — the 19th Massachusetts corporal who seized a Confederate color repulsing Pickett's Charge, widely credited as the first Hispanic-American Medal of Honor recipient). D239 added the sixteenth (Casler); D222 added the fifteenth (Webb). Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
   },
   "schema": "cw_soldier_replacements_v1",
   "records": [
@@ -1200,6 +1200,237 @@
       ],
       "sourceNote": "He did not witness Paxton's death; Jackson's wounding is secondhand; the pioneer-corps detail is his own account alone; Private rank is inferred from the absence of any attested promotion. USC Press confirms identity, Company A / 33rd Virginia, June 1861; the NPS OOB anchors the Stonewall Brigade / Colston chain. No portrait. Ratings stay neutral Inferred.",
       "bio": "John O. Casler served as a private in Company A, 33rd Virginia Infantry, Stonewall Brigade, and was at Chancellorsville with Paxton's Brigade of Trimble's Division, Colston commanding, in Jackson's Second Corps. By his own account he spent the battle detailed to the division Pioneer Corps, clearing felled timber from the Plank Road ahead of Jackson's May 2 flank column and burying the dead when the fighting ended. His memoir Four Years in the Stonewall Brigade (1893, revised 1906) — ranked by its University of South Carolina Press edition among the most sought-after and cited Confederate soldier accounts — is valued for its candor about straggling, foraging, and the unheroic labor of war."
+    },
+    {
+      "pid": "person_shiloh_cs_6ar_stanley",
+      "replacePid": "ss:shiloh:CS:cs_hardee_corps:pvt",
+      "name": "Henry M. Stanley",
+      "side": "CS",
+      "rank": "Private",
+      "branch": "inf",
+      "role": "private soldier",
+      "year": 1862,
+      "provenance": "Verified",
+      "team": {
+        "side": "CS",
+        "army": "Army of the Mississippi",
+        "corps": "Hardee's Corps (Third Corps)",
+        "division": "",
+        "brigade": "Hindman's Brigade (Shaver's)",
+        "regiment": "6th Arkansas Infantry",
+        "company": "Company E (Dixie Grays)"
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "The Autobiography of Sir Henry Morton Stanley",
+          "author": "Henry M. Stanley (ed. Dorothy Stanley)",
+          "repository": "Project Gutenberg",
+          "locator": "EBook #77113, Shiloh chapters",
+          "url": "https://www.gutenberg.org/ebooks/77113",
+          "type": "primary",
+          "note": "Stanley's own account of enlisting in the Dixie Grays of the 6th Arkansas, marching to Shiloh, and being captured on April 6, 1862; a self-mythologizing memoir used only as a soldier-life source."
+        },
+        {
+          "title": "Henry Morton Stanley Goes To War",
+          "author": "HistoryNet",
+          "repository": "HistoryNet",
+          "locator": "Feature article",
+          "url": "https://www.historynet.com/henry-morton-stanley-goes-to-war/",
+          "type": "secondary",
+          "note": "States Stanley marched as a private in the Dixie Grays, a volunteer company of the 6th Arkansas Infantry, on April 6, 1862 at Shiloh, was captured, and later took the Union oath as a 'galvanized Yankee.'"
+        },
+        {
+          "title": "Armies at the Battle of Shiloh",
+          "author": "J. Rickard",
+          "repository": "History of War",
+          "locator": "Confederate order of battle, Hardee's Third Corps, Hindman's First Brigade",
+          "url": "https://www.historyofwar.org/articles/armies_shiloh.html",
+          "type": "secondary",
+          "note": "Places the 6th Arkansas Infantry (Col. A. T. Hawthorn) in Hindman's First Brigade (Col. R. G. Shaver commanding), Hardee's Third Corps, Army of the Mississippi, at Shiloh."
+        },
+        {
+          "title": "6th Arkansas Infantry Regiment",
+          "author": "Wikipedia contributors",
+          "repository": "Wikipedia",
+          "locator": "Company organization; Company E, the 'Dixie Grays' of Arkansas County",
+          "url": "https://en.wikipedia.org/wiki/6th_Arkansas_Infantry_Regiment",
+          "type": "secondary",
+          "note": "Identifies Company E of the 6th Arkansas as the 'Dixie Grays' of Arkansas County; corroborates the regiment's first combat at Shiloh."
+        }
+      ],
+      "sourceNote": "Stanley's autobiography is self-mythologizing and is used only as a soldier-life source; no portrait is asserted and no claim is made about his contested later career. His private Dixie Grays (Co. E), 6th Arkansas service at Shiloh and his capture rest on the autobiography, HistoryNet, and the History of War order of battle. Ratings Inferred.",
+      "bio": "Henry M. Stanley, born John Rowlands and later the African explorer Sir Henry Morton Stanley, enlisted in the Dixie Grays, Company E of the 6th Arkansas Infantry, and fought as a private at Shiloh on April 6, 1862. His regiment advanced with Hindman's brigade of Hardee's corps; Stanley was captured during the battle and, held at Camp Douglas, later took the Union oath as a 'galvanized Yankee.' This replacement uses only that narrow 1862 service, offering an enlisted Confederate's ground-level view of Shiloh and a reminder of how fluid loyalties could be, and makes no claim about his contested later career."
+    },
+    {
+      "pid": "person_gettysburg_cs_1va_dooley",
+      "replacePid": "ss:gettysburg:CS:cs_pickett_div:cmd",
+      "name": "John Dooley",
+      "side": "CS",
+      "rank": "1st Lt.",
+      "branch": "inf",
+      "role": "company officer",
+      "year": 1863,
+      "provenance": "Verified",
+      "team": {
+        "side": "CS",
+        "army": "Army of Northern Virginia",
+        "corps": "First Corps",
+        "division": "Pickett's Division",
+        "brigade": "Kemper's Brigade",
+        "regiment": "1st Virginia Infantry",
+        "company": "Company C"
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Dictionary of Virginia Biography — John Edward Dooley (12 July 1842-8 May 1873)",
+          "author": "Library of Virginia",
+          "repository": "Library of Virginia, Dictionary of Virginia Biography",
+          "locator": "Biography entry; enlistment and promotion paragraphs",
+          "url": "https://old.lva.virginia.gov/public/dvb/bio.asp?b=Dooley_John_Edward",
+          "type": "secondary",
+          "note": "States Dooley enlisted 11 August 1862 as a private in the 1st Virginia Infantry, was promoted first lieutenant on 10 April 1863, held a captaincy backdated to 17 May 1863, and was wounded in both thighs and captured during Pickett's Charge."
+        },
+        {
+          "title": "Gettysburg: \"The Whole Ground for Miles Around is Covered with the Wounded\"",
+          "author": "John Dooley (American Battlefield Trust)",
+          "repository": "American Battlefield Trust",
+          "locator": "Primary-source feature; Dooley's Gettysburg account",
+          "url": "https://www.battlefields.org/learn/primary-sources/gettysburg-whole-ground-miles-around-covered-wounded",
+          "type": "primary",
+          "note": "Reproduces Lieutenant John Dooley's own Pickett's Charge account ('Shot through both thighs, I fall about 30 yards from the guns') and his capture as a Union prisoner."
+        },
+        {
+          "title": "The Army of Northern Virginia at Gettysburg",
+          "author": "National Park Service",
+          "repository": "Gettysburg National Military Park",
+          "locator": "First Corps / Pickett's Division / Kemper's Brigade order of battle",
+          "url": "https://www.nps.gov/gett/learn/historyculture/anv-orderofbattle.htm",
+          "type": "secondary",
+          "note": "Places the 1st Virginia Infantry in Brig. Gen. James L. Kemper's Brigade, Maj. Gen. George E. Pickett's Division, at Gettysburg."
+        },
+        {
+          "title": "Lt John E Dooley, First Virginia Infantry (1863)",
+          "author": "Antietam on the Web (Behind AotW)",
+          "repository": "Antietam on the Web",
+          "locator": "Soldier photo/provenance post, 4 June 2022",
+          "url": "https://behind.aotw.org/2022/06/04/lt-john-e-dooley-first-virginia-infantry-1863/",
+          "type": "secondary",
+          "note": "Corroborates Dooley's rank as a lieutenant of the 1st Virginia Infantry in 1863."
+        }
+      ],
+      "sourceNote": "This record asserts Dooley's firm first-lieutenant rank, not the backdated 17 May 1863 captaincy or his 1862 private grade; Company C; no portrait; his journal is a participant account, not a Lost Cause frame. The DVB, the American Battlefield Trust (his own account), and the NPS OOB anchor the 1st Virginia / Kemper / Pickett chain and his capture. Ratings Inferred.",
+      "bio": "John Dooley left his studies at Georgetown to enlist in the 1st Virginia Infantry, and by Gettysburg he was a lieutenant commanding Company C (the 'Montgomery Guard') in Kemper's Brigade, Pickett's Division. In Pickett's Charge on July 3, 1863, he was shot through both thighs about thirty yards from the Union guns, lay on the field overnight, and was captured. A battlefield captaincy was later backdated to May 17, 1863, so he is often styled captain at Gettysburg; this replacement uses his firm first-lieutenant rank and keeps the assault a shared, costly failure rather than a one-man feat. His postwar journal, published by Georgetown's Joseph T. Durkin, is read here as a participant account, not a Lost Cause frame."
+    },
+    {
+      "pid": "person_gettysburg_us_19ma_decastro",
+      "replacePid": "ss:gettysburg:US:us_gibbon_bdes:nco",
+      "name": "Joseph H. De Castro",
+      "side": "US",
+      "rank": "Corporal",
+      "branch": "inf",
+      "role": "noncommissioned officer",
+      "year": 1863,
+      "provenance": "Verified",
+      "team": {
+        "side": "US",
+        "army": "Army of the Potomac",
+        "corps": "II Corps",
+        "division": "Second Division",
+        "brigade": "Hall's Brigade",
+        "regiment": "19th Massachusetts Infantry",
+        "company": "Company I"
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Official Report for the 19th Massachusetts at Gettysburg",
+          "author": "Col. Arthur F. Devereux",
+          "repository": "Gettysburg (Stone Sentinels) / Official Records transcription",
+          "locator": "After-action report listing captured Confederate colors; 'one by Corpl. Joseph H. De Castro'",
+          "url": "https://gettysburg.stonesentinels.com/union-monuments/massachusetts/19th-massachusetts/official-report-for-the-19th-massachusetts/",
+          "type": "primary",
+          "note": "Col. Devereux's report names Corpl. Joseph H. De Castro among the captors of Confederate colors at the Angle on July 3, 1863; the primary report does not name the enemy regiment."
+        },
+        {
+          "title": "The Army of the Potomac at Gettysburg",
+          "author": "National Park Service",
+          "repository": "Gettysburg National Military Park",
+          "locator": "II Corps / Second Division / Third Brigade (Hall) order of battle",
+          "url": "https://www.nps.gov/gett/learn/historyculture/aop-orderofbattle.htm",
+          "type": "secondary",
+          "note": "Places the 19th Massachusetts Infantry in Col. Norman J. Hall's Third Brigade, Gibbon's Second Division, II Corps."
+        },
+        {
+          "title": "Joseph H. De Castro",
+          "author": "American Battlefield Trust",
+          "repository": "American Battlefield Trust",
+          "locator": "Biography",
+          "url": "https://www.battlefields.org/learn/biographies/joseph-h-de-castro",
+          "type": "secondary",
+          "note": "Confirms De Castro as a color-bearer of the 19th Massachusetts bearing the Massachusetts state colors who captured a Confederate flag on July 3, 1863 and received the Medal of Honor; notes he later rose to sergeant."
+        },
+        {
+          "title": "Hispanic-American Medal of Honor recipients",
+          "author": "The United States Army",
+          "repository": "Army.mil",
+          "locator": "Joseph H. De Castro entry; Company I, 19th Massachusetts; capture of the flag of the 19th Virginia, 3 July 1863",
+          "url": "https://www.army.mil/article/176781/hispanic_american_medal_of_honor_recipients",
+          "type": "secondary",
+          "note": "U.S. Army article giving De Castro's Company I / 19th Massachusetts unit, the July 3, 1863 Gettysburg action capturing the 19th Virginia's flag, and his standing as widely credited first Hispanic-American Medal of Honor recipient."
+        }
+      ],
+      "sourceNote": "The 19th Virginia identity rests on later secondary accounts, not Devereux's primary report; the 'first Hispanic-American recipient' framing is widely credited, not settled. No later sergeant rank and no portrait are asserted. Devereux's report names Corpl. De Castro; NPS OOB and the Battlefield Trust anchor the 19th Massachusetts / Hall / II Corps chain. Ratings Inferred.",
+      "bio": "Joseph H. De Castro was a corporal and color-bearer in Company I, 19th Massachusetts Infantry, part of Col. Norman J. Hall's brigade at the Angle on July 3, 1863. During the repulse of Pickett's Charge he struck down an oncoming Confederate color-bearer with his own flagstaff, seized the enemy regimental colors -- identified by later accounts as those of the 19th Virginia -- and handed them to his colonel, Arthur F. Devereux. He received the Medal of Honor on December 1, 1864, and is widely credited as the first Hispanic-American recipient. This replacement keeps the deed inside the whole brigade's stand at Gettysburg and asserts his battle-day corporal rank, not his later sergeancy or a portrait."
     }
   ],
   "_template": {
