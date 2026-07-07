@@ -6,6 +6,18 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D293 — PHASE I SOLDIER'S STORY SCALE-OUT: JOHN S. JACKMAN ADDED AS THE TWENTY-SIXTH CITATION-GRADE REPLACEMENT, A BOUNDED WESTERN/CS PRIVATE-SOLDIER SLICE BESIDE THE D290 ORPHAN BRIGADE NCO ROW — [CODEX GPT-5.5, Priority-1; web-grounded source verification inline] (2026-07-07)
+
+The Soldier's Story replacement lane grows from twenty-five to **twenty-six** `Verified` records. This is a deliberately small Western/CS balance slice: **John S. Jackman** replaces the still-open Chickamauga / Breckinridge's Division / Orphan Brigade private slot (`ss:chickamauga:CS:cs_breck_rock:pvt`), lifting side balance from 14US/11CS to **14US/12CS**. Data + probe only — no engine/combat change, D74 intact.
+
+- **Record (`data/soldier-replacements.json`):** Jackman ships as **Private**, Company B, 9th Kentucky Infantry, Helm's Kentucky "Orphan Brigade," Breckinridge's Division, Polk's Wing / Army of Tennessee, at Chickamauga. The replacement fills the private row beside D290's John W. Green NCO row, giving the same modeled division a second sourced enlisted voice without inventing a promotion, company command, portrait, or sourced ratings.
+- **Source honesty:** the University of South Carolina Press book page identifies Jackman's diary as an enlisted-man Orphan Brigade / Army of Tennessee source; the University of Louisville digital collection places him in the Ninth Kentucky and at Shiloh, Vicksburg, and Chickamauga; the Savas Beatie excerpt identifies "Pvt. John Jackman of Company B, the Confederate 9th Kentucky" and cites the Davis edition; the Chickamauga OOB source places the 9th Kentucky in Helm's Brigade / Breckinridge's Division. No portrait asset is asserted. Ratings remain Inferred/neutral.
+- **Probe change:** `tools/probe-loot-survival.mjs` now retitles the canonical replacement tooth to D293/twenty-six, bumps the replacement/apply/generated/authored counts 25→26, and adds Jackman-specific alias, rank, side, unit, bio/sourceNote, source-count, and no-portrait assertions.
+- **Focused gate (D176):** `node tools/import-soldier-replacements.mjs --check data/soldier-replacements.json` → OK records=26 verified=26 disputed=0; `node tools/build.mjs` → GATE OK (known raw embed soft warning only); `node --check tools/probe-loot-survival.mjs`; **probe-loot-survival ok=true 11/11, applied=26, hostileRejected=true, pageerrors=0**; adjacent **probe-tactical-roster 8/8** and **probe-women-in-war 8/8, pageerrors=0** with lane separation intact (`replacementRecords:26`); JSON readback confirmed all three probe artifacts `ok=true`, zero pageerrors, zero failed steps; `git diff --check` clean. Full `npm run vet:noreg` was not rerun because D292 just completed the batch/release checkpoint and D176 keeps this as a focused per-slice gate.
+- **Queue after D293:** continue bounded Priority-1 Soldier's Story replacement slices, still preferring Western/CS where the source trail is exact and the slot fit is honest. M8/Q5/Q6 remain locked; Phase H remains parked; Phase D remains deferred.
+
+---
+
 ## D292 — BATCH/RELEASE NO-REGRESSION CHECKPOINT COMPLETED AFTER D284-D291: THE LLM-OPPONENT ARC, E59, AND SOLDIER'S STORY RECORDS 17-25 ARE ALL COVERED GREEN; D288'S `probe-presets` PARENTHETICAL WAS STALE — [CODEX GPT-5.5, verification-only batch gate] (2026-07-07)
 
 The planned batch/release `npm run vet:noreg` checkpoint ran against HEAD `d0556d4` (`D291 Soldier's Story scale-out: three CS-Western citation-grade replacements (23-25)`). This was verification-only: **no `src/` or `data/` edits**. The suite covered the post-D283/D284-D287 LLM-opponent arc, D288 E59, and D289/D290/D291 Soldier's Story scale-out through twenty-five `Verified` replacements.

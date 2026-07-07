@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "decision": "D290",
+    "decision": "D293",
     "schema": "cw_soldier_replacements_v1",
     "scope": "Citation-grade replacements for generated Soldier's Story representative rows.",
     "provenance": "Inferred",
-    "note": "D290 adds the twentieth, twenty-first, and twenty-second narrow sourced replacement slices — a CS-weighted, theater-balancing slice (side balance 14US/5CS -> 14US/8CS): Berry Benson (a corporal of the 1st South Carolina in McGowan's Brigade, A. P. Hill's Light Division, wounded at Chancellorsville — the celebrated scout who tunneled out of Elmira); John W. 'Johnny' Green (an enlisted man of the 9th Kentucky 'Orphan Brigade' who rose to regimental sergeant-major, at Chickamauga in Breckinridge's Division of Polk's wing); and William H. Tunnard (a sergeant of the 3rd Louisiana who held the 3rd Louisiana Redan at Vicksburg and wrote its regimental history 'A Southern Record' — the FIRST Vicksburg Confederate record). D289 added the seventeenth-nineteenth (Stanley, Dooley, De Castro); D239 added the sixteenth (Casler); D222 added the fifteenth (Webb). Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
+    "note": "D293 adds the twenty-sixth narrow sourced replacement slice: John S. Jackman, a Private of Company B, 9th Kentucky Infantry, Helm's Kentucky 'Orphan Brigade,' in Breckinridge's Division at Chickamauga, replacing the still-open private slot beside D290's John W. Green NCO row. D291 added the twenty-third-twenty-fifth records (Giles, Chambers, Houston), all CS-Western; D290 added the twentieth-twenty-second (Benson, Green, Tunnard); D289 added the seventeenth-nineteenth (Stanley, Dooley, De Castro). Side balance after D293 is 14US/12CS. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
   },
   "schema": "cw_soldier_replacements_v1",
   "records": [
@@ -1893,6 +1893,83 @@
       ],
       "sourceNote": "Ships at Private (his enlisted rank), placed for his documented 2nd Texas service -- not his famous father; wounded on Shiloh's second day (7 April 1862); no portrait. TSHA and Wikipedia anchor the Bible that stopped a ball, being left for dead, and his Camp Douglas captivity; the OOB is Jackson's Brigade, Withers' Division, Bragg's Corps. Ratings Inferred.",
       "bio": "Sam Houston Jr., eldest son of the Texas founder and Unionist governor Sam Houston -- removed from office for refusing to swear loyalty to the Confederacy -- enlisted in August 1861 as a private in the 'Bayland Guards,' Company C of the 2nd Texas Infantry. At Shiloh the regiment fought in John K. Jackson's Brigade of Withers' Division, Bragg's Corps, storming Stuart's camp and the Hornet's Nest on 6 April; on the second day, 7 April, it was ambushed and Houston was critically wounded and left for dead (some accounts place his wounding on the first day). A Bible in his pocket -- inscribed by his mother, Margaret -- stopped a second ball, and a Union clergyman who found the Bible and her letter had him carried off; he spent about six months a prisoner, part of it at Camp Douglas, before exchange and a medical discharge. This replacement fills a Shiloh Confederate soldier's-story slot at his enlisted private rank without asserting a portrait, echoing the war's fluid loyalties beside the Stanley record."
+    },
+    {
+      "pid": "person_chickamauga_cs_9ky_jackman",
+      "replacePid": "ss:chickamauga:CS:cs_breck_rock:pvt",
+      "name": "John S. Jackman",
+      "side": "CS",
+      "rank": "Private",
+      "branch": "inf",
+      "role": "private soldier",
+      "year": 1863,
+      "provenance": "Verified",
+      "team": {
+        "side": "CS",
+        "army": "Army of Tennessee",
+        "corps": "Polk's Wing",
+        "division": "Breckinridge's Division",
+        "brigade": "Helm's Kentucky 'Orphan Brigade'",
+        "regiment": "9th Kentucky Infantry",
+        "company": "Company B"
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Diary of a Confederate Soldier: John S. Jackman of the Orphan Brigade",
+          "author": "John S. Jackman; edited by William C. Davis",
+          "repository": "University of South Carolina Press",
+          "locator": "Book page / overview",
+          "url": "https://uscpress.com/Diary-of-a-Confederate-Soldier",
+          "type": "primary",
+          "note": "Identifies Jackman's diary as an enlisted-man source from the Confederate Army of Tennessee's 9th Kentucky Brigade / Orphan Brigade."
+        },
+        {
+          "title": "Jas. S. Jackman",
+          "author": "University of Louisville Libraries",
+          "repository": "Law Library of the Louis D. Brandeis School of Law, University of Louisville",
+          "locator": "Digital Collections item john_s_jackman",
+          "url": "https://digital.library.louisville.edu/concern/images/john_s_jackman?locale=en",
+          "type": "secondary",
+          "note": "States Jackman enrolled in the Ninth Kentucky Infantry of the First Kentucky Brigade and fought at Shiloh, Vicksburg, and Chickamauga."
+        },
+        {
+          "title": "The Atlanta Campaign: Dalton to Cassville, May 1-19, 1864",
+          "author": "David A. Powell",
+          "repository": "Savas Beatie excerpt",
+          "locator": "Excerpt p. 11 / PDF lines naming 'Pvt. John Jackman of Company B, the Confederate 9th Kentucky'",
+          "url": "https://www.savasbeatie.com/content/Titles/Spring%202024/Powell%20Arlanta%20Campaign/EXCERPT_9781611216950_Atlanta%20Campaign%20V1.pdf",
+          "type": "secondary",
+          "note": "Identifies Jackman as a private in Company B, Confederate 9th Kentucky, and cites the Davis edition of his diary."
+        },
+        {
+          "title": "Chickamauga Campaign, Confederate Order of Battle",
+          "author": "Dave Powell / ACWScots",
+          "repository": "ACWScots",
+          "locator": "Breckinridge's Division, Helm's Brigade, 9th Kentucky",
+          "url": "https://www.acwscots.co.uk/Shotguns/chickamaugaaot.htm",
+          "type": "secondary",
+          "note": "Places the 9th Kentucky Infantry in Helm's Brigade, Breckinridge's Division, D. H. Hill's Corps at Chickamauga."
+        }
+      ],
+      "sourceNote": "Ships at Private in the still-open private slot; Savas Beatie identifies Pvt. John Jackman of Co. B, Confederate 9th Kentucky; Louisville places him in the 9th Kentucky and at Shiloh, Vicksburg, and Chickamauga; the OOB places the regiment in Helm's Brigade/Breckinridge's Division. No portrait asset. Ratings Inferred.",
+      "bio": "John S. Jackman, a Kentuckian born in 1841, served as a private in Company B of the Confederate 9th Kentucky Infantry, part of the Kentucky 'Orphan Brigade.' His diary, edited by William C. Davis, is one of the fullest enlisted-man accounts from the Army of Tennessee. At Chickamauga his regiment served in Helm's Brigade, Breckinridge's Division, on the Confederate right; Helm was mortally wounded during the assault on the Union breastworks near the LaFayette Road. This replacement fills the private slot beside the existing John W. Green NCO record, giving the same modeled division a second sourced enlisted voice without asserting a portrait or elevating Jackman above his documented private rank."
     }
   ],
   "_template": {

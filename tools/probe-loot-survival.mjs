@@ -197,11 +197,11 @@ const SETUP = `(() => {
       return { people:reg.people.length, brigades:reg.brigades, authored:reg.authored, generated:reg.generated, first:sample.name };
     });
 
-    step('D291 REPLACEMENTS: twenty-five canonical sourced records overlay generated slots and hostile packs still reject', function(){
+    step('D293 REPLACEMENTS: twenty-six canonical sourced records overlay generated slots and hostile packs still reject', function(){
       var C=mkC('US'); _t1InitAll(C);
       var original=GAME_DATA['soldier-replacements'];
       if(!original || original.schema!=='cw_soldier_replacements_v1' || !Array.isArray(original.records)) throw new Error('missing D152 canonical pack');
-      if(original.records.length!==25) throw new Error('canonical D291 pack should ship exactly twenty-five records, got '+original.records.length);
+      if(original.records.length!==26) throw new Error('canonical D293 pack should ship exactly twenty-six records, got '+original.records.length);
       var canonByPid={}, canonReplace={};
       for(var cr=0;cr<original.records.length;cr++){ canonByPid[original.records[cr].pid]=original.records[cr]; canonReplace[original.records[cr].replacePid]=1; }
       if(!canonByPid.person_bullrun_us_2ri_rhodes || canonByPid.person_bullrun_us_2ri_rhodes.replacePid!=='ss:bullrun1:US:us_burnside:pvt') throw new Error('missing D154 Rhodes canonical record: '+JSON.stringify(original.records));
@@ -229,15 +229,16 @@ const SETUP = `(() => {
       if(!canonByPid.person_chickamauga_cs_4tx_giles || canonByPid.person_chickamauga_cs_4tx_giles.replacePid!=='ss:chickamauga:CS:cs_law_gap:nco') throw new Error('missing D291 Giles canonical record: '+JSON.stringify(original.records));
       if(!canonByPid.person_vicksburg_cs_46ms_chambers || canonByPid.person_vicksburg_cs_46ms_chambers.replacePid!=='ss:vicksburg:CS:cs_smith_stockade:nco') throw new Error('missing D291 Chambers canonical record: '+JSON.stringify(original.records));
       if(!canonByPid.person_shiloh_cs_2tx_houston || canonByPid.person_shiloh_cs_2tx_houston.replacePid!=='ss:shiloh:CS:cs_bragg_corps:pvt') throw new Error('missing D291 Houston canonical record: '+JSON.stringify(original.records));
+      if(!canonByPid.person_chickamauga_cs_9ky_jackman || canonByPid.person_chickamauga_cs_9ky_jackman.replacePid!=='ss:chickamauga:CS:cs_breck_rock:pvt') throw new Error('missing D293 Jackman canonical record: '+JSON.stringify(original.records));
       GAME_DATA['soldier-replacements']={schema:'cw_soldier_replacements_v1',records:[]};
       var rawBase=ssPersonRegistry(C);
       GAME_DATA['soldier-replacements']=original;
       var canonical=ssValidateSoldierReplacementPack(original,{basePeople:rawBase.people});
-      if(!canonical.ok || canonical.records.length!==25) throw new Error('canonical D291 pack should validate against raw generated registry: '+JSON.stringify(canonical));
+      if(!canonical.ok || canonical.records.length!==26) throw new Error('canonical D293 pack should validate against raw generated registry: '+JSON.stringify(canonical));
       var base=ssPersonRegistry(C);
       if(base.people.length!==rawBase.people.length) throw new Error('canonical replacement should preserve registry length');
-      if(base.replacements.applied!==25 || base.replacements.rejected!==0) throw new Error('canonical replacement should apply twenty-five rows cleanly: '+JSON.stringify(base.replacements));
-      if(base.generated!==rawBase.generated-25 || base.authored!==rawBase.authored+25) throw new Error('canonical replacement should move twenty-five rows generated->authored: '+JSON.stringify({raw:{a:rawBase.authored,g:rawBase.generated},base:{a:base.authored,g:base.generated}}));
+      if(base.replacements.applied!==26 || base.replacements.rejected!==0) throw new Error('canonical replacement should apply twenty-six rows cleanly: '+JSON.stringify(base.replacements));
+      if(base.generated!==rawBase.generated-26 || base.authored!==rawBase.authored+26) throw new Error('canonical replacement should move twenty-six rows generated->authored: '+JSON.stringify({raw:{a:rawBase.authored,g:rawBase.generated},base:{a:base.authored,g:base.generated}}));
       var rhodesOld=ssFindPerson(C,'ss:bullrun1:US:us_burnside:pvt');
       var rhodes=ssFindPerson(C,'person_bullrun_us_2ri_rhodes');
       if(!rhodes || !rhodesOld || rhodesOld.pid!==rhodes.pid) throw new Error('Rhodes alias lookup failed');
@@ -433,6 +434,14 @@ const SETUP = `(() => {
       if(!houston.bio || houston.bio.indexOf('Shiloh')<0 || houston.bio.indexOf('2nd Texas')<0 || houston.bio.indexOf('Bible')<0 || houston.bio.indexOf('Camp Douglas')<0 || !houston.sourceNote || houston.sources.length<4) throw new Error('Houston source/bio payload missing');
       if(houston.sourceNote.indexOf('Ships at Private')<0 || houston.sourceNote.indexOf('no portrait')<0) throw new Error('Houston honesty caveats missing: '+houston.sourceNote);
       if(houston.portrait) throw new Error('Houston should not assert an unverified portrait: '+JSON.stringify(houston.portrait));
+      var jackmanOld=ssFindPerson(C,'ss:chickamauga:CS:cs_breck_rock:pvt');
+      var jackman=ssFindPerson(C,'person_chickamauga_cs_9ky_jackman');
+      if(!jackman || !jackmanOld || jackmanOld.pid!==jackman.pid) throw new Error('Jackman alias lookup failed');
+      if(jackman.generated || !jackman.replacement || jackman.provenance!=='Verified' || jackman.name!=='John S. Jackman') throw new Error('Jackman row not sourced/verified: '+JSON.stringify(jackman));
+      if(jackman.rank!=='Private' || jackman.side!=='CS' || jackman.branch!=='inf' || jackman.team.regiment!=='9th Kentucky Infantry' || jackman.team.company!=='Company B' || jackman.team.brigade!=="Helm's Kentucky 'Orphan Brigade'" || jackman.team.division!=="Breckinridge's Division" || jackman.team.corps.indexOf('Polk')<0) throw new Error('Jackman rank/unit mismatch: '+JSON.stringify(jackman.team));
+      if(!jackman.bio || jackman.bio.indexOf('Chickamauga')<0 || jackman.bio.indexOf('Orphan Brigade')<0 || jackman.bio.indexOf('Breckinridge')<0 || jackman.bio.indexOf('private slot beside')<0 || !jackman.sourceNote || jackman.sources.length<4) throw new Error('Jackman source/bio payload missing');
+      if(jackman.sourceNote.indexOf('Ships at Private')<0 || jackman.sourceNote.indexOf('No portrait')<0) throw new Error('Jackman honesty caveats missing: '+jackman.sourceNote);
+      if(jackman.portrait) throw new Error('Jackman should not assert an unverified portrait: '+JSON.stringify(jackman.portrait));
       var target=findPerson(rawBase,function(p){ return p.generated && p.side==='US' && p.pid.indexOf(':pvt')>0 && !canonReplace[p.pid] && p.team && p.team.army; });
       var authored=findPerson(rawBase,function(p){ return !p.generated && p.provenance==='Verified'; });
       if(!target) throw new Error('no generated replacement target found');
@@ -471,7 +480,7 @@ const SETUP = `(() => {
       }
       var restored=ssPersonRegistry(C);
       if(restored.generated!==base.generated || restored.authored!==base.authored) throw new Error('canonical pack restore changed registry');
-      return { canonicalRecords:original.records.length, rhodes:rhodes.pid, mccarter:mccarter.pid, watkins:watkins.pid, chamberlain:chamberlain.pid, cushing:cushing.pid, vincent:vincent.pid, stillwell:stillwell.pid, cook:cook.pid, howe:howe.pid, waller:waller.pid, benjamin:benjamin.pid, barlow:barlow.pid, worsham:worsham.pid, ballou:ballou.pid, webb:webb.pid, casler:casler.pid, stanley:stanley.pid, dooley:dooley.pid, decastro:decastro.pid, benson:benson.pid, green:green.pid, tunnard:tunnard.pid, giles:giles.pid, chambers:chambers.pid, houston:houston.pid, target:target.pid, applied:base.replacements.applied, hostileRejected:true };
+      return { canonicalRecords:original.records.length, rhodes:rhodes.pid, mccarter:mccarter.pid, watkins:watkins.pid, chamberlain:chamberlain.pid, cushing:cushing.pid, vincent:vincent.pid, stillwell:stillwell.pid, cook:cook.pid, howe:howe.pid, waller:waller.pid, benjamin:benjamin.pid, barlow:barlow.pid, worsham:worsham.pid, ballou:ballou.pid, webb:webb.pid, casler:casler.pid, stanley:stanley.pid, dooley:dooley.pid, decastro:decastro.pid, benson:benson.pid, green:green.pid, tunnard:tunnard.pid, giles:giles.pid, chambers:chambers.pid, houston:houston.pid, jackman:jackman.pid, target:target.pid, applied:base.replacements.applied, hostileRejected:true };
     });
 
     step('JOURNEY: play-as-anyone start enables survival and stores a saveable selected person without mutating canonical data', function(){
