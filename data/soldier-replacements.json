@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "decision": "D293",
+    "decision": "D294",
     "schema": "cw_soldier_replacements_v1",
     "scope": "Citation-grade replacements for generated Soldier's Story representative rows.",
     "provenance": "Inferred",
-    "note": "D293 adds the twenty-sixth narrow sourced replacement slice: John S. Jackman, a Private of Company B, 9th Kentucky Infantry, Helm's Kentucky 'Orphan Brigade,' in Breckinridge's Division at Chickamauga, replacing the still-open private slot beside D290's John W. Green NCO row. D291 added the twenty-third-twenty-fifth records (Giles, Chambers, Houston), all CS-Western; D290 added the twentieth-twenty-second (Benson, Green, Tunnard); D289 added the seventeenth-nineteenth (Stanley, Dooley, De Castro). Side balance after D293 is 14US/12CS. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
+    "note": "D294 adds the twenty-seventh narrow sourced replacement slice: John Camden West, a Private of Company E, 4th Texas Infantry, Robertson's Texas Brigade, Hood's Division (Law commanding) at Chickamauga, replacing the open Law/Hood division private slot beside D291's Val C. Giles NCO row. D293 added John S. Jackman as the twenty-sixth record; D291 added Giles, Chambers, and Houston; D290 added Benson, Green, and Tunnard; D289 added Stanley, Dooley, and De Castro. Side balance after D294 is 14US/13CS. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
   },
   "schema": "cw_soldier_replacements_v1",
   "records": [
@@ -1970,6 +1970,92 @@
       ],
       "sourceNote": "Ships at Private in the still-open private slot; Savas Beatie identifies Pvt. John Jackman of Co. B, Confederate 9th Kentucky; Louisville places him in the 9th Kentucky and at Shiloh, Vicksburg, and Chickamauga; the OOB places the regiment in Helm's Brigade/Breckinridge's Division. No portrait asset. Ratings Inferred.",
       "bio": "John S. Jackman, a Kentuckian born in 1841, served as a private in Company B of the Confederate 9th Kentucky Infantry, part of the Kentucky 'Orphan Brigade.' His diary, edited by William C. Davis, is one of the fullest enlisted-man accounts from the Army of Tennessee. At Chickamauga his regiment served in Helm's Brigade, Breckinridge's Division, on the Confederate right; Helm was mortally wounded during the assault on the Union breastworks near the LaFayette Road. This replacement fills the private slot beside the existing John W. Green NCO record, giving the same modeled division a second sourced enlisted voice without asserting a portrait or elevating Jackman above his documented private rank."
+    },
+    {
+      "pid": "person_chickamauga_cs_4tx_west",
+      "replacePid": "ss:chickamauga:CS:cs_law_gap:pvt",
+      "name": "John Camden West",
+      "side": "CS",
+      "rank": "Private",
+      "branch": "inf",
+      "role": "private soldier",
+      "year": 1863,
+      "provenance": "Verified",
+      "team": {
+        "side": "CS",
+        "army": "Army of Tennessee (Longstreet's Corps, on loan from the Army of Northern Virginia)",
+        "corps": "Longstreet's Corps (First Corps, ANV)",
+        "division": "Hood's Division (Law commanding, 20 Sep)",
+        "brigade": "Robertson's Texas Brigade",
+        "regiment": "4th Texas Infantry",
+        "company": "Company E"
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "West, John Camden, Jr.",
+          "author": "Vivian Elizabeth Smyrl",
+          "repository": "Handbook of Texas Online",
+          "locator": "Civil War service paragraph",
+          "url": "https://www.tshaonline.org/handbook/entries/west-john-camden-jr",
+          "type": "secondary",
+          "note": "Verifies West enlisted as a private in Company E, 4th Texas / Hood's Texas Brigade; reenlisted in April 1863 and fought at Gettysburg, Chickamauga, and Knoxville."
+        },
+        {
+          "title": "A Texan in Search of a Fight",
+          "author": "John C. West",
+          "repository": "The Online Books Page / HathiTrust",
+          "locator": "Title listing: diary and letters of a private soldier in Hood's Texas Brigade",
+          "url": "https://onlinebooks.library.upenn.edu/webbin/book/lookupid?key=ha000464387",
+          "type": "primary",
+          "note": "Catalogs West's own diary and letters as a private-soldier account in Hood's Texas Brigade."
+        },
+        {
+          "title": "John C. West--A Texan in Search of a Fight",
+          "author": "John C. West",
+          "repository": "Daily Observations from The Civil War",
+          "locator": "Letter No. XVI, camp near Chattanooga, 24 September 1863",
+          "url": "https://dotcw.com/john-c-west-54/",
+          "type": "primary",
+          "note": "Transcribes West's Chickamauga letter naming Company E casualties and describing his company's two days of close fighting."
+        },
+        {
+          "title": "4th Regiment, Texas Infantry",
+          "author": "National Park Service",
+          "repository": "Civil War Soldiers and Sailors System",
+          "locator": "Battle Unit Details / overview",
+          "url": "https://www.nps.gov/civilwar/search-battle-units-detail.htm?battleUnitCode=CTX0004RI01",
+          "type": "secondary",
+          "note": "Places the 4th Texas in Hood's Texas Brigade and confirms it served with Longstreet at Chickamauga."
+        },
+        {
+          "title": "Battle of Chickamauga order of battle: Confederate",
+          "author": "Wikipedia contributors",
+          "repository": "Wikipedia",
+          "locator": "20 September 1863, Longstreet's Corps, Hood's Division, Robertson's Brigade",
+          "url": "https://en.wikipedia.org/wiki/Battle_of_Chickamauga_order_of_battle:_Confederate",
+          "type": "secondary",
+          "note": "Places the 4th Texas in Robertson's Brigade, Hood's Division, with Evander M. Law commanding the division on 20 September 1863."
+        }
+      ],
+      "sourceNote": "Ships at Private; TSHA verifies West reenlisted in Company E, 4th Texas and fought at Chickamauga; his diary title and Chickamauga letter keep this a private-soldier account; NPS/Wikipedia anchor the 4th Texas in Hood's/Robertson's brigade under Law's Division at Chickamauga. No portrait asset. Ratings Inferred.",
+      "bio": "John Camden West, a Texas lawyer who gave up Confederate district-attorney appointments to see field service, reenlisted in Company E of the 4th Texas Infantry in April 1863. At Chickamauga his regiment served in Robertson's Texas Brigade, Hood's Division, with Evander Law commanding the division. His September 24 letter from near Chattanooga described two days of close woods fighting, Company E casualties, and a bayonet handle struck by a bullet after he removed it from his musket. This replacement fills the private slot beside Val C. Giles in the same modeled Law/Hood division without asserting a portrait, company command, or any rank above private."
     }
   ],
   "_template": {
