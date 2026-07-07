@@ -5,7 +5,9 @@ import "./guard-probe-browser.mjs";
 // artifacts (the E42 defect: the rating ignored the authored OOB); under ONE battle-truth model a
 // dominant delegating Union completes the chain WITH bounded recoveries (First Bull Run repeats
 // history, the recovery converges), while a dominant delegating Confederacy progresses deep into the
-// late war and honestly STALLS at the terminal odds (Nashville/Bentonville) — the out at that wall
+// 1864 Overland Campaign and honestly STALLS where the odds turn decisively against it (E59/D288:
+// ~Spotsylvania, idx 17 — the odds-preserving skirmish forces sharpened the attrition wall inward
+// from the old Nashville/Bentonville terminal-odds stall) — the out at that wall
 // is TAKE COMMAND (fight it in either engine); the political victoryReady path exists (exercised
 // below) but is not guaranteed reachable by delegation alone (losses net-stiffen Northern resolve
 // via vicOnResolve — the D277 panel's history-lens finding). Verifies per-
@@ -148,7 +150,7 @@ const SETUP = `(() => {
       if(r.maxConsecLoss>2) throw new Error('pacing: a delegated loss should recover within 2 attempts, saw '+r.maxConsecLoss);
       if(!r.firstInterstitial) throw new Error('President interstitial never appeared');
       return r; });
-    step('CS dominant delegation progresses DEEP into the late war; the terminal stall is honest (one battle-truth)', function(){
+    step('CS dominant delegation progresses DEEP into the 1864 Overland Campaign; the stall is honest (one battle-truth)', function(){
       clearOverlays();
       var r=driveChain('CS', 40);
       if(r.wins<15) throw new Error('CS delegation should win most of the early/mid war, got '+r.wins);
@@ -157,7 +159,12 @@ const SETUP = `(() => {
         if(hc.indexOf('Final Reckoning')<0) throw new Error('completedWar without the final graded report — spurious null campaign');
         return r;
       }
-      if(r.maxIdx<20) throw new Error('CS delegation should reach the late war (idx>=20 of '+r.chainLen+'), got '+r.maxIdx);
+      // E59/D288: the odds-preserving forces sharpen the CS attrition wall inward to ~Spotsylvania
+      // (measured maxIdx 17 of 28; require >=16 = the 1864 Overland Campaign, margin 1). The OLD >=20
+      // pin rode the compressed coin-flip fields that let a dominant CS brute-force past Gettysburg/
+      // Chickamauga; the honest wall is now Grant's Overland attrition. The teaching is unchanged
+      // (win the early/mid war, then the numbers catch up — take command or the political path).
+      if(r.maxIdx<16) throw new Error('CS delegation should reach the 1864 Overland Campaign (idx>=16 of '+r.chainLen+'), got '+r.maxIdx);
       G.campaign=null; clearOverlays();   // release the stalled war before the next step
       return r; });
     step('loss recovery branch holds idx, flips attacker, and CONVERGES back onto the chain', function(){ clearOverlays(); return fakeLossThenRecovery(); });

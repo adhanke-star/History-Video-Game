@@ -229,14 +229,43 @@ function _fldCampaignSkirmishParams(bd, C) {
   var ps = (C.side === "CS") ? "CS" : "US", es = fldEnemy(ps);
   var totP = (ps === "US") ? (bd.us || 18000) : (bd.cs || 18000);
   var totE = (es === "US") ? (bd.us || 18000) : (bd.cs || 18000);
-  function _skCnt(t) { return Math.max(2, Math.min(5, 2 + Math.round((t - 15000) / 15000))); }
-  function _skMen(t, n) { return Math.max(1300, Math.min(2100, Math.round(t / (n * 5)))); }
-  var cP = _skCnt(totP), cE = _skCnt(totE);
+  // E59 (D288) — ODDS-PRESERVING brigade scale. The OLD scheme clamped brigade COUNT to [2,5] and
+  // men-per-brigade to [1300,2100] INDEPENDENTLY, so the two sides' effective men were each pinned to
+  // [2600,10500] with no regard for their RATIO: Fort Sumter's authored 6:1 collapsed to 2600-vs-2600
+  // (a coin flip that took a fresh delegate up to 9 attempts to win), and Fredericksburg's 1.58:1
+  // collapsed to 10500-vs-10500 (both sides saturated -> 1:1). The field is still a handful of
+  // brigades a side (count [2,5] x men [1300,2100]; effective men per side [2600,10500]; the loss
+  // FRACTION is what feeds back, absolute men stay an abstraction), but the two sides are now derived
+  // JOINTLY (_skForces) so the AUTHORED men ratio (bd.us:bd.cs) SURVIVES -- proportionally, up to a
+  // capped SK_MAX_ODDS. The cap is deliberate and symmetric: the campaign advances on a WIN, so a
+  // field the disadvantaged side cannot contest would SOFT-LOCK the delegated chain at the first
+  // historical rout (measured E59 A/B: full preservation strands the delegated US at Sumter and the
+  // CS at Kernstown; 1.8 keeps the US completing at mcl 1 and the CS reaching Spotsylvania, while a
+  // walkover reads as a decisive ~1.8:1 edge, no longer a coin flip). This is an INPUT-fidelity
+  // ceiling of the brigade abstraction, NEVER a D74 output gate -- the sim still decides freely, and
+  // it is shared byte-for-byte by the fought procedural path AND the PM3 headless auto-resolve (D277).
+  var SK_MAX_ODDS = 1.8;
+  function _skDecomp(eff) {   // effective men -> {count in [2,5], men in [1300,2100]}, count*men ~= eff (ceil keeps men <= 2100)
+    eff = Math.max(2600, Math.min(10500, eff));
+    var n = Math.max(2, Math.min(5, Math.ceil(eff / 2100)));
+    return { count: n, men: Math.max(1300, Math.min(2100, Math.round(eff / n))) };
+  }
+  function _skForces(a, b) {   // authored totals (a = this side, b = the other) -> this side's {count, men}, ratio-true within the cap
+    a = Math.max(1, a); b = Math.max(1, b);
+    var big = Math.max(a, b), small = Math.min(a, b);
+    var effBig = Math.max(3400, Math.min(10500, 3400 + big * 0.13));   // battle scale: a grand field fills the 5-brigade line
+    var ratio = Math.min(SK_MAX_ODDS, big / small);                    // the represented odds, capped (symmetric)
+    var effSmall = effBig / ratio;
+    if (effSmall < 2600) { effSmall = 2600; effBig = Math.min(10500, 2600 * ratio); }   // a floored weak side lifts the strong side to hold the odds
+    effSmall = Math.max(2600, Math.min(effBig, effSmall));
+    return _skDecomp((a >= b) ? effBig : effSmall);
+  }
+  var fP = _skForces(totP, totE), fE = _skForces(totE, totP);
   var feat = (bd.feat || "") + "";
   var terrain = /ridge|hills/.test(feat) ? "ridge" : (/woods|swamp/.test(feat) ? "woods" : "open");
   return {
     playerSide: ps, attacker: bd.atk || ps, year: bd.year || 1862,
-    countPlayer: cP, countEnemy: cE, menPlayer: _skMen(totP, cP), menEnemy: _skMen(totE, cE),
+    countPlayer: fP.count, countEnemy: fE.count, menPlayer: fP.men, menEnemy: fE.men,
     weaponPlayer: _fldYearWeapon(bd.year, ps), weaponEnemy: _fldYearWeapon(bd.year, es),
     terrain: terrain, holdToWin: 36, name: bd.name || "Engagement", year2: bd.year,
   };

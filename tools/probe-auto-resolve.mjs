@@ -90,11 +90,19 @@ const SETUP = `(() => {
       if(!(o2.pFrac<o1.pFrac)) throw new Error('repeaters should CUT player losses: '+o1.pFrac+' -> '+o2.pFrac);
       return { emptyE:Math.round(o1.eFrac*1000)/1000, spencerE:Math.round(o2.eFrac*1000)/1000, emptyP:Math.round(o1.pFrac*1000)/1000, spencerP:Math.round(o2.pFrac*1000)/1000 }; });
 
-    step('PL-3: Henrys at the Wilderness 1864 FLIP a delegated loss into a hold win (fresh war, same seed)', function(){
-      var C1=mkC('US'); C1.idx=18; C1.armory.loadout={};          var o1=_arRunHeadlessSim(C1);
-      var C2=mkC('US'); C2.idx=18; C2.armory.loadout={henry:1.0}; var o2=_arRunHeadlessSim(C2);
-      if(!(o1.winnerSide==='CS' && !o1.win)) throw new Error('empty-armory Wilderness should be a delegated loss, got '+o1.winnerSide);
-      if(!(o2.winnerSide==='US' && o2.win)) throw new Error('a Henry-armed line should FLIP the Wilderness, got '+o2.winnerSide);
+    step('PL-3: Henrys at Fort Donelson 1862 FLIP a delegated loss into a capture (fresh war, same seed)', function(){
+      // E59 (D288) re-home: the odds-preserving forces make the Wilderness (US attacks the true 1.67:1)
+      // a US win even with an empty armory, so the old idx-18 flip is gone; Fort Donelson (the US
+      // attacks the historical ~1.19:1 for the fort) is the ONLY clean empty->loss / Henry->win flip
+      // left in the US chain (measured, .tmp/ab-e59-plflip.json). Deterministic (war-state-pure seed),
+      // not flaky. A Henry at Feb-1862 Donelson is a mild accepted anachronism (patented 1860, in
+      // production 1862); this tooth tests the PL-3 MECHANISM and the Gettysburg spencer-DELTA tooth
+      // below carries the robust direction proof.
+      var C1=mkC('US'); C1.idx=3; C1.armory.loadout={};          var o1=_arRunHeadlessSim(C1);
+      var C2=mkC('US'); C2.idx=3; C2.armory.loadout={henry:1.0}; var o2=_arRunHeadlessSim(C2);
+      if(o1.sim.seed!==o2.sim.seed) throw new Error('the armory must not move the seed — same field, better arms');
+      if(!(o1.winnerSide==='CS' && !o1.win)) throw new Error('empty-armory Fort Donelson should be a delegated loss, got '+o1.winnerSide);
+      if(!(o2.winnerSide==='US' && o2.win)) throw new Error('a Henry-armed line should FLIP Fort Donelson to a US win, got '+o2.winnerSide);
       return { empty:o1.winnerSide+'/'+o1.sim.winBy, henry:o2.winnerSide+'/'+o2.sim.winBy }; });
 
     step('sub-decision (D277): a delegated First Bull Run runs the FAITHFUL bullrun1 scenario and repeats history (CS holds)', function(){
