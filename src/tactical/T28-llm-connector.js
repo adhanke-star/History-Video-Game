@@ -95,19 +95,27 @@ var LLM_PRESETS = {
   },
 };
 
-/* The static system prompt (law §3.4). Slice 2 asks ONLY for orders JSON (voice
-   / persona is slice 3). Grim-professional register is set here for slice 3; the
-   anti-Lost-Cause charter rides too so any future CS persona inherits it. */
+/* The static system prompt (law §3.4 + §5 the voice/gravity law). Asks for orders
+   JSON plus an OPTIONAL ≤160-char in-character "dispatch" line. The §5 containment
+   stack is bound here: one-way facts (the model may phrase only what the digest
+   shows — the SCHEMA carries no figure/date/citation/rank/unit-history field), the
+   grim-professional register, and the anti-Lost-Cause charter (so any CS persona
+   inherits it). Labeling ("Dramatization"), somber-scene suppression, and
+   failure=silence live on the RENDER side (fldLlmRenderDispatch). */
 var LLM_SYSTEM = [
   "You command one army in a real-time American Civil War brigade battle. You are the enemy general the human player faces.",
   "You are given a JSON battlefield digest of ONLY what your own side can see. Enemy brigades you have not scouted are simply absent — you can be deceived; do not assume what you cannot see.",
-  "Reply with ONLY a JSON object of orders for your own brigades, no prose, no markdown:",
-  '{ "orders": [ { "id": "<your brigade id>", "type": "move"|"hold"|"charge", "tx": <x in yards>, "tz": <y in yards>, "formation": "line"|"column" } ] }',
+  "Reply with ONLY a JSON object, no prose, no markdown:",
+  '{ "orders": [ { "id": "<your brigade id>", "type": "move"|"hold"|"charge", "tx": <x in yards>, "tz": <y in yards>, "formation": "line"|"column" } ], "dispatch": "<optional short in-character line>" }',
   "Rules: coordinates are yards on a field about 1200 wide by 900 deep. \"move\" and \"charge\" need tx/tz; \"hold\" holds in place (omit tx/tz). \"line\" maximizes fire; \"column\" marches faster. Only order YOUR brigades (the ids under \"own\"). Seize or deny the objective; concentrate force; use terrain and cover; exploit disorder.",
-  "Register: a grim, professional 1860s field commander. Never glorify secession or slavery; no Lost-Cause tropes; no gloating.",
+  "Register: a grim, professional 1860s field commander. Never glorify secession or slavery; no Lost-Cause tropes; no gloating, banter, or joking.",
+  "The optional \"dispatch\" is ONE short in-character sentence (160 characters or fewer) — a field order or report in your own voice. Speak ONLY of what the digest shows you; never invent casualty figures, dates, place names, unit histories, ranks, or citations. If you have nothing grave and fitting to say, omit it.",
 ].join("\n");
 
-/* Order schema for Adapter B's guaranteed-parse json_schema output (Anthropic). */
+/* Order schema for Adapter B's guaranteed-parse json_schema output (Anthropic).
+   The optional voice dispatch (law §5) is bounded to 160 chars HERE, at the
+   schema; it carries NO figure/date/citation/rank/unit-history field (one-way
+   facts, §5.1). T27's wall re-clamps regardless (Adapter A can't enforce a schema). */
 var LLM_PLAN_SCHEMA = {
   type: "object", additionalProperties: false, required: ["orders"],
   properties: {
@@ -124,8 +132,98 @@ var LLM_PLAN_SCHEMA = {
         },
       },
     },
+    dispatch: { type: "string", maxLength: 160 },
   },
 };
+
+/* The somber battle set (law §5.4) — a local mirror of H0_SOMBER_SCENES
+   (98-h0-main-menu.js: {antietam, gettysburg, chancellorsville}, the D280/D282
+   dead-in-frame casualty plates). On these scenes NO live dispatch text renders —
+   orders still execute; silence stands in. Kept local (H0_SOMBER_SCENES is
+   module-scoped in 98-h0); if that set changes, mirror it here. */
+var LLM_SOMBER_SCENES = { antietam: 1, gettysburg: 1, chancellorsville: 1 };
+function fldLlmSceneIsSomber(sc) {
+  if (!sc) return false;
+  var s = String(sc).toLowerCase();
+  if (LLM_SOMBER_SCENES[s]) return true;
+  for (var k in LLM_SOMBER_SCENES) if (LLM_SOMBER_SCENES.hasOwnProperty(k) && s.indexOf(k) >= 0) return true;  // phase-suffixed / prefixed / substring ids
+  return false;
+}
+/* The live somber gate — checks the field's scenario id AND the scenData id/name.
+   __FIELD.scenario is the authoritative launch id for direct/registry launches
+   (bullrun sets 'bullrun1'), but a procedurally-launched campaign battle can carry
+   the default 'sandbox'; checking scenData.id/name too is fail-safe belt-and-braces
+   (it only ADDS suppression — never renders live text where the id says somber). */
+function fldLlmSomberNow() {
+  if (typeof __FIELD === "undefined" || !__FIELD) return false;
+  if (fldLlmSceneIsSomber(__FIELD.scenario)) return true;
+  var sd = __FIELD.scenData;
+  return !!(sd && (fldLlmSceneIsSomber(sd.id) || fldLlmSceneIsSomber(sd.name)));
+}
+
+/* PERSONA / DIFFICULTY SEASONING (law §3.4 + §7.4) — INPUT texture ONLY. A persona
+   note may nudge COMMAND STYLE; it must NEVER encode a target outcome ("ensure the
+   Confederates hold" is a D74 violation in prompt form). fldLlmPersonaLine is a
+   PURE map from a commander's documented aggression (0..100) to a style clause.
+   fldLlmPersonaFor resolves an OPTIONAL per-general temperament from generals.json
+   (GAME_DATA.generals) for the commanded side, fully null-guarded — no match →
+   "" (the base system prompt stands). It reads the battle's NAMED field/army
+   leaders first (scenData.leaders, whose `short` surnames match the generals
+   roster — e.g. Bull Run CS = Beauregard/Johnston/Jackson), in list order (army
+   commander first), then brigade commanders (u.commander) as a fallback. Only the
+   ICONIC roster (10/side) carries aggression, so this is honestly best-effort: it
+   seasons when a rostered general commands, and is silent (inert) otherwise. */
+function fldLlmPersonaLine(aggr) {
+  if (typeof aggr !== "number" || !isFinite(aggr)) return "";
+  var style = (aggr >= 65) ? "bold and offensive — you seek the decision by maneuver and concentrated attack"
+    : (aggr <= 35) ? "deliberate and protective of your men — you maneuver with care and do not squander a brigade"
+    : "measured — you balance caution with initiative as the field allows";
+  return "Command temperament: " + style + ".";
+}
+/* lowercased surname token of a "Rank First M. Last" / "Last-J" string. */
+function _fldLlmSurname(s) {
+  if (typeof s !== "string" || !s) return "";
+  var t = s.toLowerCase().replace(/["'`]/g, " ").replace(/[.,]/g, " ");
+  var parts = t.split(/\s+/), last = "";
+  for (var i = 0; i < parts.length; i++) if (parts[i]) last = parts[i];
+  return last.replace(/-[a-z]$/, "");   // strip a "-j"/"-a" disambiguation suffix (Johnston-J -> johnston)
+}
+function fldLlmPersonaFor(side) {
+  try {
+    if (side !== "US" && side !== "CS") return "";
+    var gd = (typeof GAME_DATA !== "undefined" && GAME_DATA && GAME_DATA.generals) ? GAME_DATA.generals : null;
+    if (!gd || !gd.sides || !gd.sides[side] || !gd.sides[side].generals) return "";
+    var gens = gd.sides[side].generals;
+    if (Object.prototype.toString.call(gens) !== "[object Array]") return "";
+    if (typeof __FIELD === "undefined" || !__FIELD) return "";
+    // surname -> aggression, first occurrence wins (deterministic on a shared surname)
+    var byName = Object.create(null), i, g, sn;
+    for (i = 0; i < gens.length; i++) {
+      g = gens[i];
+      if (!g || typeof g.name !== "string" || typeof g.aggression !== "number" || !isFinite(g.aggression)) continue;
+      sn = _fldLlmSurname(g.name);
+      if (sn && byName[sn] === undefined) byName[sn] = g.aggression;
+    }
+    // ordered candidates: named field/army leaders (scenData.leaders) first, then
+    // brigade commanders — the FIRST that matches the roster wins (army commander).
+    var cands = [], sd = __FIELD.scenData, arr, l;
+    if (sd && sd.leaders && Object.prototype.toString.call(sd.leaders[side]) === "[object Array]") {
+      arr = sd.leaders[side];
+      for (i = 0; i < arr.length; i++) { l = arr[i]; if (l) { sn = _fldLlmSurname(l.short || l.name); if (sn) cands.push(sn); } }
+    }
+    if (__FIELD.units) for (i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i];
+      if (u && u.side === side && typeof u.commander === "string") { sn = _fldLlmSurname(u.commander); if (sn) cands.push(sn); } }
+    for (i = 0; i < cands.length; i++) if (byName[cands[i]] !== undefined) return fldLlmPersonaLine(byName[cands[i]]);
+    return "";
+  } catch (e) { return ""; }
+}
+
+/* The per-battle system prompt = the static charter + optional persona seasoning
+   for the commanded side. Input texture only; never an outcome directive. */
+function fldLlmSystemPrompt(side) {
+  var p = fldLlmPersonaFor(side);
+  return p ? (LLM_SYSTEM + "\n" + p) : LLM_SYSTEM;
+}
 
 /* ---- device-only config (law §2.3): cw_llm_conn (provider/baseUrl/model/opts)
    + cw_llm_key (the secret, split out so "clear key" is surgical). NEVER touches
@@ -205,7 +303,7 @@ function _llmReqA(conn, digest) {   // OpenAI-compatible chat-completions
     headers: headers,
     body: {
       model: conn.model,
-      messages: [{ role: "system", content: LLM_SYSTEM }, { role: "user", content: JSON.stringify(digest) }],
+      messages: [{ role: "system", content: fldLlmSystemPrompt(digest && digest.side) }, { role: "user", content: JSON.stringify(digest) }],
       response_format: { type: "json_object" }, max_tokens: LLM_MAX_TOKENS, temperature: 0.7,
     },
     parse: function (data) {
@@ -225,7 +323,7 @@ function _llmReqB(conn, digest) {   // Anthropic Messages (browser opt-in header
     },
     body: {
       model: conn.model || "claude-haiku-4-5", max_tokens: LLM_MAX_TOKENS,
-      system: LLM_SYSTEM, messages: [{ role: "user", content: JSON.stringify(digest) }],
+      system: fldLlmSystemPrompt(digest && digest.side), messages: [{ role: "user", content: JSON.stringify(digest) }],
       output_config: { format: { type: "json_schema", schema: LLM_PLAN_SCHEMA } },
     },
     parse: function (data) {
@@ -269,6 +367,57 @@ function fldLlmDispatchAsync(digest, cb) {
 }
 
 /* ===========================================================================
+   THE DISPATCH RENDER SURFACE (law §5 — voice & gravity). Reads the latest
+   captured dispatch from T27's seam state (__FIELD._t27.dispatch) and paints a
+   small in-battle HUD card, under the full containment stack:
+     · Labeling (§5.3): always captioned "Dramatization", visually distinct
+       (italic body, small-caps brass caption) from the cited Verified/Inferred
+       layer — this text is NEVER stamped Verified/Inferred.
+     · Somber suppression (§5.4): on H0_SOMBER_SCENES no live TEXT renders (orders
+       still executed upstream) — silence stands in over the dead.
+     · Failure = silence (§5.5): no current dispatch (refusal/error/timeout/empty,
+       or a valid plan that carried no line) → nothing renders (element hidden);
+       never an apology, never meta-text.
+     · One-way facts (§5.1) are enforced upstream (schema + T27 clean); the LLM
+       text is HTML-escaped here (untrusted).
+     · Grounding null-guard (§5.6): this reads ONLY __FIELD._t27 (T27's own bag),
+       never __FIELD._e53 (which exists only while T26 parity is active) — no
+       T26-diagnostic dependency, so nothing to null-guard-miss.
+   Called each frame from T0 fldRenderTop (a cheap no-op when the seam is off) and
+   directly by the probe. reduceMotion-safe: the card is static (no transition/
+   animation); only its text changes, and only when the dispatch changes. */
+function fldLlmRenderDispatch() {
+  try {
+    if (typeof document === "undefined" || typeof __FIELD === "undefined" || !__FIELD) return;
+    var top = document.getElementById("fldTop");
+    var root = (top && top.parentNode) ? top.parentNode : null;
+    if (!root) return;                                   // no field DOM (headless) → nothing to paint
+    var el = document.getElementById("fldDispatch");
+    var st = __FIELD._t27;
+    var somber = fldLlmSomberNow();                      // §5.4: no live text over the dead (scenario + scenData id/name)
+    var text = (__FIELD.llmCommander && st && !somber && typeof st.dispatch === "string" && st.dispatch) ? st.dispatch : "";
+    if (!text) {                                         // §5.5 silence (or suppressed) → hide
+      if (el) { el.style.display = "none"; el.removeAttribute("data-disp"); }
+      return;
+    }
+    if (!el) {
+      el = document.createElement("div");
+      el.id = "fldDispatch"; el.setAttribute("role", "note"); el.setAttribute("aria-label", "Enemy dispatch, dramatization");
+      // top-LEFT, below the #fldTop bar: the only reliably panel-free zone (#fldHud
+      // is top-right, #fldBar bottom-center, the terrain legend bottom-right — the
+      // screenshot-readback collision the geometry teeth missed, D282 lesson).
+      el.style.cssText = "position:absolute;top:62px;left:12px;max-width:280px;z-index:5;background:#0c0f14f2;border:1px solid #745e3f;border-radius:6px;padding:8px 11px;font-size:12.5px;line-height:1.42;color:#e9dcc0;pointer-events:none;";
+      root.appendChild(el);
+    }
+    if (el.getAttribute("data-disp") === text) { el.style.display = "block"; return; }   // unchanged → no DOM thrash
+    el.setAttribute("data-disp", text);
+    el.style.display = "block";
+    el.innerHTML = '<div style="font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:#d8b458;font-weight:bold;margin-bottom:3px;">Enemy Dispatch &middot; Dramatization</div>'
+      + '<div style="font-style:italic;color:#e9dcc0;">' + _llmEsc(text) + '</div>';
+  } catch (e) {}
+}
+
+/* ===========================================================================
    THE CONNECTOR SETTINGS PANEL (law §6) — a main-menu sheet, the T6 idiom.
    WCAG 2.2 AA: role=group + aria-labelledby, aria-pressed toggle groups (NOT
    role=radio — no roving nav), <label for> on every input, an aria-live
@@ -299,6 +448,15 @@ function _llmPickProvider(prov) {
   _llmUi.key = keepKey;   // a typed key survives a provider switch (a key mismatch just fails on use)
 }
 function _llmEsc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+
+/* The Status text (the aria-live region's content). Extracted so a toggle can
+   refresh it IN PLACE (D285 panel-polish) instead of via a full openSheet
+   re-render — a replaced live-region node does not reliably announce. */
+function _llmSummaryText() {
+  var u = _llmUi || {};
+  return fldLlmConnConfigured() && u.enabled ? "Connected AI will command the enemy in your next battle."
+    : (u.enabled ? "Enabled — but fill in the fields above to finish connecting." : "Off — the built-in general commands the enemy.");
+}
 
 function _llmConnHtml() {
   var u = _llmUi, def = LLM_PRESETS[u.provider];
@@ -350,8 +508,7 @@ function _llmConnHtml() {
       +   ' style="width:100%;box-sizing:border-box;background:#0c1210;color:var(--h0d-ink);border:1px solid var(--h0d-line);border-radius:5px;padding:8px 10px;font:13px monospace;" />'
       + '</div>';
   }
-  var summary = fldLlmConnConfigured() && u.enabled ? "Connected AI will command the enemy in your next battle."
-    : (u.enabled ? "Enabled — but fill in the fields above to finish connecting." : "Off — the built-in general commands the enemy.");
+  var summary = _llmSummaryText();
   return ''
     + '<div style="--h0d-panel:#111918;--h0d-panel2:#17231f;--h0d-ink:#f3efe4;--h0d-muted:#c5cdc3;--h0d-brass:#d8b458;--h0d-amber:#d0a047;--h0d-focus:#ffe27a;--h0d-line:rgba(216,180,88,.30);max-width:680px;margin:0 auto;color:var(--h0d-ink);">'
     + '<h1 class="title-xl" style="text-align:center;">⚜ Connected AI Opponent</h1>'
@@ -405,7 +562,21 @@ function _llmConnWire() {
     el.addEventListener("click", function () { _llmReadFields(); _llmUi.model = el.getAttribute("data-lmodel"); _llmRerender('[data-lmodel="' + CSS_ATTR(el.getAttribute("data-lmodel")) + '"]'); });
   })(chips[j]);
   function CSS_ATTR(s) { return String(s).replace(/"/g, '\\"'); }
-  w("llmEnable", "click", function () { _llmReadFields(); _llmUi.enabled = !_llmUi.enabled; _llmRerender("#llmEnable"); });
+  w("llmEnable", "click", function () {
+    _llmReadFields(); _llmUi.enabled = !_llmUi.enabled;
+    // D285 panel-polish: update the switch + the aria-live Status region IN PLACE
+    // (not a full openSheet re-render) so the toggle reliably announces to AT.
+    var btn = document.getElementById("llmEnable");
+    if (btn) {
+      btn.setAttribute("aria-checked", _llmUi.enabled ? "true" : "false");
+      btn.textContent = _llmUi.enabled ? "On" : "Off";
+      btn.style.outline = _llmUi.enabled ? "2px solid var(--h0d-focus)" : "";
+      btn.style.outlineOffset = _llmUi.enabled ? "1px" : "";
+      btn.style.fontWeight = _llmUi.enabled ? "bold" : "";
+    }
+    var s = document.getElementById("llmSummary"); if (s) s.textContent = _llmSummaryText();
+    try { if (btn) btn.focus(); } catch (e) {}
+  });
   w("llmBrowserOptIn", "click", function () { _llmReadFields(); _llmUi.browserOptIn = !_llmUi.browserOptIn; _llmRerender("#llmBrowserOptIn"); });
   w("llmClearKey", "click", function () { _llmUi.key = ""; var kv = document.getElementById("llmKey"); if (kv) kv.value = ""; fldLlmConnClearKey(); try { if (kv) kv.focus(); } catch (e) {} });
   w("llmForget", "click", function () { fldLlmConnClear(); _llmUiInit(); _llmRerender('[data-lprov="' + _llmUi.provider + '"]'); });

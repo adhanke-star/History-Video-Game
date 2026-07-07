@@ -1413,6 +1413,9 @@ function fldRenderTop() {
   }
   // fog: keep the no-selection "N Rebel brigades sighted" HUD line live as scouting changes (throttled ~3x/sec)
   if (__FIELD.fog) { __FIELD._hudTick = (__FIELD._hudTick || 0) + 1; if (__FIELD._hudTick % 20 === 0 && !fldPlayerSel().length) fldRenderHud(); }
+  // T28 slice-3 voice: paint the enemy's live dispatch card (a cheap no-op when the
+  // LLM commander is off / no dispatch / a somber scene — law §5). Guarded seam.
+  if (typeof fldLlmRenderDispatch === "function") fldLlmRenderDispatch();
 }
 
 /* ===========================================================================

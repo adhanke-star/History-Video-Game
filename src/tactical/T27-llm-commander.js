@@ -92,11 +92,39 @@ function fldLlmState() {
     st = __FIELD._t27 = {
       gen: gen, ph: ph, lastT: -1, planT: -1e9,
       side: fldLlmSide(), plan: null, planN: 0, pending: false,
+      dispatch: null, dispatchT: -1e9,   // slice-3 voice: the latest ≤160-char in-character line (law §5); null = silence
       cycles: 0, applied: 0, droppedN: 0, malformed: 0, noResp: 0,
     };
   }
-  if (st.ph !== ph) { st.ph = ph; st.lastT = -1; st.planT = -1e9; st.plan = null; st.planN = 0; }
+  if (st.ph !== ph) { st.ph = ph; st.lastT = -1; st.planT = -1e9; st.plan = null; st.planN = 0; st.dispatch = null; }
   return st;
+}
+
+/* Sanitize the optional voice dispatch (law §5) — the ONLY free-text field the
+   model may return. Coerce to a string, collapse whitespace to single spaces,
+   strip control chars, clamp to 160 chars; anything non-string/empty → null.
+   NO HTML-escaping here (the render surface escapes untrusted text). One-way
+   facts (§5.1) are enforced by the SCHEMA (no figure/date/citation/rank fields),
+   not by this cleaner — this only bounds shape/length. */
+function fldLlmCleanDispatch(s) {
+  if (typeof s !== "string") return null;
+  var t = s.replace(/[\x00-\x1f\x7f]+/g, " ").replace(/\s+/g, " ").replace(/^\s+|\s+$/g, "");
+  if (!t) return null;
+  // §5.5: a safety-tuned model can "comply" structurally (valid orders JSON) yet
+  // refuse in PROSE ("As an AI I can't roleplay…"). Such AI-meta/refusal text must
+  // resolve to SILENCE, never a captioned dramatization — the engine still
+  // commands. Targets AI-tell phrasing ONLY (not a legit grim "I cannot hold").
+  if (fldLlmIsMetaDispatch(t)) return null;
+  return t.length > 160 ? t.slice(0, 160) : t;
+}
+function fldLlmIsMetaDispatch(t) {
+  var s = String(t).toLowerCase();
+  return /\bas an ai\b/.test(s) || /\bas a language model\b/.test(s) || /\blanguage model\b/.test(s)
+    || /\bi am an ai\b/.test(s) || /\bi'?m an ai\b/.test(s) || /\bi'?m just an ai\b/.test(s)
+    || /\ban ai (assistant|model|language model)\b/.test(s) || /\bai (assistant|language model)\b/.test(s)
+    || /\bas an assistant\b/.test(s)
+    || /\bi (cannot|can'?t) (roleplay|role-play|comply|assist you|help with that|continue with|engage)/.test(s)
+    || /\b(cannot|can'?t) (roleplay|role-play) as\b/.test(s);
 }
 
 /* Band helpers — deterministic quantization, no RNG. */
@@ -207,7 +235,10 @@ function fldLlmValidatePlan(raw, side) {
     if (out[e.id] === undefined) n++;
     out[e.id] = { type: e.type, tx: tx, tz: tz, tface: tf, formation: fm };
   }
-  return { ok: true, orders: out, n: n, dropped: dropped };
+  // The optional voice dispatch (law §5) rides the SAME validated response but is
+  // never an order — it never affects n/dropped/ok. Sanitized to a bounded string
+  // or null; the render surface (T28) applies the rest of the §5 containment stack.
+  return { ok: true, orders: out, n: n, dropped: dropped, dispatch: fldLlmCleanDispatch(raw.dispatch) };
 }
 
 /* Install a settled plan into the seam state — the wall's write side. A
@@ -216,8 +247,11 @@ function fldLlmValidatePlan(raw, side) {
 function fldLlmInstall(st, raw) {
   if (raw == null) { st.noResp++; return; }
   var v = fldLlmValidatePlan(raw, st.side);
-  if (!v.ok) { st.malformed++; return; }
+  if (!v.ok) { st.malformed++; return; }   // malformed whole response → keep last good plan AND its dispatch (§5.5 silence-on-failure)
   st.plan = v.orders; st.planN = v.n; st.droppedN += v.dropped;
+  // a valid plan carries its own voice (or none): a dispatch renders; its ABSENCE
+  // clears any prior line, so a new plan without voice = silence (law §5).
+  st.dispatch = v.dispatch; st.dispatchT = __FIELD.t;
 }
 
 /* One plan cycle: digest → request → (settle) → install. The attempt timestamp

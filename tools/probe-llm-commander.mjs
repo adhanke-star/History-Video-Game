@@ -439,7 +439,170 @@ const SETUP = `(() => {
       if (NET.count !== 0) throw new Error('panel UI fired network: ' + JSON.stringify(NET.calls));
       return { cards:6, aa:true, uiNoNetwork:true }; });
 
-    step('ZERO NETWORK: 0 fetch/XHR/WebSocket/beacon calls across every leg (armed legs, config path, and the UI panel)', function(){
+    // ===================== SLICE 3 — voice + persona (T27 capture · T28 render/persona) =====================
+
+    step('VOICE CONTRACT: schema dispatch field (no fact fields) + system-prompt charter + persona is INPUT-texture-only (no outcome directive)', function(){
+      var fns = [fldLlmCleanDispatch, fldLlmIsMetaDispatch, fldLlmSceneIsSomber, fldLlmSomberNow, fldLlmPersonaLine, _fldLlmSurname, fldLlmPersonaFor, fldLlmSystemPrompt, fldLlmRenderDispatch];
+      for (var i=0;i<fns.length;i++) if (typeof fns[i] !== 'function') throw new Error('voice function ' + i + ' missing');
+      // one-way facts (§5.1): an OPTIONAL dispatch bounded to 160, and NO figure/date/citation/rank/history field anywhere in the schema
+      var sp = LLM_PLAN_SCHEMA.properties;
+      if (!sp.dispatch || sp.dispatch.type !== 'string' || sp.dispatch.maxLength !== 160) throw new Error('schema dispatch field missing / not maxLength 160');
+      var factish = ['casualties','date','citation','rank','losses','killed','strength','history','dead','year'];
+      var oi = sp.orders.items.properties || {};
+      for (i=0;i<factish.length;i++) if (sp[factish[i]] || oi[factish[i]]) throw new Error('schema exposes a fact field: ' + factish[i]);
+      // the static system prompt binds the register + anti-Lost-Cause + one-way facts + names the dispatch
+      var sys = String(LLM_SYSTEM).toLowerCase();
+      if (sys.indexOf('dispatch') < 0) throw new Error('system prompt never mentions the dispatch');
+      if (sys.indexOf('lost-cause') < 0 && sys.indexOf('lost cause') < 0) throw new Error('anti-Lost-Cause charter missing');
+      if (sys.indexOf('never invent') < 0 && sys.indexOf('only of what') < 0 && sys.indexOf('speak only') < 0) throw new Error('one-way-facts clause missing');
+      // persona = INPUT texture ONLY: a style note that NEVER encodes an outcome (D74 in prompt form)
+      var bad = ['ensure','must hold','must win','guarantee','make sure','hold the line at all','shall win','you will win','do not lose','so that the'];
+      var aggrs = [0, 20, 35, 50, 65, 80, 100, 999, -10, NaN];
+      var any = false;
+      for (i=0;i<aggrs.length;i++){ var line = fldLlmPersonaLine(aggrs[i]); if (typeof line !== 'string') throw new Error('persona line not a string for ' + aggrs[i]);
+        var lo = line.toLowerCase();
+        for (var j=0;j<bad.length;j++) if (lo.indexOf(bad[j]) >= 0) throw new Error('persona encodes an OUTCOME (D74): "' + line + '" has "' + bad[j] + '"');
+        if (line) any = true; }
+      if (!any) throw new Error('persona produced no style note for any aggression');
+      var l2 = (fldLlmPersonaLine(85) + ' ' + fldLlmPersonaLine(10)).toLowerCase();
+      if (l2.indexOf('confederate') >= 0 || l2.indexOf('union') >= 0 || l2.indexOf('victory') >= 0) throw new Error('persona names a side / victory');
+      // the seasoned per-battle prompt EXTENDS the static charter, never replaces it
+      var full = fldLlmSystemPrompt('CS');
+      if (typeof full !== 'string' || full.indexOf(LLM_SYSTEM) !== 0) throw new Error('fldLlmSystemPrompt must extend the static charter');
+      return { schemaDispatch:true, charter:true, personaNoOutcome:true }; });
+
+    step('VOICE PERSONA RESOLVES (real data): a rostered general in the battle seasons fldLlmSystemPrompt as INPUT texture, never an outcome', function(){
+      G.campaign = null; clean();
+      fldLaunchSandbox({ renderer:'none', scenario:'bullrun1', seed:1, fog:false, autoBoth:true });
+      __FIELD.phase = 'battle';
+      // Bull Run's scenData.leaders (Beauregard/Johnston/Jackson CS) match generals.json — persona MUST resolve (else the feature ships inert)
+      var pCS = fldLlmPersonaFor('CS');
+      if (!pCS) throw new Error('persona did NOT resolve for a real bullrun1 CS launch — the scenData.leaders→generals.json path is inert');
+      if (pCS.toLowerCase().indexOf('command temperament') !== 0) throw new Error('persona is not a temperament clause: ' + pCS);
+      var bad = ['ensure','must hold','must win','victory','confederate','union','guarantee','so that'];
+      var lo = pCS.toLowerCase(); for (var b=0;b<bad.length;b++) if (lo.indexOf(bad[b]) >= 0) throw new Error('persona leaked an OUTCOME/side (D74): ' + bad[b]);
+      var full = fldLlmSystemPrompt('CS');
+      if (full.length <= LLM_SYSTEM.length || full.indexOf(LLM_SYSTEM) !== 0 || full.indexOf(pCS) < 0) throw new Error('system prompt not seasoned with the resolved persona');
+      // surname helper: rank-prefixed + disambiguation-suffixed names both reduce to the bare surname
+      if (_fldLlmSurname("Brig. Gen. P.G.T. Beauregard") !== 'beauregard' || _fldLlmSurname('Johnston-J') !== 'johnston' || _fldLlmSurname('Col. Francis S. Bartow') !== 'bartow') throw new Error('surname helper wrong');
+      clean();
+      return { csPersonaResolved: true, seasoned: true }; });
+
+    step('VOICE RENDER: a dispatch paints the #fldDispatch card captioned "Dramatization", HTML-escaped, never Verified/Inferred; orders still apply', function(){
+      G.campaign = null; clean();
+      fldLaunchSandbox({ renderer:'2d', scenario:'bullrun1', seed:1, fog:false, playerSide:'US', autoPause:false });
+      __FIELD.phase = 'battle';
+      var cs = csUnits(); if (!cs.length) throw new Error('no CS units');
+      __FIELD._t27MockPlan = { orders: [ { id: cs[0].id, type:'move', tx:600, tz:450 } ], dispatch: 'Wheel the guns to the ridge <b>now</b> & hold your front.' };
+      __FIELD.llmCommander = true; __FIELD._t27 = null;
+      for (var n=0;n<40;n++) fldSimStep(0.05);                 // cycle → install captures st.dispatch
+      fldLlmRenderDispatch();                                 // the probe drives the render (no RAF loop here)
+      var el = document.getElementById('fldDispatch');
+      if (!el || el.style.display === 'none') throw new Error('dispatch card not rendered');
+      var html = el.innerHTML, txt = el.textContent;
+      if (!/dramatization/i.test(txt)) throw new Error('no "Dramatization" caption: ' + txt);
+      if (/Verified|Inferred/.test(txt)) throw new Error('dispatch stamped Verified/Inferred (it must never be)');
+      if (html.indexOf('<b>now</b>') >= 0) throw new Error('LLM HTML NOT escaped (XSS): ' + html);
+      if (html.indexOf('&lt;b&gt;') < 0) throw new Error('escaped tag absent — escaping failed');
+      var applied = __FIELD._t27 ? __FIELD._t27.applied : 0;
+      if (applied < 1) throw new Error('orders not applied alongside the dispatch');
+      if (__FIELD._t27.dispatch.indexOf('<b>') < 0) throw new Error('capture altered the raw dispatch (render escapes, capture does not)');
+      clean(); fldExit(true);
+      return { rendered:true, caption:true, escaped:true, applied:applied }; });
+
+    step('VOICE SOMBER SUPPRESSION: on a somber scene NO live dispatch TEXT renders — orders still execute (law §5.4)', function(){
+      if (!fldLlmSceneIsSomber('antietam') || !fldLlmSceneIsSomber('gettysburg') || !fldLlmSceneIsSomber('chancellorsville')) throw new Error('somber set wrong');
+      if (fldLlmSceneIsSomber('bullrun1') || fldLlmSceneIsSomber('sandbox')) throw new Error('non-somber scene flagged somber');
+      G.campaign = null; clean();
+      fldLaunchSandbox({ renderer:'2d', scenario:'bullrun1', seed:1, fog:false, playerSide:'US', autoPause:false });
+      __FIELD.phase = 'battle';
+      __FIELD.scenario = 'antietam';                          // force a somber scene (H0_SOMBER_SCENES)
+      var cs = csUnits();
+      __FIELD._t27MockPlan = { orders: [ { id: cs[0].id, type:'move', tx:600, tz:450 } ], dispatch: 'Hold the sunken road.' };
+      __FIELD.llmCommander = true; __FIELD._t27 = null;
+      for (var n=0;n<40;n++) fldSimStep(0.05);
+      fldLlmRenderDispatch();
+      var el = document.getElementById('fldDispatch');
+      var shown = !!(el && el.style.display !== 'none' && el.textContent && /sunken road/i.test(el.textContent));
+      if (shown) throw new Error('LIVE dispatch text rendered over a somber scene — §5.4 violated');
+      var st = __FIELD._t27;
+      if (!st || st.applied < 1) throw new Error('somber suppression stopped orders (it must hide TEXT only)');
+      if (st.dispatch !== 'Hold the sunken road.') throw new Error('capture is render-independent — dispatch must still be captured under somber');
+      // belt-and-braces: a PROCEDURAL scenario ('sandbox') but a somber scenData.id
+      // must ALSO suppress via fldLlmSomberNow (the campaign-launch divergence guard)
+      __FIELD.scenario = 'sandbox'; __FIELD.scenData = { id: 'antietam', name: 'Antietam' };
+      if (!fldLlmSomberNow()) throw new Error('fldLlmSomberNow missed a somber scenData.id under a procedural scenario');
+      fldLlmRenderDispatch();
+      el = document.getElementById('fldDispatch');
+      if (el && el.style.display !== 'none' && el.textContent && /sunken road/i.test(el.textContent)) throw new Error('scenData-somber path rendered live text');
+      __FIELD.scenData = { id: 'bullrun1', name: 'First Bull Run' };
+      if (fldLlmSomberNow()) throw new Error('fldLlmSomberNow false-positive on a non-somber scenData');
+      clean(); fldExit(true);
+      return { suppressed:true, ordersStillApplied:st.applied, scenDataPath:true }; });
+
+    step('VOICE FAILURE=SILENCE + CLEAN: a plan with no dispatch, and a malformed cycle, render NOTHING (no apology/meta); cleaner bounds+strips', function(){
+      G.campaign = null; clean();
+      fldLaunchSandbox({ renderer:'2d', scenario:'bullrun1', seed:1, fog:false, playerSide:'US', autoPause:false });
+      __FIELD.phase = 'battle';
+      var cs = csUnits();
+      __FIELD._t27MockPlan = { orders: [ { id: cs[0].id, type:'move', tx:600, tz:450 } ] };   // valid orders, NO dispatch
+      __FIELD.llmCommander = true; __FIELD._t27 = null;
+      for (var n=0;n<40;n++) fldSimStep(0.05);
+      fldLlmRenderDispatch();
+      var el = document.getElementById('fldDispatch');
+      if (el && el.style.display !== 'none' && el.textContent) throw new Error('a no-dispatch plan rendered text (must be silent)');
+      if (__FIELD._t27.dispatch !== null) throw new Error('a plan without a dispatch must leave st.dispatch null');
+      __FIELD._t27MockPlan = 'not a plan'; __FIELD._t27.planT = -1e9;   // force a malformed re-pull
+      for (n=0;n<40;n++) fldSimStep(0.05);
+      fldLlmRenderDispatch();
+      el = document.getElementById('fldDispatch');
+      if (el && el.style.display !== 'none' && el.textContent) throw new Error('a malformed cycle rendered text (must stay silent)');
+      // fldLlmCleanDispatch: non-string/empty → null; clamp 160; collapse control/whitespace
+      if (fldLlmCleanDispatch(123) !== null || fldLlmCleanDispatch('') !== null || fldLlmCleanDispatch(null) !== null) throw new Error('cleanDispatch non-string/empty must be null');
+      var longS = ''; for (var q=0;q<400;q++) longS += 'x';
+      if (fldLlmCleanDispatch(longS).length !== 160) throw new Error('cleanDispatch did not clamp to 160');
+      var ctrl = 'a' + String.fromCharCode(10) + 'b' + String.fromCharCode(9) + 'c';   // newline + tab must collapse to single spaces
+      if (fldLlmCleanDispatch(ctrl) !== 'a b c') throw new Error('cleanDispatch did not collapse control chars: ' + JSON.stringify(fldLlmCleanDispatch(ctrl)));
+      if (fldLlmCleanDispatch('  keep-the-hyphen  ') !== 'keep-the-hyphen') throw new Error('cleanDispatch mangled a hyphen/trim: ' + JSON.stringify(fldLlmCleanDispatch('  keep-the-hyphen  ')));
+      // §5.5: AI-meta / refusal / language-model text is dropped to SILENCE, never captioned
+      var metas = ['As an AI I cannot roleplay this battle.', "I'm just an AI language model.", 'As a language model, I will not continue.', 'I cannot comply with this request.', 'As an assistant, I cannot role-play as a general.'];
+      for (var mi=0;mi<metas.length;mi++){ if (fldLlmCleanDispatch(metas[mi]) !== null) throw new Error('AI-meta not filtered to silence: ' + metas[mi]); if (!fldLlmIsMetaDispatch(metas[mi])) throw new Error('fldLlmIsMetaDispatch missed: ' + metas[mi]); }
+      // but a LEGIT grim 1860s line survives (no over-filter on bare "cannot"/"sorry")
+      var legit = ['I cannot hold the ridge without support — send Jackson.', 'I am sorry to report the left has given way.', 'Wheel the batteries and enfilade the turnpike.'];
+      for (var li=0;li<legit.length;li++){ if (fldLlmCleanDispatch(legit[li]) !== legit[li]) throw new Error('over-filtered a legit grim dispatch: ' + legit[li]); if (fldLlmIsMetaDispatch(legit[li])) throw new Error('fldLlmIsMetaDispatch false-positive on legit: ' + legit[li]); }
+      // end-to-end: a meta dispatch through the wall → captured null → render silent
+      G.campaign = null; clean();
+      fldLaunchSandbox({ renderer:'2d', scenario:'bullrun1', seed:1, fog:false, playerSide:'US', autoPause:false });
+      __FIELD.phase = 'battle';
+      var cs2 = csUnits();
+      __FIELD._t27MockPlan = { orders: [ { id: cs2[0].id, type:'move', tx:600, tz:450 } ], dispatch: 'As an AI language model, I cannot roleplay a Confederate general.' };
+      __FIELD.llmCommander = true; __FIELD._t27 = null;
+      for (n=0;n<40;n++) fldSimStep(0.05);
+      fldLlmRenderDispatch();
+      el = document.getElementById('fldDispatch');
+      if (el && el.style.display !== 'none' && el.textContent) throw new Error('a meta/refusal dispatch rendered captioned text (§5.5)');
+      if (__FIELD._t27.dispatch !== null) throw new Error('meta dispatch not dropped to null at capture');
+      if (!__FIELD._t27 || __FIELD._t27.applied < 1) throw new Error('meta refusal stopped orders (engine must still command)');
+      clean(); fldExit(true);
+      return { silentNoDispatch:true, silentMalformed:true, cleanBounds:true, metaSilenced:true }; });
+
+    step('VOICE PANEL POLISH (D285): the enable toggle refreshes the aria-live Status region IN PLACE (same node) so it announces to AT', function(){
+      clean();
+      fldLlmConnMenu();
+      var summ = document.getElementById('llmSummary'); if (!summ) throw new Error('aria-live summary missing');
+      var before = summ.textContent; summ.setAttribute('data-probe-node', 'tag1');
+      var en = document.getElementById('llmEnable'); if (!en) throw new Error('enable switch missing');
+      var checkedBefore = en.getAttribute('aria-checked');
+      en.click();
+      var summ2 = document.getElementById('llmSummary'), en2 = document.getElementById('llmEnable');
+      if (!summ2 || summ2.getAttribute('data-probe-node') !== 'tag1') throw new Error('the aria-live Status node was REPLACED (full re-render) — a replaced live region does not reliably announce');
+      if (summ2.textContent === before) throw new Error('Status text did not update on the toggle');
+      if (en2.getAttribute('aria-checked') === checkedBefore) throw new Error('enable aria-checked did not flip in place');
+      clean();
+      if (NET.count !== 0) throw new Error('panel-polish leg fired network: ' + JSON.stringify(NET.calls));
+      return { inPlace: true, announced: true }; });
+
+    step('ZERO NETWORK: 0 fetch/XHR/WebSocket/beacon calls across every leg (armed legs, config path, the UI panel, and the voice legs)', function(){
       if (NET.count !== 0) throw new Error('network calls observed: ' + JSON.stringify(NET.calls));
       return { count: 0 }; });
 
