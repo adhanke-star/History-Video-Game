@@ -1662,6 +1662,237 @@
       ],
       "sourceNote": "The record does not claim Tunnard was personally in a mine crater; it places him as a sergeant of the 3rd Louisiana, whose regiment held the 3rd Louisiana Redan; his Sergeant rank and Company K / Pelican Rifles origin rest on Wikipedia and his own regimental history; no portrait. The 3rd Louisiana Regiment page anchors the Hebert's Brigade / Forney's Division / redan chain and his 4 July 1863 capture at the surrender. Ratings Inferred.",
       "bio": "William H. Tunnard joined the Pelican Rifles of Baton Rouge at Louisiana's secession; the company became part of the 3rd Louisiana Infantry, and Tunnard rose to sergeant in Company K. During the siege of Vicksburg his regiment held the sector of the 3rd Louisiana Redan in Hebert's Brigade of Forney's Division -- the salient the Union twice mined and blew up, on June 25 and July 1, 1863 -- until Pemberton's garrison surrendered on July 4 and Tunnard was captured and paroled. He assembled the survivors' letters, diaries, and his own journal into A Southern Record (1866), long valued as a regimental history but read here as a participant/period account, not an uncritical authority. This replacement fills the Vicksburg Confederate soldier's-story slot without claiming Tunnard was personally in a mine crater or asserting a portrait."
+    },
+    {
+      "pid": "person_chickamauga_cs_4tx_giles",
+      "replacePid": "ss:chickamauga:CS:cs_law_gap:nco",
+      "name": "Val C. Giles",
+      "side": "CS",
+      "rank": "Sergeant",
+      "branch": "inf",
+      "role": "noncommissioned officer",
+      "year": 1863,
+      "provenance": "Verified",
+      "team": {
+        "side": "CS",
+        "army": "Army of Tennessee (Longstreet's Corps, on loan from the Army of Northern Virginia)",
+        "corps": "Longstreet's Corps (First Corps, ANV)",
+        "division": "Hood's Division (Law commanding, 20 Sep)",
+        "brigade": "Robertson's Texas Brigade",
+        "regiment": "4th Texas Infantry",
+        "company": "Company B ('Tom Green Rifles')"
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Rags and Hope: The Recollections of Val C. Giles, Four Years with Hood's Brigade, Fourth Texas Infantry, 1861-1865",
+          "author": "Valerius Cincinnatus Giles (Mary Lasswell, ed.)",
+          "repository": "Coward-McCann (1961); HathiTrust",
+          "locator": "Catalog record 000423481; Chickamauga chapter",
+          "url": "https://catalog.hathitrust.org/Record/000423481",
+          "type": "primary",
+          "note": "Giles's own memoir of four years in Company B, 4th Texas, Hood's Texas Brigade; recalls Chickamauga as 'the meanest, most unsatisfactory place I struck during the whole war.'"
+        },
+        {
+          "title": "Fourth Texas Infantry",
+          "author": "Texas State Historical Association",
+          "repository": "Handbook of Texas Online",
+          "locator": "1863 / Chickamauga section",
+          "url": "https://www.tshaonline.org/handbook/entries/fourth-texas-infantry",
+          "type": "secondary",
+          "note": "The 4th Texas fought at Chickamauga on 19-20 September 1863 as part of Longstreet's First Corps, temporarily transferred to the Army of Tennessee, and helped break the Federal line on the second day."
+        },
+        {
+          "title": "4th Texas Infantry Regiment",
+          "author": "Wikipedia contributors",
+          "repository": "Wikipedia",
+          "locator": "Chickamauga section",
+          "url": "https://en.wikipedia.org/wiki/4th_Texas_Infantry_Regiment",
+          "type": "secondary",
+          "note": "Places the regiment in Robertson's Texas Brigade (3rd Arkansas, 1st/4th/5th Texas) at Chickamauga and quotes 'Sergeant Val Giles' on the second day's blue-jacket confusion, anchoring his sergeant rank at the battle."
+        },
+        {
+          "title": "A Thousand Words a Battle: Chickamauga",
+          "author": "Emerging Civil War",
+          "repository": "Emerging Civil War",
+          "locator": "Texas Brigade / Hood's Division section",
+          "url": "https://emergingcivilwar.com/2025/03/21/a-thousand-words-a-battle-chickamauga/",
+          "type": "secondary",
+          "note": "Places Robertson's Texas Brigade in Hood's Division of Longstreet's left wing at Chickamauga and describes its 20 September charge near the Brotherton Farm; brigade losses of 570."
+        }
+      ],
+      "sourceNote": "Ships at Sergeant -- Giles's documented Chickamauga rank (4th Sergeant from May 1863; Wikipedia quotes 'Sergeant Val Giles' on the field); no portrait. His memoir Rags and Hope and TSHA place him in Company B ('Tom Green Rifles'), 4th Texas, Robertson's Texas Brigade of Hood's Division (Law commanding 20 Sep), Longstreet's Corps. Ratings Inferred.",
+      "bio": "Valerius Cincinnatus 'Val' Giles enlisted at eighteen in the 'Tom Green Rifles,' Company B of the 4th Texas Infantry, and served through the war in Hood's Texas Brigade. Rising from private to 4th Corporal (November 1862) and 4th Sergeant (May 1863), he went west with Longstreet's Corps in September 1863 and fought at Chickamauga on 19-20 September in Robertson's Texas Brigade of Hood's Division -- the wing that broke the Federal line near the Brotherton Farm on the second day. Giles remembered Chickamauga as 'the meanest, most unsatisfactory place I struck during the whole war,' recalling the confusion when Longstreet's men were mistakenly issued blue Federal jackets. Captured at Wauhatchie on 29 October 1863, he later set down his recollections in Rags and Hope, a candid, unromantic soldier's memoir. This replacement fills a Chickamauga Confederate soldier's-story slot at his documented sergeant rank without asserting a portrait."
+    },
+    {
+      "pid": "person_vicksburg_cs_46ms_chambers",
+      "replacePid": "ss:vicksburg:CS:cs_smith_stockade:nco",
+      "name": "William Pitt Chambers",
+      "side": "CS",
+      "rank": "Sergeant",
+      "branch": "inf",
+      "role": "noncommissioned officer",
+      "year": 1863,
+      "provenance": "Verified",
+      "team": {
+        "side": "CS",
+        "army": "Army of Vicksburg (Pemberton's garrison)",
+        "corps": "",
+        "division": "Smith's Division",
+        "brigade": "Baldwin's Brigade",
+        "regiment": "46th Mississippi Infantry",
+        "company": "Company B"
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Chambers (William Pitt) Diary, 1862-1865",
+          "author": "University of Southern Mississippi, McCain Library & Archives",
+          "repository": "USM Special Collections (finding aid M214)",
+          "locator": "Biographical/Historical note",
+          "url": "https://manager.lib.usm.edu/spcol/collections/manuscripts/finding_aids/m214.html",
+          "type": "secondary",
+          "note": "States Chambers was born 14 Dec 1839 in Covington County, a schoolteacher; enlisted 26 March 1862 with the 'Covington Rebels,' briefly the 6th Mississippi, then Company B, 46th Mississippi after October 1862; rose from private to first sergeant; at Vicksburg he was detailed to clerk for an adjutant but rejoined his company."
+        },
+        {
+          "title": "Blood and Sacrifice: The Civil War Journal of a Confederate Soldier",
+          "author": "William Pitt Chambers",
+          "repository": "Blue Acorn Press (1994)",
+          "locator": "46th Mississippi / Vicksburg chapters",
+          "url": "",
+          "type": "primary",
+          "note": "The published edition of Chambers's journal ('My Journal'), documenting the 46th Mississippi from Shiloh through the siege of Vicksburg to the surrender at Citronelle."
+        },
+        {
+          "title": "46th Mississippi Infantry",
+          "author": "National Park Service",
+          "repository": "Vicksburg National Military Park",
+          "locator": "Regiment history",
+          "url": "https://home.nps.gov/vick/learn/historyculture/46th-mississippi-infantry.htm",
+          "type": "secondary",
+          "note": "States the 46th Mississippi was attached to Brig. Gen. William E. Baldwin's Brigade of Maj. Gen. Martin Luther Smith's Division during the Vicksburg campaign and siege."
+        },
+        {
+          "title": "William Pitt Chambers (1839-1916)",
+          "author": "Find a Grave contributors",
+          "repository": "Find a Grave",
+          "locator": "Memorial 46789283",
+          "url": "https://www.findagrave.com/memorial/46789283/william_pitt-chambers",
+          "type": "secondary",
+          "note": "Birth and death dates (1839-1916), corroborating the USM finding aid's biographical facts."
+        }
+      ],
+      "sourceNote": "Does not claim the 46th held the Stockade Redan salient itself; it places Chambers as a first sergeant (shipped at Sergeant) of the 46th Mississippi in Baldwin's Brigade of M.L. Smith's Division, which held that northern sector; no portrait. Company B, rank, and Vicksburg service rest on the USM finding aid and NPS; journal Blood and Sacrifice. Ratings Inferred.",
+      "bio": "William Pitt Chambers, a Covington County schoolteacher born in 1839, left home on 26 March 1862 with the 'Covington Rebels'; his company was briefly attached to the 6th Mississippi before becoming Company B of the 46th Mississippi Infantry after October 1862, in which he rose from private to first sergeant. At the siege of Vicksburg his regiment served in William E. Baldwin's Brigade of Martin Luther Smith's Division, holding the northern sector of the Confederate line; detailed to clerk for an adjutant, Chambers asked to rejoin his company and did picket duty and prepared its muster and pay rolls, often weakened by fever. He kept a daily diary he revised in 1891 as 'My Journal,' published in 1994 as Blood and Sacrifice -- a valued common-soldier record from Shiloh through Vicksburg to the war's end. This replacement fills the Vicksburg Confederate soldier's-story slot without claiming the 46th held the Stockade Redan salient itself or asserting a portrait."
+    },
+    {
+      "pid": "person_shiloh_cs_2tx_houston",
+      "replacePid": "ss:shiloh:CS:cs_bragg_corps:pvt",
+      "name": "Sam Houston Jr.",
+      "side": "CS",
+      "rank": "Private",
+      "branch": "inf",
+      "role": "private soldier",
+      "year": 1862,
+      "provenance": "Verified",
+      "team": {
+        "side": "CS",
+        "army": "Army of the Mississippi",
+        "corps": "Bragg's Corps",
+        "division": "Withers' Division",
+        "brigade": "Jackson's Brigade",
+        "regiment": "2nd Texas Infantry",
+        "company": "Company C ('Bayland Guards')"
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Houston, Sam, Jr.",
+          "author": "Texas State Historical Association",
+          "repository": "Handbook of Texas Online",
+          "locator": "Civil War service",
+          "url": "https://www.tshaonline.org/handbook/entries/houston-sam-jr",
+          "type": "secondary",
+          "note": "States Houston (b. 25 May 1843, d. 3 May 1894) served with the 2nd Texas Infantry, was wounded at Shiloh in April 1862, survived because a Bible in his pocket stopped a ball, and spent nearly six months as a prisoner including Camp Douglas before exchange."
+        },
+        {
+          "title": "Sam Houston Jr.",
+          "author": "Wikipedia contributors",
+          "repository": "Wikipedia",
+          "locator": "Civil War section",
+          "url": "https://en.wikipedia.org/wiki/Sam_Houston_Jr.",
+          "type": "secondary",
+          "note": "States he enlisted August 1861 in Company C ('Bayland Guards'), 2nd Texas Infantry; was critically wounded and left for dead at Shiloh; a clergyman found his mother Margaret's Bible and letter; he was sent to Camp Douglas and exchanged; his father was removed as governor for refusing the Confederate loyalty oath."
+        },
+        {
+          "title": "2nd Texas Infantry Regiment",
+          "author": "Wikipedia contributors",
+          "repository": "Wikipedia",
+          "locator": "Shiloh section",
+          "url": "https://en.wikipedia.org/wiki/2nd_Texas_Infantry_Regiment",
+          "type": "secondary",
+          "note": "Places the 2nd Texas in J.K. Jackson's Third Brigade of Withers' Division, Bragg's Corps at Shiloh; the regiment stormed Stuart's camp and the Hornet's Nest on 6 April and was ambushed on 7 April, 'with Sam Houston Jr. among the wounded.'"
+        },
+        {
+          "title": "Second Texas Infantry",
+          "author": "Texas State Historical Association",
+          "repository": "Handbook of Texas Online",
+          "locator": "Shiloh / organization section",
+          "url": "https://www.tshaonline.org/handbook/entries/second-texas-infantry",
+          "type": "secondary",
+          "note": "The regiment's own Handbook of Texas entry, corroborating its organization and Shiloh service under Col. John Creed Moore in Jackson's Brigade of Withers' Division, Bragg's Corps."
+        }
+      ],
+      "sourceNote": "Ships at Private (his enlisted rank), placed for his documented 2nd Texas service -- not his famous father; wounded on Shiloh's second day (7 April 1862); no portrait. TSHA and Wikipedia anchor the Bible that stopped a ball, being left for dead, and his Camp Douglas captivity; the OOB is Jackson's Brigade, Withers' Division, Bragg's Corps. Ratings Inferred.",
+      "bio": "Sam Houston Jr., eldest son of the Texas founder and Unionist governor Sam Houston -- removed from office for refusing to swear loyalty to the Confederacy -- enlisted in August 1861 as a private in the 'Bayland Guards,' Company C of the 2nd Texas Infantry. At Shiloh the regiment fought in John K. Jackson's Brigade of Withers' Division, Bragg's Corps, storming Stuart's camp and the Hornet's Nest on 6 April; on the second day, 7 April, it was ambushed and Houston was critically wounded and left for dead (some accounts place his wounding on the first day). A Bible in his pocket -- inscribed by his mother, Margaret -- stopped a second ball, and a Union clergyman who found the Bible and her letter had him carried off; he spent about six months a prisoner, part of it at Camp Douglas, before exchange and a medical discharge. This replacement fills a Shiloh Confederate soldier's-story slot at his enlisted private rank without asserting a portrait, echoing the war's fluid loyalties beside the Stanley record."
     }
   ],
   "_template": {
