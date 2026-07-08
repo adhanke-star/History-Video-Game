@@ -8,6 +8,12 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D315 GROUP 6 TOOLING — media-budget arithmetic consistency guard — 2026-07-08 (D315)
+- **What shipped:** tooling only. `tools/probe-media-budget.mjs` now emits and enforces `metrics.arithmeticConsistency` so total files/bytes and all headroom math are explicitly verified against recomputed values.
+- **Exact gates run (from `tools/`):** `node --check probe-media-budget.mjs`; `node build.mjs`; `node probe-media-budget.mjs`; JSON readback via `tools/shots/probe-media-budget.json`; `git diff --check`.
+- **Focused gate/readback:** media-budget probe green **13/13**; build GATE OK with known raw-embed soft warning; arithmetic readback shows totals match (`files 199/199`, `rawBytes 2,535,463/2,535,463`) and exact headroom parity (`soft -962,599`, `review 348,121`, `hard 610,265`, `coreFiles 61`).
+- **Locks:** readback/tooling only; no gameplay/content/media/combat/runtime/history-data mutation and no lock changes.
+
 ## D314 GROUP 6 TOOLING — consolidated readback now includes source-domain drift posture — 2026-07-08 (D314)
 - **What shipped:** tooling only. `tools/probe-group6-readback.mjs` now runs `tools/probe-historical-source-domains.mjs` and validates source-domain conservative drift posture inside the consolidated Group 6 guard.
 - **Artifact/readback change:** `tools/shots/group6-readback.json` now includes `sourceDomains` with URL item count, unique domains, concentration, invalid URL count, policy readback, and drift pass/reasons; consolidated probe summary now includes source-domain URL/domain counts.

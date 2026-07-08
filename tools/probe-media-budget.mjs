@@ -360,6 +360,37 @@ function sourceInventoryState() {
   };
 }
 
+function arithmeticConsistencyState() {
+  const summary = categorySummary();
+  const coreIds = (budget.categories || []).filter(c => c.allowedInSingleFile).map(c => c.id).sort();
+  const sumFiles = coreIds.reduce((n, id) => n + Number((summary[id] || {}).files || 0), 0);
+  const sumBytes = coreIds.reduce((n, id) => n + Number((summary[id] || {}).rawBytes || 0), 0);
+  const policyState = budgetPolicyState();
+  const softHeadroomExpected = Number(budget.policy.rawEmbedSoftBytes || 0) - Number(totals.total || 0);
+  const reviewHeadroomExpected = Number(budget.policy.currentReviewWarnBytes || 0) - Number(totals.total || 0);
+  const hardHeadroomExpected = Number(budget.policy.rawEmbedHardBytes || 0) - Number(totals.total || 0);
+  const coreFileHeadroomExpected = Number(budget.policy.maxCoreFiles || 0) - Number(files.length || 0);
+
+  return {
+    declaredCoreCategories: coreIds,
+    summedCoreFiles: sumFiles,
+    summedCoreRawBytes: sumBytes,
+    totalFiles: Number(files.length || 0),
+    totalRawBytes: Number(totals.total || 0),
+    totalsMatch: sumFiles === Number(files.length || 0) && sumBytes === Number(totals.total || 0),
+    headroom: {
+      softExpected: softHeadroomExpected,
+      softReported: Number((policyState.headroom || {}).softBytes || 0),
+      reviewExpected: reviewHeadroomExpected,
+      reviewReported: Number((policyState.headroom || {}).reviewBytes || 0),
+      hardExpected: hardHeadroomExpected,
+      hardReported: Number((policyState.headroom || {}).hardBytes || 0),
+      coreFilesExpected: coreFileHeadroomExpected,
+      coreFilesReported: Number((policyState.headroom || {}).coreFiles || 0)
+    }
+  };
+}
+
 function undeclaredEmbedState() {
   const declaredCoreCategories = (budget.categories || []).filter(c => c.allowedInSingleFile).map(c => c.id).sort();
   const declared = new Set(declaredCoreCategories);
@@ -445,6 +476,27 @@ step('data budget matches build.mjs hard and soft caps', () => {
   if (budget.policy.rawEmbedSoftBytes !== b.soft) throw new Error('soft cap drift: data=' + budget.policy.rawEmbedSoftBytes + ' build=' + b.soft);
   if (budget.policy.rawEmbedHardBytes !== b.hard) throw new Error('hard cap drift: data=' + budget.policy.rawEmbedHardBytes + ' build=' + b.hard);
   return b;
+});
+
+step('media-budget arithmetic remains internally consistent', () => {
+  const state = arithmeticConsistencyState();
+  if (!state.totalsMatch) {
+    throw new Error(
+      'core category sums mismatch totals: files ' +
+      state.summedCoreFiles +
+      '/' +
+      state.totalFiles +
+      ', rawBytes ' +
+      state.summedCoreRawBytes +
+      '/' +
+      state.totalRawBytes
+    );
+  }
+  if (state.headroom.softExpected !== state.headroom.softReported) throw new Error('soft headroom mismatch');
+  if (state.headroom.reviewExpected !== state.headroom.reviewReported) throw new Error('review headroom mismatch');
+  if (state.headroom.hardExpected !== state.headroom.hardReported) throw new Error('hard headroom mismatch');
+  if (state.headroom.coreFilesExpected !== state.headroom.coreFilesReported) throw new Error('core file headroom mismatch');
+  return state;
 });
 
 step('current embedded core stays below hard cap and review warning', () => {
@@ -545,6 +597,7 @@ const out = {
     policyState: budgetPolicyState(),
     sourceOrganization: sourceOrganizationState(),
     sourceInventory: sourceInventoryState(),
+    arithmeticConsistency: arithmeticConsistencyState(),
     categorySummary: categorySummary(),
     categories: totals.by,
     largestFiles: fileList.slice(0, 10)

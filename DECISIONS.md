@@ -6,6 +6,19 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D315 — GROUP 6 MEDIA-BUDGET ARITHMETIC CONSISTENCY GUARD: TOTALS AND HEADROOM MATH ARE NOW EXPLICITLY VERIFIED — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
+
+The next Group 6 tooling slice tightens media-budget probe integrity by asserting arithmetic coherence in the readback artifact.
+
+- **Tooling change:** `tools/probe-media-budget.mjs` now computes `metrics.arithmeticConsistency` and enforces:
+  - declared core-category summed files/bytes must equal overall embedded totals
+  - reported soft/review/hard/core-file headroom values must exactly match recomputed values
+- **Current readback:** totals match (`files 199/199`, `rawBytes 2,535,463/2,535,463`), and all headroom values match exactly (`soft -962,599`, `review 348,121`, `hard 610,265`, `coreFiles 61`).
+- **Focused gate:** `node --check probe-media-budget.mjs`; `node build.mjs` GATE OK with known raw-embed soft warning; `node probe-media-budget.mjs` green **13/13**; JSON readback inspected for arithmeticConsistency; `git diff --check` clean.
+- **Policy effect:** tooling-only/readback-only. No gameplay/media/history/combat/runtime changes and no lock changes.
+
+---
+
 ## D314 — GROUP 6 CONSOLIDATED READBACK: SOURCE-DOMAIN DRIFT GUARD IS NOW INCLUDED IN THE SINGLE GROUP-6 ARTIFACT — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
 
 The next Group 6 tooling slice extends the consolidated readback guard so source-domain drift posture is first-class in the same filesystem-only artifact as media/historical/hotpath.
