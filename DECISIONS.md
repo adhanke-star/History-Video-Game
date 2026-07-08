@@ -8,6 +8,20 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ## D309 — GROUP 6 HOTPATH TOOLING: STATIC HOTPATH PROFILE READBACK NOW EXISTS — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
 
+## D310 — GROUP 6 TOOLING: CONSOLIDATED READBACK GUARD NOW EXISTS — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
+
+The ninth Group 6 meta/deferred tooling slice adds a filesystem-only consolidated readback guard that re-runs and cross-checks the three current Group 6 reporting surfaces (media-budget, historical-data source inventory, and hotpath profile) in one probeable artifact.
+
+- **Tooling change:** new `tools/probe-group6-readback.mjs` runs `tools/probe-media-budget.mjs`, `tools/probe-historical-data-inventory.mjs`, and `tools/probe-hotpath-profile.mjs`, verifies policy/state coherence across their artifacts, and writes `tools/shots/probe-group6-readback.json` plus `tools/shots/group6-readback.json`.
+- **Current readback:** consolidated summary reports media raw tier `soft-warning` at **2.418 MB**, active D300-D303 guards and source parity/metadata posture green, historical inventory at **1,559 source items / 675 source notes**, and hotpath profile at **381 functions / 228 loop sites / fetch isolated to T28**.
+- **Focused gate:** `node --check tools/probe-group6-readback.mjs` clean; `node tools/build.mjs` GATE OK with known raw-embed soft warning; `node tools/probe-group6-readback.mjs` green **6/6**; adjacent `node tools/probe-media-budget.mjs` green **12/12**; JSON readback inspected both new consolidated artifacts; `git diff --check` clean.
+- **Policy effect:** read-only tooling only. No gameplay/content/history/media/combat changes, no new network path, no asset/media fetch work, and no lock changes.
+- **Queue after D310:** this is the third post-D307 same-chat Group 6 tooling slice. Either stop at the D307 bundle boundary with a fresh continuation prompt, or only take another clearly bounded filesystem-only Group 6 reporting guard.
+
+---
+
+## D309 — GROUP 6 HOTPATH TOOLING: STATIC HOTPATH PROFILE READBACK NOW EXISTS — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
+
 The eighth Group 6 meta/deferred tooling slice adds read-only hotpath profiling/readback without changing gameplay, source modules, data, media, or balance. `tools/profile-hotpaths.mjs` scans declared tactical hotpath source files, and `tools/probe-hotpath-profile.mjs` gates that scan into reusable JSON artifacts.
 
 - **Tooling change:** the profile writes `tools/shots/hotpath-profile.json`, and the probe writes `tools/shots/probe-hotpath-profile.json`. The artifact groups source surfaces by `core-field`, `battle-step`, `render-3d`, `orders`, `ai-step`, and `ui-network-opt-in`, then reports file/line/function/loop/resource-cleanup/network-readback metrics plus anchor function line numbers.
