@@ -6,6 +6,18 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D309 — GROUP 6 HOTPATH TOOLING: STATIC HOTPATH PROFILE READBACK NOW EXISTS — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
+
+The eighth Group 6 meta/deferred tooling slice adds read-only hotpath profiling/readback without changing gameplay, source modules, data, media, or balance. `tools/profile-hotpaths.mjs` scans declared tactical hotpath source files, and `tools/probe-hotpath-profile.mjs` gates that scan into reusable JSON artifacts.
+
+- **Tooling change:** the profile writes `tools/shots/hotpath-profile.json`, and the probe writes `tools/shots/probe-hotpath-profile.json`. The artifact groups source surfaces by `core-field`, `battle-step`, `render-3d`, `orders`, `ai-step`, and `ui-network-opt-in`, then reports file/line/function/loop/resource-cleanup/network-readback metrics plus anchor function line numbers.
+- **Current readback:** 12 hotpath files, 463,690 bytes, 7,215 lines, 381 functions, 228 loop sites, 13 instancing references, 35 `.dispose()` cleanup references, 14 `localStorage` references, and 1 `fetch()` reference. The only fetch reference is isolated to `src/tactical/T28-llm-connector.js`, the opt-in LLM connector surface.
+- **Focused gate:** `node --check tools/profile-hotpaths.mjs` and `node --check tools/probe-hotpath-profile.mjs` clean; `node tools/build.mjs` GATE OK with the known raw-embed soft warning; `node tools/probe-hotpath-profile.mjs` green **6/6**; adjacent `TMPDIR="$PWD/.tmp" node tools/probe-field.mjs 2>/dev/null` green **23 steps, 0 pageerrors**; JSON readback inspected both new artifacts and `probe-field`; `git diff --check` clean.
+- **Policy effect:** read-only tooling only. It does not benchmark browser runtime, alter tactical source modules, add a no-regression suite entry, fetch assets, enable network paths, change combat, or touch media. H2/HDRI/model media, Tripo, Soldier's Story rows, battle-build, and Phase D remain locked/deferred.
+- **Queue after D309:** the D307 same-chat bundle has shipped two small Group 6 slices after D307 (D308 and D309). A third small budget/source reporting guard remains possible if it stays filesystem-only and low-risk; otherwise stop at the bundle boundary with a fresh continuation prompt before browser-heavy or full-suite work.
+
+---
+
 ## D308 — GROUP 6 HISTORICAL-DATA TOOLING: REUSABLE SOURCE INVENTORY ARTIFACT NOW EXISTS — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
 
 The seventh Group 6 meta/deferred tooling slice adds a reusable, read-only historical-data/source inventory layer without changing gameplay, data, media, or build injection. `tools/historical-data-inventory.mjs` scans the canonical `HISTORICAL-DATA*.md` docs plus every `data/*.json` file, and `tools/probe-historical-data-inventory.mjs` turns that scan into a focused gate and JSON artifacts.
