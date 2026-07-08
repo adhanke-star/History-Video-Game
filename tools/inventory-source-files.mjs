@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Read-only source-file inventory. Walks src/*.js, counts lines, extracts
+// Read-only source-file inventory. Walks src/**/*.js, counts lines, extracts
 // function/const exports via regex. Writes tools/shots/source-file-inventory.csv
 // with columns: file, lines, exports, functions.
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
@@ -15,6 +15,25 @@ function ensureDir(p) {
   if (!existsSync(p)) mkdirSync(p, { recursive: true });
 }
 
+function walkJsFiles(dir, baseDir = dir) {
+  if (!existsSync(dir)) return [];
+  const out = [];
+  const entries = readdirSync(dir, { withFileTypes: true })
+    .filter(ent => !ent.name.startsWith('.'))
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  for (const ent of entries) {
+    const abs = join(dir, ent.name);
+    if (ent.isDirectory()) {
+      out.push(...walkJsFiles(abs, baseDir));
+      continue;
+    }
+    if (!ent.isFile() || !ent.name.endsWith('.js')) continue;
+    out.push(abs.replace(baseDir + '/', ''));
+  }
+  return out;
+}
+
 function csvEscape(s) {
   const str = String(s);
   if (str.includes(',') || str.includes('"') || str.includes('\n')) {
@@ -26,9 +45,7 @@ function csvEscape(s) {
 function main() {
   ensureDir(SHOTS);
 
-  const files = readdirSync(SRC)
-    .filter(f => f.endsWith('.js'))
-    .sort();
+  const files = walkJsFiles(SRC).sort((a, b) => a.localeCompare(b));
 
   const rows = [];
 

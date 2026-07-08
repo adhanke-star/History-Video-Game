@@ -6,6 +6,30 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D321 — GROUP 6 SOURCE-FILE INVENTORY CLOSEOUT: INVENTORY MUST INCLUDE TACTICAL MODULES AND BE PROBE-GATED — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
+
+The D320 source-file inventory report was useful but incomplete: it scanned only top-level `src/*.js`, so the tactical engine under `src/tactical/` was invisible to the report.
+
+- **Loose-end fix:** `tools/inventory-source-files.mjs` now walks `src/**/*.js`, preserving relative paths such as `tactical/T0-field-sandbox.js` in `tools/shots/source-file-inventory.csv`.
+- **New focused guard:** `tools/probe-source-file-inventory.mjs` runs the inventory, asserts the CSV row count matches the live recursive source tree, asserts key tactical modules are present, and pins non-vacuous totals.
+- **Current readback:** source inventory now reports **91** JS files, **29** tactical modules, **34,207** lines, **1,846** function declarations, and **0** ES/module exports. The zero-export readback is expected because the game uses IIFE/global seams instead of ES module exports.
+- **Focused gate:** `node --check tools/inventory-source-files.mjs`; `node --check tools/probe-source-file-inventory.mjs`; `node tools/inventory-source-files.mjs`; `node tools/probe-source-file-inventory.mjs` green **4/4**; `node tools/build.mjs` GATE OK with known raw-embed soft warning; adjacent `node tools/probe-group6-readback.mjs` green **9/9**, `node tools/probe-media-budget.mjs` green **13/13**, and `node tools/probe-historical-source-domains.mjs` green **6/6**; `git diff --check` clean.
+- **Policy effect:** tooling/readback only. No gameplay/combat/runtime/media/history-data mutation and no lock changes.
+- **Next phase decision:** Group 6 loose ends are clean enough to move to the next eligible coding group. M8/Q5/Q6 still require explicit battle-build approval, so the next large coding phase should start with Group 2 GM/Transfer substrate rather than battle-build.
+
+---
+
+## D320 — GROUP 6 DIAGNOSTIC TOOLING: DATA, ASSET, PROBE, SOURCE, AND HTML REPORT TOOLS LANDED — [CODEX GPT-5.5 / local tool closeout, Priority-1 Group 6 tooling] (2026-07-08)
+
+D320 added the next batch of read-only Group 6 diagnostic/reporting tools and D320b refreshed the tracked report outputs after tool fixes.
+
+- **Tools added:** `tools/validate-data-schemas.mjs`, `tools/check-orphan-assets.mjs`, `tools/summarize-probe-logs.mjs`, `tools/inventory-source-files.mjs`, `tools/report-media-budget.mjs`, `tools/report-source-domains.mjs`, `tools/report-group6-dashboard.mjs`, and `tools/export-source-domains-csv.mjs`.
+- **Current readback after D320b/D321 verification:** data schema validation **39/39**; orphan-assets report **199 embedded / 0 orphans**; probe-log summary **107/107** after D321's new probe artifact; source-domain CSV **152 URL rows**; Group 6 dashboard reports media, historical inventory, source-domain, hotpath, and consolidated readbacks all PASS.
+- **Follow-up required and now closed by D321:** `inventory-source-files.mjs` originally omitted `src/tactical/`; D321 made it recursive and probe-gated.
+- **Policy effect:** tooling/reporting only. No gameplay/combat/runtime/media/history-data mutation and no lock changes.
+
+---
+
 ## D319 — GROUP 6 HISTORICAL SOURCE-DOMAIN POLICY READBACK CONSISTENCY GUARD: POLICY CURRENT VALUES MUST MATCH COMPUTED STATS — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
 
 The next Group 6 tooling slice tightens historical source-domain artifact integrity by proving policy readback `current*` fields are internally consistent with computed stats in the same artifact.
