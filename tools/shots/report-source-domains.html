@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Historical Source-Domain Report</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 2rem; background: #f8f9fa; color: #1a1a2e; }
+  h1 { border-bottom: 2px solid #1a1a2e; padding-bottom: 0.3rem; }
+  h2 { margin-top: 2rem; color: #16213e; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  th, td { padding: 0.5rem 0.75rem; text-align: left; border-bottom: 1px solid #dee2e6; }
+  th { background: #16213e; color: #fff; font-weight: 600; }
+  tr:hover { background: #f1f3f5; }
+  .badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 3px; font-size: 0.8rem; font-weight: 600; }
+  .ok { background: #d4edda; color: #155724; }
+  .warn { background: #fff3cd; color: #856404; }
+  .danger { background: #f8d7da; color: #721c24; }
+  .summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0; }
+  .summary-card { background: #fff; padding: 1rem; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  .summary-card .label { font-size: 0.8rem; color: #6c757d; text-transform: uppercase; letter-spacing: 0.05em; }
+  .summary-card .value { font-size: 1.5rem; font-weight: 700; margin-top: 0.25rem; }
+  .warn-list { background: #fff; padding: 1rem; border-radius: 6px; border-left: 4px solid #ffc107; margin: 1rem 0; }
+  .danger-list { background: #fff; padding: 1rem; border-radius: 6px; border-left: 4px solid #dc3545; margin: 1rem 0; }
+  code { background: #e9ecef; padding: 0.1rem 0.3rem; border-radius: 3px; font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<h1>Historical Source-Domain Report</h1>
+<p>Generated from <code>tools/shots/historical-source-domains.json</code></p>
+
+<div class="summary-grid">
+  <div class="summary-card"><div class="label">Data Files</div><div class="value">39</div></div>
+  <div class="summary-card"><div class="label">Files With Sources</div><div class="value">34</div></div>
+  <div class="summary-card"><div class="label">Source Fields</div><div class="value">574</div></div>
+  <div class="summary-card"><div class="label">Source Items</div><div class="value">1541</div></div>
+  <div class="summary-card"><div class="label">URL Source Items</div><div class="value">152</div></div>
+  <div class="summary-card"><div class="label">Unique Domains</div><div class="value">33</div></div>
+  <div class="summary-card"><div class="label">Top-20 Concentration</div><div class="value"><span class="badge warn">88.82%</span></div></div>
+  <div class="summary-card"><div class="label">Invalid URLs</div><div class="value"><span class="badge ok">0</span></div></div>
+</div>
+
+<h2>Drift Policy Readback</h2>
+<table>
+  <tr><th>Policy</th><th>Value</th><th>Current</th><th>Status</th></tr>
+  <tr><td>Zero Invalid URLs</td><td>Yes</td><td>0</td><td><span class="badge ok">OK</span></td></tr>
+  <tr><td>Max Top-20 Concentration</td><td>90%</td><td>88.82%</td><td><span class="badge ok">OK</span></td></tr>
+  <tr><td>Min Unique Domains</td><td>30</td><td>33</td><td><span class="badge ok">OK</span></td></tr>
+  <tr><td>Max Single-File URL Share</td><td>100%</td><td>100%</td><td><span class="badge ok">OK</span></td></tr>
+  <tr><td>Max Non-Index File URL Share</td><td>20%</td><td>0%</td><td><span class="badge ok">OK</span></td></tr>
+</table>
+
+<h2>Top Domains</h2>
+<table>
+  <tr><th>#</th><th>Domain</th><th>Source Items</th><th>Files</th><th>Share</th></tr>
+<tr><td>1</td><td><code>en.wikipedia.org</code></td><td>44</td><td>1</td><td>28.9%</td></tr><tr><td>2</td><td><code>encyclopediavirginia.org</code></td><td>16</td><td>1</td><td>10.5%</td></tr><tr><td>3</td><td><code>www.loc.gov</code></td><td>12</td><td>1</td><td>7.9%</td></tr><tr><td>4</td><td><code>www.britannica.com</code></td><td>10</td><td>1</td><td>6.6%</td></tr><tr><td>5</td><td><code>www.battlefields.org</code></td><td>7</td><td>1</td><td>4.6%</td></tr><tr><td>6</td><td><code>www.mrlincolnandnewyork.org</code></td><td>7</td><td>1</td><td>4.6%</td></tr><tr><td>7</td><td><code>www.americanhistorycentral.com</code></td><td>5</td><td>1</td><td>3.3%</td></tr><tr><td>8</td><td><code>www.scencyclopedia.org</code></td><td>5</td><td>1</td><td>3.3%</td></tr><tr><td>9</td><td><code>www.nps.gov</code></td><td>4</td><td>1</td><td>2.6%</td></tr><tr><td>10</td><td><code>billofrightsinstitute.org</code></td><td>3</td><td>1</td><td>2.0%</td></tr><tr><td>11</td><td><code>quod.lib.umich.edu</code></td><td>3</td><td>1</td><td>2.0%</td></tr><tr><td>12</td><td><code>www.history.com</code></td><td>3</td><td>1</td><td>2.0%</td></tr><tr><td>13</td><td><code>civilwarmonths.com</code></td><td>2</td><td>1</td><td>1.3%</td></tr><tr><td>14</td><td><code>digitalhistory.hsp.org</code></td><td>2</td><td>1</td><td>1.3%</td></tr><tr><td>15</td><td><code>ecommons.luc.edu</code></td><td>2</td><td>1</td><td>1.3%</td></tr><tr><td>16</td><td><code>library.osu.edu</code></td><td>2</td><td>1</td><td>1.3%</td></tr><tr><td>17</td><td><code>newseumed.org</code></td><td>2</td><td>1</td><td>1.3%</td></tr><tr><td>18</td><td><code>teachingamericanhistory.org</code></td><td>2</td><td>1</td><td>1.3%</td></tr><tr><td>19</td><td><code>www.abrahamlincolnonline.org</code></td><td>2</td><td>1</td><td>1.3%</td></tr><tr><td>20</td><td><code>www.essentialcivilwarcurriculum.com</code></td><td>2</td><td>1</td><td>1.3%</td></tr>
+</table>
+
+<h2>Files With URL-Bearing Sources (1)</h2>
+<table>
+  <tr><th>File</th><th>Source Fields</th><th>Source Items</th><th>URL Items</th><th>Unique Domains</th><th>Top Domains</th></tr>
+<tr><td><code>data/press.json</code></td><td>64</td><td>154</td><td>152</td><td>33</td><td><code>archive.org, billofrightsinstitute.org, civildiscourse-historyblog.com, civilwarbookofdays.org, civilwarmonths.com, digitalhistory.hsp.org, ecommons.luc.edu, en.wikipedia.org</code></td></tr>
+</table>
+
+<h2>Files Without URL-Bearing Sources (33)</h2>
+<table>
+  <tr><th>File</th><th>Source Fields</th><th>Source Items</th></tr>
+<tr><td><code>data/antietam.json</code></td><td>1</td><td>3</td></tr><tr><td><code>data/artillery.json</code></td><td>9</td><td>26</td></tr><tr><td><code>data/bullrun.json</code></td><td>1</td><td>3</td></tr><tr><td><code>data/cabinet.json</code></td><td>67</td><td>174</td></tr><tr><td><code>data/chancellorsville.json</code></td><td>1</td><td>3</td></tr><tr><td><code>data/chickamauga.json</code></td><td>1</td><td>3</td></tr><tr><td><code>data/codex.json</code></td><td>73</td><td>227</td></tr><tr><td><code>data/cs-finance.json</code></td><td>9</td><td>19</td></tr><tr><td><code>data/decisions.json</code></td><td>48</td><td>175</td></tr><tr><td><code>data/diplomacy.json</code></td><td>14</td><td>44</td></tr><tr><td><code>data/disease-medical.json</code></td><td>9</td><td>20</td></tr><tr><td><code>data/engineering.json</code></td><td>8</td><td>24</td></tr><tr><td><code>data/flagship-units.json</code></td><td>11</td><td>28</td></tr><tr><td><code>data/footage-cutaways.json</code></td><td>9</td><td>18</td></tr><tr><td><code>data/fredericksburg.json</code></td><td>1</td><td>3</td></tr><tr><td><code>data/generals.json</code></td><td>30</td><td>106</td></tr><tr><td><code>data/gettysburg.json</code></td><td>1</td><td>3</td></tr><tr><td><code>data/hard-war.json</code></td><td>8</td><td>16</td></tr><tr><td><code>data/human-cost.json</code></td><td>8</td><td>19</td></tr><tr><td><code>data/irregular-war.json</code></td><td>11</td><td>23</td></tr><tr><td><code>data/logistics-rail.json</code></td><td>33</td><td>43</td></tr><tr><td><code>data/malvern-hill.json</code></td><td>1</td><td>3</td></tr><tr><td><code>data/primary-sources.json</code></td><td>20</td><td>46</td></tr><tr><td><code>data/prisoner-exchange.json</code></td><td>10</td><td>20</td></tr><tr><td><code>data/ratings.json</code></td><td>49</td><td>89</td></tr><tr><td><code>data/shiloh.json</code></td><td>1</td><td>3</td></tr><tr><td><code>data/soldier-replacements.json</code></td><td>32</td><td>126</td></tr><tr><td><code>data/terrain-cover.json</code></td><td>1</td><td>3</td></tr><tr><td><code>data/under-told-perspectives.json</code></td><td>10</td><td>25</td></tr><tr><td><code>data/vicksburg.json</code></td><td>1</td><td>3</td></tr><tr><td><code>data/weapons.json</code></td><td>9</td><td>21</td></tr><tr><td><code>data/western-theater.json</code></td><td>14</td><td>34</td></tr><tr><td><code>data/women-in-war.json</code></td><td>9</td><td>34</td></tr>
+</table>
+
+<div class="ok-list"><strong>Invalid URLs</strong>: 0 (clean)</div>
+
+<h2>Budget Readback</h2>
+<table>
+  <tr><th>Metric</th><th>Value</th></tr>
+  <tr><td>Data Directory Bytes</td><td>1,499,981</td></tr>
+</table>
+
+<p><em>Generated at: 2026-07-08T16:54:46.344Z</em></p>
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Data Schema Validation</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 2rem; background: #f8f9fa; color: #1a1a2e; }
+  h1 { border-bottom: 2px solid #2980b9; padding-bottom: 0.5rem; }
+  .summary { margin: 1rem 0; padding: 1rem; background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  .summary span { margin-right: 2rem; }
+  .pass { color: #27ae60; font-weight: bold; }
+  .fail { color: #c0392b; font-weight: bold; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  th, td { padding: 0.5rem 0.75rem; text-align: left; border-bottom: 1px solid #eee; }
+  th { background: #2c3e50; color: #fff; font-weight: 600; }
+  tr:hover { background: #f1f2f6; }
+</style>
+</head>
+<body>
+<h1>📋 Data Schema Validation</h1>
+<div class="summary">
+  <span>Total: <strong>39</strong></span>
+  <span class="pass">✅ Passed: <strong>39</strong></span>
+  <span class="fail">❌ Failed: <strong>0</strong></span>
+  <span>Generated: 2026-07-08T17:31:12.430Z</span>
+</div>
+<table>
+<thead>
+<tr><th>File</th><th>Type</th><th>Parse OK</th><th>Missing Keys</th><th>Info</th><th>Status</th></tr>
+</thead>
+<tbody>
+<tr>
+      <td>antietam.json</td>
+      <td>battle</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>3 phases, US vs CS</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>artillery.json</td>
+      <td>schema</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>v1.0</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>bullrun.json</td>
+      <td>battle</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>single-phase (no phases array), US vs CS</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>cabinet.json</td>
+      <td>meta</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>_meta v1</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>chancellorsville.json</td>
+      <td>battle</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>single-phase (no phases array), CS vs US</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>chickamauga.json</td>
+      <td>battle</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>3 phases, CS vs US</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>codex.json</td>
+      <td>meta</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>_meta v1</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>cs-finance.json</td>
+      <td>schema</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>v1.0</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>decisions.json</td>
+      <td>meta</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>_meta v1</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>diplomacy.json</td>
+      <td>schema</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>v1.0</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>disease-medical.json</td>
+      <td>schema</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>v1.0</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>economy.json</td>
+      <td>schema</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>v1.0</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>engineering.json</td>
+      <td>schema</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>v1.0</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>flagship-units.json</td>
+      <td>schema</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>v1.0</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>footage-cutaways.json</td>
+      <td>schema</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>v1.0</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>fredericksburg.json</td>
+      <td>battle</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>single-phase (no phases array), US vs CS</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>generals.json</td>
+      <td>meta</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>comment: S2 m5 named-generals data. Per-general Verified command/deat...</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>gettysburg.json</td>
+      <td>battle</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>3 phases, CS vs US</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>hard-war.json</td>
+      <td>schema</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>v1.0</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>human-cost.json</td>
+      <td>schema</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>v1.0</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>irregular-war.json</td>
+      <td>schema</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>v1.0</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>logistics-rail.json</td>
+      <td>schema</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>v1.0</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>loot-survival.json</td>
+      <td>meta</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>_meta v—</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>malvern-hill.json</td>
+      <td>battle</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>single-phase (no phases array), CS vs US</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>manpower-teaching.json</td>
+      <td>schema</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>v1.0</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>media-budget.json</td>
+      <td>schema</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>v1.7</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>press.json</td>
+      <td>meta</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>_meta v1</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>primary-sources.json</td>
+      <td>meta</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>_meta vcw_primary_sources_v1</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>prisoner-exchange.json</td>
+      <td>schema</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>v1.0</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>ratings.json</td>
+      <td>ratings</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>_meta is a string (GAME_DATA.ratings — the D94 rating system (the OVR / Madden ...)</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>shiloh.json</td>
+      <td>battle</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>single-phase (no phases array), CS vs US</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>soldier-replacements.json</td>
+      <td>meta</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>_meta vcw_soldier_replacements_v1</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>terrain-cover.json</td>
+      <td>schema</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>v1.0</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>tripo-unit-assets.json</td>
+      <td>schema</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>schema: cw_tripo_unit_assets_v1, version: 1</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>under-told-perspectives.json</td>
+      <td>schema</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>v1.0</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>vicksburg.json</td>
+      <td>battle</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>3 phases, US vs CS</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>weapons.json</td>
+      <td>schema</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>v1.0</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>western-theater.json</td>
+      <td>schema</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>v1.0</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+<tr>
+      <td>women-in-war.json</td>
+      <td>meta</td>
+      <td>✅</td>
+      <td>—</td>
+      <td>_meta vcw_women_in_war_v1</td>
+      <td class="pass">✅ PASS</td>
+    </tr>
+</tbody>
+</table>
+</body>
+</html>

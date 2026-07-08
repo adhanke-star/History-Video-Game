@@ -131,15 +131,41 @@ step('domain drift policy guard is within conservative thresholds', () => {
 
 step('policy readback current values match computed stats', () => {
   const stats = inventory.stats || {};
+  const byFile = Array.isArray(inventory.byFile) ? inventory.byFile : [];
+  const topFile = byFile[0] || null;
+  const indexSet = new Set(Array.isArray(policy.domainIndexFiles) ? policy.domainIndexFiles.map(String) : []);
+  const topNonIndexFile = byFile.find(row => !indexSet.has(String(row.file || ''))) || null;
   const expected = {
     invalidUrlItems: Number(stats.invalidUrlItems || 0),
     concentrationTop20Pct: Number(stats.concentrationTop20Pct || 0),
-    uniqueDomains: Number(stats.uniqueDomains || 0)
+    uniqueDomains: Number(stats.uniqueDomains || 0),
+    maxSingleFileUrlSharePct: Number(policy.currentMaxSingleFileUrlSharePct || 0),
+    maxNonIndexFileUrlSharePct: Number(policy.currentMaxNonIndexFileUrlSharePct || 0),
+    topFileByUrlItems: topFile ? {
+      file: String(topFile.file || ''),
+      sourceUrlItems: Number(topFile.sourceUrlItems || 0)
+    } : null,
+    topNonIndexFileByUrlItems: topNonIndexFile ? {
+      file: String(topNonIndexFile.file || ''),
+      sourceUrlItems: Number(topNonIndexFile.sourceUrlItems || 0)
+    } : null
   };
+  if (Number(stats.sourceUrlItems || 0) > 0) {
+    expected.maxSingleFileUrlSharePct = topFile
+      ? +(100 * Number(topFile.sourceUrlItems || 0) / Number(stats.sourceUrlItems || 0)).toFixed(2)
+      : 0;
+    expected.maxNonIndexFileUrlSharePct = topNonIndexFile
+      ? +(100 * Number(topNonIndexFile.sourceUrlItems || 0) / Number(stats.sourceUrlItems || 0)).toFixed(2)
+      : 0;
+  }
   const actual = {
     invalidUrlItems: Number(policy.currentInvalidUrlItems || 0),
     concentrationTop20Pct: Number(policy.currentConcentrationTop20Pct || 0),
-    uniqueDomains: Number(policy.currentUniqueDomains || 0)
+    uniqueDomains: Number(policy.currentUniqueDomains || 0),
+    maxSingleFileUrlSharePct: Number(policy.currentMaxSingleFileUrlSharePct || 0),
+    maxNonIndexFileUrlSharePct: Number(policy.currentMaxNonIndexFileUrlSharePct || 0),
+    topFileByUrlItems: policy.currentTopFileByUrlItems || null,
+    topNonIndexFileByUrlItems: policy.currentTopNonIndexFileByUrlItems || null
   };
 
   if (actual.invalidUrlItems !== expected.invalidUrlItems) {
@@ -150,6 +176,65 @@ step('policy readback current values match computed stats', () => {
   }
   if (actual.uniqueDomains !== expected.uniqueDomains) {
     throw new Error('unique domains readback mismatch: ' + actual.uniqueDomains + ' vs ' + expected.uniqueDomains);
+  }
+  if (actual.maxSingleFileUrlSharePct !== expected.maxSingleFileUrlSharePct) {
+    throw new Error(
+      'single-file URL share readback mismatch: ' +
+      actual.maxSingleFileUrlSharePct +
+      ' vs ' +
+      expected.maxSingleFileUrlSharePct
+    );
+  }
+  if (actual.maxNonIndexFileUrlSharePct !== expected.maxNonIndexFileUrlSharePct) {
+    throw new Error(
+      'non-index single-file URL share readback mismatch: ' +
+      actual.maxNonIndexFileUrlSharePct +
+      ' vs ' +
+      expected.maxNonIndexFileUrlSharePct
+    );
+  }
+
+  const actualTopFile = actual.topFileByUrlItems;
+  const expectedTopFile = expected.topFileByUrlItems;
+  if (!!actualTopFile !== !!expectedTopFile) {
+    throw new Error('top-file readback presence mismatch');
+  }
+  if (actualTopFile) {
+    if (String(actualTopFile.file || '') !== expectedTopFile.file) {
+      throw new Error('top-file readback mismatch: ' + String(actualTopFile.file || '') + ' vs ' + expectedTopFile.file);
+    }
+    if (Number(actualTopFile.sourceUrlItems || 0) !== expectedTopFile.sourceUrlItems) {
+      throw new Error(
+        'top-file sourceUrlItems mismatch: ' +
+        Number(actualTopFile.sourceUrlItems || 0) +
+        ' vs ' +
+        expectedTopFile.sourceUrlItems
+      );
+    }
+  }
+
+  const actualTopNonIndexFile = actual.topNonIndexFileByUrlItems;
+  const expectedTopNonIndexFile = expected.topNonIndexFileByUrlItems;
+  if (!!actualTopNonIndexFile !== !!expectedTopNonIndexFile) {
+    throw new Error('top non-index file readback presence mismatch');
+  }
+  if (actualTopNonIndexFile) {
+    if (String(actualTopNonIndexFile.file || '') !== expectedTopNonIndexFile.file) {
+      throw new Error(
+        'top non-index file readback mismatch: ' +
+        String(actualTopNonIndexFile.file || '') +
+        ' vs ' +
+        expectedTopNonIndexFile.file
+      );
+    }
+    if (Number(actualTopNonIndexFile.sourceUrlItems || 0) !== expectedTopNonIndexFile.sourceUrlItems) {
+      throw new Error(
+        'top non-index file sourceUrlItems mismatch: ' +
+        Number(actualTopNonIndexFile.sourceUrlItems || 0) +
+        ' vs ' +
+        expectedTopNonIndexFile.sourceUrlItems
+      );
+    }
   }
 
   return { expected, actual };

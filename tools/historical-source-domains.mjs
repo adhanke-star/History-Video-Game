@@ -4,7 +4,8 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const THIS_FILE = fileURLToPath(import.meta.url);
+const __dirname = dirname(THIS_FILE);
 const ROOT = resolve(__dirname, '..');
 const DATA_DIR = join(ROOT, 'data');
 const DOMAIN_DRIFT_POLICY = Object.freeze({
@@ -192,7 +193,7 @@ function scanSourceDomains() {
   };
 }
 
-if (process.argv[1] && process.argv[1].endsWith('historical-source-domains.mjs')) {
+if (process.argv[1] && resolve(process.argv[1]) === THIS_FILE) {
   const out = scanSourceDomains();
   process.stdout.write(JSON.stringify(out, null, 2));
 }

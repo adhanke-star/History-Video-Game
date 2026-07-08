@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Probe Log Summary</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 2rem; background: #f8f9fa; color: #1a1a2e; }
+  h1 { border-bottom: 2px solid #c0392b; padding-bottom: 0.5rem; }
+  .summary { margin: 1rem 0; padding: 1rem; background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  .summary span { margin-right: 2rem; }
+  .pass { color: #27ae60; font-weight: bold; }
+  .fail { color: #c0392b; font-weight: bold; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  th, td { padding: 0.5rem 0.75rem; text-align: left; border-bottom: 1px solid #eee; }
+  th { background: #2c3e50; color: #fff; font-weight: 600; }
+  tr:hover { background: #f1f2f6; }
+  .warn-cell { max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+</style>
+</head>
+<body>
+<h1>📊 Probe Log Summary</h1>
+<div class="summary">
+  <span>Total: <strong>106</strong></span>
+  <span class="pass">✅ Passed: <strong>106</strong></span>
+  <span class="fail">❌ Failed: <strong>0</strong></span>
+  <span>Generated: 2026-07-08T17:30:20.763Z</span>
+</div>
+<table>
+<thead>
+<tr><th>Probe</th><th>Steps</th><th>Page Errors</th><th>Warnings</th><th>Tier</th><th>Status</th></tr>
+</thead>
+<tbody>
+<tr>
+      <td>probe-accessibility</td>
+      <td>25 / 25</td>
+      <td></td>
+      <td>—</td>
+      <td>UI</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-afteraction</td>
+      <td>15 / 15</td>
+      <td></td>
+      <td>—</td>
+      <td>UI</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-ai</td>
+      <td>15 / 15</td>
+      <td></td>
+      <td>—</td>
+      <td>Engine</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-antietam</td>
+      <td>16 / 16</td>
+      <td></td>
+      <td>—</td>
+      <td>Scenario</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-armory-field</td>
+      <td>9 / 9</td>
+      <td></td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-arms-imagery</td>
+      <td>17 / 17</td>
+      <td></td>
+      <td>—</td>
+      <td>Combat</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-arms</td>
+      <td>23 / 23</td>
+      <td></td>
+      <td>—</td>
+      <td>Combat</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-atmospherics</td>
+      <td>20 / 20</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-attacker-parity</td>
+      <td>13 / 13</td>
+      <td></td>
+      <td>—</td>
+      <td>Engine</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-audio-ambience</td>
+      <td>27 / 27</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-auto-resolve</td>
+      <td>10 / 10</td>
+      <td></td>
+      <td>—</td>
+      <td>Engine</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-autopause</td>
+      <td>13 / 13</td>
+      <td></td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-blockade</td>
+      <td>11 / 11</td>
+      <td></td>
+      <td>—</td>
+      <td>Strategy</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-bridge</td>
+      <td>6 / 6</td>
+      <td></td>
+      <td>—</td>
+      <td>Meta</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-bullrun</td>
+      <td>15 / 15</td>
+      <td></td>
+      <td>—</td>
+      <td>Scenario</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-cab-exploit</td>
+      <td>8 / 8</td>
+      <td></td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-cabinet</td>
+      <td>12 / 12</td>
+      <td></td>
+      <td>—</td>
+      <td>Strategy</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-camp</td>
+      <td>8 / 8</td>
+      <td></td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-campaign-link</td>
+      <td>19 / 19</td>
+      <td></td>
+      <td>—</td>
+      <td>Engine</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-cannon</td>
+      <td>9 / 9</td>
+      <td></td>
+      <td>—</td>
+      <td>Combat</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-chancellorsville</td>
+      <td>27 / 27</td>
+      <td></td>
+      <td>—</td>
+      <td>Scenario</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-chickamauga</td>
+      <td>18 / 18</td>
+      <td></td>
+      <td>—</td>
+      <td>Scenario</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-codex</td>
+      <td>24 / 24</td>
+      <td></td>
+      <td>—</td>
+      <td>Meta</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-command</td>
+      <td>79 / 79</td>
+      <td></td>
+      <td>—</td>
+      <td>Strategy</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-conditioning</td>
+      <td>9 / 9</td>
+      <td></td>
+      <td>—</td>
+      <td>Engine</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-cover</td>
+      <td>8 / 8</td>
+      <td></td>
+      <td>—</td>
+      <td>Combat</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-cs-finance</td>
+      <td>8 / 8</td>
+      <td></td>
+      <td>—</td>
+      <td>Strategy</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-csplayer</td>
+      <td>16 / 16</td>
+      <td></td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-custom-battle-builder</td>
+      <td>15 / 15</td>
+      <td></td>
+      <td>—</td>
+      <td>Meta</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-decisions</td>
+      <td>19 / 19</td>
+      <td></td>
+      <td>—</td>
+      <td>Strategy</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-desk</td>
+      <td>13 / 13</td>
+      <td></td>
+      <td>—</td>
+      <td>Meta</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-disease-medical</td>
+      <td>8 / 8</td>
+      <td></td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-divergence</td>
+      <td>14 / 14</td>
+      <td></td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-economy</td>
+      <td>8 / 8</td>
+      <td></td>
+      <td>—</td>
+      <td>Strategy</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-endings</td>
+      <td>24 / 24</td>
+      <td></td>
+      <td>—</td>
+      <td>Meta</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-engineering-corps</td>
+      <td>23 / 23</td>
+      <td></td>
+      <td>—</td>
+      <td>Combat</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-engineering</td>
+      <td>9 / 9</td>
+      <td></td>
+      <td>—</td>
+      <td>Combat</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-field</td>
+      <td>23 / 23</td>
+      <td></td>
+      <td>—</td>
+      <td>Engine</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-flags</td>
+      <td>39 / 39</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-flagship-units</td>
+      <td>8 / 8</td>
+      <td></td>
+      <td>—</td>
+      <td>Content</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-fog</td>
+      <td>13 / 13</td>
+      <td></td>
+      <td>—</td>
+      <td>Engine</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-formation-figures</td>
+      <td>19 / 19</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-fredericksburg</td>
+      <td>22 / 22</td>
+      <td></td>
+      <td>—</td>
+      <td>Scenario</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-full-campaign</td>
+      <td>4 / 4</td>
+      <td></td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-gettysburg</td>
+      <td>18 / 18</td>
+      <td></td>
+      <td>—</td>
+      <td>Scenario</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-glossary</td>
+      <td>12 / 12</td>
+      <td></td>
+      <td>—</td>
+      <td>Meta</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-group6-readback</td>
+      <td>9 / 9</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Tooling</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-h0-after-action</td>
+      <td>✓ / ✓</td>
+      <td></td>
+      <td>—</td>
+      <td>UI</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-h0-battle-briefing</td>
+      <td>✓ / ✓</td>
+      <td></td>
+      <td>—</td>
+      <td>UI</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-h0-between-battle</td>
+      <td>✓ / ✓</td>
+      <td></td>
+      <td>—</td>
+      <td>UI</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-h0-main-menu</td>
+      <td>✓ / ✓</td>
+      <td></td>
+      <td>—</td>
+      <td>UI</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-h0-president-desk</td>
+      <td>✓ / ✓</td>
+      <td></td>
+      <td>—</td>
+      <td>UI</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-h0-tactical-hud</td>
+      <td>✓ / ✓</td>
+      <td></td>
+      <td>—</td>
+      <td>UI</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-h2-cutaways</td>
+      <td>10 / 10</td>
+      <td></td>
+      <td>—</td>
+      <td>UI</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-hard-war</td>
+      <td>8 / 8</td>
+      <td></td>
+      <td>—</td>
+      <td>Strategy</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-help-overlay</td>
+      <td>10 / 10</td>
+      <td></td>
+      <td>—</td>
+      <td>Meta</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-historical-data-inventory</td>
+      <td>5 / 5</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Tooling</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-historical-source-domains</td>
+      <td>6 / 6</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Tooling</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-hotpath-profile</td>
+      <td>6 / 6</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Tooling</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-human-cost</td>
+      <td>7 / 7</td>
+      <td></td>
+      <td>—</td>
+      <td>Strategy</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-intel-uhd617-profile</td>
+      <td>19 / 19</td>
+      <td>—</td>
+      <td>raw embed tier remains above soft warning budget: 2.418 MB</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-irregular-war</td>
+      <td>8 / 8</td>
+      <td></td>
+      <td>—</td>
+      <td>Strategy</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-leaders-imagery</td>
+      <td>15 / 15</td>
+      <td></td>
+      <td>—</td>
+      <td>Media</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-llm-commander</td>
+      <td>24 / 24</td>
+      <td></td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-logistics-rail</td>
+      <td>8 / 8</td>
+      <td></td>
+      <td>—</td>
+      <td>Engine</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-logistics</td>
+      <td>15 / 15</td>
+      <td></td>
+      <td>—</td>
+      <td>Engine</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-loot-survival</td>
+      <td>11 / 11</td>
+      <td></td>
+      <td>—</td>
+      <td>Content</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-malvern-hill</td>
+      <td>27 / 27</td>
+      <td></td>
+      <td>—</td>
+      <td>Scenario</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-manpower</td>
+      <td>9 / 9</td>
+      <td></td>
+      <td>—</td>
+      <td>Strategy</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-media-budget</td>
+      <td>13 / 13</td>
+      <td>—</td>
+      <td>raw embed tier is above the soft warning budget but below hard/review caps</td>
+      <td>Tooling</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-morale</td>
+      <td>10 / 10</td>
+      <td></td>
+      <td>—</td>
+      <td>Strategy</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-officers</td>
+      <td>15 / 15</td>
+      <td></td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-oob</td>
+      <td>17 / 17</td>
+      <td></td>
+      <td>—</td>
+      <td>Engine</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-order-feel</td>
+      <td>17 / 17</td>
+      <td></td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-phased-3d</td>
+      <td>✓ / ✓</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-phased-ab</td>
+      <td>✓ / ✓</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-photo-embed</td>
+      <td>24 / 24</td>
+      <td></td>
+      <td>—</td>
+      <td>Media</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-playstyle</td>
+      <td>14 / 14</td>
+      <td></td>
+      <td>—</td>
+      <td>Meta</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-portraits</td>
+      <td>✓ / ✓</td>
+      <td></td>
+      <td>—</td>
+      <td>Media</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-presets</td>
+      <td>27 / 27</td>
+      <td></td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-press</td>
+      <td>10 / 10</td>
+      <td></td>
+      <td>—</td>
+      <td>Strategy</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-primary-sources</td>
+      <td>14 / 14</td>
+      <td></td>
+      <td>—</td>
+      <td>Content</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-prisoner-exchange</td>
+      <td>9 / 9</td>
+      <td></td>
+      <td>—</td>
+      <td>Strategy</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-production</td>
+      <td>4 / 4</td>
+      <td></td>
+      <td>—</td>
+      <td>Strategy</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-ratings</td>
+      <td>21 / 21</td>
+      <td></td>
+      <td>—</td>
+      <td>Meta</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-real-diplomacy</td>
+      <td>8 / 8</td>
+      <td></td>
+      <td>—</td>
+      <td>Strategy</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-realism-teaching</td>
+      <td>12 / 12</td>
+      <td></td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-render-richness</td>
+      <td>31 / 31</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-save-slots</td>
+      <td>14 / 14</td>
+      <td></td>
+      <td>—</td>
+      <td>Meta</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-scenes-imagery</td>
+      <td>16 / 16</td>
+      <td></td>
+      <td>—</td>
+      <td>Media</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-shiloh</td>
+      <td>31 / 31</td>
+      <td></td>
+      <td>—</td>
+      <td>Scenario</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-tactical-roster</td>
+      <td>8 / 8</td>
+      <td></td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-tactical-visuals</td>
+      <td>✓ / ✓</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-targeting</td>
+      <td>5 / 5</td>
+      <td></td>
+      <td>—</td>
+      <td>Engine</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-terrain-readability</td>
+      <td>29 / 29</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-tripo-unit-assets</td>
+      <td>15 / 15</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-tutorial</td>
+      <td>15 / 15</td>
+      <td></td>
+      <td>—</td>
+      <td>Meta</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-under-told-perspectives</td>
+      <td>8 / 8</td>
+      <td></td>
+      <td>—</td>
+      <td>Content</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-usct-imagery</td>
+      <td>17 / 17</td>
+      <td></td>
+      <td>—</td>
+      <td>Media</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-vicksburg</td>
+      <td>18 / 18</td>
+      <td></td>
+      <td>—</td>
+      <td>Scenario</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-victory</td>
+      <td>12 / 12</td>
+      <td></td>
+      <td>—</td>
+      <td>Meta</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-visual-fidelity</td>
+      <td>27 / 27</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-weapons</td>
+      <td>8 / 8</td>
+      <td></td>
+      <td>—</td>
+      <td>Combat</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-weather</td>
+      <td>30 / 30</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Other</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-western-theater</td>
+      <td>8 / 8</td>
+      <td></td>
+      <td>—</td>
+      <td>Strategy</td>
+      <td>✅</td>
+    </tr>
+<tr>
+      <td>probe-women-in-war</td>
+      <td>8 / 8</td>
+      <td></td>
+      <td>—</td>
+      <td>Content</td>
+      <td>✅</td>
+    </tr>
+</tbody>
+</table>
+</body>
+</html>

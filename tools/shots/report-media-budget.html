@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Media Budget Report</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 2rem; background: #f8f9fa; color: #1a1a2e; }
+  h1 { border-bottom: 2px solid #1a1a2e; padding-bottom: 0.3rem; }
+  h2 { margin-top: 2rem; color: #16213e; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  th, td { padding: 0.5rem 0.75rem; text-align: left; border-bottom: 1px solid #dee2e6; }
+  th { background: #16213e; color: #fff; font-weight: 600; }
+  tr:hover { background: #f1f3f5; }
+  .badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 3px; font-size: 0.8rem; font-weight: 600; }
+  .ok { background: #d4edda; color: #155724; }
+  .warn { background: #fff3cd; color: #856404; }
+  .danger { background: #f8d7da; color: #721c24; }
+  .summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0; }
+  .summary-card { background: #fff; padding: 1rem; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  .summary-card .label { font-size: 0.8rem; color: #6c757d; text-transform: uppercase; letter-spacing: 0.05em; }
+  .summary-card .value { font-size: 1.5rem; font-weight: 700; margin-top: 0.25rem; }
+  .warn-list { background: #fff; padding: 1rem; border-radius: 6px; border-left: 4px solid #ffc107; margin: 1rem 0; }
+  .danger-list { background: #fff; padding: 1rem; border-radius: 6px; border-left: 4px solid #dc3545; margin: 1rem 0; }
+  .ok-list { background: #fff; padding: 1rem; border-radius: 6px; border-left: 4px solid #28a745; margin: 1rem 0; }
+  .guard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin: 0.5rem 0; }
+  .guard-item { padding: 0.4rem 0.6rem; border-radius: 4px; font-size: 0.85rem; }
+  code { background: #e9ecef; padding: 0.1rem 0.3rem; border-radius: 3px; font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<h1>Media Budget Report</h1>
+<p>Generated from <code>tools/shots/probe-media-budget.json</code></p>
+
+<div class="summary-grid">
+  <div class="summary-card">
+    <div class="label">Status</div>
+    <div class="value"><span class="badge ok">PASS</span></div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Steps Passed</div>
+    <div class="value">13/13</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Raw Tier</div>
+    <div class="value"><span class="badge warn">soft-warning</span></div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Total Files</div>
+    <div class="value">199</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Total Raw MB</div>
+    <div class="value">2.418</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Total Raw Bytes</div>
+    <div class="value">2,535,463</div>
+  </div>
+</div>
+
+<div class="warn-list"><strong>Warnings (1)</strong><ul><li>raw embed tier is above the soft warning budget but below hard/review caps</li></ul></div>
+
+<h2>Headroom</h2>
+<table>
+  <tr><th>Boundary</th><th>Headroom (bytes)</th><th>Status</th></tr>
+  <tr>
+    <td>Soft (exceeded)</td>
+    <td>-962,599</td>
+    <td><span class="badge danger">Over</span></td>
+  </tr>
+  <tr>
+    <td>Review Warning</td>
+    <td>348,121</td>
+    <td><span class="badge ok">OK</span></td>
+  </tr>
+  <tr>
+    <td>Hard Cap</td>
+    <td>610,265</td>
+    <td><span class="badge ok">OK</span></td>
+  </tr>
+  <tr>
+    <td>Core Files</td>
+    <td>61</td>
+    <td><span class="badge ok">OK</span></td>
+  </tr>
+</table>
+
+<h2>Active Guards</h2>
+<div class="guard-grid">
+<div class="guard-item ok"><span class="badge ok">ON</span> <code>d300CoreFreeze</code></div><div class="guard-item ok"><span class="badge ok">ON</span> <code>d301CategoryCeilings</code></div><div class="guard-item ok"><span class="badge ok">ON</span> <code>d302SourceMirror</code></div><div class="guard-item ok"><span class="badge ok">ON</span> <code>d303InformativeMetadata</code></div><div class="guard-item ok"><span class="badge ok">ON</span> <code>h2VideoDisabled</code></div><div class="guard-item ok"><span class="badge ok">ON</span> <code>heavyMediaOptionalPack</code></div>
+</div>
+
+<h2>Category Ceilings</h2>
+<table>
+  <tr><th>Category</th><th>Files</th><th>Max Files</th><th>File Headroom</th><th>Raw Bytes</th><th>Max Bytes</th><th>Byte Headroom</th><th>Raw MB</th></tr>
+<tr>
+      <td><code>artillery</code></td>
+      <td>2</td>
+      <td>2</td>
+      <td><span class="badge warn">0</span></td>
+      <td>53,819</td>
+      <td>53,819</td>
+      <td><span class="badge warn">0</span></td>
+      <td>0.051</td>
+    </tr><tr>
+      <td><code>leaders</code></td>
+      <td>20</td>
+      <td>20</td>
+      <td><span class="badge warn">0</span></td>
+      <td>641,050</td>
+      <td>641,050</td>
+      <td><span class="badge warn">0</span></td>
+      <td>0.611</td>
+    </tr><tr>
+      <td><code>portraits</code></td>
+      <td>156</td>
+      <td>156</td>
+      <td><span class="badge warn">0</span></td>
+      <td>1,040,819</td>
+      <td>1,040,819</td>
+      <td><span class="badge warn">0</span></td>
+      <td>0.993</td>
+    </tr><tr>
+      <td><code>scenes</code></td>
+      <td>6</td>
+      <td>6</td>
+      <td><span class="badge warn">0</span></td>
+      <td>295,470</td>
+      <td>295,470</td>
+      <td><span class="badge warn">0</span></td>
+      <td>0.282</td>
+    </tr><tr>
+      <td><code>usct</code></td>
+      <td>7</td>
+      <td>7</td>
+      <td><span class="badge warn">0</span></td>
+      <td>332,447</td>
+      <td>332,447</td>
+      <td><span class="badge warn">0</span></td>
+      <td>0.317</td>
+    </tr><tr>
+      <td><code>weapons</code></td>
+      <td>8</td>
+      <td>8</td>
+      <td><span class="badge warn">0</span></td>
+      <td>171,858</td>
+      <td>171,858</td>
+      <td><span class="badge warn">0</span></td>
+      <td>0.164</td>
+    </tr>
+</table>
+
+<h2>Source Organization</h2>
+<div class="summary-grid">
+  <div class="summary-card">
+    <div class="label">Source Mirror Required</div>
+    <div class="value"><span class="badge ok">Yes</span></div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Source Mirror OK</div>
+    <div class="value"><span class="badge ok">Yes</span></div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Informative Metadata Required</div>
+    <div class="value"><span class="badge ok">Yes</span></div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Informative Metadata OK</div>
+    <div class="value"><span class="badge ok">Yes</span></div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Declared Core Categories</div>
+    <div class="value">6</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Informative Categories</div>
+    <div class="value">3</div>
+  </div>
+</div>
+
+
+<h3>Per-Category Source Organization</h3>
+<table>
+  <tr><th>Category</th><th>Source Dir</th><th>Embed Dir</th><th>Source Files</th><th>Embed Files</th><th>Missing Source</th><th>Metadata Records</th><th>Missing Metadata</th><th>Stale Metadata</th><th>Incomplete Metadata</th></tr>
+<tr>
+      <td><code>artillery</code></td>
+      <td><code>assets/artillery</code></td>
+      <td><code>assets/embed/artillery</code></td>
+      <td>2</td>
+      <td>2</td>
+      <td><span class="badge ok">0</span></td>
+      <td>-</td>
+      <td><span class="badge ok">0</span></td>
+      <td><span class="badge ok">0</span></td>
+      <td><span class="badge ok">0</span></td>
+    </tr><tr>
+      <td><code>leaders</code></td>
+      <td><code>assets/leaders</code></td>
+      <td><code>assets/embed/leaders</code></td>
+      <td>20</td>
+      <td>20</td>
+      <td><span class="badge ok">0</span></td>
+      <td>20</td>
+      <td><span class="badge ok">0</span></td>
+      <td><span class="badge ok">0</span></td>
+      <td><span class="badge ok">0</span></td>
+    </tr><tr>
+      <td><code>portraits</code></td>
+      <td><code>assets/portraits</code></td>
+      <td><code>assets/embed/portraits</code></td>
+      <td>156</td>
+      <td>156</td>
+      <td><span class="badge ok">0</span></td>
+      <td>-</td>
+      <td><span class="badge ok">0</span></td>
+      <td><span class="badge ok">0</span></td>
+      <td><span class="badge ok">0</span></td>
+    </tr><tr>
+      <td><code>scenes</code></td>
+      <td><code>assets/scenes</code></td>
+      <td><code>assets/embed/scenes</code></td>
+      <td>6</td>
+      <td>6</td>
+      <td><span class="badge ok">0</span></td>
+      <td>6</td>
+      <td><span class="badge ok">0</span></td>
+      <td><span class="badge ok">0</span></td>
+      <td><span class="badge ok">0</span></td>
+    </tr><tr>
+      <td><code>usct</code></td>
+      <td><code>assets/usct</code></td>
+      <td><code>assets/embed/usct</code></td>
+      <td>7</td>
+      <td>7</td>
+      <td><span class="badge ok">0</span></td>
+      <td>7</td>
+      <td><span class="badge ok">0</span></td>
+      <td><span class="badge ok">0</span></td>
+      <td><span class="badge ok">0</span></td>
+    </tr><tr>
+      <td><code>weapons</code></td>
+      <td><code>assets/weapons</code></td>
+      <td><code>assets/embed/weapons</code></td>
+      <td>8</td>
+      <td>8</td>
+      <td><span class="badge ok">0</span></td>
+      <td>-</td>
+      <td><span class="badge ok">0</span></td>
+      <td><span class="badge ok">0</span></td>
+      <td><span class="badge ok">0</span></td>
+    </tr>
+</table>
+
+<h2>Source Inventory (Stem Parity)</h2>
+<div class="summary-grid">
+  <div class="summary-card">
+    <div class="label">Exact Stem Parity OK</div>
+    <div class="value"><span class="badge ok">Yes</span></div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Source-Only Categories</div>
+    <div class="value">0</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Embed-Only Categories</div>
+    <div class="value">0</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Duplicate Stem Categories</div>
+    <div class="value">0</div>
+  </div>
+</div>
+
+
+<h2>Arithmetic Consistency</h2>
+<table>
+  <tr><th>Metric</th><th>Value</th></tr>
+  <tr><td>Summed Core Files</td><td>199</td></tr>
+  <tr><td>Summed Core Raw Bytes</td><td>2,535,463</td></tr>
+  <tr><td>Total Files</td><td>199</td></tr>
+  <tr><td>Total Raw Bytes</td><td>2,535,463</td></tr>
+  <tr><td>Totals Match</td><td><span class="badge ok">Yes</span></td></tr>
+</table>
+
+<h2>Undeclared Embed State</h2>
+<table>
+  <tr><th>Metric</th><th>Value</th></tr>
+  <tr><td>Frozen Core Posture Active</td><td><span class="badge ok">Yes</span></td></tr>
+  <tr><td>Guard Enabled</td><td><span class="badge ok">Yes</span></td></tr>
+  <tr><td>Enforced</td><td><span class="badge ok">Yes</span></td></tr>
+  <tr><td>Undeclared Categories</td><td>0</td></tr>
+  <tr><td>Undeclared Files</td><td>0</td></tr>
+</table>
+
+
+<h2>Largest Embedded Files (Top 10)</h2>
+<table>
+  <tr><th>Path</th><th>Category</th><th>Bytes</th></tr>
+<tr><td><code>assets/embed/scenes/antietam.jpg</code></td><td>scenes</td><td>72,626</td></tr><tr><td><code>assets/embed/scenes/chancellorsville.jpg</code></td><td>scenes</td><td>71,955</td></tr><tr><td><code>assets/embed/portraits/elisharhodes.jpg</code></td><td>portraits</td><td>64,870</td></tr><tr><td><code>assets/embed/usct/united-states-colored-troops.jpg</code></td><td>usct</td><td>61,938</td></tr><tr><td><code>assets/embed/usct/54th-massachusetts-infantry.jpg</code></td><td>usct</td><td>59,863</td></tr><tr><td><code>assets/embed/usct/system-manpower-pool-usct.jpg</code></td><td>usct</td><td>59,807</td></tr><tr><td><code>assets/embed/leaders/ulysses-s-grant.jpg</code></td><td>leaders</td><td>50,006</td></tr><tr><td><code>assets/embed/usct/robert-gould-shaw.jpg</code></td><td>usct</td><td>44,960</td></tr><tr><td><code>assets/embed/usct/nathan-bedford-forrest.jpg</code></td><td>usct</td><td>44,665</td></tr><tr><td><code>assets/embed/scenes/bullrun1.jpg</code></td><td>scenes</td><td>44,075</td></tr>
+</table>
+
+<h2>Frozen Categories</h2>
+<table>
+  <tr><th>Metric</th><th>Value</th></tr>
+  <tr><td>Total Frozen Categories</td><td>6</td></tr>
+  <tr><td>Zero File Headroom</td><td>artillery, leaders, portraits, scenes, usct, weapons</td></tr>
+  <tr><td>Zero Raw Byte Headroom</td><td>artillery, leaders, portraits, scenes, usct, weapons</td></tr>
+  <tr><td>Negative Headroom</td><td>none</td></tr>
+</table>
+
+<h2>Steps</h2>
+<table>
+  <tr><th>#</th><th>Name</th><th>Status</th><th>Detail</th></tr>
+<tr>
+    <td>1</td>
+    <td>schema and core policy are present</td>
+    <td><span class="badge ok">PASS</span></td>
+    <td><code>{"schema":"cw_media_budget_v1","version":"1.7"}</code></td>
+  </tr><tr>
+    <td>2</td>
+    <td>media budget policy state readback is explicit</td>
+    <td><span class="badge ok">PASS</span></td>
+    <td><code>{"rawTier":"soft-warning","rawBytes":2535463,"rawMB":2.418,"files":199,"headroom":{"softBytes":-962599,"reviewBytes":348121,"hardBytes":610265,"coreFiles":61},"activeGuards":{"d300CoreFreeze":true,"d301CategoryCeilings":true,"d302SourceMirror":true,"d303InformativeMetadata":true,"h2VideoDisabled":true,"heavyMediaOptionalPack":true},"frozenCategories":{"total":6,"zeroFileHeadroom":["artillery","leaders","portraits","scenes","usct","weapons"],"zeroRawByteHeadroom":["artillery","leaders","portraits","scenes","usct","weapons"],"negativeHeadroom":[]}}</code></td>
+  </tr><tr>
+    <td>3</td>
+    <td>media source-organization readback is explicit</td>
+    <td><span class="badge ok">PASS</span></td>
+    <td><code>{"declaredCoreCategories":["artillery","leaders","portraits","scenes","usct","weapons"],"informativeCategories":["leaders","scenes","usct"],"sourceMirrorRequired":true,"sourceMirrorOk":true,"informativeMetadataRequired":true,"informativeMetadataOk":true,"missingSourceCategories":[],"metadataIssueCategories":[],"perCategory":{"portraits":{"sourceDir":"assets/portraits","embedDir":"assets/embed/portraits","sourceFiles":156,"embedFiles":156,"missingSource":[],"informativeMetadataRequired":false,"metadataModule":null,"metadataVar":null,"metadataRecords":null,"missingMetadata":[],"staleMetadata":[],"incompleteMetadata":[]},"weapons":{"sourceDir":"assets/weapons","embedDir":"assets/embed/weapons","sourceFiles":8,"embedFiles":8,"missingSource":[],"informativeMetadataRequired":false,"metadataModule":null,"metadataVar":null,"metadataRecords":null,"missingMetadata":[],"staleMetadata":[],"incompleteMetadata":[]},"artillery":{"sourceDir":"assets/artillery","embedDir":"assets/embed/artillery","sourceFiles":2,"embedFiles":2,"missingSource":[],"informativeMetadataRequired":false,"metadataModule":null,"metadataVar":null,"metadataRecords":null,"missingMetadata":[],"staleMetadata":[],"incompleteMetadata":[]},"usct":{"sourceDir":"assets/usct","embedDir":"assets/embed/usct","sourceFiles":7,"embedFiles":7,"missingSource":[],"informativeMetadataRequired":true,"metadataModule":"src/53-usct-imagery.js","metadataVar":"USCT_IMG","metadataRecords":7,"missingMetadata":[],"staleMetadata":[],"incompleteMetadata":[]},"leaders":{"sourceDir":"assets/leaders","embedDir":"assets/embed/leaders","sourceFiles":20,"embedFiles":20,"missingSource":[],"informativeMetadataRequired":true,"metadataModule":"src/52-leaders-imagery.js","metadataVar":"LEADER_IMG","metadataRecords":20,"missingMetadata":[],"staleMetadata":[],"incompleteMetadata":[]},"scenes":{"sourceDir":"assets/scenes","embedDir":"assets/embed/scenes","sourceFiles":6,"embedFiles":6,"missingSource":[],"informativeMetadataRequired":true,"metadataModule":"src/51-scenes-imagery.js","metadataVar":"SCENE_IMG","metadataRecords":6,"missingMetadata":[],"staleMetadata":[],"incompleteMetadata":[]}}}</code></td>
+  </tr><tr>
+    <td>4</td>
+    <td>media source-inventory readback is explicit</td>
+    <td><span class="badge ok">PASS</span></td>
+    <td><code>{"declaredCoreCategories":["artillery","leaders","portraits","scenes","usct","weapons"],"exactStemParityOk":true,"sourceOnlyCategories":[],"embedOnlyCategories":[],"duplicateStemCategories":[],"perCategory":{"portraits":{"sourceDir":"assets/portraits","embedDir":"assets/embed/portraits","sourceFiles":156,"embedFiles":156,"sourceOnly":[],"embedOnly":[],"sourceDuplicateStems":[],"embedDuplicateStems":[],"sourceExtensions":[".jpg"],"embedExtensions":[".jpg"],"largestEmbed":{"path":"assets/embed/portraits/elisharhodes.jpg","bytes":64870}},"weapons":{"sourceDir":"assets/weapons","embedDir":"assets/embed/weapons","sourceFiles":8,"embedFiles":8,"sourceOnly":[],"embedOnly":[],"sourceDuplicateStems":[],"embedDuplicateStems":[],"sourceExtensions":[".jpg",".png"],"embedExtensions":[".jpg",".png"],"largestEmbed":{"path":"assets/embed/weapons/sharps.png","bytes":35516}},"artillery":{"sourceDir":"assets/artillery","embedDir":"assets/embed/artillery","sourceFiles":2,"embedFiles":2,"sourceOnly":[],"embedOnly":[],"sourceDuplicateStems":[],"embedDuplicateStems":[],"sourceExtensions":[".jpg"],"embedExtensions":[".jpg"],"largestEmbed":{"path":"assets/embed/artillery/whitworth.jpg","bytes":32346}},"usct":{"sourceDir":"assets/usct","embedDir":"assets/embed/usct","sourceFiles":7,"embedFiles":7,"sourceOnly":[],"embedOnly":[],"sourceDuplicateStems":[],"embedDuplicateStems":[],"sourceExtensions":[".jpg"],"embedExtensions":[".jpg"],"largestEmbed":{"path":"assets/embed/usct/united-states-colored-troops.jpg","bytes":61938}},"leaders":{"sourceDir":"assets/leaders","embedDir":"assets/embed/leaders","sourceFiles":20,"embedFiles":20,"sourceOnly":[],"embedOnly":[],"sourceDuplicateStems":[],"embedDuplicateStems":[],"sourceExtensions":[".jpg"],"embedExtensions":[".jpg"],"largestEmbed":{"path":"assets/embed/leaders/ulysses-s-grant.jpg","bytes":50006}},"scenes":{"sourceDir":"assets/scenes","embedDir":"assets/embed/scenes","sourceFiles":6,"embedFiles":6,"sourceOnly":[],"embedOnly":[],"sourceDuplicateStems":[],"embedDuplicateStems":[],"sourceExtensions":[".jpg"],"embedExtensions":[".jpg"],"largestEmbed":{"path":"assets/embed/scenes/antietam.jpg","bytes":72626}}}}</code></td>
+  </tr><tr>
+    <td>5</td>
+    <td>data budget matches build.mjs hard and soft caps</td>
+    <td><span class="badge ok">PASS</span></td>
+    <td><code>{"soft":1572864,"hard":3145728}</code></td>
+  </tr><tr>
+    <td>6</td>
+    <td>media-budget arithmetic remains internally consistent</td>
+    <td><span class="badge ok">PASS</span></td>
+    <td><code>{"declaredCoreCategories":["artillery","leaders","portraits","scenes","usct","weapons"],"summedCoreFiles":199,"summedCoreRawBytes":2535463,"totalFiles":199,"totalRawBytes":2535463,"totalsMatch":true,"headroom":{"softExpected":-962599,"softReported":-962599,"reviewExpected":348121,"reviewReported":348121,"hardExpected":610265,"hardReported":610265,"coreFilesExpected":61,"coreFilesReported":61}}</code></td>
+  </tr><tr>
+    <td>7</td>
+    <td>current embedded core stays below hard cap and review warning</td>
+    <td><span class="badge ok">PASS</span></td>
+    <td><code>{"files":199,"rawBytes":2535463,"rawMB":2.418}</code></td>
+  </tr><tr>
+    <td>8</td>
+    <td>D300 frozen core category ceilings hold while raw tier is above soft warning</td>
+    <td><span class="badge ok">PASS</span></td>
+    <td><code>{"active":true,"decision":"D300","categories":{"artillery":{"files":2,"freezeMaxFiles":2,"fileHeadroom":0,"rawBytes":53819,"freezeMaxRawBytes":53819,"rawByteHeadroom":0,"rawMB":0.051},"leaders":{"files":20,"freezeMaxFiles":20,"fileHeadroom":0,"rawBytes":641050,"freezeMaxRawBytes":641050,"rawByteHeadroom":0,"rawMB":0.611},"portraits":{"files":156,"freezeMaxFiles":156,"fileHeadroom":0,"rawBytes":1040819,"freezeMaxRawBytes":1040819,"rawByteHeadroom":0,"rawMB":0.993},"scenes":{"files":6,"freezeMaxFiles":6,"fileHeadroom":0,"rawBytes":295470,"freezeMaxRawBytes":295470,"rawByteHeadroom":0,"rawMB":0.282},"usct":{"files":7,"freezeMaxFiles":7,"fileHeadroom":0,"rawBytes":332447,"freezeMaxRawBytes":332447,"rawByteHeadroom":0,"rawMB":0.317},"weapons":{"files":8,"freezeMaxFiles":8,"fileHeadroom":0,"rawBytes":171858,"freezeMaxRawBytes":171858,"rawByteHeadroom":0,"rawMB":0.164}}}</code></td>
+  </tr><tr>
+    <td>9</td>
+    <td>embedded categories are declared and image-only</td>
+    <td><span class="badge ok">PASS</span></td>
+    <td><code>{"byCategory":{"artillery":{"files":2,"bytes":53819},"leaders":{"files":20,"bytes":641050},"portraits":{"files":156,"bytes":1040819},"scenes":{"files":6,"bytes":295470},"usct":{"files":7,"bytes":332447},"weapons":{"files":8,"bytes":171858}},"undeclared":{"declaredCoreCategories":["artillery","leaders","portraits","scenes","usct","weapons"],"frozenCorePostureActive":true,"guardEnabled":true,"enforced":true,"undeclaredCategories":[],"undeclaredCategoryCount":0,"undeclaredFilesCount":0,"sampleOffendingPaths":[]}}</code></td>
+  </tr><tr>
+    <td>10</td>
+    <td>embedded files still mirror source-tier assets</td>
+    <td><span class="badge ok">PASS</span></td>
+    <td><code>{"portraits":{"sourceDir":"assets/portraits","embedDir":"assets/embed/portraits","sourceFiles":156,"embedFiles":156,"missingSource":[]},"weapons":{"sourceDir":"assets/weapons","embedDir":"assets/embed/weapons","sourceFiles":8,"embedFiles":8,"missingSource":[]},"artillery":{"sourceDir":"assets/artillery","embedDir":"assets/embed/artillery","sourceFiles":2,"embedFiles":2,"missingSource":[]},"usct":{"sourceDir":"assets/usct","embedDir":"assets/embed/usct","sourceFiles":7,"embedFiles":7,"missingSource":[]},"leaders":{"sourceDir":"assets/leaders","embedDir":"assets/embed/leaders","sourceFiles":20,"embedFiles":20,"missingSource":[]},"scenes":{"sourceDir":"assets/scenes","embedDir":"assets/embed/scenes","sourceFiles":6,"embedFiles":6,"missingSource":[]}}</code></td>
+  </tr><tr>
+    <td>11</td>
+    <td>informative embedded media has complete curated metadata</td>
+    <td><span class="badge ok">PASS</span></td>
+    <td><code>{"usct":{"embedDir":"assets/embed/usct","metadataModule":"src/53-usct-imagery.js","metadataVar":"USCT_IMG","embeds":7,"metadataRecords":7,"missingMetadata":[],"staleMetadata":[],"incompleteMetadata":[]},"leaders":{"embedDir":"assets/embed/leaders","metadataModule":"src/52-leaders-imagery.js","metadataVar":"LEADER_IMG","embeds":20,"metadataRecords":20,"missingMetadata":[],"staleMetadata":[],"incompleteMetadata":[]},"scenes":{"embedDir":"assets/embed/scenes","metadataModule":"src/51-scenes-imagery.js","metadataVar":"SCENE_IMG","embeds":6,"metadataRecords":6,"missingMetadata":[],"staleMetadata":[],"incompleteMetadata":[]}}</code></td>
+  </tr><tr>
+    <td>12</td>
+    <td>H2 moving-image slots are still disabled and local-fallback only</td>
+    <td><span class="badge ok">PASS</span></td>
+    <td><code>{"records":9}</code></td>
+  </tr><tr>
+    <td>13</td>
+    <td>future heavy media is locked to explicit decision or optional pack</td>
+    <td><span class="badge ok">PASS</span></td>
+    <td><code>{"h2":"locked-pending-provenance","hd":"optional-pack-only"}</code></td>
+  </tr>
+</table>
+
+</body>
+</html>
