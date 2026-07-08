@@ -4,6 +4,7 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, extname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createContext, runInContext } from 'node:vm';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -64,6 +65,67 @@ function sourceMirrorSummary() {
       sourceFiles: sourceFiles.length,
       embedFiles: embedFiles.length,
       missingSource: missing
+    };
+  }
+  return { bad, detail };
+}
+function readJsGlobalObject(rel, globalName) {
+  const p = join(ROOT, rel);
+  if (!existsSync(p)) throw new Error('missing metadata module ' + rel);
+  const box = {
+    htmlEsc: function (s) {
+      return String(s == null ? '' : s);
+    }
+  };
+  createContext(box);
+  runInContext(readFileSync(p, 'utf8'), box, { filename: rel });
+  const obj = box[globalName];
+  if (!obj || typeof obj !== 'object' || Array.isArray(obj)) throw new Error(rel + ' did not define object ' + globalName);
+  return obj;
+}
+function informativeMetadataSummary() {
+  const categories = (budget.categories || []).filter(c => c.allowedInSingleFile && c.requiresInformativeMetadata);
+  const detail = {};
+  const bad = [];
+  for (const c of categories) {
+    if (!c.embedDir || !c.metadataModule || !c.metadataVar) {
+      bad.push(c.id + ' missing embedDir/metadataModule/metadataVar');
+      continue;
+    }
+    const embedDir = join(ROOT, c.embedDir);
+    if (!existsSync(embedDir)) {
+      bad.push(c.id + ' missing embedDir ' + c.embedDir);
+      continue;
+    }
+    let table;
+    try {
+      table = readJsGlobalObject(c.metadataModule, c.metadataVar);
+    } catch (e) {
+      bad.push(c.id + ' metadata load failed: ' + String(e && e.message || e));
+      continue;
+    }
+    const embedKeys = walkFiles(embedDir).map(f => baseStem(f.replace(embedDir + '/', ''))).sort();
+    const metaKeys = Object.keys(table).sort();
+    const embedSet = new Set(embedKeys);
+    const metaSet = new Set(metaKeys);
+    const missingMetadata = embedKeys.filter(k => !metaSet.has(k));
+    const staleMetadata = metaKeys.filter(k => !embedSet.has(k));
+    const incompleteMetadata = metaKeys.filter(k => {
+      const m = table[k] || {};
+      return !String(m.alt || '').trim() || !String(m.caption || '').trim() || !String(m.credit || '').trim();
+    });
+    if (missingMetadata.length) bad.push(c.id + ' embeds missing metadata: ' + missingMetadata.join(', '));
+    if (staleMetadata.length) bad.push(c.id + ' metadata without embed: ' + staleMetadata.join(', '));
+    if (incompleteMetadata.length) bad.push(c.id + ' metadata missing alt/caption/credit: ' + incompleteMetadata.join(', '));
+    detail[c.id] = {
+      embedDir: c.embedDir,
+      metadataModule: c.metadataModule,
+      metadataVar: c.metadataVar,
+      embeds: embedKeys.length,
+      metadataRecords: metaKeys.length,
+      missingMetadata,
+      staleMetadata,
+      incompleteMetadata
     };
   }
   return { bad, detail };
@@ -199,6 +261,13 @@ step('embedded categories are declared and image-only', () => {
 step('embedded files still mirror source-tier assets', () => {
   if (budget.policy.requireEmbedSourceMirror !== true) throw new Error('embed/source mirror guard missing');
   const summary = sourceMirrorSummary();
+  if (summary.bad.length) throw new Error(summary.bad.join('; '));
+  return summary.detail;
+});
+
+step('informative embedded media has complete curated metadata', () => {
+  if (budget.policy.requireInformativeEmbedMetadata !== true) throw new Error('informative embed metadata guard missing');
+  const summary = informativeMetadataSummary();
   if (summary.bad.length) throw new Error(summary.bad.join('; '));
   return summary.detail;
 });

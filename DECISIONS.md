@@ -6,6 +6,18 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D303 — GROUP 6 MEDIA-BUDGET TOOLING: INFORMATIVE EMBEDS MUST HAVE COMPLETE CURATED METADATA — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
+
+The third Group 6 meta/deferred tooling slice strengthens the embedded-media budget/source-organization guard without adding assets or changing gameplay. `data/media-budget.json` is now schemaVersion 1.3 and records an informative-media metadata rule: embedded categories that present historical teaching media must declare the source module/object that carries their alt text, caption, and credit metadata.
+
+- **Tooling change:** `tools/probe-media-budget.mjs` now loads the declared metadata objects for informative embedded categories and verifies exact key coverage against the embedded files. A category fails if an embedded file lacks metadata, if metadata points to no embedded file, or if a metadata record lacks nonempty `alt`, `caption`, or `credit` text.
+- **Current guarded categories:** USCT imagery maps `assets/embed/usct` to `src/53-usct-imagery.js` / `USCT_IMG`; leader imagery maps `assets/embed/leaders` to `src/52-leaders-imagery.js` / `LEADER_IMG`; scene imagery maps `assets/embed/scenes` to `src/51-scenes-imagery.js` / `SCENE_IMG`.
+- **Focused gate:** `node --check tools/probe-media-budget.mjs` clean; `node tools/build.mjs` GATE OK with the known raw-embed soft warning; strengthened `node tools/probe-media-budget.mjs` green **9/9**, still **199 files / 2.418 MB raw**, D300 freeze active, all category file/byte headroom **0**, source mirror green, informative metadata green for USCT **7/7**, leaders **20/20**, and scenes **6/6**, warnings=1 for the known soft-warning state; JSON readback inspected; `git diff --check` clean.
+- **Policy effect:** no media assets were added, fetched, compressed, removed, regenerated, or reclassified. H2 footage, HDRI/model media, optional pack work, Tripo, Soldier's Story replacement rows, M8/Q5/Q6, and Phase D remain locked/deferred exactly as D300/D299 specify.
+- **Queue after D303:** continue Priority 1 Group 6 with another small gateable tooling slice: reusable historical-data layer, broader source organization, hotpath profiling, or another media-budget reporting/guard improvement. Do not reopen Phase H media or pick a Soldier's Story slice unless Aaron explicitly changes the queue.
+
+---
+
 ## D302 — GROUP 6 MEDIA-BUDGET TOOLING: CORE EMBEDS MUST MIRROR SOURCE-TIER ASSETS — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
 
 The second Group 6 meta/deferred tooling slice strengthens source organization around the embedded-media budget without adding assets or changing gameplay. `data/media-budget.json` is now schemaVersion 1.2 and records the source-mirror guard: every committed offline embed under a declared core `assets/embed/<category>/` directory must have a same-stem source file under that category's `sourceDir`.
