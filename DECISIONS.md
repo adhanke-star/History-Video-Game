@@ -6,6 +6,19 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D323 — GROUP 2 TRANSFER MOVE: CROSS-THEATER READINESS IS NOW EXPLICIT, PLAYER-GATED, AND OUTPUT-WALLED — [CODEX GPT-5.5, Priority-1 Group 2 GM follow-up] (2026-07-08)
+
+D322 made theater fit honest; D323 turns it into the explicit player move without coupling it to battle outcomes.
+
+- **Runtime move:** `src/35-command.js` now adds `cmdTransfer(C,id)` plus bounded `_cmdTransfer*` helpers. A Transfer spends configured political capital, stores only current-battle readiness under `C.president.command.transfer`, and makes `cmdTransferReadiness(C,id)` read `transferred:true` for that engagement.
+- **Command desk:** the Command tab renders a `Cross-theater transfer` section showing the next battle theater, same-theater/Multi fits, cross-theater candidates, affordability, and completed transfers. The control is player-visible only; there is no enemy Transfer button or shadow write.
+- **Save hardening:** `cmdInit` sanitizes malformed, stale-battle, wrong-theater, native-fit, invalid, dead/off-date, or uncommissioned commission-pool Transfer records. Absent/null means no default transfer state and no default behavior change.
+- **Output wall:** Transfer writes only `cmd.transfer` plus the political-capital debit. It does not write scoreboard, battle result, casualties, OOB totals, combat output, hidden commissions, hidden enemy command state, or enemy Transfer.
+- **Focused gate:** `node --check src/35-command.js`; `node --check tools/probe-command.mjs`; `node tools/build.mjs` GATE OK with known raw-embed soft warning; `node tools/validate-data-schemas.mjs` green **39/39**; `node tools/probe-command.mjs` green **88/88**, **0** pageerrors; adjacents `node tools/probe-ratings.mjs` green **21/21**, `node tools/probe-oob.mjs` green **17/17**, and `node tools/probe-bridge.mjs` green **6/6**, all **0** pageerrors; `git diff --check` clean.
+- **Next phase decision:** Group 2's explicit Transfer slice is closed. Optional Group 6 report polish remains the next eligible non-locked item, but M8/Q5/Q6 battle-build still requires Aaron's explicit go/no-go; Phase H media, H2/HDRI/model media, Tripo, assets, and Soldier's Story rows remain locked/deferred unless Aaron redirects.
+
+---
+
 ## D322 — GROUP 2 GM/TRANSFER SUBSTRATE: THEATER CLASSIFICATION IS NOW HONEST, READABLE, AND PROBE-GATED BEFORE ANY TRANSFER MOVE — [CODEX GPT-5.5, Priority-1 Group 2 GM follow-up] (2026-07-08)
 
 Group 2's D173 AI-GM shadow explicitly left Transfer blocked because `data/generals.json` had no honest theater classification. D322 closes that blocker as input/readout substrate only.
@@ -14,7 +27,7 @@ Group 2's D173 AI-GM shadow explicitly left Transfer blocked because `data/gener
 - **Runtime substrate:** `src/35-command.js` now exposes pure helpers for normalizing a general's theater list, resolving the next battle's broad theater from `BATTLES.th` / logistics routes, and reading `cmdTransferReadiness(C,id)`. The helper flags whether a general already fits the next battle's theater or would need a future cross-theater Transfer move.
 - **AI-GM readout:** the enemy command shadow now carries commander theater fields and the next battle theater into its pure snapshot/readout. It still writes no enemy command save state, commissions no hidden officers, and performs no Transfer.
 - **Focused gate:** `node --check src/35-command.js`; `node --check tools/probe-command.mjs`; `node tools/build.mjs` GATE OK with known raw-embed soft warning; `node tools/validate-data-schemas.mjs` green **39/39**; `node tools/probe-command.mjs` green **81/81**, **0** pageerrors. `git diff --check` pending in the final closeout gate.
-- **Next phase decision:** the `theater` blocker is closed. A future Group 2 slice may build the actual Transfer move, but it must stay explicit, gated, and input/readout-bounded unless a separate no-fudge combat/output decision is made.
+- **Next phase decision:** the `theater` blocker is closed. This is now superseded by D323's explicit Transfer move, which stayed gated and input/readout-bounded without combat/output coupling.
 
 ---
 

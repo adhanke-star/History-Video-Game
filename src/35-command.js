@@ -141,17 +141,103 @@ function cmdTransferReadiness(C, id) {
   var battleTheater = _cmdBattleTheater(C);
   var theaters = _cmdGeneralTheaters(gen);
   var primary = _cmdGeneralTheater(gen);
-  var fits = battleTheater ? _cmdGeneralFitsTheater(gen, battleTheater) : false;
+  var naturalFit = battleTheater ? _cmdGeneralFitsTheater(gen, battleTheater) : false;
+  var transferred = !!(!naturalFit && _cmdTransferRecord(C, id));
+  var fits = !!(naturalFit || transferred);
   return {
     id: gen.id,
     name: _cmdName(gen),
     theater: primary,
     theaters: theaters,
     battleTheater: battleTheater,
+    naturalFit: !!naturalFit,
+    transferred: transferred,
     sameTheater: !!fits,
-    transferNeeded: !!(battleTheater && theaters.length && !fits),
+    transferNeeded: !!(battleTheater && theaters.length && !naturalFit && !transferred),
     prov: gen.theaterProvenance || "Inferred"
   };
+}
+
+/* ===========================================================================
+   Group 2 / D323 · CROSS-THEATER TRANSFER MOVE.
+
+   The D322 theater substrate made cross-theater fit honest and probeable; this
+   adds the explicit player move over that substrate. Transfer is deliberately a
+   current-engagement command-readiness record: it spends political capital and
+   stores only cmd.transfer for the player's command desk. It does not commission
+   officers, does not create enemy command state, and does not write casualties,
+   victory, OOB totals, or any combat output. Later systems may read this as an
+   input only if separately authorized; today it is a player-visible readiness
+   move and readout.
+   =========================================================================== */
+function _cmdTransferCfg() { var d = gameData("ratings"); return (d && d.transfer) ? d.transfer : {}; }
+function _cmdTransferCost() { var cfg = _cmdTransferCfg(); return Math.max(0, Math.round(_cmdNum(cfg.cost, 4))); }
+
+function _cmdTransferRecord(C, id) {
+  var cmd = C && C.president && C.president.command;
+  var tr = cmd && cmd.transfer;
+  if (!tr || typeof tr !== "object" || Array.isArray(tr) || !tr.ids || typeof tr.ids !== "object" || Array.isArray(tr.ids)) return null;
+  var bd = (typeof _brgNextBattle === "function") ? _brgNextBattle(C) : null;
+  var battleTheater = _cmdBattleTheater(C);
+  if (!bd || !bd.id || !battleTheater || tr.battleId !== bd.id || tr.theater !== battleTheater) return null;
+  var rec = tr.ids[id];
+  return (rec && typeof rec === "object" && !Array.isArray(rec) && rec.theater === battleTheater) ? rec : null;
+}
+
+function _cmdTransferClean(C, persist) {
+  var cmd = C && C.president && C.president.command;
+  if (!cmd) return null;
+  var raw = cmd.transfer;
+  if (raw == null) return null;
+  var bd = (typeof _brgNextBattle === "function") ? _brgNextBattle(C) : null;
+  var battleTheater = _cmdBattleTheater(C);
+  if (!bd || !bd.id || !battleTheater || Array.isArray(raw) || typeof raw !== "object" || raw.battleId !== bd.id || raw.theater !== battleTheater || !raw.ids || Array.isArray(raw.ids) || typeof raw.ids !== "object") {
+    if (persist) cmd.transfer = null;
+    return null;
+  }
+  var side = (C.side === "CS") ? "CS" : "US", outIds = {}, any = false;
+  for (var k in raw.ids) {
+    if (!raw.ids.hasOwnProperty(k)) continue;
+    if (typeof k !== "string" || !k) continue;
+    var g = _cmdById(side, k);
+    if (!g || !_cmdAlive(g, C.president.date)) continue;
+    if (!_cmdByIdRoster(side, k) && cmdCommissioned(C).indexOf(k) < 0) continue;
+    if (_cmdGeneralFitsTheater(g, battleTheater)) continue;
+    var rec = raw.ids[k];
+    if (!rec || typeof rec !== "object" || Array.isArray(rec)) continue;
+    var turn = (typeof rec.turn === "number" && isFinite(rec.turn) && rec.turn >= 0) ? Math.floor(rec.turn) : 0;
+    outIds[k] = { theater: battleTheater, turn: turn };
+    any = true;
+  }
+  var clean = any ? { battleId: bd.id, theater: battleTheater, ids: outIds } : null;
+  if (persist) cmd.transfer = clean;
+  return clean;
+}
+
+function cmdTransfer(C, id) {
+  if (!C || !C.president || !id) return;
+  cmdInit(C);
+  var side = (C.side === "CS") ? "CS" : "US", cmd = C.president.command;
+  var gen = _cmdById(side, id);
+  if (!gen || !_cmdAlive(gen, C.president.date)) return;
+  if (!_cmdByIdRoster(side, id) && cmdCommissioned(C).indexOf(id) < 0) return;
+  var rd = cmdTransferReadiness(C, id);
+  if (!rd || !rd.transferNeeded || !rd.battleTheater) return;
+  var cost = _cmdTransferCost();
+  var clk = C.clock, cap = (clk && typeof clk.capital === "number" && isFinite(clk.capital)) ? Math.round(clk.capital) : 0;
+  if (cap < cost) return;
+  if (clk && typeof clk.capital === "number") clk.capital = Math.max(0, cap - cost);
+  var bd = (typeof _brgNextBattle === "function") ? _brgNextBattle(C) : null;
+  cmd.transfer = _cmdTransferClean(C, false) || { battleId: (bd && bd.id) || "", theater: rd.battleTheater, ids: {} };
+  cmd.transfer.battleId = (bd && bd.id) || cmd.transfer.battleId;
+  cmd.transfer.theater = rd.battleTheater;
+  if (!cmd.transfer.ids || typeof cmd.transfer.ids !== "object" || Array.isArray(cmd.transfer.ids)) cmd.transfer.ids = {};
+  cmd.transfer.ids[id] = { theater: rd.battleTheater, turn: (C.president.turn || 0) };
+  _cmdTransferClean(C, true);
+  if (typeof _pdLog === "function") {
+    _pdLog(C, "You transfer General " + _cmdName(gen) + " to the " + rd.battleTheater + " theater"
+      + (cost ? " (−" + cost + " capital)" : "") + ". This is a command-readiness order, not a battle result.");
+  }
 }
 
 /* Strategic date / tenure helpers — delegate to shared 01-utils.js. */
@@ -368,6 +454,11 @@ function cmdInit(C) {
       _sc.cavalry = (typeof _sc.cavalry === "number" && isFinite(_sc.cavalry)) ? Math.max(0, Math.min(100, _sc.cavalry)) : 0;
     }
   }
+  // D323: the explicit Transfer move's current-engagement readiness record. Absent/null -> no transferred
+  // generals and no default behavior change. On load, malformed, stale-battle, wrong-side, uncommissioned,
+  // native-fit, duplicate, or dead/off-date entries are dropped; valid entries are bounded to the next battle's
+  // broad theater. This keeps Transfer player-visible and minimal, never an enemy shadow or hidden commission.
+  if (typeof _cmdTransferClean === "function") _cmdTransferClean(C, true);
   // seed reputation for every general on this side, once (idempotent: only if absent). Q11 (D109): include any
   // COMMISSIONED officers so _cmdGenRating reads them once they are in the service — byte-identical when none
   // are commissioned (the commissioned set is empty -> the seed list is exactly the starting roster).
@@ -737,6 +828,59 @@ function cmdEnemyShadowHTML(C) {
     +     '<span style="font-size:10px;opacity:.58">Pure AI-GM readout; no hidden Transfer.</span>'
     +   '</div>'
     +   '<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:8px">' + corps + '</div>'
+    + '</div>';
+}
+
+function _cmdTransferHTML(C) {
+  if (!C || !C.president) return "";
+  var bd = (typeof _brgNextBattle === "function") ? _brgNextBattle(C) : null;
+  var battleTheater = _cmdBattleTheater(C);
+  if (!bd || !bd.id || !battleTheater) return "";
+  var side = (C.side === "CS") ? "CS" : "US";
+  var roster = _cmdRosterPlusCommissioned(C, side);
+  if (!roster.length) return "";
+  var cap = (C.clock && typeof C.clock.capital === "number" && isFinite(C.clock.capital)) ? Math.round(C.clock.capital) : 0;
+  var cost = _cmdTransferCost();
+  var rows = "", cross = 0, transferred = 0;
+  for (var i = 0; i < roster.length; i++) {
+    var g = roster[i]; if (!g || !g.id || !_cmdAlive(g, C.president.date)) continue;
+    var rd = cmdTransferReadiness(C, g.id);
+    if (!rd || !rd.battleTheater || !rd.theaters || !rd.theaters.length) continue;
+    var tLabel = rd.theater === "Multi" ? "Multi-theater" : (rd.theater ? rd.theater + " theater" : "unclassified");
+    var status, ctrl = "";
+    if (rd.transferred) {
+      transferred++;
+      status = '<span style="font-size:11px;color:#6f9e5a"><span aria-hidden="true">&#10003;</span> Transferred for ' + _cmdEsc(bd.name || "the next engagement") + '</span>';
+    } else if (rd.transferNeeded) {
+      cross++;
+      status = '<span style="font-size:11px;color:#e86840">Cross-theater for this battle</span>';
+      ctrl = (cap >= cost)
+        ? '<button id="cmdTransfer_' + _cmdEsc(g.id) + '" type="button" class="upg" style="flex:0 0 auto;font-size:11px;padding:2px 8px" title="Transfer General ' + _cmdEsc(_cmdName(g)) + ' to the ' + _cmdEsc(battleTheater) + ' theater for ' + cost + ' political capital">Transfer <span style="opacity:.8">(&minus;' + cost + ' cap)</span></button>'
+        : '<span style="font-size:11px;color:#e86840" title="Transferring him costs ' + cost + ' political capital; you hold ' + cap + '">Needs ' + cost + ' cap</span>';
+    } else {
+      status = '<span style="font-size:11px;opacity:.72">Fits this theater already</span>';
+    }
+    var ovr = Math.round(_cmdGenRating(C, g));
+    rows += '<div style="display:flex;gap:10px;align-items:center;padding:6px 0;border-bottom:1px dotted var(--rule)">'
+      + '<div style="flex:1 1 auto;min-width:0">'
+      +   '<div style="font-size:12px"><b>' + _cmdEsc(_cmdName(g)) + '</b> <span style="opacity:.68">' + _cmdEsc(tLabel) + '</span></div>'
+      +   '<div style="font-size:10.5px;opacity:.72">Theater fit for ' + _cmdEsc(bd.name || "next battle") + ': ' + _cmdEsc(battleTheater)
+      +     ' &middot; OVR ' + ovr + ' &middot; ' + _cmdEsc(rd.prov || "Inferred") + '</div>'
+      + '</div>'
+      + '<div style="flex:0 0 auto;text-align:right">' + status + (ctrl ? '<div style="margin-top:3px">' + ctrl + '</div>' : '') + '</div>'
+      + '</div>';
+  }
+  if (!rows) return "";
+  var open = cross + transferred;
+  var summary = open
+    ? '<b>' + open + '</b> officer' + (open === 1 ? '' : 's') + ' need or carry a cross-theater order for this engagement.'
+    : 'No cross-theater order is needed for this engagement.';
+  return '<div style="margin-top:14px;padding:11px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.1)">'
+    + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#b3925e;margin-bottom:2px">Cross-theater transfer</div>'
+    + '<div style="font-size:11px;opacity:.82;line-height:1.45;margin-bottom:5px">Next battle: <b>' + _cmdEsc(bd.name || bd.id) + '</b> &middot; theater <b>' + _cmdEsc(battleTheater) + '</b>. '
+    + summary + ' Transfer spends <b>' + cost + '</b> political capital and records readiness only; it does not decide the battle, alter casualties, or move enemy command.</div>'
+    + rows
+    + '<div style="font-size:10.5px;opacity:.62;line-height:1.4;margin-top:6px">Theater tags are broad, Inferred buckets. Multi-theater generals already fit; single-theater generals need an explicit order before the Command desk treats them as ready outside their home theater.</div>'
     + '</div>';
 }
 
@@ -2158,6 +2302,7 @@ function cmdRenderTab(C) {
     + _cmdCareerArcHTML(C)
     + ((typeof fldCampaignOOBHtml === "function") ? fldCampaignOOBHtml(C, { reveal: cmdScoutTier(C), reconHtml: cmdScoutControlHtml(C) }) : '')   /* D106 board + Q8b (D107): the recon tier earned by scouting + the "Order a reconnaissance" control embedded in the board (the WRITE lives in cmdScout; T15 stays pure-read) */
     + cmdEnemyShadowHTML(C)
+    + _cmdTransferHTML(C)
     + _cmdPoolHTML(C)
     + _cmdCommissionHTML(C)
     + _cmdPromotionsHTML(C)
@@ -2249,6 +2394,18 @@ function cmdWireTab(C) {
     if (typeof saveLocal === "function") saveLocal();
     if (typeof _wdRefresh === "function") _wdRefresh();
   });
+  var transferRoster = _cmdRosterPlusCommissioned(C, side);
+  for (var tr = 0; tr < transferRoster.length; tr++) {
+    (function (g) {
+      if (!g || !g.id) return;
+      var tb = document.getElementById("cmdTransfer_" + _cmdEsc(g.id));
+      if (tb) tb.addEventListener("click", function () {
+        cmdTransfer(C, g.id);
+        if (typeof saveLocal === "function") saveLocal();
+        if (typeof _wdRefresh === "function") _wdRefresh();
+      });
+    })(transferRoster[tr]);
+  }
   // Q10 (D108): wire the corps depth-chart controls — a Seat button (reads its slot's select) + a Vacate button
   // per slot (ids mirror the render, the slot index is integer so no escaping is needed).
   var corpsSlots = _cmdCorpsSlots();

@@ -1171,6 +1171,104 @@ const SETUP = `(() => {
       if(C.president.command.transfer||C.transfer) throw new Error('substrate must not create a Transfer save field');
       return { battleTheater:east, meade:meade.transferNeeded, thomas:thomas.transferNeeded, grant:grant.transferNeeded, pure:true }; });
 
+    step('D323: transfer config loads and default command remains untransferred / byte-identical until the player uses Transfer', function(){
+      if(typeof _cmdTransferCfg!=='function'||typeof _cmdTransferCost!=='function'||typeof cmdTransfer!=='function') throw new Error('transfer move helpers missing');
+      var cfg=_cmdTransferCfg();
+      if(!cfg||!(cfg.cost>=0)) throw new Error('bad transfer config');
+      var C=mkC('US',1863,7);
+      var l0=commandLeadership(C), o0=bridgeArmy(C).overall;
+      var rd=cmdTransferReadiness(C,'us-thomas');
+      var l1=commandLeadership(C), o1=bridgeArmy(C).overall;
+      if(l0!==l1||o0!==o1) throw new Error('readiness/default Transfer path changed bridge inputs: '+l0+'/'+o0+' -> '+l1+'/'+o1);
+      if(C.president.command.transfer) throw new Error('default command should not seed a Transfer record');
+      if(!rd||!rd.transferNeeded||rd.transferred) throw new Error('Thomas should still need Transfer before player action: '+JSON.stringify(rd));
+      return { cost:_cmdTransferCost(), leadership:l0, overall:o0, defaultTransfer:null }; });
+
+    step('D323: cmdTransfer is gated by cost and theater fit; no-op for same-theater/Multi/native candidates', function(){
+      if(typeof cmdTransfer!=='function') return { skipped:'pre-D323' };
+      var cost=_cmdTransferCost();
+      var poor=mkC('US',1863,7); poor.clock.capital=Math.max(0,cost-1);
+      var poorCap=Math.round(poor.clock.capital); cmdTransfer(poor,'us-thomas');
+      if(poor.president.command.transfer) throw new Error('short capital must not create Transfer');
+      if(Math.round(poor.clock.capital)!==poorCap) throw new Error('short-capital Transfer changed capital');
+      var C=mkC('US',1863,7); C.clock.capital=100;
+      cmdTransfer(C,'us-meade'); if(C.president.command.transfer) throw new Error('same-theater Meade should not be transferred');
+      cmdTransfer(C,'us-grant'); if(C.president.command.transfer) throw new Error('Multi-theater Grant should not be transferred');
+      cmdTransfer(C,'us-banks'); if(C.president.command.transfer) throw new Error('uncommissioned commission-pool officer should not be transferable');
+      var cap0=Math.round(C.clock.capital); cmdTransfer(C,'us-thomas');
+      if(!C.president.command.transfer||!C.president.command.transfer.ids['us-thomas']) throw new Error('affordable Thomas Transfer did not store readiness');
+      if(Math.round(C.clock.capital)!==cap0-cost) throw new Error('Transfer did not debit exactly cost '+cost+': '+cap0+' -> '+Math.round(C.clock.capital));
+      var cap1=Math.round(C.clock.capital); cmdTransfer(C,'us-thomas');
+      if(Math.round(C.clock.capital)!==cap1) throw new Error('re-Transfer of the same battle charged again');
+      return { gated:true, noNativeTransfer:true, transferred:'us-thomas', cost:cost }; });
+
+    step('D323: transferred readiness flips only the Command readout for the current battle; theater fit logic stays explicit', function(){
+      if(typeof cmdTransfer!=='function') return { skipped:'pre-D323' };
+      var C=mkC('US',1863,7); C.clock.capital=100;
+      var before=cmdTransferReadiness(C,'us-thomas');
+      cmdTransfer(C,'us-thomas');
+      var after=cmdTransferReadiness(C,'us-thomas');
+      var meade=cmdTransferReadiness(C,'us-meade'), grant=cmdTransferReadiness(C,'us-grant');
+      if(!before.transferNeeded||before.transferred) throw new Error('precondition failed for Thomas before Transfer');
+      if(!after.transferred||after.transferNeeded||!after.sameTheater||after.naturalFit) throw new Error('Thomas should read transferred/sameTheater but not naturalFit: '+JSON.stringify(after));
+      if(!meade.naturalFit||meade.transferred||meade.transferNeeded) throw new Error('Meade should remain a natural Eastern fit: '+JSON.stringify(meade));
+      if(!grant.naturalFit||grant.transferred||grant.transferNeeded) throw new Error('Grant should remain a natural Multi fit: '+JSON.stringify(grant));
+      C.idx=1;
+      var stale=cmdTransferReadiness(C,'us-thomas');
+      if(stale.transferred) throw new Error('a Transfer keyed to the prior battle must not apply after next-battle changes');
+      return { thomas:{ before:before.transferNeeded, afterTransferred:after.transferred }, meadeNatural:meade.naturalFit, grantNatural:grant.naturalFit, staleClears:true }; });
+
+    step('D323: NO output gate — cmdTransfer writes only cmd.transfer + C.clock.capital, never scoreboard/output/OOB totals', function(){
+      if(typeof cmdTransfer!=='function') return { skipped:'pre-D323' };
+      var C=mkC('US',1863,7); C.clock.capital=100;
+      function snap(){ return JSON.stringify({ idx:C.idx, stats:C.stats, roster:C.roster, nextId:C.nextId, captured:C.captured, fieldGeneral:C.president.command.fieldGeneral, corps:C.president.command.corps, divisions:C.president.command.divisions, commissioned:C.president.command.commissioned, scout:C.president.command.scout, seniority:C.president.command.seniority, reputation:C.president.command.reputation['us-thomas'] }); }
+      var s0=snap(); cmdTransfer(C,'us-thomas');
+      if(snap()!==s0) throw new Error('Transfer mutated state beyond cmd.transfer + capital');
+      return { pure:true }; });
+
+    step('D323: no hidden enemy Transfer — AI-GM shadow remains pure and never creates enemy command state', function(){
+      if(typeof cmdEnemyShadow!=='function'||typeof cmdTransfer!=='function') return { skipped:'pre-D323' };
+      var C=mkC('US',1863,7), before=JSON.stringify(C.president.command||{});
+      var sh=cmdEnemyShadow(C), after=JSON.stringify(C.president.command||{});
+      if(before!==after) throw new Error('enemy shadow mutated player command state');
+      if(C.enemyCommand||C.president.enemyCommand||C.president.command.enemy||C.president.command.enemyTransfer) throw new Error('enemy command/transfer save state appeared');
+      if(sh&&(sh.transfer||sh.commander&&sh.commander.transfer)) throw new Error('shadow carried hidden Transfer state');
+      return { pure:true, enemy:sh&&sh.side, hiddenTransfer:false }; });
+
+    step('D323: Command desk renders Transfer readout/control and reflects completion after use', function(){
+      if(typeof _cmdTransferHTML!=='function'||typeof cmdTransfer!=='function') return { skipped:'pre-D323' };
+      var C=mkC('US',1863,7); C.clock.capital=100;
+      var html=cmdRenderTab(C);
+      if(html.indexOf('Cross-theater transfer')<0) throw new Error('Command tab missing Transfer section');
+      if(html.indexOf('cmdTransfer_us-thomas')<0) throw new Error('Thomas should render a Transfer control for an Eastern next battle');
+      if(html.indexOf('Fits this theater already')<0) throw new Error('same/Multi-theater fit readout missing');
+      if(html.indexOf('records readiness only')<0||html.indexOf('does not decide the battle')<0) throw new Error('Transfer section must disclose the no-output contract');
+      if(html.indexOf('NaN')>=0||html.indexOf('undefined')>=0) throw new Error('Transfer render leaked NaN/undefined');
+      cmdTransfer(C,'us-thomas');
+      var html2=cmdRenderTab(C);
+      if(html2.indexOf('Transferred for')<0) throw new Error('completed Transfer should render as transferred');
+      if(html2.indexOf('cmdTransfer_us-thomas')>=0) throw new Error('completed Transfer should not still offer Thomas button');
+      return { renders:true, completion:true }; });
+
+    step('D323: SAVE-TAMPER hardening — cmdInit drops malformed/stale/wrong/native/uncommissioned Transfer records and bounds valid ones', function(){
+      if(typeof cmdTransfer!=='function') return { skipped:'pre-D323' };
+      var C=mkC('US',1863,7), bd=_brgNextBattle(C), th=_cmdBattleTheater(C);
+      C.president.command.transfer=[ 'bad' ]; cmdInit(C);
+      if(C.president.command.transfer!==null) throw new Error('array Transfer record must sanitize to null');
+      C.president.command.transfer={ battleId:'stale', theater:th, ids:{ 'us-thomas':{theater:th,turn:1} } }; cmdInit(C);
+      if(C.president.command.transfer!==null) throw new Error('stale-battle Transfer must sanitize to null');
+      C.president.command.transfer={ battleId:bd.id, theater:th, ids:{ 'us-thomas':{theater:th,turn:-5}, 'us-meade':{theater:th,turn:2}, 'us-banks':{theater:th,turn:3}, 'no-such-general':{theater:th,turn:4} } };
+      cmdInit(C);
+      var tr=C.president.command.transfer;
+      if(!tr||!tr.ids||!tr.ids['us-thomas']) throw new Error('valid Thomas Transfer should survive sanitize');
+      if(tr.ids['us-thomas'].turn<0) throw new Error('Transfer turn should be bounded nonnegative');
+      if(tr.ids['us-meade']) throw new Error('native-fit Meade should be dropped from Transfer');
+      if(tr.ids['us-banks']) throw new Error('uncommissioned Banks should be dropped from Transfer');
+      if(tr.ids['no-such-general']) throw new Error('bogus id should be dropped from Transfer');
+      C.idx=1; cmdInit(C);
+      if(C.president.command.transfer!==null) throw new Error('changed next-battle should clear prior Transfer on load');
+      return { malformedDropped:true, staleDropped:true, validBounded:true }; });
+
     step('D173: enemy leadership and margin helpers are bounded pure inputs; Command tab renders the readout', function(){
       if(typeof cmdEnemyLeadership!=='function'||typeof cmdEnemyMarginEdge!=='function'||typeof cmdEnemyShadowHTML!=='function') throw new Error('enemy command helpers missing');
       var C=mkC('US',1863,7);
