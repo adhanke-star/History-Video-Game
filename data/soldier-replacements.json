@@ -2142,6 +2142,101 @@
       ],
       "sourceNote": "Ships at Corporal; Old Pendleton identifies Simpson as Cpl., Cos. A&B, 3rd S.C. Infantry, killed at Chickamauga; Oxford/Clemson anchor the letters and service; the OOB places the 3rd S.C. in Kershaw/McLaws/Longstreet, and NPS places Kershaw at Horseshoe Ridge. No portrait. Ratings Inferred.",
       "bio": "Taliaferro N. \"Tally\" Simpson, a Wofford-educated South Carolinian from a slaveholding secessionist family, served in the 3rd South Carolina Infantry. At Chickamauga he was a corporal in Companies A/B, in Kershaw's Brigade of McLaws' Division, Longstreet's Corps; the brigade fought in the attacks around Snodgrass/Horseshoe Ridge, and Simpson was killed during the battle. His letters with his brother Dick survive as Far, Far from Home. They are valuable soldier testimony, but not neutral testimony: the edition notes Tally was accompanied by enslaved Zion, so this record keeps the Confederate enlisted voice tied to slavery rather than romanticized. No portrait is asserted."
+    },
+    {
+      "pid": "person_gettysburg_us_17me_haley",
+      "replacePid": "ss:gettysburg:US:us_birney_iii:pvt",
+      "name": "John W. Haley",
+      "side": "US",
+      "rank": "Private",
+      "branch": "inf",
+      "role": "private soldier",
+      "year": 1863,
+      "provenance": "Verified",
+      "team": {
+        "side": "US",
+        "army": "Army of the Potomac",
+        "corps": "III Corps",
+        "division": "First Division (Birney's Division)",
+        "brigade": "de Trobriand's Brigade",
+        "regiment": "17th Maine Infantry",
+        "company": "Company I"
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "The Rebel Yell and the Yankee Hurrah: The Civil War Journal of a Maine Volunteer",
+          "author": "John W. Haley; Ruth L. Silliker, editor",
+          "repository": "University of Alabama Civil War Narratives Bibliography",
+          "locator": "Haley entry, 17th Maine Infantry; Gettysburg campaign pp. 88ff; Battle of Gettysburg pp. 100ff",
+          "url": "https://ir.ua.edu/bitstreams/643c6453-09bd-4158-8cff-01eace005213/download",
+          "type": "primary",
+          "note": "Indexes Haley's journal as a 17th Maine source with Gettysburg campaign and Battle of Gettysburg entries."
+        },
+        {
+          "title": "Saco Library Releases Previously Unpublished Photo of John Haley, 17th Maine",
+          "author": "Brian Swartz",
+          "repository": "Emerging Civil War",
+          "locator": "5 June 2024 article, service paragraph",
+          "url": "https://emergingcivilwar.com/2024/06/05/saco-library-releases-previously-unpublished-photo-of-john-haley-17th-maine/",
+          "type": "secondary",
+          "note": "Identifies Haley as serving as a private in Company I, 17th Maine, and fighting at Fredericksburg, Chancellorsville, Gettysburg, and later campaigns."
+        },
+        {
+          "title": "The Army of the Potomac at Gettysburg",
+          "author": "National Park Service",
+          "repository": "Gettysburg National Military Park",
+          "locator": "III Corps, First Division, Third Brigade",
+          "url": "https://www.nps.gov/gett/learn/historyculture/aop-orderofbattle.htm",
+          "type": "secondary",
+          "note": "Places the 17th Maine Infantry in de Trobriand's Third Brigade, Birney's First Division, III Corps at Gettysburg."
+        },
+        {
+          "title": "John Haley and the 17th Maine marched hungry to Gettysburg",
+          "author": "Brian Swartz",
+          "repository": "Maine at War",
+          "locator": "25 June 2025 article, Gettysburg march paragraphs",
+          "url": "https://maineatwar.wordpress.com/2025/06/25/john-haley-and-the-17th-maine-marched-hungry-to-gettysburg/",
+          "type": "secondary",
+          "note": "Identifies Pvt. John Haley of Saco and Company I, anchors the 17th Maine in de Trobriand/Birney/III Corps, and quotes his Gettysburg-march observations."
+        },
+        {
+          "title": "John Haley's Civil War Exhibit Open Reception",
+          "author": "University of New England",
+          "repository": "University of New England / Saco Museum event page",
+          "locator": "2013 exhibit description",
+          "url": "https://www.une.edu/events/2013/john-haleys-civil-war-exhibit-open-reception",
+          "type": "secondary",
+          "note": "States Haley served in the 17th Maine from 1862 to 1865, participated at Gettysburg, and documented his experiences in a journal."
+        },
+        {
+          "title": "Regis de Trobriand at Gettysburg",
+          "author": "Civil War Monitor",
+          "repository": "Civil War Monitor",
+          "locator": "Private John Haley / Wheatfield discussion",
+          "url": "https://www.civilwarmonitor.com/regis-de-trobriand-at-getysburg/",
+          "type": "secondary",
+          "note": "Uses Private John Haley's 17th Maine account as Wheatfield eyewitness evidence and discusses Birney's role in holding the III Corps line."
+        }
+      ],
+      "sourceNote": "Ships at Private; ECW and Maine at War identify Haley as Pvt./private, Co. I, 17th Maine; NPS places the regiment in de Trobriand/Birney/III Corps; the Haley journal index and UNE page anchor his Gettysburg experience. No corporal-at-Gettysburg claim. No portrait asset. Ratings Inferred.",
+      "bio": "John W. Haley of Saco, Maine, served in Company I of the 17th Maine Infantry. At Gettysburg his regiment stood in de Trobriand's Brigade, Birney's First Division, III Corps, and fought in the Wheatfield sector of the exposed III Corps salient. Haley's journal, later edited as The Rebel Yell and the Yankee Hurrah, gives a private soldier's view of the campaign: hunger on the march, hurried movement toward Gettysburg, and the confusion around de Trobriand and Birney as the 17th Maine held the line. This replacement fills the open Birney's Division private slot without asserting a Gettysburg corporal rank, portrait asset, or sourced ratings."
     }
   ],
   "_template": {
