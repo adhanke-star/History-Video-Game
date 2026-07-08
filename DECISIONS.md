@@ -6,6 +6,18 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D305 — GROUP 6 MEDIA-BUDGET TOOLING: SOURCE-ORGANIZATION READBACK IS NOW EXPLICIT — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
+
+The fifth Group 6 meta/deferred tooling slice improves the media-budget gate's source-organization reporting without adding assets or changing gameplay. `data/media-budget.json` is now schemaVersion 1.5 and records `requireSourceOrganizationReadback`, so future gate readers can see the source-tier and metadata posture directly from the probe artifact instead of reconstructing it from the D302/D303 enforcement steps.
+
+- **Tooling change:** `tools/probe-media-budget.mjs` now emits `metrics.sourceOrganization` and adds a required source-organization readback step. The summary reports declared core categories, informative categories, per-category source/embed counts, source-mirror status, and informative metadata coverage.
+- **Current readback:** all six declared core categories mirror cleanly: portraits **156/156**, weapons **8/8**, artillery **2/2**, USCT **7/7**, leaders **20/20**, and scenes **6/6** source/embed files. Informative metadata is green for USCT **7**, leaders **20**, and scenes **6**, with no missing sources, stale metadata, missing metadata, or incomplete alt/caption/credit records.
+- **Focused gate:** `node --check tools/probe-media-budget.mjs` clean; `node tools/build.mjs` GATE OK with the known raw-embed soft warning; strengthened `node tools/probe-media-budget.mjs` green **11/11**, warnings=1 for the known soft-warning state; JSON readback inspected the new `sourceOrganization`; `git diff --check` clean.
+- **Policy effect:** no media assets were added, fetched, compressed, removed, regenerated, or reclassified. H2 footage, HDRI/model media, optional pack work, Tripo, Soldier's Story replacement rows, M8/Q5/Q6, and Phase D remain locked/deferred exactly as D300/D299 specify.
+- **Queue after D305:** continue Priority 1 Group 6 with another small gateable tooling slice: reusable historical-data layer, broader source organization, hotpath profiling, or another low-blast-radius budget/source reporting guard. Do not reopen Phase H media or pick a Soldier's Story slice unless Aaron explicitly changes the queue.
+
+---
+
 ## D304 — GROUP 6 MEDIA-BUDGET TOOLING: POLICY-STATE READBACK IS NOW EXPLICIT — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
 
 The fourth Group 6 meta/deferred tooling slice improves the media-budget gate's reporting surface without adding assets or changing gameplay. `data/media-budget.json` is now schemaVersion 1.4 and records `requirePolicyStateReadback`, so future gate readers can see the active media policy posture directly from the probe artifact instead of reconstructing it from each individual step.

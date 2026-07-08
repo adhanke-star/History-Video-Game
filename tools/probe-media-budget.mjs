@@ -240,6 +240,46 @@ function budgetPolicyState() {
     }
   };
 }
+function sourceOrganizationState() {
+  const coreCategories = (budget.categories || []).filter(c => c.allowedInSingleFile);
+  const mirror = sourceMirrorSummary();
+  const metadata = informativeMetadataSummary();
+  const categoryIds = coreCategories.map(c => c.id).sort();
+  const informativeIds = coreCategories.filter(c => c.requiresInformativeMetadata).map(c => c.id).sort();
+  const perCategory = {};
+  for (const c of coreCategories) {
+    const mirrorRow = mirror.detail[c.id] || {};
+    const metadataRow = metadata.detail[c.id] || null;
+    perCategory[c.id] = {
+      sourceDir: c.sourceDir || null,
+      embedDir: c.embedDir || null,
+      sourceFiles: Number(mirrorRow.sourceFiles || 0),
+      embedFiles: Number(mirrorRow.embedFiles || 0),
+      missingSource: Array.isArray(mirrorRow.missingSource) ? mirrorRow.missingSource : [],
+      informativeMetadataRequired: c.requiresInformativeMetadata === true,
+      metadataModule: c.metadataModule || null,
+      metadataVar: c.metadataVar || null,
+      metadataRecords: metadataRow ? Number(metadataRow.metadataRecords || 0) : null,
+      missingMetadata: metadataRow && Array.isArray(metadataRow.missingMetadata) ? metadataRow.missingMetadata : [],
+      staleMetadata: metadataRow && Array.isArray(metadataRow.staleMetadata) ? metadataRow.staleMetadata : [],
+      incompleteMetadata: metadataRow && Array.isArray(metadataRow.incompleteMetadata) ? metadataRow.incompleteMetadata : []
+    };
+  }
+  return {
+    declaredCoreCategories: categoryIds,
+    informativeCategories: informativeIds,
+    sourceMirrorRequired: (budget.policy || {}).requireEmbedSourceMirror === true,
+    sourceMirrorOk: mirror.bad.length === 0,
+    informativeMetadataRequired: (budget.policy || {}).requireInformativeEmbedMetadata === true,
+    informativeMetadataOk: metadata.bad.length === 0,
+    missingSourceCategories: categoryIds.filter(id => perCategory[id].missingSource.length > 0),
+    metadataIssueCategories: informativeIds.filter(id => {
+      const row = perCategory[id];
+      return row.missingMetadata.length || row.staleMetadata.length || row.incompleteMetadata.length;
+    }),
+    perCategory
+  };
+}
 
 const budget = readJson('data/media-budget.json');
 const cutaways = readJson('data/footage-cutaways.json');
@@ -268,6 +308,18 @@ step('media budget policy state readback is explicit', () => {
   if (state.activeGuards.d302SourceMirror !== true || state.activeGuards.d303InformativeMetadata !== true) throw new Error('source/metadata guards not active in policy readback');
   if (state.activeGuards.h2VideoDisabled !== true || state.activeGuards.heavyMediaOptionalPack !== true) throw new Error('heavy-media lock state not active in policy readback');
   if (state.frozenCategories.negativeHeadroom.length) throw new Error('frozen category over ceiling: ' + state.frozenCategories.negativeHeadroom.join(', '));
+  return state;
+});
+
+step('media source-organization readback is explicit', () => {
+  const p = budget.policy || {};
+  if (p.requireSourceOrganizationReadback !== true) throw new Error('source-organization readback guard missing');
+  const state = sourceOrganizationState();
+  if (state.sourceMirrorRequired !== true || state.sourceMirrorOk !== true) throw new Error('source mirror not green in sourceOrganization readback');
+  if (state.informativeMetadataRequired !== true || state.informativeMetadataOk !== true) throw new Error('informative metadata not green in sourceOrganization readback');
+  if (state.declaredCoreCategories.length !== (budget.categories || []).filter(c => c.allowedInSingleFile).length) throw new Error('declared category count mismatch in sourceOrganization readback');
+  if (state.missingSourceCategories.length) throw new Error('sourceOrganization reports missing sources: ' + state.missingSourceCategories.join(', '));
+  if (state.metadataIssueCategories.length) throw new Error('sourceOrganization reports metadata issues: ' + state.metadataIssueCategories.join(', '));
   return state;
 });
 
@@ -364,6 +416,7 @@ const out = {
     rawBytes: totals.total,
     rawMB: +(totals.total / 1048576).toFixed(3),
     policyState: budgetPolicyState(),
+    sourceOrganization: sourceOrganizationState(),
     categorySummary: categorySummary(),
     categories: totals.by,
     largestFiles: fileList.slice(0, 10)

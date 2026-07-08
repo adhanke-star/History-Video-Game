@@ -1,6 +1,6 @@
 {
   "schema": "cw_media_budget_v1",
-  "schemaVersion": "1.4",
+  "schemaVersion": "1.5",
   "policy": {
     "singleFileCore": true,
     "optionalHdPackForHeavyMedia": true,
@@ -13,6 +13,8 @@
     "informativeEmbedMetadataRule": "Every embedded category that presents informative historical media must declare its metadata module and object, and that object must have exactly one alt/caption/credit record per embedded file.",
     "requirePolicyStateReadback": true,
     "policyStateReadbackRule": "The media-budget probe must emit a compact policyState summary showing raw-tier status, active D300/D301/D302/D303 guards, soft/review/hard/file headroom, and zero-headroom frozen categories so future gates can read policy posture without reverse-engineering each step.",
+    "requireSourceOrganizationReadback": true,
+    "sourceOrganizationReadbackRule": "The media-budget probe must emit a compact sourceOrganization summary showing declared core categories, embed/source counts, mirror status, and informative metadata coverage so future gates can read source-tier organization without reverse-engineering each step.",
     "runtimeWebDependency": false,
     "sharedArrayBufferRequired": false,
     "videoEnabledByDefault": false,
