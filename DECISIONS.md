@@ -6,6 +6,16 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D299 — QUEUE DIRECTIVE: SOLDIER'S STORY REMAINING GENERATED/UNRESEARCHED ROWS DEFERRED; MEDIA-BUDGET/PROFILE CHECKPOINT IS THE ACTIVE NEXT DECISION — [AARON directive, docs-only routing sync] (2026-07-08)
+
+Aaron directed that the currently researched Soldier's Story rows are complete and shipped through D298, and that the remaining generated/unresearched Soldier's Story replacement rows are deferred until all other queued tasks/phases are done. D298 remains the latest playable-content head, with thirty-one `Verified` replacement records and the women/support lane still separate. This D299 entry changes queue routing only; it adds no media assets, no source/data/gameplay surface, no H2 footage, no HDRI/model media, no optional HD pack, no Tripo action, and no battle-build work.
+
+- **Active next checkpoint:** before reopening any real surviving-colours/PD asset lane, H2 moving footage, HDRI/model media, optional HD pack, or other media-heavy work, run the existing media-budget/profile reconnaissance and present Aaron with exactly three short popup-style decisions: core single-file vs optional HD pack path; PD still-image asset lane vs assets frozen; H2/HDRI/model media disabled vs bounded provenance/perf pilot.
+- **Queue locks preserved:** M8/Q5/Q6 remain locked; Phase D remains deferred; D74 still forbids per-battle combat fudge; `build/base.html` and generated `civil_war_generals.html` remain source-only/build-only surfaces; women/support figures remain separate from `ss:` replacements.
+- **Reversibility/impact:** reversible docs/routing decision. The deliverable remains unchanged except for rebuild metadata if the build gate is run; no content, balance, save, combat, or asset-policy code changes ship here.
+
+---
+
 ## D298 — PHASE I SOLDIER'S STORY SCALE-OUT: JOHN BELL HOOD ADDED AS THE THIRTY-FIRST CITATION-GRADE REPLACEMENT, A CHICKAMAUGA / HOOD'S ARRIVING BRIGADES COMMAND ROW — [CODEX GPT-5.5, Priority-1; web-grounded source verification inline] (2026-07-08)
 
 The Soldier's Story replacement lane grows from thirty to **thirty-one** `Verified` records. This is a small Chickamauga/CS command-row slice: **John Bell Hood** replaces the still-open Hood's Arriving Brigades command slot (`ss:chickamauga:CS:cs_hood_arrives:cmd`), moving side balance from 15US/15CS to **15US/16CS**. Data + probe only — no engine/combat change, D74 intact.
@@ -14,7 +24,7 @@ The Soldier's Story replacement lane grows from thirty to **thirty-one** `Verifi
 - **Source honesty:** NPS identifies Hood's major-general promotion effective October 10, 1862, division command under Longstreet, and Chickamauga wound; the U.S. Army Staff Ride Handbook lists Maj. Gen. John B. Hood over Hood's Division and describes Hood's column breaking through the Brotherton gap; NPS History says Hood handled the three-division column while Longstreet managed the left wing; American Battlefield Trust places Hood's Virginia divisions reinforcing Bragg and supports his Chickamauga leg loss. No portrait asset is asserted.
 - **Probe change:** `tools/probe-loot-survival.mjs` now retitles the canonical replacement tooth to D298/thirty-one, bumps the replacement/apply/generated/authored counts 30→31, and adds Hood-specific alias, rank, side, unit, bio/sourceNote, source-count, no-lieutenant-general-at-Chickamauga, no-later-command-rating, and no-portrait assertions.
 - **Focused gate (D176):** completed before doc close-out: JSON parse OK; `node --check tools/probe-loot-survival.mjs`; `node tools/import-soldier-replacements.mjs` → OK records=31 verified=31 disputed=0; `node tools/import-soldier-replacements.mjs --check data/soldier-replacements.json` → OK records=31 verified=31 disputed=0; `node tools/build.mjs` → GATE OK (known raw embed soft warning only); **probe-loot-survival ok=true 11/11, applied=31, pageerrors=0**; adjacent **probe-tactical-roster 8/8** and **probe-women-in-war 8/8, pageerrors=0** with lane separation intact (`replacementRecords:31`); JSON readback confirmed zero pageerrors for all three probe artifacts; `git diff --check` clean. Full `npm run vet:noreg` was not rerun because D292 completed the recent batch/release checkpoint and D176 keeps this as a focused per-slice gate.
-- **Queue after D298:** continue bounded Priority-1 Soldier's Story replacement slices. Side count now leans 15US/16CS; choose the next record only where source trail and slot fit are exact. M8/Q5/Q6 remain locked; Phase H remains parked; Phase D remains deferred.
+- **Queue after D298:** superseded by D299. The remaining generated/unresearched Soldier's Story rows are deferred until all other queued tasks/phases are done. The next active checkpoint is the media-budget/profile decision before any real surviving-colours/PD assets, H2 footage, HDRI/model media, optional-pack work, or other media-heavy work. M8/Q5/Q6 remain locked; Phase H media remains approval-gated; Phase D remains deferred.
 
 ---
 
