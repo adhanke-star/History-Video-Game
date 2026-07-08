@@ -6,6 +6,31 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D325 — CHATTANOOGA BATTLE-BUILD SPEC AND PROBE SCAFFOLD ARE NOW DURABLE BEFORE IMPLEMENTATION — [CODEX GPT-5.5, Group 7 battle-build planning] (2026-07-08)
+
+D324 unlocked the battle-build lane, but Chattanooga should not be authored straight from scratch notes or memory. D325 creates a durable `docs/design/chattanooga-battle-build-spec.md` packet and a focused filesystem gate, `tools/probe-chattanooga-plan.mjs`, so the next implementation slice starts from source/OOB/rank/terrain traps rather than invented data.
+
+- **Scope locked for implementation:** Chattanooga is planned as a three-phase T8 battle: Orchard Knob (US seizes, scoreWeight 1), Lookout Mountain / Cravens-house bench (US seizes, scoreWeight 1, light-casualty/fog teaching), and Missionary Ridge (US seizes, scoreWeight 3 decisive phase). Top-level roles are `attacker:"US"` / `defender:"CS"`, intentionally mirroring Chickamauga's CS-offensive arc.
+- **Source honesty:** the spec records current source anchors and marks the old `.tmp/chattanooga-factsheet.json` as scratch-only, not authority. It names rank/sector traps up front: Grant is not lieutenant general yet; Breckinridge is not lieutenant general; Anderson and Bate are not major generals yet; John K. Jackson commands Cheatham's Division in the relevant sector; Indian Hill is not a separate objective; Lookout fighting is on the bench below the palisade; Missionary Ridge needs the physical-crest vs military-crest teaching.
+- **D74 gate:** no data/runtime implementation shipped in D325. No `data/chattanooga.json`, registry line, menu button, scenario button, generated HTML, or combat code changed. The probe asserts this planned-only state today and will later require that any future Chattanooga data is accompanied by `tools/probe-chattanooga.mjs`, `tools/probe-tactical-roster.mjs` EXPECTED, and `tools/probe-custom-battle-builder.mjs` EXPECTED updates.
+- **Recurring gotcha recorded:** when D326 adds the battle id, it must be added to BOTH `tools/probe-tactical-roster.mjs` and `tools/probe-custom-battle-builder.mjs` historical baselines, or the custom-builder registry guard should go red.
+- **Focused gate:** `node --check tools/probe-chattanooga-plan.mjs`; `node tools/build.mjs` GATE OK with known raw-embed soft warning; `node tools/probe-chattanooga-plan.mjs` green **6/6**; adjacents `probe-tactical-roster` **8/8**, `probe-custom-battle-builder` **15/15**, `probe-vicksburg` **18/18**, and `probe-chickamauga` **18/18**, all browser probes with **0** pageerrors; `git diff --check` clean.
+- **Next:** D326 Chattanooga playable implementation, beginning with re-verification of the OOB/source substrate before authoring data.
+
+---
+
+## D324 — ALL PREVIOUSLY LOCKED PHASE LANES ARE UNLOCKED FOR FUTURE WORK — [AARON, repo-routing directive] (2026-07-08)
+
+Aaron explicitly directed: "unlock all locked phases now." This supersedes the current routing locks that kept multiple lanes out of the active queue.
+
+- **Unlocked lanes:** M8 graduate-history battle-build, Chattanooga, Atlanta/March, Franklin/Nashville, USCT playable battles, Phase H media additions, H2 footage, HDRI/model media, Tripo/model/asset work, remaining Soldier's Story replacement rows, Phase D full-hex tactical mode, custom-battle phase authoring/editor work, and optional Group 6 report polish are now eligible for normal planning and execution.
+- **What did not change:** D74 no-fudge remains binding; source/citation honesty remains binding; accessibility/performance gates remain binding; `build/base.html` remains frozen; generated HTML still comes from `tools/build.mjs`; no red probe may be pushed; every slice still needs focused gates, JSON/pageerror readback, docs sync, commit, and push.
+- **Budget/account handling:** external tools, paid credits, downloads, and account-dependent media work are no longer phase-blocked, but each slice must state its cost/license/account assumptions before acting and must keep provenance/licensing auditable in repo artifacts.
+- **Queue effect:** the project is no longer constrained to optional Group 6 polish or waiting for Aaron selection. Future runs should choose the highest-leverage unlocked item from `V1-CHECKLIST.md`; if no more specific user instruction is given, start with a short fresh-chat planning pass over the now-unlocked lanes and then execute the chosen slice under normal gates.
+- **Scope of this milestone:** docs/routing only. No gameplay, content, data, media, or generated deliverable change is made by D324 itself.
+
+---
+
 ## D323 — GROUP 2 TRANSFER MOVE: CROSS-THEATER READINESS IS NOW EXPLICIT, PLAYER-GATED, AND OUTPUT-WALLED — [CODEX GPT-5.5, Priority-1 Group 2 GM follow-up] (2026-07-08)
 
 D322 made theater fit honest; D323 turns it into the explicit player move without coupling it to battle outcomes.
