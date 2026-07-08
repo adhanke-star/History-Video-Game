@@ -6,6 +6,17 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D300 — MEDIA-BUDGET/PROFILE DECISION: CORE MEDIA FROZEN; PD STILL ASSETS FROZEN; H2/HDRI/MODEL MEDIA DISABLED — [AARON, adopts recommended conservative path] (2026-07-08)
+
+Aaron adopted all three recommended media-budget/profile choices after the D299 checkpoint. The current self-contained core remains the product path, with no new embedded media exception while the raw embed tier is above the soft warning. Public-domain still-image / surviving-colours asset work remains frozen for now. H2 moving footage, HDRI, and model-media paths remain disabled rather than piloted or broadly enabled.
+
+- **Focused gate:** `node tools/build.mjs` GATE OK with the known raw-embed soft warning; `tools/probe-media-budget.json` green **6/6** with **199 embedded files / 2.418 MB raw**, above the soft warning but below hard/review caps; `tools/probe-intel-uhd617-profile.json` green **19/19** on the actual Intel UHD-617 Metal renderer path, high **10.74ms / 75 calls / 116 objects**, low **1.98ms / 63 calls / 97 objects**, **0 pageerrors**, **0 texture warnings**; `git diff --check` clean.
+- **Policy effect:** no new media assets, no asset fetch, no Tripo generation/upload/credit use, no H2 footage enablement, no HDRI/model-media pilot, no optional HD-pack build, and no zero-byte Phase H polish loop are authorized by this decision. Phase H remains parked / complete-enough under D214 and D193-D213.
+- **Queue after D300:** active next work moves to **Group 6 meta/deferred tooling**, preferably a small gateable slice such as embedded-media budget tooling, reusable historical-data organization, source organization, or hotpath profiling. M8/Q5/Q6 remain locked behind Aaron go/no-go/reorder; remaining generated/unresearched Soldier's Story rows stay deferred until all other queued tasks/phases are done; Phase D remains deferred/v2.
+- **Reversibility/impact:** reversible docs/routing decision. The deliverable remains unchanged except for rebuild metadata if the build gate is run; no content, balance, save, combat, media, or asset-policy code changes ship here.
+
+---
+
 ## D299 — QUEUE DIRECTIVE: SOLDIER'S STORY REMAINING GENERATED/UNRESEARCHED ROWS DEFERRED; MEDIA-BUDGET/PROFILE CHECKPOINT IS THE ACTIVE NEXT DECISION — [AARON directive, docs-only routing sync] (2026-07-08)
 
 Aaron directed that the currently researched Soldier's Story rows are complete and shipped through D298, and that the remaining generated/unresearched Soldier's Story replacement rows are deferred until all other queued tasks/phases are done. D298 remains the latest playable-content head, with thirty-one `Verified` replacement records and the women/support lane still separate. This D299 entry changes queue routing only; it adds no media assets, no source/data/gameplay surface, no H2 footage, no HDRI/model media, no optional HD pack, no Tripo action, and no battle-build work.
