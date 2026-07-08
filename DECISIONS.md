@@ -6,6 +6,18 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D307 — OPERATING MODEL: SAFE HOMOGENEOUS QUEUES SHOULD RUN AS SAME-CHAT EXECUTION BUNDLES — [AARON directive, docs-only instruction update] (2026-07-08)
+
+Aaron directed that current runs stop too often and should include more tasks. Going forward, the D171 fresh-chat boundary remains a guard against unsafe cross-group/context drift, but it no longer means every tiny safe slice gets its own handoff.
+
+- **New default:** when the active queue is homogeneous, low-risk, and already cleared (for example Group 6 tooling/reporting), run a same-chat execution bundle of **2-4 small slices** before stopping.
+- **Per-slice discipline remains:** each slice still gets source/doc readback, focused gates, JSON/stdout readback, docs sync, `git diff --check`, commit, and push before the run continues to the next slice.
+- **Stop conditions:** stop and return a paste-ready continuation prompt when the bundle is exhausted, the next item would enter a new group/phase, a design fork/risk/lock appears, a browser-heavy/full-suite gate is next, context is near compaction risk, or the worktree state becomes ambiguous.
+- **Locks preserved:** no media assets, asset fetches, credits/Tripo, H2 footage, Phase H reopening, Soldier's Story slice, M8/Q5/Q6, or Phase D work is authorized by this operating change.
+- **Reversibility/impact:** docs-only operating update. No runtime/data/gameplay change. It changes future prompt shape and run behavior: fewer one-slice stops inside safe queues, without weakening per-slice gates.
+
+---
+
 ## D306 — GROUP 6 MEDIA-BUDGET TOOLING: SOURCE-INVENTORY READBACK NOW PINS BOTH-WAY CORE SOURCE/EMBED PARITY — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
 
 The sixth Group 6 meta/deferred tooling slice tightens source organization around the frozen embedded core without adding assets or changing gameplay. `data/media-budget.json` is now schemaVersion 1.6 and records `requireSourceInventoryReadback`, so future gates can see exact source/embed inventory parity per declared core category instead of inferring it from aggregate counts.

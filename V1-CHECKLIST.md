@@ -12,8 +12,9 @@ content-complete v1 (still a perpetual project after — D54). Built from `MODER
    mechanical/obvious continuations + the build-and-vet itself run autonomously. (Refines charter §8.3
    "decide & ship" — that applied to the all-night charter; you've now opted for design oversight.)
 2. **Clear-then-continuous inside the current group.** I clear a scope's designs with you upfront, then execute the
-   bounded slice continuously, stopping at the clean committed+pushed boundary before a new execution group unless
-   Aaron explicitly orders same-chat continuation.
+   cleared work continuously. For homogeneous, low-risk queues, use a same-chat execution bundle: ship 2-4 small
+   slices with focused gate + docs + commit/push after each slice, then continue. Stop before a new execution group,
+   a design fork/risk/lock, a browser-heavy/full-suite gate, or context risk.
 3. **Per-milestone vetting + push** uses the D160/D176 tiered gate: always GATE OK, relevant importer/schema gate,
    focused probe, output/JSON readback, 0 pageerrors, and `git diff --check`; JS/runtime changes also require
    `node --check` on touched JS/probe files plus 1-3 adjacent probes. During an explicit same-chat queue loop,
@@ -23,7 +24,7 @@ content-complete v1 (still a perpetual project after — D54). Built from `MODER
 4. **Content standard:** ≥2-source Verified (else Inferred), anti-Lost-Cause, period-but-tight voice.
 
 ## FRESH-CHAT EXECUTION GROUPS (LOCKED 2026-06-30 — D171)
-Use this grouping to avoid carrying new work across auto-condense. A single chat may finish one bounded milestone and its red/green repair loop, but after a clean committed+pushed milestone the agent should stop and return a paste-ready next-chat prompt unless Aaron explicitly orders same-chat continuation.
+Use this grouping to avoid carrying new work across auto-condense. D307 relaxes the too-frequent one-slice stop pattern inside a safe homogeneous queue: a single chat may ship a 2-4-slice bundle, committing and pushing each slice after its focused gate, then continue until the bundle is exhausted. Stop and return a paste-ready next-chat prompt before a new group/phase, a design fork/risk/lock, a browser-heavy/full-suite gate, or context risk.
 
 1. **Group 1 — Phase I Soldier's Story scale-out (deferred after D298 by D299):** citation-grade named bios, portrait/provenance where already public-domain and verified, unit detail at scale, richer start-anywhere career trajectory, then later interpersonal hooks. Preserve D152-D158/D172/D214-D222/D239/D289-D291/D293-D298 replacement honesty: no fabricated people/ranks/units, no unsourced portrait/license claim, no women-in-war lane collapse into `ss:` replacements, and no save/journey/report contract break. D172-D298 shipped the first thirty-one `Verified` records through John Bell Hood. **D299 defers the remaining generated/unresearched Soldier's Story replacement rows until all other queued tasks/phases are done.** Do not pick another Soldier's Story replacement slice now unless Aaron explicitly reopens that lane.
 2. **Group 2 — GM follow-up leftovers (first slice shipped D173):** symmetric AI-GM shadow/readout now exists over the current enemy roster. Cross-theater Transfer remains blocked until `theater` fields are honest; the political-general/election relief/readout gap is closed by D113 unless future code proves a new gap. These are inputs/readouts only; never force scoreboard outputs or break the no-fudge wall.
