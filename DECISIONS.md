@@ -6,6 +6,22 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D328 — BUILT-BATTLE RESEARCH/AUDIT LAYER (all 10 shipped battles), FOR CODEX REVISION — [OPUS 4.8, Aaron mid-run request] (2026-07-08)
+
+Aaron asked (mid-D327) to confirm the ALREADY-BUILT battles are researched/supported to the same standard as the new D327 lanes, and, where not, to do that research so Codex can revise them alongside building new battles. D328 answers it. **Research/docs only — no `data/*.json`, runtime, registry, or generated-HTML change; `civil_war_generals.html` byte-unchanged.**
+
+- **What shipped:** `docs/design/battle-build-research/built-battles/` — a README index + one durable audit packet for each of the 10 shipped battles (Bull Run, Antietam, Fredericksburg, Chancellorsville, Malvern Hill, Gettysburg, Shiloh, Vicksburg, Chickamauga, Chattanooga). Each packet carries a Source Register, a "Confirmed Solid" list, a "Revision Checklist For Codex," OOB/rank re-verification, a terrain+teaching/anti-Lost-Cause check, a D74/D92 no-fudge adherence check, remaining uncertainties, and a SOLID_AS_IS/MINOR_REVISIONS/NEEDS_REVISION verdict. `tools/probe-battle-build-research.mjs` was extended to guard the subfolder (now **14/14**).
+- **Method:** for each battle, a compact digest of the *actually-encoded* ranks/units/terrain/teaching (from `data/<id>.json`) was audited by an Opus auditor (web-verified), then by an **adversarial Opus verifier** tasked with protecting the D92-hardened data from bad "fixes," then by the Opus 4.8 main loop against the live file.
+- **Finding — the prior hardening held:** **9 of 10 battles are SOLID_AS_IS** (D92 rank/roster audit, D86 Vicksburg, D90 Chickamauga, D325/D326 Chattanooga all re-confirmed). The two-layer design paid off twice: it **caught one missed error** and **refuted one false flag**.
+  - **Antietam → MINOR_REVISIONS (1 confirmed fix):** the `us_richardson` unit's `commander` field reads `Brig. Gen. Israel B. Richardson` but he was a **Major General** (of volunteers, Jul 4 1862) at Antietam — and the file's own `ld_richardson` leader entry already says `Maj. Gen.`, so it is an internal self-contradiction (the D92 "file contradicts itself" class, cf. Malvern Hill's Hunt). Outcome-neutral label fix; the antietam probe should stay 16/16. (The separate battery captain "Capts. Squires, Richardson, Brown" is a different man — leave it.)
+  - **Fredericksburg → SOLID_AS_IS (1 false flag refuted):** the auditor proposed Owen `Brig. Gen.`→`Col.`; the adversarial pass **refuted** it — Joshua T. Owen genuinely was a brigadier general at Fredericksburg via a Nov 1862 recess appointment (unlike Zook, whose BG was backdated from March 1863). Applying the "fix" would have injected an error into a correct D92-hardened fact. The flag is recorded as DO-NOT-APPLY, not in the actionable checklist.
+- **D74/D92 + anti-Lost-Cause:** every audit confirmed no per-battle fudge and sound anti-Lost-Cause teaching text.
+- **Codex handoff:** the only data revision to apply is Antietam's `us_richardson.commander` → `Maj. Gen. Israel B. Richardson` (then re-gate: build GATE OK + `probe-antietam` 16/16 + `git diff --check`). Everything else is confirmed source-accurate.
+- **Exact gates run:** `node --check tools/probe-battle-build-research.mjs`; `node tools/probe-battle-build-research.mjs` **14/14**; `node tools/build.mjs` **GATE OK** (known raw-embed soft warning only); `git diff --check` clean; built-verdict JSON readback correct. Docs-only; `civil_war_generals.html` unchanged.
+- **Next:** the first battle-build spec slice — **Kennesaw Mountain (Atlanta/March)** per D327 — unless Aaron reorders; Codex may apply the single Antietam revision at any time under the antietam gate.
+
+---
+
 ## D327 — DURABLE BATTLE-BUILD RESEARCH LIBRARY FOR EVERY REMAINING LANE — [OPUS 4.8, Group 7 battle-build research] (2026-07-08)
 
 Chattanooga (D325/D326) proved that a battle should be spec'd from a durable, source-verified packet before implementation, not authored from memory. D327 generalizes that to the whole remaining battle-build queue: it creates `docs/design/battle-build-research/` with one citation-grade research packet per remaining lane, plus a filesystem guard. **Research/docs only — no `data/*.json`, no registry line, no runtime, no generated-HTML behavior changed.**

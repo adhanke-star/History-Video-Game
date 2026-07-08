@@ -28,6 +28,23 @@ const PACKETS = [
 
 const VERDICTS = ["READY_FOR_SPEC", "NEEDS_MORE_RESEARCH", "DO_NOT_BUILD_NOW"];
 
+// D328 built-battle audit subfolder (research/audit of the already-built battles)
+const BUILT_DIR = join(DIR, "built-battles");
+const BUILT_README = join(BUILT_DIR, "README.md");
+const BUILT_PACKETS = [
+  "bullrun-built-battle-audit.md",
+  "antietam-built-battle-audit.md",
+  "fredericksburg-built-battle-audit.md",
+  "chancellorsville-built-battle-audit.md",
+  "malvern-hill-built-battle-audit.md",
+  "gettysburg-built-battle-audit.md",
+  "shiloh-built-battle-audit.md",
+  "vicksburg-built-battle-audit.md",
+  "chickamauga-built-battle-audit.md",
+  "chattanooga-built-battle-audit.md",
+];
+const BUILT_VERDICTS = ["SOLID_AS_IS", "MINOR_REVISIONS", "NEEDS_REVISION"];
+
 const result = { ok: true, steps: [] };
 
 function step(name, fn) {
@@ -72,6 +89,11 @@ function countSourceRows(text) {
 
 function parseVerdict(text) {
   const m = text.match(/\*\*Verdict:\*\*\s*`?(READY_FOR_SPEC|NEEDS_MORE_RESEARCH|DO_NOT_BUILD_NOW)`?/);
+  return m ? m[1] : null;
+}
+
+function parseBuiltVerdict(text) {
+  const m = text.match(/\*\*Audit verdict:\*\*\s*`?(SOLID_AS_IS|MINOR_REVISIONS|NEEDS_REVISION)`?/);
   return m ? m[1] : null;
 }
 
@@ -183,6 +205,76 @@ step("DOCS-ONLY: this library must not smuggle in battle data or a registry line
   }
   const stray = readdirSync(DIR).filter((f) => f.endsWith(".json"));
   if (stray.length) throw new Error("battle-build-research must be docs only; found JSON: " + stray.join(", "));
+  return { ok: true };
+});
+
+// ---- D328 built-battle audit subfolder ----
+
+step("BUILT: docs/design/battle-build-research/built-battles exists with all 10 audits", () => {
+  if (!existsSync(BUILT_DIR)) throw new Error("missing folder " + BUILT_DIR);
+  const sizes = {};
+  for (const p of BUILT_PACKETS) {
+    const fp = join(BUILT_DIR, p);
+    if (!existsSync(fp)) throw new Error("missing built-battle audit " + p);
+    const text = read(fp);
+    if (text.length < 2500) throw new Error(p + " too thin: " + text.length + " bytes");
+    sizes[p] = text.length;
+  }
+  return sizes;
+});
+
+step("BUILT STRUCTURE: each audit has the required sections", () => {
+  for (const p of BUILT_PACKETS) {
+    const text = read(join(BUILT_DIR, p));
+    mustInclude(
+      text,
+      [
+        "source register",             // sources
+        "confirmed solid",             // what checks out
+        "revision checklist for codex", // actionable fixes (or "no revisions required")
+        "no-fudge",                    // D74/D92 adherence section
+        "audit verdict",               // final verdict
+      ],
+      p
+    );
+  }
+  return { checked: BUILT_PACKETS.length };
+});
+
+step("BUILT SOURCES: every audit's Source Register carries >=2 URL rows", () => {
+  const counts = {};
+  for (const p of BUILT_PACKETS) {
+    const n = countSourceRows(read(join(BUILT_DIR, p)));
+    if (n < 2) throw new Error(p + " has only " + n + " source-register URL rows (need >=2)");
+    counts[p] = n;
+  }
+  return counts;
+});
+
+step("BUILT VERDICT: every audit declares a parseable, valid audit verdict", () => {
+  const verdicts = {};
+  for (const p of BUILT_PACKETS) {
+    const v = parseBuiltVerdict(read(join(BUILT_DIR, p)));
+    if (!v) throw new Error(p + " has no parseable **Audit verdict:** line");
+    if (BUILT_VERDICTS.indexOf(v) < 0) throw new Error(p + " has invalid audit verdict " + v);
+    verdicts[p] = v;
+  }
+  return verdicts;
+});
+
+step("BUILT README: indexes every audit", () => {
+  if (!existsSync(BUILT_README)) throw new Error("missing built-battles README " + BUILT_README);
+  const text = read(BUILT_README);
+  if (text.length < 800) throw new Error("built-battles README too thin: " + text.length + " bytes");
+  const missing = BUILT_PACKETS.filter((p) => text.indexOf(p) < 0);
+  if (missing.length) throw new Error("built-battles README does not index: " + missing.join(", "));
+  mustInclude(text, ["built-battle", "D328", "SOLID_AS_IS"], "built-battles README");
+  return { bytes: text.length, indexed: BUILT_PACKETS.length };
+});
+
+step("BUILT LINK: parent README points to the built-battles subfolder", () => {
+  const text = read(README);
+  if (text.indexOf("built-battles/") < 0) throw new Error("parent README does not link built-battles/");
   return { ok: true };
 });
 

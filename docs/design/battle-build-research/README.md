@@ -24,6 +24,10 @@ An Opus research→adversarial-verify workflow (5 lanes × [Opus researcher with
 | [naval-river-battle-build-research.md](naval-river-battle-build-research.md) | Naval & river battles | **READY_FOR_SPEC** (Fort Donelson only) | **Fort Donelson** (T8 three-phase land siege) | D### Fort Donelson 3-phase spec; Hampton Roads / Mobile Bay / Fort Henry are DO_NOT_BUILD_NOW (need a naval engine) |
 | [1864-65-attrition-battle-build-research.md](1864-65-attrition-battle-build-research.md) | Overland Campaign & Petersburg | **READY_FOR_SPEC** | **Spotsylvania "Bloody Angle"** (single-phase) → Overland Campaign (T8 three-phase) | D### Spotsylvania single-phase spec; the Crater ships as a failed-assault scenario with the massacre as teaching only |
 
+## Built-battle audits (D328)
+
+The forward packets above cover **unbuilt** lanes. The companion [built-battles/](built-battles/README.md) subfolder (D328) holds a citation-grade research/audit of the **10 already-built** battles (Bull Run, Antietam, Fredericksburg, Chancellorsville, Malvern Hill, Gettysburg, Shiloh, Vicksburg, Chickamauga, Chattanooga) so Codex can revise them alongside building new battles. Result: **9 of 10 are SOLID_AS_IS** (the D92/D86/D90/D325 hardening held); **Antietam** needs one outcome-neutral rank-label fix (`us_richardson.commander` Brig. Gen. → Maj. Gen., an internal self-contradiction with its own leader entry); one auditor false flag (Fredericksburg's Owen) was correctly refuted.
+
 ## Most-ready lane and what stays research-thin
 
 - **Most ready for the next implementation slice:** **Atlanta/March → Kennesaw Mountain** (a clean single-phase "attacker historically loses" build that fits the objective-hold engine grain with zero fudge), which also matches the standing queue (Priority 1 after Chattanooga). Franklin (single-phase defender-hold) and Fort Donelson (3-phase land siege) are close seconds.
