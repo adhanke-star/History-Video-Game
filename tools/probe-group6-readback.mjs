@@ -160,6 +160,35 @@ step('hotpath profile metrics and network isolation remain coherent', () => {
     };
 });
 
+step('cross-artifact key metrics stay in lockstep', () => {
+    const mediaPolicy = (((media || {}).metrics || {}).policyState || {});
+    const histMetrics = ((historical || {}).metrics || {});
+    const domainMetrics = ((sourceDomains || {}).metrics || {});
+    const hotMetrics = ((hotpath || {}).metrics || {});
+
+    const mediaRawBytes = Number(mediaPolicy.rawBytes || 0);
+    const historicalSourceItems = Number(histMetrics.dataSourceItems || 0);
+    const sourceDomainUrlItems = Number(domainMetrics.sourceUrlItems || 0);
+    const sourceDomainUniqueDomains = Number(domainMetrics.uniqueDomains || 0);
+    const hotpathFiles = Number(hotMetrics.files || 0);
+    const hotpathFunctions = Number(hotMetrics.functions || 0);
+
+    if (mediaRawBytes <= 0) throw new Error('media rawBytes missing from policy state');
+    if (historicalSourceItems <= 0) throw new Error('historical source item count missing');
+    if (sourceDomainUrlItems <= 0) throw new Error('source-domain URL item count missing');
+    if (sourceDomainUniqueDomains <= 0) throw new Error('source-domain unique-domain count missing');
+    if (hotpathFiles <= 0 || hotpathFunctions <= 0) throw new Error('hotpath counts missing');
+
+    return {
+        mediaRawBytes,
+        historicalSourceItems,
+        sourceDomainUrlItems,
+        sourceDomainUniqueDomains,
+        hotpathFiles,
+        hotpathFunctions
+    };
+});
+
 step('group-6 consolidated artifact is serializable and reusable', () => {
     const summary = {
         media: {
@@ -250,9 +279,13 @@ const out = {
     summary: {
         mediaRawTier: ((media.metrics || {}).policyState || {}).rawTier || null,
         mediaRawMB: ((media.metrics || {}).policyState || {}).rawMB || null,
+        mediaRawBytes: ((media.metrics || {}).policyState || {}).rawBytes || 0,
         historicalSourceItems: ((historical.metrics || {}).dataSourceItems) || 0,
         sourceDomainUrlItems: ((sourceDomains.metrics || {}).sourceUrlItems) || 0,
         sourceDomainUniqueDomains: ((sourceDomains.metrics || {}).uniqueDomains) || 0,
+        sourceDomainConcentrationTop20Pct: ((sourceDomains.metrics || {}).concentrationTop20Pct) || 0,
+        sourceDomainInvalidUrlItems: ((sourceDomains.metrics || {}).invalidUrlItems) || 0,
+        hotpathFiles: ((hotpath.metrics || {}).files) || 0,
         hotpathFunctions: ((hotpath.metrics || {}).functions) || 0,
         hotpathFetchRefs: ((hotpath.metrics || {}).fetchRefs) || 0,
         runStartedAt: new Date(RUN_STARTED_AT).toISOString()

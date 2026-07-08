@@ -8,6 +8,12 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D318 GROUP 6 TOOLING — consolidated cross-artifact parity guard — 2026-07-08 (D318)
+- **What shipped:** tooling only. `tools/probe-group6-readback.mjs` now enforces explicit cross-artifact parity over key counters, requiring the consolidated readback to carry present/positive metrics across media policy, historical source inventory, source-domain inventory, and hotpath profile.
+- **Exact gates run (from `tools/`):** `node --check probe-group6-readback.mjs`; `node build.mjs`; `node probe-group6-readback.mjs`; `node probe-media-budget.mjs`; `node probe-historical-source-domains.mjs`; JSON readback via `tools/shots/probe-group6-readback.json` and `tools/shots/group6-readback.json`; `git diff --check`.
+- **Focused gate/readback:** consolidated probe green **9/9**; build GATE OK with known raw-embed soft warning; parity step green with `mediaRawBytes=2535463`, `historicalSourceItems=1559`, `sourceDomainUrlItems=152`, `sourceDomainUniqueDomains=33`, `hotpathFiles=12`, `hotpathFunctions=381`; adjacent media-budget green **13/13** and source-domain green **5/5**.
+- **Locks:** readback/tooling only; no gameplay/content/media/combat/runtime/history-data mutation and no lock changes.
+
 ## D317 GROUP 6 TOOLING — consolidated artifact freshness/coherence guard — 2026-07-08 (D317)
 - **What shipped:** tooling only. `tools/probe-group6-readback.mjs` now enforces component artifact freshness/coherence by checking required artifact mtimes against run start and a bounded coherence window.
 - **Exact gates run (from `tools/`):** `node --check probe-group6-readback.mjs`; `node build.mjs`; `node probe-group6-readback.mjs`; JSON readback via `tools/shots/probe-group6-readback.json`; `git diff --check`.

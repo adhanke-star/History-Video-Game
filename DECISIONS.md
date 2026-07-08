@@ -6,6 +6,25 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D318 — GROUP 6 CONSOLIDATED CROSS-ARTIFACT PARITY GUARD: KEY METRICS MUST BE PRESENT AND MUTUALLY COHERENT IN ONE READBACK — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
+
+The next Group 6 tooling slice tightens consolidated readback integrity by asserting cross-artifact key metrics explicitly, not just per-artifact pass/fail and freshness.
+
+- **Tooling change:** `tools/probe-group6-readback.mjs` now adds a cross-artifact parity step that requires key counts from each component artifact to be present and positive in the same run:
+  - media policy raw bytes
+  - historical source-item count
+  - source-domain URL item and unique-domain counts
+  - hotpath file and function counts
+- **Summary/readback expansion:** consolidated summary now carries additional direct counters for downstream checks:
+  - `mediaRawBytes`
+  - `sourceDomainConcentrationTop20Pct`
+  - `sourceDomainInvalidUrlItems`
+  - `hotpathFiles`
+- **Focused gate:** `node --check probe-group6-readback.mjs`; `node build.mjs` GATE OK with known raw-embed soft warning; `node probe-group6-readback.mjs` green **9/9**; adjacent `node probe-media-budget.mjs` green **13/13**; adjacent `node probe-historical-source-domains.mjs` green **5/5**; JSON readback inspected (`mediaRawBytes 2535463`, `sourceDomainUrlItems 152`, `sourceDomainUniqueDomains 33`, `hotpathFiles 12`, `hotpathFunctions 381`); `git diff --check` clean.
+- **Policy effect:** tooling/readback only. No gameplay/combat/runtime/media/history-data mutation and no lock changes.
+
+---
+
 ## D317 — GROUP 6 CONSOLIDATED ARTIFACT FRESHNESS/COHERENCE GUARD: COMPONENT READBACKS MUST BE FROM THE CURRENT RUN WINDOW — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
 
 The fourth bundle slice adds explicit freshness/coherence enforcement to the consolidated Group 6 readback.
