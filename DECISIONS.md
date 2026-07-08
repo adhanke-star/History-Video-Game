@@ -6,6 +6,18 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D322 — GROUP 2 GM/TRANSFER SUBSTRATE: THEATER CLASSIFICATION IS NOW HONEST, READABLE, AND PROBE-GATED BEFORE ANY TRANSFER MOVE — [CODEX GPT-5.5, Priority-1 Group 2 GM follow-up] (2026-07-08)
+
+Group 2's D173 AI-GM shadow explicitly left Transfer blocked because `data/generals.json` had no honest theater classification. D322 closes that blocker as input/readout substrate only.
+
+- **Data substrate:** every starting-roster and commission-pool general now carries `theater`, `theaters`, and `theaterProvenance`. The broad buckets are `Eastern`, `Western`, and `Multi`, inferred from each already sourced biography and the campaign's existing Eastern/Western battle taxonomy. These fields are not new biographical claims and do not override each record's existing source trail.
+- **Runtime substrate:** `src/35-command.js` now exposes pure helpers for normalizing a general's theater list, resolving the next battle's broad theater from `BATTLES.th` / logistics routes, and reading `cmdTransferReadiness(C,id)`. The helper flags whether a general already fits the next battle's theater or would need a future cross-theater Transfer move.
+- **AI-GM readout:** the enemy command shadow now carries commander theater fields and the next battle theater into its pure snapshot/readout. It still writes no enemy command save state, commissions no hidden officers, and performs no Transfer.
+- **Focused gate:** `node --check src/35-command.js`; `node --check tools/probe-command.mjs`; `node tools/build.mjs` GATE OK with known raw-embed soft warning; `node tools/validate-data-schemas.mjs` green **39/39**; `node tools/probe-command.mjs` green **81/81**, **0** pageerrors. `git diff --check` pending in the final closeout gate.
+- **Next phase decision:** the `theater` blocker is closed. A future Group 2 slice may build the actual Transfer move, but it must stay explicit, gated, and input/readout-bounded unless a separate no-fudge combat/output decision is made.
+
+---
+
 ## D321 — GROUP 6 SOURCE-FILE INVENTORY CLOSEOUT: INVENTORY MUST INCLUDE TACTICAL MODULES AND BE PROBE-GATED — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
 
 The D320 source-file inventory report was useful but incomplete: it scanned only top-level `src/*.js`, so the tactical engine under `src/tactical/` was invisible to the report.

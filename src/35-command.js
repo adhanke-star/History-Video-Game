@@ -83,6 +83,77 @@ function _cmdName(gen) {
   return String(gen.name || "").replace(/-[A-Za-z]$/, "");
 }
 
+function _cmdTheaterNorm(v) {
+  var s = String(v || "").trim();
+  if (s === "E") return "Eastern";
+  if (s === "W") return "Western";
+  if (/^east/i.test(s)) return "Eastern";
+  if (/^west/i.test(s)) return "Western";
+  if (/^multi/i.test(s)) return "Multi";
+  return s;
+}
+
+function _cmdGeneralTheater(gen) {
+  var t = _cmdTheaterNorm(gen && gen.theater);
+  return (t === "Eastern" || t === "Western" || t === "Multi") ? t : "";
+}
+
+function _cmdGeneralTheaters(gen) {
+  var seen = {}, out = [], raw = gen && gen.theaters;
+  if (Array.isArray(raw)) {
+    for (var i = 0; i < raw.length; i++) {
+      var t = _cmdTheaterNorm(raw[i]);
+      if ((t === "Eastern" || t === "Western") && !seen[t]) { seen[t] = 1; out.push(t); }
+    }
+  }
+  var primary = _cmdGeneralTheater(gen);
+  if ((primary === "Eastern" || primary === "Western") && !seen[primary]) out.push(primary);
+  return out;
+}
+
+function _cmdGeneralFitsTheater(gen, theater) {
+  var t = _cmdTheaterNorm(theater);
+  if (t !== "Eastern" && t !== "Western") return false;
+  var list = _cmdGeneralTheaters(gen);
+  for (var i = 0; i < list.length; i++) if (list[i] === t) return true;
+  return false;
+}
+
+function _cmdBattleTheater(C) {
+  var bd = (typeof _brgNextBattle === "function") ? _brgNextBattle(C) : null;
+  if (!bd) return "";
+  var t = _cmdTheaterNorm(bd.theater);
+  if (t === "Eastern" || t === "Western") return t;
+  t = _cmdTheaterNorm(bd.th);
+  if (t === "Eastern" || t === "Western") return t;
+  try {
+    var lg = gameData("logistics-rail"), route = lg && lg.routes && bd.id && lg.routes[bd.id];
+    t = _cmdTheaterNorm(route && route.theater);
+    if (t === "Eastern" || t === "Western") return t;
+  } catch (e) {}
+  return "";
+}
+
+function cmdTransferReadiness(C, id) {
+  if (!C || !C.president || !id) return null;
+  var side = (C.side === "CS") ? "CS" : "US";
+  var gen = _cmdById(side, id); if (!gen) return null;
+  var battleTheater = _cmdBattleTheater(C);
+  var theaters = _cmdGeneralTheaters(gen);
+  var primary = _cmdGeneralTheater(gen);
+  var fits = battleTheater ? _cmdGeneralFitsTheater(gen, battleTheater) : false;
+  return {
+    id: gen.id,
+    name: _cmdName(gen),
+    theater: primary,
+    theaters: theaters,
+    battleTheater: battleTheater,
+    sameTheater: !!fits,
+    transferNeeded: !!(battleTheater && theaters.length && !fits),
+    prov: gen.theaterProvenance || "Inferred"
+  };
+}
+
 /* Strategic date / tenure helpers — delegate to shared 01-utils.js. */
 function _cmdDateNum(d) { return dateToNum(d); }
 function _cmdYM(t) { return tenureToNum(t); }
@@ -506,6 +577,9 @@ function _cmdAiGmSnapshot(gen, side, kind) {
     headline: d.headline,
     attack: d.attack,
     defend: d.defend,
+    theater: _cmdGeneralTheater(gen),
+    theaters: _cmdGeneralTheaters(gen),
+    theaterProvenance: gen.theaterProvenance || "Inferred",
     grade: _cmdBaseGrade(gen),
     belowGrade: !!below,
     aggression: (typeof gen.aggression === "number") ? gen.aggression : 50,
@@ -607,6 +681,7 @@ function cmdEnemyShadow(C) {
     side: side,
     battleId: bd.id || null,
     battleName: bd.name || "",
+    battleTheater: _cmdBattleTheater(C),
     role: role,
     aiTier: style.tier,
     label: style.label,
@@ -637,6 +712,7 @@ function cmdEnemyShadowHTML(C) {
   var sh = cmdEnemyShadow(C);
   if (!sh || !sh.commander) return "";
   var role = sh.role === "attack" ? "Attacking command" : "Defensive command";
+  var th = sh.commander.theater ? (' &middot; ' + _cmdEsc(sh.commander.theater) + ' theater') : '';
   var corps = "";
   for (var i = 0; i < sh.corps.length; i++) {
     var co = sh.corps[i], cg = co && co.commander;
@@ -657,7 +733,7 @@ function cmdEnemyShadowHTML(C) {
     +   '</div>'
     +   '<div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap">'
     +     '<span style="font-weight:bold;font-size:14px">' + _cmdEsc(sh.commander.name) + '</span>'
-    +     '<span style="font-size:11px;opacity:.75">Army OVR ' + sh.commander.headline + ' &middot; ATK ' + sh.commander.attack + ' / DEF ' + sh.commander.defend + '</span>'
+    +     '<span style="font-size:11px;opacity:.75">Army OVR ' + sh.commander.headline + ' &middot; ATK ' + sh.commander.attack + ' / DEF ' + sh.commander.defend + th + '</span>'
     +     '<span style="font-size:10px;opacity:.58">Pure AI-GM readout; no hidden Transfer.</span>'
     +   '</div>'
     +   '<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:8px">' + corps + '</div>'

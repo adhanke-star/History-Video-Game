@@ -1116,7 +1116,7 @@ const SETUP = `(() => {
       if(JSON.stringify(sh)!==JSON.stringify(sh2)) throw new Error('enemy shadow must be deterministic across reads');
       return { enemy:sh.side, commander:sh.commander.id, role:sh.role, leadership:sh.leadership, pure:true }; });
 
-    step('D173: AI tier changes staff depth without hidden commissions or Transfer fields', function(){
+    step('D173: AI tier changes staff depth without hidden commissions or hidden Transfer moves', function(){
       if(typeof cmdEnemyShadow!=='function') throw new Error('cmdEnemyShadow missing');
       var C=mkC('CS',1864,5), old=G.settings.tacticalPreset, had=Object.prototype.hasOwnProperty.call(G.settings,'tacticalPreset');
       try {
@@ -1130,9 +1130,46 @@ const SETUP = `(() => {
         var usIds=_cmdSideGenerals('US').map(function(g){return g.id;});
         var seen=[hard.commander.id].concat(hard.corps.map(function(x){return x.commander.id;})).concat(hard.divisions.map(function(x){return x.commander.id;}));
         for(var i=0;i<seen.length;i++) if(usIds.indexOf(seen[i])<0) throw new Error('AI-GM used a non-roster or commissioned id: '+seen[i]);
-        if(typeof hard.commander.theater!=='string') { /* no-op: Transfer remains blocked unless data honestly adds theater fields */ }
+        if(hard.commander.transfer || hard.transfer) throw new Error('AI-GM shadow must not run a hidden Transfer move');
         return { recruitStaff:rec.corps.length+'/'+rec.divisions.length, hardeeStaff:hard.corps.length+'/'+hard.divisions.length, noHiddenCommission:true };
       } finally { if(had) G.settings.tacticalPreset=old; else delete G.settings.tacticalPreset; } });
+
+    step('D322: theater classification covers roster + commission pool with broad Eastern/Western/Multi buckets', function(){
+      if(typeof _cmdGeneralTheater!=='function'||typeof _cmdGeneralTheaters!=='function') throw new Error('theater helpers missing');
+      var allowed={Eastern:1,Western:1,Multi:1}, checked=0, singles=0, multis=0;
+      ['US','CS'].forEach(function(side){
+        var rows=_cmdSideGenerals(side).concat(_cmdCommissionPool(side));
+        for(var i=0;i<rows.length;i++){
+          var g=rows[i], t=_cmdGeneralTheater(g), list=_cmdGeneralTheaters(g);
+          checked++;
+          if(!allowed[t]) throw new Error('bad theater bucket for '+g.id+': '+t);
+          if(g.theaterProvenance!=='Inferred') throw new Error('theater provenance should be Inferred substrate for '+g.id);
+          if(!Array.isArray(list)||!list.length) throw new Error('empty theaters list for '+g.id);
+          for(var j=0;j<list.length;j++) if(list[j]!=='Eastern'&&list[j]!=='Western') throw new Error('bad theater list item for '+g.id+': '+list[j]);
+          if(t==='Multi'&&list.length<2) throw new Error('Multi theater needs both broad theaters for '+g.id);
+          if(t==='Multi') multis++; else singles++;
+        }
+      });
+      if(!_cmdGeneralFitsTheater(_cmdById('US','us-meade'),'Eastern')) throw new Error('Meade should fit Eastern');
+      if(_cmdGeneralFitsTheater(_cmdById('US','us-meade'),'Western')) throw new Error('Meade should not fit Western');
+      if(!_cmdGeneralFitsTheater(_cmdById('US','us-grant'),'Western')||!_cmdGeneralFitsTheater(_cmdById('US','us-grant'),'Eastern')) throw new Error('Grant should fit both broad theaters');
+      if(!_cmdGeneralFitsTheater(_cmdById('CS','cs-longstreet'),'Western')||!_cmdGeneralFitsTheater(_cmdById('CS','cs-longstreet'),'Eastern')) throw new Error('Longstreet should fit both broad theaters');
+      if(!_cmdGeneralFitsTheater(_cmdById('CS','cs-lee'),'Eastern')||_cmdGeneralFitsTheater(_cmdById('CS','cs-lee'),'Western')) throw new Error('Lee should remain Eastern-only');
+      return { checked:checked, single:singles, multi:multis }; });
+
+    step('D322: Transfer readiness is pure and flags cross-theater candidates before any Transfer move exists', function(){
+      if(typeof cmdTransferReadiness!=='function'||typeof _cmdBattleTheater!=='function') throw new Error('transfer substrate helpers missing');
+      var C=mkC('US',1863,7), before=JSON.stringify(C.president.command||{});
+      var east=_cmdBattleTheater(C);
+      if(east!=='Eastern') throw new Error('idx0 campaign battle should resolve to Eastern via logistics rail, got '+east);
+      var meade=cmdTransferReadiness(C,'us-meade'), thomas=cmdTransferReadiness(C,'us-thomas'), grant=cmdTransferReadiness(C,'us-grant');
+      var after=JSON.stringify(C.president.command||{});
+      if(before!==after) throw new Error('cmdTransferReadiness must not mutate command state');
+      if(!meade||!meade.sameTheater||meade.transferNeeded) throw new Error('Meade should already fit the Eastern next battle: '+JSON.stringify(meade));
+      if(!thomas||thomas.sameTheater||!thomas.transferNeeded) throw new Error('Thomas should be flagged as cross-theater for an Eastern next battle: '+JSON.stringify(thomas));
+      if(!grant||!grant.sameTheater||grant.transferNeeded) throw new Error('Grant should bridge Eastern/Western without a Transfer flag: '+JSON.stringify(grant));
+      if(C.president.command.transfer||C.transfer) throw new Error('substrate must not create a Transfer save field');
+      return { battleTheater:east, meade:meade.transferNeeded, thomas:thomas.transferNeeded, grant:grant.transferNeeded, pure:true }; });
 
     step('D173: enemy leadership and margin helpers are bounded pure inputs; Command tab renders the readout', function(){
       if(typeof cmdEnemyLeadership!=='function'||typeof cmdEnemyMarginEdge!=='function'||typeof cmdEnemyShadowHTML!=='function') throw new Error('enemy command helpers missing');
@@ -1143,8 +1180,11 @@ const SETUP = `(() => {
       if(before!==after) throw new Error('enemy command helpers must not mutate command state');
       if(!(lead>=42&&lead<=88)) throw new Error('enemy leadership out of bounds: '+lead);
       if(Math.abs(atk)>2.1||Math.abs(def)>2.1) throw new Error('enemy margin edge out of bounds: '+atk+'/'+def);
+      var sh=cmdEnemyShadow(C);
+      if(!sh||!sh.battleTheater||typeof sh.commander.theater!=='string'||!sh.commander.theaters.length) throw new Error('enemy shadow missing D322 theater data: '+JSON.stringify(sh&&sh.commander));
       var html=cmdRenderTab(C);
       if(html.indexOf('Enemy command shadow')<0) throw new Error('Command tab must render the AI-GM shadow readout');
+      if(html.indexOf('theater')<0) throw new Error('AI-GM readout should surface the command theater');
       if(html.indexOf('hidden Transfer')<0) throw new Error('readout should make clear Transfer is not secretly active');
       if(html.indexOf('NaN')>=0||html.indexOf('undefined')>=0) throw new Error('AI-GM readout leaked NaN/undefined');
       return { leadership:lead, attackEdge:atk, defendEdge:def, renders:true }; });
