@@ -280,6 +280,85 @@ function sourceOrganizationState() {
     perCategory
   };
 }
+function stemRows(files, rootDir) {
+  return files.map(f => {
+    const rel = f.replace(rootDir + '/', '');
+    return {
+      path: rel,
+      stem: baseStem(rel),
+      ext: extname(rel).toLowerCase(),
+      bytes: statSync(f).size
+    };
+  }).sort((a, b) => a.path.localeCompare(b.path));
+}
+function duplicateStems(rows) {
+  const seen = new Set();
+  const dupes = new Set();
+  for (const r of rows) {
+    if (seen.has(r.stem)) dupes.add(r.stem);
+    seen.add(r.stem);
+  }
+  return Array.from(dupes).sort();
+}
+function sourceInventoryState() {
+  const coreCategories = (budget.categories || []).filter(c => c.allowedInSingleFile);
+  const perCategory = {};
+  const bad = [];
+  for (const c of coreCategories) {
+    const embedDir = c.embedDir ? join(ROOT, c.embedDir) : null;
+    const sourceDir = c.sourceDir ? join(ROOT, c.sourceDir) : null;
+    if (!embedDir || !sourceDir) {
+      bad.push(c.id + ' missing sourceDir/embedDir');
+      continue;
+    }
+    if (!existsSync(embedDir)) {
+      bad.push(c.id + ' missing embedDir ' + c.embedDir);
+      continue;
+    }
+    if (!existsSync(sourceDir)) {
+      bad.push(c.id + ' missing sourceDir ' + c.sourceDir);
+      continue;
+    }
+    const sourceRows = stemRows(walkFiles(sourceDir), sourceDir);
+    const embedRows = stemRows(walkFiles(embedDir), embedDir);
+    const sourceStems = new Set(sourceRows.map(r => r.stem));
+    const embedStems = new Set(embedRows.map(r => r.stem));
+    const sourceOnly = sourceRows.filter(r => !embedStems.has(r.stem)).map(r => r.path);
+    const embedOnly = embedRows.filter(r => !sourceStems.has(r.stem)).map(r => relAsset(join(embedDir, r.path)));
+    const sourceDuplicateStems = duplicateStems(sourceRows);
+    const embedDuplicateStems = duplicateStems(embedRows);
+    const largestEmbed = embedRows.slice().sort((a, b) => b.bytes - a.bytes || a.path.localeCompare(b.path))[0] || null;
+    if (sourceOnly.length) bad.push(c.id + ' source files without embedded same-stem file: ' + sourceOnly.join(', '));
+    if (embedOnly.length) bad.push(c.id + ' embedded files without source same-stem file: ' + embedOnly.join(', '));
+    if (sourceDuplicateStems.length) bad.push(c.id + ' duplicate source stems: ' + sourceDuplicateStems.join(', '));
+    if (embedDuplicateStems.length) bad.push(c.id + ' duplicate embedded stems: ' + embedDuplicateStems.join(', '));
+    perCategory[c.id] = {
+      sourceDir: c.sourceDir,
+      embedDir: c.embedDir,
+      sourceFiles: sourceRows.length,
+      embedFiles: embedRows.length,
+      sourceOnly,
+      embedOnly,
+      sourceDuplicateStems,
+      embedDuplicateStems,
+      sourceExtensions: Array.from(new Set(sourceRows.map(r => r.ext))).sort(),
+      embedExtensions: Array.from(new Set(embedRows.map(r => r.ext))).sort(),
+      largestEmbed: largestEmbed ? { path: relAsset(join(embedDir, largestEmbed.path)), bytes: largestEmbed.bytes } : null
+    };
+  }
+  const categoryIds = coreCategories.map(c => c.id).sort();
+  return {
+    declaredCoreCategories: categoryIds,
+    exactStemParityOk: bad.length === 0,
+    sourceOnlyCategories: categoryIds.filter(id => (perCategory[id] && perCategory[id].sourceOnly || []).length > 0),
+    embedOnlyCategories: categoryIds.filter(id => (perCategory[id] && perCategory[id].embedOnly || []).length > 0),
+    duplicateStemCategories: categoryIds.filter(id => {
+      const row = perCategory[id] || {};
+      return (row.sourceDuplicateStems || []).length || (row.embedDuplicateStems || []).length;
+    }),
+    perCategory
+  };
+}
 
 const budget = readJson('data/media-budget.json');
 const cutaways = readJson('data/footage-cutaways.json');
@@ -320,6 +399,18 @@ step('media source-organization readback is explicit', () => {
   if (state.declaredCoreCategories.length !== (budget.categories || []).filter(c => c.allowedInSingleFile).length) throw new Error('declared category count mismatch in sourceOrganization readback');
   if (state.missingSourceCategories.length) throw new Error('sourceOrganization reports missing sources: ' + state.missingSourceCategories.join(', '));
   if (state.metadataIssueCategories.length) throw new Error('sourceOrganization reports metadata issues: ' + state.metadataIssueCategories.join(', '));
+  return state;
+});
+
+step('media source-inventory readback is explicit', () => {
+  const p = budget.policy || {};
+  if (p.requireSourceInventoryReadback !== true) throw new Error('source-inventory readback guard missing');
+  const state = sourceInventoryState();
+  if (state.exactStemParityOk !== true) throw new Error('source inventory parity is not green');
+  if (state.declaredCoreCategories.length !== (budget.categories || []).filter(c => c.allowedInSingleFile).length) throw new Error('declared category count mismatch in sourceInventory readback');
+  if (state.sourceOnlyCategories.length) throw new Error('sourceInventory reports source-only files: ' + state.sourceOnlyCategories.join(', '));
+  if (state.embedOnlyCategories.length) throw new Error('sourceInventory reports embed-only files: ' + state.embedOnlyCategories.join(', '));
+  if (state.duplicateStemCategories.length) throw new Error('sourceInventory reports duplicate stems: ' + state.duplicateStemCategories.join(', '));
   return state;
 });
 
@@ -417,6 +508,7 @@ const out = {
     rawMB: +(totals.total / 1048576).toFixed(3),
     policyState: budgetPolicyState(),
     sourceOrganization: sourceOrganizationState(),
+    sourceInventory: sourceInventoryState(),
     categorySummary: categorySummary(),
     categories: totals.by,
     largestFiles: fileList.slice(0, 10)
