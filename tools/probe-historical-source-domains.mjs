@@ -20,6 +20,41 @@ function step(name, fn) {
 }
 
 const inventory = scanSourceDomains();
+const policy = inventory.policyReadback || {};
+
+const driftReasons = [];
+if (policy.requireZeroInvalidUrls && Number(inventory.stats.invalidUrlItems || 0) !== 0) {
+  driftReasons.push('invalid URL items must remain zero, saw ' + inventory.stats.invalidUrlItems);
+}
+if (Number(inventory.stats.concentrationTop20Pct || 0) > Number(policy.maxTop20ConcentrationPct || 0)) {
+  driftReasons.push(
+    'top-domain concentration ' +
+    inventory.stats.concentrationTop20Pct +
+    '% exceeds policy max ' +
+    policy.maxTop20ConcentrationPct +
+    '%'
+  );
+}
+if (Number(inventory.stats.uniqueDomains || 0) < Number(policy.minUniqueDomains || 0)) {
+  driftReasons.push(
+    'unique domains ' + inventory.stats.uniqueDomains + ' below policy floor ' + policy.minUniqueDomains
+  );
+}
+
+const driftGuard = {
+  pass: driftReasons.length === 0,
+  reasons: driftReasons,
+  policy: {
+    requireZeroInvalidUrls: !!policy.requireZeroInvalidUrls,
+    maxTop20ConcentrationPct: Number(policy.maxTop20ConcentrationPct || 0),
+    minUniqueDomains: Number(policy.minUniqueDomains || 0)
+  },
+  current: {
+    invalidUrlItems: Number(inventory.stats.invalidUrlItems || 0),
+    concentrationTop20Pct: Number(inventory.stats.concentrationTop20Pct || 0),
+    uniqueDomains: Number(inventory.stats.uniqueDomains || 0)
+  }
+};
 
 step('historical source-domain artifact is non-vacuous', () => {
   const s = inventory.stats || {};
@@ -53,6 +88,11 @@ step('invalid URL list is explicit', () => {
   return { invalidUrlItems: inventory.badUrls.length };
 });
 
+step('domain drift policy guard is within conservative thresholds', () => {
+  if (!driftGuard.pass) throw new Error(driftGuard.reasons.join('; '));
+  return driftGuard;
+});
+
 step('artifact is serializable and reusable', () => {
   const outFile = join(OUT, 'historical-source-domains.json');
   writeFileSync(outFile, JSON.stringify(inventory, null, 2));
@@ -72,7 +112,11 @@ const out = {
   ok,
   passed: steps.filter(s => s.ok).length,
   total: steps.length,
-  metrics: inventory.stats,
+  metrics: {
+    ...inventory.stats,
+    domainDriftGuard: driftGuard
+  },
+  policyReadback: inventory.policyReadback || null,
   topDomains: inventory.topDomains.slice(0, 10),
   steps
 };
@@ -80,15 +124,15 @@ const out = {
 writeFileSync(join(OUT, 'probe-historical-source-domains.json'), JSON.stringify(out, null, 2));
 console.log(
   'probe-historical-source-domains ok=' +
-    ok +
-    ' steps=' +
-    out.passed +
-    '/' +
-    out.total +
-    ' urlItems=' +
-    inventory.stats.sourceUrlItems +
-    ' domains=' +
-    inventory.stats.uniqueDomains
+  ok +
+  ' steps=' +
+  out.passed +
+  '/' +
+  out.total +
+  ' urlItems=' +
+  inventory.stats.sourceUrlItems +
+  ' domains=' +
+  inventory.stats.uniqueDomains
 );
 for (const s of steps) {
   if (!s.ok) console.log('  FAIL ' + s.name + ' :: ' + s.error);

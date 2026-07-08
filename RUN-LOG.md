@@ -8,6 +8,13 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D313 GROUP 6 TOOLING — historical source-domain conservative drift guard thresholds — 2026-07-08 (D313)
+- **What shipped:** tooling only. `tools/historical-source-domains.mjs` now emits policy threshold readback (`requireZeroInvalidUrls`, `maxTop20ConcentrationPct`, `minUniqueDomains`), and `tools/probe-historical-source-domains.mjs` now enforces those thresholds with explicit pass/fail reasons in probe metrics.
+- **Exact gates run (from `tools/`):** `node --check historical-source-domains.mjs`; `node --check probe-historical-source-domains.mjs`; `node build.mjs`; `node probe-historical-source-domains.mjs`; `node probe-group6-readback.mjs`; JSON readback via `tools/shots/probe-historical-source-domains.json` and `tools/shots/probe-group6-readback.json`; `git diff --check`.
+- **Focused gate/readback:** source-domain probe green **5/5**; consolidated Group 6 readback green **6/6**; invalid URLs **0**; top-20 concentration **88.82%** against policy max **90**; unique domains **33** against policy floor **30**; drift reasons `[]`; build GATE OK with known raw-embed soft warning.
+- **Locks:** no source/data gameplay edits, no historical-claim changes, no media/assets/network/combat/runtime changes, and no lock changes.
+- **NEXT:** stop after D313 per the two-slice boundary (D312 + D313) once this slice is committed and pushed.
+
 ## D312 GROUP 6 TOOLING — media-budget undeclared-embed drift guard hardening — 2026-07-08 (D312)
 - **What shipped:** tooling/data only. `data/media-budget.json` schemaVersion **1.7** adds `requireDeclaredCoreEmbedCategoriesWhileFrozen`; `tools/probe-media-budget.mjs` adds explicit `metrics.undeclaredEmbedState` readback and frozen-core enforcement.
 - **New readback metrics:** undeclared embed categories, undeclared embed files count, bounded sample offending paths, plus `frozenCorePostureActive` and `guardEnabled` flags.

@@ -6,6 +6,26 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D313 — GROUP 6 HISTORICAL SOURCE-DOMAIN DRIFT GUARD: CONSERVATIVE POLICY THRESHOLDS ARE NOW ENFORCED WITH EXPLICIT READBACK — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
+
+The next Group 6 tooling slice adds conservative drift-policy enforcement to the historical source-domain guard while staying filesystem-only and readback-first.
+
+- **Tooling/config change:** `tools/historical-source-domains.mjs` now emits `policyReadback` with conservative thresholds:
+  - `requireZeroInvalidUrls=true`
+  - `maxTop20ConcentrationPct=90`
+  - `minUniqueDomains=30`
+- **Probe change:** `tools/probe-historical-source-domains.mjs` now enforces those policy thresholds and emits explicit drift readback in `metrics.domainDriftGuard`:
+  - current invalid URL count
+  - current top-20 concentration
+  - current unique domains
+  - policy thresholds used
+  - pass/fail reasons array
+- **Current readback:** invalid URLs **0**, top-20 concentration **88.82%** (<= 90), unique domains **33** (>= 30), reasons `[]`.
+- **Focused gate:** `node --check historical-source-domains.mjs`; `node --check probe-historical-source-domains.mjs`; `node build.mjs` GATE OK with known raw-embed soft warning; `node probe-historical-source-domains.mjs` green **5/5**; `node probe-group6-readback.mjs` green **6/6**; JSON readback inspected from probe artifacts; `git diff --check` clean.
+- **Policy effect:** tooling-only. No historical claim edits, no source fabrication, no gameplay/combat/runtime/media changes, and no lock changes.
+
+---
+
 ## D312 — GROUP 6 MEDIA-BUDGET HARDENING: UNDECLARED EMBED CATEGORY DRIFT IS NOW A FROZEN-CORE GUARD WITH EXPLICIT READBACK — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
 
 The next Group 6 tooling slice strengthens D300-D306 media-budget enforcement without adding assets or changing runtime behavior.

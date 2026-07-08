@@ -7,6 +7,11 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 const DATA_DIR = join(ROOT, 'data');
+const DOMAIN_DRIFT_POLICY = Object.freeze({
+  requireZeroInvalidUrls: true,
+  maxTop20ConcentrationPct: 90,
+  minUniqueDomains: 30
+});
 
 function walkJsonFiles(dir) {
   if (!existsSync(dir)) return [];
@@ -136,9 +141,19 @@ function scanSourceDomains() {
     invalidUrlItems: badUrls.length
   };
 
+  const policyReadback = {
+    requireZeroInvalidUrls: DOMAIN_DRIFT_POLICY.requireZeroInvalidUrls,
+    maxTop20ConcentrationPct: DOMAIN_DRIFT_POLICY.maxTop20ConcentrationPct,
+    minUniqueDomains: DOMAIN_DRIFT_POLICY.minUniqueDomains,
+    currentInvalidUrlItems: stats.invalidUrlItems,
+    currentConcentrationTop20Pct: stats.concentrationTop20Pct,
+    currentUniqueDomains: stats.uniqueDomains
+  };
+
   return {
     generatedAt: new Date().toISOString(),
     stats,
+    policyReadback,
     topDomains,
     byFile: byFile.sort((a, b) => b.sourceUrlItems - a.sourceUrlItems || a.file.localeCompare(b.file)),
     badUrls,
