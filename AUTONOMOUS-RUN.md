@@ -26,15 +26,17 @@ These rules apply to Codex, Claude, Cline, DeepSeek, and any other model impleme
 
 ## 2 · STATE AS OF THIS HANDOFF (live head — see the refresh line below; the stale "run i" epoch label was corrected in D236, ledger item S38)
 
-> **LIVE REFRESH (2026-07-08 D296): read `HANDOFF.md` top block first.** D296 shipped John W. Haley as the twenty-ninth citation-grade Soldier's Story replacement, mapped to the Gettysburg / 17th Maine / de Trobriand's Brigade / Birney's Division private slot. Lane status: 29 `Verified` records, side balance **15US/14CS**, women/support figures still in the separate lane. D292 completed the batch/release no-regression checkpoint after D284-D291, so current active work remains another bounded Priority-1 Soldier's Story slice; Western/CS is again useful where the source trail and slot fit are exact. Phase H media additions, M8, Q5/Q6, and the last battle queue remain locked behind explicit Aaron decisions.
+> **LIVE REFRESH (2026-07-08 D297): read `HANDOFF.md` top block first.** D297 shipped Bushrod R. Johnson as the thirtieth citation-grade Soldier's Story replacement, mapped to the Chickamauga / Johnson's Provisional Division / Longstreet's Left Wing command slot. Lane status: 30 `Verified` records, side balance **15US/15CS**, women/support figures still in the separate lane. D292 completed the batch/release no-regression checkpoint after D284-D291, so current active work remains another bounded Priority-1 Soldier's Story slice only where the source trail and slot fit are exact. Phase H media additions, M8, Q5/Q6, and the last battle queue remain locked behind explicit Aaron decisions.
 
-> **SUPERSEDED PRIOR REFRESH (2026-07-08 D295):** Taliaferro N. "Tally" Simpson shipped as the twenty-eighth Soldier's Story replacement. Kept as historical context; use the D296 refresh above plus `HANDOFF.md` for the live state and next task.
+> **SUPERSEDED PRIOR REFRESH (2026-07-08 D296):** John W. Haley shipped as the twenty-ninth Soldier's Story replacement. Kept as historical context; use the D297 refresh above plus `HANDOFF.md` for the live state and next task.
 
-> **SUPERSEDED PRIOR REFRESH (2026-07-07 D294):** John Camden West shipped as the twenty-seventh Soldier's Story replacement. Kept as historical context; use the D296 refresh above plus `HANDOFF.md` for the live state and next task.
+> **SUPERSEDED PRIOR REFRESH (2026-07-08 D295):** Taliaferro N. "Tally" Simpson shipped as the twenty-eighth Soldier's Story replacement. Kept as historical context; use the D297 refresh above plus `HANDOFF.md` for the live state and next task.
 
-> **SUPERSEDED PRIOR REFRESH (2026-07-07 D293):** John S. Jackman shipped as the twenty-sixth Soldier's Story replacement. Kept as historical context; use the D296 refresh above plus `HANDOFF.md` for the live state and next task.
+> **SUPERSEDED PRIOR REFRESH (2026-07-07 D294):** John Camden West shipped as the twenty-seventh Soldier's Story replacement. Kept as historical context; use the D297 refresh above plus `HANDOFF.md` for the live state and next task.
 
-> **SUPERSEDED PRIOR REFRESH (2026-07-05 D275):** E54 pocket-collapse capture semantics and the remaining E47 Shiloh/Gettysburg flips are live. Kept as historical context; use the D296 refresh above plus `HANDOFF.md` for the live state and next task.
+> **SUPERSEDED PRIOR REFRESH (2026-07-07 D293):** John S. Jackman shipped as the twenty-sixth Soldier's Story replacement. Kept as historical context; use the D297 refresh above plus `HANDOFF.md` for the live state and next task.
+
+> **SUPERSEDED PRIOR REFRESH (2026-07-05 D275):** E54 pocket-collapse capture semantics and the remaining E47 Shiloh/Gettysburg flips are live. Kept as historical context; use the D297 refresh above plus `HANDOFF.md` for the live state and next task.
 
 > **PRIOR CLOSE-OUT REFRESH (2026-07-03 D236):** the FABLE-AUDIT run-1 IMPROVE loop (D224 ledger → D225-D236 fix milestones; standing ledger in `REVIEW-QUEUE.md`) was the active work, and D222 was the playable-CONTENT head. The D222 paragraph below is the last full prose refresh and stays accurate as historical context.
 

@@ -2237,6 +2237,92 @@
       ],
       "sourceNote": "Ships at Private; ECW and Maine at War identify Haley as Pvt./private, Co. I, 17th Maine; NPS places the regiment in de Trobriand/Birney/III Corps; the Haley journal index and UNE page anchor his Gettysburg experience. No corporal-at-Gettysburg claim. No portrait asset. Ratings Inferred.",
       "bio": "John W. Haley of Saco, Maine, served in Company I of the 17th Maine Infantry. At Gettysburg his regiment stood in de Trobriand's Brigade, Birney's First Division, III Corps, and fought in the Wheatfield sector of the exposed III Corps salient. Haley's journal, later edited as The Rebel Yell and the Yankee Hurrah, gives a private soldier's view of the campaign: hunger on the march, hurried movement toward Gettysburg, and the confusion around de Trobriand and Birney as the 17th Maine held the line. This replacement fills the open Birney's Division private slot without asserting a Gettysburg corporal rank, portrait asset, or sourced ratings."
+    },
+    {
+      "pid": "person_chickamauga_cs_johnson_gap",
+      "replacePid": "ss:chickamauga:CS:cs_johnson_gap:cmd",
+      "name": "Bushrod R. Johnson",
+      "side": "CS",
+      "rank": "Brig. Gen.",
+      "branch": "inf",
+      "role": "division commander",
+      "year": 1863,
+      "provenance": "Verified",
+      "team": {
+        "side": "CS",
+        "army": "Army of Tennessee",
+        "corps": "Longstreet's Left Wing / Hood's Corps",
+        "division": "Johnson's Provisional Division",
+        "brigade": "Johnson's Division - the spearhead",
+        "regiment": "",
+        "company": ""
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Bushrod Johnson",
+          "author": "National Park Service",
+          "repository": "U.S. National Park Service",
+          "locator": "Biography, Civil War service paragraphs",
+          "url": "https://www.nps.gov/people/bushrod-johnson.htm",
+          "type": "secondary",
+          "note": "Identifies Johnson's promotion to brigadier general in January 1862 and his Western Theater service including Chickamauga."
+        },
+        {
+          "title": "Staff Ride Handbook for the Battle of Chickamauga, 18-20 September 1863",
+          "author": "William Glenn Robertson and others",
+          "repository": "U.S. Army Center of Military History / Army University Press",
+          "locator": "Stand 21 and Confederate OOB appendix, pp. 124, 165-167",
+          "url": "https://www.armyupress.army.mil/Portals/7/educational-services/staff-rides/StaffRideHB_Chickamauga.pdf",
+          "type": "secondary",
+          "note": "Places Brig. Gen. Bushrod R. Johnson with Johnson's Provisional Division and describes his division leading Hood's Corps through the Brotherton gap."
+        },
+        {
+          "title": "The Battles for Chickamauga",
+          "author": "National Park Service Civil War Series",
+          "repository": "NPS History",
+          "locator": "September 18-20 narrative, Reed's Bridge and breakthrough sections",
+          "url": "https://npshistory.com/publications/civil_war_series/10/sec3.htm",
+          "type": "secondary",
+          "note": "Describes Brig. Gen. Bushrod Johnson's division at Reed's Bridge and its approach before the main battle."
+        },
+        {
+          "title": "Chickamauga Battle Facts and Summary",
+          "author": "American Battlefield Trust",
+          "repository": "American Battlefield Trust",
+          "locator": "Before the Battle section",
+          "url": "https://www.battlefields.org/learn/civil-war/battles/chickamauga",
+          "type": "secondary",
+          "note": "Identifies Brig. Gen. Bushrod Johnson's Mississippi division reinforcing Bragg before Chickamauga."
+        },
+        {
+          "title": "Bushrod Johnson, Soldier, Educator",
+          "author": "Harry Searles",
+          "repository": "American History Central",
+          "locator": "Chickamauga service paragraphs",
+          "url": "https://www.americanhistorycentral.com/entries/bushrod-rust-johnson/",
+          "type": "secondary",
+          "note": "Summarizes Johnson's provisional division command and the September 20 breakthrough at Chickamauga."
+        }
+      ],
+      "sourceNote": "Ships at Brig. Gen.; NPS verifies that rank before Chickamauga, while the U.S. Army staff ride and NPS/ABT Chickamauga sources place Johnson's provisional division in the Brotherton-gap breakthrough. No major-general-at-Chickamauga claim. No portrait. Ratings Inferred.",
+      "bio": "Bushrod R. Johnson, an Ohio-born former U.S. Army officer and educator, entered Confederate service and was a brigadier general by 1862. At Chickamauga he commanded Johnson's Provisional Division in Longstreet's left wing. On September 20 the division helped lead Hood's column past the Brotherton cabin and into the gap opened by Rosecrans's order to Wood; the breakthrough routed Rosecrans's center but could not destroy Thomas's Horseshoe Ridge stand. This command-row replacement fills the Johnson's Division spearhead slot without turning the generated row into a company command, asserting a later major-general rank, adding a portrait, or assigning sourced ratings."
     }
   ],
   "_template": {
