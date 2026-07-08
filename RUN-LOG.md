@@ -8,6 +8,13 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D314 GROUP 6 TOOLING — consolidated readback now includes source-domain drift posture — 2026-07-08 (D314)
+- **What shipped:** tooling only. `tools/probe-group6-readback.mjs` now runs `tools/probe-historical-source-domains.mjs` and validates source-domain conservative drift posture inside the consolidated Group 6 guard.
+- **Artifact/readback change:** `tools/shots/group6-readback.json` now includes `sourceDomains` with URL item count, unique domains, concentration, invalid URL count, policy readback, and drift pass/reasons; consolidated probe summary now includes source-domain URL/domain counts.
+- **Exact gates run (from `tools/`):** `node --check probe-group6-readback.mjs`; `node build.mjs`; `node probe-group6-readback.mjs`; JSON readback via `tools/shots/probe-group6-readback.json` and `tools/shots/group6-readback.json`; `git diff --check`.
+- **Focused gate/readback:** consolidated probe green **7/7**; build GATE OK with known raw-embed soft warning; source-domain summary reads URL items **152**, unique domains **33**, drift pass `true`, reasons `[]`.
+- **Locks:** readback/tooling only; no gameplay/content/media/combat/runtime/history-data mutation and no lock changes.
+
 ## D313 GROUP 6 TOOLING — historical source-domain conservative drift guard thresholds — 2026-07-08 (D313)
 - **What shipped:** tooling only. `tools/historical-source-domains.mjs` now emits policy threshold readback (`requireZeroInvalidUrls`, `maxTop20ConcentrationPct`, `minUniqueDomains`), and `tools/probe-historical-source-domains.mjs` now enforces those thresholds with explicit pass/fail reasons in probe metrics.
 - **Exact gates run (from `tools/`):** `node --check historical-source-domains.mjs`; `node --check probe-historical-source-domains.mjs`; `node build.mjs`; `node probe-historical-source-domains.mjs`; `node probe-group6-readback.mjs`; JSON readback via `tools/shots/probe-historical-source-domains.json` and `tools/shots/probe-group6-readback.json`; `git diff --check`.

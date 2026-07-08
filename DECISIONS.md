@@ -6,6 +6,18 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D314 — GROUP 6 CONSOLIDATED READBACK: SOURCE-DOMAIN DRIFT GUARD IS NOW INCLUDED IN THE SINGLE GROUP-6 ARTIFACT — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
+
+The next Group 6 tooling slice extends the consolidated readback guard so source-domain drift posture is first-class in the same filesystem-only artifact as media/historical/hotpath.
+
+- **Tooling change:** `tools/probe-group6-readback.mjs` now re-runs `tools/probe-historical-source-domains.mjs` as part of the consolidated guard and validates the embedded drift-policy readback.
+- **Artifact change:** `tools/shots/group6-readback.json` now includes a `sourceDomains` section with URL item count, unique domains, top-domain concentration, invalid URL count, policy thresholds, and drift-guard pass/reasons.
+- **Consolidated probe output:** summary now includes `sourceDomainUrlItems` and `sourceDomainUniqueDomains`.
+- **Focused gate:** `node --check probe-group6-readback.mjs`; `node build.mjs` GATE OK with known raw-embed soft warning; `node probe-group6-readback.mjs` green **7/7**; readback confirms source-domain URL items **152**, unique domains **33**, drift pass `true`, reasons `[]`; `git diff --check` clean.
+- **Policy effect:** tooling-only/readback-only. No gameplay/combat/runtime/media/history-data mutation and no lock changes.
+
+---
+
 ## D313 — GROUP 6 HISTORICAL SOURCE-DOMAIN DRIFT GUARD: CONSERVATIVE POLICY THRESHOLDS ARE NOW ENFORCED WITH EXPLICIT READBACK — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
 
 The next Group 6 tooling slice adds conservative drift-policy enforcement to the historical source-domain guard while staying filesystem-only and readback-first.

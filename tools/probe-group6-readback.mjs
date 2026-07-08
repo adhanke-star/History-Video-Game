@@ -42,6 +42,7 @@ step('component probes are green and artifacts are refreshed', () => {
     const ran = [
         runProbe('tools/probe-media-budget.mjs'),
         runProbe('tools/probe-historical-data-inventory.mjs'),
+        runProbe('tools/probe-historical-source-domains.mjs'),
         runProbe('tools/probe-hotpath-profile.mjs')
     ];
     return { ran };
@@ -49,16 +50,19 @@ step('component probes are green and artifacts are refreshed', () => {
 
 const media = readJson('tools/shots/probe-media-budget.json');
 const historical = readJson('tools/shots/probe-historical-data-inventory.json');
+const sourceDomains = readJson('tools/shots/probe-historical-source-domains.json');
 const hotpath = readJson('tools/shots/probe-hotpath-profile.json');
 const hotpathRaw = readJson('tools/shots/hotpath-profile.json');
 
 step('component artifacts report green status', () => {
     if (!media.ok) throw new Error('probe-media-budget not green');
     if (!historical.ok) throw new Error('probe-historical-data-inventory not green');
+    if (!sourceDomains.ok) throw new Error('probe-historical-source-domains not green');
     if (!hotpath.ok) throw new Error('probe-hotpath-profile not green');
     return {
         media: media.passed + '/' + media.total,
         historical: historical.passed + '/' + historical.total,
+        sourceDomains: sourceDomains.passed + '/' + sourceDomains.total,
         hotpath: hotpath.passed + '/' + hotpath.total
     };
 });
@@ -97,6 +101,35 @@ step('historical-data source inventory remains non-vacuous', () => {
         filesWithSources: m.dataFilesWithSources,
         sourceItems: m.dataSourceItems,
         sourceNotes: m.dataSourceNotes
+    };
+});
+
+step('historical source-domain drift guard remains conservative and explicit', () => {
+    const m = sourceDomains.metrics || {};
+    const drift = m.domainDriftGuard || {};
+    const policy = drift.policy || {};
+    const current = drift.current || {};
+    const reasons = Array.isArray(drift.reasons) ? drift.reasons : [];
+
+    if (drift.pass !== true) throw new Error('source-domain drift guard not green: ' + reasons.join('; '));
+    if (policy.requireZeroInvalidUrls !== true) throw new Error('source-domain policy missing zero-invalid rule');
+    if (Number(policy.maxTop20ConcentrationPct || 0) <= 0) throw new Error('source-domain policy missing max concentration');
+    if (Number(policy.minUniqueDomains || 0) <= 0) throw new Error('source-domain policy missing min unique domains');
+    if (Number(current.invalidUrlItems || 0) !== 0) throw new Error('source-domain invalid URLs not zero');
+    if (Number(current.concentrationTop20Pct || 0) > Number(policy.maxTop20ConcentrationPct || 0)) {
+        throw new Error('source-domain concentration over policy max');
+    }
+    if (Number(current.uniqueDomains || 0) < Number(policy.minUniqueDomains || 0)) {
+        throw new Error('source-domain unique domains below policy floor');
+    }
+
+    return {
+        sourceUrlItems: Number(m.sourceUrlItems || 0),
+        uniqueDomains: Number(current.uniqueDomains || 0),
+        concentrationTop20Pct: Number(current.concentrationTop20Pct || 0),
+        invalidUrlItems: Number(current.invalidUrlItems || 0),
+        maxTop20ConcentrationPct: Number(policy.maxTop20ConcentrationPct || 0),
+        minUniqueDomains: Number(policy.minUniqueDomains || 0)
     };
 });
 
@@ -142,6 +175,14 @@ step('group-6 consolidated artifact is serializable and reusable', () => {
             sourceItems: historical.metrics.dataSourceItems,
             sourceNotes: historical.metrics.dataSourceNotes
         },
+        sourceDomains: {
+            sourceUrlItems: sourceDomains.metrics.sourceUrlItems,
+            uniqueDomains: sourceDomains.metrics.uniqueDomains,
+            concentrationTop20Pct: sourceDomains.metrics.concentrationTop20Pct,
+            invalidUrlItems: sourceDomains.metrics.invalidUrlItems,
+            policyReadback: sourceDomains.policyReadback,
+            driftGuard: sourceDomains.metrics.domainDriftGuard
+        },
         hotpath: {
             files: hotpath.metrics.files,
             lines: hotpath.metrics.lines,
@@ -156,11 +197,14 @@ step('group-6 consolidated artifact is serializable and reusable', () => {
 
     writeFileSync(join(OUT, 'group6-readback.json'), JSON.stringify(summary, null, 2));
     const reread = readJson('tools/shots/group6-readback.json');
-    if (!reread.media || !reread.historical || !reread.hotpath) throw new Error('group6-readback artifact mismatch');
+    if (!reread.media || !reread.historical || !reread.sourceDomains || !reread.hotpath) {
+        throw new Error('group6-readback artifact mismatch');
+    }
     return {
         artifact: 'tools/shots/group6-readback.json',
         rawTier: reread.media.rawTier,
         sourceItems: reread.historical.sourceItems,
+        sourceDomains: reread.sourceDomains.uniqueDomains,
         hotpathFunctions: reread.hotpath.functions
     };
 });
@@ -174,6 +218,8 @@ const out = {
         mediaRawTier: ((media.metrics || {}).policyState || {}).rawTier || null,
         mediaRawMB: ((media.metrics || {}).policyState || {}).rawMB || null,
         historicalSourceItems: ((historical.metrics || {}).dataSourceItems) || 0,
+        sourceDomainUrlItems: ((sourceDomains.metrics || {}).sourceUrlItems) || 0,
+        sourceDomainUniqueDomains: ((sourceDomains.metrics || {}).uniqueDomains) || 0,
         hotpathFunctions: ((hotpath.metrics || {}).functions) || 0,
         hotpathFetchRefs: ((hotpath.metrics || {}).fetchRefs) || 0
     },
