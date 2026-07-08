@@ -1,6 +1,6 @@
 {
   "schema": "cw_media_budget_v1",
-  "schemaVersion": "1.6",
+  "schemaVersion": "1.7",
   "policy": {
     "singleFileCore": true,
     "optionalHdPackForHeavyMedia": true,
@@ -17,6 +17,8 @@
     "sourceOrganizationReadbackRule": "The media-budget probe must emit a compact sourceOrganization summary showing declared core categories, embed/source counts, mirror status, and informative metadata coverage so future gates can read source-tier organization without reverse-engineering each step.",
     "requireSourceInventoryReadback": true,
     "sourceInventoryReadbackRule": "The media-budget probe must emit a compact sourceInventory summary showing same-stem source/embed parity, source-only files, embed-only files, duplicate stems, extensions, and largest embedded file per declared core category so committed source-tier drift is visible while the core media set is frozen.",
+    "requireDeclaredCoreEmbedCategoriesWhileFrozen": true,
+    "declaredCoreEmbedCategoriesWhileFrozenRule": "While raw embeds are above rawEmbedSoftBytes and frozen-core posture is active, every file under assets/embed must belong to a declared core category; undeclared category files fail the probe.",
     "runtimeWebDependency": false,
     "sharedArrayBufferRequired": false,
     "videoEnabledByDefault": false,

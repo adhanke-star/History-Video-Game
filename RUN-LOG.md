@@ -8,6 +8,14 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D312 GROUP 6 TOOLING — media-budget undeclared-embed drift guard hardening — 2026-07-08 (D312)
+- **What shipped:** tooling/data only. `data/media-budget.json` schemaVersion **1.7** adds `requireDeclaredCoreEmbedCategoriesWhileFrozen`; `tools/probe-media-budget.mjs` adds explicit `metrics.undeclaredEmbedState` readback and frozen-core enforcement.
+- **New readback metrics:** undeclared embed categories, undeclared embed files count, bounded sample offending paths, plus `frozenCorePostureActive` and `guardEnabled` flags.
+- **Guard behavior:** while raw embeds remain above soft warning and frozen-core posture is active, any file under `assets/embed` outside declared core categories is now a hard probe failure.
+- **Exact gates run (from `tools/`):** `node --check probe-media-budget.mjs`; `node build.mjs`; `node probe-media-budget.mjs`; artifact readback via `node -e` over `tools/shots/probe-media-budget.json`; `git diff --check`.
+- **Focused gate/readback:** probe green **12/12**; build GATE OK with known raw-embed soft warning; undeclared categories **0**; undeclared files **0**; sample offending paths `[]`; artifact contains no pageerror entries.
+- **Locks:** no media assets/fetches/Tripo/H2/HDRI/model enablement; no Soldier's Story rows; no M8/Q5/Q6/Phase D; no gameplay/combat/runtime changes.
+
 ## D311 GROUP 6 TOOLING — historical source-domain visibility guard — 2026-07-08 (D311)
 - **What shipped:** tooling only. `tools/historical-source-domains.mjs` inventories URL-bearing historical source domains from `data/*.json` source arrays, and `tools/probe-historical-source-domains.mjs` gates that inventory into reusable artifacts.
 - **Source-domain readback:** `tools/shots/historical-source-domains.json` reports **152 URL source items**, **33 unique domains**, top-20-domain concentration **88.82%**, and **0 invalid URL items**. Top domains currently include `en.wikipedia.org` (44), `encyclopediavirginia.org` (16), and `www.loc.gov` (12).

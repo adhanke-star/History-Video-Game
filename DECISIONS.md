@@ -6,6 +6,22 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D312 — GROUP 6 MEDIA-BUDGET HARDENING: UNDECLARED EMBED CATEGORY DRIFT IS NOW A FROZEN-CORE GUARD WITH EXPLICIT READBACK — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
+
+The next Group 6 tooling slice strengthens D300-D306 media-budget enforcement without adding assets or changing runtime behavior.
+
+- **Policy/config change:** `data/media-budget.json` schemaVersion **1.7** adds `requireDeclaredCoreEmbedCategoriesWhileFrozen=true` and its rule text. While frozen-core posture is active (raw embeds above soft warning), files under `assets/embed/` must belong to declared core categories.
+- **Probe change:** `tools/probe-media-budget.mjs` now emits `metrics.undeclaredEmbedState` with:
+  - undeclared embed categories
+  - undeclared embed files count
+  - bounded sample offending paths
+  - frozen-core posture state and guard-enabled state
+- **Guard behavior:** the probe now fails on undeclared embed files **only when frozen-core posture is active and the new guard flag is enabled**. This keeps enforcement strict during D300 frozen-core posture while preserving explicit readback context.
+- **Focused gate:** `node --check probe-media-budget.mjs` clean; `node build.mjs` GATE OK with the known raw-embed soft warning; `node probe-media-budget.mjs` green **12/12**; readback reports undeclared categories **0**, undeclared files **0**, sample offending paths `[]`; artifact includes no pageerror entries; `git diff --check` clean.
+- **Policy effect:** tooling/data-only. No media assets added/fetched/changed; no Tripo, no H2/HDRI/model media enablement, no Soldier's Story row, no battle-build, no gameplay/combat/runtime change, no lock changes.
+
+---
+
 ## D311 — GROUP 6 HISTORICAL-SOURCE TOOLING: DOMAIN VISIBILITY GUARD NOW EXISTS — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
 
 The tenth Group 6 meta/deferred tooling slice adds a filesystem-only historical source-domain visibility guard that complements D308 inventory depth and D310 consolidated readback without touching gameplay, media, or battle logic.

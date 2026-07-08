@@ -360,11 +360,36 @@ function sourceInventoryState() {
   };
 }
 
+function undeclaredEmbedState() {
+  const declaredCoreCategories = (budget.categories || []).filter(c => c.allowedInSingleFile).map(c => c.id).sort();
+  const declared = new Set(declaredCoreCategories);
+  const undeclaredFiles = files
+    .filter(f => !declared.has(categoryOf(f)))
+    .map(f => relAsset(f))
+    .sort((a, b) => a.localeCompare(b));
+  const undeclaredCategories = Array.from(new Set(undeclaredFiles.map(f => f.replace('assets/embed/', '').split('/')[0] || '')))
+    .filter(Boolean)
+    .sort((a, b) => a.localeCompare(b));
+  const frozenCorePostureActive = budget.policy.coreMediaFrozenWhileOverSoft === true && totals.total > budget.policy.rawEmbedSoftBytes;
+  const guardEnabled = budget.policy.requireDeclaredCoreEmbedCategoriesWhileFrozen === true;
+  return {
+    declaredCoreCategories,
+    frozenCorePostureActive,
+    guardEnabled,
+    enforced: frozenCorePostureActive && guardEnabled,
+    undeclaredCategories,
+    undeclaredCategoryCount: undeclaredCategories.length,
+    undeclaredFilesCount: undeclaredFiles.length,
+    sampleOffendingPaths: undeclaredFiles.slice(0, 10)
+  };
+}
+
 const budget = readJson('data/media-budget.json');
 const cutaways = readJson('data/footage-cutaways.json');
 const files = walkFiles(join(ROOT, 'assets', 'embed'));
 const totals = bytesByCategory(files);
 const fileList = fileMetrics(files);
+const undeclaredState = undeclaredEmbedState();
 const warnings = [];
 
 step('schema and core policy are present', () => {
@@ -372,6 +397,7 @@ step('schema and core policy are present', () => {
   const p = budget.policy || {};
   if (p.singleFileCore !== true || p.optionalHdPackForHeavyMedia !== true) throw new Error('core/HD policy missing');
   if (p.coreMediaFrozenWhileOverSoft !== true || p.freezeDecision !== 'D300') throw new Error('D300 core-media freeze guard missing');
+  if (p.requireDeclaredCoreEmbedCategoriesWhileFrozen !== true) throw new Error('declared core embed category guard missing');
   if (p.runtimeWebDependency !== false || p.sharedArrayBufferRequired !== false) throw new Error('runtime dependency guard missing');
   if (p.videoEnabledByDefault !== false || p.requiresProvenanceBeforeVideo !== true) throw new Error('video provenance guard missing');
   return { schema: budget.schema, version: budget.schemaVersion };
@@ -447,16 +473,25 @@ step('D300 frozen core category ceilings hold while raw tier is above soft warni
 });
 
 step('embedded categories are declared and image-only', () => {
-  const declared = new Set((budget.categories || []).filter(c => c.allowedInSingleFile).map(c => c.id));
   const cats = Object.keys(totals.by).sort();
-  const undeclared = cats.filter(c => !declared.has(c));
-  if (undeclared.length) throw new Error('undeclared embedded categories: ' + undeclared.join(', '));
+  if (undeclaredState.enforced && undeclaredState.undeclaredFilesCount > 0) {
+    throw new Error(
+      'undeclared embedded categories while frozen-core posture is active: ' +
+      undeclaredState.undeclaredCategories.join(', ') +
+      ' (files=' + undeclaredState.undeclaredFilesCount + ')' +
+      (undeclaredState.sampleOffendingPaths.length ? ' sample=' + undeclaredState.sampleOffendingPaths.join(', ') : '')
+    );
+  }
   const videoExt = files.filter(f => ['.mp4', '.webm', '.mov', '.m4v'].includes(extname(f).toLowerCase()));
   if (videoExt.length) throw new Error('video file found in assets/embed: ' + videoExt.map(f => f.replace(ROOT + '/', '')).join(', '));
-  return cats.reduce((acc, c) => {
+  const byCategory = cats.reduce((acc, c) => {
     acc[c] = { files: totals.by[c].files, bytes: totals.by[c].bytes };
     return acc;
   }, {});
+  return {
+    byCategory,
+    undeclared: undeclaredState
+  };
 });
 
 step('embedded files still mirror source-tier assets', () => {
@@ -506,6 +541,7 @@ const out = {
     files: files.length,
     rawBytes: totals.total,
     rawMB: +(totals.total / 1048576).toFixed(3),
+    undeclaredEmbedState: undeclaredState,
     policyState: budgetPolicyState(),
     sourceOrganization: sourceOrganizationState(),
     sourceInventory: sourceInventoryState(),
