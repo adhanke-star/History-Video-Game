@@ -6,7 +6,19 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
-## D309 — GROUP 6 HOTPATH TOOLING: STATIC HOTPATH PROFILE READBACK NOW EXISTS — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
+## D311 — GROUP 6 HISTORICAL-SOURCE TOOLING: DOMAIN VISIBILITY GUARD NOW EXISTS — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
+
+The tenth Group 6 meta/deferred tooling slice adds a filesystem-only historical source-domain visibility guard that complements D308 inventory depth and D310 consolidated readback without touching gameplay, media, or battle logic.
+
+- **Tooling change:** new `tools/historical-source-domains.mjs` scans `data/*.json` `sources` arrays, inventories URL-bearing source items, domain distribution, top-domain concentration, per-file URL/source density, invalid URL rows, and writes readback-friendly metrics. New `tools/probe-historical-source-domains.mjs` gates that inventory and writes `tools/shots/historical-source-domains.json` plus `tools/shots/probe-historical-source-domains.json`.
+- **Current readback:** **152 URL source items** across **33 unique domains**, top-20-domain concentration **88.82%**, invalid URLs **0**. Top domains currently include `en.wikipedia.org` (44), `encyclopediavirginia.org` (16), and `www.loc.gov` (12).
+- **Focused gate:** `node --check tools/historical-source-domains.mjs` and `node --check tools/probe-historical-source-domains.mjs` clean; `node tools/build.mjs` GATE OK with known raw-embed soft warning; `node tools/probe-historical-source-domains.mjs` green **4/4**; adjacent `node tools/probe-historical-data-inventory.mjs` green **5/5**; JSON readback inspected both new artifacts and summary stdout; `git diff --check` clean.
+- **Policy effect:** read-only tooling only. No historical claim edits, no source fabrication, no media/asset changes, no network path changes, no combat/balance/gameplay/runtime changes, and no lock changes.
+- **Queue after D311:** this is the fourth post-D307 same-chat Group 6 tooling slice. Stop at the D307 bundle boundary with a fresh continuation prompt unless Aaron explicitly directs another same-chat bundle.
+
+---
+
+## D310 — GROUP 6 TOOLING: CONSOLIDATED READBACK GUARD NOW EXISTS — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
 
 ## D310 — GROUP 6 TOOLING: CONSOLIDATED READBACK GUARD NOW EXISTS — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
 
