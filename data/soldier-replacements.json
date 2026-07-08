@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "decision": "D295",
+    "decision": "D298",
     "schema": "cw_soldier_replacements_v1",
     "scope": "Citation-grade replacements for generated Soldier's Story representative rows.",
     "provenance": "Inferred",
-    "note": "D295 adds the twenty-eighth narrow sourced replacement slice: Taliaferro N. \"Tally\" Simpson, a Corporal of Companies A/B, 3rd South Carolina Infantry, Kershaw's Brigade, McLaws' Division / Longstreet's Corps at Chickamauga, replacing the open Kershaw NCO row. D294 added John Camden West as the twenty-seventh record; D293 added John S. Jackman as the twenty-sixth record; D291 added Giles, Chambers, and Houston; D290 added Benson, Green, and Tunnard; D289 added Stanley, Dooley, and De Castro. Side balance after D295 is 14US/14CS. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
+    "note": "D298 adds the thirty-first narrow sourced replacement slice: John Bell Hood, a Maj. Gen. commanding Hood's Division / Hood's column in Longstreet's Left Wing at Chickamauga, replacing the open Hood's Arriving Brigades command row. D297 added Bushrod R. Johnson as the thirtieth record; D296 added John W. Haley as the twenty-ninth; D295 added Taliaferro N. \"Tally\" Simpson as the twenty-eighth; D294 added John Camden West as the twenty-seventh; D293 added John S. Jackman as the twenty-sixth; D291 added Giles, Chambers, and Houston; D290 added Benson, Green, and Tunnard; D289 added Stanley, Dooley, and De Castro. Side balance after D298 is 15US/16CS. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
   },
   "schema": "cw_soldier_replacements_v1",
   "records": [
@@ -2323,6 +2323,92 @@
       ],
       "sourceNote": "Ships at Brig. Gen.; NPS verifies that rank before Chickamauga, while the U.S. Army staff ride and NPS/ABT Chickamauga sources place Johnson's provisional division in the Brotherton-gap breakthrough. No major-general-at-Chickamauga claim. No portrait. Ratings Inferred.",
       "bio": "Bushrod R. Johnson, an Ohio-born former U.S. Army officer and educator, entered Confederate service and was a brigadier general by 1862. At Chickamauga he commanded Johnson's Provisional Division in Longstreet's left wing. On September 20 the division helped lead Hood's column past the Brotherton cabin and into the gap opened by Rosecrans's order to Wood; the breakthrough routed Rosecrans's center but could not destroy Thomas's Horseshoe Ridge stand. This command-row replacement fills the Johnson's Division spearhead slot without turning the generated row into a company command, asserting a later major-general rank, adding a portrait, or assigning sourced ratings."
+    },
+    {
+      "pid": "person_chickamauga_cs_hood_arrives",
+      "replacePid": "ss:chickamauga:CS:cs_hood_arrives:cmd",
+      "name": "John Bell Hood",
+      "side": "CS",
+      "rank": "Maj. Gen.",
+      "branch": "inf",
+      "role": "division commander",
+      "year": 1863,
+      "provenance": "Verified",
+      "team": {
+        "side": "CS",
+        "army": "Army of Tennessee",
+        "corps": "Longstreet's Left Wing / Hood's Corps",
+        "division": "Hood's Division",
+        "brigade": "Hood's Arriving Brigades",
+        "regiment": "",
+        "company": ""
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "John Bell Hood",
+          "author": "National Park Service",
+          "repository": "U.S. National Park Service",
+          "locator": "Biography, division command and Chickamauga wound paragraphs",
+          "url": "https://www.nps.gov/people/john-bell-hood.htm",
+          "type": "secondary",
+          "note": "Identifies Hood's major-general promotion effective October 10, 1862, his division command under Longstreet, and the Chickamauga wound that cost his right leg."
+        },
+        {
+          "title": "Staff Ride Handbook for the Battle of Chickamauga, 18-20 September 1863",
+          "author": "William Glenn Robertson and others",
+          "repository": "U.S. Army Center of Military History / Army University Press",
+          "locator": "Stand 20-21 and Confederate OOB appendix, pp. 124, 168",
+          "url": "https://www.armyupress.army.mil/Portals/7/educational-services/staff-rides/StaffRideHB_Chickamauga.pdf",
+          "type": "secondary",
+          "note": "Describes Hood's column splitting the Federal army through the Brotherton gap and lists Maj. Gen. John B. Hood over Hood's Division in the Confederate OOB."
+        },
+        {
+          "title": "The Battles for Chickamauga",
+          "author": "National Park Service Civil War Series",
+          "repository": "NPS History",
+          "locator": "September 20 breakthrough narrative",
+          "url": "https://npshistory.com/publications/civil_war_series/10/sec6.htm",
+          "type": "secondary",
+          "note": "Places Law's, formerly Hood's, division behind Johnson and states that Hood handled the three-division column while Longstreet managed the left wing."
+        },
+        {
+          "title": "Chickamauga Battle Facts and Summary",
+          "author": "American Battlefield Trust",
+          "repository": "American Battlefield Trust",
+          "locator": "Before the Battle and September 19-20 narrative",
+          "url": "https://www.battlefields.org/learn/civil-war/battles/chickamauga",
+          "type": "secondary",
+          "note": "Identifies Hood's Virginia divisions reinforcing Bragg before the battle and situates Longstreet's arriving command in the Confederate left wing."
+        },
+        {
+          "title": "John Bell Hood",
+          "author": "American Battlefield Trust",
+          "repository": "American Battlefield Trust",
+          "locator": "Gettysburg-Chickamauga and Atlanta/Franklin paragraphs",
+          "url": "https://www.battlefields.org/learn/biographies/john-bell-hood",
+          "type": "secondary",
+          "note": "Supports Hood's major-general status by 1862, his Gettysburg arm wound, his later Chickamauga leg loss, and the poorer record of his later army command."
+        }
+      ],
+      "sourceNote": "Ships at Maj. Gen.; NPS and ABT support the 1862 major-general rank and Chickamauga leg wound, while the U.S. Army staff ride and NPS Chickamauga narrative place Hood's division/column in Longstreet's September 20 breakthrough. No lieutenant-general-at-Chickamauga claim. No later Atlanta/Franklin command rating claim. No portrait. Ratings Inferred.",
+      "bio": "John Bell Hood reached major general in 1862 and commanded a division in Longstreet's corps before the Chickamauga campaign. At Chickamauga, Hood handled the three-division column behind Johnson's Provisional Division while Longstreet managed Bragg's left wing. The September 20 advance through the Brotherton gap helped split Rosecrans's army, but Hood was wounded so severely that his right leg was amputated, and the Confederate victory still failed to destroy Thomas's Horseshoe Ridge defense or secure Chattanooga. This command-row replacement fills the Hood's Arriving Brigades slot without asserting a lieutenant-general-at-Chickamauga rank, a company command, a portrait asset, or sourced ratings."
     }
   ],
   "_template": {
