@@ -50,6 +50,44 @@ function bytesByCategory(files) {
   }
   return { total, by };
 }
+function relAsset(file) {
+  return file.replace(ROOT + '/', '');
+}
+function fileMetrics(files) {
+  return files.map(f => {
+    const bytes = statSync(f).size;
+    return { path: relAsset(f), category: categoryOf(f), bytes };
+  }).sort((a, b) => b.bytes - a.bytes || a.path.localeCompare(b.path));
+}
+function categoryLimits() {
+  const out = {};
+  for (const c of budget.categories || []) {
+    if (!c.allowedInSingleFile) continue;
+    out[c.id] = {
+      freezeMaxFiles: Number(c.freezeMaxFiles || 0),
+      freezeMaxRawBytes: Number(c.freezeMaxRawBytes || 0)
+    };
+  }
+  return out;
+}
+function categorySummary() {
+  const limits = categoryLimits();
+  const cats = Array.from(new Set(Object.keys(limits).concat(Object.keys(totals.by)))).sort();
+  return cats.reduce((acc, id) => {
+    const actual = totals.by[id] || { files: 0, bytes: 0 };
+    const limit = limits[id] || { freezeMaxFiles: 0, freezeMaxRawBytes: 0 };
+    acc[id] = {
+      files: actual.files,
+      freezeMaxFiles: limit.freezeMaxFiles,
+      fileHeadroom: limit.freezeMaxFiles - actual.files,
+      rawBytes: actual.bytes,
+      freezeMaxRawBytes: limit.freezeMaxRawBytes,
+      rawByteHeadroom: limit.freezeMaxRawBytes - actual.bytes,
+      rawMB: +(actual.bytes / 1048576).toFixed(3)
+    };
+    return acc;
+  }, {});
+}
 function buildBudgetBytes() {
   const txt = readFileSync(join(ROOT, 'tools', 'build.mjs'), 'utf8');
   const get = (name) => {
@@ -65,12 +103,14 @@ const budget = readJson('data/media-budget.json');
 const cutaways = readJson('data/footage-cutaways.json');
 const files = walkFiles(join(ROOT, 'assets', 'embed'));
 const totals = bytesByCategory(files);
+const fileList = fileMetrics(files);
 const warnings = [];
 
 step('schema and core policy are present', () => {
   if (budget.schema !== 'cw_media_budget_v1') throw new Error('bad schema ' + budget.schema);
   const p = budget.policy || {};
   if (p.singleFileCore !== true || p.optionalHdPackForHeavyMedia !== true) throw new Error('core/HD policy missing');
+  if (p.coreMediaFrozenWhileOverSoft !== true || p.freezeDecision !== 'D300') throw new Error('D300 core-media freeze guard missing');
   if (p.runtimeWebDependency !== false || p.sharedArrayBufferRequired !== false) throw new Error('runtime dependency guard missing');
   if (p.videoEnabledByDefault !== false || p.requiresProvenanceBeforeVideo !== true) throw new Error('video provenance guard missing');
   return { schema: budget.schema, version: budget.schemaVersion };
@@ -90,6 +130,22 @@ step('current embedded core stays below hard cap and review warning', () => {
   if (totals.total > budget.policy.rawEmbedSoftBytes) warnings.push('raw embed tier is above the soft warning budget but below hard/review caps');
   if (files.length > budget.policy.maxCoreFiles) throw new Error('too many embedded core files: ' + files.length);
   return { files: files.length, rawBytes: totals.total, rawMB: +(totals.total / 1048576).toFixed(3) };
+});
+
+step('D300 frozen core category ceilings hold while raw tier is above soft warning', () => {
+  const active = budget.policy.coreMediaFrozenWhileOverSoft === true && totals.total > budget.policy.rawEmbedSoftBytes;
+  if (!active) return { active: false };
+  const bad = [];
+  const summary = categorySummary();
+  for (const c of (budget.categories || []).filter(x => x.allowedInSingleFile)) {
+    if (!Number.isFinite(Number(c.freezeMaxFiles)) || Number(c.freezeMaxFiles) < 0) bad.push(c.id + ' missing freezeMaxFiles');
+    if (!Number.isFinite(Number(c.freezeMaxRawBytes)) || Number(c.freezeMaxRawBytes) < 0) bad.push(c.id + ' missing freezeMaxRawBytes');
+    const actual = summary[c.id] || { files: 0, rawBytes: 0 };
+    if (actual.files > Number(c.freezeMaxFiles)) bad.push(c.id + ' files ' + actual.files + ' > freezeMaxFiles ' + c.freezeMaxFiles);
+    if (actual.rawBytes > Number(c.freezeMaxRawBytes)) bad.push(c.id + ' rawBytes ' + actual.rawBytes + ' > freezeMaxRawBytes ' + c.freezeMaxRawBytes);
+  }
+  if (bad.length) throw new Error(bad.join('; '));
+  return { active: true, decision: budget.policy.freezeDecision, categories: summary };
 });
 
 step('embedded categories are declared and image-only', () => {
@@ -138,7 +194,9 @@ const out = {
     files: files.length,
     rawBytes: totals.total,
     rawMB: +(totals.total / 1048576).toFixed(3),
-    categories: totals.by
+    categorySummary: categorySummary(),
+    categories: totals.by,
+    largestFiles: fileList.slice(0, 10)
   },
   steps
 };

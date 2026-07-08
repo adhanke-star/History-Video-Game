@@ -1,9 +1,12 @@
 {
   "schema": "cw_media_budget_v1",
-  "schemaVersion": "1.0",
+  "schemaVersion": "1.1",
   "policy": {
     "singleFileCore": true,
     "optionalHdPackForHeavyMedia": true,
+    "coreMediaFrozenWhileOverSoft": true,
+    "freezeDecision": "D300",
+    "categoryFreezeRule": "While raw embeds are above rawEmbedSoftBytes, each core-embedded category must stay at or below its freezeMaxFiles and freezeMaxRawBytes unless Aaron explicitly reopens the media-budget decision.",
     "runtimeWebDependency": false,
     "sharedArrayBufferRequired": false,
     "videoEnabledByDefault": false,
@@ -36,7 +39,9 @@
       "embedDir": "assets/embed/portraits",
       "role": "Small officer and person badge photos for offline play.",
       "allowedInSingleFile": true,
-      "hdPackCandidate": false
+      "hdPackCandidate": false,
+      "freezeMaxFiles": 156,
+      "freezeMaxRawBytes": 1040819
     },
     {
       "id": "weapons",
@@ -45,7 +50,9 @@
       "embedDir": "assets/embed/weapons",
       "role": "Armory card weapon cutouts.",
       "allowedInSingleFile": true,
-      "hdPackCandidate": false
+      "hdPackCandidate": false,
+      "freezeMaxFiles": 8,
+      "freezeMaxRawBytes": 171858
     },
     {
       "id": "artillery",
@@ -54,7 +61,9 @@
       "embedDir": "assets/embed/artillery",
       "role": "Cannon Corps card images.",
       "allowedInSingleFile": true,
-      "hdPackCandidate": false
+      "hdPackCandidate": false,
+      "freezeMaxFiles": 2,
+      "freezeMaxRawBytes": 53819
     },
     {
       "id": "usct",
@@ -63,7 +72,9 @@
       "embedDir": "assets/embed/usct",
       "role": "USCT teaching-card photographs and engravings.",
       "allowedInSingleFile": true,
-      "hdPackCandidate": false
+      "hdPackCandidate": false,
+      "freezeMaxFiles": 7,
+      "freezeMaxRawBytes": 332447
     },
     {
       "id": "leaders",
@@ -72,7 +83,9 @@
       "embedDir": "assets/embed/leaders",
       "role": "Codex People card leader photographs.",
       "allowedInSingleFile": true,
-      "hdPackCandidate": false
+      "hdPackCandidate": false,
+      "freezeMaxFiles": 20,
+      "freezeMaxRawBytes": 641050
     },
     {
       "id": "scenes",
@@ -81,7 +94,9 @@
       "embedDir": "assets/embed/scenes",
       "role": "Pre-battle briefing scene photographs and H2 still fallback imagery.",
       "allowedInSingleFile": true,
-      "hdPackCandidate": false
+      "hdPackCandidate": false,
+      "freezeMaxFiles": 6,
+      "freezeMaxRawBytes": 295470
     },
     {
       "id": "h2-footage",

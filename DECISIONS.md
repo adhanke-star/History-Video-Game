@@ -6,6 +6,18 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D301 — GROUP 6 MEDIA-BUDGET TOOLING: D300 CORE-FREEZE CATEGORY CEILINGS ARE NOW EXECUTABLE — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
+
+The first Group 6 meta/deferred tooling slice strengthens the embedded-media budget gate without adding assets or changing gameplay. `data/media-budget.json` is now schemaVersion 1.1 and records the D300 freeze as executable policy: while raw embeds remain above the soft warning, each core-embedded category must stay at or below its D300 file count and raw-byte ceiling unless Aaron explicitly reopens the media-budget decision.
+
+- **Tooling change:** `tools/probe-media-budget.mjs` now enforces the per-category freeze ceilings when the raw tier is above `rawEmbedSoftBytes`, and its JSON artifact reports per-category headroom plus the ten largest embedded files. This makes accidental category growth red before the aggregate hard cap is the only signal.
+- **Frozen ceilings captured:** portraits **156 / 1,040,819 bytes**, weapons **8 / 171,858 bytes**, artillery **2 / 53,819 bytes**, USCT **7 / 332,447 bytes**, leaders **20 / 641,050 bytes**, scenes **6 / 295,470 bytes**.
+- **Focused gate:** `node --check tools/probe-media-budget.mjs` clean; `node tools/build.mjs` GATE OK with the known raw-embed soft warning; strengthened `node tools/probe-media-budget.mjs` green **7/7**, still **199 files / 2.418 MB raw**, D300 freeze active, all category file/byte headroom **0**, warnings=1 for the known soft-warning state; JSON readback inspected; `git diff --check` clean.
+- **Policy effect:** no media assets were added, fetched, compressed, removed, or regenerated. H2 footage, HDRI/model media, optional pack work, Tripo, Soldier's Story replacement rows, M8/Q5/Q6, and Phase D remain locked/deferred exactly as D300/D299 specify.
+- **Queue after D301:** continue Priority 1 Group 6 with another small gateable tooling slice: reusable historical-data layer, source organization, hotpath profiling, or another media-budget reporting/guard improvement. Do not reopen Phase H media or pick a Soldier's Story slice unless Aaron explicitly changes the queue.
+
+---
+
 ## D300 — MEDIA-BUDGET/PROFILE DECISION: CORE MEDIA FROZEN; PD STILL ASSETS FROZEN; H2/HDRI/MODEL MEDIA DISABLED — [AARON, adopts recommended conservative path] (2026-07-08)
 
 Aaron adopted all three recommended media-budget/profile choices after the D299 checkpoint. The current self-contained core remains the product path, with no new embedded media exception while the raw embed tier is above the soft warning. Public-domain still-image / surviving-colours asset work remains frozen for now. H2 moving footage, HDRI, and model-media paths remain disabled rather than piloted or broadly enabled.
