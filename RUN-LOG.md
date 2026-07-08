@@ -8,6 +8,13 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D308 GROUP 6 HISTORICAL-DATA TOOLING — reusable source inventory artifact — 2026-07-08 (D308)
+- **What shipped:** tooling only. `tools/historical-data-inventory.mjs` builds a reusable read-only inventory over the canonical `HISTORICAL-DATA*.md` docs and every `data/*.json` file; `tools/probe-historical-data-inventory.mjs` gates it and writes `tools/shots/probe-historical-data-inventory.json`.
+- **Inventory readback:** 4 canonical historical docs, 2,202 markdown lines, 10 source headings, 10 key-fact tables, 146 `Verified` mentions, 29 `Inferred` mentions, 39 data files, 35 data files with source fields, 592 source fields, 1,559 source items, and 675 source notes.
+- **Focused gate:** `node --check tools/historical-data-inventory.mjs` and `node --check tools/probe-historical-data-inventory.mjs` clean; `node tools/build.mjs` GATE OK with the known raw-embed soft warning; historical-data inventory probe **5/5**; adjacent `probe-primary-sources` green **14 steps, 0 pageerrors**; JSON readback clean; `git diff --check` clean.
+- **Locks:** no historical claim changed, no data/content/media asset added, no H2 footage or HDRI/model path enabled, no Tripo action, no Soldier's Story row, no battle-build, and no Phase D work.
+- **NEXT:** continue the D307 same-chat Group 6 bundle with hotpath profiling/readback or another low-blast-radius source/budget reporting guard. M8/Q5/Q6 locked; Phase D deferred; Phase H media additions remain frozen unless Aaron explicitly reopens D300.
+
 ## D307 OPERATING MODEL — same-chat execution bundles for safe homogeneous queues — 2026-07-08 (D307)
 - **What changed:** docs/instructions only. Aaron directed that runs should include more tasks and stop less often. D307 updates D171: safe homogeneous queues should run as same-chat execution bundles instead of stopping after every tiny slice.
 - **New default:** for Group 6-style tooling/reporting queues, ship 2-4 small slices in one chat when the work stays low-risk and already cleared.

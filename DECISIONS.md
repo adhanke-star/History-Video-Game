@@ -6,6 +6,18 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D308 — GROUP 6 HISTORICAL-DATA TOOLING: REUSABLE SOURCE INVENTORY ARTIFACT NOW EXISTS — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
+
+The seventh Group 6 meta/deferred tooling slice adds a reusable, read-only historical-data/source inventory layer without changing gameplay, data, media, or build injection. `tools/historical-data-inventory.mjs` scans the canonical `HISTORICAL-DATA*.md` docs plus every `data/*.json` file, and `tools/probe-historical-data-inventory.mjs` turns that scan into a focused gate and JSON artifacts.
+
+- **Tooling change:** the inventory module writes `tools/shots/historical-data-inventory.json` and the probe writes `tools/shots/probe-historical-data-inventory.json`. The artifact reports canonical historical-doc coverage, companion data links, markdown confidence/source signals, JSON `sources` fields, `sourceNote` density, and files with source-bearing machine-readable content.
+- **Current readback:** 4 canonical historical docs, 2,202 markdown lines, 10 source headings, 10 key-fact tables, 146 `Verified` mentions, 29 `Inferred` mentions, 39 data files, 35 data files with source fields, 592 source fields, 1,559 source items, and 675 source notes.
+- **Focused gate:** `node --check tools/historical-data-inventory.mjs` and `node --check tools/probe-historical-data-inventory.mjs` clean; `node tools/build.mjs` GATE OK with the known raw-embed soft warning; `node tools/probe-historical-data-inventory.mjs` green **5/5**; adjacent `node tools/probe-primary-sources.mjs` green **14 steps, 0 pageerrors**; JSON readback inspected both new artifacts; `git diff --check` clean.
+- **Policy effect:** read-only tooling only. No historical claim was changed, no source was newly asserted, no media assets were added/fetched/reclassified, no H2/HDRI/model path was enabled, no Tripo action occurred, no Soldier's Story row was picked, no battle-build started, and Phase D remains deferred.
+- **Queue after D308:** continue the D307 same-chat Group 6 bundle with hotpath profiling/readback or another low-blast-radius budget/source reporting guard. Do not reopen Phase H media or pick a Soldier's Story slice unless Aaron explicitly changes the queue.
+
+---
+
 ## D307 — OPERATING MODEL: SAFE HOMOGENEOUS QUEUES SHOULD RUN AS SAME-CHAT EXECUTION BUNDLES — [AARON directive, docs-only instruction update] (2026-07-08)
 
 Aaron directed that current runs stop too often and should include more tasks. Going forward, the D171 fresh-chat boundary remains a guard against unsafe cross-group/context drift, but it no longer means every tiny safe slice gets its own handoff.
