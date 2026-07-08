@@ -6,6 +6,21 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D317 — GROUP 6 CONSOLIDATED ARTIFACT FRESHNESS/COHERENCE GUARD: COMPONENT READBACKS MUST BE FROM THE CURRENT RUN WINDOW — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
+
+The fourth bundle slice adds explicit freshness/coherence enforcement to the consolidated Group 6 readback.
+
+- **Tooling change:** `tools/probe-group6-readback.mjs` now checks component artifact mtimes and fails if artifacts are stale relative to run start or drift outside a bounded coherence window.
+- **Guard specifics:**
+  - freshness: component artifacts must be generated in the current run window
+  - coherence: component artifact mtime spread must stay within `120000ms`
+  - readback: consolidated probe summary now includes `runStartedAt`
+- **Current readback:** freshness/coherence step green; mtime drift **1209ms** across all required component artifacts.
+- **Focused gate:** `node --check probe-group6-readback.mjs`; `node build.mjs` GATE OK with known raw-embed soft warning; `node probe-group6-readback.mjs` green **8/8**; JSON readback inspected for freshness detail; `git diff --check` clean.
+- **Policy effect:** tooling/readback only. No gameplay/combat/runtime/media/history-data mutation and no lock changes.
+
+---
+
 ## D316 — GROUP 6 HISTORICAL SOURCE-DOMAIN PER-FILE CONCENTRATION GUARD: INDEX-AWARE DRIFT POLICY IS NOW ENFORCED — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
 
 The next Group 6 tooling slice adds per-file concentration drift checks while honoring the current canonical source-domain index layout.

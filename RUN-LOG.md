@@ -8,6 +8,13 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D317 GROUP 6 TOOLING — consolidated artifact freshness/coherence guard — 2026-07-08 (D317)
+- **What shipped:** tooling only. `tools/probe-group6-readback.mjs` now enforces component artifact freshness/coherence by checking required artifact mtimes against run start and a bounded coherence window.
+- **Exact gates run (from `tools/`):** `node --check probe-group6-readback.mjs`; `node build.mjs`; `node probe-group6-readback.mjs`; JSON readback via `tools/shots/probe-group6-readback.json`; `git diff --check`.
+- **Focused gate/readback:** consolidated probe green **8/8**; build GATE OK with known raw-embed soft warning; freshness step green with coherence window **120000ms** and observed artifact drift **1209ms**; summary includes `runStartedAt`.
+- **Locks:** readback/tooling only; no gameplay/content/media/combat/runtime/history-data mutation and no lock changes.
+- **Bundle status:** D314-D317 same-chat Group 6 bundle completed green with per-slice docs sync and commit/push after each slice.
+
 ## D316 GROUP 6 TOOLING — historical source-domain per-file concentration guard (index-aware) — 2026-07-08 (D316)
 - **What shipped:** tooling only. `tools/historical-source-domains.mjs` and `tools/probe-historical-source-domains.mjs` now include index-aware per-file concentration policy/readback: overall single-file share and non-index single-file share thresholds with explicit top-file readback.
 - **Exact gates run (from `tools/`):** `node --check historical-source-domains.mjs`; `node --check probe-historical-source-domains.mjs`; `node build.mjs`; `node probe-historical-source-domains.mjs`; `node probe-group6-readback.mjs`; JSON readback via `tools/shots/probe-historical-source-domains.json` and consolidated readback artifacts; `git diff --check`.

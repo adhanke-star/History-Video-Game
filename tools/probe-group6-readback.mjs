@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Consolidated filesystem-only readback guard for Group 6 source/budget tooling.
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync, statSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
@@ -8,6 +8,8 @@ import { spawnSync } from 'node:child_process';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const OUT = join(__dirname, 'shots');
+const RUN_STARTED_AT = Date.now();
+const ARTIFACT_COHERENCE_WINDOW_MS = 120000;
 mkdirSync(OUT, { recursive: true });
 
 const steps = [];
@@ -36,6 +38,10 @@ function runProbe(relPath) {
 
 function readJson(relPath) {
     return JSON.parse(readFileSync(join(ROOT, relPath), 'utf8'));
+}
+
+function artifactMtime(relPath) {
+    return statSync(join(ROOT, relPath)).mtimeMs;
 }
 
 step('component probes are green and artifacts are refreshed', () => {
@@ -209,6 +215,33 @@ step('group-6 consolidated artifact is serializable and reusable', () => {
     };
 });
 
+step('group-6 component artifacts are fresh and time-coherent', () => {
+    const artifacts = [
+        'tools/shots/probe-media-budget.json',
+        'tools/shots/probe-historical-data-inventory.json',
+        'tools/shots/probe-historical-source-domains.json',
+        'tools/shots/probe-hotpath-profile.json',
+        'tools/shots/historical-source-domains.json',
+        'tools/shots/hotpath-profile.json',
+        'tools/shots/group6-readback.json'
+    ];
+    const rows = artifacts.map(path => ({ path, mtimeMs: artifactMtime(path) }));
+    const min = Math.min.apply(null, rows.map(r => r.mtimeMs));
+    const max = Math.max.apply(null, rows.map(r => r.mtimeMs));
+    const driftMs = Math.round(max - min);
+    const stale = rows.filter(r => r.mtimeMs + 2000 < RUN_STARTED_AT).map(r => r.path);
+    if (stale.length) throw new Error('stale artifacts from earlier run: ' + stale.join(', '));
+    if (driftMs > ARTIFACT_COHERENCE_WINDOW_MS) {
+        throw new Error('artifact mtime drift too wide: ' + driftMs + 'ms (max ' + ARTIFACT_COHERENCE_WINDOW_MS + 'ms)');
+    }
+    return {
+        runStartedAt: new Date(RUN_STARTED_AT).toISOString(),
+        coherenceWindowMs: ARTIFACT_COHERENCE_WINDOW_MS,
+        driftMs,
+        artifacts: rows.map(r => ({ path: r.path, mtimeIso: new Date(r.mtimeMs).toISOString() }))
+    };
+});
+
 const ok = steps.every(s => s.ok);
 const out = {
     ok,
@@ -221,7 +254,8 @@ const out = {
         sourceDomainUrlItems: ((sourceDomains.metrics || {}).sourceUrlItems) || 0,
         sourceDomainUniqueDomains: ((sourceDomains.metrics || {}).uniqueDomains) || 0,
         hotpathFunctions: ((hotpath.metrics || {}).functions) || 0,
-        hotpathFetchRefs: ((hotpath.metrics || {}).fetchRefs) || 0
+        hotpathFetchRefs: ((hotpath.metrics || {}).fetchRefs) || 0,
+        runStartedAt: new Date(RUN_STARTED_AT).toISOString()
     },
     steps
 };
