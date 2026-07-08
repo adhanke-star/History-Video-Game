@@ -26,11 +26,13 @@ These rules apply to Codex, Claude, Cline, DeepSeek, and any other model impleme
 
 ## 2 · STATE AS OF THIS HANDOFF (live head — see the refresh line below; the stale "run i" epoch label was corrected in D236, ledger item S38)
 
-> **LIVE REFRESH (2026-07-07 D294): read `HANDOFF.md` top block first.** D294 shipped John Camden West as the twenty-seventh citation-grade Soldier's Story replacement, mapped to the Chickamauga / 4th Texas / Robertson's Texas Brigade private slot beside D291's Val C. Giles NCO row. Lane status: 27 `Verified` records, side balance **14US/13CS**, women/support figures still in the separate lane. D292 completed the batch/release no-regression checkpoint after D284-D291, so current active work remains another bounded Priority-1 Soldier's Story slice, preferably Western/CS where the source trail and slot fit are exact. Phase H media additions, M8, Q5/Q6, and the last battle queue remain locked behind explicit Aaron decisions.
+> **LIVE REFRESH (2026-07-08 D295): read `HANDOFF.md` top block first.** D295 shipped Taliaferro N. "Tally" Simpson as the twenty-eighth citation-grade Soldier's Story replacement, mapped to the Chickamauga / 3rd South Carolina / Kershaw's Brigade NCO slot. Lane status: 28 `Verified` records, side balance **14US/14CS**, women/support figures still in the separate lane. D292 completed the batch/release no-regression checkpoint after D284-D291, so current active work remains another bounded Priority-1 Soldier's Story slice; Western/CS remains useful only where the source trail and slot fit are exact. Phase H media additions, M8, Q5/Q6, and the last battle queue remain locked behind explicit Aaron decisions.
 
-> **SUPERSEDED PRIOR REFRESH (2026-07-07 D293):** John S. Jackman shipped as the twenty-sixth Soldier's Story replacement. Kept as historical context; use the D294 refresh above plus `HANDOFF.md` for the live state and next task.
+> **SUPERSEDED PRIOR REFRESH (2026-07-07 D294):** John Camden West shipped as the twenty-seventh Soldier's Story replacement. Kept as historical context; use the D295 refresh above plus `HANDOFF.md` for the live state and next task.
 
-> **SUPERSEDED PRIOR REFRESH (2026-07-05 D275):** E54 pocket-collapse capture semantics and the remaining E47 Shiloh/Gettysburg flips are live. Kept as historical context; use the D294 refresh above plus `HANDOFF.md` for the live state and next task.
+> **SUPERSEDED PRIOR REFRESH (2026-07-07 D293):** John S. Jackman shipped as the twenty-sixth Soldier's Story replacement. Kept as historical context; use the D295 refresh above plus `HANDOFF.md` for the live state and next task.
+
+> **SUPERSEDED PRIOR REFRESH (2026-07-05 D275):** E54 pocket-collapse capture semantics and the remaining E47 Shiloh/Gettysburg flips are live. Kept as historical context; use the D295 refresh above plus `HANDOFF.md` for the live state and next task.
 
 > **PRIOR CLOSE-OUT REFRESH (2026-07-03 D236):** the FABLE-AUDIT run-1 IMPROVE loop (D224 ledger → D225-D236 fix milestones; standing ledger in `REVIEW-QUEUE.md`) was the active work, and D222 was the playable-CONTENT head. The D222 paragraph below is the last full prose refresh and stays accurate as historical context.
 

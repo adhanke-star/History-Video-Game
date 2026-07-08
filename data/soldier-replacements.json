@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "decision": "D294",
+    "decision": "D295",
     "schema": "cw_soldier_replacements_v1",
     "scope": "Citation-grade replacements for generated Soldier's Story representative rows.",
     "provenance": "Inferred",
-    "note": "D294 adds the twenty-seventh narrow sourced replacement slice: John Camden West, a Private of Company E, 4th Texas Infantry, Robertson's Texas Brigade, Hood's Division (Law commanding) at Chickamauga, replacing the open Law/Hood division private slot beside D291's Val C. Giles NCO row. D293 added John S. Jackman as the twenty-sixth record; D291 added Giles, Chambers, and Houston; D290 added Benson, Green, and Tunnard; D289 added Stanley, Dooley, and De Castro. Side balance after D294 is 14US/13CS. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
+    "note": "D295 adds the twenty-eighth narrow sourced replacement slice: Taliaferro N. \"Tally\" Simpson, a Corporal of Companies A/B, 3rd South Carolina Infantry, Kershaw's Brigade, McLaws' Division / Longstreet's Corps at Chickamauga, replacing the open Kershaw NCO row. D294 added John Camden West as the twenty-seventh record; D293 added John S. Jackman as the twenty-sixth record; D291 added Giles, Chambers, and Houston; D290 added Benson, Green, and Tunnard; D289 added Stanley, Dooley, and De Castro. Side balance after D295 is 14US/14CS. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
   },
   "schema": "cw_soldier_replacements_v1",
   "records": [
@@ -2056,6 +2056,92 @@
       ],
       "sourceNote": "Ships at Private; TSHA verifies West reenlisted in Company E, 4th Texas and fought at Chickamauga; his diary title and Chickamauga letter keep this a private-soldier account; NPS/Wikipedia anchor the 4th Texas in Hood's/Robertson's brigade under Law's Division at Chickamauga. No portrait asset. Ratings Inferred.",
       "bio": "John Camden West, a Texas lawyer who gave up Confederate district-attorney appointments to see field service, reenlisted in Company E of the 4th Texas Infantry in April 1863. At Chickamauga his regiment served in Robertson's Texas Brigade, Hood's Division, with Evander Law commanding the division. His September 24 letter from near Chattanooga described two days of close woods fighting, Company E casualties, and a bayonet handle struck by a bullet after he removed it from his musket. This replacement fills the private slot beside Val C. Giles in the same modeled Law/Hood division without asserting a portrait, company command, or any rank above private."
+    },
+    {
+      "pid": "person_chickamauga_cs_3sc_simpson",
+      "replacePid": "ss:chickamauga:CS:cs_kershaw_rock:nco",
+      "name": "Taliaferro N. \"Tally\" Simpson",
+      "side": "CS",
+      "rank": "Corporal",
+      "branch": "inf",
+      "role": "noncommissioned officer",
+      "year": 1863,
+      "provenance": "Verified",
+      "team": {
+        "side": "CS",
+        "army": "Army of Tennessee (Longstreet's Corps, on loan from the Army of Northern Virginia)",
+        "corps": "Longstreet's Corps (First Corps, ANV)",
+        "division": "McLaws' Division",
+        "brigade": "Kershaw's Brigade",
+        "regiment": "3rd South Carolina Infantry",
+        "company": "Company A / Company B"
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Far, Far from Home: The Wartime Letters of Dick and Tally Simpson",
+          "author": "Richard Wright Simpson and Taliaferro N. Simpson; Guy R. Everson and Edward W. Simpson Jr., editors",
+          "repository": "Oxford University Press / PagePlace preview",
+          "locator": "Introduction and preface preview",
+          "url": "https://api.pageplace.de/preview/DT0400.9780195358735_A23603819/preview-9780195358735_A23603819.pdf",
+          "type": "primary",
+          "note": "Edited wartime letters; identifies Dick and Tally Simpson with the Third South Carolina Volunteers, describes the letters through Chickamauga, and notes Tally was accompanied by enslaved Zion."
+        },
+        {
+          "title": "Richard Wright Simpson (1840-1912)",
+          "author": "Clemson University",
+          "repository": "Clemson University",
+          "locator": "Family and war service paragraph",
+          "url": "https://www.clemson.edu/about/history/bios/richard-simpson.html",
+          "type": "secondary",
+          "note": "Identifies Taliaferro C/N Simpson (1839-1863), says he was killed at the Battle of Chickamauga, and links the brothers' letters to Far, Far from Home."
+        },
+        {
+          "title": "Old Pendleton District Chapter Newsletter, January 2013",
+          "author": "Old Pendleton District Chapter, SC Genealogical Society",
+          "repository": "Old Pendleton District Chapter",
+          "locator": "January 2013 newsletter, Simpson grave note",
+          "url": "https://www.oldpendleton.scgen.org/newsletters/2013/2013-01.pdf",
+          "type": "secondary",
+          "note": "Identifies Cpl. Taliaferro N. Simpson, Companies A and B, 3rd South Carolina Infantry Volunteers, killed during the Battle of Chickamauga."
+        },
+        {
+          "title": "Chickamauga Campaign, Confederate Order of Battle",
+          "author": "Dave Powell / ACWScots",
+          "repository": "ACWScots",
+          "locator": "Longstreet's Corps, McLaws' Division, Kershaw's Brigade",
+          "url": "https://www.acwscots.co.uk/Shotguns/chickamaugaaot.htm",
+          "type": "secondary",
+          "note": "Places the 3rd South Carolina Infantry in Kershaw's Brigade, McLaws' Division, Longstreet's Corps at Chickamauga."
+        },
+        {
+          "title": "The Civil War in the Western Theater 1862: Chickamauga",
+          "author": "National Park Service / Eastern National",
+          "repository": "NPS History",
+          "locator": "Snodgrass / Horseshoe Ridge narrative",
+          "url": "https://npshistory.com/publications/civil_war_series/10/sec7.htm",
+          "type": "secondary",
+          "note": "Places Kershaw's brigade among the Confederate assaults against the Snodgrass/Horseshoe Ridge line at Chickamauga."
+        }
+      ],
+      "sourceNote": "Ships at Corporal; Old Pendleton identifies Simpson as Cpl., Cos. A&B, 3rd S.C. Infantry, killed at Chickamauga; Oxford/Clemson anchor the letters and service; the OOB places the 3rd S.C. in Kershaw/McLaws/Longstreet, and NPS places Kershaw at Horseshoe Ridge. No portrait. Ratings Inferred.",
+      "bio": "Taliaferro N. \"Tally\" Simpson, a Wofford-educated South Carolinian from a slaveholding secessionist family, served in the 3rd South Carolina Infantry. At Chickamauga he was a corporal in Companies A/B, in Kershaw's Brigade of McLaws' Division, Longstreet's Corps; the brigade fought in the attacks around Snodgrass/Horseshoe Ridge, and Simpson was killed during the battle. His letters with his brother Dick survive as Far, Far from Home. They are valuable soldier testimony, but not neutral testimony: the edition notes Tally was accompanied by enslaved Zion, so this record keeps the Confederate enlisted voice tied to slavery rather than romanticized. No portrait is asserted."
     }
   ],
   "_template": {
