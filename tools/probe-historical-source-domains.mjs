@@ -129,6 +129,32 @@ step('domain drift policy guard is within conservative thresholds', () => {
   return driftGuard;
 });
 
+step('policy readback current values match computed stats', () => {
+  const stats = inventory.stats || {};
+  const expected = {
+    invalidUrlItems: Number(stats.invalidUrlItems || 0),
+    concentrationTop20Pct: Number(stats.concentrationTop20Pct || 0),
+    uniqueDomains: Number(stats.uniqueDomains || 0)
+  };
+  const actual = {
+    invalidUrlItems: Number(policy.currentInvalidUrlItems || 0),
+    concentrationTop20Pct: Number(policy.currentConcentrationTop20Pct || 0),
+    uniqueDomains: Number(policy.currentUniqueDomains || 0)
+  };
+
+  if (actual.invalidUrlItems !== expected.invalidUrlItems) {
+    throw new Error('invalid URL readback mismatch: ' + actual.invalidUrlItems + ' vs ' + expected.invalidUrlItems);
+  }
+  if (actual.concentrationTop20Pct !== expected.concentrationTop20Pct) {
+    throw new Error('top20 concentration readback mismatch: ' + actual.concentrationTop20Pct + ' vs ' + expected.concentrationTop20Pct);
+  }
+  if (actual.uniqueDomains !== expected.uniqueDomains) {
+    throw new Error('unique domains readback mismatch: ' + actual.uniqueDomains + ' vs ' + expected.uniqueDomains);
+  }
+
+  return { expected, actual };
+});
+
 step('artifact is serializable and reusable', () => {
   const outFile = join(OUT, 'historical-source-domains.json');
   writeFileSync(outFile, JSON.stringify(inventory, null, 2));

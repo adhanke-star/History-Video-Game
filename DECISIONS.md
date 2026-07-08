@@ -6,6 +6,19 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D319 — GROUP 6 HISTORICAL SOURCE-DOMAIN POLICY READBACK CONSISTENCY GUARD: POLICY CURRENT VALUES MUST MATCH COMPUTED STATS — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
+
+The next Group 6 tooling slice tightens historical source-domain artifact integrity by proving policy readback `current*` fields are internally consistent with computed stats in the same artifact.
+
+- **Tooling change:** `tools/probe-historical-source-domains.mjs` now adds a consistency step that compares:
+  - `policyReadback.currentInvalidUrlItems` vs computed `stats.invalidUrlItems`
+  - `policyReadback.currentConcentrationTop20Pct` vs computed `stats.concentrationTop20Pct`
+  - `policyReadback.currentUniqueDomains` vs computed `stats.uniqueDomains`
+- **Focused gate:** `node --check probe-historical-source-domains.mjs`; `node build.mjs` GATE OK with known raw-embed soft warning; `node probe-historical-source-domains.mjs` green **6/6**; adjacent `node probe-group6-readback.mjs` green **9/9**; adjacent `node probe-media-budget.mjs` green **13/13**; JSON readback inspected (`policyConsistencyStep=true`, URL items **152**, unique domains **33**); `git diff --check` clean.
+- **Policy effect:** tooling/readback only. No gameplay/combat/runtime/media/history-data mutation and no lock changes.
+
+---
+
 ## D318 — GROUP 6 CONSOLIDATED CROSS-ARTIFACT PARITY GUARD: KEY METRICS MUST BE PRESENT AND MUTUALLY COHERENT IN ONE READBACK — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
 
 The next Group 6 tooling slice tightens consolidated readback integrity by asserting cross-artifact key metrics explicitly, not just per-artifact pass/fail and freshness.

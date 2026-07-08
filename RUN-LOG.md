@@ -8,6 +8,12 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D319 GROUP 6 TOOLING — historical source-domain policy-readback consistency guard — 2026-07-08 (D319)
+- **What shipped:** tooling only. `tools/probe-historical-source-domains.mjs` now enforces internal consistency between policy readback `current*` values and computed source-domain stats.
+- **Exact gates run (from `tools/`):** `node --check probe-historical-source-domains.mjs`; `node build.mjs`; `node probe-historical-source-domains.mjs`; `node probe-group6-readback.mjs`; `node probe-media-budget.mjs`; JSON readback via `tools/shots/probe-historical-source-domains.json` and `tools/shots/probe-group6-readback.json`; `git diff --check`.
+- **Focused gate/readback:** source-domain probe green **6/6**; build GATE OK with known raw-embed soft warning; new consistency step green (`policyConsistencyStep=true`) with URL items **152** and unique domains **33**; consolidated Group 6 probe green **9/9**; adjacent media-budget green **13/13**.
+- **Locks:** readback/tooling only; no gameplay/content/media/combat/runtime/history-data mutation and no lock changes.
+
 ## D318 GROUP 6 TOOLING — consolidated cross-artifact parity guard — 2026-07-08 (D318)
 - **What shipped:** tooling only. `tools/probe-group6-readback.mjs` now enforces explicit cross-artifact parity over key counters, requiring the consolidated readback to carry present/positive metrics across media policy, historical source inventory, source-domain inventory, and hotpath profile.
 - **Exact gates run (from `tools/`):** `node --check probe-group6-readback.mjs`; `node build.mjs`; `node probe-group6-readback.mjs`; `node probe-media-budget.mjs`; `node probe-historical-source-domains.mjs`; JSON readback via `tools/shots/probe-group6-readback.json` and `tools/shots/group6-readback.json`; `git diff --check`.
