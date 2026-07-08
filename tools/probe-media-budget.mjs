@@ -195,6 +195,51 @@ function buildBudgetBytes() {
   };
   return { soft: get('EMBED_SOFT'), hard: get('EMBED_HARD') };
 }
+function budgetPolicyState() {
+  const p = budget.policy || {};
+  const summary = categorySummary();
+  const coreCategories = (budget.categories || []).filter(c => c.allowedInSingleFile).map(c => c.id).sort();
+  const softExceeded = totals.total > p.rawEmbedSoftBytes;
+  const reviewExceeded = totals.total > p.currentReviewWarnBytes;
+  const hardExceeded = totals.total > p.rawEmbedHardBytes;
+  const categoryFreezeActive = p.coreMediaFrozenWhileOverSoft === true && softExceeded;
+  const zeroFileHeadroomCategories = coreCategories.filter(id => summary[id] && summary[id].fileHeadroom === 0);
+  const zeroRawByteHeadroomCategories = coreCategories.filter(id => summary[id] && summary[id].rawByteHeadroom === 0);
+  const negativeHeadroomCategories = coreCategories.filter(id => {
+    const row = summary[id] || {};
+    return Number(row.fileHeadroom) < 0 || Number(row.rawByteHeadroom) < 0;
+  });
+  let rawTier = 'under-soft';
+  if (hardExceeded) rawTier = 'over-hard';
+  else if (reviewExceeded) rawTier = 'over-review';
+  else if (softExceeded) rawTier = 'soft-warning';
+  return {
+    rawTier,
+    rawBytes: totals.total,
+    rawMB: +(totals.total / 1048576).toFixed(3),
+    files: files.length,
+    headroom: {
+      softBytes: p.rawEmbedSoftBytes - totals.total,
+      reviewBytes: p.currentReviewWarnBytes - totals.total,
+      hardBytes: p.rawEmbedHardBytes - totals.total,
+      coreFiles: p.maxCoreFiles - files.length
+    },
+    activeGuards: {
+      d300CoreFreeze: categoryFreezeActive,
+      d301CategoryCeilings: categoryFreezeActive,
+      d302SourceMirror: p.requireEmbedSourceMirror === true,
+      d303InformativeMetadata: p.requireInformativeEmbedMetadata === true,
+      h2VideoDisabled: p.videoEnabledByDefault === false,
+      heavyMediaOptionalPack: p.optionalHdPackForHeavyMedia === true
+    },
+    frozenCategories: {
+      total: coreCategories.length,
+      zeroFileHeadroom: zeroFileHeadroomCategories,
+      zeroRawByteHeadroom: zeroRawByteHeadroomCategories,
+      negativeHeadroom: negativeHeadroomCategories
+    }
+  };
+}
 
 const budget = readJson('data/media-budget.json');
 const cutaways = readJson('data/footage-cutaways.json');
@@ -211,6 +256,19 @@ step('schema and core policy are present', () => {
   if (p.runtimeWebDependency !== false || p.sharedArrayBufferRequired !== false) throw new Error('runtime dependency guard missing');
   if (p.videoEnabledByDefault !== false || p.requiresProvenanceBeforeVideo !== true) throw new Error('video provenance guard missing');
   return { schema: budget.schema, version: budget.schemaVersion };
+});
+
+step('media budget policy state readback is explicit', () => {
+  const p = budget.policy || {};
+  if (p.requirePolicyStateReadback !== true) throw new Error('policy-state readback guard missing');
+  const state = budgetPolicyState();
+  if (state.rawTier === 'over-hard' || state.rawTier === 'over-review') throw new Error('raw tier is over review/hard cap: ' + state.rawTier);
+  if (state.rawTier === 'soft-warning' && state.activeGuards.d300CoreFreeze !== true) throw new Error('soft-warning tier without active D300 core freeze');
+  if (state.rawTier === 'soft-warning' && state.activeGuards.d301CategoryCeilings !== true) throw new Error('soft-warning tier without active D301 category ceilings');
+  if (state.activeGuards.d302SourceMirror !== true || state.activeGuards.d303InformativeMetadata !== true) throw new Error('source/metadata guards not active in policy readback');
+  if (state.activeGuards.h2VideoDisabled !== true || state.activeGuards.heavyMediaOptionalPack !== true) throw new Error('heavy-media lock state not active in policy readback');
+  if (state.frozenCategories.negativeHeadroom.length) throw new Error('frozen category over ceiling: ' + state.frozenCategories.negativeHeadroom.join(', '));
+  return state;
 });
 
 step('data budget matches build.mjs hard and soft caps', () => {
@@ -305,6 +363,7 @@ const out = {
     files: files.length,
     rawBytes: totals.total,
     rawMB: +(totals.total / 1048576).toFixed(3),
+    policyState: budgetPolicyState(),
     categorySummary: categorySummary(),
     categories: totals.by,
     largestFiles: fileList.slice(0, 10)

@@ -6,6 +6,18 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D304 — GROUP 6 MEDIA-BUDGET TOOLING: POLICY-STATE READBACK IS NOW EXPLICIT — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
+
+The fourth Group 6 meta/deferred tooling slice improves the media-budget gate's reporting surface without adding assets or changing gameplay. `data/media-budget.json` is now schemaVersion 1.4 and records `requirePolicyStateReadback`, so future gate readers can see the active media policy posture directly from the probe artifact instead of reconstructing it from each individual step.
+
+- **Tooling change:** `tools/probe-media-budget.mjs` now emits `metrics.policyState` and adds a required policy-state readback step. The summary reports raw tier, files/bytes, soft/review/hard/file headroom, active D300/D301/D302/D303 guards, H2/heavy-media lock state, and frozen categories with zero or negative headroom.
+- **Current readback:** raw tier is `soft-warning`, with **199 files / 2.418 MB raw**, **348,121 bytes review headroom**, **610,265 bytes hard headroom**, **61 file headroom**, all D300-D303 guards active, all six core embedded categories at zero file/raw-byte headroom, and no negative category headroom.
+- **Focused gate:** `node --check tools/probe-media-budget.mjs` clean; `node tools/build.mjs` GATE OK with the known raw-embed soft warning; strengthened `node tools/probe-media-budget.mjs` green **10/10**, warnings=1 for the known soft-warning state; JSON readback inspected the new `policyState`; `git diff --check` clean.
+- **Policy effect:** no media assets were added, fetched, compressed, removed, regenerated, or reclassified. H2 footage, HDRI/model media, optional pack work, Tripo, Soldier's Story replacement rows, M8/Q5/Q6, and Phase D remain locked/deferred exactly as D300/D299 specify.
+- **Queue after D304:** continue Priority 1 Group 6 with another small gateable tooling slice: reusable historical-data layer, broader source organization, hotpath profiling, or another low-blast-radius budget/source reporting guard. Do not reopen Phase H media or pick a Soldier's Story slice unless Aaron explicitly changes the queue.
+
+---
+
 ## D303 — GROUP 6 MEDIA-BUDGET TOOLING: INFORMATIVE EMBEDS MUST HAVE COMPLETE CURATED METADATA — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
 
 The third Group 6 meta/deferred tooling slice strengthens the embedded-media budget/source-organization guard without adding assets or changing gameplay. `data/media-budget.json` is now schemaVersion 1.3 and records an informative-media metadata rule: embedded categories that present historical teaching media must declare the source module/object that carries their alt text, caption, and credit metadata.
