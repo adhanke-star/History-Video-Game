@@ -33,6 +33,41 @@ function walkFiles(dir) {
   }
   return out;
 }
+function baseStem(file) {
+  return file.replace(/\.[^.]+$/, '');
+}
+function sourceMirrorSummary() {
+  const categories = (budget.categories || []).filter(c => c.allowedInSingleFile);
+  const detail = {};
+  const bad = [];
+  for (const c of categories) {
+    if (!c.sourceDir || !c.embedDir) {
+      bad.push(c.id + ' missing sourceDir/embedDir');
+      continue;
+    }
+    const embedDir = join(ROOT, c.embedDir);
+    const sourceDir = join(ROOT, c.sourceDir);
+    if (!existsSync(embedDir)) bad.push(c.id + ' missing embedDir ' + c.embedDir);
+    if (!existsSync(sourceDir)) bad.push(c.id + ' missing sourceDir ' + c.sourceDir);
+    const embedFiles = walkFiles(embedDir);
+    const sourceFiles = walkFiles(sourceDir);
+    const sourceStems = new Set(sourceFiles.map(f => baseStem(f.replace(sourceDir + '/', ''))));
+    const missing = [];
+    for (const f of embedFiles) {
+      const rel = f.replace(embedDir + '/', '');
+      if (!sourceStems.has(baseStem(rel))) missing.push(relAsset(f));
+    }
+    if (missing.length) bad.push(c.id + ' orphan embeds without same-stem source: ' + missing.join(', '));
+    detail[c.id] = {
+      sourceDir: c.sourceDir,
+      embedDir: c.embedDir,
+      sourceFiles: sourceFiles.length,
+      embedFiles: embedFiles.length,
+      missingSource: missing
+    };
+  }
+  return { bad, detail };
+}
 function categoryOf(file) {
   const rel = file.replace(join(ROOT, 'assets', 'embed') + '/', '');
   return rel.split('/')[0] || '';
@@ -159,6 +194,13 @@ step('embedded categories are declared and image-only', () => {
     acc[c] = { files: totals.by[c].files, bytes: totals.by[c].bytes };
     return acc;
   }, {});
+});
+
+step('embedded files still mirror source-tier assets', () => {
+  if (budget.policy.requireEmbedSourceMirror !== true) throw new Error('embed/source mirror guard missing');
+  const summary = sourceMirrorSummary();
+  if (summary.bad.length) throw new Error(summary.bad.join('; '));
+  return summary.detail;
 });
 
 step('H2 moving-image slots are still disabled and local-fallback only', () => {

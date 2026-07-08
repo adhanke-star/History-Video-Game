@@ -1,12 +1,14 @@
 {
   "schema": "cw_media_budget_v1",
-  "schemaVersion": "1.1",
+  "schemaVersion": "1.2",
   "policy": {
     "singleFileCore": true,
     "optionalHdPackForHeavyMedia": true,
     "coreMediaFrozenWhileOverSoft": true,
     "freezeDecision": "D300",
     "categoryFreezeRule": "While raw embeds are above rawEmbedSoftBytes, each core-embedded category must stay at or below its freezeMaxFiles and freezeMaxRawBytes unless Aaron explicitly reopens the media-budget decision.",
+    "requireEmbedSourceMirror": true,
+    "embedSourceMirrorRule": "Every file under a declared core assets/embed/<category>/ directory must have a same-stem source file under that category's sourceDir so compressed offline media cannot become orphaned from its provenance/source tier.",
     "runtimeWebDependency": false,
     "sharedArrayBufferRequired": false,
     "videoEnabledByDefault": false,

@@ -6,6 +6,18 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D302 — GROUP 6 MEDIA-BUDGET TOOLING: CORE EMBEDS MUST MIRROR SOURCE-TIER ASSETS — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
+
+The second Group 6 meta/deferred tooling slice strengthens source organization around the embedded-media budget without adding assets or changing gameplay. `data/media-budget.json` is now schemaVersion 1.2 and records the source-mirror guard: every committed offline embed under a declared core `assets/embed/<category>/` directory must have a same-stem source file under that category's `sourceDir`.
+
+- **Tooling change:** `tools/probe-media-budget.mjs` now verifies each core embedded category has declared `sourceDir`/`embedDir` paths, those directories exist, and every embedded file has a same-stem source-tier counterpart. The JSON artifact reports source/embed counts and any missing sources per category.
+- **Why this slice:** D301 froze category counts and bytes while raw embeds remain above the soft warning, but a compressed embed could still become orphaned from its full-source/provenance tier. The D302 mirror guard catches that organizational drift before future media-budget reports become misleading.
+- **Focused gate:** `node --check tools/probe-media-budget.mjs` clean; `node tools/build.mjs` GATE OK with the known raw-embed soft warning; strengthened `node tools/probe-media-budget.mjs` green **8/8**, still **199 files / 2.418 MB raw**, D300 freeze active, all category file/byte headroom **0**, source mirror green for portraits **156/156**, weapons **8/8**, artillery **2/2**, USCT **7/7**, leaders **20/20**, scenes **6/6**, warnings=1 for the known soft-warning state; JSON readback inspected; `git diff --check` clean.
+- **Policy effect:** no media assets were added, fetched, compressed, removed, regenerated, or reclassified. H2 footage, HDRI/model media, optional pack work, Tripo, Soldier's Story replacement rows, M8/Q5/Q6, and Phase D remain locked/deferred exactly as D300/D299 specify.
+- **Queue after D302:** continue Priority 1 Group 6 with another small gateable tooling slice: reusable historical-data layer, source organization, hotpath profiling, or another media-budget reporting/guard improvement. Do not reopen Phase H media or pick a Soldier's Story slice unless Aaron explicitly changes the queue.
+
+---
+
 ## D301 — GROUP 6 MEDIA-BUDGET TOOLING: D300 CORE-FREEZE CATEGORY CEILINGS ARE NOW EXECUTABLE — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
 
 The first Group 6 meta/deferred tooling slice strengthens the embedded-media budget gate without adding assets or changing gameplay. `data/media-budget.json` is now schemaVersion 1.1 and records the D300 freeze as executable policy: while raw embeds remain above the soft warning, each core-embedded category must stay at or below its D300 file count and raw-byte ceiling unless Aaron explicitly reopens the media-budget decision.
