@@ -6,6 +6,19 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D326 — CHATTANOOGA IS NOW A PLAYABLE THREE-PHASE T8 BATTLE — [CODEX GPT-5.5, Group 7 battle-build implementation] (2026-07-08)
+
+D325's source/OOB/rank substrate re-verified clean enough to implement Chattanooga without inventing units, ranks, terrain, or outcome modifiers. D326 ships the runtime battle.
+
+- **Playable shape:** `data/chattanooga.json` adds a three-phase T8 scenario: Orchard Knob / Indian Hill on Nov. 23, Lookout Mountain at the Cravens-house bench below the palisade on Nov. 24, and Missionary Ridge on Nov. 25. Top-level roles are `attacker:"US"` / `defender:"CS"`; Missionary Ridge is the decisive scoreWeight-3 phase.
+- **Historical guardrails:** the battle teaches Lookout as fighting below the summit, Missionary Ridge as base rifle pits plus physical-crest/military-crest confusion, and Cleburne's Tunnel Hill / Ringgold Gap role as teaching and end-note content rather than an unsupported fourth playable phase.
+- **D74 boundary:** no per-battle damage, firepower, casualty, or winner fudge shipped. Outcomes emerge from the existing universal systems plus OOB, terrain, timing, doctrine, artillery gun counts, and phase scoreWeight.
+- **Registry/probes:** Chattanooga is registered after Chickamauga in the tactical menu. `tools/probe-chattanooga.mjs` gates content teeth, rank traps, no-fudge keys, menu/side-choice/interphase/HUD/end-screen behavior, deterministic simulation, historical pattern, and the Missionary Ridge alt-history hinge. Both historical baselines were updated in `tools/probe-tactical-roster.mjs` and `tools/probe-custom-battle-builder.mjs`.
+- **Focused gate:** `node tools/build.mjs` GATE OK with the known raw-embed soft warning; `node --check` clean for touched runtime/probe JS; `probe-chattanooga-plan` **6/6**; `probe-chattanooga` **16/16**; `probe-tactical-roster` **8/8**; `probe-custom-battle-builder` **15/15**; `probe-vicksburg` **18/18**; `probe-chickamauga` **18/18**; all required JSON artifacts read back `ok=true`, **0** failed steps, **0** pageerrors; `git diff --check` clean.
+- **Next:** stop at the D326 battle-build boundary. The next queued battle-build item is the remaining unlocked battle queue, starting with an Atlanta/March planning/spec slice unless Aaron reorders to Franklin/Nashville, USCT, Phase H, Soldier's Story, Phase D, or custom-battle phase authoring.
+
+---
+
 ## D325 — CHATTANOOGA BATTLE-BUILD SPEC AND PROBE SCAFFOLD ARE NOW DURABLE BEFORE IMPLEMENTATION — [CODEX GPT-5.5, Group 7 battle-build planning] (2026-07-08)
 
 D324 unlocked the battle-build lane, but Chattanooga should not be authored straight from scratch notes or memory. D325 creates a durable `docs/design/chattanooga-battle-build-spec.md` packet and a focused filesystem gate, `tools/probe-chattanooga-plan.mjs`, so the next implementation slice starts from source/OOB/rank/terrain traps rather than invented data.

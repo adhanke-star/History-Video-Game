@@ -1,0 +1,345 @@
+{
+  "_comment": "D326 PLAYABLE CHATTANOOGA, November 23-25, 1863. A three-phase T8 battle: Orchard Knob -> Lookout Mountain / Cravens-house bench -> Missionary Ridge. Strengths are brigade/division-scale abstractions marked Inferred; sequence, command roles, principal ground, rank traps, and casualty/capture teaching are Verified against the D325 source packet. Outcomes emerge from OOB, terrain, timing, doctrine, scoreWeight, and existing universal systems only - no per-battle damage/firepower/casualty/winner fudge.",
+  "chattanooga": {
+    "id": "chattanooga",
+    "weather": {
+      "sky": "overcast",
+      "time": "afternoon",
+      "provenance": "Verified/Inferred",
+      "note": "Late-November mountain weather: low cloud and fog defined Lookout Mountain, while Missionary Ridge was fought in clear enough afternoon visibility for the six-gun signal and ridge artillery. The battle abstracts all three days into phase-specific terrain rather than one weather switch.",
+      "sources": [
+        "NPS Civil War Series, The Battles for Chattanooga - Orchard Knob, Lookout Mountain, Missionary Ridge, Ringgold Gap, casualties and captured/missing split",
+        "USASMDC staff ride PDF, The Campaign for Chattanooga - phase sequence, command roles, terrain, and OOB appendix",
+        "American Battlefield Trust, Chattanooga overview and Lookout Mountain map - Orchard Knob reconnaissance in force, Cravens House bench, fog, broad casualties"
+      ]
+    },
+    "name": "Chattanooga - Break the Siege",
+    "date": "November 23-25, 1863",
+    "place": "Chattanooga, Tennessee - Orchard Knob, Lookout Mountain, and Missionary Ridge",
+    "blurb": "Grant arrives after Chickamauga to find the Army of the Cumberland penned inside Chattanooga. The Cracker Line reopens supply; then three days turn the campaign: Thomas takes Orchard Knob, Hooker clears the bench below Lookout Mountain in fog, and Thomas's center surges past its order at the base rifle pits to break Missionary Ridge. Sherman is checked by Cleburne at Tunnel Hill, and Cleburne later saves Bragg's trains at Ringgold Gap, but the siege is broken and Georgia is opened.",
+    "provenance": "Verified (high) for the Nov. 23-25 sequence, Orchard Knob, Lookout Mountain / Cravens House bench, Missionary Ridge, Cleburne at Tunnel Hill and Ringgold Gap, US victory, 40 surrendered/abandoned guns, and Confederate losses dominated by captured/missing. Inferred (medium) for phase-scale strengths, exact positions, and battery groupings. Anti-Lost-Cause frame: Chattanooga is not a Confederate near-miracle undone by fate; it is a Union operational recovery built on logistics, converging armies, terrain reading, Confederate defensive mistakes, and the Army of the Cumberland's agency.",
+    "field": { "w": 1200, "h": 900 },
+    "attacker": "US",
+    "defender": "CS",
+    "defaultFog": false,
+    "timeLimitSec": 230,
+    "holdToWinSec": 74,
+    "menu": {
+      "title": "CHATTANOOGA (1863)",
+      "deck": "The siege reversal - Orchard Knob, Lookout's bench, and Missionary Ridge. Break Bragg's line as the Union, or hold the ridge and keep Chattanooga bottled up.",
+      "aria": "Chattanooga, November 23 to 25, 1863 - a multi-phase Western Theater battle: Orchard Knob, Lookout Mountain, and Missionary Ridge."
+    },
+    "sides": {
+      "heading": "Chattanooga - Take Which Command?",
+      "intro": "November 23-25, 1863 - the siege line around Chattanooga. Three sectors, fought in sequence.",
+      "US": {
+        "title": "Command the Union (Grant / Thomas / Hooker)",
+        "badge": "&#9876; BREAK OUT",
+        "deck": "Turn supply recovery into battlefield momentum: take Orchard Knob, clear Lookout's bench, and let Thomas's center decide the ridge."
+      },
+      "CS": {
+        "title": "Command the Confederacy (Bragg / Hardee / Breckinridge)",
+        "badge": "&#9819; HOLD",
+        "deck": "Keep the siege line intact, delay Hooker and Sherman, and make Missionary Ridge the wall history expected it to be."
+      },
+      "foot": "The other army is commanded by the AI. Three phases play in sequence; the cost carries forward."
+    },
+    "brief": {
+      "attack": "This is the Union reversal after Chickamauga. First seize Orchard Knob, then clear the fog-bound Lookout bench, then cross the open valley and break Missionary Ridge. <b>This is your war:</b> the Army of the Cumberland is not a prop in Grant's story; its center carries the decisive ground.",
+      "defend": "Hold three linked positions: forward rifle pits, the Lookout bench, and the Missionary Ridge line. <b>This is your war:</b> if the center holds, Chattanooga stays under pressure and the campaign for Georgia may never start on Union terms."
+    },
+    "objective": { "x": 600, "z": 350, "r": 150, "name": "the Chattanooga siege line" },
+    "phases": [
+      {
+        "id": "orchard-knob",
+        "name": "Nov 23 - Orchard Knob",
+        "sector": "Fort Wood line, open plain, Confederate forward rifle pits, and Orchard Knob / Indian Hill",
+        "timing": "November 23, 1863 - reconnaissance in force turns into a real attack",
+        "attacker": "US",
+        "defender": "CS",
+        "assaultDoctrine": null,
+        "defaultFog": false,
+        "holdToWinSec": 62,
+        "timeLimitSec": 205,
+        "scoreWeight": 1,
+        "objective": { "x": 600, "z": 345, "r": 135, "name": "Orchard Knob / Indian Hill" },
+        "transition": {
+          "title": "Orchard Knob",
+          "lead": "November 23. Thomas's Army of the Cumberland advances from the Fort Wood line in what begins as a reconnaissance in force. The Confederate forward rifle pits are thinly held; when the blue line keeps moving, Orchard Knob falls and becomes Grant's command post for the next two days."
+        },
+        "terrain": {
+          "hills": [
+            { "name": "Orchard Knob / Indian Hill", "x": 600, "z": 345, "h": 18, "s": 145, "note": "The low hill seized on Nov. 23; Indian Hill is the old name for the same ground, not a separate objective. (Verified)" },
+            { "name": "Missionary Ridge in view", "x": 600, "z": 170, "h": 25, "s": 230, "note": "The main Confederate line east of Orchard Knob. Its apparent strength shaped Grant's next two days. (Verified)" },
+            { "name": "Fort Wood line", "x": 600, "z": 725, "h": 8, "s": 180, "note": "Union works around Chattanooga, the start line for Thomas's advance. (Verified)" }
+          ],
+          "woods": [
+            { "x": 420, "z": 500, "r": 75, "note": "Scattered timber screening the approach but not stopping the advance." },
+            { "x": 780, "z": 500, "r": 75, "note": "Broken ground and farm timber around the forward pits." }
+          ],
+          "walls": [
+            { "x1": 430, "z1": 380, "x2": 770, "z2": 372, "note": "CONFEDERATE FORWARD RIFLE PITS - thinly held works in front of Missionary Ridge. (Verified)" },
+            { "x1": 390, "z1": 700, "x2": 810, "z2": 700, "note": "FORT WOOD START LINE - Union field works from which the demonstration steps off. (Verified concept; inferred placement)" }
+          ],
+          "markers": [
+            { "kind": "road", "name": "Chattanooga Valley road", "path": [[590, 840], [595, 650], [600, 450], [610, 170]], "note": "The open valley axis toward Missionary Ridge. (Verified geography; inferred tactical path)" },
+            { "kind": "label", "name": "Orchard Knob", "x": 600, "z": 345, "note": "Captured by Thomas's men and used by Grant as headquarters on Nov. 24-25. (Verified)" },
+            { "kind": "label", "name": "forward rifle pits", "x": 500, "z": 385, "note": "A skirmish-line position, not the main Missionary Ridge defense." },
+            { "kind": "label", "name": "Fort Wood", "x": 610, "z": 725, "note": "Union siege works around Chattanooga. (Verified)" }
+          ]
+        },
+        "leaders": {
+          "_note": "The phase is deliberately one-sided: the Union attack heavily outnumbers the Confederate outpost, but the main ridge remains ahead.",
+          "US": [
+            { "id": "ld_grant_ok", "name": "Maj. Gen. Ulysses S. Grant", "short": "Grant", "quality": 0.82, "radius": 275, "x": 600, "z": 790, "fate": 3.2, "note": "Major General at Chattanooga; not yet lieutenant general. Grant authorizes the movement and then uses Orchard Knob as a command post. (Verified)" },
+            { "id": "ld_thomas_ok", "name": "Maj. Gen. George H. Thomas", "short": "Thomas", "quality": 0.84, "radius": 285, "attach": "us_wood_ok", "fate": 3.3, "note": "Major General commanding the Army of the Cumberland. His troops seize the knob after weeks of siege. (Verified)" },
+            { "id": "ld_granger_ok", "name": "Maj. Gen. Gordon Granger", "short": "Granger", "quality": 0.72, "radius": 235, "attach": "us_sheridan_ok", "fate": 2.7, "note": "Major General commanding IV Corps. His corps supplies central assault divisions again on Nov. 25. (Verified)" }
+          ],
+          "CS": [
+            { "id": "ld_bragg_ok", "name": "Gen. Braxton Bragg", "short": "Bragg", "quality": 0.54, "radius": 240, "x": 600, "z": 150, "fate": 2.4, "note": "Full Confederate General commanding the Army of Tennessee; removed after the campaign. (Verified)" },
+            { "id": "ld_maney_ok", "name": "Brig. Gen. George Maney", "short": "Maney", "quality": 0.6, "radius": 190, "attach": "cs_forward_pits", "fate": 2.0, "note": "Represents the thin Confederate forward line in front of Missionary Ridge. Brigade-scale assignment is Inferred from the forward-position abstraction." }
+          ]
+        },
+        "supply": {
+          "US": { "x": 600, "z": 855, "name": "Union depot - Chattanooga works" },
+          "CS": { "x": 600, "z": 125, "name": "Confederate ridge road" }
+        },
+        "oob": {
+          "US": [
+            { "id": "us_wood_ok", "name": "Wood's Division, IV Corps", "commander": "Brig. Gen. Thomas J. Wood", "arm": "inf", "weapon": "rifled", "men": 3600, "xp": 3, "x": 560, "z": 760, "facing": 0, "formation": "line", "note": "Part of Thomas's center. Wood later receives the order to take the base rifle pits at Missionary Ridge. (Verified role; Inferred phase strength)" },
+            { "id": "us_sheridan_ok", "name": "Sheridan's Division, IV Corps", "commander": "Maj. Gen. Philip H. Sheridan", "arm": "inf", "weapon": "rifled", "men": 3400, "xp": 3, "x": 680, "z": 770, "facing": 0, "formation": "line", "note": "A Cumberland division moving out from Chattanooga toward the forward works. (Verified presence; Inferred phase strength)" },
+            { "id": "us_ok_battery", "name": "Fort Wood Batteries", "commander": "Army of the Cumberland artillery", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 6, "men": 150, "xp": 2, "x": 610, "z": 710, "facing": 0, "formation": "line", "note": "Field-gun support from the Chattanooga works. Universal gun model: 6 guns. (Inferred grouping)" }
+          ],
+          "CS": [
+            { "id": "cs_forward_pits", "name": "Forward Rifle-Pit Line", "commander": "Army of Tennessee outposts", "arm": "inf", "weapon": "rifled", "men": 1450, "xp": 2, "x": 600, "z": 378, "facing": 3.14159, "formation": "line", "note": "Thin Confederate outpost line overrun on Nov. 23. (Verified event; Inferred composition/strength)" },
+            { "id": "cs_maney_support", "name": "Missionary Ridge Supports", "commander": "Bragg's center", "arm": "inf", "weapon": "rifled", "men": 1500, "xp": 2, "x": 700, "z": 300, "facing": 3.14159, "formation": "line", "note": "Support troops from the main ridge trying to stabilize the forward position. (Inferred)" },
+            { "id": "cs_ok_guns", "name": "Forward Section", "commander": "Confederate artillery", "arm": "art", "weapon": "smooth", "role": "defend", "guns": 4, "men": 105, "xp": 2, "x": 610, "z": 310, "facing": 3.14159, "formation": "line", "note": "A small gun section tied to the forward line, not the full ridge artillery. Universal gun model: 4 guns. (Inferred)" }
+          ]
+        },
+        "reinforcements": [
+          { "id": "us_baird_ok", "side": "US", "atSec": 48, "name": "Baird's Support Line", "commander": "Brig. Gen. Absalom Baird", "arm": "inf", "weapon": "rifled", "men": 2500, "xp": 2, "x": 500, "z": 840, "facing": 0, "formation": "column", "entry": "from Thomas's reserve line", "note": "XIV Corps support moving behind the first line; Baird is a major Missionary Ridge assault division commander on Nov. 25. (Verified role; Inferred timing/strength)" }
+        ],
+        "teaching": {
+          "head": "A reconnaissance became a foothold",
+          "body": "Orchard Knob matters because it changes the geometry. The Union army proves Bragg's center can be touched, takes a forward command post, and begins the psychological reversal after Chickamauga. It is not Sheridan's private seizure and Indian Hill is not a second objective; both names point to the same key hill.",
+          "provenance": "Verified (high) for Orchard Knob / Indian Hill and Grant's headquarters use; exact game strengths inferred."
+        }
+      },
+      {
+        "id": "lookout-mountain",
+        "name": "Nov 24 - Lookout Mountain",
+        "sector": "Lookout Creek crossing, the Cravens-house bench, ravines below the palisade, and the Confederate left",
+        "timing": "November 24, 1863 - morning to early afternoon",
+        "attacker": "US",
+        "defender": "CS",
+        "assaultDoctrine": null,
+        "defaultFog": false,
+        "holdToWinSec": 54,
+        "timeLimitSec": 220,
+        "scoreWeight": 1,
+        "objective": { "x": 610, "z": 345, "r": 140, "name": "the Cravens-house bench below Lookout's palisade" },
+        "transition": {
+          "title": "Lookout Mountain",
+          "lead": "November 24. Hooker does not storm the summit. Geary leads a crossing of Lookout Creek below the Confederate position, turns the weakened bench near the Cravens House in fog, and rolls Walthall and Moore off the mountain shelf."
+        },
+        "terrain": {
+          "hills": [
+            { "name": "Cravens-house bench", "x": 610, "z": 345, "h": 24, "s": 170, "note": "The fought-over shelf below the palisade, not the summit. (Verified)" },
+            { "name": "Lookout palisade / cliff", "x": 610, "z": 215, "h": 38, "s": 210, "note": "The dramatic cliff above the battle; the combat objective is the bench below it. (Verified terrain trap)" },
+            { "name": "Lookout Creek bottom", "x": 590, "z": 665, "h": 4, "s": 150, "note": "Hooker's force crossed below the Confederate position before climbing the slope. (Verified)" }
+          ],
+          "woods": [
+            { "x": 470, "z": 525, "r": 115, "note": "Foggy wooded slope masking Geary's lead division." },
+            { "x": 760, "z": 495, "r": 105, "note": "Ravines and timber that fragment Moore's counterattack." },
+            { "x": 610, "z": 390, "r": 90, "note": "Bench timber and boulders around the Cravens House." }
+          ],
+          "walls": [
+            { "x1": 430, "z1": 365, "x2": 780, "z2": 350, "note": "WALTHALL'S FORWARD LINE - Confederate resistance on the bench around the Cravens House. (Verified role; inferred placement)" },
+            { "x1": 520, "z1": 610, "x2": 700, "z2": 600, "note": "LOOKOUT CREEK CROSSING SCREEN - creek-bottom cover and crossing confusion, not a prepared wall. (Verified concept; inferred placement)" }
+          ],
+          "markers": [
+            { "kind": "road", "name": "bench road toward Point Lookout", "path": [[520, 780], [555, 620], [610, 345], [700, 245]], "note": "Hooker's line moves along the mountain base, not straight up the cliff. (Verified)" },
+            { "kind": "label", "name": "Lookout Creek", "x": 560, "z": 675, "note": "Crossed at 8:30 a.m. by Geary's lead elements in the ABT map account. (Verified)" },
+            { "kind": "label", "name": "Cravens House", "x": 620, "z": 345, "note": "The bench landmark around which Walthall resisted. (Verified)" },
+            { "kind": "label", "name": "palisade above, not the objective", "x": 620, "z": 215, "note": "The famous summit looms over the fight; the fighting is below it. (Verified trap)" }
+          ]
+        },
+        "leaders": {
+          "_note": "Hooker's mixed command is stronger than the thin Confederate left after Walker's withdrawal. Fog and slope make this a lighter-casualty phase, not a summit assault.",
+          "US": [
+            { "id": "ld_hooker_lm", "name": "Maj. Gen. Joseph Hooker", "short": "Hooker", "quality": 0.7, "radius": 255, "x": 570, "z": 760, "fate": 2.7, "note": "Major General commanding the composite Lookout / Rossville force. (Verified)" },
+            { "id": "ld_geary_lm", "name": "Brig. Gen. John W. Geary", "short": "Geary", "quality": 0.72, "radius": 230, "attach": "us_geary_lm", "fate": 2.6, "note": "Geary's division leads the Lookout Creek crossing and climb. (Verified)" },
+            { "id": "ld_osterhaus_lm", "name": "Brig. Gen. Peter J. Osterhaus", "short": "Osterhaus", "quality": 0.68, "radius": 215, "attach": "us_osterhaus_lm", "fate": 2.4, "note": "Brigadier General at the battle; attached to Hooker's command after bridge troubles kept him west of the river. (Verified)" }
+          ],
+          "CS": [
+            { "id": "ld_walthall_lm", "name": "Brig. Gen. Edward Walthall", "short": "Walthall", "quality": 0.66, "radius": 205, "attach": "cs_walthall_lm", "fate": 2.3, "note": "His Mississippi brigade resisted around the Cravens House but was flanked and pushed off. (Verified)" },
+            { "id": "ld_moore_lm", "name": "Brig. Gen. John C. Moore", "short": "Moore", "quality": 0.6, "radius": 195, "attach": "cs_moore_lm", "fate": 2.1, "note": "Moore's brigade counterattacked about 1 p.m. and was checked by crossfire. (Verified)" },
+            { "id": "ld_stevenson_lm", "name": "Maj. Gen. Carter L. Stevenson", "short": "Stevenson", "quality": 0.58, "radius": 210, "x": 700, "z": 240, "fate": 2.2, "note": "Commanded the reduced Lookout Mountain defense after Walker's withdrawal. (Verified)" }
+          ]
+        },
+        "supply": {
+          "US": { "x": 560, "z": 855, "name": "Hooker's trains - Lookout Valley" },
+          "CS": { "x": 720, "z": 150, "name": "Confederate route off Lookout Mountain" }
+        },
+        "oob": {
+          "US": [
+            { "id": "us_geary_lm", "name": "Geary's Division, XII Corps", "commander": "Brig. Gen. John W. Geary", "arm": "inf", "weapon": "rifled", "men": 3600, "xp": 3, "x": 520, "z": 760, "facing": 0, "formation": "line", "note": "Lead division across Lookout Creek and up the slope. (Verified role; Inferred phase strength)" },
+            { "id": "us_osterhaus_lm", "name": "Osterhaus's Division, XV Corps", "commander": "Brig. Gen. Peter J. Osterhaus", "arm": "inf", "weapon": "rifled", "men": 3300, "xp": 3, "x": 680, "z": 775, "facing": 0, "formation": "line", "note": "Part of Hooker's composite force in Lookout Valley. (Verified role; Inferred strength)" },
+            { "id": "us_cruft_lm", "name": "Cruft's Division Detachment", "commander": "Brig. Gen. Charles Cruft", "arm": "inf", "weapon": "rifled", "men": 2500, "xp": 2, "x": 600, "z": 830, "facing": 0, "formation": "column", "note": "Fourth Corps support under Hooker on the Lookout line. (Verified role; Inferred strength)" },
+            { "id": "us_lm_battery", "name": "Lookout Valley Batteries", "commander": "Hooker's artillery", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 4, "men": 100, "xp": 2, "x": 560, "z": 720, "facing": 0, "formation": "line", "note": "Limited artillery support in terrain where fog and slope mattered more than gunnery. Universal gun model: 4 guns. (Inferred)" }
+          ],
+          "CS": [
+            { "id": "cs_walthall_lm", "name": "Walthall's Mississippi Brigade", "commander": "Brig. Gen. Edward Walthall", "arm": "inf", "weapon": "rifled", "men": 1450, "xp": 2, "x": 570, "z": 360, "facing": 3.14159, "formation": "line", "note": "Resisted at the Cravens House before the Union line and foggy flank pressure forced withdrawal. (Verified role; Inferred strength)" },
+            { "id": "cs_moore_lm", "name": "Moore's Brigade", "commander": "Brig. Gen. John C. Moore", "arm": "inf", "weapon": "rifled", "men": 1350, "xp": 2, "x": 705, "z": 330, "facing": 3.14159, "formation": "line", "note": "Counterattacked around 1 p.m. and was stopped by crossfire. (Verified role; Inferred strength)" },
+            { "id": "cs_lm_guns", "name": "Lookout Mountain Guns", "commander": "Confederate artillery", "arm": "art", "weapon": "smooth", "role": "defend", "guns": 2, "men": 60, "xp": 2, "x": 640, "z": 255, "facing": 3.14159, "formation": "line", "note": "Small gun abstraction on the mountain bench; fog and cliff terrain limit the battery. Universal gun model: 2 guns. (Inferred)" }
+          ]
+        },
+        "reinforcements": [
+          { "id": "us_cobham_lm", "side": "US", "atSec": 52, "name": "Cobham's Flanking Line", "commander": "Col. George Cobham", "arm": "inf", "weapon": "rifled", "men": 1800, "xp": 3, "x": 470, "z": 820, "facing": 0, "formation": "column", "entry": "through the fog on the upper slope", "note": "Cobham's Pennsylvanians delivered flanking fire from the upper slope in the ABT map account. (Verified role; Inferred strength/timing)" },
+          { "id": "cs_lookout_rear", "side": "CS", "atSec": 120, "name": "Stevenson's Rear Line", "commander": "Maj. Gen. Carter L. Stevenson", "arm": "inf", "weapon": "rifled", "men": 700, "xp": 1, "x": 690, "z": 210, "facing": 3.14159, "formation": "line", "entry": "falling back toward the mountain road", "note": "A thin rear line trying to cover withdrawal from the bench. (Inferred)" }
+        ],
+        "teaching": {
+          "head": "Not the summit",
+          "body": "The famous 'Battle Above the Clouds' was not a bayonet charge onto Lookout's peak. Hooker's men moved below the position, crossed Lookout Creek, and swept the Cravens-house bench under fog. The light casualty teaching comes from that flank geometry and the weakened Confederate bench, not from any special Chattanooga combat rule.",
+          "provenance": "Verified (high) for Lookout Creek, Geary, Walthall, Moore, Cravens House, fog, and bench-not-summit framing; game strengths inferred."
+        }
+      },
+      {
+        "id": "missionary-ridge",
+        "name": "Nov 25 - Missionary Ridge",
+        "sector": "base rifle pits, open western slope, physical crest, and the center rupture near Bird's Mill Road",
+        "timing": "November 25, 1863 - afternoon, after Sherman is checked at Tunnel Hill",
+        "attacker": "US",
+        "defender": "CS",
+        "assaultDoctrine": null,
+        "defaultFog": false,
+        "holdToWinSec": 54,
+        "timeLimitSec": 240,
+        "scoreWeight": 3,
+        "objective": { "x": 610, "z": 315, "r": 150, "name": "Missionary Ridge crest and base rifle pits" },
+        "transition": {
+          "title": "Missionary Ridge",
+          "lead": "November 25. Sherman is stalled at Tunnel Hill by Cleburne, and Hooker is delayed near Rossville. Grant orders Thomas's center to take only the rifle pits at the base. The men take the pits, find them a death trap under the crest guns, and keep climbing."
+        },
+        "terrain": {
+          "hills": [
+            { "name": "Missionary Ridge physical crest", "x": 610, "z": 300, "h": 34, "s": 230, "note": "The topographic crest where many Confederate works were too far back for effective fire. (Verified)" },
+            { "name": "military-crest blind zone", "x": 615, "z": 395, "h": 18, "s": 170, "note": "The slope's folds gave attackers cover once they left the rifle pits; guns could not depress well enough. (Verified)" },
+            { "name": "open western valley slope", "x": 610, "z": 560, "h": 8, "s": 220, "note": "The exposed ground crossed by Thomas's four divisions before they reached the base. (Verified)" }
+          ],
+          "woods": [
+            { "x": 470, "z": 580, "r": 80, "note": "Timber shelter before the final 300-700 yards of open ground." },
+            { "x": 760, "z": 580, "r": 80, "note": "Valley-edge cover where the line forms before stepping into the open." }
+          ],
+          "walls": [
+            { "x1": 390, "z1": 430, "x2": 825, "z2": 420, "note": "BASE RIFLE PITS - the ordered objective and the death trap that pushes the soldiers uphill. (Verified)" },
+            { "x1": 430, "z1": 300, "x2": 805, "z2": 292, "note": "CREST BREASTWORKS - badly sited near the physical crest, with fields of fire masked by the slope. (Verified)" },
+            { "x1": 540, "z1": 360, "x2": 715, "z2": 350, "note": "BIRD'S MILL ROAD / CENTER RUPTURE - Tucker's brigade sector, guarded as likely rupture point rather than Bate/Tyler first-break certainty. (Verified/Inferred)" }
+          ],
+          "markers": [
+            { "kind": "road", "name": "Bird's Mill Road", "path": [[520, 835], [560, 620], [590, 450], [615, 300]], "note": "Near the likely center rupture where Tucker's brigade broke under Hazen/Willich pressure. (Verified/Inferred)" },
+            { "kind": "label", "name": "base rifle pits", "x": 610, "z": 430, "note": "Grant's order was to take these pits and halt; many men understood or decided otherwise. (Verified)" },
+            { "kind": "label", "name": "physical crest too far back", "x": 610, "z": 292, "note": "The works sat where guns and infantry often could not depress fire onto climbers. (Verified)" },
+            { "kind": "label", "name": "Tunnel Hill / Cleburne holds", "x": 235, "z": 260, "note": "Sherman is checked at the north end; Cleburne's success belongs in the teaching, not this center phase's objective. (Verified)" },
+            { "kind": "label", "name": "Rossville Gap / Hooker delayed", "x": 930, "z": 265, "note": "Hooker comes in from the south after Lookout, while the center breaks first. (Verified)" }
+          ]
+        },
+        "leaders": {
+          "_note": "The decisive center attack. Breckinridge's sector is split between the base and crest; Hardee/Cleburne hold the north but cannot save the center.",
+          "US": [
+            { "id": "ld_thomas_mr", "name": "Maj. Gen. George H. Thomas", "short": "Thomas", "quality": 0.86, "radius": 290, "x": 610, "z": 780, "fate": 3.4, "note": "Major General commanding the Army of the Cumberland. His four center divisions carry the decisive phase. (Verified)" },
+            { "id": "ld_granger_mr", "name": "Maj. Gen. Gordon Granger", "short": "Granger", "quality": 0.75, "radius": 250, "attach": "us_wood_mr", "fate": 2.8, "note": "Major General commanding IV Corps; gives Wood and Sheridan the base-rifle-pit order. (Verified)" },
+            { "id": "ld_palmer_mr", "name": "Maj. Gen. John M. Palmer", "short": "Palmer", "quality": 0.72, "radius": 240, "attach": "us_baird_mr", "fate": 2.7, "note": "Major General commanding XIV Corps parent for Baird and Johnson in the center attack. (Verified)" }
+          ],
+          "CS": [
+            { "id": "ld_breck_mr", "name": "Maj. Gen. John C. Breckinridge", "short": "Breckinridge", "quality": 0.64, "radius": 230, "x": 610, "z": 220, "fate": 2.3, "note": "Major General at Chattanooga, holding the Confederate center and left; do not backdate lieutenant general. (Verified)" },
+            { "id": "ld_hardee_mr", "name": "Lt. Gen. William J. Hardee", "short": "Hardee", "quality": 0.7, "radius": 225, "x": 235, "z": 210, "fate": 2.7, "note": "Lieutenant General commanding the Confederate right / Tunnel Hill sector. His wing's local success under Cleburne does not rescue Breckinridge's center. (Verified)" },
+            { "id": "ld_anderson_mr", "name": "Brig. Gen. J. Patton Anderson", "short": "Anderson", "quality": 0.6, "radius": 205, "attach": "cs_anderson_mr", "fate": 2.1, "note": "Brigadier General at the battle; ordered to split part of his division between base and crest. (Verified)" },
+            { "id": "ld_bate_mr", "name": "Brig. Gen. William B. Bate", "short": "Bate", "quality": 0.6, "radius": 205, "attach": "cs_bate_mr", "fate": 2.1, "note": "Brigadier General at the battle; do not backdate major general. His sector is not asserted as the first break. (Verified)" },
+            { "id": "ld_cleburne_note", "name": "Maj. Gen. Patrick Cleburne", "short": "Cleburne", "quality": 0.82, "radius": 245, "x": 230, "z": 220, "fate": 3.0, "note": "Held Tunnel Hill against Sherman and then Ringgold Gap as rear guard. He is teaching context here, not the center objective. (Verified)" }
+          ]
+        },
+        "supply": {
+          "US": { "x": 610, "z": 855, "name": "Army of the Cumberland ammunition line" },
+          "CS": { "x": 610, "z": 130, "name": "Confederate ridge road / Chickamauga Station route" }
+        },
+        "oob": {
+          "US": [
+            { "id": "us_wood_mr", "name": "Wood's Division, IV Corps", "commander": "Brig. Gen. Thomas J. Wood", "arm": "inf", "weapon": "rifled", "men": 4700, "xp": 3, "x": 540, "z": 780, "facing": 0, "formation": "line", "note": "Wood's division advances on the base rifle pits and keeps climbing. (Verified role; Inferred strength)" },
+            { "id": "us_sheridan_mr", "name": "Sheridan's Division, IV Corps", "commander": "Maj. Gen. Philip H. Sheridan", "arm": "inf", "weapon": "rifled", "men": 4550, "xp": 3, "x": 690, "z": 790, "facing": 0, "formation": "line", "note": "Sheridan's division assaults the center-right and suffers heavily while pushing up the ridge. (Verified role; Inferred strength)" },
+            { "id": "us_baird_mr", "name": "Baird's Division, XIV Corps", "commander": "Brig. Gen. Absalom Baird", "arm": "inf", "weapon": "rifled", "men": 4300, "xp": 3, "x": 420, "z": 790, "facing": 0, "formation": "line", "note": "Baird's division forms on Wood's left in the center attack. (Verified role; Inferred strength)" },
+            { "id": "us_rjohnson_mr", "name": "Richard Johnson's Division, XIV Corps", "commander": "Brig. Gen. Richard W. Johnson", "arm": "inf", "weapon": "rifled", "men": 4200, "xp": 3, "x": 820, "z": 795, "facing": 0, "formation": "line", "note": "Johnson's division attacks on the right of Palmer's XIV Corps contingent. (Verified role; Inferred strength)" },
+            { "id": "us_mr_battery", "name": "Six-Gun Signal Battery", "commander": "Army of the Cumberland artillery", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 6, "men": 150, "xp": 2, "x": 610, "z": 720, "facing": 0, "formation": "line", "note": "The six-gun volley signals the advance. Universal gun model: 6 guns. (Verified signal; Inferred battery grouping)" }
+          ],
+          "CS": [
+            { "id": "cs_anderson_mr", "name": "Anderson's Division Split Line", "commander": "Brig. Gen. J. Patton Anderson", "arm": "inf", "weapon": "rifled", "men": 2600, "xp": 2, "x": 565, "z": 305, "facing": 3.14159, "formation": "line", "note": "Part of Anderson's division split between base and crest, a defensive mistake that leaves no real reserve. (Verified order; Inferred strength)" },
+            { "id": "cs_bate_mr", "name": "Bate's Division Sector", "commander": "Brig. Gen. William B. Bate", "arm": "inf", "weapon": "rifled", "men": 2500, "xp": 2, "x": 725, "z": 305, "facing": 3.14159, "formation": "line", "note": "Bate's sector is under pressure as the center breaks; not asserted as the first rupture. (Verified role; Inferred strength)" },
+            { "id": "cs_tucker_mr", "name": "Tucker's Brigade / Bird's Mill Road", "commander": "Col. William F. Tucker", "arm": "inf", "weapon": "rifled", "men": 1600, "xp": 1, "x": 610, "z": 365, "facing": 3.14159, "formation": "line", "note": "Likely center rupture near Bird's Mill Road; guarded as a likely sector, not overclaimed as a sole first-break fact. (Verified/Inferred)" },
+            { "id": "cs_mr_guns", "name": "Missionary Ridge Batteries", "commander": "Confederate artillery", "arm": "art", "weapon": "smooth", "role": "defend", "guns": 7, "men": 175, "xp": 1, "x": 635, "z": 255, "facing": 3.14159, "formation": "line", "note": "Ridge guns, many too far forward or too widely dispersed to stop climbers once they reached the dead ground. Universal gun model: 7 guns. (Verified problem; Inferred battery grouping)" }
+          ]
+        },
+        "reinforcements": [
+          { "id": "us_hazen_mr", "side": "US", "atSec": 34, "name": "Hazen and Willich's Momentum", "commander": "Brigade commanders in Wood's division", "arm": "inf", "weapon": "rifled", "men": 3100, "xp": 3, "x": 590, "z": 850, "facing": 0, "formation": "column", "entry": "surging from the base rifle pits up the dead ground", "note": "Represents the spontaneous climb after the base pits become untenable. (Verified pattern; Inferred strength)" },
+          { "id": "cs_ridge_reserve_gap", "side": "CS", "atSec": 110, "name": "No Real Reserve", "commander": "Breckinridge's center", "arm": "inf", "weapon": "rifled", "men": 450, "xp": 1, "x": 690, "z": 210, "facing": 3.14159, "formation": "line", "entry": "too small and too late from the ridge road", "note": "Breckinridge's sector had no adequate reserve to plug the center break. (Verified problem; Inferred abstraction)" }
+        ],
+        "teaching": {
+          "head": "The ridge broke because the inputs were wrong",
+          "body": "Missionary Ridge was not captured by a hidden morale script. The Confederate works were split between base and crest, the crest line sat too far back, the guns overshot, the base rifle pits trapped the attackers under canister, and the Army of the Cumberland kept climbing. Cleburne's success at Tunnel Hill matters because it shows the Confederate army was not uniformly incompetent; the center's collapse was a concrete command-and-terrain failure.",
+          "provenance": "Verified (high) for the base-pit order, slope/depression problem, center collapse, Tunnel Hill, and Cleburne/Ringgold teaching; exact game strengths inferred."
+        }
+      }
+    ],
+    "endNote": {
+      "US": {
+        "US": "History holds. Chattanooga is broken open: Orchard Knob becomes the command post, Lookout's bench falls below the clouds, and the Army of the Cumberland carries Missionary Ridge. The city becomes the Union base for the Atlanta campaign.",
+        "CS": "History holds against you. Cleburne checked Sherman at Tunnel Hill and later saved Bragg's trains at Ringgold Gap, but those rear-guard successes could not undo the broken center on Missionary Ridge."
+      },
+      "CS": {
+        "US": "History is overturned. You took Orchard Knob and Lookout, but Missionary Ridge held. Chattanooga remains under pressure, Grant's western reputation stalls, and the road to Georgia is no longer open on Union terms.",
+        "CS": "History is overturned. Your ridge line did what Bragg expected it to do: hold the center while Cleburne checked Sherman. Chattanooga stays bottled up, and the Union breakout has failed."
+      },
+      "draw": "The siege line is bent but not broken. Orchard Knob and Lookout may have shifted the ground, but Missionary Ridge is still contested and the campaign remains unresolved."
+    },
+    "teaching": {
+      "title": "Chattanooga - The Siege Reversed",
+      "cards": [
+        {
+          "id": "ct_logistics",
+          "head": "The Cracker Line made the battle possible",
+          "body": "Chattanooga was a logistics crisis before it was a battlefield triumph. Grant's recovery of supply through the Cracker Line kept the Army of the Cumberland in the city and gave the Union force room to attack. The battle is the payoff of supply, not a disconnected burst of battlefield luck.",
+          "provenance": "Verified (high) - Cracker Line and Chattanooga supply context."
+        },
+        {
+          "id": "ct_cumberland",
+          "head": "The Army of the Cumberland carried the center",
+          "body": "Grant, Sherman, and Hooker all matter, but Missionary Ridge was Thomas's Army of the Cumberland taking the decisive ground after weeks of siege and after Chickamauga's trauma. The game centers that agency rather than reducing the army to an instrument moved by famous commanders.",
+          "provenance": "Verified (high) - Thomas's center assault and Missionary Ridge result."
+        },
+        {
+          "id": "ct_not_summit",
+          "head": "Lookout was fought below the palisade",
+          "body": "The phrase 'Battle Above the Clouds' can mislead. Hooker's men crossed Lookout Creek and cleared the Cravens-house bench in fog; they did not storm the summit as a battlefield objective. Terrain truth matters because otherwise the teaching becomes spectacle.",
+          "provenance": "Verified (high) - Lookout Creek, Cravens House bench, fog, and bench-not-summit framing."
+        },
+        {
+          "id": "ct_cleburne",
+          "head": "Cleburne held, but he could not save Chattanooga",
+          "body": "Patrick Cleburne stopped Sherman at Tunnel Hill and then held Ringgold Gap long enough for Bragg's trains and artillery to escape. That matters: the Confederate army still had capable commanders. But Cleburne's local success did not repair Bragg's broken center or restore the lost state of Tennessee.",
+          "provenance": "Verified (high) - Tunnel Hill and Ringgold Gap."
+        },
+        {
+          "id": "ct_casualties",
+          "head": "Captured men are the casualty lesson",
+          "body": "Chattanooga's Confederate loss total is dominated by captured and missing men. NPS records 6,667 Army of Tennessee losses in the battles for Chattanooga and Ringgold, with 4,146 missing; Grant counted 6,142 prisoners, and 40 guns plus 69 limbers and caissons were surrendered or abandoned. Union killed and wounded were heavier than the raw total-loss comparison implies. That is a rout/collapse signature, not a simple killing contest.",
+          "provenance": "Verified (high) - NPS Civil War Series casualty and captured/missing discussion; ABT gives a broader 13,824 total with 5,824 Union and 8,000 Confederate, so the split is sourced to NPS."
+        }
+      ],
+      "codex": {
+        "id": "codex_chattanooga",
+        "title": "Chattanooga, November 23-25, 1863",
+        "summary": "After Chickamauga, Bragg besieged the Army of the Cumberland in Chattanooga. Grant reopened supply through the Cracker Line, replaced Rosecrans with Thomas, and coordinated a breakout. Thomas seized Orchard Knob on Nov. 23; Hooker cleared the Cravens-house bench below Lookout Mountain on Nov. 24; on Nov. 25 Thomas's center captured the base rifle pits at Missionary Ridge and then climbed to the crest, breaking Bragg's line. Cleburne held Tunnel Hill against Sherman and Ringgold Gap during the retreat, but Chattanooga opened Georgia to the Union.",
+        "axes": { "timeline": "1863", "theater": "Western", "people": ["Grant", "Thomas", "Hooker", "Sherman", "Granger", "Palmer", "Bragg", "Hardee", "Breckinridge", "Cleburne", "Bate", "J. Patton Anderson"], "battle": "Chattanooga" }
+      }
+    }
+  }
+}
