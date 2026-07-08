@@ -10,7 +10,10 @@ const DATA_DIR = join(ROOT, 'data');
 const DOMAIN_DRIFT_POLICY = Object.freeze({
   requireZeroInvalidUrls: true,
   maxTop20ConcentrationPct: 90,
-  minUniqueDomains: 30
+  minUniqueDomains: 30,
+  maxSingleFileUrlSharePct: 100,
+  domainIndexFiles: ['data/press.json'],
+  maxNonIndexFileUrlSharePct: 20
 });
 
 function walkJsonFiles(dir) {
@@ -141,13 +144,38 @@ function scanSourceDomains() {
     invalidUrlItems: badUrls.length
   };
 
+  const byFileSorted = byFile.sort((a, b) => b.sourceUrlItems - a.sourceUrlItems || a.file.localeCompare(b.file));
+  const topFile = byFileSorted[0] || null;
+  const indexSet = new Set((DOMAIN_DRIFT_POLICY.domainIndexFiles || []).map(String));
+  const nonIndexRows = byFileSorted.filter(r => !indexSet.has(String(r.file || '')));
+  const topNonIndexFile = nonIndexRows[0] || null;
+  const maxSingleFileUrlSharePct = sourceUrlItems > 0 && topFile
+    ? +(100 * Number(topFile.sourceUrlItems || 0) / sourceUrlItems).toFixed(2)
+    : 0;
+  const maxNonIndexFileUrlSharePct = sourceUrlItems > 0 && topNonIndexFile
+    ? +(100 * Number(topNonIndexFile.sourceUrlItems || 0) / sourceUrlItems).toFixed(2)
+    : 0;
+
   const policyReadback = {
     requireZeroInvalidUrls: DOMAIN_DRIFT_POLICY.requireZeroInvalidUrls,
     maxTop20ConcentrationPct: DOMAIN_DRIFT_POLICY.maxTop20ConcentrationPct,
     minUniqueDomains: DOMAIN_DRIFT_POLICY.minUniqueDomains,
+    maxSingleFileUrlSharePct: DOMAIN_DRIFT_POLICY.maxSingleFileUrlSharePct,
+    domainIndexFiles: DOMAIN_DRIFT_POLICY.domainIndexFiles,
+    maxNonIndexFileUrlSharePct: DOMAIN_DRIFT_POLICY.maxNonIndexFileUrlSharePct,
     currentInvalidUrlItems: stats.invalidUrlItems,
     currentConcentrationTop20Pct: stats.concentrationTop20Pct,
-    currentUniqueDomains: stats.uniqueDomains
+    currentUniqueDomains: stats.uniqueDomains,
+    currentMaxSingleFileUrlSharePct: maxSingleFileUrlSharePct,
+    currentMaxNonIndexFileUrlSharePct: maxNonIndexFileUrlSharePct,
+    currentTopFileByUrlItems: topFile ? {
+      file: topFile.file,
+      sourceUrlItems: topFile.sourceUrlItems
+    } : null,
+    currentTopNonIndexFileByUrlItems: topNonIndexFile ? {
+      file: topNonIndexFile.file,
+      sourceUrlItems: topNonIndexFile.sourceUrlItems
+    } : null
   };
 
   return {
@@ -155,7 +183,7 @@ function scanSourceDomains() {
     stats,
     policyReadback,
     topDomains,
-    byFile: byFile.sort((a, b) => b.sourceUrlItems - a.sourceUrlItems || a.file.localeCompare(b.file)),
+    byFile: byFileSorted,
     badUrls,
     budgetReadback: {
       // Keep this artifact lightweight but include one filesystem-size signal for context.

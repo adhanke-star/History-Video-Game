@@ -8,6 +8,12 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D316 GROUP 6 TOOLING — historical source-domain per-file concentration guard (index-aware) — 2026-07-08 (D316)
+- **What shipped:** tooling only. `tools/historical-source-domains.mjs` and `tools/probe-historical-source-domains.mjs` now include index-aware per-file concentration policy/readback: overall single-file share and non-index single-file share thresholds with explicit top-file readback.
+- **Exact gates run (from `tools/`):** `node --check historical-source-domains.mjs`; `node --check probe-historical-source-domains.mjs`; `node build.mjs`; `node probe-historical-source-domains.mjs`; `node probe-group6-readback.mjs`; JSON readback via `tools/shots/probe-historical-source-domains.json` and consolidated readback artifacts; `git diff --check`.
+- **Focused gate/readback:** source-domain probe green **5/5**; consolidated Group 6 probe green **7/7**; readback shows top file `data/press.json` at **100%** under index-file allowance, max non-index share **0%** <= **20%**, invalid URLs **0**, concentration **88.82%**, unique domains **33**, drift reasons `[]`.
+- **Locks:** readback/tooling only; no gameplay/content/media/combat/runtime/history-data mutation and no lock changes.
+
 ## D315 GROUP 6 TOOLING — media-budget arithmetic consistency guard — 2026-07-08 (D315)
 - **What shipped:** tooling only. `tools/probe-media-budget.mjs` now emits and enforces `metrics.arithmeticConsistency` so total files/bytes and all headroom math are explicitly verified against recomputed values.
 - **Exact gates run (from `tools/`):** `node --check probe-media-budget.mjs`; `node build.mjs`; `node probe-media-budget.mjs`; JSON readback via `tools/shots/probe-media-budget.json`; `git diff --check`.

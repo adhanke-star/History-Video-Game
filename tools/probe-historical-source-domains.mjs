@@ -40,6 +40,34 @@ if (Number(inventory.stats.uniqueDomains || 0) < Number(policy.minUniqueDomains 
     'unique domains ' + inventory.stats.uniqueDomains + ' below policy floor ' + policy.minUniqueDomains
   );
 }
+if (Number(policy.maxSingleFileUrlSharePct || 0) > 0) {
+  const currentMaxSingleFileUrlSharePct = Number(policy.currentMaxSingleFileUrlSharePct || 0);
+  if (currentMaxSingleFileUrlSharePct > Number(policy.maxSingleFileUrlSharePct || 0)) {
+    const topFile = policy.currentTopFileByUrlItems || null;
+    driftReasons.push(
+      'single-file URL share ' +
+      currentMaxSingleFileUrlSharePct +
+      '% exceeds policy max ' +
+      policy.maxSingleFileUrlSharePct +
+      '%' +
+      (topFile && topFile.file ? ' (file=' + topFile.file + ')' : '')
+    );
+  }
+}
+if (Number(policy.maxNonIndexFileUrlSharePct || 0) > 0) {
+  const currentMaxNonIndexFileUrlSharePct = Number(policy.currentMaxNonIndexFileUrlSharePct || 0);
+  if (currentMaxNonIndexFileUrlSharePct > Number(policy.maxNonIndexFileUrlSharePct || 0)) {
+    const topNonIndexFile = policy.currentTopNonIndexFileByUrlItems || null;
+    driftReasons.push(
+      'non-index single-file URL share ' +
+      currentMaxNonIndexFileUrlSharePct +
+      '% exceeds policy max ' +
+      policy.maxNonIndexFileUrlSharePct +
+      '%' +
+      (topNonIndexFile && topNonIndexFile.file ? ' (file=' + topNonIndexFile.file + ')' : '')
+    );
+  }
+}
 
 const driftGuard = {
   pass: driftReasons.length === 0,
@@ -47,12 +75,20 @@ const driftGuard = {
   policy: {
     requireZeroInvalidUrls: !!policy.requireZeroInvalidUrls,
     maxTop20ConcentrationPct: Number(policy.maxTop20ConcentrationPct || 0),
-    minUniqueDomains: Number(policy.minUniqueDomains || 0)
+    minUniqueDomains: Number(policy.minUniqueDomains || 0),
+    maxSingleFileUrlSharePct: Number(policy.maxSingleFileUrlSharePct || 0),
+    domainIndexFiles: Array.isArray(policy.domainIndexFiles) ? policy.domainIndexFiles : [],
+    maxNonIndexFileUrlSharePct: Number(policy.maxNonIndexFileUrlSharePct || 0)
   },
   current: {
     invalidUrlItems: Number(inventory.stats.invalidUrlItems || 0),
     concentrationTop20Pct: Number(inventory.stats.concentrationTop20Pct || 0),
-    uniqueDomains: Number(inventory.stats.uniqueDomains || 0)
+    uniqueDomains: Number(inventory.stats.uniqueDomains || 0),
+    maxSingleFileUrlSharePct: Number(policy.currentMaxSingleFileUrlSharePct || 0),
+    maxNonIndexFileUrlSharePct: Number(policy.currentMaxNonIndexFileUrlSharePct || 0),
+    topFileByUrlItems: policy.currentTopFileByUrlItems || null
+    ,
+    topNonIndexFileByUrlItems: policy.currentTopNonIndexFileByUrlItems || null
   }
 };
 

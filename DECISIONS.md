@@ -6,6 +6,22 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D316 — GROUP 6 HISTORICAL SOURCE-DOMAIN PER-FILE CONCENTRATION GUARD: INDEX-AWARE DRIFT POLICY IS NOW ENFORCED — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
+
+The next Group 6 tooling slice adds per-file concentration drift checks while honoring the current canonical source-domain index layout.
+
+- **Tooling change:** `tools/historical-source-domains.mjs` policy/readback now includes:
+  - `maxSingleFileUrlSharePct=100`
+  - `domainIndexFiles=['data/press.json']`
+  - `maxNonIndexFileUrlSharePct=20`
+  - current top-file and top-non-index-file share metrics
+- **Probe change:** `tools/probe-historical-source-domains.mjs` now enforces both overall and non-index per-file share thresholds in the drift guard readback.
+- **Current readback:** top file is `data/press.json` at **100%** (allowed by index-file policy), max non-index file share **0%** (<= 20), with drift reasons `[]`.
+- **Focused gate:** `node --check historical-source-domains.mjs`; `node --check probe-historical-source-domains.mjs`; `node build.mjs` GATE OK with known raw-embed soft warning; `node probe-historical-source-domains.mjs` green **5/5**; `node probe-group6-readback.mjs` green **7/7**; JSON readback inspected; `git diff --check` clean.
+- **Policy effect:** tooling/readback only. No gameplay/combat/runtime/media/history-data mutation and no lock changes.
+
+---
+
 ## D315 — GROUP 6 MEDIA-BUDGET ARITHMETIC CONSISTENCY GUARD: TOTALS AND HEADROOM MATH ARE NOW EXPLICITLY VERIFIED — [CODEX GPT-5.5, Priority-1 Group 6 tooling] (2026-07-08)
 
 The next Group 6 tooling slice tightens media-budget probe integrity by asserting arithmetic coherence in the readback artifact.
