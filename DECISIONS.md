@@ -6,6 +6,21 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D332 — FRANKLIN BATTLE-BUILD SPEC AND PLAN PROBE — [CODEX GPT-5.5, Group 7 Franklin/Nashville battle-build planning] (2026-07-08)
+
+D327 made Franklin the lead Franklin/Nashville candidate, and D329 completed the surrounding battle-build research library. D332 turns the Franklin/Nashville packet into a durable Franklin implementation spec and filesystem guard before runtime work. **Planning/spec only — no `data/franklin.json`, runtime registry, menu button, generated-HTML behavior, or combat-code change.**
+
+- **What shipped:** `docs/design/franklin-battle-build-spec.md` and `tools/probe-franklin-plan.mjs`. The spec locks a **single-phase** Franklin battle: CS attacker, US defender, `defaultFog:false`, objective = the Federal main line around the Carter House / Carter cotton gin / Columbia Pike. Nashville remains queued as a later T8 two-phase battle, not merged into this slice.
+- **Source/OOB re-verification before spec:** the research packet was treated as a start, not authority. Load-bearing details were rechecked against American Battlefield Trust, Battle of Franklin Trust, the NPS Franklin special-resource study, and official-report/OOB locators for the runtime follow-up. The spec pins the important strength trap: use roughly **18,000-20,000 Confederate assaulting troops**, not the broader 30,000+ / 33,000 Army of Tennessee present figure, and mark exact brigade strengths as **Verified identity; Inferred strength** until rechecked at runtime.
+- **Rank/date traps locked for D333:** Hood was a temporary General (permanent Lt. Gen. nuance); Schofield and Stanley were Maj. Gens.; Cox and Wagner were Brig. Gens.; Opdycke was a Colonel; Cheatham, Cleburne, and Brown were Maj. Gens.; Stewart and S. D. Lee were Lt. Gens. if included. The "six generals killed" teaching must keep Hiram Granbury as Brig. Gen. and John C. Carter as mortally wounded Nov 30 / died Dec 10, not killed outright on the field.
+- **Terrain/objective traps:** runtime Franklin should model open southern approach, Winstead Hill context, Wagner's exposed forward line, Federal breastworks/retrenchment/ditch/head logs/abatis, the Columbia Pike breach, the Carter House/Cox HQ, Carter cotton gin, Fort Granger/Harpeth support, and Carnton as teaching/casualty context rather than the playable objective.
+- **D74 gate:** no per-battle `damage`, `firepower`, `casualty`, `morale`, `retreat`, `winner`, `outcome`, `scoreBonus`, `forceWin`, or similar fudge is allowed. Franklin's Federal defensive result must emerge from source-honest inputs, terrain/works, OOB, doctrine, and the universal combat model.
+- **Plan probe:** `probe-franklin-plan` verifies the spec, source register, history traps, single-phase/fog/role/objective shape, D74 warnings, runtime scaffold, Nashville queue note, and planned-only registry state. If `data/franklin.json` appears, it flips to requiring runtime registration, menu rank, both historical baselines, and the focused runtime probe.
+- **Focused gate:** `node --check tools/probe-franklin-plan.mjs`; `node tools/build.mjs` **GATE OK** (known raw-embed soft warning only); `node tools/probe-franklin-plan.mjs` **7/7**; `node tools/probe-tactical-roster.mjs` **8/8**; `node tools/probe-custom-battle-builder.mjs` **15/15**; adjacent `node tools/probe-kennesaw.mjs` **10/10**; all required JSON artifacts read back `ok=true`, **0** failed steps, **0** pageerrors; `git diff --check` clean.
+- **Next:** D333 playable Franklin implementation: author `data/franklin.json`, register/menu-rank it after Kennesaw, add `tools/probe-franklin.mjs`, update BOTH `probe-tactical-roster` and `probe-custom-battle-builder`, update schema tooling if needed, rebuild generated HTML from source, run schema/build/focused/adjacent gates, docs sync, commit, and push.
+
+---
+
 ## D331 — KENNESAW MOUNTAIN IS NOW A PLAYABLE SINGLE-PHASE BATTLE — [CODEX GPT-5.5, Group 7 Atlanta/March battle-build implementation] (2026-07-08)
 
 D330's source/OOB/rank/terrain packet was implemented as runtime data without changing the universal combat model. **Kennesaw Mountain is now playable** and registered after Chattanooga in the historical battle menu.
