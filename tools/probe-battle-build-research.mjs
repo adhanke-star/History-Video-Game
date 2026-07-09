@@ -19,11 +19,19 @@ mkdirSync(OUT, { recursive: true });
 const DIR = join(ROOT, "docs", "design", "battle-build-research");
 const README = join(DIR, "README.md");
 const PACKETS = [
+  // D327 forward lanes
   "atlanta-march-battle-build-research.md",
   "franklin-nashville-battle-build-research.md",
   "usct-battle-build-research.md",
   "naval-river-battle-build-research.md",
   "1864-65-attrition-battle-build-research.md",
+  // D329 coverage-completion lanes (every remaining unbuilt, uncovered battle/campaign)
+  "eastern-1862-battle-build-research.md",
+  "shenandoah-1862-battle-build-research.md",
+  "shenandoah-1864-battle-build-research.md",
+  "western-gaps-battle-build-research.md",
+  "trans-mississippi-battle-build-research.md",
+  "appomattox-campaign-battle-build-research.md",
 ];
 
 const VERDICTS = ["READY_FOR_SPEC", "NEEDS_MORE_RESEARCH", "DO_NOT_BUILD_NOW"];
@@ -196,6 +204,21 @@ step("README: indexes every packet", () => {
   if (missing.length) throw new Error("README does not index: " + missing.join(", "));
   mustInclude(text, ["battle-build research", "READY_FOR_SPEC", "D327"], "README");
   return { bytes: text.length, indexed: PACKETS.length };
+});
+
+step("HYGIENE: no leaked JSON-escape artifacts in any packet", () => {
+  // Packets authored through a JSON-carrying pipeline can leak \" or literal \n
+  // sequences into the prose. Those are silent corruption, so fail loudly.
+  const dirty = {};
+  for (const p of PACKETS.concat(BUILT_PACKETS.map((b) => join("built-battles", b)))) {
+    const text = read(join(DIR, p));
+    const escQuote = (text.match(/\\"/g) || []).length;
+    const escNewline = (text.match(/\\n/g) || []).length;
+    if (escQuote || escNewline) dirty[p] = { escQuote, escNewline };
+  }
+  const bad = Object.keys(dirty);
+  if (bad.length) throw new Error("leaked JSON-escape artifacts in: " + JSON.stringify(dirty));
+  return { checked: PACKETS.length + BUILT_PACKETS.length, clean: true };
 });
 
 step("DOCS-ONLY: this library must not smuggle in battle data or a registry line", () => {
