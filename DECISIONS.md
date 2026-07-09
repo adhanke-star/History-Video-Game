@@ -6,6 +6,21 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D335 — NASHVILLE IS NOW A PLAYABLE TWO-PHASE T8 BATTLE — [CODEX GPT-5.5, Group 7 Franklin/Nashville battle-build implementation] (2026-07-08)
+
+D334's Nashville source/OOB/rank/terrain packet was implemented as runtime data without changing the universal combat model. **Nashville is now playable** and registered after Franklin in the historical battle menu. Franklin remains a separate battle; Spring Hill remains teaching-only.
+
+- **What shipped:** `data/nashville.json`, a registry/menu-rank line in `src/tactical/T1-bull-run.js`, focused guard `tools/probe-nashville.mjs`, both historical registry baselines updated (`tools/probe-tactical-roster.mjs`, `tools/probe-custom-battle-builder.mjs`), and `tools/validate-data-schemas.mjs` now classifies `nashville.json` as a battle file. `civil_war_generals.html` and the schema artifact were regenerated from source/tooling.
+- **Playable shape:** two-phase T8 Nashville, December 15-16, 1864. Top-level roles are US attacker / CS defender; `defaultFog:false`; Phase 1 = Redoubts and Montgomery Hill, scoreWeight 1; Phase 2 = Shy's Hill and Peach Orchard Hill, scoreWeight 3.
+- **Source honesty:** runtime uses compact phase strengths, not broad 85,000 / 55,000 battle-scale totals. Probe readback: phase 1 **16,300 US / 7,575 CS**, phase 2 **19,550 US / 11,150 CS**, with **20** Inferred-strength labels across units/reinforcements. Broad force figures remain context only.
+- **Rank/sector/USCT traps held:** Thomas, A. J. Smith, Schofield, Wilson, and Steedman are Maj. Gens.; McArthur and Wood are Brig. Gens.; Hood is `Gen. John Bell Hood (temporary grade)` with permanent lieutenant-general nuance; S. D. Lee and Stewart are Lt. Gens.; Cheatham and Bate are Maj. Gens.; Shy is not a general; Forrest is absent from the main Nashville field. Sector separation holds: S. D. Lee = Peach Orchard/Overton/right, Cheatham/Bate/Shy = Shy's Hill/left, Stewart = center. USCT participation is pinned to Peach Orchard/Overton: 12th/13th/100th USCT under Thompson/Steedman, with 18th USCT supporting context, not invented Shy's Hill placement.
+- **D74 boundary:** no battle-specific damage, firepower, casualty, winner, score-bonus, or force-win keys shipped. The Nashville result comes from OOB, terrain, works, artillery gun counts, phase weights, Wilson pressure, USCT/Steedman pinning pressure, and objective mechanics under the universal model.
+- **Direction guard:** focused probe seed battery gives the intended historical pattern without count forcing: Union aggregate win **8/8** deterministic seeds, Redoubts phase **8/8**, Shy's Hill phase **8/8**, and Confederate losses exceed Union losses **8/8**. Sample readback: seed 1 = US/US aggregate US, US loss 3,154 vs CS loss 7,908.
+- **Focused gate:** `node --check` clean for touched runtime/probe/tool JS; `node tools/build.mjs` **GATE OK** (known raw-embed soft warning only); `node tools/validate-data-schemas.mjs` **43/43**; `probe-nashville-plan` **7/7**; `probe-nashville` **12/12**; `probe-tactical-roster` **8/8**; `probe-custom-battle-builder` **15/15**; adjacent `probe-franklin` **10/10** and `probe-kennesaw` **10/10**; all six required probe JSON artifacts read back `ok=true`, **0** failed steps, **0** pageerrors; `git diff --check` clean.
+- **Next:** stop at the D335 battle-build boundary. Remaining natural Group 7 candidates include USCT/New Market Heights or another researched lane; the D328 Antietam rank-label fix remains a small independent cleanup; full `vet:noreg` stays deferred to a planned batch/release gate unless explicitly requested.
+
+---
+
 ## D334 — NASHVILLE BATTLE-BUILD SPEC AND PLAN PROBE — [CODEX GPT-5.5, Group 7 Franklin/Nashville battle-build planning] (2026-07-08)
 
 D333 shipped Franklin as runtime; D334 turns Nashville into the durable follow-on implementation packet before runtime work. **Planning/spec only — no `data/nashville.json`, runtime registry, menu button, generated-HTML behavior, or combat-code change.**

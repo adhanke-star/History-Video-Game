@@ -24,6 +24,7 @@ function htmlEscape(s) {
 const BATTLE_FILES = new Set([
   'antietam.json', 'bullrun.json', 'chancellorsville.json', 'chickamauga.json',
   'chattanooga.json', 'franklin.json', 'fredericksburg.json', 'gettysburg.json', 'kennesaw.json',
+  'nashville.json',
   'malvern-hill.json', 'shiloh.json', 'vicksburg.json'
 ]);
 

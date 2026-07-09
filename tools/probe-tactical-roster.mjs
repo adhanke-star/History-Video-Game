@@ -40,7 +40,8 @@ function killChild(child) {
 
 const SETUP = `(() => {
   var R = { ok:true, steps:[] };
-  var EXPECTED = ['bullrun1', 'malvernHill', 'antietam', 'fredericksburg', 'chancellorsville', 'gettysburg', 'shiloh', 'vicksburg', 'chickamauga', 'chattanooga', 'kennesaw', 'franklin'];
+  var EXPECTED = ['bullrun1', 'malvernHill', 'antietam', 'fredericksburg', 'chancellorsville', 'gettysburg', 'shiloh', 'vicksburg', 'chickamauga', 'chattanooga', 'kennesaw', 'franklin', 'nashville'];
+  var PHASE_COUNTS = { vicksburg: 3, chickamauga: 3, chattanooga: 3, nashville: 2 };
   function step(name, fn) {
     try { var v = fn(); R.steps.push({ name:name, ok:true, v:v === undefined ? null : v }); }
     catch(e) { R.ok = false; R.steps.push({ name:name, ok:false, err:String(e && e.message || e) }); }
@@ -100,7 +101,8 @@ const SETUP = `(() => {
       for (var i = 0; i < EXPECTED.length; i++) {
         var id = EXPECTED[i], sd = reg[id];
         if (phaseKind(sd) === 'multi') {
-          if (sd.phases.length !== 3) throw new Error(id+' should have 3 phases, got '+sd.phases.length);
+          var wantPhases = PHASE_COUNTS[id] || 3;
+          if (sd.phases.length !== wantPhases) throw new Error(id+' should have '+wantPhases+' phases, got '+sd.phases.length);
           for (var p = 0; p < sd.phases.length; p++) {
             var ph = sd.phases[p];
             if (!ph.name || !ph.objective || !ph.terrain || !ph.oob || !ph.oob.US || !ph.oob.CS) throw new Error(id+' phase '+p+' malformed');
@@ -134,7 +136,7 @@ const SETUP = `(() => {
     step('MENU DOM: all registered battle buttons inject once, in roster order, before Skirmish/Command buttons', function() {
       if (typeof openMainMenu !== 'function') return { skipped:'no openMainMenu' };
       openMainMenu(); fldInjectMenuButton();
-      var ids = ['fldBullRunBtn', 'fldScnBtn_malvernHill', 'fldScnBtn_antietam', 'fldScnBtn_fredericksburg', 'fldScnBtn_chancellorsville', 'fldScnBtn_gettysburg', 'fldScnBtn_shiloh', 'fldScnBtn_vicksburg', 'fldScnBtn_chickamauga', 'fldScnBtn_chattanooga', 'fldScnBtn_kennesaw', 'fldScnBtn_franklin'];
+      var ids = ['fldBullRunBtn', 'fldScnBtn_malvernHill', 'fldScnBtn_antietam', 'fldScnBtn_fredericksburg', 'fldScnBtn_chancellorsville', 'fldScnBtn_gettysburg', 'fldScnBtn_shiloh', 'fldScnBtn_vicksburg', 'fldScnBtn_chickamauga', 'fldScnBtn_chattanooga', 'fldScnBtn_kennesaw', 'fldScnBtn_franklin', 'fldScnBtn_nashville'];
       var found = [];
       for (var i = 0; i < ids.length; i++) {
         var btn = document.getElementById(ids[i]);

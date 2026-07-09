@@ -1,0 +1,286 @@
+{
+  "_comment": "D335 PLAYABLE NASHVILLE, December 15-16, 1864. A two-phase T8 Franklin/Nashville-lane battle: Dec. 15 Redoubts/Montgomery Hill -> Dec. 16 Shy's Hill and Peach Orchard Hill. Strengths are compact brigade/division-scale abstractions marked Inferred where not pinned; sequence, command roles, principal ground, rank traps, USCT Peach Orchard/Overton participation, and Forrest's absence from the main field are verified from the D334 source packet. Outcomes emerge from OOB, terrain, works, artillery, phase scoreWeight, and the universal combat model only - no per-battle damage/firepower/casualty/winner fudge.",
+  "nashville": {
+    "id": "nashville",
+    "weather": {
+      "sky": "overcast",
+      "time": "afternoon",
+      "provenance": "Verified/Inferred",
+      "note": "Ice and rain delayed Thomas before December 15; the battle itself is modeled as deliberate attacks under poor winter conditions, not as a fog-surprise scenario.",
+      "sources": [
+        "American Battlefield Trust Nashville battle summary - December 15-16 sequence, Thomas/Hood, redoubts, Peach Orchard/Overton, Shy's Hill, casualties, and Union victory",
+        "American Battlefield Trust, Battle of Nashville: Enemies Front and Rear - Thomas's plan, Smith/Wilson/Wood/Schofield/Steedman roles, day-one redoubts, and day-two Lee/Stewart/Cheatham sectors",
+        "Battle of Nashville Trust Peach Orchard Hill and Shy's Hill pages - local terrain, USCT/Steedman detail, Shy's Hill collapse, Wilson pressure, and Shy death",
+        "Nashville Metropolitan Historical Commission markers - official local corroboration for USCT at Peach Orchard Hill, Shy's Hill, S. D. Lee at Peach Orchard, and the Confederate final stand"
+      ]
+    },
+    "name": "Nashville - Hood's Army Broken",
+    "date": "December 15-16, 1864",
+    "place": "Nashville, Tennessee - Hood's line south of the city, from the redoubts to Shy's Hill and Peach Orchard Hill",
+    "blurb": "After Franklin, Hood sits outside Nashville with a battered Army of Tennessee. Thomas waits through ice and rain until his cavalry and infantry are ready, then attacks on December 15 against the Confederate left and its redoubts. On December 16 the shorter line breaks: Wood and Steedman pin S. D. Lee at Peach Orchard / Overton Hill, Wilson presses the left rear, and McArthur's men smash Shy's Hill. The result is not a noble last stand but the destruction of Hood's offensive power.",
+    "provenance": "Verified (high) for the two-day sequence, Thomas/Hood command frame, Dec. 15 redoubts and Montgomery Hill, Dec. 16 Shy's Hill and Peach Orchard / Overton Hill sectors, USCT participation under Steedman at Peach Orchard/Overton, Wilson's cavalry pressure, and Union victory. Inferred (medium) for compact playable strengths, exact field placements, and battery groupings. Anti-Lost-Cause frame: Nashville is the collapse of a Confederate army after the reckless Tennessee campaign and Franklin, not a romance of doomed valor.",
+    "field": { "w": 1200, "h": 900 },
+    "attacker": "US",
+    "defender": "CS",
+    "defaultFog": false,
+    "timeLimitSec": 230,
+    "holdToWinSec": 66,
+    "menu": {
+      "title": "NASHVILLE (1864)",
+      "deck": "Thomas strikes after Franklin: roll the redoubts, pin Peach Orchard Hill, and break Hood's left at Shy's Hill.",
+      "aria": "Nashville, December 15 to 16, 1864 - a two-phase Western Theater battle: the redoubts and Montgomery Hill, then Shy's Hill and Peach Orchard Hill."
+    },
+    "sides": {
+      "heading": "Nashville - Take Which Command?",
+      "intro": "December 15-16, 1864 - Thomas attacks Hood's battered army south of Nashville.",
+      "US": {
+        "title": "Command the Union (Thomas)",
+        "badge": "&#9876; BREAK",
+        "deck": "Use Smith, Wilson, Wood, Schofield, and Steedman together: take the redoubts, fix Lee's right, and crush Shy's Hill."
+      },
+      "CS": {
+        "title": "Command the Confederacy (Hood)",
+        "badge": "&#9819; HOLD",
+        "deck": "Hold a thin, tired army together after Franklin. Keep the redoubts long enough and stop the Shy's Hill collapse history records."
+      },
+      "foot": "The other army is commanded by the AI. Two phases play in sequence; losses carry forward. Franklin and Spring Hill are teaching context, not hidden phases."
+    },
+    "brief": {
+      "attack": "This is Thomas's deliberate attack, not a sudden cavalry raid. First roll the redoubts and Montgomery Hill on Hood's left; then use Smith, Wilson, Wood, Schofield, and Steedman to make Shy's Hill collapse while Peach Orchard Hill is pinned. <b>This is your war:</b> coordinated pressure breaks an army already damaged by Franklin.",
+      "defend": "Hood's army has marched out of Franklin battered and short of reserves. Keep the left from folding on December 15, then hold the second line while Lee is pinned at Peach Orchard and Wilson presses the rear. <b>This is your war:</b> a better stand at Shy's Hill can change the campaign, but there is no hidden Forrest rescue."
+    },
+    "objective": { "x": 600, "z": 330, "r": 145, "name": "Hood's Nashville line" },
+    "phases": [
+      {
+        "id": "redoubts-montgomery-hill",
+        "name": "Dec 15 - Redoubts and Montgomery Hill",
+        "sector": "Hood's left: Montgomery Hill, Redoubt No. 1, and the outer redoubts along Hillsboro Pike and Granny White Pike",
+        "timing": "December 15, 1864 - afternoon attack against the Confederate left",
+        "attacker": "US",
+        "defender": "CS",
+        "assaultDoctrine": null,
+        "defaultFog": false,
+        "holdToWinSec": 60,
+        "timeLimitSec": 220,
+        "scoreWeight": 1,
+        "objective": { "x": 600, "z": 320, "r": 135, "name": "Redoubt No. 1 and Montgomery Hill" },
+        "transition": {
+          "title": "Redoubts and Montgomery Hill",
+          "lead": "December 15. Thomas opens with pressure on Hood's right, but the real weight falls on the Confederate left. A. J. Smith's veterans, Wilson's cavalry, and Schofield's support turn the redoubts and Montgomery Hill, forcing Hood to fall back to a shorter line."
+        },
+        "terrain": {
+          "hills": [
+            { "name": "Montgomery Hill", "x": 590, "z": 350, "h": 18, "s": 150, "note": "The first high ground north of Redoubt No. 1, seized as the opening hinge on Hood's left. (Verified)" },
+            { "name": "Redoubt No. 1 ridge", "x": 650, "z": 290, "h": 16, "s": 135, "note": "One of the outer Confederate redoubts protecting the left. (Verified redoubt system; inferred map placement)" },
+            { "name": "Hood's fallback line", "x": 600, "z": 185, "h": 12, "s": 220, "note": "The army falls back roughly two miles to the shorter December 16 line. (Verified sequence; inferred placement)" }
+          ],
+          "woods": [
+            { "x": 420, "z": 510, "r": 85, "note": "Broken winter timber masking Wilson and Smith's approach around the Confederate left." },
+            { "x": 790, "z": 475, "r": 75, "note": "Fields and brush between the pikes and redoubts." }
+          ],
+          "walls": [
+            { "x1": 500, "z1": 322, "x2": 700, "z2": 300, "note": "REDOUBT NO. 1 WORKS - part of Hood's left-front redoubt system. (Verified system; inferred placement)" },
+            { "x1": 385, "z1": 245, "x2": 535, "z2": 228, "note": "REDOUBTS #4-#5 - outer-left anchor under Smith/Wilson pressure. (Verified system; inferred placement)" },
+            { "x1": 685, "z1": 238, "x2": 835, "z2": 230, "note": "CENTER LINK TO STEWART - a stretched line, not a deep defensive reserve. (Verified/Inferred)" }
+          ],
+          "markers": [
+            { "kind": "road", "name": "Hillsboro Pike", "path": [[470, 850], [500, 650], [540, 470], [610, 240]], "note": "One of the main axes on Hood's left. (Verified geography)" },
+            { "kind": "road", "name": "Granny White Pike", "path": [[720, 850], [690, 640], [655, 450], [610, 200]], "note": "The retreat and pressure route that matters again at Shy's Hill. (Verified geography)" },
+            { "kind": "road", "name": "Franklin Pike", "path": [[900, 850], [840, 640], [770, 420], [700, 180]], "note": "Central road toward Hood's rear and the later Confederate retreat. (Verified geography)" },
+            { "kind": "label", "name": "Redoubts #1-#5", "x": 520, "z": 255, "note": "The Confederate outer-left redoubt line attacked on December 15. (Verified)" },
+            { "kind": "label", "name": "Montgomery Hill", "x": 590, "z": 350, "note": "Opening tactical hinge of the day-one attack. (Verified)" },
+            { "kind": "label", "name": "Nashville & Chattanooga Railroad demonstration", "x": 915, "z": 520, "note": "Steedman's pressure on Hood's right helps fix the line while the main blow lands left. (Verified concept; inferred map context)" }
+          ]
+        },
+        "leaders": {
+          "_note": "Day one is the left-flank pressure that forces Hood back. Strengths are compact playable abstractions; broad 85,000/55,000 force figures are not literal active map totals.",
+          "US": [
+            { "id": "ld_thomas_r", "name": "Maj. Gen. George H. Thomas", "short": "Thomas", "quality": 0.86, "radius": 285, "x": 600, "z": 805, "fate": 3.4, "note": "Major General commanding the Union force at Nashville. His later Regular-Army full-major-general honor is not backdated into this battle-date OOB. (Verified)" },
+            { "id": "ld_ajsmith_r", "name": "Maj. Gen. Andrew J. Smith", "short": "A. J. Smith", "quality": 0.78, "radius": 255, "attach": "us_ajsmith_r", "fate": 2.9, "note": "Major General commanding the Detachment of the Army of the Tennessee / former XVI Corps veterans hitting Hood's left. (Verified)" },
+            { "id": "ld_wilson_r", "name": "Maj. Gen. James H. Wilson", "short": "Wilson", "quality": 0.76, "radius": 245, "attach": "us_wilson_r", "fate": 2.8, "note": "Major General commanding the cavalry corps; his pressure around the left matters here and becomes decisive on December 16. (Verified)" },
+            { "id": "ld_schofield_r", "name": "Maj. Gen. John M. Schofield", "short": "Schofield", "quality": 0.72, "radius": 235, "attach": "us_schofield_r", "fate": 2.7, "note": "Major General commanding XXIII Corps / Army of the Ohio under Thomas; not overall commander at Nashville. (Verified)" }
+          ],
+          "CS": [
+            { "id": "ld_hood_r", "name": "Gen. John Bell Hood (temporary grade)", "short": "Hood", "quality": 0.5, "radius": 230, "x": 610, "z": 165, "fate": 2.0, "note": "Temporary Confederate General commanding the Army of Tennessee; permanent grade lieutenant general nuance retained. (Verified)" },
+            { "id": "ld_stewart_r", "name": "Lt. Gen. Alexander P. Stewart", "short": "Stewart", "quality": 0.64, "radius": 220, "attach": "cs_stewart_r", "fate": 2.3, "note": "Lieutenant General commanding the center after Franklin and during the Nashville line contraction. (Verified)" },
+            { "id": "ld_cheatham_r", "name": "Maj. Gen. Benjamin F. Cheatham", "short": "Cheatham", "quality": 0.64, "radius": 220, "attach": "cs_cheatham_r", "fate": 2.2, "note": "Major General commanding the left wing sector pressured on December 15 and then Shy's Hill on December 16. Do not make him a lieutenant general. (Verified)" }
+          ]
+        },
+        "supply": {
+          "US": { "x": 610, "z": 860, "name": "Union Nashville works and depots" },
+          "CS": { "x": 610, "z": 120, "name": "Confederate Franklin Pike fallback route" }
+        },
+        "oob": {
+          "US": [
+            { "id": "us_ajsmith_r", "name": "A. J. Smith's Veterans", "commander": "Maj. Gen. Andrew J. Smith", "arm": "inf", "weapon": "rifled", "men": 4300, "xp": 3, "x": 520, "z": 785, "facing": 0, "formation": "line", "note": "Veterans of the Army of the Tennessee attacking Hood's left. (Verified role; Inferred strength)" },
+            { "id": "us_schofield_r", "name": "Schofield's XXIII Corps Support", "commander": "Maj. Gen. John M. Schofield", "arm": "inf", "weapon": "rifled", "men": 3600, "xp": 3, "x": 720, "z": 790, "facing": 0, "formation": "line", "note": "XXIII Corps support shifted into the day-one pressure. (Verified role; Inferred strength)" },
+            { "id": "us_wilson_r", "name": "Wilson's Dismounted Cavalry Pressure", "commander": "Maj. Gen. James H. Wilson", "arm": "cav", "weapon": "carbine", "men": 2500, "xp": 3, "x": 390, "z": 780, "facing": 0, "formation": "line", "note": "Cavalry pressure around Hood's left and rear, represented as dismounted pressure rather than a separate cavalry-raid battle. (Verified role; Inferred strength)" },
+            { "id": "us_wood_r", "name": "Wood's IV Corps Demonstration", "commander": "Brig. Gen. Thomas J. Wood", "arm": "inf", "weapon": "rifled", "men": 3300, "xp": 2, "x": 850, "z": 795, "facing": 0, "formation": "line", "note": "IV Corps pressure toward the center/right; Wood is kept as Brig. Gen. Thomas J. Wood, IV Corps under the D334 rank guard. (Verified role; Inferred strength)" },
+            { "id": "us_r_battery", "name": "Union Field Batteries", "commander": "Thomas's artillery", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 8, "men": 200, "xp": 3, "x": 610, "z": 720, "facing": 0, "formation": "line", "note": "Massed Union field-gun support in the day-one attack. Universal gun model: 8 guns. (Inferred grouping)" }
+          ],
+          "CS": [
+            { "id": "cs_cheatham_r", "name": "Cheatham's Left Wing", "commander": "Maj. Gen. Benjamin F. Cheatham", "arm": "inf", "weapon": "rifled", "men": 2600, "xp": 2, "x": 535, "z": 300, "facing": 3.14159, "formation": "line", "note": "Left-wing infantry stretched from Franklin and now under day-one pressure. (Verified sector; Inferred strength)" },
+            { "id": "cs_stewart_r", "name": "Stewart's Center", "commander": "Lt. Gen. Alexander P. Stewart", "arm": "inf", "weapon": "rifled", "men": 2600, "xp": 2, "x": 725, "z": 270, "facing": 3.14159, "formation": "line", "note": "Center troops linking the redoubts to the rest of Hood's line. (Verified sector; Inferred strength)" },
+            { "id": "cs_redoubt_guard", "name": "Redoubts #1-#5 Garrison", "commander": "Army of Tennessee detachments", "arm": "inf", "weapon": "rifled", "men": 1550, "xp": 1, "x": 590, "z": 330, "facing": 3.14159, "formation": "line", "note": "Outer redoubt detachments on Hood's left. (Verified redoubt system; Inferred composition/strength)" },
+            { "id": "cs_r_battery", "name": "Redoubt Artillery", "commander": "Confederate artillery", "arm": "art", "weapon": "smooth", "role": "defend", "guns": 5, "men": 125, "xp": 2, "x": 620, "z": 245, "facing": 3.14159, "formation": "line", "note": "Guns worked into the redoubt line. Universal gun model: 5 guns. (Inferred grouping)" }
+          ]
+        },
+        "reinforcements": [
+          { "id": "us_mcarthur_r", "side": "US", "atSec": 62, "name": "McArthur's Division Momentum", "commander": "Brig. Gen. John McArthur", "arm": "inf", "weapon": "rifled", "men": 2400, "xp": 3, "x": 470, "z": 850, "facing": 0, "formation": "column", "entry": "pressing into the broken redoubt line", "note": "McArthur's division under A. J. Smith provides momentum here and the decisive Shy's Hill assault on December 16. (Verified role; Inferred strength/timing)" },
+          { "id": "cs_fallback_r", "side": "CS", "atSec": 120, "name": "Fallback Rear Guard", "commander": "Hood's army rear guard", "arm": "inf", "weapon": "rifled", "men": 700, "xp": 1, "x": 610, "z": 145, "facing": 3.14159, "formation": "line", "entry": "covering the withdrawal to the shorter second line", "note": "A small rear-guard abstraction for the late day-one withdrawal. (Verified sequence; Inferred strength)" }
+        ],
+        "teaching": {
+          "head": "Thomas attacks after waiting for readiness",
+          "body": "Grant's impatience and the winter delay are part of the story, but not the explanation of the battle. Thomas waited for weather, cavalry, and coordination; then his day-one attack rolled Hood's redoubts and forced a retreat to the second line. The result came from preparation and converging pressure, not timidity suddenly cured.",
+          "provenance": "Verified (high) for Thomas's delay/attack sequence and Dec. 15 redoubts; exact game strengths inferred."
+        }
+      },
+      {
+        "id": "shys-hill-peach-orchard",
+        "name": "Dec 16 - Shy's Hill and Peach Orchard Hill",
+        "sector": "the second Nashville line: Cheatham's left at Shy's Hill, Stewart's center, and S. D. Lee's right at Peach Orchard / Overton Hill",
+        "timing": "December 16, 1864 - afternoon collapse of Hood's line",
+        "attacker": "US",
+        "defender": "CS",
+        "assaultDoctrine": null,
+        "defaultFog": false,
+        "holdToWinSec": 58,
+        "timeLimitSec": 230,
+        "scoreWeight": 3,
+        "objective": { "x": 535, "z": 300, "r": 150, "name": "Shy's Hill / Compton's Hill" },
+        "transition": {
+          "title": "Shy's Hill and Peach Orchard Hill",
+          "lead": "December 16. Hood's shorter line looks stronger than it is. S. D. Lee's right at Peach Orchard / Overton Hill is pinned by Wood and Steedman, including USCT brigades in a bloody uphill attack, while Wilson presses the left rear. McArthur then hits Shy's Hill and the line collapses."
+        },
+        "terrain": {
+          "hills": [
+            { "name": "Shy's Hill / Compton's Hill", "x": 535, "z": 300, "h": 24, "s": 160, "note": "Confederate left anchor where the line broke; trenches were thin and poorly sited near the geographic crest. (Verified)" },
+            { "name": "Peach Orchard Hill / Overton Hill", "x": 785, "z": 300, "h": 23, "s": 150, "note": "Confederate right anchor held by S. D. Lee, attacked by Wood and Steedman including USCT brigades. (Verified)" },
+            { "name": "Stewart's center stone-wall ground", "x": 660, "z": 345, "h": 12, "s": 160, "note": "Central line linking the two hills with stone-wall and field defenses. (Verified/Inferred)" }
+          ],
+          "woods": [
+            { "x": 420, "z": 455, "r": 80, "note": "Broken timber and gullies around the Shy's Hill approach." },
+            { "x": 805, "z": 500, "r": 90, "note": "Open muddy slope and abatis approach to Peach Orchard / Overton Hill." },
+            { "x": 620, "z": 505, "r": 70, "note": "Mixed farm lots and ravines between the two hills." }
+          ],
+          "walls": [
+            { "x1": 450, "z1": 300, "x2": 620, "z2": 282, "note": "SHY'S HILL TRENCHES - thin, mis-sited works with little reserve support. (Verified)" },
+            { "x1": 710, "z1": 305, "x2": 875, "z2": 292, "note": "PEACH ORCHARD / OVERTON WORKS - abatis and breastworks on S. D. Lee's right. (Verified)" },
+            { "x1": 585, "z1": 365, "x2": 735, "z2": 345, "note": "CENTER STONE WALLS - Stewart's linking line between the two anchors. (Verified/Inferred)" }
+          ],
+          "markers": [
+            { "kind": "road", "name": "Granny White Pike", "path": [[460, 850], [500, 630], [530, 430], [540, 190]], "note": "Retreat and Wilson-pressure route behind the Confederate left. (Verified geography)" },
+            { "kind": "road", "name": "Franklin Pike", "path": [[710, 850], [690, 630], [665, 430], [650, 180]], "note": "Main retreat road south from Nashville. (Verified geography)" },
+            { "kind": "label", "name": "Shy's Hill / Compton's Hill", "x": 535, "z": 300, "note": "Decisive break on Cheatham's left; Col. William L. Shy was killed here. (Verified)" },
+            { "kind": "label", "name": "Peach Orchard Hill / Overton Hill", "x": 785, "z": 300, "note": "S. D. Lee's right, pinned in a costly attack by Wood and Steedman. (Verified)" },
+            { "kind": "label", "name": "12th, 13th, and 100th USCT", "x": 820, "z": 515, "note": "Verified at Peach Orchard/Overton under Col. Charles R. Thompson's 2nd Colored Brigade; not moved to Shy's Hill. (Verified)" },
+            { "kind": "label", "name": "Wilson pressure", "x": 395, "z": 455, "note": "Cavalry pressure on the Confederate left/rear helps make Shy's Hill untenable. (Verified)" },
+            { "kind": "label", "name": "Travellers Rest", "x": 690, "z": 155, "note": "Hood headquarters / Overton plantation context behind the line; teaching marker only, not a playable objective. (Verified context)" }
+          ]
+        },
+        "leaders": {
+          "_note": "The decisive weighted phase. Peach Orchard/Overton is a costly pin, while Shy's Hill is the collapse point.",
+          "US": [
+            { "id": "ld_thomas_s", "name": "Maj. Gen. George H. Thomas", "short": "Thomas", "quality": 0.87, "radius": 290, "x": 610, "z": 820, "fate": 3.4, "note": "Major General commanding the Union force; his plan converges pressure across the whole line. (Verified)" },
+            { "id": "ld_mcarthur_s", "name": "Brig. Gen. John McArthur", "short": "McArthur", "quality": 0.77, "radius": 240, "attach": "us_mcarthur_s", "fate": 2.8, "note": "Brigadier General whose division delivers the decisive Shy's Hill assault. (Verified)" },
+            { "id": "ld_ajsmith_s", "name": "Maj. Gen. Andrew J. Smith", "short": "A. J. Smith", "quality": 0.78, "radius": 250, "attach": "us_mcarthur_s", "fate": 2.9, "note": "Major General commanding the wing that includes McArthur's division. (Verified)" },
+            { "id": "ld_wilson_s", "name": "Maj. Gen. James H. Wilson", "short": "Wilson", "quality": 0.78, "radius": 245, "attach": "us_wilson_s", "fate": 2.9, "note": "Major General commanding cavalry pressure on the Confederate left and rear. (Verified)" },
+            { "id": "ld_steedman_s", "name": "Maj. Gen. James B. Steedman", "short": "Steedman", "quality": 0.72, "radius": 230, "attach": "us_usct_s", "fate": 2.6, "note": "Major General commanding the provisional detachment and USCT brigades in the Peach Orchard / Overton assault. (Verified)" },
+            { "id": "ld_thompson_s", "name": "Col. Charles R. Thompson", "short": "Thompson", "quality": 0.68, "radius": 200, "attach": "us_usct_s", "fate": 2.2, "note": "Colonel commanding the 2nd Colored Brigade at Peach Orchard/Overton; includes the 12th, 13th, and 100th USCT. (Verified)" }
+          ],
+          "CS": [
+            { "id": "ld_hood_s", "name": "Gen. John Bell Hood (temporary grade)", "short": "Hood", "quality": 0.48, "radius": 225, "x": 650, "z": 150, "fate": 1.9, "note": "Temporary Confederate General commanding an army now short of reserves and badly damaged by Franklin. Permanent grade lieutenant general nuance retained. (Verified)" },
+            { "id": "ld_slee_s", "name": "Lt. Gen. Stephen D. Lee", "short": "S. D. Lee", "quality": 0.68, "radius": 225, "attach": "cs_slee_s", "fate": 2.4, "note": "Lieutenant General commanding the Confederate right at Peach Orchard / Overton Hill. Do not place him at Shy's Hill. (Verified)" },
+            { "id": "ld_stewart_s", "name": "Lt. Gen. Alexander P. Stewart", "short": "Stewart", "quality": 0.64, "radius": 215, "attach": "cs_stewart_s", "fate": 2.2, "note": "Lieutenant General commanding the center linking Lee's right and Cheatham's left. (Verified)" },
+            { "id": "ld_cheatham_s", "name": "Maj. Gen. Benjamin F. Cheatham", "short": "Cheatham", "quality": 0.64, "radius": 215, "attach": "cs_cheatham_s", "fate": 2.2, "note": "Major General commanding the left / Shy's Hill sector; do not inflate him to lieutenant general. (Verified)" },
+            { "id": "ld_bate_s", "name": "Maj. Gen. William B. Bate", "short": "Bate", "quality": 0.62, "radius": 205, "attach": "cs_bate_s", "fate": 2.1, "note": "Major General with division elements on/around Shy's Hill under Cheatham. (Verified)" },
+            { "id": "ld_shy_s", "name": "Col. William L. Shy", "short": "Shy", "quality": 0.6, "radius": 185, "attach": "cs_shy_s", "fate": 1.3, "note": "Colonel / lieutenant-colonel wording trap: local sources style him Col. William L. Shy of the 20th Tennessee, killed at Shy's Hill. He is not a general. (Verified source wording; rank caveat retained)" }
+          ]
+        },
+        "supply": {
+          "US": { "x": 610, "z": 860, "name": "Union attack line south of Nashville" },
+          "CS": { "x": 650, "z": 120, "name": "Confederate retreat roads toward Franklin" }
+        },
+        "oob": {
+          "US": [
+            { "id": "us_mcarthur_s", "name": "McArthur's Division, A. J. Smith's Command", "commander": "Brig. Gen. John McArthur", "arm": "inf", "weapon": "rifled", "men": 4800, "xp": 3, "x": 470, "z": 805, "facing": 0, "formation": "line", "note": "Division that carries the decisive Shy's Hill assault. (Verified role; Inferred strength)" },
+            { "id": "us_wilson_s", "name": "Wilson's Cavalry Pressure", "commander": "Maj. Gen. James H. Wilson", "arm": "cav", "weapon": "carbine", "men": 3000, "xp": 3, "x": 340, "z": 770, "facing": 0, "formation": "line", "note": "Dismounted/pressure abstraction behind and around the Confederate left and Granny White Pike. (Verified role; Inferred strength)" },
+            { "id": "us_wood_s", "name": "Wood's IV Corps", "commander": "Brig. Gen. Thomas J. Wood", "arm": "inf", "weapon": "rifled", "men": 3900, "xp": 3, "x": 720, "z": 805, "facing": 0, "formation": "line", "note": "IV Corps pressure against Peach Orchard / Overton Hill; Wood kept as Brig. Gen. under D334's rank guard unless stronger rank evidence is added. (Verified role; Inferred strength)" },
+            { "id": "us_usct_s", "name": "2nd Colored Brigade - 12th, 13th, and 100th USCT", "commander": "Col. Charles R. Thompson", "arm": "inf", "weapon": "rifled", "men": 2400, "xp": 2, "x": 850, "z": 810, "facing": 0, "formation": "line", "note": "Verified Peach Orchard/Overton participants under Steedman's command. Includes 12th, 13th, and 100th USCT; exact regiment strengths are Verified identity; Inferred strength. Not placed at Shy's Hill. (Verified identity; Inferred strength)" },
+            { "id": "us_steedman_support_s", "name": "Steedman's Provisional Detachment / 18th USCT support", "commander": "Maj. Gen. James B. Steedman", "arm": "inf", "weapon": "rifled", "men": 2200, "xp": 2, "x": 900, "z": 845, "facing": 0, "formation": "column", "note": "Steedman's command and supporting USCT presence, including BONT's 18th USCT context in Grosvenor's brigade. (Verified presence; Inferred strength)" },
+            { "id": "us_s_battery", "name": "Union Massed Batteries", "commander": "Thomas's artillery", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 10, "men": 250, "xp": 3, "x": 620, "z": 735, "facing": 0, "formation": "line", "note": "Union artillery pressure supporting both Shy's Hill and Peach Orchard/Overton attacks. Universal gun model: 10 guns. (Inferred grouping)" }
+          ],
+          "CS": [
+            { "id": "cs_cheatham_s", "name": "Cheatham's Shy's Hill Line", "commander": "Maj. Gen. Benjamin F. Cheatham", "arm": "inf", "weapon": "rifled", "men": 2500, "xp": 2, "x": 505, "z": 300, "facing": 3.14159, "formation": "line", "note": "Left sector on/around Shy's Hill, badly stretched and thin after Franklin and day one. (Verified sector; Inferred strength)" },
+            { "id": "cs_bate_s", "name": "Bate's Division at Shy's Hill", "commander": "Maj. Gen. William B. Bate", "arm": "inf", "weapon": "rifled", "men": 1950, "xp": 2, "x": 570, "z": 285, "facing": 3.14159, "formation": "line", "note": "Division elements on/around Shy's Hill under Cheatham. (Verified role; Inferred strength)" },
+            { "id": "cs_shy_s", "name": "20th Tennessee / Shy's Hill Detachment", "commander": "Col. William L. Shy", "arm": "inf", "weapon": "rifled", "men": 850, "xp": 2, "x": 535, "z": 252, "facing": 3.14159, "formation": "line", "note": "Named local Shy's Hill detachment; Shy is colonel / lieutenant-colonel source wording trap, not a general. (Verified identity; Inferred strength)" },
+            { "id": "cs_stewart_s", "name": "Stewart's Center", "commander": "Lt. Gen. Alexander P. Stewart", "arm": "inf", "weapon": "rifled", "men": 2500, "xp": 2, "x": 660, "z": 335, "facing": 3.14159, "formation": "line", "note": "Center of Hood's shorter second-day line, linking Shy's Hill and Peach Orchard/Overton. (Verified sector; Inferred strength)" },
+            { "id": "cs_slee_s", "name": "S. D. Lee's Peach Orchard / Overton Line", "commander": "Lt. Gen. Stephen D. Lee", "arm": "inf", "weapon": "rifled", "men": 2700, "xp": 2, "x": 800, "z": 300, "facing": 3.14159, "formation": "line", "note": "Confederate right at Peach Orchard / Overton Hill. Lee belongs here, not at Shy's Hill. (Verified sector; Inferred strength)" },
+            { "id": "cs_s_battery", "name": "Hilltop Batteries", "commander": "Army of Tennessee artillery", "arm": "art", "weapon": "smooth", "role": "defend", "guns": 6, "men": 150, "xp": 2, "x": 660, "z": 245, "facing": 3.14159, "formation": "line", "note": "Confederate guns on the second line; no special firepower switch. Universal gun model: 6 guns. (Inferred grouping)" }
+          ]
+        },
+        "reinforcements": [
+          { "id": "us_mcarthur_charge_s", "side": "US", "atSec": 48, "name": "McArthur's Three-Brigade Charge", "commander": "Brig. Gen. John McArthur", "arm": "inf", "weapon": "rifled", "men": 3000, "xp": 3, "x": 450, "z": 860, "facing": 0, "formation": "column", "entry": "surging at Shy's Hill as the left weakens", "note": "Represents the late coordinated assault that breaks Shy's Hill. (Verified role; Inferred strength/timing)" },
+          { "id": "cs_no_reserve_s", "side": "CS", "atSec": 102, "name": "Too Little Reserve", "commander": "Hood's stretched second line", "arm": "inf", "weapon": "rifled", "men": 500, "xp": 1, "x": 620, "z": 180, "facing": 3.14159, "formation": "line", "entry": "too late from the rear roads", "note": "Small reserve abstraction; Shy's Hill lacked enough support once Wilson and McArthur converged. (Verified problem; Inferred strength)" }
+        ],
+        "teaching": {
+          "head": "Two hills, one collapse",
+          "body": "Peach Orchard / Overton Hill and Shy's Hill should not be blended. S. D. Lee's right fought a costly defensive action against Wood and Steedman, including the 12th, 13th, and 100th USCT in a bloody uphill attack. That pressure helped fix Lee while McArthur and Wilson made the Confederate left at Shy's Hill collapse. The USCT assault was sacrifice and agency, not a scripted waste.",
+          "provenance": "Verified (high) for Lee at Peach Orchard/Overton, Steedman/USCT participation, Wilson pressure, McArthur at Shy's Hill, and Shy death; exact game strengths inferred."
+        }
+      }
+    ],
+    "endNote": {
+      "US": {
+        "US": "History holds. Thomas's attack has broken Hood's army: the redoubts fall on December 15, Peach Orchard / Overton is pinned on December 16, and Shy's Hill collapses. The Army of Tennessee retreats in ruin.",
+        "CS": "History is overturned. The redoubts bent but did not break, and the second line held long enough to keep Hood's army intact. Nashville does not become the decisive destruction history recorded."
+      },
+      "CS": {
+        "US": "History holds against you. Even with brave stands at Peach Orchard and Shy's Hill, the army has no depth left after Franklin and the first day's losses. Nashville breaks Hood's offensive power.",
+        "CS": "History is overturned. You held the second line and kept the retreat from becoming a rout. Hood's Tennessee campaign survives longer, though Franklin and Nashville have still bled the army badly."
+      },
+      "draw": "Nashville is unresolved. Thomas has bent the line and Hood has not recovered the initiative; the army's fate will be decided on the retreat roads."
+    },
+    "teaching": {
+      "title": "Nashville - The Army of Tennessee Broken",
+      "cards": [
+        {
+          "id": "ns_thomas",
+          "head": "Thomas was deliberate, not timid",
+          "body": "Thomas waited through ice, cavalry remount problems, and pressure from Grant. When he attacked, the plan worked across the whole line. Nashville should teach preparation and coordination, not a cartoon of a slow general suddenly moving.",
+          "provenance": "Verified (high) for the delay/attack controversy and the success of the December 15-16 plan."
+        },
+        {
+          "id": "ns_usct",
+          "head": "USCT soldiers at Peach Orchard Hill",
+          "body": "The 12th, 13th, and 100th USCT under Col. Charles R. Thompson fought at Peach Orchard / Overton Hill in Steedman's command, with the 18th USCT in supporting context. Their assault was costly and did not itself break Shy's Hill, but it pinned Lee's right and belongs in the victory's story.",
+          "provenance": "Verified (high) from Battle of Nashville Trust and Nashville Metro markers for USCT Peach Orchard / Overton participation."
+        },
+        {
+          "id": "ns_shys_hill",
+          "head": "Shy's Hill was a systems failure",
+          "body": "Shy's Hill looked strong, but the works were thin, the line was stretched, reserves were inadequate, and Wilson threatened the rear. McArthur's assault succeeded because those inputs converged. It is not a mystery and not a hidden morale script.",
+          "provenance": "Verified (high) for Shy's Hill collapse, Wilson pressure, and McArthur's assault; exact map strengths inferred."
+        },
+        {
+          "id": "ns_no_forrest",
+          "head": "No Forrest rescue",
+          "body": "Forrest was detached toward Murfreesboro before the main battle and is absent from the playable Nashville field. That absence can be taught as Hood weakening himself, but it is not modeled as a secret penalty or rescue event.",
+          "provenance": "Verified (high) from Nashville operational accounts; Forrest absent from the main field."
+        },
+        {
+          "id": "ns_not_noble_last_stand",
+          "head": "Not a noble last stand",
+          "body": "Nashville was the destruction of Hood's offensive power after the reckless Tennessee campaign and the Franklin disaster. The game preserves Confederate courage without turning strategic collapse into Lost Cause romance.",
+          "provenance": "Verified/Inferred anti-Lost-Cause framing from the battle outcome and casualty/capture direction."
+        }
+      ],
+      "codex": {
+        "id": "codex_nashville",
+        "title": "Nashville, December 15-16, 1864",
+        "summary": "After Franklin, Hood's Army of Tennessee took position south of Nashville. Thomas attacked on December 15, using A. J. Smith, Wilson, Schofield, Wood, and Steedman to pressure Hood's line and roll the redoubts on the Confederate left. On December 16, S. D. Lee's right at Peach Orchard / Overton Hill was pinned in costly fighting, including USCT troops under Steedman, while Wilson and McArthur broke Cheatham's left at Shy's Hill. Hood's army retreated in disorder and never recovered offensive power.",
+        "axes": { "timeline": "1864", "theater": "Western", "people": ["Thomas", "Hood", "A. J. Smith", "Schofield", "Wilson", "Steedman", "Wood", "S. D. Lee", "Stewart", "Cheatham", "Bate", "Shy"], "battle": "Nashville" }
+      }
+    }
+  }
+}
