@@ -14,7 +14,7 @@ file,lines,exports,functions
 32-decisions.js,263,0,18
 33-morale.js,180,0,7
 34-press.js,216,0,14
-35-command.js,2249,0,130
+35-command.js,2482,0,142
 36-camp.js,228,0,11
 37-loot-survival.js,1407,0,115
 38-women-in-war.js,212,0,25
@@ -62,7 +62,7 @@ file,lines,exports,functions
 98-h0-main-menu.js,562,0,23
 99-h0-president-desk.js,370,0,21
 tactical/T0-field-sandbox.js,2440,0,125
-tactical/T1-bull-run.js,391,0,18
+tactical/T1-bull-run.js,395,0,18
 tactical/T10-flags.js,678,0,27
 tactical/T11-custom-battle.js,834,0,60
 tactical/T12-3d-readability.js,192,0,6

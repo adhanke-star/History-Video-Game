@@ -8,6 +8,14 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D337 AUDIT RUN 2 — audit/triage ledger only — 2026-07-09 (D337)
+- **Scope honored:** completed Part 1 full-spectrum audit and Part 2 ranked triage only; no finding, V1 item, or V2/V3 item was implemented.
+- **Result:** `REVIEW-QUEUE.md` now carries `## AUDIT — 2026-07-09 (run 2)`: 17 new FIX-NOW findings (4 HIGH / 11 MED / 2 LOW), existing E50 re-confirmed/re-triaged to FIX-NOW, one MED proposal, and the material refutations.
+- **Browser boundary:** preserved the red `probe-tactical-visuals` artifact after three valid green scenes, one Malvern Hill 3D frame-detach/navigation failure, and the resulting closed-page cascade. No rerun began; no server remains.
+- **Report adjudication:** kept the meaningful source inventory and orphan-reference-map refreshes; restored the schema report's timestamp-only churn.
+- **Docs/report gate:** build **GATE OK** with the known raw-embed soft warning; source inventory **4/4** (91 files / 29 tactical / 1,858 functions); ledger/docs/report integrity check green; `git diff --check` clean. No browser gate was started.
+- **Next:** fresh Part 3 begins with the text-only Gettysburg truth bundle C66/C67/C68; C71 Kennesaw overfielding follows as a separate sim-affecting milestone.
+
 ## D335 NASHVILLE BATTLE-BUILD — playable two-phase T8 implementation shipped — 2026-07-08 (D335)
 - **What shipped:** `data/nashville.json`, registry/menu rank after Franklin in `src/tactical/T1-bull-run.js`, new focused guard `tools/probe-nashville.mjs`, both historical baselines updated, schema validator battle-file list updated for Nashville, generated HTML rebuilt, schema artifact refreshed.
 - **Scenario shape:** two-phase T8 Nashville; US attacker / CS defender; fog off; Phase 1 Dec. 15 Redoubts/Montgomery Hill scoreWeight 1; Phase 2 Dec. 16 Shy's Hill/Peach Orchard Hill scoreWeight 3. Franklin remains separate; Spring Hill remains teaching-only.

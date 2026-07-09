@@ -6,6 +6,15 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D337 — AUDIT RUN 2 COMPLETE; PART 3 FIX LEDGER LOCKED (2026-07-09)
+
+- **[AARON] Hard boundary honored:** this session completed Part 1 AUDIT and Part 2 TRIAGE/ledger only. It did not begin any FIX-NOW implementation, V1 work, or V2/V3 work.
+- **Audit judgment:** at `c77ebca` (D336 docs; live game D335), the full-spectrum pass confirmed **17 new FIX-NOW defects** (4 HIGH / 11 MED / 2 LOW), re-confirmed and promoted existing E50 to FIX-NOW, and filed one MED design proposal (E70). The standing evidence and ranked queue are under `REVIEW-QUEUE.md` → `## AUDIT — 2026-07-09 (run 2)`.
+- **Visual-gate judgment:** `probe-tactical-visuals` remains honestly red. Three scenes completed green; Malvern Hill 3D then lost the page during navigation and the next six scenes cascaded closed-page failures. This is E67 harness resilience, not evidence of a rendered-scene product regression. Per Aaron's capacity boundary, no browser rerun was started; artifacts were preserved and the server was stopped.
+- **Generated-report decision:** of the three pre-existing dirty report outputs, keep `tools/shots/source-file-inventory.csv` (live D323/D335 source-count refresh) and `tools/shots/orphan-assets-report.html` (meaningful new Chattanooga/Kennesaw/Franklin/Nashville reference map, still 199/199 and zero orphans); restore `data-schema-validation.html` because its only diff was a generated timestamp with the same 43/43 content.
+- **Milestone gate:** `node tools/build.mjs` **GATE OK** (known 2.42 MB raw-embed soft warning only); filesystem-only source inventory **4/4** (91 JS files / 29 tactical / 1,858 functions); custom ledger/docs/report integrity check green (18 pending FIX-NOW lines including E50, E70 proposal present, reports 43/43 and 199/199/0); `git diff --check` clean. No browser gate was started.
+- **Next bounded milestone:** Part 3 M1 is the Gettysburg truth bundle **C66 + C67 + C68** in `data/gettysburg.json`, with citation-grade source wording and probe teeth but no OOB/combat-number change. C71's Kennesaw input correction follows as its own sim-affecting A/B milestone.
+
 ## D336 — CHATGPT/CODEX 5.6 SOL OPERATING POLICY + FULL-COMPLETION KICKOFF (2026-07-09)
 
 - **[AARON] Current main loop:** ChatGPT/Codex **5.6 Sol**, **Ultra** (the highest effort available in that UI), owns architecture, important code, historical judgment, UX/accessibility decisions, adversarial review, final verification, and integration. Lower tiers are optional only when explicitly offered by the active surface and only for bounded mechanical packets with exact scope, acceptance checks, and main-loop verification. No lower-tier delegation of combat balance, history, UX/accessibility, architecture, or final integration.
