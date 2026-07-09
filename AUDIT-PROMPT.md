@@ -1,11 +1,11 @@
 # AUDIT-PROMPT — paste-ready kickoff for a ChatGPT 5.6 Sol full-spectrum audit + improve run (D336)
 
-**How to use:** open a fresh ChatGPT/Codex task, select **5.6 Sol** at **xhigh** effort, paste the block below, and let it run. It is **re-runnable**: each run reads the findings ledger in `REVIEW-QUEUE.md` and continues from its real live state. Historic Fable/Opus ledger entries remain history, not routing instructions.
+**How to use:** open a fresh ChatGPT/Codex task, select **5.6 Sol** at **Ultra** (the highest effort available in that UI), paste the block below, and let it run. It is **re-runnable**: each run reads the findings ledger in `REVIEW-QUEUE.md` and continues from its real live state. Historic Fable/Opus ledger entries remain history, not routing instructions.
 
 ---
 
 ```text
-ultracode — xhigh. You are ChatGPT 5.6 Sol running a
+ultracode — maximum effort. You are ChatGPT 5.6 Sol running a
 FULL-SPECTRUM AUDIT + IMPROVE run for "The Civil War", Aaron's personal teaching
 wargame (NOT MJI work). You have ZERO context — everything lives on disk; load it
 before acting.

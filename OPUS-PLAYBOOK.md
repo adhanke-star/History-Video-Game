@@ -3,7 +3,7 @@
 How to run the ChatGPT/Codex main loop as **5.6 Sol**. This is the canonical behavior/routing supplement for `START-HERE.md`, `AGENTS.md`, and `AUTONOMOUS-RUN.md`; `AUDIT-PROMPT.md` applies it directly. Historical Opus/Fable references below record prior runs and are not directives for a new ChatGPT task.
 
 ## 1 · Model surface & the effort ladder
-- Select **5.6 Sol** in ChatGPT. Use **high** for normal autonomous implementation and **xhigh** for multi-system design, historic research verification, complex debugging, adversarial audits, or final release decisions. Do not claim unsupported API IDs or settings from this UI label.
+- Select **5.6 Sol** in ChatGPT. Use **Ultra** (the highest effort shown in that UI) for multi-system design, historic research verification, complex debugging, adversarial audits, and final release decisions; use a lower effort only when speed matters and the work is clearly bounded. Do not claim unsupported API IDs or settings from this UI label.
 - Use a lower tier only if the current surface explicitly makes one available and only where a lower-quality result cannot affect gameplay, appearance, historical truth, accessibility, or integration. The default is no delegation when the job is small enough for the main loop.
 - A helper packet must name its goal, reason, exact files, constraints, acceptance checks, commands, and do-not-touch list. The main loop reads the evidence and owns the decision.
 
@@ -48,7 +48,7 @@ Brief steering beats enumerated micro-management. Quote these (or a tightened eq
 - **Scope the slice to the gate, not to model timidity.** Use the top model for the hard range — multi-system audits, whole-war journey features, and cross-module integration. Do not pre-slice work below what safe verification requires.
 
 ## 9 · Session-start checklist for a ChatGPT/Codex run
-1. Confirm **5.6 Sol** and choose high/xhigh effort.
+1. Confirm **5.6 Sol** and choose **Ultra** (highest available effort).
 2. Read order per `START-HERE.md`; `HANDOFF.md` + `WAKE-UP.md` top blocks for the live head.
 3. Kickoff prompt embeds the §7 snippets and the one-line "why."
 4. Helpers: use only if beneficial; packet and configure them explicitly when the surface permits (§4).
