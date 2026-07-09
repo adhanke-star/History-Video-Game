@@ -6,6 +6,20 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D334 — NASHVILLE BATTLE-BUILD SPEC AND PLAN PROBE — [CODEX GPT-5.5, Group 7 Franklin/Nashville battle-build planning] (2026-07-08)
+
+D333 shipped Franklin as runtime; D334 turns Nashville into the durable follow-on implementation packet before runtime work. **Planning/spec only — no `data/nashville.json`, runtime registry, menu button, generated-HTML behavior, or combat-code change.**
+
+- **What shipped:** `docs/design/nashville-battle-build-spec.md` and `tools/probe-nashville-plan.mjs`. The spec locks a **two-phase T8** Nashville battle: US attacker / CS defender, `defaultFog:false`, Phase 1 Dec. 15 Redoubts/Montgomery Hill scoreWeight 1, Phase 2 Dec. 16 Shy's Hill/Peach Orchard Hill scoreWeight 3. Franklin remains separate; Spring Hill stays teaching-only.
+- **Source/OOB re-verification before spec:** the D327 Franklin/Nashville packet was treated as a start, not authority. Load-bearing claims were rechecked against American Battlefield Trust Nashville materials, Battle of Nashville Trust Peach Orchard Hill and Shy's Hill pages, and Nashville Metro historical markers. The two-phase T8 shape survived recheck. Broad force figures are context only; D335 must not use 85,000/55,000 as literal active map strengths. Exact runtime unit strengths require `Verified identity; Inferred strength` unless pinned by a source.
+- **Rank/sector/USCT traps locked for D335:** Thomas, A. J. Smith, Schofield, Wilson, and Steedman are Maj. Gens.; McArthur is Brig. Gen.; Wood must not be overpromoted without an explicit source note; Hood carries the temporary General / permanent Lt. Gen. nuance; S. D. Lee and Stewart are Lt. Gens.; Cheatham and Bate are Maj. Gens.; William M. Shy is not a general; Forrest is absent from the main Nashville field. Sector separation: S. D. Lee = Peach Orchard/Overton/right, Stewart = center, Cheatham = Shy's Hill/left. USCT participation is source-honest: 12th/13th/100th USCT at Peach Orchard/Overton under Thompson/Steedman, with 18th USCT support noted; do not invent regiment-level Shy's Hill placement.
+- **D74 gate:** no per-battle `damage`, `firepower`, `casualty`, `morale`, `retreat`, `winner`, `outcome`, `scoreBonus`, `forceWin`, or similar fudge. Nashville's result must emerge from source-honest OOB, terrain, works, artillery, phase weights, timing, doctrine, and the universal model.
+- **Plan probe:** `probe-nashville-plan` verifies the spec, source register, history traps, T8 role/phase/scoreWeight shape, D74 warnings, runtime scaffold, Franklin/Spring Hill separation, and planned-only registry state. If `data/nashville.json` appears, it flips to requiring runtime registration, both historical baselines, and the focused runtime probe.
+- **Focused gate:** `node --check tools/probe-nashville-plan.mjs`; `node tools/build.mjs` **GATE OK** (known raw-embed soft warning only); `node tools/probe-nashville-plan.mjs` **7/7**; `node tools/probe-tactical-roster.mjs` **8/8**; `node tools/probe-custom-battle-builder.mjs` **15/15**; adjacent `node tools/probe-franklin.mjs` **10/10** and `node tools/probe-kennesaw.mjs` **10/10**; all required JSON artifacts read back `ok=true`, **0** failed steps, **0** pageerrors; `git diff --check` clean.
+- **Next:** D335 playable Nashville implementation: author `data/nashville.json`, register/menu-rank after Franklin if chronology/roadmap supports it, add `tools/probe-nashville.mjs`, update BOTH historical baselines, update schema tooling if needed, rebuild generated HTML from source, run schema/build/focused/adjacent gates, docs sync, commit, and push.
+
+---
+
 ## D333 — FRANKLIN IS NOW A PLAYABLE SINGLE-PHASE BATTLE — [CODEX GPT-5.5, Group 7 Franklin/Nashville battle-build implementation] (2026-07-08)
 
 D332's source/OOB/rank/terrain packet was implemented as runtime data without changing the universal combat model. **Franklin is now playable** and registered after Kennesaw in the historical battle menu. Nashville remains queued as a later T8 battle, not folded into this slice.
