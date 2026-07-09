@@ -23,7 +23,7 @@ function htmlEscape(s) {
 // Battle files (named after battles) need id/name/phases nested inside the battle object
 const BATTLE_FILES = new Set([
   'antietam.json', 'bullrun.json', 'chancellorsville.json', 'chickamauga.json',
-  'chattanooga.json', 'fredericksburg.json', 'gettysburg.json', 'kennesaw.json',
+  'chattanooga.json', 'franklin.json', 'fredericksburg.json', 'gettysburg.json', 'kennesaw.json',
   'malvern-hill.json', 'shiloh.json', 'vicksburg.json'
 ]);
 

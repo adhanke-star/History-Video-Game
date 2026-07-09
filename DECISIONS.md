@@ -6,6 +6,20 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D333 — FRANKLIN IS NOW A PLAYABLE SINGLE-PHASE BATTLE — [CODEX GPT-5.5, Group 7 Franklin/Nashville battle-build implementation] (2026-07-08)
+
+D332's source/OOB/rank/terrain packet was implemented as runtime data without changing the universal combat model. **Franklin is now playable** and registered after Kennesaw in the historical battle menu. Nashville remains queued as a later T8 battle, not folded into this slice.
+
+- **What shipped:** `data/franklin.json`, a registry/menu-rank line in `src/tactical/T1-bull-run.js`, focused guard `tools/probe-franklin.mjs`, both historical registry baselines updated (`tools/probe-tactical-roster.mjs`, `tools/probe-custom-battle-builder.mjs`), and `tools/validate-data-schemas.mjs` now classifies `franklin.json` as a battle file. `civil_war_generals.html` and the schema artifact were regenerated from source/tooling.
+- **Playable shape:** single-phase Franklin, November 30, 1864. Top-level roles are CS attacker / US defender; `defaultFog:false`; objective = Carter House / Carter cotton gin / Columbia Pike main line.
+- **Source honesty:** active Confederate assaulting strength is **19,000** in the data/probe readback, inside the D332 **18,000-20,000** target and not the broader army-present figure. Runtime data carries **15** Inferred-strength labels for game-unit splits. Rank traps held: Hood is `Gen. John Bell Hood (temporary grade)` with permanent lieutenant-general nuance; Schofield/Stanley are Maj. Gens.; Cox/Wagner are Brig. Gens.; Opdycke is Col.; Cheatham/Cleburne/Brown are Maj. Gens.; Stewart is Lt. Gen.; John C. Carter is handled as mortally wounded Nov. 30 and died Dec. 10.
+- **D74 boundary:** no battle-specific damage, firepower, casualty, winner, score-bonus, or force-win keys shipped. The Franklin result comes from terrain, breastworks, abatis, Fort Granger/main-line artillery, OOB, doctrine, reserve timing, and objective mechanics.
+- **Direction guard:** focused probe seed battery gives the intended historical pattern without count forcing: US holds **8/8** deterministic seeds; Confederate losses exceed Union losses **8/8** seeds. Sample readback: seed 1 = US / US loss 3,418 vs CS loss 4,999 / timeout.
+- **Focused gate:** `node --check` clean for touched runtime/probe/tool JS; `node tools/build.mjs` **GATE OK** (known raw-embed soft warning only); `node tools/validate-data-schemas.mjs` **42/42**; `probe-franklin-plan` **7/7**; `probe-franklin` **10/10**; `probe-tactical-roster` **8/8**; `probe-custom-battle-builder` **15/15**; adjacent `probe-kennesaw` **10/10**; all five required probe JSON artifacts read back `ok=true`, **0** failed steps, **0** pageerrors.
+- **Next:** stop at the D333 battle-build boundary. Remaining natural Group 7 candidates include Nashville, USCT/New Market Heights, or another researched lane; the D328 Antietam rank-label fix remains a small independent cleanup; full `vet:noreg` stays deferred to a planned batch/release gate unless explicitly requested.
+
+---
+
 ## D332 — FRANKLIN BATTLE-BUILD SPEC AND PLAN PROBE — [CODEX GPT-5.5, Group 7 Franklin/Nashville battle-build planning] (2026-07-08)
 
 D327 made Franklin the lead Franklin/Nashville candidate, and D329 completed the surrounding battle-build research library. D332 turns the Franklin/Nashville packet into a durable Franklin implementation spec and filesystem guard before runtime work. **Planning/spec only — no `data/franklin.json`, runtime registry, menu button, generated-HTML behavior, or combat-code change.**

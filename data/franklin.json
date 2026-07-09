@@ -1,0 +1,185 @@
+{
+  "_comment": "D333 PLAYABLE FRANKLIN, November 30, 1864. Single-phase Franklin/Nashville lane battle built from the D332 spec. Confederate infantry attacks the Federal main line around Carter House / Carter cotton gin / Columbia Pike. Active assaulting strength is kept near 18,000-20,000, not the broader Army of Tennessee present figure. Exact brigade/division game strengths are abstractions marked Inferred where not source-pinned. No per-battle damage/firepower/casualty/winner fudge.",
+  "franklin": {
+    "id": "franklin",
+    "weather": {
+      "sky": "clear",
+      "time": "late afternoon",
+      "provenance": "Verified/Inferred",
+      "note": "The assault is modeled as a late-afternoon daylight attack over open ground into visible works. Fog is off by default because Franklin's teaching point is open approach, breastworks, abatis, reserve counterattack, and command choice.",
+      "sources": [
+        "American Battlefield Trust, Franklin",
+        "Battle of Franklin Trust, history page",
+        "NPS Battle of Franklin Special Resource Study",
+        "Official Records, Series I, Vol. XLV, Pt. 1"
+      ]
+    },
+    "name": "Franklin - The Carter House Line",
+    "date": "November 30, 1864",
+    "place": "Franklin, Tennessee - Columbia Pike, Carter House, and Carter cotton gin",
+    "blurb": "After the Spring Hill failure, Hood sends the Army of Tennessee into a daylight frontal assault against Schofield's prepared Franklin line. Wagner's exposed brigades fall back through the works, Brown and Cleburne drive into the Carter House sector, and Opdycke's reserve counterattack seals the breach.",
+    "provenance": "Verified (high) for date, commanders, broad strengths, Carter House / cotton gin / Columbia Pike terrain, Wagner forward-line trap, Opdycke counterattack, casualty direction, and Franklin-Nashville operational frame. The active Confederate assaulting force is modeled near 18,000-20,000, not the broader army-present figure. Inferred (medium) for per-game-unit strengths and some battery groupings. Anti-Lost-Cause frame: Franklin was a disastrous command decision after Spring Hill, not noble martyrdom.",
+    "field": { "w": 1200, "h": 900 },
+    "attacker": "CS",
+    "defender": "US",
+    "defaultFog": false,
+    "assaultDoctrine": "cautious",
+    "_assaultDoctrineNote": "The AI Confederate attacker models a dense frontal assault into prepared works. This is an input/doctrine choice reflecting historical formation and tactical problem, not an output fudge.",
+    "timeLimitSec": 430,
+    "holdToWinSec": 135,
+    "menu": {
+      "title": "FRANKLIN (1864)",
+      "deck": "Hood's Army of Tennessee attacks Schofield's Carter House line - break the pike gap, or hold the works.",
+      "aria": "Franklin, November 1864 - the Carter House line. Command the Confederate assault or the Union defense."
+    },
+    "sides": {
+      "heading": "Franklin - Take Which Command?",
+      "intro": "November 30, 1864 - a late-day assault after Spring Hill.",
+      "CS": {
+        "title": "Command Hood's assault",
+        "badge": "&#9876; ATTACK",
+        "deck": "Drive Cheatham's and Stewart's men across the open ground, exploit the Columbia Pike gap, and break the Carter House line."
+      },
+      "US": {
+        "title": "Hold for Schofield",
+        "badge": "&#9819; DEFEND",
+        "deck": "Use the works, Fort Granger's guns, and Opdycke's reserve to seal the breach and keep the Harpeth crossing open."
+      },
+      "foot": "The other army is commanded by the AI. Franklin is a single-phase battle; Nashville remains a separate later battle."
+    },
+    "brief": {
+      "attack": "Spring Hill failed to trap Schofield. Now Hood orders the attack at Franklin. Your assault must cross open ground, push through Wagner's broken line, and seize the Carter House / Columbia Pike works. <b>This is your war:</b> history says the frontal assault ruined the Army of Tennessee; coordinate well enough to do better.",
+      "defend": "Cox's line bends around the Carter House and cotton gin. Wagner's forward line is exposed, but Opdycke's brigade waits in reserve. <b>This is your war:</b> hold the pike gap and keep the army's withdrawal over the Harpeth intact."
+    },
+    "objective": {
+      "name": "Carter House and Columbia Pike main line",
+      "x": 610,
+      "z": 365,
+      "r": 140,
+      "note": "The Federal main line at the Carter House / Carter cotton gin sector. Holding this radius represents keeping the Columbia Pike works and breach area in Union hands. Historically the Confederate assault pierced but did not hold the line."
+    },
+    "leaders": {
+      "_note": "Ranks are battle-date ranks. Hood is encoded with temporary full-general grade and permanent lieutenant-general nuance; Schofield and Stanley are major generals; Cox and Wagner are brigadier generals; Opdycke is a colonel; Cheatham, Cleburne, and Brown are major generals. The six general-officer death nuance: John C. Carter was mortally wounded at Franklin and died December 10, not killed outright on the field.",
+      "US": [
+        { "id": "ld_schofield_fra", "name": "Maj. Gen. John M. Schofield", "short": "Schofield", "quality": 0.72, "radius": 255, "x": 885, "z": 285, "fate": 3.0, "note": "Major General commanding the Union field force at Franklin. (Verified)" },
+        { "id": "ld_cox_fra", "name": "Brig. Gen. Jacob D. Cox", "short": "Cox", "quality": 0.72, "radius": 245, "attach": "us_cox_reilly", "fate": 2.8, "note": "Brigadier General directing the main Franklin defensive line from the Carter House. (Verified)" },
+        { "id": "ld_stanley_fra", "name": "Maj. Gen. David S. Stanley", "short": "Stanley", "quality": 0.7, "radius": 235, "attach": "us_kimball", "fate": 2.5, "note": "Major General commanding IV Corps at Franklin; wounded in the battle. (Verified)" },
+        { "id": "ld_wagner_fra", "name": "Brig. Gen. George D. Wagner", "short": "Wagner", "quality": 0.46, "radius": 190, "attach": "us_wagner_forward", "fate": 1.8, "note": "Brigadier General whose exposed forward line broke back through the main works. (Verified)" },
+        { "id": "ld_opdycke_fra", "name": "Col. Emerson Opdycke", "short": "Opdycke", "quality": 0.78, "radius": 220, "attach": "us_opdycke", "fate": 2.7, "note": "Colonel commanding the reserve brigade that counterattacked near the Carter House. Do not promote him at Franklin. (Verified)" }
+      ],
+      "CS": [
+        { "id": "ld_hood_fra", "name": "Gen. John Bell Hood (temporary grade)", "short": "Hood", "quality": 0.5, "radius": 250, "x": 610, "z": 835, "fate": 2.6, "note": "Temporary full General commanding the Army of Tennessee; permanent grade lieutenant general. (Verified)" },
+        { "id": "ld_cheatham_fra", "name": "Maj. Gen. Benjamin F. Cheatham", "short": "Cheatham", "quality": 0.68, "radius": 235, "attach": "cs_cleburne", "fate": 2.5, "note": "Major General commanding the corps that included Cleburne, Brown, and Bate divisions. (Verified)" },
+        { "id": "ld_cleburne_fra", "name": "Maj. Gen. Patrick R. Cleburne", "short": "Cleburne", "quality": 0.84, "radius": 230, "attach": "cs_cleburne", "fate": 3.0, "note": "Major General killed at Franklin. Do not make him lieutenant general. (Verified)" },
+        { "id": "ld_brown_fra", "name": "Maj. Gen. John C. Brown", "short": "Brown", "quality": 0.7, "radius": 225, "attach": "cs_brown", "fate": 2.6, "note": "Major General whose division entered the center around the Carter House before the counterattack. (Verified)" },
+        { "id": "ld_stewart_fra", "name": "Lt. Gen. Alexander P. Stewart", "short": "Stewart", "quality": 0.68, "radius": 220, "attach": "cs_loring", "fate": 2.5, "note": "Lieutenant General commanding one of Hood's corps at Franklin. (Verified)" }
+      ]
+    },
+    "supply": {
+      "CS": { "x": 610, "z": 870, "name": "Confederate line of advance from Winstead Hill" },
+      "US": { "x": 610, "z": 155, "name": "Harpeth River crossings and Franklin rear" }
+    },
+    "terrain": {
+      "hills": [
+        { "name": "Winstead Hill", "x": 615, "z": 830, "h": 26, "s": 160, "note": "Hood's observation and launch context south of Franklin. (Verified)" },
+        { "name": "Federal main line", "x": 610, "z": 365, "h": 12, "s": 190, "note": "Carter House / cotton gin sector of the defensive line. (Verified)" },
+        { "name": "Fort Granger high ground", "x": 845, "z": 220, "h": 24, "s": 130, "note": "Union artillery support north of the Harpeth. (Verified)" }
+      ],
+      "woods": [
+        { "x": 330, "z": 690, "r": 90, "note": "Patchy southern approach west of the pike. (Inferred placement)" },
+        { "x": 860, "z": 675, "r": 90, "note": "Patchy southern approach east of the pike. (Inferred placement)" },
+        { "x": 275, "z": 430, "r": 75, "note": "Tree line near the left of the Federal works. (Inferred placement)" },
+        { "x": 965, "z": 390, "r": 70, "note": "Tree line near the right of the Federal works. (Inferred placement)" }
+      ],
+      "walls": [
+        { "x1": 255, "z1": 375, "x2": 540, "z2": 365, "note": "FEDERAL BREASTWORKS - west Carter sector with ditch, parapet, and head logs. (Verified)" },
+        { "x1": 680, "z1": 365, "x2": 965, "z2": 375, "note": "FEDERAL BREASTWORKS - east Carter / cotton gin sector with ditch, parapet, and head logs. (Verified)" },
+        { "x1": 540, "z1": 392, "x2": 680, "z2": 392, "note": "COLUMBIA PIKE RETRENCHMENT - secondary line behind the pike gap sealed by Opdycke's counterattack. (Verified/Inferred placement)" },
+        { "x1": 275, "z1": 455, "x2": 535, "z2": 450, "note": "OSAGE-ORANGE ABATIS - obstacle belt before the main line. (Verified; placement inferred)" },
+        { "x1": 690, "z1": 450, "x2": 955, "z2": 455, "note": "OSAGE-ORANGE ABATIS - obstacle belt before the cotton gin sector. (Verified; placement inferred)" }
+      ],
+      "markers": [
+        { "kind": "road", "name": "Columbia Pike", "path": [[610, 885], [610, 690], [610, 500], [610, 365], [610, 180]], "note": "The road gap through the Federal line and the route toward Nashville. (Verified)" },
+        { "kind": "stream", "name": "Harpeth River", "path": [[180, 170], [360, 150], [610, 145], [850, 165], [1030, 155]], "note": "Union rear crossing and withdrawal context. (Verified)" },
+        { "kind": "label", "name": "Carter House / Cox headquarters", "x": 565, "z": 345, "note": "Carter House served as Cox's command post; fighting raged around the buildings. (Verified)" },
+        { "kind": "label", "name": "Carter cotton gin", "x": 705, "z": 350, "note": "Assault site and landmark east of the pike. (Verified)" },
+        { "kind": "label", "name": "Wagner's exposed forward line", "x": 610, "z": 535, "note": "Forward brigades under Conrad and Lane broke back through the main works. (Verified)" },
+        { "kind": "label", "name": "Opdycke reserve", "x": 565, "z": 290, "note": "Reserve brigade that refused the exposed line and counterattacked near the Carter House. (Verified)" },
+        { "kind": "label", "name": "Carnton / field hospital context", "x": 1030, "z": 515, "note": "Teaching and human-cost context, not the playable objective. (Verified)" }
+      ]
+    },
+    "oob": {
+      "US": [
+        { "id": "us_cox_reilly", "name": "Reilly's Brigade, Cox's Line", "commander": "Brig. Gen. James W. Reilly", "arm": "inf", "weapon": "rifled", "role": "defend", "men": 2600, "xp": 3, "x": 470, "z": 350, "facing": 3.14159, "formation": "line", "note": "XXIII Corps sector at the Franklin main line. (Verified identity; Inferred strength)" },
+        { "id": "us_cox_ruger", "name": "Ruger's Division Sector", "commander": "Brig. Gen. Thomas H. Ruger", "arm": "inf", "weapon": "rifled", "role": "defend", "men": 2400, "xp": 3, "x": 350, "z": 360, "facing": 3.14159, "formation": "line", "note": "Federal main-line sector west of the Carter House. (Verified identity; Inferred strength)" },
+        { "id": "us_stiles", "name": "Stiles's Brigade, Carter Sector", "commander": "Col. Israel N. Stiles", "arm": "inf", "weapon": "rifled", "role": "defend", "men": 2200, "xp": 2, "x": 760, "z": 360, "facing": 3.14159, "formation": "line", "note": "Federal main-line sector near the cotton gin. (Verified identity; Inferred strength)" },
+        { "id": "us_wagner_forward", "name": "Wagner's Forward Line", "commander": "Brig. Gen. George D. Wagner", "arm": "inf", "weapon": "rifled", "role": "defend", "men": 2200, "xp": 1, "x": 610, "z": 535, "facing": 3.14159, "formation": "line", "note": "Conrad and Lane's exposed forward brigades, modeled as the brittle line that falls back through the works. (Verified identity; Inferred strength)" },
+        { "id": "us_kimball", "name": "Kimball's IV Corps Line", "commander": "Brig. Gen. Nathan Kimball", "arm": "inf", "weapon": "rifled", "role": "defend", "men": 2500, "xp": 2, "x": 870, "z": 365, "facing": 3.14159, "formation": "line", "note": "IV Corps sector under Stanley's command at Franklin. (Verified identity; Inferred strength)" },
+        { "id": "us_wood", "name": "Wood's IV Corps Support", "commander": "Brig. Gen. Thomas J. Wood", "arm": "inf", "weapon": "rifled", "role": "defend", "men": 2000, "xp": 2, "x": 940, "z": 420, "facing": 3.14159, "formation": "line", "note": "IV Corps support sector; Wood becomes important at Nashville later. (Verified identity; Inferred strength)" },
+        { "id": "us_fort_granger", "name": "Fort Granger and Line Artillery", "commander": "Federal artillery at Franklin", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 16, "men": 480, "xp": 3, "x": 815, "z": 225, "facing": 3.14159, "formation": "line", "note": "Fort Granger and supporting guns firing over/near the Federal line. Universal gun model: 16 guns. (Verified artillery role; Inferred grouping)" },
+        { "id": "us_battery_a_ky", "name": "Battery A, 1st Kentucky Light Artillery", "commander": "Capt. Samuel L. Canby / Federal battery officers", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 6, "men": 180, "xp": 3, "x": 520, "z": 325, "facing": 3.14159, "formation": "line", "note": "Representative Federal battery on the main line. Universal gun model: 6 guns. (Verified artillery presence; Inferred grouping)" }
+      ],
+      "CS": [
+        { "id": "cs_cleburne", "name": "Cleburne's Division", "commander": "Maj. Gen. Patrick R. Cleburne", "arm": "inf", "weapon": "rifled", "role": "attack", "men": 3100, "xp": 3, "x": 460, "z": 760, "facing": 0, "formation": "line", "note": "Cheatham's Corps division in the Franklin assault. Cleburne was a major general and was killed at Franklin. (Verified identity/rank; Inferred strength)" },
+        { "id": "cs_brown", "name": "Brown's Division", "commander": "Maj. Gen. John C. Brown", "arm": "inf", "weapon": "rifled", "role": "attack", "men": 3400, "xp": 3, "x": 590, "z": 780, "facing": 0, "formation": "line", "note": "Central assault division that entered the Carter House sector before the counterattack. (Verified identity; Inferred strength)" },
+        { "id": "cs_bate", "name": "Bate's Division", "commander": "Maj. Gen. William B. Bate", "arm": "inf", "weapon": "rifled", "role": "attack", "men": 2800, "xp": 2, "x": 720, "z": 770, "facing": 0, "formation": "line", "note": "Cheatham's Corps division on the assault line. (Verified identity; Inferred strength)" },
+        { "id": "cs_loring", "name": "Loring's Division", "commander": "Maj. Gen. William W. Loring", "arm": "inf", "weapon": "rifled", "role": "attack", "men": 3200, "xp": 2, "x": 345, "z": 800, "facing": 0, "formation": "line", "note": "Stewart's Corps division in the broader Franklin assault. (Verified identity; Inferred strength)" },
+        { "id": "cs_walthall", "name": "Walthall's Division", "commander": "Maj. Gen. Edward C. Walthall", "arm": "inf", "weapon": "rifled", "role": "attack", "men": 2800, "xp": 2, "x": 860, "z": 800, "facing": 0, "formation": "line", "note": "Stewart's Corps division in the assault. (Verified identity; Inferred strength)" },
+        { "id": "cs_french", "name": "French's Division", "commander": "Maj. Gen. Samuel G. French", "arm": "inf", "weapon": "rifled", "role": "attack", "men": 2500, "xp": 2, "x": 1010, "z": 775, "facing": 0, "formation": "line", "note": "Division used to represent the outer assault pressure. (Verified identity; Inferred strength)" },
+        { "id": "cs_guibor", "name": "Guibor's Missouri Battery", "commander": "Capt. Henry Guibor", "arm": "art", "weapon": "smooth", "role": "attack", "guns": 4, "men": 100, "xp": 2, "x": 540, "z": 700, "facing": 0, "formation": "line", "note": "Representative Confederate artillery support. Universal gun model: 4 guns. (Verified artillery identity; Inferred placement)" },
+        { "id": "cs_cowan", "name": "Cowan's Mississippi Battery", "commander": "Capt. James J. Cowan", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 4, "men": 100, "xp": 2, "x": 690, "z": 700, "facing": 0, "formation": "line", "note": "Representative Confederate artillery support; most Franklin damage came from infantry assault into works, not a gun duel. Universal gun model: 4 guns. (Verified artillery identity; Inferred placement)" }
+      ]
+    },
+    "reinforcements": [
+      { "id": "us_opdycke", "side": "US", "atSec": 45, "name": "Opdycke's Reserve Brigade", "commander": "Col. Emerson Opdycke", "arm": "inf", "weapon": "rifled", "men": 1800, "xp": 3, "x": 560, "z": 285, "facing": 3.14159, "formation": "column", "entry": "from reserve behind the Carter House", "note": "Reserve brigade that refused Wagner's forward line and counterattacked to seal the breach. Opdycke was a colonel. (Verified identity/rank; Inferred strength/timing)" },
+      { "id": "us_stanley_reserve", "side": "US", "atSec": 70, "name": "Stanley's Reserve Elements", "commander": "Maj. Gen. David S. Stanley", "arm": "inf", "weapon": "rifled", "men": 1200, "xp": 2, "x": 770, "z": 285, "facing": 3.14159, "formation": "column", "entry": "from IV Corps support behind the main line", "note": "Reserve abstraction for Stanley's command and the counterattack around the line. (Verified commander; Inferred strength/timing)" },
+      { "id": "cs_cheatham_support", "side": "CS", "atSec": 60, "name": "Cheatham's Corps Support", "commander": "Maj. Gen. Benjamin F. Cheatham", "arm": "inf", "weapon": "rifled", "men": 1000, "xp": 2, "x": 610, "z": 850, "facing": 0, "formation": "column", "entry": "from the southern assault line", "note": "Support abstraction keeps active Confederate assault strength near the D332 18,000-20,000 range. (Verified sector; Inferred strength/timing)" }
+    ],
+    "endNote": {
+      "US": {
+        "US": "History holds. The Carter House / Columbia Pike line still stands. Wagner's forward line made the danger worse, but Opdycke's reserve and the main works sealed the breach.",
+        "CS": "History is overturned against your army. Hood's assault has broken and held the Carter House line, the result the Army of Tennessee could not achieve in 1864."
+      },
+      "CS": {
+        "US": "History is overturned. Your attack has carried and held the Carter House line that Hood's men historically could not keep.",
+        "CS": "History holds. The assault pierced the line but could not hold it; the Army of Tennessee paid for the frontal attack and moved toward destruction at Nashville."
+      },
+      "draw": "A torn line and a shattered field: Franklin remains unresolved in this run, but the cost of sending infantry into prepared works is plain."
+    },
+    "teaching": {
+      "title": "Franklin - A Frontal Assault Into Works",
+      "cards": [
+        {
+          "id": "fra_hood_decision",
+          "head": "Hood's charge, not noble tragedy",
+          "body": "Franklin followed the missed opportunity at Spring Hill. Hood chose a daylight frontal assault across open ground against prepared works. The game treats that as a command decision and tactical problem, not romance.",
+          "provenance": "Verified - American Battlefield Trust; Battle of Franklin Trust; NPS special-resource study."
+        },
+        {
+          "id": "fra_breach",
+          "head": "A breach is not a victory",
+          "body": "The Confederate attack entered the Carter House sector near the Columbia Pike, but Opdycke's reserve and nearby Federal troops counterattacked. Franklin teaches why reserve depth and line repair matter.",
+          "provenance": "Verified - ABT and Battle of Franklin Trust for the Carter House fighting and Opdycke counterattack."
+        },
+        {
+          "id": "fra_strength_honesty",
+          "head": "Use the assaulting force, not the whole army",
+          "body": "Hood had a larger army present, but the active assault is closer to 18,000-20,000 men. The scenario uses that game-scale force and labels exact unit strengths as inferred when the source packet does not pin them. John C. Carter's place in the general-officer loss list is also handled carefully: he was mortally wounded on November 30 and died December 10.",
+          "provenance": "Verified for broad totals and roughly 20,000 assaulting Confederates; inferred for game-unit splits."
+        },
+        {
+          "id": "fra_human_cost",
+          "head": "The field did not end at the works",
+          "body": "Carter House, Carnton, and the Confederate cemetery carry the battle's human aftermath. The lesson is command responsibility, civilian proximity, and the ruined Army of Tennessee, not a glory narrative.",
+          "provenance": "Verified - NPS special-resource study and Battle of Franklin Trust interpretation."
+        }
+      ],
+      "codex": {
+        "id": "codex_franklin",
+        "title": "Franklin - November 30, 1864",
+        "summary": "Hood's Army of Tennessee assaulted Schofield's prepared Franklin line around the Carter House and Columbia Pike. The attack briefly broke into the center but was repulsed with disastrous Confederate losses, setting up the army's collapse at Nashville.",
+        "axes": { "timeline": "1864", "theater": "Western", "people": ["Hood", "Schofield", "Cox", "Stanley", "Wagner", "Opdycke", "Cheatham", "Cleburne", "Brown", "Stewart"], "battle": "Franklin" }
+      }
+    }
+  }
+}
