@@ -488,44 +488,89 @@ class BlenderMCPServer:
         except Exception as e:
             return {"error": str(e)}
 
-    # Disallowed patterns in user-supplied code — prevent file-system access,
-    # network calls, process spawning, and module imports outside bpy.
-    _CODE_BLOCKLIST = [
-        "import os", "import sys", "import subprocess", "import socket",
-        "import shutil", "import requests", "from os", "from sys",
-        "from subprocess", "from socket", "from shutil", "from requests",
-        "__import__", "eval(", "exec(", "compile(", "open(",
-        "os.system", "os.popen", "os.exec", "os.spawn",
-        "subprocess.run", "subprocess.call", "subprocess.Popen",
-    ]
+    @staticmethod
+    def _validate_code_ast(code):
+        """Parse code and reject dangerous AST patterns.
+
+        Returns None if safe, or an error string describing the violation.
+        Uses AST analysis (not string matching) so it cannot be bypassed by
+        string concatenation, chr() encoding, or similar tricks.
+        """
+        import ast
+
+        try:
+            tree = ast.parse(code)
+        except SyntaxError as e:
+            return f"Syntax error: {e}"
+
+        for node in ast.walk(tree):
+            # Block all imports (import X, from X import Y)
+            if isinstance(node, (ast.Import, ast.ImportFrom)):
+                return "Blocked: import statements are not permitted"
+
+            # Block attribute access to dunder names (__class__, __bases__,
+            # __subclasses__, __globals__, __builtins__, __import__, etc.)
+            # This prevents class-hierarchy traversal sandbox escapes.
+            if isinstance(node, ast.Attribute):
+                if isinstance(node.attr, str) and node.attr.startswith("__") and node.attr.endswith("__"):
+                    return f"Blocked: access to dunder attribute '{node.attr}' is not permitted"
+
+            # Block calls to dangerous builtin names even if passed via
+            # alternate paths (e.g. reassigned to a variable)
+            if isinstance(node, ast.Call):
+                func = node.func
+                if isinstance(func, ast.Name) and func.id in (
+                    "eval", "exec", "compile", "open", "__import__",
+                    "getattr", "setattr", "delattr", "globals", "locals",
+                    "vars", "breakpoint", "exit", "quit",
+                ):
+                    return f"Blocked: call to '{func.id}' is not permitted"
+
+            # Block string access to dunder names via subscript (e.g. x["__class__"])
+            if isinstance(node, ast.Constant) and isinstance(node.value, str):
+                if node.value.startswith("__") and node.value.endswith("__"):
+                    return f"Blocked: dunder string literal '{node.value}' is not permitted"
+
+        return None
 
     def execute_code(self, code):
         """Execute Blender Python code with safety restrictions.
 
-        Only bpy operations are allowed. System-level access (os, subprocess,
-        socket, file I/O, eval/exec chains) is blocked to prevent misuse over
-        the unauthenticated local socket.
+        Security is enforced via AST analysis (not bypassable string matching):
+        - All import statements are rejected at the AST level.
+        - Dunder attribute access (__class__, __bases__, __subclasses__, etc.)
+          is blocked to prevent class-hierarchy sandbox escapes.
+        - Dangerous builtin calls (eval, exec, open, getattr, setattr, etc.)
+          are blocked.
+        - The execution namespace exposes only bpy, mathutils, and a minimal
+          set of safe builtins (no getattr/setattr/type/dir).
         """
         if not isinstance(code, str) or not code.strip():
             return {"error": "Code must be a non-empty string"}
 
-        # Block dangerous patterns
-        code_lower = code.lower()
-        for pattern in self._CODE_BLOCKLIST:
-            if pattern.lower() in code_lower:
-                return {"error": f"Blocked: use of '{pattern}' is not permitted in execute_code"}
+        # AST-level validation — catches bypass attempts that string matching cannot
+        violation = self._validate_code_ast(code)
+        if violation:
+            return {"error": violation}
 
         try:
-            # Restricted namespace — only bpy and safe builtins
-            safe_builtins = {
-                k: __builtins__[k] if isinstance(__builtins__, dict) else getattr(__builtins__, k)
-                for k in ("print", "len", "range", "int", "float", "str", "list",
-                          "dict", "tuple", "set", "bool", "None", "True", "False",
-                          "round", "abs", "min", "max", "sorted", "enumerate", "zip",
-                          "isinstance", "type", "getattr", "setattr", "hasattr", "dir")
-                if (isinstance(__builtins__, dict) and k in __builtins__) or
-                   (not isinstance(__builtins__, dict) and hasattr(__builtins__, k))
-            }
+            # Minimal safe builtins — deliberately excludes getattr, setattr,
+            # hasattr, type, dir, vars, globals, locals which enable sandbox escapes.
+            _SAFE_BUILTIN_NAMES = (
+                "print", "len", "range", "int", "float", "str", "list",
+                "dict", "tuple", "set", "bool", "None", "True", "False",
+                "round", "abs", "min", "max", "sorted", "enumerate", "zip",
+                "isinstance", "map", "filter", "reversed", "any", "all",
+            )
+            safe_builtins = {}
+            for k in _SAFE_BUILTIN_NAMES:
+                if isinstance(__builtins__, dict):
+                    if k in __builtins__:
+                        safe_builtins[k] = __builtins__[k]
+                else:
+                    if hasattr(__builtins__, k):
+                        safe_builtins[k] = getattr(__builtins__, k)
+
             namespace = {"bpy": bpy, "mathutils": mathutils, "__builtins__": safe_builtins}
 
             # Capture stdout during execution, and return it as result
