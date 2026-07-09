@@ -111,6 +111,24 @@ const SETUP = `(() => {
       if(!osborn || !(osborn.guns>=15 && osborn.guns<=22)) throw new Error('us_osborn_hill missing or guns='+(osborn&&osborn.guns)+' — the documented Cemetery Hill northern enfilade (18 guns) must stay on the board');
       return { line:line.men, flank:flank.men, total:total, trimble:trimble.men, osbornGuns:osborn.guns }; });
 
+    step('C66/C67/C68 (D338) GETTYSBURG TRUTH TEETH: no Lost Cause sole-blame Longstreet framing, no unsourced Meade take-command quote, Kemper wounded-and-captured (not killed)', function(){
+      var S=JSON.stringify(GAME_DATA.gettysburg);
+      if(/foot-dragging/i.test(S)) throw new Error('C66 regression: "foot-dragging" is back');
+      if(/delay and reluctance/i.test(S)) throw new Error('C66 regression: "delay and reluctance" is back');
+      if(/costs the Confederacy Little Round Top/i.test(S)) throw new Error('C66 regression: the sole-cause "costs the Confederacy Little Round Top" teach is back');
+      var ls=null, csL=DATA.phases[1].leaders.CS; for(var i=0;i<csL.length;i++) if(csL[i].id==='ld_longstreet') ls=csL[i];
+      if(!ls) throw new Error('ld_longstreet missing from Day 2');
+      if(ls.note.indexOf('Lost Cause')<0) throw new Error('C66: the Day-2 Longstreet note lost the Lost Cause scapegoating context');
+      if(/I will take command/i.test(S)) throw new Error('C67 regression: the unsourced "General, I will take command" quote is back');
+      var hk=null, usL=DATA.phases[2].leaders.US; for(var j=0;j<usL.length;j++) if(usL[j].id==='ld_hancock') hk=usL[j];
+      if(!hk) throw new Error('ld_hancock missing from Day 3');
+      if(hk.note.indexOf('July 1')<0) throw new Error('C67: the Hancock note no longer teaches the July 1 field-command assignment separately from the July 3 wound');
+      if(/three brigade commanders were killed or mortally wounded/i.test(S)) throw new Error('C68 regression: the Pickett summary again kills all three brigade commanders');
+      var pk=null, csL3=DATA.phases[2].leaders.CS; for(var k=0;k<csL3.length;k++) if(csL3[k].id==='ld_pickett') pk=csL3[k];
+      if(!pk) throw new Error('ld_pickett missing from Day 3');
+      if(pk.note.indexOf('Kemper')<0 || pk.note.indexOf('captured')<0) throw new Error('C68: the Pickett note no longer records Kemper wounded and captured');
+      return { longstreetLostCause:true, hancockJuly1:true, kemperCaptured:true }; });
+
     step('MULTI-PHASE LAUNCH: phase state initializes, phase 0 (Day 1 McPherson Ridge) builds its OOB + objective + running tally', function(){
       fldLaunchSandbox({renderer:'none', scenario:'gettysburg', autoBoth:true, seed:12345});
       if(__FIELD.scenario!=='gettysburg') throw new Error('scenario not set: '+__FIELD.scenario);
