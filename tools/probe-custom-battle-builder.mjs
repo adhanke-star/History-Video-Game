@@ -61,7 +61,7 @@ function killChild(child) {
 
 const SETUP = `(() => {
   var R = { ok:true, steps:[] };
-  var EXPECTED = ['bullrun1', 'malvernHill', 'antietam', 'fredericksburg', 'chancellorsville', 'gettysburg', 'shiloh', 'vicksburg', 'chickamauga', 'chattanooga'];
+  var EXPECTED = ['bullrun1', 'malvernHill', 'antietam', 'fredericksburg', 'chancellorsville', 'gettysburg', 'shiloh', 'vicksburg', 'chickamauga', 'chattanooga', 'kennesaw'];
   function step(name, fn) {
     try { var v = fn(); R.steps.push({ name:name, ok:true, v:v === undefined ? null : v }); }
     catch(e) { R.ok = false; R.steps.push({ name:name, ok:false, err:String(e && e.message || e) }); }

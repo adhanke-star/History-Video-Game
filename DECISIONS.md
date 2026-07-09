@@ -6,6 +6,21 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D331 — KENNESAW MOUNTAIN IS NOW A PLAYABLE SINGLE-PHASE BATTLE — [CODEX GPT-5.5, Group 7 Atlanta/March battle-build implementation] (2026-07-08)
+
+D330's source/OOB/rank/terrain packet was implemented as runtime data without changing the universal combat model. **Kennesaw Mountain is now playable** and registered after Chattanooga in the historical battle menu.
+
+- **What shipped:** `data/kennesaw.json`, a registry/menu-rank line in `src/tactical/T1-bull-run.js`, focused guard `tools/probe-kennesaw.mjs`, both historical registry baselines updated (`tools/probe-tactical-roster.mjs`, `tools/probe-custom-battle-builder.mjs`), and `tools/validate-data-schemas.mjs` now classifies both `chattanooga.json` and `kennesaw.json` as battle files. `civil_war_generals.html` was regenerated from source.
+- **Playable shape:** single-phase Kennesaw Mountain, June 27, 1864. Top-level roles are US attacker / CS defender; `defaultFog:false`; objective = the Confederate ridge breastworks and Dead Angle spanning Pigeon Hill / Little Kennesaw and Cheatham Hill.
+- **Source honesty:** the runtime preserves the D330 sector totals: **5,500 Federals** at Pigeon Hill across Giles A. Smith, Lightburn, and Walcutt; **9,000 Federals** at Cheatham Hill across Newton/Davis with Harker/Wagner/Kimball and McCook/Mitchell. Exact brigade strengths and Confederate sector numbers are marked **Verified identity; Inferred strength** where the sources identify units but not headcounts. The forbidden Atlanta-campaign totals **150,000 / 100,000** do not appear in runtime data.
+- **Rank/date traps held:** Sherman, Thomas, Schofield, McPherson, and Logan are Maj. Gens.; Morgan L. Smith, Newton, Jefferson C. Davis, and Harker are Brig. Gens.; McCook and Mitchell are Colonels; Johnston is full General CSA and still army commander; Hood is not army commander yet; Hardee is Lt. Gen.; Cheatham and Cleburne are Maj. Gens.; Maney and Vaughn are Brig. Gens.
+- **D74 boundary:** no battle-specific damage, firepower, casualty, winner, score-bonus, or force-win keys shipped. The Kennesaw probe scans the runtime data and requires artillery gun counts under the universal gun model. The Confederate defensive result comes from terrain, breastworks, abatis, gun counts, OOB, and the existing objective/AI systems.
+- **Direction guard:** focused probe seed battery gives the intended historical pattern without count forcing: CS holds **8/8** deterministic seeds; US casualties exceed CS casualties **8/8** seeds. Sample readback: seed 1 = CS / US loss 4,915 vs CS loss 1,636 / timeout.
+- **Focused gate:** `node --check` clean for touched runtime/probe/tool JS; `node tools/build.mjs` **GATE OK** (known raw-embed soft warning only); `node tools/validate-data-schemas.mjs` **41/41**; `probe-kennesaw-plan` **6/6**; `probe-kennesaw` **10/10**; `probe-tactical-roster` **8/8**; `probe-custom-battle-builder` **15/15**; `probe-chattanooga` **16/16**; all five required probe JSON artifacts read back `ok=true`, **0** failed steps, **0** pageerrors.
+- **Next:** stop at the D331 battle-build boundary. The most natural next battle-build candidate is Franklin/Nashville or USCT if Aaron wants to continue Group 7; the D328 Antietam rank-label fix remains a small independent cleanup; full `vet:noreg` stays deferred to a planned batch/release gate unless explicitly requested.
+
+---
+
 ## D330 — KENNESAW MOUNTAIN BATTLE-BUILD SPEC AND PLAN PROBE — [CODEX GPT-5.5, Group 7 Atlanta/March battle-build planning] (2026-07-08)
 
 D327 made Kennesaw Mountain the lead Atlanta/March candidate; D330 turns that research packet into a durable implementation spec and filesystem guard before any runtime/data work. **Planning/spec only — no `data/kennesaw.json`, runtime registry, menu button, generated-HTML behavior, or combat-code change.**

@@ -23,8 +23,8 @@ function htmlEscape(s) {
 // Battle files (named after battles) need id/name/phases nested inside the battle object
 const BATTLE_FILES = new Set([
   'antietam.json', 'bullrun.json', 'chancellorsville.json', 'chickamauga.json',
-  'fredericksburg.json', 'gettysburg.json', 'malvern-hill.json', 'shiloh.json',
-  'vicksburg.json'
+  'chattanooga.json', 'fredericksburg.json', 'gettysburg.json', 'kennesaw.json',
+  'malvern-hill.json', 'shiloh.json', 'vicksburg.json'
 ]);
 
 // Data files that use _meta for version info (no top-level schemaVersion or id)

@@ -1,6 +1,6 @@
 # Kennesaw Mountain Battle-Build Spec (D330)
 
-**Status:** D330 planning/spec + probe scaffold. This is durable repo state before runtime implementation. It does not add `data/kennesaw.json`, a registry line, a menu button, or generated HTML behavior.
+**Status:** D330 planning/spec + probe scaffold, implemented in D331 as playable runtime. D331 adds `data/kennesaw.json`, registry/menu placement after Chattanooga, `tools/probe-kennesaw.mjs`, both historical baselines, and regenerated HTML.
 
 **Task shape:** build Kennesaw Mountain as the first Atlanta/March battle-build item after D327/D329 completed the research library. D330 locks the intended scope, source traps, OOB grain, rank rules, D74 no-fudge wall, and future probe teeth so D331 can implement without inventing units, ranks, strengths, terrain, quotations, casualties, or combat exceptions.
 
@@ -123,6 +123,12 @@ When `data/kennesaw.json` is added:
 - Balance/direction teeth: across a small deterministic seed set, the US fails to seize in the majority and US casualties exceed CS casualties in the majority. The probe should guard direction, not exact counts.
 - Both-baselines gotcha: `tools/probe-tactical-roster.mjs` `EXPECTED`, menu order, and DOM button list must include `kennesaw`; `tools/probe-custom-battle-builder.mjs` historical-registry baseline must include `kennesaw`.
 - Adjacent guard: `tools/probe-chattanooga.mjs` must stay green to protect the immediately preceding Western-theater scenario.
+
+## D331 Runtime Readback
+
+D331 implemented this packet as a single-phase playable battle. Focused readback: `probe-kennesaw-plan` 6/6, `probe-kennesaw` 10/10, `probe-tactical-roster` 8/8, `probe-custom-battle-builder` 15/15, adjacent `probe-chattanooga` 16/16, schema validation 41/41, all required JSON artifacts `ok=true`, zero failed steps, zero pageerrors.
+
+The runtime guard confirms: Pigeon Hill sums to 5,500 Federals, Cheatham Hill sums to 9,000 Federals, no 150,000/100,000 campaign totals leak into data, Confederate exact strengths are marked Inferred, rank/date traps hold, no D74 fudge keys are present, CS holds 8/8 deterministic seeds, and US casualties exceed CS casualties 8/8 seeds.
 
 ## D330 Completion Criteria
 
