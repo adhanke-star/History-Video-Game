@@ -6,6 +6,21 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D330 — KENNESAW MOUNTAIN BATTLE-BUILD SPEC AND PLAN PROBE — [CODEX GPT-5.5, Group 7 Atlanta/March battle-build planning] (2026-07-08)
+
+D327 made Kennesaw Mountain the lead Atlanta/March candidate; D330 turns that research packet into a durable implementation spec and filesystem guard before any runtime/data work. **Planning/spec only — no `data/kennesaw.json`, runtime registry, menu button, generated-HTML behavior, or combat-code change.**
+
+- **What shipped:** `docs/design/kennesaw-battle-build-spec.md` and `tools/probe-kennesaw-plan.mjs`. The spec locks a **single-phase** battle, not T8: US attacker, CS defender, `defaultFog:false`, objective = the Confederate ridge/breastwork line across Pigeon Hill / Little Kennesaw and Cheatham Hill / Dead Angle. The intended historical teaching read is that a frontal US assault loses because of terrain, fieldworks, abatis, and OOB/timing — not because of per-battle output modifiers.
+- **Source/OOB re-verification before spec:** D327's Atlanta/March packet was treated as a start, not authority. The load-bearing sector details were rechecked against NPS Kennesaw materials, NPS Union/Confederate OOB pages, the NPS National Register text, and ABT Cheatham Hill. The spec pins the two assault sectors: **~5,500 Federals at Pigeon Hill** via Giles A. Smith, A. J. Lightburn, and Charles C. Walcutt; **~9,000 Federals at Cheatham Hill** via Newton's and Davis's divisions, with Harker/Wagner/Kimball and McCook/Mitchell named for D331 verification.
+- **Rank/identity traps locked for D331:** Sherman is Maj. Gen.; Thomas, Schofield, and McPherson are Maj. Gens.; Morgan L. Smith is Brig. Gen.; Johnston is full General CSA and still army commander at Kennesaw; Hood is not army commander yet; Hardee is Lt. Gen.; Cheatham/Cleburne are Maj. Gens.; Maney/Vaughn are Brig. Gens. Exact Confederate brigade-strength inputs are not fully supplied by the OOB pages, so D331 must mark any such strength as **Verified identity; Inferred strength** rather than inventing certainty.
+- **Strength-total guard:** D331 must not use the campaign-scale **150,000 / 100,000** Atlanta-campaign totals as battle strengths. The probe/spec explicitly forbid that failure mode.
+- **D74 gate:** no per-battle `damage`, `firepower`, `casualty`, `morale`, `retreat`, `winner`, `outcome`, `scoreBonus`, `forceWin`, or similar fudge is allowed. Kennesaw's result must emerge from source-honest inputs and the universal combat model.
+- **Plan probe:** `probe-kennesaw-plan` verifies the spec exists, has the required source register and history traps, names the single-phase/fog/role/objective shape, preserves planned-only registry state before `data/kennesaw.json`, and flips to requiring runtime registration + both historical baselines + focused probe once data exists.
+- **Focused gate:** `node --check tools/probe-kennesaw-plan.mjs`; `node tools/build.mjs` **GATE OK** (known raw-embed soft warning only); `node tools/probe-kennesaw-plan.mjs` **6/6**, JSON `ok=true`, `failedSteps:0`; `git diff --check` clean.
+- **Next:** D331 Kennesaw playable implementation: author `data/kennesaw.json`, register/menu-rank it after Chattanooga, add `tools/probe-kennesaw.mjs`, update BOTH `tools/probe-tactical-roster.mjs` and `tools/probe-custom-battle-builder.mjs`, run schema/build/focused/adjacent gates, docs sync, commit, and push.
+
+---
+
 ## D329 — BATTLE-RESEARCH COVERAGE COMPLETION: the last six unbuilt, uncovered lanes — [OPUS 4.8, Aaron directive "finish the battle-research coverage"] (2026-07-08)
 
 D327 researched five remaining lanes; D328 audited the ten shipped battles. D329 closes the gap between them: **every** buildable Civil War battle or campaign that is neither shipped nor already covered now has a durable, citation-grade packet. **Research/docs only — no `data/*.json`, runtime, registry, or generated-HTML change; `civil_war_generals.html` byte-unchanged.**
