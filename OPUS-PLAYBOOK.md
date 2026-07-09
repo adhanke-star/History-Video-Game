@@ -1,25 +1,25 @@
-# OPUS-PLAYBOOK — operating Claude Opus 4.8 on this project (D286, 2026-07-06)
+# OPUS-PLAYBOOK — top-model operating playbook (D336, 2026-07-09; filename retained)
 
-How to run the Claude Code main loop as **Claude Opus 4.8** (`claude-opus-4-8` / `opus[1m]`). Canonical alongside the D145 routing law; `START-HERE.md`, `CLAUDE.md`, `AGENTS.md`, and `AUTONOMOUS-RUN.md` all point here. The ready-made full-spectrum audit kickoff that applies all of this is **`AUDIT-PROMPT.md`**. *(Replaces `FABLE-5-PLAYBOOK.md`, retired to `legacy/` when Fable left the subscription — D286.)*
+How to run the ChatGPT/Codex main loop as **5.6 Sol**. This is the canonical behavior/routing supplement for `START-HERE.md`, `AGENTS.md`, and `AUTONOMOUS-RUN.md`; `AUDIT-PROMPT.md` applies it directly. Historical Opus/Fable references below record prior runs and are not directives for a new ChatGPT task.
 
 ## 1 · Model surface & the effort ladder
-- The Claude Code main loop runs **Opus 4.8 + xhigh**, set via `/model opus[1m]` and persisted in `~/.claude/settings.json` (`effortLevel:"xhigh"`). Opus 4.8 is the permanent top model on this machine (Fable left the subscription; D286).
-- **Adaptive thinking only.** Opus 4.8 rejects/removes the old knobs: never add `budget_tokens`, `temperature`/`top_p`/`top_k`, or an explicit `thinking:{type:"disabled"}` — they are gone on 4.8.
-- **Effort is the intelligence/latency lever.** `high` is the general default; **`xhigh` for the hardest coding/agentic work** — this main build loop runs xhigh. Helpers get **low/medium**. Do **not** reflexively use `max` — 4.8 can overthink at the ceiling, so reserve it for genuinely gnarly problems, not routine work.
+- Select **5.6 Sol** in ChatGPT. Use **high** for normal autonomous implementation and **xhigh** for multi-system design, historic research verification, complex debugging, adversarial audits, or final release decisions. Do not claim unsupported API IDs or settings from this UI label.
+- Use a lower tier only if the current surface explicitly makes one available and only where a lower-quality result cannot affect gameplay, appearance, historical truth, accessibility, or integration. The default is no delegation when the job is small enough for the main loop.
+- A helper packet must name its goal, reason, exact files, constraints, acceptance checks, commands, and do-not-touch list. The main loop reads the evidence and owns the decision.
 
 ## 2 · Narration — default to silence
-- **4.8 narrates more by default; counter it.** Write text between tool calls only when you find something load-bearing, change direction, or hit a blocker — one sentence each. No "I'll now…", "Let me…", "First, I will…" preambles; no narrating routine actions. (This is also Aaron's standing terse/direct preference.)
+- Write text between tool calls only when you find something load-bearing, change direction, or hit a blocker — one sentence each. No "I'll now…", "Let me…", "First, I will…" preambles; no narrating routine actions. (This is also Aaron's standing terse/direct preference.)
 
 ## 3 · Autonomy — decide the small stuff, surface the real forks
-- **4.8 tends to ask "Want me to also…?" on minor choices.** For small reversible decisions (naming, which of two equivalent approaches, a default value) pick a reasonable option, note it in one line, and proceed. Still stop first for destructive actions, scope changes, money/publishing, or a fork that contradicts a shipped decision (the §8 HALT charter + D171 boundary bind unchanged).
+- For small reversible decisions (naming, which of two equivalent approaches, a default value), pick a reasonable option, note it in one line, and proceed. Stop only for destructive/irreversible actions, spending, account creation, publishing, unclear licensing/provenance, or a fork that genuinely contradicts shipped history/design.
 
-## 4 · Delegation, memory, search — 4.8 UNDER-reaches, so push
-- **Delegate aggressively.** 4.8 under-uses subagents; keep fanning out with Workflow/`Agent` for readers, adversarial panels, and parallel coverage. The D145 routing law is the frame: explicit `model` + `effort` on every `Agent`/Workflow `agent()` call — **Sonnet low/medium** (search, summaries, mechanical transforms, WCAG, first-pass gathering), **Haiku** (pure greps/reads/sizing), **Opus high/xhigh** (bug-hunt finders/verifiers/critic, design/judge panels, citation-grade research-verify). The Opus main loop is the final verifier on top. *(The old "never Fable on a helper" clause is retired — Fable no longer exists.)*
-- **Use file-memory for durable lessons** — the repo's `DECISIONS.md`/`RUN-LOG.md`/handoff docs (never hidden memory), and the `~/.claude` project memory dir for machine-level facts.
-- **Search the web when current facts matter** — provider endpoints, free tiers, model IDs, and pricing drift; re-verify, never answer from training memory. **State the reason with each helper/search request, not just the ask** — 4.8 performs better knowing intent.
+## 4 · Delegation, memory, search
+- Delegate when it materially improves independent coverage or offloads exact mechanical work; do not add helpers by ritual. If the active surface exposes lower tiers, use them only for fully packeted mechanical work and set model/effort explicitly. The 5.6 Sol main loop is the final verifier.
+- **Use durable repo records** — `DECISIONS.md`, `RUN-LOG.md`, `HANDOFF.md`, and `WAKE-UP.md` — for lessons and live state, never hidden assumptions.
+- **Search current sources when facts can drift** — model capability, provider terms, licenses, availability, and historical primary-source locators. State the reason for each research/delegation request.
 
-## 5 · Adversarial panels & code review — report EVERYTHING, filter downstream
-- **4.8 follows "only report high-severity" too literally, which depresses recall.** Prompt every review/refute/judge lens to report **everything with a confidence + severity**, then filter downstream. A default-refute panel should try to REFUTE each finding and default to refuted-if-uncertain; the main loop adjudicates. (Read-only lenses only when the panel shares a working tree — the D281 panel-race lesson.)
+## 5 · Adversarial panels & code review — report everything, filter downstream
+- Ask every review/refute/judge lens to report all findings with confidence and severity. A default-refute pass must try to disprove each finding and treat uncertainty as refuted; the main loop adjudicates. Use read-only lenses when sharing a worktree.
 
 ## 6 · Long-horizon runs
 - **You have the full spec in the kickoff; execute it end-to-end.** Don't re-derive settled facts, don't re-litigate cleared scope (`DECISIONS.md` is append-only law). When you have enough to act, act.
@@ -45,12 +45,12 @@ Brief steering beats enumerated micro-management. Quote these (or a tightened eq
 
 ## 8 · Give the reason, and lean into the hard range
 - **Give the reason, not only the request.** Kickoff prompts and helper packets should carry the one-line "why" (who the feature teaches, what the milestone unlocks), not just the task.
-- **Scope the slice to the gate, not to model timidity.** Opus 4.8's range is widest on the hardest work — multi-system audits, whole-war-journey features, cross-module integration. Don't reflexively pre-slice work smaller than the gate needs.
+- **Scope the slice to the gate, not to model timidity.** Use the top model for the hard range — multi-system audits, whole-war journey features, and cross-module integration. Do not pre-slice work below what safe verification requires.
 
-## 9 · Session-start checklist for an Opus run
-1. Confirm the model string (statusline or `/model`) — expect `opus[1m]` (`claude-opus-4-8`) + `effortLevel:"xhigh"`.
+## 9 · Session-start checklist for a ChatGPT/Codex run
+1. Confirm **5.6 Sol** and choose high/xhigh effort.
 2. Read order per `START-HERE.md`; `HANDOFF.md` + `WAKE-UP.md` top blocks for the live head.
 3. Kickoff prompt embeds the §7 snippets and the one-line "why."
-4. Helpers: explicit model + effort (§4), Opus only on reasoning legs.
+4. Helpers: use only if beneficial; packet and configure them explicitly when the surface permits (§4).
 5. Narrate sparingly (§2); decide small reversible forks and log them (§3); delegate/search aggressively (§4).
 6. D171 boundary discipline active (§6); §8 HALT charter unchanged.

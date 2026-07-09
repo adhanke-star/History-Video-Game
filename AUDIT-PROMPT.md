@@ -1,11 +1,11 @@
-# AUDIT-PROMPT — paste-ready kickoff for a Claude Opus 4.8 full-spectrum audit + improve run (D286)
+# AUDIT-PROMPT — paste-ready kickoff for a ChatGPT 5.6 Sol full-spectrum audit + improve run (D336)
 
-**How to use:** open a fresh Claude Code chat on this Mac (model `opus[1m]` — the statusline should say Opus 4.8; if not, `/model opus[1m]`), paste everything inside the block below, and let it run. It is **re-runnable**: each run reads the previous run's findings ledger in `REVIEW-QUEUE.md` and continues where the last one stopped, so this is the standing "make the whole game better" button. *(Replaces `FABLE-AUDIT-PROMPT.md`, retired to `legacy/` when Fable left the subscription — D286; the past FABLE-AUDIT ledger runs in `REVIEW-QUEUE.md` stay as history and this prompt continues that same ledger.)*
+**How to use:** open a fresh ChatGPT/Codex task, select **5.6 Sol** at **xhigh** effort, paste the block below, and let it run. It is **re-runnable**: each run reads the findings ledger in `REVIEW-QUEUE.md` and continues from its real live state. Historic Fable/Opus ledger entries remain history, not routing instructions.
 
 ---
 
 ```text
-ultracode — xhigh. You are Claude Opus 4.8 (claude-opus-4-8 / opus[1m]) running a
+ultracode — xhigh. You are ChatGPT 5.6 Sol running a
 FULL-SPECTRUM AUDIT + IMPROVE run for "The Civil War", Aaron's personal teaching
 wargame (NOT MJI work). You have ZERO context — everything lives on disk; load it
 before acting.
@@ -60,18 +60,17 @@ themselves — these are the floor, not the ceiling:
     share tamper-hardening, importer/schema gates, build-gate blind spots.
  8. Docs coherence — canonical docs vs repo reality: stale live-heads, broken
     cross-references, read-order rot, legacy files masquerading as current.
- 9. Completeness vs V1-CHECKLIST — gaps INSIDE shipped phases only. Locks are law:
-    Phase H media stays parked (D214), M8/Q5/Q6 battle-builds stay locked, Phase D
-    hex + custom-phase authoring stay deferred. Finding "Phase H should reopen" is a
-    Part-2(B) proposal, never a Part-3 action.
+ 9. Completeness vs V1-CHECKLIST — audit and finish every unlocked branch, including
+    the researched battle queue, Soldier's Story, Phase D authoring, and Phase H
+    media/performance work. `trans-mississippi` remains blocked until its explicit
+    D183 go/no-go clears; teaching-only and do-not-build findings remain teaching-only.
 Method per dimension: a Workflow with finder agents fanned out per sub-area →
 adversarial default-refute verify (loop-until-dry on dimensions 1, 2, and 7) → a
-completeness critic. ROUTING LAW (D145/D286): every agent() call sets model AND
-effort explicitly — Sonnet low/medium mechanical legs, Haiku pure greps, Opus
-high/xhigh finders/verifiers/critic. Prompt every finder/verifier/judge lens to
-report EVERYTHING with confidence + severity and filter downstream (don't suppress
-"only high-severity" — that depresses recall). You (the Opus main loop) own
-synthesis and final judgment on every finding.
+completeness critic. ROUTING LAW (D336): use helpers only when the current surface
+supports them and independent coverage or exact mechanical work benefits the task;
+configure any exposed model/effort settings explicitly. Prompt every finder,
+verifier, and judge to report everything with confidence and severity, then filter
+downstream. You, the 5.6 Sol main loop, own synthesis and final judgment.
 
 PART 2 · TRIAGE (the ledger).
 Rank CONFIRMED findings by severity × player/teaching impact. Split them:
@@ -99,13 +98,25 @@ Probes: this machine allows browser probes — run foreground with 2>/dev/null,
 export TMPDIR="$PWD/.tmp", one shared python3 -m http.server 8765, serialized,
 READ tools/shots/*.json. Probe gotchas: AUTONOMOUS-RUN.md §7.
 
+PART 4 · COMPLETE THE UNLOCKED ROADMAP.
+After the audit findings that block or improve the work are handled, continue through
+every unlocked remaining V1-CHECKLIST branch in its documented dependency order.
+Treat the live repository and current checklist as the source of truth, not stale
+handoff prose. Choose the next ready item autonomously by: (1) dependency readiness,
+(2) player/teaching impact, (3) risk contained by existing probes, and (4) visual or
+performance leverage. For every new battle, read its research packet before spec and
+obey D74/D92; for every media change, preserve the $0, public-domain/permissive-license
+policy and auditable provenance. Do not self-clear `trans-mississippi`, teaching-only,
+or do-not-build constraints. Continue milestone by milestone until no unlocked V1 work
+remains or a stated HALT condition is reached.
+
 BINDING BEHAVIOR (OPUS-PLAYBOOK.md — these govern the whole run):
 - When you have enough information to act, act. Never re-litigate DECISIONS.md.
 - Narrate sparingly — a sentence only when it is load-bearing, a direction change, or
   a blocker. Decide small reversible forks and log them; don't ask "want me to also…?"
-- Delegate and web-search AGGRESSIVELY (4.8 under-reaches on both) — but every helper
-  sets model+effort explicitly, and re-verify provider/current facts online, never
-  from memory.
+- Delegate only when independent coverage or exact mechanical work benefits the task;
+  configure exposed model/effort controls explicitly and re-verify current facts
+  online, never from memory.
 - No refactors/features/abstractions beyond the finding being fixed — except the
   repo's guarded-seam byte-identity law, which always applies.
 - Audit every progress claim against a tool result from THIS session before
