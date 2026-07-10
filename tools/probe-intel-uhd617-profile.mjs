@@ -506,7 +506,7 @@ const assets = assetMetrics();
 const coverage = openingSceneInventory();
 check('performance policy is present in data/media-budget.json', perf.targetHardware === 'Intel UHD Graphics 617 / 8 GB RAM floor' && perf.probe === 'tools/probe-intel-uhd617-profile.mjs', perf.targetHardware || '');
 check('E68 largest-scene config names a current largest shipped opening OOB',
-  coverage.count === 14 && !!coverage.scenarios[largestScenario] && coverage.scenarios[largestScenario].units === coverage.maxUnits,
+  coverage.count === 15 && !!coverage.scenarios[largestScenario] && coverage.scenarios[largestScenario].units === coverage.maxUnits,
   JSON.stringify({ configured: largestScenario, count: coverage.count, maxUnits: coverage.maxUnits, largestIds: coverage.largestIds, configuredUnits: coverage.scenarios[largestScenario] && coverage.scenarios[largestScenario].units }));
 check('E68 retains the existing low-tier hard caps unchanged',
   Number(budgets.lowTierRenderCallHardCap) === 360 && Number(budgets.lowTierObjectHardCap) === 1400,

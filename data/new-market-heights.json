@@ -1,0 +1,927 @@
+{
+  "_comment": "D364 New Market Heights (Chaffin's Farm), Sep 29 1864 - the game's first USCT-led battle. Two-phase T8 over the SAME ground per the D363 spec: Duncan's repulse (w1) then Draper's carry (w3) against a line under sourced withdrawal orders. Fort Harrison is teaching-only. Every strength is an engaged-strength abstraction labeled in each unit note; the withdrawal is a phase-boundary OOB input, never a mechanic. No battle-specific combat/result keys (D74). Sources and the full contract: docs/design/new-market-heights-battle-build-spec.md.",
+  "newMarketHeights": {
+    "id": "newMarketHeights",
+    "name": "New Market Heights - The Fourteen Medals",
+    "date": "September 29, 1864",
+    "place": "Henrico County, Virginia - the fortified heights above New Market Road, north of the James River at Deep Bottom",
+    "blurb": "Before dawn, Butler's Army of the James crosses the James River to threaten Richmond. On the right, Brig. Gen. Charles J. Paine's all-USCT division must storm New Market Heights: a marshy creek, two lines of abatis, and earthworks held by Gregg's Texas Brigade and Gary's dismounted cavalry. Duncan's brigade goes in first and is cut apart. Draper's brigade goes in over the same ground - and carries the works as the defenders, their inner line collapsing at Fort Harrison, are ordered away. Fourteen Black soldiers earn the Medal of Honor here.",
+    "provenance": "Verified (high) for the two-column operation, Paine's brigade organization (Holman 1st: 1st/22nd/37th USCT; Draper 2nd: 5th/36th/38th; Duncan 3rd: 4th/6th), the 5:30 a.m. repulse and ~7 a.m. carry, the double abatis (Fleetwood), the withdrawal orders to Bass and Gary, per-regiment casualties (NPS), and the fourteen Medals of Honor. Inferred for exact unit strengths (engaged-strength abstractions inside sourced bounds), map placement, and the phase-2 residual line. The withdrawal's causation is presented as the contested question the sources say it is. Register: docs/design/new-market-heights-battle-build-spec.md.",
+    "attacker": "US",
+    "defender": "CS",
+    "defaultFog": false,
+    "_fogNote": "Duncan attacked through thick dawn fog (two independent sources), but the game's fog MECHANIC aids the defender by blinding attacker targeting - the wrong lever (D90). The sourced fog ships as the weather presentation hint and in teaching; the works, double abatis, and marsh carry the difficulty.",
+    "homeEdge": {
+      "US": "high",
+      "CS": "low"
+    },
+    "_homeEdgeNote": "US attacker stages from Deep Bottom (high z); the CS defender's rear is New Market Road toward Richmond (low z). Routers flee toward their own rear.",
+    "holdToWinSec": 60,
+    "timeLimitSec": 230,
+    "field": {
+      "w": 1150,
+      "h": 900
+    },
+    "weather": {
+      "sky": "fog",
+      "time": "dawn",
+      "provenance": "Verified",
+      "note": "Duncan's 5:30 a.m. assault stepped off into thick fog (two independent fetched sources). The fog here is presentation and teaching only - the tactical fog-of-war mechanic stays off because it would aid the defender, which is not the sourced role the dawn fog played.",
+      "sources": [
+        "https://www.beyondthecrater.com/resources/bat-sum/fifth-offensive-summaries/the-battle-of-new-market-heights-september-29-1864/",
+        "https://battleofnewmarketheights.org/history-of-the-battle/"
+      ]
+    },
+    "menu": {
+      "title": "NEW MARKET HEIGHTS (1864)",
+      "deck": "Paine's USCT division against the heights above New Market Road - storm the double abatis with the men who earned fourteen Medals of Honor, or hold the works as the inner line collapses behind you.",
+      "aria": "New Market Heights, 1864 - the real-time historical battle; command either army. Lead the USCT assault on the fortified heights, or command the Confederate defense of the works."
+    },
+    "sides": {
+      "heading": "New Market Heights - Take Which Command?",
+      "intro": "September 29, 1864 - Paine's all-USCT division assaults the fortified heights above New Market Road.",
+      "US": {
+        "title": "Command the Union (Paine)",
+        "badge": "&#9876; STORM",
+        "deck": "Send Duncan's and then Draper's USCT brigades through the marsh and the double abatis. The first wave will bleed; bring the second wave onto the works and carry the heights."
+      },
+      "CS": {
+        "title": "Command the Confederacy (Gregg)",
+        "badge": "&#9819; HOLD",
+        "deck": "Hold one mile of works with about 1,800 men - Gregg's Texans, Gary's dismounted cavalry, and eight guns - while the crisis at Fort Harrison pulls your line away behind you."
+      },
+      "foot": "The other army is commanded by the AI. Two phases play over the same ground; losses carry forward. Fort Harrison is the operation's other prong and is taught between phases - it is not a hidden playable sector."
+    },
+    "brief": {
+      "attack": "Duncan's 4th and 6th USCT open the assault at dawn: through Four Mile Creek's marsh, into two lines of abatis under fire from the works. Historically the first wave lost half its men and did not break the line. Then Draper's 5th, 36th, and 38th USCT attack over the same ground, with Holman's brigade in support, as the defenders are ordered back to the collapsing inner line. <b>This is your war:</b> coordinate the waves, use your pioneers on the slashing, and put the colors on the works.",
+      "defend": "You hold good works behind two belts of slashing, but with about 1,800 men on a mile of line - and the operation's other prong is storming Fort Harrison behind you. Historically the line repulsed the first assault with terrible loss, then received orders to abandon the position as the second wave pressed in. <b>This is your war:</b> hold the belts, rotate the line, and decide what the orders history recorded would have cost to disobey."
+    },
+    "objective": {
+      "x": 600,
+      "z": 300,
+      "r": 140,
+      "name": "The New Market Heights works"
+    },
+    "phases": [
+      {
+        "id": "duncan-at-the-abatis",
+        "name": "Duncan's Assault - the Abatis",
+        "sector": "Four Mile Creek marsh and the double abatis below the New Market Heights works",
+        "timing": "September 29, 1864 - about 5:30 a.m., in thick fog",
+        "attacker": "US",
+        "defender": "CS",
+        "assaultDoctrine": "standard",
+        "defaultFog": false,
+        "holdToWinSec": 60,
+        "timeLimitSec": 210,
+        "scoreWeight": 1,
+        "objective": {
+          "x": 600,
+          "z": 300,
+          "r": 140,
+          "name": "The New Market Heights works"
+        },
+        "transition": {
+          "title": "Duncan at the Abatis",
+          "lead": "About 5:30 a.m. Col. Samuel A. Duncan's brigade - the 4th and 6th USCT, about 700 men - advances through the fog, across the marshy creek, and into two lines of abatis under fire from the works."
+        },
+        "engineering": {
+          "abatis": [
+            {
+              "x1": 270,
+              "z1": 392,
+              "x2": 930,
+              "z2": 392,
+              "prepared": false,
+              "strength": 1
+            },
+            {
+              "x1": 270,
+              "z1": 362,
+              "x2": 930,
+              "z2": 362,
+              "prepared": true,
+              "strength": 1
+            }
+          ],
+          "_note": "Fleetwood (4th USCT): 'Strong earthworks, protected in front by two lines of abatis and one line of palisades.' The palisade folds into the works wall; the two belts are pre-placed T13 obstacles - slowing, disordering, clearable by pioneers under fire. Verified obstacle system; Inferred map placement."
+        },
+        "terrain": {
+          "hills": [
+            {
+              "name": "New Market Heights (west crest)",
+              "x": 460,
+              "z": 290,
+              "h": 20,
+              "s": 160,
+              "note": "The fortified high ground above New Market Road. (Verified feature; Inferred placement)"
+            },
+            {
+              "name": "New Market Heights (east crest)",
+              "x": 740,
+              "z": 290,
+              "h": 22,
+              "s": 170,
+              "note": "The heights' eastern shoulder behind the works. (Verified feature; Inferred placement)"
+            }
+          ],
+          "woods": [
+            {
+              "x": 250,
+              "z": 470,
+              "r": 85,
+              "note": "Broken timber west of the approach. (Inferred placement)"
+            },
+            {
+              "x": 955,
+              "z": 470,
+              "r": 85,
+              "note": "Broken timber east of the approach. (Inferred placement)"
+            }
+          ],
+          "walls": [
+            {
+              "x1": 300,
+              "z1": 340,
+              "x2": 580,
+              "z2": 335,
+              "note": "CONFEDERATE EARTHWORKS - the western works line on the heights, with the palisade folded into the parapet. (Verified works; Inferred trace)"
+            },
+            {
+              "x1": 620,
+              "z1": 335,
+              "x2": 900,
+              "z2": 340,
+              "note": "CONFEDERATE EARTHWORKS - the eastern works line above New Market Road. (Verified works; Inferred trace)"
+            }
+          ],
+          "swamps": [
+            {
+              "x": 390,
+              "z": 565,
+              "r": 110,
+              "note": "Four Mile Creek marsh - the wet ravine across the approach. (Verified feature; Inferred placement)"
+            },
+            {
+              "x": 600,
+              "z": 590,
+              "r": 130,
+              "note": "Four Mile Creek marsh - center of the crossing. (Verified feature; Inferred placement)"
+            },
+            {
+              "x": 815,
+              "z": 565,
+              "r": 110,
+              "note": "Four Mile Creek marsh - eastern arm. (Verified feature; Inferred placement)"
+            }
+          ],
+          "markers": [
+            {
+              "kind": "road",
+              "name": "New Market Road",
+              "path": [
+                [
+                  240,
+                  255
+                ],
+                [
+                  450,
+                  250
+                ],
+                [
+                  700,
+                  248
+                ],
+                [
+                  950,
+                  252
+                ]
+              ],
+              "note": "The road behind the Confederate line - its lateral and its withdrawal route toward Richmond's inner works. (Verified)"
+            },
+            {
+              "kind": "water",
+              "name": "Four Mile Creek",
+              "path": [
+                [
+                  260,
+                  585
+                ],
+                [
+                  420,
+                  570
+                ],
+                [
+                  600,
+                  592
+                ],
+                [
+                  790,
+                  568
+                ],
+                [
+                  940,
+                  585
+                ]
+              ],
+              "note": "The marshy stream across the Union line of advance. (Verified)"
+            },
+            {
+              "kind": "town",
+              "name": "Deep Bottom bridgehead",
+              "path": [
+                [
+                  600,
+                  872
+                ]
+              ],
+              "note": "The James River crossing the assault staged from. (Verified)"
+            }
+          ]
+        },
+        "leaders": {
+          "US": [
+            {
+              "id": "ld_paine_d",
+              "name": "Brig. Gen. Charles J. Paine",
+              "short": "Paine",
+              "quality": 0.62,
+              "radius": 250,
+              "x": 600,
+              "z": 765,
+              "fate": 2.4,
+              "note": "Brigadier general commanding the 3rd Division, XVIII Corps - the all-USCT division, detached to Birney's Deep Bottom column for this assault. Not a major general on the battle date. (Verified)"
+            },
+            {
+              "id": "ld_duncan",
+              "name": "Col. Samuel A. Duncan",
+              "short": "Duncan",
+              "quality": 0.6,
+              "radius": 205,
+              "x": 600,
+              "z": 705,
+              "fate": 3.6,
+              "note": "Colonel commanding the 3rd Brigade (4th and 6th USCT). Historically wounded four times in this assault; command passed to Col. John W. Ames of the 6th USCT. His general's grades are post-battle brevets. (Verified)"
+            }
+          ],
+          "CS": [
+            {
+              "id": "ld_gregg",
+              "name": "Brig. Gen. John Gregg",
+              "short": "Gregg",
+              "quality": 0.66,
+              "radius": 240,
+              "x": 600,
+              "z": 285,
+              "fate": 2.0,
+              "note": "Brigadier general in overall command of the New Market Heights defense. Killed October 7, 1864 on the Darbytown/New Market Road - a week after this battle. (Verified)"
+            },
+            {
+              "id": "ld_bass",
+              "name": "Col. Frederick S. Bass",
+              "short": "Bass",
+              "quality": 0.6,
+              "radius": 200,
+              "x": 470,
+              "z": 322,
+              "fate": 2.4,
+              "note": "Colonel, 1st Texas, in immediate field command of the Texas Brigade at the works. Two-sourced; one summary styles him lieutenant colonel. (Verified identity)"
+            },
+            {
+              "id": "ld_gary",
+              "name": "Brig. Gen. Martin W. Gary",
+              "short": "Gary",
+              "quality": 0.6,
+              "radius": 205,
+              "x": 730,
+              "z": 322,
+              "fate": 2.2,
+              "note": "Brigadier general (rank from May 19, 1864) commanding the Department of Richmond's dismounted cavalry brigade on the line. (Verified)"
+            }
+          ]
+        },
+        "supply": {
+          "US": {
+            "x": 600,
+            "z": 870,
+            "name": "Deep Bottom bridgehead"
+          },
+          "CS": {
+            "x": 600,
+            "z": 55,
+            "name": "New Market Road toward the inner line"
+          }
+        },
+        "oob": {
+          "US": [
+            {
+              "id": "us_4th",
+              "name": "4th USCT",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 361,
+              "xp": 2,
+              "x": 520,
+              "z": 700,
+              "facing": 0,
+              "formation": "line",
+              "note": "Duncan's 3rd Brigade - went in with 11 officers and 350 enlisted men by Sgt. Maj. Fleetwood's first-person count; the color guard of Hilton, Fleetwood, and Veal earned three of the fourteen Medals of Honor. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_6th",
+              "name": "6th USCT",
+              "commander": "Col. John W. Ames",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 339,
+              "xp": 2,
+              "x": 680,
+              "z": 700,
+              "facing": 0,
+              "formation": "line",
+              "note": "Duncan's 3rd Brigade - the assault's right regiment; Sgt. Maj. Hawkins and 1st Sgt. Kelly carried its colors off the field. The 339 is the arithmetic remainder of the brigade's ~700. Verified identity; Inferred strength."
+            }
+          ],
+          "CS": [
+            {
+              "id": "cs_texas_bde",
+              "name": "Gregg's Texas Brigade",
+              "commander": "Col. Frederick S. Bass",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1000,
+              "xp": 3,
+              "x": 470,
+              "z": 330,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "3rd Arkansas and 1st, 4th, and 5th Texas - Field's Division veterans holding the western works under Bass's immediate command. No brigade-only return exists; the split is modeled from the line's ~1,800-2,000 total. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_gary_cav",
+              "name": "Gary's Dismounted Cavalry",
+              "commander": "Brig. Gen. Martin W. Gary",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 700,
+              "xp": 2,
+              "x": 730,
+              "z": 330,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "Hampton's Legion, the 7th South Carolina Cavalry, and the 24th Virginia Cavalry, fighting dismounted behind the eastern works. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_rockbridge",
+              "name": "Rockbridge Artillery",
+              "commander": "Capt. Graham",
+              "arm": "art",
+              "weapon": "napoleon",
+              "guns": 4,
+              "men": 90,
+              "xp": 2,
+              "x": 420,
+              "z": 308,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "Four guns of Hardaway's 1st Virginia Light Artillery Battalion anchoring the left of the position. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_howitzers",
+              "name": "3rd Co. Richmond Howitzers",
+              "commander": "Lt. Carter",
+              "arm": "art",
+              "weapon": "napoleon",
+              "guns": 4,
+              "men": 90,
+              "xp": 2,
+              "x": 780,
+              "z": 308,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "Four guns of Hardaway's battalion on the line's right. Verified identity; Inferred strength."
+            }
+          ]
+        },
+        "reinforcements": [
+          {
+            "id": "us_22nd",
+            "side": "US",
+            "atSec": 45,
+            "name": "22nd USCT (Holman's skirmishers)",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 200,
+            "xp": 2,
+            "x": 320,
+            "z": 760,
+            "facing": 0,
+            "formation": "column",
+            "entry": "opening on the left through the marsh",
+            "note": "Holman's 1st Brigade's skirmishers opened the engagement while the brigade was delayed in the Four Mile Creek marshes; modeled as a detachment. Verified identity; Inferred strength."
+          }
+        ],
+        "teaching": {
+          "head": "The first wave",
+          "body": "Duncan's brigade lost about 350 of its 700 men - half - in the marsh and the slashing without breaking the line. The 4th USCT's color guard fell one by one: Sgt. Hilton took both flags until he went down, Sgt. Maj. Fleetwood and Pvt. Veal carried them out. Valor here was not victory; it was what the second wave built on.",
+          "provenance": "Verified (NPS casualty tabulation; Fleetwood's account; battleofnewmarketheights.org)."
+        }
+      },
+      {
+        "id": "draper-carries-the-heights",
+        "name": "Draper Carries the Heights",
+        "sector": "The same ground - the marsh, the breached abatis, and the works",
+        "timing": "September 29, 1864 - about 7 a.m. (sources differ, 7:00-7:30)",
+        "attacker": "US",
+        "defender": "CS",
+        "assaultDoctrine": "standard",
+        "defaultFog": false,
+        "holdToWinSec": 60,
+        "timeLimitSec": 320,
+        "scoreWeight": 3,
+        "objective": {
+          "x": 600,
+          "z": 300,
+          "r": 140,
+          "name": "The New Market Heights works"
+        },
+        "transition": {
+          "title": "While the second wave formed",
+          "lead": "Three miles west, Stannard's division of Ord's XVIII Corps - about 2,800 men - storms thinly-held Fort Harrison; Brig. Gen. Burnham is killed and the fort is renamed for him, and Ord himself falls wounded. Word reaches Gregg: Bass and Gary receive orders to abandon New Market Heights and reinforce the collapsing inner line. Whether the defenders were driven off by Draper's assault, withdrew on those orders, or both, remains a genuine historical controversy - what is certain is that the second wave attacked a line already coming apart, and paid for every yard of it."
+        },
+        "engineering": {
+          "abatis": [
+            {
+              "x1": 270,
+              "z1": 392,
+              "x2": 930,
+              "z2": 392,
+              "prepared": false,
+              "strength": 0.5
+            },
+            {
+              "x1": 270,
+              "z1": 362,
+              "x2": 930,
+              "z2": 362,
+              "prepared": true,
+              "strength": 0.55
+            }
+          ],
+          "_note": "The same two belts, partially breached - Duncan's pioneers had cut into the slashing and Draper attacked over the same ground. Verified sequence; Inferred breach fraction."
+        },
+        "terrain": {
+          "hills": [
+            {
+              "name": "New Market Heights (west crest)",
+              "x": 460,
+              "z": 290,
+              "h": 20,
+              "s": 160,
+              "note": "The fortified high ground above New Market Road. (Verified feature; Inferred placement)"
+            },
+            {
+              "name": "New Market Heights (east crest)",
+              "x": 740,
+              "z": 290,
+              "h": 22,
+              "s": 170,
+              "note": "The heights' eastern shoulder behind the works. (Verified feature; Inferred placement)"
+            }
+          ],
+          "woods": [
+            {
+              "x": 250,
+              "z": 470,
+              "r": 85,
+              "note": "Broken timber west of the approach. (Inferred placement)"
+            },
+            {
+              "x": 955,
+              "z": 470,
+              "r": 85,
+              "note": "Broken timber east of the approach. (Inferred placement)"
+            }
+          ],
+          "walls": [
+            {
+              "x1": 300,
+              "z1": 340,
+              "x2": 580,
+              "z2": 335,
+              "note": "CONFEDERATE EARTHWORKS - the western works line on the heights. (Verified works; Inferred trace)"
+            },
+            {
+              "x1": 620,
+              "z1": 335,
+              "x2": 900,
+              "z2": 340,
+              "note": "CONFEDERATE EARTHWORKS - the eastern works line above New Market Road. (Verified works; Inferred trace)"
+            }
+          ],
+          "swamps": [
+            {
+              "x": 390,
+              "z": 565,
+              "r": 110,
+              "note": "Four Mile Creek marsh. (Verified feature; Inferred placement)"
+            },
+            {
+              "x": 600,
+              "z": 590,
+              "r": 130,
+              "note": "Four Mile Creek marsh - center. (Verified feature; Inferred placement)"
+            },
+            {
+              "x": 815,
+              "z": 565,
+              "r": 110,
+              "note": "Four Mile Creek marsh - eastern arm. (Verified feature; Inferred placement)"
+            }
+          ],
+          "markers": [
+            {
+              "kind": "road",
+              "name": "New Market Road",
+              "path": [
+                [
+                  240,
+                  255
+                ],
+                [
+                  450,
+                  250
+                ],
+                [
+                  700,
+                  248
+                ],
+                [
+                  950,
+                  252
+                ]
+              ],
+              "note": "The withdrawal route toward Forts Gregg, Gilmer, and Johnson on the inner line. (Verified)"
+            },
+            {
+              "kind": "water",
+              "name": "Four Mile Creek",
+              "path": [
+                [
+                  260,
+                  585
+                ],
+                [
+                  420,
+                  570
+                ],
+                [
+                  600,
+                  592
+                ],
+                [
+                  790,
+                  568
+                ],
+                [
+                  940,
+                  585
+                ]
+              ],
+              "note": "The marshy stream across the Union line of advance. (Verified)"
+            },
+            {
+              "kind": "town",
+              "name": "Deep Bottom bridgehead",
+              "path": [
+                [
+                  600,
+                  872
+                ]
+              ],
+              "note": "The James River crossing the assault staged from. (Verified)"
+            }
+          ]
+        },
+        "leaders": {
+          "US": [
+            {
+              "id": "ld_paine_d2",
+              "name": "Brig. Gen. Charles J. Paine",
+              "short": "Paine",
+              "quality": 0.62,
+              "radius": 250,
+              "x": 600,
+              "z": 765,
+              "fate": 2.4,
+              "note": "Division commander, committing his second and then his first brigade. (Verified)"
+            },
+            {
+              "id": "ld_draper",
+              "name": "Col. Alonzo G. Draper",
+              "short": "Draper",
+              "quality": 0.64,
+              "radius": 210,
+              "x": 620,
+              "z": 705,
+              "fate": 3.0,
+              "note": "Colonel commanding the 2nd Brigade (5th, 36th, 38th USCT). His brevet brigadier general grade dates from October 28, 1864 - after this battle. (Verified)"
+            },
+            {
+              "id": "ld_holman",
+              "name": "Col. John H. Holman",
+              "short": "Holman",
+              "quality": 0.58,
+              "radius": 205,
+              "x": 560,
+              "z": 780,
+              "fate": 2.4,
+              "note": "Colonel commanding the 1st Brigade (1st, 22nd, 37th USCT), coming up in support; his skirmishers opened the morning. Not a general on the battle date. (Verified)"
+            }
+          ],
+          "CS": [
+            {
+              "id": "ld_gregg2",
+              "name": "Brig. Gen. John Gregg",
+              "short": "Gregg",
+              "quality": 0.66,
+              "radius": 240,
+              "x": 600,
+              "z": 285,
+              "fate": 2.0,
+              "note": "Overall commander of the defense, now managing a line under orders to fall back to the inner works. (Verified command; the withdrawal's exact sequence is contested)"
+            },
+            {
+              "id": "ld_bass2",
+              "name": "Col. Frederick S. Bass",
+              "short": "Bass",
+              "quality": 0.6,
+              "radius": 200,
+              "x": 470,
+              "z": 322,
+              "fate": 2.4,
+              "note": "Holding the western works with the Texas Brigade's rear elements under withdrawal orders. (Verified identity)"
+            },
+            {
+              "id": "ld_gary2",
+              "name": "Brig. Gen. Martin W. Gary",
+              "short": "Gary",
+              "quality": 0.6,
+              "radius": 205,
+              "x": 730,
+              "z": 322,
+              "fate": 2.2,
+              "note": "Covering the eastern works as the brigade disengages toward the inner line. (Verified)"
+            }
+          ]
+        },
+        "supply": {
+          "US": {
+            "x": 600,
+            "z": 870,
+            "name": "Deep Bottom bridgehead"
+          },
+          "CS": {
+            "x": 600,
+            "z": 55,
+            "name": "New Market Road toward the inner line"
+          }
+        },
+        "oob": {
+          "US": [
+            {
+              "id": "us_5th",
+              "name": "5th USCT",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 430,
+              "xp": 2,
+              "x": 500,
+              "z": 640,
+              "facing": 0,
+              "formation": "line",
+              "note": "Draper's 2nd Brigade - four of its sergeants (Holland, Beaty, Bronson, Pinn) took command of companies whose officers were down and earned the Medal of Honor. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_36th",
+              "name": "36th USCT",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 435,
+              "xp": 2,
+              "x": 620,
+              "z": 640,
+              "facing": 0,
+              "formation": "line",
+              "note": "Draper's 2nd Brigade - Pvt. Gardiner and Cpl. James of this regiment earned the Medal of Honor at the works. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_38th",
+              "name": "38th USCT",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 435,
+              "xp": 2,
+              "x": 740,
+              "z": 640,
+              "facing": 0,
+              "formation": "line",
+              "note": "Draper's 2nd Brigade - 1st Sgt. Ratcliff was the first enlisted man into the works; Sgt. Harris and Pvt. Barnes earned the Medal beside him. Verified identity; Inferred strength."
+            }
+          ],
+          "CS": [
+            {
+              "id": "cs_texas_bde",
+              "name": "Gregg's Texas Brigade",
+              "commander": "Col. Frederick S. Bass",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 400,
+              "xp": 3,
+              "x": 470,
+              "z": 330,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "The brigade's rear elements holding the western works as the command disengages toward the inner line - the 22nd USCT skirmished with Texans still in these entrenchments. Verified withdrawal order; Inferred residual strength."
+            },
+            {
+              "id": "cs_gary_cav",
+              "name": "Gary's Dismounted Cavalry",
+              "commander": "Brig. Gen. Martin W. Gary",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 300,
+              "xp": 2,
+              "x": 730,
+              "z": 330,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "Gary's rear guard covering the eastern works during the ordered withdrawal. Verified withdrawal order; Inferred residual strength."
+            },
+            {
+              "id": "cs_rockbridge",
+              "name": "Rockbridge Artillery",
+              "commander": "Capt. Graham",
+              "arm": "art",
+              "weapon": "napoleon",
+              "guns": 4,
+              "men": 90,
+              "xp": 2,
+              "x": 420,
+              "z": 308,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "The last battery still in action on the heights; the Howitzers have already limbered for the inner line. Verified withdrawal order; Inferred residual strength."
+            }
+          ]
+        },
+        "reinforcements": [
+          {
+            "id": "us_22nd",
+            "side": "US",
+            "atSec": 40,
+            "name": "22nd USCT (Holman's skirmishers)",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 400,
+            "xp": 2,
+            "x": 300,
+            "z": 730,
+            "facing": 0,
+            "formation": "column",
+            "entry": "swinging west along the entrenchments",
+            "note": "Holman's 1st Brigade's lead regiment - historically it swung west up the Confederate entrenchments and skirmished with the Texas Brigade. Not an assault-wave regiment and not among the fourteen Medals. Verified identity; Inferred strength."
+          },
+          {
+            "id": "us_holman_bde",
+            "side": "US",
+            "atSec": 60,
+            "name": "Holman's Brigade (1st & 37th USCT)",
+            "commander": "Col. John H. Holman",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 500,
+            "xp": 2,
+            "x": 560,
+            "z": 790,
+            "facing": 0,
+            "formation": "column",
+            "entry": "coming up on Draper's left",
+            "note": "The 1st Brigade's remaining regiments in support of the second assault - the brigade took 119 casualties this morning by the NPS tabulation. Verified identity; Inferred strength."
+          }
+        ],
+        "teaching": {
+          "head": "The heights carried",
+          "body": "Draper's men lay pinned in the swamp and slashing for about half an hour before the works fell - roughly 447 of his 1,300 fell here. Whether the line was stormed, abandoned under orders, or both at once is a genuine controversy; what is not contested is who went up the slope, and what it cost them.",
+          "provenance": "Verified (Beyond the Crater; NPS casualties; the withdrawal controversy stated verbatim by the sources)."
+        }
+      }
+    ],
+    "endNote": {
+      "US": {
+        "US": "History holds. The heights are carried at terrible cost - about 850 casualties in the two assault brigades, more than 130 of them dead - and fourteen Black soldiers have earned the Medal of Honor. Behind you, Fort Harrison has fallen too: Richmond's outer line is breached and stays breached.",
+        "CS": "History holds against you. The works could not be kept once the inner line collapsed at Fort Harrison, and the assault pressed home over the slashing. The men your line repulsed at dawn carried it by mid-morning - and fourteen of them would receive the Medal of Honor."
+      },
+      "CS": {
+        "US": "History is overturned. The line above New Market Road held past the hour history gave it, and the assault broke in the slashing. The cost was borne all the same - by the same men, over the same ground - without the works to show for it.",
+        "CS": "History is overturned: the works held. It is a soldier's result, bought with the same blood the historical morning demanded - and it changes nothing about what these attackers proved here, or what the fourteen medals of the real morning stood for."
+      },
+      "draw": "A bloodier deadlock than the real morning: the works neither carried nor safely held. The withdrawal orders, the breached slashing, and the casualty rolls all still point the same way - this ground decided nothing cheaply."
+    },
+    "teaching": {
+      "title": "New Market Heights - what this battle teaches",
+      "cards": [
+        {
+          "id": "nmh_fourteen",
+          "head": "Fourteen Medals of Honor",
+          "body": "Fourteen Black soldiers earned the Medal of Honor on this slope - the most awarded to Black soldiers for any single engagement of the war: Sgt. Maj. Christian A. Fleetwood, Sgt. Alfred B. Hilton, and Pvt. Charles Veal of the 4th USCT; Sgt. Maj. Milton M. Holland, 1st Sgt. Powhatan Beaty, 1st Sgt. James H. Bronson, and 1st Sgt. Robert A. Pinn of the 5th; Sgt. Maj. Thomas R. Hawkins and 1st Sgt. Alexander Kelly of the 6th; Pvt. James Gardiner and Cpl. Miles James of the 36th; 1st Sgt. Edward Ratcliff, Sgt. James H. Harris, and Pvt. William H. Barnes of the 38th. Twelve were awarded April 6, 1865; Hawkins's came in 1870 and Harris's in 1874. Two white officers, Lts. Nathan H. Edgerton and William H. Appleton, were also decorated. The medals document Black combat agency against the era's racist doubt - the record is theirs, not a favor granted.",
+          "provenance": "Verified (NPS Richmond NBP recipient list; battleofnewmarketheights.org; ABT).",
+          "sources": [
+            "https://www.nps.gov/rich/learn/historyculture/mohrecip.htm",
+            "https://battleofnewmarketheights.org/medal-of-honor/",
+            "https://www.nps.gov/rich/learn/historyculture/usct.htm"
+          ]
+        },
+        {
+          "id": "nmh_colors_4th",
+          "head": "The colors of the 4th",
+          "body": "The 4th USCT went in with 11 officers and 350 enlisted men by its sergeant major's own count. When the color bearers fell, Sgt. Alfred B. Hilton carried both flags until he went down at the inner abatis; Sgt. Maj. Christian A. Fleetwood and Pvt. Charles Veal brought the colors through the rest of the fight. Fleetwood rallied about 85 men and 3 officers when it ended. Hilton died of his wounds in October; his medal was awarded posthumously.",
+          "provenance": "Verified (Fleetwood's first-person account in Deeds of Valor; NPS).",
+          "sources": [
+            "https://www.beyondthecrater.com/resources/other-pubs/deeds-of-valor-vol-1/dov-v1-434-christian-a-fleetwood/",
+            "https://www.nps.gov/rich/learn/historyculture/mohrecip.htm"
+          ]
+        },
+        {
+          "id": "nmh_abatis",
+          "head": "Two lines of abatis",
+          "body": "Fleetwood described the position plainly: 'Strong earthworks, protected in front by two lines of abatis and one line of palisades.' The casualties concentrated in that belt - troops pinned under fire while axemen cut lanes through the slashing. The game pre-places both belts as real obstacles: they slow, they disorder, and pioneers can clear them under fire. No extra casualties are scripted; the timber's friction does the historical work.",
+          "provenance": "Verified obstacle description (first-person); Inferred map placement.",
+          "sources": [
+            "https://www.beyondthecrater.com/resources/other-pubs/deeds-of-valor-vol-1/dov-v1-434-christian-a-fleetwood/",
+            "https://battleofnewmarketheights.org/history-of-the-battle/"
+          ]
+        },
+        {
+          "id": "nmh_withdrawal",
+          "head": "Driven off, ordered away - or both?",
+          "body": "One source states it outright: whether the Confederates were driven from the line by the USCT assault, retreated on their own after hearing of the assault on Fort Harrison, 'or a little of both, remains a controversy.' What is documented: Bass and Gary received orders to abandon the position and reinforce the inner line, and the withdrawal began under fire, about thirty minutes into Draper's assault. This game does not settle what historians have not: phase two fields the line's rear elements, and the controversy is taught as a controversy.",
+          "provenance": "Verified controversy (stated verbatim); Verified orders; timing unpinned.",
+          "sources": [
+            "https://www.beyondthecrater.com/resources/bat-sum/fifth-offensive-summaries/the-battle-of-chaffins-farm-new-market-heights-september-29-30-1864/",
+            "https://warfarehistorynetwork.com/article/battle-of-new-market-heights/"
+          ]
+        },
+        {
+          "id": "nmh_operation",
+          "head": "The other prong: Fort Harrison",
+          "body": "New Market Heights was half of Butler's operation. At dawn, Ord's XVIII Corps stormed Fort Harrison three miles west: Stannard's division - about 2,800 men by its commander's own report - overran a garrison of roughly 200. Brig. Gen. Hiram Burnham was killed and the fort renamed for him; Ord was wounded out of field command. Lee counterattacked on September 30 with Field's and Hoke's divisions and was repulsed with about 1,200 casualties. Richmond's outer line stayed breached to the war's end.",
+          "provenance": "Verified (Stannard's OR report; ABT; Beyond the Crater). The garrison commander's name is unpinned and deliberately not stated.",
+          "sources": [
+            "https://www.beyondthecrater.com/resources/ors/vol-xlii/part-1-sn-87/or-xlii-p1-317-g-j-stannard-1-xviii-sept-28-30-1864/",
+            "https://www.battlefields.org/learn/civil-war/battles/fort-harrison",
+            "https://www.beyondthecrater.com/resources/bat-sum/fifth-offensive-summaries/the-battle-of-chaffins-farm-new-market-heights-september-29-30-1864/"
+          ]
+        },
+        {
+          "id": "nmh_butler_medal",
+          "head": "The Butler Medal - and unequal pay",
+          "body": "Maj. Gen. Benjamin Butler had a separate silver medal struck at his own expense for the Black soldiers of Chaffin's Farm - 'Ferro iis libertas perveniet': by the sword, liberty will come to them. The same army paid these men less than white soldiers until 1864, and barred them from commissions as line officers with rare exceptions. Both facts are true at once; the soldiers fought the enemy and the injustice together.",
+          "provenance": "Verified (Butler Medal; USCT pay inequality).",
+          "sources": [
+            "https://afroamcivilwar.org/artifact-spotlight-butler-medal-army-of-the-james-medal/",
+            "https://www.battlefields.org/learn/articles/role-usct-civil-war",
+            "https://en.wikipedia.org/wiki/Butler_Medal",
+            "https://freedmen.umd.edu/equalpay.htm"
+          ]
+        },
+        {
+          "id": "nmh_no_quarter",
+          "head": "Fighting under no quarter",
+          "body": "Five months earlier, at Fort Pillow on April 12, 1864, Confederate forces under Maj. Gen. Nathan Bedford Forrest massacred surrendering Black soldiers - only about a fifth of the Black garrison was taken prisoner, against three-fifths of the white. Every USCT soldier on this slope attacked knowing capture might mean death. That is the standard against which their steadiness in the slashing should be read. Fort Pillow itself is taught in this game and will never be a playable scenario.",
+          "provenance": "Verified massacre (corroborated across sources); teaching-only dignity line per the project's standing law.",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Fort_Pillow_massacre",
+            "https://www.britannica.com/event/Fort-Pillow-Massacre"
+          ]
+        }
+      ],
+      "codex": {
+        "id": "codex_new_market_heights",
+        "title": "New Market Heights (Chaffin's Farm), September 29, 1864",
+        "summary": "Butler's Army of the James crossed the James River on the night of September 28-29 to threaten Richmond and pull Confederate strength from Petersburg. Paine's all-USCT division, with Birney's X Corps column from Deep Bottom, assaulted New Market Heights: Duncan's brigade was repulsed at dawn losing half its men; Draper's brigade carried the works about 7 a.m. as the defenders - Gregg's Texas Brigade, Gary's dismounted cavalry, and Hardaway's guns - withdrew under orders driven by Fort Harrison's fall. The division lost 961 men by the NPS tabulation, over 800 of them in the two assault brigades. Fourteen Black soldiers earned the Medal of Honor. The victory was real and it was paid for in the victor's blood - the winner did not bleed less here.",
+        "axes": {
+          "theater": "Eastern",
+          "campaign": "Richmond-Petersburg (Chaffin's Farm)",
+          "result": "Union victory",
+          "cost": "A costly Union victory - the attacker's casualties far exceeded the defender's"
+        },
+        "sources": [
+          "https://www.nps.gov/rich/learn/historyculture/overview.htm",
+          "https://www.battlefields.org/learn/civil-war/battles/new-market-heights",
+          "https://www.nps.gov/rich/learn/historyculture/casualties.htm"
+        ]
+      }
+    }
+  }
+}

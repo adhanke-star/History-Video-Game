@@ -187,7 +187,8 @@ step("STRENGTH: engaged-strength bounds, gun structure, and label law are explic
     "Engaged strengths, not campaign totals",
     "~700 effectives total",
     "361 (11 officers + 350 enlisted, Fleetwood's first-person figure)",
-    "phase-1 US total 630-770",
+    "Duncan's two regiments 630-770 at T=0",
+    "phase-1 US total including that arrival is bounded 630-1,000",
     "the US fields 0 guns",
     "phase-1 CS total 1,700-2,100 with exactly 8 CS guns",
     "Hardaway's two 4-gun batteries",
@@ -423,7 +424,9 @@ step("REGISTRY: D363 stays planned-only; any future data file requires complete 
       if (!ok) throw new Error("unit lacks exact strength-provenance label: " + id + " (phase " + pi + ")");
     }
   });
-  if (sums[0].US < 630 || sums[0].US > 770) throw new Error("phase-1 US strength out of contract: " + sums[0].US);
+  const p1oobUS = ((sd.phases[0].oob || {}).US || []).reduce((n, u) => n + (+u.men || 0), 0);
+  if (p1oobUS < 630 || p1oobUS > 770) throw new Error("phase-1 US opening OOB out of contract: " + p1oobUS);
+  if (sums[0].US > 1000) throw new Error("phase-1 US total (with the sourced skirmish arrival) exceeds 1,000: " + sums[0].US);
   if (sums[0].CS < 1700 || sums[0].CS > 2100) throw new Error("phase-1 CS strength out of contract: " + sums[0].CS);
   if (sums[1].US < 1900 || sums[1].US > 2400) throw new Error("phase-2 US strength out of contract: " + sums[1].US);
   if (sums[1].CS < 600 || sums[1].CS > 1100) throw new Error("phase-2 CS strength out of contract: " + sums[1].CS);

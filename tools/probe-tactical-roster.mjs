@@ -40,8 +40,8 @@ function killChild(child) {
 
 const SETUP = `(() => {
   var R = { ok:true, steps:[] };
-  var EXPECTED = ['bullrun1', 'gainesMill', 'malvernHill', 'antietam', 'fredericksburg', 'chancellorsville', 'gettysburg', 'shiloh', 'vicksburg', 'chickamauga', 'chattanooga', 'kennesaw', 'franklin', 'nashville'];
-  var PHASE_COUNTS = { vicksburg: 3, chickamauga: 3, chattanooga: 3, nashville: 2 };
+  var EXPECTED = ['bullrun1', 'gainesMill', 'malvernHill', 'antietam', 'fredericksburg', 'chancellorsville', 'gettysburg', 'newMarketHeights', 'shiloh', 'vicksburg', 'chickamauga', 'chattanooga', 'kennesaw', 'franklin', 'nashville'];
+  var PHASE_COUNTS = { vicksburg: 3, chickamauga: 3, chattanooga: 3, nashville: 2, newMarketHeights: 2 };
   function step(name, fn) {
     try { var v = fn(); R.steps.push({ name:name, ok:true, v:v === undefined ? null : v }); }
     catch(e) { R.ok = false; R.steps.push({ name:name, ok:false, err:String(e && e.message || e) }); }
@@ -136,7 +136,7 @@ const SETUP = `(() => {
     step('MENU DOM: all registered battle buttons inject once, in roster order, before Skirmish/Command buttons', function() {
       if (typeof openMainMenu !== 'function') return { skipped:'no openMainMenu' };
       openMainMenu(); fldInjectMenuButton();
-      var ids = ['fldBullRunBtn', 'fldScnBtn_gainesMill', 'fldScnBtn_malvernHill', 'fldScnBtn_antietam', 'fldScnBtn_fredericksburg', 'fldScnBtn_chancellorsville', 'fldScnBtn_gettysburg', 'fldScnBtn_shiloh', 'fldScnBtn_vicksburg', 'fldScnBtn_chickamauga', 'fldScnBtn_chattanooga', 'fldScnBtn_kennesaw', 'fldScnBtn_franklin', 'fldScnBtn_nashville'];
+      var ids = ['fldBullRunBtn', 'fldScnBtn_gainesMill', 'fldScnBtn_malvernHill', 'fldScnBtn_antietam', 'fldScnBtn_fredericksburg', 'fldScnBtn_chancellorsville', 'fldScnBtn_gettysburg', 'fldScnBtn_newMarketHeights', 'fldScnBtn_shiloh', 'fldScnBtn_vicksburg', 'fldScnBtn_chickamauga', 'fldScnBtn_chattanooga', 'fldScnBtn_kennesaw', 'fldScnBtn_franklin', 'fldScnBtn_nashville'];
       var found = [];
       for (var i = 0; i < ids.length; i++) {
         var btn = document.getElementById(ids[i]);

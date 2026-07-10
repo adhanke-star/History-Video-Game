@@ -197,7 +197,7 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
 ### LANE-003 · battle-ladder — **DRIVE** (Claude/Fable owns the D363+ ladder)
 
 - **Owning tool:** Claude Code, with Fable 5 at xhigh as the TOP LOOP.
-- **State:** DRIVE — Fable verified the clean `b1d828b` boundary (HEAD == origin/main, worktree clean) and took the lock on 2026-07-10 for the D363 New Market Heights planning/spec commit.
+- **State:** DRIVE — Fable verified the clean `b1d828b` boundary (HEAD == origin/main, worktree clean) and took the lock on 2026-07-10 for the D363 New Market Heights planning/spec commit; D363 and D364 (playable New Market Heights) are now shipped and the lane continues toward Stones River.
 - **Design law:** `docs/design/battle-build-research/` packets (`eastern-1862` → Gaines' Mill ·
   `usct` → New Market Heights · `western-gaps` → Stones River · stretch: `shenandoah-1864` Cedar
   Creek · `shenandoah-1862` Cross Keys/Port Republic · `appomattox-campaign` Five Forks ·
@@ -225,39 +225,36 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
 - **Probe design:** per battle — plan probe (spec invariants) + runtime probe (registry/menu/
   OOB sums by sector/direction battery/pageerrors), modeled on `tools/probe-nashville*.mjs`.
 - **Resume pointer:** **D362 playable Gaines' Mill is the handoff boundary in the commit that
-  carries this transfer.** D363 (SHIPPED, this commit) locked the New Market Heights contract:
-  `docs/design/new-market-heights-battle-build-spec.md` + `tools/probe-new-market-heights-plan.mjs`
-  (10/10, bind-tested) — two-phase T8 same-ground shape (Duncan w1 CS-holds → Draper w3
-  US-carries vs a `Verified withdrawal order; Inferred residual strength` reduced line), Fort
-  Harrison teaching-only, guarded T13 pre-placed abatis seam, executable Fort Pillow absence
-  guard, inverse winner-bleeds-less cost guard. The 13-agent research verdicts live in the spec's
-  source register/readback. **D364 RUNTIME IS GREEN WIP IN THE WORKING TREE at the 2026-07-10
-  Fable session boundary (Aaron called the stop mid-vet): 18 uncommitted files — data/
-  new-market-heights.json + tools/probe-new-market-heights.mjs (new) + T1/T8/T10/T13 seams +
-  all baselines (schema 45/45, loot pin 990 = 957+11×3, flags 15+semantic tooth, Intel/media 15,
-  suite 120, roster/builder EXPECTED) + the generated HTML + a logged spec amendment (Holman's
-  22nd USCT skirmishers join phase 1 ≤250; phase-1 US OOB 630-770, total ≤1,000 — the schema
-  phase convention requires a meaningful reinforcement and the arrival is sourced). Focused probe
-  14/14 green, 0 pageerrors; plan probe 10/10 green on the implementation branch; GATE OK.
-  Honest A/B (log into D364's DECISIONS entry): attempt 0 (P2 timeLimit 240, belts .55/.6, US
-  staged z700, CS residual 890, support @55/85) → P1 CS 8/8 but P2 US 2/8 FAIL; attempt 1
-  (timeLimit 320, belts .5/.55, staged z640 at the marsh line, residual 790 = 400/300/90, support
-  @40/60 — all inside spec bounds) → P1 CS 8/8 · P2 US 7/8 · aggregate US 7/8 · US-bleeds-more
-  8/8 PASS. Bind 1 PROVEN (T1 registry line removed → REGISTRY/OBSTACLE/LAUNCH/PASSIVE/DIRECTION
-  teeth red, exit 1 → restored checksum-identical → green). REMAINING before the D364 commit:
-  bind 2 (stub fldEngSeedScenarioObstacles → exactly the OBSTACLE tooth red → restore
-  byte-identical); the spec's Required D364 Runtime Gate adjacents serialized (gaines-mill,
-  nashville, roster, builder, loot-survival, flags, weather, intel, media, vet --list 120, plus
-  probe-field for T0/T8/T13 shared-machinery byte-identity); JSON/pageerror readback; docs sync
-  (DECISIONS D364 with the A/B log + amendment + binds, RUN-LOG, HANDOFF, WAKE-UP,
-  AUTONOMOUS-RUN §2, V1-CHECKLIST, START-HERE, this ledger); commit + push. Treat the
-  working-tree files as the lane contract's candidate rendering (adopt per the relay rule —
-  do NOT clean the tree).** Then **Stones River** (spec-first; near-parity direction guards;
-  Polk/Hardee Lt. Gens.). Stretch in order only if both mandatory battles are shipped and the
-  release battery is green: Cedar Creek · Cross Keys/Port Republic · Five Forks · Fort Donelson ·
-  Elkhorn Tavern. 2-3 battles at FULL depth beat 6 shallow ones.
+  carried this transfer.** D363 (SHIPPED) locked the New Market Heights contract (spec +
+  10/10 plan probe). **D364 (SHIPPED, this commit) closes out playable New Market Heights** —
+  the green WIP recorded at the 2026-07-10 session boundary was adopted per the relay rule and
+  completed: bind 2 executed (fldEngSeedScenarioObstacles stubbed → rebuild GATE OK → EXACTLY
+  the OBSTACLE BELTS tooth red, 13 others green, exit 1 → md5-identical restore of source AND
+  generated HTML → 14/14; the direction battery stayed green beltless — the belts are friction,
+  not the outcome carrier); the spec's Required D364 Runtime Gate ran serialized with every JSON
+  artifact read (node --check 13/13 · GATE OK · schema 45/45 · plan 10/10 · runtime 14/14 with
+  direction 8/8·7/8·7/8·8/8 · roster 8/8 · builder 15/15 · loot 12 with the 990 pin · flags 44 ·
+  weather 30 · Intel 26 · media 13, known soft warning · vet --list 120 · gaines 13 · nashville
+  12 · field 23 · diff clean · 0 pageerrors everywhere); a 3-packet Opus/high default-refute
+  pass over the NEW teaching prose (Butler Medal, Fort Pillow proportions, MoH superlative)
+  produced ONE AMEND, applied before ship — the MoH superlative is now scoped "the most awarded
+  to Black soldiers for any single engagement of the war" — plus two stronger Butler-card
+  sources; and one gate-caught root cause: probe-gaines-mill's whole-registry pin 957 → 990
+  with the documented-history comment (the pin-bump idiom this ledger's LANE-002 note predicts —
+  replacement batches never move it, new battles always do). The honest A/B, the 22nd-USCT
+  spec amendment (phase-1 arrival ≤250, opening OOB 630-770 held, total ≤1,000), and both binds
+  are logged in DECISIONS D364. **NEXT: Stones River** (spec-first from
+  `docs/design/battle-build-research/western-gaps-battle-build-research.md`; NEAR-PARITY
+  casualty direction guards — never assume US < CS; re-verify Polk/Hardee as LIEUTENANT
+  generals at Stones River though both were Maj. Gens. at Perryville; planning commit before
+  runtime; the D330-D335 pattern). Stretch in order only if both mandatory battles are shipped
+  and the release battery is green: Cedar Creek · Cross Keys/Port Republic · Five Forks · Fort
+  Donelson · Elkhorn Tavern. 2-3 battles at FULL depth beat 6 shallow ones. After the final
+  lane battle: full serialized `npm run vet:noreg`, inspect every artifact, sync docs, push,
+  and move this lane toward release.
 - **Last-touched commit:** D362 (Gaines' Mill playable slice + Fable transfer) · D363 (New
-  Market Heights spec + plan probe, Fable/Claude — this commit).
+  Market Heights spec + plan probe, Fable/Claude) · D364 (playable New Market Heights,
+  Fable/Claude — this commit).
 - **History:** lane opened by Claude Code 2026-07-10 after Aaron's popup Q&A (D359) fixed scope,
   depth, and locks for the Codex session · ChatGPT/Codex took DRIVE in D361 and locked the
   Gaines' Mill source/strength/rank/direction contract before runtime · Aaron redirected D363+
@@ -266,7 +263,10 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   green commit · Claude/Fable verified the `b1d828b` D362 boundary and took DRIVE 2026-07-10
   (D363 New Market Heights spec + plan probe first; runtime only after that commit is green and
   pushed; then Stones River) · D363 shipped 2026-07-10 (13-agent research pass → adjudicated
-  two-phase USCT shape; spec + 10/10 plan gate; Fort Harrison teaching-only).
+  two-phase USCT shape; spec + 10/10 plan gate; Fort Harrison teaching-only) · D364 shipped
+  2026-07-10 (playable New Market Heights closeout: WIP adopted per the relay rule, bind 2,
+  full serialized runtime gate, 3-packet Opus teaching-prose refute pass, gaines-pin 990 bump,
+  docs sync — Fable/Claude).
 
 #### Fable takeover packet — read as the continuation prompt
 

@@ -43,6 +43,7 @@ function fldScenarioRegistry() {
       if (GAME_DATA.fredericksburg && GAME_DATA.fredericksburg.fredericksburg) R.fredericksburg = GAME_DATA.fredericksburg.fredericksburg;
       if (GAME_DATA.antietam && GAME_DATA.antietam.antietam) R.antietam = GAME_DATA.antietam.antietam;   // Phase C-2: the first MULTI-PHASE epic (data.phases[] -> the T8 engine)
       if (GAME_DATA.gettysburg && GAME_DATA.gettysburg.gettysburg) R.gettysburg = GAME_DATA.gettysburg.gettysburg;   // Phase C-1: Gettysburg — the second MULTI-PHASE epic (3 days: McPherson Ridge, Little Round Top, Pickett's Charge)
+      if (GAME_DATA["new-market-heights"] && GAME_DATA["new-market-heights"].newMarketHeights) R.newMarketHeights = GAME_DATA["new-market-heights"].newMarketHeights;   // D364 USCT lane: New Market Heights - Paine's USCT division storms the double abatis (2 phases over the same ground: Duncan's repulse -> Draper's carry)
       if (GAME_DATA.shiloh && GAME_DATA.shiloh.shiloh) R.shiloh = GAME_DATA.shiloh.shiloh;   // Phase C-2: Shiloh — the first WESTERN THEATER battle (single-phase, the Fredericksburg pattern)
       if (GAME_DATA.vicksburg && GAME_DATA.vicksburg.vicksburg) R.vicksburg = GAME_DATA.vicksburg.vicksburg;   // Phase C Western breadth: Vicksburg — the river-fortress siege (3 phases: redans -> Forlorn Hope -> saps/mine)
       if (GAME_DATA.chancellorsville && GAME_DATA.chancellorsville.chancellorsville) R.chancellorsville = GAME_DATA.chancellorsville.chancellorsville;   // Phase C-1: Chancellorsville — Lee's greatest victory, Jackson's flank march (single-phase, the Fredericksburg/Shiloh pattern)
@@ -139,6 +140,9 @@ function fldScenarioInit(opts) {
   // (so the probes that pin fog are unaffected). Set BEFORE fldResetRun so deploy-screen visibility primes correctly.
   if (!__FIELD._fogSpecified && data.defaultFog) __FIELD.fog = true;
   fldResetRun();   // shared T0 deploy/clock/selection reset (one source of truth)
+  // D364: data-declared pre-placed obstacle belts (engineering.abatis[]) — guarded no-op for
+  // every scenario without the key (fldEngReset already ran at launch, nothing clears after).
+  if (typeof fldEngSeedScenarioObstacles === "function") fldEngSeedScenarioObstacles(data.engineering);
   return true;
 }
 
@@ -234,7 +238,7 @@ function fldScenarioMenuOrder(reg) {
   return ids;
 }
 function fldScenarioMenuRank(id) {
-  var order = { bullrun1: 10, gainesMill: 15, malvernHill: 18, antietam: 20, fredericksburg: 30, chancellorsville: 35, gettysburg: 40, shiloh: 50, vicksburg: 55, chickamauga: 60, chattanooga: 65, kennesaw: 70, franklin: 75, nashville: 80 };
+  var order = { bullrun1: 10, gainesMill: 15, malvernHill: 18, antietam: 20, fredericksburg: 30, chancellorsville: 35, gettysburg: 40, newMarketHeights: 45, shiloh: 50, vicksburg: 55, chickamauga: 60, chattanooga: 65, kennesaw: 70, franklin: 75, nashville: 80 };
   return order[id] || 1000;
 }
 function fldScenarioDateSortValue(date) {

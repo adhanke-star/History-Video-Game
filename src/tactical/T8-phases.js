@@ -102,6 +102,9 @@ function _fldBuildPhase(i) {
   __FIELD.reinforce = sched;
   fldResetRun();   // resets t/holdSecs/winner/phase=deploy + rebuilds officers (phase cast) + trains (phase supply)
   if (typeof fldEngPhaseReset === "function") fldEngPhaseReset();   // T13: drop the prior sector's obstacle belts per phase (keeps _engUsed for the aggregate end-card)
+  // D364: seed the PHASE's data-declared pre-placed belts AFTER the per-phase reset (phase
+  // spec wins over top-level; guarded no-op when neither declares engineering.abatis).
+  if (typeof fldEngSeedScenarioObstacles === "function") fldEngSeedScenarioObstacles(p.engineering || top.engineering);
 }
 
 /* the per-side tallies of the CURRENT phase (committed force = the units that spawned this

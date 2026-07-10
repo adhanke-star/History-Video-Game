@@ -767,7 +767,7 @@ const SETUP = `(() => {
       var C=mkC('US'); G.campaign=C; _t1InitAll(C);
       lootAddItem(C,'commissary_rations',1,'probe');
       var reg=ssPersonRegistry(C);
-      if(reg.people.length!==957) throw new Error('expected current 957-person registry, got '+reg.people.length);   // D362: 912 -> 957 — Gaines' Mill adds 15 unique units x 3 Soldier's Story slots; prior history: D355 645 -> 912 for Chattanooga/Kennesaw/Franklin/Nashville, D254 639 -> 645 Malvern Hill, D243 630 -> 639, D239 627 -> 630, D237 603 -> 627
+      if(reg.people.length!==990) throw new Error('expected current 990-person registry, got '+reg.people.length);   // D364: 957 -> 990 — New Market Heights adds 11 unique units x 3 Soldier's Story slots (7 US + 4 CS across both phases; phase-repeated CS ids dedupe); prior history: D362: 912 -> 957 — Gaines' Mill adds 15 unique units x 3 Soldier's Story slots; prior history: D355 645 -> 912 for Chattanooga/Kennesaw/Franklin/Nashville, D254 639 -> 645 Malvern Hill, D243 630 -> 639, D239 627 -> 630, D237 603 -> 627
       var generated=findPerson(reg,function(p){ return p.generated && p.team && p.team.brigade && p.team.company; });
       var authored=findPerson(reg,function(p){ return !p.generated && !p.replacement && p.provenance==='Verified'; });
       if(!generated) throw new Error('no generated person with brigade/company team hierarchy');
@@ -786,7 +786,7 @@ const SETUP = `(() => {
       var cards=root.querySelectorAll('[data-ss-card]');
       if(cards.length!==reg.people.length) throw new Error('register card count mismatch '+cards.length+' vs '+reg.people.length);
       var count=root.querySelector('#ssRegCount');
-      if(!count || count.textContent.indexOf('957 of 957')<0) throw new Error('full registry count missing: '+(count&&count.textContent));   // D362: tracks the 957-person registry (see the count assertion above)
+      if(!count || count.textContent.indexOf('990 of 990')<0) throw new Error('full registry count missing: '+(count&&count.textContent));   // D364: tracks the 990-person registry (see the count assertion above)
       var gCard=cardByPid(root,generated.pid), aCard=cardByPid(root,authored.pid);
       if(!gCard || !aCard) throw new Error('target cards missing');
       if(gCard.textContent.indexOf('Generated')<0 || gCard.textContent.indexOf('Inferred')<0) throw new Error('generated/Inferred card display missing: '+gCard.textContent);

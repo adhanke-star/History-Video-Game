@@ -27,7 +27,7 @@ function ensureDir(p) {
 const BATTLE_FILES = new Set([
   'antietam.json', 'bullrun.json', 'chancellorsville.json', 'chickamauga.json',
   'chattanooga.json', 'franklin.json', 'fredericksburg.json', 'gaines-mill.json', 'gettysburg.json', 'kennesaw.json',
-  'nashville.json',
+  'nashville.json', 'new-market-heights.json',
   'malvern-hill.json', 'shiloh.json', 'vicksburg.json'
 ]);
 

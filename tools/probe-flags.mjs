@@ -91,6 +91,7 @@ function pureScript() {
         kennesaw: withScenario('kennesaw', function(){ return _fldBattleMeta(); }),
         franklin: withScenario('franklin', function(){ return _fldBattleMeta(); }),
         nashville: withScenario('nashville', function(){ return _fldBattleMeta(); }),
+        nmh: withScenario('newMarketHeights', function(){ return _fldBattleMeta(); }),
         sandbox: withScenario('__nope__', function(){ return _fldBattleMeta(); })
       };
       R.metaCoverage = Object.keys(fldScenarioRegistry()).map(function(id) {
@@ -110,6 +111,7 @@ function pureScript() {
         csKennesaw: flagPat('kennesaw', "Maney's Tennessee Brigade", 'CS'),
         csFranklin: flagPat('franklin', "Cleburne's Division", 'CS'),
         csNashville: flagPat('nashville', "Cheatham's Shy's Hill Line", 'CS'),
+        csNewMarketHeights: flagPat('newMarketHeights', "Gregg's Texas Brigade", 'CS'),
         csGettysburg: flagPat('gettysburg', "Rodes's Division", 'CS'),
         csShiloh: flagPat('shiloh', "Chalmers's Brigade", 'CS'),
         usNational: flagPat('gettysburg', "Doubleday's Division (I Corps)", 'US'),
@@ -312,12 +314,16 @@ async function runScene(page, label, scenario, seed, opts, shared) {
     pure.ok && P.meta && P.meta.gburg.badges === true && P.meta.bullrun.badges === false && P.meta.chick.badges === false && P.meta.sandbox.badges === false,
     JSON.stringify(P.meta || {}));
   check('battle meta: every registered historical scenario has explicit metadata (no silent Eastern/ANV fallback)',
-    pure.ok && Array.isArray(P.metaCoverage) && P.metaCoverage.length === 14 && P.metaCoverage.every(x => x.explicit),
+    pure.ok && Array.isArray(P.metaCoverage) && P.metaCoverage.length === 15 && P.metaCoverage.every(x => x.explicit),
     JSON.stringify(P.metaCoverage || []));
   check('battle meta + flag: Gaines Mill is pre-badge Eastern and uses the ANV Southern Cross family',
     pure.ok && P.meta && P.meta.gaines && P.meta.gaines.theater === 'E' && P.meta.gaines.badges === false && P.meta.gaines.csFlag === 'anv'
       && P.flag && P.flag.csGainesMill === 'southern-cross',
     'meta=' + JSON.stringify(P.meta && P.meta.gaines) + ' flag=' + (P.flag && P.flag.csGainesMill));
+  check('battle meta + flag: New Market Heights is an Army-of-the-James Eastern field - no AotP badges (the AoJ badge sets are not modeled), ANV Southern Cross for Field\'s Division defenders',
+    pure.ok && P.meta && P.meta.nmh && P.meta.nmh.theater === 'E' && P.meta.nmh.badges === false && P.meta.nmh.csFlag === 'anv'
+      && P.flag && P.flag.csNewMarketHeights === 'southern-cross',
+    'meta=' + JSON.stringify(P.meta && P.meta.nmh) + ' flag=' + (P.flag && P.flag.csNewMarketHeights));
   check('battle meta: Chattanooga/Kennesaw/Franklin/Nashville are Western AoT fields with no AotP badges and a Hardee-pattern default',
     pure.ok && ['chattanooga', 'kennesaw', 'franklin', 'nashville'].every(function(id) {
       var m = P.meta && P.meta[id]; return m && m.theater === 'W' && m.badges === false && m.csFlag === 'hardee';

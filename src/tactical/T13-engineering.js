@@ -117,6 +117,31 @@ function fldEngPhaseReset() {
   __FIELD._engPonSeq = null;
 }
 
+/* D364 (New Market Heights): PRE-PLACED scenario obstacle belts. A battle (or a T8 phase) may
+   declare engineering.abatis[] = [{x1,z1,x2,z2, side?, prepared?, strength?}] — historical
+   slashing/abatis standing at T=0 (Fleetwood: "two lines of abatis and one line of palisades").
+   Belts are seeded COMPLETED (building:false) into the same __FIELD.engObstacles array every
+   existing crossing-slow / crossing-disorder / axe-clearance / mesh-sync path already reads, so
+   the behavior is T13's tested code unchanged — no new combat math, no damage source (D74).
+   side defaults to the scenario DEFENDER; strength <1 models a partially breached belt (D363
+   phase-2 contract). GUARDED: scenarios without the key return before touching any state ->
+   sandbox/legacy battles byte-identical. Deterministic (no RNG). Deliberately does NOT set
+   _engUsed: the engineer end-card remains a report on PLAYER work, not scenario furniture. */
+function fldEngSeedScenarioObstacles(spec) {
+  if (typeof __FIELD === "undefined" || !spec || !spec.abatis || !spec.abatis.length) return;
+  var obs = _fldEngObs(), def = __FIELD.defender || "CS";
+  for (var i = 0; i < spec.abatis.length; i++) {
+    var a = spec.abatis[i]; if (!a) continue;
+    var s = Math.max(0.05, Math.min(1, (typeof a.strength === "number") ? a.strength : 1));
+    obs.push({
+      id: "abatis_scn_" + (__FIELD._engObsSeq = (__FIELD._engObsSeq || 0) + 1),
+      side: a.side || def, builderId: null,
+      x1: +a.x1, z1: +a.z1, x2: +a.x2, z2: +a.z2,
+      strength: s, building: false, prepared: !!a.prepared, worksStage: a.prepared ? 2 : 0
+    });
+  }
+}
+
 function _fldEngObs() { return (__FIELD.engObstacles || (__FIELD.engObstacles = [])); }
 function _fldEngPointSeg(x, z, a) {
   var dx = a.x2 - a.x1, dz = a.z2 - a.z1, l2 = dx * dx + dz * dz;
