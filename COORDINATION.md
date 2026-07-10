@@ -162,25 +162,29 @@ judgment, or final integration.
   probe per record; 5c — extend `tools/probe-camp.mjs`/`probe-loot-survival.mjs` journey teeth +
   save round-trip teeth. All: build GATE OK, `git diff --check`, JSON/pageerror readback.
 - **5b inventory (mechanical helper, Sonnet, 2026-07-10 — size any batch FROM THIS COUNT, never
-  from a prompt):** universe **879** slots = 293 unique units × 3 types (`cmd`/`nco`/`pvt`),
-  derived by `ssPersonRegistry()` (src/37-loot-survival.js:800, `_ssCollectScenarioUnits`:774,
-  `_ssUnitSpecs`:553) over `fldScenarioRegistry()`; phases/reinforcements deduped by
-  battle:side:uid. **Replaced 31 · remaining 848** (cmd 283 · nco 283 · pvt 282; US 453 · CS 395).
-  All 31 shipped `replacePid` keys verified members of the universe; zero anomalies. Remaining by
-  battle (total/replaced/remaining): bullrun1 54/2/52 · malvernHill 60/0/60 · antietam 84/4/80 ·
-  fredericksburg 51/1/50 · chancellorsville 39/2/37 · gettysburg 105/8/97 · shiloh 48/3/45 ·
-  vicksburg 81/3/78 · chickamauga 90/8/82 · chattanooga 81/0/81 · kennesaw 54/0/54 ·
-  franklin 57/0/57 · nashville 75/0/75. **In-repo candidate sources:** only Bull Run has real
-  banked OOB material (~560 lines, HISTORICAL-DATA.md:21-580); Nashville has a ~40-line USCT
-  paragraph (Steedman's brigades, 13th USCT); Vicksburg a Milliken's Bend paragraph (related but
-  distinct engagement); the other 10 battles have NO in-repo roster research — records there need
-  fresh external NPS/CMOHS/primary-source work (~2 sources + default-refute + adjudication per
-  record, the repo's most expensive work per shipped line).
-- **Resume pointer:** **5a SHIPPED (D357)** — `src/tactical/T29-muster-roll-ui.js` + the T0 seam +
-  the probe-ratings T29 tooth (bind-tested). Next: **DRIVE 5b** — size the batch from the
-  inventory above + remaining context, log the number + reasoning in `DECISIONS.md` BEFORE the
-  first record; Bull Run is the cheapest lane (banked OOB at HISTORICAL-DATA.md:21-580); 848
-  remaining means this lane STAYS OPEN with a decremented count after every batch. Then 5c.
-- **Last-touched commit:** D357 (5a).
+  from a prompt; decremented by D358):** universe **879** slots = 293 unique units × 3 types
+  (`cmd`/`nco`/`pvt`), derived by `ssPersonRegistry()` (src/37-loot-survival.js:800,
+  `_ssCollectScenarioUnits`:774, `_ssUnitSpecs`:553) over `fldScenarioRegistry()`;
+  phases/reinforcements deduped by battle:side:uid. **Replaced 39 · remaining 840** (US 19 · CS 20
+  shipped). Remaining by battle (total/replaced/remaining): bullrun1 54/10/44 · malvernHill
+  60/0/60 · antietam 84/4/80 · fredericksburg 51/1/50 · chancellorsville 39/2/37 · gettysburg
+  105/8/97 · shiloh 48/3/45 · vicksburg 81/3/78 · chickamauga 90/8/82 · chattanooga 81/0/81 ·
+  kennesaw 54/0/54 · franklin 57/0/57 · nashville 75/0/75. **In-repo candidate sources:** only
+  Bull Run has real banked OOB material (~560 lines, HISTORICAL-DATA.md:21-580; its 8 richest
+  cmd rows are now spent — remaining Bull Run rows are nco/pvt diarists or thinner cmd slots
+  like Keyes/Franklin/Willcox/Ricketts/Cocke/Stuart/Early/Elzey/Jackson); Nashville has a
+  ~40-line USCT paragraph (Steedman's brigades, 13th USCT); Vicksburg a Milliken's Bend paragraph
+  (related but distinct engagement); the other 10 battles have NO in-repo roster research —
+  records there need fresh external NPS/CMOHS/primary-source work (~2 sources + default-refute +
+  adjudication per record, the repo's most expensive work per shipped line).
+- **Resume pointer:** **5a SHIPPED (D357) · first 5b batch SHIPPED (D358: 8 Bull Run cmd rows,
+  Contract Relay roles held, all refute amendments applied; probe pins 31→39, 912 pin HELD —
+  replacement batches preserve registry length, only new battle units move 912).** Next: **5c**
+  start-anywhere career trajectory (save/journey/report contracts unbroken; `_SAVE_VER` bump only
+  with idempotent lazy migration + conscious `tools/save-shape.json` update in the same commit;
+  keep new journey state clear of own `hasOwnProperty` keys per D353, extend the E50 teeth if
+  adding accept lanes). Further 5b batches remain OPEN work — size each from the count above.
+- **Last-touched commit:** D358 (5b batch 1).
 - **History:** lane opened by Claude Code 2026-07-10 under Aaron's Contract Relay kickoff;
-  5b inventory attached 2026-07-10; 5a shipped D357 2026-07-10.
+  5b inventory attached 2026-07-10; 5a shipped D357 2026-07-10; 5b batch 1 (8 records) shipped
+  D358 2026-07-10.

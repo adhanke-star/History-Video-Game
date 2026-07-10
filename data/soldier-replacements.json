@@ -2409,6 +2409,595 @@
       ],
       "sourceNote": "Ships at Maj. Gen.; NPS and ABT support the 1862 major-general rank and Chickamauga leg wound, while the U.S. Army staff ride and NPS Chickamauga narrative place Hood's division/column in Longstreet's September 20 breakthrough. No lieutenant-general-at-Chickamauga claim. No later Atlanta/Franklin command rating claim. No portrait. Ratings Inferred.",
       "bio": "John Bell Hood reached major general in 1862 and commanded a division in Longstreet's corps before the Chickamauga campaign. At Chickamauga, Hood handled the three-division column behind Johnson's Provisional Division while Longstreet managed Bragg's left wing. The September 20 advance through the Brotherton gap helped split Rosecrans's army, but Hood was wounded so severely that his right leg was amputated, and the Confederate victory still failed to destroy Thomas's Horseshoe Ridge defense or secure Chattanooga. This command-row replacement fills the Hood's Arriving Brigades slot without asserting a lieutenant-general-at-Chickamauga rank, a company command, a portrait asset, or sourced ratings."
+    },
+    {
+      "pid": "person_bullrun_us_sherman_bde",
+      "replacePid": "ss:bullrun1:US:us_sherman:cmd",
+      "name": "William T. Sherman",
+      "side": "US",
+      "rank": "Col.",
+      "branch": "inf",
+      "role": "brigade commander",
+      "year": 1861,
+      "provenance": "Verified",
+      "team": {
+        "side": "US",
+        "army": "Army of Northeastern Virginia",
+        "corps": "",
+        "division": "Tyler's First Division",
+        "brigade": "Sherman's Brigade",
+        "regiment": "",
+        "company": ""
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Union Order of Battle - First Manassas",
+          "author": "National Park Service",
+          "repository": "Manassas National Battlefield Park, U.S. National Park Service",
+          "locator": "Third Brigade, First Division entry",
+          "url": "https://www.nps.gov/mana/learn/historyculture/union-order-of-battle-first-manassas.htm",
+          "type": "secondary",
+          "note": "Lists Colonel William T. Sherman commanding the Third Brigade, First Division, with the 13th New York, 69th New York, 79th New York, 2nd Wisconsin, and Ayres's Company E, 3rd U.S. Artillery."
+        },
+        {
+          "title": "William T. Sherman",
+          "author": "American Battlefield Trust",
+          "repository": "American Battlefield Trust",
+          "locator": "Early war and Bull Run paragraphs",
+          "url": "https://www.battlefields.org/learn/biographies/william-t-sherman",
+          "type": "secondary",
+          "note": "Confirms Sherman was colonel of the 13th U.S. Infantry, commanded a brigade of Tyler's division at First Manassas, and was promoted brigadier general on August 7, 1861 — after the battle."
+        },
+        {
+          "title": "William T. Sherman's Report on His Brigade's Action at the First Battle of Bull Run",
+          "author": "W. T. Sherman (official report, July 25, 1861; OR Ser. I Vol. 2, reproduced)",
+          "repository": "Iron Brigader (reproduction of the Official Records text)",
+          "locator": "Report text and signature block",
+          "url": "https://ironbrigader.com/2015/07/20/william-t-shermans-report-brigades-action-battle-bull-run/",
+          "type": "primary",
+          "note": "Sherman signs 'Colonel, Commanding Brigade'; describes the ford crossing and the sequential regimental attacks on Henry House Hill. Reproduction site; rank and composition cross-checked against NPS and ABT."
+        }
+      ],
+      "sourceNote": "Ships at Col.; the NPS Manassas order of battle and the ABT biography carry Col. W. T. Sherman over Tyler's Third Brigade, with the brigadier promotion dated Aug. 7, 1861 — after the battle; his official report signs Colonel. No brigadier-general-at-Bull-Run claim. No brigade casualty figure (tallies diverge). No portrait. Ratings Inferred.",
+      "bio": "William Tecumseh Sherman commanded the Third Brigade of Tyler's division at First Bull Run as a colonel of the 13th U.S. Infantry. After spotting a crossing upstream, he took the brigade over Bull Run and joined the afternoon fight for Henry House Hill, committing the 13th New York, 2nd Wisconsin, 79th New York, and 69th New York one regiment at a time — each repulsed in succession, at the heaviest cost of any brigade in Tyler's division. His brigadier general's appointment came in August 1861, after the battle. This command-row replacement ships the battle-date colonel; the strategic-layer Sherman career card is a separate record, and no whole-war rank, casualty total, or portrait is asserted here."
+    },
+    {
+      "pid": "person_bullrun_us_porter_bde",
+      "replacePid": "ss:bullrun1:US:us_porter:cmd",
+      "name": "Andrew Porter",
+      "side": "US",
+      "rank": "Col.",
+      "branch": "inf",
+      "role": "brigade commander",
+      "year": 1861,
+      "provenance": "Verified",
+      "team": {
+        "side": "US",
+        "army": "Army of Northeastern Virginia",
+        "corps": "",
+        "division": "Hunter's Second Division",
+        "brigade": "Porter's Brigade",
+        "regiment": "",
+        "company": ""
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Union Order of Battle - First Manassas",
+          "author": "National Park Service",
+          "repository": "Manassas National Battlefield Park, U.S. National Park Service",
+          "locator": "First Brigade, Second Division entry",
+          "url": "https://www.nps.gov/mana/learn/historyculture/union-order-of-battle-first-manassas.htm",
+          "type": "secondary",
+          "note": "Lists Colonel Andrew Porter commanding the First Brigade, Second Division; shows division commander Col. David Hunter wounded, with Porter beneath him in the chain of command; names the brigade's militia, volunteer, regular, marine, cavalry, and battery elements."
+        },
+        {
+          "title": "#32 - Col. Andrew Porter (official report, OR Ser. I Vol. 2, reproduced)",
+          "author": "Andrew Porter (report), reproduced by Harry Smeltzer",
+          "repository": "Bull Runnings (curated reproduction of the Official Records text)",
+          "locator": "Report heading, brigade roster, division-command passage, division casualty return",
+          "url": "https://bullrunnings.wordpress.com/2008/05/25/32-%E2%80%93-col-andrew-porter/",
+          "type": "primary",
+          "note": "Porter's report is headed Colonel, 16th U.S. Infantry; lists the brigade units and commanders; states Capt. Whipple brought word that the wounded Hunter directed Porter to command the division; gives the Second Division casualty return (126 killed, 297 wounded, 346 missing)."
+        },
+        {
+          "title": "Bull Run Battle Facts and Summary",
+          "author": "American Battlefield Trust",
+          "repository": "American Battlefield Trust",
+          "locator": "Battle narrative",
+          "url": "https://www.battlefields.org/learn/civil-war/battles/bull-run",
+          "type": "secondary",
+          "note": "Corroborates the flank-march structure (Sudley Ford crossing, Matthews Hill morning fight, Henry Hill afternoon) and the battle-date colonels' ranks pattern; does not name Porter directly."
+        }
+      ],
+      "sourceNote": "Ships at Col.; his own official report (Colonel, 16th U.S. Infantry) and the NPS order of battle carry the brigade command, Matthews Hill, and the succession to division command when Hunter fell wounded (a Burnside-recollection variant exists). No brigadier-at-Bull-Run claim. No brigade casualty figure. No portrait. Ratings Inferred.",
+      "bio": "Andrew Porter, colonel of the 16th U.S. Infantry, commanded the First Brigade of Hunter's division in the flank march that opened First Bull Run — militia, New York volunteers, Sykes's regulars, marines, cavalry, and Griffin's battery. The brigade fought across Matthews Hill in the morning, and when Col. David Hunter fell wounded early, Porter took command of the division by Hunter's direction. In the afternoon the regular batteries sent to the Henry House crest were overrun, and the division came off the field in the general retreat. This command-row replacement ships the battle-date colonel; no brigadier's rank, no brigade casualty figure, and no portrait are asserted."
+    },
+    {
+      "pid": "person_bullrun_us_howard_bde",
+      "replacePid": "ss:bullrun1:US:us_howard:cmd",
+      "name": "Oliver O. Howard",
+      "side": "US",
+      "rank": "Col.",
+      "branch": "inf",
+      "role": "brigade commander",
+      "year": 1861,
+      "provenance": "Verified",
+      "team": {
+        "side": "US",
+        "army": "Army of Northeastern Virginia",
+        "corps": "",
+        "division": "Heintzelman's Third Division",
+        "brigade": "Howard's Brigade",
+        "regiment": "",
+        "company": ""
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Information Panel: Retreat From Chinn Ridge",
+          "author": "National Park Service",
+          "repository": "Manassas National Battlefield Park, U.S. National Park Service",
+          "locator": "Panel narrative",
+          "url": "https://www.nps.gov/places/information-panel-retreat-from-chinn-ridge.htm",
+          "type": "secondary",
+          "note": "Carries Colonel Howard's brigade of New Englanders deploying on Chinn Ridge around 4 p.m. after a grueling march, struck by Confederate reinforcements with artillery firing from the Chinn House yard."
+        },
+        {
+          "title": "Oliver O. Howard",
+          "author": "American Battlefield Trust",
+          "repository": "American Battlefield Trust",
+          "locator": "Biography, First Bull Run paragraph",
+          "url": "https://www.battlefields.org/learn/biographies/oliver-o-howard",
+          "type": "secondary",
+          "note": "Confirms Howard was colonel of the 3rd Maine commanding a brigade at First Bull Run, driven from the field, and promoted brigadier general that fall. Same institution as the ABT map source."
+        },
+        {
+          "title": "First Manassas - July 21, 1861 (map and narrative)",
+          "author": "American Battlefield Trust",
+          "repository": "American Battlefield Trust",
+          "locator": "Chinn Ridge action",
+          "url": "https://www.battlefields.org/learn/maps/first-manassas-july-21-1861",
+          "type": "secondary",
+          "note": "Corroborates Early's brigade beating back Howard's advance on Chinn Ridge. Same institution as the ABT biography source."
+        },
+        {
+          "title": "First Battle of Manassas (Bull Run)",
+          "author": "Encyclopedia Virginia (Virginia Humanities)",
+          "repository": "Encyclopedia Virginia",
+          "locator": "Late-afternoon Chinn Ridge passage",
+          "url": "https://encyclopediavirginia.org/entries/manassas-first-battle-of/",
+          "type": "secondary",
+          "note": "Names Union colonel Oliver Otis Howard on Chinn Ridge and the brigades of Arnold Elzey (commanding after E. Kirby Smith was wounded) and Jubal A. Early crushing the advance about 4 p.m."
+        }
+      ],
+      "sourceNote": "Ships at Col.; NPS Chinn Ridge panel, ABT biography, and Encyclopedia Virginia carry Col. O. O. Howard over the Maine/Vermont brigade and its late-afternoon collapse on Chinn Ridge (the two ABT pages count as one institution). Unhurt on the day. No brigadier-at-Bull-Run claim (that fall); no later-career rating claim. No portrait. Ratings Inferred.",
+      "bio": "Oliver Otis Howard, colonel of the 3rd Maine, led a brigade of Maine and Vermont regiments in Heintzelman's division at First Bull Run. Committed last after a punishing march, his brigade extended the Union flank onto Chinn Ridge late in the afternoon, where it was struck and broken by fresh Confederate brigades — E. Kirby Smith's, under Arnold Elzey after Smith fell wounded, arriving by rail, and Jubal Early's — with artillery firing from the Chinn House yard; the collapse opened the general Union rout. Howard came through the day unhurt; his brigadier's star came that fall. This command-row replacement ships the battle-date colonel; no later-career rank, command, or rating claim, and no portrait."
+    },
+    {
+      "pid": "person_bullrun_us_griffin_battery",
+      "replacePid": "ss:bullrun1:US:us_griffin:cmd",
+      "name": "Charles Griffin",
+      "side": "US",
+      "rank": "Capt.",
+      "branch": "art",
+      "role": "battery commander",
+      "year": 1861,
+      "provenance": "Verified",
+      "team": {
+        "side": "US",
+        "army": "Army of Northeastern Virginia",
+        "corps": "",
+        "division": "Hunter's Second Division",
+        "brigade": "Porter's Brigade",
+        "regiment": "Battery D, 5th U.S. Artillery",
+        "company": ""
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "The Battle of First Manassas (First Bull Run)",
+          "author": "National Park Service",
+          "repository": "Manassas National Battlefield Park, U.S. National Park Service",
+          "locator": "Henry Hill afternoon narrative",
+          "url": "https://www.nps.gov/mana/learn/historyculture/first-manassas.htm",
+          "type": "secondary",
+          "note": "Carries Capt. Charles Griffin's guns on Henry House Hill and the fatal friend-or-foe confusion over the approaching regiment that overran the batteries."
+        },
+        {
+          "title": "Historical Handbook Series No. 15 - Manassas (Bull Run)",
+          "author": "National Park Service",
+          "repository": "NPS History (official NPS Historical Handbook Series)",
+          "locator": "Henry Hill, ~2 p.m. passage",
+          "url": "https://npshistory.com/handbooks/historical/15/hh15e2.htm",
+          "type": "secondary",
+          "note": "States McDowell ordered forward the regular batteries of Ricketts and Griffin to an exposed position just south of the Henry House about 2 p.m. Same institution as the NPS battle page."
+        },
+        {
+          "title": "Charles Griffin (Handbook of Texas)",
+          "author": "Texas State Historical Association",
+          "repository": "Handbook of Texas Online",
+          "locator": "Civil War paragraph",
+          "url": "https://www.tshaonline.org/handbook/entries/griffin-charles",
+          "type": "secondary",
+          "note": "Confirms Captain Griffin commanded the West Point Battery (Battery D, 5th U.S. Artillery), which distinguished itself at Bull Run — the independent second institution for rank and unit."
+        }
+      ],
+      "sourceNote": "Ships at Capt.; NPS and the Handbook of Texas carry Battery D, 5th U.S. Artillery (the West Point Battery) under Porter's brigade and its loss on Henry House Hill after the chief of artillery overruled Griffin's enemy identification. Unhurt; guns lost. No field-grade-at-Bull-Run claim; attacking regiment not unit-named. No portrait. Ratings Inferred.",
+      "bio": "Charles Griffin, a captain of the regular artillery, commanded Battery D, 5th U.S. Artillery — the West Point Battery — with Porter's brigade of Hunter's division. His guns fought through the morning, then were ordered with Ricketts's battery to an exposed position by the Henry House about 2 p.m. When a regiment approached the flank, Griffin judged it Confederate, but the army's chief of artillery overruled him, taking it for battery support; its point-blank volley shot down the gunners, and the loss of the two regular batteries became the turning point of the afternoon. Griffin escaped the field unhurt. This battery-command replacement ships the battle-date captain; no field-grade rank and no portrait."
+    },
+    {
+      "pid": "person_bullrun_cs_evans_demibde",
+      "replacePid": "ss:bullrun1:CS:cs_evans:cmd",
+      "name": "Nathan G. Evans",
+      "side": "CS",
+      "rank": "Col.",
+      "branch": "inf",
+      "role": "brigade commander",
+      "year": 1861,
+      "provenance": "Verified",
+      "team": {
+        "side": "CS",
+        "army": "Confederate Army of the Potomac",
+        "corps": "",
+        "division": "",
+        "brigade": "Evans's Demi-Brigade",
+        "regiment": "",
+        "company": ""
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Nathan G. Evans",
+          "author": "American Battlefield Trust",
+          "repository": "American Battlefield Trust",
+          "locator": "Biography, First Manassas paragraphs",
+          "url": "https://www.battlefields.org/learn/biographies/nathan-g-evans",
+          "type": "secondary",
+          "note": "Places Evans on the extreme Confederate left at the Stone Bridge, turning his outnumbered command to oppose the unexpected Union crossing and delaying the flank column."
+        },
+        {
+          "title": "Nathan G. Evans",
+          "author": "National Park Service",
+          "repository": "U.S. National Park Service",
+          "locator": "Biography",
+          "url": "https://www.nps.gov/people/nathan-g-evans.htm",
+          "type": "secondary",
+          "note": "Confirms Evans served at the battle as a temporary colonel, was rewarded afterward with permanent colonel's rank and command of the Seventh Brigade, and was promoted brigadier general only after Ball's Bluff (October 1861)."
+        },
+        {
+          "title": "First Battle of Manassas (Bull Run)",
+          "author": "Encyclopedia Virginia (Virginia Humanities)",
+          "repository": "Encyclopedia Virginia",
+          "locator": "Stone Bridge and Matthews Hill passages",
+          "url": "https://encyclopediavirginia.org/entries/manassas-first-battle-of/",
+          "type": "secondary",
+          "note": "Carries Evans at the Stone Bridge, E. P. Alexander's morning wig-wag warning that the Union column had turned the left, and Evans's pivot to meet it — the signal wording is reported with variants and is not quoted verbatim in this record."
+        }
+      ],
+      "sourceNote": "Ships at Col. (a temporary colonelcy — NPS: permanent colonel and Seventh Brigade command came after the battle); ABT, NPS, and Encyclopedia Virginia carry the Stone Bridge post, Alexander's signal (paraphrased, wording varies), and the Matthews Hill delaying stand. Unhurt. No brigadier-at-Bull-Run claim (October 1861). No portrait. Ratings Inferred.",
+      "bio": "Nathan George 'Shanks' Evans held the Stone Bridge on the far left of Beauregard's Confederate Army of the Potomac with a small demi-brigade of roughly 1,100 men, serving as a temporary colonel. Warned by E. P. Alexander's wig-wag signal that a Union column had crossed upstream and turned the flank, Evans pivoted most of his command north to Matthews Hill on his own initiative and delayed the attack until Bee and Bartow came up — the stand credited with saving the Confederate left. He came through the battle unhurt; permanent colonel's rank, brigade command, and later a brigadier's commission followed. This command-row replacement ships the battle-date temporary colonel; strength approximate; no portrait."
+    },
+    {
+      "pid": "person_bullrun_cs_bee_bde",
+      "replacePid": "ss:bullrun1:CS:cs_bee:cmd",
+      "name": "Barnard E. Bee",
+      "side": "CS",
+      "rank": "Brig. Gen.",
+      "branch": "inf",
+      "role": "brigade commander",
+      "year": 1861,
+      "provenance": "Verified",
+      "team": {
+        "side": "CS",
+        "army": "Army of the Shenandoah",
+        "corps": "",
+        "division": "",
+        "brigade": "Bee's Brigade",
+        "regiment": "",
+        "company": ""
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Confederate Order of Battle - First Manassas",
+          "author": "National Park Service",
+          "repository": "Manassas National Battlefield Park, U.S. National Park Service",
+          "locator": "Third Brigade, Army of the Shenandoah entry",
+          "url": "https://home.nps.gov/mana/learn/historyculture/confederate-order-of-battle-first-manassas.htm",
+          "type": "secondary",
+          "note": "Carries Brig. Gen. Barnard E. Bee over the Third Brigade of the Army of the Shenandoah, killed in action, with the brigade's Alabama, Mississippi, and North Carolina regiments and Imboden's battery."
+        },
+        {
+          "title": "Stonewall Brigade",
+          "author": "Encyclopedia Virginia (Virginia Humanities)",
+          "repository": "Encyclopedia Virginia",
+          "locator": "Nickname origin passage",
+          "url": "https://encyclopediavirginia.org/entries/stonewall-brigade/",
+          "type": "secondary",
+          "note": "Identifies Brig. Gen. Barnard E. Bee Jr. as the officer credited with the stone-wall comparison at First Manassas and explicitly flags the debate over the remark's wording and intent."
+        },
+        {
+          "title": "Thomas J. 'Stonewall' Jackson",
+          "author": "National Park Service",
+          "repository": "U.S. National Park Service",
+          "locator": "Bull Run paragraph",
+          "url": "https://www.nps.gov/people/thomas-j-stonewall-jackson.htm",
+          "type": "secondary",
+          "note": "Attributes the stone-wall remark to Bee during the fight; this page does not itself flag the contested wording, so it is cited only alongside Encyclopedia Virginia's debate flag. Same institution as the NPS order of battle."
+        },
+        {
+          "title": "The Myth of Stonewall Jackson (video)",
+          "author": "American Battlefield Trust (Garry Adelman)",
+          "repository": "American Battlefield Trust",
+          "locator": "Video page",
+          "url": "https://www.battlefields.org/learn/videos/myth-stonewall-jackson",
+          "type": "secondary",
+          "note": "Cited only to show ABT treats the nickname's origin as a contested myth-check topic; not cited for any specific wording (transcript not retrieved)."
+        }
+      ],
+      "sourceNote": "Ships at Brig. Gen. (the June 17, 1861 appointment was confirmed only posthumously); NPS order of battle and Encyclopedia Virginia carry the brigade, the Henry House Hill stand, the mortal wound of July 21, and death the next day. No verbatim stone-wall-quotation claim — wording and intent are contested. No portrait. Ratings Inferred.",
+      "bio": "Barnard Elliott Bee Jr., a Confederate brigadier general of Johnston's Army of the Shenandoah, brought his brigade into the morning fight beside Evans and Bartow and fell back with it to Henry House Hill. There he is traditionally credited with the words that gave Jackson's brigade its name — a remark whose exact wording and intent are contested, and which this record does not assert as a quotation. Bee was mortally wounded near the Henry House on July 21, 1861, and died the next day; Confederate Senate confirmation of his brigadier's appointment came only after his death. This command-row replacement ships the battle-date brigadier general; no verbatim-quotation claim and no portrait."
+    },
+    {
+      "pid": "person_bullrun_cs_bartow_bde",
+      "replacePid": "ss:bullrun1:CS:cs_bartow:cmd",
+      "name": "Francis S. Bartow",
+      "side": "CS",
+      "rank": "Col.",
+      "branch": "inf",
+      "role": "brigade commander",
+      "year": 1861,
+      "provenance": "Verified",
+      "team": {
+        "side": "CS",
+        "army": "Army of the Shenandoah",
+        "corps": "",
+        "division": "",
+        "brigade": "Bartow's Brigade",
+        "regiment": "",
+        "company": ""
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "The Bartow Monument",
+          "author": "National Park Service",
+          "repository": "Manassas National Battlefield Park, U.S. National Park Service",
+          "locator": "Monument narrative",
+          "url": "https://www.nps.gov/places/the-bartow-monument.htm",
+          "type": "secondary",
+          "note": "NPS narrative carries Colonel Francis S. Bartow killed near the site leading the 7th Georgia Infantry in a counterattack."
+        },
+        {
+          "title": "Bartow Monument (inscription)",
+          "author": "National Park Service",
+          "repository": "Manassas National Battlefield Park, U.S. National Park Service",
+          "locator": "1936 monument inscription text",
+          "url": "https://www.nps.gov/places/000/bartow-monument.htm",
+          "type": "secondary",
+          "note": "Documents the memorial's anachronistic 'Brigadier General' styling and postwar-brigade regiment list — cited as the documented rank-trap artifact, not as evidence of his battle rank. Same institution as the monument narrative."
+        },
+        {
+          "title": "Francis S. Bartow (1816-1861)",
+          "author": "New Georgia Encyclopedia (Georgia Humanities)",
+          "repository": "New Georgia Encyclopedia",
+          "locator": "Biography",
+          "url": "https://www.georgiaencyclopedia.org/articles/history-archaeology/francis-s-bartow-1816-1861/",
+          "type": "secondary",
+          "note": "States Bartow held the rank of colonel at his death, not general as some myths suggest; colonel of the 8th Georgia Infantry, in command of a brigade by July 1861."
+        },
+        {
+          "title": "The Hidden Marker for the 7th Georgia Infantry",
+          "author": "American Battlefield Trust",
+          "repository": "American Battlefield Trust",
+          "locator": "Article",
+          "url": "https://www.battlefields.org/learn/articles/hidden-marker-7th-georgia-infantry",
+          "type": "secondary",
+          "note": "Independently confirms Colonel Bartow killed while leading the 7th Georgia against Ricketts's battery."
+        },
+        {
+          "title": "Bull Run Battle Facts and Summary",
+          "author": "American Battlefield Trust",
+          "repository": "American Battlefield Trust",
+          "locator": "Matthews Hill passage",
+          "url": "https://www.battlefields.org/learn/civil-war/battles/bull-run",
+          "type": "secondary",
+          "note": "Carries Evans, Bee, and Bartow driven off Matthews Hill in the morning fight — the sourced basis for the brigade's morning role. Same institution as the hidden-marker article."
+        }
+      ],
+      "sourceNote": "Ships at Col.; NPS, the New Georgia Encyclopedia, and ABT carry the brigade command, the morning fight, and his death on Henry House Hill leading the 7th Georgia. The Manassas monument's 'Brigadier General' is a documented memorial styling, not a commission. No general's-rank claim; no last-words quotation. No portrait. Ratings Inferred.",
+      "bio": "Francis Stebbins Bartow, colonel of the 8th Georgia and a leading Georgia secessionist, commanded the Second Brigade of Johnston's Army of the Shenandoah at First Bull Run. His Georgians joined the morning fight on Matthews Hill supporting Evans's stand, fell back under pressure to Henry House Hill, and Bartow was killed there leading the 7th Georgia against Ricketts's battery — among the first Confederate brigade commanders to die in the war. The battlefield monument that styles him 'Brigadier General' records a memorial rank, not a commission: he died a colonel. This command-row replacement ships the battle-date colonel; no general's-commission claim and no portrait."
+    },
+    {
+      "pid": "person_bullrun_cs_hampton_legion",
+      "replacePid": "ss:bullrun1:CS:cs_hampton:cmd",
+      "name": "Wade Hampton",
+      "side": "CS",
+      "rank": "Col.",
+      "branch": "inf",
+      "role": "legion commander",
+      "year": 1861,
+      "provenance": "Verified",
+      "team": {
+        "side": "CS",
+        "army": "Confederate Army of the Potomac",
+        "corps": "",
+        "division": "",
+        "brigade": "Hampton's Legion",
+        "regiment": "",
+        "company": ""
+      },
+      "persona": {
+        "tactical": 64,
+        "command": 64,
+        "initiative": 64,
+        "resolve": 64,
+        "discipline": 64,
+        "marksmanship": 64,
+        "vigor": 64,
+        "charisma": 64,
+        "aggression": 64,
+        "grit": 64,
+        "logistics": 64,
+        "engineering": 64,
+        "cavalry": 64,
+        "artillery": 64,
+        "political": 64
+      },
+      "sources": [
+        {
+          "title": "Battle Person Detail - Wade Hampton",
+          "author": "National Park Service",
+          "repository": "NPS Civil War Soldiers and Sailors database",
+          "locator": "Person detail record",
+          "url": "https://home.nps.gov/civilwar/search-battles-person-detail.htm?personId=0DB13C2E-98A9-4187-BE39-484C4D272D30",
+          "type": "secondary",
+          "note": "Confirms Hampton raised the Legion, was elected its colonel in 1861, and led it into action at First Manassas, where he was wounded. The page's war-end 'final rank' field is not battle-date evidence."
+        },
+        {
+          "title": "Wade Hampton",
+          "author": "American Battlefield Trust",
+          "repository": "American Battlefield Trust",
+          "locator": "Biography, early war paragraphs",
+          "url": "https://www.battlefields.org/learn/biographies/wade-hampton",
+          "type": "secondary",
+          "note": "Confirms Hampton organized and partially financed Hampton's Legion, was commissioned colonel, and that the Legion deployed at a decisive moment at First Bull Run, giving Jackson's brigade time to reach the field."
+        },
+        {
+          "title": "Battle Unit Details - Hampton's Legion (South Carolina)",
+          "author": "National Park Service",
+          "repository": "NPS Civil War Soldiers and Sailors database",
+          "locator": "Unit code CSCHAMPL",
+          "url": "https://www.nps.gov/civilwar/search-battle-units-detail.htm?battleUnitCode=CSCHAMPL",
+          "type": "secondary",
+          "note": "Confirms the Legion contained cavalry and infantry battalions that did not serve together, with the infantry battalion active at First Manassas — the basis for scoping this record to the engaged infantry. Same institution as the person-detail page."
+        },
+        {
+          "title": "The Battle of First Manassas (First Bull Run)",
+          "author": "National Park Service",
+          "repository": "Manassas National Battlefield Park, U.S. National Park Service",
+          "locator": "Robinson farmstead passage",
+          "url": "https://www.nps.gov/mana/learn/historyculture/first-manassas.htm",
+          "type": "secondary",
+          "note": "Places Colonel Wade Hampton's Legion fighting around the Robinson farmstead alongside Jackson's Virginia brigade — the sector anchor. Same institution as the database pages."
+        }
+      ],
+      "sourceNote": "Ships at Col.; NPS and ABT carry the Legion's Robinson farmstead / Henry House Hill fight, Hampton's wound, and the roughly 600 engaged infantry (approximate). The Legion's cavalry served separately. No brigadier-at-Bull-Run claim (May 1862); no casualty breakdown or wound-mechanism claim. No portrait. Ratings Inferred.",
+      "bio": "Wade Hampton III organized and partly financed Hampton's Legion, a combined-arms South Carolina command whose infantry battalion — some 600 men — reached the field on July 21 as an unattached command of Beauregard's Confederate Army of the Potomac. Committed at a decisive moment around the Robinson farmstead on the Henry House Hill front, the Legion helped hold the line while Jackson's brigade came up, and Hampton was wounded in the fighting. His brigadier's commission came in May 1862, long after the battle. This command-row replacement ships the battle-date colonel of the Legion's engaged infantry; no casualty breakdown, no wound-mechanism claim, and no portrait."
     }
   ],
   "_template": {

@@ -197,11 +197,11 @@ const SETUP = `(() => {
       return { people:reg.people.length, brigades:reg.brigades, authored:reg.authored, generated:reg.generated, first:sample.name };
     });
 
-    step('D298 REPLACEMENTS: thirty-one canonical sourced records overlay generated slots and hostile packs still reject', function(){
+    step('D298 REPLACEMENTS: thirty-nine canonical sourced records overlay generated slots and hostile packs still reject', function(){
       var C=mkC('US'); _t1InitAll(C);
       var original=GAME_DATA['soldier-replacements'];
       if(!original || original.schema!=='cw_soldier_replacements_v1' || !Array.isArray(original.records)) throw new Error('missing D152 canonical pack');
-      if(original.records.length!==31) throw new Error('canonical D298 pack should ship exactly thirty-one records, got '+original.records.length);
+      if(original.records.length!==39) throw new Error('canonical pack should ship exactly thirty-nine records, got '+original.records.length);   // D358: 31 -> 39 — eight Bull Run command rows (Sherman/Porter/Howard/Griffin/Evans/Bee/Bartow/Hampton); history: D298 30 -> 31 Hood
       var canonByPid={}, canonReplace={};
       for(var cr=0;cr<original.records.length;cr++){ canonByPid[original.records[cr].pid]=original.records[cr]; canonReplace[original.records[cr].replacePid]=1; }
       if(!canonByPid.person_bullrun_us_2ri_rhodes || canonByPid.person_bullrun_us_2ri_rhodes.replacePid!=='ss:bullrun1:US:us_burnside:pvt') throw new Error('missing D154 Rhodes canonical record: '+JSON.stringify(original.records));
@@ -235,15 +235,23 @@ const SETUP = `(() => {
       if(!canonByPid.person_gettysburg_us_17me_haley || canonByPid.person_gettysburg_us_17me_haley.replacePid!=='ss:gettysburg:US:us_birney_iii:pvt') throw new Error('missing D296 Haley canonical record: '+JSON.stringify(original.records));
       if(!canonByPid.person_chickamauga_cs_johnson_gap || canonByPid.person_chickamauga_cs_johnson_gap.replacePid!=='ss:chickamauga:CS:cs_johnson_gap:cmd') throw new Error('missing D297 Johnson canonical record: '+JSON.stringify(original.records));
       if(!canonByPid.person_chickamauga_cs_hood_arrives || canonByPid.person_chickamauga_cs_hood_arrives.replacePid!=='ss:chickamauga:CS:cs_hood_arrives:cmd') throw new Error('missing D298 Hood canonical record: '+JSON.stringify(original.records));
+      if(!canonByPid.person_bullrun_us_sherman_bde || canonByPid.person_bullrun_us_sherman_bde.replacePid!=='ss:bullrun1:US:us_sherman:cmd') throw new Error('missing D358 Sherman canonical record: '+JSON.stringify(original.records));
+      if(!canonByPid.person_bullrun_us_porter_bde || canonByPid.person_bullrun_us_porter_bde.replacePid!=='ss:bullrun1:US:us_porter:cmd') throw new Error('missing D358 Porter canonical record: '+JSON.stringify(original.records));
+      if(!canonByPid.person_bullrun_us_howard_bde || canonByPid.person_bullrun_us_howard_bde.replacePid!=='ss:bullrun1:US:us_howard:cmd') throw new Error('missing D358 Howard canonical record: '+JSON.stringify(original.records));
+      if(!canonByPid.person_bullrun_us_griffin_battery || canonByPid.person_bullrun_us_griffin_battery.replacePid!=='ss:bullrun1:US:us_griffin:cmd') throw new Error('missing D358 Griffin canonical record: '+JSON.stringify(original.records));
+      if(!canonByPid.person_bullrun_cs_evans_demibde || canonByPid.person_bullrun_cs_evans_demibde.replacePid!=='ss:bullrun1:CS:cs_evans:cmd') throw new Error('missing D358 Evans canonical record: '+JSON.stringify(original.records));
+      if(!canonByPid.person_bullrun_cs_bee_bde || canonByPid.person_bullrun_cs_bee_bde.replacePid!=='ss:bullrun1:CS:cs_bee:cmd') throw new Error('missing D358 Bee canonical record: '+JSON.stringify(original.records));
+      if(!canonByPid.person_bullrun_cs_bartow_bde || canonByPid.person_bullrun_cs_bartow_bde.replacePid!=='ss:bullrun1:CS:cs_bartow:cmd') throw new Error('missing D358 Bartow canonical record: '+JSON.stringify(original.records));
+      if(!canonByPid.person_bullrun_cs_hampton_legion || canonByPid.person_bullrun_cs_hampton_legion.replacePid!=='ss:bullrun1:CS:cs_hampton:cmd') throw new Error('missing D358 Hampton canonical record: '+JSON.stringify(original.records));
       GAME_DATA['soldier-replacements']={schema:'cw_soldier_replacements_v1',records:[]};
       var rawBase=ssPersonRegistry(C);
       GAME_DATA['soldier-replacements']=original;
       var canonical=ssValidateSoldierReplacementPack(original,{basePeople:rawBase.people});
-      if(!canonical.ok || canonical.records.length!==31) throw new Error('canonical D298 pack should validate against raw generated registry: '+JSON.stringify(canonical));
+      if(!canonical.ok || canonical.records.length!==39) throw new Error('canonical pack should validate against raw generated registry: '+JSON.stringify(canonical));   // D358: 31 -> 39
       var base=ssPersonRegistry(C);
       if(base.people.length!==rawBase.people.length) throw new Error('canonical replacement should preserve registry length');
-      if(base.replacements.applied!==31 || base.replacements.rejected!==0) throw new Error('canonical replacement should apply thirty-one rows cleanly: '+JSON.stringify(base.replacements));
-      if(base.generated!==rawBase.generated-31 || base.authored!==rawBase.authored+31) throw new Error('canonical replacement should move thirty-one rows generated->authored: '+JSON.stringify({raw:{a:rawBase.authored,g:rawBase.generated},base:{a:base.authored,g:base.generated}}));
+      if(base.replacements.applied!==39 || base.replacements.rejected!==0) throw new Error('canonical replacement should apply thirty-nine rows cleanly: '+JSON.stringify(base.replacements));   // D358: 31 -> 39
+      if(base.generated!==rawBase.generated-39 || base.authored!==rawBase.authored+39) throw new Error('canonical replacement should move thirty-nine rows generated->authored: '+JSON.stringify({raw:{a:rawBase.authored,g:rawBase.generated},base:{a:base.authored,g:base.generated}}));   // D358: 31 -> 39
       var rhodesOld=ssFindPerson(C,'ss:bullrun1:US:us_burnside:pvt');
       var rhodes=ssFindPerson(C,'person_bullrun_us_2ri_rhodes');
       if(!rhodes || !rhodesOld || rhodesOld.pid!==rhodes.pid) throw new Error('Rhodes alias lookup failed');
@@ -487,6 +495,71 @@ const SETUP = `(() => {
       if(!hood.bio || hood.bio.indexOf('Chickamauga')<0 || hood.bio.indexOf('Brotherton')<0 || hood.bio.indexOf('right leg')<0 || hood.bio.indexOf("Hood's Arriving Brigades")<0 || !hood.sourceNote || hood.sources.length<5) throw new Error('Hood source/bio payload missing');
       if(hood.sourceNote.indexOf('Ships at Maj. Gen.')<0 || hood.sourceNote.indexOf('No lieutenant-general-at-Chickamauga')<0 || hood.sourceNote.indexOf('No portrait')<0) throw new Error('Hood honesty caveats missing: '+hood.sourceNote);
       if(hood.portrait) throw new Error('Hood should not assert an unverified portrait: '+JSON.stringify(hood.portrait));
+      /* D358: eight Bull Run command rows — every replaced cmd slot previously carried the generated hardcoded 'Captain' rank */
+      var sherman=ssFindPerson(C,'person_bullrun_us_sherman_bde');
+      var shermanOld=ssFindPerson(C,'ss:bullrun1:US:us_sherman:cmd');
+      if(!sherman || !shermanOld || shermanOld.pid!==sherman.pid) throw new Error('Sherman alias lookup failed');
+      if(sherman.generated || !sherman.replacement || sherman.provenance!=='Verified' || sherman.name!=='William T. Sherman') throw new Error('Sherman row not sourced/verified: '+JSON.stringify(sherman));
+      if(sherman.rank!=='Col.' || sherman.side!=='US' || sherman.branch!=='inf' || sherman.team.army!=='Army of Northeastern Virginia' || sherman.team.division!=="Tyler's First Division" || sherman.team.brigade!=="Sherman's Brigade" || sherman.team.company) throw new Error('Sherman rank/unit mismatch: '+JSON.stringify(sherman.team));
+      if(!sherman.bio || sherman.bio.indexOf('First Bull Run')<0 || sherman.bio.indexOf('Henry House Hill')<0 || sherman.bio.indexOf('one regiment at a time')<0 || sherman.bio.indexOf('command-row replacement')<0 || !sherman.sourceNote || sherman.sources.length<3) throw new Error('Sherman source/bio payload missing');
+      if(sherman.sourceNote.indexOf('Ships at Col.')<0 || sherman.sourceNote.indexOf('No brigadier-general-at-Bull-Run')<0 || sherman.sourceNote.indexOf('No portrait')<0) throw new Error('Sherman honesty caveats missing: '+sherman.sourceNote);
+      if(sherman.portrait) throw new Error('Sherman should not assert an unverified portrait: '+JSON.stringify(sherman.portrait));
+      var porter=ssFindPerson(C,'person_bullrun_us_porter_bde');
+      var porterOld=ssFindPerson(C,'ss:bullrun1:US:us_porter:cmd');
+      if(!porter || !porterOld || porterOld.pid!==porter.pid) throw new Error('Porter alias lookup failed');
+      if(porter.generated || !porter.replacement || porter.provenance!=='Verified' || porter.name!=='Andrew Porter') throw new Error('Porter row not sourced/verified: '+JSON.stringify(porter));
+      if(porter.rank!=='Col.' || porter.side!=='US' || porter.branch!=='inf' || porter.team.division!=="Hunter's Second Division" || porter.team.brigade!=="Porter's Brigade" || porter.team.company) throw new Error('Porter rank/unit mismatch: '+JSON.stringify(porter.team));
+      if(!porter.bio || porter.bio.indexOf('Matthews Hill')<0 || porter.bio.indexOf('16th U.S. Infantry')<0 || porter.bio.indexOf('command of the division')<0 || !porter.sourceNote || porter.sources.length<3) throw new Error('Porter source/bio payload missing');
+      if(porter.sourceNote.indexOf('Ships at Col.')<0 || porter.sourceNote.indexOf('No brigade casualty figure')<0 || porter.sourceNote.indexOf('No portrait')<0) throw new Error('Porter honesty caveats missing: '+porter.sourceNote);
+      if(porter.portrait) throw new Error('Porter should not assert an unverified portrait: '+JSON.stringify(porter.portrait));
+      var howardB=ssFindPerson(C,'person_bullrun_us_howard_bde');
+      var howardBOld=ssFindPerson(C,'ss:bullrun1:US:us_howard:cmd');
+      if(!howardB || !howardBOld || howardBOld.pid!==howardB.pid) throw new Error('Howard alias lookup failed');
+      if(howardB.generated || !howardB.replacement || howardB.provenance!=='Verified' || howardB.name!=='Oliver O. Howard') throw new Error('Howard row not sourced/verified: '+JSON.stringify(howardB));
+      if(howardB.rank!=='Col.' || howardB.side!=='US' || howardB.branch!=='inf' || howardB.team.division!=="Heintzelman's Third Division" || howardB.team.brigade!=="Howard's Brigade" || howardB.team.company) throw new Error('Howard rank/unit mismatch: '+JSON.stringify(howardB.team));
+      if(!howardB.bio || howardB.bio.indexOf('Chinn Ridge')<0 || howardB.bio.indexOf('Elzey')<0 || howardB.bio.indexOf('unhurt')<0 || !howardB.sourceNote || howardB.sources.length<4) throw new Error('Howard source/bio payload missing');
+      if(howardB.sourceNote.indexOf('Ships at Col.')<0 || howardB.sourceNote.indexOf('No brigadier-at-Bull-Run')<0 || howardB.sourceNote.indexOf('No portrait')<0) throw new Error('Howard honesty caveats missing: '+howardB.sourceNote);
+      if(howardB.portrait) throw new Error('Howard should not assert an unverified portrait: '+JSON.stringify(howardB.portrait));
+      var griffin=ssFindPerson(C,'person_bullrun_us_griffin_battery');
+      var griffinOld=ssFindPerson(C,'ss:bullrun1:US:us_griffin:cmd');
+      if(!griffin || !griffinOld || griffinOld.pid!==griffin.pid) throw new Error('Griffin alias lookup failed');
+      if(griffin.generated || !griffin.replacement || griffin.provenance!=='Verified' || griffin.name!=='Charles Griffin') throw new Error('Griffin row not sourced/verified: '+JSON.stringify(griffin));
+      if(griffin.rank!=='Capt.' || griffin.side!=='US' || griffin.branch!=='art' || griffin.team.regiment!=='Battery D, 5th U.S. Artillery' || griffin.team.brigade!=="Porter's Brigade" || griffin.team.company) throw new Error('Griffin rank/unit mismatch: '+JSON.stringify(griffin.team));
+      if(!griffin.bio || griffin.bio.indexOf('West Point Battery')<0 || griffin.bio.indexOf('Henry House')<0 || griffin.bio.indexOf('turning point')<0 || !griffin.sourceNote || griffin.sources.length<3) throw new Error('Griffin source/bio payload missing');
+      if(griffin.sourceNote.indexOf('Ships at Capt.')<0 || griffin.sourceNote.indexOf('No field-grade-at-Bull-Run')<0 || griffin.sourceNote.indexOf('No portrait')<0) throw new Error('Griffin honesty caveats missing: '+griffin.sourceNote);
+      if(griffin.portrait) throw new Error('Griffin should not assert an unverified portrait: '+JSON.stringify(griffin.portrait));
+      var evans=ssFindPerson(C,'person_bullrun_cs_evans_demibde');
+      var evansOld=ssFindPerson(C,'ss:bullrun1:CS:cs_evans:cmd');
+      if(!evans || !evansOld || evansOld.pid!==evans.pid) throw new Error('Evans alias lookup failed');
+      if(evans.generated || !evans.replacement || evans.provenance!=='Verified' || evans.name!=='Nathan G. Evans') throw new Error('Evans row not sourced/verified: '+JSON.stringify(evans));
+      if(evans.rank!=='Col.' || evans.side!=='CS' || evans.branch!=='inf' || evans.team.army!=='Confederate Army of the Potomac' || evans.team.brigade!=="Evans's Demi-Brigade" || evans.team.company) throw new Error('Evans rank/unit mismatch: '+JSON.stringify(evans.team));
+      if(!evans.bio || evans.bio.indexOf('Stone Bridge')<0 || evans.bio.indexOf('Matthews Hill')<0 || evans.bio.indexOf('temporary colonel')<0 || !evans.sourceNote || evans.sources.length<3) throw new Error('Evans source/bio payload missing');
+      if(evans.sourceNote.indexOf('Ships at Col.')<0 || evans.sourceNote.indexOf('No brigadier-at-Bull-Run')<0 || evans.sourceNote.indexOf('No portrait')<0) throw new Error('Evans honesty caveats missing: '+evans.sourceNote);
+      if(evans.portrait) throw new Error('Evans should not assert an unverified portrait: '+JSON.stringify(evans.portrait));
+      var bee=ssFindPerson(C,'person_bullrun_cs_bee_bde');
+      var beeOld=ssFindPerson(C,'ss:bullrun1:CS:cs_bee:cmd');
+      if(!bee || !beeOld || beeOld.pid!==bee.pid) throw new Error('Bee alias lookup failed');
+      if(bee.generated || !bee.replacement || bee.provenance!=='Verified' || bee.name!=='Barnard E. Bee') throw new Error('Bee row not sourced/verified: '+JSON.stringify(bee));
+      if(bee.rank!=='Brig. Gen.' || bee.side!=='CS' || bee.branch!=='inf' || bee.team.army!=='Army of the Shenandoah' || bee.team.brigade!=="Bee's Brigade" || bee.team.company) throw new Error('Bee rank/unit mismatch: '+JSON.stringify(bee.team));
+      if(!bee.bio || bee.bio.indexOf('Henry House Hill')<0 || bee.bio.indexOf('contested')<0 || bee.bio.indexOf('died the next day')<0 || !bee.sourceNote || bee.sources.length<4) throw new Error('Bee source/bio payload missing');
+      if(bee.sourceNote.indexOf('Ships at Brig. Gen.')<0 || bee.sourceNote.indexOf('No verbatim stone-wall-quotation')<0 || bee.sourceNote.indexOf('No portrait')<0) throw new Error('Bee honesty caveats missing: '+bee.sourceNote);
+      if(bee.portrait) throw new Error('Bee should not assert an unverified portrait: '+JSON.stringify(bee.portrait));
+      var bartow=ssFindPerson(C,'person_bullrun_cs_bartow_bde');
+      var bartowOld=ssFindPerson(C,'ss:bullrun1:CS:cs_bartow:cmd');
+      if(!bartow || !bartowOld || bartowOld.pid!==bartow.pid) throw new Error('Bartow alias lookup failed');
+      if(bartow.generated || !bartow.replacement || bartow.provenance!=='Verified' || bartow.name!=='Francis S. Bartow') throw new Error('Bartow row not sourced/verified: '+JSON.stringify(bartow));
+      if(bartow.rank!=='Col.' || bartow.side!=='CS' || bartow.branch!=='inf' || bartow.team.army!=='Army of the Shenandoah' || bartow.team.brigade!=="Bartow's Brigade" || bartow.team.company) throw new Error('Bartow rank/unit mismatch: '+JSON.stringify(bartow.team));
+      if(!bartow.bio || bartow.bio.indexOf('8th Georgia')<0 || bartow.bio.indexOf('7th Georgia')<0 || bartow.bio.indexOf('memorial rank')<0 || !bartow.sourceNote || bartow.sources.length<5) throw new Error('Bartow source/bio payload missing');
+      if(bartow.sourceNote.indexOf('Ships at Col.')<0 || bartow.sourceNote.indexOf("No general's-rank claim")<0 || bartow.sourceNote.indexOf('No portrait')<0) throw new Error('Bartow honesty caveats missing: '+bartow.sourceNote);
+      if(bartow.portrait) throw new Error('Bartow should not assert an unverified portrait: '+JSON.stringify(bartow.portrait));
+      var hampton=ssFindPerson(C,'person_bullrun_cs_hampton_legion');
+      var hamptonOld=ssFindPerson(C,'ss:bullrun1:CS:cs_hampton:cmd');
+      if(!hampton || !hamptonOld || hamptonOld.pid!==hampton.pid) throw new Error('Hampton alias lookup failed');
+      if(hampton.generated || !hampton.replacement || hampton.provenance!=='Verified' || hampton.name!=='Wade Hampton') throw new Error('Hampton row not sourced/verified: '+JSON.stringify(hampton));
+      if(hampton.rank!=='Col.' || hampton.side!=='CS' || hampton.branch!=='inf' || hampton.team.army!=='Confederate Army of the Potomac' || hampton.team.brigade!=="Hampton's Legion" || hampton.team.company) throw new Error('Hampton rank/unit mismatch: '+JSON.stringify(hampton.team));
+      if(!hampton.bio || hampton.bio.indexOf('Robinson farmstead')<0 || hampton.bio.indexOf('600')<0 || hampton.bio.indexOf('wounded')<0 || !hampton.sourceNote || hampton.sources.length<4) throw new Error('Hampton source/bio payload missing');
+      if(hampton.sourceNote.indexOf('Ships at Col.')<0 || hampton.sourceNote.indexOf('No brigadier-at-Bull-Run')<0 || hampton.sourceNote.indexOf('No portrait')<0) throw new Error('Hampton honesty caveats missing: '+hampton.sourceNote);
+      if(hampton.portrait) throw new Error('Hampton should not assert an unverified portrait: '+JSON.stringify(hampton.portrait));
       var target=findPerson(rawBase,function(p){ return p.generated && p.side==='US' && p.pid.indexOf(':pvt')>0 && !canonReplace[p.pid] && p.team && p.team.army; });
       var authored=findPerson(rawBase,function(p){ return !p.generated && p.provenance==='Verified'; });
       if(!target) throw new Error('no generated replacement target found');
@@ -525,7 +598,7 @@ const SETUP = `(() => {
       }
       var restored=ssPersonRegistry(C);
       if(restored.generated!==base.generated || restored.authored!==base.authored) throw new Error('canonical pack restore changed registry');
-      return { canonicalRecords:original.records.length, rhodes:rhodes.pid, mccarter:mccarter.pid, watkins:watkins.pid, chamberlain:chamberlain.pid, cushing:cushing.pid, vincent:vincent.pid, stillwell:stillwell.pid, cook:cook.pid, howe:howe.pid, waller:waller.pid, benjamin:benjamin.pid, barlow:barlow.pid, worsham:worsham.pid, ballou:ballou.pid, webb:webb.pid, casler:casler.pid, stanley:stanley.pid, dooley:dooley.pid, decastro:decastro.pid, benson:benson.pid, green:green.pid, tunnard:tunnard.pid, giles:giles.pid, chambers:chambers.pid, houston:houston.pid, jackman:jackman.pid, west:west.pid, simpson:simpson.pid, haley:haley.pid, johnson:johnson.pid, hood:hood.pid, target:target.pid, applied:base.replacements.applied, hostileRejected:true };
+      return { canonicalRecords:original.records.length, rhodes:rhodes.pid, mccarter:mccarter.pid, watkins:watkins.pid, chamberlain:chamberlain.pid, cushing:cushing.pid, vincent:vincent.pid, stillwell:stillwell.pid, cook:cook.pid, howe:howe.pid, waller:waller.pid, benjamin:benjamin.pid, barlow:barlow.pid, worsham:worsham.pid, ballou:ballou.pid, webb:webb.pid, casler:casler.pid, stanley:stanley.pid, dooley:dooley.pid, decastro:decastro.pid, benson:benson.pid, green:green.pid, tunnard:tunnard.pid, giles:giles.pid, chambers:chambers.pid, houston:houston.pid, jackman:jackman.pid, west:west.pid, simpson:simpson.pid, haley:haley.pid, johnson:johnson.pid, hood:hood.pid, sherman:sherman.pid, porter:porter.pid, howard:howardB.pid, griffin:griffin.pid, evans:evans.pid, bee:bee.pid, bartow:bartow.pid, hampton:hampton.pid, target:target.pid, applied:base.replacements.applied, hostileRejected:true };
     });
 
     step('JOURNEY: play-as-anyone start enables survival and stores a saveable selected person without mutating canonical data', function(){
