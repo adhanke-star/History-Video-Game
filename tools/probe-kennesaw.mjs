@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import "./guard-probe-browser.mjs";
-// tools/probe-kennesaw.mjs - D331 playable Kennesaw Mountain; D339 C71 fix.
-// Verifies the single-phase scenario contract, D330/D339 source traps, D74
+// tools/probe-kennesaw.mjs - D331 playable Kennesaw Mountain; D339/C70 fixes.
+// Verifies the single-phase scenario contract, D330/D339/C70 source traps, D74
 // no-fudge wall, all-fielded sector strengths, registry/menu integration,
 // deterministic resolution, and direction guards for the historical repulse.
 import { chromium } from 'playwright-core';
@@ -140,7 +140,7 @@ const SETUP = `(() => {
 
     step('RANK/OOB TRAPS: battle-date ranks and Johnston/Hood timing are explicit; no campaign totals leak into OOB', function() {
       var body = txt(DATA);
-      ['maj. gen. william t. sherman', 'maj. gen. george h. thomas', 'maj. gen. john m. schofield', 'maj. gen. james b. mcpherson', 'maj. gen. john a. logan', 'brig. gen. morgan l. smith', 'gen. joseph e. johnston', 'lt. gen. william j. hardee', 'maj. gen. benjamin f. cheatham', 'maj. gen. patrick r. cleburne', 'brig. gen. george e. maney', 'brig. gen. alfred j. vaughn', 'brig. gen. charles g. harker', 'col. daniel mccook', 'col. john g. mitchell'].forEach(function(term) {
+      ['maj. gen. william t. sherman', 'maj. gen. george h. thomas', 'maj. gen. john m. schofield', 'maj. gen. james b. mcpherson', 'maj. gen. john a. logan', 'brig. gen. morgan l. smith', 'gen. joseph e. johnston', 'lt. gen. william j. hardee', 'maj. gen. benjamin f. cheatham', 'maj. gen. patrick r. cleburne', 'brig. gen. george e. maney', 'brig. gen. alfred j. vaughan', 'brig. gen. charles g. harker', 'col. daniel mccook', 'col. john g. mitchell'].forEach(function(term) {
         if (body.indexOf(term) < 0) throw new Error('missing rank trap ' + term);
       });
       ['lt. gen. william t. sherman', 'lt. gen. ulysses', 'gen. john bell hood', 'maj. gen. george e. maney', 'lt. gen. patrick r. cleburne', 'brig. gen. daniel mccook', 'brig. gen. john g. mitchell'].forEach(function(term) {
@@ -149,6 +149,19 @@ const SETUP = `(() => {
       if (body.indexOf('150,000') >= 0 || body.indexOf('100,000') >= 0) throw new Error('campaign-scale totals leaked into runtime data');
       if (body.indexOf('verified identity; inferred strength') < 0) throw new Error('inferred strength honesty label missing');
       return { rankTeeth:true };
+    });
+
+    step('IDENTITY TRAP: Alfred J. Vaughan is player-facing while stable id cs_vaughn remains unchanged', function() {
+      var units = allUnits(DATA), unit = null;
+      for (var i = 0; i < units.length; i++) if (units[i].id === 'cs_vaughn') unit = units[i];
+      if (!unit) throw new Error('stable unit id cs_vaughn missing');
+      if (unit.name !== "Vaughan's Tennessee Brigade") throw new Error('unit name spelling wrong: ' + unit.name);
+      if (unit.commander !== 'Brig. Gen. Alfred J. Vaughan') throw new Error('commander spelling wrong: ' + unit.commander);
+      var people = DATA.teaching && DATA.teaching.codex && DATA.teaching.codex.axes && DATA.teaching.codex.axes.people || [];
+      if (people.indexOf('Vaughan') < 0 || people.indexOf('Vaughn') >= 0) throw new Error('codex people spelling wrong: ' + people.join(', '));
+      var surfaces = [DATA.leaders && DATA.leaders._note, unit.name, unit.commander, unit.note, people.join(' ')];
+      for (var j = 0; j < surfaces.length; j++) if (/\bvaughn\b/i.test(String(surfaces[j] || ''))) throw new Error('obsolete player-facing spelling: ' + surfaces[j]);
+      return { id:unit.id, name:unit.name, commander:unit.commander, codex:'Vaughan' };
     });
 
     step('OOB STRENGTH HONESTY: ALL fielded US infantry is sector-tagged; Pigeon Hill totals 5,500 with no extra echelon; Cheatham Hill totals 9,000', function() {

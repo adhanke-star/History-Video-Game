@@ -76,6 +76,7 @@ step("SOURCES: citation register carries NPS/ABT anchors and sector-grain streng
     "nps.gov/kemo/learn/historyculture/union-order-of-battle.htm",
     "nps.gov/kemo/learn/historyculture/confederate-order-of-battle.htm",
     "npgallery.nps.gov/pdfhost/docs/NRHP/Text/66000063.pdf",
+    "archivesweb.vmi.edu/record.php?ID=443",
     "battlefields.org/learn/civil-war/battles/kennesaw-mountain",
     "battlefields.org/learn/articles/cheatham-hill"
   ];
@@ -103,7 +104,8 @@ step("HISTORY TEETH: rank, OOB, terrain, and anti-Lost-Cause traps are explicit"
     "Cheatham - Major General",
     "Cleburne - Major General",
     "Maney - Brigadier General",
-    "Vaughn - Brigadier General",
+    "Vaughan - Brigadier General",
+    "Alfred Jefferson Vaughan",
     "Harker - Brigadier General",
     "McCook - Colonel",
     "Mitchell - Colonel",
@@ -111,7 +113,10 @@ step("HISTORY TEETH: rank, OOB, terrain, and anti-Lost-Cause traps are explicit"
     "chevaux-de-frise",
     "Schofield's demonstration"
   ], "history teeth");
-  return { traps: 15 };
+  if (/\*\*Alfred J\. Vaughn\b|Vaughn - Brigadier General|Maney and Vaughn\b/.test(text)) {
+    throw new Error("obsolete player-facing Vaughan spelling returned");
+  }
+  return { traps: 16, vaughanSpelling: true };
 });
 
 step("D74: no-fudge and future gate sequence are specified", () => {
