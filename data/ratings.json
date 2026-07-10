@@ -171,8 +171,9 @@
     "sources": ["Edward G. Longacre, Lincoln's Cavalrymen (2000)", "Stephen W. Sears, Gettysburg (2003)"]
   },
   "transfer": {
-    "_note": "D323 / Group 2: THE CROSS-THEATER TRANSFER MOVE over D322's theater substrate. The President may spend political capital to make a single-theater general ready for the current next battle's other broad theater. The move writes only C.president.command.transfer, keyed to the current battle id and theater, plus the political-capital debit. It creates no enemy command state, performs no hidden AI Transfer, commissions no officer, and never writes casualties, victory, OOB totals, or battle output. Multi-theater generals already fit both broad theaters; native same-theater generals need no order. Inferred designer calibration over the existing theater taxonomy.",
+    "_note": "D323 / Group 2: THE CROSS-THEATER TRANSFER MOVE over D322's theater substrate. The President may spend political capital to make a single-theater general ready for the current next battle's other broad theater. The move writes only C.president.command.transfer, keyed to the current battle id and theater, plus the political-capital debit. It creates no enemy command state, performs no hidden AI Transfer, commissions no officer, and never writes casualties, victory, OOB totals, or battle output. Multi-theater generals already fit both broad theaters; native same-theater generals need no order. Inferred designer calibration over the existing theater taxonomy. E70 (D354, Aaron 2026-07-10): readiness gained EXACTLY ONE bounded consumer — unreadyLeadershipMalus is the command-friction an explicitly appointed, un-transferred cross-theater general pays on the commandLeadership input facet (0 for natural fit, completed Transfer, or the history-following default). Inferred designer calibration, sized below the corps lift (±4) per the §27 influence hierarchy.",
     "cost": 4,
+    "unreadyLeadershipMalus": 3,
     "prov": "Inferred"
   },
   "corpsCommand": {

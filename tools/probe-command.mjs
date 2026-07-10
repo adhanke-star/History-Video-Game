@@ -1242,13 +1242,44 @@ const SETUP = `(() => {
       if(html.indexOf('Cross-theater transfer')<0) throw new Error('Command tab missing Transfer section');
       if(html.indexOf('cmdTransfer_us-thomas')<0) throw new Error('Thomas should render a Transfer control for an Eastern next battle');
       if(html.indexOf('Fits this theater already')<0) throw new Error('same/Multi-theater fit readout missing');
-      if(html.indexOf('records readiness only')<0||html.indexOf('does not decide the battle')<0) throw new Error('Transfer section must disclose the no-output contract');
+      // E70 (D354): the disclosure copy now states BOTH what capital buys (the command-friction
+      // consumer) and the standing no-output wall. The pre-E70 "records readiness only" phrasing
+      // became false the moment readiness gained its consumer, so this tooth pins the new truth.
+      if(html.indexOf('command-friction')<0||html.indexOf('never decides the battle')<0) throw new Error('Transfer section must disclose the friction consumer + the no-output contract');
       if(html.indexOf('NaN')>=0||html.indexOf('undefined')>=0) throw new Error('Transfer render leaked NaN/undefined');
       cmdTransfer(C,'us-thomas');
       var html2=cmdRenderTab(C);
       if(html2.indexOf('Transferred for')<0) throw new Error('completed Transfer should render as transferred');
       if(html2.indexOf('cmdTransfer_us-thomas')>=0) throw new Error('completed Transfer should not still offer Thomas button');
       return { renders:true, completion:true }; });
+
+    step('E70: Transfer readiness has EXACTLY ONE bounded consumer — an explicit unready cross-theater appointment pays the command-friction malus on commandLeadership; defaults read 0', function(){
+      if(typeof _cmdTransferReadinessLift!=='function') return { skipped:'pre-E70' };
+      var cfg=(function(){ var d=gameData('ratings'); return d&&d.transfer?d.transfer:{}; })();
+      var m=cfg.unreadyLeadershipMalus;
+      if(!(typeof m==='number'&&isFinite(m)&&m>0&&m<=6)) throw new Error('unreadyLeadershipMalus must be a small positive bounded number: '+m);
+      var C=mkC('US',1863,7); C.clock.capital=100; cmdInit(C);
+      // history-following default (no explicit appointment) -> exactly 0, byte-identical campaigns
+      C.president.command.fieldGeneral=null;
+      if(_cmdTransferReadinessLift(C)!==0) throw new Error('history-following default must carry zero friction');
+      // explicit NATURAL-FIT appointment -> exactly 0
+      cmdAppoint(C,'us-meade');
+      if(_cmdTransferReadinessLift(C)!==0) throw new Error('natural-fit appointee must carry zero friction');
+      // explicit CROSS-THEATER appointment without readiness -> exactly -malus, and PURE (reads C only)
+      cmdAppoint(C,'us-thomas');
+      var snap=JSON.stringify(C.president.command)+'|'+Math.round(C.clock.capital);
+      var lift=_cmdTransferReadinessLift(C);
+      if(JSON.stringify(C.president.command)+'|'+Math.round(C.clock.capital)!==snap) throw new Error('lift must be pure (mutated command state)');
+      if(lift!==-m) throw new Error('unready cross-theater appointee must carry -'+m+': '+lift);
+      var leadUnready=commandLeadership(C);
+      // Transfer removes the friction; leadership recovers by at most the bounded malus, inside the band
+      cmdTransfer(C,'us-thomas');
+      if(_cmdTransferReadinessLift(C)!==0) throw new Error('transferred appointee must carry zero friction');
+      var leadReady=commandLeadership(C);
+      if(!(leadReady>leadUnready)) throw new Error('readiness must restore command effectiveness: '+leadUnready+' -> '+leadReady);
+      if(leadReady-leadUnready>m) throw new Error('friction exceeded its bound: '+(leadReady-leadUnready)+' > '+m);
+      if(!(leadUnready>=42&&leadUnready<=88&&leadReady>=42&&leadReady<=88)) throw new Error('leadership left the [42,88] band');
+      return { malus:m, unready:leadUnready, ready:leadReady, defaultZero:true, pure:true }; });
 
     step('D323: SAVE-TAMPER hardening — cmdInit drops malformed/stale/wrong/native/uncommissioned Transfer records and bounds valid ones', function(){
       if(typeof cmdTransfer!=='function') return { skipped:'pre-D323' };

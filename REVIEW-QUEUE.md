@@ -286,7 +286,7 @@ Updated 2026-07-09 (AUDIT ledger; run 2 completed under the D336 ChatGPT/Codex 5
 
 ### PROPOSALS (Aaron decision; not built)
 
-- **E70** · gameplay / command design · **MED** · `src/35-command.js:217-240` — Cross-theater Transfer spends political capital and persists readiness, but no appointment, OOB, battle, bridge, or leadership consumer reads that readiness; D323 intentionally stopped at readiness-only. **Recommendation:** either give readiness one bounded, source-honest command consumer or suspend/remove the cost until that consumer exists, because the current rational gameplay value is negative. → **PROPOSED**
+- **E70** · gameplay / command design · **MED** · `src/35-command.js:217-240` — Cross-theater Transfer spends political capital and persists readiness, but no appointment, OOB, battle, bridge, or leadership consumer reads that readiness; D323 intentionally stopped at readiness-only. **Recommendation:** either give readiness one bounded, source-honest command consumer or suspend/remove the cost until that consumer exists, because the current rational gameplay value is negative. → **BUILT (D354, Aaron disposition 2026-07-10: build the consumer, keep the cost)** — `_cmdTransferReadinessLift` pays a bounded −3 command-friction on `commandLeadership` only for an explicitly appointed, un-transferred cross-theater general; natural fit / completed Transfer / history-following default read exactly 0 (byte-identical campaigns). Disclosure copy + pinned tooth updated together; probe-command 90/90 with a purity-snapshotted E70 tooth; negative bind test proved the consumer bites. **The run-2 ledger is fully dispositioned.**
 
 ### REFUTED (default-refute survivors killed by main-loop verification)
 

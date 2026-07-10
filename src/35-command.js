@@ -166,12 +166,39 @@ function cmdTransferReadiness(C, id) {
    current-engagement command-readiness record: it spends political capital and
    stores only cmd.transfer for the player's command desk. It does not commission
    officers, does not create enemy command state, and does not write casualties,
-   victory, OOB totals, or any combat output. Later systems may read this as an
-   input only if separately authorized; today it is a player-visible readiness
-   move and readout.
+   victory, OOB totals, or any combat output.
+
+   E70 (D354, Aaron 2026-07-10): readiness now has EXACTLY ONE authorized
+   consumer — _cmdTransferReadinessLift below, a small bounded command-friction
+   term on commandLeadership (the same Q10/Q12 input facet the bridge already
+   reads, never the scoreboard). It is 0 unless the PLAYER has explicitly
+   appointed the active general AND he commands outside his home theater
+   without a Transfer order; natural fit, completed Transfer, and the
+   history-following default all read exactly 0, so untouched campaigns stay
+   byte-identical. This is what the political capital buys.
    =========================================================================== */
 function _cmdTransferCfg() { var d = gameData("ratings"); return (d && d.transfer) ? d.transfer : {}; }
 function _cmdTransferCost() { var cfg = _cmdTransferCfg(); return Math.max(0, Math.round(_cmdNum(cfg.cost, 4))); }
+function _cmdTransferMalus() { var cfg = _cmdTransferCfg(); return Math.max(0, Math.min(6, Math.round(_cmdNum(cfg.unreadyLeadershipMalus, 3)))); }
+
+/* E70 (D354): the ONE bounded readiness consumer. Returns 0 or -malus. PURE —
+   reads C only. 0 whenever: the player follows history (no explicit appointment
+   -> the historical arrangement is the theater's own command, never repriced),
+   the appointee naturally fits the battle theater, a Transfer order covers him,
+   or theater data is absent (fail-safe). Only a deliberate, unprepared
+   cross-theater appointment pays the friction — the honest model (a commander
+   shifted between theaters without preparation commanded over unfamiliar
+   ground, staffs, and armies), and exactly the case Transfer exists to fix. */
+function _cmdTransferReadinessLift(C) {
+  if (!C || !C.president || !C.president.command) return 0;
+  var cmd = C.president.command;
+  if (typeof cmd.fieldGeneral !== "string" || !cmd.fieldGeneral) return 0;   // history-following default
+  var id = cmdActiveId(C);
+  if (!id || id !== cmd.fieldGeneral) return 0;   // appointee dead/invalid -> historical fallback, no friction
+  var rd = cmdTransferReadiness(C, id);
+  if (!rd || !rd.transferNeeded) return 0;        // natural fit / transferred / no theater data
+  return -_cmdTransferMalus();
+}
 
 function _cmdTransferRecord(C, id) {
   var cmd = C && C.president && C.president.command;
@@ -880,9 +907,9 @@ function _cmdTransferHTML(C) {
   return '<div style="margin-top:14px;padding:11px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.1)">'
     + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#b3925e;margin-bottom:2px">Cross-theater transfer</div>'
     + '<div style="font-size:11px;opacity:.82;line-height:1.45;margin-bottom:5px">Next battle: <b>' + _cmdEsc(bd.name || bd.id) + '</b> &middot; theater <b>' + _cmdEsc(battleTheater) + '</b>. '
-    + summary + ' Transfer spends <b>' + cost + '</b> political capital and records readiness only; it does not decide the battle, alter casualties, or move enemy command.</div>'
+    + summary + ' Transfer spends <b>' + cost + '</b> political capital and buys command readiness: a general you appoint outside his home theater carries a command-friction penalty (&minus;' + _cmdTransferMalus() + ' leadership) until transferred. It never decides the battle, alters casualties, or moves enemy command.</div>'
     + rows
-    + '<div style="font-size:10.5px;opacity:.62;line-height:1.4;margin-top:6px">Theater tags are broad, Inferred buckets. Multi-theater generals already fit; single-theater generals need an explicit order before the Command desk treats them as ready outside their home theater.</div>'
+    + '<div style="font-size:10.5px;opacity:.62;line-height:1.4;margin-top:6px">Theater tags are broad, Inferred buckets. Multi-theater generals already fit; single-theater generals need an explicit order before the Command desk treats them as ready outside their home theater. The friction reaches the army only through the leadership facet the bridge already reads &mdash; the historical default command never pays it.</div>'
     + '</div>';
 }
 
@@ -1647,7 +1674,10 @@ function commandLeadership(C) {
   // Q12 (D110): the staffed DIVISIONS add a further small BOUNDED lift (±2, < the corps' ±4 — the influence
   // hierarchy army>corps>division, §27), through the SAME facet. 0 when no division is seated -> byte-identical.
   var div = (typeof _cmdDivLift === "function") ? _cmdDivLift(C) : 0;
-  var lead = 64 + (rating - 64) * 0.7 + (cab - 64) * 0.3 + corps + div;
+  // E70 (D354): unprepared cross-theater command friction — 0 unless the player explicitly appointed an
+  // out-of-theater general without a Transfer order; through the SAME facet. 0 default -> byte-identical.
+  var ready = (typeof _cmdTransferReadinessLift === "function") ? _cmdTransferReadinessLift(C) : 0;
+  var lead = 64 + (rating - 64) * 0.7 + (cab - 64) * 0.3 + corps + div + ready;
   return Math.max(42, Math.min(88, Math.round(lead)));
 }
 
