@@ -177,14 +177,54 @@ judgment, or final integration.
   (related but distinct engagement); the other 10 battles have NO in-repo roster research —
   records there need fresh external NPS/CMOHS/primary-source work (~2 sources + default-refute +
   adjudication per record, the repo's most expensive work per shipped line).
-- **Resume pointer:** **5a SHIPPED (D357) · first 5b batch SHIPPED (D358: 8 Bull Run cmd rows,
-  Contract Relay roles held, all refute amendments applied; probe pins 31→39, 912 pin HELD —
-  replacement batches preserve registry length, only new battle units move 912).** Next: **5c**
-  start-anywhere career trajectory (save/journey/report contracts unbroken; `_SAVE_VER` bump only
-  with idempotent lazy migration + conscious `tools/save-shape.json` update in the same commit;
-  keep new journey state clear of own `hasOwnProperty` keys per D353, extend the E50 teeth if
-  adding accept lanes). Further 5b batches remain OPEN work — size each from the count above.
-- **Last-touched commit:** D358 (5b batch 1).
+- **Resume pointer:** **5a SHIPPED (D357) · 5b batch 1 SHIPPED (D358: 8 Bull Run cmd rows; probe
+  pins 31→39, 912 pin HELD — replacement batches preserve registry length, only new battle units
+  move 912) · 5c SHIPPED (D360: 11-rung promotion lattice + Career Trajectory read-out; nothing
+  new rides the save).** The lane's PLANNED slices are complete; it stays OPEN for further 5b
+  batches — size each from the 840-row count above and log the number in DECISIONS before the
+  first record. NOTE for future batches: a new battle shipping (LANE-003) adds units ×3 slots to
+  the universe AND moves the 912 registry pin — whoever ships a battle bumps that pin with a
+  documented-history comment (the D355 idiom); replacement batches never do.
+- **Last-touched commit:** D360 (5c).
 - **History:** lane opened by Claude Code 2026-07-10 under Aaron's Contract Relay kickoff;
   5b inventory attached 2026-07-10; 5a shipped D357 2026-07-10; 5b batch 1 (8 records) shipped
-  D358 2026-07-10.
+  D358 2026-07-10; 5c shipped D360 2026-07-10.
+
+### LANE-003 · codex-battle-ladder — **CONTRACT** (opened for the ChatGPT/Codex 5.6 Sol session)
+
+- **Owning tool:** ChatGPT/Codex (takes the lock by starting; state → DRIVE in its first commit).
+- **State:** CONTRACT.
+- **Design law:** `docs/design/battle-build-research/` packets (`eastern-1862` → Gaines' Mill ·
+  `usct` → New Market Heights · `western-gaps` → Stones River · stretch: `shenandoah-1864` Cedar
+  Creek · `shenandoah-1862` Cross Keys/Port Republic · `appomattox-campaign` Five Forks ·
+  `naval-river` Fort Donelson land+river · `trans-mississippi` Pea Ridge ELKHORN-TAVERN AXIS
+  ONLY) · the D330-D335 spec→playable→guard pattern · D74 universal combat (NO per-battle fudge) ·
+  D92 accurate-inputs · **D359 (AARON): all phase locks cleared for this session, with two
+  dignity carve-outs a blanket unlock does NOT reach — NO Leetown Native OOB (D178/D183), NO
+  playable Fort Pillow (teaching-only). No ship-vs-ship engine exists.**
+- **Acceptance criteria (per battle, the full D330-D335 pattern + extras per Aaron's popup):**
+  1. Durable spec (`docs/design/<battle>-battle-build-spec.md`) + plan probe green BEFORE runtime.
+  2. Playable slice: `data/<battle>.json`, registry/menu rank in `src/tactical/T1-bull-run.js`,
+     schema-validator enrollment, generated HTML rebuilt from source.
+  3. Focused runtime guard `tools/probe-<battle>.mjs` with HISTORICAL-DIRECTION teeth from the
+     packet (⚠ Stones River / Perryville invert "the winner bleeds less" — near-parity guards,
+     never assume US < CS), 8/8-style direction batteries, 0 pageerrors.
+  4. Source honesty: engaged strengths not campaign totals; `Verified identity; Inferred
+     strength` where exact numbers are unpinned; rank-at-battle-date traps from the packet
+     (Polk/Hardee are Maj. Gens. at Perryville but Lt. Gens. at Stones River; New Market Heights
+     USCT Medal of Honor men; no anachronistic ranks).
+  5. Roster/custom-builder baselines updated; **probe-loot-survival registry pin 912 moves**
+     (+units×3, documented-history comment — see LANE-002 note); teaching cards + codex axes;
+     honest A/B whenever a sim input moves.
+  6. Negative bind test per new guard; D160/D176 focused gate; docs sync; commit + push per
+     green slice. Full battery only at a release boundary.
+- **Probe design:** per battle — plan probe (spec invariants) + runtime probe (registry/menu/
+  OOB sums by sector/direction battery/pageerrors), modeled on `tools/probe-nashville*.mjs`.
+- **Resume pointer:** start at **Gaines' Mill** (the exact inverse of built Malvern Hill —
+  defender-hold single-phase), then **New Market Heights** (USCT — the game's biggest
+  representation gap, unlocked by D359), then **Stones River** (multi-phase, near-parity
+  direction guards). Stretch in order: Cedar Creek · Cross Keys/Port Republic · Five Forks ·
+  Fort Donelson · Elkhorn Tavern. 2-3 battles at FULL depth beat 6 shallow ones (Aaron's popup).
+- **Last-touched commit:** (none — contract only; D359/D360 carried the opening).
+- **History:** lane opened by Claude Code 2026-07-10 after Aaron's popup Q&A (D359) fixed scope,
+  depth, and locks for the Codex session.

@@ -679,6 +679,50 @@ const SETUP = `(() => {
       return { pid:target.pid, rank:J.person.rank, status:'captured', career:J.career.length, report:true };
     });
 
+    step('JOURNEY D360 TRAJECTORY: the start-anywhere rank lattice promotes every tier, the requirement read-out is honest, and the summit caps', function(){
+      var C=mkC('US'); G.campaign=C; _t1InitAll(C);
+      var reg=ssPersonRegistry(C);
+      var sherman=findPerson(reg,function(p){ return p.pid==='person_bullrun_us_sherman_bde'; });
+      if(!sherman || sherman.rank!=='Col.') throw new Error('D358 Sherman row missing for trajectory test: '+JSON.stringify(sherman&&sherman.rank));
+      var beforeRatings=JSON.stringify(GAME_DATA.ratings);
+      var start=ssStartJourney(C,sherman.pid,'bullrun1');
+      if(!start.ok) throw new Error('colonel journey start failed: '+JSON.stringify(start));
+      C.loot.survival.rations=90; C.loot.survival.exposure=10; C.loot.survival.disease=8; C.loot.survival.fatigue=10; C.loot.survival.morale=60;
+      var req0=_ssNextRankReq(C.loot.journey);
+      if(!req0 || req0.next!=='Brig. Gen.' || req0.winsNeeded!==4 || req0.winsHave!==0 || req0.remaining!==4) throw new Error('colonel requirement read-out wrong: '+JSON.stringify(req0));
+      var activeBefore=_ssJourneyActiveHTML(C);
+      if(activeBefore.indexOf('Career Trajectory')<0 || activeBefore.indexOf('Brig. Gen.')<0 || activeBefore.indexOf('4 more victories')<0) throw new Error('trajectory read-out missing before first battle: '+activeBefore);
+      var fields=['bullrun1','antietam','fredericksburg','gettysburg'];
+      for(var i=0;i<fields.length;i++){
+        var B={ id:fields[i], name:fields[i], playerSide:'US', enemySide:'CS', casualties:{US:300,CS:900}, bd:{id:fields[i],name:fields[i]} };
+        lootOnResolve('US','tactical',B,C,true);
+      }
+      var J=C.loot.journey;
+      if(J.person.rank!=='Brig. Gen.' || J.promotionCount!==1) throw new Error('four cumulative victories should promote Col. to Brig. Gen. (D151 cumulative-wins semantic preserved): '+JSON.stringify({rank:J.person.rank,promos:J.promotionCount}));
+      if(J.person.promotedFrom!=='Col.') throw new Error('promotion provenance lost: '+JSON.stringify(J.person.promotedFrom));
+      var lastEntry=J.career[J.career.length-1];
+      if(!lastEntry || !lastEntry.promoted || lastEntry.rankAfter!=='Brig. Gen.') throw new Error('promoted career entry missing for the trajectory: '+JSON.stringify(lastEntry));
+      var req1=_ssNextRankReq(J);
+      if(!req1 || req1.next!=='Maj. Gen.' || req1.remaining!==0) throw new Error('post-promotion requirement should point at Maj. Gen. with the streak banked: '+JSON.stringify(req1));
+      var active=_ssJourneyActiveHTML(C);
+      if(active.indexOf('Career Trajectory')<0 || active.indexOf('Maj. Gen.')<0 || active.indexOf('Arc so far')<0) throw new Error('trajectory read-out missing after promotion: '+active);
+      var report=ssJourneyReportHTML(C,{});
+      if(report.indexOf('Career Trajectory')<0) throw new Error('full journey report should carry the trajectory block');
+      var compact=ssJourneyReportHTML(C,{compact:true});
+      if(compact.indexOf('Career Trajectory')>=0) throw new Error('compact report should stay lean (no trajectory block)');
+      if(_ssRankLadderStep('General')!==null || !_ssRankAtSummit('General')) throw new Error('General must cap the ladder');
+      if(_ssPromotionRank({person:{rank:'General'},career:[{outcome:'victory'},{outcome:'victory'},{outcome:'victory'},{outcome:'victory'},{outcome:'victory'},{outcome:'victory'},{outcome:'victory'}]},'victory','decisive','alive')!==null) throw new Error('a full General must never promote further');
+      var offLadder=_ssTrajectoryHTML({person:{rank:'Chaplain',name:'X'},career:[]});
+      if(offLadder.indexOf('outside the standard promotion ladder')<0) throw new Error('off-ladder ranks must be labeled honestly: '+offLadder);
+      var lieutenant=_ssRankLadderStep('1st Lt.');
+      if(!lieutenant || lieutenant.next!=='Captain') throw new Error('company-officer tier missing from the ladder');
+      var bugler=_ssRankLadderStep('Bugler');
+      if(!bugler || bugler.next!=='Sergeant' || !bugler.decisive) throw new Error('enlisted specialists must keep the legacy fast track');
+      if(JSON.stringify(GAME_DATA.ratings)!==beforeRatings) throw new Error('D360 trajectory mutated canonical ratings');
+      lootSetSurvival(C,false); C.loot.journey={enabled:false};
+      return { promoted:J.person.rank, promotions:J.promotionCount, nextReq:req1.next, summitCapped:true, offLadderHonest:true };
+    });
+
     step('SAVE/LOAD TAMPERING: save-slot import rejects bad settings and restored loot is sanitized before use', function(){
       if(typeof serializeSave!=='function' || typeof applySave!=='function' || typeof _slImportText!=='function') throw new Error('save-slot helpers missing');
       var C=mkC('US'); G.campaign=C; _t1InitAll(C);

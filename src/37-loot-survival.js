@@ -867,13 +867,58 @@ function _ssCareerWins(J) {
   for (var i = 0; i < arr.length; i++) if (arr[i] && arr[i].outcome === "victory") n++;
   return n;
 }
+/* D360 (LANE-002 5c): the full start-anywhere promotion lattice. Before this, only
+   Private->Sergeant->Captain could ever promote, so every other starting rank (Corporal,
+   Bugler, Lieutenant, Colonel, Brig. Gen., ...) had a DEAD career trajectory — the
+   opposite of the play-as-anyone pillar. The two legacy D151 transitions keep their
+   exact thresholds (the fast-track grade jumps read as battlefield/brevet promotion);
+   every added step is Inferred game balance. `next` names MUST exist in
+   data/ratings.json rankBase or fldPromotePerson cleanly no-ops (its unknown-rank guard).
+   Victory-only + alive-only gating is unchanged from D151. */
+var _SS_RANK_LADDER = [
+  { match: ["private", "pvt", "bugler", "musician", "drummer"], next: "Sergeant", wins: 2, decisive: true },
+  { match: ["corporal", "cpl"], next: "Sergeant", wins: 2, decisive: true },
+  { match: ["sergeant", "sgt", "first sergeant", "1st sgt", "sergeant major"], next: "Captain", wins: 3, decisive: false },
+  { match: ["lieutenant", "lt", "1st lt", "2nd lt", "first lieutenant", "second lieutenant"], next: "Captain", wins: 2, decisive: false },
+  { match: ["captain", "capt"], next: "Major", wins: 3, decisive: false },
+  { match: ["major", "maj"], next: "Lt. Col.", wins: 3, decisive: false },
+  { match: ["lt. col", "lt col", "lieutenant colonel"], next: "Colonel", wins: 3, decisive: false },
+  { match: ["colonel", "col"], next: "Brig. Gen.", wins: 4, decisive: false },
+  { match: ["brig. gen", "brigadier", "brigadier general"], next: "Maj. Gen.", wins: 4, decisive: false },
+  { match: ["maj. gen", "major general"], next: "Lt. Gen.", wins: 5, decisive: false },
+  { match: ["lt. gen", "lieutenant general"], next: "General", wins: 6, decisive: false }
+];
+function _ssRankNorm(rank) {
+  return _lootCleanText(rank || "", 80).toLowerCase().replace(/\.+$/, "").replace(/\s+/g, " ");
+}
+function _ssRankLadderStep(rank) {
+  var r = _ssRankNorm(rank);
+  if (!r) return null;
+  for (var i = 0; i < _SS_RANK_LADDER.length; i++) {
+    var m = _SS_RANK_LADDER[i].match;
+    for (var j = 0; j < m.length; j++) if (m[j] === r) return _SS_RANK_LADDER[i];
+  }
+  return null;
+}
+function _ssRankAtSummit(rank) {
+  var r = _ssRankNorm(rank);
+  return r === "general" || r === "gen";
+}
+function _ssNextRankReq(J) {
+  var p = J && J.person ? J.person : null;
+  var step = p ? _ssRankLadderStep(p.rank) : null;
+  if (!step) return null;
+  var have = _ssCareerWins(J);
+  var remaining = step.wins - have;
+  return { next: step.next, winsNeeded: step.wins, winsHave: have, remaining: remaining > 0 ? remaining : 0, decisiveCounts: !!step.decisive };
+}
 function _ssPromotionRank(J, outcome, type, status) {
   if (!J || outcome !== "victory" || status !== "alive") return null;
-  var p = J.person || {}, rank = _lootCleanText(p.rank || "", 80).toLowerCase();
+  var step = _ssRankLadderStep(J.person && J.person.rank);
+  if (!step) return null;
   var wins = _ssCareerWins(J) + 1;
-  if (rank === "private" && (type === "decisive" || wins >= 2)) return "Sergeant";
-  if (rank === "sergeant" && wins >= 3) return "Captain";
-  return null;
+  if (step.decisive && type === "decisive") return step.next;
+  return wins >= step.wins ? step.next : null;
 }
 function _ssHydrateJourneyPerson(C, J) {
   if (!J) return null;
@@ -1002,6 +1047,38 @@ function _lootPill(label, value, color) {
     + '<div style="font-size:18px;font-weight:bold;color:' + (color || "inherit") + '">' + _lootEsc(value) + '</div></div>';
 }
 
+/* D360: the Career Trajectory read-out — computed entirely from existing journey state
+   (career[] + person snapshot), so nothing new rides the save. */
+function _ssTrajectoryArc(J) {
+  var arr = J && Array.isArray(J.career) ? J.career : [], bits = [], first = null;
+  for (var i = 0; i < arr.length; i++) {
+    var e = arr[i];
+    if (!e) continue;
+    if (first === null && e.rankBefore) first = e.rankBefore;
+    if (e.promoted && e.rankAfter) bits.push(e.rankAfter + (e.battleName ? " at " + e.battleName : ""));
+  }
+  if (!bits.length) return "";
+  return _lootCleanText((first || "start") + " → " + bits.join(" → "), 300);
+}
+function _ssTrajectoryHTML(J) {
+  if (!J || !J.person) return "";
+  var cur = _ssRankLabel(J.person), req = _ssNextRankReq(J), line;
+  if (req) {
+    var n = req.remaining;
+    line = _lootEsc(cur) + " &rarr; " + _lootEsc(req.next) + " — "
+      + (n <= 0 ? "the next victory promotes" : (n + " more " + (n === 1 ? "victory" : "victories") + " (" + req.winsHave + " of " + req.winsNeeded + " won)"))
+      + (req.decisiveCounts ? "; a decisive victory promotes at once" : "") + ".";
+  } else if (_ssRankAtSummit(J.person.rank)) {
+    line = _lootEsc(cur) + " — at the summit of the promotion ladder.";
+  } else {
+    line = _lootEsc(cur) + " — this rank sits outside the standard promotion ladder.";
+  }
+  var arc = _ssTrajectoryArc(J);
+  return '<div class="gn-col-head" style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:9px 0 2px">Career Trajectory</div>'
+    + '<div id="ssTrajectory" style="font-size:12px;line-height:1.45">' + line
+    + (arc ? '<div style="font-size:11px;opacity:.78;margin-top:3px">Arc so far: ' + _lootEsc(arc) + '</div>' : "")
+    + '</div>';
+}
 function _ssRankLabel(p) { return _lootCleanText(p && p.rank ? p.rank : "Soldier", 80); }
 function _ssProvLabel(p) { return _lootCleanText(p && p.provenance ? p.provenance : (p && p.generated ? "Inferred" : "Unstated"), 40); }
 function _ssSourceLabel(p) { return (p && p.replacement) ? "Sourced" : ((p && p.generated) ? "Generated" : "Authored"); }
@@ -1076,6 +1153,7 @@ function _ssJourneyActiveHTML(C) {
     + _lootPill("Last field", last, "#9a9184")
     + _lootPill("Promotions", J.promotionCount || 0, "#6f9e5a")
     + '</div>'
+    + _ssTrajectoryHTML(J)
     + '<div class="gn-col-head" style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:9px 0 2px">Career Log</div>'
     + _ssCareerHTML(J, 5)
     + '</div>';
@@ -1091,6 +1169,7 @@ function ssJourneyReportHTML(C, opts) {
     + '<span style="font-size:11px;font-weight:bold;color:' + _ssStatusColor(status) + '">' + _lootEsc(_ssCap(status)) + '</span></div>'
     + '<div style="font-size:11px;opacity:.74;margin-top:2px">' + _lootEsc(p.name || "Selected soldier") + ' · ' + _lootEsc(p.rank || "Soldier")
     + ' · ' + _lootEsc((J.battles || 0) + " battle" + (J.battles === 1 ? "" : "s")) + ' · last field: ' + _lootEsc(last) + '.</div>'
+    + (opts.compact ? "" : _ssTrajectoryHTML(J))
     + _ssCareerHTML(J, max)
     + '</div>';
 }
