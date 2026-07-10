@@ -6,6 +6,14 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D346 — E64 FAIL-CLOSED MEANINGFUL DATA-SCHEMA GATE — [CODEX 5.6 Sol main loop, run-2 queue] (2026-07-10)
+
+- **Closed-world contract:** `tools/validate-data-schemas.mjs` now classifies every current JSON document into one of four explicit families (13 battles, 20 versioned schemas, 9 metadata documents, 1 ratings document). Every registered rule requires a nonempty key set; an unregistered file fails closed instead of falling through to a parse-only pass.
+- **Meaningful invariants:** battle validation binds the one-payload root, matching id, roles, field/objective/time shape, brief/sides/teaching, OOB ids, phases, reinforcements, and terrain; the other three families require their real top-level structures and version/metadata types. The report now has an authoritative JSON companion with `ok`, diagnostic state, family totals, results, and pageerrors, and any failed document sets a nonzero exit status.
+- **Bind test:** `--diagnostic-invalid=all` removes one required structure in each family in memory only. The tool reported exactly 4 failures (`antietam.objective`, `artillery.guns`, `cabinet.sides`, `ratings.attributes`), wrote `ok=false`, and exited 1. Clean mode then restored **43/43**, all four family counts, zero failed rows, zero pageerrors, and zero zero-key rules.
+- **Suite enrollment/gate:** `vet-no-regression` now runs this validator immediately after the two canonical import gates; the visible suite is **117 commands**. Both touched tools pass `node --check`; soldier replacements **31/31** and women in war **9/9** import gates are green; battle-build research **15/15**; build **GATE OK** with generated HTML unchanged; report readback is green; `git diff --check` clean. Full `npm run vet:noreg` remains deferred to the end-of-queue D176 checkpoint.
+- **Queue:** E64 flips to FIXED; **7 run-2 PENDING FIX-NOW items remain (including E50)**. Next is **S41**, deterministic tactical-label decluttering with screenshot/readability teeth; E70 remains proposal-only.
+
 ## D345 — E63 BATTLE-GUARD ENROLLMENT + HONEST CONSOLIDATED SWEEP — [CODEX 5.6 Sol main loop, run-2 queue] (2026-07-10)
 
 - **Focused direction law is enrolled, not duplicated:** `tools/vet-no-regression.mjs` now runs the Chattanooga, Kennesaw, Franklin, and Nashville focused guards immediately after Chickamauga. The suite remains a serial `for ... await runOne` pipeline, so each Chrome probe finishes and closes before the next begins. The visible suite is now **116 commands**; the four added labels occupy 107-110 before attacker parity and the consolidated sweep.

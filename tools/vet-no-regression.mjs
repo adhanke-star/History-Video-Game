@@ -14,6 +14,7 @@ const SUITE = [
   ['build gate', 'tools/build.mjs'],
   ['soldier replacements import gate', 'tools/import-soldier-replacements.mjs'],
   ['women in war import gate', 'tools/import-women-in-war.mjs'],
+  ['data schemas', 'tools/validate-data-schemas.mjs'],
   ['boot default renderer', 'tools/bootprobe.mjs'],
   ['turn-one smoke', 'tools/t1probe.mjs'],
   ['main menu', 'tools/menuprobe.mjs'],
