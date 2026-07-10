@@ -369,9 +369,11 @@ function fldDrawOfficers(ctx, v) {
       ctx.fillStyle = ld.wounded ? "#d8b46a" : col; fldStar(ctx, cx, cz, 6, 3);
     }
     ctx.restore();
-    // the name label (always — the teaching is the names)
+    // the name label (always — the teaching is the names). S41 gives every visible officer mandatory
+    // priority in the shared pass and reserves the standard/cross so displaced copy never covers it.
     var nm = (ld.short || ld.name) + (!ld.alive ? " †" : (ld.wounded ? " (wounded)" : ""));
-    if (typeof fld2dLabel === "function") fld2dLabel(ctx, nm, cx, cz + 20);
+    if (typeof fld2dLabelReserve === "function") fld2dLabelReserve(cx, cz, 20, 20, "officer-marker");
+    if (typeof fld2dLabel === "function") fld2dLabel(ctx, nm, cx, cz + 20, { kind: "officer", priority: !ld.alive ? 460 : (ld.wounded ? 440 : 420), required: true, maxShift: 200 });
   }
 }
 function fldStar(ctx, cx, cy, rO, rI) {

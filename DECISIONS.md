@@ -6,6 +6,14 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D347 — S41 DETERMINISTIC TACTICAL-LABEL DECLUTTER — [CODEX 5.6 Sol main loop, run-2 queue] (2026-07-10)
+
+- **One presentation-only layout pass:** every 2D terrain/route, objective, officer, train, and engineering label now queues into a shared deterministic frame pass. Visible unit bodies, officer/support markers, and the tactical top/HUD/button chrome reserve screen rectangles. Placement is greedy by explicit priority (objective, officer, support/engineering, point terrain, route) with fixed candidate order and no sim-state writes.
+- **Readability contract:** accepted labels render last, after weather/grain/fidelity layers, as high-contrast chips. Moved labels get a dashed leader line to their authored map anchor. Objective and visible officer labels are mandatory; only lower-priority terrain/route copy may be suppressed when no collision-free slot exists. The final layout publishes requested/placed/hidden counts, kind counts, overlap audits, displacement, reservations, and a deterministic signature.
+- **Visual proof:** the prior Shiloh/Malvern pileups are separated in the refreshed screenshots. Shiloh places **19/19** labels; Malvern places **16/19**, suppressing only 2 route labels and 1 ordinary terrain label while preserving its objective and all 9 visible officers. Across all five 2D scenes: **0 label-label overlaps, 0 label-versus-unit/UI overlaps, 0 mandatory labels hidden**, and identical-frame signatures match. The five paired 3D scenes remain green.
+- **Bind test/gate:** `--diagnostic-label-overlap` disables only the placement predicate in dense Shiloh; the independent final audit found **9** real overlaps, wrote red, and exited 1. Clean `probe-tactical-visuals` restored **10/10**, 0 pageerrors/lifecycle/cleanup errors. Adjacent field **23/23**, officers **15/15**, visual fidelity **27/27**; all touched files syntax-clean; build **GATE OK**; `git diff --check` clean. Full `npm run vet:noreg` remains deferred to the end-of-queue D176 checkpoint.
+- **Queue:** S41 flips to FIXED; **6 run-2 PENDING FIX-NOW items remain (including E50)**. Next is **S42**, making the Connected-AI live status validate the current draft rather than mixing draft intent with committed configuration; E70 remains proposal-only.
+
 ## D346 — E64 FAIL-CLOSED MEANINGFUL DATA-SCHEMA GATE — [CODEX 5.6 Sol main loop, run-2 queue] (2026-07-10)
 
 - **Closed-world contract:** `tools/validate-data-schemas.mjs` now classifies every current JSON document into one of four explicit families (13 battles, 20 versioned schemas, 9 metadata documents, 1 ratings document). Every registered rule requires a nonempty key set; an unregistered file fails closed instead of falling through to a parse-only pass.

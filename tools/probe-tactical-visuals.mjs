@@ -44,10 +44,17 @@ const TEARDOWN_EVALUATE_BOUND_MS = 5000;
 const DIAGNOSTIC_PREFIX = '--diagnostic-close-scene=';
 const diagnosticArg = process.argv.find(arg => arg.startsWith(DIAGNOSTIC_PREFIX));
 const diagnosticCloseScene = diagnosticArg ? diagnosticArg.slice(DIAGNOSTIC_PREFIX.length) : '';
+const diagnosticLabelOverlap = process.argv.includes('--diagnostic-label-overlap');
 if (diagnosticArg && !scenes.some(scene => scene.name === diagnosticCloseScene)) {
   console.error('Unknown diagnostic scene: ' + diagnosticCloseScene);
   process.exit(2);
 }
+if (diagnosticCloseScene && diagnosticLabelOverlap) {
+  console.error('Choose only one tactical-visual diagnostic mode');
+  process.exit(2);
+}
+// The label bind-test needs one dense 2D scene; clean/default and E67 recovery modes retain all ten.
+const runScenes = diagnosticLabelOverlap ? scenes.filter(scene => scene.name === 'visual-shiloh-2d') : scenes;
 
 async function ensureServer() {
   const probe = cfg.baseUrl + '/' + cfg.file;
@@ -94,6 +101,9 @@ function setupSceneScript(scene) {
       try { delete G.settings.tacticalPreset; } catch(e) {}
       delete G.settings.tacticalFog;
       fldLaunchSandbox({ renderer:${JSON.stringify(scene.renderer)}, scenario:${JSON.stringify(scene.scenario)}, autoBoth:true, playerSide:'US', seed:${scene.seed} });
+      // S41 negative mode disables the placement predicate, not the final audit. Real labels therefore
+      // pile onto their authored anchors and the readability gate must report the actual overlaps.
+      if (${JSON.stringify(diagnosticLabelOverlap)} && ${JSON.stringify(scene.renderer)} === '2d') fld2dLabelFits = function(){ return true; };
       if (${JSON.stringify(scene.renderer)} === '3d') {
         for (var w = 0; w < 160 && !(__FIELD.mode3d && __FIELD.renderer); w++) await wait(100);
         if (!__FIELD.mode3d || !__FIELD.renderer) throw new Error('3D renderer did not become active; kind=' + __FIELD.rendererKind + ' mode3d=' + __FIELD.mode3d);
@@ -106,6 +116,25 @@ function setupSceneScript(scene) {
       if (typeof fldRenderHud === 'function') fldRenderHud();
       await wait(${scene.settle});
       if (typeof fldRender === 'function') fldRender();
+      var labelLayout = null;
+      if (${JSON.stringify(scene.renderer)} === '2d') {
+        labelLayout = __FIELD._labelLayout2d ? JSON.parse(JSON.stringify(__FIELD._labelLayout2d)) : null;
+        if (!labelLayout) throw new Error('S41 label layout audit missing');
+        // A second render at the same sim state must choose byte-for-byte-equivalent label coordinates.
+        if (typeof fldRender === 'function') fldRender();
+        var labelLayout2 = __FIELD._labelLayout2d ? JSON.parse(JSON.stringify(__FIELD._labelLayout2d)) : null;
+        if (!labelLayout2 || labelLayout.signature !== labelLayout2.signature) throw new Error('S41 label placement is not deterministic across identical frames');
+        if (labelLayout.overlaps) throw new Error('S41 label-label overlaps=' + labelLayout.overlaps);
+        if (labelLayout.reservedOverlaps) throw new Error('S41 labels cover reserved unit/UI markers=' + labelLayout.reservedOverlaps);
+        if (labelLayout.mandatoryHidden) throw new Error('S41 mandatory objective/officer labels hidden=' + labelLayout.mandatoryHidden);
+        var rqOfficer = Number((labelLayout.requestedByKind || {}).officer || 0), plOfficer = Number((labelLayout.placedByKind || {}).officer || 0);
+        if (rqOfficer && rqOfficer !== plOfficer) throw new Error('S41 visible officer labels not all placed ' + plOfficer + '/' + rqOfficer);
+        if (Number((labelLayout.reservedByKind || {}).unit || 0) < 2) throw new Error('S41 unit reservations missing/thin');
+        if ((${JSON.stringify(scene.name)} === 'visual-shiloh-2d' || ${JSON.stringify(scene.name)} === 'visual-malvern-hill-2d')) {
+          if (Number((labelLayout.requestedByKind || {}).objective || 0) !== 1) throw new Error('S41 target scene must identify exactly one objective-priority terrain label');
+          if (labelLayout.requested < 8 || labelLayout.moved < 1) throw new Error('S41 target scene did not exercise dense-label relocation');
+        }
+      }
       var cv = document.getElementById('fldGl');
       if (!cv) throw new Error('no tactical canvas');
       var stats = __FIELD.mode3d ? sample3d(__FIELD.renderer, cv) : sample2d(__FIELD.ctx2d, cv);
@@ -139,6 +168,7 @@ function setupSceneScript(scene) {
           obj:(document.getElementById('fldObj') || {}).textContent || '',
           phase:(document.getElementById('fldPhase') || {}).textContent || ''
         },
+        labelLayout:labelLayout,
         dataUrl:dataUrl
       };
     } catch(e) {
@@ -283,24 +313,27 @@ async function runSceneIsolated(scene) {
 (async () => {
   const server = await ensureServer();
   const results = [];
+  const diagnosticDescriptor = diagnosticCloseScene
+    ? { kind:'close-page', target:diagnosticCloseScene }
+    : (diagnosticLabelOverlap ? { kind:'label-overlap', target:'visual-shiloh-2d' } : null);
   try {
-    for (const scene of scenes) {
+    for (const scene of runScenes) {
       const r = await runSceneIsolated(scene);
       results.push(r);
       writeFileSync(join(OUT, 'probe-tactical-visuals.json'), JSON.stringify({
         ok:false,
         partial:true,
         generatedAt:new Date().toISOString(),
-        expectedScenes:scenes.map(item => item.name),
+        expectedScenes:runScenes.map(item => item.name),
         attemptedScenes:results.length,
-        diagnostic:diagnosticCloseScene ? { kind:'close-page', target:diagnosticCloseScene } : null,
+        diagnostic:diagnosticDescriptor,
         results
       }, null, 2));
     }
   } finally {
     if (server) server.kill();
   }
-  const diagnosticIndex = diagnosticCloseScene ? scenes.findIndex(scene => scene.name === diagnosticCloseScene) : -1;
+  const diagnosticIndex = diagnosticCloseScene ? runScenes.findIndex(scene => scene.name === diagnosticCloseScene) : -1;
   const laterResults = diagnosticIndex >= 0 ? results.slice(diagnosticIndex + 1) : [];
   const diagnostic = diagnosticIndex >= 0 ? {
     kind:'close-page',
@@ -309,11 +342,16 @@ async function runSceneIsolated(scene) {
     laterScenesAttempted:laterResults.length,
     laterScenesPassed:laterResults.filter(result => result.ok).length,
     recoveryProven:!!results[diagnosticIndex] && !results[diagnosticIndex].ok && laterResults.length > 0 && laterResults.every(result => result.ok)
-  } : null;
+  } : (diagnosticLabelOverlap ? {
+    kind:'label-overlap',
+    target:'visual-shiloh-2d',
+    failed2d:results.filter(result => /-2d$/.test(result.name) && !result.ok).map(result => result.name),
+    gateBit:results.some(result => /-2d$/.test(result.name) && !result.ok && /S41 label-(?:label )?overlaps=|S41 labels cover/.test(String(result.detail.error || '')))
+  } : null);
   const out = {
-    ok:results.length === scenes.length && results.every(r => r.ok),
+    ok:results.length === runScenes.length && results.every(r => r.ok),
     generatedAt:new Date().toISOString(),
-    expectedScenes:scenes.map(item => item.name),
+    expectedScenes:runScenes.map(item => item.name),
     attemptedScenes:results.length,
     diagnostic,
     results
@@ -323,6 +361,7 @@ async function runSceneIsolated(scene) {
   for (const r of results) {
     console.log((r.ok ? '  ok   ' : '  FAIL ') + r.name + ' -> ' + (r.detail.shot || '') + (r.detail.error ? ' :: ' + r.detail.error : ''));
   }
-  if (diagnostic) console.log('diagnostic recoveryProven=' + diagnostic.recoveryProven + ' later=' + diagnostic.laterScenesPassed + '/' + diagnostic.laterScenesAttempted);
+  if (diagnostic && diagnostic.kind === 'close-page') console.log('diagnostic recoveryProven=' + diagnostic.recoveryProven + ' later=' + diagnostic.laterScenesPassed + '/' + diagnostic.laterScenesAttempted);
+  if (diagnostic && diagnostic.kind === 'label-overlap') console.log('diagnostic gateBit=' + diagnostic.gateBit + ' failed2d=' + diagnostic.failed2d.join(','));
   process.exit(out.ok ? 0 : 1);
 })().catch(e => { console.error('FATAL:', e); process.exit(1); });

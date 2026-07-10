@@ -446,7 +446,9 @@ function fldVfDispose() {
   }
   if (typeof fld2dDraw === "function" && !fld2dDraw._vf) {
     var _od = fld2dDraw;
-    fld2dDraw = function () { var r = _od.apply(this, arguments); try { fldVfDraw2d(__FIELD.ctx2d, fld2dView()); } catch (e) { _vfErr(e); } return r; };
+    // S41: this is the outermost shipped 2D paint wrapper. Flush the shared label queue only after
+    // weather, atmospherics, field grain, selection/casualty effects, and fidelity shading are complete.
+    fld2dDraw = function () { var r = _od.apply(this, arguments); try { fldVfDraw2d(__FIELD.ctx2d, fld2dView()); } catch (e) { _vfErr(e); } try { if (typeof fld2dLabelsFlush === "function") fld2dLabelsFlush(__FIELD.ctx2d); } catch (e2) { _vfErr(e2); } return r; };
     _carry(fld2dDraw, _od); fld2dDraw._vf = true;
   }
   if (typeof fldExit === "function" && !fldExit._vf) {

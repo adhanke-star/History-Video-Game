@@ -596,7 +596,7 @@ function _fldDrawFord2d(ctx, v, cc, rr, hw) {
     for (var d = 0; d <= dots; d++) { var p = d / dots, sx = cx - nx * half + nx * (2 * half) * p, sz = cz - nz * half + nz * (2 * half) * p; ctx.beginPath(); ctx.arc(sx, sz, Math.max(1.2, 2.2 * v.s), 0, 7); ctx.fill(); }
   }
   ctx.restore();
-  if (cc.name && typeof fld2dLabel === "function") fld2dLabel(ctx, cc.name + (cc.kind === "ford" && !open ? " (deep)" : ""), cx, cz - (half + 5));
+  if (cc.name && typeof fld2dLabel === "function") fld2dLabel(ctx, cc.name + (cc.kind === "ford" && !open ? " (deep)" : ""), cx, cz - (half + 5), { kind: "engineering", priority: 340, maxShift: 110 });
 }
 function _fldDrawPontoon2d(ctx, v, pn) {
   var nx = -pn.rz, nz = pn.rx, cx = v.ox + pn.x * v.s, cz = v.oz + pn.z * v.s;
@@ -615,7 +615,7 @@ function _fldDrawPontoon2d(ctx, v, pn) {
   ctx.strokeStyle = done ? "rgba(176,150,104,0.97)" : "rgba(176,150,104,0.7)"; ctx.lineWidth = 5 * v.s;
   ctx.beginPath(); ctx.moveTo(cx - nx * half, cz - nz * half); ctx.lineTo(cx - nx * half + nx * (2 * half) * frac, cz - nz * half + nz * (2 * half) * frac); ctx.stroke();
   ctx.restore();
-  if (typeof fld2dLabel === "function") fld2dLabel(ctx, done ? "Pontoon bridge" : ("Pontoon " + Math.round(frac * 100) + "%"), cx, cz - (half + 5));
+  if (typeof fld2dLabel === "function") fld2dLabel(ctx, done ? "Pontoon bridge" : ("Pontoon " + Math.round(frac * 100) + "%"), cx, cz - (half + 5), { kind: "engineering", priority: 340, maxShift: 110 });
 }
 
 /* ---- 2D render: a dirt parapet arc along the unit's front (toward its facing) ---- */

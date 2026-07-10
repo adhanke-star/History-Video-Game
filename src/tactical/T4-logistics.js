@@ -301,7 +301,8 @@ function fldDrawSupply(ctx, v) {
     ctx.beginPath(); ctx.arc(cx + 6, cz + 5, 3, 0, 7); ctx.stroke();
     ctx.fillStyle = col; ctx.fillRect(cx - 9, cz - 8, 18, 3);   // the side-coloured tilt cover
     ctx.restore();
-    if (typeof fld2dLabel === "function") fld2dLabel(ctx, "❈ Train", cx, cz + 20);
+    if (typeof fld2dLabelReserve === "function") fld2dLabelReserve(cx, cz, 24, 22, "support-marker");
+    if (typeof fld2dLabel === "function") fld2dLabel(ctx, "❈ Train", cx, cz + 20, { kind: "support", priority: 320, maxShift: 110 });
   }
 }
 function fldSupplySeen(tr, ps) {

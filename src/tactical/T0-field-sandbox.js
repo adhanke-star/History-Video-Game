@@ -1739,6 +1739,7 @@ function fld2dPick(clientX, clientY) {
 function fld2dDraw() {
   var ctx = __FIELD.ctx2d; if (!ctx) return;
   var v = fld2dView(), W = window.innerWidth, H = window.innerHeight;
+  fld2dLabelsBegin(ctx, v, W, H);
   ctx.clearRect(0, 0, W, H);
   ctx.fillStyle = "#3f4a32"; ctx.fillRect(v.ox, v.oz, FLD.FIELD_W * v.s, FLD.FIELD_H * v.s);
   // H5-i3/H5-i4: elevation render (hillshade / contour / hypsometric) + swamp/town/fort markers,
@@ -1770,6 +1771,11 @@ function fld2dDraw() {
     var cx = v.ox + u.x * v.s, cz = v.oz + u.z * v.s;
     var frontW = (u.formation === "column" ? 36 : 96) * v.s * (0.5 + 0.5 * u.men / u.maxMen);
     var depth = (u.formation === "column" ? 60 : 26) * v.s;
+    // S41: labels are laid out after every visual layer. Reserve the rotated brigade body,
+    // morale pip, facing edge, flag, and centered side glyph so map/officer copy cannot cover it.
+    var _lc = Math.abs(Math.cos(u.facing || 0)), _ls = Math.abs(Math.sin(u.facing || 0));
+    var _lrw = _lc * frontW + _ls * depth, _lrh = _ls * frontW + _lc * depth;
+    fld2dLabelReserve(cx, cz - 8, _lrw + 12, _lrh + 36, "unit");
     ctx.save(); ctx.translate(cx, cz); ctx.rotate(u.facing);
     var sel = __FIELD.sel.indexOf(u.id) >= 0;
     var base = u.side === "US" ? "#5b79ad" : "#a85a4a";
@@ -1842,14 +1848,149 @@ function fld2dDrawMarkers(ctx, v) {
       for (var p = 0; p < mk.path.length; p++) { var pt = mk.path[p], X = v.ox + pt[0] * v.s, Z = v.oz + pt[1] * v.s; if (p === 0) ctx.moveTo(X, Z); else ctx.lineTo(X, Z); }
       ctx.stroke();
       var midp = mk.path[Math.floor(mk.path.length / 2)];
-      if (mk.name) fld2dLabel(ctx, mk.name, v.ox + midp[0] * v.s, v.oz + midp[1] * v.s - 6);
+      if (mk.name) fld2dLabel(ctx, mk.name, v.ox + midp[0] * v.s, v.oz + midp[1] * v.s - 6, fld2dMarkerLabelOpts(mk, midp[0], midp[1]));
     } else if (typeof mk.x === "number") {
       if (mk.kind === "ford" || mk.kind === "bridge") { ctx.fillStyle = mk.kind === "bridge" ? "#9a8a6a" : "#5a7da0"; ctx.beginPath(); ctx.arc(v.ox + mk.x * v.s, v.oz + mk.z * v.s, 5, 0, 7); ctx.fill(); }
-      if (mk.name) fld2dLabel(ctx, mk.name, v.ox + mk.x * v.s, v.oz + mk.z * v.s - 8);
+      if (mk.name) fld2dLabel(ctx, mk.name, v.ox + mk.x * v.s, v.oz + mk.z * v.s - 8, fld2dMarkerLabelOpts(mk, mk.x, mk.z));
     }
   }
 }
-function fld2dLabel(ctx, text, x, z) {
+function fld2dMarkerLabelOpts(mk, x, z) {
+  var o = __FIELD.objective, objective = !!(o && mk.kind === "label" && fldDist({ x: x, z: z }, o) <= o.r);
+  if (objective) return { kind: "objective", priority: 500, required: true, maxShift: 180 };
+  if (mk.kind === "label") return { kind: "terrain", priority: 220, maxShift: 92 };
+  if (mk.kind === "bridge" || mk.kind === "ford") return { kind: "crossing", priority: 210, maxShift: 92 };
+  return { kind: "route", priority: 120, maxShift: 72 };
+}
+
+/* S41 (D347): deterministic, presentation-only label declutter. All 2D label producers queue into one
+   frame pass; units and visible UI reserve rectangles; the outermost 2D wrapper flushes labels after
+   weather/grain/fidelity paint. Objective and officer labels are mandatory, then support, point terrain,
+   and route labels. A displaced chip gets a leader line back to its true anchor. No sim value is read or
+   written except presentation coordinates, and the final audit is exposed for screenshot probe teeth. */
+function fld2dLabelsBegin(ctx, v, W, H) {
+  var st = {
+    ctx: ctx,
+    v: v,
+    bounds: { l: 6, t: 6, r: Math.max(7, W - 6), b: Math.max(7, H - 6) },
+    items: [], reserved: [], seq: 0
+  };
+  __FIELD._labelPass2d = st;
+  // Keep labels out from under the actual tactical chrome. Coordinates are converted into canvas CSS pixels.
+  try {
+    var cv = __FIELD.cv2d, cr = cv && cv.getBoundingClientRect ? cv.getBoundingClientRect() : { left: 0, top: 0 };
+    var ids = ["fldTop", "fldHud", "fldBar"];
+    for (var i = 0; i < ids.length; i++) {
+      var el = document.getElementById(ids[i]);
+      if (!el || !el.offsetParent || !el.getBoundingClientRect) continue;
+      var r = el.getBoundingClientRect();
+      fld2dLabelReserve(r.left - cr.left + r.width / 2, r.top - cr.top + r.height / 2, r.width + 8, r.height + 8, "ui");
+    }
+  } catch (e) {}
+}
+function fld2dLabelBox(x, y, w, h) { return { l: x - w / 2, t: y - h / 2, r: x + w / 2, b: y + h / 2, w: w, h: h }; }
+function fld2dLabelReserve(x, y, w, h, kind) {
+  var st = __FIELD && __FIELD._labelPass2d;
+  if (!st || !(w > 0) || !(h > 0)) return;
+  var b = fld2dLabelBox(x, y, w, h); b.kind = kind || "reserved"; st.reserved.push(b);
+}
+function fld2dRectsOverlap(a, b, gap) {
+  gap = gap == null ? 3 : gap;
+  return !(a.r + gap <= b.l || b.r + gap <= a.l || a.b + gap <= b.t || b.b + gap <= a.t);
+}
+function fld2dLabelFits(box, st) {
+  if (box.l < st.bounds.l || box.r > st.bounds.r || box.t < st.bounds.t || box.b > st.bounds.b) return false;
+  for (var i = 0; i < st.reserved.length; i++) if (fld2dRectsOverlap(box, st.reserved[i], 2)) return false;
+  for (var j = 0; j < st.placed.length; j++) if (fld2dRectsOverlap(box, st.placed[j].box, 4)) return false;
+  return true;
+}
+function fld2dLabelCandidates(item) {
+  var out = [[0, 0]], max = item.maxShift;
+  for (var r = 20; r <= max; r += 20) {
+    out.push([0, -r], [r, 0], [0, r], [-r, 0]);
+    out.push([r, -r], [r, r], [-r, r], [-r, -r]);
+  }
+  return out;
+}
+function fld2dLabelsFlush(ctx) {
+  var st = __FIELD && __FIELD._labelPass2d;
+  if (!st || st.ctx !== ctx) return;
+  st.placed = [];
+  var ordered = st.items.slice().sort(function (a, b) { return b.priority - a.priority || a.seq - b.seq; });
+  for (var i = 0; i < ordered.length; i++) {
+    var item = ordered[i], cand = fld2dLabelCandidates(item), found = null;
+    for (var c = 0; c < cand.length; c++) {
+      var x = item.ax + cand[c][0], y = item.ay + cand[c][1], box = fld2dLabelBox(x, y, item.w, item.h);
+      if (fld2dLabelFits(box, st)) { found = { item: item, x: x, y: y, box: box }; break; }
+    }
+    if (found) st.placed.push(found);
+  }
+
+  // Paint accepted labels only after every other 2D visual layer. Chips preserve contrast; leader lines
+  // preserve map association when the collision pass moves text away from its authored anchor.
+  for (var p = 0; p < st.placed.length; p++) {
+    var rec = st.placed[p], it = rec.item, dx = rec.x - it.ax, dy = rec.y - it.ay;
+    ctx.save();
+    if (Math.sqrt(dx * dx + dy * dy) > 10) {
+      ctx.strokeStyle = it.kind === "objective" ? "rgba(255,233,168,0.82)" : "rgba(233,220,192,0.62)";
+      ctx.lineWidth = 1; ctx.setLineDash([2, 3]); ctx.beginPath(); ctx.moveTo(it.ax, it.ay); ctx.lineTo(rec.x, rec.y); ctx.stroke(); ctx.setLineDash([]);
+    }
+    ctx.fillStyle = it.kind === "objective" ? "rgba(22,18,10,0.90)" : (it.kind === "officer" ? "rgba(12,14,18,0.88)" : "rgba(8,10,14,0.78)");
+    ctx.fillRect(rec.box.l, rec.box.t, rec.box.w, rec.box.h);
+    ctx.strokeStyle = it.kind === "objective" ? "rgba(216,200,122,0.90)" : "rgba(116,94,63,0.82)";
+    ctx.lineWidth = 1; ctx.strokeRect(rec.box.l + 0.5, rec.box.t + 0.5, rec.box.w - 1, rec.box.h - 1);
+    ctx.font = it.font; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.lineWidth = 3; ctx.strokeStyle = "rgba(8,10,14,0.92)"; ctx.strokeText(it.text, rec.x, rec.y);
+    ctx.fillStyle = it.kind === "objective" ? "#fff0ac" : "#e9dcc0"; ctx.fillText(it.text, rec.x, rec.y);
+    ctx.restore();
+  }
+
+  var requestedByKind = {}, placedByKind = {}, hiddenByKind = {}, placedSeq = {}, maxDisplacement = 0, moved = 0;
+  for (var q = 0; q < st.items.length; q++) requestedByKind[st.items[q].kind] = (requestedByKind[st.items[q].kind] || 0) + 1;
+  for (var a = 0; a < st.placed.length; a++) {
+    var pr = st.placed[a], pk = pr.item.kind, dist = Math.sqrt(Math.pow(pr.x - pr.item.ax, 2) + Math.pow(pr.y - pr.item.ay, 2));
+    placedSeq[pr.item.seq] = pr; placedByKind[pk] = (placedByKind[pk] || 0) + 1;
+    if (dist > 10) moved++; if (dist > maxDisplacement) maxDisplacement = dist;
+  }
+  var hidden = [], mandatoryHidden = 0;
+  for (var h = 0; h < st.items.length; h++) if (!placedSeq[st.items[h].seq]) {
+    hidden.push(st.items[h]); hiddenByKind[st.items[h].kind] = (hiddenByKind[st.items[h].kind] || 0) + 1;
+    if (st.items[h].required) mandatoryHidden++;
+  }
+  var overlaps = 0, reservedOverlaps = 0;
+  for (var x1 = 0; x1 < st.placed.length; x1++) {
+    for (var x2 = x1 + 1; x2 < st.placed.length; x2++) if (fld2dRectsOverlap(st.placed[x1].box, st.placed[x2].box, 0)) overlaps++;
+    for (var xr = 0; xr < st.reserved.length; xr++) if (fld2dRectsOverlap(st.placed[x1].box, st.reserved[xr], 0)) reservedOverlaps++;
+  }
+  var signatureParts = [];
+  for (var si = 0; si < st.items.length; si++) {
+    var sr = placedSeq[st.items[si].seq];
+    signatureParts.push(st.items[si].kind + ":" + st.items[si].text + "@" + (sr ? Math.round(sr.x) + "," + Math.round(sr.y) : "hidden"));
+  }
+  __FIELD._labelLayout2d = {
+    requested: st.items.length, placed: st.placed.length, hidden: hidden.length,
+    requestedByKind: requestedByKind, placedByKind: placedByKind, hiddenByKind: hiddenByKind,
+    mandatoryHidden: mandatoryHidden, overlaps: overlaps, reservedOverlaps: reservedOverlaps,
+    moved: moved, maxDisplacement: Math.round(maxDisplacement), reserved: st.reserved.length,
+    reservedByKind: st.reserved.reduce(function (out, box) { out[box.kind] = (out[box.kind] || 0) + 1; return out; }, {}),
+    signature: signatureParts.join("|")
+  };
+  __FIELD._labelPass2d = null;
+}
+function fld2dLabel(ctx, text, x, z, opts) {
+  opts = opts || {};
+  var st = __FIELD && __FIELD._labelPass2d, font = opts.font || "11px Georgia";
+  if (st && st.ctx === ctx) {
+    ctx.save(); ctx.font = font;
+    var w = Math.ceil(ctx.measureText(String(text)).width) + 10;
+    ctx.restore();
+    st.items.push({
+      seq: st.seq++, text: String(text), ax: x, ay: z, w: w, h: 18, font: font,
+      kind: opts.kind || "support", priority: Number(opts.priority == null ? 300 : opts.priority),
+      required: !!opts.required, maxShift: Math.max(20, Number(opts.maxShift || (opts.required ? 180 : 92)))
+    });
+    return;
+  }
   ctx.save();
   ctx.font = "11px Georgia"; ctx.textAlign = "center"; ctx.textBaseline = "alphabetic";
   ctx.lineWidth = 3; ctx.strokeStyle = "rgba(8,10,14,0.85)"; ctx.strokeText(text, x, z);
