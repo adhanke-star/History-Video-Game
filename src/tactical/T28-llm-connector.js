@@ -260,14 +260,15 @@ function _llmPersist() {
    the anthropic-dangerous-direct-browser-access header without consent. A
    pre-E65 stored config without the flag is deliberately NOT grandfathered. */
 function fldLlmConn() { return _llmConn; }
-function fldLlmConnConfigured() {
-  if (!_llmConn || !_llmConn.provider || !_llmConn.model) return false;
-  var p = LLM_PRESETS[_llmConn.provider]; if (!p) return false;
-  if (p.needsKey && !_llmConn.key) return false;
-  if (p.adapter === "A" && !_llmConn.baseUrl) return false;
-  if (p.adapter === "B" && !_llmConn.browserOptIn) return false;
+function _llmConnConfiguredValue(c) {
+  if (!c || !c.provider || !c.model) return false;
+  var p = LLM_PRESETS[c.provider]; if (!p) return false;
+  if (p.needsKey && !c.key) return false;
+  if (p.adapter === "A" && !c.baseUrl) return false;
+  if (p.adapter === "B" && !c.browserOptIn) return false;
   return true;
 }
+function fldLlmConnConfigured() { return _llmConnConfiguredValue(_llmConn); }
 function fldLlmEnabledForBattle() { return fldLlmConnConfigured() && !!(_llmConn && _llmConn.enabled); }
 function fldLlmConnSet(cfg) {
   cfg = cfg || {};
@@ -463,7 +464,10 @@ function _llmEsc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").r
    re-render — a replaced live-region node does not reliably announce. */
 function _llmSummaryText() {
   var u = _llmUi || {};
-  if (fldLlmConnConfigured() && u.enabled) return "Connected AI will command the enemy in your next battle.";
+  // S42: this is draft UI status, not runtime status. Validate the CURRENT fields/toggles in _llmUi;
+  // fldLlmConnConfigured remains the saved-config gate used by launch and dispatch. Mixing those two
+  // objects made a completed unsaved draft sound incomplete and an invalid edit sound connected.
+  if (_llmConnConfiguredValue(u) && u.enabled) return "Connected AI will command the enemy in your next battle.";
   // E65: when the ONLY blocker is the un-clicked consent toggle, say so — "fill in
   // the fields" is misleading when every field is visibly filled.
   if (u.enabled && u.provider === "anthropic" && u.key && u.model && !u.browserOptIn)

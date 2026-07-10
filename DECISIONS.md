@@ -6,6 +6,14 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D348 — S42 DRAFT-HONEST CONNECTED-AI LIVE STATUS — [CODEX 5.6 Sol main loop, run-2 queue] (2026-07-10)
+
+- **One readiness law, two objects:** the connector's existing provider/model/key/base-URL/Anthropic-consent readiness predicate is now a pure value check. Runtime launch/dispatch still applies it to saved `_llmConn`; the panel's aria-live `Status` applies the same predicate to current unsaved `_llmUi` fields and toggles.
+- **Both mismatch directions are bound:** with an invalid saved config, completing a valid custom-provider draft and enabling it announces “Connected AI will command…” while saved runtime state remains invalid until Save. With a valid saved config, clearing the draft model and enabling it announces the incomplete-fields message while saved runtime state remains valid. Both updates preserve the same live-region node; neither saves nor sends anything.
+- **Bind test:** temporarily restoring the old mixed predicate made exactly the S42 step red: the completed draft was wrongly announced incomplete. The final predicate was restored and rebuilt.
+- **Gate:** touched source/probe syntax clean; build **GATE OK**; LLM commander **26/26**, 0 pageerrors, **0 network requests**; adjacent accessibility **25/25**, 0 pageerrors; H0 main menu **5/5**, 0 pageerrors; artifact readback and `git diff --check` clean. Full `npm run vet:noreg` remains deferred to the end-of-queue D176 checkpoint.
+- **Queue:** S42 flips to FIXED; **5 run-2 PENDING FIX-NOW items remain (including E50)**. Next is **E68**, adding a largest-shipped-scene leg to the Intel UHD-617 profile without relaxing any cap; E70 remains proposal-only.
+
 ## D347 — S41 DETERMINISTIC TACTICAL-LABEL DECLUTTER — [CODEX 5.6 Sol main loop, run-2 queue] (2026-07-10)
 
 - **One presentation-only layout pass:** every 2D terrain/route, objective, officer, train, and engineering label now queues into a shared deterministic frame pass. Visible unit bodies, officer/support markers, and the tactical top/HUD/button chrome reserve screen rectangles. Placement is greedy by explicit priority (objective, officer, support/engineering, point terrain, route) with fixed candidate order and no sim-state writes.

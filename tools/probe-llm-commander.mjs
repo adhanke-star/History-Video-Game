@@ -324,7 +324,7 @@ const SETUP = `(() => {
     // ===================== SLICE 2 — the connector (T28) =====================
 
     step('T28 CONTRACT: connector functions + adapters + the re-verified preset table', function(){
-      var fns = [fldLlmConn, fldLlmConnConfigured, fldLlmConnSet, fldLlmConnClear, fldLlmConnClearKey, fldLlmConnReload, fldLlmEnabledForBattle, fldLlmDispatchAsync, fldLlmArmOnLaunch, fldLlmConnMenu, fldLlmInjectMenuButton];
+      var fns = [fldLlmConn, fldLlmConnConfigured, _llmConnConfiguredValue, fldLlmConnSet, fldLlmConnClear, fldLlmConnClearKey, fldLlmConnReload, fldLlmEnabledForBattle, fldLlmDispatchAsync, fldLlmArmOnLaunch, fldLlmConnMenu, fldLlmInjectMenuButton];
       for (var i=0;i<fns.length;i++) if (typeof fns[i] !== 'function') throw new Error('T28 function ' + i + ' missing');
       // the six locked providers, adapters, and the $0-verified endpoints (law §2.2)
       var want = { openrouter:['A','https://openrouter.ai/api/v1'], groq:['A','https://api.groq.com/openai/v1'],
@@ -490,6 +490,41 @@ const SETUP = `(() => {
       clean();
       if (NET.count !== 0) throw new Error('panel UI fired network: ' + JSON.stringify(NET.calls));
       return { cards:6, aa:true, uiNoNetwork:true }; });
+
+    step('S42 DRAFT-HONEST LIVE STATUS: the aria-live summary validates current fields in both saved/draft mismatch directions', function(){
+      // Direction 1: SAVED config is invalid, but the player completes a valid DRAFT before saving.
+      // The status must say connected-ready from the fields they can see, even though runtime remains unconfigured.
+      clean();
+      fldLlmConnSet({ provider:'custom', baseUrl:'', model:'', enabled:false });
+      fldLlmConnMenu();
+      var base = document.getElementById('llmBase'), model = document.getElementById('llmModel');
+      var enable = document.getElementById('llmEnable'), summ = document.getElementById('llmSummary');
+      if (!base || !model || !enable || !summ) throw new Error('valid-draft panel controls missing');
+      base.value = 'http://127.0.0.1:9/v1'; model.value = 'draft-model';
+      summ.setAttribute('data-s42-node', 'valid-draft');
+      enable.click();
+      var live = document.getElementById('llmSummary');
+      if (!live || live.getAttribute('data-s42-node') !== 'valid-draft') throw new Error('valid-draft live node was replaced');
+      if (live.textContent !== 'Connected AI will command the enemy in your next battle.') throw new Error('completed draft announced wrong status: ' + live.textContent);
+      if (fldLlmConnConfigured() !== false) throw new Error('saved invalid config changed before Save');
+
+      // Direction 2: SAVED config is valid, but the player empties a required field in the DRAFT.
+      // The status must refuse "connected" even though the prior saved object remains runtime-valid.
+      clean();
+      fldLlmConnSet({ provider:'custom', baseUrl:'http://127.0.0.1:9/v1', model:'saved-model', enabled:false });
+      fldLlmConnMenu();
+      model = document.getElementById('llmModel'); enable = document.getElementById('llmEnable'); summ = document.getElementById('llmSummary');
+      if (!model || !enable || !summ) throw new Error('invalid-draft panel controls missing');
+      model.value = '';
+      summ.setAttribute('data-s42-node', 'invalid-draft');
+      enable.click();
+      live = document.getElementById('llmSummary');
+      if (!live || live.getAttribute('data-s42-node') !== 'invalid-draft') throw new Error('invalid-draft live node was replaced');
+      if (live.textContent !== 'Enabled — but fill in the fields above to finish connecting.') throw new Error('invalid draft announced wrong status: ' + live.textContent);
+      if (fldLlmConnConfigured() !== true) throw new Error('saved valid config changed before Save');
+      clean();
+      if (NET.count !== 0) throw new Error('S42 panel legs fired network: ' + JSON.stringify(NET.calls));
+      return { validDraftReady:true, invalidDraftRefused:true, inPlace:true, savedUntouched:true }; });
 
     // ===================== SLICE 3 — voice + persona (T27 capture · T28 render/persona) =====================
 
