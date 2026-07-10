@@ -1,10 +1,10 @@
 # Antietam (Sharpsburg) - Built-Battle Research Audit
 
-**Status:** D328 durable research/audit of an already-built battle (docs only; no data/runtime change).
+**Status:** D328 durable research/audit of an already-built battle; D341 applied its sole data revision and added the focused consistency tooth.
 **Battle id:** antietam | **Current data:** data/antietam.json | **Prior hardening:** D76 build + D92 (Benjamin 4 guns, Battery B smoothbore); Mansfield Maj.Gen.-of-vols date left as an open source conflict.
-**Audit verdict:** MINOR_REVISIONS (adversarial pass D328: one missed rank error — Israel B. Richardson was a MAJOR GENERAL at Antietam, encoded as Brig. Gen.)
+**Audit verdict:** SOLID_AS_IS (after D341 corrected the one D328 rank-label finding: Israel B. Richardson was a MAJOR GENERAL at Antietam.)
 
-The build is very nearly source-accurate, but the adversarial pass caught one commander-rank error the original audit missed: **Israel B. Richardson was a major general (of volunteers) on Sep 17, 1862**, not a brigadier general. Every other commander rank checks out, unit identities and brigade attachments are correct, the three-sector phase structure matches the historical sequence, the casualty figures are the standard American Battlefield Trust numbers, and the teaching text is soundly anti-Lost-Cause. Section 3 originally proposed no revisions; the adversarial pass adds the single Richardson fix.
+The D328 adversarial pass caught one commander-rank error the original audit missed: **Israel B. Richardson was a major general (of volunteers) on Sep 17, 1862**, not a brigadier general. D341 corrected that label and added a focused data-truth guard. Every other commander rank checks out, unit identities and brigade attachments are correct, the three-sector phase structure matches the historical sequence, the casualty figures are the standard American Battlefield Trust numbers, and the teaching text is soundly anti-Lost-Cause. Section 3 originally proposed no revisions; the adversarial pass added the single Richardson fix that D341 has now applied.
 
 ## 1. Source Register
 
@@ -37,17 +37,19 @@ The build is very nearly source-accurate, but the adversarial pass caught one co
 
 ## 3. Revision Checklist For Codex
 
-| Field/location | Current encoding | Issue | Corrected value | Source | Confidence |
+| Field/location | Encoding at D328 audit | Issue | Corrected value | Source | Confidence |
 |---|---|---|---|---|---|
 | `us_richardson` unit (`data/antietam.json`, the Irish-Brigade reinforcement, atSec 80), `commander` field | `Brig. Gen. Israel B. Richardson` | Richardson was promoted **major general of volunteers on July 4, 1862**, more than two months before Antietam. He commanded the 1st Div, II Corps at the Bloody Lane as a MAJOR GENERAL (mortally wounded there, died Nov 3, 1862). The one-star encoding is a rank error under a Verified stamp; by the same rule the audit applied to R.H. Anderson (MG July 14, 1862), Richardson is a two-star. **INTERNAL SELF-CONTRADICTION (main-loop confirmed against the live file):** the leader entry `ld_richardson` on the same battle ALREADY reads `"Maj. Gen. Israel B. Richardson"` — only the `us_richardson.commander` field disagrees, exactly the D92 "file self-contradicts itself" class (cf. Malvern Hill's Hunt). This is a one-field label fix, outcome-neutral (rank labels don't feed combat), so the antietam probe should stay 16/16. Do NOT touch the separate battery captain "Capts. Squires, **Richardson**, Brown" (a different man — J.B. Richardson of the Washington Artillery). | `Maj. Gen. Israel B. Richardson` | ABT / NPS / Antietam on the Web (officer_id=109, "MGen") / Wikipedia / Stone Sentinels; internal `ld_richardson` field | High |
 
 *(Original audit proposed NO revisions in this section; the single row above was added by the D328 adversarial pass and confirmed against the live `data/antietam.json` by the main-loop final verifier. No false/over-reaching flags were present to refute.)*
 
+**D341 application status:** APPLIED. The live `data/antietam.json` value now matches the corrected value above; the focused Antietam guard requires both Israel B. Richardson fields to agree and separately preserves the Washington Artillery captain.
+
 ## 4. OOB And Rank Re-Verification
 
 - **John B. Hood — Brig. Gen.** ✓ (MG effective Oct 10, 1862; battle-date rank correct, no backdate error). — ABT/NPS.
 - **Richard H. Anderson — Maj. Gen. (w)** ✓ (MG July 14, 1862; wounded at the Sunken Road). — Wikipedia/ABT.
-- **Israel B. Richardson — MUST BE Maj. Gen.** ✗ **(encoded Brig. Gen. — REVISE).** Richardson was promoted major general of volunteers on July 4, 1862; he commanded the 1st Div, II Corps at the Bloody Lane as a major general and was mortally wounded there (died Nov 3, 1862). Antietam on the Web titles his own officer file "MGen"; NPS/ABT/Wikipedia all call him major general at the battle. The original audit conflated "commanded at the battle" with "rank correct" — the rank is wrong. There are therefore **TWO** two-star leaders in the set (Anderson CS, Richardson US), not one.
+- **Israel B. Richardson — Maj. Gen.** ✓ **(D341 corrected the D328 `Brig. Gen.` finding.)** Richardson was promoted major general of volunteers on July 4, 1862; he commanded the 1st Div, II Corps at the Bloody Lane as a major general and was mortally wounded there (died Nov 3, 1862). Antietam on the Web titles his own officer file "MGen"; NPS/ABT/Wikipedia all call him major general at the battle. The original audit conflated "commanded at the battle" with "rank correct." There are therefore **TWO** two-star leaders in the set (Anderson CS, Richardson US), not one.
 - **John C. Caldwell — Brig. Gen.** ✓; Barlow correctly a colonel wheeling the 61st/64th NY.
 - **Alpheus S. Williams — Brig. Gen.** ✓ (succeeded to XII Corps command on Mansfield's fall).
 - **George S. Greene — Brig. Gen.** ✓.
@@ -78,9 +80,11 @@ No per-battle fudge risk visible in the digest. All scoreWeights are 1 (uniform)
 
 ## 8. Audit Verdict
 
-**MINOR_REVISIONS.** Nearly every risk-bearing encoded claim verifies against reputable sources (ABT, NPS, HistoryNet, Antietam on the Web) — unit identities and brigade attachments, the three-sector terrain, the casualty weight, and every commander rank EXCEPT one. The adversarial pass caught a single missed error the original audit made: **Israel B. Richardson was a major general (of volunteers, July 4, 1862) at Antietam, encoded as brigadier general.** Correcting that gives the set two two-star leaders (Anderson CS, Richardson US), which is historically right. The teaching text is factually sound and firmly anti-Lost-Cause, and the digest shows no per-battle fudge (D74/D92 clean). The Mansfield promotion date is correctly left open. One confirmed revision (Richardson → Maj. Gen.) is needed; nothing else.
+**SOLID_AS_IS after D341.** Nearly every risk-bearing encoded claim verified against reputable sources (ABT, NPS, HistoryNet, Antietam on the Web): unit identities and brigade attachments, the three-sector terrain, the casualty weight, and every commander rank except the one D328 Richardson finding. D341 corrected Richardson to major general, giving the set two two-star leaders (Anderson CS, Richardson US), which is historically right, and added a focused consistency tooth. The teaching text is factually sound and firmly anti-Lost-Cause, and the digest shows no per-battle fudge (D74/D92 clean). The Mansfield promotion date remains correctly open. No further revision is called for.
 
 ## Verification Notes (D328 adversarial pass)
+
+The notes below preserve the D328 evidence trail. Present-tense references to the bad encoding describe the D328 snapshot; D341 applied the correction.
 
 **What I fetched / searched (reputable sources):**
 - Hood: WebSearch + ABT/Wikipedia/TSHA — Brig. Gen. at Antietam, MG effective Oct 10, 1862. **CONFIRMED correct as encoded.**
@@ -94,4 +98,4 @@ No per-battle fudge risk visible in the digest. All scoreWeights are 1 (uniform)
 
 **Spot-check result:** The original SOLID_AS_IS verdict was over-confident. The audit's own reasoning was internally inconsistent — it accepted R.H. Anderson's July 14, 1862 MG as making him a correct two-star, but kept Richardson (MG July 4, 1862, ten days EARLIER) at one star, rationalizing that "he commanded at the battle, so encoding is correct" (conflating command with rank). Both are two-star leaders.
 
-**Ratified verdict: MINOR_REVISIONS** — one confirmed rank correction (Richardson → Maj. Gen.); no false flags refuted; all other ranks, unit identities, terrain, casualties, and anti-Lost-Cause teaching text verified solid.
+**D328 ratified verdict: MINOR_REVISIONS** — one confirmed rank correction (Richardson → Maj. Gen.); no false flags refuted; all other ranks, unit identities, terrain, casualties, and anti-Lost-Cause teaching text verified solid. **D341 post-correction verdict: SOLID_AS_IS.**

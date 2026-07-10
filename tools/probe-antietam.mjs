@@ -58,6 +58,28 @@ const SETUP = `(() => {
         if(!p.oob||!p.oob.US||!p.oob.CS) throw new Error('phase '+i+' missing oob'); }
       return { names:names, p0us:DATA.phases[0].oob.US.length, p0cs:DATA.phases[0].oob.CS.length }; });
 
+    step('BATTLE-DATE RANK CONSISTENCY (C69): the Sunken Road leader and reinforcement both name Maj. Gen. Israel B. Richardson; the Washington Artillery captain remains a different Richardson', function(){
+      var lane=null, ridgeGuns=null;
+      for(var i=0;i<DATA.phases.length;i++){
+        var phase=DATA.phases[i];
+        if(phase.id==='sunkenroad') lane=phase;
+        var phaseUnits=(phase.oob.US||[]).concat(phase.oob.CS||[]).concat(phase.reinforcements||[]);
+        for(var j=0;j<phaseUnits.length;j++) if(phaseUnits[j].id==='cs_ridge_guns') ridgeGuns=phaseUnits[j];
+      }
+      if(!lane || lane.name.indexOf('Sunken Road')<0) throw new Error('Sunken Road phase not found by stable id');
+      var leaders=(lane.leaders.US||[]).concat(lane.leaders.CS||[]);
+      var richardsonLeader=null, richardsonUnit=null;
+      for(var k=0;k<leaders.length;k++) if(leaders[k].id==='ld_richardson') richardsonLeader=leaders[k];
+      for(var m=0;m<(lane.reinforcements||[]).length;m++) if(lane.reinforcements[m].id==='us_richardson') richardsonUnit=lane.reinforcements[m];
+      if(!richardsonLeader) throw new Error('ld_richardson missing from the Sunken Road leaders');
+      if(!richardsonUnit) throw new Error('us_richardson missing from the Sunken Road reinforcements');
+      var exact='Maj. Gen. Israel B. Richardson', obsolete='Brig. Gen. Israel B. Richardson';
+      if(richardsonLeader.name!==exact) throw new Error('ld_richardson.name must be '+exact+', got '+richardsonLeader.name);
+      if(richardsonUnit.commander!==exact) throw new Error('us_richardson.commander must be '+exact+', got '+richardsonUnit.commander);
+      if(JSON.stringify({leader:richardsonLeader, reinforcement:richardsonUnit}).indexOf(obsolete)>=0) throw new Error('obsolete battle-date rank remains: '+obsolete);
+      if(!ridgeGuns || ridgeGuns.commander!=='Capts. Squires, Richardson, Brown') throw new Error('the separate Washington Artillery captain Richardson was altered or confused with Israel B. Richardson');
+      return { phase:lane.id, leader:richardsonLeader.name, reinforcement:richardsonUnit.commander, separateArtilleryCommand:ridgeGuns.commander }; });
+
     step('UNIVERSAL GUN MODEL at Antietam scale (D75): every battery across the 3 phases carries a real gun count + realistic crew (S.D. Lee\\'s ~12-gun "Artillery Hell" battalion; no proxy-men fudge)', function(){
       var arts=[], totalGuns=0;
       for(var i=0;i<DATA.phases.length;i++){ var p=DATA.phases[i];

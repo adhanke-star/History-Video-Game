@@ -6,6 +6,14 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D341 — C69 ANTIETAM RICHARDSON BATTLE-DATE RANK CONSISTENCY — [CODEX main loop, Part 3 M4] (2026-07-09)
+
+- **Historical correction:** changed only `us_richardson.commander` from Brig. Gen. to `Maj. Gen. Israel B. Richardson`, matching the already-correct `ld_richardson.name` and Richardson's July 4, 1862 major-general promotion. Mansfield's disputed promotion date, every OOB/simulation input, and `cs_ridge_guns` remain untouched; the Washington Artillery commander still reads `Capts. Squires, Richardson, Brown` for the different Richardson.
+- **Focused guard:** `probe-antietam` adds one data-truth step that locates the Sunken Road phase plus `ld_richardson` and `us_richardson` by stable id, requires both player-facing labels to use the exact major-general form, rejects the obsolete brigadier form, and separately pins the artillery-captain string. The final artifact is **17/17**, `ok=true`, 0 failed steps, 0 pageerrors; all 16 D340-baseline step objects are exact by name and only the new tooth was added.
+- **Audit closure:** the D328 Antietam packet preserves its source register and original finding trail, records D341 as applied, and now returns `SOLID_AS_IS`. No strength, timing, position, weapon, experience, terrain, leader quality, combat, casualty, phase score, winner, or balance value changed.
+- **Gate:** Antietam JSON parse and touched-probe syntax clean; build **GATE OK** with the known 2.42 MB embed soft warning; schema report **43/43, 0 failed** with timestamp-only churn removed; battle-build research **15/15**; Antietam **17/17** with a readable final screenshot. One first final PNG caught an incomplete paint despite green JSON, so it was rejected and rerun under the unchanged gate. `git diff --check` clean. Full `npm run vet:noreg` remains deferred under D176.
+- **Next:** the run-2 ledger has 12 PENDING FIX-NOW items including E50. C70, Alfred J. Vaughan's player-facing surname correction under the Kennesaw guard, is next; do not begin E65 or another finding in this slice.
+
 ## D340 — S40 KEYBOARD TACTICAL ORDERING EQUIVALENCE — [CODEX main loop, Part 3 M3] (2026-07-09)
 
 - **Keyboard contract:** with one or more player brigades selected, `M` opens a bounded order cursor at their current destination centroid. Arrow keys move the endpoint in 30-yard steps; `[` / `]` turn destination facing in 15-degree steps; Enter commits an immediate movement order; Shift+Enter appends the same endpoint through the existing waypoint queue; Escape cancels the preview without exiting the battle. The live collision scan found `M`, arrows, and brackets unbound in tactical play, so no shipped command moved.
