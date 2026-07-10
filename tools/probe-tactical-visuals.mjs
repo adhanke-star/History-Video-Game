@@ -35,6 +35,20 @@ const scenes = [
   { name: 'visual-chickamauga-3d', scenario: 'chickamauga', renderer: '3d', seed: 7, steps: 480, settle: 1000 },
 ];
 
+// E67: a hung in-page scene script must cost one scene, not the whole run. The bound is
+// generous (observed full-scene evaluates finish well under a minute even on SwiftShader);
+// on timeout the scene fails at its stage and the fresh-browser teardown reclaims Chrome.
+const EVALUATE_BOUND_MS = 240000;
+const TEARDOWN_EVALUATE_BOUND_MS = 5000;
+
+const DIAGNOSTIC_PREFIX = '--diagnostic-close-scene=';
+const diagnosticArg = process.argv.find(arg => arg.startsWith(DIAGNOSTIC_PREFIX));
+const diagnosticCloseScene = diagnosticArg ? diagnosticArg.slice(DIAGNOSTIC_PREFIX.length) : '';
+if (diagnosticArg && !scenes.some(scene => scene.name === diagnosticCloseScene)) {
+  console.error('Unknown diagnostic scene: ' + diagnosticCloseScene);
+  process.exit(2);
+}
+
 async function ensureServer() {
   const probe = cfg.baseUrl + '/' + cfg.file;
   if (await up(probe)) return null;
@@ -140,63 +154,175 @@ async function launchBrowser() {
 
 async function runScene(page, scene) {
   const pageerrors = [];
+  const lifecycleErrors = [];
   const consoleLines = [];
   const onErr = e => pageerrors.push(String(e.message));
+  const onCrash = () => lifecycleErrors.push('Playwright page crashed');
   const onConsole = m => { if (m.type() === 'error' || m.type() === 'warning') consoleLines.push('[' + m.type() + '] ' + m.text()); };
   page.on('pageerror', onErr);
+  page.on('crash', onCrash);
   page.on('console', onConsole);
   const url = cfg.baseUrl + '/' + cfg.file;
   let detail = { ok:false, error:'not run' };
+  let failureStage = 'navigate';
   try {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
+    failureStage = 'settle';
     await sleep(450);
-    detail = await page.evaluate(setupSceneScript(scene));
+    if (diagnosticCloseScene === scene.name) {
+      failureStage = 'diagnostic-page-close';
+      await page.close();
+      throw new Error('diagnostic: deliberately closed this scene page before evaluation');
+    }
+    failureStage = 'scene-evaluate';
+    detail = await Promise.race([
+      page.evaluate(setupSceneScript(scene)),
+      sleep(EVALUATE_BOUND_MS).then(() => { throw new Error('scene evaluate exceeded ' + EVALUATE_BOUND_MS + 'ms hang bound'); })
+    ]);
+    if (detail && !detail.ok && !detail.failureStage) detail.failureStage = 'in-page-assert';
     if (detail && detail.ok && detail.dataUrl) {
+      failureStage = 'png-write';
       const raw = detail.dataUrl.split(',')[1] || '';
       writeFileSync(join(OUT, scene.name + '.png'), Buffer.from(raw, 'base64'));
       delete detail.dataUrl;
       detail.shot = 'tools/shots/' + scene.name + '.png';
     }
   } catch (e) {
-    detail = { ok:false, error:String(e && e.message || e), scenario:scene.scenario, renderer:scene.renderer };
+    detail = { ok:false, failureStage, error:String(e && e.message || e), scenario:scene.scenario, renderer:scene.renderer };
   } finally {
-    try { await page.evaluate(`(() => { try { if (typeof fldExit === 'function') fldExit(true); } catch(e) {} })()`); } catch(e) {}
+    try { await Promise.race([
+      page.evaluate(`(() => { try { if (typeof fldExit === 'function') fldExit(true); } catch(e) {} })()`),
+      sleep(TEARDOWN_EVALUATE_BOUND_MS)
+    ]); } catch(e) {}
     const textureWarnings = consoleLines.filter(line => THREE_TEXTURE_WARNING.test(line));
     if (textureWarnings.length) {
       detail.ok = false;
       detail.textureWarnings = textureWarnings;
+      if (!detail.failureStage) detail.failureStage = 'texture-warning';
       detail.error = (detail.error ? detail.error + '; ' : '') + 'Three.js texture warning: Texture marked for update but image is undefined';
     }
     detail.pageerrors = pageerrors;
+    detail.lifecycleErrors = lifecycleErrors;
     detail.console = consoleLines.slice(-12);
-    try { page.off('pageerror', onErr); page.off('console', onConsole); } catch(e) {}
+    try { page.off('pageerror', onErr); page.off('crash', onCrash); page.off('console', onConsole); } catch(e) {}
   }
-  return { name:scene.name, ok:!!detail.ok && !pageerrors.length, detail };
+  return { name:scene.name, ok:!!detail.ok && !pageerrors.length && !lifecycleErrors.length, detail };
+}
+
+async function closeBounded(resource, label) {
+  if (!resource) return null;
+  try {
+    const result = await Promise.race([
+      resource.close().then(() => 'closed').catch(e => 'error:' + String(e && e.message || e)),
+      sleep(5000).then(() => 'timeout')
+    ]);
+    return result === 'closed' ? null : label + ' ' + result;
+  } catch (e) {
+    return label + ' error:' + String(e && e.message || e);
+  }
+}
+
+// E67: every heavy scene owns a fresh browser, context, and page. This is deliberately
+// serialized: a renderer/page/browser crash stays attached to its scene, teardown is bounded,
+// and the next scene starts from usable Chrome state instead of inheriting a closed target or
+// accumulated SwiftShader/WebGL resources from the preceding nine scenes.
+async function runSceneIsolated(scene) {
+  let browser = null;
+  let ctx = null;
+  let page = null;
+  let result = null;
+  try {
+    browser = await launchBrowser();
+    ctx = await browser.newContext({ viewport: cfg.viewport, deviceScaleFactor: 1 });
+    ctx.setDefaultTimeout(25000);
+    page = await ctx.newPage();
+    result = await runScene(page, scene);
+  } catch (e) {
+    result = {
+      name: scene.name,
+      ok: false,
+      detail: {
+        ok: false,
+        failureStage: page ? 'scene-runner' : (ctx ? 'page-create' : (browser ? 'context-create' : 'browser-launch')),
+        error: String(e && e.message || e),
+        scenario: scene.scenario,
+        renderer: scene.renderer,
+        pageerrors: [],
+        lifecycleErrors: [],
+        console: []
+      }
+    };
+  } finally {
+    const cleanupErrors = [];
+    const ctxError = await closeBounded(ctx, 'context-close');
+    if (ctxError) cleanupErrors.push(ctxError);
+    const browserError = await closeBounded(browser, 'browser-close');
+    if (browserError) {
+      cleanupErrors.push(browserError);
+      try {
+        const proc = browser && typeof browser.process === 'function' ? browser.process() : null;
+        if (proc && proc.exitCode === null && !proc.killed) {
+          proc.kill('SIGKILL');
+          cleanupErrors.push('browser-close forced SIGKILL after bounded close failed');
+        }
+      } catch (e) { cleanupErrors.push('browser-kill error:' + String(e && e.message || e)); }
+    }
+    if (!result) {
+      result = {
+        name: scene.name,
+        ok: false,
+        detail: { ok:false, failureStage:'unknown', error:'scene runner produced no result', scenario:scene.scenario, renderer:scene.renderer, pageerrors:[], lifecycleErrors:[], console:[] }
+      };
+    }
+    result.detail.isolation = 'fresh-browser-context-page';
+    result.detail.cleanupErrors = cleanupErrors;
+  }
+  return result;
 }
 
 (async () => {
   const server = await ensureServer();
   const results = [];
-  const browser = await launchBrowser();
-  const ctx = await browser.newContext({ viewport: cfg.viewport, deviceScaleFactor: 1 });
-  ctx.setDefaultTimeout(25000);
-  const page = await ctx.newPage();
   try {
     for (const scene of scenes) {
-      const r = await runScene(page, scene);
+      const r = await runSceneIsolated(scene);
       results.push(r);
-      writeFileSync(join(OUT, 'probe-tactical-visuals.json'), JSON.stringify({ ok:false, partial:true, generatedAt:new Date().toISOString(), results }, null, 2));
+      writeFileSync(join(OUT, 'probe-tactical-visuals.json'), JSON.stringify({
+        ok:false,
+        partial:true,
+        generatedAt:new Date().toISOString(),
+        expectedScenes:scenes.map(item => item.name),
+        attemptedScenes:results.length,
+        diagnostic:diagnosticCloseScene ? { kind:'close-page', target:diagnosticCloseScene } : null,
+        results
+      }, null, 2));
     }
   } finally {
     if (server) server.kill();
   }
-  const out = { ok:results.every(r => r.ok), generatedAt:new Date().toISOString(), results };
+  const diagnosticIndex = diagnosticCloseScene ? scenes.findIndex(scene => scene.name === diagnosticCloseScene) : -1;
+  const laterResults = diagnosticIndex >= 0 ? results.slice(diagnosticIndex + 1) : [];
+  const diagnostic = diagnosticIndex >= 0 ? {
+    kind:'close-page',
+    target:diagnosticCloseScene,
+    targetFailed:!!results[diagnosticIndex] && !results[diagnosticIndex].ok,
+    laterScenesAttempted:laterResults.length,
+    laterScenesPassed:laterResults.filter(result => result.ok).length,
+    recoveryProven:!!results[diagnosticIndex] && !results[diagnosticIndex].ok && laterResults.length > 0 && laterResults.every(result => result.ok)
+  } : null;
+  const out = {
+    ok:results.length === scenes.length && results.every(r => r.ok),
+    generatedAt:new Date().toISOString(),
+    expectedScenes:scenes.map(item => item.name),
+    attemptedScenes:results.length,
+    diagnostic,
+    results
+  };
   writeFileSync(join(OUT, 'probe-tactical-visuals.json'), JSON.stringify(out, null, 2));
   console.log('probe-tactical-visuals ok=' + out.ok);
   for (const r of results) {
     console.log((r.ok ? '  ok   ' : '  FAIL ') + r.name + ' -> ' + (r.detail.shot || '') + (r.detail.error ? ' :: ' + r.detail.error : ''));
   }
-  try { await Promise.race([ctx.close().catch(() => {}), sleep(2500)]); } catch(e) {}
-  try { await Promise.race([browser.close().catch(() => {}), sleep(2500)]); } catch(e) {}
+  if (diagnostic) console.log('diagnostic recoveryProven=' + diagnostic.recoveryProven + ' later=' + diagnostic.laterScenesPassed + '/' + diagnostic.laterScenesAttempted);
   process.exit(out.ok ? 0 : 1);
 })().catch(e => { console.error('FATAL:', e); process.exit(1); });
