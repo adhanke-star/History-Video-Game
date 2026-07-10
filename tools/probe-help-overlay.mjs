@@ -68,6 +68,7 @@ const SETUP = `(() => {
       // S07/S08 (D233): the complete reference documents the two marquee UG:G gestures + the R hotkey
       if(html.indexOf('Charge a chosen foe')<0 || html.indexOf('Drag ONTO an enemy')<0) throw new Error('How-to-Play missing the drag-onto-enemy charge gesture');
       if(html.indexOf('Queue a route')<0) throw new Error('How-to-Play missing the shift-queue gesture');
+      if(html.indexOf('Keyboard movement')<0 || html.indexOf('M + arrows')<0 || html.indexOf('Shift+Enter')<0) throw new Error('How-to-Play missing the S40 keyboard endpoint/facing/waypoint path');
       if(html.indexOf('Cycle elevation display')<0) throw new Error('How-to-Play missing the R elevation hotkey');
       closeSheetSafe();
       return { htmlLen:html.length }; });
@@ -89,6 +90,7 @@ const SETUP = `(() => {
       var t=ov.textContent||'';
       if(t.indexOf('Charge a foe')<0 || t.indexOf('Drag onto it')<0) throw new Error('tactical overlay missing drag-onto-enemy');
       if(t.indexOf('Queue route')<0 || t.indexOf('Shift+drag')<0) throw new Error('tactical overlay missing shift-queue');
+      if(t.indexOf('Keyboard move')<0 || t.indexOf('M, then arrows')<0 || t.indexOf('Shift+Enter')<0) throw new Error('tactical overlay missing the S40 keyboard path');
       if(t.indexOf('Elevation display')<0) throw new Error('tactical overlay missing the R elevation row');
       ov.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true}));
       G.mode='menu'; __FIELD.launched=false; __FIELD.phase='idle';

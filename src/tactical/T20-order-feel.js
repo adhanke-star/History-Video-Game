@@ -15,6 +15,9 @@
        can re-aim a unit already under orders (Aaron's chosen facing-drag UX);
      - SHIFT-QUEUE: shift-drag appends a waypoint to a planned route (u.queue),
        advanced on arrival (Aaron's chosen immediate+queue order model).
+     - KEYBOARD ORDER CURSOR: M opens a selected-unit endpoint cursor; arrows
+       move it, [ / ] turn destination facing, Enter commits, Shift+Enter uses
+       the same waypoint queue, and Escape cancels without exiting the battle.
 
    BYTE-IDENTITY (D74) — this is GAMEPLAY/engine work (the deliberate carve-out),
    yet it is built so the HEADLESS AI-vs-AI sim stays byte-identical (proven by
@@ -42,6 +45,8 @@ var FLD_HANDLE_GRAB = 46;    // press within this of a facing-handle tip -> re-a
 var FLD_HANDLE_LEN = 70;     // length of the facing-handle arrow ahead of the destination
 var FLD_ORDER_SPREAD = 80;   // per-unit lateral spread of a multi-brigade order (mirrors the legacy fldPointerUp spread)
 var FLD_CHARGE_GRACE = 1.2;  // sim-seconds: brief correction window before a player charge commits
+var FLD_KEY_STEP = 30;       // keyboard endpoint nudge (yards; held arrows repeat through native key repeat)
+var FLD_KEY_TURN = Math.PI / 12; // keyboard facing nudge (15 degrees)
 
 /* the nearest VISIBLE alive enemy brigade within r of a world point, or null.
    Fog-gated: you cannot drag-to-charge a foe you have not scouted (and the cursor
@@ -160,6 +165,156 @@ function fldHandleHit(wp) {
 }
 
 /* ---------------------------------------------------------------------------
+   KEYBOARD ORDER CURSOR  (S40 — WCAG 2.1.1 equivalence)
+
+   This is an input adapter over fldResolveOrderGesture. It never steps a unit,
+   computes movement, or writes combat state. The pending cursor is presentation
+   state only; commit synthesizes the same endpoint/facing gesture that pointer
+   play already sends through fldApplyOrder/fldEnqueueOrder.
+   --------------------------------------------------------------------------- */
+function fldOrderKeyActive() {
+  return !!(typeof __FIELD !== "undefined" && __FIELD && __FIELD.orderCursor);
+}
+function fldOrderKeySelection(c) {
+  var out = [];
+  if (!c || !c.ids || typeof fldById !== "function") return out;
+  var ps = (typeof fldPlayerSide === "function") ? fldPlayerSide() : "US";
+  for (var i = 0; i < c.ids.length; i++) {
+    var u = fldById(c.ids[i]);
+    if (u && u.alive && u.state !== "routing" && u.side === ps && !u.ai) out.push(u);
+  }
+  return out;
+}
+function fldOrderKeyCompass(a) {
+  var dirs = ["north", "northeast", "east", "southeast", "south", "southwest", "west", "northwest"];
+  var n = Math.round(Math.atan2(Math.sin(a), Math.cos(a)) / (Math.PI / 4));
+  return dirs[(n % 8 + 8) % 8];
+}
+function fldOrderKeyFacingLabel(a) {
+  var deg = (Math.round(Math.atan2(Math.sin(a), Math.cos(a)) * 180 / Math.PI) % 360 + 360) % 360;
+  return fldOrderKeyCompass(a) + ", " + deg + " degrees clockwise from north";
+}
+function fldOrderKeyOffset(c) {
+  var dx = Math.round(c.x - c.anchorX), dz = Math.round(c.z - c.anchorZ), parts = [];
+  if (Math.abs(dx) >= 1) parts.push(Math.abs(dx) + " yards " + (dx > 0 ? "east" : "west"));
+  if (Math.abs(dz) >= 1) parts.push(Math.abs(dz) + " yards " + (dz > 0 ? "south" : "north"));
+  return parts.length ? parts.join(", ") : "at the selected position";
+}
+function fldOrderKeyStatus(c, instructions) {
+  if (!c) return "";
+  var s = "Order cursor " + fldOrderKeyOffset(c) + "; facing " + fldOrderKeyFacingLabel(c.facing) + ".";
+  if (instructions) s += " Arrows move. Left and right brackets turn. Enter commits; Shift plus Enter queues; Escape cancels.";
+  return s;
+}
+function fldOrderKeyShow(c) {
+  if (typeof document === "undefined" || !c) return;
+  var root = document.getElementById("fldRoot"); if (!root) return;
+  var el = document.getElementById("fldOrderKey");
+  if (!el) {
+    el = document.createElement("div"); el.id = "fldOrderKey"; el.setAttribute("aria-hidden", "true");
+    el.style.cssText = "position:absolute;left:50%;top:68px;transform:translateX(-50%);z-index:24;max-width:calc(100vw - 24px);padding:8px 12px;border:2px solid #ffe27a;border-radius:8px;background:#05080af2;color:#fff4c7;box-shadow:0 3px 0 #000,0 10px 28px #000b;font:800 12px/1.35 system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-align:center;pointer-events:none;white-space:normal;";
+    root.appendChild(el);
+  }
+  el.textContent = "KEYBOARD ORDER · Arrows move · [ / ] face · Enter commit · Shift+Enter waypoint · Esc cancel";
+}
+function fldOrderKeyStart() {
+  if (typeof __FIELD === "undefined" || !__FIELD || !__FIELD.launched || (__FIELD.phase !== "deploy" && __FIELD.phase !== "battle")) return false;
+  var sel = (typeof fldPlayerSel === "function") ? fldPlayerSel() : [];
+  if (!sel.length) { if (typeof fldAnnounce === "function") fldAnnounce("Select a brigade before starting a keyboard move."); return true; }
+  var ax = 0, az = 0, tx = 0, tz = 0, ids = [];
+  for (var i = 0; i < sel.length; i++) {
+    var u = sel[i], o = u.order;
+    ax += u.x; az += u.z; ids.push(u.id);
+    tx += (o && typeof o.tx === "number") ? o.tx : u.x;
+    tz += (o && typeof o.tz === "number") ? o.tz : u.z;
+  }
+  var f0 = sel[0].order && typeof sel[0].order.tface === "number" ? sel[0].order.tface : sel[0].facing;
+  var c = {
+    ids: ids,
+    anchorX: ax / sel.length, anchorZ: az / sel.length,
+    x: fldClamp(tx / sel.length, 15, FLD.FIELD_W - 15),
+    z: fldClamp(tz / sel.length, 15, FLD.FIELD_H - 15),
+    facing: Math.atan2(Math.sin(f0 || 0), Math.cos(f0 || 0))
+  };
+  __FIELD.orderCursor = c; fldOrderKeyShow(c);
+  if (typeof fldAnnounce === "function") fldAnnounce(fldOrderKeyStatus(c, true));
+  return true;
+}
+function fldOrderKeyMove(dx, dz) {
+  var c = __FIELD && __FIELD.orderCursor; if (!c) return;
+  c.x = fldClamp(c.x + dx * FLD_KEY_STEP, 15, FLD.FIELD_W - 15);
+  c.z = fldClamp(c.z + dz * FLD_KEY_STEP, 15, FLD.FIELD_H - 15);
+  if (typeof fldAnnounce === "function") fldAnnounce(fldOrderKeyStatus(c, false));
+}
+function fldOrderKeyFace(dir) {
+  var c = __FIELD && __FIELD.orderCursor; if (!c) return;
+  c.facing = Math.atan2(Math.sin(c.facing + dir * FLD_KEY_TURN), Math.cos(c.facing + dir * FLD_KEY_TURN));
+  if (typeof fldAnnounce === "function") fldAnnounce("Facing " + fldOrderKeyFacingLabel(c.facing) + ". Destination " + fldOrderKeyOffset(c) + ".");
+}
+function fldOrderKeyCancel(announce) {
+  if (!fldOrderKeyActive()) return false;
+  __FIELD.orderCursor = null;
+  if (typeof document !== "undefined") { var el = document.getElementById("fldOrderKey"); if (el && el.parentNode) el.parentNode.removeChild(el); }
+  if (announce !== false && typeof fldAnnounce === "function") fldAnnounce("Keyboard order canceled.");
+  return true;
+}
+function fldOrderKeyCommit(queue) {
+  var c = __FIELD && __FIELD.orderCursor; if (!c) return false;
+  var sel = fldOrderKeySelection(c), face = c.facing, x0 = c.x, z0 = c.z;
+  fldOrderKeyCancel(false);
+  if (!sel.length) { if (typeof fldAnnounce === "function") fldAnnounce("Keyboard order canceled; the selected brigades are unavailable."); return true; }
+  // moveOnly prevents the FACING arrow tip from being interpreted as a drag-drop charge target. Endpoint,
+  // spread, facing, immediate-vs-queue application, charge locks, and announcements remain T20's resolver.
+  fldResolveOrderGesture(sel, {
+    x0: x0, z0: z0,
+    x: x0 + Math.sin(face) * (FLD_DRAG_MIN + 2),
+    z: z0 - Math.cos(face) * (FLD_DRAG_MIN + 2),
+    shift: !!queue, moveOnly: true, keyboard: true
+  });
+  return true;
+}
+function fldOrderKeyHandle(e) {
+  if (!e) return false;
+  var k = e.key, active = fldOrderKeyActive();
+  if (active && (!__FIELD.launched || (__FIELD.phase !== "deploy" && __FIELD.phase !== "battle"))) { fldOrderKeyCancel(false); active = false; }
+  if (!active) {
+    if (k !== "m" && k !== "M") return false;
+    var started = fldOrderKeyStart();
+    if (started) { if (e.preventDefault) e.preventDefault(); if (e.stopPropagation) e.stopPropagation(); }
+    return started;
+  }
+  // Escape cancels even if a control-bar button took focus. Other keys leave native button activation alone.
+  if (k === "Escape") { fldOrderKeyCancel(true); if (e.preventDefault) e.preventDefault(); if (e.stopPropagation) e.stopPropagation(); return true; }
+  if (e.target && e.target.tagName === "BUTTON") return false;
+  var used = true;
+  if (k === "ArrowUp") fldOrderKeyMove(0, -1);
+  else if (k === "ArrowDown") fldOrderKeyMove(0, 1);
+  else if (k === "ArrowLeft") fldOrderKeyMove(-1, 0);
+  else if (k === "ArrowRight") fldOrderKeyMove(1, 0);
+  else if (k === "[" || k === "BracketLeft") fldOrderKeyFace(-1);
+  else if (k === "]" || k === "BracketRight") fldOrderKeyFace(1);
+  else if (k === "Enter") fldOrderKeyCommit(!!e.shiftKey);
+  else if (k === "m" || k === "M") { fldOrderKeyShow(__FIELD.orderCursor); if (typeof fldAnnounce === "function") fldAnnounce(fldOrderKeyStatus(__FIELD.orderCursor, true)); }
+  else used = false;
+  if (used) { if (e.preventDefault) e.preventDefault(); if (e.stopPropagation) e.stopPropagation(); }
+  return used;
+}
+function fldOrderKeyHudSelected() {
+  return '<div style="margin-top:7px;padding-top:6px;border-top:1px solid #725e40;color:#fff0bd;font-size:11px;line-height:1.35;"><b>Keyboard move:</b> M · arrows place · [ / ] face · Enter commit · Shift+Enter waypoint</div>';
+}
+function fldOrderGhostGesture() {
+  if (typeof __FIELD === "undefined" || !__FIELD) return null;
+  if (__FIELD.drag) return __FIELD.drag;
+  var c = __FIELD.orderCursor; if (!c) return null;
+  return {
+    x0: c.x, z0: c.z,
+    x: c.x + Math.sin(c.facing) * FLD_HANDLE_LEN,
+    z: c.z - Math.cos(c.facing) * FLD_HANDLE_LEN,
+    shift: false, moveOnly: true, keyboard: true
+  };
+}
+
+/* ---------------------------------------------------------------------------
    ORDER APPLICATION  (immediate vs shift-queue)
    --------------------------------------------------------------------------- */
 /* immediate: set the unit's order NOW and drop any planned route. */
@@ -225,7 +380,7 @@ function fldResolveOrderGesture(sel, gst) {
   }
   if (!sel || !sel.length) return;
   var n = sel.length, i, u;
-  var dropFoe = fldEnemyAt(gst.x, gst.z, ps, FLD_CHARGE_GRAB);
+  var dropFoe = gst.moveOnly ? null : fldEnemyAt(gst.x, gst.z, ps, FLD_CHARGE_GRAB);
   var applied = 0;
   if (dropFoe) {
     for (i = 0; i < n; i++) {
@@ -304,7 +459,7 @@ function fldOrderGhost2d(ctx, v) {
     }
   }
   // the active drag ghost
-  var dr = __FIELD.drag;
+  var dr = fldOrderGhostGesture();
   if (dr) {
     if (dr.aimUid) {
       var au = fldById(dr.aimUid);
@@ -337,6 +492,15 @@ function fldOrderGhost2d(ctx, v) {
         if (dr.shift) {   // a small "+" append glyph at the drop point makes "add a waypoint" explicit
           var qx = v.ox + dr.x0 * v.s, qz = v.oz + dr.z0 * v.s;
           ctx.beginPath(); ctx.moveTo(qx - 6, qz); ctx.lineTo(qx + 6, qz); ctx.moveTo(qx, qz - 6); ctx.lineTo(qx, qz + 6); ctx.stroke();
+        }
+        // S40: the keyboard cursor adds a thick light-on-dark crosshair around the endpoint. Shape plus
+        // dual-stroke contrast keeps it visible over every terrain palette; it is static, so reduceMotion
+        // needs no alternate animation path.
+        if (dr.keyboard) {
+          var kx = v.ox + dr.x0 * v.s, kz = v.oz + dr.z0 * v.s, kr = 18;
+          ctx.globalAlpha = 1; ctx.setLineDash([]);
+          ctx.strokeStyle = "#10141a"; ctx.lineWidth = 7; ctx.beginPath(); ctx.arc(kx, kz, kr, 0, 7); ctx.moveTo(kx - kr - 8, kz); ctx.lineTo(kx + kr + 8, kz); ctx.moveTo(kx, kz - kr - 8); ctx.lineTo(kx, kz + kr + 8); ctx.stroke();
+          ctx.strokeStyle = "#ffe27a"; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(kx, kz, kr, 0, 7); ctx.moveTo(kx - kr - 8, kz); ctx.lineTo(kx + kr + 8, kz); ctx.moveTo(kx, kz - kr - 8); ctx.lineTo(kx, kz + kr + 8); ctx.stroke();
         }
       }
     }
@@ -373,7 +537,7 @@ function fld3dEnsureGhost() {
 }
 function fld3dSyncDrag() {
   var grp = __FIELD._ghost3d; if (!grp) return;
-  var dr = __FIELD.drag;
+  var dr = fldOrderGhostGesture();
   if (!dr) { grp.visible = false; return; }
   var ps = (typeof fldPlayerSide === "function") ? fldPlayerSide() : "US";
   var dx, dz, face, col;
@@ -392,6 +556,8 @@ function fld3dSyncDrag() {
   }
   var y = (typeof fldTerrainH === "function") ? fldTerrainH(dx, dz) : 0;
   grp.visible = true; grp.position.set(dx, y + 3, dz); grp.rotation.y = -face;
+  var kring = grp.getObjectByName("gring");
+  if (kring) { kring.scale.setScalar(dr.keyboard ? 1.35 : 1); if (kring.material) kring.material.opacity = dr.keyboard ? 1 : 0.85; }
   var names = ["gring", "gshaft", "ghead"];
   for (var i = 0; i < names.length; i++) { var m = grp.getObjectByName(names[i]); if (m && m.material) m.material.color.set(col); }
   // shape redundancy: the bold foe-ring only on a CHARGE, the "+" append tick only on a QUEUE

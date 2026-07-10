@@ -40,7 +40,7 @@ var __FIELD = {
   cv2d: null, ctx2d: null, root: null,
   units: [], terrain: null, objective: null,
   t: 0, winner: null, speed: 1, paused: false, acc: 0, last: 0,
-  seed: 1, sel: [], drag: null, hover: null, holdSecs: { US: 0, CS: 0 },
+  seed: 1, sel: [], drag: null, orderCursor: null, hover: null, holdSecs: { US: 0, CS: 0 },
   routEverCount: 0, autoBoth: false, rendererKind: "3d", figures: 24,
   groups: null, _ro: null, _obsInstalled: false,
 };
@@ -251,7 +251,7 @@ function fldResetRun() {
   __FIELD.t = 0; __FIELD.winner = null; __FIELD.holdSecs = { US: 0, CS: 0 }; __FIELD.holdLive = false;   // E48: no stale mid-hold state across launches/phases
   __FIELD.vis = null; __FIELD.lastSeen = {};   // fog visibility set + last-known "ghost" positions, recomputed per tick
   __FIELD._apReason = null;                     // active auto-pause: the current decision-point reason (if paused by it)
-  __FIELD.routEverCount = 0; __FIELD.sel = []; __FIELD.drag = null;
+  __FIELD.routEverCount = 0; __FIELD.sel = []; __FIELD.drag = null; __FIELD.orderCursor = null;
   // E49a (D258): the captured/missing SUBSET ledgers + captured guns + prisoner markers — fresh every
   // run/phase (SL-4/SL-9; labeled subsets of the total-loss tally, NEVER added to battleCas).
   __FIELD.captured = { US: 0, CS: 0 }; __FIELD.missing = { US: 0, CS: 0 }; __FIELD.capturedGuns = { US: 0, CS: 0 };
@@ -1214,7 +1214,7 @@ function fldExit(silent) {
   if (__FIELD._ro) { try { __FIELD._ro.disconnect(); } catch (e) {} __FIELD._ro = null; }
   if (__FIELD.root && __FIELD.root.parentNode) __FIELD.root.parentNode.removeChild(__FIELD.root);
   __FIELD.root = null; __FIELD.cv2d = null; __FIELD.ctx2d = null; __FIELD.mode3d = false;
-  __FIELD.launched = false; __FIELD.phase = "idle"; __FIELD.units = []; __FIELD.sel = [];
+  __FIELD.launched = false; __FIELD.phase = "idle"; __FIELD.units = []; __FIELD.sel = []; __FIELD.orderCursor = null;
   // Phase A: a campaign-launched battle sets _returnFn (-> the bridge briefing) so a non-silent exit
   // (Esc / Exit before the battle ends) drops back into the campaign, re-launchable, instead of the main
   // menu; cleared here so it never leaks into a later standalone launch. Default stays openMainMenu.
@@ -1475,11 +1475,32 @@ function fldSelHold() {
   if (locked && typeof fldChargeBlocked === "function") fldChargeBlocked(lockedU || s[0]);
   else if (held) fldAnnounce("Hold ordered.");
 }
+/* Tactical hotkeys belong to the field only when the field itself owns focus. Editable controls and
+   visible aria-modal dialogs keep their native keyboard contract; the end screen is excluded because
+   fldKey has a separate campaign-result Escape path for it. */
+function fldKeyEditableTarget(t) {
+  if (!t) return false;
+  if (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.tagName === "SELECT" || t.isContentEditable) return true;
+  try { return !!(t.closest && t.closest('input,textarea,select,[contenteditable="true"],[role="textbox"]')); } catch (e) { return false; }
+}
+function fldKeyModalOwnsInput() {
+  if (typeof document === "undefined") return false;
+  var ms = document.querySelectorAll('[aria-modal="true"]');
+  for (var i = 0; i < ms.length; i++) {
+    var m = ms[i];
+    if (!m || m.id === "fldEnd" || m.hidden || m.getAttribute("aria-hidden") === "true" || m.classList.contains("hidden")) continue;
+    try { var cs = getComputedStyle(m); if (cs.display === "none" || cs.visibility === "hidden") continue; } catch (e) {}
+    return true;
+  }
+  return false;
+}
 function fldKey(e) {
-  // B-5: while the in-battle settings drawer (an aria-modal dialog) is open, NO battlefield hotkey fires — the
-  // drawer owns the keyboard (its own handler does stopPropagation + handles Escape/Tab). This guard is the
-  // belt-and-suspenders so even a key dispatched outside the drawer subtree never reaches fldExit / the toggles.
-  if (typeof document !== "undefined" && document.getElementById("fldDrawer")) return;
+  // B-5 + S40: a modal or editable control owns every key while active. This includes synthetic events
+  // dispatched outside a modal subtree, so no battlefield command can leak through its focus trap.
+  if (fldKeyEditableTarget(e.target) || fldKeyModalOwnsInput()) return;
+  // S40: T20 owns the bounded keyboard order cursor. It handles Escape before the battle-level exit path,
+  // and Enter before the legacy nearest-enemy charge only while the cursor is active.
+  if (typeof fldOrderKeyHandle === "function" && fldOrderKeyHandle(e)) return;
   // Escape always exits; otherwise let native activation handle a focused button (Space/Enter)
   // so control-bar / end-screen buttons don't double-fire, and the end screen stays keyboard-operable.
   if (e.key === "Escape") {
@@ -1525,6 +1546,9 @@ function fldCycleSel() {
 function fldPick(clientX, clientY) { return __FIELD.mode3d ? fld3dPick(clientX, clientY) : fld2dPick(clientX, clientY); }
 function fldPointerDown(e) {
   if (__FIELD.phase === "over") return;
+  // S40: choosing the pointer after opening the keyboard cursor cancels only that pending preview, then
+  // continues through the unchanged pointer selection/order flow below.
+  if (typeof fldOrderKeyActive === "function" && fldOrderKeyActive() && typeof fldOrderKeyCancel === "function") fldOrderKeyCancel(false);
   var wp = fldPick(e.clientX, e.clientY); if (!wp) return;
   // select the friendly brigade nearest the click (within grab radius), else start a move-drag
   var best = null, bd = 70, _psd = fldPlayerSide();
@@ -1581,7 +1605,7 @@ function fldRenderHud() {
     var ps = fldPlayerSide(), es = fldEnemy(ps), foeLine;
     if (__FIELD.fog) { var seen = 0; for (var fi = 0; fi < __FIELD.units.length; fi++) { var fu = __FIELD.units[fi]; if (fu.side === es && fu.alive && fldVisible(ps, fu)) seen++; } foeLine = seen + ' ' + _fldSideName(es) + ' brigades sighted'; }
     else foeLine = fldArmyLive(es) + ' ' + _fldSideName(es) + ' brigades afield';
-    el.innerHTML = '<div style="opacity:.7;">Click a brigade to select. Drag open ground to march &amp; face; drag onto a foe to charge; the handle re-aims facing; Shift-drag queues a route. (' + fldArmyLive(ps) + ' ' + _fldSideNameFull(ps) + ' vs ' + foeLine + '.)</div>'
+    el.innerHTML = '<div style="opacity:.7;">Click a brigade to select. Drag open ground to march &amp; face; drag onto a foe to charge; the handle re-aims facing; Shift-drag queues a route. Keyboard: select, then press M; arrows place; [ / ] face; Enter commits; Shift+Enter queues. (' + fldArmyLive(ps) + ' ' + _fldSideNameFull(ps) + ' vs ' + foeLine + '.)</div>'
       + (typeof fldOfficerHudRoster === "function" ? fldOfficerHudRoster() : "")   // B-2: a field-officer status line
       + (typeof fldLogisticsHudReserve === "function" ? fldLogisticsHudReserve() : "");   // B-3: the ammunition-reserve line
     return;
@@ -1604,7 +1628,8 @@ function fldRenderHud() {
     (typeof fldChargeHudSelected === "function" ? fldChargeHudSelected(u) : "") +   // H5-i4: charge impetus / commit status
     (typeof fldRatingHudSelected === "function" ? fldRatingHudSelected(u) : "") +   // R-2: brigade OVR + A-F grade (pure display)
     (typeof fldMusterHudLine === "function" ? fldMusterHudLine(u) : "") +   // R-5: the men's-mean OVR + provenance-hatched accent (lazy materialization; pure display)
-    (typeof fldRatingBadgesHtml === "function" ? fldRatingBadgesHtml(u) : "");   // R-6: the brigade's documented trait/ability chips (pure display; "" when no badge -> byte-identical)
+    (typeof fldRatingBadgesHtml === "function" ? fldRatingBadgesHtml(u) : "") +   // R-6: the brigade's documented trait/ability chips (pure display; "" when no badge -> byte-identical)
+    (typeof fldOrderKeyHudSelected === "function" ? fldOrderKeyHudSelected() : "");   // S40: discoverable keyboard endpoint/facing path
 }
 function fldOnOver() {
   var e = document.getElementById("fldEnd"); if (!e) { fldAnnounce("Battle over."); return; }

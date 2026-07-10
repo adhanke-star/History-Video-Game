@@ -30,6 +30,13 @@ const SETUP = `(() => {
   function near(a,b,eps){ return Math.abs(a-b) <= (eps||0.5); }
   function playerUnit(){ for(var i=0;i<__FIELD.units.length;i++){ var u=__FIELD.units[i]; if(u.side==='US'&&u.alive&&!u.ai) return u; } return null; }
   function enemies(){ var o=[]; for(var i=0;i<__FIELD.units.length;i++){ var u=__FIELD.units[i]; if(u.side==='CS'&&u.alive) o.push(u); } return o; }
+  function fireKey(target,key,opts){ opts=opts||{}; var ev=new KeyboardEvent('keydown',{key:key,bubbles:true,cancelable:true,shiftKey:!!opts.shiftKey}); (target||document.getElementById('fldRoot')).dispatchEvent(ev); return ev; }
+  function firePointer(type,x,z,shift){
+    var cv=document.getElementById('fldGl'), v=fld2dView(), r=cv.getBoundingClientRect();
+    var cx=r.left+v.ox+x*v.s, cy=r.top+v.oz+z*v.s, C=(typeof PointerEvent==='function'?PointerEvent:MouseEvent);
+    var ev=new C(type,{clientX:cx,clientY:cy,bubbles:true,cancelable:true,shiftKey:!!shift,button:0});
+    (type==='pointerup'?window:cv).dispatchEvent(ev); return ev;
+  }
   try {
     if (typeof fldLaunchSandbox!=='function' || typeof __FIELD==='undefined' || typeof fldResolveOrderGesture!=='function')
       return JSON.stringify({ok:false, fatal:'T20 order-feel engine missing'});
@@ -288,6 +295,100 @@ const SETUP = `(() => {
       fldExit(true);
       return { drew:true }; });
 
+    step('S40 REAL KEYS — M + arrows choose an endpoint, brackets set facing, Enter commits through the T20 resolver', function(){
+      fldLaunchSandbox({renderer:'2d', seed:140});
+      var u=playerUnit(); if(!u) throw new Error('no player unit');
+      __FIELD.phase='battle'; __FIELD.paused=true; __FIELD.sel=[u.id];
+      u.state='steady'; u.facing=0; u.order={type:'hold',tx:u.x,tz:u.z,tface:0}; u.queue=null;
+      var root=document.getElementById('fldRoot'); root.focus();
+      var sx=u.x, sz=u.z, oldRm=G.settings.reduceMotion; G.settings.reduceMotion=true;
+      fireKey(root,'m');
+      var c=__FIELD.orderCursor, badge=document.getElementById('fldOrderKey');
+      if(!c) throw new Error('M did not open the keyboard order cursor');
+      if(!badge || badge.textContent.indexOf('Shift+Enter waypoint')<0) throw new Error('visible keyboard-order instructions missing');
+      var bcs=getComputedStyle(badge);
+      if(bcs.animationName!=='none' || parseFloat(bcs.transitionDuration||'0')>0) throw new Error('keyboard cursor UI animates under reduceMotion');
+      fireKey(root,'ArrowRight'); fireKey(root,'ArrowRight'); fireKey(root,'ArrowUp');
+      if(!near(c.x,sx+60,0.01)||!near(c.z,sz-30,0.01)) throw new Error('arrow endpoint wrong: '+c.x+','+c.z+' want '+(sx+60)+','+(sz-30));
+      fireKey(root,']'); fireKey(root,']');
+      if(!near(c.facing,Math.PI/6,0.001)) throw new Error('bracket facing wrong: '+c.facing);
+      if(String((document.getElementById('fldLive')||{}).textContent||'').indexOf('30 degrees clockwise from north')<0) throw new Error('screen-reader facing status is not exact');
+      var ghost=fldOrderGhostGesture(); if(!ghost || !ghost.keyboard) throw new Error('keyboard cursor did not reach the order ghost');
+      fld2dDraw();
+      fireKey(root,'Enter');
+      if(__FIELD.orderCursor || document.getElementById('fldOrderKey')) throw new Error('commit left keyboard cursor UI/state behind');
+      if(u.order.type!=='move'||!near(u.order.tx,sx+60,0.01)||!near(u.order.tz,sz-30,0.01)) throw new Error('committed endpoint wrong: '+JSON.stringify(u.order));
+      if(!near(u.order.tface,Math.PI/6,0.001)) throw new Error('committed facing wrong: '+u.order.tface);
+      if(String((document.getElementById('fldLive')||{}).textContent||'').indexOf('March ordered')<0) throw new Error('commit was not announced');
+      if(oldRm==null) delete G.settings.reduceMotion; else G.settings.reduceMotion=oldRm;
+      return { dx:60, dz:-30, facingDeg:30, committed:true, staticUnderReduceMotion:true }; });
+
+    step('S40 REAL KEYS — Escape cancels the pending endpoint/facing edit without exiting or changing the order', function(){
+      var u=playerUnit(), root=document.getElementById('fldRoot');
+      u.order={type:'move',tx:u.x+90,tz:u.z-20,tface:0.4}; u.queue=null; __FIELD.sel=[u.id];
+      var before=JSON.stringify(u.order);
+      fireKey(root,'m'); fireKey(root,'ArrowLeft'); fireKey(root,'['); fireKey(root,'Escape');
+      if(__FIELD.orderCursor || document.getElementById('fldOrderKey')) throw new Error('Escape left cursor UI/state behind');
+      if(JSON.stringify(u.order)!==before) throw new Error('cancel mutated the live order: '+JSON.stringify(u.order)+' vs '+before);
+      if(!__FIELD.launched || __FIELD.phase!=='battle' || !document.getElementById('fldRoot')) throw new Error('Escape canceled the battle instead of the cursor');
+      if(String((document.getElementById('fldLive')||{}).textContent||'').indexOf('Keyboard order canceled')<0) throw new Error('cancel was not announced');
+      return { orderUntouched:true, battleStayedOpen:true }; });
+
+    step('S40 REAL KEYS — Shift+Enter appends one waypoint without disturbing the active order', function(){
+      var u=playerUnit(), root=document.getElementById('fldRoot');
+      u.order={type:'move',tx:u.x+100,tz:u.z-40,tface:0.2}; u.queue=null; __FIELD.sel=[u.id];
+      var ax=u.order.tx, az=u.order.tz, af=u.order.tface;
+      fireKey(root,'m'); fireKey(root,'ArrowDown'); fireKey(root,'Enter',{shiftKey:true});
+      if(!u.queue || u.queue.length!==1) throw new Error('Shift+Enter did not append exactly one waypoint: '+(u.queue?u.queue.length:'null'));
+      if(!near(u.order.tx,ax,0.001)||!near(u.order.tz,az,0.001)||!near(u.order.tface,af,0.001)) throw new Error('queued keyboard order disturbed the active order');
+      if(!near(u.queue[0].tx,ax,0.001)||!near(u.queue[0].tz,az+30,0.001)) throw new Error('queued endpoint wrong: '+JSON.stringify(u.queue[0]));
+      if(String((document.getElementById('fldLive')||{}).textContent||'').indexOf('Waypoint queued')<0) throw new Error('waypoint was not announced');
+      return { queued:u.queue.length, activeUntouched:true, queuedDz:30 }; });
+
+    step('S40 FOCUS GUARDS — editable controls, visible modals, and inactive tactical state suppress the keyboard cursor', function(){
+      var u=playerUnit(), root=document.getElementById('fldRoot'); __FIELD.sel=[u.id];
+      fireKey(root,'m'); var c=__FIELD.orderCursor, x0=c.x, z0=c.z, before=JSON.stringify(u.order);
+      var inp=document.createElement('input'); inp.type='text'; root.appendChild(inp); inp.focus();
+      fireKey(inp,'ArrowRight'); fireKey(inp,'Enter');
+      if(!__FIELD.orderCursor || c.x!==x0 || c.z!==z0 || JSON.stringify(u.order)!==before) throw new Error('editable focus leaked a battlefield key');
+      if(inp.parentNode) inp.parentNode.removeChild(inp);
+      var modal=document.createElement('div'); modal.setAttribute('role','dialog'); modal.setAttribute('aria-modal','true'); modal.style.cssText='display:block;position:absolute;inset:0;z-index:99';
+      var mb=document.createElement('button'); mb.textContent='Modal control'; modal.appendChild(mb); root.appendChild(modal); mb.focus();
+      fireKey(mb,'ArrowRight'); fireKey(mb,'Enter'); fireKey(mb,'Escape');
+      if(!__FIELD.orderCursor || c.x!==x0 || c.z!==z0 || JSON.stringify(u.order)!==before) throw new Error('visible modal leaked a battlefield key');
+      if(!__FIELD.launched || __FIELD.phase!=='battle') throw new Error('modal Escape reached the battle exit path');
+      if(modal.parentNode) modal.parentNode.removeChild(modal);
+      root.focus(); fireKey(root,'Escape'); fldExit(true);
+      if(fldOrderKeyStart()!==false || fldOrderKeyActive()) throw new Error('keyboard order cursor started while tactical play was inactive');
+      return { editableSuppressed:true, modalSuppressed:true, inactiveSuppressed:true }; });
+
+    step('S40 POINTER PARITY — real pointer tap/drag, Shift queue, handle facing, and drag-to-foe charge stay unchanged when keyboard mode is unused', function(){
+      fldLaunchSandbox({renderer:'2d', seed:141}); __FIELD.phase='battle'; __FIELD.paused=true;
+      var u=playerUnit(); __FIELD.sel=[u.id]; u.state='steady'; u.facing=0.6; u.order={type:'hold',tx:u.x,tz:u.z,tface:0.6}; u.queue=null;
+      var tapX=u.x+130, tapZ=u.z;
+      firePointer('pointerdown',tapX,tapZ,false); firePointer('pointerup',tapX,tapZ,false);
+      if(u.order.type!=='move'||!near(u.order.tx,tapX,0.5)||!near(u.order.tface,0.6,0.001)) throw new Error('pointer tap parity failed: '+JSON.stringify(u.order));
+      // Reset to a standing line before the separate drag fixture; otherwise this next press can honestly
+      // land inside the facing-handle hit circle created by the tap above and exercise re-aim instead of move.
+      u.order={type:'hold',tx:u.x,tz:u.z,tface:0.6}; u.queue=null;
+      var tx=u.x+140, tz=u.z-70;
+      firePointer('pointerdown',tx,tz,false); firePointer('pointermove',tx+90,tz,false); firePointer('pointerup',tx+90,tz,false);
+      if(u.order.type!=='move'||!near(u.order.tx,tx,0.5)||!near(u.order.tz,tz,0.5)||!near(u.order.tface,Math.PI/2,0.01)) throw new Error('pointer drag/facing parity failed: '+JSON.stringify(u.order));
+      var activeTx=u.order.tx, activeTz=u.order.tz, qx=u.x+170, qz=u.z-150;
+      firePointer('pointerdown',qx,qz,true); firePointer('pointerup',qx,qz,true);
+      if(!u.queue||u.queue.length!==1||!near(u.order.tx,activeTx,0.5)||!near(u.order.tz,activeTz,0.5)) throw new Error('pointer Shift-queue parity failed');
+      var hx=u.order.tx+Math.sin(u.order.tface)*FLD_HANDLE_LEN, hz=u.order.tz-Math.cos(u.order.tface)*FLD_HANDLE_LEN;
+      firePointer('pointerdown',hx,hz,false); firePointer('pointermove',u.order.tx,u.order.tz-100,false); firePointer('pointerup',u.order.tx,u.order.tz-100,false);
+      if(!near(u.order.tx,activeTx,0.5)||!near(u.order.tz,activeTz,0.5)||!near(u.order.tface,0,0.01)) throw new Error('pointer handle parity failed: '+JSON.stringify(u.order));
+      fldExit(true);
+      fldLaunchSandbox({renderer:'2d', seed:142}); __FIELD.phase='battle'; __FIELD.paused=true;
+      u=playerUnit(); __FIELD.sel=[u.id]; var es=enemies(); es.sort(function(a,b){return Math.hypot(a.x-u.x,a.z-u.z)-Math.hypot(b.x-u.x,b.z-u.z);}); var far=es[es.length-1];
+      firePointer('pointerdown',far.x,far.z,false); firePointer('pointerup',far.x,far.z,false);
+      if(u.order.type!=='charge'||u.order.tid!==far.id) throw new Error('pointer drag-to-foe parity failed: '+JSON.stringify(u.order));
+      if(fldOrderKeyActive()) throw new Error('pointer-only flow created keyboard cursor state');
+      fldExit(true);
+      return { tap:true, dragFace:true, shiftQueue:true, handle:true, chosenFoe:far.id }; });
+
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
 })()`;
@@ -315,7 +416,13 @@ const SETUP = `(() => {
         fldLaunchSandbox({renderer:'2d', seed:42});
         var u=null; for(var i=0;i<__FIELD.units.length;i++){ if(__FIELD.units[i].side==='US'&&!__FIELD.units[i].ai){u=__FIELD.units[i];break;} }
         __FIELD.sel=[u.id]; __FIELD.phase='battle'; __FIELD.paused=true;
-        __FIELD.drag={ x0:u.x+30, z0:u.z-30, x:u.x+140, z:u.z-90, shift:false };
+        var root=document.getElementById('fldRoot'); root.focus();
+        root.dispatchEvent(new KeyboardEvent('keydown',{key:'m',bubbles:true,cancelable:true}));
+        root.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true,cancelable:true}));
+        root.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true,cancelable:true}));
+        root.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowUp',bubbles:true,cancelable:true}));
+        root.dispatchEvent(new KeyboardEvent('keydown',{key:']',bubbles:true,cancelable:true}));
+        root.dispatchEvent(new KeyboardEvent('keydown',{key:']',bubbles:true,cancelable:true}));
         fld2dDraw(); fldRenderTop(); fldRenderHud();
         var cv = document.getElementById('fldGl');
         if (!cv || typeof cv.toDataURL !== 'function') return { ok:false, err:'no tactical canvas export' };

@@ -95,6 +95,7 @@ function _hpShowHelp() {
       /* S07 (D233): the two marquee UG:G order gestures were undocumented outside a transient HUD hint. */
       '<div style="margin-bottom:4px"><strong>Charge a chosen foe:</strong> Drag ONTO an enemy brigade to charge that brigade (not just the nearest).</div>' +
       '<div style="margin-bottom:4px"><strong>Queue a route:</strong> <kbd>Shift</kbd>+drag appends a waypoint — chain them into a multi-leg march.</div>' +
+      '<div style="margin-bottom:4px"><strong>Keyboard movement:</strong> Select a brigade and press <kbd>M</kbd>. Arrow keys move the endpoint; <kbd>[</kbd>/<kbd>]</kbd> turn its facing; <kbd>Enter</kbd> commits; <kbd>Shift</kbd>+<kbd>Enter</kbd> appends a waypoint; <kbd>Escape</kbd> cancels.</div>' +
       '<div style="margin-bottom:4px"><strong>Orders:</strong> <kbd>L</kbd>=Line &middot; <kbd>C</kbd>=Column &middot; <kbd>H</kbd>=Hold &middot; <kbd>F</kbd>/<kbd>Enter</kbd>=Charge.</div>' +
       '<div style="margin-bottom:4px"><strong>Engineering Corps:</strong> <kbd>E</kbd>=Entrench (dig in for cover) &middot; <kbd>B</kbd>=Abatis (timber belt) &middot; <kbd>X</kbd>=Clear obstacle &middot; <kbd>N</kbd>=Lay pontoon bridge (in a river skirmish). Each reads the realism slider.</div>' +
       '<div style="margin-bottom:4px"><strong>Speed:</strong> <kbd>1</kbd>/<kbd>2</kbd>/<kbd>3</kbd> set 1x / 2x / 4x. <kbd>Space</kbd> begins, pauses, or resumes.</div>' +
@@ -115,6 +116,9 @@ function _hpShowHelp() {
       '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">X</kbd><span>Clear nearest obstacle</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">N</kbd><span>Lay pontoon bridge (river)</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">F / Enter</kbd><span>Charge nearest enemy</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">M + arrows</kbd><span>Open and place the keyboard movement endpoint</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">[ / ]</kbd><span>Turn keyboard destination facing left / right</span>' +
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">Enter / Shift+Enter</kbd><span>Commit movement / append waypoint while the order cursor is open</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">A</kbd><span>Select all friendly brigades</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">Tab</kbd><span>Next unit</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">V</kbd><span>Fog of war on/off</span>' +
@@ -223,6 +227,10 @@ function _hpShowTacticalHelp() {
         /* S07 (D233): the drag-onto-enemy charge + shift-queue gestures belong in the complete reference. */
         '<div><strong>Charge a foe:</strong> Drag onto it</div>' +
         '<div><strong>Queue route:</strong> Shift+drag</div>' +
+        '<div><strong>Keyboard move:</strong> M, then arrows</div>' +
+        '<div><strong>Keyboard facing:</strong> [ / ]</div>' +
+        '<div><strong>Commit / waypoint:</strong> Enter / Shift+Enter</div>' +
+        '<div><strong>Cancel cursor:</strong> Escape</div>' +
         '<div><strong>Space:</strong> Pause/Resume</div>' +
         '<div><strong>1/2/3:</strong> 1x / 2x / 4x</div>' +
         '<div><strong>L:</strong> Line formation</div>' +
