@@ -114,14 +114,26 @@ const SETUP = `(() => {
       if(/fldLaunch|Start Battle|side-choice/i.test(h)) throw new Error('map readout leaked launch affordance');
       return { len:h.length };
     });
-    step('no tactical, output, bridge, or future battle-file contamination exists', function(){
+    step('no tactical, output, bridge, or unregistered battle-file contamination exists', function(){
       var src=${JSON.stringify(sourceText)}, bridge=${JSON.stringify(bridgeText)}, manifest=${JSON.stringify(manifestText)}, data=${JSON.stringify(dataText)}, future=${JSON.stringify(futureBattleFiles)};
       if(/__FIELD|fldLaunch|startBattleRuntime|genForce|BATTLES|CHAINS|fldScenarioRegistry|\\.victory\\s*=|\\.winner\\s*=|\\.men\\s*=|\\.casualties\\s*=/.test(src)) throw new Error('western source touched tactical/output fields');
       if(/westernTheaterBridgeBonus/.test(bridge)) throw new Error('bridgeArmy should not consume westernTheaterBridgeBonus');
       if(manifest.indexOf('73-western-theater.js')<0) throw new Error('manifest missing module');
       if(/"id"\\s*:\\s*"(chattanooga|atlanta|franklin|nashville)"/i.test(data)) throw new Error('future battle id leaked as registry-like quoted id');
-      if(future.length) throw new Error('future battle JSON exists: '+future.join(','));
-      return { clean:true };
+      // D355: the original D191 leg asserted these battle files must NOT exist — battle-build was
+      // locked when this readout shipped, so mere existence proved leakage. D324 unlocked the lanes
+      // and D326/D333/D335 shipped chattanooga/franklin/nashville through their own gates, which
+      // made the time-bound premise obsolete (caught by the first full battery after D176 deferral).
+      // The durable invariant it protected stands: a battle data file may exist ONLY as a battle
+      // REGISTERED in fldScenarioRegistry (file basename == scenario id for every name in this
+      // list), never as an unregistered stowaway smuggled around the registry/roster gates.
+      if(future.length){
+        if(typeof fldScenarioRegistry!=='function') throw new Error('battle JSON exists but the scenario registry is unavailable: '+future.join(','));
+        var reg=fldScenarioRegistry()||{}, stowaway=[];
+        for(var fi=0;fi<future.length;fi++){ if(!reg[future[fi]]) stowaway.push(future[fi]); }
+        if(stowaway.length) throw new Error('unregistered battle JSON exists (stowaway outside the registry gates): '+stowaway.join(','));
+      }
+      return { clean:true, registeredBattleFiles:future };
     });
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);

@@ -4,8 +4,8 @@
     "id": "franklin",
     "weather": {
       "sky": "clear",
-      "time": "late afternoon",
-      "provenance": "Verified/Inferred",
+      "time": "afternoon",
+      "provenance": "Inferred",
       "note": "The assault is modeled as a late-afternoon daylight attack over open ground into visible works. Fog is off by default because Franklin's teaching point is open approach, breastworks, abatis, reserve counterattack, and command choice.",
       "sources": [
         "American Battlefield Trust, Franklin",

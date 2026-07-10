@@ -615,9 +615,21 @@ const SETUP = `(() => {
       bad.settings = JSON.parse('{"hasOwnProperty":"shadow"}');
       var badRes=_slImportText(JSON.stringify(bad));
       if(badRes.ok) throw new Error('bad settings import should be rejected');
+      // E50/D353 (fixture updated D355): an own "hasOwnProperty" ANYWHERE in the campaign envelope
+      // is now REJECTED at the import door (the deep guard) — the pre-D353 fixture planted it in
+      // loot.equipped and expected the D149 import-then-sanitize posture, which door rejection has
+      // superseded for exactly this poison class (serializeSave can never write such a key, so no
+      // legitimate save is affected). Assert the rejection:
+      var bad2=clone(sv);
+      bad2.campaign.loot = { equipped:JSON.parse('{"weapon":"captured_enfield_crate","hasOwnProperty":"shadow"}') };
+      var bad2Res=_slImportText(JSON.stringify(bad2));
+      if(bad2Res.ok) throw new Error('deep hasOwnProperty-shadow loot import should be rejected (E50)');
+      // The sanitize-on-init teeth keep full coverage with NON-poison tampers (dup stacks, qty
+      // overflow, string booleans, ghost journey, ovr 999) — these still import, then lootInit
+      // must clean them before use.
       sv.campaign.loot = {
         inventory:[{id:'captured_enfield_crate',qty:99},{id:'captured_enfield_crate',qty:99},{id:'battle_flag_fragment',qty:50}],
-        equipped:JSON.parse('{"weapon":"captured_enfield_crate","hasOwnProperty":"shadow"}'),
+        equipped:JSON.parse('{"weapon":"captured_enfield_crate"}'),
         survival:{enabled:'true',rations:100,morale:100,fatigue:0,exposure:0,disease:0,lastTurn:999,forageTurn:999},
         journey:{enabled:'true',personId:'ghost',person:{pid:'ghost',name:'Ghost',side:'US',rank:'Private',ovr:999},log:['tampered']}
       };
@@ -638,7 +650,7 @@ const SETUP = `(() => {
       var C=mkC('US'); G.campaign=C; _t1InitAll(C);
       lootAddItem(C,'commissary_rations',1,'probe');
       var reg=ssPersonRegistry(C);
-      if(reg.people.length!==645) throw new Error('expected current 645-person registry, got '+reg.people.length);   // D254 (E52): 639 -> 645 — two documented Malvern Hill accurate-input formations (us_tyler_siege, us_meagher) generate 3 prosopography slots each (D243 history: 630 -> 639 for us_meade/cs_stuart_nicodemus/cs_ridge_guns; D239: 627 -> 630; D237: 603 -> 627)
+      if(reg.people.length!==912) throw new Error('expected current 912-person registry, got '+reg.people.length);   // D355: 645 -> 912 — D326/D331/D333/D335 shipped chattanooga/kennesaw/franklin/nashville (+89 units x 3 slots = +267), never bumped here because the full battery was deferred under D176 (history: D254 639 -> 645 Malvern Hill formations; D243 630 -> 639; D239 627 -> 630; D237 603 -> 627)
       var generated=findPerson(reg,function(p){ return p.generated && p.team && p.team.brigade && p.team.company; });
       var authored=findPerson(reg,function(p){ return !p.generated && !p.replacement && p.provenance==='Verified'; });
       if(!generated) throw new Error('no generated person with brigade/company team hierarchy');
@@ -657,7 +669,7 @@ const SETUP = `(() => {
       var cards=root.querySelectorAll('[data-ss-card]');
       if(cards.length!==reg.people.length) throw new Error('register card count mismatch '+cards.length+' vs '+reg.people.length);
       var count=root.querySelector('#ssRegCount');
-      if(!count || count.textContent.indexOf('645 of 645')<0) throw new Error('full registry count missing: '+(count&&count.textContent));   // D254 (E52): tracks the 645-person registry (see the count assertion above)
+      if(!count || count.textContent.indexOf('912 of 912')<0) throw new Error('full registry count missing: '+(count&&count.textContent));   // D355: tracks the 912-person registry (see the count assertion above)
       var gCard=cardByPid(root,generated.pid), aCard=cardByPid(root,authored.pid);
       if(!gCard || !aCard) throw new Error('target cards missing');
       if(gCard.textContent.indexOf('Generated')<0 || gCard.textContent.indexOf('Inferred')<0) throw new Error('generated/Inferred card display missing: '+gCard.textContent);
