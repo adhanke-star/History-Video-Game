@@ -197,7 +197,9 @@ function _cmdTransferClean(C, persist) {
   }
   var side = (C.side === "CS") ? "CS" : "US", outIds = {}, any = false;
   for (var k in raw.ids) {
-    if (!raw.ids.hasOwnProperty(k)) continue;
+    // E50 (D353): tamper-proof form — a save-derived ids object can shadow
+    // hasOwnProperty with a non-callable own property; never call it off raw.
+    if (!Object.prototype.hasOwnProperty.call(raw.ids, k)) continue;
     if (typeof k !== "string" || !k) continue;
     var g = _cmdById(side, k);
     if (!g || !_cmdAlive(g, C.president.date)) continue;

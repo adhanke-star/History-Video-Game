@@ -1269,6 +1269,18 @@ const SETUP = `(() => {
       if(C.president.command.transfer!==null) throw new Error('changed next-battle should clear prior Transfer on load');
       return { malformedDropped:true, staleDropped:true, validBounded:true }; });
 
+    step('E50: the raw.ids Transfer sink cannot be crashed by an own non-callable hasOwnProperty', function(){
+      if(typeof _cmdTransferClean!=='function') return { skipped:'pre-D323' };
+      var C=mkC('US',1863,7), bd=_brgNextBattle(C), th=_cmdBattleTheater(C);
+      C.president.command.transfer={ battleId:bd.id, theater:th,
+        ids:JSON.parse('{"hasOwnProperty":7,"us-thomas":{"theater":"Eastern","turn":2}}') };
+      cmdInit(C);
+      var tr=C.president.command.transfer;
+      if(!tr||!tr.ids||!tr.ids['us-thomas']) throw new Error('safe cleanup discarded the legitimate Thomas sibling');
+      if(Object.prototype.hasOwnProperty.call(tr.ids,'hasOwnProperty')) throw new Error('safe cleanup retained the poison key');
+      if(typeof tr.ids.hasOwnProperty!=='function') throw new Error('cleaned ids no longer inherits callable hasOwnProperty');
+      return { sanitized:true, legitimateSibling:true }; });
+
     step('D173: enemy leadership and margin helpers are bounded pure inputs; Command tab renders the readout', function(){
       if(typeof cmdEnemyLeadership!=='function'||typeof cmdEnemyMarginEdge!=='function'||typeof cmdEnemyShadowHTML!=='function') throw new Error('enemy command helpers missing');
       var C=mkC('US',1863,7);

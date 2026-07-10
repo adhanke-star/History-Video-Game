@@ -3,10 +3,10 @@ import "./guard-probe-browser.mjs";
 // tools/probe-save-slots.mjs — Phase J focused gate for save/load/share hardening.
 // Verifies named slots, rename/load/delete, import/export round trip, invalid payload
 // handling, no-latch menu reinjection, and D35 one-turn undo on learner-friendly terms.
-// E13 (D244): also boots the page with a TAMPERED autosave (own hasOwnProperty in
-// settings) seeded in localStorage and asserts the 105-save-guard override pair keeps
-// the boot alive (0 pageerrors), rejects the payload at loadLocal, sanitizes it at
-// applySave, and leaves every legit save byte-identical.
+// E13 (D244) + E50: also boots the page with TAMPERED autosaves carrying an own
+// hasOwnProperty first in settings and then deep in campaign command state. The gate
+// requires every accept lane to reject the deep campaign poison, applySave to stay
+// atomic, the boot to remain clean, and every legitimate save to remain byte-identical.
 
 import { chromium } from 'playwright-core';
 import { spawn } from 'node:child_process';
@@ -183,6 +183,7 @@ const SETUP = `(() => {
       if (_slImportText(JSON.stringify({ ver:_SAVE_VER, settings:[], campaign:null })).ok) throw new Error('settings array accepted');
       if (_slImportText(JSON.stringify({ ver:_SAVE_VER, settings:{}, campaign:7 })).ok) throw new Error('primitive campaign accepted');
       if (_slImportText(JSON.stringify({ ver:_SAVE_VER, settings:{ hasOwnProperty:7 }, campaign:null })).ok) throw new Error('hasOwnProperty-shadow settings accepted');
+      if (_slImportText(JSON.stringify({ ver:_SAVE_VER, settings:{}, campaign:{ president:{ command:{ transfer:{ ids:{ hasOwnProperty:7 } } } } } })).ok) throw new Error('deep hasOwnProperty-shadow campaign import accepted (E50)');
       return { bytes:json.length, side:G.campaign.side };
     });
 
@@ -195,6 +196,8 @@ const SETUP = `(() => {
       if (_slRead(2)) throw new Error('primitive campaign slot read as valid');
       localStorage.setItem('gor_slot_2', JSON.stringify({ ver:_SAVE_VER, settings:{ hasOwnProperty:7 }, campaign:null }));
       if (_slRead(2)) throw new Error('hasOwnProperty-shadow settings slot read as valid');
+      localStorage.setItem('gor_slot_2', JSON.stringify({ ver:_SAVE_VER, settings:{}, campaign:{ president:{ command:{ transfer:{ ids:{ hasOwnProperty:7 } } } } } }));
+      if (_slRead(2)) throw new Error('deep hasOwnProperty-shadow campaign slot read as valid (E50)');
       cleanStore();
       return { ok:true };
     });
@@ -308,6 +311,38 @@ const E13BOOT = `(() => {
   return JSON.stringify(R);
 })()`;
 
+// E50 campaign-envelope phase — a THIRD page load begins with a payload that passes
+// the old settings-only screen but poisons the D323 raw.ids command sink. Rejection at
+// load plus atomic direct-apply behavior prevents the navigation-gated crash entirely.
+const E50BOOT = `(() => {
+  var R = { ok:true, steps:[] };
+  function step(name, fn) {
+    try { var v = fn(); R.steps.push({ name:name, ok:true, v:v === undefined ? null : v }); }
+    catch(e) { R.ok = false; R.steps.push({ name:name, ok:false, err:String(e && e.message || e) }); }
+  }
+  step('E50: a deep-poisoned campaign autosave is rejected before it can enter live state', function() {
+    if (typeof loadLocal !== 'function' || typeof applySave !== 'function' || typeof hasSave !== 'function') throw new Error('save API missing');
+    if (G.mode !== 'menu') throw new Error('boot did not reach the main menu with the tampered campaign present (mode=' + G.mode + ')');
+    if (loadLocal() !== null) throw new Error('deep-poisoned campaign autosave was not rejected by loadLocal');
+    if (hasSave()) throw new Error('hasSave() still true on a deep-poisoned campaign autosave');
+    if (G.campaign && G.campaign.__e50Marker) throw new Error('deep-poisoned campaign entered G.campaign');
+    return { rejected:true, mode:G.mode };
+  });
+  step('E50: applySave rejects a deep-poisoned campaign atomically', function() {
+    var live = { __e50Live:'keep' };
+    G.campaign = live;
+    delete G.settings.__e50Setting;
+    var poisoned = JSON.parse('{"ver":0,"settings":{"__e50Setting":"poison"},"campaign":{"president":{"command":{"transfer":{"ids":{"hasOwnProperty":7}}}}}}');
+    poisoned.ver = _SAVE_VER;
+    applySave(poisoned);
+    if (G.campaign !== live || G.campaign.__e50Live !== 'keep') throw new Error('applySave replaced live campaign with deep-poisoned state');
+    if (Object.prototype.hasOwnProperty.call(G.settings, '__e50Setting')) throw new Error('applySave partially applied settings before rejecting campaign');
+    localStorage.removeItem('gor_save');
+    return { atomic:true };
+  });
+  return JSON.stringify(R);
+})()`;
+
 async function main() {
   let server = null, browser = null;
   const probe = cfg.baseUrl + '/' + cfg.file;
@@ -348,6 +383,20 @@ async function main() {
     const e13 = JSON.parse(await page.evaluate(E13BOOT));
     data.steps = (data.steps || []).concat(e13.steps || []);
     data.ok = !!data.ok && !!e13.ok;
+    // E50: repeat with a settings-clean save whose poison lives deep in the campaign
+    // envelope. Pre-fix this payload applies at boot and survives until Command opens.
+    await page.evaluate(`(() => {
+      localStorage.setItem('gor_save', JSON.stringify({ ver: _SAVE_VER, when: 1,
+        settings: {}, campaign: { __e50Marker: 'tampered', side: 'US', president: {
+          command: { transfer: { battleId: 'sumter', theater: 'Eastern',
+            ids: { hasOwnProperty: 7, 'us-thomas': { theater: 'Eastern', turn: 1 } } } }
+        } } }));
+    })()`);
+    await page.reload({ waitUntil:'domcontentloaded', timeout:45000 });
+    await sleep(500);
+    const e50 = JSON.parse(await page.evaluate(E50BOOT));
+    data.steps = (data.steps || []).concat(e50.steps || []);
+    data.ok = !!data.ok && !!e50.ok;
     const actionableConsoleErrors = consoleLines.filter(line => line.startsWith('[error]') && !/Failed to load resource:.*404/i.test(line));
     data.pageerrors = pageerrors;
     data.console = consoleLines.slice(-20);

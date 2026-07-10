@@ -29,12 +29,41 @@ function _slCleanLabel(s) {
   s = String(s == null ? "" : s).replace(/\s+/g, " ").trim();
   return s.length > 80 ? s.slice(0, 80) : s;
 }
+/* E50 (D353): deep own-"hasOwnProperty" scan of a save's campaign envelope.
+   A shadow anywhere inside it would crash a downstream callable-form iterator
+   (the D323 raw.ids Transfer sink in 35-command.js is the verified case), so
+   every accept lane — autosave loadLocal/applySave (105-save-guard.js), slot
+   read, import, undo — rejects the whole payload. Iterative walk (explicit
+   stack), cycle-safe via a seen-Set, arrays included (JSON cannot put a named
+   key on an array, but applySave accepts any object). A legitimate save never
+   carries one at any depth, so legit saves stay byte-identical on every lane.
+   Returns true = tampered payload, reject. */
+function _slCampaignPoisoned(root) {
+  if (!root || typeof root !== "object") return false;
+  var own = Object.prototype.hasOwnProperty;
+  var stack = [root], seen = (typeof Set === "function") ? new Set() : null, guard = 0;
+  while (stack.length) {
+    var node = stack.pop();
+    if (!node || typeof node !== "object") continue;
+    if (seen) { if (seen.has(node)) continue; seen.add(node); }
+    else if (++guard > 1000000) return true;   // no-Set fallback: fail closed on a runaway/cyclic payload
+    if (own.call(node, "hasOwnProperty")) return true;
+    for (var k in node) {
+      if (!own.call(node, k)) continue;
+      var v = node[k];
+      if (v && typeof v === "object") stack.push(v);
+    }
+  }
+  return false;
+}
 function _slValidSave(sv) {
   if (!sv || typeof sv !== "object" || Array.isArray(sv)) return false;
   if (sv.ver !== _SAVE_VER) return false;
   if (!sv.settings || typeof sv.settings !== "object" || Array.isArray(sv.settings)) return false;
   if (_slOwn(sv.settings, "hasOwnProperty")) return false;
   if (sv.campaign != null && (typeof sv.campaign !== "object" || Array.isArray(sv.campaign))) return false;
+  // E50 (D353): reject a deep own-"hasOwnProperty" anywhere in the campaign envelope.
+  if (_slCampaignPoisoned(sv.campaign)) return false;
   return true;
 }
 

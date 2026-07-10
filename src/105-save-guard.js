@@ -1,5 +1,6 @@
 /* ===========================================================================
-   J-polish · 105-save-guard.js — E13 SAVE-TAMPER GUARD (D244).
+   J-polish · 105-save-guard.js — E13 SAVE-TAMPER GUARD (D244) + E50 CAMPAIGN
+   ENVELOPE DEEP GUARD (D353).
 
    OVERRIDES (listed in manifest `overrides`; base fns shadowed by
    redeclaration, the D44-class frozen-engine override pattern):
@@ -35,6 +36,33 @@
    sanitize at apply (skip the poison key, never throw). The remaining accept
    lanes (slots, import, paste) were already guarded by D234's _slValidSave.
 
+   E50 (D353): the D244 screens covered ONLY sv.settings — the campaign
+   envelope was accepted wholesale (`G.campaign = sv.campaign || null`), and
+   ~20 downstream sites iterate save-derived campaign sub-objects with the
+   callable form `raw.hasOwnProperty(k)` (the D323 Transfer sink
+   `raw.ids.hasOwnProperty(k)` in 35-command.js is the directly verified
+   crash: a tampered save shadows it with a non-callable own property and
+   command initialization throws on the first Command-tab open). The fix is
+   a DEEP own-"hasOwnProperty" scan of the whole campaign envelope, enforced
+   at every accept lane:
+
+     loadLocal    — a deep-poisoned campaign autosave reads as corrupt (null),
+                    so hasSave() is false and the boot stays on the menu.
+     applySave    — ATOMIC: the campaign envelope is scanned BEFORE the
+                    settings loop, so a rejected payload applies NOTHING
+                    (no partial settings, no campaign replacement).
+     _slValidSave — (91-save-slots.js) the slot-read / import / undo lanes
+                    reject the same way.
+
+   The scanner itself — _slCampaignPoisoned — lives in 91-save-slots.js (this
+   module stays override-only, exactly the two redeclarations; the D244 static
+   tooth pins that). Function-declaration hoisting makes it live before the
+   eval-time boot lane runs, the same mechanism these overrides rely on.
+
+   A legitimate save — anything serializeSave ever wrote — never carries an
+   own "hasOwnProperty" at any depth (JSON.parse of game output cannot
+   produce one), so every legit save stays byte-identical through all lanes.
+
    Touches NO combat knob, NO RNG, NO G.battle; never bumps _SAVE_VER.
    =========================================================================== */
 
@@ -56,6 +84,10 @@ function loadLocal() {
     // E13 (D244): a settings object whose OWN "hasOwnProperty" shadows the prototype
     // method is a tampered payload — treat it exactly like corrupt JSON.
     if (Object.prototype.hasOwnProperty.call(sv.settings, "hasOwnProperty")) return null;
+    // E50 (D353): the same posture, DEEP, on the whole campaign envelope — a
+    // shadow anywhere inside it would crash a downstream callable-form iterator
+    // (the D323 raw.ids Transfer sink is the verified case).
+    if (_slCampaignPoisoned(sv.campaign)) return null;
     return sv;
   } catch (e) {
     // localStorage.getItem itself can throw on file:// in Safari
@@ -65,6 +97,9 @@ function loadLocal() {
 
 /* ---- applySave OVERRIDE (base.html:3156, tamper-proof iteration) ---- */
 function applySave(sv) {
+  // E50 (D353): ATOMIC rejection — scan the campaign envelope BEFORE any
+  // mutation, so a deep-poisoned payload applies neither settings nor campaign.
+  if (_slCampaignPoisoned(sv && sv.campaign)) return;
   var src = sv.settings;
   var own = Object.prototype.hasOwnProperty;
   for (var k in src) {

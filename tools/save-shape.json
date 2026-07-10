@@ -6,8 +6,8 @@
     "build/base.html::loadLocal": "bd8e5486ad317f25",
     "build/base.html::applySave": "5b1c6461d484bf4b",
     "build/base.html::importSave": "34e7e850b56e32a8",
-    "src/91-save-slots.js::_slValidSave": "dd0461ffd81d6e27",
-    "src/105-save-guard.js::loadLocal": "5c845ad61b0e21e3",
-    "src/105-save-guard.js::applySave": "ec4a87a57f4ea869"
+    "src/91-save-slots.js::_slValidSave": "c39bba325959a05c",
+    "src/105-save-guard.js::loadLocal": "03b946b75009c1f3",
+    "src/105-save-guard.js::applySave": "cd6a42c12696426c"
   }
 }

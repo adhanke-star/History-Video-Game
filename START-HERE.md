@@ -75,10 +75,10 @@ When Aaron asks a new chat to choose from a priority list, use this list (cross-
 
 **Model naming note (D336, 2026-07-09):** ChatGPT's visible top-model label is **5.6 Sol**. Select it at **Ultra** (the highest effort available in that UI) for quality-critical autonomous work. Older 5.5/Opus/Fable references document prior runs only; do not copy them into new ChatGPT/Codex kickoff prompts. See `OPUS-PLAYBOOK.md`.
 
-**Latest live head (2026-07-10, D352 report integrity over D351 flags):** the generated game has **13 registered historical scenarios** through Nashville. D352 gives five HTML reports one real entity-escaping boundary and enrolls hostile-string fixtures as suite command 5 of **118**; D351 parity-gates flag metadata for every scenario. D324's broad unlock and D183's narrower trans-Mississippi gate remain reconciled. **Current queue:** E50 deep campaign-save-envelope hardening is the sole FIX-NOW item; leave E70 proposal-only, then run the planned full no-regression checkpoint.
+**Latest live head (2026-07-10, D353 save hardening over D352 report integrity):** the generated game has **13 registered historical scenarios** through Nashville. D353 deep-guards the campaign save envelope at every accept lane (atomic applySave, tamper-proof D323 Transfer sink) and **empties the run-2 FIX-NOW queue**; D352 gives five HTML reports one real entity-escaping boundary (suite **118** commands). D324's broad unlock and D183's narrower trans-Mississippi gate remain reconciled. **Current queue:** E70 — one bounded, source-honest Transfer-readiness consumer (Aaron 2026-07-10: build the consumer, keep the cost), then the planned full no-regression checkpoint.
 
 **ChatGPT/Codex 5.6 Sol preferred**
-- **Priority 1 — active D337 run-2 queue:** E50, then the E70 proposal-only disposition and full release checkpoint.
+- **Priority 1 — active D337 run-2 queue tail:** E50 fixed in D353 (queue empty); next the E70 bounded readiness consumer (Aaron 2026-07-10 disposition) and the full release checkpoint.
 - **Priority 2 — unlocked roadmap after the audit queue:** USCT/New Market Heights or another researched battle lane, Phase H media/model work, Phase I Soldier's Story rows, Phase D/full-hex, custom-battle phase authoring/editor, M8, and optional report polish are eligible under their normal gates. The trans-Mississippi packet alone retains its narrower D183 go/no-go.
 - **Priority 3 — release checkpoint:** run and inspect the full `npm run vet:noreg` battery after the FIX-NOW queue, not between its remaining slices.
 
