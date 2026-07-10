@@ -10,7 +10,8 @@
 5. **`DECISIONS.md`** — the append-only decisions log (newest D## first; append, never relitigate).
 6. **`GRAND-STRATEGY-PLAN.md`** (strategic-layer design LAW) + **`MODERN-UGG-PLAN.md`** (tactical-engine design LAW) — honor verbatim; pull the section a task needs.
 7. **`src/00-manifest.json`** + the `src/*.js` you'll touch + **`tools/build.mjs`** + the relevant **`tools/probe-*.mjs`**.
-8. **`DEPLOY.md`** — only when publishing.
+8. **`COORDINATION.md`** — the Contract Relay (cross-tool lane locks): read before starting or resuming multi-session/cross-tool work; red teeth never land in git — the lane carries the committed contract, teeth ship with the fix. *(D356)*
+9. **`DEPLOY.md`** — only when publishing.
 
 ## Non-negotiables (never violate, even for a one-line change)
 1. **Edit `src/` (code) + `data/` (data); NEVER edit `build/base.html` (frozen) and never hand-edit the generated `civil_war_generals.html`** — change source, then `node tools/build.mjs` (must print `GATE OK`).

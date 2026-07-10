@@ -31,5 +31,8 @@ Aaron has granted dangerous/full-access permissions for this repo. Prefer **Code
 - Keep heavy probe batches serialized unless the cloud runner is explicitly sized for parallel Chrome. Fix harness/resource flakes at the root; never mark a red probe green.
 - After a cloud milestone is committed and pushed, the local Mac copy must be fast-forwarded before any local work continues: on the Mac run `git fetch origin && git status --short --branch && git pull --ff-only origin main` from `~/Desktop/Video Game`. If the Mac has local dirty edits, stop, inspect/stash/commit them first, and never overwrite unreviewed local work.
 
+## Cross-tool handoffs — COORDINATION.md (the Contract Relay, D356)
+Unfinished work handed between tools travels as a **lane** in [`COORDINATION.md`](COORDINATION.md): committed acceptance criteria + probe design + resume pointer + owner lock. **Red probe teeth never land in git** — teeth ship in the same commit as the fix that greens them. Before starting multi-session work (or resuming another tool's), read the lane ledger; before dying mid-lane, update it.
+
 ## Recurring gotcha
 Adding a new historical battle? You MUST add its id to the `EXPECTED` baseline in BOTH `tools/probe-tactical-roster.mjs` AND `tools/probe-custom-battle-builder.mjs` (the latter goes RED otherwise — it asserts the historical registry is unchanged). This has bitten D86/D88/D90.

@@ -6,6 +6,14 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D356 — THE CONTRACT RELAY SHIPS: COORDINATION.md CROSS-TOOL LANE LOCKS — [AARON kickoff 2026-07-10 · CLAUDE Fable 5 main loop] (2026-07-10)
+
+- **What ships:** new tracked `COORDINATION.md`, linked from `START-HERE.md` (canonical list), `AGENTS.md`, and `CLAUDE.md`. It is the standing handoff ledger between AI tools: each **lane** carries owner lock, state (`LAW-DRAFT → CONTRACT → DRIVE → VERIFY → SHIPPED`), design-law paths, acceptance criteria IN FULL, probe design (files · what each tooth asserts · how to run), resume pointer, and last-touched SHA.
+- **THE HARD RULE (resolves the push-no-red vs hand-off-unfinished conflict):** the lane lock never carries red teeth in git — it carries the CONTRACT, committed prose sufficient for either tool to rewrite the teeth from scratch; **teeth land in the same commit as the fix that greens them.** Working-tree red teeth found by a successor are a candidate rendering of the contract: adopt or deliberately amend (logged), then commit with the fix.
+- **Why now (the E50 near-miss as the worked example):** Codex authored E50's five acceptance teeth as uncommitted working-tree edits and died on usage before the fix; one `git checkout -- .` would have destroyed the acceptance criteria. LANE-001 records E50 retroactively as the exemplar; LANE-002 (Phase I "Named Army") is open with the 5a/5b/5c contracts and the 848-row prosopography inventory attached.
+- **Role-based routing codified:** lanes and kickoffs bind ROLES (TOP LOOP / REASONING HELPERS / MECHANICAL HELPERS), never model names — subscriptions churn (D223 → D286 → Fable's 2026-07-10 return); each session resolves roles to its tool's best models and states the resolution once.
+- **Gate (docs-only):** build **GATE OK** with the generated game byte-unchanged; `git diff --check` clean.
+
 ## D355 — FULL RELEASE CHECKPOINT: 118/118 GREEN, 3 FINDINGS ROOT-CAUSED AND FIXED IN-RUN — [CLAUDE Fable 5 main loop, run-2 queue] (2026-07-10)
 
 - **The checkpoint (owed since the run-2 fix stack began, D176):** full `npm run vet:noreg`, **118 commands**, run locally in this full-access non-Seatbelt session (`CODEX_SANDBOX` unset; single dedicated session, serialized runner, `TMPDIR=$PWD/.tmp`, Chrome stderr to /dev/null, shared :8765 server, verdicts read from artifacts). Chosen over a remote runner because this exact harness was proven green here minutes earlier and a remote would add unproven Chrome/repo bring-up.
