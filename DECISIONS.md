@@ -1,8 +1,24 @@
 # DECISIONS LOG — "The Civil War" autonomous build run
 
-Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc · always decide & log · auto-commit AND push at gated milestones · content-complete each phase.** Every design fork I resolve mid-run is recorded here with rationale so Aaron can override in review. Aaron-locked decisions (via popup) are marked **[AARON]**; ones I made under "always decide & log" are **[CLAUDE]**.
+Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc · always decide & log · auto-commit AND push at gated milestones · content-complete each phase.** Every design fork resolved mid-run is recorded here with rationale so Aaron can override in review. Aaron-locked decisions are marked **[AARON]**; AI-made decisions name the actual owning tool/model, such as **[CLAUDE]** or **[CODEX]**.
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
+
+---
+
+## D361 — GAINES' MILL SPEC + PLAN PROBE LOCK LANE-003; CHATGPT MAY USE INHERITING HELPERS FOR OUTPUT-INSENSITIVE EVIDENCE — [AARON routing clarification · CODEX 5.6 Sol Ultra top loop, LANE-003] (2026-07-10)
+
+LANE-003 moved from CONTRACT to DRIVE before runtime. D361 adds `docs/design/gaines-mill-battle-build-spec.md` and `tools/probe-gaines-mill-plan.mjs`; Gaines' Mill remains unregistered and unplayable until D362.
+
+- **Playable contract:** single-phase CS attacker / US defender, `defaultFog:false`, standard assault doctrine, Watt House plateau behind Boatswain's Creek as the objective, and menu rank `gainesMill:15` between Bull Run and Malvern Hill. The same universal objective-hold engine must produce the opposite Seven Days result from Malvern Hill without a battle-specific output switch.
+- **Strength dispute surfaced before runtime:** ABT's 7-8 p.m. map says roughly 32,000 Confederates in 16 brigades against about 34,000 reinforced Federals; Army CMH says Lee amassed 50,000 for the 6:30 p.m. assault; NPS gives roughly 60,000 brought to the attack and Porter's core 27,000 rising toward 34,000. D362's 27,000 US / 31,500-32,500 CS is therefore a disclosed mixed-source abstraction: the core Federal line against ABT's enumerated 16-brigade wave, not an exact same-time OOB. The Confederate aggregate is `Disputed; modeled strength Inferred`; every unit split carries the exact `Verified identity; Inferred strength` label. Meagher/French stay teaching-only unless both sides' paired aggregate is reopened.
+- **Rank and terrain locks:** Porter is Brig. Gen. on June 27 (NPS + CMH; major-general promotion July 4); A. P. Hill is Maj. Gen. (ABT + Virginia Humanities); Hood is Brig. Gen. commanding the Texas Brigade (NPS + CMH + ABT map). The separate NPS CWSAC detail corroborates Boatswain's Swamp; Watt House, Adams farm, Chickahominy, and the Cold Harbor roads are cleared. Turkey Hill stays excluded because the packet never verified it.
+- **Split historical direction:** CS holds the objective in at least 5/8 seeds. Confederate killed/wounded also meet or exceed Union killed/wounded in at least 5/8, derived after subtracting captured and missing. The two majorities need not share seeds. Hood's break stays teaching text.
+- **D362 integration contract:** runtime data, T1 registry/rank, schema 44th row, both historical baselines, loot pin `912 + unique units × 3` at both assertions, explicit T10 flag metadata and 14-scenario tooth, weather, Intel/media opening-scene count 14, suite enrollment 118→119, generated HTML, focused probe, and adjacent guards. The plan probe computes the future loot pin from runtime data and rejects comment-only or partial integrations.
+- **Helper routing clarification (Aaron, this session):** keep the highest-quality ChatGPT/Codex model and effort on the top loop. If the surface exposes helper controls, set model and effort explicitly. If it does not, inheriting helpers may handle bounded work whose raw output cannot lower the shipped result: read-only inventories, artifact summaries, gate execution, and independent mechanical audits. State inheritance once. The top loop retains architecture, code ownership, history, balance, UX/accessibility judgment, final synthesis, integration, and the commit. This rule now lives in `AGENTS.md`, `START-HERE.md`, `OPUS-PLAYBOOK.md`, `COORDINATION.md`, and the machine-level `~/.codex/AGENTS.md`.
+- **Negative bind:** changing only LANE-003 `State: DRIVE` to `CONTRACT` made exactly the lane-lock step fail (**7/8**, exit 1); restoring the line returned **8/8**, and the COORDINATION checksum returned byte-identical.
+- **Focused gate:** build **GATE OK**; schema **43/43**; battle research **15/15**; Gaines plan **8/8**; roster **8/8**; custom builder **15/15**; Bull Run **15/15**; Malvern Hill **27/27**; every inspected JSON `ok:true`, zero failed steps, zero pageerrors; `git diff --check` clean. Full `vet:noreg` remains deferred to the LANE-003 release boundary.
+- **Next:** D362 playable Gaines' Mill. Runtime starts from this committed and pushed planning boundary.
 
 ---
 

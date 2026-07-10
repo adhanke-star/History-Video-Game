@@ -1,10 +1,11 @@
-# OPUS-PLAYBOOK — top-model operating playbook (D336, 2026-07-09; filename retained)
+# OPUS-PLAYBOOK — top-model operating playbook (D336; D361 helper clarification; filename retained)
 
 How to run the ChatGPT/Codex main loop as **5.6 Sol**. This is the canonical behavior/routing supplement for `START-HERE.md`, `AGENTS.md`, and `AUTONOMOUS-RUN.md`; `AUDIT-PROMPT.md` applies it directly. Historical Opus/Fable references below record prior runs and are not directives for a new ChatGPT task.
 
 ## 1 · Model surface & the effort ladder
 - Select **5.6 Sol** in ChatGPT. Use **Ultra** (the highest effort shown in that UI) for multi-system design, historic research verification, complex debugging, adversarial audits, and final release decisions; use a lower effort only when speed matters and the work is clearly bounded. Do not claim unsupported API IDs or settings from this UI label.
-- Use a lower tier only if the current surface explicitly makes one available and only where a lower-quality result cannot affect gameplay, appearance, historical truth, accessibility, or integration. The default is no delegation when the job is small enough for the main loop.
+- Use a lower tier when the surface exposes one and a lower-quality result cannot affect gameplay, appearance, historical truth, accessibility, or integration. Configure model and effort explicitly.
+- **No-control exception (Aaron, 2026-07-10):** a ChatGPT/Codex surface with no per-helper model or effort controls may spawn inheriting helpers for bounded, output-insensitive evidence work. Good uses are read-only greps and inventories, log/artifact summaries, gate execution, and independent mechanical audits. State once that the helpers inherit; do not claim a tier the surface did not expose. The Ultra main loop keeps every quality-bearing decision and verifies the evidence.
 - A helper packet must name its goal, reason, exact files, constraints, acceptance checks, commands, and do-not-touch list. The main loop reads the evidence and owns the decision.
 
 ## 2 · Narration — default to silence
@@ -14,7 +15,7 @@ How to run the ChatGPT/Codex main loop as **5.6 Sol**. This is the canonical beh
 - For small reversible decisions (naming, which of two equivalent approaches, a default value), pick a reasonable option, note it in one line, and proceed. Stop only for destructive/irreversible actions, spending, account creation, publishing, unclear licensing/provenance, or a fork that genuinely contradicts shipped history/design.
 
 ## 4 · Delegation, memory, search
-- Delegate when it materially improves independent coverage or offloads exact mechanical work; do not add helpers by ritual. If the active surface exposes lower tiers, use them only for fully packeted mechanical work and set model/effort explicitly. The 5.6 Sol main loop is the final verifier.
+- Delegate when task-specific strength or independent coverage improves the result. Use explicit lower tiers for fully packeted mechanical work when controls exist. Under the no-control exception, keep inheriting helpers read-only or mechanically verifiable and outside shipped-output ownership. The 5.6 Sol Ultra main loop owns final verification and integration.
 - **Use durable repo records** — `DECISIONS.md`, `RUN-LOG.md`, `HANDOFF.md`, and `WAKE-UP.md` — for lessons and live state, never hidden assumptions.
 - **Search current sources when facts can drift** — model capability, provider terms, licenses, availability, and historical primary-source locators. State the reason for each research/delegation request.
 
@@ -51,6 +52,6 @@ Brief steering beats enumerated micro-management. Quote these (or a tightened eq
 1. Confirm **5.6 Sol** and choose **Ultra** (highest available effort).
 2. Read order per `START-HERE.md`; `HANDOFF.md` + `WAKE-UP.md` top blocks for the live head.
 3. Kickoff prompt embeds the §7 snippets and the one-line "why."
-4. Helpers: use only if beneficial; packet and configure them explicitly when the surface permits (§4).
+4. Helpers: use only for a task-specific strength or independent coverage; packet and configure them when controls exist, or state the no-control inheritance exception (§4).
 5. Narrate sparingly (§2); decide small reversible forks and log them (§3); delegate/search aggressively (§4).
 6. D171 boundary discipline active (§6); §8 HALT charter unchanged.

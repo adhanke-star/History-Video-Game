@@ -17,9 +17,10 @@ If the tree is dirty with edits you did not make: STOP and surface them — neve
 
 READ ORDER (then work from disk, not assumption):
 1. START-HERE.md (the map + Universal AI implementer standards + priority picker)
-2. OPUS-PLAYBOOK.md (the D336 ChatGPT/Codex 5.6 Sol + Ultra policy binds this run;
-   use lower tiers only when explicitly selectable and mechanically packeted, and
-   require every finder/verifier/judge to report confidence + severity)
+2. OPUS-PLAYBOOK.md (the D336/D361 ChatGPT/Codex 5.6 Sol + Ultra policy binds this run;
+   configure helper model/effort explicitly when available; if unavailable, inheriting
+   helpers may do only bounded output-insensitive evidence work; require every
+   finder/verifier/judge to report confidence + severity)
 3. AUTONOMOUS-RUN.md (operating manual: build loop §3, guardrails §5, §8 HALT charter)
 4. HANDOFF.md top block + WAKE-UP.md top block (the live head)
 5. V1-CHECKLIST.md (THE roadmap — D61; you never relitigate it) + REVIEW-QUEUE.md
@@ -66,11 +67,12 @@ themselves — these are the floor, not the ceiling:
     D183 go/no-go clears; teaching-only and do-not-build findings remain teaching-only.
 Method per dimension: a Workflow with finder agents fanned out per sub-area →
 adversarial default-refute verify (loop-until-dry on dimensions 1, 2, and 7) → a
-completeness critic. ROUTING LAW (D336): use helpers only when the current surface
-supports them and independent coverage or exact mechanical work benefits the task;
-configure any exposed model/effort settings explicitly. Prompt every finder,
-verifier, and judge to report everything with confidence and severity, then filter
-downstream. You, the 5.6 Sol main loop, own synthesis and final judgment.
+completeness critic. ROUTING LAW (D336 + D361): use helpers when independent coverage
+or exact mechanical work benefits the task. Configure exposed model/effort settings
+explicitly; if none exist, state once that helpers inherit and limit them to bounded,
+output-insensitive evidence. Prompt every finder, verifier, and judge to report
+everything with confidence and severity, then filter downstream. You, the 5.6 Sol
+main loop, own every quality-bearing decision, synthesis, integration, and final judgment.
 
 PART 2 · TRIAGE (the ledger).
 Rank CONFIRMED findings by severity × player/teaching impact. Split them:
@@ -115,8 +117,9 @@ BINDING BEHAVIOR (OPUS-PLAYBOOK.md — these govern the whole run):
 - Narrate sparingly — a sentence only when it is load-bearing, a direction change, or
   a blocker. Decide small reversible forks and log them; don't ask "want me to also…?"
 - Delegate only when independent coverage or exact mechanical work benefits the task;
-  configure exposed model/effort controls explicitly and re-verify current facts
-  online, never from memory.
+  configure exposed model/effort controls explicitly. If controls are absent, inheriting
+  helpers are limited to output-insensitive evidence and the main loop verifies it.
+  Re-verify current facts online, never from memory.
 - No refactors/features/abstractions beyond the finding being fixed — except the
   repo's guarded-seam byte-identity law, which always applies.
 - Audit every progress claim against a tool result from THIS session before

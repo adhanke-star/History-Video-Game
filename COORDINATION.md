@@ -85,10 +85,14 @@ its run.
   ChatGPT: whatever lower tier the surface exposes. Search summaries, inventories, probe-log
   summaries, schema fills, probe scaffolding, mechanical doc syncs, first-pass source gathering.
 
-Set model AND effort explicitly on every helper call — an unset call inherits the top tier
-(~97% of the 2026-06-16 cost spike). Helpers produce evidence; the TOP LOOP verifies every
-packet. Helpers never own architecture, combat balance, historical claims, UX/accessibility
-judgment, or final integration.
+Set model AND effort explicitly whenever the surface exposes those controls. An unset call can
+inherit the top tier (~97% of the 2026-06-16 cost spike), so inheritance is never accidental.
+**ChatGPT/Codex exception (Aaron, 2026-07-10):** a surface with no per-helper controls may use
+inheriting helpers for bounded, output-insensitive evidence work: read-only inventories,
+log/artifact summaries, gate execution, or independent mechanical audits. State the exception
+once and assign by task-specific strength. Helpers produce evidence; the TOP LOOP verifies every
+packet and retains architecture, code ownership, combat balance, historical claims,
+UX/accessibility judgment, final synthesis, integration, and the commit.
 
 ---
 
@@ -190,10 +194,10 @@ judgment, or final integration.
   5b inventory attached 2026-07-10; 5a shipped D357 2026-07-10; 5b batch 1 (8 records) shipped
   D358 2026-07-10; 5c shipped D360 2026-07-10.
 
-### LANE-003 · codex-battle-ladder — **CONTRACT** (opened for the ChatGPT/Codex 5.6 Sol session)
+### LANE-003 · codex-battle-ladder — **DRIVE** (ChatGPT/Codex lock taken in D361)
 
 - **Owning tool:** ChatGPT/Codex (takes the lock by starting; state → DRIVE in its first commit).
-- **State:** CONTRACT.
+- **State:** DRIVE.
 - **Design law:** `docs/design/battle-build-research/` packets (`eastern-1862` → Gaines' Mill ·
   `usct` → New Market Heights · `western-gaps` → Stones River · stretch: `shenandoah-1864` Cedar
   Creek · `shenandoah-1862` Cross Keys/Port Republic · `appomattox-campaign` Five Forks ·
@@ -220,11 +224,13 @@ judgment, or final integration.
      green slice. Full battery only at a release boundary.
 - **Probe design:** per battle — plan probe (spec invariants) + runtime probe (registry/menu/
   OOB sums by sector/direction battery/pageerrors), modeled on `tools/probe-nashville*.mjs`.
-- **Resume pointer:** start at **Gaines' Mill** (the exact inverse of built Malvern Hill —
-  defender-hold single-phase), then **New Market Heights** (USCT — the game's biggest
+- **Resume pointer:** **D361 planning/spec gate is the committed boundary; next is D362 playable Gaines' Mill implementation**
+  from `docs/design/gaines-mill-battle-build-spec.md` + `tools/probe-gaines-mill-plan.mjs`.
+  After Gaines' Mill ships, continue to **New Market Heights** (USCT — the game's biggest
   representation gap, unlocked by D359), then **Stones River** (multi-phase, near-parity
   direction guards). Stretch in order: Cedar Creek · Cross Keys/Port Republic · Five Forks ·
   Fort Donelson · Elkhorn Tavern. 2-3 battles at FULL depth beat 6 shallow ones (Aaron's popup).
-- **Last-touched commit:** (none — contract only; D359/D360 carried the opening).
+- **Last-touched commit:** D361 (Gaines' Mill spec + plan probe + lane lock; SHA recorded at the next lane boundary).
 - **History:** lane opened by Claude Code 2026-07-10 after Aaron's popup Q&A (D359) fixed scope,
-  depth, and locks for the Codex session.
+  depth, and locks for the Codex session · ChatGPT/Codex took DRIVE in D361 and locked the
+  Gaines' Mill source/strength/rank/direction contract before runtime.
