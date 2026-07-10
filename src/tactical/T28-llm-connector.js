@@ -14,7 +14,9 @@
      · Two adapters (law §2.1): A = OpenAI-compatible chat-completions
        (OpenRouter / Groq / localhost Ollama / LM Studio / custom); B =
        Anthropic Messages (browser opt-in header, haiku-class default, NEVER
-       an Opus/Fable-class auto-select).
+       an Opus/Fable-class auto-select). The browser opt-in is ENFORCED, not
+       just presented: adapter B is unconfigured without it (E65/D343), so no
+       arm and no dispatch can happen before the player consents.
      · Provider presets (law §2.2), endpoints/free-tiers re-verified 2026-07-06
        (they drift — RE-VERIFY at the next build).
      · The async dispatch fldLlmDispatchAsync — the deliverable's FIRST runtime
@@ -250,13 +252,20 @@ function _llmPersist() {
   } catch (e) {}
 }
 
-/* Config API (T27's fldLlmConfigured delegates to fldLlmConnConfigured). */
+/* Config API (T27's fldLlmConfigured delegates to fldLlmConnConfigured).
+   E65 (D343): this predicate is the ONE consent seam — adapter B (Anthropic)
+   is NOT configured until the player's explicit "Allow direct browser calls"
+   opt-in is on, so fldLlmEnabledForBattle, fldLlmArmOnLaunch, and
+   fldLlmDispatchAsync (which all gate on configured) can never arm or send
+   the anthropic-dangerous-direct-browser-access header without consent. A
+   pre-E65 stored config without the flag is deliberately NOT grandfathered. */
 function fldLlmConn() { return _llmConn; }
 function fldLlmConnConfigured() {
   if (!_llmConn || !_llmConn.provider || !_llmConn.model) return false;
   var p = LLM_PRESETS[_llmConn.provider]; if (!p) return false;
   if (p.needsKey && !_llmConn.key) return false;
   if (p.adapter === "A" && !_llmConn.baseUrl) return false;
+  if (p.adapter === "B" && !_llmConn.browserOptIn) return false;
   return true;
 }
 function fldLlmEnabledForBattle() { return fldLlmConnConfigured() && !!(_llmConn && _llmConn.enabled); }
@@ -454,8 +463,12 @@ function _llmEsc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").r
    re-render — a replaced live-region node does not reliably announce. */
 function _llmSummaryText() {
   var u = _llmUi || {};
-  return fldLlmConnConfigured() && u.enabled ? "Connected AI will command the enemy in your next battle."
-    : (u.enabled ? "Enabled — but fill in the fields above to finish connecting." : "Off — the built-in general commands the enemy.");
+  if (fldLlmConnConfigured() && u.enabled) return "Connected AI will command the enemy in your next battle.";
+  // E65: when the ONLY blocker is the un-clicked consent toggle, say so — "fill in
+  // the fields" is misleading when every field is visibly filled.
+  if (u.enabled && u.provider === "anthropic" && u.key && u.model && !u.browserOptIn)
+    return "Enabled — but turn on “Allow direct browser calls” above to let the game reach Anthropic.";
+  return u.enabled ? "Enabled — but fill in the fields above to finish connecting." : "Off — the built-in general commands the enemy.";
 }
 
 function _llmConnHtml() {
@@ -497,7 +510,7 @@ function _llmConnHtml() {
   if (u.provider === "anthropic") {
     browserBlock = '<div style="margin-top:10px;display:flex;align-items:flex-start;gap:8px;">'
       + '<button id="llmBrowserOptIn" type="button" class="upg" role="checkbox" aria-checked="' + (u.browserOptIn ? "true" : "false") + '" aria-label="Allow direct browser calls to Anthropic" style="min-width:56px;">' + (u.browserOptIn ? "On" : "Off") + '</button>'
-      + '<span style="font-size:12px;color:var(--h0d-muted);line-height:1.45;">Anthropic needs an explicit browser opt-in. Turn this on to allow this page to call the Claude API directly with your key.</span>'
+      + '<span style="font-size:12px;color:var(--h0d-muted);line-height:1.45;">Anthropic needs an explicit browser opt-in. Turn this on to allow this page to call the Claude API directly with your key. While this is off, the game will not call Anthropic at all.</span>'
       + '</div>';
   }
   var baseBlock = "";

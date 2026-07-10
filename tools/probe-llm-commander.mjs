@@ -353,8 +353,16 @@ const SETUP = `(() => {
       // a paid provider without a key is NOT configured
       fldLlmConnSet({ provider:'anthropic', model:'claude-haiku-4-5', enabled:true });
       if (fldLlmConfigured() !== false) throw new Error('anthropic without a key must be unconfigured');
+      // E65 (D343): adapter B without the EXPLICIT browser opt-in is NOT configured, key or no key
       fldLlmConnSet({ provider:'anthropic', model:'claude-haiku-4-5', key:'sk-ant-x', enabled:true });
-      if (fldLlmConfigured() !== true) throw new Error('anthropic with a key should be configured');
+      if (fldLlmConfigured() !== false) throw new Error('anthropic with a key but NO browser opt-in must be unconfigured (E65)');
+      if (fldLlmEnabledForBattle() !== false) throw new Error('non-opted-in anthropic must never be battle-enabled (E65)');
+      fldLlmConnSet({ provider:'anthropic', model:'claude-haiku-4-5', key:'sk-ant-x', browserOptIn:true, enabled:true });
+      if (fldLlmConfigured() !== true) throw new Error('anthropic with key + browser opt-in should be configured');
+      // the opt-in requirement is adapter-B-only — adapter A needs none (E65)
+      fldLlmConnSet({ provider:'custom', baseUrl:'http://127.0.0.1:9/v1', model:'test-model' });
+      if (fldLlmConfigured() !== true) throw new Error('adapter A must not require the browser opt-in (E65)');
+      fldLlmConnSet({ provider:'anthropic', model:'claude-haiku-4-5', key:'sk-ant-x', browserOptIn:true, enabled:true });
       fldLlmConnClearKey();
       if (fldLlmConfigured() !== false) throw new Error('clear-key must drop configured back to false');
       fldLlmConnClear();
@@ -408,6 +416,50 @@ const SETUP = `(() => {
       fldExit(true); clean();
       if (NET.count !== 0) throw new Error('arm-hook legs fired network: ' + JSON.stringify(NET.calls));
       return { armed:true, trap1:true, trap2:true, pm3Neutral:true }; });
+
+    step('E65 CONSENT (D343): without the browser opt-in Anthropic can neither ARM nor DISPATCH; with it, the request carries exactly the promised shape', function(){
+      clean();
+      // ---- dispatch seam, negative then positive, against a RECORDING mock fetch
+      // (never-settling promise: nothing real can fire; restored in finally so the
+      // zero-network spy stays authoritative for every other leg)
+      var realFetch = window.fetch, calls = [];
+      try {
+        window.fetch = function(url, opts){ calls.push({ url:String(url), opts:opts || {} }); return new Promise(function(){}); };
+        // negative: a COMPLETE anthropic config except consent → synchronous cb(null), zero fetch
+        fldLlmConnSet({ provider:'anthropic', model:'claude-haiku-4-5', key:'sk-ant-consent', enabled:true });
+        var got = 'unset';
+        fldLlmDispatchAsync({ side:'CS', own:[], enemy:[] }, function(v){ got = v; });
+        if (got !== null) throw new Error('non-opted-in dispatch must refuse cb(null) synchronously, got: ' + String(got));
+        if (calls.length !== 0) throw new Error('non-opted-in dispatch attempted a network call (consent violated): ' + JSON.stringify(calls));
+        // positive: the explicit opt-in unlocks the dispatch — one call, the locked
+        // endpoint, the opt-in header the player actually consented to, their key
+        fldLlmConnSet({ provider:'anthropic', model:'claude-haiku-4-5', key:'sk-ant-consent', browserOptIn:true, enabled:true });
+        fldLlmDispatchAsync({ side:'CS', own:[], enemy:[] }, function(){});
+        if (calls.length !== 1) throw new Error('opted-in dispatch did not fetch exactly once: ' + calls.length);
+        var c = calls[0], h = (c.opts && c.opts.headers) || {};
+        if (c.url !== 'https://api.anthropic.com/v1/messages') throw new Error('dispatch URL wrong: ' + c.url);
+        if (h['anthropic-dangerous-direct-browser-access'] !== 'true') throw new Error('browser opt-in header missing from a CONSENTED call');
+        if (h['x-api-key'] !== 'sk-ant-consent') throw new Error('key header wrong');
+        var body = null; try { body = JSON.parse(c.opts.body); } catch(e){}
+        if (!body || body.model !== 'claude-haiku-4-5') throw new Error('dispatch body wrong: ' + String(c.opts.body).slice(0,120));
+        if (h['anthropic-version'] !== '2023-06-01') throw new Error('anthropic-version header wrong: ' + h['anthropic-version']);
+        if (typeof body.system !== 'string' || !body.system || !body.messages || body.messages.length !== 1 || body.messages[0].role !== 'user') throw new Error('dispatch body system/messages shape wrong');
+        // ---- arm seam: consent gates arming too. The mock STAYS installed for both
+        // launches so an unexpected synchronous dispatch could only hit the recorder,
+        // never the network — and calls must still read exactly 1 afterward.
+        fldLlmConnSet({ provider:'anthropic', model:'claude-haiku-4-5', key:'sk-ant-consent', enabled:true });   // no opt-in
+        G.campaign = null; fldLaunchSandbox({ renderer:'2d', scenario:'bullrun1', seed:1, fog:false, playerSide:'US', autoPause:false });
+        if (__FIELD.llmCommander) throw new Error('non-opted-in anthropic ARMED at launch (consent violated)');
+        fldExit(true);
+        fldLlmConnSet({ provider:'anthropic', model:'claude-haiku-4-5', key:'sk-ant-consent', browserOptIn:true, enabled:true });
+        G.campaign = null; fldLaunchSandbox({ renderer:'2d', scenario:'bullrun1', seed:1, fog:false, playerSide:'US', autoPause:false });
+        if (__FIELD.llmCommander !== true) throw new Error('opted-in + enabled anthropic did not arm');
+        fldExit(true);
+        if (calls.length !== 1) throw new Error('an arm leg dispatched unexpectedly (' + calls.length + ' recorded calls): ' + JSON.stringify(calls.slice(1)));
+      } finally { window.fetch = realFetch; }
+      clean();
+      if (NET.count !== 0) throw new Error('consent legs fired real network: ' + JSON.stringify(NET.calls));
+      return { refusedWithoutOptIn:true, armGated:true, consentedCallShape:true }; });
 
     step('PANEL A11Y + zero-network UI (law §6/§7.4): the settings panel is AA-structured and fires no network', function(){
       clean();
