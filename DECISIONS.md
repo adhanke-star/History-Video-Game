@@ -6,6 +6,14 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D349 — E68 LARGEST-SCENE INTEL UHD-617 PROFILE COVERAGE — [CODEX 5.6 Sol main loop, run-2 queue] (2026-07-10)
+
+- **Largest-scene definition is live, not asserted by hand:** `data/media-budget.json` now names Kennesaw as the largest shipped opening scene, and the profile derives the opening OOB count for every current battle data file. The current inventory is **13 scenarios**, with Kennesaw uniquely largest at **17 initial units** (Franklin 16; representative Chickamauga 8). A future larger opening makes the configured leg red until updated.
+- **Third serialized leg:** the existing Chickamauga high and low profiles remain unchanged; a new `largest-low` Kennesaw profile runs afterward in the same bounded browser session. It verifies the full 17-unit opening roster, low-tier formation/marker fallbacks, smoke draw range/budget, nonblank output, pageerrors, texture warnings, and the same structural caps.
+- **Caps remain law:** the profile now pins the pre-E68 hard limits at **360 low-tier render calls** and **1,400 scene objects**. Final Kennesaw readback is **117 calls / 169 objects**, 17 units, 2.59 ms warning-only frame proxy and 150.3 ms launch proxy on this run; no timing warning fired. The sole expected warning remains the frozen raw embed tier at 2.418 MB over soft.
+- **Bind test/gate:** temporarily pointing the largest-scene config back at 8-unit Chickamauga produced exactly the coverage failure (**25/26**, exit 1), identifying Kennesaw/17 as the live maximum. Final schema **43/43**; build **GATE OK**; Intel profile **26/26**, 0 pageerrors/texture warnings; media budget **13/13**; Kennesaw **11/11**, 0 pageerrors; touched tool syntax and JSON parse clean; artifact readback and `git diff --check` clean. Full `npm run vet:noreg` remains deferred to the end-of-queue D176 checkpoint.
+- **Queue:** E68 flips to FIXED; **4 run-2 PENDING FIX-NOW items remain (including E50)**. Next is **S43**, reconciling stale canonical routing text against D324-D349/live git; E70 remains proposal-only.
+
 ## D348 — S42 DRAFT-HONEST CONNECTED-AI LIVE STATUS — [CODEX 5.6 Sol main loop, run-2 queue] (2026-07-10)
 
 - **One readiness law, two objects:** the connector's existing provider/model/key/base-URL/Anthropic-consent readiness predicate is now a pure value check. Runtime launch/dispatch still applies it to saved `_llmConn`; the panel's aria-live `Status` applies the same predicate to current unsaved `_llmUi` fields and toggles.

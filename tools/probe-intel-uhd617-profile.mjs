@@ -20,6 +20,7 @@ const mediaBudget = JSON.parse(readFileSync(join(ROOT, 'data', 'media-budget.jso
 const perf = mediaBudget.performanceProfile || {};
 const budgets = perf.budgets || {};
 const scenario = perf.representativeScenario || 'chickamauga';
+const largestScenario = perf.largestShippedScene || '';
 const HW_GL = ['--ignore-gpu-blocklist', '--enable-webgl', '--disable-dev-shm-usage'];
 const SW_GL = ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--enable-webgl', '--disable-dev-shm-usage'];
 const THREE_TEXTURE_WARNING = /THREE\.WebGLRenderer:\s*Texture marked for update but image is undefined/;
@@ -76,6 +77,27 @@ function assetMetrics() {
   };
 }
 
+// E68: derive the shipped opening-scene roster directly from current battle data. The configured
+// largest leg must remain tied for the actual maximum when future battles or OOBs are added.
+function openingSceneInventory() {
+  const byScenario = {};
+  for (const file of readdirSync(join(ROOT, 'data')).filter(name => /\.json$/.test(name))) {
+    let data = null;
+    try { data = JSON.parse(readFileSync(join(ROOT, 'data', file), 'utf8')); } catch { continue; }
+    for (const value of Object.values(data || {})) {
+      if (!value || typeof value !== 'object' || !value.id || !value.objective) continue;
+      const scene = Array.isArray(value.phases) && value.phases.length ? value.phases[0] : value;
+      const oob = scene && scene.oob;
+      if (!oob || typeof oob !== 'object') continue;
+      const units = ['US', 'CS'].reduce((n, side) => n + (Array.isArray(oob[side]) ? oob[side].length : 0), 0);
+      if (units > 0) byScenario[value.id] = { file, units };
+    }
+  }
+  const maxUnits = Math.max(0, ...Object.values(byScenario).map(item => item.units));
+  const largestIds = Object.keys(byScenario).filter(id => byScenario[id].units === maxUnits).sort();
+  return { metric: 'opening-oob-units', scenarios: byScenario, count: Object.keys(byScenario).length, maxUnits, largestIds };
+}
+
 async function ensureServer() {
   const probe = cfg.baseUrl + '/' + cfg.file;
   if (await up(probe)) return null;
@@ -105,12 +127,12 @@ async function launchBrowser() {
   }
 }
 
-function profileScript(label, quality) {
+function profileScript(label, quality, scenarioId) {
   const opts = {
     label,
     quality,
-    scenario,
-    seed: label === 'low' ? 41 : 40,
+    scenario: scenarioId,
+    seed: label === 'high' ? 40 : (label === 'low' ? 41 : 42),
     stepN: 220,
     burstFrames: 45
   };
@@ -463,14 +485,14 @@ function profileScript(label, quality) {
   })();`;
 }
 
-async function runProfile(page, label, quality, shared) {
+async function runProfile(page, label, quality, scenarioId, shared) {
   const peStart = shared.pe.length;
   const conStart = shared.con.length;
   let detail = { ok: false, error: 'not run' };
   try {
-    detail = await page.evaluate(profileScript(label, quality));
+    detail = await page.evaluate(profileScript(label, quality, scenarioId));
   } catch (e) {
-    detail = { ok: false, error: String(e && e.message || e), label, quality };
+    detail = { ok: false, error: String(e && e.message || e), label, quality, scenario: scenarioId };
   } finally {
     try { await page.evaluate(`(() => { try { if (typeof fldExit === 'function') fldExit(true); } catch(e) {} })()`); } catch {}
   }
@@ -481,7 +503,14 @@ async function runProfile(page, label, quality, shared) {
 }
 
 const assets = assetMetrics();
+const coverage = openingSceneInventory();
 check('performance policy is present in data/media-budget.json', perf.targetHardware === 'Intel UHD Graphics 617 / 8 GB RAM floor' && perf.probe === 'tools/probe-intel-uhd617-profile.mjs', perf.targetHardware || '');
+check('E68 largest-scene config names a current largest shipped opening OOB',
+  coverage.count === 13 && !!coverage.scenarios[largestScenario] && coverage.scenarios[largestScenario].units === coverage.maxUnits,
+  JSON.stringify({ configured: largestScenario, count: coverage.count, maxUnits: coverage.maxUnits, largestIds: coverage.largestIds, configuredUnits: coverage.scenarios[largestScenario] && coverage.scenarios[largestScenario].units }));
+check('E68 retains the existing low-tier hard caps unchanged',
+  Number(budgets.lowTierRenderCallHardCap) === 360 && Number(budgets.lowTierObjectHardCap) === 1400,
+  JSON.stringify({ calls: budgets.lowTierRenderCallHardCap, objects: budgets.lowTierObjectHardCap }));
 check('raw embedded core remains under review warning for this profile', assets.rawBytes <= mediaBudget.policy.currentReviewWarnBytes, assets.rawBytes + ' <= ' + mediaBudget.policy.currentReviewWarnBytes);
 if (assets.rawBytes > mediaBudget.policy.rawEmbedSoftBytes) warn('raw embed tier remains above soft warning budget', assets.rawMB + ' MB');
 
@@ -503,8 +532,9 @@ try {
   await page.goto(cfg.baseUrl + '/' + cfg.file, { waitUntil: 'domcontentloaded', timeout: 70000 });
   browserInfo.domcontentloadedMs = Date.now() - start;
   await sleep(450);
-  profiles.push(await runProfile(page, 'high', 'high', shared));
-  profiles.push(await runProfile(page, 'low', 'low', shared));
+  profiles.push(await runProfile(page, 'high', 'high', scenario, shared));
+  profiles.push(await runProfile(page, 'low', 'low', scenario, shared));
+  profiles.push(await runProfile(page, 'largest-low', 'low', largestScenario, shared));
 } finally {
   if (server) {
     try { server.kill(); } catch {}
@@ -515,10 +545,17 @@ try { await Promise.race([browser.close().catch(() => {}), sleep(3000)]); } catc
 
 const high = profiles.find(p => p.label === 'high') || { detail: {} };
 const low = profiles.find(p => p.label === 'low') || { detail: {} };
+const largestLow = profiles.find(p => p.label === 'largest-low') || { detail: {} };
 const allPageErrors = profiles.flatMap(p => p.pageerrors || []);
 const allTextureWarnings = profiles.flatMap(p => p.textureWarnings || []);
 check('high profile launched and rendered nonblank', high.ok === true, high.detail && high.detail.error || '');
 check('low profile launched and rendered nonblank', low.ok === true, low.detail && low.detail.error || '');
+check('E68 largest low-tier profile launched and rendered nonblank', largestLow.ok === true, largestLow.detail && largestLow.detail.error || '');
+check('E68 largest low-tier profile covers the configured scene and full opening OOB',
+  largestLow.detail.scenario === largestScenario &&
+  largestLow.detail.fldLow === true &&
+  Number(largestLow.detail.units || 0) === Number(coverage.scenarios[largestScenario] && coverage.scenarios[largestScenario].units || 0),
+  JSON.stringify({ configured: largestScenario, actual: largestLow.detail.scenario, units: largestLow.detail.units, expectedUnits: coverage.scenarios[largestScenario] && coverage.scenarios[largestScenario].units, fldLow: largestLow.detail.fldLow }));
 check('low tier reports fldLow() true and high tier reports false', high.detail.fldLow === false && low.detail.fldLow === true, 'high=' + high.detail.fldLow + ' low=' + low.detail.fldLow);
 check('low tier gates out formation figures and peg ranks', low.detail.ffOff === true && low.detail.unitRender && low.detail.unitRender.formationFigures !== true && low.detail.unitRender.pegsVisible !== true, JSON.stringify(low.detail.unitRender || {}));
 check('high tier formation figures use one shared instanced layer',
@@ -625,6 +662,19 @@ check('low tier atmoSmoke renders no more than the low particle budget',
   JSON.stringify(low.detail.atmoSmokeAfterBurst || {}));
 check('low tier stays below hard render-call cap', Number(low.detail.renderInfo && low.detail.renderInfo.calls || 0) <= Number(budgets.lowTierRenderCallHardCap || 360), 'calls=' + (low.detail.renderInfo && low.detail.renderInfo.calls));
 check('low tier stays below hard scene-object cap', Number(low.detail.sceneCounts && low.detail.sceneCounts.objects || 0) <= Number(budgets.lowTierObjectHardCap || 1400), 'objects=' + (low.detail.sceneCounts && low.detail.sceneCounts.objects));
+check('E68 largest low tier keeps formation/marker fallbacks and smoke within the existing low-tier contract',
+  largestLow.detail.ffOff === true &&
+  largestLow.detail.unitRender && largestLow.detail.unitRender.formationFigures !== true && largestLow.detail.unitRender.pegsVisible !== true &&
+  largestLow.detail.unitRender.bodyLayer === true && largestLow.detail.unitRender.bodyLayerVisible === true &&
+  largestLow.detail.unitRender.poleLayer === true && largestLow.detail.unitRender.poleLayerVisible === true &&
+  smokeDrawRangeOk(largestLow) && Number(largestLow.detail.atmoSmokeAfterBurst && largestLow.detail.atmoSmokeAfterBurst.drawRangeCount || 0) <= 84,
+  JSON.stringify({ unitRender: largestLow.detail.unitRender || {}, smoke: largestLow.detail.atmoSmokeAfterBurst || {}, renderPoints: largestLow.detail.renderInfo && largestLow.detail.renderInfo.points }));
+check('E68 largest low tier stays below the unchanged hard render-call cap',
+  Number(largestLow.detail.renderInfo && largestLow.detail.renderInfo.calls || 0) <= Number(budgets.lowTierRenderCallHardCap || 360),
+  'calls=' + (largestLow.detail.renderInfo && largestLow.detail.renderInfo.calls));
+check('E68 largest low tier stays below the unchanged hard scene-object cap',
+  Number(largestLow.detail.sceneCounts && largestLow.detail.sceneCounts.objects || 0) <= Number(budgets.lowTierObjectHardCap || 1400),
+  'objects=' + (largestLow.detail.sceneCounts && largestLow.detail.sceneCounts.objects));
 check('zero pageerrors across profile scenes', allPageErrors.length === 0, allPageErrors.slice(0, 3).join(' | '));
 check('zero Three.js undefined-texture warnings', allTextureWarnings.length === 0, allTextureWarnings.slice(0, 3).join(' | '));
 
@@ -655,6 +705,7 @@ const out = {
   targetHardware: perf.targetHardware,
   method: perf.method,
   budgets,
+  coverage,
   warnings,
   passed: steps.filter(s => s.ok).length,
   total: steps.length,
@@ -669,7 +720,7 @@ for (const p of profiles) {
   const d = p.detail || {};
   const ri = d.renderInfo || {};
   const fb = d.frameBurst || {};
-  console.log('  ' + p.label + ' quality=' + p.quality + ' launchMs=' + (d.launchMs ?? 'n/a') + ' avgFrameMs=' + (fb.avgMs ?? 'n/a') + ' calls=' + (ri.calls ?? 'n/a') + ' objects=' + (d.sceneCounts && d.sceneCounts.objects || 'n/a'));
+  console.log('  ' + p.label + ' scenario=' + (d.scenario || 'n/a') + ' quality=' + p.quality + ' launchMs=' + (d.launchMs ?? 'n/a') + ' avgFrameMs=' + (fb.avgMs ?? 'n/a') + ' calls=' + (ri.calls ?? 'n/a') + ' objects=' + (d.sceneCounts && d.sceneCounts.objects || 'n/a'));
 }
 for (const w of warnings) console.log('  WARN ' + w);
 for (const s of steps) if (!s.ok) console.log('  FAIL ' + s.name + (s.detail ? ' :: ' + s.detail : ''));

@@ -1,6 +1,6 @@
 {
   "schema": "cw_media_budget_v1",
-  "schemaVersion": "1.7",
+  "schemaVersion": "1.8",
   "policy": {
     "singleFileCore": true,
     "optionalHdPackForHeavyMedia": true,
@@ -33,7 +33,9 @@
     "targetHardware": "Intel UHD Graphics 617 / 8 GB RAM floor",
     "probe": "tools/probe-intel-uhd617-profile.mjs",
     "representativeScenario": "chickamauga",
-    "method": "Browser WebGL profile over the built single-file game. Timing values are warning-only because headless Chrome may report SwiftShader or host GPU rather than the exact player GPU.",
+    "largestShippedScene": "kennesaw",
+    "largestShippedSceneMetric": "Opening OOB unit count: Kennesaw has 17 initial units, the largest of the 13 shipped opening scenes; the probe derives and rechecks this inventory from current battle data.",
+    "method": "Browser WebGL profile over the built single-file game: representative Chickamauga high/low legs plus a low-tier Kennesaw largest-opening-scene leg. Timing values are warning-only because headless Chrome may report SwiftShader or host GPU rather than the exact player GPU.",
     "budgets": {
       "lowTierRenderCallHardCap": 360,
       "lowTierObjectHardCap": 1400,
