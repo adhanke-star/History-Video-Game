@@ -194,10 +194,10 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   5b inventory attached 2026-07-10; 5a shipped D357 2026-07-10; 5b batch 1 (8 records) shipped
   D358 2026-07-10; 5c shipped D360 2026-07-10.
 
-### LANE-003 · battle-ladder — **CONTRACT** (Claude/Fable takeover queued at the D362 boundary)
+### LANE-003 · battle-ladder — **DRIVE** (Claude/Fable owns the D363+ ladder)
 
 - **Owning tool:** Claude Code, with Fable 5 at xhigh as the TOP LOOP.
-- **State:** CONTRACT — Fable takes `DRIVE` in the D363 New Market Heights planning/spec commit.
+- **State:** DRIVE — Fable verified the clean `b1d828b` boundary (HEAD == origin/main, worktree clean) and took the lock on 2026-07-10 for the D363 New Market Heights planning/spec commit.
 - **Design law:** `docs/design/battle-build-research/` packets (`eastern-1862` → Gaines' Mill ·
   `usct` → New Market Heights · `western-gaps` → Stones River · stretch: `shenandoah-1864` Cedar
   Creek · `shenandoah-1862` Cross Keys/Port Republic · `appomattox-campaign` Five Forks ·
@@ -225,20 +225,30 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
 - **Probe design:** per battle — plan probe (spec invariants) + runtime probe (registry/menu/
   OOB sums by sector/direction battery/pageerrors), modeled on `tools/probe-nashville*.mjs`.
 - **Resume pointer:** **D362 playable Gaines' Mill is the handoff boundary in the commit that
-  carries this transfer.** Fable starts D363 with the New Market Heights durable spec + plan
-  probe only; no runtime data lands until that gate is green, committed, and pushed. Then ship
-  the playable New Market Heights slice at full depth before beginning **Stones River**
-  (multi-phase, near-parity direction guards). Stretch in order only if both mandatory battles
-  are shipped and the release battery is green: Cedar Creek · Cross Keys/Port Republic · Five
-  Forks · Fort Donelson · Elkhorn Tavern. 2-3 battles at FULL depth beat 6 shallow ones.
-- **Last-touched commit:** D362 (Gaines' Mill playable slice + Fable transfer; exact SHA is the
-  live `origin/main` head Fable verifies before taking DRIVE).
+  carries this transfer.** D363 (SHIPPED, this commit) locked the New Market Heights contract:
+  `docs/design/new-market-heights-battle-build-spec.md` + `tools/probe-new-market-heights-plan.mjs`
+  (10/10, bind-tested) — two-phase T8 same-ground shape (Duncan w1 CS-holds → Draper w3
+  US-carries vs a `Verified withdrawal order; Inferred residual strength` reduced line), Fort
+  Harrison teaching-only, guarded T13 pre-placed abatis seam, executable Fort Pillow absence
+  guard, inverse winner-bleeds-less cost guard. The 13-agent research verdicts live in the spec's
+  source register/readback. **Next: D364 playable New Market Heights at full D362 depth from the
+  committed spec** (data + T13 seam + registry rank 45 + focused probe + 8-seed batteries +
+  baselines: schema 45, loot 957+units×3, flags/Intel/media 15, suite 120). Then **Stones River**
+  (spec-first; near-parity direction guards; Polk/Hardee Lt. Gens.). Stretch in order only if
+  both mandatory battles are shipped and the release battery is green: Cedar Creek · Cross
+  Keys/Port Republic · Five Forks · Fort Donelson · Elkhorn Tavern. 2-3 battles at FULL depth
+  beat 6 shallow ones.
+- **Last-touched commit:** D362 (Gaines' Mill playable slice + Fable transfer) · D363 (New
+  Market Heights spec + plan probe, Fable/Claude — this commit).
 - **History:** lane opened by Claude Code 2026-07-10 after Aaron's popup Q&A (D359) fixed scope,
   depth, and locks for the Codex session · ChatGPT/Codex took DRIVE in D361 and locked the
   Gaines' Mill source/strength/rank/direction contract before runtime · Aaron redirected D363+
   to Claude/Fable on 2026-07-10 so work can continue while the ChatGPT usage window resets;
   ChatGPT retains ownership only through the already-bounded D362 closeout and transfers on its
-  green commit.
+  green commit · Claude/Fable verified the `b1d828b` D362 boundary and took DRIVE 2026-07-10
+  (D363 New Market Heights spec + plan probe first; runtime only after that commit is green and
+  pushed; then Stones River) · D363 shipped 2026-07-10 (13-agent research pass → adjudicated
+  two-phase USCT shape; spec + 10/10 plan gate; Fort Harrison teaching-only).
 
 #### Fable takeover packet — read as the continuation prompt
 

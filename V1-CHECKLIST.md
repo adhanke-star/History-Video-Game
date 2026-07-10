@@ -1,6 +1,6 @@
 # V1 FEATURE-COMPLETE CHECKLIST — "The Civil War"  (APPROVED — run-k Q&A, 2026-06-15)
 
-> **D362 live gate:** Gaines' Mill playable SHIPPED as scenario 14; focused/adjacent gates green. LANE-003 owner is Claude/Fable. Next: D363 New Market Heights spec + plan probe, then runtime, then Stones River; full `vet:noreg` at lane release.
+> **D363 live gate:** New Market Heights spec + plan probe SHIPPED (10/10, bind-tested); runtime NOT yet present — the roster stays 14 through Gaines' Mill. Fable holds LANE-003 DRIVE. Locked shape: two-phase T8 (Duncan w1 CS-holds → Draper w3 US-carries vs a reduced withdrawing line), Fort Harrison teaching-only, T13 pre-placed abatis seam contracted, executable Fort Pillow absence guard, inverse winner-bleeds-less cost guard. Next: D364 playable New Market Heights, then Stones River spec-first; full `vet:noreg` at lane release.
 
 **Purpose:** give "complete all project goals" a concrete, ordered target so autonomous runs can drive to a
 content-complete v1 (still a perpetual project after — D54). Built from `MODERN-UGG-PLAN.md` (P0–P5),
