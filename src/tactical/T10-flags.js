@@ -61,7 +61,9 @@ function _fldFlagInitSettings() {
 /* ---- per-battle meta: date/theater drive flag choice + the badge gate -----
    theater "E"/"W"; badges = were AotP corps badges worn (post 21 Mar 1863, East);
    csFlag = the predominant Confederate flag family at that battle.
-   Citations live in DECISIONS D131 (research+verify Workflow, >=2 sources each).
+   Citations live in DECISIONS D131/D351. "hardee" is the representative Western/AoT
+   family default, not a claim that every regiment carried one identical design;
+   a documented unit-specific variant still requires its own lookup override.
    A scenario absent from this table (the sandbox / a skirmish) -> _default:
    no badges, ANV battle flag for CS — a byte-identity-neutral, era-typical look. */
 var _FLD_BATTLE_META = {
@@ -74,6 +76,10 @@ var _FLD_BATTLE_META = {
   shiloh:           { theater: "W", badges: false, csFlag: "first-national" }, // 6-7 Apr 1862
   vicksburg:        { theater: "W", badges: false, csFlag: "hardee" },         // siege to 4 Jul 1863 (Pemberton's army was Western-lineage — a Western pattern, not the Eastern ANV cross; Inferred)
   chickamauga:      { theater: "W", badges: false, csFlag: "hardee" },         // 19-20 Sep 1863 (native Army of Tennessee; Longstreet's transferred Eastern brigades split out below)
+  chattanooga:      { theater: "W", badges: false, csFlag: "hardee" },         // 23-25 Nov 1863 (Army of Tennessee)
+  kennesaw:         { theater: "W", badges: false, csFlag: "hardee" },         // 27 Jun 1864 (Army of Tennessee)
+  franklin:         { theater: "W", badges: false, csFlag: "hardee" },         // 30 Nov 1864 (Army of Tennessee)
+  nashville:        { theater: "W", badges: false, csFlag: "hardee" },         // 15-16 Dec 1864 (Army of Tennessee)
   _default:         { theater: "E", badges: false, csFlag: "anv" }
 };
 function _fldBattleMeta() {

@@ -33,6 +33,7 @@ mkdirSync(OUT, { recursive: true });
 const cfg = JSON.parse(readFileSync(join(__dirname, 'shots.json'), 'utf8'));
 const GL = ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--enable-webgl', '--disable-dev-shm-usage'];
 const THREE_TEXTURE_WARNING = /THREE\.WebGLRenderer:\s*Texture marked for update but image is undefined/;
+const DIAGNOSTIC_LATE_WEST_FALLBACK = process.argv.includes('--diagnostic-late-west-fallback');
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 async function up(u) { try { const r = await fetch(u, { method: 'HEAD' }); return r.ok || r.status === 200; } catch { return false; } }
 
@@ -74,6 +75,7 @@ function pureScript() {
   return `(() => {
     try {
       G.settings = G.settings || {}; G.settings.battleFlags = true;
+      if (${JSON.stringify(DIAGNOSTIC_LATE_WEST_FALLBACK)}) delete _FLD_BATTLE_META.nashville;
       var savedField = (typeof __FIELD !== 'undefined') ? __FIELD : undefined;
       function withScenario(sc, fn) { __FIELD = { scenario: sc, units: [], fog: false }; try { return fn(); } finally { __FIELD = savedField; } }
       function U(name, side) { return { name: name, side: side, alive: true, x: 0, z: 0, facing: 0, men: 100, maxMen: 100 }; }
@@ -84,8 +86,15 @@ function pureScript() {
         bullrun: withScenario('bullrun1', function(){ return _fldBattleMeta(); }),
         gburg: withScenario('gettysburg', function(){ return _fldBattleMeta(); }),
         chick: withScenario('chickamauga', function(){ return _fldBattleMeta(); }),
+        chattanooga: withScenario('chattanooga', function(){ return _fldBattleMeta(); }),
+        kennesaw: withScenario('kennesaw', function(){ return _fldBattleMeta(); }),
+        franklin: withScenario('franklin', function(){ return _fldBattleMeta(); }),
+        nashville: withScenario('nashville', function(){ return _fldBattleMeta(); }),
         sandbox: withScenario('__nope__', function(){ return _fldBattleMeta(); })
       };
+      R.metaCoverage = Object.keys(fldScenarioRegistry()).map(function(id) {
+        return { id: id, explicit: Object.prototype.hasOwnProperty.call(_FLD_BATTLE_META, id) };
+      });
       // flag selection (battle-aware)
       function flagPat(sc, name, side){ return withScenario(sc, function(){ var f=_fldFlagFor(U(name, side)); return f ? f.pattern : null; }); }
       R.flag = {
@@ -95,6 +104,10 @@ function pureScript() {
         csChickamaugaHood: flagPat('chickamauga', "Hood's Arriving Brigades", 'CS'),
         csChickamaugaKershaw: flagPat('chickamauga', "Kershaw's Brigades", 'CS'),
         csVicksburg: flagPat('vicksburg', "Interior Reserve", 'CS'),
+        csChattanooga: flagPat('chattanooga', "Bate's Division Sector", 'CS'),
+        csKennesaw: flagPat('kennesaw', "Maney's Tennessee Brigade", 'CS'),
+        csFranklin: flagPat('franklin', "Cleburne's Division", 'CS'),
+        csNashville: flagPat('nashville', "Cheatham's Shy's Hill Line", 'CS'),
         csGettysburg: flagPat('gettysburg', "Rodes's Division", 'CS'),
         csShiloh: flagPat('shiloh', "Chalmers's Brigade", 'CS'),
         usNational: flagPat('gettysburg', "Doubleday's Division (I Corps)", 'US'),
@@ -296,6 +309,14 @@ async function runScene(page, label, scenario, seed, opts, shared) {
   check('battle meta: badges gated to Eastern post-Mar-1863 (Gettysburg yes, Bull Run/Chickamauga no, sandbox no)',
     pure.ok && P.meta && P.meta.gburg.badges === true && P.meta.bullrun.badges === false && P.meta.chick.badges === false && P.meta.sandbox.badges === false,
     JSON.stringify(P.meta || {}));
+  check('battle meta: every registered historical scenario has explicit metadata (no silent Eastern/ANV fallback)',
+    pure.ok && Array.isArray(P.metaCoverage) && P.metaCoverage.length === 13 && P.metaCoverage.every(x => x.explicit),
+    JSON.stringify(P.metaCoverage || []));
+  check('battle meta: Chattanooga/Kennesaw/Franklin/Nashville are Western AoT fields with no AotP badges and a Hardee-pattern default',
+    pure.ok && ['chattanooga', 'kennesaw', 'franklin', 'nashville'].every(function(id) {
+      var m = P.meta && P.meta[id]; return m && m.theater === 'W' && m.badges === false && m.csFlag === 'hardee';
+    }),
+    JSON.stringify(P.meta || {}));
   check('flag: CS flies First National at Bull Run (the ANV battle flag did not yet exist)',
     pure.ok && P.flag.csBullRun === 'first-national', 'pattern=' + (P.flag && P.flag.csBullRun));
   check('flag: CS flies the ANV battle flag (Southern Cross) in the mid-war East (Antietam, Gettysburg)',
@@ -309,6 +330,11 @@ async function runScene(page, label, scenario, seed, opts, shared) {
     'hood=' + (P.flag && P.flag.csChickamaugaHood) + ' kershaw=' + (P.flag && P.flag.csChickamaugaKershaw));
   check('flag: Vicksburg (Pemberton\'s Western-lineage army) flies a Western pattern, not the Eastern ANV cross',
     pure.ok && P.flag.csVicksburg === 'hardee', 'vicksburg=' + (P.flag && P.flag.csVicksburg));
+  check('flag: all four late-West Army of Tennessee scenarios resolve native CS units to the Hardee pattern',
+    pure.ok && P.flag.csChattanooga === 'hardee' && P.flag.csKennesaw === 'hardee'
+      && P.flag.csFranklin === 'hardee' && P.flag.csNashville === 'hardee',
+    'chattanooga=' + (P.flag && P.flag.csChattanooga) + ' kennesaw=' + (P.flag && P.flag.csKennesaw)
+      + ' franklin=' + (P.flag && P.flag.csFranklin) + ' nashville=' + (P.flag && P.flag.csNashville));
   check('flag: US national / Irish harp / Iron Brigade national resolve correctly',
     pure.ok && P.flag.usNational === 'stars-stripes' && P.flag.usIrish === 'harp' && P.flag.usIron === 'stars-stripes',
     JSON.stringify(P.flag || {}));
@@ -397,7 +423,7 @@ async function runScene(page, label, scenario, seed, opts, shared) {
   check('zero pageerrors across all live scenes', allPe === 0, 'pageerrors=' + allPe);
 
   const ok = steps.every(s => s.ok);
-  const out = { ok, generatedAt: new Date().toISOString(), passed: steps.filter(s => s.ok).length, total: steps.length, steps, pure, scenes };
+  const out = { ok, generatedAt: new Date().toISOString(), diagnosticLateWestFallback: DIAGNOSTIC_LATE_WEST_FALLBACK, passed: steps.filter(s => s.ok).length, total: steps.length, steps, pure, scenes };
   writeFileSync(join(OUT, 'probe-flags.json'), JSON.stringify(out, null, 2));
   console.log('probe-flags ok=' + ok + ' (' + out.passed + '/' + out.total + ')');
   for (const s of steps) console.log((s.ok ? '  ok   ' : '  FAIL ') + s.name + (s.detail ? ' :: ' + s.detail : ''));

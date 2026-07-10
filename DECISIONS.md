@@ -6,6 +6,14 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D351 — E66 LATE-WESTERN BATTLE-FLAG METADATA — [CODEX 5.6 Sol main loop, run-2 queue] (2026-07-10)
+
+- **Four explicit scenarios:** Chattanooga, Kennesaw, Franklin, and Nashville now resolve as Western-theater fields with no Army-of-the-Potomac corps badges and a representative Army-of-Tennessee `hardee` flag-family default. They no longer fall through to the Eastern/ANV sandbox fallback.
+- **Historical boundary:** the [Tennessee State Museum's Hardee-pattern record](https://tnmuseum.org/Stories/posts/civil-war-flags-of-tennessee--part-2-flag-construction-and-inscriptions) ties the design to Hardee and especially Cleburne and documents its use into the Atlanta Campaign. NPS identifies the Confederate force as the Army of Tennessee at [Chattanooga](https://home.nps.gov/chch/learn/historyculture/battles-for-chattanooga.htm), [Kennesaw](https://www.nps.gov/kemo/learn/historyculture/confederate-order-of-battle.htm), [Franklin](https://www.nps.gov/articles/000/the-battle-of-franklin-and-beginning-of-the-end-for-the-army-of-tennessee.htm), and [Nashville](https://www.nps.gov/civilwar/search-battles-detail.htm?battleCode=tn038). `hardee` remains a representative family default, not a false claim that every regiment carried an identical design; a documented unit variant still requires its own lookup override.
+- **Guard law:** `probe-flags` now compares the complete live 13-scenario registry to `_FLD_BATTLE_META`, so any future registered battle that silently inherits the Eastern/ANV default is red. Separate teeth pin the four new `W / badges=false / hardee` records and representative native-unit pattern resolution.
+- **Negative/focused gate:** deleting Nashville metadata in-browser made exactly the three new coverage/semantic/pattern teeth red (**39/42**, exit 1) while all 39 legacy checks stayed green. Final flags **42/42**, 0 pageerrors/texture warnings; schema **43/43**; roster **8/8**, 13 exact scenarios, 0 pageerrors; visual fidelity **27/27**, 0 pageerrors/texture warnings; screenshots read; source/probe syntax clean; build **GATE OK**; artifact readback and `git diff --check` clean. Full `npm run vet:noreg` remains deferred to the D176 queue checkpoint.
+- **Queue:** E66 flips to FIXED; **2 run-2 PENDING FIX-NOW items remain: E69 and E50**. Next is E69 report-HTML entity escaping. E70 remains proposal-only.
+
 ## D350 — S43 CANONICAL ROUTING COHERENCE — [CODEX 5.6 Sol main loop, run-2 queue] (2026-07-10)
 
 - **Disk wins over stale snapshots:** the active `START-HERE.md` picker and `AUTONOMOUS-RUN.md` refresh now describe the 13-scenario D349 boundary and the remaining run-2 order **E66 → E69 → E50**, followed by the E70 proposal disposition and the planned full-suite checkpoint. The old D333 and D322 snapshots remain only inside explicit source-history comments or legacy sections, not rendered as current instructions.
