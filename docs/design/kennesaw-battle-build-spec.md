@@ -1,6 +1,6 @@
 # Kennesaw Mountain Battle-Build Spec (D330)
 
-**Status:** D330 planning/spec + probe scaffold, implemented in D331 as playable runtime. D331 adds `data/kennesaw.json`, registry/menu placement after Chattanooga, `tools/probe-kennesaw.mjs`, both historical baselines, and regenerated HTML.
+**Status:** D330 planning/spec + probe scaffold, implemented in D331 as playable runtime; D339 corrects C71's Pigeon Hill overfielding and unmasks the focused guard. D331 adds `data/kennesaw.json`, registry/menu placement after Chattanooga, `tools/probe-kennesaw.mjs`, both historical baselines, and regenerated HTML.
 
 **Task shape:** build Kennesaw Mountain as the first Atlanta/March battle-build item after D327/D329 completed the research library. D330 locks the intended scope, source traps, OOB grain, rank rules, D74 no-fudge wall, and future probe teeth so D331 can implement without inventing units, ranks, strengths, terrain, quotations, casualties, or combat exceptions.
 
@@ -26,6 +26,7 @@ These are the minimum D331 anchors. Add more before data authoring if a rank, st
 | NPS, Union Order of Battle (`https://www.nps.gov/kemo/learn/historyculture/union-order-of-battle.htm`) | Sherman, Thomas, Newton, Davis, Morgan L. Smith, Giles A. Smith, Lightburn, Walcutt, Harker, Wagner, Kimball, McCook, Mitchell, and Union battery organization | Verified for campaign OOB and named assault brigades; not a strength table |
 | NPS, Confederate Order of Battle (`https://www.nps.gov/kemo/learn/historyculture/confederate-order-of-battle.htm`) | Johnston, Hardee, Cheatham, Maney, Vaughn, Cleburne, Walker, French, Loring, and artillery organization | Verified for campaign OOB and principal defending formations; not a strength table |
 | NPS National Register text, Kennesaw Mountain National Battlefield Park (`https://npgallery.nps.gov/pdfhost/docs/NRHP/Text/66000063.pdf`) | Sector-grain assault strengths, two-pronged assault shape, Pigeon Hill terrain, Dead Angle defenses, named assault brigades, casualty direction | Verified. It records 5,500 Federals at Pigeon Hill, 9,000 Federals in Newton's and Davis's Cheatham Hill assault, and US ~3,000 losses vs CS under 1,000 |
+| NPS, Federal Assault on Pigeon Hill site bulletin (`https://www.nps.gov/kemo/learn/historyculture/upload/Pigeon-Hill-Site-Bulletin_A.pdf`) | Exact Pigeon Hill commitment: Giles A. Smith and Lightburn from Morgan L. Smith's division plus Walcutt from Harrow's division, about 5,500 total | Verified. The bulletin states that these three brigades carried out the attack and that about 5,500 Union troops assaulted the position; it supplies no separate committed Morgan L. Smith reserve echelon |
 | American Battlefield Trust, Kennesaw Mountain (`https://www.battlefields.org/learn/civil-war/battles/kennesaw-mountain`) | Date, result, broad casualty direction, terrain names, warning that 150,000/100,000 are campaign/army-group totals | Verified in D327 packet. Use broad casualty direction only, not exact count-forcing |
 | American Battlefield Trust, Cheatham Hill article (`https://www.battlefields.org/learn/articles/cheatham-hill`) | Cheatham Hill assault participants and line distance | Verified as a secondary anchor: Newton's division plus McCook and Mitchell from Davis's division attacked there |
 
@@ -41,7 +42,7 @@ Do not encode a unit, commander, rank, strength, or sector until it is verified 
 - **James B. McPherson - Major General, USA.** Army of the Tennessee; present at Kennesaw and killed later at Atlanta on July 22. Do not carry him into post-July-22 Atlanta scenarios.
 - **John A. Logan - Major General, USA.** XV Corps, Army of the Tennessee, directs the Pigeon Hill attack.
 - **Morgan L. Smith - Brigadier General, USA.** His XV Corps Second Division furnishes the Pigeon Hill assaulting brigades. The NPS order of battle lists him as a brigadier general; do not inflate him.
-- **Pigeon Hill assault:** the NPS National Register narrative identifies three brigades and about **5,500 Federals**: Brig. Gen. Giles A. Smith, Brig. Gen. Joseph A. J. Lightburn, and Col. Charles Walcutt. Use this as a sector total, not three invented full-strength brigades.
+- **Pigeon Hill assault:** the NPS National Register narrative and NPS Pigeon Hill site bulletin identify three brigades and about **5,500 Federals**: Brig. Gen. Giles A. Smith, Brig. Gen. Joseph A. J. Lightburn, and Col. Charles Walcutt. The 5,500 is the complete committed assault, not an initial wave. Use it as a sector total, not three invented full-strength brigades, and do not field a separate Morgan L. Smith reserve echelon on top of it.
 - **Cheatham Hill / Dead Angle assault:** the NPS National Register narrative identifies about **9,000 Federals** in Newton's and Davis's divisions. It specifically names Newton's brigades under Brig. Gen. Charles G. Harker, Brig. Gen. George D. Wagner, and Brig. Gen. Nathan Kimball, and Davis's two attacking brigades under Cols. Daniel McCook and John G. Mitchell.
 - **John Newton - Brigadier General, USA.** IV Corps Second Division. The NPS OOB and ABT Cheatham Hill article anchor his role.
 - **Jefferson C. Davis - Brigadier General, USA.** XIV Corps Second Division. Do not confuse him with Confederate president Jefferson Davis, and do not overpromote him at Kennesaw.
@@ -65,6 +66,7 @@ Do not encode a unit, commander, rank, strength, or sector until it is verified 
 
 - **Forbidden:** ABT's 150,000 vs 100,000 or any similar whole-theater / army-group total. Those are campaign totals and cannot enter OOB.
 - **Verified sector totals for D331 modeling:** Pigeon Hill = about **5,500 Federals** attacking; Cheatham Hill / Dead Angle = about **9,000 Federals** attacking. The combined attacking slice is therefore about 14,500, consistent with the smaller engaged-strength figure but not equal to Sherman's whole army.
+- **C71/D339 correction:** the source's 5,500 Pigeon Hill figure already covers every committed assault unit: Giles A. Smith, Lightburn, and Walcutt. The broader Federal force held troops in reserve to exploit success, but the sources do not support fielding an additional 1,200-man Morgan L. Smith echelon inside this failed Pigeon Hill assault. Remove `us_morgan_smith_support`; keep Morgan L. Smith as the verified division commander, not a fourth combat unit.
 - **Confederate sector strengths:** the NPS National Register text identifies defending divisions and works, but not exact brigade headcounts for every unit. D331 may use game-scale, explicitly **Inferred** defending brigade strengths drawn from the named divisions/brigades, but must not invent a source label. If a runtime number is not directly sourced, the note must say "Verified identity; Inferred strength."
 
 ## Landmarks
@@ -118,7 +120,7 @@ When `data/kennesaw.json` is added:
 
 - `tools/probe-kennesaw.mjs` must verify a single-phase scenario with no `phases[]`, US attacker / CS defender, `defaultFog:false`, ridge/breastwork objective, Pigeon Hill / Little Kennesaw / Burnt Hickory Road landmarks, Cheatham's Hill / Dead Angle / Dallas Road / Mebane battery landmarks, and Schofield flank teaching.
 - Runtime probe must verify rank traps: Sherman = Maj. Gen.; Johnston = Gen.; Thomas, Schofield, McPherson = Maj. Gen.; Hardee = Lt. Gen.; Cheatham and Cleburne = Maj. Gen.; Maney and Vaughn = Brig. Gen.; Harker = Brig. Gen.; McCook and Mitchell = Col.; Hood is not army commander.
-- Runtime probe must verify OOB-strength honesty: no 150,000/100,000 campaign totals; Pigeon Hill and Cheatham Hill sector totals or notes are present; any unsourced unit strength is marked Inferred.
+- Runtime probe must verify OOB-strength honesty: no 150,000/100,000 campaign totals; every fielded US infantry unit, including reinforcements, has an explicit `assaultSector`; the probe sums all `pigeon-hill` and all `cheatham-hill` entries rather than a hand-picked id list; Pigeon Hill totals 5,500 across exactly the three sourced brigades; Cheatham Hill totals 9,000; `us_morgan_smith_support` is absent; any unsourced unit strength is marked Inferred.
 - Runtime probe must verify the D74 no-fudge key family by scanning `data/kennesaw.json` directly.
 - Balance/direction teeth: across a small deterministic seed set, the US fails to seize in the majority and US casualties exceed CS casualties in the majority. The probe should guard direction, not exact counts.
 - Both-baselines gotcha: `tools/probe-tactical-roster.mjs` `EXPECTED`, menu order, and DOM button list must include `kennesaw`; `tools/probe-custom-battle-builder.mjs` historical-registry baseline must include `kennesaw`.
@@ -128,7 +130,9 @@ When `data/kennesaw.json` is added:
 
 D331 implemented this packet as a single-phase playable battle. Focused readback: `probe-kennesaw-plan` 6/6, `probe-kennesaw` 10/10, `probe-tactical-roster` 8/8, `probe-custom-battle-builder` 15/15, adjacent `probe-chattanooga` 16/16, schema validation 41/41, all required JSON artifacts `ok=true`, zero failed steps, zero pageerrors.
 
-The runtime guard confirms: Pigeon Hill sums to 5,500 Federals, Cheatham Hill sums to 9,000 Federals, no 150,000/100,000 campaign totals leak into data, Confederate exact strengths are marked Inferred, rank/date traps hold, no D74 fudge keys are present, CS holds 8/8 deterministic seeds, and US casualties exceed CS casualties 8/8 seeds.
+The D331 runtime guard reported Pigeon Hill at 5,500 by summing only the three initial brigade ids, but runtime also fielded the separate 1,200-man `us_morgan_smith_support`, committing 6,700 to the sector. D339 removes that unsupported extra echelon and replaces the masked id-list calculation with an all-fielded-US-infantry sector contract. The guard still verifies Cheatham Hill at 9,000, rejects 150,000/100,000 campaign totals and D74 fudge keys, and preserves the honest seed battery as an outcome readback rather than an output target.
+
+D339 A/B readback at `f67cec5` versus the corrected input: Pigeon Hill **6,700→5,500**, all-fielded US strength **16,000→14,800**, CS strength **11,925 unchanged**; CS holds **8/8→8/8** and US-higher-loss **8/8→8/8**. Normalized casualty deltas vary by seed and were not tuned. Final focused gate: schema 43/43; Kennesaw plan 6/6; Kennesaw 10/10; adjacent Franklin 10/10 and Chattanooga 16/16; all final browser JSON `ok=true`, zero failed steps, zero pageerrors.
 
 ## D330 Completion Criteria
 

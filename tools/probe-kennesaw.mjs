@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 import "./guard-probe-browser.mjs";
-// tools/probe-kennesaw.mjs - D331 playable Kennesaw Mountain.
-// Verifies the single-phase scenario contract, D330 source traps, D74 no-fudge
-// wall, registry/menu integration, deterministic resolution, and direction
-// guards for the historical frontal-assault repulse.
+// tools/probe-kennesaw.mjs - D331 playable Kennesaw Mountain; D339 C71 fix.
+// Verifies the single-phase scenario contract, D330/D339 source traps, D74
+// no-fudge wall, all-fielded sector strengths, registry/menu integration,
+// deterministic resolution, and direction guards for the historical repulse.
 import { chromium } from 'playwright-core';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -52,10 +52,23 @@ const SETUP = `(() => {
   function isNum(n) { return typeof n === 'number' && isFinite(n); }
   function txt(o) { var s = ''; try { s = JSON.stringify(o); } catch(e) {} return String(s || '').toLowerCase(); }
   function allUnits(sd) { return ((sd.oob && sd.oob.US) || []).concat((sd.oob && sd.oob.CS) || []).concat(sd.reinforcements || []); }
-  function sideStrength(ids) {
-    var n = 0, units = allUnits(DATA);
-    for (var i = 0; i < units.length; i++) if (ids.indexOf(units[i].id) >= 0) n += units[i].men || 0;
+  function fieldedSideUnits(sd, side) {
+    var out = ((sd.oob && sd.oob[side]) || []).slice(), reinf = sd.reinforcements || [];
+    for (var i = 0; i < reinf.length; i++) if (reinf[i].side === side) out.push(reinf[i]);
+    return out;
+  }
+  function fieldedStrength(side) {
+    var n = 0, units = fieldedSideUnits(DATA, side);
+    for (var i = 0; i < units.length; i++) n += units[i].men || 0;
     return n;
+  }
+  function sectorUnits(side, sector) {
+    var out = [], units = fieldedSideUnits(DATA, side);
+    for (var i = 0; i < units.length; i++) if (units[i].assaultSector === sector) out.push(units[i]);
+    return out;
+  }
+  function sumMen(units) {
+    var n = 0; for (var i = 0; i < units.length; i++) n += units[i].men || 0; return n;
   }
   function keyScan(obj, path, bad) {
     if (!obj || typeof obj !== 'object') return;
@@ -78,15 +91,17 @@ const SETUP = `(() => {
   }
   function runKen(opts) {
     opts = opts || {};
+    var start = { US:fieldedStrength('US'), CS:fieldedStrength('CS') };
     __FIELD._officersOff = false; __FIELD._logisticsOff = false; __FIELD._armsOff = false;
     delete G.settings.tacticalFog;
     fldLaunchSandbox({ renderer:'none', scenario:'kennesaw', autoBoth:!!opts.autoBoth, playerSide:opts.playerSide || 'US', seed:opts.seed || 1 });
     __FIELD.phase = 'battle'; __FIELD.paused = false;
     var n = 0, max = opts.maxSteps || 65000;
     while (__FIELD.phase === 'battle' && n < max) { fldSimStep(0.05); n++; }
+    var us = liveStrength('US'), cs = liveStrength('CS');
     return {
       w:__FIELD.winner, by:__FIELD.winBy, phase:__FIELD.phase, steps:n, t:Math.round(__FIELD.t),
-      us:liveStrength('US'), cs:liveStrength('CS'), cas:__FIELD.battleCas || null,
+      us:us, cs:cs, start:start, loss:{ US:Math.round(start.US - us), CS:Math.round(start.CS - cs) }, cas:__FIELD.battleCas || null,
       hold:{ US:Math.round(__FIELD.holdSecs.US), CS:Math.round(__FIELD.holdSecs.CS) },
       scenario:__FIELD.scenario, objective:__FIELD.objective && __FIELD.objective.name
     };
@@ -136,15 +151,24 @@ const SETUP = `(() => {
       return { rankTeeth:true };
     });
 
-    step('OOB STRENGTH HONESTY: Pigeon Hill sums to 5,500, Cheatham Hill sums to 9,000, and Confederate exact strengths are marked Inferred', function() {
-      var pigeon = sideStrength(['us_giles_smith', 'us_lightburn', 'us_walcutt']);
-      var cheatham = sideStrength(['us_newton_harker', 'us_newton_wagner', 'us_newton_kimball', 'us_mccook', 'us_mitchell']);
-      if (pigeon !== 5500) throw new Error('Pigeon Hill assault should sum to 5500, got ' + pigeon);
-      if (cheatham !== 9000) throw new Error('Cheatham Hill assault should sum to 9000, got ' + cheatham);
+    step('OOB STRENGTH HONESTY: ALL fielded US infantry is sector-tagged; Pigeon Hill totals 5,500 with no extra echelon; Cheatham Hill totals 9,000', function() {
+      var fieldedUS = fieldedSideUnits(DATA, 'US');
+      var usInf = fieldedUS.filter(function(u){ return u.arm === 'inf'; });
+      var unclassified = usInf.filter(function(u){ return u.assaultSector !== 'pigeon-hill' && u.assaultSector !== 'cheatham-hill'; });
+      if (unclassified.length) throw new Error('fielded US infantry missing valid assaultSector: ' + unclassified.map(function(u){ return u.id; }).join(', '));
+      var pigeonUnits = sectorUnits('US', 'pigeon-hill');
+      var cheathamUnits = sectorUnits('US', 'cheatham-hill');
+      var pigeonIds = pigeonUnits.map(function(u){ return u.id; }).sort();
+      var expectedPigeon = ['us_giles_smith', 'us_lightburn', 'us_walcutt'].sort();
+      if (JSON.stringify(pigeonIds) !== JSON.stringify(expectedPigeon)) throw new Error('Pigeon Hill fielded ids wrong: ' + pigeonIds.join(', '));
+      var pigeon = sumMen(pigeonUnits), cheatham = sumMen(cheathamUnits);
+      if (pigeon !== 5500) throw new Error('ALL fielded Pigeon Hill units should sum to 5500, got ' + pigeon);
+      if (cheatham !== 9000) throw new Error('ALL fielded Cheatham Hill units should sum to 9000, got ' + cheatham);
+      if (allUnits(DATA).some(function(u){ return u.id === 'us_morgan_smith_support'; })) throw new Error('unsupported us_morgan_smith_support still fielded');
       var cs = (DATA.oob.CS || []), inferred = 0;
       for (var i = 0; i < cs.length; i++) if (/Inferred strength/i.test(cs[i].note || '')) inferred++;
       if (inferred < 5) throw new Error('Confederate inferred-strength labels too thin: ' + inferred);
-      return { pigeon:pigeon, cheatham:cheatham, csInferred:inferred };
+      return { pigeon:{ men:pigeon, ids:pigeonIds }, cheatham:{ men:cheatham, units:cheathamUnits.length }, fieldedUS:fieldedUS.length, unclassified:unclassified.length, csInferred:inferred };
     });
 
     step('D74 NO-FUDGE: artillery carries gun counts and data has no battle-specific combat/result keys', function() {
@@ -181,13 +205,13 @@ const SETUP = `(() => {
         var r = runKen({ autoBoth:true, seed:seeds[i] });
         if (r.phase !== 'over') throw new Error('seed ' + seeds[i] + ' did not finish: ' + JSON.stringify(r));
         if (r.w === 'CS') csWins++;
-        var usLoss = 15700 - r.us, csLoss = 11600 - r.cs;
+        var usLoss = r.loss.US, csLoss = r.loss.CS;
         if (usLoss > csLoss) usHigherLoss++;
         samples.push(seeds[i] + ':' + r.w + '/' + Math.round(usLoss) + '-' + Math.round(csLoss) + '/' + r.by);
       }
       if (csWins < 5) throw new Error('CS should hold majority, got ' + csWins + '/8 :: ' + samples.join(', '));
       if (usHigherLoss < 5) throw new Error('US should lose more in majority, got ' + usHigherLoss + '/8 :: ' + samples.join(', '));
-      return { csWins:csWins + '/8', usHigherLoss:usHigherLoss + '/8', sample:samples.slice(0, 4) };
+      return { csWins:csWins + '/8', usHigherLoss:usHigherLoss + '/8', start:{ US:fieldedStrength('US'), CS:fieldedStrength('CS') }, sample:samples };
     });
 
     step('DETERMINISM: same seed -> identical Kennesaw result', function() {
@@ -195,7 +219,7 @@ const SETUP = `(() => {
       var b = runKen({ autoBoth:true, seed:909 });
       if (a.w !== b.w || a.by !== b.by || a.steps !== b.steps || a.us !== b.us || a.cs !== b.cs || JSON.stringify(a.hold) !== JSON.stringify(b.hold))
         throw new Error('non-deterministic: ' + JSON.stringify(a) + ' vs ' + JSON.stringify(b));
-      return { winner:a.w, winBy:a.by, steps:a.steps, us:a.us, cs:a.cs };
+      return { winner:a.w, winBy:a.by, steps:a.steps, start:a.start, loss:a.loss, us:a.us, cs:a.cs };
     });
 
     step('A US PLAYER AND A CS PLAYER both resolve passively (no hang/NaN)', function() {
