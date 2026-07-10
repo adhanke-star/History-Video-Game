@@ -26,7 +26,7 @@ function ensureDir(p) {
 // ---- Closed-world schema map: every family requires substantive nonempty keys ----
 const BATTLE_FILES = new Set([
   'antietam.json', 'bullrun.json', 'chancellorsville.json', 'chickamauga.json',
-  'chattanooga.json', 'franklin.json', 'fredericksburg.json', 'gettysburg.json', 'kennesaw.json',
+  'chattanooga.json', 'franklin.json', 'fredericksburg.json', 'gaines-mill.json', 'gettysburg.json', 'kennesaw.json',
   'nashville.json',
   'malvern-hill.json', 'shiloh.json', 'vicksburg.json'
 ]);

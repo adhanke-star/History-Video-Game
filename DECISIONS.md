@@ -6,6 +6,15 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D362 — PLAYABLE GAINES' MILL SHIPS; LANE-003 TRANSFERS TO CLAUDE FABLE — [AARON transfer · CODEX 5.6 Sol Ultra] (2026-07-10)
+
+- Fourteenth scenario: single-phase CS attacker / US defender, 15 unique units (8 opening), exactly 27,000 US / 32,000 CS, 72 / 32 guns, nine battle-date-ranked leaders, and seven sourced teaching cards. Strength copy discloses the conflicting ~32,000 / 50,000 / ~60,000 Confederate aggregates; every modeled split is `Verified identity; Inferred strength`.
+- First final-input battery needed no tuning: CS objective hold **8/8** and CS killed/wounded ≥ US **8/8** after captured/missing subtraction; same-seed exact; both passive sides terminate; no D74 output key. An impossible 9/8 diagnostic made exactly the direction tooth red, then restored checksum-identical.
+- Baselines: 14 scenarios; schema 44; suite 119; Army Register **957 = 912 + 15×3**, with 45 complete Gaines cmd/nco/pvt rows proved. Gate: GATE OK; plan 8/8; runtime 13/13; loot 12/12; flags 43/43; weather 30/30; Intel 26/26; media 13/13; Malvern 27/27; Nashville 12/12; roster/builder green; zero failed/pageerrors; diff clean. Full `vet:noreg` remains owed at lane release.
+- Aaron assigned D363+ to Claude Fable while ChatGPT usage resets. `COORDINATION.md` carries the optimized New Market Heights takeover packet; repo/machine instructions and Claude/Codex SessionStart hooks now require relay checks. Next: Fable commits the New Market Heights spec + plan probe before runtime.
+
+---
+
 ## D361 — GAINES' MILL SPEC + PLAN PROBE LOCK LANE-003; CHATGPT MAY USE INHERITING HELPERS FOR OUTPUT-INSENSITIVE EVIDENCE — [AARON routing clarification · CODEX 5.6 Sol Ultra top loop, LANE-003] (2026-07-10)
 
 LANE-003 moved from CONTRACT to DRIVE before runtime. D361 adds `docs/design/gaines-mill-battle-build-spec.md` and `tools/probe-gaines-mill-plan.mjs`; Gaines' Mill remains unregistered and unplayable until D362.

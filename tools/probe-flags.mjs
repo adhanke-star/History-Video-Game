@@ -84,6 +84,7 @@ function pureScript() {
       // meta
       R.meta = {
         bullrun: withScenario('bullrun1', function(){ return _fldBattleMeta(); }),
+        gaines: withScenario('gainesMill', function(){ return _fldBattleMeta(); }),
         gburg: withScenario('gettysburg', function(){ return _fldBattleMeta(); }),
         chick: withScenario('chickamauga', function(){ return _fldBattleMeta(); }),
         chattanooga: withScenario('chattanooga', function(){ return _fldBattleMeta(); }),
@@ -99,6 +100,7 @@ function pureScript() {
       function flagPat(sc, name, side){ return withScenario(sc, function(){ var f=_fldFlagFor(U(name, side)); return f ? f.pattern : null; }); }
       R.flag = {
         csBullRun: flagPat('bullrun1', "Jackson's Brigade ('Stonewall')", 'CS'),
+        csGainesMill: flagPat('gainesMill', "Hood's Texas Brigade", 'CS'),
         csAntietam: flagPat('antietam', "Early's Brigade", 'CS'),
         csChickamaugaNative: flagPat('chickamauga', "Renewed Assault Wave", 'CS'),
         csChickamaugaHood: flagPat('chickamauga', "Hood's Arriving Brigades", 'CS'),
@@ -310,8 +312,12 @@ async function runScene(page, label, scenario, seed, opts, shared) {
     pure.ok && P.meta && P.meta.gburg.badges === true && P.meta.bullrun.badges === false && P.meta.chick.badges === false && P.meta.sandbox.badges === false,
     JSON.stringify(P.meta || {}));
   check('battle meta: every registered historical scenario has explicit metadata (no silent Eastern/ANV fallback)',
-    pure.ok && Array.isArray(P.metaCoverage) && P.metaCoverage.length === 13 && P.metaCoverage.every(x => x.explicit),
+    pure.ok && Array.isArray(P.metaCoverage) && P.metaCoverage.length === 14 && P.metaCoverage.every(x => x.explicit),
     JSON.stringify(P.metaCoverage || []));
+  check('battle meta + flag: Gaines Mill is pre-badge Eastern and uses the ANV Southern Cross family',
+    pure.ok && P.meta && P.meta.gaines && P.meta.gaines.theater === 'E' && P.meta.gaines.badges === false && P.meta.gaines.csFlag === 'anv'
+      && P.flag && P.flag.csGainesMill === 'southern-cross',
+    'meta=' + JSON.stringify(P.meta && P.meta.gaines) + ' flag=' + (P.flag && P.flag.csGainesMill));
   check('battle meta: Chattanooga/Kennesaw/Franklin/Nashville are Western AoT fields with no AotP badges and a Hardee-pattern default',
     pure.ok && ['chattanooga', 'kennesaw', 'franklin', 'nashville'].every(function(id) {
       var m = P.meta && P.meta[id]; return m && m.theater === 'W' && m.badges === false && m.csFlag === 'hardee';

@@ -100,21 +100,22 @@ step("SPEC: durable Gaines' Mill packet exists and locks a planning-only D361 bo
   return { bytes: text.length };
 });
 
-step("LANE: LANE-003 is locked to ChatGPT/Codex in DRIVE with D362 as the resume boundary", () => {
+step("LANE: LANE-003 records the valid owner/state and the D362-to-Fable handoff boundary", () => {
   const text = read(COORD);
   const start = text.indexOf("### LANE-003");
   if (start < 0) throw new Error("LANE-003 missing from COORDINATION.md");
   const next = text.indexOf("\n### LANE-", start + 8);
   const lane = text.slice(start, next < 0 ? text.length : next);
   mustInclude(lane, [
-    "codex-battle-ladder — **DRIVE**",
-    "**Owning tool:** ChatGPT/Codex",
-    "**State:** DRIVE",
-    "D362 playable Gaines' Mill implementation",
-    "**Last-touched commit:** D361",
-    "ChatGPT/Codex took DRIVE in D361"
-  ], "LANE-003 lock");
-  return { owner: "ChatGPT/Codex", state: "DRIVE", resume: "D362" };
+    "battle-ladder",
+    "**Owning tool:** Claude Code",
+    "D362 playable Gaines' Mill is the handoff boundary",
+    "**Last-touched commit:** D362",
+    "ChatGPT retains ownership only through the already-bounded D362 closeout"
+  ], "LANE-003 handoff");
+  const state = (lane.match(/\*\*State:\*\*\s*([A-Z-]+)/) || [null, ""])[1];
+  if (!["CONTRACT", "DRIVE", "VERIFY", "SHIPPED"].includes(state)) throw new Error("invalid LANE-003 state: " + state);
+  return { owner: "Claude Code / Fable", state, boundary: "D362", resume: "D363 New Market Heights spec" };
 });
 
 step("SOURCES: NPS, ABT, Army CMH, and LOC anchors bind the decisive slice and rank corrections", () => {
@@ -349,7 +350,7 @@ step("REGISTRY: D361 stays planned-only; any future data file requires complete 
   const focusedTeeth = seeds.length === 8 && new Set(seeds).size === 8
     && (focused.match(/\bcheck\s*\(/g) || []).length >= 12
     && focusedLabels.every(label => focused.indexOf(label) >= 0)
-    && /from\s+['"]playwright['"]/.test(focused)
+    && /from\s+['"]playwright(?:-core)?['"]/.test(focused)
     && /chromium\.launch\s*\(/.test(focused)
     && /page\.goto\s*\(/.test(focused)
     && /page\.evaluate\s*\(/.test(focused)

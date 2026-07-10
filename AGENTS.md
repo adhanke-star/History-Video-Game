@@ -4,13 +4,14 @@
 
 ## Canonical file system (the proper read-order — same for every AI tool)
 1. **`START-HERE.md`** — master index (canonical vs legacy · read-order · implementer standards · priority picker + model routing).
-2. **`AUTONOMOUS-RUN.md`** — THE operating manual (live state · the build loop · the phase roadmap · guardrails · the backlog · the §8 charter).
-3. **`HANDOFF.md` top block + `WAKE-UP.md` top block** — the live head (what shipped last + what's playable).
-4. **`V1-CHECKLIST.md`** — the approved, ordered v1 roadmap (the build target). *The roadmap lives HERE — there is no separate task list.*
-5. **`DECISIONS.md`** — the append-only decisions log (newest D## first; append, never relitigate).
-6. **`GRAND-STRATEGY-PLAN.md`** (strategic-layer design LAW) + **`MODERN-UGG-PLAN.md`** (tactical-engine design LAW) — honor verbatim.
-7. **`src/00-manifest.json`** + the `src/*.js` you'll touch + **`tools/build.mjs`** + the relevant **`tools/probe-*.mjs`**.
-8. **`DEPLOY.md`** — only when publishing.
+2. **`COORDINATION.md`** — mandatory session-start Contract Relay check: read the active lane's owner, state, acceptance contract, probe design, and resume pointer before choosing work, planning, spawning helpers, or editing. Never drive a lane owned by the other tool.
+3. **`AUTONOMOUS-RUN.md`** — THE operating manual (live state · the build loop · the phase roadmap · guardrails · the backlog · the §8 charter).
+4. **`HANDOFF.md` top block + `WAKE-UP.md` top block** — the live head (what shipped last + what's playable).
+5. **`V1-CHECKLIST.md`** — the approved, ordered v1 roadmap (the build target). *The roadmap lives HERE — there is no separate task list.*
+6. **`DECISIONS.md`** — the append-only decisions log (newest D## first; append, never relitigate).
+7. **`GRAND-STRATEGY-PLAN.md`** (strategic-layer design LAW) + **`MODERN-UGG-PLAN.md`** (tactical-engine design LAW) — honor verbatim.
+8. **`src/00-manifest.json`** + the `src/*.js` you'll touch + **`tools/build.mjs`** + the relevant **`tools/probe-*.mjs`**.
+9. **`DEPLOY.md`** — only when publishing.
 
 ## Non-negotiables (never violate, even for a one-line change)
 1. **Edit `src/` (code) + `data/` (data); NEVER edit `build/base.html` (frozen) and never hand-edit the generated `civil_war_generals.html`** — change source, then `node tools/build.mjs` (must print `GATE OK`).
@@ -33,6 +34,8 @@ Aaron has granted dangerous/full-access permissions for this repo. Prefer **Code
 
 ## Cross-tool handoffs — COORDINATION.md (the Contract Relay, D356)
 Unfinished work handed between tools travels as a **lane** in [`COORDINATION.md`](COORDINATION.md): committed acceptance criteria + probe design + resume pointer + owner lock. **Red probe teeth never land in git** — teeth ship in the same commit as the fix that greens them. Before starting multi-session work (or resuming another tool's), read the lane ledger; before dying mid-lane, update it.
+
+**Session-start gate (Aaron, 2026-07-10):** this check is mandatory in every Claude or ChatGPT/Codex session whenever `COORDINATION.md` exists, even if the prompt does not mention cross-tool work. Read the relevant lane in full and reconcile it with live git state before selecting or editing work. The machine-level SessionStart hooks surface the lane index, but that reminder does not replace the full relevant-lane read.
 
 ## Recurring gotcha
 Adding a new historical battle? You MUST add its id to the `EXPECTED` baseline in BOTH `tools/probe-tactical-roster.mjs` AND `tools/probe-custom-battle-builder.mjs` (the latter goes RED otherwise — it asserts the historical registry is unchanged). This has bitten D86/D88/D90.

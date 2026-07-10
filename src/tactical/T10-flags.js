@@ -68,6 +68,7 @@ function _fldFlagInitSettings() {
    no badges, ANV battle flag for CS — a byte-identity-neutral, era-typical look. */
 var _FLD_BATTLE_META = {
   bullrun1:         { theater: "E", badges: false, csFlag: "first-national" }, // 21 Jul 1861
+  gainesMill:       { theater: "E", badges: false, csFlag: "anv" },            // 27 Jun 1862
   malvernHill:      { theater: "E", badges: false, csFlag: "anv" },            // 1 Jul 1862
   antietam:         { theater: "E", badges: false, csFlag: "anv" },            // 17 Sep 1862
   fredericksburg:   { theater: "E", badges: false, csFlag: "anv" },            // 13 Dec 1862

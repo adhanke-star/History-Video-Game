@@ -40,7 +40,7 @@ function killChild(child) {
 
 const SETUP = `(() => {
   var R = { ok:true, steps:[] };
-  var EXPECTED = ['bullrun1', 'malvernHill', 'antietam', 'fredericksburg', 'chancellorsville', 'gettysburg', 'shiloh', 'vicksburg', 'chickamauga', 'chattanooga', 'kennesaw', 'franklin', 'nashville'];
+  var EXPECTED = ['bullrun1', 'gainesMill', 'malvernHill', 'antietam', 'fredericksburg', 'chancellorsville', 'gettysburg', 'shiloh', 'vicksburg', 'chickamauga', 'chattanooga', 'kennesaw', 'franklin', 'nashville'];
   var PHASE_COUNTS = { vicksburg: 3, chickamauga: 3, chattanooga: 3, nashville: 2 };
   function step(name, fn) {
     try { var v = fn(); R.steps.push({ name:name, ok:true, v:v === undefined ? null : v }); }
@@ -75,7 +75,7 @@ const SETUP = `(() => {
       return { ids:ids };
     });
 
-    step('MENU ORDER: public roster order matches help/demo route (Bull Run -> Malvern Hill -> Antietam -> Fredericksburg -> Chancellorsville -> Gettysburg -> Shiloh -> Vicksburg)', function() {
+    step('MENU ORDER: public roster order keeps Gaines Mill between Bull Run and Malvern Hill, then follows chronology', function() {
       var order = fldScenarioMenuOrder(reg);
       if (!eq(order, EXPECTED)) throw new Error('menu order '+order.join(' -> ')+' != '+EXPECTED.join(' -> '));
       return { order:order };
@@ -136,7 +136,7 @@ const SETUP = `(() => {
     step('MENU DOM: all registered battle buttons inject once, in roster order, before Skirmish/Command buttons', function() {
       if (typeof openMainMenu !== 'function') return { skipped:'no openMainMenu' };
       openMainMenu(); fldInjectMenuButton();
-      var ids = ['fldBullRunBtn', 'fldScnBtn_malvernHill', 'fldScnBtn_antietam', 'fldScnBtn_fredericksburg', 'fldScnBtn_chancellorsville', 'fldScnBtn_gettysburg', 'fldScnBtn_shiloh', 'fldScnBtn_vicksburg', 'fldScnBtn_chickamauga', 'fldScnBtn_chattanooga', 'fldScnBtn_kennesaw', 'fldScnBtn_franklin', 'fldScnBtn_nashville'];
+      var ids = ['fldBullRunBtn', 'fldScnBtn_gainesMill', 'fldScnBtn_malvernHill', 'fldScnBtn_antietam', 'fldScnBtn_fredericksburg', 'fldScnBtn_chancellorsville', 'fldScnBtn_gettysburg', 'fldScnBtn_shiloh', 'fldScnBtn_vicksburg', 'fldScnBtn_chickamauga', 'fldScnBtn_chattanooga', 'fldScnBtn_kennesaw', 'fldScnBtn_franklin', 'fldScnBtn_nashville'];
       var found = [];
       for (var i = 0; i < ids.length; i++) {
         var btn = document.getElementById(ids[i]);

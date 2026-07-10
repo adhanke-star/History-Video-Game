@@ -194,10 +194,10 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   5b inventory attached 2026-07-10; 5a shipped D357 2026-07-10; 5b batch 1 (8 records) shipped
   D358 2026-07-10; 5c shipped D360 2026-07-10.
 
-### LANE-003 · codex-battle-ladder — **DRIVE** (ChatGPT/Codex lock taken in D361)
+### LANE-003 · battle-ladder — **CONTRACT** (Claude/Fable takeover queued at the D362 boundary)
 
-- **Owning tool:** ChatGPT/Codex (takes the lock by starting; state → DRIVE in its first commit).
-- **State:** DRIVE.
+- **Owning tool:** Claude Code, with Fable 5 at xhigh as the TOP LOOP.
+- **State:** CONTRACT — Fable takes `DRIVE` in the D363 New Market Heights planning/spec commit.
 - **Design law:** `docs/design/battle-build-research/` packets (`eastern-1862` → Gaines' Mill ·
   `usct` → New Market Heights · `western-gaps` → Stones River · stretch: `shenandoah-1864` Cedar
   Creek · `shenandoah-1862` Cross Keys/Port Republic · `appomattox-campaign` Five Forks ·
@@ -224,13 +224,96 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
      green slice. Full battery only at a release boundary.
 - **Probe design:** per battle — plan probe (spec invariants) + runtime probe (registry/menu/
   OOB sums by sector/direction battery/pageerrors), modeled on `tools/probe-nashville*.mjs`.
-- **Resume pointer:** **D361 planning/spec gate is the committed boundary; next is D362 playable Gaines' Mill implementation**
-  from `docs/design/gaines-mill-battle-build-spec.md` + `tools/probe-gaines-mill-plan.mjs`.
-  After Gaines' Mill ships, continue to **New Market Heights** (USCT — the game's biggest
-  representation gap, unlocked by D359), then **Stones River** (multi-phase, near-parity
-  direction guards). Stretch in order: Cedar Creek · Cross Keys/Port Republic · Five Forks ·
-  Fort Donelson · Elkhorn Tavern. 2-3 battles at FULL depth beat 6 shallow ones (Aaron's popup).
-- **Last-touched commit:** D361 (Gaines' Mill spec + plan probe + lane lock; SHA recorded at the next lane boundary).
+- **Resume pointer:** **D362 playable Gaines' Mill is the handoff boundary in the commit that
+  carries this transfer.** Fable starts D363 with the New Market Heights durable spec + plan
+  probe only; no runtime data lands until that gate is green, committed, and pushed. Then ship
+  the playable New Market Heights slice at full depth before beginning **Stones River**
+  (multi-phase, near-parity direction guards). Stretch in order only if both mandatory battles
+  are shipped and the release battery is green: Cedar Creek · Cross Keys/Port Republic · Five
+  Forks · Fort Donelson · Elkhorn Tavern. 2-3 battles at FULL depth beat 6 shallow ones.
+- **Last-touched commit:** D362 (Gaines' Mill playable slice + Fable transfer; exact SHA is the
+  live `origin/main` head Fable verifies before taking DRIVE).
 - **History:** lane opened by Claude Code 2026-07-10 after Aaron's popup Q&A (D359) fixed scope,
   depth, and locks for the Codex session · ChatGPT/Codex took DRIVE in D361 and locked the
-  Gaines' Mill source/strength/rank/direction contract before runtime.
+  Gaines' Mill source/strength/rank/direction contract before runtime · Aaron redirected D363+
+  to Claude/Fable on 2026-07-10 so work can continue while the ChatGPT usage window resets;
+  ChatGPT retains ownership only through the already-bounded D362 closeout and transfers on its
+  green commit.
+
+#### Fable takeover packet — read as the continuation prompt
+
+**Role resolution:** You are Claude Fable 5 at xhigh, the quality-owning TOP LOOP for this lane.
+Do not downgrade the interactive/main loop. Set both `model` and `effort` on every helper call:
+Opus high/xhigh only for citation-grade default-refute verification, adversarial design/balance
+review, and final critics; Sonnet low/medium for bounded source gathering, inventories, and
+mechanical transforms; Haiku only for pure reads/greps/sizing/log extraction. Fable owns every
+historical claim, dignity decision, battle shape, balance input, acceptance tooth, integration,
+and commit.
+
+**Why Aaron is routing this interval to Fable:** use the Claude workflow surface where it has a
+real operational advantage while ChatGPT's usage window resets: explicit per-agent model/effort
+routing; high-fan-out research → default-refute verifier → completeness-critic workflows; the
+separate underused Sonnet allowance for evidence-heavy mechanical packets; and long-context
+reconciliation across the research packet, spec, probes, and canonical docs. Spend those
+advantages on the unresolved OOB/source/rank work and adversarial review—not on duplicating the
+already-shipped Gaines' Mill slice or producing speculative polish. ChatGPT/Codex may consult by
+reading this ledger when it returns, but it must not edit a Fable-owned DRIVE lane. Put every
+durable answer, correction, failed hypothesis, A/B result, and resume pointer here or in the
+canonical decision/spec/run docs; private chat context is not the relay.
+
+**Cold start (run, do not assume):**
+
+```bash
+cd "/Users/aaronhanke/Desktop/Video Game"
+git fetch origin
+git status --short --branch
+git rev-parse HEAD
+git rev-parse origin/main
+```
+
+Require a clean tree and `HEAD == origin/main`. Do not `pull` across dirt. Read, in order:
+`START-HERE.md` → this LANE-003 entry → `AUTONOMOUS-RUN.md` §1-§3 + §8 → `HANDOFF.md` and
+`WAKE-UP.md` top blocks → `V1-CHECKLIST.md` → newest `DECISIONS.md` entries through D361/D362 →
+`docs/design/battle-build-research/usct-battle-build-research.md` in full →
+`docs/design/gaines-mill-battle-build-spec.md` + both Gaines probes as the immediate pattern →
+the Nashville spec/probes for T8 → `src/tactical/T1-bull-run.js` + `T8-phases.js`.
+
+**Priority 1 — D363 New Market Heights contract, where Fable's research workflow should lead:**
+
+1. Resolve the USCT packet §9 unknowns before choosing runtime shape: exact 4th/5th/6th/22nd/
+   36th/38th USCT brigade attachments and engaged strengths; Gregg's Texas Brigade plus Brig.
+   Gen. Martin W. Gary's dismounted cavalry strength and withdrawal timing/reason; and a
+   citation-grade Fort Harrison Phase 2 OOB. Use independent sources, then an Opus
+   default-refute verifier and completeness critic. If Fort Harrison remains too thin, choose
+   and explain the packet-authorized single-phase fallback; never bluff a two-phase OOB.
+2. Write `docs/design/new-market-heights-battle-build-spec.md` and a filesystem-first plan probe.
+   Default proposal is T8: Phase 1 New Market Heights `scoreWeight:3`, Phase 2 Fort Harrison
+   `scoreWeight:1`, US attacker/CS defender, fog OFF, obstacle belt from terrain/engineering
+   inputs, and timed defender thinning only if the historical withdrawal is actually sourced.
+3. Lock battle-date ranks: Maj. Gen. Benjamin F. Butler; Brig. Gen. Charles J. Paine; Cols.
+   Alonzo G. Draper, Samuel A. Duncan, and John H. Holman. Medal of Honor men require exact
+   rank/unit/action verification before any named runtime claim. Never turn Black agency into
+   white validation or a magical combat buff.
+4. Land the Fort Pillow dignity guard in the contract and later focused probe: no playable Fort
+   Pillow registry/menu/data scenario; teaching-only treatment may name the massacre plainly.
+5. Build GATE OK, plan probe green, relevant current battle probes green, JSON readback,
+   `git diff --check`; sync docs; commit and push D363. Only then start runtime.
+
+**Priority 2 — playable New Market Heights:** implement from the committed D363 contract with
+the same full-depth pattern as D362: data + registry/menu/schema + T8/runtime focused probe +
+8-seed historical-direction guard + rank/OOB/strength/dignity/D74 teeth + roster/builder/flags/
+weather/Intel/media baselines + Army Register current pin `957 + unique new units * 3` with a
+history comment + teaching/codex + negative bind proof + honest A/B + docs. Commit and push at a
+green boundary. Outcome must emerge from true strength, obstacle geometry, timing, formation,
+experience, doctrine, and phase weights—never a USCT valor/damage/winner/score key.
+
+**Priority 3 — Stones River:** after New Market Heights ships, repeat spec-first then playable.
+Use the western-gaps packet and T8. Its casualty guard is deliberately near-parity: do not import
+the common winner-bleeds-less assumption. Re-verify Polk/Hardee as lieutenant generals at Stones
+River even though both were major generals at Perryville. Commit/push each green slice.
+
+**Release boundary:** after the final mandatory battle you ship, run the full serialized
+`npm run vet:noreg`, inspect every JSON/pageerror summary, repair root causes, sync all canonical
+docs and this resume pointer, then push. Stop only at a clean committed boundary, a genuine HALT
+condition, or exhausted context; if ChatGPT's usage returns mid-slice, keep the lock until the
+next green commit and confer through this ledger instead of permitting simultaneous edits.

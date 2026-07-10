@@ -4,13 +4,13 @@
 
 ## Canonical file system (the proper read-order — same for every AI tool)
 1. **`START-HERE.md`** — master index (canonical vs legacy · read-order · implementer standards · priority picker + model routing).
-2. **`AUTONOMOUS-RUN.md`** — THE operating manual (live state · the build loop · the phase roadmap · guardrails · the backlog · the §8 charter).
-3. **`HANDOFF.md` top block + `WAKE-UP.md` top block** — the live head (what shipped last + what's playable).
-4. **`V1-CHECKLIST.md`** — the approved, ordered v1 roadmap (the build target). *The roadmap lives HERE — there is no separate task list.*
-5. **`DECISIONS.md`** — the append-only decisions log (newest D## first; append, never relitigate).
-6. **`GRAND-STRATEGY-PLAN.md`** (strategic-layer design LAW) + **`MODERN-UGG-PLAN.md`** (tactical-engine design LAW) — honor verbatim; pull the section a task needs.
-7. **`src/00-manifest.json`** + the `src/*.js` you'll touch + **`tools/build.mjs`** + the relevant **`tools/probe-*.mjs`**.
-8. **`COORDINATION.md`** — the Contract Relay (cross-tool lane locks): read before starting or resuming multi-session/cross-tool work; red teeth never land in git — the lane carries the committed contract, teeth ship with the fix. *(D356)*
+2. **`COORDINATION.md`** — mandatory session-start Contract Relay check: read the active lane's owner, state, acceptance contract, probe design, and resume pointer before choosing work, planning, spawning helpers, or editing. Never drive a lane owned by the other tool. *(D356; Aaron 2026-07-10)*
+3. **`AUTONOMOUS-RUN.md`** — THE operating manual (live state · the build loop · the phase roadmap · guardrails · the backlog · the §8 charter).
+4. **`HANDOFF.md` top block + `WAKE-UP.md` top block** — the live head (what shipped last + what's playable).
+5. **`V1-CHECKLIST.md`** — the approved, ordered v1 roadmap (the build target). *The roadmap lives HERE — there is no separate task list.*
+6. **`DECISIONS.md`** — the append-only decisions log (newest D## first; append, never relitigate).
+7. **`GRAND-STRATEGY-PLAN.md`** (strategic-layer design LAW) + **`MODERN-UGG-PLAN.md`** (tactical-engine design LAW) — honor verbatim; pull the section a task needs.
+8. **`src/00-manifest.json`** + the `src/*.js` you'll touch + **`tools/build.mjs`** + the relevant **`tools/probe-*.mjs`**.
 9. **`DEPLOY.md`** — only when publishing.
 
 ## Non-negotiables (never violate, even for a one-line change)
@@ -21,8 +21,8 @@
 5. **Record lessons in the repo** (`DECISIONS.md`/`RUN-LOG.md`/`HANDOFF.md`/`WAKE-UP.md`/`V1-CHECKLIST.md`) — never hidden memory. **Surface (don't silently guess)** only a NEW fork that contradicts a shipped decision, is irreversible/costs money, or would waste a milestone.
 6. **Fresh-chat boundary (D171):** after a clean committed+pushed milestone, or before a new execution group/phase, stop and return a paste-ready next-chat prompt unless Aaron explicitly says to continue in the same chat. The prompt must include `cd`, fetch/status/pull, current HEAD, exact next item, read order, queue locks, and gate sequence.
 
-## Model routing (updated D145 · Fable-5 refresh D223 · Opus-4.8 restore D286)
-The main reasoning/integration loop stays on the highest-quality model — **Claude Opus 4.8** (`claude-opus-4-8` / `opus[1m]`) at xhigh when the tool is Claude Code, top-model 5.5 when the tool is Codex — for complex architecture, important code, user-facing text, historical judgment, UI/UX design decisions, accessibility judgment, bug hunts, final review, and any irreversible or quality-critical work. Use token-efficient models only for bounded helper packets where quality cannot be harmed: `rg`/search summaries, file inventories, probe-log summaries, mechanical doc syncs, exact-schema data cleanup, first-pass source gathering, and repetitive fixture/probe scaffolding. Every helper/subagent/workflow call must explicitly set model **and** effort — helpers stay **Sonnet/Haiku on mechanical legs and Opus (high/xhigh) only on genuine reasoning legs** (bug-hunt finders/verifiers/critic, design/judge panels, citation-grade research-verify); the Opus 4.8 main loop is the final verifier on top. Smaller models never own architecture, combat balance, historical claims, UX direction, accessibility judgment, or final integration; they produce packets that the top model verifies. **Opus 4.8 behavioral notes + the standard run-prompt snippets: [`OPUS-PLAYBOOK.md`](OPUS-PLAYBOOK.md).** *(D223 put the main loop on Claude Fable 5 while it was subscription-included; D286 reverted that when Fable left — Opus 4.8 is the permanent top model.)*
+## Model routing (D362 — Fable-5 return and Contract Relay handoff)
+The Claude main reasoning/integration loop is **Claude Fable 5 (`claude-fable-5[1m]`) at xhigh**, matching `~/.claude/settings.json` and `COORDINATION.md` §4. It owns complex architecture, important code, user-facing text, historical judgment, combat balance, UI/UX and accessibility decisions, adversarial adjudication, final review, integration, and the commit. Every helper/subagent/workflow call must explicitly set model **and** effort: Sonnet/Haiku for bounded mechanical packets; Opus high/xhigh only for genuine reasoning legs such as default-refute citation verification, bug-hunt finders/verifiers/critic, and design/judge panels. Helpers produce evidence; Fable verifies and owns the shipped result. `OPUS-PLAYBOOK.md` retains its compatibility filename but follows the current role-based relay policy, not stale model-name history.
 
 ## Cloud / full-access probe policy (updated 2026-06-27)
 Aaron has granted dangerous/full-access permissions for this repo. Prefer **Codex Cloud or another full-access, non-Seatbelt session** for most real implementation work and for the full browser-probe gate. The required probe gate is still mandatory, but it should run where Chrome/Playwright are allowed instead of asking Aaron to babysit an 8 GB local Mac.

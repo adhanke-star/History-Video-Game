@@ -1,0 +1,342 @@
+{
+  "_comment": "D362 - GAINES' MILL, June 27, 1862. Single-phase inverse of Malvern Hill: Confederate attacker at high z crosses the wooded Boatswain's Creek ravine against Porter's Union defender at low z, then tries to seize the Watt House plateau before dusk. This is a transparent mixed-source abstraction, not an exact same-time OOB. CMH starts Porter with 20,000 and Slocum with 7,000; NPS says later reinforcements raised him toward 34,000. ABT's 7-8 p.m. map gives about 32,000 Confederates in 16 brigades, while CMH gives 50,000 amassed for the final attack and NPS about 60,000 brought to the battle. The game models the 27,000-man Federal core line against ABT's enumerated 16-brigade wave. Confederate aggregate provenance is Disputed; every game-unit split is Inferred. Meagher and French remain teaching-only. D74: no battle-specific combat/output multiplier or winner switch; the universal model sees only OOB, guns, terrain, timing, experience, formation, doctrine, and objective geometry.",
+  "gainesMill": {
+    "id": "gainesMill",
+    "weather": {
+      "sky": "haze",
+      "time": "dusk",
+      "provenance": "Inferred",
+      "note": "The scenario compresses afternoon fighting into the final hour before sunset; the haze is a restrained powder-smoke and humid-summer presentation, not a claim of natural fog.",
+      "sources": [
+        "https://www.nps.gov/rich/learn/historyculture/gainesmillbull.htm",
+        "https://www.battlefields.org/learn/maps/gaines-mill-june-27-1862-700-800-pm",
+        "https://history.army.mil/portals/143/Images/Publications/catalog/75-5.pdf"
+      ]
+    },
+    "name": "Gaines' Mill - Break the Boatswain Line",
+    "date": "June 27, 1862",
+    "place": "Gaines' Mill, Hanover County, Virginia",
+    "blurb": "Porter's Fifth Corps bends around Boatswain's Creek with the Chickahominy at its back. A. P. Hill and Longstreet spend the afternoon against the line; Jackson's command arrives late; at dusk Lee throws the available brigades forward. Cross the wet ravine and take the Watt House plateau as the Confederacy, or hold until darkness as the Union. The same engine that stops Lee at Malvern Hill four days later must decide this field from different ground, timing, guns, and concentration.",
+    "provenance": "Verified for date, result, commanders, defensive arc, named terrain, arrival sequence, artillery direction, Hood's breakthrough role, and casualty direction. Disputed for the final-assault aggregate: ABT estimates about 32,000 Confederates in 16 brigades, while Army CMH gives 50,000 amassed and NPS about 60,000 brought to the attack. Inferred for the 27,000-versus-32,000 game abstraction, per-unit strengths, aggregate gun tokens, exact arrival seconds, experience, and geometry. Sources: NPS Richmond; NPS CWSAC; American Battlefield Trust; U.S. Army CMH; NPS Porter and Hood biographies; Virginia Humanities; Library of Congress.",
+    "field": { "w": 1200, "h": 900 },
+    "attacker": "CS",
+    "defender": "US",
+    "homeEdge": { "US": "low", "CS": "high" },
+    "_homeEdgeNote": "The Union rear and Chickahominy crossings lie toward low z; the Confederate approach from New Cold Harbor lies toward high z. Routing units therefore retire toward their own armies rather than through the enemy line.",
+    "defaultFog": false,
+    "assaultDoctrine": "standard",
+    "_assaultDoctrineNote": "The afternoon attacks were disjointed, but this scenario centers the final concentration rather than making the cautious-attacker switch carry the result. Standard doctrine is a universal posture, not a Gaines' Mill bonus; the reinforcement schedule supplies the historical accumulation of force.",
+    "timeLimitSec": 480,
+    "holdToWinSec": 120,
+    "menu": {
+      "title": "GAINES' MILL (1862)",
+      "deck": "The Seven Days' costly breakthrough - cross Boatswain's Creek with Lee's evening mass, or hold Porter's arc until darkness shelters the withdrawal.",
+      "aria": "Gaines' Mill, June 1862. Command the Confederate assault across Boatswain's Creek or the Union defense of the Watt House plateau."
+    },
+    "sides": {
+      "heading": "Gaines' Mill - Take Which Command?",
+      "intro": "June 27, 1862 - the decisive fight north of the Chickahominy. Lead either army.",
+      "US": {
+        "title": "Command the Union (Porter's line)",
+        "badge": "&#9819; DEFEND",
+        "deck": "Use Porter's arc, the wet ravine, and the Federal gun advantage. Hold the Watt House plateau until dusk and preserve the withdrawal route across the Chickahominy."
+      },
+      "CS": {
+        "title": "Command the Confederacy (Lee's assault)",
+        "badge": "&#9876; ATTACK",
+        "deck": "Bring Hill, Longstreet, Jackson, Whiting, and Hood into one accumulating attack. Break the creek line before darkness saves Porter's corps."
+      },
+      "foot": "The other army is commanded by the AI. Fog is off: woods, steep ground, Boatswain's Creek, and smoke - not a fog switch - shape the field."
+    },
+    "brief": {
+      "attack": "The Union line has more guns and a wet ravine in front, but daylight is disappearing. Commit the arriving divisions together and take the Watt House plateau. <b>This is your war:</b> concentration must emerge from timing and orders, never a scripted breakthrough.",
+      "defend": "Hold the arc above Boatswain's Creek while Slocum comes up. Keep the guns supplied and the retreat road open. <b>This is your war:</b> buy the darkness Porter needed, then withdraw across the Chickahominy intact."
+    },
+    "objective": {
+      "name": "Watt House Plateau",
+      "x": 600,
+      "z": 360,
+      "r": 115,
+      "note": "The high ground behind the Boatswain's Creek line. Confederate possession represents the historical breach of Porter's arc; Union possession through the clock represents an organized withdrawal after dark. (Verified location and role; Inferred game radius.)"
+    },
+    "leaders": {
+      "_note": "Battle-date ranks are source-locked. Porter remained a brigadier general until July 4; A. P. Hill was already a major general; Hood remained a brigadier general. Confederate lieutenant-general grades and the later formal corps organization are absent.",
+      "US": [
+        {
+          "id": "ld_porter_gaines",
+          "name": "Brig. Gen. Fitz John Porter",
+          "short": "Porter",
+          "quality": 0.76,
+          "radius": 275,
+          "x": 600,
+          "z": 285,
+          "fate": 2.8,
+          "note": "Porter arranged the Fifth Corps in a defensive arc and held long enough for most of the command to escape. NPS dates his major-general promotion to July 4; CMH also identifies him as a brigadier during the campaign. (Verified rank and command; NPS + CMH.)",
+          "teach": "Gen. Porter is carried from the field - the defensive arc loses the commander coordinating its withdrawal."
+        }
+      ],
+      "CS": [
+        {
+          "id": "ld_lee_gaines",
+          "name": "Gen. Robert E. Lee",
+          "short": "Lee",
+          "quality": 0.72,
+          "radius": 285,
+          "x": 600,
+          "z": 790,
+          "fate": 3.0,
+          "note": "Lee ordered the final broad assault after the earlier attacks failed. The result was his first major battlefield victory as army commander and one of his costliest early lessons in offensive command. (Verified.)",
+          "teach": "Gen. Lee is struck down - the final concentration loses its directing hand."
+        },
+        {
+          "id": "ld_ap_hill_gaines",
+          "name": "Maj. Gen. A. P. Hill",
+          "short": "A. P. Hill",
+          "quality": 0.70,
+          "radius": 235,
+          "attach": "cs_ap_hill_light",
+          "fate": 2.6,
+          "note": "Hill's Light Division opened the afternoon battle. ABT dates his promotion to major general to May 26; Virginia Humanities independently places the promotion before the Seven Days. (Verified rank and formation; ABT + Virginia Humanities.)",
+          "teach": "Gen. Hill falls - the Light Division's afternoon pressure loses cohesion."
+        },
+        {
+          "id": "ld_longstreet_gaines",
+          "name": "Maj. Gen. James Longstreet",
+          "short": "Longstreet",
+          "quality": 0.72,
+          "radius": 240,
+          "attach": "cs_longstreet_div",
+          "fate": 2.7,
+          "note": "Longstreet's division joined the pressure on Porter's center and right before the evening assault. He was a major general commanding a division, not a later corps formation. (Verified identity and battle-date grade; CMH + ABT.)",
+          "teach": "Gen. Longstreet is hit - the Confederate right loses its experienced division commander."
+        },
+        {
+          "id": "ld_dh_hill_gaines",
+          "name": "Maj. Gen. D. H. Hill",
+          "short": "D. H. Hill",
+          "quality": 0.66,
+          "radius": 220,
+          "attach": "cs_dh_hill_div",
+          "atSec": 45,
+          "fate": 2.5,
+          "note": "D. H. Hill's division extended the Confederate assault line. He commanded a division as a major general; no later corps label belongs here. (Verified identity and grade; CMH + ABT.)",
+          "teach": "Gen. D. H. Hill is disabled - the Confederate left loses its division command."
+        },
+        {
+          "id": "ld_ewell_gaines",
+          "name": "Maj. Gen. Richard S. Ewell",
+          "short": "Ewell",
+          "quality": 0.67,
+          "radius": 220,
+          "attach": "cs_ewell_div",
+          "atSec": 85,
+          "fate": 2.5,
+          "note": "Ewell's division arrived with Jackson's command and entered against Porter's right. He was a major general commanding a division. (Verified identity and grade; CMH + ABT map.)",
+          "teach": "Gen. Ewell is hit - Jackson's late-arriving weight loses a division commander."
+        },
+        {
+          "id": "ld_whiting_gaines",
+          "name": "Maj. Gen. William H. C. Whiting",
+          "short": "Whiting",
+          "quality": 0.68,
+          "radius": 225,
+          "attach": "cs_whiting_div",
+          "atSec": 110,
+          "fate": 2.6,
+          "note": "Whiting's division, including Law and Hood, struck the center-right of Porter's line. He was a major general at Gaines' Mill. (Verified identity and grade; CMH + ABT map.)",
+          "teach": "Gen. Whiting falls - the division carrying Hood's brigade loses coordination."
+        },
+        {
+          "id": "ld_hood_gaines",
+          "name": "Brig. Gen. John B. Hood",
+          "short": "Hood",
+          "quality": 0.78,
+          "radius": 205,
+          "attach": "cs_hood_texas",
+          "atSec": 120,
+          "fate": 2.7,
+          "note": "Hood commanded the Texas Brigade and helped make the first breach. NPS, CMH, and the ABT evening map all identify his brigadier grade and role. The game gives him no special combat key. (Verified rank and brigade role.)",
+          "teach": "Gen. Hood is struck - the Texas Brigade loses the commander at the point of the breach."
+        },
+        {
+          "id": "ld_jackson_gaines",
+          "name": "Maj. Gen. Thomas J. Jackson",
+          "short": "Jackson",
+          "quality": 0.69,
+          "radius": 240,
+          "attach": "cs_jackson_support",
+          "atSec": 145,
+          "fate": 2.8,
+          "note": "Jackson arrived late and his divisions entered unevenly before the final assault. He was a major general; the later lieutenant-general grade and formal wing-to-corps organization do not belong in June. (Verified identity and grade; CMH + ABT.)",
+          "teach": "Gen. Jackson is hit - the late-arriving command loses its senior field leader."
+        }
+      ]
+    },
+    "supply": {
+      "US": { "x": 600, "z": 95, "name": "Union train - Chickahominy crossings" },
+      "CS": { "x": 600, "z": 860, "name": "Confederate train - New Cold Harbor road" }
+    },
+    "terrain": {
+      "hills": [
+        { "name": "Watt House Plateau", "x": 600, "z": 360, "h": 30, "s": 185, "note": "The crest behind Porter's creek line and the scenario objective. (Verified place; Inferred geometry.)" },
+        { "name": "Porter's Defensive Arc", "x": 430, "z": 405, "h": 18, "s": 145, "note": "The western portion of the 1.5-mile Fifth Corps arc above the ravine. (Verified shape; Inferred compression.)" },
+        { "name": "Federal Right above Boatswain's Swamp", "x": 800, "z": 420, "h": 20, "s": 150, "note": "The ground held by Sykes and later pressed by Jackson's arriving divisions. (Verified context; Inferred geometry.)" }
+      ],
+      "woods": [
+        { "x": 255, "z": 560, "r": 145, "note": "Timber on the Confederate approach west of the main road." },
+        { "x": 470, "z": 535, "r": 115, "note": "Wooded ravine along Boatswain's Creek." },
+        { "x": 735, "z": 540, "r": 120, "note": "Broken timber that blunted the assault on Porter's right." },
+        { "x": 980, "z": 600, "r": 135, "note": "Woods toward Old Cold Harbor and Jackson's approach." }
+      ],
+      "swamps": [
+        { "x": 360, "z": 505, "r": 78, "note": "Boatswain's Swamp - wet low ground below the Federal line." },
+        { "x": 530, "z": 500, "r": 82, "note": "Boatswain's Creek ravine." },
+        { "x": 700, "z": 510, "r": 80, "note": "Boatswain's Swamp under the center-right." },
+        { "x": 855, "z": 520, "r": 72, "note": "Wet ground on the eastern reach of the line." }
+      ],
+      "walls": [],
+      "markers": [
+        { "kind": "creek", "name": "Boatswain's Creek / Boatswain's Swamp", "path": [[160, 485], [360, 510], [570, 495], [790, 520], [1030, 505]], "note": "The obstacle in front of Porter's arc. NPS CWSAC uses Boatswain's Swamp; ABT uses Creek and Swamp. It supplies movement and cover, never damage." },
+        { "kind": "label", "name": "Watt House", "x": 600, "z": 315, "note": "The house and plateau at the center of the preserved battlefield and the breach area." },
+        { "kind": "label", "name": "Adams Farm", "x": 285, "z": 390, "note": "A named farm on the battle ground, preserving the civilian landscape behind the military map." },
+        { "kind": "river", "name": "Chickahominy River - Union withdrawal", "path": [[80, 70], [370, 90], [670, 75], [1100, 100]], "note": "Porter's rear boundary and night withdrawal route; presented as a marker, not an impassable combat river." },
+        { "kind": "road", "name": "New Cold Harbor Road", "path": [[1120, 760], [875, 650], [680, 555], [590, 380]], "note": "Confederate approach from New Cold Harbor toward the Watt House line." },
+        { "kind": "road", "name": "Old Cold Harbor Road", "path": [[1040, 850], [875, 720], [790, 600], [720, 430]], "note": "The eastern approach used as Jackson's command finally came into position." },
+        { "kind": "label", "name": "Gaines' Mill / William Gaines", "x": 1040, "z": 285, "note": "The nearby mill gave the battle its name; it remains teaching context rather than an objective." }
+      ]
+    },
+    "oob": {
+      "US": [
+        { "id": "us_morell_div", "name": "Morell's Division", "commander": "Brig. Gen. George W. Morell", "arm": "inf", "weapon": "rifled", "role": "defend", "men": 6300, "xp": 2, "x": 410, "z": 420, "facing": 3.14159, "formation": "line", "note": "Morell's division held the Federal left and center above Boatswain's Creek. Verified identity; Inferred strength. The 6,300 game split is part of Porter's sourced 20,000-man opening core, not a claim of exact returns." },
+        { "id": "us_sykes_regulars_gaines", "name": "Sykes's Regular Division", "commander": "Brig. Gen. George Sykes", "arm": "inf", "weapon": "rifled", "role": "defend", "men": 5500, "xp": 3, "x": 610, "z": 405, "facing": 3.14159, "formation": "line", "note": "Sykes's regulars held Porter's right and repulsed repeated attacks before the final breach. Verified identity; Inferred strength. The split is allocated within the sourced 20,000-man opening core." },
+        { "id": "us_mccall_reserves", "name": "McCall's Pennsylvania Reserves", "commander": "Brig. Gen. George A. McCall", "arm": "inf", "weapon": "rifled", "role": "defend", "men": 6800, "xp": 2, "x": 805, "z": 430, "facing": 3.14159, "formation": "line", "note": "McCall's division joined Porter's line after Beaver Dam Creek and carried the fatigue of the previous day's fight. Verified identity; Inferred strength. The 6,800 allocation completes the 20,000-man opening core with its artillery." },
+        { "id": "us_v_corps_artillery", "name": "Fifth Corps Artillery Line", "commander": "V Corps battery commanders", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 30, "men": 700, "xp": 3, "x": 515, "z": 350, "facing": 3.14159, "formation": "line", "note": "Porter's corps had abundant artillery above the creek line. Verified identity; Inferred strength. This is an aggregate of documented Fifth Corps batteries; 30 guns and 700 crew are a game grouping under the universal gun model." },
+        { "id": "us_artillery_reserve_gaines", "name": "Army of the Potomac Reserve Batteries", "commander": "Federal reserve artillery officers", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 24, "men": 700, "xp": 3, "x": 690, "z": 345, "facing": 3.14159, "formation": "line", "note": "Additional Federal batteries reinforced Porter's position and gave him materially more artillery than the attackers. Verified identity; Inferred strength. The token is an aggregate grouping, not one battery." }
+      ],
+      "CS": [
+        { "id": "cs_ap_hill_light", "name": "A. P. Hill's Light Division", "commander": "Maj. Gen. A. P. Hill", "arm": "inf", "weapon": "smooth", "role": "attack", "men": 7600, "xp": 2, "x": 445, "z": 720, "facing": 0, "formation": "line", "note": "Hill's six-brigade Light Division opened the afternoon battle and took heavy losses against the creek line. Verified identity; Inferred strength. The 7,600 split is part of the Disputed 16-brigade game abstraction." },
+        { "id": "cs_longstreet_div", "name": "Longstreet's Division", "commander": "Maj. Gen. James Longstreet", "arm": "inf", "weapon": "smooth", "role": "attack", "men": 6200, "xp": 2, "x": 770, "z": 735, "facing": 0, "formation": "line", "note": "Longstreet's division pressed Porter's center-right before joining the final movement. Verified identity; Inferred strength. It is a division token, not a later corps formation." },
+        { "id": "cs_divisional_artillery", "name": "Hill and Longstreet Divisional Batteries", "commander": "Confederate divisional artillery officers", "arm": "art", "weapon": "smooth", "role": "attack", "guns": 32, "men": 600, "xp": 2, "x": 610, "z": 680, "facing": 0, "formation": "line", "note": "Confederate batteries supported the approaches but did not match Porter's gun strength. Verified identity; Inferred strength. The 32-gun token aggregates documented divisional artillery under the universal gun model." }
+      ]
+    },
+    "reinforcements": [
+      { "id": "cs_dh_hill_div", "side": "CS", "atSec": 45, "name": "D. H. Hill's Division", "commander": "Maj. Gen. D. H. Hill", "arm": "inf", "weapon": "smooth", "role": "attack", "men": 3600, "xp": 2, "x": 305, "z": 825, "facing": 0, "formation": "column", "entry": "the Confederate left above New Cold Harbor", "note": "D. H. Hill extended the line as Lee accumulated force north of the river. Verified identity; Inferred strength. The split belongs to the bounded 16-brigade abstraction." },
+      { "id": "us_slocum_div", "side": "US", "atSec": 70, "name": "Slocum's Division", "commander": "Brig. Gen. Henry W. Slocum", "arm": "inf", "weapon": "rifled", "role": "defend", "men": 6500, "xp": 2, "x": 585, "z": 145, "facing": 3.14159, "formation": "column", "entry": "the bridges from south of the Chickahominy", "note": "McClellan sent Slocum's VI Corps division, the principal reinforcement counted in the 27,000-man core abstraction. Verified identity; Inferred strength. CMH gives the division aggregate near 7,000; artillery is separated below." },
+      { "id": "us_slocum_artillery", "side": "US", "atSec": 80, "name": "Slocum's Division Artillery", "commander": "VI Corps battery commanders", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 18, "men": 500, "xp": 2, "x": 725, "z": 165, "facing": 3.14159, "formation": "column", "entry": "the Union reserve road", "note": "Artillery accompanying the Slocum reinforcement thickens Porter's gun advantage. Verified identity; Inferred strength. The aggregate completes the sourced 7,000-man division token under the universal gun model." },
+      { "id": "cs_ewell_div", "side": "CS", "atSec": 85, "name": "Ewell's Division", "commander": "Maj. Gen. Richard S. Ewell", "arm": "inf", "weapon": "smooth", "role": "attack", "men": 3200, "xp": 2, "x": 925, "z": 825, "facing": 0, "formation": "column", "entry": "Jackson's delayed eastern approach", "note": "Ewell's division finally entered against Porter's right after a confused march. Verified identity; Inferred strength. The token is part of the bounded 16-brigade abstraction." },
+      { "id": "cs_whiting_div", "side": "CS", "atSec": 110, "name": "Whiting's Division - Law and Support", "commander": "Maj. Gen. William H. C. Whiting", "arm": "inf", "weapon": "rifled", "role": "attack", "men": 2900, "xp": 2, "x": 745, "z": 845, "facing": 0, "formation": "column", "entry": "the center-right approach", "note": "Whiting brought Law's brigade and divisional support; Hood's Texas Brigade is modeled separately to keep the breakthrough identity visible. Verified identity; Inferred strength. No men are double-counted between the two tokens." },
+      { "id": "cs_hood_texas", "side": "CS", "atSec": 120, "name": "Hood's Texas Brigade", "commander": "Brig. Gen. John B. Hood", "arm": "inf", "weapon": "rifled", "role": "attack", "men": 2500, "xp": 3, "x": 615, "z": 850, "facing": 0, "formation": "column", "entry": "Whiting's division at the final assault", "note": "Hood's Texas regiments made the first breach in the Federal line. Verified identity; Inferred strength. The higher experience is an Inferred universal input for a veteran brigade, not a scripted breakthrough or combat bonus." },
+      { "id": "cs_jackson_support", "side": "CS", "atSec": 145, "name": "Jackson's Arriving Divisions", "commander": "Maj. Gen. Thomas J. Jackson", "arm": "inf", "weapon": "smooth", "role": "attack", "men": 5400, "xp": 2, "x": 455, "z": 855, "facing": 0, "formation": "column", "entry": "the Old Cold Harbor road", "note": "Jackson's remaining divisions and supporting elements added weight late after confused marches. Verified identity; Inferred strength. Ewell is separated above; this token carries no later wing or corps label." }
+    ],
+    "endNote": {
+      "US": {
+        "US": "History is overturned. Porter's line held the Watt House plateau until darkness and withdrew in order across the Chickahominy. In 1862 the evening assault broke the arc, but this defense bought the time the real corps nearly secured.",
+        "CS": "History holds, against your command. Lee's evening concentration broke the Boatswain's Creek line and took the Watt House plateau. The victory was costly, and four days later the same army would fail against a stronger gun position at Malvern Hill."
+      },
+      "CS": {
+        "US": "History is overturned. The Confederate assault failed to break Porter's arc before darkness. The Army of Northern Virginia spent heavily without the field victory that historically saved Richmond.",
+        "CS": "History holds. The accumulated Confederate assault crossed Boatswain's Creek and broke the Watt House line before dark. The field was won at a price the Confederacy could not replace at the Union's rate."
+      },
+      "draw": "The line remains contested at dusk. Historically the final Confederate assault broke Porter's arc, but darkness still allowed most of the Federal command to escape across the Chickahominy."
+    },
+    "teaching": {
+      "title": "Gaines' Mill - Concentration, Cost, and a Disputed Largest Assault",
+      "cards": [
+        {
+          "id": "gm_strength_dispute",
+          "head": "Thirty-two thousand, or fifty thousand?",
+          "body": "The sources do not agree on the final assault's aggregate. The American Battlefield Trust maps about 32,000 men in sixteen brigades moving forward; Army CMH says Lee had amassed 50,000 by 6:30 p.m.; NPS describes about 60,000 brought to the attack over the battle. This game uses the enumerated sixteen-brigade slice and labels the aggregate Disputed instead of turning one estimate into false certainty.",
+          "provenance": "Disputed aggregate; modeled strength Inferred.",
+          "sources": [
+            "https://www.battlefields.org/learn/maps/gaines-mill-june-27-1862-700-800-pm",
+            "https://history.army.mil/portals/143/Images/Publications/catalog/75-5.pdf",
+            "https://www.nps.gov/rich/learn/historyculture/gainesmillbull.htm"
+          ]
+        },
+        {
+          "id": "gm_porter_core",
+          "head": "Porter's core line, and who arrived too late",
+          "body": "CMH begins with Porter's 20,000 and Slocum's 7,000; NPS calls 27,000 the core defense and says later reinforcements raised the force toward 34,000. Meagher and French did enter late. They remain teaching-only here because adding only their men while keeping the smaller Confederate estimate would create a false same-time OOB.",
+          "provenance": "Verified aggregates; Inferred game scope.",
+          "sources": [
+            "https://history.army.mil/portals/143/Images/Publications/catalog/75-5.pdf",
+            "https://www.nps.gov/rich/learn/historyculture/gainesmillbull.htm",
+            "https://www.battlefields.org/learn/maps/gaines-mill-june-27-1862-700-800-pm"
+          ]
+        },
+        {
+          "id": "gm_boatswain",
+          "head": "A defensive arc above wet ground",
+          "body": "Porter did not occupy a stone fortress. His 1.5-mile arc used steep slopes, woods, open fields of fire, and Boatswain's Creek or Swamp, with the Chickahominy behind it. The ravine slowed and disordered attackers while Federal artillery fired from higher ground.",
+          "provenance": "Verified terrain; Inferred game geometry.",
+          "sources": [
+            "https://www.nps.gov/civilwar/search-battles-detail.htm?battleCode=va017",
+            "https://www.battlefields.org/learn/civil-war/battles/gaines-mill",
+            "https://history.army.mil/portals/143/Images/Publications/catalog/75-5.pdf"
+          ]
+        },
+        {
+          "id": "gm_hood_without_bonus",
+          "head": "Hood made the breach; the engine does not award it",
+          "body": "Hood's Texas Brigade helped make the first break in Porter's line. That historical achievement earns a named veteran brigade and a teaching card, not a damage key, forced rout, or winner switch. If the breach occurs here, it comes from formation, timing, experience, terrain, and player orders shared by every battle.",
+          "provenance": "Verified role; no scripted outcome.",
+          "sources": [
+            "https://www.nps.gov/people/john-bell-hood.htm",
+            "https://www.nps.gov/rich/learn/historyculture/gainesmillbull.htm",
+            "https://www.battlefields.org/learn/maps/gaines-mill-june-27-1862-700-800-pm"
+          ]
+        },
+        {
+          "id": "gm_costly_victory",
+          "head": "A victory the Confederacy could not afford forever",
+          "body": "Gaines' Mill was a Confederate victory, but Confederate killed and wounded exceeded Union killed and wounded. Many Union losses were captured or missing during the withdrawal, so the cost comparison must separate those categories. Lee won the field; the Confederacy could not replace blood at the Union's rate.",
+          "provenance": "Verified result and casualty direction.",
+          "sources": [
+            "https://www.nps.gov/rich/learn/historyculture/gainesmillbull.htm",
+            "https://www.battlefields.org/learn/civil-war/battles/gaines-mill"
+          ]
+        },
+        {
+          "id": "gm_farms",
+          "head": "Watt and Adams were farms before they were objectives",
+          "body": "The Watt House plateau and Adams farm locate the military action on a civilian landscape. Naming those places prevents the battlefield from becoming an abstract empty board, while avoiding claims about residents the sources here do not establish.",
+          "provenance": "Verified place names; deliberately bounded civilian claim.",
+          "sources": [
+            "https://www.nps.gov/rich/learn/historyculture/gainesmillbull.htm",
+            "https://www.battlefields.org/learn/civil-war/battles/gaines-mill"
+          ]
+        },
+        {
+          "id": "gm_malvern_inverse",
+          "head": "Four days to Malvern Hill",
+          "body": "At Gaines' Mill, accumulated Confederate pressure finally broke a creek-line defense before darkness. At Malvern Hill four days later, disjointed attacks failed under a stronger, better handled Union gun position. One universal combat model should produce both lessons from different inputs, not from battle-specific verdicts.",
+          "provenance": "Verified sequence and results; analytical comparison.",
+          "sources": [
+            "https://www.nps.gov/rich/learn/historyculture/gainesmillbull.htm",
+            "https://history.army.mil/portals/143/Images/Publications/catalog/75-5.pdf",
+            "https://www.battlefields.org/learn/civil-war/battles/gaines-mill"
+          ]
+        }
+      ],
+      "codex": {
+        "id": "codex_gaines_mill",
+        "title": "Gaines' Mill, June 27, 1862",
+        "summary": "Porter's Fifth Corps used Boatswain's Creek, woods, slopes, and superior artillery to resist Lee through the afternoon. The final Confederate concentration broke the Watt House line near dusk, but at greater killed-and-wounded cost than the Union. The tactical victory helped drive McClellan from Richmond; it was no costless masterpiece, and the exact size of the final assault remains disputed.",
+        "axes": {
+          "timeline": "1862",
+          "theater": "Eastern",
+          "campaign": "Peninsula / Seven Days",
+          "result": "Confederate victory",
+          "casualties": "Confederate killed/wounded exceeded Union killed/wounded; Union missing/captured were substantial",
+          "people": ["Porter", "Lee", "A. P. Hill", "Longstreet", "Jackson", "D. H. Hill", "Ewell", "Whiting", "Hood"],
+          "battle": "Gaines' Mill"
+        },
+        "sources": [
+          "https://www.nps.gov/rich/learn/historyculture/gainesmillbull.htm",
+          "https://www.battlefields.org/learn/civil-war/battles/gaines-mill",
+          "https://history.army.mil/portals/143/Images/Publications/catalog/75-5.pdf"
+        ]
+      }
+    }
+  }
+}

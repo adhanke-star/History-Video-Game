@@ -1,5 +1,7 @@
 # V1 FEATURE-COMPLETE CHECKLIST — "The Civil War"  (APPROVED — run-k Q&A, 2026-06-15)
 
+> **D362 live gate:** Gaines' Mill playable SHIPPED as scenario 14; focused/adjacent gates green. LANE-003 owner is Claude/Fable. Next: D363 New Market Heights spec + plan probe, then runtime, then Stones River; full `vet:noreg` at lane release.
+
 **Purpose:** give "complete all project goals" a concrete, ordered target so autonomous runs can drive to a
 content-complete v1 (still a perpetual project after — D54). Built from `MODERN-UGG-PLAN.md` (P0–P5),
 `GRAND-STRATEGY-PLAN.md` (S2–S5), and the §8 charter systems. **Status: APPROVED** — all 12 forks across a
