@@ -1628,6 +1628,7 @@ function fldRenderHud() {
     (typeof fldChargeHudSelected === "function" ? fldChargeHudSelected(u) : "") +   // H5-i4: charge impetus / commit status
     (typeof fldRatingHudSelected === "function" ? fldRatingHudSelected(u) : "") +   // R-2: brigade OVR + A-F grade (pure display)
     (typeof fldMusterHudLine === "function" ? fldMusterHudLine(u) : "") +   // R-5: the men's-mean OVR + provenance-hatched accent (lazy materialization; pure display)
+    (typeof fldMusterRollHudToggle === "function" ? fldMusterRollHudToggle(u) : "") +   // T29 (D357): the full Muster Roll inspect-expand (pure display; "" without ratings data)
     (typeof fldRatingBadgesHtml === "function" ? fldRatingBadgesHtml(u) : "") +   // R-6: the brigade's documented trait/ability chips (pure display; "" when no badge -> byte-identical)
     (typeof fldOrderKeyHudSelected === "function" ? fldOrderKeyHudSelected() : "");   // S40: discoverable keyboard endpoint/facing path
 }

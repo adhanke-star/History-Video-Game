@@ -176,13 +176,11 @@ judgment, or final integration.
   distinct engagement); the other 10 battles have NO in-repo roster research — records there need
   fresh external NPS/CMOHS/primary-source work (~2 sources + default-refute + adjudication per
   record, the repo's most expensive work per shipped line).
-- **Resume pointer:** M3 (D355 checkpoint, green) and M4 (this file's commit) are done — DRIVE 5a
-  next. If resuming cold:
-  read this lane, then `T14-ratings.js` around `fldMusterRollHtml`, then the D150 Army Register
-  surfaces (`src/tactical/T14-*`, Register desk code) before writing any UI. For 5b, size the
-  batch from the inventory above + remaining context, log the number in `DECISIONS.md` first;
-  Bull Run is the cheapest lane (banked OOB), and 848 remaining means the lane STAYS OPEN here
-  with a decremented count after every batch.
-- **Last-touched commit:** *(set at each slice's commit)*.
+- **Resume pointer:** **5a SHIPPED (D357)** — `src/tactical/T29-muster-roll-ui.js` + the T0 seam +
+  the probe-ratings T29 tooth (bind-tested). Next: **DRIVE 5b** — size the batch from the
+  inventory above + remaining context, log the number + reasoning in `DECISIONS.md` BEFORE the
+  first record; Bull Run is the cheapest lane (banked OOB at HISTORICAL-DATA.md:21-580); 848
+  remaining means this lane STAYS OPEN with a decremented count after every batch. Then 5c.
+- **Last-touched commit:** D357 (5a).
 - **History:** lane opened by Claude Code 2026-07-10 under Aaron's Contract Relay kickoff;
-  5b inventory attached 2026-07-10.
+  5b inventory attached 2026-07-10; 5a shipped D357 2026-07-10.

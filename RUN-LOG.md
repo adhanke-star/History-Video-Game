@@ -8,6 +8,9 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D357 PHASE I 5a — Muster-Roll inspect surface wired into the HUD (T29) — 2026-07-10 (D357)
+- New `src/tactical/T29-muster-roll-ui.js` + one guarded T0 seam: a native aria-correct toggle in the selected-unit HUD expands the full T14 muster panel. Presentation-only, byte-identical when ratings data absent, open-flag transient on `__FIELD`. WCAG AA: 11.05:1 text, target-size auto-fixed by wcag-auditor, the flagged dangling `aria-controls` resolved via always-in-DOM `hidden` panel, focus survives HUD rebuilds (reassignment wrapper, S22 lesson). Teeth: probe-ratings 22/22 incl. bind-tested seam; adjacents field 23/23, order-feel 22/22; 0 pageerrors; GATE OK. LANE-002: 5a SHIPPED; 5b/5c remain CONTRACT.
+
 ## D356 CONTRACT RELAY — COORDINATION.md cross-tool lane ledger shipped — 2026-07-10 (D356)
 - New tracked `COORDINATION.md` (linked from START-HERE/AGENTS/CLAUDE.md): lane locks with full committed contracts; **red teeth never land in git — teeth ship in the same commit as the fix**; role-based model routing. LANE-001 = the E50 retro worked example; LANE-002 = Phase I "Named Army" opened with the 848-row inventory. Docs-only: build GATE OK, game byte-unchanged, diff clean.
 

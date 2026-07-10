@@ -554,6 +554,44 @@ const SETUP = `(() => {
       if(typeof __FIELD!=='undefined') __FIELD.badges=saveB;
       return { battles:scns.length, assignments:total, usPos:usPos, usNeg:usNeg, csPos:csPos, csNeg:csNeg, jacksonRally:jr }; });
 
+    step('T29 (D357): Muster Roll inspect-expand — HUD button wired, aria-correct, content-faithful, keyboard focus survives re-render, pure display', function(){
+      if(typeof fldMusterRollHudToggle!=='function') return { skipped:'pre-T29' };
+      fldLaunchSandbox({renderer:'2d', seed:7});   // '2d' builds the real DOM HUD ('none' is headless and skips it)
+      var hud=document.getElementById('fldHud'); if(!hud) throw new Error('no #fldHud after launch');
+      var ps=fldPlayerSide(), u=null;
+      for(var i=0;i<__FIELD.units.length;i++){ var c=__FIELD.units[i]; if(c.side===ps&&c.alive&&!c.ai){u=c;break;} }
+      if(!u) throw new Error('no selectable (non-AI) player unit in the sandbox');
+      __FIELD.sel=[u.id]; __FIELD._mrOpen=false; fldRenderHud();
+      var btn=document.getElementById('fldMrBtn');
+      if(!btn) throw new Error('Muster Roll toggle button missing from the selected-unit HUD');
+      if(btn.tagName!=='BUTTON') throw new Error('toggle must be a native <button> (keyboard activation for free)');
+      if(btn.getAttribute('aria-expanded')!=='false') throw new Error('collapsed state must be aria-expanded=false');
+      if(btn.getAttribute('aria-controls')!=='fldMrPanel') throw new Error('aria-controls must name the panel');
+      var p0=document.getElementById('fldMrPanel');
+      if(!p0||!p0.hidden) throw new Error('panel must exist in the DOM and be hidden when collapsed (4.1.2: aria-controls must never dangle)');
+      btn.focus(); btn.click();
+      var btn2=document.getElementById('fldMrBtn');
+      if(!btn2||btn2.getAttribute('aria-expanded')!=='true') throw new Error('open state must be aria-expanded=true');
+      if(document.activeElement!==btn2) throw new Error('keyboard focus must survive the toggle re-render (the S22 lesson)');
+      var panel=document.getElementById('fldMrPanel');
+      if(!panel||panel.hidden) throw new Error('panel missing/hidden when expanded');
+      if(panel.getAttribute('role')!=='region'||!panel.getAttribute('aria-label')) throw new Error('panel must be a named region');
+      var norm=document.createElement('div'); norm.innerHTML=fldMusterRollHtml(u);
+      if(panel.innerHTML!==norm.innerHTML) throw new Error('panel content must equal fldMusterRollHtml(u) (normalized)');
+      fldRenderHud();   // an unrelated event re-render: panel stays open, focus stays on the button
+      var pr=document.getElementById('fldMrPanel');
+      if(!pr||pr.hidden) throw new Error('panel must survive an event re-render');
+      if(document.activeElement!==document.getElementById('fldMrBtn')) throw new Error('focus must survive an event re-render');
+      document.getElementById('fldMrBtn').click();
+      var pc=document.getElementById('fldMrPanel');
+      if(!pc||!pc.hidden) throw new Error('panel must return to hidden on the second toggle');
+      if(document.getElementById('fldMrBtn').getAttribute('aria-expanded')!=='false') throw new Error('closed state must return aria-expanded=false');
+      var sim=JSON.stringify({men:u.men,morale:u.morale,ammo:u.ammo,fatigue:u.fatigue});
+      fldMusterRollHudToggle(u);
+      if(JSON.stringify({men:u.men,morale:u.morale,ammo:u.ammo,fatigue:u.fatigue})!==sim) throw new Error('toggle render mutated sim state');
+      fldExit(true);
+      return { wired:true, aria:true, faithful:true, focusStable:true }; });
+
     step('PURITY: rating fns do not mutate G or __FIELD (R-0 is inert / byte-identical)', function(){
       var beforeMode=(typeof G!=='undefined')?G.mode:null;
       var fu=(typeof __FIELD!=='undefined' && __FIELD.units)?__FIELD.units.length:null;
