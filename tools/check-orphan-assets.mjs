@@ -6,6 +6,7 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { escapeHtml } from './report-html-escape.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -17,10 +18,6 @@ const SHOTS = join(__dirname, 'shots');
 
 function ensureDir(p) {
   if (!existsSync(p)) mkdirSync(p, { recursive: true });
-}
-
-function htmlEscape(s) {
-  return String(s).replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>').replace(/"/g, '"');
 }
 
 function main() {
@@ -137,19 +134,19 @@ function main() {
 
   const orphanRows = orphans.map(r => {
     return `<tr class="orphan">
-      <td>${htmlEscape(r.category)}</td>
-      <td>${htmlEscape(r.filename)}</td>
-      <td>${htmlEscape(r.stem)}</td>
+      <td>${escapeHtml(r.category)}</td>
+      <td>${escapeHtml(r.filename)}</td>
+      <td>${escapeHtml(r.stem)}</td>
       <td>—</td>
     </tr>`;
   }).join('\n');
 
   const referencedRows = referenced.map(r => {
     return `<tr>
-      <td>${htmlEscape(r.category)}</td>
-      <td>${htmlEscape(r.filename)}</td>
-      <td>${htmlEscape(r.stem)}</td>
-      <td>${htmlEscape(r.referencedBy.join(', '))}</td>
+      <td>${escapeHtml(r.category)}</td>
+      <td>${escapeHtml(r.filename)}</td>
+      <td>${escapeHtml(r.stem)}</td>
+      <td>${escapeHtml(r.referencedBy.join(', '))}</td>
     </tr>`;
   }).join('\n');
 

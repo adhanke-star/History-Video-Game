@@ -6,6 +6,14 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D352 — E69 REPORT HTML ENTITY-ESCAPING CONTRACT — [CODEX 5.6 Sol main loop, run-2 queue] (2026-07-10)
+
+- **One text boundary:** the five audited generators (schema validation, orphan assets, probe-log summary, media-budget report, Group 6 dashboard) now import the shared report escaper. It encodes ampersand, angle brackets, double quote, and apostrophe in the required ampersand-first order and normalizes nullish values to blank text.
+- **No trusted-number loophole:** the media and Group 6 reports also escape artifact fields previously interpolated raw because they were expected to be numeric. A malformed/tampered artifact can display its bad value but cannot turn that value into markup.
+- **Hostile fixture gate:** the new report-escaping probe statically binds all five imports/uses and rejects local identity helpers, then parses seven payloads in both text and quoted-attribute contexts with the HTML5 parser. It requires exact text/attribute round-trip, zero script/image/SVG/iframe/object/embed nodes, and zero event attributes. Parse5 is declared directly; the gate is suite command **5 of 118**.
+- **Negative/focused gate:** the in-memory identity diagnostic failed exactly entity output and hostile round-trip (**2/4**, exit 1); final escaping **4/4**. All five real reports regenerated and parsed with 0 errors/forbidden nodes/event attrs; schema **43/43**; orphan assets **199/199**, 0 orphan; probe summary **117/117** artifacts; media budget **13/13**; Group 6 readback **9/9**; build **GATE OK**, generated game unchanged; tool syntax, JSON/report readback, dependency readback, and `git diff --check` clean. Full `npm run vet:noreg` remains deferred to the D176 queue checkpoint.
+- **Queue:** E69 flips to FIXED; **E50 is the sole remaining run-2 FIX-NOW item**. E70 remains proposal-only.
+
 ## D351 — E66 LATE-WESTERN BATTLE-FLAG METADATA — [CODEX 5.6 Sol main loop, run-2 queue] (2026-07-10)
 
 - **Four explicit scenarios:** Chattanooga, Kennesaw, Franklin, and Nashville now resolve as Western-theater fields with no Army-of-the-Potomac corps badges and a representative Army-of-Tennessee `hardee` flag-family default. They no longer fall through to the Eastern/ANV sandbox fallback.

@@ -5,6 +5,7 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { escapeHtml } from './report-html-escape.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -18,10 +19,6 @@ function readJson(rel) {
   return JSON.parse(readFileSync(join(SHOTS, rel), 'utf8'));
 }
 
-function htmlEscape(s) {
-  return String(s).replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>').replace(/"/g, '"');
-}
-
 function tierFromName(name) {
   // Infer tier from probe filename conventions
   if (/probe-(accessibility|h0-|h2-)/.test(name)) return 'UI';
@@ -33,7 +30,7 @@ function tierFromName(name) {
   if (/probe-(afteraction|h0-after-action|h0-battle-briefing|h0-between-battle|h0-main-menu|h0-president-desk|h0-tactical-hud)/.test(name)) return 'UI';
   if (/probe-(photo-embed|portraits|scenes-imagery|leaders-imagery|usct-imagery|arms-imagery)/.test(name)) return 'Media';
   if (/probe-(loot-survival|women-in-war|flagship-units|primary-sources|under-told-perspectives|soldier-replacements)/.test(name)) return 'Content';
-  if (/probe-(group6|media-budget|historical|hotpath|source-domain)/.test(name)) return 'Tooling';
+  if (/probe-(group6|media-budget|historical|hotpath|report-html|source-domain)/.test(name)) return 'Tooling';
   return 'Other';
 }
 
@@ -71,11 +68,11 @@ function main() {
   const tableRows = rows.map(r => {
     const status = r.ok === true ? '✅' : (r.ok === false ? '❌' : '⚠️');
     return `<tr>
-      <td>${htmlEscape(r.probeName)}</td>
-      <td>${htmlEscape(String(r.passed))} / ${htmlEscape(String(r.total))}</td>
-      <td>${htmlEscape(String(r.pageErrors))}</td>
-      <td>${htmlEscape(String(r.warnings))}</td>
-      <td>${htmlEscape(r.tier)}</td>
+      <td>${escapeHtml(r.probeName)}</td>
+      <td>${escapeHtml(String(r.passed))} / ${escapeHtml(String(r.total))}</td>
+      <td>${escapeHtml(String(r.pageErrors))}</td>
+      <td>${escapeHtml(String(r.warnings))}</td>
+      <td>${escapeHtml(r.tier)}</td>
       <td>${status}</td>
     </tr>`;
   }).join('\n');

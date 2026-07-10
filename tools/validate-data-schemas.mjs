@@ -5,6 +5,7 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { escapeHtml } from './report-html-escape.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -20,10 +21,6 @@ if (!DIAGNOSTIC_FAMILIES.has(DIAGNOSTIC_INVALID)) {
 
 function ensureDir(p) {
   if (!existsSync(p)) mkdirSync(p, { recursive: true });
-}
-
-function htmlEscape(s) {
-  return String(s).replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>').replace(/"/g, '"');
 }
 
 // ---- Closed-world schema map: every family requires substantive nonempty keys ----
@@ -302,11 +299,11 @@ function main() {
     const parseStatus = r.parseOk ? '✅' : '❌';
     const issueStr = r.issues.length > 0 ? r.issues.join('; ') : '—';
     return `<tr>
-      <td>${htmlEscape(r.file)}</td>
-      <td>${htmlEscape(r.family)}</td>
+      <td>${escapeHtml(r.file)}</td>
+      <td>${escapeHtml(r.family)}</td>
       <td>${parseStatus}</td>
-      <td>${htmlEscape(issueStr)}</td>
-      <td>${htmlEscape(r.extraInfo || '—')}</td>
+      <td>${escapeHtml(issueStr)}</td>
+      <td>${escapeHtml(r.extraInfo || '—')}</td>
       <td class="${statusClass}">${status}</td>
     </tr>`;
   }).join('\n');

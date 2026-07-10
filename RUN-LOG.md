@@ -8,6 +8,12 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D352 REPORT HTML ENTITY-ESCAPING CONTRACT — E69 shipped — 2026-07-10 (D352)
+- **What shipped:** five report generators now share an ampersand-first five-character entity escaper; report fields assumed numeric are escaped too. Parse5 is a direct dependency for the hostile-fixture gate.
+- **Negative proof:** identity escaping made the exact-entity and hostile-round-trip rows red (**2/4**, exit 1). Clean mode passed seven text/quoted-attribute payloads, all five tool-routing checks, and nullish normalization **4/4**, with no interpreted forbidden nodes or event attributes.
+- **Focused gate/readback:** five real reports parsed with 0 errors/forbidden nodes/event attrs; schema **43/43**; orphan assets **199/199**; report inventory **117/117**; media **13/13**; Group 6 **9/9**; build GATE OK, game unchanged; suite list **118**; syntax/dependency/diff clean. Full `vet:noreg` deferred under D176.
+- **Queue:** E50 is the sole remaining FIX-NOW item. E70 remains proposal-only.
+
 ## D351 LATE-WESTERN BATTLE-FLAG METADATA — E66 shipped — 2026-07-10 (D351)
 - **What shipped:** Chattanooga, Kennesaw, Franklin, and Nashville now carry explicit Western/AoT metadata (`W`, no AotP badges, representative Hardee-pattern default) instead of silently inheriting the Eastern/ANV fallback. Registry parity now requires explicit metadata for every one of the 13 historical scenarios.
 - **History scope:** Tennessee State Museum and NPS evidence supports the Hardee/Cleburne family and the four battles' Army-of-Tennessee identity. The default is deliberately representative, not a claim of one uniform regimental flag; exact variants remain unit-specific work.

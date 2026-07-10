@@ -4,6 +4,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { escapeHtml } from './report-html-escape.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -12,14 +13,6 @@ mkdirSync(OUT, { recursive: true });
 
 function readJson(rel) {
   return JSON.parse(readFileSync(join(ROOT, rel), 'utf8'));
-}
-
-function esc(s) {
-  return String(s == null ? '' : s)
-    .replace(/&/g, '&')
-    .replace(/</g, '<')
-    .replace(/>/g, '>')
-    .replace(/"/g, '"');
 }
 
 function pctClass(val, warnAt, dangerAt) {
@@ -93,19 +86,19 @@ function render() {
 '  </div>\n' +
 '  <div class="summary-card">\n' +
 '    <div class="label">Steps Passed</div>\n' +
-'    <div class="value">' + data.passed + '/' + data.total + '</div>\n' +
+'    <div class="value">' + escapeHtml(data.passed) + '/' + escapeHtml(data.total) + '</div>\n' +
 '  </div>\n' +
 '  <div class="summary-card">\n' +
 '    <div class="label">Raw Tier</div>\n' +
-'    <div class="value"><span class="badge ' + pctClass(policy.rawTier === 'over-hard' ? 100 : policy.rawTier === 'over-review' ? 80 : policy.rawTier === 'soft-warning' ? 60 : 0, 50, 80) + '">' + esc(policy.rawTier) + '</span></div>\n' +
+'    <div class="value"><span class="badge ' + pctClass(policy.rawTier === 'over-hard' ? 100 : policy.rawTier === 'over-review' ? 80 : policy.rawTier === 'soft-warning' ? 60 : 0, 50, 80) + '">' + escapeHtml(policy.rawTier) + '</span></div>\n' +
 '  </div>\n' +
 '  <div class="summary-card">\n' +
 '    <div class="label">Total Files</div>\n' +
-'    <div class="value">' + policy.files + '</div>\n' +
+'    <div class="value">' + escapeHtml(policy.files) + '</div>\n' +
 '  </div>\n' +
 '  <div class="summary-card">\n' +
 '    <div class="label">Total Raw MB</div>\n' +
-'    <div class="value">' + policy.rawMB + '</div>\n' +
+'    <div class="value">' + escapeHtml(policy.rawMB) + '</div>\n' +
 '  </div>\n' +
 '  <div class="summary-card">\n' +
 '    <div class="label">Total Raw Bytes</div>\n' +
@@ -113,7 +106,7 @@ function render() {
 '  </div>\n' +
 '</div>\n' +
 '\n' +
-(warnings.length ? '<div class="warn-list"><strong>Warnings (' + warnings.length + ')</strong><ul>' + warnings.map(function(w) { return '<li>' + esc(w) + '</li>'; }).join('') + '</ul></div>\n' : '') +
+(warnings.length ? '<div class="warn-list"><strong>Warnings (' + warnings.length + ')</strong><ul>' + warnings.map(function(w) { return '<li>' + escapeHtml(w) + '</li>'; }).join('') + '</ul></div>\n' : '') +
 '\n' +
 '<h2>Headroom</h2>\n' +
 '<table>\n' +
@@ -144,7 +137,7 @@ function render() {
 '<div class="guard-grid">\n' +
   Object.entries(policy.activeGuards || {}).map(function(kv) {
     var k = kv[0], v = kv[1];
-    return '<div class="guard-item ' + boolClass(v) + '"><span class="badge ' + boolClass(v) + '">' + (v ? 'ON' : 'OFF') + '</span> <code>' + esc(k) + '</code></div>';
+    return '<div class="guard-item ' + boolClass(v) + '"><span class="badge ' + boolClass(v) + '">' + (v ? 'ON' : 'OFF') + '</span> <code>' + escapeHtml(k) + '</code></div>';
   }).join('') + '\n' +
 '</div>\n' +
 '\n' +
@@ -156,14 +149,14 @@ function render() {
     var fh = Number(c.fileHeadroom || 0);
     var bh = Number(c.rawByteHeadroom || 0);
     return '<tr>\n' +
-'      <td><code>' + esc(id) + '</code></td>\n' +
-'      <td>' + c.files + '</td>\n' +
-'      <td>' + c.freezeMaxFiles + '</td>\n' +
+'      <td><code>' + escapeHtml(id) + '</code></td>\n' +
+'      <td>' + escapeHtml(c.files) + '</td>\n' +
+'      <td>' + escapeHtml(c.freezeMaxFiles) + '</td>\n' +
 '      <td><span class="badge ' + headroomClass(fh) + '">' + fh + '</span></td>\n' +
 '      <td>' + Number(c.rawBytes || 0).toLocaleString() + '</td>\n' +
 '      <td>' + Number(c.freezeMaxRawBytes || 0).toLocaleString() + '</td>\n' +
 '      <td><span class="badge ' + headroomClass(bh) + '">' + Number(bh).toLocaleString() + '</span></td>\n' +
-'      <td>' + c.rawMB + '</td>\n' +
+'      <td>' + escapeHtml(c.rawMB) + '</td>\n' +
 '    </tr>';
   }).join('') + '\n' +
 '</table>\n' +
@@ -196,8 +189,8 @@ function render() {
 '  </div>\n' +
 '</div>\n' +
 '\n' +
-((sourceOrg.missingSourceCategories || []).length ? '<div class="danger-list"><strong>Missing Source Categories</strong>: ' + sourceOrg.missingSourceCategories.map(esc).join(', ') + '</div>\n' : '') +
-((sourceOrg.metadataIssueCategories || []).length ? '<div class="warn-list"><strong>Metadata Issue Categories</strong>: ' + sourceOrg.metadataIssueCategories.map(esc).join(', ') + '</div>\n' : '') +
+((sourceOrg.missingSourceCategories || []).length ? '<div class="danger-list"><strong>Missing Source Categories</strong>: ' + sourceOrg.missingSourceCategories.map(escapeHtml).join(', ') + '</div>\n' : '') +
+((sourceOrg.metadataIssueCategories || []).length ? '<div class="warn-list"><strong>Metadata Issue Categories</strong>: ' + sourceOrg.metadataIssueCategories.map(escapeHtml).join(', ') + '</div>\n' : '') +
 '\n' +
 '<h3>Per-Category Source Organization</h3>\n' +
 '<table>\n' +
@@ -205,13 +198,13 @@ function render() {
   catIds.map(function(id) {
     var c = (sourceOrg.perCategory || {})[id] || {};
     return '<tr>\n' +
-'      <td><code>' + esc(id) + '</code></td>\n' +
-'      <td>' + (c.sourceDir ? '<code>' + esc(c.sourceDir) + '</code>' : '-') + '</td>\n' +
-'      <td>' + (c.embedDir ? '<code>' + esc(c.embedDir) + '</code>' : '-') + '</td>\n' +
-'      <td>' + c.sourceFiles + '</td>\n' +
-'      <td>' + c.embedFiles + '</td>\n' +
+'      <td><code>' + escapeHtml(id) + '</code></td>\n' +
+'      <td>' + (c.sourceDir ? '<code>' + escapeHtml(c.sourceDir) + '</code>' : '-') + '</td>\n' +
+'      <td>' + (c.embedDir ? '<code>' + escapeHtml(c.embedDir) + '</code>' : '-') + '</td>\n' +
+'      <td>' + escapeHtml(c.sourceFiles) + '</td>\n' +
+'      <td>' + escapeHtml(c.embedFiles) + '</td>\n' +
 '      <td>' + ((c.missingSource || []).length ? '<span class="badge danger">' + c.missingSource.length + '</span>' : '<span class="badge ok">0</span>') + '</td>\n' +
-'      <td>' + (c.metadataRecords != null ? c.metadataRecords : '-') + '</td>\n' +
+'      <td>' + escapeHtml(c.metadataRecords != null ? c.metadataRecords : '-') + '</td>\n' +
 '      <td>' + ((c.missingMetadata || []).length ? '<span class="badge danger">' + c.missingMetadata.length + '</span>' : '<span class="badge ok">0</span>') + '</td>\n' +
 '      <td>' + ((c.staleMetadata || []).length ? '<span class="badge warn">' + c.staleMetadata.length + '</span>' : '<span class="badge ok">0</span>') + '</td>\n' +
 '      <td>' + ((c.incompleteMetadata || []).length ? '<span class="badge warn">' + c.incompleteMetadata.length + '</span>' : '<span class="badge ok">0</span>') + '</td>\n' +
@@ -239,15 +232,15 @@ function render() {
 '  </div>\n' +
 '</div>\n' +
 '\n' +
-((sourceInv.sourceOnlyCategories || []).length ? '<div class="warn-list"><strong>Source-Only Categories</strong>: ' + sourceInv.sourceOnlyCategories.map(esc).join(', ') + '</div>\n' : '') +
-((sourceInv.embedOnlyCategories || []).length ? '<div class="warn-list"><strong>Embed-Only Categories</strong>: ' + sourceInv.embedOnlyCategories.map(esc).join(', ') + '</div>\n' : '') +
+((sourceInv.sourceOnlyCategories || []).length ? '<div class="warn-list"><strong>Source-Only Categories</strong>: ' + sourceInv.sourceOnlyCategories.map(escapeHtml).join(', ') + '</div>\n' : '') +
+((sourceInv.embedOnlyCategories || []).length ? '<div class="warn-list"><strong>Embed-Only Categories</strong>: ' + sourceInv.embedOnlyCategories.map(escapeHtml).join(', ') + '</div>\n' : '') +
 '\n' +
 '<h2>Arithmetic Consistency</h2>\n' +
 '<table>\n' +
 '  <tr><th>Metric</th><th>Value</th></tr>\n' +
-'  <tr><td>Summed Core Files</td><td>' + arith.summedCoreFiles + '</td></tr>\n' +
+'  <tr><td>Summed Core Files</td><td>' + escapeHtml(arith.summedCoreFiles) + '</td></tr>\n' +
 '  <tr><td>Summed Core Raw Bytes</td><td>' + Number(arith.summedCoreRawBytes || 0).toLocaleString() + '</td></tr>\n' +
-'  <tr><td>Total Files</td><td>' + arith.totalFiles + '</td></tr>\n' +
+'  <tr><td>Total Files</td><td>' + escapeHtml(arith.totalFiles) + '</td></tr>\n' +
 '  <tr><td>Total Raw Bytes</td><td>' + Number(arith.totalRawBytes || 0).toLocaleString() + '</td></tr>\n' +
 '  <tr><td>Totals Match</td><td><span class="badge ' + boolClass(arith.totalsMatch) + '">' + (arith.totalsMatch ? 'Yes' : 'No') + '</span></td></tr>\n' +
 '</table>\n' +
@@ -258,27 +251,27 @@ function render() {
 '  <tr><td>Frozen Core Posture Active</td><td><span class="badge ' + boolClass(undeclared.frozenCorePostureActive) + '">' + (undeclared.frozenCorePostureActive ? 'Yes' : 'No') + '</span></td></tr>\n' +
 '  <tr><td>Guard Enabled</td><td><span class="badge ' + boolClass(undeclared.guardEnabled) + '">' + (undeclared.guardEnabled ? 'Yes' : 'No') + '</span></td></tr>\n' +
 '  <tr><td>Enforced</td><td><span class="badge ' + boolClass(undeclared.enforced) + '">' + (undeclared.enforced ? 'Yes' : 'No') + '</span></td></tr>\n' +
-'  <tr><td>Undeclared Categories</td><td>' + undeclared.undeclaredCategoryCount + '</td></tr>\n' +
-'  <tr><td>Undeclared Files</td><td>' + undeclared.undeclaredFilesCount + '</td></tr>\n' +
+'  <tr><td>Undeclared Categories</td><td>' + escapeHtml(undeclared.undeclaredCategoryCount) + '</td></tr>\n' +
+'  <tr><td>Undeclared Files</td><td>' + escapeHtml(undeclared.undeclaredFilesCount) + '</td></tr>\n' +
 '</table>\n' +
 '\n' +
-((undeclared.undeclaredCategories || []).length ? '<div class="warn-list"><strong>Undeclared Categories</strong>: ' + undeclared.undeclaredCategories.map(esc).join(', ') + '</div>\n' : '') +
+((undeclared.undeclaredCategories || []).length ? '<div class="warn-list"><strong>Undeclared Categories</strong>: ' + undeclared.undeclaredCategories.map(escapeHtml).join(', ') + '</div>\n' : '') +
 '\n' +
 '<h2>Largest Embedded Files (Top 10)</h2>\n' +
 '<table>\n' +
 '  <tr><th>Path</th><th>Category</th><th>Bytes</th></tr>\n' +
   largest.map(function(f) {
-    return '<tr><td><code>' + esc(f.path) + '</code></td><td>' + esc(f.category) + '</td><td>' + Number(f.bytes || 0).toLocaleString() + '</td></tr>';
+    return '<tr><td><code>' + escapeHtml(f.path) + '</code></td><td>' + escapeHtml(f.category) + '</td><td>' + Number(f.bytes || 0).toLocaleString() + '</td></tr>';
   }).join('') + '\n' +
 '</table>\n' +
 '\n' +
 '<h2>Frozen Categories</h2>\n' +
 '<table>\n' +
 '  <tr><th>Metric</th><th>Value</th></tr>\n' +
-'  <tr><td>Total Frozen Categories</td><td>' + ((policy.frozenCategories || {}).total || 0) + '</td></tr>\n' +
-'  <tr><td>Zero File Headroom</td><td>' + (((policy.frozenCategories || {}).zeroFileHeadroom || []).map(esc).join(', ') || 'none') + '</td></tr>\n' +
-'  <tr><td>Zero Raw Byte Headroom</td><td>' + (((policy.frozenCategories || {}).zeroRawByteHeadroom || []).map(esc).join(', ') || 'none') + '</td></tr>\n' +
-'  <tr><td>Negative Headroom</td><td>' + (((policy.frozenCategories || {}).negativeHeadroom || []).map(esc).join(', ') || 'none') + '</td></tr>\n' +
+'  <tr><td>Total Frozen Categories</td><td>' + escapeHtml((policy.frozenCategories || {}).total || 0) + '</td></tr>\n' +
+'  <tr><td>Zero File Headroom</td><td>' + (((policy.frozenCategories || {}).zeroFileHeadroom || []).map(escapeHtml).join(', ') || 'none') + '</td></tr>\n' +
+'  <tr><td>Zero Raw Byte Headroom</td><td>' + (((policy.frozenCategories || {}).zeroRawByteHeadroom || []).map(escapeHtml).join(', ') || 'none') + '</td></tr>\n' +
+'  <tr><td>Negative Headroom</td><td>' + (((policy.frozenCategories || {}).negativeHeadroom || []).map(escapeHtml).join(', ') || 'none') + '</td></tr>\n' +
 '</table>\n' +
 '\n' +
 '<h2>Steps</h2>\n' +
@@ -287,9 +280,9 @@ function render() {
   (data.steps || []).map(function(s, i) {
     return '<tr>\n' +
 '    <td>' + (i + 1) + '</td>\n' +
-'    <td>' + esc(s.name) + '</td>\n' +
+'    <td>' + escapeHtml(s.name) + '</td>\n' +
 '    <td><span class="badge ' + (s.ok ? 'ok' : 'danger') + '">' + (s.ok ? 'PASS' : 'FAIL') + '</span></td>\n' +
-'    <td>' + (s.ok ? (s.detail ? '<code>' + esc(JSON.stringify(s.detail)) + '</code>' : '') : '<code>' + esc(s.error) + '</code>') + '</td>\n' +
+'    <td>' + (s.ok ? (s.detail ? '<code>' + escapeHtml(JSON.stringify(s.detail)) + '</code>' : '') : '<code>' + escapeHtml(s.error) + '</code>') + '</td>\n' +
 '  </tr>';
   }).join('') + '\n' +
 '</table>\n' +

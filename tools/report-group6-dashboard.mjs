@@ -4,6 +4,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { escapeHtml } from './report-html-escape.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -12,14 +13,6 @@ mkdirSync(OUT, { recursive: true });
 
 function readJson(rel) {
   return JSON.parse(readFileSync(join(ROOT, rel), 'utf8'));
-}
-
-function esc(s) {
-  return String(s == null ? '' : s)
-    .replace(/[&]/g, '&')
-    .replace(/[<]/g, '<')
-    .replace(/[>]/g, '>')
-    .replace(/["]/g, '"');
 }
 
 function boolClass(v) {
@@ -94,17 +87,17 @@ function render() {
 '<div class="section-card">\n' +
 '<h3>Media Budget</h3>\n' +
 '<div class="summary-grid">\n' +
-'  <div class="summary-card"><div class="label">Raw Tier</div><div class="value"><span class="badge ' + (mPolicy.rawTier === 'over-hard' ? 'danger' : mPolicy.rawTier === 'over-review' ? 'danger' : mPolicy.rawTier === 'soft-warning' ? 'warn' : 'ok') + '">' + esc(mPolicy.rawTier) + '</span></div></div>\n' +
-'  <div class="summary-card"><div class="label">Raw MB</div><div class="value">' + mPolicy.rawMB + '</div></div>\n' +
-'  <div class="summary-card"><div class="label">Files</div><div class="value">' + mPolicy.files + '</div></div>\n' +
+'  <div class="summary-card"><div class="label">Raw Tier</div><div class="value"><span class="badge ' + (mPolicy.rawTier === 'over-hard' ? 'danger' : mPolicy.rawTier === 'over-review' ? 'danger' : mPolicy.rawTier === 'soft-warning' ? 'warn' : 'ok') + '">' + escapeHtml(mPolicy.rawTier) + '</span></div></div>\n' +
+'  <div class="summary-card"><div class="label">Raw MB</div><div class="value">' + escapeHtml(mPolicy.rawMB) + '</div></div>\n' +
+'  <div class="summary-card"><div class="label">Files</div><div class="value">' + escapeHtml(mPolicy.files) + '</div></div>\n' +
 '  <div class="summary-card"><div class="label">Soft Headroom</div><div class="value"><span class="badge ' + headroomClass(mPolicy.headroom.softBytes) + '">' + Number(mPolicy.headroom.softBytes || 0).toLocaleString() + '</span></div></div>\n' +
 '  <div class="summary-card"><div class="label">Hard Headroom</div><div class="value"><span class="badge ' + headroomClass(mPolicy.headroom.hardBytes) + '">' + Number(mPolicy.headroom.hardBytes || 0).toLocaleString() + '</span></div></div>\n' +
-'  <div class="summary-card"><div class="label">Steps</div><div class="value">' + media.passed + '/' + media.total + '</div></div>\n' +
+'  <div class="summary-card"><div class="label">Steps</div><div class="value">' + escapeHtml(media.passed) + '/' + escapeHtml(media.total) + '</div></div>\n' +
 '</div>\n' +
 '<div class="guard-grid">\n' +
   Object.entries(mPolicy.activeGuards || {}).map(function(kv) {
     var k = kv[0], v = kv[1];
-    return '<div class="guard-item ' + boolClass(v) + '"><span class="badge ' + boolClass(v) + '">' + (v ? 'ON' : 'OFF') + '</span> <code>' + esc(k) + '</code></div>';
+    return '<div class="guard-item ' + boolClass(v) + '"><span class="badge ' + boolClass(v) + '">' + (v ? 'ON' : 'OFF') + '</span> <code>' + escapeHtml(k) + '</code></div>';
   }).join('') + '\n' +
 '</div>\n' +
 '<table>\n' +
@@ -119,10 +112,10 @@ function render() {
 '<div class="section-card">\n' +
 '<h3>Historical Data Inventory</h3>\n' +
 '<div class="summary-grid">\n' +
-'  <div class="summary-card"><div class="label">Historical Docs</div><div class="value">' + (hm.historicalDocs || 0) + '</div></div>\n' +
+'  <div class="summary-card"><div class="label">Historical Docs</div><div class="value">' + escapeHtml(hm.historicalDocs || 0) + '</div></div>\n' +
 '  <div class="summary-card"><div class="label">Markdown Lines</div><div class="value">' + Number(hm.markdownLines || 0).toLocaleString() + '</div></div>\n' +
-'  <div class="summary-card"><div class="label">Data Files</div><div class="value">' + (hm.dataFiles || 0) + '</div></div>\n' +
-'  <div class="summary-card"><div class="label">Files With Sources</div><div class="value">' + (hm.dataFilesWithSources || 0) + '</div></div>\n' +
+'  <div class="summary-card"><div class="label">Data Files</div><div class="value">' + escapeHtml(hm.dataFiles || 0) + '</div></div>\n' +
+'  <div class="summary-card"><div class="label">Files With Sources</div><div class="value">' + escapeHtml(hm.dataFilesWithSources || 0) + '</div></div>\n' +
 '  <div class="summary-card"><div class="label">Source Fields</div><div class="value">' + Number(hm.dataSourceFields || 0).toLocaleString() + '</div></div>\n' +
 '  <div class="summary-card"><div class="label">Source Items</div><div class="value">' + Number(hm.dataSourceItems || 0).toLocaleString() + '</div></div>\n' +
 '  <div class="summary-card"><div class="label">Source Notes</div><div class="value">' + Number(hm.dataSourceNotes || 0).toLocaleString() + '</div></div>\n' +
@@ -133,10 +126,10 @@ function render() {
 '<div class="section-card">\n' +
 '<h3>Source Domains</h3>\n' +
 '<div class="summary-grid">\n' +
-'  <div class="summary-card"><div class="label">URL Items</div><div class="value">' + (dm.sourceUrlItems || 0) + '</div></div>\n' +
-'  <div class="summary-card"><div class="label">Unique Domains</div><div class="value">' + (dm.uniqueDomains || 0) + '</div></div>\n' +
-'  <div class="summary-card"><div class="label">Top-20 Concentration</div><div class="value"><span class="badge ' + (Number(dm.concentrationTop20Pct || 0) <= 90 ? 'ok' : 'danger') + '">' + dm.concentrationTop20Pct + '%</span></div></div>\n' +
-'  <div class="summary-card"><div class="label">Invalid URLs</div><div class="value"><span class="badge ' + (dm.invalidUrlItems === 0 ? 'ok' : 'danger') + '">' + dm.invalidUrlItems + '</span></div></div>\n' +
+'  <div class="summary-card"><div class="label">URL Items</div><div class="value">' + escapeHtml(dm.sourceUrlItems || 0) + '</div></div>\n' +
+'  <div class="summary-card"><div class="label">Unique Domains</div><div class="value">' + escapeHtml(dm.uniqueDomains || 0) + '</div></div>\n' +
+'  <div class="summary-card"><div class="label">Top-20 Concentration</div><div class="value"><span class="badge ' + (Number(dm.concentrationTop20Pct || 0) <= 90 ? 'ok' : 'danger') + '">' + escapeHtml(dm.concentrationTop20Pct) + '%</span></div></div>\n' +
+'  <div class="summary-card"><div class="label">Invalid URLs</div><div class="value"><span class="badge ' + (dm.invalidUrlItems === 0 ? 'ok' : 'danger') + '">' + escapeHtml(dm.invalidUrlItems) + '</span></div></div>\n' +
 '  <div class="summary-card"><div class="label">Drift Guard</div><div class="value"><span class="badge ' + boolClass(((dm.domainDriftGuard || {}).pass)) + '">' + (((dm.domainDriftGuard || {}).pass) ? 'PASS' : 'FAIL') + '</span></div></div>\n' +
 '</div>\n' +
 '</div>\n' +
@@ -144,20 +137,20 @@ function render() {
 '<div class="section-card">\n' +
 '<h3>Hotpath Profile</h3>\n' +
 '<div class="summary-grid">\n' +
-'  <div class="summary-card"><div class="label">Files</div><div class="value">' + (hp.files || 0) + '</div></div>\n' +
+'  <div class="summary-card"><div class="label">Files</div><div class="value">' + escapeHtml(hp.files || 0) + '</div></div>\n' +
 '  <div class="summary-card"><div class="label">Lines</div><div class="value">' + Number(hp.lines || 0).toLocaleString() + '</div></div>\n' +
-'  <div class="summary-card"><div class="label">Functions</div><div class="value">' + (hp.functions || 0) + '</div></div>\n' +
-'  <div class="summary-card"><div class="label">Loops</div><div class="value">' + (hp.loops || 0) + '</div></div>\n' +
-'  <div class="summary-card"><div class="label">InstancedMesh Refs</div><div class="value">' + (hp.instancedMeshRefs || 0) + '</div></div>\n' +
-'  <div class="summary-card"><div class="label">Dispose Refs</div><div class="value">' + (hp.disposeRefs || 0) + '</div></div>\n' +
-'  <div class="summary-card"><div class="label">Fetch Refs</div><div class="value"><span class="badge ' + (Number(hp.fetchRefs || 0) <= 1 ? 'ok' : 'warn') + '">' + (hp.fetchRefs || 0) + '</span></div></div>\n' +
-'  <div class="summary-card"><div class="label">Storage Refs</div><div class="value">' + (hp.storageRefs || 0) + '</div></div>\n' +
+'  <div class="summary-card"><div class="label">Functions</div><div class="value">' + escapeHtml(hp.functions || 0) + '</div></div>\n' +
+'  <div class="summary-card"><div class="label">Loops</div><div class="value">' + escapeHtml(hp.loops || 0) + '</div></div>\n' +
+'  <div class="summary-card"><div class="label">InstancedMesh Refs</div><div class="value">' + escapeHtml(hp.instancedMeshRefs || 0) + '</div></div>\n' +
+'  <div class="summary-card"><div class="label">Dispose Refs</div><div class="value">' + escapeHtml(hp.disposeRefs || 0) + '</div></div>\n' +
+'  <div class="summary-card"><div class="label">Fetch Refs</div><div class="value"><span class="badge ' + (Number(hp.fetchRefs || 0) <= 1 ? 'ok' : 'warn') + '">' + escapeHtml(hp.fetchRefs || 0) + '</span></div></div>\n' +
+'  <div class="summary-card"><div class="label">Storage Refs</div><div class="value">' + escapeHtml(hp.storageRefs || 0) + '</div></div>\n' +
 '</div>\n' +
 '<table>\n' +
 '  <tr><th>Group</th><th>Files</th><th>Bytes</th><th>Lines</th><th>Functions</th><th>Loops</th></tr>\n' +
   Object.entries(hotpathRaw.groups || {}).map(function(kv) {
     var g = kv[0], grp = kv[1];
-    return '<tr><td><code>' + esc(g) + '</code></td><td>' + grp.files + '</td><td>' + Number(grp.bytes || 0).toLocaleString() + '</td><td>' + grp.lines + '</td><td>' + grp.functions + '</td><td>' + grp.loops + '</td></tr>';
+    return '<tr><td><code>' + escapeHtml(g) + '</code></td><td>' + escapeHtml(grp.files) + '</td><td>' + Number(grp.bytes || 0).toLocaleString() + '</td><td>' + escapeHtml(grp.lines) + '</td><td>' + escapeHtml(grp.functions) + '</td><td>' + escapeHtml(grp.loops) + '</td></tr>';
   }).join('') + '\n' +
 '</table>\n' +
 '</div>\n' +
