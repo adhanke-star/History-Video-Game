@@ -6,6 +6,14 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D350 — S43 CANONICAL ROUTING COHERENCE — [CODEX 5.6 Sol main loop, run-2 queue] (2026-07-10)
+
+- **Disk wins over stale snapshots:** the active `START-HERE.md` picker and `AUTONOMOUS-RUN.md` refresh now describe the 13-scenario D349 boundary and the remaining run-2 order **E66 → E69 → E50**, followed by the E70 proposal disposition and the planned full-suite checkpoint. The old D333 and D322 snapshots remain only inside explicit source-history comments or legacy sections, not rendered as current instructions.
+- **Unlock semantics reconciled:** D324 removed the broad Phase D/H/M8/naval/battle locks. Their roadmap entries now say unlocked/eligible under normal source, D74, accessibility, performance, license/account, and focused-probe gates. The trans-Mississippi packet keeps its narrower D183 two-tier source/OOB go/no-go; D324 did not waive that content-specific safety decision.
+- **Roadmap truth:** Phase C now records Chattanooga, Kennesaw, Franklin, and Nashville as playable; Nashville's documented USCT contribution is shipped while the Crater/New Market Heights/Olustee remain candidates; Antietam's sole built-battle revision is closed by D341; custom multi-phase authoring is unlocked but unbuilt. The audit kickoff now names D336's 5.6 Sol + Ultra policy rather than “4.8 deltas” and derives HEAD from live git.
+- **Gate:** visible-text/comment-balance assertion green across the four corrected docs; build **GATE OK** with generated HTML unchanged; schema **43/43**; battle-build research **15/15**; tactical roster **8/8**, 13 exact ids, 0 pageerrors; `vet:noreg --list` remains **117 commands**; artifact readback and `git diff --check` clean. Full `npm run vet:noreg` remains deferred to the end-of-queue D176 checkpoint.
+- **Queue:** S43 flips to FIXED; **3 run-2 PENDING FIX-NOW items remain (including E50)**. Next is **E66**, explicit Western/AoT flag metadata for Chattanooga, Kennesaw, Franklin, and Nashville. E70 remains proposal-only.
+
 ## D349 — E68 LARGEST-SCENE INTEL UHD-617 PROFILE COVERAGE — [CODEX 5.6 Sol main loop, run-2 queue] (2026-07-10)
 
 - **Largest-scene definition is live, not asserted by hand:** `data/media-budget.json` now names Kennesaw as the largest shipped opening scene, and the profile derives the opening OOB count for every current battle data file. The current inventory is **13 scenarios**, with Kennesaw uniquely largest at **17 initial units** (Franklin 16; representative Chickamauga 8). A future larger opening makes the configured leg red until updated.

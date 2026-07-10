@@ -12,14 +12,14 @@ before acting.
 
 cd ~/Desktop/Video\ Game
 git fetch origin && git status --short --branch && git pull --ff-only origin main
-git log --oneline -5   # confirm the head is at or past D286 (Opus restore)
+git log --oneline -5   # confirm HEAD matches origin/main; derive the live D-number from disk
 If the tree is dirty with edits you did not make: STOP and surface them — never overwrite.
 
 READ ORDER (then work from disk, not assumption):
 1. START-HERE.md (the map + Universal AI implementer standards + priority picker)
-2. OPUS-PLAYBOOK.md (how YOU are expected to behave — the §7 run-prompt snippets bind
-   this run; note the 4.8 deltas: narrate less, delegate/search MORE, panels report
-   everything with confidence+severity)
+2. OPUS-PLAYBOOK.md (the D336 ChatGPT/Codex 5.6 Sol + Ultra policy binds this run;
+   use lower tiers only when explicitly selectable and mechanically packeted, and
+   require every finder/verifier/judge to report confidence + severity)
 3. AUTONOMOUS-RUN.md (operating manual: build loop §3, guardrails §5, §8 HALT charter)
 4. HANDOFF.md top block + WAKE-UP.md top block (the live head)
 5. V1-CHECKLIST.md (THE roadmap — D61; you never relitigate it) + REVIEW-QUEUE.md
