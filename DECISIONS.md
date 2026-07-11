@@ -6,6 +6,21 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D372 — THE 10% BOUNDARY CLOSES THE SOL CHARTER CLEAN AND RETURNS WORK THROUGH THE LEDGER — [AARON boundary · CODEX 5.6 Sol Ultra closeout] (2026-07-10)
+
+Aaron surfaced the product's 10% usage warning after D371's implementation was already green. The
+efficient choice is one docs-only relay boundary, not a second half-vetted feature or a compressed
+historical record. LANE-004 closes SHIPPED; LANE-002 5b returns to CONTRACT unowned with all **918**
+rows untouched; LANE-003 remains exactly as Fable owns it and is not edited or executed here.
+
+- **What this Sol session shipped:** D369's sourced 22-feature genre-elite design law and GEA-01 through GEA-14 ladder; D370's full-spectrum audit run 3 with 12 confirmed findings (3 HIGH / 8 MED / 1 LOW); D371's E72 honest `menuprobe` gate, negative-bind proven and green on final bytes.
+- **What it deliberately did not start:** GEA-01, S44, GEA-02, GEA-03, E71, C72, and every Phase D prosopography record. No partial source packet, dirty runtime slice, or false progress count crosses the boundary.
+- **Fable relay order:** first reconcile clean HEAD and use its existing LANE-003 DRIVE to run the deferred 121-command serialized `npm run vet:noreg` battery, repair any real red at root, inspect every JSON/pageerror summary, update the owned lane pointer, commit, and push. If context remains, continue LANE-003's already-ratified stretch order at full depth; do not silently replace that contract with Sol's audit queue. At the next clean LANE-003 bundle boundary, take a fresh lock before picking up Sol's queue: E71, then C72, with GEA-01 + S44 as the safe small fallback. LANE-002 5b starts only with enough context for gather, default-refute, adjudication, and per-record gates.
+- **S47 closeout:** every writable startup head and both released lane pointers now agree on 16 scenarios, 918 open rows, and the D371/D372 boundary. LANE-003's owned resume paragraph retains one pre-D372 Sol-status sentence under the read-only lock; Fable must reconcile it in its first owned ledger update after the battery.
+- **Verification scope:** D371 already has build GATE OK, `menuprobe` 4/4, H0 main menu 5/5, 0 pageerrors, and `git diff --check`. D372 is docs/ledger only; build must remain GATE OK with generated HTML unchanged and `git diff --check` clean. The 121-command release battery remains intentionally unrun because it belongs to Fable's LANE-003.
+
+---
+
 ## D371 — E72 MAKES THE WAR-DEPARTMENT MENU PROBE AN HONEST GATE — [CODEX 5.6 Sol Ultra, LANE-004 Phase C] (2026-07-10)
 
 `tools/menuprobe.mjs` no longer turns a nonthrowing false result into green. Its four teeth now

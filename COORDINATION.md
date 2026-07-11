@@ -128,11 +128,10 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
 - **History:** teeth authored (uncommitted) by Codex 2026-07-09/10 · contract reconstructed from
   the working tree + REVIEW-QUEUE by Claude Code 2026-07-10 · shipped D353.
 
-### LANE-002 · phase-i-named-army — **DRIVE (5b)** (opened ahead of the M5 drive)
+### LANE-002 · phase-i-named-army — **CONTRACT (5b)** (open, unowned)
 
-- **Owning tool:** ChatGPT/Codex (5.6 Sol at Ultra) for 5b during the D367 charter; 5a and 5c
-  remain shipped.
-- **State:** DRIVE on 5b; the planned 5a/5c slices remain shipped.
+- **Owning tool:** none after the D372 clean release; 5a and 5c remain shipped.
+- **State:** CONTRACT on open 5b; no D367-session prosopography batch started.
 - **Design law:** `V1-CHECKLIST.md` Phase I · `RATING-SYSTEM-DESIGN.md` (D94 OVR/ratings law) ·
   `SOLDIER-REPLACEMENT-FORMAT.md` (`cw_soldier_replacements_v1`, the citation-grade replacement
   lane) · DECISIONS D91/D93 (journey mode), D152 (lane tooling), D172-D298 (31 shipped records),
@@ -182,9 +181,10 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   (related but distinct engagement); the other 10 battles have NO in-repo roster research —
   records there need fresh external NPS/CMOHS/primary-source work (~2 sources + default-refute +
   adjudication per record, the repo's most expensive work per shipped line).
-- **Resume pointer:** **D368 STARTUP LOCK: ChatGPT/Codex holds 5b DRIVE for the D367 session and
-  starts from the D366-updated 918-row remainder; batch work begins only in Phase D after the
-  LANE-004 audit and cleared quick wins.** **5a SHIPPED (D357) · 5b batch 1 SHIPPED (D358: 8 Bull Run cmd rows; probe
+- **Resume pointer:** **D372 CLEAN RELEASE:** the D367 Sol session ended at its 10% boundary before
+  Phase D; no record was opened and the live remainder stays **918**. The next qualified TOP LOOP
+  must take 5b DRIVE in a committed ledger edit and log its batch size/reason in `DECISIONS.md`
+  before the first record. **5a SHIPPED (D357) · 5b batch 1 SHIPPED (D358: 8 Bull Run cmd rows; probe
   pins 31→39, 912 pin HELD — replacement batches preserve registry length, only new battle units
   move 912) · 5c SHIPPED (D360: 11-rung promotion lattice + Career Trajectory read-out; nothing
   new rides the save).** The lane's PLANNED slices are complete; it stays OPEN for further 5b
@@ -199,12 +199,12 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   start, follow the per-record contract above (mechanical gather → default-refute → Sol
   adjudication owning final text; ≥2 sources; batch sized + logged in DECISIONS before the
   first record), and release the lock at session end.
-- **Last-touched commit:** D368 startup lock (this commit; latest shipped 5b content remains D358
-  and 5c remains D360).
+- **Last-touched commit:** D372 clean release (latest shipped 5b content remains D358 and 5c
+  remains D360).
 - **History:** lane opened by Claude Code 2026-07-10 under Aaron's Contract Relay kickoff;
   5b inventory attached 2026-07-10; 5a shipped D357 2026-07-10; 5b batch 1 (8 records) shipped
   D358 2026-07-10; 5c shipped D360 2026-07-10; ChatGPT/Codex took 5b DRIVE for the D367
-  chartered session in D368 2026-07-10.
+  chartered session in D368 and released it untouched at D372's 10% boundary, 2026-07-10.
 
 ### LANE-003 · battle-ladder — **DRIVE** (Claude/Fable owns the D363+ ladder)
 
@@ -397,11 +397,11 @@ docs and this resume pointer, then push. Stop only at a clean committed boundary
 condition, or exhausted context; if ChatGPT's usage returns mid-slice, keep the lock until the
 next green commit and confer through this ledger instead of permitting simultaneous edits.
 
-### LANE-004 · sol-genre-elite-session — **DRIVE** (chartered by D367 for one full ChatGPT 5.6 Sol session)
+### LANE-004 · sol-genre-elite-session — **SHIPPED (D372 clean close)**
 
-- **Owning tool:** ChatGPT/Codex (5.6 Sol at Ultra; no-control helper exception stated at
-  session start).
-- **State:** DRIVE — both this lane and LANE-002 5b were taken in the same D368 startup commit.
+- **Owning tool:** none; ChatGPT/Codex drove D368-D371 and released the lane in D372.
+- **State:** SHIPPED — Phase A audit, Phase B audit, and the E72 Phase C gate fix landed; Aaron's
+  10% boundary ended the charter before further Phase C slices or Phase D records began.
 - **Design law:** DECISIONS D367 (the charter) · D336 role routing (`OPUS-PLAYBOOK.md` carries
   the kickoff snippet) · `AUDIT-PROMPT.md` (Phase B verbatim) · `REVIEW-QUEUE.md` (the findings
   ledger both audit phases write) · D369 + `docs/design/genre-elite-audit-2026-07.md` (Phase A
@@ -434,15 +434,17 @@ next green commit and confer through this ledger instead of permitting simultane
 - **Probe design:** Phases A/B are docs/ledger phases — the gate is canonical-doc coherence +
   REVIEW-QUEUE format + `git diff --check`; Phase C uses each touched system's focused probes;
   Phase D uses `tools/import-soldier-replacements.mjs` + the replacement-overlay probe teeth.
-- **Resume pointer:** **D371 PHASE C CLEAN STOP:** E72's false-green `menuprobe` is fixed and
-  bind-proven; clean final is 4/4 and adjacent H0 main menu is 5/5, both with 0 pageerrors. Aaron
-  surfaced the 10% usage boundary, so do not start GEA-01, S44, GEA-02, or Phase D in this session.
-  Commit/push D371, then spend the remainder only on live-head sync, releasing LANE-004 and
-  LANE-002 5b, and a Fable-tailored handoff. E71/C72 and all unshipped quick wins stay pending.
-- **Last-touched commit:** D371 Phase C E72 (this commit).
+- **Resume pointer:** none; lane closed. D369 ratified the 22-feature genre audit, D370 filed 12
+  confirmed run-3 findings, and D371 fixed E72 with a biting negative diagnostic. The remaining
+  ten pending run-3 findings, GEA-01/02/03, S44, and the untouched 918-row 5b contract remain in
+  `REVIEW-QUEUE.md`/LANE-002 for a newly locked session. Fable's already-owned LANE-003 release
+  battery remains the immediate cross-tool priority, followed by that lane's ratified stretch
+  order if context remains. Its owned resume paragraph still contains one pre-D372 sentence
+  about an active Sol charter; Fable, not this read-only session, must reconcile it at next touch.
+- **Last-touched commit:** D372 clean close (this commit).
 - **History:** chartered 2026-07-10 by Aaron mid-D366 via popup Q&A (boundary: commit D366 and
   defer the LANE-003 battery; scopes: all four; output mode: hybrid audit→quick-wins; pillars:
   all four); ChatGPT/Codex took DRIVE here and on LANE-002 5b together in D368 2026-07-10;
   Phase A ratified and gated in D369 with no runtime edits; Phase B audit run 3 ratified in D370
-  with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary. No
-  LANE-003 touch.
+  with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
+  D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
