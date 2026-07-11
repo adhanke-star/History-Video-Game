@@ -136,10 +136,10 @@ const SETUP = `(() => {
       return { totals:t, units:u.length, opening:DATA.oob.US.length + DATA.oob.CS.length };
     });
 
-    check('REGISTRY + MENU: Gaines Mill sits after Bull Run and before Malvern Hill', function() {
+    check('REGISTRY + MENU: Gaines Mill sits after Cross Keys / Port Republic and before Malvern Hill', function() {
       var reg = fldScenarioRegistry(), order = fldScenarioMenuOrder(reg);
       if (!reg.gainesMill || reg.gainesMill !== DATA) throw new Error('registry identity missing');
-      if (!(order.indexOf('bullrun1') + 1 === order.indexOf('gainesMill') && order.indexOf('gainesMill') + 1 === order.indexOf('malvernHill'))) throw new Error('chronology wrong: ' + order.join(' -> '));
+      if (!(order.indexOf('bullrun1') + 1 === order.indexOf('crossKeysPortRepublic') && order.indexOf('crossKeysPortRepublic') + 1 === order.indexOf('gainesMill') && order.indexOf('gainesMill') + 1 === order.indexOf('malvernHill'))) throw new Error('chronology wrong: ' + order.join(' -> '));
       return { order:order, rank:fldScenarioMenuRank('gainesMill') };
     });
 
@@ -235,10 +235,10 @@ const SETUP = `(() => {
       return { cards:ids, codex:codex.id, axes:codex.axes };
     });
 
-    check('ARMY REGISTER PIN: 15 Gaines Mill units produce exactly cmd/nco/pvt rows and current total 1125', function() {
+    check('ARMY REGISTER PIN: 15 Gaines Mill units produce exactly cmd/nco/pvt rows and current total 1170', function() {
       var C = makeCampaign('US'); if (typeof _t1InitAll === 'function') _t1InitAll(C);
       var reg = ssPersonRegistry(C), rows = [], groups = {};
-      if (reg.people.length !== 1125) throw new Error('Army Register total is ' + reg.people.length + ', expected 1125');   // D376: 1068 -> 1125 — Cedar Creek adds 19 unique units x 3 slots (the whole-registry pin moves whenever a battle ships; the Gaines-specific 45-row/15-unit teeth below are stable). Prior: D366 990 -> 1068 (Stones River, 26 units); D364 957 -> 990 (New Market Heights, 11 units); D362 912 -> 957 (this battle's 15 units)
+      if (reg.people.length !== 1170) throw new Error('Army Register total is ' + reg.people.length + ', expected 1170');   // D378: 1125 -> 1170 — Cross Keys / Port Republic adds 15 unique units x 3 slots. D376: 1068 -> 1125 — Cedar Creek adds 19 unique units x 3 slots. The Gaines-specific 45-row/15-unit teeth below remain stable.
       for (var i = 0; i < reg.people.length; i++) {
         var p = reg.people[i], origin = p.replaces || p.pid;
         if (typeof origin === 'string' && origin.indexOf('ss:gainesMill:') === 0) rows.push({ p:p, origin:origin });
@@ -277,7 +277,7 @@ const DOM = `(() => {
       fldInjectMenuButton();
       if (document.querySelectorAll('#fldScnBtn_gainesMill').length !== 1) throw new Error('duplicate Gaines menu button');
       var ids = Array.prototype.slice.call(document.querySelectorAll('.gn-btn')).map(function(b){ return b.id; });
-      if (!(ids.indexOf('fldBullRunBtn') >= 0 && ids.indexOf('fldScnBtn_gainesMill') === ids.indexOf('fldBullRunBtn') + 1 && ids.indexOf('fldScnBtn_malvernHill') === ids.indexOf('fldScnBtn_gainesMill') + 1)) throw new Error('button chronology wrong: ' + ids.join(' -> '));
+      if (!(ids.indexOf('fldBullRunBtn') >= 0 && ids.indexOf('fldScnBtn_crossKeysPortRepublic') === ids.indexOf('fldBullRunBtn') + 1 && ids.indexOf('fldScnBtn_gainesMill') === ids.indexOf('fldScnBtn_crossKeysPortRepublic') + 1 && ids.indexOf('fldScnBtn_malvernHill') === ids.indexOf('fldScnBtn_gainesMill') + 1)) throw new Error('button chronology wrong: ' + ids.join(' -> '));
       var got = null; fldScenarioSideChoice('gainesMill', function(side){ got = side; });
       var cards = document.querySelectorAll('[data-brside]'); if (cards.length !== 2) throw new Error('wanted two side cards, got ' + cards.length);
       var cs = document.querySelector('[data-brside="CS"]'); if (!cs) throw new Error('CS side card missing'); cs.click();

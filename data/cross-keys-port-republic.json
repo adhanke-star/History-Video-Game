@@ -1,0 +1,730 @@
+{
+  "_comment": "D378 Cross Keys / Port Republic, June 8-9, 1862. Two adjacent Valley fields form one T8 scenario: Fremont attacks Ewell's ridge at Cross Keys, then Jackson attacks Tyler and Carroll at The Coaling. The roles and side-keyed home edges flip between phases. Army-present anchors, senior grades, outcomes, and landmarks follow the committed D377 contract; committed strengths, lower groupings, guns, coordinates, readiness, and timing remain Inferred or Unpinned. No scenario-specific combat or result control exists (D74).",
+  "crossKeysPortRepublic": {
+    "id": "crossKeysPortRepublic",
+    "name": "Cross Keys / Port Republic - The Valley Finale",
+    "date": "June 8-9, 1862",
+    "place": "Rockingham County, Virginia - Ewell's ridge south of Mill Creek, then Lewiston Lane and The Coaling above Port Republic",
+    "blurb": "Fremont first attacks Ewell's high ground at Cross Keys with only part of his army committed. The next morning the axis reverses: Jackson concentrates against Tyler and Carroll at Port Republic, where Taylor's Louisiana Brigade must reach the wooded artillery knoll called The Coaling.",
+    "provenance": "Verified for dates, army-present anchors, senior commander grades, outcomes, side-total casualty direction, and named terrain under the committed D377 source register. Inferred for committed strengths, lower groupings, gun envelopes, coordinates, readiness, and timing. The Coaling battery identity remains Unpinned.",
+    "attacker": "US",
+    "defender": "CS",
+    "defaultFog": false,
+    "_fogNote": "Both phases declare defaultFog:false. The packet's early-morning haze at Port Republic belongs to presentation; the woods-covered approach carries the flank geometry without tactical fog.",
+    "homeEdge": {
+      "US": "low",
+      "CS": "high"
+    },
+    "_homeEdgeNote": "The top-level map matches Cross Keys. Each phase declares its own side-keyed home edges because the field and attack axis reverse at Port Republic. All coordinate orientations are Inferred engine abstractions.",
+    "holdToWinSec": 90,
+    "timeLimitSec": 360,
+    "field": {
+      "w": 1250,
+      "h": 950
+    },
+    "weather": {
+      "sky": "haze",
+      "time": "morning",
+      "provenance": "Inferred",
+      "note": "The presentation uses a light morning haze for the June 8-9 sequence. Tactical fog stays off in both phases; the wooded route to The Coaling is terrain, not a visibility bonus.",
+      "sources": [
+        "https://www.battlefields.org/learn/civil-war/battles/cross-keys",
+        "https://www.battlefields.org/learn/civil-war/battles/port-republic"
+      ]
+    },
+    "menu": {
+      "title": "CROSS KEYS / PORT REPUBLIC (1862)",
+      "deck": "Two fields in two days: test Fremont's limited commitment against Ewell's ridge, then reverse the armies and fight for The Coaling at Port Republic.",
+      "aria": "Cross Keys and Port Republic, June 1862 - a two-phase real-time historical battle with the attacking and defending armies reversing between fields; command either army."
+    },
+    "sides": {
+      "heading": "Cross Keys / Port Republic - Take Which Command?",
+      "intro": "June 8-9, 1862 - Ewell must hold the Valley escape route at Cross Keys; Jackson then concentrates against Tyler and Carroll at Port Republic.",
+      "US": {
+        "title": "Command the United States (Fremont / Tyler)",
+        "badge": "&#9733; BREAK THE VALLEY LINE",
+        "deck": "At Cross Keys, cross Mill Creek and dislodge Ewell from the ridge without mistaking Fremont's army present for men committed. At Port Republic, hold Lewiston Lane and keep the guns on The Coaling."
+      },
+      "CS": {
+        "title": "Command the Confederacy (Ewell / Jackson)",
+        "badge": "&#9876; HOLD, THEN CONCENTRATE",
+        "deck": "Use Ewell's high ground to stop Fremont on June 8. On June 9, reverse the axis and concentrate Jackson's force against The Coaling before the Union line can stabilize."
+      },
+      "foot": "The other army is commanded by the AI. Cross Keys carries weight 1; Port Republic carries the decisive weight 3. The game models the two fights, not Jackson's campaign-wide interior lines."
+    },
+    "brief": {
+      "attack": "Fremont has more men in the Valley than he puts onto this field. Cross Mill Creek with the committed grouping and attack Ewell's ridge under cautious doctrine. Port Republic reverses your role: Tyler and Carroll defend Lewiston Lane and the generic Union artillery emplacement at The Coaling.",
+      "defend": "Hold Ewell's ridge south of Mill Creek and keep the Port Republic Road open. The next phase reverses your role and your home edge: Jackson attacks from Port Republic, with Taylor's brigade using the wooded approach toward The Coaling."
+    },
+    "objective": {
+      "x": 650,
+      "z": 660,
+      "r": 125,
+      "name": "Ewell's Ridge south of Mill Creek"
+    },
+    "phases": [
+      {
+        "id": "cross-keys-ewell-holds",
+        "name": "Cross Keys - Ewell Holds the Ridge",
+        "sector": "Mill Creek, the Port Republic Road, Union Church, and Ewell's high ground",
+        "timing": "June 8, 1862 - the Union advance south of Mill Creek",
+        "attacker": "US",
+        "defender": "CS",
+        "assaultDoctrine": "cautious",
+        "defaultFog": false,
+        "homeEdge": {
+          "US": "low",
+          "CS": "high"
+        },
+        "_homeEdgeNote": "Increasing z points from Fremont's approach across Mill Creek toward Ewell's ridge and Port Republic. This is an Inferred engine orientation, not a Verified cardinal map.",
+        "holdToWinSec": 90,
+        "timeLimitSec": 360,
+        "scoreWeight": 1,
+        "objective": {
+          "x": 650,
+          "z": 660,
+          "r": 125,
+          "name": "Ewell's Ridge south of Mill Creek"
+        },
+        "transition": {
+          "title": "Cross Keys - the road must stay open",
+          "lead": "Fremont advances across Mill Creek toward Ewell's high ground. The modeled United States force is an Inferred committed grouping below the 11,500-man army-present anchor; men not committed do not receive a hidden penalty because they are not fielded."
+        },
+        "terrain": {
+          "hills": [
+            {
+              "name": "Ewell's Ridge south of Mill Creek",
+              "x": 650,
+              "z": 665,
+              "h": 25,
+              "s": 190,
+              "note": "Ewell held the high ground south of Mill Creek astride the Port Republic Road. (Verified feature; Inferred placement)"
+            },
+            {
+              "name": "Trimble's ridge on the Confederate right",
+              "x": 900,
+              "z": 690,
+              "h": 18,
+              "s": 130,
+              "note": "Trimble's ridge anchors the right-sector terrain. The modeled grouping on it remains Inferred. (Verified terrain name; Inferred placement)"
+            }
+          ],
+          "woods": [
+            {
+              "x": 870,
+              "z": 610,
+              "r": 110,
+              "note": "Wooded ground breaks the approach to the Confederate right. (Verified landscape class; Inferred placement)"
+            },
+            {
+              "x": 420,
+              "z": 590,
+              "r": 90,
+              "note": "Farm woodlots screen the left of Ewell's high ground. (Inferred map abstraction)"
+            }
+          ],
+          "walls": [],
+          "swamps": [
+            {
+              "x": 620,
+              "z": 400,
+              "r": 150,
+              "note": "The Mill Creek bottom slows Fremont's advance without causing damage. (Verified obstacle; Inferred footprint)"
+            }
+          ],
+          "markers": [
+            {
+              "kind": "water",
+              "name": "Mill Creek",
+              "path": [[70, 410], [330, 390], [610, 405], [900, 385], [1180, 420]],
+              "note": "The stream Fremont had to cross before reaching Ewell's high ground. (Verified; Inferred trace)"
+            },
+            {
+              "kind": "road",
+              "name": "Port Republic Road",
+              "path": [[570, 40], [590, 280], [630, 520], [700, 900]],
+              "note": "The road axis toward Jackson's concentration point at Port Republic. (Verified; Inferred trace)"
+            },
+            {
+              "kind": "town",
+              "name": "Union Church at the Cross Keys crossroads",
+              "path": [[500, 310]],
+              "note": "A navigation landmark at the crossroads, not the scored objective. (Verified feature; Inferred placement)"
+            }
+          ]
+        },
+        "leaders": {
+          "US": [
+            {
+              "id": "ld_ckpr_fremont",
+              "name": "Maj. Gen. John C. Fremont",
+              "short": "Fremont",
+              "quality": 0.45,
+              "radius": 225,
+              "x": 590,
+              "z": 220,
+              "fate": 1.8,
+              "note": "Mountain Department commander at Cross Keys. His grade and command are Verified; engine quality and coordinates are Inferred."
+            }
+          ],
+          "CS": [
+            {
+              "id": "ld_ckpr_ewell",
+              "name": "Maj. Gen. Richard S. Ewell",
+              "short": "Ewell",
+              "quality": 0.68,
+              "radius": 245,
+              "x": 670,
+              "z": 720,
+              "fate": 2,
+              "note": "Ewell commanded the division holding the high ground. His grade and command are Verified; engine quality and coordinates are Inferred."
+            }
+          ]
+        },
+        "supply": {
+          "US": {
+            "x": 580,
+            "z": 45,
+            "name": "Mountain Department trains north of Mill Creek"
+          },
+          "CS": {
+            "x": 720,
+            "z": 910,
+            "name": "Ewell's trains on the Port Republic Road"
+          }
+        },
+        "oob": {
+          "US": [
+            {
+              "id": "us_ckpr_left",
+              "name": "Mountain Department Advance - Left Grouping",
+              "commander": "Maj. Gen. John C. Fremont",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2200,
+              "xp": 1,
+              "x": 420,
+              "z": 150,
+              "facing": 0,
+              "formation": "column",
+              "note": "A coarse field grouping below the 11,500-man army-present anchor. Inferred grouping; Inferred committed strength."
+            },
+            {
+              "id": "us_ckpr_center",
+              "name": "Mountain Department Advance - Center Grouping",
+              "commander": "Maj. Gen. John C. Fremont",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2600,
+              "xp": 1,
+              "x": 640,
+              "z": 135,
+              "facing": 0,
+              "formation": "column",
+              "note": "The model discloses this as a committed grouping, not an exact brigade OOB. Inferred grouping; Inferred committed strength."
+            },
+            {
+              "id": "us_ckpr_guns",
+              "name": "Mountain Department Artillery",
+              "commander": "Unpinned battery command",
+              "arm": "art",
+              "weapon": "smooth",
+              "guns": 16,
+              "men": 500,
+              "xp": 1,
+              "x": 760,
+              "z": 175,
+              "facing": 0,
+              "formation": "line",
+              "note": "No battery identity or exact gun count is pinned by the packet. Unpinned battery identity; Inferred guns and crew."
+            }
+          ],
+          "CS": [
+            {
+              "id": "cs_ckpr_left",
+              "name": "Ewell's Division - Left Ridge Grouping",
+              "commander": "Maj. Gen. Richard S. Ewell",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1800,
+              "xp": 2,
+              "x": 440,
+              "z": 690,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "Ewell's division is Verified; this left-sector split and its strength are not. Inferred grouping; Inferred committed strength."
+            },
+            {
+              "id": "cs_ckpr_center",
+              "name": "Ewell's Division - Ridge Center Grouping",
+              "commander": "Maj. Gen. Richard S. Ewell",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1720,
+              "xp": 2,
+              "x": 650,
+              "z": 700,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "The ridge line is source-anchored; this field grouping is a simulation abstraction. Inferred grouping; Inferred committed strength."
+            },
+            {
+              "id": "cs_ckpr_trimble",
+              "name": "Ewell's Division - Trimble's Ridge Grouping",
+              "commander": "Maj. Gen. Richard S. Ewell",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1800,
+              "xp": 2,
+              "x": 870,
+              "z": 715,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "Trimble's ridge is Verified terrain; the grouped formation and strength are Inferred. Inferred grouping; Inferred committed strength."
+            },
+            {
+              "id": "cs_ckpr_cross_keys_guns",
+              "name": "Ewell's Division Artillery",
+              "commander": "Unpinned battery command",
+              "arm": "art",
+              "weapon": "smooth",
+              "guns": 12,
+              "men": 480,
+              "xp": 2,
+              "x": 720,
+              "z": 760,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "The packet requires artillery but pins no battery identity or exact count. Unpinned battery identity; Inferred guns and crew."
+            }
+          ]
+        },
+        "reinforcements": [
+          {
+            "id": "us_ckpr_reserve",
+            "side": "US",
+            "atSec": 85,
+            "name": "Mountain Department Advance - Reserve Grouping",
+            "commander": "Maj. Gen. John C. Fremont",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 2600,
+            "xp": 1,
+            "x": 600,
+            "z": 80,
+            "facing": 0,
+            "formation": "column",
+            "entry": "crossing Mill Creek after the opening advance",
+            "note": "This delayed grouping models limited commitment without a combat penalty. Inferred grouping; Inferred committed strength."
+          }
+        ],
+        "teaching": {
+          "head": "Army present is not army committed",
+          "body": "The 11,500-man figure describes Fremont's force present. The game fields an Inferred 7,900-man commitment and labels every lower grouping accordingly. Cautious doctrine, Mill Creek, and the ridge carry the result; no hidden hesitation or firepower control exists.",
+          "provenance": "Verified army-present anchor; Inferred commitment and all simulation detail."
+        }
+      },
+      {
+        "id": "port-republic-the-coaling",
+        "name": "Port Republic - The Coaling",
+        "sector": "The South Fork, Lewiston Lane, the wheat field, and the wooded artillery knoll at The Coaling",
+        "timing": "June 9, 1862 - the morning attack east of Port Republic",
+        "attacker": "CS",
+        "defender": "US",
+        "assaultDoctrine": "standard",
+        "defaultFog": false,
+        "homeEdge": {
+          "US": "high",
+          "CS": "low"
+        },
+        "_homeEdgeNote": "Increasing z points from Port Republic toward Lewiston Lane. This reverses the Cross Keys side-keyed home edges and remains an Inferred engine orientation.",
+        "holdToWinSec": 80,
+        "timeLimitSec": 360,
+        "scoreWeight": 3,
+        "objective": {
+          "x": 390,
+          "z": 660,
+          "r": 115,
+          "name": "The Coaling"
+        },
+        "transition": {
+          "title": "Port Republic - the axis reverses",
+          "lead": "Ewell has held Fremont away from the concentration route. On the next field Jackson attacks Tyler and Carroll along Lewiston Lane. Taylor's Louisiana Brigade approaches The Coaling through woods; the battery identity on the knoll remains Unpinned."
+        },
+        "terrain": {
+          "hills": [
+            {
+              "name": "The Coaling",
+              "x": 390,
+              "z": 660,
+              "h": 26,
+              "s": 135,
+              "note": "The wooded knoll held the Union artillery emplacement on the left. (Verified feature; Inferred placement)"
+            },
+            {
+              "name": "Lewiston Lane high ground",
+              "x": 700,
+              "z": 690,
+              "h": 16,
+              "s": 170,
+              "note": "The Union line extended along the Lewiston axis. (Verified feature; Inferred placement)"
+            }
+          ],
+          "woods": [
+            {
+              "x": 300,
+              "z": 470,
+              "r": 125,
+              "note": "Taylor's Louisiana Brigade used the woods-covered route toward The Coaling. (Verified route class; Inferred footprint)"
+            },
+            {
+              "x": 470,
+              "z": 540,
+              "r": 90,
+              "note": "Wooded ground wraps the artillery knoll and breaks the direct line of approach. (Verified terrain class; Inferred footprint)"
+            },
+            {
+              "x": 900,
+              "z": 620,
+              "r": 100,
+              "note": "Farm woods border the Union right near Lewiston Lane. (Inferred map abstraction)"
+            }
+          ],
+          "walls": [],
+          "swamps": [
+            {
+              "x": 650,
+              "z": 180,
+              "r": 110,
+              "note": "Low ground near the South Fork slows the Confederate concentration without inflicting damage. (Verified water boundary; Inferred footprint)"
+            }
+          ],
+          "markers": [
+            {
+              "kind": "water",
+              "name": "South Fork of the Shenandoah River",
+              "path": [[40, 160], [320, 180], [610, 150], [900, 190], [1210, 155]],
+              "note": "The river boundary behind Jackson's concentration at Port Republic. (Verified; Inferred trace)"
+            },
+            {
+              "kind": "road",
+              "name": "Lewiston Lane",
+              "path": [[180, 700], [430, 690], [720, 670], [1040, 710]],
+              "note": "Tyler and Carroll formed along the Lewiston axis. (Verified; Inferred trace)"
+            },
+            {
+              "kind": "road",
+              "name": "North River bridge at Port Republic",
+              "path": [[610, 40], [625, 170], [640, 300]],
+              "note": "The bridge was a concentration and escape landmark, not a scored crossing. (Verified feature; Inferred trace)"
+            },
+            {
+              "kind": "town",
+              "name": "Lewiston / Lewis farm",
+              "path": [[760, 700]],
+              "note": "The farm and lane anchor the Union line. (Verified feature; Inferred placement)"
+            },
+            {
+              "kind": "field",
+              "name": "The wheat field and flats",
+              "path": [[620, 470]],
+              "note": "Open ground separated the river approach from the Union line. (Verified landscape; Inferred placement)"
+            }
+          ]
+        },
+        "leaders": {
+          "US": [
+            {
+              "id": "ld_ckpr_tyler",
+              "name": "Brig. Gen. Erastus B. Tyler",
+              "short": "Tyler",
+              "quality": 0.58,
+              "radius": 225,
+              "x": 650,
+              "z": 720,
+              "fate": 1.9,
+              "note": "Tyler commanded the principal Union brigade at Port Republic. Grade and command are Verified; engine quality and coordinates are Inferred."
+            },
+            {
+              "id": "ld_ckpr_carroll",
+              "name": "Col. Samuel S. Carroll",
+              "short": "Carroll",
+              "quality": 0.54,
+              "radius": 205,
+              "x": 850,
+              "z": 720,
+              "fate": 1.8,
+              "note": "Carroll commanded at the field grade of colonel. Grade and command are Verified; engine quality and coordinates are Inferred."
+            }
+          ],
+          "CS": [
+            {
+              "id": "ld_ckpr_jackson",
+              "name": "Maj. Gen. Thomas J. Jackson",
+              "short": "Jackson",
+              "quality": 0.7,
+              "radius": 250,
+              "x": 610,
+              "z": 210,
+              "fate": 2.1,
+              "note": "Jackson was a major general throughout the 1862 Valley campaign. The lieutenant-general grade came on October 10, 1862. (Verified grade; Inferred engine quality)"
+            },
+            {
+              "id": "ld_ckpr_taylor",
+              "name": "Brig. Gen. Richard Taylor",
+              "short": "Taylor",
+              "quality": 0.66,
+              "radius": 225,
+              "x": 300,
+              "z": 300,
+              "fate": 1.9,
+              "note": "Taylor led the Louisiana Brigade on the wooded approach to The Coaling. Grade and formation identity are Verified; engine quality and coordinates are Inferred."
+            },
+            {
+              "id": "ld_ckpr_winder",
+              "name": "Brig. Gen. Charles S. Winder",
+              "short": "Winder",
+              "quality": 0.58,
+              "radius": 220,
+              "x": 620,
+              "z": 260,
+              "fate": 1.8,
+              "note": "Winder commanded the Stonewall Brigade at Port Republic. Grade and formation identity are Verified; engine quality and coordinates are Inferred."
+            }
+          ]
+        },
+        "supply": {
+          "US": {
+            "x": 760,
+            "z": 910,
+            "name": "Union trains beyond Lewiston Lane"
+          },
+          "CS": {
+            "x": 640,
+            "z": 35,
+            "name": "Jackson's trains at Port Republic"
+          }
+        },
+        "oob": {
+          "US": [
+            {
+              "id": "us_ckpr_tyler",
+              "name": "Tyler's Brigade",
+              "commander": "Brig. Gen. Erastus B. Tyler",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1800,
+              "xp": 2,
+              "x": 690,
+              "z": 700,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "The brigade identity and commander are source-anchored; the modeled strength is not a pinned brigade subtotal. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_ckpr_carroll",
+              "name": "Carroll's Command",
+              "commander": "Col. Samuel S. Carroll",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1380,
+              "xp": 2,
+              "x": 900,
+              "z": 710,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "Carroll's command is source-anchored; the modeled strength remains a coarse abstraction. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_ckpr_coaling_guns",
+              "name": "Union Artillery at The Coaling",
+              "commander": "Unpinned battery command",
+              "arm": "art",
+              "weapon": "smooth",
+              "guns": 8,
+              "men": 320,
+              "xp": 2,
+              "x": 405,
+              "z": 675,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "Verified emplacement; Unpinned battery identity; Inferred strength."
+            }
+          ],
+          "CS": [
+            {
+              "id": "cs_ckpr_taylor",
+              "name": "Taylor's Louisiana Brigade",
+              "commander": "Brig. Gen. Richard Taylor",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2000,
+              "xp": 3,
+              "x": 270,
+              "z": 280,
+              "facing": 0,
+              "formation": "column",
+              "note": "Taylor's brigade and wooded flank role are source-anchored; no storming regiment is asserted. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_ckpr_winder",
+              "name": "Winder's Brigade",
+              "commander": "Brig. Gen. Charles S. Winder",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1700,
+              "xp": 2,
+              "x": 620,
+              "z": 240,
+              "facing": 0,
+              "formation": "column",
+              "note": "The Stonewall Brigade identity and Winder's command are source-anchored; strength and exact placement remain modeled. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_ckpr_port_republic_guns",
+              "name": "Jackson's Port Republic Artillery",
+              "commander": "Unpinned battery command",
+              "arm": "art",
+              "weapon": "smooth",
+              "guns": 12,
+              "men": 300,
+              "xp": 2,
+              "x": 720,
+              "z": 210,
+              "facing": 0,
+              "formation": "line",
+              "note": "No Confederate battery identity or exact gun count is pinned by the packet. Unpinned battery identity; Inferred guns and crew."
+            }
+          ]
+        },
+        "reinforcements": [
+          {
+            "id": "cs_ckpr_support",
+            "side": "CS",
+            "atSec": 50,
+            "name": "Jackson's Supporting Grouping",
+            "commander": "Maj. Gen. Thomas J. Jackson",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 2000,
+            "xp": 2,
+            "x": 820,
+            "z": 120,
+            "facing": 0,
+            "formation": "column",
+            "entry": "concentrating from Port Republic behind the opening brigades",
+            "note": "The support element is required only by the simulation grain and carries no invented formation identity. Inferred grouping; Inferred committed strength."
+          }
+        ],
+        "teaching": {
+          "head": "A wooded route, not a flank bonus",
+          "body": "Taylor's brigade reaches The Coaling through modeled woods while Jackson's full phase force stays inside the packet's 6,000-man anchor. The artillery position is Verified, but its battery identity and all lower splits remain Unpinned or Inferred.",
+          "provenance": "Verified formation and terrain anchors; Inferred strength, guns, placement, and timing."
+        }
+      }
+    ],
+    "endNote": {
+      "US": {
+        "US": "History diverges across both fields. Fremont forces Ewell from the Cross Keys ridge, and the Union line then keeps The Coaling. Jackson cannot concentrate safely against Shields's detached command.",
+        "CS": "Cross Keys diverges, Port Republic holds to history. Fremont breaks Ewell's ridge, but Jackson still takes The Coaling on the decisive second field. The weighted result favors the Port Republic concentration."
+      },
+      "CS": {
+        "US": "Cross Keys holds to history, Port Republic diverges. Ewell keeps the road open, but Tyler and Carroll deny The Coaling and stop Jackson's concentration on June 9.",
+        "CS": "History holds. Ewell checks Fremont at Cross Keys; Jackson then concentrates against Tyler and Carroll and takes The Coaling at Port Republic. The battlefield result comes from fielded strength, ground, doctrine, and timing."
+      },
+      "draw": "The two fields divide without a decisive weighted result. The historical sequence ended with Confederate victories at Cross Keys and Port Republic, preserving Jackson's Valley concentration."
+    },
+    "teaching": {
+      "title": "Cross Keys / Port Republic - what the two fields can teach",
+      "cards": [
+        {
+          "id": "vk_two_day_finale",
+          "head": "Two days, two fields",
+          "body": "Ewell's June 8 defense at Cross Keys kept Fremont away from the concentration route. Jackson attacked Tyler and Carroll at Port Republic on June 9. The game joins those adjacent fights while keeping their fields and command roles distinct.",
+          "provenance": "Inferred",
+          "sources": [
+            "https://www.battlefields.org/learn/civil-war/battles/cross-keys",
+            "https://www.battlefields.org/learn/civil-war/battles/port-republic"
+          ]
+        },
+        {
+          "id": "vk_limited_commitment",
+          "head": "Eleven thousand five hundred present, fewer committed",
+          "body": "The 11,500-man figure is Fremont's army present at Cross Keys, not a pinned committed subtotal. This scenario fields 7,900 in disclosed Inferred groupings. Men outside the modeled commitment receive no hidden penalty because they are absent from the tactical OOB.",
+          "provenance": "Inferred",
+          "sources": [
+            "https://www.battlefields.org/learn/civil-war/battles/cross-keys",
+            "https://encyclopediavirginia.org/entries/shenandoah-valley-campaign-of-1862/"
+          ]
+        },
+        {
+          "id": "vk_the_coaling",
+          "head": "The Coaling - emplacement known, battery Unpinned",
+          "body": "The wooded knoll on the Union left was the decisive artillery position at Port Republic, and Taylor's Louisiana Brigade used the wooded approach against it. The packet does not pin the battery or the exact storming regiments, so the game names neither.",
+          "provenance": "Inferred",
+          "sources": [
+            "https://www.battlefields.org/learn/civil-war/battles/port-republic",
+            "https://www.battlefields.org/learn/civil-war/battles/cross-keys"
+          ]
+        },
+        {
+          "id": "vk_three_armies_one_valley",
+          "head": "Three armies, one valley",
+          "body": "Banks, Fremont, and Shields never combined against Jackson. Massanutten screened movement between separated columns. That operational problem belongs in teaching: the tactical engine scores only the two fields placed before the player.",
+          "provenance": "Inferred",
+          "sources": [
+            "https://encyclopediavirginia.org/entries/shenandoah-valley-campaign-of-1862/",
+            "https://www.battlefields.org/learn/civil-war/battles/port-republic"
+          ]
+        },
+        {
+          "id": "vk_foot_cavalry_not_deified",
+          "head": "Foot cavalry, without sainthood",
+          "body": "The campaign depended on forced marching, secrecy, interior lines, exhaustion, and straggling. The packet does not pin a scholarly mileage total, so this card stays count-free and gives Jackson no speed, morale, or genius control. Lost Cause deification is not a simulation input.",
+          "provenance": "Inferred",
+          "sources": [
+            "https://encyclopediavirginia.org/entries/shenandoah-valley-campaign-of-1862/",
+            "https://www.battlefields.org/learn/civil-war/battles/cross-keys"
+          ]
+        },
+        {
+          "id": "vk_victorious_defeat",
+          "head": "Kernstown - a tactical loss with strategic effect",
+          "body": "Jackson lost at Kernstown after underestimating the Union force. Washington's response helped his later campaign, but the battlefield result remains a Union victory. Kernstown stays teaching-only here; the game does not rewrite the repulse into a Jackson win.",
+          "provenance": "Inferred",
+          "sources": [
+            "https://www.battlefields.org/learn/civil-war/battles/kernstown",
+            "https://encyclopediavirginia.org/entries/shenandoah-valley-campaign-of-1862/"
+          ]
+        },
+        {
+          "id": "vk_mcdowell_cost_trap",
+          "head": "McDowell - victory did not mean fewer losses",
+          "body": "The Confederates held the field at McDowell while suffering the heavier loss total. That fight remains teaching-only and guards against importing a winner-bleeds-less assumption into other battles.",
+          "provenance": "Inferred",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Battle_of_McDowell",
+            "https://encyclopediavirginia.org/entries/shenandoah-valley-campaign-of-1862/"
+          ]
+        }
+      ],
+      "codex": {
+        "id": "codex_cross_keys_port_republic",
+        "title": "Cross Keys and Port Republic, June 8-9, 1862",
+        "summary": "Ewell held the high ground south of Mill Creek at Cross Keys while Fremont committed only part of the force present. The next morning Jackson concentrated at Port Republic against Tyler and Carroll, where Taylor's Louisiana Brigade reached The Coaling through the woods. Both fields ended in Confederate victories. The campaign's defining interior lines and feints remain outside this tactical objective-hold engine.",
+        "provenance": "Inferred",
+        "axes": {
+          "theater": "Eastern",
+          "campaign": "Shenandoah Valley Campaign of 1862",
+          "result": "Confederate victory",
+          "scope": "Two tactical fields; the campaign's operational maneuver is not simulated"
+        },
+        "sources": [
+          "https://www.battlefields.org/learn/civil-war/battles/cross-keys",
+          "https://www.battlefields.org/learn/civil-war/battles/port-republic",
+          "https://encyclopediavirginia.org/entries/shenandoah-valley-campaign-of-1862/"
+        ]
+      }
+    }
+  }
+}

@@ -6,6 +6,73 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D378 — PLAYABLE CROSS KEYS / PORT REPUBLIC: TWO FIELDS, ONE ROLE FLIP, NO VALLEY MYTHMAKING — [CODEX 5.6 Sol Ultra, LANE-003 DRIVE] (2026-07-11)
+
+Cross Keys / Port Republic is the eighteenth registered historical scenario. `data/cross-keys-port-republic.json`
+implements the D377 contract as two T8 fields: `Cross Keys - Ewell Holds the Ridge` (weight 1,
+US attacker / CS defender, cautious doctrine) and `Port Republic - The Coaling` (weight 3,
+CS attacker / US defender, standard doctrine). Fog stays off. Phase-level home edges reverse with
+the roles. The opening force is seven units at Cross Keys and six at Port Republic, with one
+source-honest arrival in each phase. Fifteen unique side-unit ids add 45 Soldier's Story rows,
+moving the Army Register from 1125 to **1170**. Menu rank 12 gives Bull Run → Cross Keys / Port
+Republic → Gaines' Mill → Malvern Hill. Schema is 48; flags/weather/Intel/media cover 18
+scenarios; the suite manifest is 123.
+
+**Historical ceiling:** Cross Keys fields US 7,900 including its scheduled reserve against CS
+5,800; Port Republic fields US 3,500 against CS 6,000 including Jackson's scheduled support.
+Those are source-bounded simulation abstractions, not false brigade-level precision. The
+Coaling battery remains `Unpinned`; the 7th/9th Louisiana are not invented; Ashby is absent;
+the operational Valley maneuver remains teaching rather than a third phase. Jackson, Ewell,
+and Fremont are Maj. Gens.; Tyler, Taylor, and Winder are Brig. Gens.; Carroll is Col. Seven
+cards plus the codex carry exact `Verified` / `Inferred` / `Disputed` provenance and at least
+two packet sources each. T10 uses an explicitly Inferred representative Eastern Southern-Cross
+family, not a claim that every Valley regiment carried one identical flag.
+
+**Outcome law and honest input log:** the first authored simulation battery passed all four
+source-derived guards **8/8**: P1 CS holds, P2 CS seizes, aggregate CS wins, and P1 US losses
+exceed CS losses. Therefore there were **zero outcome-tuning A/B iterations** and no result
+multiplier. The roster gate then caught two artillery aggregates above the universal maximum
+of 40 crew per gun. This was a model-conformance correction, not outcome tuning: Cross Keys CS
+artillery `500→480` with 20 moved to its Inferred center grouping; Port Republic US artillery
+`400→320` with 80 moved to its Inferred Carroll grouping. Phase totals and gun counts stayed
+fixed. The corrected candidate remained 8/8 on all four guards. Final eight-seed samples
+(P1 US-CS / P2 US-CS phase losses) are:
+
+- `1: CS/CS=CS 1390-967 / 3500-704`
+- `7: CS/CS=CS 1359-984 / 3500-797`
+- `21: CS/CS=CS 1369-970 / 3500-700`
+- `33: CS/CS=CS 1506-951 / 3500-738`
+- `49: CS/CS=CS 1477-1011 / 3500-640`
+- `101: CS/CS=CS 1398-974 / 3500-736`
+- `202: CS/CS=CS 1486-925 / 3500-633`
+- `303: CS/CS=CS 1459-970 / 3500-627`
+
+**Both negative binds proved against the corrected final candidate and restored byte-identically.**
+Removing the exact T1 registry line made the plan REGISTRY tooth red (10/11) and exactly eight
+focused teeth red: registry/menu, landmarks/home edges, launch, replay, passive completion,
+historical direction, Army Register pin, and menu/side choice. The other seven focused teeth
+stayed green. Changing only Jackson's scenario leader from `Maj. Gen.` to `Lt. Gen.` made the
+plan REGISTRY tooth red (10/11) and only the focused `RANK + NAME + ABSENCE LOCKS` tooth red;
+the other fourteen stayed green. Final restored hashes are T1
+`468e234a742255811e8f3cf3e5a2920a`, data `143c89fb819f826bb90bdaf7d865905c`, and generated HTML
+`097eabeea06387e47bd819d125950f0d`.
+
+**Serialized focused gate:** outer syntax checks and cooked SETUP/DOM preparses green; build
+**GATE OK**; schema **48/48**; research **15/15**; Cross Keys plan **11/11**; runtime **15/15**;
+roster **8/8**; custom builder **15/15**; loot **12/12** at 1170; flags **47/47**; weather
+**30/30**; Intel **26/26**; media **13/13** with only the standing 2.418 MB soft warning;
+suite list **123**; Bull Run **15/15**; Gaines' Mill **13/13**; Malvern Hill **27/27**;
+New Market Heights / Stones River / Cedar Creek plans **10/10 · 11/11 · 11/11** and runtimes
+**14/14 · 13/13 · 15/15**; `git diff --check` clean. Every produced JSON and the 48-row schema
+HTML were read; all were green with zero failed steps and zero recursive pageerrors. The full
+`npm run vet:noreg` battery was deliberately **not run**; it remains due only after playable
+Five Forks joins Cedar Creek and Cross Keys / Port Republic at the agreed release boundary.
+
+LANE-003 returns to CONTRACT/unowned. The next lane target is playable Five Forks; the next
+bounded slice is its spec + bind-tested plan probe from the committed Appomattox research packet.
+
+---
+
 ## D377 — CROSS KEYS / PORT REPUBLIC SPEC: TWO FIELDS, A ROLE FLIP, AND COARSE-GRAIN HONESTY — [CODEX 5.6 Sol Ultra, LANE-003 DRIVE] (2026-07-11)
 
 D377 commits the fifth LANE-003 planning contract:

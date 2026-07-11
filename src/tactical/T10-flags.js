@@ -68,6 +68,7 @@ function _fldFlagInitSettings() {
    no badges, ANV battle flag for CS — a byte-identity-neutral, era-typical look. */
 var _FLD_BATTLE_META = {
   bullrun1:         { theater: "E", badges: false, csFlag: "first-national" }, // 21 Jul 1861
+  crossKeysPortRepublic: { theater: "E", badges: false, csFlag: "anv" },       // 8-9 Jun 1862 (D378: Inferred representative mid-war Eastern flag family, not a claim that every Valley regiment carried one identical Southern Cross)
   gainesMill:       { theater: "E", badges: false, csFlag: "anv" },            // 27 Jun 1862
   malvernHill:      { theater: "E", badges: false, csFlag: "anv" },            // 1 Jul 1862
   antietam:         { theater: "E", badges: false, csFlag: "anv" },            // 17 Sep 1862

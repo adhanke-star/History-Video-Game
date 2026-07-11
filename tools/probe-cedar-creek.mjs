@@ -306,12 +306,12 @@ const SETUP = `(() => {
       return { cards:ids, codex:codex.id, weather:{ sky:w.sky, time:w.time, provenance:w.provenance } };
     });
 
-    check('ARMY REGISTER PIN: 19 unique Cedar Creek side/unit ids produce exact cmd/nco/pvt trios and current total 1125', function() {
+    check('ARMY REGISTER PIN: 19 unique Cedar Creek side/unit ids produce exact cmd/nco/pvt trios and current total 1170', function() {
       var C = { side:'US', iron:false, idx:0, funds:6500, recovery:false, completed:[], roster:[], nextId:1,
         stats:{ battles:0, won:0, infl:0, suff:0 }, recoveryLossCount:0, recoveryMode:false, flipAtk:false, captured:[] };
       if (typeof _t1InitAll === 'function') _t1InitAll(C);
       var reg = ssPersonRegistry(C), rows = [], groups = {};
-      if (reg.people.length !== 1125) throw new Error('Army Register total is ' + reg.people.length + ', expected 1125');
+      if (reg.people.length !== 1170) throw new Error('Army Register total is ' + reg.people.length + ', expected 1170');   // D378: 1125 -> 1170 — Cross Keys / Port Republic adds 15 unique units x 3 slots; Cedar Creek's 57-row/19-unit teeth remain stable.
       for (var i = 0; i < reg.people.length; i++) {
         var p = reg.people[i], origin = p.replaces || p.pid;
         if (typeof origin === 'string' && origin.indexOf('ss:cedarCreek:') === 0) rows.push(origin);

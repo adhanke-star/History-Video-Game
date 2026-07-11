@@ -40,6 +40,7 @@ function fldScenarioRegistry() {
   try {
     if (typeof GAME_DATA !== "undefined") {
       if (GAME_DATA.bullrun && GAME_DATA.bullrun.bullrun1) R.bullrun1 = GAME_DATA.bullrun.bullrun1;
+      if (GAME_DATA["cross-keys-port-republic"] && GAME_DATA["cross-keys-port-republic"].crossKeysPortRepublic) R.crossKeysPortRepublic = GAME_DATA["cross-keys-port-republic"].crossKeysPortRepublic;   // D378 Shenandoah 1862: Cross Keys / Port Republic - Ewell holds, then Jackson attacks The Coaling across a two-field role flip
       if (GAME_DATA.fredericksburg && GAME_DATA.fredericksburg.fredericksburg) R.fredericksburg = GAME_DATA.fredericksburg.fredericksburg;
       if (GAME_DATA.antietam && GAME_DATA.antietam.antietam) R.antietam = GAME_DATA.antietam.antietam;   // Phase C-2: the first MULTI-PHASE epic (data.phases[] -> the T8 engine)
       if (GAME_DATA.gettysburg && GAME_DATA.gettysburg.gettysburg) R.gettysburg = GAME_DATA.gettysburg.gettysburg;   // Phase C-1: Gettysburg — the second MULTI-PHASE epic (3 days: McPherson Ridge, Little Round Top, Pickett's Charge)
@@ -240,7 +241,7 @@ function fldScenarioMenuOrder(reg) {
   return ids;
 }
 function fldScenarioMenuRank(id) {
-  var order = { bullrun1: 10, gainesMill: 15, malvernHill: 18, antietam: 20, fredericksburg: 30, chancellorsville: 35, gettysburg: 40, newMarketHeights: 45, shiloh: 50, stonesRiver: 52, vicksburg: 55, chickamauga: 60, chattanooga: 65, kennesaw: 70, cedarCreek: 72, franklin: 75, nashville: 80 };
+  var order = { bullrun1: 10, crossKeysPortRepublic: 12, gainesMill: 15, malvernHill: 18, antietam: 20, fredericksburg: 30, chancellorsville: 35, gettysburg: 40, newMarketHeights: 45, shiloh: 50, stonesRiver: 52, vicksburg: 55, chickamauga: 60, chattanooga: 65, kennesaw: 70, cedarCreek: 72, franklin: 75, nashville: 80 };
   return order[id] || 1000;
 }
 function fldScenarioDateSortValue(date) {

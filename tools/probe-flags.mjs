@@ -84,6 +84,7 @@ function pureScript() {
       // meta
       R.meta = {
         bullrun: withScenario('bullrun1', function(){ return _fldBattleMeta(); }),
+        crossKeysPortRepublic: withScenario('crossKeysPortRepublic', function(){ return _fldBattleMeta(); }),
         gaines: withScenario('gainesMill', function(){ return _fldBattleMeta(); }),
         gburg: withScenario('gettysburg', function(){ return _fldBattleMeta(); }),
         chick: withScenario('chickamauga', function(){ return _fldBattleMeta(); }),
@@ -103,6 +104,7 @@ function pureScript() {
       function flagPat(sc, name, side){ return withScenario(sc, function(){ var f=_fldFlagFor(U(name, side)); return f ? f.pattern : null; }); }
       R.flag = {
         csBullRun: flagPat('bullrun1', "Jackson's Brigade ('Stonewall')", 'CS'),
+        csCrossKeysPortRepublic: flagPat('crossKeysPortRepublic', "Ewell's Division - Ridge Center Grouping", 'CS'),
         csGainesMill: flagPat('gainesMill', "Hood's Texas Brigade", 'CS'),
         csAntietam: flagPat('antietam', "Early's Brigade", 'CS'),
         csChickamaugaNative: flagPat('chickamauga', "Renewed Assault Wave", 'CS'),
@@ -318,8 +320,12 @@ async function runScene(page, label, scenario, seed, opts, shared) {
     pure.ok && P.meta && P.meta.gburg.badges === true && P.meta.bullrun.badges === false && P.meta.chick.badges === false && P.meta.sandbox.badges === false,
     JSON.stringify(P.meta || {}));
   check('battle meta: every registered historical scenario has explicit metadata (no silent Eastern/ANV fallback)',
-    pure.ok && Array.isArray(P.metaCoverage) && P.metaCoverage.length === 17 && P.metaCoverage.every(x => x.explicit),
+    pure.ok && Array.isArray(P.metaCoverage) && P.metaCoverage.length === 18 && P.metaCoverage.every(x => x.explicit),
     JSON.stringify(P.metaCoverage || []));
+  check('battle meta + flag: Cross Keys / Port Republic is an Eastern 1862 field with no AotP badge reuse and an explicitly Inferred ANV-family Southern Cross (D378)',
+    pure.ok && P.meta && P.meta.crossKeysPortRepublic && P.meta.crossKeysPortRepublic.theater === 'E' && P.meta.crossKeysPortRepublic.badges === false && P.meta.crossKeysPortRepublic.csFlag === 'anv'
+      && P.flag && P.flag.csCrossKeysPortRepublic === 'southern-cross',
+    'meta=' + JSON.stringify(P.meta && P.meta.crossKeysPortRepublic) + ' flag=' + (P.flag && P.flag.csCrossKeysPortRepublic));
   check('battle meta + flag: Cedar Creek is an Eastern Army-of-the-Valley field - no AotP badge reuse, ANV Southern Cross for Early\'s detached Second Corps (D376)',
     pure.ok && P.meta && P.meta.cedarCreek && P.meta.cedarCreek.theater === 'E' && P.meta.cedarCreek.badges === false && P.meta.cedarCreek.csFlag === 'anv'
       && P.flag && P.flag.csCedarCreek === 'southern-cross',

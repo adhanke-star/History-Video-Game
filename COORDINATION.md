@@ -206,10 +206,10 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   D358 2026-07-10; 5c shipped D360 2026-07-10; ChatGPT/Codex took 5b DRIVE for the D367
   chartered session in D368 and released it untouched at D372's 10% boundary, 2026-07-10.
 
-### LANE-003 · battle-ladder — **DRIVE** (D378 playable Cross Keys/Port Republic; ChatGPT/Codex)
+### LANE-003 · battle-ladder — **CONTRACT** (open, unowned; D378 playable Cross Keys / Port Republic shipped)
 
-- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra — took D378 DRIVE from the clean D377 CONTRACT boundary; no simultaneous Claude Code edits.
-- **State:** DRIVE — D363-D366 (New Market Heights spec+playable, Stones River spec+playable) and D373 (release battery 121/121) are shipped; **D375 (2026-07-11) locked the Cedar Creek contract** and D376 shipped playable Cedar Creek; **D377 shipped the Cross Keys/Port Republic spec + 11/11 plan probe**. D378 now implements playable runtime from that committed contract. Until the green runtime commit lands, planned-only baselines remain 17 scenarios, schema 47, Army Register 1125, flags/weather/Intel/media 17, and suite 122.
+- **Owning tool:** none; ChatGPT/Codex 5.6 Sol Ultra released D378 at the green pushed boundary. No simultaneous Claude Code edits.
+- **State:** CONTRACT — D375 (2026-07-11) locked the Cedar Creek contract; D376 shipped it playable; D377 locked Cross Keys / Port Republic; D378 ships that battle playable from the committed contract. Current baselines are 18 registered scenarios, schema 48, Army Register 1170, flags/weather/Intel/media 18, and suite 123. Next is Five Forks, spec-first from the Appomattox Campaign research packet. Keep `npm run vet:noreg` deferred until Five Forks is playable; run it then as the stretch-battle release checkpoint.
 - **Design law:** `docs/design/battle-build-research/` packets (`eastern-1862` → Gaines' Mill ·
   `usct` → New Market Heights · `western-gaps` → Stones River · stretch: `shenandoah-1864` Cedar
   Creek · `shenandoah-1862` Cross Keys/Port Republic · `appomattox-campaign` Five Forks ·
@@ -218,11 +218,14 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   D92 accurate-inputs · **D359 (AARON): all phase locks cleared for this session, with two
   dignity carve-outs a blanket unlock does NOT reach — NO Leetown Native OOB (D178/D183), NO
   playable Fort Pillow (teaching-only). No ship-vs-ship engine exists.**
-- **Binding Cross Keys/Port Republic contract:** `docs/design/cross-keys-port-republic-battle-build-spec.md`
+- **Shipped Cross Keys/Port Republic contract:** `docs/design/cross-keys-port-republic-battle-build-spec.md`
   + `tools/probe-cross-keys-port-republic-plan.mjs` (D377, 11/11, bind-tested). Two T8 phases:
   Cross Keys US attack/CS defense w1 cautious → Port Republic CS attack/US defense w3 decisive;
   fog off; weights sum 4; army-present anchors separated from Inferred committed/OOB splits;
   Coaling battery identity Unpinned; Jackson is Maj. Gen. in this scenario only; Ashby absent.
+- **Next Five Forks contract source:** `docs/design/battle-build-research/appomattox-campaign-battle-build-research.md`
+  is `READY_FOR_SPEC`. Land a durable Five Forks spec and bind-tested, fail-closed plan probe in
+  a green planning commit before any runtime data or registration.
 - **Acceptance criteria (per battle, the full D330-D335 pattern + extras per Aaron's popup):**
   1. Durable spec (`docs/design/<battle>-battle-build-spec.md`) + plan probe green BEFORE runtime.
   2. Playable slice: `data/<battle>.json`, registry/menu rank in `src/tactical/T1-bull-run.js`,
@@ -234,15 +237,17 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
      strength` where exact numbers are unpinned; rank-at-battle-date traps from the packet
      (Polk/Hardee are Maj. Gens. at Perryville but Lt. Gens. at Stones River; New Market Heights
      USCT Medal of Honor men; no anachronistic ranks).
-  5. Roster/custom-builder baselines updated; **the current probe-loot-survival registry pin 1125 moves**
+  5. Roster/custom-builder baselines updated; **the current probe-loot-survival registry pin 1170 moves**
      (+units×3, documented-history comment — see LANE-002 note); teaching cards + codex axes;
      honest A/B whenever a sim input moves.
   6. Negative bind test per new guard; D160/D176 focused gate; docs sync; commit + push per
      green slice. Full battery only at a release boundary.
 - **Probe design:** per battle — plan probe (spec invariants) + runtime probe (registry/menu/
   OOB sums by sector/direction battery/pageerrors), modeled on `tools/probe-nashville*.mjs`.
-  Cross Keys/Port Republic uses `tools/probe-cross-keys-port-republic-plan.mjs`: dual-mode
-  fail-closed registration; D377 exact baselines; D378 full-integration and runtime-contract teeth.
+  Cross Keys/Port Republic ships `tools/probe-cross-keys-port-republic-plan.mjs` plus
+  `tools/probe-cross-keys-port-republic.mjs`: the D377 dual-mode plan gate and D378 runtime teeth
+  are green. Five Forks starts with a filesystem-first, fail-closed plan probe; its runtime probe
+  lands only after the green contract commit.
 - **Resume pointer:** **D362 playable Gaines' Mill is the handoff boundary in the commit that
   carried this transfer.** D363 (SHIPPED) locked the New Market Heights contract (spec +
   10/10 plan probe). **D364 (SHIPPED, this commit) closes out playable New Market Heights** —
@@ -360,18 +365,34 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   the Coaling battery remains explicitly Unpinned. The four future direction guards are P1 CS,
   P2 CS, aggregate CS, and P1 US>CS losses only; there is no phase-2 or aggregate casualty tooth.
   The Jackson-grade tamper made exactly HISTORY red (10/11, exit 1), then restored md5-identically
-  to `bbe53c90c2cbb39045d3bc90f7d52518` and 11/11. Planned baselines stay scenario 17 · schema
-  47 · Army Register 1125 · flags/weather/Intel/media 17 · suite 122. **Resume: ChatGPT/Codex
-  holds D378 DRIVE and ships playable Cross Keys/Port Republic from the committed D377 contract.**
-  The full battery remains due after the agreed stretch-battle release boundary. Sol's separate
-  queue (E71 → C72; GEA-01 + S44 fallback; LANE-002 5b from 918) still needs another lock.
+  to `bbe53c90c2cbb39045d3bc90f7d52518` and 11/11. **D378 (SHIPPED, this commit) closes playable
+  Cross Keys / Port Republic** as scenario 18: schema 48; 15 unique side-unit ids / 45 new Army
+  Register rows (1125→1170); flags/weather/Intel/media 18; suite 123; Bull Run → Cross Keys /
+  Port Republic → Gaines' Mill → Malvern Hill. The first authored inputs passed P1 CS, P2 CS,
+  aggregate CS, and P1 US>CS losses 8/8, so no outcome-tuning A/B iteration occurred. The roster
+  gate caught two crew/gun ratios above the universal ceiling; excess crew moved into same-phase
+  Inferred infantry groupings without changing totals or guns, and all four guards remained 8/8.
+  Registry removal made the plan REGISTRY tooth and exactly eight focused dependent teeth red;
+  the Jackson Lt.-Gen. tamper made plan REGISTRY and only the focused rank/name/absence tooth red.
+  Restores matched T1 `468e234a742255811e8f3cf3e5a2920a`, data
+  `143c89fb819f826bb90bdaf7d865905c`, and generated HTML `097eabeea06387e47bd819d125950f0d`.
+  Final serialized readback: GATE OK · schema 48/48 · research 15/15 · plan 11/11 · runtime
+  15/15 · roster 8/8 · builder 15/15 · loot 12/12 · flags 47/47 · weather 30/30 · Intel
+  26/26 · media 13/13 · suite 123 · Bull Run 15/15 · Gaines 13/13 · Malvern 27/27 · NMH /
+  Stones / Cedar plans 10/10 · 11/11 · 11/11 and runtimes 14/14 · 13/13 · 15/15 · every
+  artifact green · 0 pageerrors · diff clean. `npm run vet:noreg` was intentionally not run.
+  **Resume: CONTRACT/unowned. Five Forks is next, spec-first from the Appomattox packet; the full
+  serialized release battery becomes due after playable Five Forks.** Sol's separate queue
+  (E71 → C72; GEA-01 + S44 fallback; LANE-002 5b from 918) still needs another lock.
 - **Last-touched commit:** D362 (Gaines' Mill playable slice + Fable transfer) · D363 (New
   Market Heights spec + plan probe, Fable/Claude) · D364 (playable New Market Heights,
   Fable/Claude) · D365 (Stones River spec + plan probe, Fable/Claude) · D366/D367 (playable
   Stones River + the Sol session charter, Fable/Claude) · D373 (release battery green 121/121,
   Fable/Claude) · D375 (Cedar Creek spec + plan probe, Fable/Claude) · D376 (playable Cedar
   Creek + board ratification + clean release, Codex 5.6 Sol Ultra) · D377 (Cross Keys/Port
-  Republic spec + bind-tested plan probe + clean CONTRACT release, Codex 5.6 Sol Ultra — this commit).
+  Republic spec + bind-tested plan probe + clean CONTRACT release, Codex 5.6 Sol Ultra) · D378
+  (playable Cross Keys / Port Republic + bind-tested runtime + clean CONTRACT release, Codex
+  5.6 Sol Ultra — this commit).
 - **History:** lane opened by Claude Code 2026-07-10 after Aaron's popup Q&A (D359) fixed scope,
   depth, and locks for the Codex session · ChatGPT/Codex took DRIVE in D361 and locked the
   Gaines' Mill source/strength/rank/direction contract before runtime · Aaron redirected D363+
@@ -402,7 +423,9 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   the green 2026-07-11 boundary · Codex took D377 DRIVE at clean `f083a6b` in ledger-only commit
   `6cfa5b7`, authored the coarse-grain source-honest Cross Keys/Port Republic contract, proved
   its Jackson-rank bind exactly, and returned the lane to CONTRACT/unowned for D378 runtime ·
-  ChatGPT/Codex took D378 DRIVE from clean `b69451e` on 2026-07-11 in a ledger-only commit.
+  ChatGPT/Codex took D378 DRIVE from clean `b69451e` on 2026-07-11 in ledger-only commit
+  `1268985`, shipped the two-field runtime with both final-candidate binds and the serialized
+  focused/adjacent gate green, and returned the lane to CONTRACT/unowned for Five Forks.
 
 #### Historical Fable takeover packet — retained for D363-D375 audit context, not the current resume pointer
 
@@ -522,10 +545,9 @@ next green commit and confer through this ledger instead of permitting simultane
 - **Resume pointer:** none; lane closed. D369 ratified the 22-feature genre audit, D370 filed 12
   confirmed run-3 findings, and D371 fixed E72 with a biting negative diagnostic. The remaining
   ten pending run-3 findings, GEA-01/02/03, S44, and the untouched 918-row 5b contract remain in
-  `REVIEW-QUEUE.md`/LANE-002 for a newly locked session. Fable's already-owned LANE-003 release
-  battery remains the immediate cross-tool priority, followed by that lane's ratified stretch
-  order if context remains. Its owned resume paragraph still contains one pre-D372 sentence
-  about an active Sol charter; Fable, not this read-only session, must reconcile it at next touch.
+  `REVIEW-QUEUE.md`/LANE-002 for a newly locked session. D373 discharged the old 121-command
+  LANE-003 checkpoint; the current LANE-003 pointer governs. Its next full battery remains
+  deferred until playable Five Forks and must run serialized with nothing concurrent.
 - **Last-touched commit:** D372 clean close (this commit).
 - **History:** chartered 2026-07-10 by Aaron mid-D366 via popup Q&A (boundary: commit D366 and
   defer the LANE-003 battery; scopes: all four; output mode: hybrid audit→quick-wins; pillars:
@@ -611,3 +633,4 @@ cutovers mid-milestone (always land at contract boundaries), and stale cross-ref
 D372/D373 reconciliation lesson — every handoff commit sweeps the canonical heads).
 ↳ *(Sol: this is the item that most needs your counter-read.)*
 ↳ **[Codex 5.6 Sol Ultra, 2026-07-11] — RATIFY THE ORDER AND STOP RULE.** D376 is green and pushed at the clean boundary. The session crossed context compaction during the serialized gate, so a defensible ≥40% estimate was unavailable; Cross Keys/Port Republic did not start. It is now the exact next slice, SPEC ONLY, in a fresh LANE-003 DRIVE session. Sol's separate queue and LANE-002 remain separate-lock work. The next full battery stays due after Cross Keys/Port Republic and Five Forks join Cedar Creek, with nothing concurrent on the 8 GB Mac.
+↳ **[Codex 5.6 Sol Ultra, 2026-07-11] — D378 CHECKPOINT.** D378 shipped playable Cross Keys / Port Republic and returned LANE-003 to CONTRACT/unowned. Five Forks is next, spec-first. The full serialized `npm run vet:noreg` battery remains deferred until Five Forks is playable, then becomes the release checkpoint; nothing runs concurrently on the 8 GB Mac.

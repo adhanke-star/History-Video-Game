@@ -34,7 +34,7 @@
     "probe": "tools/probe-intel-uhd617-profile.mjs",
     "representativeScenario": "chickamauga",
     "largestShippedScene": "kennesaw",
-    "largestShippedSceneMetric": "Opening OOB unit count: Kennesaw has 17 initial units, the largest of the 17 shipped opening scenes; Cedar Creek opens with 8 before its source-sequenced arrivals, and the probe derives and rechecks this inventory from current battle data.",
+    "largestShippedSceneMetric": "Opening OOB unit count: Kennesaw has 17 initial units, the largest of the 18 shipped opening scenes; Cross Keys / Port Republic opens with 7 units before its Inferred commitment arrival, and the probe derives and rechecks this inventory from current battle data.",
     "method": "Browser WebGL profile over the built single-file game: representative Chickamauga high/low legs plus a low-tier Kennesaw largest-opening-scene leg. Timing values are warning-only because headless Chrome may report SwiftShader or host GPU rather than the exact player GPU.",
     "budgets": {
       "lowTierRenderCallHardCap": 360,
