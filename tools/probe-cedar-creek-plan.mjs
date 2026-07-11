@@ -112,7 +112,10 @@ step("SPEC: durable Cedar Creek packet exists and locks a planning-only D375 bou
   return { bytes: text.length };
 });
 
-step("LANE: LANE-003 records Claude/Fable DRIVE ownership through the Cedar Creek stretch", () => {
+step("LANE: LANE-003 carries the ratified Cedar Creek contract past the D375 boundary", () => {
+  // 2026-07-11 relay boundary: Fable released the lock at D375 and Aaron routed D376 to the
+  // chartered Codex 5.6 Sol Ultra session, so CONTRACT joins the allowed states — the tooth's
+  // guarantee is "the ratified contract is carried and driveable", not who holds the lock today.
   const text = read(COORD);
   const start = text.indexOf("### LANE-003");
   if (start < 0) throw new Error("LANE-003 missing from COORDINATION.md");
@@ -120,14 +123,13 @@ step("LANE: LANE-003 records Claude/Fable DRIVE ownership through the Cedar Cree
   const lane = text.slice(start, next < 0 ? text.length : next);
   mustInclude(lane, [
     "battle-ladder",
-    "**Owning tool:** Claude Code",
-    "Fable 5 at xhigh as the TOP LOOP",
     "Cedar Creek",
-    "shenandoah-1864"
-  ], "LANE-003 ownership");
+    "shenandoah-1864",
+    "D375 (2026-07-11) locked the Cedar Creek contract"
+  ], "LANE-003 contract");
   const state = (lane.match(/\*\*State:\*\*\s*([A-Z-]+)/) || [null, ""])[1];
-  if (state !== "DRIVE" && state !== "VERIFY" && state !== "SHIPPED") throw new Error("LANE-003 must be Fable-driven for D375+: " + state);
-  return { owner: "Claude Code / Fable", state };
+  if (state !== "CONTRACT" && state !== "DRIVE" && state !== "VERIFY" && state !== "SHIPPED") throw new Error("LANE-003 must carry a driveable D375+ contract: " + state);
+  return { state };
 });
 
 step("SOURCES: the CMH strength anchor, both NPS dispute articles, the OOB registers, and the D375 Kitching pass bind the contract", () => {

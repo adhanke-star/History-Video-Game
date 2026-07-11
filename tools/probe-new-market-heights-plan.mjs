@@ -110,7 +110,10 @@ step("SPEC: durable New Market Heights packet exists and locks a planning-only D
   return { bytes: text.length };
 });
 
-step("LANE: LANE-003 records Claude/Fable DRIVE ownership and the D362 handoff boundary", () => {
+step("LANE: LANE-003 carries the battle-ladder record and the D362 handoff boundary", () => {
+  // 2026-07-11 relay boundary: Fable released the lock at D375 (D376 routed to Codex 5.6 Sol
+  // Ultra), so CONTRACT joins the allowed states; the Fable tenure stays asserted via the
+  // lane's history ("took DRIVE 2026-07-10"), which is durable fact rather than current lock.
   const text = read(COORD);
   const start = text.indexOf("### LANE-003");
   if (start < 0) throw new Error("LANE-003 missing from COORDINATION.md");
@@ -118,14 +121,12 @@ step("LANE: LANE-003 records Claude/Fable DRIVE ownership and the D362 handoff b
   const lane = text.slice(start, next < 0 ? text.length : next);
   mustInclude(lane, [
     "battle-ladder",
-    "**Owning tool:** Claude Code",
-    "Fable 5 at xhigh as the TOP LOOP",
     "D362 playable Gaines' Mill is the handoff boundary",
     "took DRIVE 2026-07-10"
-  ], "LANE-003 ownership");
+  ], "LANE-003 record");
   const state = (lane.match(/\*\*State:\*\*\s*([A-Z-]+)/) || [null, ""])[1];
-  if (state !== "DRIVE" && state !== "VERIFY" && state !== "SHIPPED") throw new Error("LANE-003 must be Fable-driven for D363+: " + state);
-  return { owner: "Claude Code / Fable", state };
+  if (state !== "CONTRACT" && state !== "DRIVE" && state !== "VERIFY" && state !== "SHIPPED") throw new Error("LANE-003 must carry a driveable contract for D363+: " + state);
+  return { state };
 });
 
 step("SOURCES: NPS, ABT, Beyond the Crater, Stannard's OR, SHSP, and the preservation-site anchors bind the contract", () => {
