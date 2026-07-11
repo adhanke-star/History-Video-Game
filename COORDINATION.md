@@ -243,18 +243,32 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   with the documented-history comment (the pin-bump idiom this ledger's LANE-002 note predicts —
   replacement batches never move it, new battles always do). The honest A/B, the 22nd-USCT
   spec amendment (phase-1 arrival ≤250, opening OOB 630-770 held, total ≤1,000), and both binds
-  are logged in DECISIONS D364. **NEXT: Stones River** (spec-first from
-  `docs/design/battle-build-research/western-gaps-battle-build-research.md`; NEAR-PARITY
-  casualty direction guards — never assume US < CS; re-verify Polk/Hardee as LIEUTENANT
-  generals at Stones River though both were Maj. Gens. at Perryville; planning commit before
-  runtime; the D330-D335 pattern). Stretch in order only if both mandatory battles are shipped
-  and the release battery is green: Cedar Creek · Cross Keys/Port Republic · Five Forks · Fort
-  Donelson · Elkhorn Tavern. 2-3 battles at FULL depth beat 6 shallow ones. After the final
-  lane battle: full serialized `npm run vet:noreg`, inspect every artifact, sync docs, push,
-  and move this lane toward release.
+  are logged in DECISIONS D364. **D365 (SHIPPED, this commit) locks the Stones River contract:**
+  `docs/design/stones-river-battle-build-spec.md` + `tools/probe-stones-river-plan.mjs` (11/11,
+  bind-tested — the bind's first pass exposed a substring weakness and the HISTORY tooth was
+  anchored to the exact trap lines before the tamper bit exactly; the lesson is in D365). An
+  11-agent research pass (5 Sonnet gather → 5 Opus default-refute → 1 Opus critic, 0 errors)
+  confirmed all 23 battle-date ranks (Polk/Hardee LIEUTENANT generals from Oct 10 1862;
+  Sheridan BRIGADIER, MG backdated; Hazen COLONEL) and REFUTED a claimed OR brigade-strength
+  table — only Breckinridge's 7,053 / ~4,500 is OR-sourced; every other split ships Inferred
+  inside the ABT anchors (41,400 / 35,000; casualties 12,906 / 11,739). Locked shape: two-phase
+  T8 CS-attacker/US-defender — Dec 31 (w3 DECISIVE, US holds the Round Forest / Nashville Pike)
+  → Jan 2 (w1, US holds sharply; Mendenhall's 45-58 guns as an OOB RANGE tooth); Jan 1 is a
+  teaching interstitial (Emancipation Proclamation), never a scored phase; THE NEAR-PARITY LAW
+  (aggregate max/min ≤ 1.6, forcing US < CS forbidden) with the one lopsided guard phase-2
+  direction-only; menu rank stonesRiver:52; weather rain/dawn never snow; the Classic-layer
+  `stonesriver` id + rail route guarded as a separate layer. **NEXT — D366 playable Stones
+  River** from the committed D365 boundary: data/stones-river.json + registry/menu + schema 46
+  + loot 990 + units×3 + flags/Intel/media 16 + suite 121 + the largest-scene check vs
+  Kennesaw's 17 + focused probe with the near-parity battery + negative binds + honest A/B +
+  docs. Stretch in order only if both mandatory battles are shipped and the release battery is
+  green: Cedar Creek · Cross Keys/Port Republic · Five Forks · Fort Donelson · Elkhorn Tavern.
+  2-3 battles at FULL depth beat 6 shallow ones. After the final lane battle: full serialized
+  `npm run vet:noreg`, inspect every artifact, sync docs, push, and move this lane toward
+  release.
 - **Last-touched commit:** D362 (Gaines' Mill playable slice + Fable transfer) · D363 (New
   Market Heights spec + plan probe, Fable/Claude) · D364 (playable New Market Heights,
-  Fable/Claude — this commit).
+  Fable/Claude) · D365 (Stones River spec + plan probe, Fable/Claude — this commit).
 - **History:** lane opened by Claude Code 2026-07-10 after Aaron's popup Q&A (D359) fixed scope,
   depth, and locks for the Codex session · ChatGPT/Codex took DRIVE in D361 and locked the
   Gaines' Mill source/strength/rank/direction contract before runtime · Aaron redirected D363+
@@ -266,7 +280,9 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   two-phase USCT shape; spec + 10/10 plan gate; Fort Harrison teaching-only) · D364 shipped
   2026-07-10 (playable New Market Heights closeout: WIP adopted per the relay rule, bind 2,
   full serialized runtime gate, 3-packet Opus teaching-prose refute pass, gaines-pin 990 bump,
-  docs sync — Fable/Claude).
+  docs sync — Fable/Claude) · D365 shipped 2026-07-10 (Stones River spec + 11/11 plan gate:
+  11-agent research pass, the near-parity law, the rank-flip traps, a bind-hardened HISTORY
+  tooth — Fable/Claude).
 
 #### Fable takeover packet — read as the continuation prompt
 
