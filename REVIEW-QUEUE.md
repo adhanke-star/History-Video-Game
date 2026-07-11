@@ -1,5 +1,5 @@
 # REVIEW QUEUE — The Civil War (Vol. I)
-Updated 2026-07-09 (AUDIT ledger; run 2 completed under the D336 ChatGPT/Codex 5.6 Sol + Ultra policy; run 1 ran under Claude Fable 5 on 2026-07-03). **The live content of this file is the standing AUDIT findings ledger below** — the memory between audit runs; every fix flips its line to fixed-in-D###. Everything beneath the ledger is run-e/f/g/h historical context from 2026-06-13/14, much of it long superseded (the UG:G pivot shipped through D142); use `V1-CHECKLIST.md` + `START-HERE.md` for current priorities and locks. **Canonical folder: ~/Desktop/Video Game.**
+Updated 2026-07-10 (AUDIT ledger; the D369 genre-elite audit follows run 2 under the D336/D367 ChatGPT/Codex 5.6 Sol + Ultra policy; run 1 ran under Claude Fable 5 on 2026-07-03). **The live content of this file is the standing AUDIT findings ledger below** — the memory between audit runs; every fix flips its line to fixed-in-D###. Everything beneath the ledger is run-e/f/g/h historical context from 2026-06-13/14, much of it long superseded (the UG:G pivot shipped through D142); use `V1-CHECKLIST.md` + `START-HERE.md` for current priorities and locks. **Canonical folder: ~/Desktop/Video Game.**
 
 ## FABLE AUDIT — 2026-07-03 (run 1)
 
@@ -287,6 +287,37 @@ Updated 2026-07-09 (AUDIT ledger; run 2 completed under the D336 ChatGPT/Codex 5
 ### PROPOSALS (Aaron decision; not built)
 
 - **E70** · gameplay / command design · **MED** · `src/35-command.js:217-240` — Cross-theater Transfer spends political capital and persists readiness, but no appointment, OOB, battle, bridge, or leadership consumer reads that readiness; D323 intentionally stopped at readiness-only. **Recommendation:** either give readiness one bounded, source-honest command consumer or suspend/remove the cost until that consumer exists, because the current rational gameplay value is negative. → **BUILT (D354, Aaron disposition 2026-07-10: build the consumer, keep the cost)** — `_cmdTransferReadinessLift` pays a bounded −3 command-friction on `commandLeadership` only for an explicitly appointed, un-transferred cross-theater general; natural fit / completed Transfer / history-following default read exactly 0 (byte-identical campaigns). Disclosure copy + pinned tooth updated together; probe-command 90/90 with a purity-snapshotted E70 tooth; negative bind test proved the consumer bites. **The run-2 ledger is fully dispositioned.**
+
+## GENRE-ELITE AUDIT — 2026-07-10 (D369 / LANE-004 Phase A)
+
+**Web-grounded design audit at HEAD `a55700f`.** The binding analysis and source register are in
+`docs/design/genre-elite-audit-2026-07.md`. It weights tactical feel, strategic depth, elite
+basics/QoL, and teaching/history equally. The audit found three small presentation seams suitable
+for Phase C, one active content contract, and ten larger proposals. No runtime file changed in
+Phase A.
+
+### CLEARED QUICK WINS
+
+- **GEA-01** · onboarding / content drift · **MED** · `src/92-help-overlay.js:49-54` — Quick Start presents the first nine historical scenarios as the current contents of Choose a Battle, but the registered roster now contains 16. The copy has already drifted once and will drift again if names remain hand-maintained. Replace the list with registry-stable guidance and pin the truthful entry path in the focused help/tutorial probe. → **FIX-NOW; first Phase C slice.**
+- **GEA-02** · AAR / session sharing · **MED** · `src/82-after-action.js:282-357,438-475` and `src/103-h0-after-action.js:110-151` — the strongest teaching artifact has no Copy Report, text download, print, or share path. Add accessible Copy Report and Download Text controls over the already-rendered report, including only existing campaign context (side, live/final status, completed-battle count, Ironman status), plain-text user names, secret exclusion, and honest clipboard failure feedback. No grade, history, save, or simulation change. → **CLEARED QUICK WIN; second Phase C slice if Phase B finds no blocker.**
+- **GEA-03** · camera ergonomics · **MED** · `src/tactical/T0-field-sandbox.js:2024-2044,2551-2558` — modern 3D play has OrbitControls and phase reframing but no player command to recover the side-aware overview or frame the selected unit. Add Home reset and Shift+Home frame-selected behavior with keyboard/help/focus/probe coverage; `F` remains the existing charge command; leave raycasting and simulation untouched. → **CLEARED QUICK WIN only after a narrow focused-probe contract and only if Phase B finds no higher-severity blocker.**
+
+### ACTIVE CONTRACT
+
+- **GEA-04** · prosopography / teaching continuity · **HIGH** · LANE-002 5b has **918** unresearched generated rows after Stones River, with only 39 citation-grade replacements at the Phase A boundary. Continue battle-coherent batches under the existing two-source, battle-date rank/sector, importer, and per-record overlay contract. → **ACTIVE; Phase D owns the next batch.**
+
+### PROPOSALS (design contract required; not built in Phase A)
+
+- **GEA-05** · reactive onboarding · **HIGH** · the seven-step tour at `src/94-tutorial.js:29-44` is static. Prove one optional, action-aware “how/why” lesson for issuing and facing an order, keyed by a stable concept id and dismissed in device-local presentation state. → **P1 CONTRACT.**
+- **GEA-06** · causal legibility · **HIGH** · the universal model computes flank, fatigue, support, terrain, morale, and supply causes, but the player has no compact state-change explanation. Add a read-only, fog-safe causal ribbon that consumes existing values and never recomputes outcomes. → **P1 CONTRACT; D74 and fog are acceptance teeth.**
+- **GEA-07** · difficulty / session respect · **MED** · the game exposes extensive presets but no learning route, scenario-duration forecast, or recommended next skill. Define phase-count/duration metadata and a non-binding Learn the Battle card before changing any settings automatically. → **P1 METADATA CONTRACT.**
+- **GEA-08** · strategic legibility · **MED** · roughly twenty President’s Desk tabs expose deep systems without a deterministic turn-level priority brief. Build a design packet for a read-only Chief of Staff summary drawn from existing snapshots and linking to the three most actionable tabs. → **P1 DESIGN.**
+- **GEA-09** · game accessibility · **MED** · current accessibility modes and captions do not provide independent critical/ambient/UI/narration audio buses, mono output, control remapping, or gamepad support. Define an audio-bus contract first, then an action-map seam. → **P1 ACCESSIBILITY CONTRACT.**
+- **GEA-10** · contextual teaching · **MED** · Codex, glossary, Primary Sources, battle cards, and AAR are strong but inconsistently deep-linked at the moment of need. Define stable concept/source ids, focus return, and provenance-preserving links before expanding prose. → **P1 CONTRACT.**
+- **GEA-11** · operational campaign · **MED** · `src/20-president-render.js:163-184` and `src/61-logistics-rail.js:227` explicitly preserve a readout-only theater map and fixed battle chain. The smallest honest candidate is a node-and-edge theater graph consuming existing logistics/command data. → **P1 DESIGN ONLY; runtime P2 because save, routing, AI, divergence, and performance surfaces are large.**
+- **GEA-12** · event memory · **MED** · executive decisions affect systems but do not create Old World-style personal memories and later event eligibility. Design one historically bounded three-beat chain using existing decision/cabinet ids. → **P1 DESIGN ONLY; save implications bar this session.**
+- **GEA-13** · deterministic replay · **LOW** · Fight Again starts a fresh simulation and no order log or playback envelope exists. Design a versioned, secret-free seed/settings/order capsule and prove deterministic playback before calling it a replay. → **P2 after AAR export.**
+- **GEA-14** · classroom handoff · **LOW** · no learning-objective, assessment, or instructor surface exists. Do not build an LMS; design a print-safe session/evidence packet from existing scenario, settings, AAR, and source ids. → **P2 after export and deep links.**
 
 ## RELEASE CHECKPOINT — 2026-07-10 (D355, full 118-command battery after the run-2 fix stack)
 

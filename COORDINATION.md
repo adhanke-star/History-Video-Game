@@ -404,7 +404,8 @@ next green commit and confer through this ledger instead of permitting simultane
 - **State:** DRIVE — both this lane and LANE-002 5b were taken in the same D368 startup commit.
 - **Design law:** DECISIONS D367 (the charter) · D336 role routing (`OPUS-PLAYBOOK.md` carries
   the kickoff snippet) · `AUDIT-PROMPT.md` (Phase B verbatim) · `REVIEW-QUEUE.md` (the findings
-  ledger both audit phases write) · D74 no-fudge · citation law (≥2 sources = Verified) ·
+  ledger both audit phases write) · D369 + `docs/design/genre-elite-audit-2026-07.md` (Phase A
+  ratified ladder) · D74 no-fudge · citation law (≥2 sources = Verified) ·
   D171/D307 boundaries · the standing dignity carve-outs (no playable Fort Pillow; no Leetown
   Native OOB) · never push red.
 - **Acceptance criteria (four usage-boxed phases; spend the WHOLE session limit):**
@@ -433,11 +434,14 @@ next green commit and confer through this ledger instead of permitting simultane
 - **Probe design:** Phases A/B are docs/ledger phases — the gate is canonical-doc coherence +
   REVIEW-QUEUE format + `git diff --check`; Phase C uses each touched system's focused probes;
   Phase D uses `tools/import-soldier-replacements.mjs` + the replacement-overlay probe teeth.
-- **Resume pointer:** D368 STARTED. The required git/read-order ritual passed at clean
-  `23aaa2c` with `HEAD == origin/main`; LANE-003 was read and remains READ-ONLY. Execute Phase A
-  from the live repository, then B, small cleared C wins, and LANE-002 5b Phase D. Stop at a
-  clean committed boundary before the usage window closes and update this pointer.
-- **Last-touched commit:** D368 startup lock (this commit).
+- **Resume pointer:** **D369 PHASE A COMPLETE:** the sourced 22-feature audit and GEA-01 through
+  GEA-14 ladder are committed design law; ten serialized focused probes are green with every
+  JSON read (0 failed assertions / 0 pageerrors). The save-slot artifact's three unspecific HTTP
+  404 console lines are an explicit Phase B verify/refute candidate, not a confirmed defect.
+  Execute `AUDIT-PROMPT.md` Phase B from this boundary, write only confirmed findings to the
+  ledger, then take small cleared Phase C wins and LANE-002 5b Phase D. LANE-003 stays READ-ONLY.
+- **Last-touched commit:** D369 Phase A (this commit).
 - **History:** chartered 2026-07-10 by Aaron mid-D366 via popup Q&A (boundary: commit D366 and
   defer the LANE-003 battery; scopes: all four; output mode: hybrid audit→quick-wins; pillars:
-  all four); ChatGPT/Codex took DRIVE here and on LANE-002 5b together in D368 2026-07-10.
+  all four); ChatGPT/Codex took DRIVE here and on LANE-002 5b together in D368 2026-07-10;
+  Phase A ratified and gated in D369 with no runtime edits and LANE-003 untouched.
