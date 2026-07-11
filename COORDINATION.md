@@ -206,10 +206,10 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   D358 2026-07-10; 5c shipped D360 2026-07-10; ChatGPT/Codex took 5b DRIVE for the D367
   chartered session in D368 and released it untouched at D372's 10% boundary, 2026-07-10.
 
-### LANE-003 · battle-ladder — **CONTRACT** (released at the D375 boundary; D376 routed to Codex 5.6 Sol Ultra)
+### LANE-003 · battle-ladder — **DRIVE** (Codex 5.6 Sol Ultra owns D376 playable Cedar Creek)
 
-- **Owning tool:** none — Claude/Fable (TOP LOOP for D363-D375) released the lock at the clean D375 boundary on Aaron's 2026-07-11 in-chat routing instruction. The D376 runtime slice is EARMARKED for the chartered ChatGPT/Codex 5.6 Sol Ultra session, which takes DRIVE in a committed ledger edit at session start before implementation.
-- **State:** CONTRACT — D363-D366 (New Market Heights spec+playable, Stones River spec+playable) are shipped, **D373 (2026-07-11) discharged the lane's release obligation (121/121 green, every artifact read)**, D374 committed the Cedar Creek research addendum (§12), and **D375 (2026-07-11) locked the Cedar Creek contract (spec + 11/11 bind-tested plan probe)**. The D376 runtime slice is fully contracted: the spec's "D376 Implementation Files" / "Future Runtime Probe Teeth" sections plus `probe-cedar-creek-plan.mjs`'s implementation-mode REGISTRY step ARE the acceptance teeth — any tool can drive from here, and Aaron has routed D376 to Codex 5.6 Sol Ultra.
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra — took the lock at clean `9f4ca93` on 2026-07-11 for the D376 playable Cedar Creek runtime slice.
+- **State:** DRIVE — D363-D366 (New Market Heights spec+playable, Stones River spec+playable) are shipped, **D373 (2026-07-11) discharged the lane's release obligation (121/121 green, every artifact read)**, D374 committed the Cedar Creek research addendum (§12), and **D375 (2026-07-11) locked the Cedar Creek contract (spec + 11/11 bind-tested plan probe)**. D376 is executing from the spec's "D376 Implementation Files" / "Future Runtime Probe Teeth" sections plus `probe-cedar-creek-plan.mjs`'s implementation-mode REGISTRY step.
 - **Design law:** `docs/design/battle-build-research/` packets (`eastern-1862` → Gaines' Mill ·
   `usct` → New Market Heights · `western-gaps` → Stones River · stretch: `shenandoah-1864` Cedar
   Creek · `shenandoah-1862` Cross Keys/Port Republic · `appomattox-campaign` Five Forks ·
