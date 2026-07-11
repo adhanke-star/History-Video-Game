@@ -6,6 +6,24 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D370 — FULL-SPECTRUM AUDIT RUN 3 FINDS THREE HIGH-SEVERITY FAILURES; PHASE C STAYS SMALL — [CODEX 5.6 Sol Ultra, LANE-004 Phase B] (2026-07-10)
+
+The standing `AUDIT-PROMPT.md` was executed from the D369 boundary with three independent read-only
+finder lanes and an Ultra default-refute pass. Twelve findings survived: **3 HIGH / 8 MED / 1 LOW**.
+`REVIEW-QUEUE.md` carries the exact evidence and disposition for C72-C74, E71-E75, and S44-S47.
+
+- **The three highs:** Ironman promises a terminal loss but always enters Standard recovery (E71); Shiloh teaches an outdated surprise/Hornets' Nest/Buell/Johnston myth bundle as settled fact (C72); and `menuprobe` can return false values or caught errors while still exiting 0 with an artifact the release runner accepts (E72).
+- **Accessibility:** the frozen Settings screen exposes selected state only visually (S45). Settings and the save manager destroy keyboard focus on rerender and lack a complete modal focus contract (S46). These require a source-owned augmentation seam; the frozen base is evidence, never an edit target.
+- **History and source honesty:** the official Confederate general-officer register contradicts Gaines' Mill's Verified major-general grade for W. H. C. Whiting (C73). Three primary-source cards count duplicate hostings of one work as independent sources (C74). The build gate skips 106 descriptive-Verified objects without a structured source contract (E74); that is a coverage defect, not a declaration that all 106 claims are wrong.
+- **Repo truth:** the Western Theater readout and its probe still enforce the old three-playable-battle state (S44); startup docs mix 840 and 918 remaining rows and omit playable Gaines' Mill/Stones River (S47); battle schemas do not validate live home-edge/doctrine enums (E73); the custom-builder unsafe-key tooth proves rejection only with an independently invalid fixture (E75).
+- **Refutations:** the save-slot 404 was bound to `/favicon.ico`; First Bull Run's Colonel Heintzelman is correct per NPS; no current D74 data key, broad leader-attachment defect, replacement-year mismatch, or measured Intel-profile regression survived.
+- **Phase C order:** first repair E72 because a green gate must mean green; then take small presentation/QoL slices from GEA-01, S44, and GEA-02 as the window permits. E71 and C72 remain pending because forcing a terminal campaign contract or rewriting a source-sensitive battle narrative would violate the Phase C size/risk box.
+
+Gate for this docs-only boundary: build must remain GATE OK with no generated diff; the run-3 ledger
+must contain every stable id and disposition; `git diff --check` must pass. LANE-003 remains untouched.
+
+---
+
 ## D369 — GENRE-ELITE AUDIT RATIFIES LEGIBILITY, SESSION RESPECT, AND PORTABLE TEACHING AS THE NEXT QUALITY BAR — [CODEX 5.6 Sol Ultra, LANE-004 Phase A] (2026-07-10)
 
 The web-grounded genre audit is now binding at `docs/design/genre-elite-audit-2026-07.md`. It compares the live game against Ultimate General: Gettysburg/Civil War, Total War, Grand Tactician: The Civil War, Scourge of War, Field of Glory II, Paradox onboarding/tooltips, Old World events, and the Xbox game-accessibility bar. Primary developer, publisher, manual, and platform sources were checked live on 2026-07-10; older manuals are used as documented feature bars, never as a claim about an uninspected 2026 runtime.

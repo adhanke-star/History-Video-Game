@@ -434,14 +434,14 @@ next green commit and confer through this ledger instead of permitting simultane
 - **Probe design:** Phases A/B are docs/ledger phases — the gate is canonical-doc coherence +
   REVIEW-QUEUE format + `git diff --check`; Phase C uses each touched system's focused probes;
   Phase D uses `tools/import-soldier-replacements.mjs` + the replacement-overlay probe teeth.
-- **Resume pointer:** **D369 PHASE A COMPLETE:** the sourced 22-feature audit and GEA-01 through
-  GEA-14 ladder are committed design law; ten serialized focused probes are green with every
-  JSON read (0 failed assertions / 0 pageerrors). The save-slot artifact's three unspecific HTTP
-  404 console lines are an explicit Phase B verify/refute candidate, not a confirmed defect.
-  Execute `AUDIT-PROMPT.md` Phase B from this boundary, write only confirmed findings to the
-  ledger, then take small cleared Phase C wins and LANE-002 5b Phase D. LANE-003 stays READ-ONLY.
-- **Last-touched commit:** D369 Phase A (this commit).
+- **Resume pointer:** **D370 PHASE B COMPLETE:** audit run 3 confirmed 12 findings (3 HIGH / 8 MED /
+  1 LOW) and default-refuted the save-slot 404 as `/favicon.ico` noise. Start Phase C with E72's
+  false-green `menuprobe`, then take only small cleared presentation/QoL slices from GEA-01, S44,
+  and GEA-02 as the window permits. E71 Ironman and C72 Shiloh remain pending outside the Phase C
+  risk box. Phase D then returns to LANE-002 5b. LANE-003 stays READ-ONLY.
+- **Last-touched commit:** D370 Phase B (this commit).
 - **History:** chartered 2026-07-10 by Aaron mid-D366 via popup Q&A (boundary: commit D366 and
   defer the LANE-003 battery; scopes: all four; output mode: hybrid audit→quick-wins; pillars:
   all four); ChatGPT/Codex took DRIVE here and on LANE-002 5b together in D368 2026-07-10;
-  Phase A ratified and gated in D369 with no runtime edits and LANE-003 untouched.
+  Phase A ratified and gated in D369 with no runtime edits; Phase B audit run 3 ratified in D370
+  with 12 confirmed findings and no LANE-003 touch.
