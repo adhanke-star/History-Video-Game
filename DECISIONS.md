@@ -22,6 +22,20 @@ Gate for this docs-only boundary: build **GATE OK** with the generated HTML unch
 
 ---
 
+## D374 — CEDAR CREEK RESEARCH ADDENDUM COMMITS THE WORKFLOW YIELD AS DURABLE PACKET LAW — [CLAUDE Fable 5 main loop, LANE-003 DRIVE] (2026-07-11)
+
+The shenandoah-1864 packet now carries §12, the 2026-07-11 pre-spec research pass (19 agents across
+two workflows, 0 errors; Sonnet gather → Opus default-refute → Opus critic; Fable adjudication),
+resolving every Cedar Creek §9 unknown so the D375 spec can be written from committed prose alone.
+
+- **Strength anchor found in an approved source:** the US Army CMH staff-ride OOB appendix (Akamai-403s bots; Wayback mirror recorded in §3) gives US per-corps AND CS per-division engaged strengths — including Kershaw's 3,071, absent from every other approved source — with the honest caveat that the CS table is a 31-Oct field-inspection reconstruction ("No official report is available"). Encoding law: "Verified identity; Inferred strength" per unit; the ~14,000-attacking vs ~21,000-total split stated as a range; no exact battle-morning count claimed.
+- **§4 rank correction (C73-class):** Emory's substantive Oct 19 1864 grade was **Brig. Gen. USV (Bvt. Maj. Gen.)**, not the packet's prior "Major General (NPS-confirmed)" — NPS's label is courtesy usage; two independent verification passes converged. Torbert's and Rosser's "Maj. Gen." labels on NPS/CCBF likewise refute-killed as substantive grades (both Brig. Gen. at the battle; Rosser's MG is Nov 1 1864). Thoburn/Hayes/Powell/Keifer/Lowell all Colonels; Lowell's brigadier star posthumous; the Thoburn "commission made out the day of his death" claim DROPPED (NPS bio doesn't state it).
+- **The Fatal Halt ships as an explicit DISPUTE:** Early's plunder account and Gordon's "fatal halting" counterclaim both pinned to the NPS Fatal Halt article's quotations; "glory enough for one day" exists only via Gordon's Reminiscences and must be attributed, never stated as fact (an ABT-page attribution was default-refuted). No mechanic may encode either commander's blame theory.
+- **Count-free pursuit law:** the circulating 43-gun/24-recaptured/200-wagon/1,000-prisoner figures failed default-refute against fetched approved pages; pursuit prose stays count-free. The CS afternoon west-to-east line order is Inferred-grade (no probe tooth). §9's Cedar Creek bullets are annotated RESOLVED with the audit trail retained (probe's ≥2-bullet READY_FOR_SPEC guard respected); Third Winchester items stay open.
+- **Gate:** `probe-battle-build-research` **15/15**; build **GATE OK** with the generated HTML unchanged; `git diff --check` clean. Docs only — no data/runtime/registry/probe change.
+
+---
+
 ## D372 — THE 10% BOUNDARY CLOSES THE SOL CHARTER CLEAN AND RETURNS WORK THROUGH THE LEDGER — [AARON boundary · CODEX 5.6 Sol Ultra closeout] (2026-07-10)
 
 Aaron surfaced the product's 10% usage warning after D371's implementation was already green. The

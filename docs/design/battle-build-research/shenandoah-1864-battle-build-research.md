@@ -39,7 +39,13 @@ Sheridan's August-October 1864 campaign broke Confederate power in the Valley in
 | American Battlefield Trust - Fisher's Hill facts | Strengths (US ~38,950 / CS ~9,500); Crook's flank march around Little North Mountain; Tumbling Run; casualties (~US 520 / CS 1,230, ~900 captured) | https://www.battlefields.org/learn/civil-war/battles/fishers-hill | cite-pending |
 | American Battlefield Trust - Monocacy facts | Wallace = Maj. Gen.; Early ~14,000 / Wallace ~6,050; Ricketts's VI Corps division; "battle that saved Washington"; casualties ~US 1,300 / CS 700 | https://www.battlefields.org/learn/civil-war/battles/monocacy | cite-pending |
 | Wikipedia - Battle of Cedar Creek (re-fetched this pass) | Infobox gives US 5,665 (644 k / 3,430 w / 1,591 m) / CS 2,910 (320 k / 1,540 w / 1,050 m), total 8,575 - so it corroborates the US-bled-more DIRECTION but does NOT say "7,682" (that is the NPS total); strengths US 31,610 / CS 21,102 effectives; Ramseur mortally wounded and captured by the 1st Vermont Cavalry | https://en.wikipedia.org/wiki/Battle_of_Cedar_Creek | Verified (corroboration only) |
-| NPS Monocacy - Jubal Early biography | Early's temporary Lt. Gen. grade (May 31 1864) and Army of the Valley command | https://www.nps.gov/mono/learn/historyculture/jubalearly.htm | cite-pending |
+| NPS Monocacy - Jubal Early biography | Early's temporary Lt. Gen. grade (May 31 1864) and Army of the Valley command | https://www.nps.gov/mono/learn/historyculture/jubalearly.htm | Verified (2026-07-11 pass; temporary grade + May 31 1864 date CONFIRMED) |
+| US Army CMH Cedar Creek Staff Ride - Order of Battle appendix (fetched 2026-07-11; live URL Akamai-403s bots — use the Wayback mirror) | THE strength anchor: US per-corps engaged (VI 8,506 inf + 600 arty / 24 guns · VIII 4,000 + 200 / 16 · XIX 8,748 + 414 / 20 · Kitching's Provisional Div 1,000 · Cavalry 7,500 + 642 / 30 · total 31,610 / 90 guns); CS per-division (31 Oct 1864 field-inspection returns + ~3,500 Cedar Creek losses added back; page footnote: "No official report is available", alt estimate as low as 15,680): Ramseur 2,442 · Pegram 2,013 · Gordon 2,227 · Kershaw 3,071 · Wharton 1,421 (11,174 inf + 1,101 arty / 40+ guns); cavalry Lomax 3,121 · Rosser 2,206; total 21,102 | https://history.army.mil/books/Staff-Rides/CedarCreek/ccob.htm (mirror: https://web.archive.org/web/20230928113544/https://history.army.mil/books/Staff-Rides/CedarCreek/ccob.htm) | Verified (single .mil source; per-unit strengths ship "Verified identity; Inferred strength") |
+| US Army CMH Cedar Creek Staff Ride - battle narrative | Dawn sequence (Kershaw waded Cedar Creek unopposed 04:30), halt decision ~10:00 a.m., 4:00 p.m. counterattack timing | https://history.army.mil/books/Staff-Rides/CedarCreek/ccbattle.htm (mirror: https://web.archive.org/web/20230928101540/https://history.army.mil/books/Staff-Rides/CedarCreek/ccbattle.htm) | Verified |
+| Cedar Creek Battlefield Foundation - order of battle | Full both-side unit/commander hierarchy (brigade level); aggregate totals only (US 31,945 / 5,764; CS 21,000 / 3,060); NOTE its rank labels can use ultimate/best-known grade (Torbert/Rosser "Maj. Gen.") — do not trust for battle-date rank | https://ccbf.us/order-of-battle/ | Verified (structure), rank labels UNRELIABLE |
+| NPS - "The Fatal Halt" article (fetched 2026-07-11) | THE anchor for the DISPUTED halt: quotes Early's plunder account ("so many of our men had stopped in the camp to plunder…") AND Gordon's Reminiscences ch. XXV counterclaim ("the fatal halting, the hesitation, the spasmodic firing… lost us the great opportunity"); Mahr's "succession of delays" framing; halt ~9:30-10:00 a.m. with delays toward ~12:30 | https://www.nps.gov/articles/000/fatal-halt.htm | Verified |
+| NPS - "Sheridan Arrives" article (fetched 2026-07-11) | Sheridan's ride: departed Winchester ~9:00 a.m. on Rienzi (Forsyth, O'Keefe, ~20 troopers), ~12 miles — not the poem's 20 — on the field ~10:30 a.m. | https://www.nps.gov/articles/000/sheridan-arrives.htm | Verified |
+| Gordon, "Reminiscences of the Civil War", ch. XXV "The Fatal Halt at Cedar Creek" (primary; hosted at docsouth.unc.edu/fpn/gordon/ — 2026-07-11 fetch reached front matter only, ch.-XXV text verified via the NPS Fatal Halt article's quotations) | Gordon's side of the dispute; the "glory enough for one day" line attributed to Early exists ONLY via Gordon's account — attribute to Gordon's Reminiscences, never state as fact (a claimed ABT-page attribution was default-refuted 2026-07-11) | https://docsouth.unc.edu/fpn/gordon/gordon.html | Verified via NPS quotation (primary text access pending) |
 
 ## 4. OOB And Rank Traps
 
@@ -47,7 +53,7 @@ Sheridan's August-October 1864 campaign broke Confederate power in the Valley in
 - **Jubal A. Early - RANK TRAP (temporary grade).** He was **Lieutenant General (TEMPORARY grade), C.S.A.**, appointed on **May 31 1864** on Lee's request under Davis's temporary-promotion authority, commanding the **Army of the Valley**. Encode "Lieutenant General (temporary grade)." **CONFLICT:** the ABT Cedar Creek AND Third Winchester facts boxes both call him "Major General" - that is an ABT error; **NPS correctly gives "Lt. Gen. Jubal A. Early."** Use NPS; record the conflict. (Separate trap: at First Bull Run 1861 - already in the repo - he was a **Colonel**; do not carry the 1864 rank backward, and note the CSA had no Lt. Gen. grade before Oct 1862.)
 - **Horatio G. Wright - Major General**, VI Corps (and acting overall US commander at Cedar Creek in the morning before Sheridan arrived). (NPS-confirmed.)
 - **George Crook - RANK TRAP. Brigadier General**, VIII Corps ("Army of West Virginia"). His **major-generalcy dated Oct 21 1864** - two days AFTER Cedar Creek and one MONTH after Fisher's Hill - so at Winchester, Fisher's Hill, AND Cedar Creek he was a **Brig. Gen.** Do NOT inflate to Maj. Gen. (NPS Cedar Creek confirms "Brig. Gen. George Crook.") His division commanders at Fisher's Hill/Cedar Creek included Col. Rutherford B. Hayes and Col. Joseph Thoburn.
-- **William H. Emory - Major General**, XIX Corps. (NPS-confirmed.)
+- **William H. Emory - RANK TRAP (corrected 2026-07-11, §12). Brigadier General (Bvt. Maj. Gen.)**, XIX Corps. His SUBSTANTIVE USV grade on Oct 19 1864 was Brig. Gen. (from Mar 17 1862), holding a brevet Maj. Gen. USV (Jul 23 1864); full MG USV came only Sep 25 1865. NPS's "Maj. Gen. William H. Emory" is courtesy/brevet usage — two independent 2026-07-11 verification passes (default-refute + a dedicated rank packet) converged on the substantive grade. Encode "Brig. Gen. (Bvt. Maj. Gen.)"; the exact brevet date is packet-note-grade, not an in-game Verified claim.
 - **John B. Gordon - Major General**, C.S.A.; led the flank column over Massanutten at Cedar Creek. (NPS-confirmed.) Do not inflate to Lt. Gen.
 - **Stephen D. Ramseur - Major General**, C.S.A. (division), **mortally wounded at Cedar Creek Oct 19, died Oct 20** at Belle Grove. Encode as Maj. Gen.; his death is a teaching-card beat, NEVER a scripted-death mechanic (D74).
 - **Alfred T. A. Torbert - Brigadier General**, chief of cavalry, Army of the Shenandoah. **George A. Custer - Brigadier General** (3rd Cavalry Division) - NOT major general yet (his MG came 1865); **Wesley Merritt - Brigadier General** (1st Cavalry Division). Do not inflate Custer/Merritt.
@@ -89,12 +95,14 @@ Sheridan's August-October 1864 campaign broke Confederate power in the Valley in
 
 ## 9. Remaining Traps To Re-Verify Before Spec
 
-- Cedar Creek engaged strengths and casualty split - the ABT facts box (US ~31,945 / CS 21,000; casualties US ~5,764 / CS ~3,060, total 8,824) CONFLICTS on the TOTAL with NPS (~7,682) and Wikipedia's infobox (US 5,665 / CS 2,910, total 8,575; strengths 31,610 / 21,102 effectives) - but all three agree US casualties EXCEEDED CS, so the Section 7 direction guard is safe. Pin a defensible per-side pair from NPS + a second source before encoding OOB. (The "7,682" figure is NPS's, NOT Wikipedia's - do not re-mis-attribute it.)
-- Third Winchester CS strength - ABT gives 15,200, other sources ~17,000; and confirm Rodes (CS, killed) and Russell (US, killed) against ABT/NPS before stamping.
-- Cedar Creek corps-to-sector assignments in P2 - which CS divisions (Gordon, Ramseur, Kershaw, Wharton, Pegram) held which ground north of Middletown, and which US corps led the counterattack; not enumerated in the fetched pages.
-- Gordon's flank-march composition and the exact fog/timing window (crossing the North Fork below Massanutten before dawn) - confirm against NPS/Shenandoah-at-War before encoding P1 fog + approach.
-- Sheridan's Regular-Army dates (BG Sep 20 1864; MG effective Nov 8 1864) - corroborate against a second reputable source before writing any rank note (Army Historical Foundation + Wikipedia used here; not both independently opened).
-- Early's temporary-Lt.-Gen. wording and the May 31 1864 date - open the NPS Jubal Early biography (cite-pending) before stamping the in-scenario rank note.
+*(2026-07-11 status: the Cedar Creek items below are RESOLVED by the §12 pre-spec research pass; the bullets are retained as the audit trail. Third Winchester items remain genuinely open for that follow-on build.)*
+
+- **RESOLVED (§12.1):** Cedar Creek engaged strengths and casualty split - the ABT facts box (US ~31,945 / CS 21,000; casualties US ~5,764 / CS ~3,060, total 8,824) CONFLICTS on the TOTAL with NPS (~7,682) and Wikipedia's infobox (US 5,665 / CS 2,910, total 8,575; strengths 31,610 / 21,102 effectives) - but all three agree US casualties EXCEEDED CS, so the Section 7 direction guard is safe. → The CMH staff-ride OOB appendix now anchors strengths at unit grain (US per-corps; CS per-division); casualty guard stays DIRECTION-NEUTRAL; NPS's 7,682 has NO per-side split (confirmed) so ABT's 5,764/3,060 is the only split anchor.
+- **STILL OPEN (Third Winchester only):** CS strength - ABT gives 15,200, other sources ~17,000; and confirm Rodes (CS, killed) and Russell (US, killed) against ABT/NPS before stamping.
+- **RESOLVED (§12.2-12.3):** Cedar Creek corps-to-sector assignments in P2 - which CS divisions held which ground north of Middletown, and which US corps led the counterattack. → Counterattack axes CONFIRMED (XIX right · VI left · Merritt left flank · Custer far right · Crook reserve; Custer broke the CS left/Gordon first); the full CS west-to-east line order remains Inferred-grade (label it so in data).
+- **RESOLVED (§12.4):** Gordon's flank-march composition and the exact fog/timing window. → Gordon's column (Gordon/Ramseur/Pegram) crossed at McInturff's + Bowman's Fords; Kershaw via Strasburg to Bowman's Mill Ford (waded 04:30 per CMH); Wharton up the Pike at Hupp's Hill; attack opened ~5:00 a.m. in fog.
+- **RESOLVED (§12.5):** Sheridan's Regular-Army dates (BG Sep 20 1864; MG effective Nov 8 1864) - CONFIRMED by the 2026-07-11 default-refute pass; field grade at the battle = Maj. Gen. USV.
+- **RESOLVED (§12.5):** Early's temporary-Lt.-Gen. wording and the May 31 1864 date - CONFIRMED (temporary grade under the CS temporary-general legislation; NPS bio row flipped to Verified in §3).
 
 ## 10. Verdict
 
@@ -127,3 +135,107 @@ Write a **D### Cedar Creek two-phase spec + probe scaffold** (T8 two-phase, role
 **Anti-Lost-Cause / dignity check:** PRESENT and correct. "The Burning" is teaching-ONLY on the dignity line (never a scored objective) and named honestly as hard war whose cost fell on Valley farm families. Early is framed as the postwar ARCHITECT of the Lost Cause (the "marble man" Lee, the "overwhelmed by numbers" alibi), not laundered. "Sheridan's Ride" separates the real rally from Thomas Buchanan Read's 1865 propaganda poem. Ramseur's death is teaching-card flavor, never a scripted-death mechanic. Monocacy stays teaching-leaning (its "won time, lost field" lesson does not map to an objective-hold scoreboard). No massacre, atrocity, or Native-nation content in this lane, so no DO_NOT_BUILD_NOW dignity constraint applies.
 
 **Ratified verdict: READY_FOR_SPEC.** Three reputable anchors were re-fetched and confirmed this pass (ABT Cedar Creek, NPS Cedar Creek, ABT Third Winchester), clearing the two-Verified bar; Section 9 carries six explicit remaining-traps bullets; the rank traps resolve cleanly from NPS; the two-phase scoreWeight arithmetic is correct (1 + 3 = 4, NOT 5); and the D74 no-fudge path (fog + camp-caught VIII Corps + flank mass in P1; strength edge + fresh cavalry + CS timing in P2) smuggles in no per-battle multiplier or forced winner. The one substantive defect (the 7,682 casualty mis-attribution) is corrected inline and does not affect buildability, because the casualty guard is direction-only and the direction is confirmed by all three sources.
+
+## 12. Pre-Spec Research Addendum — 2026-07-11 (D374; Fable workflows wf_1c51d565-bc5 + wf_ed9fb1e2-cec, 19 agents, 0 errors; Sonnet gather → Opus default-refute → Opus critic)
+
+This pass resolves every Cedar Creek item in §9 and corrects one §4 rank line (Emory). Method per
+the Contract Relay: mechanical Sonnet gathers, Opus default-refute verification of every claim
+against the fetched sources, an Opus completeness critic, Fable adjudication. Where sources
+conflict, the refuter's verdict controls; anything not CONFIRMED below ships Inferred or is avoided.
+
+### 12.1 Strengths at unit grain (the CMH staff-ride OOB appendix — see the §3 row)
+- **US per corps:** VI 8,506 inf + 600 arty / 24 guns · VIII 4,000 + 200 / 16 · XIX 8,748 + 414 / 20 ·
+  Kitching's Provisional Division 1,000 · Cavalry Corps 7,500 + 642 / 30 · **total 31,610 / 90 guns.**
+- **CS per division** (31 Oct 1864 field-inspection returns with ~3,500 Cedar Creek losses added
+  back; the page's own footnote flags "No official report is available" and an alternative estimate
+  as low as 15,680 total): **Ramseur 2,442 · Pegram 2,013 · Gordon 2,227 · Kershaw 3,071 ·
+  Wharton 1,421** (inf subtotal 11,174 + 1,101 arty / 40+ guns); cavalry **Lomax 3,121 ·
+  Rosser 2,206**; **total 21,102.**
+- Encoding law: every unit ships **"Verified identity; Inferred strength"** with the CMH table as the
+  disclosed estimating basis (it is a post-battle reconstruction, not an Oct 19 morning report);
+  ABT/NPS additionally put the ATTACKING CS force at ~14,000 engaged vs the ~21,000 army total —
+  state as a range where player-facing. A same-day Oct 19 return does NOT exist in approved sources
+  (OR Ser. I Vol. 43 returns unqueried — optional future lead). No division split may be presented
+  as an exact battle-morning count.
+
+### 12.2 Afternoon CS line + Getty's cemetery stand (P2 geometry)
+- Halt line near **Miller's Mill / Miller Lane (modern Cougill Rd)** ~10:30 a.m., further delay at
+  **Old Forge Road** ~11:00-12:30 (CONFIRMED). Getty's VI-Corps division fell back ~300 yds to the
+  **Middletown cemetery hill** and repelled three successive assaults — **Pegram's division, then
+  Ramseur-command NC regiments (43rd/45th/53rd NC + 2nd NC Bn), then Wharton** (CONFIRMED) — while
+  Wheaton's and Keifer's divisions re-formed.
+- The full CS west-to-east order (Gordon–Kershaw–Ramseur–Pegram–Wharton, Wharton east of the Pike)
+  is **Inferred-grade only** (default-refute left it UNRESOLVED for Verified on Wikipedia-only
+  support). Sector placement may use it; label Inferred; do not write a probe tooth on it.
+
+### 12.3 Counterattack axes (CONFIRMED)
+- Just before **4:00 p.m.**: **XIX Corps (Emory) Union right · VI Corps (Wright) left · Merritt's
+  cavalry left flank · Custer far right · Crook's VIII in reserve.** The cavalry broke the CS left
+  (Gordon) first. **Rosser** opposed Custer on the **Back Road (Cupp's Ford)**; **Lomax** operated
+  via the Front Royal–Winchester Rd toward Newtown (cite the NPS unit battle-plan account or the VA
+  DHR NHL nomination for the Rosser/Lomax movements — the shenandoahatwar article does not carry them).
+- Pursuit prose stays COUNT-FREE: "recaptured the morning's lost guns and took most of Early's
+  artillery and trains." The circulating 43-gun / 24-recaptured / ~200-wagon / ~1,000-prisoner
+  figures did NOT survive default-refute against fetched approved pages; the Strasburg bridge
+  collapse/jam is single-source (ccbf) — corroborate vs the OR before any Verified use.
+
+### 12.4 Dawn assault (P1 geometry, CONFIRMED)
+- Gordon's column (**Gordon/Ramseur/Pegram divisions**) crossed the North Fork at **McInturff's and
+  Bowman's Fords** after the all-night march along the base of Massanutten; **Kershaw** moved through
+  Strasburg to **Bowman's Mill Ford** and waded Cedar Creek unopposed at **04:30** (CMH); **Wharton**
+  advanced up the Valley Pike at **Hupp's Hill**; the attack opened ~**5:00 a.m.** in fog, struck
+  Thoburn's camp first, then Hayes/Kitching, then the XIX Corps camps, with VI Corps fighting the
+  delaying withdrawal. Sheridan's HQ at Belle Grove was overrun.
+- **Sheridan's ride (two-source, NPS):** departed Winchester ~9:00 a.m. on Rienzi with Maj. G. A.
+  Forsyth, Capt. J. O'Keefe, ~20 troopers; **~12 miles** (the poem's "twenty miles away" is Read's
+  1865 propaganda inflation — teach the split per §6); on the field ~10:30 a.m., attacked at 4 p.m.
+
+### 12.5 Battle-date rank table (substantive grades; default-refute CONFIRMED unless noted)
+- **US:** Sheridan **Maj. Gen. USV** (Regular BG Sep 20 1864 + Regular MG eff. Nov 8 1864 both
+  post-battle — never backdate); Wright **Maj. Gen.** (army command that morning; Ricketts briefly
+  VI Corps, then wounded — **Keifer, Col.**, took 3rd Division; Getty briefly held the corps);
+  **Emory Brig. Gen. (Bvt. Maj. Gen.)** — the §4 correction; Crook **Brig. Gen.** (MG Oct 21 1864);
+  Getty/Wheaton/Ricketts **Brig. Gen.** (Getty/Ricketts brevet-MG paperwork Dec 1864, post-battle);
+  Dwight/Grover **Brig. Gen.**; **Torbert Brig. Gen. (Bvt. MG)** — the "Maj. Gen." labels on
+  NPS/CCBF are courtesy usage, REFUTED as substantive; Merritt/Custer **Brig. Gen.**; **Powell Col.**
+  (2nd Cav Div); **Thoburn Col.** (killed Oct 19 — DROP the "commission made out the day of his
+  death" claim, the NPS bio does not state it); **Hayes Col.** (2nd/Kanawha Div, succeeded Duval);
+  **Lowell Col.** (Reserve Bde under Merritt; wounded, kept command, mortally wounded, died Oct 20;
+  his brigadier star was posthumous — he never held the grade in life). Kitching's grade: verify at
+  spec time.
+- **CS:** Early **Lt. Gen. (temporary grade, May 31 1864)**; Gordon **Maj. Gen.**; Kershaw
+  **Maj. Gen.** (eff. May 18 1864); Ramseur **Maj. Gen.** (eff. June 1 1864 — mortally wounded near
+  Miller's Mill in the collapse, two horses already shot under him; captured; died Oct 20 at Belle
+  Grove — TEACHING FLAVOR ONLY, never a scripted-death mechanic); Pegram **Brig. Gen.** (his death
+  is Hatcher's Run, Feb 1865 — later, not here); Wharton **Brig. Gen.** (eff. July 8 1863);
+  **Rosser Brig. Gen.** (MG Nov 1 1864 post-battle; commanded Fitz Lee's division — Lee wounded at
+  Third Winchester; the NPS OOB's "Maj. Gen. Rosser" is an ERROR, refute-confirmed); Lomax
+  **Maj. Gen.** (Aug 1864).
+- Brigade rosters (CONFIRMED, for OOB notes): Ramseur (Battle/Grimes/Cook/Cox), Kershaw
+  (Conner/Humphreys/Wofford/Bryan), Pegram (Hoffman/Johnston/Goodwin), Gordon (Evans/Terry/York),
+  Rosser (Wickham/Payne/Laurel), Lomax (Imboden/Johnson/McCausland/Jackson), Lowell = Reserve Bde
+  under Merritt (Devin led a BRIGADE under Merritt — a fetched "Devin division" mention was a
+  summarizer error, refute-killed).
+
+### 12.6 The Fatal Halt — ships as an explicit DISPUTE (teaching card law)
+- **Early's account** (quoted by the NPS Fatal Halt article): the army stopped because it was
+  exhausted, disordered, and thinned by men plundering the captured camps.
+- **Gordon's account** (Reminiscences ch. XXV, quoted by the same NPS article): the halt itself —
+  "the fatal halting, the hesitation, the spasmodic firing… lost us the great opportunity" — and
+  the **"glory enough for one day"** line attributed to Early, which exists ONLY via Gordon's
+  postwar account: attribute to Gordon, never state as fact.
+- Modern treatments (NPS; Mahr's "succession of delays") keep the dispute open. The teaching card
+  must present BOTH primaries with attribution and leave the verdict to the player — this is the
+  packet's anti-Lost-Cause §6 in action (Early authored the Lost Cause; his alibi here is part of
+  that historiography lesson, but the plundering claim is not simply false either — the dispute IS
+  the lesson).
+- Timing for the scenario: halt ~9:30-10:30 a.m. over Gordon's objection; counterattack 4:00 p.m.
+  The P2 "CS cohesion/reinforcement TIMING" input from §2 stays the honest mechanism; no mechanic
+  may encode either commander's blame theory as fact.
+
+### 12.7 Critic residue (what is still NOT citation-grade — avoid or label)
+- Gun/wagon/prisoner capture counts (see 12.3) — avoid numbers.
+- The CS west-to-east afternoon order (see 12.2) — Inferred label.
+- The Strasburg bridge jam — single-source, corroborate before Verified.
+- Kitching's exact grade; the exact Emory/Torbert brevet DATES (packet-note-grade only).
+- Third Winchester's own §9 items remain open — untouched by this pass.

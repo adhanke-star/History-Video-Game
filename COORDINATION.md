@@ -305,7 +305,7 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   DISPUTE pinned to Early's and Gordon's own accounts ("glory enough" attributes ONLY to
   Gordon's Reminiscences), Sheridan's ~12-mile ride, and the substantive-grade rank table —
   including the C73-class correction that Emory was Brig. Gen. (Bvt. MG) on Oct 19 1864, which
-  also fixes the packet's §4 line. Next slice: the packet addendum (docs), then
+  also fixes the packet's §4 line. The addendum SHIPPED as packet §12 (D374). Next slice:
   `docs/design/cedar-creek-battle-build-spec.md` + plan probe, then playable runtime — the
   D363-D366 pattern, direction-NEUTRAL casualty guards per the packet §7 (US bled MORE and won).
   At the next clean lane bundle boundary a fresh lock may take Sol's queue per D372
