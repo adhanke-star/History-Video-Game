@@ -206,10 +206,10 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   D358 2026-07-10; 5c shipped D360 2026-07-10; ChatGPT/Codex took 5b DRIVE for the D367
   chartered session in D368 and released it untouched at D372's 10% boundary, 2026-07-10.
 
-### LANE-003 · battle-ladder — **CONTRACT** (unowned; D377 Cross Keys/Port Republic runtime handoff)
+### LANE-003 · battle-ladder — **DRIVE** (D378 playable Cross Keys/Port Republic; ChatGPT/Codex)
 
-- **Owning tool:** none — ChatGPT/Codex 5.6 Sol Ultra released DRIVE after the green D377 spec + bind-tested plan-probe boundary.
-- **State:** CONTRACT — D363-D366 (New Market Heights spec+playable, Stones River spec+playable) and D373 (release battery 121/121) are shipped; **D375 (2026-07-11) locked the Cedar Creek contract** and D376 shipped playable Cedar Creek; **D377 shipped the Cross Keys/Port Republic spec + 11/11 plan probe**. Cross Keys/Port Republic runtime is absent; planned-only baselines remain 17 scenarios, schema 47, Army Register 1125, flags/weather/Intel/media 17, and suite 122. Next is D378 playable runtime from the committed D377 contract.
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra — took D378 DRIVE from the clean D377 CONTRACT boundary; no simultaneous Claude Code edits.
+- **State:** DRIVE — D363-D366 (New Market Heights spec+playable, Stones River spec+playable) and D373 (release battery 121/121) are shipped; **D375 (2026-07-11) locked the Cedar Creek contract** and D376 shipped playable Cedar Creek; **D377 shipped the Cross Keys/Port Republic spec + 11/11 plan probe**. D378 now implements playable runtime from that committed contract. Until the green runtime commit lands, planned-only baselines remain 17 scenarios, schema 47, Army Register 1125, flags/weather/Intel/media 17, and suite 122.
 - **Design law:** `docs/design/battle-build-research/` packets (`eastern-1862` → Gaines' Mill ·
   `usct` → New Market Heights · `western-gaps` → Stones River · stretch: `shenandoah-1864` Cedar
   Creek · `shenandoah-1862` Cross Keys/Port Republic · `appomattox-campaign` Five Forks ·
@@ -361,8 +361,8 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   P2 CS, aggregate CS, and P1 US>CS losses only; there is no phase-2 or aggregate casualty tooth.
   The Jackson-grade tamper made exactly HISTORY red (10/11, exit 1), then restored md5-identically
   to `bbe53c90c2cbb39045d3bc90f7d52518` and 11/11. Planned baselines stay scenario 17 · schema
-  47 · Army Register 1125 · flags/weather/Intel/media 17 · suite 122. **Resume: take a new
-  DRIVE lock, then ship D378 playable Cross Keys/Port Republic from the committed D377 contract.**
+  47 · Army Register 1125 · flags/weather/Intel/media 17 · suite 122. **Resume: ChatGPT/Codex
+  holds D378 DRIVE and ships playable Cross Keys/Port Republic from the committed D377 contract.**
   The full battery remains due after the agreed stretch-battle release boundary. Sol's separate
   queue (E71 → C72; GEA-01 + S44 fallback; LANE-002 5b from 918) still needs another lock.
 - **Last-touched commit:** D362 (Gaines' Mill playable slice + Fable transfer) · D363 (New
@@ -401,7 +401,8 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   ambiguity questions, responded to S-01..S-04, and returned the lane to CONTRACT/unowned at
   the green 2026-07-11 boundary · Codex took D377 DRIVE at clean `f083a6b` in ledger-only commit
   `6cfa5b7`, authored the coarse-grain source-honest Cross Keys/Port Republic contract, proved
-  its Jackson-rank bind exactly, and returned the lane to CONTRACT/unowned for D378 runtime.
+  its Jackson-rank bind exactly, and returned the lane to CONTRACT/unowned for D378 runtime ·
+  ChatGPT/Codex took D378 DRIVE from clean `b69451e` on 2026-07-11 in a ledger-only commit.
 
 #### Historical Fable takeover packet — retained for D363-D375 audit context, not the current resume pointer
 
