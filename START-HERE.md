@@ -78,15 +78,15 @@ When Aaron asks a new chat to choose from a priority list, use this list (cross-
 
 **Model naming note (D336, 2026-07-09):** ChatGPT's visible top-model label is **5.6 Sol**. Select it at **Ultra** (the highest effort available in that UI) for quality-critical autonomous work. Older 5.5/Opus/Fable references document prior runs only; do not copy them into new ChatGPT/Codex kickoff prompts. See `OPUS-PLAYBOOK.md`.
 
-**Latest live head (2026-07-10, D372 clean Sol close):** the generated game has **16 registered historical scenarios** through Stones River. D369 ships the sourced 22-feature genre-elite law; D370 files 12 confirmed audit findings; D371 fixes E72 so `menuprobe` fails honestly and finishes 4/4 green with H0 main menu 5/5, 0 pageerrors. Aaron's 10% boundary closed LANE-004 SHIPPED and returned LANE-002 5b to CONTRACT unowned with **918** rows untouched. LANE-003 remains Claude/Fable-owned DRIVE; its deferred serialized 121-command `npm run vet:noreg` release battery is the immediate next work. Read `COORDINATION.md` before starting.
+**Latest live head (2026-07-11, D373 release checkpoint):** the generated game has **16 registered historical scenarios** through Stones River, and the **full serialized 121-command `npm run vet:noreg` release battery is GREEN (D373)** — every JSON artifact read, 16 battles × 8 seeds failures=[], 0 pageerrors anywhere; the one hard-war red was root-caused to concurrent-workflow teardown load and re-run green (lesson: nothing runs beside the battery). LANE-003's release obligation is discharged; the lane stays Fable-owned DRIVE for its stretch order. LANE-002 5b remains CONTRACT/unowned at **918** rows. Read `COORDINATION.md` before starting.
 
-**Claude/Fable owns LANE-003 (D362 transfer)**
-- **Priority 1 — release checkpoint (next Claude session):** run and inspect the full serialized `npm run vet:noreg` battery (121) before closing LANE-003.
-- **Priority 2 — stretch battles (in order, only after the battery is green):** Cedar Creek · Cross Keys/Port Republic · Five Forks · Fort Donelson · Elkhorn Tavern.
+**Claude/Fable owns LANE-003 (D362 transfer; D373 battery green)**
+- **Priority 1 — stretch battles (in order, full depth):** Cedar Creek (research DONE, addendum → spec → playable) · Cross Keys/Port Republic · Five Forks · Fort Donelson · Elkhorn Tavern.
+- **Priority 2 — Sol's queue at a fresh clean lane boundary with a new lock:** E71 Ironman terminal-loss (full milestone only), C72 Shiloh two-source text-only rewrite, GEA-01 + S44 small fallback bundle.
 
 **LANE-004 is closed and LANE-002 5b is unowned (D372).** Take any new lock in one committed `COORDINATION.md` edit before work; do not drive Fable's LANE-003.
 
-**Latest completion summary:** D371 fixes E72's false-green gate; D370 completes audit run 3; D369 ratifies the genre-elite law; D366 ships playable Stones River (scenario 16). D355 remains the last full 118/118 release checkpoint; Fable now owes the 121-command successor battery.
+**Latest completion summary:** D373 closes the release checkpoint at 121/121 (succeeding D355's 118/118); D371 fixed E72's false-green gate; D370 completed audit run 3; D369 ratified the genre-elite law; D366 shipped playable Stones River (scenario 16).
 
 <!-- S43/D350: superseded D333 priority and completion snapshot retained in source history only.
 

@@ -358,6 +358,15 @@ or adjudicate all 918 remaining prosopography rows. Descriptive-Verified counts 
 not a finding that each underlying claim is false. Phase C is limited to small cleared presentation and
 gate slices; the high Ironman and Shiloh defects remain visible rather than being forced into that charter.
 
+## RELEASE CHECKPOINT — 2026-07-11 (D373, full 121-command battery closing the LANE-003 D363-D366 battle arc)
+
+All 121 commands green in two fail-fast segments (1-18 · `--from='hard war'` 103/103), final
+`VET NO-REGRESSION OK`; all 120 fresh shots-JSON artifacts read (ok:true, 0 pageerrors, 0 realErrors,
+no failed steps); sweep-all-battles 16 scenarios × 8 seeds failures=[]; diag-classic green.
+
+- **CP-4** · harness/scheduling flake (not a probe or product defect) · **LOW** · `tools/probe-hard-war.mjs` — timed out at the 360s budget in segment 1, but artifact mtimes prove all 8 steps finished green at 84s (prior-run profile 80.9s) with the hang in post-write `browser.close()`; cause was an 11-agent research workflow Fable had left running concurrently on the 8 GB Mac. → **RESOLVED (D373)** — idle-machine focused rerun 92s green; in-battery rerun 108.1s green; probe untouched. Lesson locked in D373/RUN-LOG: nothing runs concurrently with the release battery.
+- Clean sweep notes: bootprobe's 7 filtered 404 console lines are the documented expected absent-optional-assets probe (`assets/3d/`, `realErrors:[]`); the 2.42MB raw-embed soft warning is the known frozen tier (D300); no other warning, lifecycle, or cleanup failure appeared in any artifact.
+
 ## RELEASE CHECKPOINT — 2026-07-10 (D355, full 118-command battery after the run-2 fix stack)
 
 All 118 commands green in four fail-fast segments (1-25 · 26-36 · 37-93 · 94-118, `--from=` resume); every red root-caused, fixed, and re-run — none retried blind, nothing deferred.

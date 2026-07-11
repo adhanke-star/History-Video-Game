@@ -209,7 +209,7 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
 ### LANE-003 · battle-ladder — **DRIVE** (Claude/Fable owns the D363+ ladder)
 
 - **Owning tool:** Claude Code, with Fable 5 at xhigh as the TOP LOOP.
-- **State:** DRIVE — Fable verified the clean `b1d828b` boundary (HEAD == origin/main, worktree clean) and took the lock on 2026-07-10 for the D363 New Market Heights planning/spec commit; D363, D364 (playable New Market Heights), D365, and D366 (playable Stones River) are all shipped; the lane holds DRIVE for its release battery, deferred one session by D367 (Aaron). ChatGPT/Codex must not drive this lane.
+- **State:** DRIVE — D363-D366 (New Market Heights spec+playable, Stones River spec+playable) are shipped, and **D373 (2026-07-11) discharged the lane's release obligation: the full serialized 121-command `npm run vet:noreg` battery is GREEN with every JSON artifact read**. The lane holds DRIVE for its ratified stretch order. ChatGPT/Codex must not drive this lane.
 - **Design law:** `docs/design/battle-build-research/` packets (`eastern-1862` → Gaines' Mill ·
   `usct` → New Market Heights · `western-gaps` → Stones River · stretch: `shenandoah-1864` Cedar
   Creek · `shenandoah-1862` Cross Keys/Port Republic · `appomattox-campaign` Five Forks ·
@@ -288,18 +288,33 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   registry line removed → exactly the 7 registry-dependent focused teeth + the plan REGISTRY
   step red; `Lt. Gen. Leonidas Polk` → `Maj. Gen.` → exactly ONE focused tooth red; both
   md5-identical restores (source + data + generated HTML); final rerun plan 11/11 + focused
-  13/13, 0 pageerrors. **NEXT — the release boundary, deferred one session by D367 (Aaron):**
-  the next Claude/Fable session runs the full serialized `npm run vet:noreg` (121), inspects
-  every JSON/pageerror artifact, fixes root causes only, syncs docs + this pointer, and closes
-  the lane toward release. Stretch battles in order only after that battery is green: Cedar
-  Creek · Cross Keys/Port Republic · Five Forks · Fort Donelson · Elkhorn Tavern. 2-3 battles
-  at FULL depth beat 6 shallow ones. While the battery is owed, the chartered ChatGPT 5.6 Sol
-  session (LANE-004 + LANE-002 5b) works from the pushed D366/D367 HEAD and must not touch
-  this lane's files.
+  13/13, 0 pageerrors. **D373 (SHIPPED, this commit) discharges the release boundary:** the full serialized
+  121-command battery ran fail-fast in two segments (1-18 · `--from='hard war'` 103/103), final
+  `VET NO-REGRESSION OK`; all 120 fresh shots-JSON artifacts read (ok:true · 0 pageerrors ·
+  0 realErrors · no failed steps; sweep = 16 scenarios × 8 seeds, failures=[]; diag-classic
+  green; bootprobe's 7 filtered 404s are the documented absent-optional-assets probe). The one
+  red — hard-war's 360s timeout — was root-caused by artifact mtimes (all 8 steps green at 84s;
+  hang was post-write `browser.close()` under a concurrently-running research workflow, Fable's
+  own scheduling error) and re-ran green twice (idle focused 92s; in-battery 108.1s). No probe
+  weakened, no blind retry. **Lesson: nothing runs concurrently with the release battery on the
+  8 GB Mac.** **NEXT — the ratified stretch order at FULL depth (2-3 deep beat 6 shallow):
+  Cedar Creek → Cross Keys/Port Republic → Five Forks → Fort Donelson → Elkhorn Tavern.**
+  Cedar Creek research is COMPLETE (two workflows, 19 agents, 0 errors): approved-source CMH
+  staff-ride strength table (US per-corps; CS per-division incl. Kershaw 3,071, with the
+  31-Oct-reconstruction caveat), dawn/counterattack geometry, the fatal halt as an honest
+  DISPUTE pinned to Early's and Gordon's own accounts ("glory enough" attributes ONLY to
+  Gordon's Reminiscences), Sheridan's ~12-mile ride, and the substantive-grade rank table —
+  including the C73-class correction that Emory was Brig. Gen. (Bvt. MG) on Oct 19 1864, which
+  also fixes the packet's §4 line. Next slice: the packet addendum (docs), then
+  `docs/design/cedar-creek-battle-build-spec.md` + plan probe, then playable runtime — the
+  D363-D366 pattern, direction-NEUTRAL casualty guards per the packet §7 (US bled MORE and won).
+  At the next clean lane bundle boundary a fresh lock may take Sol's queue per D372
+  (E71 → C72; GEA-01 + S44 fallback; LANE-002 5b sized from 918).
 - **Last-touched commit:** D362 (Gaines' Mill playable slice + Fable transfer) · D363 (New
   Market Heights spec + plan probe, Fable/Claude) · D364 (playable New Market Heights,
   Fable/Claude) · D365 (Stones River spec + plan probe, Fable/Claude) · D366/D367 (playable
-  Stones River + the Sol session charter, Fable/Claude — this commit).
+  Stones River + the Sol session charter, Fable/Claude) · D373 (release battery green 121/121,
+  Fable/Claude — this commit).
 - **History:** lane opened by Claude Code 2026-07-10 after Aaron's popup Q&A (D359) fixed scope,
   depth, and locks for the Codex session · ChatGPT/Codex took DRIVE in D361 and locked the
   Gaines' Mill source/strength/rank/direction contract before runtime · Aaron redirected D363+
@@ -317,7 +332,10 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   all five near-parity guards with zero A/B iterations, a pre-authoring citation-verify
   workflow, both binds exact with md5-identical restores — Fable/Claude) · D367 2026-07-10
   (Aaron popup: the release battery deferred one session; the ChatGPT 5.6 Sol session
-  chartered as LANE-004 + LANE-002 5b).
+  chartered as LANE-004 + LANE-002 5b) · D373 shipped 2026-07-11 (the deferred release battery
+  green 121/121 with full artifact readback; one hard-war teardown flake root-caused to
+  Fable's concurrent research workflow and re-run green; stale pre-D372 Sol sentence in this
+  pointer reconciled per D372's relay order — Fable/Claude).
 
 #### Fable takeover packet — read as the continuation prompt
 

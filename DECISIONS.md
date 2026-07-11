@@ -6,6 +6,22 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D373 — LANE-003 RELEASE CHECKPOINT GREEN: 121/121, ONE ROOT-CAUSED HARNESS FLAKE, NOTHING DEFERRED — [CLAUDE Fable 5 main loop, LANE-003 DRIVE] (2026-07-11)
+
+The full serialized `npm run vet:noreg` battery owed since D366 ran locally (full-access session,
+`CODEX_SANDBOX` unset, one shared :8765 server, `TMPDIR=$PWD/.tmp`, foreground-artifact discipline)
+in two fail-fast segments with `--from=` resume: commands 1-18 green, then `--from='hard war'`
+103/103 green, final `VET NO-REGRESSION OK`. Every artifact was read, not assumed.
+
+- **The one red, root-caused — a harness/scheduling flake, no probe or product defect:** `probe-hard-war` timed out at its 360s budget in segment 1. Timestamp forensics proved the probe finished ALL 8 steps green and wrote its screenshot + JSON at **84s** (matching the prior green run's 80.9s profile), then hung in post-write `browser.close()` until SIGTERM. Cause: Fable had launched an 11-agent Cedar Creek research workflow CONCURRENTLY with the battery; Chrome teardown starved under that load on the 8 GB Mac. Standalone focused rerun on an idle machine: green in 92s; in-battery rerun: green at 108.1s. **Lesson locked: nothing runs concurrently with the release battery on this machine — workflows/helpers wait or run between segments.** The probe was not weakened; no blind retry occurred.
+- **Artifact readback (120 fresh `tools/shots/*.json`):** every artifact `ok:true`, 0 pageerrors, 0 realErrors, no failed step, no fatal key. `bootprobe`'s 7 filtered 404 console lines are the documented expected absent-optional-assets probe (`assets/3d/` .glb/HDRI; `tools/bootprobe.mjs:55`; `realErrors:[]`). `sweep-all-battles`: all **16 registered scenarios × 8 seeds, failures=[]**. `diag-classic`: ok, m3dActive=false, nonBlank above floor. Known-accepted 2.42MB raw-embed soft warning unchanged.
+- **Lane state:** LANE-003's release obligation is discharged; the lane stays Fable-owned DRIVE for its ratified stretch order (Cedar Creek → Cross Keys/Port Republic → Five Forks → Fort Donelson → Elkhorn Tavern, 2-3 at full depth beating 6 shallow). The stale pre-D372 Sol-status sentence in the lane's resume pointer is reconciled in this commit per D372's relay order.
+- **Ridden-along research (docs impact only, committed as its own next slice):** two Cedar Creek research workflows (11 + 8 agents, 0 errors; Sonnet gather → Opus default-refute → Opus critic) resolved the shenandoah-1864 packet's §9 unknowns — including an approved-source CMH staff-ride strength table (Kershaw 3,071 at last), the DISPUTED fatal-halt framing with both primaries pinned, and a C73-class correction: **Emory's substantive Oct 19 1864 grade was Brig. Gen. USV** (Bvt. MG July 23 1864; full MG Sept 25 1865) — the packet's "Major General (NPS-confirmed)" line reflects NPS courtesy usage and will be corrected in the packet addendum slice.
+
+Gate for this docs-only boundary: build **GATE OK** with the generated HTML unchanged; `git diff --check` clean; the 121-command battery result above is the release evidence.
+
+---
+
 ## D372 — THE 10% BOUNDARY CLOSES THE SOL CHARTER CLEAN AND RETURNS WORK THROUGH THE LEDGER — [AARON boundary · CODEX 5.6 Sol Ultra closeout] (2026-07-10)
 
 Aaron surfaced the product's 10% usage warning after D371's implementation was already green. The
