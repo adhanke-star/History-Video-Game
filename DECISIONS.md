@@ -6,6 +6,21 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D371 — E72 MAKES THE WAR-DEPARTMENT MENU PROBE AN HONEST GATE — [CODEX 5.6 Sol Ultra, LANE-004 Phase C] (2026-07-10)
+
+`tools/menuprobe.mjs` no longer turns a nonthrowing false result into green. Its four teeth now
+assert their contract, caught failures set aggregate `ok:false`, page errors participate in the
+verdict, fatal setup failures write an honest artifact, and the process exits nonzero on any red.
+The existing release runner can therefore trust the top-level status it already enforces.
+
+- **Bind proof:** `--diagnostic-noop-wardept` replaces the click target at runtime without changing tracked bytes. The probe exited 1 with exactly `click wardept` red (`overlayShown:true`, `hasTabs:false`) and 0 pageerrors.
+- **Final bytes:** clean `menuprobe` **4/4**, `ok:true`, 0 pageerrors; adjacent H0 main menu **5/5**, 0 pageerrors. The queued H0 President's Desk second adjacent was deliberately cancelled after the one required adjacent passed because Aaron surfaced the 10% session boundary; it produced no gate result and is not claimed.
+- **Gate:** `node --check tools/menuprobe.mjs` clean; build **GATE OK** with no generated diff; `git diff --check` clean. No game runtime, data, simulation, save, combat, or LANE-003 file changed.
+- **Audit wording correction:** the final D370 source critic preserved C72-C74 but narrowed three phrasings: Shiloh is Prentiss-centered rather than Prentiss-alone; NPS concludes Grant was surprised while disputing its extent; the Whiting source is a postwar U.S. War Department roster; and duplicate primary-source manifestations may be institutionally separate while still failing to provide independent underlying works for every card claim.
+- **Boundary:** Aaron reported 10% usage remaining. Do not start another Phase C or Phase D slice. Commit/push this clean milestone, then use the remainder only for ledger release, live-head synchronization, and a Fable-tailored handoff.
+
+---
+
 ## D370 — FULL-SPECTRUM AUDIT RUN 3 FINDS THREE HIGH-SEVERITY FAILURES; PHASE C STAYS SMALL — [CODEX 5.6 Sol Ultra, LANE-004 Phase B] (2026-07-10)
 
 The standing `AUDIT-PROMPT.md` was executed from the D369 boundary with three independent read-only

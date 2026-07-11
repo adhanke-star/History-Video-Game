@@ -12,11 +12,16 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..'); const OUT = join(__dirname, 'shots'); mkdirSync(OUT, { recursive: true });
 const cfg = JSON.parse(readFileSync(join(__dirname, 'shots.json'), 'utf8'));
 const GL = ['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist','--enable-webgl','--disable-dev-shm-usage'];
+const DIAG_NOOP_WARDEPT = process.argv.includes('--diagnostic-noop-wardept');
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 async function up(u){ try{ const r=await fetch(u,{method:'HEAD'}); return r.ok||r.status===200; }catch{ return false; } }
 const EVAL = `(() => {
-  var R={steps:[],errors:[]}; window.addEventListener('error',e=>R.errors.push(String(e.message)));
-  function step(n,f){ try{ R.steps.push({n,ok:true,v:f()}); }catch(e){ R.steps.push({n,ok:false,err:String(e&&e.message||e)}); } }
+  var R={ok:true,steps:[],errors:[]};
+  window.addEventListener('error',function(e){ R.ok=false; R.errors.push(String(e.message)); });
+  function step(n,f){
+    try { R.steps.push({n:n,ok:true,v:f()}); }
+    catch(e) { R.ok=false; R.steps.push({n:n,ok:false,err:String(e&&e.message||e)}); }
+  }
   try {
     G.campaign = { side:'US', iron:false, idx:1, funds:500, recovery:false, completed:['sumter'],
       roster:[{id:'R1',type:'inf',weapon:'springfield',xp:2,name:null}], nextId:2,
@@ -24,11 +29,16 @@ const EVAL = `(() => {
     if (typeof _t1InitAll==='function') _t1InitAll(G.campaign);
     step('saveLocal', function(){ saveLocal(); return true; });
     step('openMainMenu', function(){ openMainMenu(); return true; });
-    step('wardept button present', function(){ return !!document.getElementById('gnWarDept'); });
+    step('wardept button present', function(){
+      if(!document.getElementById('gnWarDept')) throw new Error('missing #gnWarDept');
+      return true;
+    });
     step('click wardept', function(){ var b=document.getElementById('gnWarDept'); if(!b) throw new Error('no button'); b.click();
       var ov=document.getElementById('overlay'); var sp=document.getElementById('sheetPad');
-      return { overlayShown: ov && !ov.classList.contains('hidden'), hasTabs: !!document.getElementById('wdTabs') }; });
-  } catch(e){ R.errors.push('FATAL '+String(e&&e.message||e)); }
+      var v={ overlayShown: !!(ov && !ov.classList.contains('hidden')), hasTabs: !!document.getElementById('wdTabs') };
+      if(!v.overlayShown || !v.hasTabs) throw new Error('War Department did not open '+JSON.stringify(v));
+      return v; });
+  } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
 })()`;
 (async () => {
@@ -37,14 +47,29 @@ const EVAL = `(() => {
   let browser; try{ browser=await chromium.launch({channel:'chrome',headless:true,args:GL}); }
   catch(e){ browser=await chromium.launch({executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:GL}); }
   const page=await browser.newPage({viewport:cfg.viewport}); const pe=[]; page.on('pageerror',e=>pe.push(String(e.message)));
-  let result={};
+  let result={ok:false};
   try {
     await page.goto(probe,{waitUntil:'load',timeout:60000}); await sleep(400);
     // capture the main menu (with the War Department entry) first
     await page.evaluate(`(()=>{ G.campaign={side:'US',iron:false,idx:1,funds:500,recovery:false,completed:['x'],roster:[{id:'R1',type:'inf',weapon:'springfield',xp:1,name:null}],nextId:2,stats:{battles:2,won:1,infl:0,suff:0},recoveryLossCount:0,recoveryMode:false,flipAtk:false,captured:[]}; if(typeof saveLocal==='function')saveLocal(); if(typeof openMainMenu==='function')openMainMenu(); })()`);
     await sleep(300); await page.screenshot({ path: join(OUT,'t1-menu.png'), fullPage:false });
+    if (DIAG_NOOP_WARDEPT) await page.evaluate(() => { window.openWarDept = function() {}; });
     result = JSON.parse(await page.evaluate(EVAL)); result.pageerrors = pe;
+    result.ok = result.ok === true && !pe.length && !(result.errors || []).length && (result.steps || []).every(s => s.ok === true);
     await sleep(300); await page.screenshot({ path: join(OUT,'t1-menu-wardept.png'), fullPage:false });
-  } catch(e){ result={fatal:String(e&&e.message||e),pageerrors:pe}; }
-  finally { writeFileSync(join(OUT,'menuprobe.json'), JSON.stringify(result,null,2)); await browser.close(); if(srv) srv.kill(); }
+  } catch(e){ result={ok:false,fatal:String(e&&e.message||e),pageerrors:pe}; }
+  finally {
+    writeFileSync(join(OUT,'menuprobe.json'), JSON.stringify(result,null,2));
+    try { await browser.close(); } catch(e) {}
+    if(srv) srv.kill();
+  }
+  const failed=(result.steps||[]).filter(s=>!s.ok);
+  if(result.ok) {
+    console.log('MENUPROBE OK '+(result.steps||[]).length+'/'+(result.steps||[]).length+' pageerrors=0');
+    process.exit(0);
+  }
+  console.error('MENUPROBE FAIL '+failed.length+' failed pageerrors='+((result.pageerrors||[]).length));
+  if(result.fatal) console.error('FATAL '+result.fatal);
+  for(const s of failed) console.error('  '+s.n+': '+s.err);
+  process.exit(1);
 })();

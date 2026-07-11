@@ -434,14 +434,15 @@ next green commit and confer through this ledger instead of permitting simultane
 - **Probe design:** Phases A/B are docs/ledger phases — the gate is canonical-doc coherence +
   REVIEW-QUEUE format + `git diff --check`; Phase C uses each touched system's focused probes;
   Phase D uses `tools/import-soldier-replacements.mjs` + the replacement-overlay probe teeth.
-- **Resume pointer:** **D370 PHASE B COMPLETE:** audit run 3 confirmed 12 findings (3 HIGH / 8 MED /
-  1 LOW) and default-refuted the save-slot 404 as `/favicon.ico` noise. Start Phase C with E72's
-  false-green `menuprobe`, then take only small cleared presentation/QoL slices from GEA-01, S44,
-  and GEA-02 as the window permits. E71 Ironman and C72 Shiloh remain pending outside the Phase C
-  risk box. Phase D then returns to LANE-002 5b. LANE-003 stays READ-ONLY.
-- **Last-touched commit:** D370 Phase B (this commit).
+- **Resume pointer:** **D371 PHASE C CLEAN STOP:** E72's false-green `menuprobe` is fixed and
+  bind-proven; clean final is 4/4 and adjacent H0 main menu is 5/5, both with 0 pageerrors. Aaron
+  surfaced the 10% usage boundary, so do not start GEA-01, S44, GEA-02, or Phase D in this session.
+  Commit/push D371, then spend the remainder only on live-head sync, releasing LANE-004 and
+  LANE-002 5b, and a Fable-tailored handoff. E71/C72 and all unshipped quick wins stay pending.
+- **Last-touched commit:** D371 Phase C E72 (this commit).
 - **History:** chartered 2026-07-10 by Aaron mid-D366 via popup Q&A (boundary: commit D366 and
   defer the LANE-003 battery; scopes: all four; output mode: hybrid audit→quick-wins; pillars:
   all four); ChatGPT/Codex took DRIVE here and on LANE-002 5b together in D368 2026-07-10;
   Phase A ratified and gated in D369 with no runtime edits; Phase B audit run 3 ratified in D370
-  with 12 confirmed findings and no LANE-003 touch.
+  with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary. No
+  LANE-003 touch.
