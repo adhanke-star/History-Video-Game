@@ -40,8 +40,8 @@ function killChild(child) {
 
 const SETUP = `(() => {
   var R = { ok:true, steps:[] };
-  var EXPECTED = ['bullrun1', 'gainesMill', 'malvernHill', 'antietam', 'fredericksburg', 'chancellorsville', 'gettysburg', 'newMarketHeights', 'shiloh', 'vicksburg', 'chickamauga', 'chattanooga', 'kennesaw', 'franklin', 'nashville'];
-  var PHASE_COUNTS = { vicksburg: 3, chickamauga: 3, chattanooga: 3, nashville: 2, newMarketHeights: 2 };
+  var EXPECTED = ['bullrun1', 'gainesMill', 'malvernHill', 'antietam', 'fredericksburg', 'chancellorsville', 'gettysburg', 'newMarketHeights', 'shiloh', 'stonesRiver', 'vicksburg', 'chickamauga', 'chattanooga', 'kennesaw', 'franklin', 'nashville'];
+  var PHASE_COUNTS = { vicksburg: 3, chickamauga: 3, chattanooga: 3, nashville: 2, newMarketHeights: 2, stonesRiver: 2 };
   function step(name, fn) {
     try { var v = fn(); R.steps.push({ name:name, ok:true, v:v === undefined ? null : v }); }
     catch(e) { R.ok = false; R.steps.push({ name:name, ok:false, err:String(e && e.message || e) }); }

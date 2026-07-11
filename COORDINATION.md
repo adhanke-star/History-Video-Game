@@ -188,7 +188,14 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   batches — size each from the 840-row count above and log the number in DECISIONS before the
   first record. NOTE for future batches: a new battle shipping (LANE-003) adds units ×3 slots to
   the universe AND moves the 912 registry pin — whoever ships a battle bumps that pin with a
-  documented-history comment (the D355 idiom); replacement batches never do.
+  documented-history comment (the D355 idiom); replacement batches never do. **D366 UPDATE:**
+  Stones River adds 26 units × 3 = 78 generated slots (universe 293 → 319 units / 879 → 957
+  slots; the whole-registry pin is now 1068; remaining unresearched rows 840 → **918**) — size
+  future batches from 918. **D367 (Aaron): the chartered ChatGPT 5.6 Sol session MAY take 5b
+  DRIVE** (Phase D of its LANE-004 charter): take the lock in a committed edit at session
+  start, follow the per-record contract above (mechanical gather → default-refute → Sol
+  adjudication owning final text; ≥2 sources; batch sized + logged in DECISIONS before the
+  first record), and release the lock at session end.
 - **Last-touched commit:** D360 (5c).
 - **History:** lane opened by Claude Code 2026-07-10 under Aaron's Contract Relay kickoff;
   5b inventory attached 2026-07-10; 5a shipped D357 2026-07-10; 5b batch 1 (8 records) shipped
@@ -197,7 +204,7 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
 ### LANE-003 · battle-ladder — **DRIVE** (Claude/Fable owns the D363+ ladder)
 
 - **Owning tool:** Claude Code, with Fable 5 at xhigh as the TOP LOOP.
-- **State:** DRIVE — Fable verified the clean `b1d828b` boundary (HEAD == origin/main, worktree clean) and took the lock on 2026-07-10 for the D363 New Market Heights planning/spec commit; D363 and D364 (playable New Market Heights) are now shipped and the lane continues toward Stones River.
+- **State:** DRIVE — Fable verified the clean `b1d828b` boundary (HEAD == origin/main, worktree clean) and took the lock on 2026-07-10 for the D363 New Market Heights planning/spec commit; D363, D364 (playable New Market Heights), D365, and D366 (playable Stones River) are all shipped; the lane holds DRIVE for its release battery, deferred one session by D367 (Aaron). ChatGPT/Codex must not drive this lane.
 - **Design law:** `docs/design/battle-build-research/` packets (`eastern-1862` → Gaines' Mill ·
   `usct` → New Market Heights · `western-gaps` → Stones River · stretch: `shenandoah-1864` Cedar
   Creek · `shenandoah-1862` Cross Keys/Port Republic · `appomattox-campaign` Five Forks ·
@@ -257,18 +264,37 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   teaching interstitial (Emancipation Proclamation), never a scored phase; THE NEAR-PARITY LAW
   (aggregate max/min ≤ 1.6, forcing US < CS forbidden) with the one lopsided guard phase-2
   direction-only; menu rank stonesRiver:52; weather rain/dawn never snow; the Classic-layer
-  `stonesriver` id + rail route guarded as a separate layer. **NEXT — D366 playable Stones
-  River** from the committed D365 boundary: data/stones-river.json + registry/menu + schema 46
-  + loot 990 + units×3 + flags/Intel/media 16 + suite 121 + the largest-scene check vs
-  Kennesaw's 17 + focused probe with the near-parity battery + negative binds + honest A/B +
-  docs. Stretch in order only if both mandatory battles are shipped and the release battery is
-  green: Cedar Creek · Cross Keys/Port Republic · Five Forks · Fort Donelson · Elkhorn Tavern.
-  2-3 battles at FULL depth beat 6 shallow ones. After the final lane battle: full serialized
-  `npm run vet:noreg`, inspect every artifact, sync docs, push, and move this lane toward
-  release.
+  `stonesriver` id + rail route guarded as a separate layer. **D366 (SHIPPED, this commit)
+  closes out playable Stones River** exactly per that contract: scenario 16 at menu rank 52,
+  26 units all `Verified identity; Inferred strength`, the Jan-1 Emancipation interstitial on
+  the phase-2 transition card only, Breckinridge's Jan-2 4,500 in his OR report's two-line
+  pairing vs Beatty + Mendenhall's 57 guns (0 CS guns fielded). THE NEAR-PARITY LAW ran green
+  on the FIRST battery — all five 8-seed guards 8/8 (p1 US holds · p2 US holds · p2 CS>US
+  direction-only · aggregate US · max/min ≤ 1.6 at observed 1.08-1.15 vs the historical 1.10)
+  — NO input moved (the honest-A/B log in D366 records zero iterations) and no tooth anywhere
+  asserts US < CS. A pre-authoring 6-packet citation-verify workflow adjudicated every card
+  URL (Wheeler card dropped single-source; Garesché ships the à-Kempis correction; WHN scoped
+  to repulse/guns/45-min with Breckinridge's OR controlling the pairing; quod.lib kept as the
+  canonical primary beside Wikipedia's quote). Integration: schema 46/46 · loot pin 990→1068
+  (+ the gaines/NMH whole-registry pins same-commit, the pin-bump idiom applied proactively) ·
+  flags 45 with a Stones River W/hardee semantic tooth · Intel/media 16 with Kennesaw KEEPING
+  the 17-unit largest-scene crown (Stones River opens at 16) · suite 121 · roster
+  `stonesRiver:2` · builder · logistics-rail untouched and probe-asserted. Binds: the T1
+  registry line removed → exactly the 7 registry-dependent focused teeth + the plan REGISTRY
+  step red; `Lt. Gen. Leonidas Polk` → `Maj. Gen.` → exactly ONE focused tooth red; both
+  md5-identical restores (source + data + generated HTML); final rerun plan 11/11 + focused
+  13/13, 0 pageerrors. **NEXT — the release boundary, deferred one session by D367 (Aaron):**
+  the next Claude/Fable session runs the full serialized `npm run vet:noreg` (121), inspects
+  every JSON/pageerror artifact, fixes root causes only, syncs docs + this pointer, and closes
+  the lane toward release. Stretch battles in order only after that battery is green: Cedar
+  Creek · Cross Keys/Port Republic · Five Forks · Fort Donelson · Elkhorn Tavern. 2-3 battles
+  at FULL depth beat 6 shallow ones. While the battery is owed, the chartered ChatGPT 5.6 Sol
+  session (LANE-004 + LANE-002 5b) works from the pushed D366/D367 HEAD and must not touch
+  this lane's files.
 - **Last-touched commit:** D362 (Gaines' Mill playable slice + Fable transfer) · D363 (New
   Market Heights spec + plan probe, Fable/Claude) · D364 (playable New Market Heights,
-  Fable/Claude) · D365 (Stones River spec + plan probe, Fable/Claude — this commit).
+  Fable/Claude) · D365 (Stones River spec + plan probe, Fable/Claude) · D366/D367 (playable
+  Stones River + the Sol session charter, Fable/Claude — this commit).
 - **History:** lane opened by Claude Code 2026-07-10 after Aaron's popup Q&A (D359) fixed scope,
   depth, and locks for the Codex session · ChatGPT/Codex took DRIVE in D361 and locked the
   Gaines' Mill source/strength/rank/direction contract before runtime · Aaron redirected D363+
@@ -282,7 +308,11 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   full serialized runtime gate, 3-packet Opus teaching-prose refute pass, gaines-pin 990 bump,
   docs sync — Fable/Claude) · D365 shipped 2026-07-10 (Stones River spec + 11/11 plan gate:
   11-agent research pass, the near-parity law, the rank-flip traps, a bind-hardened HISTORY
-  tooth — Fable/Claude).
+  tooth — Fable/Claude) · D366 shipped 2026-07-10 (playable Stones River: first-battery 8/8 on
+  all five near-parity guards with zero A/B iterations, a pre-authoring citation-verify
+  workflow, both binds exact with md5-identical restores — Fable/Claude) · D367 2026-07-10
+  (Aaron popup: the release battery deferred one session; the ChatGPT 5.6 Sol session
+  chartered as LANE-004 + LANE-002 5b).
 
 #### Fable takeover packet — read as the continuation prompt
 
@@ -361,3 +391,49 @@ River even though both were major generals at Perryville. Commit/push each green
 docs and this resume pointer, then push. Stop only at a clean committed boundary, a genuine HALT
 condition, or exhausted context; if ChatGPT's usage returns mid-slice, keep the lock until the
 next green commit and confer through this ledger instead of permitting simultaneous edits.
+
+### LANE-004 · sol-genre-elite-session — **CONTRACT** (chartered by D367 for one full ChatGPT 5.6 Sol session)
+
+- **Owning tool:** unowned until session start — then ChatGPT/Codex (5.6 Sol at Ultra, helpers
+  such as Luna/Tera enabled), which takes DRIVE in a committed edit before any work.
+- **State:** CONTRACT.
+- **Design law:** DECISIONS D367 (the charter) · D336 role routing (`OPUS-PLAYBOOK.md` carries
+  the kickoff snippet) · `AUDIT-PROMPT.md` (Phase B verbatim) · `REVIEW-QUEUE.md` (the findings
+  ledger both audit phases write) · D74 no-fudge · citation law (≥2 sources = Verified) ·
+  D171/D307 boundaries · the standing dignity carve-outs (no playable Fort Pillow; no Leetown
+  Native OOB) · never push red.
+- **Acceptance criteria (four usage-boxed phases; spend the WHOLE session limit):**
+  1. **Phase A (~30%) — genre-elite audit → design law.** Web-grounded senior-game-engineer gap
+     analysis producing `docs/design/genre-elite-audit-2026-07.md`. Benchmarks: Ultimate
+     General Gettysburg/Civil War, Total War, Grand Tactician: The Civil War, Scourge of War,
+     Field of Glory 2, Paradox UX patterns (CK3/HOI4), Old World (events/tooltips). Weight ALL
+     FOUR pillars equally: tactical battle feel · strategic/campaign depth · elite basics + QoL
+     · teaching/history presentation. Per feature: the elite bar (sourced), where this game
+     stands (cite actual repo state), the gap, a recommended slice shape, D74/citation/perf
+     risks, and a priority score. MUST include a "features Aaron didn't know to ask for"
+     section (onboarding/tutorial flow, difficulty curve + assists, save/load UX, audio
+     design/mixing, replay + AAR sharing, session-length respect, camera/map ergonomics, AI
+     legibility, game-feel/juice, accessibility beyond WCAG). Ends with a ratified priority
+     ladder + REVIEW-QUEUE entries. NO runtime edits in this phase.
+  2. **Phase B (~20%) — the standing `AUDIT-PROMPT.md` full-spectrum second-model audit** (fresh-
+     eyes bug hunt, historical spot-checks, UX/a11y) → REVIEW-QUEUE entries with severity and
+     fix-now/fix-later disposition.
+  3. **Phase C (~30%) — implement ONLY small cleared quick wins** from A+B (elite-basics/QoL).
+     Per slice: focused D160/D176 gate (build GATE OK, focused + 1-3 adjacent probes,
+     JSON/pageerror readback, `git diff --check`), docs sync, commit + push. FORBIDDEN in C:
+     combat-model/balance inputs (D74), the save envelope/`_SAVE_VER`, LANE-003 files, and any
+     new historical claim that has not been through the citation pipeline.
+  4. **Phase D (remainder) — LANE-002 5b prosopography batches** per that lane's contract
+     (918-row inventory; batch sized + logged in DECISIONS before the first record).
+- **Probe design:** Phases A/B are docs/ledger phases — the gate is canonical-doc coherence +
+  REVIEW-QUEUE format + `git diff --check`; Phase C uses each touched system's focused probes;
+  Phase D uses `tools/import-soldier-replacements.mjs` + the replacement-overlay probe teeth.
+- **Resume pointer:** UNSTARTED. Session start ritual: `git fetch origin && git status
+  --short --branch && git pull --ff-only origin main` (HEAD must equal the pushed D366/D367
+  commit) → `START-HERE.md` → this lane + LANE-002 + LANE-003 (READ-ONLY — Fable owns it and
+  its release battery) → take DRIVE here and on LANE-002-5b in ONE committed edit → Phase A.
+  Stop at a clean committed boundary before the usage window closes and update this pointer.
+- **Last-touched commit:** D367 (charter only — this commit).
+- **History:** chartered 2026-07-10 by Aaron mid-D366 via popup Q&A (boundary: commit D366 and
+  defer the LANE-003 battery; scopes: all four; output mode: hybrid audit→quick-wins; pillars:
+  all four).

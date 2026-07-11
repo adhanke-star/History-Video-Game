@@ -55,3 +55,15 @@ Brief steering beats enumerated micro-management. Quote these (or a tightened eq
 4. Helpers: use only for a task-specific strength or independent coverage; packet and configure them when controls exist, or state the no-control inheritance exception (§4).
 5. Narrate sparingly (§2); decide small reversible forks and log them (§3); delegate/search aggressively (§4).
 6. D171 boundary discipline active (§6); §8 HALT charter unchanged.
+
+## 10 · D367 chartered-session kickoff — the LANE-004 Sol session (2026-07-10)
+
+One full ChatGPT 5.6 Sol (Ultra) session, helpers enabled, spending its entire usage window on
+the four LANE-004 phases: **A** genre-elite audit → `docs/design/genre-elite-audit-2026-07.md`
+(+ ratified priority ladder + REVIEW-QUEUE rows) · **B** the standing `AUDIT-PROMPT.md` run ·
+**C** small cleared elite-basics/QoL quick wins only (focused gate + commit per slice; never
+D74 inputs, the save envelope, or LANE-003 files) · **D** LANE-002 5b batches (918-row
+inventory) until the window closes. Read `COORDINATION.md` LANE-004 for the full contract; take
+DRIVE on LANE-004 + LANE-002-5b in one committed edit at session start; LANE-003 is READ-ONLY
+(Fable owns its deferred release battery). The paste-ready kickoff prompt was delivered in the
+D367 chat; rebuild it from the LANE-004 contract if lost — the lane, not the chat, is the record.

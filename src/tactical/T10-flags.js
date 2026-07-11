@@ -76,6 +76,7 @@ var _FLD_BATTLE_META = {
   gettysburg:       { theater: "E", badges: true,  csFlag: "anv" },            // 1-3 Jul 1863
   newMarketHeights: { theater: "E", badges: false, csFlag: "anv" },            // 29 Sep 1864 (Army of the JAMES: the X/XVIII Corps had their own badges by Sep 1864, but this badge institution models the AotP set only — AoJ badges are a future extension, not a silent reuse. CS defenders are Field's Division ANV + Dept.-of-Richmond cavalry -> Southern Cross; unit names deliberately avoid "Hampton" so the 1861 Legion special-case never fires on the 1864 dismounted command. D363/D364.)
   shiloh:           { theater: "W", badges: false, csFlag: "first-national" }, // 6-7 Apr 1862
+  stonesRiver:      { theater: "W", badges: false, csFlag: "hardee" },         // 31 Dec 1862 - 2 Jan 1863 (Army of Tennessee — the Hardee-pattern blue disc was this very army's flag, carried from Stones River through Nashville; D366)
   vicksburg:        { theater: "W", badges: false, csFlag: "hardee" },         // siege to 4 Jul 1863 (Pemberton's army was Western-lineage — a Western pattern, not the Eastern ANV cross; Inferred)
   chickamauga:      { theater: "W", badges: false, csFlag: "hardee" },         // 19-20 Sep 1863 (native Army of Tennessee; Longstreet's transferred Eastern brigades split out below)
   chattanooga:      { theater: "W", badges: false, csFlag: "hardee" },         // 23-25 Nov 1863 (Army of Tennessee)

@@ -1,0 +1,1023 @@
+{
+  "_comment": "D366 Stones River (Murfreesboro), Dec 31 1862 - Jan 2 1863 - the near-parity battle: the Union WON while losing MORE men. Two-phase T8 per the D365 spec: the Dec 31 dawn attack and the Round Forest stand (w3, DECISIVE) then Breckinridge at McFadden's Ford (w1). January 1, 1863 was a lull and is a TEACHING INTERSTITIAL carried by the phase-2 transition card - NEVER a scored phase. Army-level anchors Verified (ABT: US 41,400 / CS 35,000 engaged; US 12,906 / CS 11,739 casualties); every division/brigade split is an Inferred engaged-strength abstraction labeled in each unit note - the D365 refute pass killed the only claimed sub-army table; the sole OR-sourced sub-army figures are Breckinridge's 7,053 (Dec 31) and ~4,500 (Jan 2). No battle-specific combat/result keys (D74). Sources and the full contract: docs/design/stones-river-battle-build-spec.md.",
+  "stonesRiver": {
+    "id": "stonesRiver",
+    "name": "Stones River - The Hard-Earned Victory",
+    "date": "December 31, 1862",
+    "_dateNote": "The battle ran December 31, 1862 - January 2, 1863; the date field carries the opening day for menu chronology (Shiloh -> Stones River -> Vicksburg). Phase 2 is January 2, 1863.",
+    "place": "Murfreesboro, Tennessee - astride Stones River, where the Nashville Pike and the railroad cross the cotton fields and cedar glades",
+    "blurb": "In the freezing rain after Fredericksburg, two armies meet along Stones River. At dawn on December 31, Bragg strikes first: Hardee's corps smashes the Union right at breakfast and wheels it back three miles - but the line anchors on a cedar copse the soldiers will remember as Hell's Half Acre, and the Nashville Pike holds. After a day of quiet, Breckinridge is ordered across the river against massed guns. The Union bleeds more than the Confederacy here - and wins. Lincoln never forgot it.",
+    "provenance": "Verified (high) for the army-level anchors (ABT: US 41,400 / CS 35,000 engaged; US 12,906 / CS 11,739 casualties), the 6:00 a.m. Dec 31 attack, the Round Forest stand, the Jan 1 lull, the ~4 p.m. Jan 2 assault by ~4,500 (Breckinridge's own report; his Dec 31 division return 7,053), the massed west-bank guns (57-58 across NPS/ABT), and every battle-date rank including the Polk/Hardee lieutenant-general flip. Inferred for every division/brigade strength split (no citation-grade sub-army table survived the D365 refute pass), all map placements, and the phase-2 US total. NO phase-by-phase casualty split is citable for Dec 31; only the aggregate lock and the Jan 2 CS figure are Verified. Register: docs/design/stones-river-battle-build-spec.md.",
+    "attacker": "CS",
+    "defender": "US",
+    "defaultFog": false,
+    "_fogNote": "The Dec 31 dawn surprise EMERGES from accurate positioning - concentrated CS mass against an un-refused, unentrenched right caught at breakfast - never from the fog mechanic (the D90 lesson) and never from a surprise multiplier. Jan 2 was an open-field assault the gunners plainly saw coming.",
+    "homeEdge": {
+      "US": "low",
+      "CS": "high"
+    },
+    "_homeEdgeNote": "The US rear is the Nashville Pike corridor toward Nashville (low z); the CS rear is Murfreesboro (high z). Routers flee toward their own rear. (Inferred map orientation)",
+    "holdToWinSec": 135,
+    "timeLimitSec": 430,
+    "field": {
+      "w": 1250,
+      "h": 950
+    },
+    "weather": {
+      "sky": "rain",
+      "time": "dawn",
+      "provenance": "Verified",
+      "note": "Fought in bitter cold and freezing rain, with sleet and roads freezing at night - ABT calls Dec 31 'a bitterly cold morning' and the rising, rain-fed river shaped Bragg's decisions. Never snow: the Classic strategic layer's separate stonesriver row is not a weather source.",
+      "sources": [
+        "https://www.battlefields.org/learn/civil-war/battles/stones-river",
+        "https://en.wikipedia.org/wiki/Battle_of_Stones_River"
+      ]
+    },
+    "menu": {
+      "title": "STONES RIVER (1862-63)",
+      "deck": "The winter battle that taught the Union it could win by holding: survive the dawn onslaught at the Round Forest, or press Bragg's assault - then face the order Breckinridge protested.",
+      "aria": "Stones River, December 1862 to January 1863 - the real-time historical battle; command either army. Hold the Nashville Pike as Rosecrans, or attack at dawn as Bragg."
+    },
+    "sides": {
+      "heading": "Stones River - Take Which Command?",
+      "intro": "December 31, 1862 - Bragg's Army of Tennessee strikes the Army of the Cumberland at dawn along Stones River.",
+      "US": {
+        "title": "Command the Union (Rosecrans)",
+        "badge": "&#9733; HOLD THE PIKE",
+        "deck": "Your right wing is caught at breakfast and bent back three miles. Hold the Round Forest and the Nashville Pike - your only lifeline - and make Bragg pay for every cotton row. Then break Breckinridge at the ford."
+      },
+      "CS": {
+        "title": "Command the Confederacy (Bragg)",
+        "badge": "&#9876; DAWN ASSAULT",
+        "deck": "Hardee's corps is massed against the unanchored Union right. Wheel it back to the pike and take the corridor before the anchor sets - or history's near-run morning stalls at Hell's Half Acre, and the January order comes due."
+      },
+      "foot": "The other army is commanded by the AI. Two phases: December 31 decides most of the battle (weight 3), January 2 at McFadden's Ford completes it (weight 1). January 1 - the quiet day the Emancipation Proclamation took effect - is taught between phases; it was a lull, not a fight, and is never scored."
+    },
+    "brief": {
+      "attack": "Your assault is already loaded: McCown and Cleburne against the Union right at dawn, Polk's corps extending the blow, Breckinridge's brigades crossing as the day builds. Historically the right was wheeled back three miles - and the attack broke against the Round Forest and the massed guns on the pike. <b>This is your war:</b> keep the wheel turning, mass against the anchor before Rosecrans reinforces it, and decide whether January 2's charge is worth what Breckinridge said it would cost.",
+      "defend": "Rosecrans planned his own attack for this morning; Bragg struck first. Your right is unentrenched and eating breakfast. Historically the line bent three miles but held the two things that mattered - the Round Forest and the Nashville Pike - and on January 2 Mendenhall's massed guns broke Breckinridge in under an hour. <b>This is your war:</b> trade ground for time on the right, hold Hazen's copse at any cost, and keep the pike open behind you."
+    },
+    "objective": {
+      "x": 770,
+      "z": 430,
+      "r": 130,
+      "name": "The Round Forest ('Hell's Half Acre')"
+    },
+    "phases": [
+      {
+        "id": "dec31-round-forest",
+        "name": "December 31 - The Dawn Attack and the Round Forest",
+        "sector": "The cotton fields, cedar glades, and the Round Forest along the Nashville Pike",
+        "timing": "December 31, 1862 - about 6:00 a.m., in freezing rain",
+        "attacker": "CS",
+        "defender": "US",
+        "assaultDoctrine": "standard",
+        "defaultFog": false,
+        "holdToWinSec": 135,
+        "timeLimitSec": 430,
+        "scoreWeight": 3,
+        "objective": {
+          "x": 770,
+          "z": 430,
+          "r": 130,
+          "name": "The Round Forest ('Hell's Half Acre')"
+        },
+        "transition": {
+          "title": "The Dawn Attack",
+          "lead": "About 6:00 a.m. McCown's division, with Cleburne's behind it, strikes the Union right at breakfast. The surprise is positioning, not magic: Bragg massed his weight against an un-refused, unentrenched flank whose campfires had been lit to disguise how little stood there."
+        },
+        "terrain": {
+          "hills": [
+            {
+              "name": "The pike-line rise",
+              "x": 700,
+              "z": 380,
+              "h": 14,
+              "s": 190,
+              "note": "The low interior high ground along the Nashville Pike and the railroad where the final Union line and its 30-plus massed guns stood. (Verified interior line; Inferred placement)"
+            },
+            {
+              "name": "Wayne's Hill shoulder",
+              "x": 1010,
+              "z": 620,
+              "h": 18,
+              "s": 130,
+              "note": "The east-bank high ground beyond Stones River, held by Confederate guns. (Verified feature; Inferred placement)"
+            }
+          ],
+          "woods": [
+            {
+              "x": 480,
+              "z": 500,
+              "r": 120,
+              "note": "The Cedars - the dense cedar glades and limestone outcroppings of Sheridan's fighting withdrawal; the rocks the soldiers called the Slaughter Pen lie in these thickets. (NPS-named features; Inferred placement)"
+            },
+            {
+              "x": 370,
+              "z": 545,
+              "r": 95,
+              "note": "The cedar brakes west of the Wilkinson Pike, where Sheridan's and Negley's divisions were assailed from three sides. (Verified fighting; Inferred placement)"
+            },
+            {
+              "x": 770,
+              "z": 430,
+              "r": 90,
+              "note": "The Round Forest - the cedar copse between the Nashville Pike and Stones River that Hazen's brigade held all day: 'Hell's Half Acre.' (Verified anchor; Inferred placement)"
+            },
+            {
+              "x": 240,
+              "z": 700,
+              "r": 80,
+              "note": "Timber screening the Confederate left, from which McCown's dawn columns emerged. (Inferred placement)"
+            }
+          ],
+          "walls": [],
+          "swamps": [],
+          "markers": [
+            {
+              "kind": "road",
+              "name": "Nashville Pike",
+              "path": [
+                [
+                  310,
+                  70
+                ],
+                [
+                  520,
+                  260
+                ],
+                [
+                  700,
+                  420
+                ],
+                [
+                  860,
+                  640
+                ],
+                [
+                  960,
+                  880
+                ]
+              ],
+              "note": "The Union lifeline to Nashville, running with the railroad through the position - 'Rosecrans only means of retreat should the army falter' (NPS). The phase objective is the corridor's anchor. (Verified)"
+            },
+            {
+              "kind": "road",
+              "name": "Wilkinson Pike",
+              "path": [
+                [
+                  120,
+                  430
+                ],
+                [
+                  360,
+                  470
+                ],
+                [
+                  600,
+                  510
+                ],
+                [
+                  840,
+                  560
+                ]
+              ],
+              "note": "The mid-field road of the center's fight through the Cedars - Sheridan's and Negley's ground. (Verified feature; Inferred trace)"
+            },
+            {
+              "kind": "water",
+              "name": "Stones River",
+              "path": [
+                [
+                  1090,
+                  120
+                ],
+                [
+                  1060,
+                  350
+                ],
+                [
+                  1080,
+                  580
+                ],
+                [
+                  1120,
+                  820
+                ]
+              ],
+              "note": "The rain-swollen river along the Union left; Breckinridge's division began the day east of it. McFadden's Ford lies upstream - the ground of January 2. (Verified)"
+            },
+            {
+              "kind": "town",
+              "name": "The cotton field",
+              "path": [
+                [
+                  650,
+                  540
+                ]
+              ],
+              "note": "The open cotton field in front of the pike line - 'over thirty cannons had a clear shot at the Confederates as they emerged from the forest' (NPS Tour Stop 3). Attacks stalled and broke here all afternoon. (Verified)"
+            }
+          ]
+        },
+        "leaders": {
+          "US": [
+            {
+              "id": "ld_rosecrans",
+              "name": "Maj. Gen. William S. Rosecrans",
+              "short": "Rosecrans",
+              "quality": 0.62,
+              "radius": 260,
+              "x": 640,
+              "z": 300,
+              "fate": 2.6,
+              "note": "Commanding the Army of the Cumberland, riding the line all day under fire - his chief of staff, Lt. Col. Julius P. Garesché, was decapitated by a cannonball at his side. (Verified)"
+            },
+            {
+              "id": "ld_thomas",
+              "name": "Maj. Gen. George H. Thomas",
+              "short": "Thomas",
+              "quality": 0.68,
+              "radius": 230,
+              "x": 590,
+              "z": 380,
+              "fate": 1.8,
+              "note": "Commanding the center - Negley's and Rousseau's divisions - the hinge of the bending line. (Verified)"
+            },
+            {
+              "id": "ld_mccook",
+              "name": "Maj. Gen. Alexander M. McCook",
+              "short": "McCook",
+              "quality": 0.5,
+              "radius": 220,
+              "x": 380,
+              "z": 420,
+              "fate": 2.2,
+              "note": "Commanding the right wing, caught unready at dawn; his campfires had been lit to disguise the flank, not to strengthen it. (Verified)"
+            },
+            {
+              "id": "ld_crittenden",
+              "name": "Maj. Gen. Thomas L. Crittenden",
+              "short": "Crittenden",
+              "quality": 0.56,
+              "radius": 220,
+              "x": 760,
+              "z": 350,
+              "fate": 2.0,
+              "note": "Commanding the left wing on the pike and the river; his chief of artillery is Capt. John Mendenhall. (Verified)"
+            }
+          ],
+          "CS": [
+            {
+              "id": "ld_bragg",
+              "name": "Gen. Braxton Bragg",
+              "short": "Bragg",
+              "quality": 0.52,
+              "radius": 260,
+              "x": 640,
+              "z": 850,
+              "fate": 1.6,
+              "note": "Full general commanding the Army of Tennessee (renamed from the Army of the Mississippi, November 1862). His plan struck first; his army's command culture would not survive the month intact. (Verified)"
+            },
+            {
+              "id": "ld_hardee",
+              "name": "Lt. Gen. William J. Hardee",
+              "short": "Hardee",
+              "quality": 0.68,
+              "radius": 240,
+              "x": 380,
+              "z": 690,
+              "fate": 2.0,
+              "note": "Lieutenant general (effective Oct 10, 1862 - a major general at Perryville twelve weeks earlier) commanding the assault wing: McCown then Cleburne. (Verified)"
+            },
+            {
+              "id": "ld_polk",
+              "name": "Lt. Gen. Leonidas Polk",
+              "short": "Polk",
+              "quality": 0.54,
+              "radius": 240,
+              "x": 620,
+              "z": 680,
+              "fate": 2.0,
+              "note": "Lieutenant general (effective Oct 10, 1862) commanding the corps that extended the assault - Cheatham's and Withers's divisions - against the center and the Round Forest. (Verified)"
+            }
+          ]
+        },
+        "supply": {
+          "US": {
+            "x": 420,
+            "z": 75,
+            "name": "The Nashville Pike trains"
+          },
+          "CS": {
+            "x": 820,
+            "z": 885,
+            "name": "Murfreesboro"
+          }
+        },
+        "oob": {
+          "US": [
+            {
+              "id": "us_johnson",
+              "name": "Johnson's Division (right flank)",
+              "commander": "Brig. Gen. Richard W. Johnson",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 4900,
+              "xp": 1,
+              "x": 300,
+              "z": 480,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "The unanchored end of McCook's wing, struck at breakfast - Brig. Gen. Edward N. Kirk mortally wounded, Brig. Gen. August Willich captured in the opening minutes. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_davis",
+              "name": "Davis's Division",
+              "commander": "Brig. Gen. Jefferson C. Davis",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 4900,
+              "xp": 2,
+              "x": 405,
+              "z": 465,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "McCook's center division (the Union general who shares a name with the Confederate president), wheeled back through the cotton fields. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_sheridan",
+              "name": "Sheridan's Division",
+              "commander": "Brig. Gen. Philip H. Sheridan",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 5200,
+              "xp": 3,
+              "x": 505,
+              "z": 450,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "The one right-wing division that met the dawn attack formed and fighting - its stand in the cedars and the Slaughter Pen bought the army its new line. Sheridan was a BRIGADIER here; his major general's commission (April 1863) was backdated to this day as the reward. Brig. Gen. Joshua W. Sill, his brigade commander and friend, was killed in the counterattack. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_negley",
+              "name": "Negley's Division",
+              "commander": "Brig. Gen. James S. Negley",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 4500,
+              "xp": 2,
+              "x": 590,
+              "z": 440,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "Thomas's center division, fighting beside Sheridan in the cedars; his disputed November major-general appointment expired unconfirmed, so he is fielded at his substantive grade. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_rousseau",
+              "name": "Rousseau's Division",
+              "commander": "Maj. Gen. Lovell H. Rousseau",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 5000,
+              "xp": 2,
+              "x": 640,
+              "z": 350,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "Thomas's reserve division, committed to hold the hinge as the right wheeled back to the pike. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_wood",
+              "name": "Wood's Division",
+              "commander": "Brig. Gen. Thomas J. Wood",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 4900,
+              "xp": 2,
+              "x": 710,
+              "z": 425,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "Crittenden's division on the pike line beside the Round Forest; Wood was wounded during the day and stayed on the field. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_palmer",
+              "name": "Palmer's Division (less Hazen)",
+              "commander": "Brig. Gen. John M. Palmer",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 4100,
+              "xp": 2,
+              "x": 800,
+              "z": 415,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "Crittenden's center division holding the left of the pike corridor; Hazen's brigade is fielded separately as the Round Forest anchor. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_hazen",
+              "name": "Hazen's Brigade - the Round Forest",
+              "commander": "Col. William B. Hazen",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1300,
+              "xp": 3,
+              "x": 785,
+              "z": 445,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "A colonel's brigade in the cedar copse between the pike and the river - reportedly the only Union brigade that did not give ground on December 31, holding 'Hell's Half Acre' through four successive assaults. Hazen's brigadier appointment came later. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_vancleve",
+              "name": "Van Cleve's Division (recalled)",
+              "commander": "Brig. Gen. Horatio P. Van Cleve",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 3900,
+              "xp": 2,
+              "x": 720,
+              "z": 300,
+              "facing": 3.14159,
+              "formation": "column",
+              "note": "Recalled from its own morning crossing of Stones River to backstop the collapsing right - Rosecrans's attack plan abandoned to save his line. Van Cleve was wounded this day; Col. Samuel Beatty leads the division on January 2. Verified identity; Inferred strength.",
+              "_commandNote": "Brig. Gen. Horatio P. Van Cleve commanded on Dec 31 (wounded); the division fights Phase 2 under Col. Samuel Beatty."
+            },
+            {
+              "id": "us_pike_guns",
+              "name": "The Nashville Pike Gun Line",
+              "commander": "Capt. Charles Parsons (batteries H & M, 4th U.S.)",
+              "arm": "art",
+              "weapon": "napoleon",
+              "guns": 38,
+              "men": 900,
+              "xp": 3,
+              "x": 660,
+              "z": 370,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "The concentrated Union artillery along the Nashville Pike - NPS: 'over thirty cannons had a clear shot' across the cotton field; Parsons's batteries H & M anchored the stand. Modeled as one massed gun line, 38 guns inside the sourced 30-60 total. Verified identity; Inferred strength."
+            }
+          ],
+          "CS": [
+            {
+              "id": "cs_mccown",
+              "name": "McCown's Division",
+              "commander": "Maj. Gen. John P. McCown",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 4000,
+              "xp": 2,
+              "x": 290,
+              "z": 700,
+              "facing": 0,
+              "formation": "line",
+              "note": "Ector's, Rains's, and McNair's brigades - three brigades, the dawn attack's first wave; Brig. Gen. James E. Rains was killed this day. Its leftward drift opened the gap Cleburne filled. The ~4,000 is loosely corroborated but still an Inferred split of the army anchor. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_cleburne",
+              "name": "Cleburne's Division",
+              "commander": "Maj. Gen. Patrick R. Cleburne",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 6500,
+              "xp": 3,
+              "x": 400,
+              "z": 730,
+              "facing": 0,
+              "formation": "line",
+              "note": "Lucius Polk's, Liddell's, Bushrod Johnson's, and S.A.M. Wood's brigades (Wood from reserve) - the second wave that kept the wheel turning. Cleburne had been a major general for eighteen days. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_cheatham",
+              "name": "Cheatham's Division",
+              "commander": "Maj. Gen. Benjamin F. Cheatham",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 6000,
+              "xp": 2,
+              "x": 550,
+              "z": 700,
+              "facing": 0,
+              "formation": "line",
+              "note": "Donelson's, A.P. Stewart's, Maney's, and Preston Smith's brigades, extending the assault against the center and the cedars. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_withers",
+              "name": "Withers's Division",
+              "commander": "Maj. Gen. Jones M. Withers",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 7500,
+              "xp": 2,
+              "x": 690,
+              "z": 680,
+              "facing": 0,
+              "formation": "line",
+              "note": "Deas's, Chalmers's, Anderson-Walthall's, and Manigault's brigades - Polk's heaviest division, pressed again and again across the cotton field toward the Round Forest. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_wharton",
+              "name": "Wharton's Cavalry Brigade",
+              "commander": "Brig. Gen. John A. Wharton",
+              "arm": "cav",
+              "weapon": "carbine",
+              "men": 2200,
+              "xp": 2,
+              "x": 170,
+              "z": 740,
+              "facing": 0,
+              "formation": "column",
+              "note": "The on-field CS cavalry working around the Union right and rear. Brig. Gen. Joseph Wheeler's raid on the Nashville trains (from Dec 29-30) is taught, not fielded - it happened miles from this ground. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_corps_guns",
+              "name": "The Army of Tennessee Batteries",
+              "commander": "Corps artillery battalions",
+              "arm": "art",
+              "weapon": "smooth",
+              "guns": 30,
+              "men": 600,
+              "xp": 2,
+              "x": 620,
+              "z": 780,
+              "facing": 0,
+              "formation": "line",
+              "note": "The corps batteries supporting the assault - largely smoothbore, outmatched by the Union's interior gun line. Modeled as one massed group, 30 guns inside the sourced 20-50 total. Verified identity; Inferred strength."
+            }
+          ]
+        },
+        "reinforcements": [
+          {
+            "id": "cs_bx_adams_jackson",
+            "side": "CS",
+            "atSec": 80,
+            "name": "Adams's & Jackson's Brigades (Breckinridge)",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 2600,
+            "xp": 2,
+            "x": 900,
+            "z": 760,
+            "facing": 0,
+            "formation": "column",
+            "entry": "crossing from the east bank",
+            "note": "Maj. Gen. John C. Breckinridge's first two brigades, called across Stones River at mid-morning and repulsed at the Round Forest (his report's sequence). Verified identity; Inferred strength."
+          },
+          {
+            "id": "cs_bx_preston_palmer",
+            "side": "CS",
+            "atSec": 170,
+            "name": "Preston's & Palmer's Brigades (Breckinridge)",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 2900,
+            "xp": 2,
+            "x": 880,
+            "z": 790,
+            "facing": 0,
+            "formation": "column",
+            "entry": "crossing for the twilight assault",
+            "note": "Breckinridge's last two crossing brigades, thrown piecemeal at the Round Forest about 4:00 p.m. as the light failed - Preston's and Palmer's, NOT Hanson's, whose Orphan Brigade charges only on January 2. Verified identity; Inferred strength."
+          }
+        ],
+        "teaching": {
+          "head": "The day that decided it",
+          "body": "The Union right was driven back three miles - and it did not matter, because the two things that decided the battle held: the Round Forest and the Nashville Pike. No citation-grade casualty split exists for December 31 alone; what is Verified is the aggregate - by the end, the winners had lost more men than the losers.",
+          "provenance": "Verified sequence (ABT; NPS); the phase-casualty gap is stated as a gap per the D365 source audit."
+        }
+      },
+      {
+        "id": "jan2-mcfaddens-ford",
+        "name": "January 2 - Breckinridge at McFadden's Ford",
+        "sector": "The high ground east of McFadden's Ford, under the massed guns on the west bank of Stones River",
+        "timing": "January 2, 1863 - about 4:00 p.m., in the rain",
+        "attacker": "CS",
+        "defender": "US",
+        "assaultDoctrine": "standard",
+        "defaultFog": false,
+        "holdToWinSec": 100,
+        "timeLimitSec": 320,
+        "scoreWeight": 1,
+        "objective": {
+          "x": 600,
+          "z": 330,
+          "r": 130,
+          "name": "The high ground east of McFadden's Ford"
+        },
+        "transition": {
+          "title": "January 1, 1863 - The Quiet Day",
+          "lead": "New Year's Day passes almost without firing: both armies hold their lines in the freezing rain and tend their wounded. That same day, the Emancipation Proclamation takes effect - the war for the Union is now also, openly, a war on slavery, though word of it has not reached these fields. On January 2, Bragg orders Breckinridge to take the hill east of McFadden's Ford. Breckinridge protests that the ground is a killing floor under the Union guns across the river - then forms his division, about 4,500 men in two lines, and leads it forward at 4:00 p.m."
+        },
+        "terrain": {
+          "hills": [
+            {
+              "name": "The high ground east of McFadden's Ford",
+              "x": 600,
+              "z": 330,
+              "h": 22,
+              "s": 180,
+              "note": "The hill Bragg wanted and Breckinridge was ordered to take - Col. Samuel Beatty's division holds it. (Verified objective; Inferred placement)"
+            },
+            {
+              "name": "The west-bank artillery ridge",
+              "x": 210,
+              "z": 200,
+              "h": 18,
+              "s": 140,
+              "note": "The rise across Stones River where Capt. John Mendenhall massed the guns before the assault stepped off. (Verified position; Inferred placement)"
+            }
+          ],
+          "woods": [
+            {
+              "x": 900,
+              "z": 480,
+              "r": 90,
+              "note": "The timber fringe east of the open approach. (Inferred placement)"
+            },
+            {
+              "x": 950,
+              "z": 750,
+              "r": 100,
+              "note": "The woods screening Breckinridge's forming ground. (Inferred placement)"
+            }
+          ],
+          "walls": [],
+          "swamps": [
+            {
+              "x": 330,
+              "z": 490,
+              "r": 90,
+              "note": "The flooded bottomland along the rain-swollen river below the ford. (Inferred placement)"
+            }
+          ],
+          "markers": [
+            {
+              "kind": "water",
+              "name": "Stones River at McFadden's Ford",
+              "path": [
+                [
+                  260,
+                  80
+                ],
+                [
+                  300,
+                  300
+                ],
+                [
+                  360,
+                  520
+                ],
+                [
+                  420,
+                  740
+                ],
+                [
+                  460,
+                  930
+                ]
+              ],
+              "note": "The river between the assault and the guns; McFadden's Ford is the crossing at the artillery ridge - Negley's counterattack splashes over it. (Verified)"
+            },
+            {
+              "kind": "road",
+              "name": "Nashville Pike (west bank)",
+              "path": [
+                [
+                  120,
+                  120
+                ],
+                [
+                  200,
+                  350
+                ],
+                [
+                  300,
+                  650
+                ]
+              ],
+              "note": "The pike corridor behind the river - still the Union lifeline, still intact. (Verified)"
+            },
+            {
+              "kind": "town",
+              "name": "Murfreesboro",
+              "path": [
+                [
+                  820,
+                  900
+                ]
+              ],
+              "note": "Bragg's base behind the Confederate line; he abandons it the night of January 3. (Verified)"
+            }
+          ]
+        },
+        "leaders": {
+          "US": [
+            {
+              "id": "ld_rosecrans2",
+              "name": "Maj. Gen. William S. Rosecrans",
+              "short": "Rosecrans",
+              "quality": 0.62,
+              "radius": 260,
+              "x": 420,
+              "z": 200,
+              "fate": 2.2,
+              "note": "Still on the field, still holding - the army he refused to retreat is about to finish the battle it nearly lost. (Verified)"
+            },
+            {
+              "id": "ld_crittenden2",
+              "name": "Maj. Gen. Thomas L. Crittenden",
+              "short": "Crittenden",
+              "quality": 0.56,
+              "radius": 220,
+              "x": 380,
+              "z": 260,
+              "fate": 2.0,
+              "note": "His wing holds the ford; his chief of artillery, Capt. John Mendenhall, has massed the guns that will decide the hour. (Verified)"
+            }
+          ],
+          "CS": [
+            {
+              "id": "ld_bragg2",
+              "name": "Gen. Braxton Bragg",
+              "short": "Bragg",
+              "quality": 0.5,
+              "radius": 260,
+              "x": 700,
+              "z": 870,
+              "fate": 1.6,
+              "note": "The order is his: take the hill. The literature records his answer to the protest - 'I have given the order to attack the enemy in your front and expect it to be obeyed.' (Attributed to the literature, not the OR)"
+            },
+            {
+              "id": "ld_breckinridge",
+              "name": "Maj. Gen. John C. Breckinridge",
+              "short": "Breckinridge",
+              "quality": 0.62,
+              "radius": 240,
+              "x": 620,
+              "z": 760,
+              "fate": 2.6,
+              "note": "The former U.S. vice president, ordered to make an attack he protested as hopeless. His own report: 'some 4,500 men' - about 1,700 of them fall in under an hour. (Verified, his OR report)"
+            }
+          ]
+        },
+        "supply": {
+          "US": {
+            "x": 260,
+            "z": 70,
+            "name": "The ford trains on the west bank"
+          },
+          "CS": {
+            "x": 780,
+            "z": 890,
+            "name": "Murfreesboro"
+          }
+        },
+        "oob": {
+          "US": [
+            {
+              "id": "us_beatty_div",
+              "name": "Van Cleve's Division (Beatty)",
+              "commander": "Col. Samuel Beatty",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 4000,
+              "xp": 2,
+              "x": 600,
+              "z": 330,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "Grider's, Fyffe's, and Price's brigades on the high ground east of the ford, commanded by Col. Samuel Beatty since Brig. Gen. Horatio P. Van Cleve fell wounded on December 31 - a colonel holding a division front. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_grose",
+              "name": "Grose's Brigade (support)",
+              "commander": "Col. William Grose",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1500,
+              "xp": 2,
+              "x": 470,
+              "z": 270,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "Palmer's division's support brigade backing Beatty's line at the ford. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_mendenhall_guns",
+              "name": "Mendenhall's Massed Batteries",
+              "commander": "Capt. John Mendenhall",
+              "arm": "art",
+              "weapon": "napoleon",
+              "guns": 57,
+              "men": 1200,
+              "xp": 3,
+              "x": 230,
+              "z": 220,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "Crittenden's chief of artillery - a CAPTAIN - masses the west-bank guns wheel to wheel before the assault steps off: 57 by NPS's count, 58 by ABT's, 'nearly 50 cannon hub-to-hub' in ABT's narrative. The sourced range is 45-58; the game fields 57. They break a division in about 45 minutes. Verified identity; Inferred strength."
+            }
+          ],
+          "CS": [
+            {
+              "id": "cs_hanson",
+              "name": "Hanson's Orphan Brigade",
+              "commander": "Brig. Gen. Roger W. Hanson",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1300,
+              "xp": 3,
+              "x": 520,
+              "z": 700,
+              "facing": 0,
+              "formation": "line",
+              "note": "The Kentucky Orphan Brigade on the front line's left - its only charge of this battle. Hanson is mortally wounded here and dies January 4. Front-line pairing per Breckinridge's own report. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_pillow_palmer",
+              "name": "Palmer's Brigade (Pillow)",
+              "commander": "Brig. Gen. Gideon J. Pillow",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1100,
+              "xp": 2,
+              "x": 680,
+              "z": 700,
+              "facing": 0,
+              "formation": "line",
+              "note": "The front line's right - Palmer's brigade under Brig. Gen. Gideon J. Pillow for this assault, per Breckinridge's report. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_gibson_adams",
+              "name": "Adams's Brigade (Gibson)",
+              "commander": "Col. Randall L. Gibson",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1000,
+              "xp": 2,
+              "x": 540,
+              "z": 800,
+              "facing": 0,
+              "formation": "line",
+              "note": "The support line's left - Adams's brigade under Col. Randall L. Gibson (Adams was wounded December 31). Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_preston",
+              "name": "Preston's Brigade",
+              "commander": "Brig. Gen. William Preston",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1100,
+              "xp": 2,
+              "x": 700,
+              "z": 800,
+              "facing": 0,
+              "formation": "line",
+              "note": "The support line's right. The division's attached artillery never effectively deployed and is not fielded (0 guns inside the sourced 0-12). Verified identity; Inferred strength."
+            }
+          ]
+        },
+        "reinforcements": [
+          {
+            "id": "us_negley_counter",
+            "side": "US",
+            "atSec": 120,
+            "name": "Negley's Counterattack (Miller & Stanley)",
+            "commander": "Brig. Gen. James S. Negley",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 2600,
+            "xp": 2,
+            "x": 300,
+            "z": 240,
+            "facing": 3.14159,
+            "formation": "column",
+            "entry": "splashing across McFadden's Ford",
+            "note": "Miller's and Stanley's brigades of Negley's division, counterattacking across the ford as the repulsed assault falls back. Verified identity; Inferred strength."
+          }
+        ],
+        "teaching": {
+          "head": "The order Breckinridge protested",
+          "body": "Breckinridge argued the attack was suicide under the west-bank guns; Bragg's answer, as the literature records it, was that the order stood. About 4,500 men went forward in two lines. Roughly 1,700-1,800 of them fell in under an hour - the one phase-level casualty figure this battle's sources actually support. A command decision and its predictable cost; not gallantry, arithmetic.",
+          "provenance": "Verified (Breckinridge's OR report via westerntheatercivilwar.com; Warfare History Network); the Bragg quote is secondary-attested."
+        }
+      }
+    ],
+    "endNote": {
+      "US": {
+        "US": "History holds. The line bent three miles and did not break; the Round Forest and the Nashville Pike stayed in Union hands, Breckinridge's charge died under Mendenhall's guns, and on the night of January 3 Bragg abandoned Murfreesboro. You lost more men than the enemy - 12,906 to 11,739 by the standard accounting - and you won. Lincoln wrote it plainly: 'you gave us a hard earned victory, which, had there been a defeat instead, the nation could scarcely have lived over.'",
+        "CS": "History holds against you. The dawn attack drove everything except the two things that mattered - the cedar copse the soldiers called Hell's Half Acre, and the pike behind it. The January charge your own commander protested was broken in under an hour. Middle Tennessee is passing out of Confederate hands, and the army's generals are already writing to Richmond about the man who ordered it."
+      },
+      "CS": {
+        "US": "History is overturned. The pike corridor could not be held, and with the lifeline cut the Army of the Cumberland must fall back toward Nashville. What that winter would have looked like - after Fredericksburg, with the Emancipation Proclamation four days old and no victory to stand it on - is the counterfactual this battle exists to teach.",
+        "CS": "History is overturned: the wheel closed, the anchor fell, and the Army of the Cumberland is driven from its lifeline. It was bought with blood the Army of Tennessee could not spare - the real morning came within one cedar copse of this result, and the arithmetic haunted both armies either way."
+      },
+      "draw": "A bloodier deadlock than the real battle: the corridor neither held cleanly nor fell. The real Stones River was decided by exactly this margin - one anchor brigade, one massed gun line - and its winners bled more than its losers."
+    },
+    "teaching": {
+      "title": "Stones River - what this battle teaches",
+      "cards": [
+        {
+          "id": "sr_won_by_holding",
+          "head": "Winning by holding - while bleeding more",
+          "body": "The Union lost MORE men at Stones River than the Confederacy - 12,906 to 11,739 of the 41,400 and 35,000 engaged - and won the battle, because victory here was ground and campaign, not the casualty scoreboard: Rosecrans held the field and the Nashville Pike until Bragg withdrew toward Tullahoma on the night of January 3, and Middle Tennessee changed hands. It is the inverse of Fredericksburg two weeks earlier, where the army that bled less lost nothing but men. Lincoln, who had needed exactly this, wrote to Rosecrans eight months later: 'you gave us a hard earned victory, which, had there been a defeat instead, the nation could scarcely have lived over.'",
+          "provenance": "Verified (ABT aggregate lock; Lincoln's letter, Collected Works Vol. 6). Variant totals (NPS HRS 13,244 US; Wikipedia 13,906 US) are surfaced in the spec's discrepancy register, not averaged.",
+          "sources": [
+            "https://www.battlefields.org/learn/civil-war/battles/stones-river",
+            "https://quod.lib.umich.edu/l/lincoln/lincoln6/1:661?rgn=div1;view=fulltext",
+            "https://en.wikipedia.org/wiki/Battle_of_Stones_River"
+          ]
+        },
+        {
+          "id": "sr_dawn_breakfast",
+          "head": "The dawn attack - surprise is positioning",
+          "body": "About 6:00 a.m. on December 31, McCown's and then Cleburne's divisions struck Johnson's division before many of its men had finished breakfast. Brig. Gen. Edward N. Kirk was mortally wounded and Brig. Gen. August Willich captured; the Union right was wheeled back three miles to the Nashville Pike. McCook's numerous campfires had been lit to DISGUISE how weak the unanchored flank was - in the event they helped misdirect McCown's advance leftward, opening the gap Cleburne filled. Brig. Gen. Joshua W. Sill was killed in Sheridan's dawn counterattack. The game models the surprise the way it happened: as mass against an unready flank, not as a mechanic.",
+          "provenance": "Verified (ABT 6:00 a.m. attack; Wikipedia breakfast surprise, Kirk and Sill among the fallen; campfire purpose per the D365 refute pass).",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Battle_of_Stones_River",
+            "https://www.battlefields.org/learn/civil-war/battles/stones-river"
+          ]
+        },
+        {
+          "id": "sr_hells_half_acre",
+          "head": "Hell's Half Acre",
+          "body": "The Round Forest - the cedar copse between the Nashville Pike and Stones River remembered as 'Hell's Half Acre' - was the anchor the whole bending line held to. Col. William B. Hazen's brigade, reinforced through the day, clung to it through four successive assaults (Chalmers's, Donelson's, then two of Breckinridge's crossing brigades) and is reported as the only Union brigade that did not give ground on December 31. The 32nd Alabama's figure - 280 men in, 58 out - is carried as its regiment reported it. Hazen's men raised a monument on the spot in 1863: the oldest intact Civil War monument in the nation, built by the brigade that would not leave the ground.",
+          "provenance": "Verified (NPS Hell's Half Acre page; ABT). Hazen was a COLONEL here; the 32nd Alabama figure is attributed.",
+          "sources": [
+            "https://www.nps.gov/stri/learn/historyculture/hellshalfacre.htm",
+            "https://www.battlefields.org/learn/civil-war/battles/stones-river"
+          ]
+        },
+        {
+          "id": "sr_breckinridge_protest",
+          "head": "The order Breckinridge protested",
+          "body": "On January 2 Bragg ordered Breckinridge to take the high ground east of McFadden's Ford. Breckinridge's own report records his objection - he 'preferred to fight on the ground I then occupied' - and the literature records Bragg's reply: 'I have given the order to attack the enemy in your front and expect it to be obeyed.' The division went forward at 4:00 p.m., 'some 4,500 men' by Breckinridge's count, two lines - Hanson's and Palmer's brigades in front, Adams's and Preston's in support. About 1,700 fell in under an hour, Brig. Gen. Roger W. Hanson among the dying. This is taught as what it was: a command decision and its predictable cost - never as doomed Southern gallantry.",
+          "provenance": "Verified (Breckinridge's OR report via westerntheatercivilwar.com transcription; Warfare History Network). The Bragg quote is secondary-attested and cited to the literature, never the OR.",
+          "sources": [
+            "https://www.westerntheatercivilwar.com/post/in-his-own-words-john-c-breckinridge-and-the-battle-of-stones-river",
+            "https://warfarehistorynetwork.com/article/final-attack-at-the-battle-of-stones-river/"
+          ]
+        },
+        {
+          "id": "sr_mendenhall",
+          "head": "A captain masses fifty-seven guns",
+          "body": "Capt. John Mendenhall, Crittenden's chief of artillery, packed the west bank of Stones River with guns before Breckinridge's assault stepped off - 57 by the Park Service's count, 58 by the Battlefield Trust's, 'nearly 50 cannon hub-to-hub' in the Trust's narrative; the sources disagree and this game says so rather than picking a number to assert. Firing across the river into the open half-mile, the massed batteries broke a veteran division in about 45 minutes; Miller's and Stanley's brigades then counterattacked across the ford. It is the war's textbook example of the artillery arm winning a defensive battle outright - no heroic counter-charge required, just arithmetic and canister.",
+          "provenance": "Verified (Warfare History Network; ABT). The gun count is carried as the sourced range 45-58, never one exact asserted total.",
+          "sources": [
+            "https://warfarehistorynetwork.com/article/final-attack-at-the-battle-of-stones-river/",
+            "https://www.battlefields.org/learn/civil-war/battles/stones-river"
+          ]
+        },
+        {
+          "id": "sr_garesche",
+          "head": "Garesché",
+          "body": "Lt. Col. Julius P. Garesché, Rosecrans's chief of staff, rode beside his general toward the Round Forest on December 31 - his first battle - and was decapitated by a cannonball; Rosecrans finished the day with his friend's blood on his coat. Col. William B. Hazen came upon the body and recovered his West Point ring. The devout Garesché carried a pocket copy of Thomas à Kempis's 'The Imitation of Christ' - a detail later summaries flatten into 'a Bible.' Command exposure was real at every rank: within three days this battle killed or mortally wounded four generals across the two armies - Sill and Kirk in blue, Rains and Hanson in gray - and the chief of staff of the Army of the Cumberland.",
+          "provenance": "Verified death, first battle, and ring (Wikipedia, two independent articles); the Imitation of Christ correction is Verified per the D365 refute pass (spec Reverification Readback), which explicitly rejects the 'Bible' rendering.",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Julius_Garesch%C3%A9",
+            "https://en.wikipedia.org/wiki/Battle_of_Stones_River"
+          ]
+        },
+        {
+          "id": "sr_generals_revolt",
+          "head": "The generals' revolt",
+          "body": "Within days of the retreat, the Army of Tennessee turned on its commander. Lt. Gen. Leonidas Polk wrote directly to President Davis recommending Bragg's replacement by Joseph E. Johnston; Lt. Gen. William J. Hardee concurred, having written in his official report that the January 2 attack was 'unwise, in a high degree.' Bragg himself circulated the letter properly called the 'round robin,' asking his generals whether they had counseled retreat - and got answers he did not want. Davis sent Johnston to investigate rather than relieving Bragg, and the army kept both its commander and its poisoned command culture - the dysfunction already taught in this game's command study, which would help lose Chattanooga within the year. Internal command failure, not bad luck.",
+          "provenance": "Verified (Wikipedia, battle aftermath + Bragg biography: the no-confidence letters, Johnston's investigation). Hardee's phrase is from his official report per the D365 refute pass; Kirby Smith was NOT part of the post-battle petition.",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Braxton_Bragg",
+            "https://en.wikipedia.org/wiki/Battle_of_Stones_River"
+          ]
+        },
+        {
+          "id": "sr_emancipation",
+          "head": "January 1, 1863 - the quiet day",
+          "body": "The middle day of this battle - the lull between the dawn attack and Breckinridge's charge - was the day the Emancipation Proclamation took effect. It is reasonable to suppose word had not reached these fields (this is inference, not a sourced fact), but the coincidence is the point: Union fortunes stood at their winter low after Fredericksburg, and the Proclamation needed a victory to stand on. The hard-earned hold at Stones River was that victory. When Lincoln later wrote that a defeat here was something 'the nation could scarcely have lived over,' the Proclamation winter is what he meant.",
+          "provenance": "Verified (National Archives: the Proclamation effective January 1, 1863; Wikipedia notes the battle reinforced Lincoln's foundation for it). The word-did-not-reach framing is labeled inference.",
+          "sources": [
+            "https://www.archives.gov/exhibits/featured-documents/emancipation-proclamation",
+            "https://en.wikipedia.org/wiki/Emancipation_Proclamation",
+            "https://en.wikipedia.org/wiki/Battle_of_Stones_River"
+          ]
+        }
+      ],
+      "codex": {
+        "id": "codex_stones_river",
+        "title": "Stones River (Murfreesboro), December 31, 1862 - January 2, 1863",
+        "summary": "Rosecrans's Army of the Cumberland and Bragg's Army of Tennessee each planned to attack at dawn on December 31; Bragg struck first, wheeling the Union right back three miles to the Nashville Pike - where the line anchored on Hazen's brigade in the Round Forest and the massed guns along the pike, and held. After a day's lull (the day the Emancipation Proclamation took effect), Bragg ordered Breckinridge across Stones River against the high ground east of McFadden's Ford; Mendenhall's 45-58 massed guns broke the assault in under an hour. Bragg withdrew on the night of January 3. The Union lost more men than the Confederacy - about 12,906 to 11,739 - and won: the field, the pike, and Middle Tennessee. The victory Lincoln called 'hard earned' anchored the Emancipation Proclamation's first winter; the Army of Tennessee's generals turned on Bragg and kept him anyway.",
+        "axes": {
+          "theater": "Western",
+          "campaign": "Stones River / Middle Tennessee",
+          "result": "Union victory",
+          "cost": "A near-parity bloodletting - the WINNER lost more men (US 12,906 vs CS 11,739); victory was ground and campaign, not the casualty ledger"
+        },
+        "sources": [
+          "https://www.battlefields.org/learn/civil-war/battles/stones-river",
+          "https://www.nps.gov/stri/learn/historyculture/hellshalfacre.htm",
+          "https://en.wikipedia.org/wiki/Battle_of_Stones_River"
+        ]
+      }
+    }
+  }
+}
