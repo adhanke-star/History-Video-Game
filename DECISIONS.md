@@ -6,6 +6,61 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D377 — CROSS KEYS / PORT REPUBLIC SPEC: TWO FIELDS, A ROLE FLIP, AND COARSE-GRAIN HONESTY — [CODEX 5.6 Sol Ultra, LANE-003 DRIVE] (2026-07-11)
+
+D377 commits the fifth LANE-003 planning contract:
+`docs/design/cross-keys-port-republic-battle-build-spec.md` plus
+`tools/probe-cross-keys-port-republic-plan.mjs` (11/11, dual-mode and bind-tested). This slice
+is spec/probe only. It creates no data file, registry/menu entry, schema row, Army Register row,
+generated-game behavior, or combat change.
+
+**Playable decision:** use the packet's lead two-day shape, not the campaign as a whole and not
+Port Republic alone. Phase 1 is `Cross Keys - Ewell Holds the Ridge` (weight 1, US attacker /
+CS defender, cautious doctrine, fog off). Phase 2 is `Port Republic - The Coaling` (weight 3
+decisive, CS attacker / US defender, standard doctrine, fog off). Weights sum 4. Phase-level
+home edges change with the two fields. The Valley Campaign's interior lines, Massanutten screen,
+Kernstown, McDowell, First Winchester, and Front Royal remain teaching, not extra phases.
+
+**Source/OOB decision:** the packet supports dates, outcomes, army-present anchors, side-total
+casualties, senior grades, and landmarks. It does not support Fremont's committed subtotal, a
+brigade-grain Cross Keys OOB, named batteries, exact gun counts, or the exact regiments that took
+The Coaling. The future model therefore keeps Cross Keys CS at 5,500-6,100 around the 5,800 anchor
+and labels the US 6,000-9,500 commitment as an Inferred simulation envelope below the Verified
+11,500 present. Port Republic stays inside 5,700-6,300 CS / 3,300-3,700 US around the fetched
+6,000/3,500 anchors. Every lower split and gun envelope is Inferred; the Coaling battery uses a
+generic Unpinned identity; 7th/9th Louisiana or a battery name requires a committed citation
+amendment first.
+
+**Rank and history law:** Thomas J. Jackson, Richard S. Ewell, and John C. Fremont are major
+generals; Erastus B. Tyler, Richard Taylor, and Charles S. Winder are brigadier generals; Samuel
+S. Carroll is a colonel. Jackson's rejection is scenario-scoped because lieutenant general is
+correct after October 10, 1862. Turner Ashby is absent after his June 6 death. The packet's
+candidate direction teeth control: P1 CS holds, P2 CS seizes, aggregate CS wins, and P1 US losses
+exceed CS losses, each at least 5/8. There is no phase-2 or aggregate casualty-direction tooth and
+no casualty magnitude. D74 rejects hesitation, genius, speed, commitment, flank, damage, casualty,
+winner, or score controls.
+
+**D378 integration contract:** tactical id/file `crossKeysPortRepublic` /
+`data/cross-keys-port-republic.json`; menu rank 12 between Bull Run and Gaines' Mill; schema
+47→48; scenarios 17→18; T10 E/false/anv with the flag family labeled Inferred; weather/flags/
+Intel/media 17→18; suite 122→123; Army Register `1125 + unique side-unit ids × 3` with every
+whole-registry pin moved in the same commit; Gaines' runtime chronology updated; frozen Classic
+`crosskeys` and `portrepublic` ids remain separate with no rail route.
+
+**Bind and focused gate:** the exact Jackson rank heading was changed from Maj. Gen. to Lt. Gen.
+The plan probe exited 1 with exactly HISTORY red (10/11); all ten other steps stayed green. The
+spec then restored md5-identically to `bbe53c90c2cbb39045d3bc90f7d52518` and reran 11/11. Final
+gate: node checks green; build GATE OK with `civil_war_generals.html` byte-identical at
+`3cab1dae6acc4e97101de7e196f613d9`; schema 47/47; research 15/15; Cross Keys plan 11/11;
+Gaines 8/8; New Market Heights 10/10; Stones River 11/11; Cedar Creek 11/11; roster 8/8;
+builder 15/15; every produced JSON read; 0 pageerrors; `git diff --check` clean. The full
+`npm run vet:noreg` battery was not run. Planned baselines remain 17 / 47 / 1125 / 17 / 122.
+
+LANE-003 returns to CONTRACT/unowned. D378 playable runtime starts only after a new committed
+DRIVE lock.
+
+---
+
 ## D376 — PLAYABLE CEDAR CREEK: THE ROLE REVERSAL IS LIVE, DIRECTION-NEUTRAL HISTORY IS EXECUTABLE, AND THE CROSS-TOOL RELAY HOLDS — [CODEX 5.6 Sol Ultra, LANE-003 DRIVE] (2026-07-11)
 
 Cedar Creek is the seventeenth registered historical scenario. `data/cedar-creek.json` implements

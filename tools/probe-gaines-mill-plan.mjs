@@ -100,7 +100,7 @@ step("SPEC: durable Gaines' Mill packet exists and locks a planning-only D361 bo
   return { bytes: text.length };
 });
 
-step("LANE: LANE-003 records the current released owner/state and retains the D362-to-Fable handoff boundary", () => {
+step("LANE: LANE-003 records the current D377+ owner/state and retains the D362-to-Fable handoff boundary", () => {
   const text = read(COORD);
   const start = text.indexOf("### LANE-003");
   if (start < 0) throw new Error("LANE-003 missing from COORDINATION.md");
@@ -108,16 +108,20 @@ step("LANE: LANE-003 records the current released owner/state and retains the D3
   const lane = text.slice(start, next < 0 ? text.length : next);
   mustInclude(lane, [
     "battle-ladder",
-    "**Owning tool:** none",
     "D362 playable Gaines' Mill is the handoff boundary",
     "**Last-touched commit:** D362",
     "ChatGPT retains ownership only through the already-bounded D362 closeout",
-    "D376 shipped playable Cedar Creek",
-    "Cross Keys/Port Republic **SPEC ONLY**"
+    "D376 (SHIPPED",
+    "Cedar Creek",
+    "D377",
+    "Cross Keys/Port Republic"
   ], "LANE-003 handoff");
   const state = (lane.match(/\*\*State:\*\*\s*([A-Z-]+)/) || [null, ""])[1];
   if (!["CONTRACT", "DRIVE", "VERIFY", "SHIPPED"].includes(state)) throw new Error("invalid LANE-003 state: " + state);
-  return { owner: "none", state, boundary: "D362 retained", resume: "Cross Keys/Port Republic spec only" };
+  const owner = (lane.match(/\*\*Owning tool:\*\*\s*([^\n]+)/) || [null, ""])[1];
+  if (state === "DRIVE" && !/ChatGPT\/Codex 5\.6 Sol Ultra/.test(owner)) throw new Error("D377 DRIVE must be owned by ChatGPT/Codex 5.6 Sol Ultra: " + owner);
+  if (state === "CONTRACT" && !/^none\b/.test(owner)) throw new Error("released CONTRACT must be unowned: " + owner);
+  return { owner: state === "CONTRACT" ? "none" : "ChatGPT/Codex 5.6 Sol Ultra", state, boundary: "D362 retained", resume: "D377+ contract carried" };
 });
 
 step("SOURCES: NPS, ABT, Army CMH, and LOC anchors bind the decisive slice and rank corrections", () => {
