@@ -206,10 +206,10 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   D358 2026-07-10; 5c shipped D360 2026-07-10; ChatGPT/Codex took 5b DRIVE for the D367
   chartered session in D368 and released it untouched at D372's 10% boundary, 2026-07-10.
 
-### LANE-003 · battle-ladder — **CONTRACT** (unowned; Cross Keys/Port Republic spec only next)
+### LANE-003 · battle-ladder — **DRIVE** (Codex 5.6 Sol Ultra owns D377 Cross Keys/Port Republic spec only)
 
-- **Owning tool:** none — Codex 5.6 Sol Ultra released DRIVE after the green D376 playable Cedar Creek commit/push boundary.
-- **State:** CONTRACT — D363-D366 (New Market Heights spec+playable, Stones River spec+playable) and D373 (release battery 121/121) are shipped; D374 committed the research addendum; **D375 (2026-07-11) locked the Cedar Creek contract**; **D376 shipped playable Cedar Creek as scenario 17**. Next is Cross Keys/Port Republic **SPEC ONLY** from the committed `shenandoah-1862` packet; take DRIVE in a committed ledger edit before authoring. Runtime waits for a separately green/pushed spec + bind-tested plan probe.
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra — took the lock at clean `f083a6b` on 2026-07-11 for the D377 Cross Keys/Port Republic spec + bind-tested plan probe slice.
+- **State:** DRIVE — D363-D366 (New Market Heights spec+playable, Stones River spec+playable) and D373 (release battery 121/121) are shipped; D374 committed the research addendum; **D375 (2026-07-11) locked the Cedar Creek contract**; **D376 shipped playable Cedar Creek as scenario 17**. D377 is SPEC ONLY from the committed `shenandoah-1862` packet. No runtime data, registry/menu entry, count/pin move, or playable implementation may begin before this spec + plan probe are green, committed, and pushed.
 - **Design law:** `docs/design/battle-build-research/` packets (`eastern-1862` → Gaines' Mill ·
   `usct` → New Market Heights · `western-gaps` → Stones River · stretch: `shenandoah-1864` Cedar
   Creek · `shenandoah-1862` Cross Keys/Port Republic · `appomattox-campaign` Five Forks ·
