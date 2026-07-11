@@ -235,10 +235,10 @@ const SETUP = `(() => {
       return { cards:ids, codex:codex.id, axes:codex.axes };
     });
 
-    check('ARMY REGISTER PIN: 15 Gaines Mill units produce exactly cmd/nco/pvt rows and total 1068', function() {
+    check('ARMY REGISTER PIN: 15 Gaines Mill units produce exactly cmd/nco/pvt rows and current total 1125', function() {
       var C = makeCampaign('US'); if (typeof _t1InitAll === 'function') _t1InitAll(C);
       var reg = ssPersonRegistry(C), rows = [], groups = {};
-      if (reg.people.length !== 1068) throw new Error('Army Register total is ' + reg.people.length + ', expected 1068');   // D366: 990 -> 1068 — Stones River adds 26 unique units x 3 slots (the whole-registry pin moves whenever a battle ships; the Gaines-specific 45-row/15-unit teeth below are the stable part). Prior: D364 957 -> 990 (New Market Heights, 11 units); D362 912 -> 957 (this battle's own 15 units)
+      if (reg.people.length !== 1125) throw new Error('Army Register total is ' + reg.people.length + ', expected 1125');   // D376: 1068 -> 1125 — Cedar Creek adds 19 unique units x 3 slots (the whole-registry pin moves whenever a battle ships; the Gaines-specific 45-row/15-unit teeth below are stable). Prior: D366 990 -> 1068 (Stones River, 26 units); D364 957 -> 990 (New Market Heights, 11 units); D362 912 -> 957 (this battle's 15 units)
       for (var i = 0; i < reg.people.length; i++) {
         var p = reg.people[i], origin = p.replaces || p.pid;
         if (typeof origin === 'string' && origin.indexOf('ss:gainesMill:') === 0) rows.push({ p:p, origin:origin });

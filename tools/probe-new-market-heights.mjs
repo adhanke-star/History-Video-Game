@@ -277,12 +277,12 @@ const SETUP = `(() => {
       return { playable:false };
     });
 
-    check('ARMY REGISTER PIN: 11 New Market Heights units produce exact cmd/nco/pvt trios and total 1068', function() {
+    check('ARMY REGISTER PIN: 11 New Market Heights units produce exact cmd/nco/pvt trios and current total 1125', function() {
       var C = { side:'US', iron:false, idx:0, funds:6500, recovery:false, completed:[], roster:[], nextId:1,
         stats:{ battles:0, won:0, infl:0, suff:0 }, recoveryLossCount:0, recoveryMode:false, flipAtk:false, captured:[] };
       if (typeof _t1InitAll === 'function') _t1InitAll(C);
       var reg = ssPersonRegistry(C), rows = [], groups = {};
-      if (reg.people.length !== 1068) throw new Error('Army Register total is ' + reg.people.length + ', expected 1068');   // D366: 990 -> 1068 — Stones River adds 26 unique units x 3 slots (the whole-registry pin moves whenever a battle ships; the NMH-specific 33-row/11-unit teeth below are the stable part)
+      if (reg.people.length !== 1125) throw new Error('Army Register total is ' + reg.people.length + ', expected 1125');   // D376: 1068 -> 1125 — Cedar Creek adds 19 unique units x 3 slots (the whole-registry pin moves whenever a battle ships; the NMH-specific 33-row/11-unit teeth below are stable). Prior: D366 990 -> 1068 (Stones River, 26 units)
       for (var i = 0; i < reg.people.length; i++) {
         var p = reg.people[i], origin = p.replaces || p.pid;
         if (typeof origin === 'string' && origin.indexOf('ss:newMarketHeights:') === 0) rows.push(origin);

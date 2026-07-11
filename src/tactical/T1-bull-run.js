@@ -53,6 +53,7 @@ function fldScenarioRegistry() {
       if (GAME_DATA.chickamauga && GAME_DATA.chickamauga.chickamauga) R.chickamauga = GAME_DATA.chickamauga.chickamauga;   // Phase C-2 Western breadth: Chickamauga - the river of death (3 phases: the woods -> Longstreet's breakthrough -> Thomas at Snodgrass Hill / Horseshoe Ridge)
       if (GAME_DATA.chattanooga && GAME_DATA.chattanooga.chattanooga) R.chattanooga = GAME_DATA.chattanooga.chattanooga;   // D326 Western breadth: Chattanooga - the siege reversal (3 phases: Orchard Knob -> Lookout Mountain -> Missionary Ridge)
       if (GAME_DATA.kennesaw && GAME_DATA.kennesaw.kennesaw) R.kennesaw = GAME_DATA.kennesaw.kennesaw;   // D331 Atlanta Campaign: Kennesaw Mountain - Sherman's frontal assault (single-phase: Pigeon Hill + Dead Angle)
+      if (GAME_DATA["cedar-creek"] && GAME_DATA["cedar-creek"].cedarCreek) R.cedarCreek = GAME_DATA["cedar-creek"].cedarCreek;   // D376 Shenandoah 1864: Cedar Creek - role reversal (Gordon's fog-bound dawn assault -> Sheridan's decisive clear-afternoon counterattack)
       if (GAME_DATA.franklin && GAME_DATA.franklin.franklin) R.franklin = GAME_DATA.franklin.franklin;   // D333 Franklin/Nashville lane: Franklin - Hood's assault on the Carter House line (single-phase)
       if (GAME_DATA.nashville && GAME_DATA.nashville.nashville) R.nashville = GAME_DATA.nashville.nashville;   // D335 Franklin/Nashville lane: Nashville - Thomas breaks Hood's army (2 phases: Redoubts -> Shy's Hill / Peach Orchard)
     }
@@ -239,7 +240,7 @@ function fldScenarioMenuOrder(reg) {
   return ids;
 }
 function fldScenarioMenuRank(id) {
-  var order = { bullrun1: 10, gainesMill: 15, malvernHill: 18, antietam: 20, fredericksburg: 30, chancellorsville: 35, gettysburg: 40, newMarketHeights: 45, shiloh: 50, stonesRiver: 52, vicksburg: 55, chickamauga: 60, chattanooga: 65, kennesaw: 70, franklin: 75, nashville: 80 };
+  var order = { bullrun1: 10, gainesMill: 15, malvernHill: 18, antietam: 20, fredericksburg: 30, chancellorsville: 35, gettysburg: 40, newMarketHeights: 45, shiloh: 50, stonesRiver: 52, vicksburg: 55, chickamauga: 60, chattanooga: 65, kennesaw: 70, cedarCreek: 72, franklin: 75, nashville: 80 };
   return order[id] || 1000;
 }
 function fldScenarioDateSortValue(date) {

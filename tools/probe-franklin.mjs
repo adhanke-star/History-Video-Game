@@ -106,7 +106,7 @@ const SETUP = `(() => {
     initUS = DATA ? sideTotal('US') : 0;
     initCS = DATA ? sideTotal('CS') : 0;
 
-    step('DATA present and registered: Franklin is single-phase, CS attacker / US defender, fog OFF, after Kennesaw', function() {
+    step('DATA present and registered: Franklin is single-phase, CS attacker / US defender, fog OFF, after Cedar Creek', function() {
       var reg = fldScenarioRegistry();
       if (!DATA) throw new Error('GAME_DATA.franklin.franklin missing');
       if (!reg.franklin) throw new Error('franklin missing from registry');
@@ -114,7 +114,7 @@ const SETUP = `(() => {
       if (DATA.attacker !== 'CS' || DATA.defender !== 'US') throw new Error('roles wrong: ' + DATA.attacker + '/' + DATA.defender);
       if (DATA.defaultFog !== false) throw new Error('defaultFog must be false');
       var order = fldScenarioMenuOrder(reg);
-      if (order.indexOf('franklin') !== order.indexOf('kennesaw') + 1) throw new Error('menu order not after Kennesaw: ' + order.join(' -> '));
+      if (!(order.indexOf('cedarCreek') === order.indexOf('kennesaw') + 1 && order.indexOf('franklin') === order.indexOf('cedarCreek') + 1)) throw new Error('menu order is not Kennesaw -> Cedar Creek -> Franklin: ' + order.join(' -> '));
       return { order:order, usUnits:DATA.oob.US.length, csUnits:DATA.oob.CS.length };
     });
 
@@ -229,7 +229,7 @@ const DOM = `(() => {
     G.settings = G.settings || {}; G.mode = 'menu';
     try { delete G.settings.tacticalPreset; } catch(e) {}
     delete G.settings.tacticalFog;
-    step('MENU: Franklin button injects once immediately after Kennesaw and opens side-choice cards', function() {
+    step('MENU: Franklin button injects once immediately after Cedar Creek and opens side-choice cards', function() {
       if (typeof openMainMenu !== 'function') return { skipped:'no openMainMenu' };
       openMainMenu(); fldInjectMenuButton();
       var btn = document.getElementById('fldScnBtn_franklin');
@@ -238,7 +238,7 @@ const DOM = `(() => {
       fldInjectMenuButton();
       if (document.querySelectorAll('#fldScnBtn_franklin').length !== 1) throw new Error('duplicate Franklin buttons');
       var ids = Array.prototype.slice.call(document.querySelectorAll('.gn-btn')).map(function(b){ return b.id; });
-      if (!(ids.indexOf('fldScnBtn_kennesaw') >= 0 && ids.indexOf('fldScnBtn_franklin') === ids.indexOf('fldScnBtn_kennesaw') + 1)) throw new Error('Franklin not immediately after Kennesaw: ' + ids.join(' -> '));
+      if (!(ids.indexOf('fldScnBtn_cedarCreek') === ids.indexOf('fldScnBtn_kennesaw') + 1 && ids.indexOf('fldScnBtn_franklin') === ids.indexOf('fldScnBtn_cedarCreek') + 1)) throw new Error('menu is not Kennesaw -> Cedar Creek -> Franklin: ' + ids.join(' -> '));
       var got = null;
       fldScenarioSideChoice('franklin', function(s){ got = s; });
       var cards = document.querySelectorAll('[data-brside]');

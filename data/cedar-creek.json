@@ -1,0 +1,1131 @@
+{
+  "_comment": "D376 Cedar Creek (Belle Grove), October 19, 1864. Two-phase T8 role reversal per the committed D375 contract: Gordon's dawn assault (weight 1, CS attacker under real river fog) then Sheridan's decisive afternoon counterattack (weight 3, US attacker in the clear). The direction-neutral casualty law is load-bearing: the Union won while suffering the heavier total, so only phase-scoped casualty-direction guards ship and no aggregate casualty-direction tooth exists. Army-level and unit identities are source-anchored; every modeled unit strength is an Inferred abstraction of the CMH staff-ride reconstruction and carries the exact provenance label. Lomax is not fielded. No Cedar-Creek-specific combat or result key exists (D74).",
+  "cedarCreek": {
+    "id": "cedarCreek",
+    "name": "Cedar Creek - Dawn Rout, Afternoon Reversal",
+    "date": "October 19, 1864",
+    "place": "Belle Grove and Middletown, Virginia - from the North Fork crossings below Massanutten to the Valley Pike and Miller's Mill",
+    "blurb": "Before daylight, Early sends Gordon's flank column around Massanutten and Kershaw across Cedar Creek. Fog and surprise unravel the Union camps at Belle Grove. By afternoon Sheridan has returned from Winchester, re-formed the army, and turned the same field around: the former defender attacks, the former attacker tries to hold, and the winner pays the heavier total cost.",
+    "provenance": "Verified for the battle sequence, army-level anchors, unit identities, terrain, weather, and substantive battle-date grades under the D374/D375 source register. Inferred for every modeled unit strength, placement, readiness, and timing offset; the Confederate unit-grain table is a disclosed post-battle reconstruction. Full contract: docs/design/cedar-creek-battle-build-spec.md.",
+    "attacker": "CS",
+    "defender": "US",
+    "defaultFog": true,
+    "_fogNote": "Phase 1 opens in the Verified pre-dawn river fog. Phase 2 declares defaultFog:false because the fog burned off during the morning; an explicit player fog choice still takes precedence through the universal T8 seam.",
+    "homeEdge": {
+      "US": "low",
+      "CS": "high"
+    },
+    "_homeEdgeNote": "Low z is north toward Winchester and Newtown, the Union rear; high z is south toward Strasburg and Fisher's Hill, the Confederate rear. The side-keyed home edges stay constant when attacker and defender reverse. (Verified geography; Inferred field orientation)",
+    "holdToWinSec": 80,
+    "timeLimitSec": 380,
+    "field": {
+      "w": 1250,
+      "h": 950
+    },
+    "weather": {
+      "sky": "fog",
+      "time": "dawn",
+      "provenance": "Verified",
+      "note": "The battle opened before daylight in dense river fog along Cedar Creek and the North Fork. The single-value weather block describes that opening; phase 2 carries the clear afternoon through per-phase defaultFog:false.",
+      "sources": [
+        "https://www.nps.gov/articles/000/battle-of-cedar-creek.htm",
+        "https://history.army.mil/books/Staff-Rides/CedarCreek/ccbattle.htm"
+      ]
+    },
+    "menu": {
+      "title": "CEDAR CREEK (1864)",
+      "deck": "One field, two armies attacking in turn: spring Gordon's dawn surprise through the fog, or survive the camps and return with Sheridan for the decisive counterattack.",
+      "aria": "Cedar Creek, October 1864 - the two-phase real-time historical battle; command either army through the dawn assault and afternoon role reversal."
+    },
+    "sides": {
+      "heading": "Cedar Creek - Take Which Command?",
+      "intro": "October 19, 1864 - a Confederate dawn assault overruns the Valley camps; a Union afternoon counterattack fights back across the same ground.",
+      "US": {
+        "title": "Command the Union (Sheridan)",
+        "badge": "&#9733; RALLY AND RETURN",
+        "deck": "Your camps are struck before daylight and your left is turned. Trade ground for time, preserve the corps, then use the clear afternoon and your cavalry on both flanks to seize the line north of Middletown."
+      },
+      "CS": {
+        "title": "Command the Confederacy (Early)",
+        "badge": "&#9876; DAWN FLANK MARCH",
+        "deck": "Your columns have crossed below Massanutten and reached the camps unseen. Take Belle Grove before the Union forms, then decide whether to press or hold when Sheridan's army comes back in the afternoon."
+      },
+      "foot": "The other army is commanded by the AI. Phase 1 carries weight 1; Sheridan's phase-2 counterattack carries the decisive weight 3. Home edges stay tied to the armies, not to their changing roles."
+    },
+    "brief": {
+      "attack": "The night march has put Gordon, Ramseur, Pegram, and Kershaw against the exposed Union left. Fog, low camp readiness, and flank mass are the whole surprise model; no combat bonus exists. Take the Belle Grove camp line before VI Corps and the cavalry stabilize the withdrawal. In the afternoon you become the defender north of Middletown.",
+      "defend": "Crook's and Kitching's camps are about to be struck from the flank in fog. Save what you can, let VI Corps buy time, and keep the cavalry intact. The decisive phase reverses the roles: Sheridan attacks with the re-formed army and the Confederate line must hold Miller's Mill."
+    },
+    "objective": {
+      "x": 760,
+      "z": 430,
+      "r": 115,
+      "name": "The Belle Grove Camp Line"
+    },
+    "phases": [
+      {
+        "id": "gordons-dawn-assault",
+        "name": "Gordon's Dawn Assault",
+        "sector": "The North Fork crossings, Cedar Creek, and the Union camps at Belle Grove",
+        "timing": "October 19, 1864 - about 5:00 a.m., in dense river fog",
+        "attacker": "CS",
+        "defender": "US",
+        "assaultDoctrine": "standard",
+        "defaultFog": true,
+        "holdToWinSec": 80,
+        "timeLimitSec": 380,
+        "scoreWeight": 1,
+        "objective": {
+          "x": 760,
+          "z": 430,
+          "r": 115,
+          "name": "The Belle Grove Camp Line"
+        },
+        "transition": {
+          "title": "The Fog at Belle Grove",
+          "lead": "Gordon's column has crossed the North Fork after the all-night march beneath Massanutten; Kershaw is across Bowman's Mill Ford, and Wharton advances by Hupp's Hill on the Valley Pike. The surprise comes from position, fog, and camps caught at reveille."
+        },
+        "terrain": {
+          "hills": [
+            {
+              "name": "Massanutten Mountain shoulder",
+              "x": 1110,
+              "z": 720,
+              "h": 28,
+              "s": 150,
+              "note": "Massanutten screened Gordon's all-night flank march and the North Fork crossings. (Verified feature; Inferred placement)"
+            },
+            {
+              "name": "Middletown cemetery hill",
+              "x": 420,
+              "z": 235,
+              "h": 18,
+              "s": 120,
+              "note": "Getty's division made its delaying stand on the cemetery hill as the army withdrew north. (Verified stand; Inferred placement)"
+            }
+          ],
+          "woods": [
+            {
+              "x": 970,
+              "z": 610,
+              "r": 110,
+              "note": "The wooded base of Massanutten concealed the flank column's approach. (Verified feature; Inferred placement)"
+            },
+            {
+              "x": 785,
+              "z": 500,
+              "r": 90,
+              "note": "Timber and broken ground around the Cedar Creek crossings screened Kershaw's advance. (Verified feature; Inferred placement)"
+            },
+            {
+              "x": 360,
+              "z": 360,
+              "r": 80,
+              "note": "Orchards and farm woodlots around Belle Grove broke sight lines inside the camps. (Verified landscape; Inferred placement)"
+            }
+          ],
+          "walls": [],
+          "swamps": [
+            {
+              "x": 850,
+              "z": 585,
+              "r": 80,
+              "note": "River bottom at Bowman's Mill Ford and the Cedar Creek crossing band. (Verified water approach; Inferred placement)"
+            }
+          ],
+          "markers": [
+            {
+              "kind": "water",
+              "name": "The North Fork of the Shenandoah",
+              "path": [[1030, 930], [1000, 760], [930, 620], [850, 520]],
+              "note": "Gordon's flank column crossed at McInturff's and Bowman's Fords below Massanutten. (Verified; Inferred trace)"
+            },
+            {
+              "kind": "water",
+              "name": "Cedar Creek at Bowman's Mill Ford",
+              "path": [[1160, 590], [940, 570], [740, 585], [520, 610]],
+              "note": "Kershaw waded Cedar Creek unopposed at Bowman's Mill Ford about 04:30. (Verified; Inferred trace)"
+            },
+            {
+              "kind": "road",
+              "name": "Valley Pike from Hupp's Hill to Middletown",
+              "path": [[610, 900], [620, 700], [630, 500], [620, 300], [600, 70]],
+              "note": "Wharton advanced from Hupp's Hill along the Valley Pike, the axis of the morning drive and afternoon return. (Verified; Inferred trace)"
+            },
+            {
+              "kind": "town",
+              "name": "Belle Grove",
+              "path": [[760, 430]],
+              "note": "Sheridan's headquarters and the camp-line objective, overrun in the morning. (Verified)"
+            },
+            {
+              "kind": "town",
+              "name": "Middletown",
+              "path": [[560, 180]],
+              "note": "The withdrawal passed through Middletown toward the cemetery-hill stand. (Verified; Inferred placement)"
+            }
+          ]
+        },
+        "leaders": {
+          "US": [
+            {
+              "id": "ld_cc_wright_p1",
+              "name": "Maj. Gen. Horatio G. Wright",
+              "short": "Wright",
+              "quality": 0.62,
+              "radius": 240,
+              "x": 440,
+              "z": 220,
+              "fate": 2.0,
+              "note": "VI Corps commander and acting army commander before Sheridan returned. (Verified)"
+            },
+            {
+              "id": "ld_cc_crook_p1",
+              "name": "Brig. Gen. George Crook",
+              "short": "Crook",
+              "quality": 0.5,
+              "radius": 210,
+              "x": 760,
+              "z": 390,
+              "fate": 2.1,
+              "note": "VIII Corps and the Army of West Virginia, caught in camp before daylight. His major-general grade came two days after the battle. (Verified)"
+            },
+            {
+              "id": "ld_cc_emory_p1",
+              "name": "Brig. Gen. William H. Emory (Bvt. Maj. Gen.)",
+              "short": "Emory",
+              "quality": 0.56,
+              "radius": 220,
+              "x": 580,
+              "z": 330,
+              "fate": 1.8,
+              "note": "XIX Corps commander at his substantive volunteer grade; the brevet parenthetical follows his name. (Verified)"
+            },
+            {
+              "id": "ld_cc_torbert_p1",
+              "name": "Brig. Gen. Alfred T. A. Torbert (Bvt. Maj. Gen.)",
+              "short": "Torbert",
+              "quality": 0.6,
+              "radius": 220,
+              "x": 250,
+              "z": 180,
+              "fate": 1.7,
+              "note": "Chief of cavalry; his best-known-grade labels do not replace the substantive battle-date grade. (Verified)"
+            }
+          ],
+          "CS": [
+            {
+              "id": "ld_cc_early_p1",
+              "name": "Lt. Gen. Jubal A. Early",
+              "short": "Early",
+              "quality": 0.54,
+              "radius": 250,
+              "x": 610,
+              "z": 820,
+              "fate": 1.6,
+              "note": "Army of the Valley commander in the temporary grade appointed May 31, 1864. (Verified)"
+            },
+            {
+              "id": "ld_cc_gordon_p1",
+              "name": "Maj. Gen. John B. Gordon",
+              "short": "Gordon",
+              "quality": 0.7,
+              "radius": 250,
+              "x": 860,
+              "z": 560,
+              "fate": 2.0,
+              "note": "Commander of the flank column that crossed below Massanutten. (Verified)"
+            }
+          ]
+        },
+        "supply": {
+          "US": {
+            "x": 450,
+            "z": 75,
+            "name": "The Winchester road trains"
+          },
+          "CS": {
+            "x": 670,
+            "z": 900,
+            "name": "The Strasburg road trains"
+          }
+        },
+        "oob": {
+          "US": [
+            {
+              "id": "us_cc_thoburn",
+              "name": "Thoburn's Division - VIII Corps Camp",
+              "commander": "Col. Joseph Thoburn",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2100,
+              "xp": 1,
+              "x": 820,
+              "z": 430,
+              "facing": 3.14159,
+              "formation": "column",
+              "note": "The first division struck in its camp. Thoburn was killed during the morning collapse. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_cc_hayes",
+              "name": "Hayes's Kanawha Division - VIII Corps",
+              "commander": "Col. Rutherford B. Hayes",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2000,
+              "xp": 1,
+              "x": 740,
+              "z": 405,
+              "facing": 3.14159,
+              "formation": "column",
+              "note": "The future president commanded a division here as a colonel, not as a general. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_cc_kitching",
+              "name": "Kitching's Provisional Division",
+              "commander": "Col. J. Howard Kitching",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1000,
+              "xp": 1,
+              "x": 675,
+              "z": 430,
+              "facing": 3.14159,
+              "formation": "column",
+              "note": "Kitching carried a colonel's substantive grade at Cedar Creek. Wounded in the foot, he died from the wound on January 11, 1865; the later posthumous brevet does not change the field rank. Verified identity; Inferred strength."
+            }
+          ],
+          "CS": [
+            {
+              "id": "cs_cc_gordon",
+              "name": "Gordon's Division - Flank Column",
+              "commander": "Maj. Gen. John B. Gordon",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2200,
+              "xp": 3,
+              "x": 800,
+              "z": 520,
+              "facing": 0,
+              "formation": "column",
+              "note": "Evans's, Terry's, and York's brigades in the concealed flank column. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_cc_ramseur",
+              "name": "Ramseur's Division - Flank Column",
+              "commander": "Maj. Gen. Stephen D. Ramseur",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2400,
+              "xp": 3,
+              "x": 740,
+              "z": 535,
+              "facing": 0,
+              "formation": "column",
+              "note": "Battle's, Grimes's, Cook's, and Cox's brigades in Gordon's column; Ramseur's mortal wound belongs to teaching, never to a combat trigger. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_cc_pegram",
+              "name": "Pegram's Division - Flank Column",
+              "commander": "Brig. Gen. John Pegram",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2000,
+              "xp": 2,
+              "x": 880,
+              "z": 540,
+              "facing": 0,
+              "formation": "column",
+              "note": "Hoffman's, Johnston's, and Goodwin's brigades; Pegram survived Cedar Creek and died months later at Hatcher's Run. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_cc_kershaw",
+              "name": "Kershaw's Division - Bowman's Mill Ford",
+              "commander": "Maj. Gen. Joseph B. Kershaw",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 3000,
+              "xp": 3,
+              "x": 690,
+              "z": 530,
+              "facing": 0,
+              "formation": "column",
+              "note": "Conner's, Humphreys's, Wofford's, and Bryan's brigades after the unopposed 04:30 wade at Bowman's Mill Ford. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_cc_army_guns",
+              "name": "Army of the Valley Artillery",
+              "commander": "Division and army batteries",
+              "arm": "art",
+              "weapon": "smooth",
+              "guns": 40,
+              "men": 700,
+              "xp": 2,
+              "x": 700,
+              "z": 600,
+              "facing": 0,
+              "formation": "line",
+              "note": "A 40-gun abstraction inside the CMH 30-48 phase-1 range. Verified identity; Inferred strength."
+            }
+          ]
+        },
+        "reinforcements": [
+          {
+            "id": "cs_cc_wharton",
+            "side": "CS",
+            "atSec": 38,
+            "name": "Wharton's Division - Valley Pike",
+            "commander": "Brig. Gen. Gabriel C. Wharton",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 1400,
+            "xp": 2,
+            "x": 600,
+            "z": 720,
+            "facing": 0,
+            "formation": "column",
+            "entry": "advancing from Hupp's Hill on the Valley Pike",
+            "note": "Wharton's division enters on the Pike after the flank columns open the attack. Verified identity; Inferred strength."
+          },
+          {
+            "id": "cs_cc_rosser",
+            "side": "CS",
+            "atSec": 72,
+            "name": "Rosser's Cavalry Division - Back Road",
+            "commander": "Brig. Gen. Thomas L. Rosser",
+            "arm": "cav",
+            "weapon": "carbine",
+            "men": 2200,
+            "xp": 2,
+            "x": 1060,
+            "z": 650,
+            "facing": 0,
+            "formation": "column",
+            "entry": "opposing Custer along the Back Road",
+            "note": "Wickham's, Payne's, and the Laurel brigade under Rosser. Maj. Gen. Lunsford L. Lomax operated on the Front Royal road and is not fielded on the main battlefield. Verified identity; Inferred strength."
+          },
+          {
+            "id": "us_cc_dwight",
+            "side": "US",
+            "atSec": 115,
+            "name": "Dwight's Division - XIX Corps",
+            "commander": "Brig. Gen. William Dwight",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 4200,
+            "xp": 1,
+            "x": 520,
+            "z": 160,
+            "facing": 3.14159,
+            "formation": "column",
+            "entry": "re-forming north of the XIX Corps camps",
+            "note": "One of Emory's two XIX Corps divisions, modeled on the sequential withdrawal after the VIII Corps camps were struck. Verified identity; Inferred strength."
+          },
+          {
+            "id": "us_cc_grover",
+            "side": "US",
+            "atSec": 135,
+            "name": "Grover's Division - XIX Corps",
+            "commander": "Brig. Gen. Cuvier Grover",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 4400,
+            "xp": 1,
+            "x": 600,
+            "z": 145,
+            "facing": 3.14159,
+            "formation": "column",
+            "entry": "re-forming from the Belle Grove camp line",
+            "note": "Emory's second XIX Corps division enters the modeled sequence after the first camp line is broken. Verified identity; Inferred strength."
+          },
+          {
+            "id": "us_cc_army_guns",
+            "side": "US",
+            "atSec": 145,
+            "name": "Army of the Shenandoah Artillery",
+            "commander": "VI, VIII, and XIX Corps batteries",
+            "arm": "art",
+            "weapon": "napoleon",
+            "guns": 78,
+            "men": 800,
+            "xp": 2,
+            "x": 320,
+            "z": 80,
+            "facing": 3.14159,
+            "formation": "line",
+            "entry": "assembling on the withdrawal line",
+            "note": "A corps-grain abstraction of 78 guns inside the CMH 60-90 Union phase-1 range; guns lost during the rout are an emergent battle event, not a scripted count. Verified identity; Inferred strength."
+          },
+          {
+            "id": "us_cc_wheaton",
+            "side": "US",
+            "atSec": 170,
+            "name": "Wheaton's Division - VI Corps",
+            "commander": "Brig. Gen. Frank Wheaton",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 3000,
+            "xp": 2,
+            "x": 300,
+            "z": 90,
+            "facing": 3.14159,
+            "formation": "line",
+            "entry": "forming the VI Corps delaying line",
+            "note": "A VI Corps division re-forming north of the broken camps during the delaying withdrawal. Verified identity; Inferred strength."
+          },
+          {
+            "id": "us_cc_getty",
+            "side": "US",
+            "atSec": 190,
+            "name": "Getty's Division - Cemetery Hill",
+            "commander": "Brig. Gen. George W. Getty",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 3200,
+            "xp": 3,
+            "x": 420,
+            "z": 100,
+            "facing": 3.14159,
+            "formation": "line",
+            "entry": "taking the Middletown cemetery-hill line",
+            "note": "The VI Corps anchor at Middletown cemetery hill, where successive assaults were repelled during the withdrawal. Verified identity; Inferred strength."
+          },
+          {
+            "id": "us_cc_keifer",
+            "side": "US",
+            "atSec": 210,
+            "name": "Keifer's Third Division - VI Corps",
+            "commander": "Col. J. Warren Keifer",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 2500,
+            "xp": 2,
+            "x": 240,
+            "z": 110,
+            "facing": 3.14159,
+            "formation": "line",
+            "entry": "joining the VI Corps delaying line",
+            "note": "Col. J. Warren Keifer took the division after Brig. Gen. James B. Ricketts was wounded early. Verified identity; Inferred strength."
+          },
+          {
+            "id": "us_cc_merritt",
+            "side": "US",
+            "atSec": 230,
+            "name": "Merritt's First Cavalry Division",
+            "commander": "Brig. Gen. Wesley Merritt",
+            "arm": "cav",
+            "weapon": "carbine",
+            "men": 2800,
+            "xp": 3,
+            "x": 170,
+            "z": 120,
+            "facing": 3.14159,
+            "formation": "column",
+            "entry": "covering the Union left and withdrawal",
+            "note": "Merritt's division includes Col. Charles Russell Lowell's Reserve Brigade; Lowell's star was posthumous. Verified identity; Inferred strength."
+          },
+          {
+            "id": "us_cc_custer",
+            "side": "US",
+            "atSec": 250,
+            "name": "Custer's Third Cavalry Division",
+            "commander": "Brig. Gen. George A. Custer",
+            "arm": "cav",
+            "weapon": "carbine",
+            "men": 2400,
+            "xp": 3,
+            "x": 1080,
+            "z": 170,
+            "facing": 3.14159,
+            "formation": "column",
+            "entry": "covering the far western flank against Rosser",
+            "note": "Custer's division contests the Back Road and Cupp's Ford; his major-general grade came later. Verified identity; Inferred strength."
+          },
+          {
+            "id": "us_cc_powell",
+            "side": "US",
+            "atSec": 270,
+            "name": "Powell's Second Cavalry Division",
+            "commander": "Col. William H. Powell",
+            "arm": "cav",
+            "weapon": "carbine",
+            "men": 1800,
+            "xp": 2,
+            "x": 270,
+            "z": 110,
+            "facing": 3.14159,
+            "formation": "column",
+            "entry": "covering the road toward Winchester",
+            "note": "A cavalry division commanded by a colonel at Cedar Creek. Verified identity; Inferred strength."
+          }
+        ],
+        "teaching": {
+          "head": "The same field changes hands",
+          "body": "The morning victory came from a concealed night march, fog, and mass against camps caught before they formed. Those are the game's inputs. The role reversal begins only after Sheridan re-forms the army; no surprise or collapse multiplier decides either phase.",
+          "provenance": "Verified sequence (CMH battle narrative; NPS); readiness, positions, and timing offsets are Inferred."
+        }
+      },
+      {
+        "id": "sheridans-counterattack",
+        "name": "Sheridan's Counterattack",
+        "sector": "The Valley Pike, stone walls, and high ground north of Middletown near Miller's Mill",
+        "timing": "October 19, 1864 - just before 4:00 p.m., under a clear sky",
+        "attacker": "US",
+        "defender": "CS",
+        "assaultDoctrine": "standard",
+        "defaultFog": false,
+        "holdToWinSec": 100,
+        "timeLimitSec": 390,
+        "scoreWeight": 3,
+        "objective": {
+          "x": 650,
+          "z": 500,
+          "r": 130,
+          "name": "Miller's Mill High Ground north of Middletown"
+        },
+        "transition": {
+          "title": "Sheridan Returns",
+          "lead": "Sheridan has ridden from Winchester and re-formed the army. The fog is gone. XIX Corps takes the Union right, VI Corps the left, Merritt the left flank, Custer the far right, and Crook's survivors the reserve. The former defender now attacks."
+        },
+        "terrain": {
+          "hills": [
+            {
+              "name": "Miller's Mill high ground",
+              "x": 650,
+              "z": 500,
+              "h": 24,
+              "s": 180,
+              "note": "The Confederate halt line north of Middletown near Miller's Mill and Old Forge Road. (Verified feature; Inferred placement)"
+            },
+            {
+              "name": "Middletown cemetery hill",
+              "x": 520,
+              "z": 330,
+              "h": 16,
+              "s": 125,
+              "note": "The ground of Getty's morning stand, now behind the re-formed Union line. (Verified feature; Inferred placement)"
+            }
+          ],
+          "woods": [
+            {
+              "x": 880,
+              "z": 600,
+              "r": 100,
+              "note": "Farm woods breaking the Confederate right near the Pike. (Inferred placement)"
+            },
+            {
+              "x": 300,
+              "z": 580,
+              "r": 95,
+              "note": "Wooded ground toward the Back Road and Cupp's Ford. (Verified feature; Inferred placement)"
+            }
+          ],
+          "walls": [
+            {
+              "x1": 340,
+              "z1": 520,
+              "x2": 950,
+              "z2": 550,
+              "note": "Stone walls and farm boundaries across the high ground north of Middletown. (Verified feature; Inferred trace)"
+            }
+          ],
+          "swamps": [],
+          "markers": [
+            {
+              "kind": "road",
+              "name": "Valley Pike",
+              "path": [[610, 40], [625, 250], [640, 470], [650, 700], [665, 920]],
+              "note": "The north-south axis of Sheridan's counterattack and Early's retreat. (Verified; Inferred trace)"
+            },
+            {
+              "kind": "road",
+              "name": "Back Road at Cupp's Ford",
+              "path": [[150, 60], [190, 260], [240, 500], [300, 850]],
+              "note": "The western flank where Custer opposed Rosser. (Verified; Inferred trace)"
+            },
+            {
+              "kind": "town",
+              "name": "Middletown",
+              "path": [[600, 360]],
+              "note": "The town below the afternoon halt line. (Verified; Inferred placement)"
+            },
+            {
+              "kind": "town",
+              "name": "Miller's Mill",
+              "path": [[670, 515]],
+              "note": "The objective anchor on the high ground north of Middletown. (Verified; Inferred placement)"
+            },
+            {
+              "kind": "town",
+              "name": "Belle Grove",
+              "path": [[650, 760]],
+              "note": "The morning camp ground behind the Confederate afternoon line. (Verified; Inferred placement)"
+            }
+          ]
+        },
+        "leaders": {
+          "US": [
+            {
+              "id": "ld_cc_sheridan_p2",
+              "name": "Maj. Gen. Philip H. Sheridan",
+              "short": "Sheridan",
+              "quality": 0.76,
+              "radius": 270,
+              "x": 620,
+              "z": 240,
+              "fate": 2.0,
+              "note": "Middle Military Division and Army of the Shenandoah commander, back on the field and directing the counterattack. (Verified)"
+            },
+            {
+              "id": "ld_cc_wright_p2",
+              "name": "Maj. Gen. Horatio G. Wright",
+              "short": "Wright",
+              "quality": 0.64,
+              "radius": 230,
+              "x": 500,
+              "z": 250,
+              "fate": 1.8,
+              "note": "VI Corps on the Union left. (Verified)"
+            },
+            {
+              "id": "ld_cc_emory_p2",
+              "name": "Brig. Gen. William H. Emory (Bvt. Maj. Gen.)",
+              "short": "Emory",
+              "quality": 0.58,
+              "radius": 230,
+              "x": 760,
+              "z": 270,
+              "fate": 1.8,
+              "note": "XIX Corps on the Union right at the substantive battle-date grade. (Verified)"
+            },
+            {
+              "id": "ld_cc_torbert_p2",
+              "name": "Brig. Gen. Alfred T. A. Torbert (Bvt. Maj. Gen.)",
+              "short": "Torbert",
+              "quality": 0.62,
+              "radius": 230,
+              "x": 300,
+              "z": 230,
+              "fate": 1.8,
+              "note": "Chief of cavalry coordinating Merritt, Custer, and Powell across both flanks. (Verified)"
+            }
+          ],
+          "CS": [
+            {
+              "id": "ld_cc_early_p2",
+              "name": "Lt. Gen. Jubal A. Early",
+              "short": "Early",
+              "quality": 0.5,
+              "radius": 250,
+              "x": 650,
+              "z": 760,
+              "fate": 1.6,
+              "note": "Army of the Valley commander in temporary grade, holding north of Middletown before the counterattack. (Verified)"
+            },
+            {
+              "id": "ld_cc_gordon_p2",
+              "name": "Maj. Gen. John B. Gordon",
+              "short": "Gordon",
+              "quality": 0.66,
+              "radius": 235,
+              "x": 300,
+              "z": 590,
+              "fate": 2.0,
+              "note": "Gordon's division stood on the Confederate left, the flank the Union cavalry broke first. (Verified)"
+            }
+          ]
+        },
+        "supply": {
+          "US": {
+            "x": 620,
+            "z": 65,
+            "name": "The Winchester road trains"
+          },
+          "CS": {
+            "x": 650,
+            "z": 900,
+            "name": "The Strasburg road trains"
+          }
+        },
+        "oob": {
+          "US": [
+            {
+              "id": "us_cc_dwight",
+              "name": "Dwight's Division - XIX Corps Right",
+              "commander": "Brig. Gen. William Dwight",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 3700,
+              "xp": 2,
+              "x": 800,
+              "z": 270,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "Re-formed on the Union right for the afternoon attack. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_cc_grover",
+              "name": "Grover's Division - XIX Corps Right",
+              "commander": "Brig. Gen. Cuvier Grover",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 3800,
+              "xp": 2,
+              "x": 900,
+              "z": 285,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "XIX Corps mass on the right of Sheridan's counterattack. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_cc_wheaton",
+              "name": "Wheaton's Division - VI Corps Left",
+              "commander": "Brig. Gen. Frank Wheaton",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2800,
+              "xp": 3,
+              "x": 520,
+              "z": 270,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "VI Corps division on the left of the afternoon advance. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_cc_getty",
+              "name": "Getty's Division - VI Corps Left",
+              "commander": "Brig. Gen. George W. Getty",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 3000,
+              "xp": 3,
+              "x": 430,
+              "z": 290,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "The morning's cemetery-hill anchor now advances with VI Corps. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_cc_keifer",
+              "name": "Keifer's Third Division - VI Corps",
+              "commander": "Col. J. Warren Keifer",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2200,
+              "xp": 2,
+              "x": 610,
+              "z": 300,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "The division Keifer took after Ricketts was wounded. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_cc_merritt",
+              "name": "Merritt's First Cavalry Division - Left Flank",
+              "commander": "Brig. Gen. Wesley Merritt",
+              "arm": "cav",
+              "weapon": "carbine",
+              "men": 2400,
+              "xp": 3,
+              "x": 180,
+              "z": 250,
+              "facing": 3.14159,
+              "formation": "column",
+              "note": "Fresh cavalry on the Union left flank. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_cc_custer",
+              "name": "Custer's Third Cavalry Division - Far Right",
+              "commander": "Brig. Gen. George A. Custer",
+              "arm": "cav",
+              "weapon": "carbine",
+              "men": 2200,
+              "xp": 3,
+              "x": 1080,
+              "z": 260,
+              "facing": 3.14159,
+              "formation": "column",
+              "note": "The far-right cavalry wing opposing Rosser on the Back Road. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_cc_army_guns",
+              "name": "Re-formed Army of the Shenandoah Artillery",
+              "commander": "VI and XIX Corps batteries",
+              "arm": "art",
+              "weapon": "napoleon",
+              "guns": 60,
+              "men": 600,
+              "xp": 3,
+              "x": 690,
+              "z": 330,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "A 60-gun abstraction inside the phase-2 40-90 range. Morning captures remain a within-battle event, not an OOB count claim. Verified identity; Inferred strength."
+            }
+          ],
+          "CS": [
+            {
+              "id": "cs_cc_gordon",
+              "name": "Gordon's Division - Confederate Left",
+              "commander": "Maj. Gen. John B. Gordon",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2400,
+              "xp": 2,
+              "x": 300,
+              "z": 570,
+              "facing": 0,
+              "formation": "line",
+              "note": "The inferred western end of the afternoon line; no probe treats the full west-to-east order as Verified. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_cc_kershaw",
+              "name": "Kershaw's Division - Halt Line",
+              "commander": "Maj. Gen. Joseph B. Kershaw",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2900,
+              "xp": 2,
+              "x": 460,
+              "z": 575,
+              "facing": 0,
+              "formation": "line",
+              "note": "Placed on the halt line as an Inferred sector abstraction. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_cc_ramseur",
+              "name": "Ramseur's Division - Miller's Mill",
+              "commander": "Maj. Gen. Stephen D. Ramseur",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2300,
+              "xp": 2,
+              "x": 610,
+              "z": 570,
+              "facing": 0,
+              "formation": "line",
+              "note": "Ramseur remained in command until mortally wounded during the collapse; the event is not scripted. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_cc_pegram",
+              "name": "Pegram's Division - Halt Line",
+              "commander": "Brig. Gen. John Pegram",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1900,
+              "xp": 2,
+              "x": 740,
+              "z": 585,
+              "facing": 0,
+              "formation": "line",
+              "note": "Placed east of the Pike as an Inferred sector abstraction. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_cc_wharton",
+              "name": "Wharton's Division - Valley Pike",
+              "commander": "Brig. Gen. Gabriel C. Wharton",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1400,
+              "xp": 2,
+              "x": 880,
+              "z": 600,
+              "facing": 0,
+              "formation": "line",
+              "note": "The Valley Pike division on an Inferred sector of the afternoon line. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_cc_rosser",
+              "name": "Rosser's Cavalry Division - Back Road",
+              "commander": "Brig. Gen. Thomas L. Rosser",
+              "arm": "cav",
+              "weapon": "carbine",
+              "men": 2300,
+              "xp": 2,
+              "x": 1050,
+              "z": 620,
+              "facing": 0,
+              "formation": "line",
+              "note": "Rosser still opposes Custer on the Back Road and at Cupp's Ford. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_cc_army_guns",
+              "name": "Army of the Valley Artillery - Halt Line",
+              "commander": "Division and army batteries",
+              "arm": "art",
+              "weapon": "smooth",
+              "guns": 32,
+              "men": 800,
+              "xp": 2,
+              "x": 650,
+              "z": 650,
+              "facing": 0,
+              "formation": "line",
+              "note": "A 32-gun abstraction inside the phase-2 15-48 range; pursuit prose stays count-free. Verified identity; Inferred strength."
+            }
+          ]
+        },
+        "reinforcements": [
+          {
+            "id": "us_cc_powell",
+            "side": "US",
+            "atSec": 35,
+            "name": "Powell's Second Cavalry Division - Reserve",
+            "commander": "Col. William H. Powell",
+            "arm": "cav",
+            "weapon": "carbine",
+            "men": 1500,
+            "xp": 2,
+            "x": 320,
+            "z": 160,
+            "facing": 3.14159,
+            "formation": "column",
+            "entry": "moving from the cavalry reserve",
+            "note": "Powell's division enters behind the left wing. Verified identity; Inferred strength."
+          },
+          {
+            "id": "us_cc_hayes",
+            "side": "US",
+            "atSec": 58,
+            "name": "Hayes's Kanawha Division - VIII Corps Reserve",
+            "commander": "Col. Rutherford B. Hayes",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 1600,
+            "xp": 2,
+            "x": 560,
+            "z": 170,
+            "facing": 3.14159,
+            "formation": "column",
+            "entry": "joining Crook's reserve",
+            "note": "The re-formed Kanawha division enters as part of Crook's reserve. Verified identity; Inferred strength."
+          },
+          {
+            "id": "us_cc_kitching",
+            "side": "US",
+            "atSec": 78,
+            "name": "Kitching's Provisional Division - Remnant",
+            "commander": "Col. J. Howard Kitching",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 700,
+            "xp": 2,
+            "x": 650,
+            "z": 150,
+            "facing": 3.14159,
+            "formation": "column",
+            "entry": "joining the VIII Corps reserve",
+            "note": "A reduced reserve abstraction under Kitching's field grade of colonel. Verified identity; Inferred strength."
+          }
+        ],
+        "teaching": {
+          "head": "The afternoon role reversal",
+          "body": "XIX Corps attacks on the right, VI Corps on the left, Merritt on the left flank, Custer on the far right, and Crook in reserve. The United States has the strength edge and fresh cavalry; the Confederate line has lost cohesion and time. The game encodes those inputs and leaves the result to the universal model.",
+          "provenance": "Verified axes and timing (D374 §12.3); strengths, placements, and cohesion timing are Inferred."
+        }
+      }
+    ],
+    "endNote": {
+      "US": {
+        "US": "History holds. The dawn camps were lost, but the army was re-formed and the afternoon counterattack carried the high ground north of Middletown. The pursuit recaptured the morning's lost guns and took most of Early's artillery and trains. The Union won Cedar Creek while bearing the heavier total casualty column.",
+        "CS": "History is overturned. The morning surprise still broke the camps, but the afternoon line held against Sheridan's return. Early's Valley army survives as a field force, and the campaign's political and military ending remains open."
+      },
+      "CS": {
+        "US": "History is overturned. The camps were saved and the dawn assault failed before Belle Grove. Sheridan returns to an army already holding its ground, and the afternoon becomes pursuit rather than recovery.",
+        "CS": "History diverges at the fatal opportunity. Belle Grove fell and the attack kept its momentum; Sheridan's re-formed army could not retake Miller's Mill. The human player has done what the postwar dispute argues Early should have tried, without any mechanic choosing sides in that dispute."
+      },
+      "draw": "The field changes hands without a decisive afternoon result. The real battle did not end in balance: Sheridan's counterattack broke Early's line, but the Union still carried the heavier total cost."
+    },
+    "teaching": {
+      "title": "Cedar Creek - what the reversal teaches",
+      "cards": [
+        {
+          "id": "cc_fatal_halt",
+          "head": "The Fatal Halt - two commanders, two postwar accounts",
+          "body": "Early's account said his army stopped because it was exhausted, disordered, and thinned by men plundering the captured camps. Gordon's Reminiscences blamed the halt itself - the hesitation and broken firing that lost the opportunity - and only Gordon's postwar account reports Early saying there was 'glory enough for one day.' The National Park Service presents both primary accounts. The game leaves the dispute open and encodes neither explanation as a special mechanic.",
+          "provenance": "Verified as an explicit dispute (NPS Fatal Halt article quoting Early and Gordon; Gordon's Reminiscences ch. XXV).",
+          "sources": [
+            "https://www.nps.gov/articles/000/fatal-halt.htm",
+            "https://docsouth.unc.edu/fpn/gordon/gordon.html"
+          ]
+        },
+        {
+          "id": "cc_sheridans_ride",
+          "head": "Sheridan's ride - the rally and the poem",
+          "body": "Sheridan left Winchester about 9:00 a.m. on Rienzi, rode about 12 miles, and reached the field about 10:30 a.m. The rally was real. Thomas Buchanan Read's 1865 poem turned it into 'twenty miles away,' a campaign-season artifact rather than evidence for the distance. Leadership and propaganda belong in separate columns.",
+          "provenance": "Verified (NPS Sheridan Arrives; ABT Cedar Creek).",
+          "sources": [
+            "https://www.nps.gov/articles/000/sheridan-arrives.htm",
+            "https://www.battlefields.org/learn/civil-war/battles/cedar-creek"
+          ]
+        },
+        {
+          "id": "cc_the_burning",
+          "head": "The Burning - hard war against Valley families",
+          "body": "During September and October 1864 Sheridan's campaign destroyed barns, mills, crops, and livestock to deny the Shenandoah Valley as a Confederate granary and invasion corridor. The military purpose and the civilian cost belong together. The Burning appears here only as teaching; it is never an objective or a score.",
+          "provenance": "Verified campaign context under the D374/D375 register; cross-linked to the standing sheridan-burning hard-war record.",
+          "sources": [
+            "https://www.nps.gov/articles/000/battle-of-cedar-creek.htm",
+            "https://www.battlefields.org/learn/civil-war/battles/cedar-creek"
+          ]
+        },
+        {
+          "id": "cc_ramseur",
+          "head": "Ramseur at Miller's Mill",
+          "body": "Maj. Gen. Stephen D. Ramseur was mortally wounded near Miller's Mill during the collapse, captured, and died on October 20 at Belle Grove. His command exposure and death belong to the human-cost record. No unit receives a scripted fate.",
+          "provenance": "Verified (Wikipedia corroboration; NPS battle account).",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Battle_of_Cedar_Creek",
+            "https://www.nps.gov/articles/000/battle-of-cedar-creek.htm"
+          ]
+        },
+        {
+          "id": "cc_gordons_march",
+          "head": "The night march below Massanutten",
+          "body": "Gordon, Ramseur, and Pegram crossed the North Fork after an all-night march along Massanutten; Kershaw moved through Strasburg and waded Cedar Creek at Bowman's Mill Ford about 04:30; Wharton advanced by Hupp's Hill on the Valley Pike. The attack opened about 5:00 a.m. in fog. Planning and position created the surprise.",
+          "provenance": "Verified (CMH staff-ride narrative; NPS battle account).",
+          "sources": [
+            "https://history.army.mil/books/Staff-Rides/CedarCreek/ccbattle.htm",
+            "https://www.nps.gov/articles/000/battle-of-cedar-creek.htm"
+          ]
+        },
+        {
+          "id": "cc_lost_cause_architect",
+          "head": "The man who helped build the Lost Cause",
+          "body": "Jubal Early became a chief postwar architect of the Lost Cause through the Southern Historical Society, helping construct the 'marble man' Lee and the 'overwhelmed by numbers' alibi. His plunder account at Cedar Creek is evidence inside a dispute, not a verdict the game can dismiss or encode. The losers shaped the memory of this battle on purpose.",
+          "provenance": "Verified under the D374/D375 adjudicated teaching register (NPS Early biography; ABT campaign context).",
+          "sources": [
+            "https://www.nps.gov/mono/learn/historyculture/jubalearly.htm",
+            "https://www.battlefields.org/learn/civil-war/battles/cedar-creek"
+          ]
+        },
+        {
+          "id": "cc_election_1864",
+          "head": "A Valley victory before the election",
+          "body": "Cedar Creek landed three weeks before the 1864 presidential election. The decisive Valley victory closed the corridor as a Confederate granary and invasion route and carried political weight for Lincoln's reelection. The campaign result, not a partisan flourish, is the strategic lesson.",
+          "provenance": "Verified (ABT Cedar Creek; NPS battle account).",
+          "sources": [
+            "https://www.battlefields.org/learn/civil-war/battles/cedar-creek",
+            "https://www.nps.gov/articles/000/battle-of-cedar-creek.htm"
+          ]
+        }
+      ],
+      "codex": {
+        "id": "codex_cedar_creek",
+        "title": "Cedar Creek, October 19, 1864",
+        "summary": "Early's army achieved one of the war's most complete dawn surprises through an all-night flank march, river fog, and camps struck before they formed. Sheridan returned from Winchester, re-formed VI, XIX, and VIII Corps with the cavalry on both flanks, and attacked just before 4:00 p.m. The line north of Middletown collapsed and the Valley campaign ended as a Union victory. The winner bled more: every accepted accounting puts the heavier total on the Union, though the totals conflict.",
+        "axes": {
+          "theater": "Eastern",
+          "campaign": "Shenandoah Valley Campaign of 1864",
+          "result": "Union victory",
+          "cost": "The winner bled more; sources agree that Union casualties exceeded Confederate casualties but disagree on the exact totals"
+        },
+        "sources": [
+          "https://www.battlefields.org/learn/civil-war/battles/cedar-creek",
+          "https://www.nps.gov/articles/000/battle-of-cedar-creek.htm",
+          "https://history.army.mil/books/Staff-Rides/CedarCreek/ccbattle.htm"
+        ]
+      }
+    }
+  }
+}

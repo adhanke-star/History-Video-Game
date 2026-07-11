@@ -6,6 +6,100 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D376 — PLAYABLE CEDAR CREEK: THE ROLE REVERSAL IS LIVE, DIRECTION-NEUTRAL HISTORY IS EXECUTABLE, AND THE CROSS-TOOL RELAY HOLDS — [CODEX 5.6 Sol Ultra, LANE-003 DRIVE] (2026-07-11)
+
+Cedar Creek is the seventeenth registered historical scenario. `data/cedar-creek.json` implements
+the D375 contract as two T8 phases over one field: `Gordon's Dawn Assault` (weight 1, CS attacks
+under real river fog) and `Sheridan's Counterattack` (weight 3, US attacks in the clear). The
+same side-keyed home edges survive the role reversal. Nineteen unique unit ids produce 57 new
+Army Register rows and move the whole registry from 1068 to **1125**. Every unit carries the
+exact `Verified identity; Inferred strength` provenance label; Lomax is not fielded; The Burning,
+Ramseur's wound, and the fatal-halt dispute remain teaching only. The Classic lowercase
+`cedarcreek` layer remains three frozen references with no rail route, separate from tactical
+`cedarCreek`.
+
+- **Playable shape and integration:** phase 1 totals US 30,200 / CS 13,900 with 78 / 40 guns;
+  phase 2 totals US 24,500 / CS 14,000 with 60 / 32 guns. T1 registers menu rank 72 in the exact
+  Kennesaw → Cedar Creek → Franklin order; T10 is explicit `E/false/anv`; schema is 47/47;
+  flags/weather/Intel/media cover all 17 scenarios; Kennesaw's 17 opening units retain the
+  largest-scene crown over Cedar Creek's 8/15 phase openings; `vet --list` is 122. Roster,
+  custom-builder, every whole-registry pin, the generated deliverable, and the Franklin
+  adjacency tooth move in the same commit. The roster DOM also gains the previously omitted
+  existing Stones River button while adding Cedar Creek.
+- **No D74 shortcut:** no Cedar-specific damage, firepower, morale, casualty, rout, capture,
+  plunder, straggle, blame, scripted-death, winner, or score key exists. The dawn surprise is
+  fog + camp posture + flank geometry + the sourced arrival sequence. The afternoon result is
+  the strength edge + fresh cavalry + timing. The focused probe enforces the two-primary fatal
+  halt, Gordon-only attribution for “glory enough for one day,” count-free pursuit, and the
+  absence of playable Fort Pillow.
+
+**Honest A/B log — every post-battery simulation input move and all five 8-seed guards:**
+
+1. **Attempt 0, first authored inputs:** phase-1/top hold 95s; objective `(640,390,r125)`;
+   Belle Grove marker `(640,390)`; all 14 phase-1 opening units present. Result:
+   P1 CS **0/8**, P2 US **8/8**, aggregate US **8/8**, P1 US>CS losses **0/8**, P2 CS>US
+   losses **8/8**. The P1 winner sequence was `US,US,US,US,US,US,US,US`; no result-derived
+   multiplier was added.
+2. **Attempt 1, honest geometry/hold correction:** hold `95→80`; objective
+   `(640,390,r125)→(760,430,r115)` at both top and phase levels; marker
+   `(640,390)→(760,430)`; US Wheaton `(350,260)→(300,130)`, Getty
+   `(420,230)→(420,200)`, Keifer `(300,290)→(240,170)`, artillery
+   `(470,315)→(320,120)`; CS Gordon `(850,550)→(800,520)`, Ramseur
+   `(790,570)→(740,535)`, Pegram `(915,580)→(880,540)`, Kershaw
+   `(720,570)→(690,530)`, artillery `(650,690)→(700,600)`. Result was byte-for-byte the
+   same five guard counts as Attempt 0: `0/8, 8/8, 8/8, 0/8, 8/8`.
+3. **Attempt 2, sourced sequential Union re-formation:** phase-1 opening `14→8`; Dwight moved
+   from opening `(570,385)` to `@105 (520,160)`, Grover `(500,370)` to
+   `@125 (600,145)`, artillery `(320,120)` to `@145 (320,80)`, Wheaton
+   `(300,130)` to `@170 (300,90)`, Getty `(420,200)` to `@190 (420,100)`, and Keifer
+   `(240,170)` to `@210 (240,110)`; cavalry timings Merritt `82→230`, Custer `102→250`,
+   Powell `122→270`. Total strengths and guns did not move. Result: P1 CS **4/8**, P2 US
+   **8/8**, aggregate US **8/8**, P1 US>CS losses **4/8**, P2 CS>US losses **8/8**;
+   P1 winners by seeds 1/7/21/33/49/101/202/303 were
+   `US,US,CS,US,CS,US,CS,CS`.
+4. **Attempt 3, final narrow timing correction:** only Dwight `@105→115` and Grover
+   `@125→135` moved. Result: **8/8 on all five guards**. Every seed resolved
+   `CS/US=US`; phase-loss samples were
+   `3756-699/2330-14000`, `4090-647/2329-14000`, `1903-543/2236-14000`,
+   `5116-732/2749-14000`, `2114-705/2172-14000`, `5166-690/2168-14000`,
+   `4871-738/2145-14000`, and `5100-707/2203-14000` (P1 US-CS / P2 US-CS).
+
+**Negative binds, both restored byte-identically:** removing the exact T1 registry line made
+the plan probe's REGISTRY step red and exactly eight focused teeth red: registry/menu,
+landmarks/home edges, launch, same-seed replay, passive completion, historical direction,
+Army Register pin, and menu/side choice. The other seven focused teeth stayed green. Tampering
+only phase-1 Emory from `Brig. Gen. William H. Emory (Bvt. Maj. Gen.)` to
+`Maj. Gen. William H. Emory` made the plan REGISTRY step and exactly the focused RANK tooth red;
+the other fourteen focused teeth stayed green. Restored hashes matched the pre-bind values:
+T1 `2245384f4046c4307cd7697e7e0207bb`, Cedar data
+`08863fd0bdfaacc5ad90d3fabfe2ca2d`, generated HTML
+`3cab1dae6acc4e97101de7e196f613d9`.
+
+**Final focused gate, serialized with no competing browser:** touched-file `node --check`
+green; build **GATE OK**; schema **47/47**; Cedar plan **11/11**; Cedar runtime **15/15**;
+roster **8/8**; builder **15/15**; loot **12/12** at 1125; flags **46/46**; weather
+**30/30**; Intel **26/26**; media **13/13**; vet list **122**; Stones River **13/13**;
+Kennesaw **11/11**; Franklin **10/10**; `git diff --check` clean. Every required JSON was
+parsed after the run: all `ok:true`, no failed steps, 0 pageerrors. Franklin's first pass found
+only its stale pre-Cedar assumption that Franklin immediately followed Kennesaw; its battle
+simulation remained green. The tooth was corrected to require Kennesaw → Cedar Creek →
+Franklin, syntax-checked, and rerun 10/10. The docs-only lane release then exposed Gaines'
+Mill plan's stale live-owner tooth; it now asserts CONTRACT/unowned while retaining the D362
+historical handoff, and all four relay-sensitive plans rerun green (Gaines 8/8, New Market
+Heights 10/10, Stones River 11/11, Cedar Creek 11/11). Two cooked-string syntax errors in the new browser
+probe were caught and fixed before the first simulation battery; they were harness failures,
+not tuning attempts. New browser probes must preparse embedded SETUP/DOM programs because
+`node --check` alone does not inspect those strings.
+
+The D375→D376 spec/runtime relay required **zero** ambiguity questions, ratifying the planned
+cross-tool contract seam. The session crossed a context-compaction boundary during the long
+serialized gate, so the S-04 ≥40% threshold cannot be defended; Cross Keys/Port Republic does
+not start here. LANE-003 returns to CONTRACT/unowned at this clean pushed boundary. The next
+slice is Cross Keys/Port Republic **spec only** from the committed Shenandoah-1862 packet. The
+full `vet:noreg` battery remains deferred until the agreed 2-3-battle release boundary.
+
+---
+
 ## D373 — LANE-003 RELEASE CHECKPOINT GREEN: 121/121, ONE ROOT-CAUSED HARNESS FLAKE, NOTHING DEFERRED — [CLAUDE Fable 5 main loop, LANE-003 DRIVE] (2026-07-11)
 
 The full serialized `npm run vet:noreg` battery owed since D366 ran locally (full-access session,

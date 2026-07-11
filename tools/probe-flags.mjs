@@ -89,6 +89,7 @@ function pureScript() {
         chick: withScenario('chickamauga', function(){ return _fldBattleMeta(); }),
         chattanooga: withScenario('chattanooga', function(){ return _fldBattleMeta(); }),
         kennesaw: withScenario('kennesaw', function(){ return _fldBattleMeta(); }),
+        cedarCreek: withScenario('cedarCreek', function(){ return _fldBattleMeta(); }),
         franklin: withScenario('franklin', function(){ return _fldBattleMeta(); }),
         nashville: withScenario('nashville', function(){ return _fldBattleMeta(); }),
         nmh: withScenario('newMarketHeights', function(){ return _fldBattleMeta(); }),
@@ -110,6 +111,7 @@ function pureScript() {
         csVicksburg: flagPat('vicksburg', "Interior Reserve", 'CS'),
         csChattanooga: flagPat('chattanooga', "Bate's Division Sector", 'CS'),
         csKennesaw: flagPat('kennesaw', "Maney's Tennessee Brigade", 'CS'),
+        csCedarCreek: flagPat('cedarCreek', "Gordon's Division", 'CS'),
         csFranklin: flagPat('franklin', "Cleburne's Division", 'CS'),
         csNashville: flagPat('nashville', "Cheatham's Shy's Hill Line", 'CS'),
         csNewMarketHeights: flagPat('newMarketHeights', "Gregg's Texas Brigade", 'CS'),
@@ -316,8 +318,12 @@ async function runScene(page, label, scenario, seed, opts, shared) {
     pure.ok && P.meta && P.meta.gburg.badges === true && P.meta.bullrun.badges === false && P.meta.chick.badges === false && P.meta.sandbox.badges === false,
     JSON.stringify(P.meta || {}));
   check('battle meta: every registered historical scenario has explicit metadata (no silent Eastern/ANV fallback)',
-    pure.ok && Array.isArray(P.metaCoverage) && P.metaCoverage.length === 16 && P.metaCoverage.every(x => x.explicit),
+    pure.ok && Array.isArray(P.metaCoverage) && P.metaCoverage.length === 17 && P.metaCoverage.every(x => x.explicit),
     JSON.stringify(P.metaCoverage || []));
+  check('battle meta + flag: Cedar Creek is an Eastern Army-of-the-Valley field - no AotP badge reuse, ANV Southern Cross for Early\'s detached Second Corps (D376)',
+    pure.ok && P.meta && P.meta.cedarCreek && P.meta.cedarCreek.theater === 'E' && P.meta.cedarCreek.badges === false && P.meta.cedarCreek.csFlag === 'anv'
+      && P.flag && P.flag.csCedarCreek === 'southern-cross',
+    'meta=' + JSON.stringify(P.meta && P.meta.cedarCreek) + ' flag=' + (P.flag && P.flag.csCedarCreek));
   check('battle meta + flag: Stones River is a Western Army-of-Tennessee field - no AotP badges, Hardee-pattern blue disc for the native CS divisions (D366)',
     pure.ok && P.meta && P.meta.stonesRiver && P.meta.stonesRiver.theater === 'W' && P.meta.stonesRiver.badges === false && P.meta.stonesRiver.csFlag === 'hardee'
       && P.flag && P.flag.csStonesRiver === 'hardee',

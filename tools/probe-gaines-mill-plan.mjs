@@ -100,7 +100,7 @@ step("SPEC: durable Gaines' Mill packet exists and locks a planning-only D361 bo
   return { bytes: text.length };
 });
 
-step("LANE: LANE-003 records the valid owner/state and the D362-to-Fable handoff boundary", () => {
+step("LANE: LANE-003 records the current released owner/state and retains the D362-to-Fable handoff boundary", () => {
   const text = read(COORD);
   const start = text.indexOf("### LANE-003");
   if (start < 0) throw new Error("LANE-003 missing from COORDINATION.md");
@@ -108,14 +108,16 @@ step("LANE: LANE-003 records the valid owner/state and the D362-to-Fable handoff
   const lane = text.slice(start, next < 0 ? text.length : next);
   mustInclude(lane, [
     "battle-ladder",
-    "**Owning tool:** Claude Code",
+    "**Owning tool:** none",
     "D362 playable Gaines' Mill is the handoff boundary",
     "**Last-touched commit:** D362",
-    "ChatGPT retains ownership only through the already-bounded D362 closeout"
+    "ChatGPT retains ownership only through the already-bounded D362 closeout",
+    "D376 shipped playable Cedar Creek",
+    "Cross Keys/Port Republic **SPEC ONLY**"
   ], "LANE-003 handoff");
   const state = (lane.match(/\*\*State:\*\*\s*([A-Z-]+)/) || [null, ""])[1];
   if (!["CONTRACT", "DRIVE", "VERIFY", "SHIPPED"].includes(state)) throw new Error("invalid LANE-003 state: " + state);
-  return { owner: "Claude Code / Fable", state, boundary: "D362", resume: "D363 New Market Heights spec" };
+  return { owner: "none", state, boundary: "D362 retained", resume: "Cross Keys/Port Republic spec only" };
 });
 
 step("SOURCES: NPS, ABT, Army CMH, and LOC anchors bind the decisive slice and rank corrections", () => {

@@ -767,7 +767,7 @@ const SETUP = `(() => {
       var C=mkC('US'); G.campaign=C; _t1InitAll(C);
       lootAddItem(C,'commissary_rations',1,'probe');
       var reg=ssPersonRegistry(C);
-      if(reg.people.length!==1068) throw new Error('expected current 1068-person registry, got '+reg.people.length);   // D366: 990 -> 1068 — Stones River adds 26 unique units x 3 Soldier's Story slots (phase 1: 10 US + 6 CS opening + 2 CS Breckinridge crossing groups; phase 2: 3 US + 1 US counterattack + 4 CS brigades; all 26 ids unique across phases); prior history: D364: 957 -> 990 — New Market Heights adds 11 unique units x 3 Soldier's Story slots (7 US + 4 CS across both phases; phase-repeated CS ids dedupe); prior history: D362: 912 -> 957 — Gaines' Mill adds 15 unique units x 3 Soldier's Story slots; prior history: D355 645 -> 912 for Chattanooga/Kennesaw/Franklin/Nashville, D254 639 -> 645 Malvern Hill, D243 630 -> 639, D239 627 -> 630, D237 603 -> 627
+      if(reg.people.length!==1125) throw new Error('expected current 1125-person registry, got '+reg.people.length);   // D376: 1068 -> 1125 — Cedar Creek adds 19 unique units x 3 Soldier's Story slots (12 US + 7 CS across both phases; repeated phase ids dedupe); prior history: D366: 990 -> 1068 — Stones River adds 26 unique units x 3 slots; D364: 957 -> 990 — New Market Heights adds 11 unique units x 3 slots; D362: 912 -> 957 — Gaines' Mill adds 15 unique units x 3 slots; D355 645 -> 912 for Chattanooga/Kennesaw/Franklin/Nashville, D254 639 -> 645 Malvern Hill, D243 630 -> 639, D239 627 -> 630, D237 603 -> 627
       var generated=findPerson(reg,function(p){ return p.generated && p.team && p.team.brigade && p.team.company; });
       var authored=findPerson(reg,function(p){ return !p.generated && !p.replacement && p.provenance==='Verified'; });
       if(!generated) throw new Error('no generated person with brigade/company team hierarchy');
@@ -786,7 +786,7 @@ const SETUP = `(() => {
       var cards=root.querySelectorAll('[data-ss-card]');
       if(cards.length!==reg.people.length) throw new Error('register card count mismatch '+cards.length+' vs '+reg.people.length);
       var count=root.querySelector('#ssRegCount');
-      if(!count || count.textContent.indexOf('1068 of 1068')<0) throw new Error('full registry count missing: '+(count&&count.textContent));   // D366: tracks the 1068-person registry (see the count assertion above)
+      if(!count || count.textContent.indexOf('1125 of 1125')<0) throw new Error('full registry count missing: '+(count&&count.textContent));   // D376: tracks the 1125-person registry (see the count assertion above)
       var gCard=cardByPid(root,generated.pid), aCard=cardByPid(root,authored.pid);
       if(!gCard || !aCard) throw new Error('target cards missing');
       if(gCard.textContent.indexOf('Generated')<0 || gCard.textContent.indexOf('Inferred')<0) throw new Error('generated/Inferred card display missing: '+gCard.textContent);

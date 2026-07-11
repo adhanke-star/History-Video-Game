@@ -5,7 +5,7 @@ import "./guard-probe-browser.mjs";
 // the near-parity law (the Union WON while bleeding MORE - no tooth may assert
 // aggregate US < CS; the aggregate guard is the max/min <= 1.6 band), the phase-2
 // direction-only CS>US guard, the lieutenant-general flip and the Sheridan/Hazen/
-// Beatty rank traps, the D74 wall, and the Army Register 1068 pin.
+// Beatty rank traps, the D74 wall, and the current Army Register 1125 pin.
 import { chromium } from 'playwright-core';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -261,12 +261,12 @@ const SETUP = `(() => {
       return { cards:ids, codex:codex.id };
     });
 
-    check('ARMY REGISTER PIN: 26 Stones River units produce exact cmd/nco/pvt trios and total 1068', function() {
+    check('ARMY REGISTER PIN: 26 Stones River units produce exact cmd/nco/pvt trios and current total 1125', function() {
       var C = { side:'US', iron:false, idx:0, funds:6500, recovery:false, completed:[], roster:[], nextId:1,
         stats:{ battles:0, won:0, infl:0, suff:0 }, recoveryLossCount:0, recoveryMode:false, flipAtk:false, captured:[] };
       if (typeof _t1InitAll === 'function') _t1InitAll(C);
       var reg = ssPersonRegistry(C), rows = [], groups = {};
-      if (reg.people.length !== 1068) throw new Error('Army Register total is ' + reg.people.length + ', expected 1068');
+      if (reg.people.length !== 1125) throw new Error('Army Register total is ' + reg.people.length + ', expected 1125');   // D376: 1068 -> 1125 — Cedar Creek adds 19 unique units x 3 slots; Stones River's own 78-row/26-unit teeth below remain stable. Prior: D366 990 -> 1068 (Stones River, 26 units)
       for (var i = 0; i < reg.people.length; i++) {
         var p = reg.people[i], origin = p.replaces || p.pid;
         if (typeof origin === 'string' && origin.indexOf('ss:stonesRiver:') === 0) rows.push(origin);
