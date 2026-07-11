@@ -36,6 +36,27 @@ resolving every Cedar Creek §9 unknown so the D375 spec can be written from com
 
 ---
 
+## D375 — CEDAR CREEK SPEC + PLAN PROBE: THE ROLE-REVERSAL BATTLE, THE DIRECTION-NEUTRAL LAW, THE KITCHING RESOLUTION — [CLAUDE Fable 5 main loop, LANE-003 DRIVE] (2026-07-11)
+
+The fourth LANE-003 contract is committed: `docs/design/cedar-creek-battle-build-spec.md` +
+`tools/probe-cedar-creek-plan.mjs` (**11/11**, bind-tested), written entirely from the committed
+packet §12 prose per the D363-D366 spec-first pattern. No runtime data, registry, menu, or combat
+change; the generated HTML is byte-identical.
+
+- **Locked shape:** two-phase T8 with the game's first ROLE REVERSAL — P1 `Gordon's Dawn Assault` (w1, CS attacker / US defender, per-phase `defaultFog:true` — the real pre-dawn river fog as a D92 input) → P2 `Sheridan's Counterattack` (w3 DECISIVE, US attacker / CS defender, fog OFF). **Weights sum 4, never 5** (probe-asserted). Menu rank `cedarCreek:72` (Kennesaw 70 → Cedar Creek → Franklin 75, by full date). Objectives: the Belle Grove camp line → the high ground north of Middletown. Home edges side-keyed (US north / CS south) and constant across the reversal.
+- **The direction-neutral casualty law:** US bled MORE and WON (ABT 5,764/3,060 · Wikipedia 5,665/2,910 · NPS ~7,682 no split — same direction, three totals). NO aggregate casualty tooth in EITHER direction; the only guards are the phase-scoped D92 system validations (P1 US > CS phase losses, P2 CS > US, both direction-only, ≥5/8) beside the three outcome guards (P1 CS seizes, P2 US seizes, aggregate US). Pursuit prose count-free (the 43-gun/24/200-wagon/1,000-prisoner figures failed D374 refute).
+- **Strength contract from the CMH staff-ride table (§12.1), every unit `Verified identity; Inferred strength`:** P1 CS 12,500-14,500 (the ~14,000-attacking anchor; Lomax's 3,121 NOT fielded — Front Royal road, teaching only) vs US 27,000-31,610; P2 US 22,000-28,500 vs CS 13,000-19,000; guns P1 CS 30-48 / US 60-90, P2 US 40-90 / CS 15-48. The CS west-to-east afternoon order stays Inferred-grade with NO probe tooth.
+- **The §12.5 "verify at spec time" item is RESOLVED:** a 3-agent D375 workflow (2 Sonnet gathers → 1 Opus default-refute, 0 errors) CONFIRMED **Col. J. Howard Kitching** (Provisional Division) from three institutional sources (NPS people page, CCBF OOB, NY State Military Museum), and documented the trap: his brevet BG was awarded POSTHUMOUSLY (died of the Cedar Creek wound Jan 11 1865) but BACKDATED to Aug 1 1864 — a date that predates the battle and must never be encoded; he is also never killed-in-action. Two new source rows added to the spec register.
+- **Rank table encoded with format law** (brevet parentheticals follow the name so prefix-scan rejections stay clean): Sheridan Maj. Gen. USV (never backdated Regular grades) · Early Lt. Gen. (temporary grade) · Emory Brig. Gen. (Bvt. Maj. Gen.) — the §12 correction · Crook/Torbert/Custer/Merritt/Getty/Wheaton/Ricketts/Dwight/Grover Brig. Gen. · Thoburn/Hayes/Powell/Keifer/Lowell/Kitching Col. (Lowell's star posthumous; Thoburn commission claim dropped) · Gordon/Kershaw/Ramseur/Lomax Maj. Gen. · Pegram/Wharton/Rosser Brig. Gen. (the NPS OOB "Maj. Gen. Rosser" is an ERROR). Ramseur's death is teaching flavor only.
+- **Teaching contract (8 cards, ≥2 URLs each; codex Eastern/Union victory):** the DISPUTED `cc_fatal_halt` centerpiece with BOTH primaries attributed and "glory enough for one day" existing ONLY via Gordon's Reminiscences (probe-enforced: the line may live only in the attributed card); the ride/poem split; "The Burning" as this lane's own dignity line (teaching-only, never scored); Ramseur; Gordon's march; Early as Lost Cause architect; the 1864 election; Lowell optional.
+- **Plan probe (11 steps):** SPEC/LANE/SOURCES/SHAPE/STRENGTH/HISTORY/TEACHING/D74+GATES/CLASSIC-LAYER/DIGNITY/REGISTRY — the REGISTRY step is dual-mode (today it proves NO half-registration exists anywhere: T1/roster/builder/schema/T10/flags 16/intel 16/media 16/suite 121/sweep 16/loot 1068 all at planned-only baselines; once `data/cedar-creek.json` exists it enforces the FULL integration contract including the glory-enough attribution walk, the count-free rejections, and the 1068+units×3 pin law).
+- **Negative bind:** the Emory rank-lock line tampered to the exact historical error (`Maj. Gen. William H. Emory (NPS-confirmed)`) → exactly ONE step red (HISTORY, exit 1), 10/11 → md5-identical restore (143974490bb6b72f30c86dba7d8ab226) → 11/11.
+- **Gate (all JSON artifacts read, `ok:true`, 0 pageerrors):** `node --check` clean · build **GATE OK** with the generated HTML unchanged · schema validation ok · research probe **15/15** · cedar plan **11/11** · stones-river plan **11/11** · NMH plan **10/10** · `git diff --check` clean.
+
+Runtime work (D376 playable Cedar Creek) starts only from this committed boundary.
+
+---
+
 ## D372 — THE 10% BOUNDARY CLOSES THE SOL CHARTER CLEAN AND RETURNS WORK THROUGH THE LEDGER — [AARON boundary · CODEX 5.6 Sol Ultra closeout] (2026-07-10)
 
 Aaron surfaced the product's 10% usage warning after D371's implementation was already green. The

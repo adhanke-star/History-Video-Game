@@ -209,7 +209,7 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
 ### LANE-003 · battle-ladder — **DRIVE** (Claude/Fable owns the D363+ ladder)
 
 - **Owning tool:** Claude Code, with Fable 5 at xhigh as the TOP LOOP.
-- **State:** DRIVE — D363-D366 (New Market Heights spec+playable, Stones River spec+playable) are shipped, and **D373 (2026-07-11) discharged the lane's release obligation: the full serialized 121-command `npm run vet:noreg` battery is GREEN with every JSON artifact read**. The lane holds DRIVE for its ratified stretch order. ChatGPT/Codex must not drive this lane.
+- **State:** DRIVE — D363-D366 (New Market Heights spec+playable, Stones River spec+playable) are shipped, **D373 (2026-07-11) discharged the lane's release obligation (121/121 green, every artifact read)**, D374 committed the Cedar Creek research addendum (§12), and **D375 (2026-07-11) locked the Cedar Creek contract (spec + 11/11 bind-tested plan probe)**. The lane holds DRIVE for its ratified stretch order. ChatGPT/Codex must not drive this lane.
 - **Design law:** `docs/design/battle-build-research/` packets (`eastern-1862` → Gaines' Mill ·
   `usct` → New Market Heights · `western-gaps` → Stones River · stretch: `shenandoah-1864` Cedar
   Creek · `shenandoah-1862` Cross Keys/Port Republic · `appomattox-campaign` Five Forks ·
@@ -305,16 +305,39 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   DISPUTE pinned to Early's and Gordon's own accounts ("glory enough" attributes ONLY to
   Gordon's Reminiscences), Sheridan's ~12-mile ride, and the substantive-grade rank table —
   including the C73-class correction that Emory was Brig. Gen. (Bvt. MG) on Oct 19 1864, which
-  also fixes the packet's §4 line. The addendum SHIPPED as packet §12 (D374). Next slice:
-  `docs/design/cedar-creek-battle-build-spec.md` + plan probe, then playable runtime — the
-  D363-D366 pattern, direction-NEUTRAL casualty guards per the packet §7 (US bled MORE and won).
-  At the next clean lane bundle boundary a fresh lock may take Sol's queue per D372
-  (E71 → C72; GEA-01 + S44 fallback; LANE-002 5b sized from 918).
+  also fixes the packet's §4 line. The addendum SHIPPED as packet §12 (D374). **D375 (SHIPPED,
+  this commit) locks the Cedar Creek contract:** `docs/design/cedar-creek-battle-build-spec.md`
+  + `tools/probe-cedar-creek-plan.mjs` (11/11, bind-tested — the Emory rank-lock tamper went
+  exactly one step red with md5-identical restore). Locked shape: two-phase T8 with the game's
+  first ATTACKER/DEFENDER ROLE REVERSAL — `Gordon's Dawn Assault` (w1, CS attacker, per-phase
+  defaultFog:true) → `Sheridan's Counterattack` (w3 DECISIVE, US attacker, fog OFF); weights sum
+  4 never 5; menu rank cedarCreek:72 (Kennesaw → Cedar Creek → Franklin); THE DIRECTION-NEUTRAL
+  LAW (US bled MORE and won — NO aggregate casualty tooth in either direction; only phase-scoped
+  D92 direction guards: P1 US>CS, P2 CS>US, ≥5/8 each) beside three outcome guards (P1 CS
+  seizes, P2 US seizes, aggregate US); CMH-anchored bounds (P1 CS 12,500-14,500 with Lomax NOT
+  fielded / US 27,000-31,610; P2 US 22,000-28,500 / CS 13,000-19,000; guns 30-48/60-90 then
+  40-90/15-48); every unit `Verified identity; Inferred strength`; count-free pursuit; the
+  two-primary DISPUTED fatal halt ("glory enough for one day" ONLY via Gordon's Reminiscences —
+  the plan probe enforces the attribution walk once data exists); "The Burning" teaching-only;
+  rank table with format law (brevets follow the name): Emory Brig. Gen. (Bvt. Maj. Gen.),
+  Early Lt. Gen. (temporary grade), Rosser Brig. Gen. (NPS OOB label an ERROR), Thoburn/Hayes/
+  Powell/Keifer/Lowell Col., and the spec-time Kitching resolution (3-agent workflow, 0 errors:
+  **Col. J. Howard Kitching** per NPS/CCBF/NY State Military Museum; posthumous brevet BACKDATED
+  to Aug 1 1864 — predates the battle, never encode; died of the wound Jan 11 1865, never KIA).
+  D376 obligations pinned in the spec: schema 47 · loot pin 1068 + units×3 (+ bump every other
+  whole-registry pin same-commit, the pin-bump idiom) · flags/Intel/media 17 · suite 122 · T10
+  `E/false/anv` · largest-scene check vs Kennesaw's 17 · Classic-layer collision grep · honest
+  A/B if any input moves · both binds. Gate ran green with every JSON read (GATE OK HTML
+  byte-identical · schema ok · research 15/15 · cedar plan 11/11 · stones plan 11/11 · NMH plan
+  10/10 · 0 pageerrors · diff clean). **Next slice: D376 playable Cedar Creek from this
+  committed boundary — the D364/D366 closeout pattern; the full battery is NOT owed again until
+  the next release boundary.** At the next clean lane bundle boundary a fresh lock may take
+  Sol's queue per D372 (E71 → C72; GEA-01 + S44 fallback; LANE-002 5b sized from 918).
 - **Last-touched commit:** D362 (Gaines' Mill playable slice + Fable transfer) · D363 (New
   Market Heights spec + plan probe, Fable/Claude) · D364 (playable New Market Heights,
   Fable/Claude) · D365 (Stones River spec + plan probe, Fable/Claude) · D366/D367 (playable
   Stones River + the Sol session charter, Fable/Claude) · D373 (release battery green 121/121,
-  Fable/Claude — this commit).
+  Fable/Claude) · D375 (Cedar Creek spec + plan probe, Fable/Claude — this commit).
 - **History:** lane opened by Claude Code 2026-07-10 after Aaron's popup Q&A (D359) fixed scope,
   depth, and locks for the Codex session · ChatGPT/Codex took DRIVE in D361 and locked the
   Gaines' Mill source/strength/rank/direction contract before runtime · Aaron redirected D363+
@@ -335,7 +358,9 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   chartered as LANE-004 + LANE-002 5b) · D373 shipped 2026-07-11 (the deferred release battery
   green 121/121 with full artifact readback; one hard-war teardown flake root-caused to
   Fable's concurrent research workflow and re-run green; stale pre-D372 Sol sentence in this
-  pointer reconciled per D372's relay order — Fable/Claude).
+  pointer reconciled per D372's relay order — Fable/Claude) · D375 shipped 2026-07-11 (Cedar
+  Creek spec + 11/11 plan gate: the role-reversal shape, the direction-neutral law, the
+  spec-time Kitching workflow, the Emory-tamper bind — Fable/Claude).
 
 #### Fable takeover packet — read as the continuation prompt
 
