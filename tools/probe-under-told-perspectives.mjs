@@ -241,5 +241,5 @@ const SETUP = `(() => {
   }
   console.log('probe-under-told-perspectives ok=' + result.ok + ' steps=' + (result.steps?result.steps.length:0) + ' pageerrors=' + (result.pageerrors?result.pageerrors.length:0));
   if (result.steps) for (const s of result.steps) if (!s.ok) console.log('  FAIL ' + s.name + ' :: ' + s.err);
-  if (!result.ok || (result.pageerrors && result.pageerrors.length)) process.exit(1);
+  process.exit(!result.ok || (result.pageerrors && result.pageerrors.length) ? 1 : 0);
 })();
