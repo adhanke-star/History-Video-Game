@@ -206,10 +206,12 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   D358 2026-07-10; 5c shipped D360 2026-07-10; ChatGPT/Codex took 5b DRIVE for the D367
   chartered session in D368 and released it untouched at D372's 10% boundary, 2026-07-10.
 
-### LANE-003 · battle-ladder — **CONTRACT** (open, unowned; D378 playable Cross Keys / Port Republic shipped)
+### LANE-003 · battle-ladder — **DRIVE** (D379 Five Forks spec + bind-tested plan probe only)
 
-- **Owning tool:** none; ChatGPT/Codex 5.6 Sol Ultra released D378 at the green pushed boundary. No simultaneous Claude Code edits.
-- **State:** CONTRACT — D375 (2026-07-11) locked the Cedar Creek contract; D376 shipped it playable; D377 locked Cross Keys / Port Republic; D378 ships that battle playable from the committed contract. Current baselines are 18 registered scenarios, schema 48, Army Register 1170, flags/weather/Intel/media 18, and suite 123. Next is Five Forks, spec-first from the Appomattox Campaign research packet. Keep `npm run vet:noreg` deferred until Five Forks is playable; run it then as the stretch-battle release checkpoint.
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra. No simultaneous Claude Code edits.
+- **State:** DRIVE — D379 is a planning-only Five Forks contract slice from the committed Appomattox Campaign packet. Preserve the D378 baselines exactly: 18 registered scenarios, schema 48, Army Register 1170, flags/weather/Intel/media 18, and suite 123. Keep `npm run vet:noreg` deferred until Five Forks is playable; run it then as the stretch-battle release checkpoint.
+- **Current objective:** author `docs/design/five-forks-battle-build-spec.md` plus a filesystem-first, dual-mode, fail-closed `tools/probe-five-forks-plan.mjs`; lock the approved reusable Warren-to-Griffin `replaces` contract for future D380 without editing T3 or any runtime/data/registration surface; prove the Griffin-grade negative bind; then release this lane to CONTRACT/unowned in the green D379 commit.
+- **D379 resume pointer:** start from clean `HEAD == origin/main == 9cea72c4617199c4535fd29bffec7f9bbb4c6ad3`; the next authoring action after this ledger-only takeover is the Five Forks spec and plan probe. Stop before `data/five-forks.json`, T3 implementation, Five Forks registration, count movement, or the full release battery.
 - **Design law:** `docs/design/battle-build-research/` packets (`eastern-1862` → Gaines' Mill ·
   `usct` → New Market Heights · `western-gaps` → Stones River · stretch: `shenandoah-1864` Cedar
   Creek · `shenandoah-1862` Cross Keys/Port Republic · `appomattox-campaign` Five Forks ·
