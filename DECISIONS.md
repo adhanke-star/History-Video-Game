@@ -6,6 +6,65 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D379 — FIVE FORKS CONTRACT: ONE FIELD, A GENERIC RELIEF EVENT, AND NO RUNTIME YET — [CODEX 5.6 Sol Ultra, LANE-003 DRIVE] (2026-07-12)
+
+D379 commits the sixth LANE-003 planning contract:
+`docs/design/five-forks-battle-build-spec.md` plus
+`tools/probe-five-forks-plan.mjs` (12/12, filesystem-first, dual-mode, and bind-tested). This
+slice changes no runtime data, shared officer code, registry/menu entry, schema row, Army
+Register row, generated-game behavior, combat input, or baseline count. The game remains at
+18 scenarios, 48 schema files, Army Register 1170, 18-scenario flags/weather/Intel/media
+coverage, and suite 123; generated HTML remains md5
+`097eabeea06387e47bd819d125950f0d`.
+
+**Playable contract:** Five Forks is one single-phase April 1, 1865 attacker-seize scenario,
+not a T8 sequence: `fiveForks`, future `data/five-forks.json`, US attacker / CS defender, fog
+off, menu rank 85 after Nashville, and Five Forks Crossroads as the objective. The active-map
+anchors are about 21,000 US against 9,200 CS. The broader 32,600 / 22,000 figures are rejected
+as fielded totals. White Oak Road, the return / the Angle, Ford's or Scott's Road, Gravelly
+Run, and Hatcher's Run shape the field; Dinwiddie and the shad bake remain teaching context.
+Lower formations, gun totals, timing, and placements stay coarse and Inferred unless a source
+amendment pins them.
+
+**Generic command-event law for D380:** a timed Griffin record may carry
+`replaces:"ld_warren"` plus a presentation-only `entry`. Shared T3 validates the raw current
+cast before row construction or RNG consumption, validates every due event as one batch before
+aura accumulation, and applies relief atomically: Warren becomes inactive and relieved but
+stays alive; Griffin becomes the sole active replacement aura with no gap or overlap. The
+event never calls the wound/fall path or writes morale, casualties, rout, score, winner, or
+campaign state. HUD, selected-unit attribution, end reporting, 2D, and 3D must distinguish
+relieved from fallen. Missing `replaces` stays byte-identical. Blank or malformed fields,
+missing/inactive/dead/relieved/cross-side/self targets, duplicate ids, multi-targets,
+chains/cycles, and repeats reject without throwing, mutation, announcement, or extra RNG. The
+seam is shared T3 code plus generic officer tests; no Five-Forks branch or Custom Builder
+expansion is authorized.
+
+**History and direction:** Griffin is Brig. Gen. (brevet Maj. Gen.) on April 1, never a firm
+Major General of Volunteers that day. Sheridan, Warren, Pickett, Fitz Lee, and Rosser are Maj.
+Gens.; Grant is Lt. Gen. Pickett, Fitz Lee, and Rosser remain absent aura sources. D380 runs
+exactly eight seeds and requires at least 5/8 US seizures and 5/8 Confederate-total-losses-
+greater-than-Union. No casualty magnitude, ratio, prisoner, captured-general, rout, or surrender
+guard is allowed. Teaching retains the 1879 inquiry / 1882 finding, disputed shad-bake blame,
+manpower/industry/emancipation context, USCT agency at the war's end, race-and-reunion memory,
+conflicting prisoner totals, and teaching-only Appomattox. D74 forbids every result multiplier
+or scripted verdict.
+
+**Bind and focused gate:** the pre-bind spec md5 was
+`0caa5bf0bf9777a3a778090cc6030864`. Changing only Griffin's rank-lock line to firm Maj. Gen.
+made exactly `RANKS + ABSENCES` red (11/12 green, exit 1); the other eleven steps stayed green.
+The `apply_patch` restore returned the exact spec md5. Final serialized gate: outer syntax
+green; build **GATE OK**; schema **48/48**; research **15/15**; Five Forks plan **12/12**;
+Cross Keys plan **11/11** and runtime **15/15**; roster **8/8**; builder **15/15**; suite list
+**123**; `git diff --check` clean. Every produced JSON and the 48-row schema artifact were
+read; all were green with zero failed steps and zero pageerrors.
+
+LANE-003 returns to CONTRACT/unowned. D380 is the exact next bounded slice: implement playable
+Five Forks, the generic shared T3 relief seam, complete 19/49/`1170 + unique units x 3`/19/124
+integration, both runtime binds, and then the full serialized `npm run vet:noreg` release
+battery with nothing concurrent.
+
+---
+
 ## D378 — PLAYABLE CROSS KEYS / PORT REPUBLIC: TWO FIELDS, ONE ROLE FLIP, NO VALLEY MYTHMAKING — [CODEX 5.6 Sol Ultra, LANE-003 DRIVE] (2026-07-11)
 
 Cross Keys / Port Republic is the eighteenth registered historical scenario. `data/cross-keys-port-republic.json`

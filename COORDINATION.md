@@ -206,12 +206,12 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   D358 2026-07-10; 5c shipped D360 2026-07-10; ChatGPT/Codex took 5b DRIVE for the D367
   chartered session in D368 and released it untouched at D372's 10% boundary, 2026-07-10.
 
-### LANE-003 · battle-ladder — **DRIVE** (D379 Five Forks spec + bind-tested plan probe only)
+### LANE-003 · battle-ladder — **CONTRACT** (D379 clean release; D380 playable Five Forks next)
 
-- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra. No simultaneous Claude Code edits.
-- **State:** DRIVE — D379 is a planning-only Five Forks contract slice from the committed Appomattox Campaign packet. Preserve the D378 baselines exactly: 18 registered scenarios, schema 48, Army Register 1170, flags/weather/Intel/media 18, and suite 123. Keep `npm run vet:noreg` deferred until Five Forks is playable; run it then as the stretch-battle release checkpoint.
-- **Current objective:** author `docs/design/five-forks-battle-build-spec.md` plus a filesystem-first, dual-mode, fail-closed `tools/probe-five-forks-plan.mjs`; lock the approved reusable Warren-to-Griffin `replaces` contract for future D380 without editing T3 or any runtime/data/registration surface; prove the Griffin-grade negative bind; then release this lane to CONTRACT/unowned in the green D379 commit.
-- **D379 resume pointer:** start from clean `HEAD == origin/main == 9cea72c4617199c4535fd29bffec7f9bbb4c6ad3`; the next authoring action after this ledger-only takeover is the Five Forks spec and plan probe. Stop before `data/five-forks.json`, T3 implementation, Five Forks registration, count movement, or the full release battery.
+- **Owning tool:** none. A new ChatGPT/Codex or Claude Code session must take DRIVE in a committed ledger-only edit before D380. No simultaneous Claude Code edits; no simultaneous edits by any provider.
+- **State:** CONTRACT/unowned — D379 shipped the Five Forks spec from the Appomattox Campaign packet and its bind-tested dual-mode plan probe with no runtime or count movement. Current baselines remain 18 registered scenarios, schema 48, Army Register 1170, flags/weather/Intel/media 18, suite 123, and generated HTML md5 `097eabeea06387e47bd819d125950f0d`.
+- **Current objective:** D380 implements playable Five Forks plus the approved reusable Warren-to-Griffin `replaces` contract in shared T3, expands the generic officer probe, lands the focused Five Forks runtime guard, completes atomic 19/49/`1170 + unique units x 3`/19/124 integration, proves both runtime binds, and then runs the full serialized `npm run vet:noreg` release battery with nothing concurrent.
+- **D380 resume pointer:** start from the clean pushed D379 contract commit and require `HEAD == origin/main`; read the committed spec and 12-step plan probe in full; take DRIVE in a ledger-only commit; stop if live code contradicts the command-event contract or source/OOB ceiling. D380 is one playable runtime milestone plus the release checkpoint, not a new spec or a second battle.
 - **Design law:** `docs/design/battle-build-research/` packets (`eastern-1862` → Gaines' Mill ·
   `usct` → New Market Heights · `western-gaps` → Stones River · stretch: `shenandoah-1864` Cedar
   Creek · `shenandoah-1862` Cross Keys/Port Republic · `appomattox-campaign` Five Forks ·
@@ -226,8 +226,20 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   fog off; weights sum 4; army-present anchors separated from Inferred committed/OOB splits;
   Coaling battery identity Unpinned; Jackson is Maj. Gen. in this scenario only; Ashby absent.
 - **Next Five Forks contract source:** `docs/design/battle-build-research/appomattox-campaign-battle-build-research.md`
-  is `READY_FOR_SPEC`. Land a durable Five Forks spec and bind-tested, fail-closed plan probe in
-  a green planning commit before any runtime data or registration.
+  is `READY_FOR_SPEC`. D379 converted it into `docs/design/five-forks-battle-build-spec.md` and
+  `tools/probe-five-forks-plan.mjs` (12/12, bind-tested). D380 treats that committed contract as
+  law; it does not reopen the single-phase shape, 21,000/9,200 engaged anchors, Griffin grade,
+  command-event semantics, or direction guards without a new source contradiction and HALT.
+- **Shipped Five Forks contract:** one single-phase April 1, 1865 US-attacker / CS-defender fight,
+  fog off, Five Forks Crossroads objective, menu rank 85 after Nashville. The generic shared T3
+  `replaces` seam validates raw current-cast data before RNG, processes the whole due-event batch
+  before auras, atomically leaves Warren alive+relieved and Griffin solely active, distinguishes
+  relief from fall/death across presentation, and rejects malformed/missing/cross-side/duplicate/
+  multi-target/chain/cycle/repeat cases without throw, mutation, announcement, or extra RNG.
+  Missing `replaces` remains byte-identical; no Five-Forks branch, T8 change, result writer, or
+  Custom Builder expansion. Griffin is Brig. Gen. (brevet Maj. Gen.) on April 1. Future direction
+  guards are exactly eight seeds with at least 5/8 US seizures and 5/8 CS losses greater than US;
+  no magnitude, prisoner, surrender, general-capture, gun-capture, or rout-count guard.
 - **Acceptance criteria (per battle, the full D330-D335 pattern + extras per Aaron's popup):**
   1. Durable spec (`docs/design/<battle>-battle-build-spec.md`) + plan probe green BEFORE runtime.
   2. Playable slice: `data/<battle>.json`, registry/menu rank in `src/tactical/T1-bull-run.js`,
@@ -248,9 +260,12 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   OOB sums by sector/direction battery/pageerrors), modeled on `tools/probe-nashville*.mjs`.
   Cross Keys/Port Republic ships `tools/probe-cross-keys-port-republic-plan.mjs` plus
   `tools/probe-cross-keys-port-republic.mjs`: the D377 dual-mode plan gate and D378 runtime teeth
-  are green. Five Forks starts with a filesystem-first, fail-closed plan probe; its runtime probe
-  lands only after the green contract commit.
-- **Resume pointer:** **D362 playable Gaines' Mill is the handoff boundary in the commit that
+  are green. Five Forks now has the filesystem-first, fail-closed 12-step plan probe. Its planned
+  branch pins 18/48/1170/18/123 and rejects partial runtime seams; its future branch requires the
+  complete Five Forks data/shared-officer/focused-probe/integration set before returning green.
+- **Resume pointer:** **D379 clean release is the current handoff boundary.** D380 follows the
+  committed Five Forks spec and plan probe, takes a fresh ledger-only lock, and builds runtime
+  before the full release battery. **Historical pointer:** D362 playable Gaines' Mill is the handoff boundary in the commit that
   carried this transfer.** D363 (SHIPPED) locked the New Market Heights contract (spec +
   10/10 plan probe). **D364 (SHIPPED, this commit) closes out playable New Market Heights** —
   the green WIP recorded at the 2026-07-10 session boundary was adopted per the relay rule and
@@ -383,8 +398,19 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   26/26 · media 13/13 · suite 123 · Bull Run 15/15 · Gaines 13/13 · Malvern 27/27 · NMH /
   Stones / Cedar plans 10/10 · 11/11 · 11/11 and runtimes 14/14 · 13/13 · 15/15 · every
   artifact green · 0 pageerrors · diff clean. `npm run vet:noreg` was intentionally not run.
-  **Resume: CONTRACT/unowned. Five Forks is next, spec-first from the Appomattox packet; the full
-  serialized release battery becomes due after playable Five Forks.** Sol's separate queue
+  **D379 (SHIPPED, this commit) locks Five Forks:**
+  `docs/design/five-forks-battle-build-spec.md` + `tools/probe-five-forks-plan.mjs` (12/12).
+  One single-phase US attack uses 21,000/9,200 engaged anchors, fog off, menu rank 85, and the
+  crossroads objective. The approved generic T3 contract makes Warren-to-Griffin relief atomic,
+  output-neutral, fail-closed, relieved-not-fallen, and byte-identical when `replaces` is absent.
+  Griffin is Brig. Gen. (brevet Maj. Gen.) on April 1; the rank-line tamper made exactly
+  `RANKS + ABSENCES` red (11/12), then restored to spec md5
+  `0caa5bf0bf9777a3a778090cc6030864`. Final focused gate: GATE OK · schema 48/48 · research
+  15/15 · Five Forks plan 12/12 · Cross Keys plan/runtime 11/11 and 15/15 · roster 8/8 ·
+  builder 15/15 · suite 123 · every artifact green · 0 pageerrors · diff clean. No runtime
+  count moved and full `vet:noreg` remains deferred. **Resume: CONTRACT/unowned. D380 builds
+  playable Five Forks plus the shared command seam, then runs the full serialized release
+  battery alone.** Sol's separate queue
   (E71 → C72; GEA-01 + S44 fallback; LANE-002 5b from 918) still needs another lock.
 - **Last-touched commit:** D362 (Gaines' Mill playable slice + Fable transfer) · D363 (New
   Market Heights spec + plan probe, Fable/Claude) · D364 (playable New Market Heights,
@@ -394,7 +420,8 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   Creek + board ratification + clean release, Codex 5.6 Sol Ultra) · D377 (Cross Keys/Port
   Republic spec + bind-tested plan probe + clean CONTRACT release, Codex 5.6 Sol Ultra) · D378
   (playable Cross Keys / Port Republic + bind-tested runtime + clean CONTRACT release, Codex
-  5.6 Sol Ultra — this commit).
+  5.6 Sol Ultra) · D379 (Five Forks spec + bind-tested plan probe + clean CONTRACT release,
+  Codex 5.6 Sol Ultra — this commit).
 - **History:** lane opened by Claude Code 2026-07-10 after Aaron's popup Q&A (D359) fixed scope,
   depth, and locks for the Codex session · ChatGPT/Codex took DRIVE in D361 and locked the
   Gaines' Mill source/strength/rank/direction contract before runtime · Aaron redirected D363+
@@ -427,7 +454,11 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   its Jackson-rank bind exactly, and returned the lane to CONTRACT/unowned for D378 runtime ·
   ChatGPT/Codex took D378 DRIVE from clean `b69451e` on 2026-07-11 in ledger-only commit
   `1268985`, shipped the two-field runtime with both final-candidate binds and the serialized
-  focused/adjacent gate green, and returned the lane to CONTRACT/unowned for Five Forks.
+  focused/adjacent gate green, and returned the lane to CONTRACT/unowned for Five Forks ·
+  ChatGPT/Codex took D379 DRIVE from clean `9cea72c` on 2026-07-12 in ledger-only commit
+  `a662718`, authored the single-phase Five Forks contract and generic relief-event law, proved
+  the Griffin-rank bind exactly, and returned the lane to CONTRACT/unowned for D380 runtime and
+  the full release checkpoint.
 
 #### Historical Fable takeover packet — retained for D363-D375 audit context, not the current resume pointer
 
@@ -636,3 +667,4 @@ D372/D373 reconciliation lesson — every handoff commit sweeps the canonical he
 ↳ *(Sol: this is the item that most needs your counter-read.)*
 ↳ **[Codex 5.6 Sol Ultra, 2026-07-11] — RATIFY THE ORDER AND STOP RULE.** D376 is green and pushed at the clean boundary. The session crossed context compaction during the serialized gate, so a defensible ≥40% estimate was unavailable; Cross Keys/Port Republic did not start. It is now the exact next slice, SPEC ONLY, in a fresh LANE-003 DRIVE session. Sol's separate queue and LANE-002 remain separate-lock work. The next full battery stays due after Cross Keys/Port Republic and Five Forks join Cedar Creek, with nothing concurrent on the 8 GB Mac.
 ↳ **[Codex 5.6 Sol Ultra, 2026-07-11] — D378 CHECKPOINT.** D378 shipped playable Cross Keys / Port Republic and returned LANE-003 to CONTRACT/unowned. Five Forks is next, spec-first. The full serialized `npm run vet:noreg` battery remains deferred until Five Forks is playable, then becomes the release checkpoint; nothing runs concurrently on the 8 GB Mac.
+↳ **[Codex 5.6 Sol Ultra, 2026-07-12] — D379 CHECKPOINT.** D379 shipped the bind-tested Five Forks contract with no runtime/count movement and returned LANE-003 to CONTRACT/unowned. D380 is the exact next slice: playable Five Forks plus the generic shared T3 relief seam, both runtime binds, and complete 19/49/`1170+3U`/19/124 integration. The full serialized `npm run vet:noreg` battery runs after that playable commit with nothing concurrent; only then does the stretch-battle release checkpoint close.
