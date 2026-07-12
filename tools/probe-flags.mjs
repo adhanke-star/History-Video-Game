@@ -93,6 +93,7 @@ function pureScript() {
         cedarCreek: withScenario('cedarCreek', function(){ return _fldBattleMeta(); }),
         franklin: withScenario('franklin', function(){ return _fldBattleMeta(); }),
         nashville: withScenario('nashville', function(){ return _fldBattleMeta(); }),
+        fiveForks: withScenario('fiveForks', function(){ return _fldBattleMeta(); }),
         nmh: withScenario('newMarketHeights', function(){ return _fldBattleMeta(); }),
         stonesRiver: withScenario('stonesRiver', function(){ return _fldBattleMeta(); }),
         sandbox: withScenario('__nope__', function(){ return _fldBattleMeta(); })
@@ -116,6 +117,7 @@ function pureScript() {
         csCedarCreek: flagPat('cedarCreek', "Gordon's Division", 'CS'),
         csFranklin: flagPat('franklin', "Cleburne's Division", 'CS'),
         csNashville: flagPat('nashville', "Cheatham's Shy's Hill Line", 'CS'),
+        csFiveForks: flagPat('fiveForks', "White Oak Road Left Grouping", 'CS'),
         csNewMarketHeights: flagPat('newMarketHeights', "Gregg's Texas Brigade", 'CS'),
         csStonesRiver: flagPat('stonesRiver', "Cleburne's Division", 'CS'),
         csGettysburg: flagPat('gettysburg', "Rodes's Division", 'CS'),
@@ -320,8 +322,12 @@ async function runScene(page, label, scenario, seed, opts, shared) {
     pure.ok && P.meta && P.meta.gburg.badges === true && P.meta.bullrun.badges === false && P.meta.chick.badges === false && P.meta.sandbox.badges === false,
     JSON.stringify(P.meta || {}));
   check('battle meta: every registered historical scenario has explicit metadata (no silent Eastern/ANV fallback)',
-    pure.ok && Array.isArray(P.metaCoverage) && P.metaCoverage.length === 18 && P.metaCoverage.every(x => x.explicit),
+    pure.ok && Array.isArray(P.metaCoverage) && P.metaCoverage.length === 19 && P.metaCoverage.every(x => x.explicit),
     JSON.stringify(P.metaCoverage || []));
+  check('battle meta + flag: Five Forks is an Eastern AotP/ANV field with V Corps badges and an ANV-family Southern Cross (D380)',
+    pure.ok && P.meta && P.meta.fiveForks && P.meta.fiveForks.theater === 'E' && P.meta.fiveForks.badges === true && P.meta.fiveForks.csFlag === 'anv'
+      && P.flag && P.flag.csFiveForks === 'southern-cross',
+    'meta=' + JSON.stringify(P.meta && P.meta.fiveForks) + ' flag=' + (P.flag && P.flag.csFiveForks));
   check('battle meta + flag: Cross Keys / Port Republic is an Eastern 1862 field with no AotP badge reuse and an explicitly Inferred ANV-family Southern Cross (D378)',
     pure.ok && P.meta && P.meta.crossKeysPortRepublic && P.meta.crossKeysPortRepublic.theater === 'E' && P.meta.crossKeysPortRepublic.badges === false && P.meta.crossKeysPortRepublic.csFlag === 'anv'
       && P.flag && P.flag.csCrossKeysPortRepublic === 'southern-cross',

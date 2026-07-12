@@ -54,10 +54,16 @@ var FLDO = {
    =========================================================================== */
 function fldBuildOfficers() {
   __FIELD.leaders = [];
+  try { delete __FIELD._officerReliefRejected; } catch (e) {}
   if (!__FIELD.officers) return;                 // the gate: OFF -> no leaders -> the layer is wholly inert
   var roster = fldOfficerRoster();
   if (!roster || !roster.length) return;
+  roster = fldOfficerPrepareRoster(roster);
   for (var i = 0; i < roster.length; i++) { var ld = fldMakeOfficer(roster[i]); if (ld) __FIELD.leaders.push(ld); }
+  for (var j = 0; j < __FIELD.leaders.length; j++) {
+    var incoming = __FIELD.leaders[j]; if (!fldOfficerHasReplacement(incoming)) continue;
+    var target = fldOfficerById(incoming.replaces); if (target) target._reliefTarget = true;
+  }
 }
 /* the command cast for this battle:
    1) a hand-authored scenario (Bull Run) supplies the real figures via scenData.leaders {US:[],CS:[]};
@@ -75,6 +81,61 @@ function fldOfficerRoster() {
     return out;
   }
   return fldProceduralOfficers();
+}
+/* D380: validate the optional current-cast command-replacement graph before fldMakeOfficer consumes
+   even one seeded RNG draw. A cast with no own `replaces` property returns through the old path
+   unchanged. Malformed replacement proposals are omitted from the live cast and retained only as
+   inert terminal diagnostics; they cannot announce, retry, render, or shift unrelated officer fates. */
+function fldOfficerPrepareRoster(roster) {
+  var hasRelief = false, i;
+  for (i = 0; i < roster.length; i++) if (roster[i] && Object.prototype.hasOwnProperty.call(roster[i], "replaces")) { hasRelief = true; break; }
+  if (!hasRelief) return roster;
+
+  var byId = {}, proposals = [], targets = {}, duplicateCast = false;
+  for (i = 0; i < roster.length; i++) {
+    var raw = roster[i] || {}, id = (typeof raw.id === "string") ? raw.id.trim() : "";
+    if (id) { if (!byId[id]) byId[id] = []; byId[id].push(i); }
+    if (Object.prototype.hasOwnProperty.call(raw, "replaces")) proposals.push(i);
+  }
+  for (i = 0; i < proposals.length; i++) {
+    var pr = roster[proposals[i]] || {}, rid = (typeof pr.replaces === "string") ? pr.replaces.trim() : "";
+    if (rid) { if (!targets[rid]) targets[rid] = []; targets[rid].push(proposals[i]); }
+  }
+  for (var castId in byId) if (Object.prototype.hasOwnProperty.call(byId, castId) && byId[castId].length !== 1) { duplicateCast = true; break; }
+
+  var rejected = {}, reasons = {};
+  function reject(idx, why) { rejected[idx] = true; if (!reasons[idx]) reasons[idx] = []; reasons[idx].push(why); }
+  for (i = 0; i < proposals.length; i++) {
+    var idx = proposals[i], o = roster[idx] || {};
+    var ownId = (typeof o.id === "string") ? o.id.trim() : "";
+    var targetId = (typeof o.replaces === "string") ? o.replaces.trim() : "";
+    if (duplicateCast) reject(idx, "duplicate leader id in replacement cast");
+    if (!ownId) reject(idx, "blank replacement id");
+    if (!targetId) reject(idx, "blank replaces target");
+    if ((typeof o.id === "string" && o.id !== ownId) || (typeof o.replaces === "string" && o.replaces !== targetId)) reject(idx, "whitespace-ambiguous replacement identity");
+    if (ownId && targetId && ownId === targetId) reject(idx, "self-replacement");
+    if (ownId && (!byId[ownId] || byId[ownId].length !== 1)) reject(idx, "duplicate replacement id");
+    if (targetId && (!byId[targetId] || byId[targetId].length !== 1)) reject(idx, "missing or duplicate target");
+    if (targetId && targets[targetId] && targets[targetId].length !== 1) reject(idx, "multiple replacements for target");
+    if (typeof o.atSec !== "number" || !isFinite(o.atSec) || o.atSec < 0) reject(idx, "invalid replacement time");
+    if (typeof o.entry !== "string" || !o.entry.trim()) reject(idx, "blank replacement entry");
+    if (targetId && byId[targetId] && byId[targetId].length === 1) {
+      var target = roster[byId[targetId][0]] || {};
+      if (target.id !== targetId) reject(idx, "whitespace-ambiguous target identity");
+      if (target.side !== o.side) reject(idx, "cross-side replacement");
+      if (Object.prototype.hasOwnProperty.call(target, "replaces")) reject(idx, "replacement chain or cycle");
+    }
+    if (ownId && targets[ownId] && targets[ownId].length) reject(idx, "replacement is also a target");
+  }
+
+  var out = [], diagnostics = [];
+  for (i = 0; i < roster.length; i++) {
+    if (!rejected[i]) { out.push(roster[i]); continue; }
+    var bad = roster[i] || {};
+    diagnostics.push({ id: bad.id || "", side: bad.side || "", replaces: bad.replaces, active: false, _reliefRejected: true, reasons: reasons[i] || ["invalid replacement"] });
+  }
+  __FIELD._officerReliefRejected = diagnostics;
+  return out;
 }
 function fldProceduralOfficers() {
   var out = [], sides = ["US", "CS"];
@@ -159,6 +220,12 @@ function fldMakeOfficer(o) {
     note: o.note || "", teach: o.teach || "", teachReq: o.teachReq || null, teachAlt: o.teachAlt || "",
     alive: true, wounded: false, _risk: 0, fellAt: null, _everSeen: false,
   };
+  if (Object.prototype.hasOwnProperty.call(o, "replaces")) {
+    ld.replaces = String(o.replaces);
+    ld.entry = String(o.entry);
+    ld._reliefDone = false;
+    ld._reliefRejected = false;
+  }
   ld.active = (ld.atSec == null);                       // timed arrivals are inert until their hour
   if (ld.attach) { var au = fldById(ld.attach); if (au) { ld.x = au.x; ld.z = au.z; } }   // ride with the brigade if it's on the field
   // hidden, SEEDED fate threshold (the only randomness): the per-leader `fate` (data) weights it to HISTORY —
@@ -168,6 +235,7 @@ function fldMakeOfficer(o) {
 }
 function _fldLastName(s) { s = String(s == null ? "" : s).replace(/['"]/g, "").trim(); var p = s.split(/\s+/); return p.length ? p[p.length - 1] : s; }
 function fldOfficerById(id) { var L = __FIELD.leaders; if (!L) return null; for (var i = 0; i < L.length; i++) if (L[i].id === id) return L[i]; return null; }
+function fldOfficerHasReplacement(ld) { return !!(ld && Object.prototype.hasOwnProperty.call(ld, "replaces")); }
 
 /* ===========================================================================
    THE PER-TICK STEP  (T0 fldSimStep seam — runs AFTER fire, BEFORE morale, so the
@@ -177,9 +245,10 @@ function fldOfficersStep(dt) {
   var L = __FIELD.leaders; if (!L || !L.length) return;
   var U = __FIELD.units, i, j;
   for (i = 0; i < U.length; i++) U[i].cmdBonus = 0;     // recompute the command aura fresh each tick (no stale carryover)
+  fldOfficerReplacementBatch();                         // validate every due command event before any event or aura mutates the tick
   for (i = 0; i < L.length; i++) {
     var ld = L[i];
-    if (!ld.active && ld.atSec != null && __FIELD.t >= ld.atSec) fldOfficerActivate(ld);
+    if (!ld.active && !ld.relieved && !fldOfficerHasReplacement(ld) && ld.atSec != null && __FIELD.t >= ld.atSec) fldOfficerActivate(ld);
     if (!ld.active || !ld.alive) continue;
     fldOfficerMove(ld, dt);
     fldOfficerHazard(ld, dt);
@@ -191,6 +260,52 @@ function fldOfficersStep(dt) {
       u.cmdBonus = Math.min(FLDO.CMD_BONUS_CAP, (u.cmdBonus || 0) + aura * (1 - d / ld.radius));
     }
   }
+}
+/* D380 generic current-cast command event. The complete due batch is inspected first; only after
+   verdicts are final do valid events apply. Rejected rows become terminal and remain inert. */
+function fldOfficerReplacementBatch() {
+  var L = __FIELD.leaders, due = [], i;
+  for (i = 0; i < L.length; i++) {
+    var ld = L[i];
+    if (fldOfficerHasReplacement(ld) && !ld.active && !ld._reliefDone && !ld._reliefRejected && ld.atSec != null && __FIELD.t >= ld.atSec) due.push(ld);
+  }
+  if (!due.length) return;
+
+  var idCounts = {}, dueTargets = {}, verdicts = [];
+  for (i = 0; i < L.length; i++) if (L[i] && L[i].id) idCounts[L[i].id] = (idCounts[L[i].id] || 0) + 1;
+  for (i = 0; i < due.length; i++) dueTargets[due[i].replaces] = (dueTargets[due[i].replaces] || 0) + 1;
+  for (i = 0; i < due.length; i++) {
+    var next = due[i], target = null, ok = true;
+    if (!next.id || idCounts[next.id] !== 1 || !next.replaces || idCounts[next.replaces] !== 1 || next.id === next.replaces) ok = false;
+    if (dueTargets[next.replaces] !== 1) ok = false;
+    if (ok) target = fldOfficerById(next.replaces);
+    if (!target || target.side !== next.side || !target.alive || !target.active || target.relieved || target.replaces) ok = false;
+    if (!next.alive || next.active || typeof next.entry !== "string" || !next.entry.trim()) ok = false;
+    verdicts.push({ next: next, target: target, ok: ok });
+  }
+  var batchOk = true;
+  for (i = 0; i < verdicts.length; i++) if (!verdicts[i].ok) { batchOk = false; break; }
+  if (!batchOk) {
+    for (i = 0; i < verdicts.length; i++) verdicts[i].next._reliefRejected = true;
+    return;
+  }
+  for (i = 0; i < verdicts.length; i++) fldOfficerApplyReplacement(verdicts[i].next, verdicts[i].target);
+}
+function fldOfficerApplyReplacement(ld, target) {
+  target.active = false;
+  target.relieved = true;
+  target.relievedBy = ld.id;
+  target.reliefAt = __FIELD.t;
+  ld.active = true;
+  ld._reliefDone = true;
+  ld.reliefOf = target.id;
+  var au = ld.attach ? fldById(ld.attach) : null;
+  if (au && au.alive) { ld.x = au.x; ld.z = au.z; }
+  else { var an = fldOfficerAnchorUnit(ld); if (an) { ld.x = an.x; ld.z = an.z; } }
+  var line = ld.entry;
+  fldAnnounce(line);
+  if (typeof fldScenarioBanner === "function") { try { fldScenarioBanner(line, ld.side); } catch (e) {} }
+  return true;
 }
 function fldOfficerActivate(ld) {
   ld.active = true;
@@ -285,6 +400,11 @@ function fldOfficersDownList(side) {
   for (var i = 0; i < L.length; i++) { var ld = L[i]; if (side && ld.side !== side) continue; if (!ld.alive) out.push(ld.short || ld.name); }
   return out;
 }
+function fldOfficersRelievedList(side) {
+  var L = __FIELD.leaders, out = []; if (!L) return out;
+  for (var i = 0; i < L.length; i++) { var ld = L[i]; if (side && ld.side !== side) continue; if (ld.relieved) out.push(ld.short || ld.name); }
+  return out;
+}
 
 /* ===========================================================================
    HUD  (T0 fldRenderHud seam) — commander + command-range for a selected unit;
@@ -309,13 +429,13 @@ function fldOfficerHudRoster() {
   if (!__FIELD.officers) return "";
   var L = __FIELD.leaders; if (!L || !L.length) return "";
   var ps = fldPlayerSide(), mine = [];   // show the PLAYER's own field officers (US standalone, or CS in a CS-player campaign)
-  for (var i = 0; i < L.length; i++) { var ld = L[i]; if (ld.side !== ps) continue; if (ld.atSec != null && !ld.active) continue; mine.push(ld); }
+  for (var i = 0; i < L.length; i++) { var ld = L[i]; if (ld.side !== ps) continue; if (ld.atSec != null && !ld.active && !ld.relieved) continue; mine.push(ld); }
   if (!mine.length) return "";
   var parts = [];
   for (var j = 0; j < mine.length; j++) {
     var l = mine[j];
-    var tag = !l.alive ? ' &#10013;' : (l.wounded ? " (wounded)" : "");
-    var col = !l.alive ? "#d49898" : (l.wounded ? "#c0a05a" : "#8fb47a");
+    var tag = !l.alive ? ' &#10013;' : (l.relieved ? " (relieved)" : (l.wounded ? " (wounded)" : ""));
+    var col = !l.alive ? "#d49898" : (l.relieved ? "#b9b1a1" : (l.wounded ? "#c0a05a" : "#8fb47a"));
     parts.push('<span style="color:' + col + ';">' + _fldEscO(l.short || l.name) + tag + '</span>');
   }
   return '<div style="opacity:.8;margin-top:6px;font-size:12px;border-top:1px solid #795c3e;padding-top:5px;">Field officers: ' + parts.join(", ") + '</div>';/* wcag-auditor: contrast fix #4a3c28->#795c3e border on #0c0f14/#10141a (was 1.80:1, now 3.12/3.00:1) WCAG 1.4.11 */
@@ -327,13 +447,21 @@ function fldOfficerEndHtml(winner) {
   if (!__FIELD.officers) return "";
   var L = __FIELD.leaders; if (!L || !L.length) return "";
   var downUS = fldOfficersDownList("US"), downCS = fldOfficersDownList("CS");
-  if (!downUS.length && !downCS.length) return "";
+  var relievedUS = fldOfficersRelievedList("US"), relievedCS = fldOfficersRelievedList("CS");
+  if (!downUS.length && !downCS.length && !relievedUS.length && !relievedCS.length) return "";
   var rows = "";
   if (downUS.length) rows += '<div style="font-size:13px;margin-top:3px;"><b style="color:#9fb6d8;">Union officers lost:</b> ' + _fldEscO(downUS.join(", ")) + '</div>';
   if (downCS.length) rows += '<div style="font-size:13px;margin-top:3px;"><b style="color:#d8a79f;">Confederate officers lost:</b> ' + _fldEscO(downCS.join(", ")) + '</div>';
+  if (relievedUS.length) rows += '<div style="font-size:13px;margin-top:3px;"><b style="color:#b9c6d8;">Union officers relieved:</b> ' + _fldEscO(relievedUS.join(", ")) + '</div>';
+  if (relievedCS.length) rows += '<div style="font-size:13px;margin-top:3px;"><b style="color:#d8bbb1;">Confederate officers relieved:</b> ' + _fldEscO(relievedCS.join(", ")) + '</div>';
+  var hasFall = downUS.length || downCS.length;
+  var heading = hasFall ? "The cost of command" : "Changes of command";
+  var intro = hasFall
+    ? 'Before radios, a general led from the saddle within sight of his men. That presence steadied the line &mdash; and put him in the line of fire.'
+    : 'A change of command transfers authority while the relieved officer remains alive.';
   return '<div style="text-align:left;background:#15110b;border:1px solid #715e3e;border-radius:6px;padding:12px 14px;margin-bottom:16px;">' +
-    '<div style="color:#d8c87a;font-weight:bold;margin-bottom:6px;">The cost of command</div>' +
-    '<div style="font-size:13px;opacity:.9;line-height:1.5;margin-bottom:5px;">Before radios, a general led from the saddle within sight of his men. That presence steadied the line &mdash; and put him in the line of fire.</div>' +
+    '<div style="color:#d8c87a;font-weight:bold;margin-bottom:6px;">' + heading + '</div>' +
+    '<div style="font-size:13px;opacity:.9;line-height:1.5;margin-bottom:5px;">' + intro + '</div>' +
     rows + '</div>';
 }
 
@@ -345,7 +473,7 @@ function fldDrawOfficers(ctx, v) {
   if (!__FIELD.officers) return;
   var L = __FIELD.leaders; if (!L || !L.length) return;
   for (var i = 0; i < L.length; i++) {
-    var ld = L[i]; if (ld.atSec != null && !ld.active) continue;
+    var ld = L[i]; if (ld.atSec != null && !ld.active && !ld.relieved) continue;
     var seen = fldOfficerSeen(ld);
     if (!seen && !(!ld.alive && ld._everSeen)) continue;   // fog: hide an unseen enemy general — but keep a once-seen FALLEN one marked (fog memory)
     var px = ld.x, pz = ld.z;
@@ -354,7 +482,7 @@ function fldDrawOfficers(ctx, v) {
     var col = ld.side === "US" ? "#cdd8ee" : "#eecdc4";
     var ring = ld.side === "US" ? "#6c8ebf" : "#b06a5a";
     // command ring (living, active)
-    if (ld.alive) {
+    if (ld.alive && ld.active && !ld.relieved) {
       ctx.save(); ctx.globalAlpha = ld.wounded ? 0.16 : 0.24; ctx.strokeStyle = ring; ctx.lineWidth = 1.4; ctx.setLineDash([5, 6]);
       ctx.beginPath(); ctx.arc(cx, cz, ld.radius * v.s, 0, 7); ctx.stroke(); ctx.restore();
     }
@@ -363,6 +491,10 @@ function fldDrawOfficers(ctx, v) {
     if (!ld.alive) {
       ctx.globalAlpha = 0.85; ctx.strokeStyle = "#d8b46a"; ctx.lineWidth = 2.4;
       ctx.beginPath(); ctx.moveTo(cx - 6, cz - 6); ctx.lineTo(cx + 6, cz + 6); ctx.moveTo(cx + 6, cz - 6); ctx.lineTo(cx - 6, cz + 6); ctx.stroke();   // a fallen cross
+    } else if (ld.relieved) {
+      // a neutral double bar: distinct from both the living command star and the fallen cross
+      ctx.globalAlpha = 0.9; ctx.strokeStyle = "#b9b1a1"; ctx.lineWidth = 2.4;
+      ctx.beginPath(); ctx.moveTo(cx - 7, cz - 4); ctx.lineTo(cx + 7, cz - 4); ctx.moveTo(cx - 7, cz + 4); ctx.lineTo(cx + 7, cz + 4); ctx.stroke();
     } else {
       // a small diamond plinth + a star (the commander's standard)
       ctx.fillStyle = "#13100a"; ctx.beginPath(); ctx.moveTo(cx, cz - 8); ctx.lineTo(cx + 7, cz); ctx.lineTo(cx, cz + 8); ctx.lineTo(cx - 7, cz); ctx.closePath(); ctx.fill();
@@ -371,9 +503,9 @@ function fldDrawOfficers(ctx, v) {
     ctx.restore();
     // the name label (always — the teaching is the names). S41 gives every visible officer mandatory
     // priority in the shared pass and reserves the standard/cross so displaced copy never covers it.
-    var nm = (ld.short || ld.name) + (!ld.alive ? " †" : (ld.wounded ? " (wounded)" : ""));
+    var nm = (ld.short || ld.name) + (!ld.alive ? " †" : (ld.relieved ? " (relieved)" : (ld.wounded ? " (wounded)" : "")));
     if (typeof fld2dLabelReserve === "function") fld2dLabelReserve(cx, cz, 20, 20, "officer-marker");
-    if (typeof fld2dLabel === "function") fld2dLabel(ctx, nm, cx, cz + 20, { kind: "officer", priority: !ld.alive ? 460 : (ld.wounded ? 440 : 420), required: true, maxShift: 200 });
+    if (typeof fld2dLabel === "function") fld2dLabel(ctx, nm, cx, cz + 20, { kind: "officer", priority: !ld.alive ? 460 : (ld.relieved ? 450 : (ld.wounded ? 440 : 420)), required: true, maxShift: 200 });
   }
 }
 function fldStar(ctx, cx, cy, rO, rI) {
@@ -407,11 +539,15 @@ function fld3dBuildOfficers() {
     var ld = L[i];
     var col = ld.side === "US" ? "#cdd8ee" : "#eecdc4";
     var g = new T.Group();
-    var horse = new T.Mesh(new T.BoxGeometry(20, 9, 7), new T.MeshLambertMaterial({ color: "#3a2c20" })); horse.position.y = 9; g.add(horse);
+    var horse = new T.Mesh(new T.BoxGeometry(20, 9, 7), new T.MeshLambertMaterial({ color: "#3a2c20" })); horse.position.y = 9; horse.name = "horse"; g.add(horse);
     var rider = new T.Mesh(new T.CylinderGeometry(2.2, 2.6, 12, 6), new T.MeshLambertMaterial({ color: ld.side === "US" ? "#3a5a9a" : "#9a4a3a" })); rider.position.y = 19; rider.name = "rider"; g.add(rider);
     var plume = new T.Mesh(new T.ConeGeometry(3, 8, 5), new T.MeshLambertMaterial({ color: col })); plume.position.y = 27; plume.name = "plume"; g.add(plume);
     var aura = new T.Mesh(new T.RingGeometry(Math.max(8, ld.radius - 6), ld.radius, 48), new T.MeshBasicMaterial({ color: ld.side === "US" ? "#6c8ebf" : "#b06a5a", side: T.DoubleSide, transparent: true, opacity: 0.16 }));
     aura.rotation.x = -Math.PI / 2; aura.position.y = 1.5; aura.name = "aura"; g.add(aura);
+    if (ld._reliefTarget || ld.relieved) {
+      var relief = new T.Mesh(new T.RingGeometry(8, 12, 24), new T.MeshBasicMaterial({ color: "#b9b1a1", side: T.DoubleSide, transparent: true, opacity: 0.9 }));
+      relief.rotation.x = -Math.PI / 2; relief.position.y = 2; relief.name = "relief"; relief.visible = false; g.add(relief);
+    }
     grp.add(g); __FIELD._ld3d[ld.id] = g;
   }
 }
@@ -419,16 +555,18 @@ function fld3dSyncOfficers() {
   var L = __FIELD.leaders, map = __FIELD._ld3d; if (!L || !map) return;
   for (var i = 0; i < L.length; i++) {
     var ld = L[i], g = map[ld.id]; if (!g) continue;
-    var seen = fldOfficerSeen(ld), pending = (ld.atSec != null && !ld.active);
+    var seen = fldOfficerSeen(ld), pending = (ld.atSec != null && !ld.active && !ld.relieved);
     var shown = !pending && (seen || (!ld.alive && ld._everSeen));   // keep a once-seen FALLEN enemy commander marked (fog memory)
     g.visible = shown; if (!shown) continue;
     var px = ld.x, pz = ld.z; if (!ld.alive && ld.fellAt) { px = ld.fellAt.x; pz = ld.fellAt.z; }
     var y = (typeof fldTerrainH === "function") ? fldTerrainH(px, pz) : 0;
     g.position.set(px, y, pz);
-    var rider = g.getObjectByName("rider"), plume = g.getObjectByName("plume"), aura = g.getObjectByName("aura");
-    if (rider) rider.visible = ld.alive;
-    if (plume) { plume.visible = ld.alive; if (ld.alive && plume.material) plume.material.color.set(ld.wounded ? "#d8b46a" : (ld.side === "US" ? "#cdd8ee" : "#eecdc4")); }
-    if (aura) { aura.visible = ld.alive; if (aura.material) aura.material.opacity = ld.alive ? (ld.wounded ? 0.10 : 0.18) : 0; }
+    var horse = g.getObjectByName("horse"), rider = g.getObjectByName("rider"), plume = g.getObjectByName("plume"), aura = g.getObjectByName("aura"), relief = g.getObjectByName("relief");
+    if (horse) horse.visible = !ld.relieved;
+    if (rider) rider.visible = ld.alive && !ld.relieved;
+    if (plume) { plume.visible = ld.alive && !ld.relieved; if (ld.alive && !ld.relieved && plume.material) plume.material.color.set(ld.wounded ? "#d8b46a" : (ld.side === "US" ? "#cdd8ee" : "#eecdc4")); }
+    if (aura) { aura.visible = ld.alive && ld.active && !ld.relieved; if (aura.material) aura.material.opacity = aura.visible ? (ld.wounded ? 0.10 : 0.18) : 0; }
+    if (relief) relief.visible = !!ld.relieved;
   }
 }
 function fld3dDisposeOfficers() {

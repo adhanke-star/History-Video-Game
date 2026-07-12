@@ -13,6 +13,7 @@ import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { Script } from 'node:vm';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -36,6 +37,30 @@ const SETUP = `(() => {
     __FIELD.fog = !!fog; __FIELD.phase='battle'; __FIELD.paused=false;
     var n=0; while(__FIELD.phase==='battle' && n<20000){ fldSimStep(0.05); n++; }
     return { winner:__FIELD.winner, by:__FIELD.winBy, t:Math.round(__FIELD.t), us:strength('US'), cs:strength('CS') };
+  }
+  function clone(x){ var o={}; for(var k in x) if(Object.prototype.hasOwnProperty.call(x,k)) o[k]=x[k]; return o; }
+  function oldRaw(id){ return {id:id||'ld_old',name:'Maj. Gen. Old',short:'Old',quality:0.6,radius:220,x:600,z:450}; }
+  function nextRaw(id,target){ return {id:id||'ld_new',name:'Brig. Gen. New',short:'New',quality:0.6,radius:220,x:600,z:450,atSec:10,replaces:target||'ld_old',entry:'Old is relieved; New assumes command.'}; }
+  function rawCast(us,cs){ return {US:us||[],CS:cs||[]}; }
+  function byId(id){ var L=__FIELD.leaders||[]; for(var i=0;i<L.length;i++) if(L[i].id===id) return L[i]; return null; }
+  function buildCast(leaders, rngValues){
+    fldLaunchSandbox({renderer:'none',autoBoth:true,seed:380});
+    __FIELD.officers=true; __FIELD.scenData={leaders:leaders}; __FIELD.units=[]; __FIELD.t=0;
+    var oldRng=fldRng, draws=0, vals=rngValues||[0.11,0.22,0.33,0.44,0.55];
+    fldRng=function(){ var v=vals[Math.min(draws,vals.length-1)]; draws++; return v; };
+    try{ fldBuildOfficers(); } finally { fldRng=oldRng; }
+    return {leaders:__FIELD.leaders||[],draws:draws,rejected:__FIELD._officerReliefRejected||[]};
+  }
+  function withNotices(fn){
+    var oldAnnounce=fldAnnounce, oldBanner=fldScenarioBanner, notices=[], banners=[];
+    fldAnnounce=function(s){ notices.push(String(s)); };
+    fldScenarioBanner=function(s,side){ banners.push(String(s)+'|'+String(side)); };
+    try{ return {value:fn(notices,banners),notices:notices,banners:banners}; }
+    finally{ fldAnnounce=oldAnnounce; fldScenarioBanner=oldBanner; }
+  }
+  function outputSnapshot(){
+    var units=(__FIELD.units||[]).map(function(u){return {id:u.id,men:u.men,morale:u.morale,state:u.state,alive:u.alive};});
+    return JSON.stringify({winner:__FIELD.winner,winBy:__FIELD.winBy,hold:__FIELD.holdT,captured:__FIELD.captured,routs:__FIELD.routs,surrender:__FIELD.surrender,battleCas:__FIELD.battleCas,mode:G.mode,classicMarker:G.battle&&G.battle.M,campaignPhase:G.campaign&&G.campaign.phase,units:units});
   }
   try {
     if (typeof fldLaunchSandbox!=='function' || typeof __FIELD==='undefined' || typeof fldBuildOfficers!=='function' || typeof fldOfficersStep!=='function' || typeof fldMakeOfficer!=='function')
@@ -64,6 +89,166 @@ const SETUP = `(() => {
       if((__FIELD.leaders||[]).length!==0) throw new Error('officers-off should build NO leaders, got '+(__FIELD.leaders||[]).length);
       __FIELD._officersOff=false;
       return { bullRun:L.length, usCs:[us,cs], sandbox:2, off:0 }; });
+
+    step('BYTE-IDENTICAL LEGACY: missing replaces keeps the exact timed-arrival shape, RNG count, announcement, and output', function(){
+      var timed=oldRaw('ld_legacy'); timed.short='Legacy'; timed.name='Legacy'; timed.atSec=3;
+      var steady=oldRaw('ld_steady'); steady.short='Steady';
+      var built=buildCast(rawCast([timed,steady]),[0.2,0.4]);
+      if(built.draws!==2) throw new Error('legacy cast should consume exactly one RNG draw per leader, got '+built.draws);
+      if(Object.prototype.hasOwnProperty.call(__FIELD,'_officerReliefRejected')) throw new Error('legacy cast gained a relief diagnostic property');
+      var legacy=byId('ld_legacy');
+      var keys=Object.keys(legacy).sort().join(',');
+      var expected=['_everSeen','_fate','_risk','active','alive','atSec','attach','fellAt','id','name','note','quality','radius','short','side','teach','teachAlt','teachReq','wounded','x','z'].sort().join(',');
+      if(keys!==expected) throw new Error('legacy officer own-key drift: '+keys);
+      if(legacy.active) throw new Error('legacy timed arrival started active');
+      var notices=withNotices(function(){
+        __FIELD.t=2.99; fldOfficersStep(0.05); if(legacy.active) throw new Error('legacy arrived early');
+        __FIELD.t=3; fldOfficersStep(0.05); if(!legacy.active) throw new Error('legacy did not arrive at atSec');
+        fldOfficersStep(0.05);
+      });
+      if(notices.notices.length!==1||notices.notices[0]!=='Legacy takes the field.') throw new Error('legacy timed announcement changed: '+JSON.stringify(notices.notices));
+      if(notices.banners.length!==1||notices.banners[0]!=='Legacy takes the field.|US') throw new Error('legacy banner changed: '+JSON.stringify(notices.banners));
+      if(/reliev/i.test(fldOfficerHudRoster()+fldOfficerEndHtml())) throw new Error('legacy cast leaked relief presentation');
+      return {draws:built.draws,keys:Object.keys(legacy).length,announcement:notices.notices[0]}; });
+
+    step('VALID RELIEF: Warren before and Griffin after is atomic in both roster orders, with no overlap, no gap, and exact repeated-tick silence', function(){
+      function run(reverse){
+        var old=oldRaw('ld_old'); old.name='Maj. Gen. Gouverneur K. Warren'; old.short='Warren'; old.attach='U';
+        var incoming=nextRaw('ld_new','ld_old'); incoming.name='Brig. Gen. Charles Griffin'; incoming.short='Griffin'; incoming.attach='U'; incoming.entry='Sheridan relieves Warren; Griffin assumes command of V Corps.';
+        var built=buildCast(rawCast(reverse?[incoming,old]:[old,incoming]),[0.2,0.4]);
+        if(built.leaders.length!==2||built.rejected.length) throw new Error('valid cast did not build cleanly');
+        var u=mk('U','US',600,450,1500,'steady'); __FIELD.units=[u]; __FIELD.fog=false; __FIELD.playerSide='US';
+        var w=byId('ld_old'), g=byId('ld_new');
+        var captured=withNotices(function(){
+          __FIELD.t=9.99; fldOfficersStep(0.05);
+          if(!w.active||g.active) throw new Error('Warren before boundary is not the sole active leader');
+          if([w,g].filter(function(l){return l.active;}).length!==1) throw new Error('no overlap/no gap failed before boundary');
+          if(fldNearestLeaderName(u)!=='Warren'||!(u.cmdBonus>0)) throw new Error('Warren before attribution/aura missing');
+          var outputBefore=outputSnapshot();
+          __FIELD.t=10; fldOfficersStep(0.05);
+          var outputAfter=outputSnapshot();
+          if(outputBefore!==outputAfter) throw new Error('relief mutated a result/output ledger: '+outputBefore+' -> '+outputAfter);
+          if(w.active||!w.alive||!w.relieved||w.fellAt) throw new Error('Warren after state is not alive+inactive+relieved');
+          if(!g.active||!g.alive||!g._reliefDone) throw new Error('Griffin after state is not active');
+          if([w,g].filter(function(l){return l.active;}).length!==1) throw new Error('no overlap/no gap failed after boundary');
+          if(fldNearestLeaderName(u)!=='Griffin'||!(u.cmdBonus>0)) throw new Error('Griffin after attribution/aura missing');
+          fldOfficersStep(0.05); fldOfficersStep(0.05);
+          if([w,g].filter(function(l){return l.active;}).length!==1) throw new Error('repeated ticks changed the active count');
+        });
+        if(captured.notices.length!==1||captured.notices[0]!==incoming.entry) throw new Error('entry must announce exactly once: '+JSON.stringify(captured.notices));
+        if(captured.banners.length!==1||captured.banners[0]!==incoming.entry+'|US') throw new Error('entry banner must fire exactly once: '+JSON.stringify(captured.banners));
+        return {order:reverse?'Griffin-first':'Warren-first',announcement:captured.notices.length,active:byId('ld_new').short};
+      }
+      return [run(false),run(true)]; });
+
+    step('FAIL-CLOSED RAW MATRIX: blank fields, missing target, cross-side, self-replacement, duplicate, multi-target, chain, and cycle consume no extra RNG', function(){
+      function rows(extra){ return [oldRaw('ld_old')].concat(extra||[]).concat([oldRaw('ld_unrelated')]); }
+      function proposal(p){ var n=nextRaw('ld_new','ld_old'); for(var k in p) if(Object.prototype.hasOwnProperty.call(p,k)) n[k]=p[k]; return n; }
+      var cases=[
+        {name:'blank replaces',cast:rawCast(rows([proposal({replaces:''})]))},
+        {name:'non-string replaces',cast:rawCast(rows([proposal({replaces:7})]))},
+        {name:'blank explicit id',cast:rawCast(rows([proposal({id:''})]))},
+        {name:'blank entry',cast:rawCast(rows([proposal({entry:''})]))},
+        {name:'non-string entry',cast:rawCast(rows([proposal({entry:7})]))},
+        {name:'nonfinite atSec',cast:rawCast(rows([proposal({atSec:Infinity})]))},
+        {name:'negative atSec',cast:rawCast(rows([proposal({atSec:-1})]))},
+        {name:'missing target',cast:rawCast(rows([proposal({replaces:'ld_missing'})]))},
+        {name:'cross-side',cast:rawCast([oldRaw('ld_old'),oldRaw('ld_unrelated')],[proposal({})])},
+        {name:'self-replacement',cast:rawCast(rows([proposal({id:'ld_self',replaces:'ld_self'})]))},
+        {name:'duplicate',cast:rawCast(rows([proposal({id:'ld_dup'}),proposal({id:'ld_dup'})]))},
+        {name:'two replacements one target',cast:rawCast(rows([proposal({id:'ld_a'}),proposal({id:'ld_b'})]))},
+        {name:'replacement chain',cast:rawCast(rows([proposal({id:'ld_mid'}),proposal({id:'ld_new',replaces:'ld_mid'})]))},
+        {name:'replacement cycle',cast:rawCast(rows([proposal({id:'ld_a',replaces:'ld_b'}),proposal({id:'ld_b',replaces:'ld_a'})]))}
+      ];
+      var baseline=buildCast(rawCast([oldRaw('ld_old'),oldRaw('ld_unrelated')]),[0.13,0.31]);
+      var oldFate=byId('ld_old')._fate, unrelatedFate=byId('ld_unrelated')._fate;
+      if(baseline.draws!==2) throw new Error('baseline RNG draw count drifted');
+      var seen=[];
+      for(var i=0;i<cases.length;i++){
+        var c=cases[i], b=buildCast(c.cast,[0.13,0.31]);
+        var target=byId('ld_old'), unrelated=byId('ld_unrelated');
+        if(b.draws!==2) throw new Error(c.name+' consumed extra RNG draws: '+b.draws);
+        if(!target||!unrelated||target._fate!==oldFate||unrelated._fate!==unrelatedFate) throw new Error(c.name+' shifted unrelated officer fates');
+        if(!b.rejected.length||b.rejected.some(function(x){return x.active!==false||x._reliefRejected!==true;})) throw new Error(c.name+' lacks inactive terminal rejection diagnostics');
+        var before=outputSnapshot();
+        var notices=withNotices(function(){ __FIELD.t=100; fldOfficersStep(0.05); fldOfficersStep(0.05); });
+        if(notices.notices.length||notices.banners.length) throw new Error(c.name+' emitted a relief notice');
+        if(!target.active||!target.alive||target.relieved) throw new Error(c.name+' mutated its target');
+        if(outputSnapshot()!==before) throw new Error(c.name+' mutated output state');
+        seen.push(c.name);
+      }
+      return {cases:seen,drawsPerCast:2,unrelatedFateStable:true}; });
+
+    step('EVENT-TIME REJECTION: inactive/dead/relieved targets and a bad same-tick batch are terminal, all-or-none, and repeated safely', function(){
+      function rejectState(name,mutate){
+        buildCast(rawCast([oldRaw('ld_old'),nextRaw('ld_new','ld_old')]),[0.2,0.4]);
+        var target=byId('ld_old'), incoming=byId('ld_new'); mutate(target);
+        var state=JSON.stringify({active:target.active,alive:target.alive,relieved:!!target.relieved,fellAt:target.fellAt});
+        var output=outputSnapshot();
+        var notes=withNotices(function(){ __FIELD.t=10; fldOfficersStep(0.05); fldOfficersStep(0.05); });
+        if(JSON.stringify({active:target.active,alive:target.alive,relieved:!!target.relieved,fellAt:target.fellAt})!==state) throw new Error(name+' target changed');
+        if(incoming.active||!incoming._reliefRejected) throw new Error(name+' replacement was not terminal-inactive');
+        if(notes.notices.length||notes.banners.length) throw new Error(name+' announced');
+        if(outputSnapshot()!==output) throw new Error(name+' mutated output state');
+      }
+      rejectState('target not active at event time',function(t){t.active=false;});
+      rejectState('target dead at event time',function(t){t.alive=false;});
+      rejectState('target already relieved',function(t){t.active=false;t.relieved=true;});
+
+      var o1=oldRaw('ld_o1'), n1=nextRaw('ld_n1','ld_o1'), o2=oldRaw('ld_o2'), n2=nextRaw('ld_n2','ld_o2');
+      buildCast(rawCast([o1,n1,o2,n2]),[0.1,0.2,0.3,0.4]);
+      byId('ld_o2').alive=false;
+      var batchNotes=withNotices(function(){__FIELD.t=10;fldOfficersStep(0.05);});
+      if(!byId('ld_o1').active||byId('ld_o1').relieved||byId('ld_n1').active||!byId('ld_n1')._reliefRejected) throw new Error('same-tick batch partially applied its otherwise-valid event');
+      if(byId('ld_n2').active||!byId('ld_n2')._reliefRejected||batchNotes.notices.length) throw new Error('same-tick invalid event did not fail closed');
+
+      var timed=oldRaw('ld_timed'); timed.short='Timed Old'; timed.atSec=2;
+      var successor=nextRaw('ld_successor','ld_timed'); successor.entry='Timed Old is relieved; Successor assumes command.';
+      buildCast(rawCast([timed,successor]),[0.2,0.4]);
+      var timedNotes=withNotices(function(){ __FIELD.t=2; fldOfficersStep(0.05); __FIELD.t=10; fldOfficersStep(0.05); fldOfficersStep(0.05); });
+      if(!byId('ld_timed').relieved||!byId('ld_timed').alive||!byId('ld_successor').active) throw new Error('a target active by event time could not be relieved');
+      if(timedNotes.notices.length!==2||timedNotes.notices[1]!==successor.entry) throw new Error('timed-target notices wrong: '+JSON.stringify(timedNotes.notices));
+
+      fldLaunchSandbox({renderer:'none',autoBoth:true,seed:381}); __FIELD.units=[]; __FIELD.officers=true;
+      var directOld=fldMakeOfficer(oldRaw('ld_direct_old'));
+      var directBad=fldMakeOfficer({id:'ld_direct_bad',side:'US',short:'Bad',quality:0.5,radius:200,x:600,z:450,atSec:1,replaces:'',entry:'must not announce'});
+      __FIELD.leaders=[directOld,directBad];
+      var directNotes=withNotices(function(){__FIELD.t=1;fldOfficersStep(0.05);fldOfficersStep(0.05);});
+      if(directBad.active||!directBad._reliefRejected||directNotes.notices.length) throw new Error('own blank replaces slipped into the legacy timed path');
+      return {states:3,batch:'all-or-none',timedTarget:true,repeated:true}; });
+
+    step('RELIEVED PRESENTATION: HUD, selected attribution, 2D, 3D, down-list, and AAR distinguish relief from fall/death', function(){
+      var old=oldRaw('ld_old'); old.name='Maj. Gen. Gouverneur K. Warren'; old.short='Warren'; old.attach='U';
+      var incoming=nextRaw('ld_new','ld_old'); incoming.name='Brig. Gen. Charles Griffin'; incoming.short='Griffin'; incoming.attach='U'; incoming.entry='Sheridan relieves Warren; Griffin assumes command of V Corps.';
+      buildCast(rawCast([old,incoming]),[0.2,0.4]);
+      var u=mk('U','US',600,450,1500,'steady'); __FIELD.units=[u]; __FIELD.fog=false; __FIELD.playerSide='US'; __FIELD.campaignCtx=null;
+      __FIELD.t=10; withNotices(function(){fldOfficersStep(0.05);});
+      var w=byId('ld_old'), g=byId('ld_new');
+      var roster=fldOfficerHudRoster(), selected=fldOfficerHudSelected(u), aar=fldOfficerEndHtml(), down=fldOfficersDownList('US');
+      if(roster.indexOf('Warren (relieved)')<0||roster.indexOf('Griffin')<0||/[\u2020]|&#10013;|lost|fell|fallen|death/i.test(roster)) throw new Error('HUD relief language/marker wrong: '+roster);
+      if(selected.indexOf('Griffin')<0||selected.indexOf('Warren')>=0) throw new Error('selected-unit attribution did not transfer: '+selected);
+      if(down.indexOf('Warren')>=0||!w.alive||w.fellAt) throw new Error('relieved Warren entered fallen/down state');
+      if(aar.indexOf('Warren')<0||aar.indexOf('relieved')<0||/&#10013;|lost|fell|fallen|death/i.test(aar)) throw new Error('AAR relief presentation uses casualty language: '+aar);
+
+      var labels=[],segments=[],current=null,arcs=0;
+      var ctx={save:function(){},restore:function(){},setLineDash:function(){},beginPath:function(){},closePath:function(){},fill:function(){},stroke:function(){},arc:function(){arcs++;},moveTo:function(x,y){current=[x,y];},lineTo:function(x,y){segments.push([current,[x,y]]);current=[x,y];}};
+      var oldLabel=fld2dLabel, oldReserve=fld2dLabelReserve, liveLeaders=__FIELD.leaders;
+      fld2dLabel=function(c,text){labels.push(String(text));}; fld2dLabelReserve=function(){}; __FIELD.leaders=[w];
+      try{ fldDrawOfficers(ctx,{ox:0,oz:0,s:1}); } finally { fld2dLabel=oldLabel; fld2dLabelReserve=oldReserve; __FIELD.leaders=liveLeaders; }
+      if(arcs!==0||labels.length!==1||labels[0].indexOf('(relieved)')<0||labels[0].indexOf('\u2020')>=0) throw new Error('2D relieved marker retained aura/death marker');
+      if(segments.length!==2||segments.some(function(s){return s[0][1]!==s[1][1];})) throw new Error('2D relieved marker is not the distinct double bar');
+
+      function fakeGroup(hasRelief){
+        var color={set:function(){}}, objs={horse:{visible:true},rider:{visible:true},plume:{visible:true,material:{color:color}},aura:{visible:true,material:{opacity:1}}};
+        if(hasRelief) objs.relief={visible:false};
+        return {visible:true,objects:objs,position:{set:function(){}},getObjectByName:function(n){return objs[n]||null;}};
+      }
+      var wg=fakeGroup(true),gg=fakeGroup(false); __FIELD._ld3d={ld_old:wg,ld_new:gg}; __FIELD.leaders=[w,g];
+      fld3dSyncOfficers();
+      if(wg.objects.aura.visible||wg.objects.rider.visible||wg.objects.horse.visible||!wg.objects.relief.visible) throw new Error('3D relieved marker/aura state wrong');
+      if(!gg.objects.aura.visible||!gg.objects.rider.visible) throw new Error('3D active replacement marker/aura missing');
+      __FIELD._ld3d=null;
+      return {hud:true,selected:'Griffin',twoD:'relieved-bars',threeD:'relieved-ring',down:false,aar:'relieved'}; });
 
     step('COMMAND AURA: cmdBonus falls off SHARPLY with distance (close >> edge), is 0 outside the radius, and the sum is capped', function(){
       fldLaunchSandbox({renderer:'none', autoBoth:true, seed:2});
@@ -254,6 +439,9 @@ const SETUP = `(() => {
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
 })()`;
+
+// Parse the cooked browser payload before any server or Chrome process starts.
+new Script(SETUP, { filename: 'probe-officers SETUP' });
 
 (async () => {
   const probe = `${cfg.baseUrl}/${cfg.file}`;

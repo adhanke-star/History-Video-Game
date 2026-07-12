@@ -1,0 +1,256 @@
+{
+  "_comment": "D380 - FIVE FORKS, April 1, 1865. Single-phase Union attacker-seize scenario built from the committed Appomattox Campaign packet and D379 spec. The active-map anchors are about 21,000 US and 9,200 CS engaged, not the broader 32,600/22,000 present figures. Every lower-grain split, gun count, crew count, position, experience value, reinforcement second, and sky choice is explicitly Inferred. Warren's relief is a generic shared-T3 command event, never a Five-Forks combat/output branch. D74: no battle-specific casualty, morale, firepower, surrender, prisoner, rout, or verdict key.",
+  "fiveForks": {
+    "id": "fiveForks",
+    "name": "Five Forks - Turn the White Oak Road Line",
+    "date": "April 1, 1865",
+    "place": "Five Forks, Dinwiddie County, Virginia",
+    "blurb": "Sheridan's dismounted cavalry fixes Pickett's thin White Oak Road works while Warren's V Corps marches against the refused left at the Angle. Seize the Five Forks crossroads before the late-afternoon light fails, or hold the road junction long enough to protect the South Side Railroad approach.",
+    "provenance": "Verified for date, result, engaged anchors, principal command, Warren's relief, White Oak Road, Five Forks, the refused return or Angle, Gravelly Run, Hatcher's Run, Dinwiddie Court House context, and the senior Confederate command absence at the shad bake. Inferred for all game-unit splits, active gun totals, crew counts, exact placements, experience, reinforcement and relief seconds, works geometry, objective radius, time thresholds, and haze. Sources: Encyclopedia Virginia; American Battlefield Trust; NPS Appomattox; the committed D379 Appomattox Campaign packet.",
+    "weather": {
+      "sky": "haze",
+      "time": "afternoon",
+      "provenance": "Inferred",
+      "note": "Afternoon is the supported late-afternoon presentation. Haze represents restrained spring humidity and battle smoke; it is not natural fog or a sourced weather claim.",
+      "sources": [
+        "https://encyclopediavirginia.org/entries/five-forks-battle-of/",
+        "https://www.battlefields.org/learn/civil-war/battles/five-forks"
+      ]
+    },
+    "field": { "w": 1200, "h": 900 },
+    "attacker": "US",
+    "defender": "CS",
+    "homeEdge": { "US": "high", "CS": "low" },
+    "_homeEdgeNote": "The compressed Union approach enters from the Dinwiddie and Gravelly Run side at high z; the Confederate rear and White Oak Road withdrawal lie toward low z.",
+    "defaultFog": false,
+    "timeLimitSec": 420,
+    "holdToWinSec": 75,
+    "menu": {
+      "title": "FIVE FORKS (1865)",
+      "deck": "The Appomattox Campaign opens - fix the White Oak Road front, turn the Angle, and take the crossroads before daylight fails.",
+      "aria": "Five Forks, April 1865. Command Sheridan and Fifth Corps in the Union attack or defend Pickett's thin White Oak Road line."
+    },
+    "sides": {
+      "heading": "Five Forks - Take Which Command?",
+      "intro": "April 1, 1865 - Sheridan attacks the road junction that protects Lee's last rail link. Lead either army.",
+      "US": {
+        "title": "Command the Union (Sheridan's combined force)",
+        "badge": "&#9876; ATTACK",
+        "deck": "Use dismounted cavalry to fix the front while V Corps turns the refused left. Take the Five Forks crossroads and open the road toward the South Side Railroad."
+      },
+      "CS": {
+        "title": "Command the Confederacy (the White Oak Road line)",
+        "badge": "&#9819; DEFEND",
+        "deck": "Your works are thin and the senior commanders are absent. Hold the Angle and the crossroads long enough to keep the retreat route open."
+      },
+      "foot": "The other army is commanded by the AI. Fog is off; woods, streams, ordinary fieldworks, timing, and command radius shape the field."
+    },
+    "brief": {
+      "attack": "Sheridan's cavalry has the front engaged. Bring V Corps onto the refused left, roll the White Oak Road line toward the crossroads, and keep the two arms mutually supporting. <b>This is your war:</b> the historical edge is in accurate inputs, not a scripted breakthrough.",
+      "defend": "The line is long, the Angle is exposed, and no senior Confederate commander supplies an aura in the decisive sector. Use the works and woods, shift the reserve before the turn develops, and deny the crossroads until the clock expires."
+    },
+    "objective": {
+      "name": "Five Forks Crossroads",
+      "x": 650,
+      "z": 255,
+      "r": 125,
+      "note": "The five-road junction behind the White Oak Road position. Union possession represents the historical turning of the line and seizure of the crossroads; the radius is Inferred game geometry."
+    },
+    "leaders": {
+      "_note": "Battle-date ranks and command limits are locked. Sheridan commands the combined operation; Warren commands V Corps at the start; Griffin assumes V Corps only through the generic timed relief event. Pickett, Fitzhugh Lee, and Rosser remain absent teaching figures rather than active aura sources.",
+      "US": [
+        {
+          "id": "ld_sheridan_five_forks",
+          "name": "Maj. Gen. Philip H. Sheridan",
+          "short": "Sheridan",
+          "quality": 0.84,
+          "radius": 285,
+          "attach": "us_sheridan_cavalry_front",
+          "fate": 3.2,
+          "note": "Sheridan commanded the combined cavalry and attached V Corps operation. His battle-date grade was major general, not lieutenant general. Verified command and rank; ordinary quality and aura are Inferred universal inputs."
+        },
+        {
+          "id": "ld_warren",
+          "name": "Maj. Gen. Gouverneur K. Warren",
+          "short": "Warren",
+          "quality": 0.74,
+          "radius": 250,
+          "attach": "us_v_corps_turning_group",
+          "fate": 3.0,
+          "note": "Warren commanded V Corps at the battle's start. Sheridan later relieved him; the old commander remains alive and is not treated as wounded, fallen, or lost. Verified identity, grade, and command sequence; ordinary quality and aura are Inferred."
+        },
+        {
+          "id": "ld_griffin",
+          "name": "Brig. Gen. Charles Griffin",
+          "short": "Griffin",
+          "quality": 0.76,
+          "radius": 250,
+          "attach": "us_v_corps_turning_group",
+          "atSec": 165,
+          "replaces": "ld_warren",
+          "entry": "Sheridan relieves Warren; Griffin assumes command of V Corps.",
+          "fate": 3.0,
+          "note": "Griffin was a brigadier general of volunteers on April 1, with a brevet Maj. Gen. USA dated March 13; his full major-general-of-volunteers promotion followed on April 2. Verified sequence and grade trap; relief second is Inferred."
+        }
+      ],
+      "CS": []
+    },
+    "supply": {
+      "US": { "x": 600, "z": 860, "name": "Union train - Dinwiddie approach" },
+      "CS": { "x": 650, "z": 95, "name": "Confederate rear - White Oak Road" }
+    },
+    "terrain": {
+      "hills": [
+        { "name": "Five Forks Crossroads Rise", "x": 650, "z": 255, "h": 11, "s": 150, "note": "A restrained rise used to keep the road junction readable; exact elevation and geometry are Inferred." },
+        { "name": "White Oak Road Shoulder", "x": 500, "z": 315, "h": 8, "s": 175, "note": "Slightly raised ground along the defended road. Inferred geometry, not a claimed dominant hill." }
+      ],
+      "woods": [
+        { "x": 215, "z": 405, "r": 145, "note": "Dense woods west of the refused left; verified wooded battlefield, Inferred geometry." },
+        { "x": 410, "z": 525, "r": 105, "note": "Broken timber on the V Corps turning approach; Inferred geometry." },
+        { "x": 930, "z": 425, "r": 150, "note": "Woods east of the crossroads and Confederate right; Inferred geometry." },
+        { "x": 815, "z": 670, "r": 115, "note": "Wooded ground on the Sheridan cavalry approach; Inferred geometry." }
+      ],
+      "swamps": [
+        { "x": 330, "z": 690, "r": 75, "note": "Wet ground near Gravelly Run, represented without making the stream an impassable battle-specific barrier." },
+        { "x": 1020, "z": 610, "r": 70, "note": "Low ground draining toward Hatcher's Run; Inferred compressed placement." }
+      ],
+      "walls": [
+        { "x1": 350, "z1": 315, "x2": 620, "z2": 300, "note": "WHITE OAK ROAD WORKS - ordinary log-and-earth fieldworks on the Confederate left-center. Verified line; Inferred compressed geometry." },
+        { "x1": 620, "z1": 300, "x2": 930, "z2": 300, "note": "WHITE OAK ROAD WORKS - the thin center and right. No battle-specific cover or firepower key." },
+        { "x1": 350, "z1": 315, "x2": 350, "z2": 440, "note": "THE ANGLE / THE RETURN - the refused Confederate left bent back from White Oak Road. Verified feature; Inferred length and coordinates." }
+      ],
+      "markers": [
+        { "kind": "road", "name": "White Oak Road", "path": [[80, 300], [350, 315], [650, 300], [1120, 300]], "note": "The Confederate entrenched line and east-west road through Five Forks." },
+        { "kind": "road", "name": "Ford's Road / Scott's Road (naming varies)", "path": [[650, 70], [650, 255], [610, 520], [565, 860]], "note": "The north-south road through the junction. The source packet preserves uncertainty between Ford's and Scott's Road naming; the game does not choose false precision." },
+        { "kind": "creek", "name": "Gravelly Run", "path": [[70, 690], [330, 705], [590, 680], [845, 720]], "note": "The run on the Union approach. It supplies universal wet-ground friction only." },
+        { "kind": "creek", "name": "Hatcher's Run", "path": [[850, 705], [1010, 640], [1140, 585]], "note": "A compressed eastern boundary marker preserving the campaign geography; it is not a scored objective." },
+        { "kind": "label", "name": "Five Forks", "x": 650, "z": 255, "note": "The five-road crossroads and scenario objective." },
+        { "kind": "label", "name": "the Angle / the return", "x": 350, "z": 335, "note": "The refused Confederate left where V Corps turned the line." }
+      ]
+    },
+    "oob": {
+      "US": [
+        { "id": "us_sheridan_cavalry_front", "name": "Sheridan's Dismounted Cavalry - Front Grouping", "commander": "Maj. Gen. Philip H. Sheridan", "arm": "cav", "weapon": "carbine", "role": "attack", "men": 6200, "xp": 3, "x": 765, "z": 670, "facing": 0, "formation": "line", "note": "Sheridan's dismounted cavalry fixed the White Oak Road front while V Corps turned the refused left. Verified operational role; Inferred strength. This is a coarse combined grouping, not a fabricated brigade return." },
+        { "id": "us_v_corps_leading_group", "name": "V Corps Leading Turning Group", "commander": "Maj. Gen. Gouverneur K. Warren", "arm": "inf", "weapon": "rifled", "role": "attack", "men": 5000, "xp": 3, "x": 285, "z": 710, "facing": 0, "formation": "column", "note": "A coarse V Corps grouping moving against the refused left at the Angle. Verified corps role; Inferred strength. No division or brigade identity is asserted beyond the source packet." },
+        { "id": "us_v_corps_turning_group", "name": "V Corps Main Turning Group", "commander": "Maj. Gen. Gouverneur K. Warren", "arm": "inf", "weapon": "rifled", "role": "attack", "men": 4800, "xp": 3, "x": 430, "z": 735, "facing": 0, "formation": "column", "note": "The main coarse V Corps mass on the turning approach. Verified corps role; Inferred strength. Griffin attaches here only after the generic relief event." },
+        { "id": "us_five_forks_artillery", "name": "Federal Field Artillery Grouping", "commander": "Sheridan's field-artillery officers", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 25, "men": 1000, "xp": 3, "x": 630, "z": 650, "facing": 0, "formation": "line", "note": "A coarse Union gun grouping supporting the combined attack. Inferred strength. Twenty-five guns and 1,000 crew are bounded game abstractions under the universal artillery model, not a sourced active-map return." }
+      ],
+      "CS": [
+        { "id": "cs_white_oak_left", "name": "White Oak Road Left Grouping", "commander": "Confederate sector officers", "arm": "inf", "weapon": "rifled", "role": "defend", "men": 2300, "xp": 2, "x": 390, "z": 350, "facing": 3.14159, "formation": "line", "note": "The thin refused left at the Angle. Verified sector; Inferred strength. Pickett, Fitzhugh Lee, and Rosser are deliberately absent as aura sources." },
+        { "id": "cs_white_oak_center", "name": "White Oak Road Center Grouping", "commander": "Confederate sector officers", "arm": "inf", "weapon": "rifled", "role": "defend", "men": 2500, "xp": 2, "x": 610, "z": 315, "facing": 3.14159, "formation": "line", "note": "The center of the thin White Oak Road works. Verified sector; Inferred strength. The token carries no command-failure or casualty-output switch." },
+        { "id": "cs_white_oak_right", "name": "White Oak Road Right Grouping", "commander": "Confederate sector officers", "arm": "inf", "weapon": "rifled", "role": "defend", "men": 2400, "xp": 2, "x": 850, "z": 315, "facing": 3.14159, "formation": "line", "note": "The Confederate right facing Sheridan's dismounted cavalry. Verified sector; Inferred strength. Its task is ordinary defense of the works and crossroads." },
+        { "id": "cs_five_forks_reserve", "name": "Five Forks Reserve Grouping", "commander": "Confederate field officers", "arm": "inf", "weapon": "rifled", "role": "defend", "men": 1400, "xp": 2, "x": 650, "z": 175, "facing": 3.14159, "formation": "column", "note": "A small coarse reserve behind the crossroads. Inferred strength. No exact subordinate identity or return is claimed by the committed packet." },
+        { "id": "cs_five_forks_artillery", "name": "Confederate Field Artillery Grouping", "commander": "Confederate battery officers", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 15, "men": 600, "xp": 2, "x": 700, "z": 270, "facing": 3.14159, "formation": "line", "note": "A coarse artillery envelope in the White Oak Road position. Inferred strength. Fifteen guns and 600 crew are game abstractions under the universal artillery model, not a sourced return." }
+      ]
+    },
+    "reinforcements": [
+      { "id": "us_v_corps_support_group", "side": "US", "atSec": 45, "name": "V Corps Supporting Turning Group", "commander": "V Corps field officers", "arm": "inf", "weapon": "rifled", "role": "attack", "men": 4000, "xp": 3, "x": 185, "z": 830, "facing": 0, "formation": "column", "entry": "the Gravelly Run turning approach", "note": "A coarse V Corps support grouping completing the approximately 21,000 engaged Union anchor. Inferred strength and timing. It carries no fabricated brigade identity." }
+    ],
+    "endNote": {
+      "US": {
+        "US": "History holds. Sheridan's combined force turned the White Oak Road line and seized Five Forks. Warren's relief remains a command controversy, not a combat bonus or casualty event.",
+        "CS": "History is overturned. The thin White Oak Road position held the crossroads despite the Federal strength edge and turning movement, preserving Lee's retreat route for another day."
+      },
+      "CS": {
+        "US": "History holds, against your command. Federal cavalry fixed the front while V Corps turned the Angle and took Five Forks. The result emerged from strength, geometry, timing, and command presence.",
+        "CS": "History is overturned. The Confederate line denied the crossroads through the late afternoon. The senior-command absence still receives no scripted penalty beyond the missing ordinary aura input."
+      },
+      "draw": "The Five Forks crossroads remains contested as the compressed late-afternoon clock expires. Historically Sheridan's force broke the line and opened the final Appomattox Campaign."
+    },
+    "teaching": {
+      "title": "Five Forks - Command, Attrition, and the Road to Appomattox",
+      "cards": [
+        {
+          "id": "ff_warren_inquiry",
+          "head": "Warren's relief, and redress too late",
+          "body": "Sheridan relieved Maj. Gen. Gouverneur K. Warren during the victory. A court of inquiry convened on December 9, 1879; Warren died August 8, 1882; its findings were reported in November 1882. The institutional correction came posthumously. The dates are retained as Inferred here because two direct packet URLs do not support the complete cluster, and the episode is not reduced to a hero-villain binary.",
+          "provenance": "Inferred",
+          "sources": [
+            "https://encyclopediavirginia.org/entries/five-forks-battle-of/",
+            "https://en.wikipedia.org/wiki/Charles_Griffin"
+          ]
+        },
+        {
+          "id": "ff_shad_bake",
+          "head": "The shad bake, carefully",
+          "body": "Maj. Gen. George E. Pickett, Maj. Gen. Fitzhugh Lee, and Maj. Gen. Thomas L. Rosser were away from decisive command at the shad bake. The exact culpability, whether an acoustic shadow concealed the fighting, and later blame remain disputed. Their absence removes only ordinary on-map command auras; it never writes losses, morale, routs, prisoners, or the result.",
+          "provenance": "Disputed",
+          "sources": [
+            "https://encyclopediavirginia.org/entries/five-forks-battle-of/",
+            "https://www.battlefields.org/learn/civil-war/battles/five-forks"
+          ]
+        },
+        {
+          "id": "ff_attrition_state_capacity",
+          "head": "Why the line was thin",
+          "body": "Ten months of siege attrition and Confederate manpower limits stretched the White Oak Road works. The Federal edge also reflected Northern manpower, industry, state capacity, and emancipation's destruction of slavery and enlistment of Black soldiers. 'Overwhelmed by numbers' without those causes becomes a Lost-Cause alibi; this scenario keeps the causes attached to the ratio.",
+          "provenance": "Inferred",
+          "sources": [
+            "https://encyclopediavirginia.org/entries/five-forks-battle-of/",
+            "https://www.battlefields.org/learn/civil-war/battles/five-forks"
+          ]
+        },
+        {
+          "id": "ff_appomattox_teaching_only",
+          "head": "Appomattox is context, not a scored surrender",
+          "body": "Sheridan's March 31 position at Dinwiddie Court House belongs to the approach, not the scored Five Forks objective. Five Forks opened the final Appomattox Campaign, but the April 9 surrender is not a battle objective here. Lt. Gen. Ulysses S. Grant belongs in operational context; no tactical Appomattox scenario, forced surrender, captured-general tally, or scored handshake accompanies this battle.",
+          "provenance": "Inferred",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Battle_of_Appomattox_Court_House",
+            "https://www.nps.gov/apco/learn/historyculture/united-states-colored-troops-at-appomattox.htm"
+          ]
+        },
+        {
+          "id": "ff_usct_at_end",
+          "head": "Black soldiers helped force the war's end",
+          "body": "At Appomattox, the 2nd Division, XXV Corps included seven United States Colored Troops regiments and more than 5,000 men. They helped block the last Confederate breakout. Their agency belongs in the campaign-end teaching, but the division is not invented as part of the Five Forks active OOB.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.nps.gov/apco/learn/historyculture/united-states-colored-troops-at-appomattox.htm",
+            "https://en.wikipedia.org/wiki/Battle_of_Appomattox_Court_House"
+          ]
+        },
+        {
+          "id": "ff_reconciliation_memory",
+          "head": "Reunion cannot erase emancipation",
+          "body": "David Blight's race-and-reunion framework warns that later celebration of white sectional reconciliation often displaced Black freedom and the emancipationist meaning of Union victory. The surrender should be taught as the defeat of a rebellion organized to preserve slavery, not merely as mutual white martial respect.",
+          "provenance": "Inferred",
+          "sources": [
+            "https://www.nps.gov/apco/learn/historyculture/united-states-colored-troops-at-appomattox.htm",
+            "https://en.wikipedia.org/wiki/Battle_of_Appomattox_Court_House"
+          ]
+        },
+        {
+          "id": "ff_prisoner_conflict",
+          "head": "Do not turn disputed prisoners into a mechanic",
+          "body": "Encyclopedia Virginia reports about 2,400 Confederates captured or missing within roughly 3,005 Confederate casualties; broader retellings use different totals. The game guards only the direction of total losses and objective possession. It does not force a prisoner count, general capture, gun capture, rout count, or surrender magnitude.",
+          "provenance": "Disputed",
+          "sources": [
+            "https://encyclopediavirginia.org/entries/five-forks-battle-of/",
+            "https://www.battlefields.org/learn/civil-war/battles/five-forks"
+          ]
+        }
+      ],
+      "codex": {
+        "id": "codex_five_forks",
+        "title": "Five Forks, April 1, 1865",
+        "summary": "Sheridan's dismounted cavalry fixed a thin Confederate line along White Oak Road while Warren's V Corps turned the refused left at the Angle. Sheridan relieved Warren and placed Griffin in command; the shared command event changes the aura without declaring Warren wounded, fallen, or lost. The Union victory opened the final Appomattox Campaign, but prisoner totals and command blame remain bounded teaching rather than output keys.",
+        "provenance": "Verified",
+        "axes": {
+          "timeline": "1865",
+          "theater": "Eastern",
+          "campaign": "Appomattox Campaign",
+          "result": "Union victory",
+          "cost": "Confederate total losses exceeded Union total losses; exact prisoner totals remain disputed",
+          "people": ["Sheridan", "Warren", "Griffin", "Pickett", "Fitzhugh Lee", "Rosser"],
+          "battle": "Five Forks"
+        },
+        "sources": [
+          "https://encyclopediavirginia.org/entries/five-forks-battle-of/",
+          "https://www.battlefields.org/learn/civil-war/battles/five-forks",
+          "https://www.nps.gov/apco/learn/historyculture/united-states-colored-troops-at-appomattox.htm"
+        ]
+      }
+    }
+  }
+}

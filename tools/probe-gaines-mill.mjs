@@ -235,10 +235,10 @@ const SETUP = `(() => {
       return { cards:ids, codex:codex.id, axes:codex.axes };
     });
 
-    check('ARMY REGISTER PIN: 15 Gaines Mill units produce exactly cmd/nco/pvt rows and current total 1170', function() {
+    check('ARMY REGISTER PIN: 15 Gaines Mill units produce exactly cmd/nco/pvt rows and current total 1200', function() {
       var C = makeCampaign('US'); if (typeof _t1InitAll === 'function') _t1InitAll(C);
       var reg = ssPersonRegistry(C), rows = [], groups = {};
-      if (reg.people.length !== 1170) throw new Error('Army Register total is ' + reg.people.length + ', expected 1170');   // D378: 1125 -> 1170 — Cross Keys / Port Republic adds 15 unique units x 3 slots. D376: 1068 -> 1125 — Cedar Creek adds 19 unique units x 3 slots. The Gaines-specific 45-row/15-unit teeth below remain stable.
+      if (reg.people.length !== 1200) throw new Error('Army Register total is ' + reg.people.length + ', expected 1200');   // D380: 1170 -> 1200 — Five Forks adds 10 unique side-unit ids x 3 slots. The Gaines-specific 45-row/15-unit teeth below remain stable.
       for (var i = 0; i < reg.people.length; i++) {
         var p = reg.people[i], origin = p.replaces || p.pid;
         if (typeof origin === 'string' && origin.indexOf('ss:gainesMill:') === 0) rows.push({ p:p, origin:origin });

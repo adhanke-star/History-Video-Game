@@ -6,6 +6,101 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D380 — PLAYABLE FIVE FORKS: ONE FIELD, ATOMIC RELIEF, AND THE NINETEENTH SCENARIO — [CODEX 5.6 Sol Ultra, LANE-003 VERIFY] (2026-07-12)
+
+Five Forks is the nineteenth registered historical scenario. `data/five-forks.json` implements
+the D379 contract as one April 1, 1865 attacker-seize field: US attacker, CS defender, fog off,
+menu rank 85 after Nashville, and Five Forks Crossroads as the only scored objective. Ten unique
+side-unit ids field 21,000 US against 9,200 CS, including one timed V Corps support grouping;
+25 US guns and 15 CS guns stay inside the universal crew ceiling. The ten ids add 30 generated
+Soldier's Story slots, moving the Army Register from 1170 to **1200**. Schema is 49; flags,
+weather, Intel, and media cover 19 scenarios; the no-regression manifest lists 124 commands.
+
+**Historical and teaching ceiling:** White Oak Road, the Angle or return, Ford's Road / Scott's
+Road as a naming variant, Gravelly Run, and Hatcher's Run shape the field. Dinwiddie Court House
+and the shad bake remain teaching context. Sheridan and Warren are Maj. Gens.; Griffin is
+**Brig. Gen. (brevet Maj. Gen.)** on April 1; Grant is Lt. Gen. Pickett, Fitzhugh Lee, and Rosser
+remain absent aura sources. Every lower OOB split, gun/crew count, placement, experience value,
+arrival/relief second, works coordinate, objective threshold, and haze choice is Inferred. Seven
+two-source cards plus the codex cover the Warren inquiry, disputed shad-bake blame, Confederate
+attrition beside Northern state capacity and emancipation, teaching-only Appomattox, USCT agency,
+race-and-reunion memory, and conflicting prisoner totals. Classic `fiveforks`, the lowercase rail
+route, tactical Appomattox/surrender, T8, and the Custom Builder format remain unchanged.
+
+**Reusable command event:** shared T3 validates every current-cast row carrying an own `replaces`
+before `fldMakeOfficer` consumes seeded fate RNG. A present replacement needs an exact nonblank id,
+same-side existing target, finite nonnegative `atSec`, and nonblank `entry`; duplicate ids,
+multi-targets, self-replacement, chains/cycles, whitespace-ambiguous identities, missing targets,
+and malformed fields become terminal inert diagnostics. At event time, T3 validates the entire due
+batch before any mutation or aura accumulation. An invalid member rejects the batch all-or-none.
+A valid event leaves Warren alive, inactive, and relieved; activates Griffin as the sole replacement
+aura; announces the exact entry once; and writes no morale, casualty, rout, score, winner, campaign,
+or result state. HUD, selected attribution, 2D, 3D, down-list, and AAR distinguish relief from death.
+The generic probe independently covers inactive, dead, and already-relieved targets, a timed active
+target, repeated valid/rejected ticks, both roster orders, and no overlap or gap. A cast without an
+own `replaces` property retains the exact legacy leader keys, seeded draws, announcement, and output.
+
+**Honest first battery and A/B record:** the first authored simulation inputs passed both direction
+guards **8/8**, so no simulation input changed and no outcome-tuning iteration occurred. The first
+content pass lacked the exact `Dinwiddie Court House` teaching term; adding that term changed no
+simulation input and the direction samples remained:
+
+- seed 5: US hold; losses US 636.423 / CS 9,200
+- seed 17: US hold; losses US 624.225 / CS 9,200
+- seed 29: US hold; losses US 662.694 / CS 9,200
+- seed 43: US hold; losses US 673.218 / CS 9,200
+- seed 71: US hold; losses US 663.052 / CS 9,200
+- seed 113: US hold; losses US 614.239 / CS 9,200
+- seed 211: US hold; losses US 636.696 / CS 9,200
+- seed 389: US hold; losses US 615.036 / CS 9,200
+
+Thus US objective seizure is **8/8** and Confederate losses greater than Union losses is **8/8**.
+The probe guards direction only; it does not assert casualty magnitude, ratios, prisoner/general/gun
+captures, routs, or surrender.
+
+**Both final-candidate negative binds matched their predeclared dependency scopes and restored
+byte-for-byte.** Bind A inserted one early `return false` in `fldOfficerApplyReplacement`, leaving
+legacy arrivals intact. Generic officer steps `VALID RELIEF`, `EVENT-TIME REJECTION`, and
+`RELIEVED PRESENTATION`, plus Five Forks `COMMAND EVENT`, were the only red steps. All other generic
+and focused teeth stayed green, including legacy identity, ranks, OOB, D74, teaching, collision,
+and the 8/8 direction battery. The apply-patch restore returned T3
+`7c3b0924c94e6f450e2fd491726a022f`, Five Forks data
+`380150cee52d99f7e10cbe7b45321f1a`, generic probe
+`da4934bbfc3bdeecca1150aff66045ed`, and focused probe
+`e4da87df501b2ba50bdab4cf6857df27`; rebuild returned generated HTML to
+`10a64a20394521efdc94b7edb1646686`.
+
+Bind B removed only the exact Five Forks T1 registry line. The plan's
+`FUTURE COMPLETE-INTEGRATION CONTRACT` step and exactly four focused steps turned red:
+`REGISTRY + MENU`, `REGISTERED LAUNCH + REINFORCEMENT`, `ARMY REGISTER PIN`, and
+`RUNTIME MENU + SIDE CHOICE`. Command, ranks, OOB, direction, dignity, D74, teaching, and
+Classic/rail collision stayed green. The restore returned T1 to
+`85c12c00440499a7bddc67060e9913fc`, data and focused-probe hashes to the values above, and the
+rebuilt generated HTML to the exact final-candidate hash.
+
+**Serialized focused gate:** touched JS/probe syntax and cooked SETUP/DOM preparses green; build
+**GATE OK**; schema **49/49**; research **15/15**; Five Forks plan **12/12**; generic officers
+**20/20**; Five Forks runtime **16/16**; roster **8/8** at 19 scenarios; builder **15/15** at
+19; loot **12/12** at 1200; flags **48/48** with explicit 19-scenario metadata; weather
+**30/30** with 19 hints; Intel **26/26**; media **13/13** with only the standing 2.418 MB soft
+warning; suite list **124**; Cross Keys plan/runtime **11/11** and **15/15**; Bull Run
+**15/15**; Nashville **12/12**; `git diff --check` clean. Every produced JSON parsed green with
+empty failed-step, pageerror, and realError arrays; the schema HTML has 49 body rows; all 19
+produced PNGs decoded with nonzero dimensions. Representative officer, flag, and weather images
+show valid gameplay. Two best-effort image anomalies are recorded without recasting them as green
+visual assertions: Five Forks hit its 5-second screenshot timeout and produced no PNG, while the
+pre-existing Cross Keys PNG decoded as an all-black frame. Neither artifact is an asserted probe
+step; both runtime JSONs remained `ok:true` with zero pageerrors. Nine filtered console-only 404s
+were the accepted optional-asset checks. The generated game changed only through
+`node tools/build.mjs`.
+
+LANE-003 stays ChatGPT/Codex-owned in VERIFY. The exact next action is the isolated serialized
+`npm run vet:noreg` 124-command release battery, followed by full fresh-artifact readback. No
+helper, research workflow, or second browser may run beside it. The lane releases only after that
+battery is green and the D381 checkpoint is committed and pushed.
+
+---
+
 ## D379 — FIVE FORKS CONTRACT: ONE FIELD, A GENERIC RELIEF EVENT, AND NO RUNTIME YET — [CODEX 5.6 Sol Ultra, LANE-003 DRIVE] (2026-07-12)
 
 D379 commits the sixth LANE-003 planning contract:

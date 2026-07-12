@@ -85,6 +85,7 @@ var _FLD_BATTLE_META = {
   cedarCreek:       { theater: "E", badges: false, csFlag: "anv" },            // 19 Oct 1864 (Early's Army of the Valley was the ANV Second Corps detached and used the Southern Cross. VI Corps wore its Greek cross in the Valley, but this badge institution models the AotP set only; Valley/AotS badges are a future extension, not a silent reuse. D376.)
   franklin:         { theater: "W", badges: false, csFlag: "hardee" },         // 30 Nov 1864 (Army of Tennessee)
   nashville:        { theater: "W", badges: false, csFlag: "hardee" },         // 15-16 Dec 1864 (Army of Tennessee)
+  fiveForks:        { theater: "E", badges: true,  csFlag: "anv" },            // 1 Apr 1865 (AotP V Corps badges remain legible; Pickett's ANV-family defenders use the Southern Cross. D380.)
   _default:         { theater: "E", badges: false, csFlag: "anv" }
 };
 function _fldBattleMeta() {

@@ -767,7 +767,7 @@ const SETUP = `(() => {
       var C=mkC('US'); G.campaign=C; _t1InitAll(C);
       lootAddItem(C,'commissary_rations',1,'probe');
       var reg=ssPersonRegistry(C);
-      if(reg.people.length!==1170) throw new Error('expected current 1170-person registry, got '+reg.people.length);   // D378: 1125 -> 1170 — Cross Keys / Port Republic adds 15 unique units x 3 Soldier's Story slots. D376: 1068 -> 1125 — Cedar Creek adds 19 unique units x 3 slots. D366: 990 -> 1068 — Stones River adds 26 unique units x 3 slots. D364: 957 -> 990 — New Market Heights adds 11 unique units x 3 slots.
+      if(reg.people.length!==1200) throw new Error('expected current 1200-person registry, got '+reg.people.length);   // D380: 1170 -> 1200 — Five Forks adds 10 unique side-unit ids x 3 Soldier's Story slots. D378: 1125 -> 1170 — Cross Keys / Port Republic adds 15 unique units x 3 slots. D376: 1068 -> 1125 — Cedar Creek adds 19 unique units x 3 slots. D366: 990 -> 1068 — Stones River adds 26 unique units x 3 slots. D364: 957 -> 990 — New Market Heights adds 11 unique units x 3 slots.
       var generated=findPerson(reg,function(p){ return p.generated && p.team && p.team.brigade && p.team.company; });
       var authored=findPerson(reg,function(p){ return !p.generated && !p.replacement && p.provenance==='Verified'; });
       if(!generated) throw new Error('no generated person with brigade/company team hierarchy');
@@ -786,7 +786,7 @@ const SETUP = `(() => {
       var cards=root.querySelectorAll('[data-ss-card]');
       if(cards.length!==reg.people.length) throw new Error('register card count mismatch '+cards.length+' vs '+reg.people.length);
       var count=root.querySelector('#ssRegCount');
-      if(!count || count.textContent.indexOf('1170 of 1170')<0) throw new Error('full registry count missing: '+(count&&count.textContent));   // D378: tracks the 1170-person registry (see the count assertion above)
+      if(!count || count.textContent.indexOf('1200 of 1200')<0) throw new Error('full registry count missing: '+(count&&count.textContent));   // D380: tracks the 1200-person registry (see the count assertion above)
       var gCard=cardByPid(root,generated.pid), aCard=cardByPid(root,authored.pid);
       if(!gCard || !aCard) throw new Error('target cards missing');
       if(gCard.textContent.indexOf('Generated')<0 || gCard.textContent.indexOf('Inferred')<0) throw new Error('generated/Inferred card display missing: '+gCard.textContent);
