@@ -132,7 +132,7 @@ const SETUP = `(() => {
 
     check('REGISTRY + MENU: Five Forks is scenario 19 at rank 85 after Nashville',function(){
       var reg=fldScenarioRegistry(),order=fldScenarioMenuOrder(reg);
-      if(Object.keys(reg).length!==19||reg.fiveForks!==DATA) throw new Error('registry identity/count wrong');
+      if(Object.keys(reg).length!==20||reg.fiveForks!==DATA) throw new Error('registry identity/count wrong');   // D384: 19 -> 20 — Fort Donelson registers as the twentieth scenario (the whole-registry pin moves with the battle that moves it; Five Forks' own rank-85 teeth below are stable)
       if(fldScenarioMenuRank('fiveForks')!==85||order.indexOf('fiveForks')!==order.indexOf('nashville')+1) throw new Error('menu chronology wrong: '+order.join(' -> '));
       return {count:Object.keys(reg).length,rank:85,order:order.indexOf('fiveForks')};
     });
@@ -220,7 +220,7 @@ const SETUP = `(() => {
     check('ARMY REGISTER PIN: canonical registry identity plus ten Five Forks unit trios produce current total 1200',function(){
       var registry=fldScenarioRegistry();if(registry.fiveForks!==DATA)throw new Error('declared registry dependency missing');
       var C=campaign();if(typeof _t1InitAll==='function')_t1InitAll(C);var reg=ssPersonRegistry(C),found=[],groups={};
-      if(reg.people.length!==1200)throw new Error('Army Register total '+reg.people.length+' expected 1200');
+      if(reg.people.length!==1281)throw new Error('Army Register total '+reg.people.length+' expected 1281');   // D384: 1200 -> 1281 — Fort Donelson adds 27 unique side-unit ids x 3 slots; Five Forks' own 30-row/10-trio teeth below remain stable.
       for(var i=0;i<reg.people.length;i++){var p=reg.people[i],origin=p.replaces||p.pid;if(typeof origin==='string'&&origin.indexOf('ss:fiveForks:')===0)found.push({p:p,origin:origin});}
       if(found.length!==30)throw new Error('Five Forks rows '+found.length+' expected 30');
       found.forEach(function(row){var m=row.origin.match(/^ss:fiveForks:(US|CS):([^:]+):(cmd|nco|pvt)$/);if(!m)throw new Error('bad slot '+row.origin);var key=m[1]+':'+m[2];groups[key]=groups[key]||{};groups[key][m[3]]=1;if(row.p.source!=='scenario-oob'||row.p.generated!==true||row.p.provenance!=='Inferred')throw new Error('slot metadata '+row.origin);});

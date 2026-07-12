@@ -1,0 +1,1485 @@
+{
+  "_comment": "D384 Fort Donelson (Dover, TN), Feb 13-16 1862 - the war's first Western epic and first mass surrender. Three-phase T8 per the D383 spec: the Investment (w1, US probes repulsed) -> the Breakout (w1, CS attacker opens the Forge Road exit) -> Smith's Recapture (w3 DECISIVE, US carries the vacated pits). Weights [1,1,3] deviate from the packet's [1,3,1] because the sourced phase leans would score the aggregate for the side that surrendered (D383). The Feb 14 naval repulse is a phase-2 transition-card TEACHING INTERSTITIAL; gunboats are inputs only (transports -> Lew Wallace's division); the water batteries are terrain/teaching, never land OOB. Engaged anchors US 24,531 / CS 16,171 (ABT's 40,702 is both sides combined). Every sub-aggregate split is an Inferred abstraction; escape/surrendered counts are taught as disputes, never modeled. No ship-vs-ship engine.",
+  "fortDonelson": {
+    "id": "fortDonelson",
+    "name": "Fort Donelson - Unconditional Surrender",
+    "date": "February 13, 1862",
+    "place": "Dover, Tennessee - the Confederate earthworks on the Cumberland River bluffs, between Hickman Creek and the flooded backwaters of Lick Creek",
+    "blurb": "Grant marches overland from captured Fort Henry and closes a ring around the landward works of Fort Donelson in brutal winter cold. Foote's ironclads are beaten at the water batteries; the trapped garrison smashes the Union right and opens its escape road - then marches back into the works on its commanders' orders. C. F. Smith's bayonets take the vacated rifle pits, and by morning the fort's commanders have fled their own men. What Buckner gets from Grant is two words that name the rest of the war: unconditional surrender.",
+    "provenance": "Verified (high) for the engaged anchors (ABT/Wikipedia: US 24,531 / CS 16,171; the famous 40,702 is the two-side combined total), the casualty splits (US 507/1,976/208 = 2,691; CS 327/1,127/12,392 m&c = 13,846), the Feb 13 repulses, the Feb 14 naval repulse, the Feb 15 breakout that opened the Forge Road and a stretch of Wynn's Ferry Road, the recall, Smith's capture of the vacated right, the Floyd-to-Pillow-to-Buckner devolution, and Grant's surrender text. Every division/brigade split, gun count, placement, timing second, and leader quality value below is an Inferred simulation abstraction inside those anchors - the two Wikipedia order-of-battle pages are single-source at brigade grain. Escape and surrendered counts conflict across sources and are taught as disputes, never modeled.",
+    "field": {
+      "w": 1250,
+      "h": 950
+    },
+    "homeEdge": {
+      "US": "low",
+      "CS": "high"
+    },
+    "attacker": "US",
+    "defender": "CS",
+    "defaultFog": false,
+    "holdToWinSec": 130,
+    "timeLimitSec": 420,
+    "objective": {
+      "x": 640,
+      "z": 650,
+      "r": 140,
+      "name": "The Landward Works Ring"
+    },
+    "weather": {
+      "sky": "snow",
+      "time": "dawn",
+      "provenance": "Inferred",
+      "note": "The night of Feb 13-14 brought rain turning to sleet and snow with hard cold - about 10-12 F and roughly three inches by the narrative accounts (single-source figures; the qualitative storm is well attested). Presentation only: weather never writes combat output. The frozen Classic layer's separate ftdonelson row (wx:'snow') is its own record, not a source.",
+      "sources": [
+        "https://www.nps.gov/fodo/index.htm",
+        "https://en.wikipedia.org/wiki/Battle_of_Fort_Donelson"
+      ]
+    },
+    "menu": {
+      "title": "FORT DONELSON (1862)",
+      "deck": "The war's first Western epic: close the ring in the snow, survive the breakout that opened the escape road, and take the works back before the garrison slips away - or command the Confederacy and try to use the door your sortie kicks open.",
+      "aria": "Fort Donelson, February 1862 - the real-time three-phase river-war battle; command either army."
+    },
+    "sides": {
+      "heading": "Fort Donelson - Take Which Command?",
+      "intro": "February 1862 - Grant's army has marched from Fort Henry and stands before the landward works of Fort Donelson in the bitter cold.",
+      "US": {
+        "title": "Command the Union (Grant)",
+        "badge": "&#9733; CLOSE THE RING",
+        "deck": "Probe the works, hold the right when the garrison comes out swinging, and retake the rifle pits before the escape road stays open. The river brought you a fresh division; the works hold sixteen thousand men who must not get away."
+      },
+      "CS": {
+        "title": "Command the Confederacy (Floyd)",
+        "badge": "&#9733; CUT YOUR WAY OUT",
+        "deck": "The works are strong but the trap is closing. Hold the ring, then throw Pillow's wing at the Union right and open the Forge Road - and this time, use the door your men die opening."
+      }
+    },
+    "brief": {
+      "attack": "Your ring closes on the landward works: McClernand on the right astride the roads, Smith on the left against the Hickman Creek flank. The gunboats will try the water batteries and fail - this siege will be won by infantry in the snow. Historically the garrison broke your right and opened its road, and only the afternoon counterblow at the vacated rifle pits shut the trap.",
+      "defend": "You hold two and a half miles of rifle pits with the river at your back. The ring is not yet sealed: mass on the left, break the Union right at dawn, and the Forge Road to Nashville is open. History's garrison opened that road - and was ordered back into the works to surrender. You are not required to repeat it."
+    },
+    "phases": [
+      {
+        "id": "feb13-investment",
+        "name": "The Investment - Feb 13",
+        "sector": "The landward ring - McClernand's probes at the middle redoubt, Smith's on the Hickman flank",
+        "scoreWeight": 1,
+        "attacker": "US",
+        "defender": "CS",
+        "assaultDoctrine": "cautious",
+        "defaultFog": false,
+        "holdToWinSec": 130,
+        "timeLimitSec": 420,
+        "homeEdge": {
+          "US": "low",
+          "CS": "high"
+        },
+        "objective": {
+          "x": 640,
+          "z": 650,
+          "r": 140,
+          "name": "The Landward Works Ring"
+        },
+        "terrain": {
+          "hills": [
+            {
+              "name": "Dudley's Hill",
+              "x": 300,
+              "z": 350,
+              "h": 12,
+              "s": 160,
+              "note": "The high ground on the Union right that the Feb 15 assault would sweep. (Verified name; Inferred geometry.)"
+            },
+            {
+              "name": "The works ridge",
+              "x": 660,
+              "z": 690,
+              "h": 14,
+              "s": 220,
+              "note": "The rising ground the rifle pits crown - the defender's frozen backbone. (Inferred geometry.)"
+            }
+          ],
+          "woods": [
+            {
+              "x": 430,
+              "z": 520,
+              "r": 130,
+              "note": "The oak and scrub ravines fronting the works - felled-timber tangles slowed every approach. (Inferred placement.)"
+            },
+            {
+              "x": 840,
+              "z": 520,
+              "r": 120,
+              "note": "Broken wooded ground between Indian Creek and the Lick Creek backwater. (Inferred placement.)"
+            },
+            {
+              "x": 200,
+              "z": 480,
+              "r": 100,
+              "note": "The ravines toward Hickman Creek on Smith's front. (Inferred placement.)"
+            }
+          ],
+          "walls": [
+            {
+              "x1": 300,
+              "z1": 610,
+              "x2": 620,
+              "z2": 650,
+              "note": "The western rifle pits - Heiman's and Drake's sector of the outer line. (Verified line; Inferred trace.)"
+            },
+            {
+              "x1": 620,
+              "z1": 650,
+              "x2": 950,
+              "z2": 620,
+              "note": "The eastern rifle pits - Buckner's sector covering the Wynn's Ferry approaches. (Verified line; Inferred trace.)"
+            }
+          ],
+          "swamps": [
+            {
+              "x": 140,
+              "z": 660,
+              "r": 130,
+              "note": "Hickman Creek backwater - the flooded left anchor of the works, impassable except by bridge. (Verified anchor; Inferred extent.)"
+            },
+            {
+              "x": 1120,
+              "z": 430,
+              "r": 115,
+              "note": "The flooded Lick Creek backwater - the icy water Forrest's troopers would ride out through. (Verified anchor; Inferred extent.)"
+            }
+          ],
+          "markers": [
+            {
+              "kind": "river",
+              "name": "Cumberland River",
+              "path": [
+                [
+                  1050,
+                  940
+                ],
+                [
+                  1130,
+                  700
+                ],
+                [
+                  1180,
+                  460
+                ],
+                [
+                  1210,
+                  200
+                ]
+              ],
+              "note": "The river the fort exists to close - the invasion highway to Nashville. Never a damage source."
+            },
+            {
+              "kind": "water",
+              "name": "The water batteries",
+              "x": 1090,
+              "z": 760,
+              "note": "The lower battery's eight 32-pounders and 10-inch Columbiad, with the upper battery's rifled Columbiad above - the guns that beat the ironclads on Feb 14. River-facing: terrain and teaching, never part of the land fight."
+            },
+            {
+              "kind": "town",
+              "name": "Dover",
+              "x": 960,
+              "z": 860,
+              "note": "The town and landing behind the works; the Dover Hotel is where the surrender will be signed."
+            },
+            {
+              "kind": "label",
+              "name": "Redan No. 2 - Maney's Battery",
+              "x": 560,
+              "z": 640,
+              "note": "The middle redoubt McClernand's three regiments assaulted on Feb 13 - repulsed by Heiman's infantry and Maney's guns, with wounded men caught in the burning grass."
+            },
+            {
+              "kind": "road",
+              "name": "Wynn's Ferry Road",
+              "path": [
+                [
+                  350,
+                  60
+                ],
+                [
+                  420,
+                  300
+                ],
+                [
+                  560,
+                  520
+                ],
+                [
+                  700,
+                  640
+                ]
+              ],
+              "note": "The central road out of the ring - a stretch of it would be cleared on Feb 15."
+            },
+            {
+              "kind": "road",
+              "name": "Forge Road",
+              "path": [
+                [
+                  180,
+                  120
+                ],
+                [
+                  300,
+                  330
+                ],
+                [
+                  470,
+                  560
+                ],
+                [
+                  640,
+                  660
+                ]
+              ],
+              "note": "The escape road toward Charlotte and Nashville - the breakout's prize."
+            },
+            {
+              "kind": "creek",
+              "name": "Indian Creek",
+              "path": [
+                [
+                  760,
+                  940
+                ],
+                [
+                  740,
+                  700
+                ],
+                [
+                  720,
+                  560
+                ]
+              ],
+              "note": "The central drainage splitting the works' sectors."
+            }
+          ]
+        },
+        "supply": {
+          "US": {
+            "x": 320,
+            "z": 90,
+            "name": "The Fort Henry road trains"
+          },
+          "CS": {
+            "x": 980,
+            "z": 880,
+            "name": "Dover landing"
+          }
+        },
+        "leaders": {
+          "US": [
+            {
+              "id": "ld_grant",
+              "name": "Brig. Gen. Ulysses S. Grant",
+              "short": "Grant",
+              "quality": 0.66,
+              "radius": 260,
+              "x": 520,
+              "z": 300,
+              "fate": 2.7,
+              "note": "Brigadier General of Volunteers commanding the district - the Major General's commission that ranked from February 16 was the reward for this fort, not a grade he held on this field. (Verified grade; Inferred quality value.)"
+            },
+            {
+              "id": "ld_mcclernand",
+              "name": "Brig. Gen. John A. McClernand",
+              "short": "McClernand",
+              "quality": 0.52,
+              "radius": 230,
+              "x": 350,
+              "z": 380,
+              "fate": 2.6,
+              "note": "1st Division, the Union right - the political general whose unauthorized Feb 13 assault on the middle redoubt was repulsed with the wounded left in the burning grass. (Verified command; Inferred quality value.)"
+            },
+            {
+              "id": "ld_cfsmith",
+              "name": "Brig. Gen. Charles F. Smith",
+              "short": "C.F. Smith",
+              "quality": 0.66,
+              "radius": 230,
+              "x": 260,
+              "z": 430,
+              "fate": 2.7,
+              "note": "2nd Division, the Union left - the old regular whose bayonet assault will decide this battle. (Verified command; Inferred quality value.)"
+            }
+          ],
+          "CS": [
+            {
+              "id": "ld_floyd",
+              "name": "Brig. Gen. John B. Floyd",
+              "short": "Floyd",
+              "quality": 0.45,
+              "radius": 240,
+              "x": 820,
+              "z": 760,
+              "fate": 2.6,
+              "note": "Senior Confederate officer from Feb 13 - the former U.S. Secretary of War who will flee his own garrison rather than risk federal arrest. (Verified grade and flight; Inferred quality value.)"
+            },
+            {
+              "id": "ld_pillow",
+              "name": "Brig. Gen. Gideon J. Pillow",
+              "short": "Pillow",
+              "quality": 0.5,
+              "radius": 240,
+              "x": 540,
+              "z": 720,
+              "fate": 2.6,
+              "note": "Second in command, holding the left of the works - he will win the breakout and then order it abandoned. (Verified grade; Inferred quality value.)"
+            },
+            {
+              "id": "ld_buckner",
+              "name": "Brig. Gen. Simon B. Buckner",
+              "short": "Buckner",
+              "quality": 0.58,
+              "radius": 240,
+              "x": 860,
+              "z": 660,
+              "fate": 2.7,
+              "note": "Commanding the right of the works. A brigadier - the Confederate lieutenant-general grade did not exist until September 1862. He will be the one left to surrender. (Verified grade; Inferred quality value.)"
+            }
+          ]
+        },
+        "oob": {
+          "US": [
+            {
+              "id": "us_oglesby",
+              "name": "Oglesby's Brigade (McClernand)",
+              "commander": "Col. Richard J. Oglesby",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2600,
+              "xp": 1,
+              "x": 300,
+              "z": 420,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "1st Brigade, 1st Division, astride the Forge Road approaches. Single-source brigade identity; Inferred strength."
+            },
+            {
+              "id": "us_wwallace",
+              "name": "W. H. L. Wallace's Brigade (McClernand)",
+              "commander": "Col. William H. L. Wallace",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2500,
+              "xp": 1,
+              "x": 430,
+              "z": 440,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "2nd Brigade, 1st Division, facing the middle redoubt sector. Single-source brigade identity; Inferred strength."
+            },
+            {
+              "id": "us_lauman",
+              "name": "Lauman's Brigade (C. F. Smith)",
+              "commander": "Col. Jacob G. Lauman",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2800,
+              "xp": 1,
+              "x": 220,
+              "z": 520,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "4th Brigade, 2nd Division, probing Buckner's rifle pits on the Hickman flank - repulsed on the 13th, it will lead the deciding assault on the 15th. Single-source brigade identity; Inferred strength."
+            },
+            {
+              "id": "us_cook",
+              "name": "Cook's Brigade (C. F. Smith)",
+              "commander": "Col. John Cook",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2600,
+              "xp": 1,
+              "x": 150,
+              "z": 460,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "3rd Brigade, 2nd Division, on the far Union left. Single-source brigade identity; Inferred strength."
+            },
+            {
+              "id": "us_mcclernand_art",
+              "name": "McClernand's Division Artillery (Inferred grouping)",
+              "commander": "Division batteries",
+              "arm": "art",
+              "weapon": "napoleon",
+              "guns": 12,
+              "men": 350,
+              "xp": 1,
+              "x": 380,
+              "z": 360,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "The 1st Division's field batteries as one coarse grouping under the universal gun model - no register source pins an active land gun total. Inferred strength and gun count."
+            }
+          ],
+          "CS": [
+            {
+              "id": "cs_heiman",
+              "name": "Heiman's Brigade",
+              "commander": "Col. Adolphus Heiman",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2700,
+              "xp": 1,
+              "x": 520,
+              "z": 660,
+              "facing": 0,
+              "formation": "line",
+              "note": "Holding the center-left of the outer line around the middle redoubt - the sector that broke McClernand's Feb 13 assault. Single-source brigade identity; Inferred strength."
+            },
+            {
+              "id": "cs_drake",
+              "name": "Drake's Brigade",
+              "commander": "Col. Joseph Drake",
+              "arm": "inf",
+              "weapon": "smooth",
+              "men": 2200,
+              "xp": 1,
+              "x": 380,
+              "z": 630,
+              "facing": 0,
+              "formation": "line",
+              "note": "Pillow's left-wing line west of Heiman. Single-source brigade identity; Inferred strength."
+            },
+            {
+              "id": "cs_head",
+              "name": "Head's Garrison Brigade",
+              "commander": "Col. John W. Head",
+              "arm": "inf",
+              "weapon": "smooth",
+              "men": 2300,
+              "xp": 1,
+              "x": 760,
+              "z": 680,
+              "facing": 0,
+              "formation": "line",
+              "note": "The fort and rifle-pit garrison - its 30th Tennessee will be the lone regiment left in the pits when Smith's assault comes. Single-source brigade identity; Inferred strength."
+            },
+            {
+              "id": "cs_hanson",
+              "name": "Hanson's 2nd Kentucky and the right pits",
+              "commander": "Col. Roger W. Hanson",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1600,
+              "xp": 2,
+              "x": 900,
+              "z": 640,
+              "facing": 0,
+              "formation": "line",
+              "note": "Buckner's rifle pits that turned back Smith's Feb 13 probe. Single-source identity; Inferred strength."
+            },
+            {
+              "id": "cs_maney",
+              "name": "Maney's Tennessee Battery (Redan No. 2)",
+              "commander": "Capt. Frank Maney",
+              "arm": "art",
+              "weapon": "napoleon",
+              "guns": 4,
+              "men": 120,
+              "xp": 2,
+              "x": 570,
+              "z": 655,
+              "facing": 0,
+              "formation": "line",
+              "note": "The middle-redoubt guns that shredded the Feb 13 assault. Verified battery identity; Inferred strength and gun count."
+            },
+            {
+              "id": "cs_buckner_wing",
+              "name": "Buckner's Division (right wing)",
+              "commander": "Brig. Gen. Simon B. Buckner",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2500,
+              "xp": 1,
+              "x": 830,
+              "z": 700,
+              "facing": 0,
+              "formation": "line",
+              "note": "The right-wing division whose withdrawal for the breakout will leave its own pits nearly empty. Inferred strength inside the 16,171 garrison anchor."
+            }
+          ]
+        },
+        "reinforcements": [
+          {
+            "id": "us_morrison",
+            "name": "Morrison's Assault Force (17th, 48th, 49th Illinois)",
+            "commander": "Col. William R. Morrison",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 2000,
+            "xp": 1,
+            "x": 540,
+            "z": 470,
+            "facing": 3.14159,
+            "formation": "column",
+            "note": "The three-regiment force that assaulted Redan No. 2 about noon on Feb 13 and was repulsed by Heiman's line - Morrison himself was wounded. Verified event; Inferred strength.",
+            "side": "US",
+            "atSec": 60,
+            "entry": "the noon assault goes in against the middle redoubt"
+          }
+        ],
+        "teaching": {
+          "head": "The ring, not the river",
+          "body": "Fort Henry fell to gunboats alone on Feb 6; Donelson would not. The fort's landward face was two and a half miles of rifle pits on rising ground, and Grant's February 13 was a day of unauthorized probes bloodily repulsed - McClernand's three regiments at the middle redoubt, Smith's brigades at the Hickman flank. The ring had closed, but the works held. That night the weather turned lethal: rain to sleet to snow, and wounded men froze where they lay between the lines.",
+          "provenance": "Verified (NPS event pages; Wikipedia; ABT) - the Feb 13 repulses and the storm night; the 200-casualty figure and burning-grass detail are NPS-narrative grade."
+        },
+        "transition": {
+          "title": "The Investment",
+          "lead": "Grant's columns from Fort Henry close on the works through the ravines - McClernand astride the roads on the right, Smith against Hickman Creek on the left. The probes of February 13 are repulsed all along the line, and the freezing night falls on both armies without fires."
+        },
+        "timing": "February 13, 1862 - the probes go in about noon; the killing frost comes that night"
+      },
+      {
+        "id": "feb15-breakout",
+        "name": "The Breakout - Feb 15",
+        "sector": "The Union right - Pillow's dawn sortie for the Forge Road and Wynn's Ferry Road exits",
+        "scoreWeight": 1,
+        "attacker": "CS",
+        "defender": "US",
+        "assaultDoctrine": "standard",
+        "defaultFog": false,
+        "holdToWinSec": 90,
+        "timeLimitSec": 430,
+        "homeEdge": {
+          "US": "low",
+          "CS": "high"
+        },
+        "objective": {
+          "x": 290,
+          "z": 320,
+          "r": 120,
+          "name": "The Forge Road Exit"
+        },
+        "terrain": {
+          "hills": [
+            {
+              "name": "Dudley's Hill",
+              "x": 300,
+              "z": 350,
+              "h": 12,
+              "s": 160,
+              "note": "The Feb 15 assault swept the Union right off this rise. (Verified name; Inferred geometry.)"
+            },
+            {
+              "name": "Wallace's blocking ridge",
+              "x": 380,
+              "z": 190,
+              "h": 10,
+              "s": 170,
+              "note": "The ridge astride Wynn's Ferry Road where Lew Wallace's line finally stood about 12:30 p.m. (Verified stand; Inferred geometry.)"
+            }
+          ],
+          "woods": [
+            {
+              "x": 470,
+              "z": 480,
+              "r": 130,
+              "note": "The wooded ravines the sortie attacked through. (Inferred placement.)"
+            },
+            {
+              "x": 180,
+              "z": 300,
+              "r": 110,
+              "note": "The scrub behind the Union right - the ground the broken brigades fell back across. (Inferred placement.)"
+            }
+          ],
+          "walls": [
+            {
+              "x1": 300,
+              "z1": 610,
+              "x2": 620,
+              "z2": 650,
+              "note": "The western rifle pits the sortie marched out of. (Verified line; Inferred trace.)"
+            }
+          ],
+          "swamps": [
+            {
+              "x": 140,
+              "z": 660,
+              "r": 130,
+              "note": "Hickman Creek backwater. (Verified anchor; Inferred extent.)"
+            },
+            {
+              "x": 1120,
+              "z": 430,
+              "r": 115,
+              "note": "The flooded Lick Creek backwater - Forrest's icy way out after the surrender decision. (Verified anchor; Inferred extent.)"
+            }
+          ],
+          "markers": [
+            {
+              "kind": "river",
+              "name": "Cumberland River",
+              "path": [
+                [
+                  1050,
+                  940
+                ],
+                [
+                  1130,
+                  700
+                ],
+                [
+                  1180,
+                  460
+                ],
+                [
+                  1210,
+                  200
+                ]
+              ],
+              "note": "The river at the garrison's back. Never a damage source."
+            },
+            {
+              "kind": "road",
+              "name": "Forge Road",
+              "path": [
+                [
+                  180,
+                  120
+                ],
+                [
+                  300,
+                  330
+                ],
+                [
+                  470,
+                  560
+                ],
+                [
+                  640,
+                  660
+                ]
+              ],
+              "note": "The escape road toward Charlotte and Nashville - the objective the sortie historically opened."
+            },
+            {
+              "kind": "road",
+              "name": "Wynn's Ferry Road",
+              "path": [
+                [
+                  350,
+                  60
+                ],
+                [
+                  420,
+                  300
+                ],
+                [
+                  560,
+                  520
+                ],
+                [
+                  700,
+                  640
+                ]
+              ],
+              "note": "The central road; the assault cleared a stretch of it before Wallace's line stood."
+            },
+            {
+              "kind": "label",
+              "name": "The road to Charlotte",
+              "x": 150,
+              "z": 150,
+              "note": "The direction of escape beyond the junction - the route Forrest's cavalry would take out through the backwater on Feb 16, a separate ride from this morning's fight."
+            },
+            {
+              "kind": "town",
+              "name": "Dover",
+              "x": 960,
+              "z": 860,
+              "note": "The town behind the works."
+            }
+          ]
+        },
+        "supply": {
+          "US": {
+            "x": 320,
+            "z": 90,
+            "name": "The Fort Henry road trains"
+          },
+          "CS": {
+            "x": 980,
+            "z": 880,
+            "name": "Dover landing"
+          }
+        },
+        "leaders": {
+          "US": [
+            {
+              "id": "ld_mcclernand",
+              "name": "Brig. Gen. John A. McClernand",
+              "short": "McClernand",
+              "quality": 0.52,
+              "radius": 230,
+              "x": 340,
+              "z": 340,
+              "fate": 2.6,
+              "note": "His division takes the blow at dawn - Oglesby's and McArthur's brigades hardest hit, ammunition running out. (Verified event; Inferred quality value.)"
+            },
+            {
+              "id": "ld_lwallace",
+              "name": "Brig. Gen. Lew Wallace",
+              "short": "L. Wallace",
+              "quality": 0.58,
+              "radius": 230,
+              "x": 480,
+              "z": 250,
+              "fate": 2.7,
+              "note": "3rd Division, formed Feb 14 from the transport-landed brigades - his line astride Wynn's Ferry Road stops the exploitation. (Verified command; Inferred quality value.)"
+            },
+            {
+              "id": "ld_grant",
+              "name": "Brig. Gen. Ulysses S. Grant",
+              "short": "Grant",
+              "quality": 0.66,
+              "radius": 260,
+              "atSec": 170,
+              "x": 300,
+              "z": 120,
+              "fate": 2.7,
+              "entry": "Grant returns from Foote's flagship and orders the line restored.",
+              "note": "Absent at dawn - he had ridden downriver before daylight to confer with the wounded Foote, naming no second-in-command. He returns mid-battle, reads the ration-stuffed knapsacks of the Confederate dead, and attacks. (Verified absence and return; Inferred timing second.)"
+            }
+          ],
+          "CS": [
+            {
+              "id": "ld_pillow",
+              "name": "Brig. Gen. Gideon J. Pillow",
+              "short": "Pillow",
+              "quality": 0.5,
+              "radius": 240,
+              "x": 420,
+              "z": 560,
+              "fate": 2.6,
+              "note": "Leading the breakout wing - he will win the road and then order the men back into the works. (Verified command; Inferred quality value.)"
+            },
+            {
+              "id": "ld_bjohnson",
+              "name": "Brig. Gen. Bushrod R. Johnson",
+              "short": "B. Johnson",
+              "quality": 0.55,
+              "radius": 230,
+              "x": 520,
+              "z": 590,
+              "fate": 2.7,
+              "note": "A brigadier since January 24 - he briefly held nominal command of the fort on Feb 9 and now directs the sortie's supporting line. (Verified grade; Inferred quality value.)"
+            },
+            {
+              "id": "ld_floyd",
+              "name": "Brig. Gen. John B. Floyd",
+              "short": "Floyd",
+              "quality": 0.45,
+              "radius": 240,
+              "x": 700,
+              "z": 700,
+              "fate": 2.6,
+              "note": "The senior officer, wavering between his subordinates' plans as the escape opens and closes. (Verified role; Inferred quality value.)"
+            }
+          ]
+        },
+        "oob": {
+          "US": [
+            {
+              "id": "us_mcarthur",
+              "name": "McArthur's Brigade (right flank)",
+              "commander": "Col. John McArthur",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2300,
+              "xp": 1,
+              "x": 210,
+              "z": 380,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "The unanchored end of the Union right - hit hardest with Oglesby when the sortie came out at dawn. Single-source brigade identity; Inferred strength."
+            },
+            {
+              "id": "us_oglesby",
+              "name": "Oglesby's Brigade (McClernand)",
+              "commander": "Col. Richard J. Oglesby",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2500,
+              "xp": 1,
+              "x": 320,
+              "z": 400,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "Astride the Forge Road approaches - driven back fighting as the cartridge boxes emptied. Verified event; Inferred strength."
+            },
+            {
+              "id": "us_mcclernand_art",
+              "name": "McClernand's Division Artillery (Inferred grouping)",
+              "commander": "Division batteries",
+              "arm": "art",
+              "weapon": "napoleon",
+              "guns": 10,
+              "men": 300,
+              "xp": 1,
+              "x": 400,
+              "z": 300,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "The right's batteries - one was overrun by Forrest's troopers in the driving fight. Inferred strength and gun count."
+            }
+          ],
+          "CS": [
+            {
+              "id": "cs_baldwin",
+              "name": "Baldwin's Brigade (Pillow's assault lead)",
+              "commander": "Col. William E. Baldwin",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2200,
+              "xp": 2,
+              "x": 300,
+              "z": 500,
+              "facing": 0,
+              "formation": "column",
+              "note": "The head of the breakout column against the Union right at dawn. Single-source brigade identity; Inferred strength."
+            },
+            {
+              "id": "cs_wharton",
+              "name": "Wharton's Brigade",
+              "commander": "Col. Gabriel C. Wharton",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1900,
+              "xp": 1,
+              "x": 380,
+              "z": 520,
+              "facing": 0,
+              "formation": "line",
+              "note": "Floyd's Virginians in the assault wing. Single-source brigade identity; Inferred strength."
+            },
+            {
+              "id": "cs_mccausland",
+              "name": "McCausland's Brigade",
+              "commander": "Col. John McCausland",
+              "arm": "inf",
+              "weapon": "smooth",
+              "men": 1700,
+              "xp": 1,
+              "x": 460,
+              "z": 540,
+              "facing": 0,
+              "formation": "line",
+              "note": "The second Virginia brigade of the sortie. Single-source brigade identity; Inferred strength."
+            },
+            {
+              "id": "cs_simonton",
+              "name": "Simonton's Brigade",
+              "commander": "Col. John M. Simonton",
+              "arm": "inf",
+              "weapon": "smooth",
+              "men": 1600,
+              "xp": 1,
+              "x": 540,
+              "z": 560,
+              "facing": 0,
+              "formation": "line",
+              "note": "The Mississippi brigade extending the assault. Single-source brigade identity; Inferred strength."
+            },
+            {
+              "id": "cs_bjohnson_line",
+              "name": "Bushrod Johnson's supporting line (Inferred grouping)",
+              "commander": "Brig. Gen. Bushrod R. Johnson",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2000,
+              "xp": 1,
+              "x": 450,
+              "z": 600,
+              "facing": 0,
+              "formation": "line",
+              "note": "The left-wing supports directing the sortie's weight. Inferred grouping; Inferred strength."
+            },
+            {
+              "id": "cs_forrest",
+              "name": "Forrest's Cavalry",
+              "commander": "Lt. Col. Nathan Bedford Forrest",
+              "arm": "cav",
+              "weapon": "carbine",
+              "men": 1200,
+              "xp": 2,
+              "x": 220,
+              "z": 520,
+              "facing": 0,
+              "formation": "column",
+              "note": "The flanking cavalry that dislodged a Union battery in the driving fight - commanded by a lieutenant colonel; his full colonelcy came in March, his general's star in July. Verified rank; Inferred strength (his ride-out count is disputed 700 vs 1,500 and is taught, not modeled)."
+            },
+            {
+              "id": "cs_sortie_art",
+              "name": "Sortie batteries (Inferred grouping)",
+              "commander": "Wing batteries",
+              "arm": "art",
+              "weapon": "napoleon",
+              "guns": 8,
+              "men": 300,
+              "xp": 1,
+              "x": 520,
+              "z": 620,
+              "facing": 0,
+              "formation": "line",
+              "note": "The field guns supporting the breakout under the universal gun model. Inferred strength and gun count."
+            }
+          ]
+        },
+        "reinforcements": [
+          {
+            "id": "us_ross",
+            "name": "Ross's Brigade elements (center)",
+            "commander": "Col. Leonard F. Ross",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 1800,
+            "xp": 1,
+            "x": 560,
+            "z": 260,
+            "facing": 3.14159,
+            "formation": "column",
+            "note": "Center supports feeding the crumbling right. Single-source identity; Inferred strength.",
+            "side": "US",
+            "atSec": 140,
+            "entry": "Ross's regiments feed the crumbling flank"
+          },
+          {
+            "id": "us_wwallace",
+            "name": "W. H. L. Wallace's Brigade (McClernand)",
+            "commander": "Col. William H. L. Wallace",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 2400,
+            "xp": 1,
+            "x": 470,
+            "z": 300,
+            "facing": 3.14159,
+            "formation": "column",
+            "note": "The 1st Division's third brigade, bending back under the wheeling assault. Single-source brigade identity; Inferred strength.",
+            "side": "US",
+            "atSec": 80,
+            "entry": "the line rolls south - W. H. L. Wallace's brigade wheels onto the right"
+          },
+          {
+            "id": "cs_buckner_wing",
+            "side": "CS",
+            "atSec": 120,
+            "name": "Buckner's Division (right wing)",
+            "commander": "Brig. Gen. Simon B. Buckner",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 2000,
+            "xp": 1,
+            "x": 700,
+            "z": 680,
+            "facing": 0,
+            "formation": "column",
+            "entry": "crossing Wynn's Ferry Road into the assault",
+            "note": "The right wing joins the breakout, leaving its own rifle pits nearly empty behind it - the vacancy that decides the battle. Verified movement; Inferred strength and timing second."
+          },
+          {
+            "id": "us_cruft",
+            "side": "US",
+            "atSec": 200,
+            "name": "Cruft's Brigade (Lew Wallace)",
+            "commander": "Col. Charles Cruft",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 2200,
+            "xp": 1,
+            "x": 600,
+            "z": 150,
+            "facing": 3.14159,
+            "formation": "column",
+            "entry": "sent right from the center",
+            "note": "Wallace's first brigade committed toward the collapsing right - the division the river transports delivered on Feb 14. Verified movement; Inferred strength and timing second."
+          },
+          {
+            "id": "us_thayer",
+            "side": "US",
+            "atSec": 300,
+            "name": "Thayer's Brigade (Lew Wallace)",
+            "commander": "Col. John M. Thayer",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 2300,
+            "xp": 1,
+            "x": 500,
+            "z": 120,
+            "facing": 3.14159,
+            "formation": "column",
+            "entry": "forming the blocking line astride Wynn's Ferry Road",
+            "note": "The ridge line that finally stopped the exploitation about 12:30 p.m. Verified stand; Inferred strength and timing second."
+          }
+        ],
+        "teaching": {
+          "head": "The door, opened",
+          "body": "At dawn Pillow's wing came out of the works and rolled the Union right back hill by hill. By early afternoon two of McClernand's three front-line brigades were broken, the survivors were out of ammunition, and the Forge Road and a stretch of Wynn's Ferry Road were clear: the garrison's escape route to Nashville was open, bought and paid for. What happened next is the lesson - the men were ordered back into the works.",
+          "provenance": "Verified (NPS Civil War Series; Wikipedia) - the dawn sortie, the broken Union right, and the opened Forge Road / Wynn's Ferry stretch; Oglesby/McArthur hardest-hit per the refuted-and-confirmed OOB pass."
+        },
+        "transition": {
+          "title": "The Gunboats Are Beaten - and the Garrison Comes Out",
+          "lead": "February 14: Foote's four ironclads close to point-blank range and the water batteries wreck them - fifty-nine hits on the flagship, both flag-boats' steering shot away, Foote himself wounded, the flotilla repulsed in about ninety minutes without the batteries losing a gun. Ironclads are not invincible; earth and heavy guns can still win. The same river that failed as a weapon works as a road: transports land a fresh Union division under the flotilla's escort. In the frozen works, the Confederate commanders resolve to cut their way out at dawn."
+        },
+        "timing": "February 15, 1862 - the sortie strikes about 6:00 a.m., on the snow"
+      },
+      {
+        "id": "feb15-recapture",
+        "name": "The Recapture - Smith's Assault",
+        "sector": "The vacated Confederate right - Lauman's brigade and the 2nd Iowa at the rifle pits",
+        "scoreWeight": 3,
+        "attacker": "US",
+        "defender": "CS",
+        "assaultDoctrine": "standard",
+        "defaultFog": false,
+        "holdToWinSec": 130,
+        "timeLimitSec": 430,
+        "homeEdge": {
+          "US": "low",
+          "CS": "high"
+        },
+        "objective": {
+          "x": 400,
+          "z": 655,
+          "r": 125,
+          "name": "Buckner's Vacated Rifle Pits"
+        },
+        "terrain": {
+          "hills": [
+            {
+              "name": "The works ridge",
+              "x": 500,
+              "z": 690,
+              "h": 13,
+              "s": 200,
+              "note": "The rising ground the vacated pits crown. (Inferred geometry.)"
+            }
+          ],
+          "woods": [
+            {
+              "x": 300,
+              "z": 500,
+              "r": 120,
+              "note": "The felled-timber slope Smith's column climbed - the 2nd Iowa was ordered in with the bayonet, not the rifle. (Verified tactic; Inferred placement.)"
+            },
+            {
+              "x": 700,
+              "z": 560,
+              "r": 110,
+              "note": "Broken ground between the pits and Dover. (Inferred placement.)"
+            }
+          ],
+          "walls": [
+            {
+              "x1": 280,
+              "z1": 620,
+              "x2": 560,
+              "z2": 665,
+              "note": "Buckner's vacated rifle pits - held at the moment of the assault by the lone 30th Tennessee. (Verified vacancy; Inferred trace.)"
+            },
+            {
+              "x1": 560,
+              "z1": 665,
+              "x2": 820,
+              "z2": 640,
+              "note": "The inner works toward Dover the defenders rallied on. (Inferred trace.)"
+            }
+          ],
+          "swamps": [
+            {
+              "x": 140,
+              "z": 660,
+              "r": 130,
+              "note": "Hickman Creek backwater on the assault's flank. (Verified anchor; Inferred extent.)"
+            }
+          ],
+          "markers": [
+            {
+              "kind": "river",
+              "name": "Cumberland River",
+              "path": [
+                [
+                  1050,
+                  940
+                ],
+                [
+                  1130,
+                  700
+                ],
+                [
+                  1180,
+                  460
+                ],
+                [
+                  1210,
+                  200
+                ]
+              ],
+              "note": "The river at the garrison's back. Never a damage source."
+            },
+            {
+              "kind": "water",
+              "name": "The water batteries",
+              "x": 1090,
+              "z": 760,
+              "note": "Still unbeaten by the fleet - and irrelevant to the bayonets deciding the battle on the landward side."
+            },
+            {
+              "kind": "town",
+              "name": "Dover",
+              "x": 960,
+              "z": 860,
+              "note": "The Dover Hotel, where tonight's council will pass the command twice and the garrison to captivity."
+            },
+            {
+              "kind": "road",
+              "name": "Wynn's Ferry Road",
+              "path": [
+                [
+                  350,
+                  60
+                ],
+                [
+                  420,
+                  300
+                ],
+                [
+                  560,
+                  520
+                ],
+                [
+                  700,
+                  640
+                ]
+              ],
+              "note": "The recaptured stretch - the door swinging shut."
+            }
+          ]
+        },
+        "supply": {
+          "US": {
+            "x": 320,
+            "z": 90,
+            "name": "The Fort Henry road trains"
+          },
+          "CS": {
+            "x": 980,
+            "z": 880,
+            "name": "Dover landing"
+          }
+        },
+        "leaders": {
+          "US": [
+            {
+              "id": "ld_grant",
+              "name": "Brig. Gen. Ulysses S. Grant",
+              "short": "Grant",
+              "quality": 0.66,
+              "radius": 260,
+              "x": 420,
+              "z": 300,
+              "fate": 2.7,
+              "note": "Back on the field: 'The one who attacks first now will be victorious' - attributed across the independent accounts of his return. (Verified return; quote attributed; Inferred quality value.)"
+            },
+            {
+              "id": "ld_cfsmith",
+              "name": "Brig. Gen. Charles F. Smith",
+              "short": "C.F. Smith",
+              "quality": 0.66,
+              "radius": 240,
+              "x": 340,
+              "z": 480,
+              "fate": 2.7,
+              "note": "Riding at the head of Lauman's brigade with his cap on his sword point - the old regular leading the assault in person. (Verified leadership; Inferred quality value.)"
+            }
+          ],
+          "CS": [
+            {
+              "id": "ld_buckner",
+              "name": "Brig. Gen. Simon B. Buckner",
+              "short": "Buckner",
+              "quality": 0.58,
+              "radius": 240,
+              "x": 620,
+              "z": 700,
+              "fate": 2.7,
+              "note": "Racing his division back to pits it should never have left. (Verified movement; Inferred quality value.)"
+            },
+            {
+              "id": "ld_pillow",
+              "name": "Brig. Gen. Gideon J. Pillow",
+              "short": "Pillow",
+              "quality": 0.5,
+              "radius": 240,
+              "x": 700,
+              "z": 740,
+              "fate": 2.6,
+              "note": "The author of the recall, watching the door close. (Verified role; Inferred quality value.)"
+            }
+          ]
+        },
+        "oob": {
+          "US": [
+            {
+              "id": "us_lauman",
+              "name": "Lauman's Brigade - the 2nd Iowa leading",
+              "commander": "Col. Jacob G. Lauman",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2900,
+              "xp": 2,
+              "x": 300,
+              "z": 480,
+              "facing": 3.14159,
+              "formation": "column",
+              "note": "The 2nd, 7th, and 14th Iowa with the 25th Indiana; Col. James Tuttle's 2nd Iowa went up the slope under orders to take the works with the bayonet. Verified assault; Inferred strength."
+            },
+            {
+              "id": "us_cook",
+              "name": "Cook's Brigade (feint and support)",
+              "commander": "Col. John Cook",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2500,
+              "xp": 1,
+              "x": 180,
+              "z": 520,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "Demonstrating on Lauman's flank to hold the defenders' attention. Verified role; Inferred strength."
+            },
+            {
+              "id": "us_smith_sup",
+              "name": "C. F. Smith's division supports (Inferred grouping)",
+              "commander": "Division supports",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1800,
+              "xp": 1,
+              "x": 240,
+              "z": 400,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "The 2nd Division's remaining weight behind the assault. Inferred grouping; Inferred strength."
+            },
+            {
+              "id": "us_smith_art",
+              "name": "Smith's Division Artillery (Inferred grouping)",
+              "commander": "Division batteries",
+              "arm": "art",
+              "weapon": "napoleon",
+              "guns": 8,
+              "men": 250,
+              "xp": 1,
+              "x": 220,
+              "z": 330,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "The left's batteries under the universal gun model. Inferred strength and gun count."
+            }
+          ],
+          "CS": [
+            {
+              "id": "cs_30tn",
+              "name": "30th Tennessee (the vacated pits)",
+              "commander": "Col. John W. Head's regiment",
+              "arm": "inf",
+              "weapon": "smooth",
+              "men": 700,
+              "xp": 1,
+              "x": 420,
+              "z": 670,
+              "facing": 0,
+              "formation": "line",
+              "note": "The lone regiment left holding Buckner's sector when the assault came - the price of the recall. Verified vacancy; Inferred strength; single-source commander attribution."
+            },
+            {
+              "id": "cs_works_art",
+              "name": "Works guns (Inferred grouping)",
+              "commander": "Sector guns",
+              "arm": "art",
+              "weapon": "napoleon",
+              "guns": 5,
+              "men": 150,
+              "xp": 1,
+              "x": 520,
+              "z": 690,
+              "facing": 0,
+              "formation": "line",
+              "note": "The landward guns still in the sector under the universal gun model. Inferred strength and gun count."
+            }
+          ]
+        },
+        "reinforcements": [
+          {
+            "id": "cs_hanson",
+            "side": "CS",
+            "atSec": 60,
+            "name": "Hanson's 2nd Kentucky (returning)",
+            "commander": "Col. Roger W. Hanson",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 1400,
+            "xp": 2,
+            "x": 700,
+            "z": 720,
+            "facing": 0,
+            "formation": "column",
+            "entry": "double-quicking back to the pits",
+            "note": "The first of the right wing racing back from the breakout. Verified counterattacks; Inferred strength and timing second."
+          },
+          {
+            "id": "cs_buckner_wing",
+            "side": "CS",
+            "atSec": 140,
+            "name": "Buckner's Division (returning)",
+            "commander": "Brig. Gen. Simon B. Buckner",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 2600,
+            "xp": 1,
+            "x": 780,
+            "z": 740,
+            "facing": 0,
+            "formation": "column",
+            "entry": "counterattacking the lost works",
+            "note": "The division that could not retake what it had been ordered to abandon. Verified counterattacks; Inferred strength and timing second."
+          }
+        ],
+        "teaching": {
+          "head": "The door, shut",
+          "body": "C. F. Smith personally led Lauman's brigade - Tuttle's 2nd Iowa in front, bayonets fixed, forbidden to stop and fire - up the felled-timber slope and into rifle pits held by a single regiment, the 30th Tennessee. The right wing that should have held those pits was still marching back from the breakout it had won and abandoned. Buckner's counterattacks failed to retake the lodgment; the escape road was shut; the garrison was doomed. The decisive act of the battle was retaking ground the defenders had given away.",
+          "provenance": "Verified (NPS; Wikipedia) - Smith's assault, the 2nd Iowa's bayonet order, the lone 30th Tennessee in the vacated pits, and the failed counterattacks; ABT's 'Confederate left' framing is an orientation slip taught as such."
+        },
+        "transition": {
+          "title": "The Recall - Victory Handed Back",
+          "lead": "With the escape road open, Pillow orders the assault wing back into the works to resupply before the march - over Buckner's protest - and Floyd, wavering, ratifies it. The men who bought the road with blood march back into the trap; the stated reasons still divide the accounts, and the sources are shown as they conflict. Downriver, Grant returns from the wounded Foote's flagship, reads three days' rations in the captured knapsacks, and orders the lost ground retaken: the vacated right is the place to strike."
+        },
+        "timing": "February 15, 1862 - mid-afternoon, the counterblow at the vacated pits"
+      }
+    ],
+    "endNote": {
+      "US": {
+        "US": "History holds. The works ring held its probes, the breakout opened the road and was called back, and Smith's bayonets shut the door at the vacated pits. That night the Confederate command dissolved: Floyd passed the command to Pillow and fled by steamboat with his Virginians; Pillow crossed the river in a small boat; Lt. Col. Forrest refused to surrender and rode his troopers out through the icy backwater; and Buckner - left holding the bag - asked Grant for terms. The answer made a nickname of two initials: 'No terms except an unconditional and immediate surrender can be accepted.' Roughly twelve thousand or more Confederates passed into captivity (the sources still disagree on the exact count), Nashville fell within days, and the rivers ran Union to the heart of the Confederacy.",
+        "CS": "History holds - against your army. The ring held, your breakout bought the road and gave it back, and the vacated pits fell to the bayonet. Your commanders abandoned the garrison: Floyd and Pillow fled, Forrest rode out, and Buckner surrendered unconditionally. The heartland's river line collapsed with the fort."
+      },
+      "CS": {
+        "US": "History diverges. The garrison your army had trapped cut its way out - or held its works - and the first great Union victory of the West slipped away. In 1862 the door the sortie opened was shut again by nightfall; under your command it stayed open, and there is no 'Unconditional Surrender' Grant tonight.",
+        "CS": "History diverges. The door your men died opening stayed open this time - no recall, no council at the Dover Hotel, no surrender. The garrison lives to fight at Nashville, and February 1862 reads very differently."
+      },
+      "draw": "A frozen deadlock - the ring neither sealed nor broken. History's verdict at Donelson was sharper: the garrison lost its nerve at the moment of its greatest success, and the war's first mass surrender followed."
+    },
+    "teaching": {
+      "cards": [
+        {
+          "id": "fd_river_war",
+          "head": "The river war won the West",
+          "body": "Fort Henry fell February 6, Fort Donelson February 16 - and with them the Confederate line in the West. The Tennessee and Cumberland were highways into the Confederate heartland: Nashville, the first Confederate state capital to fall, was surrendered without a fight within ten days (evacuated from February 23, formally occupied February 25), and Columbus, Kentucky - the 'Gibraltar of the West' - was abandoned by early March. Emancipation's frontier moved with the gunboats: the river war carried the Union, and eventually freedom, south. Against the Lost-Cause fixation on Virginia, the war's fatal arithmetic started here.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.battlefields.org/learn/civil-war/battles/fort-donelson",
+            "https://en.wikipedia.org/wiki/Battle_of_Fort_Donelson",
+            "https://www.nps.gov/fodo/index.htm"
+          ]
+        },
+        {
+          "id": "fd_unconditional",
+          "head": "\"Unconditional and immediate surrender\"",
+          "body": "Buckner asked for commissioners and an armistice to settle 'terms of capitulation of the forces and post under my command.' Grant's reply, in full: 'No terms except an unconditional and immediate surrender can be accepted. I propose to move immediately upon your works.' Buckner accepted what he called 'ungenerous and unchivalrous terms.' The initials U.S. acquired a second meaning, the Union had its first great victory and its first mass surrender - and the war had its doctrine of decision.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.battlefields.org/learn/civil-war/battles/fort-donelson",
+            "https://en.wikipedia.org/wiki/Battle_of_Fort_Donelson"
+          ]
+        },
+        {
+          "id": "fd_command_collapse",
+          "head": "Command collapse, stated plainly",
+          "body": "At the Dover Hotel in the small hours of February 16, the command devolved twice in minutes. Floyd - a former U.S. Secretary of War who feared federal arrest - passed command to Pillow and took the only steamboat out with his Virginia regiments (the sources disagree on how many men: about 2,000 with Floyd and Pillow combined by one account, 3,000 in another, unquantified in a third). Pillow crossed the Cumberland in a small boat with his staff. Buckner, who judged the works could not stand half an hour, stayed to surrender roughly twelve thousand or more men - no formal roll was ever taken, and estimates run 11,500 to 15,000 around the citation-grade 12,392. This was not tragic nobility. Two generals abandoned their own army.",
+          "provenance": "Verified",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Battle_of_Fort_Donelson",
+            "https://tennesseeencyclopedia.net/entries/fort-donelson-battle-of/",
+            "https://www.nps.gov/fodo/index.htm"
+          ]
+        },
+        {
+          "id": "fd_forrest_out",
+          "head": "Forrest refused",
+          "body": "Lieutenant Colonel Nathan Bedford Forrest - not yet a colonel, let alone a general - declared he had not come to surrender his command (the exact wording is traditionally attributed, without a period source) and led his troopers out through the freezing Lick Creek backwater toward Charlotte before the capitulation. The sources conflict on the number: about 700 cavalrymen in one account, '1,500 horsemen and scattered infantry' in another. The men he left behind went to the prison camps. Where Forrest's road led afterward - Fort Pillow in 1864, the Klan after the war - is told plainly elsewhere in this game.",
+          "provenance": "Disputed",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Battle_of_Fort_Donelson",
+            "https://tennesseeencyclopedia.net/entries/fort-donelson-battle-of/"
+          ]
+        },
+        {
+          "id": "fd_gunboats_beaten",
+          "head": "The gunboats were beaten",
+          "body": "On February 14 Flag Officer Andrew H. Foote - the U.S. Navy had no admirals until July 1862 - took four ironclads to point-blank range under the water batteries, and earth and heavy guns won: 59 hits on the flagship St. Louis, the steering shot away on both flag-boats, Foote wounded, the flotilla repulsed in about ninety minutes with roughly 54 casualties (the accounts spread 52 to 55) against no significant loss in the batteries. The lower battery mounted eight 32-pounders and a 10-inch Columbiad, the upper a rifled 64-pounder Columbiad and two carronades (the batteries' total gun count is still disputed, 11 or 12). Three weeks before Hampton Roads, Donelson taught the ironclad's limit - and the river still won the campaign as a road: the transports the flotilla escorted delivered the fresh division that closed the ring.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.nps.gov/fodo/index.htm",
+            "https://en.wikipedia.org/wiki/Battle_of_Fort_Donelson",
+            "https://www.history.navy.mil/"
+          ]
+        },
+        {
+          "id": "fd_freezing_night",
+          "head": "The freezing night",
+          "body": "The march from Fort Henry on February 12 was warm enough that soldiers threw away coats and blankets. On the night of February 13-14 the weather turned: rain, then sleet, then snow, with hard cold - about 10 to 12 degrees by the narrative accounts. Campfires drew rifle fire, so there were none. Wounded men from the day's repulsed assaults froze to death between the lines where no stretcher could reach them. Both armies endured it; the wounded paid for it.",
+          "provenance": "Inferred",
+          "sources": [
+            "https://www.nps.gov/fodo/index.htm",
+            "https://en.wikipedia.org/wiki/Battle_of_Fort_Donelson"
+          ]
+        },
+        {
+          "id": "fd_grants_absence",
+          "head": "Grant's absence, Grant's return",
+          "body": "The breakout struck while Grant was miles downriver aboard the flagship with the wounded Foote - he had named no second-in-command, and for hours the Union right fought its battle without him. What made the difference was the return: reading the three days' rations packed in captured knapsacks as proof the garrison meant to escape rather than fight it out, he is reported to have said the one who attacks first now would be victorious - and ordered the lost position retaken. Command presence is an input, not a spell: the counterattack, not a headquarters legend, shut the door.",
+          "provenance": "Verified",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Battle_of_Fort_Donelson",
+            "https://www.battlefields.org/learn/civil-war/battles/fort-donelson"
+          ]
+        },
+        {
+          "id": "fd_fort_henry",
+          "head": "Fort Henry: the door already ajar",
+          "body": "Ten days earlier, Brig. Gen. Lloyd Tilghman had sent Fort Henry's garrison marching to Donelson and surrendered the half-flooded fort to Foote's gunboats alone after roughly 75 minutes of bombardment, holding on with a rear detachment of under a hundred artillerists (its casualties are disputed - about 15 killed and 20 wounded in some narratives, about 5 and 11 in Tilghman's own report). Fort Henry is why Donelson's garrison was swollen with refugees from the Tennessee, and why the river door stood already ajar. It remains a teaching entry only: a gunboat bombardment is not a land battle, and this game does not pretend to fight one.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.battlefields.org/learn/civil-war/battles/fort-henry",
+            "https://en.wikipedia.org/wiki/Battle_of_Fort_Donelson"
+          ]
+        }
+      ],
+      "codex": {
+        "id": "codex_fort_donelson",
+        "title": "Fort Donelson, February 13-16, 1862",
+        "summary": "Grant's army marched from captured Fort Henry and invested Fort Donelson's landward works between Hickman Creek and the flooded Lick Creek backwater; about 24,531 Federals engaged about 16,171 Confederates (the often-quoted 40,702 is both sides added together). The February 13 probes were repulsed; Foote's ironclads were beaten at the water batteries on the 14th while transports landed a fresh Union division; the garrison's February 15 breakout broke the Union right and opened the Forge Road - then marched back into the works on its commanders' recall, and C. F. Smith's bayonet assault took the vacated rifle pits. The command devolved from Floyd to Pillow to Buckner overnight as the seniors fled; Buckner accepted Grant's demand of unconditional and immediate surrender on February 16. The Union lost 2,691 (507 killed, 1,976 wounded, 208 missing or captured); the Confederacy lost 13,846, of whom 12,392 were the surrendered garrison - by killed and wounded alone, the victors bled more (2,483 to 1,454). Nashville fell within ten days; Grant had his name.",
+        "axes": {
+          "theater": "Western",
+          "campaign": "Henry-Donelson Campaign",
+          "result": "Union victory"
+        },
+        "provenance": "Verified",
+        "sources": [
+          "https://www.battlefields.org/learn/civil-war/battles/fort-donelson",
+          "https://en.wikipedia.org/wiki/Battle_of_Fort_Donelson"
+        ]
+      }
+    }
+  }
+}

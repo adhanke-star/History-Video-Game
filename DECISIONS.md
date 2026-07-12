@@ -6,6 +6,96 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D384 — PLAYABLE FORT DONELSON: THE RIVER WAR ARRIVES, THREE PHASES, TWENTIETH SCENARIO — [CLAUDE CODE / FABLE, LANE-003 DRIVE] (2026-07-12)
+
+Fort Donelson is the twentieth registered historical scenario and the game's first land+river
+epic. `data/fort-donelson.json` implements the D383 contract exactly: three-phase T8 —
+`The Investment - Feb 13` (w1, US attacker, cautious doctrine, CS holds) → `The Breakout - Feb 15`
+(w1, CS ATTACKER role flip, CS seizes the Forge Road Exit) → `The Recapture - Smith's Assault`
+(w3 DECISIVE, US carries Buckner's vacated rifle pits); weights [1,1,3] per the D383 reweighting;
+fog off everywhere; menu rank 48 between New Market Heights and Shiloh. The Feb 14 naval repulse
+rides Phase 2's transition card as a TEACHING INTERSTITIAL (Foote's four ironclads beaten at
+close range; the transports landing Lew Wallace's division as the river's real gift); the recall
+teaching rides Phase 3's card. 27 unique side-unit ids add 81 Soldier's Story rows, moving the
+Army Register 1200 → **1281** (every whole-registry pin bumped same-commit with the full
+documented chain — the pin-bump idiom, including a NEW catch: probe-five-forks carried an
+undocumented whole-REGISTRY-COUNT pin of 19 that the adjacent gate redded; bumped 19 → 20 with
+history, the same class D364 caught in probe-gaines-mill). Schema 50; flags/weather/Intel/media
+cover 20; suite 125; T10 `W / false / first-national` (Feb 1862 precedes the Stones-River-era
+Hardee convention; Shiloh is the shipped precedent).
+
+**Committed strengths (all Inferred abstractions inside the corrected US 24,531 / CS 16,171
+engaged anchors):** P1 12,850 US vs 11,420 CS; P2 12,900 CS (incl. Forrest's 1,200 cavalry under
+Lt. Col. Forrest and Buckner's 2,000 joining at 120s) vs 13,800 US; P3 7,450 US vs 4,850 CS (the
+lone 700-man 30th Tennessee holding the vacated pits; Hanson 1,400 @60s and Buckner 2,600 @140s
+racing back). Gunboats are INPUTS only; the water batteries are markers; no naval unit exists in
+any OOB (probe-enforced).
+
+**Honest A/B (three iterations, all values logged):**
+- Iteration 0 (first authored battery): P1 CS 8/8 · P2 CS **0/8** · P3 US 8/8 · aggregate US 8/8.
+- Iteration 1: P2 objective (300,230,r125) → (290,320,r120) (the exit sits at the US right the
+  sortie rolled); Cruft (520,120)@90s → (600,150)@200s; Thayer (420,110)@150s → (500,120)@300s
+  (the sourced timeline: 6 a.m. = 0s, Cruft mid-morning, Thayer's 12:30 stand ≈300s on the 430s
+  day; positions on the Wynn's Ferry axis his stand actually held). Result: P2 CS **1/8**.
+- Iteration 2: the sourced dawn-surprise piecemeal defense — W. H. L. Wallace (2,400) moved from
+  opening OOB to @80s (470,300) and Ross (1,800) to @140s (560,260); opening defense = McArthur +
+  Oglesby + the guns (5,100) vs the 10,900-man sortie (the packet's D90 attacker-seize recipe;
+  the Cedar Creek sequential-re-formation precedent). Result: P2 CS **3/8**.
+- Iteration 3: the pre-dawn approach — assault-wing start positions moved from z 580-700 to the
+  first-light contact line (Baldwin 340,580→300,500; Wharton 430,600→380,520; McCausland
+  520,620→460,540; Simonton 610,640→540,560; Johnson 480,680→450,600; Forrest 250,620→220,520;
+  sortie guns 560,700→520,620) + P2 holdToWinSec 120→90 (history's door stood open about an
+  hour; the phase teaches seizure, not an indefinite hold). Result: **P1 CS 8/8 · P2 CS 7/8 ·
+  P3 US 8/8 · aggregate US 8/8** — final. No result multiplier anywhere; every lever was
+  strength placement, arrival timing, objective geometry, or a universal threshold.
+
+**Grant's absence as an input:** the P2 US cast opens WITHOUT Grant (he was downriver with the
+wounded Foote, no second-in-command named); `ld_grant` arrives at 170s with the return entry —
+a timed ordinary leader arrival, probe-verified inactive at dawn and active after the return,
+never a result writer.
+
+**Binds (both restored byte-identically):** Bind A removed the exact T1 registry line → plan
+`FUTURE COMPLETE-INTEGRATION CONTRACT` red (12/13) + EXACTLY eight focused registration-dependent
+teeth red (REGISTRY+MENU · LANDMARKS+HOME EDGES · LAUNCH · GRANT RETURNS · PASSIVE · DIRECTION ·
+ARMY REGISTER PIN · MENU+SIDE CHOICE) with the six data-direct teeth green; SAME-SEED REPLAY
+legitimately stayed green because the determinism tooth is registration-independent (the sandbox
+fallback still replays identically) — reconciled here, not blind-accepted. Restore: T1
+`ec051a8b2126d3f0e83853d58b3e224a`, HTML `22e3ca1360a7260070b69301acea1348`, plan 13/13. Bind B
+tampered the P1 Grant grade to the forbidden `Maj. Gen.` rendering → plan FUTURE red + EXACTLY
+the focused `RANK + NAME LOCKS` tooth red; restore: data `4d88587ede4394d09506eabfadd41309`,
+HTML `22e3ca1360a7260070b69301acea1348`, both probes green. (A first Bind-B attempt tampered a
+stale substring and did not apply — caught by its own assert and the green rerun, then re-run
+correctly via the parsed object; no probe was weakened.)
+
+**Three gate catches before ship (the gates doing their job):** the build's citation-provenance
+gate rejected three bare-`Verified` phase-teaching stamps (0 sources) — fixed to the shipped
+inline-attribution convention; the schema validator rejected the missing root `_comment`/phase
+`timing` keys and an empty phase-1 reinforcements array — fixed by making Morrison's noon
+assault the phase-1 timed reinforcement (historically apt: the Feb 13 probes developed during
+the day); and the adjacent five-forks run exposed its undocumented registry-count pin (above).
+Two probe-side corrections during authoring: the officers roster is `__FIELD.leaders` (the
+`officers` key is the on/off gate), and the four direction guards were aligned to the
+contract's `>= 5` idiom the plan probe codifies.
+
+**Serialized gate (every artifact read):** node --check 17/17 + cooked SETUP/DOM preparse;
+GATE OK (HTML 8021.3KB, md5 `22e3ca1360a7260070b69301acea1348`); schema **50/50**; research
+15/15; FD plan **13/13** (implementation-present branch); FD focused **15/15** with 0 pageerrors;
+roster **8/8** at 20 scenarios; builder **15/15**; loot **12/12** at 1281; flags **48/48** at 20;
+weather **30/30**; Intel green (Kennesaw keeps the largest-scene crown at 17; Fort Donelson opens
+at 11); media **13/13** with only the standing 2.418 MB soft warning; suite list **125**;
+adjacents Five Forks **16/16** · Stones River **13/13** · Shiloh **31/31**; `git diff --check`
+clean. One environment note: a stale `git diff` hung once on macOS placeholder refresh and was
+cleared by `git update-index --refresh` (the documented class; no blob mismatch). The four other
+pin-bumped battle probes (cedar-creek, cross-keys, gaines-mill, new-market-heights) carry
+assert-verified mechanical one-line pin edits + node --check green; they run at the next release
+checkpoint per D160/D176 (residual documented).
+
+LANE-003 stays Claude Code / Claude Fable DRIVE; next per the D382 ladder: the Women-in-War
+playable arc (M3), then the Elkhorn Tavern non-Leetown spec (M4). Full `npm run vet:noreg`
+remains owed at the next 2-3-battle release checkpoint (D381 was green 2026-07-12).
+
+---
+
 ## D383 — FORT DONELSON CONTRACT: LAND+RIVER AS INPUTS, THREE PHASES, AND A REWEIGHTED DECISIVE — [CLAUDE CODE / FABLE, LANE-003 DRIVE] (2026-07-12)
 
 D383 commits the seventh LANE-003 planning contract:

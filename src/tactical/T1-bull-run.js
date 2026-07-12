@@ -57,6 +57,7 @@ function fldScenarioRegistry() {
       if (GAME_DATA["cedar-creek"] && GAME_DATA["cedar-creek"].cedarCreek) R.cedarCreek = GAME_DATA["cedar-creek"].cedarCreek;   // D376 Shenandoah 1864: Cedar Creek - role reversal (Gordon's fog-bound dawn assault -> Sheridan's decisive clear-afternoon counterattack)
       if (GAME_DATA.franklin && GAME_DATA.franklin.franklin) R.franklin = GAME_DATA.franklin.franklin;   // D333 Franklin/Nashville lane: Franklin - Hood's assault on the Carter House line (single-phase)
       if (GAME_DATA.nashville && GAME_DATA.nashville.nashville) R.nashville = GAME_DATA.nashville.nashville;   // D335 Franklin/Nashville lane: Nashville - Thomas breaks Hood's army (2 phases: Redoubts -> Shy's Hill / Peach Orchard)
+      if (GAME_DATA["fort-donelson"] && GAME_DATA["fort-donelson"].fortDonelson) R.fortDonelson = GAME_DATA["fort-donelson"].fortDonelson;   // D384 naval-river lane: Fort Donelson - the combined land siege (3 phases: Investment -> Breakout, CS attacker -> Smith's Recapture w3; the Feb 14 naval repulse is a transition-card teaching interstitial, never a phase)
       if (GAME_DATA["five-forks"] && GAME_DATA["five-forks"].fiveForks) R.fiveForks = GAME_DATA["five-forks"].fiveForks;   // D380 Appomattox Campaign: Five Forks - Sheridan fixes the front while V Corps turns the White Oak Road line (single-phase)
     }
   } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldScenarioRegistry:", e); }
@@ -242,7 +243,7 @@ function fldScenarioMenuOrder(reg) {
   return ids;
 }
 function fldScenarioMenuRank(id) {
-  var order = { bullrun1: 10, crossKeysPortRepublic: 12, gainesMill: 15, malvernHill: 18, antietam: 20, fredericksburg: 30, chancellorsville: 35, gettysburg: 40, newMarketHeights: 45, shiloh: 50, stonesRiver: 52, vicksburg: 55, chickamauga: 60, chattanooga: 65, kennesaw: 70, cedarCreek: 72, franklin: 75, nashville: 80, fiveForks: 85 };
+  var order = { bullrun1: 10, crossKeysPortRepublic: 12, gainesMill: 15, malvernHill: 18, antietam: 20, fredericksburg: 30, chancellorsville: 35, gettysburg: 40, newMarketHeights: 45, fortDonelson: 48, shiloh: 50, stonesRiver: 52, vicksburg: 55, chickamauga: 60, chattanooga: 65, kennesaw: 70, cedarCreek: 72, franklin: 75, nashville: 80, fiveForks: 85 };
   return order[id] || 1000;
 }
 function fldScenarioDateSortValue(date) {
