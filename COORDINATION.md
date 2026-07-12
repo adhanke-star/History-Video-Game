@@ -206,12 +206,12 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   D358 2026-07-10; 5c shipped D360 2026-07-10; ChatGPT/Codex took 5b DRIVE for the D367
   chartered session in D368 and released it untouched at D372's 10% boundary, 2026-07-10.
 
-### LANE-003 · battle-ladder — **CONTRACT** (D379 clean release; D380 playable Five Forks next)
+### LANE-003 · battle-ladder — **DRIVE** (D380 playable Five Forks runtime drive)
 
-- **Owning tool:** none. A new ChatGPT/Codex or Claude Code session must take DRIVE in a committed ledger-only edit before D380. No simultaneous Claude Code edits; no simultaneous edits by any provider.
-- **State:** CONTRACT/unowned — D379 shipped the Five Forks spec from the Appomattox Campaign packet and its bind-tested dual-mode plan probe with no runtime or count movement. Current baselines remain 18 registered scenarios, schema 48, Army Register 1170, flags/weather/Intel/media 18, suite 123, and generated HTML md5 `097eabeea06387e47bd819d125950f0d`.
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra. No simultaneous Claude Code edits; no simultaneous edits by any provider.
+- **State:** DRIVE — D380 runtime drive is locked to ChatGPT/Codex from clean pushed D379 `27ff8206fce9d98e6d507a2d054386dcb1ddc291`. D379 shipped the Five Forks spec from the Appomattox Campaign packet and its bind-tested dual-mode plan probe with no runtime or count movement. Current baselines remain 18 registered scenarios, schema 48, Army Register 1170, flags/weather/Intel/media 18, suite 123, and generated HTML md5 `097eabeea06387e47bd819d125950f0d`.
 - **Current objective:** D380 implements playable Five Forks plus the approved reusable Warren-to-Griffin `replaces` contract in shared T3, expands the generic officer probe, lands the focused Five Forks runtime guard, completes atomic 19/49/`1170 + unique units x 3`/19/124 integration, proves both runtime binds, and then runs the full serialized `npm run vet:noreg` release battery with nothing concurrent.
-- **D380 resume pointer:** start from the clean pushed D379 contract commit and require `HEAD == origin/main`; read the committed spec and 12-step plan probe in full; take DRIVE in a ledger-only commit; stop if live code contradicts the command-event contract or source/OOB ceiling. D380 is one playable runtime milestone plus the release checkpoint, not a new spec or a second battle.
+- **D380 resume pointer:** drive from clean pushed D379 `27ff8206fce9d98e6d507a2d054386dcb1ddc291`; the committed D379 spec is the acceptance contract verbatim. Stop if live code contradicts the command-event contract or source/OOB ceiling. D380 is one playable runtime milestone plus the release checkpoint, not a new spec or a second battle. The full serialized `npm run vet:noreg` battery is due after the playable D380 commit is pushed.
 - **Design law:** `docs/design/battle-build-research/` packets (`eastern-1862` → Gaines' Mill ·
   `usct` → New Market Heights · `western-gaps` → Stones River · stretch: `shenandoah-1864` Cedar
   Creek · `shenandoah-1862` Cross Keys/Port Republic · `appomattox-campaign` Five Forks ·
