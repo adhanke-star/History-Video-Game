@@ -6,6 +6,67 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D385 — WOMEN-IN-WAR ARC CONTRACT: FOUR DOCUMENTED LIVES, ONE HONESTY DEVICE, NO RUNTIME YET — [CLAUDE CODE / FABLE, LANE-003 DRIVE] (2026-07-12)
+
+D385 commits the M3 planning boundary of Aaron's D382 set-1 lock: `docs/design/women-in-war-arc-spec.md`
+(md5 `6348e1f9a592118b4f26a007e75561c7`) + `tools/probe-women-in-war-arc-plan.mjs` (10/10, dual-mode,
+fail-closed, bind-tested). No src/data changed; the generated HTML rebuilt byte-identical
+(`22e3ca1360a7260070b69301acea1348`); every D384 baseline holds (20 scenarios · schema 50 · Army
+Register 1281 · coverage 20 · suite 125 · women lane 9 records 8V/1D).
+
+- **Research:** 9-agent workflow `wf_527a8c0d-3ed` — 4 Sonnet/medium gathers → 4 Opus/high
+  default-refutes → 1 Opus/high completeness critic, 0 errors, ~50 claim verdicts. The refute layer
+  earned its keep four separate times: it caught a **fabricated-citation defect before it shipped**
+  (the "no definitive proof she acted as a spy" language was misattributed to the NARA Prologue
+  article, which never discusses espionage — the honest attribution is the NPS biography page); it
+  REFUTED Edmonds's Antietam presence against the regimental record (NPS Battle Units UMI0002RI /
+  Dyer: "Duty in the Defences of Washington, D.C., September 3 to October 11" — no Antietam; PBS
+  History Detectives concurs; main-loop verified 2026-07-12); it REFUTED the Clayton prop-uniform
+  forensics ("officer's sword" class — dropped entirely); and it downgraded every memoir-only beat
+  (the eleven spy missions, the Second Manassas horse/broken-leg injuries, the Williamsburg musket,
+  the 175,000-copies figure) to her-own-account/Disputed status.
+- **The playable shape:** an interactive documented-chapter walk-through per figure inside the D153
+  lane (Campaign Kit) — chapter stepper + a read-only "played-ground reflection" from `C.completed`
+  and the active journey career log. Per-record `arc` blocks in `data/women-in-war.json` (top-level
+  schema untouched); NEW guarded `src/39-women-war-arc.js`; typeof-guarded seam in 38; ephemeral
+  chapter state (nothing rides the save, D360 posture). Two NEW records ship in D386: Edmonds
+  (Verified spine) and Clayton (Disputed) — lane 9→11, 8V/1D→9V/2D, with the under-told
+  `women-d153-lane` text + tooth moving in the same commit (the pin-bump idiom, three sites).
+- **The register law (the arc's core honesty device):** every battle-tied chapter carries
+  `tieRegister: documented|claimed`; `documented` is legal ONLY on a Verified stage; Clayton's
+  fortDonelson/stonesRiver ties are claimed-register FOREVER; shared nodes carry per-figure
+  registers (Antietam: Barton documented beside Edmonds claimed — the contrast IS the teaching).
+- **TOP-LOOP adjudications (spec §4, binding):** (1) **Cashier ships he/him under Albert D. J.
+  Cashier** — affirming the shipped record: ~50 years of documented male life before/during/after
+  economic need, the Watertown resistance, the uniformed GAR burial; the historiographical split
+  (Blanton & Cook's she/her in the field's strongest academic study vs trans-history/public-history
+  practice vs the comrades' own mixed-pronoun depositions) is SURFACED to the player as a documented
+  fact; no interior "why" may be authored; the unsupported "Irene" middle name is scrubbed in D386.
+  (2) **Clayton ships as a DOCUMENTED MYSTERY** — never implied-fraud, never confirmed-heroine: the
+  photographs are Verified objects, the service is an unverifiable claim (Blanton & Cook's negative
+  National Archives search ships as the GENERIC finding; the granular unit-nonexistence specifics
+  reach this repo only through tertiary summaries and are excluded); the wound location is itself a
+  self-report conflict (newspapers: Fort Donelson hip wound; her own LOC captions: Shiloh/Stones
+  River). (3) **The Edmonds memoir wall** — the Verified spine (May 25 1861 enlistment · Apr 19 1863
+  desertion entry · H.R. 5335's "one and the same person… beyond a doubt" · GAR 1897 · d. Sept 5
+  1898) outranks the memoir everywhere they touch. (4) **Barton corrections** — the nickname anchors
+  to Dunn's autumn-1862 letter/Antietam (never Cedar Mountain); the sleeve-bullet is her own account;
+  the Andersonville stage MUST carry the NPS myth-correction and the Atwater credit (nearly 13,000
+  graves identified by Atwater's copied register, captured records, and paroled prisoners' labor —
+  the expedition led by Capt. James Moore); the Red Cross is 1881, sixteen years after the war.
+- **Bind:** tampering §4.1 ("AFFIRMED he/him" → "she/her") made EXACTLY the ADJUDICATIONS tooth red
+  (9/10, exit 1), restored md5-identical, reran 10/10 (artifact `ok:true` read).
+- **Gate (all artifacts read):** node --check green · build GATE OK, HTML byte-identical · plan
+  probe 10/10 · all seven battle plan probes ALL OK · focused probe-women-in-war 8/8 @9-lock,
+  0 pageerrors, staticScan 0 leaks, live registry 1281 confirmed · diff clean.
+- **Why the whitespace-normalized anchors:** the spec is hard-wrapped, so the plan probe's
+  `mustInclude` matches on whitespace-collapsed text — the tooth still bites on any word-level
+  tamper (proven by the bind).
+
+Reversible: D386 implements from this committed law; any stage-set change reopens the spec, not
+the runtime. **Next: D386 playable arc (data records + arcs + importer arc law + 39-module + 38
+seam + probe pins + under-told sync + both runtime binds), same DRIVE.**
+
 ## D384 — PLAYABLE FORT DONELSON: THE RIVER WAR ARRIVES, THREE PHASES, TWENTIETH SCENARIO — [CLAUDE CODE / FABLE, LANE-003 DRIVE] (2026-07-12)
 
 Fort Donelson is the twentieth registered historical scenario and the game's first land+river
