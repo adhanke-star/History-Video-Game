@@ -6,6 +6,97 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D383 — FORT DONELSON CONTRACT: LAND+RIVER AS INPUTS, THREE PHASES, AND A REWEIGHTED DECISIVE — [CLAUDE CODE / FABLE, LANE-003 DRIVE] (2026-07-12)
+
+D383 commits the seventh LANE-003 planning contract:
+`docs/design/fort-donelson-battle-build-spec.md` (final md5 `4a8c4e226e4224e1486383f806782118`)
+plus `tools/probe-fort-donelson-plan.mjs` (13/13, filesystem-first, dual-mode, bind-tested).
+This slice changes no runtime data, registry/menu entry, schema row, Army Register row,
+generated-game behavior, combat input, or baseline count. The game remains at 19 scenarios,
+49 schema files, Army Register 1200, 19-scenario coverage, suite 124; generated HTML remains
+md5 `10a64a20394521efdc94b7edb1646686`.
+
+**Research pipeline (the D365/D366 pattern at full depth):** a 13-agent workflow — 6 Sonnet/medium
+gather packets → 6 Opus/high default-refute verifiers → 1 Opus/high completeness critic — with
+Fable adjudicating every claim. ~57 verdicts, ZERO REFUTED; every AMEND was applied to the spec
+before the gate. One refute agent initially died on a StructuredOutput retry cap and was re-run
+via workflow resume with an output-discipline instruction (the clean agents replayed from cache);
+its 9/9 CONFIRMED verdicts closed the critic's two highest-priority gaps (the Feb 13
+land-repulse sourcing for the P1 guard; the CS command grades including Forrest Lt. Col.).
+
+**The packet correction that reshapes the strength contract:** ABT's infobox 40,702 is the
+COMBINED two-side "Forces Engaged" total (raw data attributes US 24,531 / CS 16,171), so the
+packet's "US 40,702 total" was a misreading and its "24,531 = cite-pending" flag resolves the
+OTHER way — 24,531 IS the two-source Verified Union engaged anchor. The naval-river packet now
+carries a §12 spec-time addendum recording this, the road disambiguation (the Feb 15 breakout
+opened Forge Road plus a Wynn's Ferry stretch; the road to Charlotte belongs to Forrest's
+separate post-surrender ride out), and the phase-weight design error below.
+
+**The owned deviation:** the packet's `[1, 3, 1]` (decisive = the breakout) fails D92 once the
+sourced phase leans are written down — CS holds (Feb 13 probes repulsed), CS seizes (the
+breakout opened the roads), US seizes (Smith carried the vacated works): under `[1, 3, 1]` the
+AI-vs-AI aggregate would lean Confederate against the sourced Union victory. The contract ships
+`[1, 1, 3]` with Phase 3 (The Recapture) decisive; the "won the ground and threw it away"
+teaching is preserved on the Phase 3 transition card. The Feb 14 naval repulse is a TEACHING
+INTERSTITIAL on Phase 2's transition card (the Stones River Jan-1 pattern), never a scored phase.
+
+**The land+river law (Aaron's D382 non-negotiable, made executable):** no ship-vs-ship engine;
+gunboats enter the land model ONLY as inputs (the transports that delivered Lew Wallace's
+division = sourced reinforcement timing; counts Inferred) and teaching. The Feb 14 repulse is
+taught honestly — Foote's four ironclads beaten at close range by the water batteries (St. Louis
+59 hits, both flag-boats' steering lost, about 54 casualties in about 90 minutes against a
+qualitative zero in the batteries). The water batteries are terrain/teaching, never land OOB
+artillery; the D74 wall adds gunboatMult, bombardMult, navalBarrage, surrenderForce,
+paralysisMult, commandCollapseMult, weatherDamage, frostbiteMult, floydPenalty, escapeBonus,
+and prisonerCount to the forbidden families.
+
+**Direction law:** exactly eight seeds; at least 5/8 each on four sourced guards (P1 CS holds,
+P2 CS seizes the escape-road exit, P3 US seizes the outer works, aggregate US) — and NO
+casualty-direction tooth anywhere: the killed-and-wounded accounting shows the US bled MORE
+(2,483 vs 1,454) while the total-loss accounting including the surrendered garrison shows the
+CS losing five times as many; the accounting conflict is the teaching, never a guard. Escape and
+surrender counts (Floyd's steamboat load, Forrest's 700-vs-1,500 ride-out, the 11,500-15,000
+surrendered spread around the citation-grade 12,392) ship Disputed, never counts or teeth.
+
+**Rank wall (the war's densest early-war trap set):** Grant Brig. Gen. (the MG-of-Volunteers
+commission ranked FROM Feb 16 — the refute pass resolved the apparent Feb 16/17/21 conflict as
+commission/nomination/district-command dates, so no bare date ships); Floyd/Pillow/Buckner/
+Bushrod Johnson all Brig. Gens. (Buckner NEVER Lt. Gen. — the grade didn't exist until Sept
+1862); Forrest Lt. Col. (never Col. or Gen.); Foote Flag Officer (never Admiral — no US admiral
+grade until July 1862); McClernand/C. F. Smith/Lew Wallace Brig. Gens.; every brigade commander
+a colonel rendered as a colonel with Inferred single-source identity. Buckner's surrender letter
+renders the OR's "forces and POST under my command" (ABT's "fort" is the secondary variant).
+Menu rank `fortDonelson:48` before `shiloh:50` — the kickoff's "~20s" suggestion was checked and
+rejected (48 is the chronology-true Western slot; 20 would wedge the battle into the Eastern
+marquee band).
+
+**Bind, with a tooth hardened by the bind itself (the D365 class again):** the first Grant-rank
+tamper did NOT bite — the probe's whole-document includes() was satisfied by §13's
+bind-procedure QUOTATION of the lock line. The tooth was hardened to require the bulleted lock
+line inside section 6's own body; the second tamper bit EXACTLY `RANKS + TRAPS` (12/13, exit 1);
+the restore was md5-identical to the pre-bind spec (`d178b3018b6934fb0284b3c5487f4fc0` at bind
+time; two post-bind critic amendments moved the final committed md5 to
+`4a8c4e226e4224e1486383f806782118` with the probe rerun 13/13 after each); rebuild returned
+generated HTML `10a64a20394521efdc94b7edb1646686`.
+
+**Gate (serialized, every artifact read):** node --check green; build GATE OK with HTML
+byte-identical; schema 49/49; research 15/15 (with the §12 addendum); Fort Donelson plan 13/13;
+all six prior plan probes green after the DRIVE take AND after the docs sync; Five Forks runtime
+16/16 with 0 pageerrors; roster 8/8; builder 15/15; suite list 124; `git diff --check` clean.
+Three operational notes, all root-caused: a macOS dataless placeholder
+(tools/probe-new-market-heights.mjs) broke git hashing mid-gate and was materialized via
+`brctl download` with the blob verified identical to HEAD (no HALT); the tracked schema
+artifact's timestamp-only churn was checked out per the documented convention; a roster-probe
+screenshot stall at load average 11 was the documented slow-Mac fonts-stall class (this same
+probe was green in the morning's 124/124 battery) and re-ran 8/8 on the settled machine — no
+probe weakened, no blind retry.
+
+LANE-003 stays Claude Code / Claude Fable DRIVE for D384 (playable Fort Donelson runtime) under
+Aaron's chartered mega run. Full `npm run vet:noreg` remains owed at the NEXT 2-3-battle release
+checkpoint, not per milestone (D381 was green 2026-07-12).
+
+---
+
 ## D382 — AARON'S RATIFIED FORWARD SLATE: TEN POPUP Q&A SETS LOCK THE POST-LADDER DIRECTION — [AARON, via in-session popup Q&A adjudicated by Claude Fable] (2026-07-12)
 
 While the D381 battery ran, Aaron answered ten sets of recommendation-first popup questions
