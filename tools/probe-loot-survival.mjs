@@ -767,7 +767,7 @@ const SETUP = `(() => {
       var C=mkC('US'); G.campaign=C; _t1InitAll(C);
       lootAddItem(C,'commissary_rations',1,'probe');
       var reg=ssPersonRegistry(C);
-      if(reg.people.length!==1200) throw new Error('expected current 1200-person registry, got '+reg.people.length);   // D380: 1170 -> 1200 — Five Forks adds 10 unique side-unit ids x 3 Soldier's Story slots. D378: 1125 -> 1170 — Cross Keys / Port Republic adds 15 unique units x 3 slots. D376: 1068 -> 1125 — Cedar Creek adds 19 unique units x 3 slots. D366: 990 -> 1068 — Stones River adds 26 unique units x 3 slots. D364: 957 -> 990 — New Market Heights adds 11 unique units x 3 slots.
+      if(reg.people.length!==1200) throw new Error('expected current 1200-person registry, got '+reg.people.length);   // D380: 1170 -> 1200 — Five Forks adds 10 unique side-unit ids x 3 Soldier's Story slots. D378: 1125 -> 1170 — Cross Keys / Port Republic adds 15 unique units x 3 slots. D376: 1068 -> 1125 — Cedar Creek adds 19 unique units x 3 slots. D366: 990 -> 1068 — Stones River adds 26 unique units x 3 slots. D364: 957 -> 990 — New Market Heights adds 11 unique units x 3 slots. D362: 912 -> 957 — Gaines' Mill adds 15 unique units x 3 slots (fragment dropped by a later pin bump; restored in D381 — the pin-bump idiom requires the full documented chain).
       var generated=findPerson(reg,function(p){ return p.generated && p.team && p.team.brigade && p.team.company; });
       var authored=findPerson(reg,function(p){ return !p.generated && !p.replacement && p.provenance==='Verified'; });
       if(!generated) throw new Error('no generated person with brigade/company team hierarchy');

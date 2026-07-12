@@ -119,9 +119,12 @@ step("LANE: LANE-003 records the current D377+ owner/state and retains the D362-
   const state = (lane.match(/\*\*State:\*\*\s*([A-Z-]+)/) || [null, ""])[1];
   if (!["CONTRACT", "DRIVE", "VERIFY", "SHIPPED"].includes(state)) throw new Error("invalid LANE-003 state: " + state);
   const owner = (lane.match(/\*\*Owning tool:\*\*\s*([^\n]+)/) || [null, ""])[1];
-  if (state === "DRIVE" && !/ChatGPT\/Codex 5\.6 Sol Ultra/.test(owner)) throw new Error("D377 DRIVE must be owned by ChatGPT/Codex 5.6 Sol Ultra: " + owner);
+  // D381 relay reshape: the DRIVE pin named the D377-era lock holder — the current-lock-holder
+  // anti-pattern the relay ledger warns against. Active states now bind the ROLE ROSTER (any
+  // recognized TOP-LOOP tool); the durable D362 handoff history above stays the real anchor.
+  if ((state === "DRIVE" || state === "VERIFY") && !/(ChatGPT\/Codex|Claude (?:Code|Fable))/.test(owner)) throw new Error("active lane owner is not a recognized TOP-LOOP tool: " + owner);
   if (state === "CONTRACT" && !/^none\b/.test(owner)) throw new Error("released CONTRACT must be unowned: " + owner);
-  return { owner: state === "CONTRACT" ? "none" : "ChatGPT/Codex 5.6 Sol Ultra", state, boundary: "D362 retained", resume: "D377+ contract carried" };
+  return { owner: state === "CONTRACT" ? "none" : owner.slice(0, 60), state, boundary: "D362 retained", resume: "D377+ contract carried" };
 });
 
 step("SOURCES: NPS, ABT, Army CMH, and LOC anchors bind the decisive slice and rank corrections", () => {

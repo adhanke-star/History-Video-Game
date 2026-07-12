@@ -6,6 +6,80 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D381 — FIVE FORKS RELEASE CHECKPOINT VERIFIED: 124/124, EVERY ARTIFACT READ, LANE-003 RELEASED — [CLAUDE CODE / FABLE, LANE-003 VERIFY→CONTRACT] (2026-07-12)
+
+The 124-command serialized `npm run vet:noreg` release battery owed since D380 is **GREEN across
+evidenced segments** with complete fresh-artifact readback. Claude/Fable took the VERIFY handoff at
+the clean `2f3da4a` transfer boundary, resumed exactly at command 38 (`women in war`) per the relay
+pointer, and ran the battery alone — no helper, workflow, research job, or second browser beside it.
+
+**Evidence segments (all in `.tmp/`):** 1-5 `12-21-32-130Z` · 6 standalone boot green · 7-19
+`12-38-07-503Z` · 20-21 standalone green (the transfer's deterministic post-result exit fixes) ·
+22-31 `13-25-32-052Z` · 32-37 `14-04-51-793Z` · 38-97 `14-46-14-434Z` (60 green exits) · 98
+standalone green · 99-124 `17-01-13-352Z` ending `VET NO-REGRESSION OK — 26 commands`.
+
+**The one red, root-caused, never blind-rerun:** command 98 `tactical visuals` hit its 600s budget
+under battery load and the runner's SIGTERM killed scene 10 of 10 mid-evaluate ("browser has been
+closed" — a kill artifact, not an assertion). Nine scenes + fresh PNGs were already green; history
+shows 445-507s green runs (75-85% of budget) and two prior 604s timeouts in old battery logs; load
+average had peaked at 6.93. Standalone rerun on the idle machine: all 10 scenes green including a
+fresh `visual-chickamauga-3d.png`, `ok=true`, 0 pageerrors, ~7.5 min. No probe weakened; the battery
+resumed at command 99 per the established D380 standalone-then-resume pattern.
+
+**Artifact audit (read, not trusted):** 123/123 suite JSONs fresh, parseable, `ok` never false, zero
+pageerrors/realErrors/failed steps/failures everywhere; `sweep-all-battles` covers **19 scenarios ×
+8 seeds = 152 rows, all finished, `failures:[]`**, registry parity true, per-battle direction
+summaries matching the shipped laws (Five Forks US 8/8; Stones River US 8/8 at near-parity
+11,520/12,889; Cedar Creek US 8/8 while bleeding more); schema validator 49/49 across four families
+and the tracked HTML report at exactly 49 body rows; suite manifest 124; 147 fresh PNGs decode with
+nonzero dimensions (two morning artifacts were re-offloaded to `dataless` by macOS during the day
+and were materialized with `brctl download` before decoding — both valid 1366×850); representative
+visuals inspected (chickamauga-3d live gameplay; flags-gettysburg-2d fully semantic). Two known
+best-effort heavy-scene image anomalies persist unasserted (probe-stones-river dark frame;
+probe-five-forks 5s screenshot timeout — both JSONs green), the same class D380 documented.
+
+**The eighth 404, investigated:** the transfer packet whitelisted seven optional 3D URLs; the fresh
+bootprobe artifact carries eight console-only 404s. An instrumented boot reproduced all eight URLs:
+the seven whitelisted plus `assets/3d/materials/terrain/ford_albedo.png`. Verdict — same documented
+class, not a regression: the FROZEN engine (base.html:13391-13429, unchanged since 2026-06-17)
+composes `<key>_albedo.png` per terrain key with an explicit zero-regression 404 fallback; ford,
+river, and forest textures were never on disk; bootprobe's own contract reads "~7"; and the
+identical 8-error artifact was already the accepted command-6 evidence. `realErrors` stayed empty.
+
+**Three transfer-era plan-probe reds, greened in this commit (the relay hard rule — teeth ship with
+the fix):** the plan probes are not in the 124-suite, so the final gates caught them. (1)
+`probe-five-forks-plan` LANE grepped the D379-era owner sentence "No simultaneous Claude Code edits"
+and pinned VERIFY/DRIVE ownership to Codex — both broke on the legitimate transfer, the exact
+failure class this ledger and the lane-transfer memory predict; reshaped onto the durable
+serialization phrase ("no simultaneous edits by any provider", now pinned in the lane text) and a
+role-roster owner check. (2) `probe-cedar-creek-plan` LANE lost its durable history anchor "D375
+(2026-07-11) locked the Cedar Creek contract" when the transfer rewrote the lane; the sentence is
+restored in the lane text — the tooth was right, the lane text had dropped true history. (3)
+`probe-gaines-mill-plan` REGISTRY requires the loot probe's full documented pin chain; a later pin
+bump had dropped the `D362: 912 -> 957 — Gaines' Mill` fragment; restored (comment-only) with a
+provenance note. Proactively, gaines' DRIVE pin naming "ChatGPT/Codex 5.6 Sol Ultra" was reshaped to
+the same role-roster check — it would have redded the next session's legitimate lock take. **Binds:**
+(A) serialization-phrase removal → EXACTLY five-forks LANE red (11/12), five other plan probes
+green; (B) State CONTRACT→DRIVE with an unrecognized owner → EXACTLY the two reshaped LANE teeth red
+(five-forks 11/12, gaines 7/8), four others green; both restores md5-identical to
+`ae574598c2e0a1fd2d88d8b203260052`, final reruns 12/12 and 8/8. Lesson filed as the S-03 amendment
+proposal (§6): a transfer commit that rewrites a lane must re-run every plan probe that greps it.
+
+**Final release gates:** `node --check` green on all touched probes; build **GATE OK** with
+generated HTML md5-identical `10a64a20394521efdc94b7edb1646686`; plan probes 12/12 · 11/11 · 11/11 ·
+8/8 · 10/10 · 11/11; Five Forks runtime 16/16 ALL OK (registry 19, rank 85, Army Register 1200 with
+30 Five Forks rows / 10 trios, direction 8/8 + 8/8); loot-survival re-run green after the
+comment restore; `git diff --check` clean. Pins held: **19 scenarios / schema 49 / Army Register
+1200 / 19-scenario coverage / suite 124**. Classic lowercase `fiveforks`, the rail route, T8, the
+Custom Builder, Appomattox/surrender teaching boundaries, and frozen `build/base.html` untouched.
+Zero simulation inputs changed anywhere in this checkpoint.
+
+**LANE-003 is released to CONTRACT/unowned. NEXT: Fort Donelson SPEC ONLY** from
+`docs/design/battle-build-research/naval-river-battle-build-research.md`; runtime in a later bounded
+slice. Aaron's same-day popup Q&A forward slate is recorded separately in D382.
+
+---
+
 ## D380 — PLAYABLE FIVE FORKS: ONE FIELD, ATOMIC RELIEF, AND THE NINETEENTH SCENARIO — [CODEX 5.6 Sol Ultra, LANE-003 VERIFY] (2026-07-12)
 
 Five Forks is the nineteenth registered historical scenario. `data/five-forks.json` implements

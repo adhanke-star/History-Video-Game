@@ -637,6 +637,11 @@ step("LANE", () => {
   if (start < 0) throw new Error("LANE-003 missing from COORDINATION.md");
   const next = text.indexOf("\n### LANE-", start + 8);
   const lane = text.slice(start, next < 0 ? text.length : next);
+  // D381 relay reshape: the original tooth grepped the CURRENT lock holder's serialization
+  // sentence ("No simultaneous Claude Code edits") and pinned VERIFY/DRIVE ownership to the
+  // D379-era owner — both broke on the legitimate provider transfer, the exact failure class
+  // the Contract Relay predicts. Anchors are now durable history/contract facts and the
+  // owner check binds the ROLE ROSTER (any recognized TOP-LOOP tool), never today's lock.
   mustInclude(lane, [
     "battle-ladder",
     "D379",
@@ -647,12 +652,12 @@ step("LANE", () => {
     "Army Register 1170",
     "suite 123",
     "npm run vet:noreg",
-    "No simultaneous Claude Code edits"
+    "no simultaneous edits by any provider"
   ], "LANE-003 D379 contract");
   const state = (lane.match(/\*\*State:\*\*\s*([A-Z-]+)/) || [null, ""])[1];
   const owner = (lane.match(/\*\*Owning tool:\*\*\s*([^\n]+)/) || [null, ""])[1];
   if (!["DRIVE", "VERIFY", "CONTRACT", "SHIPPED"].includes(state)) throw new Error("LANE-003 does not carry a D379-driveable state: " + state);
-  if ((state === "DRIVE" || state === "VERIFY") && !/ChatGPT\/Codex 5\.6 Sol Ultra/.test(owner)) throw new Error("active D379 lane has the wrong owner: " + owner);
+  if ((state === "DRIVE" || state === "VERIFY") && !/(ChatGPT\/Codex|Claude (?:Code|Fable))/.test(owner)) throw new Error("active lane owner is not a recognized TOP-LOOP tool: " + owner);
   if (state === "CONTRACT" && !/^none\b/.test(owner)) throw new Error("released D379 CONTRACT lane must be unowned: " + owner);
   return { state, owner };
 });
