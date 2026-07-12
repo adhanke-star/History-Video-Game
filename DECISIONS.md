@@ -6,6 +6,91 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D382 — AARON'S RATIFIED FORWARD SLATE: TEN POPUP Q&A SETS LOCK THE POST-LADDER DIRECTION — [AARON, via in-session popup Q&A adjudicated by Claude Fable] (2026-07-12)
+
+While the D381 battery ran, Aaron answered ten sets of recommendation-first popup questions
+covering unbuilt asks, expert game-design expansion, and player-archetype tuning. These are
+DESIGN-DIRECTION locks: each item still requires its own spec, citation pipeline, D74-clean seams,
+and normal gates before build. Aaron's standing meta-directives from the same session: design and
+review every feature against four archetypes (newcomer · history buff/teacher · wargame veteran ·
+game-theory min-maxer); tune the world to be FUN and EXPANSIVE, not only accurate; the war
+franchise mode may diverge FAR from scripted history; ratified items may be spec'd and implemented
+by ChatGPT 5.6 Sol Ultra through the Contract Relay; and the immediate next runs should maximize
+Fable usage while it remains on the plan (expected to lapse 2026-07-13).
+
+**Build order (set 7, refined by set 10 — after Fort Donelson SPEC ONLY):**
+1. Fort Donelson runtime → 2. Women-in-War playable arc → 3. Elkhorn Tavern (non-Leetown axis) →
+3.5 Overland/attrition ladder extension (Wilderness · Spotsylvania's Mule Shoe · a Petersburg
+trench treatment, from the READY_FOR_SPEC attrition packet) → 4. war-career loop (the retention
+core) → 5. surrender/no-quarter + the four teaching threads' system integration → 6. procedural
+sandbox + Living War Chronicle → 7. naval engine → 8. media/audio session. Sol's parked queue
+(E71 · C72 · GEA-01 · S44) runs only AFTER the ladder (Aaron overrode the parallel-session option).
+
+**The locks, by theme:**
+- **Franchise/divergence:** FULL PROCEDURAL SANDBOX (Aaron chose maximum expanse over the
+  recommended labeled divergence engine). Operating interpretation pending his override: all
+  counterfactual content is labeled ALT-HISTORY in-UI and never `Verified`; the teaching/codex
+  layer keeps citation law; the dignity carve-outs hold everywhere (no playable Fort Pillow, no
+  Leetown Native OOB, no Lost Cause framing); D74's one universal combat model governs procedural
+  battles. Franchise saves are a NAMED ALT-TIMELINE GALLERY (each save a named timeline; the
+  Chronicle archives its newspapers; a browser compares your wars against real history — the
+  comparison IS the teaching payoff; new-game+ carries the career legend forward).
+- **Career loop:** ONE CAREER ACROSS ROLES — start as a soldier/junior officer, rise through
+  command by results, reach the political/strategic layer late-war; reputation and relationships
+  persist into the franchise. Career death = COMRADE HAND-OFF (death is real and narrated with
+  gravity; the timeline continues as a same-unit comrade carrying the memory; Ironman may make
+  death end the timeline). S3-S5 grand-strategy phases are RETIRED AS A MONOLITH and built
+  pull-based as the loop's political layer demands them.
+- **Surrender/no-quarter (Aaron's set-3 ask, resolved set 4):** FULL SURRENDER ARC — battlefield
+  surrender offers/terms, parole vs prison camp, officer surrenders of commands, camp-mortality
+  teaching, and the 1863 exchange-cartel collapse over the Confederacy's refusal to exchange
+  Black prisoners. NO-QUARTER exists as an order for both sides under the CONSEQUENCE MODEL,
+  NEVER SCORED: enemies expecting no quarter fight to the death (raising the issuer's own
+  casualties, as historically at "Remember Fort Pillow"), discipline/morale/political/press costs
+  and reprisal cycles follow, an infamy ledger tracks it — and victory scoring never rewards
+  massacre. The dignity law stands intact.
+- **Teaching expansion (sets 4-5, from Fable's historiography sweep at Aaron's request):** ADOPT
+  ALL FOUR new citation-verified threads at FULL SYSTEM INTEGRATION (each needs its own
+  D74-clean spec): (1) *The South was never solid* — Southern Unionists, Free State of Jones,
+  East Tennessee, the CS arming-slaves debate (Levine/Cleburne), the Black Confederates myth
+  debunk (Kevin Levin); (2) *The North wasn't innocent* — NYC draft riots, Lincoln's colonization
+  advocacy and Île à Vache, slavery legal in Delaware/Kentucky to Dec 1865, discriminatory
+  military medicine (Humphreys), habeas arrests (Neely); (3) *The forgotten wars* — Dakota War
+  1862 + the Mankato mass execution with Lincoln's commutations, the Greater Reconstruction West,
+  refugee displacement (Sternhell/Silkenat); (4) *Small people under the wheel* — Richmond Bread
+  Riot (McCurry), desertion executions, the million dead horses/environmental ruin (Nelson), camp
+  enslaved laborers, Ely Parker at Appomattox. PLUS the planter-racism thread ("why poor men
+  fought a rich man's war": Dew's secession commissioners, Du Bois's wage of whiteness, Manning/
+  McPherson soldier motivation, Merritt's poor whites, the Bynum/McCurry class-fracture nuance)
+  as a full card set with game hooks. The Lieber Code / sexual-violence prosecution scholarship
+  (Feimster) ships TEACHING-ONLY under the strictest justice-lens dignity handling.
+- **New expansion systems (set 3 — Aaron adopted ALL FOUR):** the Living War Chronicle (a
+  procedurally-written period newspaper narrating the player's war, built on the press system);
+  the rival-general relationship web; a European intervention branch (after diplomacy + naval);
+  a Reconstruction endgame mode (win the peace; extends past Appomattox).
+- **Engines/scope:** NAVAL ENGINE COMMITTED to the roadmap (Aaron chose beyond river-support;
+  Fort Donelson still ships the gunboat-support pattern first and the engine follows at stage 7).
+  Modding is NOT a priority. Social layer = zero-server ASYNC CHALLENGE CODES + AAR SHARING.
+  The optional HD pack is EVALUATED IN THE MEDIA SESSION (core stays self-contained).
+- **Player experience:** persona gates + ONBOARDING FIRST (guided First Bull Run with a period
+  mentor voice, assist presets, progressive disclosure); AI-INTENT LEGIBILITY + camera presets
+  ship inside the onboarding milestone; QUICK BATTLE mode + formalized speed controls +
+  save-anywhere for session-length respect; PERIOD AUDIO AS GAMEPLAY SIGNAL (drum/bugle calls as
+  order feedback with full visual equivalents, PD-sourced, license-audited) in the media session;
+  a STRUCTURED PLAYTEST PROTOCOL (2-3 humans per archetype per major milestone, in-game feedback
+  capture, findings to REVIEW-QUEUE) starting with onboarding.
+- **Earlier same-day locks (set 1):** Women-in-War playable arc right after Fort Donelson
+  (Edmonds/Cashier/Clayton + a Clara Barton arc, citation-grade, D153 lane law respected);
+  media/come-to-life unlock as a dedicated post-ladder session revisiting D300 via the authorized
+  linked-assets layer; hunting/fishing/town-looting as a bounded preset-gated Phase I slice.
+
+Rationale and archetype notes live in the session transcript; the durable record is THIS entry
+plus the memory pointer `civilwar-archetype-franchise-directive`. Reversible: each item can be
+re-scoped at its own spec gate; the sandbox teaching-protection interpretation above is explicitly
+flagged for Aaron's confirmation at the sandbox spec.
+
+---
+
 ## D381 — FIVE FORKS RELEASE CHECKPOINT VERIFIED: 124/124, EVERY ARTIFACT READ, LANE-003 RELEASED — [CLAUDE CODE / FABLE, LANE-003 VERIFY→CONTRACT] (2026-07-12)
 
 The 124-command serialized `npm run vet:noreg` release battery owed since D380 is **GREEN across
