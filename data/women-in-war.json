@@ -136,6 +136,46 @@
           "type": "secondary",
           "supports": "secondary; not independent of Blanton 1993",
           "independent": false
+        },
+        {
+          "title": "Jennie Hodgers Known as Albert Cashier, Part I",
+          "author": "Historical Society of Quincy & Adams County",
+          "repository": "HSQAC",
+          "locator": "hsqac.org/jennie-hodgers-known-as-albert-cashier-part-i/",
+          "url": "https://www.hsqac.org/jennie-hodgers-known-as-albert-cashier-part-i/",
+          "type": "secondary",
+          "supports": "enlistment, service, Saunemin decades, 1911 accident, Soldiers' Home",
+          "independent": true
+        },
+        {
+          "title": "Jennie Hodgers Known as Albert Cashier, Part II",
+          "author": "Historical Society of Quincy & Adams County",
+          "repository": "HSQAC",
+          "locator": "hsqac.org/jennie-hodgers-known-as-albert-cashier-part-ii/",
+          "url": "https://www.hsqac.org/jennie-hodgers-known-as-albert-cashier-part-ii/",
+          "type": "secondary",
+          "supports": "1913 Pension Bureau investigation, comrade depositions, Watertown committal, women's ward, burial with honors",
+          "independent": true
+        },
+        {
+          "title": "Little Soldier, Big Mystery",
+          "author": "NPR Illinois",
+          "repository": "NPR Illinois",
+          "locator": "2018-12-25",
+          "url": "https://www.nprillinois.org/illinois/2018-12-25/little-soldier-big-mystery",
+          "type": "secondary",
+          "supports": "pension (chronic dysentery), the 1915 board continuation, forced dress at Watertown",
+          "independent": true
+        },
+        {
+          "title": "Albert D. J. Cashier: Woman Warrior, Insane Civil War Veteran, or Transgender Man?",
+          "author": "OutHistory",
+          "repository": "outhistory.org",
+          "locator": "exhibits/show/tgi-bios/albert-cashier",
+          "url": "https://outhistory.org/exhibits/show/tgi-bios/albert-cashier",
+          "type": "secondary",
+          "supports": "the naming/pronoun historiography; the lifelong-male-identity reading",
+          "independent": true
         }
       ],
       "sourcesRaw": [
@@ -144,7 +184,7 @@
         "Gerhard P. Clausius, \"The Little Soldier of the 95th,\" *Journal of the Illinois State Historical Society* Vol. 51 No. 4 (Winter 1958), pp. 380–387 **[peer-reviewed secondary]**.",
         "Blanton & Cook, *They Fought Like Demons* — LSU Press 2002, pp. 174–175 **[secondary; not independent of Blanton 1993]**."
       ],
-      "playerCopy": "Born Jennie Irene Hodgers in County Louth, Ireland, Albert D. J. Cashier enlisted in Company G, 95th Illinois Infantry in August 1862 and served every day of a full three-year term, mustering out August 17, 1865. Cashier fought in roughly forty engagements, among them the Siege of Vicksburg, the Red River Campaign, and the Franklin-Nashville Campaign, and was never wounded or captured. After the war Cashier voted, worked, and drew a veteran's pension in Illinois, living as Albert Cashier for more than fifty years. When the identity was discovered in 1913, former Company G comrades affirmed Cashier's service before the pension board. Cashier died October 10, 1915, and was buried in full Union uniform.",
+      "playerCopy": "Born Jennie Hodgers (the commonly recorded birth name; no Irish birth record has been located) in County Louth, Ireland, Albert D. J. Cashier enlisted in Company G, 95th Illinois Infantry in August 1862 and served every day of a full three-year term, mustering out August 17, 1865. Cashier fought in roughly forty engagements, among them the Siege of Vicksburg, the Red River Campaign, and the Franklin-Nashville Campaign, and was never wounded or captured. After the war Cashier voted, worked, and drew a veteran's pension in Illinois, living as Albert Cashier for more than fifty years. When the identity was discovered in 1913, former Company G comrades affirmed Cashier's service before the pension board. Cashier died October 10, 1915, and was buried in full Union uniform.",
       "integrityNote": "The NARA service record and pension file are uncontested; the regiment, the Army, and postwar comrades all affirmed the service — present the lifelong male identity with dignity, not as fraud or scandal.",
       "warningFlags": [
         "No modeled unit (95th Ill. absent) → not a Soldier's Story replacement now",
@@ -152,8 +192,89 @@
         "death-date: NARA's \"Oct 11 1914\" is an outlier; consensus Oct 10 1915",
         "postwar identity genuinely contested by modern scholars (woman disguised for opportunity vs. transgender man) — copy uses male pronouns per lifelong self-identification; the interpretive debate is live",
         "Vicksburg rifle-capture anecdote uncited → omitted",
-        "primary CMSR/pension not directly read (via Blanton 1993 / Clausius 1958)."
-      ]
+        "primary CMSR/pension not directly read (via Blanton 1993 / Clausius 1958).",
+        "D386: the earlier playerCopy middle name \"Irene\" was unsupported by this record's own sources and was scrubbed (D385 adjudication)."
+      ],
+      "arc": {
+        "title": "Fifty Years as Albert Cashier",
+        "intro": "The smallest soldier of the 95th Illinois served a full three-year enlistment, then lived, worked, voted, and drew a pension as Albert Cashier for half a century. This arc follows the documented record — muster, pension file, comrade depositions — through war, unmasking, vindication, and burial with honors. Where scholars read the life differently, this arc shows the player the disagreement itself.",
+        "stages": [
+          {
+            "title": "Ireland to Illinois",
+            "dateRange": "c. 1843 – August 6, 1862",
+            "what": "The commonly recorded story begins in Clogherhead, County Louth, Ireland — a birth name of Jennie Hodgers and a date of December 25, 1843, both carried by tradition rather than any located birth or baptismal record. What the record does establish: on August 6, 1862, at Belvidere, Illinois, Albert D. J. Cashier enlisted for three years in Company G, 95th Illinois Infantry, passing the cursory examination and mustering in as the company's smallest private.",
+            "stageProvenance": "Verified",
+            "sourceRefs": [
+              1,
+              4
+            ]
+          },
+          {
+            "title": "Into the Army of the Tennessee",
+            "dateRange": "1862–1863",
+            "what": "The 95th Illinois marched south with Grant's Army of the Tennessee, and its wartime record — roughly forty engagements by the regiment's traditional tally — became Cashier's service record. Comrades later remembered a quiet, dependable soldier who kept apart at washing and bathing and asked no favors. No officer or man of Company G documented any wartime suspicion; the pension file's depositions say the service was faithful and unremarkable — which was the point.",
+            "stageProvenance": "Verified",
+            "sourceRefs": [
+              1,
+              4
+            ]
+          },
+          {
+            "title": "Vicksburg",
+            "dateRange": "May – July 4, 1863",
+            "what": "The 95th Illinois served through the Vicksburg campaign and siege — the crossing below the river batteries, the May assaults, the long entrenchment until the July 4 surrender. This ground is in the game, and Cashier's presence on it is documented service, not legend. One famous anecdote — briefly captured on a reconnaissance, seizing a guard's weapon and escaping to Union lines — rests on a comrade's postwar newspaper recollection (Sgt. C. W. Ives), not on any wartime record, and ships here as that: a story told later, by a man who was there.",
+            "stageProvenance": "Verified",
+            "gameBattleTie": "vicksburg",
+            "tieRegister": "documented",
+            "sourceRefs": [
+              1,
+              2,
+              4
+            ]
+          },
+          {
+            "title": "Red River to muster-out",
+            "dateRange": "1864 – August 17, 1865",
+            "what": "Detached to Banks's Red River expedition, the 95th fought at Fort DeRussy and Yellow Bayou — it was not in the marquee disasters at Mansfield or Pleasant Hill — and was lightly engaged in the Nashville campaign against Hood before finishing the war in the Mobile operations. Cashier completed the full three-year enlistment without the Army ever discovering his sex, was received home at Belvidere in mid-August 1865, and was formally mustered out at Camp Butler, Springfield, on August 17, 1865.",
+            "stageProvenance": "Verified",
+            "sourceRefs": [
+              1,
+              4
+            ]
+          },
+          {
+            "title": "Fifty years as Albert Cashier",
+            "dateRange": "c. 1869–1911",
+            "what": "Cashier settled in Saunemin, Illinois, around 1869 and lived there four decades as a man — farmhand, lamplighter, janitor, handyman for the Chesebro family — voting in elections when women could not. In 1890 he applied for an invalid pension grounded in chronic dysentery contracted during the war; after an initial refusal tied to the required medical examination, the pension was granted, and wartime comrades' sworn depositions in the file affirmed the service without ever questioning the man who claimed it.",
+            "stageProvenance": "Verified",
+            "sourceRefs": [
+              4,
+              5,
+              6
+            ]
+          },
+          {
+            "title": "The accident and the unmasking",
+            "dateRange": "1911 – May 1913",
+            "what": "In 1911 an automobile accident while working for state senator Ira Lish broke Cashier's leg; the treating physician discovered his sex and, at Cashier's plea, kept the secret, easing his admission to the Soldiers' and Sailors' Home at Quincy. In March 1913 a Pension Bureau inquiry into an increase request surfaced the fact to federal authorities, and by May 1913 the story was national news — much of it framed as sensation, some of it as fraud accusation.",
+            "stageProvenance": "Verified",
+            "sourceRefs": [
+              4,
+              5
+            ]
+          },
+          {
+            "title": "Vindication, the asylum, and the uniform",
+            "dateRange": "1913 – October 10, 1915",
+            "what": "The investigation confirmed, rather than disproved, the record: comrades' depositions — Robert D. Hannah's is dated January 24, 1915 — affirmed that Albert Cashier the pensioner was Albert Cashier the soldier, and in February 1915 the board continued the pension for life. By then dementia had put Cashier in the Watertown State Hospital, where he was placed on a women's ward and forced into a dress for the first time in half a century; accounts describe him pinning the skirt into trousers. He died October 10, 1915, and was buried in uniform with Grand Army honors under the name Albert D. J. Cashier.",
+            "stageProvenance": "Verified",
+            "sourceRefs": [
+              5,
+              6
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "velazquez-loreta-janeta",
@@ -290,6 +411,46 @@
           "type": "secondary",
           "supports": "Essential Civil War Curriculum / Virginia Tech",
           "independent": true
+        },
+        {
+          "title": "Clara Barton Chronology 1861-1869",
+          "author": "National Park Service",
+          "repository": "Clara Barton NHS",
+          "locator": "nps.gov/clba/learn/kidsyouth/chron2.htm",
+          "url": "https://www.nps.gov/clba/learn/kidsyouth/chron2.htm",
+          "type": "secondary",
+          "supports": "stage dates: 6th Massachusetts relief, Cedar Mountain, Chantilly, Antietam, Fredericksburg, Fort Wagner, Point of Rocks",
+          "independent": true
+        },
+        {
+          "title": "Myth: Clara Barton organized the expedition to Andersonville…",
+          "author": "National Park Service",
+          "repository": "Andersonville NHS",
+          "locator": "nps.gov/ande/learn/historyculture/bartonmyths.htm",
+          "url": "https://www.nps.gov/ande/learn/historyculture/bartonmyths.htm",
+          "type": "secondary",
+          "supports": "the myth-correction: Capt. James Moore led the expedition; Atwater's list + captured records + paroled prisoners identified the graves; the Army established the cemetery",
+          "independent": true
+        },
+        {
+          "title": "Clara Barton Missing Soldiers Office Museum",
+          "author": "National Museum of Civil War Medicine",
+          "repository": "clarabartonmuseum.org / civilwarmed.org",
+          "locator": "437 Seventh St NW; opened Mar 11, 1865; rediscovered Nov 1996",
+          "url": "https://www.civilwarmed.org/venue/clara-barton-missing-soldiers-office-museum/",
+          "type": "secondary",
+          "supports": "the Missing Soldiers Office: 63,182 letters, 22,000+ fates identified; the 1996 Richard Lyons rediscovery",
+          "independent": true
+        },
+        {
+          "title": "About Clara Barton",
+          "author": "American Red Cross",
+          "repository": "redcross.org",
+          "locator": "about-us/who-we-are/history/clara-barton",
+          "url": "https://www.redcross.org/about-us/who-we-are/history/clara-barton.html",
+          "type": "secondary",
+          "supports": "American Red Cross founded May 21, 1881; Barton led it ~23 years",
+          "independent": true
         }
       ],
       "sourcesRaw": [
@@ -298,15 +459,106 @@
         "National Women's History Museum (Debra Michals, PhD, 2015)",
         "Essential Civil War Curriculum / Virginia Tech (Marian Moser Jones, PhD; grounded in Pryor 1987 & Oates 1994)"
       ],
-      "playerCopy": "Clara Barton (1821–1912) was a 40-year-old former teacher and U.S. Patent Office clerk when the war began. She rejected the title of nurse, describing her mission plainly: \"to get timely supplies to those needing.\" Granted military passes in 1862, she loaded her own wagons and drove them to the front at Cedar Mountain, Antietam, Fredericksburg, and Morris Island ahead of or alongside the armies. At Antietam on September 17, 1862, she reached a field hospital before the army's supplies arrived; as she gave a wounded man a drink, a bullet tore through her sleeve and killed him. She worked roughly twenty-four hours there, then collapsed back in Washington with typhoid fever, recovering over a month. After the war she ran the Office of Missing Soldiers and, in 1881, founded the American Red Cross.",
+      "playerCopy": "Clara Barton (1821–1912) was a 40-year-old former teacher and U.S. Patent Office clerk when the war began. She rejected the title of nurse, describing her mission plainly: \"to get timely supplies to those needing.\" Granted military passes in 1862, she loaded her own wagons and drove them to the front at Cedar Mountain, Antietam, Fredericksburg, and Morris Island ahead of or alongside the armies. At Antietam on September 17, 1862, she reached a field hospital before the army's supplies arrived; by her own account, as she gave a wounded man a drink, a bullet tore through her sleeve and killed him. She worked roughly twenty-four hours there, then collapsed back in Washington with typhoid fever, recovering over a month. After the war she ran the Office of Missing Soldiers and, in 1881, founded the American Red Cross.",
       "integrityNote": "A self-funded civilian logistics organizer — not a soldier, officer, or trained nurse; her significance is the supply gap she filled in a chaotic Union medical system, not a romanticized \"angel\" stereotype.",
       "warningFlags": [
         "already in codex.json (`clara-barton`) with portrait — anchor on existing record, no duplicate",
         "not mappable to any soldier slot",
         "lead role label with supply/logistics (formal \"head nurse\" only in 1864)",
         "verifier corrected two over-claimed draft details: removed invented \"three days of unbroken field service\" (actual ~24 hrs at Antietam) and the implication she collapsed with typhoid on the field (she collapsed in Washington after Antietam)",
-        "NPS People page does not mention Fredericksburg — that presence is retained on independent support (Essential Civil War Curriculum / Pryor & Oates)."
-      ]
+        "NPS People page does not mention Fredericksburg — that presence is retained on independent support (Essential Civil War Curriculum / Pryor & Oates).",
+        "D386: the sleeve-bullet sentence now carries \"by her own account\" — it is Barton's first-person report, with no independent contemporaneous witness in the record (D385 refute)."
+      ],
+      "arc": {
+        "title": "The Angel and the Office",
+        "intro": "Clara Barton's war was logistics: getting supplies to wounded men before the system could. This arc follows her documented path from Patent Office clerk to the battlefields of 1862, then to the work that outlasted the war — the Missing Soldiers Office and Andersonville — told against the record, including the parts legend gave her that belong to other people.",
+        "stages": [
+          {
+            "title": "The Patent Office clerk",
+            "dateRange": "1854–1861",
+            "what": "Barton came to the war an independent woman already unusual for her time: appointed a recording clerk in the U.S. Patent Office in 1854 at a salary equal to the male clerks — a footing later cut back — she had earned her own living as a teacher and a federal clerk for years before Fort Sumter. When war came she was forty, unmarried, and in Washington, positioned to see exactly what the Army's supply system could not do.",
+            "stageProvenance": "Verified",
+            "sourceRefs": [
+              0,
+              4
+            ]
+          },
+          {
+            "title": "The Sixth Massachusetts and Bull Run's aftermath",
+            "dateRange": "April – July 1861",
+            "what": "On April 19, 1861, the 6th Massachusetts arrived in Washington bloodied by the Baltimore riot, and Barton found the men quartered in the Senate Chamber and organized relief for them. After First Bull Run that July she tended wounded arriving in Washington and began systematically gathering and distributing supplies. She was not on the Bull Run field — her war began in the capital's improvised wards, learning what the wounded actually needed.",
+            "stageProvenance": "Verified",
+            "sourceRefs": [
+              0,
+              4
+            ]
+          },
+          {
+            "title": "Cedar Mountain to Second Bull Run",
+            "dateRange": "August – September 1862",
+            "what": "Cedar Mountain, August 9, 1862, was the first battle at which Barton is documented in the field — arriving with a wagon-load of supplies and tending the wounded for two days and nights. Weeks later she was at Fairfax Station among the thousands wounded at Second Bull Run and Chantilly, working the railhead evacuation. Surgeon James L. Dunn's letter from this season, praising the timely supplies, became the seed of the famous nickname.",
+            "stageProvenance": "Verified",
+            "sourceRefs": [
+              4,
+              3
+            ]
+          },
+          {
+            "title": "Antietam",
+            "dateRange": "September 17, 1862",
+            "what": "At Antietam Barton reached the field hospitals near the Cornfield around midday with her own wagon of dressings — before the Army's supplies came up — and worked beside the surgeons until dark. By her own account, a bullet passed through her sleeve as she gave a wounded man water and killed him; the story is hers alone, first-person, with no independent witness in the record, and ships here as her account. Dr. Dunn's autumn 1862 letter — 'the true heroine of the age, the angel of the battlefield' — is most famously tied to this field.",
+            "stageProvenance": "Verified",
+            "gameBattleTie": "antietam",
+            "tieRegister": "documented",
+            "sourceRefs": [
+              1,
+              4
+            ]
+          },
+          {
+            "title": "Fredericksburg: the Lacy House",
+            "dateRange": "December 1862",
+            "what": "At Fredericksburg Barton worked the IX Corps hospital at the Lacy House — Chatham Manor — above the pontoon crossings, in rooms packed with wounded from the assaults on the stone wall. The house still stands in the National Park Service's care, and her presence there in December 1862 is documented in the NPS record of the battle and of the house itself.",
+            "stageProvenance": "Verified",
+            "gameBattleTie": "fredericksburg",
+            "tieRegister": "documented",
+            "sourceRefs": [
+              0,
+              4
+            ]
+          },
+          {
+            "title": "The Sea Islands and the Army of the James",
+            "dateRange": "1863–1864",
+            "what": "In 1863 Barton served on the South Carolina coast — Hilton Head and the siege operations against Charleston, including hospital work after the assaults on Fort Wagner — until illness sent her north. In June 1864 Gen. Benjamin Butler named her head nurse for a unit of the Army of the James at Point of Rocks, Virginia: the one formal appointment in a war she had fought as a self-directed civilian.",
+            "stageProvenance": "Verified",
+            "sourceRefs": [
+              0,
+              4
+            ]
+          },
+          {
+            "title": "The Missing Soldiers Office",
+            "dateRange": "March 11, 1865 – 1868",
+            "what": "On March 11, 1865, Barton opened the Office of Correspondence with the Friends of the Missing Men of the United States Army in her rooms at 437 Seventh Street NW, Washington. Over roughly four years the office received 63,182 letters and identified the fates of more than 22,000 men. The office itself was lost to memory until 1996, when GSA carpenter Richard Lyons found her boarded-up rooms — signs, papers, artifacts — weeks before the building's scheduled demolition; it is now a museum.",
+            "stageProvenance": "Verified",
+            "sourceRefs": [
+              6,
+              4
+            ]
+          },
+          {
+            "title": "Andersonville, honestly — and the Red Cross",
+            "dateRange": "Summer 1865 · May 21, 1881",
+            "what": "The Andersonville graves were identified by a collective effort: Dorence Atwater, a paroled prisoner who had secretly copied the prison death register, brought Barton his list; the July 1865 expedition was led by Capt. James Moore; and paroled prisoners' labor, Atwater's register, and captured Confederate records marked nearly 13,000 graves. Barton raised the flag over the new cemetery on August 17, 1865 — she did not organize the expedition, identify the graves, or establish the cemetery, and the National Park Service corrects each of those myths by name. Sixteen years after the war, on May 21, 1881, she founded the American Red Cross.",
+            "stageProvenance": "Verified",
+            "sourceRefs": [
+              5,
+              7
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "walker-mary-edwards",
@@ -655,6 +907,326 @@
         "canMap false; no ss: replacement and no registry row",
         "do not detach the wartime service from her postwar critique of incomplete freedom"
       ]
+    },
+    {
+      "id": "edmonds-sarah-emma",
+      "canonicalName": "Sarah Emma Edmonds",
+      "wartimeAlias": "Franklin Thompson",
+      "roleCategory": "disguised-soldier",
+      "side": "US",
+      "wartimeRole": "Private, Co. F, 2nd Michigan Volunteer Infantry — hospital attendant, regimental nurse, mail and dispatch carrier (May 25, 1861 – April 19, 1863).",
+      "unitClaimed": "2nd Michigan Inf., Co. F",
+      "battleClaimed": "First Bull Run (contested), Peninsula, Fredericksburg",
+      "provenance": "Verified",
+      "registryMappable": {
+        "canMap": false,
+        "reason": "No — presentation lane only per D153; never an ss: replacement"
+      },
+      "recommendedLane": "women-thread-card",
+      "sources": [
+        {
+          "title": "Women Soldiers of the Civil War",
+          "author": "DeAnne Blanton",
+          "repository": "NARA Prologue",
+          "locator": "Vol. 25 No. 1, Spring 1993; cites CMSR for Franklin Thompson, 2nd Michigan Infantry, and Enlisted Branch file 3132 C 1884, RG 94",
+          "url": "https://www.archives.gov/publications/prologue/1993/spring/women-in-the-civil-war-1.html",
+          "type": "secondary",
+          "supports": "enlistment May 25, 1861, Detroit; nurse and mail/dispatch carrier; April 19, 1863 departure (malaria, fear of discovery); the archival citations; 1867 marriage; death Sept 5, 1898",
+          "independent": true
+        },
+        {
+          "title": "Sarah Emma Edmonds",
+          "author": "American Battlefield Trust",
+          "repository": "American Battlefield Trust",
+          "locator": "battlefields.org/learn/biographies/sarah-emma-edmonds",
+          "url": "https://www.battlefields.org/learn/biographies/sarah-emma-edmonds",
+          "type": "secondary",
+          "supports": "enlistment; covered the retreat at First Bull Run without participating in the fighting; Peninsula duty; Second Manassas courier; Fredericksburg orderly for Col. Orlando Poe; desertion circumstances; GAR admission",
+          "independent": true
+        },
+        {
+          "title": "Sarah Emma Edmonds",
+          "author": "National Park Service",
+          "repository": "National Park Service",
+          "locator": "nps.gov/people/sarah-emma-edmonds.htm",
+          "url": "https://www.nps.gov/people/sarah-emma-edmonds.htm",
+          "type": "secondary",
+          "supports": "the memoir's bestseller status; the plain statement that no official record supports the spy-mission claims; GAR: its only female member",
+          "independent": true
+        },
+        {
+          "title": "Case File: Soldiers In Skirts",
+          "author": "PBS History Detectives",
+          "repository": "PBS",
+          "locator": "pbs.org/opb/historydetectives/technique/case-file-soldiers-in-skirts",
+          "url": "https://www.pbs.org/opb/historydetectives/technique/case-file-soldiers-in-skirts",
+          "type": "secondary",
+          "supports": "the memoir-vs-regimental-record Antietam contradiction; H.R. 5335's finding that Franklin Thompson and Sarah E. E. Seelye are one and the same person; the $12/month pension",
+          "independent": true
+        },
+        {
+          "title": "2nd Regiment, Michigan Infantry — Battle Unit Details",
+          "author": "National Park Service (Dyer, Compendium)",
+          "repository": "NPS Civil War Battle Units",
+          "locator": "battleUnitCode=UMI0002RI: \"Duty in the Defences of Washington, D.C., September 3 to October 11\" (1862); Antietam absent from the unit service record",
+          "url": "https://www.nps.gov/civilwar/search-battle-units-detail.htm?battleUnitCode=UMI0002RI",
+          "type": "tertiary",
+          "supports": "the regimental duty record controlling the Antietam question",
+          "independent": true
+        }
+      ],
+      "playerCopy": "On May 25, 1861, a Canadian-born woman enlisted in Detroit as Private Franklin Thompson, Company F, 2nd Michigan Infantry. For nearly two years Thompson served as hospital attendant, regimental nurse, and mail and dispatch carrier through the regiment's campaigns. On April 19, 1863, sick with malaria, denied a furlough, and afraid a hospital bed would reveal her sex, she left — and the rolls marked Franklin Thompson a deserter. Her 1865 memoir became a bestseller, its profits given to soldiers' aid; its spy adventures have no official record behind them. Congress settled the identity itself in 1884: Franklin Thompson and Sarah E. E. Seelye were one and the same, the desertion charge fell, and in 1897 the Grand Army of the Republic admitted its only woman member.",
+      "integrityNote": "The documentary spine — enlistment, duties, the April 1863 desertion entry, the 1884 Act of Congress, the GAR membership — is Verified from NARA-cited records; the famous adventures rest on her own memoir, and where memoir and record conflict, the record controls in every stage of this arc.",
+      "warningFlags": [
+        "The memoir 'Nurse and Spy in the Union Army' is famously embellished — the eleven spy missions have no official record (NPS) and ship as her own account only",
+        "Her Antietam presence is CONTRADICTED by the regimental record (Defenses of Washington, Sept 3 – Oct 11, 1862) and ships as a claim, not a fact",
+        "The Second Manassas horse-killed/broken-leg injuries are memoir-derived — no wound is asserted as fact",
+        "First Bull Run presence is a documented dispute between reputable sources and ships as contested",
+        "The '175,000 copies' sales figure is popular-secondary only and is not asserted",
+        "No verified wartime portrait is used"
+      ],
+      "arc": {
+        "title": "The Two Wars of Emma Edmonds",
+        "intro": "Emma Edmonds fought two wars: the documented one — two years of hospital, mail, and orderly duty in the 2nd Michigan — and the one her bestselling memoir invented on top of it. This arc walks both honestly: every chapter says which war it comes from, and where the memoir and the muster rolls disagree, the rolls win.",
+        "stages": [
+          {
+            "title": "Enlistment as Franklin Thompson",
+            "dateRange": "May 25, 1861",
+            "what": "In Detroit, on May 25, 1861, a Canadian-born woman named Sarah Emma Edmonds enlisted for three years as Private Franklin Thompson, Company F, 2nd Michigan Volunteer Infantry. The National Archives holds the compiled service record under that name. She crossed the line into the army the same way she had already crossed a border and remade a life — deliberately, alone, and under a name of her own choosing.",
+            "stageProvenance": "Verified",
+            "sourceRefs": [
+              0,
+              1
+            ]
+          },
+          {
+            "title": "First Bull Run: the contested presence",
+            "dateRange": "July 21, 1861",
+            "what": "Whether Franklin Thompson stood under fire at First Bull Run is a genuine dispute between reputable sources: the National Archives' account lists First Manassas among the regiment's battles, while the American Battlefield Trust states she did not participate in the fighting itself but helped cover the retreat and tend the wreckage afterward. This chapter ships as that dispute — the game does not settle what the record does not.",
+            "stageProvenance": "Disputed",
+            "disputeNote": "NARA Prologue lists First Manassas among the regiment's engagements with her present; the American Battlefield Trust states she 'did not participate' in the battle itself but served in the retreat's aftermath. Both are reputable; the record does not resolve the difference.",
+            "gameBattleTie": "bullrun1",
+            "tieRegister": "claimed",
+            "sourceRefs": [
+              0,
+              1
+            ]
+          },
+          {
+            "title": "The Peninsula and the hospitals",
+            "dateRange": "April – July 1862",
+            "what": "The 2nd Michigan fought through the Peninsula Campaign — Yorktown, Williamsburg, Fair Oaks, Malvern Hill — and that regimental record is solid. Thompson's own place in it is thinner: a single secondary account places her in hospital-attendant and field duty through the campaign, and the detail that she picked up a musket at Williamsburg comes from her memoir alone. The regiment's ground is documented; her exact footprints on it are not.",
+            "stageProvenance": "Inferred",
+            "gameBattleTie": "malvernHill",
+            "tieRegister": "claimed",
+            "sourceRefs": [
+              1,
+              0
+            ]
+          },
+          {
+            "title": "Second Manassas and the Antietam claim",
+            "dateRange": "August – September 1862",
+            "what": "At Second Manassas Thompson is reported to have carried dispatches; by her own account her horse was killed under her, breaking a leg — an injury no muster or pension record corroborates. Then comes the arc's hardest lesson: her memoir puts her at Antietam, but the 2nd Michigan's own service record reads 'Duty in the Defences of Washington, D.C., September 3 to October 11.' The regiment was not at Antietam. The record controls; the chapter teaches the contradiction itself.",
+            "stageProvenance": "Disputed",
+            "disputeNote": "The memoir claims presence at Antietam; the regimental service record (NPS Battle Units / Dyer) places the 2nd Michigan in the Washington defenses for the entire Antietam campaign, and PBS History Detectives documents the contradiction. The claim ships as memoir-only, contradicted by the record.",
+            "gameBattleTie": "antietam",
+            "tieRegister": "claimed",
+            "sourceRefs": [
+              4,
+              3,
+              1
+            ]
+          },
+          {
+            "title": "Fredericksburg orderly",
+            "dateRange": "December 1862",
+            "what": "At Fredericksburg, a single reputable secondary account has Thompson serving as an orderly for Col. Orlando Poe during the battle — plausible, consistent with her documented courier duties, and uncorroborated by a second independent source. It ships as Inferred: the regiment's presence at Fredericksburg is certain; her specific assignment that week rests on one account.",
+            "stageProvenance": "Inferred",
+            "gameBattleTie": "fredericksburg",
+            "tieRegister": "claimed",
+            "sourceRefs": [
+              1
+            ]
+          },
+          {
+            "title": "The desertion",
+            "dateRange": "April 19, 1863",
+            "what": "In spring 1863 Thompson contracted malaria. A furlough was denied; a hospital bed meant discovery. On April 19, 1863, she left the 2nd Michigan at Lebanon, Kentucky, and the rolls recorded Franklin Thompson as a deserter. The entry is real and stayed on the books for two decades — this chapter presents it as the record does: a documented departure under an impossible choice, not a moral verdict.",
+            "stageProvenance": "Verified",
+            "sourceRefs": [
+              0,
+              1
+            ]
+          },
+          {
+            "title": "'Nurse and Spy': bestseller and embellishment",
+            "dateRange": "1864–1865",
+            "what": "Her memoir, 'Nurse and Spy in the Union Army,' sold enormously, and she gave the profits to soldiers' aid — that much is documented. Its eleven espionage missions behind Confederate lines, in disguises from a contraband laborer to an Irish peddler, have no official record behind them: the National Park Service states it plainly, and no compiled service record, pension paper, or wartime document corroborates a single mission. The chapter teaches what a primary source is — and what a bestseller is.",
+            "stageProvenance": "Disputed",
+            "disputeNote": "The spy missions rest solely on the 1865 memoir. NPS states no official record supports them; the NARA Prologue account of her service never mentions espionage. The often-quoted 175,000-copy sales figure is popular-secondary only and is not asserted here.",
+            "sourceRefs": [
+              2,
+              0
+            ]
+          },
+          {
+            "title": "The pension act and the GAR",
+            "dateRange": "1884–1898",
+            "what": "Twenty years later, her old comrades swore the affidavits and Congress did something extraordinary: House bill 5335 (1884) found that 'Franklin Thompson and Mrs. Sarah E. E. Seelye are one and the same person… established by abundance of proof and beyond a doubt,' granting a $12 monthly pension, with the desertion charge cleared and an honorable discharge following in the mid-1880s — sources date the steps differently, and this chapter keeps them as steps. In 1897 the Grand Army of the Republic admitted her — its only woman member. She died September 5, 1898, at La Porte, Texas.",
+            "stageProvenance": "Verified",
+            "sourceRefs": [
+              3,
+              0,
+              2
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "clayton-frances",
+      "canonicalName": "Frances Clayton",
+      "wartimeAlias": "Jack Williams (newspaper-reported alias)",
+      "roleCategory": "contested",
+      "side": "US",
+      "wartimeRole": "Claimed: disguised service in Missouri units alongside her husband, c. 1861-1863; no service record under any claimed name or unit has been located.",
+      "unitClaimed": "Missouri artillery and cavalry units (as claimed; no matching records located)",
+      "battleClaimed": "Fort Donelson and Stones River (claimed; unverified)",
+      "provenance": "Disputed",
+      "disputeNote": "The primary-record layer is empty where it should be strongest: DeAnne Blanton and Lauren Cook's search of War Department records at the National Archives (They Fought Like Demons, LSU Press 2002) found no discharge, hospital, muster, or pension record for Clayton under any claimed name, the reported alias 'Jack Williams,' or any variant of her husband's name in the units she claimed. Her own photograph captions and the period newspaper accounts contradict each other — on her service months, her wounds (a hip wound at Fort Donelson in newspaper summaries; Shiloh and Stones River in the Library of Congress caption), and her husband's first name (variously Frank, Elmer, or John). What is verifiable is the pair of Boston studio photographs (ca. 1864-66) and the fact that the story circulated; historians split between 'likely fabricated for sympathy and profit' and 'unverifiable — an undocumented alias cannot be ruled out.'",
+      "registryMappable": {
+        "canMap": false,
+        "reason": "No — contested claim, presentation lane only per D153; never an ss: replacement"
+      },
+      "recommendedLane": "women-thread-card",
+      "sources": [
+        {
+          "title": "Frances L. Clatin [i.e., Clayton], carte de visite",
+          "author": "S. Masury (photographer)",
+          "repository": "Library of Congress, Prints & Photographs (Liljenquist Family Collection)",
+          "locator": "item 2016646109; caption: '4 mo. heavy artillery, Co. I / 13 mo., Cavalry Co. A. / 22 months'; LOC endpoints return bot-403 to plain fetch — retrieved by the D385 research workflow",
+          "url": "https://www.loc.gov/pictures/item/2016646109/",
+          "type": "primary",
+          "supports": "the photographic object, its self-contradictory service caption, Masury attribution, Liljenquist provenance",
+          "independent": true
+        },
+        {
+          "title": "Frances Clalin Clayton, carte de visite",
+          "author": "Samuel Masury (photographer)",
+          "repository": "The Metropolitan Museum of Art",
+          "locator": "collection search/302391 (albumen silver print, ca. 1864-66)",
+          "url": "https://www.metmuseum.org/art/collection/search/302391",
+          "type": "primary",
+          "supports": "the companion photographic object and its ca. 1864-66 dating — after the claimed service",
+          "independent": true
+        },
+        {
+          "title": "Frances Clayton",
+          "author": "American Battlefield Trust",
+          "repository": "American Battlefield Trust",
+          "locator": "battlefields.org/learn/biographies/frances-clayton",
+          "url": "https://www.battlefields.org/learn/biographies/frances-clayton",
+          "type": "secondary",
+          "supports": "the claims as circulated (alias Jack Williams, ~18 engagements, the husband's death at Stones River, injuries); 'the authenticity of her story has been questioned by historians'; no pension-outcome record; no record after 1865",
+          "independent": true
+        },
+        {
+          "title": "They Fought Like Demons: Women Soldiers in the American Civil War",
+          "author": "DeAnne Blanton and Lauren Cook",
+          "repository": "LSU Press",
+          "locator": "2002 — the National Archives negative-record search for Clayton's claimed names, alias, husband, and units",
+          "url": "",
+          "type": "secondary",
+          "supports": "no discharge or hospital record for Clayton; no matching soldier under her alias or her husband's name in the units she claimed",
+          "independent": true
+        },
+        {
+          "title": "Frances Clayton and the Women Soldiers of the Civil War",
+          "author": "UVA Small Special Collections Library (Notes from Under Grounds)",
+          "repository": "smallnotes.library.virginia.edu",
+          "locator": "2023-03-08",
+          "url": "https://smallnotes.library.virginia.edu/2023/03/08/frances-clayton-and-the-women-soldiers-of-the-civil-war/",
+          "type": "secondary",
+          "supports": "the period newspaper-claims layer and its internal contradictions (used for the claims layer only)",
+          "independent": true
+        }
+      ],
+      "playerCopy": "Two photographs from a Boston studio, taken around 1864-66, show a woman in uniform: Frances Clayton, sometimes recorded Clalin. Period newspapers told her story — that she disguised herself as 'Jack Williams,' fought in some eighteen engagements beside her husband, and stepped over his body at Stones River to keep fighting. The accounts contradict each other, and her own photograph captions disagree with them about her service months and even where she was wounded. Historians who searched the War Department's records found nothing: no muster roll, no discharge, no hospital record, no pension, under any claimed name or unit. The photographs are real. The story is unverifiable. This card is about the difference — and about how historians weigh a claim the archives cannot confirm.",
+      "integrityNote": "This record teaches source criticism: the photographs are Verified objects, the service is an unverifiable claim carried by contradictory newspapers, and the archival search that found nothing is itself the strongest documented fact. Neither fraud nor heroism is asserted; the mystery is presented as the record leaves it.",
+      "warningFlags": [
+        "No CMSR, muster, discharge, hospital, or pension record under any claimed name, alias, or unit (Blanton & Cook's National Archives search) — the generic finding ships; granular unit-nonexistence specifics are excluded (tertiary-only sourcing)",
+        "The wound location is a self-report conflict (newspapers: hip wound at Fort Donelson; LOC caption: Shiloh and Stones River) and is never settled in game copy",
+        "The husband's first name conflicts across accounts (Frank/Elmer/John) — no name is asserted; no on-screen husband death is ever rendered",
+        "The 'Fincher's Trades' Review, 1863' pamphlet attribution is unconfirmed and not asserted",
+        "The prop-uniform forensics argument was REFUTED in review and must not appear",
+        "No portrait asset is used — the photographs are described, not displayed (no cleared reproduction in repo)"
+      ],
+      "arc": {
+        "title": "The Photographs of Frances Clayton",
+        "intro": "This is an arc about evidence. Two real photographs, a stack of contradictory newspaper stories, and an archive search that came back empty: Frances Clayton's war may have happened, may be embellished, or may be invented — and the honest chapter order is the order historians work in: claim, conflict, search, verdict.",
+        "stages": [
+          {
+            "title": "The claims",
+            "dateRange": "1861–1863 (as claimed)",
+            "what": "The story as period print told it: a Minnesota woman disguised herself as a man — newspapers gave the alias 'Jack Williams' — and enlisted beside her husband in Missouri units, fighting in roughly eighteen engagements. The fullest account is commonly cited to an 1863 publication whose exact attribution is itself unconfirmed. The tellings disagree with one another from the first — including on her husband's own first name, which appears variously as Frank, Elmer, and John.",
+            "stageProvenance": "Disputed",
+            "disputeNote": "The claims layer is contemporaneous newspaper material, internally contradictory, and corroborated by no military record.",
+            "sourceRefs": [
+              4,
+              2
+            ]
+          },
+          {
+            "title": "Claimed: Fort Donelson",
+            "dateRange": "February 1862 (as claimed)",
+            "what": "Newspaper summaries place Clayton at Fort Donelson and give her a hip wound there. Her own photograph captions tell it differently: the Library of Congress exhibit text records wounds at Shiloh and Stones River instead, and the catalog caption's service arithmetic — four months of heavy artillery, thirteen of cavalry, twenty-two months total — does not add up. No military record places her, or anyone under her reported alias, on this field. The wound's location is not a fact the game can settle; the conflict itself is the chapter.",
+            "stageProvenance": "Disputed",
+            "disputeNote": "Newspaper accounts give a Fort Donelson hip wound; the LOC's own captions instead record wounds at Shiloh and Stones River and self-contradictory service months. No record corroborates any version.",
+            "gameBattleTie": "fortDonelson",
+            "tieRegister": "claimed",
+            "sourceRefs": [
+              0,
+              4
+            ]
+          },
+          {
+            "title": "Claimed: Stones River and the husband",
+            "dateRange": "December 31, 1862 – January 2, 1863 (as claimed)",
+            "what": "The most famous telling has Clayton's husband killed at her side in a charge at Stones River, and Clayton stepping over his body to fight on. The archives answer with silence: the National Archives search found no soldier by any reported version of his name killed at Stones River in any unit she claimed. The game renders no husband, no name, and no death scene — only the claim, and the empty place in the record where its proof would stand.",
+            "stageProvenance": "Disputed",
+            "disputeNote": "The husband's death at Stones River is a newspaper claim; Blanton & Cook's search found no matching casualty under Frank, Elmer, or John Clayton/Clalin in the claimed units.",
+            "gameBattleTie": "stonesRiver",
+            "tieRegister": "claimed",
+            "sourceRefs": [
+              3,
+              2,
+              4
+            ]
+          },
+          {
+            "title": "The Boston photographs",
+            "dateRange": "c. 1864–1866",
+            "what": "What survives beyond dispute: a woman sat for Samuel Masury's camera at 289 Washington Street, Boston, in uniform, around 1864-66 — after the service she described. The cartes de visite are held today by the Library of Congress and the Metropolitan Museum of Art, with copies in other national collections. They prove that Frances Clayton existed, that she was photographed in military dress, and that her story was worth selling. They prove nothing about whether she served.",
+            "stageProvenance": "Verified",
+            "sourceRefs": [
+              0,
+              1
+            ]
+          },
+          {
+            "title": "The pension quest and the verdict of the archives",
+            "dateRange": "1863–1865 · 2002–present",
+            "what": "In 1863 Clayton reportedly traveled the Midwest seeking back pay and bounty owed to her and her late husband; no record shows the claim was ever paid, and after 1865 she vanishes from the record entirely. When historians finally ran the archival search — Blanton and Cook, for their study of over two hundred documented women soldiers — the War Department's files held nothing under any of her names. Many historians now read the story as likely fabricated for sympathy and profit; others hold it unverifiable, since Missouri-theater records are incomplete and an undocumented alias cannot be ruled out. The archives get the last word, and their word is: not proven.",
+            "stageProvenance": "Disputed",
+            "disputeNote": "The pension outcome is unrecorded (ABT); the negative-record search is Blanton & Cook's; the fabrication reading and the unverifiable reading are both live in the scholarship, and neither is asserted as fact.",
+            "sourceRefs": [
+              2,
+              3
+            ]
+          }
+        ]
+      }
     }
   ]
 }

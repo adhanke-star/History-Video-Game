@@ -140,6 +140,9 @@ function _wiwCardHTML(r) {
     + (codex ? '<div style="margin-top:7px;font-size:11px;opacity:.78"><b>Codex link:</b> ' + _wiwEsc(codex.term || r.codexRef) + ' — existing sourced record and portrait reused.</div>' : "")
     + _wiwWarningsHTML(r)
     + _wiwSourcesHTML(r)
+    /* D386 guarded seam: the M3 arc module (39-women-war-arc.js) renders the
+       chapter walk-through; absent module or absent r.arc is an exact no-op. */
+    + (typeof wiwArcSectionHTML === "function" ? wiwArcSectionHTML(r, (typeof G !== "undefined" && G && G.campaign) ? G.campaign : null) : "")
     + '</article>';
 }
 function _wiwControlsHTML(records) {
@@ -166,7 +169,7 @@ function wiwThreadHTML(C) {
   for (var c = 0; c < records.length; c++) cards += _wiwCardHTML(records[c]);
   return '<hr class="rule">'
     + '<section id="wiwThread" aria-labelledby="wiwTitle" style="margin-top:8px">'
-    + '<style>#wiwThread input:focus-visible,#wiwThread select:focus-visible,#wiwThread summary:focus-visible{outline:2px solid var(--brass-lt,#c9a85f);outline-offset:2px;border-radius:3px}@media(max-width:680px){#wiwThread .wiw-card>div:first-child{grid-template-columns:minmax(0,1fr)!important}}</style>'
+    + '<style>#wiwThread input:focus-visible,#wiwThread select:focus-visible,#wiwThread summary:focus-visible,#wiwThread button:focus-visible{outline:2px solid var(--brass-lt,#c9a85f);outline-offset:2px;border-radius:3px}@media(max-width:680px){#wiwThread .wiw-card>div:first-child{grid-template-columns:minmax(0,1fr)!important}}</style>'
     + '<div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:end">'
     + '<div><div class="gn-col-head" id="wiwTitle" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin-bottom:5px">Women in the War</div>'
     + '<p style="font-size:12px;line-height:1.45;margin:0;opacity:.82">Women served in uniformed disguise, carried medical relief to the front, gathered intelligence, and built the Union nursing system.</p></div>'
@@ -207,5 +210,7 @@ function wiwWireThread(C, refresh) {
   if (search) search.addEventListener("input", apply);
   if (role) role.addEventListener("change", apply);
   if (prov) prov.addEventListener("change", apply);
+  /* D386 guarded seam: hand the campaign context to the arc module (no-op without it). */
+  if (typeof wiwWireArcs === "function") wiwWireArcs(C);
   apply();
 }

@@ -12,6 +12,10 @@ const BAD_KEYS = new Set(['__proto__', 'constructor', 'prototype', 'hasOwnProper
 const ROLE_CATEGORIES = new Set(['disguised-soldier', 'relief', 'medical', 'scout-spy', 'nursing-administration', 'diarist', 'teacher-nurse', 'contested']);
 const SIDES = new Set(['US', 'CS', 'Both', 'Unclear']);
 const PROVENANCE = new Set(['Verified', 'Disputed', 'Inferred']);
+// D385/D386 arc law (docs/design/women-in-war-arc-spec.md §2-§3): battle-tie allowlist
+// and the register law — a documented tie is legal ONLY on a Verified stage.
+const ARC_TIE_ALLOWLIST = new Set(['bullrun1', 'malvernHill', 'antietam', 'fredericksburg', 'fortDonelson', 'stonesRiver', 'vicksburg']);
+const ARC_REGISTERS = new Set(['documented', 'claimed']);
 
 function usage() {
   console.log([
@@ -169,8 +173,55 @@ function validatePack(pack) {
     if (!cleanText(r.integrityNote, 800)) errors.push(label + '.integrityNote is required');
     const wc = wordCount(r.playerCopy);
     if (wc < 80 || wc > 150) errors.push(label + '.playerCopy must be 80-150 words; got ' + wc);
+    if (r.arc != null) validateArc(r.arc, r, errors, label + '.arc');
   }
   return { ok: errors.length === 0, errors, records: records.length, verified, disputed };
+}
+function validateArc(arc, record, errors, label) {
+  if (!plain(arc)) {
+    errors.push(label + ' must be an object');
+    return;
+  }
+  if (!cleanText(arc.title, 120)) errors.push(label + '.title is required (<=120 chars)');
+  const introWc = wordCount(arc.intro);
+  if (introWc < 30 || introWc > 90) errors.push(label + '.intro must be 30-90 words; got ' + introWc);
+  const stages = Array.isArray(arc.stages) ? arc.stages : null;
+  if (!stages) {
+    errors.push(label + '.stages must be an array');
+    return;
+  }
+  if (stages.length < 4 || stages.length > 8) errors.push(label + '.stages must have 4-8 stages; got ' + stages.length);
+  const sourceCount = Array.isArray(record.sources) ? record.sources.length : 0;
+  for (let i = 0; i < stages.length; i++) {
+    const s = stages[i];
+    const sl = label + '.stages[' + i + ']';
+    if (!plain(s)) {
+      errors.push(sl + ' must be an object');
+      continue;
+    }
+    if (!cleanText(s.title, 120)) errors.push(sl + '.title is required (<=120 chars)');
+    if (!cleanText(s.dateRange, 80)) errors.push(sl + '.dateRange is required (<=80 chars)');
+    if (/[<>]/.test(String(s.what || '') + String(s.title || '') + String(s.disputeNote || ''))) errors.push(sl + ' must be plain text (no markup)');
+    const swc = wordCount(s.what);
+    if (swc < 30 || swc > 130) errors.push(sl + '.what must be 30-130 words; got ' + swc);
+    if (!PROVENANCE.has(s.stageProvenance)) errors.push(sl + '.stageProvenance must be Verified, Disputed, or Inferred');
+    if (s.stageProvenance === 'Disputed' && !cleanText(s.disputeNote, 600)) errors.push(sl + '.disputeNote is required for Disputed stages (<=600 chars)');
+    if (s.gameBattleTie != null) {
+      if (!ARC_TIE_ALLOWLIST.has(s.gameBattleTie)) errors.push(sl + '.gameBattleTie not in the spec allowlist: ' + s.gameBattleTie);
+      if (!ARC_REGISTERS.has(s.tieRegister)) errors.push(sl + '.tieRegister must be documented or claimed on a tied stage');
+      // THE REGISTER LAW: a documented tie is legal ONLY on a Verified stage.
+      if (s.tieRegister === 'documented' && s.stageProvenance !== 'Verified') errors.push(sl + ' REGISTER LAW violation: documented tie on a non-Verified stage');
+    } else if (s.tieRegister != null) {
+      errors.push(sl + '.tieRegister without gameBattleTie');
+    }
+    if (!Array.isArray(s.sourceRefs) || !s.sourceRefs.length) {
+      errors.push(sl + '.sourceRefs must be a nonempty array');
+    } else {
+      for (const ref of s.sourceRefs) {
+        if (!Number.isInteger(ref) || ref < 0 || ref >= sourceCount) errors.push(sl + '.sourceRefs entry out of range: ' + ref);
+      }
+    }
+  }
 }
 function mergePacks(base, incoming) {
   return Object.assign({}, base, {

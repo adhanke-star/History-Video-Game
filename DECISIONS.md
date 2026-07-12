@@ -6,6 +6,60 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D386 — THE WOMEN-IN-WAR ARC IS PLAYABLE: FOUR CHAPTER WALK-THROUGHS UNDER THE REGISTER LAW — [CLAUDE CODE / FABLE, LANE-003 DRIVE→CONTRACT] (2026-07-12)
+
+D386 implements the D385 contract exactly. The Campaign Kit's Women in the War lane now carries an
+interactive documented-chapter arc for Edmonds (8 chapters), Cashier (7), Clayton (5), and Barton
+(8) — a chapter stepper with per-chapter provenance chips, dispute notes, chapter sources, the
+documented/claimed tie banners, and a read-only played-ground reflection from `C.completed` and
+the journey career log. D153 held absolutely: no `ss:` id, no `replacePid`, registry non-leak
+probe-proven at the live 1281; D74 untouched (presentation only, no combat/save/launch surface);
+nothing rides the save (chapter state is module-local and ephemeral, the D360 posture).
+
+- **Data:** `data/women-in-war.json` 9→**11** records (Edmonds `Verified` spine; Clayton
+  `Disputed` with the full negative-search disputeNote), 8V/1D→**9V/2D**; four `arc` blocks; the
+  shipped Cashier playerCopy scrubbed the unsupported "Irene" and hedges the birth-name tradition;
+  the shipped Barton sleeve-bullet sentence now carries "by her own account" (both corrections
+  from the D385 refute, logged as warningFlags on their records). Every D385 §4 adjudication and
+  AMEND is applied in the shipped copy: the spy missions/Antietam/injuries ship as her-own-account
+  or record-contradicted claims (the Antietam chapter TEACHES the memoir-vs-regimental-record
+  contradiction); Clayton ships as the documented mystery (generic Blanton & Cook negative finding
+  only, the wound-location self-report conflict presented as such, no husband name, no death
+  scene, prop-uniform forensics excluded); Barton's Andersonville chapter carries the NPS
+  myth-correction and the Atwater credit, and the nickname anchors to Dunn's letter at Antietam.
+- **Code:** NEW `src/39-women-war-arc.js` (manifest between 38 and 40) — pure presentation, T29
+  canonical disclosure pattern (native buttons, aria-expanded/controls, always-in-DOM hidden
+  panel, ≥24px targets, `aria-current="step"`, `aria-live="polite"` chapter body, no animation,
+  vetted palette pairs only); `src/38-women-in-war.js` gained two typeof-guarded seam calls
+  (byte-identical without the module or without `arc` data) and the focus-visible CSS extended to
+  buttons. Importer arc law in `tools/import-women-in-war.mjs`: shape/word bounds, the §3 tie
+  allowlist, THE REGISTER LAW (documented ⇒ Verified stage), disputeNote and sourceRefs
+  enforcement — negative-proven on four violation classes (register law, off-allowlist tie,
+  missing disputeNote, out-of-range sourceRef) before ship.
+- **Pins (documented-history comments at every site):** focused probe 9/8/1→**11/9/2** with the
+  D153→D183→D386 history; the contested/Disputed filter locks move from Velazquez-only to exactly
+  Clayton+Velazquez; `data/under-told-perspectives.json` `women-d153-lane` text + its probe tooth
+  →"11 records, 9 Verified and 2 Disputed" same-commit. Baselines held: 20 scenarios · schema
+  50/50 · Army Register 1281 (live-confirmed) · coverage 20 · suite 125 (no new enrollment).
+  Generated HTML `a9b42b69c1c735b81fff7c9c878c1bc0`.
+- **Runtime bind (declared scope proven):** `wiwArcSectionHTML` stubbed to `""` → rebuild GATE
+  OK → EXACTLY the five arc-DOM teeth red (ARC UI · ARC REGISTER · ARC REFLECTION · ARC NO-OP ·
+  A11Y/XSS via its synthetic-arc assertion) with all eight non-arc teeth green and 0 pageerrors →
+  restore md5-identical (src `511d7bca98ab8775addec1f24a29b3df`, HTML `a9b42b69…`) → 13/13. The
+  D385 plan-probe bind had already proven the spec side.
+- **Gate (serialized, every artifact read):** node --check green on all touched JS/MJS · build
+  GATE OK · importer canonical 11/9/2 · schema 50/50 · plan probe 10/10 in INTEGRATION mode
+  (fail-closed) · focused probe-women-in-war **13/13**, 0 pageerrors, staticScan 0 leaks · arc
+  XSS payload (record + arc title/stage) inert · under-told 8/8 · adjacents loot-survival 12/12
+  @1281 + tactical-roster 8/8 @20 · all seven battle plan probes ALL OK · diff clean. One honest
+  first-pass red: the FILTERS tooth's Velazquez-only lock — a legitimate data-driven pin move,
+  updated with history, never weakened.
+- **A/B:** none — no simulation input exists in this arc (presentation/journey seams only).
+
+Reversible: the arc is data + one guarded module; removing the `arc` keys restores the D153
+rendering byte-identically (probe-proven). **LANE-003 releases to CONTRACT/unowned in this
+commit; next: the M4 Elkhorn Tavern SPEC, non-Leetown axis ONLY (D359 dignity carve-out).**
+
 ## D385 — WOMEN-IN-WAR ARC CONTRACT: FOUR DOCUMENTED LIVES, ONE HONESTY DEVICE, NO RUNTIME YET — [CLAUDE CODE / FABLE, LANE-003 DRIVE] (2026-07-12)
 
 D385 commits the M3 planning boundary of Aaron's D382 set-1 lock: `docs/design/women-in-war-arc-spec.md`

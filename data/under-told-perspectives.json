@@ -100,7 +100,7 @@
       "gameHook": "Preserves D153 separation: no replacePid, no ss: ids, no registry combatant row, no unsupported portrait claim.",
       "provenance": "Verified",
       "sources": [
-        "data/women-in-war.json cw_women_in_war_v1 records: 9 records, 8 Verified and 1 Disputed, with D153 lane constraints.",
+        "data/women-in-war.json cw_women_in_war_v1 records: 11 records, 9 Verified and 2 Disputed, with D153 lane constraints (D386 added Edmonds and Clayton to the D183-era 9).",
         "tools/import-women-in-war.mjs and tools/probe-women-in-war.mjs gate the separate presentation lane."
       ]
     }

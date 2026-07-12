@@ -96,7 +96,10 @@ const SETUP = `(() => {
     step('DATA: canonical women-in-war pack is separate from soldier replacements', function() {
       var d = GAME_DATA && GAME_DATA['women-in-war'];
       if (!d || d.schema !== 'cw_women_in_war_v1') throw new Error('missing women schema');
-      if (!Array.isArray(d.records) || d.records.length !== 9) throw new Error('expected 9 women records');
+      // Record-count lock history: D153 shipped 7 · the D183/M4 women-lane decision added
+      // Chesnut + Taylor -> 9 (8 Verified / 1 Disputed) · D386 (the M3 arc, spec D385) adds
+      // Edmonds (Verified) + Clayton (Disputed) -> 11 (9 Verified / 2 Disputed).
+      if (!Array.isArray(d.records) || d.records.length !== 11) throw new Error('expected 11 women records');
       var repl = GAME_DATA['soldier-replacements'];
       if (!repl || !Array.isArray(repl.records)) throw new Error('missing soldier replacements records array');
       var replacementWomenLeaks = [];
@@ -116,26 +119,26 @@ const SETUP = `(() => {
         if (r.provenance === 'Disputed') disputed++;
       }
       if (bad.length) throw new Error('separation violations: ' + bad.join(','));
-      if (verified !== 8 || disputed !== 1) throw new Error('expected 8 Verified / 1 Disputed, got ' + verified + '/' + disputed);
+      if (verified !== 9 || disputed !== 2) throw new Error('expected 9 Verified / 2 Disputed (the D386 lock), got ' + verified + '/' + disputed);
       return { records:d.records.length, verified:verified, disputed:disputed, replacementRecords:repl.records.length };
     });
 
-    step('REGISTRY: the nine women cards do not enter ssPersonRegistry', function() {
+    step('REGISTRY: the eleven women cards do not enter ssPersonRegistry', function() {
       var reg = ssPersonRegistry(C), txt = reg.people.map(function(p){ return p.name; }).join('\\n').toLowerCase();
-      ['wakeman','cashier','velazquez','clara barton','harriet tubman','mary edwards walker','dorothea','mary boykin chesnut','susie king taylor'].forEach(function(name) {
+      ['wakeman','cashier','velazquez','clara barton','harriet tubman','mary edwards walker','dorothea','mary boykin chesnut','susie king taylor','sarah emma edmonds','frances clayton'].forEach(function(name) {
         if (txt.indexOf(name) >= 0) throw new Error('women-thread name leaked into registry: ' + name);
       });
       return { registryPeople:reg.people.length };
     });
 
-    step('UI: Campaign Kit renders nine Women in the War cards with required names', function() {
+    step('UI: Campaign Kit renders eleven Women in the War cards with required names', function() {
       mountLoot(C);
       var root = document.getElementById('wiwThread');
       if (!root) throw new Error('missing wiwThread section');
       var cards = document.querySelectorAll('[data-wiw-card]');
-      if (cards.length !== 9) throw new Error('expected 9 cards, got ' + cards.length);
+      if (cards.length !== 11) throw new Error('expected 11 cards, got ' + cards.length);
       var text = root.textContent;
-      ['Sarah Rosetta Wakeman','Albert D. J. Cashier','Loreta Janeta Velazquez','Clara Barton','Dr. Mary Edwards Walker','Harriet Tubman','Dorothea Lynde Dix','Mary Boykin Chesnut','Susie King Taylor'].forEach(function(name) {
+      ['Sarah Rosetta Wakeman','Albert D. J. Cashier','Loreta Janeta Velazquez','Clara Barton','Dr. Mary Edwards Walker','Harriet Tubman','Dorothea Lynde Dix','Mary Boykin Chesnut','Susie King Taylor','Sarah Emma Edmonds','Frances Clayton'].forEach(function(name) {
         if (text.indexOf(name) < 0) throw new Error('missing visible name: ' + name);
       });
       if (!document.getElementById('wiwSearch') || !document.getElementById('wiwRole') || !document.getElementById('wiwProv')) throw new Error('missing search/filter controls');
@@ -180,14 +183,129 @@ const SETUP = `(() => {
       role.value = 'contested';
       role.dispatchEvent(new Event('change', { bubbles:true }));
       shown = visibleCards();
-      if (shown.length !== 1 || shown[0].getAttribute('data-wiw-id') !== 'velazquez-loreta-janeta') throw new Error('contested role expected Velazquez only: ' + ids(shown).join(','));
+      // D386: Clayton joins Velazquez in the contested/Disputed pair (D385 adjudication) —
+      // the filter expectations move from the single D153-era card to exactly these two.
+      var contestedIds = ids(shown).sort().join(',');
+      if (shown.length !== 2 || contestedIds !== 'clayton-frances,velazquez-loreta-janeta') throw new Error('contested role expected Clayton+Velazquez: ' + contestedIds);
       role.value = '';
       role.dispatchEvent(new Event('change', { bubbles:true }));
       prov.value = 'Disputed';
       prov.dispatchEvent(new Event('change', { bubbles:true }));
       shown = visibleCards();
-      if (shown.length !== 1 || shown[0].getAttribute('data-wiw-id') !== 'velazquez-loreta-janeta') throw new Error('Disputed provenance expected Velazquez only: ' + ids(shown).join(','));
+      var disputedIds = ids(shown).sort().join(',');
+      if (shown.length !== 2 || disputedIds !== 'clayton-frances,velazquez-loreta-janeta') throw new Error('Disputed provenance expected Clayton+Velazquez: ' + disputedIds);
       return { shown:ids(shown) };
+    });
+
+    step('ARC DATA: exactly the four D385 figures carry arcs and the register law holds in data', function() {
+      var d = GAME_DATA['women-in-war'];
+      var arcs = d.records.filter(function(r){ return r && r.arc; });
+      var arcIds = arcs.map(function(r){ return r.id; }).sort().join(',');
+      if (arcIds !== 'barton-clara,cashier-albert-d-j,clayton-frances,edmonds-sarah-emma') throw new Error('arc records wrong: ' + arcIds);
+      var allow = { bullrun1:1, malvernHill:1, antietam:1, fredericksburg:1, fortDonelson:1, stonesRiver:1, vicksburg:1 };
+      arcs.forEach(function(r) {
+        if (!Array.isArray(r.arc.stages) || r.arc.stages.length < 4 || r.arc.stages.length > 8) throw new Error(r.id + ' stage count out of 4..8');
+        r.arc.stages.forEach(function(s, i) {
+          if (s.gameBattleTie != null) {
+            if (!allow[s.gameBattleTie]) throw new Error(r.id + '[' + i + '] tie off-allowlist: ' + s.gameBattleTie);
+            if (s.tieRegister !== 'documented' && s.tieRegister !== 'claimed') throw new Error(r.id + '[' + i + '] missing tieRegister');
+            if (s.tieRegister === 'documented' && s.stageProvenance !== 'Verified') throw new Error(r.id + '[' + i + '] REGISTER LAW violation');
+            if (r.id === 'clayton-frances' && s.tieRegister !== 'claimed') throw new Error('Clayton tie must be claimed: ' + s.gameBattleTie);
+          }
+        });
+      });
+      var cashierCopy = d.records.filter(function(r){ return r.id === 'cashier-albert-d-j'; })[0].playerCopy;
+      if (/Irene/.test(cashierCopy)) throw new Error('unsupported Irene middle name still in Cashier playerCopy');
+      return { arcs: arcs.length };
+    });
+
+    step('ARC UI: the Edmonds arc discloses, steps, and moves aria-current with a live body', function() {
+      var btn = document.getElementById('wiwArcBtn_edmonds-sarah-emma');
+      var panel = document.getElementById('wiwArcPanel_edmonds-sarah-emma');
+      if (!btn || !panel) throw new Error('missing Edmonds arc button/panel');
+      if (btn.getAttribute('aria-expanded') !== 'false' || !panel.hasAttribute('hidden')) throw new Error('arc should start closed with the panel in the DOM');
+      if (btn.getAttribute('aria-controls') !== 'wiwArcPanel_edmonds-sarah-emma') throw new Error('aria-controls wiring wrong');
+      btn.click();
+      btn = document.getElementById('wiwArcBtn_edmonds-sarah-emma');
+      panel = document.getElementById('wiwArcPanel_edmonds-sarah-emma');
+      if (btn.getAttribute('aria-expanded') !== 'true' || panel.hasAttribute('hidden')) throw new Error('arc did not open');
+      var body = document.getElementById('wiwArcBody_edmonds-sarah-emma');
+      if (!body || body.getAttribute('aria-live') !== 'polite') throw new Error('chapter body must be aria-live=polite');
+      if (body.textContent.indexOf('Enlistment as Franklin Thompson') < 0) throw new Error('chapter 1 not rendered');
+      var steps = panel.querySelectorAll('[data-wiw-arc-step]');
+      if (steps.length !== 8) throw new Error('Edmonds must have 8 chapter buttons, got ' + steps.length);
+      steps[3].click();
+      panel = document.getElementById('wiwArcPanel_edmonds-sarah-emma');
+      var cur = panel.querySelector('[aria-current="step"]');
+      if (!cur || cur.getAttribute('data-wiw-arc-step') !== '3') throw new Error('aria-current did not move to chapter 4');
+      body = document.getElementById('wiwArcBody_edmonds-sarah-emma');
+      if (body.textContent.indexOf('Antietam claim') < 0) throw new Error('chapter 4 body not rendered');
+      var next = panel.querySelector('[data-wiw-arc-nav="1"]');
+      next.click();
+      body = document.getElementById('wiwArcBody_edmonds-sarah-emma');
+      if (body.textContent.indexOf('Fredericksburg orderly') < 0) throw new Error('Next chapter did not advance to 5');
+      return { chapters: steps.length };
+    });
+
+    step('ARC REGISTER: claimed ties render the claimed treatment, documented ties the documented one', function() {
+      var eBody = document.getElementById('wiwArcBody_edmonds-sarah-emma');
+      var eSteps = document.getElementById('wiwArcSteps_edmonds-sarah-emma');
+      eSteps.querySelectorAll('[data-wiw-arc-step]')[3].click();
+      eBody = document.getElementById('wiwArcBody_edmonds-sarah-emma');
+      var eTie = eBody.querySelector('[data-wiw-arc-tie]');
+      if (!eTie || eTie.getAttribute('data-wiw-arc-tie') !== 'claimed') throw new Error('Edmonds Antietam chapter must render the claimed register');
+      if (eTie.textContent.indexOf('no service record confirms it') < 0) throw new Error('claimed wording missing on Edmonds Antietam');
+      var cBtn = document.getElementById('wiwArcBtn_clayton-frances');
+      cBtn.click();
+      document.getElementById('wiwArcSteps_clayton-frances').querySelectorAll('[data-wiw-arc-step]')[1].click();
+      var cBody = document.getElementById('wiwArcBody_clayton-frances');
+      var cTie = cBody.querySelector('[data-wiw-arc-tie]');
+      if (!cTie || cTie.getAttribute('data-wiw-arc-tie') !== 'claimed') throw new Error('Clayton Fort Donelson chapter must render the claimed register');
+      var bBtn = document.getElementById('wiwArcBtn_barton-clara');
+      bBtn.click();
+      document.getElementById('wiwArcSteps_barton-clara').querySelectorAll('[data-wiw-arc-step]')[3].click();
+      var bBody = document.getElementById('wiwArcBody_barton-clara');
+      var bTie = bBody.querySelector('[data-wiw-arc-tie]');
+      if (!bTie || bTie.getAttribute('data-wiw-arc-tie') !== 'documented') throw new Error('Barton Antietam chapter must render the documented register');
+      if (bTie.textContent.indexOf('The record puts Clara Barton here') < 0) throw new Error('documented wording missing on Barton Antietam');
+      if (bBody.textContent.indexOf('by her own account') < 0 && bBody.textContent.indexOf('By her own account') < 0) throw new Error('the sleeve-bullet her-own-account framing missing');
+      return { edmonds:'claimed', clayton:'claimed', barton:'documented' };
+    });
+
+    step('ARC REFLECTION: the played-ground line derives read-only from C.completed', function() {
+      function openBarton() {
+        var b = document.getElementById('wiwArcBtn_barton-clara');
+        if (b.getAttribute('aria-expanded') !== 'true') b.click();
+        document.getElementById('wiwArcSteps_barton-clara').querySelectorAll('[data-wiw-arc-step]')[3].click();
+        return document.getElementById('wiwArcBody_barton-clara');
+      }
+      C.completed = ['antietam'];
+      mountLoot(C);
+      var body = openBarton();
+      if (body.textContent.indexOf('Your war has fought this ground.') < 0) throw new Error('played line missing with antietam completed');
+      C.completed = [];
+      mountLoot(C);
+      body = openBarton();
+      if (body.textContent.indexOf('Your war has fought this ground.') >= 0) throw new Error('played line must be absent with no completed battles');
+      if (C.completed.length !== 0) throw new Error('reflection must not write C.completed');
+      return { readOnly:true };
+    });
+
+    step('ARC NO-OP: arc-less records render no arc block and a stubbed module is byte-safe', function() {
+      var wakeman = document.querySelector('[data-wiw-id="wakeman-sarah-rosetta"]');
+      if (wakeman.querySelector('[data-wiw-arc]')) throw new Error('arc-less record rendered an arc block');
+      var real = wiwArcSectionHTML;
+      try {
+        wiwArcSectionHTML = null;
+        mountLoot(C);
+        if (document.querySelector('[data-wiw-arc]')) throw new Error('stubbed arc module still rendered arc blocks');
+        if (!document.getElementById('wiwThread')) throw new Error('thread must still render without the arc module');
+      } finally {
+        wiwArcSectionHTML = real;
+        mountLoot(C);
+      }
+      if (!document.querySelector('[data-wiw-arc]')) throw new Error('arc blocks missing after restore');
+      return { noOp:true };
     });
 
     step('EMPTY-DATA NO-OP: an empty records array renders no section', function() {
@@ -214,7 +332,10 @@ const SETUP = `(() => {
           {title:'B', repository:'B', locator:'B', type:'secondary', supports:'B', independent:true}
         ],
         playerCopy:'This is a safe probe record with enough words to exercise the escaping path without executing markup or event handlers in the generated Women in the War card surface for this browser gate.',
-        integrityNote:'probe', warningFlags:['probe']
+        integrityNote:'probe', warningFlags:['probe'],
+        arc:{ title:'<b>arc</b>', intro:'This synthetic arc exists only to exercise the D386 escaping path for arc titles intros and stage bodies so that no markup or event handler can ever reach the document through the chapter walk-through surface of this browser gate.',
+          stages:[{ title:'<img src=x onerror="window.__wiwXss=2">', dateRange:'1861', stageProvenance:'Inferred', sourceRefs:[0],
+            what:'A stage body carrying a hostile payload string that must render as inert text with every angle bracket escaped so that the arc chapter body its aria live region and its source list never execute or mount any injected element at all.' }] }
       });
       window.__wiwXss = 0;
       GAME_DATA['women-in-war'] = copy;
@@ -226,6 +347,12 @@ const SETUP = `(() => {
         if (!document.querySelector('label span') || !document.getElementById('wiwSearch')) throw new Error('search label/control missing');
         var payloadImg = document.querySelector('#wiwThread img[src="x"]');
         if (payloadImg) throw new Error('payload img reached DOM');
+        var xssArcBtn = document.getElementById('wiwArcBtn_xss-probe');
+        if (xssArcBtn) {
+          xssArcBtn.click();
+          if (window.__wiwXss !== 0) throw new Error('arc XSS payload executed');
+          if (document.querySelector('#wiwThread img[src="x"]')) throw new Error('arc payload img reached DOM');
+        } else { throw new Error('synthetic arc did not render its disclosure'); }
       } finally {
         GAME_DATA['women-in-war'] = original;
         mountLoot(C);

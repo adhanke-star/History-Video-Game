@@ -95,7 +95,7 @@ const SETUP = `(() => {
       });
       var womenLane=JSON.stringify(D.threads.filter(function(t){return t.id==='women-d153-lane';})[0]||{});
       if(!/D153/.test(womenLane)) throw new Error('women lane does not name D153 separation');
-      if(!/9 records, 8 Verified and 1 Disputed/.test(womenLane)) throw new Error('women lane does not reflect M4 9-card source count');
+      if(!/11 records, 9 Verified and 2 Disputed/.test(womenLane)) throw new Error('women lane does not reflect the D386 11-card source count (9 at M4, +Edmonds +Clayton in D386)');
       return { schema:D.schema, threads:D.threads.length, debates:(D.debates||[]).length };
     });
 
