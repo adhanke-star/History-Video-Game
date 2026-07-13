@@ -6,6 +6,98 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D390 — SPOTSYLVANIA "BLOODY ANGLE" CONTRACT: THE SAME-DAY PROMOTION SEAM, THE GUN-STRIPPED TIP, AND THE CASUALTY-NEUTRAL LAW — [CLAUDE CODE / FABLE, LANE-003 DRIVE→CONTRACT] (2026-07-13)
+
+The ninth LANE-003 planning contract, and the first D382 Overland/attrition slice:
+`docs/design/spotsylvania-battle-build-spec.md` (md5 `84f458f3494001f37886161001827764`) +
+`tools/probe-spotsylvania-plan.mjs` (md5 `8cc219b748dbb23a2797a37afaf29cba`; 12 steps, dual-mode,
+filesystem-first, fail-closed, bind-tested). No runtime moved: 21 scenarios · schema 51 · Army
+Register 1326 · coverage 21 · suite 126 · sweep 21 all hold; generated HTML byte-identical
+`21544e26c8871bc47e26ff117cce1f32`; frozen base `c9db83fa99230ffb95bdfdfe059f3fb9`; T1
+`0ea7ea9e87bc417da4a3b5b6e2ad29ed`; Elkhorn data `6798671e0e3d46a3d9c30e655198fdd0`; Elkhorn
+focused probe `c6654e9298c23317698d706b60407f21`. DRIVE was taken in ledger-only commit
+`a76dcd4` at the clean D389 boundary `3ba2c93`.
+
+**Research (6 agents: 4 Sonnet/medium gather → 2 Opus/high default-refute, 86 claims → ~40
+verdicts, 0 errors; the yield is the packet's §12 D390 addendum).** The packet's §9 spec-time
+gaps all RESOLVED — no HALT. Key adjudications: **Anderson** was a MAJOR GENERAL commanding
+First Corps the whole May 8-21 window; his TEMPORARY Lt.-Gen. appointment is effective May 31,
+1864, was never confirmed by the Confederate Congress, and lapsed on Longstreet's October return
+(two-source; historyofwar.org's "major-general" May-31 line documented as an outlier error).
+**Grant's sources:** the NARA page (archives.gov/legislative/features/grant) was FETCHED and
+confirms the Feb 29, 1864 signing/nomination and Mar 2 Senate confirmation; the LOC mcc.017 URL
+stays bot-403/cite-pending and is dropped as load-bearing; the commissioning-ceremony date ships
+Disputed (Mar 9 secondary consensus vs the packet-era Mar 10), never load-bearing. **Two NEW
+same-week traps:** Wright took VI Corps May 9 as a BRIGADIER GENERAL and his MG-of-volunteers
+date is May 12 itself (ships Brig. Gen. with the same-day nuance disclosed, single-root pending
+Warner/Eicher); Gordon commanded his division May 12 as a BRIGADIER GENERAL (MG May 14). Early
+(Maj. Gen.) commanded Third Corps for the sick A. P. Hill; IX Corps independence corrected to
+"formally assigned to the AotP May 25, 1864." Division-grain May 12 OOB resolved: II Corps =
+Barlow/Birney/Mott/Gibbon (Gibbon's combat role UNRESOLVED in fetched NPS text, ships
+disclosed), Barlow's lead brigades Miles/Brooke (Inferred, single article); VI Corps = Neill
+(Edwards by 6:30) then Russell (~9:30, Upton), Lewis A. Grant's and Brown's brigades; CS =
+Johnson's four brigades with the May 5-12 succession wall (Walker w., Monaghan for the dead
+Stafford, Witcher for the dead J. M. Jones, Steuart) — Johnson and Steuart CAPTURED with ~3,000
+men; counterattack = Gordon's division, Ramseur/Daniel (Rodes; Daniel mortally wounded), and
+Third Corps Perrin (killed)/Harris/McGowan. One refute catch of the fabricated-citation class:
+the counterattack-cluster attribution to the ABT "bloody miscue" URL failed two independent
+re-fetches — the individual facts confirmed separately and ship per-fact. A TOP-LOOP catch: the
+"twelve regiments... 4,500 men" figure is UPTON'S MAY 10 assault, never a May 12 VI Corps
+figure (an explicit spec trap now). The Rhea single-root disclosure (the Elkhorn Shea-root
+class) controls citation tiering.
+
+**The casualty-direction conclusion (the load-bearing design adjudication):** the May 12 grain
+is genuinely sourced — ~17,000 total; US ~9,000; CS ~8,000 INCLUDING ~3,000 prisoners — but no
+source recomputes a prisoners-excluded CS killed/wounded figure, raw totals differ by ~1,000
+(inside rounding), and stripping prisoners flips the direction. The Opus refute's explicit
+recommendation is adopted as spec law: **CASUALTY-DIRECTION-NEUTRAL (the Cedar Creek variant) —
+no per-side casualty tooth in either direction.** The single 8-seed direction guard is the
+sourced outcome: **the defender ultimately holds ≥5/8** (the break-in never split Lee's army;
+the re-formed base line held; withdrawal at 2-3 a.m. May 13 intact).
+
+**Locked shape:** standalone SINGLE PHASE, May 12, 1864 (`spotsylvania` /
+`data/spotsylvania.json` / "Spotsylvania: The Bloody Angle"); attacker US (Hancock's II Corps +
+Wright's VI Corps as timed reinforcements), defender CS (Ewell's Second Corps + the piecemeal
+counterattack as timed reinforcements — the D90 defender-hold recipe); objective = break or
+hold the Bloody Angle/Mule Shoe works, anchored on the salient's INTERIOR ground so the sourced
+break-in-without-breakthrough reads honestly; fog OFF (the sourced pre-dawn fog aided the
+ATTACKER, the engine's fog model aids the DEFENDER — cards carry the rain/fog); menu rank 68
+between Chattanooga 65 and Kennesaw 70; **THE ARTILLERY-WITHDRAWAL INPUT LAW** — the break-in's
+accurate-input cause is the gun-stripped tip (22 of 30 guns pulled May 11, recalled too late,
+~20 captured, one round of canister), encoded ONLY as low initial CS gun counts under the
+universal model, never a surprise/assault bonus; committed-total envelopes US 14,000-25,000 /
+CS 8,000-16,000 (all Inferred — no source pins axis totals; corps-grain figures conflict);
+strengths all `Verified identity; Inferred strength`; prisoners are outputs, never inputs; the
+D74 wall extends the family list with meleeMult/handToHandBonus/prisonerMult/captureBonus; nine
+teaching-card threads including Grant-the-Butcher rebutted WITHOUT hiding the "bloody miscue"
+errors, the USCT East-Face guard detail as agency, and human cost with gravity, never glory;
+codex Eastern / Overland Campaign / Inconclusive; the frozen Classic `spotsylvania` row and the
+pre-existing strategic rail route are separate layers held byte-identical (the shiloh/franklin
+same-name convention). The Crater and Cold Harbor stay outside this scenario.
+
+**Bind (the packet-specified one-token tamper):** §6's exact anchor `Richard H. Anderson: Major
+General` → `Lieutenant General` made EXACTLY `RANKS + COMMAND TRAPS` red (11/12, exit 1); the
+file-edit restore returned the spec md5 to `84f458f3494001f37886161001827764` exactly; rerun
+12/12 ALL OK with the JSON artifact ok=true, twelve green steps, no retained red. One probe
+root-cause during authoring: the tactical-branch scan initially flagged T2's pre-existing D288
+documentation COMMENT naming Spotsylvania (the Classic campaign chain); the scanner now strips
+comments first because the tooth's contract is code branches — a comment is not a combat branch.
+
+**Gate (serialized, every artifact read):** node --check clean; build GATE OK with HTML
+byte-identical; schema 51/51 (the report's timestamp-only churn restored to the HEAD blob);
+research 15/15 with the §12 addendum; Spotsylvania plan 12/12; all nine prior plan probes green
+at exact counts (cedar 11/11 · cross-keys 11/11 · elkhorn 14/14 · five-forks 12/12 ·
+fort-donelson 13/13 · gaines 8/8 · NMH 10/10 · stones 11/11 · women-arc 10/10) with every fresh
+JSON ok=true / 0 failed steps / 0 pageerrors; suite list 126; `git diff --check` exit 0; the
+runtime-scope diff (`civil_war_generals.html build/base.html src data`) EMPTY. **No A/B ran —
+no simulation input exists in a planning slice.** No runtime/data/registry/count movement.
+`npm run vet:noreg` deliberately not run (D160/D176; D389 discharged the release checkpoint).
+
+LANE-003 returns to CONTRACT/unowned. **The exact next bounded slice: playable Spotsylvania
+runtime from this committed contract (spec §11/§14 are the law), in a fresh session under a new
+committed DRIVE lock.** The D382 ladder then continues (Wilderness/Petersburg treatments remain
+packet lanes; war-career loop next after the Overland extension).
+
 ## D389 — ELKHORN RELEASE CHECKPOINT: 126/126 VERIFIED, THREE HARNESS TEETH HARDENED, LANE RELEASED — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-003 VERIFY→CONTRACT] (2026-07-13)
 
 D388 is released. The playable commit is `67f9672a6ff8c734c7f0ec6fa385fb7d5ad700e8`.

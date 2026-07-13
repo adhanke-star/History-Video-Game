@@ -130,3 +130,89 @@ Write a **D### Spotsylvania "Bloody Angle" single-phase spec + probe scaffold** 
 **Anti-Lost-Cause / dignity review:** PASS. Grant-the-Butcher myth is rebutted; Cold Harbor is framed as an honest Union failure without a butcher caricature; the Crater massacre carries an explicit dignity rule (never a scoreable objective, framed as a war crime rooted in pro-slavery ideology); USCT agency and Medals of Honor are centered. The Crater is built as a failed-assault scenario with massacre-as-teaching only, so it is NOT a massacre-only playable battle.
 
 **Ratified verdict: READY_FOR_SPEC.** At least three reputable sources were directly confirmed this pass, the OOB/rank/date traps are explicit and correct, the D74 no-fudge risks are named, and no massacre-only playable battle is proposed. Residual items are spec-time verifications, not blockers.
+
+## 12. D390 Spec-Time Addendum — Spotsylvania May 12 Verification Pass (2026-07-13)
+
+A 6-agent read-only workflow (4 Sonnet/medium gatherers, 86 claims → 2 Opus/high default-refute
+verifiers, ~40 verdicts, 0 agent errors) re-verified this packet's Section 9 gaps before the D390
+standalone Spotsylvania spec. Fable adjudication owns every conclusion. The packet text above
+stays as the record of what the D327 pass believed; this addendum controls where they differ.
+
+**Grant's rank sources (Section 9 gap RESOLVED).** The NARA page
+(https://www.archives.gov/legislative/features/grant) was FETCHED and confirms: Lincoln signed
+the revived-Lieutenant-General act into law February 29, 1864 and sent Grant's nomination the
+same day; the Senate confirmed March 2, 1864. It gives NO commissioning-ceremony date, and
+secondary sources (Mr. Lincoln's White House, History.com, Fold3) place the White House
+presentation on March 9, 1864 — so the packet's "commissioned Mar 10" is unsupported by any
+fetched primary and the ceremony date ships Disputed (March 9 vs March 10), never load-bearing.
+The LOC URL (https://www.loc.gov/item/mcc.017/) remains bot-403/cite-pending and is dropped as a
+load-bearing register row; the fetched NARA page substitutes. Battle-date grade is unchanged and
+firm: Lieutenant General, with General-in-Chief a role, not a rank.
+
+**Anderson (Section 9 gap RESOLVED).** Richard H. Anderson was a MAJOR GENERAL commanding the
+First Corps for the whole May 8-21 window (temporary corps command from May 6-7 after
+Longstreet's wounding, retained until Longstreet's October 1864 return). His TEMPORARY
+lieutenant-general appointment is effective May 31, 1864, was never confirmed by the Confederate
+Congress, and lapsed when Longstreet returned (two-source: Wikipedia + civilwarintheeast.com).
+One outlier — historyofwar.org calling the May 31 action a promotion to "major-general" — is a
+documented factual error (Anderson had been a major general since 1862), not a genuine dispute.
+
+**New rank traps found this pass (both directions).** (1) HORATIO WRIGHT: he took VI Corps on
+May 9 as a BRIGADIER GENERAL, and his major-general-of-volunteers appointment is dated May 12,
+1864 — the assault day itself. The honest at-battle label is Brig. Gen. Horatio G. Wright
+commanding VI Corps, with the same-day date-of-rank disclosed as a nuance (the paperwork date is
+single-root Wikipedia pending a Warner/Eicher fetch). (2) JOHN B. GORDON commanded his division
+on May 12 as a BRIGADIER GENERAL; his major-general promotion is May 14, 1864 (refute-confirmed;
+ABT's undated "now a major general in 1864" is imprecise). (3) Jubal EARLY (Maj. Gen.) commanded
+the THIRD Corps at Spotsylvania — A. P. Hill was too ill from about May 8 (two-source). (4) The
+refute pass corrected IX Corps precision: formally assigned to the Army of the Potomac May 25,
+1864 (independent under Grant before that). (5) Edward Johnson (Maj. Gen.) and George H. Steuart
+(Brig. Gen.) were both captured May 12.
+
+**Division-grain May 12 OOB (Section 9 gap RESOLVED).** US: Hancock's II Corps assault column =
+Barlow (Brig. Gen.), Birney (Maj. Gen.), Mott (Brig. Gen.), and Gibbon (Brig. Gen.; his
+division's combat role at the Angle is UNRESOLVED in fetched NPS text and ships disclosed);
+Barlow's lead brigades Miles and Brooke; Wright's VI Corps joined from about 6:00 a.m. (Neill's
+division at the west angle — Edwards's three regiments by 6:30 — then Russell's division about
+9:30 with Upton's brigade; Lewis A. Grant's Vermont and Brown's New Jersey brigades named by
+NPS). CS: Edward Johnson's division held the tip (Walker's Stonewall Brigade, Monaghan's
+Louisianians for Stafford, Witcher for the dead J. M. Jones, Steuart's brigade); the documented
+counterattack forces are Gordon's division, Rodes's brigades (Ramseur, Daniel — mortally
+wounded), and the Third Corps brigades Perrin (killed; Mahone's division, still labeled
+"Anderson's division" in sources after Anderson went upstairs), Harris (Mississippi), and
+McGowan (South Carolina). Strength figures CONFLICT at the corps grain (II Corps 15,000 ABT-page
+vs 20,000 overview; VI Corps 15,000) and NO source pins committed axis totals — all strengths
+ship as Inferred envelopes. TRAP: the "twelve regiments... some 4,500 men" figure belongs to
+UPTON'S MAY 10 assault and must never be encoded as a May 12 VI Corps figure.
+
+**Casualty direction (Section 9 gap RESOLVED — NEUTRAL).** The May 12 grain is genuinely
+sourced: about 17,000 total (NPS Bloody Angle page + ABT + Rhea), US about 9,000 vs CS about
+8,000 INCLUDING about 3,000 prisoners from Johnson's division. No source recomputes a
+prisoners-excluded CS killed/wounded total; raw totals differ by ~1,000 (inside rounding) and
+stripping prisoners flips the direction. **The refute recommendation is adopted as law: the
+standalone Spotsylvania scenario ships CASUALTY-DIRECTION-NEUTRAL (the Cedar Creek precedent) —
+no per-side casualty tooth in either direction.** The sourced 8-seed outcome direction is
+DEFENDER-HOLDS: the break-in did not split Lee's army; Gordon's and the successive counterattacks
+re-formed the line, and by 2-3 a.m. May 13 the Confederates withdrew half a mile to a mile to a
+completed base line that HELD.
+
+**Confirmed accurate-input stories.** The artillery withdrawal (Lee pulled 22 of 30 guns from
+the salient May 11 expecting a move; recalled too late; about 20 captured, one gun unlimbering a
+single round) is confirmed and is THE accurate-input encoding of the break-in — a gun-stripped
+tip, never a surprise bonus. Weather is confirmed: steady rain May 11, heavy pre-dawn fog and
+damp powder at the 4:30-4:35 a.m. step-off, a driving rainstorm through the day. Duration
+spreads 17-24 hours across sources and ships as "nearly a full day," approximate.
+
+**Provenance discipline for the spec (the Rhea root).** The tactical narrative of May 12 (NPS
+Civil War Series #25 sec16 + the ABT article cluster) leans on Gordon Rhea's scholarship — the
+same single-scholar-collapse class as Elkhorn's Shea root. Where every path leads to Rhea alone,
+claims ship Inferred with the root named. One citation-integrity defect: the
+counterattack-brigade cluster attributed to the ABT "bloody miscue" article did not reproduce on
+two independent re-fetches; the individual facts (Perrin killed, Daniel mortally wounded, Ramseur
+wounded, Harris/McGowan committed) are separately confirmed, but that URL attribution is
+unresolved and the cluster ships with per-fact sourcing instead. Dead link: the packet-era
+`nps.gov/frsp/learn/historyculture/spotsy-history.htm` now 404s; fresh anchors fetched this pass
+include `nps.gov/places/bloody-angle.htm`, `nps.gov/places/east-face-of-salient.htm`,
+`npshistory.com/publications/civil_war_series/25/sec16.htm`, the ABT certain-death /
+bloody-miscue / men-fell-heaps articles, and `encyclopediavirginia.org`'s battle entry
+(full-battle totals 18,399 US / 12,421 CS, no May-12 split — never laundered down).
