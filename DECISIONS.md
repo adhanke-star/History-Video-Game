@@ -6,6 +6,58 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D388 — PLAYABLE ELKHORN TAVERN: TWO DAYS, ONE HONEST AXIS, NO OUTCOME FUDGE — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-003 DRIVE→VERIFY] (2026-07-12)
+
+D388 implements the committed D387 contract as historical scenario 21. `data/elkhorn-tavern.json`
+and the shared T1/T4/T8/T10 seams now play `Elkhorn Tavern - March 7` (score 1, CS attacker,
+US defender, disclosed operational-surprise fog) followed by `Curtis's Counterattack - March 8`
+(score 3 decisive, US attacker, CS defender, fog off). The interstitial leaves the unscored Camp
+Stephens train, Greer's remnant, and Curtis's four-division re-formation in teaching/transition
+space. Supply collapse is encoded only by per-phase T4 train positions. No battle-named combat,
+ammo, supply, exhaustion, surprise, envelopment, panic, or result multiplier exists.
+
+The authored field abstractions are P1 US 4,030 / CS 5,250 and P2 US 7,950 / CS 5,050; the
+March 8 gun lock is US 21 / CS 12. Fifteen unique side-unit ids add exactly 45 Army Register
+rows, moving the whole register 1,281→1,326. Every unit strength is explicitly Inferred. The
+battle-date rank wall holds, including Brig. Gen. Samuel R. Curtis in both phases. Leetown and
+Native formations remain absent from runtime data while ten teaching cards preserve Native
+agency, the scalping controversy, and its weaponization. Frozen Classic `peariver` and the rail
+layer remain separate and unchanged.
+
+The first authored inputs passed every eight-seed direction guard on the first battery: P1 CS
+8/8, P2 US 8/8, aggregate US 8/8, and aggregate CS-higher-loss direction 8/8. Therefore the
+honest A/B log is zero tuning iterations and zero simulation-input changes. Bind A removed the
+exact T1 registry line: the plan probe failed only FUTURE integration and the runtime probe failed
+exactly eight registration-dependent teeth, with deterministic/setup/rank/history teeth still
+green. Bind B changed only Curtis's two parsed grade strings to Maj. Gen.: the plan probe failed
+only FUTURE integration and the runtime probe failed only RANK + NAME LOCKS. Both restores
+returned exact final hashes and final plan/runtime gates to 14/14 and 16/16 with zero pageerrors.
+
+Integration moves scenarios 20→21, schema 50→51, flags/weather/Intel/media coverage 20→21,
+Army Register 1,281→1,326, suite 125→126, sweep 20→21, menu rank 49, and T10 metadata to
+`TM / false / first-national`. A stale Fort Donelson adjacency tooth was strengthened to require
+New Market Heights → Fort Donelson → Elkhorn Tavern → Shiloh; six stale 1,200 pin labels and
+their D380/D384/D388 history comments were corrected; the T10 vocabulary comment now admits
+`TM`. These were probe/comment contract repairs, not simulation changes.
+
+Final hashes: T1 `0ea7ea9e87bc417da4a3b5b6e2ad29ed`; Elkhorn data
+`6798671e0e3d46a3d9c30e655198fdd0`; focused probe
+`c6654e9298c23317698d706b60407f21`; generated HTML
+`21544e26c8871bc47e26ff117cce1f32`; frozen base
+`c9db83fa99230ffb95bdfdfe059f3fb9`. The handoff candidate HTML hash changed only because the
+T10 source-comment contract was corrected and the generated file rebuilt; both negative binds
+were rerun afterward against this final candidate.
+
+Focused commit gate: node-check 18/18; build GATE OK; schema 51/51; battle research 15/15;
+Elkhorn plan 14/14; Elkhorn runtime 16/16; roster 8/8; builder 15/15; loot 12/12 at 1,326;
+flags 48/48; weather 30/30; Intel 26/26; media 13/13 with only the standing 2.418 MB soft
+warning; Fort Donelson 15/15; Shiloh 31/31; suite list 126; all relevant artifacts read and no
+failed step, pageerror, or realError. macOS dataless placeholders in tracked assets/research were
+materialized with `brctl download`; blob content did not change. LANE-003 advances to VERIFY.
+The exact next action is the serialized 126-command `npm run vet:noreg` battery, alone on the
+8 GB Mac. No D382 Overland/attrition work starts until that release gate is green and the lane is
+released to CONTRACT/unowned.
+
 ## D387 — ELKHORN TAVERN CONTRACT: THE HONEST AXIS, THE AMMUNITION LAW, AND THE LEETOWN ABSENCE GUARD — [CLAUDE CODE / FABLE, LANE-003 DRIVE→CONTRACT] (2026-07-12)
 
 D387 commits the eighth LANE-003 planning contract:

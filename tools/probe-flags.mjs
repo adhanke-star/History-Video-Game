@@ -322,7 +322,7 @@ async function runScene(page, label, scenario, seed, opts, shared) {
     pure.ok && P.meta && P.meta.gburg.badges === true && P.meta.bullrun.badges === false && P.meta.chick.badges === false && P.meta.sandbox.badges === false,
     JSON.stringify(P.meta || {}));
   check('battle meta: every registered historical scenario has explicit metadata (no silent Eastern/ANV fallback)',
-    pure.ok && Array.isArray(P.metaCoverage) && P.metaCoverage.length === 20 && P.metaCoverage.every(x => x.explicit),
+    pure.ok && Array.isArray(P.metaCoverage) && P.metaCoverage.length === 21 && P.metaCoverage.every(x => x.explicit),
     JSON.stringify(P.metaCoverage || []));
   check('battle meta + flag: Five Forks is an Eastern AotP/ANV field with V Corps badges and an ANV-family Southern Cross (D380)',
     pure.ok && P.meta && P.meta.fiveForks && P.meta.fiveForks.theater === 'E' && P.meta.fiveForks.badges === true && P.meta.fiveForks.csFlag === 'anv'

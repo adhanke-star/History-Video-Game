@@ -8,7 +8,7 @@ import "./guard-probe-browser.mjs";
 // the corrected US 24,531 / CS 16,171 engaged anchors, the early-1862 rank wall
 // (Grant Brig. Gen.; Buckner never Lt. Gen.; Forrest Lt. Col.; Foote Flag Officer),
 // four sourced direction guards with NO casualty-direction tooth anywhere, the D74
-// wall incl. the naval/command-collapse temptations, and the 1281 Army Register pin.
+// wall incl. the naval/command-collapse temptations, and the current 1326 Army Register pin.
 import { chromium } from 'playwright-core';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -153,11 +153,11 @@ const SETUP = `(() => {
       return { p2:String(p2.transition.title || ''), p3:String(p3.transition.title || '') };
     });
 
-    check('REGISTRY + MENU: Fort Donelson opens the Western arc at rank 48 - after New Market Heights, before Shiloh', function() {
+    check('REGISTRY + MENU: Fort Donelson opens the early-1862 arc at rank 48 - after New Market Heights, before Elkhorn Tavern and Shiloh', function() {
       var reg = fldScenarioRegistry(), order = fldScenarioMenuOrder(reg);
       if (!reg.fortDonelson || reg.fortDonelson !== DATA) throw new Error('registry identity missing');
       if (fldScenarioMenuRank('fortDonelson') !== 48) throw new Error('menu rank must be 48, got ' + fldScenarioMenuRank('fortDonelson'));
-      if (!(order.indexOf('newMarketHeights') + 1 === order.indexOf('fortDonelson') && order.indexOf('fortDonelson') + 1 === order.indexOf('shiloh'))) throw new Error('chronology wrong: ' + order.join(' -> '));
+      if (!(order.indexOf('newMarketHeights') + 1 === order.indexOf('fortDonelson') && order.indexOf('fortDonelson') + 1 === order.indexOf('elkhornTavern') && order.indexOf('elkhornTavern') + 1 === order.indexOf('shiloh'))) throw new Error('chronology wrong: ' + order.join(' -> '));
       return { rank:48, order:order.indexOf('fortDonelson') };
     });
 
@@ -308,12 +308,12 @@ const SETUP = `(() => {
       return { cards:ids, codex:codex.id };
     });
 
-    check('ARMY REGISTER PIN: 27 Fort Donelson units produce exact cmd/nco/pvt trios and current total 1281', function() {
+    check('ARMY REGISTER PIN: 27 Fort Donelson units produce exact cmd/nco/pvt trios and current total 1326', function() {
       var C = { side:'US', iron:false, idx:0, funds:6500, recovery:false, completed:[], roster:[], nextId:1,
         stats:{ battles:0, won:0, infl:0, suff:0 }, recoveryLossCount:0, recoveryMode:false, flipAtk:false, captured:[] };
       if (typeof _t1InitAll === 'function') _t1InitAll(C);
       var reg = ssPersonRegistry(C), rows = [], groups = {};
-      if (reg.people.length !== 1281) throw new Error('Army Register total is ' + reg.people.length + ', expected 1281');
+      if (reg.people.length !== 1326) throw new Error('Army Register total is ' + reg.people.length + ', expected 1326');   // D388: 1281 -> 1326 — Elkhorn Tavern adds 15 unique side-unit ids x 3 slots. D384: 1200 -> 1281 — Fort Donelson adds 27 unique units x 3 slots. D380: 1170 -> 1200 — Five Forks adds 10 unique units x 3 slots.
       for (var i = 0; i < reg.people.length; i++) {
         var p = reg.people[i], origin = p.replaces || p.pid;
         if (typeof origin === 'string' && origin.indexOf('ss:fortDonelson:') === 0) rows.push(origin);
@@ -351,7 +351,7 @@ const DOM = `(() => {
   }
   try {
     G.settings = G.settings || {}; G.mode = 'menu';
-    check('MENU + SIDE CHOICE: one accessible button between New Market Heights and Shiloh; the chosen side reaches fldLaunchBattle', function() {
+    check('MENU + SIDE CHOICE: one accessible button between New Market Heights and Elkhorn Tavern, with Shiloh next; the chosen side reaches fldLaunchBattle', function() {
       if (typeof openMainMenu === 'function') openMainMenu();
       fldInjectMenuButton();
       var btn = document.getElementById('fldScnBtn_fortDonelson');
@@ -359,7 +359,7 @@ const DOM = `(() => {
       fldInjectMenuButton();
       if (document.querySelectorAll('#fldScnBtn_fortDonelson').length !== 1) throw new Error('duplicate Fort Donelson button');
       var ids = Array.prototype.slice.call(document.querySelectorAll('.gn-btn')).map(function(b){ return b.id; });
-      if (!(ids.indexOf('fldScnBtn_newMarketHeights') >= 0 && ids.indexOf('fldScnBtn_fortDonelson') === ids.indexOf('fldScnBtn_newMarketHeights') + 1 && ids.indexOf('fldScnBtn_shiloh') === ids.indexOf('fldScnBtn_fortDonelson') + 1)) throw new Error('button chronology wrong: ' + ids.join(' -> '));
+      if (!(ids.indexOf('fldScnBtn_newMarketHeights') >= 0 && ids.indexOf('fldScnBtn_fortDonelson') === ids.indexOf('fldScnBtn_newMarketHeights') + 1 && ids.indexOf('fldScnBtn_elkhornTavern') === ids.indexOf('fldScnBtn_fortDonelson') + 1 && ids.indexOf('fldScnBtn_shiloh') === ids.indexOf('fldScnBtn_elkhornTavern') + 1)) throw new Error('button chronology wrong: ' + ids.join(' -> '));
       var got = null; fldScenarioSideChoice('fortDonelson', function(side){ got = side; });
       var cards = document.querySelectorAll('[data-brside]'); if (cards.length !== 2) throw new Error('wanted two side cards, got ' + cards.length);
       var cs = document.querySelector('[data-brside="CS"]'); if (!cs) throw new Error('CS side card missing'); cs.click();

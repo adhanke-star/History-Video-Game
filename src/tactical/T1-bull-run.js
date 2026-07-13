@@ -45,6 +45,7 @@ function fldScenarioRegistry() {
       if (GAME_DATA.antietam && GAME_DATA.antietam.antietam) R.antietam = GAME_DATA.antietam.antietam;   // Phase C-2: the first MULTI-PHASE epic (data.phases[] -> the T8 engine)
       if (GAME_DATA.gettysburg && GAME_DATA.gettysburg.gettysburg) R.gettysburg = GAME_DATA.gettysburg.gettysburg;   // Phase C-1: Gettysburg — the second MULTI-PHASE epic (3 days: McPherson Ridge, Little Round Top, Pickett's Charge)
       if (GAME_DATA["new-market-heights"] && GAME_DATA["new-market-heights"].newMarketHeights) R.newMarketHeights = GAME_DATA["new-market-heights"].newMarketHeights;   // D364 USCT lane: New Market Heights - Paine's USCT division storms the double abatis (2 phases over the same ground: Duncan's repulse -> Draper's carry)
+      if (GAME_DATA["elkhorn-tavern"] && GAME_DATA["elkhorn-tavern"].elkhornTavern) R.elkhornTavern = GAME_DATA["elkhorn-tavern"].elkhornTavern;   // D388 Trans-Mississippi lane: Elkhorn Tavern at Pea Ridge - March 7 Confederate seizure -> March 8 decisive Union counterattack
       if (GAME_DATA.shiloh && GAME_DATA.shiloh.shiloh) R.shiloh = GAME_DATA.shiloh.shiloh;   // Phase C-2: Shiloh — the first WESTERN THEATER battle (single-phase, the Fredericksburg pattern)
       if (GAME_DATA["stones-river"] && GAME_DATA["stones-river"].stonesRiver) R.stonesRiver = GAME_DATA["stones-river"].stonesRiver;   // D366 western-gaps lane: Stones River - the near-parity winter battle (2 phases: Dec 31 dawn attack/Round Forest -> Jan 2 Breckinridge at McFadden's Ford; Jan 1 is a teaching interstitial, never a phase)
       if (GAME_DATA.vicksburg && GAME_DATA.vicksburg.vicksburg) R.vicksburg = GAME_DATA.vicksburg.vicksburg;   // Phase C Western breadth: Vicksburg — the river-fortress siege (3 phases: redans -> Forlorn Hope -> saps/mine)
@@ -243,7 +244,7 @@ function fldScenarioMenuOrder(reg) {
   return ids;
 }
 function fldScenarioMenuRank(id) {
-  var order = { bullrun1: 10, crossKeysPortRepublic: 12, gainesMill: 15, malvernHill: 18, antietam: 20, fredericksburg: 30, chancellorsville: 35, gettysburg: 40, newMarketHeights: 45, fortDonelson: 48, shiloh: 50, stonesRiver: 52, vicksburg: 55, chickamauga: 60, chattanooga: 65, kennesaw: 70, cedarCreek: 72, franklin: 75, nashville: 80, fiveForks: 85 };
+  var order = { bullrun1: 10, crossKeysPortRepublic: 12, gainesMill: 15, malvernHill: 18, antietam: 20, fredericksburg: 30, chancellorsville: 35, gettysburg: 40, newMarketHeights: 45, fortDonelson: 48, elkhornTavern: 49, shiloh: 50, stonesRiver: 52, vicksburg: 55, chickamauga: 60, chattanooga: 65, kennesaw: 70, cedarCreek: 72, franklin: 75, nashville: 80, fiveForks: 85 };
   return order[id] || 1000;
 }
 function fldScenarioDateSortValue(date) {

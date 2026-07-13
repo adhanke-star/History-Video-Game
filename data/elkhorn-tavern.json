@@ -1,0 +1,986 @@
+{
+  "_comment": "D388 Elkhorn Tavern axis of Pea Ridge, March 7-8 1862. Two-phase T8 role reversal from the committed D387 contract: March 7 CS seizes the tavern under disclosed operational-surprise fog (w1), then March 8 US counterattacks in the clear (w3 DECISIVE). Home edges stay CS north / US south. The ammunition law is encoded only through per-phase T4 supply-train positions and ordinary experience inputs; the Confederate reserve train is at Camp Stephens in phase 2, never a multiplier. Every fielded unit has Verified identity and Inferred strength. Leetown and its Native formations are taught in cards 8-10 but never fielded, per D359.",
+  "elkhornTavern": {
+    "id": "elkhornTavern",
+    "name": "Pea Ridge - Elkhorn Tavern",
+    "date": "March 7, 1862",
+    "place": "Elkhorn Tavern, Arkansas - the Telegraph Road from Cross Timber Hollow to the Huntsville Road junction and Ruddick's field",
+    "blurb": "Van Dorn's exhausted Army of the West comes out of Cross Timber Hollow into the Union rear and drives Carr's outnumbered division from Elkhorn Tavern. At dawn Curtis reforms the army behind twenty-one guns on Welfley's Knoll. The field turns around: the former defender attacks an army whose reserve ammunition train has been ordered twelve miles away.",
+    "provenance": "Verified for the two-day sequence, army-level anchors, named formations, battle-date grades, the March 8 gun counts, terrain landmarks, the ammunition-train crisis, and the Union victory under the D387 two-family source register. Every phase total, lower OOB split, crew count, coordinate, experience value, leader-quality value, and timing second is an Inferred simulation abstraction inside the committed envelopes. The NPS Civil War Series, ECWC, Wikipedia, and much ABT narrative share the Shea and Hess scholarly root; the runtime never counts those as independent families.",
+    "field": {
+      "w": 1250,
+      "h": 950
+    },
+    "homeEdge": {
+      "US": "high",
+      "CS": "low"
+    },
+    "_homeEdgeNote": "Low z is north through Cross Timber Hollow, the Confederate approach into the Union rear; high z is south toward Little Sugar Creek, the Union rear. These side-keyed home edges remain constant when the roles reverse. Verified geography; Inferred field orientation.",
+    "attacker": "CS",
+    "defender": "US",
+    "defaultFog": false,
+    "holdToWinSec": 105,
+    "timeLimitSec": 410,
+    "objective": {
+      "x": 640,
+      "z": 500,
+      "r": 120,
+      "name": "Elkhorn Tavern"
+    },
+    "weather": {
+      "sky": "clear",
+      "time": "morning",
+      "provenance": "Inferred",
+      "note": "Cold March presentation only. No literal weather fog is sourced for March 7: phase 1 uses the engine's fog-of-war model solely as a disclosed operational-surprise abstraction for Van Dorn appearing in the Union rear and Curtis's all-day information problem. Phase 2 is explicitly clear because the whole opposing line was visible. Weather never writes combat output.",
+      "sources": [
+        "https://www.battlefields.org/learn/civil-war/battles/pea-ridge",
+        "https://encyclopediaofarkansas.net/entries/battle-of-pea-ridge-508/"
+      ]
+    },
+    "menu": {
+      "title": "ELKHORN TAVERN (1862)",
+      "deck": "Fight Pea Ridge on its honest axis: take the tavern from the Union rear on March 7, then face Curtis's re-formed line and massed guns while the ammunition train waits twelve miles away.",
+      "aria": "Elkhorn Tavern at Pea Ridge, March 1862 - the two-phase real-time role-reversal battle; command either army."
+    },
+    "sides": {
+      "heading": "Elkhorn Tavern - Take Which Command?",
+      "intro": "March 7, 1862 - Van Dorn's winter march has put Price's wing behind Curtis's fortified front. The first fight faces south; the second turns north.",
+      "US": {
+        "title": "Command the Union (Curtis)",
+        "badge": "&#9733; ABOUT-FACE AND REFORM",
+        "deck": "Hold Cross Timber Hollow with Carr's piecemeal reinforcements, then reform all four divisions behind Sigel's twenty-one guns and drive north through the tavern."
+      },
+      "CS": {
+        "title": "Command the Confederacy (Van Dorn)",
+        "badge": "&#9876; STRIKE THE REAR",
+        "deck": "Use the Bentonville Detour to seize the tavern before Curtis forms. On March 8, hold the junction with exhausted men while your reserve ammunition sits at Camp Stephens."
+      },
+      "foot": "Phase 1 carries weight 1; Curtis's phase-2 counterattack carries the decisive weight 3. The Phase 1 fog indicator represents operational surprise, not sourced weather."
+    },
+    "brief": {
+      "attack": "Price's Missourians have reached the Telegraph Road behind the Union camps. Mass against Carr's small opening line, take Elkhorn Tavern, and keep the Huntsville Road open. Your march has outrun the trains; the map, not a hidden penalty, shows the risk.",
+      "defend": "Carr opens outnumbered in Cross Timber Hollow. Trade ground for time while Dodge fights, Vandever arrives, and Asboth relieves the line. The decisive second phase belongs to Curtis's re-formed army and Welfley's Knoll."
+    },
+    "phases": [
+      {
+        "id": "march7-elkhorn",
+        "name": "Elkhorn Tavern - March 7",
+        "sector": "Cross Timber Hollow, Clemons' farm, Elkhorn Tavern, and the fallback to Ruddick's field",
+        "timing": "March 7, 1862 - first contact about 9:30 a.m.; the tavern falls near nightfall",
+        "scoreWeight": 1,
+        "attacker": "CS",
+        "defender": "US",
+        "assaultDoctrine": "standard",
+        "defaultFog": true,
+        "holdToWinSec": 95,
+        "timeLimitSec": 405,
+        "homeEdge": {
+          "US": "high",
+          "CS": "low"
+        },
+        "objective": {
+          "x": 640,
+          "z": 500,
+          "r": 120,
+          "name": "Elkhorn Tavern"
+        },
+        "transition": {
+          "title": "The Army in the Rear",
+          "lead": "No literal weather fog is sourced. The fog indicator stands for the operational surprise: Van Dorn has marched around Big Mountain on the Bentonville Detour, descended the Telegraph Road from Cross Timber Hollow, and appeared behind the Union line. Curtis learns about 10:30 a.m. that the main blow is in his rear."
+        },
+        "terrain": {
+          "hills": [
+            {
+              "name": "Big Mountain shoulder",
+              "x": 1030,
+              "z": 210,
+              "h": 23,
+              "s": 150,
+              "note": "High ground screening the Bentonville Detour and the northern approach. Verified feature; Inferred placement."
+            },
+            {
+              "name": "Elkhorn plateau",
+              "x": 650,
+              "z": 505,
+              "h": 14,
+              "s": 190,
+              "note": "The ridge around the tavern above Cross Timber Hollow. Verified feature; Inferred geometry."
+            }
+          ],
+          "woods": [
+            {
+              "x": 620,
+              "z": 275,
+              "r": 145,
+              "note": "Cross Timber Hollow's dense timber along the Telegraph Road. Verified feature; Inferred placement."
+            },
+            {
+              "x": 860,
+              "z": 520,
+              "r": 105,
+              "note": "Broken timber east of the tavern toward Clemons' farm. Verified landscape; Inferred placement."
+            },
+            {
+              "x": 420,
+              "z": 610,
+              "r": 95,
+              "note": "Farm woods screening the successive Union lines toward Ruddick's field. Inferred placement."
+            }
+          ],
+          "walls": [
+            {
+              "x1": 445,
+              "z1": 555,
+              "x2": 785,
+              "z2": 535,
+              "note": "Ordinary farm fences below the tavern, universal cover only. Verified landscape class; Inferred trace."
+            }
+          ],
+          "swamps": [],
+          "markers": [
+            {
+              "kind": "road",
+              "name": "Telegraph Road (Wire Road)",
+              "path": [[625, 40], [630, 245], [640, 500], [650, 735], [660, 930]],
+              "note": "The north-south spine from Cross Timber Hollow through Elkhorn Tavern toward Little Sugar Creek. Verified; Inferred trace."
+            },
+            {
+              "kind": "road",
+              "name": "Huntsville Road",
+              "path": [[640, 500], [830, 480], [1040, 450], [1210, 420]],
+              "note": "The road east from the tavern used in the nightfall push and the next day's withdrawal. Verified; Inferred trace."
+            },
+            {
+              "kind": "town",
+              "name": "Elkhorn Tavern",
+              "path": [[640, 500]],
+              "note": "The two-day objective at the Telegraph and Huntsville road junction. Verified."
+            },
+            {
+              "kind": "town",
+              "name": "Clemons' farm",
+              "path": [[875, 525]],
+              "note": "Dodge's brigade fought here during the March 7 defense. Verified landmark; Inferred placement."
+            },
+            {
+              "kind": "label",
+              "name": "Ruddick's field",
+              "x": 620,
+              "z": 735,
+              "note": "Carr's final line, more than a quarter-mile south of the tavern. Verified landmark; Inferred placement."
+            },
+            {
+              "kind": "label",
+              "name": "The tanyard",
+              "x": 565,
+              "z": 325,
+              "note": "Thinly sourced flavor inside Cross Timber Hollow, never a load-bearing terrain claim. Inferred."
+            },
+            {
+              "kind": "label",
+              "name": "Little Sugar Creek",
+              "x": 650,
+              "z": 925,
+              "note": "Curtis's original fortified front, now the Union home edge two miles south. Verified context; Inferred placement."
+            }
+          ]
+        },
+        "supply": {
+          "US": {
+            "x": 650,
+            "z": 865,
+            "name": "Curtis's intact Little Sugar Creek trains"
+          },
+          "CS": {
+            "x": 1170,
+            "z": 35,
+            "name": "The trains left behind on the Bentonville Detour"
+          }
+        },
+        "leaders": {
+          "US": [
+            {
+              "id": "ld_et_curtis_p1",
+              "name": "Brig. Gen. Samuel R. Curtis",
+              "short": "Curtis",
+              "quality": 0.66,
+              "radius": 255,
+              "x": 650,
+              "z": 760,
+              "fate": 2.4,
+              "note": "Army commander. His major-general date of rank was March 21, the reward for this victory; the field grade here is brigadier general. Verified grade; Inferred quality value."
+            },
+            {
+              "id": "ld_et_carr_p1",
+              "name": "Col. Eugene A. Carr",
+              "short": "Carr",
+              "quality": 0.68,
+              "radius": 235,
+              "x": 640,
+              "z": 560,
+              "fate": 0.8,
+              "note": "4th Division commander, several times wounded while holding the axis. His later brigadier appointment was backdated and his Medal of Honor came in 1894. Verified grade and command; Inferred quality value."
+            },
+            {
+              "id": "ld_et_asboth_p1",
+              "name": "Brig. Gen. Alexander Asboth",
+              "short": "Asboth",
+              "quality": 0.62,
+              "radius": 225,
+              "atSec": 255,
+              "x": 360,
+              "z": 690,
+              "fate": 1.2,
+              "entry": "Asboth reaches Carr's failing line late in the day.",
+              "note": "2nd Division commander, wounded in the right arm March 7. Verified grade and relief; Inferred timing and quality value."
+            }
+          ],
+          "CS": [
+            {
+              "id": "ld_et_vandorn_p1",
+              "name": "Maj. Gen. Earl Van Dorn",
+              "short": "Van Dorn",
+              "quality": 0.56,
+              "radius": 255,
+              "x": 650,
+              "z": 190,
+              "fate": 2.2,
+              "note": "Army of the West commander. The envelopment and the severed supply line are his operational choices, not a luck modifier. Verified grade; Inferred quality value."
+            },
+            {
+              "id": "ld_et_price_p1",
+              "name": "Maj. Gen. Sterling Price",
+              "short": "Price",
+              "quality": 0.65,
+              "radius": 245,
+              "x": 620,
+              "z": 285,
+              "fate": 1.0,
+              "note": "Price's Confederate commission was dated March 6, one day before the battle, while most of his command still served in Missouri State Guard organization. Verified grade and nuance; Inferred quality value."
+            },
+            {
+              "id": "ld_et_little_p1",
+              "name": "Col. Henry Little",
+              "short": "Little",
+              "quality": 0.66,
+              "radius": 220,
+              "x": 520,
+              "z": 330,
+              "fate": 1.7,
+              "note": "1st Missouri Brigade commander at colonel's grade. Verified grade and command; Inferred quality value."
+            },
+            {
+              "id": "ld_et_slack_p1",
+              "name": "Col. William Y. Slack",
+              "short": "Slack",
+              "quality": 0.58,
+              "radius": 215,
+              "x": 760,
+              "z": 340,
+              "fate": 0.65,
+              "note": "2nd Missouri Brigade commander, mortally wounded March 7. His Confederate brigadier commission was posthumous. Verified grade and fate; Inferred quality value."
+            },
+            {
+              "id": "ld_et_frost_p1",
+              "name": "Brig. Gen. Daniel M. Frost",
+              "short": "Frost",
+              "quality": 0.54,
+              "radius": 220,
+              "x": 850,
+              "z": 300,
+              "fate": 1.8,
+              "note": "A Confederate brigadier from March 3 commanding Missouri State Guard divisions: the reverse rank trap. Verified grade and command; Inferred quality value."
+            }
+          ]
+        },
+        "oob": {
+          "US": [
+            {
+              "id": "us_et_dodge",
+              "name": "Dodge's Brigade - Cross Timber Hollow",
+              "commander": "Col. Grenville M. Dodge",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1260,
+              "xp": 2,
+              "x": 650,
+              "z": 565,
+              "facing": 0,
+              "formation": "line",
+              "note": "Carr's first small line on the Telegraph Road and at Clemons' farm. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_et_carr_guns",
+              "name": "Carr's Division Artillery (Inferred grouping)",
+              "commander": "Division batteries",
+              "arm": "art",
+              "weapon": "smooth",
+              "guns": 4,
+              "men": 120,
+              "xp": 1,
+              "x": 745,
+              "z": 590,
+              "facing": 0,
+              "formation": "line",
+              "note": "A coarse March 7 gun grouping under the universal artillery model; the sources pin a ratio, not this count. Inferred strength and gun count."
+            }
+          ],
+          "CS": [
+            {
+              "id": "cs_et_little",
+              "name": "Little's 1st Missouri Brigade",
+              "commander": "Col. Henry Little",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1700,
+              "xp": 2,
+              "x": 500,
+              "z": 315,
+              "facing": 3.14159,
+              "formation": "column",
+              "note": "The leading Missouri brigade on the Elkhorn axis. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_et_slack",
+              "name": "Slack's 2nd Missouri Brigade",
+              "commander": "Col. William Y. Slack",
+              "arm": "inf",
+              "weapon": "smooth",
+              "men": 1350,
+              "xp": 2,
+              "x": 650,
+              "z": 300,
+              "facing": 3.14159,
+              "formation": "column",
+              "note": "The second Missouri brigade, still commanded by a colonel at Pea Ridge. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_et_frost",
+              "name": "Frost's Missouri State Guard Divisions (7th and 9th)",
+              "commander": "Brig. Gen. Daniel M. Frost",
+              "arm": "inf",
+              "weapon": "smooth",
+              "men": 1250,
+              "xp": 1,
+              "x": 810,
+              "z": 305,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "A coarse grouping of the State Guard divisions commanded by a Confederate brigadier. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_et_gates",
+              "name": "Gates's 1st Missouri Cavalry",
+              "commander": "Col. Elijah Gates",
+              "arm": "cav",
+              "weapon": "carbine",
+              "men": 650,
+              "xp": 1,
+              "x": 920,
+              "z": 270,
+              "facing": 3.14159,
+              "formation": "column",
+              "note": "Identity only; no claim about a dismounted fight, captured guns, or unit casualties is encoded. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_et_price_guns",
+              "name": "Price's Wing Artillery (Inferred grouping)",
+              "commander": "Wing batteries",
+              "arm": "art",
+              "weapon": "smooth",
+              "guns": 8,
+              "men": 300,
+              "xp": 1,
+              "x": 590,
+              "z": 255,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "A coarse March 7 grouping under the universal gun model; the day-one ratio is source context, not an exact battery return. Inferred strength and gun count."
+            }
+          ]
+        },
+        "reinforcements": [
+          {
+            "id": "us_et_vandever",
+            "side": "US",
+            "atSec": 115,
+            "name": "Vandever's Brigade - 4th Division",
+            "commander": "Col. William Vandever",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 1050,
+            "xp": 2,
+            "x": 850,
+            "z": 735,
+            "facing": 0,
+            "formation": "column",
+            "entry": "reaching Carr about 12:30 p.m.",
+            "note": "The sourced midday reinforcement on Carr's line. Verified identity and arrival order; Inferred strength and timing second."
+          },
+          {
+            "id": "us_et_asboth_relief",
+            "side": "US",
+            "atSec": 255,
+            "name": "Asboth's Late-Day Relief",
+            "commander": "Brig. Gen. Alexander Asboth",
+            "arm": "inf",
+            "weapon": "rifled",
+            "men": 1600,
+            "xp": 2,
+            "x": 360,
+            "z": 735,
+            "facing": 0,
+            "formation": "column",
+            "entry": "relieving the final line near Ruddick's field",
+            "note": "Asboth's late-day support before he was wounded. Verified identity and sequence; Inferred strength and timing second."
+          }
+        ],
+        "teaching": {
+          "head": "Operational surprise, not weather fog",
+          "body": "The Confederate advantage comes from marching around the fortified front and appearing in the Union rear, then massing against Carr's small opening line while the defense arrives in pieces. The fog indicator discloses that information abstraction. No surprise bonus, collapse script, or battle-specific combat key exists.",
+          "provenance": "Verified operational sequence (ABT and EOA); map coordinates, timing seconds, and readiness are Inferred."
+        }
+      },
+      {
+        "id": "march8-counterattack",
+        "name": "Curtis's Counterattack - March 8",
+        "sector": "Welfley's Knoll, the Telegraph Road line, Elkhorn Tavern, and the Huntsville Road junction",
+        "timing": "March 8, 1862 - the cannonade begins about 8:30 a.m.; the infantry advances about 10:00 a.m.",
+        "scoreWeight": 3,
+        "attacker": "US",
+        "defender": "CS",
+        "assaultDoctrine": "standard",
+        "defaultFog": false,
+        "holdToWinSec": 100,
+        "timeLimitSec": 410,
+        "homeEdge": {
+          "US": "high",
+          "CS": "low"
+        },
+        "objective": {
+          "x": 650,
+          "z": 470,
+          "r": 130,
+          "name": "Elkhorn Tavern and the Telegraph-Huntsville Road Junction"
+        },
+        "transition": {
+          "title": "The Night That Decided Pea Ridge",
+          "lead": "Van Dorn's reserve ammunition train is mistakenly ordered back to Camp Stephens, about twelve miles and a six-hour march away. Col. Elkanah Greer brings the surviving remnant of McCulloch's leaderless wing to the Elkhorn line. Curtis reforms Carr, Davis, Osterhaus, and Asboth across one visible front, with Sigel commanding the two divisions on the left. This is an overnight teaching interstitial, never a scored phase."
+        },
+        "terrain": {
+          "hills": [
+            {
+              "name": "Welfley's Knoll",
+              "x": 400,
+              "z": 650,
+              "h": 22,
+              "s": 175,
+              "note": "The ridge west of the tavern where six Federal batteries massed twenty-one guns. Verified feature; Inferred geometry."
+            },
+            {
+              "name": "Big Mountain",
+              "x": 1020,
+              "z": 345,
+              "h": 25,
+              "s": 165,
+              "note": "The high ground northwest of the tavern; the peripheral March 8 skirmish belongs to teaching, not this OOB. Verified feature; Inferred placement."
+            }
+          ],
+          "woods": [
+            {
+              "x": 650,
+              "z": 300,
+              "r": 125,
+              "note": "Cross Timber Hollow behind the Confederate line and withdrawal route. Verified feature; Inferred placement."
+            },
+            {
+              "x": 900,
+              "z": 520,
+              "r": 100,
+              "note": "Broken woods east of the Telegraph Road. Inferred placement."
+            }
+          ],
+          "walls": [
+            {
+              "x1": 360,
+              "z1": 530,
+              "x2": 940,
+              "z2": 510,
+              "note": "Farm fences across the open line south of the tavern, ordinary universal cover only. Verified landscape class; Inferred trace."
+            }
+          ],
+          "swamps": [],
+          "markers": [
+            {
+              "kind": "road",
+              "name": "Telegraph Road",
+              "path": [[640, 30], [645, 250], [650, 470], [650, 700], [650, 930]],
+              "note": "The line of the Confederate position and the Union advance. Verified; Inferred trace."
+            },
+            {
+              "kind": "road",
+              "name": "Huntsville Road",
+              "path": [[650, 470], [850, 445], [1060, 420], [1220, 400]],
+              "note": "The eastward withdrawal route past Curtis's right. Verified; Inferred trace."
+            },
+            {
+              "kind": "town",
+              "name": "Elkhorn Tavern",
+              "path": [[650, 470]],
+              "note": "The road-junction objective retaken by the Union advance. Verified."
+            },
+            {
+              "kind": "label",
+              "name": "Welfley's Knoll - twenty-one guns",
+              "x": 400,
+              "z": 650,
+              "note": "Six Federal batteries against twelve Confederate guns. Verified counts; Inferred placement."
+            },
+            {
+              "kind": "label",
+              "name": "Little Sugar Creek",
+              "x": 650,
+              "z": 925,
+              "note": "The intact Union rear and supply direction. Verified context; Inferred placement."
+            }
+          ]
+        },
+        "supply": {
+          "US": {
+            "x": 650,
+            "z": 915,
+            "name": "Curtis's intact Little Sugar Creek trains"
+          },
+          "CS": {
+            "x": 70,
+            "z": 25,
+            "name": "The trains - ordered back to Camp Stephens"
+          }
+        },
+        "leaders": {
+          "US": [
+            {
+              "id": "ld_et_curtis_p2",
+              "name": "Brig. Gen. Samuel R. Curtis",
+              "short": "Curtis",
+              "quality": 0.68,
+              "radius": 260,
+              "x": 650,
+              "z": 735,
+              "fate": 2.4,
+              "note": "Army commander, directing the re-formed four-division line at his battle-date grade. Verified grade and command; Inferred quality value."
+            },
+            {
+              "id": "ld_et_sigel_p2",
+              "name": "Brig. Gen. Franz Sigel",
+              "short": "Sigel",
+              "quality": 0.7,
+              "radius": 250,
+              "x": 350,
+              "z": 675,
+              "fate": 2.1,
+              "note": "Commanding the two left divisions and the massed artillery preparation. Verified grade and role; Inferred quality value."
+            },
+            {
+              "id": "ld_et_carr_p2",
+              "name": "Col. Eugene A. Carr",
+              "short": "Carr",
+              "quality": 0.66,
+              "radius": 225,
+              "x": 980,
+              "z": 690,
+              "fate": 1.1,
+              "note": "4th Division on the right of the March 8 line, still a colonel. Verified grade and role; Inferred quality value."
+            },
+            {
+              "id": "ld_et_davis_p2",
+              "name": "Col. Jefferson C. Davis",
+              "short": "Davis",
+              "quality": 0.64,
+              "radius": 220,
+              "x": 760,
+              "z": 685,
+              "fate": 2.0,
+              "note": "3rd Division in the center; the battle-date sources style him colonel. Verified grade and role; Inferred quality value."
+            },
+            {
+              "id": "ld_et_osterhaus_p2",
+              "name": "Col. Peter J. Osterhaus",
+              "short": "Osterhaus",
+              "quality": 0.66,
+              "radius": 220,
+              "x": 520,
+              "z": 680,
+              "fate": 1.9,
+              "note": "1st Division on Sigel's left wing at colonel's grade. Verified grade and role; Inferred quality value."
+            },
+            {
+              "id": "ld_et_asboth_p2",
+              "name": "Brig. Gen. Alexander Asboth",
+              "short": "Asboth",
+              "quality": 0.61,
+              "radius": 225,
+              "x": 275,
+              "z": 690,
+              "fate": 1.2,
+              "note": "2nd Division on the far left; his wound and the dawn-snapshot order are disclosed rather than flattened. Verified grade and identity; Inferred quality value."
+            }
+          ],
+          "CS": [
+            {
+              "id": "ld_et_vandorn_p2",
+              "name": "Maj. Gen. Earl Van Dorn",
+              "short": "Van Dorn",
+              "quality": 0.53,
+              "radius": 250,
+              "x": 650,
+              "z": 300,
+              "fate": 2.2,
+              "note": "Army commander on the March 8 line, responsible for the choices that left the reserve cartridges distant. Verified grade; Inferred quality value."
+            },
+            {
+              "id": "ld_et_price_p2",
+              "name": "Maj. Gen. Sterling Price",
+              "short": "Price",
+              "quality": 0.62,
+              "radius": 240,
+              "x": 720,
+              "z": 350,
+              "fate": 1.1,
+              "note": "Commanding the Missouri line after his March 7 wound, under a Confederate commission one day old at the battle's opening. Verified grade and role; Inferred quality value."
+            },
+            {
+              "id": "ld_et_little_p2",
+              "name": "Col. Henry Little",
+              "short": "Little",
+              "quality": 0.64,
+              "radius": 215,
+              "x": 500,
+              "z": 355,
+              "fate": 1.7,
+              "note": "Holding the Missouri line at colonel's grade. Verified grade and role; Inferred quality value."
+            },
+            {
+              "id": "ld_et_frost_p2",
+              "name": "Brig. Gen. Daniel M. Frost",
+              "short": "Frost",
+              "quality": 0.52,
+              "radius": 215,
+              "x": 830,
+              "z": 360,
+              "fate": 1.8,
+              "note": "Confederate brigadier commanding State Guard formations. Verified grade and command; Inferred quality value."
+            },
+            {
+              "id": "ld_et_greer_p2",
+              "name": "Col. Elkanah Greer",
+              "short": "Greer",
+              "quality": 0.58,
+              "radius": 215,
+              "atSec": 40,
+              "x": 1000,
+              "z": 310,
+              "fate": 1.8,
+              "entry": "Greer's remnant comes onto the Elkhorn line after the overnight march.",
+              "note": "Senior surviving officer of the other wing's remnant after its March 7 command losses. Verified identity and succession; Inferred timing and quality value."
+            }
+          ]
+        },
+        "oob": {
+          "US": [
+            {
+              "id": "us_et_carr",
+              "name": "Carr's 4th Division - Right",
+              "commander": "Col. Eugene A. Carr",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1850,
+              "xp": 2,
+              "x": 980,
+              "z": 690,
+              "facing": 0,
+              "formation": "line",
+              "note": "The right of Curtis's re-formed March 8 line. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_et_davis",
+              "name": "Davis's 3rd Division - Center",
+              "commander": "Col. Jefferson C. Davis",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1900,
+              "xp": 2,
+              "x": 760,
+              "z": 690,
+              "facing": 0,
+              "formation": "line",
+              "note": "The center of the March 8 advance. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_et_osterhaus",
+              "name": "Osterhaus's 1st Division - Left Center",
+              "commander": "Col. Peter J. Osterhaus",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1700,
+              "xp": 2,
+              "x": 520,
+              "z": 690,
+              "facing": 0,
+              "formation": "line",
+              "note": "One of Sigel's two left divisions; line order is a disclosed Shea-rooted reconstruction. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_et_asboth",
+              "name": "Asboth's 2nd Division - Far Left",
+              "commander": "Brig. Gen. Alexander Asboth",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 2050,
+              "xp": 2,
+              "x": 270,
+              "z": 700,
+              "facing": 0,
+              "formation": "line",
+              "note": "The far-left division under Sigel; the dawn-snapshot caveat and Asboth's wound remain in the teaching. Verified identity; Inferred strength."
+            },
+            {
+              "id": "us_et_welfley_guns",
+              "name": "Welfley's Knoll Grand Battery",
+              "commander": "Six Federal batteries under Sigel",
+              "arm": "art",
+              "weapon": "napoleon",
+              "guns": 21,
+              "men": 450,
+              "xp": 3,
+              "x": 400,
+              "z": 650,
+              "facing": 0,
+              "formation": "line",
+              "note": "Twenty-one sourced guns massed on Welfley's Knoll under the universal gun model. Verified identity and gun count; Inferred strength."
+            }
+          ],
+          "CS": [
+            {
+              "id": "cs_et_little",
+              "name": "Little's 1st Missouri Brigade - Left",
+              "commander": "Col. Henry Little",
+              "arm": "inf",
+              "weapon": "rifled",
+              "men": 1450,
+              "xp": 2,
+              "x": 500,
+              "z": 355,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "The Missouri line after the night at the tavern. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_et_frost",
+              "name": "Frost's Missouri State Guard Divisions - Center",
+              "commander": "Brig. Gen. Daniel M. Frost",
+              "arm": "inf",
+              "weapon": "smooth",
+              "men": 1050,
+              "xp": 1,
+              "x": 710,
+              "z": 360,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "State Guard formations under a Confederate brigadier on the March 8 line. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_et_gates",
+              "name": "Gates's 1st Missouri Cavalry - Huntsville Road",
+              "commander": "Col. Elijah Gates",
+              "arm": "cav",
+              "weapon": "carbine",
+              "men": 550,
+              "xp": 1,
+              "x": 930,
+              "z": 330,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "Identity and road-screening placement only; the refuted tactical details remain excluded. Verified identity; Inferred strength."
+            },
+            {
+              "id": "cs_et_price_guns",
+              "name": "Confederate March 8 Gun Line",
+              "commander": "Army of the West batteries",
+              "arm": "art",
+              "weapon": "smooth",
+              "guns": 12,
+              "men": 300,
+              "xp": 1,
+              "x": 650,
+              "z": 415,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "The sourced twelve Confederate guns opposed to Welfley's twenty-one, under the universal gun model. Verified identity and gun count; Inferred strength."
+            }
+          ]
+        },
+        "reinforcements": [
+          {
+            "id": "cs_et_greer",
+            "side": "CS",
+            "atSec": 40,
+            "name": "Greer's Overnight Remnant",
+            "commander": "Col. Elkanah Greer",
+            "arm": "cav",
+            "weapon": "carbine",
+            "men": 1700,
+            "xp": 2,
+            "x": 1030,
+            "z": 300,
+            "facing": 3.14159,
+            "formation": "column",
+            "entry": "arriving from the other wing after its leaders fell",
+            "note": "A coarse consolidation of the surviving remnant Greer brought to Van Dorn. Verified identity and succession; Inferred strength and timing second."
+          }
+        ],
+        "teaching": {
+          "head": "The ammunition was twelve miles away",
+          "body": "Curtis has re-formed the army and Sigel has massed twenty-one guns against twelve. Van Dorn's reserve cartridges are at Camp Stephens because the train has been ordered back. The engine reads those train positions through the universal supply model. The empty boxes are the end of Van Dorn's own operational choices met by Union competence, never a gallant army betrayed by luck.",
+          "provenance": "Verified sequence and gun counts under the D387 register; positions, timing seconds, and readiness are Inferred."
+        }
+      }
+    ],
+    "endNote": {
+      "US": {
+        "US": "History holds. Carr's line gave ground but did not dissolve; Curtis re-formed all four divisions, Sigel's guns opened from Welfley's Knoll, and the army advanced through Elkhorn Tavern. Van Dorn withdrew east on the Huntsville Road while the reserve ammunition remained at Camp Stephens. Missouri stayed in the Union and the Confederate Army of the West was ordered across the Mississippi.",
+        "CS": "History diverges after the about-face. The tavern fell on March 7, but Curtis's counterattack did not retake the road junction. Van Dorn holds northwest Arkansas with an exhausted army and an ammunition crisis still visible on the map."
+      },
+      "CS": {
+        "US": "History diverges on the first day. Carr's piecemeal line holds Elkhorn Tavern before the full army reforms, denying Van Dorn the nightfall position his march was designed to win.",
+        "CS": "History diverges decisively. The envelopment takes the tavern and the March 8 line survives Curtis's massed guns despite the distant train. Pea Ridge no longer secures Missouri for the Union."
+      },
+      "draw": "The two days divide without a decisive aggregate. The real battle did not: the Confederates took Elkhorn Tavern on March 7, the Union retook the field on March 8, and Van Dorn withdrew east."
+    },
+    "teaching": {
+      "title": "Pea Ridge - what the Elkhorn axis teaches",
+      "cards": [
+        {
+          "id": "et_most_pivotal",
+          "head": "The Most Pivotal Battle West of the Mississippi",
+          "body": "The National Park Service states: ‘Pea Ridge was the most pivotal Civil War battle west of the Mississippi River’ - never the largest. More than 23,000 soldiers fought across both fields. The Encyclopedia of Arkansas describes Van Dorn's concentration as ‘greater than any other Confederate force in a single campaign during the entire Civil War.’ The Union victory secured Missouri for the next two years and forced that campaign army to leave Arkansas.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.nps.gov/peri/",
+            "https://encyclopediaofarkansas.net/entries/battle-of-pea-ridge-508/"
+          ]
+        },
+        {
+          "id": "et_state_army",
+          "head": "A State Army, Not a Confederate One",
+          "body": "Missouri's elected convention rejected secession 98-1. A rump government claimed the state for the Confederacy, but most of Price's soldiers still served in the Missouri State Guard. Price's Confederate major-general commission was dated March 6, one day before Pea Ridge; Frost held a four-day-old Confederate brigadier's commission while commanding State Guard divisions. The dual authority is part of the army, not a footnote.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.nps.gov/peri/learn/historyculture/order-of-battle.htm",
+            "https://encyclopediaofarkansas.net/entries/pea-ridge-campaign-507/",
+            "https://www.battlefields.org/learn/biographies/sterling-price",
+            "https://en.wikipedia.org/wiki/Sterling_Price"
+          ]
+        },
+        {
+          "id": "et_about_face",
+          "head": "The Envelopment and the About-Face",
+          "body": "Curtis had fortified Little Sugar Creek facing south. Van Dorn refused that front, took the Bentonville Detour around Big Mountain, and appeared on the Telegraph Road in the Union rear. About 10:30 a.m. Curtis learned where the main blow had fallen and re-faced the army. The inverted home edges make that command problem visible.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.battlefields.org/learn/civil-war/battles/pea-ridge",
+            "https://encyclopediaofarkansas.net/entries/battle-of-pea-ridge-508/"
+          ]
+        },
+        {
+          "id": "et_forced_march",
+          "head": "Three Days of Snow, Fifty Miles, No Trains",
+          "body": "Van Dorn started the forced march on March 4 and covered roughly fifty miles through winter weather on short rations. Speed required leaving the trains behind. The flank march gained the Union rear and spent the army's strength before the decisive morning. Experience and supply positions carry the cost; no exhaustion multiplier exists.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.battlefields.org/learn/civil-war/battles/pea-ridge",
+            "https://encyclopediaofarkansas.net/entries/battle-of-pea-ridge-508/"
+          ]
+        },
+        {
+          "id": "et_carr_holds",
+          "head": "Carr Holds the Hollow",
+          "body": "Carr's 4th Division opened small in Cross Timber Hollow, then fought through Dodge's line at Clemons' farm, Vandever's midday arrival, four successive positions, and Asboth's late relief near Ruddick's field. Carr commanded a division as a colonel and was several times wounded. His Medal of Honor came on January 16, 1894, not on the 1862 field. The OR-derived divisional return assigns Carr 682 of the Union army's 1,384 casualties; that split is Inferred here because its accessible path is the Wikipedia/Official Records mirror rather than a second independent family. Slack fell near the tavern as a colonel; his Confederate brigadier commission was posthumous.",
+          "provenance": "Inferred",
+          "sources": [
+            "https://www.nps.gov/peri/planyourvisit/stop-7-elkhorn-tavern.htm",
+            "https://encyclopediaofarkansas.net/entries/battle-of-pea-ridge-508/"
+          ]
+        },
+        {
+          "id": "et_welfley_guns",
+          "head": "Twenty-One Guns on Welfley's Knoll",
+          "body": "About 8:30 a.m. on March 8, six Federal batteries massed twenty-one guns on Welfley's Knoll against twelve Confederate guns. More than 3,600 rounds crossed the field in roughly two hours; the infantry advanced about 10:00 a.m., Sigel driving the right and Davis the center. The counts enter the universal gun model, never a battle-only firepower key.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.nps.gov/peri/",
+            "https://npshistory.com/publications/civil_war_series/19/sec8.htm"
+          ]
+        },
+        {
+          "id": "et_ammunition",
+          "head": "The Ammunition Was Twelve Miles Away",
+          "body": "The reserve train was mistakenly ordered back to Camp Stephens, a dozen miles and about a six-hour march away. Van Dorn's army held the ground it had won but could not refill its cartridge boxes. This was not a gallant army betrayed by bad luck: the empty boxes ended Van Dorn's own chain of choices - forced march, short rations, separation from the trains, and the order sending them back - while Curtis re-formed the line and Sigel massed the guns.",
+          "provenance": "Verified",
+          "sources": [
+            "https://npshistory.com/publications/civil_war_series/19/sec8.htm",
+            "https://encyclopediaofarkansas.net/entries/battle-of-pea-ridge-508/",
+            "https://www.battlefields.org/learn/civil-war/battles/pea-ridge"
+          ]
+        },
+        {
+          "id": "et_leetown_other_field",
+          "head": "Leetown: The Other Field",
+          "body": "Two miles southwest on March 7, a separate fight destroyed the command of Van Dorn's other wing: Brig. Gen. Ben McCulloch was killed while reconnoitering, Brig. Gen. James McIntosh was killed soon after, and Col. Louis Hébert was captured. Col. Elkanah Greer, the senior surviving officer, brought the remnant to Van Dorn overnight. This battle teaches Leetown because that command loss shaped March 8; it does not field Leetown.",
+          "provenance": "Verified",
+          "sources": [
+            "https://encyclopediaofarkansas.net/entries/battle-of-pea-ridge-508/",
+            "https://www.battlefields.org/learn/articles/cherokees-pea-ridge"
+          ]
+        },
+        {
+          "id": "et_native_agency",
+          "head": "Native Nations - Agency, Not Exotica",
+          "body": "At Leetown, Brig. Gen. Albert Pike's brigade included Col. John Drew's 1st and Col. Stand Watie's 2nd Cherokee Mounted Rifles - no more than 900 engaged from about 2,500 on paper. Some secondary texts swap those regimental numbers; 1st Drew and 2nd Watie is the four-voice majority convention. Pike's alliances exploited sovereignty fears after the United States Army abandoned Indian Territory's forts, while the slaveholding Treaty-Party elite, including Watie's planter faction, protected human property: this does not make the Confederacy ‘diverse.’ Ross's coerced calculus and the Ross-Watie blood feud reached back to New Echota and the killings of 1839; Drew's regiment had earlier defected rather than fight Opothleyahola's Unionist refugees, a count-free reminder that Native loyalties split. Watie's men also skirmished near Big Mountain on March 8 and were driven off before the decisive Elkhorn assault. That March 8 judgment and Ross calculus are single-family, Shea-rooted Inferences. Native soldiers remain historical actors with their own politics, never spectacle, and no Native formation is fielded on this axis.",
+          "provenance": "Inferred",
+          "sources": [
+            "https://encyclopediaofarkansas.net/entries/indian-soldiers-6392/",
+            "https://www.okhistory.org/publications/enc/entry?entry=PE001",
+            "https://www.battlefields.org/learn/articles/cherokees-pea-ridge"
+          ]
+        },
+        {
+          "id": "et_scalping_weaponized",
+          "head": "The Scalping and Its Weaponization",
+          "body": "After the Leetown cavalry fight, some of Watie's men scalped at least eight Iowa cavalrymen and mutilated others. The entire cluster - the scalpings, Pike's horror, his orders against the practice, his court-martial of a soldier, later federal indictment, and July 1862 resignation - is a single-family account carried by the ABT article on the Shea and Hess root and therefore remains Inferred; the second source below supplies Native-participation context, not independent corroboration of those sentences. The Northern press then weaponized the atrocity into anti-Native propaganda. The perpetrators were not established in the accessible record, and no Union-retaliation claim was found - an honest non-finding, never proof that none occurred. The atrocity and its weaponization are both taught; neither Native savagery nor Union innocence is laundered.",
+          "provenance": "Inferred",
+          "sources": [
+            "https://www.battlefields.org/learn/articles/cherokees-pea-ridge",
+            "https://encyclopediaofarkansas.net/entries/indian-soldiers-6392/"
+          ]
+        }
+      ],
+      "codex": {
+        "id": "codex_elkhorn_tavern",
+        "title": "Pea Ridge - Elkhorn Tavern, March 7-8, 1862",
+        "summary": "Van Dorn marched around Curtis's fortified Little Sugar Creek front and struck the Union rear along the Telegraph Road. Price's wing took Elkhorn Tavern on March 7 after Carr's outnumbered division fell back through four lines. Overnight, Curtis re-formed Carr, Davis, Osterhaus, and Asboth; Sigel massed twenty-one guns on Welfley's Knoll against twelve; and Van Dorn's reserve ammunition train was mistakenly ordered to Camp Stephens, a dozen miles away. The March 8 bombardment and advance drove the Army of the West east along the Huntsville Road. The result was a Union victory that secured Missouri and left Arkansas open. The Leetown fight and Native participation are taught in full but not fielded under the D359 dignity carve-out.",
+        "axes": {
+          "theater": "Trans-Mississippi",
+          "campaign": "Pea Ridge Campaign",
+          "result": "Union victory"
+        },
+        "provenance": "Verified",
+        "sources": [
+          "https://www.nps.gov/peri/",
+          "https://encyclopediaofarkansas.net/entries/battle-of-pea-ridge-508/",
+          "https://www.battlefields.org/learn/civil-war/battles/pea-ridge"
+        ]
+      }
+    }
+  }
+}

@@ -59,7 +59,7 @@ function _fldFlagInitSettings() {
 }
 
 /* ---- per-battle meta: date/theater drive flag choice + the badge gate -----
-   theater "E"/"W"; badges = were AotP corps badges worn (post 21 Mar 1863, East);
+   theater "E"/"W"/"TM"; badges = were AotP corps badges worn (post 21 Mar 1863, East);
    csFlag = the predominant Confederate flag family at that battle.
    Citations live in DECISIONS D131/D351. "hardee" is the representative Western/AoT
    family default, not a claim that every regiment carried one identical design;
@@ -77,6 +77,7 @@ var _FLD_BATTLE_META = {
   gettysburg:       { theater: "E", badges: true,  csFlag: "anv" },            // 1-3 Jul 1863
   newMarketHeights: { theater: "E", badges: false, csFlag: "anv" },            // 29 Sep 1864 (Army of the JAMES: the X/XVIII Corps had their own badges by Sep 1864, but this badge institution models the AotP set only — AoJ badges are a future extension, not a silent reuse. CS defenders are Field's Division ANV + Dept.-of-Richmond cavalry -> Southern Cross; unit names deliberately avoid "Hampton" so the 1861 Legion special-case never fires on the 1864 dismounted command. D363/D364.)
   fortDonelson:     { theater: "W", badges: false, csFlag: "first-national" }, // 13-16 Feb 1862 (D384: February 1862 predates this game's sourced Hardee-pattern convention, which begins at Stones River; Shiloh two months later is the shipped first-national precedent. An Inferred representative family — no claim that every regiment carried one identical flag.)
+  elkhornTavern:    { theater: "TM", badges: false, csFlag: "first-national" }, // 7-8 Mar 1862 (D388: Trans-Mississippi armies, no AotP corps badges. First National is an Inferred representative family, not a claim that every regiment carried one identical flag.)
   shiloh:           { theater: "W", badges: false, csFlag: "first-national" }, // 6-7 Apr 1862
   stonesRiver:      { theater: "W", badges: false, csFlag: "hardee" },         // 31 Dec 1862 - 2 Jan 1863 (Army of Tennessee — the Hardee-pattern blue disc was this very army's flag, carried from Stones River through Nashville; D366)
   vicksburg:        { theater: "W", badges: false, csFlag: "hardee" },         // siege to 4 Jul 1863 (Pemberton's army was Western-lineage — a Western pattern, not the Eastern ANV cross; Inferred)
