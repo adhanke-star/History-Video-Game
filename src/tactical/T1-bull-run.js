@@ -54,6 +54,7 @@ function fldScenarioRegistry() {
       if (GAME_DATA["malvern-hill"] && GAME_DATA["malvern-hill"].malvernHill) R.malvernHill = GAME_DATA["malvern-hill"].malvernHill;   // Phase C-1: Malvern Hill - the Seven Days' culminating artillery duel (single-phase, gun-line defense)
       if (GAME_DATA.chickamauga && GAME_DATA.chickamauga.chickamauga) R.chickamauga = GAME_DATA.chickamauga.chickamauga;   // Phase C-2 Western breadth: Chickamauga - the river of death (3 phases: the woods -> Longstreet's breakthrough -> Thomas at Snodgrass Hill / Horseshoe Ridge)
       if (GAME_DATA.chattanooga && GAME_DATA.chattanooga.chattanooga) R.chattanooga = GAME_DATA.chattanooga.chattanooga;   // D326 Western breadth: Chattanooga - the siege reversal (3 phases: Orchard Knob -> Lookout Mountain -> Missionary Ridge)
+      if (GAME_DATA.spotsylvania && GAME_DATA.spotsylvania.spotsylvania) R.spotsylvania = GAME_DATA.spotsylvania.spotsylvania;   // D391 Overland/attrition lane: Spotsylvania - the Bloody Angle (single-phase: Hancock's dawn break-in against the gun-stripped Mule Shoe tip, then the day-long defender-hold at the west angle)
       if (GAME_DATA.kennesaw && GAME_DATA.kennesaw.kennesaw) R.kennesaw = GAME_DATA.kennesaw.kennesaw;   // D331 Atlanta Campaign: Kennesaw Mountain - Sherman's frontal assault (single-phase: Pigeon Hill + Dead Angle)
       if (GAME_DATA["cedar-creek"] && GAME_DATA["cedar-creek"].cedarCreek) R.cedarCreek = GAME_DATA["cedar-creek"].cedarCreek;   // D376 Shenandoah 1864: Cedar Creek - role reversal (Gordon's fog-bound dawn assault -> Sheridan's decisive clear-afternoon counterattack)
       if (GAME_DATA.franklin && GAME_DATA.franklin.franklin) R.franklin = GAME_DATA.franklin.franklin;   // D333 Franklin/Nashville lane: Franklin - Hood's assault on the Carter House line (single-phase)
@@ -244,7 +245,7 @@ function fldScenarioMenuOrder(reg) {
   return ids;
 }
 function fldScenarioMenuRank(id) {
-  var order = { bullrun1: 10, crossKeysPortRepublic: 12, gainesMill: 15, malvernHill: 18, antietam: 20, fredericksburg: 30, chancellorsville: 35, gettysburg: 40, newMarketHeights: 45, fortDonelson: 48, elkhornTavern: 49, shiloh: 50, stonesRiver: 52, vicksburg: 55, chickamauga: 60, chattanooga: 65, kennesaw: 70, cedarCreek: 72, franklin: 75, nashville: 80, fiveForks: 85 };
+  var order = { bullrun1: 10, crossKeysPortRepublic: 12, gainesMill: 15, malvernHill: 18, antietam: 20, fredericksburg: 30, chancellorsville: 35, gettysburg: 40, newMarketHeights: 45, fortDonelson: 48, elkhornTavern: 49, shiloh: 50, stonesRiver: 52, vicksburg: 55, chickamauga: 60, chattanooga: 65, spotsylvania: 68, kennesaw: 70, cedarCreek: 72, franklin: 75, nashville: 80, fiveForks: 85 };
   return order[id] || 1000;
 }
 function fldScenarioDateSortValue(date) {

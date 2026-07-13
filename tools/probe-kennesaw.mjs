@@ -124,7 +124,7 @@ const SETUP = `(() => {
       if (DATA.attacker !== 'US' || DATA.defender !== 'CS') throw new Error('roles wrong: ' + DATA.attacker + '/' + DATA.defender);
       if (DATA.defaultFog !== false) throw new Error('defaultFog must be false');
       var order = fldScenarioMenuOrder(reg);
-      if (order.indexOf('kennesaw') !== order.indexOf('chattanooga') + 1) throw new Error('menu order not after Chattanooga: ' + order.join(' -> '));
+      if (order.indexOf('spotsylvania') !== order.indexOf('chattanooga') + 1 || order.indexOf('kennesaw') !== order.indexOf('spotsylvania') + 1) throw new Error('menu order not Chattanooga -> Spotsylvania -> Kennesaw: ' + order.join(' -> '));   // D391: Spotsylvania (rank 68) sits between Chattanooga 65 and Kennesaw 70 — the true three-battle chronology (the D376 Franklin-class stale-adjacency lesson).
       return { order:order, usUnits:DATA.oob.US.length, csUnits:DATA.oob.CS.length };
     });
 
@@ -264,7 +264,7 @@ const DOM = `(() => {
     G.settings = G.settings || {}; G.mode = 'menu';
     try { delete G.settings.tacticalPreset; } catch(e) {}
     delete G.settings.tacticalFog;
-    step('MENU: Kennesaw button injects once immediately after Chattanooga and opens side-choice cards', function() {
+    step('MENU: Kennesaw button injects once in the Chattanooga -> Spotsylvania -> Kennesaw chronology and opens side-choice cards', function() {
       if (typeof openMainMenu !== 'function') return { skipped:'no openMainMenu' };
       openMainMenu(); fldInjectMenuButton();
       var btn = document.getElementById('fldScnBtn_kennesaw');
@@ -273,7 +273,7 @@ const DOM = `(() => {
       fldInjectMenuButton();
       if (document.querySelectorAll('#fldScnBtn_kennesaw').length !== 1) throw new Error('duplicate Kennesaw buttons');
       var ids = Array.prototype.slice.call(document.querySelectorAll('.gn-btn')).map(function(b){ return b.id; });
-      if (!(ids.indexOf('fldScnBtn_chattanooga') >= 0 && ids.indexOf('fldScnBtn_kennesaw') === ids.indexOf('fldScnBtn_chattanooga') + 1)) throw new Error('Kennesaw not immediately after Chattanooga: ' + ids.join(' -> '));
+      if (!(ids.indexOf('fldScnBtn_chattanooga') >= 0 && ids.indexOf('fldScnBtn_spotsylvania') === ids.indexOf('fldScnBtn_chattanooga') + 1 && ids.indexOf('fldScnBtn_kennesaw') === ids.indexOf('fldScnBtn_spotsylvania') + 1)) throw new Error('Kennesaw not in the Chattanooga -> Spotsylvania -> Kennesaw order: ' + ids.join(' -> '));   // D391: Spotsylvania (rank 68) sits between Chattanooga 65 and Kennesaw 70 (the D376 Franklin-class stale-adjacency lesson, DOM variant).
       var got = null;
       fldScenarioSideChoice('kennesaw', function(s){ got = s; });
       var cards = document.querySelectorAll('[data-brside]');

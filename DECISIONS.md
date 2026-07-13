@@ -6,6 +6,140 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D391 — PLAYABLE SPOTSYLVANIA: THE BLOODY ANGLE SHIPS AS SCENARIO 22 UNDER THE ARTILLERY-WITHDRAWAL INPUT LAW — [CLAUDE CODE / FABLE, LANE-003 DRIVE→CONTRACT] (2026-07-13)
+
+The playable Spotsylvania runtime from the committed D390 contract (spec §11 atomic integration +
+§14 runtime gate, both honored verbatim). DRIVE was taken in ledger-only commit `93a77e6` at the
+clean D390 boundary `d46f1c7` with all ten plan probes rerun green after the lane edit.
+
+**The scenario:** `data/spotsylvania.json` — id `spotsylvania`, "Spotsylvania: The Bloody Angle",
+May 12, 1864, standalone SINGLE PHASE (no `phases[]`), US attacker (Hancock's II Corps column +
+Wright's VI Corps as timed reinforcements) vs CS defender (Ewell's Second Corps + the sourced
+piecemeal counterattack), fog OFF, menu rank 68 between Chattanooga 65 and Kennesaw 70. The
+objective is the salient INTERIOR (the McCoull-house ground, never the captured tip). **THE
+ARTILLERY-WITHDRAWAL INPUT LAW (spec §5) is the load-bearing input:** the initial CS OOB fields
+ZERO guns (22 of 30 withdrawn May 11, recalled too late, ~20 captured), CS artillery re-enters
+ONLY as the timed re-formed-line grouping (12 guns @t110, disclosure in-file), the captured
+batteries never re-enter, and the US fields its true supporting weight (24 guns) — probe-enforced.
+Committed totals (all `Verified identity; Inferred strength`): **US 18,300** (opening 13,300 =
+Miles 2,000 · Brooke 2,000 · Birney 3,400 · Mott 2,300 · Gibbon 2,800 disclosed supporting/
+UNRESOLVED role · 24-gun/800 grouping; Neill 2,600 @35 with Wright's timed aura; Russell 2,400
+@100 with the Upton grade nuance) and **CS 15,860** (Johnson's gun-stripped tip 5,500 = Walker
+1,400 · Monaghan 1,200 · Witcher 1,400 · Steuart 1,500; Gordon 3,500 @12 · Ramseur 1,650 @25 ·
+Daniel 1,650 @35 · Harris 1,550 @50 · McGowan 1,550 @65 · 12-gun/460 @110) — inside the D390
+envelopes US 14,000-25,000 / CS 8,000-16,000 / Johnson 3,500-5,500. The §6 rank wall ships
+verbatim (Grant Lt. Gen./role; Wright BRIGADIER with the same-day May 12 paperwork disclosed;
+Gordon BRIGADIER until May 14; Sedgwick dead May 9 — teaching card only; Longstreet absent;
+Anderson unnamed by design; Early commanding Third Corps for the sick Hill; the dead Stafford and
+J. M. Jones never in a command seat; Miles/Brooke Inferred-grade). Nine teaching cards + codex
+(Eastern / Overland Campaign / Inconclusive) under the two-source rule with the Rhea-root
+disclosure; prisoners are outputs and teaching, never inputs. Lee and Ramseur field ORDINARY
+sourced command auras (both were personally present in the counterattack — never a result-writer).
+
+**THE HONEST A/B (spec §7 — every iteration logged; only enumerated eligible inputs ever moved;
+no output/multiplier key of any name):**
+- **Battery 0 (first authored inputs) → defender-holds 0/8** (all US by hold ~125s). US 20,000
+  (opening 13,800; Neill 3,200@35, Russell 3,000@100) / CS 13,300 (Johnson 4,500 zero guns;
+  Gordon 3,000@25 entry z120 · Ramseur 1,400@45 z120 · Daniel 1,400@60 z120 · Harris 1,300@80
+  z100 · McGowan 1,300@95 z100 · 12-gun/400@120); objective r130, holdToWin 90, timeLimit 450,
+  5 walls. Root cause (instrumented single-seed diagnostic, not guessed): no defender stood
+  INSIDE the objective radius, so the attacker's hold clock ran uninterrupted from ~t35, and
+  each arriving 1.3-3k brigade was destroyed in detail by ~15k concentrated rifles.
+- **Iter 1 → 0/8:** holdToWin 90→150; counterattack entries moved INTO the salient interior
+  (Gordon (600,230)@20, Ramseur (520,210), Daniel (670,210), Harris (555,195), McGowan
+  (640,195)) — the sourced ground (Gordon's reserve lay inside the salient; Harris/McGowan
+  passed the McCoull house).
+- **Iter 2 → 1/8:** +3 INTERNAL TRAVERSE walls (z410-420, the spec-§4 works vocabulary) +
+  interior rain-mud swale (605,370,r75, spec-§4 sanctioned); objective r 130→150; Johnson's
+  line moved to the traverse field inside the radius and raised 4,500→5,400; US 20,000→17,600
+  (Birney 3,200 · Mott 2,200 · Gibbon 2,400 · Neill 2,600 · Russell 2,400); CS arrivals
+  3,400@20 · 1,600@35 z215 · 1,600@50 z215 · 1,500@65 z200 · 1,500@80 z200 · art@110.
+- **Iter 3 → 3/8:** holdToWin 150→180; r 150→165; +2 interior broken-ground woods (525,355 r60;
+  690,355 r55); II Corps restored to near-full-weight honesty (Birney 3,400 · Mott 2,300 ·
+  Gibbon 2,800 → US 18,300); CS to the envelope edge 15,900 (Johnson 5,500; Gordon 3,500@15 ·
+  Ramseur 1,650@25 · Daniel 1,650@35 · Harris 1,550@50 · McGowan 1,550@65 · art 500@90);
+  + Gen. Robert E. Lee ordinary aura (0.9, present at the salient — sourced) + Ramseur ordinary
+  aura (0.82); Ewell quality 0.66→0.72 (ordinary Inferred input).
+- **Iter 4 → 8/8 with one gate red:** holdToWin 180→200; timeLimit 450→410 — INSIDE the sourced
+  17-24-hour duration spread at the ~20s/h day grain (410 ≈ 20.5h); mud swale r75→90 + west
+  swale (505,395,r55); +2 inner traverses (z385-390); Gordon @15→12 (Lee @12). The DATA+OOB
+  tooth red: art crew 500/12 guns breached the UNIVERSAL ≤40 men/gun ceiling (the D378 class).
+- **Iter 5 (root-fix, FINAL) → 7/8:** crew 500→460 (CS total 15,860). **Final battery:
+  defender-holds 7/8** — seeds 3/31/47/73/109/223/401 CS by timeout, seed 19 US by hold — the
+  spec's own honest spread ("a hold-majority with occasional draws or Union seizures"). The
+  break-in emerges (the tip line is overrun early in every seed); no tooth asserts it; NO
+  casualty tooth exists in either direction (CASUALTY-DIRECTION-NEUTRAL, the in-file anchor).
+- Same-seed replay deterministic (seed 97: CS/timeout, 8,200 steps ×2); both passive-side
+  launches terminate.
+
+**Integration (all in the one green runtime commit):** T1 registry line
+`R.spotsylvania = GAME_DATA.spotsylvania.spotsylvania` + order-map `spotsylvania: 68` (no other
+rank moved); scenarios **21→22**; schema validator + `spotsylvania.json` **51→52**;
+roster/builder EXPECTED + `fldScnBtn_spotsylvania` **21→22** each (PHASE_COUNTS untouched —
+single-phase); **Army Register 1326→1380** (18 unique side-unit ids × 3) with the documented
+pin-history fragment `D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots`
+appended at ELEVEN whole-registry pin sites (probe-loot-survival both pins, the eight battle
+probes' register pins incl. probe-elkhorn-tavern's previously comment-less pin, plus
+probe-five-forks' registry-COUNT pin 21→22 — the D384 hidden-pin class swept by grep);
+probe-women-in-war-arc-plan's BASELINES triple pin moved 21→22 / 1326→1380 / 126→127 with D391
+comments; T10 `spotsylvania: { theater:"E", badges:true, csFlag:"anv" }` + probe-flags coverage
+21→22; weather hints 21→22 (sourced rain, dawn Inferred); Intel coverage 21→22; media
+largest-scene metric re-audited — Spotsylvania opens at 10 units, **Kennesaw's 17 keeps the
+crown**, text now "22 shipped opening scenes"; vet-no-regression SUITE +
+`['spotsylvania','tools/probe-spotsylvania.mjs']` **126→127** + sweep comment 21→**22** battles;
+generated HTML rebuilt only via `node tools/build.mjs`. **Two stale immediate-adjacency teeth in
+probe-kennesaw (menu order + DOM button) were reshaped to the true Chattanooga → Spotsylvania →
+Kennesaw chronology — the D376 Franklin-class lesson, both variants.** The frozen Classic
+lowercase `spotsylvania` row and the pre-existing strategic rail route are held byte-identical
+and probe-asserted (the shiloh/franklin same-name convention); no new rail route.
+
+**The focused guard** `tools/probe-spotsylvania.mjs` (16 steps): preparse (S-03 amendment 8),
+Classic/rail collision, envelope/OOB shape, THE ARTILLERY-WITHDRAWAL LAW teeth (zero opening CS
+guns; exactly one timed re-formed CS grouping with the never-re-enter disclosure), registry/menu/
+launch/side-choice, terrain/objective-interior teeth, the single-tooth RANK WALL (required +
+forbidden renderings incl. Maj.-Gen.-Wright / Lt.-Gen.-Anderson / Maj.-Gen.-Gordon / full-General
+Grant / dead-officer command seats), the D74 deep key scan (the §8 extended family incl.
+meleeMult/handToHandBonus/prisonerMult/captureBonus), reinforcement idempotence with the CS-guns-
+only-after-reform tooth, determinism, passive termination, the 8-seed DEFENDER-HOLDS ≥5/8 guard
+with the CASUALTY-DIRECTION-NEUTRAL anchor and NO per-side casualty comparison, teaching/codex
+provenance, the 1380 register pin, and scope (no Wilderness/Cold Harbor/Petersburg/Crater id);
+fail-closed exit 1; direction battery runs on a direct-data override so it is independent of the
+T1 registration line.
+
+**Binds (both proven on the final candidate, md5-identical restores):**
+- **Bind A (registry-line removal + rebuild):** plan probe red EXACTLY on
+  `FUTURE DIRECTION + INTEGRATION` (11/12, exit 1); focused probe red EXACTLY on its four
+  predeclared registration-dependent teeth — REGISTRY+MENU, REGISTERED LAUNCH+REINFORCEMENTS,
+  ARMY REGISTER PIN, RUNTIME MENU+SIDE CHOICE (12/16, exit 1) — while the direction battery
+  stayed green by design. Restored: T1 `a44f9915bbfbcfcb25e548dfca8a0fdf`, generated HTML back
+  to `91b9979144731ae3299af4ebaca4628a`; plan 12/12.
+- **Bind B (one-token Wright tamper, Brig.→Maj. in the data):** plan probe red EXACTLY on
+  `RANKS + COMMAND TRAPS` (11/12); focused probe red EXACTLY on `RANK WALL` (15/16). Restored:
+  data `152a62767b4dbc68483096723a8fc8b0`, HTML `91b9979144731ae3299af4ebaca4628a`; plan 12/12.
+- No red artifact entered git (shots are gitignored; the final green focused artifact replaced
+  the bind-red one before commit).
+
+**Gate (spec §14, serialized, every fresh JSON artifact read — ok:true, 0 failed steps, 0
+pageerrors everywhere):** node --check clean on every touched JS/MJS incl. the cooked
+SETUP/DOM preparse; build GATE OK; schema **52/52**; research 15/15; Spotsylvania plan **12/12**
+(implementation-present branch); focused **16/16** with direction 7/8; roster **8/8** @22;
+builder **15/15** @22; loot green @**1380** (UI '1380 of 1380'); flags **48/48** @22 coverage;
+weather **30/30** @22 hints; Intel **26/26** @22 with the largest-scene teeth green; media
+**13/13** (standing 2.418MB soft warning only); vet --list **127**; adjacent chattanooga 16/16 +
+kennesaw 11/11 (menu neighbors, JSONs read); ALL TEN plan probes ALL OK; `git diff --check`
+exit 0; frozen base md5 `c9db83fa99230ffb95bdfdfe059f3fb9` unchanged; only intended paths moved.
+Final hashes: generated HTML `91b9979144731ae3299af4ebaca4628a` · T1
+`a44f9915bbfbcfcb25e548dfca8a0fdf` · data `152a62767b4dbc68483096723a8fc8b0` · focused probe
+`d0b28837d104b6d2eb78c35c35de0717`. **The full `npm run vet:noreg` battery is deliberately NOT
+run this slice (D160/D176):** D389 discharged the release checkpoint one day ago and Spotsylvania
+is the first battle since; the next serialized battery is owed at the 2-3-battle checkpoint,
+alone on the machine.
+
+**New baselines:** 22 scenarios · schema 52 · Army Register 1380 · flags/weather/Intel/media 22 ·
+suite 127 · sweep 22 · HTML `91b9979144731ae3299af4ebaca4628a`. LANE-003 returns to
+CONTRACT/unowned; the D382 ladder continues (the Overland/attrition extension's remaining packet
+lanes or the war-career loop per the D382 order).
+
 ## D390 — SPOTSYLVANIA "BLOODY ANGLE" CONTRACT: THE SAME-DAY PROMOTION SEAM, THE GUN-STRIPPED TIP, AND THE CASUALTY-NEUTRAL LAW — [CLAUDE CODE / FABLE, LANE-003 DRIVE→CONTRACT] (2026-07-13)
 
 The ninth LANE-003 planning contract, and the first D382 Overland/attrition slice:

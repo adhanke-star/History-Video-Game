@@ -1,0 +1,873 @@
+{
+  "_comment": "D391 - SPOTSYLVANIA: THE BLOODY ANGLE, May 12, 1864. Single-phase US-attacker scenario built from the committed D390 spec (docs/design/spotsylvania-battle-build-spec.md, sections 1-11 the law). THE ARTILLERY-WITHDRAWAL INPUT LAW (spec section 5): the initial CS OOB at the tip fields ZERO guns - 22 of 30 were withdrawn May 11 and recalled too late, about twenty captured - and CS artillery re-enters ONLY with the re-formed line's sectors; the captured batteries never re-enter; the US fields its true supporting weight. Committed totals are Inferred engine envelopes (US 20,000 inside 14,000-25,000; CS 13,300 inside 8,000-16,000) - no source pins May 12 axis totals. No prisoner, capture, or surrender input anywhere; the roughly 3,000 prisoners from Johnson's division are outputs and teaching. D74: no battle-specific damage, firepower, casualty, morale, melee, surprise, prisoner, or winner key of any name.",
+  "spotsylvania": {
+    "id": "spotsylvania",
+    "name": "Spotsylvania: The Bloody Angle",
+    "date": "May 12, 1864",
+    "place": "The Mule Shoe salient, Spotsylvania Court House, Virginia",
+    "blurb": "Hancock's massed II Corps column strikes the gun-stripped tip of the Mule Shoe at first light, overruns Johnson's division, and then meets Lee's counterattacks at the Bloody Angle - nearly a full day of the war's most terrible sustained close combat over a line the Union could not break.",
+    "provenance": "Verified for the date and single-day grain, the roles, the Mule Shoe / Bloody Angle / East Angle geometry names, the artillery withdrawal (22 of 30 guns pulled May 11, about twenty captured), the Johnson and Steuart captures, the counterattack identities, the battle-date rank wall, and the defender-hold outcome reading. Inferred for every game-unit split, the committed axis totals (no source pins them; corps-grain figures conflict), gun groupings, coordinates, experience, reinforcement seconds, objective radius, and time thresholds. The May 12 tactical narrative leans on Gordon Rhea's Overland Campaign scholarship (the single-root disclosure of spec section 2). Sources: NPS Bloody Angle and East Face place pages; NPS Civil War Series 25; the American Battlefield Trust article cluster; Encyclopedia Virginia; the committed D390 spec and the attrition packet's section 12 addendum.",
+    "weather": {
+      "sky": "rain",
+      "time": "dawn",
+      "provenance": "Inferred",
+      "note": "The rain is sourced - steady rain on May 11, heavy pre-dawn fog and damp powder at the 4:30-4:35 a.m. step-off, and a driving rainstorm through the day's fighting - but the sky/time presentation grain is an Inferred abstraction. Fog is OFF: the sourced pre-dawn fog concealed the ATTACKER'S massed column, while the engine's fog model aids the DEFENDER, so running fog on would push against the sourced dynamics (the D90/D326 grain lesson). The break-in emerges from mass against a gun-stripped tip, never from a weather bonus.",
+      "sources": [
+        "https://encyclopediavirginia.org/entries/spotsylvania-court-house-battle-of/",
+        "https://www.nps.gov/places/bloody-angle.htm"
+      ]
+    },
+    "field": {
+      "w": 1200,
+      "h": 900
+    },
+    "attacker": "US",
+    "defender": "CS",
+    "homeEdge": {
+      "US": "high",
+      "CS": "low"
+    },
+    "_homeEdgeNote": "The Union approach enters from the Landrum house / Brown house staging ground at high z; the Confederate interior, the base line, and the withdrawal route toward Spotsylvania Court House lie toward low z. Compass abstraction of the salient's real orientation; Inferred geometry.",
+    "defaultFog": false,
+    "timeLimitSec": 410,
+    "holdToWinSec": 200,
+    "menu": {
+      "title": "SPOTSYLVANIA (1864)",
+      "deck": "The Bloody Angle - break through the Mule Shoe salient, or hold the works until the base line is finished.",
+      "aria": "Spotsylvania, May 1864 - the Bloody Angle. Command the Union assault on the Mule Shoe salient or the Confederate defense of the works."
+    },
+    "sides": {
+      "heading": "Spotsylvania - Take Which Command?",
+      "intro": "May 12, 1864 - the Overland Campaign grinds against the Mule Shoe salient. Lead either army.",
+      "US": {
+        "title": "Command the Union assault (Hancock's column)",
+        "badge": "&#9876; ATTACK",
+        "deck": "Smash the gun-stripped tip at dawn, then push THROUGH the salient's interior before the counterattacks re-form the line."
+      },
+      "CS": {
+        "title": "Command the Confederacy (Ewell's Second Corps)",
+        "badge": "&#9819; DEFEND",
+        "deck": "The guns were ordered out last night and recalled too late. Hold the interior with Johnson's thin division until the counterattacks arrive and the new base line is finished."
+      },
+      "foot": "The other army is commanded by the AI. Fog is off; the rain-soaked ground, the log works and traverses, reinforcement timing, and command radius shape the field."
+    },
+    "brief": {
+      "attack": "The column stepped off in the pre-dawn rain and the tip caved in within the first hour - now the real question of May 12: can you push THROUGH the salient's interior? <b>This is your war:</b> the break-in came from mass against a gun-stripped line, not from a script, and the breakthrough is yours to win or lose.",
+      "defend": "Johnson's division holds works stripped of their guns. Trade ground for time: Gordon, Ramseur, Daniel, Harris, and McGowan are coming, and the engineers are completing a new line across the salient's base. The army must not break."
+    },
+    "objective": {
+      "name": "The Salient Interior - McCoull House Ground",
+      "x": 605,
+      "z": 300,
+      "r": 165,
+      "note": "The interior ground from the McCoull house toward the base line - deliberately NOT the captured tip (spec section 1). Hancock took the works at the tip within the first hour; the day's question was whether the Union could push THROUGH, and it could not. Union possession of this radius represents the breakthrough that never came; the radius is Inferred game geometry and reaches the traverse field just inside the works."
+    },
+    "leaders": {
+      "_note": "Battle-date ranks are locked by spec section 6. Hancock is a major general (since November 1862); Wright is a BRIGADIER general commanding VI Corps since Sedgwick's death, with his major-general paperwork dated May 12 itself and disclosed only as a nuance; Ewell is a lieutenant general; Johnson is a major general whose capture is taught, never scripted; Gordon is a BRIGADIER general until May 14. No Sedgwick, no Longstreet, no Anderson aura appears on this field.",
+      "US": [
+        {
+          "id": "ld_hancock_spotsy",
+          "name": "Maj. Gen. Winfield S. Hancock",
+          "short": "Hancock",
+          "quality": 0.84,
+          "radius": 265,
+          "attach": "us_birney_div",
+          "fate": 3.0,
+          "note": "Major General commanding II Corps and the massed assault column (grade since November 1862). Verified command and rank; ordinary quality and aura are Inferred universal inputs."
+        },
+        {
+          "id": "ld_barlow_spotsy",
+          "name": "Brig. Gen. Francis C. Barlow",
+          "short": "Barlow",
+          "quality": 0.8,
+          "radius": 235,
+          "attach": "us_barlow_miles",
+          "fate": 2.8,
+          "note": "Brigadier General commanding the division at the head of the column. Verified identity and battle-date grade; ordinary quality and aura are Inferred universal inputs."
+        },
+        {
+          "id": "ld_wright_spotsy",
+          "name": "Brig. Gen. Horatio G. Wright",
+          "short": "Wright",
+          "quality": 0.72,
+          "radius": 245,
+          "attach": "us_neill_div",
+          "atSec": 35,
+          "entry": "Wright brings VI Corps in west of Hancock's right.",
+          "fate": 2.8,
+          "note": "Brigadier General commanding VI Corps since May 9. His major-general-of-volunteers appointment is dated May 12, 1864 - the assault day itself - a paperwork nuance disclosed here and never rendered as the settled morning-of grade (the date is single-root and ships Inferred). Verified command; timing is an Inferred input."
+        }
+      ],
+      "CS": [
+        {
+          "id": "ld_ewell_spotsy",
+          "name": "Lt. Gen. Richard S. Ewell",
+          "short": "Ewell",
+          "quality": 0.72,
+          "radius": 250,
+          "attach": "cs_steuart_bde",
+          "fate": 2.6,
+          "note": "Lieutenant General commanding the Second Corps on the Mule Shoe (grade since May 1863). His reported May 12 breakdown episode is single-source and is not encoded. Verified command and rank; ordinary quality and aura are Inferred universal inputs."
+        },
+        {
+          "id": "ld_johnson_spotsy",
+          "name": "Maj. Gen. Edward \"Allegheny\" Johnson",
+          "short": "Johnson",
+          "quality": 0.7,
+          "radius": 230,
+          "attach": "cs_witcher_va",
+          "fate": 2.4,
+          "note": "Major General commanding the division holding the tip; captured on May 12 with most of his division. The capture is teaching content and the sourced reason the initial defense is small - it is never a scripted event, and his record here is an ordinary universal command input."
+        },
+        {
+          "id": "ld_gordon_spotsy",
+          "name": "Brig. Gen. John B. Gordon",
+          "short": "Gordon",
+          "quality": 0.85,
+          "radius": 245,
+          "attach": "cs_gordon_div",
+          "atSec": 25,
+          "entry": "Gordon's division counterattacks into the salient.",
+          "fate": 3.0,
+          "note": "Brigadier General on May 12, commanding Early's old division in the counterattack. His major-general promotion is dated May 14, 1864 - two days after this battle - and is never rendered here. Verified identity and battle-date grade; timing is an Inferred input."
+        },
+        {
+          "id": "ld_lee_spotsy",
+          "name": "Gen. Robert E. Lee",
+          "short": "Lee",
+          "quality": 0.9,
+          "radius": 260,
+          "attach": "cs_gordon_div",
+          "atSec": 12,
+          "entry": "Lee comes forward with the counterattack - his staff turns him to the rear.",
+          "fate": 3.4,
+          "note": "Full General commanding the Army of Northern Virginia, personally present inside the salient directing the counterattacks - the Lee-to-the-rear episode ships as a teaching card in its sourced form, and his presence here is an ordinary universal command aura, never a result-writer."
+        },
+        {
+          "id": "ld_ramseur_spotsy",
+          "name": "Brig. Gen. Stephen D. Ramseur",
+          "short": "Ramseur",
+          "quality": 0.82,
+          "radius": 235,
+          "attach": "cs_ramseur_bde",
+          "atSec": 25,
+          "entry": "Ramseur leads his North Carolinians into the west angle.",
+          "fate": 2.6,
+          "note": "Brigadier General leading his brigade's counterattack in person; wounded May 12 - an ordinary leader-fate input, never scripted. Verified identity and battle-date grade."
+        }
+      ]
+    },
+    "supply": {
+      "US": {
+        "x": 600,
+        "z": 865,
+        "name": "Union trains - the Landrum house approach"
+      },
+      "CS": {
+        "x": 600,
+        "z": 60,
+        "name": "Confederate rear - toward Spotsylvania Court House"
+      }
+    },
+    "terrain": {
+      "hills": [
+        {
+          "name": "McCoull House Rise",
+          "x": 605,
+          "z": 300,
+          "h": 9,
+          "s": 160,
+          "note": "A restrained rise keeping the interior objective ground readable; the McCoull farmstead detail rests on thin sources and ships Inferred."
+        },
+        {
+          "name": "Landrum House Rise",
+          "x": 720,
+          "z": 630,
+          "h": 8,
+          "s": 140,
+          "note": "Slightly raised ground on the Union approach northeast of the works; Inferred geometry, not a claimed dominant hill."
+        }
+      ],
+      "woods": [
+        {
+          "x": 300,
+          "z": 560,
+          "r": 120,
+          "note": "Wooded approach west of the assault axis; verified wooded battlefield, Inferred geometry."
+        },
+        {
+          "x": 900,
+          "z": 580,
+          "r": 130,
+          "note": "Wooded approach east of the Landrum ground; Inferred geometry."
+        },
+        {
+          "x": 180,
+          "z": 350,
+          "r": 100,
+          "note": "Timber beyond the salient's west face; Inferred geometry."
+        },
+        {
+          "x": 1020,
+          "z": 350,
+          "r": 110,
+          "note": "Timber beyond the east face; Inferred geometry."
+        },
+        {
+          "x": 525,
+          "z": 355,
+          "r": 60,
+          "note": "Broken timber and cut brush inside the salient west of the McCoull ground; universal cover only. Inferred geometry."
+        },
+        {
+          "x": 690,
+          "z": 355,
+          "r": 55,
+          "note": "Broken ground east of the McCoull ground; universal cover only. Inferred geometry."
+        }
+      ],
+      "swamps": [
+        {
+          "x": 350,
+          "z": 500,
+          "r": 70,
+          "note": "Rain-soaked swale on the western approach - the driving rainstorm's mud as ordinary universal wet-ground friction, never a penalty key."
+        },
+        {
+          "x": 870,
+          "z": 500,
+          "r": 70,
+          "note": "Muddy low ground on the eastern approach; Inferred compressed placement."
+        },
+        {
+          "x": 605,
+          "z": 370,
+          "r": 90,
+          "note": "The rain-churned interior ground between the captured works and the McCoull house - the driving rainstorm's mud as ordinary universal wet-ground friction inside the salient, never a penalty key. Inferred compressed placement."
+        },
+        {
+          "x": 505,
+          "z": 395,
+          "r": 55,
+          "note": "The knee-deep rain-churned ground before the Bloody Angle traverses - sourced driving rainstorm as ordinary universal wet-ground friction. Inferred placement."
+        }
+      ],
+      "walls": [
+        {
+          "x1": 400,
+          "z1": 300,
+          "x2": 490,
+          "z2": 455,
+          "note": "MULE SHOE WEST FACE - stacked-log breastworks with earth banking, sharpened abatis, and internal traverses. Verified works construction; Inferred compressed geometry. Universal cover vocabulary only - no battle-specific cover or firepower key."
+        },
+        {
+          "x1": 490,
+          "z1": 455,
+          "x2": 600,
+          "z2": 470,
+          "note": "THE BLOODY ANGLE (THE WEST ANGLE) - the stretch of works northwest of the tip where the hand-to-hand fight ran for nearly a full day. Verified feature; Inferred geometry."
+        },
+        {
+          "x1": 600,
+          "z1": 470,
+          "x2": 710,
+          "z2": 450,
+          "note": "THE EAST ANGLE / EAST FACE - where the salient bent back east; Johnson's ground and the break-in sector. Verified feature; Inferred geometry."
+        },
+        {
+          "x1": 710,
+          "z1": 450,
+          "x2": 810,
+          "z2": 300,
+          "note": "MULE SHOE EAST FACE - the log works running back toward the base. Verified works; Inferred compressed geometry."
+        },
+        {
+          "x1": 400,
+          "z1": 175,
+          "x2": 810,
+          "z2": 175,
+          "note": "LEE'S FINAL LINE (THE BASE LINE) - the new works across the salient's base, under construction through the day and completed during the night; the CS fallback geometry and the line that HELD. Verified line; Inferred compressed geometry."
+        },
+        {
+          "x1": 500,
+          "z1": 415,
+          "x2": 560,
+          "z2": 415,
+          "note": "INTERNAL TRAVERSES (west) - the traverse field behind the Bloody Angle; defenders fought from traverse to traverse. Verified works feature; Inferred compressed geometry. Universal cover vocabulary only."
+        },
+        {
+          "x1": 585,
+          "z1": 420,
+          "x2": 645,
+          "z2": 420,
+          "note": "INTERNAL TRAVERSES (center) - the traverse cells behind the tip. Verified works feature; Inferred geometry."
+        },
+        {
+          "x1": 665,
+          "z1": 410,
+          "x2": 720,
+          "z2": 410,
+          "note": "INTERNAL TRAVERSES (east) - the traverse field behind the East Angle. Verified works feature; Inferred geometry."
+        },
+        {
+          "x1": 545,
+          "z1": 390,
+          "x2": 605,
+          "z2": 390,
+          "note": "INTERNAL TRAVERSES (inner west) - the deep traverse cells the counterattack fought from. Verified works feature; Inferred geometry."
+        },
+        {
+          "x1": 620,
+          "z1": 385,
+          "x2": 675,
+          "z2": 385,
+          "note": "INTERNAL TRAVERSES (inner east) - the traverse field toward the McCoull ground. Verified works feature; Inferred geometry."
+        }
+      ],
+      "markers": [
+        {
+          "kind": "road",
+          "name": "Landrum Lane - the assault axis",
+          "path": [
+            [
+              620,
+              860
+            ],
+            [
+              645,
+              700
+            ],
+            [
+              615,
+              520
+            ],
+            [
+              600,
+              470
+            ]
+          ],
+          "note": "The Union approach from the Landrum house ground to the tip of the salient. Inferred compressed alignment."
+        },
+        {
+          "kind": "road",
+          "name": "Interior farm road (McCoull to Harrison)",
+          "path": [
+            [
+              605,
+              300
+            ],
+            [
+              600,
+              230
+            ],
+            [
+              600,
+              175
+            ]
+          ],
+          "note": "The interior route from the McCoull ground toward the Harrison house and the base line. Inferred alignment."
+        },
+        {
+          "kind": "label",
+          "name": "the Mule Shoe salient",
+          "x": 600,
+          "z": 400,
+          "note": "The U-shaped bulge in Lee's line, roughly a mile deep; the battle's shape. The works trace it."
+        },
+        {
+          "kind": "label",
+          "name": "the Bloody Angle (the west angle)",
+          "x": 490,
+          "z": 455,
+          "note": "The scenario's name-bearing ground - nearly a full day of sustained close combat."
+        },
+        {
+          "kind": "label",
+          "name": "the East Angle / East Face",
+          "x": 710,
+          "z": 450,
+          "note": "Johnson's ground and the sector where the massed column struck."
+        },
+        {
+          "kind": "label",
+          "name": "McCoull House",
+          "x": 605,
+          "z": 295,
+          "note": "The farmstead inside the salient; the objective's interior anchor. Thin sources; Inferred flavor."
+        },
+        {
+          "kind": "label",
+          "name": "Harrison House",
+          "x": 600,
+          "z": 195,
+          "note": "The packet-carried interior landmark toward the salient base. Inferred."
+        },
+        {
+          "kind": "label",
+          "name": "Landrum House / Farm",
+          "x": 730,
+          "z": 625,
+          "note": "The Union approach and Hancock's forward ground northeast of the works. Encyclopedia Virginia corroborates the Landrum farm; finer details ship Inferred."
+        },
+        {
+          "kind": "label",
+          "name": "Brown House ground (II Corps staging)",
+          "x": 500,
+          "z": 760,
+          "note": "The II Corps staging area of the night of May 11-12. Thin sourcing; teaching flavor, Inferred."
+        }
+      ]
+    },
+    "oob": {
+      "US": [
+        {
+          "id": "us_barlow_miles",
+          "name": "Miles's Brigade (Barlow's lead, left)",
+          "commander": "Brig. Gen. Nelson A. Miles",
+          "arm": "inf",
+          "weapon": "rifled",
+          "role": "attack",
+          "men": 2000,
+          "xp": 3,
+          "x": 520,
+          "z": 640,
+          "facing": 0,
+          "formation": "column",
+          "note": "Barlow's lead left brigade in the massed column. Identity from a single article and the grade per the register - Inferred identity detail; Inferred strength."
+        },
+        {
+          "id": "us_barlow_brooke",
+          "name": "Brooke's Brigade (Barlow's lead, right)",
+          "commander": "Col. John R. Brooke",
+          "arm": "inf",
+          "weapon": "rifled",
+          "role": "attack",
+          "men": 2000,
+          "xp": 3,
+          "x": 600,
+          "z": 640,
+          "facing": 0,
+          "formation": "column",
+          "note": "Barlow's lead right brigade; the 7th New York Heavy Artillery, fighting as infantry, penetrated the line here. Single-article identity - Inferred identity detail; Inferred strength."
+        },
+        {
+          "id": "us_birney_div",
+          "name": "Birney's Division",
+          "commander": "Maj. Gen. David B. Birney",
+          "arm": "inf",
+          "weapon": "rifled",
+          "role": "attack",
+          "men": 3400,
+          "xp": 3,
+          "x": 700,
+          "z": 660,
+          "facing": 0,
+          "formation": "line",
+          "note": "II Corps division in the assault column. Verified identity; Inferred strength."
+        },
+        {
+          "id": "us_mott_div",
+          "name": "Mott's Division",
+          "commander": "Brig. Gen. Gershom Mott",
+          "arm": "inf",
+          "weapon": "rifled",
+          "role": "attack",
+          "men": 2300,
+          "xp": 2,
+          "x": 450,
+          "z": 680,
+          "facing": 0,
+          "formation": "line",
+          "note": "II Corps division on the column's flank. Verified identity; Inferred strength and experience."
+        },
+        {
+          "id": "us_gibbon_div",
+          "name": "Gibbon's Division (supporting)",
+          "commander": "Brig. Gen. John Gibbon",
+          "arm": "inf",
+          "weapon": "rifled",
+          "role": "attack",
+          "men": 2800,
+          "xp": 3,
+          "x": 600,
+          "z": 760,
+          "facing": 0,
+          "formation": "column",
+          "note": "Gibbon's combat role at the Angle is UNRESOLVED in fetched NPS text (spec section 3), so his division ships honestly as a supporting/reserve formation with that disclosure. Verified identity; Inferred strength and role detail."
+        },
+        {
+          "id": "us_ii_corps_artillery",
+          "name": "II Corps Artillery Grouping",
+          "commander": "II Corps artillery officers",
+          "arm": "art",
+          "weapon": "rifled",
+          "role": "attack",
+          "guns": 24,
+          "men": 800,
+          "xp": 3,
+          "x": 640,
+          "z": 720,
+          "facing": 0,
+          "formation": "line",
+          "note": "A coarse Union gun grouping - the true supporting weight of the assault under the universal gun model (spec section 5: the US fields its real artillery support while the tip stands stripped). Inferred strength and grouping."
+        }
+      ],
+      "CS": [
+        {
+          "id": "cs_walker_stonewall",
+          "name": "Walker's Stonewall Brigade",
+          "commander": "Brig. Gen. James A. Walker",
+          "arm": "inf",
+          "weapon": "rifled",
+          "role": "defend",
+          "men": 1400,
+          "xp": 3,
+          "x": 530,
+          "z": 412,
+          "facing": 3.14159,
+          "formation": "line",
+          "note": "The Stonewall Brigade on the west angle. Walker was wounded May 12 - an ordinary leader-fate outcome, never scripted. Verified identity; Inferred strength."
+        },
+        {
+          "id": "cs_monaghan_la",
+          "name": "Monaghan's Louisiana Brigade",
+          "commander": "Col. William Monaghan",
+          "arm": "inf",
+          "weapon": "rifled",
+          "role": "defend",
+          "men": 1200,
+          "xp": 3,
+          "x": 575,
+          "z": 418,
+          "facing": 3.14159,
+          "formation": "line",
+          "note": "The consolidated Louisianians, commanded by Monaghan for Brig. Gen. Leroy Stafford, mortally wounded May 5 at the Wilderness - the dead are never rendered alive on May 12. Verified identity via the OR-mirror voice; Inferred strength."
+        },
+        {
+          "id": "cs_witcher_va",
+          "name": "Witcher's Virginia Brigade",
+          "commander": "Col. William A. Witcher",
+          "arm": "inf",
+          "weapon": "rifled",
+          "role": "defend",
+          "men": 1400,
+          "xp": 3,
+          "x": 635,
+          "z": 418,
+          "facing": 3.14159,
+          "formation": "line",
+          "note": "The Virginians of Brig. Gen. John M. Jones, killed May 6 at the Wilderness, holding the East Angle sector where the column struck; the brigade was effectively destroyed in the break-in. Verified identity via the OR-mirror voice; Inferred strength."
+        },
+        {
+          "id": "cs_steuart_bde",
+          "name": "Steuart's Brigade",
+          "commander": "Brig. Gen. George H. \"Maryland\" Steuart",
+          "arm": "inf",
+          "weapon": "rifled",
+          "role": "defend",
+          "men": 1500,
+          "xp": 3,
+          "x": 680,
+          "z": 408,
+          "facing": 3.14159,
+          "formation": "line",
+          "note": "Steuart's brigade on the east face (his grade since March 6, 1862). Steuart was captured on the morning of May 12 - teaching content, never a scripted event. Verified identity; Inferred strength. NOTE THE STRIPPED TIP: Johnson's division fields NO guns - 22 of 30 were withdrawn May 11 and the recall arrived as the column struck (spec section 5)."
+        }
+      ]
+    },
+    "reinforcements": [
+      {
+        "id": "cs_gordon_div",
+        "side": "CS",
+        "atSec": 12,
+        "name": "Gordon's Division",
+        "commander": "Brig. Gen. John B. Gordon",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "defend",
+        "men": 3500,
+        "xp": 3,
+        "x": 600,
+        "z": 230,
+        "facing": 3.14159,
+        "formation": "column",
+        "entry": "from the salient's base - the first counterattack",
+        "note": "Gordon's division drove into the salient early and blunted the penetration - the first arrival of the sourced piecemeal counterattack, fielded as an ordinary timing input (the D90 defender-hold recipe). Verified identity; Inferred strength and timing."
+      },
+      {
+        "id": "us_neill_div",
+        "side": "US",
+        "atSec": 35,
+        "name": "Neill's VI Corps Division",
+        "commander": "Brig. Gen. Thomas H. Neill",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "attack",
+        "men": 2600,
+        "xp": 3,
+        "x": 400,
+        "z": 800,
+        "facing": 0,
+        "formation": "column",
+        "entry": "VI Corps arrives west of Hancock's right",
+        "note": "The first VI Corps division into the fight at the west angle from about 6:00 a.m. - Edwards's three regiments at the angle by 6:30 (ABT). Verified identity; Inferred strength and timing."
+      },
+      {
+        "id": "cs_ramseur_bde",
+        "side": "CS",
+        "atSec": 25,
+        "name": "Ramseur's Brigade (Rodes's Division)",
+        "commander": "Brig. Gen. Stephen D. Ramseur",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "defend",
+        "men": 1650,
+        "xp": 3,
+        "x": 520,
+        "z": 215,
+        "facing": 3.14159,
+        "formation": "column",
+        "entry": "Rodes's brigades feed the west angle",
+        "note": "Ramseur's North Carolinians retook works at the west angle; Ramseur was wounded May 12 - an ordinary leader-fate outcome. Verified identity; Inferred strength and timing."
+      },
+      {
+        "id": "cs_daniel_bde",
+        "side": "CS",
+        "atSec": 35,
+        "name": "Daniel's Brigade (Rodes's Division)",
+        "commander": "Brig. Gen. Junius Daniel",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "defend",
+        "men": 1650,
+        "xp": 3,
+        "x": 670,
+        "z": 215,
+        "facing": 3.14159,
+        "formation": "column",
+        "entry": "Rodes's second brigade comes up",
+        "note": "Daniel was MORTALLY wounded May 12 and died May 13 - he is never rendered as surviving the battle; his fall is an ordinary leader-fate outcome. Verified identity; Inferred strength and timing."
+      },
+      {
+        "id": "cs_harris_ms",
+        "side": "CS",
+        "atSec": 50,
+        "name": "Harris's Mississippi Brigade",
+        "commander": "Brig. Gen. Nathaniel H. Harris",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "defend",
+        "men": 1550,
+        "xp": 3,
+        "x": 555,
+        "z": 200,
+        "facing": 3.14159,
+        "formation": "column",
+        "entry": "the Third Corps brigades reach the Angle",
+        "note": "Harris's Mississippians went into the Bloody Angle itself and held it through the day. Third Corps under Maj. Gen. Jubal A. Early, commanding for the sick A. P. Hill (spec section 6). Verified identity; Inferred strength and timing."
+      },
+      {
+        "id": "cs_mcgowan_sc",
+        "side": "CS",
+        "atSec": 65,
+        "name": "McGowan's South Carolina Brigade",
+        "commander": "Brig. Gen. Samuel McGowan",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "defend",
+        "men": 1550,
+        "xp": 3,
+        "x": 640,
+        "z": 200,
+        "facing": 3.14159,
+        "formation": "column",
+        "entry": "the last named counterattack brigade arrives",
+        "note": "McGowan's South Carolinians fought at the Angle beside Harris; McGowan was wounded May 12 - an ordinary leader-fate outcome. Verified identity; Inferred strength and timing."
+      },
+      {
+        "id": "us_russell_div",
+        "side": "US",
+        "atSec": 100,
+        "name": "Russell's VI Corps Division",
+        "commander": "Brig. Gen. David A. Russell",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "attack",
+        "men": 2400,
+        "xp": 3,
+        "x": 350,
+        "z": 820,
+        "facing": 0,
+        "formation": "column",
+        "entry": "Russell's division joins the west-angle fight",
+        "note": "The second VI Corps division, about 9:30 a.m., with Upton's brigade - Col. Emory Upton's May 12 grade carries the May 10 assault story; his brigadier's star, dated to that assault, was confirmed later and is a teaching nuance, never a May 12 OOB grade. Verified identity; Inferred strength and timing."
+      },
+      {
+        "id": "cs_baseline_artillery",
+        "side": "CS",
+        "atSec": 90,
+        "name": "Re-formed Line Artillery Grouping",
+        "commander": "Second Corps artillery officers",
+        "arm": "art",
+        "weapon": "rifled",
+        "role": "defend",
+        "guns": 12,
+        "men": 460,
+        "xp": 2,
+        "x": 600,
+        "z": 140,
+        "facing": 3.14159,
+        "formation": "line",
+        "entry": "working guns come into the re-formed sectors",
+        "note": "CS artillery re-enters ONLY with the re-formed line's sectors where sources place working guns - the batteries captured at the tip NEVER re-enter (THE ARTILLERY-WITHDRAWAL INPUT LAW, spec section 5). Inferred strength, grouping, and timing under the universal gun model."
+      }
+    ],
+    "endNote": {
+      "US": {
+        "US": "History is overturned. The column carried not just the tip but the salient's interior - the breakthrough Hancock's men could not sustain on the real May 12.",
+        "CS": "History holds. The break-in took the works, the prisoners, and the guns - and then the counterattacks re-formed the line at the Bloody Angle, and the army did not break."
+      },
+      "CS": {
+        "US": "History is overturned, against your command. The Union column split the salient and held its interior - the disaster the counterattacks historically prevented.",
+        "CS": "History holds. The tip was lost in the first hour, but the line re-formed at the Angle and the base line was finished overnight; the withdrawal at 2-3 a.m. was intact and unbroken."
+      },
+      "draw": "The Angle remains a mangled stalemate as the day dies. Historically the Confederates withdrew to the completed base line at 2-3 a.m. on May 13 - the salient gone, the army intact."
+    },
+    "teaching": {
+      "title": "Spotsylvania - The Bloody Angle, May 12, 1864",
+      "cards": [
+        {
+          "id": "sp_grant_butcher",
+          "head": "Grant the Butcher - the myth rebutted, the errors kept",
+          "body": "Attrition was a deliberate, war-winning strategy pressed by Lt. Gen. Ulysses S. Grant - General-in-Chief as a role, commanding through Maj. Gen. George G. Meade - against an enemy that could not replace losses: on May 12 alone Lee lost about 8,000 men from a far smaller army, proportionally worse than the Union's roughly 9,000. But rebutting the 'Butcher' caricature does not hide the real Union tactical errors the sources name: the packed, unwieldy column after the break-in, and command failures that fed men into a fight already frozen - the American Battlefield Trust calls the follow-through a 'bloody miscue.' Both truths belong on one card.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.nps.gov/places/bloody-angle.htm",
+            "https://www.battlefields.org/learn/articles/unions-bloody-miscue-spotsylvanias-muleshoe",
+            "https://www.battlefields.org/learn/civil-war/battles/spotsylvania-court-house"
+          ]
+        },
+        {
+          "id": "sp_guns_too_late",
+          "head": "The guns were ordered back too late",
+          "body": "On May 11 Lee, expecting a Union movement, ordered the artillery pulled out of the salient; 22 of 30 guns had been withdrawn when Hancock's column massed in the rain. Johnson protested; the guns were ordered back - and arrived exactly as the column struck. About twenty guns were captured (Encyclopedia Virginia says 'about twenty'; the Trust's account has one battery unlimbering to fire a single round of canister). This is the break-in's accurate-input cause, and the scenario's gun model IS this card: the tip's defenders field no guns, and captured batteries never re-enter.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.battlefields.org/learn/articles/certain-death",
+            "https://encyclopediavirginia.org/entries/spotsylvania-court-house-battle-of/"
+          ]
+        },
+        {
+          "id": "sp_first_hour",
+          "head": "The first hour",
+          "body": "The column stepped off in the pre-dawn rain and fog - 4:30 a.m. by Encyclopedia Virginia's account, 4:35 by the Trust's, a five-minute spread shown rather than reconciled - and the tip was overrun within minutes by the NPS narrative's telling. Maj. Gen. Edward 'Allegheny' Johnson and Brig. Gen. George H. 'Maryland' Steuart were captured with about 3,000 of their men - the largest single haul of prisoners the Army of Northern Virginia ever lost in an hour. The scale of the collapse is taught with the discipline of the numbers' provenance: these are rounded figures, and they are outputs of the fight, never inputs to it.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.nps.gov/places/bloody-angle.htm",
+            "https://www.battlefields.org/learn/articles/certain-death",
+            "https://encyclopediavirginia.org/entries/spotsylvania-court-house-battle-of/"
+          ]
+        },
+        {
+          "id": "sp_nearly_full_day",
+          "head": "Nearly a full day at the Angle",
+          "body": "The hand-to-hand stalemate at the west angle ran from the morning of May 12 into the small hours of May 13 - the sources spread the duration from 17 to 24 hours, so this card teaches 'nearly a full day,' honest about the spread. Behind the works a 22-inch oak was felled by musketry alone; its stump is in the Smithsonian, and its bullet-count variants are unreconciled, so no version is load-bearing here. The subject of this card is what sustained close combat did to human beings, rendered with restraint - cost, never spectacle.",
+          "provenance": "Inferred",
+          "sources": [
+            "https://www.nps.gov/places/bloody-angle.htm",
+            "https://encyclopediavirginia.org/entries/spotsylvania-court-house-battle-of/"
+          ]
+        },
+        {
+          "id": "sp_counterattacks",
+          "head": "The counterattacks that re-formed the line",
+          "body": "Gordon's division first, then Ramseur's and Daniel's brigades of Rodes's division, then Harris's Mississippians and McGowan's South Carolinians into the Angle itself. Brig. Gen. Abner Perrin was killed leading his Alabamians in; Daniel was mortally wounded; Ramseur, McGowan, and Walker were wounded. The piecemeal arrivals are the defender-hold recipe this scenario fields as timing inputs. The sequence leans on Gordon Rhea's scholarship (the single-root disclosure); the individual fates are separately confirmed and ship per-fact.",
+          "provenance": "Inferred",
+          "sources": [
+            "https://npshistory.com/publications/civil_war_series/25/sec16.htm",
+            "https://www.battlefields.org/learn/civil-war/battles/spotsylvania-court-house"
+          ]
+        },
+        {
+          "id": "sp_sedgwick",
+          "head": "Sedgwick, three days before",
+          "body": "On May 9 Maj. Gen. John Sedgwick, commanding VI Corps, was killed by a Confederate sharpshooter at Spotsylvania - the highest-ranking Union officer killed in the war. The corroborated account has him steadying his men about the enemy's marksmanship moments before he fell; the famous quotation is rendered only as sourced, so it is paraphrased here. Brig. Gen. Horatio G. Wright took the corps the same day, and his major-general paperwork was dated May 12 itself - the same-week promotion seam this scenario's rank wall pins. VI Corps fights this battle under Wright, and under no one else.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.battlefields.org/learn/civil-war/battles/spotsylvania-court-house",
+            "https://encyclopediavirginia.org/entries/spotsylvania-court-house-battle-of/"
+          ]
+        },
+        {
+          "id": "sp_prisoners_east_face",
+          "head": "The prisoners and the East Face",
+          "body": "Johnson's captured division - about 3,000 men - was marched to the rear through the mud. The National Park Service records United States Colored Troops soldiers guarding the captured Confederate generals, one of the earliest combat-adjacent USCT duties of the Overland Campaign, taught here as agency, not anecdote. The prisoner figures are rounded teaching numbers and the sourced reason the initial defense is authored small and stripped; no prisoner count, capture rate, or surrender figure is an engine input or a probe tooth anywhere in this game.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.nps.gov/places/east-face-of-salient.htm",
+            "https://www.nps.gov/places/bloody-angle.htm",
+            "https://www.battlefields.org/learn/articles/certain-death"
+          ]
+        },
+        {
+          "id": "sp_lees_last_line",
+          "head": "Lee's last line",
+          "body": "Through the night of May 12-13 Confederate engineers completed a new line across the salient's base, half a mile to a mile behind the Angle. At about 2-3 a.m. the survivors withdrew to it - intact and unbroken. That is the day's military meaning: Hancock came close to splitting the army in two, and the army did not break. 'The defender ultimately holds' is the honest outcome reading this scenario guards - the spectacular break-in that never became a breakthrough.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.battlefields.org/learn/articles/unions-bloody-miscue-spotsylvanias-muleshoe",
+            "https://encyclopediavirginia.org/entries/spotsylvania-court-house-battle-of/"
+          ]
+        },
+        {
+          "id": "sp_not_this_scenario",
+          "head": "What this scenario deliberately is not",
+          "body": "This is May 12 at the day's grain. Upton's May 10 assault - the twelve-regiment attack of some 4,500 men whose figure is never borrowed for May 12 - and the Laurel Hill fighting are context, not playable phases. The Crater and Cold Harbor are their own lanes with their own dignity handling, and no massacre content is playable anywhere in this game. The wider May 8-21 battle, with its 18,399 and 12,687-or-12,421 casualty aggregates, frames the codex entry and is never encoded as a May 12 figure.",
+          "provenance": "Inferred",
+          "sources": [
+            "https://www.battlefields.org/learn/civil-war/battles/spotsylvania-court-house",
+            "https://www.nps.gov/places/bloody-angle.htm"
+          ]
+        }
+      ],
+      "codex": {
+        "id": "codex_spotsylvania",
+        "title": "Spotsylvania Court House - the Mule Shoe, May 12, 1864",
+        "summary": "Hancock's massed II Corps column broke through the gun-stripped tip of the Mule Shoe salient at first light, capturing most of Johnson's division, and the fight froze into nearly a full day of hand-to-hand combat at the Bloody Angle while Gordon, Ramseur, Daniel, Harris, and McGowan re-formed a line the Union could not break; the Confederates withdrew overnight to a completed base line, intact. The full May 8-21 battle both register families carry is Inconclusive - the campaign ground on toward the North Anna - and the May 12 defender-hold is the day's tactical reading. Attrition was a deliberate strategy, taught here with its real costs and real errors, with gravity and without glory.",
+        "provenance": "Verified",
+        "axes": {
+          "timeline": "1864",
+          "theater": "Eastern",
+          "campaign": "Overland Campaign",
+          "result": "Inconclusive",
+          "cost": "About 17,000 total casualties at the Mule Shoe on May 12 - US about 9,000, CS about 8,000 including about 3,000 prisoners. No source recomputes a prisoners-excluded split, so no casualty direction is asserted (the casualty-direction-neutral law).",
+          "people": [
+            "Grant",
+            "Meade",
+            "Hancock",
+            "Wright",
+            "Barlow",
+            "Birney",
+            "Mott",
+            "Gibbon",
+            "Ewell",
+            "Johnson",
+            "Steuart",
+            "Gordon",
+            "Ramseur",
+            "Daniel",
+            "Harris",
+            "McGowan",
+            "Lee"
+          ],
+          "battle": "Spotsylvania Court House"
+        },
+        "sources": [
+          "https://www.battlefields.org/learn/civil-war/battles/spotsylvania-court-house",
+          "https://encyclopediavirginia.org/entries/spotsylvania-court-house-battle-of/",
+          "https://www.nps.gov/places/bloody-angle.htm"
+        ]
+      }
+    }
+  }
+}
