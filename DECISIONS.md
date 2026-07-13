@@ -6,6 +6,109 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D387 — ELKHORN TAVERN CONTRACT: THE HONEST AXIS, THE AMMUNITION LAW, AND THE LEETOWN ABSENCE GUARD — [CLAUDE CODE / FABLE, LANE-003 DRIVE→CONTRACT] (2026-07-12)
+
+D387 commits the eighth LANE-003 planning contract:
+`docs/design/elkhorn-tavern-battle-build-spec.md` (final md5 `075a6c7c755697d0ac36959c4d1ea67f`)
+plus `tools/probe-elkhorn-tavern-plan.mjs` (14/14, filesystem-first, dual-mode, bind-tested,
+whitespace-normalized anchors per the D385 idiom). This slice changes no runtime data, registry/
+menu entry, schema row, Army Register row, generated-game behavior, combat input, or baseline
+count. The game remains at 20 scenarios, 50 schema files, Army Register 1281, coverage 20, suite
+125; generated HTML remains md5 `a9b42b69c1c735b81fff7c9c878c1bc0` (rebuilt byte-identical).
+
+**Research pipeline (the D383 pattern across a pause/resume boundary):** the prior Fable session's
+14-agent workflow (6 Sonnet/medium gathers → 6 Opus/high default-refutes → 1 Opus/high critic,
+`wf_1a2d6b8d-36e`) was stopped by Aaron with 11/12 agents complete. This session recovered every
+per-agent result from the run journal (the memory-backed junk-stub law: never trust a resumed
+run's final return), observed the resume re-running already-paid gathers (the cache-churn class),
+stopped it, and ran a minimal continuation workflow (`wf_448b7f8c-07c`: the missing
+native-carveout refute + the completeness critic, both Opus/high, recovered packets embedded from
+disk) — ~66 verdicts total, 0 agent errors. Fable adjudicated every claim.
+
+**What the refute layer caught this time (the floor earning its keep):**
+- **Slack is the battle's double posthumous trap:** Col. William Y. Slack (2nd Missouri Brigade)
+  was a COLONEL in Confederate service at Pea Ridge — his CSA brigadier's commission was
+  POSTHUMOUS (Apr 17, to date from Apr 12; he died Mar 21 of the Mar 7 wound). The kickoff's own
+  "Slack BG" shorthand was corrected by the evidence.
+- **Frost is the REVERSE trap:** already a CSA Brig. Gen. (Mar 3, 1862, four days before the
+  battle) while commanding Missouri State Guard divisions — never "corrected" downward.
+- **Price's commission nuance resolved two-source:** CSA Maj. Gen. dated March 6, 1862 (the eve
+  of battle; ABT bio + Wikipedia) — the packet's `Maj. Gen., Missouri State Guard` probe string
+  belongs to Wilson's Creek, not Pea Ridge.
+- **The Union colonel wall:** Osterhaus, Jefferson C. Davis, Carr, Dodge, Vandever ALL colonels
+  at the battle (NPS OOB anchor); Carr's BG backdated to Mar 7 (appointed April), MoH Jan 16
+  1894; Curtis MG date-of-rank Mar 21, 1862 FOR the victory.
+- **A gather misattribution killed before ship:** the scalping/Pike-reaction cluster was credited
+  to BOTH ABT and EOA — two direct fetches proved the EOA page contains NONE of it; the whole
+  cluster ships single-source `Inferred` (← Shea & Hess). Gates's dismounted-fight/captured-guns/
+  casualty details REFUTED (the cited page contains none of them). The gather's "Welfley's Knoll
+  not found" was itself REFUTED — it is the named 21-gun ridge (NPS Stop 10).
+- **The single-scholar disclosure:** the NPS series narrative is Shea's own prose; ECWC/Wikipedia/
+  ABT trace to Shea & Hess — the spec's register applies the two-source rule against the real
+  author graph, and the highest-leverage D388 upgrade is a page-cited Shea & Hess fetch.
+
+**Locked shape:** two-phase T8 role reversal — `Elkhorn Tavern - March 7` (w1, CS attacker,
+per-phase `defaultFog:true` as the disclosed OPERATIONAL-surprise abstraction: no literal weather
+fog is sourced; Curtis learned ~10:30 a.m. the enemy was behind him) → `Curtis's Counterattack -
+March 8` (w3 DECISIVE, US attacker, fog OFF — NPS: the whole army visible in line). Weights
+`[1, 3]` sum 4; **the D92 phase-weight audit was written down first and the packet's weighting
+SURVIVES it** (the FD packet failed this same audit — the audit is now standing practice either
+way). Home edges inverted (CS NORTH out of Cross Timber Hollow, US SOUTH toward Little Sugar
+Creek) — the envelopment made visible. Menu rank `elkhornTavern:49` between fortDonelson:48 and
+shiloh:50. **THE AMMUNITION LAW:** the deciding logistics fact (the reserve train mistakenly
+ordered back to Camp Stephens, ~12 miles/six hours away) encodes ONLY as the T4 per-phase
+`supply` train POSITIONS (the shipped FD pattern) + readiness inputs — the D74 wall adds the
+battle-named ammoPenalty/ammoMult/supplyMult/supplyPenalty/exhaustionMult/fatigueMult/
+starvationMult/marchPenalty/surpriseBonus/surpriseMult/envelopmentBonus/envelopmentMult/
+panicMult/collapseMult families. Strengths: whole-battle anchors US ~10,500 / CS ~16,000-16,500
+Verified with NPS's 12,000-13,000 actually-engaged distinction; NO source pins an axis-engaged
+figure (the "~5,000 at the tavern" figure is rejected outright); phase envelopes ship as Inferred
+abstractions (P1 US 2,000-5,500 vs CS 4,000-6,500; P2 US 7,500-10,500 vs CS 5,000-11,000); the
+March 8 gun counts ARE sourced (21 Federal on Welfley's Knoll vs 12 CS).
+
+**Direction law:** 8 seeds, ≥5/8 each on four guards — P1 CS seizes, P2 US seizes, aggregate US,
+and aggregate casualty DIRECTION only (CS > US: the firm 1,384 against the honest ~2,000-2,500
+record-level range — every reputable estimate sits above the US figure; the refute endorsed the
+direction while killing any magnitude claim). **No per-phase casualty tooth in either direction —
+no per-day split exists in the record** (CS returns were never completed); a phase-scoped
+casualty guard would be fabricated precision.
+
+**THE LEETOWN ABSENCE GUARD (D359, executable on the Fort Pillow pattern):** the plan probe (and
+the future focused probe, contract-pinned) enforce — no `data/leetown*` file, no
+Leetown/Wilson's-Creek/Glorieta registry line, and once elkhorn data exists a name-scan of every
+OOB unit/reinforcement row rejects any Native formation (Cherokee / Mounted Rifles / Watie /
+Drew's / Pike's / Indian Brigade), while teaching cards MUST name Pike, Watie, Drew, and the
+scalping controversy honestly (cards 8-10 mandatory — dignity-by-design, not erasure). The
+completeness critic's carve-out verdict: HIGHLY FEASIBLE — the Native combat role was
+concentrated at Leetown (two miles off-axis); the March 8 Elkhorn-axis presence was a peripheral
+skirmish at Big Mountain driven off before the decisive assault; the "not load-bearing" judgment
+is an argument from silence and ships `Inferred`. Future contrary evidence = HALT-and-surface.
+
+**Packet addendum (the D383 precedent):** the trans-Mississippi packet gains a §12 D387 spec-time
+addendum (Price/Slack/Frost corrections, the colonel wall, Welfley's Knoll, landmark re-fetches,
+the 1st=Drew/2nd=Watie majority convention, the Shea independence finding, the casualty law, the
+carve-out answer). Research probe stays 15/15.
+
+**Bind (the D383 section-scoping built in from birth):** the §6 Curtis lock line was tampered to
+`Maj. Gen.` → EXACTLY `RANKS + TRAPS` red (13/14, exit 1) → restored md5-identical
+(`075a6c7c755697d0ac36959c4d1ea67f`) → 14/14. Generated HTML held `a9b42b69c1c735b81fff7c9c878c1bc0`
+throughout. One probe-run lesson logged: the first probe invocation ran in the same message as a
+parallel file edit and read the spec as 0 bytes — probes run AFTER edits settle, never beside
+them (the D373 concurrency law, applied to single tool calls).
+
+**Gate (serialized, every artifact read):** node --check green; build GATE OK with HTML
+byte-identical; schema 50/50 (timestamp-only artifact churn checked out per convention); research
+15/15; Elkhorn plan 14/14 (fresh artifact, all steps named green); ALL NINE plan probes green
+(elkhorn 14/14 · fort-donelson 13/13 · five-forks 12/12 · cedar-creek 11/11 · cross-keys 11/11 ·
+stones-river 11/11 · NMH 10/10 · gaines-mill 8/8 · women-arc 10/10); focused women probe 13/13
+@11-lock, 0 pageerrors; suite list 125; `git diff --check` clean. `npm run vet:noreg` remains
+owed at the next release checkpoint (the D384 residual + D386 pin edits), alone on the machine.
+
+LANE-003 releases to CONTRACT/unowned at this green pushed boundary; the exact next pointer is
+**D388 playable Elkhorn Tavern runtime from this committed contract** (then the D382 ladder:
+the Overland/attrition extension). Reversible: docs + a plan probe only; the runtime slice
+reopens nothing here without a new source contradiction and HALT.
+
 ## D386 — THE WOMEN-IN-WAR ARC IS PLAYABLE: FOUR CHAPTER WALK-THROUGHS UNDER THE REGISTER LAW — [CLAUDE CODE / FABLE, LANE-003 DRIVE→CONTRACT] (2026-07-12)
 
 D386 implements the D385 contract exactly. The Campaign Kit's Women in the War lane now carries an
