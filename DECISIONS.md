@@ -6,6 +6,62 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D389 — ELKHORN RELEASE CHECKPOINT: 126/126 VERIFIED, THREE HARNESS TEETH HARDENED, LANE RELEASED — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-003 VERIFY→CONTRACT] (2026-07-13)
+
+D388 is released. The playable commit is `67f9672a6ff8c734c7f0ec6fa385fb7d5ad700e8`.
+The complete 126-command `npm run vet:noreg` manifest ran serialized and alone in four evidenced
+segments: 77 green commands before Arms; 14 green commands from Arms through the command before
+Tripo; 11 green commands from Tripo through the command before New Market Heights; and 24 green
+commands from New Market Heights through Classic paint. The combined proof is 126/126. No game,
+data, historical claim, combat input, scenario result, or generated-game byte changed during the
+release gate.
+
+Three reds were real probe/harness findings and were fixed at root before exact-label resumes:
+
+- **Arms:** all 23 assertions and the PNG had completed green, but an unbounded
+  `browser.close()` exhausted the old 360-second suite budget. A standalone retry then exposed a
+  120-second screenshot ceiling on the 8 GB Mac. `probe-arms` now keeps the required full PNG,
+  allows 240 seconds for that capture, and bounds page/browser teardown at 2.5/5 seconds; the
+  suite grants this probe 600 seconds. Standalone and in-suite results are 23/23, 0 pageerrors.
+- **Tripo unit assets:** T24 legitimately removes slab/front nodes when a local GLB replaces the
+  marker, so the old tooth's strict `false` requirement reported `null` even though the screenshot
+  showed no duplicate base. The strengthened tooth now inspects the shared formation-instance
+  matrix too and requires every base representation inactive or absent while the GLB, flag, and
+  selection ring remain visible. Standalone and resumed results are 15/15, 0 pageerrors.
+- **New Market Heights:** the old chronology tooth assumed NMH immediately preceded Shiloh. The
+  live and correct D384/D388 sequence is Gettysburg → NMH → Fort Donelson → Elkhorn Tavern →
+  Shiloh. Registry and DOM teeth now assert that complete sequence. Standalone and resumed results
+  are 14/14, 0 pageerrors.
+
+Artifact audit is complete rather than inferred from exit codes. All 125 expected suite JSONs
+parse, are fresh against the segment that owns them, and report zero `ok:false`, pageerrors, and
+realErrors. Schema is 51/51 with `elkhorn-tavern.json` PASS as `2 phases, CS vs US`. The sweep is
+21 scenarios × 8 seeds = 168 completed rows with `failures:[]`; Army Register is 1,326; the suite
+list is 126. All 149 fresh PNGs and four fresh JPEGs decode with positive dimensions; all 50
+JSON-referenced image paths are fresh, present, and decodable. Visual probes report zero texture
+warnings. Standing notices are understood: embedded core 2.418 MB above the soft warning but
+below review/hard caps; eight disabled Tripo slots pending local optimized files and license
+proof; headless AudioContext-autoplay, multiple-Three.js, and WebGL ReadPixels performance
+messages; and the frozen optional-resource 404 class (boot records eight, Classic two) with
+`realErrors:[]` and `pageerrors:[]`. Tactical visuals records one post-green Shiloh 3D
+`browser-close timeout` in `cleanupErrors`; the scene is `ok:true`, its pageerror/lifecycle-error
+arrays are empty, the PNG is valid, all later scenes passed, and the command exited 0.
+
+Elkhorn's release locks remain exact: 21 scenarios; schema 51; Army Register 1,326; coverage 21;
+suite 126; menu rank 49; P1 CS 8/8; P2 US 8/8; aggregate US 8/8; aggregate CS-higher-loss 8/8;
+17 battle-date rank locks; D74 forbidden keys 0. Final hashes are unchanged: T1
+`0ea7ea9e87bc417da4a3b5b6e2ad29ed`; Elkhorn data
+`6798671e0e3d46a3d9c30e655198fdd0`; Elkhorn focused probe
+`c6654e9298c23317698d706b60407f21`; generated HTML
+`21544e26c8871bc47e26ff117cce1f32`; frozen base
+`c9db83fa99230ffb95bdfdfe059f3fb9`.
+
+LANE-003 returns to CONTRACT/unowned. No D382 feature work started. The exact next bounded slice is
+the planning-only Spotsylvania / Bloody Angle contract from
+`docs/design/battle-build-research/1864-65-attrition-battle-build-research.md`: re-verify the
+packet's spec-time OOB/rank/source gaps, then write the standalone single-phase spec plus a
+dual-mode bind-tested plan probe. Runtime/data/registry/count movement waits for a later slice.
+
 ## D388 — PLAYABLE ELKHORN TAVERN: TWO DAYS, ONE HONEST AXIS, NO OUTCOME FUDGE — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-003 DRIVE→VERIFY] (2026-07-12)
 
 D388 implements the committed D387 contract as historical scenario 21. `data/elkhorn-tavern.json`

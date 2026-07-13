@@ -212,6 +212,7 @@ function enforceDiagClassic(output) {
 }
 
 function timeoutFor(label, file) {
+  if (file.endsWith('probe-arms.mjs')) return 600000; // slow-Mac budget: 23 sim assertions + the required full PNG; probe cleanup is separately bounded
   if (file.endsWith('probe-phased-3d.mjs')) return 360000;
   if (file.endsWith('probe-render-richness.mjs')) return 900000;
   if (file.endsWith('probe-weather.mjs')) return 900000;

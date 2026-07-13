@@ -139,10 +139,13 @@ const SETUP = `(() => {
       return { phase1:t0, phase2:t1 };
     });
 
-    check('REGISTRY + MENU: New Market Heights sits after Gettysburg and before Shiloh in the Eastern arc', function() {
+    check('REGISTRY + MENU: New Market Heights sits after Gettysburg, then Fort Donelson and Elkhorn precede Shiloh', function() {
       var reg = fldScenarioRegistry(), order = fldScenarioMenuOrder(reg);
       if (!reg.newMarketHeights || reg.newMarketHeights !== DATA) throw new Error('registry identity missing');
-      if (!(order.indexOf('gettysburg') + 1 === order.indexOf('newMarketHeights') && order.indexOf('newMarketHeights') + 1 === order.indexOf('shiloh'))) throw new Error('chronology wrong: ' + order.join(' -> '));
+      if (!(order.indexOf('gettysburg') + 1 === order.indexOf('newMarketHeights') &&
+            order.indexOf('newMarketHeights') + 1 === order.indexOf('fortDonelson') &&
+            order.indexOf('fortDonelson') + 1 === order.indexOf('elkhornTavern') &&
+            order.indexOf('elkhornTavern') + 1 === order.indexOf('shiloh'))) throw new Error('chronology wrong: ' + order.join(' -> '));
       return { rank:fldScenarioMenuRank('newMarketHeights'), order:order.indexOf('newMarketHeights') };
     });
 
@@ -312,7 +315,7 @@ const DOM = `(() => {
   }
   try {
     G.settings = G.settings || {}; G.mode = 'menu';
-    check('MENU + SIDE CHOICE: one accessible button between Gettysburg and Shiloh; the chosen side reaches fldLaunchBattle', function() {
+    check('MENU + SIDE CHOICE: one accessible button in the Gettysburg -> NMH -> Fort Donelson -> Elkhorn -> Shiloh sequence; the chosen side reaches fldLaunchBattle', function() {
       if (typeof openMainMenu === 'function') openMainMenu();
       fldInjectMenuButton();
       var btn = document.getElementById('fldScnBtn_newMarketHeights');
@@ -320,7 +323,11 @@ const DOM = `(() => {
       fldInjectMenuButton();
       if (document.querySelectorAll('#fldScnBtn_newMarketHeights').length !== 1) throw new Error('duplicate NMH button');
       var ids = Array.prototype.slice.call(document.querySelectorAll('.gn-btn')).map(function(b){ return b.id; });
-      if (!(ids.indexOf('fldScnBtn_gettysburg') >= 0 && ids.indexOf('fldScnBtn_newMarketHeights') === ids.indexOf('fldScnBtn_gettysburg') + 1 && ids.indexOf('fldScnBtn_shiloh') === ids.indexOf('fldScnBtn_newMarketHeights') + 1)) throw new Error('button chronology wrong: ' + ids.join(' -> '));
+      if (!(ids.indexOf('fldScnBtn_gettysburg') >= 0 &&
+            ids.indexOf('fldScnBtn_newMarketHeights') === ids.indexOf('fldScnBtn_gettysburg') + 1 &&
+            ids.indexOf('fldScnBtn_fortDonelson') === ids.indexOf('fldScnBtn_newMarketHeights') + 1 &&
+            ids.indexOf('fldScnBtn_elkhornTavern') === ids.indexOf('fldScnBtn_fortDonelson') + 1 &&
+            ids.indexOf('fldScnBtn_shiloh') === ids.indexOf('fldScnBtn_elkhornTavern') + 1)) throw new Error('button chronology wrong: ' + ids.join(' -> '));
       var got = null; fldScenarioSideChoice('newMarketHeights', function(side){ got = side; });
       var cards = document.querySelectorAll('[data-brside]'); if (cards.length !== 2) throw new Error('wanted two side cards, got ' + cards.length);
       var cs = document.querySelector('[data-brside="CS"]'); if (!cs) throw new Error('CS side card missing'); cs.click();

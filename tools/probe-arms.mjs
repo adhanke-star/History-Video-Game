@@ -24,6 +24,23 @@ const cfg = JSON.parse(readFileSync(join(__dirname, 'shots.json'), 'utf8'));
 const GL = ['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist','--enable-webgl','--disable-dev-shm-usage'];
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 async function up(u){ try{ const r=await fetch(u,{method:'HEAD'}); return r.ok||r.status===200; }catch{ return false; } }
+async function withTimeout(label, promise, ms) {
+  let timer;
+  try {
+    return await Promise.race([
+      promise,
+      new Promise((_, reject) => { timer = setTimeout(() => reject(new Error(label + ' timed out after ' + ms + 'ms')), ms); })
+    ]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+async function closePage(page) {
+  try { await withTimeout('page.close', page.close({ runBeforeUnload:false }), 2500); } catch (e) {}
+}
+async function closeBrowser(browser) {
+  try { await withTimeout('browser.close', browser.close(), 5000); } catch (e) {}
+}
 
 const SETUP = `(() => {
   var R = { steps: [], errors: [], ok: true };
@@ -413,12 +430,14 @@ const SETUP = `(() => {
     })()`);
     result.screenshot = shot;
     await sleep(250);
-    await page.screenshot({ path: join(OUT,'probe-arms.png'), timeout: 120000 });   // slow-Mac WebGL ReadPixels stall: the 30s default flakes (the documented D232 class, repaired in D251)
+    await page.screenshot({ path: join(OUT,'probe-arms.png'), timeout: 240000 });   // slow-Mac WebGL ReadPixels stall: preserve the required full screenshot, but allow the 8 GB Mac's observed capture window
     await page.evaluate(`(function(){ try{ fldExit(true); }catch(e){} })()`);
   } catch(e){ result = { ok:false, fatal:String(e&&e.message||e), pageerrors }; }
   finally {
     writeFileSync(join(OUT,'probe-arms.json'), JSON.stringify(result, null, 2));
-    await browser.close(); if (srv) srv.kill();
+    await closePage(page);
+    await closeBrowser(browser);
+    if (srv) srv.kill();
   }
   console.log('probe-arms ok=' + result.ok + ' steps=' + (result.steps?result.steps.length:0) + ' pageerrors=' + (result.pageerrors?result.pageerrors.length:0));
   if (result.fatal) console.log('  FATAL ' + result.fatal);

@@ -121,12 +121,21 @@ function sceneScript(label, opts) {
       try { if (typeof __FIELD !== "undefined" && __FIELD && __FIELD.scene) __FIELD.scene.traverse(function(o){ if (o && o.name === "markerBodySlabLayer") bodySlabLayer = o; if (o && o.name === "markerBodyFrontLayer") bodyFrontLayer = o; }); } catch(e){}
       var bodyLayerSlot = (g.userData && g.userData._markerBodySlot != null) ? g.userData._markerBodySlot : -1;
       var bodyLayerSlotActive = false;
+      var formationLayerSlotActive = false;
       try {
         if (bodySlabLayer && bodyLayerSlot >= 0 && window.THREE) {
           var bodyMat = new window.THREE.Matrix4();
           bodySlabLayer.getMatrixAt(bodyLayerSlot, bodyMat);
           var bodyEl = bodyMat.elements || [];
           bodyLayerSlotActive = Math.abs(Number(bodyEl[0] || 0)) > 0.01 && Number(bodyEl[13] || -9999) > -1000;
+        }
+        var ffState = g.userData && g.userData._ff;
+        if (ffState && ffState.layer && ffState.layer.body && ffState.slot >= 0 && window.THREE) {
+          var ffMat = new window.THREE.Matrix4();
+          ffState.layer.body.getMatrixAt(ffState.slot, ffMat);
+          var ffEl = ffMat.elements || [];
+          var ffScale = Math.sqrt(Math.pow(Number(ffEl[0] || 0), 2) + Math.pow(Number(ffEl[1] || 0), 2) + Math.pow(Number(ffEl[2] || 0), 2));
+          formationLayerSlotActive = ffScale > 0.01 && Number(ffEl[13] || -9999) > -1000;
         }
       } catch(e) {}
       return {
@@ -141,6 +150,7 @@ function sceneScript(label, opts) {
         bodyLayer:!!(bodySlabLayer && bodyFrontLayer),
         bodyLayerVisible:bodySlabLayer && bodyFrontLayer ? (bodySlabLayer.visible !== false && bodyFrontLayer.visible !== false) : null,
         bodyLayerSlotActive:bodyLayerSlotActive,
+        formationLayerSlotActive:formationLayerSlotActive,
         flagVisible:flag ? flag.visible !== false : null,
         ringExists:!!ring,
         stats:(m && m.userData && m.userData.unitGlb && m.userData.unitGlb.stats) || null
@@ -241,8 +251,8 @@ async function runScene(browser, label, opts) {
   check('fixture pack: a local glTF model attaches to the infantry group',
     F.ok && F.unit && F.unit.model === true && F.unit.modelVisible === true && F.unit.stats && F.unit.stats.vertices === 3,
     JSON.stringify(F.unit || {}));
-  check('fixture pack: hideBaseMarker hides slab/front but keeps flag and ring cues',
-    F.ok && F.unit && F.unit.slabVisible === false && F.unit.frontVisible === false && F.unit.flagVisible === true && F.unit.ringExists === true,
+  check('fixture pack: hideBaseMarker hides every base representation but keeps flag and ring cues',
+    F.ok && F.unit && F.unit.modelVisible === true && F.unit.formationFiguresVisible !== true && F.unit.formationLayerSlotActive !== true && F.unit.slabVisible !== true && F.unit.frontVisible !== true && F.unit.bodyLayerSlotActive !== true && F.unit.flagVisible === true && F.unit.ringExists === true,
     JSON.stringify(F.unit || {}));
   check('renderRich="off": GLB layer is disabled and base marker is restored',
     F.ok && F.offCheck && F.offCheck.off === true && F.offCheck.unit && F.offCheck.unit.modelVisible !== true && F.offCheck.unit.formationFiguresVisible !== true && F.offCheck.unit.slabVisible === true,
