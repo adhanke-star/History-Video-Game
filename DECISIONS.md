@@ -6,6 +6,128 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D396 — THE PETERSBURG INITIAL-ASSAULTS CONTRACT: THE REINFORCEMENT-RACE LAW, THE REDUNDANCY DISCHARGE, AND THE USCT PROVING GROUND — [CLAUDE CODE / FABLE, LANE-003 DRIVE→CONTRACT] (2026-07-14)
+
+The eleventh LANE-003 planning contract, and the D395-named completion of D382 item 3.5:
+`docs/design/petersburg-initial-assaults-battle-build-spec.md` (md5
+`277e6754d66e619a8bf63bc0b7ca65b9`) + `tools/probe-petersburg-initial-assaults-plan.mjs` (md5
+`0886f6abc4606ba7d28fc55d1692cdc7`; 12 steps, dual-mode, filesystem-first, fail-closed,
+bind-tested). No runtime moved: 23 scenarios · schema 53 · Army Register 1434 · coverage 23 ·
+suite 128 · sweep 23 all hold; generated HTML byte-identical
+`4fc16d813663f9e2285583fca1bc2939` (rebuild-verified, GATE OK); frozen base
+`c9db83fa99230ffb95bdfdfe059f3fb9`; T1 `f913c4f9393c448057dca46bbdaaec81`; Wilderness data
+`7385a1791b3ffc802d5b0ccac9a58874`. DRIVE was taken in ledger-only commit `9db61f7` at the
+clean D395 boundary `d099082` (HEAD == origin/main; all eleven plan probes ALL OK after the
+lane edit). No selection adjudication was owed — Aaron himself named this battle in D395.
+
+**Research (two workflows, 10 agents, 0 errors: a 7-agent pass — 4 Sonnet/medium gatherers,
+140 claims → 2 Opus/high default-refute verifiers → 1 Opus/high completeness critic — then a
+3-agent gap pass — 2 Sonnet/medium gatherers, 53 claims → 1 Opus/high refuter; combined 189
+CONFIRMED / 4 ADJUSTED / 0 REFUTED / 0 UNSUPPORTED; the yield is the packet's §14 D396
+addendum, committed separately as `203343e`).** Key adjudications: **THE REDUNDANCY FLAG IS
+DISCHARGED** (D395 obligation 1) — the packet's "redundant with Spotsylvania/Cold Harbor as
+assault vs works" is REFUTED by the evidence: the honest shape is a DEFENDER-REINFORCEMENT
+RACE (the 10-mile, 55-battery Dimmock Line held by ~2,200 on June 15 against Smith's 14,000;
+the line breached that evening — the magnitude Disputed 1.5/2/"nearly three" miles across
+NPS's own two pages and ECWC — while Petersburg sat "clearly at the mercy of the Federal
+commander"; the defender growing 2,200 → ~14,000 → 20,000+ against 15-16,000 → 50,000 →
+67,000; Beauregard's unilateral Howlett-Line strip and two overnight fallback lines,
+"arguably his finest combat performance of the war"), with June 18's futility (the 1st Maine
+Heavy Artillery's 632 of ~900 — the war's worst single-action regimental loss, three
+families — and Wilkeson's sourced refusal testimony) confined to day four as the CONSEQUENCE
+of the lost race. The critic's verdict: only day four resembles the sibling battles. NO HALT.
+**Rank wall:** Beauregard **full General, CSA** (July 21, 1861, fifth in seniority — the
+bind anchor) commanding the June 15-17 defense; **Lee never the defense commander before
+his 11:00 a.m. June 18 arrival** (the erasure trap); **Maj. Gen. W. F. Smith — THE
+RESTORED-COMMISSION TRAP** (MG July 4, 1862 → expired March 4, 1863 → Senate re-confirmed
+March 9, 1864; the battle article's "Brig. Gen." adjudicated as the stale-grade error);
+Hancock Maj. Gen. arriving ~9 p.m. June 15 with 16,000 and DEFERRING to Smith though senior;
+**Brig. Gen. Orlando Willcox — THE ANACHRONISM CATCH, refute-confirmed** (the battle
+article's "Major General" is backdated: his brevet MG dates from August 1, 1864);
+Griffin/Ayres/Crawford/Cutler ALL brigadiers; Ledlie 1st Division IX from June 9 (the
+Stevenson successor chain); **Kershaw and Gibbon now legitimately MAJOR GENERALS (June 2 /
+June 7, 1864) — the Wilderness locks REVERSED**; Hinks Brig. Gen. (all-USCT 3rd Division
+XVIII); **Dearing — THE UNCONFIRMED-COMMISSION TRAP** (slated BG April 29, 1864, never
+approved by the Confederate Congress; disclosure required); Hoke MG (April 20/23) with
+Clingman/Hagood/Martin/Colquitt; Bushrod Johnson MG (May 21) with Wise/Elliott/Ransom/
+Gracie; Wise Brig. Gen. holding the opening line; **THE VI CORPS ABSENCE WALL** (no fetched
+source places Wright here) and **THE PICKETT/BERMUDA HUNDRED SCOPE WALL** (Lee's own OR
+dispatches hold Pickett to the Howlett Line).
+
+**The direction-law adjudication (both teeth honest, from sources only):** the outcome is
+uncontested — "the First Petersburg Offensive ended with the city still in Confederate
+hands" and the 292-day siege followed — **THE CITY GUARD: CS defender retains the
+city-approach objective ≥5/8.** And the casualty direction survives every honest pairing
+(worst case 8,150 vs 4,000): **THE AGGREGATE CASUALTY-DIRECTION TOOTH: US losses exceed CS
+losses ≥5/8, direction only, never magnitude** — the attacker-bleeds-and-fails class, with
+the Stones-River inversion check run and NOT inverted. **THE 11,386 SCOPE COLLISION is a
+named trap:** Wikipedia renders 11,386 as Union-only (1,688/8,513/1,185) beside CS ~4,000;
+the CWSAC root renders the SAME figure as the grand total (US 8,150 / CS 3,236); the NPS
+handbook says "a loss of 10,000 men" — all magnitudes ship Disputed with both readings
+shown, and the collision itself is taught (card 7). No per-day casualty split is sourced —
+no per-day tooth may exist.
+
+**Locked shape:** standalone SINGLE PHASE, June 15-18, 1864 (`petersburgAssaults` /
+`data/petersburg-assaults.json` / "Petersburg: The Initial Assaults"); attacker US /
+defender CS; objective = the eastern approach into Petersburg — the city ground BEHIND the
+Dimmock Line, so the sourced breached-outer-line-and-held-city shape reads honestly; fog OFF
+(darkness/hesitation are timing inputs and cards, never a fog buff); menu rank 69 between
+`spotsylvania:68` and `kennesaw:70`, with **THE COLD HARBOR RANK DISCLOSURE** (69 is the
+only free integer; a future explicit Aaron reorder inserting Cold Harbor carries its own
+renumber obligation); **THE REINFORCEMENT-RACE LAW** (the opening CS on-map garrison
+STRICTLY 2,200-5,400 — Wise's brigade, Dearing's cavalry, the militia; every accession a
+TIMED arrival on the sourced clock: Hoke overnight June 15-16, Johnson June 16-17,
+Kershaw/Field June 18; the US weight staggered Smith 7 p.m. → Hancock 9 p.m. → Burnside
+June 16 → Warren June 17-18; FORBIDDEN: static garrisons, hesitation/caution/night
+multipliers, scripted halts or retirements); committed envelopes US 25,000-62,000 / CS
+14,000-30,000 (all Inferred; no source pins per-day committed totals); **THE USCT PROVING
+GROUND** (Baylor's Farm + the evening battery captures — range Disputed 6-11 vs 7-11 — the
+gun of Graham's battery, 378 killed and wounded June 15 two-family Verified, Kiddoo's
+"fullest confidence"; accuracy-as-dignity with NO USCT-specific modifier in either
+direction, and no massacre content anywhere — the Crater stays its own lane); ten teaching
+cards + codex Eastern / Richmond-Petersburg (Initial Assaults) / Confederate victory with
+the dual strategic framing; the D74 wall extends with the hesitation/caution/paralysis/
+night/garrison/refusal/USCT-modifier families; the frozen Classic `petersburg-break` row
+(April 2, 1865 — a different battle), its rail route, and the shipped Petersburg teaching
+prose (T13's pontoon card) are separate byte-identical layers. **THE TEN NAMED RESHAPE
+OBLIGATIONS for the runtime slice** (the D391/D393 insertion class, spec §11):
+probe-kennesaw adjacency ×2 · probe-spotsylvania chronology ×2 + SCOPE regex +
+forbidden-data scan · probe-wilderness chronology ×2 + SCOPE regex + forbidden-data scan —
+all same-commit with documented history, plus the 1434 pin-bump grep across tools/
+(THIRTEEN sites at authoring) and the registry-count/coverage pin family (five-forks 23→24,
+flags/intel 23→24, suite 128→129, sweep 23→24). Cold Harbor, the Crater, Fort Stedman,
+April 2, and Bermuda Hundred stay outside.
+
+**Bind (the spec-specified one-token tamper):** §6's exact anchor `Gen. P. G. T. Beauregard`
+→ `Lt. Gen.` made EXACTLY `RANKS + COMMAND TRAPS` red (11/12, exit 1); the file-edit restore
+returned the spec md5 to `277e6754d66e619a8bf63bc0b7ca65b9` exactly; rerun 12/12 ALL OK with
+the JSON artifact ok=true, twelve green steps, 0 pageerrors, no retained red. The
+section-scoped tooth (the D383 hardening) was built in from birth and bit on the first
+tamper.
+
+**Gate (serialized, every artifact read):** node --check clean; build GATE OK with HTML
+byte-identical `4fc16d813663f9e2285583fca1bc2939`; schema 53/53 ok=true (the FIRST
+invocation died in a transient Node read-fault with no output — the documented Desktop
+storage flake class — and the identical immediate re-run was green with zero file changes;
+the tracked report's timestamp-only churn was restored to the HEAD blob); research 15/15
+with the §14 addendum; Petersburg plan 12/12; ALL ELEVEN prior plan probes green at exact
+counts (wilderness 12/12 · spotsylvania 12/12 · cedar 11/11 · cross-keys 11/11 · elkhorn
+14/14 · five-forks 12/12 · fort-donelson 13/13 · gaines 8/8 · NMH 10/10 · stones 11/11 ·
+women-arc 10/10); suite list exactly 128; `git diff --check` exit 0; the runtime-scope diff
+(`civil_war_generals.html build/base.html src data`) EMPTY; T1 and Wilderness-data hashes
+held. A mid-gate phantom-dirty stat-cache flap (the D394/D395 class) listed shifting tracked
+files as modified; `git update-index --refresh` plus content diffs proved every one a ghost.
+**No A/B ran — no simulation input exists in a planning slice.** No
+runtime/data/registry/count movement. `npm run vet:noreg` deliberately NOT run (D160/D176):
+D394 discharged the release checkpoint 2026-07-14 and this slice moves no runtime byte.
+
+LANE-003 returns to CONTRACT/unowned. **The exact next bounded slice: playable Petersburg
+initial-assaults runtime from this committed contract (spec §11/§14 are the law), in a fresh
+session under a new committed DRIVE lock — then the war-career loop (D382 item 4). Cold
+Harbor stays DEFERRED (D395, explicit-reorder-only).**
+
+---
+
 ## D395 — POST-WILDERNESS LADDER BOUNDARY: AARON NAMES THE PETERSBURG INITIAL ASSAULTS (SPEC-FIRST, LATER) AND DEFERS COLD HARBOR — [AARON, via popup Q&A adjudicated by Claude Code / Fable] (2026-07-14)
 
 The decision-only checkpoint ordered by D394 is resolved. From the clean pushed D394 boundary
