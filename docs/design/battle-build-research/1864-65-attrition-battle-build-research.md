@@ -333,3 +333,161 @@ LIVE at the corrected slug `encyclopediavirginia.org/entries/wilderness-battle-o
 single-scholar root is Gordon Rhea, *The Battle of the Wilderness May 5-6, 1864* — the
 NPS/ABT narratives and the Wikipedia/EV casualty tables each collapse toward shared roots, and
 the two-FAMILY rule applies with those collapses named (the Elkhorn Shea-root class).
+
+## 14. D396 Spec-Time Addendum — Petersburg Initial Assaults (June 15-18, 1864) Verification Pass (2026-07-14)
+
+Two read-only workflows (a 7-agent pass — 4 Sonnet/medium gatherers, 140 claims → 2 Opus/high
+default-refute verifiers → 1 Opus/high completeness critic — then a 3-agent gap pass — 2
+Sonnet/medium gatherers, 53 claims → 1 Opus/high default-refute verifier; 10 agents, 0 errors)
+re-verified this packet's June 15-18 material before the D396 standalone spec. Combined
+verdicts: **189 CONFIRMED, 4 ADJUSTED, 0 REFUTED, 0 UNSUPPORTED across 193 claims.** Fable
+adjudication owns every conclusion. The packet text above stays as the record of what the D327
+pass believed; this addendum controls where they differ.
+
+**THE REDUNDANCY FLAG (packet §1 rank 6 "redundant with Spotsylvania/Cold Harbor") is
+DISCHARGED — REFUTED by the gathered evidence.** The honest shape is not a static
+assault-on-manned-works at all: it is a **DEFENDER-REINFORCEMENT RACE**, the war's canonical
+missed opportunity. On June 15 the 10-mile, 55-battery Dimmock Line was nearly EMPTY — about
+2,200 Confederates on the line (Encyclopedia Virginia + NPS + the Wikipedia battle article;
+Wise's Virginia brigade plus militia, Beyond the Crater corroborating) against Smith's 14,000
+advancing (NPS) — and the Union evening attack BREACHED it (Batteries 1-11 lost; the breach
+magnitude ships Disputed: NPS's own two pages say "two mile-long hole" and "1.5-mile-long
+hole" while the ECWC essay says "nearly three miles"). Petersburg that night was "clearly at
+the mercy of the Federal commander, who had all but captured it." The drama is the defender
+racing to refill the works — Beauregard unilaterally stripping the Howlett Line, improvising
+two successive overnight fallback lines (the June 17-18 retirement 500-800 yards, Beyond the
+Crater; "approximately half a mile," NPS), growing 2,200 → ~14,000 (June 16, Wikipedia + NPS)
+→ 20,000+ (June 18) while the attacker grew ~15-16,000 → ~50,000 → ~67,000 — "arguably his
+finest combat performance of the war." Only June 18, AFTER the race was lost, resembles the
+sibling battles (the 1st Maine Heavy Artillery's 632 of ~900, the war's worst single-action
+regimental loss — Wikipedia + the NPS battle-unit record + ECW, three families; Frank
+Wilkeson's sourced refusal testimony), and that day is the CONSEQUENCE the scenario teaches.
+The USCT proving ground (below) has no parallel at Spotsylvania, Cold Harbor, Kennesaw, or
+Franklin. **Verdict: a genuinely distinct honest shape exists; the spec proceeds. No HALT.**
+
+**Battle-date rank wall (all two-family unless noted).** US: Grant Lt. Gen., General-in-Chief
+a role (the D390-fetched NARA anchor stands, not re-fetched); Meade Maj. Gen.; **Maj. Gen.
+William F. "Baldy" Smith — THE RESTORED-COMMISSION TRAP:** MG July 4, 1862; the Senate failed
+to confirm and the appointment EXPIRED March 4, 1863, reverting him to brigadier general; he
+was re-nominated and the Senate confirmed him major general of volunteers **March 9, 1864** —
+so he commands XVIII Corps at Petersburg as a MAJOR GENERAL, and the Wikipedia battle
+article's "Brigadier General William F. 'Baldy' Smith" rendering is adjudicated as the
+stale-grade error class (the dated commission trail controls; the intra-family conflict ships
+disclosed); Maj. Gen. Winfield S. Hancock (MG November 29, 1862), II Corps, arriving about
+9:00 p.m. June 15 with 16,000 (NPS) — **THE SENIORITY-DEFERENCE FACT: though senior, Hancock
+deferred to Smith, who knew the ground** (Wikipedia biography, verbatim); **Maj. Gen. John
+Gibbon — THE REVERSE ANACHRONISM:** his MG of volunteers is dated June 7, 1864, so at THIS
+battle (unlike the Wilderness) he IS a major general — though the fetched battle article
+never names him in the June 15-18 fighting and his division's role ships as context; Maj.
+Gen. David B. Birney; Brig. Gen. Francis C. Barlow (led his division against Redans 13, 14,
+and 15); Maj. Gen. Ambrose E. Burnside, IX Corps; **Brig. Gen. James H. Ledlie — 1st Division
+IX Corps from June 9, 1864, succeeding the dead Stevenson** (the D392 Stevenson wall's
+successor chain); Brig. Gen. Robert B. Potter (2nd Division); **Brig. Gen. Orlando B. Willcox
+— THE ANACHRONISM CATCH, refute-confirmed:** the Wikipedia battle article renders him "Major
+General," but his own biography shows only a BREVET major generalcy to rank from August 1,
+1864 (nominated December 12, 1864; confirmed April 14, 1865) — his June 15-18 substantive
+grade is BRIGADIER GENERAL (the Gibbon-at-the-Wilderness error class, reversed onto this
+battle); Maj. Gen. Gouverneur K. Warren (MG August 8, 1863), V Corps; **Griffin, Ayres,
+Crawford, and Cutler ALL Brigadier Generals** (each carries only a brevet-MG dated from
+August 1, 1864 or later — after this battle); Brig. Gen. Edward W. Hinks (rank from November
+29, 1862), 3rd Division XVIII Corps, composed entirely of USCT; Brig. Gens. William T. H.
+Brooks and John H. Martindale (XVIII Corps 1st/2nd divisions); Brig. Gen. August Kautz
+(cavalry division). **THE VI CORPS ABSENCE WALL:** no fetched source places Wright's VI Corps
+in the June 15-18 assaults (Cold Harbor June 3-12, then the Bermuda Hundred bank; the battle
+article never mentions Wright) — VI Corps is never fielded here. CS: **Gen. P. G. T.
+Beauregard — full GENERAL, CSA (one of seven; date of rank July 21, 1861; fifth in
+seniority), commanding the initial defense** — the D396 bind anchor; Gen. Robert E. Lee
+(dispatching two divisions from 3:00 a.m. June 18; arriving in person about 11:00 a.m. June
+18, conferring with Beauregard at the Customs House — ECW, with NPS's "came down from
+Chester" corroboration; **never the defense commander of June 15-17**); Brig. Gen. Henry A.
+Wise (his brigade plus militia the ONLY opening force; former Virginia governor; the
+Military-District-of-Petersburg assignment dated June 17 is paperwork disclosure); Maj. Gen.
+Robert F. Hoke (MG April 23, 1864, ranking from April 20) with Brig. Gens. Clingman, Hagood,
+Martin, and Colquitt (the Beyond-the-Crater OOB lists five brigades — the refute pass's
+ADJUSTED catch; Martin's June 28 relief is after this battle); Maj. Gen. Bushrod R. Johnson
+(MG May 21, 1864) with Wise's, Elliott's, Ransom's, and Gracie's brigades; **James Dearing —
+THE UNCONFIRMED-COMMISSION TRAP:** slated for brigadier general April 29, 1864, the promotion
+NEVER approved by the Confederate Congress; he served in the grade commanding Beauregard's
+cavalry brigade (the Baylor's Farm delaying action) — ships with the unconfirmed disclosure
+(the Anderson-temporary-Lt.-Gen. class); **Maj. Gen. Joseph B. Kershaw — THE REVERSE OF THE
+WILDERNESS BIND:** MG June 2, 1864 — at THIS battle he IS a major general, filing into the
+Petersburg line June 18 (three families: Beyond the Crater + ECW + Wikipedia); Maj. Gen.
+Charles W. Field (grade Verified; his exact MG date-of-rank is not pinned by the fetched
+biography and ships `Inferred`, situated near his February 1864 return).
+
+**THE PICKETT/BERMUDA HUNDRED SCOPE WALL (refute-confirmed from Lee's own OR dispatches via
+Beyond the Crater):** Pickett's division reached Drewry's Bluff June 16 and occupied the
+Howlett Line trenches June 17 — it was NEVER in the June 15-18 Petersburg assaults proper. No
+fetched page places Pickett at Petersburg in this window. The Bermuda Hundred front stays
+outside the scenario.
+
+**Strengths (Disputed scopes — never one number).** June 15: CS 2,200 ON THE LINE
+(EV + NPS + the Wikipedia battle article) inside Beauregard's ~5,400 WHOLE FORCE (the
+Wikipedia biography's "weak 5,400-man force — including boys, old men, and patients" + Beyond
+the Crater's "5,400 defenders"; the NPS handbook's "less than 4,000" a third scope) against
+Smith's 14,000 (NPS) / "approximately 15,000 to 16,000" moved (EV), plus Hancock's 16,000 at
+9:00 p.m. June 16: CS ~14,000 (Wikipedia + NPS "by dusk of that second day"); US ~50,000
+(Wikipedia; ECW corroborates). June 17: "outnumbered six-to-one" (ECWC, qualitative). June
+18: CS "over 20,000" (Wikipedia) with Lee's ~23,000 inbound (ECW scope note); US ~67,000
+(Wikipedia). Whole-battle: the Wikipedia infobox range "5,400-38,000" CS; the CWSAC-root
+aggregate 104,000 total / US 62,000 / CS 42,000 (Beyond the Crater; the ABT infobox carries
+the same table — adjudicated ONE root cited twice). NO source pins per-day committed axis
+totals — every committed split ships as an Inferred envelope.
+
+**Casualties and the direction law (RESOLVED — TWO honest teeth).** **THE 11,386 SCOPE
+COLLISION is itself a named trap:** Wikipedia renders 11,386 (1,688 k / 8,513 w / 1,185 m) as
+the UNION-ONLY total beside CS ~4,000 (200 / 2,900 / 900), while the CWSAC-root table renders
+the SAME 11,386 as the GRAND total (US 8,150 / CS 3,236); the NPS handbook says "a loss of
+10,000 men." The magnitudes ship `Disputed` with both readings shown and nothing load-bearing
+on any figure. But the DIRECTION survives every honest pairing (worst case 8,150 vs 4,000 —
+still better than 2:1): **the aggregate casualty-direction tooth (US losses exceed CS losses)
+is honest, direction only, never magnitude** — the attacker-bleeds-and-fails class, checked
+against the Stones-River inversion warning and confirmed NOT inverted here. And the outcome
+direction is uncontested: "the First Petersburg Offensive ended with the city still in
+Confederate hands" (ECWC) and the 292-day siege followed (ABT) — **the city-hold guard (CS
+defender retains Petersburg) is the sourced lean.** Per-day casualty splits are NOT sourced
+(only Hinks's June 15 figure below) — no per-day tooth may exist.
+
+**THE USCT PROVING GROUND (two-source, per D395 obligation 6).** Baylor's Farm, morning June
+15: Hinks's division fought through an unexpected fortified delaying position (Dearing's
+cavalry + the Petersburg Artillery) — ABT heritage-site ("Never before tested in battle,
+Hinks' black soldiers pressed forward"; "slightly more than 300 Union casualties"; the 22nd
+USCT leading) + the Wikipedia battle article (two assaults at Baylor's farm) = two families,
+`Verified`. The evening Dimmock captures: Hinks's ~3,500-man division took a battery series —
+**the exact range ships `Disputed`: "Batteries Six through Eleven" (EV; ABT battle page) vs
+"Batteries 7 through 11" (NPS)** — including the storming of Battery 9 (ABT article: the 4th
+USCT under Lt. Col. Rogers with the 1st USCT) and the capture of a gun of Graham's Petersburg
+Artillery (NPS); division loss June 15: **378 killed and wounded (ABT + NPS, two families,
+`Verified`)**; Kiddoo's "fullest confidence in the fighting qualities" and the NPS "capable
+combat soldiers" judgment anchor the teaching. June 18's supporting role and 36 losses are
+NPS-only (`Inferred`). This is the mirror image of the Wilderness's USCT card:
+accuracy-as-dignity here means the sourced combat IS the story — the first major USCT combat
+validation in Virginia, twelve days after Cold Harbor — with nothing invented and nothing
+erased. No massacre content exists in this scenario; the Crater remains its own lane.
+
+**Confirmed accurate-input stories.** The Dimmock Line: 10-mile arc, 55 batteries, laid out
+summer 1862 under Capt. Charles Dimmock (ABT map page + ECWC, two families). Smith delayed
+his June 15 attack to 7:00 p.m. (ABT + EV's 7:00/7:15 bombardment-then-infantry sequencing);
+darkness and command conservatism deferred the exploitation (EV "conservative Union
+commanders"; ECWC "darkness and uncertainty"); the ravine flanking of Battery 5 (ABT + NPS);
+Hancock's 16,000 arriving 9:00 p.m.; the II Corps June 16 Redan captures "at a frightful
+cost" (ABT map page); Potter's stealthy pre-dawn June 17 approach (Wikipedia battle article);
+the June 17-18 overnight retirement to the final line; Kershaw and Field filing in June 18;
+the 4:00 p.m. June 18 1st Maine charge from the Prince George Court House Road cover (NPS
+handbook, 850 strong there vs ~900 elsewhere — scope disclosed). Every one of these is a
+TIMING, POSITION, or GEOMETRY input under the universal model — never a script or multiplier.
+
+**Provenance discipline for the spec.** Single-root collapses named: the eight NPS URLs are
+ONE publisher family; the Wikipedia battle article and its biography cluster are ONE family;
+the ABT and Beyond-the-Crater strength/casualty tables collapse to ONE official-returns/CWSAC
+root; the ECWC essay is one authored essay; Beyond the Crater's OOB pages mirror the OR. The
+modern scholarly anchors are **Thomas J. Howe, *Wasted Valor: The Battle of Petersburg, June
+15-18, 1864*** and **Sean Michael Chick, *The Battle of Petersburg, June 15-18, 1864*** —
+cited by name as the roots the tertiary web leans on; the highest-leverage upgrade path is a
+page-cited Howe fetch. Dead/corrected links this pass: the packet-era
+`encyclopediavirginia.org/entries/petersburg-campaign-the/` slug 404s (the live entry is
+`/entries/petersburg-campaign/`, and it does NOT carry June-15-18 numbers); the guessed NPS
+`battle-of-petersburg-june-15-18-1864.htm` and `baylors-farm.htm` slugs 404 (no live NPS
+Baylor's Farm page exists); the ECW 2021 guide-map URL contains a "six-18" slug typo
+(corrected in the register); several ABT facts-box numbers surfaced only via search snippets
+and are excluded as load-bearing (the fetched-page rule).
