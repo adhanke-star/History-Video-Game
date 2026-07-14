@@ -6,6 +6,55 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D395 — POST-WILDERNESS LADDER BOUNDARY: AARON NAMES THE PETERSBURG INITIAL ASSAULTS (SPEC-FIRST, LATER) AND DEFERS COLD HARBOR — [AARON, via popup Q&A adjudicated by Claude Code / Fable] (2026-07-14)
+
+The decision-only checkpoint ordered by D394 is resolved. From the clean pushed D394 boundary
+(HEAD `798398ae`, 128/128 release verified, LANE-003 CONTRACT/unowned), both open questions were
+put to Aaron with recommendation-first options built strictly from the 1864-65 attrition packet's
+evidence hierarchy (the Crater Med with the dignity fork · initial assaults Med with the
+redundancy flag · siege Low with no tactical shape · April 2 Med-Low, un-researched, Appomattox
+lane · Cold Harbor High but outside the ratified list). No fifth candidate was invented and no
+packet verdict was upgraded.
+
+**Decision 1 — D382 item 3.5 (the Petersburg trench treatment): NAMED, not waived.** Aaron
+selected **"Name the initial assaults, spec-first later"** over the recommended explicit waiver.
+The Petersburg trench treatment is the **initial assaults of June 15-18, 1864** (the fight for
+the Dimmock Line; Beauregard's initial defense), entering a **later spec-first LANE-003 planning
+lane** on the established D383/D387/D390/D392 pattern — research-verify first, durable spec +
+dual-mode bind-tested plan probe, **runtime excluded from that lane**. **Why:** the ladder's 3.5
+rung completes with a real named battle rather than a waiver; the June 15-18 fight is packet-Med
+and buildable. **Standing obligations the future spec lane MUST discharge (all from the packet —
+no new claims):** (1) the packet's own redundancy flag — the spec must establish, from its fresh
+research pass, what distinguishes this fight from the shipped assault-vs-works battles, or HALT
+back to Aaron; (2) a full research pass on the June 15-18 OOB — the packet carries only the ABT
+Petersburg anchor (Verified as cited, not re-fetched), the Dimmock Line landmark, and the
+Beauregard rank note, and pins NO division-grain OOB, strengths, or casualty splits for these
+dates; (3) rank/date traps at minimum: Beauregard General (full, CSA) commanding the initial
+defense; Grant Lieutenant General with General-in-Chief a role; (4) scope walls: the Crater, New
+Market Heights, Fort Stedman, and the April 2 breakthrough stay OUTSIDE the scenario; (5) D74:
+any casualty disparity must emerge from works/geometry/true counts, never a per-battle fudge;
+(6) USCT combat claims at the initial assaults enter only with their own two-source verification
+at spec time (the packet's USCT thread is Petersburg-wide, centered on New Market Heights).
+
+**Decision 2 — Cold Harbor: DEFERRED (the recommendation adopted).** Cold Harbor does NOT enter
+the ladder now, despite its packet-High rank (#3, "the cleanest attacker-fails teaching
+scenario"). **Why:** its packet rating supports future consideration but does not authorize
+silently expanding the D382 ratified order; the next ratified system after the completed 3.5
+extension is the war-career loop. Cold Harbor remains a researched READY_FOR_SPEC packet lane,
+insertable only by an explicit future battle-ladder reorder from Aaron.
+
+**Boundary consequence:** D382 item 3.5 is now fully NAMED (Wilderness ✅ D392→D394 ·
+Spotsylvania ✅ D390→D391 · Petersburg initial assaults named and queued spec-first). The exact
+next bounded LANE-003 task is the **Petersburg initial-assaults planning contract** (spec + plan
+probe only, runtime excluded) under a fresh committed ledger-only DRIVE take; the war-career loop
+(D382 item 4) follows the completed 3.5 rung. This checkpoint is docs-only: LANE-003 stays
+CONTRACT/unowned, and no runtime, data, tool, probe, simulation input, or generated file moved.
+Locks held: 23 scenarios · schema 53 · Army Register 1434 · coverage 23 · suite 128 · sweep 23 ·
+HTML `4fc16d813663f9e2285583fca1bc2939` · base `c9db83fa99230ffb95bdfdfe059f3fb9`. Reversible:
+either choice can be re-opened by Aaron at any clean boundary before the spec lane's DRIVE take.
+
+---
+
 ## D394 — THE WILDERNESS RELEASE CHECKPOINT IS GREEN: 128/128, EVERY ARTIFACT READ, LANE-003 RELEASED — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-003 VERIFY→CONTRACT] (2026-07-14)
 
 D393's runtime commit `e58d9e5077b3f51693cc232cb3d1afb6fb8aeaf9` passed the complete
