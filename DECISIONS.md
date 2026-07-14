@@ -6,6 +6,104 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D393 — PLAYABLE THE WILDERNESS SHIPS AS SCENARIO 23; THE JUNCTION HOLDS WHILE THE UNION BLEEDS MORE — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-003 DRIVE→VERIFY] (2026-07-14)
+
+The D392 contract is live. ChatGPT/Codex took DRIVE in ledger-only commit
+`beff166c70439c7b7fcca6ec7e1ba3d50906f292` at the clean D392 boundary
+`29d66fb9b573aa98d397f80bc4b40528497e4304`, after all eleven plan probes passed. The runtime
+implements the spec's §11 atomic integration and stops in VERIFY for the owed 128-command release
+battery.
+
+**Scenario and historical law:** `data/wilderness.json` models one phase, May 5-7, 1864, on the
+Orange Plank Road axis. The Confederate side attacks; the Union side defends the Brock Road /
+Orange Plank Road junction. The opening six formations and twelve timed reinforcements total
+**23,580 US / 21,240 CS** across eighteen unique side-unit ids. Every row says `Verified identity;
+Inferred strength`. Twelve woods regions blanket the field, four universal breastwork walls mark
+the Brock Road works, and the deployed artillery stays low at **6 US / 8 CS guns**. Weather is
+clear/midday/Inferred and `defaultFog:false`. The Turnpike/Saunders Field fight, Gordon's dusk
+attack, the Brock/Plank roads, the unfinished railroad, Widow Tapp clearing, Chewning farm, and
+Wilderness Tavern remain teaching or terrain context; no Ewell/Warren/Sedgwick/Gordon formation
+enters the OOB. The rank wall keeps Kershaw and Gibbon brigadiers, A. P. Hill present as Third
+Corps commander, Gordon a teaching-only brigadier, and Sedgwick alive throughout the modeled
+dates. Ten cards plus `codex_wilderness` carry the two-root rule, both result framings, USCT
+train-guard accuracy, and the burning-woods dignity boundary. Fire never becomes a mechanic,
+score, or spectacle. The deep D74 scan finds no battle-specific output or forbidden thicket,
+visibility, fire, flank, confusion, or roll-up key.
+
+**Honest A/B:** the first authored battery used the contract's eight seeds
+`[3,19,31,47,73,109,223,401]` and `holdToWinSec:205`. The Union held the junction **4/8** and
+Union losses exceeded Confederate losses **7/8**. Per the ratified D391 practice, one failing seed
+was instrumented before any input moved. Seed 3 showed the Union holding through about t210; the
+Confederate side began an uninterrupted objective hold near t244 and won by hold at t449. Losses
+were US 9,460 / CS 5,844. The diagnosis isolated the hold clock, not a hidden damage or morale
+problem. One eligible input moved: `holdToWinSec 205→240`. The second and final battery passed the
+two contract guards at **US junction hold 6/8** and **US losses > CS 7/8**. No other simulation
+input moved. Same-seed replay is byte-stable in outcome/finish/steps/losses; both passive-side runs
+terminate.
+
+**Atomic integration and six reshape proofs:** T1 registers
+`R.wilderness = GAME_DATA.wilderness.wilderness` at rank 67 between Chattanooga and
+Spotsylvania; T10 assigns `E / badges:true / anv`. Scenario count moves 22→23, schema 52→53,
+Army Register 1380→**1434** (18 ids × 3), flags/weather/Intel/media coverage 22→23, suite
+127→128, and sweep 22→23. Roster and builder add the Wilderness button without a phase-count
+entry. Kennesaw's registry-order and DOM teeth now require Chattanooga → Wilderness →
+Spotsylvania → Kennesaw. Spotsylvania's two matching adjacency teeth use the same order; its
+scope regex and data-filename scan remove only Wilderness while retaining Cold Harbor,
+Petersburg, Crater, and Overland exclusions. Every whole-registry pin site carries the D393
+1380→1434 transition and preserves the earlier D391 1326→1380 history. A post-gate plan sweep
+caught one ordering defect in the loot pin comment: the reverse-chronology comment made the
+Spotsylvania plan parser consume D393 as the start of the old transition. Reordering that comment
+from D362 through D393 restored the durable history; the current 1,434 assertion did not change.
+The frozen Classic `wilderness` row, the strategic rail route, and `build/base.html` remain
+byte-identical.
+
+**Negative binds on the final candidate:**
+
+- Bind A removed only the T1 Wilderness registry line and rebuilt. The plan probe red only
+  `FUTURE DIRECTION + INTEGRATION`. The focused probe red only `REGISTRY + MENU`, `REGISTERED
+  LAUNCH + REINFORCEMENTS`, `ARMY REGISTER PIN`, and `RUNTIME MENU + SIDE CHOICE`; the direct-data
+  direction battery stayed green at 6/8 and 7/8. Restore hashes matched T1
+  `f913c4f9393c448057dca46bbdaaec81` and generated HTML
+  `4fc16d813663f9e2285583fca1bc2939`.
+- Bind B changed only Joseph B. Kershaw's data rank from `Brig.` to `Maj.` and rebuilt. The plan
+  probe red only `RANKS + COMMAND TRAPS`; the focused probe red only `RANK WALL`. Restore hashes
+  matched data `7385a1791b3ffc802d5b0ccac9a58874` and generated HTML
+  `4fc16d813663f9e2285583fca1bc2939`. Both probes returned green after each restore; no red artifact
+  entered git.
+
+The stable precommit audit caught two exactness defects before staging: the Union artillery row's
+provenance sentence exceeded the required `Verified identity; Inferred strength` wording, and the
+focused registry-step label called the Wilderness scenario 17 instead of 23. Both strings were
+corrected, the generated game rebuilt, and both negative binds were repeated against that corrected
+final candidate before the hashes above were recorded.
+
+**Focused release gate and artifact readback:** 21 touched/superset JS/MJS syntax checks pass;
+build prints GATE OK; schema 53/53; battle research 15/15; Wilderness plan 12/12; Wilderness
+runtime 15/15 with 0 pageerrors and the final 6/8 + 7/8 battery; Spotsylvania 16/16, Kennesaw
+11/11, Chattanooga 16/16; roster 8/8; builder 15/15; loot/register 12/12 at 1,434; flags 48/48
+across 23 scenarios; weather 30/30 with 23 valid hints; Intel 26/26; media 13/13; suite list 128;
+all eleven plan probes pass at their exact counts. Every fresh JSON parses with `ok:true`, zero
+failed steps, zero pageerrors/realErrors, and no fatal. Schema HTML has 53 data rows. Every fresh
+PNG decodes at 1366×850. One pre-assertion Wilderness browser attempt reached the 45-second page
+readiness ceiling on the 8 GB Mac; the served HTML hash matched the candidate, pageerrors were
+empty, and no scenario tooth had run. The idle retry and final serialized run both passed 15/15.
+The standing media notice remains **2.418 MB raw embeds**, above the soft budget and below review/
+hard caps.
+
+Final candidate hashes: T1 `f913c4f9393c448057dca46bbdaaec81`; Wilderness data
+`7385a1791b3ffc802d5b0ccac9a58874`; focused probe
+`376412e4920180205a4f21eb5f413f8d`; generated HTML
+`4fc16d813663f9e2285583fca1bc2939`; frozen base
+`c9db83fa99230ffb95bdfdfe059f3fb9`; unchanged spec
+`996508a3325b675fb163fbc11ab3f677`; unchanged plan probe
+`aa657d017b6bee143c52eed66cda60b7`.
+
+LANE-003 stays ChatGPT/Codex-owned VERIFY. The sole resume action is the complete serialized
+`npm run vet:noreg` 128-command battery, alone on the machine, with every fresh JSON/image/schema/
+sweep artifact audited. Release to CONTRACT/unowned only after that battery is green. The next
+D382 choice remains the Petersburg-treatment question or the war-career loop; Aaron's D392 Cold
+Harbor reorder question remains open.
+
 ## D392 — THE WILDERNESS CONTRACT: THE AXIS-SCOPE LAW, THE THICKET LAW, AND THE JUNCTION-HOLD DIRECTION TOOTH — [CLAUDE CODE / FABLE, LANE-003 DRIVE→CONTRACT] (2026-07-13)
 
 The tenth LANE-003 planning contract, and the second D382 Overland/attrition slice:

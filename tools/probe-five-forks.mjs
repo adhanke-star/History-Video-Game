@@ -217,10 +217,10 @@ const SETUP = `(() => {
       return {cards:ids,codex:codex.id,axes:codex.axes};
     });
 
-    check('ARMY REGISTER PIN: canonical registry identity plus ten Five Forks unit trios produce current total 1380',function(){
+    check('ARMY REGISTER PIN: canonical registry identity plus ten Five Forks unit trios produce current total 1434',function(){
       var registry=fldScenarioRegistry();if(registry.fiveForks!==DATA)throw new Error('declared registry dependency missing');
       var C=campaign();if(typeof _t1InitAll==='function')_t1InitAll(C);var reg=ssPersonRegistry(C),found=[],groups={};
-      if(reg.people.length!==1380)throw new Error('Army Register total '+reg.people.length+' expected 1380');   // D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D388: 1281 -> 1326 — Elkhorn Tavern adds 15 unique side-unit ids x 3 slots. D384: 1200 -> 1281 — Fort Donelson adds 27 unique units x 3 slots. D380: 1170 -> 1200 — Five Forks adds 10 unique units x 3 slots; Five Forks' own 30-row/10-trio teeth below remain stable.
+      if(reg.people.length!==1434)throw new Error('Army Register total '+reg.people.length+' expected 1434');   // D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D388: 1281 -> 1326 — Elkhorn Tavern adds 15 unique side-unit ids x 3 slots. D384: 1200 -> 1281 — Fort Donelson adds 27 unique units x 3 slots. D380: 1170 -> 1200 — Five Forks adds 10 unique units x 3 slots; Five Forks' own 30-row/10-trio teeth below remain stable.
       for(var i=0;i<reg.people.length;i++){var p=reg.people[i],origin=p.replaces||p.pid;if(typeof origin==='string'&&origin.indexOf('ss:fiveForks:')===0)found.push({p:p,origin:origin});}
       if(found.length!==30)throw new Error('Five Forks rows '+found.length+' expected 30');
       found.forEach(function(row){var m=row.origin.match(/^ss:fiveForks:(US|CS):([^:]+):(cmd|nco|pvt)$/);if(!m)throw new Error('bad slot '+row.origin);var key=m[1]+':'+m[2];groups[key]=groups[key]||{};groups[key][m[3]]=1;if(row.p.source!=='scenario-oob'||row.p.generated!==true||row.p.provenance!=='Inferred')throw new Error('slot metadata '+row.origin);});

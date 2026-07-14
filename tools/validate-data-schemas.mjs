@@ -28,7 +28,7 @@ const BATTLE_FILES = new Set([
   'antietam.json', 'bullrun.json', 'chancellorsville.json', 'chickamauga.json',
   'chattanooga.json', 'cedar-creek.json', 'cross-keys-port-republic.json', 'franklin.json', 'fredericksburg.json', 'gaines-mill.json', 'gettysburg.json', 'kennesaw.json',
   'five-forks.json', 'fort-donelson.json', 'nashville.json', 'new-market-heights.json',
-  'malvern-hill.json', 'elkhorn-tavern.json', 'shiloh.json', 'spotsylvania.json', 'stones-river.json', 'vicksburg.json'
+  'malvern-hill.json', 'elkhorn-tavern.json', 'shiloh.json', 'spotsylvania.json', 'stones-river.json', 'vicksburg.json', 'wilderness.json'
 ]);
 
 const META_REQUIREMENTS = new Map([

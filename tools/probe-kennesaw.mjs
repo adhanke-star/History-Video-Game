@@ -124,7 +124,7 @@ const SETUP = `(() => {
       if (DATA.attacker !== 'US' || DATA.defender !== 'CS') throw new Error('roles wrong: ' + DATA.attacker + '/' + DATA.defender);
       if (DATA.defaultFog !== false) throw new Error('defaultFog must be false');
       var order = fldScenarioMenuOrder(reg);
-      if (order.indexOf('spotsylvania') !== order.indexOf('chattanooga') + 1 || order.indexOf('kennesaw') !== order.indexOf('spotsylvania') + 1) throw new Error('menu order not Chattanooga -> Spotsylvania -> Kennesaw: ' + order.join(' -> '));   // D391: Spotsylvania (rank 68) sits between Chattanooga 65 and Kennesaw 70 — the true three-battle chronology (the D376 Franklin-class stale-adjacency lesson).
+      if (order.indexOf('wilderness') !== order.indexOf('chattanooga') + 1 || order.indexOf('spotsylvania') !== order.indexOf('wilderness') + 1 || order.indexOf('kennesaw') !== order.indexOf('spotsylvania') + 1) throw new Error('menu order not Chattanooga -> Wilderness -> Spotsylvania -> Kennesaw: ' + order.join(' -> '));   // D393 reshape: Wilderness rank 67 inserts between Chattanooga 65 and Spotsylvania 68; preserve the full four-battle chronology. D391: Spotsylvania sat between Chattanooga and Kennesaw.
       return { order:order, usUnits:DATA.oob.US.length, csUnits:DATA.oob.CS.length };
     });
 
@@ -273,7 +273,7 @@ const DOM = `(() => {
       fldInjectMenuButton();
       if (document.querySelectorAll('#fldScnBtn_kennesaw').length !== 1) throw new Error('duplicate Kennesaw buttons');
       var ids = Array.prototype.slice.call(document.querySelectorAll('.gn-btn')).map(function(b){ return b.id; });
-      if (!(ids.indexOf('fldScnBtn_chattanooga') >= 0 && ids.indexOf('fldScnBtn_spotsylvania') === ids.indexOf('fldScnBtn_chattanooga') + 1 && ids.indexOf('fldScnBtn_kennesaw') === ids.indexOf('fldScnBtn_spotsylvania') + 1)) throw new Error('Kennesaw not in the Chattanooga -> Spotsylvania -> Kennesaw order: ' + ids.join(' -> '));   // D391: Spotsylvania (rank 68) sits between Chattanooga 65 and Kennesaw 70 (the D376 Franklin-class stale-adjacency lesson, DOM variant).
+      if (!(ids.indexOf('fldScnBtn_chattanooga') >= 0 && ids.indexOf('fldScnBtn_wilderness') === ids.indexOf('fldScnBtn_chattanooga') + 1 && ids.indexOf('fldScnBtn_spotsylvania') === ids.indexOf('fldScnBtn_wilderness') + 1 && ids.indexOf('fldScnBtn_kennesaw') === ids.indexOf('fldScnBtn_spotsylvania') + 1)) throw new Error('Kennesaw not in the Chattanooga -> Wilderness -> Spotsylvania -> Kennesaw order: ' + ids.join(' -> '));   // D393 reshape DOM variant: Wilderness inserts between Chattanooga and Spotsylvania; the complete four-button chronology stays guarded. D391 carried the prior three-button chronology.
       var got = null;
       fldScenarioSideChoice('kennesaw', function(s){ got = s; });
       var cards = document.querySelectorAll('[data-brside]');

@@ -237,17 +237,17 @@ step("PINS: the three shipped count locks agree with the current mode", () => {
   return { mode: "integration", lock: "11/9/2 everywhere" };
 });
 
-step("BASELINES: the current D391 whole-registry boundary the arc must not move still holds", () => {
+step("BASELINES: the current D393 whole-registry boundary the arc must not move still holds", () => {
   const t1 = read(T1);
   const registryBlock = (t1.match(/function fldScenarioRegistry\(\)[\s\S]*?\n\s*\}\s*catch/) || [null, ""])[0] || "";
   const scenarioCount = (registryBlock.match(/R\.[A-Za-z0-9]+\s*=\s*GAME_DATA/g) || []).length;
-  if (scenarioCount !== 22) throw new Error("scenario registry must stay 22, counted " + scenarioCount);   // D391: 21 -> 22 — Spotsylvania registers as the twenty-second scenario.
+  if (scenarioCount !== 23) throw new Error("scenario registry must stay 23, counted " + scenarioCount);   // D393: 22 -> 23 — Wilderness registers after Chattanooga. D391: 21 -> 22 — Spotsylvania registered as the twenty-second scenario.
   const loot = read(LOOT);
-  if (!/people\.length\s*!==\s*1380/.test(loot) || !/1380 of 1380/.test(loot)) throw new Error("Army Register exact D391 whole-registry pin 1380 missing from probe-loot-survival");
+  if (!/people\.length\s*!==\s*1434/.test(loot) || !/1434 of 1434/.test(loot)) throw new Error("Army Register exact D393 whole-registry pin 1434 missing from probe-loot-survival");   // D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots.
   const schemas = read(SCHEMAS);
   if (!schemas.includes("['women-in-war.json', ['_meta', 'schema', 'records']]")) throw new Error("schema-validator women row changed");
   const suite = parseSuite(read(VET));
-  if (suite.length !== 127) throw new Error("vet suite must stay 127, counted " + suite.length);   // D391: 126 -> 127 — probe-spotsylvania enrolls with the twenty-second battle.
+  if (suite.length !== 128) throw new Error("vet suite must stay 128, counted " + suite.length);   // D393: 127 -> 128 — probe-wilderness enrolls with the twenty-third battle. D391: 126 -> 127 — probe-spotsylvania enrolled.
   if (!suite.some(rw => rw[1] === "tools/probe-women-in-war.mjs")) throw new Error("focused women probe missing from the suite");
   if (suite.some(rw => rw[1] === "tools/probe-women-in-war-arc-plan.mjs")) throw new Error("plan probes never enroll in the suite");
   return { scenarios: scenarioCount, suite: suite.length };

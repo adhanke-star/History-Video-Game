@@ -40,7 +40,7 @@ function killChild(child) {
 
 const SETUP = `(() => {
   var R = { ok:true, steps:[] };
-  var EXPECTED = ['bullrun1', 'crossKeysPortRepublic', 'gainesMill', 'malvernHill', 'antietam', 'fredericksburg', 'chancellorsville', 'gettysburg', 'newMarketHeights', 'fortDonelson', 'elkhornTavern', 'shiloh', 'stonesRiver', 'vicksburg', 'chickamauga', 'chattanooga', 'spotsylvania', 'kennesaw', 'cedarCreek', 'franklin', 'nashville', 'fiveForks'];
+  var EXPECTED = ['bullrun1', 'crossKeysPortRepublic', 'gainesMill', 'malvernHill', 'antietam', 'fredericksburg', 'chancellorsville', 'gettysburg', 'newMarketHeights', 'fortDonelson', 'elkhornTavern', 'shiloh', 'stonesRiver', 'vicksburg', 'chickamauga', 'chattanooga', 'wilderness', 'spotsylvania', 'kennesaw', 'cedarCreek', 'franklin', 'nashville', 'fiveForks'];
   var PHASE_COUNTS = { vicksburg: 3, chickamauga: 3, chattanooga: 3, fortDonelson: 3, elkhornTavern: 2, nashville: 2, newMarketHeights: 2, stonesRiver: 2, cedarCreek: 2, crossKeysPortRepublic: 2 };
   function step(name, fn) {
     try { var v = fn(); R.steps.push({ name:name, ok:true, v:v === undefined ? null : v }); }
@@ -136,7 +136,7 @@ const SETUP = `(() => {
     step('MENU DOM: all registered battle buttons inject once, in roster order, before Skirmish/Command buttons', function() {
       if (typeof openMainMenu !== 'function') return { skipped:'no openMainMenu' };
       openMainMenu(); fldInjectMenuButton();
-      var ids = ['fldBullRunBtn', 'fldScnBtn_crossKeysPortRepublic', 'fldScnBtn_gainesMill', 'fldScnBtn_malvernHill', 'fldScnBtn_antietam', 'fldScnBtn_fredericksburg', 'fldScnBtn_chancellorsville', 'fldScnBtn_gettysburg', 'fldScnBtn_newMarketHeights', 'fldScnBtn_fortDonelson', 'fldScnBtn_elkhornTavern', 'fldScnBtn_shiloh', 'fldScnBtn_stonesRiver', 'fldScnBtn_vicksburg', 'fldScnBtn_chickamauga', 'fldScnBtn_chattanooga', 'fldScnBtn_spotsylvania', 'fldScnBtn_kennesaw', 'fldScnBtn_cedarCreek', 'fldScnBtn_franklin', 'fldScnBtn_nashville', 'fldScnBtn_fiveForks'];
+      var ids = ['fldBullRunBtn', 'fldScnBtn_crossKeysPortRepublic', 'fldScnBtn_gainesMill', 'fldScnBtn_malvernHill', 'fldScnBtn_antietam', 'fldScnBtn_fredericksburg', 'fldScnBtn_chancellorsville', 'fldScnBtn_gettysburg', 'fldScnBtn_newMarketHeights', 'fldScnBtn_fortDonelson', 'fldScnBtn_elkhornTavern', 'fldScnBtn_shiloh', 'fldScnBtn_stonesRiver', 'fldScnBtn_vicksburg', 'fldScnBtn_chickamauga', 'fldScnBtn_chattanooga', 'fldScnBtn_wilderness', 'fldScnBtn_spotsylvania', 'fldScnBtn_kennesaw', 'fldScnBtn_cedarCreek', 'fldScnBtn_franklin', 'fldScnBtn_nashville', 'fldScnBtn_fiveForks'];
       var found = [];
       for (var i = 0; i < ids.length; i++) {
         var btn = document.getElementById(ids[i]);

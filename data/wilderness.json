@@ -1,0 +1,812 @@
+{
+  "_comment": "D393 - THE WILDERNESS, May 5-7, 1864. Single-phase CS-attacker / US-defender scenario built from the committed D392 spec. THE AXIS-SCOPE LAW fields only the Orange Plank Road / Brock Road junction fight; the Turnpike axis, Saunders Field combat, Ewell, Warren, Sedgwick's corps, and Gordon's dusk attack are teaching context only. THE THICKET LAW encodes blindness through symmetric universal woods cover and honestly low gun counts, with defaultFog false; fire and smoke are teaching, never mechanics. Committed totals are Inferred engine envelopes: US 23,580 inside 15,000-30,000; CS 21,240 inside 12,000-26,000. Every game-unit split is coarse and Inferred. D74: no battle-specific damage, firepower, casualty, morale, visibility, smoke, flank, friendly-fire, prisoner, capture, or winner key of any name.",
+  "wilderness": {
+    "id": "wilderness",
+    "name": "The Wilderness",
+    "date": "May 5-7, 1864",
+    "place": "The Brock Road / Orange Plank Road junction, Spotsylvania County, Virginia",
+    "blurb": "On May 5, 1864, Getty's small junction force meets Hill's Plank Road thrust in tangled second-growth; Hancock's divisions build a line and attack at dawn before Longstreet's relief and Sorrel's railroad-grade column turn the fight back toward the Brock Road works.",
+    "provenance": "Verified for the May 5-7 grain, CS thrust / US junction-defense roles, the junction that remained in Union hands, the Plank Road formations, the dense thickets, low artillery deployment, Brock Road works, Widow Tapp field, unfinished railroad grade, battle-date rank wall, and aggregate loss direction. Inferred for every committed split, coordinate, gun grouping, experience value, leader quality, reinforcement second, objective radius, and time threshold. The tactical narrative leans on Gordon C. Rhea's The Battle of the Wilderness May 5-6, 1864; shared Rhea and official-returns roots are disclosed in the D392 spec.",
+    "weather": {
+      "sky": "clear",
+      "time": "midday",
+      "provenance": "Inferred",
+      "note": "Dry/clear is a restrained presentation hint, not a weather claim: no fetched report pins the tactical weather. Fog is OFF. Historical blindness came from second-growth vegetation, powder smoke, and brush-fire smoke; woods cover and low deployed-gun counts encode it under THE THICKET LAW.",
+      "sources": [
+        "https://www.battlefields.org/learn/civil-war/battles/wilderness",
+        "https://encyclopediavirginia.org/entries/wilderness-battle-of-the/"
+      ]
+    },
+    "field": {
+      "w": 1200,
+      "h": 900
+    },
+    "attacker": "CS",
+    "defender": "US",
+    "homeEdge": {
+      "US": "high",
+      "CS": "low"
+    },
+    "_homeEdgeNote": "The Confederate Orange Plank Road approach enters from low z; the Union Brock Road line and the army's road south lie toward high z. This is a compressed compass abstraction of the real junction axis; geometry is Inferred.",
+    "defaultFog": false,
+    "timeLimitSec": 420,
+    "holdToWinSec": 240,
+    "menu": {
+      "title": "THE WILDERNESS (1864)",
+      "deck": "Hold the Brock Road junction through Hill's thrust and Longstreet's relief - or break the Union road south.",
+      "aria": "The Wilderness, May 1864 - the Brock Road and Orange Plank Road junction. Command the Confederate attack or the Union defense."
+    },
+    "sides": {
+      "heading": "The Wilderness - Take Which Command?",
+      "intro": "May 5-7, 1864 - the Overland Campaign opens in second-growth thickets where roads and clearings decide what strength can reach the fight.",
+      "US": {
+        "title": "Command the Union defense (Getty and Hancock)",
+        "badge": "&#9819; DEFEND",
+        "deck": "Keep the junction and Brock Road works open while II Corps masses, attacks, recoils, and repairs the line."
+      },
+      "CS": {
+        "title": "Command the Confederate attack (Hill and Longstreet)",
+        "badge": "&#9876; ATTACK",
+        "deck": "Drive Heth and Wilcox up the Plank Road, then use First Corps and the railroad-grade column before the Union line hardens."
+      },
+      "foot": "The other army is commanded by the AI. Fog is off; symmetric thicket cover, low gun counts, ordinary works, timing, and entry vectors shape the fight."
+    },
+    "brief": {
+      "attack": "Hill's Third Corps has reached the Orange Plank Road before Longstreet. Press toward the Brock Road junction, then use First Corps and Sorrel's railroad-grade route as ordinary timed arrivals. <b>This is your war:</b> the flank is a path and a clock, never a bonus, and the result is yours to earn.",
+      "defend": "Brig. Gen. George W. Getty has won the race to the crossroads with a small force. Hold the Brock Road works while Maj. Gen. Winfield S. Hancock's II Corps arrives; the army's road south must remain open."
+    },
+    "objective": {
+      "name": "Brock Road / Orange Plank Road Junction",
+      "x": 600,
+      "z": 620,
+      "r": 150,
+      "note": "The junction and its Brock Road works - the Union army's road south. Confederate troops briefly planted flags on a burning stretch of the works May 6, but the junction remained in Union hands through the May 7 departure. The radius is Inferred game geometry."
+    },
+    "leaders": {
+      "_note": "Battle-date ranks follow D392 section 6. Lt. Gen. Ulysses S. Grant is General-in-Chief by role and commands through Maj. Gen. George G. Meade; Maj. Gen. Winfield S. Hancock directs the junction defense. Brig. Gen. John Gibbon remains a brigadier until June 7. Lt. Gen. Ambrose Powell Hill is present and commanding Third Corps - never Early here. Brig. Gen. Joseph B. Kershaw remains a brigadier until June 2; Maj. Gen. Charles W. Field takes First Corps direction after Longstreet is wounded. Sedgwick is alive through this battle but never fielded on this axis.",
+      "US": [
+        {
+          "id": "ld_grant_wild",
+          "name": "Lt. Gen. Ulysses S. Grant",
+          "short": "Grant",
+          "quality": 0.9,
+          "radius": 275,
+          "attach": "us_getty_div",
+          "fate": 3.4,
+          "note": "Lieutenant General and General-in-Chief by role, traveling with the Army of the Potomac and commanding through Meade. Verified rank and role; ordinary quality/aura are Inferred universal inputs."
+        },
+        {
+          "id": "ld_meade_wild",
+          "name": "Maj. Gen. George G. Meade",
+          "short": "Meade",
+          "quality": 0.82,
+          "radius": 260,
+          "attach": "us_getty_div",
+          "fate": 3.2,
+          "note": "Major General commanding the Army of the Potomac under Grant's direct supervision - never the theater commander. Verified rank and command; ordinary aura is Inferred."
+        },
+        {
+          "id": "ld_getty_wild",
+          "name": "Brig. Gen. George W. Getty",
+          "short": "Getty",
+          "quality": 0.78,
+          "radius": 240,
+          "attach": "us_getty_div",
+          "fate": 2.5,
+          "note": "Brigadier General commanding the VI Corps division dispatched at 10:30 a.m. May 5 to hold the junction; wounded May 6. Verified identity and rank; ordinary fate and aura are universal inputs."
+        },
+        {
+          "id": "ld_hancock_wild",
+          "name": "Maj. Gen. Winfield S. Hancock",
+          "short": "Hancock",
+          "quality": 0.88,
+          "radius": 270,
+          "attach": "us_birney_wild",
+          "atSec": 10,
+          "entry": "Hancock reaches the junction with the first II Corps divisions.",
+          "fate": 3.1,
+          "note": "Major General commanding II Corps and the junction defense from May 5 evening. Verified identity and battle-date grade; timing and aura are Inferred."
+        },
+        {
+          "id": "ld_birney_wild",
+          "name": "Maj. Gen. David B. Birney",
+          "short": "Birney",
+          "quality": 0.78,
+          "radius": 235,
+          "attach": "us_birney_wild",
+          "atSec": 10,
+          "fate": 2.9,
+          "note": "Major General commanding an II Corps division on the Plank Road axis. Verified rank and identity; ordinary aura and timing are Inferred."
+        },
+        {
+          "id": "ld_barlow_wild",
+          "name": "Brig. Gen. Francis C. Barlow",
+          "short": "Barlow",
+          "quality": 0.79,
+          "radius": 235,
+          "attach": "us_barlow_wild",
+          "atSec": 28,
+          "fate": 2.9,
+          "note": "Brigadier General commanding his II Corps division. Verified identity and rank; timing and aura are Inferred."
+        },
+        {
+          "id": "ld_gibbon_wild",
+          "name": "Brig. Gen. John Gibbon",
+          "short": "Gibbon",
+          "quality": 0.79,
+          "radius": 235,
+          "attach": "us_gibbon_wild",
+          "atSec": 38,
+          "fate": 2.9,
+          "note": "Brigadier General commanding an II Corps division; his major-general-of-volunteers promotion is June 7, 1864, after this battle. Verified battle-date grade; timing and aura are Inferred."
+        },
+        {
+          "id": "ld_wadsworth_wild",
+          "name": "Brig. Gen. James S. Wadsworth",
+          "short": "Wadsworth",
+          "quality": 0.8,
+          "radius": 235,
+          "attach": "us_wadsworth_wild",
+          "atSec": 65,
+          "fate": 2.0,
+          "note": "Brigadier General commanding his V Corps division on the Plank Road axis; mortally wounded May 6 and died May 8 in Confederate hands. Verified identity, rank, and fate; the ordinary fate input is never scripted."
+        },
+        {
+          "id": "ld_hays_wild",
+          "name": "Brig. Gen. Alexander Hays",
+          "short": "Hays",
+          "quality": 0.77,
+          "radius": 220,
+          "attach": "us_birney_wild",
+          "atSec": 10,
+          "fate": 1.8,
+          "note": "Brigadier General leading his brigade in Birney's division; killed May 5 near the junction. His brigade is included within Birney's coarse division total, so it is not double-counted as a separate unit."
+        },
+        {
+          "id": "ld_carroll_wild",
+          "name": "Col. Samuel S. Carroll",
+          "short": "Carroll",
+          "quality": 0.78,
+          "radius": 220,
+          "attach": "us_carroll_wild",
+          "atSec": 125,
+          "fate": 2.3,
+          "note": "Colonel leading the brigade that helped retake the breached Brock Road works; wounded in the action. Never a general officer here. Verified identity and grade; timing and aura are Inferred."
+        }
+      ],
+      "CS": [
+        {
+          "id": "ld_hill_wild",
+          "name": "Lt. Gen. Ambrose Powell Hill",
+          "short": "A. P. Hill",
+          "quality": 0.73,
+          "radius": 255,
+          "attach": "cs_heth_wild",
+          "fate": 3.0,
+          "note": "Lieutenant General present and commanding Third Corps through May 5-6. His incapacitating illness belongs to about May 8 at Spotsylvania; Jubal Early never commands Third Corps in this scenario. Verified rank and command; ordinary aura is Inferred."
+        },
+        {
+          "id": "ld_lee_wild",
+          "name": "Gen. Robert E. Lee",
+          "short": "Lee",
+          "quality": 0.9,
+          "radius": 265,
+          "attach": "cs_field_wild",
+          "atSec": 50,
+          "entry": "Lee comes forward at the Widow Tapp field with First Corps.",
+          "fate": 3.4,
+          "note": "Full General commanding the Army of Northern Virginia. Lee-to-the-rear is taught with its participant-memoir root disclosed; this record is an ordinary universal command aura, never a result writer."
+        },
+        {
+          "id": "ld_longstreet_wild",
+          "name": "Lt. Gen. James Longstreet",
+          "short": "Longstreet",
+          "quality": 0.9,
+          "radius": 265,
+          "attach": "cs_kershaw_wild",
+          "atSec": 50,
+          "entry": "First Corps reaches the Plank Road line through the Widow Tapp field.",
+          "fate": 1.9,
+          "note": "Lieutenant General arriving about 6:00-7:00 a.m. May 6; wounded by his own troops about noon, with Brig. Gen. Micah Jenkins killed beside him. The wounding is an ordinary fate input and a card, never a scripted event."
+        },
+        {
+          "id": "ld_kershaw_wild",
+          "name": "Brig. Gen. Joseph B. Kershaw",
+          "short": "Kershaw",
+          "quality": 0.8,
+          "radius": 235,
+          "attach": "cs_kershaw_wild",
+          "atSec": 50,
+          "fate": 2.8,
+          "note": "Brigadier General commanding McLaws's old division. His major-general date of rank is June 2, 1864, after the Wilderness. Verified identity and battle-date grade; timing and aura are Inferred."
+        },
+        {
+          "id": "ld_field_wild",
+          "name": "Maj. Gen. Charles W. Field",
+          "short": "Field",
+          "quality": 0.84,
+          "radius": 245,
+          "attach": "cs_field_wild",
+          "atSec": 55,
+          "fate": 3.0,
+          "note": "Major General commanding Hood's old division; takes First Corps direction after Longstreet is wounded with the instruction 'Press the enemy.' Verified rank and command; timing and aura are Inferred."
+        },
+        {
+          "id": "ld_jenkins_wild",
+          "name": "Brig. Gen. Micah Jenkins",
+          "short": "Jenkins",
+          "quality": 0.76,
+          "radius": 220,
+          "attach": "cs_kershaw_wild",
+          "atSec": 50,
+          "fate": 1.7,
+          "note": "Brigadier General killed May 6 in the friendly-fire volley that wounded Longstreet. His brigade is within Kershaw's coarse remainder and is not double-counted; his fate is never scripted."
+        },
+        {
+          "id": "ld_mahone_wild",
+          "name": "Brig. Gen. William Mahone",
+          "short": "Mahone",
+          "quality": 0.82,
+          "radius": 230,
+          "attach": "cs_mahone_wild",
+          "atSec": 100,
+          "fate": 2.9,
+          "note": "Brigadier General and senior brigade commander in the railroad-grade grouping guided by Lt. Col. G. Moxley Sorrel, a staff officer. Verified identity and grade; timing, aura, and grouping strength are Inferred."
+        }
+      ]
+    },
+    "supply": {
+      "US": {
+        "x": 600,
+        "z": 870,
+        "name": "Union trains - Brock Road south"
+      },
+      "CS": {
+        "x": 600,
+        "z": 35,
+        "name": "Confederate rear - Orange Plank Road"
+      }
+    },
+    "terrain": {
+      "hills": [
+        {
+          "name": "Chewning Farm Plateau",
+          "x": 860,
+          "z": 245,
+          "h": 10,
+          "s": 150,
+          "note": "The high ground between the two historical axes, present here as a context landmark at the edge of the playable Plank Road field. Verified place; Inferred compressed geometry."
+        },
+        {
+          "name": "Widow Tapp Field Rise",
+          "x": 600,
+          "z": 300,
+          "h": 6,
+          "s": 120,
+          "note": "A restrained readable clearing for Poague's few deployed guns and the First Corps arrival. The field is sourced; height and geometry are Inferred."
+        }
+      ],
+      "woods": [
+        { "x": 150, "z": 160, "r": 155, "note": "Dense second-growth thicket; symmetric universal cover, Inferred geometry." },
+        { "x": 420, "z": 150, "r": 135, "note": "Dense second-growth thicket west of the Plank Road clearing; Inferred geometry." },
+        { "x": 780, "z": 150, "r": 135, "note": "Dense second-growth thicket east of the Plank Road clearing; Inferred geometry." },
+        { "x": 1050, "z": 160, "r": 155, "note": "Dense second-growth thicket; symmetric universal cover, Inferred geometry." },
+        { "x": 150, "z": 410, "r": 155, "note": "Dense second-growth along the railroad-grade approach; universal cover only." },
+        { "x": 390, "z": 410, "r": 125, "note": "Dense second-growth west of the Orange Plank Road; Inferred geometry." },
+        { "x": 810, "z": 410, "r": 125, "note": "Dense second-growth east of the Orange Plank Road; Inferred geometry." },
+        { "x": 1050, "z": 410, "r": 155, "note": "Dense second-growth; symmetric universal cover, Inferred geometry." },
+        { "x": 155, "z": 710, "r": 155, "note": "Dense second-growth west of Brock Road; Inferred geometry." },
+        { "x": 390, "z": 745, "r": 120, "note": "Dense second-growth behind the western works; Inferred geometry." },
+        { "x": 810, "z": 745, "r": 120, "note": "Dense second-growth behind the eastern works; Inferred geometry." },
+        { "x": 1045, "z": 710, "r": 155, "note": "Dense second-growth; symmetric universal cover, Inferred geometry." }
+      ],
+      "walls": [
+        {
+          "x1": 340,
+          "z1": 615,
+          "x2": 520,
+          "z2": 615,
+          "note": "BROCK ROAD WORKS, west sector - log breastworks and earthworks built by II Corps. Verified works; Inferred compressed geometry. Universal cover vocabulary only."
+        },
+        {
+          "x1": 520,
+          "z1": 615,
+          "x2": 590,
+          "z2": 615,
+          "note": "BROCK ROAD WORKS, junction west face - the line briefly breached May 6 and retaken within about an hour. Verified event; Inferred geometry."
+        },
+        {
+          "x1": 610,
+          "z1": 615,
+          "x2": 680,
+          "z2": 615,
+          "note": "BROCK ROAD WORKS, junction east face - ordinary universal breastwork cover only. Inferred geometry."
+        },
+        {
+          "x1": 680,
+          "z1": 615,
+          "x2": 860,
+          "z2": 615,
+          "note": "BROCK ROAD WORKS, east sector - log breastworks along the road line. Verified works; Inferred compressed geometry."
+        }
+      ],
+      "markers": [
+        {
+          "kind": "road",
+          "name": "Orange Plank Road",
+          "path": [[600, 25], [610, 250], [600, 440], [600, 620]],
+          "note": "Hill's approach and Longstreet's counterattack corridor to the junction. Verified route; Inferred compressed alignment."
+        },
+        {
+          "kind": "road",
+          "name": "Brock Road",
+          "path": [[80, 620], [360, 620], [600, 620], [880, 620], [1120, 620]],
+          "note": "The Union army's road south and the line of its works. Verified route; Inferred compressed alignment."
+        },
+        {
+          "kind": "road",
+          "name": "Unfinished Railroad Grade",
+          "path": [[75, 430], [210, 470], [360, 500], [500, 535]],
+          "note": "The concealed corridor used by Sorrel's flank grouping. It is only an entry vector and timing input, never a flank bonus. Verified feature; Inferred compressed alignment."
+        },
+        { "kind": "label", "name": "Widow Tapp Field", "x": 600, "z": 300, "note": "The Plank Road artillery clearing and First Corps arrival ground." },
+        { "kind": "label", "name": "Brock Road / Orange Plank Road Junction", "x": 600, "z": 620, "note": "The objective and the Union road south." },
+        { "kind": "label", "name": "Chewning Farm Plateau", "x": 860, "z": 245, "note": "High ground between the historical axes; context landmark." },
+        { "kind": "label", "name": "Wilderness Tavern", "x": 980, "z": 805, "note": "Union staging ground behind the right; teaching/context landmark." },
+        { "kind": "label", "name": "Saunders Field - teaching axis only", "x": 115, "z": 805, "note": "Turnpike-axis clearing shown only as context under THE AXIS-SCOPE LAW; no formation fights there in this scenario." }
+      ]
+    },
+    "oob": {
+      "US": [
+        {
+          "id": "us_getty_div",
+          "name": "Getty's VI Corps Division",
+          "commander": "Brig. Gen. George W. Getty",
+          "arm": "inf",
+          "weapon": "rifled",
+          "role": "defend",
+          "men": 5500,
+          "xp": 3,
+          "x": 600,
+          "z": 650,
+          "facing": 0,
+          "formation": "line",
+          "note": "The small junction stand dispatched from Wilderness Tavern at 10:30 a.m. May 5; Getty was wounded May 6. Verified identity; Inferred strength, readiness, and placement."
+        },
+        {
+          "id": "us_hammond_screen",
+          "name": "Hammond's Cavalry Screen",
+          "commander": "Col. Charles F. Hammond",
+          "arm": "cav",
+          "weapon": "repeating",
+          "role": "defend",
+          "men": 500,
+          "xp": 3,
+          "x": 480,
+          "z": 515,
+          "facing": 0,
+          "formation": "line",
+          "note": "A small Spencer-armed cavalry screen at the junction, carried at the sourced 500-trooper scale but with the exact tactical split single-family. Verified identity; Inferred strength disclosure retained for the game row."
+        },
+        {
+          "id": "us_junction_guns",
+          "name": "Junction Artillery Grouping",
+          "commander": "VI Corps artillery officers",
+          "arm": "art",
+          "weapon": "rifled",
+          "role": "defend",
+          "guns": 6,
+          "men": 180,
+          "xp": 3,
+          "x": 710,
+          "z": 655,
+          "facing": 0,
+          "formation": "line",
+          "note": "Only the few guns the junction clearing could seat - THE THICKET LAW's honestly low Union deployment, not the army's available artillery. Verified identity; Inferred strength."
+        }
+      ],
+      "CS": [
+        {
+          "id": "cs_heth_wild",
+          "name": "Heth's Division",
+          "commander": "Maj. Gen. Henry Heth",
+          "arm": "inf",
+          "weapon": "rifled",
+          "role": "attack",
+          "men": 5600,
+          "xp": 3,
+          "x": 520,
+          "z": 355,
+          "facing": 3.14159,
+          "formation": "line",
+          "note": "Third Corps division in Hill's opening Plank Road thrust. Verified identity; Inferred strength, formation, and placement."
+        },
+        {
+          "id": "cs_wilcox_wild",
+          "name": "Wilcox's Division",
+          "commander": "Maj. Gen. Cadmus M. Wilcox",
+          "arm": "inf",
+          "weapon": "rifled",
+          "role": "attack",
+          "men": 4800,
+          "xp": 3,
+          "x": 680,
+          "z": 345,
+          "facing": 3.14159,
+          "formation": "line",
+          "note": "Third Corps division alongside Heth on the Orange Plank Road axis. Verified identity; Inferred strength, formation, and placement."
+        },
+        {
+          "id": "cs_poague_guns",
+          "name": "Poague's Artillery Battalion",
+          "commander": "Lt. Col. William T. Poague",
+          "arm": "art",
+          "weapon": "rifled",
+          "role": "attack",
+          "guns": 8,
+          "men": 240,
+          "xp": 3,
+          "x": 600,
+          "z": 285,
+          "facing": 3.14159,
+          "formation": "line",
+          "note": "The Widow Tapp field exception to the thickets' artillery suppression-by-ground: a low deployed grouping under the universal gun model. Verified identity; Inferred strength and gun count."
+        }
+      ]
+    },
+    "reinforcements": [
+      {
+        "id": "us_birney_wild",
+        "side": "US",
+        "atSec": 10,
+        "name": "Birney's II Corps Division",
+        "commander": "Maj. Gen. David B. Birney",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "attack",
+        "men": 3800,
+        "xp": 3,
+        "x": 520,
+        "z": 835,
+        "facing": 0,
+        "formation": "column",
+        "entry": "II Corps reaches the Brock Road line",
+        "note": "Birney's division, including Brig. Gen. Alexander Hays's brigade without double counting, builds the junction mass. Verified identity; Inferred strength and timing."
+      },
+      {
+        "id": "us_mott_wild",
+        "side": "US",
+        "atSec": 18,
+        "name": "Mott's II Corps Division",
+        "commander": "Brig. Gen. Gershom Mott",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "attack",
+        "men": 2400,
+        "xp": 2,
+        "x": 680,
+        "z": 835,
+        "facing": 0,
+        "formation": "column",
+        "entry": "Mott follows Birney onto the Plank Road axis",
+        "note": "Mott took the division May 2 and joins Hancock's mass. Verified identity; Inferred strength, experience, and timing."
+      },
+      {
+        "id": "us_barlow_wild",
+        "side": "US",
+        "atSec": 28,
+        "name": "Barlow's II Corps Division",
+        "commander": "Brig. Gen. Francis C. Barlow",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "attack",
+        "men": 3800,
+        "xp": 3,
+        "x": 420,
+        "z": 850,
+        "facing": 0,
+        "formation": "column",
+        "entry": "Barlow enters on the western side of the works",
+        "note": "II Corps division massing for the May 6 dawn assault and later junction defense. Verified identity; Inferred strength and timing."
+      },
+      {
+        "id": "us_gibbon_wild",
+        "side": "US",
+        "atSec": 38,
+        "name": "Gibbon's II Corps Division (Carroll detached)",
+        "commander": "Brig. Gen. John Gibbon",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "attack",
+        "men": 3000,
+        "xp": 3,
+        "x": 780,
+        "z": 850,
+        "facing": 0,
+        "formation": "column",
+        "entry": "Gibbon completes the II Corps mass",
+        "note": "Gibbon remains a Brigadier General through this battle; Carroll's separately timed works-retaking brigade is excluded from this row to avoid double counting. Verified identity; Inferred strength and timing."
+      },
+      {
+        "id": "cs_kershaw_wild",
+        "side": "CS",
+        "atSec": 50,
+        "name": "Kershaw's First Corps Division (front-line remainder)",
+        "commander": "Brig. Gen. Joseph B. Kershaw",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "attack",
+        "men": 3000,
+        "xp": 3,
+        "x": 500,
+        "z": 95,
+        "facing": 3.14159,
+        "formation": "column",
+        "entry": "First Corps arrives through the Widow Tapp field",
+        "note": "McLaws's old division under Brig. Gen. Joseph B. Kershaw; Wofford's separately timed railroad-grade brigade is excluded from this coarse remainder. Verified identity; Inferred strength and timing."
+      },
+      {
+        "id": "cs_field_wild",
+        "side": "CS",
+        "atSec": 55,
+        "name": "Field's First Corps Division (front-line remainder)",
+        "commander": "Maj. Gen. Charles W. Field",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "attack",
+        "men": 2800,
+        "xp": 3,
+        "x": 700,
+        "z": 95,
+        "facing": 3.14159,
+        "formation": "column",
+        "entry": "Field's division relieves Hill's broken line",
+        "note": "Hood's old division under Maj. Gen. Charles W. Field; Gregg and G. T. Anderson are split into their own coarse rows to prevent double counting. Verified identity; Inferred strength and timing."
+      },
+      {
+        "id": "cs_gregg_texas",
+        "side": "CS",
+        "atSec": 58,
+        "name": "Gregg's Texas Brigade",
+        "commander": "Brig. Gen. John Gregg",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "attack",
+        "men": 1400,
+        "xp": 4,
+        "x": 610,
+        "z": 125,
+        "facing": 3.14159,
+        "formation": "column",
+        "entry": "the Texas Brigade leads through the Widow Tapp field",
+        "note": "Field's vanguard at the May 6 crisis. The often-repeated 250-of-800 survivor figure is not encoded and remains single-root teaching. Verified identity; Inferred strength and timing."
+      },
+      {
+        "id": "us_wadsworth_wild",
+        "side": "US",
+        "atSec": 65,
+        "name": "Wadsworth's V Corps Division",
+        "commander": "Brig. Gen. James S. Wadsworth",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "attack",
+        "men": 3200,
+        "xp": 3,
+        "x": 330,
+        "z": 815,
+        "facing": 0,
+        "formation": "column",
+        "entry": "Wadsworth joins the Plank Road fight from the Union left",
+        "note": "V Corps division on this axis; Wadsworth was mortally wounded May 6 and died May 8 in Confederate hands. Verified identity; Inferred strength and timing."
+      },
+      {
+        "id": "cs_mahone_wild",
+        "side": "CS",
+        "atSec": 100,
+        "name": "Mahone's Brigade - Sorrel Flank Grouping",
+        "commander": "Brig. Gen. William Mahone",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "attack",
+        "men": 1200,
+        "xp": 4,
+        "x": 145,
+        "z": 470,
+        "facing": 1.5708,
+        "formation": "column",
+        "entry": "the unfinished railroad grade south of the Plank Road",
+        "note": "Senior brigade of the three-brigade Sorrel grouping, arriving by the sourced vector as ordinary geometry and timing - never a flank bonus. Verified identity; Inferred strength and timing."
+      },
+      {
+        "id": "cs_gtanderson_wild",
+        "side": "CS",
+        "atSec": 104,
+        "name": "G. T. Anderson's Brigade - Sorrel Flank Grouping",
+        "commander": "Brig. Gen. George T. Anderson",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "attack",
+        "men": 1100,
+        "xp": 3,
+        "x": 145,
+        "z": 520,
+        "facing": 1.5708,
+        "formation": "column",
+        "entry": "the unfinished railroad grade behind Mahone",
+        "note": "One of the three coarse brigades in the railroad-grade column; excluded from Field's remainder to avoid double counting. Verified identity; Inferred strength and timing."
+      },
+      {
+        "id": "cs_wofford_wild",
+        "side": "CS",
+        "atSec": 108,
+        "name": "Wofford's Brigade - Sorrel Flank Grouping",
+        "commander": "Brig. Gen. William T. Wofford",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "attack",
+        "men": 1100,
+        "xp": 3,
+        "x": 145,
+        "z": 570,
+        "facing": 1.5708,
+        "formation": "column",
+        "entry": "the unfinished railroad grade behind the column",
+        "note": "One of the three coarse brigades in the railroad-grade grouping; excluded from Kershaw's remainder to avoid double counting. Verified identity; Inferred strength and timing."
+      },
+      {
+        "id": "us_carroll_wild",
+        "side": "US",
+        "atSec": 125,
+        "name": "Carroll's Brigade - Works Counterattack",
+        "commander": "Col. Samuel S. Carroll",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "defend",
+        "men": 1200,
+        "xp": 4,
+        "x": 835,
+        "z": 805,
+        "facing": 0,
+        "formation": "column",
+        "entry": "down Brock Road toward the breached works",
+        "note": "The brigade that helped retake the May 6 breach, separated from Gibbon's coarse remainder to avoid double counting. Carroll is a Colonel, never a general officer here. Verified identity; Inferred strength and timing."
+      }
+    ],
+    "endNote": "The junction remained in Union hands. On May 7 the Army of the Potomac turned south toward Spotsylvania instead of retreating across the Rapidan. That strategic persistence did not erase the human ledger: the Union lost more men, and Lee's smaller army could replace less. The engine may still produce a Confederate seizure or a draw; history supplies the lean, not a forced verdict.",
+    "teaching": {
+      "title": "The Wilderness - the junction, the thickets, and the road south",
+      "cards": [
+        {
+          "id": "wild_thickets",
+          "head": "The thickets fought both armies",
+          "body": "The Wilderness was roughly seventy square miles of tangled second-growth where ordered lines broke apart and artillery and cavalry could rarely use their full weight. Lee chose this ground because it reduced the practical advantage of a much larger Union army. The blindness was vegetation and powder or brush-fire smoke, not weather fog. The scenario encodes that fact only with symmetric woods cover and low deployed-gun counts.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.battlefields.org/learn/civil-war/battles/wilderness",
+            "https://encyclopediavirginia.org/entries/wilderness-battle-of-the/",
+            "https://en.wikipedia.org/wiki/Battle_of_the_Wilderness"
+          ]
+        },
+        {
+          "id": "wild_fires",
+          "head": "The burning woods - consequence, never spectacle",
+          "body": "Fires burned on both days and along the Plank Road into May 7. Army medical director Thomas McParlin estimated that about 200 wounded men were suffocated or burned to death. A remembered line captured the deceptive sound: \"the almost cheerful 'Pop! Pop!' of cartridges gave no hint of the almost dreadful horror their noise bespoke...\" The fires are taught with restraint; they are never a mechanic, spread simulation, spectacle, or scoring lever.",
+          "provenance": "Inferred",
+          "sources": [
+            "https://npsfrsp.wordpress.com/2014/05/03/capturing-the-wildernesss-signature-horror-fire/",
+            "https://en.wikipedia.org/wiki/Battle_of_the_Wilderness"
+          ]
+        },
+        {
+          "id": "wild_junction",
+          "head": "Getty's race for the crossroads",
+          "body": "At about 10:30 a.m. May 5 Brig. Gen. George W. Getty was sent from Wilderness Tavern toward the Brock Road / Orange Plank Road junction, where Hammond's cavalry screen was already engaged. The junction was the army's road south. Hill's men attacked it, Confederate flags briefly reached a burning stretch of the works on May 6, and Col. Samuel S. Carroll's counterattack helped restore the line. The crossroads remained in Union hands through the May 7 departure.",
+          "provenance": "Verified",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Battle_of_the_Wilderness",
+            "https://emergingcivilwar.com/2019/05/03/ecw-weekender-where-grant-turned-south/",
+            "https://www.nps.gov/articles/000/grant-at-the-wilderness.htm"
+          ]
+        },
+        {
+          "id": "wild_dawn_texans",
+          "head": "The dawn assault and the Texans",
+          "body": "Hancock's May 6 attack began about 5:00 a.m. and nearly collapsed Hill's unentrenched corps before Longstreet's two divisions reached the Widow Tapp field. Gregg's Texas Brigade led the counterstroke, and the cry \"Lee to the rear!\" marked the moment his men turned him back from following it forward. That exact wording ships Inferred: two site families repeat it, but both lead to one participant-memoir root. The repeated '250 of 800' survivor figure did not reproduce on the fetched Trust page, so it remains Inferred and is not an engine input.",
+          "provenance": "Inferred",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Battle_of_the_Wilderness",
+            "https://encyclopediavirginia.org/entries/wilderness-battle-of-the/",
+            "https://www.battlefields.org/learn/civil-war/battles/wilderness"
+          ]
+        },
+        {
+          "id": "wild_flank_fire",
+          "head": "The railroad-grade column and the friendly fire",
+          "body": "Lt. Col. G. Moxley Sorrel guided a column along an unfinished railroad grade south of the Plank Road; Hancock said it rolled the Union line \"like a wet blanket.\" Brig. Gen. James S. Wadsworth was mortally wounded; later, Virginia troops shot Lt. Gen. James Longstreet near the ground where Stonewall Jackson had been wounded a year earlier, killing Brig. Gen. Micah Jenkins. Longstreet passed the corps to Maj. Gen. Charles W. Field with 'Press the enemy.' On the Turnpike axis, Brig. Gen. John B. Gordon's dusk attack captured Brig. Gens. Truman Seymour and Alexander Shaler; that event remains teaching-only. Contingency and command loss are taught, never scripted.",
+          "provenance": "Inferred",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Battle_of_the_Wilderness",
+            "https://encyclopediavirginia.org/entries/wilderness-battle-of-the/",
+            "https://www.battlefields.org/learn/civil-war/battles/wilderness"
+          ]
+        },
+        {
+          "id": "wild_south",
+          "head": "Grant does not retreat",
+          "body": "There was no grand assault on May 7. At about 8 p.m. the army marched south toward Spotsylvania, and soldiers cheered when they understood the direction; Grant later wrote that 'The cheering was so lusty' the enemy mistook it for an attack. The tent-breakdown story remains Disputed: a Rawlins-via-Wilson account describes Grant weeping, while Horace Porter remembered him sleeping peacefully. The conflict is the lesson; neither story becomes a result writer.",
+          "provenance": "Disputed",
+          "sources": [
+            "https://encyclopediavirginia.org/entries/wilderness-battle-of-the/",
+            "https://emergingcivilwar.com/2019/05/03/ecw-weekender-where-grant-turned-south/",
+            "https://www.nps.gov/articles/000/grant-at-the-wilderness.htm"
+          ]
+        },
+        {
+          "id": "wild_ledger",
+          "head": "The ledger of the two days",
+          "body": "Union losses are about 17,666-18,000, including 3,383 captured or missing. The Confederate record does not yield one settled total: the fetched range runs from about 8,000 to 13,000 because returns were incomplete, so both bounds are shown. The direction survives the dispute: the army that held the junction and kept walking south lost more men, while Lee's smaller army could replace less. The 'Grant the Butcher' caricature is answered with proportions and strategy, not by hiding Union command errors or the dead.",
+          "provenance": "Disputed",
+          "sources": [
+            "https://www.nps.gov/articles/000/grant-at-the-wilderness.htm",
+            "https://www.battlefields.org/learn/civil-war/battles/wilderness",
+            "https://encyclopediavirginia.org/entries/wilderness-battle-of-the/"
+          ]
+        },
+        {
+          "id": "wild_bones",
+          "head": "The bones of Chancellorsville",
+          "body": "The armies fought across ground used the previous May. One later account describes troops passing the remains of men left from Chancellorsville. That detail has one fetched family and therefore ships Inferred, with restraint: the war returned to its own graves before it moved south again.",
+          "provenance": "Inferred",
+          "sources": [
+            "https://historynet.com/this-place-is-called-the-wilderness/",
+            "https://encyclopediavirginia.org/entries/wilderness-battle-of-the/"
+          ]
+        },
+        {
+          "id": "wild_usct",
+          "head": "USCT at the Wilderness - accuracy is dignity",
+          "body": "Ferrero's Fourth Division of the Ninth Corps guarded trains and crossings during the opening of the Overland Campaign. The fetched evidence does not place a directed USCT combat formation in this fight, so no such marker appears. Their campaign combat record belongs at Petersburg and New Market Heights; inventing it here would not honor it.",
+          "provenance": "Inferred",
+          "sources": [
+            "https://npsfrsp.wordpress.com/2012/02/13/a-rare-photograph-of-uscts-on-the-eve-of-the-overland-campaign/",
+            "https://www.nps.gov/articles/000/grant-at-the-wilderness.htm"
+          ]
+        },
+        {
+          "id": "wild_not_here",
+          "head": "What this scenario deliberately is not",
+          "body": "This field follows only the Orange Plank Road / Brock Road junction axis. The Orange Turnpike and Saunders Field fight, Ewell's corps, Warren's and Sedgwick's corps, and Gordon's dusk attack are teaching context, not playable OOB rows. Brig. Gen. John B. Gordon remains a brigade commander here; Sedgwick is alive through May 7 and dies May 9 at Spotsylvania. Cold Harbor, Petersburg, and the Crater require their own lanes and dignity handling. No massacre content is playable anywhere in this lane.",
+          "provenance": "Verified",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Battle_of_the_Wilderness",
+            "https://encyclopediavirginia.org/entries/wilderness-battle-of-the/",
+            "https://www.battlefields.org/learn/civil-war/battles/wilderness"
+          ]
+        }
+      ],
+      "codex": {
+        "id": "codex_wilderness",
+        "title": "The Wilderness - May 5-7, 1864",
+        "summary": "The Overland Campaign opened in tangled second-growth where neither army could use its full strength. Hill's Plank Road thrust met Getty and Hancock at the Brock Road junction; the Union dawn attack nearly broke Third Corps before Longstreet's relief and railroad-grade flank attack recovered the field. The junction remained in Union hands, Longstreet was wounded by his own troops, and Grant moved south rather than retreat. The broad result label is Inconclusive: Confederate tactical success and Union strategic victory are both taught. Attrition here means real replacement asymmetry and real command error, stated with gravity and without glory.",
+        "provenance": "Verified",
+        "axes": {
+          "timeline": "1864",
+          "theater": "Eastern",
+          "campaign": "Overland Campaign",
+          "result": "Inconclusive",
+          "cost": "US about 17,666-18,000; CS Disputed about 8,000-13,000. Direction only is robust: US losses exceeded CS losses.",
+          "people": [
+            "Grant", "Meade", "Hancock", "Getty", "Birney", "Mott", "Barlow", "Gibbon", "Wadsworth", "Hays", "Carroll",
+            "Lee", "A. P. Hill", "Longstreet", "Kershaw", "Field", "Jenkins", "Mahone", "Sorrel"
+          ],
+          "battle": "The Wilderness"
+        },
+        "sources": [
+          "https://www.battlefields.org/learn/civil-war/battles/wilderness",
+          "https://encyclopediavirginia.org/entries/wilderness-battle-of-the/",
+          "https://www.nps.gov/articles/000/grant-at-the-wilderness.htm"
+        ]
+      }
+    }
+  }
+}

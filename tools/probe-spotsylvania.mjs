@@ -3,7 +3,7 @@ import "./guard-probe-browser.mjs";
 // D391 playable Spotsylvania: The Bloody Angle (May 12, 1864). The focused guard binds the
 // single-phase US-attacker data, THE ARTILLERY-WITHDRAWAL INPUT LAW (the gun-stripped tip:
 // the initial CS OOB fields ZERO guns and CS artillery re-enters only with the re-formed
-// line), the 22/52/1380/22/127 integration surfaces, the section-6 rank wall, and exactly
+// line), the current 23/53/1434/23/128 integration surfaces after D393, the section-6 rank wall, and exactly
 // eight shared-model historical direction seeds.
 //
 // CASUALTY-DIRECTION-NEUTRAL (D390 spec section 7, the Cedar Creek variant): the May 12
@@ -149,12 +149,12 @@ const SETUP = `(() => {
       return {openGunsCS:0,reformedGuns:csArtRe[0].guns,gunsUS:t.gunsUS};
     });
 
-    check('REGISTRY + MENU: Spotsylvania is scenario 22 at rank 68 between Chattanooga and Kennesaw', function(){
+    check('REGISTRY + MENU: Spotsylvania remains rank 68 in the 23-scenario registry after Wilderness, before Kennesaw', function(){
       var reg=fldScenarioRegistry(),order=fldScenarioMenuOrder(reg);
-      if(Object.keys(reg).length!==22||reg.spotsylvania!==DATA) throw new Error('registry identity/count wrong');
+      if(Object.keys(reg).length!==23||reg.spotsylvania!==DATA) throw new Error('registry identity/count wrong');
       if(fldScenarioMenuRank('spotsylvania')!==68) throw new Error('menu rank wrong: '+fldScenarioMenuRank('spotsylvania'));
-      if(order.indexOf('spotsylvania')!==order.indexOf('chattanooga')+1||order.indexOf('kennesaw')!==order.indexOf('spotsylvania')+1) throw new Error('menu chronology wrong: '+order.join(' -> '));
-      return {count:Object.keys(reg).length,rank:68,after:'chattanooga',before:'kennesaw'};
+      if(order.indexOf('wilderness')!==order.indexOf('chattanooga')+1||order.indexOf('spotsylvania')!==order.indexOf('wilderness')+1||order.indexOf('kennesaw')!==order.indexOf('spotsylvania')+1) throw new Error('menu chronology wrong: '+order.join(' -> '));   // D393 reshape: Wilderness is the ratified next rung between Chattanooga and Spotsylvania; D391 guarded the prior three-battle chronology.
+      return {count:Object.keys(reg).length,rank:68,after:'wilderness',before:'kennesaw'};
     });
 
     check('TERRAIN + OBJECTIVE: the Mule Shoe works, the Bloody Angle, the East Angle, the base line, and the INTERIOR McCoull objective are encoded; the tip is not the objective', function(){
@@ -247,10 +247,10 @@ const SETUP = `(() => {
       return {cards:ids.length,codex:codex.id,axes:codex.axes};
     });
 
-    check('ARMY REGISTER PIN: canonical registry identity plus 18 Spotsylvania unit trios produce current total 1380', function(){
+    check('ARMY REGISTER PIN: canonical registry identity plus 18 Spotsylvania unit trios produce current total 1434', function(){
       var registry=fldScenarioRegistry();if(registry.spotsylvania!==DATA)throw new Error('declared registry dependency missing');
       var C=campaign();if(typeof _t1InitAll==='function')_t1InitAll(C);var reg=ssPersonRegistry(C),found=[],groups={};
-      if(reg.people.length!==1380)throw new Error('Army Register total '+reg.people.length+' expected 1380');   // D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots.
+      if(reg.people.length!==1434)throw new Error('Army Register total '+reg.people.length+' expected 1434');   // D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots.
       for(var i=0;i<reg.people.length;i++){var p=reg.people[i],origin=p.replaces||p.pid;if(typeof origin==='string'&&origin.indexOf('ss:spotsylvania:')===0)found.push({p:p,origin:origin});}
       if(found.length!==54)throw new Error('Spotsylvania rows '+found.length+' expected 54');
       found.forEach(function(row){var m=row.origin.match(/^ss:spotsylvania:(US|CS):([^:]+):(cmd|nco|pvt)$/);if(!m)throw new Error('bad slot '+row.origin);var key=m[1]+':'+m[2];groups[key]=groups[key]||{};groups[key][m[3]]=1;if(row.p.source!=='scenario-oob'||row.p.generated!==true||row.p.provenance!=='Inferred')throw new Error('slot metadata '+row.origin);});
@@ -258,8 +258,8 @@ const SETUP = `(() => {
       return {total:reg.people.length,spotsylvaniaRows:found.length,units:keys.length,slots:['cmd','nco','pvt']};
     });
 
-    check('SCOPE: single-phase only; no Wilderness/Cold Harbor/Petersburg/Crater/Overland-campaign tactical registration and no Spotsylvania-only combat function appears', function(){
-      var ids=Object.keys(fldScenarioRegistry());if(ids.some(function(id){return /wilderness|coldharbor|cold-harbor|petersburg|crater|overlandCampaign/i.test(id);}))throw new Error('forbidden tactical Overland id');
+    check('SCOPE: single-phase only; no unbuilt Cold Harbor/Petersburg/Crater/Overland-campaign tactical registration and no Spotsylvania-only combat function appears', function(){
+      var ids=Object.keys(fldScenarioRegistry());if(ids.some(function(id){return /coldharbor|cold-harbor|petersburg|crater|overlandCampaign/i.test(id);}))throw new Error('forbidden tactical Overland id');   // D393 reshape: Wilderness now has a ratified build order; keep only still-unbuilt lanes in this scope tooth.
       if(DATA.phases)throw new Error('Spotsylvania became phased');
       var functions=['spotsylvaniaPenalty','spotsylvaniaBonus','muleShoeMult','bloodyAngleMult','handToHandBonus','prisonerMult'];functions.forEach(function(n){if(typeof window[n]==='function')throw new Error('battle-specific function '+n);});
       return {singlePhase:true,forbiddenIds:0,battleSpecificFunctions:0};
@@ -273,12 +273,12 @@ const DOM = `(() => {
   function check(name,fn){try{var v=fn();R.steps.push({name:name,ok:true,v:v===undefined?null:v});}catch(e){R.ok=false;R.steps.push({name:name,ok:false,err:String(e&&e.message||e)});}}
   try {
     G.settings=G.settings||{};G.mode='menu';
-    check('RUNTIME MENU + SIDE CHOICE: Spotsylvania button is unique, sits between Chattanooga and Kennesaw, and fldLaunchBattle preserves the chosen Confederate side',function(){
+    check('RUNTIME MENU + SIDE CHOICE: Spotsylvania button is unique after Wilderness and before Kennesaw, and fldLaunchBattle preserves the chosen Confederate side',function(){
       if(typeof openMainMenu==='function')openMainMenu();fldInjectMenuButton();
       var btn=document.getElementById('fldScnBtn_spotsylvania');if(!btn||!btn.getAttribute('aria-label'))throw new Error('accessible Spotsylvania button missing');
       fldInjectMenuButton();if(document.querySelectorAll('#fldScnBtn_spotsylvania').length!==1)throw new Error('duplicate Spotsylvania button');
       var ids=Array.prototype.slice.call(document.querySelectorAll('.gn-btn')).map(function(b){return b.id;});
-      if(ids.indexOf('fldScnBtn_spotsylvania')!==ids.indexOf('fldScnBtn_chattanooga')+1||ids.indexOf('fldScnBtn_kennesaw')!==ids.indexOf('fldScnBtn_spotsylvania')+1)throw new Error('button chronology wrong: '+ids.join(' -> '));
+      if(ids.indexOf('fldScnBtn_wilderness')!==ids.indexOf('fldScnBtn_chattanooga')+1||ids.indexOf('fldScnBtn_spotsylvania')!==ids.indexOf('fldScnBtn_wilderness')+1||ids.indexOf('fldScnBtn_kennesaw')!==ids.indexOf('fldScnBtn_spotsylvania')+1)throw new Error('button chronology wrong: '+ids.join(' -> '));   // D393 reshape DOM variant: preserve Chattanooga -> Wilderness -> Spotsylvania -> Kennesaw.
       var got=null;fldScenarioSideChoice('spotsylvania',function(side){got=side;});var cards=document.querySelectorAll('[data-brside]');
       if(cards.length!==2)throw new Error('wanted two side cards, got '+cards.length);cards[1].click();if(got!=='CS')throw new Error('CS side card returned '+got);
       var captured=null,oldLaunch=window.fldLaunchSandbox,oldBrief=window.fldBullRunBriefing;
@@ -309,7 +309,7 @@ async function main() {
     const rail=JSON.parse(readFileSync(join(ROOT,"data","logistics-rail.json"),"utf8"));
     const route=(rail.routes||{}).spotsylvania;
     const routeOk=!!route&&route.label==="Overland railhead and wagon extension"&&route.theater==="E"&&route.provenance==="Inferred"&&route.friction&&route.friction.US===11&&route.friction.CS===14;
-    const forbiddenData=readdirSync(join(ROOT,"data")).filter(f=>/wilderness|cold-harbor|petersburg|crater/i.test(f));
+    const forbiddenData=readdirSync(join(ROOT,"data")).filter(f=>/cold-harbor|petersburg|crater/i.test(f));   // D393 reshape: data/wilderness.json is now ratified; keep the still-unbuilt lanes forbidden.
     const classicOk=classicRows===1&&classicExact&&routeOk&&forbiddenData.length===0;
     result.steps.push({name:"CLASSIC + RAIL COLLISION: the frozen lowercase Classic spotsylvania row and the pre-existing strategic rail route remain exact, separate layers (the shiloh/franklin same-name convention)",ok:!!classicOk,v:{classicRows,classicExact,route,forbiddenData}});
     if(!classicOk)throw new Error("Classic/rail collision contract changed");

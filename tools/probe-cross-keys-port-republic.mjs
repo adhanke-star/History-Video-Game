@@ -259,12 +259,12 @@ const SETUP = `(() => {
       return { cards:ids, codex:codex.id, weather:{ sky:w.sky, time:w.time, provenance:w.provenance, tacticalFog:false } };
     });
 
-    check('ARMY REGISTER PIN: 15 unique Cross Keys / Port Republic side-unit ids produce 45 cmd/nco/pvt rows and current total 1380', function() {
+    check('ARMY REGISTER PIN: 15 unique Cross Keys / Port Republic side-unit ids produce 45 cmd/nco/pvt rows and current total 1434', function() {
       var C = { side:'US', iron:false, idx:0, funds:6500, recovery:false, completed:[], roster:[], nextId:1,
         stats:{ battles:0, won:0, infl:0, suff:0 }, recoveryLossCount:0, recoveryMode:false, flipAtk:false, captured:[] };
       if (typeof _t1InitAll === 'function') _t1InitAll(C);
       var reg = ssPersonRegistry(C), rows = [], groups = {};
-      if (reg.people.length !== 1380) throw new Error('Army Register total is ' + reg.people.length + ', expected 1380');   // D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D388: 1281 -> 1326 — Elkhorn Tavern adds 15 unique side-unit ids x 3 slots. D384: 1200 -> 1281 — Fort Donelson adds 27 units x 3 slots. D380: 1170 -> 1200 — Five Forks adds 10 unique units x 3 slots; Cross Keys / Port Republic's own 45-row teeth remain stable.
+      if (reg.people.length !== 1434) throw new Error('Army Register total is ' + reg.people.length + ', expected 1434');   // D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D388: 1281 -> 1326 — Elkhorn Tavern adds 15 unique side-unit ids x 3 slots. D384: 1200 -> 1281 — Fort Donelson adds 27 units x 3 slots. D380: 1170 -> 1200 — Five Forks adds 10 unique units x 3 slots; Cross Keys / Port Republic's own 45-row teeth remain stable.
       for (var i = 0; i < reg.people.length; i++) {
         var p = reg.people[i], origin = p.replaces || p.pid;
         if (typeof origin === 'string' && origin.indexOf('ss:crossKeysPortRepublic:') === 0) rows.push(origin);

@@ -767,7 +767,7 @@ const SETUP = `(() => {
       var C=mkC('US'); G.campaign=C; _t1InitAll(C);
       lootAddItem(C,'commissary_rations',1,'probe');
       var reg=ssPersonRegistry(C);
-      if(reg.people.length!==1380) throw new Error('expected current 1380-person registry, got '+reg.people.length);   // D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 Soldier's Story slots. D388: 1281 -> 1326 — Elkhorn Tavern adds 15 unique side-unit ids x 3 Soldier's Story slots. D384: 1200 -> 1281 — Fort Donelson adds 27 unique side-unit ids x 3 slots. D380: 1170 -> 1200 — Five Forks adds 10 unique side-unit ids x 3 slots. D378: 1125 -> 1170 — Cross Keys / Port Republic adds 15 unique units x 3 slots. D376: 1068 -> 1125 — Cedar Creek adds 19 unique units x 3 slots. D366: 990 -> 1068 — Stones River adds 26 unique units x 3 slots. D364: 957 -> 990 — New Market Heights adds 11 unique units x 3 slots. D362: 912 -> 957 — Gaines' Mill adds 15 unique units x 3 slots (fragment dropped by a later pin bump; restored in D381 — the pin-bump idiom requires the full documented chain).
+      if(reg.people.length!==1434) throw new Error('expected current 1434-person registry, got '+reg.people.length);   // D362: 912 -> 957 — Gaines' Mill adds 15 unique units x 3 slots (fragment dropped by a later pin bump; restored in D381 — the pin-bump idiom requires the full documented chain). D364: 957 -> 990 — New Market Heights adds 11 unique units x 3 slots. D366: 990 -> 1068 — Stones River adds 26 unique units x 3 slots. D376: 1068 -> 1125 — Cedar Creek adds 19 unique units x 3 slots. D378: 1125 -> 1170 — Cross Keys / Port Republic adds 15 unique units x 3 slots. D380: 1170 -> 1200 — Five Forks adds 10 unique side-unit ids x 3 slots. D384: 1200 -> 1281 — Fort Donelson adds 27 unique side-unit ids x 3 slots. D388: 1281 -> 1326 — Elkhorn Tavern adds 15 unique side-unit ids x 3 Soldier's Story slots. D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 Soldier's Story slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 Soldier's Story slots.
       var generated=findPerson(reg,function(p){ return p.generated && p.team && p.team.brigade && p.team.company; });
       var authored=findPerson(reg,function(p){ return !p.generated && !p.replacement && p.provenance==='Verified'; });
       if(!generated) throw new Error('no generated person with brigade/company team hierarchy');
@@ -786,7 +786,7 @@ const SETUP = `(() => {
       var cards=root.querySelectorAll('[data-ss-card]');
       if(cards.length!==reg.people.length) throw new Error('register card count mismatch '+cards.length+' vs '+reg.people.length);
       var count=root.querySelector('#ssRegCount');
-      if(!count || count.textContent.indexOf('1380 of 1380')<0) throw new Error('full registry count missing: '+(count&&count.textContent));   // D391: tracks the 1380-person registry (see the count assertion above)
+      if(!count || count.textContent.indexOf('1434 of 1434')<0) throw new Error('full registry count missing: '+(count&&count.textContent));   // D393: tracks the 1434-person registry; D391 tracked 1380 (see the count assertion above).
       var gCard=cardByPid(root,generated.pid), aCard=cardByPid(root,authored.pid);
       if(!gCard || !aCard) throw new Error('target cards missing');
       if(gCard.textContent.indexOf('Generated')<0 || gCard.textContent.indexOf('Inferred')<0) throw new Error('generated/Inferred card display missing: '+gCard.textContent);
