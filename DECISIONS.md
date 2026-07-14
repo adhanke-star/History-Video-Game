@@ -6,6 +6,71 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D394 — THE WILDERNESS RELEASE CHECKPOINT IS GREEN: 128/128, EVERY ARTIFACT READ, LANE-003 RELEASED — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-003 VERIFY→CONTRACT] (2026-07-14)
+
+D393's runtime commit `e58d9e5077b3f51693cc232cb3d1afb6fb8aeaf9` passed the complete
+128-command no-regression manifest, serialized and alone. The eventual unique-green set is
+17 + 102 + 9 = **128 commands** across three wrapper segments:
+
+- `.tmp/vet-no-regression-2026-07-14T04-58-57-901Z.log` — commands 1-17 green. Command 18,
+  `disease medical`, wrote a fresh `ok:true` 8/8 artifact with zero pageerrors and its screenshot,
+  then hung during Chromium cleanup and hit the wrapper timeout. No orphan survived. The exact
+  probe reran standalone 8/8 with zero pageerrors and exited cleanly before the manifest resumed.
+- `.tmp/vet-no-regression-2026-07-14T05-28-45-831Z.log` — exact-label resume from
+  `disease medical`; commands 18-119 green, including a clean wrapper-owned disease rerun. Command
+  120, `five forks`, exposed one stale safety-net assertion: its runtime was correct at 23
+  scenarios, rank 85, but the probe still expected registry count 22 and called Five Forks
+  scenario 19.
+- `.tmp/vet-no-regression-2026-07-14T08-09-22-269Z.log` — after the narrow probe-baseline
+  correction, exact-label resume from `five forks`; commands 120-128 green and the wrapper ended
+  `VET NO-REGRESSION OK — 9 commands`.
+
+**The release catch strengthened the tooth rather than weakening it.**
+`tools/probe-five-forks.mjs` now calls Five Forks scenario 23 and requires the whole registry to
+contain 23 identities; rank 85, Nashville adjacency, OOB, relief, direction, Army Register, and
+runtime assertions are untouched. The D393 22→23 history was prepended without dropping the
+D391 21→22 or D388 20→21 fragments. Focused syntax and runtime reruns passed 16/16 with zero
+pageerrors, and the exact manifest-label rerun passed again. No data, tactical source, generated
+game, combat input, or balance value moved.
+
+**Release evidence:** all **127/127 expected suite JSONs** are parseable, fresh by their owning
+green segment, and clean (`ok:false` 0; failed-step, pageerror, realError, and fatal findings 0).
+Schema is **53/53** with exactly 53 data rows. The consolidated sweep covers **23 scenarios × 8
+seeds = 184 runs** with `failures:[]` and zero pageerrors. Army Register remains **1,434** and the
+suite manifest remains **128**. Image audit covers **153 fresh outputs (149 PNG + 4 JPEG)** plus
+**12 referenced static inputs**: all **46/46 JSON-referenced output images** are fresh, all 12
+static references are present, and the **165/165-file union** is nonzero, correctly typed, and
+decodable. Wilderness remains focused-green at junction **6/8** and US-higher-loss **7/8**;
+the release sweep also completed all eight of its own standard seeds without a failure. Locked
+hashes hold: T1 `f913c4f9393c448057dca46bbdaaec81`, Wilderness data
+`7385a1791b3ffc802d5b0ccac9a58874`, focused probe
+`376412e4920180205a4f21eb5f413f8d`, generated HTML
+`4fc16d813663f9e2285583fca1bc2939`, frozen base
+`c9db83fa99230ffb95bdfdfe059f3fb9`.
+
+Final closeout re-ran `node --check tools/probe-five-forks.mjs`, the source build (`GATE OK`),
+Five Forks 16/16 with zero pageerrors, all eleven coordination-sensitive plan probes after the
+ledger edit, and the 128-command suite list. The local Desktop checkout returned repeated 16 KB
+short reads for unchanged plan/suite scripts; explicit materialization and blob verification
+proved worktree/HEAD content identical before clean reruns (women-in-war 10/10; suite list 128).
+No source repair was made for a storage-read fault.
+
+Standing notices remain transparent rather than promoted to failures: the 2.418 MB raw-embed
+soft warning; eight disabled Tripo source slots awaiting optimized local files and license proof;
+the known headless browser/AudioContext/optional-resource diagnostic classes (including boot's
+eight recorded diagnostics with `ok:true`/zero pageerrors and Classic's two optional-resource
+404 console messages with its required paint/JSON green). The first disease
+cleanup timeout is retained in the record because the artifact and exact retry distinguish a
+cleanup hang from a gameplay failure.
+
+**Boundary decision:** LANE-003 returns to **CONTRACT/unowned** and no release debt remains for
+D393. The next bounded action is a **decision-only checkpoint before any DRIVE take**: complete
+D382 item 3.5 by naming a Petersburg trench treatment or explicitly waiving it and advancing to
+the war-career loop; independently decide whether packet-High Cold Harbor should be inserted even
+though D382 did not name it. The repo does not silently choose among those conflicting directions.
+
+---
+
 ## D393 — PLAYABLE THE WILDERNESS SHIPS AS SCENARIO 23; THE JUNCTION HOLDS WHILE THE UNION BLEEDS MORE — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-003 DRIVE→VERIFY] (2026-07-14)
 
 The D392 contract is live. ChatGPT/Codex took DRIVE in ledger-only commit

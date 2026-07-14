@@ -130,9 +130,9 @@ const SETUP = `(() => {
       return t;
     });
 
-    check('REGISTRY + MENU: Five Forks is scenario 19 at rank 85 after Nashville',function(){
+    check('REGISTRY + MENU: Five Forks is scenario 23 at rank 85 after Nashville',function(){
       var reg=fldScenarioRegistry(),order=fldScenarioMenuOrder(reg);
-      if(Object.keys(reg).length!==22||reg.fiveForks!==DATA) throw new Error('registry identity/count wrong');   // D391: 21 -> 22 — Spotsylvania registers as the twenty-second scenario. D388: 20 -> 21 — Elkhorn Tavern registers as the twenty-first scenario; Five Forks' own rank-85 teeth remain stable.
+      if(Object.keys(reg).length!==23||reg.fiveForks!==DATA) throw new Error('registry identity/count wrong');   // D393: 22 -> 23 — Wilderness registers as the twenty-third scenario. D391: 21 -> 22 — Spotsylvania registers as the twenty-second scenario. D388: 20 -> 21 — Elkhorn Tavern registers as the twenty-first scenario; Five Forks' own rank-85 teeth remain stable.
       if(fldScenarioMenuRank('fiveForks')!==85||order.indexOf('fiveForks')!==order.indexOf('nashville')+1) throw new Error('menu chronology wrong: '+order.join(' -> '));
       return {count:Object.keys(reg).length,rank:85,order:order.indexOf('fiveForks')};
     });
