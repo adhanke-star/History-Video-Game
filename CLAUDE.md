@@ -2,16 +2,8 @@
 
 **This is a thin pointer. The single source of truth is [`START-HERE.md`](START-HERE.md) — read it FIRST, every session.** It maps which docs are canonical vs legacy, the order to read them, the Universal AI implementer standards, and the priority picker + model routing. (Your user-level `~/.claude/CLAUDE.md` also applies — personal-projects framing, terse/direct, model routing.)
 
-## Canonical file system (the proper read-order — same for every AI tool)
-1. **`START-HERE.md`** — master index (canonical vs legacy · read-order · implementer standards · priority picker + model routing).
-2. **`COORDINATION.md`** — mandatory session-start Contract Relay check: read the active lane's owner, state, acceptance contract, probe design, and resume pointer before choosing work, planning, spawning helpers, or editing. Never drive a lane owned by the other tool. *(D356; Aaron 2026-07-10)*
-3. **`AUTONOMOUS-RUN.md`** — THE operating manual (live state · the build loop · the phase roadmap · guardrails · the backlog · the §8 charter).
-4. **`HANDOFF.md` top block + `WAKE-UP.md` top block** — the live head (what shipped last + what's playable).
-5. **`V1-CHECKLIST.md`** — the approved, ordered v1 roadmap (the build target). *The roadmap lives HERE — there is no separate task list.*
-6. **`DECISIONS.md`** — the append-only decisions log (newest D## first; append, never relitigate).
-7. **`GRAND-STRATEGY-PLAN.md`** (strategic-layer design LAW) + **`MODERN-UGG-PLAN.md`** (tactical-engine design LAW) — honor verbatim; pull the section a task needs.
-8. **`src/00-manifest.json`** + the `src/*.js` you'll touch + **`tools/build.mjs`** + the relevant **`tools/probe-*.mjs`**.
-9. **`DEPLOY.md`** — only when publishing.
+## Canonical file system
+Read `START-HERE.md` FIRST — the single source of truth for canonical-vs-legacy and the full read order (mandatory `COORDINATION.md` Contract Relay check → `AUTONOMOUS-RUN.md` → `HANDOFF.md`/`WAKE-UP.md` top blocks → `V1-CHECKLIST.md` roadmap → `DECISIONS.md` → design LAW (`GRAND-STRATEGY-PLAN.md` + `MODERN-UGG-PLAN.md`) → `src/00-manifest.json` + touched `src/*.js` + `tools/build.mjs` + relevant probes → `DEPLOY.md` only when publishing).
 
 ## Non-negotiables (never violate, even for a one-line change)
 1. **Edit `src/` (code) + `data/` (data); NEVER edit `build/base.html` (frozen) and never hand-edit the generated `civil_war_generals.html`** — change source, then `node tools/build.mjs` (must print `GATE OK`).
