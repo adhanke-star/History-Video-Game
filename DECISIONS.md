@@ -6,6 +6,124 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D392 — THE WILDERNESS CONTRACT: THE AXIS-SCOPE LAW, THE THICKET LAW, AND THE JUNCTION-HOLD DIRECTION TOOTH — [CLAUDE CODE / FABLE, LANE-003 DRIVE→CONTRACT] (2026-07-13)
+
+The tenth LANE-003 planning contract, and the second D382 Overland/attrition slice:
+`docs/design/wilderness-battle-build-spec.md` (md5 `996508a3325b675fb163fbc11ab3f677`) +
+`tools/probe-wilderness-plan.mjs` (md5 `aa657d017b6bee143c52eed66cda60b7`; 12 steps, dual-mode,
+filesystem-first, fail-closed, bind-tested). No runtime moved: 22 scenarios · schema 52 · Army
+Register 1380 · coverage 22 · suite 127 · sweep 22 all hold; generated HTML byte-identical
+`91b9979144731ae3299af4ebaca4628a` (rebuild-verified, GATE OK); frozen base
+`c9db83fa99230ffb95bdfdfe059f3fb9`. DRIVE was taken in ledger-only commit `fe740c2` at the
+clean `6840e9b` boundary (HEAD == origin/main; the one commit beyond D391's `6c23082` is a
+docs-only CLAUDE.md read-order trim, adjudicated as moving no task or decision number), with
+all ten plan probes rerun ALL OK after the lane edit.
+
+**The selection adjudication (from the packet verdicts + the D382 order, never memory):**
+D382's ratified 3.5 extension names "Wilderness · Spotsylvania's Mule Shoe · a Petersburg
+trench treatment." Spotsylvania is discharged (D390 → D391). Of the remaining Aaron-named
+items, the packet ranks the Wilderness Med-High ("best-in-lane fit for the fog/woods
+engine-grain lesson," bistable-risk needing a designed lean) while every Petersburg treatment
+ranks below it (the Crater Med with its own dignity handling; the initial assaults Med
+"redundant with Spotsylvania/Cold Harbor"; the April 2 breakthrough Med-Low "entirely
+un-researched... teaching-only until then"; the whole siege Low, campaign-teaching-only). The
+Wilderness carries NO dignity fork requiring an Aaron go/no-go (the burning-wounded horror is
+human-cost-with-gravity teaching, not a carve-out class), so the battle ladder continues and
+the war-career loop stays next-after per D382. **SURFACED for Aaron, not self-resolved: Cold
+Harbor ranks High in the packet (#3, "the cleanest attacker-fails teaching scenario") but is
+NOT named in D382's 3.5 lock — if Aaron wants it inside the extension, say so at the next
+boundary and it slots after the Wilderness runtime; otherwise the ladder advances to the
+war-career loop after the Petersburg question is settled.** The Crater's packet verdict
+explicitly does not trip DO_NOT_BUILD_NOW (failed-assault scenario, massacre as
+teaching/memory only), but it was not selected and any future Crater slice should still get
+its own Aaron look per the D359 carve-out precedent.
+
+**Research (7 agents: 4 Sonnet/medium gather → 2 Opus/high default-refute, 82 verdicts → 1
+Opus/high completeness critic, 0 errors; the yield is the packet's §13 D392 addendum).** Key
+adjudications: **Kershaw BRIGADIER** commanding McLaws's old division (MG date of rank June 2,
+1864 — two-family; the bind anchor); **Gibbon BRIGADIER** (MG June 7, 1864 — the fetched
+civilwarintheeast "MG" documented as the backdated-grade error class); **Gordon BRIGADIER
+commanding a brigade** of Early's division (division May 8, MG May 14); **A. P. Hill Lt. Gen.
+PRESENT and commanding Third Corps May 5-6** (the REVERSE of Spotsylvania's Early trap — his
+illness dates ~May 8); **Sedgwick ALIVE throughout** (killed May 9 at Spotsylvania — the
+REVERSE dead-officer guard); Stevenson (not Crittenden) commands IX 1st Division — the
+apparent conflict was an incomplete read of "Stevenson (to 5/10)"; Wadsworth m.w. May 6 / died
+May 8 in CS hands; Hays k. May 5; Getty w. May 6; Longstreet wounded ~noon May 6 by his own
+troops near the Jackson-Chancellorsville ground (Jenkins killed; "Press the enemy" to Field);
+Burnside independent (incorporation Disputed May 24 vs the D390 addendum's May 25, never
+load-bearing). **Citation-integrity catches (the URL-cluster class):** ABT's "around midday"
+and the Texas Brigade "250 of 800" are NOT on the fetched ABT page; the Ed Bearss
+"most important intersection" quote is NOT on the fetched ECW page (dropped); the IX Corps
+independence claim is NOT on the cited civilwarintheeast page (re-cited Wikipedia + NPS); the
+packet-era Encyclopedia Virginia slug 404s and the live slug substitutes; the identical
+Wikipedia/EV casualty tables are adjudicated ONE root (official returns/CWSAC). The
+single-scholar root is Rhea's *The Battle of the Wilderness* (the Shea/Rhea-root class).
+
+**The direction-law adjudication (the load-bearing design call):** every fetched family agrees
+the Union held the Brock Road / Orange Plank Road junction continuously May 5-7 (the May 6
+afternoon breach was retaken within about an hour) — **THE JUNCTION GUARD: US defender holds
+≥5/8**. And unlike Spotsylvania, an honest casualty tooth EXISTS: US ~17,666-18,000 (Verified;
+one root discloses composition 2,246/12,037/3,383) against CS Disputed ~8,000-13,000 — the
+DIRECTION survives the widest honest pairing by ~4,000, and both Opus refuters independently
+recommended it: **THE AGGREGATE CASUALTY-DIRECTION TOOTH: US losses exceed CS losses ≥5/8,
+direction only, never magnitude** — the anti-winner-bleeds-less class (the holder of the
+junction bled more and advanced anyway; the accounting IS the attrition teaching).
+
+**Locked shape:** standalone SINGLE PHASE, May 5-7, 1864 (`wilderness` / `data/wilderness.json`
+/ "The Wilderness"); **THE AXIS-SCOPE LAW** — the scenario models the ORANGE PLANK ROAD AXIS
+(Getty → Hancock → Wadsworth vs Hill → Longstreet → the Sorrel flank grouping); the Turnpike /
+Saunders Field axis and Gordon's dusk attack are taught, never fielded; attacker CS / defender
+US (a logged deviation from the packet's §2 CAMPAIGN recipe — the standalone models the
+sourced defensive invariant; the campaign recipe stays valid for a future Overland T8);
+objective = the Brock Road / Orange Plank Road junction; fog OFF under **THE THICKET LAW**
+(the blindness was vegetation + powder/brush-fire smoke — a confirmed NEGATIVE on weather fog —
+and it neutralized the attacker-side numbers edge, the opposite of the engine's
+fog-aids-defender grain; encoding = symmetric dense-woods cover + honestly LOW deployed-gun
+counts + fog off, never a visibility/fog buff); menu rank 67 between Chattanooga 65 and
+Spotsylvania 68 (66 reserved for a possible Mine Run lane); envelopes US 15,000-30,000 / CS
+12,000-26,000 all Inferred (NO source pins committed axis totals; strengths cluster
+118,000-120,000 present vs ABT's 101,895 "engaged" — Disputed scopes, never one number);
+**THE BURNING-WOODS DIGNITY LAW** (McParlin's ~200 burned/suffocated wounded anchors the card;
+the fires are never a mechanic, spread simulation, spectacle, or scoring lever); ten teaching
+cards + codex Eastern / Overland Campaign / Inconclusive with both result framings taught
+(ABT/Wikipedia "Inconclusive" beside EV's CS-tactical/US-strategic reading); USCT
+accuracy-as-dignity (Ferrero's division guarded trains — no invented USCT combat); the D74
+wall extends with the woods/blindness/visibility/smoke/brushFire/fireDamage/flank/rollUp/
+friendlyFire/confusion families; the frozen Classic `wilderness` row, the strategic rail
+route, and the strategic-probe fixtures are separate byte-identical layers (the
+shiloh/franklin convention). **THE SIX NAMED RESHAPE OBLIGATIONS for the runtime slice** (the
+D391 insertion-lesson class, spec §11): probe-kennesaw's two adjacency teeth, probe-
+spotsylvania's two adjacency teeth, its SCOPE forbidden-id regex, and its forbidden-data-file
+scan — all reshaped in the same runtime commit with documented history, plus the 1380 pin-bump
+grep across tools/ (twelve-plus sites expected). Cold Harbor, Petersburg, and the Crater stay
+outside this scenario.
+
+**Bind (the spec-specified one-token tamper):** §6's exact anchor `Brig. Gen. Joseph B.
+Kershaw` → `Maj. Gen.` made EXACTLY `RANKS + COMMAND TRAPS` red (11/12, exit 1); the file-edit
+restore returned the spec md5 to `996508a3325b675fb163fbc11ab3f677` exactly; rerun 12/12 ALL
+OK with the JSON artifact ok=true, twelve green steps, 0 pageerrors, no retained red. The
+section-scoped tooth (the D383 hardening) was built in from birth and bit on the first tamper.
+
+**Gate (serialized, every artifact read):** node --check clean; build GATE OK with HTML
+byte-identical `91b9979144731ae3299af4ebaca4628a`; schema 52/52 (the tracked report's
+timestamp-only churn restored to the HEAD blob); research 15/15 with the §13 addendum;
+Wilderness plan 12/12; ALL TEN prior plan probes green at exact counts (spotsylvania 12/12 ·
+cedar 11/11 · cross-keys 11/11 · elkhorn 14/14 · five-forks 12/12 · fort-donelson 13/13 ·
+gaines 8/8 · NMH 10/10 · stones 11/11 · women-arc 10/10); suite list 127; `git diff --check`
+exit 0; only intended paths moved (the packet addendum + the spec + the probe + the ledger/doc
+sync). **No A/B ran — no simulation input exists in a planning slice.** No
+runtime/data/registry/count movement. `npm run vet:noreg` deliberately NOT run (D160/D176):
+D389 discharged the release checkpoint 2026-07-13 and this slice moves no runtime byte — the
+battery is owed at the 2-3-battle checkpoint, which lands AT or immediately after the
+Wilderness runtime slice (D391 Spotsylvania + D393 Wilderness = the two battles since D389),
+alone on the machine.
+
+LANE-003 returns to CONTRACT/unowned. **The exact next bounded slice: playable Wilderness
+runtime from this committed contract (spec §11/§14 are the law), in a fresh session under a
+new committed DRIVE lock — then the full release battery, then the D382 ladder continues (the
+Petersburg-treatment question or the war-career loop, with the Cold Harbor gap surfaced above
+awaiting Aaron).**
+
 ## D391 — PLAYABLE SPOTSYLVANIA: THE BLOODY ANGLE SHIPS AS SCENARIO 22 UNDER THE ARTILLERY-WITHDRAWAL INPUT LAW — [CLAUDE CODE / FABLE, LANE-003 DRIVE→CONTRACT] (2026-07-13)
 
 The playable Spotsylvania runtime from the committed D390 contract (spec §11 atomic integration +

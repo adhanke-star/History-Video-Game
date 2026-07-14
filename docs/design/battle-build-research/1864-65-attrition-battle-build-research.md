@@ -216,3 +216,120 @@ include `nps.gov/places/bloody-angle.htm`, `nps.gov/places/east-face-of-salient.
 `npshistory.com/publications/civil_war_series/25/sec16.htm`, the ABT certain-death /
 bloody-miscue / men-fell-heaps articles, and `encyclopediavirginia.org`'s battle entry
 (full-battle totals 18,399 US / 12,421 CS, no May-12 split — never laundered down).
+## 13. D392 Spec-Time Addendum — The Wilderness Verification Pass (2026-07-13)
+
+A 7-agent read-only workflow (4 Sonnet/medium gatherers → 2 Opus/high default-refute verifiers,
+82 verdicts → 1 Opus/high completeness critic, 0 agent errors) re-verified this packet's
+Wilderness material before the D392 standalone spec. Fable adjudication owns every conclusion.
+The packet text above stays as the record of what the D327 pass believed; this addendum controls
+where they differ.
+
+**Shape adjudication (packet §1 rank 4 / §2 phase-1 recipe RESOLVED for the standalone).** The
+two-axis structure is confirmed two-family: the Orange Turnpike axis (Saunders Field, Warren's V
+Corps then Sedgwick's VI vs Ewell, first contact about 1:00 p.m. May 5 — the packet-era ABT
+"around midday" phrasing did NOT reproduce on the fetched page and is retired) and the Orange
+Plank Road axis about 2.5 miles south (Getty's division then Hancock's II Corps vs A. P. Hill,
+building from about 3:00-4:15 p.m.). The sourced two-day arc: Getty dispatched 10:30 a.m. May 5
+to hold the Brock Road / Orange Plank Road intersection ahead of Hill; Hancock's dawn assault
+(about 5:00 a.m. May 6) nearly collapsed Hill's unentrenched corps; Longstreet's First Corps
+(Kershaw's and Field's divisions only) arrived about 6:00-7:00 a.m. through the Widow Tapp field
+(Poague's guns; the Lee-to-the-rear episode — two site families, ONE participant-memoir root,
+wording ships Inferred); Sorrel's flank column (three brigades, Mahone senior) rolled up
+Hancock's left from the unfinished railroad grade about 11:00 a.m.; Longstreet was wounded by
+his own troops about noon near the Jackson-Chancellorsville ground (Wikipedia names the 12th
+Virginia; EV renders the wound "right arm and neck"; Jenkins killed in the same volley; "Press
+the enemy" to Field); the 4:15-5:00 p.m. assault on the Brock Road works briefly planted flags
+and was retaken within about an hour (Carroll's brigade); Gordon's dusk flank attack captured
+Brig. Gens. Seymour and Shaler; May 7 saw no major infantry battle and the army marched south
+about 8 p.m. to spontaneous cheering (EV verbatim; ECW corroborates the cheering — its
+packet-era Bearss "most important intersection" quote is NOT on the page and is dropped). The
+critic's shape recommendation is adopted: standalone SINGLE PHASE anchored on the Brock Road /
+Orange Plank Road junction as the objective, the two-day arc carried through timed
+reinforcements on both sides, no phases[] block (so no D92 phase-weight audit is owed).
+
+**THE JUNCTION INVARIANT (the load-bearing outcome adjudication).** Every fetched family agrees
+the Union held the Brock Road / Orange Plank Road intersection continuously — cavalry screen,
+then Getty, then Hancock — from May 5 through the May 7 night departure; the Confederates never
+captured it. The honest outcome guard is US-DEFENDER-HOLDS-THE-JUNCTION; a Confederate
+seize-and-hold is the alt-history spread, never the lean. The honest engine roles for the
+standalone are therefore attacker CS / defender US (Hill's May 5 objective was the intersection;
+the May 6 afternoon assault targeted exactly that line), a deliberate deviation from this
+packet's §2 CAMPAIGN phase-1 recipe (US attacker "clears the crossroads") — that recipe remains
+valid for the future Overland T8 build; the standalone models the sourced defensive invariant.
+
+**Casualty direction (RESOLVED — a TOOTH exists, unlike Spotsylvania).** US losses 17,666
+(2,246 k / 12,037 w / 3,383 c-m) are carried identically by Wikipedia and EV — adjudicated as
+ONE root (the official-returns/CWSAC compilation) — beside ABT "nearly 18,000" and NPS ~18,000:
+the US total ships Verified at "about 17,700-18,000." CS losses are genuinely DISPUTED:
+~8,000 (NPS) / 11,033 (Wikipedia) / 11,125 (EV) / ~13,000 (ABT), with complete CS returns not
+surviving — the CS magnitude ships as the Disputed range ~8,000-13,000. The DIRECTION (US > CS)
+survives the widest honest pairing by ~4,000 and both refuters recommend the directional tooth:
+**the standalone ships an aggregate casualty-DIRECTION guard (US losses exceed CS losses),
+direction only, never a magnitude** — the anti-winner-bleeds-less class again (the holder of the
+field's key ground bled more and advanced anyway; the accounting is the attrition teaching).
+
+**Battle-date rank wall (all two-family unless noted).** Grant Lt. Gen. (the fetched NARA
+anchor stands); Meade Maj. Gen.; Hancock/Warren/Sedgwick Maj. Gens. — **Sedgwick is ALIVE and
+commanding VI Corps throughout this battle** (killed May 9 at Spotsylvania, three days later —
+the reverse of the Spotsylvania dead-officer guard); Burnside Maj. Gen. with IX Corps
+INDEPENDENT under Grant (the citation-integrity catch: the civilwarintheeast page cited by the
+gather does NOT carry the independence claim — re-cited to Wikipedia + NPS; the incorporation
+date ships Disputed May 24 vs the D390 addendum's May 25, never load-bearing); **Brig. Gen.
+John Gibbon** (the anachronism catch — his MG of volunteers is June 7, 1864, AFTER this battle;
+civilwarintheeast's "MG" is the backdated-grade error class); Birney Maj. Gen.; Barlow and Mott
+Brig. Gens. (Mott took the division May 2); Brig. Gen. Getty WOUNDED May 6; Brig. Gen.
+Wadsworth MORTALLY WOUNDED May 6 in the flank attack, died May 8 in Confederate hands; Brig.
+Gen. Alexander Hays KILLED May 5 (2nd Brigade, Birney's division); Brig. Gen. Wright commands
+the FIRST DIVISION of VI Corps here (corps command only from May 9); Brig. Gen. Thomas G.
+Stevenson commands IX Corps 1st Division (the Stevenson-vs-Crittenden "conflict" is illusory —
+civilwarintheeast reads "Stevenson (to 5/10)" with Crittenden the successor; Stevenson was
+killed May 10); Brig. Gens. Seymour and Shaler CAPTURED May 6 evening. CS: Lee full General;
+Ewell Lt. Gen.; **Lt. Gen. A. P. Hill PRESENT and commanding Third Corps May 5-6** (his
+incapacitation dates to about May 8 — never render Early commanding Third Corps at the
+Wilderness; Early is a Maj. Gen. DIVISION commander under Ewell here); Longstreet Lt. Gen.
+present from about 6 a.m. May 6 until wounded about noon; **Brig. Gen. Joseph B. Kershaw
+commanding McLaws's old division — his major-general date of rank is June 2, 1864, AFTER this
+battle** (two-family; the likely bind anchor); Maj. Gen. Charles W. Field (Hood's old
+division); **Brig. Gen. John B. Gordon commanding a BRIGADE of Early's division** (division
+command May 8, MG May 14); Brig. Gen. Micah Jenkins KILLED May 6; Brig. Gen. John M. Jones
+KILLED May 5 on the Turnpike (the "Saunders Field" placement by name is Inferred); Brig. Gen.
+Leroy Stafford MORTALLY WOUNDED May 5, died May 8; R. H. Anderson's DIVISION belongs to Hill's
+Third Corps at this battle and Anderson takes First Corps only AFTER it (sequence two-family;
+the exact day single-source, Inferred).
+
+**Strengths (Disputed scopes — never one number).** Union present figures cluster
+118,000-120,000 (EV 118,000 / Wikipedia 118,700 + 316 guns at campaign start / NPS 120,000 over
+four corps) while ABT's 101,895 is labeled "engaged" — different scopes, each shipped with its
+scope named. CS: 61,025 engaged (ABT) / 62,000 (NPS) / 65,000 (EV) / 66,140 incl. staff and
+artillery (Wikipedia, single-root). II Corps 28,333 present-for-duty April 30 (single-family).
+IX Corps totals roughly 19,000-20,000 — the "~6,000 veterans" figure is a veteran SUBSET and
+must never ship as a corps total. Third Corps ~22,675 + 1,910 artillery is single-source
+Wikipedia (Inferred). NO source pins committed axis totals or division-engaged strengths — all
+committed splits ship as Inferred envelopes.
+
+**Terrain, blindness, and the fires.** The blindness was DENSE SECOND-GROWTH VEGETATION plus
+gunpowder and brush-fire SMOKE — no fetched source describes literal weather fog on May 5-6
+(confirmed as a negative across four families), and the thickets specifically neutralized the
+Union's artillery/cavalry/numbers edge. The engine's fog model aids the DEFENDER, so fog ON
+would mismodel this battle: the standalone runs fog OFF with the woods as symmetric universal
+cover and honestly low deployed-gun counts (THE THICKET LAW — the D392 spec names it). The
+brush fires are confirmed multi-day (May 5 Saunders Field; May 6-7 Orange Plank Road);
+McParlin's primary medical estimate of ~200 wounded who burned or suffocated (nearly 10% of
+Union deaths) anchors the human-cost card; the 7th Indiana eyewitness quote reproduced verbatim
+on the fetched page; the fires are teaching and presentation ONLY, never a mechanic. Landmark
+set confirmed: Saunders Field, Widow Tapp field, Chewning farm, the unfinished railroad grade,
+the Brock Road log breastworks, Wilderness Tavern.
+
+**Teaching-thread provenance.** Grant's tent-breakdown story ships DISPUTED (the
+Rawlins-via-Wilson weeping account vs Porter's "sleeping peacefully" — the conflict itself is
+the card); the 1863 Chancellorsville-skeletons detail is single-source (HistoryNet) and ships
+Inferred with restraint; the USCT thread (Ferrero's 4th Division guarding trains, NOT in
+directed combat here) is single-source (an NPS blog) and ships Inferred — accuracy-as-dignity:
+no USCT combat markers at the Wilderness because no directed USCT combat occurred here; the
+Texas Brigade's "250 of 800" figure did not reproduce on the fetched ABT page and ships
+Inferred. Dead/corrected links: the packet-era NPS
+`frsp/learn/historyculture/the-battle-of-the-wilderness.htm` 404s; Encyclopedia Virginia is
+LIVE at the corrected slug `encyclopediavirginia.org/entries/wilderness-battle-of-the/`. The
+single-scholar root is Gordon Rhea, *The Battle of the Wilderness May 5-6, 1864* — the
+NPS/ABT narratives and the Wikipedia/EV casualty tables each collapse toward shared roots, and
+the two-FAMILY rule applies with those collapses named (the Elkhorn Shea-root class).
