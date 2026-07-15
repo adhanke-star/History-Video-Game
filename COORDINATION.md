@@ -749,11 +749,14 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
-### LANE-005 · war-career-loop — **CONTRACT (unowned; D401 Slice B shipped)**
+### LANE-005 · war-career-loop — **DRIVE (ChatGPT/Codex 5.6 Sol Ultra; D402 Slice C only)**
 
-- **Owning tool:** none. A fresh committed DRIVE take is required before Slice C.
-  No simultaneous edits by any provider.
-- **State:** CONTRACT — **D401 ships Slice B: explicit participation, pure preflight personal fate,
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra. No simultaneous edits by any provider.
+- **State:** DRIVE — **D402 Slice C only: journey-owned billet history plus the narrow field/general
+  command projection through the existing `commandLeadership(C)` seam.** Preserve every D399-D401
+  ownership, terminal, participation, fate, hand-off, save, combat, safe-clone, lane-separation, and
+  no-simultaneous-edits lock. Slice D relationship memory, Slice E political pull, and Slice F
+  franchise/archive remain locked. **D401 ships Slice B: explicit participation, pure preflight personal fate,
   exact capture recovery, and deterministic COMRADE HAND-OFF.** Slice C and every later slice remain
   locked until a fresh committed take.
   The committed planning contract remains the law:
