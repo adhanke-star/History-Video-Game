@@ -749,11 +749,17 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
-### LANE-005 · war-career-loop — **CONTRACT (unowned; D405 receipt prerequisite shipped; Slice C next separate take)**
+### LANE-005 · war-career-loop — **DRIVE (ChatGPT/Codex 5.6 Sol Ultra; D406 Slice C only)**
 
-- **Owning tool:** none. No simultaneous edits by any provider.
-- **Task:** Slice C field/general-command advancement and projection only; not started. Slice D-F remain closed.
-- **State:** CONTRACT — D405 dual-reference receipt prerequisite shipped. D404 was a planning contract only;
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra. No simultaneous edits by any provider.
+- **Task:** D406 Slice C only — deterministic merit/reputation, journey-owned billet history,
+  field/general role advancement, and one bounded `warCareerCommandProjection` contribution in
+  `commandLeadership(C)`. Slice D relationship memory and Slice E-F remain closed.
+- **State:** DRIVE — D406 Slice C taken from the clean pushed D405 receipt boundary. Preserve the
+  sole `C.loot.journey` player owner, separate `P.command` NPC owner, exact source/timeline receipt
+  split, one-credit law, terminal/fate/capture/handoff/save contracts, safe-clone boundary, and all
+  no-combat/no-politics/no-relationship/no-simultaneous-edit locks. D405 dual-reference receipt
+  prerequisite shipped. D404 was a planning contract only;
   D405 implements its named/coexisting
   `cw_war_career_participation_v2`, independently bound immutable canonical `sourceRef` and exact
   Inferred “Your Timeline” `timelineAssignmentRef`, and preserves D401 v1 byte/id semantics. Aaron
