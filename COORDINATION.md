@@ -749,11 +749,12 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
-### LANE-005 · war-career-loop — **CONTRACT (D400 Slice A released; Slice B next)**
+### LANE-005 · war-career-loop — **DRIVE (D401 Slice B only)**
 
-- **Owning tool:** none — released after D400. A future TOP LOOP must take Slice B in a separate
-  committed ledger-only edit before implementation. No simultaneous edits by any provider.
-- **State:** CONTRACT — **D400 Slice A is shipped; Slice B remains unowned and locked.**
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra — D401 Slice B implementation owner.
+  No simultaneous edits by any provider.
+- **State:** DRIVE — **D401 is limited to Slice B: explicit participation, pure preflight personal
+  fate, and deterministic COMRADE HAND-OFF.** Slice C and every later slice remain locked.
   The committed planning contract remains the law:
   `docs/design/war-career-loop-design.md` (md5 `8fdd062c084d8953ff042c3cf904af1c`) +
   `tools/probe-war-career-loop-plan.mjs` (md5 `b4957c1360b55767cb5b6bac5b1fdb57`;
