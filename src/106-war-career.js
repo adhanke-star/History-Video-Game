@@ -1,7 +1,14 @@
 /* ===========================================================================
    D400 · 106-war-career.js — WAR_CAREER_RUNTIME_V1.
 
-   D401 Slice B extends the canonical spine with consequence-only identity:
+   D401 Slice B extends the canonical spine with consequence-only identity.
+   D405 adds the coexisting WAR_CAREER_RECEIPT_V2 prerequisite:
+     - canonical Army Register source history remains immutable;
+     - a frozen exact-id "Your Timeline" assignment may prove one later rung;
+     - source and timeline references validate independently;
+     - D401 v1 ids, fields, same-source-rung behavior, and bytes remain legal.
+
+   The shared consequence spine still guarantees:
      - C.loot.journey remains the one mutable person-career record;
      - a source-owned scenario-unit slot proves participation across modes;
      - personal fate is classified purely before delegation and committed only
@@ -23,6 +30,18 @@ var _wcRunSeq = 0;
 var _wcLastTerminalSnapshot = null;
 var _wcTerminalRenderKey = "";
 var _wcPendingPreflight = null;
+
+/* Authored alternate-timeline input, not a person registry or mutable ledger.
+   The phase id is validation-only and is never persisted in a receipt. */
+var _WC_TIMELINE_ASSIGNMENTS_V1 = _wcDeepFreeze([{
+  personId:"person_gettysburg_us_17me_haley",
+  sourceSlotPid:"ss:gettysburg:US:us_birney_iii:pvt",
+  scenarioId:"chickamauga", phaseId:"snodgrass-horseshoe", side:"US",
+  unitId:"us_harker_rock", slot:"pvt",
+  slotPid:"ss:chickamauga:US:us_harker_rock:pvt",
+  chainIndex:16, serviceStart:null, serviceEnd:null, serviceYear:1863,
+  timelineGrade:"Private", provenance:"Inferred", label:"Your Timeline"
+}]);
 
 function _wcText(v, max) {
   if (typeof _lootCleanText === "function") return _lootCleanText(v, max);
@@ -210,6 +229,275 @@ function _wcFiniteRungs(C) {
   return 64;
 }
 
+var _WC_SOURCE_REF_KEYS = [
+  "battleId","side","unitId","slot","slotPid","sourceGrade",
+  "serviceStart","serviceEnd","serviceYear","provenance"
+];
+var _WC_TIMELINE_REF_KEYS = [
+  "assignmentId","scenarioId","side","unitId","slot","slotPid","chainIndex",
+  "serviceStart","serviceEnd","serviceYear","timelineGrade","provenance","label"
+];
+var _WC_V2_KEYS = [
+  "schema","resultId","mode","runId","creditKey","personId","chainIndex",
+  "battleId","side","sourceRef","timelineAssignmentRef","representedFieldUnitId",
+  "fieldMapping","battleYear","rankAtResult"
+];
+
+function _wcExactKeys(src, keys) {
+  if (!_wcPlain(src) || Object.keys(src).length !== keys.length) return false;
+  for (var i = 0; i < keys.length; i++) if (!_wcOwn(src, keys[i])) return false;
+  return true;
+}
+function _wcHasKeys(src, keys) {
+  if (!_wcPlain(src)) return false;
+  for (var i = 0; i < keys.length; i++) if (!_wcOwn(src, keys[i])) return false;
+  return true;
+}
+function _wcFieldsSame(a, b, keys) {
+  if (!_wcPlain(a) || !_wcPlain(b)) return false;
+  for (var i = 0; i < keys.length; i++) if (a[keys[i]] !== b[keys[i]]) return false;
+  return true;
+}
+function _wcServiceValue(v) {
+  if (v == null) return null;
+  return typeof v === "number" && isFinite(v) && Math.floor(v) === v && v >= 1800 && v <= 1900 ? v : undefined;
+}
+function _wcServiceWindowValid(src, year) {
+  if (!_wcPlain(src) || !isFinite(year)) return false;
+  var start = _wcServiceValue(src.serviceStart), end = _wcServiceValue(src.serviceEnd), one = _wcServiceValue(src.serviceYear);
+  if (start === undefined || end === undefined || one === undefined || (start != null && end != null && start > end)) return false;
+  year = Math.round(Number(year));
+  if (start != null && year < start) return false;
+  if (end != null && year > end) return false;
+  if (one != null && year !== one) return false;
+  return true;
+}
+function _wcCleanSourceRef(src) {
+  if (!_wcHasKeys(src, _WC_SOURCE_REF_KEYS)) return null;
+  var ref = _wcUnitRef(src), sourceGrade = _wcText(src.sourceGrade || "", 80);
+  var start = _wcServiceValue(src.serviceStart), end = _wcServiceValue(src.serviceEnd), one = _wcServiceValue(src.serviceYear);
+  var provenance = _wcText(src.provenance || "", 40);
+  if (!ref || !sourceGrade || !provenance || start === undefined || end === undefined || one === undefined) return null;
+  return {
+    battleId:ref.battleId, side:ref.side, unitId:ref.unitId, slot:ref.slot, slotPid:ref.slotPid,
+    sourceGrade:sourceGrade, serviceStart:start, serviceEnd:end, serviceYear:one, provenance:provenance
+  };
+}
+function _wcSourceRefFromPerson(p) {
+  var ref = p && _wcUnitRef(p.unitRef), sourceGrade = _wcText(p && p.rank || "", 80);
+  var start = _wcServiceValue(p && _wcOwn(p, "serviceStart") ? p.serviceStart : null);
+  var end = _wcServiceValue(p && _wcOwn(p, "serviceEnd") ? p.serviceEnd : null);
+  var one = _wcServiceValue(p && _wcOwn(p, "serviceYear") ? p.serviceYear : null);
+  var provenance = _wcText(p && p.provenance || "", 40);
+  if (!ref || !sourceGrade || !provenance || start === undefined || end === undefined || one === undefined) return null;
+  return {
+    battleId:ref.battleId, side:ref.side, unitId:ref.unitId, slot:ref.slot, slotPid:ref.slotPid,
+    sourceGrade:sourceGrade, serviceStart:start, serviceEnd:end, serviceYear:one, provenance:provenance
+  };
+}
+function _wcValidateCanonicalSource(C, personId, side, sourceRef) {
+  var clean = _wcCleanSourceRef(sourceRef), safePersonId = _wcSafeId(personId, 180);
+  var reg = C && typeof ssPersonRegistry === "function" ? ssPersonRegistry(C) : null;
+  var people = reg && Array.isArray(reg.people) ? reg.people : [], person = null, personCount = 0, slotCount = 0, slotPerson = null;
+  if (!clean || !safePersonId || (side !== "US" && side !== "CS")) return null;
+  for (var i = 0; i < people.length; i++) {
+    var p = people[i], ref = p && _wcUnitRef(p.unitRef);
+    if (p && p.pid === safePersonId) { person = p; personCount++; }
+    if (ref && ref.slotPid === clean.slotPid) { slotPerson = p; slotCount++; }
+  }
+  var expected = personCount === 1 ? _wcSourceRefFromPerson(person) : null;
+  if (!expected || slotCount !== 1 || slotPerson !== person || person.side !== side || clean.side !== side ||
+      !_wcFieldsSame(clean, expected, _WC_SOURCE_REF_KEYS)) return null;
+  return { person:person, sourceRef:expected };
+}
+function _wcTimelineAssignmentId(row) {
+  if (!_wcPlain(row)) return "";
+  return "wcta-" + _wcHash([
+    row.personId, row.sourceSlotPid, row.scenarioId, row.side, row.unitId, row.slot, row.slotPid,
+    row.chainIndex, row.serviceStart == null ? "" : row.serviceStart,
+    row.serviceEnd == null ? "" : row.serviceEnd,
+    row.serviceYear == null ? "" : row.serviceYear,
+    row.timelineGrade, "timeline-assignment-v1"
+  ].join("|")).toString(36);
+}
+function _wcTimelineAssignmentUnique(personId, side, chainIndex, scenarioId) {
+  var found = null, count = 0;
+  for (var i = 0; i < _WC_TIMELINE_ASSIGNMENTS_V1.length; i++) {
+    var row = _WC_TIMELINE_ASSIGNMENTS_V1[i];
+    if (row && row.personId === personId && row.side === side && row.chainIndex === chainIndex && row.scenarioId === scenarioId) {
+      found = row; count++;
+    }
+  }
+  return count === 1 ? found : null;
+}
+function _wcTimelineRefFromRow(row) {
+  if (!_wcPlain(row)) return null;
+  var ref = _wcUnitRef({ battleId:row.scenarioId, side:row.side, unitId:row.unitId, slot:row.slot, slotPid:row.slotPid });
+  var assignmentId = _wcTimelineAssignmentId(row), chainIndex = Number(row.chainIndex);
+  var start = _wcServiceValue(row.serviceStart), end = _wcServiceValue(row.serviceEnd), one = _wcServiceValue(row.serviceYear);
+  var timelineGrade = _wcText(row.timelineGrade || "", 80), provenance = _wcText(row.provenance || "", 40), label = _wcText(row.label || "", 80);
+  if (!ref || !_wcSafeId(assignmentId, 96) || !isFinite(chainIndex) || Math.floor(chainIndex) !== chainIndex || chainIndex < 0 ||
+      start === undefined || end === undefined || one === undefined || !timelineGrade || provenance !== "Inferred" || label !== "Your Timeline") return null;
+  return {
+    assignmentId:assignmentId, scenarioId:ref.battleId, side:ref.side, unitId:ref.unitId,
+    slot:ref.slot, slotPid:ref.slotPid, chainIndex:chainIndex,
+    serviceStart:start, serviceEnd:end, serviceYear:one,
+    timelineGrade:timelineGrade, provenance:provenance, label:label
+  };
+}
+function _wcCleanTimelineRef(src) {
+  if (!_wcHasKeys(src, _WC_TIMELINE_REF_KEYS)) return null;
+  var ref = _wcUnitRef({ battleId:src.scenarioId, side:src.side, unitId:src.unitId, slot:src.slot, slotPid:src.slotPid });
+  var assignmentId = _wcSafeId(src.assignmentId, 96), chainIndex = Number(src.chainIndex);
+  var start = _wcServiceValue(src.serviceStart), end = _wcServiceValue(src.serviceEnd), one = _wcServiceValue(src.serviceYear);
+  var timelineGrade = _wcText(src.timelineGrade || "", 80), provenance = _wcText(src.provenance || "", 40), label = _wcText(src.label || "", 80);
+  if (!ref || !assignmentId || !isFinite(chainIndex) || Math.floor(chainIndex) !== chainIndex || chainIndex < 0 ||
+      start === undefined || end === undefined || one === undefined || !timelineGrade || !provenance || !label) return null;
+  return {
+    assignmentId:assignmentId, scenarioId:ref.battleId, side:ref.side, unitId:ref.unitId,
+    slot:ref.slot, slotPid:ref.slotPid, chainIndex:chainIndex,
+    serviceStart:start, serviceEnd:end, serviceYear:one,
+    timelineGrade:timelineGrade, provenance:provenance, label:label
+  };
+}
+function _wcCanonicalBattleYear(battleId) {
+  var year = typeof _ssCareerBattleYear === "function" ? _ssCareerBattleYear(battleId) : null;
+  if (year != null) return year;
+  var reg = typeof fldScenarioRegistry === "function" ? fldScenarioRegistry() : null;
+  var scenario = reg && reg[battleId], n = Number(scenario && scenario.year);
+  return isFinite(n) && n >= 1860 && n <= 1870 ? Math.round(n) : null;
+}
+function _wcTimelineTarget(row) {
+  var reg = typeof fldScenarioRegistry === "function" ? fldScenarioRegistry() : null;
+  var scenario = reg && row && reg[row.scenarioId], phases = scenario && Array.isArray(scenario.phases) ? scenario.phases : [];
+  var phaseCount = 0, totalCount = 0, target = null, phaseMatches = 0;
+  for (var pi = 0; pi < phases.length; pi++) {
+    var phase = phases[pi], rows = [];
+    if (!phase) continue;
+    if (phase.id === row.phaseId) phaseMatches++;
+    if (phase.oob && Array.isArray(phase.oob[row.side])) {
+      for (var oi = 0; oi < phase.oob[row.side].length; oi++) rows.push({ unit:phase.oob[row.side][oi], side:row.side });
+    }
+    if (Array.isArray(phase.reinforcements)) for (var ri = 0; ri < phase.reinforcements.length; ri++) {
+      var reinforcement = phase.reinforcements[ri];
+      if (reinforcement && reinforcement.side === row.side) rows.push({ unit:reinforcement, side:reinforcement.side });
+    }
+    for (var ui = 0; ui < rows.length; ui++) {
+      var unit = rows[ui].unit;
+      if (unit && unit.id === row.unitId && rows[ui].side === row.side) {
+        totalCount++;
+        if (phase.id === row.phaseId) { phaseCount++; target = unit; }
+      }
+    }
+  }
+  if (phaseMatches !== 1 || phaseCount !== 1 || totalCount !== 1 || !target || target.type === "hq" || target.arm === "hq") return null;
+  return target;
+}
+function _wcRankCompatible(rankAtResult, timelineGrade) {
+  var a = typeof _ssRankNorm === "function" ? _ssRankNorm(rankAtResult) : _wcText(rankAtResult, 80).toLowerCase();
+  var b = typeof _ssRankNorm === "function" ? _ssRankNorm(timelineGrade) : _wcText(timelineGrade, 80).toLowerCase();
+  return !!a && a === b;
+}
+function _wcValidateTimelineAssignment(C, personId, sourceRef, timelineRef, representedFieldUnitId, battleYear, rankAtResult, current) {
+  var clean = _wcCleanTimelineRef(timelineRef), represented = _wcSafeId(representedFieldUnitId, 180);
+  if (!clean || !represented || represented !== clean.unitId) return null;
+  var row = _wcTimelineAssignmentUnique(personId, clean.side, clean.chainIndex, clean.scenarioId);
+  var expected = row && _wcTimelineRefFromRow(row);
+  var chain = typeof CHAINS !== "undefined" && CHAINS && Array.isArray(CHAINS[clean.side]) ? CHAINS[clean.side] : null;
+  var canonicalYear = _wcCanonicalBattleYear(clean.scenarioId);
+  if (!row || !expected || !_wcFieldsSame(clean, expected, _WC_TIMELINE_REF_KEYS) ||
+      row.sourceSlotPid !== sourceRef.slotPid || !chain || clean.chainIndex >= chain.length || chain[clean.chainIndex] !== clean.scenarioId ||
+      canonicalYear == null || Number(battleYear) !== canonicalYear || !_wcTimelineTarget(row) ||
+      !_wcServiceWindowValid(sourceRef, canonicalYear) || !_wcServiceWindowValid(clean, canonicalYear) ||
+      !_wcRankCompatible(rankAtResult, clean.timelineGrade)) return null;
+  if (current) {
+    var J = current.J, sourceUnit = J && J.person && _wcUnitRef(J.person.unitRef);
+    if (!J || !J.enabled || J.careerVersion !== 1 || J.personId !== personId || !J.person || J.person.pid !== personId ||
+        (J.status !== "alive" && J.status !== "wounded") ||
+        (J.handoff && (J.handoff.state === "pending" || J.handoff.state === "ended")) ||
+        current.side !== clean.side || current.chainIndex !== clean.chainIndex || current.battleId !== clean.scenarioId ||
+        !warCareerRunIdValid(current.runId) || current.runId !== C.runId ||
+        current.creditKey !== [current.runId, clean.side, clean.chainIndex, clean.scenarioId].join("|") ||
+        !sourceUnit || !_wcSameUnitRef(sourceUnit, sourceRef) || _wcText(J.person.rank || "", 80) !== rankAtResult) return null;
+  }
+  return { row:row, timelineAssignmentRef:expected };
+}
+function _wcResultIdV2(runId, creditKey, mode, personId, sourceRef, timelineRef, representedFieldUnitId, fieldMapping, battleYear, rankAtResult) {
+  var parts = ["participation-v2", runId, creditKey, mode, personId];
+  for (var si = 0; si < _WC_SOURCE_REF_KEYS.length; si++) parts.push(sourceRef[_WC_SOURCE_REF_KEYS[si]] == null ? "" : sourceRef[_WC_SOURCE_REF_KEYS[si]]);
+  for (var ti = 0; ti < _WC_TIMELINE_REF_KEYS.length; ti++) parts.push(timelineRef[_WC_TIMELINE_REF_KEYS[ti]] == null ? "" : timelineRef[_WC_TIMELINE_REF_KEYS[ti]]);
+  parts.push(representedFieldUnitId, fieldMapping, battleYear, rankAtResult);
+  return "wcr-" + _wcHash(parts.join("|")).toString(36);
+}
+function _wcSanitizeParticipationV2(src, C) {
+  if (!_wcPlain(src) || src.schema !== "cw_war_career_participation_v2" || !C || !_wcHasKeys(src, _WC_V2_KEYS)) return null;
+  var resultId = _wcSafeId(src.resultId, 96), mode = src.mode === "classic" ? "classic" : "";
+  var runId = _wcSafeId(src.runId, 96), creditKey = _wcSafeId(src.creditKey, 220), personId = _wcSafeId(src.personId, 180);
+  var chainIndex = Number(src.chainIndex), battleId = _wcSafeId(src.battleId, 120);
+  var side = src.side === "CS" ? "CS" : (src.side === "US" ? "US" : "");
+  var sourceRef = _wcCleanSourceRef(src.sourceRef), timelineRef = _wcCleanTimelineRef(src.timelineAssignmentRef);
+  var representedFieldUnitId = _wcSafeId(src.representedFieldUnitId, 180);
+  var fieldMapping = src.fieldMapping === "exact-timeline-unit" ? "exact-timeline-unit" : "";
+  var battleYear = Number(src.battleYear), rankAtResult = _wcText(src.rankAtResult || "", 80);
+  if (!resultId || !mode || !runId || runId !== _wcSafeId(C.runId, 96) || !creditKey || !personId ||
+      !isFinite(chainIndex) || Math.floor(chainIndex) !== chainIndex || chainIndex < 0 || !battleId || !side || side !== C.side ||
+      !sourceRef || !timelineRef || !representedFieldUnitId || !fieldMapping || !isFinite(battleYear) || !rankAtResult ||
+      battleId !== timelineRef.scenarioId || side !== timelineRef.side || chainIndex !== timelineRef.chainIndex ||
+      creditKey !== [runId, side, chainIndex, battleId].join("|") || Math.round(battleYear) !== battleYear) return null;
+  var source = _wcValidateCanonicalSource(C, personId, side, sourceRef);
+  var timeline = source && _wcValidateTimelineAssignment(C, personId, source.sourceRef, timelineRef, representedFieldUnitId, battleYear, rankAtResult, null);
+  if (!source || !timeline) return null;
+  var expectedResultId = _wcResultIdV2(runId, creditKey, mode, personId, source.sourceRef, timeline.timelineAssignmentRef,
+    representedFieldUnitId, fieldMapping, battleYear, rankAtResult);
+  if (resultId !== expectedResultId) return null;
+  return {
+    schema:"cw_war_career_participation_v2", resultId:resultId, mode:mode, runId:runId,
+    creditKey:creditKey, personId:personId, chainIndex:chainIndex, battleId:battleId, side:side,
+    sourceRef:source.sourceRef, timelineAssignmentRef:timeline.timelineAssignmentRef,
+    representedFieldUnitId:representedFieldUnitId, fieldMapping:fieldMapping,
+    battleYear:battleYear, rankAtResult:rankAtResult
+  };
+}
+function _wcTimelineLink(C, battleId) {
+  var J = C && C.loot && C.loot.journey, chainIndex = Number(C && C.idx);
+  var side = C && (C.side === "CS" ? "CS" : (C.side === "US" ? "US" : ""));
+  var chain = side && typeof CHAINS !== "undefined" && CHAINS && Array.isArray(CHAINS[side]) ? CHAINS[side] : null;
+  if (!J || !J.enabled || J.careerVersion !== 1 || !J.person || J.personId !== J.person.pid ||
+      (J.status !== "alive" && J.status !== "wounded") ||
+      (J.handoff && (J.handoff.state === "pending" || J.handoff.state === "ended")) ||
+      !side || !warCareerRunIdValid(C.runId) || !isFinite(chainIndex) || Math.floor(chainIndex) !== chainIndex || chainIndex < 0 ||
+      !chain || chainIndex >= chain.length || chain[chainIndex] !== battleId) return null;
+  var person = _wcRegistryPersonUnique(C, J.personId), sourceRef = person && _wcSourceRefFromPerson(person);
+  var source = sourceRef && _wcValidateCanonicalSource(C, J.personId, side, sourceRef);
+  var row = source && _wcTimelineAssignmentUnique(J.personId, side, chainIndex, battleId);
+  var timelineRef = row && _wcTimelineRefFromRow(row), battleYear = _wcCanonicalBattleYear(battleId);
+  var creditKey = [C.runId, side, chainIndex, battleId].join("|");
+  var rankAtResult = _wcText(J.person.rank || "", 80);
+  var timeline = timelineRef && _wcValidateTimelineAssignment(C, J.personId, source.sourceRef, timelineRef, timelineRef.unitId,
+    battleYear, rankAtResult, { J:J, runId:C.runId, creditKey:creditKey, side:side, chainIndex:chainIndex, battleId:battleId });
+  if (!source || !timeline || !person || !_wcSameUnitRef(J.person.unitRef, source.sourceRef)) return null;
+  return {
+    J:J, runId:C.runId, person:person, sourceRef:source.sourceRef,
+    timelineAssignmentRef:timeline.timelineAssignmentRef, chainIndex:chainIndex,
+    creditKey:creditKey, battleYear:battleYear, rankAtResult:rankAtResult
+  };
+}
+function _wcResultEvidenceV2(link, mode, year) {
+  year = Number(year);
+  if (!link || mode !== "classic" || !isFinite(year) || Math.round(year) !== link.battleYear) return null;
+  var representedFieldUnitId = link.timelineAssignmentRef.unitId, fieldMapping = "exact-timeline-unit";
+  var resultId = _wcResultIdV2(link.runId, link.creditKey, mode, link.person.pid, link.sourceRef,
+    link.timelineAssignmentRef, representedFieldUnitId, fieldMapping, link.battleYear, link.rankAtResult);
+  return {
+    schema:"cw_war_career_result_v2", resultId:resultId, mode:mode, runId:link.runId,
+    creditKey:link.creditKey, personId:link.person.pid, chainIndex:link.chainIndex,
+    battleId:link.timelineAssignmentRef.scenarioId, side:link.timelineAssignmentRef.side,
+    sourceRef:link.sourceRef, timelineAssignmentRef:link.timelineAssignmentRef,
+    representedFieldUnitId:representedFieldUnitId, fieldMapping:fieldMapping,
+    battleYear:link.battleYear, rankAtResult:link.rankAtResult
+  };
+}
+
 function _wcResultId(runId, creditKey, mode, personId, slotPid, routeUnitId, mapping, battleYear, rankAtResult, assignmentId) {
   return "wcr-" + _wcHash([runId, creditKey, mode, personId, slotPid, routeUnitId,
     mapping || "", battleYear == null ? "" : battleYear, rankAtResult || "", assignmentId || "", "result-v1"].join("|")).toString(36);
@@ -311,10 +599,14 @@ function _wcResultEvidence(link, mode, route, year, leaders) {
    linked field unit to remain uniquely present in the completed B. */
 function warCareerBuildClassicEvidence(C, B) {
   var bid = _wcBattleId(B, C), link = bid && _wcActiveLink(C, bid);
-  var route = link && _wcRouteUnit(B && B.units, C.side, link.ref.unitId);
-  if (route && route.ambiguous) return null;
-  if (link && !route) route = _wcAssignRouteUnit(link, B && B.units);
-  return route ? _wcResultEvidence(link, "classic", route, B && B.bd && B.bd.year, []) : null;
+  if (link) {
+    var route = _wcRouteUnit(B && B.units, C.side, link.ref.unitId);
+    if (route && route.ambiguous) return null;
+    if (!route) route = _wcAssignRouteUnit(link, B && B.units);
+    return route ? _wcResultEvidence(link, "classic", route, B && B.bd && B.bd.year, []) : null;
+  }
+  var timelineLink = bid && _wcTimelineLink(C, bid);
+  return timelineLink ? _wcResultEvidenceV2(timelineLink, "classic", B && B.bd && B.bd.year) : null;
 }
 
 /* Called once from the campaign conditioning seam. The context-only link is
@@ -398,6 +690,36 @@ function warCareerBuildFieldEvidence(C, ctx, mode, field) {
   return _wcResultEvidence(link, mode, route, ctx.bd && ctx.bd.year, leaders);
 }
 
+function _wcParticipationV2FromResult(raw) {
+  if (!_wcPlain(raw)) return null;
+  return {
+    schema:"cw_war_career_participation_v2", resultId:raw.resultId, mode:raw.mode,
+    runId:raw.runId, creditKey:raw.creditKey, personId:raw.personId,
+    chainIndex:raw.chainIndex, battleId:raw.battleId, side:raw.side,
+    sourceRef:raw.sourceRef, timelineAssignmentRef:raw.timelineAssignmentRef,
+    representedFieldUnitId:raw.representedFieldUnitId, fieldMapping:raw.fieldMapping,
+    battleYear:raw.battleYear, rankAtResult:raw.rankAtResult
+  };
+}
+function _wcParticipationEvidenceV2(C, B, J, raw, fail) {
+  if (!_wcExactKeys(raw, _WC_V2_KEYS) || !_wcExactKeys(raw.sourceRef, _WC_SOURCE_REF_KEYS) ||
+      !_wcExactKeys(raw.timelineAssignmentRef, _WC_TIMELINE_REF_KEYS)) return fail("malformed-v2-result-evidence");
+  var bid = _wcBattleId(B, C), playerSide = B.playerSide || C.side, key = _wcCreditKey(C, B);
+  var canonicalYear = Number(B && B.bd && B.bd.year), chainIndex = Number(C.idx);
+  if (raw.mode !== "classic" || B.over !== true) return fail("v2-classic-result-incomplete");
+  if (!bid || raw.battleId !== bid || (playerSide !== "US" && playerSide !== "CS") || playerSide !== C.side || raw.side !== C.side) return fail("v2-wrong-rung-or-side");
+  if (!warCareerRunIdValid(C.runId) || raw.runId !== C.runId || raw.creditKey !== key || raw.personId !== J.personId ||
+      raw.chainIndex !== chainIndex || !isFinite(canonicalYear) || Math.round(canonicalYear) !== raw.battleYear) return fail("v2-stale-result-evidence");
+  var link = _wcTimelineLink(C, bid);
+  if (!link || !_wcFieldsSame(raw.sourceRef, link.sourceRef, _WC_SOURCE_REF_KEYS) ||
+      !_wcFieldsSame(raw.timelineAssignmentRef, link.timelineAssignmentRef, _WC_TIMELINE_REF_KEYS) ||
+      raw.representedFieldUnitId !== link.timelineAssignmentRef.unitId || raw.fieldMapping !== "exact-timeline-unit" ||
+      raw.rankAtResult !== link.rankAtResult) return fail("v2-source-or-timeline-mismatch");
+  var participation = _wcSanitizeParticipationV2(_wcParticipationV2FromResult(raw), C);
+  if (!participation || participation.resultId !== raw.resultId) return fail("invalid-v2-result-identity");
+  return { ok:true, qualifying:true, reason:"explicit-classic-timeline-result", participation:participation };
+}
+
 /* A result-owned receipt, not the static catalog, is the cross-mode authority.
    The catalog is used only to verify that the named person and slot are still
    unique. This is a pure read and aggregate casualties are never consulted. */
@@ -408,7 +730,9 @@ function warCareerParticipationEvidence(C, B) {
   if (!J || !J.enabled || J.careerVersion !== 1 || !J.person || J.personId !== J.person.pid) return fail("inactive-or-aliased");
   if (J.status !== "alive" && J.status !== "wounded") return fail("person-not-present");
   if (J.handoff && (J.handoff.state === "pending" || J.handoff.state === "ended")) return fail("handoff-unresolved");
-  var ref = _wcUnitRef(J.person.unitRef), raw = B.warCareerEvidence;
+  var raw = B.warCareerEvidence;
+  if (_wcPlain(raw) && raw.schema === "cw_war_career_result_v2") return _wcParticipationEvidenceV2(C, B, J, raw, fail);
+  var ref = _wcUnitRef(J.person.unitRef);
   if (!ref) return fail("missing-unit-ref");
   if (!_wcPlain(raw) || raw.schema !== "cw_war_career_result_v1" || !/^(classic|auto|realtime)$/.test(String(raw.mode || "")) ||
       !Array.isArray(raw.participants) || raw.participants.length !== 1 || !Array.isArray(raw.leaders)) return fail("missing-or-malformed-result-evidence");
@@ -455,6 +779,25 @@ function warCareerParticipationEvidence(C, B) {
   };
 }
 
+function _wcParticipationResultRef(participation) {
+  if (participation && participation.schema === "cw_war_career_participation_v2") {
+    var timeline = participation.timelineAssignmentRef;
+    return _wcUnitRef(timeline && {
+      battleId:timeline.scenarioId, side:timeline.side, unitId:timeline.unitId,
+      slot:timeline.slot, slotPid:timeline.slotPid
+    });
+  }
+  return _wcUnitRef(participation);
+}
+function _wcParticipationSourceRef(participation) {
+  if (participation && participation.schema === "cw_war_career_participation_v2") return _wcUnitRef(participation.sourceRef);
+  return _wcUnitRef(participation);
+}
+function _wcParticipationSlotPid(participation) {
+  var ref = _wcParticipationResultRef(participation);
+  return ref ? ref.slotPid : "";
+}
+
 function _wcLeaderFateEvidence(J, B, participation) {
   var raw = B && B.warCareerEvidence;
   if (!participation || participation.mode !== "realtime" || participation.slot !== "cmd" || !_wcPlain(raw) || !Array.isArray(raw.leaders)) return { ok:false, reason:"missing-realtime-leader-link" };
@@ -476,7 +819,7 @@ function _wcLeaderFateEvidence(J, B, participation) {
 function warCareerDeterministicFate(participation, outcome, type) {
   if (!participation) return null;
   var roll = _wcHash([participation.runId, participation.creditKey, participation.personId,
-    participation.slotPid, "personal-fate"].join("|")) % 1000;
+    _wcParticipationSlotPid(participation), "personal-fate"].join("|")) % 1000;
   var fallen = 8, captured = 0, wounded = 140;
   if (outcome === "defeat") {
     fallen = type === "decisive" ? 35 : 20;
@@ -561,14 +904,20 @@ function warCareerComradeCandidates(C, J, people, participation, basePersonId) {
     people = reg && Array.isArray(reg.people) ? reg.people : [];
   }
   participation = participation || J.lastParticipation;
-  var ref = participation && _wcUnitRef(participation), year = participation && participation.battleYear != null ? Number(participation.battleYear) : null;
+  var isV2 = !!(participation && participation.schema === "cw_war_career_participation_v2");
+  var ref = participation && _wcParticipationResultRef(participation), sourceRef = participation && _wcParticipationSourceRef(participation);
+  var year = participation && participation.battleYear != null ? Number(participation.battleYear) : null;
   var selectionRank = _wcText(participation && participation.rankAtResult || "", 80);
   var basePid = _wcSafeId(basePersonId || J.personId, 180), canonicalBase = null, baseCount = 0;
   for (var bi = 0; bi < people.length; bi++) if (people[bi] && people[bi].pid === basePid) { canonicalBase = people[bi]; baseCount++; }
-  if (!ref || !selectionRank || !isFinite(year) || year < 1860 || year > 1870 || baseCount !== 1 || !canonicalBase || canonicalBase.side !== C.side ||
-      !_wcSameUnitRef(canonicalBase.unitRef, ref)) return [];
-  if (basePid === J.personId && (!_wcSameUnitRef(J.person.unitRef, ref) || J.person.side !== C.side)) return [];
-  var hierarchyBase = { unitRef:_wcUnitRef(canonicalBase.unitRef), team:canonicalBase.team || {}, rank:selectionRank };
+  if (!ref || !sourceRef || !selectionRank || !isFinite(year) || year < 1860 || year > 1870 || baseCount !== 1 || !canonicalBase || canonicalBase.side !== C.side) return [];
+  if (isV2) {
+    if (basePid !== participation.personId || !_wcSameUnitRef(canonicalBase.unitRef, sourceRef)) return [];
+    if (basePid === J.personId && (!_wcSameUnitRef(J.person.unitRef, sourceRef) || J.person.side !== C.side)) return [];
+  } else {
+    if (!_wcSameUnitRef(canonicalBase.unitRef, ref)) return [];
+    if (basePid === J.personId && (!_wcSameUnitRef(J.person.unitRef, ref) || J.person.side !== C.side)) return [];
+  }
   var prior = {}, pidCount = {}, slotCount = {}, i;
   for (i = 0; i < (J.lineage || []).length; i++) if (J.lineage[i] && J.lineage[i].personId) prior[J.lineage[i].personId] = true;
   for (i = 0; i < people.length; i++) {
@@ -576,10 +925,23 @@ function warCareerComradeCandidates(C, J, people, participation, basePersonId) {
     if (countP && countP.pid) pidCount[countP.pid] = (pidCount[countP.pid] || 0) + 1;
     if (countRef) slotCount[countRef.slotPid] = (slotCount[countRef.slotPid] || 0) + 1;
   }
+  var representedBase = canonicalBase;
+  if (isV2) {
+    representedBase = null;
+    for (i = 0; i < people.length; i++) {
+      var representedRef = people[i] && _wcUnitRef(people[i].unitRef);
+      if (representedRef && representedRef.slotPid === ref.slotPid) {
+        if (representedBase) return [];
+        representedBase = people[i];
+      }
+    }
+    if (!representedBase || representedBase.side !== C.side) return [];
+  }
+  var hierarchyBase = { unitRef:ref, team:representedBase.team || {}, rank:selectionRank };
   var currentRank = _wcRankOrdinal(hierarchyBase.rank), out = [];
   for (i = 0; i < people.length; i++) {
     var p = people[i], pr = p && _wcUnitRef(p.unitRef), provRank = _wcProvenanceRank(p);
-    if (!p || !p.pid || p.pid === basePid || prior[p.pid] || pidCount[p.pid] !== 1 || !pr || slotCount[pr.slotPid] !== 1) continue;
+    if (!p || !p.pid || p.pid === basePid || (isV2 && pr && pr.slotPid === ref.slotPid) || prior[p.pid] || pidCount[p.pid] !== 1 || !pr || slotCount[pr.slotPid] !== 1) continue;
     if (p.side !== C.side || pr.side !== C.side || !_wcKnownPresent(p, year)) continue;
     if (provRank === 99 || (!p.generated && (!Array.isArray(p.sources) || !p.sources.length))) continue;
     var distance = _wcHierarchyDistance(hierarchyBase, p);
@@ -682,7 +1044,7 @@ function _wcBeginHandoff(C, J, event, participation) {
     handoffId:event.eventId + ":handoff", state:ids.length ? "pending" : "ended",
     fallenPersonId:J.personId, resultEventId:event.eventId, creditKey:event.creditKey,
     scenarioId:participation.battleId, side:participation.side,
-    unitRef:_wcUnitRef(participation), candidateIds:ids, selectedPersonId:null,
+    unitRef:_wcParticipationResultRef(participation), candidateIds:ids, selectedPersonId:null,
     reason:ids.length ? null : "No eligible comrade could be identified"
   };
   return J.handoff;

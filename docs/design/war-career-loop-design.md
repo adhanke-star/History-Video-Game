@@ -1,8 +1,9 @@
 # War Career Loop — Runtime Contract (D399)
 
-**Status:** D404 dual-reference receipt CONTRACTED planning boundary. The original law remains true:
-No runtime, save-version, generated-game, or political-engine change belongs to D399. D404 likewise
-authorizes planning only; it does not authorize receipt runtime or Slice C.
+**Status:** D405 dual-reference receipt prerequisite SHIPPED. The D404 CONTRACTED planning boundary
+remains the receipt law, and the original law remains true: No runtime, save-version, generated-game,
+or political-engine change belongs to D399. D405 implements only the v2 receipt proof; it does not
+authorize Slice C.
 **Lane:** `COORDINATION.md` LANE-005.
 **Decision law:** D382 item 4, D360, D151, D119, D105, D94, D74, D92, D35, D146,
 E41, E50, and E71 fixed in D400.
@@ -411,14 +412,14 @@ captured recovery, fallen, and deterministic COMRADE HAND-OFF. Career Ironman us
 classifier before the Slice-A dispatcher delegates; nonterminal fate commits afterward. No second
 terminal system and no rollback-after-`_t1Resolve` path are legal.
 
-### Receipt-continuity prerequisite — dual-reference participation-v2 (exact next runtime)
+### Receipt-continuity prerequisite — dual-reference participation-v2 (exact next runtime; D405 SHIPPED)
 
-Before Slice C, implement only the §14 coexisting `cw_war_career_participation_v2` receipt path and
-its exact Haley Gettysburg→Chickamauga proof. Preserve D401 v1 receipts unchanged. The bounded runtime
+Before Slice C, D405 implemented only the §14 coexisting `cw_war_career_participation_v2` receipt
+path and its exact Haley Gettysburg→Chickamauga proof. D401 v1 receipts remain unchanged. The bounded runtime
 surface is `src/106-war-career.js`, `src/37-loot-survival.js`, and
 `tools/probe-war-career.mjs`; the existing manifest entry remains unchanged. The planning guard
-`tools/probe-war-career-loop-plan.mjs` may also move in that same commit only to replace its D404
-planning hashes/absence teeth with exact receipt-prerequisite completion teeth. Its original ten
+`tools/probe-war-career-loop-plan.mjs` moved only to replace its D404 planning hashes/absence teeth
+with exact receipt-prerequisite completion teeth. Its original ten
 step names, runtime mode, suite exclusion, and all nine D404 step names remain fixed. The first proof
 is Classic consequence-only and does not authorize T2, T3, Auto, command projection, rank movement,
 combat movement, or a new data file. Build the generated game only from source after those focused
@@ -501,6 +502,31 @@ career probe, no manifest marker, no save-version movement, and E71 still pendin
   `b0d7f440836b60a4f18401b2d7b03f48`; D398 remains the latest full release battery
 - `git diff --check`; commit and push only the allowed planning files; return LANE-005 to
   CONTRACT/unowned; do not run `npm run vet:noreg` in this docs/tool-only slice
+
+### D405 receipt-complete runtime boundary
+
+- Keep all nineteen D404 plan-step names and runtime mode. Replace only the planning absence/hash
+  expectations with exact receipt-complete runtime, focused-probe, source-tree, and generated-game
+  hashes; keep the changed-file allowlist fail closed.
+- `tools/probe-war-career.mjs` retains every D401 row and static wall, then adds the nine §14
+  receipt controls. The final focused contract is 34/34 browser/runtime rows plus 29/29 static
+  assertions, with zero `pageerrors` and zero `realErrors`.
+- Run syntax checks for `src/106-war-career.js`, `src/37-loot-survival.js`,
+  `tools/probe-war-career.mjs`, and `tools/probe-war-career-loop-plan.mjs`; build only from source;
+  run and read War Career, loot/survival, save-slots, command, full-campaign, and plan artifacts.
+- Repeat D404's unique `NEVER`→`MAY` source/timeline negative bind. It must exit 1 with exactly
+  `SOURCE VS YOUR TIMELINE` red and eighteen green, then restore both design and plan-probe files
+  byte-for-byte before the final 19/19 run.
+- After the final LANE-005 release rewrite, run and read all thirteen coordination-sensitive plan
+  probes. The current corpus has 155 named artifact rows; D404's retained 192 count belongs to the
+  D398 24×8 battle sweep, not to the plan-probe artifacts.
+- Preserve 24 scenarios, schema 54, Army Register 1512, coverage 24, suite 130, sweep 24, War Career
+  suite row 38, `_SAVE_VER=1`, frozen base `c9db83fa99230ffb95bdfdfe059f3fb9`, data tree
+  `b0d7f440836b60a4f18401b2d7b03f48`, command `55bd7b5a30f22470e1abd7a993b3cbb4`,
+  T2 `feef8a3c1ecf5fb28a120d2398ee61fc`, T3 `56e2cd1060a40eb0754b19e8d56bacdb`,
+  Auto `4f0bd0970ef96c09b62ea44694387f80`, and command probe
+  `bbfeaa69db333fddee2741882abff245`. D398 remains the latest full release battery; do not run
+  `npm run vet:noreg` for this focused prerequisite.
 
 ### Slice-A focused and adjacent gate
 
@@ -742,10 +768,10 @@ grade, receipts, merit, reputation, rank, billet, and authority never transfer. 
 no exact current-rung mapping, participation fails closed; the game does not borrow the prior
 identity's assignment.
 
-### Exact next runtime proof and closed seams
+### Exact next runtime proof and closed seams — D405 SHIPPED
 
-The receipt-continuity prerequisite must extend the focused War Career probe with all of these
-controls before Slice C:
+The receipt-continuity prerequisite extends the focused War Career probe with all of these controls
+before Slice C:
 
 1. Haley's canonical `sourceRef` is byte-identical before and after a Chickamauga result.
 2. The exact `wcta-1pav4ac` Chickamauga assignment qualifies once and stores v2 in event, credit,
@@ -769,3 +795,22 @@ tooth. It may not edit T2, T3, Auto, data, the manifest, the suite manifest,
 `src/35-command.js`, or `tools/probe-command.mjs`. Slice C remains a separate future DRIVE take after
 this prerequisite is green, committed, pushed, and released. If this boundary cannot prove the exact
 fixture in Classic without broadening, HALT with the missing seam and the narrowest alternatives.
+
+### D405 shipped receipt-complete boundary
+
+D405 implements the selected schema without changing D401's v1 helpers or receipt bytes. The frozen
+`_WC_TIMELINE_ASSIGNMENTS_V1` contains only the exact Haley mapping. Canonical reconstruction keeps
+Gettysburg, `sourceGrade:"Private"`, `serviceYear:1863`, and `provenance:"Verified"`; result-location
+reconstruction separately keeps Chickamauga rung 16, the Harker/Rock private slot,
+`timelineGrade:"Private"`, `provenance:"Inferred"`, label `Your Timeline`, and assignment
+`wcta-1pav4ac`. The Soldier replacement adapter now takes a sourced replacement record's validated
+`year` as its service year instead of inheriting the campaign-clock year; no data record changed.
+
+The final receipt-complete locks are `src/106-war-career.js`
+`9eba476afa0b46e04c7060d7c7dbde64`, `src/37-loot-survival.js`
+`cd41b69d7e08486fac15e0d68a5d9597`, `tools/probe-war-career.mjs`
+`bfb97971b867ff7e93758b84b5cb3c0e`, complete `src/` tree
+`2fa3cec836ab89026a416bd71bb6ddd4`, and generated HTML
+`74d5abd5196f7bdd7998e4d84573a925`. The plan guard pins those receipts while keeping
+`warCareerCommandProjection()` at zero, all command/combat files closed, `_SAVE_VER=1`, and Slice C
+unstarted.

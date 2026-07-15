@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import "./guard-probe-browser.mjs";
-// D401 Slice B focused gate: D400 canonical/terminal invariants plus explicit
-// scenario-unit participation, pure personal fate, and deterministic hand-off.
+// D405 dual-reference receipt gate: every D401 Slice-B row and wall remains,
+// plus exact canonical-source / Inferred "Your Timeline" v2 continuity.
 
 import { chromium } from "playwright-core";
 import { spawn, execFileSync } from "node:child_process";
@@ -81,6 +81,14 @@ function staticPreflight() {
   check("explicit assignment is not a namespace alias", runtime.includes("cw_war_career_assignment_v1") && runtime.includes("explicit-career-assignment") && !runtime.includes("campaign-representative"), null);
   check("procedural army commander is never the career Captain", runtime.includes('link.ref.slot !== "cmd" || !ctx || !ctx.scn'), null);
   check("frozen base hash", md5(join(ROOT, "build", "base.html")) === "c9db83fa99230ffb95bdfdfe059f3fb9", md5(join(ROOT, "build", "base.html")));
+  check("dual-reference schemas registered", runtime.includes("cw_war_career_result_v2") && runtime.includes("cw_war_career_participation_v2") && runtime.includes("_WC_TIMELINE_ASSIGNMENTS_V1"), null);
+  check("replacement source year owns canonical history", journey.includes("if (r.year != null) p.serviceYear = r.year;"), null);
+  check("command file frozen", md5(join(ROOT, "src", "35-command.js")) === "55bd7b5a30f22470e1abd7a993b3cbb4", md5(join(ROOT, "src", "35-command.js")));
+  check("after-action file frozen", md5(join(ROOT, "src", "82-after-action.js")) === "e2a4739946b20b1a725a08d55b4825f6", md5(join(ROOT, "src", "82-after-action.js")));
+  check("Auto file frozen", md5(join(ROOT, "src", "87-auto-resolve.js")) === "4f0bd0970ef96c09b62ea44694387f80", md5(join(ROOT, "src", "87-auto-resolve.js")));
+  check("T2 file frozen", md5(join(ROOT, "src", "tactical", "T2-campaign-link.js")) === "feef8a3c1ecf5fb28a120d2398ee61fc", md5(join(ROOT, "src", "tactical", "T2-campaign-link.js")));
+  check("T3 file frozen", md5(join(ROOT, "src", "tactical", "T3-officers.js")) === "56e2cd1060a40eb0754b19e8d56bacdb", md5(join(ROOT, "src", "tactical", "T3-officers.js")));
+  check("command probe frozen", md5(join(ROOT, "tools", "probe-command.mjs")) === "bbfeaa69db333fddee2741882abff245", md5(join(ROOT, "tools", "probe-command.mjs")));
 
   return { ok: checks.every(row => row.ok), checks };
 }
@@ -229,6 +237,56 @@ const SETUP = `(() => {
     var result = warCareerStart(C, p.pid);
     if (!result || !result.ok) throw new Error('current War Career start failed: ' + bytes(result));
     return { person:p, result:result };
+  }
+  function exactPerson(C, pid) {
+    var people = ssPersonRegistry(C).people, found = null, count = 0;
+    for (var i = 0; i < people.length; i++) if (people[i] && people[i].pid === pid) { found = people[i]; count++; }
+    if (count !== 1) throw new Error('exact person count ' + count + ' for ' + pid);
+    return found;
+  }
+  function v2RunForFate(wanted, outcome, type) {
+    var pid = 'person_gettysburg_us_17me_haley';
+    for (var i = 0; i < 5000; i++) {
+      var runId = 'run-d405-' + wanted + '-' + i;
+      var participation = {
+        schema:'cw_war_career_participation_v2', runId:runId,
+        creditKey:runId + '|US|16|chickamauga', personId:pid,
+        timelineAssignmentRef:{
+          scenarioId:'chickamauga', side:'US', unitId:'us_harker_rock', slot:'pvt',
+          slotPid:'ss:chickamauga:US:us_harker_rock:pvt'
+        }
+      };
+      if (warCareerDeterministicFate(participation, outcome, type) === wanted) return runId;
+    }
+    throw new Error('no deterministic v2 ' + wanted + ' run id');
+  }
+  function haleyTimelineFixture(options) {
+    options = options || {};
+    var C = mkC('US', false), pid = 'person_gettysburg_us_17me_haley';
+    C.idx = 15;
+    var person = exactPerson(C, pid), sourceBefore = _wcSourceRefFromPerson(person), unitRefBefore = bytes(person.unitRef);
+    C.runId = options.fate
+      ? v2RunForFate(options.fate, options.outcome || 'defeat', options.type || 'win')
+      : (options.runId || 'run-d405-haley');
+    var started = warCareerStart(C, pid);
+    if (!started.ok) throw new Error('Haley War Career start failed: ' + bytes(started));
+    C.idx = 16;
+    var B = mkB(C, true);
+    var combatBefore = bytes({ bd:B.bd, casualties:B.casualties, infl:B.infl, units:B.units });
+    B.warCareerEvidence = warCareerBuildClassicEvidence(C, B);
+    if (!B.warCareerEvidence) throw new Error('Haley v2 Classic evidence missing');
+    return { C:C, B:B, person:person, sourceBefore:sourceBefore, unitRefBefore:unitRefBefore, combatBefore:combatBefore };
+  }
+  function haleyV1Fixture() {
+    var C = mkC('US', false), pid = 'person_gettysburg_us_17me_haley';
+    C.idx = 15;
+    C.runId = 'run-d401-byte-compat';
+    if (!warCareerStart(C, pid).ok) throw new Error('Haley v1 compatibility start failed');
+    var B = mkB(C, true);
+    participantEvidence(C, B, 'classic');
+    var proof = warCareerParticipationEvidence(C, B);
+    if (!proof.qualifying) throw new Error('Haley v1 compatibility receipt failed');
+    return { C:C, B:B, participation:proof.participation };
   }
   function exactLeaderEvidence(C, B, fate, changes) {
     var J = C.loot.journey, ref = J.person.unitRef, link = _wcActiveLink(C, ref.battleId);
@@ -1284,6 +1342,243 @@ const SETUP = `(() => {
       return { validReceipt:true, coherentForgeRejected:true, missingYearRejected:true, capturedAndFallenResurrectionRejected:true, crossPersonCaptureRecoveryRejected:true, wrongOwnerCaptureRecoveryRejected:true, twoHopLineageChainEnforced:true, lineageChainIntegrationBound:true, completedDistantWrongSideDeadRejected:true, malformedHandoffRejected:true, idempotent:true, heading:true, list:true, nativeButton:true, focus:true, target24:true, delegatedControl:true };
     });
 
+    step('V2 SOURCE IMMUTABILITY', function() {
+      var fixture = haleyTimelineFixture({ fate:'alive', outcome:'victory', type:'win' }), C = fixture.C, evidence = fixture.B.warCareerEvidence;
+      var resolved = resolveResult(C, fixture.B, 'US', 'win');
+      var canonicalAfter = _wcSourceRefFromPerson(exactPerson(C, C.loot.journey.personId));
+      if (!resolved || !resolved.qualifying) throw new Error('later-rung result did not commit a qualifying v2 receipt');
+      if (!Object.isFrozen(_WC_TIMELINE_ASSIGNMENTS_V1) || !Object.isFrozen(_WC_TIMELINE_ASSIGNMENTS_V1[0])) throw new Error('timeline assignment input is not deeply frozen');
+      if (bytes(fixture.sourceBefore) !== bytes(canonicalAfter) || bytes(fixture.sourceBefore) !== bytes(evidence.sourceRef)) throw new Error('canonical source reference changed across later-rung evidence');
+      if (fixture.unitRefBefore !== bytes(C.loot.journey.person.unitRef) || C.loot.journey.person.unitRef.battleId !== 'gettysburg') throw new Error('journey source unit was rewritten as the live rung');
+      if (evidence.sourceRef.provenance !== 'Verified' || evidence.sourceRef.serviceYear !== 1863 ||
+          evidence.timelineAssignmentRef.provenance !== 'Inferred' || evidence.timelineAssignmentRef.label !== 'Your Timeline') throw new Error('source/timeline provenance labels collapsed');
+      if (evidence.sourceRef.battleId === evidence.timelineAssignmentRef.scenarioId) throw new Error('source and timeline authorities were aliased');
+      return { sourceBattle:evidence.sourceRef.battleId, sourceProvenance:evidence.sourceRef.provenance, timelineBattle:evidence.timelineAssignmentRef.scenarioId, timelineProvenance:evidence.timelineAssignmentRef.provenance, resultCommitted:true, frozen:true };
+    });
+
+    step('V2 EXACT LATER-RUNG PARTICIPATION', function() {
+      var fixture = haleyTimelineFixture(), raw = fixture.B.warCareerEvidence;
+      var proof = warCareerParticipationEvidence(fixture.C, fixture.B), participation = proof.participation;
+      var topKeys = ['schema','resultId','mode','runId','creditKey','personId','chainIndex','battleId','side','sourceRef','timelineAssignmentRef','representedFieldUnitId','fieldMapping','battleYear','rankAtResult'];
+      var sourceKeys = ['battleId','side','unitId','slot','slotPid','sourceGrade','serviceStart','serviceEnd','serviceYear','provenance'];
+      var timelineKeys = ['assignmentId','scenarioId','side','unitId','slot','slotPid','chainIndex','serviceStart','serviceEnd','serviceYear','timelineGrade','provenance','label'];
+      if (!proof.qualifying || !participation || participation.schema !== 'cw_war_career_participation_v2' || raw.schema !== 'cw_war_career_result_v2') throw new Error('exact later-rung v2 did not qualify');
+      if (bytes(Object.keys(participation)) !== bytes(topKeys) || bytes(Object.keys(participation.sourceRef)) !== bytes(sourceKeys) || bytes(Object.keys(participation.timelineAssignmentRef)) !== bytes(timelineKeys)) throw new Error('persisted v2 shape drifted');
+      if (participation.timelineAssignmentRef.assignmentId !== 'wcta-1pav4ac' || _wcTimelineAssignmentId(_WC_TIMELINE_ASSIGNMENTS_V1[0]) !== 'wcta-1pav4ac') throw new Error('deterministic assignment id drifted');
+      if (participation.chainIndex !== 16 || participation.battleId !== 'chickamauga' || participation.representedFieldUnitId !== 'us_harker_rock' || participation.fieldMapping !== 'exact-timeline-unit' || !_wcTimelineTarget(_WC_TIMELINE_ASSIGNMENTS_V1[0])) throw new Error('current-rung target was not represented exactly');
+      var recomputed = _wcResultIdV2(participation.runId, participation.creditKey, participation.mode, participation.personId,
+        participation.sourceRef, participation.timelineAssignmentRef, participation.representedFieldUnitId,
+        participation.fieldMapping, participation.battleYear, participation.rankAtResult);
+      if (recomputed !== participation.resultId || raw.resultId !== participation.resultId) throw new Error('v2 result identity did not bind the complete receipt');
+      return { schema:participation.schema, resultId:participation.resultId, assignmentId:participation.timelineAssignmentRef.assignmentId, chainIndex:participation.chainIndex, mapping:participation.fieldMapping };
+    });
+
+    step('V2 MALFORMED MATRIX FAIL CLOSED', function() {
+      var fixture = haleyTimelineFixture(), C = fixture.C, B = fixture.B, rejected = [];
+      function reject(label, mutate) {
+        var candidate = clone(B);
+        mutate(candidate);
+        if (warCareerParticipationEvidence(C, candidate).qualifying) throw new Error(label + ' v2 qualified');
+        rejected.push(label);
+      }
+      reject('partial', function(b) { delete b.warCareerEvidence.sourceRef; b.warCareerEvidence.unitId = 'us_birney_iii'; });
+      reject('unknown-schema', function(b) { b.warCareerEvidence.schema = 'cw_war_career_result_v3'; });
+      reject('unknown-top-field', function(b) { b.warCareerEvidence.forged = true; });
+      reject('unknown-source-field', function(b) { b.warCareerEvidence.sourceRef.forged = true; });
+      reject('stale-run', function(b) { b.warCareerEvidence.runId = 'run-stale'; });
+      reject('stale-credit', function(b) { b.warCareerEvidence.creditKey += ':stale'; });
+      reject('stale-rung', function(b) { b.warCareerEvidence.chainIndex = 15; });
+      reject('wrong-result-side', function(b) { b.warCareerEvidence.side = 'CS'; });
+      reject('wrong-result-scenario', function(b) { b.warCareerEvidence.battleId = 'gettysburg'; });
+      reject('wrong-source', function(b) { b.warCareerEvidence.sourceRef.unitId = 'us_harker_rock'; });
+      reject('wrong-source-slot', function(b) { b.warCareerEvidence.sourceRef.slot = 'nco'; });
+      reject('wrong-source-grade', function(b) { b.warCareerEvidence.sourceRef.sourceGrade = 'Sergeant'; });
+      reject('wrong-source-year', function(b) { b.warCareerEvidence.sourceRef.serviceYear = 1862; });
+      reject('wrong-source-provenance', function(b) { b.warCareerEvidence.sourceRef.provenance = 'Inferred'; });
+      reject('wrong-assignment', function(b) { b.warCareerEvidence.timelineAssignmentRef.assignmentId = 'wcta-forged'; });
+      reject('wrong-timeline-side', function(b) { b.warCareerEvidence.timelineAssignmentRef.side = 'CS'; });
+      reject('wrong-timeline-scenario', function(b) { b.warCareerEvidence.timelineAssignmentRef.scenarioId = 'gettysburg'; });
+      reject('wrong-timeline-rung', function(b) { b.warCareerEvidence.timelineAssignmentRef.chainIndex = 15; });
+      reject('wrong-target-unit', function(b) { b.warCareerEvidence.timelineAssignmentRef.unitId = 'us_brannan_rock'; });
+      reject('wrong-target-slot', function(b) { b.warCareerEvidence.timelineAssignmentRef.slot = 'nco'; });
+      reject('wrong-target-slot-pid', function(b) { b.warCareerEvidence.timelineAssignmentRef.slotPid += ':forged'; });
+      reject('wrong-timeline-service-start', function(b) { b.warCareerEvidence.timelineAssignmentRef.serviceStart = 1864; });
+      reject('wrong-timeline-service-end', function(b) { b.warCareerEvidence.timelineAssignmentRef.serviceEnd = 1862; });
+      reject('wrong-timeline-service-year', function(b) { b.warCareerEvidence.timelineAssignmentRef.serviceYear = 1862; });
+      reject('wrong-timeline-grade', function(b) { b.warCareerEvidence.timelineAssignmentRef.timelineGrade = 'Sergeant'; });
+      reject('wrong-timeline-provenance', function(b) { b.warCareerEvidence.timelineAssignmentRef.provenance = 'Verified'; });
+      reject('wrong-timeline-label', function(b) { b.warCareerEvidence.timelineAssignmentRef.label = 'Historical'; });
+      reject('wrong-represented-unit', function(b) { b.warCareerEvidence.representedFieldUnitId = 'us_brannan_rock'; });
+      reject('source-timeline-cross-reference', function(b) { b.warCareerEvidence.timelineAssignmentRef.slotPid = b.warCareerEvidence.sourceRef.slotPid; });
+      var original = _WC_TIMELINE_ASSIGNMENTS_V1;
+      try {
+        _WC_TIMELINE_ASSIGNMENTS_V1 = deepFreeze([]);
+        if (warCareerParticipationEvidence(C, B).qualifying) throw new Error('absent mapping qualified');
+        rejected.push('absent-mapping');
+        _WC_TIMELINE_ASSIGNMENTS_V1 = deepFreeze([clone(original[0]), clone(original[0])]);
+        if (warCareerParticipationEvidence(C, B).qualifying) throw new Error('duplicate mapping qualified');
+        rejected.push('duplicate-mapping');
+      } finally { _WC_TIMELINE_ASSIGNMENTS_V1 = original; }
+      if (!Object.isFrozen(original) || !Object.isFrozen(original[0])) throw new Error('mapping restore lost freeze');
+      return { rejected:rejected, count:rejected.length, mappingRestored:true };
+    });
+
+    step('V2 SANITATION IDEMPOTENT', function() {
+      var fixture = haleyTimelineFixture({ fate:'alive', outcome:'victory', type:'win' });
+      var result = resolveResult(fixture.C, fixture.B, 'US', 'win'), C = fixture.C, J = C.loot.journey;
+      var credit = _wcCreditFor(J, fixture.B.warCareerEvidence.creditKey), event = credit && J.events.filter(function(row) { return row.eventId === credit.eventId; })[0];
+      if (!result.qualifying || !credit || !credit.qualifying || !event || !event.qualifying || !J.lastParticipation) throw new Error('valid v2 sanitation setup failed');
+      if (bytes(event.participation) !== bytes(credit.participation) || bytes(credit.participation) !== bytes(J.lastParticipation) ||
+          event.participation.resultId !== credit.participation.resultId) throw new Error('event/credit/last v2 copies diverged');
+      event.participation.unknownTop = true; event.participation.sourceRef.unknownSource = true;
+      credit.participation.unknownTop = true; credit.participation.timelineAssignmentRef.unknownTimeline = true;
+      J.lastParticipation.unknownLast = true;
+      warCareerInit(C); J = C.loot.journey; credit = _wcCreditFor(J, fixture.B.warCareerEvidence.creditKey);
+      event = J.events.filter(function(row) { return row.eventId === credit.eventId; })[0];
+      if (!credit.qualifying || own(event.participation, 'unknownTop') || own(event.participation.sourceRef, 'unknownSource') ||
+          own(credit.participation, 'unknownTop') || own(credit.participation.timelineAssignmentRef, 'unknownTimeline') || own(J.lastParticipation, 'unknownLast')) throw new Error('unknown v2 fields were not stripped through reconstruction');
+      var once = bytes(C); warCareerInit(C); var twice = bytes(C);
+      if (once !== twice) throw new Error('second v2 init changed bytes');
+      applySave(clone(envelope(C, 'v2-idempotent'))); warCareerInit(G.campaign);
+      if (bytes(G.campaign) !== once) throw new Error('v2 save/apply/init changed canonical bytes');
+
+      var mixed = haleyV1Fixture(), mixedC = mixed.C, mixedJ = mixedC.loot.journey, v1Part = clone(mixed.participation);
+      var v1EventId = mixedC.runId + ':event:2';
+      mixedJ.events.push({ eventId:v1EventId, ordinal:2, kind:'result', creditKey:v1Part.creditKey, scenarioId:v1Part.battleId,
+        battleName:'Gettysburg', outcome:'victory', type:'win', personId:v1Part.personId, status:'alive', fate:'alive', qualifying:true,
+        merit:0, reputation:0, note:'valid v1 control', participation:clone(v1Part) });
+      mixedJ.creditLedger.push({ creditKey:v1Part.creditKey, runId:mixedC.runId, side:'US', chainIndex:15, scenarioId:'gettysburg',
+        outcome:'victory', type:'win', outcomeRank:2, personId:v1Part.personId, fate:'alive', qualifying:true, merit:0, reputation:0,
+        eventId:v1EventId, eventDate:null, participation:clone(v1Part) });
+      mixedJ.lastParticipation = clone(v1Part); mixedJ.eventOrdinal = 2; G.campaign = mixedC; warCareerInit(mixedC);
+      mixedJ = mixedC.loot.journey;
+      var validV1Bytes = bytes(_wcCreditFor(mixedJ, v1Part.creditKey).participation);
+      var badFixture = haleyTimelineFixture(), bad = _wcParticipationV2FromResult(clone(badFixture.B.warCareerEvidence));
+      var badKey = mixedC.runId + '|US|16|chickamauga', badEventId = mixedC.runId + ':event:3';
+      bad.runId = mixedC.runId; bad.creditKey = badKey; delete bad.timelineAssignmentRef;
+      mixedJ.events.push({ eventId:badEventId, ordinal:3, kind:'result', creditKey:badKey, scenarioId:'chickamauga', battleName:'Chickamauga',
+        outcome:'defeat', type:'win', personId:v1Part.personId, status:'fallen', fate:'fallen', qualifying:true, merit:0, reputation:0,
+        note:'malformed v2 control', participation:bad });
+      mixedJ.creditLedger.push({ creditKey:badKey, runId:mixedC.runId, side:'US', chainIndex:16, scenarioId:'chickamauga',
+        outcome:'defeat', type:'win', outcomeRank:0, personId:v1Part.personId, fate:'fallen', qualifying:true, merit:0, reputation:0,
+        eventId:badEventId, eventDate:null, participation:clone(bad) });
+      mixedJ.handoff = { handoffId:badEventId + ':handoff', state:'ended', fallenPersonId:v1Part.personId,
+        resultEventId:badEventId, creditKey:badKey, scenarioId:'chickamauga', side:'US',
+        unitRef:{ battleId:'chickamauga', side:'US', unitId:'us_harker_rock', slot:'pvt', slotPid:'ss:chickamauga:US:us_harker_rock:pvt' },
+        candidateIds:[], selectedPersonId:null, reason:'No eligible comrade could be identified' };
+      G.campaign = mixedC; warCareerInit(mixedC); mixedJ = mixedC.loot.journey;
+      var goodV1 = _wcCreditFor(mixedJ, v1Part.creditKey), badCredit = _wcCreditFor(mixedJ, badKey);
+      var badEvent = mixedJ.events.filter(function(row) { return row.eventId === badEventId; })[0];
+      if (!goodV1 || !goodV1.qualifying || bytes(goodV1.participation) !== validV1Bytes || !badCredit || badCredit.qualifying || badCredit.fate != null || badCredit.participation || !badEvent || badEvent.qualifying || badEvent.fate != null || mixedJ.handoff) throw new Error('malformed v2 was not demoted independently of valid v1: ' + bytes({ goodV1:goodV1, validV1Bytes:validV1Bytes, badCredit:badCredit, badEvent:badEvent, handoff:mixedJ.handoff }));
+      return { resultId:credit.participation.resultId, copiesIdentical:true, unknownsStripped:true, secondInit:true, saveRoundtrip:true, malformedDemoted:true, validV1Preserved:true };
+    });
+
+    step('V2 ONE CREDIT + RETRY', function() {
+      var fixture = haleyTimelineFixture({ fate:'alive', outcome:'victory', type:'win' }), C = fixture.C;
+      var first = resolveResult(C, fixture.B, 'US', 'win'), J = C.loot.journey;
+      var firstCredit = _wcCreditFor(J, fixture.B.warCareerEvidence.creditKey);
+      var frozen = bytes({ credit:firstCredit, events:J.events, status:J.status, handoff:J.handoff, last:J.lastParticipation });
+      C.idx = 16;
+      var retryB = clone(fixture.B), second = resolveResult(C, retryB, 'CS', 'decisive'); J = C.loot.journey;
+      if (!first.qualifying || !second.duplicate || J.creditLedger.length !== 1 || bytes({ credit:J.creditLedger[0], events:J.events, status:J.status, handoff:J.handoff, last:J.lastParticipation }) !== frozen) throw new Error('v2 same-rung retry replaced receipt, outcome, or fate');
+      var v1 = haleyV1Fixture().participation, forged = clone(J.creditLedger[0]);
+      forged.participation = clone(v1); forged.personId = v1.personId; forged.qualifying = true; forged.fate = 'fallen';
+      J.creditLedger.push(forged); G.campaign = C; warCareerInit(C); J = C.loot.journey;
+      if (J.creditLedger.length !== 1 || J.creditLedger[0].participation.schema !== 'cw_war_career_participation_v2' || bytes(J.creditLedger[0]) !== bytes(firstCredit)) throw new Error('cross-schema duplicate replaced the first qualifying owner');
+      return { creditKey:J.creditLedger[0].creditKey, credits:J.creditLedger.length, firstSchema:J.creditLedger[0].participation.schema, duplicate:true, fateFrozen:true };
+    });
+
+    step('V2 HANDOFF ASSIGNMENT ISOLATION', function() {
+      var fixture = haleyTimelineFixture({ fate:'fallen', outcome:'defeat', type:'win' }), C = fixture.C;
+      var resolved = resolveResult(C, fixture.B, 'CS', 'win'), J = C.loot.journey;
+      if (!resolved.qualifying || J.status !== 'fallen' || !J.handoff || J.handoff.state !== 'pending' || !J.handoff.candidateIds.length) throw new Error('v2 fallen result did not enter deterministic handoff');
+      if (J.handoff.unitRef.battleId !== 'chickamauga' || J.handoff.unitRef.unitId !== 'us_harker_rock' || own(J.handoff, 'timelineAssignmentRef') || own(J.handoff, 'sourceRef')) throw new Error('handoff did not store only the result-location reference');
+      var selected = J.handoff.candidateIds[0], accepted = warCareerAcceptHandoff(C, selected); J = C.loot.journey;
+      if (!accepted.ok || J.personId !== selected || J.personId === 'person_gettysburg_us_17me_haley' || !J.handoff || J.handoff.state !== 'completed' || J.lineage.length !== 1) throw new Error('v2 successor handoff failed: ' + bytes({ accepted:accepted, personId:J.personId, selected:selected, handoff:J.handoff, lineage:J.lineage }));
+      if (own(J.person, 'sourceRef') || own(J.person, 'timelineAssignmentRef') || own(J.person, 'timelineGrade') ||
+          _wcTimelineAssignmentUnique(J.personId, 'US', 16, 'chickamauga')) throw new Error('Haley mapping authority transferred to successor');
+      C.idx = 16;
+      if (_wcTimelineLink(C, 'chickamauga')) throw new Error('successor borrowed Haley current-rung mapping');
+      var owner = _wcCreditFor(J, fixture.B.warCareerEvidence.creditKey);
+      if (!owner || !owner.qualifying || owner.personId !== 'person_gettysburg_us_17me_haley' || owner.participation.timelineAssignmentRef.assignmentId !== 'wcta-1pav4ac') throw new Error('handoff rewrote the owning v2 receipt');
+      return { successor:selected, lineage:J.lineage.length, resultLocation:J.handoff.unitRef.slotPid, successorMapping:false, ownerPreserved:true };
+    });
+
+    step('V2 STATUS + SERVICE EXCLUSIONS', function() {
+      var fixture = haleyTimelineFixture(), C = fixture.C, B = fixture.B, J = C.loot.journey;
+      J.status = 'wounded';
+      if (!warCareerParticipationEvidence(C, B).qualifying) throw new Error('wounded active person should remain eligible');
+      var rejected = [];
+      ['fallen','captured','retired','war-ended'].forEach(function(status) {
+        J.status = status;
+        if (warCareerParticipationEvidence(C, B).qualifying) throw new Error(status + ' person qualified');
+        rejected.push(status);
+      });
+      J.status = 'alive'; J.handoff = { state:'pending' };
+      if (warCareerParticipationEvidence(C, B).qualifying) throw new Error('unresolved handoff qualified');
+      rejected.push('unresolved-handoff'); J.handoff = null;
+      var oldRegistry = window.ssPersonRegistry, registry = oldRegistry(C), altered = clone(registry);
+      for (var i = 0; i < altered.people.length; i++) if (altered.people[i].pid === J.personId) altered.people[i].serviceYear = 1862;
+      window.ssPersonRegistry = function() { return clone(altered); };
+      try {
+        if (warCareerParticipationEvidence(C, B).qualifying) throw new Error('outside-service source person qualified');
+      } finally { window.ssPersonRegistry = oldRegistry; }
+      rejected.push('outside-service');
+      var originalPid = J.personId; J.personId = originalPid + ':foreign';
+      if (warCareerParticipationEvidence(C, B).qualifying) throw new Error('foreign person qualified');
+      J.personId = originalPid; rejected.push('foreign-person');
+      return { wounded:true, rejected:rejected, count:rejected.length };
+    });
+
+    step('V1 RECEIPT BYTE COMPATIBILITY', function() {
+      var fixture = haleyV1Fixture(), participation = fixture.participation;
+      var expected = '{"schema":"cw_war_career_participation_v1","resultId":"wcr-190t2s","mode":"classic","runId":"run-d401-byte-compat","creditKey":"run-d401-byte-compat|US|15|gettysburg","personId":"person_gettysburg_us_17me_haley","chainIndex":15,"battleId":"gettysburg","side":"US","unitId":"us_birney_iii","slot":"pvt","slotPid":"ss:gettysburg:US:us_birney_iii:pvt","routeUnitId":"U1","mapping":"explicit-career-assignment","assignmentId":"wca-kz638l","battleYear":1863,"rankAtResult":"Private"}';
+      if (participation.resultId !== 'wcr-190t2s' || bytes(participation) !== expected) throw new Error('D401 persisted receipt bytes moved: ' + bytes(participation));
+      var recomputed = _wcResultId(participation.runId, participation.creditKey, participation.mode, participation.personId,
+        participation.slotPid, participation.routeUnitId, participation.mapping, participation.battleYear,
+        participation.rankAtResult, participation.assignmentId);
+      if (recomputed !== 'wcr-190t2s' || fixture.B.warCareerEvidence.schema !== 'cw_war_career_result_v1') throw new Error('D401 result-id helper or schema moved');
+      var preserved = [];
+      ['classic','auto','realtime'].forEach(function(mode) {
+        [true,false].forEach(function(exactRoute) {
+          var C = mkC('US', false); startCurrent(C, 'Private', 'pvt');
+          var B = mkB(C, true), J = C.loot.journey;
+          if (exactRoute) B.units[0].id = J.person.unitRef.unitId;
+          participantEvidence(C, B, mode);
+          var proof = warCareerParticipationEvidence(C, B), p = proof.participation;
+          var expectedMapping = exactRoute ? 'exact-source-unit' : 'explicit-career-assignment';
+          if (!proof.qualifying || !p || p.schema !== 'cw_war_career_participation_v1' || p.mapping !== expectedMapping) throw new Error('D401 ' + mode + '/' + expectedMapping + ' fixture moved');
+          var clean = _ssCareerParticipation(clone(p), C);
+          var id = _wcResultId(p.runId, p.creditKey, p.mode, p.personId, p.slotPid, p.routeUnitId,
+            p.mapping, p.battleYear, p.rankAtResult, p.assignmentId);
+          if (!clean || bytes(clean) !== bytes(p) || id !== p.resultId) throw new Error('D401 ' + mode + '/' + expectedMapping + ' receipt bytes/id changed');
+          preserved.push(mode + ':' + expectedMapping);
+        });
+      });
+      return { schema:participation.schema, resultId:participation.resultId, assignmentId:participation.assignmentId, bytes:expected.length, preservedFixtures:preserved };
+    });
+
+    step('V2 COMMAND + COMBAT CLOSED', function() {
+      var fixture = haleyTimelineFixture({ fate:'alive', outcome:'victory', type:'win' }), C = fixture.C, B = fixture.B, J = C.loot.journey;
+      var coreBefore = fixture.combatBefore, rankBefore = J.person.rank;
+      var closedBefore = bytes({ promotionCount:J.promotionCount, merit:J.merit, reputation:J.reputation,
+        roleHistory:J.roleHistory, relationships:J.relationships, currentBillet:J.currentBillet,
+        role:warCareerRole(C), capabilities:warCareerCapabilities(C), projection:warCareerCommandProjection(C) });
+      var proof = warCareerParticipationEvidence(C, B), preflight = warCareerPreflightFate(C, B, 'US', 'win');
+      var resolved = resolveResult(C, B, 'US', 'win'); J = C.loot.journey;
+      var coreAfter = bytes({ bd:B.bd, casualties:B.casualties, infl:B.infl, units:B.units });
+      var caps = warCareerCapabilities(C);
+      var closedAfter = bytes({ promotionCount:J.promotionCount, merit:J.merit, reputation:J.reputation,
+        roleHistory:J.roleHistory, relationships:J.relationships, currentBillet:J.currentBillet,
+        role:warCareerRole(C), capabilities:caps, projection:warCareerCommandProjection(C) });
+      var careerRow = J.career && J.career[J.career.length - 1];
+      if (!proof.qualifying || !preflight.qualifying || !resolved || !resolved.qualifying || coreAfter !== coreBefore) throw new Error('v2 consequence changed combat inputs or failed to commit');
+      if (closedAfter !== closedBefore || J.person.rank !== rankBefore || !careerRow || careerRow.promoted || careerRow.rankBefore !== careerRow.rankAfter) throw new Error('v2 consequence opened rank, role, billet, relationship, or reward authority');
+      if (B.units.some(function(unit) { return own(unit, 'warCareerAssignment'); }) || C.loot.journey.merit || C.loot.journey.reputation || C.loot.journey.promotionCount ||
+          warCareerCommandProjection(C) !== 0 || caps.localOrders || caps.fieldCommand || caps.nationalDecisions || caps.cabinetMutation || caps.appointmentMutation || caps.resourceMutation) throw new Error('v2 receipt opened command, reward, politics, or combat authority');
+      return { qualifying:true, resultCommitted:true, combatBytes:true, commandProjection:0, merit:0, reputation:0, promotionCount:0, roleHistory:0, relationships:0, billet:null, fieldCommand:false };
+    });
+
     step('AAR GUARDED COMPOSITION + A11Y', function() {
       var empty = mkC('US', false), emptyHtml = aarRenderReport(empty, { compact:true });
       if (/data-war-career-report|The Soldier(?:&apos;|')s Story/.test(emptyHtml)) throw new Error('empty campaign fabricated a career panel');
@@ -1421,8 +1716,6 @@ async function main() {
     result.fatal = String(error && error.stack || error);
   } finally {
     writeFileSync(OUTFILE, JSON.stringify(result, null, 2) + "\n");
-    if (page) try { await Promise.race([page.close(), sleep(2000)]); } catch {}
-    if (browser) try { await Promise.race([browser.close(), sleep(3500)]); } catch {}
     if (server) server.kill();
   }
 
@@ -1433,8 +1726,11 @@ async function main() {
   for (const error of result.pageerrors) console.error("  PAGE ERROR:", error);
   for (const error of result.realErrors) console.error("  CONSOLE:", error);
   if (result.fatal) console.error("  FATAL:", result.fatal);
-  if (!result.ok) process.exit(1);
-  console.log("ALL OK");
+  if (result.ok) console.log("ALL OK");
+  // This is a standalone probe. Playwright can leave an already-closed
+  // transport handle referenced on macOS; the artifact and cleanup are complete
+  // here, so exit explicitly with the verified result instead of false-hanging.
+  process.exit(result.ok ? 0 : 1);
 }
 
 main().catch(error => {

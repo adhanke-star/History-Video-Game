@@ -749,43 +749,51 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
-### LANE-005 · war-career-loop — **DRIVE (ChatGPT/Codex 5.6 Sol Ultra; D404 receipt-continuity runtime prerequisite only)**
+### LANE-005 · war-career-loop — **CONTRACT (unowned; D405 receipt prerequisite shipped; Slice C next separate take)**
 
-- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra. No simultaneous edits by any provider.
-- **Task:** D404 receipt-continuity runtime prerequisite only. Slice C and every later slice remain closed.
-- **State:** DRIVE — D404 was a planning contract only; it selected named/coexisting
+- **Owning tool:** none. No simultaneous edits by any provider.
+- **Task:** Slice C field/general-command advancement and projection only; not started. Slice D-F remain closed.
+- **State:** CONTRACT — D405 dual-reference receipt prerequisite shipped. D404 was a planning contract only;
+  D405 implements its named/coexisting
   `cw_war_career_participation_v2`, independently bound immutable canonical `sourceRef` and exact
-  Inferred “Your Timeline” `timelineAssignmentRef`, and preserved D401 v1 byte semantics. Aaron
+  Inferred “Your Timeline” `timelineAssignmentRef`, and preserves D401 v1 byte/id semantics. Aaron
   permits alternate-timeline gameplay, not rewriting the immutable Army Register source record or
   presenting alternate service as historical fact. The exact proof is
   `person_gettysburg_us_17me_haley`, source `ss:gettysburg:US:us_birney_iii:pvt` at US rung 15,
   mapped only under “Your Timeline” to `ss:chickamauga:US:us_harker_rock:pvt` at rung 16, both 1863,
-  deterministic assignment `wcta-1pav4ac`. The plan probe now has 19/19 runtime-mode rows; its unique
-  NEVER→MAY bind exited 1 with only `SOURCE VS YOUR TIMELINE` red and restored both files
-  byte-identically. No runtime, data, generated game, base, tactical, command, manifest, suite, or
-  save-version byte moved. Final serialized coordination-sensitive planning evidence is 155/155 with
-  every JSON artifact read green; build remains `GATE OK`; D398 remains the latest full release
-  battery; all 192 artifact step rows were green and every present error array was empty. The exact
-  next bounded item is the receipt-continuity prerequisite, not Slice C. It needs
-  a fresh committed DRIVE take and may edit only the three declared runtime/proof files plus the
-  narrow 19-step plan-guard completion transition. Slice C and Slice D-F, T2/T3/Auto, data, combat,
-  command projection, politics, relationships, franchise/archive, and save-version movement remain
-  locked.
+  deterministic assignment `wcta-1pav4ac`. Explicit schema dispatch rejects malformed v2 without v1
+  fallback; sanitation is eager/idempotent; one-credit and hand-off isolation hold. The focused guard
+  is 34/34 browser rows plus 29/29 static walls with zero pageerrors/realErrors; loot 12/12, save
+  16/16, command 90/90, full campaign 4/4, and plan 19/19 are green. Its unique NEVER→MAY bind exited
+  1 with only `SOURCE VS YOUR TIMELINE` red and restored both files byte-identically. Final serialized
+  coordination-sensitive planning evidence is 155/155 named rows across thirteen artifacts; 192 is
+  only D398's 24×8 scenario sweep. Build remains `GATE OK`; every present error array is empty;
+  D398 remains the latest full release battery. The implementation stayed inside the declared
+  runtime/proof files plus the narrow 19-step plan transition and generated output. `T2/T3/AUTO
+  CLOSED` and `SLICE C RUNTIME STILL LOCKED` remain named D405 release invariants. Slice C has not
+  started and requires a fresh ledger-only DRIVE take; Slice D-F, T2/T3/Auto edits, data, combat,
+  politics, relationships, franchise/archive, and save-version movement remain locked.
   The committed D399-D404 planning record remains the law:
-  `docs/design/war-career-loop-design.md` (current md5 `c81d5e1641a4d20282a965c8344bb5d3`;
+  `docs/design/war-career-loop-design.md` (current md5 `e451043b73ad2624d5d4f9cc2131eaa0`;
   D399 contract baseline `8fdd062c084d8953ff042c3cf904af1c`) +
-  `tools/probe-war-career-loop-plan.mjs` (md5 `485760cdffe8a7beaff229b08514d099`;
+  `tools/probe-war-career-loop-plan.mjs` (md5 `036a1e53cbd6a6dcfbf80cef0b60b1d7`;
   19/19, runtime mode, filesystem-first, fail-closed, original ten names plus nine D404 names,
   full-source-tree and changed-file-allowlist guarded). The D399 one-token canonical-owner bind
   changed only `journey`→`career`, made exactly
   `STATE OWNERSHIP` fail with exit 1, and restored the spec byte-for-byte. Build remains GATE OK
-  with generated HTML `4560dfc4f22b5907429e6a5c7d303e4f` and frozen base
+  with generated HTML `74d5abd5196f7bdd7998e4d84573a925` and frozen base
   `c9db83fa99230ffb95bdfdfe059f3fb9`; 24 scenarios / schema 54 / Army Register 1512 / suite 130
-  and `_SAVE_VER = 1` remain exact. D400 ships the ordinary post-105 runtime, narrow 37/82/91
+  and `_SAVE_VER = 1` remain exact. Current guarded hashes are `src/` tree
+  `2fa3cec836ab89026a416bd71bb6ddd4`, `src/106-war-career.js`
+  `9eba476afa0b46e04c7060d7c7dbde64`, `src/37-loot-survival.js`
+  `cd41b69d7e08486fac15e0d68a5d9597`, focused probe
+  `bfb97971b867ff7e93758b84b5cb3c0e`, command `55bd7b5a30f22470e1abd7a993b3cbb4`,
+  and command probe `bbfeaa69db333fddee2741882abff245`. D400 ships the ordinary post-105 runtime, narrow 37/82/91
   adapters, canonical spine, and E71's one pure-first terminal path. D401 adds result-owned Auto/
   Classic/realtime participation receipts, predelegate fate with post-undo commit, one-rung capture
   recovery, and an anti-reroll comrade lineage while preserving zero merit/reputation/promotion/
-  command authority. Billet history, command projection, relationships, political gates, franchise
+  command authority. D405 adds only source-honest receipt continuity; billet history, command
+  projection, relationships, political gates, franchise
   storage, and save-schema migration remain excluded until their declared slices receive fresh DRIVE
   takes. This lane remains separate because LANE-002 owns citation-grade people records, LANE-003 owns
   the battle ladder, and LANE-004 is a closed audit charter.
@@ -931,10 +939,13 @@ next green commit and confer through this ledger instead of permitting simultane
   generated edits by allowlist plus exact hashes; and write `tools/shots/probe-war-career-loop-plan.json`
   with `ok:true`, every named row green, and empty error arrays where present. After each lane rewrite,
   rerun and read all thirteen coordination-sensitive plan-probe artifacts serially.
-- **Source/runtime exclusions and safe-clone lock:** do not edit `src/106-war-career.js`,
-  `src/37-loot-survival.js`, `src/35-command.js`, `src/82-after-action.js`, `src/87-auto-resolve.js`,
-  `src/90-president-register.js`, `src/91-save-slots.js`, any tactical module, any data file,
-  `build/base.html`, or `civil_war_generals.html` by hand. Work only in
+- **Retained D404 planning-only source/runtime exclusions (historical; discharged by D405):** D404
+  forbade runtime edits. D405's separately taken prerequisite was restricted to
+  `src/106-war-career.js`, `src/37-loot-survival.js`, `tools/probe-war-career.mjs`, the narrow plan
+  transition, and generated output. It did not edit `src/35-command.js`, `src/82-after-action.js`,
+  `src/87-auto-resolve.js`, `src/90-president-register.js`, `src/91-save-slots.js`, any tactical
+  module, any data file, or `build/base.html`; `civil_war_generals.html` was rebuilt, never hand-edited.
+  Every new slice gets its own declared allowlist. Work only in
   `/private/tmp/codex-vg-recovery-019f62fe`; never edit, pull across, or overwrite the dataless Desktop
   checkout. No simultaneous edits by any provider.
 - **Design law:** DECISIONS D382 item 4 · D360 start-anywhere promotion lattice and trajectory read-out ·
@@ -998,18 +1009,25 @@ next green commit and confer through this ledger instead of permitting simultane
   stable candidate order/exclusions; save/load/anti-reroll handoff; one-credit qualification; lineage/
   sanitizer hardening; and aggregate-casualty fate rejection. It is release-suite row 38 in the
   130-command manifest and is green 25/25 with zero pageerrors/realErrors.
-- **Resume pointer:** from the clean pushed D404 boundary, take LANE-005 in a committed ledger-only
-  DRIVE edit, rerun and read all thirteen coordination-sensitive plan probes, then implement only the
-  §14 receipt-continuity prerequisite. Runtime/proof edits are restricted to
-  `src/106-war-career.js`, `src/37-loot-survival.js`, and `tools/probe-war-career.mjs`;
-  `tools/probe-war-career-loop-plan.mjs` may change only to replace D404 planning-lock teeth with exact
-  receipt-complete teeth while retaining all nineteen names, runtime mode, and suite exclusion. Prove
-  the `wcta-1pav4ac` Haley fixture, D401 v1 byte/id compatibility, independent validators, eager
-  idempotent sanitation, one-credit and hand-off isolation, and hash-identical command/combat walls.
-  Build from source, run/read the focused and adjacent gates, sync docs, commit/push, and release.
-  Stop before Slice C. Work only in `/private/tmp/codex-vg-recovery-019f62fe`; never pull across or
-  overwrite the dataless Desktop checkout.
-- **Last-touched commit:** D404 coexisting-v2 receipt contract and lane release (this commit); the D404
+- **Resume pointer:** from the clean pushed D405 boundary, take LANE-005 in a committed ledger-only
+  DRIVE edit for Slice C only and rerun/read all thirteen coordination-sensitive plan probes. Before
+  runtime edits, inventory the live advancement/command seams and record the smallest deterministic
+  candidate law in `DECISIONS.md`: merit/reputation values, promotion thresholds, billet schema and
+  sequence, projection formula/cap, and strategic-general identity; label balance thresholds
+  Inferred. Primary files are `src/106-war-career.js`, `src/37-loot-survival.js`,
+  `src/35-command.js`, `tools/probe-war-career.mjs`, and `tools/probe-command.mjs`; 82/90/91 are
+  conditional only if the declared law proves necessary. Add journey-owned billet history and one
+  narrow `warCareerCommandProjection` consumer inside `commandLeadership(C)`. Preserve
+  `C.loot.journey` as player owner and `P.command` as separate NPC owner; prove pure selectors,
+  zero-state exclusions, legal field/general cases, rank sequence, source honesty, sanitation,
+  one-credit behavior, exact capped delta, no stacking, and four declared bind classes (missing
+  consumer, doubled consumer, ledger alias, relaxed qualification/life/billet guard), each with
+  predeclared red scope and byte-identical restore. HALT before T2/T3/Auto, combat/data, politics,
+  relationships, franchise/archive, save-version, invented identity/service/billet history, or Slice D.
+  Work only in `/private/tmp/codex-vg-recovery-019f62fe`; never pull across or overwrite the dataless
+  Desktop checkout.
+- **Last-touched commit:** D405 dual-reference receipt prerequisite and lane release (this commit); the
+  D405 DRIVE take was `7ed5c52dac2d52b3d903e88378918132c3406181` from clean pushed D404. The D404
   planning take was `f82b38f` from clean pushed D403. The D403
   planning take was `9fa199c89ed11bd995fc988d00f4fed0076b5667` from clean pushed D402. The D402 DRIVE
   take was `f891f3862e14411133d90dc874a6eaa0fd29d0f9` from clean pushed D401. The Slice-B DRIVE take was
@@ -1038,8 +1056,11 @@ next green commit and confer through this ledger instead of permitting simultane
   canonical source honesty; ChatGPT/Codex took D404 in ledger-only commit `f82b38f`, compared additive
   v1 against named/coexisting v2, selected v2, pinned the exact Haley cross-rung fixture, extended the
   plan guard to 19 steps, proved the surgical source-vs-timeline bind, held every runtime/data/
-  generated/save baseline, and released without runtime. Slice C and every later declared exclusion
-  remain locked until the separate receipt-continuity prerequisite ships and releases.
+  generated/save baseline, and released without runtime. ChatGPT/Codex took D405 in ledger-only commit
+  `7ed5c52dac2d52b3d903e88378918132c3406181`; the separate prerequisite shipped coexisting v2 runtime,
+  preserved D401 v1 bytes/ids and every command/combat wall, extended the focused guard to 34 browser
+  rows plus 29 static walls, proved the source-vs-timeline bind again, and released the lane. Slice C
+  remains unstarted and requires its own DRIVE take; every later declared exclusion remains locked.
 
 ---
 

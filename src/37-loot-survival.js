@@ -165,7 +165,7 @@ function _ssCareerBattleYear(battleId) {
   }
   return isFinite(year) && year >= 1860 && year <= 1870 ? Math.round(year) : null;
 }
-function _ssCareerParticipation(src, C) {
+function _ssCareerParticipationV1(src, C) {
   if (!_lootPlain(src) || src.schema !== "cw_war_career_participation_v1" || !C) return null;
   var runId = _ssCareerSafeId(src.runId, 96), creditKey = _ssCareerSafeId(src.creditKey, 220);
   var personId = _ssCareerSafeId(src.personId, 180), ref = _ssCleanUnitRef(src);
@@ -205,12 +205,40 @@ function _ssCareerParticipation(src, C) {
     mapping:mapping, assignmentId:assignmentId, battleYear:canonicalYear, rankAtResult:rankAtResult
   };
 }
+function _ssCareerParticipation(src, C) {
+  if (!_lootPlain(src) || !C) return null;
+  if (src.schema === "cw_war_career_participation_v1") return _ssCareerParticipationV1(src, C);
+  if (src.schema === "cw_war_career_participation_v2" && typeof _wcSanitizeParticipationV2 === "function") {
+    return _wcSanitizeParticipationV2(src, C);
+  }
+  return null;
+}
 function _ssCareerParticipationSame(a, b) {
-  if (!a || !b) return false;
-  var keys = ["schema","resultId","mode","runId","creditKey","personId","chainIndex","battleId","side",
-    "unitId","slot","slotPid","routeUnitId","mapping","assignmentId","battleYear","rankAtResult"];
+  if (!a || !b || a.schema !== b.schema) return false;
+  var keys = a.schema === "cw_war_career_participation_v2"
+    ? ["schema","resultId","mode","runId","creditKey","personId","chainIndex","battleId","side",
+      "representedFieldUnitId","fieldMapping","battleYear","rankAtResult"]
+    : ["schema","resultId","mode","runId","creditKey","personId","chainIndex","battleId","side",
+      "unitId","slot","slotPid","routeUnitId","mapping","assignmentId","battleYear","rankAtResult"];
   for (var i = 0; i < keys.length; i++) if (a[keys[i]] !== b[keys[i]]) return false;
+  if (a.schema === "cw_war_career_participation_v2") {
+    var sourceKeys = ["battleId","side","unitId","slot","slotPid","sourceGrade","serviceStart","serviceEnd","serviceYear","provenance"];
+    var timelineKeys = ["assignmentId","scenarioId","side","unitId","slot","slotPid","chainIndex","serviceStart","serviceEnd","serviceYear","timelineGrade","provenance","label"];
+    if (!_lootPlain(a.sourceRef) || !_lootPlain(b.sourceRef) || !_lootPlain(a.timelineAssignmentRef) || !_lootPlain(b.timelineAssignmentRef)) return false;
+    for (var si = 0; si < sourceKeys.length; si++) if (a.sourceRef[sourceKeys[si]] !== b.sourceRef[sourceKeys[si]]) return false;
+    for (var ti = 0; ti < timelineKeys.length; ti++) if (a.timelineAssignmentRef[timelineKeys[ti]] !== b.timelineAssignmentRef[timelineKeys[ti]]) return false;
+  }
   return true;
+}
+function _ssCareerParticipationResultRef(participation) {
+  if (participation && participation.schema === "cw_war_career_participation_v2") {
+    var timeline = participation.timelineAssignmentRef;
+    return _ssCleanUnitRef(timeline && {
+      battleId:timeline.scenarioId, side:timeline.side, unitId:timeline.unitId,
+      slot:timeline.slot, slotPid:timeline.slotPid
+    });
+  }
+  return _ssCleanUnitRef(participation);
 }
 function _ssCareerLineageChainValid(rows, eventsById, creditsByKey, currentPersonId) {
   if (!Array.isArray(rows) || !rows.length) return true;
@@ -311,8 +339,7 @@ function _ssCareerLineage(row, C) {
   var people = reg && Array.isArray(reg.people) ? reg.people : [], personCount = 0, person = null;
   for (var pi = 0; pi < people.length; pi++) if (people[pi] && people[pi].pid === personId) { person = people[pi]; personCount++; }
   var canonical = person && _ssCleanUnitRef(person.unitRef);
-  if (personCount !== 1 || !canonical || canonical.battleId !== ref.battleId || canonical.side !== ref.side ||
-      canonical.unitId !== ref.unitId || canonical.slot !== ref.slot || canonical.slotPid !== ref.slotPid) return null;
+  if (personCount !== 1 || !canonical || person.side !== side || canonical.side !== side) return null;
   var successorId = _ssCareerSafeId(row.successorId, 180), successorCount = 0;
   for (var si = 0; si < people.length; si++) if (people[si] && people[si].pid === successorId) successorCount++;
   if (!successorId || successorId === personId || successorCount !== 1) return null;
@@ -406,7 +433,8 @@ function _ssCleanWarCareerV1(C, J, clean) {
         if (!ownerEvent || !ownerEvent.qualifying || ownerEvent.creditKey !== credit.creditKey ||
             ownerEvent.personId !== credit.personId || ownerEvent.outcome !== credit.outcome || ownerEvent.type !== credit.type ||
             ownerEvent.fate !== credit.fate || !ownerEvent.participation || !credit.participation ||
-            ownerEvent.participation.resultId !== credit.participation.resultId) {
+            ownerEvent.participation.resultId !== credit.participation.resultId ||
+            !_ssCareerParticipationSame(ownerEvent.participation, credit.participation)) {
           credit.qualifying = false; credit.fate = null; delete credit.participation;
         }
       }
@@ -468,19 +496,22 @@ function _ssCleanWarCareerV1(C, J, clean) {
   var lineagePeopleRows = lineageRegistry && Array.isArray(lineageRegistry.people) ? lineageRegistry.people : [];
   for (var vli = 0; vli < lineage.length; vli++) {
     var candidateLine = lineage[vli], lineEvent = eventsById[candidateLine.resultEventId], lineCredit = creditsByKey[candidateLine.creditKey];
+    var lineResultRef = lineCredit && _ssCareerParticipationResultRef(lineCredit.participation);
     if (!lineEvent || !lineCredit || !lineEvent.qualifying || !lineCredit.qualifying || lineEvent.fate !== "fallen" || lineCredit.fate !== "fallen" ||
         lineEvent.personId !== candidateLine.personId || lineCredit.personId !== candidateLine.personId ||
-        lineCredit.eventId !== candidateLine.resultEventId || !lineCredit.participation ||
-        lineCredit.participation.battleId !== candidateLine.unitRef.battleId || lineCredit.participation.side !== candidateLine.unitRef.side ||
-        lineCredit.participation.unitId !== candidateLine.unitRef.unitId || lineCredit.participation.slot !== candidateLine.unitRef.slot ||
-        lineCredit.participation.slotPid !== candidateLine.unitRef.slotPid ||
+        lineCredit.eventId !== candidateLine.resultEventId || !lineCredit.participation || !lineResultRef ||
+        lineResultRef.battleId !== candidateLine.unitRef.battleId || lineResultRef.side !== candidateLine.unitRef.side ||
+        lineResultRef.unitId !== candidateLine.unitRef.unitId || lineResultRef.slot !== candidateLine.unitRef.slot ||
+        lineResultRef.slotPid !== candidateLine.unitRef.slotPid ||
         candidateLine.rank !== lineCredit.participation.rankAtResult || typeof warCareerComradeCandidates !== "function") continue;
     var baseRow = null, baseCount = 0;
     for (var bl = 0; bl < lineagePeopleRows.length; bl++) if (lineagePeopleRows[bl] && lineagePeopleRows[bl].pid === candidateLine.personId) { baseRow = lineagePeopleRows[bl]; baseCount++; }
     if (baseCount !== 1 || !baseRow) continue;
+    var linePersonRef = lineCredit.participation.schema === "cw_war_career_participation_v2"
+      ? _ssCleanUnitRef(lineCredit.participation.sourceRef) : candidateLine.unitRef;
     var lineJourney = {
       personId:candidateLine.personId,
-      person:{ pid:candidateLine.personId, rank:candidateLine.rank, side:candidateLine.side, unitRef:candidateLine.unitRef },
+      person:{ pid:candidateLine.personId, rank:candidateLine.rank, side:candidateLine.side, unitRef:linePersonRef },
       lineage:validatedLineage.slice(), lastParticipation:lineCredit.participation
     };
     var eligibleAtHandoff = warCareerComradeCandidates(C, lineJourney, lineagePeopleRows, lineCredit.participation, candidateLine.personId);
@@ -522,11 +553,12 @@ function _ssCleanWarCareerV1(C, J, clean) {
       !handoffCredit || !handoffCredit.qualifying || handoffCredit.fate !== "fallen" ||
       handoffCredit.personId !== clean.handoff.fallenPersonId || handoffCredit.eventId !== clean.handoff.resultEventId)) clean.handoff = null;
   if (clean.handoff && (clean.handoff.state === "pending" || clean.handoff.state === "ended")) {
+    var lastResultRef = _ssCareerParticipationResultRef(clean.lastParticipation);
     if (!clean.lastParticipation || clean.lastParticipation.creditKey !== clean.handoff.creditKey ||
         clean.lastParticipation.personId !== clean.handoff.fallenPersonId ||
-        !_ssCleanUnitRef(clean.handoff.unitRef) || clean.lastParticipation.battleId !== clean.handoff.unitRef.battleId ||
-        clean.lastParticipation.side !== clean.handoff.unitRef.side || clean.lastParticipation.unitId !== clean.handoff.unitRef.unitId ||
-        clean.lastParticipation.slot !== clean.handoff.unitRef.slot || clean.lastParticipation.slotPid !== clean.handoff.unitRef.slotPid) clean.handoff = null;
+        !_ssCleanUnitRef(clean.handoff.unitRef) || !lastResultRef || lastResultRef.battleId !== clean.handoff.unitRef.battleId ||
+        lastResultRef.side !== clean.handoff.unitRef.side || lastResultRef.unitId !== clean.handoff.unitRef.unitId ||
+        lastResultRef.slot !== clean.handoff.unitRef.slot || lastResultRef.slotPid !== clean.handoff.unitRef.slotPid) clean.handoff = null;
     if (clean.handoff && typeof warCareerComradeCandidates === "function") {
       var expectedCandidates = warCareerComradeCandidates(C, clean, null, handoffCredit.participation), expectedIds = [];
       for (var eci = 0; eci < expectedCandidates.length; eci++) expectedIds.push(expectedCandidates[eci].pid);
@@ -1241,7 +1273,10 @@ function _ssApplySoldierReplacements(C, reg, year) {
     if (replacedRef) p.unitRef = replacedRef;
     if (replaced.serviceStart != null) p.serviceStart = replaced.serviceStart;
     if (replaced.serviceEnd != null) p.serviceEnd = replaced.serviceEnd;
-    if (replaced.serviceYear != null) p.serviceYear = replaced.serviceYear;
+    // A sourced replacement owns its validated historical year. The generated
+    // slot's campaign-clock fallback must not rewrite canonical source service.
+    if (r.year != null) p.serviceYear = r.year;
+    else if (replaced.serviceYear != null) p.serviceYear = replaced.serviceYear;
     p.source = "soldier-replacements";
     p.sourceNote = r.sourceNote;
     p.disputeNote = r.disputeNote;

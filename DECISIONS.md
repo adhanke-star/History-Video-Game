@@ -6,6 +6,47 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D405 — DUAL-REFERENCE WAR-CAREER RECEIPTS SHIPPED WITHOUT TURNING ALTERNATE SERVICE INTO SOURCE HISTORY — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-005 DRIVE→CONTRACT] (2026-07-15)
+
+**D404's receipt prerequisite is now runtime law, not Slice-C authority.** Classic results use
+`cw_war_career_result_v2` / `cw_war_career_participation_v2` only when the D401 same-source v1 link
+cannot represent an exact later-rung assignment. Every v1 field, id algorithm, validator, sanitation
+shape, and byte stays on the original v1 path. T2, T3, and Auto remain byte-locked. Explicit schema
+dispatch rejects malformed or hybrid v2 evidence without a v1 fallback.
+
+The v2 result binds one immutable canonical `sourceRef` and one separately validated Inferred “Your
+Timeline” `timelineAssignmentRef`. The frozen exact-id mapping keeps John W. Haley's verified source
+record at `ss:gettysburg:US:us_birney_iii:pvt` / US rung 15 while allowing only the authored
+Chickamauga placement `ss:chickamauga:US:us_harker_rock:pvt` / rung 16, assignment
+`wcta-1pav4ac`. Result and participation ids bind both complete references. Missing, duplicated,
+wrong-person, wrong-side, wrong-rung, wrong-slot, wrong-grade, wrong-label, stale, outside-service, or
+forged-provenance evidence fails closed. Load sanitation is eager and byte-idempotent.
+
+**No command or combat authority moved.** V2 receipts feed the existing consequence-only fate,
+one-credit, recovery, and COMRADE HAND-OFF path. They grant no rank, role, billet, merit, reputation,
+promotion, command projection, combat modifier, political access, relationship state, or archive
+authority. Hand-off recomputes only the successor's own authored assignment. The canonical replacement
+service year now comes from the authored replacement row rather than the live campaign clock; all 39
+replacement rows still apply and the 1,512-person Army Register is unchanged.
+
+The focused guard is **34/34 browser rows plus 29/29 static walls**, with the original 24 runtime rows
+and 21 static walls retained. It proves source immutability, exact later-rung participation, an explicit
+malformed matrix, sanitation idempotence, one-credit retry resistance, hand-off isolation, status and
+service exclusions, all three D401 modes under both mapping states, and command/combat closure. Its
+artifact has zero pageerrors/realErrors. Adjacent loot 12/12, save slots 16/16, command 90/90, and full
+campaign 4/4 are green with every error array empty. The 19-step plan guard remains runtime-mode,
+suite-excluded, and fail closed. The final NEVER→MAY mutation exited 1 at 18/19 with only `SOURCE VS
+YOUR TIMELINE` red; inverse restoration returned exact design/probe md5s
+`e451043b73ad2624d5d4f9cc2131eaa0` / `036a1e53cbd6a6dcfbf80cef0b60b1d7`, then 19/19 green.
+
+Final serialized coordination evidence is **155/155 named plan rows** across thirteen artifacts; 192
+belongs only to D398's 24×8 scenario sweep. Build prints `GATE OK`; generated HTML is
+`74d5abd5196f7bdd7998e4d84573a925`; frozen base remains
+`c9db83fa99230ffb95bdfdfe059f3fb9`; baselines remain 24/54/1512/24/130, sweep 24, suite row 38, and
+`_SAVE_VER=1`. D398 remains the latest full 129-command release checkpoint. LANE-005 returns to
+CONTRACT/unowned. **Exact next is a fresh, separate Slice-C take for deterministic merit/reputation,
+billet history, and the narrow command projection adapter; Slice D-F remain locked.**
+
 ## D404 — COEXISTING V2 RECEIPTS SEPARATE CANONICAL SOURCE HISTORY FROM “YOUR TIMELINE” AUTHORITY — [AARON + CHATGPT/CODEX 5.6 SOL ULTRA, LANE-005 DRIVE→CONTRACT] (2026-07-15)
 
 **[AARON] Alternate history is permitted when gameplay needs it, but the game must label the

@@ -1,8 +1,7 @@
 #!/usr/bin/env node
-// D399 planning gate for the D382 war-career loop.
-// Filesystem-first, dual-mode, fail-closed. This plan probe never enters the
-// release suite. Planning mode forbids early runtime/save movement; runtime
-// mode begins only when the exact Slice-A marker appears.
+// D405 receipt-complete gate for the D382 war-career loop.
+// Filesystem-first, runtime-only, fail-closed. This plan probe never enters the
+// release suite and keeps Slice C locked after the dual-reference prerequisite.
 
 import {
   existsSync,
@@ -53,7 +52,7 @@ const MARKER = "WAR_CAREER_RUNTIME_V1";
 const JOURNEY_MARKER = "WAR_CAREER_JOURNEY_ADAPTER_V1";
 const RUNTIME_NAME = "106-war-career.js";
 const RECEIPT_BIND = "WAR_CAREER_RECEIPT_BIND:SOURCE_REF_NEVER_EQUALS_TIMELINE_AUTHORITY";
-const D404_PLANNING_ALLOWED = new Set([
+const D405_RECEIPT_ALLOWED = new Set([
   "AUTONOMOUS-RUN.md",
   "COORDINATION.md",
   "DECISION-NEEDED-war-career-receipt-continuity.md",
@@ -64,7 +63,11 @@ const D404_PLANNING_ALLOWED = new Set([
   "V1-CHECKLIST.md",
   "WAKE-UP.md",
   "docs/design/war-career-loop-design.md",
-  "tools/probe-war-career-loop-plan.mjs"
+  "tools/probe-war-career-loop-plan.mjs",
+  "src/106-war-career.js",
+  "src/37-loot-survival.js",
+  "tools/probe-war-career.mjs",
+  "civil_war_generals.html"
 ]);
 
 function read(path) {
@@ -588,7 +591,22 @@ step("RECEIPT CONTINUITY LAW", () => {
     "do not change the old id functions",
     "receipt-continuity prerequisite"
   ], "receipt continuity law");
-  return { selected:"coexisting participation-v2", legacy:"D401 v1 unchanged" };
+  const runtime = read(RUNTIME), journey = read(JOURNEY);
+  mustInclude(runtime, [
+    "WAR_CAREER_RECEIPT_V2",
+    "cw_war_career_result_v2",
+    "cw_war_career_participation_v2",
+    "function _wcResultIdV2(",
+    "function _wcParticipationEvidenceV2(",
+    "function _wcResultId(",
+    "function _wcAssignmentId("
+  ], "receipt runtime");
+  if ((runtime.match(/function _wcResultId\(/g) || []).length !== 1 ||
+      (runtime.match(/function _wcAssignmentId\(/g) || []).length !== 1 ||
+      !journey.includes("function _ssCareerParticipationV1(src, C)")) {
+    throw new Error("D401 v1 helper boundary moved");
+  }
+  return { selected:"coexisting participation-v2", legacy:"D401 v1 unchanged", runtime:true };
 });
 
 step("EXACT ASSIGNMENT OWNER", () => {
@@ -653,6 +671,17 @@ step("EXACT ASSIGNMENT OWNER", () => {
   if (assignmentId !== "wcta-1pav4ac") {
     throw new Error("fixture assignment id drifted: " + assignmentId);
   }
+  const runtime = read(RUNTIME);
+  mustInclude(runtime, [
+    "var _WC_TIMELINE_ASSIGNMENTS_V1 = _wcDeepFreeze([{",
+    "person_gettysburg_us_17me_haley",
+    "ss:gettysburg:US:us_birney_iii:pvt",
+    "phaseId:\"snodgrass-horseshoe\"",
+    "ss:chickamauga:US:us_harker_rock:pvt",
+    "timelineGrade:\"Private\", provenance:\"Inferred\", label:\"Your Timeline\"",
+    "function _wcTimelineAssignmentId(row)",
+    "function _wcTimelineAssignmentUnique(personId, side, chainIndex, scenarioId)"
+  ], "exact assignment runtime");
   return {
     personId:personRows[0].pid,
     sourceSlot,
@@ -682,7 +711,16 @@ step("SOURCE VS YOUR TIMELINE", () => {
     "source grade, timeline grade, and assignment are six distinct concepts",
     "not a claim that John W. Haley served at Chickamauga"
   ], "source versus timeline law");
-  return { bindTokenCount:bindCount, source:"immutable canonical", timeline:"exact alternate assignment" };
+  const runtime = read(RUNTIME);
+  mustInclude(runtime, [
+    "function _wcValidateCanonicalSource(",
+    "function _wcValidateTimelineAssignment(",
+    "function _wcSourceRefFromPerson(",
+    "function _wcTimelineRefFromRow(",
+    "fieldMapping = \"exact-timeline-unit\""
+  ], "source versus timeline runtime");
+  if (/J\.person\.unitRef\s*=/.test(runtime)) throw new Error("runtime rewrites journey.person.unitRef");
+  return { bindTokenCount:bindCount, source:"immutable canonical", timeline:"exact alternate assignment", runtime:true };
 });
 
 step("SERVICE WINDOW + FAIL CLOSED", () => {
@@ -709,10 +747,14 @@ step("SERVICE WINDOW + FAIL CLOSED", () => {
   if (person.provenance !== "Verified" || !Array.isArray(person.sources) || person.sources.length !== 6) {
     throw new Error("fixture source provenance moved");
   }
-  if (!read(RUNTIME).includes("function _wcKnownPresent(p, year)")) {
+  const runtime = read(RUNTIME), journey = read(JOURNEY);
+  if (!runtime.includes("function _wcKnownPresent(p, year)") ||
+      !runtime.includes("function _wcServiceWindowValid(src, year)") ||
+      !runtime.includes("function _wcTimelineTarget(row)") ||
+      !journey.includes("if (r.year != null) p.serviceYear = r.year;")) {
     throw new Error("service-window validator seam missing");
   }
-  return { sourceYear, targetYear, sourceProvenance:person.provenance, sources:person.sources.length };
+  return { sourceYear, targetYear, sourceProvenance:person.provenance, sources:person.sources.length, runtime:true };
 });
 
 step("HANDOFF + ONE-CREDIT ISOLATION", () => {
@@ -728,7 +770,18 @@ step("HANDOFF + ONE-CREDIT ISOLATION", () => {
     "game does not borrow the prior identity's assignment",
     "A fallen-person hand-off gives the successor no Haley assignment"
   ], "handoff and one-credit law");
-  return { owner:"creditKey", transfer:"none" };
+  const runtime = read(RUNTIME), journey = read(JOURNEY);
+  mustInclude(runtime, [
+    "function _wcParticipationResultRef(participation)",
+    "_wcTimelineAssignmentUnique(J.personId, side, chainIndex, battleId)",
+    "unitRef:_wcParticipationResultRef(participation)"
+  ], "handoff isolation runtime");
+  mustInclude(journey, [
+    "function _ssCareerParticipationResultRef(participation)",
+    "lineCredit.participation.schema === \"cw_war_career_participation_v2\"",
+    "_ssCareerParticipationSame(ownerEvent.participation, credit.participation)"
+  ], "handoff isolation sanitizer");
+  return { owner:"creditKey", transfer:"none", resultLocation:true };
 });
 
 step("SAVE SANITATION + VERSION LOCK", () => {
@@ -748,7 +801,19 @@ step("SAVE SANITATION + VERSION LOCK", () => {
     "careerVersion:1"
   ], "save sanitation law");
   if (!/var\s+_SAVE_VER\s*=\s*1\s*;/.test(read(BASE))) throw new Error("_SAVE_VER moved from 1");
-  return { saveVersion:1, sanitation:"eager deterministic idempotent fail-closed" };
+  const journey = read(JOURNEY), runtime = read(RUNTIME);
+  mustInclude(journey, [
+    "function _ssCareerParticipation(src, C)",
+    "src.schema === \"cw_war_career_participation_v1\"",
+    "src.schema === \"cw_war_career_participation_v2\"",
+    "_wcSanitizeParticipationV2(src, C)"
+  ], "schema-dispatch sanitizer");
+  mustInclude(runtime, [
+    "function _wcSanitizeParticipationV2(src, C)",
+    "cw_war_career_participation_v2",
+    "_wcResultIdV2(runId, creditKey, mode, personId"
+  ], "v2 sanitation runtime");
+  return { saveVersion:1, sanitation:"eager deterministic idempotent fail-closed", dispatcher:true };
 });
 
 step("T2/T3/AUTO CLOSED", () => {
@@ -783,20 +848,20 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     commandProbe:md5(COMMAND_PROBE)
   };
   const expected = {
-    srcTree:"c0e7fbbd36d59f1fe53147f9561b9954",
-    runtime:"c69f405c0469abe7eca67fc0fff99575",
-    journey:"d526f33a7649d378d2062b931b933884",
+    srcTree:"2fa3cec836ab89026a416bd71bb6ddd4",
+    runtime:"9eba476afa0b46e04c7060d7c7dbde64",
+    journey:"cd41b69d7e08486fac15e0d68a5d9597",
     command:"55bd7b5a30f22470e1abd7a993b3cbb4",
-    focused:"54e6a095eb81095ede3d46e5bd523f62",
+    focused:"bfb97971b867ff7e93758b84b5cb3c0e",
     commandProbe:"bbfeaa69db333fddee2741882abff245"
   };
   for (const key of Object.keys(expected)) {
-    if (locks[key] !== expected[key]) throw new Error(key + " planning lock moved: " + locks[key]);
+    if (locks[key] !== expected[key]) throw new Error(key + " receipt-complete lock moved: " + locks[key]);
   }
   const changed = gitChangedPaths();
-  const forbidden = changed.filter(path => !D404_PLANNING_ALLOWED.has(path));
+  const forbidden = changed.filter(path => !D405_RECEIPT_ALLOWED.has(path));
   if (forbidden.length) {
-    throw new Error("D404 planning allowlist violation: " + forbidden.join(", "));
+    throw new Error("D405 receipt allowlist violation: " + forbidden.join(", "));
   }
   const runtimeText = read(RUNTIME);
   for (const token of [
@@ -805,13 +870,19 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     "_WC_TIMELINE_ASSIGNMENTS_V1",
     "_wcResultIdV2"
   ]) {
-    if (runtimeText.includes(token)) throw new Error("receipt runtime landed during planning: " + token);
+    if (!runtimeText.includes(token)) throw new Error("receipt-complete runtime missing: " + token);
+  }
+  if (!/function\s+warCareerCommandProjection\s*\([^)]*\)\s*\{[\s\S]*?return 0;[\s\S]*?\}/.test(runtimeText) ||
+      runtimeText.includes("roleHistory.push")) {
+    throw new Error("Slice C authority appeared in the receipt prerequisite");
   }
   const s10 = section(read(SPEC), "## 10 ", "## 11 ");
   mustInclude(s10, [
     "Receipt-continuity prerequisite",
     "exact next runtime",
     "Before Slice C",
+    "D405",
+    "SHIPPED",
     "src/106-war-career.js",
     "src/37-loot-survival.js",
     "tools/probe-war-career.mjs",
@@ -855,7 +926,7 @@ step("BASELINES + LANE", () => {
     throw new Error("24-scenario sweep registry seam moved");
   }
   const expectedHashes = {
-    game:"4560dfc4f22b5907429e6a5c7d303e4f",
+    game:"74d5abd5196f7bdd7998e4d84573a925",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     dataTree:"b0d7f440836b60a4f18401b2d7b03f48",
     manifest:"7924da858de403cac58caabf8c9fcce8",
@@ -865,7 +936,7 @@ step("BASELINES + LANE", () => {
     if (hashes[key] !== expectedHashes[key]) throw new Error(key + " baseline moved: " + hashes[key]);
   }
   mustInclude(lane, [
-    "D404 planning-only acceptance contract",
+    "D405 dual-reference receipt prerequisite shipped",
     "cw_war_career_participation_v2",
     "sourceRef",
     "timelineAssignmentRef",
@@ -874,12 +945,12 @@ step("BASELINES + LANE", () => {
     "SLICE C RUNTIME STILL LOCKED",
     "D398 remains the latest full release battery",
     "do not run `npm run vet:noreg`"
-  ], "D404 lane");
+  ], "D405 lane");
   mustInclude(decision, [
     "RESOLVED by the D404 planning contract",
     "coexisting `cw_war_career_participation_v2`",
     "wcta-1pav4ac",
-    "smallest next runtime prerequisite",
+    "SHIPPED by D405",
     "T2, T3, Auto, data, command projection, and later slices remain closed"
   ], "receipt decision resolution");
   return {

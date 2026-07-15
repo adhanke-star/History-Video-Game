@@ -8,6 +8,33 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D405 WAR-CAREER RECEIPT CONTINUITY — dual-reference v2 runtime shipped; Slice C still locked — 2026-07-15 (D405)
+- Took LANE-005 in ledger-only commit `7ed5c52dac2d52b3d903e88378918132c3406181`
+  from the clean pushed D404 boundary. The implementation stayed inside `src/106-war-career.js`,
+  `src/37-loot-survival.js`, `tools/probe-war-career.mjs`, and the narrow 19-step plan transition.
+- Added named/coexisting v2 result and participation receipts for Classic later-rung mappings.
+  D401 same-source v1 receipts retain their exact shape, ids, validation, and sanitized bytes;
+  malformed v2 cannot fall back to v1. T2, T3, and Auto remain unchanged.
+- The result binds independently reconstructed canonical `sourceRef` and Inferred “Your Timeline”
+  `timelineAssignmentRef`. The exact Haley Gettysburg→Chickamauga fixture qualifies once at rung 16;
+  canonical source identity remains Gettysburg, and every wrong/stale/foreign/service/grade/label/
+  provenance variant fails closed.
+- V2 reuses the existing consequence-only fate, one-credit, recovery, and hand-off path. It grants no
+  rank, role, billet, merit, reputation, promotion, command, combat, politics, relationship, or archive
+  authority. Hand-off can use only the successor's own exact assignment.
+- Corrected replacement service-year reconstruction to use each authored replacement row's year, not
+  the mutable campaign clock. Replacement application remains 39/39 and Army Register 1512.
+- Focused gate: War Career **34/34 browser + 29/29 static**, zero pageerrors/realErrors; loot 12/12;
+  save slots 16/16; command 90/90; full campaign 4/4; all artifacts read green with empty error arrays.
+  Build GATE OK; HTML `74d5abd5196f7bdd7998e4d84573a925`; base unchanged.
+- The final NEVER→MAY bind made only `SOURCE VS YOUR TIMELINE` red at 18/19 and exit 1. Restore
+  returned design/probe md5s `e451043b73ad2624d5d4f9cc2131eaa0` /
+  `036a1e53cbd6a6dcfbf80cef0b60b1d7`, then 19/19 green.
+- Final lane-release evidence: all thirteen coordination-sensitive plan probes passed **155/155 named
+  rows** serialized and every artifact was read green. The earlier 192 number belongs only to D398's
+  24×8 scenario sweep. Full `npm run vet:noreg` remains deferred under D160/D176; D398 is the latest
+  release checkpoint. LANE-005 returns to CONTRACT/unowned. Exact next is a separate Slice-C take.
+
 ## D404 WAR-CAREER RECEIPT CONTINUITY — coexisting v2 contracted, runtime still locked — 2026-07-15 (D404)
 - Aaron permits alternate history for gameplay, with a strict display/evidence split: canonical Army
   Register source history stays immutable; authored divergence is labeled “Your Timeline.”
@@ -33,8 +60,9 @@ Aaron clarified during the D175 same-chat queue loop that the long audit must no
   moved. Exact next is the receipt prerequisite in three runtime/proof files plus the narrow plan-
   guard completion transition. Slice C and every later seam remain closed. Full `npm run vet:noreg`
   remains deferred; D398 is still the latest full release checkpoint.
-- Final released-lane gate: all thirteen plan probes passed **155/155** serialized checks; all 192
-  artifact step rows were green, every JSON had `ok:true`, and every present error array was empty.
+- Final released-lane gate: all thirteen plan probes passed **155/155** serialized named rows; every
+  JSON had `ok:true`, and every present error array was empty. The D398 24×8 sweep is the separate
+  192-row artifact.
   Build printed `GATE OK`; `git diff --check` passed; the 11-file planning allowlist and every locked
   hash/baseline were exact.
 

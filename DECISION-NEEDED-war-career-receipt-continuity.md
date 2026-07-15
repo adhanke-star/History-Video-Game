@@ -1,10 +1,11 @@
 # DECISION NEEDED — War Career receipt continuity before Slice C
 
-**Status:** RESOLVED by the D404 planning contract, 2026-07-15. Aaron authorized alternate-timeline
-gameplay through an exact journey-owned “Your Timeline” assignment while canonical source history
-remains immutable. D404 selected a named, coexisting `cw_war_career_participation_v2` receipt over an
-extended v1 shape, pinned the exact Haley Gettysburg→Chickamauga proof, and left runtime closed. This
-file retains the D402-D403 contradiction and alternatives as decision provenance.
+**Status:** RESOLVED by the D404 planning contract, then SHIPPED by D405 on 2026-07-15. Aaron
+authorized alternate-timeline gameplay through an exact journey-owned “Your Timeline” assignment
+while canonical source history remains immutable. D404 selected a named, coexisting
+`cw_war_career_participation_v2` receipt over an extended v1 shape; D405 implemented and proved the
+exact Haley Gettysburg→Chickamauga prerequisite without entering Slice C. This file retains the
+D402-D403 contradiction and alternatives as decision provenance.
 
 ## Measured contradiction
 
@@ -100,17 +101,19 @@ The second decision selected option 1. The D404 contract is
 - `_SAVE_VER=1`, D401 compatibility, one credit per rung, eager idempotent sanitation, hand-off
   nontransfer, and the no-combat/no-command walls are mandatory.
 
-The smallest next runtime prerequisite is the three-runtime-file v2 receipt proof in
+The smallest runtime prerequisite was the three-runtime-file v2 receipt proof in
 `src/106-war-career.js`, `src/37-loot-survival.js`, and `tools/probe-war-career.mjs`, plus the narrow
 `tools/probe-war-career-loop-plan.mjs` transition from D404 planning-lock teeth to exact
-receipt-complete teeth. All nineteen plan-step names, runtime mode, and suite exclusion stay fixed.
-That prerequisite must finish green before a separate Slice C take. T2, T3, Auto, data, command
-projection, and later slices remain closed.
+receipt-complete teeth. D405 ships that prerequisite with all nineteen plan-step names, runtime mode,
+and suite exclusion fixed. Canonical `sourceRef` stays Verified Gettysburg evidence; the exact
+`timelineAssignmentRef` is separately Inferred and labeled “Your Timeline.” D401 v1 bytes and ids,
+one credit per rung, eager sanitation, hand-off isolation, `_SAVE_VER=1`, and the no-command/no-combat
+walls remain exact. T2, T3, Auto, data, command projection, and later slices remain closed.
 
 ## Historical resume gate (discharged by Aaron's D404 authorization)
 
 The D403 gate prohibited option-1 planning or Slice C until Aaron chose one of the first two paths.
-Aaron chose the recommended planning-only dual-reference path. D404 discharges that decision hold,
-not the runtime locks: do not edit D401 runtime merely to explore it, and do not enter Slice C before
-the receipt prerequisite. T2, T3, Auto, relationships, politics, franchise/archive, combat inputs,
+Aaron chose the recommended planning-only dual-reference path. D404 discharged the decision hold;
+D405 discharged only the receipt-runtime prerequisite. Slice C still requires a fresh committed
+LANE-005 take. T2, T3, Auto, relationships, politics, franchise/archive, combat inputs,
 command-ledger aliasing, and `_SAVE_VER` movement remain excluded.
