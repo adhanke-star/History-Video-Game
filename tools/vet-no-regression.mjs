@@ -126,6 +126,7 @@ const SUITE = [
   ['chattanooga', 'tools/probe-chattanooga.mjs'],
   ['wilderness', 'tools/probe-wilderness.mjs'],
   ['spotsylvania', 'tools/probe-spotsylvania.mjs'],
+  ['petersburg assaults', 'tools/probe-petersburg-initial-assaults.mjs'],
   ['kennesaw', 'tools/probe-kennesaw.mjs'],
   ['cedar creek', 'tools/probe-cedar-creek.mjs'],
   ['franklin', 'tools/probe-franklin.mjs'],
@@ -220,7 +221,7 @@ function timeoutFor(label, file) {
   if (file.endsWith('probe-weather.mjs')) return 900000;
   if (file.endsWith('probe-tactical-visuals.mjs')) return 600000;
   if (file.endsWith('probe-atmospherics.mjs')) return 600000; // slow-Mac budget: 2D+3D+Gettysburg scenes ran green at 362s vs the 360s default (D238)
-  if (file.endsWith('sweep-all-battles.mjs')) return 900000; // D393: 23 battles x 8 seeds, intentionally serialized on the 8 GB Mac. D391: 22 battles x 8 seeds.
+  if (file.endsWith('sweep-all-battles.mjs')) return 900000; // D397: 24 battles x 8 seeds, intentionally serialized on the 8 GB Mac. D393: 23 battles x 8 seeds. D391: 22 battles x 8 seeds.
   if (file.endsWith('diag-player-agency.mjs')) return 600000; // slow-Mac budget: 5 player-order legs incl. two 3-phase Antietam runs (D265)
   if (file.endsWith('probe-attacker-parity.mjs')) return 600000; // E53-v2 battery smoke: multi-battle tactical runs (D272)
   if (file.endsWith('probe-full-campaign.mjs')) return 900000; // slow-Mac budget: PM3 (D277) — both delegated chains now run ~80 headless real-time sims instead of instant margin math

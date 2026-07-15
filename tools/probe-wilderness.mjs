@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 import "./guard-probe-browser.mjs";
 // D393 playable Wilderness. This focused guard binds the single-phase CS-attacker / US-defender
-// junction scenario, THE THICKET LAW, the current 23/53/1434/23/128 integration surfaces, the
-// battle-date rank wall, and exactly eight shared-model historical-direction seeds.
+// junction scenario, THE THICKET LAW, the current 24/54/1512/24/129 integration surfaces (D397:
+// Petersburg initial assaults inserted at rank 69), the battle-date rank wall, and exactly eight
+// shared-model historical-direction seeds.
 //
 // BIND A PREDECLARATION — removing only the T1 Wilderness registry line may red exactly:
 //   REGISTRY + MENU
@@ -135,11 +136,11 @@ const SETUP = `(() => {
       return {objective:DATA.objective.name,woods:woods.length,walls:walls.length,guns:totals().gunsUS+'/'+totals().gunsCS,fog:DATA.defaultFog};
     });
 
-    check('REGISTRY + MENU: Wilderness is scenario 23 at rank 67 between Chattanooga and Spotsylvania in the 23-scenario registry',function(){
+    check('REGISTRY + MENU: Wilderness holds rank 67 between Chattanooga and Spotsylvania in the 24-scenario registry',function(){
       var reg=fldScenarioRegistry(),order=fldScenarioMenuOrder(reg);
-      if(Object.keys(reg).length!==23||reg.wilderness!==DATA)throw new Error('registry identity/count wrong');
+      if(Object.keys(reg).length!==24||reg.wilderness!==DATA)throw new Error('registry identity/count wrong');   // D397: 23 -> 24 — Petersburg initial assaults registers at rank 69. D393: 22 -> 23 — the Wilderness registered as the twenty-third scenario.
       if(fldScenarioMenuRank('wilderness')!==67)throw new Error('menu rank wrong: '+fldScenarioMenuRank('wilderness'));
-      if(order.indexOf('wilderness')!==order.indexOf('chattanooga')+1||order.indexOf('spotsylvania')!==order.indexOf('wilderness')+1||order.indexOf('kennesaw')!==order.indexOf('spotsylvania')+1)throw new Error('menu chronology wrong: '+order.join(' -> '));
+      if(order.indexOf('wilderness')!==order.indexOf('chattanooga')+1||order.indexOf('spotsylvania')!==order.indexOf('wilderness')+1||order.indexOf('petersburgAssaults')!==order.indexOf('spotsylvania')+1||order.indexOf('kennesaw')!==order.indexOf('petersburgAssaults')+1)throw new Error('menu chronology wrong: '+order.join(' -> '));   // D397 reshape: Petersburg initial assaults (rank 69) inserts between Spotsylvania and Kennesaw; the five-battle chronology stays guarded. D393 guarded the prior four-battle chronology.
       return {count:Object.keys(reg).length,rank:67,after:'chattanooga',before:'spotsylvania'};
     });
 
@@ -210,10 +211,10 @@ const SETUP = `(() => {
       return {cards:ids.length,codex:codex.id,axes:codex.axes};
     });
 
-    check('ARMY REGISTER PIN: canonical registry identity plus 18 Wilderness unit trios produce current total 1434',function(){
+    check('ARMY REGISTER PIN: canonical registry identity plus 18 Wilderness unit trios produce current total 1512',function(){
       var registry=fldScenarioRegistry();if(registry.wilderness!==DATA)throw new Error('declared registry dependency missing');
       var C=campaign();if(typeof _t1InitAll==='function')_t1InitAll(C);var reg=ssPersonRegistry(C),found=[],groups={};
-      if(reg.people.length!==1434)throw new Error('Army Register total '+reg.people.length+' expected 1434');   // D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots.
+      if(reg.people.length!==1512)throw new Error('Army Register total '+reg.people.length+' expected 1512');   // D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots.
       for(var i=0;i<reg.people.length;i++){var p=reg.people[i],origin=p.replaces||p.pid;if(typeof origin==='string'&&origin.indexOf('ss:wilderness:')===0)found.push({p:p,origin:origin});}
       if(found.length!==54)throw new Error('Wilderness rows '+found.length+' expected 54');
       found.forEach(function(row){var m=row.origin.match(/^ss:wilderness:(US|CS):([^:]+):(cmd|nco|pvt)$/);if(!m)throw new Error('bad slot '+row.origin);var key=m[1]+':'+m[2];groups[key]=groups[key]||{};groups[key][m[3]]=1;if(row.p.source!=='scenario-oob'||row.p.generated!==true||row.p.provenance!=='Inferred')throw new Error('slot metadata '+row.origin);});
@@ -221,8 +222,8 @@ const SETUP = `(() => {
       return {total:reg.people.length,wildernessRows:found.length,units:keys.length,slots:['cmd','nco','pvt']};
     });
 
-    check('SCOPE: single-phase Plank Road axis only; no unbuilt Cold Harbor/Petersburg/Crater registration and no Wilderness-only combat function appears',function(){
-      var ids=Object.keys(fldScenarioRegistry());if(ids.some(function(id){return /coldharbor|cold-harbor|petersburg|crater|overlandCampaign/i.test(id);}))throw new Error('forbidden tactical Overland id');
+    check('SCOPE: single-phase Plank Road axis only; no unbuilt Cold Harbor/Crater registration and no Wilderness-only combat function appears',function(){
+      var ids=Object.keys(fldScenarioRegistry());if(ids.some(function(id){return /coldharbor|cold-harbor|crater|overlandCampaign/i.test(id);}))throw new Error('forbidden tactical Overland id');   // D397 reshape: petersburgAssaults now has a ratified registration and leaves this scope tooth; the still-unbuilt Cold Harbor/Crater lanes stay forbidden. D393 dropped wilderness the same way.
       if(DATA.phases)throw new Error('Wilderness became phased');
       var functions=['wildernessPenalty','wildernessBonus','woodsMult','blindnessMult','smokeMult','brushFireMult','flankMult','friendlyFireEvent'];functions.forEach(function(n){if(typeof window[n]==='function')throw new Error('battle-specific function '+n);});
       return {singlePhase:true,forbiddenIds:0,battleSpecificFunctions:0};
@@ -241,7 +242,7 @@ const DOM = `(() => {
       var btn=document.getElementById('fldScnBtn_wilderness');if(!btn||!btn.getAttribute('aria-label'))throw new Error('accessible Wilderness button missing');
       fldInjectMenuButton();if(document.querySelectorAll('#fldScnBtn_wilderness').length!==1)throw new Error('duplicate Wilderness button');
       var ids=Array.prototype.slice.call(document.querySelectorAll('.gn-btn')).map(function(b){return b.id;});
-      if(ids.indexOf('fldScnBtn_wilderness')!==ids.indexOf('fldScnBtn_chattanooga')+1||ids.indexOf('fldScnBtn_spotsylvania')!==ids.indexOf('fldScnBtn_wilderness')+1||ids.indexOf('fldScnBtn_kennesaw')!==ids.indexOf('fldScnBtn_spotsylvania')+1)throw new Error('button chronology wrong: '+ids.join(' -> '));
+      if(ids.indexOf('fldScnBtn_wilderness')!==ids.indexOf('fldScnBtn_chattanooga')+1||ids.indexOf('fldScnBtn_spotsylvania')!==ids.indexOf('fldScnBtn_wilderness')+1||ids.indexOf('fldScnBtn_petersburgAssaults')!==ids.indexOf('fldScnBtn_spotsylvania')+1||ids.indexOf('fldScnBtn_kennesaw')!==ids.indexOf('fldScnBtn_petersburgAssaults')+1)throw new Error('button chronology wrong: '+ids.join(' -> '));   // D397 reshape DOM variant: the petersburgAssaults button inserts between spotsylvania and kennesaw; the five-button chronology stays guarded. D393 guarded the prior four-button chronology.
       var got=null;fldScenarioSideChoice('wilderness',function(side){got=side;});var cards=document.querySelectorAll('[data-brside]');
       if(cards.length!==2)throw new Error('wanted two side cards, got '+cards.length);cards[0].click();if(got!=='CS')throw new Error('CS side card returned '+got);
       var captured=null,oldLaunch=window.fldLaunchSandbox,oldBrief=window.fldBullRunBriefing;
@@ -272,7 +273,7 @@ async function main() {
     const rail=JSON.parse(readFileSync(join(ROOT,"data","logistics-rail.json"),"utf8"));
     const route=(rail.routes||{}).wilderness;
     const routeOk=!!route&&/Orange and Alexandria corridor/.test(String(route.label||''))&&route.theater==="E"&&route.provenance==="Inferred"&&route.friction&&route.friction.US===10&&route.friction.CS===14;
-    const forbiddenData=readdirSync(join(ROOT,"data")).filter(f=>/cold-harbor|petersburg|crater/i.test(f));
+    const forbiddenData=readdirSync(join(ROOT,"data")).filter(f=>/cold-harbor|crater/i.test(f));   // D397 reshape: data/petersburg-assaults.json is now ratified and leaves this scan; the still-unbuilt Cold Harbor/Crater lanes stay forbidden. D393: data/wilderness.json left the same way.
     const classicOk=classicRows===1&&classicExact&&routeOk&&forbiddenData.length===0;
     result.steps.push({name:"CLASSIC + RAIL COLLISION: the frozen lowercase Classic wilderness row and pre-existing strategic rail route remain exact, separate layers",ok:!!classicOk,v:{classicRows,classicExact,route,forbiddenData}});
     if(!classicOk)throw new Error("Classic/rail collision contract changed");

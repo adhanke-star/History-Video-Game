@@ -6,6 +6,87 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D397 — PETERSBURG'S INITIAL ASSAULTS ARE PLAYABLE: THE CITY HOLDS, THE ATTACKER BLEEDS, AND THE INTERRUPTED RUN IS RECOVERED WITHOUT CHANGING ITS CONTRACT — [CLAUDE CODE / FABLE AUTHORSHIP, CHATGPT/CODEX RECOVERY + FINAL VERIFICATION, LANE-003 DRIVE→VERIFY] (2026-07-14)
+
+The committed D396 contract now exists as scenario 24. `data/petersburg-assaults.json` and
+`tools/probe-petersburg-initial-assaults.mjs` implement one June 15-18, 1864 phase: US attacker,
+CS defender, fog off, the eastern approach into Petersburg behind the Dimmock Line, and menu
+rank 69 between Spotsylvania and Kennesaw. The complete cast is 26 unique side-unit ids:
+US 55,540 / CS 27,460, opening US 14,880 / opening CS 4,620, 28 US guns / 38 CS guns. Every
+strength remains an Inferred game envelope around a Verified identity. All Confederate accessions
+remain timed, the tiny opening garrison remains strictly inside the 2,200-5,400 contract, and the
+runtime contains no hesitation, caution, night, garrison, refusal, USCT, casualty, winner, or other
+battle-specific output lever. Hinks's division uses the same universal model as every formation.
+The frozen Classic `petersburg-break` row, the strategic rail route, and the T13 pontoon prose remain
+separate.
+
+**Recovery boundary.** Claude Code authored the runtime and reached a green final candidate, both
+negative binds, and most of the serialized focused gate before the session was interrupted. The
+interruption also left macOS `fileproviderd` suspended and the Desktop checkout largely
+`compressed,dataless`. ChatGPT/Codex resumed `fileproviderd`, did not overwrite the unreliable
+checkout, recovered every authored edit and test result from the three exact Claude JSONL journals,
+replayed the tracked diff over the clean pushed boundary in a non-iCloud clone, and compared the
+recovered bytes to the journal hashes. No history, balance, scope, or probe law was re-invented in
+recovery. The authoritative final hashes are Petersburg data
+`5534c67015ca643ca343a80d586ca263`, focused probe
+`9025eb752d6b264b0168377304e4d63a`, T1
+`6281fba361ee39224e9d08b2d147d736`, T10
+`9090a9be3e7234fc11a5de41bbdbfdf2`, generated HTML
+`e669982913feb54032253bf19bcd2b8b`, frozen base
+`c9db83fa99230ffb95bdfdfe059f3fb9`, media budget
+`1000bfbcbf934c8b4f38e78a8c3985d9`, schema validator
+`198ff5e89d60a298df40be5149e28ab5`, and suite runner
+`47b2b23fdad8ea81e9ab287bd2047273`.
+
+**Honest A/B, reconstructed from the journals rather than memory.** The first authored battery at
+`timeLimitSec:480`, `holdToWinSec:220`, and 32 CS guns held the city 5/8 but produced US-higher-loss
+0/8. Moving Hoke, Johnson, the re-formed guns, Kershaw, and Field from city-edge entries to their
+prepared-line ground and changing arriving infantry from column to line made both guards 0/8; the
+required seed-19 trace showed Hoke and Johnson routed/captured off the home edge while the engine's
+defender hold band stood away from the encoded final-line works. The next pass aligned the three
+final-line wall segments at z 248/245/248, their label at z246, Hoke at 470/455, Johnson at 700/250,
+and the First Corps divisions near the final line. That diagnostic produced a real covered defense
+but still exposed the mid-battle relief gap. The final input family then moved only enumerated,
+source-defensible inputs: hold 220→240; re-formed artillery 18→24 guns with its 540 crew unchanged;
+Hoke and Johnson xp 3→4 as veteran formations; Kershaw 520/246 and Field 680/245 on the encoded
+works; and the 600-man militia z210→246 on the center line. Surviving intermediate batteries were
+6/8 city + 6/8 direction and 7/8 + 6/8. The byte-stable recovered final candidate is **8/8 city
+holds and 7/8 US-higher-loss**, all Confederate timeout wins: seed 3 19,478/13,574; 19
+15,550/14,344; 31 14,829/15,116 (the one honest direction exception); 47 16,997/13,876; 73
+17,359/13,301; 109 16,688/15,049; 223 17,893/14,189; 401 15,082/14,728 (US/CS losses). No result
+was selected by magnitude and no output gate moved.
+
+**Atomic integration.** Scenarios 23→24, schema 53→54, Army Register 1434→1512 (26 ids × three
+slots), flags/weather/Intel/media coverage 23→24, suite 128→129, and sweep 23→24. T10 records
+`E/true/anv`; `PHASE_COUNTS` receives no entry. All ten D396 insertion reshapes landed in the same
+commit: Kennesaw adjacency ×2; Spotsylvania chronology ×2 plus SCOPE and forbidden-data; Wilderness
+chronology ×2 plus SCOPE and forbidden-data. Every whole-register pin carries the chronological
+D397 transition.
+
+**Both binds were independently re-proved after recovery.** Removing only the T1 registry line made
+exactly four focused teeth red — `REGISTRY + MENU`, `REGISTERED LAUNCH + REINFORCEMENTS`, `ARMY
+REGISTER PIN`, and `RUNTIME MENU + SIDE CHOICE` — while the direct-data direction battery stayed
+green; the plan probe made exactly `FUTURE DIRECTION + INTEGRATION` red. The apply-patch restore
+returned T1/data/probe/HTML hashes exactly and both probes green. Changing only Beauregard's data
+rank `Gen.`→`Lt. Gen.` made exactly focused `RANK WALL` and plan `RANKS + COMMAND TRAPS` red; the
+apply-patch restore returned data and generated HTML byte-for-byte and both probes green.
+
+**Focused runtime gate, serialized in the safe clone with every artifact read:** all touched JS/MJS
+syntax clean; build GATE OK; schema 54/54; research 15/15; Petersburg plan/runtime 12/12 and 15/15;
+all eleven prior battle/arc plan probes at their exact counts; Spotsylvania 16/16; Wilderness
+15/15; Kennesaw 11/11; Chattanooga 16/16; Five Forks 16/16; roster 8/8; builder 15/15; loot
+12/12 at 1512; flags 48/48; weather 30/30; Intel 26/26; media 13/13; manifest list exactly 129.
+Twenty-seven focused JSON artifacts are `ok:true` with no failed steps, pageerrors, or real errors;
+all 18 produced images decode. Four heavy battle screenshots retain only the established non-fatal
+5-second screenshot warning; their assertions and pageerror gates are green. `git diff --check` is
+clean. The 2.418 MB raw-embed warning remains informational.
+
+LANE-003 advances to **VERIFY**, owned by ChatGPT/Codex. The complete 129-command
+`npm run vet:noreg` release battery is the sole next action, serialized and alone; no war-career,
+Cold Harbor, or other queue item starts before its artifact audit and release checkpoint.
+
+---
+
 ## D396 — THE PETERSBURG INITIAL-ASSAULTS CONTRACT: THE REINFORCEMENT-RACE LAW, THE REDUNDANCY DISCHARGE, AND THE USCT PROVING GROUND — [CLAUDE CODE / FABLE, LANE-003 DRIVE→CONTRACT] (2026-07-14)
 
 The eleventh LANE-003 planning contract, and the D395-named completion of D382 item 3.5:

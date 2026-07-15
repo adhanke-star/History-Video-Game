@@ -1,0 +1,949 @@
+{
+  "_comment": "D397 - PETERSBURG: THE INITIAL ASSAULTS, June 15-18, 1864. Single-phase US-attacker / CS-defender scenario built from the committed D396 spec. THE REINFORCEMENT-RACE LAW: the opening Confederate on-map garrison is honestly tiny (strictly inside 2,200-5,400), every Confederate accession is a timed arrival on the sourced clock, the Union weight is staggered on its own sourced clock, and the works geometry carries the defensive value. Forbidden by contract: static garrisons, hesitation/caution/command-paralysis stats, night or darkness penalties, scripted halts or retirements, any opportunity or race bonus, and any USCT-specific modifier in either direction. Committed totals are Inferred engine envelopes: US 55,540 inside 25,000-62,000; CS 27,460 inside 14,000-30,000; opening on-map garrison CS 4,620 inside 2,200-5,400 and US 14,880 inside 10,000-18,000. Every game-unit split is coarse and Inferred. D74: no battle-specific damage, firepower, casualty, morale, hesitation, night, garrison, refusal, USCT, or winner key of any name.",
+  "petersburgAssaults": {
+    "id": "petersburgAssaults",
+    "name": "Petersburg: The Initial Assaults",
+    "date": "June 15-18, 1864",
+    "place": "The eastern face of the Dimmock Line, Petersburg, Virginia - from Baylor's Farm and the Jordan Point Road to Harrison Creek and the final line",
+    "blurb": "On June 15, 1864, Smith's corps and Hinks's USCT division strike a ten-mile fortress line held by about 2,200 men. The outer works fall by dark - and then the race begins: Beauregard fills the line by the hour while the Union weight arrives corps by corps, until the works are full and June 18 teaches the price of the days lost. The assaults opened on June 15, 1864 and ended June 18.",
+    "provenance": "Verified for the June 15-18 grain, US attack / CS improvised-defense roles, the nearly empty Dimmock Line (about 2,200 on the line June 15), the evening June 15 breach (magnitude Disputed 1.5 / 2 / nearly 3 miles), the USCT captures at Baylor's Farm and the Dimmock batteries, the Harrison Creek fallback line, the overnight June 17-18 retirement to the final line, Kershaw's and Field's June 18 arrival, Lee's 11 a.m. June 18 arrival, the battle-date rank wall, the city remaining in Confederate hands, and the aggregate loss direction. Inferred for every committed split, coordinate, gun grouping, experience value, leader quality, reinforcement second, objective radius, and time threshold. The modern tactical narrative leans on Thomas J. Howe's Wasted Valor and Sean Michael Chick's The Battle of Petersburg; the NPS-publisher, Wikipedia-cluster, CWSAC-root, and Howe/Chick collapses are disclosed in the D396 spec.",
+    "weather": {
+      "sky": "clear",
+      "time": "afternoon",
+      "provenance": "Inferred",
+      "note": "Hot, dry mid-June Virginia is a restrained presentation hint, not a weather claim: no fetched source gives a June 15-18 weather report, and the frozen Classic layer is never cited as a source. Fog is OFF. The June 15 exploitation died of darkness, command conservatism, and Cold Harbor's shadow - timing inputs and teaching cards, never a fog buff or night penalty.",
+      "sources": [
+        "https://www.battlefields.org/learn/civil-war/battles/petersburg",
+        "https://en.wikipedia.org/wiki/Second_Battle_of_Petersburg"
+      ]
+    },
+    "field": {
+      "w": 1200,
+      "h": 900
+    },
+    "attacker": "US",
+    "defender": "CS",
+    "homeEdge": {
+      "US": "high",
+      "CS": "low"
+    },
+    "_homeEdgeNote": "The Union approach from City Point and the Jordan Point Road enters from high z; Petersburg, its bridges, and the Confederate reinforcement road from the Howlett Line and Drewry's Bluff lie toward low z. The Appomattox River bounds the northern flank at low x. This is a compressed compass abstraction; geometry is Inferred.",
+    "defaultFog": false,
+    "timeLimitSec": 480,
+    "holdToWinSec": 240,
+    "menu": {
+      "title": "PETERSBURG: THE INITIAL ASSAULTS (1864)",
+      "deck": "Race for the nearly empty Dimmock Line - break into Petersburg before Beauregard fills the works, or fill them faster than the attack can walk in.",
+      "aria": "Petersburg: The Initial Assaults, June 15 to 18, 1864 - the race for the Dimmock Line. Command the Union assault or the Confederate improvised defense."
+    },
+    "sides": {
+      "heading": "Petersburg - Take Which Command?",
+      "intro": "June 15-18, 1864 - Grant's army has slipped across the James and stands in front of a ten-mile fortress line held by a handful of men. Both sides are racing: one to walk in, one to fill the works.",
+      "US": {
+        "title": "Command the Union assault (Smith, then Hancock, Burnside, and Warren)",
+        "badge": "&#9876; ATTACK",
+        "deck": "Break the Dimmock Line and reach the city ground behind it before the works fill - every hour of hesitation is paid for in front of fuller trenches."
+      },
+      "CS": {
+        "title": "Command the Confederate defense (Beauregard's improvisation)",
+        "badge": "&#9819; DEFEND",
+        "deck": "Hold a ten-mile line with 2,200 men while Hoke, Johnson, and finally the First Corps veterans file in - trade the outer works for time and keep the city."
+      },
+      "foot": "The other army is commanded by the AI. Fog is off; garrison size, works geometry, arrival clocks, and mass shape the fight - no hesitation stat, no night penalty, no script."
+    },
+    "brief": {
+      "attack": "The Dimmock Line in front of you is formidable in profile and nearly empty of men. Maj. Gen. William F. \"Baldy\" Smith's corps and Brig. Gen. Edward W. Hinks's USCT division open the assault; Hancock, Burnside, and Warren arrive on the sourced clock behind you. <b>This is your war:</b> the works fill by the hour, and the record says the city was at the mercy of the attacker who moved - the race is yours to win or lose.",
+      "defend": "Gen. P. G. T. Beauregard commands the improvised defense of Petersburg. Brig. Gen. Henry A. Wise's brigade, Brig. Gen. James Dearing's cavalry, and the militia are the whole opening force on the line. Trade ground for hours: Hoke arrives overnight, Johnson from the stripped Howlett Line, and Kershaw's and Field's veterans on the fourth day - if the city ground still stands Confederate when the works are full, the race is won."
+    },
+    "objective": {
+      "name": "Petersburg - Eastern City Approach",
+      "x": 600,
+      "z": 165,
+      "r": 150,
+      "note": "The city ground BEHIND the Dimmock Line - the corridor the final Confederate line covered. The outer batteries fell on June 15 and the city never did: the objective anchor sits on the inner ground so a breached outer line and a held city can both be true in the same seed. The radius is Inferred game geometry."
+    },
+    "leaders": {
+      "_note": "Battle-date ranks follow D396 section 6. Lt. Gen. Ulysses S. Grant is General-in-Chief by role and directs through Meade and Butler; Maj. Gen. William F. \"Baldy\" Smith holds his RESTORED major-generalcy (re-confirmed March 9, 1864 - the expired-commission trap resolved). Gen. P. G. T. Beauregard - full General, CSA - commands the June 15-17 defense; Gen. Robert E. Lee arrives only about 11 a.m. June 18 and is never the defense commander before that hour. Maj. Gen. Joseph B. Kershaw and Maj. Gen. John Gibbon are legitimately major generals here (June 2 and June 7, 1864) - the Wilderness locks reversed. Brig. Gen. Orlando B. Willcox remains a brigadier (his brevet dates from August 1, 1864). No general officer dies on this field in the sourced record, and none may be killed by a card.",
+      "US": [
+        {
+          "id": "ld_grant_pete",
+          "name": "Lt. Gen. Ulysses S. Grant",
+          "short": "Grant",
+          "quality": 0.9,
+          "radius": 275,
+          "attach": "us_brooks_xviii",
+          "fate": 3.4,
+          "note": "Lieutenant General and General-in-Chief by role (the grade revived by the act of February 29, 1864; Senate confirmation March 2, 1864), directing the James crossing and the assaults through Meade and Butler. Verified rank and role; ordinary quality/aura are Inferred universal inputs."
+        },
+        {
+          "id": "ld_meade_pete",
+          "name": "Maj. Gen. George G. Meade",
+          "short": "Meade",
+          "quality": 0.82,
+          "radius": 260,
+          "attach": "us_brooks_xviii",
+          "atSec": 130,
+          "entry": "Meade takes direction of the assaults at the front.",
+          "fate": 3.2,
+          "note": "Major General commanding the Army of the Potomac under Grant's direct supervision - never the theater commander, never promoted. Verified rank and command; timing and ordinary aura are Inferred."
+        },
+        {
+          "id": "ld_smith_pete",
+          "name": "Maj. Gen. William F. \"Baldy\" Smith",
+          "short": "Baldy Smith",
+          "quality": 0.74,
+          "radius": 255,
+          "attach": "us_brooks_xviii",
+          "fate": 3.0,
+          "note": "MAJOR GENERAL commanding XVIII Corps - THE RESTORED-COMMISSION TRAP resolved: his first appointment expired March 4, 1863 when the Senate failed to confirm; he was re-nominated and confirmed major general of volunteers March 9, 1864. His June 15 evening halt in front of a broken line is encoded ONLY as the sourced timing of this scenario, never as a caution stat. Verified grade; ordinary quality/aura are Inferred."
+        },
+        {
+          "id": "ld_hancock_pete",
+          "name": "Maj. Gen. Winfield S. Hancock",
+          "short": "Hancock",
+          "quality": 0.88,
+          "radius": 270,
+          "attach": "us_birney_ii",
+          "atSec": 30,
+          "entry": "Hancock's II Corps reaches the front about 9 p.m. June 15.",
+          "fate": 3.1,
+          "note": "Major General commanding II Corps (grade since November 29, 1862), arriving about 9:00 p.m. June 15 with 16,000. THE SENIORITY-DEFERENCE FACT: though senior, Hancock deferred to Smith, who knew the ground and had been on the field all day - a card, never a mechanic. Verified grade and timing scope; aura is Inferred."
+        },
+        {
+          "id": "ld_hinks_pete",
+          "name": "Brig. Gen. Edward W. Hinks",
+          "short": "Hinks",
+          "quality": 0.8,
+          "radius": 240,
+          "attach": "us_hinks_usct",
+          "fate": 2.9,
+          "note": "Brigadier General (rank from November 29, 1862) commanding the 3rd Division, XVIII Corps - composed entirely of United States Colored Troops. His division's June 15 record is this scenario's USCT proving ground: the same universal model as every other soldier, with no modifier in either direction. Verified identity and grade; ordinary aura is Inferred."
+        },
+        {
+          "id": "ld_burnside_pete",
+          "name": "Maj. Gen. Ambrose E. Burnside",
+          "short": "Burnside",
+          "quality": 0.72,
+          "radius": 255,
+          "attach": "us_ledlie_ix",
+          "atSec": 130,
+          "entry": "IX Corps comes up on June 16.",
+          "fate": 3.0,
+          "note": "Major General commanding IX Corps, now inside the Army of the Potomac (the late-May 1864 incorporation seam is behind this battle; its exact day stays Disputed and is never load-bearing). Verified grade; timing and aura are Inferred."
+        },
+        {
+          "id": "ld_warren_pete",
+          "name": "Maj. Gen. Gouverneur K. Warren",
+          "short": "Warren",
+          "quality": 0.78,
+          "radius": 255,
+          "attach": "us_griffin_v",
+          "atSec": 240,
+          "entry": "V Corps arrives for the June 17-18 weight.",
+          "fate": 3.0,
+          "note": "Major General commanding V Corps (MG August 8, 1863). His division commanders - Griffin, Ayres, Crawford, and Cutler - are ALL brigadier generals on June 15-18; each carries only a brevet dated August 1, 1864 or later. Verified grades; timing and aura are Inferred."
+        }
+      ],
+      "CS": [
+        {
+          "id": "ld_beauregard_pete",
+          "name": "Gen. P. G. T. Beauregard",
+          "short": "Beauregard",
+          "quality": 0.88,
+          "radius": 270,
+          "attach": "cs_wise_brigade",
+          "fate": 3.3,
+          "note": "Full GENERAL, CSA - one of only seven officers appointed to that grade, his date of rank July 21, 1861, fifth in seniority - commanding the Department of North Carolina and Southern Virginia. The defense of June 15-17 is HIS: the unilateral Howlett-Line strip, two successive overnight fallback lines, 2,200 grown to 20,000 in three days - 'arguably his finest combat performance of the war.' This record is an ordinary universal command aura, never a result writer or a genius stat. Verified rank and command."
+        },
+        {
+          "id": "ld_wise_pete",
+          "name": "Brig. Gen. Henry A. Wise",
+          "short": "Wise",
+          "quality": 0.72,
+          "radius": 230,
+          "attach": "cs_wise_brigade",
+          "fate": 2.9,
+          "note": "Brigadier General, the former governor of Virginia, whose brigade plus the militia scrapings ARE the opening Dimmock Line force. His Military-District-of-Petersburg assignment dated June 17 is paperwork disclosure, never a battle-date command claim beyond his brigade. Verified identity and grade; ordinary aura is Inferred."
+        },
+        {
+          "id": "ld_hoke_pete",
+          "name": "Maj. Gen. Robert F. Hoke",
+          "short": "Hoke",
+          "quality": 0.8,
+          "radius": 245,
+          "attach": "cs_hoke_div",
+          "atSec": 55,
+          "entry": "Hoke's division files into the line overnight June 15-16.",
+          "fate": 3.0,
+          "note": "Major General (commissioned April 23, 1864, ranking from April 20 - the pairing is paperwork disclosure) commanding the division arriving overnight June 15-16. Verified grade and timing scope; aura is Inferred."
+        },
+        {
+          "id": "ld_bjohnson_pete",
+          "name": "Maj. Gen. Bushrod R. Johnson",
+          "short": "B. Johnson",
+          "quality": 0.76,
+          "radius": 240,
+          "attach": "cs_johnson_div",
+          "atSec": 165,
+          "entry": "Johnson's division arrives from the stripped Howlett Line.",
+          "fate": 3.0,
+          "note": "Major General (May 21, 1864) commanding the division Beauregard pulled from the Bermuda Hundred front June 16-17. Verified grade and timing scope; aura is Inferred."
+        },
+        {
+          "id": "ld_kershaw_pete",
+          "name": "Maj. Gen. Joseph B. Kershaw",
+          "short": "Kershaw",
+          "quality": 0.84,
+          "radius": 245,
+          "attach": "cs_kershaw_div",
+          "atSec": 305,
+          "entry": "First Corps veterans file into the Petersburg line on June 18.",
+          "fate": 3.0,
+          "note": "MAJOR GENERAL - THE REVERSE OF THE WILDERNESS BIND: his major-generalcy is dated June 2, 1864, BEFORE this battle, so here he legitimately wears the second star the Wilderness forbade him. Verified grade (three families); timing and aura are Inferred."
+        },
+        {
+          "id": "ld_lee_pete",
+          "name": "Gen. Robert E. Lee",
+          "short": "Lee",
+          "quality": 0.9,
+          "radius": 265,
+          "attach": "cs_field_div",
+          "atSec": 340,
+          "entry": "Lee arrives in person about 11 a.m. June 18 and confers with Beauregard at the Customs House.",
+          "fate": 3.4,
+          "note": "Full General commanding the Army of Northern Virginia - THE LATE-ARRIVAL TRAP: he dispatches two divisions toward Petersburg beginning 3:00 a.m. June 18 and arrives in person about 11:00 a.m. June 18, to a line already saved. He is NEVER the defense commander of June 15-17; that erasure steals Beauregard's due. Verified timing; ordinary aura is Inferred."
+        }
+      ]
+    },
+    "supply": {
+      "US": {
+        "x": 600,
+        "z": 870,
+        "name": "Union trains - City Point Railroad railhead"
+      },
+      "CS": {
+        "x": 600,
+        "z": 35,
+        "name": "Petersburg - the city, its bridges, and the reinforcement road"
+      }
+    },
+    "terrain": {
+      "hills": [
+        {
+          "name": "Baylor's Farm Rise",
+          "x": 360,
+          "z": 740,
+          "h": 6,
+          "s": 130,
+          "note": "The fortified delaying position on the City Point Railroad approach where Dearing's cavalry and the Petersburg Artillery met Hinks's division on the morning of June 15. Verified place; Inferred compressed geometry."
+        },
+        {
+          "name": "Dimmock Line Plateau",
+          "x": 620,
+          "z": 560,
+          "h": 8,
+          "s": 170,
+          "note": "The commanding profile of the outer works - formidable ground, nearly empty of men on June 15. Verified character; Inferred height and geometry."
+        }
+      ],
+      "woods": [
+        { "x": 455, "z": 660, "r": 60, "note": "THE RAVINE - the sourced approach geometry that exposed the rear of Battery 5, rendered as ordinary universal cover. Verified feature; Inferred compressed geometry." },
+        { "x": 395, "z": 545, "r": 45, "note": "The ravine's inner run behind the Battery 5 salient - ordinary universal cover, never a bonus. Verified feature; Inferred geometry." },
+        { "x": 150, "z": 700, "r": 110, "note": "Bottomland timber along the Appomattox flank approach; universal cover, Inferred geometry." },
+        { "x": 1060, "z": 690, "r": 120, "note": "Broken timber on the southern approach flank; universal cover, Inferred geometry." },
+        { "x": 240, "z": 390, "r": 90, "note": "Scrub timber between the outer works and Harrison Creek; universal cover, Inferred geometry." },
+        { "x": 960, "z": 400, "r": 95, "note": "Scrub timber on the southern reach of the Harrison Creek ground; universal cover, Inferred geometry." }
+      ],
+      "walls": [
+        {
+          "x1": 120,
+          "z1": 595,
+          "x2": 310,
+          "z2": 595,
+          "note": "THE DIMMOCK LINE, Batteries 1-3 - the Appomattox River flank of the eastern face. Part of the 10-mile, 55-battery arc laid out from the summer of 1862 under Capt. Charles Dimmock. Verified works; Inferred compressed geometry. Universal cover vocabulary only."
+        },
+        {
+          "x1": 380,
+          "z1": 605,
+          "x2": 520,
+          "z2": 605,
+          "note": "THE DIMMOCK LINE, Battery 5 - the salient (four guns) whose rear a ravine exposed; the June 15 breach anchor. Verified works and event; Inferred geometry."
+        },
+        {
+          "x1": 600,
+          "z1": 600,
+          "x2": 760,
+          "z2": 600,
+          "note": "THE DIMMOCK LINE, Batteries 6-8 - the center of the assaulted eastern face. Verified works; Inferred compressed geometry."
+        },
+        {
+          "x1": 800,
+          "z1": 595,
+          "x2": 1000,
+          "z2": 595,
+          "note": "THE DIMMOCK LINE, Batteries 9-11 - the USCT storming ground of the evening of June 15 (the exact battery range is Disputed: Six through Eleven vs 7 through 11). Verified captures; Inferred geometry."
+        },
+        {
+          "x1": 350,
+          "z1": 445,
+          "x2": 560,
+          "z2": 445,
+          "note": "HARRISON CREEK LINE, north sector - the improvised intermediate line Beauregard's men dug overnight June 15-16: the first fallback. Verified works; Inferred compressed geometry."
+        },
+        {
+          "x1": 620,
+          "z1": 445,
+          "x2": 830,
+          "z2": 445,
+          "note": "HARRISON CREEK LINE, south sector - ordinary universal breastwork cover only. Verified works; Inferred geometry."
+        },
+        {
+          "x1": 300,
+          "z1": 248,
+          "x2": 520,
+          "z2": 248,
+          "note": "THE FINAL LINE, north sector - the overnight June 17-18 retirement position, 500-800 yards (or about half a mile) closer to Petersburg, where the race ended and the works finally had an army in them. Verified works; Inferred geometry, compressed onto the ground the defense of the city approach actually stood."
+        },
+        {
+          "x1": 560,
+          "z1": 245,
+          "x2": 720,
+          "z2": 245,
+          "note": "THE FINAL LINE, center - the June 18 position the last grand assault went in against. Verified works; Inferred geometry, compressed onto the ground the defense of the city approach actually stood."
+        },
+        {
+          "x1": 760,
+          "z1": 248,
+          "x2": 940,
+          "z2": 248,
+          "note": "THE FINAL LINE, south sector - covering the Jerusalem Plank approaches to the city ground. Verified works; Inferred compressed geometry."
+        }
+      ],
+      "markers": [
+        {
+          "kind": "river",
+          "name": "Appomattox River",
+          "path": [[55, 30], [70, 300], [65, 600], [85, 880]],
+          "note": "The Appomattox River bounding the northern flank of the assaults. Verified bound; Inferred compressed alignment."
+        },
+        {
+          "kind": "road",
+          "name": "City Point Railroad",
+          "path": [[300, 880], [330, 700], [355, 600], [380, 480]],
+          "note": "The Union approach corridor from the City Point railhead; Baylor's Farm sat on this approach. Verified route; Inferred compressed alignment."
+        },
+        {
+          "kind": "road",
+          "name": "Jordan Point Road",
+          "path": [[870, 880], [850, 700], [825, 600], [800, 470]],
+          "note": "Hinks's sourced approach axis toward the Dimmock batteries. Verified route; Inferred compressed alignment."
+        },
+        {
+          "kind": "road",
+          "name": "Prince George Court House Road",
+          "path": [[700, 880], [660, 620], [640, 460], [620, 345]],
+          "note": "The corridor of the 4:00 p.m. June 18 assaults - the 1st Maine Heavy Artillery charged from this road's cover. Verified route; Inferred compressed alignment."
+        },
+        { "kind": "creek", "name": "Harrison Creek", "path": [[350, 470], [600, 455], [850, 465]], "note": "The creek line of Beauregard's first overnight fallback. Verified feature; Inferred compressed alignment." },
+        { "kind": "town", "name": "Petersburg", "x": 600, "z": 60, "note": "The city itself - the objective context. Its capture would cut Richmond's rail lifelines; it held, and the 292-day siege followed." },
+        { "kind": "label", "name": "Baylor's Farm", "x": 360, "z": 740, "note": "The morning June 15 delaying action: Dearing's cavalry and the Petersburg Artillery against Hinks's division - the USCT proving ground's first test." },
+        { "kind": "label", "name": "Battery 5", "x": 450, "z": 605, "note": "The salient whose rear a ravine exposed; breached on the evening of June 15 by Smith's assault." },
+        { "kind": "label", "name": "Battery 9", "x": 900, "z": 595, "note": "Stormed on the evening of June 15 by the 4th USCT with the 1st USCT - part of the Dimmock battery captures." },
+        { "kind": "label", "name": "Harrison Creek", "x": 590, "z": 462, "note": "The first fallback line, dug in motion overnight June 15-16." },
+        { "kind": "label", "name": "The Final Line - June 18", "x": 620, "z": 246, "note": "The overnight June 17-18 retirement position; full of veterans when the last assaults went in." }
+      ]
+    },
+    "oob": {
+      "US": [
+        {
+          "id": "us_brooks_xviii",
+          "name": "Brooks's Division, XVIII Corps",
+          "commander": "Brig. Gen. William T. H. Brooks",
+          "arm": "inf",
+          "weapon": "rifled",
+          "role": "attack",
+          "men": 4500,
+          "xp": 3,
+          "x": 480,
+          "z": 700,
+          "facing": 0,
+          "formation": "line",
+          "note": "1st Division, XVIII Corps - the center of Smith's 7:00 p.m. June 15 assault after the day's approach. Verified identity; Inferred strength, readiness, and placement."
+        },
+        {
+          "id": "us_martindale_xviii",
+          "name": "Martindale's Division, XVIII Corps",
+          "commander": "Brig. Gen. John H. Martindale",
+          "arm": "inf",
+          "weapon": "rifled",
+          "role": "attack",
+          "men": 4000,
+          "xp": 3,
+          "x": 260,
+          "z": 690,
+          "facing": 0,
+          "formation": "line",
+          "note": "2nd Division, XVIII Corps on the Appomattox River flank along the City Point Railroad. Verified identity; Inferred strength and placement."
+        },
+        {
+          "id": "us_hinks_usct",
+          "name": "Hinks's USCT Division, XVIII Corps",
+          "commander": "Brig. Gen. Edward W. Hinks",
+          "arm": "inf",
+          "weapon": "rifled",
+          "role": "attack",
+          "men": 3500,
+          "xp": 3,
+          "x": 820,
+          "z": 710,
+          "facing": 0,
+          "formation": "line",
+          "note": "3rd Division, XVIII Corps - composed entirely of United States Colored Troops (the 22nd, 4th, 1st, 5th, and 6th USCT are the named regiments of its June 15 record). It fought through Baylor's Farm in the morning and stormed the Dimmock batteries in the evening under the same universal model as every other formation - no modifier in either direction. Verified identity; the ~3,500 scale is sourced while the exact return is unpinned, so the row ships Inferred strength and placement."
+        },
+        {
+          "id": "us_kautz_cav",
+          "name": "Kautz's Cavalry Division",
+          "commander": "Brig. Gen. August Kautz",
+          "arm": "cav",
+          "weapon": "carbine",
+          "role": "attack",
+          "men": 2400,
+          "xp": 3,
+          "x": 1050,
+          "z": 750,
+          "facing": 0,
+          "formation": "line",
+          "note": "The cavalry division on the southern approach flank. Verified identity; Inferred strength and placement."
+        },
+        {
+          "id": "us_xviii_guns",
+          "name": "XVIII Corps Artillery Grouping",
+          "commander": "XVIII Corps artillery officers",
+          "arm": "art",
+          "weapon": "rifled",
+          "role": "attack",
+          "guns": 16,
+          "men": 480,
+          "xp": 3,
+          "x": 600,
+          "z": 760,
+          "facing": 0,
+          "formation": "line",
+          "note": "A coarse grouping of the corps artillery supporting the June 15 assault. Sixteen guns and 480 crew are game abstractions under the universal artillery model. Verified identity class; Inferred strength and gun count."
+        }
+      ],
+      "CS": [
+        {
+          "id": "cs_wise_brigade",
+          "name": "Wise's Virginia Brigade",
+          "commander": "Brig. Gen. Henry A. Wise",
+          "arm": "inf",
+          "weapon": "rifled",
+          "role": "defend",
+          "men": 2400,
+          "xp": 3,
+          "x": 560,
+          "z": 585,
+          "facing": 3.14159,
+          "formation": "line",
+          "note": "The heart of the opening force: Wise's brigade plus the militia ARE the roughly 2,200 men on the ten-mile line when Smith's 14,000 arrive. Several hundred of Wise's men were captured in the June 15 breach - an output and a card, never an input. Verified identity; Inferred strength and placement."
+        },
+        {
+          "id": "cs_dearing_cav",
+          "name": "Dearing's Cavalry Brigade",
+          "commander": "Brig. Gen. James Dearing",
+          "arm": "cav",
+          "weapon": "carbine",
+          "role": "defend",
+          "men": 1200,
+          "xp": 3,
+          "x": 920,
+          "z": 640,
+          "facing": 3.14159,
+          "formation": "line",
+          "note": "Beauregard's cavalry brigade - the Baylor's Farm delaying action of the morning of June 15. THE UNCONFIRMED-COMMISSION TRAP: Dearing was slated for brigadier general April 29, 1864, and the promotion was NEVER approved by the Confederate Congress; he served in the grade regardless, and this row renders it only with that disclosure. Verified identity; Inferred strength and placement."
+        },
+        {
+          "id": "cs_petersburg_militia",
+          "name": "Petersburg Militia and Reserves",
+          "commander": "Petersburg reserve officers",
+          "arm": "inf",
+          "weapon": "smooth",
+          "role": "defend",
+          "men": 600,
+          "xp": 1,
+          "x": 600,
+          "z": 246,
+          "facing": 3.14159,
+          "formation": "line",
+          "note": "The militia scrapings of the same class that fought June 9 - second-class men, reserves, and convalescents holding the city approach. Their low experience is the sourced character of a scratch garrison, an ordinary universal input applied to militia of every color and cause. Verified identity class; Inferred strength and placement."
+        },
+        {
+          "id": "cs_dimmock_guns",
+          "name": "Petersburg Artillery - Dimmock Line Batteries",
+          "commander": "Petersburg Artillery battery officers",
+          "arm": "art",
+          "weapon": "rifled",
+          "role": "defend",
+          "guns": 14,
+          "men": 420,
+          "xp": 3,
+          "x": 450,
+          "z": 590,
+          "facing": 3.14159,
+          "formation": "line",
+          "note": "The thin gun line of the eastern face - Graham's Petersburg Artillery is its named element, and one of Graham's guns fell to Hinks's division on June 15 (an output and a card, never an input). Fourteen guns and 420 crew are game abstractions; most of the 55 batteries stood empty. Verified identity; Inferred strength and gun count."
+        }
+      ]
+    },
+    "reinforcements": [
+      {
+        "id": "us_birney_ii",
+        "side": "US",
+        "atSec": 30,
+        "name": "Birney's Division, II Corps",
+        "commander": "Maj. Gen. David B. Birney",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "attack",
+        "men": 5500,
+        "xp": 3,
+        "x": 520,
+        "z": 860,
+        "facing": 0,
+        "formation": "column",
+        "entry": "Hancock's II Corps reaches the front about 9 p.m. June 15",
+        "note": "The first of Hancock's 16,000 - II Corps arrived about 9:00 p.m. June 15 after a hot, mismanaged march. The 1st Maine Heavy Artillery fought within this front on June 18 and is fielded separately to avoid double counting. Verified identity; Inferred strength and timing."
+      },
+      {
+        "id": "us_gibbon_ii",
+        "side": "US",
+        "atSec": 38,
+        "name": "Gibbon's Division, II Corps",
+        "commander": "Maj. Gen. John Gibbon",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "attack",
+        "men": 5500,
+        "xp": 3,
+        "x": 680,
+        "z": 860,
+        "facing": 0,
+        "formation": "column",
+        "entry": "Gibbon's division extends the II Corps line",
+        "note": "THE REVERSE ANACHRONISM: Gibbon's major-generalcy is dated June 7, 1864 - BEFORE this battle - so here (unlike the Wilderness) he IS Maj. Gen. John Gibbon. The fetched battle article never details his June 15-18 division role; the row ships as ordinary II Corps weight. Verified grade; Inferred strength and timing."
+      },
+      {
+        "id": "us_barlow_ii",
+        "side": "US",
+        "atSec": 46,
+        "name": "Barlow's Division, II Corps",
+        "commander": "Brig. Gen. Francis C. Barlow",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "attack",
+        "men": 5000,
+        "xp": 3,
+        "x": 400,
+        "z": 870,
+        "facing": 0,
+        "formation": "column",
+        "entry": "Barlow completes the II Corps mass",
+        "note": "Barlow led his division against Redans 13, 14, and 15 in the June 16 attacks 'at a frightful cost' - the cost is an output of mass against works, never a script. Verified identity; Inferred strength and timing."
+      },
+      {
+        "id": "us_ledlie_ix",
+        "side": "US",
+        "atSec": 130,
+        "name": "Ledlie's Division, IX Corps",
+        "commander": "Brig. Gen. James H. Ledlie",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "attack",
+        "men": 3500,
+        "xp": 3,
+        "x": 760,
+        "z": 865,
+        "facing": 0,
+        "formation": "column",
+        "entry": "Burnside's IX Corps comes up on June 16",
+        "note": "THE SUCCESSOR-CHAIN LOCK: Ledlie commands the 1st Division, IX Corps from June 9, 1864, succeeding Brig. Gen. Thomas G. Stevenson (killed May 10). His division's June 17 evening failure is sourced; his Crater infamy belongs to a DIFFERENT lane and no content here borrows it. Verified identity; Inferred strength and timing."
+      },
+      {
+        "id": "us_potter_ix",
+        "side": "US",
+        "atSec": 138,
+        "name": "Potter's Division, IX Corps",
+        "commander": "Brig. Gen. Robert B. Potter",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "attack",
+        "men": 3800,
+        "xp": 3,
+        "x": 840,
+        "z": 870,
+        "facing": 0,
+        "formation": "column",
+        "entry": "Potter's division moves toward the Harrison Creek ground",
+        "note": "2nd Division, IX Corps - Potter's stealthy pre-dawn June 17 approach and dawn attack is the sourced June 17 texture, carried here as ordinary timing and position inputs. Verified identity; Inferred strength and timing."
+      },
+      {
+        "id": "us_willcox_ix",
+        "side": "US",
+        "atSec": 146,
+        "name": "Willcox's Division, IX Corps",
+        "commander": "Brig. Gen. Orlando B. Willcox",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "attack",
+        "men": 3500,
+        "xp": 3,
+        "x": 300,
+        "z": 865,
+        "facing": 0,
+        "formation": "column",
+        "entry": "Willcox's division joins the IX Corps front",
+        "note": "THE ANACHRONISM CATCH: the battle article renders him a major general, but his own record carries only a BREVET major generalcy to rank from August 1, 1864 - AFTER this battle. His June 15-18 substantive grade is BRIGADIER GENERAL. Verified grade; Inferred strength and timing."
+      },
+      {
+        "id": "us_griffin_v",
+        "side": "US",
+        "atSec": 240,
+        "name": "Griffin's Division, V Corps",
+        "commander": "Brig. Gen. Charles Griffin",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "attack",
+        "men": 3600,
+        "xp": 3,
+        "x": 350,
+        "z": 875,
+        "facing": 0,
+        "formation": "column",
+        "entry": "Warren's V Corps arrives for the June 17-18 weight",
+        "note": "1st Division, V Corps. Griffin is a BRIGADIER GENERAL here - his brevet major-generalcy dates from August 1, 1864, after this battle. Verified grade; Inferred strength and timing."
+      },
+      {
+        "id": "us_ayres_v",
+        "side": "US",
+        "atSec": 248,
+        "name": "Ayres's Division, V Corps",
+        "commander": "Brig. Gen. Romeyn B. Ayres",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "attack",
+        "men": 3200,
+        "xp": 3,
+        "x": 500,
+        "z": 880,
+        "facing": 0,
+        "formation": "column",
+        "entry": "Ayres extends the V Corps line",
+        "note": "2nd Division, V Corps - a brigadier general on these dates (brevet later). Verified grade; Inferred strength and timing."
+      },
+      {
+        "id": "us_crawford_v",
+        "side": "US",
+        "atSec": 256,
+        "name": "Crawford's Division, V Corps",
+        "commander": "Brig. Gen. Samuel W. Crawford",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "attack",
+        "men": 3000,
+        "xp": 3,
+        "x": 650,
+        "z": 880,
+        "facing": 0,
+        "formation": "column",
+        "entry": "Crawford's division comes up",
+        "note": "3rd Division, V Corps - a brigadier general on these dates (brevet later). Verified grade; Inferred strength and timing."
+      },
+      {
+        "id": "us_cutler_v",
+        "side": "US",
+        "atSec": 264,
+        "name": "Cutler's Division, V Corps",
+        "commander": "Brig. Gen. Lysander Cutler",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "attack",
+        "men": 2800,
+        "xp": 3,
+        "x": 800,
+        "z": 880,
+        "facing": 0,
+        "formation": "column",
+        "entry": "Cutler completes the V Corps arrival",
+        "note": "4th Division, V Corps - a brigadier general on these dates (brevet later). Verified grade; Inferred strength and timing."
+      },
+      {
+        "id": "us_v_guns",
+        "side": "US",
+        "atSec": 250,
+        "name": "V and IX Corps Artillery Grouping",
+        "commander": "Army of the Potomac artillery officers",
+        "arm": "art",
+        "weapon": "rifled",
+        "role": "attack",
+        "guns": 12,
+        "men": 360,
+        "xp": 3,
+        "x": 600,
+        "z": 855,
+        "facing": 0,
+        "formation": "line",
+        "entry": "the massed guns of the June 17-18 assaults",
+        "note": "A coarse grouping of the later-arriving corps artillery. Twelve guns and 360 crew are game abstractions under the universal artillery model. Verified identity class; Inferred strength and gun count."
+      },
+      {
+        "id": "us_maine_heavy",
+        "side": "US",
+        "atSec": 330,
+        "name": "1st Maine Heavy Artillery (fighting as infantry)",
+        "commander": "Col. Daniel Chaplin",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "attack",
+        "men": 900,
+        "xp": 2,
+        "x": 660,
+        "z": 850,
+        "facing": 0,
+        "formation": "column",
+        "entry": "from the cover of the Prince George Court House Road",
+        "note": "The converted heavy-artillery regiment that charged at 4:00 p.m. June 18 within Birney's front and sustained the war's worst single-action regimental loss - 632 of about 900 (an output and a card, NEVER an input; the 115/489/28 split ships Inferred). Verified regiment identity; the commander is named from the regimental record and ships Inferred here; Inferred strength and timing."
+      },
+      {
+        "id": "cs_hoke_div",
+        "side": "CS",
+        "atSec": 55,
+        "name": "Hoke's Division",
+        "commander": "Maj. Gen. Robert F. Hoke",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "defend",
+        "men": 7200,
+        "xp": 4,
+        "x": 470,
+        "z": 455,
+        "facing": 3.14159,
+        "formation": "line",
+        "entry": "overnight June 15-16, from Bermuda Hundred by way of the turnpike",
+        "note": "The first great accession of the race: Hoke's division filed into the broken line overnight June 15-16 - the brigades of Brig. Gens. Clingman, Hagood, Martin, and Colquitt (the OOB voice lists five brigades with Martin's; his June 28 relief is after this battle and never encoded), veteran brigades twelve days from repulsing the Cold Harbor assaults. Verified identity and timing scope; Inferred strength and readiness."
+      },
+      {
+        "id": "cs_johnson_div",
+        "side": "CS",
+        "atSec": 165,
+        "name": "Bushrod Johnson's Division",
+        "commander": "Maj. Gen. Bushrod R. Johnson",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "defend",
+        "men": 6100,
+        "xp": 4,
+        "x": 700,
+        "z": 250,
+        "facing": 3.14159,
+        "formation": "line",
+        "entry": "June 16-17, from the unilaterally stripped Howlett Line",
+        "note": "Beauregard stripped his own Bermuda Hundred front without asking to feed the Petersburg line - Elliott's, Ransom's, and Gracie's brigades arrive in this row; Wise's brigade, already fielded on the opening line, is excluded to avoid double counting. Verified identity and the strip; Inferred strength and timing."
+      },
+      {
+        "id": "cs_reformed_guns",
+        "side": "CS",
+        "atSec": 170,
+        "name": "Re-formed Line Artillery Grouping",
+        "commander": "Confederate battery officers",
+        "arm": "art",
+        "weapon": "rifled",
+        "role": "defend",
+        "guns": 24,
+        "men": 540,
+        "xp": 3,
+        "x": 600,
+        "z": 250,
+        "facing": 3.14159,
+        "formation": "line",
+        "entry": "the guns that filled the fallback lines",
+        "note": "A coarse grouping of the artillery that armed the Harrison Creek line and the final line as the race was won. Twenty-four guns and 540 crew are game abstractions; the batteries captured on June 15 never re-enter. Verified character; Inferred strength and gun count."
+      },
+      {
+        "id": "cs_kershaw_div",
+        "side": "CS",
+        "atSec": 305,
+        "name": "Kershaw's Division, First Corps",
+        "commander": "Maj. Gen. Joseph B. Kershaw",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "defend",
+        "men": 4500,
+        "xp": 4,
+        "x": 520,
+        "z": 246,
+        "facing": 3.14159,
+        "formation": "line",
+        "entry": "First Corps veterans file into the line, June 18",
+        "note": "The Army of Northern Virginia arrives at last: Kershaw's veterans filed into the Petersburg works on June 18 as Lee turned the army south. Kershaw is a MAJOR GENERAL here (June 2, 1864 - the Wilderness lock reversed). Verified identity and grade; Inferred strength and timing."
+      },
+      {
+        "id": "cs_field_div",
+        "side": "CS",
+        "atSec": 320,
+        "name": "Field's Division, First Corps",
+        "commander": "Maj. Gen. Charles W. Field",
+        "arm": "inf",
+        "weapon": "rifled",
+        "role": "defend",
+        "men": 4500,
+        "xp": 4,
+        "x": 680,
+        "z": 245,
+        "facing": 3.14159,
+        "formation": "line",
+        "entry": "the second First Corps division on hand June 18",
+        "note": "Field's division completed the June 18 relief; his major-general grade is Verified while his exact date of rank is unpinned by the fetched biography and ships Inferred - no card states it as settled. Verified identity; Inferred strength and timing."
+      }
+    ],
+    "endNote": "The First Petersburg Offensive ended with the city still in Confederate hands, and the 292-day siege followed. The record itself says Petersburg on the first night was 'clearly at the mercy of the Federal commander, who had all but captured it' - so a Union capture here is honest alternate history, not fantasy; the engine may produce it, or a draw. History supplies the lean, not a forced verdict: the attacker bled at better than two-to-one, the works filled faster than the attack walked in, and the race's loser settled in for the siege that decided the war.",
+    "teaching": {
+      "title": "Petersburg: The Initial Assaults - the race for the empty works",
+      "cards": [
+        {
+          "id": "pete_race",
+          "head": "The race for the empty works",
+          "body": "The 10-mile, 55-battery Dimmock Line stood nearly empty - about 2,200 Confederates - when Smith's 14,000 arrived in front of it on June 15. The evening attack broke the line (the breach magnitude is Disputed: NPS's own two pages say a 1.5-mile and a two-mile hole while the ECWC essay says nearly three miles), and the defense was rebuilt in motion faster than the attack could bring itself to walk in: 2,200 grew to about 14,000 by dusk of the second day and past 20,000 by June 18, while the attackers grew from 15,000 toward 67,000 and hesitated. This scenario encodes the race honestly: a tiny opening garrison, every reinforcement a timed arrival on the sourced clock, no hesitation stat, no night penalty, no script.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.essentialcivilwarcurriculum.com/assets/files/pdf/ECWC%20TOPIC%20Petersburg%20Essay.pdf",
+            "https://www.nps.gov/pete/learn/historyculture/the-opening-assaults.htm",
+            "https://encyclopediavirginia.org/entries/dimmock-line-the/",
+            "https://en.wikipedia.org/wiki/Second_Battle_of_Petersburg"
+          ]
+        },
+        {
+          "id": "pete_bridge",
+          "head": "The bridge that made it possible",
+          "body": "Grant slipped an army of over 100,000 men out of Lee's front at Cold Harbor and moved it across the James - the wagons and much of the infantry on the war's longest pontoon bridge - a strategic surprise so complete that Smith stood in front of nearly empty works before Lee accepted where the army had gone. The game's engineering teaching layer carries the bridge itself (its span figure ships there); this card carries what the crossing bought: the one clean chance of the campaign.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.battlefields.org/learn/civil-war/battles/petersburg",
+            "https://en.wikipedia.org/wiki/Second_Battle_of_Petersburg"
+          ]
+        },
+        {
+          "id": "pete_usct",
+          "head": "The USCT proving ground - accuracy as dignity",
+          "body": "Hinks's division - about 3,500 United States Colored Troops - fought through an unexpected fortified position at Baylor's Farm in the morning ('Never before tested in battle, Hinks' black soldiers pressed forward,' the 22nd USCT leading, at slightly more than 300 Union casualties) and stormed the Dimmock batteries in the evening. The exact range ships Disputed - 'Batteries Six through Eleven' against 'Batteries 7 through 11' - the captures themselves are Verified, including Battery 9, stormed by the 4th USCT with the 1st USCT, and a captured gun of Graham's Petersburg Artillery. The division's June 15 cost was 378 killed and wounded. Col. Kiddoo reported 'fullest confidence in the fighting qualities' of his men: twelve days after Cold Harbor, this was the first major USCT combat validation in Virginia. Their June 18 supporting role and 36 losses ship Inferred. In this scenario they fight under the same universal model as every other soldier - no modifier in either direction, nothing invented, nothing erased.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.battlefields.org/learn/articles/storming-battery-9-petersburg-june-15-1864",
+            "https://www.battlefields.org/visit/heritage-sites/baylors-farm",
+            "https://npshistory.com/publications/civil_war_series/20/sec5.htm",
+            "https://encyclopediavirginia.org/entries/dimmock-line-the/"
+          ]
+        },
+        {
+          "id": "pete_night",
+          "head": "The night Petersburg stood open",
+          "body": "By dark on June 15 the outer line was broken and Petersburg 'at that hour was clearly at the mercy of the Federal commander, who had all but captured it.' Smith, twelve days from the slaughter at Cold Harbor, halted in the dark in front of a broken line and consolidated; Hancock, though senior, deferred to the man who knew the ground; 'conservative Union commanders' deferred the advance, and 'darkness and uncertainty' finished the argument. The scenario refuses to make this a stat: the halt is carried only by the sourced clock - what the hesitation cost is exactly what the record says it cost, paid in front of fuller works.",
+          "provenance": "Verified",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Second_Battle_of_Petersburg",
+            "https://encyclopediavirginia.org/entries/dimmock-line-the/",
+            "https://www.essentialcivilwarcurriculum.com/assets/files/pdf/ECWC%20TOPIC%20Petersburg%20Essay.pdf"
+          ]
+        },
+        {
+          "id": "pete_beauregard",
+          "head": "Beauregard's finest hours",
+          "body": "The defense of June 15-17 belongs to Gen. P. G. T. Beauregard - full General, CSA, one of only seven - and to no one else. He stripped his own Howlett Line front without waiting for permission, dug two successive fallback lines in the dark (Harrison Creek overnight June 15-16, the final line overnight June 17-18), and grew 2,200 men into more than 20,000 in three days: 'arguably his finest combat performance of the war.' Gen. Robert E. Lee, still unconvinced the whole Union army had crossed the James, dispatched two divisions from 3:00 a.m. June 18 and arrived in person about 11:00 a.m. that day, conferring with Beauregard at the Customs House - a line already saved. Credit is rendered where the record puts it.",
+          "provenance": "Verified",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Second_Battle_of_Petersburg",
+            "https://emergingcivilwar.com/2021/06/18/petersburg-day-four-saturday-june-18-1864/",
+            "https://www.essentialcivilwarcurriculum.com/assets/files/pdf/ECWC%20TOPIC%20Petersburg%20Essay.pdf"
+          ]
+        },
+        {
+          "id": "pete_maine",
+          "head": "June 18 - the price of the lost race",
+          "body": "By the fourth day the works were full of Army of Northern Virginia veterans, and the grand assault went in anyway at 4:00 p.m. The 1st Maine Heavy Artillery charged from the cover of the Prince George Court House Road and lost 632 of about 900 men in roughly ten minutes - the greatest loss of any one regiment in any one action of the war (the 115/489/28 split ships Inferred). Frank Wilkeson's testimony carries what the veterans around them had already learned: men 'supremely disgusted with the display of military stupidity' refused orders their own judgment had condemned. This card renders that refusal with respect for the soldiers' learned judgment, not mockery of it - and the scenario carries no refusal stat: exhausted mass against filled works is allowed to mean what it meant.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.nps.gov/civilwar/search-battle-units-detail.htm?battleUnitCode=UME0001RAH",
+            "https://emergingcivilwar.com/2021/10/22/under-fire-battlefield-guide-map-for-the-charge-of-the-first-maine-heavy-artillery/",
+            "https://www.npshistory.com/handbooks/historical/13/hh13d.htm"
+          ]
+        },
+        {
+          "id": "pete_ledger",
+          "head": "The ledger of the four days - reading the same number twice",
+          "body": "The headline number 11,386 appears in two contradictory scopes, and the collision is itself the lesson in reading sources. One family renders 11,386 (1,688 killed / 8,513 wounded / 1,185 missing) as the UNION loss alone, beside a Confederate total near 4,000; the CWSAC root renders the SAME figure as BOTH armies together (US 8,150 / CS 3,236); the NPS handbook says simply 'a loss of 10,000 men.' Every magnitude on this card ships Disputed with both readings shown, and nothing in the engine loads on any of them. What survives every honest pairing is the DIRECTION: the attacker bled at better than two-to-one and the city held - and the 292-day siege that followed killed more than the four days ever did.",
+          "provenance": "Disputed",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Second_Battle_of_Petersburg",
+            "https://www.beyondthecrater.com/resources/bat-sum/first-offensive-summaries/the-second-battle-of-petersburg-summary/",
+            "https://www.battlefields.org/learn/civil-war/battles/petersburg",
+            "https://www.npshistory.com/handbooks/historical/13/hh13d.htm"
+          ]
+        },
+        {
+          "id": "pete_decided",
+          "head": "What the race decided",
+          "body": "Both framings are true and both are taught. As a battle, the initial assaults were a Confederate defensive victory: the First Petersburg Offensive ended with the city still in Confederate hands, at a Union price the attacker set by hesitating. As a campaign, June 15-18 began the end: Grant did not take Petersburg, but he pinned the Army of Northern Virginia to its trenches and never let go - the 292-day siege that followed drained the Confederacy of the one thing it could not replace. The codex result reads 'Confederate victory' for the four days; the dual reading rides beside it.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.battlefields.org/learn/civil-war/battles/petersburg",
+            "https://www.essentialcivilwarcurriculum.com/assets/files/pdf/ECWC%20TOPIC%20Petersburg%20Essay.pdf",
+            "https://en.wikipedia.org/wiki/Second_Battle_of_Petersburg"
+          ]
+        },
+        {
+          "id": "pete_not_here",
+          "head": "What this scenario deliberately is not",
+          "body": "This field is June 15-18, 1864, and nothing else. The Crater is its own lane with its own dignity law, and no content here borrows it - no mine, no massacre content is playable anywhere in this lane. New Market Heights is its own SHIPPED scenario in the same campaign frame. Fort Stedman and the April 2, 1865 breakthrough belong to the war's last winter (the Classic layer's 'Fall of Petersburg' row is that April 2 battle - a different fight in a different year). The Bermuda Hundred / Howlett Line front stays outside this scenario's order of battle, and the VI Corps - still on the Cold Harbor to James axis in the fetched record - is never fielded here.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.battlefields.org/learn/civil-war/battles/petersburg",
+            "https://en.wikipedia.org/wiki/Second_Battle_of_Petersburg"
+          ]
+        },
+        {
+          "id": "pete_first",
+          "head": "First Petersburg - the old men and young boys",
+          "body": "Six days before Smith's corps arrived, on June 9, a small Union force had already tested the Dimmock Line and been turned back in what Petersburg remembered as the battle of old men and young boys - militia, reserves, and convalescents standing where an army should have been. That June 9 fight is context only, never fielded here; it explains the character of Wise's threadbare garrison and why the city's own scrapings stood in the works when the real assault came.",
+          "provenance": "Inferred",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Second_Battle_of_Petersburg",
+            "https://www.essentialcivilwarcurriculum.com/assets/files/pdf/ECWC%20TOPIC%20Petersburg%20Essay.pdf"
+          ]
+        }
+      ],
+      "codex": {
+        "id": "codex_petersburg_assaults",
+        "title": "Petersburg: The Initial Assaults - June 15-18, 1864",
+        "summary": "Grant's army crossed the James on the war's longest pontoon bridge and struck the 10-mile Dimmock Line while about 2,200 men held it. Smith's evening assault broke the outer works - Hinks's USCT division storming a series of the batteries - and Petersburg stood open; darkness, command conservatism, and Cold Harbor's shadow deferred the advance. Beauregard rebuilt the defense in motion, stripping the Howlett Line and digging two successive fallback lines while both sides raced reinforcements to the front, and by June 18 the works were full: the last grand assault failed at the war's worst single-regiment cost, the city held, and the 292-day siege began. A Confederate defensive victory that pinned the Army of Northern Virginia to the trenches that would doom it - both framings taught. The USCT proving ground carries the June 15 record: the first major USCT combat validation in Virginia, rendered with accuracy as dignity.",
+        "provenance": "Verified",
+        "axes": {
+          "timeline": "1864",
+          "theater": "Eastern",
+          "campaign": "Richmond-Petersburg (Initial Assaults)",
+          "result": "Confederate victory",
+          "cost": "Disputed by scope collision: 11,386 ships as the Union-only loss in one family and as the grand total (US 8,150 / CS 3,236) in the CWSAC root, beside CS ~4,000 and NPS's 'a loss of 10,000 men.' Direction only is robust: the attacker lost more and the city held.",
+          "people": [
+            "Grant", "Meade", "Baldy Smith", "Hancock", "Birney", "Gibbon", "Barlow", "Burnside", "Ledlie", "Potter", "Willcox", "Warren", "Griffin", "Ayres", "Crawford", "Cutler", "Hinks", "Kautz",
+            "Beauregard", "Lee", "Wise", "Dearing", "Hoke", "Bushrod Johnson", "Kershaw", "Field"
+          ],
+          "battle": "Petersburg: The Initial Assaults"
+        },
+        "sources": [
+          "https://www.battlefields.org/learn/civil-war/battles/petersburg",
+          "https://www.essentialcivilwarcurriculum.com/assets/files/pdf/ECWC%20TOPIC%20Petersburg%20Essay.pdf",
+          "https://en.wikipedia.org/wiki/Second_Battle_of_Petersburg"
+        ]
+      }
+    }
+  }
+}

@@ -317,12 +317,12 @@ const SETUP = `(() => {
       return { cards:cards.length, codex:codex.id, weather:{ sky:w.sky, time:w.time, provenance:w.provenance } };
     });
 
-    check('ARMY REGISTER PIN: 15 Elkhorn side-unit ids produce exact cmd/nco/pvt trios and current total 1434', function() {
+    check('ARMY REGISTER PIN: 15 Elkhorn side-unit ids produce exact cmd/nco/pvt trios and current total 1512', function() {
       var C = { side:'US', iron:false, idx:0, funds:6500, recovery:false, completed:[], roster:[], nextId:1,
         stats:{ battles:0, won:0, infl:0, suff:0 }, recoveryLossCount:0, recoveryMode:false, flipAtk:false, captured:[] };
       if (typeof _t1InitAll === 'function') _t1InitAll(C);
       var reg = ssPersonRegistry(C), rows = [], groups = {};
-      if (reg.people.length !== 1434) throw new Error('Army Register total is ' + reg.people.length + ', expected 1434');   // D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots; Elkhorn's own 45-row/15-unit teeth remain stable.
+      if (reg.people.length !== 1512) throw new Error('Army Register total is ' + reg.people.length + ', expected 1512');   // D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots; Elkhorn's own 45-row/15-unit teeth remain stable.
       for (var i = 0; i < reg.people.length; i++) {
         var p = reg.people[i], origin = p.replaces || p.pid;
         if (typeof origin === 'string' && origin.indexOf('ss:elkhornTavern:') === 0) rows.push(origin);
