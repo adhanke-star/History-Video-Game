@@ -6,6 +6,48 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D402 — WAR CAREER SLICE C HALTED BEFORE NUMERIC LAW: THE D401 RECEIPT CANNOT FOLLOW A PERSON TO A SECOND RUNG — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-005 DRIVE→CONTRACT] (2026-07-15)
+
+**No Slice-C law or runtime shipped.** LANE-005 was taken from the clean D401 boundary in
+ledger-only commit `f891f3862e14411133d90dc874a6eaa0fd29d0f9`; all thirteen coordination-sensitive
+plan probes passed and their JSON artifacts were read clean before the lock was pushed. The required
+seam inventory then exposed a contract contradiction before merit, reputation, threshold, billet,
+projection, or bind numbers were declared. The runtime remains the D401 candidate: War Career 25/25
+plus 21/21 static, zero pageerrors/realErrors.
+
+**[CODEX] Exact participation has no cross-rung continuity.** `_wcActiveLink` requires the current
+person's immutable canonical `unitRef.battleId` to equal the live campaign battle, and
+`_ssCareerParticipation` requires the receipt to match that same person, slot, battle, and chain
+rung. The Union chain contains 31 unique ids in 31 rungs; the Confederate chain contains 28 unique
+ids in 28 rungs. A current identity can therefore qualify only on its source battle. The qualifying
+`creditKey` then becomes immutable.
+
+**Hand-off cannot repair the gap.** D401 selects a successor inside the same result-time battle
+hierarchy and preserves the already-spent shared credit ledger while resetting personal merit,
+reputation, and history. A retry cannot mint another receipt on that rung; campaign advance makes
+the successor's source battle stale. Explicit v1 starts remain Private through Captain. The D402
+acceptance contract nevertheless requires one valid field-command case, one valid general-command
+case, exact current-identity support, deterministic rank sequence, and rejection of forged or
+foreign-person authority. A safe general-command path would therefore require one of three new
+decisions: an exact cross-rung identity/service assignment, several promotions from one receipt, or
+wider high-rank starts. Choosing among them exceeds Slice C and the prompt's HALT-before-broadening
+rule. A forged high-rank save, inherited foreign-person credit, or name/rank join is forbidden.
+
+**Recommendation: plan exact cross-rung service assignment before runtime.** The next bounded slice
+should be planning-only and decide whether D401's explicit assignment schema can map the exact
+current person id to an exact future scenario-unit slot without changing historical source records
+or creating a second mutable identity owner. It must fail closed when no explicit mapping exists and
+retain one credit per rung. `DECISION-NEEDED-war-career-receipt-continuity.md` records this option and
+the two rejected shortcuts. Until Aaron chooses, LANE-005 is CONTRACT/unowned; D402 Slice C remains
+unshipped and Slice D-F stay locked.
+
+Runtime and artifact hashes remain 106 `c69f405c0469abe7eca67fc0fff99575`, 37
+`d526f33a7649d378d2062b931b933884`, command `55bd7b5a30f22470e1abd7a993b3cbb4`, focused probe
+`54e6a095eb81095ede3d46e5bd523f62`, command probe `bbfeaa69db333fddee2741882abff245`, generated
+HTML `4560dfc4f22b5907429e6a5c7d303e4f`, and frozen base
+`c9db83fa99230ffb95bdfdfe059f3fb9`. Baselines remain 24/54/1512/24/130, sweep 24, War Career suite
+row 38, and `_SAVE_VER=1`; D398 remains the latest complete release battery.
+
 ## D401 — WAR CAREER SLICE B SHIPPED: RESULT-OWNED PARTICIPATION, PURE FATE, AND COMRADE HAND-OFF — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-005 DRIVE→CONTRACT] (2026-07-15)
 
 **Slice B is consequence-only.** `C.loot.journey` remains the sole mutable career owner and
