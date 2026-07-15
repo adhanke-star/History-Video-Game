@@ -6,6 +6,55 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D400 — WAR CAREER SLICE A SHIPPED: TERMINAL HONESTY BEFORE ADVANCEMENT — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-005 DRIVE→CONTRACT] (2026-07-15)
+
+**The minimal canonical spine is live.** `src/106-war-career.js` loads after the save guard and
+assignment-wraps the post-91 `campaignAdvance`; the manifest does not declare an override. The sole
+mutable person-career owner remains `C.loot.journey`. `src/37-loot-survival.js` now carries an
+idempotent v1 sanitizer, campaign `runId`, six legal statuses, a bounded 96-event observation ring,
+and a finite credit ledger. The new explicit start is Private-through-Captain, stable-team, and
+same-side; D360's high-rank Journey path remains available and legacy saves remain playable.
+
+**[CODEX] Classification precedes every write.** The only terminal predicate is an active Ironman
+campaign battle with a non-draw winner on the nonplayer side:
+`C && C.iron && B && B.fromCampaign && winnerSide !== null && winnerSide !== (B.playerSide || C.side)`.
+Every nonterminal result delegates byte-for-byte. A terminal loss bypasses stats, roster mutation,
+system ticks, rewards, recovery, undo, live saves, and upgrades; removes autosave, undo, and only
+validated named slots from the same `runId`; preserves unrelated and malformed storage; clears the
+campaign; renders one defeat report; and exposes no Continue control. This closes REVIEW E71 without
+creating a second death or terminal system.
+
+**[CODEX] Slice A observes but cannot award.** Every new battle row is `qualifying:false` with zero
+merit, reputation, promotion, or capability authority because no explicit person↔unit participation
+link exists yet. Rank/role/capability summaries are pure. The guarded After-Action projection and the
+separate keyboard-accessible War Career panel disclose that boundary. Ironman named-slot creation is
+blocked, while rename, load, import, and export retain their prior contracts. `_SAVE_VER` remains 1;
+no combat, historical data, political engine, relationship graph, command effect, or franchise state
+moved.
+
+**Adversarial hardening before ship.** A separate read-only audit found six gaps and each became a
+runtime tooth: unresolved/mismatched person snapshots now fail closed while explicit replacement
+aliases normalize and matching alternate ranks survive; only exact current-run/side/rung/scenario
+credit tuples survive; saturated event ordinals rebase with collision-checked allocation; whole
+campaign/battle inputs prove terminal purity; undo capture is observed before career mutation; and
+truthy imported Ironman flags cannot use named saves. None of these repairs grants Slice-B authority.
+
+**Executable law.** `tools/probe-war-career.mjs` is release-suite row 38 in the 130-command manifest and proves the runtime in
+12 named steps across dispatcher install, sanitizer idempotence, start compatibility, pure roles,
+nonqualifying observation, terminal classification, nonterminal byte parity, storage/Continue,
+named-slot law, Auto/Classic/realtime routes, and AAR/accessibility. Disabling only the terminal
+dispatcher made exactly three declared integration steps red; changing only the observer to
+qualifying merit made exactly the ledger step red; removing only the journey adapter marker made
+exactly the focused static step and plan-probe implementation-ladder step red. Every restore was
+hash-identical and both probes returned green. A fourth bind changed only classifier precedence from
+`B.playerSide` to `C.side`; exactly `PURE TERMINAL CLASSIFIER MATRIX` failed before an exact restore.
+
+**Exact next:** Slice B only, under a fresh committed LANE-005 DRIVE take: establish explicit
+person↔participating-unit evidence across battle modes, then preflight wounded/captured/fallen fate
+and deterministic same-unit `COMRADE HAND-OFF` before delegation. No rollback after subsystem ticks,
+no qualifying credit without explicit participation, and no Slice C command projection, relationship,
+political, franchise, combat-input, or save-version work.
+
 ## D399 — WAR CAREER CONTRACTED: ONE OWNER, ONE TERMINAL DISPATCHER, AND A PULL-BASED LADDER — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-005 DRIVE→CONTRACT] (2026-07-14)
 
 **Planning boundary only.** D382 item 4 now has a durable runtime contract:

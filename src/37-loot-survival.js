@@ -10,6 +10,11 @@
    The tactical engine is not touched here. Rewards are campaign inventory state;
    survival pressure is default-off; bridge facets are additive and gated.
    Prosopography reuses the R-5 person materializer/promotion substrate.
+
+   WAR_CAREER_JOURNEY_ADAPTER_V1 (D400): the existing C.loot.journey remains
+   the sole mutable person-career owner. This module owns its save whitelist,
+   the legacy/v1 dispatch split, and the Army Register start surface; the
+   post-save runtime lives in 106-war-career.js.
    =========================================================================== */
 
 function _lootData() { return (typeof gameData === "function") ? gameData("loot-survival") : null; }
@@ -100,7 +105,7 @@ function _ssCleanPortraitMeta(src) {
 }
 function _ssStatus(s) {
   s = _lootCleanText(s || "", 24).toLowerCase();
-  if (s === "wounded" || s === "captured" || s === "alive") return s;
+  if (s === "alive" || s === "wounded" || s === "captured" || s === "fallen" || s === "retired" || s === "war-ended") return s;
   return "alive";
 }
 function _ssOutcome(s) {
@@ -132,6 +137,112 @@ function _ssCareerEntry(e) {
   var cas = _ssCleanCasualties(e.casualties);
   if (cas) out.casualties = cas;
   return (out.battleId || out.battleName || out.note || out.outcome) ? out : null;
+}
+function _ssCareerSafeId(v, max) {
+  var s = _lootCleanText(v || "", max || 180);
+  return /^[A-Za-z0-9][A-Za-z0-9._:@|/-]*$/.test(s) ? s : "";
+}
+function _ssCareerEvent(e) {
+  if (!_lootPlain(e)) return null;
+  var eventId = _ssCareerSafeId(e.eventId, 180);
+  if (!eventId) return null;
+  return {
+    eventId: eventId,
+    ordinal: Math.round(_lootClamp(e.ordinal, 1, 1000000)),
+    kind: e.kind === "start" ? "start" : "result",
+    creditKey: e.creditKey == null ? null : (_ssCareerSafeId(e.creditKey, 220) || null),
+    scenarioId: e.scenarioId == null ? null : (_ssCareerSafeId(e.scenarioId, 120) || null),
+    battleName: _lootCleanText(e.battleName || "", 120),
+    outcome: _ssOutcome(e.outcome),
+    type: _lootCleanText(e.type || "", 32),
+    status: _ssStatus(e.status),
+    qualifying: false,
+    merit: 0,
+    reputation: 0,
+    note: _lootCleanText(e.note || "", 240)
+  };
+}
+function _ssCareerCredit(e, C) {
+  if (!_lootPlain(e) || !C || (C.side !== "US" && C.side !== "CS")) return null;
+  var key = _ssCareerSafeId(e.creditKey, 220);
+  if (!key) return null;
+  var runId = _ssCareerSafeId(e.runId, 96);
+  var side = e.side === "CS" ? "CS" : (e.side === "US" ? "US" : "");
+  var chainIndex = Number(e.chainIndex);
+  var scenarioId = _ssCareerSafeId(e.scenarioId, 120);
+  var chain = (typeof CHAINS !== "undefined" && CHAINS && Array.isArray(CHAINS[side])) ? CHAINS[side] : null;
+  if (!runId || runId !== _ssCareerSafeId(C.runId, 96) || side !== C.side ||
+      !isFinite(chainIndex) || Math.floor(chainIndex) !== chainIndex || chainIndex < 0 ||
+      !chain || chainIndex >= chain.length || scenarioId !== chain[chainIndex] ||
+      key !== [runId, side, chainIndex, scenarioId].join("|")) return null;
+  var outcome = _ssOutcome(e.outcome);
+  var type = _lootCleanText(e.type || "", 32);
+  var rank = outcome === "victory" ? (type === "decisive" ? 3 : 2) : (outcome === "draw" ? 1 : 0);
+  return {
+    creditKey: key,
+    runId: runId,
+    side: side,
+    chainIndex: chainIndex,
+    scenarioId: scenarioId,
+    outcome: outcome || "defeat",
+    type: type,
+    outcomeRank: rank,
+    qualifying: false,
+    merit: 0,
+    reputation: 0,
+    eventId: _ssCareerSafeId(e.eventId, 180) || null,
+    eventDate: null
+  };
+}
+function _ssCleanWarCareerV1(C, J, clean) {
+  clean.careerVersion = 1;
+  clean.merit = 0;
+  clean.reputation = 0;
+  clean.eventOrdinal = Math.round(_lootClamp(J.eventOrdinal, 0, 1000000));
+
+  var eventsById = {}, events = [];
+  if (Array.isArray(J.events)) {
+    for (var ei = 0; ei < J.events.length; ei++) {
+      var event = _ssCareerEvent(J.events[ei]);
+      if (!event || eventsById[event.eventId]) continue;
+      eventsById[event.eventId] = true;
+      events.push(event);
+    }
+  }
+  events.sort(function (a, b) { return a.ordinal - b.ordinal || String(a.eventId).localeCompare(String(b.eventId)); });
+  if (events.length > 96) events = events.slice(events.length - 96);
+  for (var oi = 0; oi < events.length; oi++) events[oi].ordinal = oi + 1;
+  clean.events = events;
+  clean.eventOrdinal = events.length;
+
+  var creditsByKey = {}, credits = [];
+  if (Array.isArray(J.creditLedger)) {
+    for (var ci = 0; ci < J.creditLedger.length; ci++) {
+      var credit = _ssCareerCredit(J.creditLedger[ci], C);
+      if (!credit) continue;
+      var prior = creditsByKey[credit.creditKey];
+      if (!prior) {
+        creditsByKey[credit.creditKey] = credit;
+        credits.push(credit);
+      } else if (credit.outcomeRank > prior.outcomeRank) {
+        for (var ri = 0; ri < credits.length; ri++) if (credits[ri] === prior) { credits[ri] = credit; break; }
+        creditsByKey[credit.creditKey] = credit;
+      }
+    }
+  }
+  credits.sort(function (a, b) { return a.chainIndex - b.chainIndex || String(a.creditKey).localeCompare(String(b.creditKey)); });
+  var finiteRungs = 64;
+  if (typeof CHAINS !== "undefined" && CHAINS && C && Array.isArray(CHAINS[C.side])) finiteRungs = CHAINS[C.side].length;
+  if (credits.length > finiteRungs) credits = credits.slice(0, finiteRungs);
+  clean.creditLedger = credits;
+
+  // Later slices own these ledgers. Slice A sanitizes them to inert defaults so
+  // a malformed save cannot smuggle advancement, relationships, or authority.
+  clean.roleHistory = [];
+  clean.relationships = {};
+  clean.lineage = [];
+  clean.terminal = null;
+  clean.currentBillet = null;
 }
 function _ssJourneySnapshot(p) {
   if (!_lootPlain(p)) return null;
@@ -216,7 +327,7 @@ function _ssCleanPeopleState(L) {
 }
 function _ssSyncPersonCareer(L) {
   var J = L && L.journey;
-  if (!J || !J.personId) return;
+  if (!J || !J.enabled || !J.personId || !J.person || J.person.pid !== J.personId) return;
   var p = J.person || {};
   L.people[J.personId] = {
     pid: J.personId,
@@ -252,8 +363,29 @@ function _ssCleanJourney(C, L) {
   if (!clean.currentBattleId) clean.currentBattleId = clean.lastBattleId || clean.battleId;
   clean.person = _ssJourneySnapshot(J.person);
   if (!clean.personId && clean.person) clean.personId = clean.person.pid;
+  if (J.careerVersion === 1) {
+    var resolved = clean.personId && typeof ssFindPerson === "function" ? ssFindPerson(C, clean.personId) : null;
+    if (!clean.person && resolved) {
+      clean.person = _ssJourneySnapshot(resolved);
+      clean.personId = clean.person ? clean.person.pid : "";
+    } else if (clean.person && clean.personId && clean.person.pid !== clean.personId) {
+      if (resolved && resolved.pid === clean.person.pid && resolved.replaces === clean.personId) clean.personId = clean.person.pid;
+      else {
+        clean.enabled = false;
+        clean.personId = "";
+        clean.person = null;
+        clean.status = "alive";
+      }
+    }
+    if (!clean.person || clean.person.pid !== clean.personId) {
+      clean.enabled = false;
+      clean.personId = "";
+      clean.person = null;
+      clean.status = "alive";
+    }
+  }
   if (!clean.personId) clean.enabled = false;
-  if (!clean.enabled) clean.status = "alive";
+  if (!clean.enabled && J.careerVersion !== 1) clean.status = "alive";
   clean.log = [];
   if (Array.isArray(J.log)) {
     for (var i = 0; i < J.log.length && clean.log.length < 20; i++) {
@@ -268,6 +400,7 @@ function _ssCleanJourney(C, L) {
       if (row) clean.career.push(row);
     }
   }
+  if (J.careerVersion === 1) _ssCleanWarCareerV1(C, J, clean);
   L.journey = clean;
 }
 
@@ -316,6 +449,7 @@ function lootInit(C) {
   }
   L.inventory = clean;
   _ssCleanJourney(C, L);
+  if (typeof warCareerEnsureRunId === "function") warCareerEnsureRunId(C);
   _ssCleanPeopleState(L);
   _ssSyncPersonCareer(L);
   for (var slot in L.equipped) {
@@ -1010,6 +1144,10 @@ function ssStartJourney(C, pid, battleId, opts) {
 
 function ssJourneyOnResolve(winnerSide, type, B, C, win) {
   var L = lootInit(C); if (!L || !L.journey || !L.journey.enabled) return { ok: false, reason: "inactive" };
+  if (L.journey.careerVersion === 1) {
+    if (typeof warCareerObserveResolve === "function") return warCareerObserveResolve(winnerSide, type, B, C, win);
+    return { ok: false, reason: "war-career-runtime-missing" };
+  }
   var J = L.journey, bid = _ssBattleId(B) || J.currentBattleId || J.battleId;
   var bname = _ssBattleName(B, bid), side = _ssPlayerSide(C, B), enemy = side === "CS" ? "US" : "CS";
   var suffered = _ssSideCas(B, side), inflicted = _ssSideCas(B, enemy);
@@ -1109,6 +1247,8 @@ function _ssCap(s) {
 }
 function _ssStatusColor(s) {
   s = _ssStatus(s);
+  if (s === "fallen") return "#da6a5a";
+  if (s === "retired" || s === "war-ended") return "#9a9184";
   if (s === "captured") return "#da6a5a";
   if (s === "wounded") return "#c9712e";
   return "#6f9e5a";
@@ -1156,6 +1296,7 @@ function _ssJourneyActiveHTML(C) {
     + _ssTrajectoryHTML(J)
     + '<div class="gn-col-head" style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:9px 0 2px">Career Log</div>'
     + _ssCareerHTML(J, 5)
+    + (J.careerVersion === 1 && typeof warCareerSummaryHTML === "function" ? warCareerSummaryHTML(C) : "")
     + '</div>';
 }
 function ssJourneyReportHTML(C, opts) {
@@ -1241,6 +1382,19 @@ function _ssRegisterText(p) {
   ].join(" ").toLowerCase();
 }
 
+function _ssWarCareerStartState(C, p) {
+  if (typeof warCareerCanStartPerson !== "function") return { ok: false, reason: "runtime-unavailable", label: "War Career Unavailable" };
+  return warCareerCanStartPerson(C, p, C && C.loot && C.loot.journey);
+}
+function _ssWarCareerButtonHTML(C, p, cls, id) {
+  if (!p) return "";
+  var st = _ssWarCareerStartState(C, p), label = st.label || (st.converting ? "Convert to War Career" : "Begin War Career");
+  var reason = st.ok ? "Start an explicit War Career with this person" : (st.reasonText || st.reason || "War Career unavailable");
+  return '<button type="button" class="' + (cls || "upg") + '"' + (id ? ' id="' + _lootAttr(id) + '"' : '')
+    + ' data-wc-start="' + _lootAttr(p.pid) + '" aria-label="' + _lootAttr(label + " — " + reason) + '" title="' + _lootAttr(reason) + '"'
+    + (st.ok ? "" : ' disabled aria-disabled="true"') + '>' + _lootEsc(label) + '</button>';
+}
+
 function _lootInventoryHTML(C) {
   var L = lootInit(C), inv = L.inventory;
   if (!inv.length) return '<p class="lede" style="font-size:12px;text-align:center;opacity:.72">No campaign kit recovered yet.</p>';
@@ -1294,7 +1448,9 @@ function _ssPeopleHTML(C) {
     var label = (op.side || "?") + " · " + op.name + " · " + (op.rank || "Soldier") + " · OVR " + op.ovr + (team ? " · " + team : "");
     html += '<option value="' + _lootAttr(op.pid) + '"' + (op.pid === activeId ? " selected" : "") + '>' + _lootEsc(label) + '</option>';
   }
-  html += '</select><button id="ssBeginSelected" type="button" class="bigbtn"' + (locked ? ' disabled aria-disabled="true"' : '') + '>' + (locked ? "Journey Active" : "Begin Journey") + '</button></div></div>';
+  var selectedPerson = active || people[0] || null;
+  html += '</select><div class="btn-row" style="justify-content:flex-end;gap:6px"><button id="ssBeginSelected" type="button" class="bigbtn"' + (locked ? ' disabled aria-disabled="true"' : '') + '>' + (locked ? "Journey Active" : "Begin Journey") + '</button>'
+    + _ssWarCareerButtonHTML(C, selectedPerson, "bigbtn", "wcBeginSelected") + '</div></div></div>';
   if (active) html += _ssJourneyActiveHTML(C);
   var selected = activeId || (people[0] && people[0].pid) || "";
   html += '<div id="ssArmyRegister" style="margin-top:10px">'
@@ -1303,7 +1459,7 @@ function _ssPeopleHTML(C) {
     + '<div id="ssPersonDetail" style="margin:8px 0">' + ssPersonDetailHTML(C, selected) + '</div>'
     + '<div id="ssRegCount" style="font-size:11px;opacity:.74;margin:6px 0">' + people.length + ' people</div>'
     + '<div id="ssRegResults" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px;max-height:460px;overflow:auto;padding-right:2px">';
-  for (var i = 0; i < people.length; i++) html += _ssRegisterCardHTML(people[i], locked, activeId);
+  for (var i = 0; i < people.length; i++) html += _ssRegisterCardHTML(C, people[i], locked, activeId);
   return html + '</div></div>';
 }
 
@@ -1319,7 +1475,8 @@ function ssPersonDetailHTML(C, pid) {
   return '<div id="ssPersonDetailCard" data-ss-detail-pid="' + _lootAttr(p.pid) + '" style="border:1px solid var(--rule);border-left:5px solid ' + (grade.color || "#b8863b") + ';border-radius:6px;padding:10px;background:rgba(0,0,0,.14)">'
     + '<div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:start">'
     + '<div style="min-width:0"><div style="display:flex;align-items:center;gap:8px;min-width:0"><span aria-hidden="true" title="' + _lootAttr(ps.title) + '" style="flex:none;display:inline-block;width:6px;height:30px;border-radius:2px;' + ps.fill + '"></span><div style="min-width:0"><b style="font-size:18px;overflow-wrap:anywhere">' + _lootEsc(p.name) + '</b><div style="font-size:12px;opacity:.78">' + _lootEsc(_ssRankLabel(p)) + ' &middot; ' + _lootEsc(p.side || "") + (p.role ? ' &middot; ' + _lootEsc(p.role) : '') + '</div></div></div></div>'
-    + '<button type="button" class="bigbtn" data-ss-start="' + _lootAttr(p.pid) + '"' + (locked ? ' disabled aria-disabled="true"' : '') + '>' + (activeSame ? "Journey Active" : (locked ? "Journey Active" : "Begin Journey")) + '</button></div>'
+    + '<div class="btn-row" style="justify-content:flex-end;gap:6px"><button type="button" class="bigbtn" data-ss-start="' + _lootAttr(p.pid) + '"' + (locked ? ' disabled aria-disabled="true"' : '') + '>' + (activeSame ? "Journey Active" : (locked ? "Journey Active" : "Begin Journey")) + '</button>'
+    + _ssWarCareerButtonHTML(C, p, "bigbtn") + '</div></div>'
     + '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:7px;margin-top:9px">'
     + _lootPill("OVR", p.ovr, grade.color || "#b8863b")
     + _lootPill("Grade", (grade.letter || "") + " " + (grade.word || ""), grade.color || "#b8863b")
@@ -1351,7 +1508,7 @@ function _ssRegisterControlsHTML(people) {
     + '</div>';
 }
 
-function _ssRegisterCardHTML(p, locked, activeId) {
+function _ssRegisterCardHTML(C, p, locked, activeId) {
   var grade = p.grade || { letter: "", word: "", color: "#b8863b" };
   var prov = _ssProvLabel(p), unit = _ssPrimaryUnit(p), source = _ssSourceLabel(p);
   var ps = (typeof fldProvenanceStyle === "function") ? fldProvenanceStyle(prov, grade.color) : { fill: "background:#8a7350", glyph: "", label: prov, title: prov };
@@ -1363,7 +1520,8 @@ function _ssRegisterCardHTML(p, locked, activeId) {
     + '<div style="font-size:11px;opacity:.76">' + _lootEsc(_ssRankLabel(p)) + ' &middot; ' + _lootEsc(p.side || "") + ' &middot; OVR ' + _lootEsc(p.ovr) + '</div>'
     + '<div style="font-size:11px;opacity:.72;overflow-wrap:anywhere">' + _lootEsc(unit || team || "No unit assignment") + '</div>'
     + '<div style="font-size:10px;opacity:.7;margin-top:3px">' + _lootEsc(source) + ' &middot; ' + _lootEsc(prov) + '</div></div></div>'
-    + '<div class="btn-row" style="margin-top:7px;justify-content:flex-start;gap:6px"><button type="button" class="upg" data-ss-pick="' + _lootAttr(p.pid) + '">Details</button><button type="button" class="upg" data-ss-start="' + _lootAttr(p.pid) + '"' + (locked ? ' disabled aria-disabled="true"' : '') + '>' + ((activeId && activeId === p.pid) ? "Journey Active" : (locked ? "Journey Active" : "Begin Journey")) + '</button></div>'
+    + '<div class="btn-row" style="margin-top:7px;justify-content:flex-start;gap:6px"><button type="button" class="upg" data-ss-pick="' + _lootAttr(p.pid) + '">Details</button><button type="button" class="upg" data-ss-start="' + _lootAttr(p.pid) + '"' + (locked ? ' disabled aria-disabled="true"' : '') + '>' + ((activeId && activeId === p.pid) ? "Journey Active" : (locked ? "Journey Active" : "Begin Journey")) + '</button>'
+    + _ssWarCareerButtonHTML(C, p, "upg") + '</div>'
     + '</div>';
 }
 
@@ -1408,6 +1566,13 @@ function lootWireTab(C) {
   var pick = document.getElementById("ssPersonSelect");
   var begin = document.getElementById("ssBeginSelected");
   if (pick && begin) begin.addEventListener("click", function () { if (pick.value) ssStartJourney(C, pick.value); refresh(); });
+  var wcBegin = document.getElementById("wcBeginSelected");
+  if (pick && wcBegin) wcBegin.addEventListener("click", function () {
+    if (!pick.value || typeof warCareerStart !== "function") return;
+    var res = warCareerStart(C, pick.value);
+    if (!res.ok && typeof toast === "function") toast(res.reasonText || res.reason || "War Career could not start.", 2600);
+    refresh();
+  });
   var regRoot = document.getElementById("ssArmyRegister");
   if (!regRoot) return;
   var detail = document.getElementById("ssPersonDetail");
@@ -1419,11 +1584,28 @@ function lootWireTab(C) {
   var unit = document.getElementById("ssRegUnit");
   var selectedPid = (pick && pick.value) || "";
   function filterVal(el) { return el ? String(el.value || "") : ""; }
+  function syncPrimaryCareerButton(pid) {
+    var button = document.getElementById("wcBeginSelected");
+    if (!button) return;
+    var person = pid ? ssFindPerson(C, pid) : null;
+    var state = _ssWarCareerStartState(C, person);
+    var label = state.label || (state.converting ? "Convert to War Career" : "Begin War Career");
+    var reason = state.ok ? "Start an explicit War Career with this person" : (state.reasonText || state.reason || "War Career unavailable");
+    if (person && person.pid) button.setAttribute("data-wc-start", person.pid);
+    else button.removeAttribute("data-wc-start");
+    button.textContent = label;
+    button.setAttribute("aria-label", label + " — " + reason);
+    button.setAttribute("title", reason);
+    button.disabled = !state.ok;
+    if (state.ok) button.removeAttribute("aria-disabled");
+    else button.setAttribute("aria-disabled", "true");
+  }
   function showDetail(pid) {
     if (!pid || !detail) return;
     selectedPid = pid;
     detail.innerHTML = ssPersonDetailHTML(C, pid);
     if (pick) pick.value = pid;
+    syncPrimaryCareerButton(pid);
   }
   function currentDetailPid() {
     if (!detail) return selectedPid;
@@ -1466,6 +1648,16 @@ function lootWireTab(C) {
     filterEls[ri].addEventListener(filterEls[ri] === search ? "input" : "change", applyRegisterFilters);
   }
   regRoot.addEventListener("click", function (ev) {
+    var wcStart = _ssClosestAttr(ev.target, "data-wc-start", regRoot);
+    if (wcStart && wcStart.getAttribute("disabled") == null) {
+      ev.preventDefault();
+      if (typeof warCareerStart === "function") {
+        var wcRes = warCareerStart(C, wcStart.getAttribute("data-wc-start"));
+        if (!wcRes.ok && typeof toast === "function") toast(wcRes.reasonText || wcRes.reason || "War Career could not start.", 2600);
+      }
+      refresh();
+      return;
+    }
     var start = _ssClosestAttr(ev.target, "data-ss-start", regRoot);
     if (start && start.getAttribute("disabled") == null) {
       ev.preventDefault();

@@ -93,7 +93,8 @@
     "102-h0-tactical-hud.js",
     "103-h0-after-action.js",
     "104-h2-cutaways.js",
-    "105-save-guard.js"
+    "105-save-guard.js",
+    "106-war-career.js"
   ],
   "overrides": [
     "_t1InitAll",

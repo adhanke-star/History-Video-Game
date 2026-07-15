@@ -333,11 +333,15 @@ function aarRenderReport(C, opts) {
     } catch (e) { divPanel = ''; }
   }
 
-  // D151: a read-only Soldier's Story tie-in. The journey state already rides the save;
-  // this panel only echoes its bounded career log in the live/final report.
+  // D151 + D400 WAR_CAREER_AAR_SEAM_V1: one guarded core composition seam.
+  // Explicit v1 careers receive the nonqualifying War Career report; every legacy
+  // Journey keeps the shipped Soldier's Story report unchanged.
   var soldierPanel = '';
-  if (typeof ssJourneyReportHTML === "function") {
-    try { soldierPanel = ssJourneyReportHTML(C, { compact: final }); } catch (e) { soldierPanel = ''; }
+  var isWarCareer = !!(C && C.loot && C.loot.journey && C.loot.journey.careerVersion === 1);
+  if (isWarCareer && typeof warCareerReportHTML === "function") {
+    try { soldierPanel = warCareerReportHTML(C, { compact: final }); } catch (e) { soldierPanel = ''; }
+  } else if (typeof ssJourneyReportHTML === "function") {
+    try { soldierPanel = ssJourneyReportHTML(C, { compact: final }); } catch (e2) { soldierPanel = ''; }
   }
 
   // The human cost, set beside the war's true historical toll.

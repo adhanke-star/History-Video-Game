@@ -76,14 +76,28 @@ function _slRead(i) {
     return _slValidSave(sv) ? sv : null;
   } catch (e) { return null; }
 }
+function _slIronmanNamedSaveBlocked(sv) {
+  return !!(sv && sv.campaign && sv.campaign.iron);
+}
 function _slWrite(i, sv) {
   try {
     if (!_slValidSave(sv)) return false;
+    if (_slIronmanNamedSaveBlocked(sv)) return false;
     localStorage.setItem(_slKey(i), JSON.stringify(sv));
     return true;
   } catch (e) { return false; }
 }
 function _slDelete(i) { try { localStorage.removeItem(_slKey(i)); } catch (e) {} }
+function _slInvalidateRunSlots(runId) {
+  runId = String(runId == null ? "" : runId).trim();
+  if (!/^[A-Za-z0-9][A-Za-z0-9._:@|/-]{0,95}$/.test(runId)) return 0;
+  var removed = 0;
+  for (var i = 0; i < _SL_MAX; i++) {
+    var sv = _slRead(i);
+    if (sv && sv.campaign && sv.campaign.runId === runId) { _slDelete(i); removed++; }
+  }
+  return removed;
+}
 /* S34 (D234): a slot whose RAW data exists but fails validation (older _SAVE_VER / damaged JSON) must not
    masquerade as "Empty" — the raw string is still in localStorage and an enabled Save would clobber it. */
 function _slRawPresent(i) { try { return localStorage.getItem(_slKey(i)) != null; } catch (e) { return false; } }
@@ -99,7 +113,11 @@ function _slSetSlotName(i, name) {
   var sv = _slRead(i);
   if (!sv) return false;
   sv.slotName = _slCleanLabel(name);
-  return _slWrite(i, sv);
+  // Metadata-only rename preserves the validated payload already in this slot.
+  // It is deliberately narrower than _slWrite, whose Ironman copy law has no
+  // options/bypass surface.
+  try { localStorage.setItem(_slKey(i), JSON.stringify(sv)); return true; }
+  catch (e) { return false; }
 }
 function _slMeta(i) {
   var sv = _slRead(i);
@@ -135,6 +153,7 @@ function _slApplyImportedSave(sv) {
   var copy = _slClone(sv);
   if (!_slValidSave(copy)) return { ok: false, reason: "Invalid save file." };
   applySave(copy);
+  if (typeof G !== "undefined" && G && G.campaign && typeof warCareerInit === "function") warCareerInit(G.campaign);
   _slClearUndo();
   if (typeof saveLocal === "function") saveLocal();
   return { ok: true };
@@ -231,6 +250,7 @@ function _slRestoreUndo() {
   var snap = _slReadUndo();
   if (!snap || !_slUndoAvailable()) return false;
   applySave(snap.save);
+  if (typeof G !== "undefined" && G && G.campaign && typeof warCareerInit === "function") warCareerInit(G.campaign);
   _slClearUndo();
   if (typeof saveLocal === "function") saveLocal();
   return true;
@@ -264,6 +284,8 @@ function _slRestoreUndo() {
 function _slRowHTML(i) {
   var m = _slMeta(i);
   var stale = !m && _slRawPresent(i);   // S34 (D234): raw data present but unreadable (old version / damaged)
+  var ironBlocked = false;
+  try { ironBlocked = !!(typeof G !== "undefined" && G && G.campaign && G.campaign.iron); } catch (e0) {}
   var title = stale ? "Incompatible save" : "Empty";
   var sub = stale
     ? "This slot holds data from an older or damaged save format. Save and Load are disabled to protect it; Delete clears it."
@@ -286,7 +308,7 @@ function _slRowHTML(i) {
     +       ' style="box-sizing:border-box;width:100%;margin-top:2px;padding:6px 8px;border:1px solid #8c724e;border-radius:4px;background:#161009;color:#f2e8d5">'
     +   '</div>'
     +   '<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">'
-    +     '<button class="upg" id="slSave' + i + '" style="padding:6px 10px;font-size:12px" aria-label="Save current campaign to slot ' + (i + 1) + '"' + (stale ? " disabled" : "") + '>Save</button>'
+    +     '<button class="upg" id="slSave' + i + '" style="padding:6px 10px;font-size:12px" aria-label="Save current campaign to slot ' + (i + 1) + (ironBlocked ? ' — unavailable during Ironman' : '') + '"' + ((stale || ironBlocked) ? ' disabled aria-disabled="true"' : "") + '>Save</button>'
     +     '<button class="upg" id="slRename' + i + '" style="padding:6px 10px;font-size:12px" aria-label="Rename save slot ' + (i + 1) + '"' + (m ? "" : " disabled") + '>Rename</button>'
     +     '<button class="upg" id="slLoad' + i + '" style="padding:6px 10px;font-size:12px" aria-label="Load save slot ' + (i + 1) + '"' + (m ? "" : " disabled") + '>Load</button>'
     +     '<button class="upg" id="slDel' + i + '" style="padding:6px 10px;font-size:12px;opacity:.75" aria-label="Delete save slot ' + (i + 1) + '"' + ((m || stale) ? "" : " disabled") + '>Delete</button>'
@@ -313,6 +335,7 @@ function _slOpenManager() {
   var html =
     '<h1 class="title-xl">Save &amp; Load</h1>' +
     '<p class="title-sub">Campaign Slots - keep separate campaigns for each commander</p>' +
+    ((typeof G !== "undefined" && G && G.campaign && G.campaign.iron) ? '<div id="slIronmanLaw" role="status" style="border:1px solid #b8863b;border-radius:5px;padding:8px 10px;margin:8px 0;font-size:12px">Ironman uses its live campaign save only. New named saves are disabled; existing slots may still be loaded, renamed, exported, or deleted.</div>' : '') +
     '<hr class="rule">' +
     rows +
     _slUndoHTML() +
@@ -342,12 +365,18 @@ function _slWire() {
         if (!sv) { if (typeof toast === "function") toast("Slot is empty."); return; }
         if (!_slConfirmReplaceLive("Loading slot " + (idx + 1))) return;   // S32 (D234)
         applySave(_slClone(sv));
+        if (G.campaign && typeof warCareerInit === "function") warCareerInit(G.campaign);
         _slClearUndo();
         if (typeof saveLocal === "function") saveLocal();
         if (typeof toast === "function") toast("Loaded slot " + (idx + 1) + ".");
         if (typeof openMainMenu === "function") openMainMenu();
       });
       if (saveBtn) saveBtn.addEventListener("click", function () {
+        var liveSave = serializeSave();
+        if (_slIronmanNamedSaveBlocked(liveSave)) {
+          if (typeof toast === "function") toast("Named saves are disabled during Ironman.", 2600);
+          return;
+        }
         // S31 (D234): overwriting a FILLED slot loses that save permanently (no undo lane covers it) — confirm.
         var existing = _slMeta(idx);
         if (existing) {
@@ -356,7 +385,7 @@ function _slWire() {
           try { okOw = window.confirm('Overwrite "' + exLabel + '" in slot ' + (idx + 1) + "? The existing save will be lost."); } catch (e) {}
           if (!okOw) return;
         }
-        var sv = serializeSave();
+        var sv = liveSave;
         sv.slotName = _slCleanLabel(nameEl && nameEl.value ? nameEl.value : "") || _slDefaultSlotName();
         if (_slWrite(idx, sv)) { if (typeof toast === "function") toast("Saved to slot " + (idx + 1) + "."); }
         else if (typeof toast === "function") toast("Save failed - storage may be full.");

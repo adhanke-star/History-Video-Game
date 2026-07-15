@@ -237,7 +237,7 @@ step("PINS: the three shipped count locks agree with the current mode", () => {
   return { mode: "integration", lock: "11/9/2 everywhere" };
 });
 
-step("BASELINES: the current D397 whole-registry boundary the arc must not move still holds", () => {
+step("BASELINES: the current D400 whole-registry boundary the arc must not move still holds", () => {
   const t1 = read(T1);
   const registryBlock = (t1.match(/function fldScenarioRegistry\(\)[\s\S]*?\n\s*\}\s*catch/) || [null, ""])[0] || "";
   const scenarioCount = (registryBlock.match(/R\.[A-Za-z0-9]+\s*=\s*GAME_DATA/g) || []).length;
@@ -247,7 +247,7 @@ step("BASELINES: the current D397 whole-registry boundary the arc must not move 
   const schemas = read(SCHEMAS);
   if (!schemas.includes("['women-in-war.json', ['_meta', 'schema', 'records']]")) throw new Error("schema-validator women row changed");
   const suite = parseSuite(read(VET));
-  if (suite.length !== 129) throw new Error("vet suite must stay 129, counted " + suite.length);   // D391: 126 -> 127 — probe-spotsylvania enrolled. D393: 127 -> 128 — probe-wilderness enrolls with the twenty-third battle. D397: 128 -> 129 — probe-petersburg-initial-assaults enrolls with the twenty-fourth battle.
+  if (suite.length !== 130) throw new Error("vet suite must stay 130, counted " + suite.length);   // D391: 126 -> 127 — probe-spotsylvania enrolled. D393: 127 -> 128 — probe-wilderness enrolls with the twenty-third battle. D397: 128 -> 129 — probe-petersburg-initial-assaults enrolls with the twenty-fourth battle. D400: 129 -> 130 — probe-war-career enrolls with Slice A.
   if (!suite.some(rw => rw[1] === "tools/probe-women-in-war.mjs")) throw new Error("focused women probe missing from the suite");
   if (suite.some(rw => rw[1] === "tools/probe-women-in-war-arc-plan.mjs")) throw new Error("plan probes never enroll in the suite");
   return { scenarios: scenarioCount, suite: suite.length };
