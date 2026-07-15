@@ -24,12 +24,36 @@ mkdirSync(OUT, { recursive: true });
 const cfg = JSON.parse(readFileSync(join(__dirname, 'shots.json'), 'utf8'));
 const GL = ['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist','--enable-webgl','--disable-dev-shm-usage'];
 const sleep = ms => new Promise(r => setTimeout(r, ms));
+async function settlesWithin(promise, ms) {
+  let timer;
+  try {
+    return await Promise.race([
+      promise.then(() => true, () => true),
+      new Promise(resolve => { timer = setTimeout(() => resolve(false), ms); })
+    ]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+async function closePage(page) {
+  if (!page) return;
+  try {
+    await settlesWithin(page.close({ runBeforeUnload:false }), 2500);
+  } catch {}
+}
 async function up(u){ try{ const r=await fetch(u,{method:'HEAD'}); return r.ok||r.status===200; }catch{ return false; } }
 async function closeBrowser(browser){
   if (!browser) return;
   try {
-    await Promise.race([browser.close(), sleep(3000)]);
+    await settlesWithin(browser.close(), 3000);
   } catch {}
+  // Chrome can exit before Playwright receives the close reply, leaving the
+  // transport callback live until the outer 360s guard. Finalize the standalone
+  // probe's client connection even when browser.close() reports that it settled;
+  // Connection.close is idempotent and rejects any orphaned callbacks locally.
+  if (browser._connection && typeof browser._connection.close === 'function') {
+    try { browser._connection.close('probe-gettysburg bounded cleanup'); } catch {}
+  }
 }
 function printResult(result){
   console.log('probe-gettysburg ok=' + result.ok + ' steps=' + (result.steps?result.steps.length:0) + ' pageerrors=' + (result.pageerrors?result.pageerrors.length:0));
@@ -364,7 +388,9 @@ const DOM = `(() => {
   finally {
     writeFileSync(join(OUT,'probe-gettysburg.json'), JSON.stringify(result, null, 2));
     printResult(result);
-    await closeBrowser(browser); if (srv) srv.kill();
+    await closePage(page);
+    await closeBrowser(browser);
+    if (srv) srv.kill();
   }
   if (!result.ok || result.fatal || (result.pageerrors && result.pageerrors.length)) process.exit(1);
 })();

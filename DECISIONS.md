@@ -6,6 +6,58 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D398 — PETERSBURG RELEASE VERIFIED: 129/129 GREEN, BROWSER TEARDOWN BOUNDED, AND LANE-003 RELEASED — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-003 VERIFY→CONTRACT] (2026-07-14)
+
+**Complete release evidence.** The D397 candidate at
+`97082fc74e2ae27318684f1f325512a546f58ef9` passed the entire serialized release manifest in
+two evidenced segments. `.tmp/vet-no-regression-2026-07-15T00-36-01-361Z.log` passed commands
+1-78 before command 79 (`presets`) wrote a green artifact and then reached the 360.5-second
+outer limit in teardown. The exact-label resume
+`.tmp/vet-no-regression-2026-07-15T02-00-37-808Z.log` passed commands 79-129, ending
+`VET NO-REGRESSION OK — 51 commands`. Unique coverage is therefore **78+51=129/129 green**;
+the only overlap is the repaired Presets command. Independent readback covered **282 artifacts**:
+128/128 expected JSONs are fresh, parseable, `ok:true`, and contain no failed step, pageerror,
+realError, or failure; 149 PNG + 4 JPEG outputs all decode with positive dimensions; and the
+schema HTML reports 54/54 with zero failures. Army Register is 1512. The complete sweep is 24
+scenarios × 8 seeds = 192 runs with `failures:[]` and zero pageerrors.
+
+**Harness repairs, without weaker teeth or larger timeouts.** Presets' assertions and screenshot
+were green; Playwright retained a post-Chrome close callback. `tools/probe-presets.mjs` now bounds
+and cancels page/browser cleanup timers and finalizes the standalone Playwright client connection,
+so an orphaned close callback cannot consume the runner's 360-second cap. Gettysburg passed the
+suite 19/19 with zero pageerrors but took 357.9 seconds, exposing the same teardown risk only 2.1
+seconds below that cap; `tools/probe-gettysburg.mjs` receives the identical terminal-only repair.
+The final repaired standalone confirmations both exited naturally: Presets **27/27 in 99.65s**
+and Gettysburg **19/19 in 59.30s**, each with a fresh green JSON/PNG and zero pageerrors. No test
+assertion, artifact requirement, browser timeout, or game rule was relaxed.
+
+**D397 state is unchanged.** Petersburg remains city-hold **8/8** and US-higher-loss **7/8** at
+24 scenarios / schema 54 / Army Register 1512 / coverage 24 / suite 129 / sweep 24. Final hashes
+remain data `5534c67015ca643ca343a80d586ca263`, focused probe
+`9025eb752d6b264b0168377304e4d63a`, T1 `6281fba361ee39224e9d08b2d147d736`, T10
+`9090a9be3e7234fc11a5de41bbdbfdf2`, generated HTML
+`e669982913feb54032253bf19bcd2b8b`, and frozen base
+`c9db83fa99230ffb95bdfdfe059f3fb9`. D398 moves no gameplay, historical data, simulation input,
+balance, save envelope, or generated-game byte; schema-report timestamp churn was restored.
+
+**[AARON] Tripo authorization for this personal project.** Qualifying Tripo Free/public outputs
+published under CC BY 4.0 may be used for this personal, noncommercial game. No Tripo support-ticket
+clearance is required and no paid credits may be used. This authorizes provenance, not automatic
+enablement: every actual file must retain auditable attribution and pass the existing local-file,
+license-field, path, GLB, geometry, optimization, importer, browser, performance, accessibility,
+and visual gates before its slot may be enabled. No Tripo file or enabled slot ships in D398.
+
+**Boundary.** The materialized safe clone remains authoritative while the canonical Desktop
+checkout remains largely `compressed,dataless`; never overwrite it or pull across it. LANE-003
+returns to **CONTRACT/unowned** with no release debt. Cold Harbor stays DEFERRED under D395.
+The next bounded queue slice is D382 item 4 **planning only**: inventory the existing career,
+Soldier's Story, command, relationships/reputation, save/death, Army Register, After-Action, and
+political seams; then contract the smallest ONE-CAREER-ACROSS-ROLES / COMRADE-HAND-OFF slice in a
+durable design plus filesystem-first, fail-closed, bind-tested plan probe. No runtime or save-schema
+migration starts before that contract is committed.
+
+---
+
 ## D397 — PETERSBURG'S INITIAL ASSAULTS ARE PLAYABLE: THE CITY HOLDS, THE ATTACKER BLEEDS, AND THE INTERRUPTED RUN IS RECOVERED WITHOUT CHANGING ITS CONTRACT — [CLAUDE CODE / FABLE AUTHORSHIP, CHATGPT/CODEX RECOVERY + FINAL VERIFICATION, LANE-003 DRIVE→VERIFY] (2026-07-14)
 
 The committed D396 contract now exists as scenario 24. `data/petersburg-assaults.json` and
