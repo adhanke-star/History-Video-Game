@@ -6,6 +6,72 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D399 — WAR CAREER CONTRACTED: ONE OWNER, ONE TERMINAL DISPATCHER, AND A PULL-BASED LADDER — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-005 DRIVE→CONTRACT] (2026-07-14)
+
+**Planning boundary only.** D382 item 4 now has a durable runtime contract:
+`docs/design/war-career-loop-design.md` (md5
+`8fdd062c084d8953ff042c3cf904af1c`) plus
+`tools/probe-war-career-loop-plan.mjs` (md5
+`b4957c1360b55767cb5b6bac5b1fdb57`; 10/10 planning mode,
+filesystem-first, fail-closed, future-dual-mode). No runtime, save version, generated-game byte,
+political engine, combat input, or historical data moved. Baselines remain 24 scenarios / schema
+54 / Army Register 1512 / suite 129; generated HTML remains
+`e669982913feb54032253bf19bcd2b8b` and frozen base remains
+`c9db83fa99230ffb95bdfdfe059f3fb9`.
+
+**[CODEX] One canonical owner.** The active War Career will evolve the shipped
+`C.loot.journey` record because it already owns the one saveable person, promotion history,
+Army Register start, survival bridge, and AAR projection. `C.career`/`C.warCareer` and
+name-based joins are forbidden. This is a migration-cost decision, not a save-envelope
+requirement: saves already persist the whole campaign. Slice A must modify the whitelist in
+`src/37-loot-survival.js` under `WAR_CAREER_JOURNEY_ADAPTER_V1`; a post-105 module alone
+would have its fields erased on the next `lootInit`. D360 high-rank Journey start remains a
+legacy path. New v1 War Career start is explicit, Private-through-Captain, same-side, and
+stable-team only.
+
+**[CODEX] Advancement is event/credit split and participation-fail-closed.** A bounded 96-row
+narrative event ring is separate from the finite `creditLedger`. Every recovery attempt on one
+campaign rung shares one stable `creditKey`; the row may improve only to a strictly higher
+declared outcome and totals are recomputed rather than incremented. Slice A has no trustworthy
+person↔unit participation link, so every new row is `qualifying:false` and awards zero merit,
+reputation, promotion, or role access. Slice B may qualify it only from explicit evidence. Late-war
+political eligibility uses the recorded date of a qualifying credit, never a retry-advanced live
+clock.
+
+**[CODEX] E71 and later career death use one pure-first terminal dispatcher.** Slice A's
+`WAR_CAREER_RUNTIME_V1` assignment wrapper loads after the save-slot wrapper and classifies before
+writing. The only battle-defeat predicate is an active Ironman campaign battle
+(`B.fromCampaign`, non-draw winner, winner not the player side); the enemy's `type` string is not
+player outcome. Nonterminal calls delegate with no pre-undo career mutation and commit later through
+`_t1Resolve → lootOnResolve → ssJourneyOnResolve`. Terminal defeat performs no stats, roster,
+system tick, funds, reward, recovery, upgrade, undo, or live save; it captures one terminal
+snapshot, removes autosave/undo, invalidates only matching-run named slots, preserves unrelated
+slots, clears the campaign, and leaves no Continue path. Slice B must preflight personal fate before
+delegation; rollback after subsystem ticks is forbidden.
+
+**[CODEX] Roles and politics are adapters, not a new grand-strategy layer.** Rank, role, and billet
+stay distinct. Existing political state continues to tick, while future
+`warCareerCapabilities` selectors gate both UI and underlying mutations one named capability at
+a time. The President, cabinet, economy, diplomacy, command, divergence, ending, and retired S3-S5
+monolith are not rebuilt. NPC `P.command.reputation` never aliases player reputation. Emergent
+relationships render “Your Timeline”; authored historical ties still require citation law.
+
+**Adversarial correction pass.** Three read-only seam inventories and a separate contract critic
+found and closed eleven design traps before runtime: the journey sanitizer erasing new fields; the
+nonexistent `result` argument; late death discovery; stale resumable autosave; wrapper/undo order;
+manifest-override misuse; unbounded ordinal/dedupe conflict; participation contradictions; ambiguous
+legacy activation; the three-state sanitizer/AAR gap; and retry-farmed political time. The final
+one-token bind changed only the §2 canonical-owner path `journey`→`career`, made exactly
+`STATE OWNERSHIP` fail with exit 1, and restored md5-identically to
+`8fdd062c084d8953ff042c3cf904af1c`. LANE-005 returns to CONTRACT/unowned.
+
+**Exact next:** fresh committed LANE-005 DRIVE take, then spec §10 Slice A only: module 106 +
+the narrow 37/82/91 adapters + focused suite probe (129→130), close E71 and ship a
+nonqualifying minimal career spine. No personal death, qualifying advancement, relationship,
+political gate, command effect, franchise archive, combat input, or save-version movement.
+
+---
+
 ## D398 — PETERSBURG RELEASE VERIFIED: 129/129 GREEN, BROWSER TEARDOWN BOUNDED, AND LANE-003 RELEASED — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-003 VERIFY→CONTRACT] (2026-07-14)
 
 **Complete release evidence.** The D397 candidate at

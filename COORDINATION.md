@@ -749,15 +749,23 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
-### LANE-005 · war-career-loop — **DRIVE (planning contract only)**
+### LANE-005 · war-career-loop — **CONTRACT/unowned**
 
-- **Owning tool:** ChatGPT/Codex (TOP LOOP). Read-only helper inventories are allowed; architecture,
-  acceptance law, integration boundaries, bind adjudication, docs, and commits stay with the TOP LOOP.
-- **State:** DRIVE for the D382 item-4 PLANNING CONTRACT only. Runtime, a new political engine,
-  save-schema migration, and `_SAVE_VER` movement are excluded until the contract is green, committed,
-  pushed, and released. This is a new lane because LANE-002 owns citation-grade people records,
-  LANE-003 owns the battle ladder, and LANE-004 is a closed audit charter; a cross-role career spine
-  must consume those seams without silently reopening or merging their ownership.
+- **Owning tool:** none. A future TOP LOOP must take DRIVE in a committed ledger-only edit before
+  Slice A. Read-only helper inventories are allowed; architecture, acceptance law, integration
+  boundaries, bind adjudication, docs, and commits stay with the TOP LOOP.
+- **State:** CONTRACT/unowned — **D399 planning contract shipped; no runtime moved.**
+  `docs/design/war-career-loop-design.md` (md5 `8fdd062c084d8953ff042c3cf904af1c`) +
+  `tools/probe-war-career-loop-plan.mjs` (md5 `b4957c1360b55767cb5b6bac5b1fdb57`;
+  10/10, planning mode, filesystem-first, fail-closed, dual-mode only on the declared Slice-A
+  markers). The one-token canonical-owner bind changed only `journey`→`career`, made exactly
+  `STATE OWNERSHIP` fail with exit 1, and restored the spec byte-for-byte. Build remains GATE OK
+  with generated HTML `e669982913feb54032253bf19bcd2b8b` and frozen base
+  `c9db83fa99230ffb95bdfdfe059f3fb9`; 24 scenarios / schema 54 / Army Register 1512 / suite 129
+  and `_SAVE_VER = 1` remain exact. Runtime, a new political engine, personal fate, qualifying
+  advancement, relationships, command effects, franchise storage, and save-schema migration remain
+  excluded until a fresh DRIVE take. This lane remains separate because LANE-002 owns citation-grade
+  people records, LANE-003 owns the battle ladder, and LANE-004 is a closed audit charter.
 - **Design law:** DECISIONS D382 item 4 · D360 start-anywhere promotion lattice and trajectory read-out ·
   D151 Soldier's Story career log · D94/D105 ratings and reputation development · D119/D151 After-Action
   read-out · D35/D146/E41/E50 save integrity · pending REVIEW-QUEUE E71 Ironman terminal-loss honesty ·
@@ -812,17 +820,30 @@ next green commit and confer through this ledger instead of permitting simultane
   execute the one-token bind and byte-identical restore. Adjacent planning gates: every current
   lane-grepping plan probe, `node tools/build.mjs`, and `git diff --check`; no browser or full release
   battery is authorized by this docs/tool-only slice.
-- **Resume pointer:** finish the evidence inventory; author the design contract and plan probe from
-  live seams; run the declared bind and focused/adjacent gates; sync DECISIONS/RUN-LOG/startup docs;
-  commit and push the green planning slice; release LANE-005 to CONTRACT/unowned with the first runtime
-  slice named exactly. Do not begin that runtime in the planning commit. No simultaneous edits by any
-  provider. `/private/tmp/codex-vg-recovery-019f62fe` remains authoritative while the Desktop checkout
-  is dataless.
-- **Last-touched commit:** this ledger-only DRIVE take at the clean pushed D398 boundary
-  `420884d54964add46dd130ba0f18eb6a00a315aa`.
+- **Resume pointer:** **exact next is Slice A — terminal honesty + the minimal canonical spine.**
+  From the clean pushed D399 boundary, take LANE-005 DRIVE in a committed ledger-only edit; then
+  implement only spec §10 Slice A. Add `src/106-war-career.js` with
+  `WAR_CAREER_RUNTIME_V1`, the ordinary post-105 manifest entry, and no declaration override for
+  `campaignAdvance`; narrowly update `src/37-loot-survival.js` with
+  `WAR_CAREER_JOURNEY_ADAPTER_V1`, its whitelist/start compatibility path, and the Army Register
+  entry; add the guarded core AAR seam in `src/82-after-action.js`; enforce the Ironman named-slot
+  law in `src/91-save-slots.js`; add and suite-enroll `tools/probe-war-career.mjs` (129→130).
+  Lock `C.loot.journey` as the only mutable person-career owner, `C.runId` as technical campaign
+  lineage only, explicit Private-through-Captain v1 start beside untouched D360 legacy Journey,
+  a 96-event/finite-credit nonqualifying Slice-A ledger, pure role summaries, and the exact
+  `B.fromCampaign`/winner-side Ironman terminal predicate. Close E71 only when storage/Continue,
+  stats/roster/system-tick, reward/undo, free-battle, draw, normal recovery, Auto/Classic/realtime,
+  matching/unrelated slot, and nonterminal byte-parity teeth are green. No personal death,
+  qualifying merit, relationship, political gate, command effect, franchise archive, combat input,
+  or save-version change. Run the spec §11 gate and binds; sync docs; commit/push; release. No
+  simultaneous edits by any provider. `/private/tmp/codex-vg-recovery-019f62fe` remains authoritative
+  while the Desktop checkout is dataless.
+- **Last-touched commit:** D399 planning close (this commit).
 - **History:** opened 2026-07-14 by ChatGPT/Codex after D398 discharged the battle release and D382
   item 4 became the exact queue head. The planning lock is deliberately separate from both the battle
-  ladder and the open prosopography lane.
+  ladder and the open prosopography lane. D399 completed the three-helper seam inventory plus an
+  independent adversarial contract review, contracted the single-owner/pure-first terminal design,
+  proved the one-token bind, held every baseline, and released the planning lane without runtime.
 
 ---
 
