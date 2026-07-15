@@ -159,6 +159,11 @@ function _fldArtProfile(C) {
 function fldCampaignCondition() {
   var ctx = __FIELD.campaignCtx; if (!ctx || ctx._conditioned) return;
   var C = _fldCamp(); if (!C) return;
+  // D401 consequence-only link: identifies which already-built tactical unit
+  // represents the active War Career slot. No combat reader consumes it.
+  if (typeof warCareerLinkField === "function") {
+    try { warCareerLinkField(C, ctx, __FIELD); } catch (wcErr) { if (typeof console !== "undefined" && console.warn) console.warn("warCareerLinkField:", wcErr); }
+  }
   if (typeof bridgeArmy !== "function") { ctx._conditioned = true; return; }
   var ps = (C.side === "CS") ? "CS" : "US";
   var a, bp;
@@ -543,7 +548,17 @@ function fldCampaignComputeOutcome() {
   if (winnerSide === null) type = "draw";
   else if (win) type = (winBy === "destroy" || eFrac >= 0.6) ? "decisive" : "win";
   else type = (winBy === "destroy" || pFrac >= 0.6) ? "decisive" : "win";   // for a loss, only the funds tier differs
-  return { bd: ctx.bd, winnerSide: winnerSide, type: type, pFrac: pFrac, eFrac: eFrac, win: win, playerSide: ps };
+  var out = { bd: ctx.bd, winnerSide: winnerSide, type: type, pFrac: pFrac, eFrac: eFrac, win: win, playerSide: ps };
+  // D401: capture field-complete participation/leader consequence evidence
+  // before fldExit clears the tactical state. It is never a simulation input.
+  if (typeof warCareerBuildFieldEvidence === "function") {
+    try {
+      var wcMode = ctx.simResolve === true ? "auto" : "realtime";
+      var wcEvidence = warCareerBuildFieldEvidence(C, ctx, wcMode, __FIELD);
+      if (wcEvidence) out.warCareerEvidence = wcEvidence;
+    } catch (wcErr) { if (typeof console !== "undefined" && console.warn) console.warn("warCareerBuildFieldEvidence:", wcErr); }
+  }
+  return out;
 }
 /* Apply the outcome to the campaign: build a CONDITIONED hex roster via startBattleRuntime
    (A6a runs again on it -> same conditioning the fight used), apply the real loss fractions
@@ -573,6 +588,10 @@ function fldCampaignApplyOutcome(o) {
   B.casualties[ps] = pCas; B.casualties[es] = eCas;
   B.infl[ps] = eCas; B.infl[es] = pCas;   // infl[X] = what X inflicted = what the enemy suffered
   B.over = true;
+  // Hand the already-computed result receipt to the canonical campaign result.
+  // This metadata is consequence-only and is not read by combat, casualty, AI,
+  // score, winner, or direction code.
+  if (o.warCareerEvidence && typeof o.warCareerEvidence === "object") B.warCareerEvidence = o.warCareerEvidence;
   if (o.winnerSide && typeof playSfx === "function") { try { playSfx(o.win ? "bugle" : "rout"); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldCampaignApplyOutcome playSfx:", e); } }
   campaignAdvance(o.winnerSide, o.type);
 }

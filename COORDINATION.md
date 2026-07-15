@@ -749,25 +749,29 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
-### LANE-005 · war-career-loop — **DRIVE (D401 Slice B only)**
+### LANE-005 · war-career-loop — **CONTRACT (unowned; D401 Slice B shipped)**
 
-- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra — D401 Slice B implementation owner.
+- **Owning tool:** none. A fresh committed DRIVE take is required before Slice C.
   No simultaneous edits by any provider.
-- **State:** DRIVE — **D401 is limited to Slice B: explicit participation, pure preflight personal
-  fate, and deterministic COMRADE HAND-OFF.** Slice C and every later slice remain locked.
+- **State:** CONTRACT — **D401 ships Slice B: explicit participation, pure preflight personal fate,
+  exact capture recovery, and deterministic COMRADE HAND-OFF.** Slice C and every later slice remain
+  locked until a fresh committed take.
   The committed planning contract remains the law:
   `docs/design/war-career-loop-design.md` (md5 `8fdd062c084d8953ff042c3cf904af1c`) +
   `tools/probe-war-career-loop-plan.mjs` (md5 `b4957c1360b55767cb5b6bac5b1fdb57`;
   10/10, runtime mode, filesystem-first, fail-closed, dual-mode only on the declared Slice-A
   markers). The one-token canonical-owner bind changed only `journey`→`career`, made exactly
   `STATE OWNERSHIP` fail with exit 1, and restored the spec byte-for-byte. Build remains GATE OK
-  with generated HTML `90cd936b5ae3a109f20f7759b381f5d3` and frozen base
+  with generated HTML `4560dfc4f22b5907429e6a5c7d303e4f` and frozen base
   `c9db83fa99230ffb95bdfdfe059f3fb9`; 24 scenarios / schema 54 / Army Register 1512 / suite 130
   and `_SAVE_VER = 1` remain exact. D400 ships the ordinary post-105 runtime, narrow 37/82/91
-  adapters, a nonqualifying canonical spine, and E71's one pure-first terminal path. A new political
-  engine, personal fate, qualifying advancement, relationships, command effects, franchise storage,
-  and save-schema migration remain excluded until a fresh DRIVE take. This lane remains separate because LANE-002 owns citation-grade
-  people records, LANE-003 owns the battle ladder, and LANE-004 is a closed audit charter.
+  adapters, canonical spine, and E71's one pure-first terminal path. D401 adds result-owned Auto/
+  Classic/realtime participation receipts, predelegate fate with post-undo commit, one-rung capture
+  recovery, and an anti-reroll comrade lineage while preserving zero merit/reputation/promotion/
+  command authority. Billet history, command projection, relationships, political gates, franchise
+  storage, and save-schema migration remain excluded until their declared slices receive fresh DRIVE
+  takes. This lane remains separate because LANE-002 owns citation-grade people records, LANE-003 owns
+  the battle ladder, and LANE-004 is a closed audit charter.
 - **Design law:** DECISIONS D382 item 4 · D360 start-anywhere promotion lattice and trajectory read-out ·
   D151 Soldier's Story career log · D94/D105 ratings and reputation development · D119/D151 After-Action
   read-out · D35/D146/E41/E50 save integrity · REVIEW-QUEUE E71 fixed in D400 ·
@@ -821,26 +825,31 @@ next green commit and confer through this ledger instead of permitting simultane
   those markers/files now. Run with `node tools/probe-war-career-loop-plan.mjs`, inspect the JSON, then
   execute the one-token bind and byte-identical restore. Adjacent planning gates: every current
   lane-grepping plan probe, `node tools/build.mjs`, and `git diff --check`; no browser or full release
-  battery was authorized by that docs/tool-only slice. D400's runtime probe is
-  `tools/probe-war-career.mjs`: 12 named browser steps covering registration, sanitizer/identity/
-  credit integrity, explicit and legacy starts, pure roles, nonqualifying observations, the exact
-  classifier, undo-before-career order, whole-input terminal purity, storage/Continue, truthy
-  Ironman named-slot law, route parity, and AAR/accessibility. It is release-suite row 38 in the
-  130-command manifest.
-- **Resume pointer:** **exact next is Slice B — explicit participation + personal fate only.**
-  From the clean pushed D400 boundary, take LANE-005 DRIVE in a committed ledger-only edit. Establish
-  an explicit stable link from the active person to a participating unit across Auto, Classic, and
-  realtime battle routes; missing or stale evidence stays nonqualifying. Then add a pure preflight
-  classifier for wounded, captured, and fallen before the Slice-A terminal/delegate decision, plus
-  deterministic COMRADE HAND-OFF to an alive, present, same-side identity sharing the most specific
-  stable company/regiment/brigade link and not already in the lineage. A fall with no eligible comrade
-  ends the personal career honestly. No second terminal-loss system, no post-`_t1Resolve` rollback,
-  no aggregate-casualty identity guess, no qualifying credit without explicit participation, and no
-  Slice C command projection, relationship mutation, political gate, franchise archive, combat input,
-  or save-version change. Run focused mode-parity/fate/hand-off teeth plus every D400 adjacent and
-  storage guard; sync docs; commit/push; release. No simultaneous edits by any provider.
+  battery was authorized by that docs/tool-only slice. D401's runtime probe is
+  `tools/probe-war-career.mjs`: 25 named browser steps plus 21 static walls covering D400 registration,
+  legacy/start, terminal/storage, six-case no-career parity, AAR/accessibility, and Slice-B result-owned
+  participation across Auto/Classic/realtime; exact realtime officer PID/source-unit linkage; pure
+  preflight ordering and post-undo commit; career-Ironman and normal-fallen branches; capture recovery;
+  stable candidate order/exclusions; save/load/anti-reroll handoff; one-credit qualification; lineage/
+  sanitizer hardening; and aggregate-casualty fate rejection. It is release-suite row 38 in the
+  130-command manifest and is green 25/25 with zero pageerrors/realErrors.
+- **Resume pointer:** **exact next is Slice C — field/general command projection only, still unowned.**
+  From the clean pushed D401 boundary, take LANE-005 DRIVE in a committed ledger-only edit and rerun all
+  thirteen coordination-sensitive plan probes before runtime work. Add journey-owned billet history and
+  the narrow `warCareerCommandProjection(C)` adapter. Rank, role, and billet remain distinct; field command
+  covers Major-Colonel, general command covers Brigadier-General, and any promotion/billet copy is labeled
+  “Your Timeline.” `P.command` remains the NPC appointment/reputation/promotion authority and may reference
+  the active career person without copying either ledger. Consume the bounded career contribution exactly
+  once through existing `commandLeadership(C)`; default/no-career/NPC-only behavior remains byte-identical,
+  and dead, captured, retired, service-window-ended, malformed, nonqualifying, or billet-less careers project
+  zero. Preserve D400/D401 terminal, identity, fate, hand-off, credit, legacy, `_SAVE_VER=1`, and no-combat
+  laws. No name/rank/namespace identity guess, second command consumer, relationship mutation, political
+  gate, franchise archive, combat input, or save-version change. Predeclare and execute scoped negative binds,
+  run focused War Career plus command/loot/save/campaign/AAR/H0/playstyle/Auto/officers/ratings/Classic gates,
+  sync docs, commit/push, and release. No simultaneous edits by any provider.
   `/private/tmp/codex-vg-recovery-019f62fe` remains authoritative while the Desktop checkout is dataless.
-- **Last-touched commit:** D400 Slice-A runtime and lane release (this commit); the DRIVE take was
+- **Last-touched commit:** D401 Slice-B runtime and lane release (this commit); the Slice-B DRIVE take was
+  `cbfe533f02e86f784823bcc730bbc5a36a221dc4` from clean pushed D400. D400's DRIVE take was
   `6cb6db119ff67f3c493ec64b789f126e154b88ed` from clean pushed D399.
 - **History:** opened 2026-07-14 by ChatGPT/Codex after D398 discharged the battle release and D382
   item 4 became the exact queue head. The planning lock is deliberately separate from both the battle
@@ -850,7 +859,12 @@ next green commit and confer through this ledger instead of permitting simultane
   ChatGPT/Codex took Slice A DRIVE from the clean pushed D399 boundary in a separate ledger-only
   commit. D400 implemented and adversarially hardened the minimal spine, fixed E71, suite-enrolled
   the 12-step focused probe, proved four declared binds, and released the lane after final gates.
-  Slice B and every later declared exclusion remain locked out pending a fresh committed take.
+  ChatGPT/Codex took Slice B in ledger-only commit `cbfe533f02e86f784823bcc730bbc5a36a221dc4`;
+  D401 extended the focused guard to 25 steps, shipped explicit result receipts/pure fate/capture
+  recovery/COMRADE HAND-OFF, passed three independent no-blocker audits, proved four declared binds,
+  held 24/54/1512/24/130 and `_SAVE_VER=1`, and released the lane after the final focused/adjacent and
+  thirteen-plan-probe gates. Slice C and every later declared exclusion remain locked pending a fresh
+  committed take.
 
 ---
 

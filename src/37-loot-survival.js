@@ -142,11 +142,99 @@ function _ssCareerSafeId(v, max) {
   var s = _lootCleanText(v || "", max || 180);
   return /^[A-Za-z0-9][A-Za-z0-9._:@|/-]*$/.test(s) ? s : "";
 }
-function _ssCareerEvent(e) {
+function _ssCleanUnitRef(src) {
+  if (!_lootPlain(src)) return null;
+  var battleId = _ssCareerSafeId(src.battleId, 120);
+  var side = src.side === "CS" ? "CS" : (src.side === "US" ? "US" : "");
+  var unitId = _ssCareerSafeId(src.unitId, 120);
+  var slot = /^(cmd|nco|pvt)$/.test(String(src.slot || "")) ? String(src.slot) : "";
+  var slotPid = _ssCareerSafeId(src.slotPid, 180);
+  var expected = battleId && side && unitId && slot ? ["ss", battleId, side, unitId, slot].join(":") : "";
+  if (!battleId || !side || !unitId || !slot || !slotPid || slotPid !== expected) return null;
+  return { battleId:battleId, side:side, unitId:unitId, slot:slot, slotPid:slotPid };
+}
+function _ssCareerBattleYear(battleId) {
+  // A career credit is chained to the campaign battle row. Some authored
+  // scenario records carry a date string but no numeric year, so they may
+  // supplement this lookup but must not mask the canonical campaign year.
+  var row = typeof _ssBattleById === "function" ? _ssBattleById(battleId) : null;
+  var year = Number(row && row.year);
+  if ((!isFinite(year) || year < 1860 || year > 1870) && typeof fldScenarioRegistry === "function") {
+    var reg = fldScenarioRegistry(), scenario = reg && reg[battleId];
+    year = Number(scenario && scenario.year);
+  }
+  return isFinite(year) && year >= 1860 && year <= 1870 ? Math.round(year) : null;
+}
+function _ssCareerParticipation(src, C) {
+  if (!_lootPlain(src) || src.schema !== "cw_war_career_participation_v1" || !C) return null;
+  var runId = _ssCareerSafeId(src.runId, 96), creditKey = _ssCareerSafeId(src.creditKey, 220);
+  var personId = _ssCareerSafeId(src.personId, 180), ref = _ssCleanUnitRef(src);
+  var mode = /^(classic|auto|realtime)$/.test(String(src.mode || "")) ? String(src.mode) : "";
+  var resultId = _ssCareerSafeId(src.resultId, 96), routeUnitId = _ssCareerSafeId(src.routeUnitId, 180);
+  var mapping = /^(exact-source-unit|explicit-career-assignment)$/.test(String(src.mapping || "")) ? String(src.mapping) : "";
+  var assignmentId = mapping === "explicit-career-assignment" ? _ssCareerSafeId(src.assignmentId, 96) : null;
+  var rankAtResult = _lootCleanText(src.rankAtResult || "", 80);
+  var chainIndex = Number(src.chainIndex), battleYear = Number(src.battleYear), canonicalYear = ref ? _ssCareerBattleYear(ref.battleId) : null;
+  var chain = ref && typeof CHAINS !== "undefined" && CHAINS && Array.isArray(CHAINS[ref.side]) ? CHAINS[ref.side] : null;
+  var expectedResultId = (typeof _wcResultId === "function" && runId && creditKey && mode && personId && ref && routeUnitId && mapping && canonicalYear != null)
+    ? _wcResultId(runId, creditKey, mode, personId, ref.slotPid, routeUnitId, mapping, canonicalYear, rankAtResult, assignmentId) : "";
+  if (!runId || runId !== _ssCareerSafeId(C.runId, 96) || !creditKey || !personId || !ref || !mode || !resultId || !routeUnitId || !mapping || !rankAtResult ||
+      (mapping === "exact-source-unit" && (routeUnitId !== ref.unitId || src.assignmentId != null)) ||
+      (mapping === "explicit-career-assignment" && !assignmentId) ||
+      !isFinite(chainIndex) || Math.floor(chainIndex) !== chainIndex || chainIndex < 0 ||
+      !chain || chainIndex >= chain.length || chain[chainIndex] !== ref.battleId ||
+      canonicalYear == null || !isFinite(battleYear) || Math.round(battleYear) !== canonicalYear ||
+      creditKey !== [runId, ref.side, chainIndex, ref.battleId].join("|") || resultId !== expectedResultId) return null;
+  var people = [], reg = typeof ssPersonRegistry === "function" ? ssPersonRegistry(C) : null;
+  if (reg && Array.isArray(reg.people)) people = reg.people;
+  var personMatches = [], slotMatches = [];
+  for (var i = 0; i < people.length; i++) {
+    var p = people[i], pr = p && _ssCleanUnitRef(p.unitRef);
+    if (p && p.pid === personId) personMatches.push(p);
+    if (pr && pr.slotPid === ref.slotPid) slotMatches.push(p);
+  }
+  if (personMatches.length !== 1 || slotMatches.length !== 1 || personMatches[0] !== slotMatches[0] ||
+      personMatches[0].side !== ref.side || !_ssCleanUnitRef(personMatches[0].unitRef)) return null;
+  var canonicalRef = _ssCleanUnitRef(personMatches[0].unitRef);
+  if (!canonicalRef || canonicalRef.battleId !== ref.battleId || canonicalRef.side !== ref.side || canonicalRef.unitId !== ref.unitId ||
+      canonicalRef.slot !== ref.slot || canonicalRef.slotPid !== ref.slotPid) return null;
+  return {
+    schema:"cw_war_career_participation_v1", resultId:resultId, mode:mode, runId:runId, creditKey:creditKey,
+    personId:personId, chainIndex:chainIndex, battleId:ref.battleId, side:ref.side,
+    unitId:ref.unitId, slot:ref.slot, slotPid:ref.slotPid, routeUnitId:routeUnitId,
+    mapping:mapping, assignmentId:assignmentId, battleYear:canonicalYear, rankAtResult:rankAtResult
+  };
+}
+function _ssCareerParticipationSame(a, b) {
+  if (!a || !b) return false;
+  var keys = ["schema","resultId","mode","runId","creditKey","personId","chainIndex","battleId","side",
+    "unitId","slot","slotPid","routeUnitId","mapping","assignmentId","battleYear","rankAtResult"];
+  for (var i = 0; i < keys.length; i++) if (a[keys[i]] !== b[keys[i]]) return false;
+  return true;
+}
+function _ssCareerLineageChainValid(rows, eventsById, creditsByKey, currentPersonId) {
+  if (!Array.isArray(rows) || !rows.length) return true;
+  var prior = null, priorEvent = null, priorCredit = null;
+  for (var i = 0; i < rows.length; i++) {
+    var row = rows[i], event = row && eventsById && eventsById[row.resultEventId];
+    var credit = row && creditsByKey && creditsByKey[row.creditKey];
+    if (!row || !event || !credit) return false;
+    if (prior && (prior.successorId !== row.personId || Number(credit.chainIndex) <= Number(priorCredit.chainIndex) ||
+        Number(event.ordinal) <= Number(priorEvent.ordinal))) return false;
+    prior = row; priorEvent = event; priorCredit = credit;
+  }
+  return !!(prior && prior.successorId === currentPersonId);
+}
+function _ssCareerFate(v) {
+  v = String(v || "");
+  return /^(alive|wounded|captured|fallen)$/.test(v) ? v : null;
+}
+function _ssCareerEvent(e, C) {
   if (!_lootPlain(e)) return null;
   var eventId = _ssCareerSafeId(e.eventId, 180);
   if (!eventId) return null;
-  return {
+  var participation = _ssCareerParticipation(e.participation, C);
+  var out = {
     eventId: eventId,
     ordinal: Math.round(_lootClamp(e.ordinal, 1, 1000000)),
     kind: e.kind === "start" ? "start" : "result",
@@ -155,12 +243,20 @@ function _ssCareerEvent(e) {
     battleName: _lootCleanText(e.battleName || "", 120),
     outcome: _ssOutcome(e.outcome),
     type: _lootCleanText(e.type || "", 32),
+    personId: e.personId == null ? null : (_ssCareerSafeId(e.personId, 180) || null),
     status: _ssStatus(e.status),
-    qualifying: false,
+    fate: _ssCareerFate(e.fate),
+    qualifying: e.qualifying === true && !!participation,
     merit: 0,
     reputation: 0,
     note: _lootCleanText(e.note || "", 240)
   };
+  if (participation && out.creditKey === participation.creditKey && out.scenarioId === participation.battleId &&
+      out.personId === participation.personId) out.participation = participation;
+  else { out.qualifying = false; out.fate = out.kind === "start" ? "alive" : null; }
+  var recoveryOf = _ssCareerSafeId(e.recoveryOfCreditKey, 220);
+  if (!out.qualifying && out.kind === "result" && recoveryOf && out.creditKey && recoveryOf !== out.creditKey) out.recoveryOfCreditKey = recoveryOf;
+  return out;
 }
 function _ssCareerCredit(e, C) {
   if (!_lootPlain(e) || !C || (C.side !== "US" && C.side !== "CS")) return null;
@@ -178,7 +274,9 @@ function _ssCareerCredit(e, C) {
   var outcome = _ssOutcome(e.outcome);
   var type = _lootCleanText(e.type || "", 32);
   var rank = outcome === "victory" ? (type === "decisive" ? 3 : 2) : (outcome === "draw" ? 1 : 0);
-  return {
+  var participation = _ssCareerParticipation(e.participation, C);
+  var personId = _ssCareerSafeId(e.personId, 180) || null;
+  var out = {
     creditKey: key,
     runId: runId,
     side: side,
@@ -187,12 +285,76 @@ function _ssCareerCredit(e, C) {
     outcome: outcome || "defeat",
     type: type,
     outcomeRank: rank,
-    qualifying: false,
+    personId: personId,
+    fate: _ssCareerFate(e.fate),
+    qualifying: e.qualifying === true && !!participation,
     merit: 0,
     reputation: 0,
     eventId: _ssCareerSafeId(e.eventId, 180) || null,
     eventDate: null
   };
+  if (participation && participation.creditKey === key && participation.personId === personId &&
+      participation.battleId === scenarioId) out.participation = participation;
+  else { out.qualifying = false; out.fate = null; }
+  if (out.qualifying && out.fate === "captured") {
+    out.recoveredAtCreditKey = _ssCareerSafeId(e.recoveredAtCreditKey, 220) || null;
+    out.recoveryEventId = _ssCareerSafeId(e.recoveryEventId, 180) || null;
+  }
+  return out;
+}
+function _ssCareerLineage(row, C) {
+  if (!_lootPlain(row)) return null;
+  var lineageId = _ssCareerSafeId(row.lineageId, 220), personId = _ssCareerSafeId(row.personId, 180);
+  var side = row.side === "CS" ? "CS" : (row.side === "US" ? "US" : ""), ref = _ssCleanUnitRef(row.unitRef);
+  if (!lineageId || !personId || !side || !ref || ref.side !== side || row.status !== "fallen") return null;
+  var reg = C && typeof ssPersonRegistry === "function" ? ssPersonRegistry(C) : null;
+  var people = reg && Array.isArray(reg.people) ? reg.people : [], personCount = 0, person = null;
+  for (var pi = 0; pi < people.length; pi++) if (people[pi] && people[pi].pid === personId) { person = people[pi]; personCount++; }
+  var canonical = person && _ssCleanUnitRef(person.unitRef);
+  if (personCount !== 1 || !canonical || canonical.battleId !== ref.battleId || canonical.side !== ref.side ||
+      canonical.unitId !== ref.unitId || canonical.slot !== ref.slot || canonical.slotPid !== ref.slotPid) return null;
+  var successorId = _ssCareerSafeId(row.successorId, 180), successorCount = 0;
+  for (var si = 0; si < people.length; si++) if (people[si] && people[si].pid === successorId) successorCount++;
+  if (!successorId || successorId === personId || successorCount !== 1) return null;
+  return {
+    lineageId:lineageId, personId:personId, name:_lootCleanText(row.name || "", 120),
+    rank:_lootCleanText(row.rank || "Soldier", 80), side:side,
+    provenance:_lootCleanText(row.provenance || "", 40), status:"fallen", unitRef:ref,
+    resultEventId:_ssCareerSafeId(row.resultEventId, 180) || null,
+    creditKey:_ssCareerSafeId(row.creditKey, 220) || null,
+    successorId:successorId
+  };
+}
+function _ssCareerHandoff(row, C, clean) {
+  if (!_lootPlain(row)) return null;
+  var state = /^(pending|completed|ended)$/.test(String(row.state || "")) ? String(row.state) : "";
+  var out = {
+    handoffId:_ssCareerSafeId(row.handoffId, 220), state:state,
+    fallenPersonId:_ssCareerSafeId(row.fallenPersonId, 180),
+    resultEventId:_ssCareerSafeId(row.resultEventId, 180),
+    creditKey:_ssCareerSafeId(row.creditKey, 220),
+    scenarioId:_ssCareerSafeId(row.scenarioId, 120),
+    side:row.side === "CS" ? "CS" : (row.side === "US" ? "US" : ""),
+    unitRef:_ssCleanUnitRef(row.unitRef), candidateIds:[], selectedPersonId:null, reason:null
+  };
+  if (!out.handoffId || !out.state || !out.fallenPersonId || !out.resultEventId || !out.creditKey ||
+      !out.scenarioId || !out.side || !out.unitRef || out.unitRef.side !== out.side || out.unitRef.battleId !== out.scenarioId) return null;
+  var seen = {};
+  if (Array.isArray(row.candidateIds)) for (var i = 0; i < row.candidateIds.length && out.candidateIds.length < 5; i++) {
+    var pid = _ssCareerSafeId(row.candidateIds[i], 180);
+    if (pid && !seen[pid] && pid !== out.fallenPersonId) { seen[pid] = true; out.candidateIds.push(pid); }
+  }
+  if (out.state === "pending") {
+    if (clean.status !== "fallen" || clean.personId !== out.fallenPersonId || !out.candidateIds.length) return null;
+  } else if (out.state === "completed") {
+    out.selectedPersonId = _ssCareerSafeId(row.selectedPersonId, 180) || null;
+    if (!out.selectedPersonId || out.selectedPersonId !== clean.personId || out.selectedPersonId === out.fallenPersonId || out.candidateIds.indexOf(out.selectedPersonId) < 0) return null;
+  } else {
+    out.candidateIds = [];
+    out.reason = "No eligible comrade could be identified";
+    if (clean.status !== "fallen" || clean.personId !== out.fallenPersonId) return null;
+  }
+  return out;
 }
 function _ssCleanWarCareerV1(C, J, clean) {
   clean.careerVersion = 1;
@@ -200,17 +362,36 @@ function _ssCleanWarCareerV1(C, J, clean) {
   clean.reputation = 0;
   clean.eventOrdinal = Math.round(_lootClamp(J.eventOrdinal, 0, 1000000));
 
+  var finiteRungs = 64;
+  if (typeof CHAINS !== "undefined" && CHAINS && C && Array.isArray(CHAINS[C.side])) finiteRungs = CHAINS[C.side].length;
   var eventsById = {}, events = [];
   if (Array.isArray(J.events)) {
     for (var ei = 0; ei < J.events.length; ei++) {
-      var event = _ssCareerEvent(J.events[ei]);
+      var event = _ssCareerEvent(J.events[ei], C);
       if (!event || eventsById[event.eventId]) continue;
-      eventsById[event.eventId] = true;
+      eventsById[event.eventId] = event;
       events.push(event);
     }
   }
   events.sort(function (a, b) { return a.ordinal - b.ordinal || String(a.eventId).localeCompare(String(b.eventId)); });
-  if (events.length > 96) events = events.slice(events.length - 96);
+  if (events.length > 96) {
+    var protectedIds = {}, protectedCount = 0, rawCredits = Array.isArray(J.creditLedger) ? J.creditLedger : [];
+    for (var pci = 0; pci < rawCredits.length && protectedCount < finiteRungs * 2; pci++) {
+      var rawCredit = rawCredits[pci];
+      if (!_lootPlain(rawCredit) || rawCredit.qualifying !== true) continue;
+      var ownerId = _ssCareerSafeId(rawCredit.eventId, 180), recoveryId = _ssCareerSafeId(rawCredit.recoveryEventId, 180);
+      if (ownerId && !protectedIds[ownerId]) { protectedIds[ownerId] = true; protectedCount++; }
+      if (recoveryId && !protectedIds[recoveryId] && protectedCount < finiteRungs * 2) { protectedIds[recoveryId] = true; protectedCount++; }
+    }
+    var keepIds = {}, kept = 0;
+    for (var pei = 0; pei < events.length && kept < 96; pei++) if (protectedIds[events[pei].eventId]) { keepIds[events[pei].eventId] = true; kept++; }
+    for (var rei = events.length - 1; rei >= 0 && kept < 96; rei--) if (!keepIds[events[rei].eventId]) { keepIds[events[rei].eventId] = true; kept++; }
+    var boundedEvents = [];
+    for (var bei = 0; bei < events.length; bei++) if (keepIds[events[bei].eventId]) boundedEvents.push(events[bei]);
+    events = boundedEvents;
+  }
+  eventsById = {};
+  for (var ebi = 0; ebi < events.length; ebi++) eventsById[events[ebi].eventId] = events[ebi];
   for (var oi = 0; oi < events.length; oi++) events[oi].ordinal = oi + 1;
   clean.events = events;
   clean.eventOrdinal = events.length;
@@ -220,31 +401,171 @@ function _ssCleanWarCareerV1(C, J, clean) {
     for (var ci = 0; ci < J.creditLedger.length; ci++) {
       var credit = _ssCareerCredit(J.creditLedger[ci], C);
       if (!credit) continue;
+      if (credit.qualifying) {
+        var ownerEvent = eventsById[credit.eventId];
+        if (!ownerEvent || !ownerEvent.qualifying || ownerEvent.creditKey !== credit.creditKey ||
+            ownerEvent.personId !== credit.personId || ownerEvent.outcome !== credit.outcome || ownerEvent.type !== credit.type ||
+            ownerEvent.fate !== credit.fate || !ownerEvent.participation || !credit.participation ||
+            ownerEvent.participation.resultId !== credit.participation.resultId) {
+          credit.qualifying = false; credit.fate = null; delete credit.participation;
+        }
+      }
       var prior = creditsByKey[credit.creditKey];
       if (!prior) {
         creditsByKey[credit.creditKey] = credit;
         credits.push(credit);
-      } else if (credit.outcomeRank > prior.outcomeRank) {
+      } else if (!prior.qualifying && (credit.qualifying || credit.outcomeRank > prior.outcomeRank)) {
+        // Replace the whole row. Never merge an unproved best outcome into a
+        // proved receipt, and never improve an already-proved row from a retry.
         for (var ri = 0; ri < credits.length; ri++) if (credits[ri] === prior) { credits[ri] = credit; break; }
         creditsByKey[credit.creditKey] = credit;
       }
     }
   }
   credits.sort(function (a, b) { return a.chainIndex - b.chainIndex || String(a.creditKey).localeCompare(String(b.creditKey)); });
-  var finiteRungs = 64;
-  if (typeof CHAINS !== "undefined" && CHAINS && C && Array.isArray(CHAINS[C.side])) finiteRungs = CHAINS[C.side].length;
   if (credits.length > finiteRungs) credits = credits.slice(0, finiteRungs);
   clean.creditLedger = credits;
 
-  // Later slices own these ledgers. Slice A sanitizes them to inert defaults so
-  // a malformed save cannot smuggle advancement, relationships, or authority.
+  for (var rci = 0; rci < clean.creditLedger.length; rci++) {
+    var capturedCredit = clean.creditLedger[rci];
+    if (!capturedCredit.qualifying || capturedCredit.fate !== "captured") continue;
+    var capturedEvent = capturedCredit.eventId ? eventsById[capturedCredit.eventId] : null;
+    var recoveryEvent = capturedCredit.recoveryEventId ? eventsById[capturedCredit.recoveryEventId] : null;
+    var recoveryCredit = capturedCredit.recoveredAtCreditKey ? creditsByKey[capturedCredit.recoveredAtCreditKey] : null;
+    if (!capturedCredit.recoveredAtCreditKey || !capturedCredit.recoveryEventId ||
+        capturedCredit.recoveredAtCreditKey === capturedCredit.creditKey || !capturedEvent || !recoveryEvent || !recoveryCredit ||
+        recoveryEvent.qualifying || recoveryCredit.qualifying ||
+        recoveryEvent.personId !== capturedCredit.personId || recoveryCredit.personId !== capturedCredit.personId ||
+        recoveryCredit.chainIndex <= capturedCredit.chainIndex ||
+        recoveryEvent.ordinal <= capturedEvent.ordinal || recoveryEvent.status !== "alive" || recoveryEvent.fate != null ||
+        recoveryEvent.participation || recoveryCredit.participation ||
+        recoveryCredit.eventId !== recoveryEvent.eventId || recoveryCredit.outcome !== recoveryEvent.outcome ||
+        recoveryCredit.type !== recoveryEvent.type || recoveryCredit.scenarioId !== recoveryEvent.scenarioId ||
+        recoveryEvent.creditKey !== capturedCredit.recoveredAtCreditKey ||
+        recoveryEvent.recoveryOfCreditKey !== capturedCredit.creditKey) {
+      capturedCredit.recoveredAtCreditKey = null;
+      capturedCredit.recoveryEventId = null;
+    }
+  }
+
+  clean.lastParticipation = _ssCareerParticipation(J.lastParticipation, C);
+  if (clean.lastParticipation) {
+    var linkedCredit = creditsByKey[clean.lastParticipation.creditKey];
+    if (!linkedCredit || !linkedCredit.qualifying || linkedCredit.personId !== clean.lastParticipation.personId ||
+        !_ssCareerParticipationSame(clean.lastParticipation, linkedCredit.participation)) clean.lastParticipation = null;
+    else clean.lastParticipation = linkedCredit.participation;
+  }
+
+  var lineage = [], lineageIds = {}, lineagePeople = {};
+  if (Array.isArray(J.lineage)) {
+    for (var li = 0; li < J.lineage.length && lineage.length < 24; li++) {
+      var line = _ssCareerLineage(J.lineage[li], C);
+      if (!line || lineageIds[line.lineageId] || lineagePeople[line.personId] || line.personId === clean.personId) continue;
+      lineageIds[line.lineageId] = true; lineagePeople[line.personId] = true; lineage.push(line);
+    }
+  }
+  var validatedLineage = [], lineageRegistry = typeof ssPersonRegistry === "function" ? ssPersonRegistry(C) : null;
+  var lineagePeopleRows = lineageRegistry && Array.isArray(lineageRegistry.people) ? lineageRegistry.people : [];
+  for (var vli = 0; vli < lineage.length; vli++) {
+    var candidateLine = lineage[vli], lineEvent = eventsById[candidateLine.resultEventId], lineCredit = creditsByKey[candidateLine.creditKey];
+    if (!lineEvent || !lineCredit || !lineEvent.qualifying || !lineCredit.qualifying || lineEvent.fate !== "fallen" || lineCredit.fate !== "fallen" ||
+        lineEvent.personId !== candidateLine.personId || lineCredit.personId !== candidateLine.personId ||
+        lineCredit.eventId !== candidateLine.resultEventId || !lineCredit.participation ||
+        lineCredit.participation.battleId !== candidateLine.unitRef.battleId || lineCredit.participation.side !== candidateLine.unitRef.side ||
+        lineCredit.participation.unitId !== candidateLine.unitRef.unitId || lineCredit.participation.slot !== candidateLine.unitRef.slot ||
+        lineCredit.participation.slotPid !== candidateLine.unitRef.slotPid ||
+        candidateLine.rank !== lineCredit.participation.rankAtResult || typeof warCareerComradeCandidates !== "function") continue;
+    var baseRow = null, baseCount = 0;
+    for (var bl = 0; bl < lineagePeopleRows.length; bl++) if (lineagePeopleRows[bl] && lineagePeopleRows[bl].pid === candidateLine.personId) { baseRow = lineagePeopleRows[bl]; baseCount++; }
+    if (baseCount !== 1 || !baseRow) continue;
+    var lineJourney = {
+      personId:candidateLine.personId,
+      person:{ pid:candidateLine.personId, rank:candidateLine.rank, side:candidateLine.side, unitRef:candidateLine.unitRef },
+      lineage:validatedLineage.slice(), lastParticipation:lineCredit.participation
+    };
+    var eligibleAtHandoff = warCareerComradeCandidates(C, lineJourney, lineagePeopleRows, lineCredit.participation, candidateLine.personId);
+    var successorEligible = false;
+    for (var el = 0; el < eligibleAtHandoff.length; el++) if (eligibleAtHandoff[el].pid === candidateLine.successorId) { successorEligible = true; break; }
+    if (successorEligible) validatedLineage.push(candidateLine);
+  }
+  if (validatedLineage.length !== lineage.length ||
+      !_ssCareerLineageChainValid(validatedLineage, eventsById, creditsByKey, clean.personId)) validatedLineage = [];
+  clean.lineage = validatedLineage;
+  var allowedCreditPeople = {}; allowedCreditPeople[clean.personId] = true;
+  for (var api = 0; api < clean.lineage.length; api++) allowedCreditPeople[clean.lineage[api].personId] = true;
+  for (var aci = 0; aci < clean.creditLedger.length; aci++) {
+    var ownedCredit = clean.creditLedger[aci];
+    if (!ownedCredit.qualifying || allowedCreditPeople[ownedCredit.personId]) continue;
+    ownedCredit.qualifying = false; ownedCredit.fate = null; delete ownedCredit.participation;
+    var ownedEvent = eventsById[ownedCredit.eventId];
+    if (ownedEvent) { ownedEvent.qualifying = false; ownedEvent.fate = null; delete ownedEvent.participation; }
+  }
+  var absorbing = null;
+  for (var abi = 0; abi < clean.creditLedger.length; abi++) {
+    var lifeCredit = clean.creditLedger[abi];
+    if (!lifeCredit.qualifying || lifeCredit.personId !== clean.personId) continue;
+    if (lifeCredit.fate === "fallen") absorbing = "fallen";
+    else if (!absorbing && lifeCredit.fate === "captured" && !lifeCredit.recoveredAtCreditKey) absorbing = "captured";
+  }
+  if (absorbing) clean.status = absorbing;
+  if (clean.lastParticipation) {
+    var ownedLinkedCredit = creditsByKey[clean.lastParticipation.creditKey];
+    if (!ownedLinkedCredit || !ownedLinkedCredit.qualifying || ownedLinkedCredit.personId !== clean.lastParticipation.personId ||
+        !_ssCareerParticipationSame(clean.lastParticipation, ownedLinkedCredit.participation)) clean.lastParticipation = null;
+    else clean.lastParticipation = ownedLinkedCredit.participation;
+  }
+  clean.handoff = _ssCareerHandoff(J.handoff, C, clean);
+  var handoffEvent = clean.handoff ? eventsById[clean.handoff.resultEventId] : null;
+  var handoffCredit = clean.handoff ? creditsByKey[clean.handoff.creditKey] : null;
+  if (clean.handoff && (!handoffEvent || !handoffEvent.qualifying || handoffEvent.fate !== "fallen" ||
+      handoffEvent.personId !== clean.handoff.fallenPersonId || handoffEvent.creditKey !== clean.handoff.creditKey ||
+      !handoffCredit || !handoffCredit.qualifying || handoffCredit.fate !== "fallen" ||
+      handoffCredit.personId !== clean.handoff.fallenPersonId || handoffCredit.eventId !== clean.handoff.resultEventId)) clean.handoff = null;
+  if (clean.handoff && (clean.handoff.state === "pending" || clean.handoff.state === "ended")) {
+    if (!clean.lastParticipation || clean.lastParticipation.creditKey !== clean.handoff.creditKey ||
+        clean.lastParticipation.personId !== clean.handoff.fallenPersonId ||
+        !_ssCleanUnitRef(clean.handoff.unitRef) || clean.lastParticipation.battleId !== clean.handoff.unitRef.battleId ||
+        clean.lastParticipation.side !== clean.handoff.unitRef.side || clean.lastParticipation.unitId !== clean.handoff.unitRef.unitId ||
+        clean.lastParticipation.slot !== clean.handoff.unitRef.slot || clean.lastParticipation.slotPid !== clean.handoff.unitRef.slotPid) clean.handoff = null;
+    if (clean.handoff && typeof warCareerComradeCandidates === "function") {
+      var expectedCandidates = warCareerComradeCandidates(C, clean, null, handoffCredit.participation), expectedIds = [];
+      for (var eci = 0; eci < expectedCandidates.length; eci++) expectedIds.push(expectedCandidates[eci].pid);
+      if ((clean.handoff.state === "pending" && JSON.stringify(expectedIds) !== JSON.stringify(clean.handoff.candidateIds)) ||
+          (clean.handoff.state === "ended" && expectedIds.length)) clean.handoff = null;
+    }
+  } else if (clean.handoff && clean.handoff.state === "completed") {
+    var handoffLine = null;
+    for (var hi = 0; hi < clean.lineage.length; hi++) if (clean.lineage[hi].personId === clean.handoff.fallenPersonId &&
+        clean.lineage[hi].successorId === clean.handoff.selectedPersonId &&
+        clean.lineage[hi].resultEventId === clean.handoff.resultEventId &&
+        clean.lineage[hi].creditKey === clean.handoff.creditKey) { handoffLine = clean.lineage[hi]; break; }
+    var successor = null, successorCount = 0, reg = typeof ssPersonRegistry === "function" ? ssPersonRegistry(C) : null;
+    var people = reg && Array.isArray(reg.people) ? reg.people : [];
+    for (var sci = 0; sci < people.length; sci++) if (people[sci] && people[sci].pid === clean.handoff.selectedPersonId) { successor = people[sci]; successorCount++; }
+    var successorRef = successor && _ssCleanUnitRef(successor.unitRef), cleanRef = clean.person && _ssCleanUnitRef(clean.person.unitRef);
+    var lineRef = handoffLine && _ssCleanUnitRef(handoffLine.unitRef), handoffRef = _ssCleanUnitRef(clean.handoff.unitRef);
+    if (!handoffLine || (clean.status !== "alive" && clean.status !== "wounded") || successorCount !== 1 || !successorRef || !cleanRef || successor.side !== C.side || clean.person.side !== C.side ||
+        successorRef.battleId !== cleanRef.battleId || successorRef.side !== cleanRef.side || successorRef.unitId !== cleanRef.unitId ||
+        successorRef.slot !== cleanRef.slot || successorRef.slotPid !== cleanRef.slotPid || !lineRef || !handoffRef ||
+        lineRef.battleId !== handoffRef.battleId || lineRef.side !== handoffRef.side || lineRef.unitId !== handoffRef.unitId ||
+        lineRef.slot !== handoffRef.slot || lineRef.slotPid !== handoffRef.slotPid) clean.handoff = null;
+    if (clean.handoff && typeof warCareerComradeCandidates === "function") {
+      var completedCandidates = warCareerComradeCandidates(C, clean, people, handoffCredit.participation, clean.handoff.fallenPersonId);
+      var completedIds = [];
+      for (var cci = 0; cci < completedCandidates.length; cci++) completedIds.push(completedCandidates[cci].pid);
+      if (JSON.stringify(completedIds) !== JSON.stringify(clean.handoff.candidateIds) || completedIds.indexOf(clean.handoff.selectedPersonId) < 0) clean.handoff = null;
+    }
+  }
+
+  // Slice C and later own these authority ledgers. Slice B retains only
+  // consequence evidence and immutable hand-off history; malformed saves cannot
+  // smuggle advancement, relationships, billets, or political authority.
   clean.roleHistory = [];
   clean.relationships = {};
-  clean.lineage = [];
   clean.terminal = null;
   clean.currentBillet = null;
 }
-function _ssJourneySnapshot(p) {
+function _ssJourneySnapshot(p, warCareerV1) {
   if (!_lootPlain(p)) return null;
   var snap = {
     pid: _lootCleanText(p.pid || p.id, 180),
@@ -263,6 +584,15 @@ function _ssJourneySnapshot(p) {
   if (p.status) snap.status = _ssStatus(p.status);
   if (p.officerTier === true) snap.officerTier = true;
   if (p.replacement === true) snap.replacement = true;
+  if (warCareerV1 === true) {
+    if (p.replaces) snap.replaces = _lootCleanText(p.replaces, 180);
+    var unitRef = _ssCleanUnitRef(p.unitRef);
+    if (unitRef) snap.unitRef = unitRef;
+    var serviceStart = Number(p.serviceStart), serviceEnd = Number(p.serviceEnd), serviceYear = Number(p.serviceYear);
+    if (isFinite(serviceStart) && serviceStart >= 1800 && serviceStart <= 1900) snap.serviceStart = Math.round(serviceStart);
+    if (isFinite(serviceEnd) && serviceEnd >= 1800 && serviceEnd <= 1900) snap.serviceEnd = Math.round(serviceEnd);
+    if (isFinite(serviceYear) && serviceYear >= 1800 && serviceYear <= 1900) snap.serviceYear = Math.round(serviceYear);
+  }
   if (p.promotedFrom) snap.promotedFrom = _lootCleanText(p.promotedFrom, 80);
   if (p.sourceNote) snap.sourceNote = _lootCleanText(p.sourceNote, 360);
   if (p.bio) snap.bio = _lootCleanText(p.bio, 800);
@@ -361,12 +691,12 @@ function _ssCleanJourney(C, L) {
   if (clean.lastTurn < 0) clean.lastTurn = clean.startedTurn;
   if (!clean.startBattleId) clean.startBattleId = clean.battleId;
   if (!clean.currentBattleId) clean.currentBattleId = clean.lastBattleId || clean.battleId;
-  clean.person = _ssJourneySnapshot(J.person);
+  clean.person = _ssJourneySnapshot(J.person, J.careerVersion === 1);
   if (!clean.personId && clean.person) clean.personId = clean.person.pid;
   if (J.careerVersion === 1) {
     var resolved = clean.personId && typeof ssFindPerson === "function" ? ssFindPerson(C, clean.personId) : null;
     if (!clean.person && resolved) {
-      clean.person = _ssJourneySnapshot(resolved);
+      clean.person = _ssJourneySnapshot(resolved, true);
       clean.personId = clean.person ? clean.person.pid : "";
     } else if (clean.person && clean.personId && clean.person.pid !== clean.personId) {
       if (resolved && resolved.pid === clean.person.pid && resolved.replaces === clean.personId) clean.personId = clean.person.pid;
@@ -377,7 +707,18 @@ function _ssCleanJourney(C, L) {
         clean.status = "alive";
       }
     }
-    if (!clean.person || clean.person.pid !== clean.personId) {
+    // D401 migration: a D400 snapshot predates the explicit scenario-unit
+    // reference. Hydrate only that source-owned identity field from the exact
+    // canonical pid; never overwrite alternate-timeline rank/persona state.
+    if (clean.person && resolved && resolved.pid === clean.personId && !clean.person.unitRef) {
+      var resolvedRef = _ssCleanUnitRef(resolved.unitRef);
+      if (resolvedRef) clean.person.unitRef = resolvedRef;
+      if (resolved.replaces) clean.person.replaces = _lootCleanText(resolved.replaces, 180);
+      if (resolved.serviceYear != null) clean.person.serviceYear = Math.round(_lootClamp(resolved.serviceYear, 1800, 1900));
+      if (resolved.serviceStart != null) clean.person.serviceStart = Math.round(_lootClamp(resolved.serviceStart, 1800, 1900));
+      if (resolved.serviceEnd != null) clean.person.serviceEnd = Math.round(_lootClamp(resolved.serviceEnd, 1800, 1900));
+    }
+    if (!clean.person || clean.person.pid !== clean.personId || clean.person.side !== C.side) {
       clean.enabled = false;
       clean.personId = "";
       clean.person = null;
@@ -643,8 +984,9 @@ function lootSurvivalBridgeBonus(C) {
   var firepower = _lootEquippedEffect(C, "firepower");
   var overall = _lootEquippedEffect(C, "overall") + Math.round((supply + morale - fatigue) / 4);
   var st = L.journey && L.journey.enabled ? L.journey.status : "";
-  if (st === "wounded") { morale -= 1; fatigue += 2; overall -= 1; }
-  if (st === "captured") { supply -= 2; morale -= 3; fatigue += 3; overall -= 2; }
+  var legacyStatusInput = !(L.journey && L.journey.careerVersion === 1);
+  if (legacyStatusInput && st === "wounded") { morale -= 1; fatigue += 2; overall -= 1; }
+  if (legacyStatusInput && st === "captured") { supply -= 2; morale -= 3; fatigue += 3; overall -= 2; }
   return {
     supply: _lootClamp(supply, -cap, cap),
     morale: _lootClamp(morale, -cap, cap),
@@ -661,6 +1003,12 @@ function _ssAddPerson(out, seen, spec, year, source) {
   var p = (typeof fldMaterializePerson === "function") ? fldMaterializePerson(spec, year) : null;
   if (!p) return;
   if (source) p.source = source;
+  var unitRef = _ssCleanUnitRef(spec.unitRef);
+  if (unitRef) p.unitRef = unitRef;
+  if (spec.replaces) p.replaces = _lootCleanText(spec.replaces, 180);
+  if (spec.serviceStart != null) p.serviceStart = Math.round(_lootClamp(spec.serviceStart, 1800, 1900));
+  if (spec.serviceEnd != null) p.serviceEnd = Math.round(_lootClamp(spec.serviceEnd, 1800, 1900));
+  if (spec.serviceYear != null) p.serviceYear = Math.round(_lootClamp(spec.serviceYear, 1800, 1900));
   seen[p.pid] = 1;
   out.push(p);
 }
@@ -690,10 +1038,11 @@ function _ssUnitSpecs(id, label, side, unit, year) {
   var arm = unit && unit.arm ? unit.arm : "inf";
   var team = { side: side, army: label || id, corps: null, division: null, brigade: unit && unit.name ? unit.name : uid, regiment: null, company: arm === "art" ? "Battery" : "Representative company" };
   var base = "ss:" + id + ":" + side + ":" + uid;
+  function ref(slot) { return { battleId:id, side:side, unitId:uid, slot:slot, slotPid:base + ":" + slot }; }
   return [
-    { pid: base + ":cmd", name: cname || null, rank: "Captain", branch: arm, side: side, role: "company officer", team: team, year: year },
-    { pid: base + ":nco", rank: "Sergeant", branch: arm, side: side, role: "noncommissioned officer", team: team, year: year },
-    { pid: base + ":pvt", rank: "Private", branch: arm, side: side, role: "private soldier", team: team, year: year }
+    { pid: base + ":cmd", name: cname || null, rank: "Captain", branch: arm, side: side, role: "company officer", team: team, year: year, serviceYear:year, unitRef:ref("cmd") },
+    { pid: base + ":nco", rank: "Sergeant", branch: arm, side: side, role: "noncommissioned officer", team: team, year: year, serviceYear:year, unitRef:ref("nco") },
+    { pid: base + ":pvt", rank: "Private", branch: arm, side: side, role: "private soldier", team: team, year: year, serviceYear:year, unitRef:ref("pvt") }
   ];
 }
 
@@ -884,10 +1233,15 @@ function _ssApplySoldierReplacements(C, reg, year) {
   for (var ri = 0; ri < validation.records.length; ri++) {
     var r = validation.records[ri], idx = index[r.replacePid];
     if (idx == null || !reg.people[idx] || !reg.people[idx].generated) continue;
+    var replaced = reg.people[idx], replacedRef = _ssCleanUnitRef(replaced.unitRef);
     var p = (typeof fldMaterializePerson === "function") ? fldMaterializePerson(r, r.year || year) : null;
     if (!p || p.generated || p.provenance !== r.provenance) continue;
     p.replacement = true;
     p.replaces = r.replacePid;
+    if (replacedRef) p.unitRef = replacedRef;
+    if (replaced.serviceStart != null) p.serviceStart = replaced.serviceStart;
+    if (replaced.serviceEnd != null) p.serviceEnd = replaced.serviceEnd;
+    if (replaced.serviceYear != null) p.serviceYear = replaced.serviceYear;
     p.source = "soldier-replacements";
     p.sourceNote = r.sourceNote;
     p.disputeNote = r.disputeNote;

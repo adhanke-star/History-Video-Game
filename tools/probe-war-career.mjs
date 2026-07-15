@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import "./guard-probe-browser.mjs";
-// D400 Slice A focused gate: canonical War Career spine, nonqualifying
-// observations, terminal Ironman honesty, named-slot law, and route parity.
+// D401 Slice B focused gate: D400 canonical/terminal invariants plus explicit
+// scenario-unit participation, pure personal fate, and deterministic hand-off.
 
 import { chromium } from "playwright-core";
 import { spawn, execFileSync } from "node:child_process";
@@ -43,6 +43,8 @@ function staticPreflight() {
   const journey = readFileSync(join(ROOT, "src", "37-loot-survival.js"), "utf8");
   const aar = readFileSync(join(ROOT, "src", "82-after-action.js"), "utf8");
   const slots = readFileSync(join(ROOT, "src", "91-save-slots.js"), "utf8");
+  const campaignLink = readFileSync(join(ROOT, "src", "tactical", "T2-campaign-link.js"), "utf8");
+  const officers = readFileSync(join(ROOT, "src", "tactical", "T3-officers.js"), "utf8");
   const manifest = JSON.parse(readFileSync(join(ROOT, "src", "00-manifest.json"), "utf8"));
   const vet = readFileSync(join(ROOT, "tools", "vet-no-regression.mjs"), "utf8");
   const list = execFileSync(process.execPath, [join(ROOT, "tools", "vet-no-regression.mjs"), "--list"], {
@@ -74,6 +76,10 @@ function staticPreflight() {
   check("save guard still has two declarations", (readFileSync(join(ROOT, "src", "105-save-guard.js"), "utf8").match(/^function\s+(?:loadLocal|applySave)\s*\(/gm) || []).length === 2, null);
   check("AAR v1 composition guarded", aar.includes('typeof warCareerReportHTML === "function"') && aar.includes("careerVersion === 1"), null);
   check("Ironman direct and UI slot guards", slots.includes("_slIronmanNamedSaveBlocked") && slots.includes("slIronmanLaw") && slots.includes('aria-disabled="true"'), null);
+  check("live field evidence producer", campaignLink.includes("warCareerLinkField(C, ctx, __FIELD)") && campaignLink.includes("warCareerBuildFieldEvidence(C, ctx, wcMode, __FIELD)") && campaignLink.includes("B.warCareerEvidence = o.warCareerEvidence"), null);
+  check("live exact officer link", officers.includes("warCareerLinkRealtimeOfficerRoster") && officers.includes("ld.careerPersonId") && officers.includes("ld._everActive"), null);
+  check("explicit assignment is not a namespace alias", runtime.includes("cw_war_career_assignment_v1") && runtime.includes("explicit-career-assignment") && !runtime.includes("campaign-representative"), null);
+  check("procedural army commander is never the career Captain", runtime.includes('link.ref.slot !== "cmd" || !ctx || !ctx.scn'), null);
   check("frozen base hash", md5(join(ROOT, "build", "base.html")) === "c9db83fa99230ffb95bdfdfe059f3fb9", md5(join(ROOT, "build", "base.html")));
 
   return { ok: checks.every(row => row.ok), checks };
@@ -195,6 +201,100 @@ const SETUP = `(() => {
     if (!result || !result.ok) throw new Error('War Career start failed: ' + bytes(result));
     return { person:p, result:result };
   }
+  function currentPerson(C, rank, slot) {
+    var bid = CHAINS[C.side][C.idx], people = ssPersonRegistry(C).people;
+    for (var i = 0; i < people.length; i++) {
+      var p = people[i], ref = p && p.unitRef;
+      if (p.side === C.side && ref && ref.battleId === bid && ref.side === C.side &&
+          (!rank || p.rank === rank) && (!slot || ref.slot === slot) && _wcTeamAnchor(p)) return p;
+    }
+    return null;
+  }
+  function otherBattlePerson(C, rank) {
+    var bid = CHAINS[C.side][C.idx], people = ssPersonRegistry(C).people;
+    for (var i = 0; i < people.length; i++) {
+      var p = people[i], ref = p && p.unitRef;
+      if (p.side === C.side && p.rank === (rank || 'Private') && ref && ref.battleId !== bid && _wcTeamAnchor(p)) return p;
+    }
+    return null;
+  }
+  function startCurrent(C, rank, slot) {
+    var p = currentPerson(C, rank, slot);
+    if (!p) {
+      var original = C.idx;
+      for (var i = 0; i < CHAINS[C.side].length && !p; i++) { C.idx = i; p = currentPerson(C, rank, slot); }
+      if (!p) C.idx = original;
+    }
+    if (!p) throw new Error('no current-battle ' + (rank || slot || 'eligible') + ' person');
+    var result = warCareerStart(C, p.pid);
+    if (!result || !result.ok) throw new Error('current War Career start failed: ' + bytes(result));
+    return { person:p, result:result };
+  }
+  function exactLeaderEvidence(C, B, fate, changes) {
+    var J = C.loot.journey, ref = J.person.unitRef, link = _wcActiveLink(C, ref.battleId);
+    var route = link && _wcRouteUnit(B.units, C.side, ref.unitId);
+    if (route && route.ambiguous) route = null;
+    if (link && !route) route = _wcAssignRouteUnit(link, B.units);
+    if (!link || !route) throw new Error('could not build exact participant control');
+    var row = {
+      personId:J.personId, leaderId:'probe-leader', battleId:ref.battleId, side:ref.side,
+      unitId:ref.unitId, slotPid:ref.slotPid, runId:C.runId, creditKey:link.creditKey,
+      participated:true, active:true, arrived:true, fate:fate
+    };
+    changes = changes || {};
+    Object.keys(changes).forEach(function(key) { row[key] = changes[key]; });
+    B.over = true;
+    B.warCareerEvidence = _wcResultEvidence(link, 'realtime', route, B.bd && B.bd.year, [row]);
+    return row;
+  }
+  function participantEvidence(C, B, mode) {
+    var J = C.loot.journey, ref = J.person.unitRef, link = _wcActiveLink(C, ref.battleId);
+    var route = link && _wcRouteUnit(B.units, C.side, ref.unitId);
+    if (route && route.ambiguous) route = null;
+    if (link && !route) route = _wcAssignRouteUnit(link, B.units);
+    if (!link || !route) throw new Error('could not build participant evidence');
+    B.over = true;
+    B.warCareerEvidence = _wcResultEvidence(link, mode || 'classic', route, B.bd && B.bd.year, []);
+    if (mode !== 'classic') B.warCareerEvidence.fieldComplete = true;
+    return B.warCareerEvidence;
+  }
+  function resolveResult(C, B, winnerSide, type) {
+    G.campaign = C; G.battle = B;
+    var oldObserve = window.warCareerObserveResolve, observed = null, returned;
+    window.warCareerObserveResolve = function() { observed = oldObserve.apply(this, arguments); return observed; };
+    try { returned = stubResultUi(function() { return campaignAdvance(winnerSide, type); }); }
+    finally { window.warCareerObserveResolve = oldObserve; }
+    return observed || returned;
+  }
+  function fieldOutcome(C, mode, fate, authoredScenario) {
+    var bd = battleRow(C), fightBd = clone(bd);
+    var ctx = { bd:fightBd, scn:authoredScenario || null, fromCampaign:true, _conditioned:false, simResolve:mode === 'auto' };
+    var opts = { renderer:'none', autoBoth:true, campaign:ctx, neutralPreset:true, seed:7331 };
+    if (authoredScenario) opts.scenario = authoredScenario;
+    else opts.skirmish = _fldCampaignSkirmishParams(fightBd, C);
+    fldLaunchSandbox(opts);
+    var linked = [];
+    for (var i = 0; i < (__FIELD.leaders || []).length; i++) if (__FIELD.leaders[i].careerPersonId === C.loot.journey.personId) linked.push(__FIELD.leaders[i]);
+    if (fate && linked.length === 1) {
+      linked[0].alive = fate !== 'fallen'; linked[0].wounded = fate === 'wounded'; linked[0]._everActive = true;
+    }
+    __FIELD.phase = 'over'; __FIELD.winner = C.side; __FIELD.winBy = 'hold';
+    var out = fldCampaignComputeOutcome();
+    fldExit(true);
+    return { outcome:out, linked:linked.length };
+  }
+  function latestCredit(C) {
+    var rows = C && C.loot && C.loot.journey && C.loot.journey.creditLedger || [];
+    return rows.length ? rows[rows.length - 1] : null;
+  }
+  function stubResultUi(fn) {
+    var oldUpgrade = window.openUpgrade, oldLaunch = window.launchCampaignBattle, oldWon = window.warWonScreen;
+    window.openUpgrade = function() {};
+    window.launchCampaignBattle = function() {};
+    window.warWonScreen = function() {};
+    try { return fn(); }
+    finally { window.openUpgrade = oldUpgrade; window.launchCampaignBattle = oldLaunch; window.warWonScreen = oldWon; }
+  }
   function spyGlobals(names) {
     var saved = {}, calls = {};
     names.forEach(function(name) {
@@ -211,6 +311,9 @@ const SETUP = `(() => {
     step('API + DISPATCHER INSTALL', function() {
       var names = [
         'warCareerInit', 'warCareerCanStart', 'warCareerStart', 'warCareerObserveResolve',
+        'warCareerParticipationEvidence', 'warCareerPreflightFate', 'warCareerDeterministicFate',
+        'warCareerBuildClassicEvidence', 'warCareerLinkField', 'warCareerLinkRealtimeOfficerRoster', 'warCareerBuildFieldEvidence',
+        'warCareerComradeCandidates', 'warCareerAcceptHandoff', 'warCareerHandoffHTML',
         'warCareerRole', 'warCareerCapabilities', 'warCareerCommandProjection',
         'warCareerIsTerminalLoss', 'warCareerTerminalPersist', 'warCareerReportHTML',
         'warCareerInstallDispatcher'
@@ -224,6 +327,18 @@ const SETUP = `(() => {
       var second = warCareerInstallDispatcher();
       if (second !== first || campaignAdvance !== first) throw new Error('dispatcher install is not idempotent');
       return { wrapped:true, capturedUndo:true, saveVersion:_SAVE_VER };
+    });
+
+    step('NO-CAREER T3 CONSEQUENCE BYTE PARITY', function() {
+      var spec = { id:'probe_plain_officer', side:'US', name:'Plain Officer', short:'Plain', quality:0.55, radius:210, x:100, z:100 };
+      var roster = [clone(spec)], rosterBefore = bytes(roster);
+      var linked = warCareerLinkRealtimeOfficerRoster(null, null, roster);
+      if (bytes(linked) !== rosterBefore || bytes(roster) !== rosterBefore) throw new Error('no-career roster gained consequence metadata');
+      var specBefore = bytes(spec), leader = fldMakeOfficer(spec);
+      if (bytes(spec) !== specBefore || !leader || own(leader, '_everActive') || own(leader, 'careerPersonId')) throw new Error('no-career leader shape changed');
+      fldOfficerActivate(leader);
+      if (own(leader, '_everActive') || own(leader, 'careerPersonId')) throw new Error('no-career activation gained career state');
+      return { rosterBytes:true, leaderMetadataAbsent:true, activationMetadataAbsent:true };
     });
 
     step('RUN ID + SANITIZER IDEMPOTENCE', function() {
@@ -360,6 +475,9 @@ const SETUP = `(() => {
       var legacy = mkC('US', false), high = anyHighRank(legacy);
       var old = ssStartJourney(legacy, high && high.pid);
       if (!old.ok || old.journey.careerVersion === 1 || legacy.loot.survival.enabled !== true) throw new Error('D360 high-rank legacy path changed');
+      if (own(old.journey.person, 'unitRef') || own(old.journey.person, 'serviceYear') || own(old.journey.person, 'serviceStart') || own(old.journey.person, 'serviceEnd') || own(old.journey.person, 'replaces')) throw new Error('D401 evidence fields leaked into a D360 snapshot');
+      var legacyBytes = bytes(legacy.loot.journey); warCareerInit(legacy);
+      if (bytes(legacy.loot.journey) !== legacyBytes || own(legacy.loot.journey, 'careerVersion')) throw new Error('warCareerInit changed legacy Journey bytes');
 
       var ui = mkC('US', false), eligible = anyEligible(ui), highUi = anyHighRank(ui);
       var html = ssPersonDetailHTML(ui, eligible.pid);
@@ -368,7 +486,7 @@ const SETUP = `(() => {
       if (!button || button.disabled || !/War Career/i.test(button.textContent) || !button.getAttribute('aria-label')) throw new Error('eligible accessible War Career action missing');
       html = ssPersonDetailHTML(ui, highUi.pid); host.innerHTML = html; button = host.querySelector('[data-wc-start]');
       if (!button || !button.disabled || button.getAttribute('aria-disabled') !== 'true' || !button.getAttribute('title')) throw new Error('ineligible action lacks disabled reason');
-      return { actual:found, legacy:high.name, accessible:true };
+      return { actual:found, legacy:high.name, legacyByteParity:true, accessible:true };
     });
 
     step('ROLE/CAPABILITY PURITY', function() {
@@ -488,8 +606,7 @@ const SETUP = `(() => {
         { name:'draw', iron:true, from:true, winner:null, type:'draw' },
         { name:'Ironman win', iron:true, from:true, winner:'US', type:'decisive' },
         { name:'Ironman free-battle loss', iron:true, from:false, winner:'CS', type:'win' },
-        { name:'no-battle legacy call', iron:false, noBattle:true, winner:'US', type:'win' },
-        { name:'active-v1 win', iron:false, from:true, winner:'US', type:'win', career:true }
+        { name:'no-battle legacy call', iron:false, noBattle:true, winner:'US', type:'win' }
       ];
       configs.forEach(function(cfg) {
         var C = mkC('US', cfg.iron), B = cfg.noBattle ? null : mkB(C, cfg.from);
@@ -627,6 +744,546 @@ const SETUP = `(() => {
       return { routes:R.matrix.routes.length };
     });
 
+    step('EXPLICIT PARTICIPATION FAIL-CLOSED MATRIX', function() {
+      var C = mkC('US', false), started = startCurrent(C, 'Private', 'pvt'), B = mkB(C, true);
+      participantEvidence(C, B, 'classic');
+      var good = warCareerParticipationEvidence(C, B);
+      if (!good.ok || !good.qualifying || good.participation.personId !== started.person.pid || good.participation.slotPid !== started.person.unitRef.slotPid) throw new Error('exact current scenario-unit did not qualify');
+      var stale = clone(B); stale.warCareerEvidence.runId = 'run-stale';
+      if (warCareerParticipationEvidence(C, stale).qualifying) throw new Error('stale receipt qualified');
+      var wrongYear = clone(B); wrongYear.warCareerEvidence.battleYear += 1;
+      if (warCareerParticipationEvidence(C, wrongYear).qualifying) throw new Error('wrong battle year qualified');
+      var missingYear = clone(B); delete missingYear.warCareerEvidence.battleYear;
+      if (warCareerParticipationEvidence(C, missingYear).qualifying) throw new Error('missing battle year qualified');
+      var wrong = clone(B); wrong.playerSide = 'CS'; wrong.warCareerEvidence.side = 'CS';
+      if (warCareerParticipationEvidence(C, wrong).qualifying) throw new Error('wrong side qualified');
+      var absent = clone(B); delete absent.warCareerEvidence;
+      if (warCareerParticipationEvidence(C, absent).qualifying) throw new Error('missing result receipt qualified');
+      var inactive = clone(B); inactive.warCareerEvidence.participants[0].active = false;
+      if (warCareerParticipationEvidence(C, inactive).qualifying) throw new Error('inactive result participant qualified');
+      var duplicateReceipt = clone(B); duplicateReceipt.warCareerEvidence.participants.push(clone(duplicateReceipt.warCareerEvidence.participants[0]));
+      if (warCareerParticipationEvidence(C, duplicateReceipt).qualifying) throw new Error('duplicate result participant qualified');
+      var assignmentMissing = clone(B), assignedRow = assignmentMissing.warCareerEvidence.participants[0];
+      if (assignedRow.mapping === 'explicit-career-assignment') {
+        for (var ami = 0; ami < assignmentMissing.units.length; ami++) if (assignmentMissing.units[ami].id === assignedRow.routeUnitId) delete assignmentMissing.units[ami].warCareerAssignment;
+        if (warCareerParticipationEvidence(C, assignmentMissing).qualifying) throw new Error('missing explicit field assignment qualified');
+      }
+      var savedRef = C.loot.journey.person.unitRef; delete C.loot.journey.person.unitRef;
+      if (warCareerParticipationEvidence(C, B).qualifying) throw new Error('missing unit reference qualified');
+      C.loot.journey.person.unitRef = savedRef;
+      var oldRegistry = window.ssPersonRegistry, baseReg = oldRegistry(C), duplicate = clone(started.person);
+      window.ssPersonRegistry = function() { var copy = { people:baseReg.people.slice() }; copy.people.push(duplicate); return copy; };
+      try { if (warCareerParticipationEvidence(C, B).qualifying) throw new Error('duplicate person/unit alias qualified'); }
+      finally { window.ssPersonRegistry = oldRegistry; }
+      var duplicateExact = mkB(C, true), exactUnit = { id:savedRef.unitId, side:C.side, type:'inf', alive:true };
+      duplicateExact.units.push(clone(exactUnit), clone(exactUnit));
+      if (warCareerBuildClassicEvidence(C, duplicateExact) !== null) throw new Error('duplicate exact source-unit ids fell through to an assignment');
+      var authoredCtx = { bd:clone(B.bd), scn:'authored-probe', fromCampaign:true }, authoredInitial = { phase:'active', units:[{ id:'other-live-unit', side:C.side, type:'inf', alive:true }], leaders:[] };
+      var authoredLink = warCareerLinkField(C, authoredCtx, authoredInitial);
+      if (!authoredLink || authoredLink.mapping !== 'exact-source-unit' || authoredLink.routeUnitId !== savedRef.unitId) throw new Error('authored reinforcement did not retain its exact source id');
+      var authoredAbsent = { phase:'over', units:clone(authoredInitial.units), leaders:[] };
+      if (warCareerBuildFieldEvidence(C, authoredCtx, 'auto', authoredAbsent) !== null) throw new Error('unarrived authored source unit produced evidence');
+      var authoredArrived = { phase:'over', units:clone(authoredInitial.units).concat([clone(exactUnit)]), leaders:[] };
+      var authoredEvidence = warCareerBuildFieldEvidence(C, authoredCtx, 'auto', authoredArrived);
+      if (!authoredEvidence || authoredEvidence.participants[0].routeUnitId !== savedRef.unitId) throw new Error('arrived authored source unit did not produce exact evidence');
+      authoredArrived.units.push(clone(exactUnit));
+      if (warCareerBuildFieldEvidence(C, authoredCtx, 'auto', authoredArrived) !== null) throw new Error('duplicate authored source units qualified');
+      var C2 = mkC('US', false), other = otherBattlePerson(C2, 'Private');
+      if (!other || !warCareerStart(C2, other.pid).ok) throw new Error('other-battle control could not start');
+      if (warCareerParticipationEvidence(C2, mkB(C2, true)).qualifying) throw new Error('nonparticipating scenario unit qualified');
+      function observedReject(mutator, label) {
+        var cx = mkC('US', false); startCurrent(cx, 'Private', 'pvt'); var bx = mkB(cx, true); participantEvidence(cx, bx, 'classic');
+        mutator(cx, bx); var beforeStatus = cx.loot.journey.status; resolveResult(cx, bx, 'CS', 'win');
+        var jx = cx.loot.journey, last = latestCredit(cx), ev = jx.events[jx.events.length - 1];
+        if (jx.status !== beforeStatus || jx.merit || jx.reputation || (last && last.qualifying) || !ev || ev.qualifying || ev.fate != null || ev.note.indexOf('infers no personal fate') < 0) throw new Error(label + ' did not remain a nonqualifying narrative');
+      }
+      observedReject(function(cx, bx) { delete bx.warCareerEvidence; }, 'missing');
+      observedReject(function(cx, bx) { bx.warCareerEvidence.runId = 'run-stale'; }, 'stale');
+      observedReject(function(cx, bx) { bx.playerSide = 'CS'; }, 'wrong-side');
+      observedReject(function(cx, bx) { bx.warCareerEvidence.participants.push(clone(bx.warCareerEvidence.participants[0])); }, 'duplicate');
+      observedReject(function(cx, bx) { bx.warCareerEvidence.participants[0].participated = false; }, 'nonparticipating');
+      return { receipt:good.participation, staleRejected:true, wrongYearRejected:true, missingYearRejected:true, wrongSideRejected:true, missingRejected:true, inactiveRejected:true, duplicateRejected:true, assignmentRequired:true, exactRouteAmbiguityRejected:true, authoredArrivalRequired:true, ambiguousRejected:true, nonparticipantRejected:true, narrativeRoutes:5 };
+    });
+
+    step('AGGREGATE CASUALTIES NEVER NAME FATE', function() {
+      var C = mkC('US', false); startCurrent(C, 'Private', 'pvt');
+      var low = mkB(C, true), high = mkB(C, true); participantEvidence(C, low, 'classic'); participantEvidence(C, high, 'classic');
+      low.casualties.US = 1; low.casualties.CS = 2; high.casualties.US = 999999; high.casualties.CS = 777777;
+      var lowFate = warCareerPreflightFate(C, low, 'CS', 'decisive'), highFate = warCareerPreflightFate(C, high, 'CS', 'decisive');
+      if (!lowFate.qualifying || bytes(lowFate) !== bytes(highFate)) throw new Error('aggregate totals changed deterministic named fate');
+      var C2 = mkC('US', false), p = otherBattlePerson(C2, 'Private');
+      if (!p || !warCareerStart(C2, p.pid).ok) throw new Error('aggregate control start failed');
+      var B = mkB(C2, true); B.casualties.US = 999999; B.infl.CS = 999999;
+      var beforeStatus = C2.loot.journey.status, preflight = warCareerPreflightFate(C2, B, 'CS', 'decisive');
+      if (preflight.qualifying || preflight.fate != null) throw new Error('aggregate casualty total asserted named fate without participation');
+      resolveResult(C2, B, 'CS', 'decisive'); var credit = latestCredit(C2), event = C2.loot.journey.events[C2.loot.journey.events.length - 1];
+      if (C2.loot.journey.status !== beforeStatus || !credit || credit.qualifying || credit.fate != null || !event || event.fate != null) throw new Error('aggregate-only observation did not stay fail-closed');
+      return { low:low.casualties.US, high:high.casualties.US, identicalFate:lowFate.fate, missingReceiptRejected:true, status:C2.loot.journey.status };
+    });
+
+    step('AUTO + CLASSIC + REALTIME PARTICIPATION MATRIX', function() {
+      function totals(B) { B.casualties.US = 80; B.casualties.CS = 160; B.infl.US = 160; B.infl.CS = 80; }
+      var C = mkC('US', false), bd = battleRow(C); startCurrent(C, 'Private', 'pvt');
+      bd = battleRow(C);
+      startBattleRuntime(bd, 'US', true); totals(G.battle); G.battle.over = true;
+      stubResultUi(function() { campaignAdvance('US', 'win'); });
+      if (!latestCredit(C) || !latestCredit(C).qualifying) throw new Error('Classic exact unit did not qualify: ' + bytes({ idx:C.idx, battle:G.battle && G.battle.bd && G.battle.bd.id, journey:C.loot && C.loot.journey, credit:latestCredit(C) }));
+      var classicReceipt = latestCredit(C).participation;
+
+      C = mkC('US', false); startCurrent(C, 'Private', 'pvt');
+      var realtime = fieldOutcome(C, 'realtime');
+      if (!realtime.outcome || !realtime.outcome.warCareerEvidence || realtime.outcome.warCareerEvidence.mode !== 'realtime') throw new Error('live realtime producer omitted result evidence');
+      stubResultUi(function() { fldCampaignApplyOutcome(realtime.outcome); });
+      if (!latestCredit(C) || !latestCredit(C).qualifying) throw new Error('realtime shared consequence path did not qualify');
+      var realtimeReceipt = latestCredit(C).participation;
+
+      C = mkC('US', false); startCurrent(C, 'Private', 'pvt');
+      var auto = fieldOutcome(C, 'auto');
+      if (!auto.outcome || !auto.outcome.warCareerEvidence || auto.outcome.warCareerEvidence.mode !== 'auto') throw new Error('live Auto producer omitted result evidence');
+      stubResultUi(function() { fldCampaignApplyOutcome(auto.outcome); });
+      if (!latestCredit(C) || !latestCredit(C).qualifying) throw new Error('Auto shared consequence path did not qualify');
+      var autoReceipt = latestCredit(C).participation;
+      return { classic:classicReceipt, realtime:realtimeReceipt, auto:autoReceipt, sharedEvidence:'explicit result-owned person/unit receipts' };
+    });
+
+    step('REALTIME OFFICER EXACT-ID FATE', function() {
+      var C = mkC('US', false); startCurrent(C, 'Captain', 'cmd');
+      var B = mkB(C, true), ref = C.loot.journey.person.unitRef;
+      B.units[0].id = ref.unitId;
+      var ctx = { bd:clone(B.bd), scn:'probe-exact-authored', fromCampaign:true, _conditioned:true };
+      var field = { phase:'over', units:B.units, leaders:[] };
+      if (!warCareerLinkField(C, ctx, field) || ctx.warCareerLink.mapping !== 'exact-source-unit') throw new Error('exact authored unit link unavailable');
+      var roster = [{ pid:C.loot.journey.personId, id:'probe-exact-leader', side:C.side, name:'Exact probe officer',
+        attach:ref.unitId, quality:0.55, radius:180, x:100, z:100 }];
+      var linkedRoster = warCareerLinkRealtimeOfficerRoster(C, ctx, roster);
+      if (linkedRoster === roster || linkedRoster[0].careerPersonId !== C.loot.journey.personId || roster[0].careerPersonId) throw new Error('exact source pid did not produce a cloned consequence link');
+      var wrongPidRoster = clone(roster); wrongPidRoster[0].pid += ':other';
+      if (warCareerLinkRealtimeOfficerRoster(C, ctx, wrongPidRoster) !== wrongPidRoster || wrongPidRoster[0].careerPersonId) throw new Error('same-unit wrong source pid was aliased');
+      var duplicateRoster = clone(roster); duplicateRoster.push(clone(duplicateRoster[0])); duplicateRoster[1].id += ':duplicate';
+      if (warCareerLinkRealtimeOfficerRoster(C, ctx, duplicateRoster) !== duplicateRoster || duplicateRoster[0].careerPersonId) throw new Error('duplicate exact leader source ids did not fail closed');
+      var proceduralRoster = [{ id:'ld_' + C.side, side:C.side, name:'Procedural commander', quality:0.55, radius:250, x:100, z:100 }];
+      if (warCareerLinkRealtimeOfficerRoster(C, { bd:clone(B.bd), scn:null }, proceduralRoster) !== proceduralRoster || proceduralRoster[0].careerPersonId) throw new Error('procedural commander was aliased to the selected Captain');
+      var oldUnits = __FIELD.units, oldSeed = __FIELD.seed, runtimeLeader;
+      try {
+        __FIELD.units = field.units; __FIELD.seed = 7331;
+        runtimeLeader = fldMakeOfficer(linkedRoster[0]);
+      } finally { __FIELD.units = oldUnits; __FIELD.seed = oldSeed; }
+      if (!runtimeLeader || runtimeLeader.careerPersonId !== C.loot.journey.personId || runtimeLeader._everActive !== true) throw new Error('T3 dropped exact source-owned person id');
+      runtimeLeader.alive = true; runtimeLeader.wounded = true;
+      field.leaders = [runtimeLeader];
+      B.warCareerEvidence = warCareerBuildFieldEvidence(C, ctx, 'realtime', field);
+      if (!B.warCareerEvidence || B.warCareerEvidence.leaders.length !== 1) throw new Error('T2 dropped exact realtime leader result evidence');
+      var exact = warCareerPreflightFate(C, B, 'US', 'win');
+      if (!exact.qualifying || exact.fate !== 'wounded' || exact.reason !== 'exact-realtime-leader') throw new Error('exact realtime leader fate rejected');
+      var wrong = clone(B); wrong.warCareerEvidence.leaders[0].personId = C.loot.journey.personId + ':wrong';
+      if (warCareerPreflightFate(C, wrong, 'US', 'win').qualifying) throw new Error('wrong leader person id qualified');
+      var staleRun = clone(B); staleRun.warCareerEvidence.leaders[0].runId = 'run-stale';
+      if (warCareerPreflightFate(C, staleRun, C.side, 'win').qualifying) throw new Error('stale leader run id qualified');
+      var staleKey = clone(B); staleKey.warCareerEvidence.leaders[0].creditKey += ':stale';
+      if (warCareerPreflightFate(C, staleKey, C.side, 'win').qualifying) throw new Error('stale leader credit key qualified');
+      var staleResult = clone(B); staleResult.warCareerEvidence.leaders[0].resultId += 'x';
+      if (warCareerPreflightFate(C, staleResult, C.side, 'win').qualifying) throw new Error('stale leader result id qualified');
+      var duplicate = clone(B); duplicate.warCareerEvidence.leaders.push(clone(duplicate.warCareerEvidence.leaders[0]));
+      if (warCareerPreflightFate(C, duplicate, 'US', 'win').qualifying) throw new Error('duplicate leader person id qualified');
+      var unarrived = clone(B); unarrived.warCareerEvidence.leaders[0].arrived = false;
+      if (warCareerPreflightFate(C, unarrived, 'US', 'win').qualifying) throw new Error('unarrived leader qualified');
+      var inactive = clone(B); inactive.warCareerEvidence.leaders[0].active = false;
+      if (warCareerPreflightFate(C, inactive, 'US', 'win').qualifying) throw new Error('inactive leader qualified');
+      var missing = clone(B); missing.warCareerEvidence.leaders = [];
+      if (warCareerPreflightFate(C, missing, 'US', 'win').qualifying) throw new Error('missing realtime cmd leader fell back to deterministic fate');
+      return { exactSourcePid:true, sameUnitWrongPidRejected:true, proceduralAliasRejected:true, t3T2Producer:true, exact:true, wrongIdRejected:true, staleRunRejected:true, staleKeyRejected:true, staleResultRejected:true, duplicateRejected:true, unarrivedRejected:true, inactiveRejected:true, missingRejected:true };
+    });
+
+    step('PURE PREFLIGHT FATE MATRIX', function() {
+      var fates = ['alive','wounded','captured','fallen'], seen = {}, C = mkC('US', false); startCurrent(C, 'Captain', 'cmd');
+      for (var i = 0; i < fates.length; i++) {
+        var B = mkB(C, true); exactLeaderEvidence(C, B, fates[i]);
+        var before = bytes([C, B]); deepFreeze(C); deepFreeze(B);
+        var a = warCareerPreflightFate(C, B, 'US', 'win'), b = warCareerPreflightFate(C, B, 'US', 'win');
+        if (!a.qualifying || a.fate !== fates[i] || bytes(a) !== bytes(b) || bytes([C, B]) !== before) throw new Error('pure fate failed for ' + fates[i]);
+        seen[fates[i]] = true;
+      }
+      C = mkC('US', false); startCurrent(C, 'Captain', 'cmd');
+      var malformed = mkB(C, true); exactLeaderEvidence(C, malformed, 'invented');
+      if (warCareerPreflightFate(C, malformed, 'US', 'win').qualifying) throw new Error('unsupported fate qualified');
+      return { states:Object.keys(seen), deterministic:true, noWrites:true, malformedRejected:true };
+    });
+
+    step('PREFLIGHT BEFORE DELEGATE + POST-UNDO COMMIT', function() {
+      var C = mkC('US', false); startCurrent(C, 'Captain', 'cmd');
+      var B = mkB(C, true); exactLeaderEvidence(C, B, 'wounded'); G.battle = B;
+      var oldPreflight = window.warCareerPreflightFate, oldUndo = window._slCaptureUndo, oldObserve = window.warCareerObserveResolve;
+      var trace = [], before = bytes([C, B, G.settings, storeSnapshot()]);
+      window.warCareerPreflightFate = function() { trace.push('preflight'); return oldPreflight.apply(this, arguments); };
+      window._slCaptureUndo = function() { if (bytes([C, B, G.settings, storeSnapshot()]) !== before || C.loot.journey.status !== 'alive') throw new Error('write before undo capture'); trace.push('undo'); return oldUndo.apply(this, arguments); };
+      window.warCareerObserveResolve = function() { trace.push('observe'); return oldObserve.apply(this, arguments); };
+      try { stubResultUi(function() { campaignAdvance('US', 'win'); }); }
+      finally { window.warCareerPreflightFate = oldPreflight; window._slCaptureUndo = oldUndo; window.warCareerObserveResolve = oldObserve; }
+      if (trace[0] !== 'preflight' || trace.indexOf('undo') < 0 || trace.indexOf('observe') <= trace.indexOf('undo') || C.loot.journey.status !== 'wounded') throw new Error('preflight/delegate/undo/commit order wrong: ' + trace.join(','));
+      var C2 = mkC('US', false); startCurrent(C2, 'Captain', 'cmd'); var B2 = mkB(C2, true); exactLeaderEvidence(C2, B2, 'captured');
+      resolveResult(C2, B2, 'CS', 'win');
+      if (C2.loot.journey.status !== 'captured') throw new Error('captured fate did not commit post-undo');
+      var captureKey = latestCredit(C2).creditKey, captureCredit = _wcCreditFor(C2.loot.journey, captureKey), sameRung = mkB(C2, true), same = resolveResult(C2, sameRung, 'US', 'win');
+      captureCredit = _wcCreditFor(C2.loot.journey, captureKey);
+      if (!same.duplicate || C2.loot.journey.status !== 'captured' || captureCredit.recoveredAtCreditKey) throw new Error('same-rung retry recovered capture or rerolled credit');
+      var recoveryBattle = mkB(C2, true), directRecovery = warCareerObserveResolve('US', 'win', recoveryBattle, C2, true);
+      captureCredit = _wcCreditFor(C2.loot.journey, captureKey);
+      if (directRecovery.recoveredCapture || C2.loot.journey.status !== 'captured' || captureCredit.recoveredAtCreditKey) throw new Error('observer without carried dispatcher token recovered capture');
+      var recovered = resolveResult(C2, recoveryBattle, 'CS', 'win');
+      captureCredit = _wcCreditFor(C2.loot.journey, captureKey);
+      if (!recovered.recoveredCapture || C2.loot.journey.status !== 'alive' || !captureCredit.recoveredAtCreditKey || !captureCredit.recoveryEventId || C2.loot.journey.merit || C2.loot.journey.reputation) throw new Error('distinct-result deterministic captured recovery failed');
+      var recoveryCredit = _wcCreditFor(C2.loot.journey, captureCredit.recoveredAtCreditKey), recoveryCreditBeforeRetry = bytes(recoveryCredit);
+      var betterRetryBattle = mkB(C2, true), betterRetry = resolveResult(C2, betterRetryBattle, 'US', 'decisive');
+      recoveryCredit = _wcCreditFor(C2.loot.journey, captureCredit.recoveredAtCreditKey);
+      if (!betterRetry.duplicate || bytes(recoveryCredit) !== recoveryCreditBeforeRetry || C2.loot.journey.status !== 'alive') throw new Error('better same-rung retry rewrote recovery owner or reabsorbed capture');
+      var recoveredSave = envelope(C2, 'captured-recovery-after-better-retry'); applySave(clone(recoveredSave)); warCareerInit(G.campaign);
+      if (G.campaign.loot.journey.status !== 'alive' || !_wcCreditFor(G.campaign.loot.journey, captureCredit.creditKey).recoveredAtCreditKey) throw new Error('captured recovery did not survive save/load');
+
+      var C3 = mkC('US', false); startCurrent(C3, 'Captain', 'cmd'); var B3 = mkB(C3, true); exactLeaderEvidence(C3, B3, 'wounded'); G.battle = B3;
+      var oldUndo3 = window._slCaptureUndo, replacement = currentPerson(C3, 'Private', 'pvt');
+      if (!replacement || replacement.pid === C3.loot.journey.personId) throw new Error('TOCTOU replacement control unavailable');
+      window._slCaptureUndo = function() {
+        var undoResult = oldUndo3.apply(this, arguments), J3 = C3.loot.journey;
+        J3.personId = replacement.pid; J3.person = _ssJourneySnapshot(replacement, true); J3.status = 'alive';
+        return undoResult;
+      };
+      try { stubResultUi(function() { campaignAdvance('US', 'win'); }); } finally { window._slCaptureUndo = oldUndo3; }
+      var tokenCredit = latestCredit(C3), tokenEvent = C3.loot.journey.events[C3.loot.journey.events.length - 1];
+      if (C3.loot.journey.status !== 'alive' || !tokenCredit || tokenCredit.qualifying || tokenCredit.fate != null || !tokenEvent || tokenEvent.fate != null) throw new Error('preflight token crossed an identity/key change');
+      return { trace:trace, committed:C.loot.journey.status, capturedCommitted:true, sameRungCaptureHeld:true, directObserverRecoveryRejected:true, capturedRecoveredOnLoss:true, betterSameRungRetryFrozen:true, recoverySaveLoad:true, tokenTupleBound:true };
+    });
+
+    step('CAREER-IRONMAN FALLEN SHARES TERMINAL PATH', function() {
+      cleanStore(); _wcTerminalRenderKey = '';
+      var C = mkC('US', true); startCurrent(C, 'Captain', 'cmd');
+      var B = mkB(C, true); exactLeaderEvidence(C, B, 'fallen'); G.battle = B;
+      localStorage.setItem('gor_save', JSON.stringify(envelope(C, 'live')));
+      localStorage.setItem('gor_undo_last', JSON.stringify({ ver:1, save:envelope(C, 'undo') }));
+      var spies = spyGlobals(['_slCaptureUndo','warCareerObserveResolve']);
+      var snapshot;
+      try { snapshot = campaignAdvance('US', 'win'); } finally { spies.restore(); }
+      if (!snapshot || snapshot.reason !== 'career-ironman-fallen' || !snapshot.person || snapshot.person.status !== 'fallen') throw new Error('personal Ironman fallen did not use terminal snapshot');
+      if (G.campaign !== null || snapshot.stats.battles !== 0 || spies.calls._slCaptureUndo || spies.calls.warCareerObserveResolve || localStorage.getItem('gor_save') != null || localStorage.getItem('gor_undo_last') != null) throw new Error('personal terminal delegated or left resumable state');
+      if (!Object.isFrozen(snapshot) || document.querySelectorAll('[data-war-career-terminal="1"]').length !== 1) throw new Error('personal terminal was not immutable/single-rendered');
+      return { reason:snapshot.reason, delegateWrites:0, renderCount:1 };
+    });
+
+    step('NORMAL FALLEN ENTERS HANDOFF', function() {
+      var C = mkC('US', false); startCurrent(C, 'Captain', 'cmd');
+      var B = mkB(C, true); exactLeaderEvidence(C, B, 'fallen'); G.battle = B;
+      var oldRender = window.warCareerRenderTerminal, renders = 0;
+      window.warCareerRenderTerminal = function() { renders++; return oldRender.apply(this, arguments); };
+      try { stubResultUi(function() { campaignAdvance('US', 'win'); }); } finally { window.warCareerRenderTerminal = oldRender; }
+      var J = C.loot.journey;
+      if (G.campaign !== C || J.status !== 'fallen' || !J.handoff || J.handoff.state !== 'pending' || !J.handoff.candidateIds.length || renders || C.stats.battles !== 1) throw new Error('normal fallen did not enter live pending handoff');
+      if (J.merit !== 0 || J.reputation !== 0) throw new Error('fallen created reward');
+      return { campaignLive:true, state:J.handoff.state, candidates:J.handoff.candidateIds.length, terminalRenders:renders };
+    });
+
+    step('COMRADE ORDER + EXCLUSIONS', function() {
+      var C = mkC('US', false), started = startCurrent(C, 'Captain', 'cmd'), J = C.loot.journey, baseRef = clone(J.person.unitRef);
+      var B = mkB(C, true); participantEvidence(C, B, 'classic'); var part = warCareerParticipationEvidence(C, B).participation;
+      var canonicalBase = clone(J.person);
+      canonicalBase.team = { side:'US', army:'Probe Army', brigade:'Stable Brigade', regiment:'Stable Regiment', company:'Stable Company' };
+      J.person.team = { side:'US', army:'Tampered Save', brigade:'Tampered Brigade', regiment:'Tampered Regiment', company:'Tampered Company' };
+      function ref(slot, unit) { unit = unit || baseRef.unitId; return { battleId:baseRef.battleId, side:'US', unitId:unit, slot:slot, slotPid:['ss',baseRef.battleId,'US',unit,slot].join(':') }; }
+      function person(pid, level, generated, rank) {
+        var team = { side:'US', army:'Probe Army', brigade:'Stable Brigade', regiment:'Stable Regiment', company:'Stable Company' };
+        if (level === 'regiment') team.company = 'Other Company';
+        if (level === 'brigade') { team.company = 'Other Company'; team.regiment = 'Other Regiment'; }
+        if (level === 'distant') { team.company = 'Elsewhere'; team.regiment = 'Elsewhere'; team.brigade = 'Other Brigade'; }
+        var unit = 'unit-' + pid, slot = /Captain|Lieutenant/.test(rank || '') ? 'cmd' : (/Sergeant/.test(rank || '') ? 'nco' : 'pvt');
+        return { pid:pid, name:pid, rank:rank || 'Private', side:'US', status:'alive', provenance:generated ? 'Inferred' : 'Verified', generated:!!generated, sources:generated ? [] : [{ title:'Probe source' }], unitRef:ref(slot, unit), team:team, serviceYear:part.battleYear };
+      }
+      var companyDoc = person('z-company-doc','company',false,'Private');
+      var companyGen = person('a-company-gen','company',true,'Captain');
+      var regimentNear = person('b-regiment-near','regiment',false,'Sergeant');
+      var regimentFar = person('a-regiment-far','regiment',false,'Private');
+      var brigadeB = person('b-brigade-tie','brigade',false,'Captain');
+      var brigadeA = person('a-brigade-tie','brigade',false,'Captain');
+      var people = [clone(canonicalBase), brigadeB, companyGen, regimentFar, companyDoc, brigadeA, regimentNear];
+      var ordered = warCareerComradeCandidates(C, J, people, part).map(function(row) { return row.pid; });
+      var expected = ['z-company-doc','a-company-gen','b-regiment-near','a-regiment-far','a-brigade-tie'];
+      if (bytes(ordered) !== bytes(expected)) throw new Error('stable hierarchy/documented/rank/pid/bound order wrong: ' + bytes(ordered));
+      J.lineage = [{ personId:'z-company-doc' }];
+      var lineExcluded = warCareerComradeCandidates(C, J, people, part).map(function(row) { return row.pid; });
+      J.lineage = [];
+      if (lineExcluded.indexOf('z-company-doc') >= 0) throw new Error('lineage identity remained eligible');
+      var wrongSide = person('wrong-side','company',false,'Sergeant'); wrongSide.side = 'CS'; wrongSide.unitRef.side = 'CS'; wrongSide.unitRef.slotPid = ['ss',baseRef.battleId,'CS',wrongSide.unitRef.unitId,'nco'].join(':');
+      if (warCareerComradeCandidates(C, J, [clone(canonicalBase), wrongSide], part).length) throw new Error('wrong-side candidate survived');
+      var dead = person('dead','company',false,'Sergeant'); dead.status = 'captured';
+      if (warCareerComradeCandidates(C, J, [clone(canonicalBase), dead], part).length) throw new Error('nonalive candidate survived');
+      var woundedCandidate = person('wounded','company',false,'Sergeant'); woundedCandidate.status = 'wounded';
+      if (warCareerComradeCandidates(C, J, [clone(canonicalBase), woundedCandidate], part).length) throw new Error('wounded candidate survived alive-only law');
+      var absentCandidate = person('absent','company',false,'Sergeant'); absentCandidate.present = false;
+      if (warCareerComradeCandidates(C, J, [clone(canonicalBase), absentCandidate], part).length) throw new Error('absent candidate survived');
+      var future = person('future','company',false,'Sergeant'); future.serviceStart = Number(part.battleYear) + 1; delete future.serviceYear;
+      if (warCareerComradeCandidates(C, J, [clone(canonicalBase), future], part).length) throw new Error('out-of-window candidate survived');
+      var expired = person('expired','company',false,'Sergeant'); expired.serviceEnd = Number(part.battleYear) - 1; delete expired.serviceYear;
+      if (warCareerComradeCandidates(C, J, [clone(canonicalBase), expired], part).length) throw new Error('expired service candidate survived');
+      var oneYear = person('wrong-year','company',false,'Sergeant'); oneYear.serviceYear = Number(part.battleYear) + 1;
+      if (warCareerComradeCandidates(C, J, [clone(canonicalBase), oneYear], part).length) throw new Error('one-year service mismatch survived');
+      var noProvenance = person('no-provenance','company',false,'Sergeant'); noProvenance.provenance = '';
+      if (warCareerComradeCandidates(C, J, [clone(canonicalBase), noProvenance], part).length) throw new Error('unknown provenance survived');
+      var noSources = person('no-sources','company',false,'Sergeant'); noSources.sources = [];
+      if (warCareerComradeCandidates(C, J, [clone(canonicalBase), noSources], part).length) throw new Error('undocumented authored candidate survived');
+      var dupA = person('duplicate','company',false,'Sergeant'), dupB = clone(dupA);
+      if (warCareerComradeCandidates(C, J, [clone(canonicalBase), dupA, dupB], part).length) throw new Error('duplicate identity survived');
+      var slotA = person('slot-a','company',false,'Sergeant'), slotB = clone(slotA); slotB.pid = 'slot-b'; slotB.name = 'slot-b';
+      if (warCareerComradeCandidates(C, J, [clone(canonicalBase), slotA, slotB], part).length) throw new Error('distinct identities sharing one slot survived');
+      var distant = person('distant','distant',false,'Sergeant');
+      if (warCareerComradeCandidates(C, J, [clone(canonicalBase), distant], part).length) throw new Error('different-unit candidate survived');
+      var sameBrigadeDifferentUnit = person('same-brigade-different-unit','brigade',false,'Sergeant');
+      if (warCareerComradeCandidates(C, J, [clone(canonicalBase), sameBrigadeDifferentUnit], part).length !== 1) throw new Error('stable same-brigade fallback was excluded by unit id');
+      var missingYearPart = clone(part); delete missingYearPart.battleYear;
+      if (warCareerComradeCandidates(C, J, [clone(canonicalBase), companyDoc], missingYearPart).length) throw new Error('missing result year bypassed service-window law');
+      if (ordered.length !== 5) throw new Error('candidate bound did not select exact first five');
+      return { order:ordered, bounded:ordered.length, canonicalHierarchy:true, mutableSnapshotIgnored:true, orthogonalComparator:true, lineageExcluded:true, sideExcluded:true, nonaliveExcluded:true, absentExcluded:true, serviceStartEndYearExcluded:true, missingYearRejected:true, provenanceRequired:true, duplicatePidAndSlotExcluded:true, distantHierarchyExcluded:true, sameBrigadeFallback:true };
+    });
+
+    step('HANDOFF SAVE/LOAD + SINGLE IDENTITY + NO-CANDIDATE', function() {
+      var C = mkC('US', false); startCurrent(C, 'Captain', 'cmd');
+      C.loot.journey.person.ovr = 97; C.loot.journey.person.status = 'wounded'; C.loot.journey.merit = 77;
+      var B = mkB(C, true); exactLeaderEvidence(C, B, 'fallen');
+      var observed = resolveResult(C, B, 'CS', 'win'), J = C.loot.journey;
+      if (!observed.ok || !J.handoff || J.handoff.state !== 'pending') throw new Error('pending handoff setup failed');
+      var fixed = J.handoff.candidateIds.slice(), creditCount = J.creditLedger.length, eventCount = J.events.length, saved = envelope(C, 'handoff');
+      var rankChoices = ['Private','Sergeant','Colonel','General'], forgedRank = null, forgedRankIds = null, selectedId = null;
+      for (var rci = 0; rci < rankChoices.length && !forgedRankIds; rci++) {
+        var alternatePart = clone(saved.campaign.loot.journey.lastParticipation); alternatePart.rankAtResult = rankChoices[rci];
+        var alternateIds = warCareerComradeCandidates(saved.campaign, saved.campaign.loot.journey, null, alternatePart).map(function(row) { return row.pid; });
+        if (alternateIds.length && bytes(alternateIds) !== bytes(fixed)) {
+          for (var fci = 0; fci < fixed.length && !selectedId; fci++) if (alternateIds.indexOf(fixed[fci]) >= 0) selectedId = fixed[fci];
+          if (selectedId) { forgedRank = rankChoices[rci]; forgedRankIds = alternateIds; }
+        }
+      }
+      if (!forgedRankIds || !selectedId) throw new Error('rank-reroll tamper control unavailable');
+      var rankTamper = clone(saved), rankTamperJ = rankTamper.campaign.loot.journey;
+      rankTamperJ.person.rank = forgedRank; rankTamperJ.handoff.candidateIds = forgedRankIds.slice();
+      warCareerInit(rankTamper.campaign);
+      if (rankTamper.campaign.loot.journey.handoff !== null || rankTamper.campaign.loot.journey.status !== 'fallen') throw new Error('saved display rank plus candidate ids rerolled pending handoff');
+      var receiptRankTamper = clone(saved), receiptRankJ = receiptRankTamper.campaign.loot.journey;
+      var receiptPart = receiptRankJ.lastParticipation;
+      receiptPart.rankAtResult = forgedRank;
+      receiptPart.resultId = _wcResultId(receiptPart.runId, receiptPart.creditKey, receiptPart.mode, receiptPart.personId,
+        receiptPart.slotPid, receiptPart.routeUnitId, receiptPart.mapping, receiptPart.battleYear,
+        receiptPart.rankAtResult, receiptPart.assignmentId);
+      receiptRankJ.handoff.candidateIds = forgedRankIds.slice();
+      warCareerInit(receiptRankTamper.campaign);
+      if (receiptRankTamper.campaign.loot.journey.handoff !== null || receiptRankTamper.campaign.loot.journey.lastParticipation !== null ||
+          receiptRankTamper.campaign.loot.journey.status !== 'fallen' || !receiptRankTamper.campaign.loot.journey.creditLedger.some(function(row) { return row.qualifying; })) {
+        throw new Error('divergent last-participation receipt plus candidate ids rerolled pending handoff');
+      }
+      var teamTamper = clone(saved); teamTamper.campaign.loot.journey.person.team = { side:'US', army:'Forged Army', brigade:'Forged Brigade', regiment:'Forged Regiment', company:'Forged Company' };
+      applySave(teamTamper); warCareerInit(G.campaign);
+      if (!G.campaign.loot.journey.handoff || bytes(G.campaign.loot.journey.handoff.candidateIds) !== bytes(fixed)) throw new Error('mutable snapshot hierarchy rerolled or erased canonical candidate ids');
+      if (!warCareerAcceptHandoff(G.campaign, fixed[0]).ok) throw new Error('mutable snapshot hierarchy blocked a canonical saved candidate');
+      var refTamper = clone(saved), refReplacement = _wcRegistryPersonUnique(refTamper.campaign, fixed[0]);
+      if (!refReplacement || !refReplacement.unitRef) throw new Error('unit-ref tamper control unavailable');
+      refTamper.campaign.loot.journey.person.unitRef = clone(refReplacement.unitRef);
+      applySave(refTamper); warCareerInit(G.campaign);
+      if (G.campaign.loot.journey.handoff !== null || G.campaign.loot.journey.status !== 'fallen') throw new Error('tampered fallen unit reference preserved a rerolled handoff or resurrected identity');
+      applySave(clone(saved)); C = G.campaign; J = C.loot.journey;
+      var oldRegistry = window.ssPersonRegistry, reg = oldRegistry(C), reversed = reg.people.slice().reverse();
+      window.ssPersonRegistry = function() { return { people:reversed.slice() }; };
+      try { warCareerInit(C); } finally { window.ssPersonRegistry = oldRegistry; }
+      if (bytes(J.handoff.candidateIds) !== bytes(fixed)) throw new Error('load/registry order rerolled candidate ids');
+      var selected = _wcRegistryPersonUnique(C, selectedId), ownRank = selected.rank, ownOvr = selected.ovr;
+      var accepted = warCareerAcceptHandoff(C, selectedId);
+      J = C.loot.journey;
+      if (!accepted.ok || J.personId !== selectedId || J.person.rank !== ownRank || J.person.ovr !== ownOvr || J.person.ovr === 97 || J.status !== 'alive' || J.lineage.length !== 1 || J.lineage[0].rank !== J.lastParticipation.rankAtResult || J.handoff.state !== 'completed' || J.creditLedger.length !== creditCount || J.events.length !== eventCount || J.merit || J.reputation || J.career.length || J.log.length) throw new Error('handoff did not preserve one successor with own attributes and separated personal history');
+      var completedRankTamper = envelope(C, 'completed-rank-tamper'), completedRankJ = completedRankTamper.campaign.loot.journey;
+      completedRankJ.lineage[completedRankJ.lineage.length - 1].rank = forgedRank;
+      completedRankJ.handoff.candidateIds = forgedRankIds.slice();
+      warCareerInit(completedRankTamper.campaign);
+      if (completedRankTamper.campaign.loot.journey.handoff !== null || completedRankTamper.campaign.loot.journey.lineage.length ||
+          completedRankTamper.campaign.loot.journey.creditLedger.some(function(row) { return row.qualifying; })) throw new Error('saved lineage rank plus candidate ids rerolled completed handoff');
+      var once = bytes(C), repeated = warCareerAcceptHandoff(C, selectedId);
+      if (repeated.ok || bytes(C) !== once) throw new Error('repeated handoff mutated state');
+      var retryB = mkB(C, true); participantEvidence(C, retryB, 'classic'); var journeyBeforeRetry = bytes(J);
+      resolveResult(C, retryB, 'CS', 'win'); J = C.loot.journey;
+      if (bytes(J) !== journeyBeforeRetry || J.creditLedger.length !== creditCount || J.events.length !== eventCount || J.handoff.state !== 'completed') throw new Error('same-rung recovery rerolled fate/candidates/credit after handoff');
+
+      var C2 = mkC('US', false); startCurrent(C2, 'Captain', 'cmd');
+      var B2 = mkB(C2, true); exactLeaderEvidence(C2, B2, 'fallen');
+      var noCandidatePerson = _wcRegistryPersonUnique(C2, C2.loot.journey.personId), oldRegistry2 = window.ssPersonRegistry;
+      window.ssPersonRegistry = function() { return { people:[clone(noCandidatePerson)], authored:noCandidatePerson.generated ? 0 : 1, generated:noCandidatePerson.generated ? 1 : 0, brigades:1 }; };
+      try { resolveResult(C2, B2, 'CS', 'win'); } finally { window.ssPersonRegistry = oldRegistry2; }
+      var J2 = C2.loot.journey, html = warCareerHandoffHTML(C2);
+      if (!J2.handoff || J2.handoff.state !== 'ended' || J2.handoff.candidateIds.length || J2.personId !== J2.person.pid || html.indexOf('No eligible comrade could be identified') < 0) throw new Error('no-candidate ending fabricated or hid identity');
+      return { fixedOrder:fixed, rankAtResult:J.lastParticipation.rankAtResult, pendingAndCompletedRankTamperRejected:true, divergentLastParticipationRejected:true, canonicalHierarchySurvivesTeamTamper:true, tamperedSnapshotCannotBlockCanonicalCandidate:true, unitRefTamperRejected:true, lineage:J.lineage.length, oneActive:J.personId, personalHistorySeparated:true, repeatRejected:true, recoveryRerollRejected:true, realNoCandidate:J2.handoff.reason };
+    });
+
+    step('QUALIFYING CREDIT ONE-PER-RUNG', function() {
+      var C = mkC('US', false); startCurrent(C, 'Captain', 'cmd');
+      var B = mkB(C, true); exactLeaderEvidence(C, B, 'alive');
+      var first = resolveResult(C, B, 'CS', 'win'), J = C.loot.journey;
+      var firstBytes = bytes({ credit:J.creditLedger[0], events:J.events, status:J.status, handoff:J.handoff });
+      var retry = mkB(C, true); exactLeaderEvidence(C, retry, 'fallen'); var second = resolveResult(C, retry, 'US', 'decisive'); J = C.loot.journey;
+      if (!first.qualifying || !second.duplicate || J.creditLedger.length !== 1 || !J.creditLedger[0].qualifying || J.creditLedger[0].outcomeRank !== 0 || bytes({ credit:J.creditLedger[0], events:J.events, status:J.status, handoff:J.handoff }) !== firstBytes) throw new Error('qualifying rung rerolled or accepted a later outcome/fate');
+      if (J.merit || J.reputation || J.promotionCount || warCareerCommandProjection(C) !== 0 || warCareerCapabilities(C).fieldCommand) throw new Error('Slice B qualification unlocked advancement/authority');
+      var saved = envelope(C, 'qualified'), count = J.creditLedger.length; applySave(clone(saved)); warCareerInit(G.campaign);
+      if (G.campaign.loot.journey.creditLedger.length !== count || !G.campaign.loot.journey.creditLedger[0].qualifying) throw new Error('save/load changed qualifying credit');
+      var loadedC = G.campaign, loadedJ = loadedC.loot.journey, ownerEventId = loadedJ.creditLedger[0].eventId;
+      for (var si = 0; si < 110; si++) {
+        var saturationId = _wcEventId(loadedC, loadedJ);
+        _wcPushEvent(loadedJ, { eventId:saturationId, ordinal:loadedJ.eventOrdinal, kind:'result', creditKey:null,
+          personId:loadedJ.personId, scenarioId:null, battleName:'Nonqualifying observation ' + si,
+          outcome:'draw', type:'draw', status:loadedJ.status, fate:null, qualifying:false, merit:0, reputation:0, note:'ring saturation control' });
+      }
+      if (loadedJ.events.length !== 96 || !loadedJ.events.some(function(row) { return row.eventId === ownerEventId; })) throw new Error('event ring evicted qualifying owner');
+      var saturatedSave = envelope(loadedC, 'saturated'); applySave(clone(saturatedSave)); warCareerInit(G.campaign);
+      loadedC = G.campaign; loadedJ = loadedC.loot.journey;
+      var saturatedCredit = loadedJ.creditLedger[0], saturatedCreditBytes = bytes(saturatedCredit), ownerStillPresent = loadedJ.events.some(function(row) { return row.eventId === ownerEventId; });
+      if (!saturatedCredit.qualifying || !ownerStillPresent) throw new Error('save sanitation demoted saturated qualifying credit');
+      loadedC.idx = saturatedCredit.chainIndex; loadedC.completed = []; loadedC.recovery = false; loadedC.recoveryMode = false;
+      var saturatedRetry = mkB(loadedC, true); exactLeaderEvidence(loadedC, saturatedRetry, 'fallen'); var saturatedResult = resolveResult(loadedC, saturatedRetry, 'US', 'decisive');
+      if (!saturatedResult.duplicate || bytes(_wcCreditFor(loadedC.loot.journey, saturatedCredit.creditKey)) !== saturatedCreditBytes) throw new Error('saturated owner loss reopened fate/qualification reroll');
+      var C2 = mkC('US', false); startCurrent(C2, 'Private', 'pvt'); var originalIdx = C2.idx;
+      var unproved = mkB(C2, true); resolveResult(C2, unproved, 'US', 'decisive');
+      C2.idx = originalIdx; C2.completed = [];
+      var proved = mkB(C2, true); participantEvidence(C2, proved, 'classic'); resolveResult(C2, proved, 'CS', 'win');
+      var bound = latestCredit(C2);
+      if (!bound || !bound.qualifying || bound.outcome !== 'defeat' || bound.outcomeRank !== 0 || bound.type !== 'win') throw new Error('unproved decisive result laundered into later qualifying loss');
+      return { firstQualifyingOwnsFate:true, duplicateSuppressed:true, qualifyingOwnerRetainedAcrossRing:true, saturationSaveLoad:true, saturationRerollRejected:true, credits:count, exactOutcomeBound:true, merit:0, reputation:0, projection:0 };
+    });
+
+    step('SLICE-B SANITIZER + HANDOFF A11Y', function() {
+      var C = mkC('US', false); startCurrent(C, 'Captain', 'cmd');
+      var B = mkB(C, true); exactLeaderEvidence(C, B, 'alive'); resolveResult(C, B, 'US', 'win');
+      var J = C.loot.journey;
+      var people = ssPersonRegistry(C).people, other = null;
+      for (var oi = 0; oi < people.length && !other; oi++) {
+        var candidate = people[oi], candidateRef = candidate && candidate.unitRef;
+        if (candidate && candidate.pid !== J.personId && candidate.side === C.side && candidateRef &&
+            candidateRef.side === C.side && CHAINS[C.side].indexOf(candidateRef.battleId) >= 0) other = candidate;
+      }
+      if (!other) throw new Error('coherent forge control unavailable');
+      var ref = other.unitRef, chainIndex = CHAINS[C.side].indexOf(ref.battleId), scenarioId = ref.battleId;
+      var forgedKey = [C.runId,C.side,chainIndex,scenarioId].join('|');
+      var routeUnitId = 'FORGE1', forgedMapping = 'explicit-career-assignment', forgedYear = _ssCareerBattleYear(scenarioId), forgedRank = other.rank;
+      var forgedLink = { runId:C.runId, creditKey:forgedKey, person:other, ref:ref }, forgedAssignmentId = _wcAssignmentId(forgedLink, routeUnitId);
+      var resultId = _wcResultId(C.runId, forgedKey, 'classic', other.pid, ref.slotPid, routeUnitId, forgedMapping, forgedYear, forgedRank, forgedAssignmentId);
+      var forgedPart = { schema:'cw_war_career_participation_v1', resultId:resultId, mode:'classic', runId:C.runId, creditKey:forgedKey,
+        personId:other.pid, chainIndex:chainIndex, battleId:scenarioId, side:'US', unitId:ref.unitId, slot:ref.slot, slotPid:ref.slotPid,
+        routeUnitId:routeUnitId, mapping:forgedMapping, assignmentId:forgedAssignmentId, battleYear:forgedYear, rankAtResult:forgedRank };
+      var forgedEventId = C.runId + ':event:coherent-forge';
+      J.events.push({ eventId:forgedEventId, ordinal:J.eventOrdinal + 1, kind:'result', creditKey:forgedKey, scenarioId:scenarioId, battleName:'Forged', outcome:'victory', type:'win', personId:other.pid, status:'alive', fate:'alive', qualifying:true, merit:99, reputation:99, participation:forgedPart, note:'forged' });
+      J.creditLedger.push({ creditKey:forgedKey, runId:C.runId, side:'US', chainIndex:chainIndex, scenarioId:scenarioId, outcome:'victory', type:'win', qualifying:true, merit:99, reputation:99, personId:other.pid, fate:'alive', eventId:forgedEventId, participation:forgedPart });
+      J.handoff = { handoffId:forgedEventId + ':handoff', state:'pending', fallenPersonId:other.pid, resultEventId:forgedEventId, creditKey:forgedKey, scenarioId:scenarioId, side:'US', unitRef:ref, candidateIds:[J.personId] };
+      warCareerInit(C); J = C.loot.journey;
+      var forged = null; for (var i = 0; i < J.creditLedger.length; i++) if (J.creditLedger[i].creditKey === forgedKey) forged = J.creditLedger[i];
+      if (!J.creditLedger[0].qualifying || !forged || forged.qualifying || forged.merit || forged.fate != null || J.handoff !== null || !J.lastParticipation) throw new Error('Slice-B sanitizer trusted coherent forged qualification/handoff or erased valid receipt');
+      var stable = bytes(C); warCareerInit(C); if (bytes(C) !== stable) throw new Error('Slice-B sanitizer not idempotent');
+      var yearTamper = clone(C), validCredit = null;
+      for (var yci = 0; yci < yearTamper.loot.journey.creditLedger.length; yci++) if (yearTamper.loot.journey.creditLedger[yci].qualifying) { validCredit = yearTamper.loot.journey.creditLedger[yci]; break; }
+      var validEvent = null;
+      for (var yei = 0; yei < yearTamper.loot.journey.events.length; yei++) if (validCredit && yearTamper.loot.journey.events[yei].eventId === validCredit.eventId) { validEvent = yearTamper.loot.journey.events[yei]; break; }
+      if (!validCredit || !validEvent) throw new Error('year-tamper control unavailable');
+      delete validCredit.participation.battleYear; delete validEvent.participation.battleYear;
+      if (yearTamper.loot.journey.lastParticipation) delete yearTamper.loot.journey.lastParticipation.battleYear;
+      warCareerInit(yearTamper);
+      if (yearTamper.loot.journey.creditLedger.some(function(row) { return row.qualifying; }) || yearTamper.loot.journey.lastParticipation) throw new Error('missing canonical battle year survived save sanitation');
+
+      var capturedC = mkC('US', false); startCurrent(capturedC, 'Captain', 'cmd');
+      var capturedB = mkB(capturedC, true); exactLeaderEvidence(capturedC, capturedB, 'captured'); resolveResult(capturedC, capturedB, 'CS', 'win');
+      capturedC.loot.journey.status = 'alive'; capturedC.loot.journey.handoff = null; warCareerInit(capturedC);
+      if (capturedC.loot.journey.status !== 'captured' || _wcActiveLink(capturedC, capturedC.loot.journey.person.unitRef.battleId)) throw new Error('save edit resurrected captured identity');
+      var captureForge = clone(capturedC), captureJ = captureForge.loot.journey, capturedOwner = null;
+      for (var cfi = 0; cfi < captureJ.creditLedger.length && !capturedOwner; cfi++) if (captureJ.creditLedger[cfi].qualifying && captureJ.creditLedger[cfi].fate === 'captured') capturedOwner = captureJ.creditLedger[cfi];
+      var recoveryIndex = capturedOwner && capturedOwner.chainIndex + 1;
+      if (!capturedOwner || recoveryIndex >= CHAINS[captureForge.side].length) throw new Error('capture cross-link control unavailable');
+      var recoveryScenario = CHAINS[captureForge.side][recoveryIndex], recoveryKey = [captureForge.runId,captureForge.side,recoveryIndex,recoveryScenario].join('|');
+      var forgedRecoveryEventId = captureForge.runId + ':event:forged-recovery';
+      captureJ.eventOrdinal += 1;
+      captureJ.events.push({ eventId:forgedRecoveryEventId, ordinal:captureJ.eventOrdinal, kind:'result', creditKey:recoveryKey,
+        personId:captureJ.personId, scenarioId:recoveryScenario, battleName:'Forged recovery', outcome:'victory', type:'win',
+        status:'alive', fate:null, qualifying:false, merit:0, reputation:0, recoveryOfCreditKey:capturedOwner.creditKey, note:'forged cross-link' });
+      captureJ.creditLedger.push({ creditKey:recoveryKey, runId:captureForge.runId, side:captureForge.side, chainIndex:recoveryIndex,
+        scenarioId:recoveryScenario, outcome:'victory', type:'win', personId:captureJ.personId + ':other', fate:null,
+        qualifying:false, merit:0, reputation:0, eventId:forgedRecoveryEventId });
+      capturedOwner.recoveredAtCreditKey = recoveryKey; capturedOwner.recoveryEventId = forgedRecoveryEventId;
+      warCareerInit(captureForge);
+      var cleanedCapture = _wcCreditFor(captureForge.loot.journey, capturedOwner.creditKey);
+      if (!cleanedCapture || cleanedCapture.recoveredAtCreditKey || cleanedCapture.recoveryEventId || captureForge.loot.journey.status !== 'captured') throw new Error('cross-person recovery credit suppressed captured status');
+
+      var wrongOwnerForge = clone(capturedC), wrongOwnerJ = wrongOwnerForge.loot.journey, wrongOwnerCapture = null;
+      for (var wci = 0; wci < wrongOwnerJ.creditLedger.length && !wrongOwnerCapture; wci++) if (wrongOwnerJ.creditLedger[wci].qualifying && wrongOwnerJ.creditLedger[wci].fate === 'captured') wrongOwnerCapture = wrongOwnerJ.creditLedger[wci];
+      var wrongOwnerIndex = wrongOwnerCapture && wrongOwnerCapture.chainIndex + 1;
+      if (!wrongOwnerCapture || wrongOwnerIndex >= CHAINS[wrongOwnerForge.side].length) throw new Error('wrong-owner recovery control unavailable');
+      var wrongOwnerScenario = CHAINS[wrongOwnerForge.side][wrongOwnerIndex];
+      var wrongOwnerKey = [wrongOwnerForge.runId,wrongOwnerForge.side,wrongOwnerIndex,wrongOwnerScenario].join('|');
+      var recoveryOwnerId = wrongOwnerForge.runId + ':event:recovery-owner';
+      var unrelatedOwnerId = wrongOwnerForge.runId + ':event:unrelated-owner';
+      wrongOwnerJ.eventOrdinal += 1;
+      wrongOwnerJ.events.push({ eventId:recoveryOwnerId, ordinal:wrongOwnerJ.eventOrdinal, kind:'result', creditKey:wrongOwnerKey,
+        personId:wrongOwnerJ.personId, scenarioId:wrongOwnerScenario, battleName:'Forged recovery owner', outcome:'victory', type:'win',
+        status:'alive', fate:null, qualifying:false, merit:0, reputation:0, recoveryOfCreditKey:wrongOwnerCapture.creditKey, note:'forged recovery owner' });
+      wrongOwnerJ.eventOrdinal += 1;
+      wrongOwnerJ.events.push({ eventId:unrelatedOwnerId, ordinal:wrongOwnerJ.eventOrdinal, kind:'result', creditKey:wrongOwnerKey,
+        personId:wrongOwnerJ.personId, scenarioId:wrongOwnerScenario, battleName:'Unrelated owner', outcome:'victory', type:'win',
+        status:'alive', fate:null, qualifying:false, merit:0, reputation:0, note:'different event owns the credit' });
+      wrongOwnerJ.creditLedger.push({ creditKey:wrongOwnerKey, runId:wrongOwnerForge.runId, side:wrongOwnerForge.side, chainIndex:wrongOwnerIndex,
+        scenarioId:wrongOwnerScenario, outcome:'victory', type:'win', personId:wrongOwnerJ.personId, fate:null,
+        qualifying:false, merit:0, reputation:0, eventId:unrelatedOwnerId });
+      wrongOwnerCapture.recoveredAtCreditKey = wrongOwnerKey; wrongOwnerCapture.recoveryEventId = recoveryOwnerId;
+      warCareerInit(wrongOwnerForge);
+      var wrongOwnerClean = _wcCreditFor(wrongOwnerForge.loot.journey, wrongOwnerCapture.creditKey);
+      if (!wrongOwnerClean || wrongOwnerClean.recoveredAtCreditKey || wrongOwnerClean.recoveryEventId || wrongOwnerForge.loot.journey.status !== 'captured') throw new Error('wrong-owner recovery event suppressed captured status');
+
+      var chainRows = [
+        { personId:'line-a', successorId:'line-b', resultEventId:'line-event-a', creditKey:'line-credit-a' },
+        { personId:'line-b', successorId:'line-c', resultEventId:'line-event-b', creditKey:'line-credit-b' }
+      ];
+      var chainEvents = { 'line-event-a':{ ordinal:10 }, 'line-event-b':{ ordinal:20 } };
+      var chainCredits = { 'line-credit-a':{ chainIndex:1 }, 'line-credit-b':{ chainIndex:2 } };
+      if (!_ssCareerLineageChainValid(chainRows, chainEvents, chainCredits, 'line-c')) throw new Error('valid two-hop lineage chain rejected');
+      var disconnectedRows = clone(chainRows); disconnectedRows[0].successorId = 'line-d';
+      if (_ssCareerLineageChainValid(disconnectedRows, chainEvents, chainCredits, 'line-c')) throw new Error('disconnected two-hop successor link survived');
+      var nonmonotonicCredits = clone(chainCredits); nonmonotonicCredits['line-credit-b'].chainIndex = 1;
+      if (_ssCareerLineageChainValid(chainRows, chainEvents, nonmonotonicCredits, 'line-c')) throw new Error('nonmonotonic two-hop credit order survived');
+
+      var fallenC = mkC('US', false); startCurrent(fallenC, 'Captain', 'cmd');
+      var fallenB = mkB(fallenC, true); exactLeaderEvidence(fallenC, fallenB, 'fallen'); resolveResult(fallenC, fallenB, 'CS', 'win');
+      fallenC.loot.journey.status = 'alive'; fallenC.loot.journey.handoff = null; warCareerInit(fallenC);
+      if (fallenC.loot.journey.status !== 'fallen' || _wcActiveLink(fallenC, fallenC.loot.journey.person.unitRef.battleId)) throw new Error('save edit resurrected fallen identity');
+
+      var C2 = mkC('US', false); startCurrent(C2, 'Captain', 'cmd');
+      var B2 = mkB(C2, true); exactLeaderEvidence(C2, B2, 'fallen'); resolveResult(C2, B2, 'CS', 'win');
+      openSheet('<div id="wcSliceBA11y">' + warCareerSummaryHTML(C2) + '</div>');
+      var host = document.getElementById('wcSliceBA11y'), panel = host && host.querySelector('[data-war-career-handoff="pending"]');
+      if (!panel || !panel.querySelector('h4') || !panel.querySelector('ul') || !panel.querySelector('button[data-wc-handoff]') || !/fallen|hand-off/i.test(panel.textContent)) throw new Error('pending handoff semantics/a11y missing');
+      var handoffButton = panel.querySelector('button[data-wc-handoff]'), buttonBox = handoffButton.getBoundingClientRect();
+      handoffButton.focus();
+      if (document.activeElement !== handoffButton || buttonBox.width < 24 || buttonBox.height < 24 || /animation|transition/i.test(handoffButton.getAttribute('style') || '')) throw new Error('handoff focus/target/reduced-motion contract missing');
+      handoffButton.click();
+      if (!C2.loot.journey.handoff || C2.loot.journey.handoff.state !== 'completed') throw new Error('delegated AAR/summary handoff control was inert');
+      var completedSave = envelope(C2, 'completed-handoff'), distantSuccessor = otherBattlePerson(C2, 'Private');
+      var chainGateForge = clone(completedSave), oldChainGate = window._ssCareerLineageChainValid;
+      window._ssCareerLineageChainValid = function() { return false; };
+      try { warCareerInit(chainGateForge.campaign); } finally { window._ssCareerLineageChainValid = oldChainGate; }
+      if (chainGateForge.campaign.loot.journey.lineage.length || chainGateForge.campaign.loot.journey.handoff ||
+          chainGateForge.campaign.loot.journey.creditLedger.some(function(row) { return row.qualifying; })) throw new Error('sanitizer did not consume lineage-chain authority');
+      if (!distantSuccessor) throw new Error('completed-handoff distant successor control unavailable');
+      var distantForge = clone(completedSave), distantJ = distantForge.campaign.loot.journey;
+      distantJ.personId = distantSuccessor.pid; distantJ.person = _ssJourneySnapshot(distantSuccessor, true); distantJ.status = 'alive';
+      distantJ.handoff.selectedPersonId = distantSuccessor.pid; distantJ.handoff.candidateIds = [distantSuccessor.pid]; distantJ.lineage[distantJ.lineage.length - 1].successorId = distantSuccessor.pid;
+      applySave(distantForge); warCareerInit(G.campaign);
+      if (G.campaign.loot.journey.handoff !== null || G.campaign.loot.journey.lineage.length || G.campaign.loot.journey.creditLedger.some(function(row) { return row.qualifying; })) throw new Error('coherent distant completed-handoff forge survived');
+      var wrongSide = null, allPeople = ssPersonRegistry(C2).people;
+      for (var wsi = 0; wsi < allPeople.length && !wrongSide; wsi++) if (allPeople[wsi].side !== C2.side && allPeople[wsi].unitRef) wrongSide = allPeople[wsi];
+      if (!wrongSide) throw new Error('wrong-side successor control unavailable');
+      var sideForge = clone(completedSave), sideJ = sideForge.campaign.loot.journey;
+      sideJ.personId = wrongSide.pid; sideJ.person = _ssJourneySnapshot(wrongSide, true); sideJ.status = 'alive';
+      sideJ.handoff.selectedPersonId = wrongSide.pid; sideJ.handoff.candidateIds = [wrongSide.pid]; sideJ.lineage[sideJ.lineage.length - 1].successorId = wrongSide.pid;
+      applySave(sideForge); warCareerInit(G.campaign);
+      if (G.campaign.loot.journey.enabled || G.campaign.loot.journey.handoff) throw new Error('wrong-side completed successor remained active');
+      var deadForge = clone(completedSave); deadForge.campaign.loot.journey.status = 'captured';
+      applySave(deadForge); warCareerInit(G.campaign);
+      if (G.campaign.loot.journey.handoff !== null || G.campaign.loot.journey.status !== 'captured') throw new Error('captured completed successor retained handoff authority');
+      return { validReceipt:true, coherentForgeRejected:true, missingYearRejected:true, capturedAndFallenResurrectionRejected:true, crossPersonCaptureRecoveryRejected:true, wrongOwnerCaptureRecoveryRejected:true, twoHopLineageChainEnforced:true, lineageChainIntegrationBound:true, completedDistantWrongSideDeadRejected:true, malformedHandoffRejected:true, idempotent:true, heading:true, list:true, nativeButton:true, focus:true, target24:true, delegatedControl:true };
+    });
+
     step('AAR GUARDED COMPOSITION + A11Y', function() {
       var empty = mkC('US', false), emptyHtml = aarRenderReport(empty, { compact:true });
       if (/data-war-career-report|The Soldier(?:&apos;|')s Story/.test(emptyHtml)) throw new Error('empty campaign fabricated a career panel');
@@ -740,7 +1397,12 @@ async function main() {
       aarStep.value = Object.assign({}, aarStep.value || {}, { zoom, screenshotBytes: shotBytes });
     }
 
-    const realErrors = consoleLines.filter(line => line.startsWith("[error]") && !/Failed to load resource:.*404/i.test(line));
+    const audioAutoplayNoise = "[warning] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio";
+    const readbackNoise = /^\[warning\] \[\.WebGL-[^\]]+\]GL Driver Message \(OpenGL, Performance, GL_CLOSE_PATH_NV, High\): GPU stall due to ReadPixels(?: \(this message will no longer repeat\))?$/;
+    const realErrors = consoleLines.filter(line =>
+      line !== audioAutoplayNoise && !readbackNoise.test(line) &&
+      !(line.startsWith("[error]") && /Failed to load resource:.*404/i.test(line))
+    );
     const list = execFileSync(process.execPath, [join(ROOT, "tools", "vet-no-regression.mjs"), "--list"], { cwd: ROOT, encoding: "utf8" }).trim().split(/\r?\n/).filter(Boolean);
     result = Object.assign(result, runtime, {
       schema: "cw_probe_war_career_v1",

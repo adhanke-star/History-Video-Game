@@ -59,6 +59,13 @@ function fldBuildOfficers() {
   var roster = fldOfficerRoster();
   if (!roster || !roster.length) return;
   roster = fldOfficerPrepareRoster(roster);
+  // D401: add an inert exact-person consequence link to one eligible command
+  // representative. The helper clones the matched spec; no officer input used
+  // by combat is changed.
+  if (typeof warCareerLinkRealtimeOfficerRoster === "function") {
+    try { roster = warCareerLinkRealtimeOfficerRoster((typeof _fldCamp === "function") ? _fldCamp() : null, __FIELD.campaignCtx, roster); }
+    catch (wcErr) { if (typeof console !== "undefined" && console.warn) console.warn("warCareerLinkRealtimeOfficerRoster:", wcErr); }
+  }
   for (var i = 0; i < roster.length; i++) { var ld = fldMakeOfficer(roster[i]); if (ld) __FIELD.leaders.push(ld); }
   for (var j = 0; j < __FIELD.leaders.length; j++) {
     var incoming = __FIELD.leaders[j]; if (!fldOfficerHasReplacement(incoming)) continue;
@@ -220,6 +227,16 @@ function fldMakeOfficer(o) {
     note: o.note || "", teach: o.teach || "", teachReq: o.teachReq || null, teachAlt: o.teachAlt || "",
     alive: true, wounded: false, _risk: 0, fellAt: null, _everSeen: false,
   };
+  // D401 consequence fields are opaque to every combat reader. They survive
+  // only long enough for T2 to emit an exact result receipt before teardown.
+  if (o.careerPersonId) {
+    ld.careerPersonId = o.careerPersonId;
+    ld.careerSlotPid = o.careerSlotPid;
+    ld.careerUnitId = o.careerUnitId;
+    ld.careerBattleId = o.careerBattleId;
+    ld.careerRunId = o.careerRunId;
+    ld.careerCreditKey = o.careerCreditKey;
+  }
   if (Object.prototype.hasOwnProperty.call(o, "replaces")) {
     ld.replaces = String(o.replaces);
     ld.entry = String(o.entry);
@@ -227,6 +244,7 @@ function fldMakeOfficer(o) {
     ld._reliefRejected = false;
   }
   ld.active = (ld.atSec == null);                       // timed arrivals are inert until their hour
+  if (ld.careerPersonId) ld._everActive = ld.active;
   if (ld.attach) { var au = fldById(ld.attach); if (au) { ld.x = au.x; ld.z = au.z; } }   // ride with the brigade if it's on the field
   // hidden, SEEDED fate threshold (the only randomness): the per-leader `fate` (data) weights it to HISTORY —
   // >1 endures the day (army commanders / Jackson), <1 is fall-prone (Bee, Bartow). Quality adds; jitter is luck.
@@ -297,6 +315,7 @@ function fldOfficerApplyReplacement(ld, target) {
   target.relievedBy = ld.id;
   target.reliefAt = __FIELD.t;
   ld.active = true;
+  if (ld.careerPersonId) ld._everActive = true;
   ld._reliefDone = true;
   ld.reliefOf = target.id;
   var au = ld.attach ? fldById(ld.attach) : null;
@@ -309,6 +328,7 @@ function fldOfficerApplyReplacement(ld, target) {
 }
 function fldOfficerActivate(ld) {
   ld.active = true;
+  if (ld.careerPersonId) ld._everActive = true;
   var au = ld.attach ? fldById(ld.attach) : null;
   if (au && au.alive) { ld.x = au.x; ld.z = au.z; }
   else { var an = fldOfficerAnchorUnit(ld); if (an) { ld.x = an.x; ld.z = an.z; } }

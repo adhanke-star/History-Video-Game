@@ -6,6 +6,87 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D401 — WAR CAREER SLICE B SHIPPED: RESULT-OWNED PARTICIPATION, PURE FATE, AND COMRADE HAND-OFF — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-005 DRIVE→CONTRACT] (2026-07-15)
+
+**Slice B is consequence-only.** `C.loot.journey` remains the sole mutable career owner and
+`_SAVE_VER` remains 1. A qualifying result now requires one canonical Army Register person, one
+canonical scenario-unit slot, and one result-owned receipt that binds run, credit rung, mode,
+person, slot, represented field unit, mapping, canonical battle year, result-time rank, and any
+explicit assignment. Classic may record a deterministic consequence-only assignment when its R#
+roster lacks the historical unit id; Auto and realtime share the T2 field-result handback, so no
+separate `src/87-auto-resolve.js` edit exists. These assignments never rename history or feed combat.
+Realtime commander fate additionally requires one authored officer row whose own `pid` is the
+selected Army Register id and whose attachment is the exact source unit. Same-unit lookalikes,
+procedural commanders, aliases, missing arrivals, wrong-side/stale/duplicate receipts, and aggregate
+casualties fail closed to a nonqualifying narrative.
+
+**[CODEX] Fate is pure before delegation and committed after undo capture.** The dispatcher carries
+the complete preflight tuple through the existing delegate and the post-undo
+`_t1Resolve → lootOnResolve → ssJourneyOnResolve` seam; it cannot be recomputed after campaign state
+moves. Exact realtime command links consume the tactical leader's alive/wounded/fallen state. Auto,
+Classic, and non-command realtime slots use a deterministic result-owned roll whose outcome/type
+thresholds are deliberately documented as **Inferred**, not historical casualty claims. Career-
+Ironman fallen reuses D400's sole terminal path. Normal fallen never ends the campaign: it enters
+COMRADE HAND-OFF. Captured status is absorbing until a later distinct nonparticipating campaign
+result records one same-person, nonqualifying, exactly cross-linked recovery receipt; that recovery
+rung is then immutable against better retries.
+
+**[CODEX] Hand-off is deterministic and anti-reroll.** Candidates must be alive/present, same-side,
+unique by person and slot, provenance-bearing, inside any known service window, outside the existing
+lineage, and share company, then regiment, then brigade. Ordering is hierarchy distance,
+documented-before-generated, distance from the qualifying receipt's result-time rank, then person id;
+only the first five ids persist. Pending and completed validation recompute from the qualifying owner
+receipt, not mutable display rank/team fields. Lineage rows form one strictly chronological A→B→C
+chain ending at the current identity. Acceptance snapshots the successor's own rank/OVR/status,
+zeros personal merit/reputation/history, preserves only shared events/credits/lineage/context, and
+cannot be repeated. No candidate ends the personal career with “No eligible comrade could be
+identified”; no person is invented.
+
+**Qualification grants no Slice-C authority.** One qualifying receipt may exist per `creditKey`,
+and its owner event remains in the bounded 96-row ring. Fate, recovery, hand-off, retry, and load
+cannot mint another receipt. Merit, reputation, promotion, relationships, billets, command and
+political capabilities remain zero/empty; `warCareerCommandProjection()` remains 0. D400's former
+active-v1 outer/delegate byte-parity case is intentionally superseded by the stronger
+`PREFLIGHT BEFORE DELEGATE + POST-UNDO COMMIT` ordering/rollback tooth. The six no-career/legacy
+nonterminal byte-parity cases remain exact.
+
+**Predeclared adversarial binds — execute only after this text exists, then restore byte-for-byte:**
+1. **Person-id bind:** invert only the canonical `row.personId !== J.personId` rejection inside
+   `warCareerParticipationEvidence`. Only explicit-participation, fate, qualification, and hand-off
+   dependent focused steps may turn red; registration, legacy/start, terminal-classifier, storage,
+   and no-career parity steps must remain green.
+2. **Preflight bind:** replace only the dispatcher's live `warCareerPreflightFate(...)` call with a
+   nonqualifying sentinel before delegation. Ordering/pure-fate/commit/terminal-personal-fate and
+   their hand-off dependents may turn red; registration, legacy, classifier, storage, and no-career
+   parity must remain green.
+3. **Lineage bind:** remove only `prior[p.pid] ||` from `warCareerComradeCandidates`. The declared
+   target is `COMRADE ORDER + EXCLUSIONS`; unrelated terminal, storage, legacy, mode, and evidence
+   steps must remain green.
+4. **Aggregate bind:** change only the `!participation.ok` preflight return from `fate:null` to
+   `fate:"fallen"` while leaving `qualifying:false`. Exactly
+   `AGGREGATE CASUALTIES NEVER NAME FATE` should turn red; unrelated steps must remain green.
+
+**The four binds bit their declared contracts and restored byte-for-byte.** The person-id inversion
+made 12 participation/fate/handoff-dependent steps red while 13 registration, legacy, classifier,
+storage, and inactive-path rows stayed green. Replacing preflight with the nonqualifying sentinel made
+seven ordering/fate/commit/handoff rows red while 18 unrelated rows stayed green. Removing lineage
+exclusion made only `COMRADE ORDER + EXCLUSIONS` red; permitting an aggregate-only fall made only
+`AGGREGATE CASUALTIES NEVER NAME FATE` red. Every run exited 1 with zero pageerrors/realErrors, and
+every apply-patch restore returned the candidate hashes exactly.
+
+The final focused candidate is 25/25 with zero pageerrors/realErrors after three independent
+no-blocker audits. Plan 10/10, loot 12/12, save slots 16/16, full campaign 4/4, campaign link 19/19,
+After-Action 15/15, H0 After-Action 3/3 viewports, playstyle 14/14, Auto 10/10, officers 20/20,
+ratings 22/22, and Classic paint are green. Final hashes are generated HTML
+`4560dfc4f22b5907429e6a5c7d303e4f`, frozen base `c9db83fa99230ffb95bdfdfe059f3fb9`,
+106 `c69f405c0469abe7eca67fc0fff99575`, 37 `d526f33a7649d378d2062b931b933884`, T2
+`feef8a3c1ecf5fb28a120d2398ee61fc`, T3 `56e2cd1060a40eb0754b19e8d56bacdb`, and focused probe
+`54e6a095eb81095ede3d46e5bd523f62`. The full 130-command battery remains deferred under D176;
+D398 remains the latest complete release checkpoint. **Exact next after D401 release:** a fresh
+LANE-005 Slice-C DRIVE take for billet history and the narrow `warCareerCommandProjection` adapter
+only, proving player/NPC reputation and promotion ledgers stay isolated and command effects are not
+double-counted. Relationships, politics, franchise, combat inputs, and later slices remain locked.
+
 ## D400 — WAR CAREER SLICE A SHIPPED: TERMINAL HONESTY BEFORE ADVANCEMENT — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-005 DRIVE→CONTRACT] (2026-07-15)
 
 **The minimal canonical spine is live.** `src/106-war-career.js` loads after the save guard and
