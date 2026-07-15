@@ -6,6 +6,63 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D404 — COEXISTING V2 RECEIPTS SEPARATE CANONICAL SOURCE HISTORY FROM “YOUR TIMELINE” AUTHORITY — [AARON + CHATGPT/CODEX 5.6 SOL ULTRA, LANE-005 DRIVE→CONTRACT] (2026-07-15)
+
+**[AARON] Alternate history is permitted when gameplay needs it, but the game must label the
+divergence rather than rewrite its evidence.** The immutable Army Register record remains the
+canonical source identity. An authored cross-rung placement is separate “Your Timeline” authority
+and must never be presented as the person's documented service.
+
+**[CODEX] Named/coexisting v2 is the smaller compatibility risk.** Alternative A would add optional
+dual-reference fields to `cw_war_career_participation_v1`, forcing every validator to infer whether
+“v1” means the shipped flat D401 shape, the new dual-reference shape, or a malformed hybrid.
+Alternative B keeps every D401 v1 field, id algorithm, same-source-rung validator, and sanitized byte
+unchanged. New cross-rung results use `cw_war_career_result_v2`; persisted evidence uses
+`cw_war_career_participation_v2`. Explicit schema dispatch rejects partial v2 without falling back
+to v1, so `_SAVE_VER=1` and `careerVersion:1` remain honest.
+
+V2 binds one stable `personId` to two independently reconstructed references. `sourceRef` proves the
+unique canonical Army Register battle, side, unit, slot, grade, service bounds, and provenance.
+`timelineAssignmentRef` proves one immutable exact-id mapping for the current scenario, side, chain
+rung, target unit/slot, service window, and deterministic assignment id. `C.loot.journey` remains the
+sole mutable career owner; the frozen mapping config is input, not a second registry or ledger.
+Result identity binds both references, and both validators must pass. Eager init/load sanitation is
+fail closed and byte-idempotent. One `creditKey` remains spendable once across v1/v2; COMRADE HAND-OFF
+never transfers the fallen person's mapping or authority.
+
+**The exact proof fixture is John W. Haley as an alternate placement, not a historical claim.** The
+canonical person `person_gettysburg_us_17me_haley` remains Verified at
+`ss:gettysburg:US:us_birney_iii:pvt`, US chain rung 15. The first “Your Timeline” mapping targets the
+open Chickamauga slot `ss:chickamauga:US:us_harker_rock:pvt`, US rung 16, with both exact live records
+admitting 1863. Its mapping is Inferred and its deterministic id is `wcta-1pav4ac`. Names, ranks,
+aliases, proximity, source rewrites, foreign-person credit, and historical-service guesses never
+repair a missing or malformed mapping.
+
+The planning guard retains its original ten step names and runtime mode and adds exactly nine D404
+steps, for 19/19 green. The unique `SOURCE_REF_NEVER_EQUALS_TIMELINE_AUTHORITY` bind was changed only
+to `MAY`; the probe exited 1 with exactly `SOURCE VS YOUR TIMELINE` red and the other 18 rows green.
+The inverse patch restored design md5 `c81d5e1641a4d20282a965c8344bb5d3` and probe md5
+`485760cdffe8a7beaff229b08514d099`, then returned 19/19 green in runtime mode. The same lock step
+pins the complete `src/` tree and rejects any current changed or nonignored untracked path outside
+the eleven-file D404 planning allowlist.
+
+**No runtime shipped.** The exact next bounded item is the receipt-continuity prerequisite, not
+Slice C: edit only `src/106-war-career.js`, `src/37-loot-survival.js`, and
+`tools/probe-war-career.mjs`, plus a narrow `tools/probe-war-career-loop-plan.mjs` transition from
+D404 planning-lock teeth to receipt-complete teeth. All nineteen plan-step names, suite exclusion,
+T2/T3/Auto, data, manifest, suite manifest, command, combat, rank/role/billet, politics,
+relationships, franchise/archive, and later slices remain locked. Baselines remain
+24/54/1512/24/130, sweep 24, War Career suite row 38, `_SAVE_VER=1`, generated HTML
+`4560dfc4f22b5907429e6a5c7d303e4f`, and frozen base
+`c9db83fa99230ffb95bdfdfe059f3fb9`. D398 remains the latest full release battery.
+
+Final planning verification after lane release: all thirteen coordination-sensitive probes passed
+**155/155** serialized checks; all 192 JSON step rows were green, every artifact had `ok:true`, and
+every present `pageerrors`, `realErrors`, or `errors` array was empty. Build printed `GATE OK`;
+`git diff --check` passed; every locked runtime/data/generated hash remained exact. The full
+130-command battery was not run because D398 remains the release checkpoint and D404 changed no
+runtime.
+
 ## D403 — OPTION 1 SELECTED; CROSS-RUNG PLANNING HALTED AT THE D401 RECEIPT-SCHEMA BOUNDARY — [AARON + CHATGPT/CODEX 5.6 SOL ULTRA, LANE-005 DRIVE→CONTRACT] (2026-07-15)
 
 **[AARON] Exact cross-rung service assignment is the selected product direction.** Aaron chose D402

@@ -749,26 +749,34 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
-### LANE-005 · war-career-loop — **DRIVE (ChatGPT/Codex owned; D404 dual-reference receipt planning only)**
+### LANE-005 · war-career-loop — **CONTRACT (unowned; D404 dual-reference receipt planning complete)**
 
-- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra — TOP LOOP for the planning-only dual-reference
-  receipt contract. No simultaneous edits by any provider.
-- **State:** DRIVE — Aaron authorized alternate-timeline gameplay through exact journey-owned
-  “Your Timeline” assignments. This authorization does not permit rewriting the immutable canonical
-  Army Register source record or presenting alternate service as historical fact. The six-seam D403
-  inventory remains controlling: the unchanged D401 result/participation receipt cannot express a
-  second-rung assignment because one tuple currently does double duty as canonical source identity
-  and live-rung/credit authority. This DRIVE may compare and choose receipt semantics, contract the
-  dual-reference separation, extend the filesystem-first plan probe, prove one surgical negative
-  bind, synchronize the live docs, and release the lane. It may not implement that contract. Slice C
-  and Slice D-F, T2/T3/Auto, runtime, data, combat, command projection, politics, relationships,
-  franchise/archive, generated game, frozen base, and save-version movement remain locked.
-  The committed D399-D403 planning record remains the law:
-  `docs/design/war-career-loop-design.md` (current md5 `16e9a50aa4b6c07f7fc8c8dee01e5b17`;
+- **Owning tool:** none — released after D404. No simultaneous edits by any provider.
+- **State:** CONTRACT — D404 was a planning contract only; it selected named/coexisting
+  `cw_war_career_participation_v2`, independently bound immutable canonical `sourceRef` and exact
+  Inferred “Your Timeline” `timelineAssignmentRef`, and preserved D401 v1 byte semantics. Aaron
+  permits alternate-timeline gameplay, not rewriting the immutable Army Register source record or
+  presenting alternate service as historical fact. The exact proof is
+  `person_gettysburg_us_17me_haley`, source `ss:gettysburg:US:us_birney_iii:pvt` at US rung 15,
+  mapped only under “Your Timeline” to `ss:chickamauga:US:us_harker_rock:pvt` at rung 16, both 1863,
+  deterministic assignment `wcta-1pav4ac`. The plan probe now has 19/19 runtime-mode rows; its unique
+  NEVER→MAY bind exited 1 with only `SOURCE VS YOUR TIMELINE` red and restored both files
+  byte-identically. No runtime, data, generated game, base, tactical, command, manifest, suite, or
+  save-version byte moved. Final serialized coordination-sensitive planning evidence is 155/155 with
+  every JSON artifact read green; build remains `GATE OK`; D398 remains the latest full release
+  battery; all 192 artifact step rows were green and every present error array was empty. The exact
+  next bounded item is the receipt-continuity prerequisite, not Slice C. It needs
+  a fresh committed DRIVE take and may edit only the three declared runtime/proof files plus the
+  narrow 19-step plan-guard completion transition. Slice C and Slice D-F, T2/T3/Auto, data, combat,
+  command projection, politics, relationships, franchise/archive, and save-version movement remain
+  locked.
+  The committed D399-D404 planning record remains the law:
+  `docs/design/war-career-loop-design.md` (current md5 `c81d5e1641a4d20282a965c8344bb5d3`;
   D399 contract baseline `8fdd062c084d8953ff042c3cf904af1c`) +
-  `tools/probe-war-career-loop-plan.mjs` (md5 `b4957c1360b55767cb5b6bac5b1fdb57`;
-  10/10, runtime mode, filesystem-first, fail-closed, dual-mode only on the declared Slice-A
-  markers). The one-token canonical-owner bind changed only `journey`→`career`, made exactly
+  `tools/probe-war-career-loop-plan.mjs` (md5 `485760cdffe8a7beaff229b08514d099`;
+  19/19, runtime mode, filesystem-first, fail-closed, original ten names plus nine D404 names,
+  full-source-tree and changed-file-allowlist guarded). The D399 one-token canonical-owner bind
+  changed only `journey`→`career`, made exactly
   `STATE OWNERSHIP` fail with exit 1, and restored the spec byte-for-byte. Build remains GATE OK
   with generated HTML `4560dfc4f22b5907429e6a5c7d303e4f` and frozen base
   `c9db83fa99230ffb95bdfdfe059f3fb9`; 24 scenarios / schema 54 / Army Register 1512 / suite 130
@@ -780,7 +788,7 @@ next green commit and confer through this ledger instead of permitting simultane
   storage, and save-schema migration remain excluded until their declared slices receive fresh DRIVE
   takes. This lane remains separate because LANE-002 owns citation-grade people records, LANE-003 owns
   the battle ladder, and LANE-004 is a closed audit charter.
-- **Retained D403 HALT boundary and alternatives (resolved only for the new planning take):**
+- **Retained D403 HALT boundary and alternatives (resolved by D404):**
   1. Recommended: authorize a new planning-only dual-reference receipt contract. Preserve immutable
      canonical `sourceRef` for person identity/provenance and add an exact journey-owned “Your
      Timeline” assignment reference for the live result/rung. The next contract must decide additive
@@ -801,7 +809,7 @@ next green commit and confer through this ledger instead of permitting simultane
      can be eager, deterministic, idempotent, and fail closed without a version bump.
   2. Preserve one stable `personId` and two non-aliased exact references. `sourceRef` is immutable
      canonical evidence: source battle, side, unit id, slot, slot pid, historical grade, service
-     bounds, provenance, and sources. `timelineAssignmentRef` is the exact current-rung “Your
+     bounds and provenance. `timelineAssignmentRef` is the exact current-rung “Your
      Timeline” authority: scenario id, side, scenario-unit id, slot, slot pid, campaign-chain index,
      service bounds, provenance, and a deterministic assignment id. Neither reference may substitute
      for or rewrite the other.
@@ -835,8 +843,11 @@ next green commit and confer through this ledger instead of permitting simultane
   10. The contract and probe must name one exact live fixture using stable ids: one current person,
       the immutable canonical source tuple, and one later same-side chain-rung target tuple within the
       person's exact authored service window. Label it an alternate-timeline proof, not a historical
-      service claim. HALT if the live registry cannot supply both the exact person and exact future
-      slot without guessing.
+      service claim. The verified fixture is `person_gettysburg_us_17me_haley`, source
+      `ss:gettysburg:US:us_birney_iii:pvt` at US rung 15, mapped to the open target
+      `ss:chickamauga:US:us_harker_rock:pvt` at rung 16; both are 1863 and the deterministic
+      timeline assignment id is `wcta-1pav4ac`. HALT if the live registry cannot supply both the
+      exact person and exact future slot without guessing.
   11. The future runtime proof must demonstrate: canonical `sourceRef` stays byte-identical; the
       later exact assignment qualifies once; a malformed assignment fails; init/load is byte-
       idempotent; retry does not duplicate credit; hand-off does not transfer assignment; fallen,
@@ -863,8 +874,10 @@ next green commit and confer through this ledger instead of permitting simultane
       `d526f33a7649d378d2062b931b933884`, `src/35-command.js`
       `55bd7b5a30f22470e1abd7a993b3cbb4`, `tools/probe-war-career.mjs`
       `54e6a095eb81095ede3d46e5bd523f62`, and `tools/probe-command.mjs`
-      `bbfeaa69db333fddee2741882abff245`. D398 remains the latest full release battery; do not run
-      `npm run vet:noreg` in this planning slice.
+      `bbfeaa69db333fddee2741882abff245`; the complete `src/` tree is
+      `c0e7fbbd36d59f1fe53147f9561b9954`. The plan probe must also reject any current changed or
+      nonignored untracked path outside the eleven planning files in item 13. D398 remains the latest
+      full release battery; do not run `npm run vet:noreg` in this planning slice.
 - **Attempted option-1 acceptance contract (preserved for D403 provenance; superseded by D404 above):**
   1. Compare the proposed cross-rung assignment against D401 `explicit-career-assignment`, the
      canonical Army Register person id plus immutable `unitRef`, the campaign-chain registry,
@@ -909,8 +922,8 @@ next green commit and confer through this ledger instead of permitting simultane
      option 1 recorded, the decision-needed note resolved or superseded without losing provenance,
      no runtime/data/generated byte moved, all thirteen coordination-sensitive plan probes green and
      read, and the exact next bounded D402 Slice-C runtime proof identified but not started.
-- **Deferred option-1 planning-probe design:** extend `tools/probe-war-career-loop-plan.mjs` in place
-  only after Aaron authorizes the receipt evolution; keep it
+- **Completed D404 planning-probe design:** `tools/probe-war-career-loop-plan.mjs` was extended in
+  place after Aaron authorized the receipt evolution; it remains
   filesystem-first, fail-closed, runtime-mode compatible, and outside the release suite. It statically
   reads the design, lane, current runtime/probes, frozen base, generated game, manifest, suite, data,
   and guarded source hashes. It must pin the nine option-1 steps above; reject forbidden runtime/data/
@@ -984,15 +997,19 @@ next green commit and confer through this ledger instead of permitting simultane
   stable candidate order/exclusions; save/load/anti-reroll handoff; one-credit qualification; lineage/
   sanitizer hardening; and aggregate-casualty fate rejection. It is release-suite row 38 in the
   130-command manifest and is green 25/25 with zero pageerrors/realErrors.
-- **Resume pointer:** execute the D404 planning-only dual-reference receipt contract above. Compare
-  additive v1 against named/coexisting v2, choose and record one, pin the exact stable-id alternate-
-  timeline fixture, extend the nine plan teeth, prove the unique source-vs-timeline negative bind,
-  run/read all thirteen coordination-sensitive plan probes after every final lane rewrite, preserve
-  every exact baseline, then return LANE-005 to CONTRACT/unowned. Stop before runtime. The next
-  bounded item after release is the smallest receipt-continuity runtime prerequisite, not Slice C
-  command projection. Work only in `/private/tmp/codex-vg-recovery-019f62fe`; never pull across or
+- **Resume pointer:** from the clean pushed D404 boundary, take LANE-005 in a committed ledger-only
+  DRIVE edit, rerun and read all thirteen coordination-sensitive plan probes, then implement only the
+  §14 receipt-continuity prerequisite. Runtime/proof edits are restricted to
+  `src/106-war-career.js`, `src/37-loot-survival.js`, and `tools/probe-war-career.mjs`;
+  `tools/probe-war-career-loop-plan.mjs` may change only to replace D404 planning-lock teeth with exact
+  receipt-complete teeth while retaining all nineteen names, runtime mode, and suite exclusion. Prove
+  the `wcta-1pav4ac` Haley fixture, D401 v1 byte/id compatibility, independent validators, eager
+  idempotent sanitation, one-credit and hand-off isolation, and hash-identical command/combat walls.
+  Build from source, run/read the focused and adjacent gates, sync docs, commit/push, and release.
+  Stop before Slice C. Work only in `/private/tmp/codex-vg-recovery-019f62fe`; never pull across or
   overwrite the dataless Desktop checkout.
-- **Last-touched commit:** D403 option-1 receipt-schema HALT and lane release (this commit); the D403
+- **Last-touched commit:** D404 coexisting-v2 receipt contract and lane release (this commit); the D404
+  planning take was `f82b38f` from clean pushed D403. The D403
   planning take was `9fa199c89ed11bd995fc988d00f4fed0076b5667` from clean pushed D402. The D402 DRIVE
   take was `f891f3862e14411133d90dc874a6eaa0fd29d0f9` from clean pushed D401. The Slice-B DRIVE take was
   `cbfe533f02e86f784823bcc730bbc5a36a221dc4` from clean pushed D400. D400's DRIVE take was
@@ -1016,9 +1033,12 @@ next green commit and confer through this ledger instead of permitting simultane
   Aaron selected exact cross-rung service assignment; ChatGPT/Codex took its planning lane in
   `9fa199c89ed11bd995fc988d00f4fed0076b5667`. D403 then proved D401 uses one receipt tuple for both
   immutable source identity and live-rung authority, so the opener's explicit receipt-change HALT
-  fired before a new contract or tooth. Slice C and every later declared exclusion remain locked
-  pending Aaron's second decision on a dual-reference receipt evolution and a fresh planning-only
-  committed take.
+  fired before a new contract or tooth. Aaron then authorized alternate-timeline gameplay with
+  canonical source honesty; ChatGPT/Codex took D404 in ledger-only commit `f82b38f`, compared additive
+  v1 against named/coexisting v2, selected v2, pinned the exact Haley cross-rung fixture, extended the
+  plan guard to 19 steps, proved the surgical source-vs-timeline bind, held every runtime/data/
+  generated/save baseline, and released without runtime. Slice C and every later declared exclusion
+  remain locked until the separate receipt-continuity prerequisite ships and releases.
 
 ---
 

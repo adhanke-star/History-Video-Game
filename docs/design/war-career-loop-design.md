@@ -1,10 +1,11 @@
 # War Career Loop — Runtime Contract (D399)
 
-**Status:** CONTRACTED planning boundary. No runtime, save-version, generated-game, or political-engine
-change belongs to D399.
+**Status:** D404 dual-reference receipt CONTRACTED planning boundary. The original law remains true:
+No runtime, save-version, generated-game, or political-engine change belongs to D399. D404 likewise
+authorizes planning only; it does not authorize receipt runtime or Slice C.
 **Lane:** `COORDINATION.md` LANE-005.
 **Decision law:** D382 item 4, D360, D151, D119, D105, D94, D74, D92, D35, D146,
-E41, E50, and pending E71.
+E41, E50, and E71 fixed in D400.
 **Product sentence:** one person enters the war at soldier or junior-officer scale, earns wider
 responsibility through distinct resolved results, carries a remembered human network across roles,
 and either reaches the war's end or leaves a comrade to carry that memory forward.
@@ -410,6 +411,21 @@ captured recovery, fallen, and deterministic COMRADE HAND-OFF. Career Ironman us
 classifier before the Slice-A dispatcher delegates; nonterminal fate commits afterward. No second
 terminal system and no rollback-after-`_t1Resolve` path are legal.
 
+### Receipt-continuity prerequisite — dual-reference participation-v2 (exact next runtime)
+
+Before Slice C, implement only the §14 coexisting `cw_war_career_participation_v2` receipt path and
+its exact Haley Gettysburg→Chickamauga proof. Preserve D401 v1 receipts unchanged. The bounded runtime
+surface is `src/106-war-career.js`, `src/37-loot-survival.js`, and
+`tools/probe-war-career.mjs`; the existing manifest entry remains unchanged. The planning guard
+`tools/probe-war-career-loop-plan.mjs` may also move in that same commit only to replace its D404
+planning hashes/absence teeth with exact receipt-prerequisite completion teeth. Its original ten
+step names, runtime mode, suite exclusion, and all nine D404 step names remain fixed. The first proof
+is Classic consequence-only and does not authorize T2, T3, Auto, command projection, rank movement,
+combat movement, or a new data file. Build the generated game only from source after those focused
+files are green. If the three-runtime-file boundary plus its plan-guard transition cannot prove the
+full §14 sanitation and compatibility matrix, HALT with the exact missing seam instead of entering
+Slice C or broadening silently.
+
 ### Slice C — field/general command projection
 
 Add billet history and the narrow `warCareerCommandProjection` adapter. Prove player and NPC
@@ -448,9 +464,43 @@ only if the outer archive cannot remain honest inside the existing envelope.
 - frozen `build/base.html` remains `c9db83fa99230ffb95bdfdfe059f3fb9`
 - `git diff --check`
 
-Current planning pins: 24 scenarios, 54 schema rows, Army Register 1512, release suite 129, no
+Historical D399 planning pins: 24 scenarios, 54 schema rows, Army Register 1512, release suite 129, no
 `src/106-war-career.js`, no `WAR_CAREER_JOURNEY_ADAPTER_V1` in the legacy module, no focused
 career probe, no manifest marker, no save-version movement, and E71 still pending.
+
+### D404 receipt-continuity planning boundary
+
+- `node --check tools/probe-war-career-loop-plan.mjs`
+- `node tools/probe-war-career-loop-plan.mjs`; read all nineteen named rows in
+  `tools/shots/probe-war-career-loop-plan.json`; the original ten names and runtime mode remain
+  unchanged
+- run and read all thirteen coordination-sensitive plan probes after the final LANE-005 rewrite;
+  the D404 total is 155/155 named rows
+- negative bind: change only `NEVER` to `MAY` inside the unique §14 source/timeline Bind token;
+  exactly `SOURCE VS YOUR TIMELINE` fails with exit 1 and every other one of the nineteen War Career
+  plan rows stays green; apply the inverse patch and prove both design and probe return to their
+  pre-bind md5 values
+- `node tools/build.mjs` prints `GATE OK`; generated HTML remains
+  `4560dfc4f22b5907429e6a5c7d303e4f`; frozen base remains
+  `c9db83fa99230ffb95bdfdfe059f3fb9`
+- locked read-only hashes remain: `src/106-war-career.js`
+  `c69f405c0469abe7eca67fc0fff99575`, `src/37-loot-survival.js`
+  `d526f33a7649d378d2062b931b933884`, `src/35-command.js`
+  `55bd7b5a30f22470e1abd7a993b3cbb4`, `src/tactical/T2-campaign-link.js`
+  `feef8a3c1ecf5fb28a120d2398ee61fc`, `src/tactical/T3-officers.js`
+  `56e2cd1060a40eb0754b19e8d56bacdb`, `src/87-auto-resolve.js`
+  `4f0bd0970ef96c09b62ea44694387f80`, `tools/probe-war-career.mjs`
+  `54e6a095eb81095ede3d46e5bd523f62`, and `tools/probe-command.mjs`
+  `bbfeaa69db333fddee2741882abff245`
+- the complete `src/` tree remains `c0e7fbbd36d59f1fe53147f9561b9954`; the plan probe also reads
+  `git diff HEAD` plus nonignored untracked files and rejects every path outside the eleven-file
+  D404 planning allowlist, so After-Action, President Register, save slots, every tactical module,
+  and any other source file cannot move behind a partial hash list
+- current baselines remain 24 scenarios, schema 54, Army Register 1512, coverage 24, suite 130,
+  sweep 24, War Career suite row 38, `_SAVE_VER=1`, and data-tree md5
+  `b0d7f440836b60a4f18401b2d7b03f48`; D398 remains the latest full release battery
+- `git diff --check`; commit and push only the allowed planning files; return LANE-005 to
+  CONTRACT/unowned; do not run `npm run vet:noreg` in this docs/tool-only slice
 
 ### Slice-A focused and adjacent gate
 
@@ -516,11 +566,206 @@ canonical source identity and current-rung participation.
 A result-independent assignment ledger inside `C.loot.journey` would therefore remain unusable while
 the D401 receipt is unchanged. Honest cross-rung continuity needs a dual-reference receipt contract:
 one immutable canonical source reference for identity/provenance and one exact “Your Timeline”
-assignment reference for the live result/rung. Whether that evolution is an additive v1 shape or a
-named v2 receipt is deliberately unresolved. Deciding it exceeds the option-1 packet's explicit
-receipt-change stop boundary.
+assignment reference for the live result/rung. D403 deliberately stopped before choosing that
+receipt. Aaron authorized the planning-only choice on 2026-07-15. Section 14 supersedes the unresolved
+sentence without erasing this measured boundary.
 
-No runtime contract follows from this section. The plan probe remains the shipped 10-step D399-D401
-guard; no option-1 continuity tooth or bind was added. Slice C and T2/T3/Auto remain closed. Resume
-only after Aaron authorizes a planning-only dual-reference receipt evolution or selects one of the
-narrower alternatives recorded in `DECISION-NEEDED-war-career-receipt-continuity.md`.
+No D403 runtime contract followed from this section. The shipped ten-step D399-D401 plan guard and
+all D401 runtime bytes remained unchanged at that stop. Slice C and T2/T3/Auto stayed closed.
+
+---
+
+## 14 · D404 dual-reference receipt contract
+
+### Receipt choice
+
+| Alternative | Compatibility shape | Sanitation consequence | Decision |
+|---|---|---|---|
+| A — extend `cw_war_career_participation_v1` | Old flat v1 and new dual-reference v1 share one schema string | Every validator must infer which of two meanings “v1” has from optional-field presence; a partial or forged hybrid becomes a third shape | Rejected |
+| B — coexist with `cw_war_career_participation_v2` | D401 v1 retains its exact field set, result-id algorithm, and same-source-rung meaning; v2 is required only for an exact cross-rung assignment | Schema dispatch is explicit; v1 never upgrades implicitly; malformed v2 cannot fall back to v1 | **Selected** |
+
+Alternative B is the smaller compatibility risk even though it adds one parser branch. It preserves
+the D401 contract byte-for-byte and makes fail-closed sanitation decidable from the schema, rather
+than from the presence of optional authority fields. The save envelope and journey remain version 1:
+`_SAVE_VER=1` and `careerVersion:1`. A versioned receipt nested inside the already-whitelisted
+journey does not itself require a save-envelope migration.
+
+**Bind token:** WAR_CAREER_RECEIPT_BIND:SOURCE_REF_NEVER_EQUALS_TIMELINE_AUTHORITY
+
+Changing canonical source history is not alternate-timeline gameplay. The source reference proves
+who the person is and what the historical record says. The timeline assignment proves where that
+same person is allowed to participate in the player's current rung. Neither can be inferred from,
+rewritten as, or substituted for the other.
+
+### Coexisting receipt schemas
+
+D401 `cw_war_career_participation_v1` remains legal only in its shipped flat shape:
+
+`schema, resultId, mode, runId, creditKey, personId, chainIndex, battleId, side, unitId, slot,`
+`slotPid, routeUnitId, mapping, assignmentId, battleYear, rankAtResult`.
+
+Its existing `_wcResultId(..., "result-v1")`, `_wcAssignmentId(..., "assignment-v1")`, exact
+same-source-rung validation, fate, credit, lineage, and hand-off semantics remain unchanged. No load
+path may add v2 fields, relabel it, or synthesize a timeline assignment for it.
+
+A new dual-reference result uses ephemeral schema `cw_war_career_result_v2`; its persisted
+participation uses `cw_war_career_participation_v2`. The sanitized persisted shape is exactly:
+
+- `schema`, `resultId`, `mode`, `runId`, `creditKey`, and stable `personId`;
+- current-rung projections `chainIndex`, `battleId`, and `side`, which must equal the timeline
+  assignment fields rather than the canonical source battle;
+- immutable `sourceRef`;
+- exact `timelineAssignmentRef`;
+- `representedFieldUnitId` and `fieldMapping:"exact-timeline-unit"`;
+- `battleYear` and `rankAtResult`.
+
+`sourceRef` is reconstructed from the unique live Army Register identity and contains exactly:
+`battleId, side, unitId, slot, slotPid, sourceGrade, serviceStart, serviceEnd, serviceYear,`
+`provenance`. Null service bounds remain explicit nulls. It never reads the current battle to fill a
+source field, and `journey.person.unitRef` is never rewritten.
+
+`timelineAssignmentRef` is reconstructed from one immutable exact-id mapping row and contains
+exactly: `assignmentId, scenarioId, side, unitId, slot, slotPid, chainIndex, serviceStart,`
+`serviceEnd, serviceYear, timelineGrade, provenance, label`. Its label is exactly
+`Your Timeline`; its assignment provenance is `Inferred` unless a later contract supplies evidence
+for the assignment itself. The historical provenance of the target unit does not make the person's
+alternate placement Verified.
+
+Rank, role, billet, source grade, timeline grade, and assignment are six distinct concepts.
+`rankAtResult` snapshots the journey's gameplay rank. `sourceGrade` remains the historical grade.
+`timelineGrade` states the authored grade compatibility of that target slot. An assignment neither
+promotes the person nor creates a billet, role, command projection, merit award, or historical claim.
+
+### One immutable mapping input, not a second registry
+
+The exact next runtime may add one frozen `_WC_TIMELINE_ASSIGNMENTS_V1` config inside
+`src/106-war-career.js`. It is an immutable array of authored exact-id mappings and is never saved,
+mutated, appended from a result, or queried by name/rank/proximity. It is not a person registry or a
+second career ledger. `C.loot.journey` remains the sole mutable player-career owner; receipts remain
+inside its events, credit ledger, and last-participation projection. `P.command` remains the separate
+NPC command owner.
+
+Lookup key is exactly `personId + side + chainIndex + scenarioId`. Exactly one config row must match.
+The row's source slot pid must match the unique canonical Army Register person, and its target slot pid
+must match the canonical `ss:<scenarioId>:<side>:<unitId>:<slot>` form. The scenario must occupy the
+declared chain index, the target unit id must occur exactly once in the declared phase/result field,
+and both the person and assignment must admit the battle year.
+
+The deterministic timeline assignment id is:
+
+`wcta-` + base-36 `_wcHash([personId, sourceSlotPid, scenarioId, side, unitId, slot, slotPid,`
+`chainIndex, serviceStart-or-empty, serviceEnd-or-empty, serviceYear-or-empty, timelineGrade,`
+`"timeline-assignment-v1"].join("|"))`.
+
+This `wcta-` namespace is distinct from D401's `wca-` tactical-representation id. The old
+`_wcAssignmentId` keeps its existing meaning and bytes.
+
+### Exact alternate-timeline fixture
+
+The first mapping is a proof fixture, not a claim that John W. Haley served at Chickamauga:
+
+| Field | Exact value |
+|---|---|
+| `personId` | `person_gettysburg_us_17me_haley` |
+| Canonical person | John W. Haley, Private, Verified replacement record |
+| `sourceRef.battleId / side` | `gettysburg / US` |
+| `sourceRef.unitId / slot` | `us_birney_iii / pvt` |
+| `sourceRef.slotPid` | `ss:gettysburg:US:us_birney_iii:pvt` |
+| Source phase / US chain index | `day2 / 15` |
+| Source service bounds | `serviceStart:null, serviceEnd:null, serviceYear:1863` |
+| Target scenario / phase | `chickamauga / snodgrass-horseshoe` |
+| Target `side / unitId / slot` | `US / us_harker_rock / pvt` |
+| Target `slotPid` | `ss:chickamauga:US:us_harker_rock:pvt` |
+| Target US chain index / year | `16 / 1863` |
+| Target service bounds | `serviceStart:null, serviceEnd:null, serviceYear:1863` |
+| `timelineGrade / provenance / label` | `Private / Inferred / Your Timeline` |
+| `assignmentId` | `wcta-1pav4ac` |
+
+The source replacement is unique by `pid` and `replacePid`, has six source entries, and remains
+Verified. The target unit is unique in the named Chickamauga phase and its private slot has no
+replacement record. Both exact rungs are 1863, so the live `serviceYear:1863` admits the proof
+without expanding the runtime record to Haley's wider documented 1862-1865 service. The target unit's
+identity is sourced; Haley's placement there remains explicitly alternate.
+
+### Result identity and two independent validators
+
+Add `_wcTimelineAssignmentId` and `_wcResultIdV2`; do not change the old id functions. The v2
+result id is a fixed-order hash over:
+
+1. `"participation-v2"`, `runId`, `creditKey`, `mode`, and stable `personId`;
+2. every exact `sourceRef` field in its declared order;
+3. every exact `timelineAssignmentRef` field in its declared order, including the deterministic
+   assignment id;
+4. `representedFieldUnitId`, `fieldMapping`, `battleYear`, and `rankAtResult`.
+
+The canonical-source validator independently requires one registry person for `personId`, exact
+source-field equality, canonical slot-pid reconstruction, same-side identity, unchanged source grade,
+service bounds, and provenance. It does not require the source battle to equal the current rung.
+
+The timeline validator independently requires one immutable mapping row, exact assignment-id
+recomputation, exact current `creditKey`, current side/rung/scenario/year, exact target slot and one
+represented non-HQ field unit with `representedFieldUnitId === timelineAssignmentRef.unitId`, legal
+service window, alive or wounded status, no unresolved hand-off, and compatible timeline grade. It
+does not accept canonical source equality as current-rung proof. Both validators must pass before a
+v2 result can qualify.
+
+Absent, duplicate, malformed, unknown-schema, stale-rung, stale-run, wrong-credit, wrong-side,
+wrong-scenario, wrong-chain-index, wrong-unit, wrong-slot, wrong-slot-pid, wrong-assignment-id,
+outside-service, foreign-person, fallen, captured, retired, war-ended, unresolved-hand-off, or
+cross-reference-mismatched input produces no qualifying receipt, personal fate, capture recovery,
+merit, reputation, promotion, lineage, hand-off, billet, or command authority. Names, ranks,
+namespaces, aliases, proximity, aggregate casualties, or a historical-service guess never repair it.
+
+### Save sanitation, credits, and hand-off isolation
+
+`_ssCareerParticipation` becomes an explicit schema dispatcher. Its v1 branch preserves the D401
+parser and result-id calculation exactly. Its v2 branch reconstructs only the declared v2 keys,
+validates the source and mapping independently, recomputes both ids, and rejects a partial/hybrid
+shape. Unknown fields are stripped through reconstruction. Event, credit, and
+`lastParticipation` copies must use the same schema and exact result id; cross-schema copies cannot
+cross-validate.
+
+Init/load performs sanitation eagerly. One pass converges to canonical bytes; a second
+`warCareerInit` and save/apply/init cycle produce the same bytes. No lazy authority repair is
+allowed. A bad v2 row is demoted to a nonqualifying narrative with fate and hand-off authority
+removed; it cannot erase or rewrite a valid D401 v1 receipt on another credit key. `_SAVE_VER=1`
+remains exact.
+
+The existing `creditKey` remains the one-credit-per-rung owner across both receipt schemas. A v1 and
+v2 row cannot claim the same key twice. Once one qualifying result owns the rung, retry, mode switch,
+save/load, a better outcome, or a successor cannot replace its receipt or reroll fate.
+
+COMRADE HAND-OFF stores the result-location reference appropriate to the owning receipt, but it never
+copies a mapping row. A successor is re-resolved as a unique canonical person and may use only that
+successor's own exact mapping. The fallen person's future assignments, source reference, timeline
+grade, receipts, merit, reputation, rank, billet, and authority never transfer. If the successor has
+no exact current-rung mapping, participation fails closed; the game does not borrow the prior
+identity's assignment.
+
+### Exact next runtime proof and closed seams
+
+The receipt-continuity prerequisite must extend the focused War Career probe with all of these
+controls before Slice C:
+
+1. Haley's canonical `sourceRef` is byte-identical before and after a Chickamauga result.
+2. The exact `wcta-1pav4ac` Chickamauga assignment qualifies once and stores v2 in event, credit,
+   and last-participation copies.
+3. Each malformed-reference/service/status class above fails without authority.
+4. Init twice and save/apply/init are byte-idempotent.
+5. Same-rung retry does not duplicate or replace credit or fate.
+6. A fallen-person hand-off gives the successor no Haley assignment.
+7. Fallen, captured, retired, war-ended, and out-of-service identities cannot qualify.
+8. Every existing D401 v1 receipt fixture remains valid with the same result id and bytes.
+9. `src/35-command.js` and `tools/probe-command.mjs` remain hash-identical; combat, casualty,
+   winner, score, AI, objective, reinforcement, balance, merit, reputation, promotion, role, billet,
+   and `warCareerCommandProjection` do not move.
+
+The prerequisite may edit only the three runtime/proof files `src/106-war-career.js`,
+`src/37-loot-survival.js`, and `tools/probe-war-career.mjs`; it may also update
+`tools/probe-war-career-loop-plan.mjs` solely for the declared planning-lock→receipt-complete guard
+transition, plus generated output and live documentation after focused gates. It may not rename or
+remove any of the plan probe's nineteen steps, enroll that plan probe in the suite, or weaken a D404
+tooth. It may not edit T2, T3, Auto, data, the manifest, the suite manifest,
+`src/35-command.js`, or `tools/probe-command.mjs`. Slice C remains a separate future DRIVE take after
+this prerequisite is green, committed, pushed, and released. If this boundary cannot prove the exact
+fixture in Classic without broadening, HALT with the missing seam and the narrowest alternatives.

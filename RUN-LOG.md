@@ -8,6 +8,36 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D404 WAR-CAREER RECEIPT CONTINUITY — coexisting v2 contracted, runtime still locked — 2026-07-15 (D404)
+- Aaron permits alternate history for gameplay, with a strict display/evidence split: canonical Army
+  Register source history stays immutable; authored divergence is labeled “Your Timeline.”
+- LANE-005 was taken planning-only in ledger commit
+  `f82b38f` from clean pushed D403. The thirteen plan probes were read green at **146/146** before
+  contract work.
+- Compared additive-v1 against named/coexisting-v2. V2 won because it leaves D401's flat v1 shape,
+  result ids, same-source-rung validation, and sanitized bytes exact while schema dispatch makes
+  malformed hybrid receipts fail closed. `_SAVE_VER=1` and `careerVersion:1` remain exact.
+- Contracted independent `sourceRef` and `timelineAssignmentRef` validators, result identity bound to
+  both, one immutable exact-id mapping input, one mutable owner in `C.loot.journey`, eager idempotent
+  sanitation, one credit per rung across schemas, and zero hand-off transfer of mapping/authority.
+- Pinned the exact alternate-timeline proof:
+  `person_gettysburg_us_17me_haley` at `ss:gettysburg:US:us_birney_iii:pvt` / US rung 15 maps only
+  under “Your Timeline” to `ss:chickamauga:US:us_harker_rock:pvt` / rung 16, both 1863,
+  `assignmentId=wcta-1pav4ac`, `timelineGrade=Private`, provenance `Inferred`.
+- Extended the plan probe from 10 to 19 named runtime-mode rows without changing the original ten.
+  The surgical NEVER→MAY bind exited 1 with exactly `SOURCE VS YOUR TIMELINE` red and 18 green;
+  inverse restore returned design/probe md5s `c81d5e1641a4d20282a965c8344bb5d3` /
+  `485760cdffe8a7beaff229b08514d099`, then 19/19 green. The guard also pins the complete
+  `src/` tree and rejects changed/nonignored-untracked paths outside the eleven planning files.
+- No runtime, data, generated-game, base, tactical, command, manifest, suite, or save-version byte
+  moved. Exact next is the receipt prerequisite in three runtime/proof files plus the narrow plan-
+  guard completion transition. Slice C and every later seam remain closed. Full `npm run vet:noreg`
+  remains deferred; D398 is still the latest full release checkpoint.
+- Final released-lane gate: all thirteen plan probes passed **155/155** serialized checks; all 192
+  artifact step rows were green, every JSON had `ok:true`, and every present error array was empty.
+  Build printed `GATE OK`; `git diff --check` passed; the 11-file planning allowlist and every locked
+  hash/baseline were exact.
+
 ## D403 WAR-CAREER RECEIPT CONTINUITY — option 1 selected, receipt-schema HALT — 2026-07-15 (D403)
 - Aaron selected exact stable-id cross-rung service assignment. LANE-005 was taken planning-only in
   ledger commit `9fa199c89ed11bd995fc988d00f4fed0076b5667`; all thirteen coordination-sensitive

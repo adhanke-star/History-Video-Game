@@ -12,6 +12,7 @@ import {
   writeFileSync
 } from "node:fs";
 import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -32,12 +33,39 @@ const LOOT_PROBE = join(ROOT, "tools", "probe-loot-survival.mjs");
 const REVIEW = join(ROOT, "REVIEW-QUEUE.md");
 const BASE = join(ROOT, "build", "base.html");
 const GAME = join(ROOT, "civil_war_generals.html");
+const SRC = join(ROOT, "src");
 const DATA = join(ROOT, "data");
+const RECEIPT_DECISION = join(ROOT, "DECISION-NEEDED-war-career-receipt-continuity.md");
+const COMMAND = join(ROOT, "src", "35-command.js");
+const AUTO = join(ROOT, "src", "87-auto-resolve.js");
+const T2 = join(ROOT, "src", "tactical", "T2-campaign-link.js");
+const T3 = join(ROOT, "src", "tactical", "T3-officers.js");
+const COMMAND_PROBE = join(ROOT, "tools", "probe-command.mjs");
+const ROSTER_PROBE = join(ROOT, "tools", "probe-tactical-roster.mjs");
+const BUILDER_PROBE = join(ROOT, "tools", "probe-custom-battle-builder.mjs");
+const SWEEP = join(ROOT, "tools", "sweep-all-battles.mjs");
+const REPLACEMENTS = join(DATA, "soldier-replacements.json");
+const GETTYSBURG = join(DATA, "gettysburg.json");
+const CHICKAMAUGA = join(DATA, "chickamauga.json");
 const OUTFILE = join(OUT, "probe-war-career-loop-plan.json");
 
 const MARKER = "WAR_CAREER_RUNTIME_V1";
 const JOURNEY_MARKER = "WAR_CAREER_JOURNEY_ADAPTER_V1";
 const RUNTIME_NAME = "106-war-career.js";
+const RECEIPT_BIND = "WAR_CAREER_RECEIPT_BIND:SOURCE_REF_NEVER_EQUALS_TIMELINE_AUTHORITY";
+const D404_PLANNING_ALLOWED = new Set([
+  "AUTONOMOUS-RUN.md",
+  "COORDINATION.md",
+  "DECISION-NEEDED-war-career-receipt-continuity.md",
+  "DECISIONS.md",
+  "HANDOFF.md",
+  "RUN-LOG.md",
+  "START-HERE.md",
+  "V1-CHECKLIST.md",
+  "WAKE-UP.md",
+  "docs/design/war-career-loop-design.md",
+  "tools/probe-war-career-loop-plan.mjs"
+]);
 
 function read(path) {
   return readFileSync(path, "utf8");
@@ -45,6 +73,97 @@ function read(path) {
 
 function md5(path) {
   return createHash("md5").update(readFileSync(path)).digest("hex");
+}
+
+function json(path) {
+  return JSON.parse(read(path));
+}
+
+function dataTreeMd5() {
+  const hash = createHash("md5");
+  const names = readdirSync(DATA).filter(name => name.endsWith(".json")).sort();
+  for (const name of names) {
+    hash.update(name);
+    hash.update("\0");
+    hash.update(readFileSync(join(DATA, name)));
+    hash.update("\0");
+  }
+  return hash.digest("hex");
+}
+
+function treeMd5(root) {
+  const hash = createHash("md5");
+  function walk(dir, prefix) {
+    const entries = readdirSync(dir, { withFileTypes:true })
+      .sort((a, b) => a.name.localeCompare(b.name));
+    for (const entry of entries) {
+      const relative = prefix ? prefix + "/" + entry.name : entry.name;
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) {
+        walk(full, relative);
+      } else {
+        hash.update(relative);
+        hash.update("\0");
+        hash.update(readFileSync(full));
+        hash.update("\0");
+      }
+    }
+  }
+  walk(root, "");
+  return hash.digest("hex");
+}
+
+function gitChangedPaths() {
+  const options = { cwd:ROOT, encoding:"utf8" };
+  const tracked = execFileSync("git", ["diff", "--name-only", "HEAD", "--"], options)
+    .split(/\r?\n/).filter(Boolean);
+  const untracked = execFileSync("git", ["ls-files", "--others", "--exclude-standard"], options)
+    .split(/\r?\n/).filter(Boolean);
+  return Array.from(new Set(tracked.concat(untracked))).sort();
+}
+
+function campaignChain(text, side) {
+  const block = (text.match(/const CHAINS = \{([\s\S]*?)\n\};/) || [null, ""])[1];
+  const match = block.match(new RegExp(side + ":\\s*\\[([\\s\\S]*?)\\]"));
+  if (!match) throw new Error("campaign chain missing: " + side);
+  return Array.from(match[1].matchAll(/[\"']([^\"']+)[\"']/g)).map(row => row[1]);
+}
+
+function expectedIds(text) {
+  const block = (text.match(/var EXPECTED = \[([\s\S]*?)\];/) || [null, ""])[1];
+  return Array.from(block.matchAll(/[\"']([^\"']+)[\"']/g)).map(row => row[1]);
+}
+
+function scenario(path, key) {
+  const value = json(path)[key];
+  if (!value || !Array.isArray(value.phases)) throw new Error("scenario missing: " + key);
+  return value;
+}
+
+function phaseUnitCount(value, phaseId, side, unitId) {
+  const phase = value.phases.find(row => row && row.id === phaseId);
+  if (!phase) throw new Error("phase missing: " + phaseId);
+  const rows = [];
+  if (phase.oob && Array.isArray(phase.oob[side])) rows.push(...phase.oob[side]);
+  if (Array.isArray(phase.reinforcements)) {
+    rows.push(...phase.reinforcements.filter(row => row && row.side === side));
+  }
+  return rows.filter(row => row && row.id === unitId).length;
+}
+
+function scenarioYear(value) {
+  const match = String(value && value.date || "").match(/\b(18\d{2})\b/);
+  return match ? Number(match[1]) : null;
+}
+
+function wcHash(value) {
+  const text = String(value == null ? "" : value);
+  let hash = 2166136261;
+  for (let i = 0; i < text.length; i++) {
+    hash ^= text.charCodeAt(i);
+    hash = (hash * 16777619) >>> 0;
+  }
+  return hash >>> 0;
 }
 
 function section(text, startHead, endHead) {
@@ -450,6 +569,330 @@ step("LANE", () => {
     throw new Error("released LANE-005 must be unowned");
   }
   return { state, owner: ownerLine.slice(0, 100) };
+});
+
+step("RECEIPT CONTINUITY LAW", () => {
+  const s14 = section(read(SPEC), "## 14 ", null);
+  mustInclude(s14, [
+    "D404 dual-reference receipt contract",
+    "A — extend `cw_war_career_participation_v1`",
+    "Rejected",
+    "B — coexist with `cw_war_career_participation_v2`",
+    "Selected",
+    "smaller compatibility risk",
+    "preserves the D401 contract byte-for-byte",
+    "Schema dispatch is explicit",
+    "cw_war_career_result_v2",
+    "cw_war_career_participation_v2",
+    "_wcResultIdV2",
+    "do not change the old id functions",
+    "receipt-continuity prerequisite"
+  ], "receipt continuity law");
+  return { selected:"coexisting participation-v2", legacy:"D401 v1 unchanged" };
+});
+
+step("EXACT ASSIGNMENT OWNER", () => {
+  const s14 = section(read(SPEC), "## 14 ", null);
+  mustInclude(s14, [
+    "_WC_TIMELINE_ASSIGNMENTS_V1",
+    "immutable array of authored exact-id mappings",
+    "never saved, mutated, appended from a result, or queried by name/rank/proximity",
+    "not a person registry or a second career ledger",
+    "C.loot.journey",
+    "sole mutable player-career owner",
+    "personId + side + chainIndex + scenarioId",
+    "wcta-",
+    "timeline-assignment-v1",
+    "wcta-1pav4ac"
+  ], "exact assignment owner");
+
+  const records = json(REPLACEMENTS).records || [];
+  const personRows = records.filter(row => row && row.pid === "person_gettysburg_us_17me_haley");
+  const sourceSlot = "ss:gettysburg:US:us_birney_iii:pvt";
+  const targetSlot = "ss:chickamauga:US:us_harker_rock:pvt";
+  if (personRows.length !== 1 || personRows[0].replacePid !== sourceSlot) {
+    throw new Error("Haley source identity/slot is not unique");
+  }
+  if (records.filter(row => row && row.replacePid === sourceSlot).length !== 1) {
+    throw new Error("Haley source slot has ambiguous replacements");
+  }
+  if (records.some(row => row && row.replacePid === targetSlot)) {
+    throw new Error("target private slot is no longer open");
+  }
+
+  const base = read(BASE);
+  const chain = campaignChain(base, "US");
+  if (chain[15] !== "gettysburg" || chain[16] !== "chickamauga") {
+    throw new Error("exact US adjacent rungs moved");
+  }
+  const gettysburg = scenario(GETTYSBURG, "gettysburg");
+  const chickamauga = scenario(CHICKAMAUGA, "chickamauga");
+  if (phaseUnitCount(gettysburg, "day2", "US", "us_birney_iii") !== 1) {
+    throw new Error("Gettysburg source unit is not exact");
+  }
+  if (phaseUnitCount(chickamauga, "snodgrass-horseshoe", "US", "us_harker_rock") !== 1) {
+    throw new Error("Chickamauga target unit is not exact");
+  }
+
+  const idParts = [
+    "person_gettysburg_us_17me_haley",
+    sourceSlot,
+    "chickamauga",
+    "US",
+    "us_harker_rock",
+    "pvt",
+    targetSlot,
+    16,
+    "",
+    "",
+    1863,
+    "Private",
+    "timeline-assignment-v1"
+  ];
+  const assignmentId = "wcta-" + wcHash(idParts.join("|")).toString(36);
+  if (assignmentId !== "wcta-1pav4ac") {
+    throw new Error("fixture assignment id drifted: " + assignmentId);
+  }
+  return {
+    personId:personRows[0].pid,
+    sourceSlot,
+    targetSlot,
+    sourceRung:15,
+    targetRung:16,
+    assignmentId
+  };
+});
+
+step("SOURCE VS YOUR TIMELINE", () => {
+  const text = read(SPEC);
+  const s14 = section(text, "## 14 ", null);
+  const bindCount = text.split(RECEIPT_BIND).length - 1;
+  if (bindCount !== 1) throw new Error("receipt bind token must occur exactly once, got " + bindCount);
+  mustInclude(s14, [
+    RECEIPT_BIND,
+    "Changing canonical source history is not alternate-timeline gameplay",
+    "Neither can be inferred from, rewritten as, or substituted for the other",
+    "sourceRef",
+    "battleId, side, unitId, slot, slotPid, sourceGrade, serviceStart, serviceEnd, serviceYear",
+    "timelineAssignmentRef",
+    "assignmentId, scenarioId, side, unitId, slot, slotPid, chainIndex",
+    "journey.person.unitRef",
+    "is never rewritten",
+    "Your Timeline",
+    "source grade, timeline grade, and assignment are six distinct concepts",
+    "not a claim that John W. Haley served at Chickamauga"
+  ], "source versus timeline law");
+  return { bindTokenCount:bindCount, source:"immutable canonical", timeline:"exact alternate assignment" };
+});
+
+step("SERVICE WINDOW + FAIL CLOSED", () => {
+  const s14 = section(read(SPEC), "## 14 ", null);
+  mustInclude(s14, [
+    "serviceStart:null, serviceEnd:null, serviceYear:1863",
+    "Both exact rungs are 1863",
+    "without expanding the runtime record to Haley's wider documented 1862-1865 service",
+    "Absent, duplicate, malformed, unknown-schema, stale-rung, stale-run, wrong-credit, wrong-side",
+    "wrong-scenario, wrong-chain-index, wrong-unit, wrong-slot, wrong-slot-pid, wrong-assignment-id",
+    "outside-service, foreign-person, fallen, captured, retired, war-ended, unresolved-hand-off",
+    "produces no qualifying receipt",
+    "Names, ranks, namespaces, aliases, proximity, aggregate casualties",
+    "never repair it"
+  ], "service and fail-closed law");
+  const person = (json(REPLACEMENTS).records || []).find(
+    row => row && row.pid === "person_gettysburg_us_17me_haley"
+  );
+  const sourceYear = scenarioYear(scenario(GETTYSBURG, "gettysburg"));
+  const targetYear = scenarioYear(scenario(CHICKAMAUGA, "chickamauga"));
+  if (!person || person.year !== 1863 || sourceYear !== 1863 || targetYear !== 1863) {
+    throw new Error("fixture service-year proof moved");
+  }
+  if (person.provenance !== "Verified" || !Array.isArray(person.sources) || person.sources.length !== 6) {
+    throw new Error("fixture source provenance moved");
+  }
+  if (!read(RUNTIME).includes("function _wcKnownPresent(p, year)")) {
+    throw new Error("service-window validator seam missing");
+  }
+  return { sourceYear, targetYear, sourceProvenance:person.provenance, sources:person.sources.length };
+});
+
+step("HANDOFF + ONE-CREDIT ISOLATION", () => {
+  const s14 = section(read(SPEC), "## 14 ", null);
+  mustInclude(s14, [
+    "one-credit-per-rung owner across both receipt schemas",
+    "A v1 and v2 row cannot claim the same key twice",
+    "cannot replace its receipt or reroll fate",
+    "COMRADE HAND-OFF",
+    "never copies a mapping row",
+    "successor's own exact mapping",
+    "future assignments, source reference, timeline grade, receipts, merit, reputation, rank, billet, and authority never transfer",
+    "game does not borrow the prior identity's assignment",
+    "A fallen-person hand-off gives the successor no Haley assignment"
+  ], "handoff and one-credit law");
+  return { owner:"creditKey", transfer:"none" };
+});
+
+step("SAVE SANITATION + VERSION LOCK", () => {
+  const s14 = section(read(SPEC), "## 14 ", null);
+  mustInclude(s14, [
+    "_ssCareerParticipation",
+    "explicit schema dispatcher",
+    "v1 branch preserves the D401 parser and result-id calculation exactly",
+    "v2 branch reconstructs only the declared v2 keys",
+    "Unknown fields are stripped through reconstruction",
+    "cross-schema copies cannot cross-validate",
+    "Init/load performs sanitation eagerly",
+    "One pass converges to canonical bytes",
+    "second `warCareerInit` and save/apply/init cycle produce the same bytes",
+    "No lazy authority repair",
+    "_SAVE_VER=1",
+    "careerVersion:1"
+  ], "save sanitation law");
+  if (!/var\s+_SAVE_VER\s*=\s*1\s*;/.test(read(BASE))) throw new Error("_SAVE_VER moved from 1");
+  return { saveVersion:1, sanitation:"eager deterministic idempotent fail-closed" };
+});
+
+step("T2/T3/AUTO CLOSED", () => {
+  const locks = {
+    t2:md5(T2),
+    t3:md5(T3),
+    auto:md5(AUTO)
+  };
+  const expected = {
+    t2:"feef8a3c1ecf5fb28a120d2398ee61fc",
+    t3:"56e2cd1060a40eb0754b19e8d56bacdb",
+    auto:"4f0bd0970ef96c09b62ea44694387f80"
+  };
+  for (const key of Object.keys(expected)) {
+    if (locks[key] !== expected[key]) throw new Error(key + " closed-seam hash moved: " + locks[key]);
+  }
+  const spec = read(SPEC);
+  mustInclude(spec, [
+    "Classic consequence-only and does not authorize T2, T3, Auto",
+    "It may not edit T2, T3, Auto, data, the manifest, the suite manifest"
+  ], "closed tactical producers");
+  return locks;
+});
+
+step("SLICE C RUNTIME STILL LOCKED", () => {
+  const locks = {
+    srcTree:treeMd5(SRC),
+    runtime:md5(RUNTIME),
+    journey:md5(JOURNEY),
+    command:md5(COMMAND),
+    focused:md5(FOCUSED),
+    commandProbe:md5(COMMAND_PROBE)
+  };
+  const expected = {
+    srcTree:"c0e7fbbd36d59f1fe53147f9561b9954",
+    runtime:"c69f405c0469abe7eca67fc0fff99575",
+    journey:"d526f33a7649d378d2062b931b933884",
+    command:"55bd7b5a30f22470e1abd7a993b3cbb4",
+    focused:"54e6a095eb81095ede3d46e5bd523f62",
+    commandProbe:"bbfeaa69db333fddee2741882abff245"
+  };
+  for (const key of Object.keys(expected)) {
+    if (locks[key] !== expected[key]) throw new Error(key + " planning lock moved: " + locks[key]);
+  }
+  const changed = gitChangedPaths();
+  const forbidden = changed.filter(path => !D404_PLANNING_ALLOWED.has(path));
+  if (forbidden.length) {
+    throw new Error("D404 planning allowlist violation: " + forbidden.join(", "));
+  }
+  const runtimeText = read(RUNTIME);
+  for (const token of [
+    "cw_war_career_participation_v2",
+    "cw_war_career_result_v2",
+    "_WC_TIMELINE_ASSIGNMENTS_V1",
+    "_wcResultIdV2"
+  ]) {
+    if (runtimeText.includes(token)) throw new Error("receipt runtime landed during planning: " + token);
+  }
+  const s10 = section(read(SPEC), "## 10 ", "## 11 ");
+  mustInclude(s10, [
+    "Receipt-continuity prerequisite",
+    "exact next runtime",
+    "Before Slice C",
+    "src/106-war-career.js",
+    "src/37-loot-survival.js",
+    "tools/probe-war-career.mjs",
+    "does not authorize T2, T3, Auto, command projection",
+    "HALT with the exact missing seam"
+  ], "receipt prerequisite");
+  return { ...locks, changed };
+});
+
+step("BASELINES + LANE", () => {
+  const t1Count = scenarioCount(read(T1));
+  const schemaCount = readdirSync(DATA).filter(name => name.endsWith(".json")).length;
+  const suite = parseSuite(read(VET));
+  const rosterExpected = expectedIds(read(ROSTER_PROBE));
+  const builderExpected = expectedIds(read(BUILDER_PROBE));
+  const loot = read(LOOT_PROBE);
+  const lane = lane005(read(COORD));
+  const decision = read(RECEIPT_DECISION);
+  const hashes = {
+    game:md5(GAME),
+    base:md5(BASE),
+    dataTree:dataTreeMd5(),
+    manifest:md5(MANIFEST),
+    suite:md5(VET)
+  };
+  if (t1Count !== 24 || schemaCount !== 54) {
+    throw new Error("scenario/schema baseline moved: " + t1Count + "/" + schemaCount);
+  }
+  if (!/people\.length\s*!==\s*1512/.test(loot) || !loot.includes("1512 of 1512")) {
+    throw new Error("Army Register 1512 pins missing");
+  }
+  if (rosterExpected.length !== 24 || builderExpected.length !== 24 ||
+      normalize(rosterExpected.join(" ")) !== normalize(builderExpected.join(" "))) {
+    throw new Error("coverage baselines moved");
+  }
+  if (suite.length !== 130 || !suite[37] || suite[37][1] !== "tools/probe-war-career.mjs") {
+    throw new Error("suite 130 / War Career row 38 moved");
+  }
+  if (!read(SWEEP).includes("var reg = fldScenarioRegistry()") ||
+      !read(SWEEP).includes("var order = (typeof fldScenarioMenuOrder==='function')")) {
+    throw new Error("24-scenario sweep registry seam moved");
+  }
+  const expectedHashes = {
+    game:"4560dfc4f22b5907429e6a5c7d303e4f",
+    base:"c9db83fa99230ffb95bdfdfe059f3fb9",
+    dataTree:"b0d7f440836b60a4f18401b2d7b03f48",
+    manifest:"7924da858de403cac58caabf8c9fcce8",
+    suite:"4bcdc6f252389a4bfd6bed269b52f8f0"
+  };
+  for (const key of Object.keys(expectedHashes)) {
+    if (hashes[key] !== expectedHashes[key]) throw new Error(key + " baseline moved: " + hashes[key]);
+  }
+  mustInclude(lane, [
+    "D404 planning-only acceptance contract",
+    "cw_war_career_participation_v2",
+    "sourceRef",
+    "timelineAssignmentRef",
+    "wcta-1pav4ac",
+    "T2/T3/AUTO CLOSED",
+    "SLICE C RUNTIME STILL LOCKED",
+    "D398 remains the latest full release battery",
+    "do not run `npm run vet:noreg`"
+  ], "D404 lane");
+  mustInclude(decision, [
+    "RESOLVED by the D404 planning contract",
+    "coexisting `cw_war_career_participation_v2`",
+    "wcta-1pav4ac",
+    "smallest next runtime prerequisite",
+    "T2, T3, Auto, data, command projection, and later slices remain closed"
+  ], "receipt decision resolution");
+  return {
+    scenarios:t1Count,
+    schemas:schemaCount,
+    armyRegister:1512,
+    coverage:rosterExpected.length,
+    suite:suite.length,
+    sweep:t1Count,
+    warCareerRow:38,
+    saveVersion:1,
+    hashes
+  };
 });
 
 writeFileSync(OUTFILE, JSON.stringify(result, null, 2) + "\n");

@@ -1,10 +1,10 @@
 # DECISION NEEDED — War Career receipt continuity before Slice C
 
-**Status:** D403 option-1 planning HALT, 2026-07-15. Aaron selected exact cross-rung service
-assignment. The live seam inventory proved that an authored assignment cannot satisfy the unchanged
-D401 result/participation receipt. The packet's receipt-change stop rule therefore fired before a
-continuity contract, new plan tooth, runtime, data, generated-game, frozen-base, or save-version byte
-moved. LANE-005 is CONTRACT/unowned.
+**Status:** RESOLVED by the D404 planning contract, 2026-07-15. Aaron authorized alternate-timeline
+gameplay through an exact journey-owned “Your Timeline” assignment while canonical source history
+remains immutable. D404 selected a named, coexisting `cw_war_career_participation_v2` receipt over an
+extended v1 shape, pinned the exact Haley Gettysburg→Chickamauga proof, and left runtime closed. This
+file retains the D402-D403 contradiction and alternatives as decision provenance.
 
 ## Measured contradiction
 
@@ -81,10 +81,36 @@ registry comparison would violate the selected option's source-honesty law.
    Timeline” into false source history, break Army Register provenance, and make a mutable target
    masquerade as identity authority.
 
-## Resume gate
+## Resolution
 
-Do not resume the option-1 contract or Slice C runtime until Aaron explicitly authorizes one of the
-first two second-decision paths above. The recommendation is option 1: a bounded planning-only
-dual-reference receipt contract and filesystem-first negative-bound plan probe. Do not edit D401
-runtime merely to explore it. T2, T3, Auto, relationships, politics, franchise/archive, combat
-inputs, command-ledger aliasing, and `_SAVE_VER` movement remain excluded.
+The second decision selected option 1. The D404 contract is
+`docs/design/war-career-loop-design.md` §14:
+
+- D401 v1 retains its exact flat shape, id calculation, and same-source-rung meaning.
+- New cross-rung results use explicit `sourceRef` plus `timelineAssignmentRef` under named v2 result
+  and participation schemas. Schema dispatch prevents a malformed hybrid from being interpreted as
+  legacy v1.
+- `C.loot.journey` remains the sole mutable career owner. One immutable exact-id mapping config is
+  input, not a second registry or ledger.
+- The exact proof maps `person_gettysburg_us_17me_haley` from
+  `ss:gettysburg:US:us_birney_iii:pvt` at US rung 15 to
+  `ss:chickamauga:US:us_harker_rock:pvt` at rung 16, both in 1863, with deterministic assignment id
+  `wcta-1pav4ac`. The mapping is Inferred and labeled “Your Timeline”; it is not a historical service
+  claim.
+- `_SAVE_VER=1`, D401 compatibility, one credit per rung, eager idempotent sanitation, hand-off
+  nontransfer, and the no-combat/no-command walls are mandatory.
+
+The smallest next runtime prerequisite is the three-runtime-file v2 receipt proof in
+`src/106-war-career.js`, `src/37-loot-survival.js`, and `tools/probe-war-career.mjs`, plus the narrow
+`tools/probe-war-career-loop-plan.mjs` transition from D404 planning-lock teeth to exact
+receipt-complete teeth. All nineteen plan-step names, runtime mode, and suite exclusion stay fixed.
+That prerequisite must finish green before a separate Slice C take. T2, T3, Auto, data, command
+projection, and later slices remain closed.
+
+## Historical resume gate (discharged by Aaron's D404 authorization)
+
+The D403 gate prohibited option-1 planning or Slice C until Aaron chose one of the first two paths.
+Aaron chose the recommended planning-only dual-reference path. D404 discharges that decision hold,
+not the runtime locks: do not edit D401 runtime merely to explore it, and do not enter Slice C before
+the receipt prerequisite. T2, T3, Auto, relationships, politics, franchise/archive, combat inputs,
+command-ledger aliasing, and `_SAVE_VER` movement remain excluded.
