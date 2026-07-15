@@ -749,12 +749,13 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
-### LANE-005 · war-career-loop — **CONTRACT/unowned**
+### LANE-005 · war-career-loop — **DRIVE (Slice A only)**
 
-- **Owning tool:** none. A future TOP LOOP must take DRIVE in a committed ledger-only edit before
-  Slice A. Read-only helper inventories are allowed; architecture, acceptance law, integration
-  boundaries, bind adjudication, docs, and commits stay with the TOP LOOP.
-- **State:** CONTRACT/unowned — **D399 planning contract shipped; no runtime moved.**
+- **Owning tool:** ChatGPT/Codex (TOP LOOP). Read-only helper inventories and independent gate
+  audits are allowed; architecture, runtime ownership, acceptance adjudication, docs, and commits
+  stay with the TOP LOOP. No simultaneous provider edits.
+- **State:** DRIVE — **D399 spec §10 Slice A only: terminal honesty + the minimal canonical spine.**
+  The committed planning contract remains the law:
   `docs/design/war-career-loop-design.md` (md5 `8fdd062c084d8953ff042c3cf904af1c`) +
   `tools/probe-war-career-loop-plan.mjs` (md5 `b4957c1360b55767cb5b6bac5b1fdb57`;
   10/10, planning mode, filesystem-first, fail-closed, dual-mode only on the declared Slice-A
@@ -838,12 +839,15 @@ next green commit and confer through this ledger instead of permitting simultane
   or save-version change. Run the spec §11 gate and binds; sync docs; commit/push; release. No
   simultaneous edits by any provider. `/private/tmp/codex-vg-recovery-019f62fe` remains authoritative
   while the Desktop checkout is dataless.
-- **Last-touched commit:** D399 planning close (this commit).
+- **Last-touched commit:** this ledger-only Slice-A DRIVE take at the clean pushed D399 boundary
+  `8c4f89576206950513492097ac99618ca0572b16`.
 - **History:** opened 2026-07-14 by ChatGPT/Codex after D398 discharged the battle release and D382
   item 4 became the exact queue head. The planning lock is deliberately separate from both the battle
   ladder and the open prosopography lane. D399 completed the three-helper seam inventory plus an
   independent adversarial contract review, contracted the single-owner/pure-first terminal design,
   proved the one-token bind, held every baseline, and released the planning lane without runtime.
+  ChatGPT/Codex took Slice A DRIVE from the clean pushed D399 boundary in a separate ledger-only
+  commit; all later slices and every declared exclusion remain locked out.
 
 ---
 
