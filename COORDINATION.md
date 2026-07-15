@@ -749,10 +749,11 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
-### LANE-005 · war-career-loop — **CONTRACT (unowned; D404 dual-reference receipt planning complete)**
+### LANE-005 · war-career-loop — **DRIVE (ChatGPT/Codex 5.6 Sol Ultra; D404 receipt-continuity runtime prerequisite only)**
 
-- **Owning tool:** none — released after D404. No simultaneous edits by any provider.
-- **State:** CONTRACT — D404 was a planning contract only; it selected named/coexisting
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra. No simultaneous edits by any provider.
+- **Task:** D404 receipt-continuity runtime prerequisite only. Slice C and every later slice remain closed.
+- **State:** DRIVE — D404 was a planning contract only; it selected named/coexisting
   `cw_war_career_participation_v2`, independently bound immutable canonical `sourceRef` and exact
   Inferred “Your Timeline” `timelineAssignmentRef`, and preserved D401 v1 byte semantics. Aaron
   permits alternate-timeline gameplay, not rewriting the immutable Army Register source record or
