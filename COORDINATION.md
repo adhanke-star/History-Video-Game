@@ -749,11 +749,14 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
-### LANE-005 · war-career-loop — **CONTRACT (unowned; D402 Slice C reachability HALT recorded)**
+### LANE-005 · war-career-loop — **DRIVE (ChatGPT/Codex 5.6 Sol Ultra; option-1 receipt-continuity planning only)**
 
-- **Owning tool:** none. A fresh committed DRIVE take is required after Aaron resolves
-  `DECISION-NEEDED-war-career-receipt-continuity.md`. No simultaneous edits by any provider.
-- **State:** CONTRACT — **D402 declared no numeric law and touched no runtime.** Live source proved
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra, receipt-continuity planning only. Aaron selected
+  option 1 on 2026-07-15. Helpers may perform bounded read-only inventories or audits only; the TOP
+  LOOP owns identity law, the planning probe, integration, and commits. No simultaneous edits by any
+  provider.
+- **State:** DRIVE — planning only; D402 Slice C runtime remains locked. **D402 declared no numeric
+  law and touched no runtime.** Live source proved
   that D401's exact canonical `unitRef.battleId` permits one qualifying source battle per identity;
   both campaign chains contain no repeated scenario id. COMRADE HAND-OFF chooses a same-battle
   successor after that rung's credit is immutable, so retry cannot award again and advance makes the
@@ -782,6 +785,63 @@ next green commit and confer through this ledger instead of permitting simultane
   storage, and save-schema migration remain excluded until their declared slices receive fresh DRIVE
   takes. This lane remains separate because LANE-002 owns citation-grade people records, LANE-003 owns
   the battle ladder, and LANE-004 is a closed audit charter.
+- **Active option-1 acceptance contract (planning only, in full):**
+  1. Compare the proposed cross-rung assignment against D401 `explicit-career-assignment`, the
+     canonical Army Register person id plus immutable `unitRef`, the campaign-chain registry,
+     `C.loot.journey` plus its sanitizer, D401 participation/credit/lineage/handoff rows, and existing
+     route-unit/assignment-id validation. Extend the existing seam; create no second mutable identity
+     owner, parallel registry, database, directory, or person namespace.
+  2. Define one stable current-person identity mapped only by exact authored ids to an exact future
+     campaign scenario, side, scenario-unit slot, and bounded service window. Keep the immutable
+     historical source grade/unit/provenance untouched. Alternate service and grade are separate
+     fields labeled “Your Timeline”; rank, role, billet, source grade, and timeline assignment remain
+     distinct concepts.
+  3. Define exact fail-closed behavior for absent, duplicated, malformed, stale-rung, wrong-side,
+     wrong-slot, outside-service, foreign-person, and deceased-person assignments. Names, ranks,
+     namespaces, aliases, proximity, aggregate casualties, historical-service guesses, and forged
+     saves cannot establish identity or assignment authority.
+  4. Preserve result-independent assignment ownership and one credit per campaign rung. The same
+     stable person may change authored assignments by rung without changing identity. COMRADE
+     HAND-OFF gives the successor only that successor's own authored assignments; the fallen person's
+     future assignments, receipts, merit, reputation, grade, and authority never transfer.
+  5. Preserve `C.loot.journey` as the only mutable player-career owner and `P.command` as the separate
+     NPC appointment/reputation/promotion authority. Save sanitation must be eager, deterministic,
+     idempotent, and fail closed at `_SAVE_VER=1`; no lazy authority repair, player/NPC ledger alias,
+     command projection, merit, reputation, promotion, billet, relationship, political, franchise,
+     archive, combat, or balance runtime is authorized.
+  6. Keep T2, T3, and Auto untouched. If the plan proves the D401 participation receipt itself must
+     change, HALT before broadening and record the exact insufficiency plus the narrowest alternatives.
+     Do not invent an actual historical service assignment; if the live registry cannot supply exact
+     stable ids for a required proof case, HALT with options and a recommendation.
+  7. Planning edits are restricted to `docs/design/war-career-loop-design.md`,
+     `tools/probe-war-career-loop-plan.mjs`, `DECISION-NEEDED-war-career-receipt-continuity.md`,
+     `DECISIONS.md`, `COORDINATION.md`, `START-HERE.md`, `AUTONOMOUS-RUN.md`, `HANDOFF.md`,
+     `WAKE-UP.md`, `V1-CHECKLIST.md`, and `RUN-LOG.md`. Runtime, data, tactical, frozen-base, and
+     generated-game files are read-only.
+  8. Extend the filesystem-first plan probe with named teeth for RECEIPT CONTINUITY LAW, EXACT
+     ASSIGNMENT OWNER, SOURCE VS YOUR TIMELINE, SERVICE WINDOW + FAIL CLOSED, HANDOFF + ONE-CREDIT
+     ISOLATION, SAVE SANITATION + VERSION LOCK, T2/T3/AUTO CLOSED, SLICE C RUNTIME STILL LOCKED, and
+     BASELINES + LANE. It must reject every forbidden join/transfer/owner/runtime class above.
+     Predeclare one unique load-bearing contract token; changing exactly that token must exit 1 with
+     exactly one declared named step red, every unrelated step green, and a byte-identical restore of
+     both design and probe before the final green run. Red teeth never land in git.
+  9. Terminal state is one green planning commit pushed with LANE-005 returned to CONTRACT/unowned,
+     option 1 recorded, the decision-needed note resolved or superseded without losing provenance,
+     no runtime/data/generated byte moved, all thirteen coordination-sensitive plan probes green and
+     read, and the exact next bounded D402 Slice-C runtime proof identified but not started.
+- **Active planning-probe design:** extend `tools/probe-war-career-loop-plan.mjs` in place; keep it
+  filesystem-first, fail-closed, runtime-mode compatible, and outside the release suite. It statically
+  reads the design, lane, current runtime/probes, frozen base, generated game, manifest, suite, data,
+  and guarded source hashes. It must pin the nine option-1 steps above; reject forbidden runtime/data/
+  generated edits by allowlist plus exact hashes; and write `tools/shots/probe-war-career-loop-plan.json`
+  with `ok:true`, every named row green, and empty error arrays where present. After each lane rewrite,
+  rerun and read all thirteen coordination-sensitive plan-probe artifacts serially.
+- **Source/runtime exclusions and safe-clone lock:** do not edit `src/106-war-career.js`,
+  `src/37-loot-survival.js`, `src/35-command.js`, `src/82-after-action.js`, `src/87-auto-resolve.js`,
+  `src/90-president-register.js`, `src/91-save-slots.js`, any tactical module, any data file,
+  `build/base.html`, or `civil_war_generals.html` by hand. Work only in
+  `/private/tmp/codex-vg-recovery-019f62fe`; never edit, pull across, or overwrite the dataless Desktop
+  checkout. No simultaneous edits by any provider.
 - **Design law:** DECISIONS D382 item 4 · D360 start-anywhere promotion lattice and trajectory read-out ·
   D151 Soldier's Story career log · D94/D105 ratings and reputation development · D119/D151 After-Action
   read-out · D35/D146/E41/E50 save integrity · REVIEW-QUEUE E71 fixed in D400 ·
