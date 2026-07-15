@@ -494,3 +494,33 @@ HALT instead of guessing when: a person cannot be linked to participation; two i
 same historical person without an explicit mapping; no same-unit comrade is eligible; a political
 decision lacks a defer/delegate law; a legacy save cannot be migrated idempotently; a focused gate
 fails outside the active slice; or source evidence contradicts a proposed historical label.
+
+---
+
+## 13 · D403 option-1 feasibility boundary — receipt evolution required
+
+Aaron selected exact stable-id cross-rung service assignment. The planning inventory stopped before
+contracting it because the unchanged D401 receipt has one field tuple serving two incompatible jobs:
+canonical source identity and current-rung participation.
+
+- `_wcActiveLink` rejects before any assignment exists unless the person's immutable canonical
+  `unitRef.battleId` is the live campaign battle and current chain rung.
+- D401 `explicit-career-assignment` is created only after that gate. It maps the already-accepted
+  source slot to one current field-unit id; it has no future scenario, target slot, chain index, or
+  service window.
+- `_wcResultEvidence` and `warCareerParticipationEvidence` require the result battle and participant
+  tuple to remain that canonical source reference.
+- `_ssCareerParticipation` uses the same receipt tuple to prove the campaign chain index,
+  `creditKey`, canonical person, and canonical Army Register slot.
+
+A result-independent assignment ledger inside `C.loot.journey` would therefore remain unusable while
+the D401 receipt is unchanged. Honest cross-rung continuity needs a dual-reference receipt contract:
+one immutable canonical source reference for identity/provenance and one exact “Your Timeline”
+assignment reference for the live result/rung. Whether that evolution is an additive v1 shape or a
+named v2 receipt is deliberately unresolved. Deciding it exceeds the option-1 packet's explicit
+receipt-change stop boundary.
+
+No runtime contract follows from this section. The plan probe remains the shipped 10-step D399-D401
+guard; no option-1 continuity tooth or bind was added. Slice C and T2/T3/Auto remain closed. Resume
+only after Aaron authorizes a planning-only dual-reference receipt evolution or selects one of the
+narrower alternatives recorded in `DECISION-NEEDED-war-career-receipt-continuity.md`.

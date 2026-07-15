@@ -6,6 +6,47 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D403 — OPTION 1 SELECTED; CROSS-RUNG PLANNING HALTED AT THE D401 RECEIPT-SCHEMA BOUNDARY — [AARON + CHATGPT/CODEX 5.6 SOL ULTRA, LANE-005 DRIVE→CONTRACT] (2026-07-15)
+
+**[AARON] Exact cross-rung service assignment is the selected product direction.** Aaron chose D402
+option 1. ChatGPT/Codex took the planning lane in ledger-only commit
+`9fa199c89ed11bd995fc988d00f4fed0076b5667`, preserving the safe-clone, no-simultaneous-edit,
+planning-only, source-honesty, one-owner, one-credit-per-rung, `_SAVE_VER=1`, and no-runtime locks.
+All thirteen coordination-sensitive plan probes passed after the take and every JSON artifact was
+read green.
+
+**[CODEX] The unchanged D401 receipt cannot carry the selected law.** `_wcActiveLink` rejects before
+assignment unless the current person's immutable canonical `unitRef.battleId` equals the live battle
+and chain rung. D401's `explicit-career-assignment` is created only afterward and maps that accepted
+source slot to one current field-unit id; it has no future scenario, target slot, service interval, or
+result-independent owner. `_wcResultEvidence` and `warCareerParticipationEvidence` then require the
+result/participant battle-unit-slot tuple to equal the same source reference. Finally,
+`_ssCareerParticipation` uses those fields to prove the chain rung, credit key, unique canonical
+person, and unique Army Register slot. A journey-owned assignment ledger alone cannot pass this
+receipt without rewriting or lying about source history.
+
+**The packet's receipt-change HALT fired.** No dual-reference contract, new plan-probe tooth, bind,
+runtime, data, generated game, frozen base, tactical module, command ledger, or save version shipped.
+The exact missing seam is a receipt that preserves immutable canonical `sourceRef` separately from an
+exact journey-owned “Your Timeline” assignment reference used for the live result/rung. Whether that
+is an additive backward-compatible v1 receipt or a named v2 receipt is not decided here.
+
+**Recommendation: authorize one more planning-only decision slice.** Define and negative-bind the
+dual-reference receipt contract before changing D401 runtime. Identity/provenance validation must use
+the source reference; live scenario/rung/credit validation must use the assignment reference; the
+result id must bind both; sanitation must remain eager, fail-closed, idempotent, and `_SAVE_VER=1` or
+HALT. The narrower safe alternative is source-battle-only representation, which does not solve
+progression. Rewriting `journey.person.unitRef` or aliasing a target as source is rejected as
+historically false. LANE-005 returns to CONTRACT/unowned pending Aaron's explicit second decision;
+Slice C and T2/T3/Auto remain locked.
+
+Final docs-only verification: `node --check` passed; all thirteen coordination-sensitive plan probes
+passed **146/146** named steps and every JSON artifact was read with no red row or nonempty error
+array; War Career remained 10/10 in runtime mode; build printed `GATE OK`; `git diff --check` passed.
+Generated HTML/base and every guarded runtime/probe hash remained exact. The deferred nine-tooth
+option-1 bind was not run because the receipt-change HALT fired before that probe extension. The full
+130-command battery remains deferred; D398 is still the latest complete release checkpoint.
+
 ## D402 — WAR CAREER SLICE C HALTED BEFORE NUMERIC LAW: THE D401 RECEIPT CANNOT FOLLOW A PERSON TO A SECOND RUNG — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-005 DRIVE→CONTRACT] (2026-07-15)
 
 **No Slice-C law or runtime shipped.** LANE-005 was taken from the clean D401 boundary in

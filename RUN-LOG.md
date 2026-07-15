@@ -8,6 +8,35 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D403 WAR-CAREER RECEIPT CONTINUITY — option 1 selected, receipt-schema HALT — 2026-07-15 (D403)
+- Aaron selected exact stable-id cross-rung service assignment. LANE-005 was taken planning-only in
+  ledger commit `9fa199c89ed11bd995fc988d00f4fed0076b5667`; all thirteen coordination-sensitive
+  plan probes and artifacts were green after the take.
+- The six-seam inventory proved D401's `explicit-career-assignment` is a same-result source-slot to
+  field-unit representation created only after `_wcActiveLink` accepts the person's immutable source
+  battle as the live rung. It has no future target slot or result-independent assignment authority.
+- The result builder, runtime participation validator, and save sanitizer all use the same receipt
+  battle/unit/slot tuple for both canonical Army Register identity and current campaign-rung proof.
+  A cross-rung assignment cannot pass while that receipt remains unchanged.
+- The opener's receipt-change HALT fired before the option-1 contract, added plan teeth/bind, or any
+  runtime/data/generated/base/save-version edit. The planning probe therefore remains its shipped
+  10-step runtime-mode guard.
+- Recommendation: authorize a second planning-only slice for a dual-reference receipt contract:
+  immutable canonical source reference plus exact journey-owned “Your Timeline” assignment reference,
+  with the result id binding both and eager idempotent fail-closed sanitation at `_SAVE_VER=1` or
+  HALT. Source-battle-only assignment is safe but cannot progress; rewriting/aliasing source history
+  is rejected. LANE-005 returns to CONTRACT/unowned pending Aaron's explicit decision. Full
+  `npm run vet:noreg` remains deferred.
+- Final docs-only gate: plan-probe syntax clean; all thirteen coordination-sensitive plan probes
+  **146/146** with every JSON read and no red/error array; War Career plan 10/10 runtime mode; build
+  `GATE OK`; diff check clean. HTML `4560dfc4f22b5907429e6a5c7d303e4f`, base
+  `c9db83fa99230ffb95bdfdfe059f3fb9`, runtime 106 `c69f405c0469abe7eca67fc0fff99575`,
+  journey 37 `d526f33a7649d378d2062b931b933884`, command 35
+  `55bd7b5a30f22470e1abd7a993b3cbb4`, focused War Career
+  `54e6a095eb81095ede3d46e5bd523f62`, and command probe
+  `bbfeaa69db333fddee2741882abff245` remained exact. The deferred nine-tooth option-1 negative bind
+  was not run because the mandated HALT preceded its creation.
+
 ## D402 WAR-CAREER SLICE C — reachability contradiction, runtime HALT — 2026-07-15 (D402)
 - Took LANE-005 in ledger-only commit `f891f3862e14411133d90dc874a6eaa0fd29d0f9` after a clean fetch/status/hash gate. All thirteen plan probes and artifacts were green before the push.
 - The live seam inventory proved that D401's exact source-battle identity cannot qualify on a second campaign rung. `_wcActiveLink` and `_ssCareerParticipation` require the canonical person's one `unitRef.battleId` to equal the live scenario; both chains contain only unique scenario ids (US 31/31, CS 28/28).
