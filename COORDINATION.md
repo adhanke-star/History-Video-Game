@@ -749,6 +749,81 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
+### LANE-005 · war-career-loop — **DRIVE (planning contract only)**
+
+- **Owning tool:** ChatGPT/Codex (TOP LOOP). Read-only helper inventories are allowed; architecture,
+  acceptance law, integration boundaries, bind adjudication, docs, and commits stay with the TOP LOOP.
+- **State:** DRIVE for the D382 item-4 PLANNING CONTRACT only. Runtime, a new political engine,
+  save-schema migration, and `_SAVE_VER` movement are excluded until the contract is green, committed,
+  pushed, and released. This is a new lane because LANE-002 owns citation-grade people records,
+  LANE-003 owns the battle ladder, and LANE-004 is a closed audit charter; a cross-role career spine
+  must consume those seams without silently reopening or merging their ownership.
+- **Design law:** DECISIONS D382 item 4 · D360 start-anywhere promotion lattice and trajectory read-out ·
+  D151 Soldier's Story career log · D94/D105 ratings and reputation development · D119/D151 After-Action
+  read-out · D35/D146/E41/E50 save integrity · pending REVIEW-QUEUE E71 Ironman terminal-loss honesty ·
+  D74/D92 no output-fudge law · D356 Contract Relay · the existing campaign/president/command/Army
+  Register seams as verified by the planning inventory. D382's four archetypes are mandatory review
+  lenses: newcomer, history buff/teacher, wargame veteran, and game-theory min-maxer.
+- **Acceptance criteria (planning slice, in full):**
+  1. Inventory the live career/Soldier's Story, command, relationship/reputation, save/death, Army
+     Register, After-Action, campaign bridge, and political-layer seams by exact file + symbol. Name
+     what is reusable, what is presentation-only, what already persists, and every collision or gap;
+     do not infer a system from copy when runtime state disagrees.
+  2. Commit `docs/design/war-career-loop-design.md` as the single runtime contract. It must lock ONE
+     CAREER ACROSS ROLES; start at soldier or junior-officer scale; results-based advancement through
+     field and army command; persistent reputation and relationships; late-war access to political/
+     strategic decisions; death with narrated gravity through COMRADE HAND-OFF; optional Ironman
+     terminal death; and pull-based political capabilities rather than a rebuilt S3-S5 monolith.
+  3. The spec must choose one canonical career identity/state owner and define adapters into existing
+     Soldier's Story, Army Register, command/reputation, campaign, and After-Action seams. It must
+     prohibit two parallel careers, person-state aliasing, invented historical relationships, dead/
+     captured actors continuing to command, loss/death rewards, and any direct casualty/winner/score
+     lever. Existing historical records and generated people retain their provenance labels.
+  4. Define an incremental implementation ladder with independently shippable green boundaries. The
+     first runtime slice must be the smallest vertical career spine, not a grand-strategy rewrite;
+     E71's false Ironman promise must be absorbed or explicitly sequenced at the first death/terminal
+     boundary so two terminal-loss systems cannot emerge. Every later political capability is pulled
+     only when the promoted role needs it and reuses existing President's Desk resources where honest.
+  5. Define deterministic transition laws for advancement, wound/capture/death, comrade selection,
+     role access, reputation/relationship movement, and end-of-war/franchise carry. State fail-closed
+     behavior for missing/stale people, exhausted same-unit comrades, malformed saves, duplicate ids,
+     and historical commanders whose service window has ended. Specify whether any save-shape change
+     can remain an idempotent lazy additive field; if a version bump is ever unavoidable, require an
+     idempotent migration plus E41/E50/save-slot updates in the same runtime commit.
+  6. Include a persona matrix with a concrete success path and anti-exploit guard for each D382
+     archetype; accessibility/session-respect requirements; teaching/provenance boundaries; and the
+     exact focused + adjacent probe plan for each runtime slice.
+  7. Add `tools/probe-war-career-loop-plan.mjs`: filesystem-first, fail-closed, never enrolled in the
+     release suite, green at the planning boundary, and dual-mode only when the spec names the first
+     runtime marker. It must pin the D382 laws, the seam inventory, the implementation ladder, the
+     no-parallel-career/no-monolith/no-fudge exclusions, current 24/54/1512/129 baselines, and this
+     lane. Any half-registration or forbidden early runtime/save movement must fail.
+  8. Negative bind: change exactly one unique load-bearing spec token named by the probe; exactly one
+     declared plan step must fail with exit 1; restore the spec byte-for-byte and prove the original
+     checksum returns before the final green run. Build must remain GATE OK with generated HTML
+     byte-identical; every plan probe that greps a relay lane reruns green after each lane rewrite;
+     `git diff --check` stays clean.
+- **Probe design:** new `tools/probe-war-career-loop-plan.mjs` writes
+  `tools/shots/probe-war-career-loop-plan.json`; static reads only, with named steps for SPEC CORE,
+  SEAM INVENTORY, STATE OWNERSHIP, TRANSITIONS, DEATH + IRONMAN, POLITICAL PULL, ARCHETYPES,
+  IMPLEMENTATION LADDER, EXCLUSIONS + BASELINES, and LANE. The runtime marker and downstream file
+  allowlist are declared in the spec before dual-mode checks exist; the planning-mode branch rejects
+  those markers/files now. Run with `node tools/probe-war-career-loop-plan.mjs`, inspect the JSON, then
+  execute the one-token bind and byte-identical restore. Adjacent planning gates: every current
+  lane-grepping plan probe, `node tools/build.mjs`, and `git diff --check`; no browser or full release
+  battery is authorized by this docs/tool-only slice.
+- **Resume pointer:** finish the evidence inventory; author the design contract and plan probe from
+  live seams; run the declared bind and focused/adjacent gates; sync DECISIONS/RUN-LOG/startup docs;
+  commit and push the green planning slice; release LANE-005 to CONTRACT/unowned with the first runtime
+  slice named exactly. Do not begin that runtime in the planning commit. No simultaneous edits by any
+  provider. `/private/tmp/codex-vg-recovery-019f62fe` remains authoritative while the Desktop checkout
+  is dataless.
+- **Last-touched commit:** this ledger-only DRIVE take at the clean pushed D398 boundary
+  `420884d54964add46dd130ba0f18eb6a00a315aa`.
+- **History:** opened 2026-07-14 by ChatGPT/Codex after D398 discharged the battle release and D382
+  item 4 became the exact queue head. The planning lock is deliberately separate from both the battle
+  ladder and the open prosopography lane.
+
 ---
 
 ## 6 · JOINT STRATEGY BOARD — Fable ⇄ Sol (cross-tool planning, not just locks)
