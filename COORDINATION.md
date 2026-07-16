@@ -749,18 +749,67 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
-### LANE-005 · war-career-loop — **CONTRACT (unowned; D406 Slice C shipped)**
+### LANE-005 · war-career-loop — **DRIVE (ChatGPT/Codex 5.6 Sol Ultra; D407 Slice D relationship memory)**
 
-- **Owning tool:** none. No simultaneous edits by any provider.
-- **Task:** D406 Slice C is shipped: deterministic merit/reputation, reconstructed journey-owned
-  billets, field/general role authority, and one bounded `warCareerCommandProjection` contribution
-  in `commandLeadership(C)`. Slice D relationship memory is the next separate take; Slice E-F remain
-  closed.
-- **State:** CONTRACT/unowned — D406 completed from pre-take D405 boundary
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra. No simultaneous edits by any provider.
+- **Task:** D407 Slice D relationship memory only. D406 Slice C is shipped with deterministic
+  merit/reputation and the bounded `warCareerCommandProjection`; Slice E-F remain closed.
+- **State:** DRIVE — taken from the clean D406 boundary at
+  `2ab95ba3459d77a655f1db35dc6e14dec5d06189`. D406 completed from pre-take D405 boundary
   `22180f80a04482ef742c5949f0d7f8d4a3be45d1` through pushed take
   `60430009308eb885a5b5f07c0f6abb1af59cfb6c`. Preserve the sole `C.loot.journey` player owner,
   separate `P.command` NPC owner, source/timeline receipt split, one-credit/fate/handoff/save laws,
-  safe-clone boundary, and every no-combat/no-politics/no-relationship/no-simultaneous-edit lock.
+  safe-clone boundary, and every no-combat/no-politics/no-simultaneous-edit lock.
+- **D407 acceptance contract:**
+  1. The only production transition is one qualifying, current-person, `fate:"alive"` result after
+     `cmdOnResolve` has stored the exact same-side command target in `P.command._activeId`. Require
+     `_activeId === cmdActiveId(C)`, `cmdActiveGeneral(C).id === _activeId`, one unique Army Register
+     `command-general` person with that exact id, and no self-edge. This is an emergent high-command
+     response in **Your Timeline**, not friendship, proximity, patronage, or a historical meeting.
+  2. `C.loot.journey.relationships` is the sole mutable player relationship owner. Permit exactly one
+     read-only `_activeId` target selector; never read `P.command.reputation`, never write or alias any
+     `P.command` field, and keep `src/35-command.js` plus `tools/probe-command.mjs` byte-identical.
+  3. Relationship keys are `command-general-v1|<exact-id>` in namespace `command-general-v1`.
+     Rapport and remembered rapport clamp to `-8..8`; retain at most 24 edges and four newest history
+     rows per edge. Sort transitions by validated event ordinal then transition id; dedupe before
+     capping; evict least-recent edges by ordinal then canonical key; serialize keys lexically.
+  4. The only Slice-D codes are `high-command-decisive-victory:+2`,
+     `high-command-victory:+1`, `high-command-draw:0`, `high-command-defeat:-1`, and
+     `high-command-decisive-defeat:-2`. Numeric values are Inferred balance, not source claims.
+     One deterministic transition id binds run id, credit key, event id, actor id, target namespace,
+     target id, and code. Matching event/credit copies reconstruct one update; retry, recovery,
+     duplicate credit, load, sanitation, repeated selectors, and rendering add nothing.
+  5. Current runtime emits only `emergent-timeline`, text label `Your Timeline`, and empty sources.
+     `historical-authored` remains rejected without an immutable authored claim and at least two
+     independent normalized source objects using the existing citation fields: title/author,
+     repository, locator, URL, type, and note. Never infer a source claim from identity or outcome.
+  6. Sanitation strips unknown state, validates exact event/credit ownership, rebuilds edges from
+     deduped transition copies, clamps/caps deterministically, ignores saved scalar authority, and
+     converges byte-identically after one pass at `_SAVE_VER=1`. Wounded, captured, fallen,
+     stale-service, foreign, malformed, nonqualifying, unproved, or self-target events create no edge.
+  7. On COMRADE HAND-OFF, transitions owned by validated prior lineage contribute only to clearly
+     labeled remembered-network context. Successor personal rapport begins at neutral zero and only
+     that successor's later transitions can move it. No fallen friendship or command authority copies.
+  8. `warCareerReportHTML` renders semantic, escaped, wrapping text for Personal rapport and
+     Remembered network under Your Timeline; it remains pure and readable at 200% zoom. Relationship
+     state affects no combat, OVR, source rank, command projection, politics, resources, or balance.
+- **D407 proof and binds:** preserve all 29 static walls and existing rows; add exactly four browser
+  rows: `D407 RELATIONSHIP TRANSITIONS + ONE-CREDIT`, `D407 PROVENANCE + SOURCE HONESTY`,
+  `D407 SANITATION + BOUNDED DEDUPE`, and `D407 HANDOFF MEMORY + OWNER ISOLATION + AAR`, for
+  War Career `42/42`; Command remains byte-identical and `94/94`; the plan probe retains its 19 names.
+  Bind A removes the sole production transition call and may red only row 1. Bind B relaxes only the
+  relationship event/credit-copy dedupe and may red only row 1. Bind C changes the production
+  emergent token to unsourced historical-authored and may red only row 2. Bind D misclassifies prior
+  rapport as successor-personal and may red only row 4. Every inverse must restore source and generated
+  bytes before green reruns; red teeth never land in git.
+- **D407 forbidden scope:** no data, manifest, frozen base, save version, T2/T3/Auto, combat, casualty,
+  winner, score, AI, objectives, reinforcement, balance, command runtime/probe, After Action seam,
+  politics/Slice E, franchise/Slice F, other lane, invented tie/citation, or second owner.
+- **D407 resume pointer:** from the pushed ledger-only take, first append D407 and the exact numeric law
+  to `DECISIONS.md` and `docs/design/war-career-loop-design.md`; then implement only
+  `src/106-war-career.js`, `src/37-loot-survival.js`, `tools/probe-war-career.mjs`, the narrow
+  19-row plan transition, generated HTML, and canonical docs. Run the declared binds, focused and
+  serialized adjacent gates, release this lane to CONTRACT/unowned, and leave Slice E untouched.
 - **D406 release evidence:** War Career `38/38`, Command `94/94`, plan `19/19`, the complete
   adjacent browser set, and all thirteen coordination plans at `155/155` are green with every
   present error array empty. The exact reachable path ends
