@@ -2,12 +2,14 @@
    D400 · 106-war-career.js — WAR_CAREER_RUNTIME_V1.
 
    D401 Slice B extends the canonical spine with consequence-only identity.
-   D405 adds the coexisting WAR_CAREER_RECEIPT_V2 prerequisite.
-   D406 Slice C adds ledger-derived advancement and one command projection:
+   D405 adds the coexisting WAR_CAREER_RECEIPT_V2 prerequisite:
      - canonical Army Register source history remains immutable;
      - a frozen exact-id "Your Timeline" assignment may prove one later rung;
      - source and timeline references validate independently;
      - D401 v1 ids, fields, same-source-rung behavior, and bytes remain legal.
+   D406 Slice C adds ledger-derived advancement and one command projection.
+   D407 Slice D adds bounded, provenance-bearing relationship memory from one
+   exact high-command result target, rendered only as Your Timeline.
 
    The shared consequence spine still guarantees:
      - C.loot.journey remains the one mutable person-career record;
@@ -20,13 +22,17 @@
      - an Ironman campaign defeat is classified before any write and terminates
        without delegation, recovery, reward, undo, save, or upgrade.
 
-   No combat input, aggregate-casualty inference, relationship mutation,
-   political gate, franchise store, or save-version change lives here. Slice C
-   contributes only through the existing commandLeadership clamp.
+   No combat input, aggregate-casualty inference, political gate, franchise
+   store, or save-version change lives here. Slice C contributes only through
+   the existing commandLeadership clamp; Slice D only records and reports an
+   exact-id high-command response under Your Timeline.
    =========================================================================== */
 
 var _WC_EVENT_MAX = 96;
 var _WC_HANDOFF_MAX = 5;
+var _WC_REL_EDGE_MAX = 24;
+var _WC_REL_HISTORY_MAX = 4;
+var _WC_REL_TARGET_NAMESPACE = "command-general-v1";
 var _wcRunSeq = 0;
 var _wcLastTerminalSnapshot = null;
 var _wcTerminalRenderKey = "";
@@ -1285,6 +1291,194 @@ function _wcRegistryPersonUnique(C, pid) {
   for (var i = 0; i < people.length; i++) if (people[i] && people[i].pid === pid) { found = people[i]; n++; }
   return n === 1 ? found : null;
 }
+
+/* D407 relationship memory. The command system supplies one exact result
+   target before this module observes the result. Its reputation and every
+   other command field remain separate NPC state. */
+function _wcRelationshipRegistryTarget(C, targetId, actorPersonId) {
+  targetId = _wcSafeId(targetId, 180);
+  actorPersonId = _wcSafeId(actorPersonId, 180);
+  if (!C || !targetId || !actorPersonId || targetId === actorPersonId) return null;
+  var p = _wcRegistryPersonUnique(C, targetId);
+  if (!p || p.pid !== targetId || p.side !== C.side || p.role !== "army commander") return null;
+  return p;
+}
+function _wcRelationshipCommandTarget(C, J) {
+  var commandState = C && C.president && C.president.command;
+  var targetId = _wcSafeId(commandState && commandState._activeId, 180);
+  if (!targetId || !J || J.personId === targetId ||
+      typeof cmdActiveId !== "function" || cmdActiveId(C) !== targetId ||
+      typeof cmdActiveGeneral !== "function") return null;
+  var general = cmdActiveGeneral(C);
+  if (!general || general.id !== targetId) return null;
+  return _wcRelationshipRegistryTarget(C, targetId, J.personId);
+}
+function _wcRelationshipEventLaw(outcome, type) {
+  outcome = String(outcome || "");
+  type = _wcText(type || "", 32);
+  if (outcome === "victory" && type === "decisive") return { code:"high-command-decisive-victory", delta:2 };
+  if (outcome === "victory") return { code:"high-command-victory", delta:1 };
+  if (outcome === "draw") return { code:"high-command-draw", delta:0 };
+  if (outcome === "defeat" && type === "decisive") return { code:"high-command-decisive-defeat", delta:-2 };
+  if (outcome === "defeat") return { code:"high-command-defeat", delta:-1 };
+  return null;
+}
+function _wcRelationshipTransitionId(C, owner, targetId, eventCode) {
+  if (!C || !owner) return "";
+  var runId = _wcSafeId(C.runId, 96), creditKey = _wcSafeId(owner.creditKey, 220);
+  var eventId = _wcSafeId(owner.eventId, 180), actorPersonId = _wcSafeId(owner.personId, 180);
+  targetId = _wcSafeId(targetId, 180); eventCode = _wcSafeId(eventCode, 80);
+  if (!runId || !creditKey || !eventId || !actorPersonId || !targetId || !eventCode) return "";
+  return "wcrs-" + _wcHash([runId, creditKey, eventId, actorPersonId,
+    _WC_REL_TARGET_NAMESPACE, targetId, eventCode].join("|")).toString(36);
+}
+function _wcRelationshipSignalForTarget(C, J, event, targetId) {
+  if (!C || !J || !event || event.qualifying !== true || event.fate !== "alive" ||
+      event.status !== "alive" || event.personId !== J.personId) return null;
+  var target = _wcRelationshipRegistryTarget(C, targetId, event.personId);
+  var law = _wcRelationshipEventLaw(event.outcome, event.type);
+  if (!target || !law) return null;
+  var transitionId = _wcRelationshipTransitionId(C, event, target.pid, law.code);
+  if (!transitionId) return null;
+  var origin = "emergent-timeline"; // WAR_CAREER_RELATIONSHIP_PROVENANCE_BIND:EMERGENT_ONLY
+  return {
+    schema:"cw_war_career_relationship_signal_v1", transitionId:transitionId,
+    actorPersonId:event.personId, targetId:target.pid, targetNamespace:_WC_REL_TARGET_NAMESPACE,
+    eventCode:law.code, rapportDelta:law.delta, origin:origin,
+    timelineLabel:"Your Timeline", sourceRefs:[]
+  };
+}
+function warCareerRelationshipSignal(C, J, event) {
+  var target = _wcRelationshipCommandTarget(C, J);
+  return target ? _wcRelationshipSignalForTarget(C, J, event, target.pid) : null;
+}
+function warCareerRelationshipSignalClean(row, C, owner) {
+  if (!_wcPlain(row) || !C || !owner || owner.qualifying !== true || owner.fate !== "alive") return null;
+  var actorPersonId = _wcSafeId(row.actorPersonId, 180), targetId = _wcSafeId(row.targetId, 180);
+  var eventCode = _wcSafeId(row.eventCode, 80), transitionId = _wcSafeId(row.transitionId, 180);
+  var law = _wcRelationshipEventLaw(owner.outcome, owner.type);
+  if (row.schema !== "cw_war_career_relationship_signal_v1" ||
+      row.targetNamespace !== _WC_REL_TARGET_NAMESPACE || actorPersonId !== owner.personId ||
+      !law || eventCode !== law.code || typeof row.rapportDelta !== "number" ||
+      !isFinite(row.rapportDelta) || row.rapportDelta !== law.delta ||
+      !_wcRelationshipRegistryTarget(C, targetId, actorPersonId) ||
+      transitionId !== _wcRelationshipTransitionId(C, owner, targetId, eventCode)) return null;
+  // No immutable authored relationship packet ships in D407. Unsupported
+  // historical labels or saved sources are stripped; the exact result remains
+  // only an emergent Your Timeline transition.
+  return {
+    schema:"cw_war_career_relationship_signal_v1", transitionId:transitionId,
+    actorPersonId:actorPersonId, targetId:targetId, targetNamespace:_WC_REL_TARGET_NAMESPACE,
+    eventCode:eventCode, rapportDelta:law.delta, origin:"emergent-timeline",
+    timelineLabel:"Your Timeline", sourceRefs:[]
+  };
+}
+function _wcLex(a, b) {
+  a = String(a); b = String(b);
+  return a < b ? -1 : (a > b ? 1 : 0);
+}
+function _wcRelationshipReduce(transitions, J) {
+  transitions = Array.isArray(transitions) ? transitions.slice() : [];
+  var lineageActors = Object.create(null), i;
+  for (i = 0; i < (J && J.lineage || []).length; i++) if (J.lineage[i] && J.lineage[i].personId) {
+    lineageActors[J.lineage[i].personId] = true;
+  }
+  transitions.sort(function (a, b) {
+    return a.ordinal - b.ordinal || _wcLex(a.signal.transitionId, b.signal.transitionId);
+  });
+  var buckets = Object.create(null);
+  for (i = 0; i < transitions.length; i++) {
+    var transition = transitions[i], s = transition.signal;
+    if (!s || s.targetNamespace !== _WC_REL_TARGET_NAMESPACE) continue;
+    var key = _WC_REL_TARGET_NAMESPACE + "|" + s.targetId;
+    var bucket = buckets[key];
+    if (!bucket) bucket = buckets[key] = { key:key, targetId:s.targetId, personal:0, remembered:0, rows:[], lastOrdinal:0 };
+    if (s.actorPersonId === J.personId) bucket.personal += Number(s.rapportDelta) || 0;
+    else if (lineageActors[s.actorPersonId]) bucket.remembered += Number(s.rapportDelta) || 0; // WAR_CAREER_RELATIONSHIP_HANDOFF_BIND:REMEMBERED_ONLY
+    else continue;
+    bucket.rows.push({ transitionId:s.transitionId, eventId:transition.eventId,
+      creditKey:transition.creditKey, actorPersonId:s.actorPersonId,
+      eventCode:s.eventCode, rapportDelta:s.rapportDelta });
+    bucket.lastOrdinal = transition.ordinal;
+  }
+  var ranked = [];
+  for (var bucketKey in buckets) if (_wcOwn(buckets, bucketKey) && buckets[bucketKey].rows.length) ranked.push(buckets[bucketKey]);
+  ranked.sort(function (a, b) { return b.lastOrdinal - a.lastOrdinal || _wcLex(a.key, b.key); });
+  if (ranked.length > _WC_REL_EDGE_MAX) ranked = ranked.slice(0, _WC_REL_EDGE_MAX);
+  ranked.sort(function (a, b) { return _wcLex(a.key, b.key); });
+
+  var out = {};
+  for (i = 0; i < ranked.length; i++) {
+    var b = ranked[i], last = b.rows[b.rows.length - 1];
+    out[b.key] = {
+      schema:"cw_war_career_relationship_edge_v1", targetId:b.targetId,
+      targetNamespace:_WC_REL_TARGET_NAMESPACE,
+      rapport:Math.max(-8, Math.min(8, Math.round(b.personal))),
+      rememberedRapport:Math.max(-8, Math.min(8, Math.round(b.remembered))),
+      lastEventId:last.eventId, lastCreditKey:last.creditKey,
+      eventHistory:b.rows.slice(Math.max(0, b.rows.length - _WC_REL_HISTORY_MAX)),
+      origin:"emergent-timeline", timelineLabel:"Your Timeline", sourceRefs:[]
+    };
+  }
+  J.relationships = out;
+  return out;
+}
+function warCareerRebuildRelationships(C, J) {
+  var events = J && Array.isArray(J.events) ? J.events : [];
+  var credits = J && Array.isArray(J.creditLedger) ? J.creditLedger : [];
+  var byEvent = Object.create(null), eventCounts = Object.create(null);
+  var creditCounts = Object.create(null), allowedActors = Object.create(null), i;
+  if (!J) return {};
+  if (!J.personId) {
+    for (i = 0; i < events.length; i++) if (events[i] && events[i].relationshipSignal) delete events[i].relationshipSignal;
+    for (i = 0; i < credits.length; i++) if (credits[i] && credits[i].relationshipSignal) delete credits[i].relationshipSignal;
+    J.relationships = {};
+    return J.relationships;
+  }
+  allowedActors[J.personId] = true;
+  for (i = 0; i < (J.lineage || []).length; i++) if (J.lineage[i] && J.lineage[i].personId) {
+    allowedActors[J.lineage[i].personId] = true;
+  }
+  for (i = 0; i < events.length; i++) if (events[i] && typeof events[i].eventId === "string" && events[i].eventId) {
+    var indexedEventId = events[i].eventId;
+    eventCounts[indexedEventId] = (eventCounts[indexedEventId] || 0) + 1;
+    byEvent[indexedEventId] = eventCounts[indexedEventId] === 1 ? events[i] : null;
+  }
+  for (i = 0; i < credits.length; i++) if (credits[i] && typeof credits[i].creditKey === "string" && credits[i].creditKey) {
+    creditCounts[credits[i].creditKey] = (creditCounts[credits[i].creditKey] || 0) + 1;
+  }
+
+  var transitions = [], seenCopies = Object.create(null);
+  var validEventRows = [], validCreditRows = [];
+  for (var ci = 0; ci < credits.length; ci++) {
+    var credit = credits[ci], event = credit && byEvent[credit.eventId];
+    var rawEventSignal = event && event.relationshipSignal, rawCreditSignal = credit && credit.relationshipSignal;
+    var eventSignal = rawEventSignal ? warCareerRelationshipSignalClean(rawEventSignal, C, event) : null;
+    var creditSignal = rawCreditSignal ? warCareerRelationshipSignalClean(rawCreditSignal, C, credit) : null;
+    if (!credit || !event || eventCounts[credit.eventId] !== 1 || creditCounts[credit.creditKey] !== 1 ||
+        credit.qualifying !== true || event.qualifying !== true ||
+        credit.fate !== "alive" || event.fate !== "alive" || event.status !== "alive" ||
+        credit.creditKey !== event.creditKey || credit.personId !== event.personId ||
+        credit.outcome !== event.outcome || credit.type !== event.type ||
+        allowedActors[credit.personId] !== true || !eventSignal || !creditSignal ||
+        JSON.stringify(eventSignal) !== JSON.stringify(creditSignal)) continue;
+    event.relationshipSignal = eventSignal;
+    credit.relationshipSignal = creditSignal;
+    validEventRows.push(event); validCreditRows.push(credit);
+    var copies = [eventSignal, creditSignal];
+    for (var copyIndex = 0; copyIndex < copies.length; copyIndex++) {
+      var signal = copies[copyIndex], dedupeKey = signal.transitionId;
+      if (seenCopies[dedupeKey] === true) continue; // WAR_CAREER_RELATIONSHIP_DEDUPE_BIND:PAIR_ONCE
+      seenCopies[dedupeKey] = true;
+      transitions.push({ ordinal:Number(event.ordinal) || 0, eventId:event.eventId,
+        creditKey:credit.creditKey, signal:signal });
+    }
+  }
+  for (i = 0; i < events.length; i++) if (events[i] && events[i].relationshipSignal && validEventRows.indexOf(events[i]) < 0) delete events[i].relationshipSignal;
+  for (i = 0; i < credits.length; i++) if (credits[i] && credits[i].relationshipSignal && validCreditRows.indexOf(credits[i]) < 0) delete credits[i].relationshipSignal;
+
+  return _wcRelationshipReduce(transitions, J);
+}
 function warCareerAcceptHandoff(C, pid) {
   var J = warCareerInit(C), safePid = _wcSafeId(pid, 180);
   if (!J || !J.enabled || J.careerVersion !== 1 || !J.handoff || J.handoff.state !== "pending") return { ok:false, reason:"no-pending-handoff" };
@@ -1375,6 +1569,9 @@ function warCareerObserveResolve(winnerSide, type, B, C, win) {
   };
   if (preflight.qualifying) event.participation = preflight.participation;
   if (recoveredCapture) event.recoveryOfCreditKey = capturedCredit.creditKey;
+  var relationshipSignal = preflight.qualifying && fate === "alive"
+    ? warCareerRelationshipSignal(C, J, event) : null; // WAR_CAREER_RELATIONSHIP_TRANSITION_BIND:SOLE_CALL
+  if (relationshipSignal) event.relationshipSignal = relationshipSignal;
   _wcPushEvent(J, event);
 
   if (!Array.isArray(J.creditLedger)) J.creditLedger = [];
@@ -1411,6 +1608,10 @@ function warCareerObserveResolve(winnerSide, type, B, C, win) {
       credit.outcomeRank = rank; credit.eventId = event.eventId;
     }
     credit.merit = 0; credit.reputation = 0; credit.eventDate = null;
+  }
+  if (credit && credit.eventId === event.eventId) {
+    if (relationshipSignal) credit.relationshipSignal = JSON.parse(JSON.stringify(relationshipSignal));
+    else delete credit.relationshipSignal;
   }
   if (recoveredCapture) {
     capturedCredit.recoveredAtCreditKey = key;
@@ -1603,8 +1804,42 @@ function warCareerSummaryHTML(C) {
     + warCareerHandoffHTML(C)
     + '</section>';
 }
+function _wcRelationshipSigned(value) {
+  var n = Math.max(-8, Math.min(8, Math.round(Number(value) || 0)));
+  return n > 0 ? "+" + n : String(n);
+}
+function _wcRelationshipEventLabel(code) {
+  var labels = {
+    "high-command-decisive-victory":"decisive-victory response",
+    "high-command-victory":"victory response",
+    "high-command-draw":"draw response",
+    "high-command-defeat":"defeat response",
+    "high-command-decisive-defeat":"decisive-defeat response"
+  };
+  return labels[code] || "recorded response";
+}
+function _wcRelationshipReportHTML(C, J) {
+  var map = J && _wcPlain(J.relationships) ? J.relationships : {}, keys = Object.keys(map).sort();
+  var rows = "";
+  for (var i = 0; i < keys.length; i++) {
+    var edge = map[keys[i]], target = edge && _wcRegistryPersonUnique(C, edge.targetId);
+    if (!edge || edge.schema !== "cw_war_career_relationship_edge_v1" || !target) continue;
+    var history = Array.isArray(edge.eventHistory) ? edge.eventHistory : [];
+    var newest = history.length ? history[history.length - 1] : null;
+    rows += '<li style="margin:4px 0"><b>' + _wcEsc(target.name || edge.targetId) + '</b> — '
+      + 'Personal rapport ' + _wcEsc(_wcRelationshipSigned(edge.rapport)) + '; '
+      + 'Remembered network ' + _wcEsc(_wcRelationshipSigned(edge.rememberedRapport)) + '. '
+      + 'Newest: ' + _wcEsc(_wcRelationshipEventLabel(newest && newest.eventCode)) + '.</li>';
+  }
+  return '<section data-war-career-relationships="1" aria-labelledby="wcRelationshipsHead" style="margin-top:8px;padding-top:7px;border-top:1px solid var(--rule);overflow-wrap:anywhere">'
+    + '<h4 id="wcRelationshipsHead" style="font-size:11.5px;margin:0 0 4px">Relationship memory — Your Timeline</h4>'
+    + '<p style="font-size:10.5px;line-height:1.45;margin:0;opacity:.82">These are emergent high-command responses in this playthrough, not documented historical friendships.</p>'
+    + (rows ? '<ul style="font-size:11px;line-height:1.45;margin:5px 0 0;padding-left:18px">' + rows + '</ul>'
+      : '<p style="font-size:11px;line-height:1.45;margin:5px 0 0">No qualifying high-command relationship memory has been recorded.</p>')
+    + '</section>';
+}
 function warCareerReportHTML(C, opts) {
-  var J = warCareerInit(C);
+  var J = C && C.loot && C.loot.journey;
   if (!J || !J.enabled || J.careerVersion !== 1 || !J.person) return "";
   var role = warCareerRole(C), events = Array.isArray(J.events) ? J.events : [], credits = Array.isArray(J.creditLedger) ? J.creditLedger : [], qualifying = 0;
   for (var qi = 0; qi < credits.length; qi++) if (credits[qi] && credits[qi].qualifying) qualifying++;
@@ -1618,7 +1853,7 @@ function warCareerReportHTML(C, opts) {
     + '<li>Your Timeline totals: merit ' + _wcEsc(J.merit || 0) + '; reputation ' + _wcEsc(J.reputation || 0) + '; promotions ' + _wcEsc(J.promotionCount || 0) + '. Unproved or excluded-life entries score zero.</li>'
     + '<li>Nonqualifying observations grant no merit, no reputation, no promotion, no billet, and no command authority.</li>'
     + '<li>Personal fate: ' + _wcEsc(typeof _ssStatus === "function" ? _ssStatus(J.status) : "alive") + '; lineage hand-offs ' + _wcEsc((J.lineage || []).length) + '.</li>'
-    + '</ul>' + warCareerHandoffHTML(C) + '</section>';
+    + '</ul>' + _wcRelationshipReportHTML(C, J) + warCareerHandoffHTML(C) + '</section>';
 }
 
 function warCareerIsTerminalLoss(C, B, winnerSide) {

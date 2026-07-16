@@ -8,6 +8,44 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D407 WAR-CAREER SLICE D — bounded high-command relationship memory shipped — 2026-07-16 (D407)
+- Continued from clean pushed D406 `2ab95ba3459d77a655f1db35dc6e14dec5d06189` through the
+  ledger-only LANE-005 take `d9f765ec25c47cbc6577743fe895e13013c31522`. The implementation
+  stayed inside 106/37, the focused War Career probe, the 19-row plan transition, generated output,
+  and canonical docs. Command runtime/probe, T2/T3/Auto, After Action composition, data, manifest,
+  suite manifest, frozen base, save version, combat, and politics did not move.
+- One qualifying current-person alive result produces matching event/credit
+  `cw_war_career_relationship_signal_v1` copies against the exact active same-side Army Register
+  `army commander`. Sanitation dedupes the pair and rebuilds `cw_war_career_relationship_edge_v1`
+  under `command-general-v1|<targetId>`; saved maps and scalars are never authority. Personal and
+  remembered rapport independently clamp to `-8..8`; 24 edges and four newest history rows bound
+  save growth. D407 emits only `emergent-timeline`, `Your Timeline`, and empty sources.
+- COMRADE HAND-OFF leaves successor Personal rapport at zero and classifies exact predecessor
+  lineage only as Remembered network. The AAR renders exact target, signed personal/remembered
+  values, newest code, and timeline label with semantic text at 200% zoom. Relationship state has
+  no combat, winner, score, AI, reinforcement, OVR, source, command-projection, politics, resource,
+  or balance effect.
+- Four source-only binds matched their declared scopes. A removed the sole producer and reddened
+  only row 1. B disabled event/credit pair dedupe and reddened only row 1. C changed the producer to
+  unsupported historical authorship and reddened only row 2. D moved predecessor memory into
+  successor-personal rapport and reddened only row 4. Each inverse restored exact source/generated
+  MD5s before rebuilt War Career and Command green reruns.
+- Final focused/adjacent proof: War Career **42/42 browser + 29/29 static**, Command **94/94**, plan
+  **19/19**, loot 12, save 16, full campaign 4, campaign link 19, After Action 15, H0 three
+  viewports, playstyle 14, Auto 10, officers 20, ratings 22, and Classic paint; all processes exited
+  0 and all enforced error/pageerror/realError/failure arrays were empty. Classic's non-enforced
+  sample retained only the two standing optional-resource 404s with `ok:true` / `nonBlank:346`.
+  All thirteen relay-sensitive plan probes total 155/155.
+- Final MD5s: source tree `13544d1904aaa1ff3ade0c6deaa2f2d5`; 106
+  `adc2dd9583c85cde86bbfb142cb6d666`; 37 `d9bc846734683c4ebcb00babbcc161ab`; focused probe
+  `23e67503bed073d46f9f31ff3b715012`; Command `8f12c49f7129b3a9be0203677822e048`;
+  Command probe `5ffd40fd221179f2e01cad59ef43bf7d`; HTML
+  `502aee3fc5867b970225a59c06cd6102`; frozen base `c9db83fa99230ffb95bdfdfe059f3fb9`.
+  Baselines remain 24/54/1512/24/130, sweep 24, War Career row 38, and `_SAVE_VER=1`. D398 remains
+  the latest full release battery; `npm run vet:noreg` was not run. LANE-005 returns to
+  CONTRACT/unowned. Exact next is a separate Slice-E late-war political-pull take; Slice E was not
+  started in D407.
+
 ## D406 WAR-CAREER SLICE C — ledger advancement, billets, and bounded command projection shipped — 2026-07-15 (D406)
 - Continued from pre-take D405 boundary `22180f80a04482ef742c5949f0d7f8d4a3be45d1` and the pushed
   LANE-005 take `60430009308eb885a5b5f07c0f6abb1af59cfb6c`. The implementation stayed inside

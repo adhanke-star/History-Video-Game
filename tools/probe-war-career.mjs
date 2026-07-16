@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import "./guard-probe-browser.mjs";
-// D406 field/general command gate: every D401/D405 receipt row and wall remains,
-// plus ledger-derived advancement, billet, hand-off, and pull-only authority.
+// D407 relationship-memory gate: every D401-D406 receipt, advancement, billet,
+// hand-off, and pull-only authority row remains, plus bounded source-honest ties.
 
 import { chromium } from "playwright-core";
 import { spawn, execFileSync } from "node:child_process";
@@ -83,7 +83,16 @@ function staticPreflight() {
   check("frozen base hash", md5(join(ROOT, "build", "base.html")) === "c9db83fa99230ffb95bdfdfe059f3fb9", md5(join(ROOT, "build", "base.html")));
   check("dual-reference schemas registered", runtime.includes("cw_war_career_result_v2") && runtime.includes("cw_war_career_participation_v2") && runtime.includes("_WC_TIMELINE_ASSIGNMENTS_V1"), null);
   check("replacement source year owns canonical history", journey.includes("if (r.year != null) p.serviceYear = r.year;"), null);
-  check("player career never owns NPC command state", !/(?:\bP\.command\b|\bC\.president\.command\b)/.test(runtime), null);
+  const commandTargetSelector = (runtime.match(/function _wcRelationshipCommandTarget[\s\S]*?\n\}/) || [""])[0];
+  check("player career never owns NPC command state",
+    !/\bP\.command\b/.test(runtime) && occurrences(runtime, "C.president.command") === 1 &&
+    occurrences(commandTargetSelector, "commandState.") === 1 &&
+    occurrences(commandTargetSelector, "cmdActiveId(C)") === 1 && occurrences(commandTargetSelector, "cmdActiveGeneral(C)") === 1 &&
+    commandTargetSelector.includes("commandState._activeId") && commandTargetSelector.includes("general.id !== targetId") &&
+    !/commandState\s*\[/.test(commandTargetSelector) &&
+    !/(?:delete\s+commandState\b|commandState\s*(?:\.|\[)[^;\n]*(?:\+\+|--|(?:[+\-*/%&|^]|<<|>>)?=(?!=))|Object\.(?:assign|defineProperty)\s*\(\s*commandState)/.test(commandTargetSelector) &&
+    !/(?:commandState|C\.president\.command)\s*\.[A-Za-z_$][\w$]*\s*=(?!=)/.test(runtime),
+    { commandReads: occurrences(runtime, "C.president.command"), targetOnly: !!commandTargetSelector });
   check("after-action file frozen", md5(join(ROOT, "src", "82-after-action.js")) === "e2a4739946b20b1a725a08d55b4825f6", md5(join(ROOT, "src", "82-after-action.js")));
   check("Auto file frozen", md5(join(ROOT, "src", "87-auto-resolve.js")) === "4f0bd0970ef96c09b62ea44694387f80", md5(join(ROOT, "src", "87-auto-resolve.js")));
   check("T2 file frozen", md5(join(ROOT, "src", "tactical", "T2-campaign-link.js")) === "feef8a3c1ecf5fb28a120d2398ee61fc", md5(join(ROOT, "src", "tactical", "T2-campaign-link.js")));
@@ -365,6 +374,7 @@ const SETUP = `(() => {
       { index:16, scenarioId:'chickamauga', assignmentId:'wcta-9be2qw' }
     ];
     var limit = options.fallenAt == null ? rungs.length : Number(options.fallenAt) + 1;
+    if (options.limit != null) limit = Math.max(0, Math.min(limit, Math.round(Number(options.limit) || 0)));
     var stages = [];
     for (var i = 0; i < limit; i++) {
       C.idx = rungs[i].index;
@@ -381,11 +391,50 @@ const SETUP = `(() => {
         rung:rungs[i], B:clone(B), proof:clone(proof), preflight:clone(preflight), resolved:clone(resolved),
         rank:J.person.rank, merit:J.merit, reputation:J.reputation, promotionCount:J.promotionCount,
         role:clone(warCareerRole(C)), caps:clone(warCareerCapabilities(C)), projection:warCareerCommandProjection(C),
-        history:clone(J.roleHistory), billet:clone(J.currentBillet), credit:clone(credit), ovr:J.person.ovr
+        history:clone(J.roleHistory), billet:clone(J.currentBillet), credit:clone(credit), ovr:J.person.ovr,
+        commandTarget:C.president && C.president.command && C.president.command._activeId || null
       });
     }
     return { C:C, pid:pid, canonical:canonical, sourceBefore:sourceBefore, sourceOvr:sourceOvr,
       initial:initial, rungs:rungs.slice(0, limit), stages:stages };
+  }
+  function d407Pair(J, result) {
+    var event = null, credit = null;
+    for (var i = 0; i < (J.events || []).length; i++) if (J.events[i] && J.events[i].eventId === result.eventId) event = J.events[i];
+    for (var ci = 0; ci < (J.creditLedger || []).length; ci++) if (J.creditLedger[ci] && J.creditLedger[ci].creditKey === result.creditKey) credit = J.creditLedger[ci];
+    if (!event || !credit || credit.eventId !== event.eventId) throw new Error('D407 exact event/credit pair missing');
+    return { event:event, credit:credit };
+  }
+  function d407StripSignals(J) {
+    (J.events || []).forEach(function(row) { if (row) delete row.relationshipSignal; });
+    (J.creditLedger || []).forEach(function(row) { if (row) delete row.relationshipSignal; });
+    J.relationships = {};
+  }
+  function d407SeedSignal(C, J, event, credit, targetId) {
+    var signal = _wcRelationshipSignalForTarget(C, J, event, targetId);
+    if (!signal) throw new Error('D407 literal signal could not be built for ' + targetId);
+    event.relationshipSignal = clone(signal);
+    credit.relationshipSignal = clone(signal);
+    return signal;
+  }
+  function d407LiveCase(winnerSide, type, label) {
+    var pid = 'ss:chancellorsville:US:us_battery_chanc:cmd';
+    for (var attempt = 0; attempt < 96; attempt++) {
+      var C = mkC('US', false); C.idx = 12; C.runId = 'run-d407-' + label + '-' + attempt;
+      if (!warCareerStart(C, pid).ok) throw new Error('D407 exact Captain start failed');
+      var B = mkB(C, true);
+      B.warCareerEvidence = warCareerBuildClassicEvidence(C, B);
+      if (!B.warCareerEvidence) throw new Error('D407 classic evidence missing');
+      var proof = warCareerParticipationEvidence(C, B), preflight = warCareerPreflightFate(C, B, winnerSide, type);
+      if (!proof.qualifying || !preflight.qualifying) throw new Error('D407 qualifying preflight missing');
+      if (preflight.fate !== 'alive') continue;
+      var resolved = resolveResult(C, B, winnerSide, type), J = C.loot.journey;
+      if (!resolved || !resolved.qualifying || resolved.fate !== 'alive') throw new Error('D407 qualifying result did not commit');
+      var pair = d407Pair(J, resolved);
+      return { C:C, B:B, J:J, resolved:resolved, pair:pair,
+        commandTarget:C.president && C.president.command && C.president.command._activeId || null };
+    }
+    throw new Error('D407 could not find deterministic alive fixture for ' + label);
   }
   function stubResultUi(fn) {
     var oldUpgrade = window.openUpgrade, oldLaunch = window.launchCampaignBattle, oldWon = window.warWonScreen;
@@ -415,6 +464,7 @@ const SETUP = `(() => {
         'warCareerBuildClassicEvidence', 'warCareerLinkField', 'warCareerLinkRealtimeOfficerRoster', 'warCareerBuildFieldEvidence',
         'warCareerComradeCandidates', 'warCareerAcceptHandoff', 'warCareerHandoffHTML',
         'warCareerCreditAward', 'warCareerDeriveAdvancement',
+        'warCareerRelationshipSignal', 'warCareerRelationshipSignalClean', 'warCareerRebuildRelationships',
         'warCareerRole', 'warCareerCapabilities', 'warCareerStrategicGeneral', 'warCareerCommandProjection',
         'warCareerIsTerminalLoss', 'warCareerTerminalPersist', 'warCareerReportHTML',
         'warCareerInstallDispatcher'
@@ -1611,14 +1661,14 @@ const SETUP = `(() => {
       var fixture = haleyTimelineFixture({ fate:'alive', outcome:'victory', type:'win' }), C = fixture.C, B = fixture.B, J = C.loot.journey;
       var coreBefore = fixture.combatBefore, rankBefore = J.person.rank;
       var closedBefore = bytes({ promotionCount:J.promotionCount,
-        roleHistory:J.roleHistory, relationships:J.relationships, currentBillet:J.currentBillet,
+        roleHistory:J.roleHistory, currentBillet:J.currentBillet,
         role:warCareerRole(C), capabilities:warCareerCapabilities(C), projection:warCareerCommandProjection(C) });
       var proof = warCareerParticipationEvidence(C, B), preflight = warCareerPreflightFate(C, B, 'US', 'win');
       var resolved = resolveResult(C, B, 'US', 'win'); J = C.loot.journey;
       var coreAfter = bytes({ bd:B.bd, casualties:B.casualties, infl:B.infl, units:B.units });
       var caps = warCareerCapabilities(C);
       var closedAfter = bytes({ promotionCount:J.promotionCount,
-        roleHistory:J.roleHistory, relationships:J.relationships, currentBillet:J.currentBillet,
+        roleHistory:J.roleHistory, currentBillet:J.currentBillet,
         role:warCareerRole(C), capabilities:caps, projection:warCareerCommandProjection(C) });
       var careerRow = J.career && J.career[J.career.length - 1];
       if (!proof.qualifying || !preflight.qualifying || !resolved || !resolved.qualifying || coreAfter !== coreBefore) throw new Error('v2 consequence changed combat inputs or failed to commit');
@@ -1626,7 +1676,7 @@ const SETUP = `(() => {
           resolved.merit !== 3 || resolved.reputation !== 2 || !careerRow || careerRow.promoted || careerRow.rankBefore !== careerRow.rankAfter) throw new Error('v2 consequence award or closed rank/billet authority moved');
       if (B.units.some(function(unit) { return own(unit, 'warCareerAssignment'); }) || C.loot.journey.promotionCount ||
           warCareerCommandProjection(C) !== 0 || caps.localOrders || caps.fieldCommand || caps.nationalDecisions || caps.cabinetMutation || caps.appointmentMutation || caps.resourceMutation) throw new Error('v2 receipt opened command, reward, politics, or combat authority');
-      return { qualifying:true, resultCommitted:true, combatBytes:true, commandProjection:0, merit:3, reputation:2, promotionCount:0, roleHistory:J.roleHistory.length, relationships:0, billet:J.currentBillet && J.currentBillet.billetCode, fieldCommand:false };
+      return { qualifying:true, resultCommitted:true, combatBytes:true, commandProjection:0, merit:3, reputation:2, promotionCount:0, roleHistory:J.roleHistory.length, relationships:Object.keys(J.relationships || {}).length, billet:J.currentBillet && J.currentBillet.billetCode, fieldCommand:false };
     });
 
     step('D406 LEDGER-DERIVED ADVANCEMENT', function() {
@@ -1758,6 +1808,228 @@ const SETUP = `(() => {
         sharedEvents:eventCount, personalTotalsReset:true, oneStartBillet:true, commandOwnerIsolated:true, saveRoundtrip:true, retryNoStack:true };
     });
 
+    step('D407 RELATIONSHIP TRANSITIONS + ONE-CREDIT', function() {
+      var laws = [
+        { outcome:'victory', type:'decisive', code:'high-command-decisive-victory', delta:2 },
+        { outcome:'victory', type:'win', code:'high-command-victory', delta:1 },
+        { outcome:'draw', type:'draw', code:'high-command-draw', delta:0 },
+        { outcome:'defeat', type:'win', code:'high-command-defeat', delta:-1 },
+        { outcome:'defeat', type:'decisive', code:'high-command-decisive-defeat', delta:-2 }
+      ];
+      laws.forEach(function(expected) {
+        var actual = _wcRelationshipEventLaw(expected.outcome, expected.type);
+        if (!actual || actual.code !== expected.code || actual.delta !== expected.delta) throw new Error('D407 event-code law moved: ' + bytes({ expected:expected, actual:actual }));
+      });
+      var fixture = d407LiveCase('US', 'decisive', 'one-credit'), C = fixture.C, J = fixture.J;
+      var pair = fixture.pair, signal = pair.event.relationshipSignal, targetId = fixture.commandTarget;
+      if (!targetId || !signal || bytes(signal) !== bytes(pair.credit.relationshipSignal) ||
+          signal.actorPersonId !== J.personId || signal.targetId !== targetId ||
+          signal.targetNamespace !== 'command-general-v1' || signal.eventCode !== laws[0].code || signal.rapportDelta !== 2) {
+        throw new Error('production result did not create one exact matching relationship signal: ' + bytes({ targetId:targetId, signal:signal }));
+      }
+      var target = _wcRegistryPersonUnique(C, targetId), edgeKey = 'command-general-v1|' + targetId, edge = J.relationships[edgeKey];
+      var signalKeys = ['schema','transitionId','actorPersonId','targetId','targetNamespace','eventCode','rapportDelta','origin','timelineLabel','sourceRefs'];
+      var edgeKeys = ['schema','targetId','targetNamespace','rapport','rememberedRapport','lastEventId','lastCreditKey','eventHistory','origin','timelineLabel','sourceRefs'];
+      var historyKeys = ['transitionId','eventId','creditKey','actorPersonId','eventCode','rapportDelta'];
+      if (!target || target.role !== 'army commander' || target.side !== C.side || Object.keys(J.relationships).length !== 1 || !edge ||
+          bytes(Object.keys(signal)) !== bytes(signalKeys) || bytes(Object.keys(edge)) !== bytes(edgeKeys) ||
+          edge.rapport !== 2 || edge.rememberedRapport !== 0 || edge.eventHistory.length !== 1 ||
+          bytes(Object.keys(edge.eventHistory[0])) !== bytes(historyKeys) || edge.lastEventId !== pair.event.eventId ||
+          edge.lastCreditKey !== pair.credit.creditKey || J.creditLedger.length !== 1) {
+        throw new Error('D407 edge shape/one-credit arithmetic moved: ' + bytes({ edge:edge, credits:J.creditLedger.length }));
+      }
+      var authorityRejected = [], commandOwnerBytes = bytes(C.president && C.president.command || null);
+      function rejectedAuthority(label, invoke) {
+        var value = invoke();
+        if (value || bytes(C.president && C.president.command || null) !== commandOwnerBytes) throw new Error(label + ' command-target authority leaked');
+        authorityRejected.push(label);
+      }
+      var realActiveId = window.cmdActiveId;
+      try {
+        window.cmdActiveId = function() { return targetId + '-mismatch'; };
+        rejectedAuthority('active-id-mismatch', function() { return warCareerRelationshipSignal(C, J, pair.event); });
+      } finally { window.cmdActiveId = realActiveId; }
+      var realActiveGeneral = window.cmdActiveGeneral;
+      try {
+        window.cmdActiveGeneral = function() { return null; };
+        rejectedAuthority('missing-active-general', function() { return warCareerRelationshipSignal(C, J, pair.event); });
+        window.cmdActiveGeneral = function() { return { id:targetId + '-wrong' }; };
+        rejectedAuthority('wrong-active-general', function() { return warCareerRelationshipSignal(C, J, pair.event); });
+      } finally { window.cmdActiveGeneral = realActiveGeneral; }
+      var realRegistry = window.ssPersonRegistry;
+      try {
+        window.ssPersonRegistry = function() {
+          var reg = clone(realRegistry.apply(this, arguments)), duplicate = clone(target);
+          reg.people.push(duplicate); return reg;
+        };
+        rejectedAuthority('duplicate-registry-target', function() { return warCareerRelationshipSignal(C, J, pair.event); });
+        window.ssPersonRegistry = function() {
+          var reg = clone(realRegistry.apply(this, arguments));
+          reg.people.forEach(function(row) { if (row && row.pid === targetId) row.role = 'corps commander'; });
+          return reg;
+        };
+        rejectedAuthority('wrong-role-target', function() { return warCareerRelationshipSignal(C, J, pair.event); });
+      } finally { window.ssPersonRegistry = realRegistry; }
+      var before = bytes({ relationships:J.relationships, eventSignal:pair.event.relationshipSignal, creditSignal:pair.credit.relationshipSignal });
+      C.idx = pair.credit.chainIndex;
+      var retry = resolveResult(C, clone(fixture.B), 'US', 'decisive'); J = C.loot.journey;
+      var retryPair = d407Pair(J, fixture.resolved);
+      var after = bytes({ relationships:J.relationships, eventSignal:retryPair.event.relationshipSignal, creditSignal:retryPair.credit.relationshipSignal });
+      if (!retry.duplicate || before !== after || J.creditLedger.length !== 1) throw new Error('retry duplicated relationship memory');
+      return { targetId:targetId, laws:laws.map(function(row) { return row.code + ':' + row.delta; }), rapport:edge.rapport,
+        history:edge.eventHistory.length, authorityRejected:authorityRejected, retryNoStack:true };
+    });
+
+    step('D407 PROVENANCE + SOURCE HONESTY', function() {
+      var fixture = d407LiveCase('US', 'decisive', 'provenance'), C = fixture.C, J = fixture.J, pair = fixture.pair;
+      var raw = _wcRelationshipSignalForTarget(C, J, pair.event, fixture.commandTarget);
+      if (!raw || raw.origin !== 'emergent-timeline' || raw.timelineLabel !== 'Your Timeline' || !Array.isArray(raw.sourceRefs) || raw.sourceRefs.length) {
+        throw new Error('raw D407 producer is not emergent-only: ' + bytes(raw));
+      }
+      var X = clone(C), XJ = X.loot.journey, XPair = d407Pair(XJ, fixture.resolved), forged = clone(raw);
+      forged.origin = 'historical-authored'; forged.timelineLabel = 'Historical'; forged.sourceRefs = [
+        { title:'Source A', author:'A', repository:'Archive A', locator:'p. 1', url:'https://example.test/a', type:'book', note:'probe' },
+        { title:'Source B', author:'B', repository:'Archive B', locator:'p. 2', url:'https://example.test/b', type:'book', note:'probe' }
+      ];
+      XPair.event.relationshipSignal = clone(forged); XPair.credit.relationshipSignal = clone(forged); XJ.relationships = { forged:{ rapport:99, origin:'historical-authored' } };
+      G.campaign = X; warCareerInit(X); XJ = X.loot.journey; XPair = d407Pair(XJ, fixture.resolved);
+      var edge = XJ.relationships['command-general-v1|' + fixture.commandTarget];
+      if (!edge || edge.origin !== 'emergent-timeline' || edge.timelineLabel !== 'Your Timeline' || edge.sourceRefs.length ||
+          XPair.event.relationshipSignal.origin !== 'emergent-timeline' || XPair.credit.relationshipSignal.origin !== 'emergent-timeline' ||
+          XPair.event.relationshipSignal.sourceRefs.length || XPair.credit.relationshipSignal.sourceRefs.length) {
+        throw new Error('unsupported historical claim was not normalized to emergent memory: ' + bytes({ edge:edge, event:XPair.event.relationshipSignal }));
+      }
+      var rejected = [];
+      [
+        { label:'missing-target', mutate:function(s) { s.targetId = 'missing-command-general'; } },
+        { label:'self-target', mutate:function(s) { s.targetId = s.actorPersonId; } },
+        { label:'string-delta', mutate:function(s) { s.rapportDelta = String(s.rapportDelta); } }
+      ].forEach(function(test) {
+        var Y = clone(C), YJ = Y.loot.journey, YPair = d407Pair(YJ, fixture.resolved), bad = clone(raw);
+        test.mutate(bad);
+        bad.transitionId = _wcRelationshipTransitionId(Y, YPair.event, bad.targetId, bad.eventCode);
+        YPair.event.relationshipSignal = clone(bad); YPair.credit.relationshipSignal = clone(bad); YJ.relationships = {};
+        G.campaign = Y; warCareerInit(Y); YJ = Y.loot.journey;
+        if (Object.keys(YJ.relationships).length || own(d407Pair(YJ, fixture.resolved).event, 'relationshipSignal') || own(d407Pair(YJ, fixture.resolved).credit, 'relationshipSignal')) {
+          throw new Error(test.label + ' relationship signal survived sanitation');
+        }
+        rejected.push(test.label);
+      });
+      var selfRegistry = window.ssPersonRegistry;
+      try {
+        window.ssPersonRegistry = function() {
+          var reg = clone(selfRegistry.apply(this, arguments));
+          reg.people.forEach(function(row) { if (row && row.pid === J.personId) row.role = 'army commander'; });
+          return reg;
+        };
+        if (_wcRelationshipRegistryTarget(C, J.personId, J.personId) !== null) throw new Error('self target survived an otherwise valid army-commander registry row');
+      } finally { window.ssPersonRegistry = selfRegistry; }
+      return { rawOrigin:raw.origin, persistedOrigin:edge.origin, historicalAuthority:false, sources:edge.sourceRefs.length, rejected:rejected };
+    });
+
+    step('D407 SANITATION + BOUNDED DEDUPE', function() {
+      var fixture = d406Fixture({ runId:'run-d406-general-1' }), C = fixture.C, J = C.loot.journey;
+      d407StripSignals(J);
+      var targetId = fixture.stages[0].commandTarget;
+      var directC = clone(C), directJ = directC.loot.journey, directCredit = directJ.creditLedger[0];
+      var directEvent = directJ.events.filter(function(row) { return row.eventId === directCredit.eventId; })[0];
+      var directForged = _wcRelationshipSignalForTarget(directC, directJ, directEvent, targetId);
+      directForged.schema = 'forged-signal'; directForged.rapportDelta = 99;
+      directEvent.relationshipSignal = clone(directForged); directCredit.relationshipSignal = clone(directForged);
+      warCareerRebuildRelationships(directC, directJ);
+      if (Object.keys(directJ.relationships).length || own(directEvent, 'relationshipSignal') || own(directCredit, 'relationshipSignal')) {
+        throw new Error('public rebuild trusted an unclean forged pair');
+      }
+      var mismatchC = clone(C), mismatchJ = mismatchC.loot.journey, mismatchCredit = mismatchJ.creditLedger[0];
+      var mismatchEvent = mismatchJ.events.filter(function(row) { return row.eventId === mismatchCredit.eventId; })[0];
+      var armyTargets = ssPersonRegistry(mismatchC).people.filter(function(row) { return row && row.side === mismatchC.side && row.role === 'army commander' && row.pid !== targetId; });
+      var mismatchEventSignal = _wcRelationshipSignalForTarget(mismatchC, mismatchJ, mismatchEvent, targetId);
+      var mismatchCreditSignal = armyTargets.length ? _wcRelationshipSignalForTarget(mismatchC, mismatchJ, mismatchEvent, armyTargets[0].pid) : null;
+      if (!mismatchEventSignal || !mismatchCreditSignal) throw new Error('independent valid-copy mismatch fixture missing');
+      mismatchEvent.relationshipSignal = mismatchEventSignal; mismatchCredit.relationshipSignal = mismatchCreditSignal;
+      warCareerRebuildRelationships(mismatchC, mismatchJ);
+      if (Object.keys(mismatchJ.relationships).length || own(mismatchEvent, 'relationshipSignal') || own(mismatchCredit, 'relationshipSignal')) {
+        throw new Error('mismatched valid event/credit copies created an edge');
+      }
+      var missingC = clone(C), missingJ = missingC.loot.journey, missingCredit = missingJ.creditLedger[0];
+      var missingEvent = missingJ.events.filter(function(row) { return row.eventId === missingCredit.eventId; })[0];
+      d407SeedSignal(missingC, missingJ, missingEvent, missingCredit, targetId);
+      missingJ.personId = null; missingJ.relationships = { forged:{ rapport:99 } };
+      warCareerRebuildRelationships(missingC, missingJ);
+      if (Object.keys(missingJ.relationships).length || own(missingEvent, 'relationshipSignal') || own(missingCredit, 'relationshipSignal')) {
+        throw new Error('public rebuild retained authority without a current person');
+      }
+      var duplicateC = clone(C), duplicateJ = duplicateC.loot.journey, duplicateCredit = duplicateJ.creditLedger[0];
+      var duplicateEvent = duplicateJ.events.filter(function(row) { return row.eventId === duplicateCredit.eventId; })[0];
+      d407SeedSignal(duplicateC, duplicateJ, duplicateEvent, duplicateCredit, targetId);
+      duplicateJ.events.push(clone(duplicateEvent)); duplicateJ.creditLedger.push(clone(duplicateCredit));
+      duplicateJ.relationships = { forged:{ rapport:99 } };
+      warCareerRebuildRelationships(duplicateC, duplicateJ);
+      if (Object.keys(duplicateJ.relationships).length ||
+          duplicateJ.events.some(function(row) { return own(row, 'relationshipSignal'); }) ||
+          duplicateJ.creditLedger.some(function(row) { return own(row, 'relationshipSignal'); })) {
+        throw new Error('public rebuild retained authority across duplicate event/credit identifiers');
+      }
+      for (var i = 0; i < J.creditLedger.length; i++) {
+        var credit = J.creditLedger[i], event = J.events.filter(function(row) { return row.eventId === credit.eventId; })[0];
+        d407SeedSignal(C, J, event, credit, targetId);
+        event.relationshipSignal.unknown = 'strip'; credit.relationshipSignal.unknown = 'strip';
+      }
+      J.relationships = { forged:{ schema:'forged', rapport:999, rememberedRapport:-999, aliasUnderCommand:true } };
+      G.campaign = C; warCareerInit(C); J = C.loot.journey;
+      var key = 'command-general-v1|' + targetId, edge = J.relationships[key];
+      var exactSignalKeys = ['schema','transitionId','actorPersonId','targetId','targetNamespace','eventCode','rapportDelta','origin','timelineLabel','sourceRefs'];
+      if (Object.keys(J.relationships).length !== 1 || !edge || edge.rapport !== 8 || edge.rememberedRapport !== 0 ||
+          edge.eventHistory.length !== 4 || J.events.some(function(row) { return row.relationshipSignal && bytes(Object.keys(row.relationshipSignal)) !== bytes(exactSignalKeys); }) ||
+          J.creditLedger.some(function(row) { return row.relationshipSignal && bytes(Object.keys(row.relationshipSignal)) !== bytes(exactSignalKeys); })) {
+        throw new Error('D407 sanitation did not rebuild exact bounded authority: ' + bytes(edge));
+      }
+      var canonicalJourney = bytes(J), once = bytes(C); warCareerInit(C);
+      if (bytes(C) !== once) throw new Error('second D407 sanitation pass changed bytes');
+      applySave(envelope(C, 'd407-sanitize')); warCareerInit(G.campaign);
+      if (bytes(G.campaign.loot.journey) !== canonicalJourney) throw new Error('D407 save/apply/init changed reconstructed bytes');
+
+      function syntheticTransition(target, index, delta, code, ordinal) {
+        return { ordinal:ordinal == null ? index + 1 : ordinal, eventId:'probe-event-' + index,
+          creditKey:'probe-credit-' + index, signal:{ transitionId:'probe-transition-' + index,
+            actorPersonId:'probe-actor', targetId:target, targetNamespace:'command-general-v1',
+            eventCode:code, rapportDelta:delta } };
+      }
+      var capTransitions = [];
+      for (var cap = 0; cap < 25; cap++) capTransitions.push(syntheticTransition('probe-' + String(cap).padStart(2, '0'), cap, 1, 'high-command-victory', 1));
+      var capJ = { personId:'probe-actor', lineage:[], relationships:{} };
+      _wcRelationshipReduce(capTransitions, capJ);
+      var capKeys = Object.keys(capJ.relationships), expectedCapKeys = [];
+      for (var ek = 0; ek < 24; ek++) expectedCapKeys.push('command-general-v1|probe-' + String(ek).padStart(2, '0'));
+      if (bytes(capKeys) !== bytes(expectedCapKeys)) throw new Error('24-edge lexical eviction moved: ' + bytes(capKeys));
+      var recencyTransitions = [];
+      for (var rc = 0; rc < 25; rc++) recencyTransitions.push(syntheticTransition('recent-' + String(rc).padStart(2, '0'), 400 + rc, 1, 'high-command-victory', rc === 0 ? 1 : 100 + rc));
+      var recencyJ = { personId:'probe-actor', lineage:[], relationships:{} };
+      _wcRelationshipReduce(recencyTransitions, recencyJ);
+      var recencyKeys = Object.keys(recencyJ.relationships);
+      if (recencyKeys.length !== 24 || recencyKeys.indexOf('command-general-v1|recent-00') >= 0 || recencyKeys.indexOf('command-general-v1|recent-24') < 0) {
+        throw new Error('24-edge recency eviction moved: ' + bytes(recencyKeys));
+      }
+      var historyTransitions = [], negativeTransitions = [];
+      for (var hi = 0; hi < 5; hi++) {
+        historyTransitions.push(syntheticTransition('history-target', 100 + hi, 2, 'high-command-decisive-victory', hi + 1));
+        negativeTransitions.push(syntheticTransition('negative-target', 200 + hi, -2, 'high-command-decisive-defeat', hi + 1));
+      }
+      var historyJ = { personId:'probe-actor', lineage:[], relationships:{} }, negativeJ = { personId:'probe-actor', lineage:[], relationships:{} };
+      _wcRelationshipReduce(historyTransitions, historyJ); _wcRelationshipReduce(negativeTransitions, negativeJ);
+      var historyEdge = historyJ.relationships['command-general-v1|history-target'];
+      var negativeEdge = negativeJ.relationships['command-general-v1|negative-target'];
+      if (!historyEdge || historyEdge.rapport !== 8 || historyEdge.eventHistory.length !== 4 || historyEdge.eventHistory[0].transitionId !== 'probe-transition-101' ||
+          !negativeEdge || negativeEdge.rapport !== -8 || negativeEdge.eventHistory.length !== 4) throw new Error('rapport/history clamp moved');
+      if (_wcRelationshipReduce.toString().indexOf('localeCompare') >= 0 || _wcLex('A', 'a') !== -1 || _wcLex('a', 'A') !== 1 || _wcLex('A', 'A') !== 0) {
+        throw new Error('relationship serialization is not canonical code-unit order');
+      }
+      return { rebuilt:true, directForgedRejected:true, copyMismatchRejected:true, missingPersonRejected:true,
+        duplicateIdentifiersRejected:true, secondPass:true, saveRoundtrip:true,
+        rapport:edge.rapport, edges:capKeys.length, recencyEviction:true, history:historyEdge.eventHistory.length,
+        positiveClamp:historyEdge.rapport, negativeClamp:negativeEdge.rapport, codeUnitOrder:true };
+    });
+
     step('AAR GUARDED COMPOSITION + A11Y', function() {
       var empty = mkC('US', false), emptyHtml = aarRenderReport(empty, { compact:true });
       if (/data-war-career-report|The Soldier(?:&apos;|')s Story/.test(emptyHtml)) throw new Error('empty campaign fabricated a career panel');
@@ -1784,6 +2056,84 @@ const SETUP = `(() => {
       if (!/War Career|Your Timeline/.test(host.textContent) || !/nonqualifying/i.test(host.textContent)) throw new Error('AAR text does not carry state without color');
       window.__wcAarCampaign = C;
       return { legacy:true, v1:true, headings:host.querySelectorAll('h3').length, listItems:host.querySelectorAll('ul > li').length };
+    });
+
+    step('D407 HANDOFF MEMORY + OWNER ISOLATION + AAR', function() {
+      var fixture = d406Fixture({ runId:'run-d406-handoff-27', fallenAt:2 }), C = fixture.C, J = C.loot.journey;
+      d407StripSignals(J);
+      var targetId = fixture.stages[0].commandTarget;
+      for (var i = 0; i < 2; i++) {
+        var credit = J.creditLedger[i], event = J.events.filter(function(row) { return row.eventId === credit.eventId; })[0];
+        if (!credit || !event || credit.fate !== 'alive' || event.fate !== 'alive') throw new Error('predecessor alive signal fixture moved');
+        d407SeedSignal(C, J, event, credit, targetId);
+      }
+      G.campaign = C; warCareerInit(C); J = C.loot.journey;
+      var key = 'command-general-v1|' + targetId, predecessorEdge = J.relationships[key];
+      if (!predecessorEdge || predecessorEdge.rapport <= 0 || predecessorEdge.rememberedRapport !== 0 || predecessorEdge.eventHistory.length < 2) {
+        throw new Error('predecessor relationship memory did not reconstruct: ' + bytes(predecessorEdge));
+      }
+      var predecessorRapport = predecessorEdge.rapport, predecessorHistory = bytes(predecessorEdge.eventHistory);
+      function reducerTransition(actor, target, index, delta, code) {
+        return { ordinal:index, eventId:'handoff-event-' + index, creditKey:'handoff-credit-' + index,
+          signal:{ transitionId:'handoff-transition-' + index, actorPersonId:actor, targetId:target,
+            targetNamespace:'command-general-v1', eventCode:code, rapportDelta:delta } };
+      }
+      var rememberedTransitions = [], negativeRemembered = [];
+      for (var ri = 0; ri < 5; ri++) {
+        rememberedTransitions.push(reducerTransition('predecessor', 'memory-target', ri + 1, 2, 'high-command-decisive-victory'));
+        negativeRemembered.push(reducerTransition('predecessor', 'negative-memory-target', ri + 11, -2, 'high-command-decisive-defeat'));
+      }
+      var rememberedJ = { personId:'successor', lineage:[{ personId:'predecessor' }], relationships:{} };
+      var negativeRememberedJ = { personId:'successor', lineage:[{ personId:'predecessor' }], relationships:{} };
+      var unlinkedJ = { personId:'successor', lineage:[], relationships:{} };
+      _wcRelationshipReduce(rememberedTransitions, rememberedJ); _wcRelationshipReduce(negativeRemembered, negativeRememberedJ);
+      _wcRelationshipReduce(rememberedTransitions, unlinkedJ);
+      var rememberedClamp = rememberedJ.relationships['command-general-v1|memory-target'];
+      var negativeRememberedClamp = negativeRememberedJ.relationships['command-general-v1|negative-memory-target'];
+      if (!rememberedClamp || rememberedClamp.rapport !== 0 || rememberedClamp.rememberedRapport !== 8 ||
+          !negativeRememberedClamp || negativeRememberedClamp.rapport !== 0 || negativeRememberedClamp.rememberedRapport !== -8 ||
+          Object.keys(unlinkedJ.relationships).length) throw new Error('remembered lineage clamp/authorization moved');
+      var mixedJ = { personId:'successor', lineage:[{ personId:'predecessor' }], relationships:{} };
+      _wcRelationshipReduce([reducerTransition('successor', 'mixed-target', 30, 2, 'high-command-decisive-victory'),
+        reducerTransition('predecessor', 'mixed-target', 31, -1, 'high-command-defeat')], mixedJ);
+      var mixedEdge = mixedJ.relationships['command-general-v1|mixed-target'];
+      if (!mixedEdge || mixedEdge.rapport !== 2 || mixedEdge.rememberedRapport !== -1) throw new Error('personal and remembered totals were aliased');
+      var selected = J.handoff && J.handoff.candidateIds && J.handoff.candidateIds[0];
+      var commandBefore = bytes(C.president && C.president.command || null), accepted = warCareerAcceptHandoff(C, selected); J = C.loot.journey;
+      var edge = J.relationships[key], commandAfter = bytes(C.president && C.president.command || null);
+      if (!accepted.ok || !edge || J.personId !== selected || edge.rapport !== 0 || edge.rememberedRapport !== predecessorRapport ||
+          bytes(edge.eventHistory) !== predecessorHistory || commandAfter !== commandBefore ||
+          own(C.president.command, 'relationships') || own(C.president.command, 'warCareerRelationships') || own(C.president.command, 'rapport')) {
+        throw new Error('handoff copied personal rapport or crossed command ownership: ' + bytes({ accepted:accepted, edge:edge }));
+      }
+      var before = bytes(C), directOne = warCareerReportHTML(C, { compact:true }), directTwo = warCareerReportHTML(C, { compact:true });
+      if (bytes(C) !== before) throw new Error('D407 direct report mutated campaign at ' + firstDiff(JSON.parse(before), C));
+      if (directOne !== directTwo) throw new Error('D407 direct report bytes changed across repeated reads');
+      var composedBefore = bytes({ relationships:J.relationships, events:J.events, credits:J.creditLedger,
+        command:C.president && C.president.command || null });
+      var composedOne = aarRenderReport(C, { compact:true }), composedTwo = aarRenderReport(C, { compact:true });
+      var composedAfter = bytes({ relationships:J.relationships, events:J.events, credits:J.creditLedger,
+        command:C.president && C.president.command || null });
+      if (composedAfter !== composedBefore) throw new Error('D407 composed AAR mutated relationship or command authority');
+      if (composedOne !== composedTwo) throw new Error('D407 composed AAR bytes changed across repeated reads');
+      var target = _wcRegistryPersonUnique(C, targetId);
+      if (!target || directOne.indexOf('Relationship memory') < 0 || directOne.indexOf('Your Timeline') < 0 ||
+          directOne.indexOf('Personal rapport 0') < 0 || directOne.indexOf('Remembered network +' + predecessorRapport) < 0 ||
+          directOne.indexOf(_wcEsc(target.name)) < 0 || directOne.indexOf('decisive-victory response') < 0 ||
+          (composedOne.match(/data-war-career-relationships="1"/g) || []).length !== 1) {
+        throw new Error('D407 AAR labels or exact target display missing');
+      }
+      openSheet('<div id="wcProbeAar" style="max-width:100%;overflow-wrap:anywhere">' + directOne + '</div>');
+      var host = document.getElementById('wcProbeAar'), section = host && host.querySelector('[data-war-career-relationships="1"]');
+      if (!section || section.querySelectorAll('h4').length !== 1 || section.querySelectorAll('ul > li').length !== 1 ||
+          !/Your Timeline/.test(section.textContent) || !/Personal rapport/.test(section.textContent) || !/Remembered network/.test(section.textContent)) {
+        throw new Error('D407 semantic relationship report structure missing');
+      }
+      window.__wcAarCampaign = C;
+      return { successor:selected, targetId:targetId, personal:edge.rapport, remembered:edge.rememberedRapport,
+        history:edge.eventHistory.length, rememberedClamp:rememberedClamp.rememberedRapport,
+        negativeRememberedClamp:negativeRememberedClamp.rememberedRapport, mixedIndependent:true,
+        commandOwnerIsolated:true, directPure:true, composedPure:true, semantic:true };
     });
   } catch (fatal) {
     R.ok = false;

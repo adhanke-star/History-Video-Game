@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// D406 Slice-C-complete gate for the D382 war-career loop.
+// D407 Slice-D-complete gate for the D382 war-career loop.
 // Filesystem-first, runtime-only, fail-closed. This plan probe never enters the
 // release suite and keeps the dual-reference, command-isolation, and later-slice walls.
 
@@ -52,10 +52,9 @@ const MARKER = "WAR_CAREER_RUNTIME_V1";
 const JOURNEY_MARKER = "WAR_CAREER_JOURNEY_ADAPTER_V1";
 const RUNTIME_NAME = "106-war-career.js";
 const RECEIPT_BIND = "WAR_CAREER_RECEIPT_BIND:SOURCE_REF_NEVER_EQUALS_TIMELINE_AUTHORITY";
-const D406_SLICE_C_ALLOWED = new Set([
+const D407_SLICE_D_ALLOWED = new Set([
   "AUTONOMOUS-RUN.md",
   "COORDINATION.md",
-  "DECISION-NEEDED-war-career-receipt-continuity.md",
   "DECISIONS.md",
   "HANDOFF.md",
   "RUN-LOG.md",
@@ -65,10 +64,8 @@ const D406_SLICE_C_ALLOWED = new Set([
   "docs/design/war-career-loop-design.md",
   "tools/probe-war-career-loop-plan.mjs",
   "src/106-war-career.js",
-  "src/35-command.js",
   "src/37-loot-survival.js",
   "tools/probe-war-career.mjs",
-  "tools/probe-command.mjs",
   "civil_war_generals.html"
 ]);
 
@@ -78,6 +75,10 @@ function read(path) {
 
 function md5(path) {
   return createHash("md5").update(readFileSync(path)).digest("hex");
+}
+
+function occurrences(text, token) {
+  return text.split(token).length - 1;
 }
 
 function json(path) {
@@ -218,8 +219,12 @@ function e71Block(text) {
 function lane005(text) {
   const start = text.indexOf("### LANE-005");
   if (start < 0) throw new Error("LANE-005 missing");
-  const end = text.indexOf("\n### LANE-", start + 12);
-  return text.slice(start, end < 0 ? text.length : end);
+  const ends = [
+    text.indexOf("\n### LANE-", start + 12),
+    text.indexOf("\n## ", start + 12)
+  ].filter(index => index >= 0);
+  const end = ends.length ? Math.min(...ends) : text.length;
+  return text.slice(start, end);
 }
 
 const manifestText = read(MANIFEST);
@@ -577,7 +582,7 @@ step("LANE", () => {
 });
 
 step("RECEIPT CONTINUITY LAW", () => {
-  const s14 = section(read(SPEC), "## 14 ", null);
+  const s14 = section(read(SPEC), "## 14 ", "## 15 ");
   mustInclude(s14, [
     "D404 dual-reference receipt contract",
     "A — extend `cw_war_career_participation_v1`",
@@ -612,7 +617,7 @@ step("RECEIPT CONTINUITY LAW", () => {
 });
 
 step("EXACT ASSIGNMENT OWNER", () => {
-  const s14 = section(read(SPEC), "## 14 ", null);
+  const s14 = section(read(SPEC), "## 14 ", "## 15 ");
   mustInclude(s14, [
     "_WC_TIMELINE_ASSIGNMENTS_V1",
     "immutable array of authored exact-id mappings",
@@ -696,7 +701,7 @@ step("EXACT ASSIGNMENT OWNER", () => {
 
 step("SOURCE VS YOUR TIMELINE", () => {
   const text = read(SPEC);
-  const s14 = section(text, "## 14 ", null);
+  const s14 = section(text, "## 14 ", "## 15 ");
   const bindCount = text.split(RECEIPT_BIND).length - 1;
   if (bindCount !== 1) throw new Error("receipt bind token must occur exactly once, got " + bindCount);
   mustInclude(s14, [
@@ -726,7 +731,7 @@ step("SOURCE VS YOUR TIMELINE", () => {
 });
 
 step("SERVICE WINDOW + FAIL CLOSED", () => {
-  const s14 = section(read(SPEC), "## 14 ", null);
+  const s14 = section(read(SPEC), "## 14 ", "## 15 ");
   mustInclude(s14, [
     "serviceStart:null, serviceEnd:null, serviceYear:1863",
     "Both exact rungs are 1863",
@@ -760,7 +765,7 @@ step("SERVICE WINDOW + FAIL CLOSED", () => {
 });
 
 step("HANDOFF + ONE-CREDIT ISOLATION", () => {
-  const s14 = section(read(SPEC), "## 14 ", null);
+  const s14 = section(read(SPEC), "## 14 ", "## 15 ");
   mustInclude(s14, [
     "one-credit-per-rung owner across both receipt schemas",
     "A v1 and v2 row cannot claim the same key twice",
@@ -787,7 +792,7 @@ step("HANDOFF + ONE-CREDIT ISOLATION", () => {
 });
 
 step("SAVE SANITATION + VERSION LOCK", () => {
-  const s14 = section(read(SPEC), "## 14 ", null);
+  const s14 = section(read(SPEC), "## 14 ", "## 15 ");
   mustInclude(s14, [
     "_ssCareerParticipation",
     "explicit schema dispatcher",
@@ -850,22 +855,23 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     commandProbe:md5(COMMAND_PROBE)
   };
   const expected = {
-    srcTree:"3de551405222f51925be0f520eeed5b9",
-    runtime:"d54ad18271de8d2af33be909be8251ed",
-    journey:"4221eb61fee1c209ebc85d2fc1636a17",
+    srcTree:"13544d1904aaa1ff3ade0c6deaa2f2d5",
+    runtime:"adc2dd9583c85cde86bbfb142cb6d666",
+    journey:"d9bc846734683c4ebcb00babbcc161ab",
     command:"8f12c49f7129b3a9be0203677822e048",
-    focused:"c19cffcba98e356faf2679076aa798b8",
+    focused:"23e67503bed073d46f9f31ff3b715012",
     commandProbe:"5ffd40fd221179f2e01cad59ef43bf7d"
   };
   for (const key of Object.keys(expected)) {
-    if (locks[key] !== expected[key]) throw new Error(key + " Slice-C-complete lock moved: " + locks[key]);
+    if (locks[key] !== expected[key]) throw new Error(key + " Slice-D-complete lock moved: " + locks[key]);
   }
   const changed = gitChangedPaths();
-  const forbidden = changed.filter(path => !D406_SLICE_C_ALLOWED.has(path));
+  const forbidden = changed.filter(path => !D407_SLICE_D_ALLOWED.has(path));
   if (forbidden.length) {
-    throw new Error("D406 Slice-C allowlist violation: " + forbidden.join(", "));
+    throw new Error("D407 Slice-D allowlist violation: " + forbidden.join(", "));
   }
-  const runtimeText = read(RUNTIME), commandText = read(COMMAND), focusedText = read(FOCUSED), commandProbeText = read(COMMAND_PROBE);
+  const runtimeText = read(RUNTIME), journeyText = read(JOURNEY), commandText = read(COMMAND);
+  const focusedText = read(FOCUSED), commandProbeText = read(COMMAND_PROBE);
   for (const token of [
     "cw_war_career_participation_v2",
     "cw_war_career_result_v2",
@@ -875,9 +881,15 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     "function warCareerCreditAward(credit)",
     "function warCareerDeriveAdvancement(C, J)",
     "function warCareerStrategicGeneral(C)",
-    "function warCareerCommandProjection(C)"
+    "function warCareerCommandProjection(C)",
+    "cw_war_career_relationship_signal_v1",
+    "cw_war_career_relationship_edge_v1",
+    "function warCareerRelationshipSignal(C, J, event)",
+    "function warCareerRelationshipSignalClean(row, C, owner)",
+    "function _wcRelationshipReduce(transitions, J)",
+    "function warCareerRebuildRelationships(C, J)"
   ]) {
-    if (!runtimeText.includes(token)) throw new Error("Slice-C runtime missing: " + token);
+    if (!runtimeText.includes(token)) throw new Error("Slice-D runtime missing: " + token);
   }
   mustInclude(runtimeText, [
     "if (credit.outcome === \"victory\" && credit.type === \"decisive\") return { merit:4, reputation:3 }",
@@ -888,10 +900,64 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     "timelineLabel:\"Your Timeline\"",
     "schema:\"cw_war_career_strategic_general_v1\"",
     "Math.min(2, 1 + Math.floor(reputation / 4))",
-    "Math.min(4, 2 + Math.floor(reputation / 4))"
-  ], "Slice-C advancement and projection runtime");
+    "Math.min(4, 2 + Math.floor(reputation / 4))",
+    "var _WC_REL_EDGE_MAX = 24",
+    "var _WC_REL_HISTORY_MAX = 4",
+    "var _WC_REL_TARGET_NAMESPACE = \"command-general-v1\"",
+    "return { code:\"high-command-decisive-victory\", delta:2 }",
+    "return { code:\"high-command-victory\", delta:1 }",
+    "return { code:\"high-command-draw\", delta:0 }",
+    "return { code:\"high-command-defeat\", delta:-1 }",
+    "return { code:\"high-command-decisive-defeat\", delta:-2 }",
+    "event.relationshipSignal = eventSignal",
+    "credit.relationshipSignal = creditSignal",
+    "origin:\"emergent-timeline\"",
+    "timelineLabel:\"Your Timeline\"",
+    "sourceRefs:[]",
+    "Relationship memory — Your Timeline",
+    "Personal rapport",
+    "Remembered network"
+  ], "Slice-D advancement, relationship, and projection runtime");
+  if (!journeyText.includes("warCareerRebuildRelationships(C, clean)")) {
+    throw new Error("journey sanitizer does not rebuild relationship authority");
+  }
+  const transitionBlock = (runtimeText.match(/function _wcRelationshipTransitionId[\s\S]*?\n\}/) || [""])[0];
+  mustInclude(transitionBlock, [
+    "runId, creditKey, eventId, actorPersonId",
+    "_WC_REL_TARGET_NAMESPACE, targetId, eventCode",
+    "].join(\"|\")"
+  ], "relationship transition identity");
+  if (/\bordinal\b/.test(transitionBlock)) throw new Error("relationship transition identity includes ordinal");
+  const cleanBlock = (runtimeText.match(/function warCareerRelationshipSignalClean[\s\S]*?\n\}/) || [""])[0];
+  const reducerBlock = (runtimeText.match(/function _wcRelationshipReduce[\s\S]*?\n\}/) || [""])[0];
+  if (!cleanBlock.includes('typeof row.rapportDelta !== "number"') || !cleanBlock.includes("!isFinite(row.rapportDelta)") ||
+      occurrences(reducerBlock, "Math.max(-8, Math.min(8, Math.round(") !== 2 ||
+      !runtimeText.includes("b.rows.slice(Math.max(0, b.rows.length - _WC_REL_HISTORY_MAX))") ||
+      !runtimeText.includes("ranked.length > _WC_REL_EDGE_MAX") ||
+      !runtimeText.includes("function _wcLex(a, b)") || /localeCompare/.test(reducerBlock)) {
+    throw new Error("relationship sanitation, clamps, bounds, or canonical lexical ordering moved");
+  }
+  if ((runtimeText.match(/\?\s*warCareerRelationshipSignal\(C,\s*J,\s*event\)\s*:\s*null;/g) || []).length !== 1) {
+    throw new Error("relationship transition producer is not exactly one shipped call");
+  }
+  for (const marker of [
+    "WAR_CAREER_RELATIONSHIP_TRANSITION_BIND:SOLE_CALL",
+    "WAR_CAREER_RELATIONSHIP_DEDUPE_BIND:PAIR_ONCE",
+    "WAR_CAREER_RELATIONSHIP_PROVENANCE_BIND:EMERGENT_ONLY",
+    "WAR_CAREER_RELATIONSHIP_HANDOFF_BIND:REMEMBERED_ONLY"
+  ]) {
+    if (occurrences(runtimeText, marker) !== 1) throw new Error("relationship bind marker moved: " + marker);
+  }
   if (/\bP\.command\b/.test(runtimeText) || /J\.roleHistory\.push/.test(runtimeText)) {
-    throw new Error("Slice C crossed the player/NPC owner wall or mutates saved billet history incrementally");
+    throw new Error("Slice D crossed the player/NPC owner wall or mutates saved billet history incrementally");
+  }
+  const commandTargetSelector = (runtimeText.match(/function _wcRelationshipCommandTarget[\s\S]*?\n\}/) || [""])[0];
+  if (occurrences(runtimeText, "C.president.command") !== 1 || occurrences(commandTargetSelector, "commandState.") !== 1 ||
+      occurrences(commandTargetSelector, "cmdActiveId(C)") !== 1 || occurrences(commandTargetSelector, "cmdActiveGeneral(C)") !== 1 ||
+      !commandTargetSelector.includes("commandState._activeId") || !commandTargetSelector.includes("general.id !== targetId") ||
+      /commandState\s*\[/.test(commandTargetSelector) ||
+      /(?:delete\s+commandState\b|commandState\s*(?:\.|\[)[^;\n]*(?:\+\+|--|(?:[+\-*/%&|^]|<<|>>)?=(?!=))|Object\.(?:assign|defineProperty)\s*\(\s*commandState)/.test(commandTargetSelector)) {
+    throw new Error("Slice D command target selector crossed its one-read no-write wall");
   }
   const consumerCount = (commandText.match(/Number\(warCareerCommandProjection\(C\)\)/g) || []).length;
   if (consumerCount !== 1 || !commandText.includes("career = Math.max(0, Math.min(4, career))") ||
@@ -909,6 +975,18 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
   ]) {
     if (!focusedText.includes(name)) throw new Error("focused War Career tooth missing: " + name);
   }
+  const d407Rows = [
+    "D407 RELATIONSHIP TRANSITIONS + ONE-CREDIT",
+    "D407 PROVENANCE + SOURCE HONESTY",
+    "D407 SANITATION + BOUNDED DEDUPE",
+    "D407 HANDOFF MEMORY + OWNER ISOLATION + AAR"
+  ];
+  for (const name of d407Rows) {
+    if (occurrences(focusedText, "step('" + name + "'") !== 1) throw new Error("focused D407 row moved: " + name);
+  }
+  if ((focusedText.match(/\bstep\('/g) || []).length !== 41 || (focusedText.match(/\bcheck\(/g) || []).length !== 30) {
+    throw new Error("focused source row/static structure moved from 41 literal steps + 29 checks");
+  }
   for (const name of [
     "D406: default, legacy, and excluded careers contribute zero — commandLeadership is byte-identical",
     "D406: commandLeadership consumes one projection exactly once — exact unclamped delta and repeated reads do not stack",
@@ -917,7 +995,7 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
   ]) {
     if (!commandProbeText.includes(name)) throw new Error("focused Command tooth missing: " + name);
   }
-  const s15 = section(read(SPEC), "## 15 ", null);
+  const s15 = section(read(SPEC), "## 15 ", "## 16 ");
   mustInclude(s15, [
     "D406 Slice C runtime contract",
     "decisive victory",
@@ -932,7 +1010,26 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     "T2, T3, Auto",
     "Slice D-F"
   ], "Slice-C-complete contract");
-  return { ...locks, changed, commandConsumers:consumerCount, status:"D406 Slice C complete; later slices locked" };
+  const s16 = section(read(SPEC), "## 16 ", null);
+  mustInclude(s16, [
+    "D407 Slice D runtime contract",
+    "command-general-v1|<targetId>",
+    "-8..8",
+    "24 edges",
+    "four event-history rows",
+    "high-command-decisive-victory",
+    "emergent-timeline",
+    "Your Timeline",
+    "historical-authored",
+    "event.relationshipSignal",
+    "credit.relationshipSignal",
+    "COMRADE HAND-OFF",
+    "Personal rapport",
+    "Remembered network",
+    "Slice E"
+  ], "Slice-D-complete contract");
+  return { ...locks, changed, commandConsumers:consumerCount, relationshipRows:d407Rows.length,
+    status:"D407 Slice D complete; Slice E locked" };
 });
 
 step("BASELINES + LANE", () => {
@@ -969,7 +1066,7 @@ step("BASELINES + LANE", () => {
     throw new Error("24-scenario sweep registry seam moved");
   }
   const expectedHashes = {
-    game:"32dcc03e25e080aa4e7addd26a1c5f99",
+    game:"502aee3fc5867b970225a59c06cd6102",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     dataTree:"b0d7f440836b60a4f18401b2d7b03f48",
     manifest:"7924da858de403cac58caabf8c9fcce8",
@@ -979,21 +1076,31 @@ step("BASELINES + LANE", () => {
     if (hashes[key] !== expectedHashes[key]) throw new Error(key + " baseline moved: " + hashes[key]);
   }
   mustInclude(lane, [
-    "D406 Slice C",
-    "deterministic merit/reputation",
-    "warCareerCommandProjection",
-    "separate `P.command` NPC owner",
-    "Slice D relationship memory",
-    "D405 dual-reference receipt prerequisite shipped",
-    "cw_war_career_participation_v2",
-    "sourceRef",
-    "timelineAssignmentRef",
-    "wcta-1pav4ac",
-    "T2/T3/AUTO CLOSED",
-    "SLICE C RUNTIME STILL LOCKED",
+    "Owner: none",
+    "State: CONTRACT",
+    "D407 Slice D",
+    "cw_war_career_relationship_signal_v1",
+    "cw_war_career_relationship_edge_v1",
+    "command-general-v1",
+    "emergent-timeline",
+    "Your Timeline",
+    "War Career 42/42",
+    "static 29/29",
+    "Command 94/94",
+    "plan 19/19",
+    "Bind A",
+    "Bind B",
+    "Bind C",
+    "Bind D",
+    "D406",
+    "source/command/save/T2/T3/Auto isolation",
     "D398 remains the latest full release battery",
-    "do not run `npm run vet:noreg`"
-  ], "D405 lane");
+    "`npm run vet:noreg` was not run",
+    "Slice E late-war political pull",
+    "separate and untouched",
+    "/private/tmp/codex-vg-recovery-019f62fe",
+    "No simultaneous edits"
+  ], "D407 release lane");
   mustInclude(decision, [
     "RESOLVED by the D404 planning contract",
     "coexisting `cw_war_career_participation_v2`",
@@ -1001,6 +1108,17 @@ step("BASELINES + LANE", () => {
     "SHIPPED by D405",
     "T2, T3, Auto, data, command projection, and later slices remain closed"
   ], "receipt decision resolution");
+  const expectedStepNames = [
+    "SPEC CORE", "SEAM INVENTORY", "STATE OWNERSHIP", "TRANSITIONS", "DEATH + IRONMAN",
+    "POLITICAL PULL", "ARCHETYPES", "IMPLEMENTATION LADDER", "EXCLUSIONS + BASELINES", "LANE",
+    "RECEIPT CONTINUITY LAW", "EXACT ASSIGNMENT OWNER", "SOURCE VS YOUR TIMELINE",
+    "SERVICE WINDOW + FAIL CLOSED", "HANDOFF + ONE-CREDIT ISOLATION", "SAVE SANITATION + VERSION LOCK",
+    "T2/T3/AUTO CLOSED", "SLICE C RUNTIME STILL LOCKED", "BASELINES + LANE"
+  ];
+  const actualStepNames = result.steps.map(row => row.name).concat("BASELINES + LANE");
+  if (JSON.stringify(actualStepNames) !== JSON.stringify(expectedStepNames)) {
+    throw new Error("plan probe 19-row names moved: " + JSON.stringify(actualStepNames));
+  }
   return {
     scenarios:t1Count,
     schemas:schemaCount,
@@ -1010,6 +1128,7 @@ step("BASELINES + LANE", () => {
     sweep:t1Count,
     warCareerRow:38,
     saveVersion:1,
+    planRows:expectedStepNames.length,
     hashes
   };
 });

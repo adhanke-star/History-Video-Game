@@ -282,6 +282,10 @@ function _ssCareerEvent(e, C) {
   if (participation && out.creditKey === participation.creditKey && out.scenarioId === participation.battleId &&
       out.personId === participation.personId) out.participation = participation;
   else { out.qualifying = false; out.fate = out.kind === "start" ? "alive" : null; }
+  if (out.qualifying && out.fate === "alive" && typeof warCareerRelationshipSignalClean === "function") {
+    var relationshipSignal = warCareerRelationshipSignalClean(e.relationshipSignal, C, out);
+    if (relationshipSignal) out.relationshipSignal = relationshipSignal;
+  }
   var recoveryOf = _ssCareerSafeId(e.recoveryOfCreditKey, 220);
   if (!out.qualifying && out.kind === "result" && recoveryOf && out.creditKey && recoveryOf !== out.creditKey) out.recoveryOfCreditKey = recoveryOf;
   return out;
@@ -324,6 +328,10 @@ function _ssCareerCredit(e, C) {
   if (participation && participation.creditKey === key && participation.personId === personId &&
       participation.battleId === scenarioId) out.participation = participation;
   else { out.qualifying = false; out.fate = null; }
+  if (out.qualifying && out.fate === "alive" && typeof warCareerRelationshipSignalClean === "function") {
+    var relationshipSignal = warCareerRelationshipSignalClean(e.relationshipSignal, C, out);
+    if (relationshipSignal) out.relationshipSignal = relationshipSignal;
+  }
   if (out.qualifying && out.fate === "captured") {
     out.recoveredAtCreditKey = _ssCareerSafeId(e.recoveredAtCreditKey, 220) || null;
     out.recoveryEventId = _ssCareerSafeId(e.recoveryEventId, 180) || null;
@@ -598,7 +606,8 @@ function _ssCleanWarCareerV1(C, J, clean) {
   clean.reputation = 0;
   clean.promotionCount = 0;
   if (typeof warCareerDeriveAdvancement === "function") warCareerDeriveAdvancement(C, clean);
-  clean.relationships = {};
+  clean.relationships = typeof warCareerRebuildRelationships === "function"
+    ? warCareerRebuildRelationships(C, clean) : {};
   clean.terminal = null;
 }
 function _ssJourneySnapshot(p, warCareerV1) {

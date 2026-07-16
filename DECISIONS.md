@@ -6,6 +6,91 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D407 — WAR CAREER SLICE D SHIPPED: BOUNDED HIGH-COMMAND RELATIONSHIP MEMORY — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-005 DRIVE→CONTRACT] (2026-07-16)
+
+**This numeric and structural law was locked before any Slice-D runtime edit.** The only initial
+relationship is an emergent high-command response to a qualifying result. `_t1Resolve` runs the
+existing `cmdOnResolve` before the War Career observer; the transition may therefore target only the
+exact command-general id already stored in `P.command._activeId`. It must equal `cmdActiveId(C)` and
+`cmdActiveGeneral(C).id`, resolve to one unique same-side Army Register `army commander`, and differ
+from the current journey person. This proves an exact result target, not friendship, proximity,
+patronage, or a historical meeting. Every player-facing edge says **Your Timeline**.
+
+**Shape and bounds.** `C.loot.journey.relationships` remains the sole mutable player relationship
+owner. Map keys are `command-general-v1|<exact-id>` and the target namespace is
+`command-general-v1`. Each `cw_war_career_relationship_edge_v1` stores exactly `schema, targetId,
+targetNamespace, rapport, rememberedRapport, lastEventId, lastCreditKey, eventHistory, origin,
+timelineLabel, sourceRefs`. Rapport and remembered rapport clamp independently to `-8..8`; the map
+keeps at most 24 edges and each edge keeps its newest four history rows. Those small limits are
+**Inferred** game-memory bounds: 24 follows the existing bounded lineage/save precedent, while four
+preserves a readable recent arc without making save growth unbounded.
+
+Each matching `event.relationshipSignal` and `credit.relationshipSignal` copy uses schema
+`cw_war_career_relationship_signal_v1` with exactly
+`schema, transitionId, actorPersonId, targetId, targetNamespace, eventCode, rapportDelta, origin,
+timelineLabel, sourceRefs`. The transition id hashes run id, credit key, event id, actor id, target
+namespace, target id, and event code; ordinal is excluded because sanitation renumbers it. The only
+codes are `high-command-decisive-victory:+2`, `high-command-victory:+1`,
+`high-command-draw:0`, `high-command-defeat:-1`, and
+`high-command-decisive-defeat:-2`. These deltas are **Inferred balance**, never claims about an
+officer's documented opinion.
+
+**Ordering, dedupe, and sanitation.** Accept only matching signal copies on one qualifying,
+current-or-validated-lineage-person, `fate:"alive"` event and its exact credit. Sort valid transitions
+by the sanitized event ordinal and then transition id. Dedupe the event/credit copies and transition
+id before applying the delta. The latest four rows remain in chronological order. Retain edges by
+last ordinal descending and canonical key ascending; if more than 24 exist, that rule evicts the
+oldest edge and the lexically greater key on an ordinal tie. Serialize retained map keys lexically.
+Retry, recovery, duplicate credit, load, repeated init, selectors, and report rendering add nothing.
+Saved relationship scalars, histories, unknown fields, and aliases are never authority; init/load
+rebuilds the map from sanitized event/credit pairs, clamps/caps it, and converges byte-identically
+after one pass at `_SAVE_VER=1`.
+
+**Provenance and source honesty.** D407 emits only `origin:"emergent-timeline"`,
+`timelineLabel:"Your Timeline"`, and `sourceRefs:[]`. A future `historical-authored` transition would
+need an immutable authored relationship claim plus 2–12 independent normalized source objects with
+the existing citation fields `title, author, repository, locator, url, type, note`; each source must
+have a title or repository and a locator or HTTP(S) URL, and uniqueness is the normalized
+title/repository/locator/URL tuple. No such authored claim ships in D407, so unsupported historical
+labels and sources are stripped and a structurally valid result can survive only as emergent timeline
+memory. Names, surnames, ranks, tags, unit proximity, casualty aggregates, and narrative copy confer
+no relationship authority.
+
+**Hand-off, rendering, and isolation.** Current-person transitions alone contribute personal
+`rapport`; transitions owned by exact validated prior lineage contribute only `rememberedRapport`.
+COMRADE HAND-OFF therefore begins the successor at personal zero while retaining a clearly labeled
+remembered network; it never impersonates the fallen person's friendships. `warCareerReportHTML`
+renders escaped semantic text for target, Personal rapport, Remembered network, newest event code,
+and Your Timeline without color-only meaning and remains pure at 200% zoom. Only a read-only
+`_activeId` target selector may inspect command state. `P.command.reputation` is never read, copied,
+written, aliased, or used as authority; command files remain byte-identical. Relationships affect no
+combat, casualty, winner, score, AI, objective, reinforcement, balance, OVR, source grade, command
+projection, appointment, politics, resource, or save-version input.
+
+**Predeclared proof and bind scopes.** Preserve all 29 static walls and existing browser rows, then
+add exactly: `D407 RELATIONSHIP TRANSITIONS + ONE-CREDIT`, `D407 PROVENANCE + SOURCE HONESTY`,
+`D407 SANITATION + BOUNDED DEDUPE`, and `D407 HANDOFF MEMORY + OWNER ISOLATION + AAR`, yielding
+War Career `42/42`; Command remains byte-identical and `94/94`; the plan keeps its 19 names. Bind A
+removes the sole production signal call and may red only row 1. Bind B relaxes only event/credit-copy
+dedupe and may red only row 1. Bind C changes the production emergent token to unsourced historical
+authored and may red only row 2. Bind D classifies predecessor delta as successor-personal and may
+red only row 4. Every inverse must restore exact source/generated hashes before rebuilt green reruns.
+Slice E, politics, combat, data, T2/T3/Auto, command runtime/probe, After Action composition, and a
+second owner remain closed.
+
+**Release proof.** D407 ships exactly the declared event/credit signal pair and sanitizer-derived
+edge map. War Career is `42/42` browser plus `29/29` static; Command remains byte-identical and
+`94/94`; the plan remains `19/19`. Bind A removed the sole production call and reddened only row 1;
+Bind B disabled pair dedupe and reddened only row 1; Bind C substituted unsupported historical
+authorship and reddened only row 2; Bind D classified predecessor memory as successor-personal and
+reddened only row 4. Every inverse restored exact runtime, journey, focused-probe, command,
+command-probe, generated-game, and frozen-base hashes before green reruns. Integration remains
+24 scenarios / 54 schemas / 1,512 Army Register people / 24 coverage ids / suite 130 at War Career
+row 38 / sweep 24 / `_SAVE_VER=1`. D406 advancement, command projection, immutable source history,
+and source/command/save/T2/T3/Auto isolation remain exact. D398 remains the latest full release
+battery; `npm run vet:noreg` was not run. LANE-005 returns to CONTRACT/unowned. Slice E late-war
+political pull is the next separate task and remains untouched.
+
 ## D406 — WAR CAREER SLICE C SHIPPED: LEDGER-DERIVED ADVANCEMENT, BILLETS, AND ONE COMMAND PROJECTION — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-005 DRIVE→CONTRACT] (2026-07-15)
 
 **This numeric and structural law was locked before any Slice-C runtime edit.** The thresholds are
