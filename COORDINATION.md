@@ -749,20 +749,44 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
-### LANE-005 · war-career-loop — **DRIVE (D408 Slice E contract-only planning)**
+### LANE-005 · war-career-loop — **CONTRACT (D408 Slice E contracted; runtime unowned)**
 
-- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra. Owner: ChatGPT/Codex 5.6 Sol Ultra. No simultaneous
-  edits by any provider.
-- **Task:** D408 Slice E contract-only planning for one smallest late-war political-pull capability.
-  Inventory the shipped authority surfaces, select and contract exactly one capability, add
-  fail-closed planning teeth, then release without runtime. Slice F remains closed.
-- **State:** DRIVE — taken from clean D407 boundary
-  `146040dede80c08d10a968770ed01103c8632552`. Runtime, politics, combat, data, tactical producers,
-  save version, Slice F, and relationship expansion remain locked. Preserve the sole
+- **Owning tool:** none. Owner: none. No simultaneous edits by any provider.
+- **Task:** D408 Slice E contract-only planning is shipped. The next separate task is Slice E runtime
+  for exactly one capability, `nationalDecisions` / **Matters of State**. Slice F remains closed.
+- **State:** CONTRACT — released from the ledger take
+  `3bc97caf464e9a5aa0bf94bd618c4dba8182866a`, based on clean D407 boundary
+  `146040dede80c08d10a968770ed01103c8632552`. Preserve the sole
   `C.loot.journey` player owner,
   separate `P.command` NPC owner, source/timeline receipt split, one-credit/fate/handoff/save laws,
   safe-clone boundary, and every no-combat/no-politics/no-simultaneous-edit lock. Release state:
   State: CONTRACT.
+- **D408 acceptance contract:**
+  1. Select only `nationalDecisions`, human-facing **Matters of State**. It is the smallest complete
+     rung because Desk and between-battle paths converge on `src/32-decisions.js` render/wire seams
+     and the one direct `decResolve → _decApply` mutator. Cabinet, appointments, and resources stay false.
+  2. Require both reconstructed current-person `general-command` authority and the latest sanitized
+     qualifying current-person participation receipt with canonical `battleYear >= 1864`. Bind:
+     `WAR_CAREER_POLITICAL_DATE_BIND:QUALIFYING_RECEIPT_YEAR_1864_OR_LATER`. Live clock/date, saved
+     booleans/scalars, rank text, rapport, names, or source rewriting never grant authority.
+  3. Before unlock every pending decision remains a **Visible defer** in both surfaces. Teaching,
+     sources, situation, and options remain readable; each native Decide button is keyboard focusable
+     with `aria-disabled` plus an activation guard, and explains missing date, General Command authority, or both.
+     `decOnResolve` keeps the queue current; no card resolves, drops, hides, or applies in the player name.
+  4. Guard `decRenderTab`, `decInterstitialHTML`, `_decWireCards`, and direct `decResolve` before
+     `_decApply`. Existing `openWarDept` implementations, `_wdRefresh`, `H0_DESK_TABS`, and
+     `h0iDecisions` retain routing and prove coverage without edits. Legacy/no-career remains byte-equivalent.
+  5. Runtime allowlist: `src/106-war-career.js`, `src/32-decisions.js`,
+     `tools/probe-war-career.mjs`, plan-probe transition, generated HTML, and canonical docs only.
+     President/H0/legacy shells, cabinet, Command, resources, data, manifest, suite, base, T2/T3/Auto,
+     After Action, combat/balance, relationships, save version, Slice F, and other lanes are forbidden.
+  6. Five byte-restored negative binds each red only the new D408 row: remove UI semantic lock while
+     direct mutation stays guarded; weaken 1864 to 1863; weaken earned authority; gate legacy/no-career;
+     bypass pending-decision defer by resolving, dropping, or applying while locked.
+- **D408 planning proof:** plan remains `19/19` with exact names/order; all thirteen coordination plans
+  are `155/155`; build is `GATE OK`; suite remains 130 with War Career row 38. Runtime/source/data,
+  generated HTML, Command, T2/T3/Auto, After Action, `_SAVE_VER=1`, and all pinned integration hashes
+  remain unchanged. D398 remains the latest full release battery; `npm run vet:noreg` was not run.
 - **D407 acceptance contract:**
   1. The only production transition is one qualifying, current-person, `fate:"alive"` result after
      `cmdOnResolve` has stored the exact same-side command target in `P.command._activeId`. Require
@@ -830,9 +854,9 @@ next green commit and confer through this ledger instead of permitting simultane
   Register people / 24 coverage ids / suite 130 with War Career row 38 and sweep 24 at
   `_SAVE_VER=1`. D406 advancement/command behavior and source/command/save/T2/T3/Auto isolation
   remain exact. D398 remains the latest full release battery; `npm run vet:noreg` was not run.
-- **Resume pointer:** inventory the shipped President/War Department capability seams, choose exactly
-  one smallest complete capability, contract its late-war date-plus-earned-authority and pending-action
-  behavior, add fail-closed planning teeth, and return LANE-005 to CONTRACT/unowned without runtime.
+- **Resume pointer:** take a fresh committed LANE-005 DRIVE lock for the separate Slice E runtime.
+  Implement only D408 §17 `nationalDecisions` / Matters of State across the pure receipt-derived reader,
+  shared decision render/wire seam, and direct mutator guard; run all five binds; release without Slice F.
   Work only in `/private/tmp/codex-vg-recovery-019f62fe`; the Desktop checkout remains dataless.
 - **D406 release evidence:** War Career `38/38`, Command `94/94`, plan `19/19`, the complete
   adjacent browser set, and all thirteen coordination plans at `155/155` are green with every

@@ -6,6 +6,42 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D408 — WAR CAREER SLICE E CONTRACTED: MATTERS OF STATE REQUIRE GENERAL COMMAND PLUS A QUALIFYING 1864+ RECEIPT — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-005 DRIVE→CONTRACT] (2026-07-16)
+
+**Planning boundary only.** Slice E selects exactly one capability: `nationalDecisions`, shown to the
+player as **Matters of State**. The live inventory proves it is the smallest complete rung because the
+Desk tab and between-battle presentation converge in `src/32-decisions.js` on one renderer/wirer
+family and one direct mutator, `decResolve → _decApply`. Cabinet mutation crosses legacy and full
+cabinet paths; appointment mutation crosses six direct command functions; resource mutation crosses
+several systems. All three remain false and unconsumed. No production consumer of any
+`warCareerCapabilities` political key exists at D407.
+
+**Date plus earned authority.** Unlock requires both the existing reconstructed current-person
+`general-command` role and the latest sanitized qualifying credit owned by that person carrying an
+independently validated participation receipt with canonical `battleYear >= 1864`. The recorded
+receipt year, not the live clock, President date, battle name, saved boolean/scalar, rank text,
+rapport, or source rewrite, supplies date authority. Date alone and pre-1864 General Command each
+remain locked. Bind token:
+`WAR_CAREER_POLITICAL_DATE_BIND:QUALIFYING_RECEIPT_YEAR_1864_OR_LATER`.
+
+**Pending decisions visibly defer.** Locked cards remain visible in the Decisions tab and
+between-battle surface with situation, options, history, teaching, provenance, and sources. Native
+Decide buttons remain keyboard focusable with `aria-disabled`, an activation guard, visible lock text, and a
+specific missing-date/authority reason. `decOnResolve` keeps the strategic queue current; no card
+resolves automatically, disappears because of War Career, accumulates invisibly, or resolves in the
+player's name. The shared reader must guard `decRenderTab`, `decInterstitialHTML`, `_decWireCards`,
+and direct `decResolve` before `_decApply`. Both Desk implementations, `_wdRefresh`, H0 tabs, and
+`h0iDecisions` retain their existing routing. Legacy/no-career behavior remains byte-equivalent.
+
+**Separate runtime boundary.** Future runtime is limited to `src/106-war-career.js`,
+`src/32-decisions.js`, `tools/probe-war-career.mjs`, the plan-probe transition, generated HTML, and
+canonical docs. President shells, H0 between-battle, legacy render, cabinet, Command, resources,
+data, manifest, suite manifest, frozen base, T2/T3/Auto, After Action, combat/balance, relationships,
+save version, and Slice F stay closed. Five binds must isolate UI semantics, the 1864 boundary,
+earned authority, legacy bypass, and pending-decision defer behavior, each red only in the new D408
+row and each restored byte-for-byte. D408 itself changes planning artifacts only and releases
+LANE-005 to CONTRACT/unowned after 19/19 and 155/155 planning proof.
+
 ## D407 — WAR CAREER SLICE D SHIPPED: BOUNDED HIGH-COMMAND RELATIONSHIP MEMORY — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-005 DRIVE→CONTRACT] (2026-07-16)
 
 **This numeric and structural law was locked before any Slice-D runtime edit.** The only initial

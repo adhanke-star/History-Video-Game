@@ -1066,3 +1066,100 @@ before rebuilt green reruns. `C.loot.journey` remains the sole mutable relations
 read only through the exact target selector, source history is unchanged, and `_SAVE_VER` remains 1.
 Slice E late-war political pull is a separate, untouched take; Slice F and all combat/data/tactical
 producer expansion remain closed.
+
+## 17 · D408 Slice E political-pull contract
+
+### Inventory and selected rung
+
+D408 is planning only. It inventories the production authority paths and selects exactly one first
+capability. `warCareerCapabilities` has no production consumer at this boundary; every political key
+is still `false` and no UI or mutator reads it.
+
+| Surface | Rendering entrypoint | Wiring entrypoint | Underlying mutator | Current capability owner | Career / no-career behavior | Candidate guard |
+|---|---|---|---|---|---|---|
+| Decisions desk | `_wdRefresh` → `decRenderTab` through both `openWarDept` shells | `decWireTab` → `_decWireCards` | `decResolve` → `_decApply` | `nationalDecisions` | Career currently equals legacy; no consumer exists | shared decision access reader in render, wire, and `decResolve` |
+| Between-battle decisions | `h0iDecisions` and legacy interstitial → `decInterstitialHTML` | `decWireInterstitial` → `_decWireCards` | `decResolve` → `_decApply` | `nationalDecisions` | Career currently equals legacy | same shared decision access reader |
+| Cabinet delegation/advice | `presRenderCabinet` | `presWireCabinet` and `cabWire` | delegated flags and `cabHeed` | `cabinetMutation` | Career currently equals legacy | every legacy and full-cabinet handler plus direct mutators |
+| High-command appointments | command tab/card renderers | command UI handlers | `cmdAppoint`, `cmdPromote`, `cmdTransfer`, `cmdCommission`, `cmdSeatCorps`, `cmdSeatDivision` | `appointmentMutation` | Career currently equals legacy | every command handler and all six direct mutators |
+| Treasury, diplomacy, armory, and war-effort actions | their `_wdRefresh` render branches | module-specific wire functions | multiple resource/state mutators | `resourceMutation` | Career currently equals legacy | each module handler and direct mutator family |
+
+`nationalDecisions`, human-facing **Matters of State**, is selected. It is the smallest complete rung
+because both visible paths converge on one renderer/wirer family and one direct mutator in
+`src/32-decisions.js`. `appointmentMutation` spans six direct command functions and their handlers;
+`cabinetMutation` spans both the legacy and full-cabinet delegation/advice paths; `resourceMutation`
+spans several independent systems. Those keys remain false and unconsumed.
+
+### Date plus earned authority
+
+`WAR_CAREER_POLITICAL_DATE_BIND:QUALIFYING_RECEIPT_YEAR_1864_OR_LATER`
+
+Matters of State require both conditions:
+
+1. `warCareerRole(C).id === "general-command"`, including its existing reconstructed current-person
+   billet, alive/present, hand-off, service-window, and qualifying-credit proof; and
+2. the latest sanitized qualifying credit owned by the current person has an independently validated
+   participation receipt whose canonical `battleYear >= 1864`.
+
+The receipt's `battleYear` is the date authority. The live `C.clock.year`,
+`C.president.date`, battle surname, chain aggregate, saved capability boolean, saved scalar, rank text,
+rapport, command projection, or source-history rewrite cannot satisfy it. Date alone cannot unlock
+politics, and General Command earned before 1864 remains locked until a qualifying 1864-or-later
+receipt exists. A live clock advanced into 1864 without that receipt remains locked. The shared pure
+reader returns capability, missing-date, and missing-authority reasons separately so UI and direct
+calls enforce the same law.
+
+### Visible defer and complete guard
+
+Before unlock, every pending decision remains visible in the Decisions tab and between-battle
+surface as a **Visible defer**. Situation, options, historical notes, teaching, provenance, and
+sources remain readable. Each Decide control remains a native focusable button with visible text,
+`aria-disabled="true"`, an activation guard, and a nearby explanation naming the missing late-war date,
+earned General Command authority, or both. Text and semantic state carry the lock; color never does.
+No pending card resolves automatically, disappears because of the career, or resolves in the
+player's name. `decOnResolve` continues to initialize, expire, and enqueue cards under the shipped
+strategic law, so the war cannot freeze and the defer is visible rather than silent accumulation.
+
+After unlock, the shipped choice/effect behavior is unchanged. Read-only teaching, sources,
+strategic situation, public-war readouts, resolved history, every H0 tab, and both President's Desk
+shells remain visible. Both `openWarDept` implementations and `_wdRefresh` continue to route the
+Decisions tab; `H0_DESK_TABS` retains it; `h0iDecisions`, `decRenderTab`, and
+`decInterstitialHTML` use the shared access reader; `_decWireCards` refuses a locked activation; and
+`decResolve` guards before `_decApply`. Direct calls therefore cannot bypass a disabled UI.
+
+Legacy or no-career campaigns bypass the capability gate and remain byte-equivalent to the shipped
+President experience. Malformed, inactive, unavailable, fallen, captured, retired, war-ended,
+pending-hand-off, foreign-person, stale-service, stale-run, wrong-side, nonqualifying, pre-1864, or
+unproved career state fails closed. Sanitation derives access from existing validated receipts on
+every read/load; it persists no new authority field and keeps `_SAVE_VER=1`.
+
+### Future runtime boundary and proof
+
+The separate runtime slice may edit only:
+
+- `src/106-war-career.js` for the pure receipt-derived capability reader;
+- `src/32-decisions.js` for the shared visible-defer UI/wiring and direct-mutator guard;
+- `tools/probe-war-career.mjs` for focused browser/static proof;
+- `tools/probe-war-career-loop-plan.mjs` only to convert this D408 contract boundary to a shipped
+  Slice-E boundary after runtime is complete;
+- `civil_war_generals.html` only as generated output from `node tools/build.mjs`; and
+- canonical status, decision, design, run-log, and coordination docs.
+
+Do not touch `src/30-president-shell.js`, `src/99-h0-president-desk.js`,
+`src/101-h0-between-battle.js`, or `src/20-president-render.js`: their existing routing must be proven
+through the shared decision seam, not rewritten. Also forbidden are data, manifest, frozen base,
+suite manifest, Command runtime/probe, cabinet runtime, Treasury, Diplomacy, Armory, War Effort,
+T2/T3/Auto, After Action, combat, casualty, winner, score, AI, objective, reinforcement, balance,
+relationships, save version, Slice F, and every other lane.
+
+The focused probe adds one bounded D408 browser row and the minimum static walls needed to prove all
+render, wire, and direct-call paths. Five byte-restored negative binds are mandatory:
+
+1. remove only the UI focusable semantic lock while leaving `decResolve` guarded; only the D408 row reds;
+2. weaken `battleYear >= 1864` to admit 1863; only the D408 row reds;
+3. weaken General Command/current-person receipt authority; only the D408 row reds;
+4. gate the legacy/no-career path; only the D408 row reds; and
+5. bypass visible defer by resolving, dropping, or applying a pending choice while locked; only the D408 row reds.
+
+Each inverse restores source and generated hashes byte-for-byte before the next green rerun. Runtime
+must retain every D400-D407 row, 29 static walls, Command 94/94, plan 19/19 names/order, suite 130
+with War Career row 38, 24/54/1512/24 integration, sweep 24, and `_SAVE_VER=1`. Slice F stays closed.

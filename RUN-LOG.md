@@ -8,6 +8,19 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D408 WAR-CAREER SLICE E — Matters of State contract shipped — 2026-07-16 (D408)
+
+- Selected only `nationalDecisions` / Matters of State after inventorying President, H0,
+  decision, cabinet, Command, and resource mutation paths. The decision family is the smallest
+  complete rung because both visible surfaces and direct mutation converge in `src/32-decisions.js`.
+- Locked access to reconstructed current-person General Command plus a latest qualifying canonical
+  receipt with `battleYear >= 1864`. Locked pending cards visibly defer; teaching remains readable;
+  direct `decResolve` must guard before `_decApply`; legacy/no-career remains byte-equivalent.
+- Added D408 §17, five negative-bind contracts, an exact runtime allowlist, and fail-closed planning
+  teeth. No runtime, generated, data, Command, T2/T3/Auto, After Action, or save-version byte moved.
+- Gates: plan 19/19; thirteen coordination plans 155/155; build GATE OK; suite 130 with War Career
+  row 38; pinned hashes unchanged. D398 remains the latest full release battery.
+
 ## D407 WAR-CAREER SLICE D — bounded high-command relationship memory shipped — 2026-07-16 (D407)
 - Continued from clean pushed D406 `2ab95ba3459d77a655f1db35dc6e14dec5d06189` through the
   ledger-only LANE-005 take `d9f765ec25c47cbc6577743fe895e13013c31522`. The implementation

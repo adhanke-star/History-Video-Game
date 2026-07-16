@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// D407 Slice-D-complete gate for the D382 war-career loop.
+// D408 Slice-E-contract gate for the D382 war-career loop.
 // Filesystem-first, runtime-only, fail-closed. This plan probe never enters the
 // release suite and keeps the dual-reference, command-isolation, and later-slice walls.
 
@@ -52,7 +52,7 @@ const MARKER = "WAR_CAREER_RUNTIME_V1";
 const JOURNEY_MARKER = "WAR_CAREER_JOURNEY_ADAPTER_V1";
 const RUNTIME_NAME = "106-war-career.js";
 const RECEIPT_BIND = "WAR_CAREER_RECEIPT_BIND:SOURCE_REF_NEVER_EQUALS_TIMELINE_AUTHORITY";
-const D407_SLICE_D_ALLOWED = new Set([
+const D408_CONTRACT_ALLOWED = new Set([
   "AUTONOMOUS-RUN.md",
   "COORDINATION.md",
   "DECISIONS.md",
@@ -62,11 +62,7 @@ const D407_SLICE_D_ALLOWED = new Set([
   "V1-CHECKLIST.md",
   "WAKE-UP.md",
   "docs/design/war-career-loop-design.md",
-  "tools/probe-war-career-loop-plan.mjs",
-  "src/106-war-career.js",
-  "src/37-loot-survival.js",
-  "tools/probe-war-career.mjs",
-  "civil_war_generals.html"
+  "tools/probe-war-career-loop-plan.mjs"
 ]);
 
 function read(path) {
@@ -866,9 +862,9 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     if (locks[key] !== expected[key]) throw new Error(key + " Slice-D-complete lock moved: " + locks[key]);
   }
   const changed = gitChangedPaths();
-  const forbidden = changed.filter(path => !D407_SLICE_D_ALLOWED.has(path));
+  const forbidden = changed.filter(path => !D408_CONTRACT_ALLOWED.has(path));
   if (forbidden.length) {
-    throw new Error("D407 Slice-D allowlist violation: " + forbidden.join(", "));
+    throw new Error("D408 contract allowlist violation: " + forbidden.join(", "));
   }
   const runtimeText = read(RUNTIME), journeyText = read(JOURNEY), commandText = read(COMMAND);
   const focusedText = read(FOCUSED), commandProbeText = read(COMMAND_PROBE);
@@ -1010,7 +1006,7 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     "T2, T3, Auto",
     "Slice D-F"
   ], "Slice-C-complete contract");
-  const s16 = section(read(SPEC), "## 16 ", null);
+  const s16 = section(read(SPEC), "## 16 ", "## 17 ");
   mustInclude(s16, [
     "D407 Slice D runtime contract",
     "command-general-v1|<targetId>",
@@ -1028,8 +1024,34 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     "Remembered network",
     "Slice E"
   ], "Slice-D-complete contract");
+  const s17 = section(read(SPEC), "## 17 ", null);
+  mustInclude(s17, [
+    "D408 Slice E political-pull contract",
+    "nationalDecisions",
+    "Matters of State",
+    "has no production consumer at this boundary",
+    "WAR_CAREER_POLITICAL_DATE_BIND:QUALIFYING_RECEIPT_YEAR_1864_OR_LATER",
+    "warCareerRole(C).id === \"general-command\"",
+    "battleYear >= 1864",
+    "Visible defer",
+    "decOnResolve",
+    "decRenderTab",
+    "decInterstitialHTML",
+    "_decWireCards",
+    "decResolve",
+    "_decApply",
+    "Legacy or no-career campaigns bypass the capability gate",
+    "src/106-war-career.js",
+    "src/32-decisions.js",
+    "src/30-president-shell.js",
+    "Five byte-restored negative binds",
+    "Slice F stays closed"
+  ], "D408 Slice-E contract");
+  if (occurrences(read(SPEC), "WAR_CAREER_POLITICAL_DATE_BIND:QUALIFYING_RECEIPT_YEAR_1864_OR_LATER") !== 1) {
+    throw new Error("D408 political-date bind token moved");
+  }
   return { ...locks, changed, commandConsumers:consumerCount, relationshipRows:d407Rows.length,
-    status:"D407 Slice D complete; Slice E locked" };
+    status:"D407 runtime locked; D408 Slice E contracted" };
 });
 
 step("BASELINES + LANE", () => {
@@ -1078,7 +1100,13 @@ step("BASELINES + LANE", () => {
   mustInclude(lane, [
     "Owner: none",
     "State: CONTRACT",
-    "D407 Slice D",
+    "D408 Slice E",
+    "nationalDecisions",
+    "Matters of State",
+    "battleYear >= 1864",
+    "general-command",
+    "Visible defer",
+    "Five byte-restored negative binds",
     "cw_war_career_relationship_signal_v1",
     "cw_war_career_relationship_edge_v1",
     "command-general-v1",
@@ -1096,8 +1124,8 @@ step("BASELINES + LANE", () => {
     "source/command/save/T2/T3/Auto isolation",
     "D398 remains the latest full release battery",
     "`npm run vet:noreg` was not run",
-    "Slice E late-war political pull",
-    "separate and untouched",
+    "Slice E runtime",
+    "separate",
     "/private/tmp/codex-vg-recovery-019f62fe",
     "No simultaneous edits"
   ], "D407 release lane");
