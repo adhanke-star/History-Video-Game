@@ -749,18 +749,31 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
-### LANE-005 · war-career-loop — **CONTRACT (D408 Slice E contracted; runtime unowned)**
+### LANE-005 · war-career-loop — **DRIVE (D408 Slice E Matters-of-State runtime; Claude Code Fable)**
 
-- **Owning tool:** none. Owner: none. No simultaneous edits by any provider.
-- **Task:** D408 Slice E contract-only planning is shipped. The next separate task is Slice E runtime
-  for exactly one capability, `nationalDecisions` / **Matters of State**. Slice F remains closed.
-- **State:** CONTRACT — released from the ledger take
-  `3bc97caf464e9a5aa0bf94bd618c4dba8182866a`, based on clean D407 boundary
-  `146040dede80c08d10a968770ed01103c8632552`. Preserve the sole
-  `C.loot.journey` player owner,
-  separate `P.command` NPC owner, source/timeline receipt split, one-credit/fate/handoff/save laws,
-  safe-clone boundary, and every no-combat/no-politics/no-simultaneous-edit lock. Release state:
-  State: CONTRACT.
+- **Owning tool:** Claude Code (Fable). Owner: Claude Code Fable. No simultaneous edits by any provider.
+- **Task:** D408 Slice E Matters-of-State runtime — implement design §17 only: the pure
+  receipt-derived `nationalDecisions` access reader, the shared decision render/wire seam plus the
+  direct `decResolve → _decApply` mutator guard with Visible defer, the focused D408 proof row, all
+  five byte-restored negative binds, docs sync, and release without Slice F.
+- **State:** DRIVE — taken at starting SHA `18c156261ddabe2531226db77c70bff01d7ca000` (the clean
+  pushed D408 contract boundary). Runtime allowlist: `src/106-war-career.js`, `src/32-decisions.js`,
+  `tools/probe-war-career.mjs`, `tools/probe-war-career-loop-plan.mjs` (only for the D408
+  contract-to-runtime completion transition), `civil_war_generals.html` (generated only by
+  `node tools/build.mjs`), and the canonical docs: AUTONOMOUS-RUN.md, COORDINATION.md, DECISIONS.md,
+  HANDOFF.md, RUN-LOG.md, START-HERE.md, V1-CHECKLIST.md, WAKE-UP.md, and
+  docs/design/war-career-loop-design.md. Forbidden: `src/30-president-shell.js`,
+  `src/99-h0-president-desk.js`, `src/101-h0-between-battle.js`, `src/20-president-render.js`,
+  `src/31-cabinet.js`, `src/35-command.js`, `tools/probe-command.mjs`, any Treasury/Diplomacy/
+  Armory/War Effort runtime, any `data/*`, `src/00-manifest.json`, `build/base.html`,
+  `tools/vet-no-regression.mjs`, T2/T3/Auto, After Action, combat/casualty/winner/score/AI/
+  objective/reinforcement/balance/tactical producers, relationships, save version, Slice F, and
+  every other lane. Preserve the sole `C.loot.journey` player owner, the separate `P.command` NPC
+  owner, the source/timeline receipt split, one-credit/fate/handoff/save laws, the safe-clone
+  boundary, and every no-combat/no-simultaneous-edit lock.
+- **Resume pointer (DRIVE):** implement the receipt-derived reader, shared decision guard, focused
+  proof, five binds, docs sync, and release without Slice F. Work only in
+  `/private/tmp/codex-vg-recovery-019f62fe`; never edit or pull across the dataless Desktop checkout.
 - **D408 acceptance contract:**
   1. Select only `nationalDecisions`, human-facing **Matters of State**. It is the smallest complete
      rung because Desk and between-battle paths converge on `src/32-decisions.js` render/wire seams
