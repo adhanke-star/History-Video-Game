@@ -749,14 +749,17 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
-### LANE-005 · war-career-loop — **CONTRACT (D407 Slice D shipped; Slice E unowned)**
+### LANE-005 · war-career-loop — **DRIVE (D408 Slice E contract-only planning)**
 
-- **Owning tool:** none. Owner: none. No simultaneous edits by any provider.
-- **Task:** D407 Slice D relationship memory is shipped. The next separate, untouched task is
-  Slice E late-war political pull; Slice F remains closed.
-- **State:** CONTRACT — released after implementation and focused release proof from the ledger-only
-  take `d9f765ec25c47cbc6577743fe895e13013c31522`, based on clean D406 boundary
-  `2ab95ba3459d77a655f1db35dc6e14dec5d06189`. Preserve the sole `C.loot.journey` player owner,
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra. Owner: ChatGPT/Codex 5.6 Sol Ultra. No simultaneous
+  edits by any provider.
+- **Task:** D408 Slice E contract-only planning for one smallest late-war political-pull capability.
+  Inventory the shipped authority surfaces, select and contract exactly one capability, add
+  fail-closed planning teeth, then release without runtime. Slice F remains closed.
+- **State:** DRIVE — taken from clean D407 boundary
+  `146040dede80c08d10a968770ed01103c8632552`. Runtime, politics, combat, data, tactical producers,
+  save version, Slice F, and relationship expansion remain locked. Preserve the sole
+  `C.loot.journey` player owner,
   separate `P.command` NPC owner, source/timeline receipt split, one-credit/fate/handoff/save laws,
   safe-clone boundary, and every no-combat/no-politics/no-simultaneous-edit lock. Release state:
   State: CONTRACT.
@@ -827,12 +830,10 @@ next green commit and confer through this ledger instead of permitting simultane
   Register people / 24 coverage ids / suite 130 with War Career row 38 and sweep 24 at
   `_SAVE_VER=1`. D406 advancement/command behavior and source/command/save/T2/T3/Auto isolation
   remain exact. D398 remains the latest full release battery; `npm run vet:noreg` was not run.
-- **Resume pointer:** take a fresh committed LANE-005 DRIVE lock for Slice E late-war political pull
-  only. Inventory the shipped President/War Department capability seams, lock one pull-based
-  capability contract and its negative binds before runtime, and keep Slice F, combat/data/tactical
-  producers, relationship expansion, source rewriting, parallel owners, and save-version movement
-  closed. Work only in `/private/tmp/codex-vg-recovery-019f62fe`; the Desktop checkout remains
-  dataless. Slice E is separate and untouched at this D407 release.
+- **Resume pointer:** inventory the shipped President/War Department capability seams, choose exactly
+  one smallest complete capability, contract its late-war date-plus-earned-authority and pending-action
+  behavior, add fail-closed planning teeth, and return LANE-005 to CONTRACT/unowned without runtime.
+  Work only in `/private/tmp/codex-vg-recovery-019f62fe`; the Desktop checkout remains dataless.
 - **D406 release evidence:** War Career `38/38`, Command `94/94`, plan `19/19`, the complete
   adjacent browser set, and all thirteen coordination plans at `155/155` are green with every
   present error array empty. The exact reachable path ends
