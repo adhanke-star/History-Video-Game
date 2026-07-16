@@ -749,17 +749,41 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
-### LANE-005 · war-career-loop — **DRIVE (ChatGPT/Codex 5.6 Sol Ultra; D406 Slice C only)**
+### LANE-005 · war-career-loop — **CONTRACT (unowned; D406 Slice C shipped)**
 
-- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra. No simultaneous edits by any provider.
-- **Task:** D406 Slice C only — deterministic merit/reputation, journey-owned billet history,
-  field/general role advancement, and one bounded `warCareerCommandProjection` contribution in
-  `commandLeadership(C)`. Slice D relationship memory and Slice E-F remain closed.
-- **State:** DRIVE — D406 Slice C taken from the clean pushed D405 receipt boundary. Preserve the
-  sole `C.loot.journey` player owner, separate `P.command` NPC owner, exact source/timeline receipt
-  split, one-credit law, terminal/fate/capture/handoff/save contracts, safe-clone boundary, and all
-  no-combat/no-politics/no-relationship/no-simultaneous-edit locks. D405 dual-reference receipt
-  prerequisite shipped. D404 was a planning contract only;
+- **Owning tool:** none. No simultaneous edits by any provider.
+- **Task:** D406 Slice C is shipped: deterministic merit/reputation, reconstructed journey-owned
+  billets, field/general role authority, and one bounded `warCareerCommandProjection` contribution
+  in `commandLeadership(C)`. Slice D relationship memory is the next separate take; Slice E-F remain
+  closed.
+- **State:** CONTRACT/unowned — D406 completed from pre-take D405 boundary
+  `22180f80a04482ef742c5949f0d7f8d4a3be45d1` through pushed take
+  `60430009308eb885a5b5f07c0f6abb1af59cfb6c`. Preserve the sole `C.loot.journey` player owner,
+  separate `P.command` NPC owner, source/timeline receipt split, one-credit/fate/handoff/save laws,
+  safe-clone boundary, and every no-combat/no-politics/no-relationship/no-simultaneous-edit lock.
+- **D406 release evidence:** War Career `38/38`, Command `94/94`, plan `19/19`, the complete
+  adjacent browser set, and all thirteen coordination plans at `155/155` are green with every
+  present error array empty. The exact reachable path ends
+  at merit 16, reputation 12, four promotions, Brig. Gen., and projection 4 while canonical Captain
+  rank and OVR 65 remain immutable; field/general projections are `1/2/2/4`. Binds A/B reddened only
+  the exact-once consumer row (`55/55`, then `63/63`); C reddened only forbidden player/NPC aliasing;
+  D reddened only billet sanitation/zero compatibility (`79/83`). Each inverse restored exact bytes
+  before rebuilt green reruns. Final MD5s: 106 `d54ad18271de8d2af33be909be8251ed`, 35
+  `8f12c49f7129b3a9be0203677822e048`, 37 `4221eb61fee1c209ebc85d2fc1636a17`, War Career probe
+  `c19cffcba98e356faf2679076aa798b8`, Command probe `5ffd40fd221179f2e01cad59ef43bf7d`,
+  generated HTML `32dcc03e25e080aa4e7addd26a1c5f99`, frozen base
+  `c9db83fa99230ffb95bdfdfe059f3fb9`. The suite is 130 commands with War Career row 38;
+  `_SAVE_VER=1` and all 24/54/1512/24 baselines remain exact. D398 remains the latest full release
+  battery; D406 deliberately deferred `npm run vet:noreg`.
+- **Resume pointer (D406 release):** take LANE-005 in a fresh committed ledger-only DRIVE edit for
+  Slice D relationship memory only. First inventory the live explicit-id/result/handoff/save/report
+  seams and lock the bounded provenance-bearing map plus a small deterministic event-code transition
+  set. Historical-authored edges require normal source law; emergent edges must read “Your Timeline.”
+  Preserve neutral/inherited-memory handoff semantics, `P.command` separation, all D406 numeric and
+  command bytes, `_SAVE_VER=1`, and the safe-clone/no-simultaneous-edit rules. HALT before politics,
+  Slice E-F, combat/data/tactical/Auto changes, invented ties, source inference by name/proximity, or
+  a second career/relationship owner.
+- **Retained state history:** D405 dual-reference receipt prerequisite shipped. D404 was a planning contract only;
   D405 implements its named/coexisting
   `cw_war_career_participation_v2`, independently bound immutable canonical `sourceRef` and exact
   Inferred “Your Timeline” `timelineAssignmentRef`, and preserves D401 v1 byte/id semantics. Aaron
@@ -1015,25 +1039,20 @@ next green commit and confer through this ledger instead of permitting simultane
   stable candidate order/exclusions; save/load/anti-reroll handoff; one-credit qualification; lineage/
   sanitizer hardening; and aggregate-casualty fate rejection. It is release-suite row 38 in the
   130-command manifest and is green 25/25 with zero pageerrors/realErrors.
-- **Resume pointer:** from the clean pushed D405 boundary, take LANE-005 in a committed ledger-only
-  DRIVE edit for Slice C only and rerun/read all thirteen coordination-sensitive plan probes. Before
-  runtime edits, inventory the live advancement/command seams and record the smallest deterministic
-  candidate law in `DECISIONS.md`: merit/reputation values, promotion thresholds, billet schema and
-  sequence, projection formula/cap, and strategic-general identity; label balance thresholds
-  Inferred. Primary files are `src/106-war-career.js`, `src/37-loot-survival.js`,
-  `src/35-command.js`, `tools/probe-war-career.mjs`, and `tools/probe-command.mjs`; 82/90/91 are
-  conditional only if the declared law proves necessary. Add journey-owned billet history and one
-  narrow `warCareerCommandProjection` consumer inside `commandLeadership(C)`. Preserve
-  `C.loot.journey` as player owner and `P.command` as separate NPC owner; prove pure selectors,
-  zero-state exclusions, legal field/general cases, rank sequence, source honesty, sanitation,
-  one-credit behavior, exact capped delta, no stacking, and four declared bind classes (missing
-  consumer, doubled consumer, ledger alias, relaxed qualification/life/billet guard), each with
-  predeclared red scope and byte-identical restore. HALT before T2/T3/Auto, combat/data, politics,
-  relationships, franchise/archive, save-version, invented identity/service/billet history, or Slice D.
+- **Current resume pointer:** from the clean pushed D406 boundary, take LANE-005 in a committed
+  ledger-only DRIVE edit for Slice D relationship memory only, then rerun and read all thirteen
+  coordination-sensitive plan probes before runtime work. Extend the existing `C.loot.journey`
+  owner with a bounded stable-id map; declare signed rapport bounds, dedupe/event ordering, the small
+  qualifying event-code transition set, authored-vs-emergent provenance, source requirements,
+  sanitation, handoff memory/neutral-personal semantics, AAR copy, and negative binds before coding.
+  Preserve every D406 numeric, billet, projection, command, source/timeline, fate, and save invariant.
   Work only in `/private/tmp/codex-vg-recovery-019f62fe`; never pull across or overwrite the dataless
-  Desktop checkout.
-- **Last-touched commit:** D405 dual-reference receipt prerequisite and lane release (this commit); the
-  D405 DRIVE take was `7ed5c52dac2d52b3d903e88378918132c3406181` from clean pushed D404. The D404
+  Desktop checkout; no simultaneous edits. Slice E-F, politics, combat/data/tactical/Auto, invented
+  historical ties, parallel owners, and save-version movement remain closed.
+- **Last-touched commit:** D406 Slice C implementation and lane release (this commit); the D406 DRIVE
+  take was `60430009308eb885a5b5f07c0f6abb1af59cfb6c` from clean D405 boundary
+  `22180f80a04482ef742c5949f0d7f8d4a3be45d1`. The D405 DRIVE take was
+  `7ed5c52dac2d52b3d903e88378918132c3406181` from clean pushed D404. The D404
   planning take was `f82b38f` from clean pushed D403. The D403
   planning take was `9fa199c89ed11bd995fc988d00f4fed0076b5667` from clean pushed D402. The D402 DRIVE
   take was `f891f3862e14411133d90dc874a6eaa0fd29d0f9` from clean pushed D401. The Slice-B DRIVE take was
@@ -1065,8 +1084,12 @@ next green commit and confer through this ledger instead of permitting simultane
   generated/save baseline, and released without runtime. ChatGPT/Codex took D405 in ledger-only commit
   `7ed5c52dac2d52b3d903e88378918132c3406181`; the separate prerequisite shipped coexisting v2 runtime,
   preserved D401 v1 bytes/ids and every command/combat wall, extended the focused guard to 34 browser
-  rows plus 29 static walls, proved the source-vs-timeline bind again, and released the lane. Slice C
-  remains unstarted and requires its own DRIVE take; every later declared exclusion remains locked.
+  rows plus 29 static walls, proved the source-vs-timeline bind again, and released the lane.
+  ChatGPT/Codex took D406 in `60430009308eb885a5b5f07c0f6abb1af59cfb6c`, shipped the declared
+  advancement/billet/field-general/command projection slice, proved all four negative binds with
+  byte-exact restores, held `_SAVE_VER=1` and every simulation/history wall, and released the lane.
+  Slice D relationship memory is unstarted and requires its own DRIVE take; every later exclusion
+  remains locked.
 
 ---
 

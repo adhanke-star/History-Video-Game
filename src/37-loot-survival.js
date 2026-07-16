@@ -589,13 +589,17 @@ function _ssCleanWarCareerV1(C, J, clean) {
     }
   }
 
-  // Slice C and later own these authority ledgers. Slice B retains only
-  // consequence evidence and immutable hand-off history; malformed saves cannot
-  // smuggle advancement, relationships, billets, or political authority.
+  // D406 reconstructs every player-career authority projection only after
+  // receipt ownership, life state, lineage, and hand-off have converged.
+  // Saved totals/rank/billets never survive on their own authority.
   clean.roleHistory = [];
+  clean.currentBillet = null;
+  clean.merit = 0;
+  clean.reputation = 0;
+  clean.promotionCount = 0;
+  if (typeof warCareerDeriveAdvancement === "function") warCareerDeriveAdvancement(C, clean);
   clean.relationships = {};
   clean.terminal = null;
-  clean.currentBillet = null;
 }
 function _ssJourneySnapshot(p, warCareerV1) {
   if (!_lootPlain(p)) return null;
@@ -1348,8 +1352,10 @@ function ssPersonRegistry(C) {
   var reg = (typeof fldScenarioRegistry === "function") ? fldScenarioRegistry() : {};
   for (var sid in reg) if (reg.hasOwnProperty(sid)) _ssCollectScenarioUnits(brigades, seenBrigades, sid, reg[sid]);
   for (var bi = 0; bi < brigades.length; bi++) {
-    var b = brigades[bi], specs = _ssUnitSpecs(b.scenario, b.label, b.side, b.unit, b.year || year);
-    for (var si = 0; si < specs.length; si++) _ssAddPerson(people, seen, specs[si], b.year || year, "scenario-oob");
+    var b = brigades[bi], scenarioYear = _ssCareerBattleYear(b.scenario);
+    var personYear = scenarioYear == null ? (b.year || year) : scenarioYear;
+    var specs = _ssUnitSpecs(b.scenario, b.label, b.side, b.unit, personYear);
+    for (var si = 0; si < specs.length; si++) _ssAddPerson(people, seen, specs[si], personYear, "scenario-oob");
   }
   people.sort(function (a, b) {
     if (a.side !== b.side) return a.side === "US" ? -1 : 1;

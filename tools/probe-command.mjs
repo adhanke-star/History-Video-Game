@@ -40,6 +40,60 @@ const SETUP = `(() => {
   // D105: a single resolve with an EXPLICIT casualty split (so the attrition-drag tests can dial the share).
   function resolveCas(C, win, type, casMe, casEnemy){ var side=C.side, e=(side==='US')?'CS':'US'; var c={}; c[side]=casMe; c[e]=casEnemy;
     _t1Resolve(side, win?(type||'win'):(type||'loss'), {playerSide:side,enemySide:e,bd:{name:'x',year:C.president.date.year},casualties:c,infl:{},units:[]}, C, win); return C; }
+  function d406Own(obj, key){ return Object.prototype.hasOwnProperty.call(obj, key); }
+  function d406Clone(value){ return value == null ? value : JSON.parse(JSON.stringify(value)); }
+  function d406Bytes(value){ return JSON.stringify(value); }
+  function d406BattleRow(C){
+    var id=CHAINS[C.side][Math.max(0,Math.min(CHAINS[C.side].length-1,C.idx||0))];
+    for(var i=0;i<BATTLES.length;i++) if(BATTLES[i].id===id) return d406Clone(BATTLES[i]);
+    return {id:id,name:id,year:1861,atk:C.side};
+  }
+  function d406Battle(C){
+    var side=C.side==='CS'?'CS':'US', enemy=side==='CS'?'US':'CS', bd=d406BattleRow(C);
+    var casualties={US:0,CS:0}, infl={US:0,CS:0}; casualties[side]=120; casualties[enemy]=220; infl[side]=220; infl[enemy]=120;
+    return {id:bd.id,name:bd.name||bd.id,bd:bd,fromCampaign:true,playerSide:side,enemySide:enemy,over:true,
+      casualties:casualties,infl:infl,units:[
+        {id:'U1',side:side,alive:true,type:'inf',vetId:'R1',weapon:'rifled',xp:1,kills:1,name:'Probe Infantry'},
+        {id:'E1',side:enemy,alive:true,type:'inf',weapon:'rifled',xp:0,kills:0,name:'Probe Enemy'}
+      ]};
+  }
+  function d406ExactPerson(C, pid){
+    var people=ssPersonRegistry(C).people, found=null, count=0;
+    for(var i=0;i<people.length;i++) if(people[i]&&people[i].pid===pid){ found=people[i]; count++; }
+    if(count!==1) throw new Error('D406 exact person count '+count+' for '+pid);
+    return found;
+  }
+  function d406StubResult(fn){
+    var oldUpgrade=window.openUpgrade, oldLaunch=window.launchCampaignBattle, oldWon=window.warWonScreen;
+    window.openUpgrade=function(){}; window.launchCampaignBattle=function(){}; window.warWonScreen=function(){};
+    try{return fn();} finally{window.openUpgrade=oldUpgrade;window.launchCampaignBattle=oldLaunch;window.warWonScreen=oldWon;}
+  }
+  function d406Resolve(C, B){
+    G.campaign=C; G.battle=B;
+    return d406StubResult(function(){ return campaignAdvance(C.side,'decisive'); });
+  }
+  var d406CareerCache=null;
+  function d406Career(){
+    if(d406CareerCache){ var cached=d406Clone(d406CareerCache); G.campaign=cached; return cached; }
+    var pid='ss:chancellorsville:US:us_battery_chanc:cmd';
+    var C=mkC('US',1863,5); C.idx=12; C.runId='run-d406-general-1';
+    var person=d406ExactPerson(C,pid), started=warCareerStart(C,person.pid);
+    if(!started||!started.ok) throw new Error('D406 Captain start failed: '+d406Bytes(started));
+    var rungs=[12,14,15,16];
+    for(var i=0;i<rungs.length;i++){
+      C.idx=rungs[i]; var B=d406Battle(C); B.warCareerEvidence=warCareerBuildClassicEvidence(C,B);
+      if(!B.warCareerEvidence) throw new Error('D406 evidence missing at chain '+rungs[i]);
+      var proof=warCareerParticipationEvidence(C,B), fate=warCareerPreflightFate(C,B,C.side,'decisive');
+      if(!proof.qualifying||!fate.qualifying||fate.fate!=='alive') throw new Error('D406 fixture receipt mismatch at '+rungs[i]+': '+d406Bytes({proof:proof,fate:fate}));
+      d406Resolve(C,B);
+    }
+    if(warCareerRole(C).id!=='general-command'||warCareerCommandProjection(C)!==4) throw new Error('D406 fixture did not reach bounded general command');
+    d406CareerCache=d406Clone(C); return C;
+  }
+  function d406LeadWith(C, replacement){
+    var saved=window.warCareerCommandProjection; window.warCareerCommandProjection=replacement;
+    try{return commandLeadership(C);} finally{window.warCareerCommandProjection=saved;}
+  }
   try {
     if (typeof _cmdData!=='function' || typeof commandLeadership!=='function' || typeof cmdInit!=='function')
       return JSON.stringify({ok:false,fatal:'command module missing'});
@@ -1329,6 +1383,65 @@ const SETUP = `(() => {
       if(html.indexOf('hidden Transfer')<0) throw new Error('readout should make clear Transfer is not secretly active');
       if(html.indexOf('NaN')>=0||html.indexOf('undefined')>=0) throw new Error('AI-GM readout leaked NaN/undefined');
       return { leadership:lead, attackEdge:atk, defendEdge:def, renders:true }; });
+
+    step('D406: default, legacy, and excluded careers contribute zero — commandLeadership is byte-identical', function(){
+      var real=window.warCareerCommandProjection;
+      var fresh=mkC('US',1863,5), freshBefore=d406Bytes(fresh), freshExpected=d406LeadWith(fresh,function(){return 0;}), freshActual=commandLeadership(fresh);
+      if(freshActual!==freshExpected||d406Bytes(fresh)!==freshBefore) throw new Error('fresh/default command path changed: '+freshExpected+'/'+freshActual);
+
+      var legacy=mkC('US',1863,5), people=ssPersonRegistry(legacy).people, high=null;
+      for(var i=0;i<people.length;i++) if(people[i]&&people[i].side==='US'&&!_wcAllowedStartRank(people[i].rank)){high=people[i];break;}
+      if(!high||!ssStartJourney(legacy,high.pid)||!legacy.loot||!legacy.loot.journey||legacy.loot.journey.careerVersion===1) throw new Error('could not establish an authentic legacy journey');
+      var legacyBefore=d406Bytes(legacy), legacyExpected=d406LeadWith(legacy,function(){return 0;}), legacyActual=commandLeadership(legacy);
+      if(legacyActual!==legacyExpected||real(legacy)!==0||d406Bytes(legacy)!==legacyBefore) throw new Error('legacy command path changed: '+legacyExpected+'/'+legacyActual);
+
+      var captured=d406Career(); captured.loot.journey.status='captured'; G.campaign=captured;
+      var capturedBefore=d406Bytes(captured), capturedExpected=d406LeadWith(captured,function(){return 0;}), capturedActual=commandLeadership(captured);
+      if(capturedActual!==capturedExpected||real(captured)!==0||d406Bytes(captured)!==capturedBefore) throw new Error('captured career was not a byte-identical zero: '+capturedExpected+'/'+capturedActual);
+      return {fresh:freshActual,legacy:legacyActual,captured:capturedActual,projection:0}; });
+
+    step('D406: commandLeadership consumes one projection exactly once — exact unclamped delta and repeated reads do not stack', function(){
+      var C=d406Career(), J=C.loot.journey, real=window.warCareerCommandProjection;
+      C.president.command.fieldGeneral='us-burnside'; C.president.command.transfer=null;
+      if(C.president.command.reputation) C.president.command.reputation['us-burnside']=50;
+      var projection=real(C), before=d406Bytes(J), zero=d406LeadWith(C,function(){return 0;}), calls=0;
+      window.warCareerCommandProjection=function(X){calls++;return real(X);};
+      var first, second;
+      try{first=commandLeadership(C);second=commandLeadership(C);} finally{window.warCareerCommandProjection=real;}
+      if(projection!==4) throw new Error('general projection must be 4, got '+projection);
+      if(zero<=42||zero>=85) throw new Error('fixture must exercise the unclamped band, got '+zero);
+      if(calls!==2) throw new Error('two leadership reads must make exactly two projection reads, got '+calls);
+      if(first-zero!==projection||second!==first) throw new Error('projection delta/repeat mismatch: '+d406Bytes({zero:zero,first:first,second:second,projection:projection}));
+      if(d406Bytes(J)!==before) throw new Error('repeated leadership reads stacked into the journey ledger');
+      return {zero:zero,projection:projection,first:first,second:second,calls:calls}; });
+
+    step('D406: the existing 42..88 commandLeadership clamp stays authoritative after the career contribution', function(){
+      var C=mkC('US',1863,5), names=['cabinetLeadership','cmdActiveGeneral','_cmdGenRating','_cmdCorpsLift','_cmdDivLift','_cmdTransferReadinessLift','warCareerCommandProjection'];
+      var saved={}; for(var i=0;i<names.length;i++) saved[names[i]]=window[names[i]];
+      var high0, high4, low0, low4;
+      try{
+        window.cmdActiveGeneral=function(){return {id:'probe-general'};}; window._cmdTransferReadinessLift=function(){return 0;};
+        window.cabinetLeadership=function(){return 100;}; window._cmdGenRating=function(){return 100;}; window._cmdCorpsLift=function(){return 4;}; window._cmdDivLift=function(){return 2;};
+        window.warCareerCommandProjection=function(){return 0;}; high0=commandLeadership(C); window.warCareerCommandProjection=function(){return 4;}; high4=commandLeadership(C);
+        window.cabinetLeadership=function(){return 0;}; window._cmdGenRating=function(){return 0;}; window._cmdCorpsLift=function(){return -4;}; window._cmdDivLift=function(){return -2;};
+        window.warCareerCommandProjection=function(){return 0;}; low0=commandLeadership(C); window.warCareerCommandProjection=function(){return 4;}; low4=commandLeadership(C);
+      } finally{for(var j=0;j<names.length;j++) window[names[j]]=saved[names[j]];}
+      if(high0!==88||high4!==88||low0!==42||low4!==42) throw new Error('authoritative clamp changed: '+d406Bytes({high0:high0,high4:high4,low0:low0,low4:low4}));
+      return {high:[high0,high4],low:[low0,low4]}; });
+
+    step('D406: player journey and NPC P.command ledgers stay byte-separate in both directions', function(){
+      var C=d406Career(), J=C.loot.journey, P=C.president.command, journeyBefore=d406Bytes(J), commandBefore=d406Bytes(P);
+      var projection=warCareerCommandProjection(C), strategic=warCareerStrategicGeneral(C), lead1=commandLeadership(C), lead2=commandLeadership(C);
+      if(projection!==4||!strategic||strategic.personId!==J.personId||lead1!==lead2) throw new Error('pure command adapters did not read the exact journey authority');
+      if(d406Bytes(J)!==journeyBefore||d406Bytes(P)!==commandBefore) throw new Error('adapter reads crossed or mutated owner ledgers');
+      var active=cmdActiveId(C); if(!active||!P.reputation||typeof P.reputation[active]!=='number') throw new Error('no NPC reputation owner for isolation test');
+      var projectionBefore=warCareerCommandProjection(C); P.reputation[active]+=11; var afterNpc=d406Bytes(J), projectionAfter=warCareerCommandProjection(C);
+      if(afterNpc!==journeyBefore||projectionAfter!==projectionBefore) throw new Error('NPC P.command mutation leaked into player authority');
+      var npcAfter=d406Bytes(P); J.reputation+=1; warCareerCommandProjection(C); warCareerStrategicGeneral(C);
+      if(d406Bytes(P)!==npcAfter) throw new Error('player journey mutation leaked into NPC P.command');
+      var forbidden=['warCareer','warCareerMerit','warCareerReputation','careerMerit','careerReputation','merit'];
+      for(var i=0;i<forbidden.length;i++) if(d406Own(P,forbidden[i])) throw new Error('forbidden player-career alias under P.command: '+forbidden[i]);
+      return {projection:projection,leadership:lead1,strategicId:strategic.id,npcOwner:active,separate:true}; });
 
     // helper: read a general's current reputation
     function C0rep(C,id){ return (C.president&&C.president.command&&typeof C.president.command.reputation[id]==='number')?C.president.command.reputation[id]:60; }

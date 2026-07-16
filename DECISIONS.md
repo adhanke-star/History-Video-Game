@@ -6,6 +6,107 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D406 — WAR CAREER SLICE C SHIPPED: LEDGER-DERIVED ADVANCEMENT, BILLETS, AND ONE COMMAND PROJECTION — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-005 DRIVE→CONTRACT] (2026-07-15)
+
+**This numeric and structural law was locked before any Slice-C runtime edit.** The thresholds are
+game-balance rules and therefore **Inferred**, never claims about historical promotion practice.
+Only the current journey person's canonical, qualifying, one-per-rung receipt may score. The receipt
+must retain an exact current-person id, side, event, participation, and result-slot link and must
+record `fate:"alive"`; wounded, captured, fallen, nonqualifying, foreign-person, stale-service,
+handoff, recovery, retry, and narrative-only rows score exactly zero. A decisive victory scores
+merit `4` / reputation `+3`; another victory `3` / `+2`; draw `1` / `0`; defeat `0` / `-1`.
+Ledger reconstruction, never button-press increments or saved totals, clamps current-person merit to
+`0..128` and reputation to `-64..96`. Current-person event and credit copies receive the same
+reconstructed award; prior-lineage copies remain zero and never enter the successor's totals.
+
+**Promotion law.** The existing D360 rank sequence remains the only sequence, stopped at Slice C's
+first general grade: Private/Corporal (including declared aliases) → Sergeant; Sergeant or
+Lieutenant → Captain; Captain → Major; Major → Lt. Col.; Lt. Col. → Colonel; Colonel → Brig. Gen.
+A receipt can cross at most one step. The next step is eligible at cumulative merit
+`4 * (prior successful promotions + 1)` with reputation at least zero. Eligibility still fails
+closed unless the current identity and side are exact, the receipt is qualifying/alive and inside
+the canonical service window, `rankAtResult` equals the derived pre-result gameplay rank, and the
+result slot supports the next billet. Private/Corporal → Sergeant accepts `pvt|nco|cmd`;
+Sergeant → Captain accepts `nco|cmd`; Lieutenant → Captain and every Captain-or-higher transition
+require `cmd`. No receipt, rank change, fate, or billet changes OVR.
+
+**Journey-owned billet law.** Sanitation reconstructs `roleHistory` rather than trusting saved
+authority. Each exact `cw_war_career_billet_v1` row contains only `schema, billetId, ordinal,
+personId, side, rank, roleId, billetCode, label, provenance, timelineLabel, authority, creditKey,
+eventId, chainIndex, scenarioId, battleYear`. The initial Inferred `Your Timeline` row is
+`authority:"career-start"`; each later row is bound to exactly one qualifying current-person credit
+with `authority:"qualifying-credit"`. Codes are `company-ranks`, `company-nco`,
+`company-officer`, `field-officer`, and `general-officer`; roles are `rank-and-file`,
+`junior-command`, `field-command`, and `general-command`. `currentBillet` is an exact copy of the
+last reconstructed row. Field authority begins only at Major with a valid `field-officer` receipt;
+general authority begins only at Brig. Gen. with a valid `general-officer` receipt. Captured,
+fallen, wounded, retired, war-ended, service-ended, malformed-billet, wrong-person, wrong-rank,
+foreign-ledger, and legacy/inactive states project zero.
+
+**Reachability is exact-id alternate history, not a source rewrite.** The Inferred fixture starts
+with `ss:chancellorsville:US:us_battery_chanc:cmd` and may use three frozen `Your Timeline`
+assignments: Vicksburg `ss:vicksburg:US:us_deg_battery:cmd`, Major, `wcta-144pyv4`;
+Gettysburg `ss:gettysburg:US:us_hall_battery:cmd`, Lt. Col., `wcta-11pxx98`; and Chickamauga
+`ss:chickamauga:US:us_lilly_battery:cmd`, Colonel, `wcta-9be2qw`. Four ordinary qualifying
+decisive/alive credits therefore prove Captain → Major → Lt. Col. → Colonel → Brig. Gen. while the
+canonical Chancellorsville identity, grade, source slot, and `serviceYear:1863` remain unchanged.
+After Chickamauga the live Chattanooga rung is still 1863; advancing into a 1864 rung makes this
+fixture service-ended and removes projection.
+
+**Projection and owner separation.** `warCareerRole` and every authority adapter are pure reads.
+Field command contributes `min(2, 1 + floor(max(0,reputation)/4))`; general command contributes
+`min(4, 2 + floor(max(0,reputation)/4))`; the global Slice-C cap is `4`. A pure
+`cw_war_career_strategic_general_v1` identity adapter exposes only the exact journey person, role,
+billet id, side, gameplay rank, Inferred provenance, and `Your Timeline` label. It never writes,
+copies, aliases, appoints, or sanitizes through `P.command`. `commandLeadership(C)` consumes
+`warCareerCommandProjection(C)` exactly once in its existing general-present path immediately before
+the existing final `42..88` clamp. The no-general fallback and every combat input remain unchanged;
+the existing clamp stays authoritative.
+
+**Hand-off and sanitation.** COMRADE HAND-OFF retains shared evidence but reconstructs current totals,
+rank, promotion count, role history, billet, and projection from the successor's own canonical start
+rank plus successor-owned qualifying receipts only. The fallen identity's merit, reputation, grade,
+billet, mapping, and command authority never transfer. Saved merit, reputation, promotion count,
+rank, role history, current billet, or strategic adapter data are untrusted projections; sanitation
+rebuilds or zeros them, is byte-idempotent, and keeps `_SAVE_VER=1`.
+
+**Predeclared four-bind scopes.** Bind A removes only the sole `commandLeadership` consumer; Bind B
+doubles only that contribution. Each may redden only command row `D406: commandLeadership consumes
+one projection exactly once — exact unclamped delta and repeated reads do not stack`; War Career
+must stay green. Bind C adds only a forbidden player-career merit/reputation alias under `P.command`;
+only command row `D406: player journey and NPC P.command ledgers stay byte-separate in both
+directions` may redden. Bind D relaxes only the captured-life projection guard; only War Career row
+`D406 BILLET SANITATION + ZERO MATRIX` and command row `D406: default, legacy, and excluded careers
+contribute zero — commandLeadership is byte-identical` may redden. Each bind is one mutation, uses
+both focused probes, must make the combined check exit 1 with no undeclared red row, and must restore
+source/generated hashes exactly before rebuilt green reruns.
+
+**Shipped proof.** The exact reachable fixture finishes at merit `16`, reputation `12`, four
+promotions, Brig. Gen., general-command projection `4`, while its canonical Chancellorsville Captain
+source rank and OVR `65` remain immutable. The field/general path is `field, field, field, general`
+with bounded projections `1, 2, 2, 4`; fourteen legacy, malformed, life-state, service, and billet
+exclusions project zero. COMRADE HAND-OFF starts the successor as Sergeant OVR `57` with zero
+transferred totals, grade, billet, or authority. The strategic consumer proves `zero=55`,
+`projection=4`, first/second reads `59/59`, two selector calls, and final clamps `[88,88]` /
+`[42,42]`; `C.loot.journey` and `P.command` remain byte-separate owners.
+
+War Career is `38/38`, Command `94/94`, plan `19/19`, and all thirteen coordination plans are
+`155/155`. Every required adjacent browser artifact is green: loot `12`, save `16`, full campaign
+`4`, campaign link `19`, After Action `15`, H0 After
+Action three viewports, playstyle `14`, Auto `10`, officers `20`, ratings `22`, and Classic paint.
+All present error arrays are empty. The suite remains exactly 130 commands with War Career row 38;
+`_SAVE_VER=1`, 24 scenarios, schema 54, Army Register 1512, coverage 24, and sweep 24 are unchanged.
+The four binds isolated missing consumer (`55/55` vs projection `4`), doubled consumer (`63/63`),
+forbidden `P.command.warCareerMerit`, and captured-status leakage (`79/83`) only in their declared
+rows, then restored exact bytes. Final MD5s are 106 `d54ad18271de8d2af33be909be8251ed`,
+35 `8f12c49f7129b3a9be0203677822e048`, 37 `4221eb61fee1c209ebc85d2fc1636a17`,
+War Career probe `c19cffcba98e356faf2679076aa798b8`, Command probe
+`5ffd40fd221179f2e01cad59ef43bf7d`, HTML `32dcc03e25e080aa4e7addd26a1c5f99`, and frozen base
+`c9db83fa99230ffb95bdfdfe059f3fb9`. D398 remains the latest full release battery; D406 used the
+authorized focused/adjacent gate and did not run `npm run vet:noreg`. LANE-005 returns to
+CONTRACT/unowned. **Exact next:** a fresh committed Slice-D take for the bounded provenance-bearing
+relationship ledger and its small declared event-code transition set only.
+
 ## D405 — DUAL-REFERENCE WAR-CAREER RECEIPTS SHIPPED WITHOUT TURNING ALTERNATE SERVICE INTO SOURCE HISTORY — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-005 DRIVE→CONTRACT] (2026-07-15)
 
 **D404's receipt prerequisite is now runtime law, not Slice-C authority.** Classic results use

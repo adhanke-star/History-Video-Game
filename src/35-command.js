@@ -1678,6 +1678,12 @@ function commandLeadership(C) {
   // out-of-theater general without a Transfer order; through the SAME facet. 0 default -> byte-identical.
   var ready = (typeof _cmdTransferReadinessLift === "function") ? _cmdTransferReadinessLift(C) : 0;
   var lead = 64 + (rating - 64) * 0.7 + (cab - 64) * 0.3 + corps + div + ready;
+  // D406: one pull-only player-career contribution. The journey selector owns
+  // every guard and cap; this consumer neither copies nor mutates P.command.
+  var career = (typeof warCareerCommandProjection === "function") ? Number(warCareerCommandProjection(C)) : 0;
+  if (!isFinite(career)) career = 0;
+  career = Math.max(0, Math.min(4, career));
+  lead += career;
   return Math.max(42, Math.min(88, Math.round(lead)));
 }
 

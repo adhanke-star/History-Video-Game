@@ -8,6 +8,37 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D406 WAR-CAREER SLICE C — ledger advancement, billets, and bounded command projection shipped — 2026-07-15 (D406)
+- Continued from pre-take D405 boundary `22180f80a04482ef742c5949f0d7f8d4a3be45d1` and the pushed
+  LANE-005 take `60430009308eb885a5b5f07c0f6abb1af59cfb6c`. The implementation stayed inside
+  106/37/35, the two focused probes, the 19-step plan transition, generated output, and canonical docs.
+- Shipped deterministic Inferred scoring `4/+3`, `3/+2`, `1/0`, `0/-1`; reconstructed merit
+  `0..128` and reputation `-64..96`; threshold `4*(prior promotions+1)` with reputation at least zero;
+  one-step rank progression through Brig. Gen.; and journey-owned reconstructed billets. Exact
+  Chancellorsville→Vicksburg→Gettysburg→Chickamauga mapping reaches merit 16 / reputation 12 /
+  promotions 4 without moving canonical Captain rank, source slot, service year, or OVR 65.
+- Field/general command is a pure pull: projections `min(2,1+floor(rep/4))` and
+  `min(4,2+floor(rep/4))`, global cap 4, consumed exactly once before the existing `42..88` clamp.
+  `C.loot.journey` remains the player owner; `P.command` remains NPC-owned and byte-separate.
+- Four binds bit only their declared rows: A missing consumer (`55/55`), B doubled consumer
+  (`63/63`), C forbidden player-ledger alias under `P.command`, and D captured-status leakage
+  (War Career sanitation plus Command zero compatibility, `79/83`). Each inverse restored exact MD5s
+  before rebuilt War Career `38/38` and Command `94/94` reruns.
+- Final browser gate: War Career 38, Command 94, loot 12, save 16, full campaign 4, campaign link 19,
+  After Action 15, H0 three viewports, playstyle 14, Auto 10, officers 20, ratings 22, and Classic
+  visible/nonblank; all processes exited 0 and all present error arrays were empty. War Career plan is
+  `19/19`; suite registration is exactly 130 commands with War Career row 38. Responsive and 200%
+  War Career/After-Action captures were visually inspected and decode cleanly. After lane release,
+  all thirteen coordination-sensitive plan artifacts passed `155/155` named rows with empty errors.
+- Final MD5s: 106 `d54ad18271de8d2af33be909be8251ed`; 35
+  `8f12c49f7129b3a9be0203677822e048`; 37 `4221eb61fee1c209ebc85d2fc1636a17`;
+  War Career probe `c19cffcba98e356faf2679076aa798b8`; Command probe
+  `5ffd40fd221179f2e01cad59ef43bf7d`; generated HTML `32dcc03e25e080aa4e7addd26a1c5f99`;
+  frozen base `c9db83fa99230ffb95bdfdfe059f3fb9`. D398 remains the latest full release battery;
+  `npm run vet:noreg` was deliberately deferred. LANE-005 returns to CONTRACT/unowned. **Exact next:**
+  a separate committed Slice-D take for bounded, provenance-bearing relationship memory and its small
+  event-code transition set; no relationship runtime has started.
+
 ## D405 WAR-CAREER RECEIPT CONTINUITY — dual-reference v2 runtime shipped; Slice C still locked — 2026-07-15 (D405)
 - Took LANE-005 in ledger-only commit `7ed5c52dac2d52b3d903e88378918132c3406181`
   from the clean pushed D404 boundary. The implementation stayed inside `src/106-war-career.js`,

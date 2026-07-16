@@ -1,9 +1,11 @@
 # War Career Loop — Runtime Contract (D399)
 
-**Status:** D405 dual-reference receipt prerequisite SHIPPED. The D404 CONTRACTED planning boundary
-remains the receipt law, and the original law remains true: No runtime, save-version, generated-game,
-or political-engine change belongs to D399. D405 implements only the v2 receipt proof; it does not
-authorize Slice C.
+**Status:** D406 Slice C SHIPPED. D405's dual-reference receipt prerequisite and D404's source-vs-
+timeline law remain intact; D406 adds only ledger-derived advancement, journey-owned billets, pure
+field/general authority selectors, and one bounded command projection. Slice D relationship memory
+is the next separate take. No save-version, combat, political-engine, or relationship change belongs
+to D406. The D404 CONTRACTED planning boundary remains the receipt law, and the original scope law
+remains exact: No runtime, save-version, generated-game, or political-engine change belongs to D399.
 **Lane:** `COORDINATION.md` LANE-005.
 **Decision law:** D382 item 4, D360, D151, D119, D105, D94, D74, D92, D35, D146,
 E41, E50, and E71 fixed in D400.
@@ -814,3 +816,108 @@ The final receipt-complete locks are `src/106-war-career.js`
 `74d5abd5196f7bdd7998e4d84573a925`. The plan guard pins those receipts while keeping
 `warCareerCommandProjection()` at zero, all command/combat files closed, `_SAVE_VER=1`, and Slice C
 unstarted.
+
+---
+
+## 15 · D406 Slice C runtime contract
+
+### Ledger-derived advancement, not mutable reward state
+
+D406 activates Slice C without changing either receipt schema. Only one canonical, qualifying,
+current-person receipt whose fate is `alive` can score. The deterministic Inferred gameplay table is:
+
+| Result | Merit | Reputation |
+|---|---:|---:|
+| decisive victory | 4 | +3 |
+| other victory | 3 | +2 |
+| draw | 1 | 0 |
+| defeat | 0 | -1 |
+
+Current-person totals are reconstructed in credit-ledger order and clamped to merit `0..128` and
+reputation `-64..96`. Current-person event and credit copies receive the same reconstructed award.
+Lineage, foreign-person, nonqualifying, wounded, captured, fallen, retry, recovery, hand-off, and
+narrative-only rows score zero. Saved totals are projections and never authority.
+
+The legal Slice-C ladder is Private/Corporal → Sergeant; Sergeant/Lieutenant → Captain; Captain →
+Major; Major → Lt. Col.; Lt. Col. → Colonel; Colonel → Brig. Gen. One receipt can cross only one
+step. Promotion requires cumulative merit `4 * (prior promotions + 1)`, nonnegative reputation,
+exact current-person/service/receipt ownership, and a compatible result slot. Private/Corporal to
+Sergeant accepts `pvt|nco|cmd`; Sergeant to Captain accepts `nco|cmd`; Lieutenant to Captain and
+every higher move require `cmd`. These thresholds are Inferred balance law, not historical claims.
+No promotion, death, capture, or hand-off changes canonical source grade or OVR.
+
+### Journey-owned billets and Your Timeline reachability
+
+`C.loot.journey` remains the sole mutable player-career owner. Sanitation reconstructs a bounded
+`roleHistory` and `currentBillet`; it never trusts saved rank, totals, promotion count, billet, or
+authority. Each `cw_war_career_billet_v1` row contains exactly `schema, billetId, ordinal, personId,
+side, rank, roleId, billetCode, label, provenance, timelineLabel, authority, creditKey, eventId,
+chainIndex, scenarioId, battleYear`. The first row is Inferred `Your Timeline` with
+`authority:"career-start"`; every later row binds one qualifying current-person receipt with
+`authority:"qualifying-credit"`. `currentBillet` is an exact copy of the final reconstructed row.
+
+The billet codes are `company-ranks`, `company-nco`, `company-officer`, `field-officer`, and
+`general-officer`. Their role bands are `rank-and-file`, `junior-command`, `field-command`, and
+`general-command`. Field authority begins at Major only with an exact field-officer receipt; general
+authority begins at Brig. Gen. only with an exact general-officer receipt.
+
+The reachable proof starts with canonical Captain
+`ss:chancellorsville:US:us_battery_chanc:cmd`. Three frozen, Inferred, `Your Timeline` mappings add
+only result-location authority: Vicksburg `ss:vicksburg:US:us_deg_battery:cmd`, Major,
+`wcta-144pyv4`; Gettysburg `ss:gettysburg:US:us_hall_battery:cmd`, Lt. Col., `wcta-11pxx98`; and
+Chickamauga `ss:chickamauga:US:us_lilly_battery:cmd`, Colonel, `wcta-9be2qw`. Four decisive/alive
+qualifying credits prove Captain → Major → Lt. Col. → Colonel → Brig. Gen. The canonical
+Chancellorsville source slot, source grade, source OVR, provenance, and `serviceYear:1863` never
+move. The generated-person adapter derives source year and OVR from the authored source battle,
+not the mutable campaign clock, so reload cannot rewrite source history.
+
+### One bounded pull into command
+
+`warCareerRole(C)`, `warCareerCapabilities(C)`, `warCareerStrategicGeneral(C)`, and
+`warCareerCommandProjection(C)` are pure selectors. Field command returns
+`min(2, 1 + floor(max(0,reputation)/4))`; general command returns
+`min(4, 2 + floor(max(0,reputation)/4))`; every excluded or malformed state returns zero. The pure
+strategic identity adapter uses schema `cw_war_career_strategic_general_v1` and exposes only the
+exact journey person, side, gameplay rank, role, billet id, Inferred provenance, and `Your Timeline`
+label.
+
+`commandLeadership(C)` calls `warCareerCommandProjection(C)` exactly once in its existing
+general-present path, clamps that contribution to `0..4`, adds it once immediately before the
+existing final `42..88` clamp, and writes nothing. The no-general fallback remains byte-identical.
+`P.command` remains the separate NPC command owner: no player merit, reputation, promotion, billet,
+adapter, appointment, corps, division, development, or history value is copied or aliased there.
+
+COMRADE HAND-OFF retains shared evidence but reconstructs the successor from the successor's own
+canonical start rank and qualifying receipts. The fallen identity transfers no merit, reputation,
+promotion, gameplay rank, billet, role history, mapping, or command authority. Init/load sanitation
+is eager, deterministic, byte-idempotent on the second pass, and remains inside `_SAVE_VER=1`.
+
+The focused proof keeps all prior rows and adds exactly four War Career rows—`D406 LEDGER-DERIVED
+ADVANCEMENT`, `D406 REACHABLE FIELD + GENERAL COMMAND`, `D406 BILLET SANITATION + ZERO MATRIX`, and
+`D406 HANDOFF + NO-STACK ISOLATION`—plus four Command rows for zero compatibility, exactly-once
+consumption, authoritative clamp, and player/NPC owner separation. T2, T3, Auto, data, combat,
+casualty, winner, score, AI, objective, reinforcement, balance, politics, relationships, Slice D-F,
+franchise/archive, manifest, suite enrollment, and save-version movement remain closed.
+
+### D406 shipped boundary
+
+The final candidate is green at War Career `38/38`, Command `94/94`, and War Career plan `19/19`
+runtime mode. Adjacent browser proof is loot/survival `12/12`, save slots `16/16`, full campaign
+`4/4`, campaign link `19/19`, After Action `15/15`, H0 After Action `3/3` viewports, playstyle
+`14/14`, Auto Resolve `10/10`, officers `20/20`, ratings `22/22`, and visible/nonblank Classic
+paint; every present error array is empty. The manifest remains exactly 130 commands with War Career
+at row 38. D398 remains the latest complete release battery; D406 deliberately did not run
+`npm run vet:noreg`. After lane release, all thirteen coordination-sensitive plan artifacts are
+green at `155/155` named rows.
+
+All four declared binds bit only their contracted scopes. Missing and doubled command consumers each
+reddened only the exact-once Command row while War Career stayed `38/38`; the forbidden `P.command`
+alias reddened only player/NPC owner separation; the captured-status relaxation reddened only War
+Career billet sanitation/zero matrix and Command legacy/excluded zero compatibility. Every inverse
+restore returned source and generated bytes exactly before rebuilt green reruns. Final MD5s are
+`src/106-war-career.js` `d54ad18271de8d2af33be909be8251ed`, `src/35-command.js`
+`8f12c49f7129b3a9be0203677822e048`, `src/37-loot-survival.js`
+`4221eb61fee1c209ebc85d2fc1636a17`, focused War Career probe
+`c19cffcba98e356faf2679076aa798b8`, Command probe `5ffd40fd221179f2e01cad59ef43bf7d`,
+generated HTML `32dcc03e25e080aa4e7addd26a1c5f99`, and frozen base
+`c9db83fa99230ffb95bdfdfe059f3fb9`.

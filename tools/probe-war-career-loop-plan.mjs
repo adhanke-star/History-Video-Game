@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-// D405 receipt-complete gate for the D382 war-career loop.
+// D406 Slice-C-complete gate for the D382 war-career loop.
 // Filesystem-first, runtime-only, fail-closed. This plan probe never enters the
-// release suite and keeps Slice C locked after the dual-reference prerequisite.
+// release suite and keeps the dual-reference, command-isolation, and later-slice walls.
 
 import {
   existsSync,
@@ -52,7 +52,7 @@ const MARKER = "WAR_CAREER_RUNTIME_V1";
 const JOURNEY_MARKER = "WAR_CAREER_JOURNEY_ADAPTER_V1";
 const RUNTIME_NAME = "106-war-career.js";
 const RECEIPT_BIND = "WAR_CAREER_RECEIPT_BIND:SOURCE_REF_NEVER_EQUALS_TIMELINE_AUTHORITY";
-const D405_RECEIPT_ALLOWED = new Set([
+const D406_SLICE_C_ALLOWED = new Set([
   "AUTONOMOUS-RUN.md",
   "COORDINATION.md",
   "DECISION-NEEDED-war-career-receipt-continuity.md",
@@ -65,8 +65,10 @@ const D405_RECEIPT_ALLOWED = new Set([
   "docs/design/war-career-loop-design.md",
   "tools/probe-war-career-loop-plan.mjs",
   "src/106-war-career.js",
+  "src/35-command.js",
   "src/37-loot-survival.js",
   "tools/probe-war-career.mjs",
+  "tools/probe-command.mjs",
   "civil_war_generals.html"
 ]);
 
@@ -848,48 +850,89 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     commandProbe:md5(COMMAND_PROBE)
   };
   const expected = {
-    srcTree:"2fa3cec836ab89026a416bd71bb6ddd4",
-    runtime:"9eba476afa0b46e04c7060d7c7dbde64",
-    journey:"cd41b69d7e08486fac15e0d68a5d9597",
-    command:"55bd7b5a30f22470e1abd7a993b3cbb4",
-    focused:"bfb97971b867ff7e93758b84b5cb3c0e",
-    commandProbe:"bbfeaa69db333fddee2741882abff245"
+    srcTree:"3de551405222f51925be0f520eeed5b9",
+    runtime:"d54ad18271de8d2af33be909be8251ed",
+    journey:"4221eb61fee1c209ebc85d2fc1636a17",
+    command:"8f12c49f7129b3a9be0203677822e048",
+    focused:"c19cffcba98e356faf2679076aa798b8",
+    commandProbe:"5ffd40fd221179f2e01cad59ef43bf7d"
   };
   for (const key of Object.keys(expected)) {
-    if (locks[key] !== expected[key]) throw new Error(key + " receipt-complete lock moved: " + locks[key]);
+    if (locks[key] !== expected[key]) throw new Error(key + " Slice-C-complete lock moved: " + locks[key]);
   }
   const changed = gitChangedPaths();
-  const forbidden = changed.filter(path => !D405_RECEIPT_ALLOWED.has(path));
+  const forbidden = changed.filter(path => !D406_SLICE_C_ALLOWED.has(path));
   if (forbidden.length) {
-    throw new Error("D405 receipt allowlist violation: " + forbidden.join(", "));
+    throw new Error("D406 Slice-C allowlist violation: " + forbidden.join(", "));
   }
-  const runtimeText = read(RUNTIME);
+  const runtimeText = read(RUNTIME), commandText = read(COMMAND), focusedText = read(FOCUSED), commandProbeText = read(COMMAND_PROBE);
   for (const token of [
     "cw_war_career_participation_v2",
     "cw_war_career_result_v2",
     "_WC_TIMELINE_ASSIGNMENTS_V1",
-    "_wcResultIdV2"
+    "_wcResultIdV2",
+    "cw_war_career_billet_v1",
+    "function warCareerCreditAward(credit)",
+    "function warCareerDeriveAdvancement(C, J)",
+    "function warCareerStrategicGeneral(C)",
+    "function warCareerCommandProjection(C)"
   ]) {
-    if (!runtimeText.includes(token)) throw new Error("receipt-complete runtime missing: " + token);
+    if (!runtimeText.includes(token)) throw new Error("Slice-C runtime missing: " + token);
   }
-  if (!/function\s+warCareerCommandProjection\s*\([^)]*\)\s*\{[\s\S]*?return 0;[\s\S]*?\}/.test(runtimeText) ||
-      runtimeText.includes("roleHistory.push")) {
-    throw new Error("Slice C authority appeared in the receipt prerequisite");
+  mustInclude(runtimeText, [
+    "if (credit.outcome === \"victory\" && credit.type === \"decisive\") return { merit:4, reputation:3 }",
+    "if (credit.outcome === \"defeat\") return { merit:0, reputation:-1 }",
+    "Math.max(0, Math.min(128, result.merit + award.merit))",
+    "Math.max(-64, Math.min(96, result.reputation + award.reputation))",
+    "4 * (result.promotionCount + 1)",
+    "timelineLabel:\"Your Timeline\"",
+    "schema:\"cw_war_career_strategic_general_v1\"",
+    "Math.min(2, 1 + Math.floor(reputation / 4))",
+    "Math.min(4, 2 + Math.floor(reputation / 4))"
+  ], "Slice-C advancement and projection runtime");
+  if (/\bP\.command\b/.test(runtimeText) || /J\.roleHistory\.push/.test(runtimeText)) {
+    throw new Error("Slice C crossed the player/NPC owner wall or mutates saved billet history incrementally");
   }
-  const s10 = section(read(SPEC), "## 10 ", "## 11 ");
-  mustInclude(s10, [
-    "Receipt-continuity prerequisite",
-    "exact next runtime",
-    "Before Slice C",
-    "D405",
-    "SHIPPED",
-    "src/106-war-career.js",
-    "src/37-loot-survival.js",
-    "tools/probe-war-career.mjs",
-    "does not authorize T2, T3, Auto, command projection",
-    "HALT with the exact missing seam"
-  ], "receipt prerequisite");
-  return { ...locks, changed };
+  const consumerCount = (commandText.match(/Number\(warCareerCommandProjection\(C\)\)/g) || []).length;
+  if (consumerCount !== 1 || !commandText.includes("career = Math.max(0, Math.min(4, career))") ||
+      !commandText.includes("lead += career") || !commandText.includes("Math.max(42, Math.min(88, Math.round(lead)))")) {
+    throw new Error("commandLeadership must carry exactly one capped contribution before its existing clamp");
+  }
+  for (const token of ["warCareerMerit", "warCareerReputation", "careerMerit", "careerReputation"]) {
+    if (commandText.includes(token)) throw new Error("forbidden player-career alias under P.command: " + token);
+  }
+  for (const name of [
+    "D406 LEDGER-DERIVED ADVANCEMENT",
+    "D406 REACHABLE FIELD + GENERAL COMMAND",
+    "D406 BILLET SANITATION + ZERO MATRIX",
+    "D406 HANDOFF + NO-STACK ISOLATION"
+  ]) {
+    if (!focusedText.includes(name)) throw new Error("focused War Career tooth missing: " + name);
+  }
+  for (const name of [
+    "D406: default, legacy, and excluded careers contribute zero — commandLeadership is byte-identical",
+    "D406: commandLeadership consumes one projection exactly once — exact unclamped delta and repeated reads do not stack",
+    "D406: the existing 42..88 commandLeadership clamp stays authoritative after the career contribution",
+    "D406: player journey and NPC P.command ledgers stay byte-separate in both directions"
+  ]) {
+    if (!commandProbeText.includes(name)) throw new Error("focused Command tooth missing: " + name);
+  }
+  const s15 = section(read(SPEC), "## 15 ", null);
+  mustInclude(s15, [
+    "D406 Slice C runtime contract",
+    "decisive victory",
+    "4 * (prior promotions + 1)",
+    "cw_war_career_billet_v1",
+    "wcta-144pyv4",
+    "wcta-11pxx98",
+    "wcta-9be2qw",
+    "commandLeadership(C)",
+    "exactly once",
+    "P.command",
+    "T2, T3, Auto",
+    "Slice D-F"
+  ], "Slice-C-complete contract");
+  return { ...locks, changed, commandConsumers:consumerCount, status:"D406 Slice C complete; later slices locked" };
 });
 
 step("BASELINES + LANE", () => {
@@ -926,7 +969,7 @@ step("BASELINES + LANE", () => {
     throw new Error("24-scenario sweep registry seam moved");
   }
   const expectedHashes = {
-    game:"74d5abd5196f7bdd7998e4d84573a925",
+    game:"32dcc03e25e080aa4e7addd26a1c5f99",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     dataTree:"b0d7f440836b60a4f18401b2d7b03f48",
     manifest:"7924da858de403cac58caabf8c9fcce8",
@@ -936,6 +979,11 @@ step("BASELINES + LANE", () => {
     if (hashes[key] !== expectedHashes[key]) throw new Error(key + " baseline moved: " + hashes[key]);
   }
   mustInclude(lane, [
+    "D406 Slice C",
+    "deterministic merit/reputation",
+    "warCareerCommandProjection",
+    "separate `P.command` NPC owner",
+    "Slice D relationship memory",
     "D405 dual-reference receipt prerequisite shipped",
     "cw_war_career_participation_v2",
     "sourceRef",

@@ -2,7 +2,8 @@
    D400 · 106-war-career.js — WAR_CAREER_RUNTIME_V1.
 
    D401 Slice B extends the canonical spine with consequence-only identity.
-   D405 adds the coexisting WAR_CAREER_RECEIPT_V2 prerequisite:
+   D405 adds the coexisting WAR_CAREER_RECEIPT_V2 prerequisite.
+   D406 Slice C adds ledger-derived advancement and one command projection:
      - canonical Army Register source history remains immutable;
      - a frozen exact-id "Your Timeline" assignment may prove one later rung;
      - source and timeline references validate independently;
@@ -20,8 +21,8 @@
        without delegation, recovery, reward, undo, save, or upgrade.
 
    No combat input, aggregate-casualty inference, relationship mutation,
-   political gate, command bonus, franchise store, or save-version change lives
-   here. Slice C command projection remains locked.
+   political gate, franchise store, or save-version change lives here. Slice C
+   contributes only through the existing commandLeadership clamp.
    =========================================================================== */
 
 var _WC_EVENT_MAX = 96;
@@ -41,6 +42,30 @@ var _WC_TIMELINE_ASSIGNMENTS_V1 = _wcDeepFreeze([{
   slotPid:"ss:chickamauga:US:us_harker_rock:pvt",
   chainIndex:16, serviceStart:null, serviceEnd:null, serviceYear:1863,
   timelineGrade:"Private", provenance:"Inferred", label:"Your Timeline"
+},{
+  personId:"ss:chancellorsville:US:us_battery_chanc:cmd",
+  sourceSlotPid:"ss:chancellorsville:US:us_battery_chanc:cmd",
+  scenarioId:"vicksburg", phaseId:"forlorn-hope", side:"US",
+  unitId:"us_deg_battery", slot:"cmd",
+  slotPid:"ss:vicksburg:US:us_deg_battery:cmd",
+  chainIndex:14, serviceStart:null, serviceEnd:null, serviceYear:1863,
+  timelineGrade:"Major", provenance:"Inferred", label:"Your Timeline"
+},{
+  personId:"ss:chancellorsville:US:us_battery_chanc:cmd",
+  sourceSlotPid:"ss:chancellorsville:US:us_battery_chanc:cmd",
+  scenarioId:"gettysburg", phaseId:"day1", side:"US",
+  unitId:"us_hall_battery", slot:"cmd",
+  slotPid:"ss:gettysburg:US:us_hall_battery:cmd",
+  chainIndex:15, serviceStart:null, serviceEnd:null, serviceYear:1863,
+  timelineGrade:"Lt. Col.", provenance:"Inferred", label:"Your Timeline"
+},{
+  personId:"ss:chancellorsville:US:us_battery_chanc:cmd",
+  sourceSlotPid:"ss:chancellorsville:US:us_battery_chanc:cmd",
+  scenarioId:"chickamauga", phaseId:"the-woods", side:"US",
+  unitId:"us_lilly_battery", slot:"cmd",
+  slotPid:"ss:chickamauga:US:us_lilly_battery:cmd",
+  chainIndex:16, serviceStart:null, serviceEnd:null, serviceYear:1863,
+  timelineGrade:"Colonel", provenance:"Inferred", label:"Your Timeline"
 }]);
 
 function _wcText(v, max) {
@@ -864,6 +889,211 @@ function _wcRankOrdinal(rank) {
   for (var i = 0; i < rows.length; i++) for (var j = 0; j < rows[i].length; j++) if (rows[i][j] === r) return i;
   return 99;
 }
+
+/* D406 advancement is reconstructed from receipts. Saved totals, alternate
+   rank, billet rows, and promotion count are projections, never authority. */
+var _WC_BILLET_KEYS = [
+  "schema","billetId","ordinal","personId","side","rank","roleId",
+  "billetCode","label","provenance","timelineLabel","authority",
+  "creditKey","eventId","chainIndex","scenarioId","battleYear"
+];
+function _wcRoleBand(rank) {
+  var n = _wcRankOrdinal(rank), code = "", label = "", role = "";
+  if (n === 0 || n === 1) { role = "rank-and-file"; code = "company-ranks"; label = "Company ranks"; }
+  else if (n === 2) { role = "junior-command"; code = "company-nco"; label = "Company noncommissioned officer"; }
+  else if (n === 3 || n === 4) { role = "junior-command"; code = "company-officer"; label = "Company officer"; }
+  else if (n >= 5 && n <= 7) { role = "field-command"; code = "field-officer"; label = "Field officer"; }
+  else if (n === 8) { role = "general-command"; code = "general-officer"; label = "General officer"; }
+  return role ? { roleId:role, billetCode:code, label:label } : null;
+}
+function _wcBilletId(row) {
+  return "wcb-" + _wcHash([
+    "billet-v1", row.ordinal, row.personId, row.side, row.rank, row.roleId,
+    row.billetCode, row.authority, row.creditKey || "", row.eventId || "",
+    row.chainIndex == null ? "" : row.chainIndex, row.scenarioId || "",
+    row.battleYear == null ? "" : row.battleYear
+  ].join("|")).toString(36);
+}
+function _wcBilletRow(personId, side, rank, ordinal, authority, credit, eventId, scenarioId, battleYear) {
+  var band = _wcRoleBand(rank), chainIndex = credit ? Number(credit.chainIndex) : null;
+  if (!band || !_wcSafeId(personId, 180) || (side !== "US" && side !== "CS") ||
+      !isFinite(ordinal) || Math.floor(ordinal) !== ordinal || ordinal < 1 || ordinal > 12 ||
+      !/^(career-start|qualifying-credit)$/.test(String(authority || ""))) return null;
+  if (authority === "qualifying-credit" && (!credit || !_wcSafeId(credit.creditKey, 220) ||
+      !_wcSafeId(eventId, 180) || !isFinite(chainIndex) || Math.floor(chainIndex) !== chainIndex || chainIndex < 0)) return null;
+  var row = {
+    schema:"cw_war_career_billet_v1", billetId:"", ordinal:ordinal,
+    personId:personId, side:side, rank:_wcText(rank, 80), roleId:band.roleId,
+    billetCode:band.billetCode, label:band.label, provenance:"Inferred",
+    timelineLabel:"Your Timeline", authority:authority,
+    creditKey:authority === "qualifying-credit" ? credit.creditKey : null,
+    eventId:authority === "qualifying-credit" ? eventId : (eventId || null),
+    chainIndex:authority === "qualifying-credit" ? chainIndex : null,
+    scenarioId:_wcSafeId(scenarioId, 120) || null,
+    battleYear:battleYear != null && isFinite(battleYear) ? Math.round(Number(battleYear)) : null
+  };
+  row.billetId = _wcBilletId(row);
+  return row;
+}
+function _wcBilletValid(row) {
+  if (!_wcExactKeys(row, _WC_BILLET_KEYS) || row.schema !== "cw_war_career_billet_v1" ||
+      !_wcSafeId(row.billetId, 96) || !_wcSafeId(row.personId, 180) ||
+      (row.side !== "US" && row.side !== "CS") || !_wcText(row.rank, 80) ||
+      row.provenance !== "Inferred" || row.timelineLabel !== "Your Timeline" ||
+      !isFinite(row.ordinal) || Math.floor(row.ordinal) !== row.ordinal || row.ordinal < 1 || row.ordinal > 12) return false;
+  var band = _wcRoleBand(row.rank);
+  if (!band || band.roleId !== row.roleId || band.billetCode !== row.billetCode || band.label !== row.label) return false;
+  if (row.authority === "career-start") {
+    if (row.creditKey !== null || row.chainIndex !== null) return false;
+  } else if (row.authority === "qualifying-credit") {
+    if (!_wcSafeId(row.creditKey, 220) || !_wcSafeId(row.eventId, 180) ||
+        !isFinite(row.chainIndex) || Math.floor(row.chainIndex) !== row.chainIndex || row.chainIndex < 0) return false;
+  } else return false;
+  if (row.scenarioId != null && !_wcSafeId(row.scenarioId, 120)) return false;
+  if (row.battleYear != null && (!isFinite(row.battleYear) || Math.floor(row.battleYear) !== row.battleYear || row.battleYear < 1860 || row.battleYear > 1870)) return false;
+  return row.billetId === _wcBilletId(row);
+}
+function _wcBilletSame(a, b) {
+  if (!_wcBilletValid(a) || !_wcBilletValid(b)) return false;
+  for (var i = 0; i < _WC_BILLET_KEYS.length; i++) if (a[_WC_BILLET_KEYS[i]] !== b[_WC_BILLET_KEYS[i]]) return false;
+  return true;
+}
+function _wcBilletCopy(row) {
+  if (!_wcBilletValid(row)) return null;
+  var out = {};
+  for (var i = 0; i < _WC_BILLET_KEYS.length; i++) out[_WC_BILLET_KEYS[i]] = row[_WC_BILLET_KEYS[i]];
+  return out;
+}
+function warCareerCreditAward(credit) {
+  if (!credit || credit.qualifying !== true || credit.fate !== "alive") return { merit:0, reputation:0 };
+  if (credit.outcome === "victory" && credit.type === "decisive") return { merit:4, reputation:3 };
+  if (credit.outcome === "victory") return { merit:3, reputation:2 };
+  if (credit.outcome === "draw") return { merit:1, reputation:0 };
+  if (credit.outcome === "defeat") return { merit:0, reputation:-1 };
+  return { merit:0, reputation:0 };
+}
+function _wcNextCareerRank(rank) {
+  var n = _wcRankOrdinal(rank);
+  if (n === 0 || n === 1) return "Sergeant";
+  if (n === 2 || n === 3) return "Captain";
+  if (n === 4) return "Major";
+  if (n === 5) return "Lt. Col.";
+  if (n === 6) return "Colonel";
+  if (n === 7) return "Brig. Gen.";
+  return "";
+}
+function _wcPromotionSlotEligible(rank, next, slot) {
+  var n = _wcRankOrdinal(rank);
+  if (!/^(pvt|nco|cmd)$/.test(String(slot || ""))) return false;
+  if (next === "Sergeant") return true;
+  if (next === "Captain" && n === 2) return slot === "nco" || slot === "cmd";
+  if (next === "Captain" && n === 3) return slot === "cmd";
+  return slot === "cmd";
+}
+function _wcCareerOrigin(J, personId) {
+  var events = J && Array.isArray(J.events) ? J.events : [];
+  for (var i = 0; i < events.length; i++) if (events[i] && events[i].kind === "start" && events[i].personId === personId) return events[i].eventId || null;
+  var H = J && J.handoff, lineage = J && Array.isArray(J.lineage) ? J.lineage : [];
+  if (H && H.state === "completed" && H.selectedPersonId === personId) {
+    for (var li = 0; li < lineage.length; li++) if (lineage[li] && lineage[li].successorId === personId &&
+        lineage[li].personId === H.fallenPersonId && lineage[li].resultEventId === H.resultEventId &&
+        lineage[li].creditKey === H.creditKey) return null;
+  }
+  return false;
+}
+function _wcCanonicalCareerPerson(C, personId) {
+  var person = _wcRegistryPersonUnique(C, personId), source = person && _wcSourceRefFromPerson(person);
+  if (!person || !source || person.pid !== personId || person.side !== C.side || source.side !== C.side) return null;
+  return { person:person, sourceRef:source };
+}
+function _wcAdvancementAuthority(C, J, credit, event, derivedRank, canonical) {
+  var p = credit && credit.participation, ref = _wcParticipationResultRef(p);
+  if (!C || !J || !credit || !event || !canonical || credit.qualifying !== true || credit.fate !== "alive" ||
+      event.qualifying !== true || event.fate !== "alive" || event.status !== "alive" ||
+      credit.personId !== canonical.person.pid || event.personId !== canonical.person.pid ||
+      credit.side !== C.side || event.creditKey !== credit.creditKey || credit.eventId !== event.eventId ||
+      event.outcome !== credit.outcome || event.type !== credit.type || !p || !event.participation ||
+      event.participation.resultId !== p.resultId || JSON.stringify(event.participation) !== JSON.stringify(p) ||
+      p.personId !== canonical.person.pid || p.runId !== C.runId || p.creditKey !== credit.creditKey ||
+      p.side !== C.side || p.chainIndex !== credit.chainIndex || p.battleId !== credit.scenarioId ||
+      credit.creditKey !== [C.runId, C.side, credit.chainIndex, credit.scenarioId].join("|") || !ref || ref.side !== C.side ||
+      !_wcRankCompatible(p.rankAtResult, derivedRank) || !_wcServiceWindowValid(canonical.sourceRef, p.battleYear)) return null;
+  if (p.schema === "cw_war_career_participation_v2") {
+    var sourceProof = _wcValidateCanonicalSource(C, canonical.person.pid, C.side, p.sourceRef);
+    if (!sourceProof || !_wcValidateTimelineAssignment(C, canonical.person.pid, sourceProof.sourceRef,
+        p.timelineAssignmentRef, p.representedFieldUnitId, p.battleYear, p.rankAtResult, null)) return null;
+  } else if (p.schema === "cw_war_career_participation_v1") {
+    var canonicalRef = _wcUnitRef(canonical.person.unitRef);
+    if (!canonicalRef || !_wcSameUnitRef(canonicalRef, p) || !_wcSameUnitRef(ref, p)) return null;
+  } else return null;
+  return { event:event, participation:p, resultRef:ref, battleYear:Number(p.battleYear) };
+}
+function _wcCalculateAdvancement(C, J, personId) {
+  var canonical = C && J ? _wcCanonicalCareerPerson(C, personId) : null;
+  var origin = canonical ? _wcCareerOrigin(J, personId) : false;
+  var result = { ok:false, rank:canonical ? canonical.person.rank : "", merit:0, reputation:0,
+    promotionCount:0, roleHistory:[], currentBillet:null, awards:[] };
+  if (!canonical || origin === false) return result;
+  var startRef = _wcUnitRef(canonical.person.unitRef), startYear = startRef ? _wcCanonicalBattleYear(startRef.battleId) : null;
+  if (startYear == null && canonical.sourceRef.serviceYear != null) startYear = canonical.sourceRef.serviceYear;
+  var first = _wcBilletRow(personId, C.side, result.rank, 1, "career-start", null,
+    typeof origin === "string" ? origin : null, startRef && startRef.battleId, startYear);
+  if (first) result.roleHistory.push(first);
+  var events = Array.isArray(J.events) ? J.events : [], eventsById = {};
+  for (var ei = 0; ei < events.length; ei++) if (events[ei] && events[ei].eventId) eventsById[events[ei].eventId] = events[ei];
+  var credits = Array.isArray(J.creditLedger) ? J.creditLedger : [];
+  for (var ci = 0; ci < credits.length; ci++) {
+    var credit = credits[ci];
+    if (!credit || credit.personId !== personId) continue;
+    var authority = _wcAdvancementAuthority(C, J, credit, eventsById[credit.eventId], result.rank, canonical);
+    var award = authority ? warCareerCreditAward(credit) : { merit:0, reputation:0 };
+    result.awards.push({ credit:credit, event:eventsById[credit.eventId] || null, merit:award.merit, reputation:award.reputation });
+    if (!authority) continue;
+    result.merit = Math.max(0, Math.min(128, result.merit + award.merit));
+    result.reputation = Math.max(-64, Math.min(96, result.reputation + award.reputation));
+    var next = _wcNextCareerRank(result.rank), threshold = 4 * (result.promotionCount + 1);
+    if (!next || result.merit < threshold || result.reputation < 0 ||
+        !_wcPromotionSlotEligible(result.rank, next, authority.resultRef.slot)) continue;
+    result.rank = next;
+    result.promotionCount++;
+    var billet = _wcBilletRow(personId, C.side, result.rank, result.roleHistory.length + 1,
+      "qualifying-credit", credit, credit.eventId, credit.scenarioId, authority.battleYear);
+    if (billet) result.roleHistory.push(billet);
+  }
+  result.currentBillet = result.roleHistory.length ? _wcBilletCopy(result.roleHistory[result.roleHistory.length - 1]) : null;
+  result.ok = true;
+  return result;
+}
+function warCareerDeriveAdvancement(C, J) {
+  if (!J || !Array.isArray(J.events) || !Array.isArray(J.creditLedger)) return null;
+  for (var ei = 0; ei < J.events.length; ei++) if (J.events[ei]) { J.events[ei].merit = 0; J.events[ei].reputation = 0; }
+  for (var ci = 0; ci < J.creditLedger.length; ci++) if (J.creditLedger[ci]) { J.creditLedger[ci].merit = 0; J.creditLedger[ci].reputation = 0; }
+  var derived = _wcCalculateAdvancement(C, J, J.personId);
+  J.merit = derived.ok ? derived.merit : 0;
+  J.reputation = derived.ok ? derived.reputation : 0;
+  J.promotionCount = derived.ok ? derived.promotionCount : 0;
+  J.roleHistory = derived.ok ? derived.roleHistory : [];
+  J.currentBillet = derived.ok ? derived.currentBillet : null;
+  if (derived.rank && J.person) {
+    var sourceRank = _wcCanonicalCareerPerson(C, J.personId);
+    J.person.rank = derived.rank;
+    delete J.person.promotedFrom;
+    if (sourceRank && _wcRankOrdinal(sourceRank.person.rank) !== _wcRankOrdinal(derived.rank)) J.person.promotedFrom = sourceRank.person.rank;
+    if (sourceRank) {
+      var serviceKeys = ["serviceStart","serviceEnd","serviceYear"];
+      for (var sk = 0; sk < serviceKeys.length; sk++) {
+        var key = serviceKeys[sk], value = _wcServiceValue(sourceRank.person[key]);
+        if (value == null) delete J.person[key]; else if (value !== undefined) J.person[key] = value;
+      }
+    }
+  }
+  for (var ai = 0; ai < derived.awards.length; ai++) {
+    var row = derived.awards[ai];
+    row.credit.merit = row.merit; row.credit.reputation = row.reputation;
+    if (row.event) { row.event.merit = row.merit; row.event.reputation = row.reputation; }
+  }
+  return derived;
+}
 function _wcProvenanceRank(p) {
   var prov = _wcText(p && p.provenance || "", 40);
   if (prov === "Verified") return 0;
@@ -1080,6 +1310,8 @@ function warCareerAcceptHandoff(C, pid) {
   J.promotionCount = 0;
   J.merit = 0;
   J.reputation = 0;
+  J.roleHistory = [];
+  J.currentBillet = null;
   // Legacy compatibility rows are identity-personal. Shared War Career events,
   // credits, lineage, and last-participation context remain; wounds/ranks/logs
   // from the fallen identity never populate the successor's people cache.
@@ -1100,6 +1332,7 @@ function warCareerObserveResolve(winnerSide, type, B, C, win) {
   if (!B || B.fromCampaign !== true) return { ok:false, reason:"noncampaign" };
   if (J.handoff && (J.handoff.state === "pending" || J.handoff.state === "ended")) return { ok:false, reason:"handoff-unresolved" };
   var bid = _wcBattleId(B, C), bname = _wcBattleName(B, bid);
+  var rankBefore = J.person && J.person.rank || "Soldier";
   var outcome = _wcOutcome(winnerSide, C, B, win), rank = _wcOutcomeRank(outcome, type), key = _wcCreditKey(C, B);
   var credit = _wcCreditFor(J, key);
   var recoveredOwner = _wcRecoveredCaptureForKey(J, key);
@@ -1125,16 +1358,20 @@ function warCareerObserveResolve(winnerSide, type, B, C, win) {
   var recoveredCapture = !!(carriedOk && capturedCredit && capturedCredit.creditKey !== key &&
     Number(capturedCredit.chainIndex) < Number(C.idx) && !preflight.qualifying);
   var fate = preflight.qualifying ? preflight.fate : (recoveredCapture ? "alive" : (typeof _ssStatus === "function" ? _ssStatus(J.status) : "alive"));
+  var resultAward = warCareerCreditAward({
+    qualifying:preflight.qualifying, fate:preflight.qualifying ? fate : null,
+    outcome:outcome, type:_wcText(type || "", 32)
+  });
   var note = recoveredCapture
     ? "The selected person returns from captivity after sitting out a distinct campaign result. This deterministic recovery is nonqualifying and grants no merit, promotion, command, or political authority."
     : preflight.qualifying
-    ? "Explicit " + preflight.participation.mode + " participation recorded before delegation; personal fate " + fate + ". Slice B grants no merit, promotion, command, or political authority."
+    ? "Explicit " + preflight.participation.mode + " participation recorded before delegation; personal fate " + fate + ". Slice C reconstructs merit, reputation, rank, and billet from this one receipt under Your Timeline."
     : "Result observed for the War Career; explicit participation was not proved (" + preflight.reason + "), so this entry earns no advancement and infers no personal fate.";
   var event = {
     eventId:_wcEventId(C, J), ordinal:J.eventOrdinal, kind:"result", creditKey:key,
     personId:J.personId, scenarioId:bid || null, battleName:bname, outcome:outcome,
     type:_wcText(type || "", 32), status:fate, fate:preflight.qualifying ? fate : null,
-    qualifying:preflight.qualifying, merit:0, reputation:0, note:note
+    qualifying:preflight.qualifying, merit:resultAward.merit, reputation:resultAward.reputation, note:note
   };
   if (preflight.qualifying) event.participation = preflight.participation;
   if (recoveredCapture) event.recoveryOfCreditKey = capturedCredit.creditKey;
@@ -1146,7 +1383,7 @@ function warCareerObserveResolve(winnerSide, type, B, C, win) {
       creditKey:key, runId:C.runId, side:C.side, chainIndex:Math.max(0, Math.round(Number(C.idx) || 0)),
       scenarioId:bid || "", outcome:outcome, type:_wcText(type || "", 32), outcomeRank:rank,
       personId:J.personId, fate:preflight.qualifying ? fate : null,
-      qualifying:preflight.qualifying, merit:0, reputation:0, eventId:event.eventId, eventDate:null
+      qualifying:preflight.qualifying, merit:resultAward.merit, reputation:resultAward.reputation, eventId:event.eventId, eventDate:null
     };
     if (preflight.qualifying) credit.participation = preflight.participation;
     J.creditLedger.push(credit);
@@ -1157,7 +1394,7 @@ function warCareerObserveResolve(winnerSide, type, B, C, win) {
     credit.outcomeRank = rank; credit.eventId = event.eventId;
     credit.qualifying = true; credit.personId = J.personId; credit.fate = fate;
     credit.participation = preflight.participation;
-    credit.merit = 0; credit.reputation = 0; credit.eventDate = null;
+    credit.merit = resultAward.merit; credit.reputation = resultAward.reputation; credit.eventDate = null;
   } else if (credit && recoveredCapture) {
     // The dispatcher-owned recovery event must also own the nonqualifying
     // recovery credit. A prior observer-only row on this rung cannot remain as
@@ -1180,8 +1417,6 @@ function warCareerObserveResolve(winnerSide, type, B, C, win) {
     capturedCredit.recoveryEventId = event.eventId;
   }
 
-  J.merit = 0;
-  J.reputation = 0;
   J.currentBattleId = bid || null;
   J.lastBattleId = bid || null;
   J.lastBattleName = bname;
@@ -1200,46 +1435,140 @@ function warCareerObserveResolve(winnerSide, type, B, C, win) {
   }
   if (typeof _ssCleanJourney === "function") _ssCleanJourney(C, C.loot);
   J = C.loot.journey;
+  var lastCareer = J && Array.isArray(J.career) && J.career.length ? J.career[J.career.length - 1] : null;
+  if (lastCareer) {
+    lastCareer.rankBefore = rankBefore;
+    lastCareer.rankAfter = J.person && J.person.rank || rankBefore;
+    lastCareer.promoted = _wcRankOrdinal(lastCareer.rankBefore) !== _wcRankOrdinal(lastCareer.rankAfter);
+  }
   if (typeof _ssSyncPersonCareer === "function") _ssSyncPersonCareer(C.loot);
+  var committedEvent = null;
+  for (var cei = 0; cei < (J.events || []).length; cei++) if (J.events[cei] && J.events[cei].eventId === event.eventId) { committedEvent = J.events[cei]; break; }
   return { ok:true, eventId:event.eventId, creditKey:key, outcome:outcome, qualifying:preflight.qualifying,
     fate:preflight.qualifying ? fate : null, recoveredCapture:recoveredCapture,
-    handoff:J.handoff && J.handoff.state || null, merit:0, reputation:0 };
+    handoff:J.handoff && J.handoff.state || null,
+    merit:committedEvent ? committedEvent.merit : 0,
+    reputation:committedEvent ? committedEvent.reputation : 0 };
 }
 
-function warCareerRole(C) {
-  var J = warCareerInit(C);
-  if (!J || !J.enabled || J.careerVersion !== 1 || !J.person) return { id:"legacy-or-inactive", label:"Legacy campaign", reason:"No explicit War Career is active." };
-  var status = typeof _ssStatus === "function" ? _ssStatus(J.status) : "alive";
-  if (status === "captured" || status === "fallen" || status === "retired" || status === "war-ended") {
-    return { id:"unavailable", label:"Unavailable", reason:"The active person is " + status + " and cannot exercise command authority.", status:status };
+function _wcStoredAdvancementMatches(J, derived) {
+  if (!J || !derived || !derived.ok || !J.person || J.person.rank !== derived.rank ||
+      Number(J.merit) !== derived.merit || Number(J.reputation) !== derived.reputation ||
+      Number(J.promotionCount) !== derived.promotionCount || !Array.isArray(J.roleHistory) ||
+      J.roleHistory.length !== derived.roleHistory.length) return false;
+  for (var hi = 0; hi < derived.roleHistory.length; hi++) if (!_wcBilletSame(J.roleHistory[hi], derived.roleHistory[hi])) return false;
+  if ((J.currentBillet == null) !== (derived.currentBillet == null) ||
+      (derived.currentBillet && !_wcBilletSame(J.currentBillet, derived.currentBillet))) return false;
+  for (var ai = 0; ai < derived.awards.length; ai++) {
+    var award = derived.awards[ai];
+    if (Number(award.credit.merit) !== award.merit || Number(award.credit.reputation) !== award.reputation ||
+        !award.event || Number(award.event.merit) !== award.merit || Number(award.event.reputation) !== award.reputation) return false;
   }
-  var r = typeof _ssRankNorm === "function" ? _ssRankNorm(J.person.rank) : _wcText(J.person.rank, 80).toLowerCase();
-  var label = "Rank and file", id = "rank-and-file";
-  if (/^(sergeant|sgt|first sergeant|1st sgt|sergeant major|lieutenant|lt|1st lt|2nd lt|first lieutenant|second lieutenant|captain|capt)$/.test(r)) { id = "junior-command"; label = "Junior command"; }
-  else if (/^(major|maj|lt col|lt\. col|lieutenant colonel|colonel|col)$/.test(r)) { id = "field-command"; label = "Field command"; }
-  else if (/^(brig gen|brig\. gen|brigadier|brigadier general|maj gen|maj\. gen|major general|lt gen|lt\. gen|lieutenant general|general|gen)$/.test(r)) { id = "general-command"; label = "General command"; }
-  return { id:id, label:label, reason:"Role is derived from the current rank; Slice B grants no new authority.", status:status, rank:J.person.rank || "Soldier" };
+  var credits = Array.isArray(J.creditLedger) ? J.creditLedger : [], events = Array.isArray(J.events) ? J.events : [];
+  for (var ci = 0; ci < credits.length; ci++) if (credits[ci] && credits[ci].personId !== J.personId &&
+      (Number(credits[ci].merit) !== 0 || Number(credits[ci].reputation) !== 0)) return false;
+  for (var ei = 0; ei < events.length; ei++) if (events[ei] && events[ei].personId !== J.personId &&
+      (Number(events[ei].merit) !== 0 || Number(events[ei].reputation) !== 0)) return false;
+  return true;
+}
+function _wcCareerAuthority(C, allowedProjectionStatus) {
+  var J = C && C.loot && C.loot.journey;
+  if (!J || !J.enabled || J.careerVersion !== 1 || !J.person || J.personId !== J.person.pid || J.person.side !== C.side) {
+    return { ok:false, id:"legacy-or-inactive", label:"Legacy campaign", reason:"No explicit War Career is active." };
+  }
+  var canonical = _wcCanonicalCareerPerson(C, J.personId), savedRef = _wcUnitRef(J.person.unitRef);
+  if (!canonical || !savedRef || !_wcSameUnitRef(savedRef, canonical.person.unitRef)) {
+    return { ok:false, id:"unavailable", label:"Unavailable", reason:"The current identity or canonical source reference is malformed." };
+  }
+  var derived = _wcCalculateAdvancement(C, J, J.personId);
+  if (!_wcStoredAdvancementMatches(J, derived)) {
+    return { ok:false, id:"unavailable", label:"Unavailable", reason:"The saved advancement or billet projection does not match the sanitized receipt ledger." };
+  }
+  var status = String(J.status || "");
+  // The second argument exists only as a negative-bind seam: every shipped caller
+  // passes no override, so captured/fallen/wounded authority remains unavailable.
+  if (status !== "alive" && allowedProjectionStatus !== status) {
+    return { ok:false, id:"unavailable", label:"Unavailable", reason:"The active person is " + (status || "not present") + " and cannot exercise command authority.", status:status || null };
+  }
+  if (J.handoff && (J.handoff.state === "pending" || J.handoff.state === "ended")) {
+    return { ok:false, id:"unavailable", label:"Unavailable", reason:"COMRADE HAND-OFF must resolve before command authority can return.", status:status };
+  }
+  var band = _wcRoleBand(J.person.rank);
+  if (!band) return { ok:false, id:"unavailable", label:"Unavailable", reason:"The current rank is outside Slice C's legal rank sequence.", status:status };
+  var labels = { "rank-and-file":"Rank and file", "junior-command":"Junior command", "field-command":"Field command", "general-command":"General command" };
+  if (band.roleId === "field-command" || band.roleId === "general-command") {
+    var last = J.roleHistory.length ? J.roleHistory[J.roleHistory.length - 1] : null;
+    if (!last || !_wcBilletValid(last) || !_wcBilletSame(last, J.currentBillet) ||
+        last.authority !== "qualifying-credit" || last.personId !== J.personId || last.side !== C.side ||
+        last.rank !== J.person.rank || last.roleId !== band.roleId ||
+        (band.roleId === "field-command" && last.billetCode !== "field-officer") ||
+        (band.roleId === "general-command" && last.billetCode !== "general-officer")) {
+      return { ok:false, id:"unavailable", label:"Unavailable", reason:"The current field or general rank has no exact qualifying billet." };
+    }
+    var owner = null;
+    for (var ci = 0; ci < J.creditLedger.length; ci++) if (J.creditLedger[ci] &&
+        J.creditLedger[ci].creditKey === last.creditKey && J.creditLedger[ci].eventId === last.eventId) { owner = J.creditLedger[ci]; break; }
+    if (!owner || owner.personId !== J.personId || owner.qualifying !== true || owner.fate !== "alive" ||
+        owner.chainIndex !== last.chainIndex || owner.scenarioId !== last.scenarioId ||
+        !owner.participation || Number(owner.participation.battleYear) !== Number(last.battleYear)) {
+      return { ok:false, id:"unavailable", label:"Unavailable", reason:"The current billet is not bound to one qualifying current-person receipt." };
+    }
+    var chain = typeof CHAINS !== "undefined" && CHAINS && Array.isArray(CHAINS[C.side]) ? CHAINS[C.side] : null;
+    var index = Number(C.idx), currentBattle = chain && isFinite(index) && Math.floor(index) === index && index >= 0 && index < chain.length ? chain[index] : "";
+    var currentYear = currentBattle ? _wcCanonicalBattleYear(currentBattle) : null;
+    if (currentYear == null || !_wcServiceWindowValid(canonical.sourceRef, currentYear)) {
+      return { ok:false, id:"unavailable", label:"Unavailable", reason:"The current campaign date is outside this identity's canonical service window.", status:"service-ended" };
+    }
+  }
+  return { ok:true, id:band.roleId, label:labels[band.roleId],
+    reason:"Role and billet are reconstructed from the current person's sanitized Your Timeline receipts.",
+    status:status, rank:J.person.rank, billet:J.currentBillet, derived:derived, journey:J };
+}
+function warCareerRole(C) {
+  var authority = _wcCareerAuthority(C);
+  var out = { id:authority.id, label:authority.label, reason:authority.reason };
+  if (authority.status != null) out.status = authority.status;
+  if (authority.rank) out.rank = authority.rank;
+  if (authority.billet) out.billetId = authority.billet.billetId;
+  return out;
 }
 function warCareerCapabilities(C) {
   var role = warCareerRole(C);
   var active = role.id !== "legacy-or-inactive" && role.id !== "unavailable";
+  var field = role.id === "field-command" || role.id === "general-command";
   return {
     role:role.id,
     personalStory:active,
     armyRegister:true,
     strategicReadOnly:true,
     localOrders:false,
-    fieldCommand:false,
+    fieldCommand:field,
     nationalDecisions:false,
     cabinetMutation:false,
     appointmentMutation:false,
     resourceMutation:false,
-    reason:active ? "Slice B records proved participation and personal fate only; command and political mutations remain locked." : role.reason
+    reason:active ? (field ? "Slice C exposes one bounded leadership projection; command appointments and political mutations remain locked." : "This role has no command projection yet.") : role.reason
+  };
+}
+function warCareerStrategicGeneral(C) {
+  var authority = _wcCareerAuthority(C), J = authority.journey;
+  if (!authority.ok || authority.id !== "general-command" || !J || !authority.billet) return null;
+  return {
+    schema:"cw_war_career_strategic_general_v1",
+    id:"wcsg-" + _wcHash([C.runId, J.personId, authority.billet.billetId, "strategic-general-v1"].join("|")).toString(36),
+    personId:J.personId, name:_wcText(J.person.name || "", 120), side:C.side,
+    rank:J.person.rank, roleId:"general-command", billetId:authority.billet.billetId,
+    provenance:"Inferred", timelineLabel:"Your Timeline"
   };
 }
 function warCareerCommandProjection(C) {
-  warCareerRole(C);
-  return 0;
+  var authority = _wcCareerAuthority(C), J = authority.journey;
+  if (!authority.ok || !J || (authority.id !== "field-command" && authority.id !== "general-command")) return 0;
+  var reputation = Number(J.reputation);
+  if (!isFinite(reputation)) return 0;
+  reputation = Math.max(0, reputation);
+  if (authority.id === "field-command") return Math.min(2, 1 + Math.floor(reputation / 4));
+  return Math.min(4, 2 + Math.floor(reputation / 4));
 }
 
 function warCareerHandoffHTML(C) {
@@ -1269,8 +1598,8 @@ function warCareerSummaryHTML(C) {
   for (var i = 0; i < credits.length; i++) if (credits[i] && credits[i].qualifying) qualifying++;
   return '<section data-war-career-summary="1" aria-labelledby="wcSummaryHead" style="margin-top:9px;padding:9px;border:1px solid rgba(184,134,59,.62);border-radius:5px">'
     + '<h3 id="wcSummaryHead" style="font-size:12px;margin:0 0 4px">War Career — Your Timeline</h3>'
-    + '<div style="font-size:11px;line-height:1.45">Role: <b>' + _wcEsc(role.label) + '</b> · events ' + _wcEsc((J.events || []).length) + ' · distinct credits ' + _wcEsc(credits.length) + ' · qualifying ' + _wcEsc(qualifying) + '.</div>'
-    + '<div style="font-size:11px;line-height:1.45;opacity:.78">Unproved observations remain nonqualifying. Slice B keeps merit 0, reputation 0, no promotion, command, or political authority.</div>'
+    + '<div style="font-size:11px;line-height:1.45">Role: <b>' + _wcEsc(role.label) + '</b> · merit ' + _wcEsc(J.merit || 0) + ' · reputation ' + _wcEsc(J.reputation || 0) + ' · qualifying ' + _wcEsc(qualifying) + '.</div>'
+    + '<div style="font-size:11px;line-height:1.45;opacity:.78">Rank and billet are reconstructed from one qualifying receipt per rung. Alternate advancement is Your Timeline, not a rewrite of source history.</div>'
     + warCareerHandoffHTML(C)
     + '</section>';
 }
@@ -1286,7 +1615,8 @@ function warCareerReportHTML(C, opts) {
     + '<ul style="font-size:11px;line-height:1.5;margin:6px 0 0;padding-left:18px">'
     + '<li>' + _wcEsc(events.length) + ' narrative observation' + (events.length === 1 ? "" : "s") + '; newest: ' + _wcEsc(last ? (last.battleName || last.kind) : "career start") + '.</li>'
     + '<li>' + _wcEsc(credits.length) + ' distinct campaign credit' + (credits.length === 1 ? "" : "s") + '; ' + _wcEsc(qualifying) + ' proved participation; recovery retries cannot stack credit.</li>'
-    + '<li>Unproved entries are nonqualifying. Slice B keeps merit 0, reputation 0, and no promotion, relationship, command, or political award.</li>'
+    + '<li>Your Timeline totals: merit ' + _wcEsc(J.merit || 0) + '; reputation ' + _wcEsc(J.reputation || 0) + '; promotions ' + _wcEsc(J.promotionCount || 0) + '. Unproved or excluded-life entries score zero.</li>'
+    + '<li>Nonqualifying observations grant no merit, no reputation, no promotion, no billet, and no command authority.</li>'
     + '<li>Personal fate: ' + _wcEsc(typeof _ssStatus === "function" ? _ssStatus(J.status) : "alive") + '; lineage hand-offs ' + _wcEsc((J.lineage || []).length) + '.</li>'
     + '</ul>' + warCareerHandoffHTML(C) + '</section>';
 }
