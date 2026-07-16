@@ -749,9 +749,49 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
-### LANE-005 · war-career-loop — **CONTRACT (D410 reachability contract shipped; D411 runtime unowned)**
+### LANE-005 · war-career-loop — **DRIVE (D411 reachability runtime; Claude Code Fable)**
 
-- **Owning tool:** none. Owner: none. No simultaneous edits by any provider.
+- **Owning tool:** Claude Code Fable (top loop). No simultaneous edits by any other provider
+  while this lock is held.
+- **State:** DRIVE — runtime take from clean starting SHA
+  `98f6370c9dec4a9b313f2a019798de58b80d37bb` (the D410 release boundary; all pinned hashes
+  re-verified exact before this take).
+- **Take task:** D411 reachability runtime (D410 contract; D409 option 1, Aaron-approved
+  2026-07-16). Boundary proof: plan probe 24/24 green at take, and the read-only
+  `.tmp/d410-reachability-fixture.mjs` re-run green — artifact `ok:true`, runId
+  `run-us-d410-1`, rolls `196, 204, 264, 380, 855, 688, 736`, register 1512 — before this
+  take). The "All for the Union" end-bound claim was re-verified through the normal
+  citation pipeline before landing (Vintage Books / Vintage Civil War Library, Robert Hunt
+  Rhodes ed., ISBN 0-679-73828-2; enlisted June 5, 1861; lieutenant colonel commanding from
+  February 6, 1865; brevet colonel April 2, 1865; mustered out with the 2nd Rhode Island
+  July 13, 1865 as the regiment's colonel).
+- **D411 runtime allowlist (may edit ONLY):** `data/soldier-replacements.json` (the Rhodes
+  record: `serviceStart:1861, serviceEnd:1865` plus exactly one "All for the Union" source
+  row; nothing else in the file), `src/37-loot-survival.js` (bounds validation in the record
+  cleaner + the carry in `_ssApplySoldierReplacements`), `src/106-war-career.js` (append the
+  six frozen `_WC_TIMELINE_ASSIGNMENTS_V1` rows; no other change), `tools/probe-war-career.mjs`
+  (ONE new browser row + ONE new static wall), `tools/probe-war-career-loop-plan.mjs` (ONLY
+  the declared D410→D411 transition: contracted-not-landed checks flip to landed pins, the
+  moved hashes update with documented history, all 24 step names/order stay exact),
+  `civil_war_generals.html` ONLY as generated output of `node tools/build.mjs`, and canonical
+  docs (AUTONOMOUS-RUN, COORDINATION, DECISIONS, HANDOFF, RUN-LOG, START-HERE, V1-CHECKLIST,
+  WAKE-UP).
+- **Forbidden in this take:** any other src/data file, `build/base.html`,
+  `src/00-manifest.json`, `tools/vet-no-regression.mjs`, `tools/probe-command.mjs`,
+  `src/35-command.js`, T2/T3/Auto, After Action, any other probe or lane, save version,
+  OVR/persona change, any rank rewrite (register rank stays Private), any change to
+  `_wcServiceWindowValid` or any validator semantics, Slice F, and the D408 §17
+  Matters-of-State runtime (a further separate take). `npm run vet:noreg` is NOT run.
+- **Declared negative binds (each one mutation, byte-restored, red only its declared scope,
+  never landed in git):** Bind A — remove the "All for the Union" source row while keeping
+  the bounds → the new reachability surface (the new focused row or the transitioned
+  SOURCE-BOUNDED SERVICE plan step) must red. Bind B — make the adapter accept a malformed
+  pair (start > end) as a window → only the new reachability/static teeth red. Bind C — pin
+  `serviceYear` alongside the bounds pair on the Rhodes person → only declared teeth red.
+- **DRIVE resume pointer (if interrupted):** resume from this committed lock; the law is
+  design §18 + DECISIONS D410; acceptance is War Career 43/43 browser + 30/30 static,
+  Command 94/94 byte-identical, plan 24/24 transitioned, suite 130 row 38, register 1512,
+  `_SAVE_VER=1`, non-Rhodes people byte-identical.
 - **Task:** the D410 reachability planning contract is COMMITTED — design §18 plus five appended
   fail-closed steps in `tools/probe-war-career-loop-plan.mjs` (19/19 → **24/24**, the original
   nineteen names/order retained exactly, still suite-excluded, bind-tested with a byte-identical
