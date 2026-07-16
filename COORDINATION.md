@@ -749,17 +749,39 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
-### LANE-005 · war-career-loop — **CONTRACT (D409 Slice-E runtime HALT recorded; runtime unowned)**
+### LANE-005 · war-career-loop — **DRIVE (D410 reachability planning contract take)**
 
-- **Owning tool:** none. Owner: none. No simultaneous edits by any provider.
-- **Task:** the D408 Slice E runtime take HALTED at the D409 reachability boundary before any
-  runtime edit. The D408 §17 contract for exactly one capability, `nationalDecisions` /
-  **Matters of State**, stands unchanged; the separate Slice E runtime remains the next runtime task
-  but is blocked on Aaron's D409 resolution. Slice F remains closed.
-- **State:** CONTRACT — released from the D409 halt of ledger take
-  `5449158f756d69c0b64975214ddc82bacafd0214`, based on clean D408 boundary
-  `18c156261ddabe2531226db77c70bff01d7ca000`, with zero runtime, probe, data, or generated
-  movement and every D408 pin exact. Preserve the sole `C.loot.journey` player owner,
+- **Owning tool:** Claude Code Fable. No simultaneous edits by any provider.
+- **Task:** D410 reachability planning contract (D409 option 1, Aaron-approved 2026-07-16).
+  Approval provenance, verbatim: "Aaron approved DECISIONS.md D409 option 1 on 2026-07-16: a
+  separate planning-first reachability contract (citation-grade multi-year service bounds on a
+  documented replacement record, the narrow src/37 replacement-adapter carry, and an authored
+  nashville-1864 assignment ladder), then a fresh DRIVE take implementing the unchanged D408 §17
+  runtime." This take executes the PLANNING CONTRACT ONLY: design §18, appended fail-closed
+  D410 steps in `tools/probe-war-career-loop-plan.mjs` (original 19 names/order retained exactly;
+  suite-excluded), and canonical docs. D410 moves NO runtime, data, probe-suite, or generated
+  byte; it does not start D411 or the D408 §17 runtime. Slice F remains closed.
+- **State:** DRIVE — ledger-only take from clean starting SHA
+  `64714e459eb521b39a32ff3d64a7849a0353d28c` (the D409 halt release boundary; all seventeen
+  pinned hashes re-verified exact before this take).
+- **D410 planning allowlist (this take may edit ONLY):** `docs/design/war-career-loop-design.md`
+  (new §18), `tools/probe-war-career-loop-plan.mjs` (append D410 steps only), `AUTONOMOUS-RUN.md`,
+  `COORDINATION.md`, `DECISIONS.md`, `HANDOFF.md`, `RUN-LOG.md`, `START-HERE.md`,
+  `V1-CHECKLIST.md`, `WAKE-UP.md`. Read-only scratch probes go under gitignored `.tmp/`.
+- **D410 forbidden scope:** `src/*` (all), `data/*` (all — the Rhodes bounds ship in D411, NOT
+  now), `civil_war_generals.html` (must remain byte-identical at
+  `502aee3fc5867b970225a59c06cd6102` through the entire slice), `build/base.html`,
+  `src/00-manifest.json`, `tools/vet-no-regression.mjs`, `tools/probe-war-career.mjs`,
+  `tools/probe-command.mjs`, any other probe, any other lane's files, and the save version.
+- **Resume pointer (this take):** if interrupted, resume from this committed DRIVE lock at the
+  starting SHA above: verify clean git, re-verify the pinned hashes, then continue the D410
+  contract (live `.tmp/` fixture verification → design §18 → appended plan-probe teeth →
+  negative bind with byte-identical restore → focused gates → docs → one release commit
+  returning this lane to CONTRACT/unowned with the D411 resume pointer).
+- **Prior release state (D409, retained history):** Owner: none. State: CONTRACT — released from
+  the D409 halt of ledger take `5449158f756d69c0b64975214ddc82bacafd0214`, based on clean D408
+  boundary `18c156261ddabe2531226db77c70bff01d7ca000`, with zero runtime, probe, data, or
+  generated movement and every D408 pin exact. Preserve the sole `C.loot.journey` player owner,
   separate `P.command` NPC owner, source/timeline receipt split, one-credit/fate/handoff/save laws,
   safe-clone boundary, and every no-combat/no-politics/no-simultaneous-edit lock. Release state:
   State: CONTRACT.
@@ -786,7 +808,8 @@ next green commit and confer through this ledger instead of permitting simultane
      multi-year replacement records (e.g., Elisha Hunt Rhodes, 1861-1865), the narrow
      replacement-adapter carry in src/37, and the authored nashville-1864 assignment ladder — then a
      fresh DRIVE take implementing D408 §17 unchanged.
-- **Resume pointer:** blocked on Aaron's D409 resolution. Once the chosen reachability path ships
+- **Prior resume pointer (D409, resolved by this D410 take):** blocked on Aaron's D409 resolution.
+  Once the chosen reachability path ships
   its own green contract, take a fresh committed LANE-005 DRIVE lock for the separate Slice E
   runtime and implement only D408 §17 across the pure receipt-derived reader, shared decision
   render/wire seam, and direct mutator guard; run all five binds; release without Slice F.
