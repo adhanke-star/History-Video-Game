@@ -749,31 +749,48 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
-### LANE-005 · war-career-loop — **DRIVE (D408 Slice E Matters-of-State runtime; Claude Code Fable)**
+### LANE-005 · war-career-loop — **CONTRACT (D409 Slice-E runtime HALT recorded; runtime unowned)**
 
-- **Owning tool:** Claude Code (Fable). Owner: Claude Code Fable. No simultaneous edits by any provider.
-- **Task:** D408 Slice E Matters-of-State runtime — implement design §17 only: the pure
-  receipt-derived `nationalDecisions` access reader, the shared decision render/wire seam plus the
-  direct `decResolve → _decApply` mutator guard with Visible defer, the focused D408 proof row, all
-  five byte-restored negative binds, docs sync, and release without Slice F.
-- **State:** DRIVE — taken at starting SHA `18c156261ddabe2531226db77c70bff01d7ca000` (the clean
-  pushed D408 contract boundary). Runtime allowlist: `src/106-war-career.js`, `src/32-decisions.js`,
-  `tools/probe-war-career.mjs`, `tools/probe-war-career-loop-plan.mjs` (only for the D408
-  contract-to-runtime completion transition), `civil_war_generals.html` (generated only by
-  `node tools/build.mjs`), and the canonical docs: AUTONOMOUS-RUN.md, COORDINATION.md, DECISIONS.md,
-  HANDOFF.md, RUN-LOG.md, START-HERE.md, V1-CHECKLIST.md, WAKE-UP.md, and
-  docs/design/war-career-loop-design.md. Forbidden: `src/30-president-shell.js`,
-  `src/99-h0-president-desk.js`, `src/101-h0-between-battle.js`, `src/20-president-render.js`,
-  `src/31-cabinet.js`, `src/35-command.js`, `tools/probe-command.mjs`, any Treasury/Diplomacy/
-  Armory/War Effort runtime, any `data/*`, `src/00-manifest.json`, `build/base.html`,
-  `tools/vet-no-regression.mjs`, T2/T3/Auto, After Action, combat/casualty/winner/score/AI/
-  objective/reinforcement/balance/tactical producers, relationships, save version, Slice F, and
-  every other lane. Preserve the sole `C.loot.journey` player owner, the separate `P.command` NPC
-  owner, the source/timeline receipt split, one-credit/fate/handoff/save laws, the safe-clone
-  boundary, and every no-combat/no-simultaneous-edit lock.
-- **Resume pointer (DRIVE):** implement the receipt-derived reader, shared decision guard, focused
-  proof, five binds, docs sync, and release without Slice F. Work only in
-  `/private/tmp/codex-vg-recovery-019f62fe`; never edit or pull across the dataless Desktop checkout.
+- **Owning tool:** none. Owner: none. No simultaneous edits by any provider.
+- **Task:** the D408 Slice E runtime take HALTED at the D409 reachability boundary before any
+  runtime edit. The D408 §17 contract for exactly one capability, `nationalDecisions` /
+  **Matters of State**, stands unchanged; the separate Slice E runtime remains the next runtime task
+  but is blocked on Aaron's D409 resolution. Slice F remains closed.
+- **State:** CONTRACT — released from the D409 halt of ledger take
+  `5449158f756d69c0b64975214ddc82bacafd0214`, based on clean D408 boundary
+  `18c156261ddabe2531226db77c70bff01d7ca000`, with zero runtime, probe, data, or generated
+  movement and every D408 pin exact. Preserve the sole `C.loot.journey` player owner,
+  separate `P.command` NPC owner, source/timeline receipt split, one-credit/fate/handoff/save laws,
+  safe-clone boundary, and every no-combat/no-politics/no-simultaneous-edit lock. Release state:
+  State: CONTRACT.
+- **D409 halt boundary (empirically verified in the live built game before any runtime edit):**
+  1. All 1,465 career-startable Army Register people carry a single-year service window —
+     generated slot people take `serviceYear:<scenario year>` unconditionally
+     (src/37-loot-survival.js:1088-1090) and replacement records override with their own single
+     `year` (src/37-loot-survival.js:1291). Zero multi-year or open windows exist.
+  2. Shipped D405/D406 law bounds alternate-timeline service by the canonical window
+     (`_wcValidateTimelineAssignment`, `_wcCareerAuthority`; the D406 `service-ended` zero case pins
+     it), and authored cross-rung targets must be `phases[]`-registered exact chain rungs
+     (`_wcTimelineTarget`). The complete valid target set is US antietam(9)/vicksburg(14)/
+     gettysburg(15)/chickamauga(16)/chattanooga(17)/nashville(27) and CS antietam(10)/
+     gettysburg(13)/chickamauga(14)/chattanooga(15)/nashville(22); the only 1864 target on either
+     chain is nashville.
+  3. General Command needs four promotions; a single-1864-window person reaches at most two
+     qualifying rungs (own 1864 source battle + nashville) → Lt. Col. maximum. Therefore
+     reconstructed current-person General Command and a latest qualifying canonical
+     `battleYear >= 1864` receipt can never coexist: the contracted unlock is unreachable, its
+     focused "unlocks" proof cannot be built inside the D408 runtime allowlist, and shipping the
+     gate would permanently lock every Matters-of-State decision for every career player.
+  4. D409 records four options; the recommendation is option 1 — a separate planning-first
+     reachability contract adding citation-grade `serviceStart`/`serviceEnd` bounds to documented
+     multi-year replacement records (e.g., Elisha Hunt Rhodes, 1861-1865), the narrow
+     replacement-adapter carry in src/37, and the authored nashville-1864 assignment ladder — then a
+     fresh DRIVE take implementing D408 §17 unchanged.
+- **Resume pointer:** blocked on Aaron's D409 resolution. Once the chosen reachability path ships
+  its own green contract, take a fresh committed LANE-005 DRIVE lock for the separate Slice E
+  runtime and implement only D408 §17 across the pure receipt-derived reader, shared decision
+  render/wire seam, and direct mutator guard; run all five binds; release without Slice F.
+  Work only in `/private/tmp/codex-vg-recovery-019f62fe`; the Desktop checkout remains dataless.
 - **D408 acceptance contract:**
   1. Select only `nationalDecisions`, human-facing **Matters of State**. It is the smallest complete
      rung because Desk and between-battle paths converge on `src/32-decisions.js` render/wire seams

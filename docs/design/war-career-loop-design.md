@@ -1163,3 +1163,23 @@ render, wire, and direct-call paths. Five byte-restored negative binds are manda
 Each inverse restores source and generated hashes byte-for-byte before the next green rerun. Runtime
 must retain every D400-D407 row, 29 static walls, Command 94/94, plan 19/19 names/order, suite 130
 with War Career row 38, 24/54/1512/24 integration, sweep 24, and `_SAVE_VER=1`. Slice F stays closed.
+
+### D409 reachability halt — the unlock needs a lawful multi-year person first
+
+The first runtime take (2026-07-16) verified this contract against the live built game before any
+runtime edit and HALTED. Empirically: all 1,465 career-startable Army Register people carry a
+single-year service window (generated slot people take the scenario year unconditionally;
+replacement records override with one documented `year`); §14/§15 law bounds alternate-timeline
+service by the canonical window and restricts authored cross-rung targets to `phases[]`-registered
+exact chain rungs, whose complete live set is US antietam/vicksburg/gettysburg/chickamauga/
+chattanooga/nashville and CS antietam/gettysburg/chickamauga/chattanooga/nashville — the only 1864
+member being nashville; and General Command needs four promotions while a single-1864-window person
+can reach at most two qualifying rungs. The two unlock conditions above are therefore mutually
+exclusive for every person the game can currently produce: the focused "unlocks" proof cannot be
+built inside this section's runtime allowlist, and shipping the gate would permanently lock every
+Matters-of-State decision for every career player. DECISIONS D409 records the halt and four options;
+the recommendation is a separate planning-first reachability contract (citation-grade multi-year
+`serviceStart`/`serviceEnd` bounds on documented replacement records such as Elisha Hunt Rhodes
+1861-1865, the narrow src/37 replacement-adapter carry, and the authored nashville-1864 assignment
+ladder) before a fresh DRIVE take implements this §17 contract unchanged. Nothing in this section's
+law moved at the halt.
