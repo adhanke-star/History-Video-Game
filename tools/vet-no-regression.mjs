@@ -67,6 +67,7 @@ const SUITE = [
   ['h0 tactical hud', 'tools/probe-h0-tactical-hud.mjs'],
   ['h0 after action', 'tools/probe-h0-after-action.mjs'],
   ['save slots', 'tools/probe-save-slots.mjs'],
+  ['mayhem mode', 'tools/probe-mayhem-mode.mjs'],
   ['divergence', 'tools/probe-divergence.mjs'],
   ['alternate endings', 'tools/probe-endings.mjs'],
   ['after action', 'tools/probe-afteraction.mjs'],

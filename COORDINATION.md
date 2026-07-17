@@ -1484,25 +1484,21 @@ next green commit and confer through this ledger instead of permitting simultane
   to CONTRACT/unowned.
 - **Last-touched commit:** the LANE-006 take commit (this edit).
 
-### LANE-007 · open-history-mayhem — **DRIVE (Slice A only; Slice B closed)**
+### LANE-007 · open-history-mayhem — **DRIVE (Slice A shipped; Slice B next only; Slice C closed)**
 
 - **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra TOP LOOP. No simultaneous edits by any provider.
-- **State:** DRIVE for Slice A only — Slice B remains closed. The bind-tested dual-mode design is
-  the runtime law; Slice A is the exact current bounded task. Runtime has not begun.
+- **State:** DRIVE. D418 ships Slice A; Slice B is the exact next bounded task. Slice C and every
+  public Mayhem path remain closed behind `MAYHEM_PUBLIC_READY=false`.
 - **Supersession:** Aaron's 2026-07-17 direction supersedes D382's universal consequence-only /
   never-scored / dignity-lock interpretation and the LANE-007 contract committed at `41b6051`
   before any runtime or red probe teeth landed. The uncommitted surrender research draft was
   removed. Pushed history remains intact; D416 and this lane are the forward law.
-- **Working boundary:** clean pushed DRIVE-take SHA
-  `c47cb30da1858849e13536b07abd4acc3cdebb2e`, equal to `origin/main`. The Desktop
-  checkout then began Slice A and now holds uncommitted WIP in the exact allowed runtime paths:
-  `src/00-manifest.json`, `src/105-save-guard.js`, `src/91-save-slots.js`,
-  `src/98-h0-main-menu.js`, new `src/107-mayhem-rules.js`, and
-  `tools/vet-no-regression.mjs`. The first runtime build halted before generated output moved:
-  required `src/105` post-restore sanitation changes its enrolled `applySave` signature from
-  `cd6a42c12696426c` to `201fa746ea8e8755`, and E41 therefore requires
-  `tools/save-shape.json` in the same commit. That file is outside the committed Slice-A
-  allowlist; no runtime code or red teeth are committed.
+- **Working boundary:** D418 ships from the clean pushed blocker-relay SHA
+  `ffa3c07c4235740b6d82739b61d0c4f53bec2bb5`. Aaron authorized adding only
+  `tools/save-shape.json` to the Slice-A allowlist, so the release records the required
+  `src/105-save-guard.js::applySave` signature `201fa746ea8e8755` at `_SAVE_VER=1`. Slice A
+  changes only its contracted runtime/probe/generated paths plus D412 closeout docs and archives;
+  the D418 release commit must be clean and equal to `origin/main` before Slice B starts.
 - **Design law:** Aaron's 2026-07-17 override + DECISIONS D416 · `GRAND-STRATEGY-PLAN.md` §§0,
   5-6, 9-11, 27 (one engine, strictness independent from challenge, full sandbox) · D382's
   procedural/timeline-gallery direction as superseded by D416 · D74's single-engine discipline
@@ -1627,20 +1623,94 @@ next green commit and confer through this ledger instead of permitting simultane
   MAYHEM AUTHORITY red and 12/13 green; byte-identical restore returned the final 13/13. Build
   was `GATE OK` with generated game byte-identical; all thirteen coordination-sensitive plan
   probes stayed green; suite stayed 130; no runtime/browser/full battery was owed.
-- **Resume pointer:** HALT at the E41 save-shape allowlist contradiction. Aaron must either
-  authorize adding only `tools/save-shape.json` to Slice A and recording the additive/idempotent
-  `src/105-save-guard.js::applySave` signature `201fa746ea8e8755` at `_SAVE_VER=1` (recommended),
-  revise the runtime contract, or abandon the WIP. If authorized, resume the preserved WIP,
-  finish the focused probe and six binds, and keep Slice B closed.
-- **Last-touched commit:** clean pushed DRIVE take `c47cb30`; this blocker relay is the next
-  ledger-only commit and carries no runtime files.
+- **Slice A release evidence (D418):** Aaron authorized the one-file allowlist expansion for
+  `tools/save-shape.json`; `applySave` now enrolls as `201fa746ea8e8755` at `_SAVE_VER=1`.
+  Mayhem mode is 16/16; save slots 16/16; H0 main menu 5/5; playstyle 14/14; divergence 14/14;
+  full campaign 4/4; every fresh artifact has zero pageerrors/realErrors. Suite is 131 with War
+  Career row 38 and Mayhem row 57. Six inverse-restored binds each reddened exactly one tooth:
+  Historical fallback, attach-before-init, immutable owner, cross-slot isolation, four campaign
+  routes, and fail-closed public gate. Restores returned src107
+  `ec514d1a4092ba16aa3746b14476f093`, src91 `8c2a586c62fb9acb2d49e64c899cd4e5`,
+  src98 `2c03776cf8f1097fd59860637013f714`, and game
+  `fd3064b58871b3b51a7866685075dadb`. Release pins: srcTree
+  `85f72d325f5fe1c1c09c62a1d59edbec`; base unchanged
+  `c9db83fa99230ffb95bdfdfe059f3fb9`; manifest `483be7dbc6dfc820a0092e2085b88b93`;
+  suite `5703b0a7a62ea2b922285280362e6c1d`; focused probe
+  `9801e496cf90f2ac400e965b2a517475`; save-shape
+  `c400c9d007bbfdaeea07f96f3fb1945b`; 24/54/1512/24 unchanged. Aaron authorized omitting the
+  planning probe after its pre-runtime allowlist/count pins became historical. The full battery
+  remains deferred; D398 is the latest full release checkpoint.
+- **Runtime Slice B acceptance criteria (in full):**
+  1. Start only from the clean pushed D418 release with this lane still owned by ChatGPT/Codex
+     5.6 Sol Ultra. Re-read design §§3.1, 4, 7, 10-13, this lane, the shipped src/107, the focused
+     probe, `tools/validate-data-schemas.mjs`, and the live data-loading seam. Do not rerun or edit
+     the pre-runtime planning probe.
+  2. Slice-B runtime edits are limited to `data/mayhem-rules.json`,
+     `src/107-mayhem-rules.js`, `tools/validate-data-schemas.mjs`,
+     `tools/probe-mayhem-mode.mjs`, generated `civil_war_generals.html`, and D412 canonical
+     closeout docs/archives. If a different runtime/domain file is required, HALT before editing
+     it and surface the exact seam. Do not edit frozen `build/base.html`, manifest, save guard,
+     save slots, H0, suite manifest, battle/tactical/result/AAR files, or any other lane.
+  3. Add one closed `cw_mayhem_rules_v1` data document at version 1. The schema admits only
+     reviewed action declarations, allowlisted predicates/tags, presentation data, and the exact
+     operation-family ids in design §4.2. It rejects function bodies, source strings, dynamic
+     property paths, constructors, callbacks, unknown keys/ids, invalid numerics, duplicate ids,
+     and arbitrary code. No Slice-B declaration is publicly reachable.
+  4. Enroll the document in `tools/validate-data-schemas.mjs` with substantive closed-world
+     validation, not key presence alone. Data-schema count moves exactly 54 to 55; scenarios stay
+     24, Army Register 1512, coverage 24, suite 131 with War Career row 38 and Mayhem row 57, and
+     `_SAVE_VER=1`.
+  5. Extend src/107 with pure `mayhemCan(actionId, context)`, one action registry, one operation
+     registry, and `mayhemApply(actionId, context)`. Historical rejects every Mayhem-only action
+     before mutation. Missing/malformed/wrong-side/wrong-mode/stale/forged context and unknown
+     action, predicate, tag, or operation ids fail closed.
+  6. `mayhemApply` follows the design §4.3 transaction in order: sanitize; resolve one action;
+     validate every predicate and operation without mutation; derive one deterministic receipt id
+     from timeline/battle/phase/actor/action/sequence; reject stale/duplicate/consumed inputs;
+     stage domain-adapter work in a fixed documented order; commit all or none; persist one bounded
+     receipt carrying normalized operations and before/after values. Retry/load is idempotent.
+  7. Define the smallest additive campaign receipt owner and finite cap inside src/107; document
+     the choice in D419. Keep `C.ruleset` exactly `{id,version}` and immutable. Reuse the existing
+     save envelope and result owners; do not create a second campaign, result resolver, combat
+     engine, score owner, or AAR shell. Derived `allowed`, `scored`, or `applied` booleans never
+     become authority.
+  8. The domain-adapter interface has separate pure preflight/staging and commit boundaries. The
+     focused probe supplies deterministic in-memory adapters/fixtures for every §4.2 operation
+     family and proves fixed ordering, normalized results, cap behavior, and exact rollback/no
+     receipt when any operation or commit step fails. Slice B does not wire live score, casualty,
+     reward, surrender, victory, career, tag, result, or AAR mutation; Slice C owns the first
+     production adapters and public action.
+  9. Extend the existing Mayhem probe rather than adding a suite row. Prove closed data/schema,
+     `mayhemCan`, Historical refusal and byte-equivalence, Mayhem availability, every operation
+     fixture, deterministic receipt bytes/id, duplicate retry, bounded sanitation/load, forged and
+     stale rejection, wrong side/mode, unknown action/operation, fixed adapter order, and atomic
+     rollback. Keep all Slice-A 16 steps green and zero pageerrors/realErrors.
+  10. Negative binds must include: admit an arbitrary property path or unknown operation; let
+      Historical apply a Mayhem action; remove duplicate-receipt rejection; and force operation N
+      to fail after N-1 staged operations. Each bind must exit 1, red only its named tooth, preserve
+      zero pageerrors/realErrors where the harness reaches the browser, then inverse-restore every
+      edited source/data/generated byte before the final green run.
+  11. Gate: `node --check` touched JS/probe; `node tools/validate-data-schemas.mjs` plus fresh JSON
+      readback; `node tools/build.mjs` GATE OK; focused Mayhem probe plus JSON/pageerror readback;
+      save slots and full campaign adjacent probes; suite list exact; Historical deterministic A/B;
+      `git diff --check`. Run the full `npm run vet:noreg` only at Aaron's later release checkpoint.
+  12. Commit and push Slice B as its own green milestone. Keep LANE-007 DRIVE, point to Slice C,
+      and retain `MAYHEM_PUBLIC_READY=false`; no public picker/action or no-quarter content ships
+      in Slice B.
+- **Resume pointer:** from the clean pushed D418 release, implement Runtime Slice B criteria 1-12
+  above in one separate green commit. Start with the live schema/data-loader and receipt-owner
+  inventory, then write the full schema, validator, pipeline, fixtures, binds, docs, commit, and
+  push. Keep `MAYHEM_PUBLIC_READY=false`; Slice C is closed.
+- **Last-touched commit:** D418 Slice-A release commit (this commit; verify live `HEAD` equals
+  `origin/main` before Slice B).
 - **History:** opened as surrender-consequences at `41b6051`; Aaron superseded its core rule
   before implementation. D416 converts the same lane to the wider mode architecture so the
   surrendered idea becomes one later Mayhem validation slice rather than the universal law.
   D417 ships the replacement design + plan probe and releases the lane to CONTRACT/unowned.
   The Slice-A runtime attempt stopped at the first build when the required save-owner edit exposed
-  the omitted E41 `tools/save-shape.json` transition; the WIP is preserved uncommitted pending
-  Aaron's explicit scope choice.
+  the omitted E41 `tools/save-shape.json` transition. The clean blocker relay preserved the WIP;
+  Aaron authorized that one-file expansion; D418 then shipped Slice A with all six binds green
+  after byte-identical restores.
 
 ---
 

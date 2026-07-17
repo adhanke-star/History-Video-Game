@@ -6,6 +6,70 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D418 — MAYHEM SLICE A SHIPPED HIDDEN: ONE IMMUTABLE RULESET OWNER, ONE FAIL-CLOSED PICKER, AND SAVE/TIMELINE ISOLATION — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-007 DRIVE] (2026-07-17)
+
+Aaron authorized adding only `tools/save-shape.json` to the Slice-A runtime allowlist. The
+required post-restore sanitizer changes the enrolled `src/105-save-guard.js::applySave` signature
+from `cd6a42c12696426c` to `201fa746ea8e8755`; the release records that exact change and keeps
+`_SAVE_VER=1`.
+
+Slice A now supplies the hidden mode foundation. `src/107-mayhem-rules.js` follows src/106 and
+owns the exact `{id,version}` sanitizer/readers, the only initializer, the immutable campaign
+descriptor, Historical fallback, named Historical-to-Mayhem fork, visible labels, and bounded
+pre-start carry. Late wrappers cover `_openMusterChoice`, `startCampaign`, and `_t1InitAll`
+without editing `build/base.html`. They attach the sanitized ruleset before init and first launch
+on all H0/legacy US/CS paths, and a `finally` path clears pending state. Direct two-argument
+`startCampaign` remains Historical. A valid active ruleset cannot change mid-run; malformed or
+missing state resolves Historical; Mayhem-to-Historical conversion fails; `G.settings`,
+difficulty, realism, play style, and `altHistoryEmergentOnly` have no mode authority.
+
+The accessible picker uses real controls and radio semantics, roving arrow/Home/End selection,
+Back/Escape/focus restoration, visible focus, plain descriptions, and action-only announcements.
+Its CSS covers narrow screens, 200% zoom, high contrast, and reduced motion. The single
+`MAYHEM_PUBLIC_READY=false` gate keeps all normal routes Historical. Slice A therefore exposes no
+public Mayhem action, score, casualty, reward, result, surrender, wildcard, or AAR path.
+
+Save restore now sanitizes after whole-campaign replacement. Save slots and H0 use pure ruleset
+readers for current-mode text, defaults, previews, import, undo, and export naming. Historical A
+to Mayhem B to Historical A cannot leak B's mode into A, and explicit Historical matches the
+legacy default through deterministic campaign/save vectors. The release adds no second save
+owner and changes no data, battle, combat, scenario registry, custom schema, or frozen-base byte.
+
+`tools/probe-mayhem-mode.mjs` adds one suite row and finishes 16/16 with zero
+pageerrors/realErrors. Adjacent focused results are save slots 16/16, H0 main menu 5/5,
+playstyle 14/14, divergence 14/14, and full campaign 4/4. Suite list is exactly 131 with War
+Career row 38 and Mayhem row 57. Six negative binds each reddened one tooth before inverse
+restore: Historical fallback, attach-before-init, immutable owner, cross-slot isolation, four
+campaign routes, and fail-closed public gate. Every restore returned src107
+`ec514d1a4092ba16aa3746b14476f093`, src91 `8c2a586c62fb9acb2d49e64c899cd4e5`,
+src98 `2c03776cf8f1097fd59860637013f714`, and generated game
+`fd3064b58871b3b51a7866685075dadb` byte for byte.
+
+Release pins are srcTree `85f72d325f5fe1c1c09c62a1d59edbec`, frozen base
+`c9db83fa99230ffb95bdfdfe059f3fb9`, manifest `483be7dbc6dfc820a0092e2085b88b93`,
+suite `5703b0a7a62ea2b922285280362e6c1d`, focused probe
+`9801e496cf90f2ac400e965b2a517475`, and save-shape
+`c400c9d007bbfdaeea07f96f3fb1945b`. Scenario/data/register/coverage counts remain
+24/54/1512/24. Aaron authorized omitting the pre-runtime planning probe after its frozen
+allowlist and suite pins became historical. The focused runtime gate supplies the D418 release
+evidence. The full `npm run vet:noreg` battery remains deferred; D398 is the latest full release
+checkpoint.
+
+The D412 archival preflight searched every `tools/probe-*.mjs` for the affected canonical paths
+and D413 summary tokens. No probe pins those five lines. D413 moved newest-first into the five
+canonical archives; SHA-256 comparisons against the committed pre-edit lines matched in all five
+files.
+
+LANE-007 stays DRIVE. Slice B is the next separate green commit: add the closed
+`data/mayhem-rules.json` action/effect schema, enroll it in `tools/validate-data-schemas.mjs`, and
+extend src/107 with `mayhemCan`, a closed operation registry, validate-all-before-mutate
+`mayhemApply`, deterministic idempotent bounded receipts, fixed-order domain-adapter interfaces,
+and fixtures for every contracted operation family. Probes must reject forged, stale, duplicate,
+wrong-mode, wrong-side, and unknown-operation inputs and prove that no partial transaction lands.
+`MAYHEM_PUBLIC_READY=false`; Slice C and all public Mayhem authority remain closed.
+
+---
+
 ## D417 — THE DUAL-RULESET PLAN IS SHIPPED: HISTORICAL STAYS INTACT; MAYHEM MAY SCORE, REWARD, ALTER RESULTS, AND GRANT TAGGED ADVANTAGES WITHOUT A MORAL GPA — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-007 DRIVE→CONTRACT] (2026-07-17)
 
 D416's override is now a durable implementation contract rather than an intent note.

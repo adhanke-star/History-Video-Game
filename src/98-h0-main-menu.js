@@ -63,6 +63,11 @@
     return side === "CS" ? "Confederate" : "Union";
   }
 
+  function h0RulesetLabel(C) {
+    try { return (typeof mayhemModeLabel === "function") ? mayhemModeLabel(C) : "Historical Campaign"; }
+    catch (e) { return "Historical Campaign"; }
+  }
+
   function h0ChainIdx(C, chain) {
     var idx = (C && typeof C.idx === "number") ? C.idx : 0;
     if (idx < 0) idx = 0;
@@ -433,7 +438,7 @@
     var actionHtml = "";
     if (hasCampaignSave) {
       actionHtml += h0Action("gnContinue", "primary", "&#9654;", "Continue Campaign",
-        "Resume the current " + h0SideLabel(side) + " war at the next decision point.",
+        "Resume the current " + h0SideLabel(side) + " war at the next decision point. Mode: " + h0RulesetLabel(C) + ".",
         "Continue Campaign - resume where you left off");
       actionHtml += h0Action("gnWarDept", "primary", "&#9874;", "President's Desk",
         "Open the command hub: resources, cabinet, War Effort, decisions, and campaign state.",
@@ -462,6 +467,7 @@
             + h0Chip("Season", year, "")
             + h0Chip("Side", hasCampaignSave ? h0SideLabel(side) : "Choose", "")
             + h0Chip("Next Field", battleName, "h0-alert")
+            + h0Chip("Mode", hasCampaignSave ? h0RulesetLabel(C) : "Historical default", "")
           + '</div>'
           + '<div class="h0-actions">' + actionHtml + '</div>'
         + '</section>'

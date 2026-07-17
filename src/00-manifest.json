@@ -94,7 +94,8 @@
     "103-h0-after-action.js",
     "104-h2-cutaways.js",
     "105-save-guard.js",
-    "106-war-career.js"
+    "106-war-career.js",
+    "107-mayhem-rules.js"
   ],
   "overrides": [
     "_t1InitAll",

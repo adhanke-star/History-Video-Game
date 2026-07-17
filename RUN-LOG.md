@@ -8,6 +8,48 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D418 OPEN HISTORY / MAYHEM: hidden Slice A runtime shipped, lane stays DRIVE — 2026-07-17
+
+- Aaron authorized one Slice-A allowlist addition: `tools/save-shape.json`. The enrolled
+  `src/105-save-guard.js::applySave` signature moved from `cd6a42c12696426c` to
+  `201fa746ea8e8755`; `_SAVE_VER=1` did not move.
+- Added `src/107-mayhem-rules.js` after src/106. It owns the exact campaign ruleset, the only
+  initializer/sanitizer, strict immutable state, Historical fallback, named Historical-to-Mayhem
+  forks, mode labels, and the bounded pre-start carry. Late wrappers attach the ruleset before
+  `_t1InitAll` and first launch across H0/legacy US/CS routes, then clear pending state in
+  `finally`. Direct two-argument starts remain Historical.
+- Added the real-control picker, but `MAYHEM_PUBLIC_READY=false` keeps normal paths Historical.
+  Keyboard selection, Back/Escape/focus restoration, visible focus, radio state, action-only
+  announcements, 200%/narrow layout, high contrast, and reduced motion are probe-covered.
+- Extended save restore, slots, import preview, undo metadata, current-mode labels, and H0 text
+  without adding a second save owner. Save A Historical to B Mayhem to A returns Historical;
+  `G.settings` cannot select the live mode. Explicit and legacy Historical vectors match byte for
+  byte.
+- Added `tools/probe-mayhem-mode.mjs` and one suite row. Final focused results: Mayhem 16/16,
+  save slots 16/16, H0 main menu 5/5, playstyle 14/14, divergence 14/14, full campaign 4/4;
+  every fresh artifact reports zero pageerrors/realErrors. Suite list is 131 with War Career row
+  38 and Mayhem row 57.
+- Six inverse-restored binds each reddened one declared tooth: Historical fallback,
+  attach-before-init, immutable owner, cross-slot isolation, four campaign routes, and the
+  fail-closed public gate. Restores returned src107 `ec514d1a4092ba16aa3746b14476f093`,
+  src91 `8c2a586c62fb9acb2d49e64c899cd4e5`, src98
+  `2c03776cf8f1097fd59860637013f714`, and game
+  `fd3064b58871b3b51a7866685075dadb` byte for byte.
+- Release pins: srcTree `85f72d325f5fe1c1c09c62a1d59edbec`; base unchanged
+  `c9db83fa99230ffb95bdfdfe059f3fb9`; manifest `483be7dbc6dfc820a0092e2085b88b93`;
+  suite `5703b0a7a62ea2b922285280362e6c1d`; focused probe
+  `9801e496cf90f2ac400e965b2a517475`; save shape
+  `c400c9d007bbfdaeea07f96f3fb1945b`; 24/54/1512/24 unchanged.
+- The required all-probe pin inventory found no probe that pins the five D413 canonical summary
+  lines. D413 moved to the five D412 archives newest-first; SHA-256 comparisons against `HEAD`
+  proved every moved line byte-identical.
+- Aaron authorized omitting the pre-runtime planning probe after runtime changed its frozen
+  allowlist/count pins. The focused release gate replaced it for this slice. `npm run vet:noreg`
+  was not run; D398 remains the latest full release battery.
+- LANE-007 remains DRIVE. Slice B is exact next: closed action/effect schema, atomic validation
+  and apply, deterministic idempotent receipts, fixed-order domain adapters, and operation-family
+  fixtures. `mayhemCan` belongs to Slice B. `MAYHEM_PUBLIC_READY=false`; Slice C stays closed.
+
 ## D417 OPEN HISTORY / MAYHEM — dual-ruleset planning contract shipped, lane released — 2026-07-17 (D416/D417)
 
 - Aaron superseded D382's universal consequence-only/never-scored/dignity-lock interpretation

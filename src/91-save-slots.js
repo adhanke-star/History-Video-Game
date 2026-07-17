@@ -29,6 +29,11 @@ function _slCleanLabel(s) {
   s = String(s == null ? "" : s).replace(/\s+/g, " ").trim();
   return s.length > 80 ? s.slice(0, 80) : s;
 }
+function _slRulesetLabel(C) {
+  try { return (typeof mayhemModeLabel === "function") ? mayhemModeLabel(C) : "Historical Campaign"; }
+  catch (e) { return "Historical Campaign"; }
+}
+function _slSaveRulesetLabel(sv) { return _slRulesetLabel(sv && sv.campaign); }
 /* E50 (D353): deep own-"hasOwnProperty" scan of a save's campaign envelope.
    A shadow anywhere inside it would crash a downstream callable-form iterator
    (the D323 raw.ids Transfer sink in 35-command.js is the verified case), so
@@ -134,19 +139,27 @@ function _slMeta(i) {
   }
   var when = "";
   try { when = sv.when ? new Date(sv.when).toLocaleDateString() : ""; } catch (e) {}
-  return { label: label, side: side, turn: turn, date: date, when: when, hasCampaign: !!c };
+  return { label: label, side: side, turn: turn, date: date, when: when, hasCampaign: !!c,
+    rulesetLabel:_slRulesetLabel(c) };
 }
 function _slDefaultSlotName() {
   var C = (typeof G !== "undefined") ? G.campaign : null;
   if (!C) return "Quick Save";
   var side = (C.side === "CS") ? "Confederate" : "Union";
   var turn = (C.president && typeof C.president.turn === "number") ? C.president.turn : 0;
-  return side + " - Turn " + turn;
+  return side + " - " + _slRulesetLabel(C) + " - Turn " + turn;
 }
 
 /* ---- export / import helpers ---- */
 function _slExportString(sv) {
   return JSON.stringify(sv || serializeSave(), null, 2);
+}
+function _slImportPreview(text) {
+  try {
+    var sv = JSON.parse(String(text || ""));
+    if (!_slValidSave(sv)) return { ok:false, label:"Invalid save" };
+    return { ok:true, label:_slSaveRulesetLabel(sv) };
+  } catch (e) { return { ok:false, label:"Invalid save" }; }
 }
 function _slApplyImportedSave(sv) {
   if (!_slValidSave(sv)) return { ok: false, reason: "Invalid save file." };
@@ -192,7 +205,7 @@ function _slExportEnhanced() {
       fname += "_" + (G.campaign.side === "CS" ? "confederate" : "union");
       fname += "_turn" + ((G.campaign.president && G.campaign.president.turn) || 0);
     }
-    fname += "_save.json";
+    fname += "_" + (_slSaveRulesetLabel(sv).indexOf("Mayhem") === 0 ? "mayhem" : "historical") + "_save.json";
     var blob = new Blob([_slExportString(sv)], { type: "application/json" });
     var url = URL.createObjectURL(blob);
     var a = document.createElement("a");
@@ -294,7 +307,7 @@ function _slRowHTML(i) {
   if (m) {
     title = m.label || (m.side + " - Turn " + m.turn);
     if (m.date) title += " (" + m.date + ")";
-    sub = "Saved: " + (m.when || "unknown");
+    sub = "Mode: " + m.rulesetLabel + " · Saved: " + (m.when || "unknown");
     value = m.label || "";
   }
   return ''
@@ -320,9 +333,10 @@ function _slUndoHTML() {
   if (_slUndoAvailable()) {
     var d = "";
     try { d = snap.when ? new Date(snap.when).toLocaleString() : ""; } catch (e) {}
+    var mode = _slSaveRulesetLabel(snap.save);
     return '<div style="border:1px solid #8c724e;border-radius:6px;padding:10px 12px;margin:12px 0;background:rgba(0,0,0,.12)">'
       + '<div style="font-weight:bold;color:#f0d98a">Undo last strategic turn</div>'
-      + '<div style="font-size:11.5px;opacity:.75;margin:2px 0 8px">Available for Standard/Recruit terms; disabled for Hardened or Ironman campaigns. Snapshot: ' + _slEsc(d || "last resolved turn") + '.</div>'
+      + '<div style="font-size:11.5px;opacity:.75;margin:2px 0 8px">Available for Standard/Recruit terms; disabled for Hardened or Ironman campaigns. Mode: ' + _slEsc(mode) + ' · Snapshot: ' + _slEsc(d || "last resolved turn") + '.</div>'
       + '<button class="upg" id="slUndo" aria-label="Undo the last resolved strategic turn" style="padding:6px 12px">Undo Last Turn</button>'
       + '</div>';
   }
@@ -335,6 +349,7 @@ function _slOpenManager() {
   var html =
     '<h1 class="title-xl">Save &amp; Load</h1>' +
     '<p class="title-sub">Campaign Slots - keep separate campaigns for each commander</p>' +
+    ((typeof G !== "undefined" && G && G.campaign) ? '<div id="slCurrentRuleset" role="status" style="margin:8px 0;padding:7px 10px;border:1px solid #8c724e;border-radius:5px;font-size:12px">Current mode: <b>' + _slEsc(_slRulesetLabel(G.campaign)) + '</b></div>' : '') +
     ((typeof G !== "undefined" && G && G.campaign && G.campaign.iron) ? '<div id="slIronmanLaw" role="status" style="border:1px solid #b8863b;border-radius:5px;padding:8px 10px;margin:8px 0;font-size:12px">Ironman uses its live campaign save only. New named saves are disabled; existing slots may still be loaded, renamed, exported, or deleted.</div>' : '') +
     '<hr class="rule">' +
     rows +
@@ -346,7 +361,8 @@ function _slOpenManager() {
       '<button class="upg" id="slBack" style="padding:6px 14px;opacity:.75">Back to Menu</button>' +
     '</div>' +
     '<label for="slImportJson" style="display:block;font-size:12px;opacity:.8;margin-top:8px">Paste save JSON</label>' +
-    '<textarea id="slImportJson" rows="3" aria-label="Paste exported save JSON" style="box-sizing:border-box;width:100%;margin-top:4px;padding:8px;border:1px solid #8c724e;border-radius:5px;background:#161009;color:#f2e8d5;font-family:ui-monospace,Menlo,monospace;font-size:11px"></textarea>' +
+    '<textarea id="slImportJson" rows="3" aria-label="Paste exported save JSON" aria-describedby="slImportPreview" style="box-sizing:border-box;width:100%;margin-top:4px;padding:8px;border:1px solid #8c724e;border-radius:5px;background:#161009;color:#f2e8d5;font-family:ui-monospace,Menlo,monospace;font-size:11px"></textarea>' +
+    '<div id="slImportPreview" role="status" style="font-size:11.5px;opacity:.8;margin-top:5px">Paste an exported save to preview its campaign mode.</div>' +
     '<button class="upg" id="slImportPaste" style="margin-top:8px;padding:6px 14px">Import Pasted JSON</button>';
   openSheet(html);
   _slWire();
@@ -421,6 +437,12 @@ function _slWire() {
     });
   });
   var pasteBtn = document.getElementById("slImportPaste");
+  var previewInput = document.getElementById("slImportJson");
+  var previewStatus = document.getElementById("slImportPreview");
+  if (previewInput && previewStatus) previewInput.addEventListener("input", function () {
+    var p = _slImportPreview(previewInput.value);
+    previewStatus.textContent = p.ok ? ("Import mode: " + p.label) : "This is not a valid current save.";
+  });
   if (pasteBtn) pasteBtn.addEventListener("click", function () {
     if (!_slConfirmReplaceLive("Importing pasted save JSON")) return;   // S32 (D234)
     var ta = document.getElementById("slImportJson");
