@@ -1493,8 +1493,16 @@ next green commit and confer through this ledger instead of permitting simultane
   never-scored / dignity-lock interpretation and the LANE-007 contract committed at `41b6051`
   before any runtime or red probe teeth landed. The uncommitted surrender research draft was
   removed. Pushed history remains intact; D416 and this lane are the forward law.
-- **Working boundary:** clean pushed contract-maintenance SHA
-  `7b4f7111cac96f81edf30e045d471cb11c88f37d`, equal to `origin/main`.
+- **Working boundary:** clean pushed DRIVE-take SHA
+  `c47cb30da1858849e13536b07abd4acc3cdebb2e`, equal to `origin/main`. The Desktop
+  checkout then began Slice A and now holds uncommitted WIP in the exact allowed runtime paths:
+  `src/00-manifest.json`, `src/105-save-guard.js`, `src/91-save-slots.js`,
+  `src/98-h0-main-menu.js`, new `src/107-mayhem-rules.js`, and
+  `tools/vet-no-regression.mjs`. The first runtime build halted before generated output moved:
+  required `src/105` post-restore sanitation changes its enrolled `applySave` signature from
+  `cd6a42c12696426c` to `201fa746ea8e8755`, and E41 therefore requires
+  `tools/save-shape.json` in the same commit. That file is outside the committed Slice-A
+  allowlist; no runtime code or red teeth are committed.
 - **Design law:** Aaron's 2026-07-17 override + DECISIONS D416 · `GRAND-STRATEGY-PLAN.md` §§0,
   5-6, 9-11, 27 (one engine, strictness independent from challenge, full sandbox) · D382's
   procedural/timeline-gallery direction as superseded by D416 · D74's single-engine discipline
@@ -1619,14 +1627,20 @@ next green commit and confer through this ledger instead of permitting simultane
   MAYHEM AUTHORITY red and 12/13 green; byte-identical restore returned the final 13/13. Build
   was `GATE OK` with generated game byte-identical; all thirteen coordination-sensitive plan
   probes stayed green; suite stayed 130; no runtime/browser/full battery was owed.
-- **Resume pointer:** implement Slice A exactly; Slice B remains closed. Build the hidden ruleset
-  kernel/picker/save-isolation slice from the runtime contract above; do not expose Mayhem
-  publicly and do not begin the effect engine.
-- **Last-touched commit:** this ledger-only DRIVE take from clean pushed boundary `7b4f711`.
+- **Resume pointer:** HALT at the E41 save-shape allowlist contradiction. Aaron must either
+  authorize adding only `tools/save-shape.json` to Slice A and recording the additive/idempotent
+  `src/105-save-guard.js::applySave` signature `201fa746ea8e8755` at `_SAVE_VER=1` (recommended),
+  revise the runtime contract, or abandon the WIP. If authorized, resume the preserved WIP,
+  finish the focused probe and six binds, and keep Slice B closed.
+- **Last-touched commit:** clean pushed DRIVE take `c47cb30`; this blocker relay is the next
+  ledger-only commit and carries no runtime files.
 - **History:** opened as surrender-consequences at `41b6051`; Aaron superseded its core rule
   before implementation. D416 converts the same lane to the wider mode architecture so the
   surrendered idea becomes one later Mayhem validation slice rather than the universal law.
   D417 ships the replacement design + plan probe and releases the lane to CONTRACT/unowned.
+  The Slice-A runtime attempt stopped at the first build when the required save-owner edit exposed
+  the omitted E41 `tools/save-shape.json` transition; the WIP is preserved uncommitted pending
+  Aaron's explicit scope choice.
 
 ---
 
