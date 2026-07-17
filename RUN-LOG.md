@@ -8,6 +8,35 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D417 OPEN HISTORY / MAYHEM — dual-ruleset planning contract shipped, lane released — 2026-07-17 (D416/D417)
+
+- Aaron superseded D382's universal consequence-only/never-scored/dignity-lock interpretation
+  before runtime. The uncommitted surrender research draft was removed; the pushed `41b6051`
+  ledger take remains history, then `048417c` committed the superseding D416/LANE-007 contract.
+- Shipped `docs/design/open-history-mayhem-mode-design.md`: Historical preserves the current
+  teaching game; Mayhem unlocks every historical gameplay/content guardrail. Declared Mayhem
+  actions may alter score, casualties/credit, result/winner, victory progress, rewards, rosters,
+  technology, and faction/identity tags. Mayhem carries no moral/plausibility GPA; comparison to
+  history is optional/off by default. Fiction cannot masquerade as Verified history.
+- Locked the one planned owner `C.ruleset={id:"historical"|"mayhem",version:1}`: immutable per
+  timeline, campaign-serialized at `_SAVE_VER=1`, independent from mutable global preferences,
+  Historical fallback on missing/malformed values, named fork for Historical→Mayhem, local
+  snapshots for standalone battles.
+- Locked one closed-world, atomic/idempotent effect + receipt pipeline. D74 remains the
+  single-engine/no-hidden-hack law but no longer bans explicit Mayhem score/casualty/result power.
+  Identity/cultural/faction advantages use composable authored tags, not one global race scalar.
+- New suite-excluded plan probe is 13/13. The one-token `DECLARED_ACTIONS_MAY_SCORE`→
+  `DECLARED_ACTIONS_NEVER_SCORE` bind exited 1 with exactly MAYHEM AUTHORITY red and 12/13 green;
+  byte-identical restore returned final 13/13. JSON read.
+- Planning changed no runtime/data/manifest/suite/generated/base byte: build GATE OK; game
+  `9d7d91078dd8fceea847f1c2aff4dc5f`; base `c9db83fa99230ffb95bdfdfe059f3fb9`;
+  manifest `7924da858de403cac58caabf8c9fcce8`; suite
+  `4bcdc6f252389a4bfd6bed269b52f8f0`; 24/54/1512/24/130; `_SAVE_VER=1`; all thirteen existing
+  coordination plan probes green. No browser/full battery owed; D398 remains latest full release.
+- D412 prior summary blocks moved byte-verbatim to their five `legacy/*-ARCHIVE.md` owners. LANE-007
+  released to CONTRACT/unowned. Exact next is Slice A hidden mode kernel/picker/save isolation;
+  `MAYHEM_PUBLIC_READY=false` until Slice C supplies a real action and no-judgment result readout.
+
 ## D413 WAR-CAREER SLICE E — Matters-of-State runtime shipped, lane released — 2026-07-17 (D413)
 
 - Took LANE-005 DRIVE ledger-only (`a3aec520c3f8e4e823d453011488a7447906c040`) from the clean

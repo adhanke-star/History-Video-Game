@@ -1484,14 +1484,12 @@ next green commit and confer through this ledger instead of permitting simultane
   to CONTRACT/unowned.
 - **Last-touched commit:** the LANE-006 take commit (this edit).
 
-### LANE-007 · open-history-mayhem — **DRIVE (planning contract only)**
+### LANE-007 · open-history-mayhem — **CONTRACT (planning shipped; Slice A unowned)**
 
-- **Owning tool:** ChatGPT/Codex (5.6 Sol Ultra TOP LOOP). Read-only helpers may inventory
-  seams and probe pins. Architecture, mode authority, balance, UX/accessibility, integration,
-  bind review, docs, and commits stay with the TOP LOOP. No simultaneous edits by any provider.
-- **State:** DRIVE for a MODE-ARCHITECTURE PLANNING SLICE only. Runtime, data, manifest, suite,
-  generated-game, combat, scoring, and save-version movement remain excluded until the design
-  and plan probe are green, committed, pushed, and this lane is released.
+- **Owning tool:** unowned. The next provider must take DRIVE in a committed ledger-only edit
+  before runtime. No simultaneous edits by any provider.
+- **State:** CONTRACT — D417 planning shipped. The bind-tested dual-mode design is the runtime
+  law; Slice A is the exact next bounded task. Runtime has not begun.
 - **Supersession:** Aaron's 2026-07-17 direction supersedes D382's universal consequence-only /
   never-scored / dignity-lock interpretation and the LANE-007 contract committed at `41b6051`
   before any runtime or red probe teeth landed. The uncommitted surrender research draft was
@@ -1562,6 +1560,45 @@ next green commit and confer through this ledger instead of permitting simultane
       `_SAVE_VER=1`; game `9d7d91078dd8fceea847f1c2aff4dc5f`; base
       `c9db83fa99230ffb95bdfdfe059f3fb9`; manifest `7924da858de403cac58caabf8c9fcce8`;
       suite `4bcdc6f252389a4bfd6bed269b52f8f0`.
+- **Runtime Slice A acceptance criteria (in full):**
+  1. Take LANE-007 DRIVE in a ledger-only commit from the clean D417 release boundary. Re-read
+     `docs/design/open-history-mayhem-mode-design.md` §§1-4, 7-8, 10-13 and this lane first.
+  2. Add `src/107-mayhem-rules.js` after src/106. It owns the exact `C.ruleset = {id,version}`
+     shape, `mayhemInit`, `mayhemRuleset`, `mayhemIsActive`, `mayhemModeLabel`, and the bounded
+     pre-start carry. Valid ids are exactly `historical` and `mayhem`; version is exactly 1.
+     Missing/malformed/unknown resolves Historical; valid active state is immutable.
+  3. Wrap the live `_openMusterChoice`, `startCampaign`, and `_t1InitAll` bindings without editing
+     `build/base.html`; attach the sanitized ruleset before init/first launch; clear pending state
+     in `finally`. All H0 + legacy, US + CS new-campaign routes must traverse the same picker.
+     Direct two-argument `startCampaign` remains Historical.
+  4. Keep the new picker behind one fail-closed `MAYHEM_PUBLIC_READY=false` publication gate.
+     Slice A builds and probes it but normal public paths remain Historical until Slice C ships a
+     real Mayhem action, rewards, and no-judgment result readout. No other readiness flag exists.
+  5. Preserve `_SAVE_VER=1`. Add the idempotent post-restore sanitizer to the live
+     `src/105-save-guard.js` owner and extend `src/91-save-slots.js` only for safe mode labels,
+     defaults, previews, and cross-slot/import/undo isolation. Save A Historical -> B Mayhem -> A
+     must return Historical; no `G.settings` value may determine a live campaign mode.
+  6. Add text-visible, non-color-only ruleset readouts on the current-save/menu and save-slot
+     surfaces. The gated picker uses real controls, visible focus, correct state semantics,
+     keyboard/Back/Escape/focus restoration, `a11yAnnounce` only on action, 200% zoom, high
+     contrast, reduced motion, and narrow-phone layouts.
+  7. Slice A changes no battle, score, casualty, reward, wildcard, surrender, result, AAR,
+     scenario registry, custom schema, difficulty, realism, play-style, or
+     `altHistoryEmergentOnly` behavior. Explicit Historical and the legacy default must be
+     byte-equivalent through deterministic campaign/save vectors.
+  8. Add `tools/probe-mayhem-mode.mjs` and one suite row. Prove both ids, bad/missing fallback,
+     attach-before-init, all four menu routes, hidden-public gate, immutable state, complete
+     save/load/import/undo isolation, mode labels, no global-setting authority, and Historical
+     A/B. Read the JSON/pageerror artifact.
+  9. Negative binds: remove Historical fallback; attach after first launch; accept mid-run mode
+     mutation; leak B's mode into reloaded A; bypass the picker on one route; expose Mayhem while
+     readiness is false. Each mutation must red exactly its declared tooth and restore source +
+     generated game byte-identically.
+  10. Gate: `node --check` every touched JS/probe; build `GATE OK`; focused Mayhem probe;
+      `probe-save-slots`, `probe-h0-main-menu`, `probe-playstyle`, `probe-divergence`,
+      `probe-full-campaign`; suite list 131 with the new row; `git diff --check`; inspect every
+      fresh JSON/pageerror artifact. Do not run the full battery in Slice A. Commit + push, keep
+      LANE-007 DRIVE, and set the exact next pointer to Slice B. No public Mayhem route yet.
 - **Probe design:** add `tools/probe-open-history-mayhem-plan.mjs`, filesystem-first,
   fail-closed, suite-excluded, planning-mode green. It writes
   `tools/shots/probe-open-history-mayhem-plan.json` with exact ordered steps: SCOPE +
@@ -1578,13 +1615,19 @@ next green commit and confer through this ledger instead of permitting simultane
   byte-identical restore + final 13/13; all thirteen existing coordination plan probes green at
   the clean committed boundary; suite list stays 130; `git diff --check` clean. No browser or
   full `npm run vet:noreg` battery is owed by this docs/tool-only planning slice.
-- **Resume pointer:** write the dual-mode design and plan probe from live seams; prove the bind;
-  run the planning gate; sync canonical heads; commit + push; release LANE-007 to CONTRACT/
-  unowned with Slice A named exactly. Do not begin runtime in the planning commit.
-- **Last-touched commit:** the superseding ledger take from clean pushed `41b6051`.
+- **Planning release evidence:** design + plan probe shipped in D417; plan 13/13; the one-token
+  `DECLARED_ACTIONS_MAY_SCORE` -> `DECLARED_ACTIONS_NEVER_SCORE` bind exited 1 with exactly
+  MAYHEM AUTHORITY red and 12/13 green; byte-identical restore returned the final 13/13. Build
+  was `GATE OK` with generated game byte-identical; all thirteen coordination-sensitive plan
+  probes stayed green; suite stayed 130; no runtime/browser/full battery was owed.
+- **Resume pointer:** exact next is Slice A above: take DRIVE ledger-only, then implement the
+  hidden ruleset kernel/picker/save-isolation slice exactly from the design. Do not expose Mayhem
+  publicly and do not begin Slice B in the same commit.
+- **Last-touched commit:** the D417 planning release commit from clean pushed `048417c`.
 - **History:** opened as surrender-consequences at `41b6051`; Aaron superseded its core rule
   before implementation. D416 converts the same lane to the wider mode architecture so the
   surrendered idea becomes one later Mayhem validation slice rather than the universal law.
+  D417 ships the replacement design + plan probe and releases the lane to CONTRACT/unowned.
 
 ---
 

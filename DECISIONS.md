@@ -6,6 +6,58 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D417 — THE DUAL-RULESET PLAN IS SHIPPED: HISTORICAL STAYS INTACT; MAYHEM MAY SCORE, REWARD, ALTER RESULTS, AND GRANT TAGGED ADVANTAGES WITHOUT A MORAL GPA — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-007 DRIVE→CONTRACT] (2026-07-17)
+
+D416's override is now a durable implementation contract rather than an intent note.
+`docs/design/open-history-mayhem-mode-design.md` (md5
+`bc54781364ab9da94fdb46a70fd42ae4`) defines two immutable campaign-scoped rulesets inside the
+existing engine: Historical preserves the shipped teaching game; Mayhem unlocks every historical
+gameplay/content guardrail and permits visible data-driven effects on score, casualties and
+casualty credit, result/winner, victory progress, resources, loot, promotion, reputation,
+achievements, and side/faction/identity tags. No symmetry, plausibility, citation, or prior dignity
+exclusion gates Mayhem content. Fiction still cannot masquerade as a Verified historical claim.
+
+The mode owner is exactly `C.ruleset = {id:"historical"|"mayhem",version:1}`. It is selected
+before campaign initialization, serialized under the campaign at `_SAVE_VER=1`, sanitized on
+every load, immutable in-run, and independent from `G.settings`, difficulty, realism, play style,
+and `altHistoryEmergentOnly`. Historical is the missing/malformed compatibility fallback. A
+Historical run may enter Mayhem only by forking a named timeline; Mayhem never converts back into
+Historical. Standalone battle launches carry a local sanitized snapshot.
+
+The central Mayhem effect contract is deliberately full-authority but closed-world: allowlisted
+operations may change inputs, score, casualties, results, rewards, rosters, technology, and tagged
+modifiers; one atomic/idempotent receipt pipeline calls existing domain owners. Imported content
+may reference allowlisted ids but never code or arbitrary property paths. D74 remains one-engine
+discipline, not a ban on explicit Mayhem effects. Identity/faction power uses composable authored
+tags instead of one global biological race scalar, allowing the requested racial/cultural/faction
+advantages without an uninspectable universal stat.
+
+The player experience is original `Historical Campaign` versus `Mayhem Campaign — Break the
+Timeline`. Mayhem has a friendly, high-energy pulp tone and a performance/reward/style AAR, but no
+moral or plausibility GPA; historical comparison is optional and off by default. The first public
+proof is the surrender/no-quarter action: in Mayhem it may award score, casualty credit, rewards,
+and a faction/identity advantage through the production pipeline; Historical remains unchanged.
+
+`tools/probe-open-history-mayhem-plan.mjs` (md5
+`c28938141ca02d57bd2bcb8aba528eb1`) is suite-excluded and green 13/13. Its exact ordered rows are
+SCOPE + SUPERSESSION; MODE MATRIX; MAYHEM AUTHORITY; IDENTITY + FACTION TAGS; NO-JUDGMENT UX;
+STATE + SAVE ISOLATION; SEAM OWNERSHIP; SINGLE ENGINE; SANDBOX SURFACES; ACCESSIBILITY + PERSONAS;
+IMPLEMENTATION LADDER; EXCLUSIONS + BASELINES; LANE. The declared one-token bind changed only
+`DECLARED_ACTIONS_MAY_SCORE` to `DECLARED_ACTIONS_NEVER_SCORE`: exit 1, exactly MAYHEM AUTHORITY
+red, every other row green; the design and probe were restored md5-identically before final 13/13.
+
+Planning moved no runtime/data/manifest/suite/generated/base byte: game
+`9d7d91078dd8fceea847f1c2aff4dc5f`, base `c9db83fa99230ffb95bdfdfe059f3fb9`, manifest
+`7924da858de403cac58caabf8c9fcce8`, suite `4bcdc6f252389a4bfd6bed269b52f8f0`,
+24 scenarios / 54 data JSON / Army Register 1512 / suite 130 with War Career row 38 /
+`_SAVE_VER=1`. Build is `GATE OK`, all thirteen existing coordination-sensitive plan probes stay
+green, and the plan's JSON was read. No browser or full `npm run vet:noreg` battery is owed.
+
+LANE-007 returns to CONTRACT/unowned. Exact next is runtime Slice A: take DRIVE ledger-only, then
+build the mode kernel, gated picker, and complete save/timeline isolation. The picker remains
+behind `MAYHEM_PUBLIC_READY=false`; Slices A-C are one public feature bundle, and the public gate
+cannot flip until the real no-quarter authority and no-judgment result readout are green.
+
 ## D416 — HISTORICAL AND MAYHEM ARE SEPARATE RULESETS; MAYHEM UNLOCKS ALL HISTORICAL GAMEPLAY GUARDRAILS AND CARRIES NO MORAL GRADE — [AARON] (2026-07-17)
 
 Aaron explicitly superseded D382's universal surrender/no-quarter consequence-only restriction
