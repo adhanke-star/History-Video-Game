@@ -1,6 +1,6 @@
 # .clinerules — Cline / DeepSeek / lower-model agents — "The Civil War"
 
-**Single source of truth: `START-HERE.md` (full read-order + standards). `CLAUDE.md` and `AGENTS.md` carry the same canonical file system.** Read `START-HERE.md` + `HANDOFF.md` top block + `WAKE-UP.md` top block before any work.
+**Single source of truth: `START-HERE.md` (the rules + trimmed read order, D412). `CLAUDE.md` and `AGENTS.md` carry the same canonical file system.** Read `START-HERE.md` + the relevant `COORDINATION.md` lane + `HANDOFF.md` top ⚡ block (THE canonical live boundary) + your packet's named files before any work; `WAKE-UP.md`/`RUN-LOG.md` are pull-on-demand.
 
 ## Your lane (model routing — `START-HERE.md` §priority picker, DECISIONS D145)
 You execute **bounded, pre-packaged helper tasks only** — exact files, exact step-by-step edits, fixed acceptance criteria, explicit model+effort, exact commands, expected outputs, a do-not-touch list, and rollback guidance, written for you by the 5.5 reasoning/integration loop. Suitable work: `rg`/search summaries, file inventories, probe-log summaries, source dossiers into a fixed template, teaching-card copy after the schema is set, mechanical help-copy/roster updates, simple probe assertions copied from an existing pattern, running exact gate commands and pasting exact outputs, screenshot/artifact cataloging, and small exact-schema JSON cleanup.

@@ -2,8 +2,8 @@
 
 **This is a thin pointer. The single source of truth is [`START-HERE.md`](START-HERE.md) — read it FIRST, every session.** It maps which docs are canonical vs legacy, the order to read them, the Universal AI implementer standards, and the priority picker + model routing. (Your user-level `~/.claude/CLAUDE.md` also applies — personal-projects framing, terse/direct, model routing.)
 
-## Canonical file system
-Read `START-HERE.md` FIRST — the single source of truth for canonical-vs-legacy and the full read order (mandatory `COORDINATION.md` Contract Relay check → `AUTONOMOUS-RUN.md` → `HANDOFF.md`/`WAKE-UP.md` top blocks → `V1-CHECKLIST.md` roadmap → `DECISIONS.md` → design LAW (`GRAND-STRATEGY-PLAN.md` + `MODERN-UGG-PLAN.md`) → `src/00-manifest.json` + touched `src/*.js` + `tools/build.mjs` + relevant probes → `DEPLOY.md` only when publishing).
+## Canonical file system — the TRIMMED MANDATED READ ORDER (D412)
+Read `START-HERE.md` FIRST — the single source of truth for canonical-vs-legacy and the rules. The mandated session-start order is: **`START-HERE.md` → `COORDINATION.md` (the RELEVANT lane, in full — mandatory Contract Relay check) → `HANDOFF.md` top ⚡ block (THE one canonical live boundary) → the task's own law docs/probes (relevant `docs/design/*`, `GRAND-STRATEGY-PLAN.md`/`MODERN-UGG-PLAN.md` sections, `src/00-manifest.json` + touched `src/*.js`, `tools/build.mjs` + relevant probes) → latest `DECISIONS.md` entry.** Pull-on-demand, not mandatory: `AUTONOMOUS-RUN.md` (loop/roadmap/guardrails/backlog), `WAKE-UP.md`, `RUN-LOG.md`, `V1-CHECKLIST.md` detail, `DEPLOY.md` (publishing only). Superseded doc heads live byte-verbatim in `legacy/*-ARCHIVE.md` (D412 HISTORY ARCHIVAL RULE). At startup also set the clone-local git identity: `git config user.name "Aaron Hanke" && git config user.email "adhanke@gmail.com"`.
 
 ## Non-negotiables (never violate, even for a one-line change)
 1. **Edit `src/` (code) + `data/` (data); NEVER edit `build/base.html` (frozen) and never hand-edit the generated `civil_war_generals.html`** — change source, then `node tools/build.mjs` (must print `GATE OK`).

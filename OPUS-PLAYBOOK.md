@@ -44,14 +44,23 @@ Brief steering beats enumerated micro-management. Quote these (or a tightened eq
 **(e) Autonomous-pipeline reminder (overnight/looping runs).**
 > You are operating autonomously; Aaron is not watching in real time, so "Shall I…?" blocks the work. For reversible actions inside the cleared scope, proceed. Before ending your turn, check your last paragraph: if it is a plan, a question, or a promise about work not yet done, do that work now. End only when the milestone is complete-and-gated or you are HALT-blocked.
 
+**(f) Probe-pin preflight (D412; the D411 loot-probe `Sources (4)` collision class).**
+> Before landing any contracted change, grep ALL `tools/probe-*.mjs` for literal pins touching the files or values you will change — not just the probes named in the take — and declare every hit in the take/lane up front. A pin discovered mid-take forces a surfaced allowlist exception; a pin discovered by the gate is a red you should have predicted.
+
+**(g) Clone-local git identity (D412).**
+> At session startup, after the fetch/status/HEAD boundary check, set the clone-local identity so commits neither warn nor guess: `git config user.name "Aaron Hanke" && git config user.email "adhanke@gmail.com"` (config only — never committed).
+
+**(h) COORDINATION lane-parse convention (D412).**
+> The plan probes parse a lane by its FIRST `**State:**` and FIRST `**Owning tool:**` bullets (regex on the lane slice, first match wins). When rewriting a lane at release, put the release block — new State/Owner — ABOVE the retained history, never below it; a stale first match reads as the live state.
+
 ## 8 · Give the reason, and lean into the hard range
 - **Give the reason, not only the request.** Kickoff prompts and helper packets should carry the one-line "why" (who the feature teaches, what the milestone unlocks), not just the task.
 - **Scope the slice to the gate, not to model timidity.** Use the top model for the hard range — multi-system audits, whole-war journey features, and cross-module integration. Do not pre-slice work below what safe verification requires.
 
 ## 9 · Session-start checklist for a ChatGPT/Codex run
 1. Confirm **5.6 Sol** and choose **Ultra** (highest available effort).
-2. Read order per `START-HERE.md`; `HANDOFF.md` + `WAKE-UP.md` top blocks for the live head.
-3. Kickoff prompt embeds the §7 snippets and the one-line "why."
+2. Read order per `START-HERE.md` ⭐ (trimmed, D412): START-HERE → `COORDINATION.md` relevant lane → **`HANDOFF.md` top ⚡ block (THE live head)** → task law docs/probes → latest `DECISIONS.md` entry. Set the clone-local git identity (§7g) at startup.
+3. Kickoff prompt embeds the §7 snippets — including the probe-pin preflight (§7f) and lane-parse convention (§7h) — and the one-line "why."
 4. Helpers: use only for a task-specific strength or independent coverage; packet and configure them when controls exist, or state the no-control inheritance exception (§4).
 5. Narrate sparingly (§2); decide small reversible forks and log them (§3); delegate/search aggressively (§4).
 6. D171 boundary discipline active (§6); §8 HALT charter unchanged.

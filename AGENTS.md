@@ -2,16 +2,14 @@
 
 **This is a thin pointer. The single source of truth is [`START-HERE.md`](START-HERE.md) — read it FIRST, every session.** It maps which docs are canonical vs legacy, the read-order, the Universal AI implementer standards, and the priority picker + model routing. The same standards bind every AI tool (Claude, Codex, Copilot, DeepSeek/Cline) — see `START-HERE.md` §"Universal AI implementer standards."
 
-## Canonical file system (the proper read-order — same for every AI tool)
-1. **`START-HERE.md`** — master index (canonical vs legacy · read-order · implementer standards · priority picker + model routing).
-2. **`COORDINATION.md`** — mandatory session-start Contract Relay check: read the active lane's owner, state, acceptance contract, probe design, and resume pointer before choosing work, planning, spawning helpers, or editing. Never drive a lane owned by the other tool.
-3. **`AUTONOMOUS-RUN.md`** — THE operating manual (live state · the build loop · the phase roadmap · guardrails · the backlog · the §8 charter).
-4. **`HANDOFF.md` top block + `WAKE-UP.md` top block** — the live head (what shipped last + what's playable).
-5. **`V1-CHECKLIST.md`** — the approved, ordered v1 roadmap (the build target). *The roadmap lives HERE — there is no separate task list.*
-6. **`DECISIONS.md`** — the append-only decisions log (newest D## first; append, never relitigate).
-7. **`GRAND-STRATEGY-PLAN.md`** (strategic-layer design LAW) + **`MODERN-UGG-PLAN.md`** (tactical-engine design LAW) — honor verbatim.
-8. **`src/00-manifest.json`** + the `src/*.js` you'll touch + **`tools/build.mjs`** + the relevant **`tools/probe-*.mjs`**.
-9. **`DEPLOY.md`** — only when publishing.
+## Canonical file system — the TRIMMED MANDATED READ ORDER (D412; same for every AI tool)
+1. **`START-HERE.md`** — master index (canonical vs legacy · the rules · implementer standards · priority picker + model routing).
+2. **`COORDINATION.md` — the RELEVANT lane, in full** — mandatory session-start Contract Relay check: §1-§4 plus the lane your task touches (owner, state, acceptance contract, probe design, resume pointer) before choosing work, planning, spawning helpers, or editing. Never drive a lane owned by the other tool. Don't bulk-read other lanes.
+3. **`HANDOFF.md` top ⚡ block** — **THE one canonical live boundary** (D412 LIVE-HEAD SINGLE-SOURCE RULE): what shipped last, exact pins, exact next action — in full, once.
+4. **The task's own law docs + probes** — the relevant `docs/design/*` spec/packet; `GRAND-STRATEGY-PLAN.md` / `MODERN-UGG-PLAN.md` sections (design LAW — honor verbatim); `src/00-manifest.json` + the `src/*.js` you'll touch; `tools/build.mjs` + the relevant `tools/probe-*.mjs`.
+5. **`DECISIONS.md` — the latest entry** (append-only, newest D## first; append, never relitigate; pull older entries only as needed).
+
+**Pull-on-demand (no longer mandatory):** `AUTONOMOUS-RUN.md` (operating manual — loop, roadmap, guardrails, backlog, §8 charter), `WAKE-UP.md` (human-readable snapshot), `V1-CHECKLIST.md` (the approved v1 roadmap — *the roadmap lives THERE; there is no separate task list*), `RUN-LOG.md` (chronological log), `DEPLOY.md` (publishing only). Superseded doc heads live byte-verbatim in `legacy/*-ARCHIVE.md` (D412 HISTORY ARCHIVAL RULE). At startup set the clone-local git identity: `git config user.name "Aaron Hanke" && git config user.email "adhanke@gmail.com"`.
 
 ## Non-negotiables (never violate, even for a one-line change)
 1. **Edit `src/` (code) + `data/` (data); NEVER edit `build/base.html` (frozen) and never hand-edit the generated `civil_war_generals.html`** — change source, then `node tools/build.mjs` (must print `GATE OK`).
