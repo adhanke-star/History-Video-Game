@@ -1484,18 +1484,17 @@ next green commit and confer through this ledger instead of permitting simultane
   to CONTRACT/unowned.
 - **Last-touched commit:** the LANE-006 take commit (this edit).
 
-### LANE-007 · open-history-mayhem — **CONTRACT (planning shipped; Slice A unowned)**
+### LANE-007 · open-history-mayhem — **DRIVE (Slice A only; Slice B closed)**
 
-- **Owning tool:** unowned. The next provider must take DRIVE in a committed ledger-only edit
-  before runtime. No simultaneous edits by any provider.
-- **State:** CONTRACT — D417 planning shipped. The bind-tested dual-mode design is the runtime
-  law; Slice A is the exact next bounded task. Runtime has not begun.
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra TOP LOOP. No simultaneous edits by any provider.
+- **State:** DRIVE for Slice A only — Slice B remains closed. The bind-tested dual-mode design is
+  the runtime law; Slice A is the exact current bounded task. Runtime has not begun.
 - **Supersession:** Aaron's 2026-07-17 direction supersedes D382's universal consequence-only /
   never-scored / dignity-lock interpretation and the LANE-007 contract committed at `41b6051`
   before any runtime or red probe teeth landed. The uncommitted surrender research draft was
   removed. Pushed history remains intact; D416 and this lane are the forward law.
-- **Working boundary:** clean Desktop checkout at
-  `41b6051d2b7e4b7473dc912e267048e260fa9657`, equal to `origin/main`.
+- **Working boundary:** clean pushed contract-maintenance SHA
+  `7b4f7111cac96f81edf30e045d471cb11c88f37d`, equal to `origin/main`.
 - **Design law:** Aaron's 2026-07-17 override + DECISIONS D416 · `GRAND-STRATEGY-PLAN.md` §§0,
   5-6, 9-11, 27 (one engine, strictness independent from challenge, full sandbox) · D382's
   procedural/timeline-gallery direction as superseded by D416 · D74's single-engine discipline
@@ -1620,10 +1619,10 @@ next green commit and confer through this ledger instead of permitting simultane
   MAYHEM AUTHORITY red and 12/13 green; byte-identical restore returned the final 13/13. Build
   was `GATE OK` with generated game byte-identical; all thirteen coordination-sensitive plan
   probes stayed green; suite stayed 130; no runtime/browser/full battery was owed.
-- **Resume pointer:** exact next is Slice A above: take DRIVE ledger-only, then implement the
-  hidden ruleset kernel/picker/save-isolation slice exactly from the design. Do not expose Mayhem
-  publicly and do not begin Slice B in the same commit.
-- **Last-touched commit:** the D417 planning release commit from clean pushed `048417c`.
+- **Resume pointer:** implement Slice A exactly; Slice B remains closed. Build the hidden ruleset
+  kernel/picker/save-isolation slice from the runtime contract above; do not expose Mayhem
+  publicly and do not begin the effect engine.
+- **Last-touched commit:** this ledger-only DRIVE take from clean pushed boundary `7b4f711`.
 - **History:** opened as surrender-consequences at `41b6051`; Aaron superseded its core rule
   before implementation. D416 converts the same lane to the wider mode architecture so the
   surrendered idea becomes one later Mayhem validation slice rather than the universal law.
