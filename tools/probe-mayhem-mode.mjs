@@ -485,6 +485,61 @@ async function browserSetup() {
       }
     });
 
+    step("SLICE B CLOSED SCHEMA + ATOMIC RECEIPTS", () => {
+      const declaration = GAME_DATA && GAME_DATA["mayhem-rules"];
+      const expectedOps = [
+        "battle.score.add","phase.score.add","objective.resolve","casualty.apply","casualty.credit","capture.credit",
+        "result.declare","result.reclassify","campaign.victoryProgress.add","enemyWill.add","morale.add","discipline.add",
+        "press.add","diplomacy.add","funds.add","resource.add","loot.grant","technology.unlock","weapon.grant",
+        "career.promote","reputation.add","notoriety.add","achievement.unlock","modifier.add","roster.add",
+        "roster.transfer","reinforcement.add","scenario.unlock","timeline.branch","chronicle.event"
+      ];
+      if (!declaration || declaration.schema !== "cw_mayhem_rules_v1" || declaration.version !== 1 || declaration.actions.length !== 1) throw new Error("closed data document missing");
+      if (!eq(declaration.actions[0].effects.map(x => x.operation), expectedOps)) throw new Error("operation-family registry drifted");
+      function fixture(failStage, failCommit) {
+        const state = {}; const order = []; const adapters = {};
+        expectedOps.forEach((id, index) => {
+          state[id] = 0;
+          adapters[id] = {
+            stage(op) {
+              order.push("stage:" + id);
+              if (index === failStage) throw new Error("stage fixture");
+              return { before: state[id], after: state[id] + op.value, token: { id, before: state[id], after: state[id] + op.value } };
+            },
+            commit(token) { order.push("commit:" + id); state[id] = token.after; if (index === failCommit) throw new Error("commit fixture"); },
+            rollback(token) { order.push("rollback:" + id); state[id] = token.before; }
+          };
+        });
+        return { state, order, adapters };
+      }
+      function makeContext(C, adapters, sequence) {
+        return { campaign:C, ruleset:{id:"mayhem",version:1}, side:"US", timelineId:"timeline-1", battleId:"battle-1", phaseId:"phase-1", actorId:"actor-1", sequence, actorTags:[{namespace:"side",value:"us"},{namespace:"timeline",value:"active"}], adapters };
+      }
+      const C = campaign(null, "US"); mayhemInit(C, "mayhem", "new");
+      const fx = fixture(-1, -1); const ctx = makeContext(C, fx.adapters, 1);
+      const beforeCan = JSON.stringify(C);
+      if (!mayhemCan("fixture.closed-pipeline", ctx) || JSON.stringify(C) !== beforeCan) throw new Error("mayhemCan is not pure/available");
+      const receipt = mayhemApply("fixture.closed-pipeline", ctx);
+      if (!receipt || receipt.operations.length !== expectedOps.length || receipt.id !== _mhReceiptId(ctx, "fixture.closed-pipeline")) throw new Error("deterministic receipt failed");
+      if (!eq(receipt.operations.map(x => x.operation), expectedOps)) throw new Error("normalized operation order drifted");
+      const receiptBytes = JSON.stringify(receipt);
+      if (mayhemApply("fixture.closed-pipeline", ctx) !== null || C.mayhemReceipts.length !== 1) throw new Error("duplicate retry reapplied");
+      const loaded = JSON.parse(JSON.stringify(C)); mayhemInit(loaded, null, "load");
+      if (mayhemApply("fixture.closed-pipeline", makeContext(loaded, fx.adapters, 1)) !== null || JSON.stringify(loaded.mayhemReceipts[0]) !== receiptBytes) throw new Error("reload idempotency failed");
+      const H = campaign(null,"US"); mayhemInit(H,"historical","new"); const hBytes=JSON.stringify(H);
+      if (mayhemCan("fixture.closed-pipeline", makeContext(H,fx.adapters,1)) || mayhemApply("fixture.closed-pipeline",makeContext(H,fx.adapters,1)) !== null || JSON.stringify(H)!==hBytes) throw new Error("Historical refusal/bytes failed");
+      const wrong = makeContext(C,fx.adapters,2); wrong.side="CS"; if(mayhemCan("fixture.closed-pipeline",wrong))throw new Error("wrong side accepted");
+      const forged = makeContext(C,fx.adapters,2); forged.ruleset={id:"historical",version:1}; if(mayhemCan("fixture.closed-pipeline",forged))throw new Error("forged ruleset accepted");
+      const stale = makeContext(C,fx.adapters,99); if(mayhemCan("fixture.closed-pipeline",stale))throw new Error("stale sequence accepted");
+      const consumed = makeContext(C,fx.adapters,2); consumed.consumed=true; if(mayhemCan("fixture.closed-pipeline",consumed))throw new Error("consumed context accepted");
+      const unknown = makeContext(C,fx.adapters,2); if(mayhemCan("fixture.unknown",unknown))throw new Error("unknown action accepted");
+      const sf = fixture(5,-1), C2=campaign(null,"US"); mayhemInit(C2,"mayhem","new"); const s0=JSON.stringify(sf.state); if(mayhemApply("fixture.closed-pipeline",makeContext(C2,sf.adapters,1))!==null||JSON.stringify(sf.state)!==s0||C2.mayhemReceipts.length)throw new Error("stage failure was not atomic");
+      const cf = fixture(-1,5), C3=campaign(null,"US"); mayhemInit(C3,"mayhem","new"); const c0=JSON.stringify(cf.state); if(mayhemApply("fixture.closed-pipeline",makeContext(C3,cf.adapters,1))!==null||JSON.stringify(cf.state)!==c0||C3.mayhemReceipts.length)throw new Error("commit failure was not rolled back");
+      const dirty=campaign(null,"US"); dirty.ruleset={id:"mayhem",version:1}; dirty.mayhemReceipts=[{bad:true}]; mayhemInit(dirty,null,"load"); if(dirty.mayhemReceipts.length!==0)throw new Error("malformed loaded receipt survived");
+      const capped=campaign(null,"US"); capped.ruleset={id:"mayhem",version:1}; capped.mayhemReceipts=[]; for(let i=1;i<=MAYHEM_RECEIPT_CAP+3;i++)capped.mayhemReceipts.push({id:"mh:cap-"+i,actionId:"fixture.closed-pipeline",sequence:i,operations:[]}); mayhemInit(capped,null,"load"); if(capped.mayhemReceipts.length!==MAYHEM_RECEIPT_CAP||capped.mayhemReceipts[0].sequence!==4)throw new Error("receipt cap/eviction failed");
+      return { operations:expectedOps.length, receiptId:receipt.id, receiptBytes:receiptBytes.length, cap:MAYHEM_RECEIPT_CAP, ordering:fx.order.slice(0,3) };
+    });
+
     cleanStorage();
   } catch (error) {
     R.ok = false;
@@ -607,7 +662,7 @@ async function inspectNarrowLayout(browser, probeUrl) {
       evidence.baseMd5 === "c9db83fa99230ffb95bdfdfe059f3fb9" &&
       evidence.saveVer === 1 &&
       evidence.applySaveSignature === "201fa746ea8e8755" &&
-      evidence.dataCount === 54 &&
+      evidence.dataCount === 55 &&
       evidence.rosterIds.length === 24 &&
       evidence.builderIds.length === 24 &&
       JSON.stringify(evidence.rosterIds) === JSON.stringify(evidence.builderIds) &&

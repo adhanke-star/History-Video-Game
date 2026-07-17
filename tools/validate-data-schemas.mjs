@@ -44,6 +44,7 @@ const META_REQUIREMENTS = new Map([
 ]);
 
 const SCHEMA_REQUIREMENTS = new Map([
+  ['mayhem-rules.json', ['schema', 'version', 'actions']],
   ['artillery.json', ['schemaVersion', 'guns', 'teachingCards']],
   ['cs-finance.json', ['schema', 'schemaVersion', 'config', 'profile', 'instruments']],
   ['diplomacy.json', ['schemaVersion', 'teachingCards', 'realDiplomacy', 'numbersAudit']],
@@ -112,6 +113,46 @@ function ruleFor(filename) {
   if (filename === RATINGS_FILE) return { family: 'ratings', required: RATINGS_REQUIREMENTS };
   if (SCHEMA_REQUIREMENTS.has(filename)) return { family: 'schema', required: SCHEMA_REQUIREMENTS.get(filename) };
   return null;
+}
+
+const MAYHEM_OPERATIONS = new Set([
+  'battle.score.add','phase.score.add','objective.resolve','casualty.apply','casualty.credit','capture.credit',
+  'result.declare','result.reclassify','campaign.victoryProgress.add','enemyWill.add','morale.add','discipline.add',
+  'press.add','diplomacy.add','funds.add','resource.add','loot.grant','technology.unlock','weapon.grant',
+  'career.promote','reputation.add','notoriety.add','achievement.unlock','modifier.add','roster.add',
+  'roster.transfer','reinforcement.add','scenario.unlock','timeline.branch','chronicle.event'
+]);
+const MAYHEM_PREDICATES = new Set(['ruleset.is','side.isActor']);
+const MAYHEM_TAGS = new Set(['side','faction','unit','identity','leader','policy','timeline']);
+function exactKeys(node, allowed, prefix, issues) {
+  if (!isObject(node)) { issues.push(prefix + ' must be an object'); return false; }
+  for (const key of Object.keys(node)) if (!allowed.includes(key)) issues.push(prefix + '.' + key + ' unknown key');
+  return true;
+}
+function stableId(value) { return typeof value === 'string' && /^[a-z0-9][a-z0-9._:-]{0,79}$/.test(value); }
+function safeText(value, max) {
+  return typeof value === 'string' && value.length > 0 && value.length <= max &&
+    !/(?:function\b|=>|\beval\b|constructor|callback|import\s*\(|require\s*\(|prototype|__proto__|\[\s*['"])/i.test(value);
+}
+function validateMayhem(data, issues) {
+  exactKeys(data, ['schema','version','actions'], 'root', issues);
+  if (data.schema !== 'cw_mayhem_rules_v1') issues.push('schema must be cw_mayhem_rules_v1');
+  if (data.version !== 1) issues.push('version must be 1');
+  if (!Array.isArray(data.actions) || !data.actions.length || data.actions.length > 64) { issues.push('actions must be a nonempty bounded array'); return; }
+  const ids = new Set();
+  data.actions.forEach((action, ai) => {
+    const p = 'actions[' + ai + ']';
+    exactKeys(action, ['id','rulesetId','availableWhen','actorTags','effects','presentation'], p, issues);
+    if (!stableId(action.id)) issues.push(p + '.id malformed'); else if (ids.has(action.id)) issues.push(p + '.id duplicate'); else ids.add(action.id);
+    if (action.rulesetId !== 'mayhem') issues.push(p + '.rulesetId must be mayhem');
+    if (!Array.isArray(action.availableWhen) || !action.availableWhen.length || action.availableWhen.length > 16) issues.push(p + '.availableWhen malformed');
+    else action.availableWhen.forEach((pred, pi) => { const q=p+'.availableWhen['+pi+']'; exactKeys(pred, ['id','value'], q, issues); if(!MAYHEM_PREDICATES.has(pred.id))issues.push(q+'.id unknown predicate'); if(pred.id==='ruleset.is'&&pred.value!=='mayhem')issues.push(q+'.value invalid'); if(pred.id==='side.isActor'&&Object.keys(pred).includes('value'))issues.push(q+'.value forbidden'); });
+    if (!Array.isArray(action.actorTags) || !action.actorTags.length || action.actorTags.length > 16) issues.push(p + '.actorTags malformed');
+    else action.actorTags.forEach((tag, ti) => { const q=p+'.actorTags['+ti+']'; exactKeys(tag,['namespace','value'],q,issues); if(!MAYHEM_TAGS.has(tag.namespace))issues.push(q+'.namespace unknown'); if(!stableId(tag.value))issues.push(q+'.value malformed'); });
+    if (!Array.isArray(action.effects) || !action.effects.length || action.effects.length > 64) issues.push(p + '.effects malformed');
+    else action.effects.forEach((effect, ei) => { const q=p+'.effects['+ei+']'; exactKeys(effect,['operation','target','value','tag'],q,issues); if(!MAYHEM_OPERATIONS.has(effect.operation))issues.push(q+'.operation unknown'); if(!stableId(effect.target))issues.push(q+'.target malformed'); if(!Number.isFinite(effect.value)||Math.abs(effect.value)>1000000)issues.push(q+'.value unsafe'); if(effect.tag!==undefined){exactKeys(effect.tag,['namespace','value'],q+'.tag',issues);if(!MAYHEM_TAGS.has(effect.tag.namespace))issues.push(q+'.tag.namespace unknown');if(!stableId(effect.tag.value))issues.push(q+'.tag.value malformed');} });
+    if (exactKeys(action.presentation,['label','summary','tone','icon'],p+'.presentation',issues)) { const x=action.presentation; if(!safeText(x.label,80)||!safeText(x.summary,240)||!safeText(x.tone,32)||!stableId(x.icon))issues.push(p+'.presentation invalid'); }
+  });
 }
 
 function validateRoles(node, prefix, issues) {
@@ -224,6 +265,7 @@ function validateDocument(file, data) {
     const marker = ['schemaVersion', 'schema', 'version'].find(key => Object.prototype.hasOwnProperty.call(data, key) && isMeaningful(data[key]));
     if (!marker) issues.push('schema/version marker missing');
     else if (!((typeof data[marker] === 'string' && data[marker].trim()) || (typeof data[marker] === 'number' && Number.isFinite(data[marker])))) issues.push(marker + ' must be a nonempty string or finite number');
+    if (file === 'mayhem-rules.json') validateMayhem(data, issues);
     extraInfo = (marker ? marker + '=' + String(data[marker]) : 'no version marker') + ', ' + rule.required.length + ' explicit keys';
   } else if (rule.family === 'ratings') {
     if (typeof data._meta !== 'string' || !data._meta.trim()) issues.push('_meta must be a nonempty string');

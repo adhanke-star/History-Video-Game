@@ -13,6 +13,112 @@
 
 const MAYHEM_PUBLIC_READY = false;
 
+/* D419 / Slice B — closed declarations and an adapter-only transaction kernel.
+   The campaign owns a capped receipt log beside (never inside) C.ruleset.
+   No production domain adapter is registered in this slice. */
+var MAYHEM_RECEIPT_CAP = 32;
+var _MH_TAG_NAMESPACES = ["side","faction","unit","identity","leader","policy","timeline"];
+var _MH_PREDICATES = { "ruleset.is":1, "side.isActor":1 };
+var _MH_OPERATION_IDS = [
+  "battle.score.add","phase.score.add","objective.resolve","casualty.apply","casualty.credit","capture.credit",
+  "result.declare","result.reclassify","campaign.victoryProgress.add","enemyWill.add","morale.add","discipline.add",
+  "press.add","diplomacy.add","funds.add","resource.add","loot.grant","technology.unlock","weapon.grant",
+  "career.promote","reputation.add","notoriety.add","achievement.unlock","modifier.add","roster.add",
+  "roster.transfer","reinforcement.add","scenario.unlock","timeline.branch","chronicle.event"
+];
+var _MH_OPERATION_REGISTRY = (function () { var r = {}; for (var i=0;i<_MH_OPERATION_IDS.length;i++) r[_MH_OPERATION_IDS[i]]={ id:_MH_OPERATION_IDS[i], order:i }; return r; })();
+
+function _mhOwnKeys(v, allowed) {
+  if (!v || typeof v !== "object" || Array.isArray(v)) return false;
+  var keys; try { keys=Object.keys(v); } catch(e) { return false; }
+  for (var i=0;i<keys.length;i++) if (allowed.indexOf(keys[i]) < 0) return false;
+  return true;
+}
+function _mhStableId(v) { return typeof v === "string" && /^[a-z0-9][a-z0-9._:-]{0,79}$/.test(v); }
+function _mhFinite(v) { return typeof v === "number" && isFinite(v) && Math.abs(v) <= 1000000; }
+function _mhClone(v) { try { return JSON.parse(JSON.stringify(v)); } catch(e) { return null; } }
+function _mhData() { return typeof GAME_DATA === "object" && GAME_DATA && GAME_DATA["mayhem-rules"] || null; }
+function _mhTag(tag, C, ctx) {
+  if (!_mhOwnKeys(tag,["namespace","value"]) || _MH_TAG_NAMESPACES.indexOf(tag.namespace)<0 || !_mhStableId(tag.value)) return null;
+  var value=tag.value === "actor" ? String(ctx.side||"").toLowerCase() : tag.value;
+  if (!_mhStableId(value)) return null;
+  return { namespace:tag.namespace, value:value };
+}
+function _mhActions() {
+  var d=_mhData(), out={};
+  if (!d || d.schema!=="cw_mayhem_rules_v1" || d.version!==1 || !Array.isArray(d.actions)) return out;
+  for (var i=0;i<d.actions.length;i++) { var a=d.actions[i]; if (a && _mhStableId(a.id) && !out[a.id]) out[a.id]=a; }
+  return out;
+}
+function _mhNormalizeContext(ctx) {
+  var allowed=["campaign","ruleset","side","timelineId","battleId","phaseId","actorId","sequence","actorTags","adapters","consumed"];
+  if (!_mhOwnKeys(ctx,allowed) || !ctx.campaign || typeof ctx.campaign!=="object" || Array.isArray(ctx.campaign)) return null;
+  if (!_mhExactRuleset(ctx.ruleset) || JSON.stringify(ctx.ruleset)!==JSON.stringify(mayhemRuleset(ctx.campaign))) return null;
+  if (ctx.side!=="US" && ctx.side!=="CS" || ctx.campaign.side!==ctx.side || ctx.consumed===true) return null;
+  if (!_mhStableId(ctx.timelineId)||!_mhStableId(ctx.battleId)||!_mhStableId(ctx.phaseId)||!_mhStableId(ctx.actorId)) return null;
+  if (!Number.isSafeInteger(ctx.sequence)||ctx.sequence<1||ctx.sequence>1000000000) return null;
+  if (!Array.isArray(ctx.actorTags)||ctx.actorTags.length>32 || !ctx.adapters || typeof ctx.adapters!=="object" || Array.isArray(ctx.adapters)) return null;
+  return ctx;
+}
+function _mhReceiptId(ctx, actionId) {
+  var s=[ctx.timelineId,ctx.battleId,ctx.phaseId,ctx.actorId,actionId,String(ctx.sequence)].join("|");
+  var h=2166136261;
+  for (var i=0;i<s.length;i++) { h^=s.charCodeAt(i); h=Math.imul(h,16777619); }
+  return "mh:"+(h>>>0).toString(16).padStart(8,"0")+":"+ctx.sequence;
+}
+function _mhSanitizeReceipts(C) {
+  var raw=Array.isArray(C && C.mayhemReceipts)?C.mayhemReceipts:[], clean=[], seen={};
+  for (var i=0;i<raw.length;i++) {
+    var r=raw[i];
+    if (!_mhOwnKeys(r,["id","actionId","sequence","operations"])||!_mhStableId(r.id)||!_mhStableId(r.actionId)||!Number.isSafeInteger(r.sequence)||r.sequence<1||!Array.isArray(r.operations)||seen[r.id]) continue;
+    var ok=true;
+    for(var j=0;j<r.operations.length;j++){var o=r.operations[j];if(!_mhOwnKeys(o,["operation","target","value","tag","before","after"])||!_MH_OPERATION_REGISTRY[o.operation]||!_mhStableId(o.target)||!_mhFinite(o.value)||!_mhFinite(o.before)||!_mhFinite(o.after)){ok=false;break;}}
+    if(ok){seen[r.id]=1;clean.push(_mhClone(r));}
+  }
+  clean.sort(function(a,b){return a.sequence-b.sequence||a.id.localeCompare(b.id);});
+  if(clean.length>MAYHEM_RECEIPT_CAP)clean=clean.slice(clean.length-MAYHEM_RECEIPT_CAP);
+  C.mayhemReceipts=clean;
+  var max=0;for(var k=0;k<clean.length;k++)if(clean[k].sequence>max)max=clean[k].sequence;
+  C.mayhemSequence=max;
+  return clean;
+}
+function _mhResolve(actionId, context) {
+  var ctx=_mhNormalizeContext(context), action=_mhActions()[actionId];
+  if(!ctx||!action||!mayhemIsActive(ctx.campaign)||action.rulesetId!=="mayhem")return null;
+  var currentSequence=Number.isSafeInteger(ctx.campaign.mayhemSequence)?ctx.campaign.mayhemSequence:0;
+  if(ctx.sequence!==currentSequence+1&&ctx.sequence!==currentSequence)return null;
+  var tags={};for(var i=0;i<ctx.actorTags.length;i++){var t=_mhTag(ctx.actorTags[i],ctx.campaign,ctx);if(!t)return null;tags[t.namespace+":"+t.value]=1;}
+  for(i=0;i<action.actorTags.length;i++){t=_mhTag(action.actorTags[i],ctx.campaign,ctx);if(!t||!tags[t.namespace+":"+t.value])return null;}
+  for(i=0;i<action.availableWhen.length;i++){var p=action.availableWhen[i];if(!p||!_MH_PREDICATES[p.id])return null;if(p.id==="ruleset.is"&&p.value!=="mayhem")return null;if(p.id==="side.isActor"&&ctx.campaign.side!==ctx.side)return null;}
+  _mhSanitizeReceipts(ctx.campaign);
+  var id=_mhReceiptId(ctx,actionId);for(i=0;i<ctx.campaign.mayhemReceipts.length;i++)if(ctx.campaign.mayhemReceipts[i].id===id)return null; // MAYHEM_BIND_DUPLICATE
+  var ops=[];
+  for(i=0;i<action.effects.length;i++){var e=action.effects[i], reg=e&&_MH_OPERATION_REGISTRY[e.operation], adapter=reg&&ctx.adapters[e.operation];if(!reg||!_mhOwnKeys(e,["operation","target","value","tag"])||!_mhStableId(e.target)||!_mhFinite(e.value)||!adapter||typeof adapter.stage!=="function"||typeof adapter.commit!=="function"||typeof adapter.rollback!=="function")return null;var tag=e.tag===undefined?undefined:_mhTag(e.tag,ctx.campaign,ctx);if(e.tag!==undefined&&!tag)return null;ops.push({operation:e.operation,target:e.target,value:Number(e.value),tag:tag,adapter:adapter,index:i});}
+  return {ctx:ctx,action:action,id:id,ops:ops};
+}
+function mayhemCan(actionId, context) {
+  if (!context || !context.campaign) return false;
+  var C={}; for(var k in context.campaign) if(Object.prototype.hasOwnProperty.call(context.campaign,k)) C[k]=context.campaign[k];
+  C.mayhemReceipts=_mhClone(context.campaign.mayhemReceipts||[]); C.mayhemSequence=context.campaign.mayhemSequence;
+  var copy={}; for(k in context)if(Object.prototype.hasOwnProperty.call(context,k))copy[k]=context[k]; copy.campaign=C;
+  return !!_mhResolve(actionId,copy);
+}
+function mayhemApply(actionId, context) {
+  var tx=_mhResolve(actionId,context);if(!tx)return null;
+  var staged=[];
+  try{
+    for(var i=0;i<tx.ops.length;i++){var op=tx.ops[i], result=op.adapter.stage({operation:op.operation,target:op.target,value:op.value,tag:op.tag},tx.ctx);if(!_mhOwnKeys(result,["before","after","token"])||!_mhFinite(result.before)||!_mhFinite(result.after))throw new Error("stage");staged.push({op:op,result:result});}
+  }catch(e){return null;}
+  var committed=[];
+  try{for(i=0;i<staged.length;i++){staged[i].op.adapter.commit(staged[i].result.token,tx.ctx);committed.push(staged[i]);}}
+  catch(e2){if(i<staged.length){try{staged[i].op.adapter.rollback(staged[i].result.token,tx.ctx);}catch(ignore0){}}for(i=committed.length-1;i>=0;i--){try{committed[i].op.adapter.rollback(committed[i].result.token,tx.ctx);}catch(ignore){}}return null;}
+  var normalized=[];for(i=0;i<staged.length;i++){var s=staged[i];var n={operation:s.op.operation,target:s.op.target,value:s.op.value,before:s.result.before,after:s.result.after};if(s.op.tag)n.tag=s.op.tag;normalized.push(n);}
+  var receipt={id:tx.id,actionId:actionId,sequence:tx.ctx.sequence,operations:normalized};
+  tx.ctx.campaign.mayhemReceipts.push(receipt);tx.ctx.campaign.mayhemSequence=tx.ctx.sequence;
+  if(tx.ctx.campaign.mayhemReceipts.length>MAYHEM_RECEIPT_CAP)tx.ctx.campaign.mayhemReceipts.splice(0,tx.ctx.campaign.mayhemReceipts.length-MAYHEM_RECEIPT_CAP);
+  return _mhClone(receipt);
+}
+
 function _mhHistorical() { return { id:"historical", version:1 }; }
 function _mhValidId(id) { return id === "historical" || id === "mayhem"; }
 function _mhExactRuleset(raw) {
@@ -59,7 +165,7 @@ function mayhemInit(C, requestedId, phase) {
   if (!C || typeof C !== "object" || Array.isArray(C)) return _mhHistorical();
 
   var current = _mhExactRuleset(C.ruleset);
-  if (_mhLockedOwner(C)) return current || _mhHistorical();
+  if (_mhLockedOwner(C)) { if(current&&current.id==="mayhem")_mhSanitizeReceipts(C); return current || _mhHistorical(); }
 
   var id;
   if (current) {
@@ -70,7 +176,7 @@ function mayhemInit(C, requestedId, phase) {
   } else {
     id = _mhFallbackId(); // MAYHEM_BIND_A:HISTORICAL_FALLBACK
   }
-  return _mhInstallOwner(C, id);
+  var installed=_mhInstallOwner(C, id); if(installed.id==="mayhem")_mhSanitizeReceipts(C); return installed;
 }
 
 /* A named fork creates a new object and uses the one initializer. It never

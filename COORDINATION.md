@@ -1697,12 +1697,9 @@ next green commit and confer through this ledger instead of permitting simultane
   12. Commit and push Slice B as its own green milestone. Keep LANE-007 DRIVE, point to Slice C,
       and retain `MAYHEM_PUBLIC_READY=false`; no public picker/action or no-quarter content ships
       in Slice B.
-- **Resume pointer:** from the clean pushed D418 release, implement Runtime Slice B criteria 1-12
-  above in one separate green commit. Start with the live schema/data-loader and receipt-owner
-  inventory, then write the full schema, validator, pipeline, fixtures, binds, docs, commit, and
-  push. Keep `MAYHEM_PUBLIC_READY=false`; Slice C is closed.
-- **Last-touched commit:** D418 Slice-A release commit (this commit; verify live `HEAD` equals
-  `origin/main` before Slice B).
+- **Slice B release evidence (D419):** closed schema with all 30 operation ids; recursive 55/55 validation; pure eligibility; atomic fixed-order adapters and reverse rollback; 32 deterministic bounded receipts. Mayhem 17/17, save 16/16, campaign 4/4, zero errors; suite 131 rows 38/57; 24/55/1512/24; `_SAVE_VER=1`. Four binds restored byte-identically. Planning/full battery omitted.
+- **Resume pointer:** Slice C only: first public surrender/no-quarter vertical slice with production adapters and score/casualty/reward/tag proof plus no-judgment result readout. Preserve Historical bytes.
+- **Last-touched commit:** D419 Slice-B release commit (verify live SHA after push).
 - **History:** opened as surrender-consequences at `41b6051`; Aaron superseded its core rule
   before implementation. D416 converts the same lane to the wider mode architecture so the
   surrendered idea becomes one later Mayhem validation slice rather than the universal law.

@@ -8,6 +8,11 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D419 OPEN HISTORY / MAYHEM: Slice B closed atomic pipeline shipped — 2026-07-17
+
+- Closed schema and all 30 operations; 55/55 schemas. Pure eligibility, fixed-order adapters, reverse rollback, and 32 deterministic receipts shipped without production adapters or public actions.
+- Final: Mayhem 17/17, save 16/16, campaign 4/4, zero errors; suite 131 rows 38/57; 24/55/1512/24 and `_SAVE_VER=1`. Four binds restored byte-identically. Planning/full battery omitted. Slice C is exact next.
+
 ## D418 OPEN HISTORY / MAYHEM: hidden Slice A runtime shipped, lane stays DRIVE — 2026-07-17
 
 - Aaron authorized one Slice-A allowlist addition: `tools/save-shape.json`. The enrolled

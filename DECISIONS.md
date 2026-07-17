@@ -6,6 +6,10 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D419 — MAYHEM SLICE B SHIPPED: CLOSED EFFECT DATA, ATOMIC ADAPTER PIPELINE, AND BOUNDED RECEIPTS — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-007 DRIVE] (2026-07-17)
+
+Slice B ships the closed `cw_mayhem_rules_v1` declaration with all 30 §4.2 operations and recursive exact validation. Pure `mayhemCan` and adapter-only `mayhemApply` validate/normalize all, derive the receipt id from timeline/battle/phase/actor/action/sequence, stage and commit in declaration order, and reverse-roll back on failure. No production adapter or public action is registered. Receipts live additively at `C.mayhemReceipts`, cap 32, beside exact immutable `C.ruleset={id,version}`; `C.mayhemSequence` is the replay cursor. Final gates: schema 55/55, Mayhem 17/17, save slots 16/16, full campaign 4/4, zero errors, suite 131 rows 38/57, 24/55/1512/24, `_SAVE_VER=1`. Four inverse-restored binds isolated schema, Historical refusal, duplicate rejection, and atomic rollback. `MAYHEM_PUBLIC_READY=false`; Slice C is exact next.
+
 ## D418 — MAYHEM SLICE A SHIPPED HIDDEN: ONE IMMUTABLE RULESET OWNER, ONE FAIL-CLOSED PICKER, AND SAVE/TIMELINE ISOLATION — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-007 DRIVE] (2026-07-17)
 
 Aaron authorized adding only `tools/save-shape.json` to the Slice-A runtime allowlist. The

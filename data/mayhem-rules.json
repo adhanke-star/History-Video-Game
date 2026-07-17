@@ -1,0 +1,56 @@
+{
+  "schema": "cw_mayhem_rules_v1",
+  "version": 1,
+  "actions": [
+    {
+      "id": "fixture.closed-pipeline",
+      "rulesetId": "mayhem",
+      "availableWhen": [
+        { "id": "ruleset.is", "value": "mayhem" },
+        { "id": "side.isActor" }
+      ],
+      "actorTags": [
+        { "namespace": "side", "value": "actor" },
+        { "namespace": "timeline", "value": "active" }
+      ],
+      "effects": [
+        { "operation": "battle.score.add", "target": "actor", "value": 10 },
+        { "operation": "phase.score.add", "target": "actor", "value": 5 },
+        { "operation": "objective.resolve", "target": "primary", "value": 1 },
+        { "operation": "casualty.apply", "target": "opponent", "value": 20 },
+        { "operation": "casualty.credit", "target": "actor", "value": 20 },
+        { "operation": "capture.credit", "target": "actor", "value": 2 },
+        { "operation": "result.declare", "target": "battle", "value": 1 },
+        { "operation": "result.reclassify", "target": "battle", "value": 1 },
+        { "operation": "campaign.victoryProgress.add", "target": "actor", "value": 1 },
+        { "operation": "enemyWill.add", "target": "opponent", "value": -3 },
+        { "operation": "morale.add", "target": "actor", "value": 4 },
+        { "operation": "discipline.add", "target": "actor", "value": 2 },
+        { "operation": "press.add", "target": "actor", "value": 3 },
+        { "operation": "diplomacy.add", "target": "actor", "value": 2 },
+        { "operation": "funds.add", "target": "actor", "value": 100 },
+        { "operation": "resource.add", "target": "supply", "value": 5 },
+        { "operation": "loot.grant", "target": "fixture-loot", "value": 1 },
+        { "operation": "technology.unlock", "target": "fixture-tech", "value": 1 },
+        { "operation": "weapon.grant", "target": "fixture-weapon", "value": 1 },
+        { "operation": "career.promote", "target": "actor", "value": 1 },
+        { "operation": "reputation.add", "target": "actor", "value": 2 },
+        { "operation": "notoriety.add", "target": "actor", "value": 2 },
+        { "operation": "achievement.unlock", "target": "fixture-achievement", "value": 1 },
+        { "operation": "modifier.add", "target": "actor", "value": 1, "tag": { "namespace": "side", "value": "actor" } },
+        { "operation": "roster.add", "target": "fixture-unit", "value": 1 },
+        { "operation": "roster.transfer", "target": "fixture-unit", "value": 1 },
+        { "operation": "reinforcement.add", "target": "fixture-unit", "value": 1 },
+        { "operation": "scenario.unlock", "target": "fixture-scenario", "value": 1 },
+        { "operation": "timeline.branch", "target": "fixture-branch", "value": 1 },
+        { "operation": "chronicle.event", "target": "fixture-event", "value": 1 }
+      ],
+      "presentation": {
+        "label": "Closed Pipeline Fixture",
+        "summary": "Internal Slice B fixture; not publicly reachable.",
+        "tone": "mayhem",
+        "icon": "timeline-bolt"
+      }
+    }
+  ]
+}
