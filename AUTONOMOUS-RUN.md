@@ -32,12 +32,7 @@ These rules apply to Codex, Claude, Cline, DeepSeek, and any other model impleme
 
 > **LIVE REFRESH (2026-07-17 D418 MAYHEM SLICE A SHIPPED): the ONE canonical live boundary is `HANDOFF.md`'s top ⚡ block — read it first; this section carries only this summary.** The immutable campaign ruleset, fail-closed accessible picker, all four start routes, post-load sanitation, save/import/undo/cross-slot isolation, and mode labels are live; Historical A/B is byte-equivalent; `MAYHEM_PUBLIC_READY=false`. Mayhem 16/16 plus adjacent 16/5/14/14/4 are green with zero errors; six binds each bit one tooth; suite 131 row 57; `_SAVE_VER=1`; base/data/count baselines unchanged. **LANE-007 remains DRIVE. Exact next: Slice B closed effect schema, atomic validation/apply, and deterministic idempotent receipts; Slice C/public Mayhem remain closed.** Work in `/Users/aaronhanke/Desktop/Video Game`; no simultaneous edits.
 
-> **SUPERSEDED PRIOR REFRESH (2026-07-17 D417 DUAL-RULESET PLAN SHIPPED): the ONE canonical live boundary is `HANDOFF.md`'s top ⚡ block — read it first; this section carries only this summary.** D416/D417 establish Historical (current teaching game unchanged) and Mayhem (all historical gameplay/content guardrails unlocked; declared actions may score, credit casualties, alter results, reward, and grant faction/identity-tag powers; no moral/plausibility GPA). Design + plan probe are bind-tested 13/13; game/base/manifest/suite remain byte-identical at 24/54/1512/24/130 and `_SAVE_VER=1`. **LANE-007 is CONTRACT/unowned. Exact next: Slice A hidden mode kernel/picker/save isolation under `MAYHEM_PUBLIC_READY=false`; no public Mayhem until Slice C.** Work in `/Users/aaronhanke/Desktop/Video Game`; no simultaneous edits.
-
-
-
-
-> **Older §2 refreshes (D413 and earlier, plus the retained run-i state tail):** moved byte-verbatim to [`legacy/AUTONOMOUS-RUN-ARCHIVE.md`](legacy/AUTONOMOUS-RUN-ARCHIVE.md) — D413 moved at D418; D412 at D417; older blocks moved in D412. This section keeps the latest refresh plus exactly one prior; the canonical live boundary is `HANDOFF.md`'s top ⚡ block.
+> **Older §2 refreshes (D417 and earlier, plus the retained run-i state tail):** moved byte-verbatim to [`legacy/AUTONOMOUS-RUN-ARCHIVE.md`](legacy/AUTONOMOUS-RUN-ARCHIVE.md) — D417 moved at D420; D413 moved at D418; D412 at D417; older blocks moved in D412. This section keeps the latest refresh plus exactly one prior; the canonical live boundary is `HANDOFF.md`'s top ⚡ block.
 
 ## 3 · THE LOOP (run this every cycle)
 For each phase, in order:

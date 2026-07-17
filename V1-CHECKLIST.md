@@ -4,10 +4,6 @@
 
 > **D418 live gate:** Mayhem Slice A is SHIPPED and hidden — immutable campaign ruleset, fail-closed accessible picker, all four starts, save/import/undo/cross-slot isolation, and mode labels; Historical A/B stays byte-equivalent and `MAYHEM_PUBLIC_READY=false`. Mayhem 16/16 plus adjacent 16/5/14/14/4 are green with zero errors; six byte-restored binds bit one tooth each; suite 131 with Mayhem row 57; `_SAVE_VER=1`; base/data/count baselines unchanged. **The canonical live boundary is `HANDOFF.md`'s top ⚡ block. LANE-007 remains DRIVE; exact next is Slice B closed schema/atomic receipt pipeline; Slice C/public Mayhem stay closed.** D398 remains latest full battery.
 
-> **D417 prior gate:** the Historical/Mayhem dual-ruleset planning contract is SHIPPED — Mayhem may score, credit casualties, alter results, reward declared actions, and grant faction/identity-tag powers without a moral/plausibility GPA; Historical remains unchanged. Plan 13/13 with the may-score bind biting only MAYHEM AUTHORITY; build/game/suite byte-identical at 24/54/1512/24/130 and `_SAVE_VER=1`. **The canonical live boundary is `HANDOFF.md`'s top ⚡ block. LANE-007 is CONTRACT/unowned; exact next is Slice A hidden kernel/picker/save isolation under `MAYHEM_PUBLIC_READY=false`; A-C are one public bundle.** D398 remains latest full battery.
-
-
-
 **Purpose:** give "complete all project goals" a concrete, ordered target so autonomous runs can drive to a
 content-complete v1 (still a perpetual project after — D54). Built from `MODERN-UGG-PLAN.md` (P0–P5),
 `GRAND-STRATEGY-PLAN.md` (S2–S5), and the §8 charter systems. **Status: APPROVED** — all 12 forks across a
