@@ -1086,7 +1086,7 @@ function _wcCalculateAdvancement(C, J, personId) {
   var canonical = C && J ? _wcCanonicalCareerPerson(C, personId) : null;
   var origin = canonical ? _wcCareerOrigin(J, personId) : false;
   var result = { ok:false, rank:canonical ? canonical.person.rank : "", merit:0, reputation:0,
-    promotionCount:0, roleHistory:[], currentBillet:null, awards:[] };
+    promotionCount:0, roleHistory:[], currentBillet:null, awards:[], latestQualifying:null };
   if (!canonical || origin === false) return result;
   var startRef = _wcUnitRef(canonical.person.unitRef), startYear = startRef ? _wcCanonicalBattleYear(startRef.battleId) : null;
   if (startYear == null && canonical.sourceRef.serviceYear != null) startYear = canonical.sourceRef.serviceYear;
@@ -1105,6 +1105,12 @@ function _wcCalculateAdvancement(C, J, personId) {
     if (!authority) continue;
     result.merit = Math.max(0, Math.min(128, result.merit + award.merit));
     result.reputation = Math.max(-64, Math.min(96, result.reputation + award.reputation));
+    /* D408 §17: the latest independently validated qualifying receipt (highest chain
+       rung) is the ONLY date authority for political access. Derived here, never saved. */
+    if (!result.latestQualifying || Number(credit.chainIndex) > result.latestQualifying.chainIndex) {
+      result.latestQualifying = { chainIndex:Number(credit.chainIndex), scenarioId:credit.scenarioId,
+        creditKey:credit.creditKey, battleYear:authority.battleYear };
+    }
     var next = _wcNextCareerRank(result.rank), threshold = 4 * (result.promotionCount + 1);
     if (!next || result.merit < threshold || result.reputation < 0 ||
         !_wcPromotionSlotEligible(result.rank, next, authority.resultRef.slot)) continue;
@@ -1785,6 +1791,7 @@ function warCareerCapabilities(C) {
   var role = warCareerRole(C);
   var active = role.id !== "legacy-or-inactive" && role.id !== "unavailable";
   var field = role.id === "field-command" || role.id === "general-command";
+  var decisions = warCareerDecisionAccess(C);
   return {
     role:role.id,
     personalStory:active,
@@ -1792,11 +1799,49 @@ function warCareerCapabilities(C) {
     strategicReadOnly:true,
     localOrders:false,
     fieldCommand:field,
-    nationalDecisions:false,
+    nationalDecisions:decisions.career === true && decisions.unlocked === true,
     cabinetMutation:false,
     appointmentMutation:false,
     resourceMutation:false,
     reason:active ? (field ? "Slice C exposes one bounded leadership projection; command appointments and political mutations remain locked." : "This role has no command projection yet.") : role.reason
+  };
+}
+/* D408 §17 (Slice E) — the ONE consumed political capability: `nationalDecisions`,
+   human-facing Matters of State. WAR_CAREER_POLITICAL_DATE_BIND:QUALIFYING_RECEIPT_YEAR_1864_OR_LATER —
+   unlock requires BOTH the reconstructed current-person general-command role AND a
+   latest independently validated qualifying current-person receipt whose canonical
+   battleYear >= _WC_POLITICAL_DATE_YEAR. Everything is re-derived from the sanitized
+   receipt ledger on every read: the live clock, President date, saved booleans/scalars,
+   rank text, rapport, names, and source rewriting can never grant authority, and no
+   authority field is ever persisted. Legacy/no-career campaigns bypass the gate and
+   keep the shipped President experience byte-identically. Cabinet, appointment, and
+   resource capabilities stay false and unconsumed. */
+var _WC_POLITICAL_DATE_YEAR = 1864;
+function warCareerDecisionAccess(C) {
+  var J = C && C.loot && C.loot.journey;
+  if (!J || J.enabled !== true || J.careerVersion !== 1) {
+    return { schema:"cw_war_career_decision_access_v1", career:false, unlocked:true,
+      missingDate:false, missingAuthority:false, latestQualifyingYear:null,
+      requiredYear:_WC_POLITICAL_DATE_YEAR,
+      reason:"No active War Career: Matters of State keep the shipped President experience." };
+  }
+  var authority = _wcCareerAuthority(C);
+  var latest = authority.ok === true && authority.derived ? authority.derived.latestQualifying : null;
+  var year = latest && isFinite(Number(latest.battleYear)) ? Math.round(Number(latest.battleYear)) : null;
+  var missingAuthority = !(authority.ok === true && authority.id === "general-command");
+  var missingDate = !(year != null && year >= _WC_POLITICAL_DATE_YEAR);
+  return {
+    schema:"cw_war_career_decision_access_v1", career:true,
+    unlocked:!missingAuthority && !missingDate,
+    missingDate:missingDate, missingAuthority:missingAuthority,
+    latestQualifyingYear:year, requiredYear:_WC_POLITICAL_DATE_YEAR,
+    reason:!missingAuthority && !missingDate
+      ? "General Command and a qualifying " + _WC_POLITICAL_DATE_YEAR + "-or-later receipt are both reconstructed; Matters of State are open."
+      : "Matters of State are deferred: " + (missingAuthority && missingDate
+        ? "earned General Command authority and a qualifying " + _WC_POLITICAL_DATE_YEAR + "-or-later receipt are both missing."
+        : (missingDate
+          ? "no qualifying receipt of " + _WC_POLITICAL_DATE_YEAR + " or later stands in the sanitized ledger."
+          : "earned General Command authority has not been reconstructed from the current person's receipts."))
   };
 }
 function warCareerStrategicGeneral(C) {

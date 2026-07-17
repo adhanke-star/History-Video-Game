@@ -8,6 +8,43 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D413 WAR-CAREER SLICE E — Matters-of-State runtime shipped, lane released — 2026-07-17 (D413)
+
+- Took LANE-005 DRIVE ledger-only (`a3aec520c3f8e4e823d453011488a7447906c040`) from the clean
+  D412 boundary (`70e0f990bbe8d9b37636b5484ebf5f8245467683`) after re-verifying all nine pinned
+  hashes byte-identical and the plan probe 24/24. Probe-pin preflight found every collision
+  inside the declared transition (plan-probe allowlist/pins/step-count); nothing else pins the
+  decision surface.
+- Implemented D408 §17 UNCHANGED: `warCareerDecisionAccess` pure reader in src/106
+  (general-command + latest validated qualifying receipt canonical `battleYear >= 1864`; one
+  `_WC_POLITICAL_DATE_YEAR` law site; `latestQualifying` derived per read, never persisted;
+  `warCareerCapabilities.nationalDecisions` consumes it; cabinet/appointments/resources false),
+  and the src/32 seam guards (visible defer on Desk + between-battle: readable cards, focusable
+  `aria-disabled` Decide + `aria-describedby` per-card defer notes naming date/authority/both;
+  `_decWireCards` activation guard focusing the explanation; direct `decResolve` refused before
+  `_decApply`; `decOnResolve` deliberately ungated). Legacy/no-career byte-equivalent (zero lock
+  bytes on bypass).
+- Focused proof: ONE new browser row `D408 MATTERS OF STATE + VISIBLE DEFER` → War Career
+  **44/44** + 30/30 static, zero pageerrors/realErrors (legacy bypass · both-missing ·
+  date-only via Rhodes rungs 1-6 (latest 1863) · authority-only via a nashville private with an
+  1864 v1 receipt · clock-never-grants · queue-current-while-locked · forgery fails closed ·
+  unlock at rung 7 with two green save roundtrips and no persisted field · routing literals
+  unedited). Adjacent: probe-decisions 19/19, probe-desk 13/13, probe-full-campaign 4/4;
+  Command 94/94 byte-identical; twelve battle/arc plans green (136 rows); suite list 130 row 38.
+- Plan-probe transition only: allowlist + `src/32-decisions.js`; 42→43 literal steps; moved
+  hashes documented old→new (game → `9d7d91078dd8fceea847f1c2aff4dc5f`, srcTree →
+  `a4a46fbcff478c239de037f4a63105a4`, 106 → `8e09ebbf56ba3433712f91936f438e5d`, focused →
+  `b7d6246e10357afc2a4e8f07f8c5dcea`); never-move pins all stand; 24/24 names/order exact.
+  One discovered-at-gate item (D411 loot-pin class, documented in D413): the changed-path
+  allowlist predates the D412 HISTORY ARCHIVAL RULE, so the five `legacy/*-ARCHIVE.md`
+  closeout targets were admitted with a documented-history comment.
+- Five byte-restored binds each reddened ONLY the new row at 43/44 (A UI semantic lock ·
+  B 1864→1863 · C any-band authority · D legacy gated · E direct-resolve bypass); every restore
+  md5-identical (src/32 `922d6fd0…`, src/106 `8e09ebbf…`, game `9d7d9107…`); red teeth never
+  landed. `_SAVE_VER=1`; D398 remains the latest full release battery; `npm run vet:noreg` NOT
+  run (not owed). LANE-005 released to CONTRACT/unowned; no queued lane work remains — next
+  selection is Aaron's; Slice F stays closed.
+
 ## D412 DOCS-HYGIENE AUDIT + RESTRUCTURING — shipped, lane released — 2026-07-16 (D412)
 
 - Took LANE-006 DRIVE ledger-only (`d9ed229a66625b5359926182650c0c9c0fcb3c9b`) from the clean

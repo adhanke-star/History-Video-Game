@@ -749,10 +749,46 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
-### LANE-005 · war-career-loop — **DRIVE (D408 §17 Matters-of-State runtime take)**
+### LANE-005 · war-career-loop — **CONTRACT (D413 §17 Matters of State shipped; unowned)**
 
-- **Owning tool:** Claude Code Fable (top loop). No simultaneous edits by any provider.
-- **State:** DRIVE — ledger-only take from clean D412 boundary
+- **Owning tool:** none. Owner: none. No simultaneous edits by any provider.
+- **State:** CONTRACT — released from ledger take
+  `a3aec520c3f8e4e823d453011488a7447906c040`, based on clean D412 boundary
+  `70e0f990bbe8d9b37636b5484ebf5f8245467683`. D413 shipped the D408 §17 Matters-of-State
+  runtime UNCHANGED (design §17 the law; DECISIONS D413 the record): the pure
+  receipt-derived reader `warCareerDecisionAccess` in src/106 (`_WC_POLITICAL_DATE_YEAR`
+  1864, one site; `latestQualifying` derived on every read, never persisted;
+  `warCareerCapabilities.nationalDecisions` flips to the reader's verdict while
+  cabinet/appointments/resources stay false), the shared seam guards in src/32
+  (`decRenderTab`/`decInterstitialHTML` visible defer with focusable aria-disabled
+  Decide controls + one describing defer note per card; `_decWireCards` activation
+  guard focusing the explanation; direct `decResolve` refusing before `_decApply`;
+  `decOnResolve` deliberately ungated so the queue stays current), and legacy/no-career
+  byte-equivalent (zero lock bytes on bypass, proven live by probe-decisions 19/19,
+  probe-desk 13/13, probe-full-campaign 4/4). **War Career 44/44 browser + 30/30
+  static; Command 94/94 byte-identical; plan 24/24 transitioned (names/order exact);
+  suite 130 with War Career row 38; 24/54/1512/24; `_SAVE_VER=1`.** Moved hashes
+  (documented in D413 and the plan probe): game → `9d7d91078dd8fceea847f1c2aff4dc5f`,
+  srcTree → `a4a46fbcff478c239de037f4a63105a4`, src/106 →
+  `8e09ebbf56ba3433712f91936f438e5d`, focused probe →
+  `b7d6246e10357afc2a4e8f07f8c5dcea`; never-move pins all stand (base, manifest,
+  suite, Command, Command probe, src/37, dataTree, T2/T3/Auto/After Action). Five
+  byte-restored negative binds bit exactly the new D408 row (A UI semantic lock ·
+  B 1864→1863 · C weakened earned authority · D gated legacy · E direct-resolve
+  bypass), each restored md5-identically; red teeth never landed. One discovered-at-gate
+  transition item, documented in D413 (the D411 loot-pin class): the plan probe's
+  changed-path allowlist predates the D412 HISTORY ARCHIVAL RULE, so the five
+  `legacy/*-ARCHIVE.md` closeout-archival targets were admitted with a
+  documented-history comment. D398 remains the
+  latest full release battery; `npm run vet:noreg` was not run (not owed in D413).
+  Preserve the sole `C.loot.journey` player owner, separate `P.command` NPC owner,
+  source/timeline receipt split, one-credit/fate/handoff/save laws, safe-clone
+  boundary, and every no-combat/no-simultaneous-edit lock.
+- **Resume pointer (D413 release):** D408 §17 shipped at 44/44; Slice F remains closed;
+  next Slice-E/political work only on Aaron's explicit selection. Work only in
+  `/private/tmp/codex-vg-recovery-019f62fe`; the Desktop checkout remains dataless.
+- **Prior take state (D413 DRIVE, retained history):** Owning tool was Claude Code
+  Fable (top loop); State was DRIVE — ledger-only take from clean D412 boundary
   `70e0f990bbe8d9b37636b5484ebf5f8245467683` (HEAD == origin/main verified at take; all
   nine pinned hashes re-verified byte-identical before this edit: game
   `7de51b310e09a710eb83ade276952203`, base `c9db83fa99230ffb95bdfdfe059f3fb9`, manifest

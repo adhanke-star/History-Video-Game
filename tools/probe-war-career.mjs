@@ -1943,6 +1943,247 @@ const SETUP = `(() => {
         malformedDropped:6, sourceImmutable:true, nonRhodesFrozen:true, idempotent:true, saveRoundtrip:true };
     });
 
+    step('D408 MATTERS OF STATE + VISIBLE DEFER', function() {
+      var LOCK_RX = /aria-disabled="true"|data-dec-locked="1"|data-dec-defer="1"|decLock_/;
+      function pend(X) { return (X.president.pendingChoices || []).slice(); }
+      function surface(X, year) {
+        decInit(X); X.president.date.year = year; X.president.date.month = 6;
+        decOnResolve(X.side, 'win', { bd:{ year:year } }, X, true);
+        return pend(X);
+      }
+      function counts(html) {
+        return {
+          decide:(html.match(/id="decChoose_/g) || []).length,
+          disabled:(html.match(/aria-disabled="true"/g) || []).length,
+          described:(html.match(/aria-describedby="decLock_/g) || []).length,
+          notes:(html.match(/data-dec-defer="1"/g) || []).length
+        };
+      }
+      function decideCount(X) {
+        var total = 0;
+        pend(X).forEach(function(id) { var c = _decById(id); if (c && Array.isArray(c.options)) total += c.options.length; });
+        return total;
+      }
+      function titlesPresent(X, html) {
+        return pend(X).every(function(id) { var c = _decById(id); return c && html.indexOf(_decEsc(c.title)) >= 0; });
+      }
+      function effectsState(X) {
+        return bytes({ capital:X.clock && X.clock.capital, weariness:X.clock && X.clock.weariness,
+          intervention:X.clock && X.clock.intervention, importFactor:X.blockade && X.blockade.importFactor,
+          strength:X.manpower && X.manpower.strength, resolved:X.president.decisionsResolved,
+          emancipation:X.president.emancipation, pending:X.president.pendingChoices });
+      }
+      // (0) The bind token and both surfaces' routing survive UNEDITED in the built game:
+      // Desk (openWarDept/_wdRefresh/H0_DESK_TABS) and between-battle (h0iDecisions/legacy
+      // interstitial) still converge on the guarded decRenderTab/decInterstitialHTML seam.
+      var src = Array.prototype.map.call(document.scripts, function(s) { return s.textContent || ''; }).join(' ');
+      ['WAR_CAREER_POLITICAL_DATE_BIND:QUALIFYING_RECEIPT_YEAR_1864_OR_LATER',
+       'function openWarDept()', '_wdTab === "decisions"', 'decRenderTab(C)', 'decWireInterstitial',
+       'H0_DESK_TABS', '["decisions", "Decisions"]', 'h0iDecisions(C)', 'decInterstitialHTML(C)'
+      ].forEach(function(token) {
+        if (src.indexOf(token) < 0) throw new Error('routing/bind anchor missing from the built game: ' + token);
+      });
+      // (1) LEGACY / NO-CAREER BYPASS: zero lock artifacts, shipped resolve behavior.
+      var L = mkC('US', false);
+      var accessL = warCareerDecisionAccess(L);
+      if (accessL.career !== false || accessL.unlocked !== true || accessL.missingDate || accessL.missingAuthority) {
+        throw new Error('legacy access law moved: ' + bytes(accessL));
+      }
+      surface(L, 1864);
+      if (!pend(L).length) throw new Error('no pending 1864 matters for the legacy control');
+      var legacyTab = decRenderTab(L), legacyInt = decInterstitialHTML(L);
+      if (LOCK_RX.test(legacyTab + legacyInt)) throw new Error('legacy render carries D408 lock artifacts');
+      if (!titlesPresent(L, legacyTab)) throw new Error('legacy tab lost a pending card');
+      var legacyCard = _decById(pend(L)[0]), legacyOpt = legacyCard.options[0];
+      decResolve(L, legacyCard.id, legacyOpt.id);
+      if (L.president.decisionsResolved[legacyCard.id] !== legacyOpt.id || pend(L).indexOf(legacyCard.id) >= 0) {
+        throw new Error('legacy direct decResolve stopped applying');
+      }
+      // (2) Fresh Rhodes career: BOTH prerequisites missing; reads stay pure.
+      var pid = 'person_bullrun_us_2ri_rhodes';
+      var C = mkC('US', false); C.idx = 1; C.runId = 'run-us-d410-1';
+      if (!warCareerStart(C, pid).ok) throw new Error('Rhodes career start failed');
+      var a0 = warCareerDecisionAccess(C);
+      if (!(a0.career === true && a0.unlocked === false && a0.missingDate === true && a0.missingAuthority === true &&
+            a0.requiredYear === 1864 && a0.latestQualifyingYear === null)) {
+        throw new Error('fresh-career access law moved: ' + bytes(a0));
+      }
+      surface(C, 1862);
+      var bothTab = decRenderTab(C);
+      if (bothTab.indexOf('both earned General Command authority and a qualifying participation receipt from 1864 or later') < 0) {
+        throw new Error('both-missing defer copy moved');
+      }
+      var pureBefore = bytes(C);
+      warCareerDecisionAccess(C); warCareerCapabilities(C); decRenderTab(C); decInterstitialHTML(C);
+      if (bytes(C) !== pureBefore) throw new Error('access/render reads mutated the campaign');
+      // (3) Rungs 1-6 -> reconstructed General Command with latest receipt 1863: DATE-ONLY missing.
+      var rungs = [
+        { index:1, scenarioId:'bullrun1' }, { index:9, scenarioId:'antietam' },
+        { index:14, scenarioId:'vicksburg' }, { index:15, scenarioId:'gettysburg' },
+        { index:16, scenarioId:'chickamauga' }, { index:17, scenarioId:'chattanooga' }
+      ];
+      for (var i = 0; i < rungs.length; i++) {
+        C.idx = rungs[i].index;
+        var B = mkB(C, true);
+        B.warCareerEvidence = warCareerBuildClassicEvidence(C, B);
+        if (!B.warCareerEvidence) throw new Error('evidence missing at ' + rungs[i].scenarioId);
+        var resolved = resolveResult(C, B, 'US', 'decisive');
+        if (!resolved || !resolved.qualifying || resolved.fate !== 'alive') {
+          throw new Error(rungs[i].scenarioId + ' rung did not qualify: ' + bytes(resolved));
+        }
+      }
+      if (C.loot.journey.person.rank !== 'Brig. Gen.' || warCareerRole(C).id !== 'general-command') {
+        throw new Error('rungs 1-6 did not reconstruct General Command');
+      }
+      var a6 = warCareerDecisionAccess(C);
+      if (!(a6.career && a6.unlocked === false && a6.missingDate === true && a6.missingAuthority === false &&
+            a6.latestQualifyingYear === 1863)) throw new Error('date-only access law moved: ' + bytes(a6));
+      var caps6 = warCareerCapabilities(C);
+      if (caps6.nationalDecisions !== false || caps6.cabinetMutation || caps6.appointmentMutation || caps6.resourceMutation) {
+        throw new Error('locked capability law moved: ' + bytes(caps6));
+      }
+      // The live clock never grants; decOnResolve keeps the queue current while locked.
+      surface(C, 1864);
+      if (!pend(C).length || pend(C).indexOf('us-press-censorship') < 0) {
+        throw new Error('the 1864-window card did not surface while locked: ' + bytes(pend(C)));
+      }
+      var a6clock = warCareerDecisionAccess(C);
+      if (a6clock.unlocked !== false || a6clock.missingDate !== true) throw new Error('the live 1864 clock granted date authority');
+      surface(C, 1865);
+      if (pend(C).indexOf('us-press-censorship') >= 0) throw new Error('decOnResolve stopped expiring while locked');
+      surface(C, 1864);
+      if (pend(C).indexOf('us-press-censorship') < 0) throw new Error('decOnResolve stopped enqueueing while locked');
+      // Visible defer on BOTH surfaces: readable cards, focusable aria-disabled Decide
+      // controls, one describing defer note per card, the date named — not authority.
+      var tab6 = decRenderTab(C), int6 = decInterstitialHTML(C);
+      var ct = counts(tab6), ci = counts(int6), decides = decideCount(C), cards6 = pend(C).length;
+      if (ct.decide !== decides || ct.disabled !== decides || ct.described !== decides || ct.notes !== cards6) {
+        throw new Error('tab defer marks moved: ' + bytes({ marks:ct, decides:decides, cards:cards6 }));
+      }
+      if (ci.decide !== decides || ci.disabled !== decides || ci.described !== decides || ci.notes !== cards6) {
+        throw new Error('interstitial defer marks moved: ' + bytes({ marks:ci, decides:decides, cards:cards6 }));
+      }
+      if (!titlesPresent(C, tab6) || !titlesPresent(C, int6)) throw new Error('a locked card stopped rendering');
+      if (tab6.indexOf('your latest qualifying receipt is from 1863') < 0 ||
+          int6.indexOf('your latest qualifying receipt is from 1863') < 0) throw new Error('date-only defer copy moved');
+      if (tab6.indexOf('earned General Command authority reconstructed') >= 0) throw new Error('date-only defer wrongly names authority');
+      var sampleCard = _decById(pend(C)[0]);
+      if (tab6.indexOf('decWhyBox_tab_') < 0 || tab6.indexOf(_decEsc(sampleCard.situation)) < 0) {
+        throw new Error('teaching/situation stopped rendering while locked');
+      }
+      // (4) Live DOM: the activation guard refuses, explains, and mutates nothing;
+      // the direct mutator refuses before _decApply; forged state never grants.
+      var host = document.createElement('div'); host.id = 'd408ProbeHost';
+      document.body.appendChild(host);
+      try {
+        host.innerHTML = tab6 + int6;
+        G.campaign = C;
+        var fired = 0;
+        _decWireCards(C, 'tab', pend(C), function() { fired++; });
+        _decWireCards(C, 'int', pend(C), function() { fired++; });
+        var lockedState = effectsState(C);
+        var firstCard = _decById(pend(C)[0]), firstOpt = firstCard.options[0];
+        var btn = document.getElementById('decChoose_tab_' + _decIdSafe(firstCard.id) + '_' + _decIdSafe(firstOpt.id));
+        if (!btn) throw new Error('locked Decide button missing from the DOM');
+        if (btn.getAttribute('aria-disabled') !== 'true' || btn.disabled) {
+          throw new Error('locked Decide is not a focusable aria-disabled native button');
+        }
+        btn.focus();
+        if (document.activeElement !== btn) throw new Error('locked Decide button is not keyboard focusable');
+        btn.click();
+        var note = document.getElementById('decLock_tab_' + _decIdSafe(firstCard.id));
+        if (!note) throw new Error('the defer explanation note is missing');
+        if (document.activeElement !== note) throw new Error('the activation guard did not move focus to the defer explanation');
+        var btnInt = document.getElementById('decChoose_int_' + _decIdSafe(firstCard.id) + '_' + _decIdSafe(firstOpt.id));
+        if (!btnInt) throw new Error('locked interstitial Decide button missing from the DOM');
+        btnInt.click();
+        if (fired !== 0) throw new Error('afterChoose fired while locked');
+        if (effectsState(C) !== lockedState) throw new Error('a locked activation mutated state');
+        decResolve(C, firstCard.id, firstOpt.id);
+        if (effectsState(C) !== lockedState) throw new Error('direct decResolve applied while locked');
+        var env6 = envelope(C, 'd408-locked');
+        C.loot.journey.person.rank = 'Maj. Gen.';
+        C.loot.journey.promotionCount = 9;
+        C.president.politicalUnlocked = true;
+        C.loot.journey.politicalAccess = { unlocked:true };
+        if (warCareerDecisionAccess(C).unlocked !== false) throw new Error('forged rank/scalars/booleans granted authority');
+        applySave(env6); warCareerInit(G.campaign); C = G.campaign;
+        var aRestored = warCareerDecisionAccess(C);
+        if (!(aRestored.career && aRestored.unlocked === false && aRestored.missingDate && !aRestored.missingAuthority)) {
+          throw new Error('the locked state did not survive save/apply/init: ' + bytes(aRestored));
+        }
+        // (5) AUTHORITY-ONLY missing: a nashville private earns an 1864 receipt at Sergeant.
+        var A = mkC('US', false); A.idx = 27;
+        var ap = currentPerson(A, 'Private');
+        if (!ap) throw new Error('no nashville Private for the authority-only case');
+        var aRun = null;
+        for (var ri = 0; ri < 200 && !aRun; ri++) {
+          var cand = 'run-d408-auth-' + ri;
+          var key = [cand, 'US', 27, 'nashville'].join('|');
+          if (_wcHash([cand, key, ap.pid, ap.unitRef.slotPid, 'personal-fate'].join('|')) % 1000 >= 100) aRun = cand;
+        }
+        if (!aRun) throw new Error('no deterministic alive run id for the authority-only case');
+        A.runId = aRun;
+        if (!warCareerStart(A, ap.pid).ok) throw new Error('nashville career start failed');
+        var AB = mkB(A, true);
+        AB.warCareerEvidence = warCareerBuildClassicEvidence(A, AB);
+        if (!AB.warCareerEvidence) throw new Error('nashville own-source evidence missing');
+        var aResolved = resolveResult(A, AB, 'US', 'decisive');
+        if (!aResolved || !aResolved.qualifying || aResolved.fate !== 'alive') {
+          throw new Error('the nashville rung did not qualify: ' + bytes(aResolved));
+        }
+        var aa = warCareerDecisionAccess(A);
+        if (!(aa.career && aa.unlocked === false && aa.missingDate === false && aa.missingAuthority === true &&
+              aa.latestQualifyingYear === 1864)) throw new Error('authority-only access law moved: ' + bytes(aa));
+        surface(A, 1864);
+        var tabA = decRenderTab(A);
+        if (tabA.indexOf('earned General Command authority reconstructed from your receipts') < 0) {
+          throw new Error('authority-only defer copy moved');
+        }
+        if (tabA.indexOf('participation receipt from 1864 or later') >= 0) {
+          throw new Error('authority-only defer wrongly names the date');
+        }
+        // (6) UNLOCK: rung 7 completes the D408 pair; shipped choice/effect behavior returns.
+        C.idx = 27;
+        var B7 = mkB(C, true);
+        B7.warCareerEvidence = warCareerBuildClassicEvidence(C, B7);
+        if (!B7.warCareerEvidence) throw new Error('rung-7 evidence missing');
+        var r7 = resolveResult(C, B7, 'US', 'decisive');
+        if (!r7 || !r7.qualifying || r7.fate !== 'alive') throw new Error('rung 7 did not commit');
+        var a7 = warCareerDecisionAccess(C);
+        if (!(a7.career && a7.unlocked === true && a7.missingDate === false && a7.missingAuthority === false &&
+              a7.latestQualifyingYear === 1864)) throw new Error('the D408 unlock pair did not open: ' + bytes(a7));
+        var caps7 = warCareerCapabilities(C);
+        if (caps7.nationalDecisions !== true || caps7.cabinetMutation || caps7.appointmentMutation || caps7.resourceMutation) {
+          throw new Error('unlock capability law moved: ' + bytes(caps7));
+        }
+        surface(C, 1864);
+        if (!pend(C).length) throw new Error('no pending matters after unlock');
+        var tab7 = decRenderTab(C), int7 = decInterstitialHTML(C);
+        if (LOCK_RX.test(tab7 + int7)) throw new Error('unlocked render still carries lock artifacts');
+        var env7 = envelope(C, 'd408-unlocked');
+        applySave(env7); warCareerInit(G.campaign); C = G.campaign;
+        if (warCareerDecisionAccess(C).unlocked !== true) throw new Error('the unlock did not survive save/apply/init');
+        ['unlocked', 'missingDate', 'missingAuthority', 'latestQualifyingYear', 'requiredYear'].forEach(function(k) {
+          if (own(C.loot.journey, k)) throw new Error('a derived authority field was persisted: ' + k);
+        });
+        host.innerHTML = decRenderTab(C);
+        var fired7 = 0;
+        _decWireCards(C, 'tab', pend(C), function() { fired7++; });
+        var uCard = _decById(pend(C)[0]), uOpt = uCard.options[0];
+        var ubtn = document.getElementById('decChoose_tab_' + _decIdSafe(uCard.id) + '_' + _decIdSafe(uOpt.id));
+        if (!ubtn || ubtn.getAttribute('aria-disabled')) throw new Error('unlocked Decide button carries the lock');
+        ubtn.click();
+        if (fired7 !== 1 || C.president.decisionsResolved[uCard.id] !== uOpt.id || pend(C).indexOf(uCard.id) >= 0) {
+          throw new Error('unlocked Decide did not resolve exactly once');
+        }
+      } finally { if (host.parentNode) host.parentNode.removeChild(host); }
+      return { legacyBypass:true, bothMissing:true, dateOnly:{ latest:1863 }, authorityOnly:{ latest:1864 },
+        clockNeverGrants:true, queueCurrentWhileLocked:true, deferMarks:{ tab:ct, interstitial:ci },
+        activationGuard:'focus-to-explanation', directResolveGuarded:true, forgeryFailsClosed:true,
+        unlocked:{ latest:1864, nationalDecisions:true }, saveRoundtrips:2, routingUnedited:true };
+    });
+
     step('D407 RELATIONSHIP TRANSITIONS + ONE-CREDIT', function() {
       var laws = [
         { outcome:'victory', type:'decisive', code:'high-command-decisive-victory', delta:2 },

@@ -36,6 +36,36 @@ var _decEsc = htmlEsc;
    must stay in lockstep, so NOT _decEsc (whose entities would desync them). D50.11 */
 function _decIdSafe(s) { return String(s == null ? "" : s).replace(/[^A-Za-z0-9_-]/g, "_"); }
 
+/* ---- D408 §17 (Slice E): the Matters-of-State career gate. The pure reader in
+   src/106 (warCareerDecisionAccess) owns the law; render (decRenderTab /
+   decInterstitialHTML), wiring (_decWireCards), and the direct decResolve mutator
+   all consult the SAME reader, so a disabled UI can never be bypassed by a direct
+   call. Returns the access object ONLY when a locked career defers; legacy /
+   no-career campaigns return null and render byte-identically to the shipped
+   President experience. decOnResolve is deliberately NOT gated — the queue stays
+   current while the defer is visible. ---- */
+function _decAccess(C) {
+  if (typeof warCareerDecisionAccess !== "function") return null;
+  var a = warCareerDecisionAccess(C);
+  return a && a.career === true && a.unlocked !== true ? a : null;
+}
+/* The visible-defer explanation: names the missing late-war date, the missing earned
+   General Command authority, or both. Text and semantic state carry the lock — never
+   color. The 1864 threshold comes from the reader (one law site in src/106). */
+function _decLockText(lock) {
+  var need;
+  if (lock.missingDate && lock.missingAuthority) {
+    need = "both earned General Command authority and a qualifying participation receipt from " + lock.requiredYear + " or later; your War Career has neither yet";
+  } else if (lock.missingDate) {
+    need = "a qualifying participation receipt from " + lock.requiredYear + " or later" +
+      (lock.latestQualifyingYear != null ? "; your latest qualifying receipt is from " + lock.latestQualifyingYear : "; no qualifying receipt yet stands in your sanitized ledger");
+  } else {
+    need = "earned General Command authority reconstructed from your receipts; the " + lock.requiredYear + "-or-later date requirement is already met";
+  }
+  return "Deciding a Matter of State requires " + need + ". The situation, options, teaching, and sources remain open to read; nothing is decided in your name while you wait.";
+}
+function _decLockNoteId(ns, cardId) { return "decLock_" + ns + "_" + _decIdSafe(cardId); }
+
 /* ---- decInit: idempotent. ---- */
 function decInit(C) {
   if (!C) return;
@@ -115,6 +145,7 @@ function _decApply(C, opt) {
 function decResolve(C, cardId, optionId) {
   if (!C || !C.president) return;
   decInit(C);
+  if (_decAccess(C)) return;   // D408 §17: a locked career defers — the direct mutator refuses before _decApply, so no card resolves, drops, or applies in the player's name
   var P = C.president, c = _decById(cardId);
   if (!c || !Array.isArray(c.options)) return;                          // D50.9: malformed deck degrades, no throw
   if (P.decisionsResolved && P.decisionsResolved[cardId]) return;       // D50.6/.7: resolved is TERMINAL — no re-apply, no emancipation flip
@@ -142,13 +173,13 @@ var _decCAT_LABEL = { emancipation: "Emancipation", "civil-liberties": "Civil Li
 
 /* One option as a labelled choice button + an expandable why. `ns` namespaces the
    element ids (so the tab and the interstitial can both render the same card). */
-function _decOptionHTML(card, opt, ns) {
+function _decOptionHTML(card, opt, ns, lock) {
   var oid = ns + "_" + _decIdSafe(card.id) + "_" + _decIdSafe(opt.id);
   return ''
     + '<div style="margin:6px 0;padding:7px;border:1px solid var(--rule);border-radius:4px;background:rgba(0,0,0,.1)">'
     +   '<div style="display:flex;gap:8px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap">'
     +     '<div style="flex:1 1 220px;font-size:13px;font-weight:bold">' + _decEsc(opt.label) + '</div>'
-    +     '<button id="decChoose_' + oid + '" type="button" class="bigbtn" style="flex:0 0 auto;font-size:12px;padding:3px 12px">Decide</button>'
+    +     '<button id="decChoose_' + oid + '" type="button" class="bigbtn"' + (lock ? ' aria-disabled="true" data-dec-locked="1" aria-describedby="' + _decLockNoteId(ns, card.id) + '"' : '') + ' style="flex:0 0 auto;font-size:12px;padding:3px 12px">Decide</button>'
     +   '</div>'
     +   (opt.historicalNote ? '<div style="font-size:11px;opacity:.7;margin-top:3px">' + _decEsc(opt.historicalNote) + '</div>' : '')
     +   '<button id="decWhy_' + oid + '" type="button" class="upg" style="font-size:11px;padding:1px 8px;margin-top:4px" aria-expanded="false" aria-controls="decWhyBox_' + oid + '">Why &#9656;</button>'
@@ -159,11 +190,13 @@ function _decOptionHTML(card, opt, ns) {
     + '</div>';
 }
 
-/* A full decision card (situation + options + teaching). */
-function _decCardHTML(C, card, ns) {
+/* A full decision card (situation + options + teaching). When a locked career
+   defers (D408 §17), every card stays fully readable and gains one focusable
+   defer note that each aria-disabled Decide button describes. */
+function _decCardHTML(C, card, ns, lock) {
   if (!card || !Array.isArray(card.options)) return '';   // D50.9: malformed deck degrades, no throw
   var opts = "";
-  for (var i = 0; i < card.options.length; i++) opts += _decOptionHTML(card, card.options[i], ns);
+  for (var i = 0; i < card.options.length; i++) opts += _decOptionHTML(card, card.options[i], ns, lock);
   var cat = _decCAT_LABEL[card.category] || card.category || "";
   var hinge = (card.trigger && card.trigger.hinge) ? '<span style="font-size:10px;color:#d88878;border:1px solid #d88878;border-radius:3px;padding:0 4px;margin-left:6px">&#9873; a hinge of the war</span>' : '';
   return ''
@@ -171,6 +204,7 @@ function _decCardHTML(C, card, ns) {
     +   '<div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#a89066">' + _decEsc(cat) + hinge + '</div>'
     +   '<div style="font-size:15px;font-weight:bold;margin:2px 0">' + _decEsc(card.title) + '</div>'
     +   '<div style="font-size:13px;opacity:.9;margin-bottom:4px">' + _decEsc(card.situation) + '</div>'
+    +   (lock ? '<div id="' + _decLockNoteId(ns, card.id) + '" role="note" tabindex="-1" data-dec-defer="1" style="margin:4px 0 6px;padding:6px 8px;border:1px solid var(--rule);border-radius:4px;font-size:12px"><b>Deferred.</b> ' + _decEsc(_decLockText(lock)) + '</div>' : '')
     +   opts
     + '</div>';
 }
@@ -180,13 +214,13 @@ function decRenderTab(C) {
   if (!C) return '';
   decInit(C);
   if (!_decData()) return '<p class="lede" style="font-size:13px">No matters require your decision.</p>';
-  var P = C.president, pend = P.pendingChoices || [];
+  var P = C.president, pend = P.pendingChoices || [], lock = _decAccess(C);
   var body = "";
   if (!pend.length) {
     body = '<p class="lede" style="font-size:13px;opacity:.75">No matter presently requires your decision. The work of the war goes on; the great choices will come.</p>';
   } else {
     body = '<p class="lede" style="font-size:13px;margin-bottom:4px">Matters await your decision. Each choice is yours to make &mdash; or to leave for another day.</p>';
-    for (var i = 0; i < pend.length; i++) { var c = _decById(pend[i]); if (c) body += _decCardHTML(C, c, "tab"); }
+    for (var i = 0; i < pend.length; i++) { var c = _decById(pend[i]); if (c) body += _decCardHTML(C, c, "tab", lock); }
   }
   // resolved history (teaching: your war vs history)
   var keys = P.decisionsResolved ? Object.keys(P.decisionsResolved) : [];
@@ -215,6 +249,15 @@ function _decWireCards(C, ns, cardIds, afterChoose) {
         var oid = ns + "_" + _decIdSafe(card.id) + "_" + _decIdSafe(opt.id);
         var ch = document.getElementById("decChoose_" + oid);
         if (ch) ch.addEventListener("click", function () {
+          /* D408 §17 activation guard: re-read the pure access law at activation
+             time. A locked career moves focus to the card's defer note (which
+             names the missing date/authority) — nothing resolves or applies. */
+          var lock = _decAccess(C);
+          if (lock) {
+            var note = document.getElementById(_decLockNoteId(ns, card.id));
+            if (note && typeof note.focus === "function") note.focus();
+            return;
+          }
           decResolve(C, card.id, opt.id);
           if (typeof saveLocal === "function") saveLocal();
           if (typeof afterChoose === "function") afterChoose();
@@ -244,10 +287,10 @@ function decWireTab(C) {
 function decInterstitialHTML(C) {
   if (!C || !C.president) return '';
   decInit(C);
-  var pend = C.president.pendingChoices || [];
+  var pend = C.president.pendingChoices || [], lock = _decAccess(C);
   if (!pend.length) return '';
   var cards = "";
-  for (var i = 0; i < pend.length; i++) { var c = _decById(pend[i]); if (c) cards += _decCardHTML(C, c, "int"); }
+  for (var i = 0; i < pend.length; i++) { var c = _decById(pend[i]); if (c) cards += _decCardHTML(C, c, "int", lock); }
   return ''
     + '<div style="margin:14px auto 0;max-width:560px;text-align:left">'
     +   '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);text-align:center;margin-bottom:2px">Matters of State</div>'

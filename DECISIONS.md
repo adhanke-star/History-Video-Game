@@ -6,6 +6,97 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D413 — WAR CAREER SLICE E SHIPPED: MATTERS OF STATE ARE LIVE — GENERAL COMMAND PLUS A QUALIFYING 1864+ RECEIPT UNLOCKS; EVERYTHING ELSE VISIBLY DEFERS — [CLAUDE CODE FABLE, LANE-005 DRIVE→CONTRACT] (2026-07-17)
+
+**The D408 §17 contract is now shipped runtime, implemented UNCHANGED (design §17 the law; D408
+the contract; D411 the reachability it rides on).** Ledger take
+`a3aec520c3f8e4e823d453011488a7447906c040` from clean D412 boundary
+`70e0f990bbe8d9b37636b5484ebf5f8245467683`; all nine pinned hashes re-verified byte-identical and
+the plan probe re-run 24/24 before any edit. The probe-pin preflight (OPUS-PLAYBOOK §7f) found
+every collision inside the declared transition: the plan probe's `D408_CONTRACT_ALLOWED`
+allowlist, its srcTree/runtime/focused/game pins, and its 42-step focused-structure pin — no
+out-of-allowlist probe pins src/32-decisions.js, the decision DOM/copy, or the moved hashes.
+
+1. **The pure receipt-derived reader landed (src/106).** `warCareerDecisionAccess(C)` — the ONE
+   consumed political capability. Unlock requires BOTH `_wcCareerAuthority(C)` ok at
+   `general-command` AND a latest independently validated qualifying current-person receipt with
+   canonical `battleYear >= _WC_POLITICAL_DATE_YEAR` (1864, one law site; bind token
+   `WAR_CAREER_POLITICAL_DATE_BIND:QUALIFYING_RECEIPT_YEAR_1864_OR_LATER` carried at the site).
+   `_wcCalculateAdvancement` now derives `latestQualifying` (highest chain rung among
+   authority-validated credits) — derived on every read, never persisted; `warCareerCapabilities`
+   flips `nationalDecisions` to the reader's verdict while cabinet/appointments/resources stay
+   false. The reader returns `career/unlocked/missingDate/missingAuthority/latestQualifyingYear/
+   requiredYear` separately; no-career campaigns return career:false (bypass).
+2. **The seam guards landed (src/32).** `_decAccess(C)` consults the reader; `decRenderTab` and
+   `decInterstitialHTML` render every pending card readable (situation, options, teaching,
+   provenance, sources, Why expanders) with one focusable `tabindex="-1"` defer note per card
+   naming the missing date, authority, or both, and every native Decide button keyboard-focusable
+   with `aria-disabled="true"` + `aria-describedby` → the note; `_decWireCards` re-reads the law
+   at activation and moves focus to the explanation instead of resolving; direct `decResolve`
+   refuses before `_decApply`. `decOnResolve` is deliberately NOT gated — the queue initializes,
+   expires, and enqueues while locked (visible defer, never silent accumulation, war never
+   freezes). Text and semantic state carry the lock; color never does. Legacy/no-career renders
+   byte-identically (the lock branches emit zero bytes when the reader bypasses).
+3. **Focused proof: War Career 44/44 browser + 30/30 static** (ONE new row
+   `D408 MATTERS OF STATE + VISIBLE DEFER`; zero new walls). The row proves live: the built
+   game's routing literals unedited (openWarDept/_wdRefresh dispatch, `H0_DESK_TABS`
+   `["decisions", "Decisions"]`, `h0iDecisions(C)` → `decInterstitialHTML(C)`); legacy bypass
+   with zero lock artifacts and shipped resolve; fresh Rhodes career both-missing; Rhodes rungs
+   1-6 → General Command with latest receipt 1863 = date-only missing (defer copy names 1863);
+   the live clock set to 1864 grants nothing while `us-press-censorship` surfaces, expires at
+   1865, and re-enqueues — queue current while locked; both surfaces carry 15/15 aria-disabled
+   described Decide controls + 5/5 defer notes; a locked click moves focus to the explanation,
+   fires no afterChoose, mutates nothing; direct `decResolve` refuses; forged rank
+   (`Maj. Gen.`), forged `promotionCount:9`, and saved political booleans/scalars stay locked
+   and sanitize away through save/apply/init; a nashville private → Sergeant with an 1864 v1
+   receipt = authority-only missing (copy names authority, not the date); rung 7 completes the
+   pair → unlocked, `nationalDecisions:true`, zero lock artifacts, the unlock survives
+   save/apply/init with NO derived field persisted, and a wired Decide resolves exactly once
+   with shipped effects. Reads proven pure (byte-identical campaign before/after).
+4. **Plan-probe transition (24/24, names/order exact):** `D408_CONTRACT_ALLOWED` gains exactly
+   `src/32-decisions.js` (documented-history comment); focused-structure pin 42 → 43 literal
+   steps (+ the D408 row-name check); **plus one discovered-at-gate transition item, the D411
+   loot-pin class:** the changed-path allowlist predates the D412 HISTORY ARCHIVAL RULE, so the
+   five `legacy/{AUTONOMOUS-RUN,HANDOFF,START-HERE,V1-CHECKLIST,WAKE-UP}-ARCHIVE.md` targets the
+   mandated closeout archival writes were admitted with a documented-history comment (docs-lane
+   surface only; without this, every future canonical-docs closeout reds the two
+   changed-path steps). Moved hashes documented old→new: game
+   `7de51b310e09a710eb83ade276952203` → `9d7d91078dd8fceea847f1c2aff4dc5f`, srcTree
+   `a48ceb72a951d516404f5eec29ec2d2b` → `a4a46fbcff478c239de037f4a63105a4`, src/106
+   `91bd8cd3c80e59b510726e29a16c89bb` → `8e09ebbf56ba3433712f91936f438e5d`, focused probe
+   `5e856b3f21e371f867ce99f848c0a155` → `b7d6246e10357afc2a4e8f07f8c5dcea`. Never-move pins all
+   stand byte-identical: base `c9db83fa99230ffb95bdfdfe059f3fb9`, manifest
+   `7924da858de403cac58caabf8c9fcce8`, suite `4bcdc6f252389a4bfd6bed269b52f8f0`, Command
+   `8f12c49f7129b3a9be0203677822e048`, Command probe `5ffd40fd221179f2e01cad59ef43bf7d`,
+   src/37 `25c1226edb05f9a1186d0ae4f301656d`, dataTree `3250a3f555de5e648471897978646daf`,
+   T2/T3/Auto/After Action exact.
+
+**Bind evidence (each ONE mutation, rebuilt, focused 43/44 with ONLY the new D408 row red,
+byte-restored source AND generated md5s before rerun; red teeth never landed).** Bind A removed
+the aria-disabled/data-dec-locked/aria-describedby emission while decResolve stayed guarded →
+red exactly `tab defer marks moved: disabled:0, described:0`. Bind B set
+`_WC_POLITICAL_DATE_YEAR = 1863` → red exactly at the requiredYear-1864 tooth. Bind C accepted
+any reconstructed authority (`authority.ok` without the `general-command` id) → red exactly at
+`missingAuthority:false` on a rank-and-file career. Bind D gated the no-career path (career
+predicate → always-career) → red exactly `legacy access law moved`. Bind E deleted the direct
+`decResolve` guard → red exactly `direct decResolve applied while locked` (the UI activation
+guard alone held, proving the direct path is a separate tooth). Every restore returned src/32
+`922d6fd051c3ca310d0d2959e4018cfd`, src/106 `8e09ebbf56ba3433712f91936f438e5d`, and game
+`9d7d91078dd8fceea847f1c2aff4dc5f` md5-identically before the final green rerun.
+
+**Release proof.** Build `GATE OK`; War Career 44/44 + 30/30 static (artifact ok:true, zero
+pageerrors/realErrors, suite actual 130 with row 38); Command 94/94 with src/35 + probe
+byte-identical; plan 24/24 transitioned; adjacent probe-decisions 19/19, probe-desk 13/13,
+probe-full-campaign 4/4 (legacy surfaces byte-equivalent live); all twelve battle/arc plans
+green unchanged (136 rows); suite list exactly 130 with row 38 `war career`; 24 scenarios /
+54 schemas / register 1512 / coverage 24; `_SAVE_VER=1`; `git diff --name-only` exactly the
+declared allowlist. **Cabinet, appointments, resources, combat/balance, relationships, data,
+manifest, frozen base, T2/T3/Auto, After Action, save version, and Slice F stayed closed; no
+President/H0/legacy shell was edited (routing proven through the shared seam).** D398 remains
+the latest full release battery; `npm run vet:noreg` NOT run (not owed in D413). LANE-005
+returns to CONTRACT/unowned. **Exact next: no queued Slice-E work remains — D408 §17 is shipped
+at 44/44; Slice F stays closed; next Slice-E/political work only on Aaron's explicit selection.**
+
 ## D412 — DOCS-HYGIENE AUDIT + RESTRUCTURING: THE LIVE-HEAD SINGLE-SOURCE, HISTORY-ARCHIVAL, AND TRIMMED-READ-ORDER RULES ARE LAW; THE MANDATED SESSION-START COST DROPS ~90% — [AARON + CLAUDE CODE FABLE, LANE-006 DRIVE→CONTRACT] (2026-07-16)
 
 **Docs/tooling hygiene ONLY — no game, `src/`, `data/`, `tools/`, probe, or generated byte moved.**

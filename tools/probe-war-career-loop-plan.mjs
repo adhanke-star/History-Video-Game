@@ -73,7 +73,19 @@ const D408_CONTRACT_ALLOWED = new Set([
   // D411 documented exception (Aaron-approved in-take, 2026-07-16): the loot probe's
   // Rhodes detail card pinned 'Sources (4)'; the contracted end-bound source row makes
   // it 5, so that single stale pin moved with history (DECISIONS D411).
-  "tools/probe-loot-survival.mjs"
+  "tools/probe-loot-survival.mjs",
+  // D413 transition: the D408 §17 Matters-of-State runtime allowlist gains exactly the
+  // one §17-contracted seam file (DECISIONS D408 item 5 / D413; nothing else may move).
+  "src/32-decisions.js",
+  // D413 transition (discovered at gate, documented in DECISIONS D413): the D412
+  // HISTORY ARCHIVAL RULE moves each canonical doc's now-second prior head verbatim to
+  // legacy/<DOC>-ARCHIVE.md at EVERY release closeout — those archive targets postdate
+  // this allowlist's authoring and are docs-lane surface, so they are admitted here.
+  "legacy/AUTONOMOUS-RUN-ARCHIVE.md",
+  "legacy/HANDOFF-ARCHIVE.md",
+  "legacy/START-HERE-ARCHIVE.md",
+  "legacy/V1-CHECKLIST-ARCHIVE.md",
+  "legacy/WAKE-UP-ARCHIVE.md"
 ]);
 
 function read(path) {
@@ -867,12 +879,18 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
   // journey d9bc846734683c4ebcb00babbcc161ab -> 25c1226edb05f9a1186d0ae4f301656d,
   // focused 23e67503bed073d46f9f31ff3b715012 -> 5e856b3f21e371f867ce99f848c0a155;
   // command and commandProbe NEVER move.
+  // D413 transition history (D408 §17 Matters-of-State runtime): srcTree moved
+  // a48ceb72a951d516404f5eec29ec2d2b -> a4a46fbcff478c239de037f4a63105a4
+  // (src/106 political reader + src/32 seam guards), runtime
+  // 91bd8cd3c80e59b510726e29a16c89bb -> 8e09ebbf56ba3433712f91936f438e5d,
+  // focused 5e856b3f21e371f867ce99f848c0a155 -> b7d6246e10357afc2a4e8f07f8c5dcea;
+  // journey, command, and commandProbe did NOT move.
   const expected = {
-    srcTree:"a48ceb72a951d516404f5eec29ec2d2b",
-    runtime:"91bd8cd3c80e59b510726e29a16c89bb",
+    srcTree:"a4a46fbcff478c239de037f4a63105a4",
+    runtime:"8e09ebbf56ba3433712f91936f438e5d",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
     command:"8f12c49f7129b3a9be0203677822e048",
-    focused:"5e856b3f21e371f867ce99f848c0a155",
+    focused:"b7d6246e10357afc2a4e8f07f8c5dcea",
     commandProbe:"5ffd40fd221179f2e01cad59ef43bf7d"
   };
   for (const key of Object.keys(expected)) {
@@ -999,11 +1017,16 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
   }
   // D411: one reachability browser row (42 literal steps -> 43/43 with the static
   // preflight row) and one bounds-carry static wall (30/30) joined the D407 structure.
-  if ((focusedText.match(/\bstep\('/g) || []).length !== 42 || (focusedText.match(/\bcheck\(/g) || []).length !== 31) {
-    throw new Error("focused source row/static structure moved from 42 literal steps + 30 checks");
+  // D413: the ONE D408 §17 Matters-of-State browser row joined (42 -> 43 literal steps,
+  // 44/44 with the static preflight row); static walls stayed 30/30.
+  if ((focusedText.match(/\bstep\('/g) || []).length !== 43 || (focusedText.match(/\bcheck\(/g) || []).length !== 31) {
+    throw new Error("focused source row/static structure moved from 43 literal steps + 30 checks");
   }
   if (occurrences(focusedText, "step('D411 REACHABILITY + SOURCE-BOUNDED SERVICE'") !== 1) {
     throw new Error("focused D411 reachability row moved");
+  }
+  if (occurrences(focusedText, "step('D408 MATTERS OF STATE + VISIBLE DEFER'") !== 1) {
+    throw new Error("focused D408 Matters-of-State row moved");
   }
   for (const name of [
     "D406: default, legacy, and excluded careers contribute zero — commandLeadership is byte-identical",
@@ -1113,8 +1136,11 @@ step("BASELINES + LANE", () => {
   // 502aee3fc5867b970225a59c06cd6102 -> 7de51b310e09a710eb83ade276952203 and
   // dataTree b0d7f440836b60a4f18401b2d7b03f48 -> 3250a3f555de5e648471897978646daf;
   // base, manifest, and suite NEVER move.
+  // D413 transition history (D408 §17 runtime): game moved
+  // 7de51b310e09a710eb83ade276952203 -> 9d7d91078dd8fceea847f1c2aff4dc5f;
+  // dataTree, base, manifest, and suite did NOT move.
   const expectedHashes = {
-    game:"7de51b310e09a710eb83ade276952203",
+    game:"9d7d91078dd8fceea847f1c2aff4dc5f",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     dataTree:"3250a3f555de5e648471897978646daf",
     manifest:"7924da858de403cac58caabf8c9fcce8",
@@ -1491,13 +1517,19 @@ step("REACHABILITY BASELINES", () => {
   // runtime adc2dd9583c85cde86bbfb142cb6d666 -> 91bd8cd3c80e59b510726e29a16c89bb,
   // journey d9bc846734683c4ebcb00babbcc161ab -> 25c1226edb05f9a1186d0ae4f301656d,
   // focused 23e67503bed073d46f9f31ff3b715012 -> 5e856b3f21e371f867ce99f848c0a155.
+  // D413 transition history — the D408 §17 runtime moved exactly the reader/seam/proof
+  // surface: game 7de51b310e09a710eb83ade276952203 -> 9d7d91078dd8fceea847f1c2aff4dc5f,
+  // srcTree a48ceb72a951d516404f5eec29ec2d2b -> a4a46fbcff478c239de037f4a63105a4,
+  // runtime 91bd8cd3c80e59b510726e29a16c89bb -> 8e09ebbf56ba3433712f91936f438e5d,
+  // focused 5e856b3f21e371f867ce99f848c0a155 -> b7d6246e10357afc2a4e8f07f8c5dcea;
+  // dataTree and journey did NOT move.
   const expected = {
-    game:"7de51b310e09a710eb83ade276952203",
+    game:"9d7d91078dd8fceea847f1c2aff4dc5f",
     dataTree:"3250a3f555de5e648471897978646daf",
-    srcTree:"a48ceb72a951d516404f5eec29ec2d2b",
-    runtime:"91bd8cd3c80e59b510726e29a16c89bb",
+    srcTree:"a4a46fbcff478c239de037f4a63105a4",
+    runtime:"8e09ebbf56ba3433712f91936f438e5d",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
-    focused:"5e856b3f21e371f867ce99f848c0a155"
+    focused:"b7d6246e10357afc2a4e8f07f8c5dcea"
   };
   for (const key of Object.keys(expected)) {
     if (hashes[key] !== expected[key]) throw new Error("D411 shipped baseline moved: " + key + " " + hashes[key]);
