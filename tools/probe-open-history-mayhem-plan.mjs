@@ -310,11 +310,11 @@ step("LANE", () => {
   const lane = section(coord, "### LANE-007 · open-history-mayhem", "\n---");
   const owner = (lane.match(/- \*\*Owning tool:\*\* ([^\n]+)/) || [null, ""])[1];
   const state = (lane.match(/- \*\*State:\*\* ([^\n]+)/) || [null, ""])[1];
-  const planning = owner.includes("ChatGPT/Codex") &&
-    state.startsWith("DRIVE for a MODE-ARCHITECTURE PLANNING SLICE");
+  const sliceADrive = owner.startsWith("ChatGPT/Codex 5.6 Sol Ultra TOP LOOP") &&
+    state.startsWith("DRIVE for Slice A only — Slice B remains closed");
   const released = owner.startsWith("unowned") &&
     state.startsWith("CONTRACT — D417 planning shipped");
-  if (!planning && !released) {
+  if (!sliceADrive && !released) {
     throw new Error("LANE-007 state moved: " + state);
   }
   mustInclude(lane, [
@@ -332,7 +332,13 @@ step("LANE", () => {
       "**Resume pointer:** exact next is Slice A"
     ], "released lane");
   }
-  return { mode:released ? "released" : "planning", owner:normalize(owner), state:normalize(state) };
+  if (sliceADrive) {
+    mustInclude(lane, [
+      "Runtime Slice A acceptance criteria",
+      "**Resume pointer:** implement Slice A exactly; Slice B remains closed"
+    ], "Slice A DRIVE lane");
+  }
+  return { mode:released ? "released" : "slice-a-drive", owner:normalize(owner), state:normalize(state) };
 });
 
 writeFileSync(OUTFILE, JSON.stringify(result, null, 2) + "\n");
