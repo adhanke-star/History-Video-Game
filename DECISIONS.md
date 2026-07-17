@@ -6,6 +6,44 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D416 — HISTORICAL AND MAYHEM ARE SEPARATE RULESETS; MAYHEM UNLOCKS ALL HISTORICAL GAMEPLAY GUARDRAILS AND CARRIES NO MORAL GRADE — [AARON] (2026-07-17)
+
+Aaron explicitly superseded D382's universal surrender/no-quarter consequence-only restriction
+before any runtime landed: "unlock all historical guardrails" and make the unlocked experience a
+friendly, high-energy, Borderlands-like alternate-history sandbox with no judgment mode. The
+earlier LANE-007 research draft was uncommitted and removed; the pushed `41b6051` ledger take stays
+in history but its acceptance contract no longer governs forward work.
+
+The ratified architecture is two campaign-scoped rulesets inside the existing single game:
+
+- **Historical** preserves the shipped teaching wargame, sourced history, labeled divergence,
+  period/content locks, dignity exclusions, and the prior consequence-only/no-reward treatment.
+- **Mayhem** is full-authority alternate history. Previously excluded people, battles, sides,
+  technologies, policies, actions, and outcomes may be authored and played. Declared Mayhem
+  actions — including surrender/no-quarter/atrocity branches — may award score, casualty credit,
+  victory/objective progress, enemy-will changes, resources, loot, promotion, reputation,
+  achievements, and side/faction/identity-tag advantages. They need not be symmetrical,
+  historically plausible, citation-gated, or steered back toward the documented outcome.
+- **No judgment** means Mayhem does not issue a moral or plausibility GPA. It reports the rules,
+  consequences, rewards, and the player's timeline. Historical comparison is optional and off by
+  default. The ruleset is labeled at the campaign/save/AAR level so fiction is not silently sold
+  as Verified history; that is product truth, not a moral restriction.
+
+Challenge, realism, and play-style emphasis remain independent axes. The durable technical plan
+must use an immutable campaign-owned ruleset (legacy/malformed saves resolve Historical), fork a
+named timeline rather than convert Mayhem back into Historical, and reuse the existing campaign,
+save, tactical, divergence, wildcard, result, and AAR owners. D74 remains an engineering rule:
+one visible data-driven effect/result pipeline, not scattered secret battle hacks. It no longer
+forbids explicit Mayhem-only score, casualty, or outcome effects. Identity/faction asymmetry uses
+composable authored tags and powers rather than a single global biological race scalar, which
+preserves the requested racial/identity-specific advantages while keeping the system inspectable
+and extensible. `Borderlands-like` is tone direction only; shipped names/assets remain original.
+
+This decision is a planning unlock, not runtime authorization. LANE-007 is renamed
+`open-history-mayhem`; its first deliverable is a bind-tested dual-mode design and phased runtime
+ladder. The surrender/no-quarter arc becomes the first content slice that must prove Mayhem's
+new scoring/reward/tag authority while Historical remains unchanged.
+
 ## D415 — STARTUP TOKEN-EFFICIENCY AUDIT: SESSIONSTART HOOK CUT ~90%, ONE STALE MODEL REF FIXED — [AARON + CLAUDE CODE] (2026-07-17)
 
 The global SessionStart hook (fires on startup/resume/clear/AND compact) was dumping full per-lane Resume-pointer + State paragraphs from `COORDINATION.md` — measured 23,415 chars (~6k tokens) per firing across 6 lanes, repeating on every compact in a long session. Hook now prints lane header + Owning-tool/State lines truncated to 160 chars each — 2,309 chars, ~90% smaller; the mandatory full-lane read (unchanged) still supplies full detail. `.github/copilot-instructions.md` had a stale "5.5 in Codex"/Claude-primary line predating D336/D414; corrected. No other fix rose to the bar: the four AI-entrypoint files' duplicated read-order block is necessary (each tool reads only its own entrypoint); `OPUS-PLAYBOOK.md`/`AGENTS.md`/`START-HERE.md`/`AUTONOMOUS-RUN.md` carried no live inefficiency. Docs + global settings only; build gate re-run byte-identical.

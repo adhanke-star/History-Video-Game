@@ -1484,143 +1484,107 @@ next green commit and confer through this ledger instead of permitting simultane
   to CONTRACT/unowned.
 - **Last-touched commit:** the LANE-006 take commit (this edit).
 
-### LANE-007 · surrender-consequences — **DRIVE (planning contract only)**
+### LANE-007 · open-history-mayhem — **DRIVE (planning contract only)**
 
 - **Owning tool:** ChatGPT/Codex (5.6 Sol Ultra TOP LOOP). Read-only helpers may inventory
-  seams, sources, and probe pins; historical adjudication, architecture, acceptance law,
-  accessibility/dignity judgment, integration boundaries, bind review, docs, and commits stay
-  with the TOP LOOP. No simultaneous edits by any provider.
-- **State:** DRIVE for the D382 item-5a PLANNING CONTRACT only. This committed ledger entry is
-  the contract for the planning slice; runtime, data, manifest, suite, generated-game, combat,
-  scoring, and save-version movement remain excluded until the resulting design + plan probe are
-  green, committed, pushed, and this lane is released. D382's four system-integrated teaching
-  threads remain immediately after this lane and each retains its own required D74-clean spec;
-  bounding the surrender/no-quarter arc first is decomposition of item 5, not a reorder.
-- **Lane adjudication:** open LANE-007 rather than reuse another owner. LANE-003 is the completed
-  battle ladder and Cold Harbor stays deferred; LANE-005 is the shipped War Career spine through
-  Slice E and Slice F stays closed; LANE-002 5b remains mechanical fill-in work. This lane must
-  consume the existing tactical-surrender, POW/cartel, irregular-war, press/morale, human-cost,
-  result, and AAR seams without creating a parallel battle ladder, second POW ledger, second
-  campaign resolver, or replacement score system.
+  seams and probe pins. Architecture, mode authority, balance, UX/accessibility, integration,
+  bind review, docs, and commits stay with the TOP LOOP. No simultaneous edits by any provider.
+- **State:** DRIVE for a MODE-ARCHITECTURE PLANNING SLICE only. Runtime, data, manifest, suite,
+  generated-game, combat, scoring, and save-version movement remain excluded until the design
+  and plan probe are green, committed, pushed, and this lane is released.
+- **Supersession:** Aaron's 2026-07-17 direction supersedes D382's universal consequence-only /
+  never-scored / dignity-lock interpretation and the LANE-007 contract committed at `41b6051`
+  before any runtime or red probe teeth landed. The uncommitted surrender research draft was
+  removed. Pushed history remains intact; D416 and this lane are the forward law.
 - **Working boundary:** clean Desktop checkout at
-  `b9356a618e292e155dc94c03698b5a8c3788836f`, equal to `origin/main`, as explicitly named by
-  Aaron's D414/D415 opener. The older retained D398/D413 recovery-path warnings describe a
-  superseded recovery interval; tracked files in this checkout are materialized and hash-verified.
-- **Design law:** DECISIONS D382 item 5 · `docs/design/e49-surrender-straggler-design.md`
-  (D255-D273 universal E49/E53/E54 surrender/capture law) · D161 prisoner-exchange/cartel
-  collapse · D175 hard-war civilian-protection law · D177 irregular-war/reprisal law · D190
-  human-cost-with-gravity readout · the Appomattox research packet's surrender-is-teaching,
-  never-scored dignity line · D74/D92 no-fudge law · D153/D178 anti-tokenization and source
-  honesty · D356 Contract Relay · D412 live-head/history rules. Fort Pillow remains
-  teaching-only and may never become a playable scenario, score target, spectacle, or reward.
+  `41b6051d2b7e4b7473dc912e267048e260fa9657`, equal to `origin/main`.
+- **Design law:** Aaron's 2026-07-17 override + DECISIONS D416 · `GRAND-STRATEGY-PLAN.md` §§0,
+  5-6, 9-11, 27 (one engine, strictness independent from challenge, full sandbox) · D382's
+  procedural/timeline-gallery direction as superseded by D416 · D74's single-engine discipline
+  as an engineering law, not a Historical content lock · D92 truthfulness only for claims
+  presented as history · D356 Contract Relay · D412 live-head/history rules.
 - **Acceptance criteria (planning slice, in full):**
-  1. Run a fresh citation-grade research/verify pass and commit
-     `docs/design/surrender-no-quarter-research.md`. It must cover battlefield surrender and
-     terms, parole versus detention, command/officer capitulation, camp mortality, the Dix-Hill
-     cartel and its 1863 Black-prisoner fault line, Lieber/retaliation law, historically used
-     no-quarter language/orders, Fort Pillow and "Remember Fort Pillow," reprisal cycles, and
-     the postwar memory trap. Every shipped factual claim needs two independent sources for
-     Verified or an explicit Inferred/Disputed label; source conflicts remain visible.
-  2. Inventory exact live seams and ownership by file + symbol. At minimum: T0/T8/T25 tactical
-     captured/missing ledgers and display; T2 result carry; T3 officer fate; D161 `C.prisoners`;
-     D177 `C.irregularWar`; press, morale, human cost, President lifecycle/render, victory, and
-     After Action. Record the present collision honestly: T25 actual captures are ephemeral,
-     while D161 estimates detained intake from aggregate `B.casualties`; no plan may silently
-     count both or call either an individual prisoner registry.
-  3. Commit `docs/design/surrender-no-quarter-design.md` as the one runtime contract. It must
-     define one canonical mutable owner for every new consequence fact and narrow adapters into
-     existing owners. Compare reuse/extension options before choosing; prohibit a second POW
-     ledger, second tactical surrender algorithm, second result resolver, duplicate infamy map,
-     or name/rank/proximity inference. Existing E49/E53/E54 tactical surrender remains the
-     universal model and changes only if the spec proves an exact missing seam.
-  4. Define the full arc without collapsing distinct states: battlefield offer, acceptance or
-     refusal, terms, parole, detention/camp transfer, exchange/return, death in captivity,
-     command/officer surrender, and no-quarter issuance/consequence. Every transition must name
-     its authority, deterministic id/receipt, retry/load behavior, and fail-closed handling for
-     absent, stale, duplicate, malformed, wrong-side, nonparticipant, or forged state.
-  5. **NO-QUARTER IS CONSEQUENCE-ONLY AND NEVER SCORED.** The contract must carry the unique
-     token `SURRENDER_CONSEQUENCE_BIND:NO_QUARTER_NEVER_SCORED`. No order, refusal, infamy,
-     massacre, prisoner count, camp death, reprisal, or teaching completion may add score,
-     victory credit, objective/phase points, enemy-will credit, casualty-exchange/GPA credit,
-     merit, reputation, loot, promotion, resource income, or achievement reward. If the order
-     can change combat inputs so opponents fight longer and the issuer suffers more, define an
-     explicit causal/scoring firewall so extra enemy harm can never improve the issuer's graded
-     outcome. Existing ordinary battle-result law remains byte-equivalent when the arc is inactive.
-  6. The consequence model must make the order self-damaging rather than a power option: visible
-     discipline, morale, political/press, civilian-harm, reprisal, and durable infamy costs, with
-     enemies expecting no quarter resisting rather than becoming easier points. Both sides are
-     governed by one rule. No racialized faction bonus, per-battle massacre switch, scripted
-     prisoner count, direct casualty writer, winner override, surrender-probability fudge, or
-     Fort-Pillow-specific combat branch is legal.
-  7. Preserve history and dignity. The Confederacy's refusal to accord equal prisoner status to
-     Black U.S. soldiers remains the cartel-collapse cause, not neutral administrative friction;
-     both sides' camp suffering may be taught without false equivalence. Fort Pillow is named
-     plainly as a massacre and stays teaching-only. Surrender at Appomattox remains an unscored
-     teaching sequence with Black agency and the reconciliation-memory critique intact.
-  8. Define the smallest independently shippable runtime ladder. The first runtime slice must be
-     a narrow vertical consequence receipt/readout that reuses real captures without changing
-     combat, scoring, or `_SAVE_VER`; battlefield offers, officer command surrender, custody/
-     parole, and no-quarter choice land only in later separately gated slices when their owners
-     and scoring firewall are executable. Each slice names its exact files, exclusions, focused
-     browser/static rows, adjacent probes, and byte-identity expectations.
-  9. Save law is additive, eager-on-init/load, deterministic, idempotent, bounded, and fail
-     closed at `_SAVE_VER=1`; derived access/score exclusions are recomputed, never trusted from
-     saved booleans or scalars. If a version bump is ever unavoidable, HALT and require an
-     explicit migration contract with E41/E50/save-slot coverage in the same later runtime take.
-  10. Include the four D382 persona lenses (newcomer, history buff/teacher, wargame veteran,
-      game-theory min-maxer), with a success path and exploit guard for each. All offers, defers,
-      refusals, terms, and consequence explanations must be keyboard-operable, screen-reader
-      legible, non-color-only, reduceMotion-safe, readable at 200% zoom, and usable without
-      making atrocity content compulsory or spectacular.
-  11. Planning edits are restricted to
-      `docs/design/surrender-no-quarter-{research,design}.md`,
-      `tools/probe-surrender-no-quarter-plan.mjs`, and canonical closeout docs under D412
-      (`COORDINATION.md`, append-only `DECISIONS.md`, `HANDOFF.md`, `RUN-LOG.md`, `START-HERE.md`,
-      `V1-CHECKLIST.md`, `WAKE-UP.md`, plus byte-verbatim legacy head archives only when the
-      history rule requires them). No `src/`, `data/`, manifest, suite, generated HTML, frozen
-      base, REVIEW-QUEUE, existing probe, or other-lane edit is allowed in this planning slice.
-  12. Freeze the take baselines: 24 scenarios, schema 54, Army Register 1512, coverage 24,
-      suite 130 with War Career row 38, sweep 24, `_SAVE_VER=1`; game
-      `9d7d91078dd8fceea847f1c2aff4dc5f`; base `c9db83fa99230ffb95bdfdfe059f3fb9`;
-      manifest `7924da858de403cac58caabf8c9fcce8`; suite
-      `4bcdc6f252389a4bfd6bed269b52f8f0`; T25
-      `5e348e732f6f32c6baac2b74969a1a2d`; field probe
-      `aab985c747bc191bdb7753c920a2a3af`; attacker-parity probe
-      `4930b2e4d42f7648f817e669bc0af8c1`; D161 runtime/data/probe
-      `8402b2aad6c5adfb022788d79c3983d5` / `bf5453a152b071b6bcb38909c085470e` /
-      `d1c2e7d1d2a1186442ef1b7fd0cf0388`. Planning must move none of them.
-- **Probe design:** add `tools/probe-surrender-no-quarter-plan.mjs`, filesystem-first,
-  fail-closed, suite-excluded, planning-mode green, and dual-mode only after the design names a
-  later runtime marker + allowlist. It writes
-  `tools/shots/probe-surrender-no-quarter-plan.json` with exact ordered steps: SLATE + SCOPE,
-  RESEARCH + SOURCES, SEAM INVENTORY, STATE OWNERSHIP, TERMS + CUSTODY, NO-QUARTER CONSEQUENCES,
-  NEVER SCORED, HISTORY + DIGNITY, SAVE + SANITATION, ACCESSIBILITY + PERSONAS, IMPLEMENTATION
-  LADDER, EXCLUSIONS + BASELINES, and LANE. It pins the hashes/counts above, rejects any
-  planning-scope runtime/data/generated movement, and parses this lane by its FIRST State/Owner.
-  Negative bind: change only `NO_QUARTER_NEVER_SCORED` to `NO_QUARTER_SCORED`; exactly NEVER
-  SCORED must red with exit 1, every other step green; inverse restore must return design and
-  probe md5-identically before the final 13/13 green run. Red teeth never land in git.
+  1. Commit `docs/design/open-history-mayhem-mode-design.md` as the one dual-mode contract. It
+     defines `historical` and `mayhem` as campaign-scoped rulesets, not difficulty, realism,
+     play-style emphasis, or the existing `altHistoryEmergentOnly` preference.
+  2. Historical mode preserves the currently shipped teaching experience and D382 restrictions:
+     cited history, labeled divergence, source-period availability, existing dignity exclusions,
+     and consequence-only/no-reward handling for surrender/no-quarter and atrocity content.
+  3. **Mayhem unlocks every historical gameplay guardrail.** It may expose previously blocked
+     battles, people, sides, eras, technologies, policies, surrender/no-quarter/atrocity actions,
+     and outcome branches; it need not converge on, remain plausible beside, or balance itself
+     symmetrically against the documented war. Declared Mayhem actions may award score, victory/
+     objective progress, casualty credit, enemy-will effects, resources, loot, promotion,
+     reputation/notoriety, achievements, and side/faction/identity-tag advantages. The design must
+     carry `MAYHEM_MODE_BIND:DECLARED_ACTIONS_MAY_SCORE_CREDIT_AND_GRANT_TAGGED_ADVANTAGE`.
+  4. Identity/faction asymmetry uses explicit composable tags (`side`, `faction`, `unit`,
+     `identity`, `leader`, `policy`, `timeline`) and authored abilities, not one global biological
+     race scalar. Racially or culturally identified formations may receive unique Mayhem powers;
+     the tag model keeps them inspectable, extensible, and mode-contained.
+  5. Mayhem is the no-judgment, high-agency, friendly/pulp experience Aaron requested. Its AAR
+     may grade tactics, strategy, rewards, chaos, or style, but carries no moral GPA and no
+     plausibility report card. Historical comparison is optional and off by default. One stable
+     mode label on chooser/save/AAR is sufficient; invented content is never silently presented
+     as a Verified historical claim. `Borderlands-like` is an internal tone reference only;
+     shipped names, copy, art, and assets remain original.
+  6. Choose one immutable campaign-owned authority, provisionally `C.ruleset = {id, version}`.
+     The mode is selected at new-campaign start, serialized with the campaign, visible in every
+     save/timeline surface, and cannot drift through `G.settings`. Legacy, absent, malformed, and
+     forged values resolve to Historical. A player may enter Mayhem from an existing run only by
+     forking a new named timeline; no Mayhem-to-Historical conversion is legal.
+  7. Inventory and reuse exact live owners: frozen-base `startCampaign`/`campaignAdvance`/
+     `serializeSave`; `src/105-save-guard.js`; `src/91-save-slots.js`; H0 menu/muster; existing
+     wildcard/divergence/play-style modules; T0/T2/T11 tactical launch; T25 surrender; victory;
+     After Action/H0 AAR; and the Chronicle/timeline seam. Do not build a second campaign,
+     battle engine, save envelope, result resolver, wildcard catalog, or AAR shell.
+  8. Keep D74's architectural value: one declared effect pipeline and one combat/result engine.
+     Historical supplies the unchanged baseline; Mayhem supplies visible data-driven abilities
+     and modifiers through a central allowlisted API. Hidden per-battle branches stay illegal,
+     while explicit Mayhem effects may modify any contracted input or result field named in item 3.
+  9. Define campaign, procedural, custom-battle, and free-battle behavior. Campaign mode is
+     immutable per named timeline; standalone launches receive an explicit ruleset choice.
+     Imported content may reference allowlisted action/effect ids but may never execute arbitrary
+     code. Mayhem content does not enter the canonical historical scenario registry merely to
+     become playable.
+  10. Include the four D382 personas and a keyboard/screen-reader/200%-zoom/high-contrast/
+      reduceMotion test matrix. The picker must use real controls, text plus state (not color),
+      visible focus, and direct plain-language descriptions. Mayhem is neither hidden, shamed,
+      nor described as an easier/superior reward mode.
+  11. Define a separately shippable ladder: A mode kernel + picker + save/timeline isolation;
+      B central Mayhem effect schema/API; C one surrender/no-quarter vertical slice proving the
+      newly allowed score/casualty/reward/tag authority; D procedural/custom unlocks; E no-judgment
+      AAR + Chronicle; F content packs and balance. Every slice names exact owners, exclusions,
+      focused gates, Historical byte-equivalence proof, cross-save A/B, and HALT conditions.
+  12. Planning edits are restricted to the design, `tools/probe-open-history-mayhem-plan.mjs`,
+      and D412 canonical closeout docs. No `src/`, `data/`, manifest, suite, generated HTML,
+      frozen base, existing probe, REVIEW-QUEUE, or other lane may move. Freeze: 24 scenarios,
+      schema 54, Army Register 1512, coverage 24, suite 130 with War Career row 38, sweep 24,
+      `_SAVE_VER=1`; game `9d7d91078dd8fceea847f1c2aff4dc5f`; base
+      `c9db83fa99230ffb95bdfdfe059f3fb9`; manifest `7924da858de403cac58caabf8c9fcce8`;
+      suite `4bcdc6f252389a4bfd6bed269b52f8f0`.
+- **Probe design:** add `tools/probe-open-history-mayhem-plan.mjs`, filesystem-first,
+  fail-closed, suite-excluded, planning-mode green. It writes
+  `tools/shots/probe-open-history-mayhem-plan.json` with exact ordered steps: SCOPE +
+  SUPERSESSION, MODE MATRIX, MAYHEM AUTHORITY, IDENTITY + FACTION TAGS, NO-JUDGMENT UX,
+  STATE + SAVE ISOLATION, SEAM OWNERSHIP, SINGLE ENGINE, SANDBOX SURFACES, ACCESSIBILITY +
+  PERSONAS, IMPLEMENTATION LADDER, EXCLUSIONS + BASELINES, and LANE. Negative bind: change only
+  `DECLARED_ACTIONS_MAY_SCORE` to `DECLARED_ACTIONS_NEVER_SCORE`; exactly MAYHEM AUTHORITY must
+  red with exit 1, every other step green; byte-identical restore, then final 13/13 green.
 - **Probe-pin preflight:** all thirteen existing coordination-sensitive plan probes read
-  `COORDINATION.md`; LANE-007 is appended after LANE-006 so the LANE-003 and LANE-005 slices and
-  first State/Owner matches remain untouched. Rerun and read all thirteen after this take and
-  again after release. The War Career plan's dirty-tree allowlist predates LANE-007, so it is a
-  clean-boundary gate after commits, not a dirty-tree planning gate; do not broaden its contract.
-- **Planning gate:** `node --check tools/probe-surrender-no-quarter-plan.mjs`; `node
-  tools/build.mjs` -> `GATE OK` with generated HTML byte-identical; new plan 13/13 + JSON
-  readback; the declared bind + byte-identical restore + final 13/13; all thirteen existing
-  coordination plan probes green at the clean committed boundary; `node tools/vet-no-regression.mjs
-  --list` stays 130; `git diff --check` clean. No browser or full `npm run vet:noreg` battery is
-  owed by this docs/tool-only planning slice.
-- **Resume pointer:** finish the citation/source pass; author the research packet, design, and
-  plan probe from live seams; prove the one-token bind; run the planning gate; sync canonical
-  heads under D412; commit + push the green planning slice; release LANE-007 to CONTRACT/unowned
-  with the first runtime slice named exactly. Do not begin runtime in the planning commit.
-- **Last-touched commit:** this ledger-only DRIVE take from clean pushed
-  `b9356a618e292e155dc94c03698b5a8c3788836f`.
-- **History:** opened 2026-07-17 by ChatGPT/Codex after D413 completed D382 item 4 and D414/D415
-  changed routing/startup efficiency only. D382 item 5a is the exact next ratified work; no
-  reorder was found or logged. The planning lock is deliberately separate from the completed
-  battle ladder, War Career, docs-hygiene, and open prosopography lanes.
+  `COORDINATION.md`; preserve their first State/Owner parsing and rerun/read all thirteen after
+  the planning release. The War Career plan remains a clean-boundary gate; do not broaden it.
+- **Planning gate:** `node --check tools/probe-open-history-mayhem-plan.mjs`; build `GATE OK`
+  with generated HTML byte-identical; new plan 13/13 + JSON readback; declared bind with
+  byte-identical restore + final 13/13; all thirteen existing coordination plan probes green at
+  the clean committed boundary; suite list stays 130; `git diff --check` clean. No browser or
+  full `npm run vet:noreg` battery is owed by this docs/tool-only planning slice.
+- **Resume pointer:** write the dual-mode design and plan probe from live seams; prove the bind;
+  run the planning gate; sync canonical heads; commit + push; release LANE-007 to CONTRACT/
+  unowned with Slice A named exactly. Do not begin runtime in the planning commit.
+- **Last-touched commit:** the superseding ledger take from clean pushed `41b6051`.
+- **History:** opened as surrender-consequences at `41b6051`; Aaron superseded its core rule
+  before implementation. D416 converts the same lane to the wider mode architecture so the
+  surrendered idea becomes one later Mayhem validation slice rather than the universal law.
 
 ---
 
