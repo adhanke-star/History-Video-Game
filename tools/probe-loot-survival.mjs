@@ -798,7 +798,7 @@ const SETUP = `(() => {
       var rhodesDetail=root.querySelector('#ssPersonDetailCard');
       if(!rhodesDetail || rhodesDetail.getAttribute('data-ss-detail-pid')!=='person_bullrun_us_2ri_rhodes') throw new Error('Rhodes detail did not select');
       var rtxt=rhodesDetail.textContent;
-      if(rtxt.indexOf('2nd Rhode Island Infantry')<0 || rtxt.indexOf('Company D')<0 || rtxt.indexOf('First Bull Run')<0 || rtxt.indexOf('Source note:')<0 || rtxt.indexOf('Sources (4)')<0) throw new Error('Rhodes detail source/bio/unit payload missing: '+rtxt);
+      if(rtxt.indexOf('2nd Rhode Island Infantry')<0 || rtxt.indexOf('Company D')<0 || rtxt.indexOf('First Bull Run')<0 || rtxt.indexOf('Source note:')<0 || rtxt.indexOf('Sources (5)')<0) throw new Error('Rhodes detail source/bio/unit payload missing: '+rtxt);   // D411: 4 -> 5 — the exactly-named "All for the Union" end-bound source row landed with the sourced 1861-1865 bounds (stale-pin bump approved by Aaron in the D411 take, 2026-07-16; same idiom as the D394 Five Forks stale-count fix).
       var rimg=rhodesDetail.querySelector('.ss-person-portrait img');
       if(!rimg || (rimg.getAttribute('src')||'').indexOf('data:image/jpeg')!==0 || (rimg.getAttribute('alt')||'').indexOf('officer uniform')<0) throw new Error('Rhodes portrait did not render from embedded JPEG');
       var mccarterCard=cardByPid(root,'person_fredericksburg_us_116pa_mccarter');

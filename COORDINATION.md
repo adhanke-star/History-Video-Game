@@ -749,11 +749,39 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
-### LANE-005 · war-career-loop — **DRIVE (D411 reachability runtime; Claude Code Fable)**
+### LANE-005 · war-career-loop — **CONTRACT (D411 reachability runtime shipped; D408 §17 runtime unowned)**
 
-- **Owning tool:** Claude Code Fable (top loop). No simultaneous edits by any other provider
-  while this lock is held.
-- **State:** DRIVE — runtime take from clean starting SHA
+- **Owning tool:** none. Owner: none. No simultaneous edits by any provider.
+- **State:** CONTRACT — released from ledger take
+  `acb8ac5034560414d283a1a673ff12c8248b6435`, based on clean D410 boundary
+  `98f6370c9dec4a9b313f2a019798de58b80d37bb`. D411 shipped the D410-contracted reachability
+  runtime exactly (design §18 + DECISIONS D410 the law; DECISIONS D411 the record): sourced
+  Rhodes bounds `serviceStart:1861, serviceEnd:1865` with the one verified "All for the Union"
+  end-bound source row; the fail-closed src/37 bounds carry (valid pair → own-property bounds,
+  NO `serviceYear` pin; every other record byte-for-byte today's single-`year` law; malformed
+  bounds drop, never widen); six frozen Rhodes `_WC_TIMELINE_ASSIGNMENTS_V1` rows with every
+  assignment id proven equal to its pin; War Career **43/43** browser + **30/30** static;
+  Command 94/94 byte-identical; the declared plan-probe transition at 24/24 with names/order
+  exact. Moved hashes (documented in D411 and the plan probe): HTML →
+  `7de51b310e09a710eb83ade276952203`, dataTree → `3250a3f555de5e648471897978646daf`, srcTree →
+  `a48ceb72a951d516404f5eec29ec2d2b`, src/106 → `91bd8cd3c80e59b510726e29a16c89bb`, src/37 →
+  `25c1226edb05f9a1186d0ae4f301656d`, focused probe → `5e856b3f21e371f867ce99f848c0a155`.
+  Never-move pins all stand; suite 130 with War Career row 38; 24/54/1512/24; `_SAVE_VER=1`;
+  D398 remains the latest full release battery; `npm run vet:noreg` was not run (not owed in
+  D411). Three byte-restored negative binds bit exactly their declared teeth. One documented
+  allowlist exception, Aaron-approved in-take: the loot probe's Rhodes detail pin moved
+  `Sources (4)` → `Sources (5)` with history (the contracted end-bound source row; DECISIONS
+  D411), loot back to 12/12 with its 1512 pins untouched. The D408 §17
+  political-date law is NOT implemented in D411. Preserve the sole `C.loot.journey` player
+  owner, separate `P.command` NPC owner, source/timeline receipt split,
+  one-credit/fate/handoff/save laws, safe-clone boundary, and every
+  no-combat/no-politics/no-simultaneous-edit lock.
+- **Resume pointer (D411 release):** take a fresh committed LANE-005 DRIVE lock to implement
+  D408 §17 unchanged (Matters of State; five byte-restored binds per §17) at 44/44; Slice F
+  stays closed. Work only in `/private/tmp/codex-vg-recovery-019f62fe`; the Desktop checkout
+  remains dataless.
+- **Prior take state (D411 DRIVE, retained history):** Owning tool was Claude Code Fable (top
+  loop), State DRIVE — runtime take from clean starting SHA
   `98f6370c9dec4a9b313f2a019798de58b80d37bb` (the D410 release boundary; all pinned hashes
   re-verified exact before this take).
 - **Take task:** D411 reachability runtime (D410 contract; D409 option 1, Aaron-approved

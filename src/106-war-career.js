@@ -72,6 +72,54 @@ var _WC_TIMELINE_ASSIGNMENTS_V1 = _wcDeepFreeze([{
   slotPid:"ss:chickamauga:US:us_lilly_battery:cmd",
   chainIndex:16, serviceStart:null, serviceEnd:null, serviceYear:1863,
   timelineGrade:"Colonel", provenance:"Inferred", label:"Your Timeline"
+},{
+  personId:"person_bullrun_us_2ri_rhodes",
+  sourceSlotPid:"ss:bullrun1:US:us_burnside:pvt",
+  scenarioId:"antietam", phaseId:"sunkenroad", side:"US",
+  unitId:"us_french", slot:"nco",
+  slotPid:"ss:antietam:US:us_french:nco",
+  chainIndex:9, serviceStart:null, serviceEnd:null, serviceYear:1862,
+  timelineGrade:"Sergeant", provenance:"Inferred", label:"Your Timeline"
+},{
+  personId:"person_bullrun_us_2ri_rhodes",
+  sourceSlotPid:"ss:bullrun1:US:us_burnside:pvt",
+  scenarioId:"vicksburg", phaseId:"forlorn-hope", side:"US",
+  unitId:"us_deg_battery", slot:"cmd",
+  slotPid:"ss:vicksburg:US:us_deg_battery:cmd",
+  chainIndex:14, serviceStart:null, serviceEnd:null, serviceYear:1863,
+  timelineGrade:"Captain", provenance:"Inferred", label:"Your Timeline"
+},{
+  personId:"person_bullrun_us_2ri_rhodes",
+  sourceSlotPid:"ss:bullrun1:US:us_burnside:pvt",
+  scenarioId:"gettysburg", phaseId:"day1", side:"US",
+  unitId:"us_hall_battery", slot:"cmd",
+  slotPid:"ss:gettysburg:US:us_hall_battery:cmd",
+  chainIndex:15, serviceStart:null, serviceEnd:null, serviceYear:1863,
+  timelineGrade:"Major", provenance:"Inferred", label:"Your Timeline"
+},{
+  personId:"person_bullrun_us_2ri_rhodes",
+  sourceSlotPid:"ss:bullrun1:US:us_burnside:pvt",
+  scenarioId:"chickamauga", phaseId:"the-woods", side:"US",
+  unitId:"us_lilly_battery", slot:"cmd",
+  slotPid:"ss:chickamauga:US:us_lilly_battery:cmd",
+  chainIndex:16, serviceStart:null, serviceEnd:null, serviceYear:1863,
+  timelineGrade:"Lt. Col.", provenance:"Inferred", label:"Your Timeline"
+},{
+  personId:"person_bullrun_us_2ri_rhodes",
+  sourceSlotPid:"ss:bullrun1:US:us_burnside:pvt",
+  scenarioId:"chattanooga", phaseId:"missionary-ridge", side:"US",
+  unitId:"us_hazen_mr", slot:"cmd",
+  slotPid:"ss:chattanooga:US:us_hazen_mr:cmd",
+  chainIndex:17, serviceStart:null, serviceEnd:null, serviceYear:1863,
+  timelineGrade:"Colonel", provenance:"Inferred", label:"Your Timeline"
+},{
+  personId:"person_bullrun_us_2ri_rhodes",
+  sourceSlotPid:"ss:bullrun1:US:us_burnside:pvt",
+  scenarioId:"nashville", phaseId:"redoubts-montgomery-hill", side:"US",
+  unitId:"us_r_battery", slot:"cmd",
+  slotPid:"ss:nashville:US:us_r_battery:cmd",
+  chainIndex:27, serviceStart:null, serviceEnd:null, serviceYear:1864,
+  timelineGrade:"Brig. Gen.", provenance:"Inferred", label:"Your Timeline"
 }]);
 
 function _wcText(v, max) {

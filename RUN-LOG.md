@@ -8,6 +8,48 @@ Aaron stopped the D161 full no-regression battery and directed that the big suit
 ## QUEUE-LOOP GATE CLARIFICATION — 2026-06-30 (D176)
 Aaron clarified during the D175 same-chat queue loop that the long audit must not run after every queued item. For explicit all-queue loops, even manifest/bridge/render/lifecycle/suite-enrollment slices ship on the focused per-item gate: build GATE OK, relevant importer/schema checks, `node --check`, focused probe, 1-3 adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is deferred until the end-of-queue planned-work batch/release checkpoint or an explicit Aaron request. The partial D175 `vet:noreg` run was stopped under this clarification after no red output through render-richness.
 
+## D411 WAR-CAREER REACHABILITY RUNTIME — shipped, lane released — 2026-07-16 (D411)
+
+- Took LANE-005 DRIVE (`acb8ac50…`) from the clean D410 boundary (`98f6370c…`) after re-verifying
+  every pinned hash exact, re-running the plan probe 24/24, re-running the read-only D410 fixture
+  green (ok:true, runId `run-us-d410-1`, rolls `196/204/264/380/855/688/736`, register 1512), and
+  re-verifying the "All for the Union" end-bound claim through the citation pipeline (exact
+  title/editor/imprint/ISBN 0-679-73828-2 confirmed; Rhodes lieutenant colonel commanding from
+  Feb 6, 1865, brevet colonel Apr 2, 1865, mustered out with the 2nd RI July 13, 1865).
+- Landed exactly the §18 surface: Rhodes `serviceStart:1861, serviceEnd:1865` + the one
+  exactly-named source row (all other record fields byte-identical); the src/37 cleaner validity
+  law (finite integers 1800-1900, start <= end, year inside) + the `_ssApplySoldierReplacements`
+  carry (valid pair → own-property bounds, NO `serviceYear` pin; the single-year literal
+  survives exactly once; malformed bounds drop, never widen); six frozen Rhodes
+  `_WC_TIMELINE_ASSIGNMENTS_V1` rows, every computed id proven equal to its pin.
+- Focused proof: ONE new browser row `D411 REACHABILITY + SOURCE-BOUNDED SERVICE` (register 1512,
+  Rhodes the only bounds carrier, six-shape malformed matrix, seven decisive victories → merit
+  28 / reputation 21 / six promotions / Brig. Gen. / general-command / latest receipt nashville
+  canonical 1864, source grade+OVR immutable, byte-idempotent sanitation, save roundtrip, zero
+  non-Rhodes movement) and ONE new static wall pinning the bounds-carry branch → War Career
+  **43/43** browser + **30/30** static, zero pageerrors/realErrors.
+- Plan probe transitioned within its declared scope only: contracted-not-landed → landed pins,
+  allowlist gains exactly the §18 runtime surface, focused structure 42 steps + 30 checks, moved
+  hashes documented old→new (HTML `7de51b31…`, dataTree `3250a3f5…`, srcTree `a48ceb72…`, 106
+  `91bd8cd3…`, 37 `25c1226e…`, focused `5e856b3f…`) — **24/24, names/order exact**; never-move
+  pins (base/manifest/suite/T2/T3/Auto/After Action/Command/Command probe) all stand.
+- Binds: A (source row removed, bounds kept) → focused 42/43 ONLY the new row red + plan
+  `SOURCE-BOUNDED SERVICE` red; B (cleaner accepts inverted pair as min/max window) → 41/43,
+  exactly the two new teeth red — the browser malformed case was strengthened mid-bind from a
+  year-outside shape to a swapped-pair shape so it genuinely bites ordering violations; C
+  (`serviceYear` pinned beside bounds) → 42/43 ONLY the new row red. Every restore byte-identical
+  (data `5b67f734…`, src/37 `25c1226e…`, HTML `7de51b31…`); red teeth never landed.
+- The first full battery caught one genuine collision: the loot probe's `UI D150` row pinned the
+  Rhodes detail card at `Sources (4)`; the contracted end-bound row renders 5. Surfaced to Aaron
+  mid-take; Aaron approved the one-token stale-pin bump (4 → 5, documented; D394 idiom). Loot
+  back to 12/12 with its 1512 pins untouched; the plan-probe take allowlist records the
+  exception.
+- Full focused battery green (build GATE OK; War Career 43/43+30/30; Command 94/94; plan 24/24;
+  loot 12/12; save slots 16/16; twelve battle/arc plans 136 rows unchanged; suite list exactly
+  130 with row 38). `npm run vet:noreg` NOT run (not owed). D408 §17 NOT implemented. LANE-005
+  released CONTRACT/unowned; exact next: the D408 §17 Matters-of-State runtime unchanged at
+  44/44.
+
 ## D410 WAR-CAREER REACHABILITY — planning contract shipped, lane released — 2026-07-16 (D410)
 
 - Aaron approved D409 option 1 (2026-07-16; approval line recorded verbatim in DECISIONS D410 and

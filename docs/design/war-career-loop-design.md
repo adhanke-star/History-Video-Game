@@ -1375,3 +1375,19 @@ AI, objective, reinforcement, balance, Command, T2/T3/Auto, After Action, relati
 save-version movement. No Slice F. No second career owner. No change to `_wcServiceWindowValid`
 or any validator's semantics. D410 itself edits only the planning allowlist (this document, the
 appended plan-probe steps, and canonical docs); if any gate cannot hold these locks, HALT.
+
+### D411 shipped (boundary note; the contract text above is retained unchanged)
+
+DECISIONS D411 (2026-07-16, Claude Code Fable, LANE-005 take
+`acb8ac5034560414d283a1a673ff12c8248b6435`) implemented this section exactly: the sourced Rhodes
+bounds with the one verified "All for the Union" end-bound source row, the fail-closed src/37
+adapter carry, the six frozen ladder rows with every assignment id proven equal to its pin, one
+focused reachability browser row (War Career **43/43**) and one bounds-carry static wall
+(**30/30**), and the declared plan-probe transition (24/24, names/order exact). The "Move at
+D411" pins above moved exactly once, documented in D411 and the plan probe: game →
+`7de51b310e09a710eb83ade276952203`, dataTree → `3250a3f555de5e648471897978646daf`, srcTree →
+`a48ceb72a951d516404f5eec29ec2d2b`, runtime → `91bd8cd3c80e59b510726e29a16c89bb`, journey →
+`25c1226edb05f9a1186d0ae4f301656d`, focused → `5e856b3f21e371f867ce99f848c0a155`; every
+never-move pin stands. Three byte-restored negative binds bit exactly their declared teeth. The
+§17 Matters-of-State runtime remains unimplemented and is the exact next take, unchanged, at
+**44/44**.

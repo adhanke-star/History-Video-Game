@@ -17,6 +17,8 @@
       "branch": "inf",
       "role": "private soldier",
       "year": 1861,
+      "serviceStart": 1861,
+      "serviceEnd": 1865,
       "provenance": "Verified",
       "team": {
         "side": "US",
@@ -80,6 +82,14 @@
           "url": "https://www.loc.gov/pictures/item/2019635483/",
           "type": "primary",
           "note": "Wartime portrait source; metadata has no known restrictions but depicts Rhodes as a later officer, not as a Bull Run private."
+        },
+        {
+          "title": "All for the Union: The Civil War Diary and Letters of Elisha Hunt Rhodes",
+          "author": "Elisha Hunt Rhodes; Robert Hunt Rhodes, ed.",
+          "repository": "Vintage Books (Vintage Civil War Library)",
+          "locator": "ISBN 0-679-73828-2",
+          "type": "primary",
+          "note": "Rhodes's diary runs from his June 1861 enlistment through the 2nd Rhode Island's 1865 muster-out, which he ended as the regiment's colonel."
         }
       ],
       "sourceNote": "RIHS verifies Rhodes enlisted as a private in the 2nd Rhode Island and served Bull Run; RI Heritage adds Company D; NPS places the regiment in Burnside's Brigade/Hunter's Division at Bull Run. Ratings stay neutral Inferred game calibration.",

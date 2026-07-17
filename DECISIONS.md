@@ -6,6 +6,104 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D411 — WAR CAREER REACHABILITY SHIPPED: THE SOURCED RHODES BOUNDS, THE FAIL-CLOSED ADAPTER CARRY, AND THE SIX-ROW NASHVILLE-1864 LADDER ARE RUNTIME LAW — [CLAUDE CODE FABLE, LANE-005 DRIVE→CONTRACT] (2026-07-16)
+
+**The D410 contract is now shipped runtime, exactly as contracted (design §18 the law; D410 the
+authorization).** Ledger take `acb8ac5034560414d283a1a673ff12c8248b6435` from clean D410 boundary
+`98f6370c9dec4a9b313f2a019798de58b80d37bb`; all pinned hashes re-verified, the plan probe re-run
+24/24, and `.tmp/d410-reachability-fixture.mjs` re-run green (artifact `ok:true`, runId
+`run-us-d410-1`, rolls exact, register 1512) before any edit.
+
+1. **Sourced bounds landed.** `data/soldier-replacements.json` Rhodes record
+   (`person_bullrun_us_2ri_rhodes`) gains exactly `serviceStart:1861, serviceEnd:1865` plus ONE
+   end-bound source row — "All for the Union: The Civil War Diary and Letters of Elisha Hunt
+   Rhodes", Elisha Hunt Rhodes; Robert Hunt Rhodes, ed., Vintage Books (Vintage Civil War
+   Library), ISBN 0-679-73828-2, type primary, note stating the diary runs from the June 1861
+   enlistment through the 2nd Rhode Island's 1865 muster-out, ended as the regiment's colonel.
+   The claim was re-verified through the normal citation pipeline before landing (publisher and
+   Internet Archive records confirm the exact title/editor/imprint/ISBN; Wikipedia and the ACWS
+   biography confirm lieutenant colonel commanding from February 6, 1865, brevet colonel April 2,
+   1865, mustered out with the regiment July 13, 1865). `year:1861`, rank Private, provenance,
+   persona, portrait, team, bio, sourceNote all stayed byte-identical; register stays 1512.
+2. **Adapter carry law landed (src/37).** The record cleaner in
+   `ssValidateSoldierReplacementPack` accepts a bounds pair only when both are finite integers in
+   1800-1900, start <= end, and the record `year` lies inside; a valid pair rides the clean
+   record. In `_ssApplySoldierReplacements` a valid pair sets exact own-property bounds and NO
+   `serviceYear` pin; every other record keeps today's single-`year` law byte-for-byte (the
+   literal `if (r.year != null) p.serviceYear = r.year;` survives, exactly once). Malformed
+   bounds (half a pair, non-integer, out of range, start > end, year outside) drop through
+   reconstruction to today's behavior — proven live for all six shapes, never a widened window.
+3. **Six frozen `_WC_TIMELINE_ASSIGNMENTS_V1` rows landed (src/106),** all
+   `personId:"person_bullrun_us_2ri_rhodes"`, `sourceSlotPid:"ss:bullrun1:US:us_burnside:pvt"`,
+   `serviceStart:null, serviceEnd:null`, Inferred / "Your Timeline": antietam(9, sunkenroad,
+   us_french/nco, 1862, Sergeant, `wcta-fa53w4`), vicksburg(14, forlorn-hope, us_deg_battery/cmd,
+   1863, Captain, `wcta-inib47`), gettysburg(15, day1, us_hall_battery/cmd, 1863, Major,
+   `wcta-154xy3w`), chickamauga(16, the-woods, us_lilly_battery/cmd, 1863, Lt. Col.,
+   `wcta-azt21w`), chattanooga(17, missionary-ridge, us_hazen_mr/cmd, 1863, Colonel,
+   `wcta-7u1ul0`), nashville(27, redoubts-montgomery-hill, us_r_battery/cmd, 1864, Brig. Gen.,
+   `wcta-9cpe74`). Every computed `_wcTimelineAssignmentId` was proven equal to its pinned id.
+   No other src/106 change.
+4. **Focused proof: War Career 43/43 browser + 30/30 static.** The ONE new browser row
+   (`D411 REACHABILITY + SOURCE-BOUNDED SERVICE`) proves in the live built game: register 1512
+   with Rhodes the ONLY bounds carrier; bounds 1861-1865 with no `serviceYear` own-property; the
+   exactly-named end-bound source row present once; the six-shape malformed matrix dropping to
+   single-year law; fixture runId `run-us-d410-1` with pinned fate rolls
+   `196, 204, 264, 380, 855, 688, 736`; seven decisive victories → merit 28, reputation 21, six
+   promotions, Brig. Gen., `warCareerRole` general-command, latest qualifying receipt at
+   nashville canonical `battleYear 1864` (the exact D408 §17 unlock pair); canonical source
+   grade/OVR immutable; byte-idempotent sanitation and a save/apply/init roundtrip preserving the
+   state; and zero non-Rhodes movement (a fresh same-clock campaign re-derives the identical
+   non-Rhodes registry). The ONE new static wall pins the bounds-carry branch and the surviving
+   single-year literal. All 42 prior rows and 29 prior walls stayed green unchanged.
+5. **Plan-probe transition (24/24, names/order exact).** `SOURCE-BOUNDED SERVICE` and
+   `ADAPTER CARRY + CONSUMERS` flipped from contracted-not-landed to landed pins (bounds exactly
+   1861-1865; the exact source row; ten `sourceSlotPid:` rows with six Rhodes rows; the carry
+   tokens in src/37); the take allowlist gained exactly the §18 runtime surface; the focused
+   structure pins moved to 42 literal steps + 30 checks. Moved hashes, documented: HTML
+   `502aee3fc5867b970225a59c06cd6102` → `7de51b310e09a710eb83ade276952203`, dataTree
+   `b0d7f440836b60a4f18401b2d7b03f48` → `3250a3f555de5e648471897978646daf`, srcTree
+   `13544d1904aaa1ff3ade0c6deaa2f2d5` → `a48ceb72a951d516404f5eec29ec2d2b`, src/106
+   `adc2dd9583c85cde86bbfb142cb6d666` → `91bd8cd3c80e59b510726e29a16c89bb`, src/37
+   `d9bc846734683c4ebcb00babbcc161ab` → `25c1226edb05f9a1186d0ae4f301656d`, focused probe
+   `23e67503bed073d46f9f31ff3b715012` → `5e856b3f21e371f867ce99f848c0a155`. Never-move pins all
+   stand: base `c9db83fa99230ffb95bdfdfe059f3fb9`, manifest `7924da858de403cac58caabf8c9fcce8`,
+   suite `4bcdc6f252389a4bfd6bed269b52f8f0`, Command `8f12c49f7129b3a9be0203677822e048`, Command
+   probe `5ffd40fd221179f2e01cad59ef43bf7d`, T2/T3/Auto/After Action exact.
+
+**Bind evidence (each one mutation, rebuilt, byte-restored; red teeth never landed).** Bind A
+removed the All for the Union row while keeping the bounds: focused 42/43 with ONLY the new D411
+row red; the transitioned plan probe reddened exactly `SOURCE-BOUNDED SERVICE` plus its two
+baseline-pin steps registering the unreleased build hash; restore returned data
+`5b67f734f2fb395757b6751a3b49cb4c` and HTML `7de51b310e09a710eb83ade276952203` byte-identically.
+Bind B made the cleaner accept an inverted pair as a min/max window: focused 41/43 with exactly
+the two new D411 teeth red (the static wall, and the browser malformed matrix catching the
+carried `1865-1861` pair — the browser case was strengthened mid-bind from a year-outside shape
+to a swapped-pair shape so it genuinely bites ordering violations); restore returned src/37
+`25c1226edb05f9a1186d0ae4f301656d` and the HTML byte-identically. Bind C pinned `serviceYear`
+beside the bounds pair: focused 42/43 with ONLY the new D411 row red (`pinned:true`); restore
+byte-identical. The full green battery below is the post-restore rerun.
+
+**One documented allowlist exception, Aaron-approved in-take (2026-07-16).** The first full
+battery caught a genuine contract collision: `tools/probe-loot-survival.mjs` row `UI D150` pinned
+the Rhodes Army Register detail card at the literal `Sources (4)`, and the §18-mandated end-bound
+source row lawfully renders `Sources (5)` — the acceptance requirement "loot 12/12" and the
+"no other probe" allowlist could not both hold. Surfaced to Aaron mid-take; Aaron approved the
+recommended one-token stale-pin bump (`Sources (4)` → `Sources (5)`, trailing history comment,
+same idiom as the D394 Five Forks stale-count fix and D391's documented pin-site bumps). The
+loot probe's 1512 pins and every other row are untouched; the plan-probe take allowlist records
+the exception with the same history.
+
+**Release proof.** Build `GATE OK`; War Career 43/43 + 30/30 static (artifact ok:true, zero
+pageerrors/realErrors, suite 130 actual with row 38); Command 94/94 byte-identical inputs; plan
+24/24 transitioned; loot 12/12 (register 1512, one Aaron-approved stale-pin bump above); save
+slots 16/16; all twelve battle/arc plans green unchanged (136 rows); suite list exactly 130 with
+row 38 `war career`; `_SAVE_VER=1`; `git diff` scope exactly the D411 allowlist plus the one
+documented exception. The D408 §17 political-date law is NOT implemented
+here. D398 remains the latest full release battery; `npm run vet:noreg` was NOT run (not owed in
+D411). LANE-005 returns to CONTRACT/unowned. **Exact next: take a fresh committed LANE-005 DRIVE
+lock to implement D408 §17 unchanged (Matters of State; five byte-restored binds per §17) at
+44/44; Slice F stays closed.**
+
 ## D410 — WAR CAREER REACHABILITY CONTRACTED: SOURCED MULTI-YEAR SERVICE BOUNDS, THE ADAPTER CARRY, AND THE RHODES NASHVILLE-1864 LADDER — [AARON + CLAUDE CODE FABLE, LANE-005 DRIVE→CONTRACT] (2026-07-16)
 
 **A planning contract only; no runtime, data, probe-suite, or generated byte moved.** Approval

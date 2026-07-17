@@ -1241,11 +1241,21 @@ function ssValidateSoldierReplacementPack(pack, opts) {
     if (branch !== "inf" && branch !== "art" && branch !== "cav") _ssReplacementErr(errors, label + ".branch must be inf, art, or cav");
     var year = Math.round(_lootNum(r.year, NaN));
     if (typeof r.year !== "number" || !isFinite(r.year) || year < 1861 || year > 1865) _ssReplacementErr(errors, label + ".year must be 1861-1865");
+    // D411: sourced service bounds enter only as a valid pair — both finite
+    // integers in 1800-1900, start <= end, the record year inside. Anything else
+    // drops through reconstruction to today's single-year law, never a widened window.
+    var serviceStart = null, serviceEnd = null;
+    if (typeof r.serviceStart === "number" && isFinite(r.serviceStart) && Math.floor(r.serviceStart) === r.serviceStart &&
+        typeof r.serviceEnd === "number" && isFinite(r.serviceEnd) && Math.floor(r.serviceEnd) === r.serviceEnd &&
+        r.serviceStart >= 1800 && r.serviceStart <= 1900 && r.serviceEnd >= 1800 && r.serviceEnd <= 1900 &&
+        r.serviceStart <= r.serviceEnd && year >= r.serviceStart && year <= r.serviceEnd) {
+      serviceStart = r.serviceStart; serviceEnd = r.serviceEnd;
+    }
     var sources = _ssCleanReplacementSources(r.sources, errors, label);
     var persona = _ssCleanReplacementPersona(r.persona, errors, label);
     var team = _ssCleanReplacementTeam(r.team, side, errors, label);
     var portrait = _ssCleanReplacementPortrait(r.portrait, errors, label);
-    clean.push({
+    var cleanRecord = {
       pid: pid,
       id: pid,
       replacePid: replacePid,
@@ -1264,7 +1274,12 @@ function ssValidateSoldierReplacementPack(pack, opts) {
       bio: _lootCleanText(r.bio || "", 800),
       portrait: portrait,
       team: team
-    });
+    };
+    if (serviceStart != null && serviceEnd != null) {
+      cleanRecord.serviceStart = serviceStart;
+      cleanRecord.serviceEnd = serviceEnd;
+    }
+    clean.push(cleanRecord);
   }
   return { ok: errors.length === 0, schema: _SS_REPLACEMENT_SCHEMA, records: errors.length ? [] : clean, errors: errors };
 }
@@ -1284,12 +1299,19 @@ function _ssApplySoldierReplacements(C, reg, year) {
     p.replacement = true;
     p.replaces = r.replacePid;
     if (replacedRef) p.unitRef = replacedRef;
-    if (replaced.serviceStart != null) p.serviceStart = replaced.serviceStart;
-    if (replaced.serviceEnd != null) p.serviceEnd = replaced.serviceEnd;
-    // A sourced replacement owns its validated historical year. The generated
-    // slot's campaign-clock fallback must not rewrite canonical source service.
-    if (r.year != null) p.serviceYear = r.year;
-    else if (replaced.serviceYear != null) p.serviceYear = replaced.serviceYear;
+    if (r.serviceStart != null && r.serviceEnd != null) {
+      // D411: a sourced multi-year bounds pair owns the canonical window outright —
+      // exact own-property bounds, no single-year pin, no generated-slot carry.
+      p.serviceStart = r.serviceStart;
+      p.serviceEnd = r.serviceEnd;
+    } else {
+      if (replaced.serviceStart != null) p.serviceStart = replaced.serviceStart;
+      if (replaced.serviceEnd != null) p.serviceEnd = replaced.serviceEnd;
+      // A sourced replacement owns its validated historical year. The generated
+      // slot's campaign-clock fallback must not rewrite canonical source service.
+      if (r.year != null) p.serviceYear = r.year;
+      else if (replaced.serviceYear != null) p.serviceYear = replaced.serviceYear;
+    }
     p.source = "soldier-replacements";
     p.sourceNote = r.sourceNote;
     p.disputeNote = r.disputeNote;

@@ -62,7 +62,18 @@ const D408_CONTRACT_ALLOWED = new Set([
   "V1-CHECKLIST.md",
   "WAKE-UP.md",
   "docs/design/war-career-loop-design.md",
-  "tools/probe-war-career-loop-plan.mjs"
+  "tools/probe-war-career-loop-plan.mjs",
+  // D411 transition: the D410 planning allowlist gains exactly the §18-contracted
+  // runtime surface (DECISIONS D410/D411; nothing else may move in the take).
+  "civil_war_generals.html",
+  "data/soldier-replacements.json",
+  "src/106-war-career.js",
+  "src/37-loot-survival.js",
+  "tools/probe-war-career.mjs",
+  // D411 documented exception (Aaron-approved in-take, 2026-07-16): the loot probe's
+  // Rhodes detail card pinned 'Sources (4)'; the contracted end-bound source row makes
+  // it 5, so that single stale pin moved with history (DECISIONS D411).
+  "tools/probe-loot-survival.mjs"
 ]);
 
 function read(path) {
@@ -850,16 +861,22 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     focused:md5(FOCUSED),
     commandProbe:md5(COMMAND_PROBE)
   };
+  // D411 transition history (design §18 count/pin table): srcTree moved
+  // 13544d1904aaa1ff3ade0c6deaa2f2d5 -> a48ceb72a951d516404f5eec29ec2d2b,
+  // runtime adc2dd9583c85cde86bbfb142cb6d666 -> 91bd8cd3c80e59b510726e29a16c89bb,
+  // journey d9bc846734683c4ebcb00babbcc161ab -> 25c1226edb05f9a1186d0ae4f301656d,
+  // focused 23e67503bed073d46f9f31ff3b715012 -> 5e856b3f21e371f867ce99f848c0a155;
+  // command and commandProbe NEVER move.
   const expected = {
-    srcTree:"13544d1904aaa1ff3ade0c6deaa2f2d5",
-    runtime:"adc2dd9583c85cde86bbfb142cb6d666",
-    journey:"d9bc846734683c4ebcb00babbcc161ab",
+    srcTree:"a48ceb72a951d516404f5eec29ec2d2b",
+    runtime:"91bd8cd3c80e59b510726e29a16c89bb",
+    journey:"25c1226edb05f9a1186d0ae4f301656d",
     command:"8f12c49f7129b3a9be0203677822e048",
-    focused:"23e67503bed073d46f9f31ff3b715012",
+    focused:"5e856b3f21e371f867ce99f848c0a155",
     commandProbe:"5ffd40fd221179f2e01cad59ef43bf7d"
   };
   for (const key of Object.keys(expected)) {
-    if (locks[key] !== expected[key]) throw new Error(key + " Slice-D-complete lock moved: " + locks[key]);
+    if (locks[key] !== expected[key]) throw new Error(key + " D411-complete lock moved: " + locks[key]);
   }
   const changed = gitChangedPaths();
   const forbidden = changed.filter(path => !D408_CONTRACT_ALLOWED.has(path));
@@ -980,8 +997,13 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
   for (const name of d407Rows) {
     if (occurrences(focusedText, "step('" + name + "'") !== 1) throw new Error("focused D407 row moved: " + name);
   }
-  if ((focusedText.match(/\bstep\('/g) || []).length !== 41 || (focusedText.match(/\bcheck\(/g) || []).length !== 30) {
-    throw new Error("focused source row/static structure moved from 41 literal steps + 29 checks");
+  // D411: one reachability browser row (42 literal steps -> 43/43 with the static
+  // preflight row) and one bounds-carry static wall (30/30) joined the D407 structure.
+  if ((focusedText.match(/\bstep\('/g) || []).length !== 42 || (focusedText.match(/\bcheck\(/g) || []).length !== 31) {
+    throw new Error("focused source row/static structure moved from 42 literal steps + 30 checks");
+  }
+  if (occurrences(focusedText, "step('D411 REACHABILITY + SOURCE-BOUNDED SERVICE'") !== 1) {
+    throw new Error("focused D411 reachability row moved");
   }
   for (const name of [
     "D406: default, legacy, and excluded careers contribute zero — commandLeadership is byte-identical",
@@ -1087,10 +1109,14 @@ step("BASELINES + LANE", () => {
       !read(SWEEP).includes("var order = (typeof fldScenarioMenuOrder==='function')")) {
     throw new Error("24-scenario sweep registry seam moved");
   }
+  // D411 transition history (design §18 count/pin table): game moved
+  // 502aee3fc5867b970225a59c06cd6102 -> 7de51b310e09a710eb83ade276952203 and
+  // dataTree b0d7f440836b60a4f18401b2d7b03f48 -> 3250a3f555de5e648471897978646daf;
+  // base, manifest, and suite NEVER move.
   const expectedHashes = {
-    game:"502aee3fc5867b970225a59c06cd6102",
+    game:"7de51b310e09a710eb83ade276952203",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
-    dataTree:"b0d7f440836b60a4f18401b2d7b03f48",
+    dataTree:"3250a3f555de5e648471897978646daf",
     manifest:"7924da858de403cac58caabf8c9fcce8",
     suite:"4bcdc6f252389a4bfd6bed269b52f8f0"
   };
@@ -1288,18 +1314,28 @@ step("SOURCE-BOUNDED SERVICE", () => {
   if (!sources.some(row => row && String(row.note || "").includes("June 5, 1861"))) {
     throw new Error("Rhodes 1861 start-bound source note missing");
   }
-  // D410 boundary: the bounds and the end-bound source row land in D411, not now.
-  if (record.serviceStart != null || record.serviceEnd != null) {
-    throw new Error("Rhodes service bounds landed before the D411 DRIVE take");
+  // D411 shipped (was: contracted-not-landed at D410): the sourced bounds and the
+  // exactly-named end-bound source row are landed data law.
+  if (record.serviceStart !== 1861 || record.serviceEnd !== 1865) {
+    throw new Error("Rhodes service bounds are not exactly 1861-1865: " +
+      record.serviceStart + "-" + record.serviceEnd);
   }
-  if (sources.some(row => row && String(row.title || "").includes("All for the Union"))) {
-    throw new Error("Rhodes end-bound source row landed before the D411 DRIVE take");
+  const endBound = sources.filter(row => row &&
+    String(row.title || "") === "All for the Union: The Civil War Diary and Letters of Elisha Hunt Rhodes");
+  if (endBound.length !== 1 ||
+      endBound[0].author !== "Elisha Hunt Rhodes; Robert Hunt Rhodes, ed." ||
+      endBound[0].repository !== "Vintage Books (Vintage Civil War Library)" ||
+      endBound[0].locator !== "ISBN 0-679-73828-2" ||
+      endBound[0].type !== "primary" ||
+      !/1865 muster-out/.test(String(endBound[0].note || "")) ||
+      !/colonel/.test(String(endBound[0].note || ""))) {
+    throw new Error("the exactly-named All for the Union end-bound source row is missing or drifted");
   }
   if (records.some(row => row && row.replacePid !== D410_SOURCE_SLOT &&
       (row.serviceStart != null || row.serviceEnd != null))) {
     throw new Error("a non-Rhodes replacement record carries service bounds");
   }
-  return { pid:D410_PERSON, replacePid:D410_SOURCE_SLOT, sources:sources.length, bounds:"contracted-not-landed" };
+  return { pid:D410_PERSON, replacePid:D410_SOURCE_SLOT, sources:sources.length, bounds:"landed-1861-1865" };
 });
 
 step("LADDER FIXTURE + ASSIGNMENT IDS", () => {
@@ -1408,14 +1444,20 @@ step("ADAPTER CARRY + CONSUMERS", () => {
   ]) {
     if (!runtimeText.includes(token)) throw new Error("src/106 consumer seam missing: " + token);
   }
-  // D410 boundary: the runtime ladder rows and bounds carry land in D411, not now.
-  if (runtimeText.includes(D410_PERSON)) {
-    throw new Error("Rhodes timeline rows landed before the D411 DRIVE take");
+  // D411 shipped (was: contracted-not-landed at D410): the six frozen Rhodes ladder
+  // rows and the fail-closed bounds carry are landed runtime law.
+  if (occurrences(runtimeText, "sourceSlotPid:") !== 10) {
+    throw new Error("_WC_TIMELINE_ASSIGNMENTS_V1 moved from its ten shipped rows");
   }
-  if (occurrences(runtimeText, "sourceSlotPid:") !== 4) {
-    throw new Error("_WC_TIMELINE_ASSIGNMENTS_V1 moved from its four shipped rows");
+  if (occurrences(runtimeText, 'sourceSlotPid:"' + D410_SOURCE_SLOT + '"') !== 6 ||
+      occurrences(runtimeText, 'personId:"' + D410_PERSON + '"') !== 6) {
+    throw new Error("the six frozen Rhodes ladder rows are missing or drifted");
   }
-  return { singleYearLaw:"byte-identical", shippedTimelineRows:4, boundsCarry:"contracted-not-landed" };
+  if (!journeyText.includes("if (r.serviceStart != null && r.serviceEnd != null) {") ||
+      !journeyText.includes("r.serviceStart <= r.serviceEnd && year >= r.serviceStart && year <= r.serviceEnd")) {
+    throw new Error("the D411 bounds validity/carry law is missing from src/37");
+  }
+  return { singleYearLaw:"byte-identical", shippedTimelineRows:10, rhodesRows:6, boundsCarry:"landed" };
 });
 
 step("REACHABILITY BASELINES", () => {
@@ -1442,16 +1484,23 @@ step("REACHABILITY BASELINES", () => {
     game:md5(GAME), dataTree:dataTreeMd5(), srcTree:treeMd5(SRC),
     runtime:md5(RUNTIME), journey:md5(JOURNEY), focused:md5(FOCUSED)
   };
+  // D411 transition history — the §18 "Move at D411" pins moved exactly once, here:
+  // game 502aee3fc5867b970225a59c06cd6102 -> 7de51b310e09a710eb83ade276952203,
+  // dataTree b0d7f440836b60a4f18401b2d7b03f48 -> 3250a3f555de5e648471897978646daf,
+  // srcTree 13544d1904aaa1ff3ade0c6deaa2f2d5 -> a48ceb72a951d516404f5eec29ec2d2b,
+  // runtime adc2dd9583c85cde86bbfb142cb6d666 -> 91bd8cd3c80e59b510726e29a16c89bb,
+  // journey d9bc846734683c4ebcb00babbcc161ab -> 25c1226edb05f9a1186d0ae4f301656d,
+  // focused 23e67503bed073d46f9f31ff3b715012 -> 5e856b3f21e371f867ce99f848c0a155.
   const expected = {
-    game:"502aee3fc5867b970225a59c06cd6102",
-    dataTree:"b0d7f440836b60a4f18401b2d7b03f48",
-    srcTree:"13544d1904aaa1ff3ade0c6deaa2f2d5",
-    runtime:"adc2dd9583c85cde86bbfb142cb6d666",
-    journey:"d9bc846734683c4ebcb00babbcc161ab",
-    focused:"23e67503bed073d46f9f31ff3b715012"
+    game:"7de51b310e09a710eb83ade276952203",
+    dataTree:"3250a3f555de5e648471897978646daf",
+    srcTree:"a48ceb72a951d516404f5eec29ec2d2b",
+    runtime:"91bd8cd3c80e59b510726e29a16c89bb",
+    journey:"25c1226edb05f9a1186d0ae4f301656d",
+    focused:"5e856b3f21e371f867ce99f848c0a155"
   };
   for (const key of Object.keys(expected)) {
-    if (hashes[key] !== expected[key]) throw new Error("D410 unchanged baseline moved: " + key + " " + hashes[key]);
+    if (hashes[key] !== expected[key]) throw new Error("D411 shipped baseline moved: " + key + " " + hashes[key]);
   }
   const changed = gitChangedPaths();
   const forbidden = changed.filter(path => !D408_CONTRACT_ALLOWED.has(path));
@@ -1465,8 +1514,14 @@ step("REACHABILITY BASELINES", () => {
     "focused reachability row, 43/43",
     "then a further separate take implements D408 §17",
     "unchanged at 44/44",
-    D410_RUN_ID
-  ], "D410 release lane");
+    D410_RUN_ID,
+    // D411 release boundary tokens (the D410 tokens above stay as retained history):
+    "take a fresh committed LANE-005 DRIVE lock to implement D408 §17 unchanged",
+    "Matters of State",
+    "five byte-restored binds per §17",
+    "44/44",
+    "Slice F stays closed"
+  ], "D411 release lane");
   const expectedD410Names = [
     "SPEC CORE", "SEAM INVENTORY", "STATE OWNERSHIP", "TRANSITIONS", "DEATH + IRONMAN",
     "POLITICAL PULL", "ARCHETYPES", "IMPLEMENTATION LADDER", "EXCLUSIONS + BASELINES", "LANE",
@@ -1480,7 +1535,7 @@ step("REACHABILITY BASELINES", () => {
   if (JSON.stringify(actualNames) !== JSON.stringify(expectedD410Names)) {
     throw new Error("D410 24-row names moved: " + JSON.stringify(actualNames));
   }
-  return { planRows:expectedD410Names.length, hashes, changed, status:"D410 contracted; D411 runtime next" };
+  return { planRows:expectedD410Names.length, hashes, changed, status:"D411 shipped; D408 §17 runtime next" };
 });
 
 writeFileSync(OUTFILE, JSON.stringify(result, null, 2) + "\n");

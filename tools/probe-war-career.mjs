@@ -83,6 +83,11 @@ function staticPreflight() {
   check("frozen base hash", md5(join(ROOT, "build", "base.html")) === "c9db83fa99230ffb95bdfdfe059f3fb9", md5(join(ROOT, "build", "base.html")));
   check("dual-reference schemas registered", runtime.includes("cw_war_career_result_v2") && runtime.includes("cw_war_career_participation_v2") && runtime.includes("_WC_TIMELINE_ASSIGNMENTS_V1"), null);
   check("replacement source year owns canonical history", journey.includes("if (r.year != null) p.serviceYear = r.year;"), null);
+  check("replacement bounds pair carries with no single-year pin",
+    journey.includes("if (r.serviceStart != null && r.serviceEnd != null) {") &&
+    journey.includes("p.serviceStart = r.serviceStart;") && journey.includes("p.serviceEnd = r.serviceEnd;") &&
+    journey.includes("r.serviceStart <= r.serviceEnd && year >= r.serviceStart && year <= r.serviceEnd") &&
+    occurrences(journey, "if (r.year != null) p.serviceYear = r.year;") === 1, null);
   const commandTargetSelector = (runtime.match(/function _wcRelationshipCommandTarget[\s\S]*?\n\}/) || [""])[0];
   check("player career never owns NPC command state",
     !/\bP\.command\b/.test(runtime) && occurrences(runtime, "C.president.command") === 1 &&
@@ -1806,6 +1811,136 @@ const SETUP = `(() => {
       if (!retry.duplicate || bytes(J) !== loaded) throw new Error('same-rung retry stacked after handoff');
       return { successor:selected, canonicalRank:successor.rank, canonicalOvr:successor.ovr, sharedCredits:creditCount,
         sharedEvents:eventCount, personalTotalsReset:true, oneStartBillet:true, commandOwnerIsolated:true, saveRoundtrip:true, retryNoStack:true };
+    });
+
+    step('D411 REACHABILITY + SOURCE-BOUNDED SERVICE', function() {
+      var pid = 'person_bullrun_us_2ri_rhodes';
+      var C = mkC('US', false); C.idx = 1; C.runId = 'run-us-d410-1';
+      var people = ssPersonRegistry(C).people;
+      if (people.length !== 1512) throw new Error('Army Register moved: ' + people.length);
+      var boundsCarriers = people.filter(function(p) { return p && (own(p, 'serviceStart') || own(p, 'serviceEnd')); });
+      if (boundsCarriers.length !== 1 || boundsCarriers[0].pid !== pid) {
+        throw new Error('non-Rhodes bounds movement: ' + bytes(boundsCarriers.map(function(p) { return p.pid; })));
+      }
+      function nonRhodesBytes(X) {
+        var rows = ssPersonRegistry(X).people.filter(function(p) { return p && p.pid !== pid; });
+        return bytes(rows);
+      }
+      var nonRhodesBefore = nonRhodesBytes(C);
+      var person = exactPerson(C, pid);
+      if (person.serviceStart !== 1861 || person.serviceEnd !== 1865 || own(person, 'serviceYear') ||
+          person.rank !== 'Private' || person.provenance !== 'Verified' || person.generated) {
+        throw new Error('Rhodes source-bounded law moved: ' + bytes({ start:person.serviceStart, end:person.serviceEnd,
+          pinned:own(person, 'serviceYear'), rank:person.rank, provenance:person.provenance }));
+      }
+      var endBound = (person.sources || []).filter(function(row) {
+        return row && row.title === 'All for the Union: The Civil War Diary and Letters of Elisha Hunt Rhodes';
+      });
+      if (endBound.length !== 1 || endBound[0].locator !== 'ISBN 0-679-73828-2' || endBound[0].type !== 'primary' ||
+          endBound[0].author !== 'Elisha Hunt Rhodes; Robert Hunt Rhodes, ed.') {
+        throw new Error('All for the Union end-bound source row law moved: ' + bytes(endBound));
+      }
+      var cleanWith = function(mutate) {
+        var pack = clone(_ssReplacementData());
+        var record = pack.records.filter(function(row) { return row && row.pid === pid; })[0];
+        mutate(record);
+        var validated = ssValidateSoldierReplacementPack(pack, {});
+        if (!validated.ok) return { ok:false, errors:validated.errors.slice(0, 3) };
+        var out = validated.records.filter(function(row) { return row && row.pid === pid; })[0];
+        return { ok:true, start:own(out, 'serviceStart') ? out.serviceStart : null, end:own(out, 'serviceEnd') ? out.serviceEnd : null };
+      };
+      var carried = cleanWith(function() {});
+      if (!carried.ok || carried.start !== 1861 || carried.end !== 1865) throw new Error('valid bounds pair did not carry: ' + bytes(carried));
+      [
+        ['start > end', function(row) { row.serviceStart = 1865; row.serviceEnd = 1861; }],
+        ['half a pair', function(row) { delete row.serviceEnd; }],
+        ['non-integer', function(row) { row.serviceStart = 1861.5; }],
+        ['below 1800', function(row) { row.serviceStart = 1799; }],
+        ['above 1900', function(row) { row.serviceEnd = 1901; }],
+        ['year outside pair', function(row) { row.serviceStart = 1862; }]
+      ].forEach(function(caseRow) {
+        var dropped = cleanWith(caseRow[1]);
+        if (!dropped.ok || dropped.start !== null || dropped.end !== null) {
+          throw new Error('malformed bounds (' + caseRow[0] + ') did not drop to single-year law: ' + bytes(dropped));
+        }
+      });
+      var sourceBefore = clone(_wcSourceRefFromPerson(person)), sourceOvr = person.ovr;
+      if (sourceBefore.serviceStart !== 1861 || sourceBefore.serviceEnd !== 1865 || sourceBefore.serviceYear !== null) {
+        throw new Error('Rhodes sourceRef window law moved: ' + bytes(sourceBefore));
+      }
+      var started = warCareerStart(C, pid);
+      if (!started.ok || C.loot.journey.person.rank !== 'Private') throw new Error('Rhodes career start failed: ' + bytes(started));
+      var rungs = [
+        { index:1, scenarioId:'bullrun1', unitId:'us_burnside', slot:'pvt', assignmentId:null },
+        { index:9, scenarioId:'antietam', unitId:'us_french', slot:'nco', assignmentId:'wcta-fa53w4' },
+        { index:14, scenarioId:'vicksburg', unitId:'us_deg_battery', slot:'cmd', assignmentId:'wcta-inib47' },
+        { index:15, scenarioId:'gettysburg', unitId:'us_hall_battery', slot:'cmd', assignmentId:'wcta-154xy3w' },
+        { index:16, scenarioId:'chickamauga', unitId:'us_lilly_battery', slot:'cmd', assignmentId:'wcta-azt21w' },
+        { index:17, scenarioId:'chattanooga', unitId:'us_hazen_mr', slot:'cmd', assignmentId:'wcta-7u1ul0' },
+        { index:27, scenarioId:'nashville', unitId:'us_r_battery', slot:'cmd', assignmentId:'wcta-9cpe74' }
+      ];
+      var expectedRolls = [196, 204, 264, 380, 855, 688, 736];
+      var expectedRanks = ['Sergeant', 'Captain', 'Major', 'Lt. Col.', 'Colonel', 'Brig. Gen.', 'Brig. Gen.'];
+      var expectedAtResult = ['Private', 'Sergeant', 'Captain', 'Major', 'Lt. Col.', 'Colonel', 'Brig. Gen.'];
+      var expectedYears = [1861, 1862, 1863, 1863, 1863, 1863, 1864];
+      for (var i = 0; i < rungs.length; i++) {
+        var rung = rungs[i];
+        C.idx = rung.index;
+        var creditKey = [C.runId, 'US', rung.index, rung.scenarioId].join('|');
+        var slotPid = ['ss', rung.scenarioId, 'US', rung.unitId, rung.slot].join(':');
+        var roll = _wcHash([C.runId, creditKey, pid, slotPid, 'personal-fate'].join('|')) % 1000;
+        if (roll !== expectedRolls[i]) throw new Error(rung.scenarioId + ' fate roll drifted: ' + roll);
+        var B = mkB(C, true);
+        B.warCareerEvidence = warCareerBuildClassicEvidence(C, B);
+        if (!B.warCareerEvidence) throw new Error('evidence missing at ' + rung.scenarioId);
+        var proof = warCareerParticipationEvidence(C, B), preflight = warCareerPreflightFate(C, B, 'US', 'decisive');
+        if (!proof.qualifying || !preflight.qualifying || preflight.fate !== 'alive') {
+          throw new Error(rung.scenarioId + ' preflight not qualifying/alive: ' + bytes({ proof:proof, preflight:preflight }));
+        }
+        var resolved = resolveResult(C, B, 'US', 'decisive'), J = C.loot.journey, credit = latestCredit(C);
+        if (!resolved || !resolved.qualifying || resolved.fate !== 'alive' || J.person.rank !== expectedRanks[i] ||
+            !credit || credit.scenarioId !== rung.scenarioId || credit.participation.rankAtResult !== expectedAtResult[i] ||
+            Number(credit.participation.battleYear) !== expectedYears[i]) {
+          throw new Error(rung.scenarioId + ' rung outcome moved: ' + bytes({ resolved:resolved, rank:J.person.rank, credit:credit }));
+        }
+        var assignment = credit.participation.timelineAssignmentRef;
+        if (rung.assignmentId ? (!assignment || assignment.assignmentId !== rung.assignmentId || assignment.slotPid !== slotPid) : !!assignment) {
+          throw new Error(rung.scenarioId + ' assignment identity moved: ' + bytes(assignment || null));
+        }
+      }
+      var J = C.loot.journey;
+      if (J.creditLedger.length !== 7 || J.merit !== 28 || J.reputation !== 21 || J.promotionCount !== 6 || J.person.rank !== 'Brig. Gen.') {
+        throw new Error('seven-rung totals moved: ' + bytes({ credits:J.creditLedger.length, merit:J.merit,
+          reputation:J.reputation, promotions:J.promotionCount, rank:J.person.rank }));
+      }
+      var role = warCareerRole(C), latest = latestCredit(C);
+      if (role.id !== 'general-command' || latest.scenarioId !== 'nashville' || Number(latest.participation.battleYear) !== 1864) {
+        throw new Error('the D408 unlock pair did not coexist: ' + bytes({ role:role.id, latest:latest.scenarioId,
+          battleYear:latest.participation.battleYear }));
+      }
+      var canonicalAfter = _wcSourceRefFromPerson(exactPerson(C, pid));
+      if (bytes(canonicalAfter) !== bytes(sourceBefore) || canonicalAfter.sourceGrade !== 'Private' ||
+          exactPerson(C, pid).ovr !== sourceOvr) {
+        throw new Error('reachability run rewrote canonical Rhodes source state');
+      }
+      var frozen = bytes(J);
+      G.campaign = C; warCareerInit(C); J = C.loot.journey;
+      if (bytes(J) !== frozen) throw new Error('sanitation not byte-idempotent after the ladder: ' + firstDiff(JSON.parse(frozen), J));
+      applySave(envelope(C, 'd411-reachability')); warCareerInit(G.campaign);
+      var loadedJourney = G.campaign.loot.journey;
+      if (bytes(loadedJourney) !== frozen || loadedJourney.person.rank !== 'Brig. Gen.' ||
+          warCareerRole(G.campaign).id !== 'general-command') {
+        throw new Error('save/apply/init lost the reachability state');
+      }
+      // Zero non-Rhodes movement: a fresh campaign at the same fresh clock re-derives
+      // the identical canonical registry — the ladder run mutated no canonical person.
+      var freshAfter = mkC('US', false); freshAfter.idx = 1;
+      if (nonRhodesBytes(freshAfter) !== nonRhodesBefore) {
+        throw new Error('non-Rhodes registry people moved across the reachability run');
+      }
+      return { runId:C.runId, rolls:expectedRolls, merit:28, reputation:21, promotions:6, rank:'Brig. Gen.',
+        role:role.id, latestScenario:'nashville', latestBattleYear:1864, register:1512, boundsCarriers:1,
+        malformedDropped:6, sourceImmutable:true, nonRhodesFrozen:true, idempotent:true, saveRoundtrip:true };
     });
 
     step('D407 RELATIONSHIP TRANSITIONS + ONE-CREDIT', function() {
