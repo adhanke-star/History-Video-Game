@@ -6,6 +6,18 @@ Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
 ---
 
+## D415 — STARTUP TOKEN-EFFICIENCY AUDIT: SESSIONSTART HOOK CUT ~90%, ONE STALE MODEL REF FIXED — [AARON + CLAUDE CODE] (2026-07-17)
+
+The global SessionStart hook (fires on startup/resume/clear/AND compact) was dumping full per-lane Resume-pointer + State paragraphs from `COORDINATION.md` — measured 23,415 chars (~6k tokens) per firing across 6 lanes, repeating on every compact in a long session. Hook now prints lane header + Owning-tool/State lines truncated to 160 chars each — 2,309 chars, ~90% smaller; the mandatory full-lane read (unchanged) still supplies full detail. `.github/copilot-instructions.md` had a stale "5.5 in Codex"/Claude-primary line predating D336/D414; corrected. No other fix rose to the bar: the four AI-entrypoint files' duplicated read-order block is necessary (each tool reads only its own entrypoint); `OPUS-PLAYBOOK.md`/`AGENTS.md`/`START-HERE.md`/`AUTONOMOUS-RUN.md` carried no live inefficiency. Docs + global settings only; build gate re-run byte-identical.
+
+---
+
+## D414 — FABLE LEFT THE SUBSCRIPTION AGAIN: CHATGPT/CODEX IS NOW PRIMARY, CLAUDE CODE SECONDARY (docs only) — [AARON] (2026-07-17)
+
+Fable 5 dropped from Aaron's subscription. ChatGPT/Codex 5.6 Sol Ultra is now the primary top loop; Claude Code is secondary (session model set per task: Opus/Sonnet/Haiku). Forward-operating Fable text removed from `CLAUDE.md` and `COORDINATION.md` §4 (rest of the repo already had no live Fable directives). Append-only history (D223–D413, RUN-LOG) stands unchanged. Docs only — build gate re-run byte-identical.
+
+---
+
 ## D413 — WAR CAREER SLICE E SHIPPED: MATTERS OF STATE ARE LIVE — GENERAL COMMAND PLUS A QUALIFYING 1864+ RECEIPT UNLOCKS; EVERYTHING ELSE VISIBLY DEFERS — [CLAUDE CODE FABLE, LANE-005 DRIVE→CONTRACT] (2026-07-17)
 
 **The D408 §17 contract is now shipped runtime, implemented UNCHANGED (design §17 the law; D408

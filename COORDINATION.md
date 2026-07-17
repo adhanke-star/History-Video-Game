@@ -70,15 +70,14 @@ owning tool's session died) takes over and says so in the lane's history line.
 
 ## 4 · Model routing — the Contract Relay binds ROLES, not model names
 
-Subscriptions churn (D223 put the main loop on Fable 5; D286 reverted to Opus 4.8 when Fable left
-the plan; Fable returned 2026-07-10). So lanes and kickoffs name **roles**; each session resolves
-the role to the best model its tool offers that day and states the resolution once at the top of
-its run.
+Lanes and kickoffs name **roles**; each session resolves the role to the best model its tool
+offers that day and states the resolution once at the top of its run. ChatGPT/Codex 5.6 Sol Ultra
+is the primary top loop; Claude Code is secondary.
 
-- **TOP LOOP** — Claude: Fable 5 if on the plan, else Opus 4.8, at xhigh. ChatGPT: 5.6 Sol at
-  Ultra. Owns design law, acceptance criteria, historical judgment, combat balance,
-  UX/accessibility judgment, adversarial adjudication, final integration, the commit. NEVER
-  delegated.
+- **TOP LOOP** — ChatGPT: 5.6 Sol at Ultra (primary). Claude: secondary — Opus 4.8 high/xhigh for
+  hard/quality-critical sessions, else Sonnet/Haiku (session model set by Aaron). Owns design law,
+  acceptance criteria, historical judgment, combat balance, UX/accessibility judgment, adversarial
+  adjudication, final integration, the commit. NEVER delegated.
 - **REASONING HELPERS** — Claude: Opus at high/xhigh. ChatGPT: the next tier below Sol Ultra.
   Bug-hunt finders/verifiers/critics, design + judge panels, citation-grade research-verify.
 - **MECHANICAL HELPERS** — Claude: Sonnet at low/medium; Haiku for pure greps/reads/sizing.
