@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import "./guard-probe-browser.mjs";
-// D418 / LANE-007 Slice A focused gate. Proves the hidden Historical/Mayhem
+// D420 / LANE-007 Slice C focused gate. Preserves the Historical/Mayhem
 // ruleset kernel, campaign-start routing, immutable owner, save/timeline
 // isolation, accessible picker, persistent labels, and Historical A/B.
 import { chromium } from "playwright-core";
@@ -409,15 +409,14 @@ async function browserSetup() {
       return { h0: calls, legacy: "static-verified" };
     });
 
-    step("FAIL-CLOSED PUBLIC GATE", () => {
-      if (MAYHEM_PUBLIC_READY !== false) throw new Error("MAYHEM_PUBLIC_READY is not false");
+    step("PUBLIC COMPLETE-VERTICAL-SLICE GATE", () => {
+      if (MAYHEM_PUBLIC_READY !== true) throw new Error("complete Slice C is not public");
+      if (typeof mayhemProductionAdapters !== "function" || typeof mayhemNoQuarterApply !== "function") throw new Error("production surface missing");
       _mhClearPending();
       _openMusterChoice("US");
-      if (document.getElementById("mhRulesetPicker")) throw new Error("public path exposed Mayhem while not ready");
-      if (!document.getElementById("msMuster") || !document.getElementById("msIron")) throw new Error("public path did not continue to Historical terms");
-      if (!_mhPendingStart || _mhPendingStart.id !== "historical") throw new Error("public path did not fail closed Historical");
+      if (!document.getElementById("mhRulesetPicker")) throw new Error("public chooser did not expose Mayhem");
       _mhClearPending();
-      return { public: "historical", ready: false };
+      return { public: "historical+mayhem", ready: true };
     });
 
     step("HIDDEN PICKER CONTROL + A11Y SEMANTICS", () => {
@@ -494,8 +493,9 @@ async function browserSetup() {
         "career.promote","reputation.add","notoriety.add","achievement.unlock","modifier.add","roster.add",
         "roster.transfer","reinforcement.add","scenario.unlock","timeline.branch","chronicle.event"
       ];
-      if (!declaration || declaration.schema !== "cw_mayhem_rules_v1" || declaration.version !== 1 || declaration.actions.length !== 1) throw new Error("closed data document missing");
-      if (!eq(declaration.actions[0].effects.map(x => x.operation), expectedOps)) throw new Error("operation-family registry drifted");
+      if (!declaration || declaration.schema !== "cw_mayhem_rules_v1" || declaration.version !== 1 || declaration.actions.length !== 2) throw new Error("Slice-C data document missing");
+      const fixtureDeclaration = declaration.actions.find(x => x.id === "fixture.closed-pipeline");
+      if (!fixtureDeclaration || !eq(fixtureDeclaration.effects.map(x => x.operation), expectedOps)) throw new Error("operation-family registry drifted");
       function fixture(failStage, failCommit) {
         const state = {}; const order = []; const adapters = {};
         expectedOps.forEach((id, index) => {
@@ -538,6 +538,22 @@ async function browserSetup() {
       const dirty=campaign(null,"US"); dirty.ruleset={id:"mayhem",version:1}; dirty.mayhemReceipts=[{bad:true}]; mayhemInit(dirty,null,"load"); if(dirty.mayhemReceipts.length!==0)throw new Error("malformed loaded receipt survived");
       const capped=campaign(null,"US"); capped.ruleset={id:"mayhem",version:1}; capped.mayhemReceipts=[]; for(let i=1;i<=MAYHEM_RECEIPT_CAP+3;i++)capped.mayhemReceipts.push({id:"mh:cap-"+i,actionId:"fixture.closed-pipeline",sequence:i,operations:[]}); mayhemInit(capped,null,"load"); if(capped.mayhemReceipts.length!==MAYHEM_RECEIPT_CAP||capped.mayhemReceipts[0].sequence!==4)throw new Error("receipt cap/eviction failed");
       return { operations:expectedOps.length, receiptId:receipt.id, receiptBytes:receiptBytes.length, cap:MAYHEM_RECEIPT_CAP, ordering:fx.order.slice(0,3) };
+    });
+
+    step("SLICE C PRODUCTION ADAPTERS + NO-JUDGMENT RESULT", () => {
+      const C=campaign(null,"US");mayhemInit(C,"mayhem","new");lootInit(C);
+      C.mayhemNoQuarterOffer={timelineId:"timeline-1",battleId:"battle-1",captured:120,consumed:false};
+      const ctx=_mhNoQuarterContext(C);if(!ctx||!mayhemCan("no-quarter",ctx))throw new Error("valid action unavailable");
+      const receipt=mayhemNoQuarterApply(C);if(!receipt||receipt.operations.length!==4)throw new Error("production receipt missing");
+      if(C.stats.mayhemScore!==25||C.stats.infl!==40)throw new Error("score/casualty values drifted");
+      const ration=C.loot.inventory.find(x=>x.id==="commissary_rations");if(!ration||ration.qty!==1)throw new Error("reward missing");
+      if(!Array.isArray(C.loot.modifiers)||C.loot.modifiers.length!==1||C.loot.modifiers[0].key!=="side:us:no-quarter-momentum")throw new Error("tagged advantage missing");
+      if(mayhemNoQuarterApply(C)!==null||C.mayhemReceipts.length!==1)throw new Error("duplicate retry reapplied");
+      const loaded=JSON.parse(JSON.stringify(C));mayhemInit(loaded,null,"load");if(mayhemNoQuarterApply(loaded)!==null)throw new Error("reload retry reapplied");
+      const html=aarRenderReport(C,{final:false});if(!/Mayhem Campaign/.test(html)||!/Performance, consequences, rewards, and chaos/.test(html)||!/without a moral or plausibility grade/.test(html)||/Overall conduct of the war|Report-card grade|Moral GPA\s*:|Plausibility GPA\s*:/i.test(html))throw new Error("no-judgment result drifted");
+      const H=campaign(null,"US");mayhemInit(H,"historical","new");H.mayhemNoQuarterOffer={timelineId:"timeline-1",battleId:"battle-1",captured:120,consumed:false};const hb=JSON.stringify(H);if(_mhNoQuarterContext(H)!==null||mayhemNoQuarterApply(H)!==null||JSON.stringify(H)!==hb)throw new Error("Historical refusal/bytes failed");
+      const F=campaign(null,"US");mayhemInit(F,"mayhem","new");lootInit(F);F.mayhemNoQuarterOffer={timelineId:"timeline-1",battleId:"battle-1",captured:120,consumed:false};const fa=mayhemProductionAdapters(F);fa["modifier.add"].commit=function(){throw new Error("forced later commit");};const fctx=_mhNoQuarterContext(F);fctx.adapters=fa;const fb=JSON.stringify(F);if(mayhemApply("no-quarter",fctx)!==null||JSON.stringify(F)!==fb)throw new Error("production rollback/no-receipt failed");
+      return{score:C.stats.mayhemScore,casualtyCredit:C.stats.infl,reward:ration.id,modifier:C.loot.modifiers[0].key,receiptId:receipt.id};
     });
 
     cleanStorage();

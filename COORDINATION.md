@@ -1484,11 +1484,11 @@ next green commit and confer through this ledger instead of permitting simultane
   to CONTRACT/unowned.
 - **Last-touched commit:** the LANE-006 take commit (this edit).
 
-### LANE-007 · open-history-mayhem — **DRIVE (Slice A shipped; Slice B next only; Slice C closed)**
+### LANE-007 · open-history-mayhem — **SHIPPED (Slices A-C public bundle complete)**
 
-- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra TOP LOOP. No simultaneous edits by any provider.
-- **State:** DRIVE. D418 ships Slice A; Slice B is the exact next bounded task. Slice C and every
-  public Mayhem path remain closed behind `MAYHEM_PUBLIC_READY=false`.
+- **Owning tool:** none after the D420 clean release.
+- **State:** SHIPPED. D418-D420 complete the authorized A-C public bundle; later Mayhem work
+  remains closed until a new bounded contract.
 - **Supersession:** Aaron's 2026-07-17 direction supersedes D382's universal consequence-only /
   never-scored / dignity-lock interpretation and the LANE-007 contract committed at `41b6051`
   before any runtime or red probe teeth landed. The uncommitted surrender research draft was
@@ -1698,8 +1698,8 @@ next green commit and confer through this ledger instead of permitting simultane
       and retain `MAYHEM_PUBLIC_READY=false`; no public picker/action or no-quarter content ships
       in Slice B.
 - **Slice B release evidence (D419):** closed schema with all 30 operation ids; recursive 55/55 validation; pure eligibility; atomic fixed-order adapters and reverse rollback; 32 deterministic bounded receipts. Mayhem 17/17, save 16/16, campaign 4/4, zero errors; suite 131 rows 38/57; 24/55/1512/24; `_SAVE_VER=1`. Four binds restored byte-identically. Planning/full battery omitted.
-- **Resume pointer:** Slice C only: first public surrender/no-quarter vertical slice with production adapters and score/casualty/reward/tag proof plus no-judgment result readout. Preserve Historical bytes.
-- **Last-touched commit:** D419 Slice-B release commit (verify live SHA after push).
+- **Resume pointer:** none. D420 completes the authorized A-C bundle; later Mayhem work requires a new bounded contract.
+- **Last-touched commit:** D420 Slice-C release commit (verify live SHA after push).
 - **History:** opened as surrender-consequences at `41b6051`; Aaron superseded its core rule
   before implementation. D416 converts the same lane to the wider mode architecture so the
   surrendered idea becomes one later Mayhem validation slice rather than the universal law.

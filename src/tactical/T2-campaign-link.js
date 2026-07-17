@@ -549,6 +549,10 @@ function fldCampaignComputeOutcome() {
   else if (win) type = (winBy === "destroy" || eFrac >= 0.6) ? "decisive" : "win";
   else type = (winBy === "destroy" || pFrac >= 0.6) ? "decisive" : "win";   // for a loss, only the funds tier differs
   var out = { bd: ctx.bd, winnerSide: winnerSide, type: type, pFrac: pFrac, eFrac: eFrac, win: win, playerSide: ps };
+  // D420 / LANE-007 Slice C: carry the existing surrender ledger into the
+  // canonical campaign result. It is inert unless the immutable campaign
+  // ruleset is Mayhem; Historical never reads or mutates from this metadata.
+  out.capturedByPlayer = Math.max(0, Math.round((__FIELD.captured || {})[es] || 0));
   // D401: capture field-complete participation/leader consequence evidence
   // before fldExit clears the tactical state. It is never a simulation input.
   if (typeof warCareerBuildFieldEvidence === "function") {
@@ -588,6 +592,7 @@ function fldCampaignApplyOutcome(o) {
   B.casualties[ps] = pCas; B.casualties[es] = eCas;
   B.infl[ps] = eCas; B.infl[es] = pCas;   // infl[X] = what X inflicted = what the enemy suffered
   B.over = true;
+  if (o.capturedByPlayer > 0) B.mayhemCapturedByPlayer = o.capturedByPlayer;
   // Hand the already-computed result receipt to the canonical campaign result.
   // This metadata is consequence-only and is not read by combat, casualty, AI,
   // score, winner, or direction code.

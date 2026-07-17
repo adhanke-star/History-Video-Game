@@ -1,6 +1,6 @@
 # START HERE — "The Civil War" (master index)
 
-**D419 LIVE REFRESH:** Mayhem Slice B ships hidden closed schema, all 30 operation interfaces, pure eligibility, atomic adapters, rollback, and 32 bounded receipts. Schema 55/55; Mayhem 17/17; `MAYHEM_PUBLIC_READY=false`; Slice C exact next.
+**D420 LIVE REFRESH:** Mayhem Slice C is public and atomic: accessible chooser, surrender/No Quarter production adapters for score, casualty credit, reward, and tagged advantage, plus a no-judgment result readout. Historical remains guarded; schema 55/55; Mayhem 18/18; suite 131; `_SAVE_VER=1`; LANE-007 SHIPPED.
 
 **This is the ONE file to open first. It tells every new chat exactly which documents are CURRENT and which are history, and the order to read them. If a doc isn't listed under "Canonical" below, treat it as archived — do not follow it as live strategy.**
 

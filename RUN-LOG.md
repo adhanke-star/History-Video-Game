@@ -2,6 +2,10 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-17 — D420 Mayhem Slice C public vertical slice
+
+Shipped the accessible public chooser and first production surrender/No Quarter transaction. Exact effects: +25 Mayhem score, +40 casualty credit, one commissary-rations reward, and `side:<actor>:no-quarter-momentum`; all route through `mayhemCan`/`mayhemApply`, stage/commit/rollback, and one receipt. Historical refusal and its AAR path remain intact. Focused evidence: schema 55/55, Mayhem 18/18, save 16/16, full campaign 4/4, suite list 131, zero pageerrors/realErrors. Full `npm run vet:noreg` was intentionally omitted by the opener.
+
 ## GATE BATCHING UPDATE — 2026-06-29
 Aaron stopped the D161 full no-regression battery and directed that the big suite stay deferred until the planned work is built out. The probes stay intact, but the per-slice commit gate is now focused: source/doc read order, syntax checks, importer/schema checks, build, focused probe, adjacent probes, JSON/pageerror readback, and `git diff --check`. Full `npm run vet:noreg` is reserved for the planned-work batch/release gate or explicit Aaron request.
 

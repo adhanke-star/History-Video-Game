@@ -3,6 +3,29 @@
   "version": 1,
   "actions": [
     {
+      "id": "no-quarter",
+      "rulesetId": "mayhem",
+      "availableWhen": [
+        { "id": "ruleset.is", "value": "mayhem" },
+        { "id": "side.isActor" }
+      ],
+      "actorTags": [
+        { "namespace": "side", "value": "actor" }
+      ],
+      "effects": [
+        { "operation": "battle.score.add", "target": "actor", "value": 25 },
+        { "operation": "casualty.credit", "target": "actor", "value": 40 },
+        { "operation": "loot.grant", "target": "commissary_rations", "value": 1 },
+        { "operation": "modifier.add", "target": "no-quarter-momentum", "value": 1, "tag": { "namespace": "side", "value": "actor" } }
+      ],
+      "presentation": {
+        "label": "No Quarter",
+        "summary": "Convert a surrender into 25 Mayhem score, 40 casualty credit, commissary rations, and a side-tagged momentum advantage.",
+        "tone": "mayhem",
+        "icon": "timeline-bolt"
+      }
+    },
+    {
       "id": "fixture.closed-pipeline",
       "rulesetId": "mayhem",
       "availableWhen": [

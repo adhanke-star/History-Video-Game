@@ -1,6 +1,6 @@
 # V1 FEATURE-COMPLETE CHECKLIST — "The Civil War"  (APPROVED — run-k Q&A, 2026-06-15)
 
-> **D419 live gate:** Mayhem Slice B is shipped and hidden: closed schema 55/55, all 30 operations, pure eligibility, atomic adapters, rollback, 32 bounded receipts, focused 17/17. `MAYHEM_PUBLIC_READY=false`; LANE-007 DRIVE; Slice C exact next.
+> **D420 live gate:** Mayhem Slice C is public and atomic: accessible chooser, surrender/No Quarter production adapters for score/casualty/reward/tag, and an ungraded result. Historical remains guarded. Schema 55/55; Mayhem 18/18; save 16/16; campaign 4/4; suite 131; `_SAVE_VER=1`. LANE-007 SHIPPED; later Mayhem work remains closed.
 
 > **D418 live gate:** Mayhem Slice A is SHIPPED and hidden — immutable campaign ruleset, fail-closed accessible picker, all four starts, save/import/undo/cross-slot isolation, and mode labels; Historical A/B stays byte-equivalent and `MAYHEM_PUBLIC_READY=false`. Mayhem 16/16 plus adjacent 16/5/14/14/4 are green with zero errors; six byte-restored binds bit one tooth each; suite 131 with Mayhem row 57; `_SAVE_VER=1`; base/data/count baselines unchanged. **The canonical live boundary is `HANDOFF.md`'s top ⚡ block. LANE-007 remains DRIVE; exact next is Slice B closed schema/atomic receipt pipeline; Slice C/public Mayhem stay closed.** D398 remains latest full battery.
 

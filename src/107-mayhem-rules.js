@@ -11,7 +11,7 @@
    path remains Historical while MAYHEM_PUBLIC_READY is false.
    =========================================================================== */
 
-const MAYHEM_PUBLIC_READY = false;
+const MAYHEM_PUBLIC_READY = true;
 
 /* D419 / Slice B — closed declarations and an adapter-only transaction kernel.
    The campaign owns a capped receipt log beside (never inside) C.ruleset.
@@ -118,6 +118,79 @@ function mayhemApply(actionId, context) {
   if(tx.ctx.campaign.mayhemReceipts.length>MAYHEM_RECEIPT_CAP)tx.ctx.campaign.mayhemReceipts.splice(0,tx.ctx.campaign.mayhemReceipts.length-MAYHEM_RECEIPT_CAP);
   return _mhClone(receipt);
 }
+
+/* D420 / Slice C — first production transaction. The adapters stage immutable
+   before/after snapshots, commit only through the existing campaign owners,
+   and restore those snapshots in reverse order if any later commit fails. */
+function _mhProdNumberAdapter(read, write, remove, exists) {
+  return {
+    stage:function(op,ctx){var before=Number(read(ctx.campaign))||0;return{before:before,after:before+op.value,token:{C:ctx.campaign,before:before,after:before+op.value,existed:exists(ctx.campaign)}};},
+    commit:function(t){write(t.C,t.after);}, rollback:function(t){if(t.existed)write(t.C,t.before);else remove(t.C);}
+  };
+}
+function _mhProdLootAdapter() {
+  return {
+    stage:function(op,ctx){
+      if(op.target!=="commissary_rations"||typeof lootInit!=="function"||typeof lootAddItem!=="function")throw new Error("loot");
+      var L=lootInit(ctx.campaign), before=_mhClone(L.inventory); if(!before)throw new Error("loot");
+      var qty=0;for(var i=0;i<before.length;i++)if(before[i].id===op.target)qty+=Number(before[i].qty)||0;
+      return{before:qty,after:qty+op.value,token:{C:ctx.campaign,before:before,id:op.target,value:op.value}};
+    },
+    commit:function(t){var r=lootAddItem(t.C,t.id,t.value,"Mayhem: No Quarter");if(!r||!r.ok)throw new Error("loot-commit");},
+    rollback:function(t){lootInit(t.C).inventory=_mhClone(t.before)||[];}
+  };
+}
+function _mhProdModifierAdapter() {
+  return {
+    stage:function(op,ctx){
+      var L=typeof lootInit==="function"?lootInit(ctx.campaign):null;if(!L)throw new Error("modifier");
+      var existed=Array.isArray(L.modifiers), before=existed?_mhClone(L.modifiers):[];if(!before)throw new Error("modifier");
+      var key=op.tag.namespace+":"+op.tag.value+":"+op.target, exists=false;
+      for(var i=0;i<before.length;i++)if(before[i]&&before[i].key===key)exists=true;
+      return{before:exists?1:0,after:1,token:{C:ctx.campaign,before:before,existed:existed,key:key,target:op.target,tag:op.tag}};
+    },
+    commit:function(t){var L=lootInit(t.C);if(!Array.isArray(L.modifiers))L.modifiers=[];for(var i=0;i<L.modifiers.length;i++)if(L.modifiers[i].key===t.key)return;L.modifiers.push({key:t.key,id:t.target,tag:_mhClone(t.tag)});},
+    rollback:function(t){var L=lootInit(t.C);if(t.existed)L.modifiers=_mhClone(t.before)||[];else delete L.modifiers;}
+  };
+}
+function mayhemProductionAdapters(C) {
+  return {
+    "battle.score.add":_mhProdNumberAdapter(function(c){return c.stats&&c.stats.mayhemScore;},function(c,v){if(!c.stats)c.stats={};c.stats.mayhemScore=v;},function(c){if(c.stats)delete c.stats.mayhemScore;},function(c){return !!(c.stats&&Object.prototype.hasOwnProperty.call(c.stats,"mayhemScore"));}),
+    "casualty.credit":_mhProdNumberAdapter(function(c){return c.stats&&c.stats.infl;},function(c,v){if(!c.stats)c.stats={};c.stats.infl=v;},function(c){if(c.stats)delete c.stats.infl;},function(c){return !!(c.stats&&Object.prototype.hasOwnProperty.call(c.stats,"infl"));}),
+    "loot.grant":_mhProdLootAdapter(),
+    "modifier.add":_mhProdModifierAdapter()
+  };
+}
+function _mhNoQuarterContext(C) {
+  var O=C&&C.mayhemNoQuarterOffer;if(!O||!mayhemIsActive(C)||O.consumed===true||!(O.captured>0))return null;
+  return {campaign:C,ruleset:mayhemRuleset(C),side:C.side,timelineId:O.timelineId,battleId:O.battleId,phaseId:"result",actorId:String(C.side).toLowerCase()+"-command",sequence:(Number(C.mayhemSequence)||0)+1,actorTags:[{namespace:"side",value:String(C.side).toLowerCase()}],adapters:mayhemProductionAdapters(C),consumed:false};
+}
+function mayhemNoQuarterApply(C) {
+  var ctx=_mhNoQuarterContext(C);if(!ctx)return null;
+  var receipt=mayhemApply("no-quarter",ctx);if(receipt){C.mayhemNoQuarterOffer.consumed=true;if(typeof saveLocal==="function")try{saveLocal();}catch(e){}}
+  return receipt;
+}
+function _mhNoQuarterPanel(C) {
+  var ctx=_mhNoQuarterContext(C), receipt=null, rs=Array.isArray(C&&C.mayhemReceipts)?C.mayhemReceipts:[];
+  for(var i=rs.length-1;i>=0;i--)if(rs[i]&&rs[i].actionId==="no-quarter"){receipt=rs[i];break;}
+  if(!ctx&&!receipt)return "";
+  var body=receipt?"Applied through the Mayhem transaction: 25 score; 40 casualty credit; commissary rations; side-tagged No Quarter Momentum.":"A surrender of "+_mhEsc(C.mayhemNoQuarterOffer.captured)+" troops opens one declared Mayhem action. All effects are shown before confirmation.";
+  return '<section class="mh-result" role="region" aria-labelledby="mhResultTitle" style="margin:10px 0;padding:12px;border:2px solid #ffe27a;border-radius:8px;background:#17120c;color:#f2e8d5"><div style="font-size:11px;font-weight:900;color:#ffe27a">MAYHEM CAMPAIGN</div><h2 id="mhResultTitle" style="margin:3px 0">No Quarter</h2><p>'+body+'</p>'+(ctx?'<button type="button" class="bigbtn" data-mh-no-quarter="1">Apply No Quarter</button>':'<p><b>Reward recorded.</b> Performance, consequences, rewards, and chaos are reported without a moral or plausibility grade.</p>')+'</section>';
+}
+
+var _MH_BASE_CAMPAIGN_ADVANCE=typeof campaignAdvance==="function"?campaignAdvance:null;
+if(_MH_BASE_CAMPAIGN_ADVANCE)campaignAdvance=function(winnerSide,type){
+  var C=typeof G!=="undefined"&&G.campaign,B=typeof G!=="undefined"&&G.battle;
+  if(C&&mayhemIsActive(C)&&B&&Number(B.mayhemCapturedByPlayer)>0){var n=(Number(C.stats&&C.stats.battles)||0)+1;C.mayhemNoQuarterOffer={timelineId:_mhStableId(C.timelineName)?C.timelineName:"campaign",battleId:_mhStableId(B.id)?B.id:"battle-"+n,captured:Math.round(B.mayhemCapturedByPlayer),consumed:false};}
+  return _MH_BASE_CAMPAIGN_ADVANCE.apply(this,arguments);
+};
+var _MH_BASE_AAR=typeof aarRenderReport==="function"?aarRenderReport:null;
+if(_MH_BASE_AAR)aarRenderReport=function(C,opts){
+  if(!mayhemIsActive(C))return _MH_BASE_AAR.apply(this,arguments);
+  var title=opts&&opts.final?"Mayhem Campaign — Final Results":"Mayhem Campaign — Results So Far";
+  return '<div class="mh-aar" data-mh-no-judgment="true"><h1>'+title+'</h1><p>Performance, consequences, rewards, and chaos. No moral or plausibility GPA.</p>'+_mhNoQuarterPanel(C)+'</div>';
+};
+if(typeof document!=="undefined")document.addEventListener("click",function(e){var b=e&&e.target&&e.target.closest?e.target.closest("[data-mh-no-quarter]"):null;if(!b)return;var C=typeof G!=="undefined"&&G.campaign,r=mayhemNoQuarterApply(C);if(r&&typeof aarRenderTab==="function"&&typeof openSheet==="function")openSheet(aarRenderTab(C));});
 
 function _mhHistorical() { return { id:"historical", version:1 }; }
 function _mhValidId(id) { return id === "historical" || id === "mayhem"; }

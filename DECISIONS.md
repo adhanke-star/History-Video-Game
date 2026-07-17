@@ -4,6 +4,10 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D420 — MAYHEM SLICE C SHIPPED PUBLIC: FIRST NO-QUARTER PRODUCTION TRANSACTION AND NO-JUDGMENT RESULTS — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-007 SHIPPED] (2026-07-17)
+
+The A-C bundle is complete. `MAYHEM_PUBLIC_READY=true` publishes the accessible chooser. The reviewed `no-quarter` declaration is surrender-gated and applies only through D419's transaction: +25 `C.stats.mayhemScore`, +40 existing `C.stats.infl` casualty credit, one `commissary_rations` reward through `lootAddItem`, and one composable side-tagged modifier in the loot owner. The tactical bridge carries only its existing capture ledger into the canonical result. Historical never consumes it. Mayhem AAR output reports performance, consequences, rewards, and chaos with no moral/plausibility GPA. `_SAVE_VER=1`, exact `C.ruleset`, D74, suite 131, schema 55, and scenario/register baselines remain fixed. Later Mayhem content remains closed.
+
 ---
 
 ## D419 — MAYHEM SLICE B SHIPPED: CLOSED EFFECT DATA, ATOMIC ADAPTER PIPELINE, AND BOUNDED RECEIPTS — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-007 DRIVE] (2026-07-17)
