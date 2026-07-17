@@ -1328,6 +1328,58 @@ next green commit and confer through this ledger instead of permitting simultane
   Slice D relationship memory is unstarted and requires its own DRIVE take; every later exclusion
   remains locked.
 
+### LANE-006 · docs-hygiene — **DRIVE (docs-hygiene audit + restructuring)**
+
+- **Owning tool:** Claude Code Fable (top loop). No simultaneous edits by any provider.
+- **State:** DRIVE — ledger-only take from clean D411 boundary
+  `aebc8f228af1424e15b2b1fc5556bfb2c7bcc7b2` (HEAD == origin/main verified at take; build
+  byte-stable at game `7de51b310e09a710eb83ade276952203`; all thirteen coordination-sensitive
+  plan probes re-run green at take — plan 24/24 runtime, twelve battle/arc plans 136 rows,
+  suite list 130 with War Career row 38).
+- **Task:** Docs-hygiene audit + restructuring (Aaron-requested 2026-07-16, D411 session):
+  measure the session-start token cost and duplication across the canonical docs; establish
+  and document the LIVE-HEAD SINGLE-SOURCE RULE (HANDOFF.md's top ⚡ block is THE one canonical
+  live boundary; every other canonical doc carries a 3-5 line summary plus a pointer), the
+  HISTORY ARCHIVAL RULE (each canonical doc keeps the latest head plus exactly one prior in
+  place; older superseded heads move VERBATIM to `legacy/<DOC>-ARCHIVE.md`, newest at top,
+  gated by the probe-anchor inventory), and the TRIMMED READ ORDER (START-HERE →
+  COORDINATION relevant lane → HANDOFF top block → the task's own law docs/probes →
+  DECISIONS latest entry; WAKE-UP/RUN-LOG pull-on-demand); execute them; and add the three
+  D411-session prompt-standard items to OPUS-PLAYBOOK (probe-pin grep preflight across ALL
+  `tools/probe-*.mjs` before any contracted change; clone-local git user.name/user.email at
+  startup; COORDINATION lane parsing takes the FIRST `**State:**`/`**Owning tool:**` bullets —
+  release blocks go above retained history).
+- **Allowlist (may edit ONLY):** `START-HERE.md`, `HANDOFF.md`, `WAKE-UP.md`,
+  `AUTONOMOUS-RUN.md`, `RUN-LOG.md`, `V1-CHECKLIST.md`, `COORDINATION.md` (lane ledger +
+  verified-unpinned prose only), `OPUS-PLAYBOOK.md`, NEW files under `legacy/` (verbatim
+  archives), the four AI entrypoint pointers (`CLAUDE.md`, `AGENTS.md`,
+  `.github/copilot-instructions.md`, `.clinerules` — read-order pointers only), and
+  `DECISIONS.md` (append the new decision entry ONLY; never edit existing entries).
+- **Forbidden in this take:** any `src/` or `data/` file, `civil_war_generals.html` (byte-pinned
+  at the take hash), `build/base.html`, `src/00-manifest.json`, any `tools/` file (all probes
+  read-only), `REVIEW-QUEUE.md` (E71 probe-pinned; propose-only), `docs/design/*` (spec law;
+  probe-pinned), any save/version surface. DECISIONS existing text is append-only law. Every
+  probe-grepped token must survive the trim — the Phase-1 do-not-break inventory
+  (`.tmp/docs-hygiene-do-not-break.txt`, gitignored) gates every archival move; the D408 §17
+  Matters-of-State runtime (LANE-005) is a separate take and MUST NOT start here.
+- **Declared negative bind (one mutation, byte-restored, never landed):** after restructuring
+  is green, flip the probe-pinned `43/43` count token inside this file's LANE-005 retained
+  D410 resume pointer (the "focused reachability row" sentence) to `43/44`;
+  `node tools/probe-war-career-loop-plan.mjs` must exit 1 with exactly its lane-grepping
+  `REACHABILITY BASELINES` step red and every other step green; restore byte-identically
+  (COORDINATION.md md5 must return to its pre-bind value) and rerun 24/24 green.
+- **Acceptance:** all thirteen plan probes green with zero probe edits; game, base, manifest,
+  suite, `src/`, `data/`, `tools/` byte-identical to the take baseline; every archived block
+  byte-verbatim in `legacy/`; the live boundary appears in FULL exactly once (HANDOFF top);
+  read-order token cost measurably reduced with before/after numbers reported; no DECISIONS
+  entry edited and one new entry appended; suite stays 130 with row 38; `_SAVE_VER` untouched;
+  LANE-005's D411-release resume pointer survives verbatim.
+- **Resume pointer:** if interrupted, resume from this committed lock. Phase-1 measurement
+  artifacts live in `.tmp/` (gitignored; absent from a fresh clone — re-run the measurement).
+  Nothing lands until the single docs-hygiene release commit is green; then this lane returns
+  to CONTRACT/unowned.
+- **Last-touched commit:** the LANE-006 take commit (this edit).
+
 ---
 
 ## 6 · JOINT STRATEGY BOARD — Fable ⇄ Sol (cross-tool planning, not just locks)
