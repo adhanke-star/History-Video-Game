@@ -2034,9 +2034,14 @@ next green commit and confer through this ledger instead of permitting simultane
   ONE guarded translate seam, device-local cw_keymap_v1 (sanitized, collision-checked,
   reset), the ⌨ Keys panel + bar button, reserved keys fixed, the literal-NUL sentinel
   caught and root-fixed to the escaped form; teeth authored into probe-field (suite stays
-  137); AUDIT-DEBT AD-16.** Exact next: slice 6 (GEA-13 the deterministic replay capsule) —
-  re-read its contract in full first.
-- **Last-touched commit:** the D449 slice commit.
+  137); AUDIT-DEBT AD-16.** **D450 SHIPPED slice 6 (GEA-13): the T31 replay capsule —
+  tick-indexed closed nine-mutator log on the proven fixed-timestep ground, default-off with
+  zero sim-path cost, playback through the SAME engine with hash equality or the verbatim
+  honest failure, unknown versions refused, GEA-02 Blob export on the end screen,
+  standalone-only v1 bound recorded; teeth (3-seed round trip + tamper honesty) authored
+  into probe-field; AUDIT-DEBT AD-17.** Exact next: slice 7 (GEA-14 the classroom session
+  packet) — re-read its contract in full first.
+- **Last-touched commit:** the D450 slice commit.
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's genre-elite P1
   build-run directive (the D443 extend-coding continuation).
 

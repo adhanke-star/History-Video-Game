@@ -486,6 +486,64 @@ const SETUP = `(() => {
       fldExit(true);
       return { ok:true }; });
 
+    // GEA-13 (D450, AUDIT-DEBT AD-17): THE DETERMINISTIC REPLAY CAPSULE.
+    // BIND A PREDECLARATION - removing T0's fldReplayOnLaunch launch seam must red exactly this
+    // step's recording-armed assert, nothing else.
+    // BIND B PREDECLARATION - weakening _rpValidCapsule's version check must red exactly this
+    // step's unknown-version refusal assert.
+    step('GEA-13 REPLAY: default-off zero cost (no wrapper); 3-seed record->verify round trip through the REAL engine; tamper divergence fails HONESTLY; unknown version refused; capsule closed-shape secret-free', function(){
+      if (typeof fldReplayOnLaunch!=='function' || typeof fldReplayVerify!=='function' || typeof fldReplayFinalize!=='function') throw new Error('replay API missing');
+      // (1) DEFAULT OFF: no wrapper in any call path
+      try { delete G.settings.replayRec; } catch(e){}
+      fldLaunchSandbox({renderer:'none', autoBoth:true, seed:9});
+      if (window.fldOrderMove && window.fldOrderMove._rpWrapped) throw new Error('a wrapper installed with the flag off');
+      if (typeof fldReplayEndHtml==='function' && fldReplayEndHtml() !== '') throw new Error('end block rendered while unarmed');
+      fldExit(true);
+      // (2) 3-seed record -> verify round trip (sandbox, real player orders through the wrapped mutators)
+      var seeds=[3,11,27], caps=[];
+      for (var si=0; si<seeds.length; si++){
+        G.settings.replayRec = true;
+        fldLaunchSandbox({renderer:'none', seed:seeds[si]});
+        if (!window.fldOrderMove._rpWrapped) throw new Error('recording did not arm (seed '+seeds[si]+')');
+        __FIELD.phase='battle'; __FIELD.paused=false;
+        var ps=fldPlayerSide(), uid=null, i;
+        for (i=0;i<__FIELD.units.length;i++){ var u=__FIELD.units[i]; if(u.side===ps&&u.alive&&!u.ai){ uid=u.id; break; } }
+        fldStepN(40,0.05);
+        if (uid){ var un=null; for(i=0;i<__FIELD.units.length;i++) if(__FIELD.units[i].id===uid) un=__FIELD.units[i];
+          if (un) fldOrderMove(un, un.x+60, un.z-80, un.facing); }
+        fldStepN(120,0.05);
+        if (uid){ __FIELD.sel=[uid]; fldSelCharge(); }
+        var guard=0; while(__FIELD.phase==='battle' && guard<24000){ fldSimStep(0.05); guard++; }
+        if (__FIELD.phase!=='over') throw new Error('seed '+seeds[si]+' never resolved');
+        var cap = fldReplayFinalize();
+        if (!cap || !cap.endHash || cap.log.length < 2) throw new Error('capture incomplete (seed '+seeds[si]+'): '+JSON.stringify(cap && {h:cap.endHash,n:cap.log.length}));
+        caps.push(JSON.parse(JSON.stringify(cap)));
+        fldExit(true);
+      }
+      try { delete G.settings.replayRec; } catch(e){}
+      for (si=0; si<caps.length; si++){
+        var r = fldReplayVerify(caps[si]);
+        if (!r.ok || r.replay !== true) throw new Error('round trip failed (seed '+seeds[si]+'): '+r.message+' expected '+r.expected+' actual '+r.actual);
+      }
+      // (3) TAMPER DIVERGENCE -> the honest failure, never an approximation
+      var bad = JSON.parse(JSON.stringify(caps[0]));
+      bad.endHash = (bad.endHash[0]==='0'?'1':'0') + bad.endHash.slice(1);
+      var rb = fldReplayVerify(bad);
+      if (!rb.ok || rb.replay !== false) throw new Error('a tampered hash still verified');
+      if (rb.message.indexOf('cannot replay') < 0) throw new Error('divergence message not honest: '+rb.message);
+      // (4) UNKNOWN VERSION fails closed
+      var v2 = JSON.parse(JSON.stringify(caps[0])); v2.capsuleVersion = 2;
+      var rv = fldReplayVerify(v2);
+      if (rv.ok || String(rv.message).indexOf('refused') < 0) throw new Error('unknown version not refused: '+rv.message);
+      // (5) SECRET-FREE closed shape: exactly the eight contract keys; the settings subset is five booleans
+      var keys = Object.keys(caps[0]).sort().join(',');
+      if (keys !== 'capsuleVersion,endHash,log,playerSide,scenarioId,seed,settings,ticks') throw new Error('capsule keys leaked: '+keys);
+      var sk = Object.keys(caps[0].settings).sort().join(',');
+      if (sk !== 'armsOff,autoBoth,fog,logisticsOff,officersOff') throw new Error('settings subset leaked: '+sk);
+      var txt = JSON.stringify(caps[0]);
+      if (/localStorage|password|token|gor_save|cw_career|cw_keymap/.test(txt)) throw new Error('secret-shaped content in the capsule');
+      return { seeds:seeds.length, orders:caps.map(function(c){return c.log.length;}) }; });
+
     step('NO CLASSIC CONTAMINATION: __FIELD never wrote G.battle / G.campaign / G.mode', function(){
       var modeBefore=G.mode;
       fldLaunchSandbox({renderer:'none', autoBoth:true, seed:2}); fldStepN(200,0.05);

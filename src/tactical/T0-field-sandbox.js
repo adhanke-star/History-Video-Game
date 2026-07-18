@@ -1189,6 +1189,9 @@ function fldLaunchSandbox(opts) {
   // battle runs. The arm hook refuses headless/autoBoth (PM3 stays engine-only) and NEVER writes
   // llmCommander into __FIELD._launchOpts, so the relaunch button (below) cannot silently re-arm.
   if (typeof fldLlmArmOnLaunch === "function") fldLlmArmOnLaunch();
+  // GEA-13 (D450): the replay-capsule arm hook — with the default-off flag it disarms and
+  // returns (no wrapper enters any call path; the sim tick is never touched).
+  if (typeof fldReplayOnLaunch === "function") { try { fldReplayOnLaunch(opts); } catch (eRp) {} }
   try { if (typeof closeSheet === "function") closeSheet(); } catch (e) {}
   try { var ov = document.getElementById("overlay"); if (ov) ov.classList.add("hidden"); } catch (e) {}
   if (__FIELD.rendererKind === "none") return; // headless (probe)
@@ -1676,6 +1679,8 @@ function fldOnOver() {
   if (typeof fldEngEndHtml === "function") { try { scNote += (fldEngEndHtml() || ""); } catch (eE) {} }
   // E49a seam (D258): the after-action killed/wounded · captured · missing columns (SL-8; "" in the sandbox).
   if (typeof fldPrisonerEndHtml === "function") { try { scNote += (fldPrisonerEndHtml() || ""); } catch (eS) {} }
+  // GEA-13 (D450): the replay-capsule export block ("" whenever recording was off — the default).
+  if (typeof fldReplayEndHtml === "function") { try { scNote += (fldReplayEndHtml() || ""); } catch (eRp2) {} }
   var _inCampaign = !!__FIELD.campaignCtx;
   e.innerHTML =
     '<div style="text-align:center;background:#0c0f14;border:1px solid #745e3f;border-radius:8px;padding:26px 34px;max-width:640px;max-height:88vh;overflow:auto;">' /* wcag-auditor: contrast fix #4a3c28->#745e3f border on #0c0f14 (was 1.80:1, now 3.12:1) WCAG 1.4.11 */ +
