@@ -1918,8 +1918,9 @@ next green commit and confer through this ledger instead of permitting simultane
   item 3 (GEA-03). D436 SHIPPED queue item 4 (ATLANTA): scenario 25 playable at
   25/56/1,566/132, S44 lock swapped to marchToTheSea, probe-atlanta authored; AD-4.** **D437 SHIPPED queue item 5 (Mayhem D + E first cut); AD-5. D438 SHIPPED queue item 6
   (War Career Slice F): §19 contract `ca29e2d` then the franchise-archive runtime `0fa8f97`;
-  AD-6/AD-7.** Exact next: queue item 7 — Cold Harbor spec + authored plan probe (runtime only
-  if the night allows).
+  AD-6/AD-7.** **D439 SHIPPED queue item 7 (Cold Harbor spec + dual-mode plan probe, planning 6/6; runtime
+  deferred by the queue's own if-room clause; AD-8).** Exact next: queue item 8 — GEA-05 (one
+  action-aware tutorial lesson) + GEA-06 (the read-only fog-safe causal ribbon).
 - **Last-touched commit:** the D432 lock commit (this edit).
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's D431 overnight
   directive.

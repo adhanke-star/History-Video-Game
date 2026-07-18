@@ -40,6 +40,31 @@ asset purchases/accounts. LANE-009's shipped slices are not re-run. Expected tra
 end: LANE-010 → VERIFY (audit-owed), with the audit session settling the whole AUDIT-DEBT
 ledger plus the full serialized battery and flipping LANE-009 + LANE-010 SHIPPED.
 
+## D439 — COLD HARBOR SPEC + PLAN PROBE SHIPPED (RUNTIME DEFERRED TO THE CONTINUATION BY THE QUEUE'S OWN "IF ROOM" CLAUSE) — [CLAUDE CODE (FABLE 5), LANE-010 DRIVE] (2026-07-18)
+
+Queue item 7, spec-first from the committed 1864-65 attrition packet (Cold Harbor is
+packet-High; the D395 explicit-reorder gate is SATISFIED by D431).
+`docs/design/cold-harbor-battle-build-spec.md`: single-phase doomed frontal assault (June 3,
+4:30 a.m.), attacker US FAILS (the honest Union failure with Grant's fetched regret quote,
+never a "butcher" caricature), fog OFF with the killing ground modeled via terrain + few works
+gaps, committed envelopes US [15000-25000] / CS [10000-18000], the "7,000 in 30 minutes"
+figure FENCED as disputed teaching-flavor only (Rhea vs ABT — never an input), the full rank
+wall (Grant Lt. Gen. general-in-chief / Meade commanding the AotP; Wright-not-Sedgwick; the
+packet §9 Anderson-title and Baldy-Smith/XVIII verification obligations carried as BINDING
+runtime-session duties; dead-officer wall Sedgwick/Stuart/Longstreet), the D74 law with the
+lane's signature temptation named, a five-card teaching spine, and the complete §7 integration
+pin table — including the documented 68.5 menu-rank exception (June 3 sits between
+spotsylvania:68 and petersburgAssaults:69; the comparator is numeric and renumbering would
+churn every later pin). `tools/probe-cold-harbor-plan.mjs` AUTHORED dual-mode and fail-closed
+(the D390 pattern): planning mode proves the spec tokens + packet anchors + NO half-registration
+(no tactical coldHarbor identifier anywhere); runtime mode demands every §7 transition complete.
+Run once tonight in planning mode (static, non-browser — the seconds-cheap gate class): 6/6
+green. The RUNTIME is deferred to the continuation session per the queue's own "runtime only if
+the night still has room" clause — GEA-05/06 rank ahead of it.
+
+**VETTING DEFERRED (D431):** gates were node --check + the static plan probe (6/6) + git diff
+--check; no build needed (docs + a new probe only; no src/data byte moved). AUDIT-DEBT AD-8.
+
 ## D438 — WAR CAREER SLICE F SHIPPED: THE §19 WAR-END FRANCHISE ARCHIVE (CONTRACT FIRST, THEN RUNTIME) — [CLAUDE CODE (FABLE 5), LANE-010 DRIVE] (2026-07-18)
 
 Queue item 6. The contract was committed FIRST as design law (`docs/design/war-career-loop-
