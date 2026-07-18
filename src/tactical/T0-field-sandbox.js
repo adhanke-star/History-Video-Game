@@ -1529,6 +1529,10 @@ function fldKey(e) {
   if (e.target && e.target.tagName === "BUTTON") return;
   if (__FIELD.phase === "over") return; // end screen: native Tab/Enter/Space reach #fldAgain / #fldDone
   var k = e.key;
+  // GEA-09 phase 2 (D449): THE ACTION-MAP SEAM — a remapped key translates to its action's
+  // default key and the verbatim dispatch below consumes it; a moved action's old default goes
+  // inert. Guarded: no module / no stored keymap -> k unchanged -> today's behavior exactly.
+  if (typeof fldKeymapTranslate === "function") k = fldKeymapTranslate(k, e);
   if (k === " ") { e.preventDefault(); fldTogglePlay(); }
   else if (k === "1") __FIELD.speed = 1; else if (k === "2") __FIELD.speed = 2; else if (k === "3") __FIELD.speed = 4;
   else if (k === "l" || k === "L") fldSetFormation("line");

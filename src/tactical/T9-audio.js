@@ -434,7 +434,7 @@ function _fldAudioInjectButton() {
       var _origStartLoop = fldStartLoop;
       fldStartLoop = function () {
         var r = _origStartLoop.apply(this, arguments);
-        try { _fldAudioInjectButton(); _fldAudioStart(); } catch (e) {}
+        try { _fldAudioInjectButton(); if (typeof fldKeymapInjectButton === "function") fldKeymapInjectButton(); _fldAudioStart(); } catch (e) {}   // GEA-09 phase 2 (D449): the Keys button rides the same bar hook (guarded)
         return r;
       };
       fldStartLoop._t9audio = true;

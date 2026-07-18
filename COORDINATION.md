@@ -2029,9 +2029,14 @@ next green commit and confer through this ledger instead of permitting simultane
   levers, mono as a pan-collapse that silences nothing, panel sliders in the focus trap; the
   frozen-closure zero-gate bound RECORDED (one-shot cues gate at 0 — full per-cue scaling
   needs a future base-thaw/resynthesis contract); teeth authored into the EXISTING
-  probe-audio-ambience (suite stays 137, no sweep); AUDIT-DEBT AD-15.** Exact next: slice 5b
-  (GEA-09 phase 2, the action-map seam) — the declarative table + device-local cw_keymap_v1.
-- **Last-touched commit:** the D448 slice commit.
+  probe-audio-ambience (suite stays 137, no sweep); AUDIT-DEBT AD-15.** **D449 SHIPPED
+  slice 5b (GEA-09 phase 2): the T30 action map — the 18-action table verbatim from fldKey,
+  ONE guarded translate seam, device-local cw_keymap_v1 (sanitized, collision-checked,
+  reset), the ⌨ Keys panel + bar button, reserved keys fixed, the literal-NUL sentinel
+  caught and root-fixed to the escaped form; teeth authored into probe-field (suite stays
+  137); AUDIT-DEBT AD-16.** Exact next: slice 6 (GEA-13 the deterministic replay capsule) —
+  re-read its contract in full first.
+- **Last-touched commit:** the D449 slice commit.
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's genre-elite P1
   build-run directive (the D443 extend-coding continuation).
 

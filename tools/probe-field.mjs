@@ -435,6 +435,57 @@ const SETUP = `(() => {
       if(n!==1) throw new Error('duplicate injection: '+n+' buttons');
       return { injected:true, copies:n, hasAria: !!btn.getAttribute('aria-label') }; });
 
+    // GEA-09 phase 2 (D449, AUDIT-DEBT AD-16): THE ACTION-MAP SEAM.
+    // BIND A PREDECLARATION - removing T0's fldKeymapTranslate seam line must red exactly this
+    // step's dispatch-through-translation assert, nothing else.
+    // BIND B PREDECLARATION - removing the collision-check in fldKeymapSet must red exactly
+    // this step's duplicate-key refusal assert.
+    step('GEA-09 KEYMAP: table verbatim vs fldKey; identity without a store; remap round trip through the REAL fldKey; moved default inert; collision + reserved refused; sanitation drops junk; reset clears; device-local only (G.settings untouched)', function(){
+      if (typeof fldKeymapTranslate!=='function' || typeof fldKeymapSet!=='function' || typeof fldKeymapReset!=='function') throw new Error('keymap API missing');
+      try { localStorage.removeItem('cw_keymap_v1'); } catch(e){}
+      fldKeymapReset();
+      // (1) table verbatim: every declared default key literally appears in the fldKey source dispatch
+      var src = String(fldKey);
+      for (var i=0;i<FLD_ACTIONS.length;i++){ var a=FLD_ACTIONS[i];
+        var tok = (a.key===' ') ? '" "' : (a.key.length===1 ? '"'+a.key+'"' : '"'+a.key+'"');
+        if (src.indexOf(tok) < 0) throw new Error('default key not in fldKey dispatch: '+a.id+' -> '+a.key); }
+      // (2) identity with no store
+      if (fldKeymapTranslate('v',{}) !== 'v' || fldKeymapTranslate('Home',{}) !== 'Home') throw new Error('identity translation broken');
+      // (3) remap hold h->z, drive the REAL fldKey: pressing z holds the selected brigade
+      var r = fldKeymapSet('hold','z'); if (!r.ok) throw new Error('set failed: '+r.err);
+      fldLaunchSandbox({renderer:'none', seed:5}); __FIELD.phase='battle'; __FIELD.paused=false;
+      var ps=fldPlayerSide(), uid=null;
+      for (var j=0;j<__FIELD.units.length;j++){ var u=__FIELD.units[j]; if(u.side===ps && u.alive && !u.ai){ uid=u.id; break; } }
+      if (!uid) throw new Error('no player unit');
+      __FIELD.sel=[uid];
+      fldKey({ key:'z', target:{tagName:'DIV'}, preventDefault:function(){}, stopPropagation:function(){} });
+      var un=null; for (j=0;j<__FIELD.units.length;j++) if(__FIELD.units[j].id===uid) un=__FIELD.units[j];
+      if (!un.order || un.order.type!=='hold') throw new Error('remapped z did not dispatch hold (order: '+JSON.stringify(un.order)+')');
+      // (4) the moved default h is INERT (no hold re-issue after clearing the order)
+      un.order=null;
+      fldKey({ key:'h', target:{tagName:'DIV'}, preventDefault:function(){}, stopPropagation:function(){} });
+      if (un.order && un.order.type==='hold') throw new Error('the moved default still fired');
+      // (5) collision + reserved refusals
+      if (fldKeymapSet('charge','z').ok) throw new Error('duplicate custom key accepted');
+      if (fldKeymapSet('charge','v').ok) throw new Error('another action\\'s default accepted');
+      if (fldKeymapSet('charge','Escape').ok) throw new Error('reserved key accepted');
+      // (6) READ-SIDE SANITATION: a junk store re-read through the sanitizer (cache busted via
+      // the bare module global) drops unknown action ids and refuses duplicate keys (first wins)
+      localStorage.setItem('cw_keymap_v1', JSON.stringify({v:1,map:{'not-an-action':'q','hold':'z','charge':'z'}}));
+      _fldKeymapCache = undefined;
+      if (fldKeymapTranslate('q',{}) !== 'q') throw new Error('an unknown action id bound a key');
+      if (fldKeymapTranslate('z',{}) !== 'h') throw new Error('the valid entry did not survive the sanitizer');
+      var mSane = fldKeymapCustom();
+      if (mSane && mSane['charge']) throw new Error('the duplicate key survived the sanitizer');
+      // (7) device-local only: G.settings carries no keymap
+      if (JSON.stringify(G.settings).indexOf('cw_keymap')>=0 || JSON.stringify(G.settings).indexOf('keymap')>=0) throw new Error('keymap leaked into G.settings');
+      // (8) reset clears
+      fldKeymapReset();
+      if (localStorage.getItem('cw_keymap_v1')) throw new Error('reset did not clear the store');
+      if (fldKeymapTranslate('z',{}) !== 'z') throw new Error('post-reset translation not identity');
+      fldExit(true);
+      return { ok:true }; });
+
     step('NO CLASSIC CONTAMINATION: __FIELD never wrote G.battle / G.campaign / G.mode', function(){
       var modeBefore=G.mode;
       fldLaunchSandbox({renderer:'none', autoBoth:true, seed:2}); fldStepN(200,0.05);
