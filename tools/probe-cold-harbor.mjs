@@ -149,6 +149,17 @@ const SETUP = `(() => {
   var R = { steps: [], errors: [], ok: true };
   function check(name, fn){ try{ var v=fn(); R.steps.push({name:name, ok:true, v: v===undefined?null:v}); }
     catch(e){ R.ok=false; R.steps.push({name:name, ok:false, err:String(e&&e.message||e)}); } }
+  function dataStrength(sd, side) {
+    var t = 0;
+    (((sd || {}).oob || {})[side] || []).forEach(function(u){ t += u.men || 0; });
+    ((sd || {}).reinforcements || []).forEach(function(u){ if (u.side === side) t += u.men || 0; });
+    return t;
+  }
+  function liveStrength(side) {
+    var t = 0;
+    for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side === side) t += u.men; }
+    return t;
+  }
   function runBattle(opts) {
     opts = opts || {};
     G.campaign = null; G.settings = G.settings || {};
@@ -156,10 +167,13 @@ const SETUP = `(() => {
     delete G.settings.tacticalFog;
     __FIELD._officersOff = false; __FIELD._logisticsOff = false; __FIELD._armsOff = false;
     fldLaunchSandbox({ renderer:'none', scenario:'coldHarbor', autoBoth:!!opts.autoBoth, playerSide:opts.playerSide || 'US', seed:opts.seed || 1 });
+    var start = { US:dataStrength(__FIELD.scenData, 'US'), CS:dataStrength(__FIELD.scenData, 'CS') };
     __FIELD.phase = 'battle'; __FIELD.paused = false;
     var n = 0, max = opts.maxSteps || 120000;
     while (__FIELD.phase === 'battle' && n < max) { fldSimStep(0.05); n++; }
-    return { w:__FIELD.winner, by:__FIELD.winBy, phase:__FIELD.phase, steps:n, cas:__FIELD.battleCas };
+    var us = liveStrength('US'), cs = liveStrength('CS');
+    return { w:__FIELD.winner, by:__FIELD.winBy, phase:__FIELD.phase, steps:n,
+      loss:{ US:Math.round(start.US - us), CS:Math.round(start.CS - cs) }, cas:__FIELD.battleCas || null };
   }
   try {
     if (typeof fldLaunchSandbox !== 'function' || typeof fldScenarioRegistry !== 'function' || typeof ssPersonRegistry !== 'function')
@@ -200,12 +214,22 @@ const SETUP = `(() => {
     check('ARMY REGISTER PIN: 16 unique Cold Harbor side-unit ids produce exact cmd/nco/pvt trios and current total 1614', function(){
       var reg = ssPersonRegistry();
       if (reg.people.length !== 1614) throw new Error('Army Register total is ' + reg.people.length + ', expected 1614');   // D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots
-      var ids = {};
-      ['us_barlow_ch','us_gibbon_ch','us_russell_ch','us_vi_second_ch','us_brooks_ch','us_martindale_ch','us_xviii_second_ch','us_left_guns_ch','us_right_guns_ch','cs_anderson_front_ch','cs_hoke_ch','cs_breck_ch','cs_hill_right_ch','cs_works_guns_ch','cs_right_guns_ch','cs_breck_reserve_ch'].forEach(function(id){ ids[id] = 0; });
-      reg.people.forEach(function(p){ var u = String(p.unitId || ''); if (Object.prototype.hasOwnProperty.call(ids, u)) ids[u]++; });
-      var bad = Object.keys(ids).filter(function(k){ return ids[k] !== 3; });
-      if (bad.length) throw new Error('units without exact trios: ' + bad.map(function(k){ return k + '=' + ids[k]; }).join(', '));
-      return { total:reg.people.length };
+      var rows = [], groups = {};
+      for (var i = 0; i < reg.people.length; i++) {
+        var p = reg.people[i], origin = p.replaces || p.pid;
+        if (typeof origin === 'string' && origin.indexOf('ss:coldHarbor:') === 0) rows.push(origin);
+      }
+      if (rows.length !== 48) throw new Error('Cold Harbor rows are ' + rows.length + ', expected 48 (16 units x cmd/nco/pvt)');
+      rows.forEach(function(origin){
+        var m = origin.match(/^ss:coldHarbor:(US|CS):([^:]+):(cmd|nco|pvt)$/);
+        if (!m) throw new Error('bad Cold Harbor slot id ' + origin);
+        var key = m[1] + ':' + m[2]; groups[key] = groups[key] || {}; groups[key][m[3]] = 1;
+      });
+      var want = ['US:us_barlow_ch','US:us_gibbon_ch','US:us_russell_ch','US:us_vi_second_ch','US:us_brooks_ch','US:us_martindale_ch','US:us_xviii_second_ch','US:us_left_guns_ch','US:us_right_guns_ch','CS:cs_anderson_front_ch','CS:cs_hoke_ch','CS:cs_breck_ch','CS:cs_hill_right_ch','CS:cs_works_guns_ch','CS:cs_right_guns_ch','CS:cs_breck_reserve_ch'];
+      var bad = want.filter(function(k){ var g = groups[k]; return !g || !g.cmd || !g.nco || !g.pvt; });
+      if (bad.length) throw new Error('units without exact trios: ' + bad.join(', '));
+      if (Object.keys(groups).length !== 16) throw new Error('unexpected Cold Harbor unit groups: ' + Object.keys(groups).length);
+      return { total:reg.people.length, rows:rows.length };
     });
 
     check('HISTORICAL DIRECTION (8 seeds): the CS defender holds in the majority AND US losses exceed CS in the majority (direction only, never a count gate — D74; fix INPUTS if this fails, never a lever)', function(){
@@ -214,9 +238,8 @@ const SETUP = `(() => {
         var r = runBattle({ autoBoth:true, seed:seeds[i] });
         if (r.phase !== 'over') throw new Error('seed ' + seeds[i] + ' did not resolve');
         if (r.w === 'CS') csHolds++;
-        var totUS = (r.cas && r.cas.US) || 0, totCS = (r.cas && r.cas.CS) || 0;
-        if (totUS > totCS) usBleeds++;
-        samples.push(seeds[i] + ':' + r.w + ' cas ' + Math.round(totUS) + '-' + Math.round(totCS));
+        if (r.loss.US > r.loss.CS) usBleeds++;
+        samples.push(seeds[i] + ':' + r.w + ' loss ' + r.loss.US + '-' + r.loss.CS);
       }
       if (csHolds < 5) throw new Error('CS holds below 5/8: ' + csHolds + ' :: ' + samples.join(', '));
       if (usBleeds < 5) throw new Error('US-losses-exceed-CS below 5/8 (the lopsided-repulse direction): ' + usBleeds + ' :: ' + samples.join(', '));
