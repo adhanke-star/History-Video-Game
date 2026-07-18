@@ -205,6 +205,7 @@ const SETUP = `(() => {
 
     step('GEA-02 the plain-text builder carries the context header + visible report text and excludes the controls (secret-free)', function(){
       var C=mkC('CS',1864,9); C.stats={battles:3,won:1,infl:500,suff:800};
+      try { if (typeof closeSheet==='function') closeSheet(); } catch(e){}   // D443 (AD-2 fixture fix, never-run authoring bug): earlier war-end steps leave the sheet overlay open, rendering body-appended nodes hidden — innerText of a non-rendered node is empty, so the WYSIWYG body read came back blank
       var host=document.createElement('div'); host.innerHTML=aarRenderReport(C,{final:false}); document.body.appendChild(host);
       try {
         var bar=host.querySelector('.aarExport'), root=host.querySelector('.aarReportRoot');
@@ -217,7 +218,7 @@ const SETUP = `(() => {
         if(text.indexOf('Ironman: Off')<0) throw new Error('the Ironman status is missing');
         if(text.indexOf('Copy Report')>=0||text.indexOf('Download Text')>=0) throw new Error('the export text must not contain the controls themselves');
         if(text.indexOf('cw_llm')>=0) throw new Error('the export text leaked a device-local secret key');
-        if(text.indexOf('Overall conduct')<0) throw new Error('the export text must carry the visible report body');
+        if(text.toUpperCase().indexOf('OVERALL CONDUCT')<0) throw new Error('the export text must carry the visible report body');   // D443 (AD-2 root fix, never-run authoring bug): the panel label renders under CSS text-transform:uppercase and innerText is WYSIWYG — the export deliberately carries the RENDERED casing
         return { len:text.length };
       } finally { document.body.removeChild(host); } });
 
