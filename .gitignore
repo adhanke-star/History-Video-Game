@@ -18,6 +18,8 @@ tools/shots/*.png
 tools/shots/*.jpg
 tools/shots/*.json
 tools/shots/*.log
+tools/shots/*.webm
+tools/shots/session-video/
 !tools/shots/milestone-*.png
 !tools/shots/baseline-*.png
 !tools/shots/after-*.png
