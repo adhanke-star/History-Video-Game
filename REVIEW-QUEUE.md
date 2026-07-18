@@ -288,6 +288,12 @@ Updated 2026-07-10 (AUDIT ledger; D370 is run 3 under the D336/D367 ChatGPT/Code
 
 - **E70** · gameplay / command design · **MED** · `src/35-command.js:217-240` — Cross-theater Transfer spends political capital and persists readiness, but no appointment, OOB, battle, bridge, or leadership consumer reads that readiness; D323 intentionally stopped at readiness-only. **Recommendation:** either give readiness one bounded, source-honest command consumer or suspend/remove the cost until that consumer exists, because the current rational gameplay value is negative. → **BUILT (D354, Aaron disposition 2026-07-10: build the consumer, keep the cost)** — `_cmdTransferReadinessLift` pays a bounded −3 command-friction on `commandLeadership` only for an explicitly appointed, un-transferred cross-theater general; natural fit / completed Transfer / history-following default read exactly 0 (byte-identical campaigns). Disclosure copy + pinned tooth updated together; probe-command 90/90 with a purity-snapshotted E70 tooth; negative bind test proved the consumer bites. **The run-2 ledger is fully dispositioned.**
 
+## AUDIT-DEBT LEDGER — D431 coding-first deferral (2026-07-18; the dedicated audit session settles every row)
+
+**Standing law (D431):** the overnight coding-first run gates slices only on node --check + build GATE OK (+ schema when data moves). Every overnight slice MUST append a row here naming the probes/binds/batteries it owes. The audit session runs this ledger top to bottom, then the full serialized battery, then flips each row settled.
+
+- **AD-0** · LANE-009 terminal battery · owed by D423-D430 (all seven FIX-NOW slices shipped fully probed/bound; only the 131-command battery itself is outstanding — it died at row 38 on the war-career 360s budget after 37 greens; budget root-fixed to 900s in D431). Settle by: `npm run vet:noreg` alone on the machine, resume-capable via `--from='war career'` against the D431 boundary or a fresh full run at the audit head; read every artifact per law.
+
 ## GENRE-ELITE AUDIT — 2026-07-10 (D369 / LANE-004 Phase A)
 
 **Web-grounded design audit at HEAD `a55700f`.** The binding analysis and source register are in

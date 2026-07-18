@@ -1774,7 +1774,7 @@ next green commit and confer through this ledger instead of permitting simultane
 - **Last-touched commit:** D422 release pending.
 - **History:** selected and contracted in D422 after the D421 clean boundary; shipped in D422.
 
-### LANE-009 · finish-line-fixnow — **DRIVE** (Claude Code / Fable 5)
+### LANE-009 · finish-line-fixnow — **VERIFY** (unowned; every slice shipped, battery owed to the audit session)
 
 - **Owning tool:** Claude Code (Fable 5) — Aaron authorized Fable-friendly sessions through
   Sunday 2026-07-19; owner recorded per §3-4 role law (TOP LOOP resolved to the live session
@@ -1865,11 +1865,14 @@ next green commit and confer through this ledger instead of permitting simultane
   byte-identical; one-token bind).** **C74 SHIPPED (D429: live-verified independent editorial
   authorities on the Jacobs/Taylor/Lunt cards + the static independence tooth; authority-removal
   bind).** **E74 PARTIALLY SHIPPED (D430: the inheritance rule + the exact-count per-file
-  ratchet in build gate 4e-2; injection bind exit 5; the 123-object migration is the surfaced
-  fork and the push's ONE deferred item — options + recommendation in D430).** Exact next: the
-  terminal full serialized `npm run vet:noreg` release battery, alone on the machine — green =
-  feature-done; then flip LANE-009 SHIPPED/unowned.
-- **Last-touched commit:** the D430 E74 release.
+  ratchet in build gate 4e-2; injection bind exit 5).** **D431 close: Aaron's 2026-07-18
+  coding-first directive defers the terminal battery to a dedicated AUDIT SESSION (AUDIT-DEBT
+  AD-0 — the D430 battery was green for 37 commands and died only on the war-career 360s budget,
+  root-fixed to 900s). LANE-009 rests at VERIFY/unowned with every FIX-NOW slice shipped and
+  fully probed/bound at its own boundary; the audit session discharges AD-0 and flips this lane
+  SHIPPED. The overnight feature run opens its own LANE-010 and must not rerun this lane's
+  slices.**
+- **Last-touched commit:** the D431 boundary close.
 - **History:** adjudicated + contracted by Claude Code (Fable 5) 2026-07-17 under Aaron's
   finish-line directive; DRIVE taken in the same ledger-only commit; GEA-01 + S44 shipped in the
   D423 release the same day.

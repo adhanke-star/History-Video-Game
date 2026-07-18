@@ -227,6 +227,7 @@ function timeoutFor(label, file) {
   if (file.endsWith('diag-player-agency.mjs')) return 600000; // slow-Mac budget: 5 player-order legs incl. two 3-phase Antietam runs (D265)
   if (file.endsWith('probe-attacker-parity.mjs')) return 600000; // E53-v2 battery smoke: multi-battle tactical runs (D272)
   if (file.endsWith('probe-full-campaign.mjs')) return 900000; // slow-Mac budget: PM3 (D277) — both delegated chains now run ~80 headless real-time sims instead of instant margin math
+  if (file.endsWith('probe-war-career.mjs')) return 900000; // slow-Mac budget: D431 — the probe grew to 44 browser steps + V2 receipt/Matters-of-State legs across D400-D413 and runs ~7-12 min on this Mac (two standalone 44/44 greens 2026-07-17); the 360s default killed it mid-evaluate in the D430 battery
   if (file.endsWith('probe-auto-resolve.mjs')) return 600000;  // slow-Mac budget: PM3 (D277) — ~12 headless sims incl. the fog-on Bull Run scenario
   if (file.endsWith('build.mjs')) return 240000;
   return DEFAULT_TIMEOUT_MS;

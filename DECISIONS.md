@@ -4,6 +4,40 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D431 — AARON PIVOTS TO A CODING-FIRST OVERNIGHT RUN: THE BATTERY IS DEFERRED TO A DEDICATED AUDIT SESSION; THE WAR-CAREER BUDGET IS ROOT-FIXED; LANE-009 CLOSES AT VERIFY — [AARON + CLAUDE CODE (FABLE 5)] (2026-07-18)
+
+Battery result (partial, honest record): the D430 terminal `npm run vet:noreg` ran serialized and
+alone and was green for its first **37 commands** (`.tmp/d430-battery.log`), then died at row 38
+`war career` when the runner's DEFAULT 360s budget killed the probe mid-evaluate at 360.2s
+("Target page, context or browser has been closed" is the kill, not a game error). Root cause is
+the documented slow-Mac budget class (D381/D394): probe-war-career grew to 44 browser steps plus
+the V2-receipt/Matters-of-State legs across D400-D413 (~7-12 min on this Mac; two standalone
+44/44 greens on 2026-07-17) but never received a `timeoutFor` entry. Root-fixed here: 900s with
+the documented comment, the probe-full-campaign precedent. No tooth, probe, game, or data byte
+moved; no game regression is indicated by the failure.
+
+**[AARON, 2026-07-18] CODING-FIRST DIRECTIVE (supersedes the battery-as-terminal-checkpoint plan
+and, FOR THE OVERNIGHT RUN ONLY, the D160/D176 tiered-vetting cadence):** find a stopping point
+and hand off to an overnight session that maximizes SHIPPED FEATURES and planned tasks —
+"get all queue items done. prioritize coding over testing. we will audit and test completed coded
+product later and debug at that time." Standing law consequences, recorded so the next sessions
+inherit them exactly: (1) the full battery and all per-slice browser probes/binds are DEFERRED to
+a dedicated AUDIT SESSION — the overnight run gates each slice only on `node --check`,
+`node tools/build.mjs` GATE OK, and `node tools/validate-data-schemas.mjs` when data moves
+(seconds-cheap; keeps the repo loadable), and every overnight DECISIONS entry carries a
+**VETTING DEFERRED (D431)** marker plus a row in the AUDIT-DEBT ledger (REVIEW-QUEUE.md) naming
+exactly which probes/binds/batteries that slice owes. (2) NON-DEFERRABLE even overnight: the
+citation law (≥2 independent sources for any NEW historical claim; no fabricated
+citations/people/ranks; committed research packets are the approved source spine), D74 no-fudge,
+the frozen base, never hand-editing the generated HTML, and honest reporting of what was NOT
+verified. (3) The E74 fork resolves to option (a) NOW by this directive — the 123-object
+migration is queue item 1 of the overnight run. (4) Cold Harbor's D395 explicit-reorder
+requirement is SATISFIED by this directive's "get all queue items done"; it enters the overnight
+queue spec-first from the committed attrition packet. LANE-009 flips to **VERIFY/unowned**: every
+FIX-NOW slice is shipped (D423-D430); its sole remaining obligation — the green battery — moves
+into the audit session's charter. The overnight session opens its own lane (LANE-010) with a
+ledger-only lock commit before coding.
+
 ## D430 — E74 PARTIALLY SHIPPED: THE INHERITANCE RULE + AN EXACT-COUNT RATCHET CONTAIN THE DESCRIPTIVE-VERIFIED BLIND SPOT; THE 123-OBJECT MIGRATION IS THE SURFACED FORK — [CLAUDE CODE (FABLE 5), LANE-009 DRIVE] (2026-07-17)
 
 E74 (run-3 MED, citation-gate coverage — the biggest finding, done last by charter): gate 4e

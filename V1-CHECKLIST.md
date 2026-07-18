@@ -1,6 +1,6 @@
 # V1 FEATURE-COMPLETE CHECKLIST — "The Civil War"  (APPROVED — run-k Q&A, 2026-06-15)
 
-> **D423 live gate:** the finish-line push ships GEA-01 (registry-derived quick-start count, nine-name chain retired) + S44 (all nine registered Western battles presented playable; Atlanta/March the only lock; live registry-truth tooth). LANE-009 (Claude Code / Fable 5) drives S45→S46→E73→E75→C73→C74→E74 then the full release battery; all 24/55/1,512/131 + `_SAVE_VER=1` invariants hold; see `HANDOFF.md` top.
+> **D431 live gate:** the FIX-NOW ladder is CLEARED (D423-D430: GEA-01, S44, S45, S46, E73, E75, C73, C74 shipped; E74 ratchet-contained with its migration queued). Aaron's coding-first directive defers the battery + heavy testing to the audit session (AUDIT-DEBT ledger, REVIEW-QUEUE.md). Next: the overnight LANE-010 feature run; all 24/55/1,512/131 + `_SAVE_VER=1` invariants hold; see `HANDOFF.md` top.
 
 > **D421 prior gate:** three Verified New Market Heights USCT Medal of Honor records ship: Fleetwood, Beaty, and Gardiner. Pack 39→42; open generated rows 1,440→1,437; register 1,512; focused/adjacent gates green. LANE-002 is CONTRACT/unowned; see `HANDOFF.md` top.
 

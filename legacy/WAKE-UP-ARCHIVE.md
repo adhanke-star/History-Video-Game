@@ -1,5 +1,7 @@
 # WAKE-UP-ARCHIVE — superseded ☀ wake-up heads, moved byte-verbatim from WAKE-UP.md (D412 docs-hygiene, 2026-07-16; source lines 3-2611 at D411 boundary aebc8f22). Newest at top. Read HANDOFF.md's top ⚡ block for the live state.
 
+# ☀ WAKE-UP — 2026-07-17 (previous): **D422 — SHILOH'S MYTH BUNDLE IS CORRECTED.** Peabody's warning, W. H. L. Wallace's central role, the non-sunken road, Buell nuance, and Johnston counterfactual caution now replace the stale player-facing account; the unchanged Hornets' Nest objective is labeled a game abstraction. Focused/adjacent gates are green with zero pageerrors. LANE-008 SHIPPED. **NEXT: adjudicate GEA-01 + S44 against another 5b batch and larger eligible lanes.**
+
 # ☀ WAKE-UP — 2026-07-17 (previous): **D421 — THREE NEW MARKET HEIGHTS USCT SOLDIERS ARE VERIFIED AND PLAYABLE.** Fleetwood, Beaty, and Gardiner move the replacement pack 39→42 and open generated rows 1,440→1,437; register remains 1,512. Focused and adjacent gates are green with zero pageerrors. LANE-002 is CONTRACT/unowned. **NEXT: select and contract one bounded roadmap item.**
 
 # ☀ WAKE-UP — 2026-07-17 (previous): **D420 — MAYHEM SLICE C IS PUBLIC AND ATOMIC.** The chooser and first surrender/No Quarter production action ship with score, casualty credit, reward, tagged advantage, and an ungraded result. Historical stays guarded. Schema 55/55; Mayhem 18/18; save 16/16; campaign 4/4; suite 131; `_SAVE_VER=1`. LANE-007 SHIPPED. **NEXT: select the next live-roadmap item.**
