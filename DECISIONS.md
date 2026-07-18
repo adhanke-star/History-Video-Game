@@ -127,7 +127,7 @@ Tab, and Enter are deliberately absent (reserved — modal exits and native acti
 fixed). (2) THE TRANSLATE SEAM: exactly ONE guarded line in fldKey (`k =
 fldKeymapTranslate(k, e)`) — a custom binding translates to its action's default key, which
 the byte-for-byte-unchanged dispatch chain consumes; a moved action's old default returns
-the escaped `" "` sentinel (INERT — matches no dispatch arm; never `" "`, the pause
+the escaped `"\u0000"` sentinel (INERT — matches no dispatch arm; never `" "`, the pause
 default); no module / no store → identity → today's behavior exactly. (3) THE STORE:
 device-local `localStorage["cw_keymap_v1"] = { v:1, map:{action→key} }` — NEVER the save
 envelope (`_SAVE_VER` untouched, save-shape ✓, no G.settings write). Sanitized on every
@@ -141,7 +141,7 @@ contract's RESET button; a ⌨ Keys button injected next to the Audio button thr
 guarded T9 bar hook. Gamepad stays OUT of scope (the contract's own bound). (5) BUILD-HYGIENE
 CATCH (recorded): the first cut embedded a LITERAL NUL byte as the inert sentinel — caught at
 authoring (a NUL would ride into the generated HTML and can flip tooling to binary-mode);
-root-fixed to the six-character escape `" "` with a byte-level proof (0 NUL bytes).
+root-fixed to the six-character escape `"\u0000"` with a byte-level proof (0 NUL bytes).
 (6) Teeth AUTHORED as one step in the EXISTING `tools/probe-field.mjs` (the T0 owner — suite
 stays 137, no sweep): table-verbatim-vs-fldKey-source, identity without a store, a remap
 round trip through the REAL fldKey (z dispatches hold on a live selected brigade), the
