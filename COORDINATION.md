@@ -801,6 +801,10 @@ next green commit and confer through this ledger instead of permitting simultane
   source/timeline receipt split, one-credit/fate/handoff/save laws, safe-clone
   boundary, and every no-combat/no-simultaneous-edit lock.
 - **Resume pointer (D413 release):** D408 §17 shipped at 44/44; Slice F remains closed;
+  *(D438 cross-lane note: the §19 war-end franchise archive — Slice F's scope — SHIPPED under
+  LANE-010's D438 with the contract committed first; the 'Slice F stays closed' tokens above
+  record the D413 boundary and are superseded by D438. The audit session re-pins the 44/44
+  step-count tokens.)*
   next Slice-E/political work only on Aaron's explicit selection. Work only in
   `/private/tmp/codex-vg-recovery-019f62fe`; the Desktop checkout remains dataless.
 - **Prior take state (D413 DRIVE, retained history):** Owning tool was Claude Code
@@ -1912,8 +1916,10 @@ next green commit and confer through this ledger instead of permitting simultane
   citations; AUDIT-DEBT AD-1 records the owed bind/probe/spot-audit re-proof.** **D434 SHIPPED queue item 2
   (GEA-02): accessible Copy/Download over the AAR with authored teeth; AUDIT-DEBT AD-2.** **D435 SHIPPED queue
   item 3 (GEA-03). D436 SHIPPED queue item 4 (ATLANTA): scenario 25 playable at
-  25/56/1,566/132, S44 lock swapped to marchToTheSea, probe-atlanta authored; AD-4.** **D437 SHIPPED queue item 5 (Mayhem D + E first cut): standalone carry, custom allowlist,
-  Chronicle; AD-5.** Exact next: queue item 6 — War Career Slice F, design §19 contract first.
+  25/56/1,566/132, S44 lock swapped to marchToTheSea, probe-atlanta authored; AD-4.** **D437 SHIPPED queue item 5 (Mayhem D + E first cut); AD-5. D438 SHIPPED queue item 6
+  (War Career Slice F): §19 contract `ca29e2d` then the franchise-archive runtime `0fa8f97`;
+  AD-6/AD-7.** Exact next: queue item 7 — Cold Harbor spec + authored plan probe (runtime only
+  if the night allows).
 - **Last-touched commit:** the D432 lock commit (this edit).
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's D431 overnight
   directive.

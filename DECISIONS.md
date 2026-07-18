@@ -40,6 +40,36 @@ asset purchases/accounts. LANE-009's shipped slices are not re-run. Expected tra
 end: LANE-010 → VERIFY (audit-owed), with the audit session settling the whole AUDIT-DEBT
 ledger plus the full serialized battery and flipping LANE-009 + LANE-010 SHIPPED.
 
+## D438 — WAR CAREER SLICE F SHIPPED: THE §19 WAR-END FRANCHISE ARCHIVE (CONTRACT FIRST, THEN RUNTIME) — [CLAUDE CODE (FABLE 5), LANE-010 DRIVE] (2026-07-18)
+
+Queue item 6. The contract was committed FIRST as design law (`docs/design/war-career-loop-
+design.md` §19, commit `ca29e2d`) scoping Slice F from the D399 pillar + the §10 reservation:
+a finished war LEAVES A RECORD. The runtime (`0fa8f97`) then implemented exactly that section
+in `src/106-war-career.js`.
+
+SHIPPED: ONE device-local archive owner (`localStorage["cw_career_archive_v1"]`,
+ARCHIVE_CANONICAL_OWNER bind token) deliberately OUTSIDE the save envelope — `_SAVE_VER` stays
+1, nothing rides the save, legacy campaigns byte-equivalent, and the §10 migration clause is
+discharged without a migration. Capture fires at the single war-end chokepoint via a
+`warWonScreen` wrapper (the D425 idiom: base delegate + every marker propagated) BEFORE the
+base nullifies `G.campaign`, covering chain-completion AND the D119 strategic ends (the
+one-shot `_aarEndReason` read pre-delegate). The record is a CLOSED shape (`archiveVersion:1`;
+side/endReason/stats/gradeLetter/iron/ruleset/timelineName/career; `career` null unless
+`careerVersion===1`, then name/rank/role/promotions/credits/lineageLen/handoffState/
+mattersOfState — all pure reads, no name-based joins, no secrets). Cap 20 newest-first;
+read-side sanitation DROPS malformed/extra-key/unsafe records, never repairs; every
+localStorage failure is silent-safe in both directions. The Franchise Record gallery renders
+below the war-end report only when the sanitized read returns records; a main-menu gallery
+surface and defeat-side capture (no defeat screen exists — losses enter recovery) are the
+recorded v1 bounds. Teeth AUTHORED as one §19 step in `tools/probe-war-career.mjs` (wrapper/
+markers · closed-shape capture · strategic one-shot · cap/order · three sanitation vectors ·
+legacy purity incl. save-byte identity · gallery presence/absence) — NOT run tonight; the
+probe grows 44→45 browser steps (the audit session re-pins the step-count tokens).
+
+**VETTING DEFERRED (D431):** ran node --check ×2, build GATE OK, git diff --check. AUDIT-DEBT
+AD-6 names the owed probe run + binds; AD-7 records the PRE-EXISTING plan-probe baseline drift
+this run surfaced.
+
 ## D437 — MAYHEM SLICES D + E (FIRST CUT) SHIPPED: STANDALONE RULESET CARRY, THE CUSTOM-CONTENT ALLOWLIST, AND THE LIVING WAR CHRONICLE — [CLAUDE CODE (FABLE 5), LANE-010 DRIVE] (2026-07-18)
 
 Queue item 5 under LANE-010 (LANE-007's shipped Slices A-C are the substrate; this slice EXTENDS
