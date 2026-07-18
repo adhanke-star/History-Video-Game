@@ -458,8 +458,12 @@ const SETUP = `(() => {
       for (var j=0;j<__FIELD.units.length;j++){ var u=__FIELD.units[j]; if(u.side===ps && u.alive && !u.ai){ uid=u.id; break; } }
       if (!uid) throw new Error('no player unit');
       __FIELD.sel=[uid];
-      fldKey({ key:'z', target:{tagName:'DIV'}, preventDefault:function(){}, stopPropagation:function(){} });
       var un=null; for (j=0;j<__FIELD.units.length;j++) if(__FIELD.units[j].id===uid) un=__FIELD.units[j];
+      // D453 audit root-fix (never-run weak tooth): fldMakeUnit INITIALIZES every unit with a
+      // hold order, so this assert passed even when the keypress did nothing — the order must
+      // be cleared BEFORE the press for the dispatch-through-translation tooth to bite.
+      un.order=null;
+      fldKey({ key:'z', target:{tagName:'DIV'}, preventDefault:function(){}, stopPropagation:function(){} });
       if (!un.order || un.order.type!=='hold') throw new Error('remapped z did not dispatch hold (order: '+JSON.stringify(un.order)+')');
       // (4) the moved default h is INERT (no hold re-issue after clearing the order)
       un.order=null;
