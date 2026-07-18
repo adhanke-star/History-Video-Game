@@ -1,6 +1,17 @@
 {
   "_comment": "PHASE C-2 — ANTIETAM / SHARPSBURG, September 17 1862 — the FIRST MULTI-PHASE epic for the __FIELD real-time engine (DECISIONS D74/D76). Three sequential phases fought in one scenario via the gated T8 phases[] engine: PHASE 1 the CORNFIELD (dawn, the Confederate left — Hooker's I Corps + Mansfield's XII Corps vs Jackson's wing + Hood's counterattack, 'Artillery Hell'); PHASE 2 the SUNKEN ROAD / 'Bloody Lane' (mid-morning, the center — Sumner's II Corps vs D.H. Hill in a worn farm-lane trench, carried by Barlow's enfilade + a misheard Confederate order); PHASE 3 BURNSIDE'S BRIDGE (afternoon, the Confederate right — the IX Corps bottleneck across the Lower/Rohrbach Bridge, held for hours by Toombs's few Georgians, the breakthrough toward Sharpsburg halted by A.P. Hill's Light Division force-marching from Harpers Ferry). Each phase is its own sector/OOB/objective; the running casualty tally + the per-phase sector results carry forward; the overall battle is scored as a weighted aggregate with a draw band (the historical TACTICAL DRAW / marginal-Union-strategic-check emerges). COORDINATE NOTE: each phase field is 1200x900 yards; per engine convention the ATTACKER (US, every phase) sits at HIGH z facing -z (facing 0) and the DEFENDER (CS) at LOW z facing +z (facing PI); the objective sits at low-center z. ARTILLERY uses the D75 UNIVERSAL GUN MODEL (real gun counts + realistic crew; fire = guns * the universal weight). ANTI-LOST-CAUSE: the lessons are command failure on BOTH sides, terrain + contingency over martial 'genius', the appalling cost (the bloodiest single day), McClellan's wasted ~2:1 advantage + withheld reserves, and ABOVE ALL the Emancipation Proclamation five days later that turned the war against slavery. Strengths are Inferred division/brigade-scale approximations (Carman/Sears/OR differ); the Verified, teaching-bearing facts are the phase sequence, the commanders + their fate, the terrain, and the casualty weight. Sources: NPS Antietam, American Battlefield Trust, the Official Records (via aotw.org), Sears 'Landscape Turned Red', McPherson 'Crossroads of Freedom'.",
   "antietam": {
+    "sources": [
+      "NPS Antietam National Battlefield (the Cornfield, S.D. Lee's 'Artillery Hell', the Bloody Lane, the Final Attack)",
+      "American Battlefield Trust (casualties 12,401 US / 10,316 CS / 22,717 total)",
+      "the Official Records via Antietam on the Web (S.D. Lee's 'twelve guns, all that could be manned'; Battery B 4th US — Campbell wounded, command to Lt. Stewart; A.P. Hill's report — in motion 7:30 a.m., reached the field ~2:30 p.m.)",
+      "Stephen W. Sears, \"Landscape Turned Red: The Battle of Antietam\" (1983)",
+      "McPherson, 'Crossroads of Freedom'",
+      "HistoryNet",
+      "Emerging Civil War (the revisionist A.P. Hill reading)",
+      "Ted Ballard, \"Staff Ride Guide: Battle of Antietam\" (U.S. Army Center of Military History)",
+      "American Battlefield Trust — Antietam Cornfield map narrative (\"rain had stopped, leaving a thin ground fog\"; hollows filled with mist)"
+    ],
     "id": "antietam",
     "weather": {
       "sky": "fog",
@@ -128,6 +139,11 @@
         "teaching": {
           "head": "The most savage field of the war",
           "body": "Some 8,000 men fell in and around this cornfield in about three hours. It was command failure on both sides, not glory: McClellan fed in the I Corps, then the XII Corps, piecemeal — never together — so Jackson's thin line survived by his opponent's method. Hood's division was annihilated to buy minutes. The corn was cut level by the firing, and the dead lay in rows where they had stood.",
+          "sources": [
+            "NPS",
+            "American Battlefield Trust",
+            "the Official Records"
+          ],
           "provenance": "Verified (high) — NPS; American Battlefield Trust; the Official Records."
         }
       },
@@ -204,6 +220,11 @@
         "teaching": {
           "head": "An accident of terrain, a misheard order — not destiny",
           "body": "About 5,500 fell in and around this lane. The defenders were ordinary soldiers multiplied by terrain — a worn ditch and fence rails — not Southern invincibility. The position fell to a Union flank maneuver plus a Confederate command error. And the deepest lesson is the breakthrough McClellan would not exploit: believing himself outnumbered when in fact he heavily outnumbered Lee, he withheld a fresh reserve of more than 20,000 men that might have split the Confederate army in two.",
+          "sources": [
+            "NPS Bloody Lane Trail",
+            "American Battlefield Trust",
+            "the Official Records"
+          ],
           "provenance": "Verified (high) — NPS Bloody Lane Trail; American Battlefield Trust; the Official Records. The reserve figure is 'more than 20,000' (Franklin's VI + Porter's V Corps); McClellan's belief he was outnumbered is paired with the reality that he was not."
         }
       },
@@ -282,6 +303,13 @@
         "teaching": {
           "head": "Contingent, not destiny",
           "body": "A few hundred Georgians stalled an entire corps for three hours — but the cause was a twelve-foot bottleneck, an unscouted creek, and timid Union command, not innate Confederate prowess: only a few thousand attackers could press the span at a time. A.P. Hill's blow was the trigger that toppled an already over-extended, low-on-ammunition advance — exploiting McClellan's refusal to commit his reserves as much as rescuing Lee. Lee's army survived to recross the Potomac in the night.",
+          "sources": [
+            "NPS Final Attack Trail",
+            "American Battlefield Trust",
+            "the Official Records (A.P. Hill's report)",
+            "Emerging Civil War (the revisionist reading)",
+            "Sears"
+          ],
           "provenance": "Verified (high) — NPS Final Attack Trail; American Battlefield Trust; the Official Records (A.P. Hill's report); Emerging Civil War (the revisionist reading) alongside Sears."
         }
       }
@@ -304,24 +332,41 @@
           "id": "an_cost",
           "head": "The price, not the glory",
           "body": "About 23,000 men were killed, wounded, or missing on September 17, 1862 — more Americans than fell in the War of 1812, the Mexican-American War, and the Spanish-American War combined, in a single day. Alexander Gardner's photographs of the dead in rows along the Sunken Road and the Hagerstown Pike were the first time Americans saw their own war's corpses. The Cornfield and the Bloody Lane are monuments to slaughter, not to maneuver.",
+          "sources": [
+            "American Battlefield Trust (12,401 US / 10,316 CS / 22,717 total)",
+            "NPS"
+          ],
           "provenance": "Verified (high) — American Battlefield Trust (12,401 US / 10,316 CS / 22,717 total); NPS."
         },
         {
           "id": "an_wasted",
           "head": "Overwhelming advantage, wasted",
           "body": "McClellan had the Lost Order — Lee's entire divided plan of march, found wrapped around three cigars — and nearly two-to-one numbers, with Lee pinned against the Potomac and a single ford. And still he attacked piecemeal, sector by sector, withheld more than 20,000 men in reserve, and let a divided, outnumbered army survive and escape. Advantages mean nothing without the will to use them. Lee survived as much by his opponent's caution as by his own skill — the opposite of 'Southern martial genius.'",
+          "sources": [
+            "Sears, 'Landscape Turned Red' (the piecemeal-commitment thesis)",
+            "HistoryNet 'McClellan's Missed Opportunities'"
+          ],
           "provenance": "Verified (high) — Sears, 'Landscape Turned Red' (the piecemeal-commitment thesis); HistoryNet 'McClellan's Missed Opportunities'. Pair McClellan's belief he was outnumbered with the reality that he was not."
         },
         {
           "id": "an_contingency",
           "head": "Command failure on both sides, not heroism on one",
           "body": "Confederate survival traces to terrain and contingency, not innate prowess: an accidental ditch in the center, a twelve-foot bottleneck on the right, an unscouted ford, captured blue uniforms, a misheard order that emptied the lane. And the Confederate defense was itself disjointed — Jones stunned, Starke killed, Lawton wrecked, Hood's division annihilated. There is no 'Jackson the wizard' here and no 'gallant outnumbered few' — only ordinary soldiers, terrible ground, and chance, on both sides.",
+          "sources": [
+            "NPS",
+            "the Official Records",
+            "Emerging Civil War"
+          ],
           "provenance": "Verified (high) — NPS; the Official Records; Emerging Civil War. The de-romanticizing standard applies evenly to Rodes's Alabamians and Anderson's Carolinians as to the Irish Brigade."
         },
         {
           "id": "an_emancipation",
           "head": "Emancipation — the real significance",
           "body": "Tactically September 17 was a brutal draw; Lee held the 18th, then withdrew. But turning back the first invasion of the North was strategic check enough for Lincoln, who had held the Emancipation Proclamation since July on Seward's advice not to look desperate. Five days later, on September 22, 1862, he issued the preliminary Proclamation. Antietam transformed the war from a struggle to restore the Union into a war against slavery, and made foreign recognition of a slaveholding Confederacy politically impossible. To dwell on Confederate tenacity while skipping this is to miss the entire point of why this day is remembered.",
+          "sources": [
+            "McPherson, 'Crossroads of Freedom'",
+            "American Battlefield Trust"
+          ],
           "provenance": "Verified (high) — McPherson, 'Crossroads of Freedom'; American Battlefield Trust. Omitting emancipation from an Antietam treatment is the classic Lost-Cause erasure."
         }
       ],

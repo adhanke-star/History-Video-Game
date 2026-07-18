@@ -302,15 +302,21 @@ for (const rm of RATING_MODULES) {
 // arrays / file-root registers is the recorded E74 design fork (DECISIONS D430) — this ratchet is
 // containment + forward enforcement, NOT a substitute for that migration.
 {
+  // D433 migration history (the pin idiom): the D430 map pinned 123 grandfathered objects across
+  // 28 files. The D433 E74-MIGRATE batches (D431 queue item 1) moved each file to structural
+  // citation (battle-object/file-root register or per-object arrays lifted from the file's own
+  // committed packets/prose) and lowered its entry to absence in the same commit:
+  //   batch A (D433): antietam 8 -> 0, artillery 1 -> 0, diplomacy 6 -> 0,
+  //                   manpower-teaching 6 -> 0, weapons 1 -> 0.
   const E74_BASELINE = {
-    'antietam.json': 8, 'artillery.json': 1, 'bullrun.json': 3, 'cedar-creek.json': 3,
+    'bullrun.json': 3, 'cedar-creek.json': 3,
     'chancellorsville.json': 6, 'chattanooga.json': 9, 'chickamauga.json': 8,
-    'cross-keys-port-republic.json': 3, 'diplomacy.json': 6, 'elkhorn-tavern.json': 3,
+    'cross-keys-port-republic.json': 3, 'elkhorn-tavern.json': 3,
     'five-forks.json': 1, 'fort-donelson.json': 4, 'franklin.json': 5, 'fredericksburg.json': 4,
     'gaines-mill.json': 1, 'gettysburg.json': 8, 'kennesaw.json': 5, 'malvern-hill.json': 6,
-    'manpower-teaching.json': 6, 'nashville.json': 8, 'new-market-heights.json': 3,
+    'nashville.json': 8, 'new-market-heights.json': 3,
     'petersburg-assaults.json': 1, 'shiloh.json': 6, 'spotsylvania.json': 1,
-    'stones-river.json': 3, 'vicksburg.json': 9, 'weapons.json': 1, 'wilderness.json': 1
+    'stones-river.json': 3, 'vicksburg.json': 9, 'wilderness.json': 1
   };
   const SRC_KEYS2 = ['sources', 'src'];
   const norm2 = (v) => (typeof v === 'string' ? v.trim().toLowerCase() : '');

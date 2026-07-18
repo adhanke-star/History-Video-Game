@@ -1,5 +1,10 @@
 {
   "_comment": "S1d teaching content for the manpower/conscription layer. Citation-grade multi-voice debate cards (consensus + scholarly dissent + named-and-countered Lost Cause + primary sources) + a quantitative numbers audit, from an 11-agent research+verify+audit workflow (run i, 2026-06-13). Build-injected as GAME_DATA[\"manpower-teaching\"]; surfaced by src/70-manpower.js (The Ranks overview block) and the S4 codex. Black Americans treated as full historical agents (self-emancipation, USCT); Lost Cause erasure countered.",
+  "sources": [
+    "James M. McPherson (named scholar, top-level provenance)",
+    "James W. Geary (named scholar, top-level provenance)",
+    "11-agent research+verify+audit workflow (run i, 2026-06-13)"
+  ],
   "provenance": "Verified historiography. Scholars: McPherson, Geary, Murdock, Moore, Anbinder, Lonn, Glatthaar, Levine, Gallagher, Marvel. Every cited work adversarially fact-checked; fabricated/misattributed citations removed in the Verify pass.",
   "schemaVersion": "1.0",
   "teachingCards": [
@@ -34,6 +39,12 @@
         "Act of July 4, 1864 amending the Enrollment Act — abolished the $300 commutation clause except for conscientious objectors (substitution remained legal)",
         "James B. Fry, Final Report of the Operations of the Bureau of the Provost-Marshal-General in 1863-1866 (congressional document, 2 parts, Washington, 1866) — enrollment, the federal calls, commutations paid, substitutes furnished, and men held to service",
         "The War of the Rebellion: Official Records (OR), Series IV — Union mobilization correspondence and quota records of the Provost Marshal General's Bureau"
+      ],
+      "sources": [
+        "James W. Geary, We Need Men — ~5.5% (5.54%) draft-supply figure and coercive-stimulus thesis",
+        "Eugene C. Murdock, One Million Men (1971) and Patriotism Limited (1967)",
+        "James M. McPherson — 'carrot and stick' framing with draftee/substitute/volunteer figures",
+        "James B. Fry, Final Report (1866 congressional document) — corrected attribution vs. Official Records"
       ],
       "provenance": "Verified (high certainty on consensus). Confirmed against secondary scholarship and primary-source descriptions: Geary's ~5.5% (5.54%) figure and 'coercive stimulus' thesis; Murdock's two works with correct titles/dates (One Million Men, 1971; Patriotism Limited, 1967); McPherson's 'carrot and stick' framing with ~46,000 draftees / ~74,000 substitutes vs. ~800,000 volunteers; Moore (Macmillan, 1924); Anbinder, Civil War History 52 (2006); the $300 commutation and its July 1864 repeal (except for conscientious objectors); the Enrollment Act text. Correction applied: Fry's Final Report was a standalone 1866 congressional document, NOT printed in OR Series III, vol. 5 as the draft claimed; that misattribution has been removed and the OR is cited separately (the Provost Marshal Bureau's mobilization records appear in OR Series III/IV correspondence). Exact PMG sub-totals round slightly differently across sources, so specific counts are given as approximations."
     },
@@ -73,6 +84,11 @@
         "The War of the Rebellion: Official Records, Series IV — Confederate conscription, exemption, and impressment correspondence",
         "Sam R. Watkins, 'Co. Aytch' — soldier testimony reacting to the Twenty-Slave Law as a 'rich man's war, poor man's fight'"
       ],
+      "sources": [
+        "James W. Geary — induction/commutation/substitution tabulation (~9,800/~52,000/~26,000)",
+        "James M. McPherson, Eugene C. Murdock, and Hugh G. Earnhart (dissent citations)",
+        "Hugh G. Earnhart, 'Commutation: Democratic or Undemocratic?', Civil War History (1966)"
+      ],
       "provenance": "Verified (high certainty). Statutes, dates, and Geary's induction/commutation/substitution figures confirmed via scholarly and encyclopedic summaries (Geary's own tabulation: ~9,800 inducted, ~52,000 commuted, ~26,000 substitutes). The commutation-as-price-cap point is Geary's mainstream finding (placed in consensus); the stronger 'slogan overstates class sorting' claim rests on McPherson, Murdock, and Earnhart (placed in dissent). McPherson's 'For Cause and Comrades' and a duplicate price-cap attribution to the dissent were removed from the draft as non-supporting or redundant. Earnhart corrected to his 1966 Civil War History article, not a dissertation."
     },
     {
@@ -111,6 +127,11 @@
         "U.S. War Department, The War of the Rebellion: Official Records of the Union and Confederate Armies, Series IV (Confederate correspondence on impressment and conscription)",
         "Provost Marshal General's Bureau / Bureau of Colored Troops records documenting roughly 180,000 USCT enlistments"
       ],
+      "sources": [
+        "Patrick R. Cleburne proposal, Jan. 2, 1864, and its suppression (Official Records Ser. I, Vol. LII, Pt. 2)",
+        "Robert E. Lee to Andrew Hunter, January 11, 1865",
+        "Philip D. Dillard and Robert F. Durden (dissent works, corrected attribution)"
+      ],
       "provenance": "Verified (high certainty). The Cleburne proposal of Jan. 2, 1864 and its suppression (OR Ser. I, Vol. LII, Pt. 2), Lee's Jan. 11, 1865 letter to Andrew Hunter, the Cobb-to-Seddon letter of Jan. 8, 1865 (quoted verbatim), the act of March 13, 1865 and General Orders No. 14 (March 23, 1865), and the negligible recruitment yield are confirmed against primary documents and the consensus literature; the ~180,000 USCT figure is standard. All scholar/work attributions were checked against catalog records (Dillard's full subtitle and Durden's 1972 date corrected; Levine removed from the dissent list to avoid misrepresenting his own consensus thesis). Counterfactual scale claims in the dissent are inherently Inferred."
     },
     {
@@ -145,6 +166,10 @@
         "Provost Marshal General's Bureau Final Report (James B. Fry, 1866), Union enrollment and draft statistics",
         "1860 U.S. Census population data (free vs. enslaved, by state)",
         "Official Records (OR), Series IV (Confederate manpower and conscription correspondence)"
+      ],
+      "sources": [
+        "James McPherson, James W. Geary, and Joseph T. Glatthaar (consensus figures)",
+        "Gary W. Gallagher and James McPherson — contingency dissent vs. Lost Cause 'overwhelmed by numbers' trope"
       ],
       "provenance": "Verified (high certainty): the ~4:1 free-population edge (~22M loyal-state vs. ~5.5M free Confederate plus ~3.5M enslaved), ~2.1M Union vs. ~750k-1M Confederate enlistments, ~180,000 USCT, and the late-war replacement-ratio collapse are firmly established in McPherson, Geary, and Glatthaar. The Gallagher and McPherson contingency dissent and the Lost Cause 'overwhelmed by numbers' trope are well-documented historiographical positions; all four consensus and three dissent citations were checked and confirmed real and correctly attributed. Confederate enlistment totals remain estimates due to incomplete records."
     },
@@ -181,6 +206,11 @@
         "Confederate General Orders No. 14 (March 23, 1865), promulgating the act of March 13, 1865 authorizing Black enlistment in Confederate service",
         "Ella Lonn, Foreigners in the Union Army and Navy (1951) — nativity estimates",
         "Frederick Douglass, 'Men of Color, To Arms!' (1863) recruiting broadside"
+      ],
+      "sources": [
+        "Ella Lonn, Foreigners in the Union Army and Navy — 500,000+ foreign-born total, Germans first/Irish second",
+        "Dudley Taylor Cornish, The Sable Arm (1956); William Marvel, Lincoln's Mercenaries (2018); Chandra Manning, Troubled Refuge (2016)",
+        "Five consensus scholars and both dissent scholars, verified attributions"
       ],
       "provenance": "Verified (high certainty). Confirmed against reference sources during this task: the ~25 percent foreign-born share and Lonn's 500,000+ total with Germans first / Irish second; the ~179,000–186,000 USCT at ~10 percent of the army and ~18,000 Black sailors; and the dates of GO No. 143 (May 22, 1863) and the Confederate measure (act March 13, 1865; GO No. 14 March 23, 1865). All five consensus scholars and both dissent scholars were verified to hold the attributed views, and every work title is real and correctly attributed (Cornish's The Sable Arm: orig. 1956; Marvel's Lincoln's Mercenaries: 2018; Manning's Troubled Refuge: 2016). The 'double-swing' framing and Black-agency emphasis reflect current consensus (Glatthaar, Manning, McPherson); the dissent reflects genuine debate over proportionality and combat weight, not contested facts. One correction from the draft: the specific 200k/150k German/Irish figures are the standard nativity estimates Lonn worked from rather than precise counts she asserted, and the attribution is softened accordingly."
     }

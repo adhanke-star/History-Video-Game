@@ -1,5 +1,11 @@
 {
   "_comment": "S? Weapons & Armory catalog — real Civil War small arms with loot-game-style rarity tiers (common -> legendary) so procurement feels like Borderlands: spend funds, arm part or all of your army with better guns, raise battlefield firepower/accuracy. Specs grounded in the period record (calibers, effective ranges, rates of fire); `quality` is a 0-100 composite (accuracy + rate-of-fire + range) used by the armory weapon-score. CS-premium arms (csCostMult) cover blockade imports (Enfield, Lorenz) and Northern-made arms the Confederacy could get only by capture or trickle purchase (Colt, Sharps); the repeaters unlock in 1863. Build-injected as GAME_DATA.weapons; consumed by src/55-weapons.js (The Armory tab) and the battle bridge.",
+  "sources": [
+    "Earl J. Hess, The Rifle Musket in Civil War Combat",
+    "American Rifleman",
+    "National Park Service weapons references",
+    "HISTORICAL-DATA.md weapons tables"
+  ],
   "provenance": "Verified specs (Earl J. Hess, The Rifle Musket in Civil War Combat; American Rifleman; National Park Service weapons references; HISTORICAL-DATA.md weapons tables). Rarity/cost are designer calibration (inferred), tunable.",
   "schemaVersion": "1.0",
   "baselineQuality": 30,

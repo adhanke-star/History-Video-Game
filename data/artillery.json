@@ -1,5 +1,15 @@
 {
   "_comment": "S5 Cannon Corps — real Civil War field artillery as a loot-style purchasable tier (common -> legendary), bought BATTERY by BATTERY so building an artillery arm feels like assembling a Borderlands kit: spend funds, raise batteries, lift your army's pre-battle firepower rating. A battery is a big-ticket object next to small arms — a fully-horsed six-gun Union battery was ~150 men, ~14 carriages, and ~110 horses (HISTORICAL-DATA.md L818). Specs are grounded in the period record (Hazlett/Olmstead/Parks firing tables, Hess, Naisawald): bore, effective range, ~2 aimed rounds/min, 9-man detachment. `quality` is a 0-100 designer composite (range + accuracy + versatility) that the battery score reads; `accuracy` and `rangeYds` are the underlying levers. Whitworth is csImport + rare: superb but ammunition-fragile and slow. Build-injected as GAME_DATA.artillery; consumed by src/56-artillery.js (the Cannon Corps tab) and the pre-battle firepower bridge.",
+  "sources": [
+    "Hazlett, Olmstead & Parks, Field Artillery Weapons of the Civil War",
+    "Earl J. Hess, Civil War Field Artillery: Promise and Performance, 2022",
+    "L. VanLoan Naisawald, Grape and Canister",
+    "Instruction for Field Artillery 1860/1864 range tables",
+    "NPS ordnance references",
+    "HISTORICAL-DATA.md artillery tables",
+    "HISTORICAL-DATA-ECONOMY.md Tredegar facts",
+    "HISTORICAL-DATA.md L818 (battery manpower/horses figure)"
+  ],
   "provenance": "Verified specs (Hazlett, Olmstead & Parks, Field Artillery Weapons of the Civil War; Earl J. Hess, Civil War Field Artillery: Promise and Performance, 2022; L. VanLoan Naisawald, Grape and Canister; Instruction for Field Artillery 1860/1864 range tables; NPS ordnance references; cross-checked to HISTORICAL-DATA.md artillery tables and HISTORICAL-DATA-ECONOMY.md Tredegar facts). Rarity, costPerBattery, and quality are designer calibration (Inferred), tunable. Corrections applied per verify: 10-pdr Parrott max capped ~2,800 yds (the ~5,000 yd figure belongs to naval/siege Parrotts, not the field piece); Whitworth tube weight ~896 lb (not ~1,092); Whitworth's ~10,000-yd trial range is flavor only, never an in-game range.",
   "schemaVersion": "1.0",
   "baselineArtilleryScore": 8,

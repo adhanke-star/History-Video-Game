@@ -1,5 +1,11 @@
 {
   "_comment": "S1c teaching content for the cotton/blockade/foreign-diplomacy layer. Citation-grade multi-voice debate cards (consensus + scholarly dissent + named-and-countered Lost Cause framing + primary sources) and a quantitative numbers audit, produced by an 11-agent research+adversarial-verify+audit workflow (run i, 2026-06-13). Build-injected as GAME_DATA.diplomacy; surfaced by src/60-blockade.js (the Diplomacy desk tab) and the S4 codex.",
+  "sources": [
+    "Frank L. Owsley",
+    "David G. Surdam",
+    "Amanda Foreman",
+    "Sven Beckert"
+  ],
   "provenance": "Verified historiography. Scholars: Owsley, Surdam, Wise, Howard Jones, Amanda Foreman, McPherson, Ball, Gentry, Lester, Weidenmier, Lebergott, Beckert. Every cited work title adversarially fact-checked; fabricated/misattributed citations removed in the Verify pass. The numbersAudit CORRECTED three sim claims (see numbersAudit.summary).",
   "schemaVersion": "1.0",
   "teachingCards": [
@@ -78,6 +84,15 @@
         "Queen Victoria's Proclamation of Neutrality (May 13, 1861) and Lord John Russell's related correspondence, showing British policy was governed by neutrality law and self-interest, not cotton dependence",
         "Liverpool cotton-stock and import figures, 1860–1862, documenting the pre-war surplus that blunted the embargo's leverage"
       ],
+      "sources": [
+        "Frank L. Owsley",
+        "James M. McPherson",
+        "Howard Jones",
+        "Amanda Foreman",
+        "David G. Surdam",
+        "Douglas B. Ball",
+        "Marc Egnal, Clash of Extremes (2009)"
+      ],
       "provenance": "Verified (high certainty on the core facts: the embargo was committee/planter-driven and non-statutory until 1864; the late-1850s surplus glut; and the lost-export-year framing are settled across Owsley, McPherson, Jones, Foreman, Surdam, and Ball). Two corrections from the draft: Marc Egnal's Clash of Extremes (2009) is subtitled 'The Economic Origins of the Civil War' and concerns the economic causes of secession, NOT the wartime embargo decision, so it was removed from the dissent as misattributed; and the 1864 statute is dated to 'February 1864' rather than a specific section/day that could not be independently confirmed. The dollar magnitude of foregone 1861 earnings is Inferred from Surdam/Ball estimates and varies with counterfactual assumptions about how much cotton could actually have run the early blockade."
     },
     {
@@ -112,6 +127,13 @@
         "Lincoln's Proclamation of a Blockade of the Southern Ports, Apr. 19, 1861 (extended to Virginia and North Carolina, Apr. 27, 1861)",
         "Confederate cotton-export and customs returns, and the 1861 quasi-official cotton-embargo resolutions (Confederate Congress and state/local committee actions)",
         "The Erlanger cotton-loan prospectus (1863) — £3M, 7%, cotton-backed — evidence the South sought to monetize cotton it could not physically export"
+      ],
+      "sources": [
+        "HISTORICAL-DATA-ECONOMY.md sec. 6 (in-house dossier)",
+        "David G. Surdam (2001, via EH.net)",
+        "Stanley Lebergott, J. Econ. Hist. 1981 and J. Amer. Hist. 1983",
+        "Marcus W. Price, American Neptune studies",
+        "Frank L. Owsley (1931/1959)"
       ],
       "provenance": "Verified (high certainty on the core figures and attributions). The under-2M-bales-exported figure, the ~93%-by-weight export decline, the ~2,500-2,800 runner attempts, the ~80%+ per-voyage success tightening from roughly 1-in-10 capture risk (1861) to ~1-in-3 (1864), and the Surdam/Wise/McPherson/Lebergott/Owsley/Price attributions are cross-checked against the project's in-house dossier (HISTORICAL-DATA-ECONOMY.md sec. 6) and confirmed against the published bibliographic record (Surdam 2001 via EH.net; Lebergott's J. Econ. Hist. 1981 and J. Amer. Hist. 1983 pieces; Price's American Neptune studies; Owsley 1931/1959). Corrected from draft: 'leaky sieve' is flagged as a later characterization of Owsley's thesis rather than his coinage; Lebergott's 1983 subtitle and Surdam's/Wise's publisher restored; the question's peacetime-volume baseline reconciled to the dossier (~4-5M bales/yr crop). Inferred only: the precise selection-effect causal phrasing (deterrence plus diversion onto low-capacity steamers reconciles the two metrics) is a synthesis of Surdam and Wise, well-grounded but a teaching gloss rather than a single sourced sentence."
     },
@@ -150,6 +172,12 @@
         "Official Records of the Union and Confederate Navies (ORN), Ser. I — squadron correspondence on capture/escape rates and the value of seized cargoes",
         "Owsley, 'King Cotton Diplomacy,' and standard accounts: interior cotton at roughly 3c/lb vs. 45c-$1.00/lb in Liverpool — the spread that drove the trade"
       ],
+      "sources": [
+        "Stephen R. Wise",
+        "David G. Surdam",
+        "Robert M. Browning, Jr.",
+        "Josiah Gorgas, SHSP vol. 12"
+      ],
       "provenance": "Verified (high certainty on the structure of the debate and the institutional facts: the imports-supplied-most-small-arms claim, the Gorgas/Huse munitions lifeline, the luxury-cargo distortion, the late-1863 New Plan and the Feb. 6, 1864 acts, McRae's ~50% cargo share by March 1864, and the Wise/Surdam/McPherson/Owsley/Beringer/Browning/Price historiographical positions are confirmed against standard scholarship and corroborated by web search). Corrected from the draft: the Gorgas piece is SHSP vol. 12 (vol. 37 is the separate 'Work of the Ordnance Bureau'); Browning's studies supply the high-success-rate data for the revisionist case but Browning's own thesis argues the blockade was effective — the draft's attribution of an 'overstated' view to him was reversed and removed. Inferred / approximate on per-voyage economics: the 3c-vs-Liverpool spread and ~700% returns (e.g., the Banshee's eight runs) are well-attested orders of magnitude but varied sharply by year, port, vessel, and gross-vs-net basis — treat the percentages as illustrative of scale, not a fixed constant."
     },
     {
@@ -181,6 +209,13 @@
         "Correspondence of James M. Mason and Secretary of State Judah P. Benjamin on the loan negotiation and price-support purchases (Confederate State Department diplomatic correspondence)",
         "Official Records of the Union and Confederate Navies (ORN), Series II — Confederate purchasing and ironclad contracts financed by loan proceeds",
         "Papers Relating to the Foreign Relations of the United States (FRUS), 1863 — dispatches from U.S. Minister to France William L. Dayton to Secretary Seward reporting the loan's reception in Europe"
+      ],
+      "sources": [
+        "Judith Fenner Gentry",
+        "Richard I. Lester",
+        "Marc D. Weidenmier",
+        "Erlanger Loan prospectus, 19 March 1863",
+        "Marc Egnal, Clash of Extremes"
       ],
       "provenance": "Verified. Core terms (£3M / ~$15M, taken at 77, resold at 90, 7% coupon, 6d/lb cotton conversion, oversubscribed, post-Vicksburg/Gettysburg slide into the mid-60s, Confederate repurchase of over half the issue, worthless at surrender) confirmed against Gentry, Lester, Weidenmier, and the 19 March 1863 prospectus. Net-proceeds figure varies by source (~£1.4-2.5M), reflecting genuine scholarly disagreement, so stated as a range. Corrections to the draft: removed a fabricated co-author (\"Weidenmier & Brown\") — the relevant paper is single-authored by Weidenmier; and removed Marc Egnal's Clash of Extremes from the dissent, as that book concerns the economic ORIGINS of the war (1820-1861), not the Erlanger loan or wartime cotton collateral, making the attribution unsupported."
     }
