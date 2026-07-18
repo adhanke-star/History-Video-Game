@@ -505,8 +505,8 @@ step("IMPLEMENTATION LADDER", () => {
   if (/"campaignAdvance"/.test(overrides)) {
     throw new Error("assignment wrapper must not register campaignAdvance as a declaration override");
   }
-  if (suite.length !== 130) {
-    throw new Error("complete Slice A requires suite 130, got " + suite.length);
+  if (suite.length !== 133) {   // AD-7 re-pin (D443): 130 -> 131 D418 mayhem row; 131 -> 132 D436 atlanta; 132 -> 133 D442 cold harbor — each appended at the END so the War Career row 38 holds
+    throw new Error("complete Slice A requires suite 133, got " + suite.length);
   }
   return { mode: "runtime", suite: suite.length, marker: MARKER };
 });
@@ -555,7 +555,7 @@ step("EXCLUSIONS + BASELINES", () => {
     }
     if (!e71.includes("PENDING")) throw new Error("planning boundary must leave E71 pending");
   } else {
-    if (suite.length !== 130) throw new Error("Slice-A suite must be 130, got " + suite.length);
+    if (suite.length !== 133) throw new Error("Slice-A suite must be 133, got " + suite.length);   // AD-7 re-pin (D443): 130 -> 133 (D418 mayhem, D436 atlanta, D442 cold harbor rows append at the END)
     if (!e71.includes("FIXED")) throw new Error("Slice A marker exists but E71 is not FIXED");
   }
 
@@ -849,7 +849,10 @@ step("T2/T3/AUTO CLOSED", () => {
     auto:md5(AUTO)
   };
   const expected = {
-    t2:"feef8a3c1ecf5fb28a120d2398ee61fc",
+    // AD-7 re-pin (D443): t2 feef8a3c1ecf5fb28a120d2398ee61fc -> 25b7c20563be53cadd7ee1ba98a62a3b —
+    // moved exactly once after this plan-time pin, at the LANE-007 Mayhem Slice C ship (aa2f58c,
+    // D420: the authorized ruleset seam edit in T2). t3 and auto did NOT move (the closed seams held).
+    t2:"25b7c20563be53cadd7ee1ba98a62a3b",
     t3:"56e2cd1060a40eb0754b19e8d56bacdb",
     auto:"4f0bd0970ef96c09b62ea44694387f80"
   };
@@ -886,11 +889,18 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
   // focused 5e856b3f21e371f867ce99f848c0a155 -> b7d6246e10357afc2a4e8f07f8c5dcea;
   // journey, command, and commandProbe did NOT move.
   const expected = {
-    srcTree:"a4a46fbcff478c239de037f4a63105a4",
-    runtime:"8e09ebbf56ba3433712f91936f438e5d",
+    // AD-7 re-pin (D443) at the audit head: srcTree a4a46fbcff478c239de037f4a63105a4 ->
+    // 42d0015426fc8644793bb3813bfc83e0 (the D414-D442 release train: D418/D420 Mayhem A-C,
+    // D423-D430 FIX-NOW incl. src/107, D433-D441 overnight run incl. src/108 + the D443
+    // latch fix, D442 Cold Harbor T1/T10); runtime 8e09ebbf56ba3433712f91936f438e5d ->
+    // f1a34977cd51aa73279740f67446a7c4 (D438 §19 franchise archive in src/106); focused
+    // b7d6246e10357afc2a4e8f07f8c5dcea -> 8474e95f0dde35d3c34a430dcfbd1f1f (D425 pin fixes,
+    // D436 1566, D438 §19 step, D442 1614). journey, command, and commandProbe did NOT move.
+    srcTree:"42d0015426fc8644793bb3813bfc83e0",
+    runtime:"f1a34977cd51aa73279740f67446a7c4",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
     command:"8f12c49f7129b3a9be0203677822e048",
-    focused:"b7d6246e10357afc2a4e8f07f8c5dcea",
+    focused:"8474e95f0dde35d3c34a430dcfbd1f1f",
     commandProbe:"5ffd40fd221179f2e01cad59ef43bf7d"
   };
   for (const key of Object.keys(expected)) {
@@ -1140,11 +1150,17 @@ step("BASELINES + LANE", () => {
   // 7de51b310e09a710eb83ade276952203 -> 9d7d91078dd8fceea847f1c2aff4dc5f;
   // dataTree, base, manifest, and suite did NOT move.
   const expectedHashes = {
-    game:"9d7d91078dd8fceea847f1c2aff4dc5f",
+    // AD-7 re-pin (D443) at the audit head: game/dataTree moved across the D414-D442
+    // release train (Mayhem A-C, FIX-NOW, the overnight run, Cold Harbor + the D443
+    // audit root-fixes); manifest 7924da858de403cac58caabf8c9fcce8 ->
+    // 442b440c45372ff4330f4fe184d537c7 (D440 enrolls src/108); suite
+    // 4bcdc6f252389a4bfd6bed269b52f8f0 -> cc91894f93d6b38d6fe97ea43af6f0e9 (D418 row 131,
+    // D431 900s budget, D436 row 132, D442 row 133). base NEVER moves (frozen).
+    game:"467614da27def1085e2d93213488fd82",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
-    dataTree:"3250a3f555de5e648471897978646daf",
-    manifest:"7924da858de403cac58caabf8c9fcce8",
-    suite:"4bcdc6f252389a4bfd6bed269b52f8f0"
+    dataTree:"db156b75144a18633ab6b326d9026e1a",
+    manifest:"442b440c45372ff4330f4fe184d537c7",
+    suite:"cc91894f93d6b38d6fe97ea43af6f0e9"
   };
   for (const key of Object.keys(expectedHashes)) {
     if (hashes[key] !== expectedHashes[key]) throw new Error(key + " baseline moved: " + hashes[key]);
@@ -1524,12 +1540,15 @@ step("REACHABILITY BASELINES", () => {
   // focused 5e856b3f21e371f867ce99f848c0a155 -> b7d6246e10357afc2a4e8f07f8c5dcea;
   // dataTree and journey did NOT move.
   const expected = {
-    game:"9d7d91078dd8fceea847f1c2aff4dc5f",
-    dataTree:"3250a3f555de5e648471897978646daf",
-    srcTree:"a4a46fbcff478c239de037f4a63105a4",
-    runtime:"8e09ebbf56ba3433712f91936f438e5d",
+    // AD-7 re-pin (D443) at the audit head — the D414-D442 release train plus the D443
+    // audit root-fixes moved game/dataTree/srcTree/runtime/focused (chains above and in
+    // DECISIONS D443); journey (src/37) did NOT move — the save-vector purity surface held.
+    game:"467614da27def1085e2d93213488fd82",
+    dataTree:"db156b75144a18633ab6b326d9026e1a",
+    srcTree:"42d0015426fc8644793bb3813bfc83e0",
+    runtime:"f1a34977cd51aa73279740f67446a7c4",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
-    focused:"b7d6246e10357afc2a4e8f07f8c5dcea"
+    focused:"8474e95f0dde35d3c34a430dcfbd1f1f"
   };
   for (const key of Object.keys(expected)) {
     if (hashes[key] !== expected[key]) throw new Error("D411 shipped baseline moved: " + key + " " + hashes[key]);

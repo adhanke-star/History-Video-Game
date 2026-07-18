@@ -551,7 +551,7 @@ The planning slice freezes:
 
 - 24 historical scenarios and 24-scenario custom-builder baseline;
 - 54 data JSON files;
-- Army Register 1512;
+- Army Register 1614 (the plan-time baseline was 1512; D436 Atlanta moved it to 1566 and D442 Cold Harbor to 1614 — the AD-7 audit re-pin, D443, with the chain documented here and in the plan probe);
 - tactical coverage 24 and sweep 24;
 - suite 130 with War Career row 38;
 - `_SAVE_VER=1`;

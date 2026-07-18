@@ -34,14 +34,23 @@ const DATA = join(ROOT, "data");
 const OUTFILE = join(OUT, "probe-open-history-mayhem-plan.json");
 
 const PIN = {
-  game: "9d7d91078dd8fceea847f1c2aff4dc5f",
+  // AD-7 re-pin at the audit head (D443; the D393 chronological-chain lesson): the D416
+  // plan-time values froze the D413 boundary; the D414-D442 release train legitimately
+  // moved every non-frozen surface. game 9d7d91078dd8fceea847f1c2aff4dc5f -> (D418/D420
+  // Mayhem A-C, D423-D430 FIX-NOW, D433-D441 overnight run, D442 Cold Harbor, D443 audit
+  // root-fixes) -> re-pinned live; manifest 7924da858de403cac58caabf8c9fcce8 ->
+  // 442b440c45372ff4330f4fe184d537c7 (D440 enrolls src/108); suite
+  // 4bcdc6f252389a4bfd6bed269b52f8f0 -> cc91894f93d6b38d6fe97ea43af6f0e9 (D418 mayhem row
+  // 131, D431 war-career 900s budget, D436 atlanta row 132, D442 cold harbor row 133).
+  // base NEVER moves (frozen). warCareerRow 38 and _SAVE_VER 1 hold.
+  game: "467614da27def1085e2d93213488fd82",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
-  manifest: "7924da858de403cac58caabf8c9fcce8",
-  suite: "4bcdc6f252389a4bfd6bed269b52f8f0",
-  scenarios: 24,
-  schemas: 54,
+  manifest: "442b440c45372ff4330f4fe184d537c7",
+  suite: "cc91894f93d6b38d6fe97ea43af6f0e9",
+  scenarios: 26,   // D436: 24 -> 25 atlanta; D442: 25 -> 26 coldHarbor
+  schemas: 57,   // D418: 54 -> 55 mayhem-rules.json; D436: 55 -> 56 atlanta.json; D442: 56 -> 57 cold-harbor.json
   armyRegister: 1614,   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots
-  suiteRows: 130,
+  suiteRows: 133,   // D418: 130 -> 131; D436: 131 -> 132; D442: 132 -> 133 (each appended at the END so row 38 holds)
   warCareerRow: 38,
   saveVersion: 1
 };
@@ -314,7 +323,8 @@ step("LANE", () => {
     state.startsWith("DRIVE for Slice A only — Slice B remains closed");
   const released = owner.startsWith("unowned") &&
     state.startsWith("CONTRACT — D417 planning shipped");
-  if (!sliceADrive && !released) {
+  const shipped = state.startsWith("SHIPPED");   // AD-7 re-pin (D443): LANE-007 flipped SHIPPED at the D420 A-C public bundle — a legitimate later state this plan-time pin predates
+  if (!sliceADrive && !released && !shipped) {
     throw new Error("LANE-007 state moved: " + state);
   }
   mustInclude(lane, [
