@@ -96,6 +96,11 @@ function spPacketHtml(C) {
             + _spSourcesList(card.sources);
         cards += '</div>';
         }
+        // D453 audit root-fix: "every cited source list verbatim" (GEA-14 contract) — a battle
+        // whose card citations are ancestor-covered (D430/D433: the register lives on the battle
+        // object) must still print its cited sources; the battle register rides once per battle.
+        if (sd.sources && sd.sources.length)
+          cards += '<div class="entry"><span class="meta">Battle source register — ' + _spEsc(sd.name || completed[b]) + '</span>' + _spSourcesList(sd.sources) + '</div>';
       }
     }
 

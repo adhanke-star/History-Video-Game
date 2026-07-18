@@ -242,14 +242,22 @@ const SETUP = `(() => {
       if (pk.indexOf('AFTER-ACTION')<0 && pk.indexOf('After-action')<0) throw new Error('the AAR section is missing');
       if (pk.indexOf('Divergence ledger')<0) throw new Error('the divergence section is missing');
       if (pk.indexOf('Concept index')<0 || pk.indexOf('concept:union-blockade')<0) throw new Error('the GEA-10 concept index is missing');
-      // sources verbatim: bullrun1's own card sources ride into the packet untouched
+      // sources verbatim: bullrun1's citations ride untouched. Its cards are ANCESTOR-COVERED
+      // (D430/D433: the source register lives on the battle object, not the card), so the
+      // battle-level register must print (the D453 audit root-fix); any card-level list
+      // (spec-era battles) still rides per card.
       var sd=(typeof fldScenarioData==='function')?fldScenarioData('bullrun1'):null;
       var card=sd&&sd.teaching&&sd.teaching.cards&&sd.teaching.cards[0];
       if (card&&card.sources&&card.sources.length){
         var probeSrc=String(card.sources[0]);
         if (pk.indexOf(probeSrc.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'))<0 && pk.indexOf(probeSrc)<0)
           throw new Error('a battle-card source did not ride verbatim');
-      } else if (card) { throw new Error('bullrun1 card carries no sources to verify'); }
+      }
+      if (!sd||!sd.sources||!sd.sources.length) throw new Error('bullrun1 carries no battle-level source register');
+      var breg=String(sd.sources[0]);
+      if (pk.indexOf('Battle source register')<0) throw new Error('the battle source register section is missing');
+      if (pk.indexOf(breg.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'))<0 && pk.indexOf(breg)<0)
+        throw new Error('the battle-level source register did not ride verbatim');
       // print-CSS sanity: white paper declared; NO dark background token anywhere in the stylesheet
       if (pk.indexOf('background:#fff')<0) throw new Error('white-paper background missing');
       var css=pk.slice(pk.indexOf('<style>'),pk.indexOf('</style>'));
