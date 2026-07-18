@@ -392,5 +392,11 @@ const DOM = `(() => {
     await closeBrowser(browser);
     if (srv) srv.kill();
   }
-  if (!result.ok || result.fatal || (result.pageerrors && result.pageerrors.length)) process.exit(1);
+  // D454 battery root fix (the D398 owning-process class): a fully-green run relied on the event
+  // loop draining naturally, and a live handle (Playwright transport remnant / fetch agent) held
+  // the green process hostage until the harness 360s guard SIGTERMed it — the exact hang the
+  // bounded-close comment above describes. Exit EXPLICITLY on both paths after the artifact is
+  // written and teardown attempted (the probe-weather idiom); the 19 asserts + pageerrors gating
+  // still solely decide the code.
+  process.exit((!result.ok || result.fatal || (result.pageerrors && result.pageerrors.length)) ? 1 : 0);
 })();
