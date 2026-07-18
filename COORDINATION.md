@@ -1949,6 +1949,65 @@ next green commit and confer through this ledger instead of permitting simultane
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's D431 overnight
   directive.
 
+### LANE-011 · genre-elite-p1-build — **DRIVE** (Claude Code / Fable 5)
+
+- **Owning tool:** Claude Code (Fable 5) — within Aaron's authorized Fable window through
+  Sunday 2026-07-19 (the same authorization LANE-009/LANE-010 ran under).
+- **State:** DRIVE (taken in this ledger-only commit at the clean pushed D443 boundary
+  `0041c9ac2cf227b61d539999d5955c3b2b65521c`; HEAD == origin/main verified).
+- **Design law:** `docs/design/genre-elite-p1-contracts.md` (the eight D441 contracts — THE
+  LAW for the GEA slices; each slice re-reads its contract in full at slice start and the
+  contract BOUNDS the slice) · `docs/design/open-history-mayhem-mode-design.md` §3.4 + §11 +
+  the D437 recorded bound (Mayhem Slice F = the skirmish/free-battle standalone ruleset
+  picker UI ONLY; the engine seam + JSON/import path already ship) · DECISIONS D431 + D443
+  (the coding-first run law) · D74 no-fudge · the ≥2-independent-source citation law · frozen
+  `build/base.html` · `_SAVE_VER=1` · D412 docs law.
+- **Charter (ordered queue; each item = its own D### + commit + push):**
+  1. GEA-07 — Learn-the-Battle metadata + the NON-BINDING recommendation card (metadata +
+     presentation only; never an outcome input; citation law on any new battle-facts text).
+  2. GEA-08 — the Chief of Staff three-line deterministic morning brief (data-declared
+     rules, EXISTING readers only, pure — no new state, no sim writes).
+  3. GEA-10 — stable concept ids + focus-returning deep links (WIRING ONLY; no content
+     moves; a11y focus-return is the acceptance spine).
+  4. GEA-12 — ONE bounded three-beat memory chain (legacy-save BYTE IDENTITY is the gating
+     tooth; author that tooth with the slice; no shim, defer honestly if byte identity
+     cannot be proven without a version bump).
+  5. GEA-09 — the audio-bus contract FIRST, then the action-map seam (default
+     byte-equivalence; device-local keymap; gamepad OUT of scope).
+  6. GEA-13 — the deterministic replay capsule (hash-equality or HONEST failure;
+     default-OFF; byte-equivalent when off).
+  7. GEA-14 — the print-safe classroom session packet (composed from EXISTING surfaces
+     only; no new content authority).
+  8. MAYHEM SLICE F — the skirmish/free-battle standalone ruleset picker UI (EXTEND the
+     Slice-B/D machinery, never bypass; `MAYHEM_PUBLIC_READY` stays false; Historical
+     surfaces stay byte-equivalent).
+  9. IF room remains: ONE LANE-002 5b citation-grade replacement batch per
+     `SOLDIER-REPLACEMENT-FORMAT.md` (live-fetch + two-source every claim).
+  GEA-11's interactive campaign layer stays CLOSED (design-only contract).
+- **Run law (D431/D443 inherited verbatim):** per-slice gates ONLY — `node --check` on
+  touched JS · `node tools/build.mjs` GATE OK · `node tools/validate-data-schemas.mjs` when
+  data moves · `git diff --check` · commit + push per slice. NO browser probes, binds, or
+  batteries this run. Every slice's DECISIONS entry (D444+) carries VETTING DEFERRED (D443)
+  + one AUDIT-DEBT row (AD-11+) naming exactly what it owes the end-audit; new features get
+  AUTHORED (not run) probe teeth. Each contract's byte-equivalence defaults are BINDING
+  acceptance restated per slice. Pin-bump idiom at EVERY pin site for any count movement
+  (baseline 26 scenarios / schema 57 / Army Register 1,614 / suite 133; suite rows append
+  at the END so the war-career-38 / mayhem-57 row pins hold). HANDOFF top-block EXACT NEXT
+  amended at every slice boundary.
+- **Probe design:** deferred by construction (D431/D443) — each slice AUTHORS its focused
+  teeth as files without running them; its AUDIT-DEBT row is the run manifest the FINAL
+  audit session executes, then flips LANE-009 + LANE-010 + LANE-011 SHIPPED.
+- **Exclusions:** `_SAVE_VER` movement, `build/base.html` edits, probe weakening, re-running
+  LANE-009/LANE-010 slices or the AD-0 battery, Phase D hex, Phase H media, public Mayhem,
+  asset purchases/accounts, GEA-11 runtime.
+- **Expected transition:** DRIVE → VERIFY (battery-only) at run end; the FINAL audit
+  session settles AD-0 + every AD-11+ row at the final head and flips this lane SHIPPED.
+- **Resume pointer:** slice 1 (GEA-07) from this ledger-only commit — re-read its contract
+  in `docs/design/genre-elite-p1-contracts.md` in full first.
+- **Last-touched commit:** this ledger-only lock commit.
+- **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's genre-elite P1
+  build-run directive (the D443 extend-coding continuation).
+
 ---
 
 ## 6 · JOINT STRATEGY BOARD — Fable ⇄ Sol (cross-tool planning, not just locks)
