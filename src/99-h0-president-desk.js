@@ -350,6 +350,11 @@
           + '<span class="h0-desk-chip"><b>Date</b>' + h0DeskEsc(dateLine) + '</span>'
         + '</div>'
       + '</header>'
+      /* GEA-08 (D445 / D453 audit root-fix): the Chief of Staff morning brief rides the LIVE h0
+         desk — the D445 seam sat only in src/30's superseded shell (dead code under this
+         override). Composed above wdTabs, OUTSIDE wdContent so deep links survive refreshes;
+         "" when the module or its data is absent -> the desk is byte-identical. */
+      + ((typeof cosBriefHtml === "function") ? cosBriefHtml(C) : "")
       /* S30 (D233): label the <nav> landmark only — the inner group carried the identical aria-label, so a
          screen reader announced "President's Desk sections" twice for nested wrappers around the same buttons. */
       + '<nav class="h0-desk-tabs-wrap" aria-label="President\'s Desk sections"><div id="wdTabs" role="group">' + h0DeskTabsHtml() + '</div></nav>'
@@ -365,5 +370,7 @@
       else if (typeof closeSheet === "function") closeSheet();
     });
     h0DeskWireTabs();
+    // GEA-08 (D445 / D453): wire the brief's deep links on the live shell (guarded no-op without the module).
+    if (typeof cosWireBrief === "function") { try { cosWireBrief(C); } catch (e) {} }
   };
 })();

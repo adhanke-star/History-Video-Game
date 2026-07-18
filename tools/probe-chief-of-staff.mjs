@@ -99,7 +99,11 @@ function staticChecks() {
   });
 
   check('PURITY BY CONSTRUCTION: src/109 contains NO lazy-init tab-wrapper call (econRenderFinance/econInit/blockadeInit/decInit/moraleCompute/logisticsSnapshot/decPendingCount are all absent) — the D443 §19 lesson', () => {
-    const mod = readFileSync(join(ROOT, 'src', '109-chief-of-staff.js'), 'utf8');
+    // D453 audit root-fix (never-run tooth): the module's own header comment NAMES the impure
+    // wrappers while stating the purity interpretation — the forbidden-call scan must run over
+    // CODE with comments stripped (the AD-14/AD-13 class).
+    const mod = readFileSync(join(ROOT, 'src', '109-chief-of-staff.js'), 'utf8')
+      .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
     ['econRenderFinance', 'econInit(', 'blockadeInit(', 'decInit(', 'moraleCompute(', 'logisticsSnapshot(', 'decPendingCount(', 'realDiplomacySnapshot('].forEach(tok => {
       if (mod.indexOf(tok) >= 0) throw new Error('impure reader call present: ' + tok);
     });
