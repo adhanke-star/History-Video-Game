@@ -164,7 +164,7 @@ const SETUP = `(() => {
       var reg = fldScenarioRegistry(), order = fldScenarioMenuOrder(reg);
       if (!reg.cedarCreek || reg.cedarCreek !== DATA) throw new Error('registry identity missing');
       if (fldScenarioMenuRank('cedarCreek') !== 72) throw new Error('menu rank must be 72, got ' + fldScenarioMenuRank('cedarCreek'));
-      if (!(order.indexOf('kennesaw') + 1 === order.indexOf('cedarCreek') && order.indexOf('cedarCreek') + 1 === order.indexOf('franklin'))) throw new Error('chronology wrong: ' + order.join(' -> '));
+      if (!(order.indexOf('kennesaw') + 1 === order.indexOf('atlanta') && order.indexOf('atlanta') + 1 === order.indexOf('cedarCreek') && order.indexOf('cedarCreek') + 1 === order.indexOf('franklin'))) throw new Error('chronology wrong: ' + order.join(' -> '));   // D454 re-pin: D436 registered atlanta at rank 71 BETWEEN kennesaw 70 and cedarCreek 72 and updated this probe's DOM chronology tooth (line ~360) but MISSED this registry tooth (the reversed-form expression); re-pinned to the shipped chain on its first-ever run — the chain now guards Kennesaw -> Atlanta -> Cedar Creek -> Franklin.
       return { rank:72, order:order.indexOf('cedarCreek') };
     });
 

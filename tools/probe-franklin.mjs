@@ -114,7 +114,7 @@ const SETUP = `(() => {
       if (DATA.attacker !== 'CS' || DATA.defender !== 'US') throw new Error('roles wrong: ' + DATA.attacker + '/' + DATA.defender);
       if (DATA.defaultFog !== false) throw new Error('defaultFog must be false');
       var order = fldScenarioMenuOrder(reg);
-      if (!(order.indexOf('cedarCreek') === order.indexOf('kennesaw') + 1 && order.indexOf('franklin') === order.indexOf('cedarCreek') + 1)) throw new Error('menu order is not Kennesaw -> Cedar Creek -> Franklin: ' + order.join(' -> '));
+      if (!(order.indexOf('atlanta') === order.indexOf('kennesaw') + 1 && order.indexOf('cedarCreek') === order.indexOf('atlanta') + 1 && order.indexOf('franklin') === order.indexOf('cedarCreek') + 1)) throw new Error('menu order is not Kennesaw -> Atlanta -> Cedar Creek -> Franklin: ' + order.join(' -> '));   // D454 re-pin: D436 registered atlanta at rank 71 between kennesaw and cedarCreek (this probe's tooth was authored pre-D436 and never ran since — VETTING DEFERRED); the chain now guards Kennesaw -> Atlanta -> Cedar Creek -> Franklin.
       return { order:order, usUnits:DATA.oob.US.length, csUnits:DATA.oob.CS.length };
     });
 
