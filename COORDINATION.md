@@ -1728,6 +1728,51 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
+### LANE-008 · c72-shiloh-myth-correction — **DRIVE**
+
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra.
+- **State:** DRIVE.
+- **Design law:** REVIEW-QUEUE C72 · V1-CHECKLIST Post-D300 Remaining-Work Priority Ladder ·
+  D422 · D74 single-engine/no-fudge law · D92 two-source and source-confidence law.
+- **Acceptance criteria:**
+  1. Rewrite only player-facing historical text in `data/shiloh.json` that presents the old
+     complete-surprise / Prentiss-centered / truly-sunken-road / Buell-saved-Grant /
+     Johnston-lived-means-victory bundle as settled fact.
+  2. The corrected account must state that Grant was surprised but total tactical surprise is
+     disputed; Everett Peabody's unauthorized patrol warned the army before the camps were struck.
+  3. The Hornets' Nest account must center W. H. L. Wallace's veteran division alongside the
+     remnant of Prentiss's command and distinguish later Prentiss-centered memory from the field
+     evidence.
+  4. The road must not be described as a trench-like sunken defensive feature. The existing wall
+     geometry/objective stays unchanged only as a plainly labeled game abstraction for the wider
+     Hornets' Nest defensive sector.
+  5. Buell's arrival must be described as strengthening the second-day counterattack, not as the
+     sole event that saved an otherwise doomed army. Johnston's death remains important but any
+     claim that his survival would certainly have produced Confederate victory must be rejected as
+     counterfactual.
+  6. Every corrected thesis must rest on both named reputable sources: the NPS Grant-surprise
+     article and Timothy B. Smith's American Battlefield Trust myth review. Preserve honest
+     `Verified`/`Inferred` labels; invent no quotation or citation.
+  7. Change no ids, scenario registration, side, units, commanders, ranks, men/guns/xp/weapons,
+     coordinates, terrain shapes, objective mechanics, score weights, reinforcements/timing,
+     combat/output code, schema, save shape/version, media, `build/base.html`, or generated HTML by
+     hand. Counts stay 24 scenarios / schema 55 / Army Register 1,512 / suite 131 / `_SAVE_VER=1`.
+- **Probe design:** extend `tools/probe-shiloh.mjs` with one C72 content tooth that reads the live
+  Shiloh data and requires the Peabody warning, W. H. L. Wallace centrality, non-sunken-road
+  correction, Buell nuance, Johnston counterfactual caution, explicit game-abstraction disclosure,
+  and both exact source URLs; reject the obsolete certainty phrases. Keep all existing runtime,
+  determinism, A/B, accessibility, and historical-direction teeth green. Negative bind: replace
+  only the abstraction disclosure token with the old natural-defensive-position claim; require
+  exactly the C72 tooth red, inverse-restore `data/shiloh.json`, `tools/probe-shiloh.mjs`, and the
+  generated game byte-identically, rebuild, and rerun green.
+- **Resume pointer:** first mechanical action after this pushed lock is to inventory every
+  player-facing string in `data/shiloh.json` matching surprise, Prentiss, Sunken Road, Hornets'
+  Nest, Buell, or Johnston; classify each as rewrite/retain before editing.
+- **Last-touched commit:** ledger-only DRIVE take pending.
+- **History:** selected and contracted in D422 after the D421 clean boundary.
+
+---
+
 ## 6 · JOINT STRATEGY BOARD — Fable ⇄ Sol (cross-tool planning, not just locks)
 
 **What this is (Aaron, 2026-07-11):** the lanes above carry contracts and locks; this board

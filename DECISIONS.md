@@ -4,6 +4,32 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D422 — POST-D421 ROADMAP SELECTS C72 SHILOH MYTH-CORRECTION, TEXT ONLY — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-008 DRIVE] (2026-07-17)
+
+C72 is the highest-priority bounded post-D421 item. It is the only open HIGH review finding and
+the canonical post-D300 ladder parks it ahead of the smaller GEA-01 + S44 presentation bundle.
+Its two named sources are live and directly address the disputed claims already present in
+`data/shiloh.json`: NPS treats Grant's surprise as real but debated and documents advance warning;
+the American Battlefield Trust's Timothy B. Smith review corrects the complete-surprise,
+Prentiss-centered, sunken-road, Buell-saved-Grant, and Johnston-certain-victory myths. The slice
+therefore has high teaching value, source readiness, and a narrow implementation boundary.
+
+Rejected for this milestone: another LANE-002 5b batch remains eligible but is open-ended and just
+received D421; Phase H media/model work carries license, account, performance, and asset-pipeline
+risk; Phase D/full-hex and custom phase authoring are larger product directions; Group 6 report
+polish is optional; GEA-01 + S44 are MED presentation defects; later Mayhem, War Career Slice F,
+and Cold Harbor remain closed. This choice does not authorize any of those lanes.
+
+The C72 release is text-only. Rewrite Shiloh's player-facing summary, side briefings/objectives,
+unit/terrain/marker notes, outcome framing, teaching cards, and codex summary wherever they repeat
+the disputed bundle. Keep the playable Hornets' Nest objective and existing terrain coordinates as
+an explicitly labeled game abstraction; change no ids, OOB numbers, weapons, ranks, timings,
+reinforcement mechanics, terrain geometry, objective logic, score weights, combat/output code,
+schema, save shape/version, registry, or media. Add focused probe teeth for the corrected thesis,
+the two-source provenance, and the abstraction disclosure, plus a negative bind that restores
+every edited byte. Expected counts remain 24 scenarios, schema 55, Army Register 1,512, suite 131,
+and `_SAVE_VER=1`.
+
 ## D421 — POST-D420 ROADMAP SELECTS ONE THREE-RECORD NEW MARKET HEIGHTS USCT PROSOPOGRAPHY BATCH — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-002 DRIVE] (2026-07-17)
 
 The live roadmap has no authorized later Mayhem or War Career slice, the battle ladder is complete
