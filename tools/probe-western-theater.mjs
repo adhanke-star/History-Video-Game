@@ -60,13 +60,36 @@ const SETUP = `(() => {
     step('data loads sourced current arc, hinges, future locks, and guardrails', function(){
       var D=GAME_DATA&&GAME_DATA['western-theater'];
       if(!D||D.schema!=='cw_western_theater_v1') throw new Error('missing western-theater schema');
-      var cur=(D.currentArc||[]).map(function(x){return x.id;}).sort();
-      ['chickamauga-current','shiloh-current','vicksburg-current'].forEach(function(id){ if(cur.indexOf(id)<0) throw new Error('missing current arc '+id); });
-      var locks=(D.futureLocks||[]).map(function(x){return (x.label||'')+' '+(x.status||'');}).join(' | ');
-      ['Chattanooga','Atlanta','Franklin','Nashville','USCT','locked'].forEach(function(s){ if(locks.indexOf(s)<0) throw new Error('missing future lock token '+s+' in '+locks); });
+      // S44 (D423): every arc entry carries scenarioId + playable-now + the two-source law.
+      // The 9-id SET requirement is owned by the registry-truth tooth below, live-derived from
+      // the registry (no hardcoded subset) — which also lets the atlanta-flip bind isolate it.
+      var cur=(D.currentArc||[]).map(function(x){return x.scenarioId;});
+      if(!cur.length) throw new Error('currentArc empty');
+      (D.currentArc||[]).forEach(function(x){
+        if(!x.scenarioId||typeof x.scenarioId!=='string') throw new Error('currentArc entry missing scenarioId: '+(x.id||x.label));
+        if(x.status!=='playable-now') throw new Error('currentArc entry not playable-now: '+x.id); });
+      var locks=D.futureLocks||[];
+      if(!locks.length) throw new Error('futureLocks empty');
+      var atl=locks.filter(function(x){return x.id==='wt-atlanta-march-readout';})[0];
+      if(!atl) throw new Error('missing the Atlanta/March future lock');
+      if(!Array.isArray(atl.lockedScenarioIds)||atl.lockedScenarioIds.indexOf('atlanta')<0) throw new Error('Atlanta lock missing lockedScenarioIds ["atlanta"]');
       var all=[D.profile||{}].concat(D.currentArc||[],D.strategicHinges||[],D.futureLocks||[],D.guardrails||[]);
       all.forEach(function(x){ if(x.provenance==='Verified' && (!Array.isArray(x.sources)||x.sources.length<2)) throw new Error('under-sourced '+(x.id||x.title||x.label||x.name)); });
-      return { current:cur, locks:(D.futureLocks||[]).length, hinges:(D.strategicHinges||[]).length };
+      return { current:cur, locks:locks.length, hinges:(D.strategicHinges||[]).length };
+    });
+    step('S44 registry truth: currentArc == the registered theater-"W" set; locked ids unregistered', function(){
+      if(typeof fldScenarioRegistry!=='function') throw new Error('fldScenarioRegistry unavailable');
+      if(typeof _FLD_BATTLE_META!=='object'||!_FLD_BATTLE_META) throw new Error('_FLD_BATTLE_META unavailable');
+      var D=GAME_DATA['western-theater'], reg=fldScenarioRegistry()||{};
+      var arcIds=(D.currentArc||[]).map(function(x){return x.scenarioId;});
+      arcIds.forEach(function(id){ if(!reg[id]) throw new Error('currentArc scenarioId not registered: '+id); });
+      // no hardcoded subset: a new registered Western battle forces this copy update
+      var westernRegistered=Object.keys(reg).filter(function(id){ var m=_FLD_BATTLE_META[id]; return !!(m&&m.theater==='W'); }).sort();
+      var arcSorted=arcIds.slice().sort();
+      if(JSON.stringify(westernRegistered)!==JSON.stringify(arcSorted)) throw new Error('registered western set ['+westernRegistered.join(',')+'] != currentArc ['+arcSorted.join(',')+']');
+      var lockedIds=(D.futureLocks||[]).reduce(function(a,l){return a.concat(Array.isArray(l.lockedScenarioIds)?l.lockedScenarioIds:[]);},[]);
+      lockedIds.forEach(function(id){ if(reg[id]) throw new Error('locked scenarioId is actually registered: '+id); });
+      return { western:westernRegistered, lockedIds:lockedIds };
     });
     step('bridge function is exact zero and does not move army facets', function(){
       var C=mkC('US',1864), before=bridgeArmy(C), b=westernTheaterBridgeBonus(C), after=bridgeArmy(C);
@@ -78,7 +101,8 @@ const SETUP = `(() => {
       var C=mkC('CS',1864), before=stripWestern(C), snap=westernTheaterSnapshot(C), after=stripWestern(C);
       if(before!==after) throw new Error('snapshot mutated external campaign state');
       if(!(snap.riverRailIndex>0 && snap.chattanoogaPressure>0 && snap.georgiaPressure>0 && snap.armyTennesseeStrain>0)) throw new Error('snapshot metrics missing '+JSON.stringify(snap));
-      if(snap.playableWesternCount!==3 || snap.futureLockedCount<4 || snap.battleBuildLocked!==true) throw new Error('queue counts wrong '+JSON.stringify(snap));
+      var arcLen=(GAME_DATA['western-theater'].currentArc||[]).length;   // S44 (D423): count derives from the data, never a hardcoded 3
+      if(snap.playableWesternCount!==arcLen || snap.futureLockedCount<1 || snap.readoutAddsNoBattles!==true) throw new Error('queue counts wrong (want playable '+arcLen+', locks >=1, readoutAddsNoBattles true) '+JSON.stringify(snap));
       return snap;
     });
     step('resolve records only western lastTurn/log', function(){
@@ -98,19 +122,25 @@ const SETUP = `(() => {
       if(!Array.isArray(C.westernTheater.log)||C.westernTheater.lastTurn!==null||C.westernTheater.lastBridge!==null) throw new Error('sanitize failed '+JSON.stringify(C.westernTheater));
       return C.westernTheater;
     });
-    step('War Effort UI renders Western readout and no priority control', function(){
+    step('War Effort UI renders the DERIVED Western readout and no priority control', function(){
       var C=mkC('US',1864);
       openWarDept(); window._wdTab='economy'; _wdRefresh();
       var h=document.getElementById('wdContent').innerHTML;
-      ['Western Theater Strategic Readout','Shiloh','Vicksburg','Chickamauga','Chattanooga','Atlanta','Franklin','Nashville','USCT','No battle-build in this slice','bridge input is zero'].forEach(function(s){ if(h.indexOf(s)<0) throw new Error('missing UI text '+s); });
+      // S44 (D423): all nine playable labels + the Atlanta lock render; the listing is derived
+      ['Western Theater Strategic Readout','Fort Donelson','Shiloh','Stones River','Vicksburg','Chickamauga','Chattanooga','Kennesaw','Franklin','Nashville','Atlanta','USCT','No battle-build in this slice','bridge input is zero'].forEach(function(s){ if(h.indexOf(s)<0) throw new Error('missing UI text '+s); });
+      if(h.indexOf('are playable now')<0) throw new Error('missing the derived playable listing');
+      if(h.indexOf('locked future battle work')<0) throw new Error('missing the derived locked listing');
+      if(h.indexOf('Shiloh, Vicksburg, and Chickamauga are playable now')>=0) throw new Error('retired hardcoded playable sentence still rendered');
+      if(h.indexOf('USCT playable work remain locked')>=0) throw new Error('retired hardcoded lock sentence still rendered');
       if(document.querySelector('[data-wtpriority],#wtToggle,#westernTheaterToggle')) throw new Error('western theater priority control should not exist');
       return { len:h.length };
     });
-    step('Theater Map renders readout without launch affordance', function(){
+    step('Theater Map renders the full derived arc without launch affordance', function(){
       var C=mkC('US',1864);
       openWarDept(); window._wdTab='map'; _wdRefresh();
       var h=document.getElementById('wdContent').innerHTML;
-      ['The seat of war spans','Western Theater Strategic Readout','No tactical launch added','Chattanooga','Atlanta','Franklin','Nashville'].forEach(function(s){ if(h.indexOf(s)<0) throw new Error('missing map text '+s); });
+      ['The seat of war spans','Western Theater Strategic Readout','No tactical launch added','Fort Donelson','Stones River','Kennesaw','Chattanooga','Atlanta','Franklin','Nashville'].forEach(function(s){ if(h.indexOf(s)<0) throw new Error('missing map text '+s); });
+      if(h.indexOf('Shiloh, Vicksburg, and Chickamauga are playable now')>=0) throw new Error('retired hardcoded playable sentence leaked into the map block');
       if(/fldLaunch|Start Battle|side-choice/i.test(h)) throw new Error('map readout leaked launch affordance');
       return { len:h.length };
     });

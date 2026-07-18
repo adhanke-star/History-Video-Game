@@ -18,6 +18,17 @@
 /* ============ (1) FIRST-LAUNCH WELCOME ============ */
 var _HP_WELCOMED_KEY = "gor_welcomed";
 
+function _hpQuickStartBattleLine() {
+  /* GEA-01 (D423): the hand-maintained nine-battle enumeration drifted against the live roster
+     (9 named vs the registered count) and is retired. The count derives from the one scenario
+     registry owner behind a typeof guard; the copy anchors on First Bull Run, the canonical
+     first scenario, with a graceful no-count fallback. */
+  var n = 0;
+  try { if (typeof fldScenarioRegistry === "function") n = Object.keys(fldScenarioRegistry() || {}).length; } catch (e) {}
+  var battles = (n > 0) ? ("all " + n + " historical battles") : "the historical battles";
+  return "opens " + battles + ", beginning with First Bull Run, plus the real-time Skirmish sandbox and the Custom Battle builder.";
+}
+
 function _hpShowWelcome() {
   var html =
     '<h1 class="title-xl">The Civil War</h1>' +
@@ -47,10 +58,11 @@ function _hpShowWelcome() {
     '</div>' +
     '<hr class="rule">' +
     /* C19 (D233): quick-start names the SHIPPED H0 command-shell buttons — the old copy pointed a brand-new
-       player at "Federal Armies Muster for War" + per-battle buttons that no longer exist on the dark menu. */
+       player at "Federal Armies Muster for War" + per-battle buttons that no longer exist on the dark menu.
+       GEA-01 (D423): the battle line is registry-derived — see _hpQuickStartBattleLine. */
     '<p style="font-size:13px;opacity:.8;margin-bottom:10px"><strong>Quick start:</strong> ' +
       'Click <em>"Muster the Union"</em> or <em>"Command the Confederacy"</em> to begin a campaign. ' +
-      '<em>"Choose a Battle"</em> opens the standalone battles — First Bull Run, Malvern Hill, Antietam, Fredericksburg, Chancellorsville, Gettysburg, Shiloh, Vicksburg, Chickamauga — plus the real-time Skirmish sandbox and the Custom Battle builder.</p>' +
+      '<em>"Choose a Battle"</em> ' + _hpQuickStartBattleLine() + '</p>' +
     '<p style="font-size:12px;opacity:.65;margin-bottom:14px">Press <kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;font-size:11px">?</kbd> anytime for controls help.</p>' +
     '<div class="btn-row" style="gap:10px;flex-wrap:wrap;justify-content:center">' +
       '<button class="bigbtn" id="hpWelcomeTour" aria-label="Take the guided tour of the game">&#9733; Take the Guided Tour</button>' +

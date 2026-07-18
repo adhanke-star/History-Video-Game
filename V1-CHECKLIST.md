@@ -1,6 +1,6 @@
 # V1 FEATURE-COMPLETE CHECKLIST — "The Civil War"  (APPROVED — run-k Q&A, 2026-06-15)
 
-> **D422 live gate:** the two-source C72 Shiloh myth correction ships. Peabody/Wallace/non-sunken-road/Buell/Johnston nuance replaces the stale player-facing bundle; the unchanged Hornets' Nest objective is labeled a game abstraction. LANE-008 SHIPPED; all 24/55/1,512/131 + `_SAVE_VER=1` invariants hold; see `HANDOFF.md` top.
+> **D423 live gate:** the finish-line push ships GEA-01 (registry-derived quick-start count, nine-name chain retired) + S44 (all nine registered Western battles presented playable; Atlanta/March the only lock; live registry-truth tooth). LANE-009 (Claude Code / Fable 5) drives S45→S46→E73→E75→C73→C74→E74 then the full release battery; all 24/55/1,512/131 + `_SAVE_VER=1` invariants hold; see `HANDOFF.md` top.
 
 > **D421 prior gate:** three Verified New Market Heights USCT Medal of Honor records ship: Fleetwood, Beaty, and Gardiner. Pack 39→42; open generated rows 1,440→1,437; register 1,512; focused/adjacent gates green. LANE-002 is CONTRACT/unowned; see `HANDOFF.md` top.
 

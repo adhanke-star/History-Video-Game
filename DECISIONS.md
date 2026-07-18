@@ -30,6 +30,36 @@ session model). LANE-009 "finish-line-fixnow" carries the full charter, acceptan
 design, exclusions, expected transition, and resume pointer. This lock commit is ledger-only with
 no executable red teeth; teeth ship in the same commits as the fixes that green them.
 
+Release result (Phases 1-2, same date): GEA-01 and S44 ship together. The quick-start battle line
+is now derived from `fldScenarioRegistry()` behind a typeof guard ("all 24 historical battles,
+beginning with First Bull Run" live; graceful no-count fallback), keeping the exact
+Muster/Command/Choose tokens plus the Skirmish sandbox and Custom Battle builder mentions; the
+nine-name enumeration is retired. `data/western-theater.json` currentArc now carries all nine
+registered Western battles chronologically (fortDonelson → nashville), each with `scenarioId`,
+status "playable-now", and the file's two-source convention; USCT is folded truthfully into the
+Nashville entry (Steedman / Col. Charles R. Thompson's 2nd Colored Brigade — 12th, 13th, 100th
+USCT at Peach Orchard/Overton, matching shipped `data/nashville.json`); futureLocks keeps only
+wt-atlanta-march-readout plus `lockedScenarioIds:["atlanta"]`; the profile summary's stale locked
+claim is corrected. `src/73-western-theater.js` derives its playable/locked sentence from
+currentArc/futureLocks labels via `_wtArcLine`, raises both `_wtCards` current caps 3→12, renames
+snapshot key battleBuildLocked → readoutAddsNoBattles, and still never references
+`fldScenarioRegistry` (contamination scan green — the probe owns the registry cross-check).
+One deliberate contract amendment (COORDINATION §1 adopt-or-amend): the 9-id SET requirement lives
+solely in the NEW live-derived registry-truth tooth, not duplicated as a hardcoded list in the data
+tooth, so the atlanta-flip bind isolates exactly one tooth; coverage is equal-or-stronger (the set
+derives from the registry, no hardcoded subset). Gates: build GATE OK; schema 55/55; node --check
+clean on all four touched files; probe-help-overlay 11/11 (new GEA-01 tooth, liveCount 24);
+probe-western-theater 9/9 (data, registry-truth, snapshot, derived-UI teeth); adjacent
+probe-tutorial 15/15 and probe-tactical-roster 8/8; zero pageerrors everywhere, all artifacts read.
+Binds: (a) nine-name-chain reinsertion → exactly the GEA-01 tooth red; (b) one currentArc
+scenarioId flipped to "atlanta" → exactly the registry-truth tooth red; both restored
+md5-identically (src92 `ce78956913741f6dbc53a1dfe2c82c82`, data `47b77fe6d66601c8c30317a44c673e9b`,
+generated `8238c30987eed173ac095ff9b6c47b43`) with rebuild + green rerun. Invariants held: 24
+scenarios / schema 55 / Army Register 1,512 / suite 131 / `_SAVE_VER=1` / frozen base
+`c9db83fa99230ffb95bdfdfe059f3fb9` / `westernTheaterBridgeBonus` exact zero. Player-facing change:
+the welcome card counts battles honestly, and the Western Theater readout now tells the truth —
+nine playable Western fields listed and rendered, only Atlanta/the March locked.
+
 ## D422 — POST-D421 ROADMAP SELECTS C72 SHILOH MYTH-CORRECTION, TEXT ONLY — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-008 DRIVE] (2026-07-17)
 
 C72 is the highest-priority bounded post-D421 item. It is the only open HIGH review finding and

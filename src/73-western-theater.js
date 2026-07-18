@@ -130,7 +130,7 @@ function westernTheaterSnapshot(C) {
     propertyPressure: _wtRound(propertyPressure),
     playableWesternCount: Array.isArray(D.currentArc) ? D.currentArc.length : 0,
     futureLockedCount: Array.isArray(D.futureLocks) ? D.futureLocks.length : 0,
-    battleBuildLocked: true,
+    readoutAddsNoBattles: true,   /* S44 (D423): renamed from battleBuildLocked — this slice still builds no battles; only the probe consumes it */
     readoutOnly: !!W
   };
 }
@@ -169,6 +169,23 @@ function _wtCards(items, max, tone) {
   return html;
 }
 
+function _wtArcLine(D) {
+  /* S44 (D423): the playable/locked sentence is DERIVED from the data file's currentArc and
+     futureLocks labels — never hand-maintained, so it cannot drift against the presentation
+     owner again. The registry cross-check lives in the probe, not here. */
+  var cur = Array.isArray(D && D.currentArc) ? D.currentArc : [];
+  var locks = Array.isArray(D && D.futureLocks) ? D.futureLocks : [];
+  var names = [], lockNames = [], i, j;
+  for (i = 0; i < cur.length; i++) names.push(String(cur[i].label || cur[i].id || ""));
+  for (j = 0; j < locks.length; j++) lockNames.push(String(locks[j].label || locks[j].id || ""));
+  var line = names.length
+    ? (names.join(", ") + (names.length > 1 ? " are" : " is") + " playable now")
+    : "No Western fields are playable yet";
+  if (lockNames.length) line += "; " + lockNames.join(", ") + (lockNames.length > 1 ? " remain" : " remains") + " locked future battle work.";
+  else line += ".";
+  return line;
+}
+
 function _wtGuardrailHTML(items) {
   var html = "";
   items = Array.isArray(items) ? items : [];
@@ -192,7 +209,7 @@ function presWesternTheaterBlock(C) {
     + '<div style="margin-top:14px;padding-top:10px;border-top:1px solid var(--rule)">'
     + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap">'
     + '<div><div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule)">Western Theater Strategic Readout</div>'
-    + '<div style="font-size:12px;opacity:.72;max-width:680px">Shiloh, Vicksburg, and Chickamauga are playable now; Chattanooga, Atlanta, Franklin, Nashville, and USCT playable work remain locked future battle queue.</div></div>'
+    + '<div style="font-size:12px;opacity:.72;max-width:680px">' + htmlEsc(_wtArcLine(D)) + '</div></div>'
     + '<div style="text-align:right"><div style="font-size:20px;font-weight:bold;color:' + snap.color + '">' + snap.index + ' &middot; ' + htmlEsc(snap.word) + '</div>'
     + '<div style="font-size:11px;opacity:.7">Readout only: bridge input is zero</div></div>'
     + '</div>'
@@ -218,7 +235,7 @@ function presWesternTheaterBlock(C) {
     + '<div style="font-size:11px;opacity:.68;margin-top:6px">westernTheaterBridgeBonus returns exact zero by contract.</div>'
     + '</div>'
     + '<div style="margin-top:9px"><div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);font-weight:bold">Playable Western arc now</div>'
-    + '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px">' + _wtCards(current, 3, '#6f9e5a') + '</div></div>'
+    + '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px">' + _wtCards(current, 12, '#6f9e5a') + '</div></div>'
     + '<div style="margin-top:9px"><div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);font-weight:bold">Strategic hinges</div>'
     + '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px">' + _wtCards(hinges, 4, '#b8863b') + '</div></div>'
     + '<div style="margin-top:9px"><div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);font-weight:bold">Locked future battle queue</div>'
@@ -244,7 +261,7 @@ function presWesternTheaterMapBlock(C) {
     + '<div style="font-size:12px;opacity:.76">River corridors, rail junctions, Tennessee-Georgia pressure, and the locked battle-build order.</div></div>'
     + '<div style="text-align:right;font-size:12px"><b style="color:' + snap.color + '">' + snap.index + ' &middot; ' + htmlEsc(snap.word) + '</b><br><span style="opacity:.68">No tactical launch added</span></div>'
     + '</div>'
-    + '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">' + _wtCards(current, 3, '#6f9e5a') + '</div>'
+    + '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">' + _wtCards(current, 12, '#6f9e5a') + '</div>'
     + '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">' + _wtCards(locks, 4, '#c9712e') + '</div>'
     + '</div>';
 }

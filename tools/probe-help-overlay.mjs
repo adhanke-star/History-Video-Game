@@ -82,6 +82,19 @@ const SETUP = `(() => {
       closeSheetSafe();
       return { ok:true }; });
 
+    step('GEA-01 (D423): quick-start derives the live scenario count and retires the nine-name chain', function(){
+      _hpShowWelcome();
+      var html=pad();
+      var n=(typeof fldScenarioRegistry==='function')?Object.keys(fldScenarioRegistry()||{}).length:0;
+      if(!(n>0)) throw new Error('live scenario registry unavailable/empty in-page (n='+n+')');
+      if(html.indexOf('all '+n+' historical battles')<0) throw new Error('quick-start missing the live-count phrase "all '+n+' historical battles"');
+      if(html.indexOf('beginning with First Bull Run')<0) throw new Error('quick-start missing the First Bull Run anchor');
+      if(html.indexOf('Fredericksburg, Chancellorsville, Gettysburg')>=0) throw new Error('quick-start still carries the retired nine-name enumeration');
+      if(html.indexOf('Choose a Battle')<0) throw new Error('quick-start missing Choose a Battle');
+      if(html.indexOf('Skirmish sandbox')<0 || html.indexOf('Custom Battle builder')<0) throw new Error('quick-start missing the Skirmish sandbox / Custom Battle builder mentions');
+      closeSheetSafe();
+      return { liveCount:n }; });
+
     step('S07/S08 (D233): the tactical "?" overlay lists drag-onto-enemy, shift-queue, and R', function(){
       G.mode='battle'; __FIELD.launched=true; __FIELD.phase='battle';
       document.dispatchEvent(new KeyboardEvent('keydown',{key:'?',bubbles:true}));

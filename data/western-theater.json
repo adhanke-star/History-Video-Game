@@ -1,10 +1,10 @@
 {
-  "_comment": "D191 Group 4 bounded Western Theater strategic readout. This is a War Effort and Theater Map teaching/readout slice, not a battle-build, not a tactical registry change, not an OOB rewrite, and not a bridge lever.",
+  "_comment": "D191 Group 4 bounded Western Theater strategic readout. This is a War Effort and Theater Map teaching/readout slice, not a battle-build, not a tactical registry change, not an OOB rewrite, and not a bridge lever. S44 (D423): currentArc reconciled with the live registry - the nine registered Western-theater battles are presented playable-now; only genuinely unbuilt work (Atlanta / the March) stays locked.",
   "schema": "cw_western_theater_v1",
   "schemaVersion": "1.0",
   "profile": {
     "name": "Western Theater Strategic Readout",
-    "summary": "A bounded readout that makes the Western Theater legible as a war-winning river, rail, army, emancipation, and election story while keeping future playable battles locked.",
+    "summary": "A bounded readout that makes the Western Theater legible as a war-winning river, rail, army, emancipation, and election story. All nine registered Western battles are playable now; only genuinely unbuilt work, the Atlanta / March to the Sea treatment, remains locked.",
     "teaching": "The Western Theater was not a side stage. Shiloh, Vicksburg, Chickamauga, Chattanooga, Atlanta, Franklin, Nashville, and USCT service belong in one strategic arc, but this slice only reads and teaches that arc; it does not create new fields.",
     "provenance": "Verified",
     "sources": [
@@ -16,7 +16,21 @@
   },
   "currentArc": [
     {
+      "id": "fort-donelson-current",
+      "scenarioId": "fortDonelson",
+      "label": "Fort Donelson",
+      "year": 1862,
+      "status": "playable-now",
+      "summary": "The combined land-and-river siege opens the Western river war: Grant's investment, the Confederate breakout attempt, Smith's recapture, and the unconditional surrender that opened Tennessee.",
+      "provenance": "Verified",
+      "sources": [
+        "data/fort-donelson.json current playable battle data and teaching cards.",
+        "American Battlefield Trust and National Park Service Fort Donelson source trail recorded in data/fort-donelson.json."
+      ]
+    },
+    {
       "id": "shiloh-current",
+      "scenarioId": "shiloh",
       "label": "Shiloh",
       "year": 1862,
       "status": "playable-now",
@@ -28,7 +42,21 @@
       ]
     },
     {
+      "id": "stones-river-current",
+      "scenarioId": "stonesRiver",
+      "label": "Stones River",
+      "year": 1862,
+      "status": "playable-now",
+      "summary": "The near-parity winter battle at Murfreesboro teaches the dawn assault, the Round Forest stand, Breckinridge's repulse at McFadden's Ford, and the morale stakes after Fredericksburg and Emancipation.",
+      "provenance": "Verified",
+      "sources": [
+        "data/stones-river.json current playable battle data and teaching cards.",
+        "American Battlefield Trust, Battle of Stones River, source trail recorded in data/stones-river.json."
+      ]
+    },
+    {
       "id": "vicksburg-current",
+      "scenarioId": "vicksburg",
       "label": "Vicksburg",
       "year": 1863,
       "status": "playable-now",
@@ -41,6 +69,7 @@
     },
     {
       "id": "chickamauga-current",
+      "scenarioId": "chickamauga",
       "label": "Chickamauga",
       "year": 1863,
       "status": "playable-now",
@@ -49,6 +78,58 @@
       "sources": [
         "data/chickamauga.json current playable battle data and teaching cards.",
         "American Battlefield Trust, Battle of Chickamauga source trail recorded in data/chickamauga.json."
+      ]
+    },
+    {
+      "id": "chattanooga-current",
+      "scenarioId": "chattanooga",
+      "label": "Chattanooga",
+      "year": 1863,
+      "status": "playable-now",
+      "summary": "The siege reversal teaches the Cracker Line, Orchard Knob, Lookout Mountain, and the Missionary Ridge assault that reopened the road into Georgia.",
+      "provenance": "Verified",
+      "sources": [
+        "data/chattanooga.json current playable battle data and teaching cards.",
+        "American Battlefield Trust Chattanooga overview and Lookout Mountain map source trail recorded in data/chattanooga.json."
+      ]
+    },
+    {
+      "id": "kennesaw-current",
+      "scenarioId": "kennesaw",
+      "label": "Kennesaw Mountain",
+      "year": 1864,
+      "status": "playable-now",
+      "summary": "Sherman's frontal assault on the Kennesaw line - Pigeon Hill and the Dead Angle - teaches the cost of attacking entrenchments inside the Atlanta Campaign's war of maneuver.",
+      "provenance": "Verified",
+      "sources": [
+        "data/kennesaw.json current playable battle data and teaching cards.",
+        "American Battlefield Trust, Kennesaw Mountain and Cheatham Hill, source trail recorded in data/kennesaw.json."
+      ]
+    },
+    {
+      "id": "franklin-current",
+      "scenarioId": "franklin",
+      "label": "Franklin",
+      "year": 1864,
+      "status": "playable-now",
+      "summary": "Hood's frontal assault on the Carter House line bled the Army of Tennessee's command corps white and set up the army's destruction at Nashville two weeks later.",
+      "provenance": "Verified",
+      "sources": [
+        "data/franklin.json current playable battle data and teaching cards.",
+        "American Battlefield Trust and Battle of Franklin Trust source trail recorded in data/franklin.json."
+      ]
+    },
+    {
+      "id": "nashville-current",
+      "scenarioId": "nashville",
+      "label": "Nashville",
+      "year": 1864,
+      "status": "playable-now",
+      "summary": "Thomas breaks Hood's army in two days: the redoubts, then Shy's Hill while Peach Orchard / Overton Hill is pinned - where Steedman's command and Col. Charles R. Thompson's 2nd Colored Brigade (12th, 13th, and 100th USCT) made their costly uphill attack. Black combat agency is part of the victory's story.",
+      "provenance": "Verified",
+      "sources": [
+        "data/nashville.json current playable battle data and teaching cards.",
+        "American Battlefield Trust, Battle of Nashville: Enemies Front and Rear, source trail recorded in data/nashville.json."
       ]
     }
   ],
@@ -103,48 +184,15 @@
   ],
   "futureLocks": [
     {
-      "id": "wt-chattanooga-readout",
-      "label": "Chattanooga",
-      "status": "locked-future-battle",
-      "summary": "Future battle-build candidate only: Cracker Line, Lookout Mountain, Missionary Ridge, Tunnel Hill, and Ringgold Gap are kept out of this slice.",
-      "provenance": "Verified",
-      "sources": [
-        "American Battlefield Trust, Battle of Chattanooga, https://www.battlefields.org/learn/civil-war/battles/chattanooga",
-        "National Park Service, Missionary Ridge, https://www.nps.gov/chch/learn/historyculture/missionary-ridge.htm"
-      ]
-    },
-    {
       "id": "wt-atlanta-march-readout",
       "label": "Atlanta / March to the Sea",
       "status": "locked-future-battle",
+      "lockedScenarioIds": ["atlanta"],
       "summary": "Future battle-build and campaign-treatment candidate only: Atlanta's rail and industrial role, election effect, and the later March remain last-queue work.",
       "provenance": "Verified",
       "sources": [
         "American Battlefield Trust, Battle of Atlanta, https://www.battlefields.org/learn/civil-war/battles/atlanta",
         "data/hard-war.json Sherman's March teaching card and source trail."
-      ]
-    },
-    {
-      "id": "wt-franklin-nashville-readout",
-      "label": "Franklin / Nashville",
-      "status": "locked-future-battle",
-      "summary": "Future battle-build candidate only: Hood's Tennessee campaign, Franklin's casualties, Thomas's Nashville victory, and Army of Tennessee collapse remain locked.",
-      "provenance": "Verified",
-      "sources": [
-        "American Battlefield Trust, Battle of Franklin, https://www.battlefields.org/learn/civil-war/battles/franklin",
-        "American Battlefield Trust, Battle of Nashville, https://www.battlefields.org/learn/civil-war/battles/nashville"
-      ]
-    },
-    {
-      "id": "wt-usct-nashville-readout",
-      "label": "USCT at Nashville",
-      "status": "locked-future-battle",
-      "summary": "Future USCT playable-battle lane only: Black combat agency at Nashville stays visible as a lock without being pulled into this implementation.",
-      "provenance": "Verified",
-      "sources": [
-        "data/codex.json United States Colored Troops and Black combat-agency entries.",
-        "data/primary-sources.json Lived slavery and Black combat-agency source lanes.",
-        "American Battlefield Trust, Battle of Nashville, https://www.battlefields.org/learn/civil-war/battles/nashville"
       ]
     }
   ],

@@ -1850,14 +1850,16 @@ next green commit and confer through this ledger instead of permitting simultane
 - **Expected transition:** DRIVE → SHIPPED/unowned on the terminal battery green with every
   finding line flipped fixed-in-D### (E74 the only permissible honest deferral, recorded with
   rationale).
-- **Resume pointer:** implement Phase 1 (GEA-01) + Phase 2 (S44), run the focused gates + the two
-  negative binds (nine-name-chain reinsertion → exactly the GEA-01 tooth red; one currentArc
-  scenarioId flipped to "atlanta" → exactly the registry-truth tooth red), release as D423; then
-  the ordered slices S45 → S46 → E73 → E75 → C73 → C74 → E74 (D424+), one focused-gated
-  commit+push each; then the full serialized battery, alone on the machine.
-- **Last-touched commit:** the D423 ledger lock (this commit).
+- **Resume pointer:** **GEA-01 + S44 are SHIPPED (D423 release; both binds bit exactly their
+  teeth with md5-identical restores; one logged contract amendment — the 9-id set requirement
+  lives solely in the live-derived registry-truth tooth so the atlanta bind isolates exactly one
+  tooth).** Exact next: the ordered FIX-NOW slices S45 → S46 → E73 → E75 → C73 → C74 → E74
+  (D424+), one focused-gated commit+push each, reading each REVIEW-QUEUE run-3 entry in full at
+  slice start; then the full serialized `npm run vet:noreg` battery alone on the machine.
+- **Last-touched commit:** the D423 release (Phases 1-2).
 - **History:** adjudicated + contracted by Claude Code (Fable 5) 2026-07-17 under Aaron's
-  finish-line directive; DRIVE taken in the same ledger-only commit.
+  finish-line directive; DRIVE taken in the same ledger-only commit; GEA-01 + S44 shipped in the
+  D423 release the same day.
 
 ---
 
