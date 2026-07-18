@@ -40,6 +40,34 @@ asset purchases/accounts. LANE-009's shipped slices are not re-run. Expected tra
 end: LANE-010 → VERIFY (audit-owed), with the audit session settling the whole AUDIT-DEBT
 ledger plus the full serialized battery and flipping LANE-009 + LANE-010 SHIPPED.
 
+## D440 — GEA-05 + GEA-06 SHIPPED: THE ACTION-AWARE FIRST-ORDER LESSON AND THE FOG-SAFE CAUSAL RIBBON — [CLAUDE CODE (FABLE 5), LANE-010 DRIVE] (2026-07-18)
+
+Queue item 8 (REVIEW-QUEUE GENRE-ELITE GEA-05 + GEA-06, both P1 CONTRACT rows). One new module
+`src/108-tactical-coach.js` (manifest 107→108, the documented enrollment).
+
+GEA-05: ONE optional action-aware "how/why" lesson, concept-id keyed (`order-issue-v1`), fired
+the first time the PLAYER commits an order in a live rendered battle — installed as a guarded
+`fldOrderMove` wrapper (marker + delegate propagated, the D425 idiom) that refuses AI orders,
+non-battle phases, and headless launches. The card renders over `#fldRoot` (role=note,
+aria-labelled, two buttons): "Got it" dismisses into DEVICE-LOCAL presentation state
+(`localStorage cw_lessons_v1`, closed shape, sanitized read — never the save envelope);
+"Close" leaves the device state untouched. The static src/94 tour is unchanged.
+
+GEA-06: `fldCausalRibbonHTML(u)` — a READ-ONLY causal ribbon appended to the selected-brigade
+HUD via one guarded helper line in `fldRenderHud` (the shipped B-2/B-3/H1b composition idiom).
+It consumes EXISTING stored per-unit values the universal model already computed (state,
+flankHit, underFire, fatigue, morale, ammo, formation, order.type), explains up to four causes
+in plain language ("flanked — taking fire from beyond its facing"), renders NOTHING for a
+steady fresh brigade, and NEVER recomputes an outcome (the D74 acceptance tooth). Fog-safe by
+construction: it renders only for the player's own selected brigade and reads no enemy state.
+
+Teeth AUTHORED into `tools/probe-field.mjs` (one step: functions + wrapper marker/delegate ·
+two crafted-state ribbon fixtures under the 4-cause cap · empty-ribbon purity · lesson-store
+sanitation round-trip · headless silence) — NOT run tonight.
+
+**VETTING DEFERRED (D431):** ran node --check ×3, build GATE OK (manifest enrollment verified
+by the build's own completeness gate), git diff --check. AUDIT-DEBT AD-9.
+
 ## D439 — COLD HARBOR SPEC + PLAN PROBE SHIPPED (RUNTIME DEFERRED TO THE CONTINUATION BY THE QUEUE'S OWN "IF ROOM" CLAUSE) — [CLAUDE CODE (FABLE 5), LANE-010 DRIVE] (2026-07-18)
 
 Queue item 7, spec-first from the committed 1864-65 attrition packet (Cold Harbor is

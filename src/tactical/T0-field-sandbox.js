@@ -1642,7 +1642,8 @@ function fldRenderHud() {
     (typeof fldMusterHudLine === "function" ? fldMusterHudLine(u) : "") +   // R-5: the men's-mean OVR + provenance-hatched accent (lazy materialization; pure display)
     (typeof fldMusterRollHudToggle === "function" ? fldMusterRollHudToggle(u) : "") +   // T29 (D357): the full Muster Roll inspect-expand (pure display; "" without ratings data)
     (typeof fldRatingBadgesHtml === "function" ? fldRatingBadgesHtml(u) : "") +   // R-6: the brigade's documented trait/ability chips (pure display; "" when no badge -> byte-identical)
-    (typeof fldOrderKeyHudSelected === "function" ? fldOrderKeyHudSelected() : "");   // S40: discoverable keyboard endpoint/facing path
+    (typeof fldOrderKeyHudSelected === "function" ? fldOrderKeyHudSelected() : "") +   // S40: discoverable keyboard endpoint/facing path
+    (typeof fldCausalRibbonHTML === "function" ? fldCausalRibbonHTML(u) : "");   // GEA-06 (D440): the read-only fog-safe causal ribbon — existing stored values only, never a recompute
 }
 function fldOnOver() {
   var e = document.getElementById("fldEnd"); if (!e) { fldAnnounce("Battle over."); return; }

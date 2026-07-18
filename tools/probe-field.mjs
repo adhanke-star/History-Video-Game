@@ -63,6 +63,32 @@ const SETUP = `(() => {
       if(fs.indexOf('fldCamHome')<0) throw new Error('frame-selected must fall back to the overview when nothing is selected');
       return { ok:true }; });
 
+    step('GEA-05/06 (D440): coach module wired (wrapper marker, ribbon reads stored values only, lesson store sanitized, headless-silent)', function(){
+      if(typeof tcMaybeShowLesson!=='function'||typeof fldCausalRibbonHTML!=='function'||typeof _tcReadDismissed!=='function') throw new Error('coach functions missing');
+      if(fldOrderMove._tcWrapped!==true||typeof fldOrderMove._tcDelegate!=='function') throw new Error('fldOrderMove wrapper/marker missing');
+      // GEA-06 ribbon: existing stored values only — crafted unit states produce the expected causes
+      // (the ribbon caps at 4 rendered causes, so each fake exercises <= 4)
+      var fake1={alive:true,state:'shaken',flankHit:2,underFire:1,fatigue:70,morale:78,maxMor:78,ammo:100,formation:'line',order:{type:'hold'}};
+      var rib=fldCausalRibbonHTML(fake1);
+      ['shaken','flanked','exhausted'].forEach(function(t){ if(rib.indexOf(t)<0) throw new Error('ribbon missing cause: '+t); });
+      var fake2={alive:true,state:'steady',flankHit:0,underFire:0,fatigue:0,morale:78,maxMor:78,ammo:10,formation:'column',order:{type:'charge'}};
+      var rib2=fldCausalRibbonHTML(fake2);
+      ['ammunition low','in column','committed to the charge'].forEach(function(t){ if(rib2.indexOf(t)<0) throw new Error('ribbon missing cause: '+t); });
+      var steady={alive:true,state:'steady',flankHit:0,underFire:0,fatigue:0,morale:78,maxMor:78,ammo:100,formation:'line',order:{type:'hold'}};
+      if(fldCausalRibbonHTML(steady)!=='') throw new Error('a steady fresh brigade must render no ribbon');
+      if(fldCausalRibbonHTML(null)!=='') throw new Error('null unit must render nothing');
+      // GEA-05 store: malformed device state reads empty; dismissal round-trips; concept ids validated
+      localStorage.setItem('cw_lessons_v1','{');
+      if(Object.keys(_tcReadDismissed()).length!==0) throw new Error('malformed lesson store not dropped');
+      localStorage.setItem('cw_lessons_v1',JSON.stringify({version:1,dismissed:{'order-issue-v1':true,'BAD KEY!':true,'x':'yes'}}));
+      var d=_tcReadDismissed();
+      if(d['order-issue-v1']!==true||Object.keys(d).length!==1) throw new Error('lesson-store sanitation wrong: '+JSON.stringify(d));
+      localStorage.removeItem('cw_lessons_v1');
+      // headless purity: the order hook must refuse rendererKind none (no #tcLesson in this probe)
+      if(document.getElementById('tcLesson')) throw new Error('the lesson card appeared in a headless battle');
+      return { ok:true };
+    });
+
     step('MANEUVER: stepping advances the sim and units move from their start', function(){
       var start=__FIELD.units.map(function(u){return {id:u.id,x:u.x,z:u.z};});
       fldStepN(120, 0.05);  // 6 sim-seconds; flips deploy->battle
