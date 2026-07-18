@@ -13,7 +13,7 @@
     "weather": {
       "sky": "overcast",
       "time": "dawn",
-      "provenance": "Verified (dawn assault through thick ground fog); design: engine fog OFF",
+      "provenance": "Verified",
       "note": "The assault stepped off at 4:30 a.m. through a thick ground fog. The engine's fog model aids the defender, which would mismodel this battle: the killing ground was open approach into entrenched enfilade, so fog stays OFF and the works, wall angles, and narrow gaps do the work (the packet's grain law).",
       "sources": [
         "Wikipedia, Battle of Cold Harbor (the 4:30 a.m. advance through thick ground fog)",
