@@ -1949,12 +1949,14 @@ next green commit and confer through this ledger instead of permitting simultane
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's D431 overnight
   directive.
 
-### LANE-011 · genre-elite-p1-build — **DRIVE** (Claude Code / Fable 5)
+### LANE-011 · genre-elite-p1-build — **VERIFY** (battery-only; unowned — the queue is run down)
 
-- **Owning tool:** Claude Code (Fable 5) — within Aaron's authorized Fable window through
-  Sunday 2026-07-19 (the same authorization LANE-009/LANE-010 ran under).
-- **State:** DRIVE (taken in this ledger-only commit at the clean pushed D443 boundary
-  `0041c9ac2cf227b61d539999d5955c3b2b65521c`; HEAD == origin/main verified).
+- **Owning tool:** unowned (the Claude Code / Fable 5 lock RELEASED at the D452 boundary;
+  the run executed within Aaron's authorized Fable window through Sunday 2026-07-19).
+- **State:** VERIFY (battery-only; prior: DRIVE taken ledger-only at the clean pushed D443
+  boundary `0041c9ac2cf227b61d539999d5955c3b2b65521c`; slices 1-8 shipped as D444-D452; the
+  optional LANE-002 5b batch was deliberately NOT started — a citation-grade content lane
+  must not open on a session tail, per the usage rule).
 - **Design law:** `docs/design/genre-elite-p1-contracts.md` (the eight D441 contracts — THE
   LAW for the GEA slices; each slice re-reads its contract in full at slice start and the
   contract BOUNDS the slice) · `docs/design/open-history-mayhem-mode-design.md` §3.4 + §11 +
@@ -2044,9 +2046,15 @@ next green commit and confer through this ledger instead of permitting simultane
   path, divScan verbatim, completed-battle cards + sources verbatim, the GEA-10 concept
   index; the no-telemetry interpretation recorded); the guarded bar button; white-paper
   print CSS with the no-ink-trap tooth; teeth authored into probe-afteraction (suite stays
-  137); AUDIT-DEBT AD-18.** Exact next: slice 8 (MAYHEM SLICE F, the standalone ruleset
-  picker UI) — re-read the D437 recorded bound first.
-- **Last-touched commit:** the D451 slice commit.
+  137); AUDIT-DEBT AD-18.** **D452 SHIPPED slice 8 (MAYHEM SLICE F): the skirmish Ruleset
+  segment through the existing machinery, gated on the SHIPPED public gate (the charter's
+  stays-false line adjudicated stale — the gate has been true since Slice C and was NOT
+  moved), §3.4 reset-on-open + exact-copy opts, Historical launches carry NO key; teeth
+  authored into probe-mayhem-mode; AUDIT-DEBT AD-19.** **THE LANE-011 CHARTERED QUEUE IS
+  RUN DOWN — D444-D452, slices 1-8 all shipped. LANE-011 → VERIFY (battery-only).** Exact
+  next: the FINAL dedicated audit session settles AD-11..AD-19 + AD-0 (one full serialized
+  battery at the final head; suite 137) and flips LANE-009 + LANE-010 + LANE-011 SHIPPED.
+- **Last-touched commit:** the D452 slice commit.
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's genre-elite P1
   build-run directive (the D443 extend-coding continuation).
 

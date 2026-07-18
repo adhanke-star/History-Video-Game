@@ -371,8 +371,15 @@ function _fldOrdinal(n) { var s = ["th", "st", "nd", "rd"], v = n % 100; return 
 
 /* the FREE skirmish setup menu — a period broadsheet sheet; pick side / size / terrain / era /
    fog, then launch. Full keyboard + ARIA; option groups are radio-style buttons (aria-pressed). */
-var _fldSkState = { side: "US", size: 3, terrain: "woods", era: 1862, fog: false };
+var _fldSkState = { side: "US", size: 3, terrain: "woods", era: 1862, fog: false, ruleset: "historical" };
+/* MAYHEM SLICE F (D452, design §3.4): the standalone ruleset segment renders ONLY when the
+   shipped publication gate is open AND the Slice-D engine seam is present — fail-closed to no
+   segment (and a Historical launch) otherwise. */
+function _fldSkMayhemAvail() {
+  return (typeof MAYHEM_PUBLIC_READY !== "undefined" && MAYHEM_PUBLIC_READY === true && typeof mayhemStandaloneRuleset === "function");
+}
 function fldSkirmishMenu() {
+  _fldSkState.ruleset = "historical";   // SLICE F: per-launch choice, never a sticky preference (§3.4)
   if (typeof openSheet !== "function") { fldSkirmishLaunch(); return; }
   openSheet(_fldSkirmishHTML());
   _fldSkWire();
@@ -405,6 +412,9 @@ function _fldSkirmishHTML() {
     + _fldSkOptRow("Ground", "terrain", [{ v: "open", label: "Open field" }, { v: "woods", label: "Wooded" }, { v: "ridge", label: "Ridge &amp; crest" }, { v: "river", label: "River crossing" }], s.terrain)
     + _fldSkOptRow("Year (arms)", "era", [{ v: 1861, label: "1861" }, { v: 1862, label: "1862" }, { v: 1863, label: "1863" }, { v: 1864, label: "1864" }], s.era)
     + _fldSkOptRow("Fog of war", "fog", [{ v: "0", label: "Off" }, { v: "1", label: "On" }], s.fog ? "1" : "0")
+    // MAYHEM SLICE F (D452): the standalone ruleset choice — "" when the gate/module is absent,
+    // so the Historical sheet is byte-identical without Mayhem.
+    + (_fldSkMayhemAvail() ? _fldSkOptRow("Ruleset", "ruleset", [{ v: "historical", label: "Historical" }, { v: "mayhem", label: "Mayhem" }], s.ruleset || "historical") : "")
     + _fldSkDifficultyRow()
     + '<p class="lede" style="font-size:11px;opacity:.6;margin-top:6px">The two armies start on opposite edges; seize and hold the central crest, or break the enemy. Auto-pause helps a low-APM commander.</p>'
     + '<div class="btn-row" style="margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">'
@@ -436,6 +446,7 @@ function _fldSkWire() {
         else if (g === "terrain") _fldSkState.terrain = v;
         else if (g === "era") _fldSkState.era = parseInt(v, 10) || 1862;
         else if (g === "fog") _fldSkState.fog = (v === "1");
+        else if (g === "ruleset") _fldSkState.ruleset = (v === "mayhem") ? "mayhem" : "historical";   // SLICE F (D452)
         openSheet(_fldSkirmishHTML()); _fldSkWire();   // re-render with the new selection
         // bug-hunt F3: restore keyboard focus to the chosen chip after the full re-render (else focus drops to <body>)
         try { var nb = document.querySelector('[data-skg="' + g + '"][data-skv="' + v + '"]'); if (nb) nb.focus(); } catch (e) {}
@@ -456,7 +467,12 @@ function fldSkirmishLaunch() {
     weaponPlayer: _fldYearWeapon(s.era, s.side), weaponEnemy: _fldYearWeapon(s.era, es),
     terrain: s.terrain, name: "Skirmish",
   };
-  fldLaunchSandbox({ renderer: "3d", skirmish: sk, fog: s.fog });
+  // MAYHEM SLICE F (D452): the Mayhem choice rides opts.ruleset EXACTLY as design §3.4 declares
+  // (the D437 Slice-D stamp exact-copies it); a Historical launch adds NO key at all, so the
+  // launch opts are byte-identical to the pre-D452 call.
+  var opts = { renderer: "3d", skirmish: sk, fog: s.fog };
+  if (_fldSkState.ruleset === "mayhem" && _fldSkMayhemAvail()) opts.ruleset = { id: "mayhem", version: 1 };
+  fldLaunchSandbox(opts);
 }
 /* main-menu injection (T0 fldInjectMenuButton hook) — a button beside the sandbox / Bull Run. */
 function fldInjectSkirmishButton(afterBtn) {

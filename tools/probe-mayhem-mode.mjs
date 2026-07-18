@@ -625,6 +625,45 @@ async function browserSetup() {
       return { dispatches:1 };
     });
 
+    // MAYHEM SLICE F (D452, AUDIT-DEBT AD-19): the skirmish standalone ruleset picker UI.
+    // BIND A PREDECLARATION - removing T2's gated _fldSkOptRow("Ruleset", ...) row must red
+    // exactly this step's segment-presence assert, nothing else.
+    // BIND B PREDECLARATION - removing the launch's opts.ruleset pass must red exactly this
+    // step's mayhem-choice-rides-opts assert.
+    step("SLICE F SKIRMISH RULESET PICKER (gated segment; Historical default; §3.4 exact-copy opts; reset-on-open; Historical launch carries NO key)", () => {
+      if (typeof fldSkirmishMenu !== "function" || typeof fldSkirmishLaunch !== "function" || typeof _fldSkMayhemAvail !== "function")
+        throw new Error("skirmish Slice-F API missing");
+      G.campaign = null;
+      fldSkirmishMenu();
+      const seg = document.querySelectorAll('[data-skg="ruleset"]');
+      if (seg.length !== 2) throw new Error("ruleset segment buttons: " + seg.length);
+      const hist = document.querySelector('[data-skg="ruleset"][data-skv="historical"]');
+      if (!hist || hist.getAttribute("aria-pressed") !== "true") throw new Error("Historical is not the pressed default");
+      document.querySelector('[data-skg="ruleset"][data-skv="mayhem"]').click();
+      const may2 = document.querySelector('[data-skg="ruleset"][data-skv="mayhem"]');
+      if (!may2 || may2.getAttribute("aria-pressed") !== "true") throw new Error("the Mayhem chip did not press");
+      const orig = fldLaunchSandbox;
+      let captured = null;
+      try {
+        fldLaunchSandbox = function (o) { captured = o; };
+        fldSkirmishLaunch();
+      } finally { fldLaunchSandbox = orig; }
+      if (!captured || !captured.ruleset || captured.ruleset.id !== "mayhem" || captured.ruleset.version !== 1 || Object.keys(captured.ruleset).length !== 2)
+        throw new Error("the Mayhem choice did not ride opts.ruleset exactly: " + JSON.stringify(captured && captured.ruleset));
+      // reset-on-open (§3.4: never a sticky preference) + the Historical byte-equivalence key-absence
+      fldSkirmishMenu();
+      const hist2 = document.querySelector('[data-skg="ruleset"][data-skv="historical"]');
+      if (!hist2 || hist2.getAttribute("aria-pressed") !== "true") throw new Error("reset-on-open failed — a sticky ruleset preference");
+      captured = null;
+      try {
+        fldLaunchSandbox = function (o) { captured = o; };
+        fldSkirmishLaunch();
+      } finally { fldLaunchSandbox = orig; }
+      if (!captured || ("ruleset" in captured)) throw new Error("a Historical skirmish launch must carry NO ruleset key");
+      if (typeof closeSheet === "function") closeSheet();
+      return { gate: MAYHEM_PUBLIC_READY === true };
+    });
+
     cleanStorage();
   } catch (error) {
     R.ok = false;
