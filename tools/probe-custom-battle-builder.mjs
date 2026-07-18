@@ -217,14 +217,54 @@ const SETUP = `(() => {
       return { id:s.id, us:s.oob.US.length, cs:s.oob.CS.length, reinforcements:s.reinforcements.length };
     });
 
-    step('JSON: export/import round trip is stable and rejects unsafe prototype keys', function() {
+    step('JSON: export/import round trip is stable', function() {
+      // E75 (D427): the old unsafe-key sub-check here used a payload that was ALREADY invalid
+      // (empty OOBs, oversized objective), so its red result proved nothing about unsafe keys.
+      // The honest policy tooth is the dedicated E75 step below.
       var r = fldCustomValidate(validDraft());
       var imported = fldCustomImportJson(r.json);
       if (!imported.ok) throw new Error(imported.errors.join(' | '));
       if (!eq(imported.scenario, r.scenario)) throw new Error('round trip scenario changed');
-      var unsafe = fldCustomImportJson('{"scenario":{"name":"Bad","date":"1863","place":"x","__proto__":{"polluted":true},"oob":{"US":[],"CS":[]},"terrain":{},"objective":{"name":"x","x":1,"z":1,"r":500}}}');
-      if (unsafe.ok) throw new Error('unsafe JSON object accepted');
       return { bytes:r.json.length, id:imported.scenario.id };
+    });
+
+    step('E75 (D427): unsafe-key POLICY on an OTHERWISE-VALID payload — import strips-then-accepts (no pollution, byte-equal); direct validate rejects', function() {
+      var clean = fldCustomValidate(validDraft());
+      if (!clean.ok) throw new Error('precondition: valid draft failed validation');
+      var cleanImp = fldCustomImportJson(clean.json);
+      if (!cleanImp.ok) throw new Error('precondition: clean import failed');
+      // build the evil twin: the SAME valid payload with own __proto__ + nested own constructor
+      var obj = JSON.parse(clean.json);
+      var host = obj.scenario || obj;
+      Object.defineProperty(host, '__proto__', { value: { polluted: true }, enumerable: true, configurable: true, writable: true });
+      if (host.objective) Object.defineProperty(host.objective, 'constructor', { value: { evil: 1 }, enumerable: true, configurable: true, writable: true });
+      var evilJson = JSON.stringify(obj);
+      if (evilJson.indexOf('__proto__') < 0 || evilJson.indexOf('"constructor"') < 0) throw new Error('harness failed to build the unsafe payload');
+      // POLICY (T11 design): the import lane SCRUBS unsafe keys BEFORE validation and ACCEPTS
+      var evil = fldCustomImportJson(evilJson);
+      if (!evil.ok) throw new Error('policy broken: otherwise-valid payload with unsafe keys must be accepted AFTER stripping, got reject: ' + evil.errors.join(' | '));
+      // the strip left no trace: no own unsafe key anywhere in the accepted scenario
+      var UNSAFE = { '__proto__':1, 'constructor':1, 'prototype':1, 'hasOwnProperty':1 };
+      var hits = [];
+      (function scan(node, path) {
+        if (!node || typeof node !== 'object') return;
+        var names = Object.getOwnPropertyNames(node);
+        for (var i = 0; i < names.length; i++) {
+          if (UNSAFE[names[i]] === 1 && !Array.isArray(node)) hits.push(path + '.' + names[i]);
+          try { scan(node[names[i]], path + '.' + names[i]); } catch (e) {}
+        }
+      })(evil.scenario, 'scenario');
+      if (hits.length) throw new Error('unsafe own keys survived the strip: ' + hits.join(', '));
+      // no prototype pollution reached any object
+      if (({}).polluted !== undefined || Object.prototype.polluted !== undefined) throw new Error('Object.prototype was polluted');
+      if (evil.scenario.polluted !== undefined) throw new Error('accepted scenario inherits pollution');
+      // the accepted scenario is byte-equal to the clean import — stripping changed nothing else
+      if (!eq(evil.scenario, cleanImp.scenario)) throw new Error('stripped import differs from the clean import');
+      // defense-in-depth stays explicit: DIRECT validation of an unscrubbed unsafe payload rejects
+      var direct = fldCustomValidate(JSON.parse(evilJson));
+      if (direct.ok) throw new Error('direct fldCustomValidate accepted an unscrubbed unsafe payload');
+      if (direct.errors.join(' ').indexOf('Unsafe JSON key') < 0) throw new Error('direct reject did not name the unsafe key: ' + direct.errors.join(' | '));
+      return { accepted: true, directRejected: true };
     });
 
     step('PACK: template, export, import-to-empty-slots, duplicate rejection, and forbidden-key rejection are locked', function() {

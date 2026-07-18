@@ -4,6 +4,30 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D427 — E75 SHIPPED: THE UNSAFE-KEY TOOTH NOW PROVES THE REAL POLICY ON AN OTHERWISE-VALID PAYLOAD — [CLAUDE CODE (FABLE 5), LANE-009 DRIVE] (2026-07-17)
+
+E75 (run-3 LOW, probe truthfulness): the custom-builder "unsafe key rejection" tooth used a
+payload that was ALREADY invalid (empty OOBs, oversized objective), so its red result proved
+nothing about unsafe keys — the runtime scrubs them before validation. No runtime change: T11's
+layered design is correct (`fldCustomImportJson` = `_fldCbScrub` strip THEN validate → an
+otherwise-valid payload with unsafe keys is ACCEPTED with the keys stripped; `fldCustomValidate`'s
+`_fldCbWalk` = the reject layer for unscrubbed input). The probe now states that policy
+explicitly: a NEW E75 step builds the evil twin of a KNOWN-VALID scenario (own `__proto__` at the
+scenario level + own nested `constructor` via defineProperty→stringify), then asserts the import
+lane accepts it, no own unsafe key survives anywhere (recursive getOwnPropertyNames scan), no
+prototype pollution reaches `Object.prototype` or the result, the accepted scenario is deep-equal
+to the clean import, AND direct `fldCustomValidate` on the unscrubbed payload rejects naming
+"Unsafe JSON key". The old step keeps its honest round-trip half and drops the misleading claim.
+
+Bind: deleting the `fldCustomImportJson` scrub call (line 440 only; the pack lane kept its own)
+made exactly the E75 tooth red ("policy broken … got reject: Unsafe JSON key:
+objective.constructor | __proto__"); byte-identical restore (T11
+`39b66550f1a26b04025c87aeed7f4be1`, probe `bdb2383a996843f152c629f1f5e3ede2`, generated
+`bb4a797443299836bfe53c75ad647239`) with rebuild + 16/16 green rerun. Gates: node --check clean;
+build GATE OK; probe-custom-battle-builder 16/16; adjacent probe-tactical-roster 8/8; zero
+pageerrors. Invariants hold: 24/55/1,512/131, `_SAVE_VER=1`, frozen base, D74. REVIEW-QUEUE E75
+flips fixed-in-D427; LANE-009 next slice is C73.
+
 ## D426 — E73 SHIPPED: homeEdge AND assaultDoctrine ARE SCHEMA-VALIDATED WITH PERMANENT NEGATIVE FIXTURES — [CLAUDE CODE (FABLE 5), LANE-009 DRIVE] (2026-07-17)
 
 E73 (run-3 MED, schema/gameplay inputs): the battle/phase schema rules never validated the

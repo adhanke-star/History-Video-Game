@@ -1858,11 +1858,12 @@ next green commit and confer through this ledger instead of permitting simultane
   id-keyed focus persistence; exact-tooth bind; three latent gate breaks root-fixed — src/107
   marker propagation, probe-war-career suite-131 and T2 pins).** **E73 SHIPPED (D426:
   homeEdge/assaultDoctrine validated at battle + phase level with permanent battle-homeedge /
-  battle-doctrine negative fixtures; real-file bind restored md5-identically).** Exact next: the
-  ordered FIX-NOW slices E75 → C73 → C74 → E74 (D427+), one focused-gated commit+push each,
-  reading each REVIEW-QUEUE run-3 entry in full at slice start; then the full serialized
-  `npm run vet:noreg` battery alone on the machine.
-- **Last-touched commit:** the D426 E73 release.
+  battle-doctrine negative fixtures; real-file bind restored md5-identically).** **E75 SHIPPED
+  (D427: the honest strip-then-accept policy tooth on an otherwise-valid unsafe payload;
+  scrub-removal bind).** Exact next: the ordered FIX-NOW slices C73 → C74 → E74 (D428+), one
+  focused-gated commit+push each, reading each REVIEW-QUEUE run-3 entry in full at slice start;
+  then the full serialized `npm run vet:noreg` battery alone on the machine.
+- **Last-touched commit:** the D427 E75 release.
 - **History:** adjudicated + contracted by Claude Code (Fable 5) 2026-07-17 under Aaron's
   finish-line directive; DRIVE taken in the same ledger-only commit; GEA-01 + S44 shipped in the
   D423 release the same day.
