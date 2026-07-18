@@ -1,6 +1,16 @@
 {
   "_comment": "D331 PLAYABLE KENNESAW MOUNTAIN, June 27, 1864; D339 C71 INPUT CORRECTION. Single-phase Atlanta Campaign frontal-assault scenario built from the D330 spec. US attacks prepared Confederate high ground at Pigeon Hill / Little Kennesaw and Cheatham Hill / the Dead Angle. Sector identities and assault totals are Verified against NPS OOB, the NPS National Register text, and the NPS Pigeon Hill site bulletin; exact game-unit strengths are brigade/division-scale Inferred abstractions unless explicitly sourced. The complete Pigeon Hill commitment is the three named brigades totaling about 5,500; no separate fielded Morgan L. Smith reserve is added. No per-battle damage/firepower/casualty/winner fudge.",
   "kennesaw": {
+    "sources": [
+      "NPS, Kennesaw Mountain National Battlefield Park overview",
+      "NPS, Union Order of Battle",
+      "NPS, Confederate Order of Battle",
+      "VMI Archives Historical Rosters, Alfred Jefferson Vaughan",
+      "NPS National Register text, Kennesaw Mountain National Battlefield Park",
+      "NPS, Federal Assault on Pigeon Hill site bulletin",
+      "American Battlefield Trust, Kennesaw Mountain battle page",
+      "American Battlefield Trust, Cheatham Hill article"
+    ],
     "id": "kennesaw",
     "weather": {
       "sky": "clear",

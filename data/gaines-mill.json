@@ -1,6 +1,18 @@
 {
   "_comment": "D362 - GAINES' MILL, June 27, 1862. Single-phase inverse of Malvern Hill: Confederate attacker at high z crosses the wooded Boatswain's Creek ravine against Porter's Union defender at low z, then tries to seize the Watt House plateau before dusk. This is a transparent mixed-source abstraction, not an exact same-time OOB. CMH starts Porter with 20,000 and Slocum with 7,000; NPS says later reinforcements raised him toward 34,000. ABT's 7-8 p.m. map gives about 32,000 Confederates in 16 brigades, while CMH gives 50,000 amassed for the final attack and NPS about 60,000 brought to the battle. The game models the 27,000-man Federal core line against ABT's enumerated 16-brigade wave. Confederate aggregate provenance is Disputed; every game-unit split is Inferred. Meagher and French remain teaching-only. D74: no battle-specific combat/output multiplier or winner switch; the universal model sees only OOB, guns, terrain, timing, experience, formation, doctrine, and objective geometry.",
   "gainesMill": {
+    "sources": [
+      "National Park Service, Richmond NBP, The Battle of Gaines' Mill",
+      "National Park Service, CWSAC, Gaines' Mill battle detail",
+      "American Battlefield Trust, Gaines' Mill battle page",
+      "American Battlefield Trust, Gaines' Mill 7:00-8:00 p.m. map",
+      "U.S. Army Center of Military History, The Virginia Campaigns, March-August 1862",
+      "National Park Service, Fitz John Porter (biography)",
+      "American Battlefield Trust, A. P. Hill (biography)",
+      "Virginia Humanities, Encyclopedia Virginia, A. P. Hill",
+      "National Park Service, John Bell Hood (biography)",
+      "Library of Congress, Map of the battle field of Gaines's Mill"
+    ],
     "id": "gainesMill",
     "weather": {
       "sky": "haze",

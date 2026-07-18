@@ -1,6 +1,15 @@
 {
   "_comment": "D388 Elkhorn Tavern axis of Pea Ridge, March 7-8 1862. Two-phase T8 role reversal from the committed D387 contract: March 7 CS seizes the tavern under disclosed operational-surprise fog (w1), then March 8 US counterattacks in the clear (w3 DECISIVE). Home edges stay CS north / US south. The ammunition law is encoded only through per-phase T4 supply-train positions and ordinary experience inputs; the Confederate reserve train is at Camp Stephens in phase 2, never a multiplier. Every fielded unit has Verified identity and Inferred strength. Leetown and its Native formations are taught in cards 8-10 but never fielded, per D359.",
   "elkhornTavern": {
+    "sources": [
+      "NPS Pea Ridge order of battle",
+      "NPS park page + Stop 7 Elkhorn Tavern + Stop 10 Federal Artillery",
+      "NPS Civil War Series sec8 (Shea)",
+      "American Battlefield Trust - Pea Ridge",
+      "Encyclopedia of Arkansas - Pea Ridge",
+      "Wikipedia - Battle of Pea Ridge",
+      "Shea & Hess, Pea Ridge: Civil War Campaign in the West (1992)"
+    ],
     "id": "elkhornTavern",
     "name": "Pea Ridge - Elkhorn Tavern",
     "date": "March 7, 1862",

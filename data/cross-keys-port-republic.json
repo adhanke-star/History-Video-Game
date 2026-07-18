@@ -1,6 +1,14 @@
 {
   "_comment": "D378 Cross Keys / Port Republic, June 8-9, 1862. Two adjacent Valley fields form one T8 scenario: Fremont attacks Ewell's ridge at Cross Keys, then Jackson attacks Tyler and Carroll at The Coaling. The roles and side-keyed home edges flip between phases. Army-present anchors, senior grades, outcomes, and landmarks follow the committed D377 contract; committed strengths, lower groupings, guns, coordinates, readiness, and timing remain Inferred or Unpinned. No scenario-specific combat or result control exists (D74).",
   "crossKeysPortRepublic": {
+    "sources": [
+      "American Battlefield Trust - Cross Keys",
+      "American Battlefield Trust - Port Republic",
+      "Encyclopedia Virginia - Shenandoah Valley Campaign of 1862",
+      "Encyclopedia Virginia - Turner Ashby",
+      "American Battlefield Trust - Kernstown",
+      "Wikipedia - Battle of McDowell"
+    ],
     "id": "crossKeysPortRepublic",
     "name": "Cross Keys / Port Republic - The Valley Finale",
     "date": "June 8-9, 1862",

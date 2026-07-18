@@ -1,6 +1,15 @@
 {
   "_comment": "D333 PLAYABLE FRANKLIN, November 30, 1864. Single-phase Franklin/Nashville lane battle built from the D332 spec. Confederate infantry attacks the Federal main line around Carter House / Carter cotton gin / Columbia Pike. Active assaulting strength is kept near 18,000-20,000, not the broader Army of Tennessee present figure. Exact brigade/division game strengths are abstractions marked Inferred where not source-pinned. No per-battle damage/firepower/casualty/winner fudge.",
   "franklin": {
+    "sources": [
+      "American Battlefield Trust, Franklin",
+      "Battle of Franklin Trust, history page",
+      "National Park Service, Battle of Franklin Special Resource Study",
+      "War of the Rebellion / Official Records, Series I, Vol. XLV, Pt. 1",
+      "Civil War Trust / Wikipedia-hosted Franklin OOB pages",
+      "Wikipedia - Battle of Franklin",
+      "HistoryNet, \"The Myth of the 5 Dead Rebel Generals\""
+    ],
     "id": "franklin",
     "weather": {
       "sky": "clear",

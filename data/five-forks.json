@@ -1,6 +1,14 @@
 {
   "_comment": "D380 - FIVE FORKS, April 1, 1865. Single-phase Union attacker-seize scenario built from the committed Appomattox Campaign packet and D379 spec. The active-map anchors are about 21,000 US and 9,200 CS engaged, not the broader 32,600/22,000 present figures. Every lower-grain split, gun count, crew count, position, experience value, reinforcement second, and sky choice is explicitly Inferred. Warren's relief is a generic shared-T3 command event, never a Five-Forks combat/output branch. D74: no battle-specific casualty, morale, firepower, surrender, prisoner, rout, or verdict key.",
   "fiveForks": {
+    "sources": [
+      "Encyclopedia Virginia - Five Forks, Battle of",
+      "American Battlefield Trust - Five Forks",
+      "NPS - United States Colored Troops at Appomattox",
+      "Charles Griffin summary and cited V Corps report (Wikipedia)",
+      "Battle of Appomattox Court House (Wikipedia)",
+      "the committed D379 Appomattox Campaign packet"
+    ],
     "id": "fiveForks",
     "name": "Five Forks - Turn the White Oak Road Line",
     "date": "April 1, 1865",

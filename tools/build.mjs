@@ -311,11 +311,10 @@ for (const rm of RATING_MODULES) {
   //   batch B (D433): bullrun 3 -> 0, chancellorsville 6 -> 0, chattanooga 9 -> 0,
   //                   chickamauga 8 -> 0, fredericksburg 4 -> 0, gettysburg 8 -> 0,
   //                   malvern-hill 6 -> 0, shiloh 6 -> 0, vicksburg 9 -> 0.
+  //   batch C (D433): cedar-creek 3 -> 0, cross-keys-port-republic 3 -> 0, elkhorn-tavern 3 -> 0,
+  //                   five-forks 1 -> 0, fort-donelson 4 -> 0, franklin 5 -> 0,
+  //                   gaines-mill 1 -> 0, kennesaw 5 -> 0.
   const E74_BASELINE = {
-    'cedar-creek.json': 3,
-    'cross-keys-port-republic.json': 3, 'elkhorn-tavern.json': 3,
-    'five-forks.json': 1, 'fort-donelson.json': 4, 'franklin.json': 5,
-    'gaines-mill.json': 1, 'kennesaw.json': 5,
     'nashville.json': 8, 'new-market-heights.json': 3,
     'petersburg-assaults.json': 1, 'spotsylvania.json': 1,
     'stones-river.json': 3, 'wilderness.json': 1

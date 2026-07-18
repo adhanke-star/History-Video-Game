@@ -1,6 +1,18 @@
 {
   "_comment": "D376 Cedar Creek (Belle Grove), October 19, 1864. Two-phase T8 role reversal per the committed D375 contract: Gordon's dawn assault (weight 1, CS attacker under real river fog) then Sheridan's decisive afternoon counterattack (weight 3, US attacker in the clear). The direction-neutral casualty law is load-bearing: the Union won while suffering the heavier total, so only phase-scoped casualty-direction guards ship and no aggregate casualty-direction tooth exists. Army-level and unit identities are source-anchored; every modeled unit strength is an Inferred abstraction of the CMH staff-ride reconstruction and carries the exact provenance label. Lomax is not fielded. No Cedar-Creek-specific combat or result key exists (D74).",
   "cedarCreek": {
+    "sources": [
+      "American Battlefield Trust (ABT) — Cedar Creek battle page",
+      "NPS — Battle of Cedar Creek",
+      "US Army CMH Cedar Creek Staff Ride — OOB appendix",
+      "US Army CMH Cedar Creek Staff Ride — battle narrative",
+      "Cedar Creek Battlefield Foundation — order of battle",
+      "NPS — \"The Fatal Halt\"",
+      "NPS — \"Sheridan Arrives\"",
+      "Gordon, Reminiscences of the Civil War, ch. XXV",
+      "NPS Monocacy — Jubal Early biography",
+      "Wikipedia — Battle of Cedar Creek"
+    ],
     "id": "cedarCreek",
     "name": "Cedar Creek - Dawn Rout, Afternoon Reversal",
     "date": "October 19, 1864",
