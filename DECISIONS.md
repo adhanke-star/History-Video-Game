@@ -40,6 +40,67 @@ asset purchases/accounts. LANE-009's shipped slices are not re-run. Expected tra
 end: LANE-010 → VERIFY (audit-owed), with the audit session settling the whole AUDIT-DEBT
 ledger plus the full serialized battery and flipping LANE-009 + LANE-010 SHIPPED.
 
+## D442 — COLD HARBOR SHIPPED: THE JUNE 3, 1864 DAWN ASSAULT IS PLAYABLE AS SCENARIO 26 AT 26/57/1,614/133; THE D432 QUEUE IS FULLY RUN DOWN — [CLAUDE CODE (FABLE 5), LANE-010 DRIVE, COMBINED CLOSING SESSION PHASE A] (2026-07-18)
+
+The one remaining D432 queue item (deferred by D439's own if-room clause), built exactly to the
+D439 spec's BINDING §7 pin table from the clean pushed re-take boundary `c463152`. The packet §9
+obligations were discharged BEFORE any number was authored, by live-fetching Wikipedia's Battle
+of Cold Harbor page plus the NPS Richmond Cold Harbor page: (a) BALDY SMITH/XVIII CONFIRMED
+two-source — Maj. Gen. William F. Smith, XVIII Corps on temporary assignment from Butler's Army
+of the James (live Wikipedia + the committed D396 restored-commission addendum); its exact
+strength is pinned by NO fetched source (NPS gives only the ~50,000 three-corps aggregate), so
+the XVIII split ships Inferred inside the committed envelope with the scope disclosed. (b)
+ANDERSON'S DATED TITLE CONFIRMED — Wikipedia renders him Lt. Gen. commanding the First Corps at
+this battle; the committed D390 addendum (two-source) dates the TEMPORARY appointment effective
+May 31, 1864, never confirmed by the Confederate Congress; June 3 > May 31, so the grade ships
+WITH the disclosure (the D436 Hood-temporary-General precedent). Bonus catches ridden: Gibbon is
+a BRIGADIER here (MG June 7 — four days after; the committed reverse-anachronism chain), Hoke's
+division is INDEPENDENT (not First Corps), Mahone/Wilcox ship surname-only (the live article's
+grades conflict with the dated commission record), the truce card gained its second live source
+(NPS), and the Rhea revision (3,500-4,000 morning / ~6,000 day vs 1,000-1,500) plus the
+Porter-only name-tag story joined the disputed-tradition card.
+
+SHIPPED: `data/cold-harbor.json` — single-phase (NO phases key), attacker US / defender CS, fog
+OFF (the historical dawn ground fog is teaching only), assaultDoctrine "standard" (spec §1),
+engaged-front envelopes honored (US 20,200 in [15000, 25000] / CS 14,650 in [10000, 18000],
+every split Inferred), a 5-entry battle-object sources register (4e-2), the full §2 rank wall
+(Grant Lt. Gen. general-in-chief / Meade commands the AotP / Wright Maj. Gen. VI), the
+dead-officer wall honored by TOTAL ABSENCE (the three names appear nowhere in the file — the
+plan probe's raw-string tooth), the works as 8 wall segments with two ENFILADE SPURS and the
+narrow-gaps seam, the killing-field open approach, ravine/swamp markers, Turkey Hill, and five
+sourced teaching cards (regret quote verbatim / the FENCED thirty-minute tradition — its digits
+exist ONLY inside ch_seven_thousand, probe-enforced / trench lesson / truce / the James pivot).
+D74 clean: no forbidden key; the lopsided repulse must EMERGE from works + enfilade + open
+ground + xp differential + true gun groupings. INTEGRATION at every §7 pin site with documented
+history: T1 registry line + menu rank **68.5, the documented non-integer exception**
+(spotsylvania:68 < coldHarbor:68.5 < petersburgAssaults:69; comparator numeric) · T10
+`_FLD_BATTLE_META.coldHarbor` E/true/anv (XVIII is AoJ — the badge institution models the AotP
+set only, the NMH precedent) · schema 56→57 · Army Register 1566→1614 (+16 unique `_ch` ids ×3;
+collision-checked against antietam's us_barlow and petersburg's cs_hoke_div/us_gibbon_ii) at
+ALL pin sites (probe-loot-survival ×2, probe-war-career ×2, twelve per-battle probes, the three
+plan probes' live-derived pins) · scenario pins 25→26 at every D436 sweep site (flags, intel,
+mayhem-mode 56→57/25→26/132→133, custom-battle-builder, tactical-roster + its button list,
+women-in-war-arc-plan, war-career-loop-plan 26/57/133, media-budget metric text) · adjacency
+reshapes to the six-battle chronology (wilderness → spotsylvania → coldHarbor →
+petersburgAssaults → kennesaw) in probe-spotsylvania/-petersburg-initial-assaults/-wilderness/
+-kennesaw · suite 132→133 with the cold harbor row appended at the END (war-career row 38 and
+mayhem row 57 pins hold). HONESTY CATCH recorded: FOUR per-battle probes (spotsylvania,
+petersburg-initial-assaults, wilderness, five-forks) still pinned a 24-scenario registry — the
+D436 sweep moved only their 1566 pins and missed the count teeth, which would have been red at
+the first audit run; all four now read 26 with the miss documented in their chain comments.
+`tools/probe-cold-harbor.mjs` AUTHORED (static + browser teeth: D74 wall, 4e-2 register, shape/
+envelopes, rank wall + dead-officer wall, landmarks, the seven-thousand fence, T1/T10 source
+pins, live registry at 68.5, 15-unit launch shape, Register 1614 with 16 exact trios, the
+8-seed direction battery — CS holds ≥5/8 AND US losses exceed CS ≥5/8, direction only; two
+binds predeclared in its header) — NOT run tonight per D431. `node tools/probe-cold-harbor-plan.mjs`
+run at the head: **mode=runtime ok=true 6/6** — the fail-closed gate proves every §7 transition
+complete (it is the anti-half-registration tooth, and it bit nothing).
+
+**VETTING DEFERRED (D431):** ran node --check on all 29 touched JS files, build GATE OK, schema
+57/57, the plan probe in runtime mode (6/6), git diff --check. The focused probe run, the
+direction battery, and both binds are owed as AUDIT-DEBT AD-10 (REVIEW-QUEUE.md), settled in
+Phase B of this same combined closing session.
+
 ## D441 — GEA-07..GEA-14 P1 DESIGN CONTRACTS COMMITTED (DOCS ONLY): THE DESSERT SLICE — [CLAUDE CODE (FABLE 5), LANE-010 DRIVE] (2026-07-18)
 
 Queue item 9. `docs/design/genre-elite-p1-contracts.md` commits eight bounded design contracts

@@ -7,7 +7,7 @@ import "./guard-probe-browser.mjs";
 // the spec §3 rank wall (Hood "General (temporary)"; McPherson Maj. Gen. killed 2:02;
 // Logan's one-day command; no Johnston on the field), the §5 landmarks, the D74
 // forbidden-key wall, the 4e-2 sources register, the S44 western-theater truth swap
-// (atlanta playable; marchToTheSea the only lock), the 1566 Army Register pin, and the
+// (atlanta playable; marchToTheSea the only lock), the 1614 Army Register pin (D442), and the
 // 8-seed casualty-direction battery (defender holds + CS bleeds more, direction only).
 import { chromium } from 'playwright-core';
 import { spawn } from 'node:child_process';
@@ -195,9 +195,9 @@ const SETUP = `(() => {
       return { units:__FIELD.units.length };
     });
 
-    check('ARMY REGISTER PIN: 18 unique Atlanta side-unit ids produce exact cmd/nco/pvt trios and current total 1566', function(){
+    check('ARMY REGISTER PIN: 18 unique Atlanta side-unit ids produce exact cmd/nco/pvt trios and current total 1614', function(){
       var reg = ssPersonRegistry();
-      if (reg.people.length !== 1566) throw new Error('Army Register total is ' + reg.people.length + ', expected 1566');   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots
+      if (reg.people.length !== 1614) throw new Error('Army Register total is ' + reg.people.length + ', expected 1614');   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots
       var atl = reg.people.filter(function(p){ return String(p.unitScenario || p.scenario || '').indexOf('atlanta') >= 0 || /at_|atlanta/.test(String(p.unitId || '')); });
       var ids = {};
       ['us_leggett','us_gasmith','us_fuller','us_sweeny','us_bald_hill_guns','cs_cleburne','cs_walker','cs_bate','cs_hardee_guns','cs_maney','us_mlsmith','us_woods','us_harrow','us_degress','us_massed_guns','cs_brown','cs_clayton','cs_gwsmith'].forEach(function(id){ ids[id] = 0; });

@@ -1,0 +1,215 @@
+{
+  "_comment": "D442 PLAYABLE COLD HARBOR, June 3, 1864. Single-phase doomed frontal assault built from the D439 spec (docs/design/cold-harbor-battle-build-spec.md) and the D327 1864-65 attrition packet: the 4:30 a.m. dawn assault by the II, VI, and XVIII Corps into Lee's entrenched line. Attacker US, defender CS, fog OFF (the historical dawn ground fog is teaching/presentation; the killing ground is modeled via works, enfilade wall angles, narrow gaps, and open approach, never a fog defender-buff). Committed engaged-front envelopes: US [15000, 25000] / CS [10000, 18000] (the three assaulting corps' engaged fronts vs the entrenched sector; the NPS figure of almost 50,000 is the whole three-corps commitment, a different scope, disclosed). Every division split is an Inferred abstraction inside those envelopes. The two-week campaign totals (12,737 US vs 4,595 CS, ABT) are aggregates, never per-assault seeds; the disputed thirty-minute casualty tradition is fenced into ONE teaching card and appears nowhere else. NO per-battle damage/firepower/casualty/winner fudge (D74): the lopsided repulse must emerge from open approach + works + enfilade geometry + true gun groupings + defender readiness.",
+  "coldHarbor": {
+    "sources": [
+      "American Battlefield Trust, Battle of Cold Harbor — https://www.battlefields.org/learn/civil-war/battles/cold-harbor (packet-fetched D327: campaign casualties 12,737 US / 4,595 CS with splits, the June 3 4:30 a.m. assault by the Second, Sixth, and Eighteenth Corps, Grant's regret quote, Confederate victory)",
+      "Wikipedia, Battle of Cold Harbor — https://en.wikipedia.org/wiki/Battle_of_Cold_Harbor (live-fetched D442: Maj. Gen. W. F. Smith's XVIII Corps on temporary assignment from the Army of the James, the Lt. Gen. Anderson rendering, Barlow/Gibbon/Russell divisions named in the assault, the Breckinridge-sector break-in and reserve counterattack, Rhea's revision of the casualty tradition, the June 5-7 truce notes, the June 12 disengagement toward the James)",
+      "NPS, Richmond National Battlefield Park — Cold Harbor — https://www.nps.gov/rich/learn/historyculture/cold-harbor.htm (live-fetched D442: almost 50,000 Federals in the II, VI and XVIII Corps launched the June 3 assault; the entrenched position proved too strong; the four-day cease-fire delay cost the wounded; two-week totals 12,000 US vs almost 4,000 CS)",
+      "docs/design/battle-build-research/1864-65-attrition-battle-build-research.md (D327 packet + D390/D392/D396 addenda: the rank walls, Anderson's temporary lieutenant-generalcy effective May 31, 1864 never confirmed by the Confederate Congress, Gibbon's June 7 major-general date, Brooks/Martindale grades, Hoke's April 23 major-general date)",
+      "docs/design/cold-harbor-battle-build-spec.md (D439 spec: committed envelopes, single-phase shape, the fenced thirty-minute casualty tradition, the §7 integration pin table)"
+    ],
+    "id": "coldHarbor",
+    "weather": {
+      "sky": "overcast",
+      "time": "dawn",
+      "provenance": "Verified (dawn assault through thick ground fog); design: engine fog OFF",
+      "note": "The assault stepped off at 4:30 a.m. through a thick ground fog. The engine's fog model aids the defender, which would mismodel this battle: the killing ground was open approach into entrenched enfilade, so fog stays OFF and the works, wall angles, and narrow gaps do the work (the packet's grain law).",
+      "sources": [
+        "Wikipedia, Battle of Cold Harbor (the 4:30 a.m. advance through thick ground fog)",
+        "NPS, Richmond National Battlefield Park — Cold Harbor (4:30 on the morning of June 3)",
+        "docs/design/cold-harbor-battle-build-spec.md §1 (fog OFF; killing ground via terrain, not a fog defender-buff)"
+      ]
+    },
+    "name": "Cold Harbor - The June 3 Assault",
+    "date": "June 3, 1864",
+    "place": "Cold Harbor, Virginia - the entrenched line northwest of the Chickahominy",
+    "blurb": "At 4:30 a.m. Grant sends three corps - Hancock's II, Wright's VI, and Smith's XVIII - straight at Lee's entrenched line. Barlow's division briefly breaks into Breckinridge's works before the reserves throw it out; everywhere else the assault dies on open ground swept by enfilade fire from angled entrenchments. It is the honest Union failure of the Overland Campaign: a hard, admitted error inside a sound campaign that still ends at the gates of Petersburg.",
+    "provenance": "Verified (high) for date, the 4:30 a.m. three-corps assault, the corps and named division commanders on the assault front, the Confederate repulse, the Breckinridge-sector break-in and its reserve counterattack, the truce delay, and the campaign pivot to the James. Verified army-scale anchors: almost 50,000 Federals committed across the three corps (NPS, whole-commitment scope); campaign totals 12,737 US vs 4,595 CS (ABT, May 31-Jun 12 aggregate scope). Inferred (medium) for every fielded engaged-front strength inside the committed spec envelopes US [15000, 25000] / CS [10000, 18000], for battery groupings, and for tactical placements. Disputed and fenced: the thirty-minute casualty tradition lives in one teaching card only. Anti-Lost-Cause frame: the failure is taught plainly without the 'Grant the Butcher' caricature - attrition was a deliberate war-winning strategy, and Cold Harbor was a real mistake inside it, admitted by Grant himself.",
+    "field": { "w": 1200, "h": 900 },
+    "attacker": "US",
+    "defender": "CS",
+    "defaultFog": false,
+    "assaultDoctrine": "standard",
+    "_assaultDoctrineNote": "Spec §1 pins standard doctrine: the June 3 assault was a massed dawn attack pressed home, not a cautious probe. The repulse must come from the works, the enfilade angles, the narrow gaps, and the open approach - inputs, never a lever (D74).",
+    "timeLimitSec": 460,
+    "holdToWinSec": 140,
+    "menu": {
+      "title": "COLD HARBOR (1864)",
+      "deck": "The doomed dawn assault of June 3 - carry Lee's entrenched line across the killing field, or hold the works and make the arithmetic of trenches tell.",
+      "aria": "Cold Harbor, June 1864 - the Overland Campaign's doomed frontal assault. Command the Union attack or the Confederate defense."
+    },
+    "sides": {
+      "heading": "Cold Harbor - Take Which Command?",
+      "intro": "June 3, 1864 - three Union corps assault Lee's entrenched line at dawn.",
+      "US": {
+        "title": "Command the Union assault",
+        "badge": "&#9876; ATTACK",
+        "deck": "Send Barlow, Gibbon, Russell, Brooks, and Martindale across the open ground and through the narrow gaps in the Confederate works."
+      },
+      "CS": {
+        "title": "Hold for the Confederacy",
+        "badge": "&#9819; DEFEND",
+        "deck": "Hold the entrenched line. Your works, your enfilading angles, and your guns are the battle."
+      },
+      "foot": "The other army is commanded by the AI. Cold Harbor is a single-phase battle; the June 1-12 trench stalemate and the truce tragedy appear in teaching, not as playable phases."
+    },
+    "brief": {
+      "attack": "Grant orders a dawn assault along the whole front. Strike the entrenched line with all three corps: Hancock on the left against Breckinridge, Wright in the center, Smith on the right through the ravines. <b>This is your war:</b> history says the works and the enfilade fire break the assault in under an hour; mass your columns at the gaps and prove otherwise.",
+      "defend": "Lee's army is dug in with interlocking fields of fire. Hold the line from the First Corps front to the Chickahominy shoulder. <b>This is your war:</b> stop the assault as history did - and understand that winning this fight still cannot stop the campaign from crossing the James."
+    },
+    "objective": {
+      "name": "The entrenched Confederate line above the Cold Harbor crossroads",
+      "x": 600,
+      "z": 270,
+      "r": 150,
+      "note": "The center of the Confederate entrenchment trace. Holding this radius represents keeping the line unbroken between the First Corps front and Breckinridge's sector. Historically the assault gained nothing here that held. (Verified repulse; Inferred game placement)"
+    },
+    "leaders": {
+      "_note": "Ranks are battle-date ranks (June 3, 1864). Grant is Lieutenant General, general-in-chief, traveling WITH the army; Meade is the Major General commanding the Army of the Potomac - Grant directs, Meade commands. Wright succeeded to VI Corps command on May 9, 1864 after his predecessor was killed at Spotsylvania. Anderson's lieutenant-generalcy is temporary, effective May 31, 1864, never confirmed by the Confederate Congress. Hoke's division is independent, not First Corps. Barlow and Gibbon are brigadier generals - Gibbon's major-general date is June 7, four days AFTER this assault.",
+      "US": [
+        { "id": "ld_grant_ch", "name": "Lt. Gen. Ulysses S. Grant", "short": "Grant", "quality": 0.8, "radius": 260, "x": 600, "z": 845, "fate": 3.2, "note": "Lieutenant General, general-in-chief, traveling with the Army of the Potomac and directing the campaign through Meade. He is NOT a full General - that grade was created for him only in 1866. Of this day he later wrote his one great regret. (Verified)" },
+        { "id": "ld_meade_ch", "name": "Maj. Gen. George G. Meade", "short": "Meade", "quality": 0.72, "radius": 250, "x": 520, "z": 820, "fate": 2.8, "note": "Major General commanding the Army of the Potomac under Grant's direct supervision - the command-frame honesty the Overland builds carry: Grant directs, Meade commands. (Verified)" },
+        { "id": "ld_hancock_ch", "name": "Maj. Gen. Winfield S. Hancock", "short": "Hancock", "quality": 0.8, "radius": 245, "attach": "us_barlow_ch", "fate": 2.9, "note": "Major General commanding the II Corps on the Union left; his lead divisions under Barlow and Gibbon made the deepest lodgment of the morning. (Verified)" },
+        { "id": "ld_wright_ch", "name": "Maj. Gen. Horatio G. Wright", "short": "Wright", "quality": 0.68, "radius": 235, "attach": "us_russell_ch", "fate": 2.6, "note": "Major General commanding the VI Corps in the center; he succeeded to the command on May 9, 1864 after the corps' beloved commander was killed at Spotsylvania. (Verified)" },
+        { "id": "ld_smith_ch", "name": "Maj. Gen. William F. Smith", "short": "Baldy Smith", "quality": 0.66, "radius": 235, "attach": "us_brooks_ch", "fate": 2.6, "note": "Major General commanding the XVIII Corps, on temporary loan from the Army of the James - the restored-commission trap: his major-generalcy was re-confirmed March 9, 1864 after the first appointment lapsed. He called this attack 'simply an order to slaughter my best troops.' (Verified)" }
+      ],
+      "CS": [
+        { "id": "ld_lee_ch", "name": "Gen. Robert E. Lee", "short": "Lee", "quality": 0.85, "radius": 275, "x": 600, "z": 140, "fate": 3.2, "note": "Full General commanding the Army of Northern Virginia. The entrenched line at Cold Harbor is his army's most complete field fortification of the campaign so far. (Verified)" },
+        { "id": "ld_anderson_ch", "name": "Lt. Gen. Richard H. Anderson", "short": "Anderson", "quality": 0.66, "radius": 245, "attach": "cs_anderson_front_ch", "fate": 2.6, "note": "In temporary command of the First Corps since May 1864; his lieutenant-generalcy is TEMPORARY, effective May 31, 1864, and was never confirmed by the Confederate Congress - the grade ships with that disclosure, per the packet's dated-title law. (Verified rendering + committed packet dating)" },
+        { "id": "ld_hoke_ch", "name": "Maj. Gen. Robert F. Hoke", "short": "Hoke", "quality": 0.68, "radius": 235, "attach": "cs_hoke_ch", "fate": 2.7, "note": "Major General (April 23, 1864) commanding an INDEPENDENT division under Lee - not part of the First Corps - holding the entrenchments south of Anderson's front. (Verified)" },
+        { "id": "ld_breck_ch", "name": "Maj. Gen. John C. Breckinridge", "short": "Breckinridge", "quality": 0.66, "radius": 235, "attach": "cs_breck_ch", "fate": 2.6, "note": "Major General - the former U.S. Vice President - holding the sector where Barlow's division briefly broke in before the reserves restored the line. (Verified)" }
+      ]
+    },
+    "supply": {
+      "US": { "x": 600, "z": 870, "name": "Union trains - the Old Church and Cold Harbor road rear" },
+      "CS": { "x": 600, "z": 115, "name": "Confederate rear - the road network toward the Chickahominy bridges and Richmond" }
+    },
+    "terrain": {
+      "hills": [
+        { "name": "Low ridge behind the works", "x": 600, "z": 235, "h": 12, "s": 200, "note": "The modest rise the entrenchment trace follows. Cold Harbor's strength was never high ground - it was the works themselves. (Verified entrenchment strength; Inferred relief)" },
+        { "name": "Turkey Hill", "x": 1020, "z": 300, "h": 20, "s": 130, "note": "The rise on the Confederate right that Breckinridge's men took on June 2, anchoring the line toward the Chickahominy. (Wikipedia battle article; single-source, Inferred placement)" }
+      ],
+      "woods": [
+        { "x": 300, "z": 710, "r": 100, "note": "Timber behind the Union staging line - cover for the approach march, none for the assault. (Inferred staging abstraction)" },
+        { "x": 810, "z": 730, "r": 90, "note": "Woodlot behind Hancock's left staging ground. (Inferred staging abstraction)" },
+        { "x": 140, "z": 150, "r": 80, "note": "Timber behind the Confederate left rear. (Inferred frame)" }
+      ],
+      "walls": [
+        { "x1": 130, "z1": 330, "x2": 400, "z2": 305, "note": "FIRST CORPS WORKS - Anderson's entrenched front, angled so its fire sweeps across the neighboring approach. (Verified entrenchment; Inferred trace)" },
+        { "x1": 400, "z1": 305, "x2": 430, "z2": 345, "note": "ENFILADE SPUR - the angled shoulder covering the western gap; troops pressing the gap take fire from the flank. (Verified enfilade geometry per the packet; Inferred placement)" },
+        { "x1": 430, "z1": 300, "x2": 560, "z2": 300, "note": "HOKE'S ENTRENCHMENTS - the west face of the independent division's line. (Verified)" },
+        { "x1": 590, "z1": 310, "x2": 700, "z2": 320, "note": "HOKE-BRECKINRIDGE BOUNDARY WORKS - the re-entrant angle at the divisional seam, one of the few structural weak points. (Verified sector boundary; Inferred trace)" },
+        { "x1": 700, "z1": 335, "x2": 900, "z2": 330, "note": "BRECKINRIDGE'S WORKS - the sector where Barlow's men broke in over the parapet before the reserves counterattacked. (Verified break-in sector per the Wikipedia battle article)" },
+        { "x1": 900, "z1": 330, "x2": 930, "z2": 370, "note": "ENFILADE SPUR - the angled shoulder covering the eastern gap. (Verified enfilade geometry per the packet; Inferred placement)" },
+        { "x1": 930, "z1": 345, "x2": 1080, "z2": 380, "note": "RIGHT-FLANK WORKS - the line bending back toward Turkey Hill and the Chickahominy, where Hill's divisions came up in support. (Verified support movement; Inferred trace)" },
+        { "x1": 500, "z1": 385, "x2": 640, "z2": 390, "note": "ADVANCED RIFLE PITS - the picket line in front of the main works. (Inferred placement)" }
+      ],
+      "markers": [
+        { "kind": "road", "name": "Cold Harbor Road", "path": [[620, 860], [615, 700], [605, 540], [600, 400]], "note": "The assault axis from the crossroads toward the entrenched line. (Verified geography; Inferred tactical path)" },
+        { "kind": "label", "name": "Old Cold Harbor crossroads", "x": 640, "z": 520, "note": "The dusty road junction both armies raced for on May 31 - June 1, behind the Union assault line on June 3. (Verified)" },
+        { "kind": "label", "name": "THE KILLING FIELD", "x": 560, "z": 470, "note": "The open approach swept by interlocking fire from the angled works. In less than an hour the assault was broken here. (Verified)" },
+        { "kind": "stream", "name": "ravine and swampy approach ground", "path": [[420, 650], [480, 560], [520, 470], [545, 405]], "note": "The ravines and swampy ground that broke the assault formations apart as they advanced. (Verified terrain class per the packet; Inferred course)" },
+        { "kind": "stream", "name": "Boatswain's Swamp low ground", "path": [[150, 490], [300, 475], [420, 505]], "note": "The 1864 field overlaps the 1862 Gaines' Mill ground; the swampy low ground channels the western approach. (Verified overlap per the packet; Inferred course)" },
+        { "kind": "label", "name": "Narrow gaps in the works", "x": 575, "z": 335, "note": "The few and narrow seams in the entrenchment trace - the structural openings that make the assault honest rather than hopeless. (Verified 'few gaps' law per the packet; Inferred placement)" },
+        { "kind": "label", "name": "The Chickahominy - and the road to the James", "x": 1090, "z": 250, "note": "Lee's right flank anchor. Nine days after the assault, Grant slipped the army across the James toward Petersburg - the operational pivot this tactical defeat produced. (Verified)" }
+      ]
+    },
+    "oob": {
+      "US": [
+        { "id": "us_barlow_ch", "name": "Barlow's Division, II Corps", "commander": "Brig. Gen. Francis C. Barlow", "arm": "inf", "weapon": "rifled", "men": 3300, "xp": 2, "x": 760, "z": 800, "facing": 0, "formation": "column", "note": "Hancock's left assault division. Barlow's men broke into Breckinridge's works in hand-to-hand fighting, taking several hundred prisoners and four guns, before the reserves threw them out. (Verified identity/rank/break-in; Inferred engaged strength)" },
+        { "id": "us_gibbon_ch", "name": "Gibbon's Division, II Corps", "commander": "Brig. Gen. John Gibbon", "arm": "inf", "weapon": "rifled", "men": 3200, "xp": 2, "x": 640, "z": 815, "facing": 0, "formation": "column", "note": "Hancock's right assault division. Gibbon is a BRIGADIER general this morning - his major-general date is June 7, 1864, four days after the assault (the reverse-anachronism trap, committed addenda). (Verified identity/rank; Inferred engaged strength)" },
+        { "id": "us_russell_ch", "name": "Russell's Division, VI Corps", "commander": "Brig. Gen. David A. Russell", "arm": "inf", "weapon": "rifled", "men": 2700, "xp": 2, "x": 500, "z": 790, "facing": 0, "formation": "line", "note": "Wright's lead division in the center, Upton's brigade among its commands - the same division that led the Spotsylvania assaults. (Verified identity; Inferred engaged strength)" },
+        { "id": "us_vi_second_ch", "name": "VI Corps Second Line", "commander": "Maj. Gen. Horatio G. Wright", "arm": "inf", "weapon": "rifled", "men": 3600, "xp": 2, "x": 400, "z": 830, "facing": 0, "formation": "line", "note": "The corps' supporting divisions, encoded as one engaged front at division scale - individual division identities beyond Russell's are not asserted for the June 3 line. (Verified corps presence; Inferred aggregate split)" },
+        { "id": "us_brooks_ch", "name": "Brooks's Division, XVIII Corps", "commander": "Brig. Gen. William T. H. Brooks", "arm": "inf", "weapon": "rifled", "men": 2500, "xp": 2, "x": 250, "z": 785, "facing": 0, "formation": "column", "note": "Smith's lead division on the Union right, attacking through the ravine approaches. The XVIII Corps is on temporary loan from the Army of the James. (Verified identity/rank; Inferred engaged strength)" },
+        { "id": "us_martindale_ch", "name": "Martindale's Division, XVIII Corps", "commander": "Brig. Gen. John H. Martindale", "arm": "inf", "weapon": "rifled", "men": 2400, "xp": 2, "x": 150, "z": 815, "facing": 0, "formation": "column", "note": "Smith's second assault division, funneled by the ravine into a narrow front under enfilade fire. (Verified identity/rank; Inferred engaged strength)" },
+        { "id": "us_xviii_second_ch", "name": "XVIII Corps Second Line", "commander": "Maj. Gen. William F. Smith", "arm": "inf", "weapon": "rifled", "men": 2000, "xp": 2, "x": 320, "z": 855, "facing": 0, "formation": "line", "note": "The corps' remaining division-scale front (the OOB lists Devens's division; its grade is not asserted here). (Verified corps presence; Inferred aggregate split)" },
+        { "id": "us_left_guns_ch", "name": "II/VI Corps Batteries", "commander": "Army of the Potomac artillery", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 12, "men": 300, "xp": 2, "x": 560, "z": 745, "facing": 0, "formation": "line", "note": "Aggregate field-gun support for the left and center assault columns. Universal gun model: 12 guns. (Inferred grouping)" },
+        { "id": "us_right_guns_ch", "name": "XVIII Corps Batteries", "commander": "XVIII Corps artillery", "arm": "art", "weapon": "rifled", "role": "attack", "guns": 8, "men": 200, "xp": 2, "x": 230, "z": 730, "facing": 0, "formation": "line", "note": "Aggregate gun support for the right assault. Universal gun model: 8 guns. (Inferred grouping)" }
+      ],
+      "CS": [
+        { "id": "cs_anderson_front_ch", "name": "First Corps Entrenched Front", "commander": "Lt. Gen. Richard H. Anderson", "arm": "inf", "weapon": "rifled", "men": 3800, "xp": 3, "x": 260, "z": 315, "facing": 3.14159, "formation": "line", "note": "The First Corps line at division scale under Anderson's temporary command - his lieutenant-generalcy is temporary, effective May 31, 1864, never confirmed by the Confederate Congress. (Verified corps identity + dated title; Inferred aggregate strength)" },
+        { "id": "cs_hoke_ch", "name": "Hoke's Division (independent)", "commander": "Maj. Gen. Robert F. Hoke", "arm": "inf", "weapon": "rifled", "men": 4200, "xp": 3, "x": 490, "z": 305, "facing": 3.14159, "formation": "line", "note": "Hoke's INDEPENDENT division - not part of the First Corps - holding the entrenchments at the center of the assault front. (Verified identity/rank/independence; Inferred strength)" },
+        { "id": "cs_breck_ch", "name": "Breckinridge's Division", "commander": "Maj. Gen. John C. Breckinridge", "arm": "inf", "weapon": "rifled", "men": 2300, "xp": 3, "x": 780, "z": 330, "facing": 3.14159, "formation": "line", "note": "The sector Barlow's assault briefly broke. Breckinridge - the former U.S. Vice President - had taken Turkey Hill the day before, anchoring this end of the line. (Verified identity/rank/sector; Inferred strength)" },
+        { "id": "cs_hill_right_ch", "name": "Third Corps Support - Mahone's and Wilcox's fronts", "commander": "Lt. Gen. A. P. Hill", "arm": "inf", "weapon": "rifled", "men": 2600, "xp": 3, "x": 970, "z": 350, "facing": 3.14159, "formation": "line", "note": "Lee moved the divisions of Mahone and Wilcox from Hill's Third Corps to support Breckinridge's right toward the Chickahominy (per-officer grades not encoded - the battle article's renderings conflict with the dated commission record, so surnames ship without grades). (Verified movement; Inferred strength)" },
+        { "id": "cs_works_guns_ch", "name": "Entrenched Line Batteries", "commander": "First Corps and sector artillery", "arm": "art", "weapon": "smooth", "role": "defend", "guns": 14, "men": 350, "xp": 3, "x": 600, "z": 255, "facing": 3.14159, "formation": "line", "note": "Aggregate close-range batteries in the works - the canister that swept the killing field. Universal gun model: 14 guns; gun types are an Inferred grouping. (Verified artillery strength of the line; Inferred grouping)" },
+        { "id": "cs_right_guns_ch", "name": "Right-Flank Enfilade Batteries", "commander": "Sector artillery", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 8, "men": 200, "xp": 3, "x": 950, "z": 295, "facing": 3.14159, "formation": "line", "note": "Aggregate guns on the refused right, firing along the length of the assault lines - the enfilade geometry the packet names as the field's killing mechanism. Universal gun model: 8 guns. (Verified enfilade role per the packet; Inferred grouping)" }
+      ]
+    },
+    "reinforcements": [
+      { "id": "cs_breck_reserve_ch", "side": "CS", "atSec": 75, "name": "Breckinridge's Sector Reserves", "commander": "Maj. Gen. John C. Breckinridge", "arm": "inf", "weapon": "rifled", "men": 1200, "xp": 3, "x": 790, "z": 235, "facing": 3.14159, "formation": "column", "entry": "from the reserve line behind the broken works", "note": "The reserves that counterattacked Barlow's lodgment and restored the line - the battle article credits 'Breckinridge's reserves' without naming units, so no regiment identity is invented here. (Verified counterattack per the Wikipedia battle article; Inferred strength/timing)" }
+    ],
+    "endNote": {
+      "US": {
+        "US": "History is overturned. Your assault carried the entrenched line that broke three Union corps in under an hour on June 3, 1864. In reality the attack failed everywhere except Barlow's brief lodgment, and Grant wrote that he always regretted ordering it.",
+        "CS": "History is overturned against your army. The Union columns have carried the works that Lee's veterans historically held - the entrenchment arithmetic has been beaten by mass and better generalship."
+      },
+      "CS": {
+        "US": "History holds. The assault has broken on the works, as it did on June 3, 1864 - the killing field, the enfilading angles, and the narrow gaps did exactly what entrenchments had learned to do. Grant admitted the error; nine days later the army was gone south, across the James.",
+        "CS": "History holds. The line is unbroken, the assault has bled out on open ground, and the Army of Northern Virginia has won its clearest defensive victory of the campaign - one that still cannot stop the crossing of the James."
+      },
+      "draw": "A bloodier stalemate than history: the works still stand, but the lodgments have torn the line badly enough that both armies dig, and the trench war arrives early."
+    },
+    "teaching": {
+      "title": "Cold Harbor - The Honest Failure and the Arithmetic of Trenches",
+      "cards": [
+        {
+          "id": "ch_regret",
+          "head": "'I have always regretted that the last assault at Cold Harbor was ever made'",
+          "body": "Grant's own words, from his memoirs. The June 3 assault was a genuine tactical failure, ordered against an entrenched line that could not be carried frontally, and its author said so plainly. Teach it as a hard, admitted error inside a sound campaign - not as proof of a 'butcher': attrition was a deliberate, war-winning strategy against an army that could not replace its losses, and Lee's army bled proportionally as badly across the campaign.",
+          "provenance": "Verified (high) - the quote is carried verbatim by both fetched pages; the anti-caricature frame is the packet's dignity review.",
+          "sources": [
+            "American Battlefield Trust, Battle of Cold Harbor (the regret quote)",
+            "Wikipedia, Battle of Cold Harbor (the memoir quote and its restatement)",
+            "docs/design/battle-build-research/1864-65-attrition-battle-build-research.md §6 (the Grant-the-Butcher myth rebutted)"
+          ]
+        },
+        {
+          "id": "ch_seven_thousand",
+          "head": "The 7,000-in-30-minutes tradition - how a casualty myth calcifies",
+          "body": "Tradition says the Union lost about 7,000 men in the first half hour. The American Battlefield Trust page states it; so did generations of histories. Gordon Rhea's modern scholarship, working from the returns, can account for roughly 3,500-4,000 killed, wounded, and missing in the morning assault and about 6,000 for the whole day, against 1,000-1,500 Confederates - still a lopsided disaster, but lower and longer than the legend. The famous story of men pinning their names to their coats the night before rests on a single postwar memoir (Horace Porter's) and is likewise disputed. This card is the ONLY place the 7,000 figure appears in this battle: it is a tradition under examination, never a count, a seed, or an input.",
+          "provenance": "Disputed (deliberately) - the card teaches the historiography itself.",
+          "sources": [
+            "American Battlefield Trust, Battle of Cold Harbor (states the 7,000-in-30-minutes figure)",
+            "Wikipedia, Battle of Cold Harbor (the tradition, Rhea's revision, and the Porter-only name-tag story)"
+          ]
+        },
+        {
+          "id": "ch_trench_lesson",
+          "head": "Rifles plus spades ended the frontal assault",
+          "body": "The Confederate position at Cold Harbor was the most complete field fortification the Army of Northern Virginia had yet built: interlocking angles, cleared fields of fire, narrow deliberate gaps. The NPS puts it simply - the entrenched position 'proved too strong for the Union troops,' and in less than an hour thousands lay between the lines. June 1864 is the hinge: what the Mule Shoe hinted at, Cold Harbor proved, and ten days later the armies began the trench war at Petersburg that previewed 1914.",
+          "provenance": "Verified (high) - both fetched pages; ties to the shipped Spotsylvania and Petersburg teaching.",
+          "sources": [
+            "NPS, Richmond National Battlefield Park — Cold Harbor (the entrenched position proved too strong; thousands in less than an hour)",
+            "Wikipedia, Battle of Cold Harbor (the entrenchment system and the repulse)"
+          ]
+        },
+        {
+          "id": "ch_truce",
+          "head": "The wounded between the lines",
+          "body": "For four days after the assault, wounded men lay in the open between the works while Grant and Lee exchanged notes about the terms of a truce - neither commander willing to concede the field by asking first. By the time a formal cease-fire came, most of the wounded were dead. Teach it plainly: a command failure, on both headquarters' ledgers, that cost helpless men their lives.",
+          "provenance": "Verified (high) - both fetched pages carry the delay and its cost.",
+          "sources": [
+            "Wikipedia, Battle of Cold Harbor (notes traded June 5-7; the truce that came too late)",
+            "NPS, Richmond National Battlefield Park — Cold Harbor (four days as Grant and Lee negotiated; few survived)"
+          ]
+        },
+        {
+          "id": "ch_pivot",
+          "head": "What the campaign bought",
+          "body": "Cold Harbor stopped the Overland Campaign's overland arithmetic - and produced its boldest move. On June 12 the Army of the Potomac slipped out of its trenches, marched southeast, and crossed the James River to strike at Petersburg, the rail junction that fed Richmond. The tactical defeat forced the operational pivot: within two weeks the war in Virginia had become the siege that would end it.",
+          "provenance": "Verified (high) - the June 12 disengagement and the Petersburg objective are two-family; the June 15-18 sequel is the shipped Petersburg battle.",
+          "sources": [
+            "Wikipedia, Battle of Cold Harbor (the June 12 disengagement to cross the James toward Petersburg)",
+            "docs/design/battle-build-research/1864-65-attrition-battle-build-research.md §14 (the D396 Petersburg addendum: the June 15-18 assaults that followed)"
+          ]
+        }
+      ],
+      "codex": {
+        "id": "codex_cold_harbor",
+        "title": "Cold Harbor - June 3, 1864",
+        "summary": "Grant's dawn assault by the II, VI, and XVIII Corps broke on Lee's entrenched line in under an hour - the honest Union failure of the Overland Campaign, admitted by Grant himself. The repulse taught the arithmetic of trenches, the truce delay cost the wounded their lives, and the defeat pushed the army across the James to Petersburg.",
+        "axes": { "timeline": "1864", "theater": "Eastern", "people": ["Grant", "Meade", "Hancock", "Wright", "Smith", "Lee", "Anderson", "Hoke", "Breckinridge", "Hill"], "battle": "Cold Harbor" }
+      }
+    }
+  }
+}

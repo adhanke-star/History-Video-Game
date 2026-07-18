@@ -535,10 +535,10 @@ step("EXCLUSIONS + BASELINES", () => {
   const gameHash = md5(GAME);
   const baseHash = md5(BASE);
 
-  if (t1Count !== 25) throw new Error("scenario baseline must be 25, got " + t1Count);   // D436: 24 -> 25 — Atlanta registers at rank 71
-  if (schemaCount !== 56) throw new Error("schema/data baseline must be 56, got " + schemaCount);   // D436: 54 -> 56 — mayhem-rules.json (D418, pin missed then) + atlanta.json (D436); documented honestly
-  if (!/people\.length\s*!==\s*1566/.test(loot) || !loot.includes("1566 of 1566")) {
-    throw new Error("Army Register 1566 pins missing");
+  if (t1Count !== 26) throw new Error("scenario baseline must be 26, got " + t1Count);   // D436: 24 -> 25 — Atlanta registers at rank 71. D442: 25 -> 26 — Cold Harbor registers at rank 68.5
+  if (schemaCount !== 57) throw new Error("schema/data baseline must be 57, got " + schemaCount);   // D436: 54 -> 56 — mayhem-rules.json (D418, pin missed then) + atlanta.json (D436); documented honestly. D442: 56 -> 57 — cold-harbor.json
+  if (!/people\.length\s*!==\s*1614/.test(loot) || !loot.includes("1614 of 1614")) {
+    throw new Error("Army Register 1614 pins missing");
   }
   if (!saveVersionOne) throw new Error("_SAVE_VER moved from 1");
   if (baseHash !== "c9db83fa99230ffb95bdfdfe059f3fb9") {
@@ -1115,18 +1115,18 @@ step("BASELINES + LANE", () => {
     manifest:md5(MANIFEST),
     suite:md5(VET)
   };
-  if (t1Count !== 25 || schemaCount !== 56) {   // D436: 24/54 -> 25/56 (atlanta + the D418 mayhem-rules pin catch-up)
+  if (t1Count !== 26 || schemaCount !== 57) {   // D436: 24/54 -> 25/56 (atlanta + the D418 mayhem-rules pin catch-up). D442: 25/56 -> 26/57 (cold harbor)
     throw new Error("scenario/schema baseline moved: " + t1Count + "/" + schemaCount);
   }
-  if (!/people\.length\s*!==\s*1566/.test(loot) || !loot.includes("1566 of 1566")) {
-    throw new Error("Army Register 1566 pins missing");
+  if (!/people\.length\s*!==\s*1614/.test(loot) || !loot.includes("1614 of 1614")) {
+    throw new Error("Army Register 1614 pins missing");
   }
-  if (rosterExpected.length !== 25 || builderExpected.length !== 25 ||
+  if (rosterExpected.length !== 26 || builderExpected.length !== 26 ||   // D442: 25 -> 26 — coldHarbor inserts between spotsylvania and petersburgAssaults
       normalize(rosterExpected.join(" ")) !== normalize(builderExpected.join(" "))) {
     throw new Error("coverage baselines moved");
   }
-  if (suite.length !== 132 || !suite[37] || suite[37][1] !== "tools/probe-war-career.mjs") {   // D436: 130 -> 132 (mayhem row D418 missed this pin; atlanta row appends at the end so row 38 holds)
-    throw new Error("suite 132 / War Career row 38 moved");
+  if (suite.length !== 133 || !suite[37] || suite[37][1] !== "tools/probe-war-career.mjs") {   // D436: 130 -> 132 (mayhem row D418 missed this pin; atlanta row appends at the end so row 38 holds). D442: 132 -> 133 (cold harbor row appends at the end; row 38 still holds)
+    throw new Error("suite 133 / War Career row 38 moved");
   }
   if (!read(SWEEP).includes("var reg = fldScenarioRegistry()") ||
       !read(SWEEP).includes("var order = (typeof fldScenarioMenuOrder==='function')")) {

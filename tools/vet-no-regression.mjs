@@ -142,7 +142,8 @@ const SUITE = [
   ['full campaign', 'tools/probe-full-campaign.mjs'],
   ['player agency diagnostic', 'tools/diag-player-agency.mjs'],
   ['classic paint', 'tools/diag-classic.mjs'],
-  ['atlanta', 'tools/probe-atlanta.mjs']   // D436: suite 131 -> 132 — appended at the END so every existing row pin (war career 38, mayhem 57) holds; the audit session runs the full 132
+  ['atlanta', 'tools/probe-atlanta.mjs'],   // D436: suite 131 -> 132 — appended at the END so every existing row pin (war career 38, mayhem 57) holds; the audit session runs the full 132
+  ['cold harbor', 'tools/probe-cold-harbor.mjs']   // D442: suite 132 -> 133 — appended at the END so every existing row pin (war career 38, mayhem 57) holds; the audit session runs the full 133
 ];
 
 const listOnly = process.argv.includes('--list');

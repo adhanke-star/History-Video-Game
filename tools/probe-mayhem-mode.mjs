@@ -747,11 +747,11 @@ async function inspectNarrowLayout(browser, probeUrl) {
       evidence.baseMd5 === "c9db83fa99230ffb95bdfdfe059f3fb9" &&
       evidence.saveVer === 1 &&
       evidence.applySaveSignature === "201fa746ea8e8755" &&
-      evidence.dataCount === 56 &&   // D436: 55 -> 56 — atlanta.json
-      evidence.rosterIds.length === 25 &&   // D436: 24 -> 25 — atlanta
-      evidence.builderIds.length === 25 &&
+      evidence.dataCount === 57 &&   // D436: 55 -> 56 — atlanta.json. D442: 56 -> 57 — cold-harbor.json
+      evidence.rosterIds.length === 26 &&   // D436: 24 -> 25 — atlanta. D442: 25 -> 26 — coldHarbor
+      evidence.builderIds.length === 26 &&
       JSON.stringify(evidence.rosterIds) === JSON.stringify(evidence.builderIds) &&
-      evidence.suiteCount === 132 &&   // D436: 131 -> 132 — the atlanta row appends at the suite end so the row-38/57 pins hold
+      evidence.suiteCount === 133 &&   // D436: 131 -> 132 — the atlanta row appends at the suite end so the row-38/57 pins hold. D442: 132 -> 133 — the cold harbor row appends at the end likewise
       evidence.mayhemRow === 57 &&
       evidence.mayhemFile === "tools/probe-mayhem-mode.mjs" &&
       evidence.warCareerRow === 38 &&

@@ -26,12 +26,13 @@ function ensureDir(p) {
 // ---- Closed-world schema map: every family requires substantive nonempty keys ----
 const BATTLE_FILES = new Set([
   'antietam.json', 'atlanta.json', 'bullrun.json', 'chancellorsville.json', 'chickamauga.json',
-  'chattanooga.json', 'cedar-creek.json', 'cross-keys-port-republic.json', 'franklin.json', 'fredericksburg.json', 'gaines-mill.json', 'gettysburg.json', 'kennesaw.json',
+  'chattanooga.json', 'cedar-creek.json', 'cold-harbor.json', 'cross-keys-port-republic.json', 'franklin.json', 'fredericksburg.json', 'gaines-mill.json', 'gettysburg.json', 'kennesaw.json',
   'five-forks.json', 'fort-donelson.json', 'nashville.json', 'new-market-heights.json',
   'malvern-hill.json', 'elkhorn-tavern.json', 'petersburg-assaults.json', 'shiloh.json', 'spotsylvania.json', 'stones-river.json', 'vicksburg.json', 'wilderness.json'
 ]);
-// D436: 55 -> 56 data files — atlanta.json enrolls as the 25th battle family member (the
-// documented pin-bump idiom; prior transitions D397 53->54 Petersburg, D393 52->53 Wilderness).
+// D442: 56 -> 57 data files — cold-harbor.json enrolls as the 26th battle family member (the
+// documented pin-bump idiom; prior transitions D436 55->56 Atlanta, D397 53->54 Petersburg,
+// D393 52->53 Wilderness).
 
 const META_REQUIREMENTS = new Map([
   ['cabinet.json', ['_meta', 'sides', 'crossCards']],

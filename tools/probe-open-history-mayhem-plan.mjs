@@ -40,7 +40,7 @@ const PIN = {
   suite: "4bcdc6f252389a4bfd6bed269b52f8f0",
   scenarios: 24,
   schemas: 54,
-  armyRegister: 1566,   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots
+  armyRegister: 1614,   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots
   suiteRows: 130,
   warCareerRow: 38,
   saveVersion: 1
@@ -292,14 +292,14 @@ step("EXCLUSIONS + BASELINES", () => {
   const version = Number((read(BASE).match(/var _SAVE_VER = (\d+);/) || [null, NaN])[1]);
   if (version !== PIN.saveVersion) throw new Error("_SAVE_VER moved: " + version);
   const loot = read(LOOT);
-  if (!/people\.length\s*!==\s*1566/.test(loot) || !loot.includes("1566 of 1566")) {
-    throw new Error("Army Register 1566 pins missing");
+  if (!/people\.length\s*!==\s*1614/.test(loot) || !loot.includes("1614 of 1614")) {
+    throw new Error("Army Register 1614 pins missing");
   }
   mustInclude(spec, [
     "This planning slice changes no runtime, data, manifest, suite, generated HTML, frozen base",
     "24 historical scenarios",
     "54 data JSON files",
-    "Army Register 1566",
+    "Army Register 1614",
     "suite 130 with War Career row 38",
     "`_SAVE_VER=1`"
   ], "exclusions/baselines");

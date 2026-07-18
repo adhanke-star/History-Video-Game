@@ -136,11 +136,11 @@ const SETUP = `(() => {
       return {objective:DATA.objective.name,woods:woods.length,walls:walls.length,guns:totals().gunsUS+'/'+totals().gunsCS,fog:DATA.defaultFog};
     });
 
-    check('REGISTRY + MENU: Wilderness holds rank 67 between Chattanooga and Spotsylvania in the 24-scenario registry',function(){
+    check('REGISTRY + MENU: Wilderness holds rank 67 between Chattanooga and Spotsylvania in the 26-scenario registry',function(){
       var reg=fldScenarioRegistry(),order=fldScenarioMenuOrder(reg);
-      if(Object.keys(reg).length!==24||reg.wilderness!==DATA)throw new Error('registry identity/count wrong');   // D397: 23 -> 24 — Petersburg initial assaults registers at rank 69. D393: 22 -> 23 — the Wilderness registered as the twenty-third scenario.
+      if(Object.keys(reg).length!==26||reg.wilderness!==DATA)throw new Error('registry identity/count wrong');   // D397: 23 -> 24 — Petersburg initial assaults registers at rank 69. D393: 22 -> 23 — the Wilderness registered as the twenty-third scenario. D442: 24 -> 26 — Atlanta (D436, whose sweep missed this count pin — recorded honestly) and Cold Harbor (rank 68.5) both register.
       if(fldScenarioMenuRank('wilderness')!==67)throw new Error('menu rank wrong: '+fldScenarioMenuRank('wilderness'));
-      if(order.indexOf('wilderness')!==order.indexOf('chattanooga')+1||order.indexOf('spotsylvania')!==order.indexOf('wilderness')+1||order.indexOf('petersburgAssaults')!==order.indexOf('spotsylvania')+1||order.indexOf('kennesaw')!==order.indexOf('petersburgAssaults')+1)throw new Error('menu chronology wrong: '+order.join(' -> '));   // D397 reshape: Petersburg initial assaults (rank 69) inserts between Spotsylvania and Kennesaw; the five-battle chronology stays guarded. D393 guarded the prior four-battle chronology.
+      if(order.indexOf('wilderness')!==order.indexOf('chattanooga')+1||order.indexOf('spotsylvania')!==order.indexOf('wilderness')+1||order.indexOf('coldHarbor')!==order.indexOf('spotsylvania')+1||order.indexOf('petersburgAssaults')!==order.indexOf('coldHarbor')+1||order.indexOf('kennesaw')!==order.indexOf('petersburgAssaults')+1)throw new Error('menu chronology wrong: '+order.join(' -> '));   // D442 reshape: Cold Harbor (the documented 68.5) inserts between Spotsylvania and the Petersburg initial assaults; the six-battle chronology stays guarded. D397 reshape: Petersburg initial assaults (rank 69) between Spotsylvania and Kennesaw. D393 guarded the prior four-battle chronology.
       return {count:Object.keys(reg).length,rank:67,after:'chattanooga',before:'spotsylvania'};
     });
 
@@ -211,10 +211,10 @@ const SETUP = `(() => {
       return {cards:ids.length,codex:codex.id,axes:codex.axes};
     });
 
-    check('ARMY REGISTER PIN: canonical registry identity plus 18 Wilderness unit trios produce current total 1566',function(){
+    check('ARMY REGISTER PIN: canonical registry identity plus 18 Wilderness unit trios produce current total 1614',function(){
       var registry=fldScenarioRegistry();if(registry.wilderness!==DATA)throw new Error('declared registry dependency missing');
       var C=campaign();if(typeof _t1InitAll==='function')_t1InitAll(C);var reg=ssPersonRegistry(C),found=[],groups={};
-      if(reg.people.length!==1566)throw new Error('Army Register total '+reg.people.length+' expected 1566');   // D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots. D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots.
+      if(reg.people.length!==1614)throw new Error('Army Register total '+reg.people.length+' expected 1614');   // D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots. D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots.
       for(var i=0;i<reg.people.length;i++){var p=reg.people[i],origin=p.replaces||p.pid;if(typeof origin==='string'&&origin.indexOf('ss:wilderness:')===0)found.push({p:p,origin:origin});}
       if(found.length!==54)throw new Error('Wilderness rows '+found.length+' expected 54');
       found.forEach(function(row){var m=row.origin.match(/^ss:wilderness:(US|CS):([^:]+):(cmd|nco|pvt)$/);if(!m)throw new Error('bad slot '+row.origin);var key=m[1]+':'+m[2];groups[key]=groups[key]||{};groups[key][m[3]]=1;if(row.p.source!=='scenario-oob'||row.p.generated!==true||row.p.provenance!=='Inferred')throw new Error('slot metadata '+row.origin);});

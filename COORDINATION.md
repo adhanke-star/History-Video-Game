@@ -1939,8 +1939,12 @@ next green commit and confer through this ledger instead of permitting simultane
   AD-6/AD-7.** **D439 SHIPPED queue item 7 (Cold Harbor spec + dual-mode plan probe, planning 6/6; runtime
   deferred by the queue's own if-room clause; AD-8).** **D440 SHIPPED queue item 8 (GEA-05 + GEA-06): the src/108 tactical coach — first-order
   lesson + causal ribbon; teeth authored; AD-9.** **D441 SHIPPED queue item 9 (dessert): the eight GEA-07..14 P1 design contracts committed
-  docs-only.** THE QUEUE IS RUN DOWN. Exact next: CLOSEOUT — LANE-010 flips to VERIFY
-  (audit-owed); the audit session settles AD-0..AD-9 + the full serialized battery.
+  docs-only.** **D442 SHIPPED (the combined closing session's Phase A): the COLD HARBOR RUNTIME
+  — scenario 26 at 26/57/1,614/133, rank 68.5, §9 obligations live-discharged, plan probe
+  runtime-mode 6/6, probe-cold-harbor authored with two predeclared binds, four stale
+  D436-missed count pins root-fixed with documented chains; AUDIT-DEBT AD-10. THE D432 QUEUE
+  IS FULLY RUN DOWN.** Exact next: PHASE B — settle AD-10 down to AD-1, then AD-0 (the full
+  serialized 133-row battery); then PHASE C flips LANE-009 + LANE-010 SHIPPED.
 - **Last-touched commit:** the D432 lock commit (this edit).
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's D431 overnight
   directive.
