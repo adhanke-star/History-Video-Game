@@ -188,7 +188,7 @@ function econRenderFinance(C) {
     + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:8px 0 2px">How the war is paid for</div>'
     + mixRow('War Bonds', E.mix.bonds, 'bonds', 'Borrow from the public. Sound, but builds debt; the market is thin in the South.')
     + mixRow('Taxation', E.mix.taxes, 'taxes', 'Direct revenue. Unpopular; Southern collection is feeble.')
-    + mixRow('The Printing Press', E.mix.printing, 'printing', 'Instant funds — and the road to inflation. Unanchored in the South, it spirals.')
+    + mixRow('The Printing Press', E.mix.printing, 'printing', 'Instant funds — and the road to <span data-concept="concept:inflation" data-no-gloss>inflation</span>. Unanchored in the South, it spirals.') /* GEA-10 (D446/D453): the LIVE treasury-tab copy span opts into the concept deep-link registry — prose unchanged (the D446 src/20 annotation was dead code under the src/99 h0 desk override) */
     + ltHtml
     + '<div class="btn-row" style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">'
     +   '<button id="ecDelegate" type="button" class="upg">' + (E.delegated ? 'Take personal control' : 'Delegate to Sec. ' + sec) + '</button>'

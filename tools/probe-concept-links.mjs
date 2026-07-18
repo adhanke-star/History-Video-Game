@@ -104,7 +104,11 @@ function staticChecks() {
     const scan = (dir) => {
       for (const f of readdirSync(join(ROOT, dir))) {
         if (!f.endsWith('.js')) continue;
-        const t = readFileSync(join(ROOT, dir, f), 'utf8');
+        // D453 audit root-fix (never-run tooth): src/110's own header comment shows the
+        // annotation idiom as data-concept="<id>" — the orphan scan must run over CODE with
+        // comments stripped, or the doc placeholder reads as an orphan span.
+        const t = readFileSync(join(ROOT, dir, f), 'utf8')
+          .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
         const m = t.match(/data-concept="([^"]+)"/g) || [];
         for (const hit of m) {
           const id = hit.slice('data-concept="'.length, -1);
@@ -220,15 +224,19 @@ const SETUP = `(() => {
       return { ok: true };
     });
 
-    check('DESK SPANS DECORATED: the economy tab renders the inflation + blockade spans as live deep links (the src/30 decorate seam)', function(){
+    check('DESK SPANS DECORATED: the treasury tab renders the inflation span and the diplomacy tab the blockade span as live deep links (the src/30 decorate seam) — D453 audit root-fix: the D446 src/20 annotations were DEAD CODE under the src/99 h0 desk override; the live spans now ride the treasury (src/40) + diplomacy (src/60) copy', function(){
       mkC('US');
       openWarDept();
       var cont = document.getElementById('wdContent');
-      var spans = cont ? cont.querySelectorAll('[data-concept][data-cl-done="1"]') : [];
-      if (spans.length < 2) throw new Error('expected >=2 decorated desk spans, got ' + spans.length);
+      _wdTab = 'treasury'; _wdRefresh();
+      var infl = cont ? cont.querySelectorAll('[data-concept="concept:inflation"][data-cl-done="1"]') : [];
+      if (infl.length < 1) throw new Error('treasury inflation span not decorated, got ' + infl.length);
+      _wdTab = 'diplomacy'; _wdRefresh();
+      var blk = cont ? cont.querySelectorAll('[data-concept="concept:union-blockade"][data-cl-done="1"]') : [];
+      if (blk.length < 1) throw new Error('diplomacy blockade span not decorated, got ' + blk.length);
       if (typeof closeSheet === 'function') closeSheet();
       G.campaign = null;
-      return { decorated: spans.length };
+      return { inflation: infl.length, blockade: blk.length };
     });
 
     check('PURITY: decorate + resolve + open/close write nothing to G.settings and leave no stray modal', function(){

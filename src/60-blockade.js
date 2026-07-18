@@ -331,7 +331,7 @@ function blockadeRenderDiplomacy(C) {
   } else {
     body = ''
       + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:2px 0 4px">The Anaconda</div>'
-      + '<p class="lede" style="font-size:13px">The Union\'s strategy is strangulation: blockade every Southern port, deny the Confederacy its cotton revenue and imported arms, '
+      + '<p class="lede" style="font-size:13px">The Union\'s strategy is strangulation: <span data-concept="concept:union-blockade" data-no-gloss>blockade</span> every Southern port, deny the Confederacy its cotton revenue and imported arms, ' /* GEA-10 (D446/D453): the LIVE diplomacy-tab copy span opts into the concept deep-link registry — prose unchanged */
       + 'and use Northern grain (&ldquo;King Wheat&rdquo;) to keep Britain neutral. Each season the noose tightens and the chance of foreign intervention falls.</p>'
       + meter('Foreign-intervention risk', (C.clock ? C.clock.intervention : 8), _blkTightStatus(C.clock ? C.clock.intervention : 8))
       + '<p class="lede" style="font-size:12px;opacity:.7;margin-top:6px">Capturing Southern ports (Wilmington, Charleston, Mobile) severs blockade-runner lifelines outright.</p>';
