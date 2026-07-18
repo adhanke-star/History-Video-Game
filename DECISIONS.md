@@ -4,6 +4,78 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D453 — THE FINAL AUDIT SETTLES AD-11..AD-19 IN FULL (FOUR DEAD-CODE-UNDER-OVERRIDE RUNTIME BUGS + SIX NEVER-RUN PROBE TEETH ROOT-FIXED); THE AD-0 BATTERY RUNS TO 72/137 GREEN WITH TWO BATTERY REDS ROOT-FIXED, THEN AARON CALLS THE SAFE STOP — [CLAUDE CODE (FABLE 5) + AARON, DEDICATED FINAL AUDIT SESSION] (2026-07-18)
+
+The dedicated final audit session (chartered to settle the ENTIRE AUDIT-DEBT ledger, then flip
+LANE-009/010/011 SHIPPED) settled every AD-11..AD-19 row by running EXACTLY what it named,
+reading every JSON artifact, and root-fixing every red at its exact failing label; every
+predeclared bind bit its tooth with byte-identical md5-proven restores of source AND generated
+game; no tooth was weakened anywhere. Per-debt evidence lives in the nine settle commits
+(AD-19 3c9757b · AD-18 f045795 · AD-17 evidence-only · AD-16 f0b1ff2 · AD-15 ed11d68 ·
+AD-14 1491edc · AD-13 2fd3e30 · AD-12 8ed1c16 · AD-11 a0fb3b7) and the flipped ledger rows.
+
+**PATTERN 1 — DEAD CODE UNDER THE H0 OVERRIDES (four runtime root fixes).** Three LANE-011
+slices wired their surfaces into base renderers that the h0 shell modules OVERRIDE at load:
+the D444 learn card sat in T7's superseded fldScenarioSideChoice (src/100 owns the live
+sheet), the D445 morning-brief seam in src/30's superseded openWarDept (src/99 owns the live
+desk), the D446 desk concept spans in src/20's superseded presRenderEconomy. The authored
+probes honestly caught all three on their first-ever run. Fixes: the LIVE owners now compose
+the surfaces (src/100 fldLearnCardHtml; src/99 cosBriefHtml above wdTabs + cosWireBrief; the
+concept spans moved to REAL live copy — treasury's Printing-Press hint "inflation" in src/40
+and diplomacy's Anaconda lede "blockade" in src/60, prose unchanged, data-no-gloss carried) —
+each typeof-guarded with the guarded-off render proven BYTE-IDENTICAL to its pre-slice build
+(desk shell 5,351B ≡ pre-D445; stripped picker sheet 5,505B ≡ pre-D444; wdContent excluded
+where later slices legitimately moved tab content, recorded). FOURTH: the D452 Mayhem
+free-battle launch showed NO ruleset label anywhere (design §8.2 demands the chip on
+"custom/free-battle launch"; a free skirmish fires no briefing) — fldRenderTop now appends
+the persistent "· MAYHEM RULESET" HUD-title chip when the battle ruleset is Mayhem
+(Historical byte-identical; tooth added to the Slice F step). **DURABLE LAW for future
+slices: wire new desk/sheet/menu surfaces into the LIVE override owner (src/98-103), never
+only the base renderer it supersedes — and drive the probe through the REAL entry point.**
+
+**PATTERN 2 — THE COMMENT-SCAN NEVER-RUN TOOTH CLASS (six probe root fixes, all STRONGER).**
+Four static forbidden-token scans tripped on their modules' OWN header comments naming the
+tokens while stating the law (memory-chain save-law scan, concept span inventory,
+chief-of-staff purity scan, learn-battle reader grep-guard) — all now scan comment-stripped
+CODE. The audio panel tooth counted a template the factored slider() helper instantiates at
+runtime — re-pinned to all four NAMED slider calls. The keymap dispatch tooth passed on
+fldMakeUnit's INITIAL hold order — the order is now cleared pre-press, and the re-proven
+bind bites at exactly the predeclared assert. Also: the GEA-14 packet dropped citations for
+ancestor-covered battles (D430/D433 — the register lives on the battle object) — the
+battle-level source register now rides once per battle, honoring "every cited source list
+verbatim". And DECISIONS.md itself carried two LITERAL NUL bytes in the D449 entry (the very
+escape-leak class D449 fixed in T30) — restored to text (7224943).
+
+**Bind-cascade adjudications (recorded):** AD-14's receipt-seam bind bit CHAIN-ARM plus its
+three PURE downstream dependents and the relax bind bit ELIGIBILITY-FLIP plus two, with
+CHAIN-ARM green (the AD-10 registry-cascade precedent — the downstream teeth consume the
+armed chain through the REAL decResolve path, which is their strength, not a defect); the
+AD-13/AD-12/AD-11 data-tamper binds each also redded their few pure dependents while the
+static tooth NAMED the tamper and the validator exited 1 naming the file. AD-19's Historical
+"briefing" byte-equivalence was adjudicated BY ABSENCE (the free-skirmish path fires no
+briefing on either build). All three --diagnostic-invalid fixtures re-proven at the audit
+head (58/59 ok=false under injection, exit 1; 59/59 clean).
+
+**AD-0 (PARTIAL; the safe stop is Aaron's, mid-battery):** the full serialized battery ran
+alone at the audit head and reached **72/137 GREEN with ZERO unresolved reds** across three
+segments (rows 1-37 · 38-49 · 50-72; logs `.tmp/ad0-battery*.log`). TWO battery reds were
+root-fixed at their exact labels and their rows re-run green: (1) row 38 'war career' —
+probe-war-career's three frozen-wall md5 pins were stale for VETTING-DEFERRED slices that
+legitimately moved their files (src/82 ← D451 packet seam; src/87 ← D448 critical-cue tag;
+T2 ← D448 + D452), re-pinned with documented chains, then 45/45 at 568.7s (e9bc7de);
+(2) row 50 'h0 main menu' — the core-action tooth demanded the pre-D420 direct-muster flow,
+but the D420 Slice-C public release interposes the design-§11 RULESET PICKER on every
+campaign start and no battery row had run since the flip — re-toothed STRONGER to the shipped
+flow (picker presence with Start disarmed → Historical card arms → Start opens the real
+muster → muster Back AND picker Back return), then 5/5 viewports (266f6b0). **[AARON,
+2026-07-18] "finds safe stopping point save and push"** — the battery was stopped at the
+row-72/73 boundary (row 73 'field sandbox' had just started; its partial run is discarded).
+AD-0 re-settles by resuming `node tools/vet-no-regression.mjs --from='field sandbox'` at
+THIS head (rows 73-137, ~65 rows), reading every artifact, then flipping LANE-009 +
+LANE-010 + LANE-011 SHIPPED (D454). Invariants held throughout: 26 scenarios / schema 59 /
+Army Register 1,614 / suite 137 / `_SAVE_VER=1` / frozen base untouched / D74 clean / no new
+historical claims (every fix reused committed prose or presentation seams).
+
 ## D452 — MAYHEM SLICE F SHIPPED: THE SKIRMISH/FREE-BATTLE STANDALONE RULESET PICKER UI (THE D437 RECORDED BOUND DISCHARGED) — [CLAUDE CODE (FABLE 5), LANE-011 DRIVE] (2026-07-18)
 
 LANE-011 slice 8, the last chartered queue item. Design law: design §3.4 + the D437 recorded

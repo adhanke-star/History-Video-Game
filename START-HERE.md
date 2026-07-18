@@ -1,6 +1,6 @@
 # START HERE — "The Civil War" (master index)
 
-**D431 LIVE REFRESH:** the finish-line FIX-NOW push is COMPLETE (GEA-01, S44, S45, S46, E73, E75, C73, C74 shipped; E74 contained by the 4e-2 ratchet with its 123-object migration queued). Aaron's 2026-07-18 coding-first directive defers the battery + heavy testing to a dedicated audit session (AUDIT-DEBT ledger in REVIEW-QUEUE.md; war-career budget root-fixed). LANE-009 VERIFY/unowned. Exact next: the overnight LANE-010 feature run (coding over testing), then the audit session. The exact boundary is `HANDOFF.md`'s top block.
+**D453 LIVE REFRESH:** the FINAL AUDIT settled AD-11..AD-19 in full (exact binds, md5 restores; four dead-code-under-h0-override runtime bugs fixed on the live owners; six never-run teeth re-toothed stronger) and ran the AD-0 battery to 72/137 GREEN with zero unresolved reds (two battery reds root-fixed) before Aaron's safe stop. LANE-009/010/011 rest at VERIFY (battery-only). Exact next: resume the battery `--from='field sandbox'` at this head, then D454 flips the three lanes SHIPPED. The exact boundary is `HANDOFF.md`'s top block.
 
 **This is the ONE file to open first. It tells every new chat exactly which documents are CURRENT and which are history, and the order to read them. If a doc isn't listed under "Canonical" below, treat it as archived — do not follow it as live strategy.**
 
@@ -86,7 +86,7 @@ When Aaron asks a new chat to choose from a priority list, use this list (cross-
 
 **Model naming note (D336, 2026-07-09):** ChatGPT's visible top-model label is **5.6 Sol**. Select it at **Ultra** (the highest effort available in that UI) for quality-critical autonomous work. Older 5.5/Opus/Fable references document prior runs only; do not copy them into new ChatGPT/Codex kickoff prompts. See `OPUS-PLAYBOOK.md`.
 
-**Latest live head (2026-07-18, D431 CODING-FIRST PIVOT):** all seven FIX-NOW findings are shipped; testing is deferred to a dedicated audit session by Aaron's directive; LANE-009 rests at VERIFY/unowned with AUDIT-DEBT AD-0 (the battery) owed. The one canonical live boundary is `HANDOFF.md`'s top ⚡ block. Exact next: the overnight LANE-010 feature run — E74 migration, GEA-02/03, Atlanta, Mayhem next, War Career F, Cold Harbor spec — per-slice build gates only. Work in `/Users/aaronhanke/Desktop/Video Game`; no simultaneous edits.
+**Latest live head (2026-07-18, D453 FINAL AUDIT partial):** AD-11..AD-19 are ALL settled with exact binds and md5 restores; the AD-0 battery reached 72/137 GREEN with zero unresolved reds (two battery reds root-fixed: the war-career wall pins, the h0-menu flow tooth) and was safe-stopped by Aaron at the row-72/73 boundary. The one canonical live boundary is `HANDOFF.md`'s top ⚡ block. Exact next: resume `node tools/vet-no-regression.mjs --from='field sandbox'` at this head, alone; then D454 flips LANE-009/010/011 SHIPPED. Work in `/Users/aaronhanke/Desktop/Video Game`; no simultaneous edits.
 
 *Older prior heads (D422 → D392) and the commented-out superseded snapshots moved byte-verbatim to [`legacy/START-HERE-ARCHIVE.md`](legacy/START-HERE-ARCHIVE.md) — D422 moved at D423; D417 moved at D420; D413 moved at D418; D412 at D417; D411 at D413; D410 → D392 in D412 (HISTORY ARCHIVAL RULE below).*
 

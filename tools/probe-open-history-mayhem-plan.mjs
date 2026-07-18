@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// D453 re-pin (the AD-7 idiom, at the FINAL audit head): the VETTING-DEFERRED D444-D452 slices plus the D453 audit root-fixes legitimately moved these surfaces — t2 25b7c205->57e82cd4 (D448 critical-cue tag + D452 skirmish Ruleset segment); auto 4f0bd097->9396ff63 (D448 cue tag); srcTree 1e973caa->d1792e99 and game baa37b96->4f9adfe5 (D444-D452 + the D453 live-owner fixes in src/99/src/100/src/40/src/60/T0/T2-adjacent probes); focused 87ce5226->a29a5351 (D444-D447 suite sweeps + the D453 e9bc7de wall re-pins); dataTree a0b26ed6->108961c5 (D444 learnMeta on 26 files + D445 chief-of-staff.json + D446 concept-links.json); manifest 442b440c->60f73b23 (D445 109 / D446 110 / D447 111 / D451 112); suite cc91894f->69987b22 (rows 134-137, D444-D447). base/runtime/journey/command/commandProbe/t3 did NOT move.
 // D416 / LANE-007 dual-ruleset planning gate.
 // Filesystem-first, fail-closed, suite-excluded. Runtime mode teeth belong to
 // the later implementation commit, never to this planning slice.
@@ -39,14 +40,14 @@ const PIN = {
   // moved every non-frozen surface. game 9d7d91078dd8fceea847f1c2aff4dc5f -> (D418/D420
   // Mayhem A-C, D423-D430 FIX-NOW, D433-D441 overnight run, D442 Cold Harbor, D443 audit
   // root-fixes) -> re-pinned live; manifest 7924da858de403cac58caabf8c9fcce8 ->
-  // 442b440c45372ff4330f4fe184d537c7 (D440 enrolls src/108); suite
-  // 4bcdc6f252389a4bfd6bed269b52f8f0 -> cc91894f93d6b38d6fe97ea43af6f0e9 (D418 mayhem row
+  // 60f73b23f03f08b978011100f6dea14d (D440 enrolls src/108); suite
+  // 4bcdc6f252389a4bfd6bed269b52f8f0 -> 69987b22cda2916fb42f0a3f04b96a1b (D418 mayhem row
   // 131, D431 war-career 900s budget, D436 atlanta row 132, D442 cold harbor row 133).
   // base NEVER moves (frozen). warCareerRow 38 and _SAVE_VER 1 hold.
-  game: "baa37b9626b98307211ee6cca94d1741",
+  game: "4f9adfe5507b451b17c0999958f4a836",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
-  manifest: "442b440c45372ff4330f4fe184d537c7",
-  suite: "cc91894f93d6b38d6fe97ea43af6f0e9",
+  manifest: "60f73b23f03f08b978011100f6dea14d",
+  suite: "69987b22cda2916fb42f0a3f04b96a1b",
   scenarios: 26,   // D436: 24 -> 25 atlanta; D442: 25 -> 26 coldHarbor
   schemas: 59,   // D418: 54 -> 55 mayhem-rules.json; D436: 55 -> 56 atlanta.json; D442: 56 -> 57 cold-harbor.json; D445: 57 -> 58 chief-of-staff.json; D446: 58 -> 59 concept-links.json
   armyRegister: 1614,   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots

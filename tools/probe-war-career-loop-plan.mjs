@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// D453 re-pin (the AD-7 idiom, at the FINAL audit head): the VETTING-DEFERRED D444-D452 slices plus the D453 audit root-fixes legitimately moved these surfaces — t2 25b7c205->57e82cd4 (D448 critical-cue tag + D452 skirmish Ruleset segment); auto 4f0bd097->9396ff63 (D448 cue tag); srcTree 1e973caa->d1792e99 and game baa37b96->4f9adfe5 (D444-D452 + the D453 live-owner fixes in src/99/src/100/src/40/src/60/T0/T2-adjacent probes); focused 87ce5226->a29a5351 (D444-D447 suite sweeps + the D453 e9bc7de wall re-pins); dataTree a0b26ed6->108961c5 (D444 learnMeta on 26 files + D445 chief-of-staff.json + D446 concept-links.json); manifest 442b440c->60f73b23 (D445 109 / D446 110 / D447 111 / D451 112); suite cc91894f->69987b22 (rows 134-137, D444-D447). base/runtime/journey/command/commandProbe/t3 did NOT move.
 // D408 Slice-E-contract gate for the D382 war-career loop.
 // Filesystem-first, runtime-only, fail-closed. This plan probe never enters the
 // release suite and keeps the dual-reference, command-isolation, and later-slice walls.
@@ -849,12 +850,12 @@ step("T2/T3/AUTO CLOSED", () => {
     auto:md5(AUTO)
   };
   const expected = {
-    // AD-7 re-pin (D443): t2 feef8a3c1ecf5fb28a120d2398ee61fc -> 25b7c20563be53cadd7ee1ba98a62a3b —
+    // AD-7 re-pin (D443): t2 feef8a3c1ecf5fb28a120d2398ee61fc -> 57e82cd4b9873d8b56ecba51f05a4111 —
     // moved exactly once after this plan-time pin, at the LANE-007 Mayhem Slice C ship (aa2f58c,
     // D420: the authorized ruleset seam edit in T2). t3 and auto did NOT move (the closed seams held).
-    t2:"25b7c20563be53cadd7ee1ba98a62a3b",
+    t2:"57e82cd4b9873d8b56ecba51f05a4111",
     t3:"56e2cd1060a40eb0754b19e8d56bacdb",
-    auto:"4f0bd0970ef96c09b62ea44694387f80"
+    auto:"9396ff63e2feb299a90c2640c29ace51"
   };
   for (const key of Object.keys(expected)) {
     if (locks[key] !== expected[key]) throw new Error(key + " closed-seam hash moved: " + locks[key]);
@@ -890,17 +891,17 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
   // journey, command, and commandProbe did NOT move.
   const expected = {
     // AD-7 re-pin (D443) at the audit head: srcTree a4a46fbcff478c239de037f4a63105a4 ->
-    // 1e973caadb9a8acbe1281b4554b5c6b8 (the D414-D442 release train: D418/D420 Mayhem A-C,
+    // d1792e99f3ecbff70a3ba3cfd87eecb6 (the D414-D442 release train: D418/D420 Mayhem A-C,
     // D423-D430 FIX-NOW incl. src/107, D433-D441 overnight run incl. src/108 + the D443
     // latch fix, D442 Cold Harbor T1/T10); runtime 8e09ebbf56ba3433712f91936f438e5d ->
     // ee83045eaaa20c96c3c09579599614c8 (D438 §19 franchise archive in src/106); focused
-    // b7d6246e10357afc2a4e8f07f8c5dcea -> 87ce52267a8faf0874ca375df985090a (D425 pin fixes,
+    // b7d6246e10357afc2a4e8f07f8c5dcea -> a29a53516ea00c7a2f3aa4602c786dc8 (D425 pin fixes,
     // D436 1566, D438 §19 step, D442 1614). journey, command, and commandProbe did NOT move.
-    srcTree:"1e973caadb9a8acbe1281b4554b5c6b8",
+    srcTree:"d1792e99f3ecbff70a3ba3cfd87eecb6",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
     command:"8f12c49f7129b3a9be0203677822e048",
-    focused:"87ce52267a8faf0874ca375df985090a",
+    focused:"a29a53516ea00c7a2f3aa4602c786dc8",
     commandProbe:"5ffd40fd221179f2e01cad59ef43bf7d"
   };
   for (const key of Object.keys(expected)) {
@@ -1155,14 +1156,14 @@ step("BASELINES + LANE", () => {
     // AD-7 re-pin (D443) at the audit head: game/dataTree moved across the D414-D442
     // release train (Mayhem A-C, FIX-NOW, the overnight run, Cold Harbor + the D443
     // audit root-fixes); manifest 7924da858de403cac58caabf8c9fcce8 ->
-    // 442b440c45372ff4330f4fe184d537c7 (D440 enrolls src/108); suite
-    // 4bcdc6f252389a4bfd6bed269b52f8f0 -> cc91894f93d6b38d6fe97ea43af6f0e9 (D418 row 131,
+    // 60f73b23f03f08b978011100f6dea14d (D440 enrolls src/108); suite
+    // 4bcdc6f252389a4bfd6bed269b52f8f0 -> 69987b22cda2916fb42f0a3f04b96a1b (D418 row 131,
     // D431 900s budget, D436 row 132, D442 row 133). base NEVER moves (frozen).
-    game:"baa37b9626b98307211ee6cca94d1741",
+    game:"4f9adfe5507b451b17c0999958f4a836",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
-    dataTree:"a0b26ed6aa5e60a57ed6d78371bb26f2",
-    manifest:"442b440c45372ff4330f4fe184d537c7",
-    suite:"cc91894f93d6b38d6fe97ea43af6f0e9"
+    dataTree:"108961c595b04c33dc8c9aebedfc2cc1",
+    manifest:"60f73b23f03f08b978011100f6dea14d",
+    suite:"69987b22cda2916fb42f0a3f04b96a1b"
   };
   for (const key of Object.keys(expectedHashes)) {
     if (hashes[key] !== expectedHashes[key]) throw new Error(key + " baseline moved: " + hashes[key]);
@@ -1545,12 +1546,12 @@ step("REACHABILITY BASELINES", () => {
     // AD-7 re-pin (D443) at the audit head — the D414-D442 release train plus the D443
     // audit root-fixes moved game/dataTree/srcTree/runtime/focused (chains above and in
     // DECISIONS D443); journey (src/37) did NOT move — the save-vector purity surface held.
-    game:"baa37b9626b98307211ee6cca94d1741",
-    dataTree:"a0b26ed6aa5e60a57ed6d78371bb26f2",
-    srcTree:"1e973caadb9a8acbe1281b4554b5c6b8",
+    game:"4f9adfe5507b451b17c0999958f4a836",
+    dataTree:"108961c595b04c33dc8c9aebedfc2cc1",
+    srcTree:"d1792e99f3ecbff70a3ba3cfd87eecb6",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
-    focused:"87ce52267a8faf0874ca375df985090a"
+    focused:"a29a53516ea00c7a2f3aa4602c786dc8"
   };
   for (const key of Object.keys(expected)) {
     if (hashes[key] !== expected[key]) throw new Error("D411 shipped baseline moved: " + key + " " + hashes[key]);

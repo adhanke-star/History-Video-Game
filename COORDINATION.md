@@ -1877,7 +1877,7 @@ next green commit and confer through this ledger instead of permitting simultane
   SHIPPED. The overnight feature run opens its own LANE-010 and must not rerun this lane's
   slices.** **D443 note: the audit session settled AD-10..AD-1 and ran this lane's AD-0
   battery to 45/133 GREEN with zero reds before Aaron's extend-coding directive deferred it —
-  AD-0 alone still gates this lane's SHIPPED flip, at the final head.**
+  AD-0 alone still gates this lane's SHIPPED flip, at the final head.** **D453 note: the FINAL audit settled AD-11..AD-19, root-fixed two battery reds (the war-career wall pins; the h0-menu flow tooth), and ran AD-0 to 72/137 GREEN with zero unresolved reds before Aaron's safe stop — resume --from='field sandbox' (rows 73-137) at the D453 head, then this lane flips SHIPPED (D454).**
 - **Last-touched commit:** the D431 boundary close.
 - **History:** adjudicated + contracted by Claude Code (Fable 5) 2026-07-17 under Aaron's
   finish-line directive; DRIVE taken in the same ledger-only commit; GEA-01 + S44 shipped in the
@@ -1944,7 +1944,9 @@ next green commit and confer through this ledger instead of permitting simultane
   before Aaron's extend-coding directive deferred it.** Exact next: the GEA-07..14 P1 build
   run + Mayhem Slice F on a NEW feature lane (coding-first, AD-11+ rows); the FINAL audit
   session settles AD-0 + AD-11+ at the final head and flips LANE-009 + LANE-010 + the feature
-  lane SHIPPED.
+  lane SHIPPED. **D453 note: AD-11..AD-19 are settled and AD-0 reached 72/137 GREEN (zero
+  unresolved reds) before Aaron's safe stop — resume --from='field sandbox', then D454 flips
+  this lane SHIPPED.**
 - **Last-touched commit:** the D432 lock commit (this edit).
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's D431 overnight
   directive.
@@ -2054,6 +2056,9 @@ next green commit and confer through this ledger instead of permitting simultane
   RUN DOWN — D444-D452, slices 1-8 all shipped. LANE-011 → VERIFY (battery-only).** Exact
   next: the FINAL dedicated audit session settles AD-11..AD-19 + AD-0 (one full serialized
   battery at the final head; suite 137) and flips LANE-009 + LANE-010 + LANE-011 SHIPPED.
+  **D453 note: AD-11..AD-19 ALL SETTLED (exact binds, md5 restores; four runtime root fixes
+  on the live h0 owners; six teeth re-toothed stronger); AD-0 at 72/137 GREEN, safe-stopped —
+  resume --from='field sandbox' at the D453 head, then D454 flips this lane SHIPPED.**
 - **Last-touched commit:** the D452 slice commit.
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's genre-elite P1
   build-run directive (the D443 extend-coding continuation).

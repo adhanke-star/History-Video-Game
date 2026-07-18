@@ -2,6 +2,27 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-18 — D453 the FINAL AUDIT session (AD-11..AD-19 settled; the AD-0 battery to 72/137, safe-stopped)
+
+The dedicated final audit (Claude Code / Fable 5, within the authorized window) settled every
+AD-11..AD-19 row exactly as written: every named probe green with zero pageerrors, all
+eighteen predeclared binds bit exactly their teeth with md5-proven byte-identical restores,
+all three --diagnostic-invalid fixtures re-proven at the audit head. FOUR
+dead-code-under-h0-override runtime bugs root-fixed on the LIVE owners (D444 learn card →
+src/100; D445 morning brief → src/99; D446 desk concept spans → real treasury/diplomacy copy;
+D452 Mayhem free-battle launch → the design-§8.2 persistent HUD chip), each guarded-off path
+proven byte-identical to its pre-slice build. SIX never-run probe teeth re-toothed STRONGER
+(the comment-scan class ×4, the audio factored-helper pin, the keymap dispatch tooth); the
+GEA-14 packet gained the battle-level source register; DECISIONS.md's two literal NUL bytes
+restored to text. The AD-0 battery then ran serialized and alone to 72/137 GREEN with zero
+unresolved reds — two battery reds root-fixed and re-run green (row 38 war-career: stale
+frozen-wall pins re-pinned with documented chains → 45/45; row 50 h0-main-menu: the
+pre-D420-flow tooth re-toothed to the shipped public ruleset-picker flow → 5/5) — before
+Aaron called the safe stop at the row-72/73 boundary. Lanes rest at VERIFY (battery-only).
+NEXT: resume --from='field sandbox' (rows 73-137) at this head, then D454 flips
+LANE-009/010/011 SHIPPED. Settle commits: 3c9757b f045795 f0b1ff2 ed11d68 1491edc 2fd3e30
+8ed1c16 a0fb3b7 7224943 e9bc7de 266f6b0.
+
 ## 2026-07-18 — D444-D452 the LANE-011 genre-elite P1 build run (coding-first)
 
 The GEA-07..14 P1 build run under the D431/D443 coding-first law (Claude Code / Fable 5,
