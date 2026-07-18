@@ -49,6 +49,29 @@ function staticScan() {
   let t19 = ''; try { t19 = readFileSync(join(tacDir, 'T19-battle-ambience.js'), 'utf8'); } catch (e) {}
   check('static-scan: T19 never calls fldRng (combat determinism intact)', t19.length > 0 && !/fldRng\(/.test(t19));
   check('static-scan: T19 never writes _SAVE_VER', t19.length > 0 && !/_SAVE_VER\s*[-+]?=/.test(t19));
+
+  // ---- GEA-09 phase 1 (D448, AUDIT-DEBT AD-15): the audio-bus contract, AUTHORED teeth ----
+  // BIND A PREDECLARATION - removing T9's fldAudioBusScale("ambient") term from the dinSet call
+  // must red exactly the din-tag static tooth below. BIND B PREDECLARATION - removing the T19
+  // master multiply must red exactly the T19-multiply static tooth below.
+  let t9 = ''; try { t9 = readFileSync(join(tacDir, 'T9-audio.js'), 'utf8'); } catch (e) {}
+  let t2 = ''; try { t2 = readFileSync(join(tacDir, 'T2-campaign-link.js'), 'utf8'); } catch (e) {}
+  let ar = ''; try { ar = readFileSync(join(ROOT, 'src', '87-auto-resolve.js'), 'utf8'); } catch (e) {}
+  check('GEA-09 static: T9 defines the bus layer (fldAudioBusScale fail-open to 1, fldAudioMono, the fldAudioBusPlay zero-gate funnel) and seeds the four-bus + mono default shape',
+    /function fldAudioBusScale/.test(t9) && /function fldAudioMono/.test(t9) && /function fldAudioBusPlay/.test(t9) &&
+    /critical: 100, ambient: 100, ui: 100, narration: 100, mono: false/.test(t9));
+  check('GEA-09 static: the din call site is tagged ambient with a TRUE multiplication',
+    t9.indexOf('_fldAudioLoudScale() * fldAudioBusScale("ambient")') >= 0);
+  check('GEA-09 static: every T9 one-shot cue call site is tagged critical through the funnel (charge bugle+sfx, punctuation, both end cues)',
+    (t9.match(/fldAudioBusPlay\("critical"/g) || []).length >= 5);
+  check('GEA-09 static: the T2 + auto-resolve outcome cues are tagged critical behind typeof guards (legacy fallback intact)',
+    /fldAudioBusPlay\("critical", "sfx", o\.win/.test(t2) && /fldAudioBusPlay\("critical", "sfx", o\.win/.test(ar) &&
+    /else playSfx\(o\.win/.test(t2) && /else playSfx\(o\.win/.test(ar));
+  check('GEA-09 static: T19 multiplies its src-owned master by the ambient bus and the mono flag collapses PAN ONLY (never a gain write — downmix without silencing)',
+    t19.indexOf('fldAudioBusScale === "function") ? fldAudioBusScale("ambient") : 1') >= 0 &&
+    /_monoPan = \(\(typeof fldAudioMono === "function"\) && fldAudioMono\(\)\) \? 0 : pan/.test(t19));
+  check('GEA-09 static: the audio panel ships four labeled bus sliders + the mono toggle',
+    (t9.match(/data-abus="/g) || []).length >= 4 && t9.indexOf('"audioMono"') >= 0 && t9.indexOf('slider("Critical cues"') >= 0);
 }
 
 async function ensureServer() {
@@ -57,6 +80,43 @@ async function ensureServer() {
   const srv = spawn('python3', ['-m', 'http.server', String(cfg.port)], { cwd: ROOT, stdio: 'ignore' });
   for (let i = 0; i < 70; i++) { if (await up(probe)) return srv; await sleep(150); }
   srv.kill(); throw new Error('Could not start static server on :' + cfg.port);
+}
+
+// GEA-09 phase 1 (D448): the audio-bus contract scene — pure settings-layer checks, no battle.
+function busContractScript() {
+  return `(() => {
+    try {
+      G.settings = G.settings || {};
+      try { delete G.settings.audio; } catch (e) {}
+      if (typeof fldAudioBusScale !== 'function' || typeof fldAudioBusPlay !== 'function' || typeof fldAudioMono !== 'function')
+        return { ok: false, err: 'bus API missing' };
+      if (fldAudioBusScale('ambient') !== 1 || fldAudioBusScale('critical') !== 1 || fldAudioBusScale('not-a-bus') !== 1)
+        return { ok: false, err: 'default/unknown bus must scale 1 (fail-open)' };
+      _fldAudioInitSettings();
+      var a = G.settings.audio;
+      if (!(a && a.critical === 100 && a.ambient === 100 && a.ui === 100 && a.narration === 100 && a.mono === false))
+        return { ok: false, err: 'seed shape wrong: ' + JSON.stringify(a) };
+      a.ambient = 50;
+      if (Math.abs(fldAudioBusScale('ambient') - 0.5) > 1e-9) return { ok: false, err: 'ambient did not multiply' };
+      if (fldAudioBusScale('critical') !== 1) return { ok: false, err: 'cross-bus leak' };
+      var calls = 0, orig = window.playSfx;
+      window.playSfx = function () { calls++; };
+      try {
+        a.critical = 0; fldAudioBusPlay('critical', 'sfx', 'charge');
+        if (calls !== 0) return { ok: false, err: 'zero-gate failed' };
+        a.critical = 40; fldAudioBusPlay('critical', 'sfx', 'charge');
+        if (calls !== 1) return { ok: false, err: 'nonzero bus did not delegate' };
+      } finally { window.playSfx = orig; }
+      a.ambient = 'loud'; if (fldAudioBusScale('ambient') !== 1) return { ok: false, err: 'junk value must fail open to 1' };
+      a.ambient = 250; if (fldAudioBusScale('ambient') !== 1) return { ok: false, err: 'high clamp failed' };
+      a.ambient = -5; if (fldAudioBusScale('ambient') !== 0) return { ok: false, err: 'low clamp failed' };
+      a.ambient = 100;
+      a.mono = true; if (!fldAudioMono()) return { ok: false, err: 'mono flag unread' };
+      a.mono = false;
+      try { delete G.settings.audio; } catch (e) {}
+      return { ok: true };
+    } catch (e) { return { ok: false, err: String(e && e.message || e) }; }
+  })()`;
 }
 
 // mode: 'normal' | 'default-off' | 'reduceMotion' | 'loud-off'
@@ -311,11 +371,17 @@ async function runReadabilityScene(page, label, viewport) {
     scenes.fog = await runScene(page, 'fog+dispose', fogAndDisposeScript('shiloh', 21));
     scenes.panelDesktop = await runReadabilityScene(page, 'panel-desktop', { width: 960, height: 640 });
     scenes.panelPhone = await runReadabilityScene(page, 'panel-phone', { width: 390, height: 520 });
+    scenes.bus = await runScene(page, 'gea09-bus', busContractScript());
   } finally { if (server) server.kill(); }
 
   const allPe = Object.values(scenes).reduce((a, s) => a + s.pageerrors.length, 0);
   const n = scenes.normal.detail, off = scenes.off.detail, rm = scenes.rm.detail, loud = scenes.loud.detail, fog = scenes.fog.detail;
   const pd = scenes.panelDesktop.detail, pp = scenes.panelPhone.detail;
+  const bus = scenes.bus.detail || {};
+
+  // GEA-09 phase 1 (D448): the live bus-contract scene.
+  check('GEA-09 bus contract: default scales 1 (no settings -> today\'s behavior), seed shape, per-bus multiplication with no cross-bus leak, the critical zero-gate delegate, junk fail-open + clamps, the mono flag',
+    bus.ok === true, bus.err || '');
 
   // wrappers + module present
   check('module + 4 by-assignment wrappers installed', n.ok && n.wrappers && n.wrappers.d3 && n.wrappers.d2 && n.wrappers.ex && n.wrappers.pr && n.wrappers.fns, JSON.stringify(n.wrappers || {}));

@@ -41,6 +41,10 @@ function _fldAudioInitSettings() {
     if (G.settings.battleLoud === undefined)    G.settings.battleLoud = "full";
     if (G.settings.battleSfx === undefined)     G.settings.battleSfx = true;
     if (G.settings.audioCaptions === undefined) G.settings.audioCaptions = false;
+    // GEA-09 phase 1 (D448): the AUDIO-BUS contract — four independent 0-100 bus volumes plus a
+    // mono-downmix flag, seeded lazily exactly like battleLoud above (the shipped T9 settings
+    // precedent). Defaults preserve today's output EXACTLY (every scale resolves to 1).
+    if (G.settings.audio === undefined) G.settings.audio = { critical: 100, ambient: 100, ui: 100, narration: 100, mono: false };
   } catch (e) {}
 }
 
@@ -74,6 +78,37 @@ function _fldAudioPlayerSide() {
 }
 function _fldAudioCall(fn, a) {
   try { if (typeof window !== "undefined" && typeof window[fn] === "function") window[fn](a); } catch (e) {}
+}
+
+/* ---- GEA-09 phase 1 (D448): the audio-bus layer ------------------------- */
+/* Bus ids: critical (bugle/cannon/outcome cues) · ambient (the din + the T19
+   bed) · ui (reserved: base-internal clicks run inside frozen closures and
+   stay untouched = audible) · narration (forward-declared for a future spoken
+   source). An absent/unknown bus or a missing G.settings.audio resolves to
+   scale 1 — FAIL-OPEN TO AUDIBLE, never silent, and byte-equivalent to the
+   pre-D448 output. THE RECORDED BOUND: each one-shot cue's DSP gain lives in a
+   frozen build/base.html closure, so a one-shot's bus volume gates at zero
+   (0 = silent, otherwise audible at its authored level); TRUE multiplication
+   rides the src-owned levers — the dinSet intensity argument and the T19
+   ambience master (both ambient), plus any future narration source. */
+function fldAudioBusScale(bus) {
+  try {
+    var a = (typeof G !== "undefined") && G.settings && G.settings.audio;
+    if (!a || typeof a !== "object") return 1;
+    var v = a[bus];
+    if (typeof v !== "number" || !isFinite(v)) return 1;
+    return Math.max(0, Math.min(100, v)) / 100;
+  } catch (e) { return 1; }
+}
+function fldAudioMono() {
+  try { var a = G.settings && G.settings.audio; return !!(a && a.mono === true); } catch (e) { return false; }
+}
+function fldAudioBusPlay(bus, kind, name) {
+  try {
+    if (fldAudioBusScale(bus) <= 0) return;   // the zero-gate (see the recorded bound above)
+    if (kind === "bugle") { if (typeof bugleCall === "function") { try { bugleCall(name); } catch (e) {} } }
+    else _fldAudioCall("playSfx", name);
+  } catch (e) {}
 }
 
 /* ---- intensity sampled from the LIVE tactical field --------------------- */
@@ -135,7 +170,9 @@ function _fldAudioTick() {
     if (_fldAudioOn() && !_T9.musicStarted) {
       _fldAudioCall("scoreInit");
       _fldAudioCall("musicStart", "battle");
-      if (typeof ambientStart === "function") { try { ambientStart(); } catch (e) {} }
+      // GEA-09: the base wind bed is tagged ambient — a zero ambient bus skips it (its gain
+      // lives in a frozen closure; the recorded zero-gate bound), any other value is audible.
+      if (typeof ambientStart === "function" && fldAudioBusScale("ambient") > 0) { try { ambientStart(); } catch (e) {} }
       _T9.musicStarted = true;
     }
 
@@ -143,8 +180,9 @@ function _fldAudioTick() {
     var inBattle = (__FIELD.phase === "battle" && !__FIELD.paused);
     var intensity = inBattle ? _fldAudioIntensity() : 0;
 
-    // adaptive din (scaled by the player's "battlefield loudness" volume)
-    _fldAudioCall("dinSet", intensity * _fldAudioLoudScale());
+    // adaptive din (scaled by the player's "battlefield loudness" volume × the ambient bus —
+    // GEA-09: a TRUE multiplication, the src-owned lever)
+    _fldAudioCall("dinSet", intensity * _fldAudioLoudScale() * fldAudioBusScale("ambient"));
 
     // ----- event cues (bugle / cannon), gated + throttled -----
     if (_fldAudioSfxOn() && inBattle) {
@@ -156,8 +194,8 @@ function _fldAudioTick() {
         if (u && u.alive && u.side === ps && u.order && u.order.type === "charge") pCharge++;
       }
       if (pCharge > _T9.prevPCharge && (now - _T9.lastCharge) > 4800) {
-        if (typeof bugleCall === "function") { try { bugleCall("charge"); } catch (e) {} }
-        _fldAudioCall("playSfx", "charge");
+        fldAudioBusPlay("critical", "bugle", "charge");   // GEA-09: tagged critical
+        fldAudioBusPlay("critical", "sfx", "charge");
         _fldAudioCaption("🎺 Charge — forward at the double-quick!");
         _T9.lastCharge = now;
       }
@@ -167,7 +205,7 @@ function _fldAudioTick() {
       if (intensity > 0.28) {
         var gap = 900 + 1700 * (1 - intensity);   // ~0.9s when fierce, ~2.6s when light
         if ((now - _T9.lastPunch) > gap) {
-          _fldAudioCall("playSfx", Math.random() < 0.45 ? "cannon" : "volley");
+          fldAudioBusPlay("critical", "sfx", Math.random() < 0.45 ? "cannon" : "volley");   // GEA-09: tagged critical
           _T9.lastPunch = now;
         }
       }
@@ -182,8 +220,8 @@ function _fldAudioTick() {
         var draw = (!w || w === "draw");
         if (!draw) {
           var win = (w === _fldAudioPlayerSide());
-          if (typeof bugleCall === "function") { try { bugleCall(win ? "to_the_colors" : "taps"); } catch (e) {} }
-          _fldAudioCall("playSfx", win ? "bugle" : "rout");
+          fldAudioBusPlay("critical", "bugle", win ? "to_the_colors" : "taps");   // GEA-09: tagged critical
+          fldAudioBusPlay("critical", "sfx", win ? "bugle" : "rout");
           _fldAudioCaption(win ? "🎺 To the Colors — the field is held"
                                : "🎺 Taps — the line is broken");
         }
@@ -256,11 +294,25 @@ function _fldAudioPanelRows() {
   }
   var s = G.settings;
   var onoff = [[true, "On"], [false, "Off"]];
+  // GEA-09 phase 1 (D448): one labeled 0-100 slider per bus + the mono toggle.
+  function slider(label, hint, bus) {
+    var a = s.audio || {}, v = (typeof a[bus] === "number" && isFinite(a[bus])) ? Math.max(0, Math.min(100, a[bus])) : 100;
+    return '<div style="margin:0 0 12px;"><label for="fldAudioBus_' + bus + '" style="font-size:13px;letter-spacing:.5px;display:block;margin-bottom:5px;">' + label +
+      ' <span id="fldAudioBusVal_' + bus + '" style="opacity:.7;">' + v + '</span></label>' +
+      '<input type="range" id="fldAudioBus_' + bus + '" data-abus="' + bus + '" min="0" max="100" step="5" value="' + v + '" ' +
+      'style="width:100%;accent-color:#e8c84a;" aria-label="' + label + ' volume, 0 to 100">' +
+      '<div style="font-size:11px;opacity:.7;margin-top:2px;">' + hint + '</div></div>';
+  }
   return seg("Sound (master)", "All music, bugles and battlefield sound.", onoff, !!s.sound, "sound") +
          seg("Music", "The adaptive martial score under the battle.", onoff, s.music !== false, "music") +
          seg("Battlefield loudness", "Volume of the cannon-and-musketry roar.", [["full", "Full"], ["soft", "Soft"], ["off", "Off"]], (s.battleLoud || "full"), "battleLoud") +
          seg("Bugle & cannon cues", "Charge calls, victory / taps, and cannon punctuation.", onoff, s.battleSfx !== false, "battleSfx") +
-         seg("Captions", "On-screen text for each audio cue.", onoff, !!s.audioCaptions, "audioCaptions");
+         seg("Captions", "On-screen text for each audio cue.", onoff, !!s.audioCaptions, "audioCaptions") +
+         slider("Critical cues", "Bugle calls, cannon punctuation, and outcome cues. 0 silences them.", "critical") +
+         slider("Ambience", "The battle din and the wind-and-musketry bed.", "ambient") +
+         slider("Interface", "Reserved for interface sounds.", "ui") +
+         slider("Narration", "Reserved for future spoken narration.", "narration") +
+         seg("Mono downmix", "Collapse the stereo battlefield image to center — nothing is silenced.", onoff, !!(s.audio && s.audio.mono), "audioMono");
 }
 
 function _fldAudioClosePanel() {
@@ -303,12 +355,30 @@ function _fldAudioOpenPanel() {
           var key = this.getAttribute("data-acb");
           var raw = this.getAttribute("data-acv");
           var val = (raw === "true") ? true : (raw === "false") ? false : raw;
-          G.settings[key] = val;
+          // GEA-09 (D448): the mono toggle lives inside G.settings.audio, never a top-level key.
+          if (key === "audioMono") { _fldAudioInitSettings(); G.settings.audio.mono = (val === true); }
+          else G.settings[key] = val;
           _fldAudioApply(key);
           // re-render the rows in place to reflect the new pressed state
           var host = ov.querySelector("[data-acrows]") || this.closest("div[role=dialog] > div") || ov.firstChild;
           // simplest robust refresh: rebuild the whole panel body
           _fldAudioClosePanel(); _fldAudioOpenPanel();
+        } catch (e) {}
+      });
+    }
+    // GEA-09 (D448): wire the four bus sliders — live value readout; the din/T19 levers pick
+    // the new scale up on their next tick (no re-render needed, so the slider keeps focus).
+    var sliders = ov.querySelectorAll("input[data-abus]");
+    for (i = 0; i < sliders.length; i++) {
+      sliders[i].addEventListener("input", function () {
+        try {
+          _fldAudioInitSettings();
+          var bus = this.getAttribute("data-abus");
+          var v = Math.max(0, Math.min(100, Math.round(+this.value || 0)));
+          G.settings.audio[bus] = v;
+          var lab = document.getElementById("fldAudioBusVal_" + bus);
+          if (lab) lab.textContent = String(v);
+          if (typeof saveLocal === "function") { try { saveLocal(); } catch (e) {} }
         } catch (e) {}
       });
     }
@@ -322,7 +392,7 @@ function _fldAudioOpenPanel() {
       if (k === "Escape") { ev.preventDefault(); ev.stopPropagation(); _fldAudioClosePanel(); return; }
       ev.stopPropagation();   // keep battle hotkeys from firing behind the modal
       if (k === "Tab") {
-        var f = ov.querySelectorAll("button");
+        var f = ov.querySelectorAll("button, input");   // GEA-09 (D448): the bus sliders join the focus trap
         if (!f.length) return;
         var first = f[0], last = f[f.length - 1];
         if (ev.shiftKey && document.activeElement === first) { ev.preventDefault(); try { last.focus(); } catch (e) {} }

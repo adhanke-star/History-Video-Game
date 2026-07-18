@@ -597,7 +597,7 @@ function fldCampaignApplyOutcome(o) {
   // This metadata is consequence-only and is not read by combat, casualty, AI,
   // score, winner, or direction code.
   if (o.warCareerEvidence && typeof o.warCareerEvidence === "object") B.warCareerEvidence = o.warCareerEvidence;
-  if (o.winnerSide && typeof playSfx === "function") { try { playSfx(o.win ? "bugle" : "rout"); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldCampaignApplyOutcome playSfx:", e); } }
+  if (o.winnerSide && typeof playSfx === "function") { try { if (typeof fldAudioBusPlay === "function") fldAudioBusPlay("critical", "sfx", o.win ? "bugle" : "rout"); else playSfx(o.win ? "bugle" : "rout"); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("fldCampaignApplyOutcome playSfx:", e); } }   // GEA-09 (D448): the outcome cue is tagged critical (guarded; module absent -> the legacy call, byte-identical)
   campaignAdvance(o.winnerSide, o.type);
 }
 /* the campaign end-screen teaching/result snippet (T0 fldOnOver hook) — appended beneath any

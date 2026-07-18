@@ -131,7 +131,7 @@ function bridgeAutoResolve(C) {
   if (!C) return null;
   var o = _arRunHeadlessSim(C);
   if (!o) { if (typeof toast === "function") toast("No battle to resolve."); return null; }
-  if (o.winnerSide && typeof playSfx === "function") { try { playSfx(o.win ? "bugle" : "rout"); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("bridgeAutoResolve playSfx:", e); } }
+  if (o.winnerSide && typeof playSfx === "function") { try { if (typeof fldAudioBusPlay === "function") fldAudioBusPlay("critical", "sfx", o.win ? "bugle" : "rout"); else playSfx(o.win ? "bugle" : "rout"); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("bridgeAutoResolve playSfx:", e); } }   // GEA-09 (D448): tagged critical (guarded; module absent -> the legacy call, byte-identical)
   _arShowResult(C, o);
   return o;
 }

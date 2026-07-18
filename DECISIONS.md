@@ -4,6 +4,46 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D448 — GEA-09 PHASE 1 SHIPPED: THE AUDIO-BUS CONTRACT (FOUR BUSES + MONO, DEFAULTS BYTE-EQUIVALENT, THE FROZEN-CLOSURE BOUND RECORDED) — [CLAUDE CODE (FABLE 5), LANE-011 DRIVE] (2026-07-18)
+
+LANE-011 slice 5a (the GEA-09 contract phases itself: "phase 2 (action map, separate slice)" —
+honored as its own D449). Built to the D441 GEA-09 phase-1 contract, re-read at slice start.
+
+SHIPPED: (1) `G.settings.audio = { critical, ambient, ui, narration (0-100 each), mono }`,
+seeded lazily in `_fldAudioInitSettings` (the shipped battleLoud precedent — additive settings
+key, `_SAVE_VER` untouched, no envelope function moved: save-shape ✓). `fldAudioBusScale(bus)`
+FAILS OPEN TO AUDIBLE: absent settings, unknown bus ids, and junk values all resolve to scale
+1, so the no-settings default is byte-equivalent to today's output; values clamp 0-100.
+(2) Call-site tagging through the new `fldAudioBusPlay(bus, kind, name)` funnel: every T9
+one-shot cue (charge bugle+sfx, cannon/volley punctuation, both end cues) plus the T2
+campaign-outcome and src/87 auto-resolve cues are tagged **critical** (typeof-guarded with the
+legacy call as fallback); the adaptive din and the base wind bed are tagged **ambient**;
+base-INTERNAL calls (Classic-path bugles, UI clicks) run inside frozen closures, stay
+untouched, and are therefore audible — the untagged-defaults-ui fail-open clause satisfied by
+construction. (3) TRUE multiplication on the src-owned levers: the dinSet intensity argument
+(× ambient) and T19's master gain (× ambient); the MONO flag collapses T19's src-owned stereo
+pans to center — a real downmix that silences NOTHING. **THE RECORDED BOUND (honest, D437
+style):** each one-shot cue's DSP gain lives in a frozen `build/base.html` closure, so a
+one-shot's bus volume gates at ZERO (0 = silent, otherwise audible at its authored level);
+full per-cue scaling would require base-thaw or src-side resynthesis — explicitly OUT of this
+slice, left to a future contract. (4) The audio panel (the existing T9 settings surface —
+recorded seam interpretation: the contract's "existing a11y panel" resolves to the shipped
+in-battle audio panel, whose controls the a11y layer already mirrors/high-contrasts) gains
+four labeled 0-100 sliders with live value readouts + the mono toggle; sliders join the
+focus trap; no re-render on input so the slider keeps focus. (5) Teeth AUTHORED into the
+EXISTING `tools/probe-audio-ambience.mjs` (the D440 extend-don't-enroll precedent — suite
+stays 137, NO pin sweep): six static teeth (bus-layer definitions + seed shape, the din
+ambient-multiply tag, ≥5 critical-funnel tags, the guarded T2/87 tags with legacy fallback,
+the T19 multiply + pan-only mono law, the four sliders + mono toggle) and one live
+bus-contract scene (default/unknown scale 1, seed shape, per-bus multiplication without
+cross-bus leak, the critical zero-gate + nonzero delegate via a playSfx wrapper, junk
+fail-open + clamps, the mono flag) — NOT run this session; two binds predeclared in the
+probe's GEA-09 comment block. NO count movement anywhere (26/59/1,614/137).
+
+**VETTING DEFERRED (D443):** ran node --check ×5, build GATE OK (save-shape ✓), git diff
+--check. The probe run (its existing teeth incl. the >=6-row panel asserts must stay green
+over the taller panel) and both binds are owed as AUDIT-DEBT AD-15 (REVIEW-QUEUE.md).
+
 ## D447 — GEA-12 SHIPPED: THE ONE THREE-BEAT MEMORY CHAIN (EMANCIPATION → RECONSTRUCTION), LEGACY SAVES BYTE-IDENTICAL BY ABSENCE — [CLAUDE CODE (FABLE 5), LANE-011 DRIVE] (2026-07-18)
 
 LANE-011 slice 4, built exactly to the D441 GEA-12 contract (re-read in full at slice start).

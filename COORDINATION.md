@@ -2023,9 +2023,15 @@ next green commit and confer through this ledger instead of permitting simultane
   cards' own committed sources; NO new claim), three guarded seams, legacy saves
   byte-identical BY ABSENCE with the E41 envelope untouched (save-shape ✓);
   probe-memory-chain AUTHORED (the legacy-byte-identity gating tooth + two predeclared
-  binds); suite 136→137 swept; AUDIT-DEBT AD-14.** Exact next: slice 5 (GEA-09 audio-bus
-  contract then the action-map seam) — re-read its contract in full first.
-- **Last-touched commit:** the D447 slice commit.
+  binds); suite 136→137 swept; AUDIT-DEBT AD-14.** **D448 SHIPPED slice 5a (GEA-09 phase 1):
+  the four-bus + mono contract — fail-open scales byte-equivalent by default, the
+  critical/ambient call-site tagging funnel, TRUE multiplication on the src-owned din/T19
+  levers, mono as a pan-collapse that silences nothing, panel sliders in the focus trap; the
+  frozen-closure zero-gate bound RECORDED (one-shot cues gate at 0 — full per-cue scaling
+  needs a future base-thaw/resynthesis contract); teeth authored into the EXISTING
+  probe-audio-ambience (suite stays 137, no sweep); AUDIT-DEBT AD-15.** Exact next: slice 5b
+  (GEA-09 phase 2, the action-map seam) — the declarative table + device-local cw_keymap_v1.
+- **Last-touched commit:** the D448 slice commit.
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's genre-elite P1
   build-run directive (the D443 extend-coding continuation).
 

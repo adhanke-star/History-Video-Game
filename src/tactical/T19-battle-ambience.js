@@ -219,8 +219,10 @@ function fldAmbEnsure() {
     if (!FLDAMB.master) { var m = c.createGain(); m.gain.value = 0.0001; m.connect(c.destination); FLDAMB.master = m; }
     fldAmbBuildWash(c); fldAmbBuildRumble(c);
     FLDAMB.started = true;
-    // master tracks the loudness setting; re-ramp only when it actually changes
-    var scale = fldAmbLoud(), target = FLDAMB.MASTER * scale;
+    // master tracks the loudness setting; re-ramp only when it actually changes.
+    // GEA-09 (D448): × the ambient bus — a TRUE multiplication on this src-owned master gain
+    // (guarded: module absent -> 1 -> byte-identical).
+    var scale = fldAmbLoud() * ((typeof fldAudioBusScale === "function") ? fldAudioBusScale("ambient") : 1), target = FLDAMB.MASTER * scale;
     if (FLDAMB.silenced || FLDAMB.loudApplied !== scale) {
       fldAmbRamp(FLDAMB.master.gain, c, target, 0.5);
       FLDAMB.loudApplied = scale; FLDAMB.silenced = false;
@@ -249,7 +251,10 @@ function fldAmbSynthReport(isArt, pan, intensity) {
     var when = c.currentTime + 0.005;
     var dest = FLDAMB.master;
     if (c.createStereoPanner) {
-      var pn = c.createStereoPanner(); pn.pan.value = pan; pn.connect(FLDAMB.master); dest = pn; FLDAMB.pans.push(pn);
+      // GEA-09 (D448): the mono-downmix flag collapses this src-owned stereo image to center
+      // WITHOUT silencing anything (guarded; flag off -> the authored pan, byte-identical).
+      var _monoPan = ((typeof fldAudioMono === "function") && fldAudioMono()) ? 0 : pan;
+      var pn = c.createStereoPanner(); pn.pan.value = _monoPan; pn.connect(FLDAMB.master); dest = pn; FLDAMB.pans.push(pn);
     }
     var k = 0.6 + 0.4 * (intensity < 0 ? 0 : (intensity > 1 ? 1 : intensity));
     if (isArt) {
