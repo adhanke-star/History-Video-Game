@@ -2039,9 +2039,14 @@ next green commit and confer through this ledger instead of permitting simultane
   zero sim-path cost, playback through the SAME engine with hash equality or the verbatim
   honest failure, unknown versions refused, GEA-02 Blob export on the end screen,
   standalone-only v1 bound recorded; teeth (3-seed round trip + tamper honesty) authored
-  into probe-field; AUDIT-DEBT AD-17.** Exact next: slice 7 (GEA-14 the classroom session
-  packet) — re-read its contract in full first.
-- **Last-touched commit:** the D450 slice commit.
+  into probe-field; AUDIT-DEBT AD-17.** **D451 SHIPPED slice 7 (GEA-14): src/112 — the
+  pure-read print-safe session packet from EXISTING surfaces only (the GEA-02 innerText
+  path, divScan verbatim, completed-battle cards + sources verbatim, the GEA-10 concept
+  index; the no-telemetry interpretation recorded); the guarded bar button; white-paper
+  print CSS with the no-ink-trap tooth; teeth authored into probe-afteraction (suite stays
+  137); AUDIT-DEBT AD-18.** Exact next: slice 8 (MAYHEM SLICE F, the standalone ruleset
+  picker UI) — re-read the D437 recorded bound first.
+- **Last-touched commit:** the D451 slice commit.
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's genre-elite P1
   build-run directive (the D443 extend-coding continuation).
 

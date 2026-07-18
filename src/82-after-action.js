@@ -379,6 +379,9 @@ function _aarExportBar(C, final, sideLabel) {
     + ' style="margin-top:10px;padding-top:8px;border-top:1px dotted var(--rule);display:flex;gap:8px;align-items:center;flex-wrap:wrap">'
     + '<button type="button" class="aarCopyBtn" style="' + _AAR_BTN_STYLE + '">Copy Report</button>'
     + '<button type="button" class="aarDlBtn" style="' + _AAR_BTN_STYLE + '">Download Text</button>'
+    // GEA-14 (D451): the Session Packet button rides this bar behind a typeof guard — "" when
+    // the module is absent, so the bar and its GEA-02 teeth are byte-identical without it.
+    + ((typeof spPacketButtonHtml === "function") ? spPacketButtonHtml() : "")
     + '<span class="aarExportStatus" role="status" aria-live="polite" style="font-size:11px;opacity:.8"></span>'
     + '</div>';
 }

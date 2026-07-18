@@ -101,7 +101,8 @@
     "108-tactical-coach.js",
     "109-chief-of-staff.js",
     "110-concept-links.js",
-    "111-memory-chain.js"
+    "111-memory-chain.js",
+    "112-session-packet.js"
   ],
   "overrides": [
     "_t1InitAll",

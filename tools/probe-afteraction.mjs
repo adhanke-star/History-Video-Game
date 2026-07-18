@@ -223,6 +223,41 @@ const SETUP = `(() => {
       } finally { document.body.removeChild(host); } });
 
     // ---- E4-i2 (D119): the STRATEGIC war-END — a reached victoryReady concludes the war. ----
+    // ---- GEA-14 (D451, AUDIT-DEBT AD-18): the classroom session packet on the GEA-02 bar. ----
+    // BIND A PREDECLARATION - removing the bar's guarded spPacketButtonHtml seam must red
+    // exactly this step's button-presence assert, nothing else.
+    // BIND B PREDECLARATION - removing the packet's white-paper print stylesheet must red
+    // exactly this step's print-CSS ink-trap assert.
+    step('GEA-14 (D451) the Session Packet: button rides the GEA-02 bar (existing controls untouched); the packet composes ONLY existing surfaces (AAR text, divScan ledger, registry teaching cards, GEA-10 concept index) with sources verbatim; print CSS is white-paper with NO dark ink trap; generation is a pure read', function(){
+      if (typeof spPacketHtml!=='function' || typeof spPacketButtonHtml!=='function') throw new Error('session-packet API missing');
+      var C=mkC('US',1864,9); C.stats={battles:3,won:2,infl:500,suff:400}; C.iron=false;
+      C.completed=['bullrun1'];   // registry-resolvable -> its teaching cards must compose
+      var bar=aarRenderReport(C,{final:false});
+      if (bar.indexOf('aarPacketBtn')<0 || bar.indexOf('Session Packet')<0) throw new Error('the Session Packet button is missing from the bar');
+      if (bar.indexOf('aarCopyBtn')<0 || bar.indexOf('aarDlBtn')<0) throw new Error('the existing GEA-02 controls moved');
+      var before=JSON.stringify(C);
+      var pk=spPacketHtml(C);
+      if (JSON.stringify(C)!==before) throw new Error('packet generation wrote the campaign');
+      if (!pk || pk.indexOf('<!DOCTYPE html')!==0) throw new Error('not a self-contained document');
+      if (pk.indexOf('AFTER-ACTION')<0 && pk.indexOf('After-action')<0) throw new Error('the AAR section is missing');
+      if (pk.indexOf('Divergence ledger')<0) throw new Error('the divergence section is missing');
+      if (pk.indexOf('Concept index')<0 || pk.indexOf('concept:union-blockade')<0) throw new Error('the GEA-10 concept index is missing');
+      // sources verbatim: bullrun1's own card sources ride into the packet untouched
+      var sd=(typeof fldScenarioData==='function')?fldScenarioData('bullrun1'):null;
+      var card=sd&&sd.teaching&&sd.teaching.cards&&sd.teaching.cards[0];
+      if (card&&card.sources&&card.sources.length){
+        var probeSrc=String(card.sources[0]);
+        if (pk.indexOf(probeSrc.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'))<0 && pk.indexOf(probeSrc)<0)
+          throw new Error('a battle-card source did not ride verbatim');
+      } else if (card) { throw new Error('bullrun1 card carries no sources to verify'); }
+      // print-CSS sanity: white paper declared; NO dark background token anywhere in the stylesheet
+      if (pk.indexOf('background:#fff')<0) throw new Error('white-paper background missing');
+      var css=pk.slice(pk.indexOf('<style>'),pk.indexOf('</style>'));
+      if (/background:#(0|1|2)[0-9a-f]{2}/i.test(css)) throw new Error('a dark ink-trap background in the print stylesheet');
+      if (pk.indexOf('@media print')<0) throw new Error('print rules missing');
+      return { bytes: pk.length };
+    });
+
     step('D119 strategic-end availability is side-correct (will = either side; recognition = CS-only)', function(){
       if(typeof aarStrategicEndAvailable!=='function') throw new Error('aarStrategicEndAvailable missing');
       var U=mkC('US',1864,9); U.strategy.victoryReady='will';
