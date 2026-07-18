@@ -1029,8 +1029,10 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
   // preflight row) and one bounds-carry static wall (30/30) joined the D407 structure.
   // D413: the ONE D408 §17 Matters-of-State browser row joined (42 -> 43 literal steps,
   // 44/44 with the static preflight row); static walls stayed 30/30.
-  if ((focusedText.match(/\bstep\('/g) || []).length !== 43 || (focusedText.match(/\bcheck\(/g) || []).length !== 31) {
-    throw new Error("focused source row/static structure moved from 43 literal steps + 30 checks");
+  // AD-7 re-pin (D443): the ONE D438 §19 franchise-archive browser row joined (43 -> 44
+  // literal steps, 45/45 with the static preflight row); check( walls stayed 31.
+  if ((focusedText.match(/\bstep\('/g) || []).length !== 44 || (focusedText.match(/\bcheck\(/g) || []).length !== 31) {
+    throw new Error("focused source row/static structure moved from 44 literal steps + 31 checks");
   }
   if (occurrences(focusedText, "step('D411 REACHABILITY + SOURCE-BOUNDED SERVICE'") !== 1) {
     throw new Error("focused D411 reachability row moved");
