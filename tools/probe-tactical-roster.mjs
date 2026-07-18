@@ -41,7 +41,7 @@ function killChild(child) {
 const SETUP = `(() => {
   var R = { ok:true, steps:[] };
   var EXPECTED = ['bullrun1', 'crossKeysPortRepublic', 'gainesMill', 'malvernHill', 'antietam', 'fredericksburg', 'chancellorsville', 'gettysburg', 'newMarketHeights', 'fortDonelson', 'elkhornTavern', 'shiloh', 'stonesRiver', 'vicksburg', 'chickamauga', 'chattanooga', 'wilderness', 'spotsylvania', 'coldHarbor', 'petersburgAssaults', 'kennesaw', 'atlanta', 'cedarCreek', 'franklin', 'nashville', 'fiveForks'];   // D397: 23 -> 24 — Petersburg initial assaults registers at rank 69 between spotsylvania and kennesaw (single-phase; PHASE_COUNTS unchanged). D442: 25 -> 26 — coldHarbor at the documented 68.5 (single-phase; PHASE_COUNTS unchanged).
-  var PHASE_COUNTS = { vicksburg: 3, chickamauga: 3, chattanooga: 3, fortDonelson: 3, elkhornTavern: 2, nashville: 2, newMarketHeights: 2, stonesRiver: 2, cedarCreek: 2, crossKeysPortRepublic: 2 };
+  var PHASE_COUNTS = { vicksburg: 3, chickamauga: 3, chattanooga: 3, fortDonelson: 3, elkhornTavern: 2, nashville: 2, newMarketHeights: 2, stonesRiver: 2, cedarCreek: 2, crossKeysPortRepublic: 2, atlanta: 2 };   // D454 battery root fix: the D436 VETTING-DEFERRED slice shipped Atlanta as two-phase T8 (spec d596579 "Shape: phases.length 2; scoreWeights [1,3]"; probe-atlanta pins the same 2/[1,3]) but never added its PHASE_COUNTS entry, so this tooth's ||3 default demanded a third phase on the probe's first-ever run against it — atlanta: 2 is the spec truth, pinned explicitly.
   function step(name, fn) {
     try { var v = fn(); R.steps.push({ name:name, ok:true, v:v === undefined ? null : v }); }
     catch(e) { R.ok = false; R.steps.push({ name:name, ok:false, err:String(e && e.message || e) }); }
