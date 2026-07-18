@@ -246,7 +246,7 @@ const SETUP = `(() => {
     });
 
     check('SCOPE: single-phase June 15-18 only; no Cold Harbor/Crater/Fort Stedman/April-2 tactical registration and no Petersburg-only combat function appears',function(){
-      var ids=Object.keys(fldScenarioRegistry());if(ids.some(function(id){return /coldharbor|cold-harbor|crater|fortStedman|fort-stedman|overlandCampaign/i.test(id);}))throw new Error('forbidden tactical id');
+      var ids=Object.keys(fldScenarioRegistry());if(ids.some(function(id){return /crater|fortStedman|fort-stedman|overlandCampaign/i.test(id);}))throw new Error('forbidden tactical id');   // D454: coldHarbor (cold-harbor) is RATIFIED + registered as scenario 26 since D442 and leaves this tooth (the same documented way petersburgAssaults left the D393-era scans at D397); crater/fortStedman/overlandCampaign stay forbidden until their own ratified builds.
       if(DATA.phases)throw new Error('Petersburg initial assaults became phased');
       var functions=['petersburgPenalty','petersburgBonus','hesitationMult','nightMult','garrisonBonus','usctBonus','usctPenalty'];functions.forEach(function(n){if(typeof window[n]==='function')throw new Error('battle-specific function '+n);});
       return {singlePhase:true,forbiddenIds:0,battleSpecificFunctions:0};
@@ -265,7 +265,7 @@ const DOM = `(() => {
       var btn=document.getElementById('fldScnBtn_petersburgAssaults');if(!btn||!btn.getAttribute('aria-label'))throw new Error('accessible Petersburg button missing');
       fldInjectMenuButton();if(document.querySelectorAll('#fldScnBtn_petersburgAssaults').length!==1)throw new Error('duplicate Petersburg button');
       var ids=Array.prototype.slice.call(document.querySelectorAll('.gn-btn')).map(function(b){return b.id;});
-      if(ids.indexOf('fldScnBtn_petersburgAssaults')!==ids.indexOf('fldScnBtn_spotsylvania')+1||ids.indexOf('fldScnBtn_kennesaw')!==ids.indexOf('fldScnBtn_petersburgAssaults')+1)throw new Error('button chronology wrong: '+ids.join(' -> '));
+      if(ids.indexOf('fldScnBtn_coldHarbor')!==ids.indexOf('fldScnBtn_spotsylvania')+1||ids.indexOf('fldScnBtn_petersburgAssaults')!==ids.indexOf('fldScnBtn_coldHarbor')+1||ids.indexOf('fldScnBtn_kennesaw')!==ids.indexOf('fldScnBtn_petersburgAssaults')+1)throw new Error('button chronology wrong: '+ids.join(' -> '));   // D454 re-pin: D442 registered coldHarbor at rank 68.5 BETWEEN spotsylvania and petersburgAssaults (the documented non-integer exception; probe-tactical-roster pins the same order) — the pre-D442 spotsylvania+1 pin was stale on this tooth's first-ever run; the chain now guards Spotsylvania -> Cold Harbor -> Petersburg initial assaults -> Kennesaw.
       var got=null;fldScenarioSideChoice('petersburgAssaults',function(side){got=side;});var cards=document.querySelectorAll('[data-brside]');
       if(cards.length!==2)throw new Error('wanted two side cards, got '+cards.length);cards[1].click();if(got!=='CS')throw new Error('CS side card returned '+got);
       var captured=null,oldLaunch=window.fldLaunchSandbox,oldBrief=window.fldBullRunBriefing;
@@ -297,7 +297,7 @@ async function main() {
     const route=(rail.routes||{})["petersburg-break"];
     const routeOk=!!route&&/Petersburg rail lifelines/.test(String(route.label||''))&&route.theater==="E"&&route.provenance==="Inferred"&&route.friction&&route.friction.US===7&&route.friction.CS===20;
     const noTacticalRoute=!(rail.routes||{}).petersburgAssaults&&!(rail.routes||{})["petersburg-assaults"];
-    const forbiddenData=readdirSync(join(ROOT,"data")).filter(f=>/cold-harbor|crater|fort-stedman/i.test(f));
+    const forbiddenData=readdirSync(join(ROOT,"data")).filter(f=>/crater|fort-stedman/i.test(f));   // D454: data/cold-harbor.json is RATIFIED since D442 (scenario 26) and leaves this scan the same documented way; crater + fort-stedman stay forbidden until their own ratified builds.
     const classicOk=classicRows===1&&classicExact&&routeOk&&noTacticalRoute&&forbiddenData.length===0;
     result.steps.push({name:"CLASSIC + RAIL COLLISION: the frozen Classic petersburg-break row (the April 2, 1865 battle - a DIFFERENT fight) and its pre-existing strategic rail route remain exact, separate layers with no new tactical route",ok:!!classicOk,v:{classicRows,classicExact,route,noTacticalRoute,forbiddenData}});
     if(!classicOk)throw new Error("Classic/rail collision contract changed");
