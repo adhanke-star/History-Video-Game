@@ -13,7 +13,7 @@ const DATA = join(ROOT, 'data');
 const SHOTS = join(__dirname, 'shots');
 const diagnosticArg = process.argv.find(arg => arg.startsWith('--diagnostic-invalid='));
 const DIAGNOSTIC_INVALID = diagnosticArg ? diagnosticArg.slice('--diagnostic-invalid='.length) : '';
-const DIAGNOSTIC_FAMILIES = new Set(['', 'all', 'battle', 'meta', 'schema', 'ratings']);
+const DIAGNOSTIC_FAMILIES = new Set(['', 'all', 'battle', 'meta', 'schema', 'ratings', 'battle-homeedge', 'battle-doctrine']);
 if (!DIAGNOSTIC_FAMILIES.has(DIAGNOSTIC_INVALID)) {
   console.error('Unknown diagnostic family: ' + DIAGNOSTIC_INVALID);
   process.exit(2);
@@ -162,6 +162,28 @@ function validateRoles(node, prefix, issues) {
   if (typeof node.defaultFog !== 'boolean') issues.push(prefix + '.defaultFog must be boolean');
 }
 
+// E73 (D426): OPTIONAL gameplay-input fields must be shape-valid WHEN PRESENT — a typo
+// (homeEdge US "lo", assaultDoctrine "cautius") used to fall back silently to the default
+// rout/supply edges or standard AI while this schema stayed green. Semantics mirror the
+// runtime exactly and change no battle value: fldHomeEdgeSpec (src/tactical/T0:603) accepts
+// exactly {US,CS} each "low"|"high"; T1/T8 treat exactly "cautious" as the cautious posture;
+// live data also carries explicit nulls (equivalent to absent), which stay legal.
+function validateHomeEdge(node, prefix, issues) {
+  if (!isObject(node) || !Object.prototype.hasOwnProperty.call(node, 'homeEdge') || node.homeEdge == null) return;
+  const he = node.homeEdge;
+  if (!isObject(he)) { issues.push(prefix + '.homeEdge must be an object with US/CS'); return; }
+  for (const key of Object.keys(he)) if (key !== 'US' && key !== 'CS') issues.push(prefix + '.homeEdge.' + key + ' unknown key');
+  for (const side of ['US', 'CS']) {
+    if (he[side] !== 'low' && he[side] !== 'high') issues.push(prefix + '.homeEdge.' + side + ' must be "low" or "high"');
+  }
+}
+function validateAssaultDoctrine(node, prefix, issues) {
+  if (!isObject(node) || !Object.prototype.hasOwnProperty.call(node, 'assaultDoctrine') || node.assaultDoctrine == null) return;
+  if (node.assaultDoctrine !== 'cautious' && node.assaultDoctrine !== 'standard') {
+    issues.push(prefix + '.assaultDoctrine must be "cautious" or "standard" when present');
+  }
+}
+
 function validateObjective(objective, prefix, issues) {
   if (!isObject(objective)) {
     issues.push(prefix + ' must be an object');
@@ -207,6 +229,8 @@ function validateBattle(file, data, issues) {
   if (!isObject(battle)) return { extraInfo: battleKey + ' invalid' };
   if (battle.id !== battleKey) issues.push(battleKey + '.id must match payload key');
   validateRoles(battle, battleKey, issues);
+  validateHomeEdge(battle, battleKey, issues);            // E73: T1 reads data.homeEdge; T8 falls back to top.homeEdge
+  validateAssaultDoctrine(battle, battleKey, issues);     // E73: T1 reads data.assaultDoctrine
   if (!isObject(battle.field) || !Number.isFinite(battle.field.w) || battle.field.w <= 0 || !Number.isFinite(battle.field.h) || battle.field.h <= 0) {
     issues.push(battleKey + '.field must have positive finite w/h');
   }
@@ -230,6 +254,8 @@ function validateBattle(file, data, issues) {
         else if (phaseIds.has(phase.id)) issues.push(battleKey + ' duplicate phase id ' + phase.id);
         else phaseIds.add(phase.id);
         validateRoles(phase, prefix, issues);
+        validateHomeEdge(phase, prefix, issues);           // E73: T8 reads p.homeEdge per phase
+        validateAssaultDoctrine(phase, prefix, issues);    // E73: T8 reads p.assaultDoctrine per phase
         validateObjective(phase.objective, prefix + '.objective', issues);
         validateOob(phase.oob, prefix + '.oob', issues);
         if (!Number.isFinite(phase.holdToWinSec) || phase.holdToWinSec <= 0) issues.push(prefix + '.holdToWinSec must be a positive number');
@@ -277,12 +303,20 @@ function validateDocument(file, data) {
 }
 
 function injectDiagnostic(file, family, data, rule, applied) {
-  if (!DIAGNOSTIC_INVALID || (DIAGNOSTIC_INVALID !== 'all' && DIAGNOSTIC_INVALID !== family) || applied.some(item => item.family === family)) return data;
+  // E73 (D426): 'battle-homeedge' / 'battle-doctrine' are PERMANENT NEGATIVE FIXTURES for the
+  // optional gameplay-input checks — they inject exactly the silent-typo class the checks exist
+  // to catch (US "lo"; "cautius") into the first battle file, proving the teeth on demand.
+  const wants = (DIAGNOSTIC_INVALID === 'all') ? family : (DIAGNOSTIC_INVALID.indexOf('battle-') === 0 ? 'battle' : DIAGNOSTIC_INVALID);
+  if (!DIAGNOSTIC_INVALID || wants !== family || applied.some(item => item.family === family)) return data;
   const copy = JSON.parse(JSON.stringify(data));
   let key = '';
   if (family === 'battle') {
     const battleKey = Object.keys(copy).find(name => !META_ROOT_KEYS.has(name));
-    if (battleKey && isObject(copy[battleKey])) { delete copy[battleKey].objective; key = battleKey + '.objective'; }
+    if (battleKey && isObject(copy[battleKey])) {
+      if (DIAGNOSTIC_INVALID === 'battle-homeedge') { copy[battleKey].homeEdge = { US: 'lo', CS: 'high' }; key = battleKey + '.homeEdge (E73 typo fixture)'; }
+      else if (DIAGNOSTIC_INVALID === 'battle-doctrine') { copy[battleKey].assaultDoctrine = 'cautius'; key = battleKey + '.assaultDoctrine (E73 typo fixture)'; }
+      else { delete copy[battleKey].objective; key = battleKey + '.objective'; }
+    }
   } else {
     const skip = new Set(['_meta', 'comment', 'schema', 'schemaVersion', 'version']);
     key = rule.required.find(name => !skip.has(name)) || rule.required[0];

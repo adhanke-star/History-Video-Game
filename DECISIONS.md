@@ -4,6 +4,30 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D426 — E73 SHIPPED: homeEdge AND assaultDoctrine ARE SCHEMA-VALIDATED WITH PERMANENT NEGATIVE FIXTURES — [CLAUDE CODE (FABLE 5), LANE-009 DRIVE] (2026-07-17)
+
+E73 (run-3 MED, schema/gameplay inputs): the battle/phase schema rules never validated the
+optional `homeEdge` and `assaultDoctrine` gameplay inputs — a typo (US "lo", "cautius") silently
+fell back to default rout/supply edges or standard AI while the schema stayed green.
+`tools/validate-data-schemas.mjs` now validates both WHEN PRESENT, at the battle top level (T1
+reads them; T8 falls back to top) AND per phase (T8 reads per-phase overrides), mirroring runtime
+semantics exactly: `homeEdge` must be an object with only US/CS keys, each "low"|"high"
+(`fldHomeEdgeSpec`, src/tactical/T0:603); `assaultDoctrine` must be "cautious"|"standard";
+explicit `null` stays legal (14 live nulls are runtime-equivalent to absent). NO battle value
+changed; the clean run is 55/55 — every live declaration already conforms.
+
+Negative fixtures are PERMANENT machinery: the `--diagnostic-invalid` facility gains
+`battle-homeedge` and `battle-doctrine` families that inject exactly the silent-typo class into
+the first battle file; both fire with exit 1 and one exact issue (`antietam.homeEdge.US must be
+"low" or "high"` / `antietam.assaultDoctrine must be "cautious" or "standard" when present`).
+Real-file bind: `data/chancellorsville.json` homeEdge US "low"→"lo" → exit 1 with exactly that
+one file red and exactly the new tooth's message; byte-identical restore (data
+`d54650651a0560df8daad64a8263f13a`, validator `db39c549c5f8be51b80fbe37e0de89ac`) and a clean
+55/55 rerun. Gates: node --check clean; validator 55/55 exit 0; build GATE OK (no src/data input
+moved, generated HTML unchanged). Invariants hold: 24 scenarios / schema 55 (rule additions, no
+schema-count change) / Army Register 1,512 / suite 131 / `_SAVE_VER=1` / frozen base / D74.
+REVIEW-QUEUE E73 flips fixed-in-D426; LANE-009 next slice is E75.
+
 ## D425 — S46 SHIPPED: THE SHARED SHEET GETS A REAL MODAL CONTRACT AND RERENDER FOCUS PERSISTENCE; THREE LATENT GATE BREAKS ROOT-FIXED — [CLAUDE CODE (FABLE 5), LANE-009 DRIVE] (2026-07-17)
 
 S46 (run-3 MED, accessibility/keyboard focus): Settings and save-manager actions replace
