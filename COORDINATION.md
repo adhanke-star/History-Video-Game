@@ -1881,11 +1881,25 @@ next green commit and confer through this ledger instead of permitting simultane
   finish-line directive; DRIVE taken in the same ledger-only commit; GEA-01 + S44 shipped in the
   D423 release the same day.
 
-### LANE-010 · overnight-feature-blitz — **VERIFY** (audit-owed; unowned — the run is complete)
+### LANE-010 · overnight-feature-blitz — **DRIVE** (combined closing session: the Cold Harbor runtime + the audit settlement)
 
-- **Owning tool:** Claude Code (Fable 5) — the Aaron-authorized D431 overnight coding-first run
-  (authorization window through 2026-07-19); TOP LOOP resolved to the live session model per §4.
-- **State:** VERIFY (audit-owed; flipped at the run's clean close `51e27a5`). The D432 queue
+- **Owning tool:** Claude Code (Fable 5) — RE-TAKEN 2026-07-18 in this ledger-only commit for
+  the COMBINED CLOSING SESSION (within Aaron's authorization window through 2026-07-19); TOP
+  LOOP resolved to the live session model per §4. This is a NEW DRIVE note, not a silent reuse
+  of the D432 lock: **Phase A** ships the one remaining D432 queue item — the COLD HARBOR
+  RUNTIME (D442) under the D431 coding-first gates (spec §7 pin table binding; documented
+  pin-bump idiom at every site; AUDIT-DEBT row AD-10 appended) ending at a clean pushed commit;
+  **Phase B** is the DEDICATED AUDIT — settle AD-10 down to AD-1, then AD-0 (the full
+  serialized `npm run vet:noreg` battery at the final head, war-career budget 900s), root-fix
+  every red at its exact label, never weaken a tooth, every negative bind restored
+  byte-identically (md5-proven); **Phase C** records the release checkpoint, flips every
+  settled AD row, and flips LANE-009 + LANE-010 to SHIPPED with final SHAs. Usage rule
+  (non-negotiable 7): if remaining usage cannot carry Phase B's full battery, the session STOPS
+  at the Phase A clean pushed boundary and emits a fresh audit-only prompt instead of starting
+  a battery it cannot finish.
+- **State:** DRIVE (re-taken at the clean pushed D441 boundary
+  `f1fdf9cf3b270d0bd1455f316daecd035bf77e39`; HEAD == origin/main verified at session start;
+  prior state VERIFY audit-owed, flipped at the run's clean close `51e27a5`). The D432 queue
   ran down COMPLETE except the Cold Harbor RUNTIME (deferred by its own if-room clause; its
   spec + fail-closed plan probe shipped in D439). D433-D441 shipped nine slices across 15
   commits; every slice carries VETTING DEFERRED (D431) + an AUDIT-DEBT row (AD-1..AD-9,
