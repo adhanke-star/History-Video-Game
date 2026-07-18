@@ -1854,10 +1854,13 @@ next green commit and confer through this ledger instead of permitting simultane
   teeth with md5-identical restores; one logged contract amendment — the 9-id set requirement
   lives solely in the live-derived registry-truth tooth so the atlanta bind isolates exactly one
   tooth).** **S45 SHIPPED (D424: the source-owned `_renderSettings` decorator; exact-tooth bind
-  restored md5-identically).** Exact next: the ordered FIX-NOW slices S46 → E73 → E75 → C73 →
-  C74 → E74 (D425+), one focused-gated commit+push each, reading each REVIEW-QUEUE run-3 entry in
-  full at slice start; then the full serialized `npm run vet:noreg` battery alone on the machine.
-- **Last-touched commit:** the D424 S45 release.
+  restored md5-identically).** **S46 SHIPPED (D425: the classified sheet modal contract +
+  id-keyed focus persistence; exact-tooth bind; three latent gate breaks root-fixed — src/107
+  marker propagation, probe-war-career suite-131 and T2 pins).** Exact next: the ordered FIX-NOW
+  slices E73 → E75 → C73 → C74 → E74 (D426+), one focused-gated commit+push each, reading each
+  REVIEW-QUEUE run-3 entry in full at slice start; then the full serialized `npm run vet:noreg`
+  battery alone on the machine.
+- **Last-touched commit:** the D425 S46 release.
 - **History:** adjudicated + contracted by Claude Code (Fable 5) 2026-07-17 under Aaron's
   finish-line directive; DRIVE taken in the same ledger-only commit; GEA-01 + S44 shipped in the
   D423 release the same day.

@@ -66,7 +66,7 @@ function staticPreflight() {
   check("106 follows 105", index105 >= 0 && index106 === index105 + 1, { index105, index106 });
   check("campaignAdvance not an override", !(manifest.overrides || []).includes("campaignAdvance"), manifest.overrides || []);
   check("assignment wrapper only", !/function\s+campaignAdvance\s*\(/.test(runtime), null);
-  check("suite is 130", rows.length === 130, rows.length);
+  check("suite is 131", rows.length === 131, rows.length);   // D425: 130 -> 131 (D418 enrolled the Mayhem row; this probe had not rerun since D413)
   check("focused row is 38", /^38\s+war career\s+::\s+tools\/probe-war-career\.mjs$/.test(rows[37] || ""), rows[37] || "missing");
   check("focused probe enrolled once", occurrences(vet, "tools/probe-war-career.mjs") === 1, occurrences(vet, "tools/probe-war-career.mjs"));
   check("plan probe unenrolled", !vet.includes("['war career plan'") && !vet.includes('tools/probe-war-career-loop-plan.mjs'), null);
@@ -100,7 +100,7 @@ function staticPreflight() {
     { commandReads: occurrences(runtime, "C.president.command"), targetOnly: !!commandTargetSelector });
   check("after-action file frozen", md5(join(ROOT, "src", "82-after-action.js")) === "e2a4739946b20b1a725a08d55b4825f6", md5(join(ROOT, "src", "82-after-action.js")));
   check("Auto file frozen", md5(join(ROOT, "src", "87-auto-resolve.js")) === "4f0bd0970ef96c09b62ea44694387f80", md5(join(ROOT, "src", "87-auto-resolve.js")));
-  check("T2 file frozen", md5(join(ROOT, "src", "tactical", "T2-campaign-link.js")) === "feef8a3c1ecf5fb28a120d2398ee61fc", md5(join(ROOT, "src", "tactical", "T2-campaign-link.js")));
+  check("T2 file frozen", md5(join(ROOT, "src", "tactical", "T2-campaign-link.js")) === "25b7c20563be53cadd7ee1ba98a62a3b", md5(join(ROOT, "src", "tactical", "T2-campaign-link.js")));   // D425: feef8a3c -> 25b7c205 (the recorded D420/LANE-007 Slice C consequence-metadata carry in fldCampaignComputeOutcome/ApplyOutcome; this probe had not rerun since D413)
   check("T3 file frozen", md5(join(ROOT, "src", "tactical", "T3-officers.js")) === "56e2cd1060a40eb0754b19e8d56bacdb", md5(join(ROOT, "src", "tactical", "T3-officers.js")));
   const commandProbe = readFileSync(join(ROOT, "tools", "probe-command.mjs"), "utf8");
   check("command probe carries player/NPC isolation tooth", commandProbe.includes("D406: player journey and NPC P.command ledgers stay byte-separate in both directions"), null);
@@ -2528,7 +2528,7 @@ async function main() {
     schema: "cw_probe_war_career_v1",
     generatedAt: new Date().toISOString(),
     ok: false,
-    suite: { expected: 130, actual: 0, index: 38 },
+    suite: { expected: 131, actual: 0, index: 38 },   // D425: 130 -> 131 (D418 Mayhem row)
     static: staticResult,
     steps: [],
     pageerrors: [],
@@ -2607,7 +2607,7 @@ async function main() {
     result = Object.assign(result, runtime, {
       schema: "cw_probe_war_career_v1",
       generatedAt: new Date().toISOString(),
-      suite: { expected: 130, actual: list.length, index: 38 },
+      suite: { expected: 131, actual: list.length, index: 38 },   // D425: 130 -> 131 (D418 Mayhem row)
       static: staticResult,
       pageerrors,
       realErrors,
@@ -2615,7 +2615,7 @@ async function main() {
       screenshots: [{ path: SHOT, bytes: shotBytes, viewport: { width:390, height:700 }, zoom:200 }]
     });
     const failed = result.steps.filter(row => !row.ok);
-    result.ok = !!runtime.ok && staticResult.ok && !failed.length && !pageerrors.length && !realErrors.length && list.length === 130;
+    result.ok = !!runtime.ok && staticResult.ok && !failed.length && !pageerrors.length && !realErrors.length && list.length === 131;   // D425: 130 -> 131 (D418 Mayhem row)
   } catch (error) {
     result.ok = false;
     result.fatal = String(error && error.stack || error);

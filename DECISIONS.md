@@ -4,6 +4,53 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D425 — S46 SHIPPED: THE SHARED SHEET GETS A REAL MODAL CONTRACT AND RERENDER FOCUS PERSISTENCE; THREE LATENT GATE BREAKS ROOT-FIXED — [CLAUDE CODE (FABLE 5), LANE-009 DRIVE] (2026-07-17)
+
+S46 (run-3 MED, accessibility/keyboard focus): Settings and save-manager actions replace
+`#sheetPad` by innerHTML, dropping focus to the document, and the shared sheet had no dialog
+semantics, initial focus, trap, or opener restore. The frozen base owns `openSheet`/`closeSheet`,
+so the fix is a SOURCE-OWNED wrapper in `src/97-accessibility.js` (D418 idiom, beside S45's).
+The controlling structural fact: the H0 MAIN MENU renders inside this same sheet (src/98
+`openMainMenu` → `openSheet`), so content is CLASSIFIED — a pad containing `.h0-menu` is the PAGE
+(no dialog semantics, no focus steal); everything else is a DIALOG: `role="dialog"` +
+`aria-modal="true"` + a `.title-xl`-derived accessible name, initial focus into the first
+focusable, a Tab trap that wraps inside the overlay, Escape riding the sheet's OWN dismiss control
+(`slBack`/`stBack`/`hpHelpBack`/`hpWelcomeOk` — sheets without a registered dismiss, e.g. the
+muster choice, pickers, and results, keep their flow untouched), and opener restore BY STABLE ID
+across the menu rebuild (the menu is new DOM every render, so element references cannot restore).
+Rerender focus persistence is also id-keyed: the frozen surfaces reuse stable control ids
+(`stDiff_N`, `slSaveN`, `slImportPaste` …), so the activated control regains focus in the fresh
+DOM. Pure presentation; no click path, save, or combat surface moves.
+
+Probe: one S46 tooth in `tools/probe-accessibility.mjs` (now 27 steps) walks the whole contract:
+the H0 menu carries NO dialog semantics; opening the save manager from a focused opener gives
+dialog semantics + accessible name + initial focus inside; the empty paste-import rerender
+preserves focus on `slImportPaste`; Tab from the last focusable wraps to the first; Escape rides
+`slBack` back to the menu, which drops dialog semantics and restores the opener by stable id.
+Bind: inverting the install guard made exactly the S46 tooth red (`sheet missing dialog
+semantics`); byte-identical restore (src97 `89c513e0bcf6306f469437a2add2a59e`, probe
+`266fdaa5f406d788b168a6976d2f1abd`, generated `3d85ea68f9a515da502eeecab8cf32d1`) with rebuild +
+27/27 green rerun.
+
+Adjacent gates then exposed THREE LATENT pre-existing breaks, verified present at clean HEAD
+(stash test) and root-fixed here rather than papered over: (1) src/107's D419 `campaignAdvance`
+wrapper silently dropped the `_slUndoWrapped`/`_warCareerWrapped`/`_warCareerDelegate` markers
+that src/106 propagates — undo and dispatch still worked through the delegate chain, but
+probe-save-slots' and probe-war-career's marker teeth were blind-red; src/107 now propagates all
+three (the src/106 idiom). (2) probe-war-career pinned suite=130 in three places — stale since
+D418 enrolled the Mayhem row at 131; updated with documented history. (3) probe-war-career's
+frozen-T2 pin predated the recorded D420/LANE-007 Slice C consequence-metadata carry
+(`feef8a3c` → `25b7c205`, verified against the aa2f58c diff — metadata-only, no combat input);
+updated with documented history. None of these is a weakened tooth: the markers are restored for
+real, and the pins now match recorded, legitimate movements. Root cause of the latency: no full
+battery has run since D398; these teeth had not been exercised since D413.
+
+Gates: build GATE OK; node --check clean on src/97, src/107, both probes; probe-accessibility
+27/27; probe-save-slots 16/16; probe-help-overlay 11/11; probe-mayhem-mode 18/18;
+probe-war-career 44/44; zero pageerrors/realErrors everywhere; all artifacts read. Invariants
+hold: 24 scenarios / schema 55 / Army Register 1,512 / suite 131 / `_SAVE_VER=1` / frozen base /
+no manifest movement / D74. REVIEW-QUEUE S46 flips fixed-in-D425; LANE-009 next slice is E73.
+
 ## D424 — S45 SHIPPED: THE FROZEN SETTINGS SEGS EXPOSE PROGRAMMATIC SELECTED STATE — [CLAUDE CODE (FABLE 5), LANE-009 DRIVE] (2026-07-17)
 
 S45 (run-3 MED, accessibility/settings): every segmented Settings choice exposed selection only

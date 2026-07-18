@@ -315,6 +315,40 @@ const SETUP = `(() => {
       if(typeof closeSheet==='function') closeSheet();
       return { segs:segs.length }; });
 
+    step('S46 (D425): the shared sheet is a modal dialog — semantics, initial focus, id-keyed rerender persistence, Tab trap, Escape, opener restore', function(){
+      if(typeof _slOpenManager!=='function'||typeof openMainMenu!=='function') throw new Error('save manager / menu unavailable');
+      openMainMenu();   // deterministic start: the sheet holds the H0 menu (the PAGE, not a dialog)
+      var overlay=document.getElementById('overlay');
+      if(!overlay) throw new Error('no #overlay');
+      if(overlay.getAttribute('role')==='dialog') throw new Error('the H0 menu must NOT carry dialog semantics');
+      var opener=document.createElement('button'); opener.id='s46Opener'; document.body.appendChild(opener); opener.focus();
+      try{
+        _slOpenManager();
+        if(overlay.classList.contains('hidden')) throw new Error('save manager did not open');
+        if(overlay.getAttribute('role')!=='dialog'||overlay.getAttribute('aria-modal')!=='true') throw new Error('sheet missing dialog semantics');
+        if(!(overlay.getAttribute('aria-label')||'').length) throw new Error('sheet missing an accessible name');
+        if(!overlay.contains(document.activeElement)) throw new Error('initial focus did not enter the dialog (active='+((document.activeElement&&document.activeElement.id)||'?')+')');
+        // id-keyed persistence across the innerHTML rerender: empty paste-import rerenders the manager
+        var pb=document.getElementById('slImportPaste'); if(!pb) throw new Error('no slImportPaste');
+        pb.focus(); pb.click();
+        var pb2=document.getElementById('slImportPaste');
+        if(!pb2) throw new Error('slImportPaste missing after rerender');
+        if(document.activeElement!==pb2) throw new Error('focus not preserved on the stable control id across rerender (active='+((document.activeElement&&document.activeElement.id)||'?')+')');
+        // Tab trap: from the last focusable, Tab wraps to the first
+        var f=[].filter.call(overlay.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'),function(el){return !el.disabled&&(el.offsetParent!==null||el.getClientRects().length);});
+        if(f.length<2) throw new Error('too few focusables to test the trap');
+        f[f.length-1].focus();
+        document.dispatchEvent(new KeyboardEvent('keydown',{key:'Tab',bubbles:true}));
+        if(document.activeElement!==f[0]) throw new Error('Tab from the last control did not wrap to the first (active='+((document.activeElement&&document.activeElement.id)||'?')+')');
+        // Escape rides the sheet's own Back and the menu rebuild restores the OPENER by stable id
+        document.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true}));
+        var pad=document.getElementById('sheetPad');
+        if(!pad||!pad.querySelector('.h0-menu')) throw new Error('Escape did not ride slBack back to the menu');
+        if(overlay.getAttribute('role')==='dialog') throw new Error('menu still carries dialog semantics after Escape');
+        if(document.activeElement!==opener) throw new Error('opener not restored by stable id after Escape (active='+((document.activeElement&&document.activeElement.id)||'?')+')');
+      } finally { if(opener.parentNode) opener.parentNode.removeChild(opener); }
+      return { ok:true }; });
+
     // ===== E3-i2 (D126): per-surface WCAG 2.2 AA assertions =====
     var _hx=function(h){h=String(h).replace('#','');if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];};
     var _lin=function(c){c/=255;return c<=0.03928?c/12.92:Math.pow((c+0.055)/1.055,2.4);};

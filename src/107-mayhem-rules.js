@@ -184,6 +184,11 @@ if(_MH_BASE_CAMPAIGN_ADVANCE)campaignAdvance=function(winnerSide,type){
   if(C&&mayhemIsActive(C)&&B&&Number(B.mayhemCapturedByPlayer)>0){var n=(Number(C.stats&&C.stats.battles)||0)+1;C.mayhemNoQuarterOffer={timelineId:_mhStableId(C.timelineName)?C.timelineName:"campaign",battleId:_mhStableId(B.id)?B.id:"battle-"+n,captured:Math.round(B.mayhemCapturedByPlayer),consumed:false};}
   return _MH_BASE_CAMPAIGN_ADVANCE.apply(this,arguments);
 };
+/* D425 gate-discovered root fix: propagate the delegate's wrapper markers AND the war-career
+   dispatcher's captured-delegate reference (the src/106 idiom) — this wrapper silently dropped
+   _slUndoWrapped/_warCareerWrapped/_warCareerDelegate, blinding probe-save-slots' and
+   probe-war-career's marker teeth while undo/dispatch still worked through the delegate chain. */
+if(_MH_BASE_CAMPAIGN_ADVANCE){campaignAdvance._slUndoWrapped=_MH_BASE_CAMPAIGN_ADVANCE._slUndoWrapped===true;campaignAdvance._warCareerWrapped=_MH_BASE_CAMPAIGN_ADVANCE._warCareerWrapped===true;if(_MH_BASE_CAMPAIGN_ADVANCE._warCareerDelegate)campaignAdvance._warCareerDelegate=_MH_BASE_CAMPAIGN_ADVANCE._warCareerDelegate;}
 var _MH_BASE_AAR=typeof aarRenderReport==="function"?aarRenderReport:null;
 if(_MH_BASE_AAR)aarRenderReport=function(C,opts){
   if(!mayhemIsActive(C))return _MH_BASE_AAR.apply(this,arguments);

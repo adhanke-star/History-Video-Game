@@ -498,3 +498,104 @@ function _stA11ySyncSegs(rootEl) {
     };
   } catch (e) {}
 })();
+
+/* ============ S46 (D425): the shared sheet's modal contract + rerender focus persistence ============
+   base.html's openSheet/closeSheet swap #sheetPad by innerHTML with no dialog semantics, initial
+   focus, trap, or opener restore — and every Settings / save-manager action rerenders the sheet,
+   dropping focus to the document. The base is frozen, so this SOURCE-OWNED wrapper (the D418
+   idiom) supplies the contract. One structural fact rules the design: the H0 MAIN MENU ITSELF
+   renders inside this same sheet (src/98 openMainMenu → openSheet), so content is CLASSIFIED —
+   a pad containing .h0-menu is the PAGE (no dialog semantics, no focus steal); anything else is a
+   DIALOG (role=dialog + aria-modal + a .title-xl-derived name, initial focus, Tab trap, Escape via
+   the sheet's OWN dismiss control, and opener restore BY STABLE ID across the menu rebuild).
+   Rerender persistence is also id-keyed: the frozen surfaces reuse stable control ids
+   (stDiff_N, slSaveN, slImportPaste …), so the activated control regains focus in the fresh DOM.
+   Pure presentation: no click path, save, or combat surface moves. */
+var _shOpenerId = "";
+var _shOpenerEl = null;
+function _shOverlayEl() { return (typeof document !== "undefined") ? document.getElementById("overlay") : null; }
+function _shOverlayOpen() { var o = _shOverlayEl(); return !!(o && o.classList && !o.classList.contains("hidden")); }
+function _shPadIsMenu(pad) { return !!(pad && pad.querySelector && pad.querySelector(".h0-menu")); }
+function _shFocusables(scope) {
+  if (!scope || !scope.querySelectorAll) return [];
+  var all = scope.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'), out = [];
+  for (var i = 0; i < all.length; i++) {
+    var el = all[i];
+    if (el.disabled) continue;
+    if (el.offsetParent === null && (!el.getClientRects || el.getClientRects().length === 0)) continue;
+    out.push(el);
+  }
+  return out;
+}
+(function _shInstall() {
+  try {
+    if (typeof openSheet !== "function" || typeof closeSheet !== "function" || typeof document === "undefined") return;
+    var origOpen = openSheet, origClose = closeSheet;
+    openSheet = function (html) {
+      var wasOpen = _shOverlayOpen();
+      var padBefore = document.getElementById("sheetPad");
+      var fromMenu = wasOpen && _shPadIsMenu(padBefore);
+      var prev = document.activeElement;
+      var prevId = (prev && prev.id) ? prev.id : "";
+      var r = origOpen.apply(this, arguments);
+      try {
+        var overlay = _shOverlayEl(), pad = document.getElementById("sheetPad");
+        if (!overlay || !pad) return r;
+        if (_shPadIsMenu(pad)) {
+          // the sheet IS the page again — drop dialog semantics; restore the remembered opener by id
+          overlay.removeAttribute("role");
+          overlay.removeAttribute("aria-modal");
+          overlay.removeAttribute("aria-label");
+          if (_shOpenerId) {
+            var back = document.getElementById(_shOpenerId);
+            if (back && typeof back.focus === "function") back.focus();
+            _shOpenerId = "";
+          }
+          _shOpenerEl = null;
+        } else {
+          overlay.setAttribute("role", "dialog");
+          overlay.setAttribute("aria-modal", "true");
+          var h = pad.querySelector(".title-xl");
+          overlay.setAttribute("aria-label", (h && h.textContent) ? h.textContent : "Game dialog");
+          if (fromMenu || !wasOpen) { _shOpenerId = prevId; _shOpenerEl = (prev && prev !== document.body) ? prev : null; }
+          var target = (wasOpen && !fromMenu && prevId) ? document.getElementById(prevId) : null;   // id-keyed rerender persistence
+          if (!target) target = _shFocusables(pad)[0] || null;                                       // initial focus
+          if (target && typeof target.focus === "function") target.focus();
+        }
+      } catch (e) {}
+      return r;
+    };
+    closeSheet = function () {
+      var wasOpen = _shOverlayOpen();
+      var r = origClose.apply(this, arguments);
+      try {
+        var o = _shOverlayEl();
+        if (o) { o.removeAttribute("role"); o.removeAttribute("aria-modal"); o.removeAttribute("aria-label"); }
+        if (wasOpen && _shOpenerEl && document.contains(_shOpenerEl) && typeof _shOpenerEl.focus === "function") _shOpenerEl.focus();
+      } catch (e) {}
+      _shOpenerId = ""; _shOpenerEl = null;
+      return r;
+    };
+    document.addEventListener("keydown", function (e) {
+      if (!_shOverlayOpen()) return;
+      var overlay = _shOverlayEl(), pad = document.getElementById("sheetPad");
+      if (!overlay || !pad || _shPadIsMenu(pad)) return;   // the menu is not a dialog
+      if (e.key === "Escape") {
+        // Escape rides the sheet's OWN dismiss control so each surface's back semantics run;
+        // sheets without a registered dismiss (muster choice, pickers, results) keep their flow.
+        var dis = document.getElementById("slBack") || document.getElementById("stBack")
+          || document.getElementById("hpHelpBack") || document.getElementById("hpWelcomeOk");
+        if (dis) { e.preventDefault(); e.stopPropagation(); dis.click(); }
+        return;
+      }
+      if (e.key === "Tab") {
+        var f = _shFocusables(overlay);
+        if (!f.length) return;
+        var first = f[0], last = f[f.length - 1], a = document.activeElement;
+        if (!overlay.contains(a)) { e.preventDefault(); first.focus(); return; }
+        if (e.shiftKey && a === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && a === last) { e.preventDefault(); first.focus(); }
+      }
+    }, true);
+  } catch (e) {}
+})();
