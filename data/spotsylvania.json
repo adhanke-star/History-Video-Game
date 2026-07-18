@@ -1,6 +1,17 @@
 {
   "_comment": "D391 - SPOTSYLVANIA: THE BLOODY ANGLE, May 12, 1864. Single-phase US-attacker scenario built from the committed D390 spec (docs/design/spotsylvania-battle-build-spec.md, sections 1-11 the law). THE ARTILLERY-WITHDRAWAL INPUT LAW (spec section 5): the initial CS OOB at the tip fields ZERO guns - 22 of 30 were withdrawn May 11 and recalled too late, about twenty captured - and CS artillery re-enters ONLY with the re-formed line's sectors; the captured batteries never re-enter; the US fields its true supporting weight. Committed totals are Inferred engine envelopes (US 20,000 inside 14,000-25,000; CS 13,300 inside 8,000-16,000) - no source pins May 12 axis totals. No prisoner, capture, or surrender input anywhere; the roughly 3,000 prisoners from Johnson's division are outputs and teaching. D74: no battle-specific damage, firepower, casualty, morale, melee, surprise, prisoner, or winner key of any name.",
   "spotsylvania": {
+    "sources": [
+      "NPS Bloody Angle place page",
+      "NPS East Face of the Salient",
+      "NPS Civil War Series #25 sec16",
+      "ABT \"A Union's Bloody Miscue\"",
+      "ABT \"Certain Death\"",
+      "ABT \"Men Fell in Heaps\"",
+      "ABT Spotsylvania battle page",
+      "Encyclopedia Virginia — Spotsylvania",
+      "Gordon C. Rhea, The Battles for Spotsylvania Court House and the Road to Yellow Tavern (1997)"
+    ],
     "id": "spotsylvania",
     "name": "Spotsylvania: The Bloody Angle",
     "date": "May 12, 1864",

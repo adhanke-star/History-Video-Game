@@ -1,6 +1,13 @@
 {
   "_comment": "D335 PLAYABLE NASHVILLE, December 15-16, 1864. A two-phase T8 Franklin/Nashville-lane battle: Dec. 15 Redoubts/Montgomery Hill -> Dec. 16 Shy's Hill and Peach Orchard Hill. Strengths are compact brigade/division-scale abstractions marked Inferred where not pinned; sequence, command roles, principal ground, rank traps, USCT Peach Orchard/Overton participation, and Forrest's absence from the main field are verified from the D334 source packet. Outcomes emerge from OOB, terrain, works, artillery, phase scoreWeight, and the universal combat model only - no per-battle damage/firepower/casualty/winner fudge.",
   "nashville": {
+    "sources": [
+      "American Battlefield Trust, Nashville",
+      "American Battlefield Trust, \"Battle of Nashville: Enemies Front and Rear\"",
+      "Battle of Nashville Trust, Peach Orchard Hill",
+      "Battle of Nashville Trust, Shy's Hill",
+      "Nashville Metropolitan Historical Commission, Military Sites markers"
+    ],
     "id": "nashville",
     "weather": {
       "sky": "overcast",

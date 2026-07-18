@@ -1,6 +1,18 @@
 {
   "_comment": "D397 - PETERSBURG: THE INITIAL ASSAULTS, June 15-18, 1864. Single-phase US-attacker / CS-defender scenario built from the committed D396 spec. THE REINFORCEMENT-RACE LAW: the opening Confederate on-map garrison is honestly tiny (strictly inside 2,200-5,400), every Confederate accession is a timed arrival on the sourced clock, the Union weight is staggered on its own sourced clock, and the works geometry carries the defensive value. Forbidden by contract: static garrisons, hesitation/caution/command-paralysis stats, night or darkness penalties, scripted halts or retirements, any opportunity or race bonus, and any USCT-specific modifier in either direction. Committed totals are Inferred engine envelopes: US 55,540 inside 25,000-62,000; CS 27,460 inside 14,000-30,000; opening on-map garrison CS 4,620 inside 2,200-5,400 and US 14,880 inside 10,000-18,000. Every game-unit split is coarse and Inferred. D74: no battle-specific damage, firepower, casualty, morale, hesitation, night, garrison, refusal, USCT, or winner key of any name.",
   "petersburgAssaults": {
+    "sources": [
+      "American Battlefield Trust (ABT) Petersburg battle page",
+      "American Battlefield Trust, \"Storming Battery 9\"",
+      "NPS, \"The Opening Assaults\"",
+      "NPS Civil War Series, Siege of Petersburg (section 5)",
+      "NPS historical handbook 13",
+      "Wikipedia, Second Battle of Petersburg",
+      "Encyclopedia Virginia, the Dimmock Line",
+      "ECWC Petersburg essay (PDF, Essential Civil War Curriculum)",
+      "Beyond the Crater — Second Petersburg summary + CS OOB + Lee's OR dispatches",
+      "Thomas J. Howe, Wasted Valor: The Battle of Petersburg, June 15-18, 1864; Sean Michael Chick, The Battle of Petersburg, June 15-18, 1864"
+    ],
     "id": "petersburgAssaults",
     "name": "Petersburg: The Initial Assaults",
     "date": "June 15-18, 1864",

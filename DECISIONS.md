@@ -40,6 +40,42 @@ asset purchases/accounts. LANE-009's shipped slices are not re-run. Expected tra
 end: LANE-010 → VERIFY (audit-owed), with the audit session settling the whole AUDIT-DEBT
 ledger plus the full serialized battery and flipping LANE-009 + LANE-010 SHIPPED.
 
+## D433 — E74-MIGRATE SHIPPED: ALL 123 GRANDFATHERED DESCRIPTIVE-VERIFIED OBJECTS MOVED TO STRUCTURAL CITATION; THE 4e-2 RATCHET IS AT ZERO — [CLAUDE CODE (FABLE 5), LANE-010 DRIVE] (2026-07-18)
+
+Queue item 1 of the D431/D432 overnight run, resolving the D430 fork as Aaron directed (option a).
+Mechanics, exactly as chartered: the 24 battle files gain a battle-object `sources` register
+(placed on the payload object, not the file root — the battle schema's exactly-one-payload rule
+forbids new root keys) extracted from each battle's OWN committed packet: the
+`docs/design/<battle>-battle-build-spec.md` source tables for the spec-era battles, the
+`docs/design/battle-build-research/built-battles/*-built-battle-audit.md` registers (plus the
+files' own prose-named sources) for the original nine. The four prose-citation files
+(artillery/diplomacy/manpower-teaching/weapons roots + the diplomacy/manpower teaching cards) and
+antietam's cards/phases gain per-object `sources` arrays lifted from the sources their prose
+ALREADY names. Gate 4e-2's inheritance walk covers every descendant, so each file's uncovered
+count fell to zero; its `E74_BASELINE` entry was lowered IN THE SAME COMMIT (documented history
+in the gate comment), across four batched commits (A: antietam+prose ×5 · B: the original nine ·
+C: eight spec-era files · D: the last six). **`E74_BASELINE` is now the EMPTY MAP — the blind
+spot is closed:** any new descriptive-Verified object without own/ancestor structural sources
+fails the build.
+
+Faithfulness (the citation law, non-deferrable): extraction ran as a 28-agent workflow
+(one per file) under a hard copy-faithfully rule; every returned entry carried a verbatim
+`fromQuote` provenance anchor, and a mechanical verifier confirmed all 194 register + 62
+per-object citations exist in their named committed files (6 initial misses were JSON
+quote-escaping false negatives, re-confirmed by direct grep; all full-name/title expansions —
+e.g. "Sears" → "Stephen W. Sears" — were confirmed present elsewhere in the same file). NO
+citation was invented; NO stamp needed an honest downgrade (per-object lifts that fell below 2
+distinct sources were simply skipped where ancestor coverage already held: diplomacy
+teachingCards[0], nashville cards[1]). No prov string, OOB, strength, coordinate, timing, score,
+combat, save, or simulation byte moved — the change is additive `sources` arrays plus the gate
+map. Counts hold: 24 scenarios / schema 55 / Register 1,512 / suite 131 / `_SAVE_VER=1`; frozen
+base untouched.
+
+**VETTING DEFERRED (D431):** gates run tonight were node --check (build.mjs), build GATE OK ×4,
+schema 55/55 ×4, and the repo-wide coverage re-walk (TOTAL 0). The ratchet bind re-proof, the
+focused content probes over touched files, and the human-grade faithfulness spot-audit are owed
+as AUDIT-DEBT row AD-1 (REVIEW-QUEUE.md).
+
 ## D431 — AARON PIVOTS TO A CODING-FIRST OVERNIGHT RUN: THE BATTERY IS DEFERRED TO A DEDICATED AUDIT SESSION; THE WAR-CAREER BUDGET IS ROOT-FIXED; LANE-009 CLOSES AT VERIFY — [AARON + CLAUDE CODE (FABLE 5)] (2026-07-18)
 
 Battery result (partial, honest record): the D430 terminal `npm run vet:noreg` ran serialized and

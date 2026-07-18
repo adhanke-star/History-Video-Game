@@ -1,6 +1,17 @@
 {
   "_comment": "D393 - THE WILDERNESS, May 5-7, 1864. Single-phase CS-attacker / US-defender scenario built from the committed D392 spec. THE AXIS-SCOPE LAW fields only the Orange Plank Road / Brock Road junction fight; the Turnpike axis, Saunders Field combat, Ewell, Warren, Sedgwick's corps, and Gordon's dusk attack are teaching context only. THE THICKET LAW encodes blindness through symmetric universal woods cover and honestly low gun counts, with defaultFog false; fire and smoke are teaching, never mechanics. Committed totals are Inferred engine envelopes: US 23,580 inside 15,000-30,000; CS 21,240 inside 12,000-26,000. Every game-unit split is coarse and Inferred. D74: no battle-specific damage, firepower, casualty, morale, visibility, smoke, flank, friendly-fire, prisoner, capture, or winner key of any name.",
   "wilderness": {
+    "sources": [
+      "American Battlefield Trust, Wilderness battle page",
+      "Wikipedia, Battle of the Wilderness",
+      "Encyclopedia Virginia, the Wilderness entry",
+      "NPS, \"Grant at the Wilderness\"",
+      "NPS/FRSP blog, the fires (McParlin's medical estimate)",
+      "NPS/FRSP blog, USCT on the eve of the Overland Campaign",
+      "Wikipedia, Battle of the Wilderness order of battle: Union, plus the biography cluster",
+      "NARA, Grant's lieutenant general nomination",
+      "Gordon C. Rhea, The Battle of the Wilderness May 5-6, 1864 (LSU Press, 1994)"
+    ],
     "id": "wilderness",
     "name": "The Wilderness",
     "date": "May 5-7, 1864",

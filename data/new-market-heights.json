@@ -1,6 +1,17 @@
 {
   "_comment": "D364 New Market Heights (Chaffin's Farm), Sep 29 1864 - the game's first USCT-led battle. Two-phase T8 over the SAME ground per the D363 spec: Duncan's repulse (w1) then Draper's carry (w3) against a line under sourced withdrawal orders. Fort Harrison is teaching-only. Every strength is an engaged-strength abstraction labeled in each unit note; the withdrawal is a phase-boundary OOB input, never a mechanic. No battle-specific combat/result keys (D74). Sources and the full contract: docs/design/new-market-heights-battle-build-spec.md.",
   "newMarketHeights": {
+    "sources": [
+      "NPS Richmond NBP, overview",
+      "NPS Richmond NBP, casualties table",
+      "NPS Richmond NBP, USCT + MoH recipients",
+      "American Battlefield Trust, Covered With Glory",
+      "American Battlefield Trust, New Market Heights battle page",
+      "Beyond the Crater, New Market Heights summary",
+      "Beyond the Crater, Chaffin's Farm summary",
+      "Beyond the Crater, Fleetwood in Deeds of Valor",
+      "battleofnewmarketheights.org, history + Medal of Honor"
+    ],
     "id": "newMarketHeights",
     "name": "New Market Heights - The Fourteen Medals",
     "date": "September 29, 1864",

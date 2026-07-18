@@ -1906,9 +1906,11 @@ next green commit and confer through this ledger instead of permitting simultane
   purchases/accounts, re-running LANE-009 slices.
 - **Expected transition:** DRIVE → VERIFY (audit-owed) at run end; the dedicated audit session
   settles the AUDIT-DEBT ledger + full serialized battery and flips LANE-009 + LANE-010 SHIPPED.
-- **Resume pointer:** queue item 1 — E74-MIGRATE (123 grandfathered descriptive-Verified objects
-  to structural citation; gate 4e-2 E74_BASELINE ratchets to all zeros; batch by file, lower
-  each file's baseline in the same commit).
+- **Resume pointer:** **D433 SHIPPED queue item 1 (E74-MIGRATE): all 123 objects structurally
+  cited from their own committed packets across four batched commits; `E74_BASELINE` is the
+  EMPTY map (the blind spot is CLOSED); mechanical quote-verification of all 256 extracted
+  citations; AUDIT-DEBT AD-1 records the owed bind/probe/spot-audit re-proof.** Exact next:
+  queue item 2 — GEA-02 AAR Copy Report + Download Text.
 - **Last-touched commit:** the D432 lock commit (this edit).
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's D431 overnight
   directive.

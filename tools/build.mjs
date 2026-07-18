@@ -314,11 +314,11 @@ for (const rm of RATING_MODULES) {
   //   batch C (D433): cedar-creek 3 -> 0, cross-keys-port-republic 3 -> 0, elkhorn-tavern 3 -> 0,
   //                   five-forks 1 -> 0, fort-donelson 4 -> 0, franklin 5 -> 0,
   //                   gaines-mill 1 -> 0, kennesaw 5 -> 0.
-  const E74_BASELINE = {
-    'nashville.json': 8, 'new-market-heights.json': 3,
-    'petersburg-assaults.json': 1, 'spotsylvania.json': 1,
-    'stones-river.json': 3, 'wilderness.json': 1
-  };
+  //   batch D (D433): nashville 8 -> 0, new-market-heights 3 -> 0, petersburg-assaults 1 -> 0,
+  //                   spotsylvania 1 -> 0, stones-river 3 -> 0, wilderness 1 -> 0.
+  //   THE MAP IS EMPTY: every descriptive-Verified object is structurally covered; any new one
+  //   without own/ancestor sources fails the build (the blind spot is CLOSED, not just contained).
+  const E74_BASELINE = {};
   const SRC_KEYS2 = ['sources', 'src'];
   const norm2 = (v) => (typeof v === 'string' ? v.trim().toLowerCase() : '');
   const distinctCount = (arr) => {
