@@ -45,7 +45,7 @@ function staticEvidence() {
   const suiteText = readFileSync(join(ROOT, "tools", "vet-no-regression.mjs"), "utf8");
   const suiteBlock = (/const SUITE = \[([\s\S]*?)\n\];/.exec(suiteText) || [null, ""])[1];
   const suiteRows = Array.from(
-    suiteBlock.matchAll(/^\s*\['([^']+)',\s*'([^']+)'\],?\s*$/gm),
+    suiteBlock.matchAll(/^\s*\['([^']+)',\s*'([^']+)'\],?\s*(?:\/\/.*)?$/gm),   // D443 (AD-5, the D393 parser lesson): the D436/D442 rows carry trailing pin-history comments this parser silently dropped
     item => [item[1], item[2]]
   );
   const manifest = JSON.parse(readFileSync(join(ROOT, "src", "00-manifest.json"), "utf8"));
