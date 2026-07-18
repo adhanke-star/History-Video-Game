@@ -2071,6 +2071,147 @@ next green commit and confer through this ledger instead of permitting simultane
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's genre-elite P1
   build-run directive (the D443 extend-coding continuation).
 
+### LANE-012 · unlock-and-teach-spine — **DRIVE** (Claude Code / Fable 5; ARC 1 of the D455 roadmap)
+
+- **Owning tool:** Claude Code (Fable 5) — DRIVE taken ledger-only at the clean pushed D454/D455
+  boundary `8595d6e1b49c1715b28f0f5c24610e6139c40acf`, within Aaron's authorized Fable window
+  through Sunday 2026-07-19.
+- **State:** DRIVE (this entry IS the CONTRACT; committed before any code moves).
+- **Design law:** `docs/design/unlocked-but-judged-design.md` (THE LAW — §1 the decision, §2
+  Aaron's verbatim locks, §3 the adjudicated restriction inventory, §4a the spine, §7 the ARC
+  roadmap) · DECISIONS D455 + D454 · `docs/design/open-history-mayhem-mode-design.md` §4 (the
+  effect-schema/receipt machinery — EXTEND, NEVER BYPASS; the D452 lesson) + §6/§7 seams ·
+  D74 no-fudge (consequences are simulation inputs, never outcome writes) · the ≥2-source
+  citation law + anti-Lost-Cause factual standard · frozen `build/base.html` · `_SAVE_VER=1`
+  (the packet's fresh-start authorization belongs to a FUTURE lane's own recorded contract,
+  not this one) · the D453 durable law (new surfaces wire into the LIVE h0 override owners,
+  src/98-103, never only the base renderer) · D412 docs law.
+- **ERRATUM (recorded at charter):** packet §7 lists "ARC 1 — … + rider C72." The C72 Shiloh
+  two-source rewrite SHIPPED in D422 (LANE-008 · c72-shiloh-myth-correction — SHIPPED). The
+  rider is stale and is DROPPED from this lane's charter; ARC 1 is the §4a spine alone.
+- **Charter (ordered slices; each = its own D### + focused gates + commit + push):**
+
+  **SLICE 1 — the always-visible teaching companion, BOTH modes (§4a.2; AMENDS D416's
+  comparison-off-by-default — the amendment is recorded in the slice's D### entry).**
+  A new pure-composer module `src/113-teaching-companion.js` (manifest 112 → 113). Factual
+  voice; the companion INFORMS, it never grades — Mayhem keeps its chartered no-moral-GPA
+  identity. Every consumer seam is typeof-guarded so module-absence renders byte-identically.
+  Compose EXISTING committed sourced prose (the divergence `_divWILD_HIST`/`divScan` hist
+  corpus, the `_END_CATALOG` hist corpus, each scenario's own `sources`/`teaching.cards`/
+  `endNote`/provenance, the codex/prisoner-exchange teaching corpus); any genuinely NEW
+  sourced line falls under the ≥2-source law.
+  1. **Battle briefings (both modes):** the LIVE owner `src/100-h0-battle-briefing.js`
+     (`bridgeBriefingHTML` override) composes a compact sourced "In history…" panel from the
+     scenario's OWN committed corpus via a guarded `tc*` composer ("" when absent).
+  2. **The Mayhem AAR (the D416 amendment):** the src/107 Mayhem AAR wrapper composes a
+     guarded companion panel — the divergence juxtaposition (existing `divScan` hist lines +
+     the index word) rendered factually, with NO grade chip and NO verdict language.
+  3. **The Chronicle juxtaposition:** `mayhemChronicleHTML` gains a per-dispatch "In
+     history…" line via a guarded composer keyed by actionId, composed from existing
+     committed prose.
+  4. **Divergences + endings (both modes):** `divRenderTab`/`endRenderSection` are already
+     mode-independent sourced "In history…" carriers by construction — ADJUDICATION: presence
+     TEETH pin that fact (both modes) rather than adding a duplicate panel.
+  - **Teeth (owners; suite stays 137):** `tools/probe-h0-battle-briefing.mjs` — briefing
+    companion presence + "In history" + ≥1 attribution token + absent-by-guard byte-
+    equivalence (md5 of the briefing HTML with the module stubbed out == pre-slice).
+    `tools/probe-mayhem-mode.mjs` — Mayhem AAR companion presence + Chronicle per-dispatch
+    line + the no-grade factual-voice tooth (forbidden-token scan over companion output: no
+    grade letters/chips, no moral-GPA verdict tokens). `tools/probe-divergence.mjs` +
+    `tools/probe-endings.mjs` — presence pins for the existing sourced corpus under BOTH
+    rulesets. Historical byte-equivalence teeth wherever the companion is absent-by-guard.
+  - **Two predeclared negative binds (md5-proven byte-identical restores):** (a) stub the
+    companion module out of the manifest → presence teeth red EXACTLY, byte-equivalence
+    teeth still green; (b) strip the attribution from one composed line → the sourced tooth
+    red EXACTLY.
+
+  **SLICE 2 — the Historical mechanics unlock (§3 row 2 + §4a.1): surrender/no-quarter
+  PLAYABLE in Historical through the SHIPPED effect-schema/receipt machinery — JUDGED,
+  NEVER REWARDED.**
+  1. **Data:** `data/mayhem-rules.json` gains action `no-quarter-historical`
+     (`rulesetId:"historical"`; availableWhen `ruleset.is historical` + `side.isActor`) whose
+     effects are CONSEQUENCES ONLY: `morale.add` (own public will, negative) · `press.add`
+     (own press standing, negative) · `diplomacy.add` (European standing moves AGAINST the
+     actor, negative) · `notoriety.add` (the INFAMY LEDGER, positive). Exact magnitudes are
+     a runtime balance decision after logged deterministic A/B evidence; the SIGNS are law.
+  2. **Engine (src/107 — extend, never bypass):** `_mhResolve` legalizes an action whose
+     `rulesetId` EXACTLY matches the campaign ruleset id (Mayhem actions unchanged; the
+     `ruleset.is` predicate matches the campaign ruleset). THE LOAD-BEARING MASSACRE-BLOCK,
+     authored WITH the slice: a closed consequence-operation allowlist for historical-ruleset
+     actions — `morale.add`/`press.add`/`diplomacy.add` (values ≤ 0), `notoriety.add`
+     (≥ 0), `modifier.add`, `chronicle.event` — and EVERY other operation family
+     (score/casualty-credit/capture/result/victoryProgress/funds/resource/loot/technology/
+     weapon/career/reputation/achievement/roster/reinforcement/scenario/timeline/enemyWill)
+     is REFUSED at validation, before any mutation. A red here is a design failure, not a
+     tooth to move.
+  3. **Adapters (domain owners keep their ledgers):** morale → a bounded additive
+     `M.infamyShock` on the `moraleInit` owner read by `moraleCompute` (the `M.repudiated`
+     durable-shock idiom; guarded no-op at 0/absent) · press → a bounded `infamyShock` on
+     the `pressInit` owner read by `pressSentiment` (guarded) · diplomacy → the existing
+     `C.blockade.recognition` field moved AGAINST the actor (US actor → +|v| toward
+     recognition, CS actor → −|v|; clamped; no reader change needed) · notoriety → the new
+     additive `C.infamy` ledger (`{ total, events[] }`, capped, sanitized; NO `_SAVE_VER`
+     bump — the additive-field pattern). **The reprisal cycle:** `prisonerExchangeSnapshot`/
+     `prisonerExchangeOnResolve` read `C.infamy.total > 0` as durable cartel damage
+     (pressure up, exchange function down — the Fort Pillow → cartel-breakdown teaching
+     chain), guarded no-op when absent. ALL consequences enter the simulation as INPUTS
+     through existing readers (D74); no outcome write anywhere.
+  4. **Offer + surface:** the src/107 `campaignAdvance` wrapper stamps the existing
+     `C.mayhemNoQuarterOffer` shape for Historical campaigns too (from the shipped
+     `B.mayhemCapturedByPlayer` T25/T2 chain). A new pure panel rides INSIDE
+     `aarRenderReport` behind a typeof guard (the GEA-14 seam idiom): the offer states ALL
+     consequences before confirmation; the applied receipt renders with the JUDGED framing —
+     factual condemnation composed from the committed corpus (General Order No. 252 / the
+     exchange-cartel/USCT teaching prose; ≥2-source law on any new line) — and the infamy
+     ledger renders its condemnation section while `total > 0`. The panel returns "" with no
+     offer AND no infamy → the Historical AAR is BYTE-IDENTICAL (the guard tooth). The
+     existing delegated click path routes by ruleset. AAR grading/endings moral voice
+     UNTOUCHED (retained teaching instruments — the round-5 law).
+  - **Teeth (owner `tools/probe-mayhem-mode.mjs`; AAR byte-equivalence also pinned in
+    `tools/probe-afteraction.mjs`):** (t1) a fixture historical action carrying
+    `battle.score.add` resolves null, campaign bytes unchanged; (t2) a consequence op with a
+    reward-direction sign (`morale.add +5` under historical) is refused; (t3) applying
+    `no-quarter-historical` yields a receipt moving ONLY the four consequence targets —
+    `C.stats.mayhemScore` absent/unchanged, `C.stats.infl` unchanged, loot inventory
+    byte-unchanged, victory progress/career/reputation unchanged, `vicMomentum` after ≤
+    before; (t4) the Mayhem `no-quarter` reward action STILL refuses under Historical (the
+    re-pinned probe-554 family half); (t5) the judged panel is present with an offer,
+    carries condemnation + sources, and the no-offer/no-infamy Historical AAR is
+    byte-identical to pre-slice; (t6) the reprisal read moves the exchange snapshot only
+    when `C.infamy.total > 0`.
+  - **Two predeclared negative binds (md5 restores):** (a) disable the engine's
+    reward-family refusal for historical actions → t1/t2 red EXACTLY; (b) tamper the data
+    action with a `battle.score.add` effect → the refusal teeth bite, no mutation. Plus the
+    standing A/B: a Historical campaign that never takes the action resolves byte-identically
+    to pre-slice through resolve + AAR.
+
+  **SLICE 3 — the re-toothing sweep (§4a.3):** grep the ENTIRE probe tree for teeth that
+  assume consequence-only ABSENCE in Historical — the known family head is
+  `tools/probe-mayhem-mode.mjs` "Historical refusal/bytes failed" (`_mhNoQuarterContext(H)
+  === null` / `mayhemNoQuarterApply(H) === null`), plus any Historical byte-equivalence
+  teeth over surfaces the unlock legitimately moves (AAR/save-shape/mode-gating) and the E41
+  save-shape hash pins if the offer/infamy additive fields surface in serialized saves.
+  Re-pin EACH with the documented chain idiom (old → new, D### cited); the D454 precedent:
+  fix the FAMILY at once and CLOSE it with a tree-wide audit of every such assertion in
+  `tools/` — never one-red-per-row. Teeth that still bind (the Mayhem reward action refused
+  in Historical) are KEPT, split from the moved half.
+
+- **Per-slice gates (the standing law):** `node --check` on every touched JS/probe file ·
+  `node tools/build.mjs` → GATE OK · the slice's focused probe green with artifact JSON read
+  (ok + 0 pageerrors) · 1-3 adjacent probes · the slice's binds with md5-proven restores ·
+  `git diff --check` · commit `-F` + push per slice · HANDOFF top-block EXACT NEXT amended at
+  each boundary. NO full battery this session (next battery at the next release checkpoint
+  per D160/D176). Counts hold 26/59/1,614/137 unless a slice's own contract moves them with
+  documented pin chains.
+- **Resume pointer:** Slice 1 is next (the companion module + seams + teeth + binds), then
+  Slice 2, then Slice 3. A session that inherits this lane mid-DRIVE reads this entry + the
+  packet §4a in full, verifies HEAD against the lane history, and continues at the first
+  unshipped slice.
+- **Last-touched commit:** (this ledger-only charter commit).
+- **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's ARC-1 charter
+  directive (the D455 packet §7); C72 rider dropped as stale at charter (shipped D422,
+  LANE-008).
+
 ---
 
 ## 6 · JOINT STRATEGY BOARD — Fable ⇄ Sol (cross-tool planning, not just locks)
