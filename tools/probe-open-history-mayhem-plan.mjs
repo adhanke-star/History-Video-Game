@@ -43,7 +43,7 @@ const PIN = {
   // 4bcdc6f252389a4bfd6bed269b52f8f0 -> cc91894f93d6b38d6fe97ea43af6f0e9 (D418 mayhem row
   // 131, D431 war-career 900s budget, D436 atlanta row 132, D442 cold harbor row 133).
   // base NEVER moves (frozen). warCareerRow 38 and _SAVE_VER 1 hold.
-  game: "f8bd4d3216d15ef52e8a0eb1f3f4977f",
+  game: "baa37b9626b98307211ee6cca94d1741",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
   manifest: "442b440c45372ff4330f4fe184d537c7",
   suite: "cc91894f93d6b38d6fe97ea43af6f0e9",

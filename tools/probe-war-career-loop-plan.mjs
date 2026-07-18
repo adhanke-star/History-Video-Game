@@ -1158,9 +1158,9 @@ step("BASELINES + LANE", () => {
     // 442b440c45372ff4330f4fe184d537c7 (D440 enrolls src/108); suite
     // 4bcdc6f252389a4bfd6bed269b52f8f0 -> cc91894f93d6b38d6fe97ea43af6f0e9 (D418 row 131,
     // D431 900s budget, D436 row 132, D442 row 133). base NEVER moves (frozen).
-    game:"f8bd4d3216d15ef52e8a0eb1f3f4977f",
+    game:"baa37b9626b98307211ee6cca94d1741",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
-    dataTree:"db156b75144a18633ab6b326d9026e1a",
+    dataTree:"a0b26ed6aa5e60a57ed6d78371bb26f2",
     manifest:"442b440c45372ff4330f4fe184d537c7",
     suite:"cc91894f93d6b38d6fe97ea43af6f0e9"
   };
@@ -1545,8 +1545,8 @@ step("REACHABILITY BASELINES", () => {
     // AD-7 re-pin (D443) at the audit head — the D414-D442 release train plus the D443
     // audit root-fixes moved game/dataTree/srcTree/runtime/focused (chains above and in
     // DECISIONS D443); journey (src/37) did NOT move — the save-vector purity surface held.
-    game:"f8bd4d3216d15ef52e8a0eb1f3f4977f",
-    dataTree:"db156b75144a18633ab6b326d9026e1a",
+    game:"baa37b9626b98307211ee6cca94d1741",
+    dataTree:"a0b26ed6aa5e60a57ed6d78371bb26f2",
     srcTree:"1e973caadb9a8acbe1281b4554b5c6b8",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",

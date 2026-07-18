@@ -198,13 +198,22 @@ const SETUP = `(() => {
     check('ARMY REGISTER PIN: 18 unique Atlanta side-unit ids produce exact cmd/nco/pvt trios and current total 1614', function(){
       var reg = ssPersonRegistry();
       if (reg.people.length !== 1614) throw new Error('Army Register total is ' + reg.people.length + ', expected 1614');   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots
-      var atl = reg.people.filter(function(p){ return String(p.unitScenario || p.scenario || '').indexOf('atlanta') >= 0 || /at_|atlanta/.test(String(p.unitId || '')); });
-      var ids = {};
-      ['us_leggett','us_gasmith','us_fuller','us_sweeny','us_bald_hill_guns','cs_cleburne','cs_walker','cs_bate','cs_hardee_guns','cs_maney','us_mlsmith','us_woods','us_harrow','us_degress','us_massed_guns','cs_brown','cs_clayton','cs_gwsmith'].forEach(function(id){ ids[id] = 0; });
-      reg.people.forEach(function(p){ var u = String(p.unitId || ''); if (Object.prototype.hasOwnProperty.call(ids, u)) ids[u]++; });
-      var bad = Object.keys(ids).filter(function(k){ return ids[k] !== 3; });
-      if (bad.length) throw new Error('units without exact trios: ' + bad.map(function(k){ return k + '=' + ids[k]; }).join(', '));
-      return { total:reg.people.length };
+      // D443 (AD-4 probe fix, the AD-10 never-run bug class): people carry no flat unitId —
+      // count trios by parsing the canonical ss:atlanta:<side>:<uid>:<slot> origin pids.
+      var rows = [], groups = {};
+      for (var pi2 = 0; pi2 < reg.people.length; pi2++) {
+        var pp = reg.people[pi2], origin = pp.replaces || pp.pid;
+        if (typeof origin === 'string' && origin.indexOf('ss:atlanta:') === 0) rows.push(origin);
+      }
+      if (rows.length !== 54) throw new Error('Atlanta rows are ' + rows.length + ', expected 54 (18 units x cmd/nco/pvt)');
+      rows.forEach(function(origin){
+        var m = origin.match(/^ss:atlanta:(US|CS):([^:]+):(cmd|nco|pvt)$/);
+        if (!m) throw new Error('bad Atlanta slot id ' + origin);
+        var key = m[2]; groups[key] = groups[key] || {}; groups[key][m[3]] = 1;
+      });
+      var bad = ['us_leggett','us_gasmith','us_fuller','us_sweeny','us_bald_hill_guns','cs_cleburne','cs_walker','cs_bate','cs_hardee_guns','cs_maney','us_mlsmith','us_woods','us_harrow','us_degress','us_massed_guns','cs_brown','cs_clayton','cs_gwsmith'].filter(function(k){ var g = groups[k]; return !g || !g.cmd || !g.nco || !g.pvt; });
+      if (bad.length) throw new Error('units without exact trios: ' + bad.join(', '));
+      return { total:reg.people.length, rows:rows.length };
     });
 
     check('HISTORICAL DIRECTION (8 seeds): US holds BOTH phases and CS losses exceed US in the majority; aggregate US victory with CS total loss > US (direction only, never a count gate — D74)', function(){

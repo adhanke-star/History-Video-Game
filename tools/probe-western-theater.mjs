@@ -70,9 +70,9 @@ const SETUP = `(() => {
         if(x.status!=='playable-now') throw new Error('currentArc entry not playable-now: '+x.id); });
       var locks=D.futureLocks||[];
       if(!locks.length) throw new Error('futureLocks empty');
-      var atl=locks.filter(function(x){return x.id==='wt-atlanta-march-readout';})[0];
-      if(!atl) throw new Error('missing the Atlanta/March future lock');
-      if(!Array.isArray(atl.lockedScenarioIds)||atl.lockedScenarioIds.indexOf('atlanta')<0) throw new Error('Atlanta lock missing lockedScenarioIds ["atlanta"]');
+      var atl=locks.filter(function(x){return x.id==='wt-march-to-the-sea-readout';})[0];   // D443 (AD-4 re-pin): D436's S44 swap renamed the lock wt-atlanta-march-readout -> wt-march-to-the-sea-readout with lockedScenarioIds ["marchToTheSea"] (atlanta is registered/playable); the D436 sweep missed this tooth — recorded honestly
+      if(!atl) throw new Error('missing the March-to-the-Sea future lock');
+      if(!Array.isArray(atl.lockedScenarioIds)||atl.lockedScenarioIds.indexOf('marchToTheSea')<0) throw new Error('March lock missing lockedScenarioIds ["marchToTheSea"]');
       var all=[D.profile||{}].concat(D.currentArc||[],D.strategicHinges||[],D.futureLocks||[],D.guardrails||[]);
       all.forEach(function(x){ if(x.provenance==='Verified' && (!Array.isArray(x.sources)||x.sources.length<2)) throw new Error('under-sourced '+(x.id||x.title||x.label||x.name)); });
       return { current:cur, locks:locks.length, hinges:(D.strategicHinges||[]).length };
