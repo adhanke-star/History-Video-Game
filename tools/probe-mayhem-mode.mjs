@@ -751,7 +751,7 @@ async function inspectNarrowLayout(browser, probeUrl) {
       evidence.rosterIds.length === 26 &&   // D436: 24 -> 25 — atlanta. D442: 25 -> 26 — coldHarbor
       evidence.builderIds.length === 26 &&
       JSON.stringify(evidence.rosterIds) === JSON.stringify(evidence.builderIds) &&
-      evidence.suiteCount === 136 &&   // D436: 131 -> 132 — the atlanta row appends at the suite end so the row-38/57 pins hold. D442: 132 -> 133 — the cold harbor row appends at the end likewise. D444: 133 -> 134 — learn-battle. D445: 134 -> 135 — chief-of-staff. D446: 135 -> 136 — concept-links, each at the end likewise
+      evidence.suiteCount === 137 &&   // D436: 131 -> 132 — the atlanta row appends at the suite end so the row-38/57 pins hold. D442: 132 -> 133 — the cold harbor row appends at the end likewise. D444: 133 -> 134 — learn-battle. D445: 134 -> 135 — chief-of-staff. D446: 135 -> 136 — concept-links, each at the end likewise
       evidence.mayhemRow === 57 &&
       evidence.mayhemFile === "tools/probe-mayhem-mode.mjs" &&
       evidence.warCareerRow === 38 &&

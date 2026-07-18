@@ -505,8 +505,8 @@ step("IMPLEMENTATION LADDER", () => {
   if (/"campaignAdvance"/.test(overrides)) {
     throw new Error("assignment wrapper must not register campaignAdvance as a declaration override");
   }
-  if (suite.length !== 136) {   // AD-7 re-pin (D443): 130 -> 131 D418 mayhem row; 131 -> 132 D436 atlanta; 132 -> 133 D442 cold harbor; D444: 133 -> 134 learn-battle; D445: 134 -> 135 chief-of-staff; D446: 135 -> 136 concept-links — each appended at the END so the War Career row 38 holds
-    throw new Error("complete Slice A requires suite 136, got " + suite.length);
+  if (suite.length !== 137) {   // AD-7 re-pin (D443): 130 -> 131 D418 mayhem row; 131 -> 132 D436 atlanta; 132 -> 133 D442 cold harbor; D444: 133 -> 134 learn-battle; D445: 134 -> 135 chief-of-staff; D446: 135 -> 136 concept-links — each appended at the END so the War Career row 38 holds
+    throw new Error("complete Slice A requires suite 137, got " + suite.length);
   }
   return { mode: "runtime", suite: suite.length, marker: MARKER };
 });
@@ -555,7 +555,7 @@ step("EXCLUSIONS + BASELINES", () => {
     }
     if (!e71.includes("PENDING")) throw new Error("planning boundary must leave E71 pending");
   } else {
-    if (suite.length !== 136) throw new Error("Slice-A suite must be 136, got " + suite.length);   // AD-7 re-pin (D443): 130 -> 133 (D418 mayhem, D436 atlanta, D442 cold harbor rows append at the END). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links)
+    if (suite.length !== 137) throw new Error("Slice-A suite must be 137, got " + suite.length);   // AD-7 re-pin (D443): 130 -> 133 (D418 mayhem, D436 atlanta, D442 cold harbor rows append at the END). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links)
     if (!e71.includes("FIXED")) throw new Error("Slice A marker exists but E71 is not FIXED");
   }
 
@@ -1137,8 +1137,8 @@ step("BASELINES + LANE", () => {
       normalize(rosterExpected.join(" ")) !== normalize(builderExpected.join(" "))) {
     throw new Error("coverage baselines moved");
   }
-  if (suite.length !== 136 || !suite[37] || suite[37][1] !== "tools/probe-war-career.mjs") {   // D436: 130 -> 132 (mayhem row D418 missed this pin; atlanta row appends at the end so row 38 holds). D442: 132 -> 133 (cold harbor row appends at the end; row 38 still holds). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links, each at the end; row 38 still holds)
-    throw new Error("suite 136 / War Career row 38 moved");
+  if (suite.length !== 137 || !suite[37] || suite[37][1] !== "tools/probe-war-career.mjs") {   // D436: 130 -> 132 (mayhem row D418 missed this pin; atlanta row appends at the end so row 38 holds). D442: 132 -> 133 (cold harbor row appends at the end; row 38 still holds). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links, each at the end; row 38 still holds)
+    throw new Error("suite 137 / War Career row 38 moved");
   }
   if (!read(SWEEP).includes("var reg = fldScenarioRegistry()") ||
       !read(SWEEP).includes("var order = (typeof fldScenarioMenuOrder==='function')")) {

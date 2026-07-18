@@ -50,7 +50,7 @@ const PIN = {
   scenarios: 26,   // D436: 24 -> 25 atlanta; D442: 25 -> 26 coldHarbor
   schemas: 59,   // D418: 54 -> 55 mayhem-rules.json; D436: 55 -> 56 atlanta.json; D442: 56 -> 57 cold-harbor.json; D445: 57 -> 58 chief-of-staff.json; D446: 58 -> 59 concept-links.json
   armyRegister: 1614,   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots
-  suiteRows: 136,   // D418: 130 -> 131; D436: 131 -> 132; D442: 132 -> 133; D444: 133 -> 134; D445: 134 -> 135; D446: 135 -> 136 (each appended at the END so row 38 holds)
+  suiteRows: 137,   // D418: 130 -> 131; D436: 131 -> 132; D442: 132 -> 133; D444: 133 -> 134; D445: 134 -> 135; D446: 135 -> 136 (each appended at the END so row 38 holds)
   warCareerRow: 38,
   saveVersion: 1
 };

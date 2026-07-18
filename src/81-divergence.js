@@ -190,6 +190,14 @@ function divScan(C) {
         "In history the victories of 1864 — Atlanta, the Shenandoah, the closing vise on Lee — carried the Union to triumph in the spring of 1865. (McPherson.)");
     }
 
+    // ---- GEA-12 (D447): the ONE memory-chain line — a guarded pure read of the bounded
+    // map; null (no line) until BOTH beats have resolved, so legacy campaigns render
+    // byte-identically. ----
+    if (typeof mcChainLine === "function") {
+      var _mc = mcChainLine(C);
+      if (_mc) push(_mc.id, _mc.cat, _mc.tier, _mc.when, _mc.title, _mc.hist);
+    }
+
     // ---- WILD CARDS (each engaged gambit is an explicit, tiered divergence). ----
     var played = Array.isArray(S.wildsPlayed) ? S.wildsPlayed : [];
     var catalog = (typeof _vicWILDCARDS !== "undefined" && Array.isArray(_vicWILDCARDS)) ? _vicWILDCARDS : [];

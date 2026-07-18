@@ -85,7 +85,11 @@ function _decEligible(C, c) {
   var year = (P.date && typeof P.date.year === "number") ? P.date.year : 1861;
   if (c.side !== "both" && c.side !== side) return false;
   if (P.decisionsResolved && P.decisionsResolved[c.id]) return false;
-  if (typeof c.trigger.earliestYear === "number" && year < c.trigger.earliestYear) return false;
+  // GEA-12 (D447): the ONE memory chain may relax beat-2's earliest year (a guarded pure read
+  // of the bounded map; 0 for every other card and whenever the module/map is absent, so
+  // legacy saves and non-chain cards evaluate byte-identically).
+  var _mcRelax = (typeof mcYearRelax === "function") ? mcYearRelax(C, c.id) : 0;
+  if (typeof c.trigger.earliestYear === "number" && year < c.trigger.earliestYear - _mcRelax) return false;
   if (typeof c.trigger.latestYear === "number" && year > c.trigger.latestYear) return false;
   return true;
 }
@@ -156,6 +160,9 @@ function decResolve(C, cardId, optionId) {
   _decApply(C, opt);
   if (!P.decisionsResolved) P.decisionsResolved = {};
   P.decisionsResolved[cardId] = optionId;
+  // GEA-12 (D447): the memory chain records the receipt (guarded; writes ONLY its own bounded
+  // lazily-created map — no init path ever seeds it, so legacy saves stay byte-identical).
+  if (typeof mcOnDecisionResolved === "function") { try { mcOnDecisionResolved(C, cardId, optionId); } catch (e) {} }
   P.pendingChoices = P.pendingChoices.filter(function (id) { return id !== cardId; });
   if (typeof _pdLog === "function" && opt.resultText) _pdLog(C, opt.resultText);
 }

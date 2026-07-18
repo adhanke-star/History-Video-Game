@@ -2017,10 +2017,15 @@ next green commit and confer through this ledger instead of permitting simultane
   fail-closed decoration, the h2Cutaway modal idiom + S12/S22 focus return +
   provenance-visible landing, three prose-unchanged span annotations (data-no-gloss
   glossary guard); concept-badanchor fixture proven; probe-concept-links AUTHORED with two
-  predeclared binds; suite 135→136 swept; AUDIT-DEBT AD-13.** Exact next: slice 4 (GEA-12
-  the bounded three-beat memory chain) — re-read its contract in full first; legacy-save
-  byte identity is the gating tooth.
-- **Last-touched commit:** the D446 slice commit.
+  predeclared binds; suite 135→136 swept; AUDIT-DEBT AD-13.** **D447 SHIPPED slice 4
+  (GEA-12): the ONE emancipation→reconstruction chain — src/111 single-writer lazy map
+  (cap 8, drop-on-read sanitation), the 1864→1863 beat-2 flip (historically better; the
+  cards' own committed sources; NO new claim), three guarded seams, legacy saves
+  byte-identical BY ABSENCE with the E41 envelope untouched (save-shape ✓);
+  probe-memory-chain AUTHORED (the legacy-byte-identity gating tooth + two predeclared
+  binds); suite 136→137 swept; AUDIT-DEBT AD-14.** Exact next: slice 5 (GEA-09 audio-bus
+  contract then the action-map seam) — re-read its contract in full first.
+- **Last-touched commit:** the D447 slice commit.
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's genre-elite P1
   build-run directive (the D443 extend-coding continuation).
 

@@ -98,7 +98,8 @@
     "107-mayhem-rules.js",
     "108-tactical-coach.js",
     "109-chief-of-staff.js",
-    "110-concept-links.js"
+    "110-concept-links.js",
+    "111-memory-chain.js"
   ],
   "overrides": [
     "_t1InitAll",

@@ -4,6 +4,57 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D447 — GEA-12 SHIPPED: THE ONE THREE-BEAT MEMORY CHAIN (EMANCIPATION → RECONSTRUCTION), LEGACY SAVES BYTE-IDENTICAL BY ABSENCE — [CLAUDE CODE (FABLE 5), LANE-011 DRIVE] (2026-07-18)
+
+LANE-011 slice 4, built exactly to the D441 GEA-12 contract (re-read in full at slice start).
+
+**THE CHAIN (adjudicated from the live deck):** beat 1 = `emancipation-proclamation` resolves
+on an option that ISSUES the proclamation (`issue` or `radical`; `refuse` never arms) → beat 2
+= `us-reconstruction-terms`' eligibility flips ONE YEAR EARLIER (1864 → 1863), keyed to the
+beat-1 receipt, offerable-not-forced through decOnResolve's normal hinge path → beat 3 = one
+divergence line names the chain once BOTH beats have resolved (divScan → the divergence tab +
+the AAR's top-4 read-back panel, both mode-neutral). The acceleration is HISTORICALLY BETTER
+than the shipped 1864 gate: Lincoln's Proclamation of Amnesty and Reconstruction is Dec 8,
+1863, already documented WITH SOURCES in the us-reconstruction-terms card's own committed
+text, and the emancipation→freedpeople→Reconstruction linkage is the card's own framing — NO
+new historical claim was authored (the beat-3 hist line restates the two cards' committed
+texts and points at their sources). Candidate pairs REJECTED with reasons: habeas→Vallandigham
+and conscription→bread-riot both accelerate hard-DATED 1863 events into 1862 (anachronism);
+hard-war→reconstruction shares one earliest year (the flip would be vacuous).
+
+**THE SAVE LAW (the contract's gating question, resolved additively):** the map lives at
+`C.president.memoryChains` — created LAZILY at the first qualifying beat-1 receipt by the ONE
+writer (`mcOnDecisionResolved`), NEVER seeded by any init/load path (decInit untouched;
+src/32 never references the key — probe-pinned). A legacy save that never fires the chain
+carries no key and round-trips byte-identically; NO save-envelope function moved (the E41
+gate's seven hashed signatures untouched — build prints save-shape ✓); `_SAVE_VER` stays 1.
+Closed entry shape {v:1, opt, year, beat2Year}; cap 8 chains REFUSED-not-trimmed on write;
+unknown chain ids and malformed entries DROPPED on the sanitized read, never repaired, never
+written back. Historical/Mayhem parity per D416 BY CONSTRUCTION: src/111 never reads the
+ruleset (probe-pinned) and decisions were already mode-neutral.
+
+SHIPPED: `src/111-memory-chain.js` (manifest 110 → 111: MC_CHAINS the ONE closed chain const ·
+mcChains sanitized read · mcOnDecisionResolved the one writer · mcYearRelax the pure
+eligibility relax · mcChainLine the pure beat-3 line) · three guarded seams: decResolve's
+receipt call + _decEligible's `earliestYear - _mcRelax` term (src/32-decisions.js) + one
+guarded divScan push (src/81-divergence.js) — every seam a no-op when the module or map is
+absent, so legacy campaigns evaluate byte-identically. `tools/probe-memory-chain.mjs`
+AUTHORED (static: one-chain/real-ids/qualifying-opts pins incl. a beat2-earliestYear-moved
+tripwire, seam pins, the single-writer + no-envelope-token + no-ruleset-read laws, the E41
+seven-signature check; browser: THE LEGACY BYTE-IDENTITY GATING TOOTH — full init + turn tick
+never seeds the key, serialized campaign carries no token, a load+decInit round trip is
+byte-identical — plus chain arming closed-shape / refuse-never-arms, the 1863 flip with
+1862-stays-ineligible and non-chain-cards-unaffected, offerable-not-forced through the real
+decOnResolve, beat-3 line presence + exactly-once + divScan determinism, cap-8 refusal +
+unknown-id/malformed drop-on-read never-repair; two binds predeclared) — NOT run this
+session. Suite 136 → 137 (row at the END), swept at all 11 sites. Counts hold: 26 scenarios /
+schema 59 / Register 1,614 / frozen base untouched.
+
+**VETTING DEFERRED (D443):** ran node --check ×10, manifest JSON parse, build GATE OK
+(save-shape ✓ = the E41 envelope-untouched proof), git diff --check. No data file moved (the
+chain definition is code; decisions.json untouched), so no schema run was owed. The focused
+probe run and both binds are owed as AUDIT-DEBT AD-14 (REVIEW-QUEUE.md).
+
 ## D446 — GEA-10 SHIPPED: STABLE CONCEPT IDS + FOCUS-RETURNING DEEP LINKS (WIRING ONLY) — [CLAUDE CODE (FABLE 5), LANE-011 DRIVE] (2026-07-18)
 
 LANE-011 slice 3, built exactly to the D441 GEA-10 contract (re-read in full at slice start).
