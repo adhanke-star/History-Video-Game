@@ -2012,9 +2012,15 @@ next green commit and confer through this ledger instead of permitting simultane
   deep links; PURE property-path readers per the D443 §19 lesson — no lazy-init wrapper
   called, probe-pinned); validator family + cos-badrule fixture (proven 57/58 under
   injection); probe-chief-of-staff AUTHORED with two predeclared binds; suite 134→135
-  swept; AUDIT-DEBT AD-12.** Exact next: slice 3 (GEA-10 concept ids + focus-returning
-  deep links) — re-read its contract in full first.
-- **Last-touched commit:** the D445 slice commit.
+  swept; AUDIT-DEBT AD-12.** **D446 SHIPPED slice 3 (GEA-10): the concept-links registry
+  (schema 58→59; all four anchor kinds live-validated), src/110 (manifest 110) with
+  fail-closed decoration, the h2Cutaway modal idiom + S12/S22 focus return +
+  provenance-visible landing, three prose-unchanged span annotations (data-no-gloss
+  glossary guard); concept-badanchor fixture proven; probe-concept-links AUTHORED with two
+  predeclared binds; suite 135→136 swept; AUDIT-DEBT AD-13.** Exact next: slice 4 (GEA-12
+  the bounded three-beat memory chain) — re-read its contract in full first; legacy-save
+  byte identity is the gating tooth.
+- **Last-touched commit:** the D446 slice commit.
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's genre-elite P1
   build-run directive (the D443 extend-coding continuation).
 

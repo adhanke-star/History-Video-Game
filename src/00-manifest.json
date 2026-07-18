@@ -97,7 +97,8 @@
     "106-war-career.js",
     "107-mayhem-rules.js",
     "108-tactical-coach.js",
-    "109-chief-of-staff.js"
+    "109-chief-of-staff.js",
+    "110-concept-links.js"
   ],
   "overrides": [
     "_t1InitAll",

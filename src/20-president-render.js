@@ -117,7 +117,7 @@ function presRenderEconomy(C) {
     + dispatches
     + '<hr class="rule">'
     + '<p class="lede" style="font-size:12px;opacity:.7">Full executive management of ' + sideName
-    + ' — finance &amp; inflation, industry, railroads, agriculture, the blockade, diplomacy, and the home front — '
+    + ' — finance &amp; <span data-concept="concept:inflation" data-no-gloss>inflation</span>, industry, railroads, agriculture, the <span data-concept="concept:union-blockade" data-no-gloss>blockade</span>, diplomacy, and the home front — ' /* GEA-10 (D446): existing copy spans opt into the concept deep-link registry — prose unchanged */
     + 'deepens as the war grows. Your cabinet will advise and, where you wish, manage it for you.</p>';
 }
 

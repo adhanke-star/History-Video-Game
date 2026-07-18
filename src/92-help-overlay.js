@@ -42,7 +42,7 @@ function _hpShowWelcome() {
     '<div style="display:grid;gap:10px;margin:12px 0">' +
       '<div style="padding:10px 14px;border:1px solid var(--rule);border-radius:4px;background:rgba(0,0,0,.12)">' +
         '<div style="font-weight:bold;font-size:13px;margin-bottom:3px">&#9813; Grand Strategy (Owner Mode)</div>' +
-        '<div style="font-size:12px;opacity:.85">Manage economy, blockade, manpower, diplomacy, and politics between battles. ' +
+        '<div style="font-size:12px;opacity:.85">Manage economy, <span data-concept="concept:union-blockade" data-no-gloss>blockade</span>, manpower, diplomacy, and politics between battles. ' /* GEA-10 (D446): an existing copy span opts into the concept deep-link registry — prose unchanged */ +
         'Appoint generals, buy weapons, and guide the home front.</div>' +
       '</div>' +
       '<div style="padding:10px 14px;border:1px solid var(--rule);border-radius:4px;background:rgba(0,0,0,.12)">' +
@@ -70,6 +70,8 @@ function _hpShowWelcome() {
     '</div>';
 
   openSheet(html);
+  // GEA-10 (D446): decorate the welcome sheet's opted-in concept spans (guarded; resolvable ids only).
+  if (typeof conceptDecorate === "function") { try { conceptDecorate(document.getElementById("sheetPad") || document.body); } catch (e) {} }
   var tour = document.getElementById("hpWelcomeTour");
   if (tour) tour.addEventListener("click", function () {
     try { localStorage.setItem(_HP_WELCOMED_KEY, "1"); } catch (e) {}

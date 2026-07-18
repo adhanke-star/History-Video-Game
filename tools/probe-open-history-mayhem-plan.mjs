@@ -48,9 +48,9 @@ const PIN = {
   manifest: "442b440c45372ff4330f4fe184d537c7",
   suite: "cc91894f93d6b38d6fe97ea43af6f0e9",
   scenarios: 26,   // D436: 24 -> 25 atlanta; D442: 25 -> 26 coldHarbor
-  schemas: 58,   // D418: 54 -> 55 mayhem-rules.json; D436: 55 -> 56 atlanta.json; D442: 56 -> 57 cold-harbor.json; D445: 57 -> 58 chief-of-staff.json
+  schemas: 59,   // D418: 54 -> 55 mayhem-rules.json; D436: 55 -> 56 atlanta.json; D442: 56 -> 57 cold-harbor.json; D445: 57 -> 58 chief-of-staff.json; D446: 58 -> 59 concept-links.json
   armyRegister: 1614,   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots
-  suiteRows: 135,   // D418: 130 -> 131; D436: 131 -> 132; D442: 132 -> 133; D444: 133 -> 134; D445: 134 -> 135 (each appended at the END so row 38 holds)
+  suiteRows: 136,   // D418: 130 -> 131; D436: 131 -> 132; D442: 132 -> 133; D444: 133 -> 134; D445: 134 -> 135; D446: 135 -> 136 (each appended at the END so row 38 holds)
   warCareerRow: 38,
   saveVersion: 1
 };

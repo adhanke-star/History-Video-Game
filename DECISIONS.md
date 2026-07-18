@@ -4,6 +4,53 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D446 — GEA-10 SHIPPED: STABLE CONCEPT IDS + FOCUS-RETURNING DEEP LINKS (WIRING ONLY) — [CLAUDE CODE (FABLE 5), LANE-011 DRIVE] (2026-07-18)
+
+LANE-011 slice 3, built exactly to the D441 GEA-10 contract (re-read in full at slice start).
+
+SHIPPED: (1) `data/concept-links.json` (schema family 58 → 59) — the `cw_concept_links_v1`
+registry of six stable concept ids covering ALL FOUR anchor kinds: codex
+(concept:union-blockade → anaconda-plan-union-blockade; concept:inflation →
+greenbacks-and-wartime-inflation; concept:conscription → conscription-the-draft) · glossary
+(concept:emancipation-proclamation → the exact codex term "The Emancipation Proclamation" —
+the glossary source IS the codex) · source (concept:emancipation-service →
+ps-emancipation-proclamation-service) · card (concept:mcpherson-at-atlanta → at_mcpherson,
+searched battle- and phase-level across the live scenario registry). (2)
+`src/110-concept-links.js` (manifest 109 → 110): conceptData/conceptResolve — fail-closed
+resolution REUSING the owning modules' own renderers (_cxById/_cxEntryHTML for codex+glossary,
+_psCardHTML for sources; teaching cards render their own head/body/provenance/sources shape) ·
+conceptDecorate — decorates ONLY resolvable [data-concept] spans (role=button, tabindex 0,
+aria-haspopup=dialog, the cl-term underline); an unknown id stays EXACTLY plain text (no role,
+no tabindex, no dead link — the contract's fail-closed clause) · one shared delegated
+click/Enter/Space handler · conceptOpen — the src/104 h2Cutaway body-appended-dialog idiom
+(role=dialog aria-modal, Tab trap, Escape) with FOCUS RETURNED to the invoking span on close
+(the S12/S22 law); codex bodies are FORCE-EXPANDED in the modal so provenance/sources are
+visible on landing (contract clause 3 — "provenance travels"). (3) Opt-in annotations, PROSE
+UNCHANGED: three existing copy spans wrapped — "blockade" in the src/92 welcome sheet,
+"inflation" + "blockade" in the src/20 desk overview — each carrying `data-no-gloss`, the
+SHIPPED src/93 skip attribute, so the inline glossary never nests a gl-term button inside a
+concept span (the nesting hazard found in recon and closed without touching the glossary).
+Two guarded decorate seams: src/30 _wdRefresh (after glDecorate) + src/92 _hpShowWelcome.
+(4) Validator law: enrollment + validateConceptLinks — closed shape and LIVE-DERIVED anchor
+resolution against the owning files (codex ids/terms, primary-source record ids, battle
+teaching-card ids; the D423 registry-truth idiom — a renamed anchor forces this registry to
+move with it) + the PERMANENT `concept-badanchor` fixture — run at ship: 58/59 ok=false under
+injection, 59/59 green clean. (5) `tools/probe-concept-links.mjs` AUTHORED (static: closed
+shape / live anchor resolution / orphan-span inventory / seam-manifest-validator-no-gloss
+pins; browser: all-four-kinds live resolution, unknown-id inertness incl. no-modal-on-click,
+the click-path round trip with provenance-visible + focus-return, the Escape-path round trip
+on a source-kind concept, desk-span decoration through the real _wdRefresh seam, purity;
+two binds predeclared in the header) — NOT run this session. (6) Suite 135 → 136 (row at the
+END) + schema pins 58 → 59, swept at ALL sites. Scenarios stay 26, Register 1,614,
+`_SAVE_VER=1`, frozen base untouched. NO new prose, NO new historical claims (citation law
+not triggered — the registry maps ids to EXISTING sourced content).
+
+**VETTING DEFERRED (D443):** ran node --check ×12 (one first-pass red: the module header
+briefly carried a literal comment-closer inside its block comment — the repo's own
+non-negotiable — root-fixed before any gate passed), build GATE OK, schema 59/59 + the
+concept-badanchor fixture proof, git diff --check. The focused probe run and both binds are
+owed as AUDIT-DEBT AD-13 (REVIEW-QUEUE.md).
+
 ## D445 — GEA-08 SHIPPED: THE CHIEF OF STAFF MORNING BRIEF (DATA-DECLARED, PURE, THREE-LINE CAP, DEEP LINKS) — [CLAUDE CODE (FABLE 5), LANE-011 DRIVE] (2026-07-18)
 
 LANE-011 slice 2, built exactly to the D441 GEA-08 contract (re-read in full at slice start).

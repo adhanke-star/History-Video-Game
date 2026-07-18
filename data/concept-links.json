@@ -1,0 +1,13 @@
+{
+  "_comment": "GEA-10 (D446): the STABLE CONCEPT-ID registry (docs/design/genre-elite-p1-contracts.md GEA-10). Each concept id (concept:<kebab>) maps to EXACTLY ONE canonical surface anchor: kind 'codex' -> a data/codex.json entry id; kind 'glossary' -> a codex entry's exact term string (the glossary source IS the codex); kind 'source' -> a data/primary-sources.json record id; kind 'card' -> a battle teaching-card id (searched across all registered battles' teaching.cards, battle- and phase-level). Surfaces opt in by annotating EXISTING copy spans with data-concept=\"<id>\" (plus data-no-gloss so the inline glossary never nests a term button inside a concept span); src/110-concept-links.js decorates only RESOLVABLE spans (unknown ids stay plain text, no dead link — the fail-closed contract) and opens the canonical content in a focus-trapped modal that RETURNS FOCUS to the invoking span on close (the S12/S22 focus law). Provenance travels: every kind's canonical render includes its sources/provenance visibly. WIRING ONLY — no prose was changed, no new content authored. Validated by tools/validate-data-schemas.mjs (validateConceptLinks; the concept-badanchor permanent fixture): closed shapes and LIVE-DERIVED anchor resolution against the owning data files (registry-truth, never a hardcoded list).",
+  "schema": "cw_concept_links_v1",
+  "schemaVersion": 1,
+  "concepts": [
+    { "id": "concept:union-blockade", "kind": "codex", "anchor": "anaconda-plan-union-blockade" },
+    { "id": "concept:inflation", "kind": "codex", "anchor": "greenbacks-and-wartime-inflation" },
+    { "id": "concept:conscription", "kind": "codex", "anchor": "conscription-the-draft" },
+    { "id": "concept:emancipation-proclamation", "kind": "glossary", "anchor": "The Emancipation Proclamation" },
+    { "id": "concept:emancipation-service", "kind": "source", "anchor": "ps-emancipation-proclamation-service" },
+    { "id": "concept:mcpherson-at-atlanta", "kind": "card", "anchor": "at_mcpherson" }
+  ]
+}

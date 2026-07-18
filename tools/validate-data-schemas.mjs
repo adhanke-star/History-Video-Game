@@ -13,7 +13,7 @@ const DATA = join(ROOT, 'data');
 const SHOTS = join(__dirname, 'shots');
 const diagnosticArg = process.argv.find(arg => arg.startsWith('--diagnostic-invalid='));
 const DIAGNOSTIC_INVALID = diagnosticArg ? diagnosticArg.slice('--diagnostic-invalid='.length) : '';
-const DIAGNOSTIC_FAMILIES = new Set(['', 'all', 'battle', 'meta', 'schema', 'ratings', 'battle-homeedge', 'battle-doctrine', 'battle-learnmeta', 'cos-badrule']);
+const DIAGNOSTIC_FAMILIES = new Set(['', 'all', 'battle', 'meta', 'schema', 'ratings', 'battle-homeedge', 'battle-doctrine', 'battle-learnmeta', 'cos-badrule', 'concept-badanchor']);
 if (!DIAGNOSTIC_FAMILIES.has(DIAGNOSTIC_INVALID)) {
   console.error('Unknown diagnostic family: ' + DIAGNOSTIC_INVALID);
   process.exit(2);
@@ -33,7 +33,7 @@ const BATTLE_FILES = new Set([
 // D442: 56 -> 57 data files — cold-harbor.json enrolls as the 26th battle family member (the
 // documented pin-bump idiom; prior transitions D436 55->56 Atlanta, D397 53->54 Petersburg,
 // D393 52->53 Wilderness). D445: 57 -> 58 — chief-of-staff.json enrolls in the schema family
-// (GEA-08; scenarios stay 26).
+// (GEA-08; scenarios stay 26). D446: 58 -> 59 — concept-links.json enrolls (GEA-10).
 
 const META_REQUIREMENTS = new Map([
   ['cabinet.json', ['_meta', 'sides', 'crossCards']],
@@ -49,6 +49,7 @@ const META_REQUIREMENTS = new Map([
 
 const SCHEMA_REQUIREMENTS = new Map([
   ['chief-of-staff.json', ['schema', 'schemaVersion', 'config', 'rules']],
+  ['concept-links.json', ['schema', 'schemaVersion', 'concepts']],
   ['mayhem-rules.json', ['schema', 'version', 'actions']],
   ['artillery.json', ['schemaVersion', 'guns', 'teachingCards']],
   ['cs-finance.json', ['schema', 'schemaVersion', 'config', 'profile', 'instruments']],
@@ -202,6 +203,58 @@ function validateChiefOfStaff(data, issues) {
     if (!safeText(rule.copy, 240) || /[<>]/.test(rule.copy)) issues.push(p + '.copy must be bounded plain text (no markup)');
     if (tabs.size && !tabs.has(rule.tab)) issues.push(p + '.tab is not a live desk tab id: ' + JSON.stringify(rule.tab));
     if (!safeText(rule.label, 40) || /[<>]/.test(rule.label)) issues.push(p + '.label must be bounded plain text');
+  });
+}
+
+// GEA-10 (D446): the concept-links registry — closed shape + LIVE-DERIVED anchor resolution
+// (the registry-truth idiom): kind codex -> a real codex entry id; glossary -> a real codex
+// entry term (case-insensitive exact); source -> a real primary-sources record id; card -> a
+// real teaching-card id somewhere in the battle files (battle- or phase-level). A renamed or
+// deleted anchor in the owning file forces this registry to move with it.
+const CONCEPT_KINDS = new Set(['codex', 'glossary', 'source', 'card']);
+let CONCEPT_ANCHORS = null;
+function conceptAnchorSets() {
+  if (CONCEPT_ANCHORS) return CONCEPT_ANCHORS;
+  const sets = { codex: new Set(), glossary: new Set(), source: new Set(), card: new Set() };
+  try {
+    const cx = JSON.parse(readFileSync(join(DATA, 'codex.json'), 'utf8'));
+    for (const en of (cx.entries || [])) { if (en && en.id) sets.codex.add(en.id); if (en && en.term) sets.glossary.add(String(en.term).toLowerCase()); }
+  } catch (e) { /* codex.json fails its own row */ }
+  try {
+    const ps = JSON.parse(readFileSync(join(DATA, 'primary-sources.json'), 'utf8'));
+    for (const rec of (ps.records || [])) if (rec && rec.id) sets.source.add(rec.id);
+  } catch (e) { /* primary-sources.json fails its own row */ }
+  for (const file of BATTLE_FILES) {
+    try {
+      const data = JSON.parse(readFileSync(join(DATA, file), 'utf8'));
+      const key = Object.keys(data).find(name => !META_ROOT_KEYS.has(name));
+      const battle = key ? data[key] : null; if (!battle) continue;
+      const packs = [];
+      if (battle.teaching && Array.isArray(battle.teaching.cards)) packs.push(battle.teaching.cards);
+      for (const phase of (battle.phases || [])) if (phase && phase.teaching && Array.isArray(phase.teaching.cards)) packs.push(phase.teaching.cards);
+      for (const cards of packs) for (const card of cards) if (card && card.id) sets.card.add(card.id);
+    } catch (e) { /* the battle file fails its own row */ }
+  }
+  CONCEPT_ANCHORS = sets;
+  return sets;
+}
+function validateConceptLinks(data, issues) {
+  exactKeys(data, ['_comment', 'schema', 'schemaVersion', 'concepts'], 'root', issues);
+  if (data.schema !== 'cw_concept_links_v1') issues.push('schema must be cw_concept_links_v1');
+  if (data.schemaVersion !== 1) issues.push('schemaVersion must be 1');
+  if (!Array.isArray(data.concepts) || !data.concepts.length || data.concepts.length > 64) { issues.push('concepts must be a nonempty array of at most 64'); return; }
+  const anchors = conceptAnchorSets();
+  const ids = new Set();
+  data.concepts.forEach((c, i) => {
+    const p = 'concepts[' + i + ']';
+    if (!exactKeys(c, ['id', 'kind', 'anchor'], p, issues)) return;
+    if (typeof c.id !== 'string' || !/^concept:[a-z0-9][a-z0-9-]{0,60}$/.test(c.id)) issues.push(p + '.id malformed');
+    else if (ids.has(c.id)) issues.push(p + '.id duplicate'); else ids.add(c.id);
+    if (!CONCEPT_KINDS.has(c.kind)) { issues.push(p + '.kind unknown'); return; }
+    if (typeof c.anchor !== 'string' || !c.anchor || c.anchor.length > 120) { issues.push(p + '.anchor malformed'); return; }
+    const pool = anchors[c.kind];
+    const hit = (c.kind === 'glossary') ? pool.has(c.anchor.toLowerCase()) : pool.has(c.anchor);
+    if (!hit) issues.push(p + '.anchor does not resolve to a real ' + c.kind + ' entry: ' + JSON.stringify(c.anchor));
   });
 }
 
@@ -403,6 +456,7 @@ function validateDocument(file, data) {
     else if (!((typeof data[marker] === 'string' && data[marker].trim()) || (typeof data[marker] === 'number' && Number.isFinite(data[marker])))) issues.push(marker + ' must be a nonempty string or finite number');
     if (file === 'mayhem-rules.json') validateMayhem(data, issues);
     if (file === 'chief-of-staff.json') validateChiefOfStaff(data, issues);
+    if (file === 'concept-links.json') validateConceptLinks(data, issues);
     extraInfo = (marker ? marker + '=' + String(data[marker]) : 'no version marker') + ', ' + rule.required.length + ' explicit keys';
   } else if (rule.family === 'ratings') {
     if (typeof data._meta !== 'string' || !data._meta.trim()) issues.push('_meta must be a nonempty string');
@@ -417,16 +471,24 @@ function injectDiagnostic(file, family, data, rule, applied) {
   // E73 (D426): 'battle-homeedge' / 'battle-doctrine' are PERMANENT NEGATIVE FIXTURES for the
   // optional gameplay-input checks — they inject exactly the silent-typo class the checks exist
   // to catch (US "lo"; "cautius") into the first battle file, proving the teeth on demand.
-  const wants = (DIAGNOSTIC_INVALID === 'all') ? family : (DIAGNOSTIC_INVALID.indexOf('battle-') === 0 ? 'battle' : (DIAGNOSTIC_INVALID === 'cos-badrule' ? 'schema' : DIAGNOSTIC_INVALID));
+  const wants = (DIAGNOSTIC_INVALID === 'all') ? family : (DIAGNOSTIC_INVALID.indexOf('battle-') === 0 ? 'battle' : ((DIAGNOSTIC_INVALID === 'cos-badrule' || DIAGNOSTIC_INVALID === 'concept-badanchor') ? 'schema' : DIAGNOSTIC_INVALID));
   if (!DIAGNOSTIC_INVALID || wants !== family || applied.some(item => item.family === family)) return data;
   // GEA-08 (D445): the cos-badrule PERMANENT NEGATIVE FIXTURE targets exactly chief-of-staff.json
   // (an unknown reader id + an unreal desk tab — the silent-rule-drop class the checks exist to name).
   if (DIAGNOSTIC_INVALID === 'cos-badrule' && file !== 'chief-of-staff.json') return data;
+  // GEA-10 (D446): the concept-badanchor PERMANENT NEGATIVE FIXTURE targets exactly
+  // concept-links.json (an anchor that resolves nowhere — the dead-deep-link class).
+  if (DIAGNOSTIC_INVALID === 'concept-badanchor' && file !== 'concept-links.json') return data;
   const copy = JSON.parse(JSON.stringify(data));
   let key = '';
   if (DIAGNOSTIC_INVALID === 'cos-badrule') {
     if (Array.isArray(copy.rules) && copy.rules.length) { copy.rules[0].reader = 'not-a-reader'; copy.rules[0].tab = 'not-a-tab'; }
     applied.push({ family, file, removed: 'rules[0].reader/tab (GEA-08 invalid fixture)' });
+    return copy;
+  }
+  if (DIAGNOSTIC_INVALID === 'concept-badanchor') {
+    if (Array.isArray(copy.concepts) && copy.concepts.length) copy.concepts[0].anchor = 'not-a-real-anchor';
+    applied.push({ family, file, removed: 'concepts[0].anchor (GEA-10 invalid fixture)' });
     return copy;
   }
   if (family === 'battle') {

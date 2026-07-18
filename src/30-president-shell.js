@@ -155,6 +155,9 @@ function _wdRefresh() {
   if (typeof glDecorate === "function" && _glTabs[_wdTab]) {
     try { if (cont.removeAttribute) cont.removeAttribute("data-gl-done"); glDecorate(cont); } catch (e) {}   // cont is reused across refreshes with fresh innerHTML — clear the once-guard so each render re-decorates
   }
+  // GEA-10 (D446): decorate the desk's opted-in concept spans (guarded; concept spans carry
+  // data-no-gloss so the glossary pass above never nests a term button inside one).
+  if (typeof conceptDecorate === "function") { try { conceptDecorate(cont); } catch (e) {} }
 }
 
 /* ---- openWarDept OVERRIDE: the President's Desk (expand-in-place). ---- */
