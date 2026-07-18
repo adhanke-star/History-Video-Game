@@ -1881,12 +1881,16 @@ next green commit and confer through this ledger instead of permitting simultane
   finish-line directive; DRIVE taken in the same ledger-only commit; GEA-01 + S44 shipped in the
   D423 release the same day.
 
-### LANE-010 · overnight-feature-blitz — **DRIVE** (owner: Claude Code / Fable 5)
+### LANE-010 · overnight-feature-blitz — **VERIFY** (audit-owed; unowned — the run is complete)
 
 - **Owning tool:** Claude Code (Fable 5) — the Aaron-authorized D431 overnight coding-first run
   (authorization window through 2026-07-19); TOP LOOP resolved to the live session model per §4.
-- **State:** DRIVE (CONTRACT→DRIVE taken in this ledger-only commit at the clean pushed D431
-  boundary `dc4afa304c681f16d42da5c3ababafa5d797c3ba`; HEAD == origin/main verified).
+- **State:** VERIFY (audit-owed; flipped at the run's clean close `51e27a5`). The D432 queue
+  ran down COMPLETE except the Cold Harbor RUNTIME (deferred by its own if-room clause; its
+  spec + fail-closed plan probe shipped in D439). D433-D441 shipped nine slices across 15
+  commits; every slice carries VETTING DEFERRED (D431) + an AUDIT-DEBT row (AD-1..AD-9,
+  REVIEW-QUEUE.md). The audit session settles the ledger + the full serialized battery and
+  flips LANE-009 + LANE-010 SHIPPED.
 - **Design law:** DECISIONS D431 (Aaron's coding-first directive — THE run law) + D432 (this
   lane's charter + queue) · per queue item its own law docs: the D430 E74 fork record +
   build gate 4e-2 (`tools/build.mjs`), REVIEW-QUEUE GENRE-ELITE GEA-02/GEA-03/GEA-05/GEA-06
