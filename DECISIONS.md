@@ -40,6 +40,79 @@ asset purchases/accounts. LANE-009's shipped slices are not re-run. Expected tra
 end: LANE-010 → VERIFY (audit-owed), with the audit session settling the whole AUDIT-DEBT
 ledger plus the full serialized battery and flipping LANE-009 + LANE-010 SHIPPED.
 
+## D443 — THE DEDICATED AUDIT SETTLES AD-10 THROUGH AD-1 (EVERY PROBE GREEN, EVERY BIND EXACT, THREE RUNTIME BUGS ROOT-FIXED); AARON EXTENDS THE CODING-FIRST RUN MID-BATTERY, DEFERRING AD-0 ALONE — [CLAUDE CODE (FABLE 5) + AARON, COMBINED CLOSING SESSION PHASE B] (2026-07-18)
+
+Phase B of the combined closing session (LANE-010 re-take `c463152`; Phase A = D442). Every
+AUDIT-DEBT row AD-10..AD-1 was settled by running EXACTLY what it named, reading every JSON
+artifact, root-fixing every red at its exact failing label, never weakening a tooth; every
+negative bind restored byte-identically, proven by md5.
+
+**AD-10 (57d5944):** probe-cold-harbor 15/15 (0 pe) after two probe-side reading root-fixes
+(trio-count via the canonical `ss:` pid parse — the never-run authoring class; losses via
+data-start-minus-live, since single-phase battles do not populate battleCas). Direction: CS
+holds 5/8, US bleeds more 6/8 — NO input moved. Bind A (T1 registry-line removal): the two
+registry teeth + the pure registry cascade red, nothing unrelated; md5-identical restore of
+source + generated game. Bind B (Grant full-General tamper): EXACTLY the static rank-wall
+tooth; md5 restore. Plan probe runtime-mode re-run 6/6. **AD-9 (7b36aa6):** probe-field 25/25
+×2; click-through 9/9 on the real surfaces; ONE RUNTIME BUG root-fixed — the GEA-05
+`_tcShowing` latch was page-lifetime so "Close" could never reappear next battle (the D440
+contract); now battle-scoped via fresh `__FIELD.units` identity. Fog clean (no enemy identity
+in the ribbon; enemy selection renders nothing). Wrapper bind exact; md5 restore. **AD-8:**
+superseded by AD-10 exactly as the row anticipated. **AD-7 (3e6e25a + parts):** all three plan
+probes re-pinned at the audit head with full chronological chains (the D393 lesson) and ALL
+OK; frozen surfaces (base, src/37 journey, t3, auto, command, commandProbe) NEVER moved; the
+kickoff's "44/44 tokens" adjudicated against runtime as passing RETAINED HISTORY — no edit
+(the audit-vs-runtime check). **AD-6 (c6f337a, af9200a):** probe-war-career 45/45 at the 900s
+budget; ONE RUNTIME BUG root-fixed — §19 demands pure reads but warCareerArchiveRecord's
+grade/ruleset/capability readers lazy-init default subsystem blocks onto the LIVE campaign
+(the save grew 317→4,302 chars around a capture); the record now reads a deep-copy snapshot,
+capture proven byte-pure. Probe re-pins: suite 131→133 (a D436/D442 sweep miss, recorded),
+the src/82 md5 (D434 moved it legitimately), a time-invariant save compare (the frozen base
+stamps when:Date.now()), the tooth-7 will-one-shot re-arm (never-run bug). §19 bind exact in
+a full 45-step run; md5 restore. Click-throughs 4/4: chain + strategic (will) ends through the
+REAL chokepoints — Franchise Record renders, G.campaign still nullifies, saves byte-pure.
+**AD-5:** probe-mayhem-mode 21/21 after a D393-class parser root fix (the suite-row regex
+silently dropped rows carrying trailing pin-history comments). Historical byte-equivalence
+vs the pre-D437 build (b7b6322): standalone kennesaw briefing 3,478 bytes and Historical AAR
+9,641 bytes BYTE-IDENTICAL, no label/Chronicle leakage, 0 pe both builds. T0-stamp and T11-
+allowlist binds each bit exactly; md5 restores. Builder 16/16. **AD-4 (e340601):**
+probe-atlanta 14/14; THE VERIFIED CASUALTY DIRECTION NOW EMERGES (phase-1 US holds 7/8,
+phase-2 8/8, aggregate 8/8, CS bleeds more 5/8) from documented INPUTS with full A/B notes in
+data/atlanta.json — never a lever: Harrow/Woods Inferred placements aligned onto their
+Verified works (Harrow sat 89 units off the parapet); the exhausted fifteen-mile night-march
+corps encoded through the existing readiness input (Walker/Bate/Maney xp 2→1; Cleburne kept
+3); elite-veteran quality per family precedent (Sweeny/M.L. Smith/Woods 2→3; petersburg ships
+US [3]). Dead-input lesson: per-unit data `morale` is silently dropped by fldBrSpec's
+allowlist — removed rather than shipped as false behavior. Both binds exact (registry cascade;
+Hood rank-wall) — the bind-B restore RE-APPLIED the uncommitted direction inputs and matched
+the pre-tamper md5 exactly (a git-checkout overreach caught in-session). probe-western-theater
+9/9 after re-pinning the D436-renamed marchToTheSea lock tooth (another missed-sweep pin).
+**AD-3:** help-overlay 12/12; the 3D Home/Shift+Home check 6/6 for BOTH sides through the real
+fldKey (Home returns to the survey framing at distance 0; Shift+Home frames side-aware);
+routing bind exact; md5 restore. **AD-2 (9d1f875):** probe-afteraction 17/17 after two
+never-run fixture root-fixes (sheet-overlay innerText visibility; the CSS text-transform
+WYSIWYG casing assert). Click-throughs 4/4: real clipboard Copy on the sheet surface, a real
+Download (civil-war-aar-union-live.txt), post-nullify war-end context intact, file:// honest.
+Delegated-wiring bind exact; md5 restore. **AD-1:** the 4e-2 ratchet bind died the build
+EXIT 5 NAMING cabinet.json crossCards[0] at the empty-map baseline; byte-identical restore.
+Two prior injection sites (shiloh's payload, artillery's root-registered tree) correctly
+PASSED by the D430 inheritance rule — the D433 registers cover descendants BY DESIGN; the
+row's "any battle file" phrasing predates those registers (adjudicated). Content probes green
+(chattanooga, shiloh 32/32, primary-sources 14/14, western-theater 9/9). Faithfulness
+spot-audit 12/12 across twelve files — every sampled register entry traced to its named
+committed packet/spec or own prose per the D433 law; no invented citation.
+
+**AD-0 (PARTIAL; deferred by Aaron):** the 133-row terminal battery ran serialized and alone
+to **45/133 GREEN with ZERO reds** (`.tmp/d443-battery.log`), then **[AARON, 2026-07-18]
+extended the coding-first run mid-battery: "find next stopping point … continue fable
+leverage to build remaining aspects of project. leave testing auditing and vetting for
+end."** The battery stop is a DEFERRAL, not a red. AD-0 is now the sole open debt of the
+D423-D442 arc and re-settles with ONE full serialized battery at the FINAL head after the
+next feature run. LANE-009 and LANE-010 rest at VERIFY (audit-owed, battery-only); the next
+session opens its own feature lane. Exact next: the GEA-07..14 P1 build run (the D441
+contracts) + Mayhem Slice F, coding-first under the D431/D443 law, each slice appending
+AUDIT-DEBT rows AD-11+.
+
 ## D442 — COLD HARBOR SHIPPED: THE JUNE 3, 1864 DAWN ASSAULT IS PLAYABLE AS SCENARIO 26 AT 26/57/1,614/133; THE D432 QUEUE IS FULLY RUN DOWN — [CLAUDE CODE (FABLE 5), LANE-010 DRIVE, COMBINED CLOSING SESSION PHASE A] (2026-07-18)
 
 The one remaining D432 queue item (deferred by D439's own if-room clause), built exactly to the

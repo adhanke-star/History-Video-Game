@@ -1875,31 +1875,25 @@ next green commit and confer through this ledger instead of permitting simultane
   root-fixed to 900s). LANE-009 rests at VERIFY/unowned with every FIX-NOW slice shipped and
   fully probed/bound at its own boundary; the audit session discharges AD-0 and flips this lane
   SHIPPED. The overnight feature run opens its own LANE-010 and must not rerun this lane's
-  slices.**
+  slices.** **D443 note: the audit session settled AD-10..AD-1 and ran this lane's AD-0
+  battery to 45/133 GREEN with zero reds before Aaron's extend-coding directive deferred it —
+  AD-0 alone still gates this lane's SHIPPED flip, at the final head.**
 - **Last-touched commit:** the D431 boundary close.
 - **History:** adjudicated + contracted by Claude Code (Fable 5) 2026-07-17 under Aaron's
   finish-line directive; DRIVE taken in the same ledger-only commit; GEA-01 + S44 shipped in the
   D423 release the same day.
 
-### LANE-010 · overnight-feature-blitz — **DRIVE** (combined closing session: the Cold Harbor runtime + the audit settlement)
+### LANE-010 · overnight-feature-blitz — **VERIFY** (battery-only; unowned — AD-10..AD-1 settled in D443)
 
-- **Owning tool:** Claude Code (Fable 5) — RE-TAKEN 2026-07-18 in this ledger-only commit for
-  the COMBINED CLOSING SESSION (within Aaron's authorization window through 2026-07-19); TOP
-  LOOP resolved to the live session model per §4. This is a NEW DRIVE note, not a silent reuse
-  of the D432 lock: **Phase A** ships the one remaining D432 queue item — the COLD HARBOR
-  RUNTIME (D442) under the D431 coding-first gates (spec §7 pin table binding; documented
-  pin-bump idiom at every site; AUDIT-DEBT row AD-10 appended) ending at a clean pushed commit;
-  **Phase B** is the DEDICATED AUDIT — settle AD-10 down to AD-1, then AD-0 (the full
-  serialized `npm run vet:noreg` battery at the final head, war-career budget 900s), root-fix
-  every red at its exact label, never weaken a tooth, every negative bind restored
-  byte-identically (md5-proven); **Phase C** records the release checkpoint, flips every
-  settled AD row, and flips LANE-009 + LANE-010 to SHIPPED with final SHAs. Usage rule
-  (non-negotiable 7): if remaining usage cannot carry Phase B's full battery, the session STOPS
-  at the Phase A clean pushed boundary and emits a fresh audit-only prompt instead of starting
-  a battery it cannot finish.
-- **State:** DRIVE (re-taken at the clean pushed D441 boundary
-  `f1fdf9cf3b270d0bd1455f316daecd035bf77e39`; HEAD == origin/main verified at session start;
-  prior state VERIFY audit-owed, flipped at the run's clean close `51e27a5`). The D432 queue
+- **Owning tool:** unowned (the combined closing session's lock RELEASED at the D443 boundary).
+  The 2026-07-18 combined closing session (Claude Code / Fable 5, re-take `c463152`) ran
+  **Phase A** — the Cold Harbor runtime shipped as D442 (`8640e67`) — and **Phase B** — the
+  dedicated audit settled AUDIT-DEBT AD-10 down to AD-1 in D443 (every named probe green, all
+  nine binds exact with md5 restores, three runtime bugs root-fixed). The AD-0 terminal
+  battery ran to 45/133 GREEN with zero reds and was then DEFERRED mid-run by Aaron's
+  extend-coding directive; it re-settles as ONE full serialized battery at the FINAL head.
+- **State:** VERIFY (battery-only; prior states: VERIFY audit-owed at `51e27a5` → DRIVE
+  combined-session at `c463152` → this release). The D432 queue
   ran down COMPLETE except the Cold Harbor RUNTIME (deferred by its own if-room clause; its
   spec + fail-closed plan probe shipped in D439). D433-D441 shipped nine slices across 15
   commits; every slice carries VETTING DEFERRED (D431) + an AUDIT-DEBT row (AD-1..AD-9,
@@ -1943,8 +1937,14 @@ next green commit and confer through this ledger instead of permitting simultane
   — scenario 26 at 26/57/1,614/133, rank 68.5, §9 obligations live-discharged, plan probe
   runtime-mode 6/6, probe-cold-harbor authored with two predeclared binds, four stale
   D436-missed count pins root-fixed with documented chains; AUDIT-DEBT AD-10. THE D432 QUEUE
-  IS FULLY RUN DOWN.** Exact next: PHASE B — settle AD-10 down to AD-1, then AD-0 (the full
-  serialized 133-row battery); then PHASE C flips LANE-009 + LANE-010 SHIPPED.
+  IS FULLY RUN DOWN.** **D443 (Phase B): AD-10..AD-1 ALL SETTLED — every named probe green
+  (0 pe), all nine binds bit exactly with md5-proven byte-identical restores, three runtime
+  bugs root-fixed (the GEA-05 Close latch, the §19 capture purity, the Atlanta direction via
+  documented inputs), 12/12 spot-audit; the AD-0 battery reached 45/133 GREEN with zero reds
+  before Aaron's extend-coding directive deferred it.** Exact next: the GEA-07..14 P1 build
+  run + Mayhem Slice F on a NEW feature lane (coding-first, AD-11+ rows); the FINAL audit
+  session settles AD-0 + AD-11+ at the final head and flips LANE-009 + LANE-010 + the feature
+  lane SHIPPED.
 - **Last-touched commit:** the D432 lock commit (this edit).
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's D431 overnight
   directive.
