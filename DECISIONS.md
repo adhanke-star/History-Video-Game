@@ -4,6 +4,77 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D454 — THE AD-0 BATTERY COMPLETES 137/137 GREEN; SIX BATTERY REDS ROOT-FIXED AT THEIR EXACT LABELS (THE TWO D453-ADJUDICATED CLASSES ONLY); LANE-009 + LANE-010 + LANE-011 FLIP SHIPPED — THE D423-D452 ARC IS FULLY RELEASED — [CLAUDE CODE (FABLE 5), AD-0 COMPLETION + RELEASE SESSION] (2026-07-18)
+
+**THE BATTERY (AD-0 SETTLED).** The resumed serialized battery ran rows 73-137 alone on the
+machine and ended `VET NO-REGRESSION OK` — **137/137 GREEN** in total: the 72-row D453 prefix
+(rows 1-72 at `1ffd972`, logs `.tmp/ad0-battery*.log`) plus tonight's seven segments
+(23+5+7+8+3+1+18 rows; logs `.tmp/ad0-battery-resume3..10.log`; each segment resumed
+`--from=` its fixed row's label at the fix commit's head; final segment at `1a43027`).
+**ARTIFACT AUDIT: all 136 expected artifact JSONs read** (every suite row except the build
+gate, which writes none) — `ok=true`, **ZERO pageerrors, ZERO realErrors** across the entire
+suite; 232 screenshots on disk. War-career rode its 900s budget green; the h0-menu D453
+re-tooth rode green in the prefix.
+
+**SIX BATTERY REDS ROOT-FIXED, none weakening a tooth — every one a stale VETTING-DEFERRED
+pin or a never-run tooth from the D436-D452 coding-first slices (the D453 adjudication held
+exactly):**
+1. **Row 'weather' (`bbffcb4`):** cold-harbor.json's weather hint carried a decorated
+   provenance string ("Verified (dawn assault…); design: engine fog OFF") where the
+   well-formedness tooth requires the exact `Verified`|`Inferred` enum — the D442 slice never
+   ran this probe. Fix: provenance exactly `"Verified"`; the fog fact + fog-OFF rationale were
+   already verbatim in the hint's note; sources untouched. Schema 59/59; GATE OK; standalone
+   30/30. A/B: data-only, no sim input moved.
+2. **Row 'tactical roster' (`2e2fcde`):** PHASE_COUNTS defaults unlisted multi-phase
+   scenarios to 3; the D436 slice shipped two-phase Atlanta (spec: "phases.length 2;
+   scoreWeights [1,3]"; probe-atlanta pins the same) without its map entry. Fix:
+   `atlanta: 2` pinned explicitly with the chain comment. Standalone 8/8.
+3. **Row 'gettysburg' (`7916d14`):** all 19 steps green and the artifact written ok, then
+   the OWNING PROCESS never exited — a live handle held the event loop until the 360s guard
+   SIGTERMed it (the D398 owning-process law, the exact hang the probe's own bounded-close
+   comments describe). Fix: explicit `process.exit(0|1)` after artifact write + teardown (the
+   probe-weather idiom; the asserts alone still decide the code) + a 600s slow-Mac budget in
+   `timeoutFor` (88s standalone vs ~4.5min under mid-battery memory pressure; the D238/D431
+   budget precedent). In-harness re-run: 90.2s clean.
+4. **Row 'wilderness' (`9b7f58d`):** the D442-missed Overland stale-pin FAMILY, fixed at
+   once across six sites in three probes (wilderness/spotsylvania/petersburg-initial-assaults):
+   the forbidden data/registry scans still barred the RATIFIED Cold Harbor lane (it leaves
+   the scans exactly the documented way petersburg left them at D397 and wilderness at D393;
+   crater/fort-stedman STAY forbidden), and the menu adjacency teeth pinned the pre-D442
+   chain (re-pinned to the shipped Chattanooga → Wilderness → Spotsylvania → COLD HARBOR →
+   Petersburg → Kennesaw order — each chain now guards MORE buttons). The
+   wilderness-plan/petersburg-plan meta-teeth (which grep these probes' source for the
+   cold-harbor tokens and forbid combined scan patterns) were proven green by direct regex
+   test BEFORE running. Standalone 15/15 · 16/16 · 15/15.
+5. **Row 'kennesaw' (`b5be203`):** the same family's DOM-variant tooth — D442 updated this
+   probe's registry-order tooth but missed its DOM sibling. Re-pinned to the six-button
+   chain. Standalone 11/11.
+6. **Row 'cedar creek' (`1a43027`):** the D436-missed ATLANTA-insert variant — cedar-creek's
+   registry tooth (reversed expression form) and probe-franklin's pre-D436 tooth both pinned
+   cedarCreek === kennesaw+1 across the shipped rank-71 Atlanta. Re-pinned to Kennesaw →
+   Atlanta → Cedar Creek → Franklin, and the family was then CLOSED by a tree-wide
+   mechanical audit validating EVERY adjacency assertion in tools/ (both expression forms)
+   against the shipped 26-battle order — zero stale assertions remain. Standalone green ×2.
+
+**Environmental root causes (no git change):** SIGTERM'd harness runs left orphaned headless
+Chromes holding memory on the 8 GB Mac — the row-'tactical roster' screenshot flake did not
+recur after cleanup; one transient 45s cold-boot page timeout (wilderness, first Chrome
+launch after a battery kill) was green on the immediate retry per the retry-first law.
+
+**THE RELEASE.** AD-0 flips SETTLED IN D454 (the last open row — the AUDIT-DEBT ledger is
+now fully discharged, AD-0..AD-19). LANE-009, LANE-010, and LANE-011 flip **SHIPPED**
+(unowned) with the battery head `1a43027` in each lane's record — the entire D423-D452 arc
+(seven FIX-NOW slices, the nine-slice overnight run, Atlanta, Cold Harbor, the eight GEA
+P1 slices, Mayhem Slice F) is released at a fully-audited head. Docs synced per the D412
+live-head law (HANDOFF top-block rotation with the D423 block archived verbatim under the
+probe-anchor inventory; START-HERE/WAKE-UP/RUN-LOG refreshed), plus the overdue
+V1-CHECKLIST gate-state stack archived verbatim (inventory-proven unpinned: no tool reads
+V1-CHECKLIST content). The two doc-grepping plan probes re-pinned at this head with the
+AD-7 chain idiom (the cold-harbor data fix + tonight's probe/harness edits legitimately
+moved dataTree/game/suite/focused). Invariants held throughout: 26 scenarios / schema 59 /
+Army Register 1,614 / suite 137 / `_SAVE_VER=1` / frozen base untouched / D74 clean / no
+new historical claims (every fix reused committed prose or pinned counts).
+
 ## D453 — THE FINAL AUDIT SETTLES AD-11..AD-19 IN FULL (FOUR DEAD-CODE-UNDER-OVERRIDE RUNTIME BUGS + SIX NEVER-RUN PROBE TEETH ROOT-FIXED); THE AD-0 BATTERY RUNS TO 72/137 GREEN WITH TWO BATTERY REDS ROOT-FIXED, THEN AARON CALLS THE SAFE STOP — [CLAUDE CODE (FABLE 5) + AARON, DEDICATED FINAL AUDIT SESSION] (2026-07-18)
 
 The dedicated final audit session (chartered to settle the ENTIRE AUDIT-DEBT ledger, then flip

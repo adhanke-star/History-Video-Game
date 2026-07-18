@@ -1159,11 +1159,17 @@ step("BASELINES + LANE", () => {
     // 60f73b23f03f08b978011100f6dea14d (D440 enrolls src/108); suite
     // 4bcdc6f252389a4bfd6bed269b52f8f0 -> 69987b22cda2916fb42f0a3f04b96a1b (D418 row 131,
     // D431 900s budget, D436 row 132, D442 row 133). base NEVER moves (frozen).
-    game:"4f9adfe5507b451b17c0999958f4a836",
+    // D454 re-pin (the AD-7 idiom, at the AD-0 completion head): the D454 battery root
+    // fixes legitimately moved three surfaces — dataTree 108961c5 -> 379d4223 and game
+    // 4f9adfe5 -> 6113bc2c (the row-'weather' fix: cold-harbor.json weather provenance
+    // decorated-string -> exact "Verified" enum, bbffcb4, + rebuild); suite 69987b22 ->
+    // edba2bd9 (the row-'gettysburg' 600s slow-Mac budget in timeoutFor, 7916d14).
+    // base/manifest/srcTree/runtime/journey/focused did NOT move (no src edit all night).
+    game:"6113bc2cb413547400d7e8398ddefde8",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
-    dataTree:"108961c595b04c33dc8c9aebedfc2cc1",
+    dataTree:"379d4223818782e89ec0b6f011d17f42",
     manifest:"60f73b23f03f08b978011100f6dea14d",
-    suite:"69987b22cda2916fb42f0a3f04b96a1b"
+    suite:"edba2bd930922a27414e07173a64296b"
   };
   for (const key of Object.keys(expectedHashes)) {
     if (hashes[key] !== expectedHashes[key]) throw new Error(key + " baseline moved: " + hashes[key]);
@@ -1546,8 +1552,11 @@ step("REACHABILITY BASELINES", () => {
     // AD-7 re-pin (D443) at the audit head — the D414-D442 release train plus the D443
     // audit root-fixes moved game/dataTree/srcTree/runtime/focused (chains above and in
     // DECISIONS D443); journey (src/37) did NOT move — the save-vector purity surface held.
-    game:"4f9adfe5507b451b17c0999958f4a836",
-    dataTree:"108961c595b04c33dc8c9aebedfc2cc1",
+    // D454 re-pin (chain in the D411-complete block above): game 4f9adfe5 -> 6113bc2c and
+    // dataTree 108961c5 -> 379d4223 (the bbffcb4 cold-harbor weather-provenance enum fix +
+    // rebuild); srcTree/runtime/journey/focused did NOT move.
+    game:"6113bc2cb413547400d7e8398ddefde8",
+    dataTree:"379d4223818782e89ec0b6f011d17f42",
     srcTree:"d1792e99f3ecbff70a3ba3cfd87eecb6",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",

@@ -1778,7 +1778,7 @@ next green commit and confer through this ledger instead of permitting simultane
 - **Last-touched commit:** D422 release pending.
 - **History:** selected and contracted in D422 after the D421 clean boundary; shipped in D422.
 
-### LANE-009 · finish-line-fixnow — **VERIFY** (unowned; every slice shipped, battery owed to the audit session)
+### LANE-009 · finish-line-fixnow — **SHIPPED** (unowned; D454 — the AD-0 battery ran 137/137 GREEN with every artifact read)
 
 - **Owning tool:** Claude Code (Fable 5) — Aaron authorized Fable-friendly sessions through
   Sunday 2026-07-19; owner recorded per §3-4 role law (TOP LOOP resolved to the live session
@@ -1877,13 +1877,13 @@ next green commit and confer through this ledger instead of permitting simultane
   SHIPPED. The overnight feature run opens its own LANE-010 and must not rerun this lane's
   slices.** **D443 note: the audit session settled AD-10..AD-1 and ran this lane's AD-0
   battery to 45/133 GREEN with zero reds before Aaron's extend-coding directive deferred it —
-  AD-0 alone still gates this lane's SHIPPED flip, at the final head.** **D453 note: the FINAL audit settled AD-11..AD-19, root-fixed two battery reds (the war-career wall pins; the h0-menu flow tooth), and ran AD-0 to 72/137 GREEN with zero unresolved reds before Aaron's safe stop — resume --from='field sandbox' (rows 73-137) at the D453 head, then this lane flips SHIPPED (D454).**
-- **Last-touched commit:** the D431 boundary close.
+  AD-0 alone still gates this lane's SHIPPED flip, at the final head.** **D453 note: the FINAL audit settled AD-11..AD-19, root-fixed two battery reds (the war-career wall pins; the h0-menu flow tooth), and ran AD-0 to 72/137 GREEN with zero unresolved reds before Aaron's safe stop — resume --from='field sandbox' (rows 73-137) at the D453 head, then this lane flips SHIPPED (D454).** **D454 SHIPPED: the resumed battery completed 137/137 GREEN (the 72-row D453 prefix + seven segments, six battery reds root-fixed at their exact labels — stale VETTING-DEFERRED pins and never-run teeth only, none weakened; final segment VET NO-REGRESSION OK at `1a43027`); all 136 artifact JSONs read with zero pageerrors/realErrors. This lane's D423-D430 slices are fully released.**
+- **Last-touched commit:** the D454 release (battery head `1a43027`).
 - **History:** adjudicated + contracted by Claude Code (Fable 5) 2026-07-17 under Aaron's
   finish-line directive; DRIVE taken in the same ledger-only commit; GEA-01 + S44 shipped in the
   D423 release the same day.
 
-### LANE-010 · overnight-feature-blitz — **VERIFY** (battery-only; unowned — AD-10..AD-1 settled in D443)
+### LANE-010 · overnight-feature-blitz — **SHIPPED** (unowned; D454 — the AD-0 battery ran 137/137 GREEN with every artifact read)
 
 - **Owning tool:** unowned (the combined closing session's lock RELEASED at the D443 boundary).
   The 2026-07-18 combined closing session (Claude Code / Fable 5, re-take `c463152`) ran
@@ -1946,12 +1946,16 @@ next green commit and confer through this ledger instead of permitting simultane
   session settles AD-0 + AD-11+ at the final head and flips LANE-009 + LANE-010 + the feature
   lane SHIPPED. **D453 note: AD-11..AD-19 are settled and AD-0 reached 72/137 GREEN (zero
   unresolved reds) before Aaron's safe stop — resume --from='field sandbox', then D454 flips
-  this lane SHIPPED.**
-- **Last-touched commit:** the D432 lock commit (this edit).
+  this lane SHIPPED.** **D454 SHIPPED: 137/137 GREEN (final segment at `1a43027`); six battery
+  reds root-fixed at their exact labels (the D453-adjudicated classes only — incl. the D442
+  cold-harbor provenance enum and the D436/D442-missed adjacency-pin family, closed by a
+  tree-wide audit); all 136 artifacts read, zero pageerrors/realErrors. The D432-D442 queue
+  is fully released.**
+- **Last-touched commit:** the D454 release (battery head `1a43027`).
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's D431 overnight
   directive.
 
-### LANE-011 · genre-elite-p1-build — **VERIFY** (battery-only; unowned — the queue is run down)
+### LANE-011 · genre-elite-p1-build — **SHIPPED** (unowned; D454 — the AD-0 battery ran 137/137 GREEN with every artifact read)
 
 - **Owning tool:** unowned (the Claude Code / Fable 5 lock RELEASED at the D452 boundary;
   the run executed within Aaron's authorized Fable window through Sunday 2026-07-19).
@@ -2059,7 +2063,11 @@ next green commit and confer through this ledger instead of permitting simultane
   **D453 note: AD-11..AD-19 ALL SETTLED (exact binds, md5 restores; four runtime root fixes
   on the live h0 owners; six teeth re-toothed stronger); AD-0 at 72/137 GREEN, safe-stopped —
   resume --from='field sandbox' at the D453 head, then D454 flips this lane SHIPPED.**
-- **Last-touched commit:** the D452 slice commit.
+  **D454 SHIPPED: 137/137 GREEN (final segment at `1a43027`); the four newest GEA rows
+  (learn-battle · chief-of-staff · concept-links · memory-chain) all rode the completed
+  battery green; six battery reds root-fixed at their exact labels, none weakened; all 136
+  artifacts read, zero pageerrors/realErrors. The D444-D452 slices are fully released.**
+- **Last-touched commit:** the D454 release (battery head `1a43027`).
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's genre-elite P1
   build-run directive (the D443 extend-coding continuation).
 

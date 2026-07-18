@@ -2,6 +2,26 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-18 — D454 the AD-0 COMPLETION + RELEASE session (137/137 GREEN; LANE-009/010/011 SHIPPED) + the D455 design Q&A
+
+The AD-0 completion session resumed the battery `--from='field sandbox'` at the D453 head and
+ran rows 73-137 to `VET NO-REGRESSION OK` — 137/137 GREEN total across the 72-row D453 prefix
+plus seven serialized segments (23+5+7+8+3+1+18; logs `.tmp/ad0-battery-resume3..10.log`).
+Every artifact read: 136 JSONs ok, zero pageerrors, zero realErrors, 232 screenshots. Six
+battery reds root-fixed at their exact labels (`bbffcb4` weather/cold-harbor provenance enum ·
+`2e2fcde` atlanta PHASE_COUNTS · `7916d14` gettysburg owning-process exit + 600s budget ·
+`9b7f58d` the six-site Overland forbidden-scan/adjacency family · `b5be203` kennesaw DOM
+adjacency · `1a43027` cedar-creek/franklin Atlanta-insert adjacency + the tree-wide audit
+closing the family) — every one a stale VETTING-DEFERRED pin or never-run tooth; none
+weakened. Environmental: orphaned headless Chromes cleaned (the roster screenshot flake);
+one cold-boot timeout green on retry. AD-0 → SETTLED IN D454; LANE-009 + LANE-010 +
+LANE-011 → SHIPPED; docs synced per the D412 law incl. the overdue 56-block V1-CHECKLIST
+gate-state archival (inventory-proven unpinned). In parallel (docs-only, battery-safe),
+Aaron locked ELEVEN popup rounds of design law for the next arc — recorded verbatim in
+`docs/design/unlocked-but-judged-design.md` (D455): UNLOCKED-BUT-JUDGED, the conquest
+layer, the terrain pipeline, the graphics uplift promoted to ARC 3, and the integrated
+ARC 0-9 roadmap.
+
 ## 2026-07-18 — D453 the FINAL AUDIT session (AD-11..AD-19 settled; the AD-0 battery to 72/137, safe-stopped)
 
 The dedicated final audit (Claude Code / Fable 5, within the authorized window) settled every

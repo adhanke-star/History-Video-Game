@@ -44,10 +44,13 @@ const PIN = {
   // 4bcdc6f252389a4bfd6bed269b52f8f0 -> 69987b22cda2916fb42f0a3f04b96a1b (D418 mayhem row
   // 131, D431 war-career 900s budget, D436 atlanta row 132, D442 cold harbor row 133).
   // base NEVER moves (frozen). warCareerRow 38 and _SAVE_VER 1 hold.
-  game: "4f9adfe5507b451b17c0999958f4a836",
+  // D454 re-pin (the AD-7 idiom, at the AD-0 completion head): game 4f9adfe5 -> 6113bc2c
+  // (the bbffcb4 cold-harbor weather-provenance enum fix + rebuild); suite 69987b22 ->
+  // edba2bd9 (the 7916d14 gettysburg 600s slow-Mac budget). base/manifest hold.
+  game: "6113bc2cb413547400d7e8398ddefde8",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
   manifest: "60f73b23f03f08b978011100f6dea14d",
-  suite: "69987b22cda2916fb42f0a3f04b96a1b",
+  suite: "edba2bd930922a27414e07173a64296b",
   scenarios: 26,   // D436: 24 -> 25 atlanta; D442: 25 -> 26 coldHarbor
   schemas: 59,   // D418: 54 -> 55 mayhem-rules.json; D436: 55 -> 56 atlanta.json; D442: 56 -> 57 cold-harbor.json; D445: 57 -> 58 chief-of-staff.json; D446: 58 -> 59 concept-links.json
   armyRegister: 1614,   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots
