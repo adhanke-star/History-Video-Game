@@ -136,14 +136,14 @@
         },
         {
           "id": "ld_whiting_gaines",
-          "name": "Maj. Gen. William H. C. Whiting",
+          "name": "Brig. Gen. William H. C. Whiting",
           "short": "Whiting",
           "quality": 0.68,
           "radius": 225,
           "attach": "cs_whiting_div",
           "atSec": 110,
           "fate": 2.6,
-          "note": "Whiting's division, including Law and Hood, struck the center-right of Porter's line. He was a major general at Gaines' Mill. (Verified identity and grade; CMH + ABT map.)",
+          "note": "Whiting's division, including Law and Hood, struck the center-right of Porter's line. He was a BRIGADIER general at Gaines' Mill; the major-generalcy came only in 1863 (appointed April 22, 1863, to rank from February 28, 1863). C73/D428 correction. (Verified identity and grade; U.S. War Department Serial Set roster of Confederate general officers, govinfo SERIALSET-05241, + Dictionary of North Carolina Biography, Clyde Wilson 1996, via NCpedia: brigadier general on the field of First Manassas July 21, 1861, commanding his division through the Seven Days as such.)",
           "teach": "Gen. Whiting falls - the division carrying Hood's brigade loses coordination."
         },
         {
@@ -224,7 +224,7 @@
       { "id": "us_slocum_div", "side": "US", "atSec": 70, "name": "Slocum's Division", "commander": "Brig. Gen. Henry W. Slocum", "arm": "inf", "weapon": "rifled", "role": "defend", "men": 6500, "xp": 2, "x": 585, "z": 145, "facing": 3.14159, "formation": "column", "entry": "the bridges from south of the Chickahominy", "note": "McClellan sent Slocum's VI Corps division, the principal reinforcement counted in the 27,000-man core abstraction. Verified identity; Inferred strength. CMH gives the division aggregate near 7,000; artillery is separated below." },
       { "id": "us_slocum_artillery", "side": "US", "atSec": 80, "name": "Slocum's Division Artillery", "commander": "VI Corps battery commanders", "arm": "art", "weapon": "rifled", "role": "defend", "guns": 18, "men": 500, "xp": 2, "x": 725, "z": 165, "facing": 3.14159, "formation": "column", "entry": "the Union reserve road", "note": "Artillery accompanying the Slocum reinforcement thickens Porter's gun advantage. Verified identity; Inferred strength. The aggregate completes the sourced 7,000-man division token under the universal gun model." },
       { "id": "cs_ewell_div", "side": "CS", "atSec": 85, "name": "Ewell's Division", "commander": "Maj. Gen. Richard S. Ewell", "arm": "inf", "weapon": "smooth", "role": "attack", "men": 3200, "xp": 2, "x": 925, "z": 825, "facing": 0, "formation": "column", "entry": "Jackson's delayed eastern approach", "note": "Ewell's division finally entered against Porter's right after a confused march. Verified identity; Inferred strength. The token is part of the bounded 16-brigade abstraction." },
-      { "id": "cs_whiting_div", "side": "CS", "atSec": 110, "name": "Whiting's Division - Law and Support", "commander": "Maj. Gen. William H. C. Whiting", "arm": "inf", "weapon": "rifled", "role": "attack", "men": 2900, "xp": 2, "x": 745, "z": 845, "facing": 0, "formation": "column", "entry": "the center-right approach", "note": "Whiting brought Law's brigade and divisional support; Hood's Texas Brigade is modeled separately to keep the breakthrough identity visible. Verified identity; Inferred strength. No men are double-counted between the two tokens." },
+      { "id": "cs_whiting_div", "side": "CS", "atSec": 110, "name": "Whiting's Division - Law and Support", "commander": "Brig. Gen. William H. C. Whiting", "arm": "inf", "weapon": "rifled", "role": "attack", "men": 2900, "xp": 2, "x": 745, "z": 845, "facing": 0, "formation": "column", "entry": "the center-right approach", "note": "Whiting brought Law's brigade and divisional support; Hood's Texas Brigade is modeled separately to keep the breakthrough identity visible. Verified identity; Inferred strength. No men are double-counted between the two tokens." },
       { "id": "cs_hood_texas", "side": "CS", "atSec": 120, "name": "Hood's Texas Brigade", "commander": "Brig. Gen. John B. Hood", "arm": "inf", "weapon": "rifled", "role": "attack", "men": 2500, "xp": 3, "x": 615, "z": 850, "facing": 0, "formation": "column", "entry": "Whiting's division at the final assault", "note": "Hood's Texas regiments made the first breach in the Federal line. Verified identity; Inferred strength. The higher experience is an Inferred universal input for a veteran brigade, not a scripted breakthrough or combat bonus." },
       { "id": "cs_jackson_support", "side": "CS", "atSec": 145, "name": "Jackson's Arriving Divisions", "commander": "Maj. Gen. Thomas J. Jackson", "arm": "inf", "weapon": "smooth", "role": "attack", "men": 5400, "xp": 2, "x": 455, "z": 855, "facing": 0, "formation": "column", "entry": "the Old Cold Harbor road", "note": "Jackson's remaining divisions and supporting elements added weight late after confused marches. Verified identity; Inferred strength. Ewell is separated above; this token carries no later wing or corps label." }
     ],

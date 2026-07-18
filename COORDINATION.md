@@ -1860,10 +1860,12 @@ next green commit and confer through this ledger instead of permitting simultane
   homeEdge/assaultDoctrine validated at battle + phase level with permanent battle-homeedge /
   battle-doctrine negative fixtures; real-file bind restored md5-identically).** **E75 SHIPPED
   (D427: the honest strip-then-accept policy tooth on an otherwise-valid unsafe payload;
-  scrub-removal bind).** Exact next: the ordered FIX-NOW slices C73 → C74 → E74 (D428+), one
-  focused-gated commit+push each, reading each REVIEW-QUEUE run-3 entry in full at slice start;
-  then the full serialized `npm run vet:noreg` battery alone on the machine.
-- **Last-touched commit:** the D427 E75 release.
+  scrub-removal bind).** **C73 SHIPPED (D428: Whiting Brig. Gen. at Gaines' Mill under the
+  Serial Set roster + DNCB two-source law; data/spec/probe renderings corrected; OOB inputs
+  byte-identical; one-token bind).** Exact next: the ordered FIX-NOW slices C74 → E74 (D429+),
+  one focused-gated commit+push each, reading each REVIEW-QUEUE run-3 entry in full at slice
+  start; then the full serialized `npm run vet:noreg` battery alone on the machine.
+- **Last-touched commit:** the D428 C73 release.
 - **History:** adjudicated + contracted by Claude Code (Fable 5) 2026-07-17 under Aaron's
   finish-line directive; DRIVE taken in the same ledger-only commit; GEA-01 + S44 shipped in the
   D423 release the same day.

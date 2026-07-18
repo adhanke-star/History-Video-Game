@@ -4,6 +4,38 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D428 — C73 SHIPPED: WHITING IS A BRIGADIER GENERAL AT GAINES' MILL UNDER THE TWO-SOURCE LAW — [CLAUDE CODE (FABLE 5), LANE-009 DRIVE] (2026-07-17)
+
+C73 (run-3 MED, battle-date rank/citation integrity): `data/gaines-mill.json` graded W. H. C.
+Whiting "Maj. Gen." on June 27, 1862 — four days before Malvern Hill's correct "Brig. Gen." — and
+its leader note claimed the grade as Verified ("CMH + ABT map"). The two-source adjudication is
+complete and the major-generalcy is REJECTED at Gaines' Mill: (1) the postwar U.S. War Department
+Serial Set roster of Confederate general officers (govinfo SERIALSET-05241, linked in the run-3
+ledger) records Whiting's major-general appointment on April 22, 1863, to rank from February 28,
+1863; (2) the Dictionary of North Carolina Biography (Clyde Wilson, 1996, via NCpedia,
+ncpedia.org/biography/whiting-william-henry) has him promoted brigadier general on the field of
+First Manassas on July 21, 1861, commanding his division "with conspicuous ability" through the
+Peninsula/Seven Days as such, with the major-generalcy following his November 1862 Wilmington
+assignment. The repo's own Malvern Hill built-battle audit ("MG only Feb 1863") already agreed.
+
+Corrected renderings: both gaines-mill.json rank strings (leader entry + `cs_whiting_div`
+reinforcement) now read "Brig. Gen. William H. C. Whiting" with the leader note carrying the full
+two-source trail; the Gaines' Mill spec's §rank-wall line mis-grading Whiting is corrected with a
+C73/D428 note (Longstreet/D. H. Hill/Ewell stay major generals) and its checklist line updated;
+`tools/probe-gaines-mill.mjs` pins the exact corrected grade AND adds
+/Maj\. Gen\. William H\. C\. Whiting/ to the forbidden-rank scan; `tools/probe-gaines-mill-plan.mjs`
+updates its spec pin, exact-rank list, and forbidden list identically. OOB INPUTS PRESERVED: men,
+xp, guns, timing, positions, totals (27,000/32,000, guns 72/32) byte-identical; direction stayed
+8/8 CS objective + 8/8 CS-bleeds-more. Malvern Hill needed no change.
+
+Bind: the one-token Brig.→Maj. tamper on the leader entry made exactly the RANK + SOURCES check
+red ("missing exact rank Brig. Gen. William H. C. Whiting"); byte-identical restore (data
+`58162296fdfdd840c0c2b606fcfef945`, probe `f0d1335e36a6abefd3aec59cf67c5906`, generated
+`d015aedd96ff12c820018e58ed5b0a58`) with rebuild + green rerun. Gates: build GATE OK; schema
+55/55; probe-gaines-mill-plan 8/8; probe-gaines-mill 13/13; adjacent probe-malvern-hill 27/27;
+zero pageerrors. Invariants hold: 24/55/1,512/131, `_SAVE_VER=1`, frozen base, D74. REVIEW-QUEUE
+C73 flips fixed-in-D428; LANE-009 next slice is C74.
+
 ## D427 — E75 SHIPPED: THE UNSAFE-KEY TOOTH NOW PROVES THE REAL POLICY ON AN OTHERWISE-VALID PAYLOAD — [CLAUDE CODE (FABLE 5), LANE-009 DRIVE] (2026-07-17)
 
 E75 (run-3 LOW, probe truthfulness): the custom-builder "unsafe key rejection" tooth used a

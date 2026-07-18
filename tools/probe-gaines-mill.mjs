@@ -160,9 +160,9 @@ const SETUP = `(() => {
     check('RANK + SOURCES: exact battle-date grades and source plurality survive in runtime data', function() {
       var leaders = [], sides = ['US', 'CS'];
       for (var si = 0; si < sides.length; si++) for (var li = 0; li < ((DATA.leaders || {})[sides[si]] || []).length; li++) leaders.push(DATA.leaders[sides[si]][li].name);
-      ['Brig. Gen. Fitz John Porter', 'Maj. Gen. A. P. Hill', 'Brig. Gen. John B. Hood', 'Maj. Gen. Thomas J. Jackson', 'Maj. Gen. James Longstreet', 'Maj. Gen. D. H. Hill', 'Maj. Gen. Richard S. Ewell', 'Maj. Gen. William H. C. Whiting'].forEach(function(name){ if (leaders.indexOf(name) < 0) throw new Error('missing exact rank ' + name); });
+      ['Brig. Gen. Fitz John Porter', 'Maj. Gen. A. P. Hill', 'Brig. Gen. John B. Hood', 'Maj. Gen. Thomas J. Jackson', 'Maj. Gen. James Longstreet', 'Maj. Gen. D. H. Hill', 'Maj. Gen. Richard S. Ewell', 'Brig. Gen. William H. C. Whiting'].forEach(function(name){ if (leaders.indexOf(name) < 0) throw new Error('missing exact rank ' + name); });   // C73/D428: Whiting Maj. -> Brig. (MG only Feb 28, 1863 rank date; Serial Set roster + DNCB)
       var body = JSON.stringify(DATA);
-      [/Maj\\. Gen\\. Fitz John Porter/, /Brig\\. Gen\\. A\\. P\\. Hill/, /Lt\\. Gen\\. A\\. P\\. Hill/, /Maj\\. Gen\\. John B\\. Hood/, /Lt\\. Gen\\. John B\\. Hood/, /\\bFirst Corps\\b/, /\\bSecond Corps\\b/, /\\bThird Corps\\b/, /Turkey Hill/].forEach(function(re){ if (re.test(body)) throw new Error('forbidden rank/place leaked: ' + re); });
+      [/Maj\\. Gen\\. Fitz John Porter/, /Brig\\. Gen\\. A\\. P\\. Hill/, /Lt\\. Gen\\. A\\. P\\. Hill/, /Maj\\. Gen\\. John B\\. Hood/, /Lt\\. Gen\\. John B\\. Hood/, /Maj\\. Gen\\. William H\\. C\\. Whiting/, /\\bFirst Corps\\b/, /\\bSecond Corps\\b/, /\\bThird Corps\\b/, /Turkey Hill/].forEach(function(re){ if (re.test(body)) throw new Error('forbidden rank/place leaked: ' + re); });   // C73/D428: the retired Whiting major-generalcy is now forbidden text
       if (/McClellan/.test(JSON.stringify(DATA.leaders || {})) || /Lt\\. Gen\\./.test(JSON.stringify(DATA.leaders || {}))) throw new Error('forbidden on-map leader leaked');
       return { leaders:leaders };
     });

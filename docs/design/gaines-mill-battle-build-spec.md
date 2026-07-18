@@ -78,7 +78,8 @@ The runtime probe must search the full Gaines' Mill payload, including leaders, 
 - **John Bell Hood:** `Brig. Gen. John B. Hood`, Texas Brigade. Reject major-general and lieutenant-general labels at Gaines' Mill.
 - **Robert E. Lee:** General, commanding the Army of Northern Virginia. Lee can appear as overall Confederate leader.
 - **Thomas J. Jackson:** Major General and wing commander. Reject a June 1862 lieutenant-general or corps label.
-- **James Longstreet, D. H. Hill, Richard S. Ewell, and William H. C. Whiting:** major generals in the battle OOB. Runtime text should avoid later formal corps labels.
+- **James Longstreet, D. H. Hill, and Richard S. Ewell:** major generals in the battle OOB. Runtime text should avoid later formal corps labels.
+- **William H. C. Whiting:** `Brig. Gen. William H. C. Whiting` — a BRIGADIER general commanding his division at Gaines' Mill *(C73/D428 correction: this spec previously mis-graded him major general, and the shipped data inherited it)*. The postwar U.S. War Department Serial Set roster of Confederate general officers (govinfo SERIALSET-05241) records his major-general appointment on April 22, 1863, to rank from February 28, 1863; the Dictionary of North Carolina Biography (Clyde Wilson, 1996, via NCpedia) has him promoted brigadier general on the field of First Manassas on July 21, 1861, commanding his division "with conspicuous ability" through the Seven Days as such, with the major-generalcy following his November 1862 Wilmington assignment. Reject `Maj. Gen. William H. C. Whiting` in this battle; Malvern Hill's `Brig. Gen. W. H. C. Whiting` four days later was already correct.
 - **George B. McClellan:** Major General and army commander, but south of the Chickahominy. He belongs in teaching context and must not appear as an on-map Gaines' Mill leader.
 - **V Corps label:** Porter's formation was the Fifth Provisional Army Corps in late June. `V Corps` is acceptable game shorthand only when a note names the provisional status.
 
@@ -194,7 +195,7 @@ When `data/gaines-mill.json` exists, `tools/probe-gaines-mill.mjs` must verify:
 - Watt House, Boatswain's Creek/Swamp, Adams farm, Chickahominy, and Old/New Cold Harbor context;
 - US modeled strength 27,000 at the agreed abstraction and Confederate modeled strength 31,500-32,500, with Inferred labels on unsourced splits;
 - more Union guns than Confederate guns, all artillery using positive gun counts and sane crews;
-- Porter/Hill/Hood battle-date ranks; Jackson, Longstreet, D. H. Hill, Ewell, and Whiting as major generals without later corps labels; McClellan absent from the on-map leader list;
+- Porter/Hill/Hood battle-date ranks; Jackson, Longstreet, D. H. Hill, and Ewell as major generals and Whiting as a brigadier general (C73/D428) without later corps labels; McClellan absent from the on-map leader list;
 - role-aware home edges plus a negative leak test against the sandbox;
 - no forbidden D74 key at any depth;
 - deterministic same-seed replay and passive US/CS completion without hangs or NaN;

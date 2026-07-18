@@ -259,7 +259,8 @@ step("SCAFFOLD: D362 runtime obligations cover data, schema, registry, direction
     "more Union guns than Confederate guns",
     "role-aware home edges",
     "eight-seed split direction guard",
-    "Jackson, Longstreet, D. H. Hill, Ewell, and Whiting as major generals",
+    "Jackson, Longstreet, D. H. Hill, and Ewell as major generals and Whiting as a brigadier general",   // C73/D428: the spec's Whiting grade corrected
+
     "each claim carrying at least two source URLs",
     "at least five teaching cards",
     "Army Register pin increase equals unique new Gaines' Mill unit ids times three"
@@ -426,11 +427,12 @@ step("REGISTRY: D361 stays planned-only; any future data file requires complete 
   for (const rank of [
     "Brig. Gen. Fitz John Porter", "Maj. Gen. A. P. Hill", "Brig. Gen. John B. Hood",
     "Maj. Gen. Thomas J. Jackson", "Maj. Gen. James Longstreet", "Maj. Gen. D. H. Hill",
-    "Maj. Gen. Richard S. Ewell", "Maj. Gen. William H. C. Whiting"
+    "Maj. Gen. Richard S. Ewell", "Brig. Gen. William H. C. Whiting"   // C73/D428: Whiting Maj. -> Brig. (Serial Set roster + DNCB)
   ]) if (!onMapLeaderNames.includes(rank)) throw new Error("runtime on-map leader rank tooth missing " + rank);
   const forbiddenRankText = [
     /Maj\. Gen\. Fitz John Porter/, /Brig\. Gen\. A\. P\. Hill/, /Lt\. Gen\. A\. P\. Hill/,
-    /Maj\. Gen\. John B\. Hood/, /Lt\. Gen\. John B\. Hood/, /Longstreet's Corps/,
+    /Maj\. Gen\. John B\. Hood/, /Lt\. Gen\. John B\. Hood/, /Maj\. Gen\. William H\. C\. Whiting/,   // C73/D428
+    /Longstreet's Corps/,
     /Jackson's Corps/, /A\. P\. Hill's Corps/, /\bFirst Corps\b/, /\bSecond Corps\b/, /\bThird Corps\b/
   ];
   if (forbiddenRankText.some(re => re.test(runtimeText))) throw new Error("runtime contains an anachronistic rank or later Confederate corps label");
