@@ -4,6 +4,55 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D445 — GEA-08 SHIPPED: THE CHIEF OF STAFF MORNING BRIEF (DATA-DECLARED, PURE, THREE-LINE CAP, DEEP LINKS) — [CLAUDE CODE (FABLE 5), LANE-011 DRIVE] (2026-07-18)
+
+LANE-011 slice 2, built exactly to the D441 GEA-08 contract (re-read in full at slice start).
+
+SHIPPED: (1) `data/chief-of-staff.json` (schema family 57 → 58, the documented pin-bump idiom)
+— `cw_chief_of_staff_v1`: config {maxLines 3, the honest allQuiet copy} + SEVEN data-declared
+rules (id → reader id → lt/gte threshold → severity → plain-text {value} copy template →
+target tab → label): pending decisions ≥1 (sev 90) → Decisions; funds <60 (80) → Treasury;
+public morale <35 (70), manpower pool <300k (60), rail integrity <50 (40) → The War Effort;
+recognition ≥60 (50) → Diplomacy; inflation ≥12%/quarter (45) → Treasury. Thresholds are
+presentation-tuning values, not history claims — no new historical prose (citation law not
+triggered). (2) `src/109-chief-of-staff.js` (manifest 108 → 109): cosData sanitized fail-closed
+read · cosReaderValue — the CLOSED reader registry · cosBriefLines — deterministic (severity
+desc, ties by id asc, {value} 0.1-rounded), hard-capped at 3 · cosBriefHtml — the panel with
+role=region, per-line deep-link buttons (escaped aria-labels, schema-constrained tab ids), the
+allQuiet state, "" when data/module absent (byte-identical desk) · cosWireBrief — deep links
+via the same _wdTab/_wdRefresh path the tab buttons use. **THE PURITY INTERPRETATION
+(recorded):** the contract says "readers are the same functions the tabs already call," but
+the recon proved those tab functions LAZY-INIT the live campaign (econRenderFinance→econInit,
+blockadeRenderDiplomacy→blockadeInit, decRenderTab→decInit, moraleCompute→bridgeArmy→
+engInit/logistics writes) — exactly the D443 §19 mutation class the audit root-fixed in
+warCareerArchiveRecord. The brief therefore reads the SAME already-materialized per-turn
+property paths those functions render (C.president.pendingChoices.length, C.funds,
+C.economy.lastTurn.inflRatePct, C.morale.public, C.manpower.pool, C.blockade.recognition,
+C.production.railIntegrity — each computed by the domains' own OnResolve chain every turn),
+and NEVER calls a lazy-init wrapper; a probe tooth pins the absence of those calls. No new
+aggregate is computed anywhere. Unknown reader ids and unavailable values DROP their rule,
+never throw. (3) The desk seam: two guarded lines in `src/30-president-shell.js` — the panel
+composed above wdTabs (outside wdContent so deep links survive refreshes) + the wire call.
+(4) Validator law: SCHEMA_REQUIREMENTS enrollment + validateChiefOfStaff (closed shapes end
+to end; reader ids closed; tab ids LIVE-DERIVED from the src/30 tab registry literal — the
+D423 registry-truth idiom; plain-text copy only) + the PERMANENT `cos-badrule` fixture
+(unknown reader + unreal tab into rules[0]) — run at ship: 57/58 ok=false under injection,
+58/58 green clean. (5) `tools/probe-chief-of-staff.mjs` AUTHORED (static: data closed shape /
+tab truth / seam-manifest-validator pins / the no-lazy-init purity-by-construction grep;
+browser: determinism, the §19-class purity snapshot (deep JSON before/after), the three-line
+cap + severity order on a crafted crisis state, the fail-closed unknown-reader drop with
+restore, the all-quiet honesty, panel presence above wdTabs on the REAL desk + a deep-link
+click flipping aria-pressed; two binds predeclared in the header) — NOT run this session.
+(6) Suite 134 → 135 (row at the END) + schema pins 57 → 58, swept at ALL sites
+(probe-mayhem-mode ×2, probe-open-history-mayhem-plan ×2, probe-war-career-loop-plan ×5,
+probe-war-career ×4, probe-women-in-war-arc-plan, vet-no-regression, the validator's
+transition comment). Scenarios stay 26, Register 1,614, `_SAVE_VER=1`, frozen base untouched.
+
+**VETTING DEFERRED (D443):** ran node --check ×10, manifest+data JSON parse, build GATE OK
+(manifest enrollment verified by the build's completeness gate), schema 58/58 + the
+cos-badrule fixture proof, git diff --check. The focused probe run, both binds, and the
+desk byte-equivalence spot-proof are owed as AUDIT-DEBT AD-12 (REVIEW-QUEUE.md).
+
 ## D444 — GEA-07 SHIPPED: LEARN-THE-BATTLE METADATA ON ALL 26 SCENARIOS + THE NON-BINDING RECOMMENDATION CARD — [CLAUDE CODE (FABLE 5), LANE-011 DRIVE] (2026-07-18)
 
 LANE-011 slice 1, built exactly to the D441 contract (docs/design/genre-elite-p1-contracts.md

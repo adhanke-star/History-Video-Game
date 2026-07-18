@@ -144,7 +144,8 @@ const SUITE = [
   ['classic paint', 'tools/diag-classic.mjs'],
   ['atlanta', 'tools/probe-atlanta.mjs'],   // D436: suite 131 -> 132 — appended at the END so every existing row pin (war career 38, mayhem 57) holds; the audit session runs the full 132
   ['cold harbor', 'tools/probe-cold-harbor.mjs'],   // D442: suite 132 -> 133 — appended at the END so every existing row pin (war career 38, mayhem 57) holds; the audit session runs the full 133
-  ['learn the battle', 'tools/probe-learn-battle.mjs']   // D444: suite 133 -> 134 — GEA-07 appends at the END so every existing row pin (war career 38, mayhem 57) holds; the FINAL audit session runs the full suite
+  ['learn the battle', 'tools/probe-learn-battle.mjs'],   // D444: suite 133 -> 134 — GEA-07 appends at the END so every existing row pin (war career 38, mayhem 57) holds; the FINAL audit session runs the full suite
+  ['chief of staff', 'tools/probe-chief-of-staff.mjs']   // D445: suite 134 -> 135 — GEA-08 appends at the END likewise
 ];
 
 const listOnly = process.argv.includes('--list');

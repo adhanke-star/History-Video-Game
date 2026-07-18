@@ -179,6 +179,10 @@ function openWarDept() {
     '<p class="title-sub" style="text-align:center">' + (head.title || '')
       + (head.seat ? ' &mdash; ' + head.seat : '') + '</p>' +
     '<hr class="rule">' +
+    // GEA-08 (D445): the Chief of Staff morning brief — a READ-ONLY, data-declared three-line
+    // priority panel above the tab row (outside wdContent so its deep links survive refreshes).
+    // "" when the module or its data is absent -> the desk is byte-identical.
+    ((typeof cosBriefHtml === "function") ? cosBriefHtml(C) : "") +
     '<div id="wdTabs" role="group" aria-label="President\'s Desk sections" style="display:flex;gap:6px;justify-content:center;margin-bottom:12px;flex-wrap:wrap">' +
       _wdTabBtn("economy", "The War Effort") +
       _wdTabBtn("treasury", "The Treasury") +
@@ -214,6 +218,8 @@ function openWarDept() {
     var b = document.getElementById("wdTab_" + k);
     if (b) b.addEventListener("click", function () { _wdTab = k; _wdRefresh(); });
   });
+  // GEA-08 (D445): wire the brief's deep links (guarded; no-op when the module is absent).
+  if (typeof cosWireBrief === "function") { try { cosWireBrief(C); } catch (e) {} }
 }
 
 /* The between-battles strategic-turn surface. Opens an overlay sheet; one click

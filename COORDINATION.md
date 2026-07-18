@@ -2007,9 +2007,14 @@ next green commit and confer through this ledger instead of permitting simultane
   56/57 under injection, 57/57 clean); fldLearnCardHtml (T1) composed on the T7 side-choice
   sheet behind a typeof guard ("" without learnMeta → byte-identical picker);
   probe-learn-battle AUTHORED with two predeclared binds; suite 133→134 with all 11 pin
-  sites bumped under the documented idiom; AUDIT-DEBT AD-11.** Exact next: slice 2 (GEA-08
-  Chief of Staff morning brief) — re-read its contract in full first.
-- **Last-touched commit:** the D444 slice commit.
+  sites bumped under the documented idiom; AUDIT-DEBT AD-11.** **D445 SHIPPED slice 2
+  (GEA-08): the data-declared morning brief (schema 57→58; manifest 109; the desk panel +
+  deep links; PURE property-path readers per the D443 §19 lesson — no lazy-init wrapper
+  called, probe-pinned); validator family + cos-badrule fixture (proven 57/58 under
+  injection); probe-chief-of-staff AUTHORED with two predeclared binds; suite 134→135
+  swept; AUDIT-DEBT AD-12.** Exact next: slice 3 (GEA-10 concept ids + focus-returning
+  deep links) — re-read its contract in full first.
+- **Last-touched commit:** the D445 slice commit.
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's genre-elite P1
   build-run directive (the D443 extend-coding continuation).
 

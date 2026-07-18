@@ -13,7 +13,7 @@ const DATA = join(ROOT, 'data');
 const SHOTS = join(__dirname, 'shots');
 const diagnosticArg = process.argv.find(arg => arg.startsWith('--diagnostic-invalid='));
 const DIAGNOSTIC_INVALID = diagnosticArg ? diagnosticArg.slice('--diagnostic-invalid='.length) : '';
-const DIAGNOSTIC_FAMILIES = new Set(['', 'all', 'battle', 'meta', 'schema', 'ratings', 'battle-homeedge', 'battle-doctrine', 'battle-learnmeta']);
+const DIAGNOSTIC_FAMILIES = new Set(['', 'all', 'battle', 'meta', 'schema', 'ratings', 'battle-homeedge', 'battle-doctrine', 'battle-learnmeta', 'cos-badrule']);
 if (!DIAGNOSTIC_FAMILIES.has(DIAGNOSTIC_INVALID)) {
   console.error('Unknown diagnostic family: ' + DIAGNOSTIC_INVALID);
   process.exit(2);
@@ -32,7 +32,8 @@ const BATTLE_FILES = new Set([
 ]);
 // D442: 56 -> 57 data files — cold-harbor.json enrolls as the 26th battle family member (the
 // documented pin-bump idiom; prior transitions D436 55->56 Atlanta, D397 53->54 Petersburg,
-// D393 52->53 Wilderness).
+// D393 52->53 Wilderness). D445: 57 -> 58 — chief-of-staff.json enrolls in the schema family
+// (GEA-08; scenarios stay 26).
 
 const META_REQUIREMENTS = new Map([
   ['cabinet.json', ['_meta', 'sides', 'crossCards']],
@@ -47,6 +48,7 @@ const META_REQUIREMENTS = new Map([
 ]);
 
 const SCHEMA_REQUIREMENTS = new Map([
+  ['chief-of-staff.json', ['schema', 'schemaVersion', 'config', 'rules']],
   ['mayhem-rules.json', ['schema', 'version', 'actions']],
   ['artillery.json', ['schemaVersion', 'guns', 'teachingCards']],
   ['cs-finance.json', ['schema', 'schemaVersion', 'config', 'profile', 'instruments']],
@@ -155,6 +157,51 @@ function validateMayhem(data, issues) {
     if (!Array.isArray(action.effects) || !action.effects.length || action.effects.length > 64) issues.push(p + '.effects malformed');
     else action.effects.forEach((effect, ei) => { const q=p+'.effects['+ei+']'; exactKeys(effect,['operation','target','value','tag'],q,issues); if(!MAYHEM_OPERATIONS.has(effect.operation))issues.push(q+'.operation unknown'); if(!stableId(effect.target))issues.push(q+'.target malformed'); if(!Number.isFinite(effect.value)||Math.abs(effect.value)>1000000)issues.push(q+'.value unsafe'); if(effect.tag!==undefined){exactKeys(effect.tag,['namespace','value'],q+'.tag',issues);if(!MAYHEM_TAGS.has(effect.tag.namespace))issues.push(q+'.tag.namespace unknown');if(!stableId(effect.tag.value))issues.push(q+'.tag.value malformed');} });
     if (exactKeys(action.presentation,['label','summary','tone','icon'],p+'.presentation',issues)) { const x=action.presentation; if(!safeText(x.label,80)||!safeText(x.summary,240)||!safeText(x.tone,32)||!stableId(x.icon))issues.push(p+'.presentation invalid'); }
+  });
+}
+
+// GEA-08 (D445): the Chief of Staff brief data — closed shapes end to end. Reader ids are the
+// CLOSED registry src/109-chief-of-staff.js resolves (pure property-path reads); tab ids are
+// LIVE-DERIVED from the src/30 desk shell's tab registry (the D423 registry-truth idiom — a
+// renamed/removed desk tab forces this data file to move with it). Copy templates are plain
+// text ({value} substitution only): no markup, no eval-shaped content.
+const COS_READER_IDS = new Set([
+  'decisions-pending', 'treasury-funds', 'treasury-inflation', 'morale-public',
+  'manpower-pool', 'blockade-recognition', 'rail-integrity'
+]);
+let COS_TAB_SET = null;
+function cosDeskTabSet(issues) {
+  if (COS_TAB_SET) return COS_TAB_SET;
+  try {
+    const shell = readFileSync(join(ROOT, 'src', '30-president-shell.js'), 'utf8');
+    const m = shell.match(/var tabs = \[([^\]]+)\]/);
+    if (m) COS_TAB_SET = new Set(m[1].split(',').map(s => s.trim().replace(/^"|"$/g, '')).filter(Boolean));
+  } catch (e) { /* fall through */ }
+  if (!COS_TAB_SET || !COS_TAB_SET.size) { COS_TAB_SET = new Set(); issues.push('cannot derive the desk tab registry from src/30-president-shell.js'); }
+  return COS_TAB_SET;
+}
+function validateChiefOfStaff(data, issues) {
+  exactKeys(data, ['_comment', 'schema', 'schemaVersion', 'config', 'rules'], 'root', issues);
+  if (data.schema !== 'cw_chief_of_staff_v1') issues.push('schema must be cw_chief_of_staff_v1');
+  if (data.schemaVersion !== 1) issues.push('schemaVersion must be 1');
+  if (exactKeys(data.config, ['maxLines', 'allQuiet'], 'config', issues)) {
+    if (!Number.isInteger(data.config.maxLines) || data.config.maxLines < 1 || data.config.maxLines > 3) issues.push('config.maxLines must be an integer 1-3');
+    if (!safeText(data.config.allQuiet, 240) || /[<>]/.test(data.config.allQuiet)) issues.push('config.allQuiet must be bounded plain text');
+  }
+  if (!Array.isArray(data.rules) || !data.rules.length || data.rules.length > 16) { issues.push('rules must be a nonempty array of at most 16'); return; }
+  const tabs = cosDeskTabSet(issues);
+  const ids = new Set();
+  data.rules.forEach((rule, i) => {
+    const p = 'rules[' + i + ']';
+    if (!exactKeys(rule, ['id', 'reader', 'op', 'threshold', 'severity', 'copy', 'tab', 'label'], p, issues)) return;
+    if (!stableId(rule.id)) issues.push(p + '.id malformed'); else if (ids.has(rule.id)) issues.push(p + '.id duplicate'); else ids.add(rule.id);
+    if (!COS_READER_IDS.has(rule.reader)) issues.push(p + '.reader unknown reader id ' + JSON.stringify(rule.reader));
+    if (rule.op !== 'lt' && rule.op !== 'gte') issues.push(p + '.op must be lt or gte');
+    if (!Number.isFinite(rule.threshold)) issues.push(p + '.threshold must be finite');
+    if (!Number.isFinite(rule.severity) || rule.severity < 0 || rule.severity > 100) issues.push(p + '.severity must be 0-100');
+    if (!safeText(rule.copy, 240) || /[<>]/.test(rule.copy)) issues.push(p + '.copy must be bounded plain text (no markup)');
+    if (tabs.size && !tabs.has(rule.tab)) issues.push(p + '.tab is not a live desk tab id: ' + JSON.stringify(rule.tab));
+    if (!safeText(rule.label, 40) || /[<>]/.test(rule.label)) issues.push(p + '.label must be bounded plain text');
   });
 }
 
@@ -355,6 +402,7 @@ function validateDocument(file, data) {
     if (!marker) issues.push('schema/version marker missing');
     else if (!((typeof data[marker] === 'string' && data[marker].trim()) || (typeof data[marker] === 'number' && Number.isFinite(data[marker])))) issues.push(marker + ' must be a nonempty string or finite number');
     if (file === 'mayhem-rules.json') validateMayhem(data, issues);
+    if (file === 'chief-of-staff.json') validateChiefOfStaff(data, issues);
     extraInfo = (marker ? marker + '=' + String(data[marker]) : 'no version marker') + ', ' + rule.required.length + ' explicit keys';
   } else if (rule.family === 'ratings') {
     if (typeof data._meta !== 'string' || !data._meta.trim()) issues.push('_meta must be a nonempty string');
@@ -369,10 +417,18 @@ function injectDiagnostic(file, family, data, rule, applied) {
   // E73 (D426): 'battle-homeedge' / 'battle-doctrine' are PERMANENT NEGATIVE FIXTURES for the
   // optional gameplay-input checks — they inject exactly the silent-typo class the checks exist
   // to catch (US "lo"; "cautius") into the first battle file, proving the teeth on demand.
-  const wants = (DIAGNOSTIC_INVALID === 'all') ? family : (DIAGNOSTIC_INVALID.indexOf('battle-') === 0 ? 'battle' : DIAGNOSTIC_INVALID);
+  const wants = (DIAGNOSTIC_INVALID === 'all') ? family : (DIAGNOSTIC_INVALID.indexOf('battle-') === 0 ? 'battle' : (DIAGNOSTIC_INVALID === 'cos-badrule' ? 'schema' : DIAGNOSTIC_INVALID));
   if (!DIAGNOSTIC_INVALID || wants !== family || applied.some(item => item.family === family)) return data;
+  // GEA-08 (D445): the cos-badrule PERMANENT NEGATIVE FIXTURE targets exactly chief-of-staff.json
+  // (an unknown reader id + an unreal desk tab — the silent-rule-drop class the checks exist to name).
+  if (DIAGNOSTIC_INVALID === 'cos-badrule' && file !== 'chief-of-staff.json') return data;
   const copy = JSON.parse(JSON.stringify(data));
   let key = '';
+  if (DIAGNOSTIC_INVALID === 'cos-badrule') {
+    if (Array.isArray(copy.rules) && copy.rules.length) { copy.rules[0].reader = 'not-a-reader'; copy.rules[0].tab = 'not-a-tab'; }
+    applied.push({ family, file, removed: 'rules[0].reader/tab (GEA-08 invalid fixture)' });
+    return copy;
+  }
   if (family === 'battle') {
     const battleKey = Object.keys(copy).find(name => !META_ROOT_KEYS.has(name));
     if (battleKey && isObject(copy[battleKey])) {

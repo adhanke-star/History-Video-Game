@@ -96,7 +96,8 @@
     "105-save-guard.js",
     "106-war-career.js",
     "107-mayhem-rules.js",
-    "108-tactical-coach.js"
+    "108-tactical-coach.js",
+    "109-chief-of-staff.js"
   ],
   "overrides": [
     "_t1InitAll",

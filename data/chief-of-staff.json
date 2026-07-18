@@ -1,0 +1,18 @@
+{
+  "_comment": "GEA-08 (D445): the Chief of Staff morning brief — DATA-DECLARED priority rules for the read-only three-line panel at the top of the President's Desk (docs/design/genre-elite-p1-contracts.md GEA-08). Each rule: a stable id, a reader id resolved by src/109-chief-of-staff.js's CLOSED registry of pure property-path reads (the already-materialized per-turn values the desk tabs themselves render — the D443 §19 purity lesson: the brief NEVER calls a lazy-init tab wrapper), a threshold op (lt | gte), a deterministic severity for the ordering (desc, ties by id asc), a plain-text copy template ({value} substitution only — no HTML, no eval), the REAL desk tab id the line deep-links to, and a short label. The panel caps at config.maxLines (hard-capped 3 in code), writes NOTHING, computes NO new aggregates, and renders the honest allQuiet state when no rule fires. Thresholds are presentation-tuning values, not history claims. Validated by tools/validate-data-schemas.mjs (validateChiefOfStaff; the cos-badrule permanent fixture): closed shapes, known reader ids, ops, bounded rules, and tab ids live-derived from the src/30 shell registry.",
+  "schema": "cw_chief_of_staff_v1",
+  "schemaVersion": 1,
+  "config": {
+    "maxLines": 3,
+    "allQuiet": "All quiet this morning, Mr. President — no office demands your immediate attention."
+  },
+  "rules": [
+    { "id": "cos-decisions", "reader": "decisions-pending", "op": "gte", "threshold": 1, "severity": 90, "copy": "{value} decision(s) await your signature.", "tab": "decisions", "label": "Decisions" },
+    { "id": "cos-treasury", "reader": "treasury-funds", "op": "lt", "threshold": 60, "severity": 80, "copy": "The treasury is down to ${value} — revenue needs attention.", "tab": "treasury", "label": "The Treasury" },
+    { "id": "cos-morale", "reader": "morale-public", "op": "lt", "threshold": 35, "severity": 70, "copy": "Public morale stands at {value} of 100 — the home front is wavering.", "tab": "economy", "label": "The War Effort" },
+    { "id": "cos-manpower", "reader": "manpower-pool", "op": "lt", "threshold": 300, "severity": 60, "copy": "The mobilizable reserve is down to {value} thousand men.", "tab": "economy", "label": "The War Effort" },
+    { "id": "cos-recognition", "reader": "blockade-recognition", "op": "gte", "threshold": 60, "severity": 50, "copy": "Foreign recognition pressure stands at {value} of 100.", "tab": "diplomacy", "label": "Diplomacy" },
+    { "id": "cos-inflation", "reader": "treasury-inflation", "op": "gte", "threshold": 12, "severity": 45, "copy": "Prices rose {value}% last quarter — inflation is eating the war chest.", "tab": "treasury", "label": "The Treasury" },
+    { "id": "cos-rail", "reader": "rail-integrity", "op": "lt", "threshold": 50, "severity": 40, "copy": "Railroad integrity is at {value} of 100 — the supply arteries are fraying.", "tab": "economy", "label": "The War Effort" }
+  ]
+}

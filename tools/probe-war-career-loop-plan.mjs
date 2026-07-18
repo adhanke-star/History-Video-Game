@@ -505,8 +505,8 @@ step("IMPLEMENTATION LADDER", () => {
   if (/"campaignAdvance"/.test(overrides)) {
     throw new Error("assignment wrapper must not register campaignAdvance as a declaration override");
   }
-  if (suite.length !== 134) {   // AD-7 re-pin (D443): 130 -> 131 D418 mayhem row; 131 -> 132 D436 atlanta; 132 -> 133 D442 cold harbor; D444: 133 -> 134 learn-battle — each appended at the END so the War Career row 38 holds
-    throw new Error("complete Slice A requires suite 134, got " + suite.length);
+  if (suite.length !== 135) {   // AD-7 re-pin (D443): 130 -> 131 D418 mayhem row; 131 -> 132 D436 atlanta; 132 -> 133 D442 cold harbor; D444: 133 -> 134 learn-battle; D445: 134 -> 135 chief-of-staff — each appended at the END so the War Career row 38 holds
+    throw new Error("complete Slice A requires suite 135, got " + suite.length);
   }
   return { mode: "runtime", suite: suite.length, marker: MARKER };
 });
@@ -536,7 +536,7 @@ step("EXCLUSIONS + BASELINES", () => {
   const baseHash = md5(BASE);
 
   if (t1Count !== 26) throw new Error("scenario baseline must be 26, got " + t1Count);   // D436: 24 -> 25 — Atlanta registers at rank 71. D442: 25 -> 26 — Cold Harbor registers at rank 68.5
-  if (schemaCount !== 57) throw new Error("schema/data baseline must be 57, got " + schemaCount);   // D436: 54 -> 56 — mayhem-rules.json (D418, pin missed then) + atlanta.json (D436); documented honestly. D442: 56 -> 57 — cold-harbor.json
+  if (schemaCount !== 58) throw new Error("schema/data baseline must be 58, got " + schemaCount);   // D436: 54 -> 56 — mayhem-rules.json (D418, pin missed then) + atlanta.json (D436); documented honestly. D442: 56 -> 57 — cold-harbor.json. D445: 57 -> 58 — chief-of-staff.json (GEA-08)
   if (!/people\.length\s*!==\s*1614/.test(loot) || !loot.includes("1614 of 1614")) {
     throw new Error("Army Register 1614 pins missing");
   }
@@ -555,7 +555,7 @@ step("EXCLUSIONS + BASELINES", () => {
     }
     if (!e71.includes("PENDING")) throw new Error("planning boundary must leave E71 pending");
   } else {
-    if (suite.length !== 134) throw new Error("Slice-A suite must be 134, got " + suite.length);   // AD-7 re-pin (D443): 130 -> 133 (D418 mayhem, D436 atlanta, D442 cold harbor rows append at the END). D444: 133 -> 134 (learn-battle at the END)
+    if (suite.length !== 135) throw new Error("Slice-A suite must be 135, got " + suite.length);   // AD-7 re-pin (D443): 130 -> 133 (D418 mayhem, D436 atlanta, D442 cold harbor rows append at the END). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff)
     if (!e71.includes("FIXED")) throw new Error("Slice A marker exists but E71 is not FIXED");
   }
 
@@ -1127,7 +1127,7 @@ step("BASELINES + LANE", () => {
     manifest:md5(MANIFEST),
     suite:md5(VET)
   };
-  if (t1Count !== 26 || schemaCount !== 57) {   // D436: 24/54 -> 25/56 (atlanta + the D418 mayhem-rules pin catch-up). D442: 25/56 -> 26/57 (cold harbor)
+  if (t1Count !== 26 || schemaCount !== 58) {   // D436: 24/54 -> 25/56 (atlanta + the D418 mayhem-rules pin catch-up). D442: 25/56 -> 26/57 (cold harbor). D445: 57 -> 58 (chief-of-staff.json; scenarios stay 26)
     throw new Error("scenario/schema baseline moved: " + t1Count + "/" + schemaCount);
   }
   if (!/people\.length\s*!==\s*1614/.test(loot) || !loot.includes("1614 of 1614")) {
@@ -1137,8 +1137,8 @@ step("BASELINES + LANE", () => {
       normalize(rosterExpected.join(" ")) !== normalize(builderExpected.join(" "))) {
     throw new Error("coverage baselines moved");
   }
-  if (suite.length !== 134 || !suite[37] || suite[37][1] !== "tools/probe-war-career.mjs") {   // D436: 130 -> 132 (mayhem row D418 missed this pin; atlanta row appends at the end so row 38 holds). D442: 132 -> 133 (cold harbor row appends at the end; row 38 still holds). D444: 133 -> 134 (learn-battle at the end; row 38 still holds)
-    throw new Error("suite 134 / War Career row 38 moved");
+  if (suite.length !== 135 || !suite[37] || suite[37][1] !== "tools/probe-war-career.mjs") {   // D436: 130 -> 132 (mayhem row D418 missed this pin; atlanta row appends at the end so row 38 holds). D442: 132 -> 133 (cold harbor row appends at the end; row 38 still holds). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff, both at the end; row 38 still holds)
+    throw new Error("suite 135 / War Career row 38 moved");
   }
   if (!read(SWEEP).includes("var reg = fldScenarioRegistry()") ||
       !read(SWEEP).includes("var order = (typeof fldScenarioMenuOrder==='function')")) {
