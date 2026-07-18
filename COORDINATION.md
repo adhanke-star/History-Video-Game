@@ -1774,6 +1774,91 @@ next green commit and confer through this ledger instead of permitting simultane
 - **Last-touched commit:** D422 release pending.
 - **History:** selected and contracted in D422 after the D421 clean boundary; shipped in D422.
 
+### LANE-009 · finish-line-fixnow — **DRIVE** (Claude Code / Fable 5)
+
+- **Owning tool:** Claude Code (Fable 5) — Aaron authorized Fable-friendly sessions through
+  Sunday 2026-07-19; owner recorded per §3-4 role law (TOP LOOP resolved to the live session
+  model).
+- **State:** DRIVE (taken in this ledger-only commit at the clean pushed D422 boundary
+  `e50e0b4bbc6fafdffd400b423bb5d1ec39c8cd3e`; HEAD == origin/main verified).
+- **Design law:** DECISIONS D423 (Aaron's finish-line directive + the recorded adjudication) ·
+  `REVIEW-QUEUE.md` GENRE-ELITE GEA-01 line + run-3 FIX-NOW ledger (S44, S45, S46, E73, E75, C73,
+  C74, E74 — read each entry in full at slice start) · D74 no-fudge · the ≥2-independent-source
+  citation law · D160/D176 tiered vetting · D412 docs law · frozen `build/base.html` law.
+- **Charter (ordered):** (1) the GEA-01 + S44 presentation bundle as one release (D423); then
+  (2) one bounded slice per remaining FIX-NOW finding in value/risk order
+  S45 → S46 → E73 → E75 → C73 → C74 → E74, each with its own DECISIONS entry (D424+), focused
+  gates, docs sync, and commit+push; then (3) the full serialized `npm run vet:noreg` release
+  battery as the terminal "done" checkpoint. Open NO new feature family (no Atlanta build, no
+  LANE-002 5b batch, no Phase H media, no Phase D hex, no later Mayhem, no War Career Slice F,
+  no Cold Harbor).
+- **Acceptance criteria:**
+  1. GEA-01: the `src/92-help-overlay.js` quick-start paragraph derives the live scenario count
+     via `fldScenarioRegistry()` behind a typeof guard (Object.keys length; graceful no-count
+     fallback), anchors on First Bull Run as the canonical first scenario, keeps the exact tokens
+     "Muster the Union", "Command the Confederacy", "Choose a Battle" plus the Skirmish sandbox
+     and Custom Battle builder mentions, and retires the hand-maintained nine-battle enumeration.
+     No second registry or duplicate roster owner; the truthful "Tips" sample and tutorial
+     "and more" copy stay unchanged.
+  2. S44: `data/western-theater.json` currentArc = the 9 registered Western-theater scenarios
+     (fortDonelson, shiloh, stonesRiver, vicksburg, chickamauga, chattanooga, kennesaw, franklin,
+     nashville — the live registry ∩ `_FLD_BATTLE_META` theater "W"; elkhornTavern is "TM" and
+     deliberately excluded) in chronological order, each entry carrying `scenarioId`, status
+     "playable-now", and ≥2 sources per the file's existing convention (source 1 = the battle
+     data file; source 2 = the ABT/NPS trail recorded in that battle file — no invented
+     citation); the 3 existing entries keep their text; USCT folded truthfully into the Nashville
+     entry (Steedman / Col. Charles R. Thompson's 2nd Colored Brigade — 12th, 13th, 100th USCT at
+     Peach Orchard/Overton, matching shipped `data/nashville.json`); futureLocks keeps ONLY
+     wt-atlanta-march-readout plus `lockedScenarioIds:["atlanta"]` and deletes the obsolete
+     Chattanooga, Franklin/Nashville, and USCT locks; profile.summary's stale locked claim
+     corrected. `src/73-western-theater.js` replaces the hardcoded playable/locked sentence with
+     copy DERIVED from D.currentArc/D.futureLocks labels, raises the _wtCards caps 3→12 in both
+     presWesternTheaterBlock and presWesternTheaterMapBlock, renames snapshot key
+     battleBuildLocked → readoutAddsNoBattles (still true), keeps westernTheaterOnResolve
+     count-derived, and must NOT reference fldScenarioRegistry (the probe contamination scan
+     forbids it — the data file stays the single presentation owner; the PROBE does the registry
+     cross-check).
+  3. Focused probes re-toothed per the probe design below; negative binds prove each new tooth
+     with byte-identical restores; no probe weakened to pass, ever.
+  4. Per-slice criteria for S45/S46/E73/E75/C73/C74/E74 are their run-3 ledger entries read in
+     full at slice start. E74 (the biggest, done LAST) may HALT with options + a recommendation
+     if the honest fix demands a design fork bigger than one slice — recorded as the sole
+     allowed deferral; it must not block the terminal battery.
+  5. Invariants every slice: 24 scenarios / schema 55 / Army Register 1,512 / suite 131 (unless a
+     slice legitimately enrolls a row — recorded in DECISIONS) / `_SAVE_VER=1` / D74 no-fudge /
+     frozen base / no manifest movement / citation law / never weaken a probe.
+- **Probe design:** GEA-01 — one new tooth in `tools/probe-help-overlay.mjs`: the quick-start
+  contains the in-page computed live-count phrase; the retired nine-name chain is absent (reject
+  the "Fredericksburg, Chancellorsville, Gettysburg" adjacency); Choose a Battle / Skirmish /
+  Custom Battle present; all existing steps stay green (its C19 tooth pins the exact
+  Muster/Command/Choose tokens). S44 — `tools/probe-western-theater.mjs` re-toothed: data tooth
+  (all 9 current ids + scenarioId fields + the ≥2-source law), NEW registry-truth tooth (every
+  currentArc.scenarioId is registered AND the set of registered scenarios with
+  `_FLD_BATTLE_META.theater === "W"` equals the currentArc scenarioId set AND every
+  futureLocks.lockedScenarioIds id is NOT registered — no hardcoded subset, so a new Western
+  battle shipping forces the copy update), snapshot tooth (playableWesternCount ===
+  currentArc.length; futureLockedCount >= 1; readoutAddsNoBattles === true), UI teeth (require
+  the derived playable/locked listing; REJECT the retired hardcoded sentence), with the stowaway
+  + contamination scans and the exact-zero bridge tooth unchanged. Later slices: focused teeth
+  designed at slice start from each ledger entry (accessibility-tree teeth for S45; initial
+  focus/persistence/Escape/restore teeth for S46; negative schema fixtures for E73; the
+  otherwise-valid-payload policy assert for E75; content/provenance teeth for C73/C74; gate
+  coverage teeth for E74).
+- **Exclusions:** no battle registration, campaign order, combat, OOB, score, save, schema-version,
+  or strategic-mechanics change; `westernTheaterBridgeBonus` stays exact zero; no hand edit of
+  generated HTML or the frozen base; no new feature family.
+- **Expected transition:** DRIVE → SHIPPED/unowned on the terminal battery green with every
+  finding line flipped fixed-in-D### (E74 the only permissible honest deferral, recorded with
+  rationale).
+- **Resume pointer:** implement Phase 1 (GEA-01) + Phase 2 (S44), run the focused gates + the two
+  negative binds (nine-name-chain reinsertion → exactly the GEA-01 tooth red; one currentArc
+  scenarioId flipped to "atlanta" → exactly the registry-truth tooth red), release as D423; then
+  the ordered slices S45 → S46 → E73 → E75 → C73 → C74 → E74 (D424+), one focused-gated
+  commit+push each; then the full serialized battery, alone on the machine.
+- **Last-touched commit:** the D423 ledger lock (this commit).
+- **History:** adjudicated + contracted by Claude Code (Fable 5) 2026-07-17 under Aaron's
+  finish-line directive; DRIVE taken in the same ledger-only commit.
+
 ---
 
 ## 6 · JOINT STRATEGY BOARD — Fable ⇄ Sol (cross-tool planning, not just locks)

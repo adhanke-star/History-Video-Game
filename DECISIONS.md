@@ -4,6 +4,32 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D423 — FINISH-LINE DIRECTIVE: SHIP GEA-01 + S44, THEN CLEAR EVERY OPEN FIX-NOW FINDING, THEN THE RELEASE BATTERY — [CLAUDE CODE (FABLE 5), LANE-009 CONTRACT→DRIVE] (2026-07-17)
+
+Aaron's 2026-07-17 directive: prioritize finishing all planned game features and setups — he wants
+to be done and play. Under live roadmap law that means shipping the already-adjudicated GEA-01 +
+S44 presentation bundle, then clearing every remaining open FIX-NOW finding in `REVIEW-QUEUE.md`
+(S45, S46, E73, E75, C73, C74, E74), then running the full serialized release battery as the
+"done" checkpoint. No new feature family opens: no Atlanta build, no LANE-002 5b batch, no Phase H
+media, no Phase D hex, no later Mayhem, no War Career Slice F, no Cold Harbor.
+
+The roadmap adjudication is already complete (2026-07-17 Fable session) and is recorded here, not
+redone. GEA-01 + S44 won on canonical ladder position (the last parked Priority-2/-3 presentation
+item), audit clearance (both are CLEARED small presentation fixes in the run-3 ledger),
+registry-grounded source readiness (the Western arc derives mechanically from the live registry ∩
+`_FLD_BATTLE_META` theater tags), and bounded presentation-only risk. Rejected alternatives:
+another LANE-002 5b batch (just serviced in D421, open-ended, the repo's most expensive work per
+shipped line); the pending run-3 findings (queued as ordered LANE-009 slices immediately after the
+bundle instead of competing with it); Phase H media (license/account/performance risk); Phase
+D/custom phase authoring (needs its own contract); Group 6 polish (optional). This selection
+authorizes none of those lanes.
+
+Owner note: Aaron authorized Fable-friendly sessions through Sunday 2026-07-19; the owner is
+recorded as Claude Code (Fable 5) per COORDINATION §3-4 role law (TOP LOOP resolved to the live
+session model). LANE-009 "finish-line-fixnow" carries the full charter, acceptance criteria, probe
+design, exclusions, expected transition, and resume pointer. This lock commit is ledger-only with
+no executable red teeth; teeth ship in the same commits as the fixes that green them.
+
 ## D422 — POST-D421 ROADMAP SELECTS C72 SHILOH MYTH-CORRECTION, TEXT ONLY — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-008 DRIVE] (2026-07-17)
 
 C72 is the highest-priority bounded post-D421 item. It is the only open HIGH review finding and
