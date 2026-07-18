@@ -295,7 +295,7 @@
       "provenance": "Verified",
       "verbatimExcerpt": "Slavery is terrible for men; but it is far more terrible for women. Superadded to the burden common to all, they have wrongs, and sufferings, and mortifications peculiarly their own.",
       "attribution": "Repository: UNC Documenting the American South and Project Gutenberg. Locator: Incidents in the Life of a Slave Girl, Chapter XIV, Another Link To Life.",
-      "sourceCritique": "Published under Jacobs's pseudonym Linda Brent and edited by L. Maria Child. The excerpt follows the Gutenberg text; DocSouth carries the same wording with minor spacing differences.",
+      "sourceCritique": "Published under Jacobs's pseudonym Linda Brent and edited by L. Maria Child. The excerpt follows the Gutenberg text; DocSouth carries the same wording with minor spacing differences. C74 (D429) independence note: the two text hostings are manifestations of the same 1861 work, so authorship and publication rest on the independent Dictionary of North Carolina Biography entry — written by Jean Fagan Yellin, the scholar whose research authenticated Jacobs's authorship of the pseudonymous narrative.",
       "indictment": "Jacobs made enslaved women's sexual vulnerability, family claims, and bodily danger central to what slavery meant in daily life.",
       "catalystFrame": "",
       "sources": [
@@ -310,6 +310,12 @@
           "repository": "Project Gutenberg",
           "locator": "Chapter XIV, Another Link To Life",
           "url": "https://www.gutenberg.org/files/11030/11030-h/11030-h.htm"
+        },
+        {
+          "title": "Jacobs, Harriet (Dictionary of North Carolina Biography, Jean Fagan Yellin 1989, rev. 2022)",
+          "repository": "NCpedia / Government & Heritage Library",
+          "locator": "Independent editorial authority: pseudonymous 1861 publication, L. Maria Child's editing, and authenticated authorship",
+          "url": "https://www.ncpedia.org/biography/jacobs-harriet"
         }
       ]
     },
@@ -463,7 +469,7 @@
       "provenance": "Verified",
       "verbatimExcerpt": "Was the war in vain? Has it brought freedom, in the full sense of the word, or has it not made our condition more hopeless?",
       "attribution": "Repository: UNC Documenting the American South and Internet Archive. Locator: Reminiscences of My Life in Camp, chapter XIII, Thoughts on Present Conditions, p. 61.",
-      "sourceCritique": "Taylor wrote decades after wartime service, but as a participant. DocSouth records its transcription normalizations, so the card treats the memoir as a remembered first-person source, not a stenographic wartime diary.",
+      "sourceCritique": "Taylor wrote decades after wartime service, but as a participant. DocSouth records its transcription normalizations, so the card treats the memoir as a remembered first-person source, not a stenographic wartime diary. C74 (D429) independence note: the three hostings are manifestations of the same 1902 book (the Internet Archive page images anchor the locator and transcription), so authorship and publication context rest on the independent New Georgia Encyclopedia entry by Ronald E. Butchart.",
       "indictment": "Taylor connected Union victory to the unfinished fight against lynching, racial terror, and unequal citizenship.",
       "catalystFrame": "",
       "sources": [
@@ -484,6 +490,12 @@
           "repository": "National Constitution Center",
           "locator": "Historic Document Library excerpt from Taylor, chapter XIII",
           "url": "https://constitutioncenter.org/the-constitution/historic-document-library/detail/susie-king-taylor-after-the-war-reminiscences-of-my-life-in-camp-with-the-33rd-united-states-colored-troops-late-1st-s.c-volunteers-1902"
+        },
+        {
+          "title": "Susie King Taylor (1848-1912), by Ronald E. Butchart",
+          "repository": "New Georgia Encyclopedia",
+          "locator": "Independent editorial authority: her 1902 privately published Reminiscences and her standing as the only African American woman to publish a memoir of wartime experiences",
+          "url": "https://www.georgiaencyclopedia.org/articles/history-archaeology/susie-king-taylor-1848-1912/"
         }
       ]
     },
@@ -497,7 +509,7 @@
       "provenance": "Verified",
       "verbatimExcerpt": "There go my mules, my sheep, and, worse than all, my boys [slaves]!",
       "attribution": "Repository: UNC Documenting the American South and Digital Library of Georgia. Locator: A Woman's Wartime Journal, November 19, 1864, p. 24.",
-      "sourceCritique": "The diary was published in 1918 with an introduction and notes. The bracketed [slaves] gloss is part of the edited text; the source preserves an enslaver's viewpoint and must be framed as such.",
+      "sourceCritique": "The diary was published in 1918 with an introduction and notes. The bracketed [slaves] gloss is part of that edited 1918 text, not the manuscript hand; the source preserves an enslaver's viewpoint and must be framed as such. C74 (D429) independence note: the DocSouth transcription and the DLG metadata record describe the same digitized 1918 edition, so authorship, the Covington plantation setting, and the 1918 publication rest on the independent New Georgia Encyclopedia survey by John C. Inscoe.",
       "indictment": "The hard-war eyewitness record shows real civilian fear while also exposing enslaver language that treated people as property.",
       "catalystFrame": "",
       "sources": [
@@ -512,6 +524,12 @@
           "repository": "Digital Library of Georgia",
           "locator": "North American Slave Narratives metadata record",
           "url": "https://dlg.usg.edu/record/noa_fpn_86"
+        },
+        {
+          "title": "Civil War Journals, Diaries, and Memoirs, by John C. Inscoe",
+          "repository": "New Georgia Encyclopedia",
+          "locator": "Independent editorial authority: Lunt's A Woman's Wartime Journal (1918) and the plantation near Covington during Sherman's March",
+          "url": "https://www.georgiaencyclopedia.org/articles/history-archaeology/civil-war-journals-diaries-and-memoirs/"
         }
       ]
     },

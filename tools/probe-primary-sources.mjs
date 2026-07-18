@@ -57,6 +57,18 @@ function validatePrimarySourcesData() {
     }
     if (rec.category === 'reconstruction-memory') reconstruction++;
     if (rec.category === 'source-criticism-voices') sourceCriticism++;
+    // C74 (D429): same-work manifestations cannot satisfy source INDEPENDENCE. These three cards'
+    // hostings all derive from one underlying work each, so each must ALSO carry its named
+    // independent editorial authority (verified live 2026-07-17) and say why in sourceCritique.
+    const C74_INDEPENDENT = {
+      'ps-jacobs-enslaved-women': 'ncpedia.org',
+      'ps-susie-king-taylor-after-war': 'georgiaencyclopedia.org',
+      'ps-dolly-lunt-hard-war': 'georgiaencyclopedia.org'
+    };
+    if (C74_INDEPENDENT[id]) {
+      if (!sources.some(s => s && String(s.url || '').includes(C74_INDEPENDENT[id]))) errors.push(id + ' missing its independent editorial authority (' + C74_INDEPENDENT[id] + ')');
+      if (!/C74/.test(rec.sourceCritique || '')) errors.push(id + ' sourceCritique missing the C74 independence note');
+    }
     if (rec.category === 'home-front-politics-economy') homeFront++;
     if (rec.category === 'lived-slavery-agency') livedSlavery++;
   }

@@ -4,6 +4,39 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D429 — C74 SHIPPED: JACOBS, TAYLOR, AND LUNT EACH CARRY A VERIFIED INDEPENDENT EDITORIAL AUTHORITY — [CLAUDE CODE (FABLE 5), LANE-009 DRIVE] (2026-07-17)
+
+C74 (run-3 MED, source independence): the Jacobs, Susie King Taylor, and Dolly Lunt cards in
+`data/primary-sources.json` satisfied the array-count gate with institutionally separate hostings
+of the SAME underlying works (Jacobs: DocSouth + Gutenberg texts of the 1861 book; Taylor:
+DocSouth + Internet Archive page images + NCC excerpt of the 1902 book; Lunt: DocSouth
+transcription + the DLG metadata record of the same digitized 1918 edition). Each card now ALSO
+carries a genuinely independent editorial authority, each verified by live fetch on 2026-07-17
+with no invented citation: Jacobs — the Dictionary of North Carolina Biography entry on NCpedia,
+written by Jean Fagan Yellin (1989, rev. 2022), the scholar whose research authenticated Jacobs's
+authorship; it confirms the pseudonymous early-1861 publication and L. Maria Child's editing.
+Taylor — the New Georgia Encyclopedia entry by Ronald E. Butchart, confirming the privately
+published 1902 Reminiscences and her standing as the only African American woman to publish a
+wartime memoir. Lunt — the New Georgia Encyclopedia "Civil War Journals, Diaries, and Memoirs"
+survey by John C. Inscoe, confirming A Woman's Wartime Journal (1918) and the plantation near
+Covington during Sherman's March. Each sourceCritique now states the independence rationale (which
+claims rest on the manifestations vs. the independent authority; the Lunt note also clarifies the
+bracketed [slaves] gloss belongs to the edited 1918 text, not the manuscript hand). No excerpt,
+attribution locator, provenance grade, or category moved; an Emory finding-aid manuscript citation
+was considered and deliberately omitted because its content could not be fetched and verified.
+
+Probe: the node-side static validation in `tools/probe-primary-sources.mjs` gains the C74
+independence tooth — each of the three ids must carry its named independent authority
+(ncpedia.org / georgiaencyclopedia.org) AND a C74 independence note in sourceCritique, so
+same-work manifestations can never re-satisfy these cards alone. Bind: removing the NCpedia
+authority from the Jacobs card made exactly the static tooth red ("ps-jacobs-enslaved-women
+missing its independent editorial authority (ncpedia.org)"); byte-identical restore (data
+`bea5726449d609ae340c9f49f76cde57`, probe `f063662bd80cf203115de029f0cf579f`, generated
+`3753858501afa23097d86f25e7bbd222`) with rebuild + 14/14 green rerun. Gates: build GATE OK;
+schema 55/55; probe-primary-sources 14/14; adjacent probe-under-told-perspectives 8/8; zero
+pageerrors. Invariants hold: 24/55/1,512/131, `_SAVE_VER=1`, frozen base, D74. REVIEW-QUEUE C74
+flips fixed-in-D429; LANE-009 next slice is E74, the last.
+
 ## D428 — C73 SHIPPED: WHITING IS A BRIGADIER GENERAL AT GAINES' MILL UNDER THE TWO-SOURCE LAW — [CLAUDE CODE (FABLE 5), LANE-009 DRIVE] (2026-07-17)
 
 C73 (run-3 MED, battle-date rank/citation integrity): `data/gaines-mill.json` graded W. H. C.

@@ -1862,10 +1862,12 @@ next green commit and confer through this ledger instead of permitting simultane
   (D427: the honest strip-then-accept policy tooth on an otherwise-valid unsafe payload;
   scrub-removal bind).** **C73 SHIPPED (D428: Whiting Brig. Gen. at Gaines' Mill under the
   Serial Set roster + DNCB two-source law; data/spec/probe renderings corrected; OOB inputs
-  byte-identical; one-token bind).** Exact next: the ordered FIX-NOW slices C74 → E74 (D429+),
-  one focused-gated commit+push each, reading each REVIEW-QUEUE run-3 entry in full at slice
-  start; then the full serialized `npm run vet:noreg` battery alone on the machine.
-- **Last-touched commit:** the D428 C73 release.
+  byte-identical; one-token bind).** **C74 SHIPPED (D429: live-verified independent editorial
+  authorities on the Jacobs/Taylor/Lunt cards + the static independence tooth; authority-removal
+  bind).** Exact next: E74 (D430) — the LAST FIX-NOW slice, biggest, may HALT honestly with
+  options + recommendation if the honest fix outgrows one slice; then the full serialized
+  `npm run vet:noreg` battery alone on the machine.
+- **Last-touched commit:** the D429 C74 release.
 - **History:** adjudicated + contracted by Claude Code (Fable 5) 2026-07-17 under Aaron's
   finish-line directive; DRIVE taken in the same ledger-only commit; GEA-01 + S44 shipped in the
   D423 release the same day.
