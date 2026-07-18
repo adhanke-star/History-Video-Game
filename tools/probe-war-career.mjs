@@ -66,7 +66,7 @@ function staticPreflight() {
   check("106 follows 105", index105 >= 0 && index106 === index105 + 1, { index105, index106 });
   check("campaignAdvance not an override", !(manifest.overrides || []).includes("campaignAdvance"), manifest.overrides || []);
   check("assignment wrapper only", !/function\s+campaignAdvance\s*\(/.test(runtime), null);
-  check("suite is 131", rows.length === 131, rows.length);   // D425: 130 -> 131 (D418 enrolled the Mayhem row; this probe had not rerun since D413)
+  check("suite is 133", rows.length === 133, rows.length);   // D425: 130 -> 131 (D418 enrolled the Mayhem row; this probe had not rerun since D413). D443 (AD-6): 131 -> 133 — the D436 atlanta and D442 cold harbor rows appended at the END; the D436/D442 sweeps moved only this probe's 1566/1614 pins and missed this count tooth (recorded honestly).
   check("focused row is 38", /^38\s+war career\s+::\s+tools\/probe-war-career\.mjs$/.test(rows[37] || ""), rows[37] || "missing");
   check("focused probe enrolled once", occurrences(vet, "tools/probe-war-career.mjs") === 1, occurrences(vet, "tools/probe-war-career.mjs"));
   check("plan probe unenrolled", !vet.includes("['war career plan'") && !vet.includes('tools/probe-war-career-loop-plan.mjs'), null);
@@ -98,7 +98,7 @@ function staticPreflight() {
     !/(?:delete\s+commandState\b|commandState\s*(?:\.|\[)[^;\n]*(?:\+\+|--|(?:[+\-*/%&|^]|<<|>>)?=(?!=))|Object\.(?:assign|defineProperty)\s*\(\s*commandState)/.test(commandTargetSelector) &&
     !/(?:commandState|C\.president\.command)\s*\.[A-Za-z_$][\w$]*\s*=(?!=)/.test(runtime),
     { commandReads: occurrences(runtime, "C.president.command"), targetOnly: !!commandTargetSelector });
-  check("after-action file frozen", md5(join(ROOT, "src", "82-after-action.js")) === "e2a4739946b20b1a725a08d55b4825f6", md5(join(ROOT, "src", "82-after-action.js")));
+  check("after-action file frozen", md5(join(ROOT, "src", "82-after-action.js")) === "cecf9d405c0b335bea3f5ce81347c139", md5(join(ROOT, "src", "82-after-action.js")));   // D443 (AD-6 re-pin): e2a4739946b20b1a725a08d55b4825f6 -> cecf9d405c0b335bea3f5ce81347c139 — D434 (GEA-02) legitimately added the authorized Copy/Download export bar to src/82; the war-career surface itself did not move it
   check("Auto file frozen", md5(join(ROOT, "src", "87-auto-resolve.js")) === "4f0bd0970ef96c09b62ea44694387f80", md5(join(ROOT, "src", "87-auto-resolve.js")));
   check("T2 file frozen", md5(join(ROOT, "src", "tactical", "T2-campaign-link.js")) === "25b7c20563be53cadd7ee1ba98a62a3b", md5(join(ROOT, "src", "tactical", "T2-campaign-link.js")));   // D425: feef8a3c -> 25b7c205 (the recorded D420/LANE-007 Slice C consequence-metadata carry in fldCampaignComputeOutcome/ApplyOutcome; this probe had not rerun since D413)
   check("T3 file frozen", md5(join(ROOT, "src", "tactical", "T3-officers.js")) === "56e2cd1060a40eb0754b19e8d56bacdb", md5(join(ROOT, "src", "tactical", "T3-officers.js")));
@@ -2520,12 +2520,17 @@ const SETUP = `(() => {
       // §19 tooth 6 (first half) — legacy purity: a no-career campaign archives career:null, and
       // nothing rides the save (the archive key is not inside the campaign envelope)
       var C = { side:'US', iron:false, stats:{ battles:3, won:2, suff:100, infl:200 } }; G.campaign = C;
-      var save0 = (typeof serializeSave === 'function') ? JSON.stringify(serializeSave()) : null;
+      // D443 (AD-6 root fix): the frozen base's serializeSave stamps when:Date.now(), so two calls
+      // differ by wall-clock ALWAYS — normalize the volatile timestamp before the byte-compare.
+      // The tooth's intent (a capture mutates NOTHING in the save vector) is unchanged.
+      var _wcSaveNorm = function(){ var s = serializeSave(); var c = JSON.parse(JSON.stringify(s)); if (c && typeof c === 'object') delete c.when; return JSON.stringify(c); };
+      var save0 = (typeof serializeSave === 'function') ? _wcSaveNorm() : null;
+      var save0raw = (typeof serializeSave === 'function') ? JSON.stringify(serializeSave()) : null;
       if (!warCareerArchiveCapture(C)) throw new Error('no-career capture failed');
       var recs = warCareerArchiveRead();
       if (recs.length !== 1 || recs[0].career !== null || recs[0].side !== 'US' || recs[0].endReason !== 'chain') throw new Error('no-career record wrong: ' + JSON.stringify(recs[0]));
-      if (save0 !== null && JSON.stringify(serializeSave()) !== save0) throw new Error('the archive rode the save envelope');
-      if (save0 !== null && save0.indexOf('cw_career_archive') >= 0) throw new Error('archive key leaked into the save');
+      if (save0 !== null && _wcSaveNorm() !== save0) throw new Error('the archive rode the save envelope');
+      if (save0raw !== null && save0raw.indexOf('cw_career_archive') >= 0) throw new Error('archive key leaked into the save');
       // §19 tooth 2/3 — a career campaign captures the closed career shape; the strategic one-shot is honored
       var C2 = { side:'CS', iron:true, timelineName:'timeline-1', stats:{ battles:9, won:6, suff:400, infl:900 },
         loot:{ journey:{ careerVersion:1, person:{ name:'Test Person', rank:'Captain' }, promotionCount:2, creditLedger:[{},{}], lineage:[{}], handoff:null } } };
@@ -2573,7 +2578,7 @@ async function main() {
     schema: "cw_probe_war_career_v1",
     generatedAt: new Date().toISOString(),
     ok: false,
-    suite: { expected: 131, actual: 0, index: 38 },   // D425: 130 -> 131 (D418 Mayhem row)
+    suite: { expected: 133, actual: 0, index: 38 },   // D425: 130 -> 131 (D418 Mayhem row). D443: 131 -> 133 (D436 atlanta + D442 cold harbor rows at the END)
     static: staticResult,
     steps: [],
     pageerrors: [],
@@ -2652,7 +2657,7 @@ async function main() {
     result = Object.assign(result, runtime, {
       schema: "cw_probe_war_career_v1",
       generatedAt: new Date().toISOString(),
-      suite: { expected: 131, actual: list.length, index: 38 },   // D425: 130 -> 131 (D418 Mayhem row)
+      suite: { expected: 133, actual: list.length, index: 38 },   // D425: 130 -> 131 (D418 Mayhem row). D443: 131 -> 133 (D436 atlanta + D442 cold harbor rows at the END)
       static: staticResult,
       pageerrors,
       realErrors,
@@ -2660,7 +2665,7 @@ async function main() {
       screenshots: [{ path: SHOT, bytes: shotBytes, viewport: { width:390, height:700 }, zoom:200 }]
     });
     const failed = result.steps.filter(row => !row.ok);
-    result.ok = !!runtime.ok && staticResult.ok && !failed.length && !pageerrors.length && !realErrors.length && list.length === 131;   // D425: 130 -> 131 (D418 Mayhem row)
+    result.ok = !!runtime.ok && staticResult.ok && !failed.length && !pageerrors.length && !realErrors.length && list.length === 133;   // D425: 130 -> 131 (D418 Mayhem row). D443: 131 -> 133 (D436 atlanta + D442 cold harbor rows at the END)
   } catch (error) {
     result.ok = false;
     result.fatal = String(error && error.stack || error);

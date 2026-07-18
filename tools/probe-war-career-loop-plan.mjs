@@ -890,17 +890,17 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
   // journey, command, and commandProbe did NOT move.
   const expected = {
     // AD-7 re-pin (D443) at the audit head: srcTree a4a46fbcff478c239de037f4a63105a4 ->
-    // 42d0015426fc8644793bb3813bfc83e0 (the D414-D442 release train: D418/D420 Mayhem A-C,
+    // 1e973caadb9a8acbe1281b4554b5c6b8 (the D414-D442 release train: D418/D420 Mayhem A-C,
     // D423-D430 FIX-NOW incl. src/107, D433-D441 overnight run incl. src/108 + the D443
     // latch fix, D442 Cold Harbor T1/T10); runtime 8e09ebbf56ba3433712f91936f438e5d ->
-    // f1a34977cd51aa73279740f67446a7c4 (D438 §19 franchise archive in src/106); focused
-    // b7d6246e10357afc2a4e8f07f8c5dcea -> 8474e95f0dde35d3c34a430dcfbd1f1f (D425 pin fixes,
+    // ee83045eaaa20c96c3c09579599614c8 (D438 §19 franchise archive in src/106); focused
+    // b7d6246e10357afc2a4e8f07f8c5dcea -> d6bc1e91473a0489f834c516b2681a98 (D425 pin fixes,
     // D436 1566, D438 §19 step, D442 1614). journey, command, and commandProbe did NOT move.
-    srcTree:"42d0015426fc8644793bb3813bfc83e0",
-    runtime:"f1a34977cd51aa73279740f67446a7c4",
+    srcTree:"1e973caadb9a8acbe1281b4554b5c6b8",
+    runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
     command:"8f12c49f7129b3a9be0203677822e048",
-    focused:"8474e95f0dde35d3c34a430dcfbd1f1f",
+    focused:"d6bc1e91473a0489f834c516b2681a98",
     commandProbe:"5ffd40fd221179f2e01cad59ef43bf7d"
   };
   for (const key of Object.keys(expected)) {
@@ -1158,7 +1158,7 @@ step("BASELINES + LANE", () => {
     // 442b440c45372ff4330f4fe184d537c7 (D440 enrolls src/108); suite
     // 4bcdc6f252389a4bfd6bed269b52f8f0 -> cc91894f93d6b38d6fe97ea43af6f0e9 (D418 row 131,
     // D431 900s budget, D436 row 132, D442 row 133). base NEVER moves (frozen).
-    game:"467614da27def1085e2d93213488fd82",
+    game:"f8bd4d3216d15ef52e8a0eb1f3f4977f",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     dataTree:"db156b75144a18633ab6b326d9026e1a",
     manifest:"442b440c45372ff4330f4fe184d537c7",
@@ -1545,12 +1545,12 @@ step("REACHABILITY BASELINES", () => {
     // AD-7 re-pin (D443) at the audit head — the D414-D442 release train plus the D443
     // audit root-fixes moved game/dataTree/srcTree/runtime/focused (chains above and in
     // DECISIONS D443); journey (src/37) did NOT move — the save-vector purity surface held.
-    game:"467614da27def1085e2d93213488fd82",
+    game:"f8bd4d3216d15ef52e8a0eb1f3f4977f",
     dataTree:"db156b75144a18633ab6b326d9026e1a",
-    srcTree:"42d0015426fc8644793bb3813bfc83e0",
-    runtime:"f1a34977cd51aa73279740f67446a7c4",
+    srcTree:"1e973caadb9a8acbe1281b4554b5c6b8",
+    runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
-    focused:"8474e95f0dde35d3c34a430dcfbd1f1f"
+    focused:"d6bc1e91473a0489f834c516b2681a98"
   };
   for (const key of Object.keys(expected)) {
     if (hashes[key] !== expected[key]) throw new Error("D411 shipped baseline moved: " + key + " " + hashes[key]);

@@ -2175,6 +2175,12 @@ function warCareerArchiveRead() {
 /* Assemble the closed §19 record by PURE reads — every subsystem guarded; never throws out. */
 function warCareerArchiveRecord(C) {
   if (!C || typeof C !== "object") return null;
+  // D443 (AD-6 root fix): §19 demands ALL PURE READS, but the grade/ruleset/capability
+  // readers below lazy-initialize default subsystem blocks onto the campaign they read
+  // (engineering levels et al.), which would mutate the live save vector at capture.
+  // Compute the record from a deep-copy snapshot so every lazy init lands on a throwaway
+  // (the campaign is serializable by definition — serializeSave stringifies it).
+  try { C = JSON.parse(JSON.stringify(C)); } catch (eSnap) { return null; }
   var st = C.stats || {};
   var rec = {
     archiveVersion: 1,
