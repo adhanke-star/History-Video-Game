@@ -12,6 +12,7 @@
       "American Battlefield Trust — Battle of Shiloh (packet source register row: casualties, CS strength, terrain, Buell rescue)"
     ],
     "id": "shiloh",
+    "learnMeta": { "phases": 1, "approxMinutes": [5, 15], "skills": ["fog-scouting","morale-rally","reinforcements"], "recommendedAfter": "elkhornTavern" },
     "weather": {
       "sky": "clear",
       "time": "morning",

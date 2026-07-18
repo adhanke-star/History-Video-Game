@@ -12,6 +12,7 @@
       "Wikipedia — James S. Negley"
     ],
     "id": "chickamauga",
+    "learnMeta": { "phases": 3, "approxMinutes": [10, 25], "skills": ["phases","fog-scouting","defense-hold"], "recommendedAfter": "vicksburg" },
     "weather": {
       "sky": "clear",
       "time": "afternoon",

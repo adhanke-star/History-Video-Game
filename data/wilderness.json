@@ -13,6 +13,7 @@
       "Gordon C. Rhea, The Battle of the Wilderness May 5-6, 1864 (LSU Press, 1994)"
     ],
     "id": "wilderness",
+    "learnMeta": { "phases": 1, "approxMinutes": [5, 15], "skills": ["fog-scouting","facing","defense-hold"], "recommendedAfter": "chattanooga" },
     "name": "The Wilderness",
     "date": "May 5-7, 1864",
     "place": "The Brock Road / Orange Plank Road junction, Spotsylvania County, Virginia",

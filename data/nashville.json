@@ -9,6 +9,7 @@
       "Nashville Metropolitan Historical Commission, Military Sites markers"
     ],
     "id": "nashville",
+    "learnMeta": { "phases": 2, "approxMinutes": [5, 20], "skills": ["phases","facing","assault-pacing"], "recommendedAfter": "franklin" },
     "weather": {
       "sky": "overcast",
       "time": "afternoon",

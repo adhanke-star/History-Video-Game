@@ -13,6 +13,7 @@
       "American Battlefield Trust — Antietam Cornfield map narrative (\"rain had stopped, leaving a thin ground fog\"; hollows filled with mist)"
     ],
     "id": "antietam",
+    "learnMeta": { "phases": 3, "approxMinutes": [10, 25], "skills": ["phases","assault-pacing","reinforcements"], "recommendedAfter": "malvernHill" },
     "weather": {
       "sky": "fog",
       "time": "dawn",

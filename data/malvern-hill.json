@@ -13,6 +13,7 @@
       "Wikipedia, Battle of Malvern Hill (OOB cross-check)"
     ],
     "id": "malvernHill",
+    "learnMeta": { "phases": 1, "approxMinutes": [5, 15], "skills": ["artillery","defense-hold","assault-pacing"], "recommendedAfter": "gainesMill" },
     "weather": {
       "sky": "clear",
       "time": "afternoon",

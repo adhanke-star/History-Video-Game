@@ -13,6 +13,7 @@
       "Gordon C. Rhea, The Battles for Spotsylvania Court House and the Road to Yellow Tavern (1997)"
     ],
     "id": "spotsylvania",
+    "learnMeta": { "phases": 1, "approxMinutes": [5, 15], "skills": ["works-assault","assault-pacing","morale-rally"], "recommendedAfter": "wilderness" },
     "name": "Spotsylvania: The Bloody Angle",
     "date": "May 12, 1864",
     "place": "The Mule Shoe salient, Spotsylvania Court House, Virginia",

@@ -66,7 +66,7 @@ function staticPreflight() {
   check("106 follows 105", index105 >= 0 && index106 === index105 + 1, { index105, index106 });
   check("campaignAdvance not an override", !(manifest.overrides || []).includes("campaignAdvance"), manifest.overrides || []);
   check("assignment wrapper only", !/function\s+campaignAdvance\s*\(/.test(runtime), null);
-  check("suite is 133", rows.length === 133, rows.length);   // D425: 130 -> 131 (D418 enrolled the Mayhem row; this probe had not rerun since D413). D443 (AD-6): 131 -> 133 — the D436 atlanta and D442 cold harbor rows appended at the END; the D436/D442 sweeps moved only this probe's 1566/1614 pins and missed this count tooth (recorded honestly).
+  check("suite is 134", rows.length === 134, rows.length);   // D425: 130 -> 131 (D418 enrolled the Mayhem row; this probe had not rerun since D413). D443 (AD-6): 131 -> 133 — the D436 atlanta and D442 cold harbor rows appended at the END; the D436/D442 sweeps moved only this probe's 1566/1614 pins and missed this count tooth (recorded honestly). D444: 133 -> 134 (learn-battle at the END).
   check("focused row is 38", /^38\s+war career\s+::\s+tools\/probe-war-career\.mjs$/.test(rows[37] || ""), rows[37] || "missing");
   check("focused probe enrolled once", occurrences(vet, "tools/probe-war-career.mjs") === 1, occurrences(vet, "tools/probe-war-career.mjs"));
   check("plan probe unenrolled", !vet.includes("['war career plan'") && !vet.includes('tools/probe-war-career-loop-plan.mjs'), null);
@@ -2580,7 +2580,7 @@ async function main() {
     schema: "cw_probe_war_career_v1",
     generatedAt: new Date().toISOString(),
     ok: false,
-    suite: { expected: 133, actual: 0, index: 38 },   // D425: 130 -> 131 (D418 Mayhem row). D443: 131 -> 133 (D436 atlanta + D442 cold harbor rows at the END)
+    suite: { expected: 134, actual: 0, index: 38 },   // D425: 130 -> 131 (D418 Mayhem row). D443: 131 -> 133 (D436 atlanta + D442 cold harbor rows at the END). D444: 133 -> 134 (learn-battle at the END)
     static: staticResult,
     steps: [],
     pageerrors: [],
@@ -2659,7 +2659,7 @@ async function main() {
     result = Object.assign(result, runtime, {
       schema: "cw_probe_war_career_v1",
       generatedAt: new Date().toISOString(),
-      suite: { expected: 133, actual: list.length, index: 38 },   // D425: 130 -> 131 (D418 Mayhem row). D443: 131 -> 133 (D436 atlanta + D442 cold harbor rows at the END)
+      suite: { expected: 134, actual: list.length, index: 38 },   // D425: 130 -> 131 (D418 Mayhem row). D443: 131 -> 133 (D436 atlanta + D442 cold harbor rows at the END). D444: 133 -> 134 (learn-battle at the END)
       static: staticResult,
       pageerrors,
       realErrors,
@@ -2667,7 +2667,7 @@ async function main() {
       screenshots: [{ path: SHOT, bytes: shotBytes, viewport: { width:390, height:700 }, zoom:200 }]
     });
     const failed = result.steps.filter(row => !row.ok);
-    result.ok = !!runtime.ok && staticResult.ok && !failed.length && !pageerrors.length && !realErrors.length && list.length === 133;   // D425: 130 -> 131 (D418 Mayhem row). D443: 131 -> 133 (D436 atlanta + D442 cold harbor rows at the END)
+    result.ok = !!runtime.ok && staticResult.ok && !failed.length && !pageerrors.length && !realErrors.length && list.length === 134;   // D425: 130 -> 131 (D418 Mayhem row). D443: 131 -> 133 (D436 atlanta + D442 cold harbor rows at the END). D444: 133 -> 134 (learn-battle at the END)
   } catch (error) {
     result.ok = false;
     result.fatal = String(error && error.stack || error);

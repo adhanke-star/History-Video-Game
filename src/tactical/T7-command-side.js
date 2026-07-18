@@ -106,6 +106,9 @@ function fldScenarioSideChoice(id, go) {
     // Q7 (D94 GM layer): the pre-battle MATCHUP board — each army's force OVR + a predicted-edge bar, a
     // pure read-out of the historical OOB (no sim change). "" when the scenario has no readable OOB.
     + ((typeof fldMatchupHtml === "function") ? fldMatchupHtml(sd) : "")
+    // GEA-07 (D444): the read-only Learn-the-Battle card — "" when sd has no learnMeta, so the
+    // sheet is byte-identical for custom/sandbox scenarios and any battle without the metadata.
+    + ((typeof fldLearnCardHtml === "function") ? fldLearnCardHtml(sd) : "")
     + '<p class="lede" style="font-size:11px;opacity:.6;margin-top:12px;text-align:center">' + foot + '</p>'
     + '<div class="btn-row" style="margin-top:12px;display:flex;gap:10px;justify-content:center">'
     + '<button id="fldBrSideBack" type="button" class="upg">Back</button>'

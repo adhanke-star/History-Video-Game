@@ -14,6 +14,7 @@
       "Wills, 'Lincoln at Gettysburg'"
     ],
     "id": "gettysburg",
+    "learnMeta": { "phases": 3, "approxMinutes": [10, 25], "skills": ["phases","defense-hold","artillery"], "recommendedAfter": "chancellorsville" },
     "weather": {
       "sky": "clear",
       "time": "afternoon",

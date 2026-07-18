@@ -505,8 +505,8 @@ step("IMPLEMENTATION LADDER", () => {
   if (/"campaignAdvance"/.test(overrides)) {
     throw new Error("assignment wrapper must not register campaignAdvance as a declaration override");
   }
-  if (suite.length !== 133) {   // AD-7 re-pin (D443): 130 -> 131 D418 mayhem row; 131 -> 132 D436 atlanta; 132 -> 133 D442 cold harbor — each appended at the END so the War Career row 38 holds
-    throw new Error("complete Slice A requires suite 133, got " + suite.length);
+  if (suite.length !== 134) {   // AD-7 re-pin (D443): 130 -> 131 D418 mayhem row; 131 -> 132 D436 atlanta; 132 -> 133 D442 cold harbor; D444: 133 -> 134 learn-battle — each appended at the END so the War Career row 38 holds
+    throw new Error("complete Slice A requires suite 134, got " + suite.length);
   }
   return { mode: "runtime", suite: suite.length, marker: MARKER };
 });
@@ -555,7 +555,7 @@ step("EXCLUSIONS + BASELINES", () => {
     }
     if (!e71.includes("PENDING")) throw new Error("planning boundary must leave E71 pending");
   } else {
-    if (suite.length !== 133) throw new Error("Slice-A suite must be 133, got " + suite.length);   // AD-7 re-pin (D443): 130 -> 133 (D418 mayhem, D436 atlanta, D442 cold harbor rows append at the END)
+    if (suite.length !== 134) throw new Error("Slice-A suite must be 134, got " + suite.length);   // AD-7 re-pin (D443): 130 -> 133 (D418 mayhem, D436 atlanta, D442 cold harbor rows append at the END). D444: 133 -> 134 (learn-battle at the END)
     if (!e71.includes("FIXED")) throw new Error("Slice A marker exists but E71 is not FIXED");
   }
 
@@ -1137,8 +1137,8 @@ step("BASELINES + LANE", () => {
       normalize(rosterExpected.join(" ")) !== normalize(builderExpected.join(" "))) {
     throw new Error("coverage baselines moved");
   }
-  if (suite.length !== 133 || !suite[37] || suite[37][1] !== "tools/probe-war-career.mjs") {   // D436: 130 -> 132 (mayhem row D418 missed this pin; atlanta row appends at the end so row 38 holds). D442: 132 -> 133 (cold harbor row appends at the end; row 38 still holds)
-    throw new Error("suite 133 / War Career row 38 moved");
+  if (suite.length !== 134 || !suite[37] || suite[37][1] !== "tools/probe-war-career.mjs") {   // D436: 130 -> 132 (mayhem row D418 missed this pin; atlanta row appends at the end so row 38 holds). D442: 132 -> 133 (cold harbor row appends at the end; row 38 still holds). D444: 133 -> 134 (learn-battle at the end; row 38 still holds)
+    throw new Error("suite 134 / War Career row 38 moved");
   }
   if (!read(SWEEP).includes("var reg = fldScenarioRegistry()") ||
       !read(SWEEP).includes("var order = (typeof fldScenarioMenuOrder==='function')")) {

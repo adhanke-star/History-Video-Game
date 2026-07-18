@@ -14,6 +14,7 @@
       "Wikipedia — Battle of Cedar Creek"
     ],
     "id": "cedarCreek",
+    "learnMeta": { "phases": 2, "approxMinutes": [10, 25], "skills": ["fog-scouting","morale-rally","phases"], "recommendedAfter": "atlanta" },
     "name": "Cedar Creek - Dawn Rout, Afternoon Reversal",
     "date": "October 19, 1864",
     "place": "Belle Grove and Middletown, Virginia - from the North Fork crossings below Massanutten to the Valley Pike and Miller's Mill",

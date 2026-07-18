@@ -11,6 +11,7 @@
       "HistoryNet, \"The Myth of the 5 Dead Rebel Generals\""
     ],
     "id": "franklin",
+    "learnMeta": { "phases": 1, "approxMinutes": [5, 15], "skills": ["works-assault","assault-pacing","morale-rally"], "recommendedAfter": "cedarCreek" },
     "weather": {
       "sky": "clear",
       "time": "afternoon",

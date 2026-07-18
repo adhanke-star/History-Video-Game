@@ -8,6 +8,7 @@
       "Wikipedia, John Bell Hood (https://en.wikipedia.org/wiki/John_Bell_Hood) - via the D327 packet fetch: promoted temporary full general Jul 18 1864; commission reverted to Lieutenant General Jan 23 1865"
     ],
     "id": "atlanta",
+    "learnMeta": { "phases": 2, "approxMinutes": [10, 25], "skills": ["phases","facing","artillery"], "recommendedAfter": "kennesaw" },
     "name": "The Battle of Atlanta",
     "date": "July 22, 1864",
     "place": "East of Atlanta, Fulton County, Georgia - Bald Hill, the Georgia Railroad, and the Troup Hurt house",

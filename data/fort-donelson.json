@@ -12,6 +12,7 @@
       "NPS Civil War Series"
     ],
     "id": "fortDonelson",
+    "learnMeta": { "phases": 3, "approxMinutes": [15, 35], "skills": ["phases","works-assault","reinforcements"], "recommendedAfter": "newMarketHeights" },
     "name": "Fort Donelson - Unconditional Surrender",
     "date": "February 13, 1862",
     "place": "Dover, Tennessee - the Confederate earthworks on the Cumberland River bluffs, between Hickman Creek and the flooded backwaters of Lick Creek",

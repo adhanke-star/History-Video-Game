@@ -9,6 +9,7 @@
       "docs/design/cold-harbor-battle-build-spec.md (D439 spec: committed envelopes, single-phase shape, the fenced thirty-minute casualty tradition, the §7 integration pin table)"
     ],
     "id": "coldHarbor",
+    "learnMeta": { "phases": 1, "approxMinutes": [5, 15], "skills": ["works-assault","facing","defense-hold"], "recommendedAfter": "spotsylvania" },
     "weather": {
       "sky": "overcast",
       "time": "dawn",

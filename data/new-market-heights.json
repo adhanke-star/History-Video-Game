@@ -13,6 +13,7 @@
       "battleofnewmarketheights.org, history + Medal of Honor"
     ],
     "id": "newMarketHeights",
+    "learnMeta": { "phases": 2, "approxMinutes": [5, 20], "skills": ["phases","works-assault","assault-pacing"], "recommendedAfter": "gettysburg" },
     "name": "New Market Heights - The Fourteen Medals",
     "date": "September 29, 1864",
     "place": "Henrico County, Virginia - the fortified heights above New Market Road, north of the James River at Deep Bottom",

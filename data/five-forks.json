@@ -10,6 +10,7 @@
       "the committed D379 Appomattox Campaign packet"
     ],
     "id": "fiveForks",
+    "learnMeta": { "phases": 1, "approxMinutes": [5, 15], "skills": ["facing","cavalry","assault-pacing"], "recommendedAfter": "nashville" },
     "name": "Five Forks - Turn the White Oak Road Line",
     "date": "April 1, 1865",
     "place": "Five Forks, Dinwiddie County, Virginia",

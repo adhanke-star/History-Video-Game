@@ -14,6 +14,7 @@
       "Thomas J. Howe, Wasted Valor: The Battle of Petersburg, June 15-18, 1864; Sean Michael Chick, The Battle of Petersburg, June 15-18, 1864"
     ],
     "id": "petersburgAssaults",
+    "learnMeta": { "phases": 1, "approxMinutes": [5, 15], "skills": ["reinforcements","works-assault","assault-pacing"], "recommendedAfter": "coldHarbor" },
     "name": "Petersburg: The Initial Assaults",
     "date": "June 15-18, 1864",
     "place": "The eastern face of the Dimmock Line, Petersburg, Virginia - from Baylor's Farm and the Jordan Point Road to Harrison Creek and the final line",

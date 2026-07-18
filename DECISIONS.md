@@ -4,6 +4,57 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D444 — GEA-07 SHIPPED: LEARN-THE-BATTLE METADATA ON ALL 26 SCENARIOS + THE NON-BINDING RECOMMENDATION CARD — [CLAUDE CODE (FABLE 5), LANE-011 DRIVE] (2026-07-18)
+
+LANE-011 slice 1, built exactly to the D441 contract (docs/design/genre-elite-p1-contracts.md
+GEA-07; re-read in full at slice start; the contract bounds the slice).
+
+SHIPPED: (1) every registered scenario's data payload gains the OPTIONAL presentation key
+`learnMeta: { phases, approxMinutes: [lo, hi], skills, recommendedAfter }` — one line per file
+across all 26 battle files, derived mechanically at authoring time (phases = the actual phase
+count; approxMinutes from the scenario's own timeLimitSec + per-phase overhead, lo =
+max(5, round5(total/2 min + phases)), hi = max(lo+5, ceil5(total min + 3·phases + 3));
+recommendedAfter = the scenario's predecessor in the shipped fldScenarioMenuOrder learning
+ladder, bullrun1 the single null root; skills 3 ids per battle from a closed 12-id vocabulary
+naming mechanics the engine actually exercises — facing/formations/fog-scouting/reinforcements/
+phases/works-assault/artillery/assault-pacing/defense-hold/morale-rally/supply-ammo/cavalry).
+NO new historical prose was authored (skills/durations/predecessors are game-mechanics
+presentation, not battle-facts text — the citation law is not triggered). (2) Schema law:
+`tools/validate-data-schemas.mjs` gains the validateLearnMeta optional-key family (the E73
+idiom): closed four-key shape, phases must EQUAL the actual phase count, [lo,hi] integer
+bounds 1<=lo<=hi<=240, 1-6 known unique skill ids, recommendedAfter null or a REAL scenario id
+(live-derived from the battle files' payload keys, never a hardcoded list) and never self;
+plus the PERMANENT `--diagnostic-invalid=battle-learnmeta` negative fixture (triple-invalid:
+phases 99 / [25,5] / unknown skill / unreal id) — run at ship: 56/57 ok=false under injection,
+57/57 green clean. (3) The card: `fldLearnCardHtml(sd)` in src/tactical/T1-bull-run.js — a
+PURE string helper returning "" whenever sd.learnMeta is absent (custom scenarios, sandbox,
+future battles), composed onto the T7 side-choice picker sheet behind a typeof guard (the
+shipped fldMatchupHtml idiom; one line in src/tactical/T7-command-side.js). It renders the
+duration band, phase count, skill labels (a fixed id→label presentation vocabulary matching
+the validator set), the predecessor's NAME resolved live from the registry, and the verbatim
+contract line "A recommendation, never a gate — every battle is open from the start."
+role=note, aria-labelled, no dynamic attribute interpolation. NO settings write, no lock, no
+difficulty mutation, no combat/AI read (contract teeth). Seam note (recorded): the D441 text
+names "the T1 picker render" — the picker SURFACE is T7's side-choice sheet (T1 owns no card
+markup), so the helper lives in T1 (scenario presentation owner) and T7 composes it exactly
+like fldMatchupHtml; a scenario without learnMeta contributes "" → the sheet is byte-identical
+by construction. (4) `tools/probe-learn-battle.mjs` AUTHORED (static: 26-battle coverage +
+closed shape + acyclic recommendedAfter chain rooted at bullrun1 + the grep-guard proving
+src/tactical/T1-bull-run.js is the ONLY src reader of learnMeta + validator-family and
+T7-seam pins; browser: card presence with data-derived values on antietam, the bullrun1
+first-battle line, the no-card ""-contribution path with restore, double-render purity with
+G.settings/__FIELD snapshots, all-26 coverage sweep; two binds predeclared in the header) —
+NOT run this session per D431/D443. (5) Suite 133 → 134: the learn-battle row appends at the
+END; the documented pin-bump idiom applied at ALL 11 pin sites (probe-mayhem-mode,
+probe-open-history-mayhem-plan, probe-war-career-loop-plan ×3, probe-war-career ×4,
+probe-women-in-war-arc-plan, vet-no-regression). Counts otherwise hold: 26 scenarios /
+schema 57 / Army Register 1,614 / `_SAVE_VER=1` / frozen base untouched.
+
+**VETTING DEFERRED (D443):** ran node --check ×10 (all touched JS/probes), build GATE OK,
+schema 57/57 + the battle-learnmeta fixture proof, git diff --check. The focused probe run,
+both binds, and the picker byte-equivalence proof are owed as AUDIT-DEBT AD-11
+(REVIEW-QUEUE.md).
+
 ## D432 — LANE-010 OVERNIGHT FEATURE BLITZ OPENS: THE D431 QUEUE IS CHARTERED UNDER A LEDGER-ONLY LOCK — [CLAUDE CODE (FABLE 5), LANE-010 DRIVE] (2026-07-18)
 
 The Aaron-authorized overnight coding-first run (D431 directive) opens its own lane before any

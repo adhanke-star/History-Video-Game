@@ -12,6 +12,7 @@
       "American Battlefield Trust, Cheatham Hill article"
     ],
     "id": "kennesaw",
+    "learnMeta": { "phases": 1, "approxMinutes": [5, 15], "skills": ["works-assault","assault-pacing","defense-hold"], "recommendedAfter": "petersburgAssaults" },
     "weather": {
       "sky": "clear",
       "time": "morning",

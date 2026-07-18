@@ -11,6 +11,7 @@
       "National Park Service, Vicksburg National Military Park - 'Vicksburg Siege' history page"
     ],
     "id": "vicksburg",
+    "learnMeta": { "phases": 3, "approxMinutes": [10, 25], "skills": ["phases","works-assault","assault-pacing"], "recommendedAfter": "stonesRiver" },
     "weather": {
       "sky": "clear",
       "time": "midday",

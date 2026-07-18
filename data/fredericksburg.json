@@ -10,6 +10,7 @@
       "USGS Circular 1264 (terrain)"
     ],
     "id": "fredericksburg",
+    "learnMeta": { "phases": 1, "approxMinutes": [5, 15], "skills": ["works-assault","assault-pacing","defense-hold"], "recommendedAfter": "antietam" },
     "weather": {
       "sky": "clear",
       "time": "afternoon",

@@ -13,7 +13,7 @@ const DATA = join(ROOT, 'data');
 const SHOTS = join(__dirname, 'shots');
 const diagnosticArg = process.argv.find(arg => arg.startsWith('--diagnostic-invalid='));
 const DIAGNOSTIC_INVALID = diagnosticArg ? diagnosticArg.slice('--diagnostic-invalid='.length) : '';
-const DIAGNOSTIC_FAMILIES = new Set(['', 'all', 'battle', 'meta', 'schema', 'ratings', 'battle-homeedge', 'battle-doctrine']);
+const DIAGNOSTIC_FAMILIES = new Set(['', 'all', 'battle', 'meta', 'schema', 'ratings', 'battle-homeedge', 'battle-doctrine', 'battle-learnmeta']);
 if (!DIAGNOSTIC_FAMILIES.has(DIAGNOSTIC_INVALID)) {
   console.error('Unknown diagnostic family: ' + DIAGNOSTIC_INVALID);
   process.exit(2);
@@ -187,6 +187,65 @@ function validateAssaultDoctrine(node, prefix, issues) {
   }
 }
 
+// GEA-07 (D444): learnMeta is OPTIONAL presentation metadata on the battle payload —
+// { phases, approxMinutes: [lo, hi], skills: [known ids], recommendedAfter: id|null }.
+// Closed shape, bounded arrays, known skill ids only, recommendedAfter must be a REAL
+// scenario id (live-derived from the battle files' payload keys, never a hardcoded list)
+// or null, and phases must equal the battle's actual phase count. It is NEVER a gameplay
+// input (no combat/AI file may read it — the probe grep-guard pins that side).
+const LEARN_SKILL_IDS = new Set([
+  'facing', 'formations', 'fog-scouting', 'reinforcements', 'phases', 'works-assault',
+  'artillery', 'assault-pacing', 'defense-hold', 'morale-rally', 'supply-ammo', 'cavalry'
+]);
+let SCENARIO_ID_SET = null;
+function scenarioIdSet() {
+  if (SCENARIO_ID_SET) return SCENARIO_ID_SET;
+  SCENARIO_ID_SET = new Set();
+  for (const file of BATTLE_FILES) {
+    try {
+      const data = JSON.parse(readFileSync(join(DATA, file), 'utf8'));
+      const key = Object.keys(data).find(name => !META_ROOT_KEYS.has(name));
+      if (key) SCENARIO_ID_SET.add(key);
+    } catch (e) { /* an unparseable file already fails its own row */ }
+  }
+  return SCENARIO_ID_SET;
+}
+function validateLearnMeta(battle, battleKey, issues) {
+  if (!isObject(battle) || !Object.prototype.hasOwnProperty.call(battle, 'learnMeta') || battle.learnMeta == null) return;
+  const lm = battle.learnMeta;
+  const prefix = battleKey + '.learnMeta';
+  if (!isObject(lm)) { issues.push(prefix + ' must be an object'); return; }
+  for (const key of Object.keys(lm)) {
+    if (!['phases', 'approxMinutes', 'skills', 'recommendedAfter'].includes(key)) issues.push(prefix + '.' + key + ' unknown key');
+  }
+  const actualPhases = Array.isArray(battle.phases) ? battle.phases.length : 1;
+  if (!Number.isInteger(lm.phases) || lm.phases !== actualPhases) {
+    issues.push(prefix + '.phases must equal the actual phase count ' + actualPhases);
+  }
+  if (!Array.isArray(lm.approxMinutes) || lm.approxMinutes.length !== 2 ||
+      !Number.isInteger(lm.approxMinutes[0]) || !Number.isInteger(lm.approxMinutes[1]) ||
+      lm.approxMinutes[0] < 1 || lm.approxMinutes[0] > lm.approxMinutes[1] || lm.approxMinutes[1] > 240) {
+    issues.push(prefix + '.approxMinutes must be [lo, hi] integers with 1 <= lo <= hi <= 240');
+  }
+  if (!Array.isArray(lm.skills) || !lm.skills.length || lm.skills.length > 6) {
+    issues.push(prefix + '.skills must be a nonempty array of at most 6 skill ids');
+  } else {
+    const seen = new Set();
+    lm.skills.forEach((skill, i) => {
+      if (!LEARN_SKILL_IDS.has(skill)) issues.push(prefix + '.skills[' + i + '] unknown skill id ' + JSON.stringify(skill));
+      else if (seen.has(skill)) issues.push(prefix + '.skills[' + i + '] duplicate skill id ' + skill);
+      else seen.add(skill);
+    });
+  }
+  if (lm.recommendedAfter !== null) {
+    if (typeof lm.recommendedAfter !== 'string' || !scenarioIdSet().has(lm.recommendedAfter)) {
+      issues.push(prefix + '.recommendedAfter must be null or a registered scenario id');
+    } else if (lm.recommendedAfter === battleKey) {
+      issues.push(prefix + '.recommendedAfter must not be the scenario itself');
+    }
+  }
+}
+
 function validateObjective(objective, prefix, issues) {
   if (!isObject(objective)) {
     issues.push(prefix + ' must be an object');
@@ -234,6 +293,7 @@ function validateBattle(file, data, issues) {
   validateRoles(battle, battleKey, issues);
   validateHomeEdge(battle, battleKey, issues);            // E73: T1 reads data.homeEdge; T8 falls back to top.homeEdge
   validateAssaultDoctrine(battle, battleKey, issues);     // E73: T1 reads data.assaultDoctrine
+  validateLearnMeta(battle, battleKey, issues);           // GEA-07: presentation-only Learn-the-Battle metadata
   if (!isObject(battle.field) || !Number.isFinite(battle.field.w) || battle.field.w <= 0 || !Number.isFinite(battle.field.h) || battle.field.h <= 0) {
     issues.push(battleKey + '.field must have positive finite w/h');
   }
@@ -318,6 +378,7 @@ function injectDiagnostic(file, family, data, rule, applied) {
     if (battleKey && isObject(copy[battleKey])) {
       if (DIAGNOSTIC_INVALID === 'battle-homeedge') { copy[battleKey].homeEdge = { US: 'lo', CS: 'high' }; key = battleKey + '.homeEdge (E73 typo fixture)'; }
       else if (DIAGNOSTIC_INVALID === 'battle-doctrine') { copy[battleKey].assaultDoctrine = 'cautius'; key = battleKey + '.assaultDoctrine (E73 typo fixture)'; }
+      else if (DIAGNOSTIC_INVALID === 'battle-learnmeta') { copy[battleKey].learnMeta = { phases: 99, approxMinutes: [25, 5], skills: ['not-a-skill'], recommendedAfter: 'notAScenario' }; key = battleKey + '.learnMeta (GEA-07 invalid fixture)'; }
       else { delete copy[battleKey].objective; key = battleKey + '.objective'; }
     }
   } else {

@@ -10,6 +10,7 @@
       "Wikipedia - Battle of McDowell"
     ],
     "id": "crossKeysPortRepublic",
+    "learnMeta": { "phases": 2, "approxMinutes": [10, 25], "skills": ["phases","defense-hold","assault-pacing"], "recommendedAfter": "bullrun1" },
     "name": "Cross Keys / Port Republic - The Valley Finale",
     "date": "June 8-9, 1862",
     "place": "Rockingham County, Virginia - Ewell's ridge south of Mill Creek, then Lewiston Lane and The Coaling above Port Republic",

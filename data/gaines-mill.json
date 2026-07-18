@@ -14,6 +14,7 @@
       "Library of Congress, Map of the battle field of Gaines's Mill"
     ],
     "id": "gainesMill",
+    "learnMeta": { "phases": 1, "approxMinutes": [5, 15], "skills": ["assault-pacing","defense-hold","facing"], "recommendedAfter": "crossKeysPortRepublic" },
     "weather": {
       "sky": "haze",
       "time": "dusk",

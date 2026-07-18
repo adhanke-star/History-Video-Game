@@ -11,6 +11,7 @@
       "Shea & Hess, Pea Ridge: Civil War Campaign in the West (1992)"
     ],
     "id": "elkhornTavern",
+    "learnMeta": { "phases": 2, "approxMinutes": [10, 25], "skills": ["phases","supply-ammo","defense-hold"], "recommendedAfter": "fortDonelson" },
     "name": "Pea Ridge - Elkhorn Tavern",
     "date": "March 7, 1862",
     "place": "Elkhorn Tavern, Arkansas - the Telegraph Road from Cross Timber Hollow to the Huntsville Road junction and Ruddick's field",

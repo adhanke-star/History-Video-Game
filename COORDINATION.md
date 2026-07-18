@@ -2002,9 +2002,14 @@ next green commit and confer through this ledger instead of permitting simultane
   asset purchases/accounts, GEA-11 runtime.
 - **Expected transition:** DRIVE → VERIFY (battery-only) at run end; the FINAL audit
   session settles AD-0 + every AD-11+ row at the final head and flips this lane SHIPPED.
-- **Resume pointer:** slice 1 (GEA-07) from this ledger-only commit — re-read its contract
-  in `docs/design/genre-elite-p1-contracts.md` in full first.
-- **Last-touched commit:** this ledger-only lock commit.
+- **Resume pointer:** **D444 SHIPPED slice 1 (GEA-07): learnMeta authored on all 26 battle
+  payloads; validateLearnMeta schema family + the permanent battle-learnmeta fixture (proven
+  56/57 under injection, 57/57 clean); fldLearnCardHtml (T1) composed on the T7 side-choice
+  sheet behind a typeof guard ("" without learnMeta → byte-identical picker);
+  probe-learn-battle AUTHORED with two predeclared binds; suite 133→134 with all 11 pin
+  sites bumped under the documented idiom; AUDIT-DEBT AD-11.** Exact next: slice 2 (GEA-08
+  Chief of Staff morning brief) — re-read its contract in full first.
+- **Last-touched commit:** the D444 slice commit.
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's genre-elite P1
   build-run directive (the D443 extend-coding continuation).
 

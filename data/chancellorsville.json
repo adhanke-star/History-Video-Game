@@ -12,6 +12,7 @@
       "Keller, \"Chancellorsville and the Germans\" (in The Battle of Chancellorsville, ed. Gallagher)"
     ],
     "id": "chancellorsville",
+    "learnMeta": { "phases": 1, "approxMinutes": [5, 15], "skills": ["facing","fog-scouting","morale-rally"], "recommendedAfter": "fredericksburg" },
     "weather": {
       "sky": "clear",
       "time": "morning",

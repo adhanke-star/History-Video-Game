@@ -307,6 +307,56 @@ function _fldInjectBullRunButton(afterBtn) {
     return b;
   } catch (e) { return null; }
 }
+/* ===========================================================================
+   GEA-07 (D444): the "Learn the Battle" card — a PURE render of the OPTIONAL
+   sd.learnMeta presentation metadata (phases / approxMinutes [lo,hi] / skills /
+   recommendedAfter), composed onto the side-choice picker sheet by T7. Returns ""
+   whenever the scenario carries no learnMeta (custom scenarios, the sandbox, any
+   future battle shipped without it) so the picker sheet is byte-identical to the
+   pre-GEA-07 rendering. The card INFORMS ONLY: no settings write, no lock, no
+   difficulty mutation — the explicit never-a-gate line is part of the contract.
+   learnMeta is NEVER read by combat, scoring, or AI (the probe grep-guard pins
+   this file as the only src reader). Skill ids -> labels is the fixed presentation
+   vocabulary matching the validator's LEARN_SKILL_IDS set; every VALUE on the card
+   derives from the data.
+   =========================================================================== */
+var FLD_LEARN_SKILL_LABELS = {
+  "facing": "facing & flanks", "formations": "line vs. column formations",
+  "fog-scouting": "fog of war & scouting", "reinforcements": "reinforcement timing",
+  "phases": "multi-phase battles", "works-assault": "assaulting fortifications",
+  "artillery": "artillery & gun lines", "assault-pacing": "pacing an assault",
+  "defense-hold": "holding a defensive line", "morale-rally": "morale & rallying",
+  "supply-ammo": "supply & ammunition", "cavalry": "cavalry employment"
+};
+function fldLearnCardHtml(sd) {
+  try {
+    if (!sd || !sd.learnMeta) return "";
+    var lm = sd.learnMeta;
+    if (!lm.approxMinutes || lm.approxMinutes.length !== 2 || !lm.skills || !lm.skills.length) return "";
+    var labels = [];
+    for (var i = 0; i < lm.skills.length; i++) labels.push(FLD_LEARN_SKILL_LABELS[lm.skills[i]] || String(lm.skills[i]));
+    var afterLine;
+    if (lm.recommendedAfter) {
+      var prev = (typeof fldScenarioData === "function") ? fldScenarioData(lm.recommendedAfter) : null;
+      var prevName = (prev && prev.name) ? String(prev.name).split(" — ")[0] : String(lm.recommendedAfter);
+      afterLine = "Recommended after: <b>" + prevName + "</b>.";
+    } else {
+      afterLine = "A recommended <b>first battle</b>.";
+    }
+    var phaseWord = (lm.phases === 1) ? "1 phase" : (lm.phases + " phases");
+    return '<div id="fldLearnCard" role="note" aria-label="Learn the battle" '
+      + 'style="max-width:560px;margin:14px auto 0;text-align:left;background:#15110b;border:1px solid #715e3e;border-radius:6px;padding:10px 13px;">'
+      + '<div style="font-size:12px;letter-spacing:2px;color:#d8c87a;font-weight:bold;">LEARN THE BATTLE</div>'
+      + '<div style="font-size:12.5px;opacity:.88;line-height:1.5;margin-top:4px;">'
+      + 'Approx. session: <b>' + lm.approxMinutes[0] + '&ndash;' + lm.approxMinutes[1] + ' min</b> &middot; ' + phaseWord + '.<br>'
+      + 'Skills taught: <b>' + labels.join('</b> &middot; <b>') + '</b>.<br>'
+      + afterLine
+      + '</div>'
+      + '<div style="font-size:11px;opacity:.6;margin-top:5px;">A recommendation, never a gate &mdash; every battle is open from the start.</div>'
+      + '</div>';
+  } catch (e) { return ""; }
+}
+
 function fldLaunchBattle(scn, side) {
   fldLaunchSandbox({ scenario: scn, renderer: "3d", playerSide: (side === "CS") ? "CS" : "US" });
   // Phase C: the pre-battle briefing fires for ANY registered scenario — fldBullRunBriefing reads __FIELD.scenData,

@@ -13,6 +13,7 @@
       "NPS/ABT biographies (Sheridan, Cleburne, Bragg, Polk, Hardee, Hanson)"
     ],
     "id": "stonesRiver",
+    "learnMeta": { "phases": 2, "approxMinutes": [10, 25], "skills": ["phases","defense-hold","artillery"], "recommendedAfter": "shiloh" },
     "name": "Stones River - The Hard-Earned Victory",
     "date": "December 31, 1862",
     "_dateNote": "The battle ran December 31, 1862 - January 2, 1863; the date field carries the opening day for menu chronology (Shiloh -> Stones River -> Vicksburg). Phase 2 is January 2, 1863.",
