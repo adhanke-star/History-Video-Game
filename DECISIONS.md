@@ -40,6 +40,25 @@ asset purchases/accounts. LANE-009's shipped slices are not re-run. Expected tra
 end: LANE-010 → VERIFY (audit-owed), with the audit session settling the whole AUDIT-DEBT
 ledger plus the full serialized battery and flipping LANE-009 + LANE-010 SHIPPED.
 
+## D435 — GEA-03 SHIPPED: HOME / SHIFT+HOME CAMERA RECOVERY IN THE 3D BATTLE VIEW — [CLAUDE CODE (FABLE 5), LANE-010 DRIVE] (2026-07-18)
+
+Queue item 3 (REVIEW-QUEUE GENRE-ELITE GEA-03). `src/tactical/T0-field-sandbox.js` gains two
+guarded camera commands beside `_fld3dReaimPhase`: `fldCamHome()` re-seats the side-aware survey
+overview (the exact `fld3dInit` framing over the objective — a CS player gets the northern mirror
+view), and `fldCamFrameSelected()` frames the first selected living brigade at close range from
+the same side-aware direction, falling back to the overview when nothing is selected. `fldKey`
+routes `Home` (with `preventDefault` so the page never scrolls) and `Shift+Home`; `F` remains
+charge, untouched. Both commands are 3D-only by design (`__FIELD.mode3d` guard — the 2D canvas
+keeps its own pan/zoom) and are PURE camera/target moves: no raycast, selection, order, or
+simulation change. Help reference rows added in `src/92-help-overlay.js` on BOTH surfaces: the
+How-to-Play battle list + two grid rows, and the tactical "?" overlay compact rows. Teeth
+AUTHORED (not run): `tools/probe-field.mjs` (functions exist; fldKey routes Home/Shift+Home;
+headless no-op purity snapshot; side-aware + fallback source introspection) and
+`tools/probe-help-overlay.mjs` (both help surfaces document the keys).
+
+**VETTING DEFERRED (D431):** ran node --check ×4 + build GATE OK + git diff --check. AUDIT-DEBT
+row AD-3 names the owed probe runs and the 3D behavior check.
+
 ## D434 — GEA-02 SHIPPED: THE AAR GAINS ACCESSIBLE COPY-REPORT + DOWNLOAD-TEXT CONTROLS — [CLAUDE CODE (FABLE 5), LANE-010 DRIVE] (2026-07-18)
 
 Queue item 2 (REVIEW-QUEUE GENRE-ELITE GEA-02). `src/82-after-action.js` renders the report inside

@@ -112,6 +112,7 @@ function _hpShowHelp() {
       '<div style="margin-bottom:4px"><strong>Engineering Corps:</strong> <kbd>E</kbd>=Entrench (dig in for cover) &middot; <kbd>B</kbd>=Abatis (timber belt) &middot; <kbd>X</kbd>=Clear obstacle &middot; <kbd>N</kbd>=Lay pontoon bridge (in a river skirmish). Each reads the realism slider.</div>' +
       '<div style="margin-bottom:4px"><strong>Speed:</strong> <kbd>1</kbd>/<kbd>2</kbd>/<kbd>3</kbd> set 1x / 2x / 4x. <kbd>Space</kbd> begins, pauses, or resumes.</div>' +
       '<div style="margin-bottom:4px"><strong>Battle settings:</strong> <kbd>V</kbd> toggles fog, <kbd>P</kbd> toggles auto-pause, and <kbd>G</kbd> opens the settings drawer.</div>' +
+      '<div style="margin-bottom:4px"><strong>Camera (3D):</strong> <kbd>Home</kbd> resets the side-aware overview; <kbd>Shift</kbd>+<kbd>Home</kbd> frames the selected brigade.</div>' +   /* GEA-03 (D435) */
       '<div style="margin-bottom:4px"><strong>Win:</strong> Carry or deny the scenario objective, break the enemy, or in multi-phase battles win enough sectors for the aggregate result.</div>' +
     '</div>' +
     '<hr class="rule">' +
@@ -137,6 +138,8 @@ function _hpShowHelp() {
       '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">P</kbd><span>Auto-pause on/off</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">G</kbd><span>Battle settings drawer</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">R</kbd><span>Cycle elevation display (hillshade / contours / color-by-height)</span>' +   /* S08 (D233) */
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">Home</kbd><span>Reset the 3D camera to the side-aware overview</span>' +   /* GEA-03 (D435) */
+      '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">Shift+Home</kbd><span>Frame the selected brigade (3D camera)</span>' +   /* GEA-03 (D435) */
       '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">Esc</kbd><span>Exit battle or close an open tactical dialog</span>' +
       '<kbd style="padding:1px 5px;border:1px solid var(--brass-lt,#c9a85f);border-radius:3px;text-align:center">?</kbd><span>This help panel</span>' +
     '</div>' +
@@ -257,6 +260,8 @@ function _hpShowTacticalHelp() {
         '<div><strong>P:</strong> Auto-pause</div>' +
         '<div><strong>G:</strong> Settings</div>' +
         '<div><strong>R:</strong> Elevation display</div>' +   /* S08 (D233) */
+        '<div><strong>Home:</strong> Overview camera (3D)</div>' +   /* GEA-03 (D435) */
+        '<div><strong>Shift+Home:</strong> Frame selected (3D)</div>' +   /* GEA-03 (D435) */
         '<div><strong>Tab:</strong> Next unit</div>' +
         '<div><strong>Esc:</strong> Close dialog</div>' +
         '<div><strong>?:</strong> Toggle help</div>' +

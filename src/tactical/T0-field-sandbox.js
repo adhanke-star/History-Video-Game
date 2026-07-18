@@ -1532,6 +1532,7 @@ function fldKey(e) {
   else if (k === "p" || k === "P") fldToggleAutoPause();
   else if (k === "g" || k === "G") { if (typeof fldOpenSettingsDrawer === "function") fldOpenSettingsDrawer(); }   // B-5: the in-battle settings drawer
   else if (k === "r" || k === "R") { if (typeof fldCycleElevMode === "function") fldCycleElevMode(); }              // H5-i3: cycle the elevation display (hillshade / contours / color-by-height)
+  else if (k === "Home") { e.preventDefault(); if (e.shiftKey) { if (typeof fldCamFrameSelected === "function") fldCamFrameSelected(); } else if (typeof fldCamHome === "function") fldCamHome(); }   // GEA-03 (D435): camera recovery — Home = side-aware overview, Shift+Home = frame selected
   else if (k === "a" || k === "A") { var _psa = fldPlayerSide(); __FIELD.sel = []; for (var i = 0; i < __FIELD.units.length; i++) { var u = __FIELD.units[i]; if (u.side === _psa && u.alive && !u.ai) __FIELD.sel.push(u.id); } fldRenderHud(); }
   else if (k === "Tab") { if (__FIELD.phase === "battle") { e.preventDefault(); fldCycleSel(); } } // only steal Tab mid-battle
   var b = document.getElementById("fldBtnSpd"); if (b) { b.innerHTML = __FIELD.speed + "&times;"; b.setAttribute("aria-label", "Speed " + __FIELD.speed + "x — cycle to change (1 2 3)"); }
@@ -2555,6 +2556,26 @@ function _fld3dReaimPhase() {
   var ctr = __FIELD.objective, ps = (typeof fldPlayerSide === "function") ? fldPlayerSide() : "US";
   __FIELD.camera.position.set(ctr.x, 620, (ps === "CS") ? -380 : (FLD.FIELD_H + 380));
   if (__FIELD.controls.target && __FIELD.controls.target.set) __FIELD.controls.target.set(ctr.x, 0, ctr.z);
+  if (__FIELD.controls.update) { try { __FIELD.controls.update(); } catch (e) {} }
+}
+
+/* ---- GEA-03 (D435): player camera-recovery commands. Home re-seats the side-aware survey
+   overview (the exact fld3dInit / _fld3dReaimPhase framing over the objective); Shift+Home
+   frames the SELECTED brigade from the same side-aware direction at close range (no selection
+   -> the survey view). 3D-only by design — the 2D canvas keeps its own pan/zoom; F remains
+   charge. PURE camera/target move: no raycast, selection, order, or simulation change. ---- */
+function fldCamHome() {
+  if (!__FIELD.mode3d) return;
+  _fld3dReaimPhase();
+}
+function fldCamFrameSelected() {
+  if (!__FIELD.mode3d || !__FIELD.camera || !__FIELD.controls) return;
+  var u = null;
+  for (var i = 0; i < __FIELD.sel.length; i++) { var c = fldById(__FIELD.sel[i]); if (c && c.alive) { u = c; break; } }
+  if (!u) { fldCamHome(); return; }
+  var ps = (typeof fldPlayerSide === "function") ? fldPlayerSide() : "US";
+  __FIELD.camera.position.set(u.x, 260, u.z + ((ps === "CS") ? -240 : 240));
+  if (__FIELD.controls.target && __FIELD.controls.target.set) __FIELD.controls.target.set(u.x, 0, u.z);
   if (__FIELD.controls.update) { try { __FIELD.controls.update(); } catch (e) {} }
 }
 

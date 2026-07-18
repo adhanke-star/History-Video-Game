@@ -45,6 +45,24 @@ const SETUP = `(() => {
       if(__FIELD.phase!=='deploy') throw new Error('should start in deploy, got '+__FIELD.phase);
       return { units:__FIELD.units.length, us:us, cs:cs, phase:__FIELD.phase }; });
 
+    step('GEA-03 (D435): camera-recovery commands exist, route from fldKey, and are inert no-ops outside 3D', function(){
+      if(typeof fldCamHome!=='function'||typeof fldCamFrameSelected!=='function') throw new Error('GEA-03 camera functions missing');
+      var src=String(fldKey);
+      if(src.indexOf('"Home"')<0) throw new Error('fldKey does not route the Home key');
+      if(src.indexOf('fldCamFrameSelected')<0||src.indexOf('shiftKey')<0) throw new Error('fldKey does not route Shift+Home to frame-selected');
+      if(src.indexOf('fldCamHome')<0) throw new Error('fldKey does not route Home to the overview reset');
+      // headless launch has no 3D camera: both commands must be guarded, throw-free, sim-pure no-ops
+      var snap=JSON.stringify(__FIELD.units.map(function(u){return {id:u.id,x:u.x,z:u.z,men:u.men,morale:u.morale,sel:__FIELD.sel.slice()};}));
+      fldCamHome(); fldCamFrameSelected();
+      __FIELD.sel=[__FIELD.units[0].id]; fldCamFrameSelected(); __FIELD.sel=[];
+      var snap2=JSON.stringify(__FIELD.units.map(function(u){return {id:u.id,x:u.x,z:u.z,men:u.men,morale:u.morale,sel:__FIELD.sel.slice()};}));
+      if(snap!==snap2) throw new Error('camera commands mutated simulation state (must be pure)');
+      // frame-selected reads the SELECTED unit and the survey fallback: both paths side-aware via fldPlayerSide
+      var fs=String(fldCamFrameSelected);
+      if(fs.indexOf('fldPlayerSide')<0) throw new Error('frame-selected must stay side-aware');
+      if(fs.indexOf('fldCamHome')<0) throw new Error('frame-selected must fall back to the overview when nothing is selected');
+      return { ok:true }; });
+
     step('MANEUVER: stepping advances the sim and units move from their start', function(){
       var start=__FIELD.units.map(function(u){return {id:u.id,x:u.x,z:u.z};});
       fldStepN(120, 0.05);  // 6 sim-seconds; flips deploy->battle

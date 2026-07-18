@@ -1910,8 +1910,9 @@ next green commit and confer through this ledger instead of permitting simultane
   cited from their own committed packets across four batched commits; `E74_BASELINE` is the
   EMPTY map (the blind spot is CLOSED); mechanical quote-verification of all 256 extracted
   citations; AUDIT-DEBT AD-1 records the owed bind/probe/spot-audit re-proof.** **D434 SHIPPED queue item 2
-  (GEA-02): accessible Copy/Download over the AAR with authored teeth; AUDIT-DEBT AD-2.** Exact
-  next: queue item 3 — GEA-03 camera Home / Shift+Home frame-selected.
+  (GEA-02): accessible Copy/Download over the AAR with authored teeth; AUDIT-DEBT AD-2.** **D435 SHIPPED queue
+  item 3 (GEA-03): Home/Shift+Home camera recovery, teeth authored; AD-3.** Exact next: queue
+  item 4 — ATLANTA spec-first from the D327 packet, then the full runtime integration.
 - **Last-touched commit:** the D432 lock commit (this edit).
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's D431 overnight
   directive.

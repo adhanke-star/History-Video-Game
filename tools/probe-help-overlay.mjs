@@ -109,6 +109,29 @@ const SETUP = `(() => {
       G.mode='menu'; __FIELD.launched=false; __FIELD.phase='idle';
       return { ok:true }; });
 
+    step('GEA-03 (D435): both help surfaces document the Home / Shift+Home camera-recovery keys', function(){
+      // the How-to-Play complete reference (list line + two grid rows)
+      if(typeof _hpHowToHTML!=='function' && typeof _hpShowHelp!=='function') throw new Error('help builders missing');
+      G.mode='menu';
+      document.dispatchEvent(new KeyboardEvent('keydown',{key:'?',bubbles:true}));
+      var sheet=document.getElementById('sheetPad')||document.body;
+      var t=sheet.textContent||'';
+      if(t.indexOf('resets the side-aware overview')<0) throw new Error('How-to-Play missing the Home camera line');
+      if(t.indexOf('Reset the 3D camera to the side-aware overview')<0) throw new Error('How-to-Play grid missing the Home row');
+      if(t.indexOf('Frame the selected brigade (3D camera)')<0) throw new Error('How-to-Play grid missing the Shift+Home row');
+      closeSheetSafe();
+      // the tactical "?" overlay compact rows
+      G.mode='battle'; __FIELD.launched=true; __FIELD.phase='battle';
+      document.dispatchEvent(new KeyboardEvent('keydown',{key:'?',bubbles:true}));
+      var ov=document.getElementById('hpTacOverlay');
+      if(!ov) throw new Error('tactical overlay did not open');
+      var tt=ov.textContent||'';
+      if(tt.indexOf('Overview camera (3D)')<0) throw new Error('tactical overlay missing the Home row');
+      if(tt.indexOf('Frame selected (3D)')<0) throw new Error('tactical overlay missing the Shift+Home row');
+      ov.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true}));
+      G.mode='menu'; __FIELD.launched=false; __FIELD.phase='idle';
+      return { ok:true }; });
+
     step('global "?" opens How-to-Play in menu mode', function(){
       G.mode='menu'; __FIELD.launched=false; __FIELD.phase='idle'; closeSheetSafe();
       document.dispatchEvent(new KeyboardEvent('keydown',{key:'?',bubbles:true}));
