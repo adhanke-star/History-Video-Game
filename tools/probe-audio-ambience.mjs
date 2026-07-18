@@ -70,8 +70,14 @@ function staticScan() {
   check('GEA-09 static: T19 multiplies its src-owned master by the ambient bus and the mono flag collapses PAN ONLY (never a gain write — downmix without silencing)',
     t19.indexOf('fldAudioBusScale === "function") ? fldAudioBusScale("ambient") : 1') >= 0 &&
     /_monoPan = \(\(typeof fldAudioMono === "function"\) && fldAudioMono\(\)\) \? 0 : pan/.test(t19));
+  // D453 audit root-fix (never-run authoring bug): the shipped panel factors the row through ONE
+  // slider(label,hint,bus) helper — the source carries the data-abus template once and instantiates
+  // it four times, so the old ">=4 data-abus occurrences" count could never pass. The tooth now
+  // pins all FOUR named slider calls + the template + the mono toggle (stronger: names every bus).
   check('GEA-09 static: the audio panel ships four labeled bus sliders + the mono toggle',
-    (t9.match(/data-abus="/g) || []).length >= 4 && t9.indexOf('"audioMono"') >= 0 && t9.indexOf('slider("Critical cues"') >= 0);
+    t9.indexOf('data-abus="') >= 0 && t9.indexOf('"audioMono"') >= 0 &&
+    t9.indexOf('slider("Critical cues"') >= 0 && t9.indexOf('slider("Ambience"') >= 0 &&
+    t9.indexOf('slider("Interface"') >= 0 && t9.indexOf('slider("Narration"') >= 0);
 }
 
 async function ensureServer() {
