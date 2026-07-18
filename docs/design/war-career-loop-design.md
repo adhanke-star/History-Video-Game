@@ -1391,3 +1391,85 @@ D411" pins above moved exactly once, documented in D411 and the plan probe: game
 never-move pin stands. Three byte-restored negative binds bit exactly their declared teeth. The
 §17 Matters-of-State runtime remains unimplemented and is the exact next take, unchanged, at
 **44/44**.
+
+---
+
+## 19 · D438 Slice F contract — war end and franchise archive
+
+**Status:** contracted 2026-07-18 under LANE-010 (the D431/D432 overnight run); the §10 Slice-F
+reservation ("capture before campaign nullification, then add the Chronicle gallery; perform a
+save-version migration only if the outer archive cannot remain honest inside the existing
+envelope") is scoped here from the D399 pillar: the one remaining career capability after
+Matters of State is that a finished war LEAVES A RECORD. The runtime in the same D438 slice
+implements exactly this section. VETTING DEFERRED (D431); the probe teeth below are AUTHORED,
+not run, and the audit session settles them (AUDIT-DEBT AD-6).
+
+### One archive owner, outside the save envelope
+
+**Bind token:** ARCHIVE_CANONICAL_OWNER:localStorage.cw_career_archive_v1
+
+- The franchise archive lives in ONE device-local store, `localStorage["cw_career_archive_v1"]`
+  — deliberately OUTSIDE the campaign save envelope, so `_SAVE_VER` stays 1, nothing rides the
+  save, legacy campaigns and every existing save/import/undo vector remain byte-equivalent, and
+  the §10 migration clause is discharged without a migration.
+- Shape: `{ version: 1, records: [...] }`, newest first, capped at 20 records (oldest dropped).
+  Read-side sanitation mirrors the campaign-envelope law: a malformed store or record is
+  DROPPED, never repaired; a poisoned/unsafe-key store reads as empty; a localStorage failure
+  (private mode, quota) is silently safe in BOTH directions — capture failure never blocks the
+  war-end screen, read failure renders no gallery.
+
+### The capture point and the closed record shape
+
+- Capture fires at the SINGLE war-end chokepoint — a `warWonScreen` wrapper installed by
+  `src/106-war-career.js` (the shipped D425 wrapper idiom: markers/delegate propagated so no
+  probe tooth is blinded) — BEFORE the base nullifies `G.campaign`, and works for both the
+  chain-completion and the D119 strategic-conclusion paths (`aarConcludeWar` funnels through
+  `warWonScreen`). There is no defeat-side capture because there is no defeat screen (losses
+  enter recovery); recorded as the v1 bound.
+- The record is a CLOSED shape, `archiveVersion: 1`, assembled by PURE reads (every subsystem
+  guarded; a missing reader yields null, never a throw):
+  `side` · `final` (true) · `endReason` ("chain" | "will" | "recognition" — the D119 one-shot,
+  read before the base consumes it) · `battles`/`won`/`suff`/`infl` (C.stats) · `gradeLetter`
+  (aarOverall over _aarDomains, null if unavailable) · `iron` · `ruleset` (the campaign owner's
+  id via mayhemRuleset, "historical" fail-closed) · `timelineName` (sanitized or null) ·
+  `career` (null unless `C.loot.journey.careerVersion === 1`: `{ name, rank, role, promotions,
+  credits, lineageLen, handoffState, mattersOfState }` — all read from the journey's own
+  projections, no name-based joins, no new identity namespace) · `capturedAt` (epoch ms).
+- NO secrets (never a `cw_llm_*` value), no free-text user input beyond the already-sanitized
+  timeline/person names, no receipt bodies (the Mayhem Chronicle owns those in-campaign).
+
+### The Franchise Record gallery
+
+- `warCareerArchiveHTML()` renders the gallery: a compact numbered list (side, end reason,
+  grade, battles, the career line when present), newest first, aria-labelled, no interactivity
+  beyond reading. v1 surfaces it in ONE place: appended below the war-end report (`#wwReport`'s
+  sheet) by the same wrapper AFTER the base renders — the moment the record it just captured is
+  most meaningful. A main-menu/desk gallery surface is a deliberate later bound, recorded here.
+- The gallery renders ONLY what the sanitized read returns; an empty/unreadable archive renders
+  nothing (no empty-state chrome on the war-end screen).
+
+### Exclusions and invariants
+
+No save-version movement; no combat, political, decision, appointment, or resource change; no
+new identity namespace or name-based join; no second archive owner; no change to the D408 §17
+capabilities, the D410 reachability law, or any shipped Slice A-E surface beyond the wrapper;
+Historical/Mayhem both archive (the record carries the ruleset honestly); the frozen base is
+untouched (the wrapper is the authorized src-side override idiom already carried by
+82/106/107).
+
+### Probe teeth (AUTHORED into tools/probe-war-career.mjs; the audit session runs them)
+
+1. Wrapper install: `warWonScreen._warCareerArchiveWrapped === true` with the base delegate
+   propagated; the D425 marker teeth still see every prior wrapper marker.
+2. Capture: a finished career campaign (careerVersion 1) run through `warWonScreen` writes
+   exactly one record with the closed shape (own-keys check), correct side/battles/grade/career
+   fields, and `G.campaign` still nullified after.
+3. Strategic end: `aarConcludeWar("will")` captures `endReason:"will"`.
+4. Cap + order: 21 captures keep 20, newest first.
+5. Sanitation: a malformed store (`"{"`), a record with an extra key, and an unsafe-key store
+   each read as empty/dropped; capture into a full/failing localStorage does not throw and the
+   war-end screen still renders.
+6. Legacy purity: a no-career campaign archives `career: null`; a fresh campaign's serialized
+   save is byte-identical to pre-D438 (nothing rides the save).
+7. Gallery: after a capture, the war-end sheet contains the Franchise Record section listing
+   the new record; with an empty archive the section is absent.
