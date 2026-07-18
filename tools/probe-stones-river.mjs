@@ -261,12 +261,12 @@ const SETUP = `(() => {
       return { cards:ids, codex:codex.id };
     });
 
-    check('ARMY REGISTER PIN: 26 Stones River units produce exact cmd/nco/pvt trios and current total 1512', function() {
+    check('ARMY REGISTER PIN: 26 Stones River units produce exact cmd/nco/pvt trios and current total 1566', function() {
       var C = { side:'US', iron:false, idx:0, funds:6500, recovery:false, completed:[], roster:[], nextId:1,
         stats:{ battles:0, won:0, infl:0, suff:0 }, recoveryLossCount:0, recoveryMode:false, flipAtk:false, captured:[] };
       if (typeof _t1InitAll === 'function') _t1InitAll(C);
       var reg = ssPersonRegistry(C), rows = [], groups = {};
-      if (reg.people.length !== 1512) throw new Error('Army Register total is ' + reg.people.length + ', expected 1512');   // D380: 1170 -> 1200 — Five Forks adds 10 unique units x 3 slots. D384: 1200 -> 1281 — Fort Donelson adds 27 units x 3 slots. D388: 1281 -> 1326 — Elkhorn Tavern adds 15 unique side-unit ids x 3 slots. D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots; Stones River's own 78-row/26-unit teeth below remain stable.
+      if (reg.people.length !== 1566) throw new Error('Army Register total is ' + reg.people.length + ', expected 1566');   // D380: 1170 -> 1200 — Five Forks adds 10 unique units x 3 slots. D384: 1200 -> 1281 — Fort Donelson adds 27 units x 3 slots. D388: 1281 -> 1326 — Elkhorn Tavern adds 15 unique side-unit ids x 3 slots. D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots; Stones River's own 78-row/26-unit teeth below remain stable. D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots.
       for (var i = 0; i < reg.people.length; i++) {
         var p = reg.people[i], origin = p.replaces || p.pid;
         if (typeof origin === 'string' && origin.indexOf('ss:stonesRiver:') === 0) rows.push(origin);

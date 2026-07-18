@@ -238,7 +238,7 @@ const DOM = `(() => {
       fldInjectMenuButton();
       if (document.querySelectorAll('#fldScnBtn_franklin').length !== 1) throw new Error('duplicate Franklin buttons');
       var ids = Array.prototype.slice.call(document.querySelectorAll('.gn-btn')).map(function(b){ return b.id; });
-      if (!(ids.indexOf('fldScnBtn_cedarCreek') === ids.indexOf('fldScnBtn_kennesaw') + 1 && ids.indexOf('fldScnBtn_franklin') === ids.indexOf('fldScnBtn_cedarCreek') + 1)) throw new Error('menu is not Kennesaw -> Cedar Creek -> Franklin: ' + ids.join(' -> '));
+      if (!(ids.indexOf('fldScnBtn_atlanta') === ids.indexOf('fldScnBtn_kennesaw') + 1 && ids.indexOf('fldScnBtn_cedarCreek') === ids.indexOf('fldScnBtn_atlanta') + 1 && ids.indexOf('fldScnBtn_franklin') === ids.indexOf('fldScnBtn_cedarCreek') + 1)) throw new Error('menu is not Kennesaw -> Atlanta -> Cedar Creek -> Franklin: ' + ids.join(' -> '));   // D436 reshape: atlanta inserts at rank 71
       var got = null;
       fldScenarioSideChoice('franklin', function(s){ got = s; });
       var cards = document.querySelectorAll('[data-brside]');

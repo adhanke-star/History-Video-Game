@@ -58,6 +58,7 @@ function fldScenarioRegistry() {
       if (GAME_DATA.spotsylvania && GAME_DATA.spotsylvania.spotsylvania) R.spotsylvania = GAME_DATA.spotsylvania.spotsylvania;   // D391 Overland/attrition lane: Spotsylvania - the Bloody Angle (single-phase: Hancock's dawn break-in against the gun-stripped Mule Shoe tip, then the day-long defender-hold at the west angle)
       if (GAME_DATA["petersburg-assaults"] && GAME_DATA["petersburg-assaults"].petersburgAssaults) R.petersburgAssaults = GAME_DATA["petersburg-assaults"].petersburgAssaults;   // D397 Overland/attrition lane: Petersburg - the initial assaults of June 15-18, 1864 (single-phase defender-reinforcement race: the nearly empty Dimmock Line, THE REINFORCEMENT-RACE LAW's timed accessions, the USCT proving ground; distinct from the frozen Classic petersburg-break April 2, 1865 row)
       if (GAME_DATA.kennesaw && GAME_DATA.kennesaw.kennesaw) R.kennesaw = GAME_DATA.kennesaw.kennesaw;   // D331 Atlanta Campaign: Kennesaw Mountain - Sherman's frontal assault (single-phase: Pigeon Hill + Dead Angle)
+      if (GAME_DATA.atlanta && GAME_DATA.atlanta.atlanta) R.atlanta = GAME_DATA.atlanta.atlanta;   // D436 Atlanta Campaign: the Battle of Atlanta, July 22, 1864 (two-phase T8: Hardee's flank blow at Bald Hill -> Cheatham's Troup Hurt breakthrough vs the twenty massed guns; McPherson falls at 2:02)
       if (GAME_DATA["cedar-creek"] && GAME_DATA["cedar-creek"].cedarCreek) R.cedarCreek = GAME_DATA["cedar-creek"].cedarCreek;   // D376 Shenandoah 1864: Cedar Creek - role reversal (Gordon's fog-bound dawn assault -> Sheridan's decisive clear-afternoon counterattack)
       if (GAME_DATA.franklin && GAME_DATA.franklin.franklin) R.franklin = GAME_DATA.franklin.franklin;   // D333 Franklin/Nashville lane: Franklin - Hood's assault on the Carter House line (single-phase)
       if (GAME_DATA.nashville && GAME_DATA.nashville.nashville) R.nashville = GAME_DATA.nashville.nashville;   // D335 Franklin/Nashville lane: Nashville - Thomas breaks Hood's army (2 phases: Redoubts -> Shy's Hill / Peach Orchard)
@@ -247,7 +248,7 @@ function fldScenarioMenuOrder(reg) {
   return ids;
 }
 function fldScenarioMenuRank(id) {
-  var order = { bullrun1: 10, crossKeysPortRepublic: 12, gainesMill: 15, malvernHill: 18, antietam: 20, fredericksburg: 30, chancellorsville: 35, gettysburg: 40, newMarketHeights: 45, fortDonelson: 48, elkhornTavern: 49, shiloh: 50, stonesRiver: 52, vicksburg: 55, chickamauga: 60, chattanooga: 65, wilderness: 67, spotsylvania: 68, petersburgAssaults: 69, kennesaw: 70, cedarCreek: 72, franklin: 75, nashville: 80, fiveForks: 85 };
+  var order = { bullrun1: 10, crossKeysPortRepublic: 12, gainesMill: 15, malvernHill: 18, antietam: 20, fredericksburg: 30, chancellorsville: 35, gettysburg: 40, newMarketHeights: 45, fortDonelson: 48, elkhornTavern: 49, shiloh: 50, stonesRiver: 52, vicksburg: 55, chickamauga: 60, chattanooga: 65, wilderness: 67, spotsylvania: 68, petersburgAssaults: 69, kennesaw: 70, atlanta: 71, cedarCreek: 72, franklin: 75, nashville: 80, fiveForks: 85 };   // D436: atlanta slots at 71 — Jul 22 1864, after Kennesaw (Jun 27) and before Cedar Creek (Oct 19); the documented chronology convention
   return order[id] || 1000;
 }
 function fldScenarioDateSortValue(date) {

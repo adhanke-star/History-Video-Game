@@ -211,10 +211,10 @@ const SETUP = `(() => {
       return {cards:ids.length,codex:codex.id,axes:codex.axes};
     });
 
-    check('ARMY REGISTER PIN: canonical registry identity plus 18 Wilderness unit trios produce current total 1512',function(){
+    check('ARMY REGISTER PIN: canonical registry identity plus 18 Wilderness unit trios produce current total 1566',function(){
       var registry=fldScenarioRegistry();if(registry.wilderness!==DATA)throw new Error('declared registry dependency missing');
       var C=campaign();if(typeof _t1InitAll==='function')_t1InitAll(C);var reg=ssPersonRegistry(C),found=[],groups={};
-      if(reg.people.length!==1512)throw new Error('Army Register total '+reg.people.length+' expected 1512');   // D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots.
+      if(reg.people.length!==1566)throw new Error('Army Register total '+reg.people.length+' expected 1566');   // D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots. D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots.
       for(var i=0;i<reg.people.length;i++){var p=reg.people[i],origin=p.replaces||p.pid;if(typeof origin==='string'&&origin.indexOf('ss:wilderness:')===0)found.push({p:p,origin:origin});}
       if(found.length!==54)throw new Error('Wilderness rows '+found.length+' expected 54');
       found.forEach(function(row){var m=row.origin.match(/^ss:wilderness:(US|CS):([^:]+):(cmd|nco|pvt)$/);if(!m)throw new Error('bad slot '+row.origin);var key=m[1]+':'+m[2];groups[key]=groups[key]||{};groups[key][m[3]]=1;if(row.p.source!=='scenario-oob'||row.p.generated!==true||row.p.provenance!=='Inferred')throw new Error('slot metadata '+row.origin);});

@@ -1817,7 +1817,7 @@ const SETUP = `(() => {
       var pid = 'person_bullrun_us_2ri_rhodes';
       var C = mkC('US', false); C.idx = 1; C.runId = 'run-us-d410-1';
       var people = ssPersonRegistry(C).people;
-      if (people.length !== 1512) throw new Error('Army Register moved: ' + people.length);
+      if (people.length !== 1566) throw new Error('Army Register moved: ' + people.length);   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots
       var boundsCarriers = people.filter(function(p) { return p && (own(p, 'serviceStart') || own(p, 'serviceEnd')); });
       if (boundsCarriers.length !== 1 || boundsCarriers[0].pid !== pid) {
         throw new Error('non-Rhodes bounds movement: ' + bytes(boundsCarriers.map(function(p) { return p.pid; })));
@@ -1939,7 +1939,7 @@ const SETUP = `(() => {
         throw new Error('non-Rhodes registry people moved across the reachability run');
       }
       return { runId:C.runId, rolls:expectedRolls, merit:28, reputation:21, promotions:6, rank:'Brig. Gen.',
-        role:role.id, latestScenario:'nashville', latestBattleYear:1864, register:1512, boundsCarriers:1,
+        role:role.id, latestScenario:'nashville', latestBattleYear:1864, register:1566, boundsCarriers:1,
         malformedDropped:6, sourceImmutable:true, nonRhodesFrozen:true, idempotent:true, saveRoundtrip:true };
     });
 

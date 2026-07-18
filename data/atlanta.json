@@ -1,0 +1,274 @@
+{
+  "_comment": "D436 PLAYABLE BATTLE OF ATLANTA, July 22, 1864. A two-phase T8 battle: Hardee's delayed flank march strikes the refused Union left at Bald Hill, then Cheatham's frontal assault breaks the XV Corps line at the Troup Hurt house before the massed guns and Logan's counterattack retake it. Strengths are division-scale abstractions marked Inferred inside the Verified army-present anchors (Army of the Tennessee 34,863 present; Hood ~40,438 present across his corps); sequence, command roles, ranks, principal ground, and casualty direction are Verified against the D327 packet plus the two live-fetched pages in the sources register. Outcomes emerge from OOB, terrain, timing, doctrine, scoreWeight, and the universal systems only - no per-battle damage/firepower/casualty/winner fudge (D74). The single-axis home-edge seating of both phases is a GAME ABSTRACTION taught in the phase transitions.",
+  "atlanta": {
+    "sources": [
+      "American Battlefield Trust, Battle of Atlanta (https://www.battlefields.org/learn/civil-war/battles/atlanta) - fetched 2026-07-18: Jul 22 1864, Union victory, US 3,722 / CS 5,500, Hardee's 15-mile night march, McPherson's death at 2:02 p.m., Leggett's treeless hilltop, the Troup Hurt House overrun",
+      "Wikipedia, Battle of Atlanta (https://en.wikipedia.org/wiki/Battle_of_Atlanta) - fetched 2026-07-18: 34,863 US present vs 40,438 CS, casualties US 3,722 / CS 5,000-5,500, Walker killed by a sharpshooter, Bald Hill held after hand-to-hand fighting until dark, twenty massed guns + Logan's XV Corps repulse at the Georgia railroad, Wheeler at Decatur",
+      "docs/design/battle-build-research/atlanta-march-battle-build-research.md (D327 packet) - rank traps (Hood temporary full General from Jul 18 1864, never Senate-confirmed; McPherson dead-officer trap; Logan one-day command), engaged-strength honesty, direction guidance",
+      "Wikipedia, John Bell Hood (https://en.wikipedia.org/wiki/John_Bell_Hood) - via the D327 packet fetch: promoted temporary full general Jul 18 1864; commission reverted to Lieutenant General Jan 23 1865"
+    ],
+    "id": "atlanta",
+    "name": "The Battle of Atlanta",
+    "date": "July 22, 1864",
+    "place": "East of Atlanta, Fulton County, Georgia - Bald Hill, the Georgia Railroad, and the Troup Hurt house",
+    "blurb": "Four days into army command, Hood throws Hardee's corps on an all-night flank march against the Army of the Tennessee's refused left while Cheatham waits to strike the front. McPherson falls at 2:02 p.m.; Bald Hill holds through hand-to-hand fighting; the Troup Hurt breach is retaken under twenty massed guns. The siege of Atlanta goes on.",
+    "provenance": "Verified (high) for the July 22 date, the Union victory, the command frame (Sherman overall; McPherson killed and Logan's temporary succession; Hood commanding with Hardee and Cheatham attacking), the flank-march delay, Bald Hill / Leggett's Hill held, the Troup Hurt breakthrough and its repulse by massed artillery and the XV Corps, Walker's death, Wheeler's Decatur diversion, and the casualty direction (US 3,722 vs CS 5,000-5,500). Inferred (medium) for every committed division strength, gun grouping, coordinate, timing second, and readiness value - division-scale abstractions inside the Verified army anchors.",
+    "attacker": "CS",
+    "defender": "US",
+    "defaultFog": false,
+    "_fogNote": "A clear midsummer daylight battle; the surprise was Hardee's positioning, not weather or visibility. Per the packet grain guidance, fog stays OFF and the flank shock is modeled by seating and timing.",
+    "homeEdge": { "US": "low", "CS": "high" },
+    "_homeEdgeNote": "US home is the low edge (the Atlanta works behind the Army of the Tennessee); CS home is the high edge (Hardee emerging from the wooded approach south of the refused flank; Cheatham's phase-2 axis re-seated to the same edge as a GAME ABSTRACTION taught in the transition).",
+    "holdToWinSec": 120,
+    "timeLimitSec": 420,
+    "field": { "w": 1250, "h": 950 },
+    "weather": {
+      "sky": "clear",
+      "time": "afternoon",
+      "provenance": "Inferred",
+      "note": "A hot midsummer Georgia afternoon - ABT records the night march through 'a hot night, and dusty roads'; the assault opened just after noon and the Bald Hill fight ran until after dark. No claim of exact temperature or sky is made.",
+      "sources": [
+        "American Battlefield Trust, Battle of Atlanta - the delayed night march ('A late start, exhausted troops, a hot night, and dusty roads')",
+        "Wikipedia, Battle of Atlanta - the fight around Bald Hill 'lasting until just after dark'"
+      ]
+    },
+    "menu": {
+      "title": "ATLANTA (JUL 1864)",
+      "deck": "Hood's great sortie: Hardee's all-night flank march against the refused left, McPherson down at 2:02, the Troup Hurt breach - and the guns that closed it. Hold the hill as Logan, or swing the flank blow as Hood.",
+      "aria": "The Battle of Atlanta, July 22, 1864 - the real-time historical battle; command either army. Hold Bald Hill and the railroad line as the Army of the Tennessee, or press Hood's double blow with Hardee and Cheatham."
+    },
+    "sides": {
+      "heading": "The Battle of Atlanta - Take Which Command?",
+      "intro": "July 22, 1864 - four days after Davis replaces Johnston with Hood, the new commander answers Sherman's closing armies with the boldest Confederate attack of the campaign.",
+      "US": {
+        "title": "Command the Union (McPherson &rarr; Logan)",
+        "badge": "&#9733; HOLD THE HILL",
+        "deck": "Your left is refused but the seam is real, and Hardee's corps is already through the woods behind it. Hold Bald Hill, plug the railroad cut, and when the line breaks at the Troup Hurt house - take it back."
+      },
+      "CS": {
+        "title": "Command the Confederacy (Hood's sortie)",
+        "badge": "&#9733; BREAK THE LEFT",
+        "deck": "Johnston is relieved; retreating is over. Hardee's four divisions are behind the Union left after a fifteen-mile night march, and Cheatham waits on the works. Strike both blows home before the massed guns answer."
+      }
+    },
+    "brief": {
+      "attack": "Your assault is loaded in two blows: Bate, Walker, Cleburne, and Maney against the refused Union left at Bald Hill, then Cheatham's corps with the Georgia militia demonstrating against the XV Corps line at the railroad. Historically the first blow bent but never broke the hill, and the second breach died under twenty massed guns and Logan's counterattack. <b>This is your war:</b> time the echelon, mass at the seam by the Troup Hurt house, and make the breach stick before the guns are laid.",
+      "defend": "McPherson's army holds a refused L east of Atlanta - Dodge's XVI Corps across the seam, Blair's XVII on Bald Hill, Logan's XV on the railroad works. The commanding general rides toward the firing at 2:02 p.m. and does not come back. Hold the hill through the hand-to-hand evening, and when Manigault's men take the Troup Hurt house and Degress's guns, retake the line - history did, at 3,722 men."
+    },
+    "objective": { "x": 620, "z": 380, "r": 130, "name": "Bald Hill (Leggett's Hill)" },
+    "phases": [
+      {
+        "id": "jul22-bald-hill",
+        "name": "Hardee Strikes the Refused Left",
+        "sector": "Bald Hill / Leggett's Hill and the wooded approach ravines south of the refused flank",
+        "timing": "July 22, 1864 - about 12:15 p.m., after the fifteen-mile night march",
+        "attacker": "CS",
+        "defender": "US",
+        "assaultDoctrine": "standard",
+        "defaultFog": false,
+        "holdToWinSec": 120,
+        "timeLimitSec": 420,
+        "scoreWeight": 1,
+        "objective": { "x": 620, "z": 380, "r": 130, "name": "Bald Hill (Leggett's Hill)" },
+        "transition": {
+          "title": "The Flank March Strikes",
+          "lead": "Hardee's corps was supposed to hit at dawn; a late start, exhausted troops, and dusty roads put the blow in at midday instead - and not as deep behind the flank as Hood ordered. Dodge's XVI Corps happens to be facing the seam when Bate and Walker come out of the trees; Cleburne and Maney find Blair's XVII Corps on the bald hilltop. GAME ABSTRACTION: the whole converging attack is seated on one southern axis; the refused-L geometry lives in the unit facings and notes."
+        },
+        "terrain": {
+          "hills": [
+            { "name": "Bald Hill (Leggett's Hill)", "x": 620, "z": 380, "h": 20, "s": 170, "note": "The treeless hilltop Leggett's division took on July 21 and would not give back - the anchor of the refused Union left and this phase's objective. (Verified feature; Inferred placement)" },
+            { "name": "The Flat Shoals rise", "x": 380, "z": 430, "h": 10, "s": 140, "note": "The low ground along the Flat Shoals Road where Giles A. Smith's refused line bent back. (Verified road axis; Inferred placement)" }
+          ],
+          "woods": [
+            { "x": 640, "z": 720, "r": 200, "note": "The dense second-growth woods and ravines Hardee's columns spent the morning threading - the cover that hid the flank march and disordered it. (Verified approach; Inferred placement)" },
+            { "x": 300, "z": 700, "r": 150, "note": "The Sugar Creek valley thickets on the Confederate right, where Bate's advance lost its alignment. (Verified feature; Inferred placement)" },
+            { "x": 980, "z": 600, "r": 130, "note": "The wooded ground east of the hill toward Decatur - Wheeler's cavalry is beyond it, off this field, raiding Sprague's trains. (Verified context; Inferred placement)" }
+          ],
+          "walls": [
+            { "x1": 540, "z1": 350, "x2": 720, "z2": 350, "note": "Leggett's reversed works on Bald Hill - the XVII Corps dug in facing the wrong way overnight and refused the line at dawn. (Verified works; Inferred trace)" },
+            { "x1": 420, "z1": 420, "x2": 540, "z2": 380, "note": "The refused shoulder of Giles A. Smith's line along the Flat Shoals Road. (Verified refusal; Inferred trace)" }
+          ]
+        },
+        "leaders": {
+          "US": [
+            { "id": "ld_mcpherson", "name": "Maj. Gen. James B. McPherson", "short": "McPherson", "quality": 0.7, "radius": 250, "x": 560, "z": 300, "fate": 4.2, "note": "Commanding the Army of the Tennessee; rode toward the firing to read the seam and met Cleburne's skirmishers - killed at 2:02 p.m., the highest-ranking Union officer to die in the war. Logan of the XV Corps took the army for the day. (Verified; ABT preserves the minute)" },
+            { "id": "ld_dodge", "name": "Maj. Gen. Grenville M. Dodge", "short": "Dodge", "quality": 0.66, "radius": 230, "x": 420, "z": 360, "fate": 1.6, "note": "XVI Corps - his two divisions were marching toward the left when Hardee's attack came out of the woods squarely at them; the accidental facing saved the army's rear. (Verified)" },
+            { "id": "ld_blair", "name": "Maj. Gen. Frank P. Blair Jr.", "short": "Blair", "quality": 0.62, "radius": 230, "x": 640, "z": 330, "fate": 1.4, "note": "XVII Corps, holding Bald Hill; the political general fought his hill well - Leggett's and Giles A. Smith's divisions bent around it and held until dark. (Verified)" }
+          ],
+          "CS": [
+            { "id": "ld_hardee", "name": "Lt. Gen. William J. Hardee", "short": "Hardee", "quality": 0.68, "radius": 250, "x": 640, "z": 820, "fate": 1.6, "note": "'Old Reliable,' commanding the flank column of four divisions after the all-night march - the blow was late and shallower than Hood ordered, and Hood blamed him for it ever after. (Verified)" },
+            { "id": "ld_cleburne", "name": "Maj. Gen. Patrick R. Cleburne", "short": "Cleburne", "quality": 0.78, "radius": 240, "x": 700, "z": 760, "fate": 2.2, "note": "The army's best division commander, driving straight at Bald Hill; his men took the ground between the corps and came within a seam of splitting the army. (Verified)" }
+          ]
+        },
+        "supply": {
+          "US": { "x": 480, "z": 80, "name": "The Army of the Tennessee trains (Decatur road)" },
+          "CS": { "x": 660, "z": 890, "name": "Hardee's column trains (Cobb's Mill road)" }
+        },
+        "oob": {
+          "US": [
+            { "id": "us_leggett", "name": "Leggett's Division (XVII Corps)", "commander": "Brig. Gen. Mortimer D. Leggett", "arm": "inf", "weapon": "rifled", "men": 3800, "xp": 3, "x": 620, "z": 370, "facing": 3.14159, "formation": "line", "note": "Took the bald hill on July 21 and reversed the works overnight; the hill carried his name afterward. The anchor the whole refused left bends around. Verified identity; Inferred strength." },
+            { "id": "us_gasmith", "name": "Giles A. Smith's Division (XVII Corps)", "commander": "Brig. Gen. Giles A. Smith", "arm": "inf", "weapon": "rifled", "men": 3200, "xp": 2, "x": 460, "z": 410, "facing": 3.6, "formation": "line", "note": "The refused shoulder along the Flat Shoals Road - struck front and flank by Cleburne's and Maney's converging attack and bent back around the hill without breaking. Verified identity; Inferred strength." },
+            { "id": "us_fuller", "name": "Fuller's Division (XVI Corps)", "commander": "Brig. Gen. John W. Fuller", "arm": "inf", "weapon": "rifled", "men": 2600, "xp": 2, "x": 350, "z": 500, "facing": 3.14159, "formation": "line", "note": "Dodge's smaller division, halted mid-march squarely across the seam Hardee aimed for - the accidental line that met Bate and Walker head-on. Verified identity; Inferred strength." },
+            { "id": "us_sweeny", "name": "Sweeny's Division (XVI Corps)", "commander": "Brig. Gen. Thomas W. Sweeny", "arm": "inf", "weapon": "rifled", "men": 3100, "xp": 2, "x": 260, "z": 560, "facing": 3.14159, "formation": "line", "note": "The one-armed Irish regular's division, refusing the far flank of the seam; its stand broke Walker's assault. Sweeny was arrested days later for brawling with Dodge - the army's tempers ran as hot as July. Verified identity; Inferred strength." },
+            { "id": "us_bald_hill_guns", "name": "The Bald Hill batteries (XVII Corps artillery)", "commander": "XVII Corps chief of artillery", "arm": "art", "weapon": "rifled", "guns": 10, "men": 260, "xp": 2, "x": 600, "z": 340, "facing": 3.14159, "formation": "line", "note": "The hilltop guns Leggett's men fought around all afternoon. Universal gun model: 10 guns. (Inferred grouping inside the Verified hilltop defense)" }
+          ],
+          "CS": [
+            { "id": "cs_cleburne", "name": "Cleburne's Division (Hardee's corps)", "commander": "Maj. Gen. Patrick R. Cleburne", "arm": "inf", "weapon": "rifled", "men": 4600, "xp": 3, "x": 680, "z": 700, "facing": 0, "formation": "line", "note": "The main blow at the hill itself - his brigades took the ground between the XVI and XVII Corps and fought hand-to-hand on the slopes until after dark. Verified identity; Inferred strength." },
+            { "id": "cs_walker", "name": "Walker's Division (Hardee's corps)", "commander": "Maj. Gen. William H. T. Walker", "arm": "inf", "weapon": "rifled", "men": 3800, "xp": 2, "x": 420, "z": 720, "facing": 0, "formation": "line", "note": "Walker was shot from his horse by a Union sharpshooter as his division deployed - one of two generals this field killed. His brigades struck Dodge's accidental line and broke against it. Verified fate; Inferred strength." },
+            { "id": "cs_bate", "name": "Bate's Division (Hardee's corps)", "commander": "Maj. Gen. William B. Bate", "arm": "inf", "weapon": "rifled", "men": 3200, "xp": 2, "x": 280, "z": 760, "facing": 0, "formation": "line", "note": "The right of the flank column, tangled in the Sugar Creek thickets and committed piecemeal against Sweeny. Verified identity; Inferred strength." },
+            { "id": "cs_hardee_guns", "name": "Hardee's accompanying batteries", "commander": "Hardee's corps artillery", "arm": "art", "weapon": "rifled", "guns": 6, "men": 160, "xp": 1, "x": 640, "z": 800, "facing": 0, "formation": "line", "note": "What guns the night march could bring - far fewer than the defense could answer with. Universal gun model: 6 guns. (Inferred grouping)" }
+          ]
+        },
+        "reinforcements": [
+          { "id": "cs_maney", "side": "CS", "atSec": 90, "name": "Maney's Division (Cheatham's old)", "arm": "inf", "weapon": "rifled", "men": 3600, "xp": 2, "x": 560, "z": 860, "facing": 0, "formation": "column", "entry": "the echelon extends against the hill", "note": "Brig. Gen. George Maney, commanding Cheatham's old division in Hardee's column - the echelon's later weight against Bald Hill's southern face. Verified identity; Inferred strength and minute." }
+        ],
+        "teaching": {
+          "head": "The blow that was supposed to land at dawn",
+          "body": "Hood's plan was Chancellorsville-shaped: a night flank march, a dawn surprise, the enemy's left rolled up. The execution was human: exhausted men, dusty roads, a late start, and a column that came in at midday, shallower than ordered - onto a seam where Dodge's corps happened to be standing. The lesson is not that Hood was a fool or Hardee a traitor; it is that plans are executed by tired armies, and that Leggett's men holding their reversed works turned a rout-shaped day into a defense the Union could win.",
+          "provenance": "Verified sequence (ABT and Wikipedia, fetched 2026-07-18: the delayed 15-mile night march, Dodge's fortunate facing, Bald Hill held through hand-to-hand fighting until dark); positions, strengths, and timing seconds are Inferred.",
+          "sources": [
+            "American Battlefield Trust, Battle of Atlanta - 'A late start, exhausted troops, a hot night, and dusty roads combine to bring the four assault divisions not nearly far enough'",
+            "Wikipedia, Battle of Atlanta - 'A savage struggle, sometimes hand-to-hand, developed around the hill... The Federals held the hill'"
+          ]
+        }
+      },
+      {
+        "id": "jul22-troup-hurt",
+        "name": "The Georgia Railroad Breakthrough",
+        "sector": "The Georgia Railroad cut and the Troup Hurt house on the XV Corps line",
+        "timing": "July 22, 1864 - about 3:30 p.m., as Hardee's fight burns on the left",
+        "attacker": "CS",
+        "defender": "US",
+        "assaultDoctrine": "standard",
+        "defaultFog": false,
+        "holdToWinSec": 135,
+        "timeLimitSec": 430,
+        "scoreWeight": 3,
+        "objective": { "x": 640, "z": 360, "r": 120, "name": "The Troup Hurt house line" },
+        "transition": {
+          "title": "Cheatham Strikes the Works",
+          "lead": "With the left still fighting for Bald Hill, Hood commits Cheatham's corps against the XV Corps works astride the Georgia Railroad. Manigault's brigade finds the seam at the railroad cut, takes the Troup Hurt house, and captures Degress's four 20-pounder Parrotts - a real breach in a real line. Sherman, watching from the Howard House, masses twenty guns on it; Logan, commanding the army since 2:02, leads the XV Corps back into its own works. GAME ABSTRACTION: Cheatham's western axis is re-seated to the same southern home edge as phase 1; the breach lives in the works gap at the cut."
+        },
+        "terrain": {
+          "hills": [
+            { "name": "The Troup Hurt rise", "x": 640, "z": 360, "h": 12, "s": 150, "note": "The brick-house rise on the XV Corps line where Manigault's breakthrough crested and was retaken. (Verified feature; Inferred placement)" },
+            { "name": "The Howard House rise", "x": 700, "z": 150, "h": 14, "s": 130, "note": "Sherman's vantage in the Union rear - from here he personally directed the massed batteries onto the breach. (Verified; Inferred placement)" }
+          ],
+          "woods": [
+            { "x": 300, "z": 650, "r": 160, "note": "The brush along the militia's demonstration front on the Confederate left. (Inferred placement)" },
+            { "x": 950, "z": 620, "r": 140, "note": "The wooded ground toward the left where Hardee's fight continues off this sector's axis. (Verified context; Inferred placement)" }
+          ],
+          "walls": [
+            { "x1": 480, "z1": 380, "x2": 610, "z2": 365, "note": "The XV Corps works west of the railroad cut. (Verified works; Inferred trace)" },
+            { "x1": 680, "z1": 355, "x2": 840, "z2": 370, "note": "The works east of the Troup Hurt house. The GAP at the cut between the wall segments is the deliberate structural seam - the breach point history put there. (Verified breach; Inferred trace)" }
+          ]
+        },
+        "leaders": {
+          "US": [
+            { "id": "ld_logan", "name": "Maj. Gen. John A. Logan", "short": "Logan", "quality": 0.72, "radius": 260, "x": 620, "z": 250, "fate": 2.0, "note": "'Black Jack,' XV Corps commander, holding the Army of the Tennessee since McPherson fell at 2:02 - his mounted ride into the retaking of the works became the day's Union legend. Howard received the permanent command five days later; Logan's one-day army is taught, not overwritten. (Verified)" },
+            { "id": "ld_sherman", "name": "Maj. Gen. William T. Sherman", "short": "Sherman", "quality": 0.74, "radius": 220, "x": 700, "z": 140, "fate": 1.0, "note": "Commanding the Military Division of the Mississippi from the Howard House - he massed the twenty guns on the breach and otherwise let the Army of the Tennessee 'fight it out.' His higher regular-army grades post-date the campaign. (Verified)" }
+          ],
+          "CS": [
+            { "id": "ld_cheatham", "name": "Maj. Gen. Benjamin F. Cheatham", "short": "Cheatham", "quality": 0.64, "radius": 240, "x": 620, "z": 780, "fate": 1.6, "note": "Temporarily commanding Hood's old corps - his frontal assault found the one seam in the XV Corps line and could not hold it. (Verified)" }
+          ]
+        },
+        "supply": {
+          "US": { "x": 520, "z": 70, "name": "The XV Corps trains behind the Howard House" },
+          "CS": { "x": 620, "z": 890, "name": "The Atlanta works" }
+        },
+        "oob": {
+          "US": [
+            { "id": "us_mlsmith", "name": "Morgan L. Smith's Division (XV Corps)", "commander": "Brig. Gen. Morgan L. Smith", "arm": "inf", "weapon": "rifled", "men": 3400, "xp": 2, "x": 560, "z": 380, "facing": 3.14159, "formation": "line", "note": "Holding the works astride the railroad cut - the division Manigault's breakthrough struck and the division that took the line back. Verified identity; Inferred strength." },
+            { "id": "us_woods", "name": "Woods's Division (XV Corps)", "commander": "Brig. Gen. Charles R. Woods", "arm": "inf", "weapon": "rifled", "men": 3600, "xp": 2, "x": 760, "z": 390, "facing": 3.14159, "formation": "line", "note": "East of the house; its counterattack closed the breach from the right. Verified identity; Inferred strength." },
+            { "id": "us_harrow", "name": "Harrow's Division (XV Corps)", "commander": "Brig. Gen. William Harrow", "arm": "inf", "weapon": "rifled", "men": 3000, "xp": 2, "x": 400, "z": 420, "facing": 3.14159, "formation": "line", "note": "The left of the corps line, keeping the militia demonstration honest. Verified identity; Inferred strength." },
+            { "id": "us_degress", "name": "Degress's Battery H, 1st Illinois Light", "commander": "Capt. Francis DeGress", "arm": "art", "weapon": "rifled", "guns": 4, "men": 110, "xp": 3, "x": 655, "z": 355, "facing": 3.14159, "formation": "line", "note": "Four 20-pounder Parrotts at the Troup Hurt house - overrun in the breakthrough, spiked by their own crews, and retaken with the line. The day's most famous guns. Universal gun model: 4 guns. (Verified capture and recapture)" }
+          ],
+          "CS": [
+            { "id": "cs_brown", "name": "Brown's Division (Cheatham's corps)", "commander": "Maj. Gen. John C. Brown", "arm": "inf", "weapon": "rifled", "men": 3900, "xp": 2, "x": 600, "z": 700, "facing": 0, "formation": "line", "note": "Manigault's brigade led its assault through the railroad cut into the Troup Hurt house - the breakthrough itself. Verified identity and Manigault's role; Inferred strength." },
+            { "id": "cs_clayton", "name": "Clayton's Division (Cheatham's corps)", "commander": "Maj. Gen. Henry D. Clayton", "arm": "inf", "weapon": "rifled", "men": 3600, "xp": 2, "x": 760, "z": 720, "facing": 0, "formation": "line", "note": "The supporting weight east of the cut, pressing Woods's front while the breach was open. Verified identity; Inferred strength." },
+            { "id": "cs_gwsmith", "name": "Georgia Militia (G. W. Smith)", "commander": "Maj. Gen. Gustavus W. Smith (Georgia Militia)", "arm": "inf", "weapon": "smooth", "men": 2000, "xp": 0, "x": 340, "z": 740, "facing": 0, "formation": "line", "note": "The state troops demonstrating on the Confederate left - old men and boys with what arms Georgia had; a pinning force, not an assault column. Verified role; Inferred strength." }
+          ]
+        },
+        "reinforcements": [
+          { "id": "us_massed_guns", "side": "US", "atSec": 100, "name": "The massed batteries (Schofield's guns)", "arm": "art", "weapon": "rifled", "guns": 20, "men": 480, "xp": 2, "x": 620, "z": 160, "facing": 3.14159, "formation": "line", "entry": "Sherman masses the guns from the Howard House", "note": "Twenty pieces positioned on Sherman's personal order, shelling the breach until the XV Corps could retake it - the reason the breakthrough died. Verified count and role; Inferred grouping and minute." }
+        ],
+        "teaching": {
+          "head": "A breach is not a victory",
+          "body": "Manigault's men did everything right: found the seam at the railroad cut, took the brick house, took the famous guns. And it did not matter, because a breakthrough that cannot be held is only a salient - twenty massed guns and a corps counterattack closed it within the hour. The Confederacy's problem on July 22 was never courage; it was that every yard gained had to be kept against an army that could mass artillery and feed fresh divisions faster than Hood could. The war's arithmetic, taught in one afternoon.",
+          "provenance": "Verified sequence (Wikipedia and ABT, fetched 2026-07-18: the breakthrough at the Georgia railroad / Troup Hurt House, twenty massed guns, Logan's XV Corps repulse, Degress's battery lost and retaken); strengths, placements, and timing are Inferred.",
+          "sources": [
+            "Wikipedia, Battle of Atlanta - 'Cheatham's troops had broken through the Union lines at the Georgia railroad. In response, twenty artillery pieces were positioned...and shelled the Confederates, while Logan's XV Corps regrouped and repulsed the Southern troops'",
+            "American Battlefield Trust, Battle of Atlanta - Cheatham's corps 'initially overrunning positions at the Troup Hurt House'"
+          ]
+        }
+      }
+    ],
+    "endNote": {
+      "US": {
+        "US": "History holds twice. Bald Hill stayed Union through hand-to-hand fighting that ran past dark, and the Troup Hurt breach died under twenty massed guns and the XV Corps counterattack. The army lost its commander - McPherson, at 2:02 p.m., the highest-ranking Union officer killed in the war - and 3,722 men against 5,000-5,500 Confederates. Wheeler's cavalry mauled the trains at Decatur before being recalled. The city did not fall today: the siege ground on until Jonesborough cut the last railroad and Atlanta fell on September 2, remaking Lincoln's election.",
+        "CS": "You held where history held - and Hood's second sortie still cost him a quarter more men than it cost you. The Army of Tennessee cannot spend 5,000 veterans a week; three sorties in eleven days cost it about 11,000. The arithmetic that decides this campaign is not on the tactical field.",
+        "note": "US player perspectives keyed to the aggregate result."
+      },
+      "CS": {
+        "CS": "Your war diverges: the blow Hood designed - and history denied - has landed. If Bald Hill fell, the Army of the Tennessee's left is broken and Sherman must pull back toward the railroad; if the Troup Hurt breach held, the XV Corps line is cut in two. Know what it cost history to ATTEMPT this: 5,000-5,500 men against 3,722, with nothing gained. Your victory spends the same blood - the question Hood never answered is whether the Confederacy can pay for what it wins.",
+        "US": "The sortie breaks against the works as it did in history - but you have spent Union blood and an afternoon, and the army east of Atlanta knows Hood will strike again. Six days later he did, at Ezra Church, and bled again.",
+        "note": "CS player perspectives; the divergence framing follows the D111 ledger convention."
+      }
+    },
+    "teaching": {
+      "cards": [
+        {
+          "id": "at_mcpherson",
+          "title": "2:02 p.m. - The Army Loses Its Commander",
+          "body": "James B. McPherson - 35, first in his West Point class, commanding the Army of the Tennessee - rode toward the sound of Hardee's attack to read the seam in his refused left, met Cleburne's skirmish line, and was shot dead. ABT preserves the minute: 2:02 p.m. He was the highest-ranking Union officer killed in the war. John A. Logan, the XV Corps' political general, took the army for the rest of the day and led its counterattack; five days later Sherman gave the permanent command to Oliver O. Howard, and Logan's grievance followed him the rest of his life. The chain of command is a casualty system too.",
+          "provenance": "Verified (high) - the death, the minute, Logan's temporary succession, and Howard's ~Jul 27 permanent appointment are cross-confirmed.",
+          "sources": [
+            "American Battlefield Trust, Battle of Atlanta (fetched 2026-07-18) - 'it was his shot that brought General McPherson down'; death time 2:02 p.m.",
+            "Wikipedia, Battle of Atlanta (fetched 2026-07-18) - McPherson shot on reconnaissance; Logan assumed Army of the Tennessee command",
+            "D327 packet §4 - the Logan-temporary / Howard-permanent wrong-commander trap"
+          ]
+        },
+        {
+          "id": "at_hood_bleeds",
+          "title": "Davis Fires Johnston; Hood Attacks - and Bleeds His Army White",
+          "body": "Jefferson Davis relieved Joseph E. Johnston on July 17 for retreating, and gave the army to 33-year-old John Bell Hood - promoted temporary full general on July 18, a grade the Confederate Senate never confirmed. Hood did exactly what he was hired to do: attack. Peachtree Creek on the 20th, this battle on the 22nd, Ezra Church on the 28th - about 11,000 Confederate casualties in his first eleven days of command, and Atlanta no safer. Name the command failure squarely: the sorties wrecked the Army of Tennessee's offensive power without changing the siege's arithmetic. Reject the Lost-Cause frame of Hood as simply a gallant fighter; aggression without the means to pay for it is not a strategy.",
+          "provenance": "Verified (high) for the command change, Hood's temporary rank, and the three-sortie sequence; the ~11,000 aggregate is the packet's taught figure for the eleven days.",
+          "sources": [
+            "Wikipedia, John Bell Hood (via the D327 packet fetch) - temporary full general Jul 18 1864; never Senate-confirmed; reverted Jan 23 1865",
+            "D327 packet §6 - 'Hood's aggressive sorties... cost the Army of Tennessee ~11,000 men in his first 11 days and did not save Atlanta'"
+          ]
+        },
+        {
+          "id": "at_bald_hill",
+          "title": "Bald Hill: Hand-to-Hand Until Dark",
+          "body": "Leggett's division took the treeless hilltop on July 21 and reversed its works overnight - so when Cleburne's and Maney's men came up the slopes on the 22nd, the defense was ready to fight in both directions. The struggle around the hill was hand-to-hand at points and lasted until just after dark, and when it ended the Federals still held it. The hill carried Leggett's name afterward. The teaching: a refused flank with a prepared anchor turns a surprise into a battle, and a battle into a defense.",
+          "provenance": "Verified (high) - the July 21 capture, the reversed works, the hand-to-hand fighting until dark, and the held hill are cross-confirmed.",
+          "sources": [
+            "Wikipedia, Battle of Atlanta (fetched 2026-07-18) - 'A savage struggle, sometimes hand-to-hand, developed around the hill... lasting until just after dark. The Federals held the hill.'",
+            "American Battlefield Trust, Battle of Atlanta (fetched 2026-07-18) - Cleburne's temporary success met by 'Brig. Gen. Mortimer Leggett's division' on 'a treeless hilltop'"
+          ]
+        },
+        {
+          "id": "at_troup_hurt",
+          "title": "The Troup Hurt Breakthrough - and the Twenty Guns",
+          "body": "Manigault's brigade broke the XV Corps line at the Georgia Railroad cut, took the brick Troup Hurt house, and captured Degress's four 20-pounder Parrotts - the most famous guns of the campaign. It was a real breach in a real fortified line, and it died anyway: Sherman, watching from the Howard House, massed some twenty pieces of artillery on the lost ground, and Logan led the XV Corps back into its own works. Degress's crews had spiked their guns before running; they were retaken and served again. A breakthrough you cannot hold is only a salient with your name on it.",
+          "provenance": "Verified (high) - the breakthrough, the massed guns, the counterattack, and the battery's loss and recapture are cross-confirmed.",
+          "sources": [
+            "Wikipedia, Battle of Atlanta (fetched 2026-07-18) - the Georgia-railroad breakthrough answered by twenty massed guns and Logan's XV Corps repulse",
+            "American Battlefield Trust, Battle of Atlanta (fetched 2026-07-18) - Cheatham's corps 'initially overrunning positions at the Troup Hurt House'"
+          ]
+        },
+        {
+          "id": "at_election",
+          "title": "Atlanta and the 1864 Election",
+          "body": "July 22 did not take the city - the Union won the battle and the siege simply continued. That distinction is the point: Atlanta's strategic meaning was political, and it ripened slowly. Not until Jonesborough severed the Macon & Western Railroad did Hood evacuate, and Union troops occupied Atlanta on September 2, 1864. The fall of the city revived Northern morale and helped re-elect Abraham Lincoln over the peace-platform Democrats - tying this campaign's battlefield outcomes directly to emancipation's political survival. A war is won in theaters; it is decided in Novembers.",
+          "provenance": "Verified (high) for the Sep 2 occupation and the election linkage (the packet's fetch-confirmed framing); this battle's non-decisive relationship to the city's fall is cross-confirmed by the continuing siege.",
+          "sources": [
+            "D327 packet §6 - 'The fall of Atlanta on Sep 2 1864 (Union occupation fetch-confirmed) revived Northern morale and helped re-elect Lincoln over the peace-platform Democrats'",
+            "Wikipedia, Battle of Atlanta (fetched 2026-07-18) - Sherman 'settled into a siege of Atlanta' after the battle"
+          ]
+        }
+      ]
+    }
+  }
+}

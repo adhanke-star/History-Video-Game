@@ -61,7 +61,7 @@ function killChild(child) {
 
 const SETUP = `(() => {
   var R = { ok:true, steps:[] };
-  var EXPECTED = ['bullrun1', 'crossKeysPortRepublic', 'gainesMill', 'malvernHill', 'antietam', 'fredericksburg', 'chancellorsville', 'gettysburg', 'newMarketHeights', 'fortDonelson', 'elkhornTavern', 'shiloh', 'stonesRiver', 'vicksburg', 'chickamauga', 'chattanooga', 'wilderness', 'spotsylvania', 'petersburgAssaults', 'kennesaw', 'cedarCreek', 'franklin', 'nashville', 'fiveForks'];   // D397: 23 -> 24 — Petersburg initial assaults registers at rank 69 between spotsylvania and kennesaw.
+  var EXPECTED = ['bullrun1', 'crossKeysPortRepublic', 'gainesMill', 'malvernHill', 'antietam', 'fredericksburg', 'chancellorsville', 'gettysburg', 'newMarketHeights', 'fortDonelson', 'elkhornTavern', 'shiloh', 'stonesRiver', 'vicksburg', 'chickamauga', 'chattanooga', 'wilderness', 'spotsylvania', 'petersburgAssaults', 'kennesaw', 'atlanta', 'cedarCreek', 'franklin', 'nashville', 'fiveForks'];   // D397: 23 -> 24 — Petersburg initial assaults registers at rank 69 between spotsylvania and kennesaw.
   function step(name, fn) {
     try { var v = fn(); R.steps.push({ name:name, ok:true, v:v === undefined ? null : v }); }
     catch(e) { R.ok = false; R.steps.push({ name:name, ok:false, err:String(e && e.message || e) }); }

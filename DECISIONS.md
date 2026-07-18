@@ -40,6 +40,47 @@ asset purchases/accounts. LANE-009's shipped slices are not re-run. Expected tra
 end: LANE-010 → VERIFY (audit-owed), with the audit session settling the whole AUDIT-DEBT
 ledger plus the full serialized battery and flipping LANE-009 + LANE-010 SHIPPED.
 
+## D436 — ATLANTA SHIPPED: THE BATTLE OF ATLANTA (JULY 22, 1864) IS PLAYABLE AS SCENARIO 25 AT 25/56/1,566/132; THE WESTERN THEATER READOUT TELLS THE NEW TRUTH — [CLAUDE CODE (FABLE 5), LANE-010 DRIVE] (2026-07-18)
+
+Queue item 4, spec-first: `docs/design/atlanta-battle-build-spec.md` committed at `d596579`, then
+this runtime. The two-source spine was LIVE-FETCHED this session (ABT Atlanta page + Wikipedia
+Battle of Atlanta; both read and cross-confirmed: Jul 22 1864, Union victory, US 3,722 vs CS
+5,000-5,500, Hardee's delayed 15-mile night march, McPherson killed 2:02 p.m., Walker killed,
+Bald Hill held hand-to-hand until dark, Cheatham's Georgia-railroad / Troup Hurt breakthrough
+answered by twenty massed guns + Logan's XV Corps, Wheeler at Decatur, the siege continuing),
+honoring the D327 packet's verdict, rank traps, engaged-strength honesty (the ABT 75,301 is the
+army-group total — the field encodes the Army of the Tennessee 34,863-present anchor at
+division-scale Inferred envelopes), and direction guidance.
+
+SHIPPED: `data/atlanta.json` — two-phase T8 (Bald Hill scoreWeight 1 → Troup Hurt breakthrough
+scoreWeight 3; [1,3]=4 per the two-phase convention), CS attacker / US defender, fog OFF, D74
+clean (no forbidden keys; the phase-2 breach is STRUCTURAL — a works gap at the railroad cut),
+the spec §3 rank wall in full (Hood "General (temporary)" never Senate-confirmed; Sherman
+Maj. Gen. observer at the Howard House; Logan's one-day army command taught; no Johnston after
+Jul 17; Walker's death encoded), 18 unique side-unit ids, five sourced teaching cards
+(McPherson / Hood-bleeds / Bald Hill / Troup Hurt / 1864 election), and a 4-entry 4e-2 sources
+register. INTEGRATION at every pin site with documented history: T1 registry line + menu rank
+71 (kennesaw:70 < atlanta:71 < cedarCreek:72) · T10 `_FLD_BATTLE_META.atlanta` W/false/hardee ·
+schema enrollment 55→56 · Army Register 1512→1566 (+18×3) at ALL pin sites (probe-loot-survival
+×2, probe-war-career ×2, eleven per-battle probes, three plan probes — probe-war-career-loop-plan
+also caught up two pins that had silently gone stale: schemaCount 54→56 records the D418
+mayhem-rules.json enrollment this pin missed, and suite 130→132 likewise) · scenario-count pins
+24→25 (probe-flags, probe-intel, probe-mayhem-mode 55→56/24→25/131→132, probe-custom-battle-
+builder, probe-tactical-roster, probe-women-in-war-arc-plan, media-budget metric text) ·
+adjacency reshapes in probe-cedar-creek + probe-franklin (kennesaw → atlanta → cedarCreek) ·
+suite 131→132 with the atlanta row appended at the END so every existing row pin (war career
+38, mayhem 57) holds. S44 TRUTH: `data/western-theater.json` currentArc gains the atlanta
+playable entry (two sources), futureLocks swaps the atlanta lock for the March-to-the-Sea
+campaign-treatment lock `lockedScenarioIds:["marchToTheSea"]` (non-empty for the schema rule;
+the March stays teaching/campaign-only per the packet), profile/summary/_comment corrected to
+ten playable Western battles. `tools/probe-atlanta.mjs` AUTHORED (static + browser teeth:
+registry/meta/launch shape/Register trios/8-seed direction battery/S44 cross-check) — NOT run
+tonight per D431.
+
+**VETTING DEFERRED (D431):** ran node --check on all 25 touched JS/probe files, build GATE OK,
+schema 56/56, git diff --check. The probe run, both binds (registry removal + a rank tamper),
+the direction battery, and the D423 registry-truth tooth re-run are owed as AUDIT-DEBT AD-4.
+
 ## D435 — GEA-03 SHIPPED: HOME / SHIFT+HOME CAMERA RECOVERY IN THE 3D BATTLE VIEW — [CLAUDE CODE (FABLE 5), LANE-010 DRIVE] (2026-07-18)
 
 Queue item 3 (REVIEW-QUEUE GENRE-ELITE GEA-03). `src/tactical/T0-field-sandbox.js` gains two

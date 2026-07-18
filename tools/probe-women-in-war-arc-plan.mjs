@@ -241,9 +241,9 @@ step("BASELINES: the current D400 whole-registry boundary the arc must not move 
   const t1 = read(T1);
   const registryBlock = (t1.match(/function fldScenarioRegistry\(\)[\s\S]*?\n\s*\}\s*catch/) || [null, ""])[0] || "";
   const scenarioCount = (registryBlock.match(/R\.[A-Za-z0-9]+\s*=\s*GAME_DATA/g) || []).length;
-  if (scenarioCount !== 24) throw new Error("scenario registry must stay 24, counted " + scenarioCount);   // D391: 21 -> 22 — Spotsylvania registered as the twenty-second scenario. D393: 22 -> 23 — Wilderness registers after Chattanooga. D397: 23 -> 24 — Petersburg initial assaults registers at rank 69.
+  if (scenarioCount !== 25) throw new Error("scenario registry must stay 25, counted " + scenarioCount);   // D391: 21 -> 22 — Spotsylvania registered as the twenty-second scenario. D393: 22 -> 23 — Wilderness registers after Chattanooga. D397: 23 -> 24 — Petersburg initial assaults registers at rank 69. D436: 24 -> 25 — Atlanta registers at rank 71.
   const loot = read(LOOT);
-  if (!/people\.length\s*!==\s*1512/.test(loot) || !/1512 of 1512/.test(loot)) throw new Error("Army Register exact D397 whole-registry pin 1512 missing from probe-loot-survival");   // D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots.
+  if (!/people\.length\s*!==\s*1566/.test(loot) || !/1566 of 1566/.test(loot)) throw new Error("Army Register exact D436 whole-registry pin 1566 missing from probe-loot-survival");   // D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots. D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots.
   const schemas = read(SCHEMAS);
   if (!schemas.includes("['women-in-war.json', ['_meta', 'schema', 'records']]")) throw new Error("schema-validator women row changed");
   const suite = parseSuite(read(VET));

@@ -34,7 +34,7 @@
     "probe": "tools/probe-intel-uhd617-profile.mjs",
     "representativeScenario": "chickamauga",
     "largestShippedScene": "kennesaw",
-    "largestShippedSceneMetric": "Opening OOB unit count: Kennesaw has 17 initial units, the largest of the 24 shipped opening scenes; the Petersburg initial assaults open with 9 units under THE REINFORCEMENT-RACE LAW, the Wilderness opens with 6 units under THE THICKET LAW, Cross Keys / Port Republic opens with 7 before its Inferred commitment arrival, and the probe derives and rechecks this inventory from current battle data.",
+    "largestShippedSceneMetric": "Opening OOB unit count: Kennesaw has 17 initial units, the largest of the 25 shipped opening scenes; the Battle of Atlanta opens with 9 units (D436), the Petersburg initial assaults open with 9 units under THE REINFORCEMENT-RACE LAW, the Wilderness opens with 6 units under THE THICKET LAW, Cross Keys / Port Republic opens with 7 before its Inferred commitment arrival, and the probe derives and rechecks this inventory from current battle data.",
     "method": "Browser WebGL profile over the built single-file game: representative Chickamauga high/low legs plus a low-tier Kennesaw largest-opening-scene leg. Timing values are warning-only because headless Chrome may report SwiftShader or host GPU rather than the exact player GPU.",
     "budgets": {
       "lowTierRenderCallHardCap": 360,

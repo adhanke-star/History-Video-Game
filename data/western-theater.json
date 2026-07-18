@@ -1,10 +1,10 @@
 {
-  "_comment": "D191 Group 4 bounded Western Theater strategic readout. This is a War Effort and Theater Map teaching/readout slice, not a battle-build, not a tactical registry change, not an OOB rewrite, and not a bridge lever. S44 (D423): currentArc reconciled with the live registry - the nine registered Western-theater battles are presented playable-now; only genuinely unbuilt work (Atlanta / the March) stays locked.",
+  "_comment": "D191 Group 4 bounded Western Theater strategic readout. This is a War Effort and Theater Map teaching/readout slice, not a battle-build, not a tactical registry change, not an OOB rewrite, and not a bridge lever. S44 (D423): currentArc reconciled with the live registry. D436: the Battle of Atlanta registers and joins the arc - ten registered Western-theater battles presented playable-now; only genuinely unbuilt work (the March to the Sea campaign treatment) stays locked.",
   "schema": "cw_western_theater_v1",
   "schemaVersion": "1.0",
   "profile": {
     "name": "Western Theater Strategic Readout",
-    "summary": "A bounded readout that makes the Western Theater legible as a war-winning river, rail, army, emancipation, and election story. All nine registered Western battles are playable now; only genuinely unbuilt work, the Atlanta / March to the Sea treatment, remains locked.",
+    "summary": "A bounded readout that makes the Western Theater legible as a war-winning river, rail, army, emancipation, and election story. All ten registered Western battles are playable now - Atlanta joined in D436; only genuinely unbuilt work, the March to the Sea campaign treatment, remains locked.",
     "teaching": "The Western Theater was not a side stage. Shiloh, Vicksburg, Chickamauga, Chattanooga, Atlanta, Franklin, Nashville, and USCT service belong in one strategic arc, but this slice only reads and teaches that arc; it does not create new fields.",
     "provenance": "Verified",
     "sources": [
@@ -107,6 +107,19 @@
       ]
     },
     {
+      "id": "atlanta-current",
+      "scenarioId": "atlanta",
+      "label": "The Battle of Atlanta",
+      "year": 1864,
+      "status": "playable-now",
+      "summary": "Hood's July 22 sortie: Hardee's all-night flank march against the refused left at Bald Hill, McPherson killed at 2:02 p.m., and the Troup Hurt breakthrough retaken under twenty massed guns. The battle the city's siege turned on - though Atlanta itself held until Jonesborough cut the last railroad.",
+      "provenance": "Verified",
+      "sources": [
+        "data/atlanta.json current playable battle data and teaching cards (D436).",
+        "American Battlefield Trust, Battle of Atlanta, source trail recorded in data/atlanta.json."
+      ]
+    },
+    {
       "id": "franklin-current",
       "scenarioId": "franklin",
       "label": "Franklin",
@@ -184,14 +197,14 @@
   ],
   "futureLocks": [
     {
-      "id": "wt-atlanta-march-readout",
-      "label": "Atlanta / March to the Sea",
+      "id": "wt-march-to-the-sea-readout",
+      "label": "The March to the Sea",
       "status": "locked-future-battle",
-      "lockedScenarioIds": ["atlanta"],
-      "summary": "Future battle-build and campaign-treatment candidate only: Atlanta's rail and industrial role, election effect, and the later March remain last-queue work.",
+      "lockedScenarioIds": ["marchToTheSea"],
+      "summary": "Campaign-treatment candidate only (D436: the Battle of Atlanta is now playable; the D327 packet holds the March itself as teaching/campaign work, never a pitched-battle build): hard-war logistics, Black self-emancipation on the march, Ebenezer Creek under the dignity rule, and Special Field Orders No. 15.",
       "provenance": "Verified",
       "sources": [
-        "American Battlefield Trust, Battle of Atlanta, https://www.battlefields.org/learn/civil-war/battles/atlanta",
+        "docs/design/battle-build-research/atlanta-march-battle-build-research.md - the March is campaign/teaching-only; no set-piece battle build.",
         "data/hard-war.json Sherman's March teaching card and source trail."
       ]
     }
