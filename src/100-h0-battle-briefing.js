@@ -243,6 +243,11 @@
       + '</header>'
       + '<div class="h0-side-grid" role="group" aria-label="Choose the army you will command">' + h0bSideCard(atkSide) + h0bSideCard(defSide) + '</div>'
       + '<div class="h0-side-matchup">' + ((typeof fldMatchupHtml === "function") ? fldMatchupHtml(sd) : "") + '</div>'
+      /* GEA-07 (D444 / D453 audit root-fix): the Learn-the-Battle card rides the LIVE h0 sheet —
+         the D444 composition sat in T7's superseded fldScenarioSideChoice (dead code under this
+         override). "" when sd carries no learnMeta -> the sheet is byte-identical for
+         custom/sandbox scenarios and any battle without the metadata. */
+      + ((typeof fldLearnCardHtml === "function") ? fldLearnCardHtml(sd) : "")
       + '<footer class="h0-side-foot"><p>' + h0bEsc(foot) + '</p><button id="fldBrSideBack" type="button" class="upg">Back</button></footer>'
       + '</section>';
 

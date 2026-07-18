@@ -126,7 +126,11 @@ function staticChecks() {
     const scan = (dir, prefix) => {
       for (const f of readdirSync(join(ROOT, dir))) {
         if (!f.endsWith('.js')) continue;
-        const t = readFileSync(join(ROOT, dir, f), 'utf8');
+        // D453 audit root-fix (never-run tooth): composition seams (T7, src/100) NAME learnMeta
+        // in their guard comments — the reader scan must run over CODE with comments stripped
+        // (the AD-14/AD-13/AD-12 class), or a documented seam reads as a data reader.
+        const t = readFileSync(join(ROOT, dir, f), 'utf8')
+          .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
         if (t.indexOf('learnMeta') >= 0) offenders.push(prefix + f);
       }
     };
