@@ -2,6 +2,10 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-17 — D422 C72 Shiloh myth correction
+
+Selected the HIGH C72 historical defect ahead of another biography batch and optional/larger lanes. Rewrote player-facing Shiloh text around NPS + Timothy B. Smith/ABT: Grant was surprised but Peabody prevented total tactical surprise; W. H. L. Wallace's veterans anchor the Hornets' Nest account; the road was not trench-like; Buell strengthened rather than single-handedly saved the army; Johnston's survival is counterfactual, not certain victory. The unchanged wall-shaped objective is labeled a game abstraction. Schema 55/55; build GATE OK; Shiloh 32/32; roster 8/8; builder 15/15; Codex 24/24; zero pageerrors. One bind isolated the C72 tooth and restored intended data/probe/game bytes. No mechanics/count/save/schema change; full battery remains deferred.
+
 ## 2026-07-17 — D421 New Market Heights USCT prosopography batch
 
 Selected LANE-002 5b after post-D420 roadmap adjudication. Live runtime corrected the stale remainder to 1,440 open generated `ss:` rows. Added Christian A. Fleetwood (Sergeant Major, 4th USCT), Powhatan Beaty (First Sergeant, Company G, 5th USCT), and James Gardiner (Private, Company I, 36th USCT) as Verified New Market Heights Medal of Honor records; pack 39→42 and remainder 1,440→1,437, register fixed at 1,512. Importer 42/42; build GATE OK; loot-survival 12/12; tactical roster 8/8; women-in-war 13/13; zero pageerrors. Full battery deferred under D160/D176.

@@ -1,6 +1,6 @@
 # AUTONOMOUS-RUN.md — the 12-hour max-productivity build plan ("The Civil War")
 
-**D421 §2 LIVE REFRESH:** Fleetwood, Beaty, and Gardiner ship as three Verified New Market Heights USCT records. Pack 39→42; open generated rows 1,440→1,437; register 1,512; focused gates green; LANE-002 CONTRACT/unowned. See `HANDOFF.md` top.
+**D422 §2 LIVE REFRESH:** the two-source C72 Shiloh text correction ships with Peabody/Wallace/non-sunken-road/Buell/Johnston nuance and an explicit game-abstraction label; mechanics and 24/55/1,512/131 + `_SAVE_VER=1` are unchanged. LANE-008 SHIPPED. See `HANDOFF.md` top.
 
 **Written run i (2026-06-13). This is the operating manual for a long, unsupervised, self-perpetuating autonomous build run.** Aaron is away ~12 hours and wants the strategic Owner-Mode war built as far as possible, ship-quality, content-complete, fully self-verified. Personal project — NOT MJI. Ultracode on. $0/single-file. Build bar **200/100 — go above and beyond.**
 
@@ -30,7 +30,7 @@ These rules apply to Codex, Claude, Cline, DeepSeek, and any other model impleme
 
 ## 2 · STATE AS OF THIS HANDOFF (live head — see the refresh line below; the stale "run i" epoch label was corrected in D236, ledger item S38)
 
-> **LIVE REFRESH (2026-07-17 D418 MAYHEM SLICE A SHIPPED): the ONE canonical live boundary is `HANDOFF.md`'s top ⚡ block — read it first; this section carries only this summary.** The immutable campaign ruleset, fail-closed accessible picker, all four start routes, post-load sanitation, save/import/undo/cross-slot isolation, and mode labels are live; Historical A/B is byte-equivalent; `MAYHEM_PUBLIC_READY=false`. Mayhem 16/16 plus adjacent 16/5/14/14/4 are green with zero errors; six binds each bit one tooth; suite 131 row 57; `_SAVE_VER=1`; base/data/count baselines unchanged. **LANE-007 remains DRIVE. Exact next: Slice B closed effect schema, atomic validation/apply, and deterministic idempotent receipts; Slice C/public Mayhem remain closed.** Work in `/Users/aaronhanke/Desktop/Video Game`; no simultaneous edits.
+> **LIVE REFRESH (2026-07-17 D422 C72 SHILOH CORRECTION SHIPPED): the ONE canonical live boundary is `HANDOFF.md`'s top ⚡ block — read it first; this section carries only this summary.** The two-source Shiloh correction is live with mechanics and 24/55/1,512/131 + `_SAVE_VER=1` unchanged; LANE-008 is SHIPPED. **Exact next: fresh adjudication led by GEA-01 + S44 versus another LANE-002 5b batch and eligible larger lanes; no candidate is preselected.** Work in `/Users/aaronhanke/Desktop/Video Game`; no simultaneous edits.
 
 > **Older §2 refreshes (D417 and earlier, plus the retained run-i state tail):** moved byte-verbatim to [`legacy/AUTONOMOUS-RUN-ARCHIVE.md`](legacy/AUTONOMOUS-RUN-ARCHIVE.md) — D417 moved at D420; D413 moved at D418; D412 at D417; older blocks moved in D412. This section keeps the latest refresh plus exactly one prior; the canonical live boundary is `HANDOFF.md`'s top ⚡ block.
 

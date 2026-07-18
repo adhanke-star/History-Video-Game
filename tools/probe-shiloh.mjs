@@ -125,6 +125,20 @@ const SETUP = `(() => {
       if(ids.indexOf('sh_hornets_nest')<0) throw new Error('sh_hornets_nest card missing: '+ids);
     });
 
+    step('C72: corrected interpretation rejects the Shiloh myth bundle and labels the modeled Hornets\\' Nest line as a game abstraction', function(){
+      var text=JSON.stringify(DATA), low=text.toLowerCase();
+      var nps='https://www.nps.gov/articles/000/was-general-grant-surprised-by-the-confederate-attack-at-shiloh.htm';
+      var abt='https://www.battlefields.org/learn/articles/battle-shiloh-shattering-myths';
+      ['Everett Peabody','W. H. L. Wallace',"HORNETS' NEST SECTOR — GAME ABSTRACTION",'not deeply sunken','counterfactual','strengthened the Union counterattack'].forEach(function(term){
+        if(text.indexOf(term)<0) throw new Error('C72 correction missing: '+term);
+      });
+      if(text.indexOf(nps)<0 || text.indexOf(abt)<0) throw new Error('C72 exact two-source URLs missing');
+      ['complete tactical surprise','saved only by Buell','stand that saved Grant\\'s army','Johnston\\'s death — the turning point','the surprise is complete'].forEach(function(stale){
+        if(low.indexOf(stale.toLowerCase())>=0) throw new Error('C72 stale certainty remains: '+stale);
+      });
+      return {peabody:true,wallace:true,roadCorrection:true,bothSources:true,gameAbstraction:true};
+    });
+
     step('DATA: codex entry present', function(){
       var codex=DATA.teaching&&DATA.teaching.codex;
       if(!codex) throw new Error('codex entry missing');

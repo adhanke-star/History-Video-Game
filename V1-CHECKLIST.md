@@ -1,8 +1,8 @@
 # V1 FEATURE-COMPLETE CHECKLIST — "The Civil War"  (APPROVED — run-k Q&A, 2026-06-15)
 
-> **D421 live gate:** three Verified New Market Heights USCT Medal of Honor records ship: Fleetwood, Beaty, and Gardiner. Pack 39→42; open generated rows 1,440→1,437; register 1,512; focused/adjacent gates green. LANE-002 is CONTRACT/unowned; see `HANDOFF.md` top.
+> **D422 live gate:** the two-source C72 Shiloh myth correction ships. Peabody/Wallace/non-sunken-road/Buell/Johnston nuance replaces the stale player-facing bundle; the unchanged Hornets' Nest objective is labeled a game abstraction. LANE-008 SHIPPED; all 24/55/1,512/131 + `_SAVE_VER=1` invariants hold; see `HANDOFF.md` top.
 
-> **D418 live gate:** Mayhem Slice A is SHIPPED and hidden — immutable campaign ruleset, fail-closed accessible picker, all four starts, save/import/undo/cross-slot isolation, and mode labels; Historical A/B stays byte-equivalent and `MAYHEM_PUBLIC_READY=false`. Mayhem 16/16 plus adjacent 16/5/14/14/4 are green with zero errors; six byte-restored binds bit one tooth each; suite 131 with Mayhem row 57; `_SAVE_VER=1`; base/data/count baselines unchanged. **The canonical live boundary is `HANDOFF.md`'s top ⚡ block. LANE-007 remains DRIVE; exact next is Slice B closed schema/atomic receipt pipeline; Slice C/public Mayhem stay closed.** D398 remains latest full battery.
+> **D421 prior gate:** three Verified New Market Heights USCT Medal of Honor records ship: Fleetwood, Beaty, and Gardiner. Pack 39→42; open generated rows 1,440→1,437; register 1,512; focused/adjacent gates green. LANE-002 is CONTRACT/unowned; see `HANDOFF.md` top.
 
 **Purpose:** give "complete all project goals" a concrete, ordered target so autonomous runs can drive to a
 content-complete v1 (still a perpetual project after — D54). Built from `MODERN-UGG-PLAN.md` (P0–P5),
