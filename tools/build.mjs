@@ -290,6 +290,67 @@ for (const rm of RATING_MODULES) {
   if (offenders.length) die(5, 'citation-provenance: ' + offenders.length + ' record(s) stamped "Verified" with <2 sources (the >=2-source non-negotiable, D92/D103) — add a second independent REAL source or downgrade prov to "Inferred"/"Disputed":\n  ' + offenders.join('\n  '));
 }
 
+// 4e-2. E74 (D430) DESCRIPTIVE-VERIFIED COVERAGE RATCHET — gate 4e deliberately skips the long
+// descriptive forms ("Verified (high) — …", "Verified specs (…)", "Verified identity; …"), whose
+// citations live inline in prose or in the committed spec packets. THE INHERITANCE RULE: a
+// descriptive-Verified object is STRUCTURALLY covered when it, or its nearest ancestor (walking
+// up to the file root), carries a sources/src array with >=2 distinct entries. Everything else is
+// GRANDFATHERED at the exact per-file baseline below (123 objects at D430) — the blind spot may
+// never grow: a NEW descriptive-Verified object without structured own/ancestor sources fails the
+// build, and any migration that shrinks a file's count must consciously lower its baseline here
+// (documented history, the pin idiom). The full migration of the 123 into structured claim-local
+// arrays / file-root registers is the recorded E74 design fork (DECISIONS D430) — this ratchet is
+// containment + forward enforcement, NOT a substitute for that migration.
+{
+  const E74_BASELINE = {
+    'antietam.json': 8, 'artillery.json': 1, 'bullrun.json': 3, 'cedar-creek.json': 3,
+    'chancellorsville.json': 6, 'chattanooga.json': 9, 'chickamauga.json': 8,
+    'cross-keys-port-republic.json': 3, 'diplomacy.json': 6, 'elkhorn-tavern.json': 3,
+    'five-forks.json': 1, 'fort-donelson.json': 4, 'franklin.json': 5, 'fredericksburg.json': 4,
+    'gaines-mill.json': 1, 'gettysburg.json': 8, 'kennesaw.json': 5, 'malvern-hill.json': 6,
+    'manpower-teaching.json': 6, 'nashville.json': 8, 'new-market-heights.json': 3,
+    'petersburg-assaults.json': 1, 'shiloh.json': 6, 'spotsylvania.json': 1,
+    'stones-river.json': 3, 'vicksburg.json': 9, 'weapons.json': 1, 'wilderness.json': 1
+  };
+  const SRC_KEYS2 = ['sources', 'src'];
+  const norm2 = (v) => (typeof v === 'string' ? v.trim().toLowerCase() : '');
+  const distinctCount = (arr) => {
+    const seen = new Set();
+    for (const s of arr || []) {
+      const k = (typeof s === 'string' ? s : JSON.stringify(s)).replace(/\s+/g, ' ').trim().toLowerCase();
+      if (k && k !== '{}' && k !== 'null') seen.add(k);
+    }
+    return seen.size;
+  };
+  const ownSrcCount = (n) => { for (const k of SRC_KEYS2) if (Array.isArray(n[k])) return distinctCount(n[k]); return -1; };
+  const uncoveredByFile = {};
+  const walk2 = (node, file, ancCovered, trail) => {
+    if (Array.isArray(node)) { node.forEach((v, i) => walk2(v, file, ancCovered, trail + '[' + i + ']')); return; }
+    if (node && typeof node === 'object') {
+      const pv = [norm2(node.prov), norm2(node.provenance)];
+      const isDescriptive = pv.some(p => p.startsWith('verified') && p !== 'verified');
+      const own = ownSrcCount(node);
+      if (isDescriptive && !(own >= 2 || ancCovered)) (uncoveredByFile[file] = uncoveredByFile[file] || []).push(trail || '(root)');
+      const nextCovered = own >= 2 ? true : ancCovered;
+      for (const k in node) walk2(node[k], file, nextCovered, trail ? trail + '.' + k : k);
+    }
+  };
+  if (existsSync(DATA)) {
+    for (const f of readdirSync(DATA).filter(f => f.endsWith('.json')).sort()) {
+      let j; try { j = JSON.parse(readFileSync(join(DATA, f), 'utf8')); } catch (e) { continue; }
+      walk2(j, f, false, '');
+    }
+  }
+  const problems = [];
+  const filesSeen = new Set([...Object.keys(E74_BASELINE), ...Object.keys(uncoveredByFile)]);
+  for (const f of [...filesSeen].sort()) {
+    const want = E74_BASELINE[f] || 0, got = (uncoveredByFile[f] || []).length;
+    if (got > want) problems.push(f + ': ' + got + ' uncovered descriptive-Verified object(s), baseline ' + want + ' — new: ' + (uncoveredByFile[f] || []).join(', '));
+    else if (got < want) problems.push(f + ': uncovered count dropped to ' + got + ' (baseline ' + want + ') — good; consciously lower its E74_BASELINE entry in the same commit (documented history)');
+  }
+  if (problems.length) die(5, 'E74 descriptive-Verified ratchet (D430): give the object (or an ancestor) a sources/src array with >=2 distinct REAL entries, downgrade the stamp, or consciously move the pinned baseline:\n  ' + problems.join('\n  '));
+}
+
 // 4f. SOLDIER'S STORY REPLACEMENT GATE (D152) — generated representative rows may be
 // replaced later only by explicit citation-grade person records. The canonical data file
 // is empty today; this gate makes future edits fail fast for malformed, prototype-polluted,

@@ -4,6 +4,47 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D430 — E74 PARTIALLY SHIPPED: THE INHERITANCE RULE + AN EXACT-COUNT RATCHET CONTAIN THE DESCRIPTIVE-VERIFIED BLIND SPOT; THE 123-OBJECT MIGRATION IS THE SURFACED FORK — [CLAUDE CODE (FABLE 5), LANE-009 DRIVE] (2026-07-17)
+
+E74 (run-3 MED, citation-gate coverage — the biggest finding, done last by charter): gate 4e
+covers only exact `"Verified"` stamps; descriptive forms bypass it by design. The fresh mechanical
+inventory found **151** descriptive-Verified objects across 28 data files: **28** already satisfy
+THE INHERITANCE RULE (the object or its nearest ancestor carries a sources/src array with >=2
+distinct entries), and **123** do not — their citations live inline in prose (the antietam/
+diplomacy/weapons class: "Verified (high) — NPS; American Battlefield Trust; the Official
+Records") or only in the committed spec/research packets outside the data file (the chattanooga/
+wilderness class: "Verified (high) for the … sequence" with no inline source).
+
+SHIPPED (the bounded honest part, no gate weakened): build gate **4e-2** now (1) DEFINES and
+ENFORCES the inheritance rule for every descriptive-Verified object it can cover, and (2) pins the
+123 grandfathered objects at an EXACT per-file baseline (the D430 inventory map, recorded in the
+gate). Any NEW descriptive-Verified object without structured own/ancestor sources fails the
+build; any migration that shrinks a file's uncovered count must consciously lower that file's
+baseline in the same commit (the documented-pin idiom). Bind: injecting one uncited
+descriptive-Verified card into `data/chattanooga.json` (the ledger's named example) killed the
+build with exit 5 naming the file (10 vs baseline 9); byte-identical restore (data
+`5f4e18255d881fee2354d4e9b20f9d56`, build.mjs `ffd50bb2ce31b4e00f4cac93977b2dec`, generated
+`3753858501afa23097d86f25e7bbd222`) with a green rebuild. Gates: node --check clean; build GATE
+OK at the exact baseline; schema 55/55; adjacent probe-chattanooga 16/16, zero pageerrors.
+Invariants hold: 24/55/1,512/131, `_SAVE_VER=1`, frozen base, D74. No claim was inferred false —
+the gate was blind, not the history wrong.
+
+SURFACED FOR AARON (the honest fork, per the charter's HALT clause — recorded, not blocking the
+terminal battery; the ONE deferred item of the finish-line push): migrating the 123 grandfathered
+objects to structural citation. Options: **(a) RECOMMENDED — a future content lane with its own
+contract** migrating per-file in bounded batches (extract each battle's source register from its
+committed spec/research packet into a file-root `sources` array, or per-card arrays where the
+prose already names its citations; each batch runs that battle's focused probe; sized and
+logged like LANE-002 batches; the ratchet baseline drops with each batch until it reads all
+zeros). **(b)** a prose-citation parser that pattern-matches source names inside descriptive
+strings — rejected: weak law; it would bless "Verified (source A; source B)" without adjudicating
+that the named sources are real. **(c)** keep the ratchet as the terminal state — rejected as an
+end state: the blind spot stays contained but never closes. Recommendation: (a), because the
+citations already exist in committed spec packets and the work is mechanical-plus-verification,
+exactly the shape this repo ships well in bounded slices. REVIEW-QUEUE E74 flips
+partially-fixed-in-D430 with the fork recorded; LANE-009's remaining work is the terminal
+release battery.
+
 ## D429 — C74 SHIPPED: JACOBS, TAYLOR, AND LUNT EACH CARRY A VERIFIED INDEPENDENT EDITORIAL AUTHORITY — [CLAUDE CODE (FABLE 5), LANE-009 DRIVE] (2026-07-17)
 
 C74 (run-3 MED, source independence): the Jacobs, Susie King Taylor, and Dolly Lunt cards in

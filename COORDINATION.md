@@ -1864,10 +1864,12 @@ next green commit and confer through this ledger instead of permitting simultane
   Serial Set roster + DNCB two-source law; data/spec/probe renderings corrected; OOB inputs
   byte-identical; one-token bind).** **C74 SHIPPED (D429: live-verified independent editorial
   authorities on the Jacobs/Taylor/Lunt cards + the static independence tooth; authority-removal
-  bind).** Exact next: E74 (D430) — the LAST FIX-NOW slice, biggest, may HALT honestly with
-  options + recommendation if the honest fix outgrows one slice; then the full serialized
-  `npm run vet:noreg` battery alone on the machine.
-- **Last-touched commit:** the D429 C74 release.
+  bind).** **E74 PARTIALLY SHIPPED (D430: the inheritance rule + the exact-count per-file
+  ratchet in build gate 4e-2; injection bind exit 5; the 123-object migration is the surfaced
+  fork and the push's ONE deferred item — options + recommendation in D430).** Exact next: the
+  terminal full serialized `npm run vet:noreg` release battery, alone on the machine — green =
+  feature-done; then flip LANE-009 SHIPPED/unowned.
+- **Last-touched commit:** the D430 E74 release.
 - **History:** adjudicated + contracted by Claude Code (Fable 5) 2026-07-17 under Aaron's
   finish-line directive; DRIVE taken in the same ledger-only commit; GEA-01 + S44 shipped in the
   D423 release the same day.
