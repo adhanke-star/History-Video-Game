@@ -83,8 +83,12 @@ function staticChecks() {
   });
 
   check('SAVE LAW BY CONSTRUCTION: src/111 never touches the envelope (no serializeSave/loadLocal/applySave/_SAVE_VER token); no init path seeds memoryChains (the ONLY writer is mcOnDecisionResolved); decInit does not reference memoryChains; MODE PARITY (no ruleset/mayhem read)', () => {
+    // D453 audit root-fix (never-run tooth): src/111's own header comment NAMES the envelope
+    // functions while stating the save law, so the forbidden-token scan must run over CODE
+    // with comments stripped — a comment mention is documentation, not a reference.
+    const modCode = mod.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
     ['serializeSave', 'loadLocal', 'applySave', '_SAVE_VER', 'ruleset', 'mayhem', 'Mayhem'].forEach(tok => {
-      if (mod.indexOf(tok) >= 0) throw new Error('src/111 references ' + tok);
+      if (modCode.indexOf(tok) >= 0) throw new Error('src/111 references ' + tok);
     });
     const writes = mod.match(/P\.memoryChains\s*=/g) || [];
     if (writes.length !== 1) throw new Error('expected exactly one lazy-creation write, got ' + writes.length);
