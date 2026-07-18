@@ -2118,3 +2118,153 @@ function warCareerInstallHandoffUI() {
   warCareerInstallDispatcher();
   warCareerInstallHandoffUI();
 })();
+
+/* ================= SLICE F (D438, design §19): WAR END AND FRANCHISE ARCHIVE =================
+   ARCHIVE_CANONICAL_OWNER:localStorage.cw_career_archive_v1 — ONE device-local archive owner,
+   deliberately OUTSIDE the campaign save envelope (_SAVE_VER untouched; nothing rides the save;
+   legacy campaigns byte-equivalent). Pure-read capture at the single war-end chokepoint BEFORE
+   campaign nullification (chain + D119 strategic ends both funnel through warWonScreen); read-
+   side sanitation drops malformed records, never repairs; every localStorage failure is silent-
+   safe in both directions. No combat/political/decision/appointment/resource change. */
+var _WC_ARCHIVE_KEY = "cw_career_archive_v1";
+var _WC_ARCHIVE_CAP = 20;
+function _wcArcStr(v, max) { return (typeof v === "string" && v.length > 0 && v.length <= (max || 80) && v.indexOf("<") < 0) ? v : null; }
+function _wcArcNum(v) { return (typeof v === "number" && isFinite(v) && v >= 0) ? Math.round(v) : 0; }
+function _wcArchiveSanitizeRecord(r) {
+  var KEYS = ["archiveVersion", "side", "final", "endReason", "battles", "won", "suff", "infl", "gradeLetter", "iron", "ruleset", "timelineName", "career", "capturedAt"];
+  var CKEYS = ["name", "rank", "role", "promotions", "credits", "lineageLen", "handoffState", "mattersOfState"];
+  if (!r || typeof r !== "object" || Array.isArray(r)) return null;
+  var k;
+  for (k in r) if (Object.prototype.hasOwnProperty.call(r, k) && KEYS.indexOf(k) < 0) return null;
+  if (r.archiveVersion !== 1 || (r.side !== "US" && r.side !== "CS") || r.final !== true) return null;
+  if (["chain", "will", "recognition"].indexOf(r.endReason) < 0) return null;
+  var nums = [r.battles, r.won, r.suff, r.infl, r.capturedAt], ni;
+  for (ni = 0; ni < nums.length; ni++) if (!(typeof nums[ni] === "number" && isFinite(nums[ni]) && nums[ni] >= 0)) return null;
+  if (r.gradeLetter !== null && !(typeof r.gradeLetter === "string" && r.gradeLetter.length >= 1 && r.gradeLetter.length <= 2)) return null;
+  if (typeof r.iron !== "boolean" || (r.ruleset !== "historical" && r.ruleset !== "mayhem")) return null;
+  if (r.timelineName !== null && _wcArcStr(r.timelineName) === null) return null;
+  if (r.career !== null) {
+    var c = r.career;
+    if (!c || typeof c !== "object" || Array.isArray(c)) return null;
+    for (k in c) if (Object.prototype.hasOwnProperty.call(c, k) && CKEYS.indexOf(k) < 0) return null;
+    if (c.name !== null && _wcArcStr(c.name) === null) return null;
+    if (c.rank !== null && _wcArcStr(c.rank) === null) return null;
+    if (c.role !== null && _wcArcStr(c.role) === null) return null;
+    if (!(typeof c.promotions === "number" && isFinite(c.promotions) && c.promotions >= 0)) return null;
+    if (!(typeof c.credits === "number" && isFinite(c.credits) && c.credits >= 0)) return null;
+    if (!(typeof c.lineageLen === "number" && isFinite(c.lineageLen) && c.lineageLen >= 0)) return null;
+    if (c.handoffState !== null && _wcArcStr(c.handoffState, 16) === null) return null;
+    if (typeof c.mattersOfState !== "boolean") return null;
+  }
+  return r;
+}
+function warCareerArchiveRead() {
+  var raw = null;
+  try { raw = localStorage.getItem(_WC_ARCHIVE_KEY); } catch (e) { return []; }
+  if (!raw) return [];
+  var j = null;
+  try { j = JSON.parse(raw); } catch (e2) { return []; }
+  if (!j || typeof j !== "object" || Array.isArray(j) || j.version !== 1 || !Array.isArray(j.records)) return [];
+  var out = [];
+  for (var i = 0; i < j.records.length && out.length < _WC_ARCHIVE_CAP; i++) {
+    var r = _wcArchiveSanitizeRecord(j.records[i]);
+    if (r) out.push(r);
+  }
+  return out;
+}
+/* Assemble the closed §19 record by PURE reads — every subsystem guarded; never throws out. */
+function warCareerArchiveRecord(C) {
+  if (!C || typeof C !== "object") return null;
+  var st = C.stats || {};
+  var rec = {
+    archiveVersion: 1,
+    side: (C.side === "CS") ? "CS" : "US",
+    final: true,
+    endReason: "chain",
+    battles: _wcArcNum(st.battles), won: _wcArcNum(st.won), suff: _wcArcNum(st.suff), infl: _wcArcNum(st.infl),
+    gradeLetter: null,
+    iron: C.iron === true,
+    ruleset: "historical",
+    timelineName: _wcArcStr(C.timelineName),
+    career: null,
+    capturedAt: Date.now()
+  };
+  // the D119 one-shot, read BEFORE the base consumes it (this runs pre-delegate)
+  try { if (typeof _aarEndReason !== "undefined" && (_aarEndReason === "will" || _aarEndReason === "recognition")) rec.endReason = _aarEndReason; } catch (e0) {}
+  try { if (typeof _aarDomains === "function" && typeof aarOverall === "function") { var ov = aarOverall(_aarDomains(C)); rec.gradeLetter = (ov && ov.grade && typeof ov.grade.letter === "string") ? ov.grade.letter.slice(0, 2) : null; } } catch (e1) {}
+  try { if (typeof mayhemRuleset === "function") { var rs = mayhemRuleset(C); if (rs && rs.id === "mayhem") rec.ruleset = "mayhem"; } } catch (e2) {}
+  try {
+    var J = C.loot && C.loot.journey;
+    if (J && J.careerVersion === 1) {
+      var p = J.person || {};
+      var caps = null;
+      try { if (typeof warCareerCapabilities === "function") caps = warCareerCapabilities(C); } catch (e3) { caps = null; }
+      rec.career = {
+        name: _wcArcStr(String(p.name || "")), rank: _wcArcStr(String(p.rank || "")),
+        role: _wcArcStr(String(J.role || p.role || "")),
+        promotions: _wcArcNum(J.promotionCount),
+        credits: _wcArcNum(Array.isArray(J.creditLedger) ? J.creditLedger.length : 0),
+        lineageLen: _wcArcNum(Array.isArray(J.lineage) ? J.lineage.length : 0),
+        handoffState: J.handoff ? _wcArcStr(String(J.handoff.state || ""), 16) : null,
+        mattersOfState: !!(caps && caps.nationalDecisions === true)
+      };
+    }
+  } catch (e4) { rec.career = null; }
+  return _wcArchiveSanitizeRecord(rec);
+}
+function warCareerArchiveCapture(C) {
+  var rec = warCareerArchiveRecord(C);
+  if (!rec) return false;
+  var records = warCareerArchiveRead();
+  records.unshift(rec);
+  if (records.length > _WC_ARCHIVE_CAP) records = records.slice(0, _WC_ARCHIVE_CAP);
+  try { localStorage.setItem(_WC_ARCHIVE_KEY, JSON.stringify({ version: 1, records: records })); return true; }
+  catch (e) { return false; }   // quota/private mode: silently safe — the war-end screen must render regardless
+}
+/* The Franchise Record gallery — renders ONLY what the sanitized read returns; empty -> "". */
+function warCareerArchiveHTML() {
+  var records = warCareerArchiveRead();
+  if (!records.length) return "";
+  var esc = (typeof _wcEsc === "function") ? _wcEsc : function (v) { return String(v == null ? "" : v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); };
+  var REASON = { chain: "the war fought through", will: "a negotiated peace", recognition: "recognized independence" };
+  var rows = "";
+  for (var i = 0; i < records.length; i++) {
+    var r = records[i];
+    var line = (r.side === "CS" ? "Confederate" : "Union") + " · " + (REASON[r.endReason] || r.endReason)
+      + (r.gradeLetter ? " · grade " + esc(r.gradeLetter) : "") + " · " + r.won + "/" + r.battles + " battles"
+      + (r.iron ? " · Ironman" : "") + (r.ruleset === "mayhem" ? " · Mayhem" : "");
+    if (r.career) {
+      var cLine = [r.career.rank, r.career.name].filter(function (x) { return !!x; }).join(" ");
+      if (cLine) line += "<br><span style=\"opacity:.75;font-size:11px\">" + esc(cLine)
+        + (r.career.promotions ? " · " + r.career.promotions + " promotion" + (r.career.promotions === 1 ? "" : "s") : "")
+        + (r.career.lineageLen ? " · " + r.career.lineageLen + " hand-off" + (r.career.lineageLen === 1 ? "" : "s") : "")
+        + (r.career.mattersOfState ? " · Matters of State" : "") + "</span>";
+    }
+    rows += '<li style="margin:4px 0">' + line + "</li>";
+  }
+  return '<div class="wcArchive" role="region" aria-label="The Franchise Record - your finished wars" style="margin-top:14px;padding:11px;border:1px solid var(--rule,#6b5a3e);border-radius:5px">'
+    + '<b style="font-size:13px">The Franchise Record</b>'
+    + '<div style="font-size:11px;opacity:.72">Every war this device has fought to its end, newest first. A device-local record - it never rides a save.</div>'
+    + '<ol style="margin:6px 0 0;padding-left:20px;font-size:12px">' + rows + "</ol></div>";
+}
+/* The single-chokepoint wrapper (the D425 idiom: markers + delegate propagated). */
+(function warCareerArchiveInstall() {
+  if (typeof warWonScreen !== "function" || warWonScreen._warCareerArchiveWrapped === true) return;
+  var base = warWonScreen;
+  var wrapped = function () {
+    try { var C = (typeof G !== "undefined" && G) ? G.campaign : null; if (C) warCareerArchiveCapture(C); } catch (e) {}
+    var ret = base.apply(this, arguments);
+    try {
+      var rep = document.getElementById("wwReport");
+      if (rep && rep.parentNode) {
+        var html = warCareerArchiveHTML();
+        if (html) { var d = document.createElement("div"); d.innerHTML = html; rep.parentNode.insertBefore(d, rep.nextSibling); }
+      }
+    } catch (e2) {}
+    return ret;
+  };
+  for (var k in base) if (Object.prototype.hasOwnProperty.call(base, k)) { try { wrapped[k] = base[k]; } catch (e3) {} }
+  wrapped._warCareerArchiveWrapped = true;
+  wrapped._warCareerArchiveDelegate = base;
+  warWonScreen = wrapped;
+})();

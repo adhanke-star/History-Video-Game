@@ -2511,6 +2511,51 @@ const SETUP = `(() => {
         negativeRememberedClamp:negativeRememberedClamp.rememberedRapport, mixedIndependent:true,
         commandOwnerIsolated:true, directPure:true, composedPure:true, semantic:true };
     });
+
+    step('D438 SLICE F FRANCHISE ARCHIVE (§19: wrapper, capture, cap, sanitation, legacy purity, gallery)', function() {
+      // §19 tooth 1 — wrapper install with delegate + marker propagation
+      if (typeof warCareerArchiveCapture !== 'function' || typeof warCareerArchiveRead !== 'function' || typeof warCareerArchiveHTML !== 'function') throw new Error('archive functions missing');
+      if (warWonScreen._warCareerArchiveWrapped !== true || typeof warWonScreen._warCareerArchiveDelegate !== 'function') throw new Error('warWonScreen wrapper/marker missing');
+      try { localStorage.removeItem('cw_career_archive_v1'); } catch (e) {}
+      // §19 tooth 6 (first half) — legacy purity: a no-career campaign archives career:null, and
+      // nothing rides the save (the archive key is not inside the campaign envelope)
+      var C = { side:'US', iron:false, stats:{ battles:3, won:2, suff:100, infl:200 } }; G.campaign = C;
+      var save0 = (typeof serializeSave === 'function') ? JSON.stringify(serializeSave()) : null;
+      if (!warCareerArchiveCapture(C)) throw new Error('no-career capture failed');
+      var recs = warCareerArchiveRead();
+      if (recs.length !== 1 || recs[0].career !== null || recs[0].side !== 'US' || recs[0].endReason !== 'chain') throw new Error('no-career record wrong: ' + JSON.stringify(recs[0]));
+      if (save0 !== null && JSON.stringify(serializeSave()) !== save0) throw new Error('the archive rode the save envelope');
+      if (save0 !== null && save0.indexOf('cw_career_archive') >= 0) throw new Error('archive key leaked into the save');
+      // §19 tooth 2/3 — a career campaign captures the closed career shape; the strategic one-shot is honored
+      var C2 = { side:'CS', iron:true, timelineName:'timeline-1', stats:{ battles:9, won:6, suff:400, infl:900 },
+        loot:{ journey:{ careerVersion:1, person:{ name:'Test Person', rank:'Captain' }, promotionCount:2, creditLedger:[{},{}], lineage:[{}], handoff:null } } };
+      _aarEndReason = 'will';
+      warCareerArchiveCapture(C2);
+      _aarEndReason = null;
+      recs = warCareerArchiveRead();
+      if (recs.length !== 2 || recs[0].side !== 'CS' || recs[0].endReason !== 'will' || recs[0].iron !== true) throw new Error('career/strategic record wrong');
+      var cr = recs[0].career;
+      if (!cr || cr.name !== 'Test Person' || cr.rank !== 'Captain' || cr.promotions !== 2 || cr.credits !== 2 || cr.lineageLen !== 1 || typeof cr.mattersOfState !== 'boolean') throw new Error('career shape wrong: ' + JSON.stringify(cr));
+      // §19 tooth 4 — cap 20 newest-first
+      for (var i = 0; i < 21; i++) warCareerArchiveCapture({ side:'US', stats:{ battles:i, won:0, suff:0, infl:0 } });
+      recs = warCareerArchiveRead();
+      if (recs.length !== 20 || recs[0].battles !== 20) throw new Error('cap/order wrong: ' + recs.length + '/' + recs[0].battles);
+      // §19 tooth 5 — sanitation: malformed store, extra-key record, unsafe-key store all read empty/dropped
+      localStorage.setItem('cw_career_archive_v1', '{');
+      if (warCareerArchiveRead().length !== 0) throw new Error('malformed store not dropped');
+      localStorage.setItem('cw_career_archive_v1', JSON.stringify({ version:1, records:[{ archiveVersion:1, side:'US', final:true, endReason:'chain', battles:1, won:1, suff:0, infl:0, gradeLetter:null, iron:false, ruleset:'historical', timelineName:null, career:null, capturedAt:1, EXTRA:1 }] }));
+      if (warCareerArchiveRead().length !== 0) throw new Error('extra-key record not dropped');
+      // §19 tooth 7 — the gallery renders the sanitized read; empty archive renders nothing
+      localStorage.removeItem('cw_career_archive_v1');
+      if (warCareerArchiveHTML() !== '') throw new Error('empty archive must render nothing');
+      warCareerArchiveCapture(C2);
+      var html = warCareerArchiveHTML();
+      if (html.indexOf('The Franchise Record') < 0 || html.indexOf('Test Person') < 0 || html.indexOf('negotiated peace') < 0) throw new Error('gallery content missing');
+      if (html.indexOf('cw_llm') >= 0) throw new Error('secret leak in the gallery');
+      localStorage.removeItem('cw_career_archive_v1');
+      G.campaign = null;
+      return { wrapped:true, capped:20 };
+    });
   } catch (fatal) {
     R.ok = false;
     R.fatal = String(fatal && fatal.message || fatal);
