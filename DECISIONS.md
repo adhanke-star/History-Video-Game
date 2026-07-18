@@ -4,6 +4,66 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D455 — UNLOCKED BUT JUDGED: AARON LOCKS THE NEXT-ARC DESIGN LAW IN ELEVEN POPUP ROUNDS — GAMEPLAY UNLOCKS + RETAINED MORAL TEACHING + THE RISK-STYLE CONQUEST LAYER + THE INTEGRATED ARC 0-9 ROADMAP — [AARON, POPUP Q&A + TWO DIRECT DIRECTIVES; PACKET AUTHORED BY CLAUDE CODE (FABLE 5)] (2026-07-18)
+
+**THE LAW:** `docs/design/unlocked-but-judged-design.md` — authored this session from eleven
+AskUserQuestion rounds plus two mid-session directives, every answer recorded VERBATIM in the
+packet §2 (the GRAND-STRATEGY-PLAN popup-lock convention). The governing clarification, Aaron
+verbatim: *"I was more concerned with morality taking away gameplay features, i like the idea
+of continuing to cast moral judgment on a player… I still want this game to be a teaching game
+and at least attempt to teach users the evils of the civil war even if the gameplay is more
+unlocked sandbox style play that allows alt history. I dont think we have to give up either."*
+
+**The one-page decision:** gameplay features are never removed on moral grounds; the moral
+teaching voice is never removed for gameplay's sake. The Historical/Mayhem toggle STAYS
+(Aaron: "restore mayhem/historical mode toggle" — it splits plausibility, not morality; the
+D420 picker unchanged). Historical UNLOCKS mechanics — surrender/no-quarter playable with
+real simulated consequences, **judged, never rewarded** (the infamy scoring block is
+load-bearing). The graded AAR (incl. moral framing + the cause panel) and ending verdicts
+STAY as teaching instruments. The sourced "In history…" juxtaposition companion goes
+ALWAYS-VISIBLE in BOTH modes (amends D416's off-by-default comparison; Mayhem keeps its
+no-moral-GPA charter). Content unlocks per adjudication: Fort Pillow playable BOTH sides
+with honest no-quarter treatment and mandatory sourced teaching (amends D135/D382);
+the documented Cherokee regiments field at Elkhorn with teaching cards 8-10 mandatory
+(amends D359); Front Royal may score. KEPT: imagery dignity handling, the ≥2-source
+citation law, anti-Lost-Cause factual standard, D74. Saves: fresh-start acceptable if a
+build lane's contract needs it. GEA-11's design-only campaign contract is SUPERSEDED by
+the conquest law.
+
+**The conquest layer (Risk-style player-authored alt-history):** both map layers (a
+~30-45-territory strategic graph + hex zoom — absorbs Phase D/D1), a new campaign type in
+BOTH rulesets beside the teaching ladder; movement is TRANSPORT-REAL (rail capacity, river/
+road, naval transfer — Aaron's addition); territory reinforcements, theater bonuses,
+objective cards/set turn-ins; every engagement always playable, always optional; the
+COUNCIL OF WAR pre-battle phase (site choice with high-ground read, troop commitment,
+armory, doctrine — all D74-clean conditioning inputs) on conquest AND ladder. TERRAIN:
+Google Maps ruled OUT (license-incompatible with the public $0 build); USGS public-domain
+DEMs give real elevation + LoC/NPS period maps give 1860s land cover, PRE-BAKED for curated
+candidate sites per territory so the single offline file holds.
+
+**Feature depth locked:** loot — named legendary artifacts (provenance-locked drops in
+Historical / general pool in Mayhem, small equip-path levers), set collections, drop-feel
+presentation, ONE CVD-safe rarity language across loot/badges/register/flagships. Badges —
+presentation gallery, the 9→26-battle coverage sweep (two-source, A/B-swept), soldier-tier
+badges from BOTH sources visually distinct (Verified-solid historical records vs
+Inferred-hatched earned-through-play); R-7 situational triggers deliberately NOT chartered
+(standing candidate; reconsider when the sweep touches the same files). GM — AI-GM with
+player-choice persona (Historical vs Competitive), muster-roll UI, the election bind
+(cross-theater Transfer is mostly shipped, D322/D323/D354). Research packets: rail, naval,
+politics/1864-election (absorbs Phase E), medicine.
+
+**THE INTEGRATED ARC 0-9 ROADMAP (packet §7 — Aaron: "integrate all future planned builds
+with existing planned phases to maximize efficiency"; nothing dropped, everything absorbed):**
+ARC 0 the D454 release (done) → ARC 1 unlock-and-teach spine (+C72 rider) → ARC 2 content
+unlocks (Fort Pillow + the Crater + Olustee as ONE research family — completes C3 entirely —
++ Leetown + Front Royal) → **ARC 3 the GRAPHICS UPLIFT (Phase H promoted; Aaron adopted the
+reslot after reviewing the live tactical renders: Tripo/CC-BY models, terrain texturing,
+HDRI, ground-level camera, formation LOD under the existing media/license/perf gates)** →
+ARC 4 loot+badges → ARC 5 GM completion → ARC 6 research packets (rail+naval first — conquest
+depends on them) → ARC 7 the conquest layer → ARC 8 soldier depth → ARC 9 desk-to-battle
+pacing (Aaron's pains: turn-processing wait, unclear next action, too many stops). ARC 1
+charters next session, lane ledger-only first, per-slice gates; the packet is THE law.
+
 ## D454 — THE AD-0 BATTERY COMPLETES 137/137 GREEN; SIX BATTERY REDS ROOT-FIXED AT THEIR EXACT LABELS (THE TWO D453-ADJUDICATED CLASSES ONLY); LANE-009 + LANE-010 + LANE-011 FLIP SHIPPED — THE D423-D452 ARC IS FULLY RELEASED — [CLAUDE CODE (FABLE 5), AD-0 COMPLETION + RELEASE SESSION] (2026-07-18)
 
 **THE BATTERY (AD-0 SETTLED).** The resumed serialized battery ran rows 73-137 alone on the
