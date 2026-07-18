@@ -40,6 +40,24 @@ asset purchases/accounts. LANE-009's shipped slices are not re-run. Expected tra
 end: LANE-010 → VERIFY (audit-owed), with the audit session settling the whole AUDIT-DEBT
 ledger plus the full serialized battery and flipping LANE-009 + LANE-010 SHIPPED.
 
+## D441 — GEA-07..GEA-14 P1 DESIGN CONTRACTS COMMITTED (DOCS ONLY): THE DESSERT SLICE — [CLAUDE CODE (FABLE 5), LANE-010 DRIVE] (2026-07-18)
+
+Queue item 9. `docs/design/genre-elite-p1-contracts.md` commits eight bounded design contracts
+at the lane standard (a future session can take any one cold and rebuild its teeth from the
+prose): GEA-07 Learn-the-Battle metadata + non-binding recommendation card · GEA-08 the
+Chief of Staff three-line deterministic morning brief (data-declared rules, existing readers,
+pure) · GEA-09 the audio-bus contract then the action-map seam (default byte-equivalence;
+device-local keymap; gamepad out of scope) · GEA-10 stable concept ids + focus-returning deep
+links (wiring only) · GEA-11 the theater graph readout (DESIGN ONLY; the interactive campaign
+layer explicitly deferred to its own future save-adjudicated contract) · GEA-12 one bounded
+three-beat memory chain (legacy-save byte identity as the gating tooth) · GEA-13 the
+deterministic replay capsule (hash-equality or honest failure; default-off) · GEA-14 the
+print-safe classroom session packet (composed from existing surfaces only). Standing
+exclusions restated for all eight. NO runtime, data, or probe byte moved.
+
+**VETTING DEFERRED (D431):** docs-only; git diff --check. No AUDIT-DEBT row is owed (nothing
+runnable shipped); each future slice appends its own when taken.
+
 ## D440 — GEA-05 + GEA-06 SHIPPED: THE ACTION-AWARE FIRST-ORDER LESSON AND THE FOG-SAFE CAUSAL RIBBON — [CLAUDE CODE (FABLE 5), LANE-010 DRIVE] (2026-07-18)
 
 Queue item 8 (REVIEW-QUEUE GENRE-ELITE GEA-05 + GEA-06, both P1 CONTRACT rows). One new module

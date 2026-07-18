@@ -1920,8 +1920,9 @@ next green commit and confer through this ledger instead of permitting simultane
   (War Career Slice F): §19 contract `ca29e2d` then the franchise-archive runtime `0fa8f97`;
   AD-6/AD-7.** **D439 SHIPPED queue item 7 (Cold Harbor spec + dual-mode plan probe, planning 6/6; runtime
   deferred by the queue's own if-room clause; AD-8).** **D440 SHIPPED queue item 8 (GEA-05 + GEA-06): the src/108 tactical coach — first-order
-  lesson + causal ribbon; teeth authored; AD-9.** Exact next: queue item 9 (dessert) — GEA-07..14
-  P1 design contracts, docs only; then CLOSEOUT.
+  lesson + causal ribbon; teeth authored; AD-9.** **D441 SHIPPED queue item 9 (dessert): the eight GEA-07..14 P1 design contracts committed
+  docs-only.** THE QUEUE IS RUN DOWN. Exact next: CLOSEOUT — LANE-010 flips to VERIFY
+  (audit-owed); the audit session settles AD-0..AD-9 + the full serialized battery.
 - **Last-touched commit:** the D432 lock commit (this edit).
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's D431 overnight
   directive.
