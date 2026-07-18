@@ -261,26 +261,48 @@ async function inspectCoreButtonActions(page) {
     const sel = s => document.querySelector(s);
     try {
       if (!sel('.h0-menu')) openMainMenu();
+      // D453 audit re-tooth (STRONGER; the D420 design-§11 PUBLIC flow — this suite row had not
+      // run since the Slice-C public flip): a campaign start opens the RULESET PICKER first;
+      // Historical is chosen through the real cards, and only the armed Start opens the muster
+      // choice. The old direct-muster expectation described the pre-D420 private flow.
       const us = sel('#gnNewUS');
       if (!us) fail('missing #gnNewUS before action check');
       else {
         us.click();
+        R.checks.unionPicker = !!sel('#mhRulesetPicker') && document.querySelectorAll('[data-mh-mode]').length === 2 && !!sel('#mhStart') && sel('#mhStart').disabled === true;
+        if (!R.checks.unionPicker) fail('Union campaign button did not open the ruleset picker (Start must arm only after a choice)');
+        const usHist = sel('[data-mh-mode="historical"]');
+        if (usHist) usHist.click();
+        const usStart = sel('#mhStart');
+        R.checks.unionPickerStart = !!usStart && usStart.disabled === false && usStart.textContent.indexOf('Start Historical Campaign') >= 0;
+        if (!R.checks.unionPickerStart) fail('Historical selection did not arm the picker Start');
+        if (usStart) usStart.click();
         const title = (sel('.title-xl') || {}).textContent || '';
         R.checks.unionMuster = title.indexOf('Union Campaign') >= 0 && !!sel('#msMuster') && !!sel('#msIron');
-        if (!R.checks.unionMuster) fail('Union campaign button did not open the muster choice');
+        if (!R.checks.unionMuster) fail('the Historical start did not open the muster choice');
         const back = sel('#msBack');
         if (back) back.click();
         R.checks.unionBackReturns = !!sel('.h0-menu') && !!sel('#gnNewUS');
         if (!R.checks.unionBackReturns) fail('Union muster Back did not return to H0 menu');
+        const us2 = sel('#gnNewUS');
+        if (us2) { us2.click(); const mb = sel('#mhBack'); if (mb) mb.click(); }
+        R.checks.unionPickerBackReturns = !!sel('.h0-menu') && !!sel('#gnNewUS');
+        if (!R.checks.unionPickerBackReturns) fail('ruleset picker Back did not return to H0 menu');
       }
 
       const cs = sel('#gnNewCS');
       if (!cs) fail('missing #gnNewCS before action check');
       else {
         cs.click();
+        R.checks.confedPicker = !!sel('#mhRulesetPicker') && !!sel('#mhStart');
+        if (!R.checks.confedPicker) fail('Confederate campaign button did not open the ruleset picker');
+        const csHist = sel('[data-mh-mode="historical"]');
+        if (csHist) csHist.click();
+        const csStart = sel('#mhStart');
+        if (csStart && !csStart.disabled) csStart.click();
         const title = (sel('.title-xl') || {}).textContent || '';
         R.checks.confedMuster = title.indexOf('Confederate Campaign') >= 0 && !!sel('#msMuster') && !!sel('#msIron');
-        if (!R.checks.confedMuster) fail('Confederate campaign button did not open the muster choice');
+        if (!R.checks.confedMuster) fail('the Historical start did not open the Confederate muster choice');
         const back = sel('#msBack');
         if (back) back.click();
         R.checks.confedBackReturns = !!sel('.h0-menu') && !!sel('#gnNewCS');
