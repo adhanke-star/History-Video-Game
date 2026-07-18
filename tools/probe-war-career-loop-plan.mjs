@@ -894,13 +894,13 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     // D423-D430 FIX-NOW incl. src/107, D433-D441 overnight run incl. src/108 + the D443
     // latch fix, D442 Cold Harbor T1/T10); runtime 8e09ebbf56ba3433712f91936f438e5d ->
     // ee83045eaaa20c96c3c09579599614c8 (D438 §19 franchise archive in src/106); focused
-    // b7d6246e10357afc2a4e8f07f8c5dcea -> d6bc1e91473a0489f834c516b2681a98 (D425 pin fixes,
+    // b7d6246e10357afc2a4e8f07f8c5dcea -> 87ce52267a8faf0874ca375df985090a (D425 pin fixes,
     // D436 1566, D438 §19 step, D442 1614). journey, command, and commandProbe did NOT move.
     srcTree:"1e973caadb9a8acbe1281b4554b5c6b8",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
     command:"8f12c49f7129b3a9be0203677822e048",
-    focused:"d6bc1e91473a0489f834c516b2681a98",
+    focused:"87ce52267a8faf0874ca375df985090a",
     commandProbe:"5ffd40fd221179f2e01cad59ef43bf7d"
   };
   for (const key of Object.keys(expected)) {
@@ -1550,7 +1550,7 @@ step("REACHABILITY BASELINES", () => {
     srcTree:"1e973caadb9a8acbe1281b4554b5c6b8",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
-    focused:"d6bc1e91473a0489f834c516b2681a98"
+    focused:"87ce52267a8faf0874ca375df985090a"
   };
   for (const key of Object.keys(expected)) {
     if (hashes[key] !== expected[key]) throw new Error("D411 shipped baseline moved: " + key + " " + hashes[key]);

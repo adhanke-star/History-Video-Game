@@ -2553,7 +2553,9 @@ const SETUP = `(() => {
       // §19 tooth 7 — the gallery renders the sanitized read; empty archive renders nothing
       localStorage.removeItem('cw_career_archive_v1');
       if (warCareerArchiveHTML() !== '') throw new Error('empty archive must render nothing');
+      _aarEndReason = 'will';   // D443 (AD-6 probe fix, never-run authoring bug): the tooth-2/3 one-shot was already consumed, so this recapture read 'chain' while the assert expects the will-end 'negotiated peace' line — re-arm the one-shot to match the fixture's own intent
       warCareerArchiveCapture(C2);
+      _aarEndReason = null;
       var html = warCareerArchiveHTML();
       if (html.indexOf('The Franchise Record') < 0 || html.indexOf('Test Person') < 0 || html.indexOf('negotiated peace') < 0) throw new Error('gallery content missing');
       if (html.indexOf('cw_llm') >= 0) throw new Error('secret leak in the gallery');
