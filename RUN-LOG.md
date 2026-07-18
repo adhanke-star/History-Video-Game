@@ -2,6 +2,30 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-18 — D444-D452 the LANE-011 genre-elite P1 build run (coding-first)
+
+The GEA-07..14 P1 build run under the D431/D443 coding-first law (Claude Code / Fable 5,
+within the authorized window; LANE-011 ledger-only lock `0224a10` from the clean D443
+boundary). All eight chartered slices shipped, one commit + push each: D444 GEA-07
+Learn-the-Battle metadata on all 26 scenarios + the non-binding picker card (suite 133→134) ·
+D445 GEA-08 the Chief of Staff morning brief with PURE property-path readers per the D443 §19
+lesson (schema 57→58, suite 134→135, manifest 109) · D446 GEA-10 concept ids + focus-returning
+deep links, all four anchor kinds live-validated (schema 58→59, suite 135→136, manifest 110) ·
+D447 GEA-12 the ONE emancipation→reconstruction memory chain, legacy saves byte-identical by
+absence, E41 envelope untouched (suite 136→137, manifest 111) · D448/D449 GEA-09 audio buses
+(the frozen-closure zero-gate bound recorded) + the T30 action map (a literal-NUL sentinel
+caught and root-fixed) · D450 GEA-13 the deterministic replay capsule (hash equality or the
+verbatim honest failure) · D451 GEA-14 the print-safe classroom session packet · D452 Mayhem
+Slice F, the skirmish standalone ruleset picker (the stays-false charter line adjudicated
+stale against the shipped public gate). Per-slice gates only (node --check · build GATE OK ·
+schema when data moved · git diff --check); every slice authored (never ran) its probe teeth
+with predeclared binds and appended AUDIT-DEBT AD-11..AD-19; the schema/suite pins swept with
+documented chains at every site each time they moved. Counts close at 26 scenarios / schema
+59 / Register 1,614 / suite 137 / `_SAVE_VER=1` / frozen base untouched. GEA-11 stayed
+design-only; the optional LANE-002 5b batch was deliberately not opened on the session tail.
+LANE-011 rests at VERIFY (battery-only, unowned). Exact next: the FINAL dedicated audit
+session settles AD-11..AD-19 + AD-0 and flips LANE-009/010/011 SHIPPED.
+
 ## 2026-07-17 — D422 C72 Shiloh myth correction
 
 Selected the HIGH C72 historical defect ahead of another biography batch and optional/larger lanes. Rewrote player-facing Shiloh text around NPS + Timothy B. Smith/ABT: Grant was surprised but Peabody prevented total tactical surprise; W. H. L. Wallace's veterans anchor the Hornets' Nest account; the road was not trench-like; Buell strengthened rather than single-handedly saved the army; Johnston's survival is counterfactual, not certain victory. The unchanged wall-shaped objective is labeled a game abstraction. Schema 55/55; build GATE OK; Shiloh 32/32; roster 8/8; builder 15/15; Codex 24/24; zero pageerrors. One bind isolated the C72 tooth and restored intended data/probe/game bytes. No mechanics/count/save/schema change; full battery remains deferred.
