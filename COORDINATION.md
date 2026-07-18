@@ -127,10 +127,10 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
 - **History:** teeth authored (uncommitted) by Codex 2026-07-09/10 · contract reconstructed from
   the working tree + REVIEW-QUEUE by Claude Code 2026-07-10 · shipped D353.
 
-### LANE-002 · phase-i-named-army — **CONTRACT (5b)** (open, unowned)
+### LANE-002 · phase-i-named-army — **DRIVE (5b)** (D421 New Market Heights batch)
 
-- **Owning tool:** none after the D372 clean release; 5a and 5c remain shipped.
-- **State:** CONTRACT on open 5b; no D367-session prosopography batch started.
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra; 5a and 5c remain shipped.
+- **State:** DRIVE on one three-record New Market Heights USCT Medal of Honor batch.
 - **Design law:** `V1-CHECKLIST.md` Phase I · `RATING-SYSTEM-DESIGN.md` (D94 OVR/ratings law) ·
   `SOLDIER-REPLACEMENT-FORMAT.md` (`cw_soldier_replacements_v1`, the citation-grade replacement
   lane) · DECISIONS D91/D93 (journey mode), D152 (lane tooling), D172-D298 (31 shipped records),
@@ -180,7 +180,25 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   (related but distinct engagement); the other 10 battles have NO in-repo roster research —
   records there need fresh external NPS/CMOHS/primary-source work (~2 sources + default-refute +
   adjudication per record, the repo's most expensive work per shipped line).
-- **Resume pointer:** **D372 CLEAN RELEASE:** the D367 Sol session ended at its 10% boundary before
+- **D421 live inventory + locked batch (ChatGPT/Codex, 2026-07-17):** live
+  `ssPersonRegistry()` readback is **1,512 people / 527 brigade tokens / 61 authored / 1,451
+  generated**. Filtering the generated `ss:` namespace after the 39 canonical overlays yields
+  **1,440 open rows** (**770 US / 670 CS**); none of the 39 replaced ids remains generated. The
+  older 840 and 918 remainders predate the expanded battle ladder and are historical, not current.
+  This batch is exactly three New Market Heights USCT enlisted Medal of Honor recipients:
+  Christian A. Fleetwood → `ss:newMarketHeights:US:us_4th:nco` (Sergeant Major, 4th USCT),
+  Powhatan Beaty → `ss:newMarketHeights:US:us_5th:nco` (First Sergeant, Company G, 5th USCT), and
+  James Gardiner → `ss:newMarketHeights:US:us_36th:pvt` (Private, Company I, 36th USCT). The batch
+  is homogeneous by battle, side, USCT service, enlisted status, and official-honor source trail;
+  it maps exact modeled regiment/role slots and stops at three to keep battle-date rank, company,
+  action, and independent-source adjudication citation-grade. Expected transition: 39 → 42
+  Verified overlays and 1,440 → 1,437 open generated `ss:` rows; registry length stays 1,512.
+- **Resume pointer:** **D421 DRIVE:** lock commit first, then add only the three declared records
+  to `data/soldier-replacements.json` and exact reachability/count teeth to
+  `tools/probe-loot-survival.mjs`; run importer, build, focused overlay probe, tactical-roster and
+  women-in-war adjacents, inspect JSON/pageerrors, sync D412 live docs, release to CONTRACT/unowned
+  at 42 Verified / 1,437 open, commit, and push. No portrait, sourced-rating, combat, save, battle,
+  women-in-war, War Career, or Mayhem work is in scope. **D372 CLEAN RELEASE:** the D367 Sol session ended at its 10% boundary before
   Phase D; no record was opened and the live remainder stays **918**. The next qualified TOP LOOP
   must take 5b DRIVE in a committed ledger edit and log its batch size/reason in `DECISIONS.md`
   before the first record. **5a SHIPPED (D357) · 5b batch 1 SHIPPED (D358: 8 Bull Run cmd rows; probe
@@ -198,12 +216,12 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   start, follow the per-record contract above (mechanical gather → default-refute → Sol
   adjudication owning final text; ≥2 sources; batch sized + logged in DECISIONS before the
   first record), and release the lock at session end.
-- **Last-touched commit:** D372 clean release (latest shipped 5b content remains D358 and 5c
-  remains D360).
+- **Last-touched commit:** D421 DRIVE lock (content still remains D358 for 5b and D360 for 5c).
 - **History:** lane opened by Claude Code 2026-07-10 under Aaron's Contract Relay kickoff;
   5b inventory attached 2026-07-10; 5a shipped D357 2026-07-10; 5b batch 1 (8 records) shipped
   D358 2026-07-10; 5c shipped D360 2026-07-10; ChatGPT/Codex took 5b DRIVE for the D367
-  chartered session in D368 and released it untouched at D372's 10% boundary, 2026-07-10.
+  chartered session in D368 and released it untouched at D372's 10% boundary, 2026-07-10;
+  ChatGPT/Codex took DRIVE for the three-record New Market Heights batch in D421, 2026-07-17.
 
 ### LANE-003 · battle-ladder — **CONTRACT** (unowned; D398 Petersburg release verified)
 

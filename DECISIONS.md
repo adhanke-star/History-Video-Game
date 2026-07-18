@@ -4,6 +4,26 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D421 — POST-D420 ROADMAP SELECTS ONE THREE-RECORD NEW MARKET HEIGHTS USCT PROSOPOGRAPHY BATCH — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-002 DRIVE] (2026-07-17)
+
+The live roadmap has no authorized later Mayhem or War Career slice, the battle ladder is complete
+through Petersburg with Cold Harbor deferred, and the remaining media/custom-authoring/report items
+either need a new contract or deliver less bounded player value. LANE-002 5b is therefore the
+highest-priority executable slice. Runtime truth supersedes its stale prose: 1,512 people, 527
+brigade tokens, 61 authored, 1,451 generated, 39 canonical overlays, and **1,440 open generated
+`ss:` rows** (770 US / 670 CS), not 840 or 918.
+
+The batch is exactly three New Market Heights USCT enlisted Medal of Honor recipients: Christian A.
+Fleetwood in the 4th USCT NCO slot, Powhatan Beaty in the 5th USCT NCO slot, and James Gardiner in
+the 36th USCT private slot. It is homogeneous by battle, side, USCT service, enlisted status, and
+official-honor source trail. Three is the honest session-sized boundary because each record still
+requires independent verification of battle-date rank, company/regiment, battlefield action, and
+source independence. The expected transition is 39→42 Verified overlays and 1,440→1,437 open rows,
+with registry length 1,512, `_SAVE_VER=1`, combat, generated names, women-in-war, and existing
+replacement records unchanged. No portrait or non-neutral sourced-rating claim is authorized.
+
+---
+
 ## D420 — MAYHEM SLICE C SHIPPED PUBLIC: FIRST NO-QUARTER PRODUCTION TRANSACTION AND NO-JUDGMENT RESULTS — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-007 SHIPPED] (2026-07-17)
 
 The A-C bundle is complete. `MAYHEM_PUBLIC_READY=true` publishes the accessible chooser. The reviewed `no-quarter` declaration is surrender-gated and applies only through D419's transaction: +25 `C.stats.mayhemScore`, +40 existing `C.stats.infl` casualty credit, one `commissary_rations` reward through `lootAddItem`, and one composable side-tagged modifier in the loot owner. The tactical bridge carries only its existing capture ledger into the canonical result. Historical never consumes it. Mayhem AAR output reports performance, consequences, rewards, and chaos with no moral/plausibility GPA. `_SAVE_VER=1`, exact `C.ruleset`, D74, suite 131, schema 55, and scenario/register baselines remain fixed. Later Mayhem content remains closed.
