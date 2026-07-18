@@ -1389,7 +1389,14 @@ function fldRender() {
 function fldRenderTop() {
   var c = document.getElementById("fldClock"); if (c) { var s = Math.floor(__FIELD.t); c.textContent = Math.floor(s / 60) + ":" + ("0" + (s % 60)).slice(-2); }
   var ti = document.getElementById("fldTitle");
-  if (ti) { var wantT = (__FIELD.scenData && __FIELD.scenData.name) ? ("⚔ " + __FIELD.scenData.name) : "⚔ TACTICAL SANDBOX"; if (ti.textContent !== wantT) ti.textContent = wantT; }
+  if (ti) {
+    var wantT = (__FIELD.scenData && __FIELD.scenData.name) ? ("⚔ " + __FIELD.scenData.name) : "⚔ TACTICAL SANDBOX";
+    // MAYHEM (design §8.2, D453 audit root-fix): the persistent mode chip on the battle surface —
+    // a free/custom-battle launch has NO briefing sheet, so the standing HUD title is the §8.2
+    // "custom/free-battle launch" label surface. Historical adds nothing (byte-identical).
+    if (typeof mayhemBattleModeLabel === "function" && mayhemBattleModeLabel() === "Mayhem") wantT += " · MAYHEM RULESET";
+    if (ti.textContent !== wantT) ti.textContent = wantT;
+  }
   var sec = document.getElementById("fldSector");
   if (sec) {
     var _parts = (__FIELD.phases && typeof _fldPhaseTopParts === "function") ? _fldPhaseTopParts() : null;

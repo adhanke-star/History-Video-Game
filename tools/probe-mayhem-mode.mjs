@@ -661,6 +661,21 @@ async function browserSetup() {
       } finally { fldLaunchSandbox = orig; }
       if (!captured || ("ruleset" in captured)) throw new Error("a Historical skirmish launch must carry NO ruleset key");
       if (typeof closeSheet === "function") closeSheet();
+      // D453 AUDIT ROOT-FIX TOOTH (design §8.2): a free-battle launch has no briefing sheet, so
+      // the persistent HUD title is the "custom/free-battle launch" chip surface — a Mayhem
+      // launch names itself; a Historical launch's title carries no Mayhem token (byte-identical).
+      const sk = { playerSide: "US", year: 1862, countPlayer: 1, countEnemy: 1, menPlayer: 400, menEnemy: 400, terrain: "woods", name: "Skirmish" };
+      G.campaign = null;
+      fldLaunchSandbox({ renderer: "2d", autoBoth: true, seed: 7, skirmish: sk, ruleset: { id: "mayhem", version: 1 } });
+      fldRenderTop();
+      let ti = document.getElementById("fldTitle");
+      if (!ti || ti.textContent.indexOf("MAYHEM RULESET") < 0) throw new Error("Mayhem free-battle launch missing the persistent HUD chip");
+      fldExit(true);
+      fldLaunchSandbox({ renderer: "2d", autoBoth: true, seed: 7, skirmish: sk });
+      fldRenderTop();
+      ti = document.getElementById("fldTitle");
+      if (!ti || ti.textContent.indexOf("MAYHEM") >= 0) throw new Error("a Historical free-battle title must carry no Mayhem token");
+      fldExit(true);
       return { gate: MAYHEM_PUBLIC_READY === true };
     });
 
