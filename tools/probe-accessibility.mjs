@@ -280,6 +280,41 @@ const SETUP = `(() => {
       if(!d.querySelector('[role="group"][aria-label]')) throw new Error('no labelled modes group');
       return { n:btns.length }; });
 
+    step('S45 (D424): frozen Settings segs expose programmatic selected state (aria-pressed via the source-owned wrapper), surviving the click rerender', function(){
+      if(typeof openSettings!=='function'||typeof _renderSettings!=='function'||typeof _stA11ySyncSegs!=='function') throw new Error('settings surface / S45 wrapper unavailable');
+      if(typeof G.settings.diff!=='number') G.settings.diff=1;
+      var d0=G.settings.diff;
+      openSettings();
+      var pad=document.getElementById('sheetPad');
+      if(!pad) throw new Error('settings sheet did not open');
+      var segs=pad.querySelectorAll('.setrow .seg');
+      if(segs.length<8) throw new Error('expected >=8 seg groups (difficulty/map/graphics/quality/sound/music/reduced-motion/colorblind), got '+segs.length);
+      for(var i=0;i<segs.length;i++){
+        var seg=segs[i];
+        if(seg.getAttribute('role')!=='group') throw new Error('seg '+(seg.id||i)+' missing role=group');
+        if(!(seg.getAttribute('aria-label')||'').length) throw new Error('seg '+(seg.id||i)+' missing aria-label');
+        var btns2=seg.querySelectorAll('button'); if(!btns2.length) throw new Error('seg '+(seg.id||i)+' has no buttons');
+        var pressed=0;
+        for(var j=0;j<btns2.length;j++){
+          var ap=btns2[j].getAttribute('aria-pressed');
+          if(ap!=='true'&&ap!=='false') throw new Error('seg button '+(btns2[j].id||'?')+' aria-pressed='+ap);
+          if((btns2[j].classList.contains('on'))!==(ap==='true')) throw new Error('aria-pressed disagrees with .on for '+(btns2[j].id||'?'));
+          if(ap==='true') pressed++;
+        }
+        if(pressed!==1) throw new Error('seg '+(seg.id||i)+' has '+pressed+' pressed buttons (want exactly 1)');
+      }
+      var target=(d0===0)?1:0;
+      var bt=document.getElementById('stDiff_'+target); if(!bt) throw new Error('no stDiff_'+target);
+      bt.click();
+      var bt2=document.getElementById('stDiff_'+target);
+      if(!bt2||bt2.getAttribute('aria-pressed')!=='true') throw new Error('rerendered seg lost aria-pressed sync after click');
+      var bOld=document.getElementById('stDiff_'+d0);
+      if(bOld&&bOld.getAttribute('aria-pressed')!=='false') throw new Error('previously selected difficulty still aria-pressed=true after click');
+      var bRestore=document.getElementById('stDiff_'+d0); if(bRestore) bRestore.click();
+      if(G.settings.diff!==d0) throw new Error('difficulty not restored (got '+G.settings.diff+')');
+      if(typeof closeSheet==='function') closeSheet();
+      return { segs:segs.length }; });
+
     // ===== E3-i2 (D126): per-surface WCAG 2.2 AA assertions =====
     var _hx=function(h){h=String(h).replace('#','');if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];};
     var _lin=function(c){c/=255;return c<=0.03928?c/12.92:Math.pow((c+0.055)/1.055,2.4);};

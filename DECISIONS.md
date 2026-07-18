@@ -4,6 +4,31 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D424 — S45 SHIPPED: THE FROZEN SETTINGS SEGS EXPOSE PROGRAMMATIC SELECTED STATE — [CLAUDE CODE (FABLE 5), LANE-009 DRIVE] (2026-07-17)
+
+S45 (run-3 MED, accessibility/settings): every segmented Settings choice exposed selection only
+through `.on` styling — no aria-pressed/aria-selected/checked state (WCAG 2.2 4.1.2
+name/role/value). `build/base.html:3599-3690` is frozen, so the fix is a SOURCE-OWNED post-render
+decorator in `src/97-accessibility.js` (the a11y hub — the natural owner; D418 late-additive
+wrapper idiom, no new module, no manifest movement): `_stA11ySyncSegs` gives each `.setrow .seg` a
+`role="group"` named by its row's `.sl` label and mirrors `aria-pressed` from each button's `.on`
+class; a typeof-guarded install wraps `_renderSettings` so the decoration reapplies after EVERY
+frozen render, including each click's rerender. Pure presentation: no click path, settings write,
+save, or combat surface moves; the host is byte-identical when the module is absent.
+
+Probe: one S45 tooth in `tools/probe-accessibility.mjs` (now 26 steps) asserts >=8 seg groups
+(difficulty/map/graphics/quality/sound/music/reduced-motion/colorblind), role=group + non-empty
+aria-label per group, aria-pressed true/false on every button, agreement with `.on`, exactly one
+pressed per group, and survival of the click-triggered rerender with the changed selection
+reflected and the original difficulty restored. Bind: inverting the install guard made exactly the
+S45 tooth red (`seg stDiffSeg missing role=group`); byte-identical restore (src97
+`12d2a08a27fc8d4d4cf84d65d271329e`, probe `d8cfb1632caff51701ce2174255fc041`, generated
+`45eb2e1b9d55e89703b75864843cfe6c`) with rebuild + 26/26 green rerun. Gates: build GATE OK;
+node --check clean; probe-accessibility 26/26; adjacent menuprobe 4/4 + probe-playstyle 14/14;
+zero pageerrors, all artifacts read. Invariants hold: 24 scenarios / schema 55 / Army Register
+1,512 / suite 131 / `_SAVE_VER=1` / frozen base / D74. REVIEW-QUEUE S45 flips fixed-in-D424;
+LANE-009 next slice is S46.
+
 ## D423 — FINISH-LINE DIRECTIVE: SHIP GEA-01 + S44, THEN CLEAR EVERY OPEN FIX-NOW FINDING, THEN THE RELEASE BATTERY — [CLAUDE CODE (FABLE 5), LANE-009 CONTRACT→DRIVE] (2026-07-17)
 
 Aaron's 2026-07-17 directive: prioritize finishing all planned game features and setups — he wants

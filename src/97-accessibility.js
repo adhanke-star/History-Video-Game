@@ -457,3 +457,44 @@ function a11yInjectMenuButton() {
     else a11yBootLoad();
   } catch (e) {}
 })();
+
+/* ============ S45 (D424): programmatic selected state for the FROZEN Settings segs ============
+   base.html's _renderSettings paints seg selection ONLY via the .on class — no aria-pressed,
+   aria-selected, or checked input state (WCAG 4.1.2 name/role/value). The base is frozen, so this
+   SOURCE-OWNED post-render decorator (the D418 late-additive-wrapper idiom) runs after EVERY
+   frozen render, including the rerender each click triggers: each .setrow .seg becomes a
+   role=group named by its row's .sl label, and every seg button carries aria-pressed mirrored
+   from its .on class. Pure presentation — no click path, settings write, save, or combat surface
+   is touched; absent this module the host stays byte-identical. */
+function _stA11ySyncSegs(rootEl) {
+  var root = rootEl || (typeof document !== "undefined" ? document : null);
+  if (!root || !root.querySelectorAll) return 0;
+  var segs = root.querySelectorAll(".setrow .seg"), n = 0;
+  for (var i = 0; i < segs.length; i++) {
+    var seg = segs[i];
+    if (seg.getAttribute("role") !== "group") seg.setAttribute("role", "group");
+    if (!seg.getAttribute("aria-label")) {
+      try {
+        var row = seg.parentNode, sl = row && row.querySelector ? row.querySelector(".sl") : null;
+        if (sl && sl.textContent) seg.setAttribute("aria-label", sl.textContent);
+      } catch (e) {}
+    }
+    var btns = seg.querySelectorAll("button");
+    for (var j = 0; j < btns.length; j++) {
+      btns[j].setAttribute("aria-pressed", (btns[j].classList && btns[j].classList.contains("on")) ? "true" : "false");
+      n++;
+    }
+  }
+  return n;
+}
+(function _stA11yInstall() {
+  try {
+    if (typeof _renderSettings !== "function") return;
+    var orig = _renderSettings;
+    _renderSettings = function () {
+      var r = orig.apply(this, arguments);
+      try { _stA11ySyncSegs(document.getElementById("sheetPad") || document); } catch (e) {}
+      return r;
+    };
+  } catch (e) {}
+})();
