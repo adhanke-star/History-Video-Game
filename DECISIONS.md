@@ -40,6 +40,28 @@ asset purchases/accounts. LANE-009's shipped slices are not re-run. Expected tra
 end: LANE-010 → VERIFY (audit-owed), with the audit session settling the whole AUDIT-DEBT
 ledger plus the full serialized battery and flipping LANE-009 + LANE-010 SHIPPED.
 
+## D434 — GEA-02 SHIPPED: THE AAR GAINS ACCESSIBLE COPY-REPORT + DOWNLOAD-TEXT CONTROLS — [CLAUDE CODE (FABLE 5), LANE-010 DRIVE] (2026-07-18)
+
+Queue item 2 (REVIEW-QUEUE GENRE-ELITE GEA-02). `src/82-after-action.js` renders the report inside
+a `.aarReportWrap` / `.aarReportRoot` pair with an export bar OUTSIDE the text root: Copy Report +
+Download Text buttons plus a `role="status" aria-live="polite"` feedback span, in a labeled
+`role="group"`. Context (side label, live/final, completed-battle count, Ironman) is stamped as
+data-attributes AT RENDER TIME because `warWonScreen` nullifies `G.campaign` after rendering. The
+plain-text export = a context header + the rendered report's `innerText` (WYSIWYG; user-entered
+names arrive as plain text; the controls are excluded by construction; the surface renders no
+secrets, so exclusion holds structurally). Copy uses `navigator.clipboard` with a `execCommand`
+textarea fallback (file:// has no async clipboard) and HONEST failure feedback ("your browser
+blocked clipboard access — use Download Text instead"); Download uses a Blob object-URL with its
+own honest failure path. One delegated document-level click listener (wired once, module-load
+guard) serves every render container — desk tab and war-end sheet — surviving innerHTML
+re-renders. NO grade, history, save, sim, or h0-shell change; both surfaces inherit the controls
+through the existing `aarRenderReport` composition. Probe teeth AUTHORED into
+`tools/probe-afteraction.mjs` (two new steps: bar render/context/a11y/outside-root; text builder
+header/exclusion/secret-free) — not run tonight.
+
+**VETTING DEFERRED (D431):** ran node --check + build GATE OK + git diff --check only. AUDIT-DEBT
+row AD-2 (REVIEW-QUEUE.md) names the owed probe run and binds.
+
 ## D433 — E74-MIGRATE SHIPPED: ALL 123 GRANDFATHERED DESCRIPTIVE-VERIFIED OBJECTS MOVED TO STRUCTURAL CITATION; THE 4e-2 RATCHET IS AT ZERO — [CLAUDE CODE (FABLE 5), LANE-010 DRIVE] (2026-07-18)
 
 Queue item 1 of the D431/D432 overnight run, resolving the D430 fork as Aaron directed (option a).

@@ -358,7 +358,103 @@ function aarRenderReport(C, opts) {
   var foot = '<div style="margin-top:12px;font-size:10.5px;opacity:.6;line-height:1.5">'
     + 'Sources: McPherson, <i>Battle Cry of Freedom</i>; Foner, <i>Reconstruction</i> &amp; <i>The Fiery Trial</i>; Howard Jones, <i>Blue &amp; Gray Diplomacy</i>; Dew, <i>Apostles of Disunion</i>; Hacker (2011). A grade reads your war; it never wrote it.</div>';
 
-  return head + overallPanel + card + divPanel + soldierPanel + costPanel + coda + foot;
+  // GEA-02 (D434): accessible plain-text export controls rendered OVER the already-built report.
+  // The export bar sits OUTSIDE .aarReportRoot so the exported text never includes the controls
+  // themselves; context data (side / live-final / battles / Ironman) is captured at render time
+  // because warWonScreen nullifies G.campaign after rendering. Pure presentation — no grade,
+  // history, save, or simulation read/write beyond this render.
+  var exportBar = _aarExportBar(C, final, sideLabel);
+  return '<div class="aarReportWrap"><div class="aarReportRoot">' + head + overallPanel + card + divPanel + soldierPanel + costPanel + coda + foot + '</div>' + exportBar + '</div>';
+}
+
+/* ---- GEA-02 (D434): Copy Report / Download Text over the rendered report. ---- */
+var _AAR_BTN_STYLE = 'font-size:12px;padding:6px 12px;border:1px solid var(--rule);border-radius:4px;background:rgba(0,0,0,.14);color:inherit;cursor:pointer';
+function _aarExportBar(C, final, sideLabel) {
+  var st = (C && C.stats) || {};
+  var battles = _aarNum(st.battles, 0);
+  var iron = !!(C && C.iron);
+  return '<div class="aarExport" role="group" aria-label="Share this report"'
+    + ' data-side="' + _aarEsc(sideLabel) + '" data-final="' + (final ? '1' : '0') + '"'
+    + ' data-battles="' + battles + '" data-iron="' + (iron ? '1' : '0') + '"'
+    + ' style="margin-top:10px;padding-top:8px;border-top:1px dotted var(--rule);display:flex;gap:8px;align-items:center;flex-wrap:wrap">'
+    + '<button type="button" class="aarCopyBtn" style="' + _AAR_BTN_STYLE + '">Copy Report</button>'
+    + '<button type="button" class="aarDlBtn" style="' + _AAR_BTN_STYLE + '">Download Text</button>'
+    + '<span class="aarExportStatus" role="status" aria-live="polite" style="font-size:11px;opacity:.8"></span>'
+    + '</div>';
+}
+
+/* Build the plain-text export: a context header + the rendered report's visible text.
+   Reading the DOM (innerText) keeps the export WYSIWYG with the report the player sees and
+   excludes secrets by construction (the report surface renders none; device-local cw_llm_* keys
+   are never part of it). User-entered names arrive as plain text via innerText. */
+function _aarExportBuildText(bar, root) {
+  var d = bar.dataset || {};
+  var head = 'THE CIVIL WAR - AFTER-ACTION REPORT (plain-text export)\n'
+    + 'Side: ' + (d.side || 'Union') + ' | Status: ' + (d.final === '1' ? 'Final (war concluded)' : 'Live campaign')
+    + ' | Battles fought: ' + (d.battles || '0') + ' | Ironman: ' + (d.iron === '1' ? 'On' : 'Off') + '\n'
+    + '----------------------------------------\n\n';
+  var body = (root && root.innerText) ? root.innerText : '';
+  return head + body.replace(/\n{3,}/g, '\n\n').trim() + '\n';
+}
+
+/* Legacy clipboard path (file:// and other non-secure contexts have no navigator.clipboard). */
+function _aarCopyLegacy(text) {
+  try {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.left = '-9999px';
+    document.body.appendChild(ta); ta.select();
+    var ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    return !!ok;
+  } catch (e) { return false; }
+}
+
+function _aarExportStatus(bar, msg) {
+  var s = bar.querySelector('.aarExportStatus');
+  if (s) s.textContent = msg;
+}
+
+function _aarExportHandle(e) {
+  var t = e.target;
+  var btn = (t && t.closest) ? t.closest('.aarCopyBtn,.aarDlBtn') : null;
+  if (!btn) return;
+  var bar = btn.closest('.aarExport');
+  var wrap = btn.closest('.aarReportWrap');
+  var root = wrap ? wrap.querySelector('.aarReportRoot') : null;
+  if (!bar || !root) return;
+  var text = _aarExportBuildText(bar, root);
+  if (btn.classList.contains('aarCopyBtn')) {
+    var doneCopy = function (ok) {
+      _aarExportStatus(bar, ok ? 'Report copied to the clipboard.'
+        : 'Copy failed - your browser blocked clipboard access. Use Download Text instead.');
+    };
+    if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { doneCopy(true); }, function () { doneCopy(_aarCopyLegacy(text)); });
+    } else { doneCopy(_aarCopyLegacy(text)); }
+  } else {
+    var d = bar.dataset || {};
+    var fname = 'civil-war-aar-' + (d.side === 'Confederate' ? 'confederate' : 'union') + (d.final === '1' ? '-final' : '-live') + '.txt';
+    var ok = false;
+    try {
+      var blob = new Blob([text], { type: 'text/plain' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url; a.download = fname;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function () { try { URL.revokeObjectURL(url); } catch (e2) {} }, 1000);
+      ok = true;
+    } catch (e3) { ok = false; }
+    _aarExportStatus(bar, ok ? 'Report downloaded as ' + fname + '.' : 'Download failed - your browser blocked the file save. Use Copy Report instead.');
+  }
+}
+
+/* One delegated document-level listener: the report renders into different containers (the desk
+   tab, the war-end sheet) via innerHTML, so per-render wiring would be racy; delegation survives
+   every re-render and duplicate-render. Wired once at load. */
+var _aarExportWired = false;
+if (typeof document !== 'undefined' && !_aarExportWired) {
+  document.addEventListener('click', _aarExportHandle);
+  _aarExportWired = true;
 }
 
 /* ---- aarRenderTab(C): the live "After-Action" desk tab (the war so far). ---- */

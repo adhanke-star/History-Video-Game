@@ -181,6 +181,46 @@ const SETUP = `(() => {
       if(typeof closeSheet==='function') closeSheet();
       return { rendered:true }; });
 
+    // ---- GEA-02 (D434): plain-text export controls over the rendered report. ----
+    step('GEA-02 (D434) the export bar renders with accessible controls + render-time context, outside the text root', function(){
+      if(typeof _aarExportBar!=='function'||typeof _aarExportBuildText!=='function'||typeof _aarExportHandle!=='function')
+        throw new Error('GEA-02 export functions missing');
+      var C=mkC('US',1864,9); C.stats={battles:7,won:5,infl:1000,suff:900}; C.iron=true;
+      var html=aarRenderReport(C,{final:false});
+      if(html.indexOf('aarReportWrap')<0||html.indexOf('aarReportRoot')<0) throw new Error('the report must render inside the export wrapper/root pair');
+      if(html.indexOf('aarCopyBtn')<0||html.indexOf('Copy Report')<0) throw new Error('the Copy Report control is missing');
+      if(html.indexOf('aarDlBtn')<0||html.indexOf('Download Text')<0) throw new Error('the Download Text control is missing');
+      if(html.indexOf('aria-live="polite"')<0||html.indexOf('role="status"')<0) throw new Error('the export status region must be role=status aria-live=polite');
+      if(html.indexOf('role="group"')<0||html.indexOf('Share this report')<0) throw new Error('the export bar must be a labeled group');
+      if(html.indexOf('data-battles="7"')<0) throw new Error('render-time completed-battle count missing');
+      if(html.indexOf('data-iron="1"')<0) throw new Error('render-time Ironman status missing');
+      if(html.indexOf('data-final="0"')<0) throw new Error('a live report must stamp data-final=0');
+      var fin=aarRenderReport(C,{final:true});
+      if(fin.indexOf('data-final="1"')<0) throw new Error('a final report must stamp data-final=1');
+      // the bar sits OUTSIDE the text root so the export never contains its own controls
+      var d=document.createElement('div'); d.innerHTML=html;
+      var root=d.querySelector('.aarReportRoot');
+      if(root && root.querySelector('.aarExport')) throw new Error('the export bar must sit outside .aarReportRoot');
+      return { ok:true }; });
+
+    step('GEA-02 the plain-text builder carries the context header + visible report text and excludes the controls (secret-free)', function(){
+      var C=mkC('CS',1864,9); C.stats={battles:3,won:1,infl:500,suff:800};
+      var host=document.createElement('div'); host.innerHTML=aarRenderReport(C,{final:false}); document.body.appendChild(host);
+      try {
+        var bar=host.querySelector('.aarExport'), root=host.querySelector('.aarReportRoot');
+        if(!bar||!root) throw new Error('bar/root missing after DOM insertion');
+        var text=_aarExportBuildText(bar,root);
+        if(text.indexOf('AFTER-ACTION REPORT')<0) throw new Error('the export header is missing');
+        if(text.indexOf('Side: Confederate')<0) throw new Error('the side context is missing');
+        if(text.indexOf('Status: Live campaign')<0) throw new Error('the live/final status is missing');
+        if(text.indexOf('Battles fought: 3')<0) throw new Error('the completed-battle count is missing');
+        if(text.indexOf('Ironman: Off')<0) throw new Error('the Ironman status is missing');
+        if(text.indexOf('Copy Report')>=0||text.indexOf('Download Text')>=0) throw new Error('the export text must not contain the controls themselves');
+        if(text.indexOf('cw_llm')>=0) throw new Error('the export text leaked a device-local secret key');
+        if(text.indexOf('Overall conduct')<0) throw new Error('the export text must carry the visible report body');
+        return { len:text.length };
+      } finally { document.body.removeChild(host); } });
+
     // ---- E4-i2 (D119): the STRATEGIC war-END — a reached victoryReady concludes the war. ----
     step('D119 strategic-end availability is side-correct (will = either side; recognition = CS-only)', function(){
       if(typeof aarStrategicEndAvailable!=='function') throw new Error('aarStrategicEndAvailable missing');
