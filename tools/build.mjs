@@ -308,15 +308,17 @@ for (const rm of RATING_MODULES) {
   // committed packets/prose) and lowered its entry to absence in the same commit:
   //   batch A (D433): antietam 8 -> 0, artillery 1 -> 0, diplomacy 6 -> 0,
   //                   manpower-teaching 6 -> 0, weapons 1 -> 0.
+  //   batch B (D433): bullrun 3 -> 0, chancellorsville 6 -> 0, chattanooga 9 -> 0,
+  //                   chickamauga 8 -> 0, fredericksburg 4 -> 0, gettysburg 8 -> 0,
+  //                   malvern-hill 6 -> 0, shiloh 6 -> 0, vicksburg 9 -> 0.
   const E74_BASELINE = {
-    'bullrun.json': 3, 'cedar-creek.json': 3,
-    'chancellorsville.json': 6, 'chattanooga.json': 9, 'chickamauga.json': 8,
+    'cedar-creek.json': 3,
     'cross-keys-port-republic.json': 3, 'elkhorn-tavern.json': 3,
-    'five-forks.json': 1, 'fort-donelson.json': 4, 'franklin.json': 5, 'fredericksburg.json': 4,
-    'gaines-mill.json': 1, 'gettysburg.json': 8, 'kennesaw.json': 5, 'malvern-hill.json': 6,
+    'five-forks.json': 1, 'fort-donelson.json': 4, 'franklin.json': 5,
+    'gaines-mill.json': 1, 'kennesaw.json': 5,
     'nashville.json': 8, 'new-market-heights.json': 3,
-    'petersburg-assaults.json': 1, 'shiloh.json': 6, 'spotsylvania.json': 1,
-    'stones-river.json': 3, 'vicksburg.json': 9, 'wilderness.json': 1
+    'petersburg-assaults.json': 1, 'spotsylvania.json': 1,
+    'stones-river.json': 3, 'wilderness.json': 1
   };
   const SRC_KEYS2 = ['sources', 'src'];
   const norm2 = (v) => (typeof v === 'string' ? v.trim().toLowerCase() : '');

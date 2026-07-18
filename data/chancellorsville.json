@@ -1,6 +1,16 @@
 {
   "_comment": "PHASE C-1 — CHANCELLORSVILLE, April 30-May 6, 1863 — the THIRD EASTERN MARQUEE battle for the __FIELD real-time engine (single-phase, the Fredericksburg/Shiloh pattern). Lee's greatest victory and his costliest: the Army of Northern Virginia, outnumbered ~2:1 (133,000 US vs 60,000 CS), splits its army in the face of the enemy — Jackson's legendary flank march on May 2 that crushed Hooker's XI Corps, the desperate fighting around the Chancellor House, Hazel Grove, and Fairview, and the mortal wounding of Stonewall Jackson by his own men at dusk on May 2. The battle is modeled as a SINGLE-PHASE engagement focused on the decisive action: Jackson's flank attack on the Union right (the XI Corps rout near Dowdall's Tavern / Wilderness Church), with the Confederate assault pressing toward the Chancellor House and the Union defense trying to rally and hold the crossroads. COORDINATE NOTE: the engine field is 1200x900 yards; per engine convention the ATTACKER (CS, the flank march) sits at HIGH z facing -z (facing 0) and the DEFENDER (US) forms nearer LOW/mid z facing +z (facing PI). The Chancellor House / crossroads is the defender's key hold line at mid-field. ARTILLERY uses the D75 UNIVERSAL GUN MODEL (real gun counts + realistic crew; fire = guns * the universal weight). ANTI-LOST-CAUSE: the lessons are command failure on BOTH sides — Hooker's loss of nerve (despite a ~2:1 advantage and a sound plan), Jackson's fatal wounding by friendly fire, the piecemeal Confederate attacks after Jackson fell, and the appalling cost (~30,000 total casualties; Lee lost roughly a fifth of his army, a rate he could not sustain). The 'flank march' is a monument to audacity AND to the cost of audacity: Jackson's death was the war's greatest single loss to the Confederate command. Sources: NPS Fredericksburg & Spotsylvania National Military Park (Chancellorsville Battlefield), American Battlefield Trust, the Official Records, Sears 'Chancellorsville', Gallagher 'The Battle of Chancellorsville', Krick 'Chancellorsville — Lee's Greatest Victory'.",
   "chancellorsville": {
+    "sources": [
+      "NPS Fredericksburg & Spotsylvania National Military Park",
+      "American Battlefield Trust (casualty figures: 17,287 US / 13,303 CS / 30,590 total)",
+      "Official Records via aotw.org",
+      "Stephen W. Sears, Chancellorsville",
+      "Gallagher (ed.), The Battle of Chancellorsville",
+      "Krick, Chancellorsville — Lee's Greatest Victory",
+      "Bigelow, The Campaign of Chancellorsville",
+      "Keller, \"Chancellorsville and the Germans\" (in The Battle of Chancellorsville, ed. Gallagher)"
+    ],
     "id": "chancellorsville",
     "weather": {
       "sky": "clear",

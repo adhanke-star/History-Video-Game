@@ -1,6 +1,16 @@
 {
   "_comment": "TACTICAL P1a — First Bull Run (First Manassas) scenario data for the __FIELD real-time engine. Distilled from HISTORICAL-DATA.md (the citation-grade Bull Run dossier). Brigade-scale, the ENGAGED main-field force only (Matthews Hill -> Henry House Hill -> Chinn Ridge); rear-area/unengaged brigades are omitted by design. The battle is modeled as ARRIVAL WAVES, matching the real engagement: at T=0 only the lead Union brigades (Burnside, Porter) are in contact with the Confederate delaying force (Evans, then Bee/Bartow) on Matthews Hill; both sides then FEED brigades onto the field over the morning, the Confederates rallying on Henry House Hill and — the teaching mechanic — receiving rail-borne reinforcements (Jackson, then Early + Elzey on Chinn Ridge) that historically turned the Union right and won the day. COORDINATE NOTE: the engine field is 1200x900 yards. Per the engine convention US sits at HIGH z and faces -z (facing 0); CS sits at LOW z and faces +z (facing PI). In THIS field's coordinates: high z = the Union approach (Sudley Ford / Matthews Hill); center = Henry House Hill (the decisive crest = the objective); low z = the Confederate rear (Manassas Junction); low x (west) = the Union RIGHT flank = Chinn Ridge, where the rail-borne reinforcements turned the day. Strength figures are brigade-scale approximations from after-action reports (Inferred/medium per the dossier); the engaged-force asymmetry and the reinforcement TIMELINE are the Verified, teaching-bearing facts.",
   "bullrun1": {
+    "sources": [
+      "NPS Manassas National Battlefield Park, 'The Battle of First Manassas (First Bull Run)'",
+      "NPS Manassas — Union Order of Battle, First Manassas",
+      "American Battlefield Trust, 'Bull Run' battle page",
+      "Encyclopedia Virginia — Stonewall Jackson at First Manassas",
+      "Wikipedia First Bull Run OOBs (drawn from the Official Records)",
+      "Smithsonian Institution Archives, 'How Hot Was It At Bull Run?'",
+      "Bull Runnings compilation",
+      "americanhistorycentral / Wikipedia — Jubal Early; Samuel Heintzelman"
+    ],
     "id": "bullrun1",
     "weather": {
       "sky": "clear",

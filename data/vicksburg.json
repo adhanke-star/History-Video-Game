@@ -1,6 +1,15 @@
 {
   "_comment": "PHASE C WESTERN BREADTH - VICKSBURG, May-July 1863. A three-phase siege battle for the __FIELD real-time engine: May 19 Stockade Redan, May 22 grand assault (Jackson Road front), and the June siege approaches / mine against the 3rd Louisiana Redan. The teaching point is architectural: Vicksburg was not a single field battle but a fortress system of loess ravines, ridge roads, redans, lunettes, artillery batteries, covered approaches, mines, and collapsing logistics. Strengths are Inferred brigade-scale approximations; the phase sequence, principal ground, siege works, failed assaults, and Union engineering pressure are the teaching-bearing facts.",
   "vicksburg": {
+    "sources": [
+      "American Battlefield Trust battle page (Vicksburg)",
+      "Iron Brigader, Hugh Ewing's Brigade in the Vicksburg Assaults (May 19 & 22, 1863)",
+      "Wikipedia, Siege of Vicksburg (defense)",
+      "NPS, Vicksburg NMP (West Virginia Troops / campaign series)",
+      "NPS, Brig. Gen. Hugh Ewing (Vicksburg NMP)",
+      "Ulysses S. Grant, Personal Memoirs of U. S. Grant, Vol. II, Ch. 55",
+      "National Park Service, Vicksburg National Military Park - 'Vicksburg Siege' history page"
+    ],
     "id": "vicksburg",
     "weather": {
       "sky": "clear",

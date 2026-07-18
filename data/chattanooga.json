@@ -1,6 +1,16 @@
 {
   "_comment": "D326 PLAYABLE CHATTANOOGA, November 23-25, 1863. A three-phase T8 battle: Orchard Knob -> Lookout Mountain / Cravens-house bench -> Missionary Ridge. Strengths are brigade/division-scale abstractions marked Inferred; sequence, command roles, principal ground, rank traps, and casualty/capture teaching are Verified against the D325 source packet. Outcomes emerge from OOB, terrain, timing, doctrine, scoreWeight, and existing universal systems only - no per-battle damage/firepower/casualty/winner fudge.",
   "chattanooga": {
+    "sources": [
+      "NPS Civil War Series, The Battles for Chattanooga",
+      "USASMDC staff ride PDF, The Campaign for Chattanooga",
+      "American Battlefield Trust, Chattanooga overview and Lookout Mountain map",
+      "American Battlefield Trust, Lookout Mountain map page",
+      "NPS Missionary Ridge page",
+      "American Battlefield Trust - Chattanooga",
+      "Wikipedia - Battle of Missionary Ridge",
+      "Wikipedia - Battle of Lookout Mountain"
+    ],
     "id": "chattanooga",
     "weather": {
       "sky": "overcast",

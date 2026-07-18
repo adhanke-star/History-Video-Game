@@ -1,6 +1,16 @@
 {
   "_comment": "PHASE C WESTERN BREADTH - CHICKAMAUGA, September 19-20, 1863. A three-phase epic on the __FIELD real-time multi-phase (T8) engine: P0 The Battle in the Woods (Sep 19 meeting engagement in dense timber; the woods themselves blind both armies, fog-of-war off by default but heavy woods terrain - the Union line holds the road Sep 19, which is historical: the breakthrough came the next day), P1 Longstreet's Breakthrough (Sep 20 late morning, the Wood gap at the Brotherton farm - the decisive, scoreWeight-3 phase), P2 The Rock of Chickamauga (Sep 20 afternoon, Thomas holds Snodgrass Hill / Horseshoe Ridge - a Union defensive success in which the cautious CS assault pays the failed-assault price). The teaching is CONTINGENCY OVER GENIUS: a Confederate victory handed to Longstreet by a Union staff error, then squandered by Bragg's failure to pursue. Outcomes EMERGE from OOB / terrain / timing / doctrine under the ONE universal combat model (D74) - NO per-battle damage fudge. BALANCE (AI-vs-AI, 32 seeds, deterministic): P0 US-holds 32/32 (mutual bloodbath), P1 CS-breakthrough 32/32, P2 US-holds 32/32 with the CS attacker paying ~3:1; aggregate CS 32/32 (CS 3 / US 2 via the weight-3 breakthrough), with the alt-history path that a human US player who closes the gap in P1 overturns the battle. Top-level attacker=CS / defender=US across all three phases: the Army of the Cumberland fought on the defensive throughout, so the CS player takes the offensive (Bragg) and the US player holds (Thomas). Strengths are Inferred brigade-scale abstractions (a division per marker); the sequence, ground, command facts, and leader fates are Verified (and were run through an adversarial fact-check that corrected Hood's wounding to Sep 20 / Maj. Gen., Helm to Breckinridge's division, restored Cheatham, removed Loring, and left the gap-reporter's identity flagged as disputed).",
   "chickamauga": {
+    "sources": [
+      "American Battlefield Trust — Chickamauga facts",
+      "Wikipedia — Battle of Chickamauga",
+      "American Battlefield Trust / Wikipedia — John Bell Hood",
+      "Wikipedia — Joseph B. Kershaw",
+      "Wikipedia — James B. Steedman / Gordon Granger",
+      "Wikipedia — Charles Garrison Harker",
+      "Wikipedia / ABT — Joseph J. Reynolds",
+      "Wikipedia — James S. Negley"
+    ],
     "id": "chickamauga",
     "weather": {
       "sky": "clear",
