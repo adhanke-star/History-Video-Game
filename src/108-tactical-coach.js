@@ -48,8 +48,12 @@ function _tcEsc(v) {
     : String(v == null ? "" : v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-/* GEA-05: show the lesson card once per concept. Pure presentation over #fldRoot. */
+/* GEA-05: show the lesson card once per concept. Pure presentation over #fldRoot.
+   _tcShowing is a ONCE-PER-BATTLE latch (not once-per-page): the order hook resets it
+   when a fresh launch builds a fresh __FIELD.units array, so "Close" makes the card
+   eligible again NEXT battle (the D440 contract) without same-battle order spam. */
 var _tcShowing = false;
+var _tcUnitsRef = null;
 function tcMaybeShowLesson(conceptId) {
   if (_tcShowing) return;
   var lesson = _TC_LESSONS[conceptId];
@@ -87,6 +91,9 @@ function tcMaybeShowLesson(conceptId) {
   var base = fldOrderMove;
   var wrapped = function (u) {
     try {
+      if (typeof __FIELD !== "undefined" && __FIELD && __FIELD.units && _tcUnitsRef !== __FIELD.units) {
+        _tcUnitsRef = __FIELD.units; _tcShowing = false;   // a fresh launch re-arms the once-per-battle latch (Got-it stays blocked by the device store)
+      }
       if (u && !u.ai && typeof __FIELD !== "undefined" && __FIELD && __FIELD.launched &&
           (__FIELD.phase === "battle" || __FIELD.phase === "deploy") && __FIELD.rendererKind !== "none") {
         tcMaybeShowLesson("order-issue-v1");
