@@ -1,6 +1,6 @@
 # START HERE — "The Civil War" (master index)
 
-**D420 LIVE REFRESH:** Mayhem Slice C is public and atomic: accessible chooser, surrender/No Quarter production adapters for score, casualty credit, reward, and tagged advantage, plus a no-judgment result readout. Historical remains guarded; schema 55/55; Mayhem 18/18; suite 131; `_SAVE_VER=1`; LANE-007 SHIPPED.
+**D421 LIVE REFRESH:** three citation-grade New Market Heights USCT Medal of Honor records ship: Fleetwood, Beaty, and Gardiner. Replacement pack 39→42; open generated `ss:` rows 1,440→1,437; Army Register 1,512; focused/adjacent gates green; LANE-002 CONTRACT/unowned. The exact boundary is `HANDOFF.md`'s top block.
 
 **This is the ONE file to open first. It tells every new chat exactly which documents are CURRENT and which are history, and the order to read them. If a doc isn't listed under "Canonical" below, treat it as archived — do not follow it as live strategy.**
 

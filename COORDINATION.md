@@ -127,10 +127,10 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
 - **History:** teeth authored (uncommitted) by Codex 2026-07-09/10 · contract reconstructed from
   the working tree + REVIEW-QUEUE by Claude Code 2026-07-10 · shipped D353.
 
-### LANE-002 · phase-i-named-army — **DRIVE (5b)** (D421 New Market Heights batch)
+### LANE-002 · phase-i-named-army — **CONTRACT (5b)** (D421 batch shipped; open, unowned)
 
-- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra; 5a and 5c remain shipped.
-- **State:** DRIVE on one three-record New Market Heights USCT Medal of Honor batch.
+- **Owning tool:** none after the D421 clean release; 5a and 5c remain shipped.
+- **State:** CONTRACT on open 5b; the D421 three-record batch is shipped.
 - **Design law:** `V1-CHECKLIST.md` Phase I · `RATING-SYSTEM-DESIGN.md` (D94 OVR/ratings law) ·
   `SOLDIER-REPLACEMENT-FORMAT.md` (`cw_soldier_replacements_v1`, the citation-grade replacement
   lane) · DECISIONS D91/D93 (journey mode), D152 (lane tooling), D172-D298 (31 shipped records),
@@ -193,12 +193,11 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   it maps exact modeled regiment/role slots and stops at three to keep battle-date rank, company,
   action, and independent-source adjudication citation-grade. Expected transition: 39 → 42
   Verified overlays and 1,440 → 1,437 open generated `ss:` rows; registry length stays 1,512.
-- **Resume pointer:** **D421 DRIVE:** lock commit first, then add only the three declared records
-  to `data/soldier-replacements.json` and exact reachability/count teeth to
-  `tools/probe-loot-survival.mjs`; run importer, build, focused overlay probe, tactical-roster and
-  women-in-war adjacents, inspect JSON/pageerrors, sync D412 live docs, release to CONTRACT/unowned
-  at 42 Verified / 1,437 open, commit, and push. No portrait, sourced-rating, combat, save, battle,
-  women-in-war, War Career, or Mayhem work is in scope. **D372 CLEAN RELEASE:** the D367 Sol session ended at its 10% boundary before
+- **Resume pointer:** **D421 SHIPPED:** Fleetwood, Beaty, and Gardiner are live at 42 Verified /
+  1,437 open generated `ss:` rows; register 1,512. The next session must adjudicate the roadmap and,
+  only if another 5b batch wins, take a fresh committed DRIVE lock with an exact candidate boundary,
+  batch size, source plan, and expected count transition. No next candidate is preselected.
+  **D372 CLEAN RELEASE:** the D367 Sol session ended at its 10% boundary before
   Phase D; no record was opened and the live remainder stays **918**. The next qualified TOP LOOP
   must take 5b DRIVE in a committed ledger edit and log its batch size/reason in `DECISIONS.md`
   before the first record. **5a SHIPPED (D357) · 5b batch 1 SHIPPED (D358: 8 Bull Run cmd rows; probe
@@ -216,7 +215,7 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   start, follow the per-record contract above (mechanical gather → default-refute → Sol
   adjudication owning final text; ≥2 sources; batch sized + logged in DECISIONS before the
   first record), and release the lock at session end.
-- **Last-touched commit:** D421 DRIVE lock (content still remains D358 for 5b and D360 for 5c).
+- **Last-touched commit:** D421 release (three New Market Heights USCT records; 42 Verified).
 - **History:** lane opened by Claude Code 2026-07-10 under Aaron's Contract Relay kickoff;
   5b inventory attached 2026-07-10; 5a shipped D357 2026-07-10; 5b batch 1 (8 records) shipped
   D358 2026-07-10; 5c shipped D360 2026-07-10; ChatGPT/Codex took 5b DRIVE for the D367

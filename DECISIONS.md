@@ -22,6 +22,13 @@ source independence. The expected transition is 39→42 Verified overlays and 1,
 with registry length 1,512, `_SAVE_VER=1`, combat, generated names, women-in-war, and existing
 replacement records unchanged. No portrait or non-neutral sourced-rating claim is authorized.
 
+Release result: all three ship `Verified` with neutral 64 ratings and no portraits. The existing
+39 records remain byte-identical; pack 42, side balance 18US/24CS, open generated rows 1,437,
+registry 1,512, authored 64, generated 1,448. Importer 42/42, build GATE OK, loot-survival 12/12,
+tactical roster 8/8, and women-in-war 13/13 are green with zero pageerrors. Base, manifest, suite
+131, and `_SAVE_VER=1` stay fixed. Full `vet:noreg` remains deferred under D160/D176. LANE-002
+returns to CONTRACT/unowned; another batch is eligible but not silently selected.
+
 ---
 
 ## D420 — MAYHEM SLICE C SHIPPED PUBLIC: FIRST NO-QUARTER PRODUCTION TRANSACTION AND NO-JUDGMENT RESULTS — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-007 SHIPPED] (2026-07-17)

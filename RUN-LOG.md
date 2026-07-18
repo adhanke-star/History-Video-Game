@@ -2,6 +2,10 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-17 — D421 New Market Heights USCT prosopography batch
+
+Selected LANE-002 5b after post-D420 roadmap adjudication. Live runtime corrected the stale remainder to 1,440 open generated `ss:` rows. Added Christian A. Fleetwood (Sergeant Major, 4th USCT), Powhatan Beaty (First Sergeant, Company G, 5th USCT), and James Gardiner (Private, Company I, 36th USCT) as Verified New Market Heights Medal of Honor records; pack 39→42 and remainder 1,440→1,437, register fixed at 1,512. Importer 42/42; build GATE OK; loot-survival 12/12; tactical roster 8/8; women-in-war 13/13; zero pageerrors. Full battery deferred under D160/D176.
+
 ## 2026-07-17 — D420 Mayhem Slice C public vertical slice
 
 Shipped the accessible public chooser and first production surrender/No Quarter transaction. Exact effects: +25 Mayhem score, +40 casualty credit, one commissary-rations reward, and `side:<actor>:no-quarter-momentum`; all route through `mayhemCan`/`mayhemApply`, stage/commit/rollback, and one receipt. Historical refusal and its AAR path remain intact. Focused evidence: schema 55/55, Mayhem 18/18, save 16/16, full campaign 4/4, suite list 131, zero pageerrors/realErrors. Full `npm run vet:noreg` was intentionally omitted by the opener.

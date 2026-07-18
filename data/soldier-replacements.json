@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "decision": "D298",
+    "decision": "D421",
     "schema": "cw_soldier_replacements_v1",
     "scope": "Citation-grade replacements for generated Soldier's Story representative rows.",
     "provenance": "Inferred",
-    "note": "D298 adds the thirty-first narrow sourced replacement slice: John Bell Hood, a Maj. Gen. commanding Hood's Division / Hood's column in Longstreet's Left Wing at Chickamauga, replacing the open Hood's Arriving Brigades command row. D297 added Bushrod R. Johnson as the thirtieth record; D296 added John W. Haley as the twenty-ninth; D295 added Taliaferro N. \"Tally\" Simpson as the twenty-eighth; D294 added John Camden West as the twenty-seventh; D293 added John S. Jackman as the twenty-sixth; D291 added Giles, Chambers, and Houston; D290 added Benson, Green, and Tunnard; D289 added Stanley, Dooley, and De Castro. Side balance after D298 is 15US/16CS. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
+    "note": "D421 adds three New Market Heights USCT enlisted Medal of Honor recipients: Christian A. Fleetwood (Sergeant Major, 4th USCT), Powhatan Beaty (First Sergeant, Company G, 5th USCT), and James Gardiner (Private, Company I, 36th USCT). The pack now contains 42 Verified records, side balance 18US/24CS. D358 added eight Bull Run command rows after D298's thirty-first record. Each record must still pass tools/import-soldier-replacements.mjs, the build gate, the focused browser probe, and the normal focused gate. Template values below are documentation only and are ignored by the validator."
   },
   "schema": "cw_soldier_replacements_v1",
   "records": [
@@ -3008,6 +3008,195 @@
       ],
       "sourceNote": "Ships at Col.; NPS and ABT carry the Legion's Robinson farmstead / Henry House Hill fight, Hampton's wound, and the roughly 600 engaged infantry (approximate). The Legion's cavalry served separately. No brigadier-at-Bull-Run claim (May 1862); no casualty breakdown or wound-mechanism claim. No portrait. Ratings Inferred.",
       "bio": "Wade Hampton III organized and partly financed Hampton's Legion, a combined-arms South Carolina command whose infantry battalion — some 600 men — reached the field on July 21 as an unattached command of Beauregard's Confederate Army of the Potomac. Committed at a decisive moment around the Robinson farmstead on the Henry House Hill front, the Legion helped hold the line while Jackson's brigade came up, and Hampton was wounded in the fighting. His brigadier's commission came in May 1862, long after the battle. This command-row replacement ships the battle-date colonel of the Legion's engaged infantry; no casualty breakdown, no wound-mechanism claim, and no portrait."
+    },
+    {
+      "pid": "person_new_market_heights_us_4usct_fleetwood",
+      "replacePid": "ss:newMarketHeights:US:us_4th:nco",
+      "name": "Christian A. Fleetwood",
+      "side": "US",
+      "rank": "Sergeant Major",
+      "branch": "inf",
+      "role": "regimental sergeant major",
+      "year": 1864,
+      "provenance": "Verified",
+      "team": {
+        "side": "US",
+        "army": "Army of the James",
+        "corps": "XVIII Corps",
+        "division": "Third Division (Paine)",
+        "brigade": "Third Brigade (Duncan)",
+        "regiment": "4th U.S. Colored Infantry",
+        "company": ""
+      },
+      "persona": {
+        "tactical": 64, "command": 64, "initiative": 64, "resolve": 64,
+        "discipline": 64, "marksmanship": 64, "vigor": 64, "charisma": 64,
+        "aggression": 64, "grit": 64, "logistics": 64, "engineering": 64,
+        "cavalry": 64, "artillery": 64, "political": 64
+      },
+      "sources": [
+        {
+          "title": "Christian A. Fleetwood",
+          "author": "Library of Congress",
+          "repository": "Library of Congress, The Civil War in America",
+          "locator": "Biographical essay",
+          "url": "https://www.loc.gov/exhibits/civil-war-in-america/biographies/christian-fleetwood.html",
+          "type": "secondary",
+          "note": "States Fleetwood enlisted in the 4th USCT, quickly rose to sergeant major, and carried the colors after two bearers fell at New Market Heights."
+        },
+        {
+          "title": "Christian A. Fleetwood",
+          "author": "Congressional Medal of Honor Society",
+          "repository": "Congressional Medal of Honor Society",
+          "locator": "Recipient record",
+          "url": "https://www.cmohs.org/recipients/christian-a-fleetwood",
+          "type": "secondary",
+          "note": "Official recipient record gives Sergeant Major, 4th U.S. Colored Infantry, and the September 29, 1864 Chapin's Farm action."
+        },
+        {
+          "title": "Union Order of Battle",
+          "author": "National Park Service",
+          "repository": "Richmond National Battlefield Park",
+          "locator": "Third Division, XVIII Corps, Third Brigade",
+          "url": "https://www.nps.gov/rich/learn/historyculture/union-order.htm",
+          "type": "secondary",
+          "note": "Places the 4th USCT in Samuel A. Duncan's brigade of Charles J. Paine's Third Division for the New Market Heights operation."
+        }
+      ],
+      "sourceNote": "LOC and CMOHS independently verify Fleetwood's battle-date Sergeant Major rank, 4th USCT identity, and color-bearing action; NPS fixes the regiment in Duncan's brigade of Paine's division. No company, portrait, quotation, promotion, or sourced ratings claim. Ratings remain neutral Inferred calibration.",
+      "bio": "Christian A. Fleetwood rose to Sergeant Major of the 4th U.S. Colored Infantry. In Duncan's first New Market Heights assault on September 29, 1864, two color bearers fell; Fleetwood carried the flag through the fight and earned the Medal of Honor. Battle-date rank and regiment only; no company, portrait, quotation, or sourced ratings."
+    },
+    {
+      "pid": "person_new_market_heights_us_5usct_beaty",
+      "replacePid": "ss:newMarketHeights:US:us_5th:nco",
+      "name": "Powhatan Beaty",
+      "side": "US",
+      "rank": "First Sergeant",
+      "branch": "inf",
+      "role": "company first sergeant",
+      "year": 1864,
+      "provenance": "Verified",
+      "team": {
+        "side": "US",
+        "army": "Army of the James",
+        "corps": "XVIII Corps",
+        "division": "Third Division (Paine)",
+        "brigade": "Second Brigade (Draper)",
+        "regiment": "5th U.S. Colored Infantry",
+        "company": "Company G"
+      },
+      "persona": {
+        "tactical": 64, "command": 64, "initiative": 64, "resolve": 64,
+        "discipline": 64, "marksmanship": 64, "vigor": 64, "charisma": 64,
+        "aggression": 64, "grit": 64, "logistics": 64, "engineering": 64,
+        "cavalry": 64, "artillery": 64, "political": 64
+      },
+      "sources": [
+        {
+          "title": "Powhatan Beaty",
+          "author": "Congressional Medal of Honor Society",
+          "repository": "Congressional Medal of Honor Society",
+          "locator": "Recipient record",
+          "url": "https://www.cmohs.org/recipients/powhatan-beaty",
+          "type": "secondary",
+          "note": "Gives First Sergeant, Company G, 5th U.S. Colored Infantry, and his September 29, 1864 Chapin's Farm command action."
+        },
+        {
+          "title": "Powhatan Beaty: A Gallant Commander",
+          "author": "James Gindlesperger",
+          "repository": "Congressional Medal of Honor Society",
+          "locator": "Recipient profile, September 29, 2023",
+          "url": "https://www.cmohs.org/news-events/medal-of-honor-recipient-profile/powhatan-beaty-a-gallant-commander/",
+          "type": "secondary",
+          "note": "Places Beaty at New Market Heights as First Sergeant of Company G, 5th USCT, and describes his taking command after the company's officers fell."
+        },
+        {
+          "title": "Union Order of Battle",
+          "author": "National Park Service",
+          "repository": "Richmond National Battlefield Park",
+          "locator": "Third Division, XVIII Corps, Second Brigade",
+          "url": "https://www.nps.gov/rich/learn/historyculture/union-order.htm",
+          "type": "secondary",
+          "note": "Places the 5th USCT in Alonzo G. Draper's brigade of Charles J. Paine's Third Division."
+        },
+        {
+          "title": "USCT Casualties at the Battle of New Market Heights",
+          "author": "National Park Service",
+          "repository": "Richmond National Battlefield Park",
+          "locator": "Draper's Brigade casualty table",
+          "url": "https://www.nps.gov/rich/learn/historyculture/casualties.htm",
+          "type": "secondary",
+          "note": "Uses Official Records figures to identify the 5th USCT in Draper's engaged brigade and documents its severe September 29 losses."
+        }
+      ],
+      "sourceNote": "CMOHS fixes Beaty's First Sergeant rank, Company G, 5th USCT, date, and command action; NPS independently fixes the regiment in Draper's brigade at New Market Heights. No portrait, unsupported flag-distance detail, quotation, commissioned-rank, or sourced ratings claim. Ratings remain neutral Inferred calibration.",
+      "bio": "Powhatan Beaty was First Sergeant of Company G, 5th U.S. Colored Infantry, in Draper's New Market Heights assault. After the company's officers were killed or wounded on September 29, 1864, he took command and led its remaining men, earning the Medal of Honor. Battle-date rank and company only; no portrait, commissioned rank, or sourced ratings."
+    },
+    {
+      "pid": "person_new_market_heights_us_36usct_gardiner",
+      "replacePid": "ss:newMarketHeights:US:us_36th:pvt",
+      "name": "James Gardiner",
+      "side": "US",
+      "rank": "Private",
+      "branch": "inf",
+      "role": "private soldier",
+      "year": 1864,
+      "provenance": "Verified",
+      "team": {
+        "side": "US",
+        "army": "Army of the James",
+        "corps": "XVIII Corps",
+        "division": "Third Division (Paine)",
+        "brigade": "Second Brigade (Draper)",
+        "regiment": "36th U.S. Colored Infantry",
+        "company": "Company I"
+      },
+      "persona": {
+        "tactical": 64, "command": 64, "initiative": 64, "resolve": 64,
+        "discipline": 64, "marksmanship": 64, "vigor": 64, "charisma": 64,
+        "aggression": 64, "grit": 64, "logistics": 64, "engineering": 64,
+        "cavalry": 64, "artillery": 64, "political": 64
+      },
+      "sources": [
+        {
+          "title": "Civil War Medal of Honor Recipients, A-L",
+          "author": "United States Army",
+          "repository": "The United States Army",
+          "locator": "Gardiner, James",
+          "url": "https://www.army.mil/medalofhonor/citations1.html",
+          "type": "secondary",
+          "note": "Official Army citation gives Private, Company I, 36th USCT, at Chapin's Farm on September 29, 1864."
+        },
+        {
+          "title": "36th U.S.C.T. Infantry Regiment",
+          "author": "National Park Service",
+          "repository": "Fort Raleigh National Historic Site",
+          "locator": "Soldiers in Action section",
+          "url": "https://www.nps.gov/fora/learn/historyculture/36th-u-s-c-t-infantry-regiment.htm",
+          "type": "secondary",
+          "note": "Places Private James Gardiner of the 36th USCT in the New Market Heights assaults and describes the action for which he received the Medal of Honor."
+        },
+        {
+          "title": "Congressional Medals of Honor Index",
+          "author": "National Archives and Records Administration",
+          "repository": "National Archives",
+          "locator": "Gardiner, James; Pvt; USCT 36th Infantry; Company I",
+          "url": "https://www.archives.gov/files/research/military/army/congressional-medals-of-honor-index.pdf",
+          "type": "primary",
+          "note": "Archival index independently records Gardiner as a private of Company I, 36th USCT."
+        },
+        {
+          "title": "Union Order of Battle",
+          "author": "National Park Service",
+          "repository": "Richmond National Battlefield Park",
+          "locator": "Third Division, XVIII Corps, Second Brigade",
+          "url": "https://www.nps.gov/rich/learn/historyculture/union-order.htm",
+          "type": "secondary",
+          "note": "Places the 36th USCT in Alonzo G. Draper's brigade of Charles J. Paine's Third Division."
+        }
+      ],
+      "sourceNote": "Army and National Archives fix Private, Company I, 36th USCT; NPS ties the regiment to Draper's assault. Name expansions conflict, so this ships the Army citation's James Gardiner. No portrait, quotation, promotion, or sourced ratings; ratings remain neutral Inferred calibration.",
+      "bio": "Private James Gardiner of Company I, 36th U.S. Colored Infantry, advanced ahead of Draper's brigade at New Market Heights and killed a Confederate officer at the works, earning the Medal of Honor. Sources conflict on expanding his name, so this uses the Army citation's James Gardiner. No portrait, promotion, quotation, or sourced ratings."
     }
   ],
   "_template": {

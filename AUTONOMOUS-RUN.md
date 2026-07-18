@@ -1,6 +1,6 @@
 # AUTONOMOUS-RUN.md — the 12-hour max-productivity build plan ("The Civil War")
 
-**D420 §2 LIVE REFRESH:** Mayhem Slice C is public and atomic: accessible chooser, surrender/No Quarter production adapters for score/casualty/reward/tag, and a no-judgment result readout. Historical remains guarded; schema 55/55; focused 18/18; suite 131; `_SAVE_VER=1`; LANE-007 SHIPPED.
+**D421 §2 LIVE REFRESH:** Fleetwood, Beaty, and Gardiner ship as three Verified New Market Heights USCT records. Pack 39→42; open generated rows 1,440→1,437; register 1,512; focused gates green; LANE-002 CONTRACT/unowned. See `HANDOFF.md` top.
 
 **Written run i (2026-06-13). This is the operating manual for a long, unsupervised, self-perpetuating autonomous build run.** Aaron is away ~12 hours and wants the strategic Owner-Mode war built as far as possible, ship-quality, content-complete, fully self-verified. Personal project — NOT MJI. Ultracode on. $0/single-file. Build bar **200/100 — go above and beyond.**
 
