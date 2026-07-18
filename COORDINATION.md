@@ -1877,6 +1877,42 @@ next green commit and confer through this ledger instead of permitting simultane
   finish-line directive; DRIVE taken in the same ledger-only commit; GEA-01 + S44 shipped in the
   D423 release the same day.
 
+### LANE-010 · overnight-feature-blitz — **DRIVE** (owner: Claude Code / Fable 5)
+
+- **Owning tool:** Claude Code (Fable 5) — the Aaron-authorized D431 overnight coding-first run
+  (authorization window through 2026-07-19); TOP LOOP resolved to the live session model per §4.
+- **State:** DRIVE (CONTRACT→DRIVE taken in this ledger-only commit at the clean pushed D431
+  boundary `dc4afa304c681f16d42da5c3ababafa5d797c3ba`; HEAD == origin/main verified).
+- **Design law:** DECISIONS D431 (Aaron's coding-first directive — THE run law) + D432 (this
+  lane's charter + queue) · per queue item its own law docs: the D430 E74 fork record +
+  build gate 4e-2 (`tools/build.mjs`), REVIEW-QUEUE GENRE-ELITE GEA-02/GEA-03/GEA-05/GEA-06
+  lines, `docs/design/battle-build-research/` Atlanta/March + 1864-65 attrition packets,
+  `docs/design/open-history-mayhem-mode-design.md`, `docs/design/war-career-loop-design.md` ·
+  D74 no-fudge · the citation law · frozen base · D412 docs law.
+- **Acceptance criteria (run-level; per-slice criteria live in each slice's D### entry):**
+  1. Per-slice gates ONLY: `node --check` on touched JS · `node tools/build.mjs` GATE OK ·
+     `node tools/validate-data-schemas.mjs` when data moves · `git diff --check` · commit+push
+     per slice. NO browser probes/binds/batteries tonight (D431).
+  2. Every slice's DECISIONS entry carries **VETTING DEFERRED (D431)** + one AUDIT-DEBT row
+     naming exactly what it owes; new features get AUTHORED (not run) probes.
+  3. NON-DEFERRABLE: citation law, D74, frozen base, no hand-edit of generated HTML,
+     `_SAVE_VER=1`, bare-name globals, pin-bump idiom at every pin site for any count movement.
+  4. Queue order per D432; HANDOFF top-block EXACT NEXT amended at every slice boundary.
+  5. Do NOT touch LANE-009's shipped slices or drive any lane owned elsewhere.
+- **Probe design:** deferred by construction — each feature slice AUTHORS its focused probe
+  teeth as files (e.g. `tools/probe-atlanta.mjs`) without running them; the AUDIT-DEBT row is
+  the run manifest the audit session executes.
+- **Exclusions:** LANE-002 5b records, `_SAVE_VER` bumps, `build/base.html`, asset
+  purchases/accounts, re-running LANE-009 slices.
+- **Expected transition:** DRIVE → VERIFY (audit-owed) at run end; the dedicated audit session
+  settles the AUDIT-DEBT ledger + full serialized battery and flips LANE-009 + LANE-010 SHIPPED.
+- **Resume pointer:** queue item 1 — E74-MIGRATE (123 grandfathered descriptive-Verified objects
+  to structural citation; gate 4e-2 E74_BASELINE ratchets to all zeros; batch by file, lower
+  each file's baseline in the same commit).
+- **Last-touched commit:** the D432 lock commit (this edit).
+- **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's D431 overnight
+  directive.
+
 ---
 
 ## 6 · JOINT STRATEGY BOARD — Fable ⇄ Sol (cross-tool planning, not just locks)

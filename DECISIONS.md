@@ -4,6 +4,42 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D432 — LANE-010 OVERNIGHT FEATURE BLITZ OPENS: THE D431 QUEUE IS CHARTERED UNDER A LEDGER-ONLY LOCK — [CLAUDE CODE (FABLE 5), LANE-010 DRIVE] (2026-07-18)
+
+The Aaron-authorized overnight coding-first run (D431 directive) opens its own lane before any
+code moves. LANE-010 `overnight-feature-blitz` is taken CONTRACT→DRIVE by Claude Code (Fable 5)
+in this ledger-only commit from the clean pushed D431 boundary
+`dc4afa304c681f16d42da5c3ababafa5d797c3ba` (HEAD == origin/main verified at session start).
+
+**The run charter (inherits D431 verbatim; recorded here so the audit session can replay it):**
+per-slice gates are ONLY `node --check` on touched JS, `node tools/build.mjs` → GATE OK, and
+`node tools/validate-data-schemas.mjs` when data moves; NO browser probes, binds, or batteries
+tonight; `git diff --check` before every commit; commit + push per slice; every slice's DECISIONS
+entry carries **VETTING DEFERRED (D431)** and appends one AUDIT-DEBT row (REVIEW-QUEUE.md) naming
+exactly which probes/binds/batteries it owes. NON-DEFERRABLE: the ≥2-independent-source citation
+law (committed research packets + live-fetched reputable pages only; no invented
+citations/people/ranks), D74 no-fudge, frozen `build/base.html`, never hand-editing the generated
+HTML, `_SAVE_VER` stays 1 (defer anything needing a save migration), bare-name globals, no
+literal comment-closer in block comments. Registry/count pins (Army Register 1512, suite 131,
+schema 55, scenarios 24) move only with the documented-history pin-bump idiom at EVERY pin site.
+New features get AUTHORED probes (not run — the audit session's checklist).
+
+**The queue (run down in order; each item = its own D### + commit + push; HANDOFF top-block
+EXACT NEXT amended at every boundary):** (1) E74-MIGRATE — all 123 grandfathered
+descriptive-Verified objects to structural citation from their OWN committed packets/prose,
+gate 4e-2 E74_BASELINE ratcheted to all zeros, batched by file (resolves the D430 fork,
+Aaron-picked option a). (2) GEA-02 AAR Copy Report + Download Text. (3) GEA-03 camera Home /
+Shift+Home. (4) ATLANTA spec-first then full runtime from the committed D327 packet (schema
+55→56, suite 131→132, Register 1512→1512+U×3, S44 western-theater truth update with the
+marchToTheSea lock swap). (5) Mayhem procedural/custom unlocks + Chronicle (extend Slice-B
+machinery, never bypass). (6) War Career Slice F — design §19 contract FIRST, then runtime.
+(7) Cold Harbor spec + authored plan probe (D395 reorder gate satisfied by D431); runtime only
+if the night allows. (8) GEA-05 + GEA-06. (9) GEA-07..14 P1 design contracts, docs only.
+NEVER tonight: LANE-002 5b records, anything needing a `_SAVE_VER` bump, base.html edits,
+asset purchases/accounts. LANE-009's shipped slices are not re-run. Expected transition at run
+end: LANE-010 → VERIFY (audit-owed), with the audit session settling the whole AUDIT-DEBT
+ledger plus the full serialized battery and flipping LANE-009 + LANE-010 SHIPPED.
+
 ## D431 — AARON PIVOTS TO A CODING-FIRST OVERNIGHT RUN: THE BATTERY IS DEFERRED TO A DEDICATED AUDIT SESSION; THE WAR-CAREER BUDGET IS ROOT-FIXED; LANE-009 CLOSES AT VERIFY — [AARON + CLAUDE CODE (FABLE 5)] (2026-07-18)
 
 Battery result (partial, honest record): the D430 terminal `npm run vet:noreg` ran serialized and
