@@ -61,6 +61,17 @@ Use packs to share multiple custom battles at once:
 
 The pack importer validates every scenario before installing anything. It installs only into empty local custom-battle slots, refuses duplicate ids, refuses packs larger than the six local slots, and never adds custom ids to the historical battle registry.
 
+## Mayhem fields (D437, optional — additive; older exports stay valid)
+
+- `"ruleset": "historical" | "mayhem"` — omitted means `"historical"`. A `"mayhem"` scenario
+  launches under the Mayhem ruleset (the launch stamps an immutable sanitized snapshot; the
+  briefing shows the MAYHEM RULESET label). Any other value fails validation.
+- `"mayhemActionIds": ["no-quarter", ...]` — at most 16 ids, each of which MUST be an action id
+  registered in the game's declared Mayhem catalog (`mayhemKnownActionIds()`); an unknown or
+  invented id fails the whole scenario, and the field requires `"ruleset": "mayhem"` (a
+  Historical scenario carries no Mayhem content). Custom scenarios remain LOCAL content — they
+  never enter the canonical scenario registry.
+
 ## Guardrails
 
 - Custom data cannot define `phases[]`.

@@ -222,6 +222,27 @@ function fldCustomValidate(raw) {
   var attacker = src.attacker === "CS" ? "CS" : "US";
   var defender = src.defender === "US" ? "US" : "CS";
   if (attacker === defender) errors.push("Attacker and defender must be different sides.");
+  // MAYHEM SLICE D (D437): optional ruleset + allowlisted Mayhem action ids — fail-closed.
+  // A custom scenario is LOCAL content: it may declare ruleset "mayhem" and import ONLY action
+  // ids registered in the declared data catalog (mayhemKnownActionIds). Unknown/invented ids,
+  // ids under a Historical ruleset, or a malformed field fail the whole scenario; Historical
+  // scenarios carry no Mayhem content by construction. Never touches the canonical registry.
+  var ruleset = src.ruleset === "mayhem" ? "mayhem" : "historical";
+  if (src.ruleset !== undefined && src.ruleset !== "historical" && src.ruleset !== "mayhem") errors.push('ruleset must be "historical" or "mayhem" when present.');
+  var mayhemActionIds = [];
+  if (src.mayhemActionIds !== undefined) {
+    if (!Array.isArray(src.mayhemActionIds) || src.mayhemActionIds.length > 16) {
+      errors.push("mayhemActionIds must be an array of at most 16 ids.");
+    } else {
+      var _cbKnown = (typeof mayhemKnownActionIds === "function") ? mayhemKnownActionIds() : [];
+      for (var _cbMi = 0; _cbMi < src.mayhemActionIds.length; _cbMi++) {
+        var _cbAid = src.mayhemActionIds[_cbMi];
+        if (typeof _cbAid !== "string" || _cbKnown.indexOf(_cbAid) < 0) { errors.push("mayhemActionIds[" + _cbMi + "] is not a registered Mayhem action id."); break; }
+        if (mayhemActionIds.indexOf(_cbAid) < 0) mayhemActionIds.push(_cbAid);
+      }
+      if (mayhemActionIds.length && ruleset !== "mayhem") errors.push('mayhemActionIds requires ruleset "mayhem" (Historical scenarios carry no Mayhem content).');
+    }
+  }
   var field = { w: _fldCbInt(src.fieldW || (src.field && src.field.w), 1200, 700, 1800), h: _fldCbInt(src.fieldH || (src.field && src.field.h), 900, 550, 1400) };
   var objective = src.objective || {};
   objective = {
@@ -372,6 +393,8 @@ function fldCustomValidate(raw) {
     field: field,
     attacker: attacker,
     defender: defender,
+    ruleset: ruleset,
+    mayhemActionIds: mayhemActionIds,
     defaultFog: !!src.defaultFog,
     assaultDoctrine: src.assaultDoctrine === "cautious" ? "cautious" : "standard",
     timeLimitSec: timeLimitSec,

@@ -189,11 +189,46 @@ if(_MH_BASE_CAMPAIGN_ADVANCE)campaignAdvance=function(winnerSide,type){
    _slUndoWrapped/_warCareerWrapped/_warCareerDelegate, blinding probe-save-slots' and
    probe-war-career's marker teeth while undo/dispatch still worked through the delegate chain. */
 if(_MH_BASE_CAMPAIGN_ADVANCE){campaignAdvance._slUndoWrapped=_MH_BASE_CAMPAIGN_ADVANCE._slUndoWrapped===true;campaignAdvance._warCareerWrapped=_MH_BASE_CAMPAIGN_ADVANCE._warCareerWrapped===true;if(_MH_BASE_CAMPAIGN_ADVANCE._warCareerDelegate)campaignAdvance._warCareerDelegate=_MH_BASE_CAMPAIGN_ADVANCE._warCareerDelegate;}
+/* ---- SLICE E first cut (D437): THE LIVING WAR CHRONICLE — receipts rendered as an
+   in-universe dispatch record. PURE READER over the Slice-B receipt pipeline: validates each
+   stored receipt against the same closed shape _mhSanitizeReceipts enforces but WRITES NOTHING
+   (no C mutation, no persistence). History comparison stays OFF by default per design §11
+   Slice E; Historical campaigns never reach this branch (byte-equivalent by construction). ---- */
+function _mhReadReceipts(C) {
+  var raw=Array.isArray(C && C.mayhemReceipts)?C.mayhemReceipts:[], clean=[], seen={};
+  for (var i=0;i<raw.length;i++) {
+    var r=raw[i];
+    if (!_mhOwnKeys(r,["id","actionId","sequence","operations"])||!_mhStableId(r.id)||!_mhStableId(r.actionId)||!Number.isSafeInteger(r.sequence)||r.sequence<1||!Array.isArray(r.operations)||seen[r.id]) continue;
+    var ok=true;
+    for(var j=0;j<r.operations.length;j++){var o=r.operations[j];if(!_mhOwnKeys(o,["operation","target","value","tag","before","after"])||!_MH_OPERATION_REGISTRY[o.operation]||!_mhStableId(o.target)||!_mhFinite(o.value)||!_mhFinite(o.before)||!_mhFinite(o.after)){ok=false;break;}}
+    if(ok){seen[r.id]=1;clean.push(r);}
+  }
+  clean.sort(function(a,b){return a.sequence-b.sequence||a.id.localeCompare(b.id);});
+  return clean;
+}
+function mayhemChronicleHTML(C) {
+  if (!mayhemIsActive(C)) return "";
+  var receipts=_mhReadReceipts(C), acts=_mhActions();
+  var tl=_mhStableId(C && C.timelineName)?C.timelineName:"an unnamed timeline";
+  var head='<div class="mh-chronicle" style="margin-top:12px;padding:10px;border:1px solid var(--rule,#6b5a3e);border-radius:5px">'
+    + '<b style="font-size:13px">The Living War Chronicle</b>'
+    + '<div style="font-size:11px;opacity:.75">The recorded dispatches of '+_mhEsc(tl)+' — every Mayhem consequence, as it was applied. This is the receipt ledger, not a judgment.</div>';
+  if (!receipts.length) return head+'<div style="font-size:11.5px;opacity:.7;margin-top:6px">No Mayhem dispatches recorded yet — this timeline has so far run on its own momentum.</div></div>';
+  var rows='';
+  for (var i=0;i<receipts.length;i++) {
+    var r=receipts[i], a=acts[r.actionId], label=a&&a.presentation&&a.presentation.label?a.presentation.label:r.actionId;
+    var ops='';
+    for (var j=0;j<r.operations.length;j++){var o=r.operations[j];ops+=(ops?'; ':'')+_mhEsc(o.operation)+' '+_mhEsc(o.target)+(o.tag?' ['+_mhEsc(o.tag)+']':'')+' '+(o.value>=0?'+':'')+o.value+' ('+o.before+' &rarr; '+o.after+')';}
+    rows+='<li style="margin:3px 0"><b>Dispatch '+r.sequence+':</b> '+_mhEsc(label)+' <span style="opacity:.75;font-size:11px">'+ops+'</span></li>';
+  }
+  return head+'<ol style="margin:6px 0 0;padding-left:20px;font-size:12px">'+rows+'</ol></div>';
+}
+
 var _MH_BASE_AAR=typeof aarRenderReport==="function"?aarRenderReport:null;
 if(_MH_BASE_AAR)aarRenderReport=function(C,opts){
   if(!mayhemIsActive(C))return _MH_BASE_AAR.apply(this,arguments);
   var title=opts&&opts.final?"Mayhem Campaign — Final Results":"Mayhem Campaign — Results So Far";
-  return '<div class="mh-aar" data-mh-no-judgment="true"><h1>'+title+'</h1><p>Performance, consequences, rewards, and chaos. No moral or plausibility GPA.</p>'+_mhNoQuarterPanel(C)+'</div>';
+  return '<div class="mh-aar" data-mh-no-judgment="true"><h1>'+title+'</h1><p>Performance, consequences, rewards, and chaos. No moral or plausibility GPA.</p>'+_mhNoQuarterPanel(C)+mayhemChronicleHTML(C)+'</div>';
 };
 if(typeof document!=="undefined")document.addEventListener("click",function(e){var b=e&&e.target&&e.target.closest?e.target.closest("[data-mh-no-quarter]"):null;if(!b)return;var C=typeof G!=="undefined"&&G.campaign,r=mayhemNoQuarterApply(C);if(r&&typeof aarRenderTab==="function"&&typeof openSheet==="function")openSheet(aarRenderTab(C));});
 
@@ -238,6 +273,27 @@ function mayhemRuleset(C) {
 }
 function mayhemIsActive(C) { return mayhemRuleset(C).id === "mayhem"; }
 function mayhemModeLabel(C) { return mayhemIsActive(C) ? "Mayhem Campaign" : "Historical Campaign"; }
+
+/* ---- SLICE D (D437): standalone ruleset carry + the custom-content allowlist (design §3.4,
+   §11 Slice D). These are PURE readers/sanitizers — no mutation, no persistence, no authority
+   beyond the exact-copy law the campaign owner already enforces. ---- */
+/* §3.4: sanitize a standalone launch's opts.ruleset — exact {id,version:1} copy or Historical. */
+function mayhemStandaloneRuleset(raw) {
+  return _mhExactRuleset(raw) || _mhHistorical();
+}
+/* The live battle's immutable snapshot (stamped once by fldLaunchSandbox); fail-closed. */
+function mayhemBattleRuleset() {
+  var f = (typeof __FIELD !== "undefined" && __FIELD) ? __FIELD.ruleset : null;
+  return _mhExactRuleset(f) || _mhHistorical();
+}
+function mayhemBattleModeLabel() { return mayhemBattleRuleset().id === "mayhem" ? "Mayhem" : "Historical"; }
+/* Registered action ids from the declared data catalog — the ONLY ids a custom scenario may
+   import (T11 validates against this allowlist; unknown/invented ids fail the scenario closed). */
+function mayhemKnownActionIds() {
+  var acts = _mhActions(), out = [];
+  for (var k in acts) if (Object.prototype.hasOwnProperty.call(acts, k)) out.push(k);
+  return out.sort();
+}
 
 function mayhemInit(C, requestedId, phase) {
   if (!C || typeof C !== "object" || Array.isArray(C)) return _mhHistorical();

@@ -40,6 +40,38 @@ asset purchases/accounts. LANE-009's shipped slices are not re-run. Expected tra
 end: LANE-010 → VERIFY (audit-owed), with the audit session settling the whole AUDIT-DEBT
 ledger plus the full serialized battery and flipping LANE-009 + LANE-010 SHIPPED.
 
+## D437 — MAYHEM SLICES D + E (FIRST CUT) SHIPPED: STANDALONE RULESET CARRY, THE CUSTOM-CONTENT ALLOWLIST, AND THE LIVING WAR CHRONICLE — [CLAUDE CODE (FABLE 5), LANE-010 DRIVE] (2026-07-18)
+
+Queue item 5 under LANE-010 (LANE-007's shipped Slices A-C are the substrate; this slice EXTENDS
+the Slice-B machinery, never bypasses it). Design law: `docs/design/open-history-mayhem-mode-
+design.md` §3.4 + §11 Slices D/E.
+
+SLICE D (procedural/custom unlocks, the bounded honest core): (1) §3.4 STANDALONE CARRY —
+`fldLaunchSandbox` stamps ONE immutable sanitized ruleset snapshot per launch with fail-closed
+authority order (active campaign owner → a custom scenario's own declared `ruleset:"mayhem"` →
+exact-copied `opts.ruleset` → Historical); new pure readers in src/107
+(`mayhemStandaloneRuleset`, `mayhemBattleRuleset`, `mayhemBattleModeLabel`,
+`mayhemKnownActionIds`); the standalone briefing renders the MAYHEM RULESET label only under a
+Mayhem snapshot (Historical briefings byte-identical). (2) CUSTOM ALLOWLIST — `fldCustomValidate`
+gains optional `ruleset` + `mayhemActionIds` (≤16, each REQUIRED to be a registered catalog id;
+invented ids fail the scenario; ids under Historical fail; local content never enters the
+canonical registry); `CUSTOM-SCENARIO-FORMAT.md` documents the additive fields. Deliberate
+bound, recorded honestly: the skirmish/free-battle picker UI for standalone ruleset choice is
+deferred to the Slice F polish pass — tonight ships the engine seam + the JSON/import path.
+
+SLICE E (first cut): THE LIVING WAR CHRONICLE — `mayhemChronicleHTML(C)`, a PURE reader
+rendering the Slice-B receipt ledger as in-universe numbered dispatches under the named timeline
+(`C.timelineName`), validating each receipt against the same closed shape as sanitation but writing
+NOTHING; malformed/forged receipts are skipped, never rendered or repaired; no moral/plausibility
+judgment; history comparison stays OFF by default per design. Rendered inside the Mayhem AAR
+wrapper only — Historical output is byte-equivalent by construction. Teeth AUTHORED into
+`tools/probe-mayhem-mode.mjs` (three new steps: standalone carry incl. six malformed-snapshot
+refusals + launch/default checks; the T11 allowlist matrix incl. registry-cleanliness; the
+Chronicle purity/tamper/no-judgment contract) — NOT run tonight.
+
+**VETTING DEFERRED (D431):** ran node --check ×5, build GATE OK, git diff --check. AUDIT-DEBT
+row AD-5 names the owed probe runs, byte-equivalence proofs, and binds.
+
 ## D436 — ATLANTA SHIPPED: THE BATTLE OF ATLANTA (JULY 22, 1864) IS PLAYABLE AS SCENARIO 25 AT 25/56/1,566/132; THE WESTERN THEATER READOUT TELLS THE NEW TRUTH — [CLAUDE CODE (FABLE 5), LANE-010 DRIVE] (2026-07-18)
 
 Queue item 4, spec-first: `docs/design/atlanta-battle-build-spec.md` committed at `d596579`, then

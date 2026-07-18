@@ -556,6 +556,75 @@ async function browserSetup() {
       return{score:C.stats.mayhemScore,casualtyCredit:C.stats.infl,reward:ration.id,modifier:C.loot.modifiers[0].key,receiptId:receipt.id};
     });
 
+    // ---- SLICE D (D437): standalone ruleset carry + the custom-content allowlist ----
+    step("SLICE D STANDALONE RULESET CARRY (fail-closed; immutable snapshot)", () => {
+      if (typeof mayhemStandaloneRuleset !== "function" || typeof mayhemBattleRuleset !== "function" || typeof mayhemBattleModeLabel !== "function") throw new Error("Slice D readers missing");
+      // sanitizer law: exact copy or Historical
+      if (mayhemStandaloneRuleset({ id:"mayhem", version:1 }).id !== "mayhem") throw new Error("exact mayhem snapshot rejected");
+      [undefined, null, "mayhem", { id:"mayhem" }, { id:"mayhem", version:2 }, { id:"mayhem", version:1, extra:1 }, { id:"wild", version:1 }].forEach(bad => {
+        if (mayhemStandaloneRuleset(bad).id !== "historical") throw new Error("malformed standalone ruleset did not fail closed: " + JSON.stringify(bad));
+      });
+      // launch carry: opts.ruleset stamps the live snapshot; default launch is Historical
+      G.campaign = null;
+      fldLaunchSandbox({ renderer:"none", autoBoth:true, seed:7, ruleset:{ id:"mayhem", version:1 } });
+      if (!__FIELD.ruleset || __FIELD.ruleset.id !== "mayhem") throw new Error("opts.ruleset not carried into the live battle state");
+      if (mayhemBattleRuleset().id !== "mayhem" || mayhemBattleModeLabel() !== "Mayhem") throw new Error("battle readers wrong under mayhem");
+      fldExit(true);
+      fldLaunchSandbox({ renderer:"none", autoBoth:true, seed:7 });
+      if (mayhemBattleRuleset().id !== "historical") throw new Error("default standalone launch must be Historical");
+      fldExit(true);
+      return { carried:true };
+    });
+
+    step("SLICE D CUSTOM-SCENARIO ALLOWLIST (T11 fail-closed; local content never registers)", () => {
+      if (typeof fldCustomValidate !== "function" || typeof mayhemKnownActionIds !== "function") throw new Error("custom validate/allowlist missing");
+      const base = fldCustomDefaultDraft();
+      // historical default: no ruleset field -> historical, empty action ids
+      let r = fldCustomValidate(base);
+      if (!r.ok || r.scenario.ruleset !== "historical" || r.scenario.mayhemActionIds.length !== 0) throw new Error("default draft must validate historical/empty");
+      // declared mayhem ruleset passes and is carried
+      r = fldCustomValidate(Object.assign({}, r.scenario, { ruleset:"mayhem" }));
+      if (!r.ok || r.scenario.ruleset !== "mayhem") throw new Error("mayhem ruleset rejected");
+      // known action id under mayhem passes; unknown id fails; ids under historical fail
+      const known = mayhemKnownActionIds();
+      if (!known.length || known.indexOf("no-quarter") < 0) throw new Error("declared catalog missing no-quarter");
+      r = fldCustomValidate(Object.assign({}, fldCustomValidate(base).scenario, { ruleset:"mayhem", mayhemActionIds:["no-quarter"] }));
+      if (!r.ok || r.scenario.mayhemActionIds.join(",") !== "no-quarter") throw new Error("known action id rejected under mayhem");
+      r = fldCustomValidate(Object.assign({}, fldCustomValidate(base).scenario, { ruleset:"mayhem", mayhemActionIds:["invented-action"] }));
+      if (r.ok || !r.errors.some(e => /not a registered Mayhem action id/.test(e))) throw new Error("invented action id not refused");
+      r = fldCustomValidate(Object.assign({}, fldCustomValidate(base).scenario, { mayhemActionIds:["no-quarter"] }));
+      if (r.ok || !r.errors.some(e => /requires ruleset "mayhem"/.test(e))) throw new Error("historical scenario with mayhem ids not refused");
+      // the canonical registry stays clean: no custom/mayhem id may appear in fldScenarioRegistry
+      const reg = fldScenarioRegistry();
+      Object.keys(reg).forEach(id => { if (/^custom_/.test(id)) throw new Error("custom scenario leaked into the canonical registry: " + id); });
+      return { known:known.length };
+    });
+
+    step("SLICE E CHRONICLE (pure reader over Slice-B receipts; named timeline; no history GPA)", () => {
+      if (typeof mayhemChronicleHTML !== "function") throw new Error("mayhemChronicleHTML missing");
+      const C=campaign(null,"US");mayhemInit(C,"mayhem","new");lootInit(C);
+      C.timelineName="timeline-1";
+      C.mayhemNoQuarterOffer={timelineId:"timeline-1",battleId:"battle-1",captured:120,consumed:false};
+      const receipt=mayhemNoQuarterApply(C);if(!receipt)throw new Error("setup receipt failed");
+      const before=JSON.stringify(C);
+      const html=mayhemChronicleHTML(C);
+      if(JSON.stringify(C)!==before)throw new Error("the Chronicle reader mutated the campaign (must be pure)");
+      if(html.indexOf("Living War Chronicle")<0)throw new Error("Chronicle heading missing");
+      if(html.indexOf("timeline-1")<0)throw new Error("the named timeline is not rendered");
+      if(html.indexOf("Dispatch 1:")<0)throw new Error("the receipt dispatch row is missing");
+      if(!/\(\d+ &rarr; \d+\)/.test(html))throw new Error("before/after values missing from the dispatch row");
+      if(/plausib|moral/i.test(html))throw new Error("the Chronicle must carry no moral/plausibility judgment");
+      // rendered inside the Mayhem AAR; absent for Historical (byte-equivalence holds upstream)
+      const aar=aarRenderReport(C,{final:false});
+      if(aar.indexOf("Living War Chronicle")<0)throw new Error("Chronicle not rendered in the Mayhem AAR");
+      const H=campaign(null,"US");mayhemInit(H,"historical","new");
+      if(mayhemChronicleHTML(H)!=="")throw new Error("Historical must render no Chronicle");
+      // a tampered receipt is skipped, never rendered or repaired
+      C.mayhemReceipts.push({id:"forged",actionId:"no-quarter",sequence:99,operations:[{operation:"result.declare",target:"x",value:1,before:0,after:1,extra:1}]});
+      if(mayhemChronicleHTML(C).indexOf("Dispatch 99")>=0)throw new Error("a malformed receipt was rendered");
+      return { dispatches:1 };
+    });
+
     cleanStorage();
   } catch (error) {
     R.ok = false;

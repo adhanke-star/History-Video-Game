@@ -1912,8 +1912,8 @@ next green commit and confer through this ledger instead of permitting simultane
   citations; AUDIT-DEBT AD-1 records the owed bind/probe/spot-audit re-proof.** **D434 SHIPPED queue item 2
   (GEA-02): accessible Copy/Download over the AAR with authored teeth; AUDIT-DEBT AD-2.** **D435 SHIPPED queue
   item 3 (GEA-03). D436 SHIPPED queue item 4 (ATLANTA): scenario 25 playable at
-  25/56/1,566/132, S44 lock swapped to marchToTheSea, probe-atlanta authored; AD-4.** Exact
-  next: queue item 5 — Mayhem Slice D (procedural/custom unlocks), then the Chronicle slice.
+  25/56/1,566/132, S44 lock swapped to marchToTheSea, probe-atlanta authored; AD-4.** **D437 SHIPPED queue item 5 (Mayhem D + E first cut): standalone carry, custom allowlist,
+  Chronicle; AD-5.** Exact next: queue item 6 — War Career Slice F, design §19 contract first.
 - **Last-touched commit:** the D432 lock commit (this edit).
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's D431 overnight
   directive.

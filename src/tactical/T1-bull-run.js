@@ -325,6 +325,9 @@ function fldBullRunBriefing() {
   ov.innerHTML =
     '<div style="max-width:600px;max-height:86vh;overflow:auto;background:#0c0f14;border:1px solid #745e3f;border-radius:8px;padding:22px 26px;">' /* wcag-auditor: contrast fix #4a3c28->#745e3f border on #0c0f14 (was 1.80:1, now 3.12:1) WCAG 1.4.11 */ +
       '<div style="font-size:12px;letter-spacing:2px;opacity:.7;">' + sd.date + ' &middot; ' + sd.place + '</div>' +
+      // MAYHEM SLICE D (D437, design §8.2): the persistent mode label on the standalone briefing —
+      // renders ONLY when the launch-stamped snapshot is Mayhem; Historical briefings are byte-identical.
+      ((typeof mayhemBattleModeLabel === "function" && mayhemBattleModeLabel() === "Mayhem") ? '<div style="display:inline-block;margin-top:4px;font-size:11px;font-weight:bold;letter-spacing:.08em;color:#e0b34a;border:1px solid #e0b34a;border-radius:3px;padding:1px 8px;">MAYHEM RULESET</div>' : '') +
       '<div style="font-size:24px;color:#e9dcc0;margin:2px 0 8px;">' + sd.name + '</div>' +
       '<div style="opacity:.9;font-size:14px;line-height:1.5;">' + sd.blurb + '</div>' +
       // B-6: the objective copy follows the side you took (attack & seize vs hold & deny). fldBriefObjectiveHtml

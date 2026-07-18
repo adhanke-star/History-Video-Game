@@ -1173,6 +1173,17 @@ function fldLaunchSandbox(opts) {
   var gen = (__FIELD._gen = (__FIELD._gen || 0) + 1);   // launch generation — stale async callbacks no-op
   __FIELD.rendererKind = opts.renderer || "3d";   // '3d' | '2d' | 'none'
   fldInitSim(opts);
+  // MAYHEM SLICE D (D437, design §3.4): every launch carries one immutable sanitized ruleset
+  // snapshot. Authority order, fail-closed: an active campaign derives from its locked owner; a
+  // resolved custom scenario declaring ruleset "mayhem" carries its own; standalone opts.ruleset
+  // is exact-copied; anything missing/malformed is Historical. Stamped once after fldInitSim
+  // (scenData/campaignCtx are live) and never rewritten mid-battle. No-op when src/107 is absent.
+  if (typeof mayhemStandaloneRuleset === "function") {
+    var _mhCamp = (__FIELD.campaignCtx && typeof G !== "undefined" && G) ? G.campaign : null;
+    if (_mhCamp && typeof mayhemRuleset === "function") __FIELD.ruleset = mayhemRuleset(_mhCamp);
+    else if (__FIELD.scenData && __FIELD.scenData.ruleset === "mayhem") __FIELD.ruleset = { id: "mayhem", version: 1 };
+    else __FIELD.ruleset = mayhemStandaloneRuleset(opts.ruleset);
+  }
   // LLM FIELD COMMANDER (T28, D28x): arm T27 from LIVE connector config, AFTER fldInitSim has
   // stamped __FIELD.playerSide (so fldLlmSide aims at the AI army, not the human) and BEFORE the
   // battle runs. The arm hook refuses headless/autoBoth (PM3 stays engine-only) and NEVER writes
