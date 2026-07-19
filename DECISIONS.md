@@ -4,6 +4,30 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D475 — THE D473/D474 DAY-END BATTERY IS COMPLETE (140/140 ACROSS THE DOCUMENTED RESUMED SEGMENTS, ZERO UNRESOLVED REDS) — SLICES 3-4 VERIFIED AT RELEASE GRADE; LANE-014 RESTS AT CONTRACT (SLICES 5-6 REMAIN); THE DRIVE LOCK RELEASED — [CLAUDE CODE (FABLE 5); THE POST-D471 LADDER P4 CLOSEOUT] (2026-07-20)
+
+**THE BATTERY (SHA `a7c9e7e`):** the full 140-row suite ran serialized/ALONE (TMPDIR set,
+one shared :8765 server): rows 1-72 green in the first leg (at the D473 tree), ONE red at
+row 73 `field sandbox` root-fixed at its exact label as D474 (the GEA-03 source tooth
+re-pinned THROUGH T34's wrap via the exposed `_gcDelegate` — the tooth STRENGTHENED with a
+wrap-without-delegate conjunct; the only site of its class tree-wide), then the resumed
+segment `--from="field sandbox"` ran rows 73-140 to the END at `a7c9e7e` — 68/68 exit 0,
+68/68 artifact JSONs read `ok=true pageerrors=0`, zero timeouts, zero texture warnings,
+"VET NO-REGRESSION OK", plus a direct sweep of every tools/shots artifact: zero red. Rows
+91-92 (visual fidelity 49/49 / render richness) re-verified AGAINST the fixed build.
+
+**THE LADDER'S OUTCOME:** slices 3 (D472 `1ba778b`, HDRI sky T33) and 4 (D473 `8978390`,
+ground camera T34) are VERIFIED AT RELEASE GRADE by this battery. Slice 5 (formation
+density/LOD + the fixture-only Tripo slots) was SHED FROM THE BACK under the context
+safe-stop law and remains contracted; slice 6 (the ARC 3 release checkpoint) remains — the
+lane can only flip SHIPPED when 5 lands and its own battery gates it. **LANE-014 rests at
+CONTRACT (slices 1-4 SHIPPED; 5-6 remain; unowned — the DRIVE lock RELEASED at this
+closeout).** Doc-only commit — no pinned surface moves; both plan probes re-run post-commit.
+Counts hold 29/62/1,710/140; `_SAVE_VER=1`; frozen base `c9db83fa` untouched. Exact next:
+LANE-014 slice 5 per the committed contract (take DRIVE with a committed ledger edit BEFORE
+any code move; note the `4e4593f` T23 async-seam fix when touching the T23/T24 interplay;
+adjudication 10 — real Tripo model production stays Aaron-gated, fixtures only).
+
 ## D474 — THE D473 DAY-END BATTERY, ROOT-FIX 1: probe-field's GEA-03 SOURCE TOOTH RE-PINNED THROUGH T34'S WRAP (THE DELEGATE IDIOM) — [CLAUDE CODE (FABLE 5); THE POST-D471 LADDER P4] (2026-07-20)
 
 **THE RED (row 73 `field sandbox`, 72 rows green before it):** probe-field's GEA-03 tooth

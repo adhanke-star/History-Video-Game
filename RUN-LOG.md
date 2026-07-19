@@ -2,6 +2,22 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-20 — D474/D475 the DAY-END BATTERY COMPLETES: 140-row green, slices 3-4 VERIFIED, LANE-014 lock released
+
+The post-D471 ladder P4 (Claude Code / Fable 5): the mandatory battery ran
+serialized/ALONE — rows 1-72 green in the first leg; ONE red at row 73 `field
+sandbox` root-fixed at its exact label (D474 `a7c9e7e`: probe-field's GEA-03
+source tooth saw T34's legitimate wrap; the wrapped reposition commands now
+expose `_gcDelegate` and the tooth scans the delegate + gains a wrap-without-
+delegate failure conjunct — strengthened; the D443/D471 class, the only site
+tree-wide); the resumed leg ran rows 73-140 to the END — 68/68 exit 0, every
+artifact JSON ok/0-pageerrors, zero timeouts, "VET NO-REGRESSION OK", vf 49/49
+re-verified against the fixed build. Slice 5 was SHED from the back (context
+safe-stop law). **Slices 3-4 verified at release grade at battery SHA
+`a7c9e7e`; LANE-014 rests at CONTRACT (slices 5-6 remain), lock RELEASED.**
+Counts 29/62/1,710/140. Next: slice 5 (formation LOD + fixture-only Tripo
+slots), then the ARC 3 release checkpoint.
+
 ## 2026-07-20 — D473 LANE-014 SLICE 4 SHIPS: the ground-level camera (T34)
 
 The post-D471 continuation ladder P2 (Claude Code / Fable 5): T34 walk-the-field

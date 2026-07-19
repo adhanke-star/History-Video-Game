@@ -2448,19 +2448,22 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
-### LANE-014 · graphics-uplift — **DRIVE (slices 1-4 SHIPPED as D467/D468/D472/D473; slices 5-6 in flight — the post-D471 continuation ladder)** (ARC 3 of the D455 roadmap)
+### LANE-014 · graphics-uplift — **CONTRACT (slices 1-4 SHIPPED as D467/D468/D472/D473, VERIFIED by the D475 battery at `a7c9e7e`; slices 5-6 remain; unowned — the DRIVE lock released at the 2026-07-20 closeout)** (ARC 3 of the D455 roadmap)
 
-- **Owning tool:** Claude Code (Fable 5) — DRIVE re-taken 2026-07-20 (the post-D471
-  LANE-014 slices 3-6 continuation ladder) with THIS committed edit, per Aaron's
-  explicit continuation kickoff: the §4 TOP-LOOP resolution is Fable 5 (the kickoff
-  names Fable 5 as recipient and it is the live session model; helpers routed
-  Sonnet low/med mechanical · Haiku pure reads · Opus high reasoning, model+effort
-  explicit per call). Resume: slice 3 (T33 HDRI sky) per this contract's clause IN
-  FULL. The WIP BANK branch `lane-014-s3-wip` (06200ba, pushed) carries a candidate
-  T33 draft + probe design + the deterministic palette-derivation tool — §1 law:
-  a candidate rendering of the contract, to be read against the lane entry, adopted
-  or deliberately amended (logged in DECISIONS), landed WITH the teeth in the same
-  commit, branch deleted after (the D463 pattern). Prior DRIVE history: SLICE 2
+- **Owning tool:** unowned — the DRIVE lock RELEASED at the 2026-07-20 closeout
+  (the post-D471 continuation ladder: Claude Code / Fable 5, the §4 TOP-LOOP
+  resolution recorded at `5d6d955`; helpers routed Sonnet low/med mechanical ·
+  Haiku pure reads · Opus high reasoning, model+effort explicit per call). The
+  ladder SHIPPED slice 3 (D472 `1ba778b`, HDRI sky T33) and slice 4 (D473
+  `8978390`, ground camera T34), root-fixed the one battery red at its exact
+  label (D474 `a7c9e7e` — probe-field's GEA-03 source tooth re-pinned THROUGH
+  the T34 wrap via the exposed `_gcDelegate`, strengthened not weakened), and
+  completed the 140-row day-end battery across documented resumed segments at
+  SHA `a7c9e7e` (rows 1-72 pre-fix leg · rows 73-140 post-fix leg; every
+  artifact JSON ok/0-pageerrors; D475). Slice 5 was SHED FROM THE BACK under
+  the context safe-stop law. The next session re-takes DRIVE with a committed
+  edit BEFORE any code move (resume: slice 5 per this contract). Prior DRIVE
+  history: SLICE 2
   SHIPPED as D468 — T32 terrain texturing per the slice-2 clause verbatim — the
   region-keyed audited-albedo bake on the Lambert ground map, fail-closed at every
   gate, teeth in the existing owners (terrain-readability 35 · visual-fidelity 28 ·
@@ -2721,9 +2724,13 @@ next green commit and confer through this ledger instead of permitting simultane
   reduceMotion jump, exact exit restore, the two wrapped T0 reposition commands
   authoritative; teeth in the owner probe-visual-fidelity 39→49 (49/49) + adjacent
   probe-tactical-visuals; binds clamp-break/default-on md5-proven; AD-7 re-pins
-  game→584e5c6f · manifest→4625dca9 · srcTree→a7d2eef4 (suite holds). Resume:
-  slice 5 (formation density/LOD, T24 extension + T23 fixture-only slots) per this
-  contract, then slice 6 (the ARC 3 release battery).
+  game→584e5c6f · manifest→4625dca9 · srcTree→a7d2eef4 (suite holds). The day-end
+  battery then ran 140/140 across documented resumed segments (D474 root-fix +
+  D475 completion at `a7c9e7e`; slices 3-4 VERIFIED at release grade); slice 5
+  was shed honestly; the DRIVE lock RELEASED at the closeout. Resume: slice 5
+  (formation density/LOD, T24 extension + T23 fixture-only slots) per this
+  contract, then slice 6 (the ARC 3 release checkpoint — the lane flips SHIPPED
+  only when slice 5 lands and its own battery gates it).
 
 ---
 
