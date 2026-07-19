@@ -1195,9 +1195,13 @@ step("BASELINES + LANE", () => {
     // D463 re-pin (the AD-7 idiom, at the LANE-013 P4 head): game 7c13850e -> 7e212198,
     // dataTree d1c6557f -> abee76fa (data/fort-pillow.json enrolls + rebuild), suite
     // edba2bd9 -> 0f8550a5 (the fort pillow row at the END, 137 -> 138). base/manifest hold.
-    game:"7e2121989c0e179af3a9b534def7ebfc",
+    // D466 re-pin (the AD-7 idiom, at the P6 battery head): game 7e212198 -> f0228c4b and
+    // dataTree abee76fa -> e33afffc — the S44-forced western-theater currentArc copy
+    // update (Fort Pillow arc entry + rebuild; the battery's one red, root-fixed at its
+    // exact label). base/manifest/suite/srcTree/focused hold.
+    game:"f0228c4b39c3c8d7a367e594f806ffbb",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
-    dataTree:"abee76fa90fad19f15bcd1370a56d050",
+    dataTree:"e33afffc2fb358bcfb60a029dc7971c1",
     manifest:"bb5d7903507c8fccf53addf981c2023e",
     suite:"0f8550a5e120772d89777d7459029e7e"
   };
@@ -1600,8 +1604,10 @@ step("REACHABILITY BASELINES", () => {
     // dataTree d1c6557f -> abee76fa, srcTree 41ee94b1 -> 916d7e72 (the Fort Pillow runtime:
     // data/fort-pillow.json + the T1/T10 rows + rebuild; zero engine code);
     // runtime/journey did NOT move — the war-career surface held.
-    game:"7e2121989c0e179af3a9b534def7ebfc",
-    dataTree:"abee76fa90fad19f15bcd1370a56d050",
+    // D466 re-pin: game 7e212198 -> f0228c4b, dataTree abee76fa -> e33afffc (the
+    // S44-forced western-theater copy update; srcTree/runtime/journey/focused held).
+    game:"f0228c4b39c3c8d7a367e594f806ffbb",
+    dataTree:"e33afffc2fb358bcfb60a029dc7971c1",
     srcTree:"916d7e7288c1749190f47a03c7b60065",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",

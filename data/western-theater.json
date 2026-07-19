@@ -1,10 +1,10 @@
 {
-  "_comment": "D191 Group 4 bounded Western Theater strategic readout. This is a War Effort and Theater Map teaching/readout slice, not a battle-build, not a tactical registry change, not an OOB rewrite, and not a bridge lever. S44 (D423): currentArc reconciled with the live registry. D436: the Battle of Atlanta registers and joins the arc - ten registered Western-theater battles presented playable-now; only genuinely unbuilt work (the March to the Sea campaign treatment) stays locked.",
+  "_comment": "D191 Group 4 bounded Western Theater strategic readout. This is a War Effort and Theater Map teaching/readout slice, not a battle-build, not a tactical registry change, not an OOB rewrite, and not a bridge lever. S44 (D423): currentArc reconciled with the live registry. D436: the Battle of Atlanta registers and joins the arc. D466: Fort Pillow (D463) joins - eleven registered Western-theater battles presented playable-now; only genuinely unbuilt work (the March to the Sea campaign treatment) stays locked. The S44 registry-truth tooth forced this copy update exactly as designed.",
   "schema": "cw_western_theater_v1",
   "schemaVersion": "1.0",
   "profile": {
     "name": "Western Theater Strategic Readout",
-    "summary": "A bounded readout that makes the Western Theater legible as a war-winning river, rail, army, emancipation, and election story. All ten registered Western battles are playable now - Atlanta joined in D436; only genuinely unbuilt work, the March to the Sea campaign treatment, remains locked.",
+    "summary": "A bounded readout that makes the Western Theater legible as a war-winning river, rail, army, emancipation, and election story. All eleven registered Western battles are playable now - Atlanta joined in D436 and Fort Pillow in D463/D466 (the assault playable; the massacre taught and judged, never played); only genuinely unbuilt work, the March to the Sea campaign treatment, remains locked.",
     "teaching": "The Western Theater was not a side stage. Shiloh, Vicksburg, Chickamauga, Chattanooga, Atlanta, Franklin, Nashville, and USCT service belong in one strategic arc, but this slice only reads and teaches that arc; it does not create new fields.",
     "provenance": "Verified",
     "sources": [
@@ -91,6 +91,19 @@
       "sources": [
         "data/chattanooga.json current playable battle data and teaching cards.",
         "American Battlefield Trust Chattanooga overview and Lookout Mountain map source trail recorded in data/chattanooga.json."
+      ]
+    },
+    {
+      "id": "fort-pillow-current",
+      "scenarioId": "fortPillow",
+      "label": "Fort Pillow",
+      "year": 1864,
+      "status": "playable-now",
+      "summary": "Forrest's West Tennessee raid teaches the river war's garrison layer: the assault on the bluff fort is playable from true inputs, and the massacre that followed the works' fall - one of the war's best-documented atrocities - is taught with primary sources and judged through the campaign's no-quarter machinery, never played (D455 SS3 row 6 / D463).",
+      "provenance": "Verified",
+      "sources": [
+        "data/fort-pillow.json current playable battle data and teaching cards (JCCW primary, Forrest OR primary, NPS x2, Tennessee Encyclopedia/Cimprich, ABT x2, Wikipedia source trail recorded there).",
+        "National Park Service battle-summary database TN030, https://www.nps.gov/civilwar/search-battles-detail.htm?battleCode=TN030"
       ]
     },
     {

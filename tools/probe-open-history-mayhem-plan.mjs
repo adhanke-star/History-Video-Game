@@ -62,7 +62,11 @@ const PIN = {
   // suite edba2bd9 -> 0f8550a5 — the Fort Pillow runtime (data/fort-pillow.json + the T1
   // rank-66 registry line + the T10 W/false/anv meta row; the fort pillow suite row appends
   // at the END, 137 -> 138; rebuild). base/manifest hold.
-  game: "7e2121989c0e179af3a9b534def7ebfc",
+  // D466 re-pin (the AD-7 idiom, at the P6 battery head): game 7e212198 -> f0228c4b — the
+  // S44 registry-truth tooth forced the western-theater currentArc copy update (the Fort
+  // Pillow arc entry + rebuild; the battery's one red, root-fixed at its exact label).
+  // base/manifest/suite hold.
+  game: "f0228c4b39c3c8d7a367e594f806ffbb",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
   manifest: "bb5d7903507c8fccf53addf981c2023e",
   suite: "0f8550a5e120772d89777d7459029e7e",
