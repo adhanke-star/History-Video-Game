@@ -150,9 +150,30 @@ function validateMayhem(data, issues) {
     const p = 'actions[' + ai + ']';
     exactKeys(action, ['id','rulesetId','availableWhen','actorTags','effects','presentation'], p, issues);
     if (!stableId(action.id)) issues.push(p + '.id malformed'); else if (ids.has(action.id)) issues.push(p + '.id duplicate'); else ids.add(action.id);
-    if (action.rulesetId !== 'mayhem') issues.push(p + '.rulesetId must be mayhem');
+    // D457 chain (LANE-013 incidental root-fix): the pre-D457 tooth pinned rulesetId==='mayhem'
+    // only; D457 shipped the Historical judged action (rulesetId 'historical', exact-match law in
+    // src/107 _mhResolve). The gate now admits exactly the two shipped ruleset ids, requires the
+    // ruleset.is predicate to EQUAL the action's declared rulesetId (the exact-match law), and —
+    // strengthening, below — enforces the D457 massacre-block consequence allowlist + sign law on
+    // historical actions at the data layer. Old: must-be-mayhem. New: the shipped D457 contract.
+    if (action.rulesetId !== 'mayhem' && action.rulesetId !== 'historical') issues.push(p + '.rulesetId must be mayhem or historical (D457)');
     if (!Array.isArray(action.availableWhen) || !action.availableWhen.length || action.availableWhen.length > 16) issues.push(p + '.availableWhen malformed');
-    else action.availableWhen.forEach((pred, pi) => { const q=p+'.availableWhen['+pi+']'; exactKeys(pred, ['id','value'], q, issues); if(!MAYHEM_PREDICATES.has(pred.id))issues.push(q+'.id unknown predicate'); if(pred.id==='ruleset.is'&&pred.value!=='mayhem')issues.push(q+'.value invalid'); if(pred.id==='side.isActor'&&Object.keys(pred).includes('value'))issues.push(q+'.value forbidden'); });
+    else action.availableWhen.forEach((pred, pi) => { const q=p+'.availableWhen['+pi+']'; exactKeys(pred, ['id','value'], q, issues); if(!MAYHEM_PREDICATES.has(pred.id))issues.push(q+'.id unknown predicate'); if(pred.id==='ruleset.is'&&pred.value!==action.rulesetId)issues.push(q+'.value must equal the declared rulesetId (D457 exact-match law)'); if(pred.id==='side.isActor'&&Object.keys(pred).includes('value'))issues.push(q+'.value forbidden'); });
+    // D457 massacre-block at the data layer (LANE-013): a historical-ruleset action may carry
+    // ONLY the consequence family — morale/press/diplomacy.add (<= 0), notoriety.add (>= 0),
+    // modifier.add, chronicle.event. Every other operation family fails the gate here, before
+    // the engine's _MH_HISTORICAL_OPS ever sees it. A red here is a design failure.
+    if (action.rulesetId === 'historical' && Array.isArray(action.effects)) {
+      const HIST_OPS = { 'morale.add': -1, 'press.add': -1, 'diplomacy.add': -1, 'notoriety.add': 1, 'modifier.add': 0, 'chronicle.event': 0 };
+      action.effects.forEach((effect, ei) => {
+        const q = p + '.effects[' + ei + ']';
+        if (!effect || typeof effect !== 'object') return;
+        const rule = HIST_OPS[effect.operation];
+        if (rule === undefined) issues.push(q + '.operation forbidden for a historical-ruleset action (D457 massacre-block)');
+        else if (rule === -1 && !(Number(effect.value) <= 0)) issues.push(q + '.value must be <= 0 (D457 sign law)');
+        else if (rule === 1 && !(Number(effect.value) >= 0)) issues.push(q + '.value must be >= 0 (D457 sign law)');
+      });
+    }
     if (!Array.isArray(action.actorTags) || !action.actorTags.length || action.actorTags.length > 16) issues.push(p + '.actorTags malformed');
     else action.actorTags.forEach((tag, ti) => { const q=p+'.actorTags['+ti+']'; exactKeys(tag,['namespace','value'],q,issues); if(!MAYHEM_TAGS.has(tag.namespace))issues.push(q+'.namespace unknown'); if(!stableId(tag.value))issues.push(q+'.value malformed'); });
     if (!Array.isArray(action.effects) || !action.effects.length || action.effects.length > 64) issues.push(p + '.effects malformed');
