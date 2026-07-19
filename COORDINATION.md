@@ -2230,6 +2230,133 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
+### LANE-013 · content-unlocks — **DRIVE** (ARC 2 of the D455 roadmap; chartered ledger-only per the D456 precedent)
+
+- **Owning tool:** Claude Code (Fable 5 — Aaron's authorization window through 2026-07-19;
+  the ARC 2 overnight charter directive, 2026-07-18). No simultaneous edits by any provider.
+- **State:** DRIVE (charter committed ledger-only BEFORE any research or code move).
+- **Design law:** `docs/design/unlocked-but-judged-design.md` §3 rows 6-8 + §4b + §7 (THE
+  LAW for this arc) · DECISIONS D455 (the popup-locked unlock decisions: Fort Pillow
+  playable BOTH sides honest treatment, amends D135/D382 taught-only; Leetown Cherokee
+  regiments fielded with teaching cards 8-10 mandatory, amends D359; Front Royal may score)
+  · D457 (the SHIPPED no-quarter machinery this arc rides — the `_MH_HISTORICAL_OPS`
+  massacre-block is LOAD-BEARING; EXTEND, never bypass) · D458 (the regex-literal-aware
+  scanner idiom for any comment-stripped scan) · the battle-build-research library
+  (`docs/design/battle-build-research/` README + usct + trans-mississippi packets + the
+  D387 spec-time addendum — build ON them, never duplicate) · D74 no-fudge · the ≥2-source
+  law + anti-Lost-Cause factual standard · the dignity imagery law (D135/src/51 HOLDS —
+  no massacre imagery; text carries the weight) · frozen `build/base.html` · `_SAVE_VER=1`
+  · the D453 live-owner law (new surfaces wire into src/98-103 owners) · D412 docs law.
+- **STANDING ADJUDICATIONS (recorded at charter; do not re-litigate):**
+  1. The stale D183 trans-Mississippi go/no-go does NOT block the Leetown phase: Leetown
+     fields inside the SHIPPED Elkhorn battle (D387-D389), and Aaron's D455 R3/R7 locks +
+     §3 row 7 ("field 1st/2nd Cherokee Mounted Rifles, two-source law; teaching cards 8-10
+     mandatory") explicitly unlock it. The supersession is recorded in that phase's D###.
+  2. The petersburg/spotsylvania/wilderness plan probes carry forbidden-token scans naming
+     crater/fort-stedman "until their own ratified builds" — any Crater spec/runtime phase
+     re-pins those teeth the documented D397/D454 way IN THE SAME COMMIT, never weakens
+     them. Spec-only commits must NOT touch those teeth.
+  3. Counts 26/59/1,614/137 move ONLY with documented pin chains at EVERY pin site (the
+     D436/D442 sweep precedent: probe-tactical-roster + probe-custom-battle-builder
+     EXPECTED baselines, suite rows, dataCount/schema pins, the two lane-grepping plan
+     probes' md5+count pins).
+  4. The two lane-grepping plan probes (probe-open-history-mayhem-plan,
+     probe-war-career-loop-plan) pin game/manifest/srcTree/dataTree md5s + clean-tree
+     allowlists: re-pin with the AD-7 chain idiom in the SAME commit as any surface move
+     and re-run them AFTER committing.
+- **Acceptance contract (the ARC 2 phase ladder — each phase its own D### + focused gates
+  + commit `-F` + push + HANDOFF top-block EXACT NEXT amendment; phases marked [IF-ROOM]
+  may be deferred honestly; the loop rule between every phase: clean/committed/pushed,
+  plan probes re-run post-commit if any pinned surface moved, context/usage check,
+  memory check — serialize browser probes on the 8 GB Mac):**
+
+  **P1 — THE MASSACRE-TREATMENT RESEARCH FAMILY (docs-only; safe at any boundary).** ONE
+  citation-grade family packet in `docs/design/battle-build-research/` covering Fort
+  Pillow + the Crater + Olustee in three chapters (completes C3's research entirely — the
+  §7 one-pass efficiency rule). Each chapter: source register (NPS/ABT/OR/McPherson-grade,
+  ≥2 sources per claim, live-fetched + adversarially verified), OOB/rank traps, USCT
+  treatment written anti-Lost-Cause (Fort Pillow: the massacre named plainly, both-sides
+  playability shape; Crater: Ledlie/Ferrero failures + the USCT division honestly;
+  Olustee: the 8th USCT/54th Massachusetts record), D74 no-fudge risks,
+  dignity-imagery-law notes, probe teeth, and a READY_FOR_SPEC / NEEDS_MORE_RESEARCH /
+  DO_NOT_BUILD_NOW verdict per battle. A chapter that cannot reach two independent
+  sources for a load-bearing claim records NEEDS_MORE_RESEARCH and the ladder continues.
+  Probe design: the packet registers in `tools/probe-battle-build-research.mjs`'s
+  required-file/section gate (README indexed; source register / OOB traps / playable
+  shape / D74 / teeth / verdict sections present).
+
+  **P2 — LEETOWN CHEROKEE OOB (small runtime; the highest-certainty build).** Two-source
+  data for the 1st (Drew) / 2nd (Watie) Cherokee Mounted Rifles fielded at the SHIPPED
+  Elkhorn battle (the D387 addendum §6 majority convention with the swap-caution note);
+  spec addendum to the elkhorn packet; `data/elkhorn-tavern.json` edits through the
+  schema gate; teaching cards 8-10 MANDATORY and byte-unchanged (pinned); direction
+  guards untouched (Pea Ridge inverts winner-bleeds-less — never assume US<CS).
+  Probe design: `tools/probe-elkhorn-tavern.mjs` teeth extended (Cherokee units present
+  with two-source rows; Watie COLONEL not the 1864 backdate; cards 8-10 md5 pin) + ONE
+  predeclared bind (drop a Cherokee unit's source row → the two-source tooth reds
+  exactly; md5 restore) + 1-2 adjacent probes (probe-tactical-roster, probe-field).
+
+  **P3 — FRONT ROYAL SCORING GUARD LIFT (small runtime).** Locate the never-scored guard
+  and every tooth pinning it (grep tools/ + src/ for frontRoyal/front-royal scoring
+  absence); lift so conventional capture may score through the EXISTING scoring path (no
+  new scoring family, D74 clean); re-pin each tooth with a documented chain; log
+  deterministic before/after A/B evidence in the probe artifact. Probe design: the
+  focused probe gains the scored tooth + ONE inverse bind (restore the guard → the new
+  scored tooth reds exactly; md5 restore).
+
+  **P4 — FORT PILLOW SPEC → RUNTIME (the centerpiece; ONLY if P1's Fort Pillow verdict
+  is READY_FOR_SPEC).** The durable spec (`docs/design/fort-pillow-battle-build-spec.md`,
+  packet conventions), then the playable runtime: both sides, honest treatment, mandatory
+  sourced teaching surfaced pre- and post-battle, the massacre resolvable ONLY through
+  the SHIPPED no-quarter machinery — in Historical the judged consequence-only path (the
+  massacre-block refuses every reward family; a red there is a design failure, never a
+  tooth to move); in Mayhem the chartered reward action applies. Dignity imagery law
+  holds. Counts move 26→27 (and schema/register/suite accordingly) with documented
+  chains at EVERY pin site in the SAME commit. Probe design: `tools/probe-fort-pillow.mjs`
+  authored with ≥2 predeclared binds; the scenario leaves every forbidden-token scan the
+  documented D397/D454 way. If context/usage cannot carry the full runtime, the phase
+  STOPS at the committed SPEC (a clean boundary) and the runtime queues in the closeout
+  prompt.
+
+  **P5 — [IF-ROOM] CRATER SPEC, then OLUSTEE SPEC (specs only; runtimes queue for the
+  next session).** Same conventions as P4's spec step, each its own commit; the Crater
+  spec commit carries NO forbidden-scan re-pins (those move only when its RUNTIME later
+  registers, per standing adjudication 2).
+
+  **P6 — THE RELEASE BATTERY AT THE FINAL HEAD (runs ALONE, serialized).**
+  `export TMPDIR="$PWD/.tmp"` then `npm run vet:noreg` (suite 137 + any rows this ladder
+  added; war-career budget 900s; read EVERY artifact JSON — ok + 0 pageerrors; a green
+  artifact is not a green harness until the owning process exits, the D398 law).
+  Root-fix any red at its exact label (stale VETTING-DEFERRED pins and probe-side
+  reading bugs are the legitimate classes — the D453/D454 precedent; never weaken a
+  tooth), then re-run `--from` that row. On full green: flip LANE-012 VERIFY→SHIPPED
+  with the battery SHA, flip this lane's landed phases SHIPPED, write the release D###.
+  If the night runs out mid-battery: safe-stop, record the exact `--from` resume row
+  (the D454 precedent), leave both lanes honestly at VERIFY.
+
+- **Per-phase gates (standing law):** `node --check` on every touched JS/probe file ·
+  `node tools/build.mjs` → GATE OK · the schema gate when data moves · the phase's
+  focused probe green with artifact JSON read (ok + 0 pageerrors) · 1-3 adjacent probes ·
+  the phase's predeclared binds with md5-proven byte-identical restores ·
+  `git diff --check` · commit `-F` + push per phase.
+- **NON-DEFERRABLE (any phase, any hour):** D74 no-fudge · ≥2-source law +
+  anti-Lost-Cause standard (an unverifiable claim DIES, it is never approximated) · the
+  dignity imagery law · frozen base · never hand-edit generated HTML · `_SAVE_VER=1` ·
+  bare-name globals · no literal comment-closer inside a block comment · pins move only
+  with documented chains · new surfaces wire into the live h0 owners (src/98-103) ·
+  comment-stripped scans use the D458 regex-literal-aware scanner idiom · the LANE-012
+  massacre-block and the AAR grading/endings moral voice are UNTOUCHED except through a
+  recorded Aaron decision.
+- **Resume pointer:** P0c charter committed → EXACT NEXT: P1, the massacre-treatment
+  research family packet (docs-only). Whoever resumes mid-ladder: run the P0a startup
+  check, read this contract in full, and continue at the first phase whose D### is not
+  yet in DECISIONS.md.
+- **Last-touched commit:** the P0c charter commit (this edit).
+- **History:** opened 2026-07-18 (overnight) by Claude Code (Fable 5) under Aaron's
+  ARC 2 overnight charter directive; ledger-only first per the D456 precedent.
+
+---
+
 ## 6 · JOINT STRATEGY BOARD — Fable ⇄ Sol (cross-tool planning, not just locks)
 
 **What this is (Aaron, 2026-07-11):** the lanes above carry contracts and locks; this board
