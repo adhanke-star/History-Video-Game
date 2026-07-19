@@ -219,11 +219,13 @@ function _gcErr(e) {
     var _orp = _fld3dReaimPhase;
     _fld3dReaimPhase = function () { try { if (FLDGC_S.active) fldGcDrop(); } catch (e) { _gcErr(e); } return _orp.apply(this, arguments); };
     _carryGc(_fld3dReaimPhase, _orp); _fld3dReaimPhase._t34 = true;
+    _fld3dReaimPhase._gcDelegate = _orp;                    // the underlying command, introspectable (the GEA-05 delegate idiom)
   }
   if (typeof fldCamFrameSelected === "function" && !fldCamFrameSelected._t34) {
     var _ofs = fldCamFrameSelected;
     fldCamFrameSelected = function () { try { if (FLDGC_S.active) fldGcDrop(); } catch (e) { _gcErr(e); } return _ofs.apply(this, arguments); };
     _carryGc(fldCamFrameSelected, _ofs); fldCamFrameSelected._t34 = true;
+    fldCamFrameSelected._gcDelegate = _ofs;                 // probe-field's GEA-03 source tooth scans the delegate
   }
   if (typeof fldExit === "function" && !fldExit._t34) {
     var _oe = fldExit;

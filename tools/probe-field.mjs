@@ -57,8 +57,13 @@ const SETUP = `(() => {
       __FIELD.sel=[__FIELD.units[0].id]; fldCamFrameSelected(); __FIELD.sel=[];
       var snap2=JSON.stringify(__FIELD.units.map(function(u){return {id:u.id,x:u.x,z:u.z,men:u.men,morale:u.morale,sel:__FIELD.sel.slice()};}));
       if(snap!==snap2) throw new Error('camera commands mutated simulation state (must be pure)');
-      // frame-selected reads the SELECTED unit and the survey fallback: both paths side-aware via fldPlayerSide
-      var fs=String(fldCamFrameSelected);
+      // frame-selected reads the SELECTED unit and the survey fallback: both paths side-aware via fldPlayerSide.
+      // D474 re-pin: T34 (ground camera, D473) wraps the command by reassignment — when the _t34 wrap is
+      // present the source scan reads the UNDERLYING command through its exposed _gcDelegate (the GEA-05
+      // _tcDelegate idiom); unwrapped builds scan the bare function as before. Intent unchanged.
+      var fsFn=(typeof fldCamFrameSelected._gcDelegate==='function')?fldCamFrameSelected._gcDelegate:fldCamFrameSelected;
+      if(fldCamFrameSelected._t34===true&&typeof fldCamFrameSelected._gcDelegate!=='function') throw new Error('T34 wrap present but the delegate is missing');
+      var fs=String(fsFn);
       if(fs.indexOf('fldPlayerSide')<0) throw new Error('frame-selected must stay side-aware');
       if(fs.indexOf('fldCamHome')<0) throw new Error('frame-selected must fall back to the overview when nothing is selected');
       return { ok:true }; });

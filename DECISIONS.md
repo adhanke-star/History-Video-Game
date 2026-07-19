@@ -4,6 +4,27 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D474 — THE D473 DAY-END BATTERY, ROOT-FIX 1: probe-field's GEA-03 SOURCE TOOTH RE-PINNED THROUGH T34'S WRAP (THE DELEGATE IDIOM) — [CLAUDE CODE (FABLE 5); THE POST-D471 LADDER P4] (2026-07-20)
+
+**THE RED (row 73 `field sandbox`, 72 rows green before it):** probe-field's GEA-03 tooth
+scans `String(fldCamFrameSelected)` for the side-aware `fldPlayerSide` read and the
+`fldCamHome` fallback. T34 (D473) legitimately wraps the command by reassignment (the
+contract's own seam law — the reposition commands stay authoritative by DROPPING ground
+mode), so the source scan saw the wrapper body — the D443/D453/D471 pin-acknowledges-a-
+legitimate-wrap class, its fourth instance. The INTENT holds: the underlying command is
+closed over, unchanged, side-aware, with the overview fallback.
+
+**THE FIX (both sides, never weakened):** T34's two wrapped reposition commands now expose
+the underlying command as `_gcDelegate` (the shipped GEA-05 `_tcDelegate` introspection
+idiom); the tooth re-pins to scan the DELEGATE when the `_t34` wrap is present (bare
+function otherwise) and gains a new conjunct — a `_t34` wrap WITHOUT a delegate is itself
+a failure. probe-field re-ran 27/27 green with 0 pageerrors. A tree-wide sweep proves this
+was the ONLY source-string tooth over any T34-wrapped function (the D471 one-swept-class
+lesson applied). **AD-7 re-pins in this commit:** game 584e5c6f → bcfd6454 · srcTree
+a7d2eef4 → 8395da0a at all four plan-probe sites (base/dataTree/manifest/suite/focused
+hold). The battery resumes `--from="field sandbox"`; rows 91-92 (visual fidelity / render
+richness) sit AFTER the resume point and re-verify against the fixed build.
+
 ## D473 — LANE-014 SLICE 4 SHIPPED: THE GROUND-LEVEL CAMERA (T34) — WALK THE FIELD THROUGH PARAMETER-MODE ORBITCONTROLS, DEFAULT OFF, TERRAIN-CLAMPED — [CLAUDE CODE (FABLE 5), LANE-014 DRIVE; THE POST-D471 LADDER P2] (2026-07-20)
 
 **SHIPPED (the contract's slice-4 clause verbatim):** new `src/tactical/T34-ground-camera.js`

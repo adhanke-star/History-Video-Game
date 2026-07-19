@@ -928,7 +928,9 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     // a7d2eef4 (ground camera T34 — src/tactical/T34-ground-camera.js enrolls after T33;
     // presentation-only, no war-career surface touched).
     // runtime/journey/command/focused/commandProbe did NOT move.
-    srcTree:"a7d2eef4daacd6b4954e98d9b26473f9",
+    // D474 battery root-fix re-pin: srcTree a7d2eef4 -> 8395da0a (T34's wrapped reposition
+    // commands expose _gcDelegate for probe-field's GEA-03 source tooth; introspection only).
+    srcTree:"8395da0a97d70e47fb1cba1a6a26a4de",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
     command:"8f12c49f7129b3a9be0203677822e048",
@@ -1249,7 +1251,9 @@ step("BASELINES + LANE", () => {
     // D473 re-pin (the AD-7 idiom, at the LANE-014 slice-4 head): game c72c7585 -> 584e5c6f,
     // manifest 2fdf5fb3 -> 4625dca9 — ground camera T34 enrolls after T33 (presentation-only
     // src module + rebuild). base/dataTree/suite hold.
-    game:"584e5c6ff6084040a5a929a312acd2d0",
+    // D474 battery root-fix re-pin: game 584e5c6f -> bcfd6454 (T34 _gcDelegate exposure for
+    // probe-field's GEA-03 source tooth + rebuild). base/dataTree/manifest/suite hold.
+    game:"bcfd6454e4920442defd4da11b6f0152",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     dataTree:"4bbdebe5c1180ed3ec702d9b6fe68b6b",
     manifest:"4625dca91b9b2cd8e65c1a9439160cf2",
@@ -1673,9 +1677,11 @@ step("REACHABILITY BASELINES", () => {
     // enrolls after T32; presentation-only + rebuild); dataTree/runtime/journey did NOT move.
     // D473 re-pin: game c72c7585 -> 584e5c6f, srcTree b0a88e93 -> a7d2eef4 (ground camera
     // T34 enrolls after T33; presentation-only + rebuild); dataTree/runtime/journey did NOT move.
-    game:"584e5c6ff6084040a5a929a312acd2d0",
+    // D474 re-pin: game 584e5c6f -> bcfd6454, srcTree a7d2eef4 -> 8395da0a (T34 _gcDelegate
+    // exposure for probe-field's GEA-03 tooth); dataTree/runtime/journey did NOT move.
+    game:"bcfd6454e4920442defd4da11b6f0152",
     dataTree:"4bbdebe5c1180ed3ec702d9b6fe68b6b",
-    srcTree:"a7d2eef4daacd6b4954e98d9b26473f9",
+    srcTree:"8395da0a97d70e47fb1cba1a6a26a4de",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
     // D460 re-pin: focused a29a5351 -> 2816a82c (Elkhorn Cherokee, 1614 -> 1617). D463

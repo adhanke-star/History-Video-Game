@@ -96,7 +96,11 @@ const PIN = {
   // enrolls after T33; settings-gated default-OFF walk-the-field mode through parameter-mode
   // OrbitControls, terrain-clamped, reposition-commands authoritative; rebuild).
   // base/suite hold; data untouched.
-  game: "584e5c6ff6084040a5a929a312acd2d0",
+  // D474 battery root-fix re-pin: game 584e5c6f -> bcfd6454 — T34's wrapped reposition
+  // commands expose their underlying command as _gcDelegate (the GEA-05 delegate idiom) so
+  // probe-field's GEA-03 source tooth scans the real command through the wrap (rebuild).
+  // base/manifest/suite hold; data untouched.
+  game: "bcfd6454e4920442defd4da11b6f0152",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
   manifest: "4625dca91b9b2cd8e65c1a9439160cf2",
   suite: "69681d6f2216fe1dcfd594ffc4a757b7",
