@@ -2,6 +2,26 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-19 — D463-D466 the ARC 2 COMPLETION + RELEASE session (overnight night 2; the maximizer)
+
+The overnight-maximizer session (Claude Code / Fable 5, the authorized window's final
+night) re-took LANE-013 DRIVE at `9a35890` and ran the ladder to release. D463
+(`9a0d4e9` + `dffd3bc`): the Fort Pillow RUNTIME in one atomic commit from the banked
+`lane-013-p4-wip` draft (branch deleted after landing) — 27/60/1,632/138 chained at
+every pin site, the ten absence-tooth flips, probe-fort-pillow 19 steps with the 8-seed
+direction battery 8/8 both axes at the fair 1,500 baseline, the no-quarter machinery
+teeth extending t1-t6 (24 reward families refused; declined path takes nothing), binds
+A/B md5-proven. D464 (`e3fcc8b`) + D465 (`6663449`): the Crater and Olustee specs
+committed docs-only with the two HISTORICAL-DATA.md corrections; the adjudication-2
+forbidden scans verified untouched. LANE-014 `graphics-uplift` chartered ledger-only
+(`fba0b61`); the [IF-ROOM] Crater runtime declined under the charter's budget rule.
+D466: the release battery ran ALONE/serialized to 138/138 GREEN at `ca1a219` with 139
+artifact JSONs read (zero pageerrors); five reds root-fixed at their exact labels
+(`8b082e6` S44 copy update · `7531e15` war-career frozen pin · `813aa53` two
+regex-source disk scans split · `7b3edca` spotsylvania DOM sibling · `ca1a219` kennesaw
+chain teeth) — no tooth weakened. LANE-012 + LANE-013 flipped SHIPPED; the session
+closed with the D412 doc rotation and the release commit.
+
 ## 2026-07-18/19 — D459-D462 the ARC 2 OVERNIGHT session (LANE-013 chartered; P1-P3 shipped + P4 spec)
 
 The overnight session (Claude Code / Fable 5, final night of the authorized window) chartered

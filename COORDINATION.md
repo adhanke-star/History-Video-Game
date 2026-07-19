@@ -2071,15 +2071,15 @@ next green commit and confer through this ledger instead of permitting simultane
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's genre-elite P1
   build-run directive (the D443 extend-coding continuation).
 
-### LANE-012 · unlock-and-teach-spine — **VERIFY (battery-only), lock RELEASED at the D458 boundary** (Slices 1-3 ALL SHIPPED as D456/D457/D458; ARC 1 of the D455 roadmap)
+### LANE-012 · unlock-and-teach-spine — **SHIPPED (D466: the 138/138 release battery at `ca1a219` gated the flip; Slices 1-3 = D456/D457/D458; ARC 1 of the D455 roadmap — CLOSED)**
 
 - **Owning tool:** unowned (the Claude Code / Fable 5 lock RELEASED at the clean pushed
   D458 boundary — session closeout, the D171/D307 law; DRIVE ran `e8d761c` → the D457
   Slice-2 commit `c4bc504` → the D458 Slice-3 commit, all within Aaron's authorized Fable
   window through Sunday 2026-07-19).
-- **State:** VERIFY — every slice's code + teeth are green with focused gates, adjacent
-  probes, and md5-restored binds; ONLY the next release checkpoint's full battery
-  (D160/D176) gates the SHIPPED flip. No open slice work remains in this lane.
+- **State:** SHIPPED — the D466 release battery (138/138 green at `ca1a219`; 139
+  artifact JSONs read, zero pageerrors) discharged the VERIFY condition; the lane is
+  CLOSED. (Prior: VERIFY, battery-only, from the D458 boundary.)
 - **Design law:** `docs/design/unlocked-but-judged-design.md` (THE LAW — §1 the decision, §2
   Aaron's verbatim locks, §3 the adjudicated restriction inventory, §4a the spine, §7 the ARC
   roadmap) · DECISIONS D455 + D454 · `docs/design/open-history-mayhem-mode-design.md` §4 (the
@@ -2230,19 +2230,19 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
-### LANE-013 · content-unlocks — **DRIVE (Claude Code / Fable 5; P4 runtime → P5 specs → P6 battery, the 2026-07-18/19 overnight maximizer)** (ARC 2 of the D455 roadmap)
+### LANE-013 · content-unlocks — **SHIPPED (D466: all six phases landed — P1 D459 · P2 D460 · P3 D461 · P4 D462+D463 · P5 D464/D465 · P6 the 138/138 battery at `ca1a219`; lock RELEASED at closeout; ARC 2 of the D455 roadmap — CLOSED)**
 
-- **Owning tool:** Claude Code (Fable 5; Aaron's authorization window through
-  2026-07-19) — DRIVE re-taken at this committed edit for the P4 FORT PILLOW
-  RUNTIME, then P5 (Crater/Olustee specs) and the P6 release battery per the
-  overnight charter. The banked `data/fort-pillow.json` draft is restored from
-  `lane-013-p4-wip` into the working tree (the expected single untracked file;
-  the schema gate reds on it BY DESIGN until the atomic P4 commit). Prior DRIVE
-  ran `3506716` → D459 `0127cc7` (+`1af86ee`/`aa41dec`) → D460 `a2b0484` → D461
-  `ea1f714` → D462 `045a50b`; the earlier P4 re-take (`caaa72a`/`f94d3b9`) was
-  released at Aaron's save-and-push safe-stop with the recon + draft banked below.
-- **State:** DRIVE — the remaining phases (P4 runtime · P5 specs · P6 battery)
-  carry their full committed contracts (this entry + the D462 spec §8-§9).
+- **Owning tool:** unowned (the Claude Code / Fable 5 overnight-maximizer lock —
+  DRIVE re-taken `9a35890` — RELEASED at the D466 release closeout. Full DRIVE
+  history: `3506716` → D459 `0127cc7` (+`1af86ee`/`aa41dec`) → D460 `a2b0484` →
+  D461 `ea1f714` → D462 `045a50b` → [safe-stop bank `9ad44ea`] → D463 `9a0d4e9`
+  (+`dffd3bc`) → D464 `e3fcc8b` → D465 `6663449` → the D466 battery fixes
+  `8b082e6`/`7531e15`/`813aa53`/`7b3edca`/`ca1a219` → the release commit.)
+- **State:** SHIPPED — every chartered phase landed and the P6 release battery ran
+  138/138 green with full artifact readback; the lane is CLOSED. The Crater and
+  Olustee RUNTIMES were never this lane's scope: their committed specs (D464/D465
+  §8-§9) are the law for future charters, recorded under LANE-014's standing-queue
+  note.
 - **P4 SAFE-STOP BANK (2026-07-18 evening; adopt, don't redo):**
   1. **The authored `data/fort-pillow.json` draft is committed on the pushed WIP
      branch `lane-013-p4-wip` (`c7ee774`) — NEVER merge that branch;** restore the

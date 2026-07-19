@@ -4,6 +4,51 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D466 — THE P6 RELEASE BATTERY COMPLETES 138/138 GREEN; FIVE BATTERY REDS ROOT-FIXED AT THEIR EXACT LABELS; LANE-012 AND LANE-013 FLIP SHIPPED — ARC 1 AND ARC 2 ARE FULLY RELEASED — [CLAUDE CODE (FABLE 5), LANE-013 DRIVE, ARC 2 OVERNIGHT NIGHT 2 RELEASE] (2026-07-19)
+
+**THE BATTERY (Aaron's overnight law: all debugging saved to the end; ALONE on the
+machine, serialized, `export TMPDIR="$PWD/.tmp"` · `npm run vet:noreg` · war-career
+budget 900s):** the full 138-row suite ran GREEN end-to-end across six stitched runs
+(start `9ad44ea`-era head → final head `ca1a219`), with the D454 resume law
+(`--from=<row>`) after each root-fix. **ARTIFACT READBACK (the D398 law): 139
+battery-window artifact JSONs swept — every one ok, ZERO pageerrors anywhere; every
+owning process exited 0.** The final resume printed `VET NO-REGRESSION OK`.
+
+**FIVE BATTERY REDS, ALL ROOT-FIXED AT THEIR EXACT LABELS, NO TOOTH WEAKENED (each its
+own committed+pushed fix):**
+1. `8b082e6` — **western theater**: the S44 registry-truth tooth live-derives the
+   theater-"W" set and REQUIRES the strategic-readout copy to acknowledge every
+   registered Western battle — it bit on the D463 registration exactly as designed.
+   Fix: the sourced `fort-pillow-current` arc entry (playable-now; the massacre taught
+   and judged, never played) + ten→eleven prose + rebuild + the AD-7 plan-probe re-pins
+   (game `7e212198`→`f0228c4b`, dataTree `abee76fa`→`e33afffc`).
+2. `7531e15` — **war career**: the frozen src/82 pin owed its sweep to the battery —
+   D457 (`c4bc504`) legitimately added the guarded judged-panel seam
+   (probe-afteraction owned those gates); the stale-VETTING-DEFERRED class, the
+   D443/D453 precedent's third instance. Re-pin `590f8a78`→`664db3e3` + the cascaded
+   `focused` hash at both plan-probe sites.
+3. `813aa53` — **cross keys**: a main()-side disk scan whose regex-SOURCE form
+   `/fort.?pillow/` escaped the D463 flip sweep's literal greps (the lesson recorded);
+   probe-fort-donelson carried the same idiom. Both split the D397/D454 way (leetown +
+   fort-henry/naval halves KEPT; the fort-pillow half flips to exactly-one-file);
+   a broadened bare-"pillow" predicate sweep proved these the last two absence sites.
+4. `7b3edca` — **spotsylvania**: its SECOND adjacency site — the DOM button-chronology
+   tooth — sat outside the banked P4 inventory; re-pinned to the seven-button chain.
+5. `ca1a219` — **kennesaw**: its OWN registry + DOM chain teeth anchored at
+   chattanooga→wilderness (the same missed-sibling pattern its D454 chain comment
+   records from D442); both re-pinned to the seven-battle chain. The tree sweep for
+   chattanooga adjacency/order assertions is now exhausted — every site carries the
+   D463/D466 chain.
+
+**THE FLIPS:** LANE-012 `unlock-and-teach-spine` VERIFY → **SHIPPED** (Slices 1-3 =
+D456/D457/D458; the battery at `ca1a219` is its release gate). LANE-013
+`content-unlocks` → **SHIPPED** (P1 D459 · P2 D460 · P3 D461 · P4 D462 spec + D463
+runtime · P5 D464/D465 specs · P6 this battery; the Crater/Olustee RUNTIMES were never
+this lane's scope — they queue with their committed specs as law, recorded under
+LANE-014's standing-queue note). LANE-014 `graphics-uplift` stays LAW-DRAFT/unowned.
+Counts rest at **27/60/1,632/138**; game `f0228c4b`; `_SAVE_VER=1`; frozen base
+`c9db83fa` untouched throughout.
+
 ## D465 — LANE-013 P5b COMMITTED: THE OLUSTEE BATTLE-BUILD SPEC + THE TWO HISTORICAL-DATA.md CORRECTIONS (DOCS-ONLY; THE RUNTIME CHARTERS LATER) — [CLAUDE CODE (FABLE 5), LANE-013 DRIVE, ARC 2 OVERNIGHT NIGHT 2] (2026-07-19)
 
 ARC 2 phase P5, second spec, built to the LANE-013 charter from the D459 packet's Chapter
