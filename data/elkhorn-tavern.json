@@ -1,5 +1,5 @@
 {
-  "_comment": "D388 Elkhorn Tavern axis of Pea Ridge, March 7-8 1862. Two-phase T8 role reversal from the committed D387 contract: March 7 CS seizes the tavern under disclosed operational-surprise fog (w1), then March 8 US counterattacks in the clear (w3 DECISIVE). Home edges stay CS north / US south. The ammunition law is encoded only through per-phase T4 supply-train positions and ordinary experience inputs; the Confederate reserve train is at Camp Stephens in phase 2, never a multiplier. Every fielded unit has Verified identity and Inferred strength. Leetown and its Native formations are taught in cards 8-10 but never fielded, per D359.",
+  "_comment": "D388 Elkhorn Tavern axis of Pea Ridge, March 7-8 1862. Two-phase T8 role reversal from the committed D387 contract: March 7 CS seizes the tavern under disclosed operational-surprise fog (w1), then March 8 US counterattacks in the clear (w3 DECISIVE). Home edges stay CS north / US south. The ammunition law is encoded only through per-phase T4 supply-train positions and ordinary experience inputs; the Confederate reserve train is at Camp Stephens in phase 2, never a multiplier. Every fielded unit has Verified identity and Inferred strength. Leetown and its Native formations are taught in cards 8-10 but never fielded, per D359 - AMENDED at D460 (Aaron's D455 SS3 row 7): Watie's 2nd Cherokee Mounted Rifles now fields on its sourced March 8 station at the point of Big Mountain (phase 2), while Drew's 1st Cherokee Mounted Rifles stands at its sourced non-combat station with the trains (the transition record) - a combat marker for Drew's would fabricate a refuted placement. Cards 8-10 remain byte-unchanged and mandatory.",
   "elkhornTavern": {
     "sources": [
       "NPS Pea Ridge order of battle",
@@ -8,7 +8,10 @@
       "American Battlefield Trust - Pea Ridge",
       "Encyclopedia of Arkansas - Pea Ridge",
       "Wikipedia - Battle of Pea Ridge",
-      "Shea & Hess, Pea Ridge: Civil War Campaign in the West (1992)"
+      "Shea & Hess, Pea Ridge: Civil War Campaign in the West (1992)",
+      "Pike's official report, OR Ser. 1 Vol. 8 pp. 287-292 (Drew's regiment about 500 strong; both Cherokee regiments' Leetown charge)",
+      "Oklahoma Historical Society encyclopedia - Cherokee Mounted Rifles / Watie / Drew / W. P. Ross entries",
+      "Goodspeed county history (1889) - Watie's regiment an organized force through March 8, retiring to Bentonville"
     ],
     "id": "elkhornTavern",
     "learnMeta": { "phases": 2, "approxMinutes": [10, 25], "skills": ["phases","supply-ammo","defense-hold"], "recommendedAfter": "fortDonelson" },
@@ -475,7 +478,7 @@
         },
         "transition": {
           "title": "The Night That Decided Pea Ridge",
-          "lead": "Van Dorn's reserve ammunition train is mistakenly ordered back to Camp Stephens, about twelve miles and a six-hour march away. Col. Elkanah Greer brings the surviving remnant of McCulloch's leaderless wing to the Elkhorn line. Curtis reforms Carr, Davis, Osterhaus, and Asboth across one visible front, with Sigel commanding the two divisions on the left. This is an overnight teaching interstitial, never a scored phase."
+          "lead": "Van Dorn's reserve ammunition train is mistakenly ordered back to Camp Stephens, about twelve miles and a six-hour march away. Col. Elkanah Greer brings the surviving remnant of McCulloch's leaderless wing to the Elkhorn line. Curtis reforms Carr, Davis, Osterhaus, and Asboth across one visible front, with Sigel commanding the two divisions on the left. This is an overnight teaching interstitial, never a scored phase. Pike reaches the main army overnight with remnants of his Indian Brigade: Watie's 2nd Cherokee Mounted Rifles take post at the point of Big Mountain, while Drew's 1st Cherokee Mounted Rifles (Lt. Col. William P. Ross; about 500 at Pea Ridge by Pike's own report) stand with the supply train off the fighting line - the accounts of Drew's March 8 station diverge (train guard, retreat toward Bentonville, dispersal) and all agree the regiment saw no combat that day, so it is never a combat marker here."
         },
         "terrain": {
           "hills": [
@@ -827,6 +830,20 @@
               "facing": 3.14159,
               "formation": "line",
               "note": "The sourced twelve Confederate guns opposed to Welfley's twenty-one, under the universal gun model. Verified identity and gun count; Inferred strength."
+            },
+            {
+              "id": "cs_et_watie_2cmr",
+              "name": "Watie's 2nd Cherokee Mounted Rifles - Point of Big Mountain",
+              "commander": "Col. Stand Watie",
+              "arm": "cav",
+              "weapon": "smooth",
+              "men": 350,
+              "xp": 1,
+              "x": 1010,
+              "z": 235,
+              "facing": 3.14159,
+              "formation": "line",
+              "note": "Fielded per Aaron's D455 SS3 row 7 unlock (amends the D359 carve-out; D460). Identity Verified across independent families (NPS OOB, ABT, Oklahoma Historical Society, Pike's OR report). Numbering law: this regiment was the SECOND Cherokee Mounted Rifles at Pea Ridge; it took the '1st' designation only in December 1862 after Drew's regiment disbanded - never backdate. The March 8 station at the point of Big Mountain, driven off by Asboth's regiments before the decisive assault, rests on the Shea & Hess scholarly family with 1889 Goodspeed directional support and one uncited dissent recorded - Inferred placement. No standalone strength figure exists in any fetched source: 350 is an Inferred share of Pike's ~900-1,000 engaged brigade after Drew's two-source ~500. Armed 'very indifferently' with common rifles and shotguns (ABT, single-family). Verified identity; Inferred strength."
             }
           ]
         },

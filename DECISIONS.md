@@ -4,6 +4,66 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D460 — LANE-013 P2 SHIPPED: THE CHEROKEE FIELDING AT ELKHORN TAVERN — WATIE'S 2ND CMR ON ITS SOURCED MARCH 8 STATION; DREW'S 1ST CMR AT ITS SOURCED NON-COMBAT STATION (THE D455 §3 ROW 7 UNLOCK, HONESTLY BOUNDED BY THE RECORD) — [CLAUDE CODE (FABLE 5), LANE-013 DRIVE, ARC 2 OVERNIGHT] (2026-07-18)
+
+ARC 2 phase P2, built to the LANE-013 charter. **THE SUPERSESSION, RECORDED:** Aaron's D455
+§3 row 7 ("field 1st/2nd Cherokee Mounted Rifles, two-source law; teaching cards 8-10
+mandatory") AMENDS the D359 Leetown/Native-OOB carve-out; the stale D183 two-tier gate is
+superseded for this phase by that lock (the standing charter adjudication — Leetown fields
+inside the SHIPPED Elkhorn battle, D387-D389).
+
+**THE EVIDENCE ADJUDICATION (gather + default-refute pass, recorded before build):** both
+regiments verifiably fought at LEETOWN on March 7 — off the shipped non-Leetown axis (Pike's
+own OR report: Watie's on foot, Drew's mounted, charging the battery; Drew's "about 500
+strong" — two independent families with researchonline's roster data). On March 8 only
+WATIE'S 2ND CMR has combat-presence support on the shipped field: the point of Big Mountain,
+driven off by Asboth's regiments before the decisive assault (the Shea & Hess scholarly
+family + 1889 Goodspeed directional support that the regiment remained organized through
+March 8; one uncited modern dissent recorded). EVERY account agrees Drew's 1st CMR saw NO
+combat that day (accounts diverge only on its non-combat station). Fielding Drew's as a
+combat marker would FABRICATE a refuted placement — barred by the same two-source /
+anti-fabrication law the D455 lock itself invokes. **The resolution:** Watie's 2nd CMR
+fields as a phase-2 combat unit (`cs_et_watie_2cmr`, 350 men Inferred share, weapon-poor,
+Big Mountain shoulder, Col. Stand Watie — the 1864 brigadier is a backdate trap; the
+numbering law disclosed: the regiment was the SECOND at Pea Ridge, renamed "1st" only Dec
+1862); Drew's 1st CMR enters the battle data at its sourced non-combat station (the phase-2
+transition record names it — Lt. Col. William P. Ross, ~500 by Pike's report — with the
+divergent-accounts disclosure), never a combat marker. THE TENSION between the lock's plain
+"field both" reading and the refuted placement is SURFACED TO AARON in the session report;
+a future Leetown-sector build (its own lane) is the honest path to fielding Drew's regiment.
+
+**SHIPPED:** data/elkhorn-tavern.json only (data-phase; no src change) — the Watie unit +
+three new source rows (Pike's OR / OHS / Goodspeed) + the Drew transition record + the
+_comment amendment; spec addendum §16 in elkhorn-tavern-battle-build-spec.md (original D359
+text preserved as historical record); rebuild (game a6cbfd2d → 7c13850e).
+
+**TEETH (re-pinned with documented D460 chains, all in THIS commit):** the runtime probe's
+old LEETOWN+NATIVE ABSENCE tooth SPLIT — registry-absence half KEPT; the fielded half is now
+the CHEROKEE FIELDING contract (phase-1 Native absence · exactly cs_et_watie_2cmr in phase 2
+· the exact colonel grade · the 2nd-designation law · the two-source placement families in
+the unit note · Drew never-a-marker + the transition record present · cards 8-10 pinned
+byte-identical to the D388 corpus, FNV 68d30a4:3234 / parsed-JSON md5 4abd77c9) · phase-2
+opening 9→10 · register pins 1614→1617 at ALL SEVENTEEN sites (the 15 register-pin probes +
+the loot-survival "1617 of 1617" UI pin + war-career's reported literal) with the chain at
+every site · the elkhorn plan probe's LEETOWN ABSENCE GUARD re-scoped the same way + its
+D388-era one-transition assumption taught the two-transition model (D388 +15 units, D460 +1)
+· the two lane-grepping plan probes re-pinned the AD-7 way (game 7c13850e · dataTree
+d1c6557f · armyRegister 1617 · the three loot-grep teeth · the war-career focused-probe hash
+a29a5351→2816a82c at both sites; srcTree/base/manifest/suite did NOT move).
+
+**GATES:** node --check on all 18 touched probe files · build GATE OK · schema 59/59 ·
+focused probe-elkhorn-tavern 16/16 with artifact read (ok, ZERO pageerrors) — the 8-seed
+HISTORICAL DIRECTION battery held 8/8 on ALL FOUR axes (P1 CS seizes / P2 US seizes /
+aggregate US / CS-losses-exceed-US — the 350-man addition did not disturb the lean; Pea
+Ridge's winner-bleeds-less inversion guard untouched) · adjacent probe-tactical-roster +
+probe-field green, zero pageerrors · elkhorn plan probe 14/14 · git diff --check clean.
+**BIND (md5-proven):** the Goodspeed placement family stripped from the Watie note →
+EXACTLY the two-source tooth red ("the two-source placement rows are missing from the Watie
+note", 15/16); restore byte-identical (data 265df974, game 7c13850e) → 16/16 ALL OK.
+
+Counts move 26/59/1,614/137 → 26/59/1,617/137 with the documented chain at every pin site;
+`_SAVE_VER=1`; frozen base untouched. EXACT NEXT: P3 — the Front Royal scoring guard lift.
+
 ## D459 — LANE-013 P1 SHIPPED: THE MASSACRE-TREATMENT RESEARCH FAMILY (FORT PILLOW + THE CRATER + OLUSTEE, ONE PACKET) + THE INCIDENTAL D457 SCHEMA-GATE ROOT-FIX — [CLAUDE CODE (FABLE 5), LANE-013 DRIVE, ARC 2 OVERNIGHT] (2026-07-18)
 
 ARC 2 phase P1, built to the LANE-013 charter (`3506716`; the D455 packet §3 rows 6-8 + §4b

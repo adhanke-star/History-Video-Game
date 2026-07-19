@@ -54,13 +54,17 @@ const PIN = {
   // (D457 Historical no-quarter unlock — the `no-quarter-historical` consequence-only data
   // action + the src/107 massacre-block/adapters/judged panel + the src/33/34/62 reader
   // seams + the src/82 guarded seam; rebuild). base/manifest/suite hold.
-  game: "a6cbfd2dde97653049415dd7e078ce3e",
+  // D460 chain (the AD-7 idiom): game a6cbfd2d -> 7c13850e — LANE-013 P2 Elkhorn Cherokee OOB
+  // (data/elkhorn-tavern.json: Watie's 2nd CMR phase-2 unit + three source rows + the Drew
+  // transition record + the _comment amendment; rebuild). base/manifest/suite hold; src did
+  // NOT move.
+  game: "7c13850e7f340f1ab7cc9227423d7340",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
   manifest: "bb5d7903507c8fccf53addf981c2023e",
   suite: "edba2bd930922a27414e07173a64296b",
   scenarios: 26,   // D436: 24 -> 25 atlanta; D442: 25 -> 26 coldHarbor
   schemas: 59,   // D418: 54 -> 55 mayhem-rules.json; D436: 55 -> 56 atlanta.json; D442: 56 -> 57 cold-harbor.json; D445: 57 -> 58 chief-of-staff.json; D446: 58 -> 59 concept-links.json
-  armyRegister: 1614,   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots
+  armyRegister: 1617,   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots. D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7) adds 1 unique side-unit id x 3 slots
   suiteRows: 137,   // D418: 130 -> 131; D436: 131 -> 132; D442: 132 -> 133; D444: 133 -> 134; D445: 134 -> 135; D446: 135 -> 136 (each appended at the END so row 38 holds)
   warCareerRow: 38,
   saveVersion: 1
@@ -312,8 +316,8 @@ step("EXCLUSIONS + BASELINES", () => {
   const version = Number((read(BASE).match(/var _SAVE_VER = (\d+);/) || [null, NaN])[1]);
   if (version !== PIN.saveVersion) throw new Error("_SAVE_VER moved: " + version);
   const loot = read(LOOT);
-  if (!/people\.length\s*!==\s*1614/.test(loot) || !loot.includes("1614 of 1614")) {
-    throw new Error("Army Register 1614 pins missing");
+  if (!/people\.length\s*!==\s*1617/.test(loot) || !loot.includes("1617 of 1617")) {   // D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7) adds 1 unique side-unit id x 3 slots (the AD-7 chain idiom)
+    throw new Error("Army Register 1617 pins missing");
   }
   mustInclude(spec, [
     "This planning slice changes no runtime, data, manifest, suite, generated HTML, frozen base",

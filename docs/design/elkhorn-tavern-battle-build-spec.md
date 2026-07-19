@@ -686,3 +686,53 @@ artifact is read; the 20/50/1281/20/125 baselines and generated HTML md5
 spec-time addendum; canonical docs record the two-phase shape, the ammunition law, the Leetown
 absence guard, and the D388 runtime boundary; the final D387 commit is pushed; and no Elkhorn
 Tavern runtime surface has started.
+
+## 16. D460 Addendum — the D455 Cherokee-fielding unlock (LANE-013 P2, 2026-07-18)
+
+Aaron's D455 popup-locked decision (§3 row 7: "field 1st/2nd Cherokee Mounted Rifles,
+two-source law; teaching cards 8-10 mandatory") AMENDS the D359 carve-out this spec's §
+"Dignity boundaries (executable)" recorded. The original text above is preserved verbatim as
+the historical record; this addendum is the controlling law for the fielding.
+
+**What the evidence supports (gather + default-refute pass, 2026-07-18):** both Cherokee
+regiments verifiably fought at LEETOWN on March 7 — off this build's deliberately non-Leetown
+axis — where Pike's own OR report (Ser. 1 Vol. 8 pp. 287-292) has Watie's regiment on foot and
+Drew's mounted charging the battery, with Drew's "about 500 strong." On March 8, only Watie's
+2nd Cherokee Mounted Rifles has combat-presence support on this field: the point of Big
+Mountain, driven off by Asboth's regiments before the decisive assault (the Shea & Hess
+scholarly family, with 1889 Goodspeed directional support that the regiment remained an
+organized force through March 8, and one uncited modern dissent recorded). Every account
+agrees Drew's 1st CMR saw NO combat on March 8 (the three accounts diverge only on its
+non-combat station: train guard, retreat toward Bentonville, or dispersal).
+
+**The fielding law:**
+1. Phase 1 (March 7, the Elkhorn axis) fields NO Native formation — fielding them there would
+   relocate a Leetown action onto the wrong field.
+2. Phase 2 (March 8) fields EXACTLY ONE Native formation: `cs_et_watie_2cmr`, "Watie's 2nd
+   Cherokee Mounted Rifles - Point of Big Mountain", commander exactly `Col. Stand Watie`
+   (the 1864 brigadier is a backdate trap), weapon-poor (`smooth`), 350 men as an Inferred
+   share of Pike's ~900-1,000 brigade after Drew's two-source ~500, position at the Big
+   Mountain shoulder. Its note carries the two placement families (Shea & Hess + Goodspeed),
+   the numbering law (the regiment was the SECOND at Pea Ridge; "1st" only from December
+   1862), and the Inferred placement/strength disclosures.
+3. Drew's 1st Cherokee Mounted Rifles is NEVER a combat marker on this build — a combat
+   placement would fabricate what the record refutes, violating the same two-source law the
+   D455 lock invokes. The regiment enters the battle data at its sourced non-combat station:
+   the phase-2 transition record names it (Lt. Col. William P. Ross; ~500 by Pike's report)
+   standing with the supply train, with the divergent-accounts disclosure. The tension between
+   the lock's plain "field both" reading and the refuted placement is surfaced to Aaron in the
+   session report; a future Leetown-sector build (its own lane) is the path to fielding
+   Drew's regiment honestly.
+4. Teaching cards 8-10 (`et_leetown_other_field`, `et_native_agency`,
+   `et_scalping_weaponized`) remain MANDATORY and byte-identical to the D388 corpus
+   (probe-pinned: parsed-JSON md5 `4abd77c94ede36077976054fba3f3cfe`).
+5. Direction guards are UNTOUCHED (Pea Ridge inverts winner-bleeds-less; the 8-seed
+   direction battery still requires P1 CS seizes / P2 US seizes / aggregate US / aggregate
+   CS-losses-exceed-US at >=5/8).
+
+**Teeth (both probes, re-pinned with documented D460 chains in the same commit as the data):**
+the runtime probe's LEETOWN SCOPE + D460 CHEROKEE FIELDING check (registry absence kept;
+phase-1 Native absence; the exact one-unit phase-2 fielding with the two-source note tooth;
+Drew never-a-marker; the cards-8-10 pin) and the plan probe's LEETOWN ABSENCE GUARD
+(re-scoped the same way). Army Register pins move 1614 -> 1617 tree-wide (one unique
+side-unit id x 3 slots) with the documented chain at every pin site.

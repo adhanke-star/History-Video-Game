@@ -9,7 +9,7 @@ import "./guard-probe-browser.mjs";
 // Wright-not-his-predecessor / Anderson's disclosed temporary lieutenant-generalcy /
 // Gibbon's reverse anachronism / the dead-officer wall), the §4 landmarks, the D74
 // forbidden-key wall, the fenced thirty-minute casualty tradition (digits live ONLY in
-// the ch_seven_thousand card), the 4e-2 sources register, the 1614 Army Register pin,
+// the ch_seven_thousand card), the 4e-2 sources register, the 1617 Army Register pin,
 // and the 8-seed direction battery (CS holds >=5/8 AND US losses exceed CS >=5/8 —
 // direction only, never a count gate).
 // BIND A PREDECLARATION - removing the T1 registry line must red exactly the REGISTRY tooth.
@@ -211,9 +211,9 @@ const SETUP = `(() => {
       return { units:__FIELD.units.length };
     });
 
-    check('ARMY REGISTER PIN: 16 unique Cold Harbor side-unit ids produce exact cmd/nco/pvt trios and current total 1614', function(){
+    check('ARMY REGISTER PIN: 16 unique Cold Harbor side-unit ids produce exact cmd/nco/pvt trios and current total 1617', function(){
       var reg = ssPersonRegistry();
-      if (reg.people.length !== 1614) throw new Error('Army Register total is ' + reg.people.length + ', expected 1614');   // D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots
+      if (reg.people.length !== 1617) throw new Error('Army Register total is ' + reg.people.length + ', expected 1617');   // D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots.
       var rows = [], groups = {};
       for (var i = 0; i < reg.people.length; i++) {
         var p = reg.people[i], origin = p.replaces || p.pid;

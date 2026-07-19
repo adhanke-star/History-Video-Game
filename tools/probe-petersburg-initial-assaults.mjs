@@ -234,10 +234,10 @@ const SETUP = `(() => {
       return {cards:ids.length,codex:codex.id,axes:codex.axes};
     });
 
-    check('ARMY REGISTER PIN: canonical registry identity plus 26 Petersburg unit trios produce current total 1614',function(){
+    check('ARMY REGISTER PIN: canonical registry identity plus 26 Petersburg unit trios produce current total 1617',function(){
       var registry=fldScenarioRegistry();if(registry.petersburgAssaults!==DATA)throw new Error('declared registry dependency missing');
       var C=campaign();if(typeof _t1InitAll==='function')_t1InitAll(C);var reg=ssPersonRegistry(C),found=[],groups={};
-      if(reg.people.length!==1614)throw new Error('Army Register total '+reg.people.length+' expected 1614');   // D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots.
+      if(reg.people.length!==1617)throw new Error('Army Register total '+reg.people.length+' expected 1617');   // D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots. D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots.
       for(var i=0;i<reg.people.length;i++){var p=reg.people[i],origin=p.replaces||p.pid;if(typeof origin==='string'&&origin.indexOf('ss:petersburgAssaults:')===0)found.push({p:p,origin:origin});}
       if(found.length!==78)throw new Error('Petersburg rows '+found.length+' expected 78');
       found.forEach(function(row){var m=row.origin.match(/^ss:petersburgAssaults:(US|CS):([^:]+):(cmd|nco|pvt)$/);if(!m)throw new Error('bad slot '+row.origin);var key=m[1]+':'+m[2];groups[key]=groups[key]||{};groups[key][m[3]]=1;if(row.p.source!=='scenario-oob'||row.p.generated!==true||row.p.provenance!=='Inferred')throw new Error('slot metadata '+row.origin);});

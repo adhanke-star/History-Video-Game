@@ -500,22 +500,37 @@ step("LEETOWN ABSENCE GUARD", () => {
   if (forbiddenData.length) throw new Error("Leetown runtime data exists: " + forbiddenData.join(", "));
   const t1 = stripJsComments(read(T1));
   if (/R\.(?:leetown|wilsonsCreek|glorieta)\s*=/i.test(t1)) throw new Error("a barred/queued trans-Mississippi lane has a registry entry");
-  // When the Elkhorn data exists, no fielded OOB unit or reinforcement may be a Native formation.
-  let scanned = 0;
+  /* D460 CHAIN (LANE-013 P2; Aaron's D455 SS3 row 7 unlock amends the D359 carve-out): the old
+     tooth barred ANY fielded Native formation from the whole Elkhorn OOB. It now enforces the
+     sourced-fielding contract instead: phase 1 (index 0 — the March 7 Elkhorn axis, while both
+     Cherokee regiments verifiably fought at Leetown) still fields NO Native formation; phase 2
+     (index 1 — March 8) fields EXACTLY ONE, Watie's 2nd Cherokee Mounted Rifles at its sourced
+     Big Mountain station (a colonel, never the 1864 brigadier backdate); Drew's 1st CMR is never
+     a combat marker (every account agrees it saw no combat March 8 — its station lives in the
+     phase-2 transition record). The spec's original D359 text is preserved above as the
+     historical record; the spec addendum SS13 records the supersession. */
+  let scanned = 0, nativeIds = [];
   if (existsSync(DATA)) {
     const sd = (JSON.parse(read(DATA)) || {}).elkhornTavern || {};
     for (const row of phaseUnitRows(sd)) {
       scanned++;
       const probeText = [row.unit.name, row.unit.commander, row.unit.note, row.unit.entry].map(x => String(x || "")).join(" | ");
       if (NATIVE_UNIT_RE.test(probeText)) {
-        throw new Error("D359 violation — fielded Native formation in the Elkhorn OOB (phase " + row.phase + ", " + row.side + "): " + probeText.slice(0, 120));
+        if (row.phase !== 1) throw new Error("Native formation fielded outside the sourced March 8 station (phase " + row.phase + ", " + row.side + "): " + probeText.slice(0, 120));
+        nativeIds.push(row.unit.id);
       }
     }
+    if (nativeIds.length !== 1 || nativeIds[0] !== "cs_et_watie_2cmr") {
+      throw new Error("phase 2 must field exactly cs_et_watie_2cmr (D460): " + nativeIds.join(","));
+    }
+    if (!/John Drew|Drew's 1st/.test(JSON.stringify(((sd.phases || [])[1] || {}).transition || {}))) {
+      throw new Error("Drew's sourced non-combat station record is missing from the phase-2 transition (D460)");
+    }
     if (existsSync(FOCUSED) && !/NATIVE|cherokee|leetown/i.test(read(FOCUSED))) {
-      throw new Error("focused runtime probe lacks its own Leetown/Native absence tooth");
+      throw new Error("focused runtime probe lacks its own Leetown/Native scope tooth");
     }
   }
-  return { mode: existsSync(DATA) ? "integration" : "planning", unitRowsScanned: scanned };
+  return { mode: existsSync(DATA) ? "integration" : "planning", unitRowsScanned: scanned, fieldedNative: nativeIds };
 });
 
 step("D74 NO-FUDGE", () => {
@@ -752,14 +767,24 @@ step("FUTURE COMPLETE-INTEGRATION CONTRACT", () => {
     throw new Error("runtime codex lacks Trans-Mississippi / Pea Ridge Campaign / Union victory axes");
   }
 
-  const expectedPin = 1281 + unitKeys.size * 3;
+  /* D460 CHAIN: this tooth assumed every Elkhorn unit id entered at the one D388 transition
+     (1281 + 15x3 = 1326). Aaron's D455 SS3 row 7 fields Watie's 2nd CMR as the SIXTEENTH
+     elkhorn unit id at its own documented transition (D460: 1614 -> 1617). The tooth now
+     pins BOTH: the historical D388 transition (1281 -> 1326, 15 units) AND the D460
+     transition, and the documented chain from 1326 must still reach the live pin exactly. */
+  const D388_UNITS = 15;
+  const expectedPin = 1281 + D388_UNITS * 3;
+  if (unitKeys.size !== 16) throw new Error("Elkhorn unit ids must be D388's 15 + D460's Watie: " + unitKeys.size);
+  if (!/D460:[^\n]*1614\s*->\s*1617[^\n]*(Elkhorn|Cherokee)/i.test(s.lootRaw)) {
+    throw new Error("the D460 Cherokee register transition (1614 -> 1617) is undocumented in the loot-survival chain");
+  }
   const history = s.lootRaw.match(/D388:[^\n]*1281\s*->\s*([0-9]+)[^\n]*(Elkhorn Tavern|elkhornTavern)/i);
   const laterTransitions = Array.from(s.lootRaw.matchAll(/D([0-9]+):[^\n]*?([0-9]+)\s*->\s*([0-9]+)/gi))
     .map(m => ({ d: +m[1], from: +m[2], to: +m[3] })).filter(x => x.d > 388).sort((a, b) => a.d - b.d);
   let documentedPin = expectedPin;
   for (const transition of laterTransitions) if (transition.from === documentedPin) documentedPin = transition.to;
   if (!history || +history[1] !== expectedPin || s.pin < expectedPin || s.pin !== documentedPin || s.pinUi[0] !== s.pin || s.pinUi[1] !== s.pin) {
-    throw new Error("runtime Army Register must document 1281 + " + unitKeys.size + " unique units x3 = " + expectedPin);
+    throw new Error("runtime Army Register must document 1281 + " + D388_UNITS + " unique units x3 = " + expectedPin + " with the documented chain reaching the live pin (" + s.pin + " vs " + documentedPin + ")");
   }
 
   const focused = read(FOCUSED);

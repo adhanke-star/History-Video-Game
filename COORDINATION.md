@@ -2347,22 +2347,19 @@ next green commit and confer through this ledger instead of permitting simultane
   comment-stripped scans use the D458 regex-literal-aware scanner idiom · the LANE-012
   massacre-block and the AAR grading/endings moral voice are UNTOUCHED except through a
   recorded Aaron decision.
-- **Resume pointer:** P1 SHIPPED (D459 — the family packet, all three chapters
-  READY_FOR_SPEC; + the incidental D457 schema-gate root-fix) → EXACT NEXT: P2, the
-  Leetown Cherokee OOB. P2 evidence adjudication (recorded before build): the gather +
-  refute pass proved both regiments fought at LEETOWN (off the shipped axis) March 7;
-  on March 8 only Watie's 2nd CMR has combat-presence support on the shipped field
-  (Shea/Hess family + 1889 Goodspeed directional; one uncited dissent recorded), while
-  every account agrees Drew's 1st CMR did no combat that day (train guard/retreat/
-  dispersal — divergent, all non-combat). Fielding Drew's as a combat marker would
-  fabricate a refuted placement — barred by the same two-source law Aaron's lock
-  invokes. P2 therefore fields Watie's 2nd CMR as a phase-2 combat unit (Big Mountain
-  point, Verified identity / Inferred strength+placement per the shipped data
-  convention) and carries Drew's 1st CMR in the battle data at its sourced non-combat
-  station (train guard note + sources + spec addendum), with the tension surfaced to
-  Aaron in the morning report. Whoever resumes mid-ladder: run the P0a startup check,
-  read this contract in full, and continue at the first phase whose D### is not yet in
-  DECISIONS.md.
+- **Resume pointer:** P1 SHIPPED (D459) · P2 SHIPPED (D460 — Watie's 2nd CMR fielded on
+  its sourced March 8 station with the full re-pin sweep, counts 1,614→1,617; Drew's 1st
+  CMR honestly non-combat at its sourced station; the field-both tension surfaced to
+  Aaron in the session report) → EXACT NEXT: P3, the Front Royal scoring guard lift
+  (D455 §3 row 8). P3 recon (recorded): the guard's ENTIRE surface is the cross-keys
+  spec's dignity text ("never a scored capture objective") + probe-cross-keys-port-
+  republic.mjs's barred-registry-id tooth (frontRoyal in the teaching-only list) + the
+  plan probe's spec-text pins; src/ carries NO Front Royal scoring code, so the lift is
+  a docs+teeth re-pin (frontRoyal leaves the barred list with a documented chain;
+  kernstown/mcdowell/firstWinchester STAY barred; spec addendum records the D455 lift;
+  A/B evidence = the byte-identical game hash, docs+teeth only). Whoever resumes
+  mid-ladder: run the P0a startup check, read this contract in full, and continue at
+  the first phase whose D### is not yet in DECISIONS.md.
 - **Last-touched commit:** the P0c charter commit (this edit).
 - **History:** opened 2026-07-18 (overnight) by Claude Code (Fable 5) under Aaron's
   ARC 2 overnight charter directive; ledger-only first per the D456 precedent.

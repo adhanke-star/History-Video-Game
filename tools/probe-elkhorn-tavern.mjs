@@ -235,16 +235,47 @@ const SETUP = `(() => {
       return { forbidden:0 };
     });
 
-    check('LEETOWN + NATIVE ABSENCE: teaching names the omitted actors, but no Leetown/Wilson/Glorieta/Red River scenario and no Native formation enters the Elkhorn OOB', function() {
+    /* D460 CHAIN (LANE-013 P2; Aaron's D455 SS3 row 7 unlock amends the D359 carve-out): the
+       old tooth barred ANY Native formation from the Elkhorn OOB. The registry-absence half is
+       KEPT (no Leetown/Wilson/Glorieta/Red River scenario may exist). The fielded-Native half
+       FLIPS to the sourced-fielding contract: phase 1 (March 7, the Elkhorn axis while both
+       Cherokee regiments fought at Leetown) fields NO Native formation; phase 2 (March 8)
+       fields EXACTLY Watie's 2nd Cherokee Mounted Rifles at its sourced Big Mountain station,
+       two placement families named in its note (Shea & Hess + Goodspeed), Watie a COLONEL;
+       Drew's 1st CMR is NEVER a combat marker (every account agrees it saw no combat March 8)
+       and its non-combat station lives in the phase-2 transition record; teaching cards 8-10
+       stay byte-identical to the D388 corpus (md5-pinned). */
+    check('LEETOWN SCOPE + D460 CHEROKEE FIELDING: registry absence holds; phase 1 fields no Native formation; phase 2 fields exactly Watie 2nd CMR two-source; Drew never a combat marker; cards 8-10 byte-identical', function() {
       var reg = fldScenarioRegistry(), keys = Object.keys(reg);
       if (keys.some(function(k){ return /leetown|wilson|glorieta|redriver|redRiver/i.test(k); })) throw new Error('teaching/queued battle leaked into registry: ' + keys.join(','));
-      DATA.phases.forEach(function(p){ phaseUnits(p).forEach(function(row){
+      var NATIVE_RE = /Cherokee|Mounted Rifles|Stand Watie|John Drew|Pike.?s brigade|Indian Brigade/i;
+      phaseUnits(DATA.phases[0]).forEach(function(row){
         var text = [row.u.name,row.u.commander,row.u.note,row.u.entry].join(' ');
-        if (/Cherokee|Mounted Rifles|Stand Watie|John Drew|Pike.?s brigade|Indian Brigade/i.test(text)) throw new Error('Native formation fielded: ' + row.u.id);
-      }); });
+        if (NATIVE_RE.test(text)) throw new Error('Native formation fielded on the March 7 Elkhorn axis (they fought at Leetown): ' + row.u.id);
+      });
+      var natives = [];
+      phaseUnits(DATA.phases[1]).forEach(function(row){
+        var text = [row.u.name,row.u.commander,row.u.note,row.u.entry].join(' ');
+        if (NATIVE_RE.test(text)) natives.push(row.u);
+      });
+      if (natives.length !== 1 || natives[0].id !== 'cs_et_watie_2cmr') throw new Error('phase 2 must field exactly cs_et_watie_2cmr: ' + natives.map(function(u){ return u.id; }).join(','));
+      var w = natives[0], note = String(w.note || '');
+      if (w.commander !== 'Col. Stand Watie') throw new Error('Watie must carry the exact colonel grade: ' + w.commander);
+      if (w.name.indexOf('2nd Cherokee Mounted Rifles') < 0) throw new Error('the Pea Ridge-date SECOND designation is law: ' + w.name);
+      if (note.indexOf('Shea & Hess') < 0 || note.indexOf('Goodspeed') < 0) throw new Error('the two-source placement rows are missing from the Watie note'); // D460_BIND_SOURCE
+      if (note.indexOf('Inferred placement') < 0 || note.indexOf('Inferred strength') < 0) throw new Error('the Inferred placement/strength disclosures are missing');
+      var drewCombat = [];
+      DATA.phases.forEach(function(p){ phaseUnits(p).forEach(function(row){ if (/John Drew|Drew's 1st|1st Cherokee/i.test([row.u.name,row.u.commander,row.u.note].join(' ')) && row.u.id !== 'cs_et_watie_2cmr') drewCombat.push(row.u.id); }); });
+      if (drewCombat.length) throw new Error('Drew must never be a combat marker (refuted placement): ' + drewCombat.join(','));
+      var lead = String(DATA.phases[1].transition && DATA.phases[1].transition.lead || '');
+      if (!/Drew's 1st Cherokee Mounted Rifles/.test(lead) || !/no combat/i.test(lead)) throw new Error('the Drew non-combat station record is missing from the phase-2 transition');
+      var s810 = JSON.stringify(((DATA.teaching && DATA.teaching.cards) || []).slice(7,10)), h810 = 2166136261;
+      for (var ci = 0; ci < s810.length; ci++) { h810 ^= s810.charCodeAt(ci); h810 = Math.imul(h810, 16777619); }
+      var cards810 = (h810 >>> 0).toString(16) + ':' + s810.length;
+      if (cards810 !== '68d30a4:3234') throw new Error('teaching cards 8-10 moved (must stay byte-identical to the D388 corpus; the parsed-JSON md5 is 4abd77c94ede36077976054fba3f3cfe): ' + cards810);
       var teaching = JSON.stringify((DATA.teaching && DATA.teaching.cards) || []);
       if (!/Leetown/.test(teaching) || !/Watie|Cherokee/.test(teaching) || !/scalp/i.test(teaching)) throw new Error('mandatory dignity teaching missing');
-      return { fieldedNative:false, teaching:true };
+      return { fieldedNative:'cs_et_watie_2cmr', drewCombat:false, cards810:cards810, teaching:true };
     });
 
     check('REGISTERED LAUNCH: both objectives, roles, fog states, opening casts, and reinforcement schedules initialize and fire exactly once without NaN', function() {
@@ -259,7 +290,7 @@ const SETUP = `(() => {
       __FIELD.phaseIdx = 1; _fldBuildPhase(1);
       if (__FIELD.attacker !== 'US' || __FIELD.defender !== 'CS' || __FIELD.fog !== false || __FIELD.objective.name.indexOf('Elkhorn Tavern') < 0) throw new Error('phase-2 launch contract wrong');
       var base2 = __FIELD.units.length, sched2 = (__FIELD.reinforce || []).slice();
-      if (base2 !== 9 || sched2.length !== 1 || sched2[0].spec.id !== 'cs_et_greer' || sched2[0].atSec !== 40) throw new Error('phase-2 opening/schedule wrong: ' + base2 + '/' + JSON.stringify(sched2));
+      if (base2 !== 10 || sched2.length !== 1 || sched2[0].spec.id !== 'cs_et_greer' || sched2[0].atSec !== 40) throw new Error('phase-2 opening/schedule wrong: ' + base2 + '/' + JSON.stringify(sched2));   // D460: 9 -> 10 — Watie's 2nd CMR joins the phase-2 opening OOB (D455 SS3 row 7)
       __FIELD.phase = 'battle'; __FIELD.t = 99999; fldScenarioTick(0.05); fldScenarioTick(0.05);
       if (__FIELD.units.length !== base2 + 1) throw new Error('phase-2 reinforcement duplicated or missing: ' + __FIELD.units.length);
       var bad = nanScan(); if (bad) throw new Error('NaN in ' + bad);
@@ -317,24 +348,24 @@ const SETUP = `(() => {
       return { cards:cards.length, codex:codex.id, weather:{ sky:w.sky, time:w.time, provenance:w.provenance } };
     });
 
-    check('ARMY REGISTER PIN: 15 Elkhorn side-unit ids produce exact cmd/nco/pvt trios and current total 1614', function() {
+    check('ARMY REGISTER PIN: 16 Elkhorn side-unit ids produce exact cmd/nco/pvt trios and current total 1617', function() {
       var C = { side:'US', iron:false, idx:0, funds:6500, recovery:false, completed:[], roster:[], nextId:1,
         stats:{ battles:0, won:0, infl:0, suff:0 }, recoveryLossCount:0, recoveryMode:false, flipAtk:false, captured:[] };
       if (typeof _t1InitAll === 'function') _t1InitAll(C);
       var reg = ssPersonRegistry(C), rows = [], groups = {};
-      if (reg.people.length !== 1614) throw new Error('Army Register total is ' + reg.people.length + ', expected 1614');   // D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots; Elkhorn's own 45-row/15-unit teeth remain stable. D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots.
+      if (reg.people.length !== 1617) throw new Error('Army Register total is ' + reg.people.length + ', expected 1617');   // D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots; Elkhorn's own 45-row/15-unit teeth remain stable. D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots. D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots; Elkhorn's own teeth move 45->48 rows / 15->16 units.
       for (var i = 0; i < reg.people.length; i++) {
         var p = reg.people[i], origin = p.replaces || p.pid;
         if (typeof origin === 'string' && origin.indexOf('ss:elkhornTavern:') === 0) rows.push(origin);
       }
-      if (rows.length !== 45) throw new Error('Elkhorn rows are ' + rows.length + ', expected 45');
+      if (rows.length !== 48) throw new Error('Elkhorn rows are ' + rows.length + ', expected 48');   // D460: 45 -> 48
       rows.forEach(function(origin){
         var m = origin.match(/^ss:elkhornTavern:(US|CS):([^:]+):(cmd|nco|pvt)$/);
         if (!m) throw new Error('bad Elkhorn slot id ' + origin);
         var key = m[1] + ':' + m[2]; groups[key] = groups[key] || {}; groups[key][m[3]] = 1;
       });
       var keys = Object.keys(groups);
-      if (keys.length !== 15) throw new Error('Elkhorn unit groups are ' + keys.length + ', expected 15');
+      if (keys.length !== 16) throw new Error('Elkhorn unit groups are ' + keys.length + ', expected 16');   // D460: 15 -> 16
       keys.forEach(function(k){ if (!groups[k].cmd || !groups[k].nco || !groups[k].pvt) throw new Error('incomplete trio ' + k); });
       return { total:reg.people.length, elkhornRows:rows.length, units:keys.length };
     });

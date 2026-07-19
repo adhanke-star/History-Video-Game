@@ -538,8 +538,8 @@ step("EXCLUSIONS + BASELINES", () => {
 
   if (t1Count !== 26) throw new Error("scenario baseline must be 26, got " + t1Count);   // D436: 24 -> 25 — Atlanta registers at rank 71. D442: 25 -> 26 — Cold Harbor registers at rank 68.5
   if (schemaCount !== 59) throw new Error("schema/data baseline must be 59, got " + schemaCount);   // D436: 54 -> 56 — mayhem-rules.json (D418, pin missed then) + atlanta.json (D436); documented honestly. D442: 56 -> 57 — cold-harbor.json. D445: 57 -> 58 — chief-of-staff.json (GEA-08). D446: 58 -> 59 — concept-links.json (GEA-10)
-  if (!/people\.length\s*!==\s*1614/.test(loot) || !loot.includes("1614 of 1614")) {
-    throw new Error("Army Register 1614 pins missing");
+  if (!/people\.length\s*!==\s*1617/.test(loot) || !loot.includes("1617 of 1617")) {   // D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7) adds 1 unique side-unit id x 3 slots (the AD-7 chain idiom)
+    throw new Error("Army Register 1617 pins missing");
   }
   if (!saveVersionOne) throw new Error("_SAVE_VER moved from 1");
   if (baseHash !== "c9db83fa99230ffb95bdfdfe059f3fb9") {
@@ -909,7 +909,10 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
     command:"8f12c49f7129b3a9be0203677822e048",
-    focused:"a29a53516ea00c7a2f3aa4602c786dc8",
+    // D460 re-pin (the AD-7 idiom): focused a29a5351 -> 2816a82c — probe-war-career.mjs
+    // carries the D460 register chain (1614 -> 1617, Elkhorn Cherokee OOB); the war-career
+    // runtime surface itself did NOT move.
+    focused:"2816a82c216f46d16a53f81c0220a425",
     commandProbe:"5ffd40fd221179f2e01cad59ef43bf7d"
   };
   for (const key of Object.keys(expected)) {
@@ -1139,8 +1142,8 @@ step("BASELINES + LANE", () => {
   if (t1Count !== 26 || schemaCount !== 59) {   // D436: 24/54 -> 25/56 (atlanta + the D418 mayhem-rules pin catch-up). D442: 25/56 -> 26/57 (cold harbor). D445: 57 -> 58 (chief-of-staff.json). D446: 58 -> 59 (concept-links.json; scenarios stay 26)
     throw new Error("scenario/schema baseline moved: " + t1Count + "/" + schemaCount);
   }
-  if (!/people\.length\s*!==\s*1614/.test(loot) || !loot.includes("1614 of 1614")) {
-    throw new Error("Army Register 1614 pins missing");
+  if (!/people\.length\s*!==\s*1617/.test(loot) || !loot.includes("1617 of 1617")) {   // D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7) adds 1 unique side-unit id x 3 slots (the AD-7 chain idiom)
+    throw new Error("Army Register 1617 pins missing");
   }
   if (rosterExpected.length !== 26 || builderExpected.length !== 26 ||   // D442: 25 -> 26 — coldHarbor inserts between spotsylvania and petersburgAssaults
       normalize(rosterExpected.join(" ")) !== normalize(builderExpected.join(" "))) {
@@ -1180,9 +1183,13 @@ step("BASELINES + LANE", () => {
     // and dataTree 379d4223 -> 8647e586 (D457 Historical no-quarter unlock — the declared
     // `no-quarter-historical` consequence-only action in data/mayhem-rules.json + the
     // src/107/33/34/62/82 slice, rebuild). base/manifest/suite did NOT move.
-    game:"a6cbfd2dde97653049415dd7e078ce3e",
+    // D460 chain (the AD-7 idiom): game a6cbfd2d -> 7c13850e and dataTree 8647e586 -> d1c6557f
+    // — LANE-013 P2 Elkhorn Cherokee OOB (data/elkhorn-tavern.json only: Watie's 2nd CMR
+    // phase-2 unit + source rows + the Drew transition record; rebuild). base/manifest/suite
+    // and srcTree did NOT move.
+    game:"7c13850e7f340f1ab7cc9227423d7340",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
-    dataTree:"8647e5864985b497161dd637bec85be0",
+    dataTree:"d1c6557fd93cd0fd9eee4fafe54b7381",
     manifest:"bb5d7903507c8fccf53addf981c2023e",
     suite:"edba2bd930922a27414e07173a64296b"
   };
@@ -1578,12 +1585,17 @@ step("REACHABILITY BASELINES", () => {
     // dataTree 379d4223 -> 8647e586, srcTree 28d894d9 -> 41ee94b1 (D457 Historical
     // no-quarter unlock — data action + src/107/33/34/62/82 + rebuild);
     // runtime/journey/focused did NOT move — the war-career surface held.
-    game:"a6cbfd2dde97653049415dd7e078ce3e",
-    dataTree:"8647e5864985b497161dd637bec85be0",
+    // D460 re-pin (the AD-7 idiom, at the LANE-013 P2 head): game a6cbfd2d -> 7c13850e,
+    // dataTree 8647e586 -> d1c6557f (Elkhorn Cherokee OOB, data-only + rebuild);
+    // srcTree/runtime/journey/focused did NOT move — the war-career surface held.
+    game:"7c13850e7f340f1ab7cc9227423d7340",
+    dataTree:"d1c6557fd93cd0fd9eee4fafe54b7381",
     srcTree:"41ee94b16ef420b480a041d1b49bdfd1",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
-    focused:"a29a53516ea00c7a2f3aa4602c786dc8"
+    // D460 re-pin: focused a29a5351 -> 2816a82c (the war-career focused probe's register
+    // chain moved 1614 -> 1617 with the Elkhorn Cherokee OOB; runtime surface untouched).
+    focused:"2816a82c216f46d16a53f81c0220a425"
   };
   for (const key of Object.keys(expected)) {
     if (hashes[key] !== expected[key]) throw new Error("D411 shipped baseline moved: " + key + " " + hashes[key]);
