@@ -2230,16 +2230,69 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
-### LANE-013 · content-unlocks — **DRIVE (P1-P3 + the P4 spec SHIPPED as D459-D462; the P4 RUNTIME session holds the lock)** (ARC 2 of the D455 roadmap)
+### LANE-013 · content-unlocks — **CONTRACT (P1-P3 + the P4 spec SHIPPED as D459-D462; P4-runtime recon + data draft banked; lock RELEASED at the safe-stop boundary)** (ARC 2 of the D455 roadmap)
 
-- **Owning tool:** Claude Code (Fable 5 — within Aaron's authorized window through
-  2026-07-19; DRIVE re-taken at the `caaa72a` clean boundary for the P4 runtime →
-  P5 specs → P6 battery ladder, this commit). Prior DRIVE ran `3506716` →
-  D459 `0127cc7` (+`1af86ee`/`aa41dec`) → D460 `a2b0484` → D461 `ea1f714` → D462
-  `045a50b`; lock was released at the D462 boundary and is re-taken here.
-- **State:** DRIVE — the remaining phases (P4 runtime · P5 specs · P6 battery) carry
-  their full committed contracts (this entry + the D462 spec §8-§9); this session
-  drives them in order.
+- **Owning tool:** unowned (the Claude Code / Fable 5 lock — DRIVE re-taken at
+  `caaa72a` (`f94d3b9`) for the P4 runtime — was RELEASED the same day at Aaron's
+  save-and-push safe-stop instruction, before any main-branch code move. Prior DRIVE
+  ran `3506716` → D459 `0127cc7` (+`1af86ee`/`aa41dec`) → D460 `a2b0484` → D461
+  `ea1f714` → D462 `045a50b`.)
+- **State:** CONTRACT — the remaining phases (P4 runtime · P5 specs · P6 battery)
+  carry their full committed contracts (this entry + the D462 spec §8-§9), so ANY
+  tool can drive from here.
+- **P4 SAFE-STOP BANK (2026-07-18 evening; adopt, don't redo):**
+  1. **The authored `data/fort-pillow.json` draft is committed on the pushed WIP
+     branch `lane-013-p4-wip` (`c7ee774`) — NEVER merge that branch;** restore the
+     file into the runtime session's working tree with
+     `git checkout lane-013-p4-wip -- data/fort-pillow.json` and land it inside the
+     ONE atomic P4 commit on main (spec §8). Main stays green until then (the schema
+     gate fails closed on an unregistered data file by design). Encoding decisions
+     recorded in the draft: US garrison NPS 557 encoded 535 — the roster gun-model
+     tooth caps artillery crews at 40/gun, so `us_fp_6uscha` carries 240 of its ~262
+     (guns 6, residual disclosed in the unit note); CS encoded 1,500 (Cimprich; range
+     1,500-2,500 disclosed) split 720/720/60 McCulloch/Bell/sharpshooters, all
+     dismounted (arm `inf`, disclosed); `learnMeta` `{1,[5,15],[works-assault,
+     assault-pacing,defense-hold],chattanooga}`; menu rank 66; no massacre content.
+  2. **P4 recon addendum — pin sites BEYOND the D462 §8 inventory, all found by
+     grep this session:** menu rank chain in `src/tactical/T1-bull-run.js` (registry
+     line + `fortPillow: 66` between chattanooga 65 and wilderness 67);
+     `src/tactical/T10-flags.js` `_FLD_BATTLE_META` needs `fortPillow: { theater:
+     "W", badges: false, csFlag: "anv" }` with an Inferred-representative-family
+     disclosure comment; **probe-wilderness.mjs** re-pins THREE ways (registry count
+     26→27 line 141, the chattanooga→wilderness ADJACENCY tooth line 143 — fortPillow
+     inserts between them, and the DOM button-adjacency tooth line 245);
+     registry-count 26→27 also pins in probe-five-forks 135, probe-spotsylvania
+     153-155, probe-petersburg-initial-assaults 151-153, probe-flags 325
+     (metaCoverage — needs the T10 row), probe-intel-uhd617-profile 509 (Fort Pillow
+     opens 5 units; Kennesaw's 17 keeps the crown), probe-mayhem-mode 1026-1032
+     (dataCount 59→60 · rosterIds/builderIds 26→27 · suiteCount 137→138; mayhemRow 57
+     + warCareerRow 38 hold), probe-women-in-war-arc-plan 244; suite 137→138 also
+     pins in probe-war-career 69/2583/2662/2670; register 1617→1632 pins at the 13
+     battle probes (atlanta 200 · cedar-creek 314 · cold-harbor 216 · cross-keys 267
+     · elkhorn 356 · five-forks 223 · fort-donelson 316 · gaines-mill 241 ·
+     new-market-heights 288 · petersburg 240 · spotsylvania 254 · stones-river 269 ·
+     wilderness 217) + probe-war-career 1820/1942 + probe-loot-survival 791/810
+     (**KEEP the "D460: 1614 -> 1617 … Cherokee" chain text there —
+     probe-elkhorn-tavern-plan 778 pins that literal**); the two lane-grepping plan
+     probes re-pin PIN/expectedHashes (open-history-plan: game+suite md5s move,
+     base/manifest hold, scenarios 27 · schemas 60 · armyRegister 1632 · suiteRows
+     138, loot-scan 1632 at 319; war-career-loop-plan: suite 138 at 509/559/1152,
+     scenarios 27 + schemas 60 at 539-540/1142, loot 1632 at 541/1145,
+     roster/builder EXPECTED 27 at 1148, hashes — game/dataTree/srcTree/suite md5s
+     move and `focused` (probe-war-career.mjs md5) moves at BOTH sites;
+     runtime/journey/command/commandProbe/t2/t3/auto/base/manifest hold) — re-run
+     both AFTER the commit; the ten-probe absence-tooth flips keep the
+     fortHenry/naval/leetown/kernstown-family halves and the OTHER SPECS' historical
+     sentences (plan-probe `mustInclude` spec-text pins are NOT touched — the
+     fort-pillow spec §1 records the supersession). probe-cold-harbor.mjs is the
+     authoring template for probe-fort-pillow.mjs; the no-quarter machinery teeth
+     reuse probe-mayhem-mode's fixture idioms (the `_MH_BASE_CAMPAIGN_ADVANCE`
+     override for the offer-stamp A/B; fixture historical actions injected into
+     `GAME_DATA["mayhem-rules"].actions` with restore) with battleId `fortPillow`.
+  3. **Direction-battery risk (the one open build lever):** if CS-seizes <5/8 or
+     US-losses-exceed-CS <5/8 at the fair 1,500 baseline, move CS strength WITHIN
+     the sourced range toward NPS's 2,500 with the change documented in data note +
+     probe pins in the same commit — never a multiplier (spec §3).
 - **Design law:** `docs/design/unlocked-but-judged-design.md` §3 rows 6-8 + §4b + §7 (THE
   LAW for this arc) · DECISIONS D455 (the popup-locked unlock decisions: Fort Pillow
   playable BOTH sides honest treatment, amends D135/D382 taught-only; Leetown Cherokee
@@ -2372,7 +2425,8 @@ next green commit and confer through this ledger instead of permitting simultane
   AD-7 re-pins. Whoever resumes mid-ladder: run the P0a startup check, read this
   contract in full, and continue at the first phase whose D### is not yet in
   DECISIONS.md.
-- **Last-touched commit:** the P0c charter commit (this edit).
+- **Last-touched commit:** the safe-stop lock-release commit (this edit; the P4 data
+  draft is banked on the pushed WIP branch `lane-013-p4-wip` @ `c7ee774`).
 - **History:** opened 2026-07-18 (overnight) by Claude Code (Fable 5) under Aaron's
   ARC 2 overnight charter directive; ledger-only first per the D456 precedent. Same
   session: P1 shipped as D459 (`0127cc7`; + the incidental schema-gate root-fix
@@ -2381,7 +2435,12 @@ next green commit and confer through this ledger instead of permitting simultane
   P3 shipped as D461 (`ea1f714`); the P4 SPEC committed as D462 (`045a50b`) with the
   runtime deliberately queued at the clean boundary (the charter's own budget rule);
   P5/P6 deferred honestly; lane flipped DRIVE → CONTRACT and the lock released at
-  closeout. LANE-012 was NOT touched (rests at VERIFY, battery-only).
+  closeout. LANE-012 was NOT touched (rests at VERIFY, battery-only). 2026-07-18
+  evening: a Claude Code (Fable 5) session re-took DRIVE at `f94d3b9`, completed the
+  full read order + the P4 pin-site recon, authored the `data/fort-pillow.json`
+  draft, then RELEASED the lock at Aaron's save-and-push safe-stop instruction —
+  recon + draft banked above and on `lane-013-p4-wip`; no main-branch code moved;
+  main stays green at every gate.
 
 ---
 
