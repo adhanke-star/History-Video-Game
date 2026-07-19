@@ -389,8 +389,13 @@ async function main() {
   const url = cfg.baseUrl + '/' + cfg.file;
   const result = { ok:false, steps:[], pageerrors:[] };
   try {
-    const forbiddenFiles = readdirSync(join(ROOT, 'data')).filter(f => /pillow|fort-henry|forthenry|hampton|mobile-bay/i.test(f));
+    /* D466 split (the battery sweep): the old scan refused fort-pillow with the fort-henry/naval
+       teaching-only files. fortPillow is REGISTERED per D455 SS3 row 6 / D463 — its half flips to
+       exactly-one-file-present; the fort-henry/hampton/mobile-bay halves are KEPT unchanged. */
+    const forbiddenFiles = readdirSync(join(ROOT, 'data')).filter(f => /fort-henry|forthenry|hampton|mobile-bay/i.test(f));
     if (forbiddenFiles.length) throw new Error('teaching-only lane data file present on disk: ' + forbiddenFiles.join(', '));
+    const pillowFiles = readdirSync(join(ROOT, 'data')).filter(f => /pillow/i.test(f));
+    if (pillowFiles.join(',') !== 'fort-pillow.json') throw new Error('expected exactly data/fort-pillow.json on disk (registered per D455 SS3 row 6 / D463): ' + pillowFiles.join(', '));
     const rail = JSON.parse(readFileSync(join(ROOT, 'data', 'logistics-rail.json'), 'utf8'));
     const route = rail.routes && rail.routes.ftdonelson;
     if (!route || route.label !== 'Cumberland-Tennessee river-rail junctions' || route.theater !== 'W' || !route.friction || route.friction.US !== 10 || route.friction.CS !== 15)

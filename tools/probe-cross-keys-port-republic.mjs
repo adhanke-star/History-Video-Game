@@ -364,12 +364,17 @@ async function main() {
     const port = Array.from(base.matchAll(/\{id:"portrepublic"/g)).length;
     const rail = JSON.parse(readFileSync(join(ROOT, "data", "logistics-rail.json"), "utf8"));
     const railRoutes = Object.keys(rail.routes || {}).filter(key => /crosskeys|portrepublic|cross.?keys|port.?republic/i.test(key));
-    const dignityFiles = readdirSync(join(ROOT, "data")).filter(f => /fort.?pillow|leetown/i.test(f));
-    const classicOk = cross === 1 && port === 1 && railRoutes.length === 0 && dignityFiles.length === 0;
+    /* D466 split (the battery's exact-label red): the old scan refused fort-pillow AND leetown
+       data files together. fortPillow is REGISTERED per D455 SS3 row 6 / D463 — the fort-pillow
+       half flips to exactly-one-file-present; the leetown half is KEPT (D460 fields the Cherokee
+       inside the shipped Elkhorn battle, never as leetown data). The D397/D454 split idiom. */
+    const leetownFiles = readdirSync(join(ROOT, "data")).filter(f => /leetown/i.test(f));
+    const pillowFiles = readdirSync(join(ROOT, "data")).filter(f => /fort.?pillow/i.test(f));
+    const classicOk = cross === 1 && port === 1 && railRoutes.length === 0 && leetownFiles.length === 0 && pillowFiles.join(",") === "fort-pillow.json";
     result.steps.push({
       name:"CLASSIC + DIGNITY LAYERS: frozen crosskeys/portrepublic stay separate, no rail route or forbidden data file appears",
       ok:classicOk,
-      v:{ classicRows:{ crosskeys:cross, portrepublic:port }, tacticalId:"crossKeysPortRepublic", railRoutes, dignityFiles }
+      v:{ classicRows:{ crosskeys:cross, portrepublic:port }, tacticalId:"crossKeysPortRepublic", railRoutes, leetownFiles, pillowFiles }
     });
     if (!classicOk) throw new Error("Classic/dignity layer contract changed");
     /* D461 SCORED-LIFT TOOTH (LANE-013 P3; D455 SS3 row 8): the spec must carry the lift
