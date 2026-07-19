@@ -2448,37 +2448,224 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
-### LANE-014 · graphics-uplift — **LAW-DRAFT (chartered ledger-only at the D465 boundary; unowned)** (ARC 3 of the D455 roadmap)
+### LANE-014 · graphics-uplift — **DRIVE (the acceptance contract ratified 2026-07-19; owner Claude Code / Fable 5)** (ARC 3 of the D455 roadmap)
 
-- **Owning tool:** unowned (chartered ledger-only by Claude Code / Fable 5, 2026-07-19
-  overnight, per the maximizer's [IF-ROOM] item 1; NO code, NO probe, NO data moved).
-- **State:** LAW-DRAFT — the design law exists (D455 §7's ARC 3 lock, Aaron-adopted
-  after reviewing the live tactical renders); the ACCEPTANCE CONTRACT does not yet.
-  A future session must write this lane's full contract (slices, teeth, binds, gates)
-  and flip it to CONTRACT before ANY implementation may start — the D456 ledger-only
-  charter precedent.
-- **Design law:** DECISIONS D455 §7 (ARC 3 — the GRAPHICS UPLIFT, Phase H promoted:
-  Tripo/CC-BY models, terrain texturing, HDRI, ground-level camera, formation LOD) ·
-  the standing media/license/perf gates (no unclear-license assets; the D455 $0-public
-  build law — license-incompatible sources like Google Maps stay OUT; the
-  probe-intel-uhd617-profile perf wall + the media-budget policy are binding teeth) ·
-  frozen `build/base.html` (the uplift wires through live src owners, never the frozen
-  foundation) · D74 (graphics never touch simulation inputs) · the D412 docs law.
-- **Scope sketch (NOT a contract; the future charter refines):** model sourcing/license
-  audit → terrain texturing → lighting/HDRI → camera → formation LOD/perf — each slice
-  its own D### with focused gates, screenshot/artifact evidence, and perf teeth on the
-  Intel UHD 617 floor.
+- **Owning tool:** Claude Code (Fable 5) — DRIVE taken with THIS committed contract edit
+  (Aaron's queue pick (a), 2026-07-19 morning session). The §4 TOP-LOOP role resolution,
+  stated once: the closeout kickoff named Opus 4.8 as the expected Claude tier; Fable 5
+  is the best model the tool offers today and Aaron confirmed driving on it.
+- **State:** DRIVE — this entry IS the acceptance contract. LAW-DRAFT → CONTRACT → DRIVE
+  in this one ledger-only commit (the LANE-013 `3506716` precedent: contract prose only;
+  no code, data, or probe file moves in this commit — teeth land with the fixes that
+  green them, §1).
+- **Design law:** DECISIONS D455 §7 + packet `docs/design/unlocked-but-judged-design.md`
+  §7 ARC 3 (THE LAW: Tripo/CC-BY unit models · terrain texturing · HDRI lighting ·
+  ground-level camera polish · formation-figure density/LOD — "every slice under the
+  media-budget guard + license/perf/accessibility gates") · the D398 appended [AARON]
+  Tripo authorization (qualifying Tripo Free/public outputs under CC BY 4.0 for this
+  personal noncommercial game; no paid credits; it "authorizes provenance, not automatic
+  enablement" — every file still passes the local-file/license/path/GLB/geometry/
+  importer/browser/perf/accessibility/visual gates before its slot enables) · the
+  standing walls: no unclear-license assets + the D455 $0-public build law · D74
+  (graphics never touch simulation inputs) · frozen `build/base.html` (NEVER edited; it
+  owns `THREE_BASE` = three@0.128.0 on jsdelivr, whose examples tree already enrolls
+  GLTFLoader + RGBELoader, base.html 10498-10499) · `_SAVE_VER=1` · the D412 docs law ·
+  the D458 regex-literal-aware scanner for any comment-stripped scan.
+- **ERRATA (recorded at charter):** the packet §7 mapping table's "ARC 3 loot content
+  packs" cell and its R-7 rider row ("Flag at charter time") conflict with the packet's
+  own arc list — the locked backbone — which places loot/content-pack work in ARC 4/
+  ARC 6 and the R-7 reconsideration with ARC 4's badge coverage sweep. ARC 3 is the
+  GRAPHICS UPLIFT ONLY; the R-7 flag is hereby recorded and routed to ARC 4's charter.
+  Neither rider enters this lane.
+- **CHARTER ADJUDICATIONS (recorded at charter recon, run `wf_1c520994-6d8`; do not
+  re-litigate):**
+  1. **THREE stays 0.128.0.** Frozen `build/base.html` owns the library and the CDN-only
+     post-script law (its own comment: scripts load from the SAME jsdelivr
+     three@0.128.0 tree). No library upgrade, no ACES/sRGB colour-management flip — the
+     T21 docstring precedent (r128 + the T16/T17 raw-`gl_FragColor` ShaderMaterials)
+     stands for the whole arc.
+  2. **Progressive-enhancement law.** Every uplift layer is optional presentation: asset
+     or CDN absence ⇒ byte-identical CURRENT visuals (the T23 disabled-slot/fallback
+     pattern generalized; the base `__M3D` flat-sky fallback at base.html 10742 is the
+     idiom). The offline single-file deliverable keeps working exactly as today; the
+     public Pages deployment serves `assets/3d/` alongside. Per-slice fail-closed teeth
+     pin this.
+  3. **Graphics bytes NEVER enter the embed pipeline.** The six D300-frozen embed
+     categories sit at ZERO headroom and raw embed has only 348,121 bytes to the
+     review-warn gate (2,535,463 of 2,883,584; hard cap 3,145,728). `assets/3d/` gets
+     its OWN budget wall instead: a new `assets3d` policy block in
+     `data/media-budget.json` + `tools/probe-media-budget.mjs` steps enumerating
+     `assets/3d/` 1:1 against a provenance ledger with hard total/per-class/per-file
+     caps (slice 1). The exact cap numbers are set from slice 1's audit evidence IN the
+     slice-1 commit; the STRUCTURE is law here, and caps only move thereafter with a
+     documented chain.
+  4. **The terrain-texture license exposure (FOUND AT CHARTER — the slice-1
+     centerpiece).** `assets/3d/` already ships 31 TRACKED files (~111 MB) in the PUBLIC
+     repo: 3 env HDRIs the README credits as Poly Haven CC0, and 27 terrain PBR PNGs
+     (~98 MB, 2K) with NO recorded provenance anywhere. Under the no-unclear-license
+     wall, slice 1 audits every file to license grade (per-file source URL + license +
+     verification, the `assets/*-imagery-provenance.json` pattern); any file that cannot
+     be verified DIES (removed from the repo — an unverifiable claim dies). Oversized
+     maps may be re-encoded for the UHD617 floor within the new wall, method + bytes
+     disclosed.
+  5. **Terrain heights stay ANALYTIC.** `fldTerrainH` is untouched and vertex Y never
+     moves — probe-visual-fidelity's vertex-Y==fldTerrainH tooth stays green UNAMENDED
+     through the whole arc. Texturing is colour/normal-space only. Unit seating, cover,
+     and mobility read the analytic terrain: D74 holds by construction.
+  6. **The suite stays 138 through the arc.** Every new tooth lands in an EXISTING
+     graphics-row owner (`media budget` · `intel uhd617 profile` · `terrain readability`
+     · `visual fidelity` · `render richness` · the two `tripo` rows · `formation
+     figures` · `weather` · `atmospherics` · `tactical visuals`). No suite-count pin
+     cascade. If a future slice genuinely needs a new row, that slice's D### records the
+     append-at-END + the full pin-chain inventory the D463 way.
+  7. **AD-7 plan-probe re-pins every slice.** Every slice moves game + dataTree and/or
+     srcTree md5s; new T-modules touch `src/00-manifest.json`, moving the manifest pins
+     that some sites hold. The two suite-excluded lane-grepping plan probes
+     (probe-open-history-mayhem-plan, probe-war-career-loop-plan) re-pin the AD-7 chain
+     way IN each slice's commit and re-run AFTER it — the standing LANE-013
+     adjudication 4, carried forward verbatim.
+  8. **The perf walls are BINDING and their caps LOCKED.** Low-tier draw calls ≤ 360,
+     low-tier scene objects ≤ 1400 (E68 pins the cap VALUES themselves), atmoSmoke
+     drawRange ≤ 84, zero pageerrors + zero texture-update warnings, canvas
+     non-blank/variety floors; the structural instancing assertions (shared instanced
+     figures/markers/shadows, no resident selection rings) hold. Timing floors stay
+     warning-only (headless-GPU proxy, 8000 ms launch / 33.4 ms frame). NO cap is
+     raised to admit an uplift — fit inside the walls or the slice does not ship.
+  9. **The seam law.** All uplift runtime code lands in NEW `src/tactical/` T-modules
+     (next free number T32+), wrapping the T0 seams (`fld3dInit`/`fld3dBuildTerrain`/
+     `fld3dBuildUnits`/`fld3dSyncUnit`/`fld3dRender`/`fld2dDraw`/`fldExit`) by
+     reassignment with the `_carry` marker chain preserved, every hook try/caught into
+     the module's own errN. T0 function bodies and frozen base.html are never edited.
+     Every layer honors `renderRich="off"`, `fldLow()`, reduceMotion, and its own
+     settings gate with off⇒byte-identical teeth. Sibling-internal reaches
+     (fldRr/FLDVF/fldTr* style) stay forbidden per the T23 staticScan idiom.
+  10. **Model production is Aaron-gated and never blocks the lane.** Tripo Ultra
+     generation/download is a human/authorized-browser step (D398: free outputs,
+     CC BY 4.0, verify current terms at use time, no paid credits). The slot-enablement
+     workflow ships and is proven with FIXTURE assets regardless; real slots enable
+     one-by-one as audited files arrive, each behind the full import/license/budget/
+     probe chain (per-model caps stand: 1,500,000 bytes · 20,000 verts · 12,000 tris).
+- **Acceptance contract (the ARC 3 slice ladder — each slice its own D### + focused
+  gates + ≥2 predeclared binds with md5-proven byte-identical restores + commit `-F` +
+  push + HANDOFF top-block EXACT-NEXT amendment; the loop rule between slices:
+  clean/committed/pushed, plan probes re-run post-commit, context/usage check; browser
+  probes SERIALIZED on the 8 GB Mac or run in a full-access non-Seatbelt cloud
+  session):**
+
+  **SLICE 1 — the asset ledger, the license audit, and the assets3d budget wall
+  (adjudications 3+4).** Author the `assets/3d/` provenance ledger (per-file source
+  URL · author · license id · verification evidence · bytes; the imagery-provenance
+  pattern): verify the 3 HDRIs against Poly Haven CC0 records; establish or refute the
+  27 terrain PNGs' provenance (check `legacy/3D-ASSET-PLAN.md` + tools/shots recon
+  artifacts for their origin first); UNVERIFIABLE ⇒ REMOVED from the repo in this same
+  slice. Re-encode oversized maps for the UHD617 floor if the audit keeps them (method
+  + before/after bytes disclosed). Land the `assets3d` policy block + the
+  probe-media-budget enumeration/license/caps steps (1:1 file⇔ledger, no unledgered
+  file, no ghost row, every row license-clear, caps hold, embed budget untouched) and
+  the Tripo model-sourcing plan note (which units, what workflow, per adjudication 10).
+  Data edit ⇒ game/dataTree md5s move ⇒ the AD-7 re-pins ride the commit. — **Teeth
+  (owner `tools/probe-media-budget.mjs`):** enumeration 1:1 · per-row license-clear ·
+  caps hold · embed-side metrics unchanged. **Binds:** (a) flip one ledger row's
+  license to `pending` → the license step red EXACTLY; (b) drop an unledgered fixture
+  file under `assets/3d/` → the enumeration step red EXACTLY; both restored md5-proven.
+  Gates: focused probe-media-budget (fs-only) + adjacent `node
+  tools/import-tripo-unit-assets.mjs` + both plan probes re-run post-commit; no browser
+  probe needed unless src/* moves (none expected).
+
+  **SLICE 2 — terrain texturing (new module T32).** Audited albedo (+normal/rough only
+  if the chosen material supports them inside the perf walls) applied to the
+  `fld3dBuildTerrain` ground mesh, keyed to the analytic region predicates (the 9
+  terrain keys: clear/field/woods/hills/ridge/town/road/swamp/fort), BLENDED with the
+  preserved T18 grain + T21 AO vertex-colour passes (their idempotency latches and
+  teeth stay green or re-pin with documented chains in the same commit). A material
+  upgrade (Lambert→Phong/Standard) ONLY with profile evidence inside the walls.
+  Low-tier: off or one cheap map — profile decides. Vertex Y untouched (adjudication
+  5). Fail-closed: texture fetch absent/blocked ⇒ byte-identical current ground. —
+  **Teeth (owners probe-terrain-readability + probe-visual-fidelity +
+  probe-tactical-visuals canvas floors):** textured-path presence + region keying ·
+  off/absent byte-identity · relief/AO teeth green · canvas variety floors green.
+  **Binds:** (a) break the texture manifest path → fail-closed tooth proves
+  byte-identical fallback, presence tooth red EXACTLY; (b) strip the T32 wrap marker →
+  the carry-chain tooth red EXACTLY.
+
+  **SLICE 3 — HDRI sky + derived lighting (new module T33).** The audited env HDRIs
+  (day/dusk/overcast) load via the already-enrolled RGBELoader, keyed to weather/time
+  state; the T21 `vfSky` dome gains the equirect map with the live fog tint preserved
+  (the vfSky/fog-match teeth re-pin with documented chains in the same commit if their
+  exact assertions move); directional + hemisphere light values become
+  HDRI-palette-derived PRECOMPUTED constants (determinism — no live sampling). NO
+  PMREM/IBL world-material conversion (adjudication 1). Low-tier/reduceMotion: static
+  tint fallback; HDR absent/blocked ⇒ current gradient dome byte-identical. — **Teeth
+  (owner probe-visual-fidelity; adjacents probe-weather + probe-atmospherics):**
+  HDRI-sky presence per weather key · fog-tint coupling · off/absent byte-identity ·
+  zero texture-update warnings. **Binds:** (a) point one weather key at a missing .hdr
+  → fail-closed tooth proves the gradient dome, presence red EXACTLY; (b) decouple the
+  fog tint → the coupling tooth red EXACTLY.
+
+  **SLICE 4 — the ground-level camera (new module T34).** A settings-gated camera mode
+  (default OFF = today's orbit exactly): brigade-follow/ground-inspect through the
+  existing OrbitControls seam + the two T0 reposition sites (wrapped, never edited),
+  camera y clamped ≥ `fldTerrainH` + eye height, keyboard-operable, reduceMotion ⇒ no
+  damping/auto-glide. Any control addon must come from the SAME three@0.128.0 tree
+  (adjudication 1); prefer parameter-mode OrbitControls, no pointer lock. Mode off ⇒
+  byte-identical. — **Teeth (owner probe-visual-fidelity; adjacent
+  probe-tactical-visuals):** mode presence + terrain clamp + keyboard path ·
+  off byte-identity · sim byte-identity across the render burst. **Binds:** (a) break
+  the terrain clamp → the clamp tooth red EXACTLY; (b) leave the mode enabled by
+  default → the default-off tooth red EXACTLY.
+
+  **SLICE 5 — formation density/LOD + the Tripo slots (T24 extension + T23
+  enablement).** Distance-based figure LOD (near tier richer instanced detail; far tier
+  current; `fldLow()` tier UNCHANGED), INF_CAP density revisited INSIDE the hard walls,
+  the E20 no-per-frame-instanceColor-upload guard preserved; the slot-enablement
+  workflow proven with the fixture pack, then real audited CC-BY models enable
+  one-by-one (import gate + license fields + budget + probe-tripo + uhd617 green per
+  enablement; envMap on GLB materials only with profile evidence). — **Teeth (owners
+  probe-formation-figures + probe-tripo-unit-assets + probe-intel-uhd617-profile):**
+  LOD tier branch ×3 · E20 guard · pegs/slab/GLB three-way residency · draw-call/object
+  caps green on the largest scene. **Binds:** (a) force the near-LOD set resident at
+  low tier → the low-tier branch red EXACTLY; (b) enable a slot with license `pending`
+  → the import gate red EXACTLY (the shipped license wall bites).
+
+  **SLICE 6 — the ARC 3 release checkpoint.** The full serialized battery (suite 138;
+  `export TMPDIR="$PWD/.tmp"` · `npm run vet:noreg` ALONE on the machine · war-career
+  budget 900s · read EVERY artifact JSON · zero pageerrors) → on green flip this lane
+  SHIPPED with the battery SHA. Prefer a full-access cloud session for the battery; the
+  Mac fast-forwards after.
+- **Probe design (owners; how to run):** all teeth live in the existing graphics rows
+  (adjudication 6). Fs-only: probe-media-budget, import-tripo-unit-assets, both plan
+  probes. Browser (Playwright, `2>/dev/null`, `TMPDIR="$PWD/.tmp"`, one shared
+  `python3 -m http.server 8765`, serialized locally, artifact JSON READ every run):
+  probe-terrain-readability · probe-visual-fidelity · probe-render-richness ·
+  probe-tripo-unit-assets · probe-formation-figures · probe-weather ·
+  probe-atmospherics · probe-tactical-visuals · probe-intel-uhd617-profile.
+- **Per-slice gates (the standing law):** `node --check` on every touched JS/probe file
+  · `node tools/build.mjs` → GATE OK · the slice's focused probe(s) green with artifact
+  JSON read (ok + 0 pageerrors) · 1-3 adjacent probes · the slice's predeclared binds
+  with md5-proven restores · `git diff --check` · commit `-F` + push per slice · the
+  AD-7 plan-probe re-pin/re-run rule (adjudication 7) · HANDOFF top-block EXACT NEXT
+  amended at each boundary. NO full battery before slice 6 (D160/D176). Counts hold
+  27/60/1,632/138 through the whole arc unless a slice's own contract moves them with
+  documented chains (none is expected to).
 - **Standing queue behind this lane (recorded for the picker):** the CRATER RUNTIME
   (D464 spec §8-§9 is its law; its charter must carry the full re-pin inventory incl.
   the adjudication-2 forbidden-scan flips) and the OLUSTEE RUNTIME (D465 spec §8-§9) —
   each a one-commit build on the D463 pattern; they may charter before or after ARC 3
   work at Aaron's priority call.
-- **Resume pointer:** write the full acceptance contract (a fresh session, ledger-only
-  first), then take DRIVE. Nothing else may move under this lane until then.
-- **Last-touched commit:** this charter edit.
-- **History:** chartered 2026-07-19 (overnight) at the D465 boundary under the ARC 2
-  maximizer's [IF-ROOM] directive; the Crater-runtime option was declined the same
-  night under the charter's budget rule (the P6 battery outranks new runtimes).
+- **Resume pointer:** SLICE 1 (the asset ledger + license audit + assets3d wall). Start
+  at `legacy/3D-ASSET-PLAN.md` + the tools/shots recon artifacts to source the terrain
+  PNGs' origin, then the Poly Haven verification, then the ledger + policy + probe
+  steps + binds, then the AD-7 re-pins, one commit.
+- **Last-touched commit:** this contract/DRIVE edit.
+- **History:** chartered LAW-DRAFT ledger-only 2026-07-19 overnight at the D465
+  boundary (`fba0b61`, the maximizer's [IF-ROOM] item 1; the Crater-runtime option
+  declined the same night under the charter's budget rule — the P6 battery outranked
+  new runtimes). The FULL acceptance contract authored + DRIVE taken 2026-07-19
+  (morning) by Claude Code (Fable 5) under Aaron's queue pick (a), after a four-agent
+  read-only recon (run `wf_1c520994-6d8`: tripo pipeline · perf/media walls · render
+  seams · suite/pin topology; zero probes pin this entry's text — the flip is
+  probe-safe). The ~98 MB unprovenanced terrain-texture exposure in the public repo
+  surfaced at recon and is now adjudication 4 / slice 1.
 
 ---
 
