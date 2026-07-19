@@ -536,8 +536,8 @@ step("EXCLUSIONS + BASELINES", () => {
   const gameHash = md5(GAME);
   const baseHash = md5(BASE);
 
-  if (t1Count !== 27) throw new Error("scenario baseline must be 27, got " + t1Count);   // D436: 24 -> 25 — Atlanta registers at rank 71. D442: 25 -> 26 — Cold Harbor registers at rank 68.5. D463: 26 -> 27 — Fort Pillow registers at rank 66 (LANE-013 P4)
-  if (schemaCount !== 60) throw new Error("schema/data baseline must be 60, got " + schemaCount);   // D436: 54 -> 56 — mayhem-rules.json (D418, pin missed then) + atlanta.json (D436); documented honestly. D442: 56 -> 57 — cold-harbor.json. D445: 57 -> 58 — chief-of-staff.json (GEA-08). D446: 58 -> 59 — concept-links.json (GEA-10). D463: 59 -> 60 — fort-pillow.json (LANE-013 P4)
+  if (t1Count !== 28) throw new Error("scenario baseline must be 28, got " + t1Count);   // D436: 24 -> 25 — Atlanta registers at rank 71. D442: 25 -> 26 — Cold Harbor registers at rank 68.5. D463: 26 -> 27 — Fort Pillow registers at rank 66 (LANE-013 P4). D469: 27 -> 28 — The Crater registers at rank 71.5 (LANE-015)
+  if (schemaCount !== 61) throw new Error("schema/data baseline must be 61, got " + schemaCount);   // D436: 54 -> 56 — mayhem-rules.json (D418, pin missed then) + atlanta.json (D436); documented honestly. D442: 56 -> 57 — cold-harbor.json. D445: 57 -> 58 — chief-of-staff.json (GEA-08). D446: 58 -> 59 — concept-links.json (GEA-10). D463: 59 -> 60 — fort-pillow.json (LANE-013 P4). D469: 60 -> 61 — crater.json (LANE-015)
   if (!/people\.length\s*!==\s*1671/.test(loot) || !loot.includes("1671 of 1671")) {   // D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7); D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (the AD-7 chain idiom)
     throw new Error("Army Register 1671 pins missing");
   }
@@ -1155,7 +1155,7 @@ step("BASELINES + LANE", () => {
     manifest:md5(MANIFEST),
     suite:md5(VET)
   };
-  if (t1Count !== 27 || schemaCount !== 60) {   // D436: 24/54 -> 25/56 (atlanta + the D418 mayhem-rules pin catch-up). D442: 25/56 -> 26/57 (cold harbor). D445: 57 -> 58 (chief-of-staff.json). D446: 58 -> 59 (concept-links.json; scenarios stay 26). D463: 26/59 -> 27/60 (fort-pillow, LANE-013 P4)
+  if (t1Count !== 28 || schemaCount !== 61) {   // D436: 24/54 -> 25/56 (atlanta + the D418 mayhem-rules pin catch-up). D442: 25/56 -> 26/57 (cold harbor). D445: 57 -> 58 (chief-of-staff.json). D446: 58 -> 59 (concept-links.json; scenarios stay 26). D463: 26/59 -> 27/60 (fort-pillow, LANE-013 P4). D469: 27/60 -> 28/61 (crater, LANE-015)
     throw new Error("scenario/schema baseline moved: " + t1Count + "/" + schemaCount);
   }
   if (!/people\.length\s*!==\s*1671/.test(loot) || !loot.includes("1671 of 1671")) {   // D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7); D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (the AD-7 chain idiom)
