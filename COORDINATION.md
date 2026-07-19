@@ -2695,6 +2695,50 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
+### LANE-015 · crater-runtime — **DRIVE (chartered this commit; the ONE atomic runtime commit follows)** (ARC 2 completion — C3 content; the D455 SS3 massacre-treatment family)
+
+- **Owning tool:** Claude Code (Fable 5) — DRIVE taken WITH this charter edit (the LANE-013
+  `3506716` ledger-only precedent), 2026-07-19 afternoon, P2 of Aaron's all-day ladder. The
+  §4 TOP-LOOP resolution stands as recorded at LANE-014 (Fable 5, Aaron-confirmed).
+- **State:** DRIVE — the charter IS this entry + the committed spec; the runtime lands as
+  ONE atomic commit per the spec's §8-§9 inventory.
+- **Design law:** `docs/design/crater-battle-build-spec.md` (D464 — THE controlling law,
+  committed `e3fcc8b`; its §8-§9 carry the complete count/registration/re-pin inventory
+  and completion criteria) · the D459 family packet
+  (`docs/design/battle-build-research/massacre-treatment-battle-build-research.md`,
+  incorporated by reference) · D74 · the dignity imagery law (D135/src/51) · the D457
+  no-quarter machinery as the ONLY massacre-resolution path (`_MH_HISTORICAL_OPS`
+  massacre-block EXTENDED, never bypassed) · the D458 regex-literal-aware scanner for
+  comment-stripped scans.
+- **Acceptance criteria (the spec §8-§9 verbatim, summarized for the ledger):**
+  `data/crater.json` (one-family strengths US 8,500 / CS 6,100; Mahone BRIG. GEN. lock;
+  the no-Connecticut roster law — 2nd Bde is 19/23/28/29/31 USCT; the blast as TRUE
+  STARTING STATE — Elliott reduced ~278/suppressed posture, never a lever; the
+  qualitative-toll + McClellan-caution law; menu rank 71.5) · schema 60→61 · scenarios
+  27→28 · suite +1 APPENDED AT THE END (138→139; row 38 holds) · register +3× unique
+  units at EVERY pin site (the D460/D463 seventeen-site precedent) · `tools/probe-crater.mjs`
+  authored WITH the commit (probe-cold-harbor the template; the spec §8 tooth list incl.
+  the 8-seed direction battery CS-holds ≥5/8 AND US-losses-exceed-CS ≥5/8, the machinery
+  teeth, the dignity scan, the extended D74 scan with the Crater temptations) · the
+  ADJUDICATION-2 forbidden-scan flips in the petersburg/spotsylvania/wilderness plan
+  probes ride ONLY this commit, the documented D397/D454 way, fort-stedman halves KEPT ·
+  the D466 sibling sweep (bare tokens AND regex-source forms; registry-order and
+  fldScnBtn_ DOM chains tree-wide) · ≥2 predeclared binds md5-proven (spec §8: Mahone
+  grade tamper → rank-lock tooth red EXACTLY; a card's second source dropped →
+  card-source tooth red EXACTLY) · AD-7 re-pins + both plan probes re-run post-commit.
+- **Probe design:** `tools/probe-crater.mjs`, fs+sim (the probe-fort-pillow/-cold-harbor
+  idiom); suite row `['crater','tools/probe-crater.mjs']` appended at END.
+- **Resume pointer:** author the runtime per the spec §8-§9 in one atomic commit; on green
+  gates + push, flip this lane SHIPPED (or VERIFY pending the day-end battery per the
+  D160/D176 tiering).
+- **Last-touched commit:** this charter edit.
+- **History:** chartered ledger-only + DRIVE taken 2026-07-19 (afternoon, Claude Code /
+  Fable 5, the all-day ladder P2) at the D468 boundary; recon run `wf_748c7029-7ed`
+  (register-site inventory · forbidden-scan/adjacency inventory · probe template ·
+  data-model mechanics) supporting the build.
+
+---
+
 ## 6 · JOINT STRATEGY BOARD — Fable ⇄ Sol (cross-tool planning, not just locks)
 
 **What this is (Aaron, 2026-07-11):** the lanes above carry contracts and locks; this board
