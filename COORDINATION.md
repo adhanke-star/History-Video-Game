@@ -2448,16 +2448,19 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
-### LANE-014 · graphics-uplift — **DRIVE (the acceptance contract ratified 2026-07-19; owner Claude Code / Fable 5)** (ARC 3 of the D455 roadmap)
+### LANE-014 · graphics-uplift — **CONTRACT (slice 1 SHIPPED as D467; unowned — the DRIVE lock released at the 2026-07-19 closeout)** (ARC 3 of the D455 roadmap)
 
-- **Owning tool:** Claude Code (Fable 5) — DRIVE taken with THIS committed contract edit
-  (Aaron's queue pick (a), 2026-07-19 morning session). The §4 TOP-LOOP role resolution,
-  stated once: the closeout kickoff named Opus 4.8 as the expected Claude tier; Fable 5
-  is the best model the tool offers today and Aaron confirmed driving on it.
-- **State:** DRIVE — this entry IS the acceptance contract. LAW-DRAFT → CONTRACT → DRIVE
-  in this one ledger-only commit (the LANE-013 `3506716` precedent: contract prose only;
-  no code, data, or probe file moves in this commit — teeth land with the fixes that
-  green them, §1).
+- **Owning tool:** unowned (the Claude Code / Fable 5 DRIVE lock — taken with the
+  `489cfc4` contract edit under Aaron's queue pick (a), the §4 TOP-LOOP resolution
+  recorded there — RELEASED at the clean pushed D467 boundary; session closeout, the
+  D171/D307 law. The next session re-takes DRIVE with a committed edit BEFORE any code
+  move.)
+- **State:** CONTRACT — this entry IS the acceptance contract (ratified `489cfc4`, the
+  LANE-013 `3506716` precedent). SLICE 1 is SHIPPED (`6f62352`, D467: the assets3d
+  provenance wall; all 30 staged files Verified CC0-1.0 byte-identical to identified
+  Poly Haven originals; binds A/B md5-proven; AD-7 re-pins game→11099dac ·
+  dataTree→23ccef52; plan probes green post-commit). Slices 2-6 remain; teeth land with
+  the fixes that green them (§1).
 - **Design law:** DECISIONS D455 §7 + packet `docs/design/unlocked-but-judged-design.md`
   §7 ARC 3 (THE LAW: Tripo/CC-BY unit models · terrain texturing · HDRI lighting ·
   ground-level camera polish · formation-figure density/LOD — "every slice under the
@@ -2652,11 +2655,16 @@ next green commit and confer through this ledger instead of permitting simultane
   the adjudication-2 forbidden-scan flips) and the OLUSTEE RUNTIME (D465 spec §8-§9) —
   each a one-commit build on the D463 pattern; they may charter before or after ARC 3
   work at Aaron's priority call.
-- **Resume pointer:** SLICE 1 (the asset ledger + license audit + assets3d wall). Start
-  at `legacy/3D-ASSET-PLAN.md` + the tools/shots recon artifacts to source the terrain
-  PNGs' origin, then the Poly Haven verification, then the ledger + policy + probe
-  steps + binds, then the AD-7 re-pins, one commit.
-- **Last-touched commit:** this contract/DRIVE edit.
+- **Resume pointer:** SLICE 2 — terrain texturing (new module T32) per this contract's
+  slice-2 clause IN FULL (audited albedo keyed to the 9 analytic region predicates,
+  blended with the preserved T18/T21 vertex-colour passes; material upgrade only with
+  profile evidence; low-tier off-or-one-map; vertex Y untouched — adjudication 5;
+  fail-closed byte-identical when fetch absent; teeth in probe-terrain-readability +
+  probe-visual-fidelity + probe-tactical-visuals; ≥2 predeclared binds; browser probes
+  serialized locally or full-access cloud). Slice-1 groundwork available: the audited
+  ledger `assets/3d/provenance.json` + the ledgerClasses wall.
+- **Last-touched commit:** the D467 slice-1 commit `6f62352` (+ this closeout
+  lock-release edit).
 - **History:** chartered LAW-DRAFT ledger-only 2026-07-19 overnight at the D465
   boundary (`fba0b61`, the maximizer's [IF-ROOM] item 1; the Crater-runtime option
   declined the same night under the charter's budget rule — the P6 battery outranked
@@ -2665,7 +2673,13 @@ next green commit and confer through this ledger instead of permitting simultane
   read-only recon (run `wf_1c520994-6d8`: tripo pipeline · perf/media walls · render
   seams · suite/pin topology; zero probes pin this entry's text — the flip is
   probe-safe). The ~98 MB unprovenanced terrain-texture exposure in the public repo
-  surfaced at recon and is now adjudication 4 / slice 1.
+  surfaced at recon and is now adjudication 4 / slice 1. SLICE 1 SHIPPED the same
+  session (`6f62352`, D467): the exposure CLEARED — 30/30 files md5-matched to
+  identified Poly Haven CC0 originals (the committed fetch-script asset map + live API
+  records; the 3 HDRIs identified across the 980-asset catalog) — and the assets3d
+  provenance wall landed (ledger + media-budget 1.9 ledgerClasses + the 17-step gate).
+  Lock released at the clean pushed boundary; Aaron's session picks recorded: drive on
+  Fable 5; the D460 Drew's-regiment adjudication stays standing.
 
 ---
 
