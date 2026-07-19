@@ -148,9 +148,9 @@ const SETUP = `(() => {
       return {objective:DATA.objective.name,walls:walls.length,woods:woods.length,guns:totals().gunsUS+'/'+totals().gunsCS,fog:DATA.defaultFog};
     });
 
-    check('REGISTRY + MENU: Petersburg initial assaults is rank 69 between Cold Harbor and Kennesaw in the 27-scenario registry',function(){
+    check('REGISTRY + MENU: Petersburg initial assaults is rank 69 between Cold Harbor and Kennesaw in the 28-scenario registry',function(){
       var reg=fldScenarioRegistry(),order=fldScenarioMenuOrder(reg);
-      if(Object.keys(reg).length!==27||reg.petersburgAssaults!==DATA)throw new Error('registry identity/count wrong');   // D442: 24 -> 26 — Atlanta (D436, whose sweep missed this count pin — recorded honestly) and Cold Harbor (rank 68.5) both register. D463: 26 -> 27 — Fort Pillow registers at rank 66 between Chattanooga and the Wilderness (LANE-013 P4, the D455 SS3 row 6 unlock).
+      if(Object.keys(reg).length!==28||reg.petersburgAssaults!==DATA)throw new Error('registry identity/count wrong');   // D442: 24 -> 26 — Atlanta (D436, whose sweep missed this count pin — recorded honestly) and Cold Harbor (rank 68.5) both register. D463: 26 -> 27 — Fort Pillow registers at rank 66 between Chattanooga and the Wilderness (LANE-013 P4, the D455 SS3 row 6 unlock). D469: 27 -> 28 — The Crater registers at rank 71.5 between Atlanta and Cedar Creek (LANE-015, the D464 spec).
       if(fldScenarioMenuRank('petersburgAssaults')!==69)throw new Error('menu rank wrong: '+fldScenarioMenuRank('petersburgAssaults'));
       if(order.indexOf('coldHarbor')!==order.indexOf('spotsylvania')+1||order.indexOf('petersburgAssaults')!==order.indexOf('coldHarbor')+1||order.indexOf('kennesaw')!==order.indexOf('petersburgAssaults')+1||order.indexOf('spotsylvania')!==order.indexOf('wilderness')+1)throw new Error('menu chronology wrong: '+order.join(' -> '));   // D442 reshape: Cold Harbor (the documented 68.5) inserts between Spotsylvania and this battle.
       return {count:Object.keys(reg).length,rank:69,after:'coldHarbor',before:'kennesaw'};
@@ -234,10 +234,10 @@ const SETUP = `(() => {
       return {cards:ids.length,codex:codex.id,axes:codex.axes};
     });
 
-    check('ARMY REGISTER PIN: canonical registry identity plus 26 Petersburg unit trios produce current total 1632',function(){
+    check('ARMY REGISTER PIN: canonical registry identity plus 26 Petersburg unit trios produce current total 1671',function(){
       var registry=fldScenarioRegistry();if(registry.petersburgAssaults!==DATA)throw new Error('declared registry dependency missing');
       var C=campaign();if(typeof _t1InitAll==='function')_t1InitAll(C);var reg=ssPersonRegistry(C),found=[],groups={};
-      if(reg.people.length!==1632)throw new Error('Army Register total '+reg.people.length+' expected 1632');   // D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots. D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots. D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4, the D455 SS3 row 6 unlock).
+      if(reg.people.length!==1671)throw new Error('Army Register total '+reg.people.length+' expected 1671');   // D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots. D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots. D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4, the D455 SS3 row 6 unlock). D469: 1632 -> 1671 — The Crater adds 13 unique side-unit ids x 3 slots (LANE-015, the D464 spec).
       for(var i=0;i<reg.people.length;i++){var p=reg.people[i],origin=p.replaces||p.pid;if(typeof origin==='string'&&origin.indexOf('ss:petersburgAssaults:')===0)found.push({p:p,origin:origin});}
       if(found.length!==78)throw new Error('Petersburg rows '+found.length+' expected 78');
       found.forEach(function(row){var m=row.origin.match(/^ss:petersburgAssaults:(US|CS):([^:]+):(cmd|nco|pvt)$/);if(!m)throw new Error('bad slot '+row.origin);var key=m[1]+':'+m[2];groups[key]=groups[key]||{};groups[key][m[3]]=1;if(row.p.source!=='scenario-oob'||row.p.generated!==true||row.p.provenance!=='Inferred')throw new Error('slot metadata '+row.origin);});
@@ -246,7 +246,7 @@ const SETUP = `(() => {
     });
 
     check('SCOPE: single-phase June 15-18 only; no Cold Harbor/Crater/Fort Stedman/April-2 tactical registration and no Petersburg-only combat function appears',function(){
-      var ids=Object.keys(fldScenarioRegistry());if(ids.some(function(id){return /crater|fortStedman|fort-stedman|overlandCampaign/i.test(id);}))throw new Error('forbidden tactical id');   // D454: coldHarbor (cold-harbor) is RATIFIED + registered as scenario 26 since D442 and leaves this tooth (the same documented way petersburgAssaults left the D393-era scans at D397); crater/fortStedman/overlandCampaign stay forbidden until their own ratified builds.
+      var ids=Object.keys(fldScenarioRegistry());if(ids.some(function(id){return /fortStedman|fort-stedman|overlandCampaign/i.test(id);}))throw new Error('forbidden tactical id');   // D454: coldHarbor (cold-harbor) is RATIFIED + registered as scenario 26 since D442 and leaves this tooth (the same documented way petersburgAssaults left the D393-era scans at D397); crater/fortStedman/overlandCampaign stay forbidden until their own ratified builds. D469: crater is RATIFIED + registered as scenario 28 (rank 71.5) and leaves this tooth the same documented way; fortStedman + overlandCampaign stay forbidden until their own ratified builds.
       if(DATA.phases)throw new Error('Petersburg initial assaults became phased');
       var functions=['petersburgPenalty','petersburgBonus','hesitationMult','nightMult','garrisonBonus','usctBonus','usctPenalty'];functions.forEach(function(n){if(typeof window[n]==='function')throw new Error('battle-specific function '+n);});
       return {singlePhase:true,forbiddenIds:0,battleSpecificFunctions:0};
@@ -297,8 +297,8 @@ async function main() {
     const route=(rail.routes||{})["petersburg-break"];
     const routeOk=!!route&&/Petersburg rail lifelines/.test(String(route.label||''))&&route.theater==="E"&&route.provenance==="Inferred"&&route.friction&&route.friction.US===7&&route.friction.CS===20;
     const noTacticalRoute=!(rail.routes||{}).petersburgAssaults&&!(rail.routes||{})["petersburg-assaults"];
-    const forbiddenData=readdirSync(join(ROOT,"data")).filter(f=>/crater|fort-stedman/i.test(f));   // D454: data/cold-harbor.json is RATIFIED since D442 (scenario 26) and leaves this scan the same documented way; crater + fort-stedman stay forbidden until their own ratified builds.
-    const classicOk=classicRows===1&&classicExact&&routeOk&&noTacticalRoute&&forbiddenData.length===0;
+    const forbiddenData=readdirSync(join(ROOT,"data")).filter(f=>/fort-stedman/i.test(f));const craterData=readdirSync(join(ROOT,"data")).filter(f=>/crater/i.test(f));   // D454: data/cold-harbor.json is RATIFIED since D442 (scenario 26) and leaves this scan the same documented way; D469: data/crater.json is RATIFIED (scenario 28, schema 61st file) and this scan now REQUIRES exactly that one file (the cedar-creek presence-flip idiom); fort-stedman stays forbidden until their own ratified builds.
+    const classicOk=classicRows===1&&classicExact&&routeOk&&noTacticalRoute&&forbiddenData.length===0&&craterData.join(",")==="crater.json";
     result.steps.push({name:"CLASSIC + RAIL COLLISION: the frozen Classic petersburg-break row (the April 2, 1865 battle - a DIFFERENT fight) and its pre-existing strategic rail route remain exact, separate layers with no new tactical route",ok:!!classicOk,v:{classicRows,classicExact,route,noTacticalRoute,forbiddenData}});
     if(!classicOk)throw new Error("Classic/rail collision contract changed");
     if(!(await up(url))){server=spawn("python3",["-m","http.server",String(cfg.port)],{cwd:ROOT,stdio:"ignore"});for(let i=0;i<80&&!(await up(url));i++)await sleep(250);}

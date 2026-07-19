@@ -10,7 +10,7 @@ import "./guard-probe-browser.mjs";
 // massacre-temptation keys), the SS5 teaching teeth (five sourced cards; the JCCW conclusion
 // verbatim; the culpability debate taught AS a debate; the casualty record as attributed
 // RANGES), the SS6 dignity imagery scan (no imagery reference anywhere in the scenario; the
-// USS New Era fenced inside the fp_truce card - the cold-harbor fence idiom), the 1632 Army
+// USS New Era fenced inside the fp_truce card - the cold-harbor fence idiom), the 1671 Army
 // Register pin, the 8-seed direction battery (CS seizes >=5/8 AND US-losses-exceed-CS >=5/8 -
 // direction only, never a count gate), and the D457 no-quarter machinery teeth EXTENDING
 // probe-mayhem-mode's shipped t1-t6 family with battleId fortPillow: captures stamp the offer
@@ -270,9 +270,9 @@ const SETUP = `(() => {
       return { units:__FIELD.units.length };
     });
 
-    check('ARMY REGISTER PIN: 5 unique Fort Pillow side-unit ids produce exact cmd/nco/pvt trios and current total 1632', function(){
+    check('ARMY REGISTER PIN: 5 unique Fort Pillow side-unit ids produce exact cmd/nco/pvt trios and current total 1671', function(){
       var reg = ssPersonRegistry();
-      if (reg.people.length !== 1632) throw new Error('Army Register total is ' + reg.people.length + ', expected 1632');   // D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4, the D455 SS3 row 6 unlock).
+      if (reg.people.length !== 1671) throw new Error('Army Register total is ' + reg.people.length + ', expected 1671');   // D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4, the D455 SS3 row 6 unlock). D469: 1632 -> 1671 — The Crater adds 13 unique side-unit ids x 3 slots (LANE-015, the D464 spec).
       var rows = [], groups = {};
       for (var i = 0; i < reg.people.length; i++) {
         var p = reg.people[i], origin = p.replaces || p.pid;

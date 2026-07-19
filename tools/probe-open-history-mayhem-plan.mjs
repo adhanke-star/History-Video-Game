@@ -74,14 +74,18 @@ const PIN = {
   // and manifest bb5d7903 -> bf29b44f — terrain texturing T32 (src/tactical/
   // T32-terrain-texturing.js enrolls after T31; the audited-albedo region-keyed bake on the
   // ground material, fail-closed; rebuild). base/suite hold; data untouched.
-  game: "9fca6932621bddaeb97c06f383b5b146",
+  // D469 re-pin (the AD-7 idiom, at the LANE-015 Crater head): game 9fca6932 -> 1757fdbf
+  // and suite 0f8550a5 -> 7b36f51e — the Crater runtime (data/crater.json + the T1 rank-71.5
+  // registry line + the T10 E/true/anv meta row + the crater suite row at the END, 138 -> 139,
+  // + the probe-crater 600s slow-Mac budget; rebuild). base/manifest hold.
+  game: "1757fdbf182c8554fe591465d4efc73b",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
   manifest: "bf29b44f3a90b4d678c97e8a204db89a",
-  suite: "0f8550a5e120772d89777d7459029e7e",
-  scenarios: 27,   // D436: 24 -> 25 atlanta; D442: 25 -> 26 coldHarbor; D463: 26 -> 27 fortPillow (LANE-013 P4, the D455 SS3 row 6 unlock)
-  schemas: 60,   // D418: 54 -> 55 mayhem-rules.json; D436: 55 -> 56 atlanta.json; D442: 56 -> 57 cold-harbor.json; D445: 57 -> 58 chief-of-staff.json; D446: 58 -> 59 concept-links.json; D463: 59 -> 60 fort-pillow.json
-  armyRegister: 1632,   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots. D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7) adds 1 unique side-unit id x 3 slots. D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4)
-  suiteRows: 138,   // D418: 130 -> 131; D436: 131 -> 132; D442: 132 -> 133; D444: 133 -> 134; D445: 134 -> 135; D446: 135 -> 136; D447: 136 -> 137; D463: 137 -> 138 (each appended at the END so row 38 holds)
+  suite: "7b36f51eeea485008d753b5b223f0028",
+  scenarios: 28,   // D436: 24 -> 25 atlanta; D442: 25 -> 26 coldHarbor; D463: 26 -> 27 fortPillow (LANE-013 P4, the D455 SS3 row 6 unlock); D469: 27 -> 28 crater at rank 71.5 between atlanta (71) and cedarCreek (72) (LANE-015)
+  schemas: 61,   // D418: 54 -> 55 mayhem-rules.json; D436: 55 -> 56 atlanta.json; D442: 56 -> 57 cold-harbor.json; D445: 57 -> 58 chief-of-staff.json; D446: 58 -> 59 concept-links.json; D463: 59 -> 60 fort-pillow.json; D469: 60 -> 61 crater.json (LANE-015)
+  armyRegister: 1671,   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots. D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7) adds 1 unique side-unit id x 3 slots. D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4). D469: 1632 -> 1671 — The Crater adds 13 unique side-unit ids x 3 slots (LANE-015, the D464 spec).
+  suiteRows: 139,   // D418: 130 -> 131; D436: 131 -> 132; D442: 132 -> 133; D444: 133 -> 134; D445: 134 -> 135; D446: 135 -> 136; D447: 136 -> 137; D463: 137 -> 138; D469: 138 -> 139 crater (each appended at the END so row 38 holds)
   warCareerRow: 38,
   saveVersion: 1
 };
@@ -332,8 +336,8 @@ step("EXCLUSIONS + BASELINES", () => {
   const version = Number((read(BASE).match(/var _SAVE_VER = (\d+);/) || [null, NaN])[1]);
   if (version !== PIN.saveVersion) throw new Error("_SAVE_VER moved: " + version);
   const loot = read(LOOT);
-  if (!/people\.length\s*!==\s*1632/.test(loot) || !loot.includes("1632 of 1632")) {   // D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7); D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (the AD-7 chain idiom)
-    throw new Error("Army Register 1632 pins missing");
+  if (!/people\.length\s*!==\s*1671/.test(loot) || !loot.includes("1671 of 1671")) {   // D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7); D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (the AD-7 chain idiom)
+    throw new Error("Army Register 1671 pins missing");
   }
   mustInclude(spec, [
     "This planning slice changes no runtime, data, manifest, suite, generated HTML, frozen base",

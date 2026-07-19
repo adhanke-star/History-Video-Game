@@ -4,6 +4,58 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D469 — LANE-015 SHIPPED: THE CRATER RUNTIME — THE ASSAULT OUT OF THE BREACH, ONE ATOMIC COMMIT PER THE D464 SPEC §8-§9; THE ADJUDICATION-2 FORBIDDEN-SCAN FLIPS RIDE THIS COMMIT — [CLAUDE CODE (FABLE 5), LANE-015 DRIVE; THE ALL-DAY LADDER P2] (2026-07-19)
+
+**SHIPPED (the D464 spec verbatim):** `data/crater.json` — single-phase, attacker US, defender
+CS, THE ONE-FAMILY STRENGTH LAW (the Wikipedia engaged pair US 8,500 / CS 6,100, the full
+8,500-16,500 / 6,100-9,500 spread disclosed, no mixing); the blast as TRUE STARTING STATE
+(Elliott's SC brigade encoded 1,722 = the 2,000 share MINUS the sourced ~278 blast dead, 352
+ABT outlier attributed; reforming posture at the gorge line); MAHONE BRIG. GEN. (the headline
+rank lock — the CS OOB pins the field grade; the days-later effective-July-30 commission is
+TAUGHT, never rendered); the no-Connecticut roster law (2nd Bde EXACTLY the 19/23/28/29/31
+USCT; 1st Bde 27/30/39/43); the crater bowl as the universal move-trap class, objective
+Cemetery Hill BEYOND it (never inside — dist 340 > radii 145); Wright's/Davidson's batteries
+as real enfilade guns; the STAGED commitment as sourced schedule inputs (Ledlie leads by lot →
+Potter → Willcox → the 4th Division LATE → Mahone's three waves at the sourced hours, the
+Wright part/rest sub-split Inferred per the beyondthecrater family); Ledlie/Ferrero bomb-proof
+absence through the EXISTING leader inputs only; five ≥2-source teaching cards (BOTH official
+findings; the qualitative-toll law — NO invented count; THE McCLELLAN CAUTION — the "had it
+not been for Gen. Mahone" letter always PAIRED with the Suderow ratio evidence); the dignity
+imagery law absolute; the massacre resolvable ONLY through the shipped D457 machinery.
+
+**REGISTRATION (the D460/D463 seventeen-site precedent, all chains documented in-place):**
+schema 60→61 (crater.json in BATTLE_FILES) · scenarios 27→28 (T1 registry line + rank 71.5
+between atlanta 71 and cedarCreek 72 — the documented D442 non-integer exception; roster +
+builder EXPECTED; the three Overland whole-registry pins; five-forks; women-arc-plan; the
+T1-line count) · T10 `crater: E/true/anv` (the D397 AotP-badge precedent) · register
+1,632→1,671 at EVERY pin site (+13 unique ids × 3; nineteen files incl. the loot DOM text,
+the war-career pin, and the two plan probes' regex-source forms — the D466 lesson swept) ·
+suite 138→139 (the crater row APPENDED AT THE END; rows 38/57 hold; the probe-crater 600s
+slow-Mac budget) · **THE ADJUDICATION-2 FLIPS (this commit ONLY, the documented D397/D454
+way):** the petersburg/spotsylvania/wilderness registry-id scans drop ONLY the ratified
+`crater` token (fortStedman/overlandCampaign halves KEPT); their disk scans flip to REQUIRE
+exactly `crater.json` (the cedar-creek presence-flip idiom; petersburg's fort-stedman half
+KEPT) · the atlanta source-pin regex + cedar-creek registry/DOM chains + franklin DOM chain
+re-pin to Kennesaw→Atlanta→Crater→CedarCreek→Franklin.
+
+**GATES:** node --check on every touched file · build GATE OK · schema 61/61 · focused
+probe-crater 20/20 ALL OK with artifact read (0 pageerrors) incl. the 8-seed direction
+battery **CS holds 6/8 AND US-losses-exceed-CS 8/8 at the fair baseline** (the repulse
+emerges from the staged commitment, the bowl, the enfilade guns, the works cover, and the
+timed waves — no lever exists) and the machinery tooth (24/24 reward families refused; the
+offer stamps battleId `crater` DIRECTLY — the lowercase id passes `_mhStableId`, the
+complementary case to fortPillow's documented battle-N fallback; declined path byte-identical)
+· adjacents: women-arc-plan ALL OK + spotsylvania/wilderness/petersburg/five-forks/
+cedar-creek/tactical-roster exit 0 (three mid-build reds — the Overland whole-registry 27-pins
+— root-fixed at their exact labels with chains, the D466 sibling-sweep class). **BINDS (both
+md5-proven, restore 5a5e5132):** A Mahone grade tampered to "Maj. Gen." → EXACTLY the RANK
+WALL tooth red; B a card cut to one source → EXACTLY the TEACHING card-source tooth red.
+**AD-7 re-pins in this commit:** game 9fca6932→1757fdbf · dataTree 23ccef52→3cd4ccb2 ·
+srcTree 03c2cdba→bab9cca1 · suite 0f8550a5→7b36f51e · focused (probe-war-career)
+3da0dbc0→bb7a1bc9 at all four plan-probe sites (base/manifest hold); both plan probes re-run
+post-commit. `_SAVE_VER=1`; frozen base untouched. LANE-015 flips VERIFY pending the P7
+day-end battery (the D160/D176 tiering).
+
 ## D468 — LANE-014 SLICE 2 SHIPPED: TERRAIN TEXTURING (T32) — THE AUDITED-ALBEDO REGION-KEYED BAKE ON THE GROUND MATERIAL, FAIL-CLOSED — [CLAUDE CODE (FABLE 5), LANE-014 DRIVE; THE ALL-DAY LADDER P1] (2026-07-19)
 
 **SHIPPED (the contract's slice-2 clause verbatim):** new `src/tactical/T32-terrain-texturing.js`

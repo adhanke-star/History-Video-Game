@@ -2,6 +2,27 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-19 — D469 the ALL-DAY LADDER P2: the CRATER RUNTIME ships (afternoon)
+
+LANE-015 chartered ledger-only at DRIVE (`2b19f20`, the 3506716 precedent), then the
+runtime landed as ONE atomic commit per the D464 spec §8-§9 verbatim: data/crater.json
+(one-family 8,500/6,100 with the spread disclosed; the blast as true starting state —
+Elliott 1,722 reforming; the Mahone Brig. Gen. lock; the no-Connecticut five-regiment
+2nd Brigade; the bowl as the universal move-trap with Cemetery Hill beyond it; the
+staged commitment + the three sourced waves; five ≥2-source cards with both findings,
+the qualitative toll, and the McClellan caution paired with Suderow), schema 60→61,
+scenarios 27→28 at rank 71.5, register 1,632→1,671 at every pin site, suite 138→139
+appended at the END, probe-crater authored WITH the commit (20/20; direction battery
+CS 6/8 + US-bleeds 8/8 at the fair baseline; the machinery tooth stamps battleId
+`crater` directly), the adjudication-2 forbidden-scan flips riding ONLY this commit
+(crater token dropped, fort-stedman/overlandCampaign kept, disk scans flipped to
+presence), and the Kennesaw→Atlanta→Crater→CedarCreek→Franklin adjacency re-pins.
+Three mid-build reds (the Overland whole-registry 27-pins, the D466 sibling class)
+root-fixed at their exact labels. Binds A (Mahone tamper) + B (single-source card)
+md5-proven (5a5e5132). AD-7: game→1757fdbf · dataTree→3cd4ccb2 · srcTree→bab9cca1 ·
+suite→7b36f51e · focused→bb7a1bc9. LANE-015 at VERIFY pending the P7 battery.
+EXACT NEXT: P3 — the Olustee runtime (D465 spec §8-§9), which completes C3.
+
 ## 2026-07-19 — D468 the ALL-DAY LADDER P1: LANE-014 slice 2 terrain texturing (afternoon)
 
 Claude Code (Fable 5; the §4 TOP-LOOP resolution re-stated at the DRIVE re-take

@@ -164,7 +164,7 @@ const SETUP = `(() => {
       var reg = fldScenarioRegistry(), order = fldScenarioMenuOrder(reg);
       if (!reg.cedarCreek || reg.cedarCreek !== DATA) throw new Error('registry identity missing');
       if (fldScenarioMenuRank('cedarCreek') !== 72) throw new Error('menu rank must be 72, got ' + fldScenarioMenuRank('cedarCreek'));
-      if (!(order.indexOf('kennesaw') + 1 === order.indexOf('atlanta') && order.indexOf('atlanta') + 1 === order.indexOf('cedarCreek') && order.indexOf('cedarCreek') + 1 === order.indexOf('franklin'))) throw new Error('chronology wrong: ' + order.join(' -> '));   // D454 re-pin: D436 registered atlanta at rank 71 BETWEEN kennesaw 70 and cedarCreek 72 and updated this probe's DOM chronology tooth (line ~360) but MISSED this registry tooth (the reversed-form expression); re-pinned to the shipped chain on its first-ever run — the chain now guards Kennesaw -> Atlanta -> Cedar Creek -> Franklin.
+      if (!(order.indexOf('kennesaw') + 1 === order.indexOf('atlanta') && order.indexOf('atlanta') + 1 === order.indexOf('crater') && order.indexOf('crater') + 1 === order.indexOf('cedarCreek') && order.indexOf('cedarCreek') + 1 === order.indexOf('franklin'))) throw new Error('chronology wrong: ' + order.join(' -> '));   // D454 re-pin: D436 registered atlanta at rank 71 BETWEEN kennesaw 70 and cedarCreek 72 and updated this probe's DOM chronology tooth (line ~360) but MISSED this registry tooth (the reversed-form expression); re-pinned to the shipped chain on its first-ever run — the chain now guards Kennesaw -> Atlanta -> Cedar Creek -> Franklin. D469 re-pin: crater (rank 71.5) inserts between atlanta and cedarCreek per the D464 spec SS2 (LANE-015) — the chain is now Kennesaw -> Atlanta -> Crater -> Cedar Creek -> Franklin.
       return { rank:72, order:order.indexOf('cedarCreek') };
     });
 
@@ -306,12 +306,12 @@ const SETUP = `(() => {
       return { cards:ids, codex:codex.id, weather:{ sky:w.sky, time:w.time, provenance:w.provenance } };
     });
 
-    check('ARMY REGISTER PIN: 19 unique Cedar Creek side/unit ids produce exact cmd/nco/pvt trios and current total 1632', function() {
+    check('ARMY REGISTER PIN: 19 unique Cedar Creek side/unit ids produce exact cmd/nco/pvt trios and current total 1671', function() {
       var C = { side:'US', iron:false, idx:0, funds:6500, recovery:false, completed:[], roster:[], nextId:1,
         stats:{ battles:0, won:0, infl:0, suff:0 }, recoveryLossCount:0, recoveryMode:false, flipAtk:false, captured:[] };
       if (typeof _t1InitAll === 'function') _t1InitAll(C);
       var reg = ssPersonRegistry(C), rows = [], groups = {};
-      if (reg.people.length !== 1632) throw new Error('Army Register total is ' + reg.people.length + ', expected 1632');   // D380: 1170 -> 1200 — Five Forks adds 10 unique units x 3 slots. D384: 1200 -> 1281 — Fort Donelson adds 27 unique units x 3 slots. D388: 1281 -> 1326 — Elkhorn Tavern adds 15 unique side-unit ids x 3 slots. D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots; Cedar Creek's 57-row/19-unit teeth remain stable. D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots. D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots. D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4, the D455 SS3 row 6 unlock).
+      if (reg.people.length !== 1671) throw new Error('Army Register total is ' + reg.people.length + ', expected 1671');   // D380: 1170 -> 1200 — Five Forks adds 10 unique units x 3 slots. D384: 1200 -> 1281 — Fort Donelson adds 27 unique units x 3 slots. D388: 1281 -> 1326 — Elkhorn Tavern adds 15 unique side-unit ids x 3 slots. D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots; Cedar Creek's 57-row/19-unit teeth remain stable. D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots. D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots. D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4, the D455 SS3 row 6 unlock). D469: 1632 -> 1671 — The Crater adds 13 unique side-unit ids x 3 slots (LANE-015, the D464 spec).
       for (var i = 0; i < reg.people.length; i++) {
         var p = reg.people[i], origin = p.replaces || p.pid;
         if (typeof origin === 'string' && origin.indexOf('ss:cedarCreek:') === 0) rows.push(origin);
@@ -366,7 +366,7 @@ const DOM = `(() => {
       fldInjectMenuButton();
       if (document.querySelectorAll('#fldScnBtn_cedarCreek').length !== 1) throw new Error('duplicate Cedar Creek button');
       var ids = Array.prototype.slice.call(document.querySelectorAll('.gn-btn')).map(function(b){ return b.id; });
-      if (!(ids.indexOf('fldScnBtn_kennesaw') >= 0 && ids.indexOf('fldScnBtn_atlanta') === ids.indexOf('fldScnBtn_kennesaw') + 1 && ids.indexOf('fldScnBtn_cedarCreek') === ids.indexOf('fldScnBtn_atlanta') + 1 && ids.indexOf('fldScnBtn_franklin') === ids.indexOf('fldScnBtn_cedarCreek') + 1)) throw new Error('button chronology wrong: ' + ids.join(' -> '));   // D436 reshape: atlanta (rank 71, Jul 22 1864) inserts between kennesaw and cedarCreek
+      if (!(ids.indexOf('fldScnBtn_kennesaw') >= 0 && ids.indexOf('fldScnBtn_atlanta') === ids.indexOf('fldScnBtn_kennesaw') + 1 && ids.indexOf('fldScnBtn_crater') === ids.indexOf('fldScnBtn_atlanta') + 1 && ids.indexOf('fldScnBtn_cedarCreek') === ids.indexOf('fldScnBtn_crater') + 1 && ids.indexOf('fldScnBtn_franklin') === ids.indexOf('fldScnBtn_cedarCreek') + 1)) throw new Error('button chronology wrong: ' + ids.join(' -> '));   // D436 reshape: atlanta (rank 71, Jul 22 1864) inserts between kennesaw and cedarCreek. D469 re-pin: crater (rank 71.5, Jul 30 1864) inserts between atlanta and cedarCreek (LANE-015)
       var got = null; fldScenarioSideChoice('cedarCreek', function(side){ got = side; });
       var cards = document.querySelectorAll('[data-brside]');
       if (cards.length !== 2) throw new Error('wanted two side cards, got ' + cards.length);

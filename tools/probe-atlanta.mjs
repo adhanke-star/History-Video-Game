@@ -7,7 +7,7 @@ import "./guard-probe-browser.mjs";
 // the spec §3 rank wall (Hood "General (temporary)"; McPherson Maj. Gen. killed 2:02;
 // Logan's one-day command; no Johnston on the field), the §5 landmarks, the D74
 // forbidden-key wall, the 4e-2 sources register, the S44 western-theater truth swap
-// (atlanta playable; marchToTheSea the only lock), the 1632 Army Register pin (D442), and the
+// (atlanta playable; marchToTheSea the only lock), the 1671 Army Register pin (D442), and the
 // 8-seed casualty-direction battery (defender holds + CS bleeds more, direction only).
 import { chromium } from 'playwright-core';
 import { spawn } from 'node:child_process';
@@ -126,7 +126,7 @@ function staticChecks() {
 
   check('INTEGRATION SOURCE PINS: T1 rank 71 (kennesaw 70 < atlanta 71 < cedarCreek 72) and the T10 W/false/hardee meta row exist in source', () => {
     const t1 = readFileSync(join(ROOT, 'src', 'tactical', 'T1-bull-run.js'), 'utf8');
-    if (!/kennesaw:\s*70,\s*atlanta:\s*71,\s*cedarCreek:\s*72/.test(t1)) throw new Error('menu rank chain kennesaw:70 -> atlanta:71 -> cedarCreek:72 missing');
+    if (!/kennesaw:\s*70,\s*atlanta:\s*71,\s*crater:\s*71\.5,\s*cedarCreek:\s*72/.test(t1)) throw new Error('menu rank chain kennesaw:70 -> atlanta:71 -> crater:71.5 -> cedarCreek:72 missing');   // D469 re-pin: crater (rank 71.5, Jul 30 1864) inserts between atlanta and cedarCreek per the D464 spec SS2 (LANE-015); the chain now guards Kennesaw -> Atlanta -> Crater -> Cedar Creek -> Franklin.
     if (t1.indexOf('GAME_DATA.atlanta && GAME_DATA.atlanta.atlanta') < 0) throw new Error('T1 registry line missing');
     const t10 = readFileSync(join(ROOT, 'src', 'tactical', 'T10-flags.js'), 'utf8');
     if (!/atlanta:\s*\{ theater: "W", badges: false, csFlag: "hardee" \}/.test(t10)) throw new Error('T10 meta row missing');
@@ -195,9 +195,9 @@ const SETUP = `(() => {
       return { units:__FIELD.units.length };
     });
 
-    check('ARMY REGISTER PIN: 18 unique Atlanta side-unit ids produce exact cmd/nco/pvt trios and current total 1632', function(){
+    check('ARMY REGISTER PIN: 18 unique Atlanta side-unit ids produce exact cmd/nco/pvt trios and current total 1671', function(){
       var reg = ssPersonRegistry();
-      if (reg.people.length !== 1632) throw new Error('Army Register total is ' + reg.people.length + ', expected 1632');   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots. D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4, the D455 SS3 row 6 unlock).
+      if (reg.people.length !== 1671) throw new Error('Army Register total is ' + reg.people.length + ', expected 1671');   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots. D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4, the D455 SS3 row 6 unlock). D469: 1632 -> 1671 — The Crater adds 13 unique side-unit ids x 3 slots (LANE-015, the D464 spec).
       // D443 (AD-4 probe fix, the AD-10 never-run bug class): people carry no flat unitId —
       // count trios by parsing the canonical ss:atlanta:<side>:<uid>:<slot> origin pids.
       var rows = [], groups = {};

@@ -1,0 +1,613 @@
+{
+  "_comment": "D469 The Crater, July 30, 1864 (LANE-015; the controlling law is docs/design/crater-battle-build-spec.md, D464, from the D459 massacre-treatment family packet). Single-phase assault out of the breach: Burnside's IX Corps tries to carry Cemetery Hill through the gap the mine opened, against Mahone's timed counterattack waves. THE MASSACRE IS NEVER IN THIS SCENARIO: no massacre event, mechanic, imagery, casualty script, or scoring exists anywhere in this file - the battle is the assault and the repulse, and the post-surrender choice belongs exclusively to the shipped D457 no-quarter machinery (judged in Historical behind the massacre-block, chartered reward in Mayhem; declining leaves the campaign byte-identical). The dignity imagery law (D135/src/51) holds: text carries the weight. Every fielded unit is Verified identity, Inferred strength (shares of the one-family engaged pair).",
+  "crater": {
+    "sources": [
+      "Wikipedia - Battle of the Crater - https://en.wikipedia.org/wiki/Battle_of_the_Crater",
+      "Wikipedia - Union order of battle for the Battle of the Crater (OR-derived; PRIMARY-STRUCTURED) - https://en.wikipedia.org/wiki/Union_order_of_battle_for_the_Battle_of_the_Crater",
+      "Wikipedia - Confederate order of battle for the Battle of the Crater (OR-derived; PRIMARY-STRUCTURED; pins BG William Mahone at the battle) - https://en.wikipedia.org/wiki/Confederate_order_of_battle_for_the_Battle_of_the_Crater",
+      "Encyclopedia Virginia - The Crater, Battle of the - https://encyclopediavirginia.org/entries/crater-battle-of-the/",
+      "NPS Petersburg - Battle of the Crater - https://www.nps.gov/pete/learn/historyculture/battle-of-the-crater.htm",
+      "American Battlefield Trust - The Crater battle page (used with its recorded defects: both ABT pages mis-style Mahone's July 30 grade, and the 352-blast figure is the outlier) - https://www.battlefields.org/learn/civil-war/battles/crater",
+      "beyondthecrater.com siege-research site (independent specialist family: the wave timing and the Suderow killed-to-wounded analysis) - https://www.beyondthecrater.com/",
+      "Kevin Levin - Remembering the Battle of the Crater (historiography; no numeric toll - none exists) - https://cwmemory.com/remembering-the-battle-of-the-crater-war-as-murder/",
+      "Committed research packet - docs/design/battle-build-research/massacre-treatment-battle-build-research.md (D459)",
+      "Committed build spec - docs/design/crater-battle-build-spec.md (D464)"
+    ],
+    "id": "crater",
+    "learnMeta": {
+      "phases": 1,
+      "approxMinutes": [
+        6,
+        16
+      ],
+      "skills": [
+        "works-assault",
+        "reinforcements",
+        "artillery"
+      ],
+      "recommendedAfter": "petersburgAssaults"
+    },
+    "name": "The Crater",
+    "date": "July 30, 1864",
+    "place": "Elliott's Salient, the Petersburg siege lines - the mine breach east of the city, with Cemetery Hill about five hundred yards beyond the gap",
+    "blurb": "At 4:44 a.m. eight thousand pounds of powder tear Elliott's Salient open and the IX Corps goes in - Ledlie's division first, chosen by lot, its commander in a bomb-proof to the rear. The objective is Cemetery Hill BEYOND the breach; the crater bowl between is a trap, not a prize. Wright's and Davidson's batteries enfilade the gap, and Mahone's division comes on in three timed waves. The scenario is the assault out of the breach and it ends on the field: the killing of surrendering U.S. Colored Troops that followed the repulse is taught with primary sources and judged through the campaign's no-quarter choice; it is never played.",
+    "provenance": "Verified for the identities, the battle-date grades (the Confederate OOB pins BG William Mahone), the brigade organization on both sides, the mine and blast record, the wave sequence, the terrain landmarks, and the result under the D459 packet register. THE ONE-FAMILY STRENGTH LAW: engaged strengths are NOT convergent across sources - the spread runs Union 8,500-16,500 and Confederate 6,100-9,500, an engaged-versus-present definitional mess - so this build encodes the Wikipedia engaged pair, US 8,500 / CS 6,100, one source family used consistently with NO mixing; every unit-level split is an Inferred share of those totals. Elliott's brigade starts REDUCED by the sourced ~278 blast dead (the 352 figure is the ABT outlier, disclosed never encoded) and its opening posture is the reforming disorder of the sourced ~15-minute silence - true starting state, never a lever. The crater's ~170 ft length is the convergent figure; its width (60-120 ft) and depth (30-35 ft) are genuinely contested and this rendering picks a shape inside that spread - no dimension is a combat input. The three-wave counterattack shape is multi-family; the part-of-Wright's-Georgians-at-9/rest-at-11 sub-split is the beyondthecrater specialist family alone and ships Inferred. Elliott's exact regimental roster (17th/18th/22nd/23rd/26th South Carolina) carries one OR-derived family and ships as an Inferred note; the brigade's identity is multi-family Verified. Every coordinate, timing second, experience/readiness value, and leader-quality value is an Inferred abstraction. No massacre content exists in this file.",
+    "field": {
+      "w": 1100,
+      "h": 950
+    },
+    "homeEdge": {
+      "US": "high",
+      "CS": "low"
+    },
+    "_homeEdgeNote": "High z is the Union siege line east of the city - the covered ways and the IX Corps front; low z is the Confederate rear toward Petersburg, with Cemetery Hill the high ground about five hundred yards beyond the breach. The field compresses the historical depth (the objective sits ~340 yards beyond the bowl here; the sourced distance is ~500 - disclosed, an Inferred abstraction). These side-keyed home edges are Verified geography; the orientation is an Inferred abstraction.",
+    "attacker": "US",
+    "defender": "CS",
+    "defaultFog": false,
+    "assaultDoctrine": "standard",
+    "_assaultDoctrineNote": "Standard posture. The historical repulse must be allowed to happen at a fair baseline under the one universal model (D74): the bowl's movement trap, the enfilade guns, the timed waves, and true strengths do the work. No storm bonus, blast key, confusion key, or per-battle lever exists.",
+    "holdToWinSec": 90,
+    "timeLimitSec": 480,
+    "objective": {
+      "x": 550,
+      "z": 200,
+      "r": 90,
+      "name": "Cemetery Hill"
+    },
+    "weather": {
+      "sky": "clear",
+      "time": "morning",
+      "provenance": "Inferred",
+      "note": "Presentation only; no sourced weather claim is encoded. Fog is OFF by design: this was a daylight assault both armies watched develop. The ~15-minute Confederate silence after the blast is the sourced SETUP framing - the first line's reduction and reforming disorder are encoded as true starting state (strength and posture), never as literal weather and never as a scripted buff. Weather never writes combat output.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Battle_of_the_Crater",
+        "https://www.nps.gov/pete/learn/historyculture/battle-of-the-crater.htm"
+      ]
+    },
+    "menu": {
+      "title": "THE CRATER (1864)",
+      "deck": "Carry Cemetery Hill through the gap the mine opened - or seal the breach with Mahone's counterattack. The bowl between the lines is a trap, not a prize. The battle ends on the field: the massacre that followed the repulse is taught and judged, never played.",
+      "aria": "The Crater, July 1864 - the real-time single-phase assault out of the mine breach at Petersburg; command either side. The post-surrender killing of U.S. Colored Troops is taught with primary sources and is never part of play."
+    },
+    "sides": {
+      "heading": "The Crater - Take Which Command?",
+      "intro": "July 30, 1864 - the mine under Elliott's Salient has fired. A hundred and seventy feet of the Confederate line is a smoking pit, the South Carolina brigade that held it is torn and reforming, and for a quarter hour nothing answers. Cemetery Hill stands five hundred yards beyond the gap. The clock on the breach is already running.",
+      "US": {
+        "title": "Command the Union (Burnside's IX Corps)",
+        "badge": "&#9733; CARRY THE HILL",
+        "deck": "Push the IX Corps through the breach to Cemetery Hill. The bowl is a trap - go around it, keep the columns moving, and commit the 4th Division's two brigades when they arrive. The guns on the flanking knolls enfilade every yard of the gap."
+      },
+      "CS": {
+        "title": "Command the Confederacy (Mahone)",
+        "badge": "&#9876; SEAL THE BREACH",
+        "deck": "Hold the shoulders of the breach with Elliott's torn brigade and the flanking batteries until the counterattack waves arrive, then retake the salient. The historical waves came at their own hours; every minute the gap stays shallow is a minute won."
+      },
+      "foot": "The battle ends on the field. What followed the repulse - the killing of surrendering U.S. Colored Troops, documented in Confederate letters - is taught in the cards with primary sources and is judged through the campaign's no-quarter machinery; it is never played, scored, or depicted."
+    },
+    "brief": {
+      "attack": "The blast has opened the salient and the first line is stunned. Ledlie's division leads - chosen by lot, its commander absent to the rear - with Potter and Willcox in support and Ferrero's U.S. Colored division committed late, on the sourced schedule. The objective is the HILL, not the pit: the bowl's steep interior is encoded as trapping ground, the flanking batteries rake the gap, and Mahone's waves are coming. Speed past the crater decides this, if anything does.",
+      "defend": "Elliott's South Carolinians - torn by the blast, reforming on the shoulders - hold with Wright's and Davidson's guns enfilading the breach until the division arrives. Weisiger's Virginians and part of Wright's Georgians come first, the rest under Hall later, Sanders's Alabamians last: the sourced hours, encoded as arrival times. Seal the gap, hold the retrenchment, and keep the hill."
+    },
+    "terrain": {
+      "hills": [
+        {
+          "name": "Cemetery Hill",
+          "x": 550,
+          "z": 200,
+          "h": 26,
+          "s": 175,
+          "note": "The objective high ground beyond the breach - never taken. Verified feature; Inferred geometry."
+        },
+        {
+          "name": "The northern battery knoll",
+          "x": 190,
+          "z": 500,
+          "h": 12,
+          "s": 85,
+          "note": "Wright's battery ground north of the breach - real enfilade geometry, encoded as a fielded gun position. Verified role; Inferred placement."
+        },
+        {
+          "name": "The southern battery knoll",
+          "x": 900,
+          "z": 510,
+          "h": 12,
+          "s": 85,
+          "note": "Davidson's battery ground south of the breach. Verified role; Inferred placement."
+        }
+      ],
+      "woods": [
+        {
+          "x": 170,
+          "z": 760,
+          "r": 95,
+          "note": "The scrub and ravine cover behind the Union right - ordinary cover under the universal model. Inferred placement."
+        },
+        {
+          "x": 950,
+          "z": 780,
+          "r": 90,
+          "note": "The low timber behind the Union left. Inferred placement."
+        }
+      ],
+      "walls": [
+        {
+          "x1": 130,
+          "z1": 545,
+          "x2": 480,
+          "z2": 540,
+          "note": "The Confederate main line north of the breach - Elliott's Salient's left shoulder and the flanking breastworks. Ordinary works cover under the universal model. Verified feature; Inferred trace."
+        },
+        {
+          "x1": 620,
+          "z1": 540,
+          "x2": 970,
+          "z2": 545,
+          "note": "The Confederate main line south of the breach - the right shoulder. The gap between the two segments IS the breach the mine opened. Verified feature; Inferred trace."
+        },
+        {
+          "x1": 430,
+          "z1": 285,
+          "x2": 690,
+          "z2": 275,
+          "note": "The retrenchment (gorge line) behind the salient - the interior line the survivors rallied on, here covering the Cemetery Hill approach under the field's disclosed depth compression. Ordinary works cover under the universal model. Verified feature; Inferred trace."
+        },
+        {
+          "x1": 520,
+          "z1": 700,
+          "x2": 555,
+          "z2": 615,
+          "note": "The Union covered way (west run) - the approach trench to the advanced line. Verified feature; Inferred trace."
+        },
+        {
+          "x1": 640,
+          "z1": 705,
+          "x2": 610,
+          "z2": 620,
+          "note": "The Union covered way (east run). Verified feature; Inferred trace."
+        }
+      ],
+      "swamps": [
+        {
+          "x": 550,
+          "z": 540,
+          "r": 55,
+          "note": "THE CRATER BOWL - the pit the mine opened: ~170 ft long (the convergent figure; width 60-120 and depth 30-35 ft are contested, and this rendering picks a shape inside the spread - no dimension is a combat input). Encoded under the universal model's mire/broken-ground class: the STEEPEST movement penalty in the terrain ladder and only its weakest concealment - the record's own trap, men sheltered in the pit and could not leave it. It is NEVER attacker cover toward Cemetery Hill: the objective lies far beyond, and no cover exists on the exit. Verified feature; Inferred rendering."
+        }
+      ],
+      "markers": [
+        {
+          "kind": "road",
+          "name": "Jerusalem Plank Road",
+          "path": [
+            [
+              310,
+              60
+            ],
+            [
+              345,
+              300
+            ],
+            [
+              365,
+              520
+            ]
+          ],
+          "note": "The plank road behind the Confederate line toward Petersburg. Verified feature; Inferred trace."
+        },
+        {
+          "kind": "label",
+          "name": "The Crater",
+          "x": 550,
+          "z": 540,
+          "note": "The pit itself - the trap between the lines. Verified."
+        },
+        {
+          "kind": "label",
+          "name": "The Taylor house ruins",
+          "x": 730,
+          "z": 660,
+          "note": "The ruined farmstead area on the Union side of the lines. Verified landmark; Inferred placement."
+        },
+        {
+          "kind": "label",
+          "name": "The captured Union forward line",
+          "x": 550,
+          "z": 750,
+          "note": "The IX Corps front the assault stepped off from, behind the covered ways. Verified sequence; Inferred placement."
+        },
+        {
+          "kind": "label",
+          "name": "to Petersburg and Blandford Church",
+          "x": 300,
+          "z": 70,
+          "note": "The city a mile beyond the hill - the stake of the whole assault. Verified context; Inferred placement."
+        }
+      ]
+    },
+    "supply": {
+      "US": {
+        "x": 550,
+        "z": 900,
+        "name": "The IX Corps depots behind the covered ways"
+      },
+      "CS": {
+        "x": 550,
+        "z": 45,
+        "name": "The Petersburg trains on the plank road"
+      }
+    },
+    "leaders": {
+      "US": [
+        {
+          "id": "ld_cr_burnside",
+          "name": "Maj. Gen. Ambrose E. Burnside",
+          "short": "Burnside",
+          "quality": 0.45,
+          "radius": 235,
+          "x": 550,
+          "z": 850,
+          "fate": 1.9,
+          "note": "IX Corps commander - his mine, his plan, his censure. Meade's July 29 substitution order (with Grant's concurrence) and the ~3-hour order-to-units communication lag are TEACHING (card cr_substitution), never a mechanic. Verified grade; Inferred quality value."
+        },
+        {
+          "id": "ld_cr_ledlie",
+          "name": "Brig. Gen. James H. Ledlie",
+          "short": "Ledlie",
+          "quality": 0.2,
+          "radius": 120,
+          "x": 560,
+          "z": 825,
+          "fate": 1.9,
+          "note": "1st Division commander, chosen by lot to lead - and absent in a bomb-proof sharing rum while his division piled into the bowl. The absence is encoded ONLY through the EXISTING leader-system inputs (low quality, short radius) and taught in card cr_leadership; no invented debuff key exists. Verified conduct (court of inquiry record); Inferred quality value."
+        },
+        {
+          "id": "ld_cr_ferrero",
+          "name": "Brig. Gen. Edward Ferrero",
+          "short": "Ferrero",
+          "quality": 0.28,
+          "radius": 130,
+          "atSec": 120,
+          "x": 600,
+          "z": 830,
+          "fate": 1.9,
+          "entry": "The 4th Division's commander comes forward with his brigades - historically he stayed in the same bomb-proof as Ledlie.",
+          "note": "4th Division (USCT) commander, censured with Ledlie for the same bomb-proof absence - the EXISTING leader inputs (low quality, short radius) carry it, never a new mechanic. Verified conduct; Inferred quality value and timing second."
+        }
+      ],
+      "CS": [
+        {
+          "id": "ld_cr_elliott",
+          "name": "Brig. Gen. Stephen Elliott Jr.",
+          "short": "Elliott",
+          "quality": 0.58,
+          "radius": 200,
+          "x": 640,
+          "z": 500,
+          "fate": 0.55,
+          "note": "Commander of the salient's South Carolina brigade, severely wounded leading the first counterattack; Col. William H. Wallace succeeded him. The wound enters through the EXISTING leader-fate input, never a scripted event. Verified grade and fate; Inferred quality value."
+        },
+        {
+          "id": "ld_cr_mahone",
+          "name": "Brig. Gen. William Mahone",
+          "short": "Mahone",
+          "quality": 0.76,
+          "radius": 250,
+          "atSec": 200,
+          "x": 520,
+          "z": 130,
+          "fate": 1.9,
+          "entry": "Mahone brings his division up the covered ravine from the Willcox farm and takes the counterattack in hand.",
+          "note": "THE RANK LOCK (packet SS12 correction 2): the grade he actually wore in the field on July 30 was brigadier general - the Confederate OOB pins BG William Mahone. His promotion to major general was appointed days later but made effective to rank FROM July 30, the battle's own date; that reward is taught in card cr_leadership and is never rendered as his grade here. Verified grade; Inferred quality value and timing second."
+        }
+      ]
+    },
+    "oob": {
+      "US": [
+        {
+          "id": "us_cr_ledlie",
+          "name": "Ledlie's 1st Division, IX Corps",
+          "commander": "Brig. Gen. James H. Ledlie",
+          "arm": "inf",
+          "weapon": "rifled",
+          "men": 2000,
+          "xp": 1,
+          "x": 550,
+          "z": 660,
+          "facing": 0,
+          "formation": "column",
+          "note": "The lead division, chosen BY LOT after Meade's July 29 order pulled the trained 4th Division from the front of the assault. Its men were veterans; its readiness encoding (xp 1) carries the leaderless, orderless state the court of inquiry documented - the Atlanta D443 readiness idiom, disclosed, never a debuff key. 2,000 is an Inferred share of the one-family US 8,500. Verified identity; Inferred strength and readiness."
+        },
+        {
+          "id": "us_cr_guns",
+          "name": "The IX Corps siege batteries",
+          "commander": "Corps artillery officers",
+          "arm": "art",
+          "weapon": "rifled",
+          "guns": 8,
+          "men": 300,
+          "xp": 2,
+          "x": 550,
+          "z": 845,
+          "facing": 0,
+          "formation": "line",
+          "note": "The siege guns that opened with the blast - real fielded pieces under the universal gun model (crews within the 40-per-gun cap). The ~160-gun grand bombardment is TEACHING scale; this formation is the engaged corps-front battery weight, an Inferred share of the one-family US 8,500. Verified role; Inferred grouping and strength."
+        }
+      ],
+      "CS": [
+        {
+          "id": "cs_cr_elliott",
+          "name": "Elliott's South Carolina Brigade",
+          "commander": "Brig. Gen. Stephen Elliott Jr.",
+          "arm": "inf",
+          "weapon": "rifled",
+          "men": 1722,
+          "xp": 2,
+          "x": 565,
+          "z": 262,
+          "facing": 3.14159,
+          "formation": "column",
+          "note": "The brigade that held the salient - its regimental roster (17th/18th/22nd/23rd/26th South Carolina) is OR-derived single-family and ships as this Inferred note; the brigade identity itself is multi-family Verified. STARTS REDUCED AND REFORMING AS TRUE INPUTS: the encoded 1,722 is the brigade's Inferred 2,000-man share of the one-family CS 6,100 MINUS the sourced ~278 blast dead (the 352 figure is the ABT outlier, disclosed never encoded), and the column posture rallied at the gorge line covering the hill approach is the reforming disorder of the sourced ~15-minute silence and the survivors' documented rally to the interior line (placed under the field's disclosed depth compression) - starting state, never a lever. Verified identity and blast toll; Inferred strength share, posture, and placement."
+        },
+        {
+          "id": "cs_cr_wright_bty",
+          "name": "Wright's Battery (Halifax Artillery)",
+          "commander": "Capt. Samuel T. Wright",
+          "arm": "art",
+          "weapon": "smooth",
+          "guns": 4,
+          "men": 160,
+          "xp": 2,
+          "x": 190,
+          "z": 500,
+          "facing": 3.14159,
+          "formation": "line",
+          "note": "The battery north of the breach whose enfilade raked the gap - real guns with real geometry, the correct lever for the historical fire (never a multiplier). 160 on 4 guns sits inside the 40-per-gun crew cap, an Inferred share. Verified identity and role; Inferred strength."
+        },
+        {
+          "id": "cs_cr_davidson_bty",
+          "name": "Davidson's Battery",
+          "commander": "Battery officers",
+          "arm": "art",
+          "weapon": "smooth",
+          "guns": 4,
+          "men": 160,
+          "xp": 2,
+          "x": 900,
+          "z": 510,
+          "facing": 3.14159,
+          "formation": "line",
+          "note": "The battery south of the breach - the other jaw of the enfilade. Verified role; Inferred strength and grouping."
+        }
+      ]
+    },
+    "reinforcements": [
+      {
+        "id": "us_cr_potter",
+        "name": "Potter's 2nd Division, IX Corps",
+        "commander": "Brig. Gen. Robert B. Potter",
+        "arm": "inf",
+        "weapon": "rifled",
+        "men": 1850,
+        "xp": 2,
+        "x": 730,
+        "z": 700,
+        "facing": 0,
+        "formation": "column",
+        "note": "The supporting division on the right of the breach approach, committed AFTER the lead division per the sourced sequence - the IX Corps fed its divisions through the narrow breach frontage one at a time, and that staged commitment is encoded as an Inferred timing second (the same schedule-input class as the Confederate waves), never a mechanic. 1,850 is an Inferred share of the one-family US 8,500. Verified identity and sequence; Inferred strength and timing second.",
+        "side": "US",
+        "atSec": 60,
+        "entry": "Potter's division follows Ledlie through the gap - the sourced sequential commitment."
+      },
+      {
+        "id": "us_cr_willcox",
+        "name": "Willcox's 3rd Division, IX Corps",
+        "commander": "Brig. Gen. Orlando B. Willcox",
+        "arm": "inf",
+        "weapon": "rifled",
+        "men": 1850,
+        "xp": 2,
+        "x": 370,
+        "z": 700,
+        "facing": 0,
+        "formation": "column",
+        "note": "The supporting division on the left, committed after Potter per the sourced sequence (encoded as an Inferred timing second, as above). 1,850 is an Inferred share of the one-family US 8,500. Verified identity and sequence; Inferred strength and timing second.",
+        "side": "US",
+        "atSec": 90,
+        "entry": "Willcox's division comes up on the left - the sourced sequential commitment."
+      },
+      {
+        "id": "us_cr_sigfried",
+        "side": "US",
+        "atSec": 150,
+        "name": "Sigfried's 1st Brigade, 4th Division (27th, 30th, 39th, 43rd USCT)",
+        "commander": "Lt. Col. Joshua K. Sigfried",
+        "arm": "inf",
+        "weapon": "rifled",
+        "men": 1200,
+        "xp": 1,
+        "x": 585,
+        "z": 840,
+        "facing": 0,
+        "formation": "column",
+        "entry": "The 4th Division goes in at last - hours after the division trained for this assault was ordered out of the lead.",
+        "note": "The brigade that had rehearsed the breach assault for weeks before Meade's July 29 order pulled the division from the front - committed LATE as the sourced schedule input. Unblooded (xp 1, the honest experience input; the training was plan-specific and its value died with the substitution - taught, never a modifier). 1,200 is an Inferred share of the one-family US 8,500. Verified identity and roster; Inferred strength and timing second."
+      },
+      {
+        "id": "us_cr_thomas",
+        "side": "US",
+        "atSec": 165,
+        "name": "Thomas's 2nd Brigade, 4th Division (19th, 23rd, 28th, 29th, 31st USCT)",
+        "commander": "Col. Henry Goddard Thomas",
+        "arm": "inf",
+        "weapon": "rifled",
+        "men": 1300,
+        "xp": 1,
+        "x": 680,
+        "z": 845,
+        "facing": 0,
+        "formation": "column",
+        "entry": "Thomas's brigade swings right into its own trench lane - the sourced distinct axis.",
+        "note": "THE ROSTER LAW (packet SS12 correction 1): this brigade is EXACTLY the 19th, 23rd, 28th, 29th, and 31st USCT - five regiments. Historically it swung right into a separate trench lane, encoded here as the distinct approach axis (position and entry), never a special mechanic. Unblooded (xp 1, disclosed as for Sigfried). 1,300 is an Inferred share. Verified identity and roster; Inferred strength and timing second."
+      },
+      {
+        "id": "cs_cr_weisiger",
+        "side": "CS",
+        "atSec": 200,
+        "name": "Weisiger's Virginia Brigade (Mahone's Division)",
+        "commander": "Col. David A. Weisiger",
+        "arm": "inf",
+        "weapon": "rifled",
+        "men": 1558,
+        "xp": 3,
+        "x": 470,
+        "z": 110,
+        "facing": 3.14159,
+        "formation": "column",
+        "entry": "The first wave - Weisiger's Virginians up the covered ravine, about 9 a.m. by the sourced clock.",
+        "note": "The first counterattack wave at the sourced ~9 a.m. hour (the scenario's timing seconds are an Inferred compression of the sourced hours, disclosed here). 1,558 is an Inferred share of the one-family CS 6,100. Verified identity and wave; Inferred strength and timing second."
+      },
+      {
+        "id": "cs_cr_wrightga",
+        "side": "CS",
+        "atSec": 200,
+        "name": "Wright's Georgia Brigade (part, with the first wave)",
+        "commander": "Brigade officers",
+        "arm": "inf",
+        "weapon": "rifled",
+        "men": 500,
+        "xp": 2,
+        "x": 590,
+        "z": 105,
+        "facing": 3.14159,
+        "formation": "column",
+        "entry": "Part of Wright's Georgians go in beside the Virginians - about 9 a.m.",
+        "note": "THE SUB-SPLIT, HONESTLY: the three-wave shape is multi-family, but the part-at-9/rest-at-11 division of Wright's Georgians is the beyondthecrater specialist family alone and ships Inferred. 500 is an Inferred share. Verified brigade identity; Inferred sub-split, strength, and timing second."
+      },
+      {
+        "id": "cs_cr_hall",
+        "side": "CS",
+        "atSec": 300,
+        "name": "Wright's Georgia Brigade - the rest (Lt. Col. Matthew R. Hall)",
+        "commander": "Lt. Col. Matthew R. Hall",
+        "arm": "inf",
+        "weapon": "rifled",
+        "men": 700,
+        "xp": 2,
+        "x": 590,
+        "z": 100,
+        "facing": 3.14159,
+        "formation": "column",
+        "entry": "The rest of the Georgians under Hall - about 11 a.m. by the sourced clock.",
+        "note": "The second wave at the sourced ~11 a.m. hour (Inferred sub-split per the note above; Inferred compression of the hour). 700 is an Inferred share. Verified identity; Inferred strength and timing second."
+      },
+      {
+        "id": "cs_cr_sanders",
+        "side": "CS",
+        "atSec": 380,
+        "name": "Sanders's Alabama Brigade",
+        "commander": "Col. John C. C. Sanders",
+        "arm": "inf",
+        "weapon": "rifled",
+        "men": 1300,
+        "xp": 3,
+        "x": 520,
+        "z": 105,
+        "facing": 3.14159,
+        "formation": "column",
+        "entry": "The last wave - Sanders's Alabamians, about 1 to 1:30 p.m., the assault that retook the pit.",
+        "note": "The third wave at the sourced ~1-1:30 p.m. hour (Inferred compression). 1,300 is an Inferred share of the one-family CS 6,100. Verified identity and wave; Inferred strength and timing second."
+      }
+    ],
+    "teaching": {
+      "title": "The Crater - what this battle must teach",
+      "head": "The assault is the scenario; the injustice has two layers",
+      "body": "The mine worked. Everything after it failed - the substitution the day before, the lot that chose the wrong division, the commanders in a bomb-proof, the bowl that became a trap, and the counterattack that retook the salient. What followed the repulse is documented in Confederate letters and taught in the cards below. In campaign play the post-surrender choice resolves ONLY through the no-quarter machinery - judged, never rewarded - and declining it changes nothing.",
+      "provenance": "Verified sequence under the D459 packet register; coordinates, timing seconds, and readiness values are Inferred.",
+      "cards": [
+        {
+          "id": "cr_substitution",
+          "head": "The Substitution - Both Findings, Taught",
+          "body": "Ferrero's 4th Division - U.S. Colored Troops - trained for weeks to lead this assault. On July 29, the day before, Meade ordered them out of the lead, and Grant concurred; Burnside had his remaining commanders draw lots, and the lot fell to Ledlie's division, which had neither plan nor preparation. Grant told the Joint Committee afterward: had the Black division led, \"I believe... it would have been a success.\" Two official inquiries then split the blame: the court of inquiry censured Burnside, Ledlie, Ferrero, Willcox, and Col. Bliss for the execution, while the 1865 Joint Committee blamed the substitution itself. This game teaches BOTH findings as findings - the record does not resolve them by fiat, and neither does the card.",
+          "provenance": "Verified",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Battle_of_the_Crater",
+            "https://encyclopediavirginia.org/entries/crater-battle-of-the/",
+            "https://www.nps.gov/pete/learn/historyculture/battle-of-the-crater.htm"
+          ]
+        },
+        {
+          "id": "cr_massacre",
+          "head": "The Massacre, Named Plainly - and Never Counted Falsely",
+          "body": "After the counterattack broke the lodgment, surrendering and wounded U.S. Colored Troops were killed by Confederate soldiers - documented in the Confederates' own letters and in the disproportionate killed-to-wounded ratios Bryce Suderow's analysis established from the records. NO SOURCE PINS A PRECISE TOLL, and this game refuses to invent one: the record here is qualitative, and it is damning enough without a number. One Confederate letter claims the killing would have consumed every Black prisoner \"had it not been for Gen. Mahone\" - THE McCLELLAN CAUTION IS LAW in this game: that letter never stands alone, because the Mahone-the-humane-rescuer reading is historiographically contested, and it is taught here PAIRED with the Suderow ratio evidence that shows what had already happened before any order stopped it. The killing of surrendering men is the settled record; the count and the credit are not.",
+          "provenance": "Verified",
+          "sources": [
+            "https://encyclopediavirginia.org/entries/crater-battle-of-the/",
+            "https://www.beyondthecrater.com/",
+            "https://cwmemory.com/remembering-the-battle-of-the-crater-war-as-murder/",
+            "https://www.nps.gov/pete/learn/historyculture/battle-of-the-crater.htm"
+          ]
+        },
+        {
+          "id": "cr_mine",
+          "head": "The Mine",
+          "body": "Lt. Col. Henry Pleasants's 48th Pennsylvania - anthracite miners in uniform - drove a 511-foot approach shaft under Elliott's Salient (about 586 feet counting the lateral powder galleries), against the engineers' assurances it could not be done. At 4:44 a.m. on July 30 the charge of 8,000 lbs of powder fired, killing about 278 South Carolinians in the works above (the 352 figure is the ABT article's outlier, recorded and not adopted) and opening a crater about 170 feet long. The mine was the war's great engineering feat turned to tragedy within hours - the hole it made became the trap the assault died in.",
+          "provenance": "Verified",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Battle_of_the_Crater",
+            "https://encyclopediavirginia.org/entries/crater-battle-of-the/",
+            "https://www.battlefields.org/learn/civil-war/battles/crater"
+          ]
+        },
+        {
+          "id": "cr_leadership",
+          "head": "The Bomb-Proof",
+          "body": "While Ledlie's division piled leaderless into the pit, Ledlie and Ferrero shared a surgeon's rum in a bomb-proof well to the rear - the court of inquiry's record, not a legend. Orders took roughly three hours to travel from the rear to the men in the breach. Grant called the day \"the saddest affair I have witnessed in this war.\" Mahone, who wore a brigadier general's grade on the field that day, was rewarded with promotion to major general - the commission appointed days afterward but made effective to rank from July 30 itself, so the battle's date became his commission's date. Leadership decided this battle twice: by its absence in the bowl, and by its presence in the counterattack.",
+          "provenance": "Verified",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Battle_of_the_Crater",
+            "https://encyclopediavirginia.org/entries/crater-battle-of-the/",
+            "https://en.wikipedia.org/wiki/Confederate_order_of_battle_for_the_Battle_of_the_Crater"
+          ]
+        },
+        {
+          "id": "cr_remember",
+          "head": "\"Remember Fort Pillow\" Ran Both Ways",
+          "body": "The Crater's killings did not come from nowhere. The Confederacy's standing policy climate - Davis's December 1862 proclamation, the May 1863 congressional act promising captured Black soldiers execution or enslavement, and the Union's answering General Order No. 252 with the prisoner-exchange cartel's collapse - is the same documented chain this game teaches in its prisoner-exchange and codex corpus, and Fort Pillow had shown three months earlier what that climate licensed. At the Crater the pattern held at Petersburg: U.S. Colored Troops went in expecting no quarter, and the aftermath record shows what that expectation was worth. The atrocities were not aberrations; they were policy meeting battle.",
+          "provenance": "Verified",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Battle_of_the_Crater",
+            "https://www.nps.gov/pete/learn/historyculture/battle-of-the-crater.htm",
+            "https://cwmemory.com/remembering-the-battle-of-the-crater-war-as-murder/"
+          ]
+        }
+      ],
+      "codex": {
+        "id": "codex_crater",
+        "title": "The Crater - July 30, 1864",
+        "summary": "Pleasants's Pennsylvania miners blew Elliott's Salient apart at 4:44 a.m. and the IX Corps assault died in and around the pit the blast made: the trained USCT division was substituted out the day before, the lead division chosen by lot went in leaderless, the flanking batteries enfiladed the gap, and Mahone's division retook the salient in three timed waves. Union losses ran roughly two and a half times Confederate at the engaged figures this build encodes. The killing of surrendering U.S. Colored Troops that followed the repulse is documented in Confederate letters and taught with primary sources; it resolves only through the campaign's judged no-quarter machinery and is never played.",
+        "axes": {
+          "theater": "Eastern",
+          "campaign": "Richmond-Petersburg Campaign",
+          "result": "Confederate victory"
+        },
+        "provenance": "Verified",
+        "sources": [
+          "https://www.nps.gov/pete/learn/historyculture/battle-of-the-crater.htm",
+          "https://en.wikipedia.org/wiki/Battle_of_the_Crater",
+          "https://encyclopediavirginia.org/entries/crater-battle-of-the/"
+        ]
+      }
+    },
+    "endNote": {
+      "US": {
+        "US": "History diverges. The columns clear the bowl's shoulders, the hill falls before the last wave lands, and the IX Corps holds Cemetery Hill - the result the mine was dug for and the substitution helped throw away. The record this scenario teaches remains: at the real Crater the assault died in the pit, and what followed is documented in the cards.",
+        "CS": "History holds. The assault piles into the bowl and dies under the enfilade and the counterattack waves. What Confederate troops then did to surrendering U.S. Colored Troops is the documented record this game teaches and never plays - taught qualitatively, from their own letters, with no invented count. In campaign play that choice belongs to the judged no-quarter machinery; here the teaching carries it."
+      },
+      "CS": {
+        "US": "History diverges. The breach becomes a corridor instead of a grave: the Union columns bypass the pit and carry the hill. No outcome here rewrites the record the cards teach.",
+        "CS": "History holds. Elliott's torn brigade and the flanking guns buy the hours, and the division's waves seal the breach - the true strengths and the ground did this without any special power. The aftermath record - the killing of surrendering Black soldiers, documented in Confederate letters - is taught in the cards; it is not part of play, it is not scored, and no framing here softens it."
+      },
+      "draw": "The clock divides the field with the breach still contested. The real day did not: the counterattack retook the salient by early afternoon, and the documented killings that followed are taught in the cards - never played."
+    }
+  }
+}

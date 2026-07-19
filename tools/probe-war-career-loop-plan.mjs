@@ -506,8 +506,8 @@ step("IMPLEMENTATION LADDER", () => {
   if (/"campaignAdvance"/.test(overrides)) {
     throw new Error("assignment wrapper must not register campaignAdvance as a declaration override");
   }
-  if (suite.length !== 138) {   // AD-7 re-pin (D443): 130 -> 131 D418 mayhem row; 131 -> 132 D436 atlanta; 132 -> 133 D442 cold harbor; D444: 133 -> 134 learn-battle; D445: 134 -> 135 chief-of-staff; D446: 135 -> 136 concept-links; D447: 136 -> 137 memory-chain; D463: 137 -> 138 fort-pillow — each appended at the END so the War Career row 38 holds
-    throw new Error("complete Slice A requires suite 138, got " + suite.length);
+  if (suite.length !== 139) {   // D469: 138 -> 139 — the crater row appends at the END (LANE-015). AD-7 re-pin (D443): 130 -> 131 D418 mayhem row; 131 -> 132 D436 atlanta; 132 -> 133 D442 cold harbor; D444: 133 -> 134 learn-battle; D445: 134 -> 135 chief-of-staff; D446: 135 -> 136 concept-links; D447: 136 -> 137 memory-chain; D463: 137 -> 138 fort-pillow — each appended at the END so the War Career row 38 holds
+    throw new Error("complete Slice A requires suite 139, got " + suite.length);
   }
   return { mode: "runtime", suite: suite.length, marker: MARKER };
 });
@@ -538,8 +538,8 @@ step("EXCLUSIONS + BASELINES", () => {
 
   if (t1Count !== 27) throw new Error("scenario baseline must be 27, got " + t1Count);   // D436: 24 -> 25 — Atlanta registers at rank 71. D442: 25 -> 26 — Cold Harbor registers at rank 68.5. D463: 26 -> 27 — Fort Pillow registers at rank 66 (LANE-013 P4)
   if (schemaCount !== 60) throw new Error("schema/data baseline must be 60, got " + schemaCount);   // D436: 54 -> 56 — mayhem-rules.json (D418, pin missed then) + atlanta.json (D436); documented honestly. D442: 56 -> 57 — cold-harbor.json. D445: 57 -> 58 — chief-of-staff.json (GEA-08). D446: 58 -> 59 — concept-links.json (GEA-10). D463: 59 -> 60 — fort-pillow.json (LANE-013 P4)
-  if (!/people\.length\s*!==\s*1632/.test(loot) || !loot.includes("1632 of 1632")) {   // D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7); D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (the AD-7 chain idiom)
-    throw new Error("Army Register 1632 pins missing");
+  if (!/people\.length\s*!==\s*1671/.test(loot) || !loot.includes("1671 of 1671")) {   // D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7); D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (the AD-7 chain idiom)
+    throw new Error("Army Register 1671 pins missing");
   }
   if (!saveVersionOne) throw new Error("_SAVE_VER moved from 1");
   if (baseHash !== "c9db83fa99230ffb95bdfdfe059f3fb9") {
@@ -556,7 +556,7 @@ step("EXCLUSIONS + BASELINES", () => {
     }
     if (!e71.includes("PENDING")) throw new Error("planning boundary must leave E71 pending");
   } else {
-    if (suite.length !== 138) throw new Error("Slice-A suite must be 138, got " + suite.length);   // AD-7 re-pin (D443): 130 -> 133 (D418 mayhem, D436 atlanta, D442 cold harbor rows append at the END). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links). D447: 136 -> 137 (memory-chain). D463: 137 -> 138 (fort-pillow, at the END)
+    if (suite.length !== 139) throw new Error("Slice-A suite must be 139, got " + suite.length);   // D469: 138 -> 139 — the crater row appends at the END (LANE-015). AD-7 re-pin (D443): 130 -> 133 (D418 mayhem, D436 atlanta, D442 cold harbor rows append at the END). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links). D447: 136 -> 137 (memory-chain). D463: 137 -> 138 (fort-pillow, at the END)
     if (!e71.includes("FIXED")) throw new Error("Slice A marker exists but E71 is not FIXED");
   }
 
@@ -912,7 +912,10 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     // 03c2cdba (terrain texturing T32 — src/tactical/T32-terrain-texturing.js enrolls after
     // T31 in the manifest; presentation-only, no war-career surface touched).
     // runtime/journey/command/focused/commandProbe did NOT move.
-    srcTree:"03c2cdba0aafd8c67d7fa994f104d923",
+    // D469 re-pin (the AD-7 idiom, at the LANE-015 Crater head): srcTree 03c2cdba -> bab9cca1
+    // (the T1 rank-71.5 registry line + the T10 E/true/anv meta row; zero engine code).
+    // runtime/journey/command/commandProbe did NOT move.
+    srcTree:"bab9cca1fb6616fa293dee83e07bf3a5",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
     command:"8f12c49f7129b3a9be0203677822e048",
@@ -923,7 +926,9 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     // 138 pins; the runtime surface held.
     // D466 re-pin: focused 664ca996 -> 3da0dbc0 (the src/82 frozen-pin chain moved with
     // the D457 seam acknowledgment; the war-career runtime surface held).
-    focused:"3da0dbc09f20b643924de06d272a667e",
+    // D469 re-pin: focused 3da0dbc0 -> bb7a1bc9 — probe-war-career.mjs carries the D469
+    // register chain (1632 -> 1671, The Crater); the war-career runtime surface held.
+    focused:"bb7a1bc9667c0dd00580bb20a46ec833",
     commandProbe:"5ffd40fd221179f2e01cad59ef43bf7d"
   };
   for (const key of Object.keys(expected)) {
@@ -1153,14 +1158,14 @@ step("BASELINES + LANE", () => {
   if (t1Count !== 27 || schemaCount !== 60) {   // D436: 24/54 -> 25/56 (atlanta + the D418 mayhem-rules pin catch-up). D442: 25/56 -> 26/57 (cold harbor). D445: 57 -> 58 (chief-of-staff.json). D446: 58 -> 59 (concept-links.json; scenarios stay 26). D463: 26/59 -> 27/60 (fort-pillow, LANE-013 P4)
     throw new Error("scenario/schema baseline moved: " + t1Count + "/" + schemaCount);
   }
-  if (!/people\.length\s*!==\s*1632/.test(loot) || !loot.includes("1632 of 1632")) {   // D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7); D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (the AD-7 chain idiom)
-    throw new Error("Army Register 1632 pins missing");
+  if (!/people\.length\s*!==\s*1671/.test(loot) || !loot.includes("1671 of 1671")) {   // D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7); D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (the AD-7 chain idiom)
+    throw new Error("Army Register 1671 pins missing");
   }
-  if (rosterExpected.length !== 27 || builderExpected.length !== 27 ||   // D442: 25 -> 26 — coldHarbor inserts between spotsylvania and petersburgAssaults. D463: 26 -> 27 — fortPillow inserts between chattanooga and wilderness
+  if (rosterExpected.length !== 28 || builderExpected.length !== 28 ||   // D442: 25 -> 26 — coldHarbor inserts between spotsylvania and petersburgAssaults. D463: 26 -> 27 — fortPillow inserts between chattanooga and wilderness. D469: 27 -> 28 — crater inserts between atlanta and cedarCreek (LANE-015)
       normalize(rosterExpected.join(" ")) !== normalize(builderExpected.join(" "))) {
     throw new Error("coverage baselines moved");
   }
-  if (suite.length !== 138 || !suite[37] || suite[37][1] !== "tools/probe-war-career.mjs") {   // D436: 130 -> 132 (mayhem row D418 missed this pin; atlanta row appends at the end so row 38 holds). D442: 132 -> 133 (cold harbor row appends at the end; row 38 still holds). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links). D447: 136 -> 137 (memory-chain). D463: 137 -> 138 (fort-pillow, each at the end; row 38 still holds)
+  if (suite.length !== 139 || !suite[37] || suite[37][1] !== "tools/probe-war-career.mjs") {   // D436: 130 -> 132 (mayhem row D418 missed this pin; atlanta row appends at the end so row 38 holds). D442: 132 -> 133 (cold harbor row appends at the end; row 38 still holds). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links). D447: 136 -> 137 (memory-chain). D463: 137 -> 138 (fort-pillow, each at the end; row 38 still holds)
     throw new Error("suite 137 / War Career row 38 moved");
   }
   if (!read(SWEEP).includes("var reg = fldScenarioRegistry()") ||
@@ -1211,11 +1216,14 @@ step("BASELINES + LANE", () => {
     // D468 re-pin (the AD-7 idiom, at the LANE-014 slice-2 head): game 11099dac -> 9fca6932
     // and manifest bb5d7903 -> bf29b44f — terrain texturing T32 enrolls after T31
     // (presentation-only src module + rebuild). base/dataTree/suite hold.
-    game:"9fca6932621bddaeb97c06f383b5b146",
+    // D469 re-pin (the AD-7 idiom, at the LANE-015 Crater head): game 9fca6932 -> 1757fdbf,
+    // dataTree 23ccef52 -> 3cd4ccb2 (data/crater.json enrolls + rebuild), suite 0f8550a5 ->
+    // 7b36f51e (the crater row at the END, 138 -> 139, + the 600s budget). base/manifest hold.
+    game:"1757fdbf182c8554fe591465d4efc73b",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
-    dataTree:"23ccef52d8b6fdccddc894b1cfaf3b5c",
+    dataTree:"3cd4ccb2fb8f5b91cd5def368ca79966",
     manifest:"bf29b44f3a90b4d678c97e8a204db89a",
-    suite:"0f8550a5e120772d89777d7459029e7e"
+    suite:"7b36f51eeea485008d753b5b223f0028"
   };
   for (const key of Object.keys(expectedHashes)) {
     if (hashes[key] !== expectedHashes[key]) throw new Error(key + " baseline moved: " + hashes[key]);
@@ -1622,16 +1630,20 @@ step("REACHABILITY BASELINES", () => {
     // provenance wall, data-only; srcTree/runtime/journey/focused held).
     // D468 re-pin: game 11099dac -> 9fca6932, srcTree 916d7e72 -> 03c2cdba (terrain
     // texturing T32 enrolls; dataTree/runtime/journey/focused held).
-    game:"9fca6932621bddaeb97c06f383b5b146",
-    dataTree:"23ccef52d8b6fdccddc894b1cfaf3b5c",
-    srcTree:"03c2cdba0aafd8c67d7fa994f104d923",
+    // D469 re-pin: game 9fca6932 -> 1757fdbf, dataTree 23ccef52 -> 3cd4ccb2, srcTree
+    // 03c2cdba -> bab9cca1 (the Crater runtime: data/crater.json + the T1/T10 rows +
+    // rebuild; zero engine code); runtime/journey did NOT move.
+    game:"1757fdbf182c8554fe591465d4efc73b",
+    dataTree:"3cd4ccb2fb8f5b91cd5def368ca79966",
+    srcTree:"bab9cca1fb6616fa293dee83e07bf3a5",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
     // D460 re-pin: focused a29a5351 -> 2816a82c (Elkhorn Cherokee, 1614 -> 1617). D463
     // re-pin: focused 2816a82c -> 664ca996 (the D463 register chain 1617 -> 1632 + the
     // suite-138 pins; the war-career runtime surface untouched).
     // D466 re-pin: focused 664ca996 -> 3da0dbc0 (the src/82 frozen-pin chain acknowledgment).
-    focused:"3da0dbc09f20b643924de06d272a667e"
+    // D469 re-pin: focused 3da0dbc0 -> bb7a1bc9 (the 1632 -> 1671 Crater register chain).
+    focused:"bb7a1bc9667c0dd00580bb20a46ec833"
   };
   for (const key of Object.keys(expected)) {
     if (hashes[key] !== expected[key]) throw new Error("D411 shipped baseline moved: " + key + " " + hashes[key]);

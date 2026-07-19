@@ -2695,7 +2695,7 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
-### LANE-015 · crater-runtime — **DRIVE (chartered this commit; the ONE atomic runtime commit follows)** (ARC 2 completion — C3 content; the D455 SS3 massacre-treatment family)
+### LANE-015 · crater-runtime — **VERIFY (the runtime SHIPPED as D469 in this commit; the flip to SHIPPED gates on the P7 day-end battery)** (ARC 2 completion — C3 content; the D455 SS3 massacre-treatment family)
 
 - **Owning tool:** Claude Code (Fable 5) — DRIVE taken WITH this charter edit (the LANE-013
   `3506716` ledger-only precedent), 2026-07-19 afternoon, P2 of Aaron's all-day ladder. The
@@ -2728,14 +2728,20 @@ next green commit and confer through this ledger instead of permitting simultane
   card-source tooth red EXACTLY) · AD-7 re-pins + both plan probes re-run post-commit.
 - **Probe design:** `tools/probe-crater.mjs`, fs+sim (the probe-fort-pillow/-cold-harbor
   idiom); suite row `['crater','tools/probe-crater.mjs']` appended at END.
-- **Resume pointer:** author the runtime per the spec §8-§9 in one atomic commit; on green
-  gates + push, flip this lane SHIPPED (or VERIFY pending the day-end battery per the
-  D160/D176 tiering).
-- **Last-touched commit:** this charter edit.
+- **Resume pointer:** the P7 day-end battery (suite 139) gates the VERIFY→SHIPPED flip;
+  no further code work is queued in this lane.
+- **Last-touched commit:** the D469 runtime commit (this commit).
 - **History:** chartered ledger-only + DRIVE taken 2026-07-19 (afternoon, Claude Code /
   Fable 5, the all-day ladder P2) at the D468 boundary; recon run `wf_748c7029-7ed`
   (register-site inventory · forbidden-scan/adjacency inventory · probe template ·
-  data-model mechanics) supporting the build.
+  data-model mechanics) supporting the build. The RUNTIME SHIPPED the same session as
+  D469 in ONE atomic commit: probe-crater 20/20 (direction battery CS 6/8 · US-bleeds
+  8/8; the machinery tooth at battleId `crater` direct), binds A/B md5-proven
+  (5a5e5132), the adjudication-2 flips + the Kennesaw→Atlanta→Crater→CedarCreek→
+  Franklin adjacency re-pins + the 17-site register chain (1,632→1,671) all riding the
+  commit; three mid-build Overland whole-registry 27-pin reds root-fixed at their
+  exact labels (the D466 sibling class, swept bare-token AND regex-source forms).
+  Lane at VERIFY pending the P7 battery.
 
 ---
 

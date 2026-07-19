@@ -1023,11 +1023,11 @@ async function inspectNarrowLayout(browser, probeUrl) {
       evidence.baseMd5 === "c9db83fa99230ffb95bdfdfe059f3fb9" &&
       evidence.saveVer === 1 &&
       evidence.applySaveSignature === "201fa746ea8e8755" &&
-      evidence.dataCount === 60 &&   // D436: 55 -> 56 — atlanta.json. D442: 56 -> 57 — cold-harbor.json. D445: 57 -> 58 — chief-of-staff.json (GEA-08). D446: 58 -> 59 — concept-links.json (GEA-10). D463: 59 -> 60 — fort-pillow.json (LANE-013 P4)
-      evidence.rosterIds.length === 27 &&   // D436: 24 -> 25 — atlanta. D442: 25 -> 26 — coldHarbor. D463: 26 -> 27 — fortPillow (LANE-013 P4)
-      evidence.builderIds.length === 27 &&
+      evidence.dataCount === 61 &&   // D436: 55 -> 56 — atlanta.json. D442: 56 -> 57 — cold-harbor.json. D445: 57 -> 58 — chief-of-staff.json (GEA-08). D446: 58 -> 59 — concept-links.json (GEA-10). D463: 59 -> 60 — fort-pillow.json; D469: 60 -> 61 — crater.json (LANE-015) (LANE-013 P4)
+      evidence.rosterIds.length === 28 &&   // D436: 24 -> 25 — atlanta. D442: 25 -> 26 — coldHarbor. D463: 26 -> 27 — fortPillow (LANE-013 P4). D469: 27 -> 28 — crater (LANE-015)
+      evidence.builderIds.length === 28 &&
       JSON.stringify(evidence.rosterIds) === JSON.stringify(evidence.builderIds) &&
-      evidence.suiteCount === 138 &&   // D436: 131 -> 132 — the atlanta row appends at the suite end so the row-38/57 pins hold. D442: 132 -> 133 — the cold harbor row appends at the end likewise. D444: 133 -> 134 — learn-battle. D445: 134 -> 135 — chief-of-staff. D446: 135 -> 136 — concept-links, each at the end likewise. D447: 136 -> 137 — memory-chain. D463: 137 -> 138 — fort-pillow (LANE-013 P4), each at the END so the row-38/57 pins hold
+      evidence.suiteCount === 139 &&   // D436: 131 -> 132 — the atlanta row appends at the suite end so the row-38/57 pins hold. D442: 132 -> 133 — the cold harbor row appends at the end likewise. D444: 133 -> 134 — learn-battle. D445: 134 -> 135 — chief-of-staff. D446: 135 -> 136 — concept-links, each at the end likewise. D447: 136 -> 137 — memory-chain. D463: 137 -> 138 — fort-pillow; D469: 138 -> 139 — crater (LANE-015) (LANE-013 P4), each at the END so the row-38/57 pins hold
       evidence.mayhemRow === 57 &&
       evidence.mayhemFile === "tools/probe-mayhem-mode.mjs" &&
       evidence.warCareerRow === 38 &&
