@@ -917,7 +917,9 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     // runtime surface itself did NOT move. D463 re-pin: focused 2816a82c -> 664ca996 —
     // probe-war-career.mjs carries the D463 register chain (1617 -> 1632) and the suite
     // 138 pins; the runtime surface held.
-    focused:"664ca996d31a5743c9c7109a0b543dfc",
+    // D466 re-pin: focused 664ca996 -> 3da0dbc0 (the src/82 frozen-pin chain moved with
+    // the D457 seam acknowledgment; the war-career runtime surface held).
+    focused:"3da0dbc09f20b643924de06d272a667e",
     commandProbe:"5ffd40fd221179f2e01cad59ef43bf7d"
   };
   for (const key of Object.keys(expected)) {
@@ -1614,7 +1616,8 @@ step("REACHABILITY BASELINES", () => {
     // D460 re-pin: focused a29a5351 -> 2816a82c (Elkhorn Cherokee, 1614 -> 1617). D463
     // re-pin: focused 2816a82c -> 664ca996 (the D463 register chain 1617 -> 1632 + the
     // suite-138 pins; the war-career runtime surface untouched).
-    focused:"664ca996d31a5743c9c7109a0b543dfc"
+    // D466 re-pin: focused 664ca996 -> 3da0dbc0 (the src/82 frozen-pin chain acknowledgment).
+    focused:"3da0dbc09f20b643924de06d272a667e"
   };
   for (const key of Object.keys(expected)) {
     if (hashes[key] !== expected[key]) throw new Error("D411 shipped baseline moved: " + key + " " + hashes[key]);
