@@ -679,6 +679,68 @@ async function browserSetup() {
       return { gate: MAYHEM_PUBLIC_READY === true };
     });
 
+    // LANE-012 SLICE 1 (D455 §4a.2 — the D416 amendment): the always-visible teaching
+    // companion. The companion INFORMS; it never grades — Mayhem keeps its no-moral-GPA
+    // charter while the sourced "In history…" juxtaposition rides every Mayhem AAR and
+    // every Chronicle dispatch.
+    // BIND A PREDECLARATION - the companion API absent must red exactly the presence asserts
+    // here (+ the briefing probe's presence teeth); the guarded byte-equivalence asserts stay
+    // green by construction. EXECUTED FORM (D### slice record): a manifest drop is REFUSED
+    // fail-closed by the build's manifest-completeness gate (BUILD FAIL [5] proven at bind
+    // time), so the bind renames the three tc* composers instead - same absence, build-legal.
+    // BIND B PREDECLARATION - stripping the committed attribution tail from tcChronicleLine
+    // must red exactly this step's Chronicle-attribution assert.
+    step("SLICE 1 TEACHING COMPANION (D455 §4a.2 — always-visible both modes; informs never grades; Chronicle juxtaposition; guarded byte-equivalence)", () => {
+      if (typeof tcMayhemPanel !== "function" || typeof tcChronicleLine !== "function" || typeof tcBriefingPanel !== "function")
+        throw new Error("Slice-1 companion API missing");
+      // (1) The Mayhem AAR carries the companion; a seeded divergence renders its COMMITTED hist line.
+      const C = campaign(null, "CS"); mayhemInit(C, "mayhem", "new");
+      C.timelineName = "timeline-1";
+      C.strategy = { armEnslaved: true, wildsPlayed: [] };
+      const before = JSON.stringify(C);
+      const aarC = aarRenderReport(C, { final: false });
+      if (JSON.stringify(C) !== before) throw new Error("the companion mutated the campaign (must be pure)");
+      if (aarC.indexOf("tc-companion") < 0 || aarC.indexOf("In history") < 0) throw new Error("Mayhem AAR companion missing");
+      if (aarC.indexOf("Cleburne") < 0) throw new Error("the seeded divergence's committed hist line is not rendered");
+      const tcHtml = tcMayhemPanel(C);
+      if (tcHtml.indexOf("informs; it does not grade") < 0) throw new Error("the no-grading contract line is missing");
+      const verdict = ["Legendary", "Masterful", "Workmanlike", "Faltering", "A failure", "GPA", "report card"].filter(w => tcHtml.indexOf(w) >= 0);
+      if (/\bgraded?\b/i.test(tcHtml.replace(/does not grade/g, ""))) verdict.push("grade");
+      if (verdict.length) throw new Error("companion carries verdict vocabulary: " + verdict.join(","));
+      if (tcHtml.indexOf("tc-src") < 0) throw new Error("companion sources line missing");
+      // (2) The Chronicle juxtaposition: a real no-quarter dispatch carries the sourced In-history
+      // line composed from the committed codex corpus (Forrest / USCT) with its attributions.
+      const M = campaign(null, "US"); mayhemInit(M, "mayhem", "new"); lootInit(M);
+      M.timelineName = "timeline-1";
+      M.mayhemNoQuarterOffer = { timelineId: "timeline-1", battleId: "battle-1", captured: 120, consumed: false };
+      if (!mayhemNoQuarterApply(M)) throw new Error("setup receipt failed");
+      const chronM = mayhemChronicleHTML(M);
+      if (chronM.indexOf("tc-chronicle-line") < 0 || chronM.indexOf("Fort Pillow") < 0) throw new Error("Chronicle juxtaposition missing");
+      if (!/\(American Battlefield Trust[^)]*McPherson, Battle Cry of Freedom\.\)/.test(chronM)) throw new Error("the Chronicle line's committed attributions are missing");
+      // (3) BOTH-MODES presence without double-render: Historical's AAR carries NO Mayhem
+      // companion node (its own read-back already carries the corpus); the divergence tab
+      // keeps the sourced corpus under BOTH rulesets.
+      const H = campaign(null, "US"); mayhemInit(H, "historical", "new");
+      if (tcMayhemPanel(H) !== "") throw new Error("the Mayhem companion must return '' for Historical");
+      if (aarRenderReport(H, { final: false }).indexOf("tc-companion") >= 0) throw new Error("Historical AAR must not carry the Mayhem companion node");
+      if (divRenderTab(C).indexOf("In history") < 0) throw new Error("divergence tab under Mayhem lost its In-history corpus");
+      if (divRenderTab(C).indexOf("Sources: McPherson") < 0 || divRenderTab(H).indexOf("Sources: McPherson") < 0)
+        throw new Error("the divergence tab's sources foot is missing in a mode");
+      // (4) Guarded byte-equivalence: stubbing each composer off yields EXACTLY render-minus-node.
+      const chronWith = mayhemChronicleHTML(M);
+      const aarWith = aarRenderReport(C, { final: false });
+      const aside = (aarWith.match(/<aside class="tc-companion"[\s\S]*?<\/aside>/) || [null])[0];
+      const lineRe = /<div class="tc-chronicle-line"[\s\S]*?<\/div>/g;
+      if (!aside || !lineRe.test(chronWith)) throw new Error("companion nodes not found for the guard proof");
+      const savedP = tcMayhemPanel, savedL = tcChronicleLine;
+      let aarWithout, chronWithout;
+      try { tcMayhemPanel = 0; tcChronicleLine = 0; aarWithout = aarRenderReport(C, { final: false }); chronWithout = mayhemChronicleHTML(M); }
+      finally { tcMayhemPanel = savedP; tcChronicleLine = savedL; }
+      if (chronWithout !== chronWith.replace(lineRe, "")) throw new Error("guarded Chronicle absence is not byte-identical to render-minus-line");
+      if (aarWithout !== aarWith.replace(aside, "")) throw new Error("guarded AAR absence is not byte-identical to render-minus-panel");
+      return { companion: true };
+    });
+
     cleanStorage();
   } catch (error) {
     R.ok = false;

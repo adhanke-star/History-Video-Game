@@ -897,7 +897,11 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     // ee83045eaaa20c96c3c09579599614c8 (D438 §19 franchise archive in src/106); focused
     // b7d6246e10357afc2a4e8f07f8c5dcea -> a29a53516ea00c7a2f3aa4602c786dc8 (D425 pin fixes,
     // D436 1566, D438 §19 step, D442 1614). journey, command, and commandProbe did NOT move.
-    srcTree:"d1792e99f3ecbff70a3ba3cfd87eecb6",
+    // D456 re-pin (the AD-7 idiom, at the LANE-012 Slice-1 head): srcTree d1792e99 ->
+    // 28d894d9 (D456 teaching companion — src/113 enrolls at manifest 113; guarded seams in
+    // src/100 briefing + src/107 AAR/Chronicle). runtime/journey/command/focused/commandProbe
+    // did NOT move — the war-career surface itself is untouched.
+    srcTree:"28d894d97afc5828c4501a6a60472954",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
     command:"8f12c49f7129b3a9be0203677822e048",
@@ -1165,10 +1169,13 @@ step("BASELINES + LANE", () => {
     // decorated-string -> exact "Verified" enum, bbffcb4, + rebuild); suite 69987b22 ->
     // edba2bd9 (the row-'gettysburg' 600s slow-Mac budget in timeoutFor, 7916d14).
     // base/manifest/srcTree/runtime/journey/focused did NOT move (no src edit all night).
-    game:"6113bc2cb413547400d7e8398ddefde8",
+    // D456 re-pin (the AD-7 idiom, at the LANE-012 Slice-1 head): game 6113bc2c -> 2171f60d
+    // and manifest 60f73b23 -> bb5d7903 (D456 teaching companion — src/113 enrolls, guarded
+    // seams in src/100 + src/107, rebuild). base/dataTree/suite did NOT move.
+    game:"2171f60d4eeff1710f7a7c1badda0065",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     dataTree:"379d4223818782e89ec0b6f011d17f42",
-    manifest:"60f73b23f03f08b978011100f6dea14d",
+    manifest:"bb5d7903507c8fccf53addf981c2023e",
     suite:"edba2bd930922a27414e07173a64296b"
   };
   for (const key of Object.keys(expectedHashes)) {
@@ -1555,9 +1562,13 @@ step("REACHABILITY BASELINES", () => {
     // D454 re-pin (chain in the D411-complete block above): game 4f9adfe5 -> 6113bc2c and
     // dataTree 108961c5 -> 379d4223 (the bbffcb4 cold-harbor weather-provenance enum fix +
     // rebuild); srcTree/runtime/journey/focused did NOT move.
-    game:"6113bc2cb413547400d7e8398ddefde8",
+    // D456 re-pin (the AD-7 idiom, at the LANE-012 Slice-1 head): game 6113bc2c -> 2171f60d
+    // and srcTree d1792e99 -> 28d894d9 (D456 teaching companion — src/113 + guarded seams in
+    // src/100/src/107 + rebuild); dataTree/runtime/journey/focused did NOT move — the D411
+    // war-career reachability surface itself is untouched.
+    game:"2171f60d4eeff1710f7a7c1badda0065",
     dataTree:"379d4223818782e89ec0b6f011d17f42",
-    srcTree:"d1792e99f3ecbff70a3ba3cfd87eecb6",
+    srcTree:"28d894d97afc5828c4501a6a60472954",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
     focused:"a29a53516ea00c7a2f3aa4602c786dc8"

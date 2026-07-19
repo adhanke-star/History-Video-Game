@@ -4,6 +4,58 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D456 — LANE-012 SLICE 1 SHIPPED: THE ALWAYS-VISIBLE TEACHING COMPANION IN BOTH MODES (AMENDS D416'S COMPARISON-OFF-BY-DEFAULT) — [CLAUDE CODE (FABLE 5), LANE-012 DRIVE] (2026-07-18)
+
+ARC 1 slice 1, built to the LANE-012 contract (COORDINATION.md; the D455 packet §4a.2 is the
+law). **THE D416 AMENDMENT, RECORDED:** D416/D437 chartered the Mayhem history comparison
+OFF-by-default; Aaron's D455 R3/R6 locks ("Juxtaposition always-visible"; "Companion: both
+modes, always visible") AMEND that — the sourced "In history…" juxtaposition now rides every
+Mayhem AAR and every Chronicle dispatch, while Mayhem keeps its no-moral-GPA charter: THE
+COMPANION INFORMS; IT NEVER GRADES (no grade chips, no verdict vocabulary — probe-enforced).
+
+SHIPPED: `src/113-teaching-companion.js` (manifest 112 → 113) — pure composers only, every
+consumer seam typeof-guarded so module absence renders each host surface byte-identically.
+(1) **Briefings, both modes** (the LIVE src/100 owner per the D453 law): a compact sourced
+"In history…" panel composed from the NEXT battle's OWN committed scenario corpus (date ·
+place · blurb · its ≥2-source register); attribution labels are mechanical PREFIXES of
+committed source rows (probe-verified); chain battles with no committed scenario corpus
+render NO panel (fail-closed — no placeholder history); a verified-alias map joins base
+chain ids to their same-battle scenarios (peariver→elkhornTavern etc.; newmarket and the
+Petersburg actions deliberately NOT aliased). (2) **The Mayhem AAR companion** (src/107
+wrapper seam): the divergence ledger's own committed hist corpus rendered factually — top
+entries by tier with their "In history…" lines, no index bar, no grade. (3) **The Chronicle
+juxtaposition** (src/107 seam): every no-quarter dispatch carries one sourced "In history…"
+line composing the committed codex corpus verbatim (nathan-bedford-forrest + united-states-
+colored-troops bodies: Fort Pillow, April 12, 1864; the cartel collapse over equal status)
+with committed attributions (ABT; National Archives; McPherson). (4) **Divergences +
+endings:** already mode-independent sourced carriers by construction — now PINNED both-modes
+byte-identical (divRenderTab/endRenderSection render identically under either ruleset).
+
+TEETH (suite stays 137; owners per contract): probe-h0-battle-briefing — presence ×3
+viewports + sourced-prefix + factual-voice + guard-exact byte-equivalence + fail-closed +
+alias; probe-mayhem-mode step "SLICE 1 TEACHING COMPANION" — purity, presence, committed
+hist line, no-verdict vocabulary, Chronicle line + attributions, Historical-AAR-clean,
+both-modes divergence pins, stub-guard byte-equivalence ×2; probe-divergence + probe-endings
+— both-rulesets byte-identity pins. ALL RUN GREEN THIS SESSION with artifacts read:
+briefing 3/3 viewports, mayhem 23/23, divergence 15 steps, endings 25 steps, adjacent
+probe-afteraction 18/18 — zero pageerrors everywhere.
+
+BINDS (both executed, md5-proven byte-identical restores): **A (API absence)** — the
+predeclared manifest-drop form was REFUSED FAIL-CLOSED by the build's manifest-completeness
+gate (`BUILD FAIL [5]` proven at bind time — an unenrolled src file cannot ship), so the
+executed form renames the three tc* composers: briefing presence teeth red ×3 + guard red +
+mayhem Slice-1 step red at "companion API missing", nothing else; restore md5-identical
+(src bb5d…/2ae8…, game 2171…). **B (attribution strip)** — the Chronicle line minus its
+committed attribution span: exactly "the Chronicle line's committed attributions are
+missing" red; restore md5-identical, probe re-run 23/23.
+
+Counts hold 26/59/1,614/137; `_SAVE_VER=1`; frozen base untouched; no simulation input
+moved (pure renders only — the A/B is the guard-exact byte-equivalence tooth family).
+INCIDENTAL (out of lane, surfaced): `tools/probe-cedar-creek-plan.mjs` is red on clean
+D454 HEAD — its stripJsComments eats from the `data/*` glob in validate-data-schemas.mjs
+line 2 to the first real `*/`, deleting BATTLE_FILES before the scan (a never-run non-suite
+tooth; same comment-stripper family as the D453 re-tooths). Queued for the Slice-3 sweep.
+
 ## D455 — UNLOCKED BUT JUDGED: AARON LOCKS THE NEXT-ARC DESIGN LAW IN ELEVEN POPUP ROUNDS — GAMEPLAY UNLOCKS + RETAINED MORAL TEACHING + THE RISK-STYLE CONQUEST LAYER + THE INTEGRATED ARC 0-9 ROADMAP — [AARON, POPUP Q&A + TWO DIRECT DIRECTIVES; PACKET AUTHORED BY CLAUDE CODE (FABLE 5)] (2026-07-18)
 
 **THE LAW:** `docs/design/unlocked-but-judged-design.md` — authored this session from eleven

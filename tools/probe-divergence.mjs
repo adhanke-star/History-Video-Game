@@ -201,6 +201,17 @@ const SETUP = `(() => {
       if(safe.indexOf('No active campaign')<0) throw new Error('a null campaign must render the safe placeholder');
       return { len:html.length }; });
 
+    step('LANE-012 SLICE 1 (D455 4a.2) - the sourced "In history..." ledger renders under BOTH rulesets, byte-identically (the divergence tab is a mode-independent teaching carrier)', function(){
+      if (typeof mayhemInit!=='function') throw new Error('mayhem kernel missing');
+      var C=mkC('CS',1864,6); C.strategy.armEnslaved=true;                      // seeds the Cleburne hist line
+      var M=JSON.parse(JSON.stringify(C)); delete M.ruleset; mayhemInit(M,'mayhem','new');
+      if(typeof mayhemIsActive!=='function'||!mayhemIsActive(M)) throw new Error('mayhem fixture did not activate');
+      var hH=divRenderTab(C), hM=divRenderTab(M);
+      if(hH.indexOf('In history')<0) throw new Error('the Historical ledger lost its In-history corpus');
+      if(hH.indexOf('McPherson')<0) throw new Error('the Historical ledger lost its sources foot');
+      if(hH!==hM) throw new Error('the divergence tab must render byte-identically under both rulesets (always-visible in BOTH modes)');
+      return { bothModes:true, len:hH.length }; });
+
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
 })()`;

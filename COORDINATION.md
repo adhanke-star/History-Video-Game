@@ -2203,14 +2203,18 @@ next green commit and confer through this ledger instead of permitting simultane
   each boundary. NO full battery this session (next battery at the next release checkpoint
   per D160/D176). Counts hold 26/59/1,614/137 unless a slice's own contract moves them with
   documented pin chains.
-- **Resume pointer:** Slice 1 is next (the companion module + seams + teeth + binds), then
-  Slice 2, then Slice 3. A session that inherits this lane mid-DRIVE reads this entry + the
-  packet §4a in full, verifies HEAD against the lane history, and continues at the first
-  unshipped slice.
-- **Last-touched commit:** (this ledger-only charter commit).
+- **Resume pointer:** SLICE 1 SHIPPED (D456). Slice 2 is next (the Historical
+  surrender/no-quarter unlock + the load-bearing massacre-block), then Slice 3 (the
+  re-toothing sweep — carry the D456-surfaced probe-cedar-creek-plan stripJsComments red
+  into that sweep's family audit). A session that inherits this lane mid-DRIVE reads this
+  entry + the packet §4a in full, verifies HEAD against the lane history, and continues at
+  the first unshipped slice.
+- **Last-touched commit:** the D456 Slice-1 commit.
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's ARC-1 charter
   directive (the D455 packet §7); C72 rider dropped as stale at charter (shipped D422,
-  LANE-008).
+  LANE-008). Charter committed `138e216`. Slice 1 shipped as D456 same session (companion
+  module + 4 surfaces + teeth in 4 probes + both binds md5-restored; Bind A's manifest-drop
+  form proven build-refused fail-closed, executed as API-absence).
 
 ---
 

@@ -219,7 +219,9 @@ function mayhemChronicleHTML(C) {
     var r=receipts[i], a=acts[r.actionId], label=a&&a.presentation&&a.presentation.label?a.presentation.label:r.actionId;
     var ops='';
     for (var j=0;j<r.operations.length;j++){var o=r.operations[j];ops+=(ops?'; ':'')+_mhEsc(o.operation)+' '+_mhEsc(o.target)+(o.tag?' ['+_mhEsc(o.tag)+']':'')+' '+(o.value>=0?'+':'')+o.value+' ('+o.before+' &rarr; '+o.after+')';}
-    rows+='<li style="margin:3px 0"><b>Dispatch '+r.sequence+':</b> '+_mhEsc(label)+' <span style="opacity:.75;font-size:11px">'+ops+'</span></li>';
+    /* LANE-012 Slice 1 (D455 §4a.2 — the D416 amendment): the always-visible Chronicle
+       juxtaposition — one guarded sourced "In history…" line per dispatch ("" when absent). */
+    rows+='<li style="margin:3px 0"><b>Dispatch '+r.sequence+':</b> '+_mhEsc(label)+' <span style="opacity:.75;font-size:11px">'+ops+'</span>'+((typeof tcChronicleLine==="function")?tcChronicleLine(r.actionId):"")+'</li>';
   }
   return head+'<ol style="margin:6px 0 0;padding-left:20px;font-size:12px">'+rows+'</ol></div>';
 }
@@ -228,7 +230,10 @@ var _MH_BASE_AAR=typeof aarRenderReport==="function"?aarRenderReport:null;
 if(_MH_BASE_AAR)aarRenderReport=function(C,opts){
   if(!mayhemIsActive(C))return _MH_BASE_AAR.apply(this,arguments);
   var title=opts&&opts.final?"Mayhem Campaign — Final Results":"Mayhem Campaign — Results So Far";
-  return '<div class="mh-aar" data-mh-no-judgment="true"><h1>'+title+'</h1><p>Performance, consequences, rewards, and chaos. No moral or plausibility GPA.</p>'+_mhNoQuarterPanel(C)+mayhemChronicleHTML(C)+'</div>';
+  /* LANE-012 Slice 1 (D455 §4a.2 — amends D416's comparison-off-by-default): the always-visible
+     teaching companion rides the Mayhem AAR through a guarded seam ("" when the module is absent,
+     so this wrapper's output is byte-identical without it). The companion informs; it never grades. */
+  return '<div class="mh-aar" data-mh-no-judgment="true"><h1>'+title+'</h1><p>Performance, consequences, rewards, and chaos. No moral or plausibility GPA.</p>'+_mhNoQuarterPanel(C)+((typeof tcMayhemPanel==="function")?tcMayhemPanel(C):"")+mayhemChronicleHTML(C)+'</div>';
 };
 if(typeof document!=="undefined")document.addEventListener("click",function(e){var b=e&&e.target&&e.target.closest?e.target.closest("[data-mh-no-quarter]"):null;if(!b)return;var C=typeof G!=="undefined"&&G.campaign,r=mayhemNoQuarterApply(C);if(r&&typeof aarRenderTab==="function"&&typeof openSheet==="function")openSheet(aarRenderTab(C));});
 

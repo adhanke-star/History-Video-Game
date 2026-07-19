@@ -164,6 +164,9 @@
         + '</div>'
       + '</header>'
       + h0bCommandFigure(bd)
+      /* LANE-012 Slice 1 (D455 §4a.2): the always-visible teaching companion — guarded, so
+         module absence renders this surface byte-identically. */
+      + ((typeof tcBriefingPanel === "function") ? tcBriefingPanel(bd) : "")
       + '<div class="h0-brief-actions" aria-label="Battle launch options">'
         + '<button id="brgBack" type="button" class="upg">Back</button>'
         + '<button id="brgAuto" type="button" class="upg h0-primary" title="Resolve from the army you fielded, without fighting the battle">Auto-resolve</button>'

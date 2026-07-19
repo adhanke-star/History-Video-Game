@@ -144,9 +144,55 @@ async function inspectBridge(page, viewportName) {
       R.checks.toggleWires = before === 'false' && after === 'true';
       if (!R.checks.toggleWires) fail('prep toggle did not re-render with aria-pressed true');
     }
+    // LANE-012 Slice 1 (D455 §4a.2): the always-visible teaching companion on the briefing.
+    // Presence + sourced (every attribution is a PREFIX of the scenario's committed source
+    // register) + factual voice (no verdict vocabulary). bullrun1 is chain US idx 1.
+    const tc = sel('.h0-brief-shell .tc-companion');
+    R.checks.tcPresent = !!tc && (tc.textContent || '').indexOf('In history') >= 0;
+    if (!R.checks.tcPresent) fail('teaching companion missing from the briefing');
+    if (tc) {
+      const sd = (typeof fldScenarioData === 'function') ? fldScenarioData('bullrun1') : null;
+      const attrs = Array.from(tc.querySelectorAll('.tc-src')).map(el => (el.textContent || '').trim());
+      R.checks.tcSourced = !!sd && attrs.length >= 2
+        && attrs.every(a => (sd.sources || []).some(row => String(row).indexOf(a) === 0));
+      if (!R.checks.tcSourced) fail('companion attributions are not prefixes of the committed source register: ' + attrs.join(' | '));
+      const tcText = tc.textContent || '';
+      const verdictHits = ['Legendary', 'Masterful', 'Workmanlike', 'Faltering', 'A failure', 'GPA', 'report card']
+        .filter(w => tcText.indexOf(w) >= 0);
+      if (/\bgraded?\b/i.test(tcText)) verdictHits.push('grade');
+      R.checks.tcFactualVoice = verdictHits.length === 0;
+      if (!R.checks.tcFactualVoice) fail('companion carries verdict vocabulary: ' + verdictHits.join(','));
+    }
     R.checks.core = true;
     return R;
   }, viewportName);
+}
+
+// LANE-012 Slice 1: the absent-by-guard byte-equivalence + fail-closed contract. Run once
+// (desktop). Stubbing the composer off must yield EXACTLY the with-panel render minus the
+// companion node; a chain battle with no committed scenario corpus renders NO panel; the
+// verified alias map reaches its corpus.
+async function inspectCompanionGuard(page) {
+  return await page.evaluate(() => {
+    const R = { checks: {}, failures: [] };
+    const fail = msg => R.failures.push(msg);
+    const C = G.campaign;
+    if (typeof tcBriefingPanel !== 'function') { fail('tcBriefingPanel missing'); return R; }
+    const withHtml = bridgeBriefingHTML(C);
+    const m = withHtml.match(/<aside class="tc-companion"[\s\S]*?<\/aside>/);
+    R.checks.panelInRender = !!m;
+    if (!m) { fail('companion aside not found in briefing render'); return R; }
+    const saved = tcBriefingPanel;
+    let withoutHtml;
+    try { tcBriefingPanel = 0; withoutHtml = bridgeBriefingHTML(C); } finally { tcBriefingPanel = saved; }
+    R.checks.guardExact = withoutHtml === withHtml.replace(m[0], '');
+    if (!R.checks.guardExact) fail('guarded absence is not byte-identical to render-minus-panel');
+    R.checks.failClosed = tcBriefingPanel({ id: 'wilsons', name: 'Wilsons Creek' }) === '';
+    if (!R.checks.failClosed) fail('companion fabricates a panel for a battle with no committed corpus');
+    R.checks.aliasWorks = tcBriefingPanel({ id: 'ftdonelson' }) !== '' && tcBriefingPanel({ id: 'peariver' }) !== '';
+    if (!R.checks.aliasWorks) fail('verified chain alias (ftdonelson/peariver) did not reach its scenario corpus');
+    return R;
+  });
 }
 
 async function inspectSideChoice(page, viewportName) {
@@ -212,6 +258,11 @@ async function runViewport(browser, vp) {
   try {
     await openBridge(page);
     const bridge = await inspectBridge(page, vp.name);
+    if (vp.name === 'desktop') {
+      const guard = await inspectCompanionGuard(page);
+      bridge.failures = [...(bridge.failures || []), ...(guard.failures || [])];
+      bridge.checks = Object.assign({}, bridge.checks, guard.checks);
+    }
     await page.evaluate(() => { const sh = document.querySelector('.sheet'); if (sh) sh.scrollTop = 0; });
     await withTimeout('bridge screenshot ' + vp.name, page.screenshot({ path: join(OUT, `probe-h0-battle-briefing-${vp.name}.png`), fullPage: false, timeout: 90000 }), 95000);
     const side = await inspectSideChoice(page, vp.name);

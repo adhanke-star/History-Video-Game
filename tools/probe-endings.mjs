@@ -316,6 +316,16 @@ const SETUP = `(() => {
       if(html.indexOf('NaN')>=0||html.indexOf('>undefined')>=0) throw new Error('the banded US render leaked NaN/undefined');
       return { noLeak:true, banded:true }; });
 
+    step('LANE-012 SLICE 1 (D455 4a.2) - the sourced ending counterfactuals render under BOTH rulesets, byte-identically (endings are a mode-independent teaching carrier)', function(){
+      if (typeof mayhemInit!=='function') throw new Error('mayhem kernel missing');
+      var C=mkC('US',1863,6); C.strategy.wildsPlayed=['us-russian']; setMom(C,5,10,30,60);   // a REACHED ending with its In-history counterfactual
+      var M=JSON.parse(JSON.stringify(C)); delete M.ruleset; mayhemInit(M,'mayhem','new');
+      if(typeof mayhemIsActive!=='function'||!mayhemIsActive(M)) throw new Error('mayhem fixture did not activate');
+      var hH=endRenderSection(C), hM=endRenderSection(M);
+      if(hH.indexOf('In history')<0) throw new Error('the reached ending lost its In-history counterfactual');
+      if(hH!==hM) throw new Error('the endings section must render byte-identically under both rulesets (always-visible in BOTH modes)');
+      return { bothModes:true }; });
+
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
 })()`;
