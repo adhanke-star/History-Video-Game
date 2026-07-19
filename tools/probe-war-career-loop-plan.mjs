@@ -506,7 +506,7 @@ step("IMPLEMENTATION LADDER", () => {
   if (/"campaignAdvance"/.test(overrides)) {
     throw new Error("assignment wrapper must not register campaignAdvance as a declaration override");
   }
-  if (suite.length !== 137) {   // AD-7 re-pin (D443): 130 -> 131 D418 mayhem row; 131 -> 132 D436 atlanta; 132 -> 133 D442 cold harbor; D444: 133 -> 134 learn-battle; D445: 134 -> 135 chief-of-staff; D446: 135 -> 136 concept-links — each appended at the END so the War Career row 38 holds
+  if (suite.length !== 138) {   // AD-7 re-pin (D443): 130 -> 131 D418 mayhem row; 131 -> 132 D436 atlanta; 132 -> 133 D442 cold harbor; D444: 133 -> 134 learn-battle; D445: 134 -> 135 chief-of-staff; D446: 135 -> 136 concept-links; D447: 136 -> 137 memory-chain; D463: 137 -> 138 fort-pillow — each appended at the END so the War Career row 38 holds
     throw new Error("complete Slice A requires suite 138, got " + suite.length);
   }
   return { mode: "runtime", suite: suite.length, marker: MARKER };
@@ -537,7 +537,7 @@ step("EXCLUSIONS + BASELINES", () => {
   const baseHash = md5(BASE);
 
   if (t1Count !== 27) throw new Error("scenario baseline must be 27, got " + t1Count);   // D436: 24 -> 25 — Atlanta registers at rank 71. D442: 25 -> 26 — Cold Harbor registers at rank 68.5. D463: 26 -> 27 — Fort Pillow registers at rank 66 (LANE-013 P4)
-  if (schemaCount !== 59) throw new Error("schema/data baseline must be 59, got " + schemaCount);   // D436: 54 -> 56 — mayhem-rules.json (D418, pin missed then) + atlanta.json (D436); documented honestly. D442: 56 -> 57 — cold-harbor.json. D445: 57 -> 58 — chief-of-staff.json (GEA-08). D446: 58 -> 59 — concept-links.json (GEA-10)
+  if (schemaCount !== 60) throw new Error("schema/data baseline must be 60, got " + schemaCount);   // D436: 54 -> 56 — mayhem-rules.json (D418, pin missed then) + atlanta.json (D436); documented honestly. D442: 56 -> 57 — cold-harbor.json. D445: 57 -> 58 — chief-of-staff.json (GEA-08). D446: 58 -> 59 — concept-links.json (GEA-10). D463: 59 -> 60 — fort-pillow.json (LANE-013 P4)
   if (!/people\.length\s*!==\s*1632/.test(loot) || !loot.includes("1632 of 1632")) {   // D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7); D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (the AD-7 chain idiom)
     throw new Error("Army Register 1632 pins missing");
   }
