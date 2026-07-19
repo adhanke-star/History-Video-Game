@@ -70,9 +70,13 @@ const PIN = {
   // the assets3d provenance wall (data/media-budget.json schemaVersion 1.9: the
   // requireAssets3dProvenanceLedger policy + hd-terrain-models ledgerClasses caps; rebuild;
   // zero src). base/manifest/suite hold.
-  game: "11099dac176a87cd86b2f9978c21c56d",
+  // D468 re-pin (the AD-7 idiom, at the LANE-014 slice-2 head): game 11099dac -> 9fca6932
+  // and manifest bb5d7903 -> bf29b44f — terrain texturing T32 (src/tactical/
+  // T32-terrain-texturing.js enrolls after T31; the audited-albedo region-keyed bake on the
+  // ground material, fail-closed; rebuild). base/suite hold; data untouched.
+  game: "9fca6932621bddaeb97c06f383b5b146",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
-  manifest: "bb5d7903507c8fccf53addf981c2023e",
+  manifest: "bf29b44f3a90b4d678c97e8a204db89a",
   suite: "0f8550a5e120772d89777d7459029e7e",
   scenarios: 27,   // D436: 24 -> 25 atlanta; D442: 25 -> 26 coldHarbor; D463: 26 -> 27 fortPillow (LANE-013 P4, the D455 SS3 row 6 unlock)
   schemas: 60,   // D418: 54 -> 55 mayhem-rules.json; D436: 55 -> 56 atlanta.json; D442: 56 -> 57 cold-harbor.json; D445: 57 -> 58 chief-of-staff.json; D446: 58 -> 59 concept-links.json; D463: 59 -> 60 fort-pillow.json

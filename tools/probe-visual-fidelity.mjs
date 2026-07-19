@@ -134,6 +134,8 @@ function sceneScript(scenario, seed, opts) {
         if (Math.abs(fldTerrainH(wx, wz) - posA.getY(sv)) > 0.01) { posOk = false; break; }
       }
       out.ao.posOk = posOk;
+      // T32 terrain texturing rides the same renderRich opt-out: capture the ground map state per scene
+      out.groundMap = !!(__FIELD.ground && __FIELD.ground.material && __FIELD.ground.material.map);
 
       /* ---- PER-BRIGADE DECOR ---- */
       var ug = null, uu = null;
@@ -285,6 +287,7 @@ async function runScene(page, label, scenario, seed, opts, shared) {
   check('renderRich="off": ground AO NOT applied (colA._vfAO unset)', OFF.ok && OFF.ao.latch !== true, 'latch=' + (OFF.ao && OFF.ao.latch));
   check('renderRich="off": NO per-brigade shadow / pegs / rank-map (byte-identical default marker)', OFF.ok && OFF.unit.found && OFF.unit.shadow !== true && OFF.unit.pegs !== true && OFF.unit.rankMap !== true, 'shadow=' + (OFF.unit && OFF.unit.shadow) + ' pegs=' + (OFF.unit && OFF.unit.pegs) + ' rankMap=' + (OFF.unit && OFF.unit.rankMap));
   check('renderRich="off": no swallowed exceptions (errN===0)', OFF.ok && OFF.errN === 0, 'errN=' + (OFF.ok && OFF.errN));
+  check('renderRich="off": NO ground texture map applied (the T32 terrain-texturing layer rides the same opt-out)', OFF.ok && OFF.groundMap === false, 'groundMap=' + (OFF.groundMap));
 
   // health
   check('a screenshot was captured for visual confirmation', !!byLabel['3d'].detail.shot, byLabel['3d'].detail.shot || '');

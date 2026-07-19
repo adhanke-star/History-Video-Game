@@ -2448,14 +2448,19 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
-### LANE-014 · graphics-uplift — **DRIVE (slice 2 in progress; slice 1 SHIPPED as D467)** (ARC 3 of the D455 roadmap)
+### LANE-014 · graphics-uplift — **DRIVE (slices 1-2 SHIPPED as D467/D468; slices 3-6 remain)** (ARC 3 of the D455 roadmap)
 
 - **Owning tool:** Claude Code (Fable 5) — DRIVE re-taken 2026-07-19 (afternoon day
   ladder) with THIS committed edit, per Aaron's standing same-day pick: the §4
   TOP-LOOP resolution is Fable 5 (Aaron-confirmed this morning at the D467 charter and
   extended by the all-day maximizer kickoff; helpers routed Sonnet/Haiku mechanical ·
-  Opus high reasoning, model+effort explicit per call). Working SLICE 2 (terrain
-  texturing, T32) per the slice-2 clause below IN FULL.
+  Opus high reasoning, model+effort explicit per call). SLICE 2 SHIPPED as D468 (this
+  commit): T32 terrain texturing per the slice-2 clause verbatim — the region-keyed
+  audited-albedo bake on the Lambert ground map, fail-closed at every gate, teeth in
+  the existing owners (terrain-readability 35 · visual-fidelity 28 · tactical-visuals
+  floors), binds A/B md5-proven, AD-7 re-pins game→9fca6932 · manifest→bf29b44f ·
+  srcTree→03c2cdba. The lock is HELD for the day ladder's remaining LANE-014 slices
+  (P4-P6 if room); the Crater/Olustee runtimes (P2/P3) are separate lanes.
 - **State:** CONTRACT — this entry IS the acceptance contract (ratified `489cfc4`, the
   LANE-013 `3506716` precedent). SLICE 1 is SHIPPED (`6f62352`, D467: the assets3d
   provenance wall; all 30 staged files Verified CC0-1.0 byte-identical to identified
@@ -2656,16 +2661,16 @@ next green commit and confer through this ledger instead of permitting simultane
   the adjudication-2 forbidden-scan flips) and the OLUSTEE RUNTIME (D465 spec §8-§9) —
   each a one-commit build on the D463 pattern; they may charter before or after ARC 3
   work at Aaron's priority call.
-- **Resume pointer:** SLICE 2 — terrain texturing (new module T32) per this contract's
-  slice-2 clause IN FULL (audited albedo keyed to the 9 analytic region predicates,
-  blended with the preserved T18/T21 vertex-colour passes; material upgrade only with
-  profile evidence; low-tier off-or-one-map; vertex Y untouched — adjudication 5;
-  fail-closed byte-identical when fetch absent; teeth in probe-terrain-readability +
-  probe-visual-fidelity + probe-tactical-visuals; ≥2 predeclared binds; browser probes
-  serialized locally or full-access cloud). Slice-1 groundwork available: the audited
-  ledger `assets/3d/provenance.json` + the ledgerClasses wall.
-- **Last-touched commit:** the D467 slice-1 commit `6f62352` (+ this closeout
-  lock-release edit).
+- **Resume pointer:** SLICE 3 — HDRI sky + derived lighting (new module T33) per this
+  contract's slice-3 clause IN FULL (the audited env HDRIs via the already-enrolled
+  RGBELoader keyed to weather/time; the vfSky dome gains the equirect map with the
+  live fog tint preserved — its teeth re-pin with documented chains in the same
+  commit if their exact assertions move; light values become HDRI-derived PRECOMPUTED
+  constants; NO PMREM/IBL — adjudication 1; low/reduceMotion static tint; HDR
+  absent ⇒ gradient dome byte-identical; owner probe-visual-fidelity, adjacents
+  probe-weather + probe-atmospherics; ≥2 predeclared binds). Slice-2 groundwork: the
+  T32 loader/fail-closed idiom is the template.
+- **Last-touched commit:** the D468 slice-2 commit (this commit).
 - **History:** chartered LAW-DRAFT ledger-only 2026-07-19 overnight at the D465
   boundary (`fba0b61`, the maximizer's [IF-ROOM] item 1; the Crater-runtime option
   declined the same night under the charter's budget rule — the P6 battery outranked
@@ -2683,7 +2688,10 @@ next green commit and confer through this ledger instead of permitting simultane
   Fable 5; the D460 Drew's-regiment adjudication stays standing. DRIVE re-taken
   2026-07-19 (afternoon, Claude Code / Fable 5) for SLICE 2 under Aaron's all-day
   ladder kickoff (P1 of the ARC 3 + C3-completion ladder); the §4 TOP-LOOP resolution
-  re-stated in the owner field above.
+  re-stated in the owner field above. SLICE 2 SHIPPED the same session (D468, this
+  commit): T32 terrain texturing per the contract clause verbatim — presence/keying/
+  carry-chain/fail-closed/low-tier teeth in the existing owners, binds A+B md5-proven,
+  the vertex-Y tooth green unamended, zero new draw calls, suite held at 138.
 
 ---
 

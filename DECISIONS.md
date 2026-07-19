@@ -4,6 +4,48 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D468 — LANE-014 SLICE 2 SHIPPED: TERRAIN TEXTURING (T32) — THE AUDITED-ALBEDO REGION-KEYED BAKE ON THE GROUND MATERIAL, FAIL-CLOSED — [CLAUDE CODE (FABLE 5), LANE-014 DRIVE; THE ALL-DAY LADDER P1] (2026-07-19)
+
+**SHIPPED (the contract's slice-2 clause verbatim):** new `src/tactical/T32-terrain-texturing.js`
+(manifest-enrolled after T31), wrapping `fld3dBuildTerrain` + `fldExit` by reassignment with the
+full `_carry` marker chain preserved (`_tt` outermost; every hook try/caught into FLDTT_S.errN).
+The module bakes the NINE ledgered Poly Haven CC0 albedos (assets/3d/provenance.json rows; no new
+asset bytes) into ONE 1024×1024 POT composite canvas, keyed per grid cell to the analytic region
+predicates — fldInFort/fldInTown/fldInSwamp/fldInWoods (the T0 universal hooks), a marker-path
+road predicate, normalized-height hills (>0.62) / ridge (>0.85) bands off `fldTerrainH` (skipped
+on near-flat fields), and a cultivated-field mask sharing the grain pass's lattice constants so
+the furrow striping lands ON the field texture — then per-tile exposure-normalizes (mean → 232)
+so the map MODULATES the authored palette, and attaches it as the existing Lambert ground
+material's `map`. Lambert multiplies map × vertex colours: the T18 grain + T21 relief/AO
+vertex-colour passes keep full effect and their latches/teeth stay green UNAMENDED. Vertex
+positions AND vertex colours untouched (adjudication 5 holds by construction — the vertex-Y tooth
+green unamended). ZERO new scene objects/draw calls (adjudication 8). Material stays Lambert —
+no Phong/Standard upgrade without profile evidence. FAIL-CLOSED (adjudication 2): renderRich
+"off" ⇒ no map; fldLow() ⇒ no map (the "off or one cheap map — profile decides" branch resolves
+to OFF until profile evidence exists); non-http(s) protocol ⇒ no map (a file:// image taints the
+bake canvas — the offline single-file build keeps today's ground byte-identical); ANY of the 9
+albedos absent/blocked ⇒ no map at all (no partial bake; load failure is the fail-closed path,
+never an error).
+
+**TEETH (existing owners only — suite stays 138, adjudication 6):** probe-terrain-readability
+30→35 steps (T32 static purity scan · map presence/battle-scoped disposal · region keying with
+8 keys drawn + woods≠fort bake contrast · carry-chain · a new route-BLOCKED first-load scene
+proving no map + IDENTICAL vertex-colour checksum + errN 0 · low-tier no-map) and
+probe-visual-fidelity 27→28 (renderRich "off" ⇒ no ground map, riding the existing off scene).
+probe-tactical-visuals' canvas floors stay the third owner (10/10 green, zero texture warnings).
+
+**GATES:** node --check ×3 · build GATE OK · focused probe-terrain-readability 35/35 + artifact
+JSON read (3 scenes + blocked scene, 0 pageerrors) · focused probe-visual-fidelity 28/28 (0
+pageerrors, 0 texture warnings) · adjacents probe-render-richness 31/31 + probe-tactical-visuals
+10/10 (artifact JSONs read, 0 pageerrors) · screenshot visually confirmed (furrows/fort
+stone/swamp/town keying read; relief shows through). **BINDS (both md5-proven, restore
+79bc5701):** A broken texture path → EXACTLY the presence + region-keying teeth red
+(loadState "failed") with the fail-closed tooth GREEN proving byte-identity; B stripped `_tt`
+wrap marker → EXACTLY the carry-chain tooth red, everything else green. **AD-7 re-pins in this
+commit:** game 11099dac → 9fca6932 · manifest bb5d7903 → bf29b44f · srcTree 916d7e72 → 03c2cdba
+at all four plan-probe sites (base/dataTree/suite hold; data/ untouched); both plan probes re-run
+post-commit. Counts hold 27/60/1,632/138; `_SAVE_VER=1`; frozen base `c9db83fa` untouched.
+
 ## D467 — LANE-014 CHARTERED AT DRIVE + SLICE 1 SHIPPED: THE ASSETS3D PROVENANCE WALL — ALL 30 STAGED 3D FILES VERIFIED BYTE-IDENTICAL TO IDENTIFIED POLY HAVEN CC0 ORIGINALS AND LEDGERED — [CLAUDE CODE (FABLE 5), LANE-014 DRIVE; AARON'S QUEUE PICK (a)] (2026-07-19)
 
 **THE CHARTER (`489cfc4`, ledger-only, the LANE-013 `3506716` precedent):** the FULL ARC 3

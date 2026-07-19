@@ -908,7 +908,11 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     // D463 re-pin (the AD-7 idiom, at the LANE-013 P4 head): srcTree 41ee94b1 -> 916d7e72
     // (the Fort Pillow runtime — the T1 rank-66 registry line + the T10 W/false/anv meta
     // row; zero engine code). runtime/journey/command/commandProbe did NOT move.
-    srcTree:"916d7e7288c1749190f47a03c7b60065",
+    // D468 re-pin (the AD-7 idiom, at the LANE-014 slice-2 head): srcTree 916d7e72 ->
+    // 03c2cdba (terrain texturing T32 — src/tactical/T32-terrain-texturing.js enrolls after
+    // T31 in the manifest; presentation-only, no war-career surface touched).
+    // runtime/journey/command/focused/commandProbe did NOT move.
+    srcTree:"03c2cdba0aafd8c67d7fa994f104d923",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
     command:"8f12c49f7129b3a9be0203677822e048",
@@ -1204,10 +1208,13 @@ step("BASELINES + LANE", () => {
     // D467 re-pin (the AD-7 idiom, at the LANE-014 slice-1 head): game f0228c4b -> 11099dac
     // and dataTree e33afffc -> 23ccef52 — the assets3d provenance wall (media-budget 1.9
     // policy + ledgerClasses; rebuild; zero src). base/manifest/suite/srcTree/focused hold.
-    game:"11099dac176a87cd86b2f9978c21c56d",
+    // D468 re-pin (the AD-7 idiom, at the LANE-014 slice-2 head): game 11099dac -> 9fca6932
+    // and manifest bb5d7903 -> bf29b44f — terrain texturing T32 enrolls after T31
+    // (presentation-only src module + rebuild). base/dataTree/suite hold.
+    game:"9fca6932621bddaeb97c06f383b5b146",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     dataTree:"23ccef52d8b6fdccddc894b1cfaf3b5c",
-    manifest:"bb5d7903507c8fccf53addf981c2023e",
+    manifest:"bf29b44f3a90b4d678c97e8a204db89a",
     suite:"0f8550a5e120772d89777d7459029e7e"
   };
   for (const key of Object.keys(expectedHashes)) {
@@ -1613,9 +1620,11 @@ step("REACHABILITY BASELINES", () => {
     // S44-forced western-theater copy update; srcTree/runtime/journey/focused held).
     // D467 re-pin: game f0228c4b -> 11099dac, dataTree e33afffc -> 23ccef52 (the assets3d
     // provenance wall, data-only; srcTree/runtime/journey/focused held).
-    game:"11099dac176a87cd86b2f9978c21c56d",
+    // D468 re-pin: game 11099dac -> 9fca6932, srcTree 916d7e72 -> 03c2cdba (terrain
+    // texturing T32 enrolls; dataTree/runtime/journey/focused held).
+    game:"9fca6932621bddaeb97c06f383b5b146",
     dataTree:"23ccef52d8b6fdccddc894b1cfaf3b5c",
-    srcTree:"916d7e7288c1749190f47a03c7b60065",
+    srcTree:"03c2cdba0aafd8c67d7fa994f104d923",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
     // D460 re-pin: focused a29a5351 -> 2816a82c (Elkhorn Cherokee, 1614 -> 1617). D463

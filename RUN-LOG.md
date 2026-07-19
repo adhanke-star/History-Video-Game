@@ -2,6 +2,27 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-19 — D468 the ALL-DAY LADDER P1: LANE-014 slice 2 terrain texturing (afternoon)
+
+Claude Code (Fable 5; the §4 TOP-LOOP resolution re-stated at the DRIVE re-take
+`04d2bdc` — Aaron's standing drive-on-Fable pick extended by the all-day maximizer)
+shipped SLICE 2 per the committed contract clause verbatim: `src/tactical/
+T32-terrain-texturing.js` bakes the nine ledgered CC0 albedos into one POT composite
+keyed to the analytic region predicates (T0 hooks + marker roads + height bands +
+the grain-aligned cultivated mask), exposure-normalized so the map modulates the
+authored palette, attached to the existing Lambert ground (map × vertexColors — the
+T18/T21 passes show through; zero new objects/draw calls; vertex Y and colours
+untouched). Fail-closed everywhere: off/low/file-protocol/any-albedo-missing ⇒
+byte-identical current ground. Teeth in existing owners only (suite stays 138):
+probe-terrain-readability 30→35 (incl. a route-blocked first-load scene proving
+identical vertex-colour checksums) + probe-visual-fidelity 27→28 (off ⇒ no map);
+tactical-visuals 10/10 + render-richness 31/31 adjacents green; binds A (broken
+path → presence+keying red exactly, fail-closed green) and B (stripped `_tt` →
+carry-chain red exactly) md5-proven (79bc5701). AD-7 re-pins game
+11099dac→9fca6932 · manifest bb5d7903→bf29b44f · srcTree 916d7e72→03c2cdba at all
+four sites; plan probes re-run green post-commit. Counts hold 27/60/1,632/138.
+EXACT NEXT: the ladder's P2 — the Crater runtime charter (D464 spec §8-§9).
+
 ## 2026-07-19 — D467 the ARC 3 CHARTER + SLICE 1 session (morning; Aaron's pick (a))
 
 Claude Code (Fable 5; the §4 TOP-LOOP resolution recorded — Aaron confirmed driving on

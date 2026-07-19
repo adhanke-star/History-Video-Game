@@ -71,6 +71,10 @@ function staticScan() {
   // 3. T22 never calls fldRng + never bumps _SAVE_VER (presentation-only, no sim perturbation).
   let t22 = ''; try { t22 = readFileSync(join(tacDir, 'T22-terrain-readability.js'), 'utf8'); } catch (e) {}
   check('static-scan: T22 never calls fldRng + never writes _SAVE_VER', t22.length > 0 && !/fldRng\(/.test(t22) && !/_SAVE_VER\s*=/.test(t22));
+  // 4. T32 terrain texturing (LANE-014 slice 2): presentation-only + no sibling visual-layer reaches.
+  let t32 = ''; try { t32 = readFileSync(join(tacDir, 'T32-terrain-texturing.js'), 'utf8'); } catch (e) {}
+  check('static-scan: T32 never calls fldRng, never writes _SAVE_VER, reaches no sibling visual-layer internals',
+    t32.length > 0 && !/fldRng\(/.test(t32) && !/_SAVE_VER\s*=/.test(t32) && !/(fldRr|FLDRR|fldVf|FLDVF|fldTr[A-Z]|FLDTR|fldFf|FLDFF|fldWx|FLDWX|fldAtmo|FLDAT)/.test(t32) && !/\.swamps\b|\.towns\b|\.forts\b/.test(t32));
 }
 
 async function ensureServer() {
@@ -148,6 +152,35 @@ function sceneScript(seed, opts) {
 
       if (kind === '3d') {
         var T = window.THREE;
+
+        /* ---- T32 TERRAIN TEXTURING (LANE-014 slice 2) — capture the first build's map state ---- */
+        out.tex = {
+          latch: !!(typeof fld3dBuildTerrain === 'function' && fld3dBuildTerrain._tt),
+          chainAll: !!(typeof fld3dBuildTerrain === 'function' && fld3dBuildTerrain._tt && fld3dBuildTerrain._tr && fld3dBuildTerrain._vf && fld3dBuildTerrain._rr && typeof fldExit === 'function' && fldExit._tt && fldExit._tr && fldExit._vf && fldExit._rr)
+        };
+        if (!${JSON.stringify(!!opts.low)}) {
+          for (var tp = 0; tp < 80 && !(__FIELD.ground && __FIELD.ground.material && __FIELD.ground.material.map); tp++) await wait(100);
+        } else { await wait(800); }
+        var gm0 = __FIELD.ground && __FIELD.ground.material;
+        out.tex.mapPresent = !!(gm0 && gm0.map);
+        out.tex.mapCanvas = !!(gm0 && gm0.map && gm0.map.image && gm0.map.image.tagName === 'CANVAS');
+        out.tex.matType = gm0 ? gm0.type : null;
+        out.tex.vertexColors = gm0 ? !!gm0.vertexColors : null;
+        out.tex.errN = (typeof FLDTT_S !== 'undefined' && FLDTT_S) ? FLDTT_S.errN : -1;
+        out.tex.loadState = (typeof FLDTT_S !== 'undefined' && FLDTT_S) ? FLDTT_S.loadState : null;
+        var bk0 = (typeof FLDTT_S !== 'undefined' && FLDTT_S) ? FLDTT_S.bake : null;
+        out.tex.keys = bk0 ? bk0.keys : null;
+        if (bk0 && bk0.canvas) {
+          var bc0 = bk0.canvas.getContext('2d');
+          function ttPx(wx, wz){ var p = bc0.getImageData(Math.floor(wx / FLD.FIELD_W * bk0.canvas.width), Math.floor(wz / FLD.FIELD_H * bk0.canvas.height), 1, 1).data; return [p[0], p[1], p[2]]; }
+          var pxWoods = ttPx(310, 480), pxFort = ttPx(600, 200);
+          out.tex.sampleWoods = pxWoods; out.tex.sampleFort = pxFort;
+          out.tex.regionContrast = (Math.abs(pxWoods[0] - pxFort[0]) + Math.abs(pxWoods[1] - pxFort[1]) + Math.abs(pxWoods[2] - pxFort[2])) > 30;
+        }
+        // vertex-colour checksum: T32 must never touch the T18/T21 colour work (compared against the blocked scene)
+        var ca0 = __FIELD.ground && __FIELD.ground.geometry && __FIELD.ground.geometry.attributes.color;
+        if (ca0) { var cs = 0; for (var cv = 0; cv < ca0.count; cv++) { cs += ca0.getX(cv) + ca0.getY(cv) + ca0.getZ(cv); } out.colSum = cs.toFixed(4); }
+
         function lineCount(grp){ var n=0; if(grp) grp.traverse(function(o){ if(o.name==='vfTrContourLines' && o.geometry && o.geometry.attributes.position) n=o.geometry.attributes.position.count; }); return n; }
         function labelCount(grp){ var n=0; if(grp) grp.traverse(function(o){ if(o.name==='vfTrLabel') n++; }); return n; }
         function decorCount(){ var g=FLDTR_S.decor3d, n=0; if(g) g.traverse(function(o){ if(o!==g) n++; }); return n; }
@@ -183,6 +216,7 @@ function sceneScript(seed, opts) {
         // must rebuild exactly ONE legend (no leak, no duplicate). (Closes the bug-hunt coverage gap.)
         fldExit(true); await wait(120);
         out.teardown = { legendGone: !document.getElementById('fldElevLegend'), overlaysNull: (FLDTR_S.hyp3d === null && FLDTR_S.contour3d === null && FLDTR_S.decor3d === null) };
+        out.tex.disposedOnExit = (typeof FLDTT_S !== 'undefined' && FLDTT_S) ? (FLDTT_S.tex === null && FLDTT_S.bake === null) : null;
         fldLaunchSandbox({ renderer:'3d', autoBoth:true, playerSide:'US', seed:${seed} });
         for (var w2 = 0; w2 < 160 && !(__FIELD.mode3d && __FIELD.renderer); w2++) await wait(100);
         if (__FIELD.phase === 'deploy') { __FIELD.phase = 'battle'; __FIELD.paused = false; }
@@ -225,6 +259,45 @@ async function runScene(page, label, seed, opts, shared) {
   return { label, detail: d, pageerrors: shared.pe.slice(peStart) };
 }
 
+/* ---- T32 fail-closed scene: albedo requests aborted BEFORE the module ever loads them,
+   so the texture-absent path must leave the ground byte-identical (no map, same vertex
+   colours, zero swallowed errors). Runs on the freshly-loaded page, which is then
+   reloaded so the remaining scenes exercise the normal textured path. ---- */
+function texBlockedScript(seed) {
+  return `(async () => {
+    function wait(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+    var out = { ok:false };
+    try {
+      try { if (typeof fldExit === 'function' && typeof __FIELD !== 'undefined' && __FIELD && __FIELD.launched) fldExit(true); } catch(e){}
+      await wait(120);
+      G.settings = G.settings || {};
+      G.settings.gfxQuality = 'high';
+      try { delete G.settings.tacticalPreset; } catch(e) {}
+      delete G.settings.tacticalFog;
+      G.settings.reduceMotion = false;
+      try { delete G.settings.renderRich; } catch(e){}
+      try { delete G.settings.fldElevMode; } catch(e){}
+      fldLaunchSandbox({ renderer:'3d', autoBoth:true, playerSide:'US', seed:${seed} });
+      for (var w = 0; w < 160 && !(__FIELD.mode3d && __FIELD.renderer); w++) await wait(100);
+      if (!__FIELD.mode3d || !__FIELD.renderer) throw new Error('3D renderer did not become active');
+      if (__FIELD.phase === 'deploy') { __FIELD.phase = 'battle'; __FIELD.paused = false; }
+      for (var f = 0; f < 5; f++) { fldRender(); await wait(60); }
+      for (var lw = 0; lw < 60 && typeof FLDTT_S !== 'undefined' && FLDTT_S.loadState === 'loading'; lw++) await wait(100);
+      await wait(400);
+      var gm = __FIELD.ground && __FIELD.ground.material;
+      out.mapPresent = !!(gm && gm.map);
+      out.matType = gm ? gm.type : null;
+      out.vertexColors = gm ? !!gm.vertexColors : null;
+      out.loadState = (typeof FLDTT_S !== 'undefined' && FLDTT_S) ? FLDTT_S.loadState : null;
+      out.errN = (typeof FLDTT_S !== 'undefined' && FLDTT_S) ? FLDTT_S.errN : -1;
+      var ca = __FIELD.ground && __FIELD.ground.geometry && __FIELD.ground.geometry.attributes.color;
+      if (ca) { var cs = 0; for (var i = 0; i < ca.count; i++) { cs += ca.getX(i) + ca.getY(i) + ca.getZ(i); } out.colSum = cs.toFixed(4); }
+      out.ok = true;
+    } catch (e) { out.ok = false; out.error = String(e && e.message || e); }
+    return out;
+  })();`;
+}
+
 (async () => {
   staticScan();
   const server = await ensureServer();
@@ -236,7 +309,18 @@ async function runScene(page, label, seed, opts, shared) {
   const shared = { pe: [] };
   page.on('pageerror', e => shared.pe.push(String(e.message)));
   const scenes = [];
+  let texBlocked = { ok: false, error: 'not run' };
   try {
+    // T32 fail-closed FIRST (fresh module state; the route must bite before any albedo is cached),
+    // then reload so the remaining scenes exercise the normal textured path.
+    await page.route('**/assets/3d/materials/terrain/**', r => r.abort());
+    await page.goto(cfg.baseUrl + '/' + cfg.file, { waitUntil: 'domcontentloaded', timeout: 45000 });
+    await sleep(500);
+    { const peStart = shared.pe.length;
+      try { texBlocked = await page.evaluate(texBlockedScript(7)); }
+      catch (e) { texBlocked = { ok: false, error: String(e && e.message || e) }; }
+      texBlocked.pageerrors = shared.pe.slice(peStart); }
+    await page.unroute('**/assets/3d/materials/terrain/**');
     await page.goto(cfg.baseUrl + '/' + cfg.file, { waitUntil: 'domcontentloaded', timeout: 45000 });
     await sleep(500);
     scenes.push(await runScene(page, '3d', 7, {}, shared));
@@ -245,8 +329,8 @@ async function runScene(page, label, seed, opts, shared) {
   } finally { if (server) server.kill(); }
 
   const byLabel = {}; for (const s of scenes) byLabel[s.label] = s;
-  const allPe = scenes.reduce((a, s) => a + s.pageerrors.length, 0);
-  const R = byLabel['3d'].detail, D2 = byLabel['2d'].detail, LO = byLabel['low'].detail;
+  const allPe = scenes.reduce((a, s) => a + s.pageerrors.length, 0) + ((texBlocked.pageerrors || []).length);
+  const R = byLabel['3d'].detail, D2 = byLabel['2d'].detail, LO = byLabel['low'].detail, TB = texBlocked;
 
   // wrappers + chain
   check('module + 5 by-assignment wrappers installed (prior ._wx/._atmo/._rr/._vf markers carried forward)',
@@ -309,6 +393,23 @@ async function runScene(page, label, seed, opts, shared) {
   // low tier
   check('low tier: contours still render but the 3D elevation LABELS are trimmed out (UHD-617 floor)',
     LO.ok && LO.contours.lines > 0 && LO.contours.labels === 0 && LO.errN === 0, JSON.stringify({ lines: LO.contours && LO.contours.lines, labels: LO.contours && LO.contours.labels, errN: LO.errN }));
+
+  // T32 terrain texturing (LANE-014 slice 2)
+  check('T32 texturing: the audited albedo composite is APPLIED as the ground material map, battle-scoped (canvas map on the Lambert+vertexColors ground; disposed on exit)',
+    R.ok && R.tex && R.tex.mapPresent === true && R.tex.mapCanvas === true && R.tex.matType === 'MeshLambertMaterial' && R.tex.vertexColors === true && R.tex.disposedOnExit === true && R.tex.errN === 0,
+    JSON.stringify({ map: R.tex && R.tex.mapPresent, canvas: R.tex && R.tex.mapCanvas, mat: R.tex && R.tex.matType, vc: R.tex && R.tex.vertexColors, disposed: R.tex && R.tex.disposedOnExit, errN: R.tex && R.tex.errN, loadState: R.tex && R.tex.loadState }));
+  check('T32 texturing: the bake is KEYED to the analytic region predicates (clear/woods/swamp/town/fort/hills all drawn; woods reads distinct from fort)',
+    R.ok && R.tex && Array.isArray(R.tex.keys) && ['clear','woods','swamp','town','fort','hills'].every(k => R.tex.keys.indexOf(k) >= 0) && R.tex.regionContrast === true,
+    JSON.stringify({ keys: R.tex && R.tex.keys, woods: R.tex && R.tex.sampleWoods, fort: R.tex && R.tex.sampleFort }));
+  check('T32 texturing: wrap-by-reassignment carry chain intact (_tt outermost on fld3dBuildTerrain + fldExit with _tr/_vf/_rr preserved)',
+    R.ok && R.tex && R.tex.latch === true && R.tex.chainAll === true,
+    JSON.stringify({ latch: R.tex && R.tex.latch, chainAll: R.tex && R.tex.chainAll }));
+  check('T32 fail-closed: albedo fetch BLOCKED => byte-identical current ground (no map, identical vertex-colour checksum, Lambert+vertexColors, zero swallowed errors)',
+    TB.ok && TB.mapPresent === false && TB.matType === 'MeshLambertMaterial' && TB.vertexColors === true && TB.errN === 0 && !!TB.colSum && R.ok && TB.colSum === R.colSum,
+    JSON.stringify({ map: TB.mapPresent, loadState: TB.loadState, errN: TB.errN, colEq: !!(TB.colSum && R.colSum && TB.colSum === R.colSum) }));
+  check('T32 low tier: NO ground map on fldLow() (the "off or one cheap map" contract resolves to OFF without profile evidence)',
+    LO.ok && LO.tex && LO.tex.mapPresent === false && LO.tex.errN === 0,
+    JSON.stringify({ map: LO.tex && LO.tex.mapPresent, errN: LO.tex && LO.tex.errN }));
 
   // health
   check('a screenshot was captured for visual confirmation', !!byLabel['3d'].detail.shot, byLabel['3d'].detail.shot || '');
