@@ -97,7 +97,44 @@ function section(text, startHead, endHead) {
 }
 
 function stripJsComments(text) {
-  return text.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/[^\n]*/g, "");
+  // D458 root fix (the D456-surfaced family red on clean HEAD): the old two-pass regex ate
+  // from any "/*" inside a line comment or string literal (e.g. the `data/*` glob in
+  // validate-data-schemas.mjs line 2) to the FIRST real "*/", deleting whole declarations
+  // (incl. BATTLE_FILES) before the scan. This single-pass scanner honors line comments,
+  // block comments, string literals, AND regex literals (a quote inside /"/g must not open
+  // a string — the src/100 lesson), so only REAL comments are removed and code survives
+  // verbatim: the scans cover MORE text, never less (a tooth is never weakened).
+  let out = "", i = 0, mode = "code", quote = "", inClass = false, sig = "";
+  const rxPos = /(?:^|[^$\w.])(?:return|typeof|case|do|else|in|of|instanceof|new|delete|void|yield)$/;
+  while (i < text.length) {
+    const c = text[i], n = text[i + 1];
+    if (mode === "code") {
+      if (c === "/" && n === "/") { mode = "line"; i += 2; continue; }
+      if (c === "/" && n === "*") { mode = "block"; i += 2; continue; }
+      if (c === '"' || c === "'" || c === "`") { mode = "string"; quote = c; }
+      else if (c === "/") {
+        const prev = sig.slice(-1);
+        if (prev === "" || "([{=,;:!?&|+-*%^~<>".indexOf(prev) >= 0 || rxPos.test(sig)) { mode = "regex"; inClass = false; }
+      }
+      out += c; if (!/\s/.test(c)) sig = (sig + c).slice(-12); i += 1; continue;
+    }
+    if (mode === "string") {
+      if (c === "\\") { out += c + (n === undefined ? "" : n); i += 2; continue; }
+      if (c === quote) mode = "code";
+      out += c; i += 1; continue;
+    }
+    if (mode === "regex") {
+      if (c === "\\") { out += c + (n === undefined ? "" : n); i += 2; continue; }
+      if (c === "[") inClass = true;
+      else if (c === "]") inClass = false;
+      else if (c === "/" && !inClass) mode = "code";
+      out += c; i += 1; continue;
+    }
+    if (mode === "line") { if (c === "\n") { mode = "code"; out += c; } i += 1; continue; }
+    if (c === "*" && n === "/") { mode = "code"; i += 2; continue; }
+    i += 1;
+  }
+  return out;
 }
 
 function parseExpected(text) {

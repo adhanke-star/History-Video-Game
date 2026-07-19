@@ -2,6 +2,37 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-18 — D457+D458 the ARC 1 SLICE 2+3 session (LANE-012 all-slices-green → VERIFY)
+
+The Slice-2 session (Claude Code / Fable 5, within the authorized window through 2026-07-19)
+re-took DRIVE ledger-only at `e8d761c`, then shipped D457 at `c4bc504`: the Historical
+surrender/no-quarter unlock — judged, never rewarded — through the SHIPPED Mayhem
+effect-schema/receipt machinery. The `no-quarter-historical` consequence-only data action
+(signs are law: morale/press/diplomacy ≤0, notoriety ≥0; magnitudes recorded with logged
+deterministic A/B evidence in the probe artifact), the engine-level LOAD-BEARING
+massacre-block (`_MH_HISTORICAL_OPS` — every reward family refused before mutation; the t1
+tooth surfaced a real resolve-ordering purity bug, root-fixed so ALL validation runs before
+receipt sanitation), four consequence adapters through existing owners (M.infamyShock →
+moraleCompute; C.press.infamyShock → pressSentiment; BL.recognition moved AGAINST the
+actor; the NEW capped C.infamy ledger → the prisoner-exchange reprisal cycle), the
+both-rulesets offer stamp from the T25/T2 chain, and the judged AAR panel (GEA-14 idiom;
+all consequences stated before confirmation; committed Fort Pillow + GO-252 condemnation
+with attributions; byte-identical Historical AAR at no-offer/no-infamy). Teeth
+t1-t6 in probe-mayhem-mode (24/24) + the AAR pin in probe-afteraction (19); adjacent
+save-slots 16/16 + campaign-link 19; zero pageerrors. Binds A1/A2/B bit EXACTLY t1/t2/t3
+with md5-proven restores; both lane plan probes re-pinned (AD-7 chains) and ALL OK
+post-commit. Then D458 shipped the Slice-3 re-toothing sweep: the stripJsComments family
+root-fixed TREE-WIDE (11 red-on-clean-HEAD battle plan probes + the same idiom in 4 suite
+probes; one regex-literal-aware single-pass scanner — v1's string-only pass was itself
+caught by probe-learn-battle on src/100's `.replace(/"/g,…)` and upgraded; verified on real
+inputs; inverse bind md5-proven on cedar-creek; zero broken instances remain) and the
+consequence-only-absence audit CLOSED (family head split-chained in D457; E41 untouched by
+additive fields; nothing else to re-pin). Counts 26/59/1,614/137 and `_SAVE_VER=1` held all
+session; frozen base untouched. LANE-012 moved DRIVE → VERIFY (battery-only) and the lock
+released at session close. Exact next: charter ARC 2 (the Fort Pillow/Crater/Olustee
+research family + Leetown + Front Royal) fresh, ledger-only first; or run the release
+battery to flip LANE-012 SHIPPED.
+
 ## 2026-07-18 — D456 the ARC 1 CHARTER + BUILD session (LANE-012 chartered; Slice 1 shipped)
 
 The ARC 1 session opened LANE-012 `unlock-and-teach-spine` per the D455 packet §4a: the full

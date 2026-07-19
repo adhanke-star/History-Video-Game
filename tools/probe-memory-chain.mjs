@@ -24,6 +24,47 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 const OUT = join(__dirname, 'shots');
 mkdirSync(OUT, { recursive: true });
+
+function stripJsCode(text) {
+  // D458 root fix (the D453 comment-stripped-scan class, family CLOSED tree-wide): the old
+  // two-pass regex ate from any "/*" inside a line comment or string literal to the FIRST
+  // real "*/", silently deleting code between them — which WEAKENS a forbidden-token scan
+  // (over-stripping hides tokens -> false green). This single-pass scanner honors line
+  // comments, block comments, string literals, AND regex literals (a quote inside /"/g
+  // must not open a string — the src/100 lesson): only REAL comments are removed, code and
+  // strings survive verbatim, so the scans cover more text, never less.
+  let out = "", i = 0, mode = "code", quote = "", inClass = false, sig = "";
+  const rxPos = /(?:^|[^$\w.])(?:return|typeof|case|do|else|in|of|instanceof|new|delete|void|yield)$/;
+  while (i < text.length) {
+    const c = text[i], n = text[i + 1];
+    if (mode === "code") {
+      if (c === "/" && n === "/") { mode = "line"; i += 2; continue; }
+      if (c === "/" && n === "*") { mode = "block"; i += 2; continue; }
+      if (c === '"' || c === "'" || c === "`") { mode = "string"; quote = c; }
+      else if (c === "/") {
+        const prev = sig.slice(-1);
+        if (prev === "" || "([{=,;:!?&|+-*%^~<>".indexOf(prev) >= 0 || rxPos.test(sig)) { mode = "regex"; inClass = false; }
+      }
+      out += c; if (!/\s/.test(c)) sig = (sig + c).slice(-12); i += 1; continue;
+    }
+    if (mode === "string") {
+      if (c === "\\") { out += c + (n === undefined ? "" : n); i += 2; continue; }
+      if (c === quote) mode = "code";
+      out += c; i += 1; continue;
+    }
+    if (mode === "regex") {
+      if (c === "\\") { out += c + (n === undefined ? "" : n); i += 2; continue; }
+      if (c === "[") inClass = true;
+      else if (c === "]") inClass = false;
+      else if (c === "/" && !inClass) mode = "code";
+      out += c; i += 1; continue;
+    }
+    if (mode === "line") { if (c === "\n") { mode = "code"; out += c; } i += 1; continue; }
+    if (c === "*" && n === "/") { mode = "code"; i += 2; continue; }
+    i += 1;
+  }
+  return out;
+}
 const cfg = JSON.parse(readFileSync(join(__dirname, 'shots.json'), 'utf8'));
 const GL = ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--enable-webgl', '--disable-dev-shm-usage'];
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -86,7 +127,7 @@ function staticChecks() {
     // D453 audit root-fix (never-run tooth): src/111's own header comment NAMES the envelope
     // functions while stating the save law, so the forbidden-token scan must run over CODE
     // with comments stripped — a comment mention is documentation, not a reference.
-    const modCode = mod.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+    const modCode = stripJsCode(mod);
     ['serializeSave', 'loadLocal', 'applySave', '_SAVE_VER', 'ruleset', 'mayhem', 'Mayhem'].forEach(tok => {
       if (modCode.indexOf(tok) >= 0) throw new Error('src/111 references ' + tok);
     });

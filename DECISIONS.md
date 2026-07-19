@@ -4,6 +4,57 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D458 — LANE-012 SLICE 3 SHIPPED: THE RE-TOOTHING SWEEP — THE stripJsComments FAMILY ROOT-FIXED TREE-WIDE (15 PROBES, REGEX-LITERAL-AWARE SCANNER) + THE CONSEQUENCE-ONLY-ABSENCE AUDIT CLOSED — [CLAUDE CODE (FABLE 5), LANE-012 DRIVE] (2026-07-18)
+
+ARC 1 slice 3, built to the LANE-012 contract (§4a.3; the D453 "probe-side reading bug"
+class; the D454 fix-the-family-and-close-it precedent — never one-red-per-row).
+
+**THE stripJsComments FAMILY (root-fixed, CLOSED tree-wide).** All ELEVEN non-suite battle
+plan probes (cedar-creek, cross-keys-port-republic, elkhorn-tavern, fort-donelson,
+five-forks, gaines-mill, new-market-heights, petersburg-initial-assaults, stones-river,
+spotsylvania, wilderness) were RED on clean HEAD with one shared cause: the naive two-pass
+stripper (`replace(/\/\*[\s\S]*?\*\//g,"")` first) ate from the `data/*` glob inside
+validate-data-schemas.mjs line 2's line comment to the FIRST real block-comment closer,
+deleting `BATTLE_FILES` before the scan — so every integration tooth misread its SHIPPED
+battle as never-enrolled ("runtime exists but validate-data-schemas lacks <battle>.json" /
+"runtime data exists without N-battle / M-file schema integration"). The tree-wide grep
+also found the SAME idiom in FOUR suite probes (probe-learn-battle, probe-chief-of-staff,
+probe-concept-links, probe-memory-chain) where over-stripping runs the OTHER way — it can
+silently HIDE forbidden tokens (false green), the more dangerous failure. ROOT FIX, one
+idiom in all 15 files: a single-pass state-machine scanner honoring line comments, block
+comments, string literals, AND regex literals — the v1 string-only scanner was itself
+caught by probe-learn-battle when the quote inside src/100's `.replace(/"/g,…)` regex
+literal desynced it and a block-comment `learnMeta` mention survived as a phantom reader;
+v2 tracks regex-literal state (position heuristic + character classes + escapes) and was
+verified on the real inputs (src/100 learnMeta -1 post-strip; T1's REAL reader survives;
+BATTLE_FILES survives with cedar-creek.json enrolled). No tooth weakened: only REAL
+comments are removed, code and strings survive verbatim, so every forbidden-token scan now
+covers MORE text than before. All 11 plan probes 0-exit; all four suite probes green with
+zero pageerrors (learn-battle 10 · memory-chain 10 · concept-links 10 · chief-of-staff 10).
+INVERSE BIND (md5-proven): restoring the old stripper in probe-cedar-creek-plan brought
+back EXACTLY the family red at its label; the v2 restore is byte-identical (f1a70fe3) and
+green. Tree-wide close: grep proves ZERO remaining instances of the broken idiom anywhere
+in tools/ (build.mjs clean).
+
+**THE CONSEQUENCE-ONLY-ABSENCE AUDIT (closed).** The family head — probe-mayhem-mode's
+"Historical refusal/bytes failed" ×2 sites — was already SPLIT with documented chains in
+D457 (reward-refusal half KEPT; the judged path toothed separately as t1-t6). Tree-wide
+sweep of tools/ for every other tooth assuming consequence-only absence in Historical:
+probe-afteraction carries the D457 AAR-side byte-equivalence pin (correct by
+construction); the only other noQuarter/infamy/mayhemReceipts/offer references are D457
+chain comments and one unrelated committed-spec prose anchor (petersburg's Ledlie "Crater
+infamy" mustInclude); every remaining byte-identical tooth in the tree guards an unrelated
+feature seam (arms/audio/camp/HUD/accessibility). E41 save-shape: gate 4h hashes the
+serialize/load/apply FUNCTIONS only — untouched by the purely additive
+offer/infamy/shock fields (save-shape ✓ green all session); probe-save-slots 16/16 with
+the new fields shipping and carries no historical-absence tooth. NOTHING ELSE TO RE-PIN —
+the family is closed by audit, not by enumeration.
+
+No src/, data/, or generated-file change in this slice (game holds a6cbfd2d); counts hold
+26/59/1,614/137; `_SAVE_VER=1`; frozen base untouched. ALL THREE LANE-012 SLICES ARE
+GREEN → the lane moves DRIVE → VERIFY (battery-only; the next release checkpoint's full
+battery gates SHIPPED per D160/D176).
+
 ## D457 — LANE-012 SLICE 2 SHIPPED: THE HISTORICAL SURRENDER/NO-QUARTER UNLOCK — JUDGED, NEVER REWARDED, BEHIND THE LOAD-BEARING MASSACRE-BLOCK — [CLAUDE CODE (FABLE 5), LANE-012 DRIVE] (2026-07-18)
 
 ARC 1 slice 2, built to the LANE-012 contract (COORDINATION.md; the D455 packet §3 row 2 +
