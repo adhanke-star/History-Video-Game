@@ -4,6 +4,45 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D465 — LANE-013 P5b COMMITTED: THE OLUSTEE BATTLE-BUILD SPEC + THE TWO HISTORICAL-DATA.md CORRECTIONS (DOCS-ONLY; THE RUNTIME CHARTERS LATER) — [CLAUDE CODE (FABLE 5), LANE-013 DRIVE, ARC 2 OVERNIGHT NIGHT 2] (2026-07-19)
+
+ARC 2 phase P5, second spec, built to the LANE-013 charter from the D459 packet's Chapter
+III READY_FOR_SPEC verdict. **THE SPEC:** `docs/design/olustee-battle-build-spec.md` — the
+controlling law for the future one-commit Olustee runtime: single-phase meeting engagement
+in the Ocean Pond/swamp pine corridor at rank 65.5 (between chattanooga and fortPillow;
+the D442 non-integer precedent); attacker CS, historical lean CS breaks the line — an
+HONEST UNION DEFEAT that must emerge from the piecemeal-arrival schedules against
+Finegan's concentrated commitment, never a winner gate; US ~5,500 vs CS 5,000 (two
+families; the 5,400 single-family variant disclosed never encoded); the 8th USCT at its
+explicit 565 engaged with greenness as an xp input never a penalty; the rank wall with the
+resolved Colquitt (Brig. Gen. from Sept 1 1862 — never a false 1864 MG) and Barton
+(COLONEL 48th NY — the LOC 1865-brevet caption trap) locks; **Reed's death date ships as
+the contested Feb 26/27 spread — Feb 23 REFUTED and never appears**; the dual-designation
+display law "35th USCT (1st North Carolina Colored Volunteers)"; the rearguard/train-haul
+teaching heart (verified by direct fetch); the aftermath killing of Black wounded taught
+with its scale HONESTLY CONTESTED (the ABT self-contradiction itself taught; ~70 prisoners
+to Andersonville composing the committed corpus); the 54th's loss-figure conflict shipped
+as a spread (OR/Emilio check queued as an open trap); the ~34% loss statement hedged
+(no "third-bloodiest" superlative without Fox); the D74 wall extended with the Olustee
+temptations (green-troops penalty/scripted Fribley death/rearguard bonus/winner gate).
+Counts law relative (+1/+1/+3×units/+1 at the then-current head). No standing absence
+tooth names Olustee (verified — the economy-data battle-agnostic scans in
+probe-cs-finance/flagship-units/human-cost/real-diplomacy guard data files this spec
+never touches).
+
+**THE TWO HISTORICAL-DATA.md CORRECTIONS RIDE THIS COMMIT (the maximizer's directive;
+pin-sweep verified clean — no probe pins either wording; probe-historical-data-inventory
+5/5 ok, sourceItems 2257):** (1) the Crater 2nd Brigade roster corrected to
+19/23/28/29/31 USCT with the consolidation fact and the old moderate-confidence flag
+discharged (the D459 §12 correction 1); (2) the Olustee 8th USCT line corrected from the
+unverified "≈87 killed" to the sourced 49/188/73 = 310 of 565 breakdown (correction 4).
+Both carry in-place D465 chain notes; the superseded wordings die.
+
+Docs-only commit (no build; game `7e212198` holds); counts hold 27/60/1,632/138;
+`_SAVE_VER=1`; frozen base untouched. EXACT NEXT: P6 — the release battery at the final
+head (suite 138, alone, serialized), with the [IF-ROOM] ARC 3 charter decision taken
+first per the overnight contract.
+
 ## D464 — LANE-013 P5a COMMITTED: THE CRATER BATTLE-BUILD SPEC (DOCS-ONLY; THE RUNTIME CHARTERS LATER; ADJUDICATION-2 SCANS UNTOUCHED) — [CLAUDE CODE (FABLE 5), LANE-013 DRIVE, ARC 2 OVERNIGHT NIGHT 2] (2026-07-19)
 
 ARC 2 phase P5, first spec, built to the LANE-013 charter from the D459 packet's Chapter
