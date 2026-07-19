@@ -4,6 +4,66 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D459 — LANE-013 P1 SHIPPED: THE MASSACRE-TREATMENT RESEARCH FAMILY (FORT PILLOW + THE CRATER + OLUSTEE, ONE PACKET) + THE INCIDENTAL D457 SCHEMA-GATE ROOT-FIX — [CLAUDE CODE (FABLE 5), LANE-013 DRIVE, ARC 2 OVERNIGHT] (2026-07-18)
+
+ARC 2 phase P1, built to the LANE-013 charter (`3506716`; the D455 packet §3 rows 6-8 + §4b
+are the law). **THE PACKET:** `docs/design/battle-build-research/massacre-treatment-battle-
+build-research.md` — ONE citation-grade family packet in three chapters, completing C3's
+remaining research entirely (the Crater + Olustee were C3's open USCT battles; Fort Pillow
+joins on the shared design law). The family law: the BATTLE becomes playable from true
+inputs; the ATROCITY is never a scenario objective, never scores, and resolves ONLY through
+the shipped D457 no-quarter machinery (judged in Historical, chartered reward in Mayhem),
+with mandatory sourced teaching and the dignity imagery law holding. It SUPERSEDES the
+taught-only AVAILABILITY dispositions in the usct + 1864-65-attrition packets per D455 —
+every dignity/citation/D74 rule they state remains in force; old texts preserved as record.
+
+**METHOD (the RUN-LOG standing law):** three parallel Sonnet evidence gathers (live
+WebFetch/WebSearch, per-URL findings + source-family independence notes) → packet authored
+by the top loop → three Opus DEFAULT-REFUTE adversarial verifiers (10 targeted refutations
+per chapter, primary sources fetched directly: the JCCW report full text, Forrest's OR
+report, Pike-report transcript checks). 403 failures (Britannica, TN/FL state parks,
+BlackPast) recorded honestly; nothing load-bearing rests on a search snippet.
+
+**VERDICTS:** packet READY_FOR_SPEC (family), carried by Fort Pillow; per-chapter verdicts
+Fort Pillow READY_FOR_SPEC (P4 builds spec → runtime), Crater READY_FOR_SPEC (spec-only
+this arc; its forbidden-scan re-pins ride only its future RUNTIME commit — standing
+adjudication), Olustee READY_FOR_SPEC (spec [IF-ROOM]).
+
+**EVIDENCE-FORCED CORRECTIONS (recorded in packet §12):** (1) the Crater 2nd Brigade is
+19/23/28/29/31 USCT — the "30th [31st] Connecticut" line is wrong (30th CT consolidated
+into the 31st USCT May 18 1864); (2) Mahone was BRIG. GEN. in the field July 30 1864 (both
+ABT pages mis-style him; the MG commission was appointed ~Aug 2 but made to rank from July
+30 — the nuance is disclosed); (3) Bell's brigade belonged to BUFORD's division, attached
+to Chalmers (Forrest's own OR); (4) Olustee 8th USCT "≈87 killed" is unverified — the
+sourced ABT breakdown is 49/188/73 = 310 of 565 engaged; (5) Reed's death date Feb 23 is
+REFUTED (record book Feb 27 / BAFO Feb 26 — the spread ships); (6) the Fort Pillow
+6th USCHA designation trap (correct name only Mar 11-Apr 26 1864; the modern NPS "6th
+USCHA" database page is a DIFFERENT regiment); (7) Colquitt (Brig. Gen. from Sept 1 1862)
+and Barton (Colonel, 48th NY; the LOC "Brigadier General" caption is an 1865 brevet)
+resolved. Contested figures ship as attributed ranges, never resolved by fiat.
+
+**TEETH + GATES:** the packet registers in `tools/probe-battle-build-research.mjs` PACKETS
+(chain comment) + the README index — 15/15 ALL OK; BIND (md5-proven): the top Verdict line
+stripped → EXACTLY the VERDICT step red (14/15), restore byte-identical `1747f8a3` →
+15/15; `node --check` green; build GATE OK (no src/data change in the P1 commit);
+`git diff --check` clean; the two lane-grepping plan probes re-ran ALL OK post-charter.
+
+**INCIDENTAL ROOT-FIX (own commit, the D453/D454 stale-pin class):** the schema gate was
+RED on clean HEAD — 58/59, `data/mayhem-rules.json`: `validateMayhem` still pinned the
+pre-D457 contract (`rulesetId must be mayhem`; `ruleset.is` value must be "mayhem"),
+refusing the SHIPPED D457 `no-quarter-historical` action. Root fix teaches the validator
+the exact D457 law and STRENGTHENS it: rulesetId ∈ {mayhem, historical}; the `ruleset.is`
+predicate must EQUAL the declared rulesetId (the exact-match law); and historical-ruleset
+actions now face the massacre-block AT THE DATA LAYER — only morale/press/diplomacy.add
+(≤0), notoriety.add (≥0), modifier.add, chronicle.event; every other operation family
+fails the gate with "(D457 massacre-block)". 59/59 green. BIND (md5-proven): the
+historical action tampered with `battle.score.add` → EXACTLY "operation forbidden for a
+historical-ruleset action (D457 massacre-block)" red, restore byte-identical `be20279f`
+→ 59/59. No tooth weakened — the gate now refuses MORE illegal data than before.
+
+No src/, data/, or generated-file change (game `a6cbfd2d` holds); counts 26/59/1,614/137;
+`_SAVE_VER=1`; frozen base untouched. EXACT NEXT: P2 — the Leetown Cherokee OOB.
+
 ## D458 — LANE-012 SLICE 3 SHIPPED: THE RE-TOOTHING SWEEP — THE stripJsComments FAMILY ROOT-FIXED TREE-WIDE (15 PROBES, REGEX-LITERAL-AWARE SCANNER) + THE CONSEQUENCE-ONLY-ABSENCE AUDIT CLOSED — [CLAUDE CODE (FABLE 5), LANE-012 DRIVE] (2026-07-18)
 
 ARC 1 slice 3, built to the LANE-012 contract (§4a.3; the D453 "probe-side reading bug"

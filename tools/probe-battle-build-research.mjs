@@ -32,6 +32,9 @@ const PACKETS = [
   "western-gaps-battle-build-research.md",
   "trans-mississippi-battle-build-research.md",
   "appomattox-campaign-battle-build-research.md",
+  // LANE-013 P1 (ARC 2, D455 SS3 rows 6-8 + SS4b): the massacre-treatment family packet
+  // (Fort Pillow + the Crater + Olustee) — completes C3's research entirely.
+  "massacre-treatment-battle-build-research.md",
 ];
 
 const VERDICTS = ["READY_FOR_SPEC", "NEEDS_MORE_RESEARCH", "DO_NOT_BUILD_NOW"];

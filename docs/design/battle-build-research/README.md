@@ -46,7 +46,15 @@ Every packet ends with a **Verification Notes** section recording what was fetch
 | [trans-mississippi-battle-build-research.md](trans-mississippi-battle-build-research.md) | Trans-Mississippi (Wilson's Creek, Pea Ridge, Glorieta, Red River) | **READY_FOR_SPEC** *(evidence bar only — **blocked behind the D183 two-tier Aaron gate**, see below)* | **Pea Ridge / Elkhorn Tavern** (T8 two-phase, sum 4) | **Put the D183 gate to Aaron first.** Then D### Pea Ridge spec on the Native-free Elkhorn axis; Glorieta + the Red River river-war stay teaching-only |
 | [appomattox-campaign-battle-build-research.md](appomattox-campaign-battle-build-research.md) | The Appomattox Campaign (Apr 1–9 1865) | **READY_FOR_SPEC** | **Five Forks** (single-phase attacker-seize) + the Apr 2 Petersburg Breakthrough (T8 two-phase, sum 4) | D### Five Forks single-phase spec; **the surrender is a teaching sequence, never a scored battle** |
 
-**Lane boundary (no double-claim):** `1864-65-attrition` owns the Overland Campaign, Cold Harbor, the Petersburg **siege** (Jun 1864–Mar 1865), and the Crater. `appomattox-campaign` owns **Apr 1–9 1865** — Five Forks, the Apr 2 breakthrough (which the attrition packet explicitly deferred as un-researched), Sailor's Creek, and the surrender. Fort Stedman (Mar 25 1865) is a gray zone recommended to stay a teaching card.
+**LANE-013 P1 massacre-treatment family (2026-07-18, D455 §3 rows 6-8 + §4b — completes C3's research entirely):**
+
+| Packet | Lane | Verdict | Lead buildable candidate | Exact next slice |
+|---|---|---|---|---|
+| [massacre-treatment-battle-build-research.md](massacre-treatment-battle-build-research.md) | Fort Pillow + the Crater + Olustee as ONE family (Aaron's D455 unlock: playable battles, unscoreable atrocities through the shipped no-quarter machinery) | **READY_FOR_SPEC** | **Fort Pillow** (single-phase CS assault; the massacre resolves ONLY through the D457 no-quarter machinery) | LANE-013 P4 Fort Pillow spec → runtime; Crater + Olustee specs [IF-ROOM] |
+
+This family packet SUPERSEDES the *availability* dispositions ("Fort Pillow DO_NOT_BUILD / teaching-only", "the massacre may not be built") recorded in `usct-battle-build-research.md` and `1864-65-attrition-battle-build-research.md` and in the "teaching-only" list below, per Aaron's D455 §3 rows 6-8 — the dignity rules those packets state (no atrocity is ever a scored objective; imagery law; ≥2-source law) remain in force unchanged. The older packet texts are preserved as the historical record.
+
+**Lane boundary (no double-claim):** `1864-65-attrition` owns the Overland Campaign, Cold Harbor, the Petersburg **siege** (Jun 1864–Mar 1865), and the Crater. `appomattox-campaign` owns **Apr 1–9 1865** — Five Forks, the Apr 2 breakthrough (which the attrition packet explicitly deferred as un-researched), Sailor's Creek, and the surrender. Fort Stedman (Mar 25 1865) is a gray zone recommended to stay a teaching card. *(Crater research now ALSO lives in the massacre-treatment family packet above, which supersedes the attrition packet's massacre-availability line per D455.)*
 
 ## The D183 gate on the Trans-Mississippi lane (a live Aaron decision — do not self-clear)
 
