@@ -2,6 +2,24 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-18/19 — D459-D462 the ARC 2 OVERNIGHT session (LANE-013 chartered; P1-P3 shipped + P4 spec)
+
+The overnight session (Claude Code / Fable 5, final night of the authorized window) chartered
+LANE-013 `content-unlocks` ledger-only at `3506716`, then ran the ARC 2 ladder: D459 `0127cc7`
+the massacre-treatment research family packet (3 live-fetch gathers → 3 Opus default-refute
+verifiers; JCCW + Forrest-OR primaries; all three chapters READY_FOR_SPEC; seven evidence-
+forced corrections recorded) + the incidental `1af86ee` schema-gate root-fix (the validator
+never learned the D457 historical action — now enforces the massacre-block at the data layer,
+59/59, tamper-bind proven); D460 `a2b0484` the Cherokee fielding at Elkhorn (Watie's 2nd CMR
+on its sourced March 8 Big Mountain station; Drew's honestly non-combat — the field-both
+tension surfaced to Aaron; register 1,614→1,617 chained at seventeen sites; the 8-seed
+direction battery held 8/8 ×4; Goodspeed-strip bind md5-proven); D461 `ea1f714` the Front
+Royal scored-capture lift (docs+teeth only; game hash `7c13850e` held as the A/B); D462
+`045a50b` the Fort Pillow battle-build SPEC (the runtime deliberately queued at the clean
+boundary per the charter's own budget rule). P5 (Crater/Olustee specs) and P6 (the release
+battery) deferred honestly to the continuation prompt; LANE-012 rests at VERIFY untouched;
+LANE-013 rests at CONTRACT (unowned) with the full ladder + P4 recon in its ledger entry.
+
 ## 2026-07-18 — D457+D458 the ARC 1 SLICE 2+3 session (LANE-012 all-slices-green → VERIFY)
 
 The Slice-2 session (Claude Code / Fable 5, within the authorized window through 2026-07-19)

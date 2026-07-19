@@ -2230,11 +2230,15 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
-### LANE-013 · content-unlocks — **DRIVE** (ARC 2 of the D455 roadmap; chartered ledger-only per the D456 precedent)
+### LANE-013 · content-unlocks — **CONTRACT (P1-P3 + the P4 spec SHIPPED as D459-D462; runtime queued; lock RELEASED at the D462 boundary)** (ARC 2 of the D455 roadmap)
 
-- **Owning tool:** Claude Code (Fable 5 — Aaron's authorization window through 2026-07-19;
-  the ARC 2 overnight charter directive, 2026-07-18). No simultaneous edits by any provider.
-- **State:** DRIVE (charter committed ledger-only BEFORE any research or code move).
+- **Owning tool:** unowned (the Claude Code / Fable 5 lock RELEASED at the clean pushed
+  D462 boundary — overnight session closeout, the D171/D307 law; DRIVE ran `3506716` →
+  D459 `0127cc7` (+`1af86ee`/`aa41dec`) → D460 `a2b0484` → D461 `ea1f714` → D462
+  `045a50b`, all within Aaron's authorized Fable window through 2026-07-19).
+- **State:** CONTRACT — the remaining phases (P4 runtime · P5 specs · P6 battery) carry
+  their full committed contracts (this entry + the D462 spec §8-§9), so ANY tool can
+  drive from here.
 - **Design law:** `docs/design/unlocked-but-judged-design.md` §3 rows 6-8 + §4b + §7 (THE
   LAW for this arc) · DECISIONS D455 (the popup-locked unlock decisions: Fort Pillow
   playable BOTH sides honest treatment, amends D135/D382 taught-only; Leetown Cherokee
@@ -2369,7 +2373,14 @@ next green commit and confer through this ledger instead of permitting simultane
   DECISIONS.md.
 - **Last-touched commit:** the P0c charter commit (this edit).
 - **History:** opened 2026-07-18 (overnight) by Claude Code (Fable 5) under Aaron's
-  ARC 2 overnight charter directive; ledger-only first per the D456 precedent.
+  ARC 2 overnight charter directive; ledger-only first per the D456 precedent. Same
+  session: P1 shipped as D459 (`0127cc7`; + the incidental schema-gate root-fix
+  `1af86ee` and its tracked-report follow-up `aa41dec`); P2 shipped as D460 (`a2b0484`
+  — the Drew's-regiment field-both tension surfaced to Aaron in the session report);
+  P3 shipped as D461 (`ea1f714`); the P4 SPEC committed as D462 (`045a50b`) with the
+  runtime deliberately queued at the clean boundary (the charter's own budget rule);
+  P5/P6 deferred honestly; lane flipped DRIVE → CONTRACT and the lock released at
+  closeout. LANE-012 was NOT touched (rests at VERIFY, battery-only).
 
 ---
 
