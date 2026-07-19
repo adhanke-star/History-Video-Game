@@ -2745,6 +2745,40 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
+### LANE-016 · olustee-runtime — **DRIVE (chartered this commit; the ONE atomic runtime commit follows — COMPLETES C3)** (ARC 2 completion; the D455 SS3 massacre-treatment family)
+
+- **Owning tool:** Claude Code (Fable 5) — DRIVE taken WITH this charter edit (the
+  ledger-only precedent), 2026-07-19 afternoon, P3 of Aaron's all-day ladder. The §4
+  TOP-LOOP resolution stands as recorded at LANE-014/LANE-015.
+- **State:** DRIVE — the charter IS this entry + the committed spec.
+- **Design law:** `docs/design/olustee-battle-build-spec.md` (D465 — THE controlling law,
+  committed `6663449`; its §8-§9 carry the complete inventory) · the D459 family packet ·
+  D74 · the dignity imagery law · the D457 no-quarter machinery as the ONLY
+  atrocity-resolution path · the D458 scanner law.
+- **Acceptance criteria (the spec §8-§9, summarized):** `data/olustee.json` (US ~5,500 /
+  CS 5,000 two-family-convergent encodes with the 5,400 single-family variant disclosed;
+  the honest Union defeat from piecemeal-arrival schedule inputs — never a winner gate;
+  the Seymour/Finegan/Colquitt Brig. Gen. + colonels' wall rank locks incl. the Barton
+  never-brevet-backdate and Reed Feb 26/27-spread laws; the dual-designation "35th USCT
+  (1st North Carolina Colored Volunteers)" display string; the 8th USCT 565-engaged
+  xp-floor law; menu rank 65.5 between chattanooga 65 and fortPillow 66) · schema 61→62 ·
+  scenarios 28→29 · register 1,671→1,710 (+13×3) at EVERY pin site · suite 139→140
+  APPENDED AT THE END · the chattanooga/fortPillow adjacency re-pins incl.
+  probe-fort-pillow's rank-66 chain regex and the seven-battle DOM chronology guards ·
+  `tools/probe-olustee.mjs` authored WITH the commit (the spec §8 tooth list incl. the
+  8-seed direction battery CS-breaks ≥5/8 AND US-losses-exceed-CS ≥5/8 and the machinery
+  teeth at battleId `olustee`) · ≥2 predeclared binds md5-proven (Colquitt grade tamper →
+  rank-wall red EXACTLY; a card cut below 2 sources → card-source red EXACTLY) · AD-7
+  re-pins + both plan probes re-run post-commit.
+- **Resume pointer:** author the runtime per the spec §8-§9 in one atomic commit; on
+  green + push, the lane rests at VERIFY with LANE-015 pending the P7 battery.
+- **Last-touched commit:** this charter edit.
+- **History:** chartered ledger-only + DRIVE taken 2026-07-19 (afternoon, Claude Code /
+  Fable 5, the all-day ladder P3) at the D469 boundary. Landing this lane COMPLETES C3
+  (the D455 SS3 massacre-treatment family: Fort Pillow D463 · the Crater D469 · Olustee).
+
+---
+
 ## 6 · JOINT STRATEGY BOARD — Fable ⇄ Sol (cross-tool planning, not just locks)
 
 **What this is (Aaron, 2026-07-11):** the lanes above carry contracts and locks; this board
