@@ -1,6 +1,6 @@
 {
   "schema": "cw_media_budget_v1",
-  "schemaVersion": "1.8",
+  "schemaVersion": "1.9",
   "policy": {
     "singleFileCore": true,
     "optionalHdPackForHeavyMedia": true,
@@ -27,7 +27,9 @@
     "rawEmbedSoftBytes": 1572864,
     "rawEmbedHardBytes": 3145728,
     "currentReviewWarnBytes": 2883584,
-    "maxCoreFiles": 260
+    "maxCoreFiles": 260,
+    "requireAssets3dProvenanceLedger": true,
+    "assets3dProvenanceRule": "Every asset-class file (.png/.hdr/.glb/.gltf) under assets/3d must have exactly one row in assets/3d/provenance.json carrying source URL, asset id, authors, license CC0-1.0 (or a future explicitly recorded clear license), byte size, md5, and Verified status; the media-budget probe enumerates 1:1 both ways, re-hashes every file against its ledgered md5, and enforces the hd-terrain-models ledgerClasses caps. Unledgered, ghost, unverified, out-of-class, or over-cap files fail the gate. Caps move only with a documented chain in the moving commit (LANE-014 slice 1)."
   },
   "performanceProfile": {
     "targetHardware": "Intel UHD Graphics 617 / 8 GB RAM floor",
@@ -150,7 +152,38 @@
         "optimized runtime file separate from source art",
         "fallback in the self-contained core",
         "no SharedArrayBuffer requirement"
-      ]
+      ],
+      "provenanceLedger": "assets/3d/provenance.json",
+      "ledgerClasses": {
+        "terrainTextures": {
+          "dir": "assets/3d/materials/terrain",
+          "maxFiles": 27,
+          "maxRawBytes": 102540283,
+          "maxFileBytes": 7000000,
+          "note": "9 terrain keys x albedo/normal/rough, Poly Haven 1k PNG; caps pinned to the LANE-014 slice-1 audited totals."
+        },
+        "envHdri": {
+          "dir": "assets/3d/env",
+          "maxFiles": 3,
+          "maxRawBytes": 13324229,
+          "maxFileBytes": 4600000,
+          "note": "sky_day/sky_dusk/sky_overcast, Poly Haven 2k HDR; caps pinned to the LANE-014 slice-1 audited totals."
+        },
+        "unitModels": {
+          "dir": "assets/3d/models/units",
+          "maxFiles": 0,
+          "maxRawBytes": 0,
+          "maxFileBytes": 1500000,
+          "note": "No runtime model files are ledgered yet; each Tripo slot enablement commit raises maxFiles/maxRawBytes with a documented chain (LANE-014 adjudication 10; per-file cap echoes the tripo-unit-assets policy maxRuntimeBytes)."
+        },
+        "modelSources": {
+          "dir": "assets/3d/source",
+          "maxFiles": 0,
+          "maxRawBytes": 0,
+          "maxFileBytes": 0,
+          "note": "No Ultra source meshes are ledgered yet; a future enablement commit raises these caps with a documented chain before any source drop."
+        }
+      }
     }
   ],
   "locks": {

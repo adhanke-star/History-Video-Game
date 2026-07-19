@@ -2,6 +2,26 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-19 — D467 the ARC 3 CHARTER + SLICE 1 session (morning; Aaron's pick (a))
+
+Claude Code (Fable 5; the §4 TOP-LOOP resolution recorded — Aaron confirmed driving on
+Fable after the kickoff's Opus 4.8 routing note) ratified the FULL LANE-014 acceptance
+contract at DRIVE (`489cfc4`, COORDINATION.md-only; six slices, ten adjudications, two
+packet errata; recon `wf_1c520994-6d8`), then shipped SLICE 1: the ~98 MB unprovenanced
+terrain-texture exposure in the public repo was CLEARED — the committed fetch script's
+asset map + live Poly Haven API md5 records matched all 27 maps byte-for-byte, and the 3
+HDRIs were identified by md5 across the full 980-asset catalog (syferfontein_18d_clear /
+belfast_sunset / overcast_soil pure skies, 2k). 30/30 Verified CC0 with named authors.
+Shipped the 30-row `assets/3d/provenance.json`, media-budget 1.9 (assets3d policy +
+ledgerClasses caps at the audited totals), probe-media-budget 13→17 steps (1:1
+enumeration, per-run full re-hash, caps, outside-embed guard), README provenance law +
+model-sourcing plan. Binds A (license-flip) + B (unledgered file) bit at exactly their
+steps with md5-proven restores; build GATE OK; schema 60/60; AD-7 re-pins game
+f0228c4b→11099dac · dataTree e33afffc→23ccef52 at all three sites; plan probes re-run
+green post-commit. Counts hold 27/60/1,632/138. Aaron's other picks recorded: drive on
+Fable 5; the D460 Drew's-regiment adjudication stays standing. EXACT NEXT: slice 2
+(terrain texturing T32) per the committed contract.
+
 ## 2026-07-19 — D463-D466 the ARC 2 COMPLETION + RELEASE session (overnight night 2; the maximizer)
 
 The overnight-maximizer session (Claude Code / Fable 5, the authorized window's final

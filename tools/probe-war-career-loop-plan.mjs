@@ -1201,9 +1201,12 @@ step("BASELINES + LANE", () => {
     // dataTree abee76fa -> e33afffc — the S44-forced western-theater currentArc copy
     // update (Fort Pillow arc entry + rebuild; the battery's one red, root-fixed at its
     // exact label). base/manifest/suite/srcTree/focused hold.
-    game:"f0228c4b39c3c8d7a367e594f806ffbb",
+    // D467 re-pin (the AD-7 idiom, at the LANE-014 slice-1 head): game f0228c4b -> 11099dac
+    // and dataTree e33afffc -> 23ccef52 — the assets3d provenance wall (media-budget 1.9
+    // policy + ledgerClasses; rebuild; zero src). base/manifest/suite/srcTree/focused hold.
+    game:"11099dac176a87cd86b2f9978c21c56d",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
-    dataTree:"e33afffc2fb358bcfb60a029dc7971c1",
+    dataTree:"23ccef52d8b6fdccddc894b1cfaf3b5c",
     manifest:"bb5d7903507c8fccf53addf981c2023e",
     suite:"0f8550a5e120772d89777d7459029e7e"
   };
@@ -1608,8 +1611,10 @@ step("REACHABILITY BASELINES", () => {
     // runtime/journey did NOT move — the war-career surface held.
     // D466 re-pin: game 7e212198 -> f0228c4b, dataTree abee76fa -> e33afffc (the
     // S44-forced western-theater copy update; srcTree/runtime/journey/focused held).
-    game:"f0228c4b39c3c8d7a367e594f806ffbb",
-    dataTree:"e33afffc2fb358bcfb60a029dc7971c1",
+    // D467 re-pin: game f0228c4b -> 11099dac, dataTree e33afffc -> 23ccef52 (the assets3d
+    // provenance wall, data-only; srcTree/runtime/journey/focused held).
+    game:"11099dac176a87cd86b2f9978c21c56d",
+    dataTree:"23ccef52d8b6fdccddc894b1cfaf3b5c",
     srcTree:"916d7e7288c1749190f47a03c7b60065",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",

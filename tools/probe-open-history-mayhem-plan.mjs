@@ -66,7 +66,11 @@ const PIN = {
   // S44 registry-truth tooth forced the western-theater currentArc copy update (the Fort
   // Pillow arc entry + rebuild; the battery's one red, root-fixed at its exact label).
   // base/manifest/suite hold.
-  game: "f0228c4b39c3c8d7a367e594f806ffbb",
+  // D467 re-pin (the AD-7 idiom, at the LANE-014 slice-1 head): game f0228c4b -> 11099dac —
+  // the assets3d provenance wall (data/media-budget.json schemaVersion 1.9: the
+  // requireAssets3dProvenanceLedger policy + hd-terrain-models ledgerClasses caps; rebuild;
+  // zero src). base/manifest/suite hold.
+  game: "11099dac176a87cd86b2f9978c21c56d",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
   manifest: "bb5d7903507c8fccf53addf981c2023e",
   suite: "0f8550a5e120772d89777d7459029e7e",

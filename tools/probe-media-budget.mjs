@@ -5,6 +5,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSy
 import { dirname, extname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createContext, runInContext } from 'node:vm';
+import { createHash } from 'node:crypto';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -583,6 +584,103 @@ step('future heavy media is locked to explicit decision or optional pack', () =>
   return { h2: h2.status, hd: hd.status };
 });
 
+// LANE-014 slice 1: the assets/3d provenance-ledger wall (adjudications 3+4).
+const ASSETS3D_EXTS = new Set(['.png', '.hdr', '.glb', '.gltf']);
+function assets3dCategory() {
+  const c = (budget.categories || []).find(x => x.id === 'hd-terrain-models');
+  if (!c) throw new Error('hd-terrain-models category missing');
+  return c;
+}
+function assets3dTreeFiles() {
+  return walkFiles(join(ROOT, 'assets', '3d'))
+    .filter(f => ASSETS3D_EXTS.has(extname(f).toLowerCase()))
+    .map(f => relAsset(f))
+    .sort();
+}
+function assets3dLedger() {
+  const c = assets3dCategory();
+  if (!c.provenanceLedger) throw new Error('hd-terrain-models missing provenanceLedger');
+  const ledger = readJson(c.provenanceLedger);
+  if (ledger.schema !== 'cw_assets3d_provenance_v1') throw new Error('bad ledger schema ' + ledger.schema);
+  if (!Array.isArray(ledger.records)) throw new Error('ledger records missing');
+  return ledger;
+}
+function assets3dState() {
+  const ledger = assets3dLedger();
+  const tree = assets3dTreeFiles();
+  const ledgered = ledger.records.map(r => 'assets/3d/' + r.file).sort();
+  const unledgered = tree.filter(f => !ledgered.includes(f));
+  const ghosts = ledgered.filter(f => !tree.includes(f));
+  const byClass = {};
+  for (const r of ledger.records) {
+    byClass[r.class] = byClass[r.class] || { files: 0, bytes: 0 };
+    byClass[r.class].files++;
+    byClass[r.class].bytes += Number(r.bytes || 0);
+  }
+  return { ledger, tree, unledgered, ghosts, byClass };
+}
+
+step('assets3d ledger enumeration is 1:1 with the asset tree', () => {
+  const s = assets3dState();
+  if (s.unledgered.length) throw new Error('assets/3d files without a provenance row: ' + s.unledgered.join(', '));
+  if (s.ghosts.length) throw new Error('provenance rows without a file: ' + s.ghosts.join(', '));
+  const classes = assets3dCategory().ledgerClasses || {};
+  const outOfClass = s.ledger.records.filter(r => {
+    const cls = classes[r.class];
+    return !cls || !('assets/3d/' + r.file).startsWith(cls.dir + '/');
+  }).map(r => r.file);
+  if (outOfClass.length) throw new Error('ledger rows outside their declared class dir: ' + outOfClass.join(', '));
+  return { treeFiles: s.tree.length, ledgerRows: s.ledger.records.length };
+});
+
+step('assets3d ledger rows are license-clear and identity-proven', () => {
+  const s = assets3dState();
+  const bad = [];
+  for (const r of s.ledger.records) {
+    const missing = ['file', 'class', 'asset', 'source', 'md5', 'license', 'status'].filter(k => !String(r[k] || '').trim());
+    if (missing.length) { bad.push(r.file + ' missing ' + missing.join('/')); continue; }
+    if (r.license !== 'CC0-1.0') { bad.push(r.file + ' license not clear: ' + r.license); continue; }
+    if (r.status !== 'Verified') { bad.push(r.file + ' status not Verified: ' + r.status); continue; }
+    if (!Array.isArray(r.authors) || !r.authors.length) { bad.push(r.file + ' authors missing'); continue; }
+    const p = join(ROOT, 'assets', '3d', r.file);
+    const actual = createHash('md5').update(readFileSync(p)).digest('hex');
+    if (actual !== r.md5) bad.push(r.file + ' md5 drift: ' + actual + ' != ledgered ' + r.md5);
+    else if (statSync(p).size !== Number(r.bytes)) bad.push(r.file + ' byte drift');
+  }
+  if (bad.length) throw new Error(bad.join('; '));
+  return { rows: s.ledger.records.length, hashed: s.ledger.records.length };
+});
+
+step('assets3d ledger class caps hold', () => {
+  const classes = assets3dCategory().ledgerClasses || {};
+  if (!Object.keys(classes).length) throw new Error('ledgerClasses missing');
+  const s = assets3dState();
+  const bad = [];
+  for (const [id, cls] of Object.entries(classes)) {
+    const actual = s.byClass[id] || { files: 0, bytes: 0 };
+    if (actual.files > Number(cls.maxFiles)) bad.push(id + ' files ' + actual.files + ' > maxFiles ' + cls.maxFiles);
+    if (actual.bytes > Number(cls.maxRawBytes)) bad.push(id + ' bytes ' + actual.bytes + ' > maxRawBytes ' + cls.maxRawBytes);
+    for (const r of s.ledger.records.filter(x => x.class === id)) {
+      if (Number(r.bytes) > Number(cls.maxFileBytes)) bad.push(r.file + ' bytes ' + r.bytes + ' > maxFileBytes ' + cls.maxFileBytes);
+    }
+  }
+  const declared = new Set(Object.keys(classes));
+  const strays = Object.keys(s.byClass).filter(id => !declared.has(id));
+  if (strays.length) bad.push('undeclared ledger classes: ' + strays.join(', '));
+  if (bad.length) throw new Error(bad.join('; '));
+  return { classes: Object.keys(classes).sort(), byClass: s.byClass };
+});
+
+step('assets3d stays outside the embed pipeline', () => {
+  if (budget.policy.requireAssets3dProvenanceLedger !== true) throw new Error('assets3d provenance guard missing from policy');
+  const c = assets3dCategory();
+  if (c.allowedInSingleFile !== false || c.embedDir !== null) throw new Error('hd-terrain-models must stay non-embedded');
+  if (Object.keys(totals.by).includes('3d')) throw new Error('assets/embed carries a 3d category');
+  const prep = readFileSync(join(ROOT, 'tools', 'prep-embed-assets.mjs'), 'utf8');
+  if (/['"]3d['"]/.test(prep)) throw new Error('prep-embed-assets.mjs enrolls a 3d category');
+  return { embedDir: c.embedDir, allowedInSingleFile: c.allowedInSingleFile };
+});
+
 const ok = steps.every(s => s.ok);
 const out = {
   ok,
@@ -600,7 +698,15 @@ const out = {
     arithmeticConsistency: arithmeticConsistencyState(),
     categorySummary: categorySummary(),
     categories: totals.by,
-    largestFiles: fileList.slice(0, 10)
+    largestFiles: fileList.slice(0, 10),
+    assets3d: (() => {
+      try {
+        const s = assets3dState();
+        return { treeFiles: s.tree.length, ledgerRows: s.ledger.records.length, byClass: s.byClass, unledgered: s.unledgered, ghosts: s.ghosts };
+      } catch (e) {
+        return { error: String(e && e.message || e) };
+      }
+    })()
   },
   steps
 };

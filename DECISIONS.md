@@ -4,6 +4,55 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D467 — LANE-014 CHARTERED AT DRIVE + SLICE 1 SHIPPED: THE ASSETS3D PROVENANCE WALL — ALL 30 STAGED 3D FILES VERIFIED BYTE-IDENTICAL TO IDENTIFIED POLY HAVEN CC0 ORIGINALS AND LEDGERED — [CLAUDE CODE (FABLE 5), LANE-014 DRIVE; AARON'S QUEUE PICK (a)] (2026-07-19)
+
+**THE CHARTER (`489cfc4`, ledger-only, the LANE-013 `3506716` precedent):** the FULL ARC 3
+acceptance contract ratified in COORDINATION.md — six slices (asset ledger/license audit +
+assets3d wall → terrain texturing T32 → HDRI sky/lighting T33 → ground-level camera T34 →
+formation LOD + Tripo slots → the release-checkpoint battery), ten charter adjudications
+(THREE pinned at 0.128.0 by the frozen base; progressive-enhancement fail-closed law;
+graphics bytes barred from the zero-headroom embed budget; analytic terrain heights
+inviolate; suite stays 138 through the arc; AD-7 re-pins every slice; perf caps locked
+360/1400; the T-module wrap seam law; Aaron-gated model production), and two packet §7
+errata recorded (the mapping table's "ARC 3 loot content packs" cell + R-7 rider route to
+ARC 4 per the arcs-list backbone). DRIVE taken in the same commit; the §4 TOP-LOOP
+resolution recorded (Fable 5, Aaron-confirmed). Charter recon: the read-only 4-agent
+inventory `wf_1c520994-6d8` (tripo pipeline · perf/media walls · render seams · suite/pin
+topology; zero probes pin the lane entry — the flip proven safe).
+
+**SLICE 1 — THE AUDIT'S HEADLINE:** recon surfaced ~98 MB of terrain PBR textures TRACKED
+in the PUBLIC repo with no recorded provenance (the feared unclear-license exposure). The
+audit CLEARED it: `tools/fetch_polyhaven_terrain.mjs` (committed at S0 `673894f`) maps all
+9 terrain keys to exact Poly Haven asset ids; the live api.polyhaven.com/files md5+size
+records matched ALL 27 local maps byte-for-byte at 1k; the 3 unattributed env HDRIs were
+identified by md5 search across the full Poly Haven HDRI catalog (980 assets scanned):
+sky_day = syferfontein_18d_clear_puresky, sky_dusk = belfast_sunset_puresky, sky_overcast
+= overcast_soil_puresky (2k). 30/30 Verified CC0-1.0 with named authors — nothing removed,
+an evidence-forced upgrade from "unknown provenance" to citation-grade.
+
+**SHIPPED:** `assets/3d/provenance.json` (the 30-row ledger: file/class/asset/authors/
+source URL/download URL/bytes/md5/license/status; totals terrainTextures 27/102,540,283 B ·
+envHdri 3/13,324,229 B) · `data/media-budget.json` 1.8 → 1.9 (the
+`requireAssets3dProvenanceLedger` policy + the hd-terrain-models `ledgerClasses` caps
+pinned to the audited totals, with unitModels/modelSources chartered at 0-until-chained
+per adjudication 10) · `tools/probe-media-budget.mjs` 13 → 17 steps (enumeration 1:1 both
+ways + out-of-class refusal · per-row license-clear/Verified/authors + full md5+byte
+re-hash every run · class caps + undeclared-class refusal · outside-the-embed-pipeline
+structural guard) with an `assets3d` metrics readback · the README provenance-law section
++ the 2K→1k factual correction + the adjudication-10 MODEL SOURCING PLAN.
+
+**GATES:** node --check ×3 · build GATE OK · schema gate 60/60 · focused
+probe-media-budget 17/17 (fs-only; soft-warning-only, embed metrics byte-unmoved) ·
+adjacent import-tripo-unit-assets exit 0 + report-media-budget 17/17 · **BINDS (both
+md5-proven):** A license-flip → EXACTLY "assets3d ledger rows are license-clear and
+identity-proven" red naming the row, restore d7c15d7f identical, re-run 17/17; B
+unledgered fixture file → EXACTLY "assets3d ledger enumeration is 1:1 with the asset
+tree" red naming the stray, removal restore, re-run 17/17. **AD-7 re-pins in this
+commit:** game f0228c4b → 11099dac · dataTree e33afffc → 23ccef52 at all three plan-probe
+sites (base/manifest/suite/srcTree/focused hold); both plan probes re-run post-commit.
+Counts hold 27/60/1,632/138; `_SAVE_VER=1`; frozen base `c9db83fa` untouched; zero src
+moved.
+
 ## D466 — THE P6 RELEASE BATTERY COMPLETES 138/138 GREEN; FIVE BATTERY REDS ROOT-FIXED AT THEIR EXACT LABELS; LANE-012 AND LANE-013 FLIP SHIPPED — ARC 1 AND ARC 2 ARE FULLY RELEASED — [CLAUDE CODE (FABLE 5), LANE-013 DRIVE, ARC 2 OVERNIGHT NIGHT 2 RELEASE] (2026-07-19)
 
 **THE BATTERY (Aaron's overnight law: all debugging saved to the end; ALONE on the

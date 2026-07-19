@@ -39,7 +39,7 @@
   </div>
   <div class="summary-card">
     <div class="label">Steps Passed</div>
-    <div class="value">13/13</div>
+    <div class="value">17/17</div>
   </div>
   <div class="summary-card">
     <div class="label">Raw Tier</div>
@@ -316,7 +316,7 @@
     <td>1</td>
     <td>schema and core policy are present</td>
     <td><span class="badge ok">PASS</span></td>
-    <td><code>{&quot;schema&quot;:&quot;cw_media_budget_v1&quot;,&quot;version&quot;:&quot;1.8&quot;}</code></td>
+    <td><code>{&quot;schema&quot;:&quot;cw_media_budget_v1&quot;,&quot;version&quot;:&quot;1.9&quot;}</code></td>
   </tr><tr>
     <td>2</td>
     <td>media budget policy state readback is explicit</td>
@@ -377,6 +377,26 @@
     <td>future heavy media is locked to explicit decision or optional pack</td>
     <td><span class="badge ok">PASS</span></td>
     <td><code>{&quot;h2&quot;:&quot;locked-pending-provenance&quot;,&quot;hd&quot;:&quot;optional-pack-only&quot;}</code></td>
+  </tr><tr>
+    <td>14</td>
+    <td>assets3d ledger enumeration is 1:1 with the asset tree</td>
+    <td><span class="badge ok">PASS</span></td>
+    <td><code>{&quot;treeFiles&quot;:30,&quot;ledgerRows&quot;:30}</code></td>
+  </tr><tr>
+    <td>15</td>
+    <td>assets3d ledger rows are license-clear and identity-proven</td>
+    <td><span class="badge ok">PASS</span></td>
+    <td><code>{&quot;rows&quot;:30,&quot;hashed&quot;:30}</code></td>
+  </tr><tr>
+    <td>16</td>
+    <td>assets3d ledger class caps hold</td>
+    <td><span class="badge ok">PASS</span></td>
+    <td><code>{&quot;classes&quot;:[&quot;envHdri&quot;,&quot;modelSources&quot;,&quot;terrainTextures&quot;,&quot;unitModels&quot;],&quot;byClass&quot;:{&quot;envHdri&quot;:{&quot;files&quot;:3,&quot;bytes&quot;:13324229},&quot;terrainTextures&quot;:{&quot;files&quot;:27,&quot;bytes&quot;:102540283}}}</code></td>
+  </tr><tr>
+    <td>17</td>
+    <td>assets3d stays outside the embed pipeline</td>
+    <td><span class="badge ok">PASS</span></td>
+    <td><code>{&quot;embedDir&quot;:null,&quot;allowedInSingleFile&quot;:false}</code></td>
   </tr>
 </table>
 

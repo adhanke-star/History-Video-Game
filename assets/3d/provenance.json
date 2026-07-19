@@ -1,0 +1,539 @@
+{
+  "schema": "cw_assets3d_provenance_v1",
+  "schemaVersion": "1.0",
+  "verifiedOn": "2026-07-19",
+  "decision": "LANE-014 slice 1 (ARC 3 graphics-uplift); the D398 Tripo authorization governs future models/units rows",
+  "method": "Three-way verification: the committed fetch script tools/fetch_polyhaven_terrain.mjs maps each terrain key to its Poly Haven asset id; the live api.polyhaven.com/files record for each asset was matched byte-for-byte (md5 + size) against the local file; the three env HDRIs were identified by md5 search across the full Poly Haven HDRI catalog (980 assets scanned) and re-verified the same way. 30/30 files matched exactly.",
+  "license": {
+    "id": "CC0-1.0",
+    "name": "Creative Commons Zero v1.0 Universal",
+    "url": "https://polyhaven.com/license",
+    "note": "Poly Haven publishes all assets under CC0; attribution is recorded here as a courtesy and provenance record, not a license requirement."
+  },
+  "totals": {
+    "envHdri": {
+      "files": 3,
+      "bytes": 13324229
+    },
+    "terrainTextures": {
+      "files": 27,
+      "bytes": 102540283
+    }
+  },
+  "records": [
+    {
+      "file": "env/sky_day.hdr",
+      "class": "envHdri",
+      "asset": "syferfontein_18d_clear_puresky",
+      "assetName": "Syferfontein 18d Clear (Pure Sky)",
+      "authors": [
+        "Greg Zaal",
+        "Jarod Guest"
+      ],
+      "mapType": "hdr",
+      "resolution": "2k",
+      "source": "https://polyhaven.com/a/syferfontein_18d_clear_puresky",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/syferfontein_18d_clear_puresky_2k.hdr",
+      "bytes": 4193025,
+      "md5": "413841ca76945d22238d5167c338c79f",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "env/sky_dusk.hdr",
+      "class": "envHdri",
+      "asset": "belfast_sunset_puresky",
+      "assetName": "Belfast Sunset (Pure Sky)",
+      "authors": [
+        "Greg Zaal",
+        "Dimitrios Savva",
+        "Jarod Guest"
+      ],
+      "mapType": "hdr",
+      "resolution": "2k",
+      "source": "https://polyhaven.com/a/belfast_sunset_puresky",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/belfast_sunset_puresky_2k.hdr",
+      "bytes": 4563204,
+      "md5": "4bb56d6163ef1c7ec762e4a7ef8ede81",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "env/sky_overcast.hdr",
+      "class": "envHdri",
+      "asset": "overcast_soil_puresky",
+      "assetName": "Overcast Soil (Pure Sky)",
+      "authors": [
+        "Jarod Guest",
+        "Sergej Majboroda"
+      ],
+      "mapType": "hdr",
+      "resolution": "2k",
+      "source": "https://polyhaven.com/a/overcast_soil_puresky",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/overcast_soil_puresky_2k.hdr",
+      "bytes": 4568000,
+      "md5": "877caf0680d7269037995f6567a67103",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/clear_albedo.png",
+      "class": "terrainTextures",
+      "asset": "leafy_grass",
+      "assetName": "Leafy Grass",
+      "authors": [
+        "Charlotte Baglioni"
+      ],
+      "mapType": "Diffuse",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/leafy_grass",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/leafy_grass/leafy_grass_diff_1k.png",
+      "bytes": 5913007,
+      "md5": "7639691afa92caa8034236e6a0687bfe",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/clear_normal.png",
+      "class": "terrainTextures",
+      "asset": "leafy_grass",
+      "assetName": "Leafy Grass",
+      "authors": [
+        "Charlotte Baglioni"
+      ],
+      "mapType": "nor_gl",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/leafy_grass",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/leafy_grass/leafy_grass_nor_gl_1k.png",
+      "bytes": 6111876,
+      "md5": "a98f306f4dafb1e956d562b78503e174",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/clear_rough.png",
+      "class": "terrainTextures",
+      "asset": "leafy_grass",
+      "assetName": "Leafy Grass",
+      "authors": [
+        "Charlotte Baglioni"
+      ],
+      "mapType": "Rough",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/leafy_grass",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/leafy_grass/leafy_grass_rough_1k.png",
+      "bytes": 2444449,
+      "md5": "5dff12e1e81532a92d074e63473ab127",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/field_albedo.png",
+      "class": "terrainTextures",
+      "asset": "sparse_grass",
+      "assetName": "Sparse Grass",
+      "authors": [
+        "Amal Kumar"
+      ],
+      "mapType": "Diffuse",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/sparse_grass",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/sparse_grass/sparse_grass_diff_1k.png",
+      "bytes": 5697636,
+      "md5": "e4c7593acc6bd6b937e43351fadc41aa",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/field_normal.png",
+      "class": "terrainTextures",
+      "asset": "sparse_grass",
+      "assetName": "Sparse Grass",
+      "authors": [
+        "Amal Kumar"
+      ],
+      "mapType": "nor_gl",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/sparse_grass",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/sparse_grass/sparse_grass_nor_gl_1k.png",
+      "bytes": 6096327,
+      "md5": "a09e4b0ea1cbec68992cfae5b00c2607",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/field_rough.png",
+      "class": "terrainTextures",
+      "asset": "sparse_grass",
+      "assetName": "Sparse Grass",
+      "authors": [
+        "Amal Kumar"
+      ],
+      "mapType": "Rough",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/sparse_grass",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/sparse_grass/sparse_grass_rough_1k.png",
+      "bytes": 1749004,
+      "md5": "875663e79a0cec7d2d7eeff5234326f1",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/fort_albedo.png",
+      "class": "terrainTextures",
+      "asset": "medieval_blocks_02",
+      "assetName": "Medieval Blocks 02",
+      "authors": [
+        "Rob Tuytel"
+      ],
+      "mapType": "Diffuse",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/medieval_blocks_02",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/medieval_blocks_02/medieval_blocks_02_diff_1k.png",
+      "bytes": 2138937,
+      "md5": "030e2f669725059b29aa946bec85b905",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/fort_normal.png",
+      "class": "terrainTextures",
+      "asset": "medieval_blocks_02",
+      "assetName": "Medieval Blocks 02",
+      "authors": [
+        "Rob Tuytel"
+      ],
+      "mapType": "nor_gl",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/medieval_blocks_02",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/medieval_blocks_02/medieval_blocks_02_nor_gl_1k.png",
+      "bytes": 2282033,
+      "md5": "2152f6c871a8249e1d4e4d9b89f4533e",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/fort_rough.png",
+      "class": "terrainTextures",
+      "asset": "medieval_blocks_02",
+      "assetName": "Medieval Blocks 02",
+      "authors": [
+        "Rob Tuytel"
+      ],
+      "mapType": "Rough",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/medieval_blocks_02",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/medieval_blocks_02/medieval_blocks_02_rough_1k.png",
+      "bytes": 1837926,
+      "md5": "3834860ff3d53507cc8ad5d9b56a28cf",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/hills_albedo.png",
+      "class": "terrainTextures",
+      "asset": "aerial_grass_rock",
+      "assetName": "Aerial Grass Rock",
+      "authors": [
+        "Rob Tuytel"
+      ],
+      "mapType": "Diffuse",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/aerial_grass_rock",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/aerial_grass_rock/aerial_grass_rock_diff_1k.png",
+      "bytes": 6322654,
+      "md5": "c8e58b31d224fd27c5d8674ffb1c14e2",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/hills_normal.png",
+      "class": "terrainTextures",
+      "asset": "aerial_grass_rock",
+      "assetName": "Aerial Grass Rock",
+      "authors": [
+        "Rob Tuytel"
+      ],
+      "mapType": "nor_gl",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/aerial_grass_rock",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/aerial_grass_rock/aerial_grass_rock_nor_gl_1k.png",
+      "bytes": 6366521,
+      "md5": "7f8e7115d05196a294c10e545fa35fd5",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/hills_rough.png",
+      "class": "terrainTextures",
+      "asset": "aerial_grass_rock",
+      "assetName": "Aerial Grass Rock",
+      "authors": [
+        "Rob Tuytel"
+      ],
+      "mapType": "Rough",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/aerial_grass_rock",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/aerial_grass_rock/aerial_grass_rock_rough_1k.png",
+      "bytes": 2225970,
+      "md5": "f732623ea415e31ffc839da6bd45fc2e",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/ridge_albedo.png",
+      "class": "terrainTextures",
+      "asset": "aerial_rocks_02",
+      "assetName": "Aerial Rocks 02",
+      "authors": [
+        "Rob Tuytel"
+      ],
+      "mapType": "Diffuse",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/aerial_rocks_02",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/aerial_rocks_02/aerial_rocks_02_diff_1k.png",
+      "bytes": 2199181,
+      "md5": "1bdc9c3ac9d56fd720a70c4dc5013740",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/ridge_normal.png",
+      "class": "terrainTextures",
+      "asset": "aerial_rocks_02",
+      "assetName": "Aerial Rocks 02",
+      "authors": [
+        "Rob Tuytel"
+      ],
+      "mapType": "nor_gl",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/aerial_rocks_02",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/aerial_rocks_02/aerial_rocks_02_nor_gl_1k.png",
+      "bytes": 2295937,
+      "md5": "88fd5b2237d4e10cd4624f584fb58ab2",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/ridge_rough.png",
+      "class": "terrainTextures",
+      "asset": "aerial_rocks_02",
+      "assetName": "Aerial Rocks 02",
+      "authors": [
+        "Rob Tuytel"
+      ],
+      "mapType": "Rough",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/aerial_rocks_02",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/aerial_rocks_02/aerial_rocks_02_rough_1k.png",
+      "bytes": 598262,
+      "md5": "ec28f323d725bd019abdea077cf6527e",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/road_albedo.png",
+      "class": "terrainTextures",
+      "asset": "rocky_trail_02",
+      "assetName": "Rocky Trail 02",
+      "authors": [
+        "Amal Kumar"
+      ],
+      "mapType": "Diffuse",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/rocky_trail_02",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/rocky_trail_02/rocky_trail_02_diff_1k.png",
+      "bytes": 5640184,
+      "md5": "cd1ac64aa295eedde3266d47a01c754e",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/road_normal.png",
+      "class": "terrainTextures",
+      "asset": "rocky_trail_02",
+      "assetName": "Rocky Trail 02",
+      "authors": [
+        "Amal Kumar"
+      ],
+      "mapType": "nor_gl",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/rocky_trail_02",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/rocky_trail_02/rocky_trail_02_nor_gl_1k.png",
+      "bytes": 6063689,
+      "md5": "99c53160cf26df87a685a2f2af9f98d0",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/road_rough.png",
+      "class": "terrainTextures",
+      "asset": "rocky_trail_02",
+      "assetName": "Rocky Trail 02",
+      "authors": [
+        "Amal Kumar"
+      ],
+      "mapType": "Rough",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/rocky_trail_02",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/rocky_trail_02/rocky_trail_02_rough_1k.png",
+      "bytes": 1815660,
+      "md5": "b79bc4526872b0b1209885720032e83d",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/swamp_albedo.png",
+      "class": "terrainTextures",
+      "asset": "brown_mud_03",
+      "assetName": "Brown Mud 03",
+      "authors": [
+        "Rob Tuytel"
+      ],
+      "mapType": "Diffuse",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/brown_mud_03",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/brown_mud_03/brown_mud_03_diff_1k.png",
+      "bytes": 1764989,
+      "md5": "9a981ec3e97b3077c8638bd88b8588ba",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/swamp_normal.png",
+      "class": "terrainTextures",
+      "asset": "brown_mud_03",
+      "assetName": "Brown Mud 03",
+      "authors": [
+        "Rob Tuytel"
+      ],
+      "mapType": "nor_gl",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/brown_mud_03",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/brown_mud_03/brown_mud_03_nor_gl_1k.png",
+      "bytes": 2364901,
+      "md5": "601906db68fed2c1cad72bc11be4a927",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/swamp_rough.png",
+      "class": "terrainTextures",
+      "asset": "brown_mud_03",
+      "assetName": "Brown Mud 03",
+      "authors": [
+        "Rob Tuytel"
+      ],
+      "mapType": "Rough",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/brown_mud_03",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/brown_mud_03/brown_mud_03_rough_1k.png",
+      "bytes": 748796,
+      "md5": "25860d958bf41264b242ca6e97a7aefb",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/town_albedo.png",
+      "class": "terrainTextures",
+      "asset": "cobblestone_floor_04",
+      "assetName": "Cobblestone Floor 04",
+      "authors": [
+        "Rob Tuytel"
+      ],
+      "mapType": "Diffuse",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/cobblestone_floor_04",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/cobblestone_floor_04/cobblestone_floor_04_diff_1k.png",
+      "bytes": 6297482,
+      "md5": "5285fec3a9f0d5cae947f869cc4a85b4",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/town_normal.png",
+      "class": "terrainTextures",
+      "asset": "cobblestone_floor_04",
+      "assetName": "Cobblestone Floor 04",
+      "authors": [
+        "Rob Tuytel"
+      ],
+      "mapType": "nor_gl",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/cobblestone_floor_04",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/cobblestone_floor_04/cobblestone_floor_04_nor_gl_1k.png",
+      "bytes": 6073334,
+      "md5": "64fee09bc07a110b4d07b9189c042acf",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/town_rough.png",
+      "class": "terrainTextures",
+      "asset": "cobblestone_floor_04",
+      "assetName": "Cobblestone Floor 04",
+      "authors": [
+        "Rob Tuytel"
+      ],
+      "mapType": "Rough",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/cobblestone_floor_04",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/cobblestone_floor_04/cobblestone_floor_04_rough_1k.png",
+      "bytes": 2277356,
+      "md5": "3d5aecb73d57cc703919beb4b066b683",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/woods_albedo.png",
+      "class": "terrainTextures",
+      "asset": "forrest_ground_01",
+      "assetName": "Forest Ground 01",
+      "authors": [
+        "Rob Tuytel"
+      ],
+      "mapType": "Diffuse",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/forrest_ground_01",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/forrest_ground_01/forrest_ground_01_diff_1k.png",
+      "bytes": 6603753,
+      "md5": "8b85fb10bc45ac4969262edb5965133f",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/woods_normal.png",
+      "class": "terrainTextures",
+      "asset": "forrest_ground_01",
+      "assetName": "Forest Ground 01",
+      "authors": [
+        "Rob Tuytel"
+      ],
+      "mapType": "nor_gl",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/forrest_ground_01",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/forrest_ground_01/forrest_ground_01_nor_gl_1k.png",
+      "bytes": 6787606,
+      "md5": "68875a9e81c29ba8f70e5dccdd66c476",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    },
+    {
+      "file": "materials/terrain/woods_rough.png",
+      "class": "terrainTextures",
+      "asset": "forrest_ground_01",
+      "assetName": "Forest Ground 01",
+      "authors": [
+        "Rob Tuytel"
+      ],
+      "mapType": "Rough",
+      "resolution": "1k",
+      "source": "https://polyhaven.com/a/forrest_ground_01",
+      "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/forrest_ground_01/forrest_ground_01_rough_1k.png",
+      "bytes": 1822813,
+      "md5": "a43ba9777dca8de2cf5a4565468fe39f",
+      "license": "CC0-1.0",
+      "status": "Verified"
+    }
+  ]
+}
