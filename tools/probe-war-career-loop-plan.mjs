@@ -932,10 +932,10 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     // register chain (1632 -> 1671, The Crater); the war-career runtime surface held.
     // D470 re-pin: focused bb7a1bc9 -> 78633570 — probe-war-career.mjs carries the D470
     // register chain (1671 -> 1710, Olustee); the war-career runtime surface held.
-    // D470 battery root-fix re-pin: focused 78633570 -> be92dedc44366e6ddb2f0cdbfd1828eb — the probe's own suite-count
+    // D470 battery root-fix re-pin: focused 78633570 -> 65e9c8730dfa6cb0250feddd3adabf6f — the probe's own suite-count
     // tooth (138 -> 140) missed by the D469/D470 sweeps, fixed at its exact label (the
     // D443 AD-6 precedent); the war-career runtime surface held.
-    focused:"be92dedc44366e6ddb2f0cdbfd1828eb",
+    focused:"65e9c8730dfa6cb0250feddd3adabf6f",
     commandProbe:"5ffd40fd221179f2e01cad59ef43bf7d"
   };
   for (const key of Object.keys(expected)) {
@@ -1657,8 +1657,8 @@ step("REACHABILITY BASELINES", () => {
     // D466 re-pin: focused 664ca996 -> 3da0dbc0 (the src/82 frozen-pin chain acknowledgment).
     // D469 re-pin: focused 3da0dbc0 -> bb7a1bc9 (the 1632 -> 1671 Crater register chain).
     // D470 re-pin: focused bb7a1bc9 -> 78633570 (the 1671 -> 1710 Olustee register chain).
-    // D470 battery root-fix: focused 78633570 -> be92dedc44366e6ddb2f0cdbfd1828eb (the suite-count tooth 138 -> 140).
-    focused:"be92dedc44366e6ddb2f0cdbfd1828eb"
+    // D470 battery root-fix: focused 78633570 -> 65e9c8730dfa6cb0250feddd3adabf6f (the suite-count tooth 138 -> 140 AND its silent list.length conjunct in result.ok).
+    focused:"65e9c8730dfa6cb0250feddd3adabf6f"
   };
   for (const key of Object.keys(expected)) {
     if (hashes[key] !== expected[key]) throw new Error("D411 shipped baseline moved: " + key + " " + hashes[key]);
