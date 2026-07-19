@@ -2230,16 +2230,19 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
-### LANE-013 · content-unlocks — **CONTRACT (P1-P3 + the P4 spec SHIPPED as D459-D462; P4-runtime recon + data draft banked; lock RELEASED at the safe-stop boundary)** (ARC 2 of the D455 roadmap)
+### LANE-013 · content-unlocks — **DRIVE (Claude Code / Fable 5; P4 runtime → P5 specs → P6 battery, the 2026-07-18/19 overnight maximizer)** (ARC 2 of the D455 roadmap)
 
-- **Owning tool:** unowned (the Claude Code / Fable 5 lock — DRIVE re-taken at
-  `caaa72a` (`f94d3b9`) for the P4 runtime — was RELEASED the same day at Aaron's
-  save-and-push safe-stop instruction, before any main-branch code move. Prior DRIVE
+- **Owning tool:** Claude Code (Fable 5; Aaron's authorization window through
+  2026-07-19) — DRIVE re-taken at this committed edit for the P4 FORT PILLOW
+  RUNTIME, then P5 (Crater/Olustee specs) and the P6 release battery per the
+  overnight charter. The banked `data/fort-pillow.json` draft is restored from
+  `lane-013-p4-wip` into the working tree (the expected single untracked file;
+  the schema gate reds on it BY DESIGN until the atomic P4 commit). Prior DRIVE
   ran `3506716` → D459 `0127cc7` (+`1af86ee`/`aa41dec`) → D460 `a2b0484` → D461
-  `ea1f714` → D462 `045a50b`.)
-- **State:** CONTRACT — the remaining phases (P4 runtime · P5 specs · P6 battery)
-  carry their full committed contracts (this entry + the D462 spec §8-§9), so ANY
-  tool can drive from here.
+  `ea1f714` → D462 `045a50b`; the earlier P4 re-take (`caaa72a`/`f94d3b9`) was
+  released at Aaron's save-and-push safe-stop with the recon + draft banked below.
+- **State:** DRIVE — the remaining phases (P4 runtime · P5 specs · P6 battery)
+  carry their full committed contracts (this entry + the D462 spec §8-§9).
 - **P4 SAFE-STOP BANK (2026-07-18 evening; adopt, don't redo):**
   1. **The authored `data/fort-pillow.json` draft is committed on the pushed WIP
      branch `lane-013-p4-wip` (`c7ee774`) — NEVER merge that branch;** restore the
