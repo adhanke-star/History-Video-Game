@@ -147,7 +147,8 @@ const SUITE = [
   ['learn the battle', 'tools/probe-learn-battle.mjs'],   // D444: suite 133 -> 134 — GEA-07 appends at the END so every existing row pin (war career 38, mayhem 57) holds; the FINAL audit session runs the full suite
   ['chief of staff', 'tools/probe-chief-of-staff.mjs'],   // D445: suite 134 -> 135 — GEA-08 appends at the END likewise
   ['concept links', 'tools/probe-concept-links.mjs'],   // D446: suite 135 -> 136 — GEA-10 appends at the END likewise
-  ['memory chain', 'tools/probe-memory-chain.mjs']   // D447: suite 136 -> 137 — GEA-12 appends at the END likewise
+  ['memory chain', 'tools/probe-memory-chain.mjs'],   // D447: suite 136 -> 137 — GEA-12 appends at the END likewise
+  ['fort pillow', 'tools/probe-fort-pillow.mjs']   // D463: suite 137 -> 138 — LANE-013 P4 appends at the END so every existing row pin (war career 38, mayhem 57) holds
 ];
 
 const listOnly = process.argv.includes('--list');

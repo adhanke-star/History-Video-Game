@@ -58,14 +58,18 @@ const PIN = {
   // (data/elkhorn-tavern.json: Watie's 2nd CMR phase-2 unit + three source rows + the Drew
   // transition record + the _comment amendment; rebuild). base/manifest/suite hold; src did
   // NOT move.
-  game: "7c13850e7f340f1ab7cc9227423d7340",
+  // D463 re-pin (the AD-7 idiom, at the LANE-013 P4 head): game 7c13850e -> 7e212198 and
+  // suite edba2bd9 -> 0f8550a5 — the Fort Pillow runtime (data/fort-pillow.json + the T1
+  // rank-66 registry line + the T10 W/false/anv meta row; the fort pillow suite row appends
+  // at the END, 137 -> 138; rebuild). base/manifest hold.
+  game: "7e2121989c0e179af3a9b534def7ebfc",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
   manifest: "bb5d7903507c8fccf53addf981c2023e",
-  suite: "edba2bd930922a27414e07173a64296b",
-  scenarios: 26,   // D436: 24 -> 25 atlanta; D442: 25 -> 26 coldHarbor
-  schemas: 59,   // D418: 54 -> 55 mayhem-rules.json; D436: 55 -> 56 atlanta.json; D442: 56 -> 57 cold-harbor.json; D445: 57 -> 58 chief-of-staff.json; D446: 58 -> 59 concept-links.json
-  armyRegister: 1617,   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots. D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7) adds 1 unique side-unit id x 3 slots
-  suiteRows: 137,   // D418: 130 -> 131; D436: 131 -> 132; D442: 132 -> 133; D444: 133 -> 134; D445: 134 -> 135; D446: 135 -> 136 (each appended at the END so row 38 holds)
+  suite: "0f8550a5e120772d89777d7459029e7e",
+  scenarios: 27,   // D436: 24 -> 25 atlanta; D442: 25 -> 26 coldHarbor; D463: 26 -> 27 fortPillow (LANE-013 P4, the D455 SS3 row 6 unlock)
+  schemas: 60,   // D418: 54 -> 55 mayhem-rules.json; D436: 55 -> 56 atlanta.json; D442: 56 -> 57 cold-harbor.json; D445: 57 -> 58 chief-of-staff.json; D446: 58 -> 59 concept-links.json; D463: 59 -> 60 fort-pillow.json
+  armyRegister: 1632,   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots. D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7) adds 1 unique side-unit id x 3 slots. D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4)
+  suiteRows: 138,   // D418: 130 -> 131; D436: 131 -> 132; D442: 132 -> 133; D444: 133 -> 134; D445: 134 -> 135; D446: 135 -> 136; D447: 136 -> 137; D463: 137 -> 138 (each appended at the END so row 38 holds)
   warCareerRow: 38,
   saveVersion: 1
 };
@@ -316,8 +320,8 @@ step("EXCLUSIONS + BASELINES", () => {
   const version = Number((read(BASE).match(/var _SAVE_VER = (\d+);/) || [null, NaN])[1]);
   if (version !== PIN.saveVersion) throw new Error("_SAVE_VER moved: " + version);
   const loot = read(LOOT);
-  if (!/people\.length\s*!==\s*1617/.test(loot) || !loot.includes("1617 of 1617")) {   // D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7) adds 1 unique side-unit id x 3 slots (the AD-7 chain idiom)
-    throw new Error("Army Register 1617 pins missing");
+  if (!/people\.length\s*!==\s*1632/.test(loot) || !loot.includes("1632 of 1632")) {   // D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7); D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (the AD-7 chain idiom)
+    throw new Error("Army Register 1632 pins missing");
   }
   mustInclude(spec, [
     "This planning slice changes no runtime, data, manifest, suite, generated HTML, frozen base",

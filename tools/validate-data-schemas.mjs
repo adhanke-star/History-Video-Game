@@ -27,13 +27,15 @@ function ensureDir(p) {
 const BATTLE_FILES = new Set([
   'antietam.json', 'atlanta.json', 'bullrun.json', 'chancellorsville.json', 'chickamauga.json',
   'chattanooga.json', 'cedar-creek.json', 'cold-harbor.json', 'cross-keys-port-republic.json', 'franklin.json', 'fredericksburg.json', 'gaines-mill.json', 'gettysburg.json', 'kennesaw.json',
-  'five-forks.json', 'fort-donelson.json', 'nashville.json', 'new-market-heights.json',
+  'five-forks.json', 'fort-donelson.json', 'fort-pillow.json', 'nashville.json', 'new-market-heights.json',
   'malvern-hill.json', 'elkhorn-tavern.json', 'petersburg-assaults.json', 'shiloh.json', 'spotsylvania.json', 'stones-river.json', 'vicksburg.json', 'wilderness.json'
 ]);
 // D442: 56 -> 57 data files — cold-harbor.json enrolls as the 26th battle family member (the
 // documented pin-bump idiom; prior transitions D436 55->56 Atlanta, D397 53->54 Petersburg,
 // D393 52->53 Wilderness). D445: 57 -> 58 — chief-of-staff.json enrolls in the schema family
 // (GEA-08; scenarios stay 26). D446: 58 -> 59 — concept-links.json enrolls (GEA-10).
+// D463: 59 -> 60 — fort-pillow.json enrolls as the 27th battle family member (LANE-013 P4,
+// the D455 SS3 row 6 unlock; the controlling law is docs/design/fort-pillow-battle-build-spec.md).
 
 const META_REQUIREMENTS = new Map([
   ['cabinet.json', ['_meta', 'sides', 'crossCards']],

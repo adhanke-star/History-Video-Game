@@ -4,6 +4,79 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D463 — LANE-013 P4 SHIPPED: THE FORT PILLOW RUNTIME — THE ASSAULT PLAYABLE BOTH SIDES, THE MASSACRE NEVER IN-SCENARIO, ONE ATOMIC COMMIT (THE D455 §3 ROW 6 UNLOCK, BUILT TO THE D462 SPEC §8-§9 VERBATIM) — [CLAUDE CODE (FABLE 5), LANE-013 DRIVE, ARC 2 OVERNIGHT NIGHT 2] (2026-07-19)
+
+ARC 2 phase P4 runtime, built to the committed D462 spec (the controlling law) from the
+banked safe-stop draft (`lane-013-p4-wip` @ `c7ee774`, restored via
+`git checkout lane-013-p4-wip -- data/fort-pillow.json`, landed here md5 `804b75ab`,
+NEVER merged as a branch). **ZERO ENGINE CODE — data + registry + teeth exactly as the
+spec commands.**
+
+**SHIPPED:** `data/fort-pillow.json` (single-phase attacker-seize; CS 1,500 Cimprich vs US
+557-encoded-535 NPS, ranges + the 40-per-gun crew-cap residual disclosed; 720/720/60
+dismounted split; learnMeta {1,[5,15],[works-assault,assault-pacing,defense-hold],
+chattanooga}; five ≥2-source teaching cards with the JCCW conclusion VERBATIM, the
+culpability debate taught AS a debate, the casualty record as attributed RANGES; codex axes
+Western / "Forrest's 1864 West Tennessee raid" / "Confederate victory"; no massacre
+content anywhere in the file) · T1 registry line + `fortPillow: 66` between chattanooga 65
+and wilderness 67 · T10 `_FLD_BATTLE_META.fortPillow` W/false/anv with the
+Inferred-representative-family disclosure · schema BATTLE_FILES 59→60 · suite row
+['fort pillow','tools/probe-fort-pillow.mjs'] appended at the END 137→138 (row 38 holds) ·
+rebuild (game `7c13850e` → `7e212198`).
+
+**TEETH:** `tools/probe-fort-pillow.mjs` authored WITH the commit (19 steps ALL OK, zero
+pageerrors, artifact read): the extended D74 wall (spec §7 list incl. rageMult/
+massacreMult/atrocityBonus/noQuarterBonus) · rank wall with forbidden-grade regexes
+(Forrest NEVER Brig./Lt. Gen.; Booth/Bradford NEVER colonels/generals) · the Bell/Buford
+attachment string · the 6th-USCHA designation trap · the three-formation garrison · the
+dignity imagery scan (no imagery key/ref; "New Era" fenced inside fp_truce — the
+cold-harbor fence idiom) · the 8-seed direction battery **8/8 CS-seizes AND 8/8
+US-losses-exceed-CS at the fair 1,500 baseline — the sourced-range lever was never
+needed** · the no-quarter machinery teeth extending probe-mayhem-mode t1-t6 at the Fort
+Pillow battle: the offer stamps from the captured chain via the _MH_BASE_CAMPAIGN_ADVANCE
+override (the camelCase `fortPillow` id takes the documented D457 stable-id fallback
+`battle-1` — pinned as shipped behavior), ALL 24 reward operation families refuse under
+Historical (with a consequence-only CONTROL proving non-vacuity), the judged action
+resolves exactly morale/press/diplomacy/notoriety, and the DECLINED path takes no
+consequence (panel pure; no receipt; no infamy; offer unconsumed).
+
+**RE-PINS (documented chains at EVERY site, this commit):** register 1,617→1,632 at all
+seventeen sites (13 battle probes + probe-war-career 2 + probe-loot-survival 2 — the D460
+Cherokee literal KEPT for probe-elkhorn-tavern-plan 778) · scenarios 26→27 at
+probe-tactical-roster + probe-custom-battle-builder EXPECTED/buttons, probe-five-forks,
+probe-spotsylvania, probe-petersburg, probe-wilderness (registry + chattanooga→fortPillow→
+wilderness adjacency + the DOM button tooth), probe-flags metaCoverage,
+probe-intel-uhd617-profile (Fort Pillow opens 5 units; Kennesaw's 17 keeps the crown),
+probe-mayhem-mode (dataCount 60 · rosterIds/builderIds 27 · suiteCount 138; mayhemRow 57 +
+warCareerRow 38 hold), probe-women-in-war-arc-plan (whose loot pin was ALSO stale at 1614
+on clean HEAD — the D460 sweep missed this never-run site; root-fixed honestly with the
+chain) · suite 137→138 at probe-war-career ×4 · **the TEN-probe absence-tooth flips**
+(cedar-creek/cross-keys/fort-donelson/new-market-heights/stones-river, runtime + plan
+each): registry/name/data-file/T1/vet/roster scans flip to "fortPillow registered per D455
+§3 row 6 / D463" the documented D397/D454 way — the fortHenry/naval/leetown/
+kernstown-family halves KEPT, the plan-probe mustInclude SPEC-TEXT pins NOT touched (the
+fort-pillow spec §1 records the supersession), the massacre-KEY scans kept as the absence
+half that remains · the two lane-grepping plan probes re-pinned the AD-7 way (game
+`7e212198` · dataTree `abee76fa` · srcTree `916d7e72` · suite `0f8550a5` · focused
+`664ca996`; base/manifest/runtime/journey/command/commandProbe hold) and re-run AFTER the
+commit.
+
+**GATES:** node --check on all 33 touched files · build GATE OK · schema 60/60 · focused
+probe 19 steps ALL OK with artifact read (ok:true, 0 pageerrors) · adjacent
+probe-mayhem-mode 24/24 + probe-tactical-roster 8/8 · git diff --check clean.
+**BINDS (md5-proven byte-identical restores of data `804b75ab`):** **A** — Forrest
+tampered to "Brig. Gen." → EXACTLY the RANK WALL tooth red (18/19); restore → ALL OK.
+**B** — fp_remember's second source dropped → EXACTLY the TEACHING card-source tooth red
+(18/19); restore byte-identical → 19/19 ALL OK. Plus the standing A/B carried in the
+machinery step: no captures → no stamp → bytes unchanged; the declined offer takes
+nothing.
+
+Counts move 26/59/1,617/137 → **27/60/1,632/138** with the documented chain at every pin
+site; `_SAVE_VER=1`; frozen base untouched (`c9db83fa` holds); the massacre-block and the
+AAR/endings moral voice untouched. The WIP branch `lane-013-p4-wip` is deleted after this
+commit lands — the draft has landed. EXACT NEXT: P5 — the Crater spec, then the Olustee
+spec (docs-only, one commit each), then the P6 release battery at the final head.
+
 ## D462 — LANE-013 P4 SPEC COMMITTED: THE FORT PILLOW BATTLE-BUILD SPEC (THE D455 §3 ROW 6 UNLOCK; RUNTIME DELIBERATELY QUEUED AT THE CLEAN SPEC BOUNDARY) — [CLAUDE CODE (FABLE 5), LANE-013 DRIVE, ARC 2 OVERNIGHT] (2026-07-18)
 
 ARC 2 phase P4, spec step, built to the LANE-013 charter from the D459 packet's

@@ -272,20 +272,25 @@ const SETUP = `(() => {
       return { cards:ids, codex:codex.id };
     });
 
-    check('FORT PILLOW ABSENCE: no playable massacre scenario in the registry or menu order', function() {
-      var reg = fldScenarioRegistry(), keys = Object.keys(reg);
-      if (keys.some(function(k){ return /pillow/i.test(k); })) throw new Error('Fort Pillow appears in the registry');
-      var body = JSON.stringify(Object.keys(reg).map(function(k){ return (reg[k] || {}).name || ''; }));
-      if (/fort pillow/i.test(body)) throw new Error('a registered scenario names Fort Pillow');
-      return { playable:false };
+    check('FORT PILLOW REGISTERED (D463): the assault scenario is registered per D455 SS3 row 6; no massacre-temptation key exists in it', function() {
+      /* D463 chain: this tooth was the FORT PILLOW ABSENCE guard (the D135/D382 taught-only
+         disposition). Aaron's D455 SS3 row 6 amends it; D463 registers the assault-only
+         scenario (docs/design/fort-pillow-battle-build-spec.md - the massacre is never
+         in-scenario; the D457 no-quarter machinery is the only resolution path). The tooth
+         flips the documented D397/D454 way; the massacre-key scan is the half that remains. */
+      var reg = fldScenarioRegistry();
+      if (!reg.fortPillow) throw new Error('fortPillow missing from the registry (registered per D455 SS3 row 6 / D463)');
+      if (((reg.fortPillow || {}).name || '') !== 'Fort Pillow') throw new Error('fortPillow name wrong: ' + (reg.fortPillow || {}).name);
+      if (/"(?:massacreMult|rageMult|atrocityBonus|noQuarterBonus|casualtyScript)"/i.test(JSON.stringify(reg.fortPillow))) throw new Error('massacre-temptation key in the scenario data');
+      return { playable:true, registered:'D455 SS3 row 6 / D463' };
     });
 
-    check('ARMY REGISTER PIN: 11 New Market Heights units produce exact cmd/nco/pvt trios and current total 1617', function() {
+    check('ARMY REGISTER PIN: 11 New Market Heights units produce exact cmd/nco/pvt trios and current total 1632', function() {
       var C = { side:'US', iron:false, idx:0, funds:6500, recovery:false, completed:[], roster:[], nextId:1,
         stats:{ battles:0, won:0, infl:0, suff:0 }, recoveryLossCount:0, recoveryMode:false, flipAtk:false, captured:[] };
       if (typeof _t1InitAll === 'function') _t1InitAll(C);
       var reg = ssPersonRegistry(C), rows = [], groups = {};
-      if (reg.people.length !== 1617) throw new Error('Army Register total is ' + reg.people.length + ', expected 1617');   // D380: 1170 -> 1200 — Five Forks adds 10 unique units x 3 slots. D384: 1200 -> 1281 — Fort Donelson adds 27 units x 3 slots. D388: 1281 -> 1326 — Elkhorn Tavern adds 15 unique side-unit ids x 3 slots. D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots; the NMH-specific 33-row/11-unit teeth below remain stable. D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots. D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots.
+      if (reg.people.length !== 1632) throw new Error('Army Register total is ' + reg.people.length + ', expected 1632');   // D380: 1170 -> 1200 — Five Forks adds 10 unique units x 3 slots. D384: 1200 -> 1281 — Fort Donelson adds 27 units x 3 slots. D388: 1281 -> 1326 — Elkhorn Tavern adds 15 unique side-unit ids x 3 slots. D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots; the NMH-specific 33-row/11-unit teeth below remain stable. D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots. D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots. D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4, the D455 SS3 row 6 unlock).
       for (var i = 0; i < reg.people.length; i++) {
         var p = reg.people[i], origin = p.replaces || p.pid;
         if (typeof origin === 'string' && origin.indexOf('ss:newMarketHeights:') === 0) rows.push(origin);
@@ -353,7 +358,7 @@ async function main() {
   const result = { ok:false, steps:[], pageerrors:[] };
   try {
     const pillowFiles = readdirSync(join(ROOT, 'data')).filter(f => /pillow/i.test(f));
-    if (pillowFiles.length) throw new Error('Fort Pillow data file present on disk: ' + pillowFiles.join(', '));
+    if (pillowFiles.join(',') !== 'fort-pillow.json') throw new Error('expected exactly data/fort-pillow.json on disk (D463 flip of the absence guard): ' + pillowFiles.join(', '));
     if (!(await up(url))) {
       server = spawn('python3', ['-m', 'http.server', String(cfg.port)], { cwd: ROOT, stdio:'ignore' });
       for (let i = 0; i < 80 && !(await up(url)); i++) await sleep(250);

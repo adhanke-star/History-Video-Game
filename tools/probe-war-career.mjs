@@ -66,7 +66,7 @@ function staticPreflight() {
   check("106 follows 105", index105 >= 0 && index106 === index105 + 1, { index105, index106 });
   check("campaignAdvance not an override", !(manifest.overrides || []).includes("campaignAdvance"), manifest.overrides || []);
   check("assignment wrapper only", !/function\s+campaignAdvance\s*\(/.test(runtime), null);
-  check("suite is 137", rows.length === 137, rows.length);   // D425: 130 -> 131 (D418 enrolled the Mayhem row; this probe had not rerun since D413). D443 (AD-6): 131 -> 133 — the D436 atlanta and D442 cold harbor rows appended at the END; the D436/D442 sweeps moved only this probe's 1566/1614 pins and missed this count tooth (recorded honestly). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links, each at the END).
+  check("suite is 138", rows.length === 138, rows.length);   // D425: 130 -> 131 (D418 enrolled the Mayhem row; this probe had not rerun since D413). D443 (AD-6): 131 -> 133 — the D436 atlanta and D442 cold harbor rows appended at the END; the D436/D442 sweeps moved only this probe's 1566/1614 pins and missed this count tooth (recorded honestly). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links, each at the END). D447: 136 -> 137 (memory-chain). D463: 137 -> 138 (fort-pillow, LANE-013 P4, at the END; row 38 holds).
   check("focused row is 38", /^38\s+war career\s+::\s+tools\/probe-war-career\.mjs$/.test(rows[37] || ""), rows[37] || "missing");
   check("focused probe enrolled once", occurrences(vet, "tools/probe-war-career.mjs") === 1, occurrences(vet, "tools/probe-war-career.mjs"));
   check("plan probe unenrolled", !vet.includes("['war career plan'") && !vet.includes('tools/probe-war-career-loop-plan.mjs'), null);
@@ -1817,7 +1817,7 @@ const SETUP = `(() => {
       var pid = 'person_bullrun_us_2ri_rhodes';
       var C = mkC('US', false); C.idx = 1; C.runId = 'run-us-d410-1';
       var people = ssPersonRegistry(C).people;
-      if (people.length !== 1617) throw new Error('Army Register moved: ' + people.length);   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots.
+      if (people.length !== 1632) throw new Error('Army Register moved: ' + people.length);   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots. D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4, the D455 SS3 row 6 unlock).
       var boundsCarriers = people.filter(function(p) { return p && (own(p, 'serviceStart') || own(p, 'serviceEnd')); });
       if (boundsCarriers.length !== 1 || boundsCarriers[0].pid !== pid) {
         throw new Error('non-Rhodes bounds movement: ' + bytes(boundsCarriers.map(function(p) { return p.pid; })));
@@ -2580,7 +2580,7 @@ async function main() {
     schema: "cw_probe_war_career_v1",
     generatedAt: new Date().toISOString(),
     ok: false,
-    suite: { expected: 137, actual: 0, index: 38 },   // D425: 130 -> 131 (D418 Mayhem row). D443: 131 -> 133 (D436 atlanta + D442 cold harbor rows at the END). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links)
+    suite: { expected: 138, actual: 0, index: 38 },   // D425: 130 -> 131 (D418 Mayhem row). D443: 131 -> 133 (D436 atlanta + D442 cold harbor rows at the END). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links) D447: 136 -> 137 (memory-chain). D463: 137 -> 138 (fort-pillow, LANE-013 P4, at the END; row 38 holds).
     static: staticResult,
     steps: [],
     pageerrors: [],
@@ -2659,7 +2659,7 @@ async function main() {
     result = Object.assign(result, runtime, {
       schema: "cw_probe_war_career_v1",
       generatedAt: new Date().toISOString(),
-      suite: { expected: 137, actual: list.length, index: 38 },   // D425: 130 -> 131 (D418 Mayhem row). D443: 131 -> 133 (D436 atlanta + D442 cold harbor rows at the END). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links)
+      suite: { expected: 138, actual: list.length, index: 38 },   // D425: 130 -> 131 (D418 Mayhem row). D443: 131 -> 133 (D436 atlanta + D442 cold harbor rows at the END). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links) D447: 136 -> 137 (memory-chain). D463: 137 -> 138 (fort-pillow, LANE-013 P4, at the END; row 38 holds).
       static: staticResult,
       pageerrors,
       realErrors,
@@ -2667,7 +2667,7 @@ async function main() {
       screenshots: [{ path: SHOT, bytes: shotBytes, viewport: { width:390, height:700 }, zoom:200 }]
     });
     const failed = result.steps.filter(row => !row.ok);
-    result.ok = !!runtime.ok && staticResult.ok && !failed.length && !pageerrors.length && !realErrors.length && list.length === 137;   // D425: 130 -> 131 (D418 Mayhem row). D443: 131 -> 133 (D436 atlanta + D442 cold harbor rows at the END). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links)
+    result.ok = !!runtime.ok && staticResult.ok && !failed.length && !pageerrors.length && !realErrors.length && list.length === 138;   // D425: 130 -> 131 (D418 Mayhem row). D443: 131 -> 133 (D436 atlanta + D442 cold harbor rows at the END). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links) D447: 136 -> 137 (memory-chain). D463: 137 -> 138 (fort-pillow, LANE-013 P4, at the END; row 38 holds).
   } catch (error) {
     result.ok = false;
     result.fatal = String(error && error.stack || error);

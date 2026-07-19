@@ -2410,24 +2410,20 @@ next green commit and confer through this ledger instead of permitting simultane
   recorded Aaron decision.
 - **Resume pointer:** P1 SHIPPED (D459) · P2 SHIPPED (D460 — counts 1,614→1,617; the
   field-both tension surfaced to Aaron) · P3 SHIPPED (D461 — the Front Royal lift,
-  docs+teeth only, game hash held) · P4 SPEC COMMITTED (D462 —
-  `docs/design/fort-pillow-battle-build-spec.md` is the controlling law; the runtime
-  deliberately queued at the clean spec boundary; P5 specs + P6 battery deferred with
-  it) → EXACT NEXT: the P4 RUNTIME per spec §8-§9 (one atomic commit), then P5, then
-  the P6 release battery. Prior recon preserved below for the runtime session: the
-  Fort Pillow SPEC
-  (`docs/design/fort-pillow-battle-build-spec.md`, packet conventions; resolve the P1
-  packet §9 Fort Pillow traps first), THEN the runtime only if session budget carries a
-  clean end — otherwise the committed spec is the clean boundary and the runtime queues
-  in the closeout prompt. The P4 runtime's absence-tooth re-pin inventory (all in its
-  ONE commit): probe-cedar-creek(+plan), probe-cross-keys-port-republic(+plan),
-  probe-fort-donelson(+plan), probe-new-market-heights(+plan), probe-stones-river(+plan)
-  — registry/name/data-file/vet-suite/roster-baseline scans; plus both-baselines
-  EXPECTED (tactical-roster + custom-battle-builder), suite row append, schema count
-  59→60, scenarios 26→27, register total move, and the two lane-grepping plan probes'
-  AD-7 re-pins. Whoever resumes mid-ladder: run the P0a startup check, read this
-  contract in full, and continue at the first phase whose D### is not yet in
-  DECISIONS.md.
+  docs+teeth only, game hash held) · P4 SPEC COMMITTED (D462) · **P4 RUNTIME SHIPPED
+  (D463, 2026-07-19 overnight — the banked draft landed in ONE atomic commit; counts
+  26/59/1,617/137 → 27/60/1,632/138; the direction battery 8/8 both axes at the fair
+  1,500 baseline; the ten absence-tooth flips + seventeen register sites + the AD-7
+  plan-probe re-pins all in the commit; binds A/B md5-proven; the WIP branch
+  `lane-013-p4-wip` deleted — the draft has landed)** → EXACT NEXT: P5 — the CRATER
+  SPEC then the OLUSTEE SPEC (docs-only, one commit each, packet conventions, own D###
+  each; the Crater spec commit must NOT touch the petersburg/spotsylvania/wilderness
+  forbidden-token scans — standing adjudication 2; the Olustee pass carries the two
+  HISTORICAL-DATA.md corrections ONLY if its own pin sweep covers them, else queues
+  them explicitly), then the P6 RELEASE BATTERY at the final head (suite 138; alone,
+  serialized; on green flip LANE-012 SHIPPED + this lane's landed phases). Whoever
+  resumes mid-ladder: run the P0a startup check, read this contract in full, and
+  continue at the first phase whose D### is not yet in DECISIONS.md.
 - **Last-touched commit:** the safe-stop lock-release commit (this edit; the P4 data
   draft is banked on the pushed WIP branch `lane-013-p4-wip` @ `c7ee774`).
 - **History:** opened 2026-07-18 (overnight) by Claude Code (Fable 5) under Aaron's

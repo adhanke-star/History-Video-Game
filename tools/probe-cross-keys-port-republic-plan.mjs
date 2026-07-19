@@ -346,19 +346,27 @@ step("CLASSIC-LAYER: frozen crosskeys/portrepublic remain separate and no rail r
   return { classicRows: ["crosskeys", "portrepublic"], railRoutes: 0 };
 });
 
-step("DIGNITY: teaching-only boundaries and standing carve-outs remain intact", () => {
+step("DIGNITY (D463 split): the Leetown carve-out remains intact; fortPillow is registered per D455 SS3 row 6", () => {
+  /* D463 chain: the old step refused fortPillow AND leetown in data/T1/vet together. Aaron's
+     D455 SS3 row 6 registers Fort Pillow; the LEETOWN half is KEPT verbatim (D460 fields the
+     Cherokee regiments inside the shipped Elkhorn battle, never as a leetown registry entry).
+     The spec-text pins below are NOT touched: this spec keeps its historical sentence and the
+     fort-pillow spec SS1 records the supersession - the documented D397/D454 split idiom. */
   const dataNames = readdirSync(join(ROOT, "data"));
-  if (dataNames.some(name => /fort.?pillow|leetown/i.test(name))) throw new Error("forbidden dignity-lane data file present");
+  if (dataNames.some(name => /leetown/i.test(name))) throw new Error("forbidden dignity-lane data file present");
+  if (!dataNames.includes("fort-pillow.json")) throw new Error("data/fort-pillow.json missing (registered per D455 SS3 row 6 / D463)");
   const t1 = stripJsComments(read(T1));
   const vet = stripJsComments(read(VET));
-  if (/fortPillow|fort-pillow|leetown/i.test(t1)) throw new Error("forbidden dignity-lane registry entry present");
-  if (/fort-?pillow|leetown/i.test(vet)) throw new Error("forbidden dignity-lane suite row present");
+  if (/leetown/i.test(t1)) throw new Error("forbidden dignity-lane registry entry present");
+  if (/leetown/i.test(vet)) throw new Error("forbidden dignity-lane suite row present");
+  if (!/fortPillow/.test(t1)) throw new Error("fortPillow missing from the T1 registry (D463)");
+  if (!/fort-pillow/.test(vet)) throw new Error("the fort pillow row is missing from the vet suite (D463)");
   const text = read(SPEC);
   mustInclude(text, [
     "Valley campaign as a whole, Kernstown, McDowell, First Winchester, and Front Royal are not extra phases",
     "no-Leetown-Native-OOB and no-playable-Fort-Pillow carve-outs remain untouched"
   ], "dignity/scope");
-  return { frontRoyal: "teaching-only", leetown: false, fortPillow: false };
+  return { frontRoyal: "scored-lift (D461)", leetown: false, fortPillow: "registered (D455 SS3 row 6 / D463)" };
 });
 
 step("REGISTRY: D377 remains exactly planned-only; future data requires complete D378 integration", () => {

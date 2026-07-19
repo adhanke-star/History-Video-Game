@@ -316,16 +316,20 @@ step("CLASSIC-LAYER GUARD: the strategic stonesriver rail route is untouched and
   return { route: route.label };
 });
 
-step("FORT PILLOW: the standing dignity guard holds — no playable massacre scenario anywhere", () => {
+step("FORT PILLOW: the assault scenario is registered per D455 SS3 row 6 / D463 in data, registry, and suite", () => {
+  /* D463 chain: this step was the standing Fort Pillow ABSENCE guard. Aaron's D455 SS3 row 6
+     amends the D135/D382 taught-only disposition; D463 registers the assault-only scenario
+     and the scans flip to REGISTERED the documented D397/D454 way (the massacre stays out of
+     every scenario surface - the D457 no-quarter machinery is the only resolution path). */
   const dataFiles = readdirSync(join(ROOT, "data")).filter(f => /pillow/i.test(f));
-  if (dataFiles.length) throw new Error("fort-pillow data file present: " + dataFiles.join(", "));
+  if (dataFiles.join(",") !== "fort-pillow.json") throw new Error("expected exactly data/fort-pillow.json: " + dataFiles.join(", "));
   const t1 = read(T1);
   const vet = read(VET);
   const roster = read(ROSTER);
-  if (/fortPillow|fort-pillow/i.test(stripJsComments(t1))) throw new Error("Fort Pillow appears in the T1 registry/menu code");
-  if (/fort-?pillow/i.test(stripJsComments(vet))) throw new Error("Fort Pillow appears in the vet suite");
-  if (/fortPillow/i.test(stripJsComments(roster))) throw new Error("Fort Pillow appears in the roster baseline");
-  return { playable: false, guard: "teaching-only" };
+  if (!/fortPillow/.test(stripJsComments(t1))) throw new Error("fortPillow missing from the T1 registry/menu code (D463)");
+  if (!/fort-pillow/.test(stripJsComments(vet))) throw new Error("the fort pillow row is missing from the vet suite (D463)");
+  if (!/fortPillow/.test(stripJsComments(roster))) throw new Error("fortPillow missing from the roster baseline (D463)");
+  return { playable: "fortPillow (D455 SS3 row 6 / D463)", massacre: "never in-scenario - the D457 machinery only" };
 });
 
 step("REGISTRY: D365 stays planned-only; any future data file requires complete D366 integration", () => {

@@ -308,12 +308,12 @@ const SETUP = `(() => {
       return { cards:ids, codex:codex.id };
     });
 
-    check('ARMY REGISTER PIN: 27 Fort Donelson units produce exact cmd/nco/pvt trios and current total 1617', function() {
+    check('ARMY REGISTER PIN: 27 Fort Donelson units produce exact cmd/nco/pvt trios and current total 1632', function() {
       var C = { side:'US', iron:false, idx:0, funds:6500, recovery:false, completed:[], roster:[], nextId:1,
         stats:{ battles:0, won:0, infl:0, suff:0 }, recoveryLossCount:0, recoveryMode:false, flipAtk:false, captured:[] };
       if (typeof _t1InitAll === 'function') _t1InitAll(C);
       var reg = ssPersonRegistry(C), rows = [], groups = {};
-      if (reg.people.length !== 1617) throw new Error('Army Register total is ' + reg.people.length + ', expected 1617');   // D380: 1170 -> 1200 — Five Forks adds 10 unique units x 3 slots. D384: 1200 -> 1281 — Fort Donelson adds 27 unique units x 3 slots. D388: 1281 -> 1326 — Elkhorn Tavern adds 15 unique side-unit ids x 3 slots. D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots. D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots. D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots.
+      if (reg.people.length !== 1632) throw new Error('Army Register total is ' + reg.people.length + ', expected 1632');   // D380: 1170 -> 1200 — Five Forks adds 10 unique units x 3 slots. D384: 1200 -> 1281 — Fort Donelson adds 27 unique units x 3 slots. D388: 1281 -> 1326 — Elkhorn Tavern adds 15 unique side-unit ids x 3 slots. D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots. D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots. D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots. D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4, the D455 SS3 row 6 unlock).
       for (var i = 0; i < reg.people.length; i++) {
         var p = reg.people[i], origin = p.replaces || p.pid;
         if (typeof origin === 'string' && origin.indexOf('ss:fortDonelson:') === 0) rows.push(origin);
@@ -330,12 +330,17 @@ const SETUP = `(() => {
       return { total:reg.people.length, fdRows:rows.length, units:keys.length };
     });
 
-    check('DIGNITY + SHIP-VS-SHIP ABSENCE: no playable Fort Pillow, no playable Fort Henry, no naval scenario in the registry', function() {
+    check('DIGNITY + SHIP-VS-SHIP ABSENCE (D463 split): Fort Henry and naval stay teaching-only; fortPillow is registered per D455 SS3 row 6', function() {
+      /* D463 chain: the old tooth refused fortPillow AND fortHenry AND naval together. Aaron's
+         D455 SS3 row 6 registers Fort Pillow (assault-only; the massacre never in-scenario);
+         the fortHenry/naval halves are KEPT unchanged - this is the documented D397/D454
+         split-and-chain idiom, never a weakened tooth. */
       var reg = fldScenarioRegistry(), keys = Object.keys(reg);
-      if (keys.some(function(k){ return /pillow|forthenry|fortHenry|hamptonroads|mobilebay/i.test(k); })) throw new Error('a teaching-only lane battle appears in the registry');
+      if (keys.some(function(k){ return /forthenry|fortHenry|hamptonroads|mobilebay/i.test(k); })) throw new Error('a teaching-only lane battle appears in the registry');
       var body = JSON.stringify(Object.keys(reg).map(function(k){ return (reg[k] || {}).name || ''; }));
-      if (/fort pillow|hampton roads|mobile bay/i.test(body)) throw new Error('a registered scenario names a teaching-only lane battle');
-      return { playable:false };
+      if (/fort henry|hampton roads|mobile bay/i.test(body)) throw new Error('a registered scenario names a teaching-only lane battle');
+      if (!reg.fortPillow) throw new Error('fortPillow missing from the registry (registered per D455 SS3 row 6 / D463)');
+      return { fortHenry:'teaching-only', naval:'teaching-only', fortPillow:'registered (D455 SS3 row 6 / D463)' };
     });
   } catch(e) {
     R.ok = false; R.errors.push('FATAL ' + String(e && e.message || e));

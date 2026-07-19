@@ -1,0 +1,391 @@
+{
+  "_comment": "D463 Fort Pillow, April 12, 1864 (LANE-013 P4; Aaron's D455 SS3 row 6 unlock, amends the D135/D382 taught-only disposition; the controlling law is docs/design/fort-pillow-battle-build-spec.md, D462). Single-phase attacker-seize: Forrest's cavalry, dismounted, storm the bluff fort at the mouth of Coal Creek; the garrison is half U.S. Colored Artillerymen. THE MASSACRE IS NEVER IN THIS SCENARIO: no massacre event, mechanic, casualty script, or scoring exists anywhere in this file - the battle ends at the works, and the post-surrender choice belongs exclusively to the shipped D457 no-quarter machinery (judged in Historical, chartered reward in Mayhem; declining leaves the campaign byte-identical). The dignity imagery law (D135/src/51) holds: text carries the weight. Every fielded unit is Verified identity, Inferred strength.",
+  "fortPillow": {
+    "sources": [
+      "Wikipedia - Battle of Fort Pillow - https://en.wikipedia.org/wiki/Battle_of_Fort_Pillow",
+      "Joint Committee on the Conduct of the War, Fort Pillow report, full text (PRIMARY) - https://www.gutenberg.org/files/41787/41787-h/41787-h.htm",
+      "Forrest's official report, hosted transcription (PRIMARY; interested party - used for organization and as the counterparty record, never for the toll) - https://confederatehistory.wixsite.com/forrest/fort-pillow-report",
+      "NPS battle-summary database TN030 - https://www.nps.gov/civilwar/search-battles-detail.htm?battleCode=TN030",
+      "NPS - The Hard Reality of Fort Pillow - https://www.nps.gov/articles/000/hard-reality-of-fort-pillow.htm",
+      "Tennessee Encyclopedia - Fort Pillow (Cimprich) - https://tennesseeencyclopedia.net/entries/fort-pillow/",
+      "American Battlefield Trust - The Most Terrible Ordeal of My Life - https://www.battlefields.org/learn/articles/most-terrible-ordeal-my-life-battle-fort-pillow",
+      "American Battlefield Trust - Remember Fort Pillow heritage page - https://www.battlefields.org/visit/heritage-sites/remember-fort-pillow",
+      "Committed research packet - docs/design/battle-build-research/massacre-treatment-battle-build-research.md (D459)",
+      "Committed build spec - docs/design/fort-pillow-battle-build-spec.md (D462)"
+    ],
+    "id": "fortPillow",
+    "learnMeta": { "phases": 1, "approxMinutes": [5, 15], "skills": ["works-assault", "assault-pacing", "defense-hold"], "recommendedAfter": "chattanooga" },
+    "name": "Fort Pillow",
+    "date": "April 12, 1864",
+    "place": "Fort Pillow, Tennessee - the bluff over the Mississippi at the mouth of Coal Creek, forty river miles above Memphis",
+    "blurb": "Forrest's dismounted cavalry invest the bluff fort from the ravines and barracks rows while sharpshooters on the knolls command the parapet. The garrison - four companies of the 6th U.S. Colored Heavy Artillery with a section of Battery D, 2nd U.S. Colored Light Artillery, and Bradford's West Tennessee Unionist battalion - holds the inner works. The scenario is the assault and it ends at the works: the massacre that followed the fort's fall is taught with primary sources and judged through the campaign's no-quarter choice; it is never played.",
+    "provenance": "Verified for the identities, battle-date grades, brigade organization (McCulloch's brigade of Chalmers's division; Bell's brigade of Buford's division attached to Chalmers - Forrest's own report), the six-gun armament, the day-shape, the terrain landmarks, and the result under the D459 packet register. STRENGTHS ARE ENCODED FROM THE SOURCED FIGURES WITH THEIR RANGES DISCLOSED: the Confederate assault force is encoded at 1,500 (the Cimprich/Tennessee Encyclopedia figure, the conservative end of the genuine 1,500-2,500 range; the NPS battle-summary pins 2,500) split 720/720/60 as an Inferred share; the garrison is the NPS tabulation of 557 engaged (295 white + 262 USCT; the 585-605 present-for-duty band is disclosed here and Forrest's self-serving 700 is never encoded), encoded as 535 because the universal gun model caps artillery crews at forty per gun - the 6th USCHA's ~262 artillerists carry 240 encoded men on six guns with the residual disclosed in the unit note, an Inferred simulation abstraction inside the sourced envelope, never a combat input. Every coordinate, timing second, experience value, and leader-quality value is an Inferred abstraction. No massacre content exists in this file.",
+    "field": {
+      "w": 1000,
+      "h": 850
+    },
+    "homeEdge": {
+      "US": "high",
+      "CS": "low"
+    },
+    "_homeEdgeNote": "Low z is the landward east - the Confederate approach from the outer works through the ravine system; high z is the bluff and the Mississippi at the Union rear, with Coal Creek bounding the low-x (north) side. These side-keyed home edges are Verified geography; the field orientation is an Inferred abstraction.",
+    "attacker": "CS",
+    "defender": "US",
+    "defaultFog": false,
+    "assaultDoctrine": "standard",
+    "_assaultDoctrineNote": "Standard posture. The historical result emerges from true inputs - roughly 2.7:1 odds, covered approaches, and sharpshooter knolls against an earthwork - under the one universal model (D74). No storm bonus, rage key, or per-battle lever exists.",
+    "holdToWinSec": 90,
+    "timeLimitSec": 420,
+    "objective": {
+      "x": 500,
+      "z": 640,
+      "r": 95,
+      "name": "The inner fort on the bluff"
+    },
+    "weather": {
+      "sky": "clear",
+      "time": "afternoon",
+      "provenance": "Inferred",
+      "note": "Presentation only; no sourced weather claim is encoded. Fog is OFF by design: this was a daylight assault the defenders watched develop - the surprise was operational tempo (the pre-dawn approach, the morning investment, the massed final storm), which is disclosed here rather than modeled as literal weather fog. Weather never writes combat output.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Battle_of_Fort_Pillow",
+        "https://www.battlefields.org/learn/articles/most-terrible-ordeal-my-life-battle-fort-pillow"
+      ]
+    },
+    "menu": {
+      "title": "FORT PILLOW (1864)",
+      "deck": "Storm or hold the bluff fort above the Mississippi - Forrest's fifteen hundred against a garrison half U.S. Colored Artillerymen. The battle ends at the works: the massacre that followed is taught and judged, never played.",
+      "aria": "Fort Pillow, April 1864 - the real-time single-phase assault on the bluff fort; command either side. The post-surrender massacre is taught with primary sources and is never part of play."
+    },
+    "sides": {
+      "heading": "Fort Pillow - Take Which Command?",
+      "intro": "April 12, 1864 - Forrest's cavalry have overrun the outer works by mid-morning. Sharpshooters command the parapet from the knolls, the barracks rows stand a hundred and fifty yards from the ditch, and the ravines carry covered approaches to the inner fort.",
+      "US": {
+        "title": "Command the Union (Booth, then Bradford)",
+        "badge": "&#9733; HOLD THE WORKS",
+        "deck": "Hold the inner fort with the 6th U.S. Colored Heavy Artillery and Bradford's Unionist battalion. The works are strong, the odds are not; every hour held is bought under sharpshooter fire from the knolls."
+      },
+      "CS": {
+        "title": "Command the Confederacy (Forrest)",
+        "badge": "&#9876; STORM THE BLUFF",
+        "deck": "Carry the inner fort. McCulloch works down the river side, Bell anchors on Coal Creek, and the sharpshooters suppress the parapet. The assault is the scenario; nothing after the works falls is played."
+      },
+      "foot": "The battle ends at the works. What followed the surrender - one of the war's best-documented atrocities - is taught in the cards with primary sources and is judged through the campaign's no-quarter machinery; it is never played, scored, or depicted."
+    },
+    "brief": {
+      "attack": "Your troopers fight dismounted. The outer works are yours; the garrison stands in the inner fort on the bluff. Use the ravines and the captured barracks rows as covered approaches, keep the sharpshooters on the knolls working the parapet, and mass the final storm. The strength ratio and the ground, not any hidden bonus, decide the works.",
+      "defend": "Maj. Booth's guns hold the inner fort with Bradford's dismounted battalion on the line. The approaches are covered against you - the ravines and barracks rows shelter the attackers - and sharpshooter fire commands the parapet from the knolls. Trade fire for time and hold the works to the limit."
+    },
+    "terrain": {
+      "hills": [
+        {
+          "name": "The knolls above the fort",
+          "x": 500,
+          "z": 390,
+          "h": 16,
+          "s": 145,
+          "note": "The high knolls commanding the fort's interior - the sharpshooter positions. Verified feature (Wikipedia/ABT); Inferred placement."
+        },
+        {
+          "name": "The bluff over the Mississippi",
+          "x": 460,
+          "z": 780,
+          "h": 24,
+          "s": 200,
+          "note": "The river bluff at the Union rear. Verified feature; Inferred geometry."
+        }
+      ],
+      "woods": [
+        {
+          "x": 270,
+          "z": 450,
+          "r": 105,
+          "note": "The Coal Creek ravine head on the Confederate right - covered low ground. The JCCW record of movement in the ravines during the truce is TEACHING (card fp_truce), never a mechanic. Verified feature; Inferred placement."
+        },
+        {
+          "x": 720,
+          "z": 470,
+          "r": 110,
+          "note": "The ravine system toward the river on the Confederate left - the covered approaches the assault used. Encoded as ordinary cover under the universal model, never a bonus. Verified feature (JCCW/ABT); Inferred placement."
+        }
+      ],
+      "walls": [
+        {
+          "x1": 640,
+          "z1": 575,
+          "x2": 845,
+          "z2": 560,
+          "note": "The two barracks rows about 150 yards south of the works - intermediate cover the attacker can win (captured about 11 a.m. historically; encoded as cover geometry, not an event). Verified feature; Inferred trace."
+        },
+        {
+          "x1": 425,
+          "z1": 645,
+          "x2": 605,
+          "z2": 635,
+          "note": "The inner fort's ditch and parapet, ordinary works cover under the universal model. The parapet dimensions are a single-family claim and stay an Inferred note; no dimension is encoded as a combat input."
+        }
+      ],
+      "swamps": [],
+      "markers": [
+        {
+          "kind": "town",
+          "name": "Fort Pillow - the inner fort",
+          "path": [[500, 640]],
+          "note": "The objective: the inner earthwork on the bluff. Verified."
+        },
+        {
+          "kind": "label",
+          "name": "The Mississippi River",
+          "x": 500,
+          "z": 830,
+          "note": "The river below the bluff at the Union rear. The gunboat story is taught in the cards; no naval unit or gunboat mechanic exists (the no-naval-engine law). Verified context; Inferred placement."
+        },
+        {
+          "kind": "label",
+          "name": "Coal Creek",
+          "x": 90,
+          "z": 280,
+          "note": "The creek bounding the fort's north side - the anchor of the Confederate right. Verified feature; Inferred placement."
+        },
+        {
+          "kind": "label",
+          "name": "The captured outer works",
+          "x": 500,
+          "z": 120,
+          "note": "The outer entrenchment line, overrun before this scenario opens. Verified sequence; Inferred placement."
+        }
+      ]
+    },
+    "supply": {
+      "US": {
+        "x": 500,
+        "z": 815,
+        "name": "The landing under the bluff"
+      },
+      "CS": {
+        "x": 500,
+        "z": 35,
+        "name": "The Confederate trains on the landward road"
+      }
+    },
+    "leaders": {
+      "US": [
+        {
+          "id": "ld_fp_booth",
+          "name": "Maj. Lionel F. Booth",
+          "short": "Booth",
+          "quality": 0.62,
+          "radius": 225,
+          "x": 500,
+          "z": 655,
+          "fate": 0.55,
+          "note": "Garrison commander, killed by sharpshooter fire in the morning; Maj. Bradford succeeded him. The fate enters through the EXISTING leader system as an input, never a scripted event. Verified grade and fate; Inferred quality value."
+        },
+        {
+          "id": "ld_fp_bradford",
+          "name": "Maj. William F. Bradford",
+          "short": "Bradford",
+          "quality": 0.5,
+          "radius": 210,
+          "x": 560,
+          "z": 645,
+          "fate": 1.4,
+          "note": "13th Tennessee Cavalry battalion commander; succeeded Booth and refused the mid-afternoon surrender demand. Neither Booth nor Bradford was ever a colonel. Verified grade and succession; Inferred quality value."
+        }
+      ],
+      "CS": [
+        {
+          "id": "ld_fp_forrest",
+          "name": "Maj. Gen. Nathan Bedford Forrest",
+          "short": "Forrest",
+          "quality": 0.74,
+          "radius": 260,
+          "atSec": 55,
+          "x": 500,
+          "z": 240,
+          "fate": 1.9,
+          "entry": "Forrest reaches the field about 10 a.m. and takes personal direction of the investment.",
+          "note": "Overall command; major general since December 1863 - never brigadier, never lieutenant general here. His mid-afternoon ultimatum and the truce controversy are TEACHING (card fp_truce), never a mechanic. Verified grade and arrival sequence; Inferred timing second and quality value."
+        },
+        {
+          "id": "ld_fp_chalmers",
+          "name": "Brig. Gen. James R. Chalmers",
+          "short": "Chalmers",
+          "quality": 0.66,
+          "radius": 235,
+          "x": 560,
+          "z": 300,
+          "fate": 1.9,
+          "note": "Field command of the assault force: McCulloch's brigade of his own division, with Bell's brigade of Buford's division attached to him for the operation - Forrest's own report. Verified grade and command; Inferred quality value."
+        }
+      ]
+    },
+    "oob": {
+      "US": [
+        {
+          "id": "us_fp_6uscha",
+          "name": "6th U.S. Colored Heavy Artillery (four companies) with the Battery D, 2nd U.S. Colored Light Artillery section",
+          "commander": "Maj. Lionel F. Booth",
+          "arm": "art",
+          "weapon": "smooth",
+          "guns": 6,
+          "men": 240,
+          "xp": 1,
+          "x": 470,
+          "z": 660,
+          "facing": 0,
+          "formation": "line",
+          "note": "The garrison's Black artillerists - about 262 engaged by the NPS tabulation, most formerly enslaved men from Alabama and Tennessee - serving the fort's six pieces (Wikipedia and Forrest's own report agree on six; a second independent family for the exact count is an open trap and stays unconfirmed). Encoded at 240 men because the universal gun model caps crews at forty per gun; the ~22-man residual is disclosed here, an Inferred abstraction, never a combat input. DESIGNATION TRAP: this regiment carried the name 6th U.S. Colored Heavy Artillery only from March 11 to April 26, 1864 - formerly the 1st Alabama Siege Artillery (African Descent), redesignated the 7th USCHA two weeks after the battle; the modern NPS unit-database page titled 6th USCHA describes a different regiment and is never cited for this unit. Verified identity; Inferred strength."
+        },
+        {
+          "id": "us_fp_13tn",
+          "name": "13th Tennessee Cavalry (Bradford's Battalion), dismounted",
+          "commander": "Maj. William F. Bradford",
+          "arm": "inf",
+          "weapon": "carbine",
+          "men": 295,
+          "xp": 1,
+          "x": 545,
+          "z": 650,
+          "facing": 0,
+          "formation": "line",
+          "note": "West Tennessee Unionist recruits, many newly enlisted, fighting dismounted in the works with their cavalry carbines - encoded under the universal infantry model with the dismounted service disclosed. 295 is the NPS tabulation's white-garrison figure. Verified identity and dismounted service; Inferred strength."
+        }
+      ],
+      "CS": [
+        {
+          "id": "cs_fp_mcculloch",
+          "name": "McCulloch's Brigade (Chalmers's Division), dismounted",
+          "commander": "Col. Robert McCulloch",
+          "arm": "inf",
+          "weapon": "rifled",
+          "men": 720,
+          "xp": 2,
+          "x": 700,
+          "z": 310,
+          "facing": 3.14159,
+          "formation": "column",
+          "note": "The left of the assault, working down the river side through the ravines and the barracks rows. Forrest's troopers assaulted dismounted - encoded under the universal infantry model with the mounted arm disclosed. 720 is an Inferred split of the encoded 1,500 assault force (the Cimprich figure, the conservative end of the sourced 1,500-2,500 range; NPS pins 2,500 - the range is disclosed in the battle provenance). Verified identity; Inferred strength."
+        },
+        {
+          "id": "cs_fp_bell",
+          "name": "Bell's Brigade (Buford's Division, attached to Chalmers), dismounted",
+          "commander": "Col. Tyree H. Bell",
+          "arm": "inf",
+          "weapon": "rifled",
+          "men": 720,
+          "xp": 2,
+          "x": 300,
+          "z": 290,
+          "facing": 3.14159,
+          "formation": "column",
+          "note": "THE ATTACHMENT, HONESTLY: Bell's brigade belonged to Buford's division and was attached to Chalmers for this operation - Forrest's own report; the flat two-brigades-of-Chalmers framing in tertiary sources is a simplification. The right of the assault, anchored on Coal Creek. Dismounted troopers under the universal infantry model. 720 is an Inferred split of the encoded 1,500 (range disclosed in the battle provenance). Verified identity and attachment; Inferred strength."
+        },
+        {
+          "id": "cs_fp_sharp",
+          "name": "Forrest's Dismounted Sharpshooters (detachment)",
+          "commander": "Detachment officers",
+          "arm": "inf",
+          "weapon": "rifled",
+          "men": 60,
+          "xp": 3,
+          "x": 500,
+          "z": 385,
+          "facing": 3.14159,
+          "formation": "line",
+          "note": "The small detachment posted on the knolls commanding the fort's interior. The morning sharpshooter fire - including the shot that killed Maj. Booth - and the parapet suppression live HERE AS TEACHING and through the ordinary leader-fate and experience inputs, never as a mechanic. 60 is an Inferred carve-out of the encoded 1,500. Verified practice; Inferred strength and grouping."
+        }
+      ]
+    },
+    "reinforcements": [],
+    "teaching": {
+      "title": "Fort Pillow - what this battle must teach",
+      "head": "The assault is the scenario; the massacre is the record",
+      "body": "The storm carried the works in minutes. What followed is one of the war's best-documented atrocities, taught in the cards below with primary sources. In campaign play the post-surrender choice resolves ONLY through the no-quarter machinery - judged, never rewarded - and declining it changes nothing.",
+      "provenance": "Verified sequence under the D459 packet register; coordinates, timing seconds, and readiness are Inferred.",
+      "cards": [
+        {
+          "id": "fp_massacre_named",
+          "head": "The Massacre, Named Plainly",
+          "body": "After the works fell, surrendering soldiers - disproportionately Black - were shot down. The Joint Committee on the Conduct of the War concluded the killings were “the results of a policy deliberately decided upon”; Confederate Sgt. Achilles Clark's private letter two days later described the slaughter of surrendering men; Forrest's own April 15 dispatch reported the river “dyed with the blood of the slaughtered for 200 yards.” Three hostile directions converge on the same fact. Modern scholarship (Castel, Ward, Fuchs, Cimprich) is settled that a massacre of surrendered men occurred. Forrest's precise culpability - whether he ordered the killing, condoned it, or failed to halt it - remains genuinely debated, and this game teaches that debate as a debate. No framing softens the fact, and the old Lost-Cause deflections (the garrison never surrendered; the garrison was drunk) fail against the primary record.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.gutenberg.org/files/41787/41787-h/41787-h.htm",
+            "https://en.wikipedia.org/wiki/Battle_of_Fort_Pillow",
+            "https://www.battlefields.org/learn/articles/most-terrible-ordeal-my-life-battle-fort-pillow"
+          ]
+        },
+        {
+          "id": "fp_remember",
+          "head": "“Remember Fort Pillow”",
+          "body": "The massacre ran through the rest of the war. U.S. Colored Troops took “Remember Fort Pillow” as a battle cry. The Union's retaliation policy - General Order No. 252's suspended exchanges over the Confederacy's refusal to treat Black soldiers as soldiers - and the collapse of the prisoner-exchange cartel are the same chain this game already teaches in its prisoner-exchange and codex corpus, and the campaign's judged no-quarter consequences compose that committed record. The atrocity did not stay at the fort: it changed how the war was fought and how it ended.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.battlefields.org/visit/heritage-sites/remember-fort-pillow",
+            "https://en.wikipedia.org/wiki/Battle_of_Fort_Pillow"
+          ]
+        },
+        {
+          "id": "fp_casualty_range",
+          "head": "The Casualty Record Is a Range - and the Direction Is Certain",
+          "body": "No two source generations agree on the exact toll, and this game refuses to pretend otherwise. Forrest's men buried 228 by his own account; the standard modern tabulations run 277-297 Union dead; the Joint Committee's wartime figure was 300-400; Dyer's compendium prints 350. The prisoner record splits the same way: roughly 58-80 Black soldiers taken alive against 100-168 white, by source generation. Around 64 percent of the Black garrison died against roughly 31-33 percent of the white garrison - every reputable figure, from Forrest's own dispatch to the JCCW, agrees on the direction: Black soldiers were killed at roughly twice the rate of white soldiers, after resistance had ended. The counts are contested; the disproportion is not.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.gutenberg.org/files/41787/41787-h/41787-h.htm",
+            "https://confederatehistory.wixsite.com/forrest/fort-pillow-report",
+            "https://en.wikipedia.org/wiki/Battle_of_Fort_Pillow",
+            "https://tennesseeencyclopedia.net/entries/fort-pillow/"
+          ]
+        },
+        {
+          "id": "fp_garrison",
+          "head": "The Garrison's People",
+          "body": "About 262 of the fort's 557 engaged defenders were Black artillerists of the 6th U.S. Colored Heavy Artillery and the Battery D section - most of them formerly enslaved men from Alabama and Tennessee who had claimed freedom by enlisting, serving under the Confederate policy climate that promised captured Black soldiers execution or enslavement (Davis's December 1862 proclamation and the May 1863 congressional act). The other 295 were Bradford's 13th Tennessee Cavalry - West Tennessee Unionists, their neighbors' enemies in a bitter home-front war. Both halves of the garrison had reason to expect no quarter, and the record shows what that expectation was worth.",
+          "provenance": "Verified",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Battle_of_Fort_Pillow",
+            "https://www.nps.gov/articles/000/hard-reality-of-fort-pillow.htm",
+            "https://tennesseeencyclopedia.net/entries/fort-pillow/"
+          ]
+        },
+        {
+          "id": "fp_truce",
+          "head": "The Truce Controversy",
+          "body": "About 3:30 p.m. Forrest demanded surrender under flag of truce, granting twenty minutes; Bradford - concealing Booth's death - refused. The Joint Committee's record contains sworn testimony that Confederate troops used the truce to move into the ravines and closer positions, a violation the defense witnessed from the parapet; the garrison's officers polled under the truce and chose to fight. The USS New Era's part belongs to the aftermath record: with the Silver Cloud and Platte Valley she received wounded under the post-battle truce - taught here from the primary record, never a gunboat mechanic. Minutes after the truce expired, the storm carried the works.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.gutenberg.org/files/41787/41787-h/41787-h.htm",
+            "https://www.battlefields.org/learn/articles/most-terrible-ordeal-my-life-battle-fort-pillow"
+          ]
+        }
+      ],
+      "codex": {
+        "id": "codex_fort_pillow",
+        "title": "Fort Pillow - April 12, 1864",
+        "summary": "Forrest's cavalry corps - McCulloch's brigade of Chalmers's division and Bell's brigade of Buford's division, attached to Chalmers - stormed the Mississippi bluff fort at the mouth of Coal Creek after a morning investment, a contested truce, and a massed final assault that carried the works in minutes. The garrison of 557 was half Black artillerists of the 6th U.S. Colored Heavy Artillery. What followed the fall is one of the war's best-documented atrocities: surrendering soldiers, disproportionately Black, were shot down - the Joint Committee called it the result of a policy deliberately decided upon, and “Remember Fort Pillow” became a USCT battle cry. The massacre is taught with primary sources and resolves only through the campaign's judged no-quarter machinery; it is never played.",
+        "axes": {
+          "theater": "Western",
+          "campaign": "Forrest's 1864 West Tennessee raid",
+          "result": "Confederate victory"
+        },
+        "provenance": "Verified",
+        "sources": [
+          "https://www.nps.gov/civilwar/search-battles-detail.htm?battleCode=TN030",
+          "https://tennesseeencyclopedia.net/entries/fort-pillow/",
+          "https://en.wikipedia.org/wiki/Battle_of_Fort_Pillow"
+        ]
+      }
+    },
+    "endNote": {
+      "US": {
+        "US": "History diverges. The garrison holds the inner fort to the limit - the storm never carries the works, and the fort's people stand their ground into the night. The historical record this scenario teaches remains: at the real Fort Pillow the works fell in minutes, and what followed is documented in the cards.",
+        "CS": "History holds. The works fell in minutes once the storm went in. What followed the fall is the documented record this game teaches and never plays: a massacre of surrendering soldiers, disproportionately Black - named by the Joint Committee, by a Confederate sergeant's own letter, and by Forrest's own dispatch. In campaign play that choice belongs to the judged no-quarter machinery; here the teaching carries it."
+      },
+      "CS": {
+        "US": "History diverges. The assault spends itself against the works and the garrison holds to the limit. The record this scenario teaches remains what it is; no outcome here rewrites it.",
+        "CS": "History holds. The storm carries the works in minutes - the true strength ratio and the covered approaches did this without any special power. The record of what Confederate troops then did to surrendering men, disproportionately Black soldiers, is taught in the cards from the primary sources; it is not part of play, it is not scored, and no framing here softens it."
+      },
+      "draw": "The clock divides the field without a decision. The real assault did not: the works fell in the afternoon storm, and the documented massacre that followed is taught in the cards - never played."
+    }
+  }
+}

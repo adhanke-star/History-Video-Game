@@ -259,12 +259,12 @@ const SETUP = `(() => {
       return { cards:ids, codex:codex.id, weather:{ sky:w.sky, time:w.time, provenance:w.provenance, tacticalFog:false } };
     });
 
-    check('ARMY REGISTER PIN: 15 unique Cross Keys / Port Republic side-unit ids produce 45 cmd/nco/pvt rows and current total 1617', function() {
+    check('ARMY REGISTER PIN: 15 unique Cross Keys / Port Republic side-unit ids produce 45 cmd/nco/pvt rows and current total 1632', function() {
       var C = { side:'US', iron:false, idx:0, funds:6500, recovery:false, completed:[], roster:[], nextId:1,
         stats:{ battles:0, won:0, infl:0, suff:0 }, recoveryLossCount:0, recoveryMode:false, flipAtk:false, captured:[] };
       if (typeof _t1InitAll === 'function') _t1InitAll(C);
       var reg = ssPersonRegistry(C), rows = [], groups = {};
-      if (reg.people.length !== 1617) throw new Error('Army Register total is ' + reg.people.length + ', expected 1617');   // D380: 1170 -> 1200 — Five Forks adds 10 unique units x 3 slots. D384: 1200 -> 1281 — Fort Donelson adds 27 units x 3 slots. D388: 1281 -> 1326 — Elkhorn Tavern adds 15 unique side-unit ids x 3 slots. D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots; Cross Keys / Port Republic's own 45-row teeth remain stable. D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots. D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots.
+      if (reg.people.length !== 1632) throw new Error('Army Register total is ' + reg.people.length + ', expected 1632');   // D380: 1170 -> 1200 — Five Forks adds 10 unique units x 3 slots. D384: 1200 -> 1281 — Fort Donelson adds 27 units x 3 slots. D388: 1281 -> 1326 — Elkhorn Tavern adds 15 unique side-unit ids x 3 slots. D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots; Cross Keys / Port Republic's own 45-row teeth remain stable. D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots. D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots. D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4, the D455 SS3 row 6 unlock).
       for (var i = 0; i < reg.people.length; i++) {
         var p = reg.people[i], origin = p.replaces || p.pid;
         if (typeof origin === 'string' && origin.indexOf('ss:crossKeysPortRepublic:') === 0) rows.push(origin);
@@ -287,13 +287,20 @@ const SETUP = `(() => {
        universal capture path; no new scoring family exists). Kernstown, McDowell, and First
        Winchester STAY barred (their guards are engine-mismatch/inversion cautions, not the
        lifted moral scope guard). The spec's SS-addendum records the lift; the new scored-
-       lift tooth below pins it. Fort Pillow / Leetown carve-outs here are UNCHANGED by this
-       phase (Fort Pillow's own re-pin belongs to its runtime registration commit). */
-    check('SCOPE + DIGNITY: Kernstown/McDowell/First Winchester stay teaching-only; the D461 Front Royal scored-lift is recorded; standing Fort Pillow / Leetown carve-outs remain absent', function() {
+       lift tooth below pins it. The Leetown carve-out here is UNCHANGED; the Fort Pillow
+       half flipped to REGISTERED at its runtime registration commit (D463), as this comment
+       always said it would. */
+    check('SCOPE + DIGNITY (D463 split): Kernstown/McDowell/First Winchester stay teaching-only; the D461 Front Royal scored-lift is recorded; the Leetown carve-out remains absent; fortPillow is registered per D455 SS3 row 6', function() {
+      /* D463 chain: the old tooth refused fortPillow AND leetown together. Aaron's D455 SS3
+         row 6 registers Fort Pillow (assault-only; the massacre never in-scenario - the D457
+         machinery is the only resolution path); the kernstown/mcdowell/firstWinchester AND
+         leetown halves are KEPT unchanged (leetown fields inside the shipped Elkhorn battle
+         per D460, never as its own registry entry) - the documented D397/D454 split idiom. */
       var reg = fldScenarioRegistry(), keys = Object.keys(reg), combined = JSON.stringify(keys.map(function(k){ return (reg[k] || {}).name || ''; }));
       ['kernstown','mcdowell','firstWinchester'].forEach(function(id){ if (keys.indexOf(id) >= 0) throw new Error('teaching-only Valley action registered: ' + id); });
-      if (/fort pillow|leetown/i.test(combined) || keys.some(function(k){ return /pillow|leetown/i.test(k); })) throw new Error('standing dignity carve-out violated');
-      return { valleyExtraPhases:0, frontRoyal:'scored-lift (D461)', fortPillow:false, leetown:false };
+      if (/leetown/i.test(combined) || keys.some(function(k){ return /leetown/i.test(k); })) throw new Error('standing dignity carve-out violated');
+      if (!reg.fortPillow) throw new Error('fortPillow missing from the registry (registered per D455 SS3 row 6 / D463)');
+      return { valleyExtraPhases:0, frontRoyal:'scored-lift (D461)', fortPillow:'registered (D455 SS3 row 6 / D463)', leetown:false };
     });
   } catch(e) {
     R.ok = false; R.errors.push('FATAL ' + String(e && e.message || e));

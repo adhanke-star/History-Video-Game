@@ -429,10 +429,16 @@ step("HISTORY + DIGNITY", () => {
     "no USCT unit existed in February 1862",
     "Every claim obeys the two-source/provenance rule"
   ], "history/dignity contract");
-  const forbiddenData = readdirSync(join(ROOT, "data")).filter(name => /^(?:fort-henry|forthenry|fort-pillow|fortpillow)(?:[-_.]|$)/i.test(name));
+  /* D463 split: the Fort Henry half is KEPT (teaching-only, no data, no registry entry); the
+     Fort Pillow half flips to REGISTERED per Aaron's D455 SS3 row 6 / D463 (assault-only, the
+     massacre never in-scenario) - the documented D397/D454 split-and-chain idiom. The spec-text
+     pins above ("Fort Pillow", "DO_NOT_BUILD") are NOT touched: this packet keeps its
+     historical sentences and the fort-pillow spec SS1 records the supersession. */
+  const forbiddenData = readdirSync(join(ROOT, "data")).filter(name => /^(?:fort-henry|forthenry)(?:[-_.]|$)/i.test(name));
   if (forbiddenData.length) throw new Error("teaching-only lane battle has runtime data: " + forbiddenData.join(", "));
-  if (/R\.(?:fortHenry|fortPillow)\s*=/.test(stripJsComments(read(T1)))) throw new Error("teaching-only lane battle has a registry entry");
-  return { cards: 8, fortHenry: "teaching-only", fortPillow: "DO_NOT_BUILD (dignity carve-out)" };
+  if (/R\.fortHenry\s*=/.test(stripJsComments(read(T1)))) throw new Error("teaching-only lane battle has a registry entry");
+  if (!/R\.fortPillow\s*=/.test(stripJsComments(read(T1)))) throw new Error("fortPillow missing from the T1 registry (registered per D455 SS3 row 6 / D463)");
+  return { cards: 8, fortHenry: "teaching-only", fortPillow: "registered (D455 SS3 row 6 / D463)" };
 });
 
 step("D74 NO-FUDGE", () => {

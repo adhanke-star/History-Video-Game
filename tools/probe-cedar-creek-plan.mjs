@@ -330,18 +330,24 @@ step("CLASSIC-LAYER GUARD: no cedarcreek rail route exists and the spec document
   return { routes: "no cedar collision" };
 });
 
-step("DIGNITY: the standing Fort Pillow guard holds and the Burning stays teaching-only", () => {
+step("DIGNITY: fortPillow is registered per D455 SS3 row 6 / D463 and the Burning stays teaching-only", () => {
+  /* D463 chain: this step was the standing Fort Pillow ABSENCE guard (data/T1/vet/roster all
+     refused any pillow token - the D135/D382 taught-only disposition). Aaron's D455 SS3 row 6
+     amends it and D463 registers the assault scenario; the scans flip to REGISTERED the
+     documented D397/D454 way. The spec-text pin below is NOT touched: this spec keeps its
+     historical sentence, and the fort-pillow spec SS1 records the supersession. The Burning
+     teaching-only half is KEPT unchanged. */
   const dataFiles = readdirSync(join(ROOT, "data")).filter(f => /pillow/i.test(f));
-  if (dataFiles.length) throw new Error("fort-pillow data file present: " + dataFiles.join(", "));
+  if (dataFiles.join(",") !== "fort-pillow.json") throw new Error("expected exactly data/fort-pillow.json: " + dataFiles.join(", "));
   const t1 = read(T1);
   const vet = read(VET);
   const roster = read(ROSTER);
-  if (/fortPillow|fort-pillow/i.test(stripJsComments(t1))) throw new Error("Fort Pillow appears in the T1 registry/menu code");
-  if (/fort-?pillow/i.test(stripJsComments(vet))) throw new Error("Fort Pillow appears in the vet suite");
-  if (/fortPillow/i.test(stripJsComments(roster))) throw new Error("Fort Pillow appears in the roster baseline");
+  if (!/fortPillow/.test(stripJsComments(t1))) throw new Error("fortPillow missing from the T1 registry/menu code (registered per D455 SS3 row 6 / D463)");
+  if (!/fort-pillow/.test(stripJsComments(vet))) throw new Error("the fort pillow row is missing from the vet suite (D463)");
+  if (!/fortPillow/.test(stripJsComments(roster))) throw new Error("fortPillow missing from the roster baseline (D463)");
   const text = read(SPEC);
   mustInclude(text, ["never a scored or gamified objective", "no Leetown Native OOB, no playable Fort Pillow"], "dignity doc");
-  return { playable: false, burning: "teaching-only" };
+  return { playable: "fortPillow (D455 SS3 row 6 / D463)", burning: "teaching-only" };
 });
 
 step("REGISTRY: D375 stays planned-only; any future data file requires complete D376 integration", () => {

@@ -306,12 +306,12 @@ const SETUP = `(() => {
       return { cards:ids, codex:codex.id, weather:{ sky:w.sky, time:w.time, provenance:w.provenance } };
     });
 
-    check('ARMY REGISTER PIN: 19 unique Cedar Creek side/unit ids produce exact cmd/nco/pvt trios and current total 1617', function() {
+    check('ARMY REGISTER PIN: 19 unique Cedar Creek side/unit ids produce exact cmd/nco/pvt trios and current total 1632', function() {
       var C = { side:'US', iron:false, idx:0, funds:6500, recovery:false, completed:[], roster:[], nextId:1,
         stats:{ battles:0, won:0, infl:0, suff:0 }, recoveryLossCount:0, recoveryMode:false, flipAtk:false, captured:[] };
       if (typeof _t1InitAll === 'function') _t1InitAll(C);
       var reg = ssPersonRegistry(C), rows = [], groups = {};
-      if (reg.people.length !== 1617) throw new Error('Army Register total is ' + reg.people.length + ', expected 1617');   // D380: 1170 -> 1200 — Five Forks adds 10 unique units x 3 slots. D384: 1200 -> 1281 — Fort Donelson adds 27 unique units x 3 slots. D388: 1281 -> 1326 — Elkhorn Tavern adds 15 unique side-unit ids x 3 slots. D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots; Cedar Creek's 57-row/19-unit teeth remain stable. D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots. D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots.
+      if (reg.people.length !== 1632) throw new Error('Army Register total is ' + reg.people.length + ', expected 1632');   // D380: 1170 -> 1200 — Five Forks adds 10 unique units x 3 slots. D384: 1200 -> 1281 — Fort Donelson adds 27 unique units x 3 slots. D388: 1281 -> 1326 — Elkhorn Tavern adds 15 unique side-unit ids x 3 slots. D391: 1326 -> 1380 — Spotsylvania adds 18 unique side-unit ids x 3 slots. D393: 1380 -> 1434 — Wilderness adds 18 unique side-unit ids x 3 slots. D397: 1434 -> 1512 — Petersburg initial assaults adds 26 unique side-unit ids x 3 slots; Cedar Creek's 57-row/19-unit teeth remain stable. D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots. D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots. D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4, the D455 SS3 row 6 unlock).
       for (var i = 0; i < reg.people.length; i++) {
         var p = reg.people[i], origin = p.replaces || p.pid;
         if (typeof origin === 'string' && origin.indexOf('ss:cedarCreek:') === 0) rows.push(origin);
@@ -328,12 +328,21 @@ const SETUP = `(() => {
       return { total:reg.people.length, cedarRows:rows.length, units:keys.length };
     });
 
-    check('FORT PILLOW ABSENCE: standing dignity carve-out holds; no playable massacre scenario is registered', function() {
-      var reg = fldScenarioRegistry(), keys = Object.keys(reg);
-      if (keys.some(function(k){ return /pillow/i.test(k); })) throw new Error('Fort Pillow appears in the registry');
-      var names = JSON.stringify(keys.map(function(k){ return (reg[k] || {}).name || ''; }));
-      if (/fort pillow/i.test(names)) throw new Error('a registered scenario names Fort Pillow');
-      return { playable:false };
+    check('FORT PILLOW REGISTERED (D463): the D455 SS3 row 6 unlock holds - fortPillow is the registered assault scenario and the massacre stays out of every scenario surface', function() {
+      /* D463 chain: this tooth was the D376-era FORT PILLOW ABSENCE guard (no playable massacre
+         scenario registered - the D135/D382 taught-only disposition). Aaron's D455 SS3 row 6
+         AMENDS that disposition and D463 registers fortPillow per the committed spec
+         (docs/design/fort-pillow-battle-build-spec.md): the scenario is the ASSAULT ONLY - the
+         massacre is never in-scenario and resolves only through the shipped D457 no-quarter
+         machinery. The tooth flips the documented D397/D454 way: absence -> registered-with-
+         the-dignity-contract; the massacre-key scan is the half that REMAINS. */
+      var reg = fldScenarioRegistry();
+      if (!reg.fortPillow) throw new Error('fortPillow missing from the registry (registered per D455 SS3 row 6 / D463)');
+      if (((reg.fortPillow || {}).name || '') !== 'Fort Pillow') throw new Error('fortPillow name wrong: ' + (reg.fortPillow || {}).name);
+      var body = JSON.stringify(reg.fortPillow);
+      /* teaching prose may NAME the massacre; keys/mechanics may not — the key-name scan is the absence half that remains */
+      if (/"(?:massacreMult|rageMult|atrocityBonus|noQuarterBonus|casualtyScript)"/i.test(body)) throw new Error('massacre-temptation key in the scenario data');
+      return { playable:true, registered:'D455 SS3 row 6 / D463' };
     });
   } catch(e) {
     R.ok = false; R.errors.push('FATAL ' + String(e && e.message || e));
@@ -396,7 +405,7 @@ async function main() {
     });
     if (!result.steps[0].ok) throw new Error("Classic-layer collision contract changed: " + JSON.stringify(result.steps[0].v));
     const pillowFiles = readdirSync(join(ROOT, "data")).filter(f => /pillow/i.test(f));
-    if (pillowFiles.length) throw new Error("Fort Pillow data file present on disk: " + pillowFiles.join(", "));
+    if (pillowFiles.join(",") !== "fort-pillow.json") throw new Error("expected exactly data/fort-pillow.json on disk (D463 flip of the absence guard): " + pillowFiles.join(", "));
     if (!(await up(url))) {
       server = spawn("python3", ["-m", "http.server", String(cfg.port)], { cwd: ROOT, stdio:"ignore" });
       for (let i = 0; i < 80 && !(await up(url)); i++) await sleep(250);

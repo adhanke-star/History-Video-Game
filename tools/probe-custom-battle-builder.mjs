@@ -61,7 +61,7 @@ function killChild(child) {
 
 const SETUP = `(() => {
   var R = { ok:true, steps:[] };
-  var EXPECTED = ['bullrun1', 'crossKeysPortRepublic', 'gainesMill', 'malvernHill', 'antietam', 'fredericksburg', 'chancellorsville', 'gettysburg', 'newMarketHeights', 'fortDonelson', 'elkhornTavern', 'shiloh', 'stonesRiver', 'vicksburg', 'chickamauga', 'chattanooga', 'wilderness', 'spotsylvania', 'coldHarbor', 'petersburgAssaults', 'kennesaw', 'atlanta', 'cedarCreek', 'franklin', 'nashville', 'fiveForks'];   // D397: 23 -> 24 — Petersburg initial assaults registers at rank 69 between spotsylvania and kennesaw. D442: 25 -> 26 — coldHarbor registers at the documented 68.5 between spotsylvania and petersburgAssaults.
+  var EXPECTED = ['bullrun1', 'crossKeysPortRepublic', 'gainesMill', 'malvernHill', 'antietam', 'fredericksburg', 'chancellorsville', 'gettysburg', 'newMarketHeights', 'fortDonelson', 'elkhornTavern', 'shiloh', 'stonesRiver', 'vicksburg', 'chickamauga', 'chattanooga', 'fortPillow', 'wilderness', 'spotsylvania', 'coldHarbor', 'petersburgAssaults', 'kennesaw', 'atlanta', 'cedarCreek', 'franklin', 'nashville', 'fiveForks'];   // D397: 23 -> 24 — Petersburg initial assaults registers at rank 69 between spotsylvania and kennesaw. D442: 25 -> 26 — coldHarbor registers at the documented 68.5 between spotsylvania and petersburgAssaults. D463: 26 -> 27 — fortPillow registers at rank 66 between chattanooga and wilderness (LANE-013 P4).
   function step(name, fn) {
     try { var v = fn(); R.steps.push({ name:name, ok:true, v:v === undefined ? null : v }); }
     catch(e) { R.ok = false; R.steps.push({ name:name, ok:false, err:String(e && e.message || e) }); }

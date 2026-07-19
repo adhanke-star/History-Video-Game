@@ -337,16 +337,21 @@ step("D74 + GATES: the no-fudge wall, planning gate, runtime gate, and integrati
   return { gate: "focused", fullBattery: "release boundary" };
 });
 
-step("FORT PILLOW: no playable massacre scenario exists anywhere in data, registry, or suite", () => {
+step("FORT PILLOW: the assault scenario is registered per D455 SS3 row 6 / D463 in data, registry, and suite", () => {
+  /* D463 chain: this step was the Fort Pillow ABSENCE guard (data/T1/vet/roster refused any
+     pillow token - the D135/D382 taught-only disposition). Aaron's D455 SS3 row 6 amends it;
+     D463 registers the assault-only scenario and the scans flip to REGISTERED the documented
+     D397/D454 way. The NMH spec-text pins above are NOT touched - that spec keeps its
+     historical sentences, and the fort-pillow spec SS1 records the supersession. */
   const dataFiles = readdirSync(join(ROOT, "data")).filter(f => /pillow/i.test(f));
-  if (dataFiles.length) throw new Error("fort-pillow data file present: " + dataFiles.join(", "));
+  if (dataFiles.join(",") !== "fort-pillow.json") throw new Error("expected exactly data/fort-pillow.json: " + dataFiles.join(", "));
   const t1 = read(T1);
   const vet = read(VET);
   const roster = read(ROSTER);
-  if (/fortPillow|fort-pillow/i.test(stripJsComments(t1))) throw new Error("Fort Pillow appears in the T1 registry/menu code");
-  if (/fort-?pillow/i.test(stripJsComments(vet))) throw new Error("Fort Pillow appears in the vet suite");
-  if (/fortPillow/i.test(stripJsComments(roster))) throw new Error("Fort Pillow appears in the roster baseline");
-  return { playable: false, guard: "teaching-only" };
+  if (!/fortPillow/.test(stripJsComments(t1))) throw new Error("fortPillow missing from the T1 registry/menu code (D463)");
+  if (!/fort-pillow/.test(stripJsComments(vet))) throw new Error("the fort pillow row is missing from the vet suite (D463)");
+  if (!/fortPillow/.test(stripJsComments(roster))) throw new Error("fortPillow missing from the roster baseline (D463)");
+  return { playable: "fortPillow (D455 SS3 row 6 / D463)", massacre: "never in-scenario - the D457 machinery only" };
 });
 
 step("REGISTRY: D363 stays planned-only; any future data file requires complete D364 integration", () => {
