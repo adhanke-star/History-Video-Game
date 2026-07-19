@@ -2071,14 +2071,14 @@ next green commit and confer through this ledger instead of permitting simultane
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's genre-elite P1
   build-run directive (the D443 extend-coding continuation).
 
-### LANE-012 · unlock-and-teach-spine — **DRIVE, lock RELEASED at the D456 boundary** (Slice 1 SHIPPED; Slices 2-3 open; ARC 1 of the D455 roadmap)
+### LANE-012 · unlock-and-teach-spine — **DRIVE, lock HELD by Claude Code (Fable 5)** (Slice 1 SHIPPED; Slice 2 in flight; ARC 1 of the D455 roadmap)
 
-- **Owning tool:** unowned (the Claude Code / Fable 5 lock RELEASED at the clean pushed D456
-  boundary `0851de0` — session context boundary, the D171/D307 law; DRIVE was taken
-  ledger-only at `8595d6e`/`138e216` within Aaron's authorized Fable window through Sunday
-  2026-07-19). ANY tool may take DRIVE from this contract.
-- **State:** DRIVE (this entry IS the CONTRACT; Slice 1 shipped as D456; the next owner
-  resumes at Slice 2).
+- **Owning tool:** Claude Code (Fable 5) — DRIVE re-taken ledger-only at the clean D456
+  head `7ae93c1b` (2026-07-18, within Aaron's authorized Fable window through Sunday
+  2026-07-19; the prior lock was RELEASED at the pushed D456 boundary `0851de0` per the
+  D171/D307 law).
+- **State:** DRIVE (this entry IS the CONTRACT; Slice 1 shipped as D456; the current owner
+  is driving Slice 2, then Slice 3).
 - **Design law:** `docs/design/unlocked-but-judged-design.md` (THE LAW — §1 the decision, §2
   Aaron's verbatim locks, §3 the adjudicated restriction inventory, §4a the spine, §7 the ARC
   roadmap) · DECISIONS D455 + D454 · `docs/design/open-history-mayhem-mode-design.md` §4 (the
