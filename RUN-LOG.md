@@ -2,6 +2,22 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-20 — D472 LANE-014 SLICE 3 SHIPS: HDRI sky + derived lighting (T33)
+
+The post-D471 continuation ladder P1 (Claude Code / Fable 5, the §4 TOP-LOOP
+resolution recorded in the lane at `5d6d955` BEFORE any code move): the FIRST CODE
+MOVE smoke proved raw RGBE renders in headless SwiftShader r128 but reads near-night
+(the linear-output pipeline), so the WIP bank (`lane-014-s3-wip` 06200ba) landed with
+two logged amendments — the LDR pre-decode (per-sky EXPOSURE 0.336/0.590/0.645,
+gamma-2.2 LUT, below-horizon white fade) and the dusk LIGHTS row recomputed under
+the one reproducible 50/50 blend rule; `tools/derive-hdr-palette.mjs` ships and
+reproduces every constant. probe-visual-fidelity 28→39 (6 scenes incl. the
+route-BLOCKED-first fail-closed page; 39/39; matchesFog = the coupling tooth green
+UNAMENDED; 600s slow-Mac budget documented); binds A/B md5-proven; adjacents
+weather + atmospherics green; AD-7 game→c72c7585 · manifest→2fdf5fb3 ·
+srcTree→b0a88e93 · suite→69681d6f; WIP branch deleted. Counts hold 29/62/1,710/140.
+Next: slice 4 (T34 ground-level camera).
+
 ## 2026-07-19/20 — D471 the DAY-END BATTERY COMPLETES: 140-row green, LANE-015 + LANE-016 flip SHIPPED (night)
 
 The post-D470 ladder P1 (Claude Code / Fable 5, the §4 TOP-LOOP resolution per Aaron's

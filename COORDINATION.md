@@ -2448,7 +2448,7 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
-### LANE-014 · graphics-uplift — **DRIVE (slices 1-2 SHIPPED as D467/D468; slices 3-6 in flight — DRIVE re-taken 2026-07-20 for the post-D471 continuation ladder)** (ARC 3 of the D455 roadmap)
+### LANE-014 · graphics-uplift — **DRIVE (slices 1-3 SHIPPED as D467/D468/D472; slices 4-6 in flight — the post-D471 continuation ladder)** (ARC 3 of the D455 roadmap)
 
 - **Owning tool:** Claude Code (Fable 5) — DRIVE re-taken 2026-07-20 (the post-D471
   LANE-014 slices 3-6 continuation ladder) with THIS committed edit, per Aaron's
@@ -2705,7 +2705,16 @@ next green commit and confer through this ledger instead of permitting simultane
   suite now stands at 140 (the D469/D470 crater+olustee appends — adjudication 6's
   "stays 138" reads "no NEW rows from THIS lane"; slice teeth land in the existing
   graphics rows unchanged). First move: the RGBE-in-headless smoke, then slice 3
-  from the WIP bank per §1.
+  from the WIP bank per §1. SLICE 3 SHIPPED as D472 (this commit): T33 HDRI sky +
+  derived lighting per the slice-3 clause verbatim — the WIP bank adopted with two
+  logged amendments (the LDR pre-decode the smoke forced — raw RGBE renders
+  near-night in the r128 linear-output pipeline — and the dusk LIGHTS row recomputed
+  under the one reproducible 50/50 blend rule; tools/derive-hdr-palette.mjs ships
+  and reproduces every constant); teeth in the owner probe-visual-fidelity 28→39
+  with the matchesFog tooth as the coupling tooth green UNAMENDED; binds A/B
+  md5-proven; the 600s vf budget line documented; AD-7 re-pins game→c72c7585 ·
+  manifest→2fdf5fb3 · srcTree→b0a88e93 · suite→69681d6f; the WIP branch deleted
+  (the D463 pattern). Resume: slice 4 (T34 ground-level camera) per this contract.
 
 ---
 

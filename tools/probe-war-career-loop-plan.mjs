@@ -920,7 +920,11 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     // D470 battery root-fix 3 re-pin: srcTree 4564d84d -> cc403e85 — T23's async GLB apply
     // routes through the wrapped fld3dSyncUnit seam (atomic sibling hide/park with the
     // attach; presentation-only, no war-career surface touched).
-    srcTree:"cc403e85d963b31de50572111939fd25",
+    // D472 re-pin (the AD-7 idiom, at the LANE-014 slice-3 head): srcTree cc403e85 ->
+    // b0a88e93 (HDRI sky T33 — src/tactical/T33-hdri-sky.js enrolls after T32 in the
+    // manifest; presentation-only, no war-career surface touched).
+    // runtime/journey/command/focused/commandProbe did NOT move.
+    srcTree:"b0a88e93eb08ab9fbee9fca50eb158b2",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
     command:"8f12c49f7129b3a9be0203677822e048",
@@ -1234,11 +1238,15 @@ step("BASELINES + LANE", () => {
     // cf5de9f6 (the olustee row at the END, 139 -> 140, + the 600s budget). base/manifest hold.
     // D470 battery root-fix 3 re-pin: game 21a5216d -> b26238de — T23's async GLB apply
     // routes through the wrapped fld3dSyncUnit seam (rebuild). base/dataTree/manifest/suite hold.
-    game:"b26238de28f4ab74a07ad8950f8882c1",
+    // D472 re-pin (the AD-7 idiom, at the LANE-014 slice-3 head): game b26238de -> c72c7585,
+    // manifest bf29b44f -> 2fdf5fb3, suite cf5de9f6 -> 69681d6f — HDRI sky T33 enrolls after
+    // T32 (presentation-only src module + rebuild; + the probe-visual-fidelity 600s slow-Mac
+    // budget line). base/dataTree hold.
+    game:"c72c7585862844adef65776d3f3d2d4d",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     dataTree:"4bbdebe5c1180ed3ec702d9b6fe68b6b",
-    manifest:"bf29b44f3a90b4d678c97e8a204db89a",
-    suite:"cf5de9f6d23e881d7a7d97e3d147e382"
+    manifest:"2fdf5fb3e67399327deb812612962294",
+    suite:"69681d6f2216fe1dcfd594ffc4a757b7"
   };
   for (const key of Object.keys(expectedHashes)) {
     if (hashes[key] !== expectedHashes[key]) throw new Error(key + " baseline moved: " + hashes[key]);
@@ -1654,9 +1662,11 @@ step("REACHABILITY BASELINES", () => {
     // D470 battery root-fix 3 re-pin: game 21a5216d -> b26238de, srcTree 4564d84d ->
     // cc403e85 (T23's async GLB apply routes through the wrapped fld3dSyncUnit seam;
     // rebuild); dataTree/runtime/journey did NOT move.
-    game:"b26238de28f4ab74a07ad8950f8882c1",
+    // D472 re-pin: game b26238de -> c72c7585, srcTree cc403e85 -> b0a88e93 (HDRI sky T33
+    // enrolls after T32; presentation-only + rebuild); dataTree/runtime/journey did NOT move.
+    game:"c72c7585862844adef65776d3f3d2d4d",
     dataTree:"4bbdebe5c1180ed3ec702d9b6fe68b6b",
-    srcTree:"cc403e85d963b31de50572111939fd25",
+    srcTree:"b0a88e93eb08ab9fbee9fca50eb158b2",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
     // D460 re-pin: focused a29a5351 -> 2816a82c (Elkhorn Cherokee, 1614 -> 1617). D463

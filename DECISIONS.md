@@ -4,6 +4,73 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D472 — LANE-014 SLICE 3 SHIPPED: HDRI SKY + DERIVED LIGHTING (T33) — THE LDR-DECODED EQUIRECT SKY ON THE vfSKY DOME, FAIL-CLOSED, WITH REPRODUCIBLE PRECOMPUTED LIGHT CONSTANTS — [CLAUDE CODE (FABLE 5), LANE-014 DRIVE; THE POST-D471 LADDER P1] (2026-07-20)
+
+**SHIPPED (the contract's slice-3 clause verbatim):** new `src/tactical/T33-hdri-sky.js`
+(manifest-enrolled after T32), wrapping `fld3dInit` + `fldExit` by reassignment with the full
+`_carry` marker chain preserved (`_t33` outermost; every hook try/caught into FLDHDRI_S.errN;
+NO per-frame work — no render wrap). The three ledgered Poly Haven CC0 env HDRIs
+(provenance.json rows sky_day/sky_dusk/sky_overcast) load via the ALREADY-ENROLLED frozen-base
+RGBELoader addon, keyed to weather/time by an INDEPENDENT re-read of `__FIELD._scenTop/.scenData`
+(overcast/rain/fog/snow → overcast · clear/haze at dawn/dusk → dusk · else day), and attach to
+the T21 sky dome FOUND BY SCENE NAME 'vfSky' (no sibling-internal reach). The dome's material
+multiplies map × vertex ramp × material.colour and the fidelity layer keeps re-copying
+material.colour from the live fog every frame, so THE FOG TINT KEEPS MODULATING THE HDRI SKY by
+construction — the existing matchesFog tooth became the coupling tooth and stayed green
+UNAMENDED. NO PMREM/IBL (adjudication 1). Zero new scene objects/draw calls (adjudication 8).
+
+**THE WIP BANK (§1 law — adopted WITH two deliberate amendments, both logged):** branch
+`lane-014-s3-wip` (06200ba) carried a T33 draft + probe design + the palette-derivation tool;
+read against the contract, landed with the teeth, branch deleted after (the D463 pattern).
+**Amendment 1 — LDR pre-decode (the kickoff's anticipated adaptation):** the FIRST CODE MOVE
+smoke proved a raw RGBE map RENDERS in headless SwiftShader r128 (92 distinct sky colours,
+zero texture warnings, glError 0) but reads as a NEAR-NIGHT sky — the r128 linear-output
+pipeline displays RGBE-decoded linear light without gamma encoding. T33 therefore pre-decodes
+each HDRI once to an LDR canvas (RGBE → linear × precomputed per-sky EXPOSURE → gamma-2.2 LUT
+→ CanvasTexture, the T32 CanvasTexture idiom; the BELOW-HORIZON half fades to white so the
+dome under the horizon keeps today's fog-tinted look exactly). EXPOSURE constants are
+precomputed offline (232/255 display-mean target in linear light / measured upper-hemisphere
+mean luminance): day 0.336 · dusk 0.590 · overcast 0.645. **Amendment 2 — the dusk LIGHTS row
+recomputed:** the bank's day/overcast light constants reproduce EXACTLY from the derivation
+tool + the documented 50/50 blend rule, but its dusk row reproduced under NO consistent rule —
+recomputed under the one uniform rule (derived colours blended 50/50 with the authored palette
+of the key's canonical weather state: day = the engine default, dusk = clear + the dusk time
+modifier, overcast = the overcast base). The shipped constants — day #feefc7/#dee0dc/#55534d ·
+dusk #ffdb9e/#dfdef0/#5e4f44 · overcast #efeadf/#d3d5d5/#57524a — are ALL reproduced by
+`node tools/derive-hdr-palette.mjs` (ships in this commit; full RGBE parse, solid-angle-weighted
+hemisphere means, brightest-0.05% sun region, the T17 blend math reproduced verbatim).
+INTENSITIES never touched (the authored per-sky darkness law); pre-attach colours captured and
+restored on any detach so every non-attached state keeps today's lighting byte-identical.
+
+**FAIL-CLOSED (adjudication 2):** renderRich "off" ⇒ inert (no dome exists); fldLow() ⇒ no map;
+reduceMotion ⇒ static tint (map detached, lights restored); non-http(s)/file:// ⇒ no map (the
+offline single-file build keeps today's sky); RGBELoader absent ⇒ no map; .hdr
+absent/blocked/unreadable or undecodable ⇒ no map, lights never captured, errN 0.
+
+**TEETH (owner probe-visual-fidelity 28→39, adjudication 6 — suite stays 140):** T33 purity
+static scan (the full forbidden-sibling family + fldRng/_SAVE_VER/.swamps-.towns-.forts) ·
+wrappers/_t33/carry/fns · day-attach presence · injected clear/dusk → dusk · injected rain →
+overcast (the probe-weather scenData-injection idiom + the re-callable fldHdriApply) · derived
+colours == the pinned LIGHTS literals for all three keys · intensities == the authored launch
+palette across every switch · reduceMotion detach/restore/stash-cleared · low-tier no-map ·
+route-BLOCKED-FIRST fail-closed scene (fresh page session, every .hdr aborted: loadState
+"failed", gradient dome intact, fog tint live, lights never captured, errN 0) · off-inert.
+The probe grew 4→6 scenes (~292s standalone) — a documented 600s slow-Mac timeoutFor line
+rides this commit (the D469/D470 precedent; the D454/D471 slow-row class). Adjacents
+probe-weather + probe-atmospherics green (their static scans sweep T33); every sibling
+tactical-dir sweep (rr/vf/wx/atmo/amb/ff/flags/terrain) preflighted clean against T33.
+
+**BINDS (both md5-proven byte-identical restores):** A — FLDHDRI.FILES.day → a missing .hdr
+(+rebuild): EXACTLY the day-attach presence tooth + the derived-colours tooth red (the dusk/
+overcast keying teeth stay green — those HDRIs still load; predeclared), the BLOCKED-scene
+fail-closed tooth GREEN proving the gradient dome; restore md5-proven. B — a temporary T33
+outermost fld3dRender wrap overwriting the dome colour post-render-chain (a real decouple):
+EXACTLY the matchesFog coupling tooth red; restore md5-proven. **AD-7 re-pins in this commit:**
+game b26238de → c72c7585 · manifest bf29b44f → 2fdf5fb3 · srcTree cc403e85 → b0a88e93 · suite
+cf5de9f6 → 69681d6f at all four plan-probe sites (base/dataTree/focused hold; data/ untouched);
+both plan probes re-run green post-commit. Counts hold 29/62/1,710/140; `_SAVE_VER=1`; frozen
+base `c9db83fa` untouched.
+
 ## D471 — THE D470 DAY-END BATTERY IS COMPLETE (140/140 ACROSS THE RESUMED SEGMENTS, ZERO UNRESOLVED REDS) — LANE-015 + LANE-016 FLIP SHIPPED AT BATTERY SHA `c9934a0` — [CLAUDE CODE (FABLE 5); THE POST-D470 LADDER P1] (2026-07-19/20 night)
 
 **THE BATTERY (the COORDINATION §4 TOP-LOOP resolution: Claude Code / Fable 5, per

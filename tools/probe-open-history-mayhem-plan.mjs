@@ -86,10 +86,15 @@ const PIN = {
   // template-arrival apply now routes through the wrapped fld3dSyncUnit seam so every
   // sibling layer's hide/park runs atomically with the attach (the tripo hideBaseMarker
   // one-frame orphan-figures window; rebuild). base/manifest/suite hold; data untouched.
-  game: "b26238de28f4ab74a07ad8950f8882c1",
+  // D472 re-pin (the AD-7 idiom, at the LANE-014 slice-3 head): game b26238de -> c72c7585,
+  // manifest bf29b44f -> 2fdf5fb3, suite cf5de9f6 -> 69681d6f — HDRI sky T33
+  // (src/tactical/T33-hdri-sky.js enrolls after T32; the LDR-decoded equirect map on the
+  // vfSky dome keyed to weather/time + precomputed derived light colours, fail-closed;
+  // rebuild; + the probe-visual-fidelity 600s slow-Mac budget line). base holds; data untouched.
+  game: "c72c7585862844adef65776d3f3d2d4d",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
-  manifest: "bf29b44f3a90b4d678c97e8a204db89a",
-  suite: "cf5de9f6d23e881d7a7d97e3d147e382",
+  manifest: "2fdf5fb3e67399327deb812612962294",
+  suite: "69681d6f2216fe1dcfd594ffc4a757b7",
   scenarios: 29,   // D436: 24 -> 25 atlanta; D442: 25 -> 26 coldHarbor; D463: 26 -> 27 fortPillow (LANE-013 P4, the D455 SS3 row 6 unlock); D469: 27 -> 28 crater at rank 71.5 (LANE-015); D470: 28 -> 29 olustee at rank 65.5 between chattanooga (65) and fortPillow (66) (LANE-016)
   schemas: 62,   // D418: 54 -> 55 mayhem-rules.json; D436: 55 -> 56 atlanta.json; D442: 56 -> 57 cold-harbor.json; D445: 57 -> 58 chief-of-staff.json; D446: 58 -> 59 concept-links.json; D463: 59 -> 60 fort-pillow.json; D469: 60 -> 61 crater.json (LANE-015); D470: 61 -> 62 olustee.json (LANE-016)
   armyRegister: 1710,   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots. D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7) adds 1 unique side-unit id x 3 slots. D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4). D469: 1632 -> 1671 — The Crater adds 13 unique side-unit ids x 3 slots (LANE-015, the D464 spec). D470: 1671 -> 1710 — Olustee adds 13 unique side-unit ids x 3 slots (LANE-016, the D465 spec).

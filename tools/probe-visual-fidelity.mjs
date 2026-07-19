@@ -18,6 +18,15 @@ import "./guard-probe-browser.mjs";
 //  - the OFF switch (renderRich="off") reverts to the byte-identical default: no dome, no vignette, no shadow/
 //    pegs/rank-map, colA._vfAO unset;
 //  - zero pageerrors + zero Three.js texture warnings; a screenshot is captured for visual confirmation.
+//  - T33 HDRI SKY + DERIVED LIGHTING (LANE-014 slice 3, this probe is the owner): the decoded LDR
+//    equirect map attaches to the vfSky dome keyed to weather/time (day at launch; injected clear/dusk
+//    -> dusk; injected rain -> overcast — the probe-weather scenData-injection idiom + the re-callable
+//    fldHdriApply); sun/hemisphere light COLOURS == the FLDHDRI.LIGHTS precomputed constants
+//    (tools/derive-hdr-palette.mjs, D472) with INTENSITIES untouched; reduceMotion detaches the map and
+//    restores the authored launch palette; fldLow() carries no map; a route-BLOCKED first-load scene
+//    proves the fail-closed gradient dome (loadState "failed", no map, fog tint live, lights never
+//    captured, errN 0); renderRich="off" leaves T33 inert. The existing matchesFog tooth doubles as the
+//    fog-tint COUPLING tooth on the mapped dome (the dome colour keeps re-copying the live weather fog).
 // (The 26-outcome + 20-AB seed-for-seed byte-identity gate stays owned by probe-presets / probe-phased-ab.)
 
 import { chromium } from 'playwright-core';
@@ -53,6 +62,11 @@ function staticScan() {
   check('static-scan: no combat/tactical file references the visual-fidelity layer', leaks.length === 0, leaks.join(', '));
   let t21 = ''; try { t21 = readFileSync(join(tacDir, 'T21-visual-fidelity.js'), 'utf8'); } catch (e) {}
   check('static-scan: T21 never calls fldRng + never writes _SAVE_VER', t21.length > 0 && !/fldRng\(/.test(t21) && !/_SAVE_VER\s*=/.test(t21));
+  // T33 hdri sky (LANE-014 slice 3): presentation-only + no sibling visual-layer reaches
+  // (the dome is found by scene name 'vfSky'; weather re-resolved from __FIELD independently).
+  let t33 = ''; try { t33 = readFileSync(join(tacDir, 'T33-hdri-sky.js'), 'utf8'); } catch (e) {}
+  check('static-scan: T33 never calls fldRng, never writes _SAVE_VER, reaches no sibling visual-layer internals',
+    t33.length > 0 && !/fldRng\(/.test(t33) && !/_SAVE_VER\s*=/.test(t33) && !/(fldRr|FLDRR|fldVf|FLDVF|fldTr[A-Z]|FLDTR|fldFf|FLDFF|fldWx|FLDWX|fldAtmo|FLDAT|fldElevMode)/.test(t33) && !/\.swamps\b|\.towns\b|\.forts\b/.test(t33));
 }
 
 async function ensureServer() {
@@ -63,7 +77,7 @@ async function ensureServer() {
   srv.kill(); throw new Error('Could not start static server on :' + cfg.port);
 }
 
-// opts: { off, low, noFigures }
+// opts: { off, low, noFigures, waitHdri }
 function sceneScript(scenario, seed, opts) {
   opts = opts || {};
   return `(async () => {
@@ -103,12 +117,26 @@ function sceneScript(scenario, seed, opts) {
 
       var T = window.THREE;
 
+      /* ---- T33 HDRI SKY (LANE-014 slice 3): wait for the async day attach where expected ---- */
+      if (${JSON.stringify(!!opts.waitHdri)}) {
+        for (var hw = 0; hw < 200 && !(typeof FLDHDRI_S !== 'undefined' && FLDHDRI_S.attachedKey === 'day'); hw++) { fldRender(); await wait(100); }
+      }
+      out.t33 = {
+        wrappers: typeof fld3dInit === 'function' && !!fld3dInit._t33 && typeof fldExit === 'function' && !!fldExit._t33,
+        chainVf: !!(fld3dInit._vf && fldExit._vf),
+        fns: ['fldHdriOff','fldHdriEligible','fldHdriKey','fldHdriDome','fldHdriDecode','fldHdriEnsure','fldHdriApply','fldHdriAttach','fldHdriDetach','fldHdriExit'].every(function(n){ return eval('typeof '+n) === 'function'; }),
+        attachedKey: (typeof FLDHDRI_S !== 'undefined') ? FLDHDRI_S.attachedKey : undefined,
+        errN: (typeof FLDHDRI_S !== 'undefined') ? FLDHDRI_S.errN : -1
+      };
+
       /* ---- SKY DOME ---- */
       var sky = null; __FIELD.scene.traverse(function(o){ if (o && o.name === 'vfSky') sky = o; });
       out.sky = { found: !!sky };
       if (sky) {
         out.sky.renderOrder = sky.renderOrder;
         out.sky.backside = (sky.material && sky.material.side === T.BackSide);
+        out.sky.map = !!(sky.material && sky.material.map);
+        out.sky.attachedKey = (typeof FLDHDRI_S !== 'undefined') ? FLDHDRI_S.attachedKey : undefined;
         out.sky.matchesFog = !!(sky.material && __FIELD.scene.fog && sky.material.color.getHexString() === __FIELD.scene.fog.color.getHexString());
         // the flat background is RETAINED (a sky-coloured fallback that fills the far-plane clip ring behind the
         // dome). T17 authors bg a touch distinct from fog by design, so we assert RETENTION, not a fog hex match
@@ -200,16 +228,116 @@ function sceneScript(scenario, seed, opts) {
   })();`;
 }
 
-async function runScene(page, label, scenario, seed, opts, shared) {
+/* ---- T33 scene scripts (LANE-014 slice 3) ---- */
+// FAIL-CLOSED FIRST-LOAD: runs on a fresh page session with every .hdr request aborted
+// (T33's per-key loadState is sticky per session), proving the byte-identical gradient dome.
+function hdriBlockedScript(scenario, seed) {
+  return `(async () => {
+    function wait(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+    var out = { ok:false };
+    try {
+      G.settings = G.settings || {};
+      G.settings.gfxQuality = 'high';
+      try { delete G.settings.tacticalPreset; } catch(e) {}
+      delete G.settings.tacticalFog;
+      G.settings.reduceMotion = false;
+      try { delete G.settings.renderRich; } catch(e){}
+      try { delete G.settings.formationFigures; } catch(e){}
+      fldLaunchSandbox({ renderer:'3d', scenario:${JSON.stringify(scenario)}, autoBoth:true, playerSide:'US', seed:${seed} });
+      for (var w = 0; w < 160 && !(__FIELD.mode3d && __FIELD.renderer); w++) await wait(100);
+      if (!__FIELD.mode3d || !__FIELD.renderer) throw new Error('3D renderer did not become active; kind=' + __FIELD.rendererKind);
+      if (__FIELD.phase === 'deploy') { __FIELD.phase = 'battle'; __FIELD.paused = false; }
+      for (var p = 0; p < 200 && !(typeof FLDHDRI_S !== 'undefined' && FLDHDRI_S.loadState.day === 'failed'); p++) { fldRender(); await wait(100); }
+      var sky = null; __FIELD.scene.traverse(function(o){ if (o && o.name === 'vfSky') sky = o; });
+      out.loadStateDay = (typeof FLDHDRI_S !== 'undefined') ? FLDHDRI_S.loadState.day : undefined;
+      out.sky = { found: !!sky, map: !!(sky && sky.material.map),
+        matchesFog: !!(sky && __FIELD.scene.fog && sky.material.color.getHexString() === __FIELD.scene.fog.color.getHexString()) };
+      out.attachedKey = FLDHDRI_S.attachedKey;
+      out.prevLights = FLDHDRI_S.prevLights;
+      out.errN = FLDHDRI_S.errN;
+      out.ok = true;
+    } catch (e) { out.ok = false; out.error = String(e && e.message || e); }
+    return out;
+  })();`;
+}
+// KEYING + DERIVED LIGHTING + reduceMotion: one launch; weather re-injected via the
+// probe-weather scenData idiom, re-applied through the re-callable fldHdriApply().
+function hdriKeysScript(scenario, seed) {
+  return `(async () => {
+    function wait(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+    var out = { ok:false };
+    try {
+      try { if (typeof fldExit === 'function' && typeof __FIELD !== 'undefined' && __FIELD && __FIELD.launched) fldExit(true); } catch(e){}
+      await wait(120);
+      G.settings = G.settings || {};
+      G.settings.gfxQuality = 'high';
+      try { delete G.settings.tacticalPreset; } catch(e) {}
+      delete G.settings.tacticalFog;
+      G.settings.reduceMotion = false;
+      try { delete G.settings.renderRich; } catch(e){}
+      try { delete G.settings.formationFigures; } catch(e){}
+      fldLaunchSandbox({ renderer:'3d', scenario:${JSON.stringify(scenario)}, autoBoth:true, playerSide:'US', seed:${seed} });
+      for (var w = 0; w < 160 && !(__FIELD.mode3d && __FIELD.renderer); w++) await wait(100);
+      if (!__FIELD.mode3d || !__FIELD.renderer) throw new Error('3D renderer did not become active; kind=' + __FIELD.rendererKind);
+      if (__FIELD.phase === 'deploy') { __FIELD.phase = 'battle'; __FIELD.paused = false; }
+      // the authored launch palette (what T33 must never change intensities of, and must
+      // restore colours to on detach): the weather layer's own resolve, else engine defaults
+      var wx = (typeof fldWxResolve === 'function') ? fldWxResolve() : null;
+      out.palette = wx ? { sun: wx.palette.sun, hemiS: wx.palette.hemiS, hemiG: wx.palette.hemiG, sunI: wx.palette.sunI, hemiI: wx.palette.hemiI }
+                       : { sun: '#fff2d0', hemiS: '#dceaff', hemiG: '#5a4a32', sunI: 1.15, hemiI: 0.72 };
+      function snap() {
+        var sky = null, dir = null, hemi = null;
+        __FIELD.scene.traverse(function(o){
+          if (o && o.name === 'vfSky') sky = o;
+          if (o && o.isDirectionalLight && !dir) dir = o;
+          if (o && o.isHemisphereLight && !hemi) hemi = o;
+        });
+        return {
+          attachedKey: FLDHDRI_S.attachedKey,
+          map: !!(sky && sky.material.map),
+          matchesFog: !!(sky && __FIELD.scene.fog && sky.material.color.getHexString() === __FIELD.scene.fog.color.getHexString()),
+          sun: dir ? '#' + dir.color.getHexString() : null, sunI: dir ? dir.intensity : null,
+          hemiS: hemi ? '#' + hemi.color.getHexString() : null,
+          hemiG: hemi && hemi.groundColor ? '#' + hemi.groundColor.getHexString() : null,
+          hemiI: hemi ? hemi.intensity : null,
+          prevLights: FLDHDRI_S.prevLights ? Object.assign({}, FLDHDRI_S.prevLights) : null
+        };
+      }
+      async function till(key) {
+        for (var p = 0; p < 200 && FLDHDRI_S.attachedKey !== key; p++) { fldRender(); await wait(100); }
+      }
+      function inject(weather) {
+        __FIELD.scenData = Object.assign({}, __FIELD.scenData, { weather: weather });   // resolve reads _scenTop first, then scenData
+        __FIELD._scenTop = null;
+        fldHdriApply();
+      }
+      await till('day');    out.day = snap();
+      inject({ sky: 'clear', time: 'dusk' });     await till('dusk');     out.dusk = snap();
+      inject({ sky: 'rain', time: 'midday' });    await till('overcast'); out.rain = snap();
+      G.settings.reduceMotion = true; fldHdriApply();
+      for (var f = 0; f < 3; f++) { fldRender(); await wait(60); }
+      out.rm = snap();
+      G.settings.reduceMotion = false;
+      out.errN = FLDHDRI_S.errN;
+      out.ok = true;
+    } catch (e) { out.ok = false; out.error = String(e && e.message || e); }
+    return out;
+  })();`;
+}
+
+async function runSceneScript(page, label, script, shared) {
   const peStart = shared.pe.length, conStart = shared.con.length;
   let d = { ok: false, error: 'not run' };
   try {
-    d = await page.evaluate(sceneScript(scenario, seed, opts));
+    d = await page.evaluate(script);
     try { await page.screenshot({ path: join(OUT, 'vf-' + label + '.png') }); d.shot = 'tools/shots/vf-' + label + '.png'; } catch (e) {}
   } catch (e) { d = { ok: false, error: String(e && e.message || e) }; }
   const pageerrors = shared.pe.slice(peStart), consoleLines = shared.con.slice(conStart);
   const texWarn = consoleLines.filter(l => THREE_TEXTURE_WARNING.test(l));
   return { label, detail: d, pageerrors, texWarn, console: consoleLines.slice(-10) };
+}
+async function runScene(page, label, scenario, seed, opts, shared) {
+  return runSceneScript(page, label, sceneScript(scenario, seed, opts), shared);
 }
 
 (async () => {
@@ -225,12 +353,20 @@ async function runScene(page, label, scenario, seed, opts, shared) {
   page.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') shared.con.push('[' + m.type() + '] ' + m.text()); });
   const scenes = [];
   try {
+    // T33 FAIL-CLOSED FIRST (fresh page session; per-key loadState is sticky): abort
+    // every .hdr fetch, prove the byte-identical gradient dome, then reload clean.
+    await page.route('**/*.hdr', r => r.abort());
     await page.goto(cfg.baseUrl + '/' + cfg.file, { waitUntil: 'domcontentloaded', timeout: 45000 });
     await sleep(500);
-    scenes.push(await runScene(page, '3d', 'shiloh', 21, {}, shared));
+    scenes.push(await runSceneScript(page, 'hdri-blocked', hdriBlockedScript('shiloh', 21), shared));
+    await page.unroute('**/*.hdr');
+    await page.goto(cfg.baseUrl + '/' + cfg.file, { waitUntil: 'domcontentloaded', timeout: 45000 });
+    await sleep(500);
+    scenes.push(await runScene(page, '3d', 'shiloh', 21, { waitHdri: true }, shared));
     scenes.push(await runScene(page, 'pegs-fallback', 'shiloh', 21, { noFigures: true }, shared));
     scenes.push(await runScene(page, 'off', 'shiloh', 21, { off: true }, shared));
     scenes.push(await runScene(page, 'low', 'shiloh', 21, { low: true }, shared));
+    scenes.push(await runSceneScript(page, 'hdri-keys', hdriKeysScript('shiloh', 21), shared));
   } finally { if (server) server.kill(); }
 
   const byLabel = {}; for (const s of scenes) byLabel[s.label] = s;
@@ -288,6 +424,42 @@ async function runScene(page, label, scenario, seed, opts, shared) {
   check('renderRich="off": NO per-brigade shadow / pegs / rank-map (byte-identical default marker)', OFF.ok && OFF.unit.found && OFF.unit.shadow !== true && OFF.unit.pegs !== true && OFF.unit.rankMap !== true, 'shadow=' + (OFF.unit && OFF.unit.shadow) + ' pegs=' + (OFF.unit && OFF.unit.pegs) + ' rankMap=' + (OFF.unit && OFF.unit.rankMap));
   check('renderRich="off": no swallowed exceptions (errN===0)', OFF.ok && OFF.errN === 0, 'errN=' + (OFF.ok && OFF.errN));
   check('renderRich="off": NO ground texture map applied (the T32 terrain-texturing layer rides the same opt-out)', OFF.ok && OFF.groundMap === false, 'groundMap=' + (OFF.groundMap));
+
+  // T33 HDRI sky + derived lighting (LANE-014 slice 3)
+  const KEYS = byLabel['hdri-keys'].detail, BLK = byLabel['hdri-blocked'].detail;
+  // FLDHDRI.LIGHTS pinned as literals (tools/derive-hdr-palette.mjs reproduces them; D472)
+  const HL = { day: { sun: '#feefc7', hemiS: '#dee0dc', hemiG: '#55534d' },
+               dusk: { sun: '#ffdb9e', hemiS: '#dfdef0', hemiG: '#5e4f44' },
+               overcast: { sun: '#efeadf', hemiS: '#d3d5d5', hemiG: '#57524a' } };
+  const near = (a, b) => a !== null && a !== undefined && b !== null && b !== undefined && Math.abs(a - b) < 1e-9;
+  const litMatch = (s, e) => !!s && !!e && s.sun === e.sun && s.hemiS === e.hemiS && s.hemiG === e.hemiG;
+  check('T33: 2 by-assignment wrappers (fld3dInit/fldExit) installed, prior ._vf markers carried, module fns present',
+    R.ok && R.t33 && R.t33.wrappers === true && R.t33.chainVf === true && R.t33.fns === true, JSON.stringify(R.t33 || {}));
+  check('hdri sky: the decoded day equirect map ATTACHES to the vfSky dome at launch (attachedKey "day")',
+    R.ok && R.sky.map === true && R.sky.attachedKey === 'day', 'map=' + (R.sky && R.sky.map) + ' key=' + (R.sky && R.sky.attachedKey));
+  check('hdri keying: injected clear/dusk re-applies to the DUSK HDRI',
+    KEYS.ok && KEYS.dusk && KEYS.dusk.attachedKey === 'dusk' && KEYS.dusk.map === true,
+    'key=' + (KEYS.dusk && KEYS.dusk.attachedKey) + ' map=' + (KEYS.dusk && KEYS.dusk.map));
+  check('hdri keying: injected rain re-applies to the OVERCAST HDRI',
+    KEYS.ok && KEYS.rain && KEYS.rain.attachedKey === 'overcast' && KEYS.rain.map === true,
+    'key=' + (KEYS.rain && KEYS.rain.attachedKey) + ' map=' + (KEYS.rain && KEYS.rain.map));
+  check('derived lighting: sun/hemisphere COLOURS == the precomputed FLDHDRI.LIGHTS constants for all three keys',
+    KEYS.ok && litMatch(KEYS.day, HL.day) && litMatch(KEYS.dusk, HL.dusk) && litMatch(KEYS.rain, HL.overcast),
+    JSON.stringify({ day: KEYS.day && [KEYS.day.sun, KEYS.day.hemiS, KEYS.day.hemiG], dusk: KEYS.dusk && [KEYS.dusk.sun, KEYS.dusk.hemiS, KEYS.dusk.hemiG], rain: KEYS.rain && [KEYS.rain.sun, KEYS.rain.hemiS, KEYS.rain.hemiG] }));
+  check('derived lighting: light INTENSITIES untouched (== the authored launch palette) across every key switch',
+    KEYS.ok && KEYS.palette && [KEYS.day, KEYS.dusk, KEYS.rain, KEYS.rm].every(s => s && near(s.sunI, KEYS.palette.sunI) && near(s.hemiI, KEYS.palette.hemiI)),
+    JSON.stringify({ expected: KEYS.palette && [KEYS.palette.sunI, KEYS.palette.hemiI], day: KEYS.day && [KEYS.day.sunI, KEYS.day.hemiI], rm: KEYS.rm && [KEYS.rm.sunI, KEYS.rm.hemiI] }));
+  check('reduceMotion: static tint — map DETACHED, key null, light colours RESTORED to the authored launch palette, stash cleared',
+    KEYS.ok && KEYS.rm && KEYS.rm.map === false && KEYS.rm.attachedKey === null && litMatch(KEYS.rm, KEYS.palette) && KEYS.rm.prevLights === null,
+    JSON.stringify(KEYS.rm || {}));
+  check('fldLow(): the dome carries NO hdri map at the low tier (static tint)',
+    LOW.ok && LOW.sky.found && LOW.sky.map !== true && !!LOW.t33 && LOW.t33.attachedKey == null,
+    'map=' + (LOW.sky && LOW.sky.map) + ' key=' + (LOW.t33 && LOW.t33.attachedKey));
+  check('fail-closed (.hdr BLOCKED, first load): loadState "failed" — gradient dome intact (no map), fog tint live, lights never captured, errN 0',
+    BLK.ok && BLK.loadStateDay === 'failed' && BLK.sky && BLK.sky.found === true && BLK.sky.map !== true && BLK.sky.matchesFog === true && BLK.attachedKey === null && BLK.prevLights === null && BLK.errN === 0,
+    JSON.stringify({ loadStateDay: BLK.loadStateDay, sky: BLK.sky, key: BLK.attachedKey, errN: BLK.errN }));
+  check('renderRich="off": T33 inert (no attach, attachedKey null, errN 0)',
+    OFF.ok && OFF.t33 && OFF.t33.attachedKey === null && OFF.t33.errN === 0, JSON.stringify(OFF.t33 || {}));
 
   // health
   check('a screenshot was captured for visual confirmation', !!byLabel['3d'].detail.shot, byLabel['3d'].detail.shot || '');
