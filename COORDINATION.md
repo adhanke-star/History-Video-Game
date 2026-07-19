@@ -2448,23 +2448,28 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
-### LANE-014 · graphics-uplift — **CONTRACT (slices 1-2 SHIPPED as D467/D468; slices 3-6 remain; unowned — the DRIVE lock released at the 2026-07-19 evening closeout)** (ARC 3 of the D455 roadmap)
+### LANE-014 · graphics-uplift — **DRIVE (slices 1-2 SHIPPED as D467/D468; slices 3-6 in flight — DRIVE re-taken 2026-07-20 for the post-D471 continuation ladder)** (ARC 3 of the D455 roadmap)
 
-- **Owning tool:** Claude Code (Fable 5) — DRIVE re-taken 2026-07-19 (afternoon day
-  ladder) with THIS committed edit, per Aaron's standing same-day pick: the §4
-  TOP-LOOP resolution is Fable 5 (Aaron-confirmed this morning at the D467 charter and
-  extended by the all-day maximizer kickoff; helpers routed Sonnet/Haiku mechanical ·
-  Opus high reasoning, model+effort explicit per call). SLICE 2 SHIPPED as D468 (this
-  commit): T32 terrain texturing per the slice-2 clause verbatim — the region-keyed
-  audited-albedo bake on the Lambert ground map, fail-closed at every gate, teeth in
-  the existing owners (terrain-readability 35 · visual-fidelity 28 · tactical-visuals
-  floors), binds A/B md5-proven, AD-7 re-pins game→9fca6932 · manifest→bf29b44f ·
-  srcTree→03c2cdba. The day ladder then shipped the Crater (LANE-015/D469) and Olustee
-  (LANE-016/D470) runtimes and SHED slices 3-5 honestly under the context safe-stop
-  law; the DRIVE lock RELEASED at the evening closeout. The next session re-takes
-  DRIVE with a committed edit BEFORE any code move (resume: slice 3 per this
-  contract).
-- **State:** CONTRACT — this entry IS the acceptance contract (ratified `489cfc4`, the
+- **Owning tool:** Claude Code (Fable 5) — DRIVE re-taken 2026-07-20 (the post-D471
+  LANE-014 slices 3-6 continuation ladder) with THIS committed edit, per Aaron's
+  explicit continuation kickoff: the §4 TOP-LOOP resolution is Fable 5 (the kickoff
+  names Fable 5 as recipient and it is the live session model; helpers routed
+  Sonnet low/med mechanical · Haiku pure reads · Opus high reasoning, model+effort
+  explicit per call). Resume: slice 3 (T33 HDRI sky) per this contract's clause IN
+  FULL. The WIP BANK branch `lane-014-s3-wip` (06200ba, pushed) carries a candidate
+  T33 draft + probe design + the deterministic palette-derivation tool — §1 law:
+  a candidate rendering of the contract, to be read against the lane entry, adopted
+  or deliberately amended (logged in DECISIONS), landed WITH the teeth in the same
+  commit, branch deleted after (the D463 pattern). Prior DRIVE history: SLICE 2
+  SHIPPED as D468 — T32 terrain texturing per the slice-2 clause verbatim — the
+  region-keyed audited-albedo bake on the Lambert ground map, fail-closed at every
+  gate, teeth in the existing owners (terrain-readability 35 · visual-fidelity 28 ·
+  tactical-visuals floors), binds A/B md5-proven, AD-7 re-pins game→9fca6932 ·
+  manifest→bf29b44f · srcTree→03c2cdba. The day ladder then shipped the Crater
+  (LANE-015/D469) and Olustee (LANE-016/D470) runtimes and SHED slices 3-5 honestly
+  under the context safe-stop law; the D471 battery (SHA c9934a0) then released
+  ARC 2 / C3 fully, leaving this lane the sole open arc.
+- **State:** DRIVE — this entry IS the acceptance contract (ratified `489cfc4`, the
   LANE-013 `3506716` precedent). SLICE 1 is SHIPPED (`6f62352`, D467: the assets3d
   provenance wall; all 30 staged files Verified CC0-1.0 byte-identical to identified
   Poly Haven originals; binds A/B md5-proven; AD-7 re-pins game→11099dac ·
@@ -2694,7 +2699,13 @@ next green commit and confer through this ledger instead of permitting simultane
   re-stated in the owner field above. SLICE 2 SHIPPED the same session (D468, this
   commit): T32 terrain texturing per the contract clause verbatim — presence/keying/
   carry-chain/fail-closed/low-tier teeth in the existing owners, binds A+B md5-proven,
-  the vertex-Y tooth green unamended, zero new draw calls, suite held at 138.
+  the vertex-Y tooth green unamended, zero new draw calls, suite held at 138. DRIVE
+  re-taken 2026-07-20 (Claude Code / Fable 5, the §4 resolution re-stated in the owner
+  field above) for slices 3-6 under Aaron's post-D471 continuation kickoff; the
+  suite now stands at 140 (the D469/D470 crater+olustee appends — adjudication 6's
+  "stays 138" reads "no NEW rows from THIS lane"; slice teeth land in the existing
+  graphics rows unchanged). First move: the RGBE-in-headless smoke, then slice 3
+  from the WIP bank per §1.
 
 ---
 
