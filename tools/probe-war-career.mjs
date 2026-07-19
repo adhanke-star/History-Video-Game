@@ -2667,7 +2667,7 @@ async function main() {
       screenshots: [{ path: SHOT, bytes: shotBytes, viewport: { width:390, height:700 }, zoom:200 }]
     });
     const failed = result.steps.filter(row => !row.ok);
-    result.ok = !!runtime.ok && staticResult.ok && !failed.length && !pageerrors.length && !realErrors.length && list.length === 138;   // D425: 130 -> 131 (D418 Mayhem row). D443: 131 -> 133 (D436 atlanta + D442 cold harbor rows at the END). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links) D447: 136 -> 137 (memory-chain). D463: 137 -> 138 (fort-pillow, LANE-013 P4, at the END; row 38 holds). D469/D470: 138 -> 140 — the crater and olustee rows appended at the END (LANE-015/LANE-016); the D469/D470 sweeps moved this probe's 1671/1710 register pins and missed this count tooth (recorded honestly, the D443 AD-6 precedent).
+    result.ok = !!runtime.ok && staticResult.ok && !failed.length && !pageerrors.length && !realErrors.length && list.length === 140;   // D425: 130 -> 131 (D418 Mayhem row). D443: 131 -> 133 (D436 atlanta + D442 cold harbor rows at the END). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links) D447: 136 -> 137 (memory-chain). D463: 137 -> 138 (fort-pillow, LANE-013 P4, at the END; row 38 holds). D469/D470: 138 -> 140 — the crater and olustee rows appended at the END (LANE-015/LANE-016); the D469/D470 sweeps moved this probe's 1671/1710 register pins and missed this count tooth (recorded honestly, the D443 AD-6 precedent).
   } catch (error) {
     result.ok = false;
     result.fatal = String(error && error.stack || error);
