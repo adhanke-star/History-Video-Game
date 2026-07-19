@@ -50,7 +50,11 @@ const PIN = {
   // D456 re-pin (the AD-7 idiom, at the LANE-012 Slice-1 head): game 6113bc2c -> 2171f60d
   // and manifest 60f73b23 -> bb5d7903 (D456 teaching companion — src/113 enrolls at
   // manifest 113; guarded seams in src/100 + src/107; rebuild). base/suite hold.
-  game: "2171f60d4eeff1710f7a7c1badda0065",
+  // D457 re-pin (the AD-7 idiom, at the LANE-012 Slice-2 head): game 2171f60d -> a6cbfd2d
+  // (D457 Historical no-quarter unlock — the `no-quarter-historical` consequence-only data
+  // action + the src/107 massacre-block/adapters/judged panel + the src/33/34/62 reader
+  // seams + the src/82 guarded seam; rebuild). base/manifest/suite hold.
+  game: "a6cbfd2dde97653049415dd7e078ce3e",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
   manifest: "bb5d7903507c8fccf53addf981c2023e",
   suite: "edba2bd930922a27414e07173a64296b",

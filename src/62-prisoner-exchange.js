@@ -45,6 +45,22 @@ function _pxYear(C, B) {
   return campaignYear(C);
 }
 
+/* LANE-012 Slice 2 (D455 §4a.1) — THE REPRISAL CYCLE: the C.infamy ledger (written only
+   by the src/107 judged no-quarter action) reads here as DURABLE cartel damage — pressure
+   up, exchange function down (the Fort Pillow -> cartel-breakdown teaching chain). Both
+   reads are bounded and are EXACT no-ops when the ledger is absent or zero (D74: a
+   simulation input through this existing owner; no outcome write). */
+function _pxInfamyTotal(C) {
+  var I = C && C.infamy;
+  if (!I || typeof I !== "object" || Array.isArray(I)) return 0;
+  var t = Number(I.total);
+  return (isFinite(t) && t > 0) ? Math.min(100, t) : 0;
+}
+function _pxInfamyExchangeFactor(C) {
+  var t = _pxInfamyTotal(C);
+  return t > 0 ? 1 - Math.min(0.5, t * 0.005) : 1;
+}
+
 function _pxUsctFault(C, year) {
   var em = C && C.president && C.president.emancipation;
   var issued = !!(em && em.issued);
@@ -132,6 +148,7 @@ function prisonerExchangeSnapshot(C) {
     + usctPressure * _pxNum(w.usct, 0.24)
     + mortalityRisk * _pxNum(w.mortality, 0.16)
     + (100 - enemyWill) * _pxNum(w.enemyWill, 0.10);
+  pressure += Math.min(15, _pxInfamyTotal(C) * 0.3);   // LANE-012 Slice 2: the reprisal read (0 when the ledger is absent)
   if (P && P.active) pressure -= 8;
   pressure = _pxClamp(pressure, 0, 100);
   var word = _pxPressureWord(pressure);
@@ -147,7 +164,7 @@ function prisonerExchangeSnapshot(C) {
     totalDetained: _pxRound(total),
     heldByUs: _pxRound(heldByUs),
     heldByEnemy: _pxRound(heldByEnemy),
-    exchangeFunction: _pxRound(stage.exchangeRate * 100),
+    exchangeFunction: _pxRound(stage.exchangeRate * _pxInfamyExchangeFactor(C) * 100),   // LANE-012 Slice 2: durable cartel damage (factor 1 when the ledger is absent)
     mortalityRisk: _pxRound(mortalityRisk),
     usctFault: _pxUsctFault(C, year),
     returnedHome: _pxRound(returned[side]),
@@ -218,7 +235,7 @@ function prisonerExchangeOnResolve(winnerSide, type, B, C, win) {
   var rates = _pxCfg().exchangeRates || {}, morts = _pxCfg().mortalityRates || {};
   var reliefRate = P.active ? _pxNum(rates.reliefBonus, 0.055) : 0;
   var mortalityReduction = P.active ? _pxNum(morts.reliefReduction, 0.008) : 0;
-  var exchangeRate = _pxClamp(stage.exchangeRate + reliefRate, 0, 0.65);
+  var exchangeRate = _pxClamp((stage.exchangeRate + reliefRate) * _pxInfamyExchangeFactor(C), 0, 0.65);   // LANE-012 Slice 2: the reprisal read — infamy durably degrades the exchange (factor 1 when absent)
   var mortalityRate = _pxClamp(stage.mortalityRate - mortalityReduction, 0, 0.08);
   var casualties = (B && B.casualties) || {};
   var added = { US: _pxCaptureFor("US", winnerSide, type, casualties), CS: _pxCaptureFor("CS", winnerSide, type, casualties) };

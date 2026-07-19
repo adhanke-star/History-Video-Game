@@ -4,6 +4,86 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D457 — LANE-012 SLICE 2 SHIPPED: THE HISTORICAL SURRENDER/NO-QUARTER UNLOCK — JUDGED, NEVER REWARDED, BEHIND THE LOAD-BEARING MASSACRE-BLOCK — [CLAUDE CODE (FABLE 5), LANE-012 DRIVE] (2026-07-18)
+
+ARC 1 slice 2, built to the LANE-012 contract (COORDINATION.md; the D455 packet §3 row 2 +
+§4a.1 is the law; D74 holds throughout — every consequence is a SIMULATION INPUT through an
+existing reader, never an outcome write). The D382-remnant availability limit is UNLOCKED:
+surrender/no-quarter is now PLAYABLE in Historical through the SHIPPED Mayhem effect-schema/
+receipt machinery (EXTENDED, never bypassed — the D452 lesson), with real simulated
+consequences and zero reward paths.
+
+SHIPPED: (a) **data** — `data/mayhem-rules.json` action `no-quarter-historical`
+(rulesetId "historical"; availableWhen ruleset.is historical + side.isActor), CONSEQUENCES
+ONLY: morale.add −6 · press.add −8 · diplomacy.add −6 · notoriety.add +25. The SIGNS are
+law (three ≤0, notoriety ≥0); the magnitudes are a balance call recorded with logged
+deterministic A/B evidence in the probe artifact (public will 33→25, press 50→42,
+recognition 20→26 against the US actor, reprisal pressure 17→24, exchange function 45→39,
+returned prisoners 450→225 at ledger cap). (b) **engine (src/107)** — `_mhResolve`
+legalizes an action iff its declared rulesetId EXACTLY matches the campaign ruleset (Mayhem
+unchanged); the `ruleset.is` predicate matches the campaign ruleset; THE LOAD-BEARING
+MASSACRE-BLOCK (`_MH_HISTORICAL_OPS`) is a closed consequence-op allowlist for
+historical-ruleset actions — morale/press/diplomacy.add (≤0), notoriety.add (≥0),
+modifier.add, chronicle.event — and EVERY other operation family is REFUSED at validation
+before mutation. ORDERING LAW surfaced by t1 and root-fixed: ALL validation (incl. the
+block) now runs BEFORE `_mhSanitizeReceipts`, so a refused action leaves a receiptless
+campaign byte-identical. (c) **adapters through existing owners** — morale → bounded
+additive `M.infamyShock` (clamped [−25,0], the M.repudiated durable-shock idiom) read by
+`moraleCompute`'s public-will term; press → bounded `C.press.infamyShock` read by
+`pressSentiment`; diplomacy → `C.blockade.recognition` moved AGAINST the actor (US +|v|,
+CS −|v|, clamped [0,100], no reader change); notoriety → the NEW additive `C.infamy`
+ledger `{total, events[]}` (total capped 100, events capped 16, present-only sanitation in
+`mayhemInit`/`moraleInit`/`pressInit` — absent stays absent, NO `_SAVE_VER` bump). THE
+REPRISAL CYCLE: `prisonerExchangeSnapshot`/`OnResolve` read `C.infamy.total > 0` as durable
+cartel damage (pressure +min(15, total·0.3); exchange rate ×(1−min(0.5, total·0.005)) —
+the Fort Pillow → cartel-breakdown teaching chain), exact no-op when absent. Rollback law:
+the historical adapters snapshot the WHOLE domain object, so a failed later commit restores
+byte-exactly. (d) **offer + judged surface** — the src/107 `campaignAdvance` wrapper stamps
+`C.mayhemNoQuarterOffer` for BOTH rulesets from the shipped `B.mayhemCapturedByPlayer`
+T25/T2 chain (no captures → no stamp → bytes unchanged); the NEW pure
+`mhJudgedNoQuarterPanel` rides INSIDE `aarRenderReport` behind a typeof guard (the GEA-14
+idiom): the offer states ALL consequences before confirmation; the applied receipt renders
+factual condemnation composed from the COMMITTED corpus (the General Order No. 252
+policy-timeline entry with its committed sources; the committed Fort Pillow/cartel
+juxtaposition via `tcChronicleLine("no-quarter-historical")`, shipped D456); the infamy
+ledger section renders while total > 0; no offer AND no infamy → "" → the Historical AAR is
+BYTE-IDENTICAL. The one delegated `[data-mh-no-quarter]` click path routes by ruleset. AAR
+grading/endings moral voice UNTOUCHED (the round-5 law). NOTE: a custom Mayhem scenario may
+now name `no-quarter-historical` in its import allowlist (it is a registered id) but the
+action can never resolve under Mayhem — the rulesetId exact-match refuses it fail-closed.
+
+TEETH (probe-mayhem-mode step "SLICE 2 HISTORICAL NO-QUARTER", t1-t6, 24/24 green with
+artifacts read; probe-afteraction gains the AAR-side byte-equivalence pin, 19 steps green;
+adjacent probe-save-slots 16/16 + probe-campaign-link 19 green; zero pageerrors everywhere):
+t1 fixture historical action carrying battle.score.add resolves null with campaign bytes
+unchanged (full fixture-adapter coverage so the block is the ONLY refuser); t2 reward-
+direction signs refused (morale.add +5; notoriety.add −5); t3 the applied receipt moves
+ONLY the four consequence targets — op set pinned exactly, signs pinned, mayhemScore
+absent, stats/loot/modifiers byte-unchanged, vicMomentum after ≤ before, public-will/press
+fall, duplicate retry refused; t4 the Mayhem `no-quarter` reward action STILL refuses under
+Historical (the "Historical refusal/bytes failed" family SPLIT recorded with documented
+chains at both tooth sites: the reward-refusal half KEPT, the judged path toothed
+separately); t5 the judged panel (all four consequences stated before confirmation, confirm
+button, condemnation with the committed ABT/National Archives/McPherson attributions + the
+committed GO 252 line, the infamy ledger, the graded frame untouched) + the guard-exact
+no-offer/no-infamy byte-identity; t6 the reprisal read moves snapshot pressure up and
+exchange function down ONLY when total > 0 (a zero ledger is an exact no-op) + returned
+prisoners durably reduced. Re-pins with documented chains: the Slice-B data-catalog tooth
+actions 2→3; the two plan probes (game 2171f60d→a6cbfd2d, dataTree 379d4223→8647e586,
+srcTree 28d894d9→41ee94b1 — the AD-7 idiom).
+
+BINDS (all executed, md5-proven byte-identical restores of src/107 59def573 /
+data/mayhem-rules.json be20279f / game a6cbfd2d): **A1** (family refusal disabled —
+`rule===undefined` neutralized) → EXACTLY t1 red, 23/24; **A2** (sign law removed) →
+EXACTLY t2 red, 23/24; **B** (the data action tampered with battle.score.add) → EXACTLY t3
+red with the bytes-unchanged proof carried in the tooth message, 23/24. Plus the standing
+A/B inside the step: a no-captures Historical advance stamps nothing with bytes unchanged,
+and the no-offer/no-infamy AAR is byte-identical to the seam-stubbed render.
+
+Counts hold 26/59/1,614/137; `_SAVE_VER=1`; frozen base untouched; save-shape gate 4h
+untouched (all fields purely additive inside campaign). Exact next: SLICE 3 — the
+consequence-only-absence re-toothing sweep + the stripJsComments family root fix.
+
 ## D456 — LANE-012 SLICE 1 SHIPPED: THE ALWAYS-VISIBLE TEACHING COMPANION IN BOTH MODES (AMENDS D416'S COMPARISON-OFF-BY-DEFAULT) — [CLAUDE CODE (FABLE 5), LANE-012 DRIVE] (2026-07-18)
 
 ARC 1 slice 1, built to the LANE-012 contract (COORDINATION.md; the D455 packet §4a.2 is the

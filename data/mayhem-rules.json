@@ -26,6 +26,29 @@
       }
     },
     {
+      "id": "no-quarter-historical",
+      "rulesetId": "historical",
+      "availableWhen": [
+        { "id": "ruleset.is", "value": "historical" },
+        { "id": "side.isActor" }
+      ],
+      "actorTags": [
+        { "namespace": "side", "value": "actor" }
+      ],
+      "effects": [
+        { "operation": "morale.add", "target": "actor", "value": -6 },
+        { "operation": "press.add", "target": "actor", "value": -8 },
+        { "operation": "diplomacy.add", "target": "actor", "value": -6 },
+        { "operation": "notoriety.add", "target": "actor", "value": 25 }
+      ],
+      "presentation": {
+        "label": "No Quarter",
+        "summary": "Refuse quarter to surrendering troops. A war crime, judged: your own public will falls, the press turns, European standing moves against you, and the infamy ledger opens. No score, credit, loot, or reward of any kind.",
+        "tone": "judged",
+        "icon": "infamy-ledger"
+      }
+    },
+    {
       "id": "fixture.closed-pipeline",
       "rulesetId": "mayhem",
       "availableWhen": [

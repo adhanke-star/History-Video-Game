@@ -148,6 +148,25 @@ const SETUP = `(() => {
       if(snap()!==s0) throw new Error('the after-action read-out mutated campaign state (must be pure)');
       return { pure:true }; });
 
+    // LANE-012 Slice 2 (D457): the judged no-quarter panel rides aarRenderReport behind a
+    // typeof guard (the GEA-14 seam idiom). This is the AAR-side byte-equivalence pin: a
+    // Historical report with no offer and no infamy must be BYTE-IDENTICAL with the seam
+    // stubbed out; the panel appears only when an offer or an open infamy ledger exists.
+    step('LANE-012 Slice 2 (D457) the judged no-quarter seam: no-offer/no-infamy Historical AAR is byte-identical with the panel stubbed; the panel renders on an open infamy ledger', function(){
+      if(typeof mhJudgedNoQuarterPanel!=='function') throw new Error('judged-panel API missing');
+      var C=mkC('US',1864,9); C.stats={battles:4,won:2,infl:3000,suff:2500};
+      if(mhJudgedNoQuarterPanel(C)!=='') throw new Error('no offer + no infamy must render the empty string');
+      var withFn=aarRenderReport(C,{final:false});
+      if(withFn.indexOf('mh-judged')>=0) throw new Error('a clean Historical AAR must carry no judged panel');
+      var saved=mhJudgedNoQuarterPanel, without;
+      try{ mhJudgedNoQuarterPanel=0; without=aarRenderReport(C,{final:false}); } finally { mhJudgedNoQuarterPanel=saved; }
+      if(withFn!==without) throw new Error('the no-offer/no-infamy Historical AAR is not byte-identical with the seam stubbed');
+      C.infamy={total:25,events:[{battleId:'battle-1',value:25,sequence:1}]};
+      var withLedger=aarRenderReport(C,{final:false});
+      if(withLedger.indexOf('mh-judged')<0||withLedger.indexOf('The Infamy Ledger')<0) throw new Error('an open infamy ledger must render the judged panel in the Historical AAR');
+      if(withLedger.indexOf('Overall conduct')<0) throw new Error('the graded AAR frame must be untouched around the panel (the round-5 law)');
+      return { pinned:true }; });
+
     step('bug-hunt (D112 LOW) — a NaN moraleCompute().public is sanitized: the home-front domain stays GRADED + finite, no "NaN" leaks, the graded-count matches the GPA', function(){
       var saved = (typeof moraleCompute==='function') ? moraleCompute : null;
       try {

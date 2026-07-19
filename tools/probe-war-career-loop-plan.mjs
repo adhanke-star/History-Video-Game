@@ -901,7 +901,11 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     // 28d894d9 (D456 teaching companion — src/113 enrolls at manifest 113; guarded seams in
     // src/100 briefing + src/107 AAR/Chronicle). runtime/journey/command/focused/commandProbe
     // did NOT move — the war-career surface itself is untouched.
-    srcTree:"28d894d97afc5828c4501a6a60472954",
+    // D457 re-pin (the AD-7 idiom, at the LANE-012 Slice-2 head): srcTree 28d894d9 ->
+    // 41ee94b1 (D457 Historical no-quarter unlock — the src/107 massacre-block/adapters/
+    // judged panel, the src/33+34 infamy-shock reads, the src/62 reprisal read, the src/82
+    // guarded seam). runtime/journey/command/focused/commandProbe did NOT move.
+    srcTree:"41ee94b16ef420b480a041d1b49bdfd1",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
     command:"8f12c49f7129b3a9be0203677822e048",
@@ -1172,9 +1176,13 @@ step("BASELINES + LANE", () => {
     // D456 re-pin (the AD-7 idiom, at the LANE-012 Slice-1 head): game 6113bc2c -> 2171f60d
     // and manifest 60f73b23 -> bb5d7903 (D456 teaching companion — src/113 enrolls, guarded
     // seams in src/100 + src/107, rebuild). base/dataTree/suite did NOT move.
-    game:"2171f60d4eeff1710f7a7c1badda0065",
+    // D457 re-pin (the AD-7 idiom, at the LANE-012 Slice-2 head): game 2171f60d -> a6cbfd2d
+    // and dataTree 379d4223 -> 8647e586 (D457 Historical no-quarter unlock — the declared
+    // `no-quarter-historical` consequence-only action in data/mayhem-rules.json + the
+    // src/107/33/34/62/82 slice, rebuild). base/manifest/suite did NOT move.
+    game:"a6cbfd2dde97653049415dd7e078ce3e",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
-    dataTree:"379d4223818782e89ec0b6f011d17f42",
+    dataTree:"8647e5864985b497161dd637bec85be0",
     manifest:"bb5d7903507c8fccf53addf981c2023e",
     suite:"edba2bd930922a27414e07173a64296b"
   };
@@ -1566,9 +1574,13 @@ step("REACHABILITY BASELINES", () => {
     // and srcTree d1792e99 -> 28d894d9 (D456 teaching companion — src/113 + guarded seams in
     // src/100/src/107 + rebuild); dataTree/runtime/journey/focused did NOT move — the D411
     // war-career reachability surface itself is untouched.
-    game:"2171f60d4eeff1710f7a7c1badda0065",
-    dataTree:"379d4223818782e89ec0b6f011d17f42",
-    srcTree:"28d894d97afc5828c4501a6a60472954",
+    // D457 re-pin (the AD-7 idiom, at the LANE-012 Slice-2 head): game 2171f60d -> a6cbfd2d,
+    // dataTree 379d4223 -> 8647e586, srcTree 28d894d9 -> 41ee94b1 (D457 Historical
+    // no-quarter unlock — data action + src/107/33/34/62/82 + rebuild);
+    // runtime/journey/focused did NOT move — the war-career surface held.
+    game:"a6cbfd2dde97653049415dd7e078ce3e",
+    dataTree:"8647e5864985b497161dd637bec85be0",
+    srcTree:"41ee94b16ef420b480a041d1b49bdfd1",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
     focused:"a29a53516ea00c7a2f3aa4602c786dc8"

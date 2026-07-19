@@ -48,6 +48,10 @@ function moraleInit(C) {
   if (typeof M.casualtyToll !== "number" || !(M.casualtyToll >= 0)) M.casualtyToll = 0;   // D51.2: floor >=0 (a corrupt negative toll would invert the penalty)
   if (typeof M.electionApplied !== "boolean") M.electionApplied = !!(C.clock && C.clock.resolved1864);   // D51.1: migration-safe latch
   if (typeof M.repudiated !== "boolean") M.repudiated = false;
+  // LANE-012 Slice 2 (D455 §4a.1): the bounded additive infamy shock — sanitized ONLY when
+  // present (a campaign that never took the judged action stays byte-identical). Written
+  // solely by the src/107 historical adapter; read by moraleCompute below.
+  if (M.infamyShock !== undefined) M.infamyShock = Math.max(-25, Math.min(0, Number(M.infamyShock) || 0));
 }
 
 function _morClamp(v) { return Math.max(0, Math.min(100, v)); }
@@ -85,10 +89,11 @@ function moraleCompute(C) {
   }
 
   var repudPenalty = (M && M.repudiated) ? 12 : 0;                                          // a DURABLE home-front shock after a lost 1864 election (D51.4)
+  var infamyShock = (M && typeof M.infamyShock === "number" && isFinite(M.infamyShock)) ? Math.max(-25, Math.min(0, M.infamyShock)) : 0;   // LANE-012 Slice 2: the durable no-quarter shock (the M.repudiated idiom; 0/absent = exact no-op)
   var pressTerm = ((typeof pressSentiment === "function") ? pressSentiment(C) : 50) - 50;   // S2 m4: the press swings public will (anchored at 50 = neutral, a no-op until the press reacts)
   var leader = _morClamp(48 + cwin * 50 + leadC * 0.5 - ambFriction);
   var troop = _morClamp(bMorale * 0.6 + leader * 0.25 + supply * 0.15);                     // leadership lifts the troops
-  var publicWill = _morClamp(52 + cwin * 36 - casPenalty - inflPenalty + leadC * 0.3 + recogEffect - repudPenalty + pressTerm * 0.2);  // the human cost + economy + the press + a repudiation
+  var publicWill = _morClamp(52 + cwin * 36 - casPenalty - inflPenalty + leadC * 0.3 + recogEffect - repudPenalty + infamyShock + pressTerm * 0.2);  // the human cost + economy + the press + a repudiation + the infamy shock
   return { troop: Math.round(troop), leader: Math.round(leader), public: Math.round(publicWill),
     casToll: Math.round(casToll), casPenalty: Math.round(casPenalty), inflPenalty: Math.round(inflPenalty), winRate: Math.round(winRate * 100) / 100 };
 }

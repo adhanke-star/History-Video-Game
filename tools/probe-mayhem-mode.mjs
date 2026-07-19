@@ -493,7 +493,10 @@ async function browserSetup() {
         "career.promote","reputation.add","notoriety.add","achievement.unlock","modifier.add","roster.add",
         "roster.transfer","reinforcement.add","scenario.unlock","timeline.branch","chronicle.event"
       ];
-      if (!declaration || declaration.schema !== "cw_mayhem_rules_v1" || declaration.version !== 1 || declaration.actions.length !== 2) throw new Error("Slice-C data document missing");
+      // D457 re-pin (documented chain): actions 2 -> 3 — LANE-012 Slice 2 adds the declared
+      // `no-quarter-historical` consequence-only action (rulesetId "historical") beside the
+      // shipped Mayhem pair. The closed schema, version, and operation registry hold.
+      if (!declaration || declaration.schema !== "cw_mayhem_rules_v1" || declaration.version !== 1 || declaration.actions.length !== 3) throw new Error("Slice-C data document missing");
       const fixtureDeclaration = declaration.actions.find(x => x.id === "fixture.closed-pipeline");
       if (!fixtureDeclaration || !eq(fixtureDeclaration.effects.map(x => x.operation), expectedOps)) throw new Error("operation-family registry drifted");
       function fixture(failStage, failCommit) {
@@ -551,6 +554,11 @@ async function browserSetup() {
       if(mayhemNoQuarterApply(C)!==null||C.mayhemReceipts.length!==1)throw new Error("duplicate retry reapplied");
       const loaded=JSON.parse(JSON.stringify(C));mayhemInit(loaded,null,"load");if(mayhemNoQuarterApply(loaded)!==null)throw new Error("reload retry reapplied");
       const html=aarRenderReport(C,{final:false});if(!/Mayhem Campaign/.test(html)||!/Performance, consequences, rewards, and chaos/.test(html)||!/without a moral or plausibility grade/.test(html)||/Overall conduct of the war|Report-card grade|Moral GPA\s*:|Plausibility GPA\s*:/i.test(html))throw new Error("no-judgment result drifted");
+      // D457 chain (LANE-012 Slice 2 SPLITS this tooth's old meaning): the D420 pin read
+      // "nothing no-quarter is reachable in Historical"; the SURVIVING HALF is that the
+      // Mayhem REWARD context/apply still refuse under Historical with zero mutation —
+      // KEPT below unchanged. The judged consequence-only action is now legal in
+      // Historical and is toothed separately (the SLICE 2 step's t3/t4).
       const H=campaign(null,"US");mayhemInit(H,"historical","new");H.mayhemNoQuarterOffer={timelineId:"timeline-1",battleId:"battle-1",captured:120,consumed:false};const hb=JSON.stringify(H);if(_mhNoQuarterContext(H)!==null||mayhemNoQuarterApply(H)!==null||JSON.stringify(H)!==hb)throw new Error("Historical refusal/bytes failed");
       const F=campaign(null,"US");mayhemInit(F,"mayhem","new");lootInit(F);F.mayhemNoQuarterOffer={timelineId:"timeline-1",battleId:"battle-1",captured:120,consumed:false};const fa=mayhemProductionAdapters(F);fa["modifier.add"].commit=function(){throw new Error("forced later commit");};const fctx=_mhNoQuarterContext(F);fctx.adapters=fa;const fb=JSON.stringify(F);if(mayhemApply("no-quarter",fctx)!==null||JSON.stringify(F)!==fb)throw new Error("production rollback/no-receipt failed");
       return{score:C.stats.mayhemScore,casualtyCredit:C.stats.infl,reward:ration.id,modifier:C.loot.modifiers[0].key,receiptId:receipt.id};
@@ -739,6 +747,158 @@ async function browserSetup() {
       if (chronWithout !== chronWith.replace(lineRe, "")) throw new Error("guarded Chronicle absence is not byte-identical to render-minus-line");
       if (aarWithout !== aarWith.replace(aside, "")) throw new Error("guarded AAR absence is not byte-identical to render-minus-panel");
       return { companion: true };
+    });
+
+    // LANE-012 SLICE 2 (D455 §3 row 2 + §4a.1): the Historical surrender/no-quarter unlock —
+    // JUDGED, NEVER REWARDED. The engine-level MASSACRE-BLOCK is LOAD-BEARING: a red on
+    // t1/t2 is a design failure, never a tooth to move.
+    // BIND A PREDECLARATION - disabling the engine's historical reward-family refusal (the
+    // _MH_HISTORICAL_OPS massacre-block in _mhResolve) must red EXACTLY t1 + t2, nothing else.
+    // BIND B PREDECLARATION - tampering the data action with a battle.score.add effect must
+    // red EXACTLY t3 (the apply refuses; the thrown message carries the bytes-unchanged
+    // proof) plus t5's offer-presence half, with zero campaign mutation.
+    step("SLICE 2 HISTORICAL NO-QUARTER (t1 massacre-block; t2 sign law; t3 consequences-only; t4 reward split; t5 judged panel; t6 reprisal read)", () => {
+      if (typeof mayhemHistoricalAdapters !== "function" || typeof mayhemNoQuarterHistApply !== "function" ||
+          typeof _mhNoQuarterHistContext !== "function" || typeof mhJudgedNoQuarterPanel !== "function" ||
+          typeof mayhemInfamyTotal !== "function") throw new Error("Slice-2 API missing");
+      const dataDoc = GAME_DATA["mayhem-rules"];
+      function fixtureAdapters() {
+        const state = {}; const adapters = {};
+        ["battle.score.add","morale.add","press.add","diplomacy.add","notoriety.add","modifier.add","chronicle.event"].forEach(id => {
+          state[id] = 0;
+          adapters[id] = { stage(op){ return { before:state[id], after:state[id]+op.value, token:{ id, after:state[id]+op.value } }; }, commit(t){ state[t.id]=t.after; }, rollback(){} };
+        });
+        return adapters;
+      }
+      function histCampaign(side) { const C = campaign(null, side || "US"); mayhemInit(C, "historical", "new"); return C; }
+      function histFixture(id, effects) {
+        return { id, rulesetId:"historical", availableWhen:[{id:"ruleset.is",value:"historical"},{id:"side.isActor"}], actorTags:[{namespace:"side",value:"actor"}], effects, presentation:{label:"F",summary:"f",tone:"t",icon:"i"} };
+      }
+      function histContext(C, adapters, seq) {
+        return { campaign:C, ruleset:{id:"historical",version:1}, side:C.side, timelineId:"timeline-1", battleId:"battle-1", phaseId:"result", actorId:String(C.side).toLowerCase()+"-command", sequence:seq||1, actorTags:[{namespace:"side",value:String(C.side).toLowerCase()}], adapters };
+      }
+      // (t1) a fixture historical action carrying battle.score.add resolves null, bytes unchanged.
+      // The fixture context supplies FULL adapter coverage so the massacre-block is the ONLY refuser.
+      const savedActions = dataDoc.actions;
+      try {
+        dataDoc.actions = savedActions.concat([histFixture("fixture.hist-reward", [{operation:"battle.score.add",target:"actor",value:10}])]);
+        const C1 = histCampaign("US"); const b1 = JSON.stringify(C1);
+        if (_mhResolve("fixture.hist-reward", histContext(C1, fixtureAdapters(), 1)) !== null) throw new Error("t1: a historical action carrying battle.score.add must resolve null (the massacre-block)");
+        if (mayhemApply("fixture.hist-reward", histContext(C1, fixtureAdapters(), 1)) !== null) throw new Error("t1: the apply must refuse");
+        if (JSON.stringify(C1) !== b1) throw new Error("t1: the refusal mutated the campaign");
+        // (t2) a consequence op with a reward-direction sign is refused (morale.add +5; notoriety.add -5)
+        dataDoc.actions = savedActions.concat([histFixture("fixture.hist-sign", [{operation:"morale.add",target:"actor",value:5}])]);
+        const C2 = histCampaign("US"); const b2 = JSON.stringify(C2);
+        if (_mhResolve("fixture.hist-sign", histContext(C2, fixtureAdapters(), 1)) !== null) throw new Error("t2: morale.add +5 under historical must be refused (the sign law)");
+        if (JSON.stringify(C2) !== b2) throw new Error("t2: the sign refusal mutated the campaign");
+        dataDoc.actions = savedActions.concat([histFixture("fixture.hist-neg", [{operation:"notoriety.add",target:"actor",value:-5}])]);
+        if (_mhResolve("fixture.hist-neg", histContext(histCampaign("US"), fixtureAdapters(), 1)) !== null) throw new Error("t2: notoriety.add -5 must be refused (the ledger only rises)");
+      } finally { dataDoc.actions = savedActions; }
+      // (t3) the applied receipt moves ONLY the four consequence targets; every reward
+      // surface is byte-unchanged; vicMomentum after <= before. The before/after numbers in
+      // this step's artifact value ARE the logged deterministic A/B evidence for the
+      // magnitude balance call.
+      const M = histCampaign("US"); lootInit(M);
+      M.blockade = { recognition: 20 }; M.strategy = { enemyWill: 70 };
+      moraleInit(M); pressInit(M);
+      M.mayhemNoQuarterOffer = { timelineId:"timeline-1", battleId:"battle-1", captured:120, consumed:false };
+      const publicBefore = moraleCompute(M).public, pressBefore = pressSentiment(M), recogBefore = M.blockade.recognition;
+      const lootBytes = JSON.stringify(M.loot.inventory), statsBytes = JSON.stringify(M.stats), modifiersBytes = JSON.stringify(M.loot.modifiers);
+      const momBefore = vicMomentum(M);
+      const before = JSON.stringify(M);
+      const receipt = mayhemNoQuarterHistApply(M);
+      if (!receipt) throw new Error("t3: historical apply refused (bytes unchanged: " + (JSON.stringify(M) === before) + ")");
+      const opIds = receipt.operations.map(o => o.operation).join(",");
+      if (opIds !== "morale.add,press.add,diplomacy.add,notoriety.add") throw new Error("t3: the op set drifted: " + opIds);
+      receipt.operations.forEach(o => { if (o.operation === "notoriety.add") { if (!(o.value >= 0)) throw new Error("t3: notoriety must be >= 0"); } else if (!(o.value <= 0)) throw new Error("t3: " + o.operation + " must be <= 0"); });
+      if (!(M.morale.infamyShock < 0)) throw new Error("t3: M.infamyShock did not move");
+      if (!(M.press.infamyShock < 0)) throw new Error("t3: the press infamyShock did not move");
+      if (!(M.blockade.recognition > recogBefore)) throw new Error("t3: a US actor's recognition must move AGAINST the actor (up)");
+      if (!(mayhemInfamyTotal(M) === 25 && M.infamy.events.length === 1)) throw new Error("t3: the infamy ledger did not open");
+      if (M.stats.mayhemScore !== undefined) throw new Error("t3: mayhemScore must stay absent");
+      if (JSON.stringify(M.stats) !== statsBytes) throw new Error("t3: stats moved (score/infl)");
+      if (JSON.stringify(M.loot.inventory) !== lootBytes) throw new Error("t3: the loot inventory moved");
+      if (JSON.stringify(M.loot.modifiers) !== modifiersBytes) throw new Error("t3: loot modifiers moved");
+      const momAfter = vicMomentum(M);
+      if (!(momAfter <= momBefore)) throw new Error("t3: vicMomentum rose");
+      const publicAfter = moraleCompute(M).public, pressAfter = pressSentiment(M);
+      if (!(publicAfter < publicBefore)) throw new Error("t3: public will must fall");
+      if (!(pressAfter < pressBefore)) throw new Error("t3: press sentiment must fall");
+      if (mayhemNoQuarterHistApply(M) !== null || M.mayhemReceipts.length !== 1) throw new Error("t3: a duplicate retry reapplied");
+      // (t4) THE SURVIVING HALF of the "Historical refusal/bytes failed" family, re-pinned
+      // with its documented chain (D457): the D420 tooth read "nothing no-quarter is
+      // reachable in Historical"; Slice 2 SPLITS it — the Mayhem REWARD action still
+      // refuses under Historical with zero mutation (KEPT here), while the judged
+      // consequence-only action is legal (t3 above).
+      const H = histCampaign("US"); H.mayhemNoQuarterOffer = { timelineId:"timeline-1", battleId:"battle-1", captured:120, consumed:false };
+      const hb = JSON.stringify(H);
+      if (_mhNoQuarterContext(H) !== null) throw new Error("t4: the Mayhem offer context must stay null under Historical");
+      if (mayhemNoQuarterApply(H) !== null) throw new Error("t4: the Mayhem reward apply must still refuse under Historical");
+      if (mayhemCan("no-quarter", _mhNoQuarterHistContext(H)) !== false) throw new Error("t4: the Mayhem reward action must refuse a historical context");
+      if (JSON.stringify(H) !== hb) throw new Error("t4: the Historical refusal mutated bytes");
+      // (t5) the judged panel: ALL consequences stated before confirmation; factual
+      // condemnation with committed attributions on the applied receipt; the infamy ledger
+      // while total > 0; the no-offer/no-infamy Historical AAR byte-identical (guard-exact).
+      const J = histCampaign("US"); J.mayhemNoQuarterOffer = { timelineId:"timeline-1", battleId:"battle-1", captured:120, consumed:false };
+      J.blockade = { recognition: 20 };
+      const offerHtml = aarRenderReport(J, { final:false });
+      if (offerHtml.indexOf("mh-judged") < 0) throw new Error("t5: the judged panel is missing with a live offer");
+      if (offerHtml.indexOf("Judged, never rewarded") < 0) throw new Error("t5: the judged framing is missing");
+      ["Your own public will","Your press standing","European standing","infamy ledger"].forEach(tok => { if (offerHtml.indexOf(tok) < 0) throw new Error("t5: the offer must state every consequence before confirmation: " + tok); });
+      if (offerHtml.indexOf("data-mh-no-quarter") < 0) throw new Error("t5: the confirm button is missing");
+      if (!mayhemNoQuarterHistApply(J)) throw new Error("t5: the setup apply failed");
+      const appliedHtml = aarRenderReport(J, { final:false });
+      if (appliedHtml.indexOf("Quarter was refused") < 0) throw new Error("t5: the applied receipt does not render");
+      if (appliedHtml.indexOf("Fort Pillow") < 0) throw new Error("t5: the committed Fort Pillow condemnation is missing");
+      if (!/\(American Battlefield Trust[^)]*McPherson, Battle Cry of Freedom\.\)/.test(appliedHtml)) throw new Error("t5: the condemnation's committed attributions are missing");
+      if (appliedHtml.indexOf("General Order No. 252") < 0) throw new Error("t5: the committed GO 252 line is missing");
+      if (appliedHtml.indexOf("The Infamy Ledger") < 0) throw new Error("t5: the infamy ledger section is missing while total > 0");
+      if (appliedHtml.indexOf("Overall conduct of the war") < 0 || appliedHtml.indexOf("The report card") < 0) throw new Error("t5: the graded AAR frame moved (the round-5 law)");
+      const K = histCampaign("US");
+      if (mhJudgedNoQuarterPanel(K) !== "") throw new Error("t5: the panel must return '' with no offer and no infamy");
+      const withFn = aarRenderReport(K, { final:false });
+      const savedPanel = mhJudgedNoQuarterPanel;
+      let withoutFn;
+      try { mhJudgedNoQuarterPanel = 0; withoutFn = aarRenderReport(K, { final:false }); }
+      finally { mhJudgedNoQuarterPanel = savedPanel; }
+      if (withFn !== withoutFn) throw new Error("t5: the no-offer/no-infamy Historical AAR is not byte-identical to the panel-stubbed render");
+      const MM = campaign(null, "US"); mayhemInit(MM, "mayhem", "new");
+      if (mhJudgedNoQuarterPanel(MM) !== "") throw new Error("t5: the judged panel must return '' for Mayhem (its charter is the no-GPA readout)");
+      // (t6) the reprisal read moves the exchange snapshot ONLY when C.infamy.total > 0
+      const P0 = histCampaign("US"); const s0 = prisonerExchangeSnapshot(P0);
+      const P1 = histCampaign("US"); P1.infamy = { total:25, events:[{battleId:"battle-1",value:25,sequence:1}] };
+      const s1 = prisonerExchangeSnapshot(P1);
+      if (!(s1.pressure > s0.pressure)) throw new Error("t6: infamy must raise cartel pressure");
+      if (!(s1.exchangeFunction < s0.exchangeFunction)) throw new Error("t6: infamy must lower the exchange function");
+      const P2 = histCampaign("US"); P2.infamy = { total:0, events:[] };
+      if (JSON.stringify(prisonerExchangeSnapshot(P2)) !== JSON.stringify(s0)) throw new Error("t6: a zero ledger must be an exact no-op");
+      function pxFixture(withInfamy) {
+        const C = histCampaign("US");
+        C.prisoners = { active:false, detained:{US:1000,CS:1000}, returned:{US:0,CS:0}, deaths:{US:0,CS:0}, log:[] };
+        if (withInfamy) C.infamy = { total:100, events:[] };
+        return C;
+      }
+      const pxA = pxFixture(false), pxB = pxFixture(true);
+      prisonerExchangeOnResolve("US", "major", { casualties:{US:0,CS:0} }, pxA, true);
+      prisonerExchangeOnResolve("US", "major", { casualties:{US:0,CS:0} }, pxB, true);
+      if (!(pxB.prisoners.returned.US < pxA.prisoners.returned.US)) throw new Error("t6: infamy must durably reduce returned prisoners (the cartel-breakdown chain)");
+      // the standing A/B at the offer seam: no captures -> no stamp -> bytes unchanged; the
+      // captured chain stamps the same offer shape for Historical.
+      const priorAdv = _MH_BASE_CAMPAIGN_ADVANCE;
+      try {
+        _MH_BASE_CAMPAIGN_ADVANCE = function () {};
+        const N = histCampaign("US"); G.campaign = N; G.battle = { id:"battle-1" };
+        const nb = JSON.stringify(N);
+        campaignAdvance("US", "major");
+        if (N.mayhemNoQuarterOffer !== undefined || JSON.stringify(N) !== nb) throw new Error("A/B: a no-captures Historical resolve must stamp nothing (bytes unchanged)");
+        G.battle = { id:"battle-1", mayhemCapturedByPlayer:120 };
+        campaignAdvance("US", "major");
+        if (!N.mayhemNoQuarterOffer || N.mayhemNoQuarterOffer.captured !== 120) throw new Error("the Historical offer must stamp from the captured chain");
+      } finally { _MH_BASE_CAMPAIGN_ADVANCE = priorAdv; G.campaign = null; G.battle = null; }
+      return {
+        ab: { publicBefore, publicAfter, pressBefore, pressAfter, recogBefore, recogAfter: M.blockade.recognition, infamy: mayhemInfamyTotal(M) },
+        reprisal: { pressure0: s0.pressure, pressure1: s1.pressure, exchange0: s0.exchangeFunction, exchange1: s1.exchangeFunction, returnedClean: pxA.prisoners.returned.US, returnedInfamy: pxB.prisoners.returned.US }
+      };
     });
 
     cleanStorage();

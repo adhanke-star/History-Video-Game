@@ -2077,8 +2077,8 @@ next green commit and confer through this ledger instead of permitting simultane
   head `7ae93c1b` (2026-07-18, within Aaron's authorized Fable window through Sunday
   2026-07-19; the prior lock was RELEASED at the pushed D456 boundary `0851de0` per the
   D171/D307 law).
-- **State:** DRIVE (this entry IS the CONTRACT; Slice 1 shipped as D456; the current owner
-  is driving Slice 2, then Slice 3).
+- **State:** DRIVE (this entry IS the CONTRACT; Slice 1 shipped as D456; Slice 2 shipped
+  as D457; the current owner is driving Slice 3).
 - **Design law:** `docs/design/unlocked-but-judged-design.md` (THE LAW — §1 the decision, §2
   Aaron's verbatim locks, §3 the adjudicated restriction inventory, §4a the spine, §7 the ARC
   roadmap) · DECISIONS D455 + D454 · `docs/design/open-history-mayhem-mode-design.md` §4 (the
@@ -2205,18 +2205,26 @@ next green commit and confer through this ledger instead of permitting simultane
   each boundary. NO full battery this session (next battery at the next release checkpoint
   per D160/D176). Counts hold 26/59/1,614/137 unless a slice's own contract moves them with
   documented pin chains.
-- **Resume pointer:** SLICE 1 SHIPPED (D456). Slice 2 is next (the Historical
-  surrender/no-quarter unlock + the load-bearing massacre-block), then Slice 3 (the
-  re-toothing sweep — carry the D456-surfaced probe-cedar-creek-plan stripJsComments red
-  into that sweep's family audit). A session that inherits this lane mid-DRIVE reads this
+- **Resume pointer:** SLICES 1-2 SHIPPED (D456, D457). Slice 3 is next: the
+  consequence-only-absence re-toothing sweep (the probe-mayhem-mode "Historical
+  refusal/bytes failed" family head is already split-and-chained at both tooth sites in
+  D457 — audit the REST of tools/ the D454 tree-wide way, one family, never
+  one-red-per-row; check the E41 save-shape pins if offer/infamy fields surface in
+  serialized saves) PLUS the stripJsComments family root fix (eleven non-suite battle plan
+  probes red on clean HEAD — the naive block-comment regex eats from the `data/*` glob in
+  validate-data-schemas.mjs line 2 to the first real `*/`; fix the stripper/read idiom at
+  the root, never weaken a tooth). A session that inherits this lane mid-DRIVE reads this
   entry + the packet §4a in full, verifies HEAD against the lane history, and continues at
   the first unshipped slice.
-- **Last-touched commit:** the D456 Slice-1 commit.
+- **Last-touched commit:** the D457 Slice-2 commit.
 - **History:** opened 2026-07-18 by Claude Code (Fable 5) under Aaron's ARC-1 charter
   directive (the D455 packet §7); C72 rider dropped as stale at charter (shipped D422,
   LANE-008). Charter committed `138e216`. Slice 1 shipped as D456 same session (companion
   module + 4 surfaces + teeth in 4 probes + both binds md5-restored; Bind A's manifest-drop
-  form proven build-refused fail-closed, executed as API-absence).
+  form proven build-refused fail-closed, executed as API-absence). DRIVE re-taken at
+  `e8d761c` (Fable 5, 2026-07-18); Slice 2 shipped as D457 (the massacre-block + four
+  consequence adapters + reprisal cycle + judged panel; three binds A1/A2/B bit exactly
+  with md5 restores; the t1-surfaced resolve-ordering purity bug root-fixed).
 
 ---
 

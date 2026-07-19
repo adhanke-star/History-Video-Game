@@ -307,6 +307,11 @@ function aarRenderReport(C, opts) {
   for (var i = 0; i < domains.length; i++) card += _aarDomainRow(domains[i]);
   card += '</div>';
 
+  // LANE-012 Slice 2 (D455 §3 row 2 + §4a.1): the JUDGED no-quarter panel rides here behind
+  // a typeof guard (the GEA-14 seam idiom) — "" when the module is absent OR when there is
+  // no offer and no infamy, so this report is byte-identical without it.
+  var judgedPanel = (typeof mhJudgedNoQuarterPanel === "function") ? mhJudgedNoQuarterPanel(C) : "";
+
   // The divergence read-back (the D111 ledger, in brief).
   var divPanel = '';
   if (typeof divScan === "function" && typeof divIndex === "function") {
@@ -364,7 +369,7 @@ function aarRenderReport(C, opts) {
   // because warWonScreen nullifies G.campaign after rendering. Pure presentation — no grade,
   // history, save, or simulation read/write beyond this render.
   var exportBar = _aarExportBar(C, final, sideLabel);
-  return '<div class="aarReportWrap"><div class="aarReportRoot">' + head + overallPanel + card + divPanel + soldierPanel + costPanel + coda + foot + '</div>' + exportBar + '</div>';
+  return '<div class="aarReportWrap"><div class="aarReportRoot">' + head + overallPanel + card + judgedPanel + divPanel + soldierPanel + costPanel + coda + foot + '</div>' + exportBar + '</div>';
 }
 
 /* ---- GEA-02 (D434): Copy Report / Download Text over the rendered report. ---- */

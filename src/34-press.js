@@ -53,6 +53,10 @@ function pressInit(C) {
   if (!Array.isArray(P.headlines)) P.headlines = [];
   else { var _ph = []; for (var hh = 0; hh < P.headlines.length; hh++) { var _he = P.headlines[hh]; if (_he && typeof _he === "object" && !Array.isArray(_he)) _ph.push(_he); } P.headlines = _ph; }   // D52.1: drop malformed headline entries so pressRenderTab can't crash
   if (typeof P.emancipationReacted !== "boolean") P.emancipationReacted = false;
+  // LANE-012 Slice 2 (D455 §4a.1): the bounded additive infamy shock — sanitized ONLY when
+  // present (absent stays absent; byte-identical for campaigns that never took the judged
+  // action). Written solely by the src/107 historical adapter; read by pressSentiment.
+  if (P.infamyShock !== undefined) P.infamyShock = Math.max(-25, Math.min(0, Number(P.infamyShock) || 0));
   var papers = _prsPapers(side);
   for (var i = 0; i < papers.length; i++) {
     var id = papers[i].id;
@@ -121,10 +125,13 @@ function pressOnResolve(winnerSide, type, B, C, win) {
 }
 
 /* The aggregate press sentiment toward the war effort (0-100). NEUTRAL 50 until the
-   press has first reacted, so it perturbs nothing at init / in unrelated probes. */
+   press has first reacted, so it perturbs nothing at init / in unrelated probes.
+   LANE-012 Slice 2: the bounded infamy shock lowers the read (a D74 simulation INPUT —
+   the papers turn on an army that refuses quarter); 0/absent is an EXACT no-op. */
 function pressSentiment(C) {
-  if (!C || !C.press || !C.press.reacted || typeof C.press.sentiment !== "number" || !(C.press.sentiment >= 0 && C.press.sentiment <= 100)) return 50;   // D52.6: range test rejects NaN/Infinity
-  return C.press.sentiment;
+  var base = (!C || !C.press || !C.press.reacted || typeof C.press.sentiment !== "number" || !(C.press.sentiment >= 0 && C.press.sentiment <= 100)) ? 50 : C.press.sentiment;   // D52.6: range test rejects NaN/Infinity
+  var shock = (C && C.press && typeof C.press.infamyShock === "number" && isFinite(C.press.infamyShock)) ? Math.max(-25, Math.min(0, C.press.infamyShock)) : 0;
+  return shock ? Math.max(0, Math.min(100, base + shock)) : base;
 }
 
 /* ===== render: "The Press" desk tab — the period broadsheet ===== */

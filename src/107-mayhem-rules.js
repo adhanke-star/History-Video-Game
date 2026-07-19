@@ -82,18 +82,36 @@ function _mhSanitizeReceipts(C) {
   C.mayhemSequence=max;
   return clean;
 }
+/* ---- LANE-012 Slice 2 (D455 §3 row 2 + §4a.1): THE LOAD-BEARING MASSACRE-BLOCK. ----
+   A closed consequence-operation allowlist for historical-ruleset actions. Values are the
+   sign law: -1 = the effect value must be <= 0 (own-cost consequences only), +1 = >= 0
+   (the infamy ledger only), 0 = no sign constraint. EVERY operation family absent from
+   this map (score/casualty-credit/capture/result/victoryProgress/funds/resource/loot/
+   technology/weapon/career/reputation/achievement/roster/reinforcement/scenario/timeline/
+   enemyWill) is REFUSED at validation, before any mutation. A red here is a design
+   failure, never a tooth to move. */
+var _MH_HISTORICAL_OPS = { "morale.add":-1, "press.add":-1, "diplomacy.add":-1, "notoriety.add":1, "modifier.add":0, "chronicle.event":0 };
 function _mhResolve(actionId, context) {
   var ctx=_mhNormalizeContext(context), action=_mhActions()[actionId];
-  if(!ctx||!action||!mayhemIsActive(ctx.campaign)||action.rulesetId!=="mayhem")return null;
+  /* Slice 2: an action is legal iff its declared rulesetId EXACTLY matches the campaign
+     ruleset id ("mayhem" actions only in Mayhem — unchanged; "historical" actions only in
+     Historical). Anything else, including an undeclared rulesetId, fails closed. */
+  if(!ctx||!action||action.rulesetId!==mayhemRuleset(ctx.campaign).id)return null;
   var currentSequence=Number.isSafeInteger(ctx.campaign.mayhemSequence)?ctx.campaign.mayhemSequence:0;
   if(ctx.sequence!==currentSequence+1&&ctx.sequence!==currentSequence)return null;
   var tags={};for(var i=0;i<ctx.actorTags.length;i++){var t=_mhTag(ctx.actorTags[i],ctx.campaign,ctx);if(!t)return null;tags[t.namespace+":"+t.value]=1;}
   for(i=0;i<action.actorTags.length;i++){t=_mhTag(action.actorTags[i],ctx.campaign,ctx);if(!t||!tags[t.namespace+":"+t.value])return null;}
-  for(i=0;i<action.availableWhen.length;i++){var p=action.availableWhen[i];if(!p||!_MH_PREDICATES[p.id])return null;if(p.id==="ruleset.is"&&p.value!=="mayhem")return null;if(p.id==="side.isActor"&&ctx.campaign.side!==ctx.side)return null;}
+  for(i=0;i<action.availableWhen.length;i++){var p=action.availableWhen[i];if(!p||!_MH_PREDICATES[p.id])return null;if(p.id==="ruleset.is"&&p.value!==mayhemRuleset(ctx.campaign).id)return null;if(p.id==="side.isActor"&&ctx.campaign.side!==ctx.side)return null;}
+  /* Slice 2 ordering law: EVERY validation — including the massacre-block — runs BEFORE
+     the receipt-log sanitation below, so a REFUSED action leaves the campaign
+     byte-identical even when it never carried receipt fields (the Historical purity
+     teeth). Sanitation runs only once the action is fully legal. */
+  var ops=[];
+  for(i=0;i<action.effects.length;i++){var e=action.effects[i], reg=e&&_MH_OPERATION_REGISTRY[e.operation], adapter=reg&&ctx.adapters[e.operation];if(!reg||!_mhOwnKeys(e,["operation","target","value","tag"])||!_mhStableId(e.target)||!_mhFinite(e.value)||!adapter||typeof adapter.stage!=="function"||typeof adapter.commit!=="function"||typeof adapter.rollback!=="function")return null;
+    if(action.rulesetId==="historical"){var rule=_MH_HISTORICAL_OPS[e.operation];if(rule===undefined)return null;if(rule===-1&&!(Number(e.value)<=0))return null;if(rule===1&&!(Number(e.value)>=0))return null;} // MASSACRE_BLOCK
+    var tag=e.tag===undefined?undefined:_mhTag(e.tag,ctx.campaign,ctx);if(e.tag!==undefined&&!tag)return null;ops.push({operation:e.operation,target:e.target,value:Number(e.value),tag:tag,adapter:adapter,index:i});}
   _mhSanitizeReceipts(ctx.campaign);
   var id=_mhReceiptId(ctx,actionId);for(i=0;i<ctx.campaign.mayhemReceipts.length;i++)if(ctx.campaign.mayhemReceipts[i].id===id)return null; // MAYHEM_BIND_DUPLICATE
-  var ops=[];
-  for(i=0;i<action.effects.length;i++){var e=action.effects[i], reg=e&&_MH_OPERATION_REGISTRY[e.operation], adapter=reg&&ctx.adapters[e.operation];if(!reg||!_mhOwnKeys(e,["operation","target","value","tag"])||!_mhStableId(e.target)||!_mhFinite(e.value)||!adapter||typeof adapter.stage!=="function"||typeof adapter.commit!=="function"||typeof adapter.rollback!=="function")return null;var tag=e.tag===undefined?undefined:_mhTag(e.tag,ctx.campaign,ctx);if(e.tag!==undefined&&!tag)return null;ops.push({operation:e.operation,target:e.target,value:Number(e.value),tag:tag,adapter:adapter,index:i});}
   return {ctx:ctx,action:action,id:id,ops:ops};
 }
 function mayhemCan(actionId, context) {
@@ -161,9 +179,152 @@ function mayhemProductionAdapters(C) {
     "modifier.add":_mhProdModifierAdapter()
   };
 }
+/* ---- LANE-012 Slice 2 (D455 §4a.1): the Historical consequence adapters. Every
+   consequence enters the SIMULATION as an INPUT through an existing reader (D74):
+   M.infamyShock -> moraleCompute's public-will term; C.press.infamyShock ->
+   pressSentiment; C.blockade.recognition -> the existing diplomacy/victory readers,
+   moved AGAINST the actor; the additive C.infamy ledger -> the prisoner-exchange
+   reprisal read. No outcome write anywhere. All bounded; all additive save fields
+   (NO _SAVE_VER bump). ---- */
+var _MH_INFAMY_TOTAL_CAP = 100;
+var _MH_INFAMY_EVENT_CAP = 16;
+var _MH_SHOCK_FLOOR = -25;
+function _mhInfamySanitize(C) {
+  if (!C || C.infamy === undefined) return null;
+  var raw=C.infamy, total=0, events=[];
+  if (raw && typeof raw === "object" && !Array.isArray(raw)) {
+    var t=Number(raw.total); if (isFinite(t)) total=Math.max(0, Math.min(_MH_INFAMY_TOTAL_CAP, t));
+    var src=Array.isArray(raw.events)?raw.events:[];
+    for (var i=0;i<src.length&&events.length<_MH_INFAMY_EVENT_CAP;i++){var ev=src[i];if(_mhOwnKeys(ev,["battleId","value","sequence"])&&_mhStableId(ev.battleId)&&_mhFinite(ev.value)&&ev.value>=0&&Number.isSafeInteger(ev.sequence)&&ev.sequence>=1)events.push({battleId:ev.battleId,value:Number(ev.value),sequence:ev.sequence});}
+  }
+  C.infamy={total:total,events:events};
+  return C.infamy;
+}
+function mayhemInfamyTotal(C) {
+  if (!C || !C.infamy || typeof C.infamy !== "object" || Array.isArray(C.infamy)) return 0;
+  var t=Number(C.infamy.total);
+  return isFinite(t)?Math.max(0,Math.min(_MH_INFAMY_TOTAL_CAP,t)):0;
+}
+function _mhHistShockAdapter(key, init) {
+  /* the M.repudiated durable-shock idiom: a bounded additive NEGATIVE shock field the
+     domain's compute reads (guarded no-op at 0/absent). key names the domain object on
+     the campaign ("morale"/"press"); init(C) is the domain's own idempotent
+     initializer. rollback restores the WHOLE domain object byte-exactly, so a failed
+     later commit cannot leave the initializer's side effects behind. */
+  return {
+    stage:function(op,ctx){var o=ctx.campaign[key],before=o&&typeof o.infamyShock==="number"&&isFinite(o.infamyShock)?o.infamyShock:0,after=Math.max(_MH_SHOCK_FLOOR,Math.min(0,before+op.value)),snapshot=o===undefined?undefined:_mhClone(o);return{before:before,after:after,token:{C:ctx.campaign,snapshot:snapshot,after:after}};},
+    commit:function(t){init(t.C);var o=t.C[key];if(!o||typeof o!=="object"||Array.isArray(o))throw new Error("shock-owner");o.infamyShock=t.after;},
+    rollback:function(t){if(t.snapshot===undefined)delete t.C[key];else t.C[key]=_mhClone(t.snapshot);}
+  };
+}
+function _mhHistDiplomacyAdapter() {
+  /* C.blockade.recognition moved AGAINST the actor: a US actor pushes recognition UP
+     toward the Confederacy (+|v|), a CS actor pushes it DOWN (-|v|); clamped [0,100].
+     The existing readers (diplomacy/victory/morale) consume it unchanged. */
+  return {
+    stage:function(op,ctx){var BL=ctx.campaign.blockade,before=BL&&typeof BL.recognition==="number"&&isFinite(BL.recognition)?BL.recognition:0,delta=(ctx.side==="US"?1:-1)*Math.abs(op.value),after=Math.max(0,Math.min(100,before+delta)),snapshot=BL===undefined?undefined:_mhClone(BL);return{before:before,after:after,token:{C:ctx.campaign,snapshot:snapshot,after:after}};},
+    commit:function(t){if(!t.C.blockade||typeof t.C.blockade!=="object"||Array.isArray(t.C.blockade))t.C.blockade={};t.C.blockade.recognition=t.after;},
+    rollback:function(t){if(t.snapshot===undefined)delete t.C.blockade;else t.C.blockade=_mhClone(t.snapshot);}
+  };
+}
+function _mhHistNotorietyAdapter() {
+  return {
+    stage:function(op,ctx){var before=mayhemInfamyTotal(ctx.campaign),after=Math.min(_MH_INFAMY_TOTAL_CAP,before+op.value),snapshot=ctx.campaign.infamy===undefined?undefined:_mhClone(ctx.campaign.infamy);return{before:before,after:after,token:{C:ctx.campaign,before:snapshot,after:after,value:op.value,battleId:ctx.battleId,sequence:ctx.sequence}};},
+    commit:function(t){var L=_mhInfamySanitize(t.C)||(t.C.infamy={total:0,events:[]});L.total=t.after;L.events.push({battleId:t.battleId,value:t.value,sequence:t.sequence});if(L.events.length>_MH_INFAMY_EVENT_CAP)L.events.splice(0,L.events.length-_MH_INFAMY_EVENT_CAP);},
+    rollback:function(t){if(t.before===undefined)delete t.C.infamy;else t.C.infamy=_mhClone(t.before);}
+  };
+}
+function mayhemHistoricalAdapters(C) {
+  return {
+    "morale.add":_mhHistShockAdapter("morale",function(c){if(typeof moraleInit==="function")moraleInit(c);if(!c.morale||typeof c.morale!=="object"||Array.isArray(c.morale))c.morale={};}),
+    "press.add":_mhHistShockAdapter("press",function(c){if(typeof pressInit==="function")pressInit(c);if(!c.press||typeof c.press!=="object"||Array.isArray(c.press))c.press={};}),
+    "diplomacy.add":_mhHistDiplomacyAdapter(),
+    "notoriety.add":_mhHistNotorietyAdapter()
+  };
+}
 function _mhNoQuarterContext(C) {
   var O=C&&C.mayhemNoQuarterOffer;if(!O||!mayhemIsActive(C)||O.consumed===true||!(O.captured>0))return null;
   return {campaign:C,ruleset:mayhemRuleset(C),side:C.side,timelineId:O.timelineId,battleId:O.battleId,phaseId:"result",actorId:String(C.side).toLowerCase()+"-command",sequence:(Number(C.mayhemSequence)||0)+1,actorTags:[{namespace:"side",value:String(C.side).toLowerCase()}],adapters:mayhemProductionAdapters(C),consumed:false};
+}
+/* ---- LANE-012 Slice 2: the Historical offer context + apply. Same offer shape, same
+   engine, same transaction law — the ONLY differences are the ruleset gate, the
+   consequence-only adapters, and the massacre-block above. ---- */
+function _mhNoQuarterHistContext(C) {
+  var O=C&&C.mayhemNoQuarterOffer;if(!O||mayhemIsActive(C)||O.consumed===true||!(O.captured>0))return null;
+  return {campaign:C,ruleset:mayhemRuleset(C),side:C.side,timelineId:O.timelineId,battleId:O.battleId,phaseId:"result",actorId:String(C.side).toLowerCase()+"-command",sequence:(Number(C.mayhemSequence)||0)+1,actorTags:[{namespace:"side",value:String(C.side).toLowerCase()}],adapters:mayhemHistoricalAdapters(C),consumed:false};
+}
+function mayhemNoQuarterHistApply(C) {
+  var ctx=_mhNoQuarterHistContext(C);if(!ctx)return null;
+  var receipt=mayhemApply("no-quarter-historical",ctx);if(receipt){C.mayhemNoQuarterOffer.consumed=true;if(typeof saveLocal==="function")try{saveLocal();}catch(e){}}
+  return receipt;
+}
+
+/* ---- LANE-012 Slice 2: THE JUDGED PANEL (Historical AARs only; consumed by src/82
+   aarRenderReport behind a typeof guard — the GEA-14 seam idiom). PURE RENDER. The offer
+   states ALL consequences before confirmation; the applied receipt renders with factual
+   condemnation composed from the COMMITTED corpus (the General Order No. 252 policy-
+   timeline entry with its committed sources; the committed Fort Pillow / cartel-collapse
+   juxtaposition via tcChronicleLine); the infamy ledger renders while total > 0. With no
+   offer AND no infamy it returns "" so the Historical AAR is BYTE-IDENTICAL. It NEVER
+   grades performance and NEVER awards anything — judged, never rewarded (D455 §3 row 3).
+   AAR grading / endings moral voice are UNTOUCHED (the round-5 law). ---- */
+var _MH_JUDGED_EFFECT_LABELS = {
+  "morale.add": "Your own public will",
+  "press.add": "Your press standing",
+  "diplomacy.add": "European standing (moved against you)",
+  "notoriety.add": "The infamy ledger (opens against your cause)"
+};
+function _mhJudgedGo252Line() {
+  var d=typeof GAME_DATA==="object"&&GAME_DATA&&GAME_DATA["prisoner-exchange"];
+  var tl=d&&Array.isArray(d.policyTimeline)?d.policyTimeline:[];
+  for (var i=0;i<tl.length;i++){
+    var e=tl[i];
+    if (e&&e.id==="lincoln-retaliation-order"&&e.summary){
+      var src=Array.isArray(e.sources)?e.sources:[];
+      return '<div style="margin-top:5px;font-size:11px;line-height:1.5;opacity:.85">'+_mhEsc(e.summary)
+        +(src.length?' <span style="opacity:.8">('+_mhEsc(src.join(" "))+')</span>':'')+'</div>';
+    }
+  }
+  return "";
+}
+function mhJudgedNoQuarterPanel(C) {
+  if (!C || mayhemIsActive(C)) return "";
+  var ctx=_mhNoQuarterHistContext(C);
+  var total=mayhemInfamyTotal(C);
+  if (!ctx && !(total>0)) return "";
+  var action=_mhActions()["no-quarter-historical"];
+  var offer="";
+  if (ctx && action && mayhemCan("no-quarter-historical", ctx)) {
+    var rows="";
+    for (var i=0;i<action.effects.length;i++){
+      var e=action.effects[i], label=_MH_JUDGED_EFFECT_LABELS[e.operation]||e.operation, v=Number(e.value);
+      rows+='<li style="margin:2px 0">'+_mhEsc(label)+': <b>'+(v>0?'+':'')+v+'</b></li>';
+    }
+    offer='<div style="margin-top:6px"><p style="margin:4px 0">A surrender of <b>'+_mhEsc(C.mayhemNoQuarterOffer.captured)
+      +'</b> troops stands before you. Refusing quarter is playable here — and judged. Every consequence is stated now, before you confirm; none can be undone:</p>'
+      +'<ul style="margin:4px 0 6px;padding-left:20px;font-size:12px">'+rows+'</ul>'
+      +'<p style="margin:4px 0;font-size:11.5px;opacity:.85">While the infamy ledger stands above zero, the prisoner-exchange cartel functions worse and its pressure rises. There is no score, credit, loot, or reward on this path.</p>'
+      +'<button type="button" class="bigbtn" data-mh-no-quarter="1">Refuse quarter &mdash; accept the judgment</button></div>';
+  }
+  var receipt=null, rs=_mhReadReceipts(C);
+  for (var k=rs.length-1;k>=0;k--)if(rs[k].actionId==="no-quarter-historical"){receipt=rs[k];break;}
+  var applied="";
+  if (receipt) {
+    var ops="";
+    for (var j=0;j<receipt.operations.length;j++){var o=receipt.operations[j];ops+=(ops?'; ':'')+_mhEsc(_MH_JUDGED_EFFECT_LABELS[o.operation]||o.operation)+' '+(o.value>0?'+':'')+o.value+' ('+o.before+' &rarr; '+o.after+')';}
+    applied='<div style="margin-top:6px"><p style="margin:4px 0"><b>Quarter was refused.</b> The consequences are applied and recorded: <span style="font-size:11.5px;opacity:.85">'+ops+'</span></p>'
+      +((typeof tcChronicleLine==="function")?tcChronicleLine("no-quarter-historical"):"")
+      +_mhJudgedGo252Line()+'</div>';
+  }
+  var ledger="";
+  if (total>0) {
+    ledger='<div style="margin-top:6px;padding-top:6px;border-top:1px dotted #b98a6a"><b style="font-size:12px">The Infamy Ledger &mdash; '+Math.round(total)
+      +'</b><div style="font-size:11.5px;opacity:.85;margin-top:2px">This ledger records atrocity as lasting damage to your own cause: public will, the press, European standing, and the prisoner-exchange cartel all stand against you while it is open. It never scores, and it never closes on its own.</div></div>';
+  }
+  return '<section class="mh-judged" role="region" aria-labelledby="mhJudgedTitle" style="margin:10px 0;padding:12px;border:2px solid #b98a6a;border-left:6px solid #d06862;border-radius:8px;background:rgba(0,0,0,.14)">'
+    +'<div style="font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.07em;color:#d06862">Judged, never rewarded</div>'
+    +'<h2 id="mhJudgedTitle" style="margin:3px 0;font-size:15px">No Quarter</h2>'
+    +offer+applied+ledger+'</section>';
 }
 function mayhemNoQuarterApply(C) {
   var ctx=_mhNoQuarterContext(C);if(!ctx)return null;
@@ -181,7 +342,11 @@ function _mhNoQuarterPanel(C) {
 var _MH_BASE_CAMPAIGN_ADVANCE=typeof campaignAdvance==="function"?campaignAdvance:null;
 if(_MH_BASE_CAMPAIGN_ADVANCE)campaignAdvance=function(winnerSide,type){
   var C=typeof G!=="undefined"&&G.campaign,B=typeof G!=="undefined"&&G.battle;
-  if(C&&mayhemIsActive(C)&&B&&Number(B.mayhemCapturedByPlayer)>0){var n=(Number(C.stats&&C.stats.battles)||0)+1;C.mayhemNoQuarterOffer={timelineId:_mhStableId(C.timelineName)?C.timelineName:"campaign",battleId:_mhStableId(B.id)?B.id:"battle-"+n,captured:Math.round(B.mayhemCapturedByPlayer),consumed:false};}
+  /* LANE-012 Slice 2: the offer stamps for BOTH rulesets from the shipped
+     B.mayhemCapturedByPlayer T25/T2 chain. The ruleset routes what the offer CAN DO
+     (Mayhem: the reward action; Historical: the judged consequence-only action) — never
+     whether the surrender happened. No captures -> no stamp -> bytes unchanged. */
+  if(C&&B&&Number(B.mayhemCapturedByPlayer)>0){var n=(Number(C.stats&&C.stats.battles)||0)+1;C.mayhemNoQuarterOffer={timelineId:_mhStableId(C.timelineName)?C.timelineName:"campaign",battleId:_mhStableId(B.id)?B.id:"battle-"+n,captured:Math.round(B.mayhemCapturedByPlayer),consumed:false};}
   return _MH_BASE_CAMPAIGN_ADVANCE.apply(this,arguments);
 };
 /* D425 gate-discovered root fix: propagate the delegate's wrapper markers AND the war-career
@@ -235,7 +400,9 @@ if(_MH_BASE_AAR)aarRenderReport=function(C,opts){
      so this wrapper's output is byte-identical without it). The companion informs; it never grades. */
   return '<div class="mh-aar" data-mh-no-judgment="true"><h1>'+title+'</h1><p>Performance, consequences, rewards, and chaos. No moral or plausibility GPA.</p>'+_mhNoQuarterPanel(C)+((typeof tcMayhemPanel==="function")?tcMayhemPanel(C):"")+mayhemChronicleHTML(C)+'</div>';
 };
-if(typeof document!=="undefined")document.addEventListener("click",function(e){var b=e&&e.target&&e.target.closest?e.target.closest("[data-mh-no-quarter]"):null;if(!b)return;var C=typeof G!=="undefined"&&G.campaign,r=mayhemNoQuarterApply(C);if(r&&typeof aarRenderTab==="function"&&typeof openSheet==="function")openSheet(aarRenderTab(C));});
+/* LANE-012 Slice 2: the ONE delegated click path routes by ruleset — Mayhem takes the
+   reward action; Historical takes the judged consequence-only action. Same button seam. */
+if(typeof document!=="undefined")document.addEventListener("click",function(e){var b=e&&e.target&&e.target.closest?e.target.closest("[data-mh-no-quarter]"):null;if(!b)return;var C=typeof G!=="undefined"&&G.campaign,r=(C&&mayhemIsActive(C))?mayhemNoQuarterApply(C):mayhemNoQuarterHistApply(C);if(r&&typeof aarRenderTab==="function"&&typeof openSheet==="function")openSheet(aarRenderTab(C));});
 
 function _mhHistorical() { return { id:"historical", version:1 }; }
 function _mhValidId(id) { return id === "historical" || id === "mayhem"; }
@@ -300,11 +467,19 @@ function mayhemKnownActionIds() {
   return out.sort();
 }
 
+/* LANE-012 Slice 2: PRESENT-ONLY load sanitation. Historical campaigns may now
+   legitimately carry receipts (the judged action) and the C.infamy ledger — sanitize
+   them whenever PRESENT under either ruleset, but NEVER create them on a campaign that
+   lacks them (the never-took-the-action Historical A/B stays byte-identical). */
+function _mhSanitizeCarried(C, rulesetId) {
+  if (rulesetId === "mayhem" || Array.isArray(C.mayhemReceipts)) _mhSanitizeReceipts(C);
+  _mhInfamySanitize(C);
+}
 function mayhemInit(C, requestedId, phase) {
   if (!C || typeof C !== "object" || Array.isArray(C)) return _mhHistorical();
 
   var current = _mhExactRuleset(C.ruleset);
-  if (_mhLockedOwner(C)) { if(current&&current.id==="mayhem")_mhSanitizeReceipts(C); return current || _mhHistorical(); }
+  if (_mhLockedOwner(C)) { if(current)_mhSanitizeCarried(C,current.id); return current || _mhHistorical(); }
 
   var id;
   if (current) {
@@ -315,7 +490,7 @@ function mayhemInit(C, requestedId, phase) {
   } else {
     id = _mhFallbackId(); // MAYHEM_BIND_A:HISTORICAL_FALLBACK
   }
-  var installed=_mhInstallOwner(C, id); if(installed.id==="mayhem")_mhSanitizeReceipts(C); return installed;
+  var installed=_mhInstallOwner(C, id); _mhSanitizeCarried(C, installed.id); return installed;
 }
 
 /* A named fork creates a new object and uses the one initializer. It never
