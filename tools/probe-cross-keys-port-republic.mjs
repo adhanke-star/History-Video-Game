@@ -281,11 +281,19 @@ const SETUP = `(() => {
       return { total:reg.people.length, scenarioRows:rows.length, units:keys.length };
     });
 
-    check('SCOPE + DIGNITY: other Valley actions stay teaching-only and standing Fort Pillow / Leetown carve-outs remain absent', function() {
+    /* D461 CHAIN (LANE-013 P3; Aaron's D455 SS3 row 8): 'frontRoyal' leaves the barred
+       teaching-only list — the never-scored guard on Front Royal's conventional capture is
+       LIFTED (a future Front Royal build may register and score through the EXISTING
+       universal capture path; no new scoring family exists). Kernstown, McDowell, and First
+       Winchester STAY barred (their guards are engine-mismatch/inversion cautions, not the
+       lifted moral scope guard). The spec's SS-addendum records the lift; the new scored-
+       lift tooth below pins it. Fort Pillow / Leetown carve-outs here are UNCHANGED by this
+       phase (Fort Pillow's own re-pin belongs to its runtime registration commit). */
+    check('SCOPE + DIGNITY: Kernstown/McDowell/First Winchester stay teaching-only; the D461 Front Royal scored-lift is recorded; standing Fort Pillow / Leetown carve-outs remain absent', function() {
       var reg = fldScenarioRegistry(), keys = Object.keys(reg), combined = JSON.stringify(keys.map(function(k){ return (reg[k] || {}).name || ''; }));
-      ['kernstown','mcdowell','frontRoyal','firstWinchester'].forEach(function(id){ if (keys.indexOf(id) >= 0) throw new Error('teaching-only Valley action registered: ' + id); });
+      ['kernstown','mcdowell','firstWinchester'].forEach(function(id){ if (keys.indexOf(id) >= 0) throw new Error('teaching-only Valley action registered: ' + id); });
       if (/fort pillow|leetown/i.test(combined) || keys.some(function(k){ return /pillow|leetown/i.test(k); })) throw new Error('standing dignity carve-out violated');
-      return { valleyExtraPhases:0, fortPillow:false, leetown:false };
+      return { valleyExtraPhases:0, frontRoyal:'scored-lift (D461)', fortPillow:false, leetown:false };
     });
   } catch(e) {
     R.ok = false; R.errors.push('FATAL ' + String(e && e.message || e));
@@ -357,6 +365,20 @@ async function main() {
       v:{ classicRows:{ crosskeys:cross, portrepublic:port }, tacticalId:"crossKeysPortRepublic", railRoutes, dignityFiles }
     });
     if (!classicOk) throw new Error("Classic/dignity layer contract changed");
+    /* D461 SCORED-LIFT TOOTH (LANE-013 P3; D455 SS3 row 8): the spec must carry the lift
+       addendum — Front Royal's conventional capture MAY score through the existing universal
+       capture path when a future build registers it (no new scoring family); the original
+       never-scored sentence stays above it as the historical record. The inverse bind:
+       stripping the addendum reds EXACTLY this tooth. */
+    const specText = readFileSync(join(ROOT, "docs", "design", "cross-keys-port-republic-battle-build-spec.md"), "utf8");
+    const specFlat = specText.replace(/\s+/g, " ");
+    const liftOk = specFlat.includes("D461 addendum") && specFlat.includes("Front Royal's conventional capture MAY score through the existing universal capture path") && specFlat.includes("no new scoring family");
+    result.steps.push({
+      name:"D461 FRONT ROYAL SCORED-LIFT: the spec records the D455 SS3 row 8 lift (conventional capture may score; existing path only)",
+      ok:liftOk,
+      v:{ lift:liftOk }
+    });
+    if (!liftOk) throw new Error("the D461 Front Royal scored-lift addendum is missing from the spec");
     if (!(await up(url))) {
       server = spawn("python3", ["-m", "http.server", String(cfg.port)], { cwd: ROOT, stdio:"ignore" });
       for (let i = 0; i < 80 && !(await up(url)); i++) await sleep(250);

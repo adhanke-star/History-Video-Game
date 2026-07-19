@@ -4,6 +4,37 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D461 — LANE-013 P3 SHIPPED: THE FRONT ROYAL SCORING-GUARD LIFT — CONVENTIONAL CAPTURE MAY SCORE THROUGH THE EXISTING PATH (THE D455 §3 ROW 8 UNLOCK; DOCS + TEETH ONLY, ZERO RUNTIME BYTES) — [CLAUDE CODE (FABLE 5), LANE-013 DRIVE, ARC 2 OVERNIGHT] (2026-07-18)
+
+ARC 2 phase P3, built to the LANE-013 charter. **THE FINDING (recon recorded in the lane):**
+the "Front Royal never-scored guard" has NO runtime enforcement — src/ carries zero Front
+Royal code; the guard's ENTIRE surface is the cross-keys spec's dignity sentence ("never a
+scored capture objective"), the runtime probe's barred teaching-only registry list
+(`frontRoyal` among kernstown/mcdowell/firstWinchester), and the plan probe's spec-text
+pins. The lift is therefore a docs+teeth re-pin, and the deterministic A/B evidence is the
+UNCHANGED generated-game hash (`7c13850e` before and after — no build ran; no simulation
+input moved; D74 clean by construction).
+
+**SHIPPED:** the spec's D461 addendum (the original never-scored sentence preserved above
+it as the historical record; the lift scoped to Front Royal ONLY — conventional capture may
+score through the EXISTING universal capture path when a future build registers, no new
+scoring family, no capture-harvest mechanic; the Two Marylands story stays teaching; the
+mass surrender ~700 of May 23 1862 becomes an ordinary capture-credit outcome). TEETH
+(documented D461 chains): `frontRoyal` leaves the runtime probe's barred list —
+kernstown/mcdowell/firstWinchester STAY barred (engine-mismatch/inversion cautions, not the
+lifted scope guard); the standing Fort Pillow/Leetown carve-outs in the same tooth are
+UNCHANGED (their re-pin belongs to the Fort Pillow runtime commit); a NEW scored-lift tooth
+pins the addendum (whitespace-normalized match).
+
+**GATES:** node --check · focused probe-cross-keys-port-republic 16 steps ALL OK with
+artifact read, ZERO pageerrors · its plan probe OK · no build (nothing to rebuild).
+**BIND (md5-proven):** the addendum stripped → EXACTLY the scored-lift tooth red; restore
+byte-identical (spec `dabdedf1`) → ALL OK; game hash `7c13850e` held throughout.
+
+Counts hold 26/59/1,617/137; `_SAVE_VER=1`; frozen base untouched. EXACT NEXT: P4 — the
+Fort Pillow spec (P1's chapter verdict is READY_FOR_SPEC), then its runtime if budget
+carries it.
+
 ## D460 — LANE-013 P2 SHIPPED: THE CHEROKEE FIELDING AT ELKHORN TAVERN — WATIE'S 2ND CMR ON ITS SOURCED MARCH 8 STATION; DREW'S 1ST CMR AT ITS SOURCED NON-COMBAT STATION (THE D455 §3 ROW 7 UNLOCK, HONESTLY BOUNDED BY THE RECORD) — [CLAUDE CODE (FABLE 5), LANE-013 DRIVE, ARC 2 OVERNIGHT] (2026-07-18)
 
 ARC 2 phase P2, built to the LANE-013 charter. **THE SUPERSESSION, RECORDED:** Aaron's D455

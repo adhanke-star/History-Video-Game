@@ -2347,19 +2347,21 @@ next green commit and confer through this ledger instead of permitting simultane
   comment-stripped scans use the D458 regex-literal-aware scanner idiom · the LANE-012
   massacre-block and the AAR grading/endings moral voice are UNTOUCHED except through a
   recorded Aaron decision.
-- **Resume pointer:** P1 SHIPPED (D459) · P2 SHIPPED (D460 — Watie's 2nd CMR fielded on
-  its sourced March 8 station with the full re-pin sweep, counts 1,614→1,617; Drew's 1st
-  CMR honestly non-combat at its sourced station; the field-both tension surfaced to
-  Aaron in the session report) → EXACT NEXT: P3, the Front Royal scoring guard lift
-  (D455 §3 row 8). P3 recon (recorded): the guard's ENTIRE surface is the cross-keys
-  spec's dignity text ("never a scored capture objective") + probe-cross-keys-port-
-  republic.mjs's barred-registry-id tooth (frontRoyal in the teaching-only list) + the
-  plan probe's spec-text pins; src/ carries NO Front Royal scoring code, so the lift is
-  a docs+teeth re-pin (frontRoyal leaves the barred list with a documented chain;
-  kernstown/mcdowell/firstWinchester STAY barred; spec addendum records the D455 lift;
-  A/B evidence = the byte-identical game hash, docs+teeth only). Whoever resumes
-  mid-ladder: run the P0a startup check, read this contract in full, and continue at
-  the first phase whose D### is not yet in DECISIONS.md.
+- **Resume pointer:** P1 SHIPPED (D459) · P2 SHIPPED (D460 — counts 1,614→1,617; the
+  field-both tension surfaced to Aaron) · P3 SHIPPED (D461 — the Front Royal lift,
+  docs+teeth only, game hash held) → EXACT NEXT: P4, the Fort Pillow SPEC
+  (`docs/design/fort-pillow-battle-build-spec.md`, packet conventions; resolve the P1
+  packet §9 Fort Pillow traps first), THEN the runtime only if session budget carries a
+  clean end — otherwise the committed spec is the clean boundary and the runtime queues
+  in the closeout prompt. The P4 runtime's absence-tooth re-pin inventory (all in its
+  ONE commit): probe-cedar-creek(+plan), probe-cross-keys-port-republic(+plan),
+  probe-fort-donelson(+plan), probe-new-market-heights(+plan), probe-stones-river(+plan)
+  — registry/name/data-file/vet-suite/roster-baseline scans; plus both-baselines
+  EXPECTED (tactical-roster + custom-battle-builder), suite row append, schema count
+  59→60, scenarios 26→27, register total move, and the two lane-grepping plan probes'
+  AD-7 re-pins. Whoever resumes mid-ladder: run the P0a startup check, read this
+  contract in full, and continue at the first phase whose D### is not yet in
+  DECISIONS.md.
 - **Last-touched commit:** the P0c charter commit (this edit).
 - **History:** opened 2026-07-18 (overnight) by Claude Code (Fable 5) under Aaron's
   ARC 2 overnight charter directive; ledger-only first per the D456 precedent.
