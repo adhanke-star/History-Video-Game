@@ -2349,7 +2349,12 @@ next green commit and confer through this ledger instead of permitting simultane
   recorded Aaron decision.
 - **Resume pointer:** P1 SHIPPED (D459) · P2 SHIPPED (D460 — counts 1,614→1,617; the
   field-both tension surfaced to Aaron) · P3 SHIPPED (D461 — the Front Royal lift,
-  docs+teeth only, game hash held) → EXACT NEXT: P4, the Fort Pillow SPEC
+  docs+teeth only, game hash held) · P4 SPEC COMMITTED (D462 —
+  `docs/design/fort-pillow-battle-build-spec.md` is the controlling law; the runtime
+  deliberately queued at the clean spec boundary; P5 specs + P6 battery deferred with
+  it) → EXACT NEXT: the P4 RUNTIME per spec §8-§9 (one atomic commit), then P5, then
+  the P6 release battery. Prior recon preserved below for the runtime session: the
+  Fort Pillow SPEC
   (`docs/design/fort-pillow-battle-build-spec.md`, packet conventions; resolve the P1
   packet §9 Fort Pillow traps first), THEN the runtime only if session budget carries a
   clean end — otherwise the committed spec is the clean boundary and the runtime queues

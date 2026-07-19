@@ -4,6 +4,34 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D462 — LANE-013 P4 SPEC COMMITTED: THE FORT PILLOW BATTLE-BUILD SPEC (THE D455 §3 ROW 6 UNLOCK; RUNTIME DELIBERATELY QUEUED AT THE CLEAN SPEC BOUNDARY) — [CLAUDE CODE (FABLE 5), LANE-013 DRIVE, ARC 2 OVERNIGHT] (2026-07-18)
+
+ARC 2 phase P4, spec step, built to the LANE-013 charter from the D459 packet's
+READY_FOR_SPEC chapter. **THE SPEC:** `docs/design/fort-pillow-battle-build-spec.md` — the
+controlling law for the future one-commit runtime: single-phase attacker-seize (CS 1,500
+Cimprich-sourced vs US 557 NPS-sourced, ranges disclosed in provenance; the fort falls at
+fair baseline from covered-approach geometry, never a fudge); the massacre NEVER in the
+scenario — the post-surrender choice belongs exclusively to the SHIPPED D457 no-quarter
+machinery (zero new engine code); mandatory ≥2-source teaching (the JCCW verbatim, the
+culpability debate taught AS a debate, the casualty record as attributed ranges, GO 252 /
+cartel collapse composing the committed corpus); the dignity imagery law absolute; the D74
+wall extended with massacre-temptation keys (rageMult/massacreMult/atrocityBonus/
+noQuarterBonus). Counts law for the runtime commit: scenarios 26→27 · schemas 59→60 ·
+register 1,617→1,632 (5 units × 3) at every pin site · suite 137→138 (END append) · the
+TEN-probe absence-tooth re-pin inventory (cedar-creek/cross-keys/fort-donelson/
+new-market-heights/stones-river, runtime + plan each) in the SAME commit · both-baselines
+EXPECTED · the two lane-grepping plan probes AD-7 re-pins · probe-fort-pillow authored with
+the commit carrying ≥2 predeclared binds (Forrest-grade tamper; card-source drop) + the
+declined-choice byte-identity A/B. **BOUNDARY CALL (the charter's own rule):** session
+context/usage cannot carry the full runtime to a clean end tonight — the phase STOPS at
+this committed spec (a clean boundary per the charter text) and the runtime queues as the
+continuation prompt's first item. P5 (Crater/Olustee specs, [IF-ROOM]) and P6 (the release
+battery) are honestly DEFERRED with it; LANE-012 rests at VERIFY untouched.
+
+Docs-only commit (no build; game `7c13850e` holds); counts hold 26/59/1,617/137;
+`_SAVE_VER=1`; frozen base untouched. EXACT NEXT: the P4 runtime per spec §8-§9, then P5,
+then the P6 battery.
+
 ## D461 — LANE-013 P3 SHIPPED: THE FRONT ROYAL SCORING-GUARD LIFT — CONVENTIONAL CAPTURE MAY SCORE THROUGH THE EXISTING PATH (THE D455 §3 ROW 8 UNLOCK; DOCS + TEETH ONLY, ZERO RUNTIME BYTES) — [CLAUDE CODE (FABLE 5), LANE-013 DRIVE, ARC 2 OVERNIGHT] (2026-07-18)
 
 ARC 2 phase P3, built to the LANE-013 charter. **THE FINDING (recon recorded in the lane):**
