@@ -27,6 +27,13 @@ import "./guard-probe-browser.mjs";
 //    proves the fail-closed gradient dome (loadState "failed", no map, fog tint live, lights never
 //    captured, errN 0); renderRich="off" leaves T33 inert. The existing matchesFog tooth doubles as the
 //    fog-tint COUPLING tooth on the mapped dome (the dome colour keeps re-copying the live weather fog).
+//  - T34 GROUND-LEVEL CAMERA (LANE-014 slice 4, this probe is the owner): settings-gated
+//    (groundCam="on"); DEFAULT OFF = the T key + arrows change nothing (camera/params byte-identical);
+//    when on, T enters ground inspect at fldTerrainH+EYE through PARAMETER-MODE OrbitControls (no
+//    addon, no pointer lock), arrows walk/turn, the per-frame clamp floors camera.y at terrain+EYE,
+//    a selected brigade gives follow (reduceMotion => jump, never glide; enableDamping never touched),
+//    exit restores the exact pre-entry camera/target/params, and the two wrapped T0 reposition
+//    commands stay authoritative (they drop the mode and win). Sim seed/fields invariant while active.
 // (The 26-outcome + 20-AB seed-for-seed byte-identity gate stays owned by probe-presets / probe-phased-ab.)
 
 import { chromium } from 'playwright-core';
@@ -67,6 +74,11 @@ function staticScan() {
   let t33 = ''; try { t33 = readFileSync(join(tacDir, 'T33-hdri-sky.js'), 'utf8'); } catch (e) {}
   check('static-scan: T33 never calls fldRng, never writes _SAVE_VER, reaches no sibling visual-layer internals',
     t33.length > 0 && !/fldRng\(/.test(t33) && !/_SAVE_VER\s*=/.test(t33) && !/(fldRr|FLDRR|fldVf|FLDVF|fldTr[A-Z]|FLDTR|fldFf|FLDFF|fldWx|FLDWX|fldAtmo|FLDAT|fldElevMode)/.test(t33) && !/\.swamps\b|\.towns\b|\.forts\b/.test(t33));
+  // T34 ground camera (LANE-014 slice 4): presentation-only + no sibling visual-layer
+  // reaches + no pointer lock + no control addon (the existing OrbitControls in parameter mode).
+  let t34 = ''; try { t34 = readFileSync(join(tacDir, 'T34-ground-camera.js'), 'utf8'); } catch (e) {}
+  check('static-scan: T34 never calls fldRng, never writes _SAVE_VER, no sibling reaches, no pointer lock, no control addon',
+    t34.length > 0 && !/fldRng\(/.test(t34) && !/_SAVE_VER\s*=/.test(t34) && !/(fldRr|FLDRR|fldVf|FLDVF|fldTr[A-Z]|FLDTR|fldFf|FLDFF|fldWx|FLDWX|fldAtmo|FLDAT|fldElevMode)/.test(t34) && !/\.swamps\b|\.towns\b|\.forts\b/.test(t34) && !/pointerLock|requestPointerLock/i.test(t34) && !/new\s+T\.(OrbitControls|FirstPersonControls|FlyControls|PointerLockControls)/.test(t34) && !/enableDamping\s*=/.test(t34));
 }
 
 async function ensureServer() {
@@ -210,6 +222,32 @@ function sceneScript(scenario, seed, opts) {
         out.unit.bodyLayerSlotActive = bodyLayerSlotActive;
       }
 
+      /* ---- T34 GROUND CAMERA (LANE-014 slice 4): default OFF must be byte-identical —
+         the T key + arrows are dispatched and must change NOTHING (no groundCam setting) ---- */
+      out.t34 = {
+        wrappers: typeof fld3dRender === 'function' && !!fld3dRender._t34 &&
+                  typeof _fld3dReaimPhase === 'function' && !!_fld3dReaimPhase._t34 &&
+                  typeof fldCamFrameSelected === 'function' && !!fldCamFrameSelected._t34 &&
+                  typeof fldExit === 'function' && !!fldExit._t34,
+        chainVf: !!(fld3dRender._vf && fldExit._vf),
+        fns: ['fldGcOn','fldGcActive','fldGcEnter','fldGcExit','fldGcToggle','fldGcFrame','fldGcClamp','fldGcKey','fldGcDrop'].every(function(n){ return eval('typeof '+n) === 'function'; })
+      };
+      if (!${JSON.stringify(!!opts.off)}) {
+        var gcPos0 = { x: __FIELD.camera.position.x, y: __FIELD.camera.position.y, z: __FIELD.camera.position.z };
+        var gcMin0 = __FIELD.controls.minDistance, gcPolar0 = __FIELD.controls.maxPolarAngle;
+        ['t','ArrowUp','ArrowUp','ArrowLeft'].forEach(function(kk){
+          document.dispatchEvent(new KeyboardEvent('keydown', { key: kk, bubbles: true }));
+        });
+        for (var gf = 0; gf < 3; gf++) fld3dRender();
+        out.t34.offInert = {
+          active: (typeof FLDGC_S !== 'undefined') ? FLDGC_S.active : undefined,
+          camMoved: Math.abs(__FIELD.camera.position.x - gcPos0.x) + Math.abs(__FIELD.camera.position.y - gcPos0.y) + Math.abs(__FIELD.camera.position.z - gcPos0.z),
+          minD: __FIELD.controls.minDistance, minD0: gcMin0,
+          maxPolar: __FIELD.controls.maxPolarAngle, maxPolar0: gcPolar0,
+          gcSetting: (G.settings && G.settings.groundCam) || null
+        };
+      }
+
       /* ---- BYTE-IDENTITY: synchronous render burst (no sim step, no fldRng) ---- */
       __FIELD.paused = true;
       var su0 = (__FIELD.units && __FIELD.units[0]) ? __FIELD.units[0] : null;
@@ -325,6 +363,109 @@ function hdriKeysScript(scenario, seed) {
   })();`;
 }
 
+// T34 GROUND CAMERA (LANE-014 slice 4): one launch with groundCam="on" — enter/walk/turn,
+// the terrain clamp floor, brigade follow (+ the reduceMotion jump), exact exit restore,
+// and the T0 reposition-command authority.
+function groundCamScript(scenario, seed) {
+  return `(async () => {
+    function wait(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+    var out = { ok:false };
+    try {
+      try { if (typeof fldExit === 'function' && typeof __FIELD !== 'undefined' && __FIELD && __FIELD.launched) fldExit(true); } catch(e){}
+      await wait(120);
+      G.settings = G.settings || {};
+      G.settings.gfxQuality = 'high';
+      try { delete G.settings.tacticalPreset; } catch(e) {}
+      delete G.settings.tacticalFog;
+      G.settings.reduceMotion = false;
+      try { delete G.settings.renderRich; } catch(e){}
+      try { delete G.settings.formationFigures; } catch(e){}
+      G.settings.groundCam = 'on';
+      fldLaunchSandbox({ renderer:'3d', scenario:${JSON.stringify(scenario)}, autoBoth:true, playerSide:'US', seed:${seed} });
+      for (var w = 0; w < 160 && !(__FIELD.mode3d && __FIELD.renderer); w++) await wait(100);
+      if (!__FIELD.mode3d || !__FIELD.renderer) throw new Error('3D renderer did not become active; kind=' + __FIELD.rendererKind);
+      if (__FIELD.phase === 'deploy') __FIELD.phase = 'battle';
+      __FIELD.paused = true;                                    // static sim: the follow seat is deterministic
+      for (var f0 = 0; f0 < 3; f0++) fld3dRender();
+      var cam = __FIELD.camera, ct = __FIELD.controls;
+      function key(kk, shift){ document.dispatchEvent(new KeyboardEvent('keydown', { key: kk, shiftKey: !!shift, bubbles: true })); }
+      var EYE = FLDGC.EYE, STEP = FLDGC.STEP;
+      var damp0 = ct.enableDamping;
+      var s0 = { x: cam.position.x, y: cam.position.y, z: cam.position.z,
+                 tx: ct.target.x, ty: ct.target.y, tz: ct.target.z,
+                 minD: ct.minDistance, maxPolar: ct.maxPolarAngle };
+      // ENTER (no selection -> inspect)
+      __FIELD.sel = [];
+      key('t');
+      for (var f1 = 0; f1 < 2; f1++) fld3dRender();
+      out.enter = { active: FLDGC_S.active, mode: FLDGC_S.mode, minD: ct.minDistance,
+        eyeErr: Math.abs(cam.position.y - (fldTerrainH(cam.position.x, cam.position.z) + EYE)) };
+      // WALK + TURN
+      var wx0 = cam.position.x, wz0 = cam.position.z;
+      key('ArrowUp'); key('ArrowUp'); key('ArrowUp');
+      var walkDist = Math.sqrt(Math.pow(cam.position.x - wx0, 2) + Math.pow(cam.position.z - wz0, 2));
+      var cx1 = cam.position.x, cz1 = cam.position.z, tx1 = ct.target.x, tz1 = ct.target.z;
+      key('ArrowLeft');
+      out.kb = { walkDist: walkDist, expect: 3 * STEP,
+        turnCamMoved: Math.abs(cam.position.x - cx1) + Math.abs(cam.position.z - cz1),
+        turnTgtMoved: Math.abs(ct.target.x - tx1) + Math.abs(ct.target.z - tz1) };
+      // CLAMP floor: force the camera under the terrain, render, expect recovery
+      cam.position.y = fldTerrainH(cam.position.x, cam.position.z) - 70;
+      for (var f2 = 0; f2 < 3; f2++) fld3dRender();
+      out.clamp = { y: cam.position.y, floor: fldTerrainH(cam.position.x, cam.position.z) + EYE };
+      // EXIT restores the exact pre-entry camera/target/params
+      key('t');
+      for (var f3 = 0; f3 < 2; f3++) fld3dRender();
+      out.restore = {
+        active: FLDGC_S.active,
+        camErr: Math.abs(cam.position.x - s0.x) + Math.abs(cam.position.y - s0.y) + Math.abs(cam.position.z - s0.z),
+        tgtErr: Math.abs(ct.target.x - s0.tx) + Math.abs(ct.target.y - s0.ty) + Math.abs(ct.target.z - s0.tz),
+        minD: ct.minDistance, maxPolar: ct.maxPolarAngle, minD0: s0.minD, maxPolar0: s0.maxPolar,
+        damp: ct.enableDamping, damp0: damp0
+      };
+      // FOLLOW a selected brigade (glide), then the reduceMotion JUMP
+      var u = null;
+      for (var i = 0; i < __FIELD.units.length; i++) { if (__FIELD.units[i].alive) { u = __FIELD.units[i]; break; } }
+      __FIELD.sel = [u.id];
+      key('t');
+      for (var f4 = 0; f4 < 24; f4++) fld3dRender();
+      function seat() {
+        var dx = u.x - Math.sin(u.facing) * FLDGC.BACK, dz = u.z - Math.cos(u.facing) * FLDGC.BACK;
+        return { x: dx, y: fldTerrainH(dx, dz) + EYE, z: dz };
+      }
+      var st = seat();
+      out.follow = { mode: FLDGC_S.mode,
+        seatErr: Math.sqrt(Math.pow(cam.position.x - st.x, 2) + Math.pow(cam.position.y - st.y, 2) + Math.pow(cam.position.z - st.z, 2)),
+        tgtOnUnit: Math.abs(ct.target.x - u.x) + Math.abs(ct.target.z - u.z) };
+      G.settings.reduceMotion = true;
+      cam.position.x += 200;                                     // knock the seat: rm must JUMP straight back
+      for (var f5 = 0; f5 < 2; f5++) fld3dRender();
+      var st2 = seat();
+      out.rmJump = { seatErr: Math.sqrt(Math.pow(cam.position.x - st2.x, 2) + Math.pow(cam.position.y - st2.y, 2) + Math.pow(cam.position.z - st2.z, 2)) };
+      G.settings.reduceMotion = false;
+      // REPOSITION AUTHORITY: an explicit frame-selected command drops the mode and wins
+      fldCamFrameSelected();
+      for (var f6 = 0; f6 < 2; f6++) fld3dRender();
+      out.reposition = { active: FLDGC_S.active, saved: FLDGC_S.saved,
+        camErr: Math.abs(cam.position.x - u.x) + Math.abs(cam.position.y - 260) + Math.abs(cam.position.z - (u.z + 240)),
+        minD: ct.minDistance };
+      // SIM BYTE-IDENTITY across an active-mode render burst
+      G.settings.groundCam = 'on'; __FIELD.sel = [u.id]; key('t');
+      var su = __FIELD.units[0];
+      var snap0 = [su.x, su.z, su.men, su.morale, su.facing].join(',');
+      out.seedBefore = (__FIELD.seed >>> 0);
+      for (var b = 0; b < 6; b++) fld3dRender();
+      out.seedAfter = (__FIELD.seed >>> 0);
+      out.simStable = (snap0 === [su.x, su.z, su.men, su.morale, su.facing].join(','));
+      key('t');
+      out.errN = FLDGC_S.errN;
+      try { delete G.settings.groundCam; } catch(e){}
+      out.ok = true;
+    } catch (e) { out.ok = false; out.error = String(e && e.message || e); }
+    return out;
+  })();`;
+}
+
 async function runSceneScript(page, label, script, shared) {
   const peStart = shared.pe.length, conStart = shared.con.length;
   let d = { ok: false, error: 'not run' };
@@ -367,6 +508,7 @@ async function runScene(page, label, scenario, seed, opts, shared) {
     scenes.push(await runScene(page, 'off', 'shiloh', 21, { off: true }, shared));
     scenes.push(await runScene(page, 'low', 'shiloh', 21, { low: true }, shared));
     scenes.push(await runSceneScript(page, 'hdri-keys', hdriKeysScript('shiloh', 21), shared));
+    scenes.push(await runSceneScript(page, 'ground-cam', groundCamScript('shiloh', 21), shared));
   } finally { if (server) server.kill(); }
 
   const byLabel = {}; for (const s of scenes) byLabel[s.label] = s;
@@ -460,6 +602,37 @@ async function runScene(page, label, scenario, seed, opts, shared) {
     JSON.stringify({ loadStateDay: BLK.loadStateDay, sky: BLK.sky, key: BLK.attachedKey, errN: BLK.errN }));
   check('renderRich="off": T33 inert (no attach, attachedKey null, errN 0)',
     OFF.ok && OFF.t33 && OFF.t33.attachedKey === null && OFF.t33.errN === 0, JSON.stringify(OFF.t33 || {}));
+
+  // T34 ground-level camera (LANE-014 slice 4)
+  const GC = byLabel['ground-cam'].detail;
+  check('T34: 4 by-assignment wrappers (fld3dRender/_fld3dReaimPhase/fldCamFrameSelected/fldExit) installed, ._vf carried, fns present',
+    R.ok && R.t34 && R.t34.wrappers === true && R.t34.chainVf === true && R.t34.fns === true, JSON.stringify(R.t34 || {}));
+  check('T34 default OFF: the T key + arrows change NOTHING — camera/params byte-identical, mode never activates',
+    R.ok && R.t34 && R.t34.offInert && R.t34.offInert.active === false && R.t34.offInert.camMoved < 1e-9 &&
+    R.t34.offInert.minD === R.t34.offInert.minD0 && R.t34.offInert.maxPolar === R.t34.offInert.maxPolar0 && R.t34.offInert.gcSetting === null,
+    JSON.stringify((R.t34 && R.t34.offInert) || {}));
+  check('T34 ground mode: T enters at eye height through parameter-mode OrbitControls (camera.y == fldTerrainH + EYE)',
+    GC.ok && GC.enter && GC.enter.active === true && GC.enter.mode === 'inspect' && GC.enter.eyeErr < 0.5 && GC.enter.minD < 120,
+    JSON.stringify(GC.enter || {}));
+  check('T34 keyboard path: arrows WALK the camera (3 steps ≈ 3×STEP) and TURN the view (target moves, camera holds)',
+    GC.ok && GC.kb && Math.abs(GC.kb.walkDist - GC.kb.expect) < 2 && GC.kb.turnCamMoved < 1e-6 && GC.kb.turnTgtMoved > 1,
+    JSON.stringify(GC.kb || {}));
+  check('T34 terrain clamp: a camera forced under the terrain recovers to >= fldTerrainH + EYE on the next frames',
+    GC.ok && GC.clamp && GC.clamp.y >= GC.clamp.floor - 0.01, JSON.stringify(GC.clamp || {}));
+  check('T34 exit: the EXACT pre-entry camera/target/minDistance/maxPolarAngle restore (enableDamping never touched)',
+    GC.ok && GC.restore && GC.restore.active === false && GC.restore.camErr < 1e-6 && GC.restore.tgtErr < 1e-6 &&
+    GC.restore.minD === GC.restore.minD0 && GC.restore.maxPolar === GC.restore.maxPolar0 && GC.restore.damp === GC.restore.damp0,
+    JSON.stringify(GC.restore || {}));
+  check('T34 brigade follow: the camera glides to the seat behind the selected brigade (target on the unit); reduceMotion JUMPS',
+    GC.ok && GC.follow && GC.follow.mode === 'follow' && GC.follow.seatErr < 12 && GC.follow.tgtOnUnit < 0.01 &&
+    GC.rmJump && GC.rmJump.seatErr < 0.01,
+    JSON.stringify({ follow: GC.follow, rmJump: GC.rmJump }));
+  check('T34 reposition authority: an explicit frame-selected command DROPS ground mode and its framing wins (params restored)',
+    GC.ok && GC.reposition && GC.reposition.active === false && GC.reposition.saved === null && GC.reposition.camErr < 0.01 && GC.reposition.minD === 120,
+    JSON.stringify(GC.reposition || {}));
+  check('T34 byte-identity: sim seed + unit fields INVARIANT across an active-mode render burst (errN 0)',
+    GC.ok && GC.seedBefore === GC.seedAfter && GC.simStable === true && GC.errN === 0,
+    'seed=' + GC.seedBefore + '->' + GC.seedAfter + ' simStable=' + GC.simStable + ' errN=' + GC.errN);
 
   // health
   check('a screenshot was captured for visual confirmation', !!byLabel['3d'].detail.shot, byLabel['3d'].detail.shot || '');

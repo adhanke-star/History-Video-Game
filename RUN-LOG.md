@@ -2,6 +2,19 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-20 — D473 LANE-014 SLICE 4 SHIPS: the ground-level camera (T34)
+
+The post-D471 continuation ladder P2 (Claude Code / Fable 5): T34 walk-the-field
+mode — settings-gated DEFAULT OFF (T+arrows provably inert without the gate),
+parameter-mode OrbitControls (no addon, no pointer lock, enableDamping never
+written), ground inspect at fldTerrainH+22 with arrow walk/turn, brigade follow
+(reduceMotion ⇒ jump), the per-frame terrain-clamp floor, float-exact exit
+restore, and the two wrapped T0 reposition commands authoritative.
+probe-visual-fidelity 39→49 (49/49, 7 scenes clean); adjacent tactical-visuals
+10/10; binds clamp-break/default-on bit exactly, md5-proven; AD-7 game→584e5c6f ·
+manifest→4625dca9 · srcTree→a7d2eef4. Counts hold 29/62/1,710/140. Next: slice 5
+[IF-ROOM] (formation LOD) then the ARC 3 release battery.
+
 ## 2026-07-20 — D472 LANE-014 SLICE 3 SHIPS: HDRI sky + derived lighting (T33)
 
 The post-D471 continuation ladder P1 (Claude Code / Fable 5, the §4 TOP-LOOP

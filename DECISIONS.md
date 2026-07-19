@@ -4,6 +4,49 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D473 — LANE-014 SLICE 4 SHIPPED: THE GROUND-LEVEL CAMERA (T34) — WALK THE FIELD THROUGH PARAMETER-MODE ORBITCONTROLS, DEFAULT OFF, TERRAIN-CLAMPED — [CLAUDE CODE (FABLE 5), LANE-014 DRIVE; THE POST-D471 LADDER P2] (2026-07-20)
+
+**SHIPPED (the contract's slice-4 clause verbatim):** new `src/tactical/T34-ground-camera.js`
+(manifest-enrolled after T33), a settings-gated camera mode — `G.settings.groundCam === "on"`;
+**DEFAULT OFF = today's orbit camera byte-identical** (the T key + arrows change NOTHING; the
+probe proves camMoved 0 and engine params held). When enabled: **T** enters GROUND INSPECT (the
+camera drops to the orbit target at `fldTerrainH + EYE(22)` eye height; arrows walk ±STEP(26)
+along the view line and turn ±0.12 rad, Shift+Left/Right sidesteps) or BRIGADE FOLLOW (with a
+selection, the camera glides to the seat BACK(90) behind the brigade along its facing, target on
+the unit); **T again restores the EXACT pre-entry camera/target/params** (float-exact, probed).
+Everything runs through the EXISTING OrbitControls in PARAMETER MODE — minDistance 120→8 and
+maxPolarAngle 0.47π→0.55π through the documented public fields, restored on exit — NO control
+addon (the contract's "prefer none" branch), NO pointer lock, and `enableDamping` NEVER touched
+(the engine's own reduceMotion damping law from fld3dInit stands). The per-frame CLAMP floors
+`camera.y >= fldTerrainH(camera.x, camera.z) + EYE` while active — the camera can never sink
+under the analytic terrain. reduceMotion ⇒ the follow seat JUMPS (never glides). The two T0
+reposition commands stay AUTHORITATIVE: `_fld3dReaimPhase` (~T0 2585) and `fldCamFrameSelected`
+(~T0 2605) are WRAPPED BY REASSIGNMENT (never edited) to DROP ground mode and win — T34 never
+fights a T0 camera command. Wraps: fld3dRender (seat+floor) · the two reposition commands ·
+fldExit (state reset), `_t34` outermost with the full `_carry` chain; one resident keydown
+listener inert unless the gate is on (defers to editable targets and already-consumed keys; T
+and arrows are free of the whole T30 action table). Pure presentation: no sim writes, no shared
+RNG, no save-format change; sim seed + unit fields probed INVARIANT across an active-mode burst.
+
+**TEETH (owner probe-visual-fidelity 39→49, adjudication 6 — suite stays 140):** T34 purity
+static scan (the forbidden-sibling family + no pointerLock + no control-addon construction + no
+enableDamping write) · 4 wrappers/_t34/carry/fns · DEFAULT-OFF byte-identity (T+arrows inert,
+camera/params exact) · enter-at-eye-height with parameter-mode params · keyboard walk/turn ·
+the terrain-clamp floor recovery · exact exit restore (damping untouched) · brigade follow +
+the reduceMotion jump · reposition authority (frame-selected drops the mode, its framing wins,
+params restored) · active-mode sim byte-identity + errN 0. 49/49 green standalone (~416s — the
+D472 600s vf budget already covers it); artifact read, 7 scenes, 0 pageerrors, 0 texture
+warnings. Adjacent probe-tactical-visuals 10/10 green (canvas floors; sim byte-identity).
+
+**BINDS (both md5-proven byte-identical restores):** A — the clamp disabled (an early return in
+fldGcClamp) → EXACTLY the terrain-clamp tooth red (y 13.45 < floor 36.25, the polar clamp alone
+provably NOT a terrain floor); restore md5-proven. B — the mode left enabled by default
+(fldGcOn → true) → EXACTLY the default-OFF byte-identity tooth red (camMoved 607.8, minD 8,
+active true); restore md5-proven. **AD-7 re-pins in this commit:** game c72c7585 → 584e5c6f ·
+manifest 2fdf5fb3 → 4625dca9 · srcTree b0a88e93 → a7d2eef4 at all four plan-probe sites
+(base/dataTree/suite/focused hold; data/ untouched); both plan probes re-run green post-commit.
+Counts hold 29/62/1,710/140; `_SAVE_VER=1`; frozen base `c9db83fa` untouched.
+
 ## D472 — LANE-014 SLICE 3 SHIPPED: HDRI SKY + DERIVED LIGHTING (T33) — THE LDR-DECODED EQUIRECT SKY ON THE vfSKY DOME, FAIL-CLOSED, WITH REPRODUCIBLE PRECOMPUTED LIGHT CONSTANTS — [CLAUDE CODE (FABLE 5), LANE-014 DRIVE; THE POST-D471 LADDER P1] (2026-07-20)
 
 **SHIPPED (the contract's slice-3 clause verbatim):** new `src/tactical/T33-hdri-sky.js`

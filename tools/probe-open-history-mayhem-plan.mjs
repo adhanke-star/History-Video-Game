@@ -91,9 +91,14 @@ const PIN = {
   // (src/tactical/T33-hdri-sky.js enrolls after T32; the LDR-decoded equirect map on the
   // vfSky dome keyed to weather/time + precomputed derived light colours, fail-closed;
   // rebuild; + the probe-visual-fidelity 600s slow-Mac budget line). base holds; data untouched.
-  game: "c72c7585862844adef65776d3f3d2d4d",
+  // D473 re-pin (the AD-7 idiom, at the LANE-014 slice-4 head): game c72c7585 -> 584e5c6f,
+  // manifest 2fdf5fb3 -> 4625dca9 — ground camera T34 (src/tactical/T34-ground-camera.js
+  // enrolls after T33; settings-gated default-OFF walk-the-field mode through parameter-mode
+  // OrbitControls, terrain-clamped, reposition-commands authoritative; rebuild).
+  // base/suite hold; data untouched.
+  game: "584e5c6ff6084040a5a929a312acd2d0",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
-  manifest: "2fdf5fb3e67399327deb812612962294",
+  manifest: "4625dca91b9b2cd8e65c1a9439160cf2",
   suite: "69681d6f2216fe1dcfd594ffc4a757b7",
   scenarios: 29,   // D436: 24 -> 25 atlanta; D442: 25 -> 26 coldHarbor; D463: 26 -> 27 fortPillow (LANE-013 P4, the D455 SS3 row 6 unlock); D469: 27 -> 28 crater at rank 71.5 (LANE-015); D470: 28 -> 29 olustee at rank 65.5 between chattanooga (65) and fortPillow (66) (LANE-016)
   schemas: 62,   // D418: 54 -> 55 mayhem-rules.json; D436: 55 -> 56 atlanta.json; D442: 56 -> 57 cold-harbor.json; D445: 57 -> 58 chief-of-staff.json; D446: 58 -> 59 concept-links.json; D463: 59 -> 60 fort-pillow.json; D469: 60 -> 61 crater.json (LANE-015); D470: 61 -> 62 olustee.json (LANE-016)

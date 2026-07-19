@@ -2448,7 +2448,7 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
-### LANE-014 · graphics-uplift — **DRIVE (slices 1-3 SHIPPED as D467/D468/D472; slices 4-6 in flight — the post-D471 continuation ladder)** (ARC 3 of the D455 roadmap)
+### LANE-014 · graphics-uplift — **DRIVE (slices 1-4 SHIPPED as D467/D468/D472/D473; slices 5-6 in flight — the post-D471 continuation ladder)** (ARC 3 of the D455 roadmap)
 
 - **Owning tool:** Claude Code (Fable 5) — DRIVE re-taken 2026-07-20 (the post-D471
   LANE-014 slices 3-6 continuation ladder) with THIS committed edit, per Aaron's
@@ -2714,7 +2714,16 @@ next green commit and confer through this ledger instead of permitting simultane
   with the matchesFog tooth as the coupling tooth green UNAMENDED; binds A/B
   md5-proven; the 600s vf budget line documented; AD-7 re-pins game→c72c7585 ·
   manifest→2fdf5fb3 · srcTree→b0a88e93 · suite→69681d6f; the WIP branch deleted
-  (the D463 pattern). Resume: slice 4 (T34 ground-level camera) per this contract.
+  (the D463 pattern). SLICE 4 SHIPPED as D473 (this commit): T34 ground-level camera
+  per the slice-4 clause verbatim — settings-gated default-OFF (T+arrows provably
+  inert without the gate), parameter-mode OrbitControls (no addon, no pointer lock,
+  enableDamping untouched), terrain-clamped eye height, brigade follow with the
+  reduceMotion jump, exact exit restore, the two wrapped T0 reposition commands
+  authoritative; teeth in the owner probe-visual-fidelity 39→49 (49/49) + adjacent
+  probe-tactical-visuals; binds clamp-break/default-on md5-proven; AD-7 re-pins
+  game→584e5c6f · manifest→4625dca9 · srcTree→a7d2eef4 (suite holds). Resume:
+  slice 5 (formation density/LOD, T24 extension + T23 fixture-only slots) per this
+  contract, then slice 6 (the ARC 3 release battery).
 
 ---
 
