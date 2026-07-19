@@ -2439,7 +2439,46 @@ next green commit and confer through this ledger instead of permitting simultane
   full read order + the P4 pin-site recon, authored the `data/fort-pillow.json`
   draft, then RELEASED the lock at Aaron's save-and-push safe-stop instruction —
   recon + draft banked above and on `lane-013-p4-wip`; no main-branch code moved;
-  main stays green at every gate.
+  main stays green at every gate. 2026-07-18/19 overnight maximizer (Fable 5,
+  DRIVE re-taken `9a35890`): P4 runtime SHIPPED as D463 (`9a0d4e9` + the
+  `dffd3bc` two-pin follow-up; WIP branch deleted); P5a Crater spec D464
+  (`e3fcc8b`); P5b Olustee spec + the two HISTORICAL-DATA corrections D465
+  (`6663449`). The Crater RUNTIME was deliberately SKIPPED under the charter's
+  own budget rule (the mandatory P6 battery outranks new runtimes).
+
+---
+
+### LANE-014 · graphics-uplift — **LAW-DRAFT (chartered ledger-only at the D465 boundary; unowned)** (ARC 3 of the D455 roadmap)
+
+- **Owning tool:** unowned (chartered ledger-only by Claude Code / Fable 5, 2026-07-19
+  overnight, per the maximizer's [IF-ROOM] item 1; NO code, NO probe, NO data moved).
+- **State:** LAW-DRAFT — the design law exists (D455 §7's ARC 3 lock, Aaron-adopted
+  after reviewing the live tactical renders); the ACCEPTANCE CONTRACT does not yet.
+  A future session must write this lane's full contract (slices, teeth, binds, gates)
+  and flip it to CONTRACT before ANY implementation may start — the D456 ledger-only
+  charter precedent.
+- **Design law:** DECISIONS D455 §7 (ARC 3 — the GRAPHICS UPLIFT, Phase H promoted:
+  Tripo/CC-BY models, terrain texturing, HDRI, ground-level camera, formation LOD) ·
+  the standing media/license/perf gates (no unclear-license assets; the D455 $0-public
+  build law — license-incompatible sources like Google Maps stay OUT; the
+  probe-intel-uhd617-profile perf wall + the media-budget policy are binding teeth) ·
+  frozen `build/base.html` (the uplift wires through live src owners, never the frozen
+  foundation) · D74 (graphics never touch simulation inputs) · the D412 docs law.
+- **Scope sketch (NOT a contract; the future charter refines):** model sourcing/license
+  audit → terrain texturing → lighting/HDRI → camera → formation LOD/perf — each slice
+  its own D### with focused gates, screenshot/artifact evidence, and perf teeth on the
+  Intel UHD 617 floor.
+- **Standing queue behind this lane (recorded for the picker):** the CRATER RUNTIME
+  (D464 spec §8-§9 is its law; its charter must carry the full re-pin inventory incl.
+  the adjudication-2 forbidden-scan flips) and the OLUSTEE RUNTIME (D465 spec §8-§9) —
+  each a one-commit build on the D463 pattern; they may charter before or after ARC 3
+  work at Aaron's priority call.
+- **Resume pointer:** write the full acceptance contract (a fresh session, ledger-only
+  first), then take DRIVE. Nothing else may move under this lane until then.
+- **Last-touched commit:** this charter edit.
+- **History:** chartered 2026-07-19 (overnight) at the D465 boundary under the ARC 2
+  maximizer's [IF-ROOM] directive; the Crater-runtime option was declined the same
+  night under the charter's budget rule (the P6 battery outranks new runtimes).
 
 ---
 
