@@ -2448,7 +2448,7 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
-### LANE-014 · graphics-uplift — **DRIVE (slices 1-2 SHIPPED as D467/D468; slices 3-6 remain)** (ARC 3 of the D455 roadmap)
+### LANE-014 · graphics-uplift — **CONTRACT (slices 1-2 SHIPPED as D467/D468; slices 3-6 remain; unowned — the DRIVE lock released at the 2026-07-19 evening closeout)** (ARC 3 of the D455 roadmap)
 
 - **Owning tool:** Claude Code (Fable 5) — DRIVE re-taken 2026-07-19 (afternoon day
   ladder) with THIS committed edit, per Aaron's standing same-day pick: the §4
@@ -2459,8 +2459,11 @@ next green commit and confer through this ledger instead of permitting simultane
   audited-albedo bake on the Lambert ground map, fail-closed at every gate, teeth in
   the existing owners (terrain-readability 35 · visual-fidelity 28 · tactical-visuals
   floors), binds A/B md5-proven, AD-7 re-pins game→9fca6932 · manifest→bf29b44f ·
-  srcTree→03c2cdba. The lock is HELD for the day ladder's remaining LANE-014 slices
-  (P4-P6 if room); the Crater/Olustee runtimes (P2/P3) are separate lanes.
+  srcTree→03c2cdba. The day ladder then shipped the Crater (LANE-015/D469) and Olustee
+  (LANE-016/D470) runtimes and SHED slices 3-5 honestly under the context safe-stop
+  law; the DRIVE lock RELEASED at the evening closeout. The next session re-takes
+  DRIVE with a committed edit BEFORE any code move (resume: slice 3 per this
+  contract).
 - **State:** CONTRACT — this entry IS the acceptance contract (ratified `489cfc4`, the
   LANE-013 `3506716` precedent). SLICE 1 is SHIPPED (`6f62352`, D467: the assets3d
   provenance wall; all 30 staged files Verified CC0-1.0 byte-identical to identified
@@ -2697,9 +2700,9 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ### LANE-015 · crater-runtime — **VERIFY (the runtime SHIPPED as D469 in this commit; the flip to SHIPPED gates on the P7 day-end battery)** (ARC 2 completion — C3 content; the D455 SS3 massacre-treatment family)
 
-- **Owning tool:** Claude Code (Fable 5) — DRIVE taken WITH this charter edit (the LANE-013
-  `3506716` ledger-only precedent), 2026-07-19 afternoon, P2 of Aaron's all-day ladder. The
-  §4 TOP-LOOP resolution stands as recorded at LANE-014 (Fable 5, Aaron-confirmed).
+- **Owning tool:** unowned (the Claude Code / Fable 5 DRIVE lock released at the
+  2026-07-19 evening closeout; the runtime is SHIPPED as D469 and pushed — only the
+  battery-gated VERIFY→SHIPPED ledger flip remains).
 - **State:** DRIVE — the charter IS this entry + the committed spec; the runtime lands as
   ONE atomic commit per the spec's §8-§9 inventory.
 - **Design law:** `docs/design/crater-battle-build-spec.md` (D464 — THE controlling law,
@@ -2747,9 +2750,9 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ### LANE-016 · olustee-runtime — **VERIFY (the runtime SHIPPED as D470 in this commit; C3 IS COMPLETE; the flip to SHIPPED gates on the P7 day-end battery)** (ARC 2 completion; the D455 SS3 massacre-treatment family)
 
-- **Owning tool:** Claude Code (Fable 5) — DRIVE taken WITH this charter edit (the
-  ledger-only precedent), 2026-07-19 afternoon, P3 of Aaron's all-day ladder. The §4
-  TOP-LOOP resolution stands as recorded at LANE-014/LANE-015.
+- **Owning tool:** unowned (the Claude Code / Fable 5 DRIVE lock released at the
+  2026-07-19 evening closeout; the runtime is SHIPPED as D470 and pushed — only the
+  battery-gated VERIFY→SHIPPED ledger flip remains).
 - **State:** DRIVE — the charter IS this entry + the committed spec.
 - **Design law:** `docs/design/olustee-battle-build-spec.md` (D465 — THE controlling law,
   committed `6663449`; its §8-§9 carry the complete inventory) · the D459 family packet ·
@@ -2770,8 +2773,13 @@ next green commit and confer through this ledger instead of permitting simultane
   teeth at battleId `olustee`) · ≥2 predeclared binds md5-proven (Colquitt grade tamper →
   rank-wall red EXACTLY; a card cut below 2 sources → card-source red EXACTLY) · AD-7
   re-pins + both plan probes re-run post-commit.
-- **Resume pointer:** the P7 day-end battery (suite 140) gates the VERIFY→SHIPPED flip;
-  no further code work is queued in this lane.
+- **Resume pointer:** the day-end battery (suite 140) gates the VERIFY→SHIPPED flip. At
+  the 2026-07-19 closeout the battery stood ~87/140 green with ZERO unresolved reds
+  (three root-fixes at exact labels: probe-war-career's suite-count tooth 138→140 —
+  BOTH the named check and the silent result.ok conjunct — plus two environment flakes
+  re-run green); the remaining rows resume with
+  `node tools/vet-no-regression.mjs --from="render richness"`. No further code work is
+  queued in this lane.
 - **Last-touched commit:** the D470 runtime commit (this commit).
 - **History:** chartered ledger-only + DRIVE taken 2026-07-19 (afternoon, Claude Code /
   Fable 5, the all-day ladder P3) at the D469 boundary. The RUNTIME SHIPPED the same

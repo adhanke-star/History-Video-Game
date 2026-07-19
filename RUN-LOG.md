@@ -18,8 +18,12 @@ chattanooga→olustee→fortPillow adjacency re-pins across the rank regex + reg
 + DOM chains, binds A/B md5-proven (75f32bf6; the bind-B restore reconstructed exact
 original bytes). AD-7: game→21a5216d · dataTree→4bbdebe5 · srcTree→4564d84d ·
 suite→cf5de9f6 · focused→78633570. **C3 COMPLETE: Fort Pillow · the Crater · Olustee.**
-LANE-015 + LANE-016 rest at VERIFY pending the P7 battery. EXACT NEXT: the ladder's
-P4-P6 [IF-ROOM] LANE-014 slices, then the P7 day-end battery (suite 140).
+LANE-015 + LANE-016 rest at VERIFY pending the battery. P4-P6 were SHED honestly
+(the context safe-stop law). THE P7 BATTERY (night): ~87/140 green across resumed
+segments, ZERO unresolved reds; three root-fixes at exact labels (probe-war-career's
+suite-count tooth 138→140 — both the named check and the silent result.ok conjunct;
+two environment flakes re-run green); Aaron stopped the session mid-battery. Resume
+`--from="render richness"`. Locks released; the flips to SHIPPED await full green.
 
 ## 2026-07-19 — D469 the ALL-DAY LADDER P2: the CRATER RUNTIME ships (afternoon)
 
