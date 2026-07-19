@@ -4,6 +4,47 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D471 — THE D470 DAY-END BATTERY IS COMPLETE (140/140 ACROSS THE RESUMED SEGMENTS, ZERO UNRESOLVED REDS) — LANE-015 + LANE-016 FLIP SHIPPED AT BATTERY SHA `c9934a0` — [CLAUDE CODE (FABLE 5); THE POST-D470 LADDER P1] (2026-07-19/20 night)
+
+**THE BATTERY (the COORDINATION §4 TOP-LOOP resolution: Claude Code / Fable 5, per
+Aaron's post-D470 continuation kickoff):** resumed `--from="render richness"` per the
+D470 closeout and ran ALONE/serialized (TMPDIR=$PWD/.tmp, one shared :8765 server,
+orphan-Chrome checks between legs) to the END — every row exit 0, EVERY artifact JSON
+read `ok=true pageerrors=0`, zero texture warnings, final leg "VET NO-REGRESSION OK".
+Combined with last night's ~87 green rows (D470 closeout), the FULL 140-row suite is
+green across the documented resumed segments with ZERO unresolved reds.
+
+**THREE ROOT-FIXES at exact labels rode the battery (never a weakened tooth):**
+- `4e4593f` **root-fix 3 (RUNTIME):** row `tripo unit assets` — T23's async GLTF
+  template-arrival callback called its PRIVATE sync directly, so the T24 formation
+  shared-layer slot stayed active for one frame (42 orphan figures over the hero
+  model; deterministically reproduced 2x and frame-traced: active at the first
+  model-visible frame, self-healed one frame later — T32's launch work shifted the
+  probe's snapshot into the window). Fix: the async apply routes through the PUBLIC
+  wrapped `fld3dSyncUnit` seam — every sibling layer's hide/park atomic with the
+  attach. AD-7 re-pins rode the commit (game 21a5216d→b26238de · srcTree
+  4564d84d→cc403e85); plan probes re-run green post-commit.
+- `b1c4a4a` **root-fix 4 (probe chain):** row `kennesaw` — the D470 sweep re-pinned
+  the DOM chain variant but MISSED the probe's separate REGISTRY-order conjunct
+  (the D466 sibling class); re-pinned to the eight-battle chronology incl. Olustee.
+- `c9934a0` **root-fix 5 (probe chain):** row `franklin` — the same class for the
+  D469 Crater insert; re-pinned to Kennesaw→Atlanta→Crater→CedarCreek→Franklin. A
+  PROGRAMMATIC tree-wide assertion sweep (every registry-indexOf + fldScnBtn-DOM
+  adjacency pair evaluated against the live 29-battle order) proves ZERO stale
+  sites remain — the adjacency-chain family is exhausted.
+- One environment flake: `vicksburg` timed out at the 360s default in-battery
+  (immediately after a 538s tactical-visuals row; 8 GB memory pressure) and re-ran
+  green ALONE in 116.8s with artifact ok — the D454 class, no budget change at 3x
+  margin.
+
+**THE FLIPS:** LANE-015 (crater-runtime) and LANE-016 (olustee-runtime) VERIFY →
+**SHIPPED** at battery SHA `c9934a0` (this commit's parent), recorded in
+COORDINATION.md with the battery evidence. ARC 2's C3 family (Fort Pillow D463 ·
+the Crater D469 · Olustee D470) is now fully released. Counts hold 29/62/1,710/140;
+`_SAVE_VER=1`; frozen base `c9db83fa` untouched. Doc-only commit — no pinned
+surface moves; both plan probes re-run post-commit. Exact next: LANE-014 slice 3
+(HDRI sky T33) per the committed contract.
+
 ## D470 — LANE-016 SHIPPED: THE OLUSTEE RUNTIME — THE HONEST UNION DEFEAT IN THE PINE CORRIDOR, ONE ATOMIC COMMIT PER THE D465 SPEC §8-§9 — C3 IS COMPLETE — [CLAUDE CODE (FABLE 5), LANE-016 DRIVE; THE ALL-DAY LADDER P3] (2026-07-19)
 
 **SHIPPED (the D465 spec verbatim):** `data/olustee.json` — single-phase meeting engagement,

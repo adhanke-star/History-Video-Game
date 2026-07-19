@@ -2,6 +2,23 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-19/20 — D471 the DAY-END BATTERY COMPLETES: 140-row green, LANE-015 + LANE-016 flip SHIPPED (night)
+
+The post-D470 ladder P1 (Claude Code / Fable 5, the §4 TOP-LOOP resolution per Aaron's
+continuation kickoff): the battery resumed `--from="render richness"` ALONE/serialized
+and ran to the END — every row exit 0, EVERY artifact JSON `ok=true pageerrors=0`,
+"VET NO-REGRESSION OK" on the final leg at SHA `c9934a0`. Three root-fixes at exact
+labels rode the resumed segments, no tooth weakened: `4e4593f` (RUNTIME — T23's async
+GLB apply now routes through the wrapped fld3dSyncUnit seam, closing a real one-frame
+orphan-figures window the tripo hideBaseMarker tooth caught; frame-traced, AD-7
+game→b26238de · srcTree→cc403e85), `b1c4a4a` (probe-kennesaw's registry-order chain
+gains Olustee — the D466 two-teeth-one-swept class), `c9934a0` (probe-franklin's gains
+Crater; a programmatic tree-wide adjacency-assertion sweep now proves zero stale
+sites). One environment flake: vicksburg 360s in-battery timeout re-ran green alone
+in 116.8s (the D454 class). **LANE-015 + LANE-016 FLIPPED SHIPPED at battery SHA
+`c9934a0` — ARC 2 / C3 is fully released.** Counts 29/62/1,710/140; `_SAVE_VER=1`;
+frozen base untouched. Next: LANE-014 slice 3 (HDRI sky T33).
+
 ## 2026-07-19 — D470 the ALL-DAY LADDER P3: the OLUSTEE RUNTIME ships — C3 IS COMPLETE (evening)
 
 LANE-016 chartered ledger-only at DRIVE (`5dbda85`), then the runtime landed as ONE

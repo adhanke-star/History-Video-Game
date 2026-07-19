@@ -2698,13 +2698,15 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
-### LANE-015 · crater-runtime — **VERIFY (the runtime SHIPPED as D469 in this commit; the flip to SHIPPED gates on the P7 day-end battery)** (ARC 2 completion — C3 content; the D455 SS3 massacre-treatment family)
+### LANE-015 · crater-runtime — **SHIPPED (D469 runtime; the D471 battery flip at SHA `c9934a0` — the full 140-row suite green across the documented resumed segments, zero unresolved reds)** (ARC 2 completion — C3 content; the D455 SS3 massacre-treatment family)
 
-- **Owning tool:** unowned (the Claude Code / Fable 5 DRIVE lock released at the
-  2026-07-19 evening closeout; the runtime is SHIPPED as D469 and pushed — only the
-  battery-gated VERIFY→SHIPPED ledger flip remains).
-- **State:** DRIVE — the charter IS this entry + the committed spec; the runtime lands as
-  ONE atomic commit per the spec's §8-§9 inventory.
+- **Owning tool:** unowned (lane CLOSED — the D470/D471 day-end battery completed
+  2026-07-19/20 night by Claude Code (Fable 5), the §4 TOP-LOOP resolution per
+  Aaron's post-D470 continuation kickoff; no further work in this lane).
+- **State:** SHIPPED — the runtime is D469; the battery evidence is D471 (battery
+  SHA `c9934a0`; every artifact JSON read ok/0-pageerrors; the one runtime red the
+  battery surfaced — the T23 async-apply one-frame window — root-fixed at `4e4593f`,
+  a sibling-layer seam fix outside this lane's data/probe surface).
 - **Design law:** `docs/design/crater-battle-build-spec.md` (D464 — THE controlling law,
   committed `e3fcc8b`; its §8-§9 carry the complete count/registration/re-pin inventory
   and completion criteria) · the D459 family packet
@@ -2731,9 +2733,9 @@ next green commit and confer through this ledger instead of permitting simultane
   card-source tooth red EXACTLY) · AD-7 re-pins + both plan probes re-run post-commit.
 - **Probe design:** `tools/probe-crater.mjs`, fs+sim (the probe-fort-pillow/-cold-harbor
   idiom); suite row `['crater','tools/probe-crater.mjs']` appended at END.
-- **Resume pointer:** the P7 day-end battery (suite 139) gates the VERIFY→SHIPPED flip;
-  no further code work is queued in this lane.
-- **Last-touched commit:** the D469 runtime commit (this commit).
+- **Resume pointer:** none — lane closed at the D471 battery flip.
+- **Last-touched commit:** the D471 flip commit (this commit; the runtime is the D469
+  commit).
 - **History:** chartered ledger-only + DRIVE taken 2026-07-19 (afternoon, Claude Code /
   Fable 5, the all-day ladder P2) at the D468 boundary; recon run `wf_748c7029-7ed`
   (register-site inventory · forbidden-scan/adjacency inventory · probe template ·
@@ -2744,16 +2746,23 @@ next green commit and confer through this ledger instead of permitting simultane
   Franklin adjacency re-pins + the 17-site register chain (1,632→1,671) all riding the
   commit; three mid-build Overland whole-registry 27-pin reds root-fixed at their
   exact labels (the D466 sibling class, swept bare-token AND regex-source forms).
-  Lane at VERIFY pending the P7 battery.
+  Lane at VERIFY pending the P7 battery. FLIPPED SHIPPED 2026-07-19/20 night (D471,
+  Claude Code / Fable 5 — the §4 TOP-LOOP resolution stated at the battery run): the
+  battery completed 140-row green across the documented resumed segments at SHA
+  `c9934a0`; the probe-franklin registry-order chain gained the crater insert at
+  `c9934a0` (root-fix 5, this lane's one downstream chain sibling).
 
 ---
 
-### LANE-016 · olustee-runtime — **VERIFY (the runtime SHIPPED as D470 in this commit; C3 IS COMPLETE; the flip to SHIPPED gates on the P7 day-end battery)** (ARC 2 completion; the D455 SS3 massacre-treatment family)
+### LANE-016 · olustee-runtime — **SHIPPED (D470 runtime; the D471 battery flip at SHA `c9934a0`; C3 IS COMPLETE AND FULLY RELEASED)** (ARC 2 completion; the D455 SS3 massacre-treatment family)
 
-- **Owning tool:** unowned (the Claude Code / Fable 5 DRIVE lock released at the
-  2026-07-19 evening closeout; the runtime is SHIPPED as D470 and pushed — only the
-  battery-gated VERIFY→SHIPPED ledger flip remains).
-- **State:** DRIVE — the charter IS this entry + the committed spec.
+- **Owning tool:** unowned (lane CLOSED — the D470/D471 day-end battery completed
+  2026-07-19/20 night by Claude Code (Fable 5), the §4 TOP-LOOP resolution per
+  Aaron's post-D470 continuation kickoff; no further work in this lane).
+- **State:** SHIPPED — the runtime is D470; the battery evidence is D471 (battery
+  SHA `c9934a0`; every artifact JSON read ok/0-pageerrors; the probe-kennesaw
+  registry-order chain gained the olustee insert at `b1c4a4a`, root-fix 4 — this
+  lane's one downstream chain sibling, the D466 class).
 - **Design law:** `docs/design/olustee-battle-build-spec.md` (D465 — THE controlling law,
   committed `6663449`; its §8-§9 carry the complete inventory) · the D459 family packet ·
   D74 · the dignity imagery law · the D457 no-quarter machinery as the ONLY
@@ -2773,14 +2782,12 @@ next green commit and confer through this ledger instead of permitting simultane
   teeth at battleId `olustee`) · ≥2 predeclared binds md5-proven (Colquitt grade tamper →
   rank-wall red EXACTLY; a card cut below 2 sources → card-source red EXACTLY) · AD-7
   re-pins + both plan probes re-run post-commit.
-- **Resume pointer:** the day-end battery (suite 140) gates the VERIFY→SHIPPED flip. At
-  the 2026-07-19 closeout the battery stood ~87/140 green with ZERO unresolved reds
-  (three root-fixes at exact labels: probe-war-career's suite-count tooth 138→140 —
-  BOTH the named check and the silent result.ok conjunct — plus two environment flakes
-  re-run green); the remaining rows resume with
-  `node tools/vet-no-regression.mjs --from="render richness"`. No further code work is
-  queued in this lane.
-- **Last-touched commit:** the D470 runtime commit (this commit).
+- **Resume pointer:** none — lane closed at the D471 battery flip (the battery
+  completed 2026-07-19/20 night: the resumed segments ran to the end at SHA `c9934a0`
+  with every artifact JSON ok/0-pageerrors; D471 records the three additional
+  root-fixes `4e4593f`/`b1c4a4a`/`c9934a0` and the vicksburg flake re-run green).
+- **Last-touched commit:** the D471 flip commit (this commit; the runtime is the D470
+  commit).
 - **History:** chartered ledger-only + DRIVE taken 2026-07-19 (afternoon, Claude Code /
   Fable 5, the all-day ladder P3) at the D469 boundary. The RUNTIME SHIPPED the same
   session as D470 in ONE atomic commit: probe-olustee 20/20 (direction battery CS breaks
@@ -2789,7 +2796,9 @@ next green commit and confer through this ledger instead of permitting simultane
   (rank regex + registry-order + DOM chains) + the 18-file register chain (1,671→1,710)
   riding the commit; one mid-build registry-order red root-fixed at its exact label.
   **C3 IS COMPLETE: Fort Pillow (D463) · the Crater (D469) · Olustee (D470).** Lane at
-  VERIFY pending the P7 battery.
+  VERIFY pending the P7 battery. FLIPPED SHIPPED 2026-07-19/20 night (D471, Claude
+  Code / Fable 5): the battery completed 140-row green across the documented resumed
+  segments at SHA `c9934a0` — C3 is fully released.
 
 ---
 
