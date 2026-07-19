@@ -4,6 +4,57 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D470 — LANE-016 SHIPPED: THE OLUSTEE RUNTIME — THE HONEST UNION DEFEAT IN THE PINE CORRIDOR, ONE ATOMIC COMMIT PER THE D465 SPEC §8-§9 — C3 IS COMPLETE — [CLAUDE CODE (FABLE 5), LANE-016 DRIVE; THE ALL-DAY LADDER P3] (2026-07-19)
+
+**SHIPPED (the D465 spec verbatim):** `data/olustee.json` — single-phase meeting engagement,
+attacker CS, defender US, the HONEST UNION DEFEAT emerging from true inputs (the piecemeal
+Union commitment as sourced arrival-schedule inputs: the 7th CT/Henry/guns advance on field →
+7th NH → the green 8th USCT → Barton → the 54th Mass → the 35th USCT, against Finegan's
+concentrated line with its staged Harrison/reserve commitment — never a winner gate; the 7th
+NH break and Fribley's death through readiness/leader-fate inputs only). US ~5,500 / CS 5,000
+(two-family convergent; the ~5,400 battleofolustee.org single-family variant disclosed never
+encoded); the 8th USCT law (565 = 21 officers + 544 enlisted, ABT-explicit; greenness as the
+TRUE EXPERIENCE INPUT, never a penalty); the RANK WALL (Seymour/Finegan/Colquitt Brig. Gens.
+— Colquitt to rank from Sept 1 1862, NEVER a 1864 MG; the COLONELS' WALL incl. Barton
+COLONEL with the March-1865-brevet trap shipped, and Reed's death date as the CONTESTED
+Feb 26/27 spread — Feb 23 refuted, never appears); the dual-designation law ("35th USCT
+(1st North Carolina Colored Volunteers)" exactly); the corridor terrain (Ocean Pond north /
+southern swamps bounding; Finegan's works BEHIND the fight as the honest note; the
+wagon-road/railroad junction objective); five ≥2-source cards (the rearguard/rope-train
+teaching heart — valor in defeat; the aftermath record with its scale taught AS CONTESTED
+incl. the ABT self-contradiction itself; the political stakes; the 8th USCT; the hedged
+command-failure card — the superlative never hardened; the 54th loss conflict shipped as an
+unpinned spread); the dignity imagery law absolute; the aftermath resolvable ONLY through
+the shipped D457 machinery. **C3 IS COMPLETE: Fort Pillow (D463) · the Crater (D469) ·
+Olustee (D470) — the full D455 SS3 massacre-treatment family is playable.**
+
+**REGISTRATION (chains documented in-place):** schema 61→62 · scenarios 28→29 (rank 65.5
+between chattanooga 65 and fortPillow 66 — the D442 non-integer exception; roster + builder
+EXPECTED; the Overland/five-forks whole-registry pins; the T1-line count; the
+spotsylvania/wilderness REGISTRY-order chains + the kennesaw/spotsylvania/wilderness
+seven-battle DOM chains re-pinned to Chattanooga→Olustee→FortPillow onward;
+probe-fort-pillow's rank-66 chain regex re-pinned) · T10 `olustee: E/false/first-national`
+(the fortDonelson/elkhorn Inferred-representative precedent) · register 1,671→1,710 at
+EVERY pin site (+13×3, incl. probe-crater's fresh pin and the plan probes' regex-source
+forms) · suite 139→140 (olustee APPENDED AT THE END; rows 38/57 hold; the 600s budget).
+
+**GATES:** node --check on every touched file · build GATE OK · schema 62/62 · focused
+probe-olustee 20/20 ALL OK with artifact read (0 pageerrors) incl. the 8-seed direction
+battery **CS breaks 7/8 AND US-losses-exceed-CS 8/8 at the fair baseline** (losses running
+~2-3.6:1 — the winner bled less, the loser's percentage is the story) and the machinery
+tooth (24/24 reward families refused; battleId `olustee` stamps directly; declined path
+byte-identical) · adjacents: fort-pillow/spotsylvania/wilderness/tactical-roster/crater all
+exit 0 (one mid-build red — the spotsylvania/wilderness REGISTRY-order chain, the D466
+sibling class — root-fixed at its exact label with chains). **BINDS (both md5-proven,
+restore 75f32bf6 — the bind-B restore reconstructed the exact original bytes after a
+json-normalization detour, verified identical):** A Colquitt grade tampered to "Maj. Gen."
+→ EXACTLY the RANK WALL tooth red; B a card cut to one source → EXACTLY the TEACHING
+card-source tooth red. **AD-7 re-pins in this commit:** game 1757fdbf→21a5216d · dataTree
+3cd4ccb2→4bbdebe5 · srcTree bab9cca1→4564d84d · suite 7b36f51e→cf5de9f6 · focused
+bb7a1bc9→78633570 at all four plan-probe sites (base/manifest hold); both plan probes
+re-run post-commit. `_SAVE_VER=1`; frozen base untouched. LANE-016 flips VERIFY pending
+the P7 day-end battery (with LANE-015).
+
 ## D469 — LANE-015 SHIPPED: THE CRATER RUNTIME — THE ASSAULT OUT OF THE BREACH, ONE ATOMIC COMMIT PER THE D464 SPEC §8-§9; THE ADJUDICATION-2 FORBIDDEN-SCAN FLIPS RIDE THIS COMMIT — [CLAUDE CODE (FABLE 5), LANE-015 DRIVE; THE ALL-DAY LADDER P2] (2026-07-19)
 
 **SHIPPED (the D464 spec verbatim):** `data/crater.json` — single-phase, attacker US, defender

@@ -10,7 +10,7 @@ import "./guard-probe-browser.mjs";
 // massacre-temptation keys), the SS5 teaching teeth (five sourced cards; the JCCW conclusion
 // verbatim; the culpability debate taught AS a debate; the casualty record as attributed
 // RANGES), the SS6 dignity imagery scan (no imagery reference anywhere in the scenario; the
-// USS New Era fenced inside the fp_truce card - the cold-harbor fence idiom), the 1671 Army
+// USS New Era fenced inside the fp_truce card - the cold-harbor fence idiom), the 1710 Army
 // Register pin, the 8-seed direction battery (CS seizes >=5/8 AND US-losses-exceed-CS >=5/8 -
 // direction only, never a count gate), and the D457 no-quarter machinery teeth EXTENDING
 // probe-mayhem-mode's shipped t1-t6 family with battleId fortPillow: captures stamp the offer
@@ -186,7 +186,7 @@ function staticChecks() {
 
   check('INTEGRATION SOURCE PINS: T1 rank chain chattanooga 65 -> fortPillow 66 -> wilderness 67 and the T10 W/false/anv meta row exist in source', () => {
     const t1 = readFileSync(join(ROOT, 'src', 'tactical', 'T1-bull-run.js'), 'utf8');
-    if (!/chattanooga:\s*65,\s*fortPillow:\s*66,\s*wilderness:\s*67/.test(t1)) throw new Error('menu rank chain chattanooga:65 -> fortPillow:66 -> wilderness:67 missing');
+    if (!/chattanooga:\s*65,\s*olustee:\s*65\.5,\s*fortPillow:\s*66,\s*wilderness:\s*67/.test(t1)) throw new Error('menu rank chain chattanooga:65 -> olustee:65.5 -> fortPillow:66 -> wilderness:67 missing');   // D470 re-pin: olustee (rank 65.5, Feb 20 1864) inserts between chattanooga and fortPillow per the D465 spec SS2 (LANE-016).
     if (t1.indexOf('GAME_DATA["fort-pillow"] && GAME_DATA["fort-pillow"].fortPillow') < 0) throw new Error('T1 registry line missing');
     const t10 = readFileSync(join(ROOT, 'src', 'tactical', 'T10-flags.js'), 'utf8');
     if (!/fortPillow:\s*\{ theater: "W", badges: false, csFlag: "anv" \}/.test(t10)) throw new Error('T10 meta row missing');
@@ -270,9 +270,9 @@ const SETUP = `(() => {
       return { units:__FIELD.units.length };
     });
 
-    check('ARMY REGISTER PIN: 5 unique Fort Pillow side-unit ids produce exact cmd/nco/pvt trios and current total 1671', function(){
+    check('ARMY REGISTER PIN: 5 unique Fort Pillow side-unit ids produce exact cmd/nco/pvt trios and current total 1710', function(){
       var reg = ssPersonRegistry();
-      if (reg.people.length !== 1671) throw new Error('Army Register total is ' + reg.people.length + ', expected 1671');   // D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4, the D455 SS3 row 6 unlock). D469: 1632 -> 1671 — The Crater adds 13 unique side-unit ids x 3 slots (LANE-015, the D464 spec).
+      if (reg.people.length !== 1710) throw new Error('Army Register total is ' + reg.people.length + ', expected 1710');   // D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4, the D455 SS3 row 6 unlock). D469: 1632 -> 1671 — The Crater adds 13 unique side-unit ids x 3 slots (LANE-015, the D464 spec). D470: 1671 -> 1710 — Olustee adds 13 unique side-unit ids x 3 slots (LANE-016, the D465 spec).
       var rows = [], groups = {};
       for (var i = 0; i < reg.people.length; i++) {
         var p = reg.people[i], origin = p.replaces || p.pid;

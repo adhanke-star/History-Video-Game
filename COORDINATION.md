@@ -2745,7 +2745,7 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
-### LANE-016 · olustee-runtime — **DRIVE (chartered this commit; the ONE atomic runtime commit follows — COMPLETES C3)** (ARC 2 completion; the D455 SS3 massacre-treatment family)
+### LANE-016 · olustee-runtime — **VERIFY (the runtime SHIPPED as D470 in this commit; C3 IS COMPLETE; the flip to SHIPPED gates on the P7 day-end battery)** (ARC 2 completion; the D455 SS3 massacre-treatment family)
 
 - **Owning tool:** Claude Code (Fable 5) — DRIVE taken WITH this charter edit (the
   ledger-only precedent), 2026-07-19 afternoon, P3 of Aaron's all-day ladder. The §4
@@ -2770,12 +2770,18 @@ next green commit and confer through this ledger instead of permitting simultane
   teeth at battleId `olustee`) · ≥2 predeclared binds md5-proven (Colquitt grade tamper →
   rank-wall red EXACTLY; a card cut below 2 sources → card-source red EXACTLY) · AD-7
   re-pins + both plan probes re-run post-commit.
-- **Resume pointer:** author the runtime per the spec §8-§9 in one atomic commit; on
-  green + push, the lane rests at VERIFY with LANE-015 pending the P7 battery.
-- **Last-touched commit:** this charter edit.
+- **Resume pointer:** the P7 day-end battery (suite 140) gates the VERIFY→SHIPPED flip;
+  no further code work is queued in this lane.
+- **Last-touched commit:** the D470 runtime commit (this commit).
 - **History:** chartered ledger-only + DRIVE taken 2026-07-19 (afternoon, Claude Code /
-  Fable 5, the all-day ladder P3) at the D469 boundary. Landing this lane COMPLETES C3
-  (the D455 SS3 massacre-treatment family: Fort Pillow D463 · the Crater D469 · Olustee).
+  Fable 5, the all-day ladder P3) at the D469 boundary. The RUNTIME SHIPPED the same
+  session as D470 in ONE atomic commit: probe-olustee 20/20 (direction battery CS breaks
+  7/8 · US-bleeds 8/8 at the fair baseline; machinery at battleId `olustee` direct),
+  binds A/B md5-proven (75f32bf6), the chattanooga→olustee→fortPillow adjacency re-pins
+  (rank regex + registry-order + DOM chains) + the 18-file register chain (1,671→1,710)
+  riding the commit; one mid-build registry-order red root-fixed at its exact label.
+  **C3 IS COMPLETE: Fort Pillow (D463) · the Crater (D469) · Olustee (D470).** Lane at
+  VERIFY pending the P7 battery.
 
 ---
 

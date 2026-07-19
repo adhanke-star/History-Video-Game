@@ -1,0 +1,532 @@
+{
+  "_comment": "D470 Olustee / Ocean Pond, February 20, 1864 (LANE-016; the controlling law is docs/design/olustee-battle-build-spec.md, D465, from the D459 massacre-treatment family packet). Single-phase meeting engagement in the pine corridor: Finegan's concentrated Confederates against Seymour's piecemeal-committed column - an HONEST UNION DEFEAT the engine is allowed to produce from true inputs (exposed arrival schedules against a defense-turned-attack), never forced with a winner gate. THE AFTERMATH IS NEVER IN THIS SCENARIO: no aftermath event, mechanic, imagery, casualty script, or scoring exists anywhere in this file - the documented killing of Black wounded left on the field is taught with its scale honestly CONTESTED, and any post-battle atrocity choice resolves ONLY through the shipped D457 no-quarter machinery (judged in Historical, chartered reward in Mayhem; declining leaves the campaign byte-identical). The dignity imagery law (D135/src/51) holds: text carries the weight. Every fielded unit is Verified identity, Inferred strength.",
+  "olustee": {
+    "sources": [
+      "Wikipedia - Battle of Olustee - https://en.wikipedia.org/wiki/Battle_of_Olustee",
+      "American Battlefield Trust - Battle of Olustee article (unit-level losses incl. the 8th USCT 49/188/73; the 'killed a few' framing) - https://www.battlefields.org/learn/articles/battle-olustee",
+      "American Battlefield Trust - Olustee battle page + 10 facts (strengths; the 'killed most' framing - the ABT self-contradiction is recorded and taught) - https://www.battlefields.org/learn/civil-war/battles/olustee",
+      "NPS battle-summary database FL005 - https://www.nps.gov/civilwar/search-battles-detail.htm?battleCode=FL005",
+      "battleofolustee.org - battle narrative + hosted primaries (the Penniman reminiscence on the killing of Black wounded; Caraway Smith's cavalry AAR; the Fribley record) - https://battleofolustee.org/battle.html",
+      "Wikipedia - 35th United States Colored Infantry (the Feb 8 1864 redesignation from the 1st North Carolina Colored Volunteers; Reed mortally wounded) - https://en.wikipedia.org/wiki/35th_United_States_Colored_Infantry_Regiment",
+      "emergingcivilwar.com - Olustee coverage (the Shackelford letter; Hawley's line) - https://emergingcivilwar.com/",
+      "Committed research packet - docs/design/battle-build-research/massacre-treatment-battle-build-research.md (D459)",
+      "Committed build spec - docs/design/olustee-battle-build-spec.md (D465)"
+    ],
+    "id": "olustee",
+    "learnMeta": { "phases": 1, "approxMinutes": [6, 16], "skills": ["reinforcements", "defense-hold", "morale-rally"], "recommendedAfter": "chattanooga" },
+    "name": "Olustee",
+    "date": "February 20, 1864",
+    "place": "Olustee Station, Florida - the open longleaf-pine corridor between Ocean Pond and the southern swamps, on the Florida, Atlantic & Gulf Central Railroad",
+    "blurb": "Seymour's column marches west into a corridor Finegan has already concentrated across. The ground is open pine flat - 'level as a billiard table' - with Ocean Pond sealing the north and swamps the south, and the Union brigades arrive one at a time: Hawley's advance with the 7th New Hampshire and the green 8th USCT first and exposed, Barton's New Yorkers next, Montgomery's brigade - the 54th Massachusetts and the 35th USCT - last, as the rearguard. The scenario is the meeting engagement and it ends on the field: the documented killing of Black wounded in the aftermath is taught with its contested scale honest, and is never played.",
+    "provenance": "Verified for the identities, the battle-date grades (the Seymour/Finegan/Colquitt brigadier grades and the colonels' wall, incl. Barton COLONEL - the Library of Congress 'Brigadier General' caption is a March 1865 brevet that never carries back - and Reed's mortal wound with the death date shipped as the CONTESTED Feb 26/27 spread), the piecemeal commitment sequence, the corridor geography, and the result under the D459 packet register. STRENGTHS: US ~5,500 (ABT/Wikipedia convergent); CS 5,000 - 4,600 infantry, under 600 cavalry, 12 guns (ABT + Wikipedia, two families; the ~5,400 variant appears only on battleofolustee.org and is disclosed here as that named single family, never encoded). The 8th USCT is encoded at the ABT-explicit 565 engaged (21 officers + 544 enlisted; the '300 of 500' prose variant disclosed, never encoded); its greenness is its TRUE EXPERIENCE INPUT, never a damage penalty. Unit-level splits are Inferred shares of the sourced totals. Every coordinate, timing second, experience value, and leader-quality value is an Inferred abstraction. No aftermath content exists in this file.",
+    "field": {
+      "w": 1100,
+      "h": 900
+    },
+    "homeEdge": {
+      "US": "high",
+      "CS": "low"
+    },
+    "_homeEdgeNote": "High z is the Union rear - the wagon road east through Sanderson toward Barber's and Jacksonville, the retreat the rearguard saved; low z is the Confederate rear at Olustee Station, with Finegan's earthworks BEHIND the fight line (present, uncontested, left behind - the honest note). Low x is the north flank (Ocean Pond); high x the southern swamps and bays. These side-keyed edges are Verified geography; the orientation is an Inferred abstraction.",
+    "attacker": "CS",
+    "defender": "US",
+    "defaultFog": false,
+    "assaultDoctrine": "standard",
+    "_assaultDoctrineNote": "Standard posture. The historical Union defeat must EMERGE at a fair baseline under the one universal model (D74): the piecemeal Union arrivals against Finegan's concentrated line, the open corridor, and true strengths and experience grades do the work. No winner gate, green-troops penalty key, or per-battle lever exists.",
+    "holdToWinSec": 90,
+    "timeLimitSec": 420,
+    "objective": {
+      "x": 560,
+      "z": 620,
+      "r": 90,
+      "name": "The wagon-road and railroad junction"
+    },
+    "weather": {
+      "sky": "clear",
+      "time": "afternoon",
+      "provenance": "Inferred",
+      "note": "Presentation only; no sourced weather claim is encoded. Fog is OFF by design: an open-pine afternoon fight with long sight lines - 'level as a billiard table' (the Penniman reminiscence) is the fought ground's character, disclosed here. Weather never writes combat output.",
+      "sources": [
+        "https://battleofolustee.org/battle.html",
+        "https://en.wikipedia.org/wiki/Battle_of_Olustee"
+      ]
+    },
+    "menu": {
+      "title": "OLUSTEE (1864)",
+      "deck": "Break the Union column in the pine corridor - or hold the road-and-rail junction while the brigades arrive one at a time. An honest Union defeat from true inputs; the aftermath record is taught with its contested scale honest, never played.",
+      "aria": "Olustee, February 1864 - the real-time single-phase meeting engagement in the Florida pine corridor; command either side. The documented killing of Black wounded in the aftermath is taught with primary sources and is never part of play."
+    },
+    "sides": {
+      "heading": "Olustee - Take Which Command?",
+      "intro": "February 20, 1864 - Seymour's column is marching west on the wagon road and the railroad, into open longleaf pine between Ocean Pond and the southern swamps. Finegan is already concentrated across the corridor, forward of his own works. The Union brigades will arrive one at a time. The ground is level, the sight lines are long, and there are no entrenchments at the fight line.",
+      "US": {
+        "title": "Command the Union (Seymour)",
+        "badge": "&#9733; HOLD THE JUNCTION",
+        "deck": "Hold the road-and-rail junction while the column closes up. The advance guard is in contact, the 7th New Hampshire and the green 8th USCT are the first weight behind it, and Montgomery's brigade - the 54th Massachusetts and the 35th USCT - is the last. Every brigade that arrives buys the column time."
+      },
+      "CS": {
+        "title": "Command the Confederacy (Finegan, Colquitt forward)",
+        "badge": "&#9876; BREAK THE COLUMN",
+        "deck": "Colquitt carries the fight's weight forward, Harrison extends the line, the reserves feed in. Break the Union brigades as they arrive, one at a time, before the column can mass at the junction."
+      },
+      "foot": "The battle ends on the field. The documented killing of Black wounded left on the field afterward - its scale genuinely contested, its existence beyond dispute - is taught in the cards with primary sources and is judged through the campaign's no-quarter machinery; it is never played, scored, or depicted."
+    },
+    "brief": {
+      "attack": "You are concentrated and they are not. Colquitt's brigade is the fight's weight, Harrison extends, the reserves feed in on your schedule, and Smith's cavalry holds the flanks. The corridor funnels everything: Ocean Pond seals the north, the swamps the south, and the Union brigades must feed into the open pine one at a time. Break them as they arrive.",
+      "defend": "The column is strung out on the road and the enemy is already across the corridor. The advance guard is in contact; the 7th New Hampshire and the 8th U.S. Colored Troops - a green regiment in its first fight - are the first supports; Barton's New Yorkers follow; Montgomery's brigade comes last. Hold the junction to the limit, and if the line goes, the rearguard must save the column.",
+      "provenance": "Verified sequence; Inferred framing."
+    },
+    "terrain": {
+      "hills": [
+        {
+          "name": "The railroad grade",
+          "x": 560,
+          "z": 400,
+          "h": 6,
+          "s": 260,
+          "note": "The low rail embankment through the flat - the only relief in the 'billiard table' pine barren. Verified character; Inferred geometry."
+        }
+      ],
+      "woods": [
+        {
+          "x": 300,
+          "z": 120,
+          "r": 100,
+          "note": "Pine and scrub at the corridor's western edge, toward the station. Ordinary cover under the universal model. Inferred placement."
+        },
+        {
+          "x": 850,
+          "z": 800,
+          "r": 95,
+          "note": "The pines along the Union rear on the Sanderson road. Inferred placement."
+        }
+      ],
+      "walls": [
+        {
+          "x1": 420,
+          "z1": 110,
+          "x2": 700,
+          "z2": 100,
+          "note": "FINEGAN'S EARTHWORKS - BEHIND THE FIGHT (the honest note): the entrenchments at Olustee Station existed and were LEFT - Finegan came forward of his works and the battle was fought in the open. Present on the map as teaching geography at the Confederate rear; never a combat feature of the fight line. Verified; Inferred trace."
+        }
+      ],
+      "swamps": [
+        {
+          "x": 100,
+          "z": 400,
+          "r": 210,
+          "note": "OCEAN POND - the lake sealing the north flank, encoded under the universal model's impassable-penalty class as the corridor's north wall. Verified feature; Inferred rendering."
+        },
+        {
+          "x": 1010,
+          "z": 420,
+          "r": 180,
+          "note": "The southern swamps and bays sealing the other flank - the corridor's south wall. Verified feature; Inferred rendering."
+        },
+        {
+          "x": 960,
+          "z": 130,
+          "r": 110,
+          "note": "The bay heads toward the station's south side. Verified character; Inferred placement."
+        }
+      ],
+      "markers": [
+        {
+          "kind": "road",
+          "name": "Florida, Atlantic & Gulf Central Railroad",
+          "path": [[540, 40], [550, 400], [560, 860]],
+          "note": "The railroad - the axis of the whole expedition. Verified feature; Inferred trace."
+        },
+        {
+          "kind": "road",
+          "name": "The wagon road",
+          "path": [[610, 40], [615, 400], [620, 860]],
+          "note": "The parallel wagon road - with the railroad, the corridor's axis and the objective's junction. Verified feature; Inferred trace."
+        },
+        {
+          "kind": "label",
+          "name": "Olustee Station",
+          "x": 560,
+          "z": 70,
+          "note": "The station behind the Confederate line. Verified."
+        },
+        {
+          "kind": "label",
+          "name": "the retreat road through Sanderson",
+          "x": 620,
+          "z": 870,
+          "note": "The road east toward Barber's and Jacksonville - the column the rearguard saved. Verified; Inferred placement."
+        }
+      ]
+    },
+    "supply": {
+      "US": {
+        "x": 620,
+        "z": 860,
+        "name": "The column trains on the Sanderson road"
+      },
+      "CS": {
+        "x": 560,
+        "z": 50,
+        "name": "Olustee Station and the railroad to Lake City"
+      }
+    },
+    "leaders": {
+      "US": [
+        {
+          "id": "ld_ol_seymour",
+          "name": "Brig. Gen. Truman Seymour",
+          "short": "Seymour",
+          "quality": 0.42,
+          "radius": 230,
+          "x": 570,
+          "z": 700,
+          "fate": 1.9,
+          "note": "Column commander - his advance west against standing instructions is the command-context teaching (card ol_command), carried through the EXISTING leader inputs and the cards, never a mechanic. Verified grade; Inferred quality value."
+        },
+        {
+          "id": "ld_ol_fribley",
+          "name": "Col. Charles W. Fribley",
+          "short": "Fribley",
+          "quality": 0.55,
+          "radius": 150,
+          "atSec": 55,
+          "x": 620,
+          "z": 800,
+          "fate": 0.5,
+          "entry": "Fribley brings the 8th U.S. Colored Troops forward - the regiment's first battle.",
+          "note": "Commander of the 8th USCT, killed on the field; his body was never recovered. The death enters through the EXISTING leader-fate input, never a scripted event. Verified grade and fate; Inferred quality value and timing second."
+        }
+      ],
+      "CS": [
+        {
+          "id": "ld_ol_finegan",
+          "name": "Brig. Gen. Joseph Finegan",
+          "short": "Finegan",
+          "quality": 0.6,
+          "radius": 240,
+          "x": 560,
+          "z": 160,
+          "fate": 1.9,
+          "note": "District commander - concentrated the corridor defense and came FORWARD of his works to fight in the open. His non-pursuit afterward is teaching context. Verified grade; Inferred quality value."
+        },
+        {
+          "id": "ld_ol_colquitt",
+          "name": "Brig. Gen. Alfred H. Colquitt",
+          "short": "Colquitt",
+          "quality": 0.7,
+          "radius": 225,
+          "x": 560,
+          "z": 300,
+          "fate": 1.9,
+          "note": "THE RANK LOCK (packet SS4.3, RESOLVED): brigadier general to rank from September 1, 1862 - major general only near the war's end; no 1864 major-general date exists and none is ever back-filled here. He carried the fight's weight at the front. Verified grade; Inferred quality value."
+        }
+      ]
+    },
+    "oob": {
+      "US": [
+        {
+          "id": "us_ol_7ct",
+          "name": "7th Connecticut (Hawley's advance)",
+          "commander": "Col. Joseph R. Hawley",
+          "arm": "inf",
+          "weapon": "rifled",
+          "men": 450,
+          "xp": 2,
+          "x": 560,
+          "z": 560,
+          "facing": 0,
+          "formation": "line",
+          "note": "The advance guard in contact when the battle opened, and part of the rearguard that closed it - one of the three regiments the rearguard card names. Hawley (COLONEL - the colonels' wall) led the brigade from this regiment. 450 is an Inferred share of the sourced US ~5,500. Verified identity; Inferred strength."
+        },
+        {
+          "id": "us_ol_henry",
+          "name": "Henry's Mounted Brigade",
+          "commander": "Col. Guy V. Henry",
+          "arm": "cav",
+          "weapon": "carbine",
+          "men": 500,
+          "xp": 2,
+          "x": 380,
+          "z": 590,
+          "facing": 0,
+          "formation": "line",
+          "note": "The mounted screen on the flanks of the advance. Henry (COLONEL - the colonels' wall). 500 is an Inferred share. Verified identity; Inferred strength."
+        },
+        {
+          "id": "us_ol_guns",
+          "name": "The column's batteries",
+          "commander": "Battery officers",
+          "arm": "art",
+          "weapon": "rifled",
+          "guns": 16,
+          "men": 480,
+          "xp": 2,
+          "x": 570,
+          "z": 680,
+          "facing": 0,
+          "formation": "line",
+          "note": "The Union artillery, exposed with the piecemeal line - guns were LOST in the collapse historically, an ordinary capture outcome under the universal model, never scripted. Crews within the 40-per-gun cap. 480 is an Inferred share. Verified exposure; Inferred strength and grouping."
+        }
+      ],
+      "CS": [
+        {
+          "id": "cs_ol_colquitt",
+          "name": "Colquitt's Brigade",
+          "commander": "Brig. Gen. Alfred H. Colquitt",
+          "arm": "inf",
+          "weapon": "rifled",
+          "men": 1900,
+          "xp": 2,
+          "x": 560,
+          "z": 320,
+          "facing": 3.14159,
+          "formation": "line",
+          "note": "The fight's weight, forward across the corridor when the battle opened - Virginia veterans concentrated against a column in march order. 1,900 is an Inferred share of the sourced CS 5,000 (4,600 infantry + under 600 cavalry + 12 guns; the ~5,400 variant is the battleofolustee.org single family, disclosed never encoded). Verified identity; Inferred strength."
+        },
+        {
+          "id": "cs_ol_smith",
+          "name": "Smith's Cavalry (2nd Florida Cavalry and the flank squadrons)",
+          "commander": "Col. Caraway Smith",
+          "arm": "cav",
+          "weapon": "carbine",
+          "men": 452,
+          "xp": 2,
+          "x": 300,
+          "z": 300,
+          "facing": 3.14159,
+          "formation": "line",
+          "note": "The mounted flanks - 452 is Smith's OWN after-action figure (the hosted primary), the one unit-level strength this build encodes from a primary. His conduct in the non-pursuit is aftermath teaching context. Verified identity and strength family; Inferred placement."
+        },
+        {
+          "id": "cs_ol_guns",
+          "name": "The Confederate batteries (12 guns)",
+          "commander": "Battery officers",
+          "arm": "art",
+          "weapon": "smooth",
+          "guns": 12,
+          "men": 348,
+          "xp": 2,
+          "x": 560,
+          "z": 210,
+          "facing": 3.14159,
+          "formation": "line",
+          "note": "The sourced 12 guns (ABT + Wikipedia), encoded as real batteries inside the crew cap. 348 crew is an Inferred share of the sourced 5,000. Verified count; Inferred crew strength."
+        }
+      ]
+    },
+    "reinforcements": [
+      {
+        "id": "us_ol_7nh",
+        "side": "US",
+        "atSec": 40,
+        "name": "7th New Hampshire",
+        "commander": "Regimental field officers",
+        "arm": "inf",
+        "weapon": "rifled",
+        "men": 650,
+        "xp": 1,
+        "x": 600,
+        "z": 820,
+        "facing": 0,
+        "formation": "column",
+        "entry": "The 7th New Hampshire comes up the wagon road - the first weight behind the advance.",
+        "note": "The regiment that BROKE EARLY in the historical fight - encoded through its experience/readiness input (xp 1, a re-armed and reorganized regiment committed piecemeal into the open), NEVER a scripted rout. Its collapse must be allowed to emerge, not forced. 650 is an Inferred share. Verified identity and conduct; Inferred strength, readiness, and timing second."
+      },
+      {
+        "id": "us_ol_8usct",
+        "side": "US",
+        "atSec": 55,
+        "name": "8th U.S. Colored Troops",
+        "commander": "Col. Charles W. Fribley",
+        "arm": "inf",
+        "weapon": "rifled",
+        "men": 565,
+        "xp": 1,
+        "x": 630,
+        "z": 830,
+        "facing": 0,
+        "formation": "column",
+        "entry": "The 8th USCT goes in - a green regiment in its first battle, committed straight off the march.",
+        "note": "THE 8th USCT LAW (spec SS3): encoded at the ABT-explicit 565 engaged (21 officers + 544 enlisted; the '300 of 500' prose variant is disclosed in provenance, never encoded). Its greenness is its TRUE EXPERIENCE INPUT (xp 1 - the honest floor), never a damage penalty; its stand and its 310 losses are the record card ol_8usct teaches. Fribley's death is the existing leader-fate input. Verified identity and strength; Inferred timing second."
+      },
+      {
+        "id": "us_ol_barton",
+        "side": "US",
+        "atSec": 120,
+        "name": "Barton's New York Brigade (47th, 48th, 115th NY)",
+        "commander": "Col. William B. Barton",
+        "arm": "inf",
+        "weapon": "rifled",
+        "men": 1760,
+        "xp": 2,
+        "x": 610,
+        "z": 840,
+        "facing": 0,
+        "formation": "column",
+        "entry": "Barton's New Yorkers close up and go in on the center.",
+        "note": "THE BARTON TRAP, SHIPPED (spec SS3, RESOLVED): Barton was a COLONEL - mustered colonel of the 48th New York June 18, 1862; the Library of Congress photo caption styling him 'Brigadier General' reflects a March 1865 BREVET and never carries back to February 1864. 1,760 is an Inferred share. Verified identity and grade; Inferred strength and timing second."
+      },
+      {
+        "id": "us_ol_54ma",
+        "side": "US",
+        "atSec": 200,
+        "name": "54th Massachusetts",
+        "commander": "Lt. Col. Edward N. Hallowell",
+        "arm": "inf",
+        "weapon": "rifled",
+        "men": 495,
+        "xp": 2,
+        "x": 590,
+        "z": 850,
+        "facing": 0,
+        "formation": "column",
+        "entry": "Montgomery's brigade arrives last - the 54th Massachusetts at the double-quick.",
+        "note": "The Fort Wagner regiment, here the rearguard's backbone (card ol_rearguard: with the 35th USCT and the 7th Connecticut it saved the column, then hauled a disabled train of wounded by rope). Hallowell (Lt. Col. - the colonels' wall). ITS LOSS FIGURES SHIP AS A SPREAD: ABT 13/65/8 = 86 against NPS '8 killed, 70+ wounded' - both recorded, neither pinned, pending an OR/Emilio check (the open trap disclosed). 495 is an Inferred share. Verified identity; Inferred strength and timing second."
+      },
+      {
+        "id": "us_ol_35usct",
+        "side": "US",
+        "atSec": 205,
+        "name": "35th USCT (1st North Carolina Colored Volunteers)",
+        "commander": "Lt. Col. William N. Reed",
+        "arm": "inf",
+        "weapon": "rifled",
+        "men": 600,
+        "xp": 2,
+        "x": 640,
+        "z": 855,
+        "facing": 0,
+        "formation": "column",
+        "entry": "The 35th USCT comes in beside the 54th - the rearguard forms.",
+        "note": "THE DESIGNATION LAW (spec SS3): the display string is exactly '35th USCT (1st North Carolina Colored Volunteers)' - the redesignation predates the battle by twelve days and source usage is genuinely mixed; the dual display is the honest convention. Reed (Lt. Col., the colonels' wall) was mortally wounded this day; HIS DEATH DATE SHIPS AS THE CONTESTED SPREAD - the compiled record book says February 27, 1864, and Black Armed Forces Officers says February 26; the spread is the record. 600 is an Inferred share. Verified identity; Inferred strength and timing second."
+      },
+      {
+        "id": "cs_ol_harrison",
+        "side": "CS",
+        "atSec": 80,
+        "name": "Harrison's Command (the left wing)",
+        "commander": "Col. George P. Harrison Jr.",
+        "arm": "inf",
+        "weapon": "rifled",
+        "men": 1500,
+        "xp": 2,
+        "x": 480,
+        "z": 140,
+        "facing": 3.14159,
+        "formation": "column",
+        "entry": "Harrison extends the line - the staged Confederate commitment.",
+        "note": "The second weight, extending Colquitt's line across the corridor - the staged CS commitment is likewise a schedule input (Inferred timing seconds on the sourced sequence). Harrison (COLONEL - the colonels' wall). 1,500 is an Inferred share. Verified identity; Inferred strength and timing second."
+      },
+      {
+        "id": "cs_ol_reserve",
+        "side": "CS",
+        "atSec": 180,
+        "name": "Finegan's reserves",
+        "commander": "Brig. Gen. Joseph Finegan",
+        "arm": "inf",
+        "weapon": "rifled",
+        "men": 800,
+        "xp": 2,
+        "x": 620,
+        "z": 130,
+        "facing": 3.14159,
+        "formation": "column",
+        "entry": "Finegan feeds the reserves in as the Union brigades keep arriving.",
+        "note": "The reserves fed in through the afternoon - the third stage of the sourced commitment. 800 is an Inferred share of the sourced 5,000. Verified sequence; Inferred strength and timing second."
+      }
+    ],
+    "teaching": {
+      "title": "Olustee - what this battle must teach",
+      "head": "An honest defeat, a rearguard's valor, and an aftermath taught as contested",
+      "body": "Seymour marched west against standing instructions into a concentrated enemy, and committed his column piece by piece into open pine. The line collapsed by dusk; the rearguard - two Black regiments and the 7th Connecticut - saved the column. The documented killing of Black wounded left on the field afterward is taught below with its scale honestly contested. In campaign play any post-battle atrocity choice resolves ONLY through the no-quarter machinery - judged, never rewarded - and declining it changes nothing.",
+      "provenance": "Verified sequence under the D459 packet register; coordinates, timing seconds, and readiness values are Inferred.",
+      "cards": [
+        {
+          "id": "ol_rearguard",
+          "head": "Valor in Defeat - the Rearguard",
+          "body": "When the line broke, the 54th Massachusetts, the 35th USCT (1st North Carolina Colored Volunteers), and the 7th Connecticut held the rearguard that saved Seymour's column from destruction. Afterward, when a locomotive failed, men of the 54th hauled a disabled train loaded with wounded about three miles BY ROPE - about ten miles in total with horses helping, over some forty-two hours - toward Jacksonville. The regiment that had led the assault on Battery Wagner spent Olustee's night dragging its army's wounded to safety. Dignity does not require victory; the rearguard is this battle's teaching heart.",
+          "provenance": "Verified",
+          "sources": [
+            "https://battleofolustee.org/battle.html",
+            "https://en.wikipedia.org/wiki/Battle_of_Olustee",
+            "https://www.battlefields.org/learn/articles/battle-olustee"
+          ]
+        },
+        {
+          "id": "ol_aftermath",
+          "head": "The Aftermath Record, Honestly Contested",
+          "body": "Black wounded left on the field were killed in the aftermath - Confederate letters (Shackelford: 'many black prisoners were murdered') and William Penniman's eyewitness reminiscence document the killings, and roughly 70 Black prisoners reached Andersonville. THE SCALE IS GENUINELY CONTESTED, and this game teaches the contest itself: the American Battlefield Trust's own two pages disagree - one says the counterattacking Confederates 'killed most' of the wounded Black soldiers, the other 'killed a few' - and that self-contradiction is taught as what it is. The record's existence is beyond dispute; its arithmetic is not. Teaching the contest honestly IS the anti-Lost-Cause move: no framing softens the fact, and no invented number hardens it.",
+          "provenance": "Verified",
+          "sources": [
+            "https://battleofolustee.org/battle.html",
+            "https://www.battlefields.org/learn/articles/battle-olustee",
+            "https://www.battlefields.org/learn/civil-war/battles/olustee",
+            "https://emergingcivilwar.com/"
+          ]
+        },
+        {
+          "id": "ol_political",
+          "head": "The Political Stakes - Lincoln's Florida Project",
+          "body": "The expedition was as much political as military: John Hay carried loyalty-oath books south under Lincoln's Ten-Percent Plan, aiming to reconstruct Florida in time to matter for the 1864 electoral calculus, and the army's advance was the project's arm. Olustee killed it - the defeat ended organized Union operations in Florida's interior, and the state's reconstruction waited for the war's end. A small battle by Virginia's standards carried outsized political weight, which is why it was fought at all.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.battlefields.org/learn/civil-war/battles/olustee",
+            "https://www.nps.gov/civilwar/search-battles-detail.htm?battleCode=FL005",
+            "https://en.wikipedia.org/wiki/Battle_of_Olustee"
+          ]
+        },
+        {
+          "id": "ol_8usct",
+          "head": "The 8th USCT",
+          "body": "The 8th U.S. Colored Troops went into its first battle straight off the march - a green regiment, 565 engaged (21 officers and 544 enlisted men), committed piecemeal into open pine against a concentrated line. Its colonel, Charles W. Fribley, was killed on the field; his body was never recovered. The regiment lost 310 - 49 killed, 188 wounded, 73 missing, the attributed ABT breakdown - among the heaviest regimental losses of the battle, taken while doing exactly what was asked of it. Its greenness in this scenario is an experience input, never a penalty: the record shows a new regiment that stood and paid for its army's mistakes.",
+          "provenance": "Verified",
+          "sources": [
+            "https://www.battlefields.org/learn/articles/battle-olustee",
+            "https://battleofolustee.org/battle.html",
+            "https://en.wikipedia.org/wiki/Battle_of_Olustee"
+          ]
+        },
+        {
+          "id": "ol_command",
+          "head": "The Command Failure",
+          "body": "Seymour advanced west against his department commander's standing instructions, met Finegan's concentrated force with a column committed brigade by brigade, and lost roughly 1,861 of about 5,500 engaged - around 34 percent, against Confederate losses of 946 - among the worst Union percentage losses of the war (popular sources sometimes rank it near the top by ratio; this game states the direction and declines to harden the superlative). The winner bled less at Olustee: the loser's PERCENTAGE is the story, and the piecemeal commitment is the reason. The defeat in this scenario must emerge from those true inputs - the arrival schedule against a concentrated defense-turned-attack - never from a script.",
+          "provenance": "Verified",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Battle_of_Olustee",
+            "https://www.nps.gov/civilwar/search-battles-detail.htm?battleCode=FL005",
+            "https://www.battlefields.org/learn/civil-war/battles/olustee"
+          ]
+        }
+      ],
+      "codex": {
+        "id": "codex_olustee",
+        "title": "Olustee / Ocean Pond - February 20, 1864",
+        "summary": "Seymour's 5,500-man column, advancing west against standing instructions, met Finegan's 5,000 concentrated Confederates in the open pine corridor between Ocean Pond and the southern swamps and was committed piecemeal into collapse - about 1,861 Union losses (34 percent) against 946, with the green 8th USCT losing 310 of 565 and Col. Fribley killed. The 54th Massachusetts, the 35th USCT (1st North Carolina Colored Volunteers), and the 7th Connecticut fought the rearguard that saved the column, then men of the 54th hauled a disabled train of wounded miles by rope. The documented killing of Black wounded in the aftermath - its scale genuinely contested - is taught with primary sources and resolves only through the campaign's judged no-quarter machinery; it is never played. Lincoln's Florida reconstruction project died with the defeat.",
+        "axes": {
+          "theater": "Eastern",
+          "campaign": "Seymour's Florida expedition (Lincoln's Florida project)",
+          "result": "Confederate victory"
+        },
+        "_axesNote": "Theater picked from the codex's EXISTING axis vocabulary (Eastern/Western/Multi/Trans-Mississippi - never a new value for one battle): the Department of the South's Atlantic-seaboard command family is the least-wrong existing fit for Florida, disclosed here.",
+        "provenance": "Verified",
+        "sources": [
+          "https://www.nps.gov/civilwar/search-battles-detail.htm?battleCode=FL005",
+          "https://en.wikipedia.org/wiki/Battle_of_Olustee",
+          "https://www.battlefields.org/learn/civil-war/battles/olustee"
+        ]
+      }
+    },
+    "endNote": {
+      "US": {
+        "US": "History diverges. The junction holds to the limit - the brigades arrive in time, the line never collapses, and the column marches back east intact. The record this scenario teaches remains: at the real Olustee the piecemeal commitment broke, and the aftermath is documented in the cards.",
+        "CS": "History holds. The brigades feed in one at a time and break one at a time; by dusk the line is gone and the rearguard is buying the column's life. The documented killing of Black wounded that followed on the field - its scale contested, its existence not - is taught in the cards from the primary record. In campaign play that choice belongs to the judged no-quarter machinery; here the teaching carries it."
+      },
+      "CS": {
+        "US": "History diverges. The corridor fight stalls against a line that refuses to break piecemeal, and the column holds the junction to the limit. No outcome here rewrites the record the cards teach.",
+        "CS": "History holds. Concentration beats a column in march order - the corridor, the schedule, and true strengths did this without any special power. The aftermath record on the field is taught in the cards with its contested scale honest; it is not part of play, it is not scored, and no framing here softens it."
+      },
+      "draw": "The clock divides the corridor without a decision. The real afternoon did not: the line collapsed by dusk, the rearguard saved the column, and the documented aftermath is taught in the cards - never played."
+    }
+  }
+}

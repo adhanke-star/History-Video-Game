@@ -2,6 +2,25 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-19 — D470 the ALL-DAY LADDER P3: the OLUSTEE RUNTIME ships — C3 IS COMPLETE (evening)
+
+LANE-016 chartered ledger-only at DRIVE (`5dbda85`), then the runtime landed as ONE
+atomic commit per the D465 spec §8-§9 verbatim: data/olustee.json (the honest Union
+defeat from piecemeal-arrival schedule inputs; US 5,500 / CS 5,000 with the 5,400
+variant disclosed; the 8th USCT 565/xp-floor law; the Colquitt/Barton/Reed rank locks
+with Reed's Feb 26/27 spread; the dual-designation display string; the corridor terrain
+with Finegan's works honestly BEHIND the fight; five ≥2-source cards incl. the
+rope-train rearguard heart and the contested-scale aftermath card teaching the ABT
+self-contradiction itself), schema 61→62, scenarios 28→29 at rank 65.5, register
+1,671→1,710 at every pin site, suite 139→140 at the END, probe-olustee 20/20 (direction
+battery CS breaks 7/8 + US-bleeds 8/8; machinery at battleId `olustee` direct), the
+chattanooga→olustee→fortPillow adjacency re-pins across the rank regex + registry-order
++ DOM chains, binds A/B md5-proven (75f32bf6; the bind-B restore reconstructed exact
+original bytes). AD-7: game→21a5216d · dataTree→4bbdebe5 · srcTree→4564d84d ·
+suite→cf5de9f6 · focused→78633570. **C3 COMPLETE: Fort Pillow · the Crater · Olustee.**
+LANE-015 + LANE-016 rest at VERIFY pending the P7 battery. EXACT NEXT: the ladder's
+P4-P6 [IF-ROOM] LANE-014 slices, then the P7 day-end battery (suite 140).
+
 ## 2026-07-19 — D469 the ALL-DAY LADDER P2: the CRATER RUNTIME ships (afternoon)
 
 LANE-015 chartered ledger-only at DRIVE (`2b19f20`, the 3506716 precedent), then the

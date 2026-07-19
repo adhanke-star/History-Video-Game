@@ -9,7 +9,7 @@ import "./guard-probe-browser.mjs";
 // Wright-not-his-predecessor / Anderson's disclosed temporary lieutenant-generalcy /
 // Gibbon's reverse anachronism / the dead-officer wall), the §4 landmarks, the D74
 // forbidden-key wall, the fenced thirty-minute casualty tradition (digits live ONLY in
-// the ch_seven_thousand card), the 4e-2 sources register, the 1671 Army Register pin,
+// the ch_seven_thousand card), the 4e-2 sources register, the 1710 Army Register pin,
 // and the 8-seed direction battery (CS holds >=5/8 AND US losses exceed CS >=5/8 —
 // direction only, never a count gate).
 // BIND A PREDECLARATION - removing the T1 registry line must red exactly the REGISTRY tooth.
@@ -211,9 +211,9 @@ const SETUP = `(() => {
       return { units:__FIELD.units.length };
     });
 
-    check('ARMY REGISTER PIN: 16 unique Cold Harbor side-unit ids produce exact cmd/nco/pvt trios and current total 1671', function(){
+    check('ARMY REGISTER PIN: 16 unique Cold Harbor side-unit ids produce exact cmd/nco/pvt trios and current total 1710', function(){
       var reg = ssPersonRegistry();
-      if (reg.people.length !== 1671) throw new Error('Army Register total is ' + reg.people.length + ', expected 1671');   // D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots. D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4, the D455 SS3 row 6 unlock). D469: 1632 -> 1671 — The Crater adds 13 unique side-unit ids x 3 slots (LANE-015, the D464 spec).
+      if (reg.people.length !== 1710) throw new Error('Army Register total is ' + reg.people.length + ', expected 1710');   // D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots. D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4, the D455 SS3 row 6 unlock). D469: 1632 -> 1671 — The Crater adds 13 unique side-unit ids x 3 slots (LANE-015, the D464 spec). D470: 1671 -> 1710 — Olustee adds 13 unique side-unit ids x 3 slots (LANE-016, the D465 spec).
       var rows = [], groups = {};
       for (var i = 0; i < reg.people.length; i++) {
         var p = reg.people[i], origin = p.replaces || p.pid;

@@ -7,7 +7,7 @@ import "./guard-probe-browser.mjs";
 // the spec §3 rank wall (Hood "General (temporary)"; McPherson Maj. Gen. killed 2:02;
 // Logan's one-day command; no Johnston on the field), the §5 landmarks, the D74
 // forbidden-key wall, the 4e-2 sources register, the S44 western-theater truth swap
-// (atlanta playable; marchToTheSea the only lock), the 1671 Army Register pin (D442), and the
+// (atlanta playable; marchToTheSea the only lock), the 1710 Army Register pin (D442), and the
 // 8-seed casualty-direction battery (defender holds + CS bleeds more, direction only).
 import { chromium } from 'playwright-core';
 import { spawn } from 'node:child_process';
@@ -195,9 +195,9 @@ const SETUP = `(() => {
       return { units:__FIELD.units.length };
     });
 
-    check('ARMY REGISTER PIN: 18 unique Atlanta side-unit ids produce exact cmd/nco/pvt trios and current total 1671', function(){
+    check('ARMY REGISTER PIN: 18 unique Atlanta side-unit ids produce exact cmd/nco/pvt trios and current total 1710', function(){
       var reg = ssPersonRegistry();
-      if (reg.people.length !== 1671) throw new Error('Army Register total is ' + reg.people.length + ', expected 1671');   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots. D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4, the D455 SS3 row 6 unlock). D469: 1632 -> 1671 — The Crater adds 13 unique side-unit ids x 3 slots (LANE-015, the D464 spec).
+      if (reg.people.length !== 1710) throw new Error('Army Register total is ' + reg.people.length + ', expected 1710');   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots. D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4, the D455 SS3 row 6 unlock). D469: 1632 -> 1671 — The Crater adds 13 unique side-unit ids x 3 slots (LANE-015, the D464 spec). D470: 1671 -> 1710 — Olustee adds 13 unique side-unit ids x 3 slots (LANE-016, the D465 spec).
       // D443 (AD-4 probe fix, the AD-10 never-run bug class): people carry no flat unitId —
       // count trios by parsing the canonical ss:atlanta:<side>:<uid>:<slot> origin pids.
       var rows = [], groups = {};

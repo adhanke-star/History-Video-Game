@@ -1817,7 +1817,7 @@ const SETUP = `(() => {
       var pid = 'person_bullrun_us_2ri_rhodes';
       var C = mkC('US', false); C.idx = 1; C.runId = 'run-us-d410-1';
       var people = ssPersonRegistry(C).people;
-      if (people.length !== 1671) throw new Error('Army Register moved: ' + people.length);   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots. D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4, the D455 SS3 row 6 unlock). D469: 1632 -> 1671 — The Crater adds 13 unique side-unit ids x 3 slots (LANE-015, the D464 spec).
+      if (people.length !== 1710) throw new Error('Army Register moved: ' + people.length);   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7): Watie's 2nd CMR adds 1 unique side-unit id x 3 slots. D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4, the D455 SS3 row 6 unlock). D469: 1632 -> 1671 — The Crater adds 13 unique side-unit ids x 3 slots (LANE-015, the D464 spec). D470: 1671 -> 1710 — Olustee adds 13 unique side-unit ids x 3 slots (LANE-016, the D465 spec).
       var boundsCarriers = people.filter(function(p) { return p && (own(p, 'serviceStart') || own(p, 'serviceEnd')); });
       if (boundsCarriers.length !== 1 || boundsCarriers[0].pid !== pid) {
         throw new Error('non-Rhodes bounds movement: ' + bytes(boundsCarriers.map(function(p) { return p.pid; })));

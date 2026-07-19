@@ -27,7 +27,7 @@ function ensureDir(p) {
 const BATTLE_FILES = new Set([
   'antietam.json', 'atlanta.json', 'bullrun.json', 'chancellorsville.json', 'chickamauga.json',
   'chattanooga.json', 'cedar-creek.json', 'cold-harbor.json', 'crater.json', 'cross-keys-port-republic.json', 'franklin.json', 'fredericksburg.json', 'gaines-mill.json', 'gettysburg.json', 'kennesaw.json',
-  'five-forks.json', 'fort-donelson.json', 'fort-pillow.json', 'nashville.json', 'new-market-heights.json',
+  'five-forks.json', 'fort-donelson.json', 'fort-pillow.json', 'nashville.json', 'new-market-heights.json', 'olustee.json',
   'malvern-hill.json', 'elkhorn-tavern.json', 'petersburg-assaults.json', 'shiloh.json', 'spotsylvania.json', 'stones-river.json', 'vicksburg.json', 'wilderness.json'
 ]);
 // D442: 56 -> 57 data files — cold-harbor.json enrolls as the 26th battle family member (the
@@ -38,6 +38,8 @@ const BATTLE_FILES = new Set([
 // the D455 SS3 row 6 unlock; the controlling law is docs/design/fort-pillow-battle-build-spec.md).
 // D469: 60 -> 61 — crater.json enrolls as the 28th battle family member (LANE-015; the
 // controlling law is docs/design/crater-battle-build-spec.md, D464).
+// D470: 61 -> 62 — olustee.json enrolls as the 29th battle family member (LANE-016; the
+// controlling law is docs/design/olustee-battle-build-spec.md, D465).
 
 const META_REQUIREMENTS = new Map([
   ['cabinet.json', ['_meta', 'sides', 'crossCards']],
