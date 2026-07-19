@@ -2230,15 +2230,16 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
-### LANE-013 · content-unlocks — **CONTRACT (P1-P3 + the P4 spec SHIPPED as D459-D462; runtime queued; lock RELEASED at the D462 boundary)** (ARC 2 of the D455 roadmap)
+### LANE-013 · content-unlocks — **DRIVE (P1-P3 + the P4 spec SHIPPED as D459-D462; the P4 RUNTIME session holds the lock)** (ARC 2 of the D455 roadmap)
 
-- **Owning tool:** unowned (the Claude Code / Fable 5 lock RELEASED at the clean pushed
-  D462 boundary — overnight session closeout, the D171/D307 law; DRIVE ran `3506716` →
+- **Owning tool:** Claude Code (Fable 5 — within Aaron's authorized window through
+  2026-07-19; DRIVE re-taken at the `caaa72a` clean boundary for the P4 runtime →
+  P5 specs → P6 battery ladder, this commit). Prior DRIVE ran `3506716` →
   D459 `0127cc7` (+`1af86ee`/`aa41dec`) → D460 `a2b0484` → D461 `ea1f714` → D462
-  `045a50b`, all within Aaron's authorized Fable window through 2026-07-19).
-- **State:** CONTRACT — the remaining phases (P4 runtime · P5 specs · P6 battery) carry
-  their full committed contracts (this entry + the D462 spec §8-§9), so ANY tool can
-  drive from here.
+  `045a50b`; lock was released at the D462 boundary and is re-taken here.
+- **State:** DRIVE — the remaining phases (P4 runtime · P5 specs · P6 battery) carry
+  their full committed contracts (this entry + the D462 spec §8-§9); this session
+  drives them in order.
 - **Design law:** `docs/design/unlocked-but-judged-design.md` §3 rows 6-8 + §4b + §7 (THE
   LAW for this arc) · DECISIONS D455 (the popup-locked unlock decisions: Fort Pillow
   playable BOTH sides honest treatment, amends D135/D382 taught-only; Leetown Cherokee
