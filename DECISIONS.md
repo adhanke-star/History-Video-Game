@@ -4,6 +4,37 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D464 — LANE-013 P5a COMMITTED: THE CRATER BATTLE-BUILD SPEC (DOCS-ONLY; THE RUNTIME CHARTERS LATER; ADJUDICATION-2 SCANS UNTOUCHED) — [CLAUDE CODE (FABLE 5), LANE-013 DRIVE, ARC 2 OVERNIGHT NIGHT 2] (2026-07-19)
+
+ARC 2 phase P5, first spec, built to the LANE-013 charter from the D459 packet's Chapter
+II READY_FOR_SPEC verdict. **THE SPEC:** `docs/design/crater-battle-build-spec.md` — the
+controlling law for the future one-commit Crater runtime (a LATER session; specs only
+this arc): single-phase US assault out of the breach toward Cemetery Hill (the objective
+NEVER inside the bowl — the crater is the trap, not the prize); historical lean CS holds
+at fair baseline; **the one-family strength law resolved — the Wikipedia engaged pair
+8,500/6,100 encoded consistently with the full definitional spread disclosed**; Elliott's
+brigade opens reduced/suppressed by the sourced blast (~278; the 352 outlier disclosed) as
+TRUE STARTING STATE — the blast is never a multiplier; Mahone's three counterattack waves
+as the reinforcement schedule at the sourced hours (the 9/11 sub-split Inferred, one
+specialist family); **the Mahone BRIG. GEN. headline rank lock** (field grade July 30; the
+to-rank-from backdate TAUGHT, the single-family Aug-2 date never a probe string); **the
+no-Connecticut roster law** (2nd Bde = 19/23/28/29/31 USCT — the packet §12 correction);
+Ledlie/Ferrero dysfunction as teaching + existing leader inputs only; the massacre of
+surrendering USCT taught QUALITATIVELY (no source pins a toll — the build never invents
+one) with the McClellan-caution pairing law (never standalone Mahone-exculpation; always
+paired with Suderow's ratio analysis); the two-findings law (court of inquiry censure AND
+the 1865 JCCW substitution finding both taught); the D74 wall extended with the Crater
+temptations (blastMult/shockMult/craterKill/confusionMult/any Ledlie debuff key). Counts
+law for the future runtime: 27→28 · 60→61 · register +3×units · suite 138→139 · **the
+adjudication-2 forbidden-scan flips ride ONLY that runtime commit** — this spec commit
+touches zero probe teeth (verified: the petersburg/spotsylvania/wilderness plan probes
+re-ran ALL OK post-commit). Open traps recorded honestly for the runtime pass: the
+Pleasants brevet second family; Elliott's exact regimental roster second family.
+
+Docs-only commit (no build; game `7e212198` holds); counts hold 27/60/1,632/138;
+`_SAVE_VER=1`; frozen base untouched. EXACT NEXT: P5b — the Olustee spec (+ the two
+HISTORICAL-DATA.md corrections riding it), then the P6 release battery.
+
 ## D463 — LANE-013 P4 SHIPPED: THE FORT PILLOW RUNTIME — THE ASSAULT PLAYABLE BOTH SIDES, THE MASSACRE NEVER IN-SCENARIO, ONE ATOMIC COMMIT (THE D455 §3 ROW 6 UNLOCK, BUILT TO THE D462 SPEC §8-§9 VERBATIM) — [CLAUDE CODE (FABLE 5), LANE-013 DRIVE, ARC 2 OVERNIGHT NIGHT 2] (2026-07-19)
 
 ARC 2 phase P4 runtime, built to the committed D462 spec (the controlling law) from the
