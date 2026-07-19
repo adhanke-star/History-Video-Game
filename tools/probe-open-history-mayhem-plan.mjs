@@ -82,7 +82,11 @@ const PIN = {
   // and suite 7b36f51e -> cf5de9f6 — the Olustee runtime (data/olustee.json + the T1
   // rank-65.5 registry line + the T10 E/false/first-national meta row + the olustee suite
   // row at the END, 139 -> 140, + the probe-olustee 600s budget; rebuild). base/manifest hold.
-  game: "21a5216d51220dc029bb543890a855b9",
+  // D470 battery root-fix 3 re-pin: game 21a5216d -> b26238de — T23's async GLB
+  // template-arrival apply now routes through the wrapped fld3dSyncUnit seam so every
+  // sibling layer's hide/park runs atomically with the attach (the tripo hideBaseMarker
+  // one-frame orphan-figures window; rebuild). base/manifest/suite hold; data untouched.
+  game: "b26238de28f4ab74a07ad8950f8882c1",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
   manifest: "bf29b44f3a90b4d678c97e8a204db89a",
   suite: "cf5de9f6d23e881d7a7d97e3d147e382",

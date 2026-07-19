@@ -917,7 +917,10 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     // runtime/journey/command/commandProbe did NOT move.
     // D470 re-pin (the AD-7 idiom, at the LANE-016 Olustee head): srcTree bab9cca1 -> 4564d84d
     // (the T1 rank-65.5 registry line + the T10 meta row; zero engine code).
-    srcTree:"4564d84d0e2cb9036c243e18b1b5d5a1",
+    // D470 battery root-fix 3 re-pin: srcTree 4564d84d -> cc403e85 — T23's async GLB apply
+    // routes through the wrapped fld3dSyncUnit seam (atomic sibling hide/park with the
+    // attach; presentation-only, no war-career surface touched).
+    srcTree:"cc403e85d963b31de50572111939fd25",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
     command:"8f12c49f7129b3a9be0203677822e048",
@@ -1229,7 +1232,9 @@ step("BASELINES + LANE", () => {
     // D470 re-pin (the AD-7 idiom, at the LANE-016 Olustee head): game 1757fdbf -> 21a5216d,
     // dataTree 3cd4ccb2 -> 4bbdebe5 (data/olustee.json enrolls + rebuild), suite 7b36f51e ->
     // cf5de9f6 (the olustee row at the END, 139 -> 140, + the 600s budget). base/manifest hold.
-    game:"21a5216d51220dc029bb543890a855b9",
+    // D470 battery root-fix 3 re-pin: game 21a5216d -> b26238de — T23's async GLB apply
+    // routes through the wrapped fld3dSyncUnit seam (rebuild). base/dataTree/manifest/suite hold.
+    game:"b26238de28f4ab74a07ad8950f8882c1",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     dataTree:"4bbdebe5c1180ed3ec702d9b6fe68b6b",
     manifest:"bf29b44f3a90b4d678c97e8a204db89a",
@@ -1646,9 +1651,12 @@ step("REACHABILITY BASELINES", () => {
     // D470 re-pin: game 1757fdbf -> 21a5216d, dataTree 3cd4ccb2 -> 4bbdebe5, srcTree
     // bab9cca1 -> 4564d84d (the Olustee runtime: data/olustee.json + the T1/T10 rows +
     // rebuild; zero engine code); runtime/journey did NOT move.
-    game:"21a5216d51220dc029bb543890a855b9",
+    // D470 battery root-fix 3 re-pin: game 21a5216d -> b26238de, srcTree 4564d84d ->
+    // cc403e85 (T23's async GLB apply routes through the wrapped fld3dSyncUnit seam;
+    // rebuild); dataTree/runtime/journey did NOT move.
+    game:"b26238de28f4ab74a07ad8950f8882c1",
     dataTree:"4bbdebe5c1180ed3ec702d9b6fe68b6b",
-    srcTree:"4564d84d0e2cb9036c243e18b1b5d5a1",
+    srcTree:"cc403e85d963b31de50572111939fd25",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
     // D460 re-pin: focused a29a5351 -> 2816a82c (Elkhorn Cherokee, 1614 -> 1617). D463

@@ -295,9 +295,17 @@ function fldUnitGlbSyncUnit(u, g) {
 
 function fldUnitGlbApplyAll() {
   if (typeof __FIELD === "undefined" || !__FIELD || !__FIELD._u3d || !__FIELD.units) return;
+  // Route the async template-arrival apply through the PUBLIC wrapped seam, not this
+  // module's private sync: the loader callback fires between frames, and a direct
+  // fldUnitGlbSyncUnit here attaches + shows the hero model and hides the base marker
+  // WITHOUT the later-loaded sibling layers' fld3dSyncUnit wrappers running — leaving
+  // their shared instanced slots active for one frame (orphan figures over the model).
+  // The full seam call keeps every layer's hide/park atomic with the attach.
+  var seam = (typeof fld3dSyncUnit === "function") ? fld3dSyncUnit : null;
   for (var i = 0; i < __FIELD.units.length; i++) {
     var u = __FIELD.units[i], g = __FIELD._u3d[u.id];
-    if (g) fldUnitGlbSyncUnit(u, g);
+    if (!g) continue;
+    if (seam) seam(u, g); else fldUnitGlbSyncUnit(u, g);
   }
 }
 
