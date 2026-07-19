@@ -2448,13 +2448,14 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
-### LANE-014 · graphics-uplift — **CONTRACT (slice 1 SHIPPED as D467; unowned — the DRIVE lock released at the 2026-07-19 closeout)** (ARC 3 of the D455 roadmap)
+### LANE-014 · graphics-uplift — **DRIVE (slice 2 in progress; slice 1 SHIPPED as D467)** (ARC 3 of the D455 roadmap)
 
-- **Owning tool:** unowned (the Claude Code / Fable 5 DRIVE lock — taken with the
-  `489cfc4` contract edit under Aaron's queue pick (a), the §4 TOP-LOOP resolution
-  recorded there — RELEASED at the clean pushed D467 boundary; session closeout, the
-  D171/D307 law. The next session re-takes DRIVE with a committed edit BEFORE any code
-  move.)
+- **Owning tool:** Claude Code (Fable 5) — DRIVE re-taken 2026-07-19 (afternoon day
+  ladder) with THIS committed edit, per Aaron's standing same-day pick: the §4
+  TOP-LOOP resolution is Fable 5 (Aaron-confirmed this morning at the D467 charter and
+  extended by the all-day maximizer kickoff; helpers routed Sonnet/Haiku mechanical ·
+  Opus high reasoning, model+effort explicit per call). Working SLICE 2 (terrain
+  texturing, T32) per the slice-2 clause below IN FULL.
 - **State:** CONTRACT — this entry IS the acceptance contract (ratified `489cfc4`, the
   LANE-013 `3506716` precedent). SLICE 1 is SHIPPED (`6f62352`, D467: the assets3d
   provenance wall; all 30 staged files Verified CC0-1.0 byte-identical to identified
@@ -2679,7 +2680,10 @@ next green commit and confer through this ledger instead of permitting simultane
   records; the 3 HDRIs identified across the 980-asset catalog) — and the assets3d
   provenance wall landed (ledger + media-budget 1.9 ledgerClasses + the 17-step gate).
   Lock released at the clean pushed boundary; Aaron's session picks recorded: drive on
-  Fable 5; the D460 Drew's-regiment adjudication stays standing.
+  Fable 5; the D460 Drew's-regiment adjudication stays standing. DRIVE re-taken
+  2026-07-19 (afternoon, Claude Code / Fable 5) for SLICE 2 under Aaron's all-day
+  ladder kickoff (P1 of the ARC 3 + C3-completion ladder); the §4 TOP-LOOP resolution
+  re-stated in the owner field above.
 
 ---
 
