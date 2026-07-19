@@ -2,6 +2,31 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-18 — D456 the ARC 1 CHARTER + BUILD session (LANE-012 chartered; Slice 1 shipped)
+
+The ARC 1 session opened LANE-012 `unlock-and-teach-spine` per the D455 packet §4a: the full
+acceptance contract (three slices + probe design + per-slice gates) committed ledger-only at
+`138e216` BEFORE any code moved, with the packet's C72 rider dropped as stale (shipped D422,
+LANE-008) — the erratum recorded in the lane history. Slice 1 then shipped as D456 at
+`0851de0`: `src/113-teaching-companion.js` (manifest 112→113) — the always-visible sourced
+"In history…" companion on briefings (each battle's own committed corpus; attribution labels
+probe-verified as prefixes of committed source rows; fail-closed without corpus; verified
+chain-alias map), the Mayhem AAR companion (the divergence ledger's committed hist corpus,
+factual voice — the D416 comparison-off-by-default AMENDED per Aaron's D455 R3/R6 locks
+while the no-moral-GPA charter holds), the per-dispatch Chronicle juxtaposition (Fort
+Pillow / cartel-collapse, composed verbatim from the committed codex corpus), and both-modes
+byte-identity pins on divRenderTab/endRenderSection. Gates: node --check ×7, build GATE OK
+(save-shape ✓), briefing 3/3 viewports · mayhem 23/23 · divergence 15 · endings 25 ·
+adjacent afteraction 18/18 — all artifacts read, zero pageerrors; Bind A (API absence — the
+manifest-drop form proven build-refused fail-closed, BUILD FAIL [5]) and Bind B (attribution
+strip) bit exactly, md5-proven byte-identical restores; plan-probe md5 pins re-chained with
+the AD-7 idiom and both lane-grepping plan probes re-run green on the clean tree. Counts
+26/59/1,614/137 and `_SAVE_VER=1` hold. INCIDENTAL surfaced for Slice 3: the battle
+plan-probe stripJsComments family is red on clean HEAD (the validate-data-schemas line-2
+`data/*` glob eats BATTLE_FILES before the scan — latent never-run non-suite teeth).
+Session closed at the clean D456 boundary; LANE-012 lock released with the resume pointer
+at Slice 2.
+
 ## 2026-07-18 — D454 the AD-0 COMPLETION + RELEASE session (137/137 GREEN; LANE-009/010/011 SHIPPED) + the D455 design Q&A
 
 The AD-0 completion session resumed the battery `--from='field sandbox'` at the D453 head and
